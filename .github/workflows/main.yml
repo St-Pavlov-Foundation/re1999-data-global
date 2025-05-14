@@ -1,0 +1,66 @@
+name: Auto-Update Data
+
+on:
+  schedule:
+    - cron: '0 2,14 * * *'
+  workflow_dispatch:
+  
+jobs:
+  commit:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout the repository
+        uses: actions/checkout@v4
+        with:
+            path: re1999-data
+
+      - name: Checkout the depack repository
+        uses: actions/checkout@v4
+        with:
+          repository: St-Pavlov-Foundation/re1999-depack
+          token: ${{ secrets.DEPACK_TOKEN }} 
+          path: re1999-depack
+          submodules: true
+
+      - name: Set up python 3.11
+        uses: actions/setup-python@v4
+        with:
+            python-version: '3.11'
+            
+      - name: Checkout the ljd-v2 repository
+        uses: actions/checkout@v4
+        with:
+          repository: aergoio/luajit-decompiler-v2
+          path: luajit-decompiler-v2
+          submodules: true
+
+      - name: Set up luajit-decompiler-v2
+        run: |
+          cd luajit-decompiler-v2
+          make
+          sed 's#./tools/luajit-decompiler-v2/luajit-decompiler-v2.exe#../luajit-decompiler-v2/decompiler#g' ../re1999-depack/conf.ini
+
+      - name: Generate unpacked data
+        id: bin
+        run: |
+          cd re1999-depack
+          pip install -r requirements.txt
+          python -u main.py --work-dir ../re1999-data/data update
+          echo "version=`python main.py --work-dir ../re1999-data/data resversion`" >> "$GITHUB_OUTPUT"
+
+      - name: Commit and push changes to the target repository
+        if: steps.bin.outputs.version
+        uses: EndBug/add-and-commit@v9.1.4
+        with:
+          author_name: St. Pavlov [bot]
+          author_email: st.pavlov.bot@users.noreply.github.com
+          message: "${{ steps.bin.outputs.version }}"
+          cwd: "re1999-data"
+
+      - name: Upload attachments
+        if: steps.bin.outputs.version
+        uses: actions/upload-artifact@v4
+        with:
+          name: "${{ steps.bin.outputs.version }}"
+          path: "re1999-data/data/json"
