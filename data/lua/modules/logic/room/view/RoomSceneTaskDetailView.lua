@@ -1,284 +1,312 @@
-module("modules.logic.room.view.RoomSceneTaskDetailView", package.seeall)
+﻿module("modules.logic.room.view.RoomSceneTaskDetailView", package.seeall)
 
-slot0 = class("RoomSceneTaskDetailView", BaseView)
+local var_0_0 = class("RoomSceneTaskDetailView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gotask1 = gohelper.findChild(slot0.viewGO, "taskContent/#go_task1")
-	slot0._gotask2 = gohelper.findChild(slot0.viewGO, "taskContent/#go_task2")
-	slot0._gotask3 = gohelper.findChild(slot0.viewGO, "taskContent/#go_task3")
-	slot0._gotask4 = gohelper.findChild(slot0.viewGO, "taskContent/#go_task4")
-	slot0._gotask5 = gohelper.findChild(slot0.viewGO, "taskContent/#go_task5")
-	slot0._golefttop = gohelper.findChild(slot0.viewGO, "#go_lefttop")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gotask1 = gohelper.findChild(arg_1_0.viewGO, "taskContent/#go_task1")
+	arg_1_0._gotask2 = gohelper.findChild(arg_1_0.viewGO, "taskContent/#go_task2")
+	arg_1_0._gotask3 = gohelper.findChild(arg_1_0.viewGO, "taskContent/#go_task3")
+	arg_1_0._gotask4 = gohelper.findChild(arg_1_0.viewGO, "taskContent/#go_task4")
+	arg_1_0._gotask5 = gohelper.findChild(arg_1_0.viewGO, "taskContent/#go_task5")
+	arg_1_0._golefttop = gohelper.findChild(arg_1_0.viewGO, "#go_lefttop")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-slot0.PageShowNum = 5
+var_0_0.PageShowNum = 5
 
-function slot0._editableInitView(slot0)
-	slot0._itemObjs = {}
-	slot0._bgmask = gohelper.findChildSingleImage(slot0.viewGO, "#bg_mask")
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._itemObjs = {}
+	arg_4_0._bgmask = gohelper.findChildSingleImage(arg_4_0.viewGO, "#bg_mask")
 end
 
-function slot0.onDestroyView(slot0)
-	for slot4, slot5 in pairs(slot0._itemObjs) do
-		if not gohelper.isNil(slot5.btntouch) then
-			slot5.btntouch:RemoveClickListener()
+function var_0_0.onDestroyView(arg_5_0)
+	for iter_5_0, iter_5_1 in pairs(arg_5_0._itemObjs) do
+		if not gohelper.isNil(iter_5_1.btntouch) then
+			iter_5_1.btntouch:RemoveClickListener()
 		end
 
-		if not gohelper.isNil(slot5.simagebonus) then
-			slot5.simagebonus:UnLoadImage()
+		if not gohelper.isNil(iter_5_1.simagebonus) then
+			iter_5_1.simagebonus:UnLoadImage()
 		end
 
-		if slot4 == 1 then
-			slot5.btnEdit:RemoveClickListener()
-			slot5.btnExpansion:RemoveClickListener()
+		if iter_5_0 == 1 then
+			iter_5_1.btnEdit:RemoveClickListener()
+			iter_5_1.btnExpansion:RemoveClickListener()
 		end
 	end
 end
 
-function slot0.onOpen(slot0)
-	slot0._curPage = 1
+function var_0_0.onOpen(arg_6_0)
+	arg_6_0._curPage = 1
 
-	slot0:addEventCb(RoomSceneTaskController.instance, RoomEvent.TaskUpdate, slot0.refreshUI, slot0)
-	slot0:refreshUI()
+	arg_6_0:addEventCb(RoomSceneTaskController.instance, RoomEvent.TaskUpdate, arg_6_0.refreshUI, arg_6_0)
+	arg_6_0:refreshUI()
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_7_0)
+	return
 end
 
-function slot0.refreshUI(slot0)
-	for slot4 = 1, uv0.PageShowNum do
-		slot0:refreshItem(slot4)
+function var_0_0.refreshUI(arg_8_0)
+	for iter_8_0 = 1, var_0_0.PageShowNum do
+		arg_8_0:refreshItem(iter_8_0)
 	end
 end
 
-function slot0.onClickTask(slot0)
-	if not RoomTaskModel.instance:getShowList()[slot0.index + (slot0.self._curPage - 1) * uv0.PageShowNum] then
+function var_0_0.onClickTask(arg_9_0)
+	local var_9_0 = arg_9_0.self
+	local var_9_1 = arg_9_0.index
+	local var_9_2 = var_9_1 + (var_9_0._curPage - 1) * var_0_0.PageShowNum
+	local var_9_3 = RoomTaskModel.instance:getShowList()[var_9_2]
+
+	if not var_9_3 then
 		return
 	end
 
-	if RoomTaskModel.instance:tryGetTaskMO(slot5.id) and slot2 == 1 then
-		slot1:showMaterialInfoByTaskConfig(slot5)
-	elseif slot5 then
-		if RoomSceneTaskController.isTaskOverUnlockLevel(slot5) then
+	if RoomTaskModel.instance:tryGetTaskMO(var_9_3.id) and var_9_1 == 1 then
+		var_9_0:showMaterialInfoByTaskConfig(var_9_3)
+	elseif var_9_3 then
+		if RoomSceneTaskController.isTaskOverUnlockLevel(var_9_3) then
 			GameFacade.showToast(ToastEnum.RoomTaskUnlock)
 		else
-			GameFacade.showToast(ToastEnum.RoomSceneTaskOpen, slot5.name)
+			GameFacade.showToast(ToastEnum.RoomSceneTaskOpen, var_9_3.name)
 		end
 	end
 end
 
-function slot0.onClickJump(slot0)
-	if RoomTaskModel.instance:getShowList() and #slot1 > 0 and RoomTaskModel.instance:tryGetTaskMO(slot1[1].id) and not RoomSceneTaskDetailController.instance:goToTask(slot2) then
-		slot0:closeThis()
+function var_0_0.onClickJump(arg_10_0)
+	local var_10_0 = RoomTaskModel.instance:getShowList()
+
+	if var_10_0 and #var_10_0 > 0 then
+		local var_10_1 = var_10_0[1]
+
+		if RoomTaskModel.instance:tryGetTaskMO(var_10_1.id) and not RoomSceneTaskDetailController.instance:goToTask(var_10_1) then
+			arg_10_0:closeThis()
+		end
 	end
 end
 
-function slot0.showMaterialInfoByTaskConfig(slot0, slot1)
-	if #string.split(slot1.bonus, "|") > 0 then
-		slot3 = string.splitToNumber(slot2[1], "#")
-		slot4 = tonumber(slot3[1])
-		slot5 = tonumber(slot3[2])
-		slot6, slot7 = ItemModel.instance:getItemConfigAndIcon(slot4, slot5)
+function var_0_0.showMaterialInfoByTaskConfig(arg_11_0, arg_11_1)
+	local var_11_0 = string.split(arg_11_1.bonus, "|")
 
-		MaterialTipController.instance:showMaterialInfo(slot4, slot5, false, nil, true)
+	if #var_11_0 > 0 then
+		local var_11_1 = string.splitToNumber(var_11_0[1], "#")
+		local var_11_2 = tonumber(var_11_1[1])
+		local var_11_3 = tonumber(var_11_1[2])
+		local var_11_4, var_11_5 = ItemModel.instance:getItemConfigAndIcon(var_11_2, var_11_3)
+
+		MaterialTipController.instance:showMaterialInfo(var_11_2, var_11_3, false, nil, true)
 	end
 end
 
-function slot0.getOrCreateItem(slot0, slot1)
-	if not slot0._itemObjs[slot1] then
-		slot2 = slot0:getUserDataTb_()
-		slot2.go = slot0["_gotask" .. tostring(slot1)]
-		slot2.gofinish = gohelper.findChild(slot2.go, "go_finish")
-		slot2.gounfinish = gohelper.findChild(slot2.go, "go_unfinish")
-		slot2.golock = gohelper.findChild(slot2.go, "go_unfinish/go_lock")
-		slot2.txtlock = gohelper.findChildText(slot2.go, "go_unfinish/go_lock/txt_lock")
-		slot2.gorunning = gohelper.findChild(slot2.go, "go_running")
-		slot2.goorderbg = gohelper.findChild(slot2.go, "go_lightbg")
-		slot2.txtid = gohelper.findChildText(slot2.go, "txt_id")
+function var_0_0.getOrCreateItem(arg_12_0, arg_12_1)
+	local var_12_0 = arg_12_0._itemObjs[arg_12_1]
 
-		if slot1 == 1 then
-			slot2.goJump = gohelper.findChild(slot2.go, "#go_jump")
-			slot2.txtnum = gohelper.findChildText(slot2.goJump, "txt_rewardnum")
-			slot2.txtdesc = gohelper.findChildText(slot2.goJump, "txt_taskdesc")
-			slot2.txtRunningTips = gohelper.findChildText(slot2.goJump, "txt_rewardtip")
-			slot2.simagebonus = gohelper.findChildSingleImage(slot2.goJump, "simage_reward")
-			slot2.imagebonus = gohelper.findChildImage(slot2.goJump, "simage_reward")
-			slot2.btnEdit = gohelper.findChildButtonWithAudio(slot2.goJump, "btn_edit")
-			slot2.btnExpansion = gohelper.findChildButtonWithAudio(slot2.goJump, "btn_expansion")
-			slot2.btntouch = gohelper.findChildButtonWithAudio(slot2.goJump, "btn_touch")
+	if not var_12_0 then
+		var_12_0 = arg_12_0:getUserDataTb_()
+		var_12_0.go = arg_12_0["_gotask" .. tostring(arg_12_1)]
+		var_12_0.gofinish = gohelper.findChild(var_12_0.go, "go_finish")
+		var_12_0.gounfinish = gohelper.findChild(var_12_0.go, "go_unfinish")
+		var_12_0.golock = gohelper.findChild(var_12_0.go, "go_unfinish/go_lock")
+		var_12_0.txtlock = gohelper.findChildText(var_12_0.go, "go_unfinish/go_lock/txt_lock")
+		var_12_0.gorunning = gohelper.findChild(var_12_0.go, "go_running")
+		var_12_0.goorderbg = gohelper.findChild(var_12_0.go, "go_lightbg")
+		var_12_0.txtid = gohelper.findChildText(var_12_0.go, "txt_id")
 
-			slot2.btnEdit:AddClickListener(slot0.onClickJump, slot0)
-			slot2.btnExpansion:AddClickListener(slot0.onClickJump, slot0)
-			gohelper.setActive(gohelper.findChild(slot2.go, "btn_touch"), false)
+		if arg_12_1 == 1 then
+			var_12_0.goJump = gohelper.findChild(var_12_0.go, "#go_jump")
+			var_12_0.txtnum = gohelper.findChildText(var_12_0.goJump, "txt_rewardnum")
+			var_12_0.txtdesc = gohelper.findChildText(var_12_0.goJump, "txt_taskdesc")
+			var_12_0.txtRunningTips = gohelper.findChildText(var_12_0.goJump, "txt_rewardtip")
+			var_12_0.simagebonus = gohelper.findChildSingleImage(var_12_0.goJump, "simage_reward")
+			var_12_0.imagebonus = gohelper.findChildImage(var_12_0.goJump, "simage_reward")
+			var_12_0.btnEdit = gohelper.findChildButtonWithAudio(var_12_0.goJump, "btn_edit")
+			var_12_0.btnExpansion = gohelper.findChildButtonWithAudio(var_12_0.goJump, "btn_expansion")
+			var_12_0.btntouch = gohelper.findChildButtonWithAudio(var_12_0.goJump, "btn_touch")
+
+			var_12_0.btnEdit:AddClickListener(arg_12_0.onClickJump, arg_12_0)
+			var_12_0.btnExpansion:AddClickListener(arg_12_0.onClickJump, arg_12_0)
+
+			local var_12_1 = gohelper.findChild(var_12_0.go, "btn_touch")
+
+			gohelper.setActive(var_12_1, false)
 		else
-			slot2.txtnum = gohelper.findChildText(slot2.go, "go_unfinish/txt_num")
-			slot2.txtdesc = gohelper.findChildText(slot2.go, "go_unfinish/txt_desc")
-			slot2.simagebonus = gohelper.findChildSingleImage(slot2.go, "go_unfinish/simage_build")
-			slot2.imagebonus = gohelper.findChildImage(slot2.go, "go_unfinish/simage_build")
-			slot2.btntouch = gohelper.findChildButtonWithAudio(slot2.go, "btn_touch")
+			var_12_0.txtnum = gohelper.findChildText(var_12_0.go, "go_unfinish/txt_num")
+			var_12_0.txtdesc = gohelper.findChildText(var_12_0.go, "go_unfinish/txt_desc")
+			var_12_0.simagebonus = gohelper.findChildSingleImage(var_12_0.go, "go_unfinish/simage_build")
+			var_12_0.imagebonus = gohelper.findChildImage(var_12_0.go, "go_unfinish/simage_build")
+			var_12_0.btntouch = gohelper.findChildButtonWithAudio(var_12_0.go, "btn_touch")
 		end
 
-		slot2.btntouch:AddClickListener(slot0.onClickTask, {
-			self = slot0,
-			index = slot1
+		var_12_0.btntouch:AddClickListener(arg_12_0.onClickTask, {
+			self = arg_12_0,
+			index = arg_12_1
 		})
 
-		slot0._itemObjs[slot1] = slot2
+		arg_12_0._itemObjs[arg_12_1] = var_12_0
 	end
 
-	return slot2
+	return var_12_0
 end
 
-slot1 = Color.New(0.090196, 0.08627451, 0.08627451, 1)
-slot2 = Color.New(0.8980392, 0.8980392, 0.8980392, 0.5)
-slot3 = Color.New(0.5372549, 0.5215687, 0.5176471, 1)
-slot4 = Color.New(0.8980392, 0.8980392, 0.8980392, 1)
+local var_0_1 = Color.New(0.090196, 0.08627451, 0.08627451, 1)
+local var_0_2 = Color.New(0.8980392, 0.8980392, 0.8980392, 0.5)
+local var_0_3 = Color.New(0.5372549, 0.5215687, 0.5176471, 1)
+local var_0_4 = Color.New(0.8980392, 0.8980392, 0.8980392, 1)
 
-function slot0.refreshItem(slot0, slot1)
-	slot2 = slot0:getOrCreateItem(slot1)
-	slot6 = nil
+function var_0_0.refreshItem(arg_13_0, arg_13_1)
+	local var_13_0 = arg_13_0:getOrCreateItem(arg_13_1)
+	local var_13_1 = arg_13_1 + (arg_13_0._curPage - 1) * var_0_0.PageShowNum
+	local var_13_2 = RoomTaskModel.instance:getShowList()[var_13_1]
+	local var_13_3
 
-	if RoomTaskModel.instance:getShowList()[slot1 + (slot0._curPage - 1) * uv0.PageShowNum] then
-		slot6 = RoomTaskModel.instance:tryGetTaskMO(slot5.id)
+	if var_13_2 then
+		var_13_3 = RoomTaskModel.instance:tryGetTaskMO(var_13_2.id)
 	end
 
-	slot7 = false
+	local var_13_4 = false
 
-	if slot6 and slot1 == 1 then
-		slot0:refreshWhenRunning(slot2, slot6, slot5)
+	if var_13_3 and arg_13_1 == 1 then
+		arg_13_0:refreshWhenRunning(var_13_0, var_13_3, var_13_2)
 
-		slot7 = true
-	elseif not slot5 then
-		slot0:refreshWhenFinish(slot2)
+		var_13_4 = true
+	elseif not var_13_2 then
+		arg_13_0:refreshWhenFinish(var_13_0)
 	else
-		slot0:refreshWhenLock(slot2, slot5)
+		arg_13_0:refreshWhenLock(var_13_0, var_13_2)
 	end
 
-	if not gohelper.isNil(slot2.gorunning) then
-		gohelper.setActive(slot2.gorunning, slot7)
+	if not gohelper.isNil(var_13_0.gorunning) then
+		gohelper.setActive(var_13_0.gorunning, var_13_4)
 	end
 end
 
-function slot0.refreshWhenRunning(slot0, slot1, slot2, slot3)
-	gohelper.setActive(slot1.gofinish, false)
-	gohelper.setActive(slot1.gounfinish, false)
-	gohelper.setActive(slot1.goJump, true)
-	gohelper.setActive(slot1.golock, false)
-	gohelper.setActive(slot1.goorderbg, true)
+function var_0_0.refreshWhenRunning(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
+	gohelper.setActive(arg_14_1.gofinish, false)
+	gohelper.setActive(arg_14_1.gounfinish, false)
+	gohelper.setActive(arg_14_1.goJump, true)
+	gohelper.setActive(arg_14_1.golock, false)
+	gohelper.setActive(arg_14_1.goorderbg, true)
 
-	slot1.txtdesc.text = string.format(slot2.hasFinished == true and "%s(%s/%s)" or "%s(<color=#b26161>%s</color>/%s)", slot3.desc, slot2.progress, slot3.maxProgress)
+	local var_14_0 = arg_14_2.hasFinished == true and "%s(%s/%s)" or "%s(<color=#b26161>%s</color>/%s)"
 
-	slot0:setRewardIcon(slot3, slot1, true)
+	arg_14_1.txtdesc.text = string.format(var_14_0, arg_14_3.desc, arg_14_2.progress, arg_14_3.maxProgress)
 
-	slot5 = false
-	slot6 = false
-	slot7 = slot3.tips or ""
+	arg_14_0:setRewardIcon(arg_14_3, arg_14_1, true)
 
-	if slot3.listenerType == RoomSceneTaskEnum.ListenerType.EditResArea or slot3.listenerType == RoomSceneTaskEnum.ListenerType.EditHasResBlockCount then
-		slot6 = true
-	elseif slot3.listenerType == RoomSceneTaskEnum.ListenerType.RoomLevel then
-		slot5 = true
-		slot8 = ItemModel.instance:getItemQuantity(MaterialEnum.MaterialType.Item, RoomSceneTaskEnum.RoomLevelUpItem)
-		slot9 = tostring(slot8)
+	local var_14_1 = false
+	local var_14_2 = false
+	local var_14_3 = arg_14_3.tips or ""
 
-		if slot8 > 0 then
-			slot9 = string.format("<color=#ffffff>%s</color>", slot8)
+	if arg_14_3.listenerType == RoomSceneTaskEnum.ListenerType.EditResArea or arg_14_3.listenerType == RoomSceneTaskEnum.ListenerType.EditHasResBlockCount then
+		var_14_2 = true
+	elseif arg_14_3.listenerType == RoomSceneTaskEnum.ListenerType.RoomLevel then
+		var_14_1 = true
+
+		local var_14_4 = ItemModel.instance:getItemQuantity(MaterialEnum.MaterialType.Item, RoomSceneTaskEnum.RoomLevelUpItem)
+		local var_14_5 = tostring(var_14_4)
+
+		if var_14_4 > 0 then
+			var_14_5 = string.format("<color=#ffffff>%s</color>", var_14_4)
 		end
 
-		if not string.nilorempty(slot7) then
-			slot7 = string.format(slot7, slot9)
+		if not string.nilorempty(var_14_3) then
+			var_14_3 = string.format(var_14_3, var_14_5)
 		end
 	end
 
-	if not string.nilorempty(slot7) then
-		slot1.txtRunningTips.text = slot7
+	if not string.nilorempty(var_14_3) then
+		arg_14_1.txtRunningTips.text = var_14_3
 
-		gohelper.setActive(slot1.txtRunningTips, true)
+		gohelper.setActive(arg_14_1.txtRunningTips, true)
 	else
-		gohelper.setActive(slot1.txtRunningTips, false)
+		gohelper.setActive(arg_14_1.txtRunningTips, false)
 	end
 
-	gohelper.setActive(slot1.btnExpansion, slot5)
-	gohelper.setActive(slot1.btnEdit, slot6)
+	gohelper.setActive(arg_14_1.btnExpansion, var_14_1)
+	gohelper.setActive(arg_14_1.btnEdit, var_14_2)
 
-	slot1.imagebonus.color = Color.white
-	slot1.txtdesc.color = Color.white
-	slot1.txtid.color = uv0
-	slot1.txtid.text = slot3.order
+	arg_14_1.imagebonus.color = Color.white
+	arg_14_1.txtdesc.color = Color.white
+	arg_14_1.txtid.color = var_0_4
+	arg_14_1.txtid.text = arg_14_3.order
 end
 
-function slot0.refreshWhenFinish(slot0, slot1)
-	gohelper.setActive(slot1.gofinish, true)
-	gohelper.setActive(slot1.gounfinish, false)
-	gohelper.setActive(slot1.goorderbg, false)
+function var_0_0.refreshWhenFinish(arg_15_0, arg_15_1)
+	gohelper.setActive(arg_15_1.gofinish, true)
+	gohelper.setActive(arg_15_1.gounfinish, false)
+	gohelper.setActive(arg_15_1.goorderbg, false)
 
-	if slot1.goJump then
-		gohelper.setActive(slot1.goJump, false)
+	if arg_15_1.goJump then
+		gohelper.setActive(arg_15_1.goJump, false)
 	end
 
-	slot1.txtid.text = ""
+	arg_15_1.txtid.text = ""
 end
 
-function slot0.refreshWhenLock(slot0, slot1, slot2)
-	gohelper.setActive(slot1.gofinish, false)
-	gohelper.setActive(slot1.gounfinish, true)
-	gohelper.setActive(slot1.golock, true)
-	gohelper.setActive(slot1.goorderbg, false)
+function var_0_0.refreshWhenLock(arg_16_0, arg_16_1, arg_16_2)
+	gohelper.setActive(arg_16_1.gofinish, false)
+	gohelper.setActive(arg_16_1.gounfinish, true)
+	gohelper.setActive(arg_16_1.golock, true)
+	gohelper.setActive(arg_16_1.goorderbg, false)
 
-	if slot1.goJump then
-		gohelper.setActive(slot1.goJump, false)
+	if arg_16_1.goJump then
+		gohelper.setActive(arg_16_1.goJump, false)
 	end
 
-	slot1.txtdesc.text = slot2.desc
+	arg_16_1.txtdesc.text = arg_16_2.desc
 
-	if not gohelper.isNil(slot1.txtlock) then
-		if RoomSceneTaskController.isTaskOverUnlockLevel(slot2) then
-			slot1.txtlock.text = luaLang("room_task_lock_by_task")
+	if not gohelper.isNil(arg_16_1.txtlock) then
+		if RoomSceneTaskController.isTaskOverUnlockLevel(arg_16_2) then
+			arg_16_1.txtlock.text = luaLang("room_task_lock_by_task")
 		else
-			slot1.txtlock.text = string.format(luaLang("room_task_lock_by_level"), RoomSceneTaskController.getTaskUnlockLevel(slot2.openLimit))
+			arg_16_1.txtlock.text = string.format(luaLang("room_task_lock_by_level"), RoomSceneTaskController.getTaskUnlockLevel(arg_16_2.openLimit))
 		end
 	end
 
-	slot0:setRewardIcon(slot2, slot1, false)
+	arg_16_0:setRewardIcon(arg_16_2, arg_16_1, false)
 
-	slot1.imagebonus.color = uv0
-	slot1.txtdesc.color = uv1
-	slot1.txtid.color = uv2
-	slot1.txtid.text = slot2.order
+	arg_16_1.imagebonus.color = var_0_1
+	arg_16_1.txtdesc.color = var_0_2
+	arg_16_1.txtid.color = var_0_3
+	arg_16_1.txtid.text = arg_16_2.order
 end
 
-function slot0.setRewardIcon(slot0, slot1, slot2, slot3)
-	slot4, slot5, slot6 = RoomSceneTaskController.getRewardConfigAndIcon(slot1)
+function var_0_0.setRewardIcon(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
+	local var_17_0, var_17_1, var_17_2 = RoomSceneTaskController.getRewardConfigAndIcon(arg_17_1)
 
-	if not string.nilorempty(slot1.bonusIcon) then
-		slot5 = ResUrl.getRoomTaskBonusIcon(slot1.bonusIcon)
+	if not string.nilorempty(arg_17_1.bonusIcon) then
+		var_17_1 = ResUrl.getRoomTaskBonusIcon(arg_17_1.bonusIcon)
 	end
 
-	if not string.nilorempty(slot5) then
-		slot2.simagebonus:LoadImage(slot5)
+	if not string.nilorempty(var_17_1) then
+		arg_17_2.simagebonus:LoadImage(var_17_1)
 	end
 
-	if slot6 and slot3 then
-		gohelper.setActive(slot2.txtnum.gameObject, true)
+	if var_17_2 and arg_17_3 then
+		gohelper.setActive(arg_17_2.txtnum.gameObject, true)
 
-		slot2.txtnum.text = tostring(GameUtil.numberDisplay(slot6))
+		arg_17_2.txtnum.text = tostring(GameUtil.numberDisplay(var_17_2))
 	else
-		gohelper.setActive(slot2.txtnum.gameObject, false)
+		gohelper.setActive(arg_17_2.txtnum.gameObject, false)
 	end
 end
 
-function slot0.getMaxPage(slot0)
-	return math.ceil(#RoomTaskModel.instance:getShowList() / uv0.PageShowNum)
+function var_0_0.getMaxPage(arg_18_0)
+	local var_18_0 = RoomTaskModel.instance:getShowList()
+
+	return math.ceil(#var_18_0 / var_0_0.PageShowNum)
 end
 
-return slot0
+return var_0_0

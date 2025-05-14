@@ -1,35 +1,39 @@
-module("modules.logic.social.view.SocialRequestView", package.seeall)
+﻿module("modules.logic.social.view.SocialRequestView", package.seeall)
 
-slot0 = class("SocialRequestView", BaseView)
+local var_0_0 = class("SocialRequestView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gonorequest = gohelper.findChild(slot0.viewGO, "#go_norequest")
-	slot0._gobottom = gohelper.findChild(slot0.viewGO, "#go_top")
-	slot0._txtfriendscount = gohelper.findChildText(slot0.viewGO, "#go_top/#txt_friendscount")
-	slot0._txtfriends = gohelper.findChildText(slot0.viewGO, "#go_top/#txt_friends")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gonorequest = gohelper.findChild(arg_1_0.viewGO, "#go_norequest")
+	arg_1_0._gobottom = gohelper.findChild(arg_1_0.viewGO, "#go_top")
+	arg_1_0._txtfriendscount = gohelper.findChildText(arg_1_0.viewGO, "#go_top/#txt_friendscount")
+	arg_1_0._txtfriends = gohelper.findChildText(arg_1_0.viewGO, "#go_top/#txt_friends")
 end
 
-function slot0.addEvents(slot0)
-	slot0:addEventCb(SocialController.instance, SocialEvent.RequestInfoChanged, slot0._refreshUI, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0:addEventCb(SocialController.instance, SocialEvent.RequestInfoChanged, arg_2_0._refreshUI, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0:removeEventCb(SocialController.instance, SocialEvent.RequestInfoChanged, slot0._refreshUI, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0:removeEventCb(SocialController.instance, SocialEvent.RequestInfoChanged, arg_3_0._refreshUI, arg_3_0)
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_4_0)
 	FriendRpc.instance:sendGetApplyListRequest()
-	slot0:_refreshUI()
+	arg_4_0:_refreshUI()
 end
 
-function slot0._refreshUI(slot0)
-	gohelper.setActive(slot0._gonorequest, SocialModel.instance:getRequestCount() <= 0)
-	gohelper.setActive(slot0._gobottom, slot1 > 0)
+function var_0_0._refreshUI(arg_5_0)
+	local var_5_0 = SocialModel.instance:getRequestCount()
 
-	if slot1 > 0 then
-		slot0._txtfriendscount.text = string.format("%d/%d", SocialModel.instance:getRequestCount(), SocialConfig.instance:getMaxRequestCount())
-		slot0._txtfriends.text = luaLang("social_tabviewinfo_request")
+	gohelper.setActive(arg_5_0._gonorequest, var_5_0 <= 0)
+	gohelper.setActive(arg_5_0._gobottom, var_5_0 > 0)
+
+	if var_5_0 > 0 then
+		local var_5_1 = SocialModel.instance:getRequestCount()
+
+		arg_5_0._txtfriendscount.text = string.format("%d/%d", var_5_1, SocialConfig.instance:getMaxRequestCount())
+		arg_5_0._txtfriends.text = luaLang("social_tabviewinfo_request")
 	end
 end
 
-return slot0
+return var_0_0

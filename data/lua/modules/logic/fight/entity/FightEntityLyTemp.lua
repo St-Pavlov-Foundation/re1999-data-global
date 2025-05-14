@@ -1,11 +1,11 @@
-module("modules.logic.fight.entity.FightEntityLyTemp", package.seeall)
+﻿module("modules.logic.fight.entity.FightEntityLyTemp", package.seeall)
 
-slot0 = class("FightEntityLyTemp", FightEntityTemp)
+local var_0_0 = class("FightEntityLyTemp", FightEntityTemp)
 
-function slot0.initComponents(slot0)
-	slot0:addComp("spine", UnitSpine)
-	slot0:addComp("spineRenderer", UnitSpineRenderer)
-	slot0:addComp("effect", FightEffectComp)
+function var_0_0.initComponents(arg_1_0)
+	arg_1_0:addComp("spine", UnitSpine)
+	arg_1_0:addComp("spineRenderer", UnitSpineRenderer)
+	arg_1_0:addComp("effect", FightEffectComp)
 end
 
-return slot0
+return var_0_0

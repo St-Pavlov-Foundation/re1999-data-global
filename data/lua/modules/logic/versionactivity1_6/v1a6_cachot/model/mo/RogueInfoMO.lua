@@ -1,117 +1,119 @@
-module("modules.logic.versionactivity1_6.v1a6_cachot.model.mo.RogueInfoMO", package.seeall)
+﻿module("modules.logic.versionactivity1_6.v1a6_cachot.model.mo.RogueInfoMO", package.seeall)
 
-slot0 = pureTable("RogueInfoMO")
+local var_0_0 = pureTable("RogueInfoMO")
 
-function slot0.init(slot0, slot1)
-	slot0.activityId = slot1.activityId
-	slot0.difficulty = slot1.difficulty
-	slot0.layer = slot1.layer
-	slot0.room = slot1.room
-	slot0.coin = slot1.coin
-	slot0.currency = slot1.currency
-	slot0.heart = slot1.heart
-	slot0.isFinish = slot1.isFinish
-	slot0.score = slot1.score
-	slot0.sceneId = slot1.sceneId
-	slot0.currencyTotal = slot1.currencyTotal
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.activityId = arg_1_1.activityId
+	arg_1_0.difficulty = arg_1_1.difficulty
+	arg_1_0.layer = arg_1_1.layer
+	arg_1_0.room = arg_1_1.room
+	arg_1_0.coin = arg_1_1.coin
+	arg_1_0.currency = arg_1_1.currency
+	arg_1_0.heart = arg_1_1.heart
+	arg_1_0.isFinish = arg_1_1.isFinish
+	arg_1_0.score = arg_1_1.score
+	arg_1_0.sceneId = arg_1_1.sceneId
+	arg_1_0.currencyTotal = arg_1_1.currencyTotal
 
-	slot0:updateTeamInfo(slot1.teamInfo)
+	arg_1_0:updateTeamInfo(arg_1_1.teamInfo)
 
-	slot0.currentEvents = {}
+	arg_1_0.currentEvents = {}
 
-	for slot5, slot6 in ipairs(slot1.currentEvents) do
-		slot7 = RogueEventMO.New()
+	for iter_1_0, iter_1_1 in ipairs(arg_1_1.currentEvents) do
+		local var_1_0 = RogueEventMO.New()
 
-		slot7:init(slot6)
-		table.insert(slot0.currentEvents, slot7)
+		var_1_0:init(iter_1_1)
+		table.insert(arg_1_0.currentEvents, var_1_0)
 	end
 
-	slot0.nextEvents = {}
+	arg_1_0.nextEvents = {}
 
-	for slot5, slot6 in ipairs(slot1.nextEvents) do
-		slot7 = RogueEventMO.New()
+	for iter_1_2, iter_1_3 in ipairs(arg_1_1.nextEvents) do
+		local var_1_1 = RogueEventMO.New()
 
-		slot7:init(slot6)
-		table.insert(slot0.nextEvents, slot7)
+		var_1_1:init(iter_1_3)
+		table.insert(arg_1_0.nextEvents, var_1_1)
 	end
 
-	slot0:updateCollections(slot1.collections)
+	arg_1_0:updateCollections(arg_1_1.collections)
 
-	slot0.selectedEvents = {}
+	arg_1_0.selectedEvents = {}
 
-	for slot5, slot6 in ipairs(slot1.selectedEvents) do
-		if slot6.status ~= V1a6_CachotEnum.EventStatus.Finish then
-			slot7 = RogueEventMO.New()
+	for iter_1_4, iter_1_5 in ipairs(arg_1_1.selectedEvents) do
+		if iter_1_5.status ~= V1a6_CachotEnum.EventStatus.Finish then
+			local var_1_2 = RogueEventMO.New()
 
-			slot7:init(slot6)
-			table.insert(slot0.selectedEvents, slot7)
+			var_1_2:init(iter_1_5)
+			table.insert(arg_1_0.selectedEvents, var_1_2)
 		end
 	end
 end
 
-function slot0.updateTeamInfo(slot0, slot1)
-	slot0.teamInfo = RogueTeamInfoMO.New()
+function var_0_0.updateTeamInfo(arg_2_0, arg_2_1)
+	arg_2_0.teamInfo = RogueTeamInfoMO.New()
 
-	slot0.teamInfo:init(slot1)
+	arg_2_0.teamInfo:init(arg_2_1)
 end
 
-function slot0.updateCoin(slot0, slot1)
-	slot0.coin = slot1
+function var_0_0.updateCoin(arg_3_0, arg_3_1)
+	arg_3_0.coin = arg_3_1
 end
 
-function slot0.updateCurrency(slot0, slot1)
-	slot0.currency = slot1
+function var_0_0.updateCurrency(arg_4_0, arg_4_1)
+	arg_4_0.currency = arg_4_1
 end
 
-function slot0.updateCurrencyTotal(slot0, slot1)
-	slot0.currencyTotal = slot1
+function var_0_0.updateCurrencyTotal(arg_5_0, arg_5_1)
+	arg_5_0.currencyTotal = arg_5_1
 end
 
-function slot0.updateHeart(slot0, slot1)
-	slot0.heart = slot1
+function var_0_0.updateHeart(arg_6_0, arg_6_1)
+	arg_6_0.heart = arg_6_1
 end
 
-function slot0.updateCollections(slot0, slot1)
-	slot0.collections = {}
-	slot0.collectionCfgMap = {}
-	slot0.collectionBaseMap = {}
-	slot0.enchants = {}
-	slot0.collectionMap = {}
+function var_0_0.updateCollections(arg_7_0, arg_7_1)
+	arg_7_0.collections = {}
+	arg_7_0.collectionCfgMap = {}
+	arg_7_0.collectionBaseMap = {}
+	arg_7_0.enchants = {}
+	arg_7_0.collectionMap = {}
 
-	if slot1 then
-		for slot5, slot6 in ipairs(slot1) do
-			slot7 = RogueCollectionMO.New()
+	if arg_7_1 then
+		for iter_7_0, iter_7_1 in ipairs(arg_7_1) do
+			local var_7_0 = RogueCollectionMO.New()
 
-			slot7:init(slot6)
+			var_7_0:init(iter_7_1)
 
-			if V1a6_CachotCollectionConfig.instance:getCollectionConfig(slot7.cfgId) and slot8.type == V1a6_CachotEnum.CollectionType.Enchant then
-				table.insert(slot0.enchants, slot7)
+			local var_7_1 = V1a6_CachotCollectionConfig.instance:getCollectionConfig(var_7_0.cfgId)
+
+			if var_7_1 and var_7_1.type == V1a6_CachotEnum.CollectionType.Enchant then
+				table.insert(arg_7_0.enchants, var_7_0)
 			end
 
-			if not slot7:isEnchant() then
-				table.insert(slot0.collections, slot7)
+			if not var_7_0:isEnchant() then
+				table.insert(arg_7_0.collections, var_7_0)
 			end
 
-			slot0.collectionMap[slot7.id] = slot7
-			slot0.collectionCfgMap[slot7.cfgId] = slot0.collectionCfgMap[slot7.cfgId] or {}
+			arg_7_0.collectionMap[var_7_0.id] = var_7_0
+			arg_7_0.collectionCfgMap[var_7_0.cfgId] = arg_7_0.collectionCfgMap[var_7_0.cfgId] or {}
 
-			table.insert(slot0.collectionCfgMap[slot7.cfgId], slot7)
+			table.insert(arg_7_0.collectionCfgMap[var_7_0.cfgId], var_7_0)
 
-			if slot7 and slot7.baseId and slot7.baseId ~= 0 then
-				slot0.collectionBaseMap[slot7.baseId] = slot0.collectionBaseMap[slot7.baseId] or {}
+			if var_7_0 and var_7_0.baseId and var_7_0.baseId ~= 0 then
+				arg_7_0.collectionBaseMap[var_7_0.baseId] = arg_7_0.collectionBaseMap[var_7_0.baseId] or {}
 
-				table.insert(slot0.collectionBaseMap[slot7.baseId], slot7)
+				table.insert(arg_7_0.collectionBaseMap[var_7_0.baseId], var_7_0)
 			end
 		end
 	end
 end
 
-function slot0.getCollectionByUid(slot0, slot1)
-	return slot0.collectionMap and slot0.collectionMap[slot1]
+function var_0_0.getCollectionByUid(arg_8_0, arg_8_1)
+	return arg_8_0.collectionMap and arg_8_0.collectionMap[arg_8_1]
 end
 
-function slot0.getSelectEvents(slot0)
-	return slot0.selectedEvents
+function var_0_0.getSelectEvents(arg_9_0)
+	return arg_9_0.selectedEvents
 end
 
-return slot0
+return var_0_0

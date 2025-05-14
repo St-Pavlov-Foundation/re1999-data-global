@@ -1,77 +1,82 @@
-module("modules.logic.explore.map.unit.comp.ExploreRoleAnimEffectComp", package.seeall)
+﻿module("modules.logic.explore.map.unit.comp.ExploreRoleAnimEffectComp", package.seeall)
 
-slot0 = class("ExploreRoleAnimEffectComp", LuaCompBase)
+local var_0_0 = class("ExploreRoleAnimEffectComp", LuaCompBase)
 
-function slot0.ctor(slot0, slot1)
-	slot0.unit = slot1
-	slot0._effects = {}
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0.unit = arg_1_1
+	arg_1_0._effects = {}
 end
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.go = arg_2_1
 end
 
-function slot0.setStatus(slot0, slot1)
-	slot0._status = slot1
+function var_0_0.setStatus(arg_3_0, arg_3_1)
+	arg_3_0._status = arg_3_1
 
-	if lua_explore_hero_effect.configDict[slot1] then
-		for slot6 = 1, #slot2 do
-			if slot2[slot6].audioId and slot2[slot6].audioId > 0 then
-				AudioMgr.instance:trigger(slot2[slot6].audioId)
+	local var_3_0 = lua_explore_hero_effect.configDict[arg_3_1]
+
+	if var_3_0 then
+		for iter_3_0 = 1, #var_3_0 do
+			if var_3_0[iter_3_0].audioId and var_3_0[iter_3_0].audioId > 0 then
+				AudioMgr.instance:trigger(var_3_0[iter_3_0].audioId)
 			end
 
-			if not slot0._effects[slot6] then
-				slot0._effects[slot6] = {
-					go = UnityEngine.GameObject.New()
-				}
-				slot0._effects[slot6].loader = PrefabInstantiate.Create(slot0._effects[slot6].go)
+			if not arg_3_0._effects[iter_3_0] then
+				arg_3_0._effects[iter_3_0] = {}
+				arg_3_0._effects[iter_3_0].go = UnityEngine.GameObject.New()
+				arg_3_0._effects[iter_3_0].loader = PrefabInstantiate.Create(arg_3_0._effects[iter_3_0].go)
 			else
-				gohelper.setActive(slot0._effects[slot6].go, true)
+				gohelper.setActive(arg_3_0._effects[iter_3_0].go, true)
 			end
 
-			slot0._effects[slot6].loader:dispose()
+			arg_3_0._effects[iter_3_0].loader:dispose()
 
-			if not string.nilorempty(slot2[slot6].effectPath) then
-				slot0._effects[slot6].path = slot2[slot6].hangPath
+			if not string.nilorempty(var_3_0[iter_3_0].effectPath) then
+				arg_3_0._effects[iter_3_0].path = var_3_0[iter_3_0].hangPath
 
-				slot0._effects[slot6].loader:startLoad(ResUrl.getExploreEffectPath(slot2[slot6].effectPath))
+				arg_3_0._effects[iter_3_0].loader:startLoad(ResUrl.getExploreEffectPath(var_3_0[iter_3_0].effectPath))
 
-				slot7 = slot0.unit._displayTr
+				local var_3_1 = arg_3_0.unit._displayTr
 
-				if not string.nilorempty(slot0._effects[slot6].path) and slot0.unit._displayTr:Find(slot0._effects[slot6].path) then
-					slot7 = slot8
+				if not string.nilorempty(arg_3_0._effects[iter_3_0].path) then
+					local var_3_2 = arg_3_0.unit._displayTr:Find(arg_3_0._effects[iter_3_0].path)
+
+					if var_3_2 then
+						var_3_1 = var_3_2
+					end
 				end
 
-				slot0._effects[slot6].go.transform:SetParent(slot7, false)
+				arg_3_0._effects[iter_3_0].go.transform:SetParent(var_3_1, false)
 			else
-				gohelper.setActive(slot0._effects[slot6].go, false)
+				gohelper.setActive(arg_3_0._effects[iter_3_0].go, false)
 			end
 		end
 
-		for slot6 = #slot2 + 1, #slot0._effects do
-			gohelper.setActive(slot0._effects[slot6].go, false)
+		for iter_3_1 = #var_3_0 + 1, #arg_3_0._effects do
+			gohelper.setActive(arg_3_0._effects[iter_3_1].go, false)
 		end
 	else
-		for slot6 = 1, #slot0._effects do
-			gohelper.setActive(slot0._effects[slot6].go, false)
+		for iter_3_2 = 1, #arg_3_0._effects do
+			gohelper.setActive(arg_3_0._effects[iter_3_2].go, false)
 		end
 	end
 end
 
-function slot0._releaseEffectGo(slot0)
-	ResMgr.ReleaseObj(slot0._effectGo)
+function var_0_0._releaseEffectGo(arg_4_0)
+	ResMgr.ReleaseObj(arg_4_0._effectGo)
 
-	slot0._effectGo = nil
-	slot0._effectPath = nil
+	arg_4_0._effectGo = nil
+	arg_4_0._effectPath = nil
 end
 
-function slot0.onDestroy(slot0)
-	for slot4, slot5 in pairs(slot0._effects) do
-		slot5.loader:dispose()
-		gohelper.destroy(slot5.go)
+function var_0_0.onDestroy(arg_5_0)
+	for iter_5_0, iter_5_1 in pairs(arg_5_0._effects) do
+		iter_5_1.loader:dispose()
+		gohelper.destroy(iter_5_1.go)
 	end
 
-	slot0._effects = {}
+	arg_5_0._effects = {}
 end
 
-return slot0
+return var_0_0

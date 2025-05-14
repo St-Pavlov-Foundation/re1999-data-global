@@ -1,58 +1,62 @@
-module("modules.logic.versionactivity1_9.heroinvitation.model.HeroInvitationMo", package.seeall)
+﻿module("modules.logic.versionactivity1_9.heroinvitation.model.HeroInvitationMo", package.seeall)
 
-slot0 = pureTable("HeroInvitationMo")
+local var_0_0 = pureTable("HeroInvitationMo")
 
-function slot0.init(slot0, slot1)
-	slot0.id = slot1
-	slot0.gainReward = false
-	slot0.cfg = HeroInvitationConfig.instance:getInvitationConfig(slot1)
-	slot0.state = slot0:getInvitationState()
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.id = arg_1_1
+	arg_1_0.gainReward = false
+	arg_1_0.cfg = HeroInvitationConfig.instance:getInvitationConfig(arg_1_1)
+	arg_1_0.state = arg_1_0:getInvitationState()
 end
 
-function slot0.setGainReward(slot0, slot1)
-	slot0.gainReward = slot1
-	slot0.state = slot0:getInvitationState()
+function var_0_0.setGainReward(arg_2_0, arg_2_1)
+	arg_2_0.gainReward = arg_2_1
+	arg_2_0.state = arg_2_0:getInvitationState()
 end
 
-function slot0.isGainReward(slot0)
-	return slot0.gainReward
+function var_0_0.isGainReward(arg_3_0)
+	return arg_3_0.gainReward
 end
 
-function slot0.getInvitationState(slot0)
-	if slot0:isGainReward() then
+function var_0_0.getInvitationState(arg_4_0)
+	if arg_4_0:isGainReward() then
 		return HeroInvitationEnum.InvitationState.Finish
 	end
 
-	if DungeonMapModel.instance:elementIsFinished(slot0.cfg.elementId) then
+	local var_4_0 = arg_4_0.cfg
+
+	if DungeonMapModel.instance:elementIsFinished(var_4_0.elementId) then
 		return HeroInvitationEnum.InvitationState.CanGet
 	end
 
-	if ServerTime.now() < uv0.stringToTimestamp(slot1.openTime) then
+	if var_0_0.stringToTimestamp(var_4_0.openTime) > ServerTime.now() then
 		return HeroInvitationEnum.InvitationState.TimeLocked
 	end
 
-	if not DungeonMapModel.instance:getElementById(slot1.elementId) then
+	if not DungeonMapModel.instance:getElementById(var_4_0.elementId) then
 		return HeroInvitationEnum.InvitationState.ElementLocked
 	end
 
 	return HeroInvitationEnum.InvitationState.Normal
 end
 
-function slot0.stringToTimestamp(slot0)
-	slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8 = string.find(slot0, "(%d+)/(%d+)/(%d+)%s*(%d+):(%d+):(%d+)")
+function var_0_0.stringToTimestamp(arg_5_0)
+	local var_5_0, var_5_1, var_5_2, var_5_3, var_5_4, var_5_5, var_5_6, var_5_7 = string.find(arg_5_0, "(%d+)/(%d+)/(%d+)%s*(%d+):(%d+):(%d+)")
 
-	if not slot3 or not slot4 or not slot5 or not slot6 or not slot7 or not slot8 then
+	if not var_5_2 or not var_5_3 or not var_5_4 or not var_5_5 or not var_5_6 or not var_5_7 then
 		return 0
 	end
 
-	return TimeUtil.dtTableToTimeStamp({
-		year = slot3,
-		month = slot4,
-		day = slot5,
-		hour = slot6,
-		min = slot7,
-		sec = slot8
-	}) - ServerTime.clientToServerOffset() - ServerTime.getDstOffset()
+	local var_5_8 = {
+		year = var_5_2,
+		month = var_5_3,
+		day = var_5_4,
+		hour = var_5_5,
+		min = var_5_6,
+		sec = var_5_7
+	}
+
+	return TimeUtil.dtTableToTimeStamp(var_5_8) - ServerTime.clientToServerOffset() - ServerTime.getDstOffset()
 end
 
-return slot0
+return var_0_0

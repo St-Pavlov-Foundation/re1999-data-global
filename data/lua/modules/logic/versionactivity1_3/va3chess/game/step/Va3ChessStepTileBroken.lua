@@ -1,46 +1,50 @@
-module("modules.logic.versionactivity1_3.va3chess.game.step.Va3ChessStepTileBroken", package.seeall)
+﻿module("modules.logic.versionactivity1_3.va3chess.game.step.Va3ChessStepTileBroken", package.seeall)
 
-slot0 = class("Va3ChessStepTileBroken", Va3ChessStepBase)
+local var_0_0 = class("Va3ChessStepTileBroken", Va3ChessStepBase)
 
-function slot0.start(slot0)
-	slot0:processNextTileStatus()
+function var_0_0.start(arg_1_0)
+	arg_1_0:processNextTileStatus()
 end
 
-function slot0.processNextTileStatus(slot0)
-	slot4 = Va3ChessEnum.TileTrigger.Broken
+function var_0_0.processNextTileStatus(arg_2_0)
+	local var_2_0 = arg_2_0.originData.x
+	local var_2_1 = arg_2_0.originData.y
+	local var_2_2 = Va3ChessGameModel.instance:getTileMO(var_2_0, var_2_1)
+	local var_2_3 = Va3ChessEnum.TileTrigger.Broken
 
-	if Va3ChessGameModel.instance:getTileMO(slot0.originData.x, slot0.originData.y) and slot3:isHasTrigger(slot4) then
-		slot5 = nil
+	if var_2_2 and var_2_2:isHasTrigger(var_2_3) then
+		local var_2_4
+		local var_2_5 = Va3ChessEnum.TriggerStatus[var_2_3]
 
-		if slot0.originData.stepType == Va3ChessEnum.Act142StepType.TileFragile then
-			slot5 = Va3ChessEnum.TriggerStatus[slot4].Fragile
-		elseif slot0.originData.stepType == Va3ChessEnum.Act142StepType.TileBroken then
-			slot5 = slot6.Broken
+		if arg_2_0.originData.stepType == Va3ChessEnum.Act142StepType.TileFragile then
+			var_2_4 = var_2_5.Fragile
+		elseif arg_2_0.originData.stepType == Va3ChessEnum.Act142StepType.TileBroken then
+			var_2_4 = var_2_5.Broken
 
-			slot3:addFinishTrigger(slot4)
+			var_2_2:addFinishTrigger(var_2_3)
 		end
 
-		slot3:updateTrigger(slot4, slot5)
-		Va3ChessGameController.instance:dispatchEvent(Va3ChessEvent.TileTriggerUpdate, slot1, slot2, slot4)
-		TaskDispatcher.cancelTask(slot0._onDelayFinish, slot0)
-		TaskDispatcher.runDelay(slot0._onDelayFinish, slot0, 0.2)
+		var_2_2:updateTrigger(var_2_3, var_2_4)
+		Va3ChessGameController.instance:dispatchEvent(Va3ChessEvent.TileTriggerUpdate, var_2_0, var_2_1, var_2_3)
+		TaskDispatcher.cancelTask(arg_2_0._onDelayFinish, arg_2_0)
+		TaskDispatcher.runDelay(arg_2_0._onDelayFinish, arg_2_0, 0.2)
 	else
-		slot0:_onDelayFinish()
+		arg_2_0:_onDelayFinish()
 	end
 end
 
-function slot0._onDelayFinish(slot0)
-	slot0:finish()
+function var_0_0._onDelayFinish(arg_3_0)
+	arg_3_0:finish()
 end
 
-function slot0.finish(slot0)
-	TaskDispatcher.cancelTask(slot0._onDelayFinish, slot0)
-	uv0.super.finish(slot0)
+function var_0_0.finish(arg_4_0)
+	TaskDispatcher.cancelTask(arg_4_0._onDelayFinish, arg_4_0)
+	var_0_0.super.finish(arg_4_0)
 end
 
-function slot0.dispose(slot0)
-	TaskDispatcher.cancelTask(slot0._onDelayFinish, slot0)
-	uv0.super.dispose(slot0)
+function var_0_0.dispose(arg_5_0)
+	TaskDispatcher.cancelTask(arg_5_0._onDelayFinish, arg_5_0)
+	var_0_0.super.dispose(arg_5_0)
 end
 
-return slot0
+return var_0_0

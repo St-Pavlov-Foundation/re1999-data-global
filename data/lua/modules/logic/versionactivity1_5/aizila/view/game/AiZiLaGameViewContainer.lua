@@ -1,47 +1,49 @@
-module("modules.logic.versionactivity1_5.aizila.view.game.AiZiLaGameViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity1_5.aizila.view.game.AiZiLaGameViewContainer", package.seeall)
 
-slot0 = class("AiZiLaGameViewContainer", BaseViewContainer)
+local var_0_0 = class("AiZiLaGameViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
-	slot0._gameView = AiZiLaGameView.New()
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, slot0._gameView)
-	table.insert(slot1, TabViewGroup.New(1, "#go_BackBtns"))
+	arg_1_0._gameView = AiZiLaGameView.New()
 
-	return slot1
+	table.insert(var_1_0, arg_1_0._gameView)
+	table.insert(var_1_0, TabViewGroup.New(1, "#go_BackBtns"))
+
+	return var_1_0
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
-		slot0._navigateButtonsView = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == 1 then
+		arg_2_0._navigateButtonsView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
-		slot0._navigateButtonsView:setOverrideClose(slot0._overrideCloseFunc, slot0)
-		slot0._navigateButtonsView:setHelpId(HelpEnum.HelpId.Role1_5AiziLa)
+		arg_2_0._navigateButtonsView:setOverrideClose(arg_2_0._overrideCloseFunc, arg_2_0)
+		arg_2_0._navigateButtonsView:setHelpId(HelpEnum.HelpId.Role1_5AiziLa)
 
 		return {
-			slot0._navigateButtonsView
+			arg_2_0._navigateButtonsView
 		}
 	end
 end
 
-function slot0._overrideCloseFunc(slot0)
-	if slot0._gameView:isLockOp() then
+function var_0_0._overrideCloseFunc(arg_3_0)
+	if arg_3_0._gameView:isLockOp() then
 		return
 	end
 
 	AiZiLaGameController.instance:exitGame()
 end
 
-function slot0.needPlayRiseAnim(slot0)
-	return slot0._gameView:needPlayRiseAnim()
+function var_0_0.needPlayRiseAnim(arg_4_0)
+	return arg_4_0._gameView:needPlayRiseAnim()
 end
 
-function slot0.startViewOpenBlock(slot0)
+function var_0_0.startViewOpenBlock(arg_5_0)
+	return
 end
 
-return slot0
+return var_0_0

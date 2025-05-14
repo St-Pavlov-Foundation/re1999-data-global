@@ -1,253 +1,282 @@
-module("modules.logic.bossrush.view.V1a4_BossRushMainItem", package.seeall)
+﻿module("modules.logic.bossrush.view.V1a4_BossRushMainItem", package.seeall)
 
-slot0 = class("V1a4_BossRushMainItem", LuaCompBase)
-slot1 = BossRushEnum.AnimMainItem
+local var_0_0 = class("V1a4_BossRushMainItem", LuaCompBase)
+local var_0_1 = BossRushEnum.AnimMainItem
 
-function slot0.init(slot0, slot1)
-	slot0.viewGO = gohelper.findChild(slot1, "Root")
-	slot0._btnItemBG = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_ItemBG")
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_bg")
-	slot0._goUnlocked = gohelper.findChild(slot0.viewGO, "#go_Unlocked")
-	slot0._imageIssxIcon = gohelper.findChildImage(slot0.viewGO, "#go_Unlocked/Title/#image_IssxIcon")
-	slot0._txtTitle = gohelper.findChildText(slot0.viewGO, "#go_Unlocked/Title/#txt_Title")
-	slot0._txtTitleEn = gohelper.findChildText(slot0.viewGO, "#go_Unlocked/Title/#txt_TitleEn")
-	slot0._btnGo = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_Unlocked/#btn_Go", AudioEnum.ui_activity.play_ui_activity_open)
-	slot0._goLocked = gohelper.findChild(slot0.viewGO, "#go_Locked")
-	slot0._txtLocked = gohelper.findChildText(slot0.viewGO, "#go_Locked/#txt_Locked")
-	slot0._btnLocked = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_Locked/#btn_Locked")
-	slot0._goRecord = gohelper.findChild(slot0.viewGO, "#go_Record")
-	slot0._txtRecordNum = gohelper.findChildText(slot0.viewGO, "#go_Record/#txt_RecordNum")
-	slot0._goAssessIcon = gohelper.findChild(slot0.viewGO, "#go_Record/#go_AssessIcon")
-	slot0._goRed = gohelper.findChild(slot0.viewGO, "#go_Red")
-	slot0._imgItemBG = gohelper.findChildImage(slot0.viewGO, "#btn_ItemBG")
-	slot0._go3s = gohelper.findChild(slot0.viewGO, "3s")
-	slot0._go4s = gohelper.findChild(slot0.viewGO, "4s")
-	slot0._anim = slot0.viewGO:GetComponent(gohelper.Type_Animator)
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.viewGO = gohelper.findChild(arg_1_1, "Root")
+	arg_1_0._btnItemBG = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_ItemBG")
+	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
+	arg_1_0._goUnlocked = gohelper.findChild(arg_1_0.viewGO, "#go_Unlocked")
+	arg_1_0._imageIssxIcon = gohelper.findChildImage(arg_1_0.viewGO, "#go_Unlocked/Title/#image_IssxIcon")
+	arg_1_0._txtTitle = gohelper.findChildText(arg_1_0.viewGO, "#go_Unlocked/Title/#txt_Title")
+	arg_1_0._txtTitleEn = gohelper.findChildText(arg_1_0.viewGO, "#go_Unlocked/Title/#txt_TitleEn")
+	arg_1_0._btnGo = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_Unlocked/#btn_Go", AudioEnum.ui_activity.play_ui_activity_open)
+	arg_1_0._goLocked = gohelper.findChild(arg_1_0.viewGO, "#go_Locked")
+	arg_1_0._txtLocked = gohelper.findChildText(arg_1_0.viewGO, "#go_Locked/#txt_Locked")
+	arg_1_0._btnLocked = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_Locked/#btn_Locked")
+	arg_1_0._goRecord = gohelper.findChild(arg_1_0.viewGO, "#go_Record")
+	arg_1_0._txtRecordNum = gohelper.findChildText(arg_1_0.viewGO, "#go_Record/#txt_RecordNum")
+	arg_1_0._goAssessIcon = gohelper.findChild(arg_1_0.viewGO, "#go_Record/#go_AssessIcon")
+	arg_1_0._goRed = gohelper.findChild(arg_1_0.viewGO, "#go_Red")
+	arg_1_0._imgItemBG = gohelper.findChildImage(arg_1_0.viewGO, "#btn_ItemBG")
+	arg_1_0._go3s = gohelper.findChild(arg_1_0.viewGO, "3s")
+	arg_1_0._go4s = gohelper.findChild(arg_1_0.viewGO, "4s")
+	arg_1_0._anim = arg_1_0.viewGO:GetComponent(gohelper.Type_Animator)
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEventListeners(slot0)
-	slot0._btnItemBG:AddClickListener(slot0._btnItemBGOnClick, slot0)
-	slot0._btnGo:AddClickListener(slot0._btnGoOnClick, slot0)
-	slot0._btnLocked:AddClickListener(slot0._btnLockedOnClick, slot0)
+function var_0_0.addEventListeners(arg_2_0)
+	arg_2_0._btnItemBG:AddClickListener(arg_2_0._btnItemBGOnClick, arg_2_0)
+	arg_2_0._btnGo:AddClickListener(arg_2_0._btnGoOnClick, arg_2_0)
+	arg_2_0._btnLocked:AddClickListener(arg_2_0._btnLockedOnClick, arg_2_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0._btnItemBG:RemoveClickListener()
-	slot0._btnGo:RemoveClickListener()
-	slot0._btnLocked:RemoveClickListener()
+function var_0_0.removeEventListeners(arg_3_0)
+	arg_3_0._btnItemBG:RemoveClickListener()
+	arg_3_0._btnGo:RemoveClickListener()
+	arg_3_0._btnLocked:RemoveClickListener()
 end
 
-function slot0._btnItemBGOnClick(slot0)
-	slot0:_onClick()
+function var_0_0._btnItemBGOnClick(arg_4_0)
+	arg_4_0:_onClick()
 end
 
-function slot0._btnGoOnClick(slot0)
-	slot0:_onClick()
+function var_0_0._btnGoOnClick(arg_5_0)
+	arg_5_0:_onClick()
 end
 
-function slot0._btnLockedOnClick(slot0)
-	slot0:_onClick()
+function var_0_0._btnLockedOnClick(arg_6_0)
+	arg_6_0:_onClick()
 end
 
-function slot0._editableInitView(slot0)
-	slot0:_initAssessIcon()
+function var_0_0._editableInitView(arg_7_0)
+	arg_7_0:_initAssessIcon()
 
-	slot0._txtLocked.text = ""
-	slot0._txtRecordNum.text = ""
+	arg_7_0._txtLocked.text = ""
+	arg_7_0._txtRecordNum.text = ""
 end
 
-function slot0.onDestroy(slot0)
-	slot0:onDestroyView()
+function var_0_0.onDestroy(arg_8_0)
+	arg_8_0:onDestroyView()
 end
 
-function slot0.onDestroyView(slot0)
-	GameUtil.onDestroyViewMember(slot0, "_assessIcon")
+function var_0_0.onDestroyView(arg_9_0)
+	GameUtil.onDestroyViewMember(arg_9_0, "_assessIcon")
 
-	slot0._isForcePlayUnlock = false
-	slot0._openAnim = false
+	arg_9_0._isForcePlayUnlock = false
+	arg_9_0._openAnim = false
 
-	slot0._simagebg:UnLoadImage()
-	TaskDispatcher.cancelTask(slot0._onRefreshDeadline, slot0)
-	TaskDispatcher.cancelTask(slot0._delayOpenCallBack, slot0)
+	arg_9_0._simagebg:UnLoadImage()
+	TaskDispatcher.cancelTask(arg_9_0._onRefreshDeadline, arg_9_0)
+	TaskDispatcher.cancelTask(arg_9_0._delayOpenCallBack, arg_9_0)
 end
 
-function slot0._initAssessIcon(slot0)
-	slot2 = V1a4_BossRush_AssessIcon
-	slot0._assessIcon = MonoHelper.addNoUpdateLuaComOnceToGo(ViewMgr.instance:getContainer(ViewName.V1a4_BossRushMainView):getResInst(BossRushEnum.ResPath.v1a4_bossrush_mainview_assessicon, slot0._goAssessIcon, slot2.__cname), slot2)
+function var_0_0._initAssessIcon(arg_10_0)
+	local var_10_0 = ViewMgr.instance:getContainer(ViewName.V1a4_BossRushMainView)
+	local var_10_1 = V1a4_BossRush_AssessIcon
+	local var_10_2 = var_10_0:getResInst(BossRushEnum.ResPath.v1a4_bossrush_mainview_assessicon, arg_10_0._goAssessIcon, var_10_1.__cname)
 
-	slot0._assessIcon:initData(slot0, false)
+	arg_10_0._assessIcon = MonoHelper.addNoUpdateLuaComOnceToGo(var_10_2, var_10_1)
+
+	arg_10_0._assessIcon:initData(arg_10_0, false)
 end
 
-function slot0.setData(slot0, slot1, slot2)
-	slot0._mo = slot1
+function var_0_0.setData(arg_11_0, arg_11_1, arg_11_2)
+	arg_11_0._mo = arg_11_1
 
-	slot0:_refresh()
-	slot0:_setActive(false)
+	arg_11_0:_refresh()
+	arg_11_0:_setActive(false)
 
-	if slot2 then
-		slot0:_tweenOpen()
+	if arg_11_2 then
+		arg_11_0:_tweenOpen()
 	else
-		slot0:_playIdle()
+		arg_11_0:_playIdle()
 	end
 
-	if not slot0:_isOpen() then
-		slot0:_onRefreshDeadline()
-		TaskDispatcher.runRepeat(slot0._onRefreshDeadline, slot0, 1)
+	if not arg_11_0:_isOpen() then
+		arg_11_0:_onRefreshDeadline()
+		TaskDispatcher.runRepeat(arg_11_0._onRefreshDeadline, arg_11_0, 1)
 	end
 
-	slot0:_refreshRed()
+	arg_11_0:_refreshRed()
 end
 
-function slot0._refresh(slot0)
-	slot2 = slot0._mo.stageCO
-	slot3 = slot2.stage
-	slot4 = slot0:_isOpen()
-	slot5 = BossRushConfig.instance:getIssxIconName(slot3)
-	slot6 = BossRushModel.instance:getHighestPoint(slot3)
-	slot7 = slot2.name
+function var_0_0._refresh(arg_12_0)
+	local var_12_0 = arg_12_0._mo.stageCO
+	local var_12_1 = var_12_0.stage
+	local var_12_2 = arg_12_0:_isOpen()
+	local var_12_3 = BossRushConfig.instance:getIssxIconName(var_12_1)
+	local var_12_4 = BossRushModel.instance:getHighestPoint(var_12_1)
+	local var_12_5 = var_12_0.name
 
-	if GameConfig:GetCurLangType() == LangSettings.zh and not string.nilorempty(slot7) and string.len(slot7) >= 4 then
-		slot9 = "<size=67>%s</size>"
-		slot7 = string.format(slot9, slot7:sub(1, 3)) .. slot7:sub(4, slot8 - 3) .. string.format(slot9, slot7:sub(slot8 - 2, slot8))
+	if GameConfig:GetCurLangType() == LangSettings.zh and not string.nilorempty(var_12_5) then
+		local var_12_6 = string.len(var_12_5)
+
+		if var_12_6 >= 4 then
+			local var_12_7 = "<size=67>%s</size>"
+			local var_12_8 = var_12_5:sub(1, 3)
+			local var_12_9 = var_12_5:sub(4, var_12_6 - 3)
+			local var_12_10 = var_12_5:sub(var_12_6 - 2, var_12_6)
+
+			var_12_5 = string.format(var_12_7, var_12_8) .. var_12_9 .. string.format(var_12_7, var_12_10)
+		end
 	end
 
-	UISpriteSetMgr.instance:setCommonSprite(slot0._imageIssxIcon, slot5)
-	gohelper.setActive(slot0._goRecord, slot4)
+	UISpriteSetMgr.instance:setCommonSprite(arg_12_0._imageIssxIcon, var_12_3)
+	gohelper.setActive(arg_12_0._goRecord, var_12_2)
 
-	slot0._txtRecordNum.text = slot6
-	slot0._txtTitle.text = slot7
-	slot0._txtTitleEn.text = slot2.name_en
+	arg_12_0._txtRecordNum.text = var_12_4
+	arg_12_0._txtTitle.text = var_12_5
+	arg_12_0._txtTitleEn.text = var_12_0.name_en
 
-	slot0._simagebg:LoadImage(BossRushConfig.instance:getBossRushMainItemBossSprite(slot3))
-	slot0._assessIcon:setData(slot3, slot6, BossRushModel.instance:getLayer4HightScore(slot3) == slot6)
+	arg_12_0._simagebg:LoadImage(BossRushConfig.instance:getBossRushMainItemBossSprite(var_12_1))
 
-	if slot4 then
-		gohelper.addUIClickAudio(slot0._btnItemBG.gameObject, AudioEnum.UI.UI_Activity_open)
+	local var_12_11 = BossRushModel.instance:getLayer4HightScore(var_12_1) == var_12_4
+
+	arg_12_0._assessIcon:setData(var_12_1, var_12_4, var_12_11)
+
+	if var_12_2 then
+		gohelper.addUIClickAudio(arg_12_0._btnItemBG.gameObject, AudioEnum.UI.UI_Activity_open)
 	end
 
-	slot9, slot10 = BossRushConfig.instance:getAssessMainBossBgName(slot3, slot6, slot8)
+	local var_12_12, var_12_13 = BossRushConfig.instance:getAssessMainBossBgName(var_12_1, var_12_4, var_12_11)
 
-	UISpriteSetMgr.instance:setV1a4BossRushSprite(slot0._imgItemBG, slot9)
-	gohelper.setActive(slot0._go3s, slot10 and slot10 == BossRushEnum.ScoreLevel.S_AA)
-	gohelper.setActive(slot0._go4s, slot10 and slot10 == BossRushEnum.ScoreLevel.S_AAA)
+	UISpriteSetMgr.instance:setV1a4BossRushSprite(arg_12_0._imgItemBG, var_12_12)
+
+	local var_12_14 = var_12_13 and var_12_13 == BossRushEnum.ScoreLevel.S_AA
+	local var_12_15 = var_12_13 and var_12_13 == BossRushEnum.ScoreLevel.S_AAA
+
+	gohelper.setActive(arg_12_0._go3s, var_12_14)
+	gohelper.setActive(arg_12_0._go4s, var_12_15)
 end
 
-function slot0._isOpen(slot0)
-	return BossRushModel.instance:isBossOnline(slot0:_getStage())
+function var_0_0._isOpen(arg_13_0)
+	local var_13_0 = arg_13_0:_getStage()
+
+	return BossRushModel.instance:isBossOnline(var_13_0)
 end
 
-function slot0._getStage(slot0)
-	return slot0._mo.stageCO.stage
+function var_0_0._getStage(arg_14_0)
+	return arg_14_0._mo.stageCO.stage
 end
 
-function slot0._onRefreshDeadline(slot0)
-	if BossRushModel.instance:getStageOpenServerTime(slot0:_getStage()) - ServerTime.now() > 0 then
-		slot0._txtLocked.text = BossRushConfig.instance:getRemainTimeStrWithFmt(slot3, Activity128Config.ETimeFmtStyle.UnLock)
+function var_0_0._onRefreshDeadline(arg_15_0)
+	local var_15_0 = arg_15_0:_getStage()
+	local var_15_1 = BossRushModel.instance:getStageOpenServerTime(var_15_0) - ServerTime.now()
+
+	if var_15_1 > 0 then
+		arg_15_0._txtLocked.text = BossRushConfig.instance:getRemainTimeStrWithFmt(var_15_1, Activity128Config.ETimeFmtStyle.UnLock)
 	else
-		TaskDispatcher.cancelTask(slot0._onRefreshDeadline, slot0)
+		TaskDispatcher.cancelTask(arg_15_0._onRefreshDeadline, arg_15_0)
 
-		if slot0:_isOpen() then
-			if slot0._openAnimed then
-				BossRushRedModel.instance:setIsNewUnlockStage(slot1, false)
-				slot0:_playUnlocking()
+		if arg_15_0:_isOpen() then
+			if arg_15_0._openAnimed then
+				BossRushRedModel.instance:setIsNewUnlockStage(var_15_0, false)
+				arg_15_0:_playUnlocking()
 			else
-				slot0:_playUnlock(true)
+				arg_15_0:_playUnlock(true)
 			end
 		end
 
-		slot0:_refresh()
+		arg_15_0:_refresh()
 	end
 end
 
-function slot0._onClick(slot0)
-	BossRushController.instance:openLevelDetailView(slot0._mo)
+function var_0_0._onClick(arg_16_0)
+	local var_16_0 = arg_16_0._mo
+
+	BossRushController.instance:openLevelDetailView(var_16_0)
 end
 
-function slot0._delayOpenCallBack(slot0)
-	slot0:_setActive(true)
+function var_0_0._delayOpenCallBack(arg_17_0)
+	arg_17_0:_setActive(true)
 
-	if slot0._isForcePlayUnlock and slot0:_isOpen() then
-		slot0:_playUnlock(true)
+	if arg_17_0._isForcePlayUnlock and arg_17_0:_isOpen() then
+		arg_17_0:_playUnlock(true)
 	else
-		slot0:_playOpen()
+		arg_17_0:_playOpen()
 	end
 
-	slot0._openAnim = false
+	arg_17_0._openAnim = false
 end
 
-function slot0._tweenOpen(slot0)
-	if slot0._openAnim then
+function var_0_0._tweenOpen(arg_18_0)
+	if arg_18_0._openAnim then
 		return
 	end
 
-	slot0._openAnim = true
+	arg_18_0._openAnim = true
 
-	if BossRushRedModel.instance:getIsNewUnlockStage(slot0:_getStage()) then
-		slot0._isForcePlayUnlock = true
+	local var_18_0 = arg_18_0:_getStage()
+
+	if BossRushRedModel.instance:getIsNewUnlockStage(var_18_0) then
+		arg_18_0._isForcePlayUnlock = true
 	end
 
-	slot0._openAnimed = true
+	arg_18_0._openAnimed = true
 
-	TaskDispatcher.runDelay(slot0._delayOpenCallBack, slot0, slot0._index * 0.06)
+	TaskDispatcher.runDelay(arg_18_0._delayOpenCallBack, arg_18_0, arg_18_0._index * 0.06)
 end
 
-function slot0._playOpen(slot0)
-	if slot0:_isOpen() then
-		slot0:_playAnim(uv0.OpeningUnlocked, 0, 0)
+function var_0_0._playOpen(arg_19_0)
+	if arg_19_0:_isOpen() then
+		arg_19_0:_playAnim(var_0_1.OpeningUnlocked, 0, 0)
 	else
-		slot0:_playAnim(uv0.OpeningLocked, 0, 0)
+		arg_19_0:_playAnim(var_0_1.OpeningLocked, 0, 0)
 	end
 end
 
-function slot0._playIdle(slot0)
-	if slot0:_isOpen() then
-		slot0:_playAnim(uv0.UnlockedIdle, 0, 1)
+function var_0_0._playIdle(arg_20_0)
+	if arg_20_0:_isOpen() then
+		arg_20_0:_playAnim(var_0_1.UnlockedIdle, 0, 1)
 	else
-		slot0:_playAnim(uv0.LockedIdle, 0, 1)
+		arg_20_0:_playAnim(var_0_1.LockedIdle, 0, 1)
 	end
 end
 
-function slot0._playUnlock(slot0, slot1)
-	if slot0._openAnim and not slot0._isForcePlayUnlock then
-		if slot1 then
-			slot0._isForcePlayUnlock = true
+function var_0_0._playUnlock(arg_21_0, arg_21_1)
+	if arg_21_0._openAnim and not arg_21_0._isForcePlayUnlock then
+		if arg_21_1 then
+			arg_21_0._isForcePlayUnlock = true
 		end
 
 		return
 	end
 
-	slot0:_playAnim(uv0.Unlock, 0, 0)
+	arg_21_0:_playAnim(var_0_1.Unlock, 0, 0)
 	AudioMgr.instance:trigger(AudioEnum.ui_activity_1_4_qiutu.play_ui_qiutu_list_maintain)
 
-	slot0._isForcePlayUnlock = false
+	arg_21_0._isForcePlayUnlock = false
 
-	gohelper.setActive(slot0._goRecord, true)
+	gohelper.setActive(arg_21_0._goRecord, true)
 end
 
-function slot0._playUnlocking(slot0)
-	TaskDispatcher.cancelTask(slot0._delayOpenCallBack, slot0)
-	slot0:_playAnim(uv0.Unlocking, 0, 0)
+function var_0_0._playUnlocking(arg_22_0)
+	TaskDispatcher.cancelTask(arg_22_0._delayOpenCallBack, arg_22_0)
+	arg_22_0:_playAnim(var_0_1.Unlocking, 0, 0)
 	AudioMgr.instance:trigger(AudioEnum.ui_activity_1_4_qiutu.play_ui_qiutu_list_maintain)
 
-	slot0._isForcePlayUnlock = false
+	arg_22_0._isForcePlayUnlock = false
 
-	gohelper.setActive(slot0._goRecord, true)
+	gohelper.setActive(arg_22_0._goRecord, true)
 end
 
-function slot0._setActive(slot0, slot1)
-	gohelper.setActive(slot0.viewGO, slot1)
+function var_0_0._setActive(arg_23_0, arg_23_1)
+	gohelper.setActive(arg_23_0.viewGO, arg_23_1)
 end
 
-function slot0._playAnim(slot0, slot1, ...)
-	slot0._anim:Play(slot1, ...)
+function var_0_0._playAnim(arg_24_0, arg_24_1, ...)
+	arg_24_0._anim:Play(arg_24_1, ...)
 end
 
-function slot0._refreshRed(slot0)
-	RedDotController.instance:addRedDot(slot0._goRed, RedDotEnum.DotNode.BossRushBoss, slot0:_getStage())
+function var_0_0._refreshRed(arg_25_0)
+	local var_25_0 = arg_25_0:_getStage()
+
+	RedDotController.instance:addRedDot(arg_25_0._goRed, RedDotEnum.DotNode.BossRushBoss, var_25_0)
 end
 
-return slot0
+return var_0_0

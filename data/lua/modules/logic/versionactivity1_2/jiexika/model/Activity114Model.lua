@@ -1,7 +1,7 @@
-module("modules.logic.versionactivity1_2.jiexika.model.Activity114Model", package.seeall)
+﻿module("modules.logic.versionactivity1_2.jiexika.model.Activity114Model", package.seeall)
 
-slot0 = class("Activity114Model", BaseModel)
-slot1 = {
+local var_0_0 = class("Activity114Model", BaseModel)
+local var_0_1 = {
 	[Activity114Enum.EventType.Edu] = Activity114EduFlow,
 	[Activity114Enum.EventType.Rest] = Activity114RestFlow,
 	[Activity114Enum.EventType.Meet] = Activity114MeetingFlow,
@@ -9,101 +9,101 @@ slot1 = {
 	[Activity114Enum.EventType.KeyDay] = Activity114KeyDayFlow
 }
 
-function slot0.onInit(slot0)
-	slot0.eduSelectAttr = nil
-	slot0.id = 0
-	slot0._isEnd = true
-	slot0.serverData = nil
-	slot0.unLockMeetingDict = {}
-	slot0.unLockTravelDict = {}
-	slot0.attrDict = {}
-	slot0.featuresDict = {}
-	slot0.unLockEventDict = {}
-	slot0.unLockPhotoDict = {}
-	slot0.changeEventList = {}
-	slot0.newPhotos = {}
-	slot0.newUnLockTravel = {}
-	slot0.newUnLockMeeting = {}
-	slot0.newUnLockFeature = {}
-	slot0.attrChangeDict = nil
-	slot0.waitStoryFinish = false
-	slot0.preServerData = nil
-	slot0._nextWeekInfo = nil
-	slot0._flow = nil
-	slot0._storyFlow = nil
-	slot0.attrAddPermillage = {}
+function var_0_0.onInit(arg_1_0)
+	arg_1_0.eduSelectAttr = nil
+	arg_1_0.id = 0
+	arg_1_0._isEnd = true
+	arg_1_0.serverData = nil
+	arg_1_0.unLockMeetingDict = {}
+	arg_1_0.unLockTravelDict = {}
+	arg_1_0.attrDict = {}
+	arg_1_0.featuresDict = {}
+	arg_1_0.unLockEventDict = {}
+	arg_1_0.unLockPhotoDict = {}
+	arg_1_0.changeEventList = {}
+	arg_1_0.newPhotos = {}
+	arg_1_0.newUnLockTravel = {}
+	arg_1_0.newUnLockMeeting = {}
+	arg_1_0.newUnLockFeature = {}
+	arg_1_0.attrChangeDict = nil
+	arg_1_0.waitStoryFinish = false
+	arg_1_0.preServerData = nil
+	arg_1_0._nextWeekInfo = nil
+	arg_1_0._flow = nil
+	arg_1_0._storyFlow = nil
+	arg_1_0.attrAddPermillage = {}
 
-	for slot4 = 1, Activity114Enum.Attr.End - 1 do
-		slot0.attrAddPermillage[slot4] = 0
+	for iter_1_0 = 1, Activity114Enum.Attr.End - 1 do
+		arg_1_0.attrAddPermillage[iter_1_0] = 0
 	end
 
-	slot0.attentionAddPermillage = 0
-	slot0.saveUnLockData = nil
-	slot0.saveUnLockUserData = nil
-	slot0.preEventType = nil
-	slot0.preResult = nil
-	slot0._statData = nil
-	slot0.playedEduSuccessStory = nil
+	arg_1_0.attentionAddPermillage = 0
+	arg_1_0.saveUnLockData = nil
+	arg_1_0.saveUnLockUserData = nil
+	arg_1_0.preEventType = nil
+	arg_1_0.preResult = nil
+	arg_1_0._statData = nil
+	arg_1_0.playedEduSuccessStory = nil
 end
 
-function slot0.clearFlow(slot0)
-	if slot0._flow then
-		slot0._flow:onDestroyInternal()
+function var_0_0.clearFlow(arg_2_0)
+	if arg_2_0._flow then
+		arg_2_0._flow:onDestroyInternal()
 	end
 
-	if slot0._storyFlow then
-		slot0._storyFlow:onDestroyInternal()
+	if arg_2_0._storyFlow then
+		arg_2_0._storyFlow:onDestroyInternal()
 	end
 end
 
-function slot0.reInit(slot0)
-	slot0:onInit()
+function var_0_0.reInit(arg_3_0)
+	arg_3_0:onInit()
 end
 
-function slot0.beginStoryFlow(slot0)
-	if slot0._storyFlow then
+function var_0_0.beginStoryFlow(arg_4_0)
+	if arg_4_0._storyFlow then
 		return
 	end
 
-	slot0._storyFlow = Activity114RoundBeginFlow.New()
+	arg_4_0._storyFlow = Activity114RoundBeginFlow.New()
 
-	slot0._storyFlow:registerDoneListener(slot0.onStoryFlowDone, slot0)
+	arg_4_0._storyFlow:registerDoneListener(arg_4_0.onStoryFlowDone, arg_4_0)
 
-	if not slot0._storyFlow:beginFlow() then
-		slot0._storyFlow = nil
+	if not arg_4_0._storyFlow:beginFlow() then
+		arg_4_0._storyFlow = nil
 	end
 end
 
-function slot0.onStoryFlowDone(slot0, slot1)
-	slot0._storyFlow = nil
+function var_0_0.onStoryFlowDone(arg_5_0, arg_5_1)
+	arg_5_0._storyFlow = nil
 
-	if slot1 then
+	if arg_5_1 then
 		Activity114Controller.instance:dispatchEvent(Activity114Event.OnEventProcessEnd)
 	end
 end
 
-function slot0.have114StoryFlow(slot0)
-	return slot0._storyFlow and true or false
+function var_0_0.have114StoryFlow(arg_6_0)
+	return arg_6_0._storyFlow and true or false
 end
 
-function slot0.beginEvent(slot0, slot1)
-	if slot0._flow then
-		slot0._flow:onDestroy()
+function var_0_0.beginEvent(arg_7_0, arg_7_1)
+	if arg_7_0._flow then
+		arg_7_0._flow:onDestroy()
 	end
 
 	if GameSceneMgr.instance:getCurSceneType() ~= SceneType.Fight then
 		ViewMgr.instance:openView(ViewName.Activity114EmptyView, nil, true)
 	end
 
-	slot0._flow = uv0[slot1.type].New()
+	arg_7_0._flow = var_0_1[arg_7_1.type].New()
 
-	slot0._flow:registerDoneListener(slot0.onFlowDone, slot0)
-	slot0._flow:initParams(slot1)
+	arg_7_0._flow:registerDoneListener(arg_7_0.onFlowDone, arg_7_0)
+	arg_7_0._flow:initParams(arg_7_1)
 	Activity114Controller.instance:dispatchEvent(Activity114Event.OnEventProcessStart)
 end
 
-function slot0.buildFlowAndSkipWork(slot0, slot1)
-	if slot0._flow then
+function var_0_0.buildFlowAndSkipWork(arg_8_0, arg_8_1)
+	if arg_8_0._flow then
 		return
 	end
 
@@ -111,263 +111,271 @@ function slot0.buildFlowAndSkipWork(slot0, slot1)
 		ViewMgr.instance:openView(ViewName.Activity114EmptyView, nil, true)
 	end
 
-	slot0._flow = uv0[slot1.type].New()
+	arg_8_0._flow = var_0_1[arg_8_1.type].New()
 
-	slot0._flow:registerDoneListener(slot0.onFlowDone, slot0)
-	slot0._flow:initParams(slot1, true)
+	arg_8_0._flow:registerDoneListener(arg_8_0.onFlowDone, arg_8_0)
+	arg_8_0._flow:initParams(arg_8_1, true)
 end
 
-function slot0.setEventParams(slot0, slot1, slot2)
-	if not slot0._flow then
+function var_0_0.setEventParams(arg_9_0, arg_9_1, arg_9_2)
+	if not arg_9_0._flow then
 		return
 	end
 
-	slot0._flow:getContext()[slot1] = slot2
+	arg_9_0._flow:getContext()[arg_9_1] = arg_9_2
 end
 
-function slot0.getEventParams(slot0, slot1)
-	if not slot0._flow then
+function var_0_0.getEventParams(arg_10_0, arg_10_1)
+	if not arg_10_0._flow then
 		return
 	end
 
-	return slot0._flow:getContext()[slot1]
+	return arg_10_0._flow:getContext()[arg_10_1]
 end
 
-function slot0.canFinishStory(slot0)
-	if not slot0._flow then
+function var_0_0.canFinishStory(arg_11_0)
+	if not arg_11_0._flow then
 		return true
 	end
 
-	return slot0._flow:canFinishStory()
+	return arg_11_0._flow:canFinishStory()
 end
 
-function slot0.onFlowDone(slot0)
-	if not slot0._flow then
+function var_0_0.onFlowDone(arg_12_0)
+	if not arg_12_0._flow then
 		return
 	end
 
 	ViewMgr.instance:closeView(ViewName.Activity114EmptyView, true, true)
-	slot0._flow:unregisterDoneListener(slot0.onFlowDone, slot0)
+	arg_12_0._flow:unregisterDoneListener(arg_12_0.onFlowDone, arg_12_0)
 
-	slot0._flow = nil
+	arg_12_0._flow = nil
 
-	if slot0.newPhotos[1] then
-		ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, slot0._onCloseViewFinish, slot0)
+	if arg_12_0.newPhotos[1] then
+		ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_12_0._onCloseViewFinish, arg_12_0)
 		ViewMgr.instance:openView(ViewName.Activity114GetPhotoView)
 	else
-		slot0:_checkHaveNextWeekInfo()
+		arg_12_0:_checkHaveNextWeekInfo()
 		Activity114Controller.instance:dispatchEvent(Activity114Event.OnEventProcessEnd)
 	end
 end
 
-function slot0._onCloseViewFinish(slot0, slot1)
-	if slot1 == ViewName.Activity114GetPhotoView then
-		ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, slot0._onCloseViewFinish, slot0)
-		slot0:_checkHaveNextWeekInfo()
+function var_0_0._onCloseViewFinish(arg_13_0, arg_13_1)
+	if arg_13_1 == ViewName.Activity114GetPhotoView then
+		ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_13_0._onCloseViewFinish, arg_13_0)
+		arg_13_0:_checkHaveNextWeekInfo()
 		Activity114Controller.instance:dispatchEvent(Activity114Event.OnEventProcessEnd)
 	end
 end
 
-function slot0._checkHaveNextWeekInfo(slot0)
-	if not slot0._nextWeekInfo then
+function var_0_0._checkHaveNextWeekInfo(arg_14_0)
+	if not arg_14_0._nextWeekInfo then
 		return
 	end
 
-	slot4 = slot0._nextWeekInfo
+	arg_14_0:onGetInfo(arg_14_0.id, arg_14_0._nextWeekInfo)
 
-	slot0:onGetInfo(slot0.id, slot4)
-
-	for slot4 in pairs(slot0.changeEventList) do
-		Activity114Controller.instance:dispatchEvent(slot4)
+	for iter_14_0 in pairs(arg_14_0.changeEventList) do
+		Activity114Controller.instance:dispatchEvent(iter_14_0)
 	end
 
-	slot0.changeEventList = {}
-	slot0._nextWeekInfo = nil
+	arg_14_0.changeEventList = {}
+	arg_14_0._nextWeekInfo = nil
 end
 
-function slot0.onGetInfo(slot0, slot1, slot2)
-	if slot0.serverData and slot0.serverData.week ~= slot2.week and slot0._flow then
-		slot0._nextWeekInfo = slot2
+function var_0_0.onGetInfo(arg_15_0, arg_15_1, arg_15_2)
+	if arg_15_0.serverData and arg_15_0.serverData.week ~= arg_15_2.week and arg_15_0._flow then
+		arg_15_0._nextWeekInfo = arg_15_2
 
 		return
 	end
 
-	slot3 = false
+	local var_15_0 = false
 
-	if not slot0.serverData then
-		slot0.changeEventList[Activity114Event.OnAttentionUpdate] = true
-		slot0.changeEventList[Activity114Event.OnCGUpdate] = true
-		slot0.changeEventList[Activity114Event.OnAttrUpdate] = true
-		slot0.changeEventList[Activity114Event.OnRoundUpdate] = true
-		slot0.changeEventList[Activity114Event.OnNewFeature] = true
+	if not arg_15_0.serverData then
+		arg_15_0.changeEventList[Activity114Event.OnAttentionUpdate] = true
+		arg_15_0.changeEventList[Activity114Event.OnCGUpdate] = true
+		arg_15_0.changeEventList[Activity114Event.OnAttrUpdate] = true
+		arg_15_0.changeEventList[Activity114Event.OnRoundUpdate] = true
+		arg_15_0.changeEventList[Activity114Event.OnNewFeature] = true
 	else
-		if slot2.week ~= slot0.serverData.week then
-			slot0.playedEduSuccessStory = nil
+		if arg_15_2.week ~= arg_15_0.serverData.week then
+			arg_15_0.playedEduSuccessStory = nil
 
-			slot0:endStat(true)
+			arg_15_0:endStat(true)
 
-			slot3 = true
+			var_15_0 = true
 		end
 
-		if slot2.day ~= slot0.serverData.day or slot2.round ~= slot0.serverData.round or slot2.week ~= slot0.serverData.week then
-			slot0.changeEventList[Activity114Event.OnRoundUpdate] = true
+		if arg_15_2.day ~= arg_15_0.serverData.day or arg_15_2.round ~= arg_15_0.serverData.round or arg_15_2.week ~= arg_15_0.serverData.week then
+			arg_15_0.changeEventList[Activity114Event.OnRoundUpdate] = true
 		end
 
-		if #slot2.photos ~= #slot0.serverData.photos then
-			for slot7 = 1, #slot2.photos do
-				if not slot0.unLockPhotoDict[slot2.photos[slot7]] then
-					table.insert(slot0.newPhotos, slot2.photos[slot7])
+		if #arg_15_2.photos ~= #arg_15_0.serverData.photos then
+			for iter_15_0 = 1, #arg_15_2.photos do
+				if not arg_15_0.unLockPhotoDict[arg_15_2.photos[iter_15_0]] then
+					table.insert(arg_15_0.newPhotos, arg_15_2.photos[iter_15_0])
 				end
 			end
 
-			slot0.changeEventList[Activity114Event.OnCGUpdate] = true
+			arg_15_0.changeEventList[Activity114Event.OnCGUpdate] = true
 		end
 
-		slot4, slot5 = Activity114Config.instance:getUnlockIds(slot1)
+		local var_15_1, var_15_2 = Activity114Config.instance:getUnlockIds(arg_15_1)
 
-		if #slot2.meetings ~= #slot0.serverData.meetings then
-			for slot9 = 1, #slot2.meetings do
-				if slot4[slot2.meetings[slot9].meetingId] and not slot0.unLockMeetingDict[slot10] then
-					table.insert(slot0.newUnLockMeeting, slot10)
-				end
-			end
-		end
+		if #arg_15_2.meetings ~= #arg_15_0.serverData.meetings then
+			for iter_15_1 = 1, #arg_15_2.meetings do
+				local var_15_3 = arg_15_2.meetings[iter_15_1].meetingId
 
-		if #slot2.travels ~= #slot0.serverData.travels then
-			for slot9 = 1, #slot2.travels do
-				if not slot0.unLockTravelDict[slot2.travels[slot9].travelId] and slot5[slot10] then
-					table.insert(slot0.newUnLockTravel, slot10)
+				if var_15_1[var_15_3] and not arg_15_0.unLockMeetingDict[var_15_3] then
+					table.insert(arg_15_0.newUnLockMeeting, var_15_3)
 				end
 			end
 		end
 
-		if #slot2.features ~= #slot0.serverData.features then
-			slot0.changeEventList[Activity114Event.OnNewFeature] = true
+		if #arg_15_2.travels ~= #arg_15_0.serverData.travels then
+			for iter_15_2 = 1, #arg_15_2.travels do
+				local var_15_4 = arg_15_2.travels[iter_15_2].travelId
 
-			for slot9 = 1, #slot2.features do
-				if not slot0.featuresDict[slot2.features[slot9]] then
-					table.insert(slot0.newUnLockFeature, slot10)
+				if not arg_15_0.unLockTravelDict[var_15_4] and var_15_2[var_15_4] then
+					table.insert(arg_15_0.newUnLockTravel, var_15_4)
 				end
 			end
 		end
 
-		if slot2.attention ~= slot0.serverData.attention then
-			slot0.changeEventList[Activity114Event.OnAttentionUpdate] = true
+		if #arg_15_2.features ~= #arg_15_0.serverData.features then
+			arg_15_0.changeEventList[Activity114Event.OnNewFeature] = true
+
+			for iter_15_3 = 1, #arg_15_2.features do
+				local var_15_5 = arg_15_2.features[iter_15_3]
+
+				if not arg_15_0.featuresDict[var_15_5] then
+					table.insert(arg_15_0.newUnLockFeature, var_15_5)
+				end
+			end
 		end
 
-		for slot9 = 1, Activity114Enum.Attr.End - 1 do
-			if slot2.attrs[slot9].value ~= slot0.serverData.attrs[slot9].value then
-				slot0.changeEventList[Activity114Event.OnAttrUpdate] = true
+		if arg_15_2.attention ~= arg_15_0.serverData.attention then
+			arg_15_0.changeEventList[Activity114Event.OnAttentionUpdate] = true
+		end
+
+		for iter_15_4 = 1, Activity114Enum.Attr.End - 1 do
+			if arg_15_2.attrs[iter_15_4].value ~= arg_15_0.serverData.attrs[iter_15_4].value then
+				arg_15_0.changeEventList[Activity114Event.OnAttrUpdate] = true
 
 				break
 			end
 		end
 	end
 
-	slot0.id = slot1
-	slot0.serverData = slot2
-	slot0._isEnd = false
+	arg_15_0.id = arg_15_1
+	arg_15_0.serverData = arg_15_2
+	arg_15_0._isEnd = false
 
-	slot0:onMeetingChange(slot2.meetings)
-	slot0:onTravelChange(slot2.travels)
-	slot0:onAttrChange(slot2.attrs)
-	slot0:onFeatureChange(slot2.features)
-	slot0:onUnLockEventChange(slot2.unlockEventIds)
-	slot0:onUnLockPhotoChange(slot2.photos)
+	arg_15_0:onMeetingChange(arg_15_2.meetings)
+	arg_15_0:onTravelChange(arg_15_2.travels)
+	arg_15_0:onAttrChange(arg_15_2.attrs)
+	arg_15_0:onFeatureChange(arg_15_2.features)
+	arg_15_0:onUnLockEventChange(arg_15_2.unlockEventIds)
+	arg_15_0:onUnLockPhotoChange(arg_15_2.photos)
 
-	if isDebugBuild and not slot0._flow then
-		TaskDispatcher.runDelay(function ()
-			if not uv0._flow then
-				for slot3 in pairs(uv0.changeEventList) do
-					Activity114Controller.instance:dispatchEvent(slot3)
+	if isDebugBuild and not arg_15_0._flow then
+		TaskDispatcher.runDelay(function()
+			if not arg_15_0._flow then
+				for iter_16_0 in pairs(arg_15_0.changeEventList) do
+					Activity114Controller.instance:dispatchEvent(iter_16_0)
 				end
 
-				uv0.changeEventList = {}
+				arg_15_0.changeEventList = {}
 			end
 		end, nil, 0)
 	end
 
-	if slot3 then
-		slot0:beginStat()
+	if var_15_0 then
+		arg_15_0:beginStat()
 	end
 end
 
-function slot0.onAttrChange(slot0, slot1)
-	slot0.attrDict = {}
+function var_0_0.onAttrChange(arg_17_0, arg_17_1)
+	arg_17_0.attrDict = {}
 
-	for slot5, slot6 in ipairs(slot1) do
-		slot0.attrDict[slot6.attrId] = slot6.value
+	for iter_17_0, iter_17_1 in ipairs(arg_17_1) do
+		arg_17_0.attrDict[iter_17_1.attrId] = iter_17_1.value
 	end
 
-	for slot5 = 1, Activity114Enum.Attr.End - 1 do
-		slot0.attrDict[slot5] = slot0.attrDict[slot5] or 0
+	for iter_17_2 = 1, Activity114Enum.Attr.End - 1 do
+		arg_17_0.attrDict[iter_17_2] = arg_17_0.attrDict[iter_17_2] or 0
 	end
 end
 
-function slot0.onFeatureChange(slot0, slot1)
-	slot2 = {}
-	slot0.featuresDict = {}
+function var_0_0.onFeatureChange(arg_18_0, arg_18_1)
+	local var_18_0 = {}
+	local var_18_1 = 0
 
-	for slot7, slot8 in ipairs(slot1) do
-		slot0.featuresDict[slot8] = true
+	arg_18_0.featuresDict = {}
 
-		if Activity114Config.instance:getFeatureCo(slot0.id, slot8) then
-			if slot9.restEfficiency > 0 then
-				slot3 = 0 + slot9.restEfficiency / 1000
+	for iter_18_0, iter_18_1 in ipairs(arg_18_1) do
+		arg_18_0.featuresDict[iter_18_1] = true
+
+		local var_18_2 = Activity114Config.instance:getFeatureCo(arg_18_0.id, iter_18_1)
+
+		if var_18_2 then
+			if var_18_2.restEfficiency > 0 then
+				var_18_1 = var_18_1 + var_18_2.restEfficiency / 1000
 			end
 
-			if not string.nilorempty(slot9.courseEfficiency) then
-				slot14 = "#"
+			if not string.nilorempty(var_18_2.courseEfficiency) then
+				local var_18_3 = GameUtil.splitString2(var_18_2.courseEfficiency, true, "|", "#")
 
-				for slot14, slot15 in ipairs(GameUtil.splitString2(slot9.courseEfficiency, true, "|", slot14)) do
-					slot2[slot15[1]] = (slot2[slot15[1]] or 0) + slot15[2] / 1000
+				for iter_18_2, iter_18_3 in ipairs(var_18_3) do
+					var_18_0[iter_18_3[1]] = (var_18_0[iter_18_3[1]] or 0) + iter_18_3[2] / 1000
 				end
 			end
 		end
 	end
 
-	for slot7, slot8 in pairs(slot0.attrAddPermillage) do
-		slot0.attrAddPermillage[slot7] = slot2[slot7] or 0
+	for iter_18_4, iter_18_5 in pairs(arg_18_0.attrAddPermillage) do
+		arg_18_0.attrAddPermillage[iter_18_4] = var_18_0[iter_18_4] or 0
 	end
 
-	slot0.attentionAddPermillage = slot3
+	arg_18_0.attentionAddPermillage = var_18_1
 end
 
-function slot0.onUnLockEventChange(slot0, slot1)
-	slot0.unLockEventDict = {}
+function var_0_0.onUnLockEventChange(arg_19_0, arg_19_1)
+	arg_19_0.unLockEventDict = {}
 
-	for slot5, slot6 in ipairs(slot1) do
-		slot0.unLockEventDict[slot6] = true
-	end
-end
-
-function slot0.onUnLockPhotoChange(slot0, slot1)
-	slot0.unLockPhotoDict = {}
-
-	for slot5, slot6 in ipairs(slot1) do
-		slot0.unLockPhotoDict[slot6] = true
+	for iter_19_0, iter_19_1 in ipairs(arg_19_1) do
+		arg_19_0.unLockEventDict[iter_19_1] = true
 	end
 end
 
-function slot0.onMeetingChange(slot0, slot1)
-	slot0.unLockMeetingDict = {}
+function var_0_0.onUnLockPhotoChange(arg_20_0, arg_20_1)
+	arg_20_0.unLockPhotoDict = {}
 
-	for slot5, slot6 in ipairs(slot1) do
-		slot0.unLockMeetingDict[slot6.meetingId] = slot6
+	for iter_20_0, iter_20_1 in ipairs(arg_20_1) do
+		arg_20_0.unLockPhotoDict[iter_20_1] = true
 	end
 end
 
-function slot0.onTravelChange(slot0, slot1)
-	slot0.unLockTravelDict = {}
+function var_0_0.onMeetingChange(arg_21_0, arg_21_1)
+	arg_21_0.unLockMeetingDict = {}
 
-	for slot5, slot6 in ipairs(slot1) do
-		slot0.unLockTravelDict[slot6.travelId] = slot6
+	for iter_21_0, iter_21_1 in ipairs(arg_21_1) do
+		arg_21_0.unLockMeetingDict[iter_21_1.meetingId] = iter_21_1
 	end
 end
 
-function slot0.haveUnLockMeeting(slot0)
-	for slot4, slot5 in pairs(slot0.unLockMeetingDict) do
-		if not slot0:getIsPlayUnLock(Activity114Enum.EventType.Meet, slot5.meetingId) then
+function var_0_0.onTravelChange(arg_22_0, arg_22_1)
+	arg_22_0.unLockTravelDict = {}
+
+	for iter_22_0, iter_22_1 in ipairs(arg_22_1) do
+		arg_22_0.unLockTravelDict[iter_22_1.travelId] = iter_22_1
+	end
+end
+
+function var_0_0.haveUnLockMeeting(arg_23_0)
+	for iter_23_0, iter_23_1 in pairs(arg_23_0.unLockMeetingDict) do
+		if not arg_23_0:getIsPlayUnLock(Activity114Enum.EventType.Meet, iter_23_1.meetingId) then
 			return true
 		end
 	end
@@ -375,9 +383,9 @@ function slot0.haveUnLockMeeting(slot0)
 	return false
 end
 
-function slot0.haveUnLockTravel(slot0)
-	for slot4, slot5 in pairs(slot0.unLockTravelDict) do
-		if not slot0:getIsPlayUnLock(Activity114Enum.EventType.Travel, slot5.travelId) then
+function var_0_0.haveUnLockTravel(arg_24_0)
+	for iter_24_0, iter_24_1 in pairs(arg_24_0.unLockTravelDict) do
+		if not arg_24_0:getIsPlayUnLock(Activity114Enum.EventType.Travel, iter_24_1.travelId) then
 			return true
 		end
 	end
@@ -385,127 +393,129 @@ function slot0.haveUnLockTravel(slot0)
 	return false
 end
 
-function slot0.getIsPlayUnLock(slot0, slot1, slot2)
-	if not slot0.saveUnLockData then
-		if not string.nilorempty(PlayerPrefsHelper.getString(PlayerPrefsKey.JieXiKaUnLock, "")) then
-			slot0.saveUnLockData = cjson.decode(slot4)
-			slot0.saveUnLockUserData = slot0.saveUnLockData[tostring(PlayerModel.instance:getMyUserId())]
+function var_0_0.getIsPlayUnLock(arg_25_0, arg_25_1, arg_25_2)
+	if not arg_25_0.saveUnLockData then
+		local var_25_0 = tostring(PlayerModel.instance:getMyUserId())
+		local var_25_1 = PlayerPrefsHelper.getString(PlayerPrefsKey.JieXiKaUnLock, "")
 
-			if slot0.saveUnLockData.activityId ~= slot0.id then
-				slot0.saveUnLockData = nil
-				slot0.saveUnLockUserData = nil
+		if not string.nilorempty(var_25_1) then
+			arg_25_0.saveUnLockData = cjson.decode(var_25_1)
+			arg_25_0.saveUnLockUserData = arg_25_0.saveUnLockData[var_25_0]
+
+			if arg_25_0.saveUnLockData.activityId ~= arg_25_0.id then
+				arg_25_0.saveUnLockData = nil
+				arg_25_0.saveUnLockUserData = nil
 			end
 		end
 
-		if not slot0.saveUnLockData then
-			slot0.saveUnLockData = {
-				activityId = slot0.id
-			}
+		if not arg_25_0.saveUnLockData then
+			arg_25_0.saveUnLockData = {}
+			arg_25_0.saveUnLockData.activityId = arg_25_0.id
 		end
 
-		if not slot0.saveUnLockUserData then
-			slot0.saveUnLockUserData = {}
-			slot0.saveUnLockData[slot3] = slot0.saveUnLockUserData
+		if not arg_25_0.saveUnLockUserData then
+			arg_25_0.saveUnLockUserData = {}
+			arg_25_0.saveUnLockData[var_25_0] = arg_25_0.saveUnLockUserData
 		end
 	end
 
-	if not slot0.saveUnLockUserData[slot1] or slot0.saveUnLockUserData[slot1] == cjson.null then
+	if not arg_25_0.saveUnLockUserData[arg_25_1] or arg_25_0.saveUnLockUserData[arg_25_1] == cjson.null then
 		return false
 	end
 
-	return slot0.saveUnLockUserData[slot1][slot2] == 1
+	return arg_25_0.saveUnLockUserData[arg_25_1][arg_25_2] == 1
 end
 
-function slot0.setIsPlayUnLock(slot0, slot1, slot2)
-	if slot0:getIsPlayUnLock(slot1, slot2) then
+function var_0_0.setIsPlayUnLock(arg_26_0, arg_26_1, arg_26_2)
+	if arg_26_0:getIsPlayUnLock(arg_26_1, arg_26_2) then
 		return
 	end
 
-	if not slot0.saveUnLockUserData[slot1] or slot0.saveUnLockUserData[slot1] == cjson.null then
-		slot0.saveUnLockUserData[slot1] = {}
+	if not arg_26_0.saveUnLockUserData[arg_26_1] or arg_26_0.saveUnLockUserData[arg_26_1] == cjson.null then
+		arg_26_0.saveUnLockUserData[arg_26_1] = {}
 	end
 
-	slot0.saveUnLockUserData[slot1][slot2] = 1
+	arg_26_0.saveUnLockUserData[arg_26_1][arg_26_2] = 1
 
-	PlayerPrefsHelper.setString(PlayerPrefsKey.JieXiKaUnLock, cjson.encode(slot0.saveUnLockData))
+	PlayerPrefsHelper.setString(PlayerPrefsKey.JieXiKaUnLock, cjson.encode(arg_26_0.saveUnLockData))
 	Activity114Controller.instance:dispatchEvent(Activity114Event.UnLockRedDotUpdate)
 end
 
-function slot0.setEnd(slot0)
-	slot0._isEnd = true
+function var_0_0.setEnd(arg_27_0)
+	arg_27_0._isEnd = true
 
-	if slot0._flow then
-		slot0._flow:destroy()
+	if arg_27_0._flow then
+		arg_27_0._flow:destroy()
 
-		slot0._flow = nil
+		arg_27_0._flow = nil
 	end
 
-	if slot0._storyFlow then
-		slot0._storyFlow:destroy()
+	if arg_27_0._storyFlow then
+		arg_27_0._storyFlow:destroy()
 
-		slot0._storyFlow = nil
+		arg_27_0._storyFlow = nil
 	end
 end
 
-function slot0.isEnd(slot0)
-	return slot0._isEnd
+function var_0_0.isEnd(arg_28_0)
+	return arg_28_0._isEnd
 end
 
-function slot0.beginStat(slot0)
-	slot0._statData = {
-		time = ServerTime.now(),
-		beginRound = Activity114Config.instance:getRoundCount(slot0.id, slot0.serverData.day, slot0.serverData.round)
-	}
+function var_0_0.beginStat(arg_29_0)
+	arg_29_0._statData = {}
+	arg_29_0._statData.time = ServerTime.now()
+	arg_29_0._statData.beginRound = Activity114Config.instance:getRoundCount(arg_29_0.id, arg_29_0.serverData.day, arg_29_0.serverData.round)
 end
 
-function slot0.setResetRound(slot0)
-	if not slot0._statData then
+function var_0_0.setResetRound(arg_30_0)
+	if not arg_30_0._statData then
 		return
 	end
 
-	slot0._statData.resetRound = Activity114Config.instance:getRoundCount(slot0.id, slot0.serverData.day, slot0.serverData.round)
+	arg_30_0._statData.resetRound = Activity114Config.instance:getRoundCount(arg_30_0.id, arg_30_0.serverData.day, arg_30_0.serverData.round)
 end
 
-function slot0.endStat(slot0, slot1, slot2)
-	if not slot0._statData then
+function var_0_0.endStat(arg_31_0, arg_31_1, arg_31_2)
+	if not arg_31_0._statData then
 		return
 	end
 
-	slot3 = "中断"
+	local var_31_0 = "中断"
 
-	if slot1 then
-		slot4, slot5, slot6, slot7 = Activity114Helper.getWeekEndScore()
-		slot3 = Activity114Config.instance:getConstValue(slot0.id, Activity114Enum.ConstId.ScoreA) <= slot7 and "A" or Activity114Config.instance:getConstValue(slot0.id, Activity114Enum.ConstId.ScoreB) <= slot7 and "B" or Activity114Config.instance:getConstValue(slot0.id, Activity114Enum.ConstId.ScoreC) <= slot7 and "C" or "E"
+	if arg_31_1 then
+		local var_31_1, var_31_2, var_31_3, var_31_4 = Activity114Helper.getWeekEndScore()
+
+		var_31_0 = var_31_4 >= Activity114Config.instance:getConstValue(arg_31_0.id, Activity114Enum.ConstId.ScoreA) and "A" or var_31_4 >= Activity114Config.instance:getConstValue(arg_31_0.id, Activity114Enum.ConstId.ScoreB) and "B" or var_31_4 >= Activity114Config.instance:getConstValue(arg_31_0.id, Activity114Enum.ConstId.ScoreC) and "C" or "E"
 	end
 
-	if slot2 then
-		slot3 = "重置"
+	if arg_31_2 then
+		var_31_0 = "重置"
 	end
 
-	slot4 = {
-		[slot8] = slot0.serverData.photos[slot8]
-	}
+	local var_31_5 = {}
 
-	for slot8 = 1, #slot0.serverData.photos do
+	for iter_31_0 = 1, #arg_31_0.serverData.photos do
+		var_31_5[iter_31_0] = arg_31_0.serverData.photos[iter_31_0]
 	end
 
-	slot6 = math.max(0, Activity114Config.instance:getRoundCount(slot0.id, slot0.serverData.day, slot0.serverData.round) - slot0._statData.beginRound)
+	local var_31_6 = Activity114Config.instance:getRoundCount(arg_31_0.id, arg_31_0.serverData.day, arg_31_0.serverData.round)
+	local var_31_7 = math.max(0, var_31_6 - arg_31_0._statData.beginRound)
 
-	if slot2 then
-		slot6 = 0
-		slot5 = slot0._statData.resetRound or slot5
+	if arg_31_2 then
+		var_31_7 = 0
+		var_31_6 = arg_31_0._statData.resetRound or var_31_6
 	end
 
 	StatController.instance:track(StatEnum.EventName.Act114Exit, {
-		[StatEnum.EventProperties.UseTime] = ServerTime.now() - slot0._statData.time,
-		[StatEnum.EventProperties.Act114Week] = slot0.serverData.week,
-		[StatEnum.EventProperties.RoundNum] = slot5,
-		[StatEnum.EventProperties.IncrementRoundNum] = slot6,
-		[StatEnum.EventProperties.Act114AllPhoto] = slot4,
-		[StatEnum.EventProperties.Result] = slot3
+		[StatEnum.EventProperties.UseTime] = ServerTime.now() - arg_31_0._statData.time,
+		[StatEnum.EventProperties.Act114Week] = arg_31_0.serverData.week,
+		[StatEnum.EventProperties.RoundNum] = var_31_6,
+		[StatEnum.EventProperties.IncrementRoundNum] = var_31_7,
+		[StatEnum.EventProperties.Act114AllPhoto] = var_31_5,
+		[StatEnum.EventProperties.Result] = var_31_0
 	})
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

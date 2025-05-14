@@ -1,10 +1,12 @@
-module("modules.logic.character.controller.CharacterDestinyEvent", package.seeall)
+﻿module("modules.logic.character.controller.CharacterDestinyEvent", package.seeall)
 
-return {
-	OnRankUpReply = 1,
-	OnLevelUpReply = 2,
-	OnUnlockStoneReply = 3,
-	OnUseStoneReply = 4,
-	OnHeroRedDotReadReply = 5,
-	OnUnlockSlot = 6
-}
+local var_0_0 = {}
+
+var_0_0.OnRankUpReply = 1
+var_0_0.OnLevelUpReply = 2
+var_0_0.OnUnlockStoneReply = 3
+var_0_0.OnUseStoneReply = 4
+var_0_0.OnHeroRedDotReadReply = 5
+var_0_0.OnUnlockSlot = 6
+
+return var_0_0

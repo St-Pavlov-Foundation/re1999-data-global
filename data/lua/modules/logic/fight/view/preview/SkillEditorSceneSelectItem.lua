@@ -1,46 +1,64 @@
-module("modules.logic.fight.view.preview.SkillEditorSceneSelectItem", package.seeall)
+﻿module("modules.logic.fight.view.preview.SkillEditorSceneSelectItem", package.seeall)
 
-slot0 = class("SkillEditorSceneSelectItem", ListScrollCell)
+local var_0_0 = class("SkillEditorSceneSelectItem", ListScrollCell)
 
-function slot0.init(slot0, slot1)
-	slot0._text = gohelper.findChildText(slot1, "Text")
-	slot0._text1 = gohelper.findChildText(slot1, "imgSelect/Text")
-	slot0._click = SLFramework.UGUI.UIClickListener.Get(slot1)
-	slot0._selectGO = gohelper.findChild(slot1, "imgSelect")
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0._text = gohelper.findChildText(arg_1_1, "Text")
+	arg_1_0._text1 = gohelper.findChildText(arg_1_1, "imgSelect/Text")
+	arg_1_0._click = SLFramework.UGUI.UIClickListener.Get(arg_1_1)
+	arg_1_0._selectGO = gohelper.findChild(arg_1_1, "imgSelect")
 end
 
-function slot0.addEventListeners(slot0)
-	slot0._click:AddClickListener(slot0._onClickThis, slot0)
+function var_0_0.addEventListeners(arg_2_0)
+	arg_2_0._click:AddClickListener(arg_2_0._onClickThis, arg_2_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0._click:RemoveClickListener()
+function var_0_0.removeEventListeners(arg_3_0)
+	arg_3_0._click:RemoveClickListener()
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
-	slot0._text.text = (lua_scene.configDict[slot1.co.sceneId] and slot3.name .. "\n" or "") .. slot2.id
-	slot0._text1.text = (slot3 and slot3.name .. "\n" or "") .. slot2.id
+function var_0_0.onUpdateMO(arg_4_0, arg_4_1)
+	arg_4_0._mo = arg_4_1
+
+	local var_4_0 = arg_4_1.co
+	local var_4_1 = lua_scene.configDict[var_4_0.sceneId]
+
+	arg_4_0._text.text = (var_4_1 and var_4_1.name .. "\n" or "") .. var_4_0.id
+	arg_4_0._text1.text = (var_4_1 and var_4_1.name .. "\n" or "") .. var_4_0.id
 end
 
-function slot0.onSelect(slot0, slot1)
-	gohelper.setActive(slot0._selectGO, slot1)
+function var_0_0.onSelect(arg_5_0, arg_5_1)
+	gohelper.setActive(arg_5_0._selectGO, arg_5_1)
 end
 
-function slot0._onClickThis(slot0)
-	if GameSceneMgr.instance:getScene(SceneType.Fight).level:getCurLevelId() ~= slot0._mo.co.id then
-		SkillEditorSceneSelectModel.instance:selectCell(SkillEditorSceneSelectModel.instance:getIndex(slot0._mo), true)
-		GameSceneMgr.instance:getScene(SceneType.Fight).level:loadLevel(slot2)
-		SkillEditorMgr.instance:setSceneLevelId(slot2)
-		slot0:_setCameraOffset(slot2)
+function var_0_0._onClickThis(arg_6_0)
+	local var_6_0 = GameSceneMgr.instance:getScene(SceneType.Fight).level:getCurLevelId()
+	local var_6_1 = arg_6_0._mo.co.id
+
+	if var_6_0 ~= var_6_1 then
+		local var_6_2 = SkillEditorSceneSelectModel.instance:getIndex(arg_6_0._mo)
+
+		SkillEditorSceneSelectModel.instance:selectCell(var_6_2, true)
+		GameSceneMgr.instance:getScene(SceneType.Fight).level:loadLevel(var_6_1)
+		SkillEditorMgr.instance:setSceneLevelId(var_6_1)
+		arg_6_0:_setCameraOffset(var_6_1)
 		FightController.instance:dispatchEvent(FightEvent.OnSkillEditorSceneChange)
 	end
 end
 
-function slot0._setCameraOffset(slot0, slot1)
-	slot4 = lua_scene_level.configDict[slot1] and slot3.cameraOffset
-	slot5 = nil
-	CameraMgr.instance:getVirtualCameraGO().transform.localPosition = (not string.nilorempty(slot4) or Vector3.zero) and Vector3.New(unpack(cjson.decode(slot4)))
+function var_0_0._setCameraOffset(arg_7_0, arg_7_1)
+	local var_7_0 = CameraMgr.instance:getVirtualCameraGO()
+	local var_7_1 = lua_scene_level.configDict[arg_7_1]
+	local var_7_2 = var_7_1 and var_7_1.cameraOffset
+	local var_7_3
+
+	if string.nilorempty(var_7_2) then
+		var_7_3 = Vector3.zero
+	else
+		var_7_3 = Vector3.New(unpack(cjson.decode(var_7_2)))
+	end
+
+	var_7_0.transform.localPosition = var_7_3
 end
 
-return slot0
+return var_0_0

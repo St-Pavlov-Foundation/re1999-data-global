@@ -1,49 +1,64 @@
-module("modules.logic.fight.entity.comp.skill.FightTLEventSetSceneObjVisible", package.seeall)
+﻿module("modules.logic.fight.entity.comp.skill.FightTLEventSetSceneObjVisible", package.seeall)
 
-slot0 = class("FightTLEventSetSceneObjVisible")
+local var_0_0 = class("FightTLEventSetSceneObjVisible")
 
-function slot0.handleSkillEvent(slot0, slot1, slot2, slot3)
-	slot0._fightStepMO = slot1
-	slot0._paramsArr = slot3
+function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	arg_1_0._fightStepMO = arg_1_1
+	arg_1_0._paramsArr = arg_1_3
 
-	if slot0._paramsArr[3] == "1" then
+	if arg_1_0._paramsArr[3] == "1" then
 		return
 	end
 
-	slot0:_setVisible()
+	arg_1_0:_setVisible()
 end
 
-function slot0._setVisible(slot0)
-	if slot0._paramsArr[4] == "1" then
-		if FightHelper.getEntity(slot0._fightStepMO.fromId) and slot1.skinSpineEffect then
-			if slot0._paramsArr[2] == "1" then
-				slot1.skinSpineEffect:showEffects()
+function var_0_0._setVisible(arg_2_0)
+	if arg_2_0._paramsArr[4] == "1" then
+		local var_2_0 = FightHelper.getEntity(arg_2_0._fightStepMO.fromId)
+
+		if var_2_0 and var_2_0.skinSpineEffect then
+			if arg_2_0._paramsArr[2] == "1" then
+				var_2_0.skinSpineEffect:showEffects()
 			else
-				slot1.skinSpineEffect:hideEffects()
+				var_2_0.skinSpineEffect:hideEffects()
 			end
 		end
 
 		return
 	end
 
-	if GameSceneMgr.instance:getCurScene() and slot1.level:getSceneGo() and gohelper.findChild(slot2, slot0._paramsArr[1]) then
-		gohelper.setActive(slot3, slot0._paramsArr[2] == "1")
+	local var_2_1 = GameSceneMgr.instance:getCurScene()
+
+	if var_2_1 then
+		local var_2_2 = var_2_1.level:getSceneGo()
+
+		if var_2_2 then
+			local var_2_3 = gohelper.findChild(var_2_2, arg_2_0._paramsArr[1])
+
+			if var_2_3 then
+				gohelper.setActive(var_2_3, arg_2_0._paramsArr[2] == "1")
+			end
+		end
 	end
 end
 
-function slot0.handleSkillEventEnd(slot0)
+function var_0_0.handleSkillEventEnd(arg_3_0)
+	return
 end
 
-function slot0.onSkillEnd(slot0)
-	if slot0._paramsArr and slot0._paramsArr[3] == "1" then
-		slot0:_setVisible()
+function var_0_0.onSkillEnd(arg_4_0)
+	if arg_4_0._paramsArr and arg_4_0._paramsArr[3] == "1" then
+		arg_4_0:_setVisible()
 	end
 end
 
-function slot0.reset(slot0)
+function var_0_0.reset(arg_5_0)
+	return
 end
 
-function slot0.dispose(slot0)
+function var_0_0.dispose(arg_6_0)
+	return
 end
 
-return slot0
+return var_0_0

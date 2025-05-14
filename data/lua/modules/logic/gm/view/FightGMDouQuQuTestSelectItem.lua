@@ -1,85 +1,101 @@
-module("modules.logic.gm.view.FightGMDouQuQuTestSelectItem", package.seeall)
+﻿module("modules.logic.gm.view.FightGMDouQuQuTestSelectItem", package.seeall)
 
-slot0 = class("FightGMDouQuQuTestSelectItem", FightBaseView)
+local var_0_0 = class("FightGMDouQuQuTestSelectItem", FightBaseView)
 
-function slot0.onInitView(slot0)
-	slot0._btnSelect = gohelper.findChildClickWithDefaultAudio(slot0.viewGO, "btn")
-	slot0._selected = gohelper.findChild(slot0.viewGO, "select")
-	slot0._text = gohelper.findChildText(slot0.viewGO, "Text")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnSelect = gohelper.findChildClickWithDefaultAudio(arg_1_0.viewGO, "btn")
+	arg_1_0._selected = gohelper.findChild(arg_1_0.viewGO, "select")
+	arg_1_0._text = gohelper.findChildText(arg_1_0.viewGO, "Text")
 end
 
-function slot0.addEvents(slot0)
-	slot0:com_registClick(slot0._btnSelect, slot0._onBtnSelect)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0:com_registClick(arg_2_0._btnSelect, arg_2_0._onBtnSelect)
 end
 
-function slot0._onBtnSelect(slot0)
-	if slot0.listType == "_enemySelectedList" or slot0.listType == "_playerSelectedList" then
-		slot0.PARENT_VIEW[slot0.listType]:removeIndex(slot0:getItemIndex())
+function var_0_0._onBtnSelect(arg_3_0)
+	local var_3_0 = arg_3_0:getItemIndex()
 
-		slot2 = slot0.listType == "_enemySelectedList" and slot0.PARENT_VIEW._enemySelectList or slot0.PARENT_VIEW._playerSelectList
+	if arg_3_0.listType == "_enemySelectedList" or arg_3_0.listType == "_playerSelectedList" then
+		arg_3_0.PARENT_VIEW[arg_3_0.listType]:removeIndex(var_3_0)
 
-		for slot7, slot8 in ipairs(slot2) do
-			if slot8.config.robotId < slot0.config.robotId then
-				slot3 = 0 + 1
+		local var_3_1 = arg_3_0.listType == "_enemySelectedList" and arg_3_0.PARENT_VIEW._enemySelectList or arg_3_0.PARENT_VIEW._playerSelectList
+		local var_3_2 = 0
+
+		for iter_3_0, iter_3_1 in ipairs(var_3_1) do
+			if iter_3_1.config.robotId < arg_3_0.config.robotId then
+				var_3_2 = var_3_2 + 1
 			end
 		end
 
-		slot3 = slot3 + 1
+		local var_3_3 = var_3_2 + 1
+		local var_3_4 = var_3_1:addIndex(var_3_3, arg_3_0.config)
 
-		gohelper.setSibling(slot2:addIndex(slot3, slot0.config).keyword_gameObject, slot3 - 1)
+		gohelper.setSibling(var_3_4.keyword_gameObject, var_3_3 - 1)
 	else
-		if UnityEngine.Input.GetKey(UnityEngine.KeyCode.LeftShift) and slot0.ITEM_LIST_MGR.lastSelectIndex and slot2 < #slot0.ITEM_LIST_MGR and slot2 > 0 then
-			for slot8 = math.min(slot2, slot1), math.max(slot2, slot1) do
-				if not slot0.ITEM_LIST_MGR[slot8].selecting then
-					slot0.ITEM_LIST_MGR[slot8].selecting = true
+		if UnityEngine.Input.GetKey(UnityEngine.KeyCode.LeftShift) then
+			local var_3_5 = arg_3_0.ITEM_LIST_MGR.lastSelectIndex
 
-					gohelper.setActive(slot0.ITEM_LIST_MGR[slot8]._selected, true)
+			if var_3_5 and var_3_5 < #arg_3_0.ITEM_LIST_MGR and var_3_5 > 0 then
+				local var_3_6 = math.min(var_3_5, var_3_0)
+				local var_3_7 = math.max(var_3_5, var_3_0)
+
+				for iter_3_2 = var_3_6, var_3_7 do
+					if not arg_3_0.ITEM_LIST_MGR[iter_3_2].selecting then
+						arg_3_0.ITEM_LIST_MGR[iter_3_2].selecting = true
+
+						gohelper.setActive(arg_3_0.ITEM_LIST_MGR[iter_3_2]._selected, true)
+					end
 				end
+
+				arg_3_0.ITEM_LIST_MGR.lastSelectIndex = var_3_0
+
+				return
 			end
-
-			slot0.ITEM_LIST_MGR.lastSelectIndex = slot1
-
-			return
 		end
 
-		slot0.selecting = not slot0.selecting
+		arg_3_0.selecting = not arg_3_0.selecting
 
-		gohelper.setActive(slot0._selected, slot0.selecting)
+		gohelper.setActive(arg_3_0._selected, arg_3_0.selecting)
 
-		slot0.ITEM_LIST_MGR.lastSelectIndex = slot1
+		arg_3_0.ITEM_LIST_MGR.lastSelectIndex = var_3_0
 	end
 end
 
-function slot0.refreshItemData(slot0, slot1)
-	gohelper.setSibling(slot0.viewGO, slot0:getItemIndex() - 1)
+function var_0_0.refreshItemData(arg_4_0, arg_4_1)
+	gohelper.setSibling(arg_4_0.viewGO, arg_4_0:getItemIndex() - 1)
 
-	slot0.listType = slot0.ITEM_LIST_MGR.listType
-	slot0.selecting = false
+	arg_4_0.listType = arg_4_0.ITEM_LIST_MGR.listType
+	arg_4_0.selecting = false
 
-	gohelper.setActive(slot0._selected, slot0.selecting)
+	gohelper.setActive(arg_4_0._selected, arg_4_0.selecting)
 
-	slot0.config = slot1
+	arg_4_0.config = arg_4_1
 
-	for slot6 = 1, 4 do
-		if slot1["role" .. slot6] ~= 0 then
-			slot8 = lua_activity174_test_role.configDict[slot7]
+	local var_4_0 = ""
 
-			if slot6 > 1 then
-				slot2 = "" .. "+"
+	for iter_4_0 = 1, 4 do
+		local var_4_1 = arg_4_1["role" .. iter_4_0]
+
+		if var_4_1 ~= 0 then
+			local var_4_2 = lua_activity174_test_role.configDict[var_4_1]
+
+			if iter_4_0 > 1 then
+				var_4_0 = var_4_0 .. "+"
 			end
 
-			if slot8 then
-				slot2 = slot2 .. slot8.name
+			if var_4_2 then
+				var_4_0 = var_4_0 .. var_4_2.name
 			else
-				logError("测试人物表 找不到id:" .. slot7)
+				logError("测试人物表 找不到id:" .. var_4_1)
 			end
 		end
 	end
 
-	slot0._text.text = slot1.robotId .. " " .. slot2
+	arg_4_0._text.text = arg_4_1.robotId .. " " .. var_4_0
 end
 
-function slot0.onDestructor(slot0)
+function var_0_0.onDestructor(arg_5_0)
+	return
 end
 
-return slot0
+return var_0_0

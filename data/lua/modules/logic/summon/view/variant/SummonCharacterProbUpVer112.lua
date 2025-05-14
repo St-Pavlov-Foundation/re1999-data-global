@@ -1,45 +1,43 @@
-module("modules.logic.summon.view.variant.SummonCharacterProbUpVer112", package.seeall)
+﻿module("modules.logic.summon.view.variant.SummonCharacterProbUpVer112", package.seeall)
 
-slot0 = class("SummonCharacterProbUpVer112", SummonMainCharacterProbUp)
-slot0.SIMAGE_COUNT = 3
-slot0.preloadList = {
+local var_0_0 = class("SummonCharacterProbUpVer112", SummonMainCharacterProbUp)
+
+var_0_0.SIMAGE_COUNT = 3
+var_0_0.preloadList = {
 	ResUrl.getSummonCoverBg("heroversion_1_1/full/bg1"),
 	ResUrl.getSummonCoverBg("heroversion_1_1/fg")
 }
 
-for slot4 = 1, slot0.SIMAGE_COUNT do
-	table.insert(slot0.preloadList, ResUrl.getSummonCoverBg("heroversion_1_1/img_role" .. slot4 + 3))
+for iter_0_0 = 1, var_0_0.SIMAGE_COUNT do
+	table.insert(var_0_0.preloadList, ResUrl.getSummonCoverBg("heroversion_1_1/img_role" .. iter_0_0 + 3))
 end
 
-function slot0._editableInitView(slot0)
-	slot0._charaterItemCount = 2
+function var_0_0._editableInitView(arg_1_0)
+	arg_1_0._charaterItemCount = 2
 
-	uv0.super._editableInitView(slot0)
+	var_0_0.super._editableInitView(arg_1_0)
 end
 
-function slot0.refreshSingleImage(slot0)
-	slot0._simagebg:LoadImage(ResUrl.getSummonCoverBg("heroversion_1_1/full/bg1"))
-	slot0._simageline:LoadImage(ResUrl.getSummonHeroIcon("title_img_deco"))
+function var_0_0.refreshSingleImage(arg_2_0)
+	arg_2_0._simagebg:LoadImage(ResUrl.getSummonCoverBg("heroversion_1_1/full/bg1"))
+	arg_2_0._simageline:LoadImage(ResUrl.getSummonHeroIcon("title_img_deco"))
+	arg_2_0._simagefrontbg:LoadImage(ResUrl.getSummonCoverBg("heroversion_1_1/fg"))
 
-	slot4 = "heroversion_1_1/fg"
-
-	slot0._simagefrontbg:LoadImage(ResUrl.getSummonCoverBg(slot4))
-
-	for slot4 = 1, uv0.SIMAGE_COUNT do
-		slot0["_simagead" .. slot4]:LoadImage(ResUrl.getSummonCoverBg("heroversion_1_1/img_role" .. slot4 + 3), slot0._adLoaded, slot0)
+	for iter_2_0 = 1, var_0_0.SIMAGE_COUNT do
+		arg_2_0["_simagead" .. iter_2_0]:LoadImage(ResUrl.getSummonCoverBg("heroversion_1_1/img_role" .. iter_2_0 + 3), arg_2_0._adLoaded, arg_2_0)
 	end
 end
 
-function slot0.unloadSingleImage(slot0)
-	for slot4 = 1, uv0.SIMAGE_COUNT do
-		slot0["_simagead" .. slot4]:UnLoadImage()
+function var_0_0.unloadSingleImage(arg_3_0)
+	for iter_3_0 = 1, var_0_0.SIMAGE_COUNT do
+		arg_3_0["_simagead" .. iter_3_0]:UnLoadImage()
 	end
 
-	slot0._simagebg:UnLoadImage()
-	slot0._simageline:UnLoadImage()
-	slot0._simagecurrency1:UnLoadImage()
-	slot0._simagecurrency10:UnLoadImage()
-	slot0._simagefrontbg:UnLoadImage()
+	arg_3_0._simagebg:UnLoadImage()
+	arg_3_0._simageline:UnLoadImage()
+	arg_3_0._simagecurrency1:UnLoadImage()
+	arg_3_0._simagecurrency10:UnLoadImage()
+	arg_3_0._simagefrontbg:UnLoadImage()
 end
 
-return slot0
+return var_0_0

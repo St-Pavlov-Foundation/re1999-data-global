@@ -1,128 +1,142 @@
-module("modules.logic.versionactivity1_8.weila.model.ActWeilaTaskListModel", package.seeall)
+﻿module("modules.logic.versionactivity1_8.weila.model.ActWeilaTaskListModel", package.seeall)
 
-slot0 = class("ActWeilaTaskListModel", ListScrollModel)
+local var_0_0 = class("ActWeilaTaskListModel", ListScrollModel)
 
-function slot0.init(slot0)
+function var_0_0.init(arg_1_0)
 	TaskRpc.instance:sendGetTaskInfoRequest({
 		TaskEnum.TaskType.RoleActivity
-	}, slot0.refreshData, slot0)
+	}, arg_1_0.refreshData, arg_1_0)
 end
 
-function slot0.refreshData(slot0)
-	slot2 = {}
+function var_0_0.refreshData(arg_2_0)
+	local var_2_0 = TaskModel.instance:getTaskMoList(TaskEnum.TaskType.RoleActivity, VersionActivity1_8Enum.ActivityId.Weila)
+	local var_2_1 = {}
+	local var_2_2 = 0
 
-	for slot7, slot8 in ipairs(TaskModel.instance:getTaskMoList(TaskEnum.TaskType.RoleActivity, VersionActivity1_8Enum.ActivityId.Weila)) do
-		if slot8.hasFinished then
-			slot3 = 0 + 1
+	for iter_2_0, iter_2_1 in ipairs(var_2_0) do
+		if iter_2_1.hasFinished then
+			var_2_2 = var_2_2 + 1
 		end
 
-		table.insert(slot2, slot8)
+		table.insert(var_2_1, iter_2_1)
 	end
 
-	if slot3 > 1 then
-		table.insert(slot2, TaskMo.New())
+	if var_2_2 > 1 then
+		table.insert(var_2_1, TaskMo.New())
 	end
 
-	table.sort(slot2, uv0.sortMO)
+	table.sort(var_2_1, var_0_0.sortMO)
 
-	slot0._hasRankDiff = false
+	arg_2_0._hasRankDiff = false
 
-	slot0:setList(slot2)
+	arg_2_0:setList(var_2_1)
 end
 
-function slot0.sortMO(slot0, slot1)
-	if uv0.getSortIndex(slot0) ~= uv0.getSortIndex(slot1) then
-		return slot2 < slot3
-	elseif slot0.id ~= slot1.id then
-		return slot0.id < slot1.id
+function var_0_0.sortMO(arg_3_0, arg_3_1)
+	local var_3_0 = var_0_0.getSortIndex(arg_3_0)
+	local var_3_1 = var_0_0.getSortIndex(arg_3_1)
+
+	if var_3_0 ~= var_3_1 then
+		return var_3_0 < var_3_1
+	elseif arg_3_0.id ~= arg_3_1.id then
+		return arg_3_0.id < arg_3_1.id
 	end
 end
 
-function slot0.getSortIndex(slot0)
-	if slot0.id == 0 then
+function var_0_0.getSortIndex(arg_4_0)
+	if arg_4_0.id == 0 then
 		return 1
-	elseif slot0.finishCount > 0 or slot0.preFinish then
+	elseif arg_4_0.finishCount > 0 or arg_4_0.preFinish then
 		return 100
-	elseif slot0.hasFinished then
+	elseif arg_4_0.hasFinished then
 		return 2
 	end
 
 	return 50
 end
 
-function slot0.getRankDiff(slot0, slot1)
-	if slot0._hasRankDiff and slot1 then
-		slot3 = slot0:getIndex(slot1)
+function var_0_0.getRankDiff(arg_5_0, arg_5_1)
+	if arg_5_0._hasRankDiff and arg_5_1 then
+		local var_5_0 = tabletool.indexOf(arg_5_0._idIdxList, arg_5_1.id)
+		local var_5_1 = arg_5_0:getIndex(arg_5_1)
 
-		if tabletool.indexOf(slot0._idIdxList, slot1.id) and slot3 then
-			slot0._idIdxList[slot2] = -2
+		if var_5_0 and var_5_1 then
+			arg_5_0._idIdxList[var_5_0] = -2
 
-			return slot3 - slot2
+			return var_5_1 - var_5_0
 		end
 	end
 
 	return 0
 end
 
-function slot0.refreshRankDiff(slot0)
-	slot0._idIdxList = {}
+function var_0_0.refreshRankDiff(arg_6_0)
+	arg_6_0._idIdxList = {}
 
-	for slot5, slot6 in ipairs(slot0:getList()) do
-		table.insert(slot0._idIdxList, slot6.id)
+	local var_6_0 = arg_6_0:getList()
+
+	for iter_6_0, iter_6_1 in ipairs(var_6_0) do
+		table.insert(arg_6_0._idIdxList, iter_6_1.id)
 	end
 end
 
-function slot0.preFinish(slot0, slot1)
-	if not slot1 then
+function var_0_0.preFinish(arg_7_0, arg_7_1)
+	if not arg_7_1 then
 		return
 	end
 
-	slot2 = false
-	slot0._hasRankDiff = false
+	local var_7_0 = false
 
-	slot0:refreshRankDiff()
+	arg_7_0._hasRankDiff = false
 
-	slot3 = 0
-	slot4 = slot0:getList()
+	arg_7_0:refreshRankDiff()
 
-	if slot1.id == 0 then
-		for slot8, slot9 in ipairs(slot4) do
-			if slot9.hasFinished and slot9.id ~= 0 then
-				slot9.preFinish = true
-				slot2 = true
-				slot3 = slot3 + 1
+	local var_7_1 = 0
+	local var_7_2 = arg_7_0:getList()
+
+	if arg_7_1.id == 0 then
+		for iter_7_0, iter_7_1 in ipairs(var_7_2) do
+			if iter_7_1.hasFinished and iter_7_1.id ~= 0 then
+				iter_7_1.preFinish = true
+				var_7_0 = true
+				var_7_1 = var_7_1 + 1
 			end
 		end
-	elseif slot1.hasFinished then
-		slot1.preFinish = true
-		slot2 = true
-		slot3 = slot3 + 1
+	elseif arg_7_1.hasFinished then
+		arg_7_1.preFinish = true
+		var_7_0 = true
+		var_7_1 = var_7_1 + 1
 	end
 
-	if slot2 then
-		if slot0:getById(0) and slot0:getGotRewardCount() < slot3 + 1 then
-			tabletool.removeValue(slot4, slot5)
+	if var_7_0 then
+		local var_7_3 = arg_7_0:getById(0)
+
+		if var_7_3 and arg_7_0:getGotRewardCount() < var_7_1 + 1 then
+			tabletool.removeValue(var_7_2, var_7_3)
 		end
 
-		slot0._hasRankDiff = true
+		arg_7_0._hasRankDiff = true
 
-		table.sort(slot4, uv0.sortMO)
-		slot0:setList(slot4)
+		table.sort(var_7_2, var_0_0.sortMO)
+		arg_7_0:setList(var_7_2)
 
-		slot0._hasRankDiff = false
+		arg_7_0._hasRankDiff = false
 	end
 end
 
-function slot0.getGotRewardCount(slot0, slot1)
-	for slot7, slot8 in ipairs(slot1 or slot0:getList()) do
-		if slot8.hasFinished then
-			slot3 = 0 + 1
+function var_0_0.getGotRewardCount(arg_8_0, arg_8_1)
+	local var_8_0 = arg_8_1 or arg_8_0:getList()
+	local var_8_1 = 0
+
+	for iter_8_0, iter_8_1 in ipairs(var_8_0) do
+		if iter_8_1.hasFinished then
+			var_8_1 = var_8_1 + 1
 		end
 	end
 
-	return slot3
+	return var_8_1
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

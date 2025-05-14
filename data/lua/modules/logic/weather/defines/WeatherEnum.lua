@@ -1,31 +1,32 @@
-module("modules.logic.weather.defines.WeatherEnum", package.seeall)
+﻿module("modules.logic.weather.defines.WeatherEnum", package.seeall)
 
-slot0 = _M
-slot0.LightMode = {
+local var_0_0 = _M
+
+var_0_0.LightMode = {
 	"During",
 	"Overcast",
 	"Dusk",
 	"Night"
 }
-slot0.LightModeDuring = 1
-slot0.LightModeOvercast = 2
-slot0.LightModeDusk = 3
-slot0.LightModeNight = 4
-slot0.DayTimeFireworks = 9
-slot0.NightTimeFireworks = 10
-slot0.EffectAudioTime = {
-	[slot0.DayTimeFireworks] = 40,
-	[slot0.NightTimeFireworks] = 40
+var_0_0.LightModeDuring = 1
+var_0_0.LightModeOvercast = 2
+var_0_0.LightModeDusk = 3
+var_0_0.LightModeNight = 4
+var_0_0.DayTimeFireworks = 9
+var_0_0.NightTimeFireworks = 10
+var_0_0.EffectAudioTime = {
+	[var_0_0.DayTimeFireworks] = 40,
+	[var_0_0.NightTimeFireworks] = 40
 }
-slot0.EffectPlayAudio = {
-	[slot0.DayTimeFireworks] = 20250601,
-	[slot0.NightTimeFireworks] = 20250601
+var_0_0.EffectPlayAudio = {
+	[var_0_0.DayTimeFireworks] = 20250601,
+	[var_0_0.NightTimeFireworks] = 20250601
 }
-slot0.EffectStopAudio = {
-	[slot0.DayTimeFireworks] = 20250602,
-	[slot0.NightTimeFireworks] = 20250602
+var_0_0.EffectStopAudio = {
+	[var_0_0.DayTimeFireworks] = 20250602,
+	[var_0_0.NightTimeFireworks] = 20250602
 }
-slot0.EffectMode = {
+var_0_0.EffectMode = {
 	"Normal",
 	"Sunny",
 	"Light_Rain",
@@ -37,7 +38,7 @@ slot0.EffectMode = {
 	"Normal",
 	"Normal"
 }
-slot0.EffectAirColor = {
+var_0_0.EffectAirColor = {
 	{
 		255,
 		255,
@@ -63,7 +64,7 @@ slot0.EffectAirColor = {
 		148
 	}
 }
-slot0.DoorLightColor = {
+var_0_0.DoorLightColor = {
 	{
 		247,
 		245,
@@ -89,21 +90,21 @@ slot0.DoorLightColor = {
 		255
 	}
 }
-slot0.BloomFactor = 1
-slot0.Percent = 1
-slot0.BloomFactor2 = {
+var_0_0.BloomFactor = 1
+var_0_0.Percent = 1
+var_0_0.BloomFactor2 = {
 	0,
 	0,
 	0,
 	0
 }
-slot0.Luminance = {
+var_0_0.Luminance = {
 	0,
 	0.223,
 	0,
 	0
 }
-slot0.FrameTintColor = {
+var_0_0.FrameTintColor = {
 	{
 		1,
 		1,
@@ -129,50 +130,50 @@ slot0.FrameTintColor = {
 		0.54
 	}
 }
-slot0.FrameLumFactor = {
+var_0_0.FrameLumFactor = {
 	0.5,
 	0.77,
 	0.77,
 	0.77
 }
-slot0.HeroInFrameColor = {
+var_0_0.HeroInFrameColor = {
 	Color.New(0.74, 0.68, 0.59, 1),
 	Color.New(0.51, 0.48, 0.45, 1),
 	Color.New(0.44, 0.43, 0.39, 1),
 	Color.New(0.41, 0.44, 0.5, 1)
 }
-slot0.HeroInFrameLumFactor = {
+var_0_0.HeroInFrameLumFactor = {
 	0.25,
 	0.5,
 	0.5,
 	0.5
 }
-slot0.HeroInSceneLumFactor = 0
-slot0.Default = 0
-slot0.Heavy_Rain = 4
-slot0.Heavy_Rainstorm = 5
-slot0.RainOn = {
-	[slot0.Default] = 0,
-	[slot0.Heavy_Rain] = 1,
-	[slot0.Heavy_Rainstorm] = 1
+var_0_0.HeroInSceneLumFactor = 0
+var_0_0.Default = 0
+var_0_0.Heavy_Rain = 4
+var_0_0.Heavy_Rainstorm = 5
+var_0_0.RainOn = {
+	[var_0_0.Default] = 0,
+	[var_0_0.Heavy_Rain] = 1,
+	[var_0_0.Heavy_Rainstorm] = 1
 }
-slot0.RainValue = {
-	[slot0.Default] = 0,
-	[slot0.Heavy_Rain] = 1,
-	[slot0.Heavy_Rainstorm] = 1
+var_0_0.RainValue = {
+	[var_0_0.Default] = 0,
+	[var_0_0.Heavy_Rain] = 1,
+	[var_0_0.Heavy_Rainstorm] = 1
 }
-slot0.RainDistortionFactor = {
-	[slot0.Default] = Vector4(0, 0, 0, 0),
-	[slot0.Heavy_Rain] = Vector4(0, 1.3, 4.7, 0),
-	[slot0.Heavy_Rainstorm] = Vector4(3, 1.3, 4.7, 0)
+var_0_0.RainDistortionFactor = {
+	[var_0_0.Default] = Vector4(0, 0, 0, 0),
+	[var_0_0.Heavy_Rain] = Vector4(0, 1.3, 4.7, 0),
+	[var_0_0.Heavy_Rainstorm] = Vector4(3, 1.3, 4.7, 0)
 }
-slot0.RainEmission = {
-	[slot0.Default] = Vector4(0, 0, 0, 0),
-	[slot0.Heavy_Rain] = Vector4(0, 3.5, 1.86, 0),
-	[slot0.Heavy_Rainstorm] = Vector4(1.5, 3, 1.86, 0)
+var_0_0.RainEmission = {
+	[var_0_0.Default] = Vector4(0, 0, 0, 0),
+	[var_0_0.Heavy_Rain] = Vector4(0, 3.5, 1.86, 0),
+	[var_0_0.Heavy_Rainstorm] = Vector4(1.5, 3, 1.86, 0)
 }
-slot0.EffectTag = {
+var_0_0.EffectTag = {
 	Frame = "frame"
 }
 
-return slot0
+return var_0_0

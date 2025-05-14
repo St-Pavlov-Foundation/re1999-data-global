@@ -1,62 +1,67 @@
-module("modules.logic.pcInput.activityAdapter.StoryDialogAdapter", package.seeall)
+﻿module("modules.logic.pcInput.activityAdapter.StoryDialogAdapter", package.seeall)
 
-slot0 = class("StoryDialogAdapter", BaseActivityAdapter)
-slot0.keytoFunction = {
-	Space = function ()
+local var_0_0 = class("StoryDialogAdapter", BaseActivityAdapter)
+
+var_0_0.keytoFunction = {
+	Space = function()
 		PCInputController.instance:dispatchEvent(PCInputEvent.NotifyStoryDialogNext)
 	end,
-	F1 = function ()
+	F1 = function()
 		PCInputController.instance:dispatchEvent(PCInputEvent.NotifyStoryDialogAuto)
 	end,
-	F2 = function ()
+	F2 = function()
 		PCInputController.instance:dispatchEvent(PCInputEvent.NotifyStoryDialogSkip)
 	end,
-	F3 = function ()
+	F3 = function()
 		PCInputController.instance:dispatchEvent(PCInputEvent.NotifyStoryDialogExit)
 	end,
-	Alpha1 = function ()
+	Alpha1 = function()
 		PCInputController.instance:dispatchEvent(PCInputEvent.NotifyStoryDialogSelect, 1)
 	end,
-	Alpha2 = function ()
+	Alpha2 = function()
 		PCInputController.instance:dispatchEvent(PCInputEvent.NotifyStoryDialogSelect, 2)
 	end,
-	Alpha3 = function ()
+	Alpha3 = function()
 		PCInputController.instance:dispatchEvent(PCInputEvent.NotifyStoryDialogSelect, 3)
 	end
 }
 
-function slot0.ctor(slot0)
-	slot0.keytoFunction = uv0.keytoFunction
+function var_0_0.ctor(arg_8_0)
+	arg_8_0.keytoFunction = var_0_0.keytoFunction
 
-	slot0:registerFunction()
+	arg_8_0:registerFunction()
 end
 
-function slot0.registerFunction(slot0)
-	for slot4, slot5 in pairs(slot0.keytoFunction) do
-		PCInputController.instance:registerKey(slot4, ZProj.PCInputManager.PCInputEvent.KeyUp)
+function var_0_0.registerFunction(arg_9_0)
+	for iter_9_0, iter_9_1 in pairs(arg_9_0.keytoFunction) do
+		PCInputController.instance:registerKey(iter_9_0, ZProj.PCInputManager.PCInputEvent.KeyUp)
 	end
 end
 
-function slot0.unRegisterFunction(slot0)
-	for slot4, slot5 in pairs(slot0.keytoFunction) do
-		PCInputController.instance:unregisterKey(slot4, ZProj.PCInputManager.PCInputEvent.KeyUp)
+function var_0_0.unRegisterFunction(arg_10_0)
+	for iter_10_0, iter_10_1 in pairs(arg_10_0.keytoFunction) do
+		PCInputController.instance:unregisterKey(iter_10_0, ZProj.PCInputManager.PCInputEvent.KeyUp)
 	end
 end
 
-function slot0.OnkeyUp(slot0, slot1)
-	if slot0.keytoFunction[slot1] then
-		slot2()
+function var_0_0.OnkeyUp(arg_11_0, arg_11_1)
+	local var_11_0 = arg_11_0.keytoFunction[arg_11_1]
+
+	if var_11_0 then
+		var_11_0()
 	end
 end
 
-function slot0.OnkeyDown(slot0, slot1)
-	if slot0.keytoFunction[slot1] then
-		slot2()
+function var_0_0.OnkeyDown(arg_12_0, arg_12_1)
+	local var_12_0 = arg_12_0.keytoFunction[arg_12_1]
+
+	if var_12_0 then
+		var_12_0()
 	end
 end
 
-function slot0.destroy(slot0)
-	slot0:unRegisterFunction()
+function var_0_0.destroy(arg_13_0)
+	arg_13_0:unRegisterFunction()
 end
 
-return slot0
+return var_0_0

@@ -1,27 +1,30 @@
-module("modules.logic.activitywelfare.view.ActivityWelfareView", package.seeall)
+﻿module("modules.logic.activitywelfare.view.ActivityWelfareView", package.seeall)
 
-slot0 = class("ActivityWelfareView", BaseView)
+local var_0_0 = class("ActivityWelfareView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gocategory = gohelper.findChild(slot0.viewGO, "#go_category")
-	slot0._scrollitem = gohelper.findChildScrollRect(slot0.viewGO, "#go_category/#scroll_categoryitem")
-	slot0._gosubview = gohelper.findChild(slot0.viewGO, "#go_subview")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gocategory = gohelper.findChild(arg_1_0.viewGO, "#go_category")
+	arg_1_0._scrollitem = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_category/#scroll_categoryitem")
+	arg_1_0._gosubview = gohelper.findChild(arg_1_0.viewGO, "#go_subview")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_4_0)
+	return
 end
 
-slot1 = {
+local var_0_1 = {
 	[ActivityEnum.Activity.NewWelfare] = ViewName.NewWelfareView,
 	[ActivityEnum.Activity.NoviceSign] = ViewName.ActivityNoviceSignView,
 	[ActivityEnum.Activity.StoryShow] = ViewName.ActivityStoryShowView,
@@ -32,98 +35,109 @@ slot1 = {
 	[ActivityEnum.Activity.V2a5_NewInsight] = ViewName.ActivityInsightShowView_2_5
 }
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_5_0)
+	return
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_6_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Activity_open)
-	slot0:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, slot0._refreshView, slot0)
-	slot0:addEventCb(ActivityController.instance, ActivityEvent.SetBannerViewCategoryListInteract, slot0.setCategoryListInteractable, slot0)
-	slot0:addEventCb(ActivityController.instance, ActivityEvent.SwitchWelfareActivity, slot0._openSubView, slot0)
-	slot0:_refreshView()
+	arg_6_0:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_6_0._refreshView, arg_6_0)
+	arg_6_0:addEventCb(ActivityController.instance, ActivityEvent.SetBannerViewCategoryListInteract, arg_6_0.setCategoryListInteractable, arg_6_0)
+	arg_6_0:addEventCb(ActivityController.instance, ActivityEvent.SwitchWelfareActivity, arg_6_0._openSubView, arg_6_0)
+	arg_6_0:_refreshView()
 end
 
-function slot0._refreshView(slot0)
-	if not ActivityModel.instance:getCenterActivities(ActivityEnum.ActivityType.Welfare) or not next(slot1) then
-		slot0:closeThis()
+function var_0_0._refreshView(arg_7_0)
+	local var_7_0 = ActivityModel.instance:getCenterActivities(ActivityEnum.ActivityType.Welfare)
+
+	if not var_7_0 or not next(var_7_0) then
+		arg_7_0:closeThis()
 	end
 
-	ActivityModel.instance:removeFinishedWelfare(slot1)
+	ActivityModel.instance:removeFinishedWelfare(var_7_0)
 
-	slot0.data = {}
+	arg_7_0.data = {}
 
-	for slot5, slot6 in pairs(slot1) do
-		table.insert(slot0.data, {
-			id = slot6,
-			co = ActivityConfig.instance:getActivityCo(slot6),
+	for iter_7_0, iter_7_1 in pairs(var_7_0) do
+		local var_7_1 = {
+			id = iter_7_1,
+			co = ActivityConfig.instance:getActivityCo(iter_7_1),
 			type = ActivityEnum.ActivityType.Welfare
-		})
+		}
+
+		table.insert(arg_7_0.data, var_7_1)
 	end
 
 	ActivityWelfareListModel.instance:setOpenViewTime()
-	ActivityWelfareListModel.instance:setCategoryList(slot0.data)
-	slot0:_openSubView()
+	ActivityWelfareListModel.instance:setCategoryList(arg_7_0.data)
+	arg_7_0:_openSubView()
 end
 
-function slot0._openSubView(slot0)
-	if slot0._viewName then
-		ViewMgr.instance:closeView(slot0._viewName, true)
+function var_0_0._openSubView(arg_8_0)
+	if arg_8_0._viewName then
+		ViewMgr.instance:closeView(arg_8_0._viewName, true)
 	end
 
-	slot0._viewName = uv0[ActivityModel.instance:getTargetActivityCategoryId(ActivityEnum.ActivityType.Welfare)]
+	local var_8_0 = ActivityModel.instance:getTargetActivityCategoryId(ActivityEnum.ActivityType.Welfare)
 
-	if not slot0._viewName then
+	arg_8_0._viewName = var_0_1[var_8_0]
+
+	if not arg_8_0._viewName then
 		return
 	end
 
-	if slot1 == ActivityEnum.Activity.StoryShow or slot1 == ActivityEnum.Activity.ClassShow then
-		slot0:setCategoryRedDotData(slot1)
+	if var_8_0 == ActivityEnum.Activity.StoryShow or var_8_0 == ActivityEnum.Activity.ClassShow then
+		arg_8_0:setCategoryRedDotData(var_8_0)
 	end
 
-	slot0.viewContainer:hideHelp()
-	ViewMgr.instance:openView(slot0._viewName, {
-		parent = slot0._gosubview,
-		actId = slot1,
-		root = slot0.viewGO
-	}, true)
+	arg_8_0.viewContainer:hideHelp()
+
+	local var_8_1 = {
+		parent = arg_8_0._gosubview,
+		actId = var_8_0,
+		root = arg_8_0.viewGO
+	}
+
+	ViewMgr.instance:openView(arg_8_0._viewName, var_8_1, true)
 end
 
-function slot0.setCategoryRedDotData(slot0, slot1)
-	slot2 = PlayerPrefsKey.FirstEnterActivityShow .. "#" .. tostring(slot1) .. "#" .. tostring(PlayerModel.instance:getPlayinfo().userId)
+function var_0_0.setCategoryRedDotData(arg_9_0, arg_9_1)
+	local var_9_0 = PlayerPrefsKey.FirstEnterActivityShow .. "#" .. tostring(arg_9_1) .. "#" .. tostring(PlayerModel.instance:getPlayinfo().userId)
 
-	PlayerPrefsHelper.setString(slot2, "hasEnter")
+	PlayerPrefsHelper.setString(var_9_0, "hasEnter")
 
-	return slot2
+	return var_9_0
 end
 
-function slot0.closeSubView(slot0)
-	if slot0._viewName then
-		ViewMgr.instance:closeView(slot0._viewName, true)
+function var_0_0.closeSubView(arg_10_0)
+	if arg_10_0._viewName then
+		ViewMgr.instance:closeView(arg_10_0._viewName, true)
 
-		slot0._viewName = nil
+		arg_10_0._viewName = nil
 	end
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_11_0)
 	ActivityModel.instance:setTargetActivityCategoryId(0)
-	slot0:removeEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, slot0._refreshView, slot0)
-	slot0:removeEventCb(ActivityController.instance, ActivityEvent.SetBannerViewCategoryListInteract, slot0.setCategoryListInteractable, slot0)
-	slot0:closeSubView()
+	arg_11_0:removeEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_11_0._refreshView, arg_11_0)
+	arg_11_0:removeEventCb(ActivityController.instance, ActivityEvent.SetBannerViewCategoryListInteract, arg_11_0.setCategoryListInteractable, arg_11_0)
+	arg_11_0:closeSubView()
 	ActivityModel.instance:setTargetActivityCategoryId(0)
 	ActivityWelfareListModel.instance:clear()
 end
 
-function slot0.setCategoryListInteractable(slot0, slot1)
-	if not slot0._categoryListCanvasGroup then
-		slot0._categoryListCanvasGroup = gohelper.onceAddComponent(slot0._gocategory, typeof(UnityEngine.CanvasGroup))
+function var_0_0.setCategoryListInteractable(arg_12_0, arg_12_1)
+	if not arg_12_0._categoryListCanvasGroup then
+		arg_12_0._categoryListCanvasGroup = gohelper.onceAddComponent(arg_12_0._gocategory, typeof(UnityEngine.CanvasGroup))
 	end
 
-	slot0._categoryListCanvasGroup.interactable = slot1
-	slot0._categoryListCanvasGroup.blocksRaycasts = slot1
-	slot0._categoryListCanvasGroup.blocksRaycasts = slot1
+	arg_12_0._categoryListCanvasGroup.interactable = arg_12_1
+	arg_12_0._categoryListCanvasGroup.blocksRaycasts = arg_12_1
+	arg_12_0._categoryListCanvasGroup.blocksRaycasts = arg_12_1
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_13_0)
+	return
 end
 
-return slot0
+return var_0_0

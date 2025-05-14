@@ -1,30 +1,30 @@
-module("modules.logic.versionactivity2_4.wuerlixi.model.WuErLiXiEpisodeMo", package.seeall)
+﻿module("modules.logic.versionactivity2_4.wuerlixi.model.WuErLiXiEpisodeMo", package.seeall)
 
-slot0 = class("WuErLiXiEpisodeMo")
+local var_0_0 = class("WuErLiXiEpisodeMo")
 
-function slot0.ctor(slot0)
-	slot0.episodeId = 0
-	slot0.isFinished = false
-	slot0.status = WuErLiXiEnum.EpisodeStatus.BeforeStory
-	slot0.gameString = ""
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.episodeId = 0
+	arg_1_0.isFinished = false
+	arg_1_0.status = WuErLiXiEnum.EpisodeStatus.BeforeStory
+	arg_1_0.gameString = ""
 end
 
-function slot0.init(slot0, slot1)
-	slot0.episodeId = slot1.episodeId
-	slot0.isFinished = slot1.isFinished
-	slot0.status = slot1.status
-	slot0.gameString = slot1.gameString
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.episodeId = arg_2_1.episodeId
+	arg_2_0.isFinished = arg_2_1.isFinished
+	arg_2_0.status = arg_2_1.status
+	arg_2_0.gameString = arg_2_1.gameString
 end
 
-function slot0.update(slot0, slot1)
-	slot0.episodeId = slot1.episodeId
-	slot0.isFinished = slot1.isFinished
-	slot0.status = slot1.status
-	slot0.gameString = slot1.gameString
+function var_0_0.update(arg_3_0, arg_3_1)
+	arg_3_0.episodeId = arg_3_1.episodeId
+	arg_3_0.isFinished = arg_3_1.isFinished
+	arg_3_0.status = arg_3_1.status
+	arg_3_0.gameString = arg_3_1.gameString
 end
 
-function slot0.updateGameString(slot0, slot1)
-	slot0.gameString = slot1
+function var_0_0.updateGameString(arg_4_0, arg_4_1)
+	arg_4_0.gameString = arg_4_1
 end
 
-return slot0
+return var_0_0

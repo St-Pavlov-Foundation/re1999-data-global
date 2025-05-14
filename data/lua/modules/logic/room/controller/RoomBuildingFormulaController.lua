@@ -1,78 +1,88 @@
-module("modules.logic.room.controller.RoomBuildingFormulaController", package.seeall)
+﻿module("modules.logic.room.controller.RoomBuildingFormulaController", package.seeall)
 
-slot0 = class("RoomBuildingFormulaController", BaseController)
+local var_0_0 = class("RoomBuildingFormulaController", BaseController)
 
-function slot0.onInit(slot0)
-	slot0:clear()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:clear()
 end
 
-function slot0.reInit(slot0)
-	slot0:clear()
+function var_0_0.reInit(arg_2_0)
+	arg_2_0:clear()
 end
 
-function slot0.clear(slot0)
+function var_0_0.clear(arg_3_0)
+	return
 end
 
-function slot0.addConstEvents(slot0)
+function var_0_0.addConstEvents(arg_4_0)
+	return
 end
 
-function slot0.resetSelectFormulaStrId(slot0)
+function var_0_0.resetSelectFormulaStrId(arg_5_0)
 	RoomFormulaListModel.instance:resetSelectFormulaStrId()
 end
 
-function slot0.setSelectFormulaStrId(slot0, slot1, slot2, slot3)
-	if slot0._waitingSelectFormulaParam then
+function var_0_0.setSelectFormulaStrId(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
+	if arg_6_0._waitingSelectFormulaParam then
 		return
 	end
 
-	if not RoomFormulaModel.instance:getFormulaMo(slot1) then
+	local var_6_0 = RoomFormulaModel.instance:getFormulaMo(arg_6_1)
+
+	if not var_6_0 then
 		return
 	end
 
-	slot5 = false
-	slot6 = slot1
+	local var_6_1 = false
+	local var_6_2 = arg_6_1
 
-	if slot1 == RoomFormulaListModel.instance:getSelectFormulaStrId() and not slot2 then
-		slot6 = slot4:getParentStrId()
-		slot5 = true
+	if arg_6_1 == RoomFormulaListModel.instance:getSelectFormulaStrId() and not arg_6_2 then
+		var_6_2 = var_6_0:getParentStrId()
+		var_6_1 = true
 	end
 
-	slot0._waitingSelectFormulaParam = {
-		formulaStrId = slot6,
-		isCollapse = slot5,
-		treeLevel = slot3
+	arg_6_0._waitingSelectFormulaParam = {
+		formulaStrId = var_6_2,
+		isCollapse = var_6_1,
+		treeLevel = arg_6_3
 	}
 
-	if slot3 and slot0:_checkTreeLevel(slot3) then
-		RoomMapController.instance:dispatchEvent(RoomEvent.UIFormulaIdTreeLevelHideAnim, slot3)
-		TaskDispatcher.runDelay(slot0._onDelaySelectFormulaStrId, slot0, RoomProductLineEnum.AnimTime.TreeAnim)
+	if arg_6_3 and arg_6_0:_checkTreeLevel(arg_6_3) then
+		RoomMapController.instance:dispatchEvent(RoomEvent.UIFormulaIdTreeLevelHideAnim, arg_6_3)
+		TaskDispatcher.runDelay(arg_6_0._onDelaySelectFormulaStrId, arg_6_0, RoomProductLineEnum.AnimTime.TreeAnim)
 	else
-		slot0:_onDelaySelectFormulaStrId()
+		arg_6_0:_onDelaySelectFormulaStrId()
 	end
 end
 
-function slot0._onDelaySelectFormulaStrId(slot0)
-	if slot0._waitingSelectFormulaParam then
-		slot1 = RoomFormulaListModel.instance:getSelectFormulaStrId()
-		slot2 = slot0._waitingSelectFormulaParam.formulaStrId
-		slot3 = slot0._waitingSelectFormulaParam.isCollapse
-		slot0._waitingSelectFormulaParam = nil
+function var_0_0._onDelaySelectFormulaStrId(arg_7_0)
+	if arg_7_0._waitingSelectFormulaParam then
+		local var_7_0 = RoomFormulaListModel.instance:getSelectFormulaStrId()
+		local var_7_1 = arg_7_0._waitingSelectFormulaParam.formulaStrId
+		local var_7_2 = arg_7_0._waitingSelectFormulaParam.isCollapse
+		local var_7_3 = arg_7_0._waitingSelectFormulaParam.treeLevel
+
+		arg_7_0._waitingSelectFormulaParam = nil
 
 		RoomFormulaListModel.instance:refreshRankDiff()
 
-		if slot0._waitingSelectFormulaParam.treeLevel and not slot0:_checkTreeLevel(slot4) then
-			RoomMapController.instance:dispatchEvent(RoomEvent.UIFormulaIdTreeLevelShowAnim, slot4)
+		if var_7_3 and not arg_7_0:_checkTreeLevel(var_7_3) then
+			RoomMapController.instance:dispatchEvent(RoomEvent.UIFormulaIdTreeLevelShowAnim, var_7_3)
 		end
 
 		RoomMapController.instance:dispatchEvent(RoomEvent.UIFormulaIdTreeLevelMoveAnim)
-		RoomFormulaListModel.instance:setSelectFormulaStrId(slot2)
-		RoomMapController.instance:dispatchEvent(RoomEvent.SelectFormulaIdChanged, slot1, slot3)
+		RoomFormulaListModel.instance:setSelectFormulaStrId(var_7_1)
+		RoomMapController.instance:dispatchEvent(RoomEvent.SelectFormulaIdChanged, var_7_0, var_7_2)
 	end
 end
 
-function slot0._checkTreeLevel(slot0, slot1)
-	for slot6, slot7 in ipairs(RoomFormulaListModel.instance:getList()) do
-		if slot7:getFormulaTreeLevel() and slot1 < slot8 then
+function var_0_0._checkTreeLevel(arg_8_0, arg_8_1)
+	local var_8_0 = RoomFormulaListModel.instance:getList()
+
+	for iter_8_0, iter_8_1 in ipairs(var_8_0) do
+		local var_8_1 = iter_8_1:getFormulaTreeLevel()
+
+		if var_8_1 and arg_8_1 < var_8_1 then
 			return true
 		end
 	end
@@ -80,6 +90,6 @@ function slot0._checkTreeLevel(slot0, slot1)
 	return false
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

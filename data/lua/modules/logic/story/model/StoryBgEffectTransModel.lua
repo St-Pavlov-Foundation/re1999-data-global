@@ -1,36 +1,36 @@
-module("modules.logic.story.model.StoryBgEffectTransModel", package.seeall)
+﻿module("modules.logic.story.model.StoryBgEffectTransModel", package.seeall)
 
-slot0 = class("StoryBgEffectTransModel", BaseModel)
+local var_0_0 = class("StoryBgEffectTransModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0._transList = {}
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._transList = {}
 end
 
-function slot0.setStoryBgEffectTransList(slot0, slot1)
-	slot0._transList = {}
+function var_0_0.setStoryBgEffectTransList(arg_2_0, arg_2_1)
+	arg_2_0._transList = {}
 
-	for slot5, slot6 in ipairs(slot1) do
-		slot7 = StoryBgEffectTransMo.New()
+	for iter_2_0, iter_2_1 in ipairs(arg_2_1) do
+		local var_2_0 = StoryBgEffectTransMo.New()
 
-		slot7:init(slot6, slot5)
-		table.insert(slot0._transList, slot7)
+		var_2_0:init(iter_2_1, iter_2_0)
+		table.insert(arg_2_0._transList, var_2_0)
 	end
 end
 
-function slot0.getStoryBgEffectTransList(slot0)
-	return slot0._transList
+function var_0_0.getStoryBgEffectTransList(arg_3_0)
+	return arg_3_0._transList
 end
 
-function slot0.getStoryBgEffectTransByType(slot0, slot1)
-	for slot5, slot6 in pairs(slot0._transList) do
-		if slot6.type == slot1 then
-			return slot6
+function var_0_0.getStoryBgEffectTransByType(arg_4_0, arg_4_1)
+	for iter_4_0, iter_4_1 in pairs(arg_4_0._transList) do
+		if iter_4_1.type == arg_4_1 then
+			return iter_4_1
 		end
 	end
 
 	return nil
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

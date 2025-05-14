@@ -1,70 +1,77 @@
-module("modules.logic.versionactivity2_2.tianshinana.view.TianShiNaNaBaseSceneView", package.seeall)
+﻿module("modules.logic.versionactivity2_2.tianshinana.view.TianShiNaNaBaseSceneView", package.seeall)
 
-slot0 = class("TianShiNaNaBaseSceneView", BaseView)
+local var_0_0 = class("TianShiNaNaBaseSceneView", BaseView)
 
-function slot0.onOpen(slot0)
-	slot0._sceneRoot = UnityEngine.GameObject.New(slot0.__cname)
+function var_0_0.onOpen(arg_1_0)
+	local var_1_0 = CameraMgr.instance:getSceneRoot()
 
-	gohelper.setActive(slot0._sceneRoot, false)
+	arg_1_0._sceneRoot = UnityEngine.GameObject.New(arg_1_0.__cname)
 
-	slot0.isLoading = true
+	gohelper.setActive(arg_1_0._sceneRoot, false)
 
-	slot0:beforeLoadScene()
-	gohelper.addChild(CameraMgr.instance:getSceneRoot(), slot0._sceneRoot)
+	arg_1_0.isLoading = true
 
-	slot0._loader = PrefabInstantiate.Create(slot0._sceneRoot)
+	arg_1_0:beforeLoadScene()
+	gohelper.addChild(var_1_0, arg_1_0._sceneRoot)
 
-	transformhelper.setLocalPos(slot0._sceneRoot.transform, 0, 5, 0)
-	MainCameraMgr.instance:addView(slot0.viewName, slot0._initCamera, nil, slot0)
-	slot0._loader:startLoad(slot0:getScenePath(), slot0._onSceneLoadEnd, slot0)
+	arg_1_0._loader = PrefabInstantiate.Create(arg_1_0._sceneRoot)
+
+	transformhelper.setLocalPos(arg_1_0._sceneRoot.transform, 0, 5, 0)
+	MainCameraMgr.instance:addView(arg_1_0.viewName, arg_1_0._initCamera, nil, arg_1_0)
+	arg_1_0._loader:startLoad(arg_1_0:getScenePath(), arg_1_0._onSceneLoadEnd, arg_1_0)
 end
 
-function slot0.beforeLoadScene(slot0)
+function var_0_0.beforeLoadScene(arg_2_0)
+	return
 end
 
-function slot0.getScenePath(slot0)
+function var_0_0.getScenePath(arg_3_0)
 	return ""
 end
 
-function slot0._onSceneLoadEnd(slot0)
-	slot1 = slot0._loader:getInstGO()
-	slot1.name = "Scene"
+function var_0_0._onSceneLoadEnd(arg_4_0)
+	local var_4_0 = arg_4_0._loader:getInstGO()
 
-	transformhelper.setLocalPos(slot1.transform, 0, 0, 10)
-	slot0:onSceneLoaded(slot1)
+	var_4_0.name = "Scene"
 
-	slot0.isLoading = false
+	transformhelper.setLocalPos(var_4_0.transform, 0, 0, 10)
+	arg_4_0:onSceneLoaded(var_4_0)
 
-	gohelper.setActive(slot0._sceneRoot, not slot0._isHide)
+	arg_4_0.isLoading = false
+
+	gohelper.setActive(arg_4_0._sceneRoot, not arg_4_0._isHide)
 end
 
-function slot0.onSceneLoaded(slot0, slot1)
+function var_0_0.onSceneLoaded(arg_5_0, arg_5_1)
+	return
 end
 
-function slot0._initCamera(slot0)
-	slot1 = CameraMgr.instance:getMainCamera()
-	slot1.orthographic = true
-	slot1.orthographicSize = 7 * GameUtil.getAdapterScale(true)
+function var_0_0._initCamera(arg_6_0)
+	local var_6_0 = CameraMgr.instance:getMainCamera()
+	local var_6_1 = GameUtil.getAdapterScale(true)
+
+	var_6_0.orthographic = true
+	var_6_0.orthographicSize = 7 * var_6_1
 end
 
-function slot0.setSceneVisible(slot0, slot1)
-	slot0._isHide = not slot1
+function var_0_0.setSceneVisible(arg_7_0, arg_7_1)
+	arg_7_0._isHide = not arg_7_1
 
-	gohelper.setActive(slot0._sceneRoot, slot1 and not slot0.isLoading)
+	gohelper.setActive(arg_7_0._sceneRoot, arg_7_1 and not arg_7_0.isLoading)
 end
 
-function slot0.onDestroyView(slot0)
-	if slot0._loader then
-		slot0._loader:dispose()
+function var_0_0.onDestroyView(arg_8_0)
+	if arg_8_0._loader then
+		arg_8_0._loader:dispose()
 
-		slot0._loader = nil
+		arg_8_0._loader = nil
 	end
 
-	if slot0._sceneRoot then
-		gohelper.destroy(slot0._sceneRoot)
+	if arg_8_0._sceneRoot then
+		gohelper.destroy(arg_8_0._sceneRoot)
 
-		slot0._sceneRoot = nil
+		arg_8_0._sceneRoot = nil
 	end
 end
 
-return slot0
+return var_0_0

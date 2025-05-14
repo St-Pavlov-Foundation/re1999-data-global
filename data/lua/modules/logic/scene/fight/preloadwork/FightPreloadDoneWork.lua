@@ -1,10 +1,10 @@
-module("modules.logic.scene.fight.preloadwork.FightPreloadDoneWork", package.seeall)
+﻿module("modules.logic.scene.fight.preloadwork.FightPreloadDoneWork", package.seeall)
 
-slot0 = class("FightPreloadDoneWork", BaseWork)
+local var_0_0 = class("FightPreloadDoneWork", BaseWork)
 
-function slot0.onStart(slot0, slot1)
+function var_0_0.onStart(arg_1_0, arg_1_1)
 	GameSceneMgr.instance:getScene(SceneType.Fight).preloader:dispatchEvent(FightSceneEvent.OnPreloadFinish)
-	slot0:onDone(true)
+	arg_1_0:onDone(true)
 end
 
-return slot0
+return var_0_0

@@ -1,216 +1,235 @@
-module("modules.logic.room.entity.actcomp.RoomGiftActComp", package.seeall)
+﻿module("modules.logic.room.entity.actcomp.RoomGiftActComp", package.seeall)
 
-slot0 = class("RoomGiftActComp", LuaCompBase)
-slot1 = 0.6
+local var_0_0 = class("RoomGiftActComp", LuaCompBase)
+local var_0_1 = 0.6
 
-function slot0.ctor(slot0, slot1)
-	slot0.entity = slot1
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0.entity = arg_1_1
 end
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
-	slot0._materialRes = RoomCharacterEnum.MaterialPath
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.go = arg_2_1
+	arg_2_0._materialRes = RoomCharacterEnum.MaterialPath
 end
 
-function slot0.addEventListeners(slot0)
-	RoomGiftController.instance:registerCallback(RoomGiftEvent.UpdateActInfo, slot0._checkActivity, slot0)
-	RoomGiftController.instance:registerCallback(RoomGiftEvent.GetBonus, slot0._checkActivity, slot0)
+function var_0_0.addEventListeners(arg_3_0)
+	RoomGiftController.instance:registerCallback(RoomGiftEvent.UpdateActInfo, arg_3_0._checkActivity, arg_3_0)
+	RoomGiftController.instance:registerCallback(RoomGiftEvent.GetBonus, arg_3_0._checkActivity, arg_3_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	RoomGiftController.instance:unregisterCallback(RoomGiftEvent.UpdateActInfo, slot0._checkActivity, slot0)
-	RoomGiftController.instance:unregisterCallback(RoomGiftEvent.GetBonus, slot0._checkActivity, slot0)
+function var_0_0.removeEventListeners(arg_4_0)
+	RoomGiftController.instance:unregisterCallback(RoomGiftEvent.UpdateActInfo, arg_4_0._checkActivity, arg_4_0)
+	RoomGiftController.instance:unregisterCallback(RoomGiftEvent.GetBonus, arg_4_0._checkActivity, arg_4_0)
 end
 
-function slot0.onStart(slot0)
-	slot0:_checkActivity()
+function var_0_0.onStart(arg_5_0)
+	arg_5_0:_checkActivity()
 end
 
-function slot0._checkActivity(slot0)
-	if slot0:_isShowSpine() then
-		if not slot0._isCurShow then
-			slot0._isCurShow = true
+function var_0_0._checkActivity(arg_6_0)
+	if arg_6_0:_isShowSpine() then
+		if not arg_6_0._isCurShow then
+			arg_6_0._isCurShow = true
 
-			slot0:_loadActivitySpine()
+			arg_6_0:_loadActivitySpine()
 		end
 	else
-		slot0._isCurShow = false
+		arg_6_0._isCurShow = false
 
-		slot0:destroyAllActivitySpine()
+		arg_6_0:destroyAllActivitySpine()
 	end
 end
 
-function slot0._isShowSpine(slot0)
-	if slot0.__willDestroy then
+function var_0_0._isShowSpine(arg_7_0)
+	if arg_7_0.__willDestroy then
 		return false
 	end
 
-	return RoomGiftModel.instance:isActOnLine() and RoomGiftModel.instance:isCanGetBonus()
+	local var_7_0 = RoomGiftModel.instance:isActOnLine()
+	local var_7_1 = RoomGiftModel.instance:isCanGetBonus()
+
+	return var_7_0 and var_7_1
 end
 
-function slot0._loadActivitySpine(slot0)
-	if slot0._isLoaderDone then
-		slot0:_onLoadFinish()
+function var_0_0._loadActivitySpine(arg_8_0)
+	if arg_8_0._isLoaderDone then
+		arg_8_0:_onLoadFinish()
 
 		return
 	end
 
-	slot0._loader = slot0._loader or SequenceAbLoader.New()
-	slot1 = {}
-	slot0.roomGiftSpineList = RoomGiftConfig.instance:getAllRoomGiftSpineList()
+	arg_8_0._loader = arg_8_0._loader or SequenceAbLoader.New()
 
-	for slot5, slot6 in pairs(slot0.roomGiftSpineList) do
-		if not slot1[RoomGiftConfig.instance:getRoomGiftSpineRes(slot6)] then
-			slot0._loader:addPath(slot7)
+	local var_8_0 = {}
 
-			slot1[slot7] = true
+	arg_8_0.roomGiftSpineList = RoomGiftConfig.instance:getAllRoomGiftSpineList()
+
+	for iter_8_0, iter_8_1 in pairs(arg_8_0.roomGiftSpineList) do
+		local var_8_1 = RoomGiftConfig.instance:getRoomGiftSpineRes(iter_8_1)
+
+		if not var_8_0[var_8_1] then
+			arg_8_0._loader:addPath(var_8_1)
+
+			var_8_0[var_8_1] = true
 		end
 	end
 
-	slot0._loader:addPath(slot0._materialRes)
-	slot0._loader:setLoadFailCallback(slot0._onLoadOneFail)
-	slot0._loader:startLoad(slot0._onLoadFinish, slot0)
+	arg_8_0._loader:addPath(arg_8_0._materialRes)
+	arg_8_0._loader:setLoadFailCallback(arg_8_0._onLoadOneFail)
+	arg_8_0._loader:startLoad(arg_8_0._onLoadFinish, arg_8_0)
 end
 
-function slot0._onLoadOneFail(slot0, slot1, slot2)
-	logError("RoomGiftActComp: 加载失败, url: " .. slot2.ResPath)
+function var_0_0._onLoadOneFail(arg_9_0, arg_9_1, arg_9_2)
+	logError("RoomGiftActComp: 加载失败, url: " .. arg_9_2.ResPath)
 end
 
-function slot0._onLoadFinish(slot0, slot1)
-	if not slot0:_isShowSpine() then
-		slot0:destroyAllActivitySpine()
+function var_0_0._onLoadFinish(arg_10_0, arg_10_1)
+	if not arg_10_0:_isShowSpine() then
+		arg_10_0:destroyAllActivitySpine()
 
 		return
 	end
 
-	slot0._isLoaderDone = true
+	arg_10_0._isLoaderDone = true
 
-	if not slot0.roomGiftSpineList then
+	if not arg_10_0.roomGiftSpineList then
 		return
 	end
 
-	slot0._activitySpineDict = slot0._activitySpineDict or {}
+	arg_10_0._activitySpineDict = arg_10_0._activitySpineDict or {}
 
-	for slot5, slot6 in ipairs(slot0.roomGiftSpineList) do
-		if gohelper.isNil(slot0._activitySpineDict[slot6] and slot7.spineGO) then
-			slot0:destroyActivitySpine(slot7)
+	for iter_10_0, iter_10_1 in ipairs(arg_10_0.roomGiftSpineList) do
+		local var_10_0 = arg_10_0._activitySpineDict[iter_10_1]
+		local var_10_1 = var_10_0 and var_10_0.spineGO
 
-			slot7 = {}
-			slot9 = RoomGiftConfig.instance:getRoomGiftSpineRes(slot6)
-			slot10 = slot0._loader and slot0._loader:getAssetItem(slot9)
+		if gohelper.isNil(var_10_1) then
+			arg_10_0:destroyActivitySpine(var_10_0)
 
-			if slot10 and slot10:GetResource(slot9) then
-				slot8 = gohelper.clone(slot11, slot0.entity.staticContainerGO, slot6)
-				slot12 = RoomGiftConfig.instance:getRoomGiftSpineStartPos(slot6)
+			local var_10_2 = {}
+			local var_10_3 = RoomGiftConfig.instance:getRoomGiftSpineRes(iter_10_1)
+			local var_10_4 = arg_10_0._loader and arg_10_0._loader:getAssetItem(var_10_3)
+			local var_10_5 = var_10_4 and var_10_4:GetResource(var_10_3)
 
-				transformhelper.setLocalPos(slot8.transform, slot12[1], slot12[2], slot12[3])
+			if var_10_5 then
+				local var_10_6 = gohelper.clone(var_10_5, arg_10_0.entity.staticContainerGO, iter_10_1)
+				local var_10_7 = RoomGiftConfig.instance:getRoomGiftSpineStartPos(iter_10_1)
 
-				slot13 = RoomGiftConfig.instance:getRoomGiftSpineScale(slot6)
+				transformhelper.setLocalPos(var_10_6.transform, var_10_7[1], var_10_7[2], var_10_7[3])
 
-				transformhelper.setLocalScale(slot8.transform, slot13, slot13, slot13)
+				local var_10_8 = RoomGiftConfig.instance:getRoomGiftSpineScale(iter_10_1)
 
-				slot15 = slot8:GetComponent(typeof(UnityEngine.MeshRenderer)).sharedMaterial
-				slot18 = UnityEngine.GameObject.Instantiate(slot1:getAssetItem(slot0._materialRes):GetResource(slot0._materialRes))
+				transformhelper.setLocalScale(var_10_6.transform, var_10_8, var_10_8, var_10_8)
 
-				slot18:SetTexture("_MainTex", slot15:GetTexture("_MainTex"))
-				slot18:SetTexture("_BackLight", slot15:GetTexture("_NormalMap"))
-				slot18:SetTexture("_DissolveTex", slot15:GetTexture("_DissolveTex"))
+				local var_10_9 = var_10_6:GetComponent(typeof(UnityEngine.MeshRenderer))
+				local var_10_10 = var_10_9.sharedMaterial
+				local var_10_11 = arg_10_1:getAssetItem(arg_10_0._materialRes):GetResource(arg_10_0._materialRes)
+				local var_10_12 = UnityEngine.GameObject.Instantiate(var_10_11)
 
-				if slot8:GetComponent(typeof(Spine.Unity.SkeletonAnimation)).CustomMaterialOverride then
-					slot20:Clear()
-					slot20:Add(slot15, slot18)
+				var_10_12:SetTexture("_MainTex", var_10_10:GetTexture("_MainTex"))
+				var_10_12:SetTexture("_BackLight", var_10_10:GetTexture("_NormalMap"))
+				var_10_12:SetTexture("_DissolveTex", var_10_10:GetTexture("_DissolveTex"))
+
+				local var_10_13 = var_10_6:GetComponent(typeof(Spine.Unity.SkeletonAnimation))
+				local var_10_14 = var_10_13.CustomMaterialOverride
+
+				if var_10_14 then
+					var_10_14:Clear()
+					var_10_14:Add(var_10_10, var_10_12)
 				end
 
-				slot14.material = slot18
-				slot7.spineGO = slot8
-				slot7.material = slot18
-				slot7.meshRenderer = slot14
-				slot7.skeletonAnim = slot19
+				var_10_9.material = var_10_12
+				var_10_2.spineGO = var_10_6
+				var_10_2.material = var_10_12
+				var_10_2.meshRenderer = var_10_9
+				var_10_2.skeletonAnim = var_10_13
 
-				gohelper.setLayer(slot8, LayerMask.NameToLayer("Scene"), true)
+				gohelper.setLayer(var_10_6, LayerMask.NameToLayer("Scene"), true)
 			end
 
-			slot0._activitySpineDict[slot6] = slot7
+			arg_10_0._activitySpineDict[iter_10_1] = var_10_2
 		end
 	end
 
-	slot0._curSpineAnimIndex = 0
+	arg_10_0._curSpineAnimIndex = 0
 
-	slot0:delayPlaySpineAnim()
+	arg_10_0:delayPlaySpineAnim()
 end
 
-function slot0.delayPlaySpineAnim(slot0)
-	if not slot0.roomGiftSpineList or not slot0._activitySpineDict then
+function var_0_0.delayPlaySpineAnim(arg_11_0)
+	if not arg_11_0.roomGiftSpineList or not arg_11_0._activitySpineDict then
 		return
 	end
 
-	slot0._curSpineAnimIndex = slot0._curSpineAnimIndex + 1
-	slot2 = slot0.roomGiftSpineList[slot0._curSpineAnimIndex] and slot0._activitySpineDict[slot1]
+	arg_11_0._curSpineAnimIndex = arg_11_0._curSpineAnimIndex + 1
 
-	if not (slot2 and slot2.skeletonAnim) then
-		slot0._curSpineAnimIndex = 0
+	local var_11_0 = arg_11_0.roomGiftSpineList[arg_11_0._curSpineAnimIndex]
+	local var_11_1 = var_11_0 and arg_11_0._activitySpineDict[var_11_0]
+	local var_11_2 = var_11_1 and var_11_1.skeletonAnim
+
+	if not var_11_2 then
+		arg_11_0._curSpineAnimIndex = 0
 
 		return
 	end
 
-	slot4 = RoomGiftConfig.instance:getRoomGiftSpineAnim(slot1)
+	local var_11_3 = RoomGiftConfig.instance:getRoomGiftSpineAnim(var_11_0)
 
-	if slot3 and not string.nilorempty(slot4) then
-		slot3:PlayAnim(slot4, true, true)
+	if var_11_2 and not string.nilorempty(var_11_3) then
+		var_11_2:PlayAnim(var_11_3, true, true)
 	end
 
-	TaskDispatcher.cancelTask(slot0.delayPlaySpineAnim, slot0)
-	TaskDispatcher.runDelay(slot0.delayPlaySpineAnim, slot0, uv0)
+	TaskDispatcher.cancelTask(arg_11_0.delayPlaySpineAnim, arg_11_0)
+	TaskDispatcher.runDelay(arg_11_0.delayPlaySpineAnim, arg_11_0, var_0_1)
 end
 
-function slot0.destroyAllActivitySpine(slot0)
-	if slot0._activitySpineDict then
-		for slot4, slot5 in pairs(slot0._activitySpineDict) do
-			slot0:destroyActivitySpine(slot5)
+function var_0_0.destroyAllActivitySpine(arg_12_0)
+	if arg_12_0._activitySpineDict then
+		for iter_12_0, iter_12_1 in pairs(arg_12_0._activitySpineDict) do
+			arg_12_0:destroyActivitySpine(iter_12_1)
 		end
 
-		slot0._activitySpineDict = nil
+		arg_12_0._activitySpineDict = nil
 	end
 
-	TaskDispatcher.cancelTask(slot0.delayPlaySpineAnim, slot0)
+	TaskDispatcher.cancelTask(arg_12_0.delayPlaySpineAnim, arg_12_0)
 
-	if slot0._loader then
-		slot0._loader:dispose()
+	if arg_12_0._loader then
+		arg_12_0._loader:dispose()
 
-		slot0._loader = nil
+		arg_12_0._loader = nil
 	end
 
-	slot0.roomGiftSpineList = nil
-	slot0._isLoaderDone = false
-	slot0._isCurShow = false
+	arg_12_0.roomGiftSpineList = nil
+	arg_12_0._isLoaderDone = false
+	arg_12_0._isCurShow = false
 end
 
-function slot0.destroyActivitySpine(slot0, slot1)
-	if not slot1 then
+function var_0_0.destroyActivitySpine(arg_13_0, arg_13_1)
+	if not arg_13_1 then
 		return
 	end
 
-	slot1.meshRenderer = nil
-	slot1.skeletonAnim = nil
+	arg_13_1.meshRenderer = nil
+	arg_13_1.skeletonAnim = nil
 
-	if slot1.material then
-		gohelper.destroy(slot1.material)
+	if arg_13_1.material then
+		gohelper.destroy(arg_13_1.material)
 
-		slot1.material = nil
+		arg_13_1.material = nil
 	end
 
-	gohelper.destroy(slot1.spineGO)
+	gohelper.destroy(arg_13_1.spineGO)
 end
 
-function slot0.beforeDestroy(slot0)
-	slot0.__willDestroy = true
+function var_0_0.beforeDestroy(arg_14_0)
+	arg_14_0.__willDestroy = true
 
-	slot0:destroyAllActivitySpine()
-	slot0:removeEventListeners()
+	arg_14_0:destroyAllActivitySpine()
+	arg_14_0:removeEventListeners()
 end
 
-function slot0.onDestroy(slot0)
-	slot0:destroyAllActivitySpine()
+function var_0_0.onDestroy(arg_15_0)
+	arg_15_0:destroyAllActivitySpine()
 end
 
-return slot0
+return var_0_0

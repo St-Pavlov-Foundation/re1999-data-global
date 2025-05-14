@@ -1,48 +1,55 @@
-module("modules.logic.fight.entity.comp.skill.FightTLEventCameraDistance", package.seeall)
+﻿module("modules.logic.fight.entity.comp.skill.FightTLEventCameraDistance", package.seeall)
 
-slot0 = class("FightTLEventCameraDistance")
+local var_0_0 = class("FightTLEventCameraDistance")
 
-function slot0.handleSkillEvent(slot0, slot1, slot2, slot3)
-	slot6 = slot3[1]
+function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	local var_1_0 = CameraMgr.instance:getVirtualCameraGO()
+	local var_1_1 = GameSceneMgr.instance:getCurScene().camera
+	local var_1_2 = arg_1_3[1]
 
-	if slot3[2] == "1" then
-		slot8 = GameSceneMgr.instance:getCurScene().camera:getDefaultCameraOffset()
-		slot0._tween = ZProj.TweenHelper.DOLocalMove(CameraMgr.instance:getVirtualCameraGO().transform, slot8.x, slot8.y, slot8.z, slot2)
-	elseif not string.nilorempty(slot6) then
-		if string.splitToNumber(slot6, ",")[1] and slot8[2] and slot8[3] then
-			slot0._tween = ZProj.TweenHelper.DOLocalMove(slot4.transform, slot8[1], slot8[2], slot8[3], slot2)
+	if arg_1_3[2] == "1" then
+		local var_1_3 = var_1_1:getDefaultCameraOffset()
+
+		arg_1_0._tween = ZProj.TweenHelper.DOLocalMove(var_1_0.transform, var_1_3.x, var_1_3.y, var_1_3.z, arg_1_2)
+	elseif not string.nilorempty(var_1_2) then
+		local var_1_4 = string.splitToNumber(var_1_2, ",")
+
+		if var_1_4[1] and var_1_4[2] and var_1_4[3] then
+			arg_1_0._tween = ZProj.TweenHelper.DOLocalMove(var_1_0.transform, var_1_4[1], var_1_4[2], var_1_4[3], arg_1_2)
 		else
-			logError("相机统一距离参数错误（3个数字用逗号分隔）：" .. slot6)
+			logError("相机统一距离参数错误（3个数字用逗号分隔）：" .. var_1_2)
 		end
 	else
-		slot5:setSceneCameraOffset()
+		var_1_1:setSceneCameraOffset()
 	end
 end
 
-function slot0._releaseTween(slot0)
-	if slot0._tween then
-		ZProj.TweenHelper.KillById(slot0._tween)
+function var_0_0._releaseTween(arg_2_0)
+	if arg_2_0._tween then
+		ZProj.TweenHelper.KillById(arg_2_0._tween)
 
-		slot0._tween = nil
+		arg_2_0._tween = nil
 	end
 end
 
-function slot0.handleSkillEventEnd(slot0)
+function var_0_0.handleSkillEventEnd(arg_3_0)
+	return
 end
 
-function slot0.onSkillEnd(slot0)
-	if slot0._tween then
+function var_0_0.onSkillEnd(arg_4_0)
+	if arg_4_0._tween then
 		GameSceneMgr.instance:getCurScene().camera:setSceneCameraOffset()
 	end
 
-	slot0:_releaseTween()
+	arg_4_0:_releaseTween()
 end
 
-function slot0.reset(slot0)
-	slot0:_releaseTween()
+function var_0_0.reset(arg_5_0)
+	arg_5_0:_releaseTween()
 end
 
-function slot0.dispose(slot0)
+function var_0_0.dispose(arg_6_0)
+	return
 end
 
-return slot0
+return var_0_0

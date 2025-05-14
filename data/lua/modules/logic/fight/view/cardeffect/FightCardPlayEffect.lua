@@ -1,252 +1,278 @@
-module("modules.logic.fight.view.cardeffect.FightCardPlayEffect", package.seeall)
+﻿module("modules.logic.fight.view.cardeffect.FightCardPlayEffect", package.seeall)
 
-slot0 = class("FightCardPlayEffect", BaseWork)
-slot1 = 1
+local var_0_0 = class("FightCardPlayEffect", BaseWork)
+local var_0_1 = 1
 
-function slot0.onStart(slot0, slot1)
-	FightCardModel.instance:setUniversalCombine(nil, )
+function var_0_0.onStart(arg_1_0, arg_1_1)
+	FightCardModel.instance:setUniversalCombine(nil, nil)
 
-	slot0._dt = 0.033 * uv0 / FightModel.instance:getUISpeed()
-	slot0._tweenParamList = nil
+	arg_1_0._dt = 0.033 * var_0_1 / FightModel.instance:getUISpeed()
+	arg_1_0._tweenParamList = nil
 
-	uv1.super.onStart(slot0, slot1)
+	var_0_0.super.onStart(arg_1_0, arg_1_1)
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_FightPlayCard)
 
-	slot3 = slot1.handCardItemList[slot1.from]
+	local var_1_0 = arg_1_1.handCardItemList[arg_1_1.from]
 
-	slot3:setASFDActive(false)
+	var_1_0:setASFDActive(false)
 
-	if slot3._cardItem then
-		slot3._cardItem:setHeatRootVisible(false)
+	if var_1_0._cardItem then
+		var_1_0._cardItem:setHeatRootVisible(false)
 	end
 
-	slot0._cardInfoMO = slot3.cardInfoMO:clone()
-	slot0._cardInfoMO.playCanAddExpoint = slot1.cards[slot1.from].playCanAddExpoint
-	slot0._clonePlayCardGO = gohelper.cloneInPlace(slot3.go)
+	arg_1_0._cardInfoMO = var_1_0.cardInfoMO:clone()
+	arg_1_0._cardInfoMO.playCanAddExpoint = arg_1_1.cards[arg_1_1.from].playCanAddExpoint
+	arg_1_0._clonePlayCardGO = gohelper.cloneInPlace(var_1_0.go)
 
-	gohelper.setActive(slot3.go, false)
-	table.remove(tabletool.copy(slot0.context.cards), slot0.context.from)
-	slot0:_addTrailEffect(slot0._clonePlayCardGO.transform)
+	local var_1_1 = arg_1_0._clonePlayCardGO.transform
+	local var_1_2 = tabletool.copy(arg_1_0.context.cards)
 
-	slot6 = true
-	slot7 = false
+	gohelper.setActive(var_1_0.go, false)
+	table.remove(var_1_2, arg_1_0.context.from)
+	arg_1_0:_addTrailEffect(var_1_1)
 
-	if slot0.context.needDiscard then
-		slot6 = false
-		slot7 = true
+	local var_1_3 = true
+	local var_1_4 = false
+
+	if arg_1_0.context.needDiscard then
+		var_1_3 = false
+		var_1_4 = true
 	end
 
-	slot8 = false
+	local var_1_5 = false
+	local var_1_6 = arg_1_1.dissolveCardIndexsAfterPlay
 
-	if slot1.dissolveCardIndexsAfterPlay and #slot9 > 0 then
-		slot6 = false
-		slot8 = true
+	if var_1_6 and #var_1_6 > 0 then
+		var_1_3 = false
+		var_1_5 = true
 	end
 
-	slot10 = false
+	local var_1_7 = false
 
-	if slot6 then
-		slot10 = FightCardModel.getCombineIndexOnce(slot5) or false
+	if var_1_3 then
+		var_1_7 = FightCardModel.getCombineIndexOnce(var_1_2) or false
 	end
 
-	if slot10 then
-		slot0._stepCount = 1
-	elseif slot7 or slot8 then
-		slot0._stepCount = 2
+	if var_1_7 then
+		arg_1_0._stepCount = 1
+	elseif var_1_4 or var_1_5 then
+		arg_1_0._stepCount = 2
 	elseif FightCardModel.instance:isCardOpEnd() and #FightCardModel.instance:getCardOps() > 0 then
-		slot0._stepCount = 2
+		arg_1_0._stepCount = 2
 	else
-		slot0._stepCount = 1
+		arg_1_0._stepCount = 1
 	end
 
-	FightController.instance:unregisterCallback(FightEvent.PlayCardFlayFinish, slot0._onPlayCardFlayFinish, slot0)
+	FightController.instance:unregisterCallback(FightEvent.PlayCardFlayFinish, arg_1_0._onPlayCardFlayFinish, arg_1_0)
 
-	if slot0._stepCount == 2 then
-		FightController.instance:registerCallback(FightEvent.PlayCardFlayFinish, slot0._onPlayCardFlayFinish, slot0)
+	if arg_1_0._stepCount == 2 then
+		FightController.instance:registerCallback(FightEvent.PlayCardFlayFinish, arg_1_0._onPlayCardFlayFinish, arg_1_0)
 	end
 
-	slot0._main_flow = FlowSequence.New()
-	slot11 = FlowSequence.New()
+	arg_1_0._main_flow = FlowSequence.New()
 
-	slot11:addWork(FunctionWork.New(function ()
-		FightController.instance:dispatchEvent(FightEvent.ShowPlayCardFlyEffect, uv0._cardInfoMO, uv0._clonePlayCardGO, uv0.context.fightBeginRoundOp)
+	local var_1_8 = FlowSequence.New()
+
+	var_1_8:addWork(FunctionWork.New(function()
+		FightController.instance:dispatchEvent(FightEvent.ShowPlayCardFlyEffect, arg_1_0._cardInfoMO, arg_1_0._clonePlayCardGO, arg_1_0.context.fightBeginRoundOp)
 	end))
 
-	if FightCardDataHelper.isNoCostSpecialCard(slot0._cardInfoMO) then
-		slot11:addWork(slot0:_buildNoActCostMoveFlow())
+	if FightCardDataHelper.isNoCostSpecialCard(arg_1_0._cardInfoMO) then
+		var_1_8:addWork(arg_1_0:_buildNoActCostMoveFlow())
 	end
 
-	slot11:addWork(WorkWaitSeconds.New(slot0._dt * 1))
+	var_1_8:addWork(WorkWaitSeconds.New(arg_1_0._dt * 1))
 
-	if slot10 then
-		slot11:addWork(FunctionWork.New(function ()
-			uv0:_playShrinkFlow()
+	if var_1_7 then
+		var_1_8:addWork(FunctionWork.New(function()
+			arg_1_0:_playShrinkFlow()
 		end))
-		slot11:addWork(WorkWaitSeconds.New(slot0._dt * 6))
+		var_1_8:addWork(WorkWaitSeconds.New(arg_1_0._dt * 6))
 	else
-		slot11:addWork(slot0:_startShrinkFlow())
+		var_1_8:addWork(arg_1_0:_startShrinkFlow())
 	end
 
-	slot0._main_flow:addWork(slot11)
-	TaskDispatcher.runDelay(slot0._delayDone, slot0, 10 / FightModel.instance:getUISpeed())
-	slot0._main_flow:registerDoneListener(slot0._onPlayCardDone, slot0)
-	slot0._main_flow:start(slot1)
+	arg_1_0._main_flow:addWork(var_1_8)
+	TaskDispatcher.runDelay(arg_1_0._delayDone, arg_1_0, 10 / FightModel.instance:getUISpeed())
+	arg_1_0._main_flow:registerDoneListener(arg_1_0._onPlayCardDone, arg_1_0)
+	arg_1_0._main_flow:start(arg_1_1)
 end
 
-function slot0._onPlayCardFlayFinish(slot0, slot1)
-	if slot1 == slot0.context.fightBeginRoundOp then
-		slot0:_checkDone()
+function var_0_0._onPlayCardFlayFinish(arg_4_0, arg_4_1)
+	if arg_4_1 == arg_4_0.context.fightBeginRoundOp then
+		arg_4_0:_checkDone()
 	end
 end
 
-function slot0._delayDone(slot0)
-	TaskDispatcher.cancelTask(slot0._delayDone, slot0)
+function var_0_0._delayDone(arg_5_0)
+	TaskDispatcher.cancelTask(arg_5_0._delayDone, arg_5_0)
 	logError("出牌流程超过了10秒,可能卡住了,先强制结束")
 
-	slot0._stepCount = 1
+	arg_5_0._stepCount = 1
 
-	slot0:_onPlayCardDone()
-	slot0:onStop()
+	arg_5_0:_onPlayCardDone()
+	arg_5_0:onStop()
 end
 
-function slot0._onPlayCardDone(slot0)
-	slot0._main_flow:unregisterDoneListener(slot0._onPlayCardDone, slot0)
-	table.remove(slot0.context.cards, slot0.context.from)
+function var_0_0._onPlayCardDone(arg_6_0)
+	arg_6_0._main_flow:unregisterDoneListener(arg_6_0._onPlayCardDone, arg_6_0)
+	table.remove(arg_6_0.context.cards, arg_6_0.context.from)
 
-	if slot0._tweenParamList then
-		for slot4, slot5 in ipairs(slot0._tweenParamList) do
-			if slot0.context.from <= slot5.index then
-				slot5.index = slot5.index - 1
+	if arg_6_0._tweenParamList then
+		for iter_6_0, iter_6_1 in ipairs(arg_6_0._tweenParamList) do
+			if iter_6_1.index >= arg_6_0.context.from then
+				iter_6_1.index = iter_6_1.index - 1
 
-				slot0:_tweenCardPosFrameCb(slot5.curPos, slot5)
+				arg_6_0:_tweenCardPosFrameCb(iter_6_1.curPos, iter_6_1)
 			end
 		end
 	end
 
-	TaskDispatcher.cancelTask(slot0._delayDone, slot0)
-	slot0.context.view:_playCardItemInList(slot0.context.from)
-	slot0.context.view:_updateHandCards(slot0.context.cards)
-	slot0:_checkDone()
+	TaskDispatcher.cancelTask(arg_6_0._delayDone, arg_6_0)
+	arg_6_0.context.view:_playCardItemInList(arg_6_0.context.from)
+	arg_6_0.context.view:_updateHandCards(arg_6_0.context.cards)
+	arg_6_0:_checkDone()
 end
 
-function slot0._checkDone(slot0)
-	slot0._stepCount = slot0._stepCount - 1
+function var_0_0._checkDone(arg_7_0)
+	arg_7_0._stepCount = arg_7_0._stepCount - 1
 
-	if slot0._stepCount <= 0 then
-		slot0:onDone(true)
+	if arg_7_0._stepCount <= 0 then
+		arg_7_0:onDone(true)
 	end
 end
 
-function slot0._addTrailEffect(slot0, slot1)
+function var_0_0._addTrailEffect(arg_8_0, arg_8_1)
 	if GMFightShowState.cards then
-		slot2 = ResUrl.getUIEffect(FightPreloadViewWork.ui_kapaituowei)
-		slot0._tailEffectGO = gohelper.clone(FightHelper.getPreloadAssetItem(slot2):GetResource(slot2), slot1.gameObject)
-		slot0._tailEffectGO.name = FightPreloadViewWork.ui_kapaituowei
+		local var_8_0 = ResUrl.getUIEffect(FightPreloadViewWork.ui_kapaituowei)
+		local var_8_1 = FightHelper.getPreloadAssetItem(var_8_0)
+
+		arg_8_0._tailEffectGO = gohelper.clone(var_8_1:GetResource(var_8_0), arg_8_1.gameObject)
+		arg_8_0._tailEffectGO.name = FightPreloadViewWork.ui_kapaituowei
 	end
 end
 
-function slot0._buildNoActCostMoveFlow(slot0)
-	slot1 = FlowSequence.New()
-	slot2 = FlowParallel.New()
-	slot3, slot4 = FightViewPlayCard.getMaxItemCount()
-	slot5 = slot0.context.view.viewContainer.fightViewPlayCard._playCardItemList
-	slot6 = slot0.context.view.viewContainer.fightViewPlayCard:getShowIndex(slot0.context.fightBeginRoundOp)
+function var_0_0._buildNoActCostMoveFlow(arg_9_0)
+	local var_9_0 = FlowSequence.New()
+	local var_9_1 = FlowParallel.New()
+	local var_9_2, var_9_3 = FightViewPlayCard.getMaxItemCount()
+	local var_9_4 = arg_9_0.context.view.viewContainer.fightViewPlayCard._playCardItemList
+	local var_9_5 = arg_9_0.context.view.viewContainer.fightViewPlayCard:getShowIndex(arg_9_0.context.fightBeginRoundOp)
 
-	if FightViewPlayCard.VisibleCount >= slot3 then
-		for slot10 = 1, #slot5 do
-			slot11 = slot5[slot10].tr
+	if var_9_2 > FightViewPlayCard.VisibleCount then
+		-- block empty
+	else
+		for iter_9_0 = 1, #var_9_4 do
+			local var_9_6 = var_9_4[iter_9_0].tr
+			local var_9_7 = iter_9_0
 
-			if slot6 < slot10 then
-				slot12 = slot10 + 1
+			if var_9_5 < iter_9_0 then
+				var_9_7 = var_9_7 + 1
 			end
 
-			slot2:addWork(TweenWork.New({
+			local var_9_8 = FightViewPlayCard.calcCardPosX(var_9_7, var_9_2)
+
+			var_9_1:addWork(TweenWork.New({
 				type = "DOAnchorPosX",
-				tr = slot11,
-				to = FightViewPlayCard.calcCardPosX(slot12, slot3),
-				t = slot0._dt * 3
+				tr = var_9_6,
+				to = var_9_8,
+				t = arg_9_0._dt * 3
 			}))
 		end
 	end
 
-	slot1:addWork(slot2)
-	slot1:addWork(FunctionWork.New(function ()
+	var_9_0:addWork(var_9_1)
+	var_9_0:addWork(FunctionWork.New(function()
 		FightController.instance:dispatchEvent(FightEvent.onNoActCostMoveFlowOver)
 	end))
 
-	return slot1
+	return var_9_0
 end
 
-function slot0._playShrinkFlow(slot0)
-	slot0._shrinkFlow = slot0:_startShrinkFlow()
+function var_0_0._playShrinkFlow(arg_11_0)
+	arg_11_0._shrinkFlow = arg_11_0:_startShrinkFlow()
 
-	slot0._shrinkFlow:start()
+	arg_11_0._shrinkFlow:start()
 end
 
-function slot0._startShrinkFlow(slot0)
-	FlowSequence.New():addWork(WorkWaitSeconds.New(slot0._dt * 2))
+function var_0_0._startShrinkFlow(arg_12_0)
+	local var_12_0 = FlowSequence.New()
 
-	slot2 = FlowParallel.New()
-	slot0._tweenParamList = {}
+	var_12_0:addWork(WorkWaitSeconds.New(arg_12_0._dt * 2))
 
-	for slot6, slot7 in ipairs(slot0.context.handCardItemList) do
-		if slot7.go.activeInHierarchy and slot0.context.from < slot6 then
-			slot9 = FightViewHandCard.calcCardPosX(slot6 <= slot0.context.from and slot6 or slot6 - 1)
-			slot10 = FlowSequence.New()
+	local var_12_1 = FlowParallel.New()
 
-			if (slot6 - slot0.context.from - 1) * slot0._dt > 0 then
-				slot10:addWork(WorkWaitSeconds.New(slot11))
+	arg_12_0._tweenParamList = {}
+
+	for iter_12_0, iter_12_1 in ipairs(arg_12_0.context.handCardItemList) do
+		if iter_12_1.go.activeInHierarchy and iter_12_0 > arg_12_0.context.from then
+			local var_12_2 = iter_12_0 <= arg_12_0.context.from and iter_12_0 or iter_12_0 - 1
+			local var_12_3 = FightViewHandCard.calcCardPosX(var_12_2)
+			local var_12_4 = FlowSequence.New()
+			local var_12_5 = (iter_12_0 - arg_12_0.context.from - 1) * arg_12_0._dt
+
+			if var_12_5 > 0 then
+				var_12_4:addWork(WorkWaitSeconds.New(var_12_5))
 			end
 
-			slot12 = recthelper.getAnchorX(slot7.tr)
-			slot13 = {
-				index = slot6,
-				curPos = slot12
+			local var_12_6 = recthelper.getAnchorX(iter_12_1.tr)
+			local var_12_7 = {
+				index = iter_12_0,
+				curPos = var_12_6
 			}
 
-			table.insert(slot0._tweenParamList, slot13)
-			slot10:addWork(TweenWork.New({
+			table.insert(arg_12_0._tweenParamList, var_12_7)
+
+			local var_12_8 = {
 				type = "DOTweenFloat",
-				from = slot12,
-				to = slot9,
-				t = slot0._dt * 5,
-				frameCb = slot0._tweenCardPosFrameCb,
-				cbObj = slot0,
-				param = slot13,
+				from = var_12_6,
+				to = var_12_3,
+				t = arg_12_0._dt * 5,
+				frameCb = arg_12_0._tweenCardPosFrameCb,
+				cbObj = arg_12_0,
+				param = var_12_7,
 				ease = EaseType.OutQuart
-			}))
-			slot2:addWork(slot10)
+			}
+
+			var_12_4:addWork(TweenWork.New(var_12_8))
+			var_12_1:addWork(var_12_4)
 		end
 	end
 
-	slot1:addWork(slot2)
+	var_12_0:addWork(var_12_1)
 
-	return slot1
+	return var_12_0
 end
 
-function slot0._tweenCardPosFrameCb(slot0, slot1, slot2)
-	slot2.curPos = slot1
+function var_0_0._tweenCardPosFrameCb(arg_13_0, arg_13_1, arg_13_2)
+	arg_13_2.curPos = arg_13_1
 
-	if not gohelper.isNil(slot0.context.handCardTr) and not gohelper.isNil(gohelper.findChild(slot0.context.handCardTr.gameObject, "cardItem" .. slot2.index)) then
-		recthelper.setAnchorX(slot5.transform, slot1)
+	if not gohelper.isNil(arg_13_0.context.handCardTr) then
+		local var_13_0 = "cardItem" .. arg_13_2.index
+		local var_13_1 = arg_13_0.context.handCardTr
+		local var_13_2 = gohelper.findChild(var_13_1.gameObject, var_13_0)
+
+		if not gohelper.isNil(var_13_2) then
+			recthelper.setAnchorX(var_13_2.transform, arg_13_1)
+		end
 	end
 end
 
-function slot0.clearWork(slot0)
-	FightController.instance:unregisterCallback(FightEvent.PlayCardFlayFinish, slot0._onPlayCardFlayFinish, slot0)
-	TaskDispatcher.cancelTask(slot0._delayDone, slot0)
+function var_0_0.clearWork(arg_14_0)
+	FightController.instance:unregisterCallback(FightEvent.PlayCardFlayFinish, arg_14_0._onPlayCardFlayFinish, arg_14_0)
+	TaskDispatcher.cancelTask(arg_14_0._delayDone, arg_14_0)
 
-	if slot0._main_flow then
-		slot0._main_flow:stop()
+	if arg_14_0._main_flow then
+		arg_14_0._main_flow:stop()
 
-		slot0._main_flow = nil
+		arg_14_0._main_flow = nil
 	end
 
-	if slot0._shrinkFlow then
-		slot0._shrinkFlow:stop()
+	if arg_14_0._shrinkFlow then
+		arg_14_0._shrinkFlow:stop()
 
-		slot0._shrinkFlow = nil
+		arg_14_0._shrinkFlow = nil
 	end
 end
 
-return slot0
+return var_0_0

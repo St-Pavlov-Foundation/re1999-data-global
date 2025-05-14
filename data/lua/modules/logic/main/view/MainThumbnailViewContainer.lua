@@ -1,8 +1,8 @@
-module("modules.logic.main.view.MainThumbnailViewContainer", package.seeall)
+﻿module("modules.logic.main.view.MainThumbnailViewContainer", package.seeall)
 
-slot0 = class("MainThumbnailViewContainer", BaseViewContainer)
+local var_0_0 = class("MainThumbnailViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		MainThumbnailView.New(),
 		MainThumbnailHeroView.New(),
@@ -13,26 +13,26 @@ function slot0.buildViews(slot0)
 	}
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	slot0.navigationView = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	arg_2_0.navigationView = NavigateButtonsView.New({
 		true,
 		false,
 		false
 	}, 101)
 
 	return {
-		slot0.navigationView
+		arg_2_0.navigationView
 	}
 end
 
-function slot0.getThumbnailNav(slot0)
-	return slot0.navigationView
+function var_0_0.getThumbnailNav(arg_3_0)
+	return arg_3_0.navigationView
 end
 
-function slot0.playCloseTransition(slot0)
-	uv0.super.playCloseTransition(slot0, {
+function var_0_0.playCloseTransition(arg_4_0)
+	var_0_0.super.playCloseTransition(arg_4_0, {
 		duration = 1
 	})
 end
 
-return slot0
+return var_0_0

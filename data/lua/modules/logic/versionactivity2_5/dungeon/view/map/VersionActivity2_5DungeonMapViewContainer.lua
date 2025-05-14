@@ -1,51 +1,51 @@
-module("modules.logic.versionactivity2_5.dungeon.view.map.VersionActivity2_5DungeonMapViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity2_5.dungeon.view.map.VersionActivity2_5DungeonMapViewContainer", package.seeall)
 
-slot0 = class("VersionActivity2_5DungeonMapViewContainer", BaseViewContainer)
+local var_0_0 = class("VersionActivity2_5DungeonMapViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot0.mapScene = VersionActivity2_5DungeonMapScene.New()
-	slot0.mapSceneElements = VersionActivity2_5DungeonMapSceneElements.New()
-	slot0.mapView = VersionActivity2_5DungeonMapView.New()
-	slot0.mapEpisodeView = VersionActivity2_5DungeonMapEpisodeView.New()
-	slot0.interactView = VersionActivity2_5DungeonMapInteractView.New()
-	slot0.mapElementReward = DungeonMapElementReward.New()
+function var_0_0.buildViews(arg_1_0)
+	arg_1_0.mapScene = VersionActivity2_5DungeonMapScene.New()
+	arg_1_0.mapSceneElements = VersionActivity2_5DungeonMapSceneElements.New()
+	arg_1_0.mapView = VersionActivity2_5DungeonMapView.New()
+	arg_1_0.mapEpisodeView = VersionActivity2_5DungeonMapEpisodeView.New()
+	arg_1_0.interactView = VersionActivity2_5DungeonMapInteractView.New()
+	arg_1_0.mapElementReward = DungeonMapElementReward.New()
 
 	return {
 		VersionActivity2_5DungeonMapHoleView.New(),
-		slot0.mapScene,
-		slot0.mapSceneElements,
-		slot0.mapView,
-		slot0.mapEpisodeView,
-		slot0.interactView,
-		slot0.mapElementReward,
+		arg_1_0.mapScene,
+		arg_1_0.mapSceneElements,
+		arg_1_0.mapView,
+		arg_1_0.mapEpisodeView,
+		arg_1_0.interactView,
+		arg_1_0.mapElementReward,
 		TabViewGroup.New(1, "#go_topleft")
 	}
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	slot0.navigateView = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	arg_2_0.navigateView = NavigateButtonsView.New({
 		true,
 		true,
 		false
 	})
 
-	slot0.navigateView:setOverrideClose(slot0.onClickClose, slot0)
-	slot0.navigateView:setOverrideHome(slot0.onClickHome, slot0)
+	arg_2_0.navigateView:setOverrideClose(arg_2_0.onClickClose, arg_2_0)
+	arg_2_0.navigateView:setOverrideHome(arg_2_0.onClickHome, arg_2_0)
 
 	return {
-		slot0.navigateView
+		arg_2_0.navigateView
 	}
 end
 
-function slot0.onClickClose(slot0)
+function var_0_0.onClickClose(arg_3_0)
 	if VersionActivity2_5DungeonModel.instance:checkIsShowInteractView() then
 		return
 	end
 
-	slot0:closeThis()
+	arg_3_0:closeThis()
 end
 
-function slot0.onClickHome(slot0)
+function var_0_0.onClickHome(arg_4_0)
 	if VersionActivity2_5DungeonModel.instance:checkIsShowInteractView() then
 		return
 	end
@@ -53,57 +53,55 @@ function slot0.onClickHome(slot0)
 	NavigateButtonsView.homeClick()
 end
 
-function slot0.onContainerInit(slot0)
-	slot0.versionActivityDungeonBaseMo = VersionActivity2_5DungeonMo.New()
-	slot4 = slot0.viewParam.chapterId
-	slot5 = slot0.viewParam.episodeId
+function var_0_0.onContainerInit(arg_5_0)
+	arg_5_0.versionActivityDungeonBaseMo = VersionActivity2_5DungeonMo.New()
 
-	slot0.versionActivityDungeonBaseMo:init(VersionActivity2_5Enum.ActivityId.Dungeon, slot4, slot5)
-	slot0.versionActivityDungeonBaseMo:setLayoutClass(VersionActivity2_5DungeonMapChapterLayout)
-	slot0.versionActivityDungeonBaseMo:setMapEpisodeItemClass(VersionActivity2_5DungeonMapEpisodeItem)
+	arg_5_0.versionActivityDungeonBaseMo:init(VersionActivity2_5Enum.ActivityId.Dungeon, arg_5_0.viewParam.chapterId, arg_5_0.viewParam.episodeId)
+	arg_5_0.versionActivityDungeonBaseMo:setLayoutClass(VersionActivity2_5DungeonMapChapterLayout)
+	arg_5_0.versionActivityDungeonBaseMo:setMapEpisodeItemClass(VersionActivity2_5DungeonMapEpisodeItem)
 
-	for slot4, slot5 in ipairs(slot0._views) do
-		slot5.activityDungeonMo = slot0.versionActivityDungeonBaseMo
+	for iter_5_0, iter_5_1 in ipairs(arg_5_0._views) do
+		iter_5_1.activityDungeonMo = arg_5_0.versionActivityDungeonBaseMo
 	end
 
-	VersionActivity2_5DungeonModel.instance:setDungeonBaseMo(slot0.versionActivityDungeonBaseMo)
-	slot0.mapElementReward:setShowToastState(true)
+	VersionActivity2_5DungeonModel.instance:setDungeonBaseMo(arg_5_0.versionActivityDungeonBaseMo)
+	arg_5_0.mapElementReward:setShowToastState(true)
 end
 
-function slot0.onUpdateParamInternal(slot0, slot1)
-	slot0.viewParam = slot1
+function var_0_0.onUpdateParamInternal(arg_6_0, arg_6_1)
+	arg_6_0.viewParam = arg_6_1
 
-	slot0:onContainerUpdateParam()
-	slot0:_setVisible(true)
+	arg_6_0:onContainerUpdateParam()
+	arg_6_0:_setVisible(true)
 
-	if slot0._views then
-		for slot5, slot6 in ipairs(slot0._views) do
-			slot6.viewParam = slot1
+	if arg_6_0._views then
+		for iter_6_0, iter_6_1 in ipairs(arg_6_0._views) do
+			iter_6_1.viewParam = arg_6_1
 
-			slot6:onUpdateParamInternal()
+			iter_6_1:onUpdateParamInternal()
 		end
 	end
 end
 
-function slot0.onContainerUpdateParam(slot0)
-	slot0.versionActivityDungeonBaseMo:update(slot0.viewParam.chapterId, slot0.viewParam.episodeId)
-	slot0:setVisibleInternal(true)
+function var_0_0.onContainerUpdateParam(arg_7_0)
+	arg_7_0.versionActivityDungeonBaseMo:update(arg_7_0.viewParam.chapterId, arg_7_0.viewParam.episodeId)
+	arg_7_0:setVisibleInternal(true)
 end
 
-function slot0.setVisibleInternal(slot0, slot1)
-	uv0.super.setVisibleInternal(slot0, slot1)
+function var_0_0.setVisibleInternal(arg_8_0, arg_8_1)
+	var_0_0.super.setVisibleInternal(arg_8_0, arg_8_1)
 
-	if slot0.mapScene then
-		slot0.mapScene:setVisible(slot1)
+	if arg_8_0.mapScene then
+		arg_8_0.mapScene:setVisible(arg_8_1)
 	end
 end
 
-function slot0.onContainerClose(slot0)
-	TaskDispatcher.cancelTask(slot0.everySecondCall, slot0)
+function var_0_0.onContainerClose(arg_9_0)
+	TaskDispatcher.cancelTask(arg_9_0.everySecondCall, arg_9_0)
 end
 
-function slot0.getMapScene(slot0)
-	return slot0.mapScene
+function var_0_0.getMapScene(arg_10_0)
+	return arg_10_0.mapScene
 end
 
-return slot0
+return var_0_0

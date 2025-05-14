@@ -1,73 +1,74 @@
-module("modules.logic.explore.map.unit.ExploreStepOnceUnit", package.seeall)
+﻿module("modules.logic.explore.map.unit.ExploreStepOnceUnit", package.seeall)
 
-slot0 = class("ExploreStepOnceUnit", ExploreBaseDisplayUnit)
+local var_0_0 = class("ExploreStepOnceUnit", ExploreBaseDisplayUnit)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.onRoleEnter(slot0, slot1, slot2, slot3)
-	if not slot2 then
+function var_0_0.onRoleEnter(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
+	if not arg_2_2 then
 		return
 	end
 
-	slot0._isRoleEnter = true
+	arg_2_0._isRoleEnter = true
 
-	if not slot0:canTrigger() then
+	if not arg_2_0:canTrigger() then
 		return
 	end
 
-	if not slot3:isRole() and not slot3.mo.canTriggerGear then
+	if not arg_2_3:isRole() and not arg_2_3.mo.canTriggerGear then
 		return
 	end
 
-	if slot0.mo:isInteractActiveState() == false then
-		ExploreModel.instance:setHeroControl(false, ExploreEnum.HeroLock.UnitIdLock + slot0.id)
+	if arg_2_0.mo:isInteractActiveState() == false then
+		ExploreModel.instance:setHeroControl(false, ExploreEnum.HeroLock.UnitIdLock + arg_2_0.id)
 		ExploreController.instance:getMap():getHero():stopMoving()
 		ExploreModel.instance:setStepPause(true)
-		slot0:playAnim(ExploreAnimEnum.AnimName.nToA)
-		slot0:setInteractActive(true)
+		arg_2_0:playAnim(ExploreAnimEnum.AnimName.nToA)
+		arg_2_0:setInteractActive(true)
 	end
 end
 
-function slot0.onRoleLeave(slot0)
-	slot0._isRoleEnter = false
+function var_0_0.onRoleLeave(arg_3_0)
+	arg_3_0._isRoleEnter = false
 
-	uv0.super.onRoleLeave(slot0)
+	var_0_0.super.onRoleLeave(arg_3_0)
 end
 
-function slot0.needUpdateHeroPos(slot0)
-	return slot0._isRoleEnter and (slot0.animComp._curAnim == ExploreAnimEnum.AnimName.nToA or slot0.animComp._curAnim == ExploreAnimEnum.AnimName.aToN)
+function var_0_0.needUpdateHeroPos(arg_4_0)
+	return arg_4_0._isRoleEnter and (arg_4_0.animComp._curAnim == ExploreAnimEnum.AnimName.nToA or arg_4_0.animComp._curAnim == ExploreAnimEnum.AnimName.aToN)
 end
 
-function slot0.onAnimEnd(slot0, slot1, slot2)
-	if slot2 == ExploreAnimEnum.AnimName.active or slot2 == ExploreAnimEnum.AnimName.normal then
-		ExploreModel.instance:setHeroControl(true, ExploreEnum.HeroLock.UnitIdLock + slot0.id)
+function var_0_0.onAnimEnd(arg_5_0, arg_5_1, arg_5_2)
+	if arg_5_2 == ExploreAnimEnum.AnimName.active or arg_5_2 == ExploreAnimEnum.AnimName.normal then
+		ExploreModel.instance:setHeroControl(true, ExploreEnum.HeroLock.UnitIdLock + arg_5_0.id)
 
-		slot3 = {
+		local var_5_0 = {
 			stepType = ExploreEnum.StepType.CheckCounter,
-			id = slot0.id
+			id = arg_5_0.id
 		}
 
-		ExploreStepController.instance:insertClientStep(slot3, 1)
-		ExploreStepController.instance:insertClientStep(slot3)
+		ExploreStepController.instance:insertClientStep(var_5_0, 1)
+		ExploreStepController.instance:insertClientStep(var_5_0)
 
-		if slot0.mo:isInteractActiveState() then
-			slot0:tryTrigger()
+		if arg_5_0.mo:isInteractActiveState() then
+			arg_5_0:tryTrigger()
 		end
 
 		ExploreStepController.instance:startStep()
 		ExploreModel.instance:setStepPause(false)
 	end
 
-	uv0.super.onAnimEnd(slot0, slot1, slot2)
+	var_0_0.super.onAnimEnd(arg_5_0, arg_5_1, arg_5_2)
 end
 
-function slot0.canTrigger(slot0)
-	if slot0.mo:isInteractActiveState() then
+function var_0_0.canTrigger(arg_6_0)
+	if arg_6_0.mo:isInteractActiveState() then
 		return false
 	end
 
-	return uv0.super.canTrigger(slot0)
+	return var_0_0.super.canTrigger(arg_6_0)
 end
 
-return slot0
+return var_0_0

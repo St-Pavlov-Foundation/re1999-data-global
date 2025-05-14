@@ -1,46 +1,55 @@
-module("modules.logic.equip.view.EquipTeamAttrItem", package.seeall)
+﻿module("modules.logic.equip.view.EquipTeamAttrItem", package.seeall)
 
-slot0 = class("EquipTeamAttrItem", ListScrollCellExtend)
+local var_0_0 = class("EquipTeamAttrItem", ListScrollCellExtend)
 
-function slot0.onInitView(slot0)
-	slot0._txtvalue1 = gohelper.findChildText(slot0.viewGO, "#txt_value1")
-	slot0._txtname1 = gohelper.findChildText(slot0.viewGO, "#txt_name1")
-	slot0._simageicon1 = gohelper.findChildImage(slot0.viewGO, "#simage_icon1")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._txtvalue1 = gohelper.findChildText(arg_1_0.viewGO, "#txt_value1")
+	arg_1_0._txtname1 = gohelper.findChildText(arg_1_0.viewGO, "#txt_name1")
+	arg_1_0._simageicon1 = gohelper.findChildImage(arg_1_0.viewGO, "#simage_icon1")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_4_0)
+	return
 end
 
-function slot0._editableAddEvents(slot0)
+function var_0_0._editableAddEvents(arg_5_0)
+	return
 end
 
-function slot0._editableRemoveEvents(slot0)
+function var_0_0._editableRemoveEvents(arg_6_0)
+	return
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
-	slot2 = slot0._mo.attrId
+function var_0_0.onUpdateMO(arg_7_0, arg_7_1)
+	arg_7_0._mo = arg_7_1
 
-	CharacterController.instance:SetAttriIcon(slot0._simageicon1, slot2)
+	local var_7_0 = arg_7_0._mo.attrId
+	local var_7_1 = HeroConfig.instance:getHeroAttributeCO(var_7_0)
 
-	slot0._txtvalue1.text = EquipConfig.instance:getEquipValueStr(slot0._mo)
-	slot0._txtname1.text = HeroConfig.instance:getHeroAttributeCO(slot2).name
+	CharacterController.instance:SetAttriIcon(arg_7_0._simageicon1, var_7_0)
+
+	arg_7_0._txtvalue1.text = EquipConfig.instance:getEquipValueStr(arg_7_0._mo)
+	arg_7_0._txtname1.text = var_7_1.name
 end
 
-function slot0.onSelect(slot0, slot1)
+function var_0_0.onSelect(arg_8_0, arg_8_1)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_9_0)
+	return
 end
 
-return slot0
+return var_0_0

@@ -1,13 +1,13 @@
-module("modules.logic.story.model.StoryStepPictureMo", package.seeall)
+﻿module("modules.logic.story.model.StoryStepPictureMo", package.seeall)
 
-slot0 = pureTable("StoryStepPictureMo")
+local var_0_0 = pureTable("StoryStepPictureMo")
 
-function slot0.ctor(slot0)
-	slot0.picType = 0
-	slot0.cirRadius = 0
-	slot0.picColor = "#000000"
-	slot0.picture = ""
-	slot0.delayTimes = {
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.picType = 0
+	arg_1_0.cirRadius = 0
+	arg_1_0.picColor = "#000000"
+	arg_1_0.picture = ""
+	arg_1_0.delayTimes = {
 		0,
 		0,
 		0,
@@ -17,9 +17,9 @@ function slot0.ctor(slot0)
 		0,
 		0
 	}
-	slot0.orderType = 0
-	slot0.inType = 0
-	slot0.inTimes = {
+	arg_1_0.orderType = 0
+	arg_1_0.inType = 0
+	arg_1_0.inTimes = {
 		0,
 		0,
 		0,
@@ -29,8 +29,8 @@ function slot0.ctor(slot0)
 		0,
 		0
 	}
-	slot0.outType = 0
-	slot0.outTimes = {
+	arg_1_0.outType = 0
+	arg_1_0.outTimes = {
 		0,
 		0,
 		0,
@@ -40,11 +40,11 @@ function slot0.ctor(slot0)
 		0,
 		0
 	}
-	slot0.pos = {}
-	slot0.layer = 9
-	slot0.effType = 0
-	slot0.effDegree = 0
-	slot0.effDelayTimes = {
+	arg_1_0.pos = {}
+	arg_1_0.layer = 9
+	arg_1_0.effType = 0
+	arg_1_0.effDegree = 0
+	arg_1_0.effDelayTimes = {
 		0,
 		0,
 		0,
@@ -54,7 +54,7 @@ function slot0.ctor(slot0)
 		0,
 		0
 	}
-	slot0.effTimes = {
+	arg_1_0.effTimes = {
 		0,
 		0,
 		0,
@@ -64,30 +64,30 @@ function slot0.ctor(slot0)
 		0,
 		0
 	}
-	slot0.effRate = 1
+	arg_1_0.effRate = 1
 end
 
-function slot0.init(slot0, slot1)
-	slot0.picType = slot1[1]
-	slot0.cirRadius = slot1[2]
-	slot0.picColor = slot1[3]
-	slot0.picture = slot1[4]
-	slot0.delayTimes = slot1[5]
-	slot0.orderType = slot1[6]
-	slot0.inType = slot1[7]
-	slot0.inTimes = slot1[8]
-	slot0.outType = slot1[9]
-	slot0.outTimes = slot1[10]
-	slot0.pos = {
-		slot1[11],
-		slot1[12]
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.picType = arg_2_1[1]
+	arg_2_0.cirRadius = arg_2_1[2]
+	arg_2_0.picColor = arg_2_1[3]
+	arg_2_0.picture = arg_2_1[4]
+	arg_2_0.delayTimes = arg_2_1[5]
+	arg_2_0.orderType = arg_2_1[6]
+	arg_2_0.inType = arg_2_1[7]
+	arg_2_0.inTimes = arg_2_1[8]
+	arg_2_0.outType = arg_2_1[9]
+	arg_2_0.outTimes = arg_2_1[10]
+	arg_2_0.pos = {
+		arg_2_1[11],
+		arg_2_1[12]
 	}
-	slot0.layer = slot1[13]
-	slot0.effType = slot1[14]
-	slot0.effDegree = slot1[15]
-	slot0.effDelayTimes = slot1[16]
-	slot0.effTimes = slot1[17]
-	slot0.effRate = slot1[18]
+	arg_2_0.layer = arg_2_1[13]
+	arg_2_0.effType = arg_2_1[14]
+	arg_2_0.effDegree = arg_2_1[15]
+	arg_2_0.effDelayTimes = arg_2_1[16]
+	arg_2_0.effTimes = arg_2_1[17]
+	arg_2_0.effRate = arg_2_1[18]
 end
 
-return slot0
+return var_0_0

@@ -1,40 +1,40 @@
-module("modules.logic.versionactivity2_4.music.model.VersionActivity2_4MusicFreeModel", package.seeall)
+﻿module("modules.logic.versionactivity2_4.music.model.VersionActivity2_4MusicFreeModel", package.seeall)
 
-slot0 = class("VersionActivity2_4MusicFreeModel", BaseModel)
+local var_0_0 = class("VersionActivity2_4MusicFreeModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0:reInit()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:reInit()
 end
 
-function slot0.reInit(slot0)
-	slot0._trackList = {}
-	slot0._recordIndex = nil
-	slot0._selectedTrackIndex = nil
+function var_0_0.reInit(arg_2_0)
+	arg_2_0._trackList = {}
+	arg_2_0._recordIndex = nil
+	arg_2_0._selectedTrackIndex = nil
 end
 
-function slot0.getMaxTrackCount(slot0)
-	return slot0._maxTrackCount
+function var_0_0.getMaxTrackCount(arg_3_0)
+	return arg_3_0._maxTrackCount
 end
 
-function slot0.getTrackLength(slot0)
-	return slot0._trackLength
+function var_0_0.getTrackLength(arg_4_0)
+	return arg_4_0._trackLength
 end
 
-function slot0.timeout(slot0, slot1)
-	return slot0._trackLength <= slot1
+function var_0_0.timeout(arg_5_0, arg_5_1)
+	return arg_5_1 >= arg_5_0._trackLength
 end
 
-function slot0.getTrackList(slot0)
-	return slot0._trackList
+function var_0_0.getTrackList(arg_6_0)
+	return arg_6_0._trackList
 end
 
-function slot0.getTrackMo(slot0)
-	return slot0._trackList[slot0._selectedTrackIndex]
+function var_0_0.getTrackMo(arg_7_0)
+	return arg_7_0._trackList[arg_7_0._selectedTrackIndex]
 end
 
-function slot0.anyOneHasRecorded(slot0)
-	for slot4, slot5 in pairs(slot0._trackList) do
-		if slot5.recordTotalTime > 0 then
+function var_0_0.anyOneHasRecorded(arg_8_0)
+	for iter_8_0, iter_8_1 in pairs(arg_8_0._trackList) do
+		if iter_8_1.recordTotalTime > 0 then
 			return true
 		end
 	end
@@ -42,86 +42,88 @@ function slot0.anyOneHasRecorded(slot0)
 	return false
 end
 
-function slot0.getActionStatus(slot0)
-	return slot0._actionStatus
+function var_0_0.getActionStatus(arg_9_0)
+	return arg_9_0._actionStatus
 end
 
-function slot0.getAccompanyStatus(slot0)
-	return slot0._accompanyStatus
+function var_0_0.getAccompanyStatus(arg_10_0)
+	return arg_10_0._accompanyStatus
 end
 
-function slot0.setActionStatus(slot0, slot1)
-	slot0._actionStatus = slot1
+function var_0_0.setActionStatus(arg_11_0, arg_11_1)
+	arg_11_0._actionStatus = arg_11_1
 
-	slot0:updateTrackListStatus()
+	arg_11_0:updateTrackListStatus()
 	VersionActivity2_4MusicController.instance:dispatchEvent(VersionActivity2_4MusicEvent.ActionStatusChange)
 end
 
-function slot0.onEnd(slot0)
-	TaskDispatcher.cancelTask(slot0._playBgm, slot0)
+function var_0_0.onEnd(arg_12_0)
+	TaskDispatcher.cancelTask(arg_12_0._playBgm, arg_12_0)
 end
 
-function slot0.onStart(slot0)
+function var_0_0.onStart(arg_13_0)
 	VersionActivity2_4MusicController.instance:initBgm()
 
-	slot0._maxTrackCount = Activity179Model.instance:getConstValue(VersionActivity2_4MusicEnum.Const.MaxTrackCount)
-	slot0._trackLength = Activity179Model.instance:getConstValue(VersionActivity2_4MusicEnum.Const.TrackLength)
-	slot0._actionStatus = VersionActivity2_4MusicEnum.ActionStatus.Record
-	slot0._trackList = {}
-	slot0._trackCount = 1
+	arg_13_0._maxTrackCount = Activity179Model.instance:getConstValue(VersionActivity2_4MusicEnum.Const.MaxTrackCount)
+	arg_13_0._trackLength = Activity179Model.instance:getConstValue(VersionActivity2_4MusicEnum.Const.TrackLength)
+	arg_13_0._actionStatus = VersionActivity2_4MusicEnum.ActionStatus.Record
+	arg_13_0._trackList = {}
+	arg_13_0._trackCount = 1
 
-	slot0:_initTrackList()
-	slot0:updateTrackListStatus()
-	slot0:setInstrumentIndexList({
+	arg_13_0:_initTrackList()
+	arg_13_0:updateTrackListStatus()
+	arg_13_0:setInstrumentIndexList({
 		1,
 		2
 	})
 
-	slot1 = VersionActivity2_4MusicEnum.AccompanyStatus.Close
-	slot0._accompanyStatus = slot0._accompanyStatus or {
-		slot1,
-		slot1,
-		slot1
+	local var_13_0 = VersionActivity2_4MusicEnum.AccompanyStatus.Close
+
+	arg_13_0._accompanyStatus = arg_13_0._accompanyStatus or {
+		var_13_0,
+		var_13_0,
+		var_13_0
 	}
-	slot0._accompanyIcon = {
+	arg_13_0._accompanyIcon = {
 		"v2a4_bakaluoer_freeinstrument_icon_t_gu",
 		"v2a4_bakaluoer_freeinstrument_icon_t_zhongyin",
 		"v2a4_bakaluoer_freeinstrument_icon_t_gaoyin"
 	}
-	slot2 = false
 
-	for slot6, slot7 in ipairs(slot0._accompanyStatus) do
-		AudioMgr.instance:setRTPCValue(VersionActivity2_4MusicEnum.AccompanyTypeName[slot6], slot7)
+	local var_13_1 = false
 
-		if slot7 == VersionActivity2_4MusicEnum.AccompanyStatus.Open then
-			slot2 = true
+	for iter_13_0, iter_13_1 in ipairs(arg_13_0._accompanyStatus) do
+		AudioMgr.instance:setRTPCValue(VersionActivity2_4MusicEnum.AccompanyTypeName[iter_13_0], iter_13_1)
+
+		if iter_13_1 == VersionActivity2_4MusicEnum.AccompanyStatus.Open then
+			var_13_1 = true
 		end
 	end
 
-	if slot2 then
-		TaskDispatcher.cancelTask(slot0._playBgm, slot0)
-		TaskDispatcher.runDelay(slot0._playBgm, slot0, 0.5)
+	if var_13_1 then
+		TaskDispatcher.cancelTask(arg_13_0._playBgm, arg_13_0)
+		TaskDispatcher.runDelay(arg_13_0._playBgm, arg_13_0, 0.5)
 	end
 end
 
-function slot0._playBgm(slot0)
+function var_0_0._playBgm(arg_14_0)
 	VersionActivity2_4MusicController.instance:playBgm(VersionActivity2_4MusicEnum.BgmPlay)
 end
 
-function slot0.onAccompanyStatusChange(slot0)
-	if slot0:isRecordingOrPlaying() then
+function var_0_0.onAccompanyStatusChange(arg_15_0)
+	if arg_15_0:isRecordingOrPlaying() then
 		return
 	end
 
-	slot1 = false
+	local var_15_0 = false
 
-	for slot5, slot6 in ipairs(slot0._accompanyStatus) do
-		if slot6 == VersionActivity2_4MusicEnum.AccompanyStatus.Open then
-			slot1 = true
+	for iter_15_0, iter_15_1 in ipairs(arg_15_0._accompanyStatus) do
+		if iter_15_1 == VersionActivity2_4MusicEnum.AccompanyStatus.Open then
+			var_15_0 = true
 		end
 	end
 
-	if slot1 then
+	if var_15_0 then
 		if VersionActivity2_4MusicController.instance:bgmIsStop() then
 			VersionActivity2_4MusicController.instance:playBgm(VersionActivity2_4MusicEnum.BgmPlay)
 		end
@@ -130,230 +132,254 @@ function slot0.onAccompanyStatusChange(slot0)
 	end
 end
 
-function slot0._initTrackList(slot0)
-	for slot4 = 1, slot0._maxTrackCount do
-		slot0:_initTrack(slot4)
+function var_0_0._initTrackList(arg_16_0)
+	for iter_16_0 = 1, arg_16_0._maxTrackCount do
+		arg_16_0:_initTrack(iter_16_0)
 	end
 end
 
-function slot0._initTrack(slot0, slot1)
-	slot2, slot3 = pcall(slot0._safeInitTrack, slot0, slot1)
+function var_0_0._initTrack(arg_17_0, arg_17_1)
+	local var_17_0, var_17_1 = pcall(arg_17_0._safeInitTrack, arg_17_0, arg_17_1)
 
-	if not slot2 then
-		logError(string.format("VersionActivity2_4MusicFreeModel:_initTrack index:%s error:%s", slot1, slot3))
+	if not var_17_0 then
+		logError(string.format("VersionActivity2_4MusicFreeModel:_initTrack index:%s error:%s", arg_17_1, var_17_1))
 	end
 end
 
-function slot0._safeInitTrack(slot0, slot1)
-	if string.nilorempty(PlayerPrefsHelper.getString(slot0:_getTrackKey(slot1))) then
+function var_0_0._safeInitTrack(arg_18_0, arg_18_1)
+	local var_18_0 = arg_18_0:_getTrackKey(arg_18_1)
+	local var_18_1 = PlayerPrefsHelper.getString(var_18_0)
+
+	if string.nilorempty(var_18_1) then
 		return
 	end
 
-	if not cjson.decode(slot3) or not slot4.recordTotalTime or not slot4.mute or not slot4.timeline then
+	local var_18_2 = cjson.decode(var_18_1)
+
+	if not var_18_2 or not var_18_2.recordTotalTime or not var_18_2.mute or not var_18_2.timeline then
 		return
 	end
 
-	slot5 = VersionActivity2_4MusicTrackMo.New()
-	slot5.recordTotalTime = slot4.recordTotalTime
-	slot5.mute = slot4.mute
-	slot5.timeline = slot4.timeline
-	slot5.index = slot1
-	slot0._trackList[slot1] = slot5
-	slot0._trackCount = slot1
+	local var_18_3 = VersionActivity2_4MusicTrackMo.New()
+
+	var_18_3.recordTotalTime = var_18_2.recordTotalTime
+	var_18_3.mute = var_18_2.mute
+	var_18_3.timeline = var_18_2.timeline
+	var_18_3.index = arg_18_1
+	arg_18_0._trackList[arg_18_1] = var_18_3
+	arg_18_0._trackCount = arg_18_1
 end
 
-function slot0.setAccompany(slot0, slot1, slot2)
-	slot0._accompanyStatus[slot1] = slot2
+function var_0_0.setAccompany(arg_19_0, arg_19_1, arg_19_2)
+	arg_19_0._accompanyStatus[arg_19_1] = arg_19_2
 
-	slot0:onAccompanyStatusChange()
+	arg_19_0:onAccompanyStatusChange()
 end
 
-function slot0.getAccompany(slot0, slot1)
-	return slot0._accompanyStatus[slot1]
+function var_0_0.getAccompany(arg_20_0, arg_20_1)
+	return arg_20_0._accompanyStatus[arg_20_1]
 end
 
-function slot0.getAccompanyIcon(slot0, slot1)
-	return slot0._accompanyIcon[slot1]
+function var_0_0.getAccompanyIcon(arg_21_0, arg_21_1)
+	return arg_21_0._accompanyIcon[arg_21_1]
 end
 
-function slot0.setInstrumentIndexList(slot0, slot1)
-	slot0._instrumentIndexList = slot1
+function var_0_0.setInstrumentIndexList(arg_22_0, arg_22_1)
+	arg_22_0._instrumentIndexList = arg_22_1
 end
 
-function slot0.getInstrumentIndexList(slot0)
-	return slot0._instrumentIndexList
+function var_0_0.getInstrumentIndexList(arg_23_0)
+	return arg_23_0._instrumentIndexList
 end
 
-function slot0.addTrack(slot0)
-	if slot0._maxTrackCount <= slot0._trackCount then
+function var_0_0.addTrack(arg_24_0)
+	if arg_24_0._trackCount >= arg_24_0._maxTrackCount then
 		return
 	end
 
-	slot0._trackCount = slot0._trackCount + 1
+	arg_24_0._trackCount = arg_24_0._trackCount + 1
 
-	slot0:setSelectedTrackIndex(slot0._trackCount)
-	slot0:updateTrackListStatus()
+	arg_24_0:setSelectedTrackIndex(arg_24_0._trackCount)
+	arg_24_0:updateTrackListStatus()
 end
 
-function slot0.updateTrackListStatus(slot0)
-	for slot4 = 1, slot0._maxTrackCount do
-		(slot0._trackList[slot4] or VersionActivity2_4MusicTrackMo.New()).index = slot4
+function var_0_0.updateTrackListStatus(arg_25_0)
+	for iter_25_0 = 1, arg_25_0._maxTrackCount do
+		local var_25_0 = arg_25_0._trackList[iter_25_0] or VersionActivity2_4MusicTrackMo.New()
 
-		if slot4 <= slot0._trackCount then
-			slot5.status = VersionActivity2_4MusicEnum.TrackStatus.UnRecorded
-		elseif slot4 == slot0._trackCount + 1 then
-			slot5.status = VersionActivity2_4MusicEnum.TrackStatus.Add
+		var_25_0.index = iter_25_0
+
+		if iter_25_0 <= arg_25_0._trackCount then
+			var_25_0.status = VersionActivity2_4MusicEnum.TrackStatus.UnRecorded
+		elseif iter_25_0 == arg_25_0._trackCount + 1 then
+			var_25_0.status = VersionActivity2_4MusicEnum.TrackStatus.Add
 		else
-			slot5.status = VersionActivity2_4MusicEnum.TrackStatus.Inactive
+			var_25_0.status = VersionActivity2_4MusicEnum.TrackStatus.Inactive
 		end
 
-		if slot0._actionStatus == VersionActivity2_4MusicEnum.ActionStatus.Del then
-			if slot5.status == VersionActivity2_4MusicEnum.TrackStatus.Add then
-				slot5.status = VersionActivity2_4MusicEnum.TrackStatus.Inactive
-			elseif slot5.status == VersionActivity2_4MusicEnum.TrackStatus.UnRecorded then
-				slot5.status = VersionActivity2_4MusicEnum.TrackStatus.Del
+		if arg_25_0._actionStatus == VersionActivity2_4MusicEnum.ActionStatus.Del then
+			if var_25_0.status == VersionActivity2_4MusicEnum.TrackStatus.Add then
+				var_25_0.status = VersionActivity2_4MusicEnum.TrackStatus.Inactive
+			elseif var_25_0.status == VersionActivity2_4MusicEnum.TrackStatus.UnRecorded then
+				var_25_0.status = VersionActivity2_4MusicEnum.TrackStatus.Del
 			end
 		end
 
-		slot0._trackList[slot4] = slot5
+		arg_25_0._trackList[iter_25_0] = var_25_0
 	end
 end
 
-function slot0.delTrackSelected(slot0)
-	slot1 = nil
+function var_0_0.delTrackSelected(arg_26_0)
+	local var_26_0
 
-	for slot5 = #slot0._trackList, 1, -1 do
-		if slot0._trackList[slot5].isDelSelected then
-			slot1 = slot5
+	for iter_26_0 = #arg_26_0._trackList, 1, -1 do
+		if arg_26_0._trackList[iter_26_0].isDelSelected then
+			var_26_0 = iter_26_0
 
-			table.remove(slot0._trackList, slot5)
+			table.remove(arg_26_0._trackList, iter_26_0)
 
-			slot0._trackCount = slot0._trackCount - 1
+			arg_26_0._trackCount = arg_26_0._trackCount - 1
 		end
 	end
 
-	if slot0._trackCount <= 0 then
-		slot0._trackCount = 1
+	if arg_26_0._trackCount <= 0 then
+		arg_26_0._trackCount = 1
 	end
 
-	if slot1 then
-		if slot1 <= slot0._selectedTrackIndex then
-			slot0:setSelectedTrackIndex(1)
+	if var_26_0 then
+		if var_26_0 <= arg_26_0._selectedTrackIndex then
+			arg_26_0:setSelectedTrackIndex(1)
 		end
 
-		for slot5 = 1, slot0._maxTrackCount do
-			if slot1 <= slot5 then
-				if slot0._trackList[slot5] then
-					slot6.index = slot5
+		for iter_26_1 = 1, arg_26_0._maxTrackCount do
+			if var_26_0 <= iter_26_1 then
+				local var_26_1 = arg_26_0._trackList[iter_26_1]
+
+				if var_26_1 then
+					var_26_1.index = iter_26_1
 				end
 
-				slot0:_saveTrack(slot5)
+				arg_26_0:_saveTrack(iter_26_1)
 			end
 		end
 	end
 
-	slot0:setActionStatus(VersionActivity2_4MusicEnum.ActionStatus.Record)
+	arg_26_0:setActionStatus(VersionActivity2_4MusicEnum.ActionStatus.Record)
 	VersionActivity2_4MusicController.instance:dispatchEvent(VersionActivity2_4MusicEvent.UpdateTrackList)
 end
 
-function slot0.getTrackSelectedNum(slot0)
-	for slot5, slot6 in ipairs(slot0._trackList) do
-		if slot6.isDelSelected then
-			slot1 = 0 + 1
+function var_0_0.getTrackSelectedNum(arg_27_0)
+	local var_27_0 = 0
+
+	for iter_27_0, iter_27_1 in ipairs(arg_27_0._trackList) do
+		if iter_27_1.isDelSelected then
+			var_27_0 = var_27_0 + 1
 		end
 	end
 
-	return slot1
+	return var_27_0
 end
 
-function slot0.setSelectedTrackIndex(slot0, slot1)
-	slot0._selectedTrackIndex = slot1
+function var_0_0.setSelectedTrackIndex(arg_28_0, arg_28_1)
+	arg_28_0._selectedTrackIndex = arg_28_1
 
 	VersionActivity2_4MusicController.instance:dispatchEvent(VersionActivity2_4MusicEvent.UpdateSelectedTrackIndex)
 end
 
-function slot0.getSelectedTrackIndex(slot0)
-	return slot0._selectedTrackIndex
+function var_0_0.getSelectedTrackIndex(arg_29_0)
+	return arg_29_0._selectedTrackIndex
 end
 
-function slot0.startRecord(slot0)
-	slot0._recordIndex = slot0._selectedTrackIndex
-	slot0._recordTimeline = {}
-	slot0._recordProgressTime = 0
-	slot0._playProgressIndex = {}
+function var_0_0.startRecord(arg_30_0)
+	arg_30_0._recordIndex = arg_30_0._selectedTrackIndex
+	arg_30_0._recordTimeline = {}
+	arg_30_0._recordProgressTime = 0
+	arg_30_0._playProgressIndex = {}
 end
 
-function slot0.endRecord(slot0)
-	slot1 = slot0._trackList[slot0._recordIndex]
-	slot1.recordTotalTime = slot0._recordProgressTime
-	slot1.timeline = slot0._recordTimeline
+function var_0_0.endRecord(arg_31_0)
+	local var_31_0 = arg_31_0._trackList[arg_31_0._recordIndex]
 
-	slot0:_saveTrack(slot0._recordIndex)
-	VersionActivity2_4MusicController.instance:trackFreeView(slot0._recordProgressTime)
+	var_31_0.recordTotalTime = arg_31_0._recordProgressTime
+	var_31_0.timeline = arg_31_0._recordTimeline
 
-	slot0._recordProgressTime = 0
-	slot0._recordIndex = nil
-	slot0._recordTimeline = nil
+	arg_31_0:_saveTrack(arg_31_0._recordIndex)
+	VersionActivity2_4MusicController.instance:trackFreeView(arg_31_0._recordProgressTime)
+
+	arg_31_0._recordProgressTime = 0
+	arg_31_0._recordIndex = nil
+	arg_31_0._recordTimeline = nil
 end
 
-function slot0._saveTrack(slot0, slot1)
-	slot2, slot3 = pcall(slot0._safeSaveTrack, slot0, slot1)
+function var_0_0._saveTrack(arg_32_0, arg_32_1)
+	local var_32_0, var_32_1 = pcall(arg_32_0._safeSaveTrack, arg_32_0, arg_32_1)
 
-	if not slot2 then
-		logError(string.format("VersionActivity2_4MusicFreeModel:_saveTrack index:%s error:%s", slot1, slot3))
+	if not var_32_0 then
+		logError(string.format("VersionActivity2_4MusicFreeModel:_saveTrack index:%s error:%s", arg_32_1, var_32_1))
 	end
 end
 
-function slot0._safeSaveTrack(slot0, slot1)
-	if not slot0._trackList[slot1] then
-		PlayerPrefsHelper.deleteKey(slot0:_getTrackKey(slot1))
+function var_0_0._safeSaveTrack(arg_33_0, arg_33_1)
+	local var_33_0 = arg_33_0:_getTrackKey(arg_33_1)
+	local var_33_1 = arg_33_0._trackList[arg_33_1]
+
+	if not var_33_1 then
+		PlayerPrefsHelper.deleteKey(var_33_0)
 
 		return
 	end
 
-	if not slot3:canSave() then
-		PlayerPrefsHelper.deleteKey(slot2)
+	if not var_33_1:canSave() then
+		PlayerPrefsHelper.deleteKey(var_33_0)
 	else
-		PlayerPrefsHelper.setString(slot2, slot3:encode())
+		local var_33_2 = var_33_1:encode()
+
+		PlayerPrefsHelper.setString(var_33_0, var_33_2)
 
 		if SLFramework.FrameworkSettings.IsEditor then
-			logNormal(string.format("VersionActivity2_4MusicFreeModel:_saveTrack index:%s str:%s", slot1, slot4))
+			logNormal(string.format("VersionActivity2_4MusicFreeModel:_saveTrack index:%s str:%s", arg_33_1, var_33_2))
 		end
 	end
 end
 
-function slot0._getTrackKey(slot0, slot1)
-	return PlayerModel.instance:getPlayerPrefsKey(string.format("%s_track_%d#", PlayerPrefsKey.Activity179FreeView, slot1))
+function var_0_0._getTrackKey(arg_34_0, arg_34_1)
+	local var_34_0 = string.format("%s_track_%d#", PlayerPrefsKey.Activity179FreeView, arg_34_1)
+
+	return PlayerModel.instance:getPlayerPrefsKey(var_34_0)
 end
 
-function slot0.startPlay(slot0)
-	slot0._recordProgressTime = 0
-	slot0._playProgressIndex = {}
+function var_0_0.startPlay(arg_35_0)
+	arg_35_0._recordProgressTime = 0
+	arg_35_0._playProgressIndex = {}
 end
 
-function slot0.endPlay(slot0)
-	slot0._recordProgressTime = 0
+function var_0_0.endPlay(arg_36_0)
+	arg_36_0._recordProgressTime = 0
 end
 
-function slot0.playTrackList(slot0, slot1)
-	slot3 = true
+function var_0_0.playTrackList(arg_37_0, arg_37_1)
+	local var_37_0 = arg_37_0._recordProgressTime
+	local var_37_1 = true
 
-	for slot7, slot8 in pairs(slot0._trackList) do
-		if not slot1 or not slot1[slot7] then
-			slot9 = slot0._playProgressIndex[slot7] or 1
-			slot11 = #slot8.timeline
+	for iter_37_0, iter_37_1 in pairs(arg_37_0._trackList) do
+		if not arg_37_1 or not arg_37_1[iter_37_0] then
+			local var_37_2 = arg_37_0._playProgressIndex[iter_37_0] or 1
+			local var_37_3 = iter_37_1.timeline
+			local var_37_4 = #var_37_3
 
-			if slot0._recordProgressTime <= slot8.recordTotalTime then
-				slot3 = false
+			if var_37_0 <= iter_37_1.recordTotalTime then
+				var_37_1 = false
 			end
 
-			if slot9 <= slot11 then
-				for slot15 = slot9, slot11 do
-					if slot10[slot15][1] <= slot2 then
-						slot0._playProgressIndex[slot7] = slot9 + 1
+			if var_37_2 <= var_37_4 then
+				for iter_37_2 = var_37_2, var_37_4 do
+					local var_37_5 = var_37_3[iter_37_2]
 
-						if slot8.mute == VersionActivity2_4MusicEnum.MuteStatus.Close then
-							AudioMgr.instance:trigger(slot16[2])
+					if var_37_0 >= var_37_5[1] then
+						arg_37_0._playProgressIndex[iter_37_0] = var_37_2 + 1
+
+						if iter_37_1.mute == VersionActivity2_4MusicEnum.MuteStatus.Close then
+							AudioMgr.instance:trigger(var_37_5[2])
 						end
 					else
 						break
@@ -363,48 +389,49 @@ function slot0.playTrackList(slot0, slot1)
 		end
 	end
 
-	return slot3
+	return var_37_1
 end
 
-function slot0.setStatus(slot0, slot1)
-	slot0._status = slot1
+function var_0_0.setStatus(arg_38_0, arg_38_1)
+	arg_38_0._status = arg_38_1
 end
 
-function slot0.getStatus(slot0)
-	return slot0._status
+function var_0_0.getStatus(arg_39_0)
+	return arg_39_0._status
 end
 
-function slot0.isRecordingOrPlaying(slot0)
-	return slot0._status == VersionActivity2_4MusicEnum.RecordStatus.Recording or slot0._status == VersionActivity2_4MusicEnum.RecordStatus.RecordReady or slot0._status == VersionActivity2_4MusicEnum.RecordStatus.RecordPause or slot0._status == VersionActivity2_4MusicEnum.RecordStatus.PlayPause or slot0._status == VersionActivity2_4MusicEnum.RecordStatus.Playing
+function var_0_0.isRecordingOrPlaying(arg_40_0)
+	return arg_40_0._status == VersionActivity2_4MusicEnum.RecordStatus.Recording or arg_40_0._status == VersionActivity2_4MusicEnum.RecordStatus.RecordReady or arg_40_0._status == VersionActivity2_4MusicEnum.RecordStatus.RecordPause or arg_40_0._status == VersionActivity2_4MusicEnum.RecordStatus.PlayPause or arg_40_0._status == VersionActivity2_4MusicEnum.RecordStatus.Playing
 end
 
-function slot0.isRecordStatus(slot0)
-	return slot0._status == VersionActivity2_4MusicEnum.RecordStatus.Recording or slot0._status == VersionActivity2_4MusicEnum.RecordStatus.RecordReady or slot0._status == VersionActivity2_4MusicEnum.RecordStatus.RecordPause
+function var_0_0.isRecordStatus(arg_41_0)
+	return arg_41_0._status == VersionActivity2_4MusicEnum.RecordStatus.Recording or arg_41_0._status == VersionActivity2_4MusicEnum.RecordStatus.RecordReady or arg_41_0._status == VersionActivity2_4MusicEnum.RecordStatus.RecordPause
 end
 
-function slot0.isRecording(slot0)
-	return slot0._status == VersionActivity2_4MusicEnum.RecordStatus.Recording
+function var_0_0.isRecording(arg_42_0)
+	return arg_42_0._status == VersionActivity2_4MusicEnum.RecordStatus.Recording
 end
 
-function slot0.isNormalStatus(slot0)
-	return slot0._status == VersionActivity2_4MusicEnum.RecordStatus.Normal or slot0._status == VersionActivity2_4MusicEnum.RecordStatus.NormalAfterRecord
+function var_0_0.isNormalStatus(arg_43_0)
+	return arg_43_0._status == VersionActivity2_4MusicEnum.RecordStatus.Normal or arg_43_0._status == VersionActivity2_4MusicEnum.RecordStatus.NormalAfterRecord
 end
 
-function slot0.setRecordProgressTime(slot0, slot1)
-	slot0._recordProgressTime = math.min(math.floor(slot1 * 100) / 100, slot0._trackLength)
+function var_0_0.setRecordProgressTime(arg_44_0, arg_44_1)
+	arg_44_1 = math.floor(arg_44_1 * 100) / 100
+	arg_44_0._recordProgressTime = math.min(arg_44_1, arg_44_0._trackLength)
 end
 
-function slot0.addNote(slot0, slot1)
-	if not slot0._recordTimeline then
+function var_0_0.addNote(arg_45_0, arg_45_1)
+	if not arg_45_0._recordTimeline then
 		return
 	end
 
-	table.insert(slot0._recordTimeline, {
-		slot0._recordProgressTime,
-		slot1
+	table.insert(arg_45_0._recordTimeline, {
+		arg_45_0._recordProgressTime,
+		arg_45_1
 	})
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

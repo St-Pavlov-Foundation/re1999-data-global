@@ -1,159 +1,169 @@
-module("modules.logic.backpack.rpc.ItemRpc", package.seeall)
+﻿module("modules.logic.backpack.rpc.ItemRpc", package.seeall)
 
-slot0 = class("ItemRpc", BaseRpc)
+local var_0_0 = class("ItemRpc", BaseRpc)
 
-function slot0.sendUseItemRequest(slot0, slot1, slot2, slot3, slot4)
+function var_0_0.sendUseItemRequest(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4)
 	logNormal("Send Use Item Request !")
 
-	slot5 = ItemModule_pb.UseItemRequest()
+	local var_1_0 = ItemModule_pb.UseItemRequest()
 
-	for slot9, slot10 in ipairs(slot1) do
-		slot11 = MaterialModule_pb.M2QEntry()
-		slot11.materialId = slot10.materialId
-		slot11.quantity = slot10.quantity
+	for iter_1_0, iter_1_1 in ipairs(arg_1_1) do
+		local var_1_1 = MaterialModule_pb.M2QEntry()
 
-		table.insert(slot5.entry, slot11)
+		var_1_1.materialId = iter_1_1.materialId
+		var_1_1.quantity = iter_1_1.quantity
+
+		table.insert(var_1_0.entry, var_1_1)
 	end
 
-	slot5.targetId = slot2
+	var_1_0.targetId = arg_1_2
 
-	slot0:sendMsg(slot5, slot3, slot4)
+	arg_1_0:sendMsg(var_1_0, arg_1_3, arg_1_4)
 end
 
-function slot0.onReceiveUseItemReply(slot0, slot1, slot2)
-	logNormal("Receive Use Item Reply Result Code : " .. slot1)
-	StoreController.instance:onUseItemInStore(slot2)
+function var_0_0.onReceiveUseItemReply(arg_2_0, arg_2_1, arg_2_2)
+	logNormal("Receive Use Item Reply Result Code : " .. arg_2_1)
+	StoreController.instance:onUseItemInStore(arg_2_2)
 end
 
-function slot0.onReceiveItemChangePush(slot0, slot1, slot2)
-	if slot1 == 0 then
-		ItemModel.instance:changeItemList(slot2.items)
-		ItemPowerModel.instance:changePowerItemList(slot2.powerItems)
-		ItemInsightModel.instance:changeInsightItemList(slot2.insightItems)
+function var_0_0.onReceiveItemChangePush(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_1 == 0 then
+		ItemModel.instance:changeItemList(arg_3_2.items)
+		ItemPowerModel.instance:changePowerItemList(arg_3_2.powerItems)
+		ItemInsightModel.instance:changeInsightItemList(arg_3_2.insightItems)
 		BackpackController.instance:dispatchEvent(BackpackEvent.UpdateItemList)
 		RedDotController.instance:dispatchEvent(RedDotEvent.RefreshClientCharacterDot)
 	end
 end
 
-function slot0.sendGetItemListRequest(slot0, slot1, slot2)
-	return slot0:sendMsg(ItemModule_pb.GetItemListRequest(), slot1, slot2)
+function var_0_0.sendGetItemListRequest(arg_4_0, arg_4_1, arg_4_2)
+	local var_4_0 = ItemModule_pb.GetItemListRequest()
+
+	return arg_4_0:sendMsg(var_4_0, arg_4_1, arg_4_2)
 end
 
-function slot0.onReceiveGetItemListReply(slot0, slot1, slot2)
-	if slot1 == 0 then
-		ItemModel.instance:setItemList(slot2.items)
+function var_0_0.onReceiveGetItemListReply(arg_5_0, arg_5_1, arg_5_2)
+	if arg_5_1 == 0 then
+		ItemModel.instance:setItemList(arg_5_2.items)
 		ItemModel.instance:setOptionalGift()
-		ItemPowerModel.instance:setPowerItemList(slot2.powerItems)
-		ItemInsightModel.instance:setInsightItemList(slot2.insightItems)
+		ItemPowerModel.instance:setPowerItemList(arg_5_2.powerItems)
+		ItemInsightModel.instance:setInsightItemList(arg_5_2.insightItems)
 		BackpackController.instance:dispatchEvent(BackpackEvent.UpdateItemList)
 	end
 end
 
-function slot0.sendUsePowerItemRequest(slot0, slot1)
-	slot2 = ItemModule_pb.UsePowerItemRequest()
-	slot2.uid = slot1
+function var_0_0.sendUsePowerItemRequest(arg_6_0, arg_6_1)
+	local var_6_0 = ItemModule_pb.UsePowerItemRequest()
 
-	slot0:sendMsg(slot2)
+	var_6_0.uid = arg_6_1
+
+	arg_6_0:sendMsg(var_6_0)
 end
 
-function slot0.onReceiveUsePowerItemReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveUsePowerItemReply(arg_7_0, arg_7_1, arg_7_2)
+	if arg_7_1 ~= 0 then
 		return
 	end
 
-	BackpackController.instance:dispatchEvent(BackpackEvent.UsePowerPotionFinish, slot2.uid)
+	BackpackController.instance:dispatchEvent(BackpackEvent.UsePowerPotionFinish, arg_7_2.uid)
 end
 
-function slot0.sendUsePowerItemListRequest(slot0, slot1)
-	slot2 = ItemModule_pb.UsePowerItemListRequest()
+function var_0_0.sendUsePowerItemListRequest(arg_8_0, arg_8_1)
+	local var_8_0 = ItemModule_pb.UsePowerItemListRequest()
 
-	for slot6, slot7 in ipairs(slot1) do
-		slot8 = ItemModule_pb.UsePowerItemInfo()
-		slot8.uid = slot7.uid
-		slot8.num = slot7.num
+	for iter_8_0, iter_8_1 in ipairs(arg_8_1) do
+		local var_8_1 = ItemModule_pb.UsePowerItemInfo()
 
-		table.insert(slot2.usePowerItemInfo, slot8)
+		var_8_1.uid = iter_8_1.uid
+		var_8_1.num = iter_8_1.num
+
+		table.insert(var_8_0.usePowerItemInfo, var_8_1)
 	end
 
-	slot0:sendMsg(slot2)
+	arg_8_0:sendMsg(var_8_0)
 end
 
-function slot0.onReceiveUsePowerItemListReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveUsePowerItemListReply(arg_9_0, arg_9_1, arg_9_2)
+	if arg_9_1 ~= 0 then
 		return
 	end
 
-	BackpackController.instance:dispatchEvent(BackpackEvent.UsePowerPotionListFinish, slot2.usePowerItemInfo)
+	BackpackController.instance:dispatchEvent(BackpackEvent.UsePowerPotionListFinish, arg_9_2.usePowerItemInfo)
 end
 
-function slot0.sendAutoUseExpirePowerItemRequest(slot0, slot1)
-	return slot0:sendMsg(ItemModule_pb.AutoUseExpirePowerItemRequest(), slot1)
+function var_0_0.sendAutoUseExpirePowerItemRequest(arg_10_0, arg_10_1)
+	local var_10_0 = ItemModule_pb.AutoUseExpirePowerItemRequest()
+
+	return arg_10_0:sendMsg(var_10_0, arg_10_1)
 end
 
-function slot0.onReceiveAutoUseExpirePowerItemReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveAutoUseExpirePowerItemReply(arg_11_0, arg_11_1, arg_11_2)
+	if arg_11_1 ~= 0 then
 		return
 	end
 
-	if slot2.used then
+	if arg_11_2.used then
 		GameFacade.showToast(ToastEnum.AutoUsseExpirePowerItem)
 	end
 end
 
-function slot0.sendMarkReadSubType21Request(slot0, slot1)
-	slot2 = ItemModule_pb.MarkReadSubType21Request()
-	slot2.itemId = slot1
+function var_0_0.sendMarkReadSubType21Request(arg_12_0, arg_12_1)
+	local var_12_0 = ItemModule_pb.MarkReadSubType21Request()
 
-	return slot0:sendMsg(slot2)
+	var_12_0.itemId = arg_12_1
+
+	return arg_12_0:sendMsg(var_12_0)
 end
 
-function slot0.onReceiveMarkReadSubType21Reply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveMarkReadSubType21Reply(arg_13_0, arg_13_1, arg_13_2)
+	if arg_13_1 ~= 0 then
 		return
 	end
 end
 
-function slot0.sendUseInsightItemRequest(slot0, slot1, slot2, slot3, slot4)
-	slot5 = ItemModule_pb.UseInsightItemRequest()
-	slot0._startRank = HeroModel.instance:getByHeroId(slot2).rank
-	slot5.uid = slot1
-	slot5.heroId = slot2
+function var_0_0.sendUseInsightItemRequest(arg_14_0, arg_14_1, arg_14_2, arg_14_3, arg_14_4)
+	local var_14_0 = ItemModule_pb.UseInsightItemRequest()
 
-	slot0:sendMsg(slot5, slot3, slot4)
+	arg_14_0._startRank = HeroModel.instance:getByHeroId(arg_14_2).rank
+	var_14_0.uid = arg_14_1
+	var_14_0.heroId = arg_14_2
+
+	arg_14_0:sendMsg(var_14_0, arg_14_3, arg_14_4)
 end
 
-function slot0.onReceiveUseInsightItemReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveUseInsightItemReply(arg_15_0, arg_15_1, arg_15_2)
+	if arg_15_1 ~= 0 then
 		return
 	end
 
-	BackpackController.instance:dispatchEvent(BackpackEvent.UseInsightItemFinished, slot2.uid, slot2.heroId)
+	BackpackController.instance:dispatchEvent(BackpackEvent.UseInsightItemFinished, arg_15_2.uid, arg_15_2.heroId)
 	CharacterController.instance:dispatchEvent(CharacterEvent.successHeroRankUp)
 	RedDotController.instance:dispatchEvent(RedDotEvent.RefreshClientCharacterDot)
 
-	slot3 = {
-		heroId = slot2.heroId
+	local var_15_0 = {
+		heroId = arg_15_2.heroId
 	}
-	slot3.newRank = HeroModel.instance:getByHeroId(slot3.heroId).rank
-	slot3.startRank = slot0._startRank
-	slot3.isRank = true
 
-	PopupController.instance:addPopupView(PopupEnum.PriorityType.GainCharacterView, ViewName.CharacterGetView, slot3)
+	var_15_0.newRank = HeroModel.instance:getByHeroId(var_15_0.heroId).rank
+	var_15_0.startRank = arg_15_0._startRank
+	var_15_0.isRank = true
+
+	PopupController.instance:addPopupView(PopupEnum.PriorityType.GainCharacterView, ViewName.CharacterGetView, var_15_0)
 end
 
-function slot0.simpleSendUseItemRequest(slot0, slot1, slot2, slot3, slot4, slot5)
-	if not slot2 or slot2 <= 0 then
+function var_0_0.simpleSendUseItemRequest(arg_16_0, arg_16_1, arg_16_2, arg_16_3, arg_16_4, arg_16_5)
+	if not arg_16_2 or arg_16_2 <= 0 then
 		return
 	end
 
-	slot0:sendUseItemRequest({
+	arg_16_0:sendUseItemRequest({
 		{
-			materialId = slot1,
-			quantity = slot2
+			materialId = arg_16_1,
+			quantity = arg_16_2
 		}
-	}, slot3 or 0, slot4, slot5)
+	}, arg_16_3 or 0, arg_16_4, arg_16_5)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

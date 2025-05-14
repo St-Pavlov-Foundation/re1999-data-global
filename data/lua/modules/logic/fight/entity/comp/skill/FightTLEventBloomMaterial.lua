@@ -1,62 +1,63 @@
-module("modules.logic.fight.entity.comp.skill.FightTLEventBloomMaterial", package.seeall)
+﻿module("modules.logic.fight.entity.comp.skill.FightTLEventBloomMaterial", package.seeall)
 
-slot0 = class("FightTLEventBloomMaterial")
+local var_0_0 = class("FightTLEventBloomMaterial")
 
-function slot0.handleSkillEvent(slot0, slot1, slot2, slot3)
-	slot4 = slot3[1]
+function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	local var_1_0 = arg_1_3[1]
+	local var_1_1 = arg_1_3[2]
 
-	if string.nilorempty(slot3[2]) then
+	if string.nilorempty(var_1_1) then
 		return
 	end
 
-	slot0._passNameList = string.split(slot5, "#")
-	slot0._targetEntitys = nil
+	arg_1_0._passNameList = string.split(var_1_1, "#")
+	arg_1_0._targetEntitys = nil
 
-	if slot4 == "1" then
-		slot0._targetEntitys = {}
+	if var_1_0 == "1" then
+		arg_1_0._targetEntitys = {}
 
-		table.insert(slot0._targetEntitys, FightHelper.getEntity(slot1.fromId))
-	elseif slot4 == "2" then
-		slot0._targetEntitys = FightHelper.getSkillTargetEntitys(slot1)
-	elseif slot4 == "3" then
-		slot0._targetEntitys = FightHelper.getSideEntitys(FightEnum.EntitySide.MySide, true)
-	elseif slot4 == "4" then
-		slot0._targetEntitys = FightHelper.getSideEntitys(FightEnum.EntitySide.EnemySide, true)
-	elseif slot4 == "5" then
-		slot0._targetEntitys = FightHelper.getAllEntitys()
+		table.insert(arg_1_0._targetEntitys, FightHelper.getEntity(arg_1_1.fromId))
+	elseif var_1_0 == "2" then
+		arg_1_0._targetEntitys = FightHelper.getSkillTargetEntitys(arg_1_1)
+	elseif var_1_0 == "3" then
+		arg_1_0._targetEntitys = FightHelper.getSideEntitys(FightEnum.EntitySide.MySide, true)
+	elseif var_1_0 == "4" then
+		arg_1_0._targetEntitys = FightHelper.getSideEntitys(FightEnum.EntitySide.EnemySide, true)
+	elseif var_1_0 == "5" then
+		arg_1_0._targetEntitys = FightHelper.getAllEntitys()
 	end
 
-	slot0:_setPassEnable(true)
+	arg_1_0:_setPassEnable(true)
 end
 
-function slot0.handleSkillEventEnd(slot0)
-	slot0:_clear()
+function var_0_0.handleSkillEventEnd(arg_2_0)
+	arg_2_0:_clear()
 end
 
-function slot0._setPassEnable(slot0, slot1)
-	slot2 = GameSceneMgr.instance:getCurScene().bloom
+function var_0_0._setPassEnable(arg_3_0, arg_3_1)
+	local var_3_0 = GameSceneMgr.instance:getCurScene().bloom
 
-	if slot0._targetEntitys then
-		for slot6, slot7 in ipairs(slot0._targetEntitys) do
-			for slot11, slot12 in ipairs(slot0._passNameList) do
-				slot2:setSingleEntityPass(slot12, slot1, slot7, "timeline_bloom")
+	if arg_3_0._targetEntitys then
+		for iter_3_0, iter_3_1 in ipairs(arg_3_0._targetEntitys) do
+			for iter_3_2, iter_3_3 in ipairs(arg_3_0._passNameList) do
+				var_3_0:setSingleEntityPass(iter_3_3, arg_3_1, iter_3_1, "timeline_bloom")
 			end
 		end
 	end
 end
 
-function slot0.reset(slot0)
-	slot0:_clear()
+function var_0_0.reset(arg_4_0)
+	arg_4_0:_clear()
 end
 
-function slot0.dispose(slot0)
-	slot0:_clear()
+function var_0_0.dispose(arg_5_0)
+	arg_5_0:_clear()
 end
 
-function slot0._clear(slot0)
-	slot0:_setPassEnable(false)
+function var_0_0._clear(arg_6_0)
+	arg_6_0:_setPassEnable(false)
 
-	slot0._targetEntitys = nil
+	arg_6_0._targetEntitys = nil
 end
 
-return slot0
+return var_0_0

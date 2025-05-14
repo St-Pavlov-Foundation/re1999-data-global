@@ -1,152 +1,170 @@
-module("modules.logic.versionactivity2_5.challenge.view.Act183HeroGroupEditItem", package.seeall)
+﻿module("modules.logic.versionactivity2_5.challenge.view.Act183HeroGroupEditItem", package.seeall)
 
-slot0 = class("Act183HeroGroupEditItem", ListScrollCell)
+local var_0_0 = class("Act183HeroGroupEditItem", ListScrollCell)
 
-function slot0.init(slot0, slot1)
-	slot0._gorepress = gohelper.findChild(slot1, "go_repress")
-	slot0._heroGOParent = gohelper.findChild(slot1, "hero")
-	slot0._heroItem = IconMgr.instance:getCommonHeroItem(slot0._heroGOParent)
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0._gorepress = gohelper.findChild(arg_1_1, "go_repress")
+	arg_1_0._heroGOParent = gohelper.findChild(arg_1_1, "hero")
+	arg_1_0._heroItem = IconMgr.instance:getCommonHeroItem(arg_1_0._heroGOParent)
 
-	slot0._heroItem:addClickListener(slot0._onItemClick, slot0)
-	slot0:_initObj(slot1)
+	arg_1_0._heroItem:addClickListener(arg_1_0._onItemClick, arg_1_0)
+	arg_1_0:_initObj(arg_1_1)
 end
 
-function slot0._initObj(slot0, slot1)
-	slot0._heroItem:_setTxtWidth("_nameCnTxt", 180)
+function var_0_0._initObj(arg_2_0, arg_2_1)
+	arg_2_0._heroItem:_setTxtWidth("_nameCnTxt", 180)
 
-	slot0._animator = slot0._heroItem.go:GetComponent(typeof(UnityEngine.Animator))
-	slot0._isSelect = false
-	slot0._enableDeselect = true
+	arg_2_0._animator = arg_2_0._heroItem.go:GetComponent(typeof(UnityEngine.Animator))
+	arg_2_0._isSelect = false
+	arg_2_0._enableDeselect = true
 
-	transformhelper.setLocalScale(slot1.transform, 0.8, 0.8, 1)
-	slot0._heroItem:_setTxtPos("_nameCnTxt", 0.55, 68.9)
-	slot0._heroItem:_setTxtPos("_rankObj", 1.7, -107.7)
-	slot0._heroItem:_setTranScale("_nameCnTxt", 1.25, 1.25)
-	slot0._heroItem:_setTranScale("_nameEnTxt", 1.25, 1.25)
-	slot0._heroItem:_setTranScale("_lvObj", 1.25, 1.25)
-	slot0._heroItem:_setTranScale("_rankObj", 0.22, 0.22)
+	transformhelper.setLocalScale(arg_2_1.transform, 0.8, 0.8, 1)
+	arg_2_0._heroItem:_setTxtPos("_nameCnTxt", 0.55, 68.9)
+	arg_2_0._heroItem:_setTxtPos("_rankObj", 1.7, -107.7)
+	arg_2_0._heroItem:_setTranScale("_nameCnTxt", 1.25, 1.25)
+	arg_2_0._heroItem:_setTranScale("_nameEnTxt", 1.25, 1.25)
+	arg_2_0._heroItem:_setTranScale("_lvObj", 1.25, 1.25)
+	arg_2_0._heroItem:_setTranScale("_rankObj", 0.22, 0.22)
 end
 
-function slot0.addEventListeners(slot0)
-	slot0:addEventCb(CharacterController.instance, CharacterEvent.successDressUpSkin, slot0._onSkinChanged, slot0)
-	slot0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnHeroEditItemSelectChange, slot0.updateTrialRepeat, slot0)
+function var_0_0.addEventListeners(arg_3_0)
+	arg_3_0:addEventCb(CharacterController.instance, CharacterEvent.successDressUpSkin, arg_3_0._onSkinChanged, arg_3_0)
+	arg_3_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnHeroEditItemSelectChange, arg_3_0.updateTrialRepeat, arg_3_0)
 end
 
-function slot0.removeEventListeners(slot0)
+function var_0_0.removeEventListeners(arg_4_0)
+	return
 end
 
-function slot0._onSkinChanged(slot0)
-	slot0._heroItem:updateHero()
+function var_0_0._onSkinChanged(arg_5_0)
+	arg_5_0._heroItem:updateHero()
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
+function var_0_0.onUpdateMO(arg_6_0, arg_6_1)
+	arg_6_0._mo = arg_6_1
 
-	slot0._heroItem:onUpdateMO(slot1)
+	arg_6_0._heroItem:onUpdateMO(arg_6_1)
 
-	if not slot1:isTrial() and slot1.level < HeroGroupBalanceHelper.getHeroBalanceLv(slot1.heroId) then
-		slot0._heroItem:setBalanceLv(slot2)
+	if not arg_6_1:isTrial() then
+		local var_6_0 = HeroGroupBalanceHelper.getHeroBalanceLv(arg_6_1.heroId)
+
+		if var_6_0 > arg_6_1.level then
+			arg_6_0._heroItem:setBalanceLv(var_6_0)
+		end
 	end
 
-	slot0:updateTrialTag()
-	slot0:updateTrialRepeat()
-	slot0._heroItem:setNewShow(false)
-	slot0._heroItem:setInteam(Act183HeroGroupEditListModel.instance:isInTeamHero(slot0._mo.uid))
+	arg_6_0:updateTrialTag()
+	arg_6_0:updateTrialRepeat()
 
-	slot0._isRepress = Act183Model.instance:isHeroRepressInPreEpisode(HeroGroupModel.instance.episodeId, slot0._mo.heroId)
+	local var_6_1 = Act183HeroGroupEditListModel.instance:isInTeamHero(arg_6_0._mo.uid)
 
-	gohelper.setActive(slot0._gorepress, slot0._isRepress)
-	slot0._heroItem._commonHeroCard:setGrayScale(slot0._isRepress)
+	arg_6_0._heroItem:setNewShow(false)
+	arg_6_0._heroItem:setInteam(var_6_1)
+
+	local var_6_2 = HeroGroupModel.instance.episodeId
+
+	arg_6_0._isRepress = Act183Model.instance:isHeroRepressInPreEpisode(var_6_2, arg_6_0._mo.heroId)
+
+	gohelper.setActive(arg_6_0._gorepress, arg_6_0._isRepress)
+	arg_6_0._heroItem._commonHeroCard:setGrayScale(arg_6_0._isRepress)
 end
 
-function slot0.updateTrialTag(slot0)
-	slot1 = nil
+function var_0_0.updateTrialTag(arg_7_0)
+	local var_7_0
 
-	if slot0._mo:isTrial() then
-		slot1 = luaLang("herogroup_trial_tag0")
+	if arg_7_0._mo:isTrial() then
+		var_7_0 = luaLang("herogroup_trial_tag0")
 	end
 
-	slot0._heroItem:setTrialTxt(slot1)
+	arg_7_0._heroItem:setTrialTxt(var_7_0)
 end
 
-function slot0.updateTrialRepeat(slot0)
-	if HeroSingleGroupModel.instance:getById(slot0._view.viewContainer.viewParam.singleGroupMOId) and not slot1:isEmpty() and (slot1.trial and slot1:getTrialCO().heroId == slot0._mo.heroId or not slot1.trial and (not slot1:getHeroCO() or slot1:getHeroCO().id == slot0._mo.heroId)) then
-		if not slot1.trial and not slot1.aid and not slot1:getHeroCO() then
-			logError("编队界面角色不存在 uid：" .. tostring(slot1.id))
+function var_0_0.updateTrialRepeat(arg_8_0)
+	local var_8_0 = HeroSingleGroupModel.instance:getById(arg_8_0._view.viewContainer.viewParam.singleGroupMOId)
+
+	if var_8_0 and not var_8_0:isEmpty() and (var_8_0.trial and var_8_0:getTrialCO().heroId == arg_8_0._mo.heroId or not var_8_0.trial and (not var_8_0:getHeroCO() or var_8_0:getHeroCO().id == arg_8_0._mo.heroId)) then
+		if not var_8_0.trial and not var_8_0.aid and not var_8_0:getHeroCO() then
+			logError("编队界面角色不存在 uid：" .. tostring(var_8_0.id))
 		end
 
-		slot0._heroItem:setTrialRepeat(false)
+		arg_8_0._heroItem:setTrialRepeat(false)
 
 		return
 	end
 
-	slot0._heroItem:setTrialRepeat(Act183HeroGroupEditListModel.instance:isRepeatHero(slot0._mo.heroId, slot0._mo.uid))
+	local var_8_1 = Act183HeroGroupEditListModel.instance:isRepeatHero(arg_8_0._mo.heroId, arg_8_0._mo.uid)
+
+	arg_8_0._heroItem:setTrialRepeat(var_8_1)
 end
 
-function slot0.onSelect(slot0, slot1)
-	slot0._isSelect = slot1
+function var_0_0.onSelect(arg_9_0, arg_9_1)
+	arg_9_0._isSelect = arg_9_1
 
-	slot0._heroItem:setSelect(slot1)
+	arg_9_0._heroItem:setSelect(arg_9_1)
 
-	if slot1 then
-		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnClickHeroEditItem, slot0._mo)
+	if arg_9_1 then
+		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnClickHeroEditItem, arg_9_0._mo)
 	end
 end
 
-function slot0._onItemClick(slot0)
+function var_0_0._onItemClick(arg_10_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Universal_Click)
 
-	if slot0._heroItem:getIsRepeat() then
+	if arg_10_0._heroItem:getIsRepeat() then
 		GameFacade.showToast(ToastEnum.TrialIsJoin)
 
 		return
 	end
 
-	if slot0._isRepress then
+	if arg_10_0._isRepress then
 		GameFacade.showToast(ToastEnum.Act183HeroRepress)
 
 		return
 	end
 
-	slot1 = HeroSingleGroupModel.instance:getById(slot0._view.viewContainer.viewParam.singleGroupMOId)
+	local var_10_0 = HeroSingleGroupModel.instance:getById(arg_10_0._view.viewContainer.viewParam.singleGroupMOId)
 
-	if slot0._mo:isTrial() and not HeroSingleGroupModel.instance:isInGroup(slot0._mo.uid) and (slot1:isEmpty() or not slot1.trial) and Act183HeroGroupEditListModel.instance:isTrialLimit() then
+	if arg_10_0._mo:isTrial() and not HeroSingleGroupModel.instance:isInGroup(arg_10_0._mo.uid) and (var_10_0:isEmpty() or not var_10_0.trial) and Act183HeroGroupEditListModel.instance:isTrialLimit() then
 		GameFacade.showToast(ToastEnum.TrialJoinLimit, HeroGroupTrialModel.instance:getLimitNum())
 
 		return
 	end
 
-	if slot0._mo.isPosLock or not slot1:isEmpty() and slot1.trialPos then
+	if arg_10_0._mo.isPosLock or not var_10_0:isEmpty() and var_10_0.trialPos then
 		GameFacade.showToast(ToastEnum.TrialCantTakeOff)
 
 		return
 	end
 
-	if HeroGroupModel.instance:isRestrict(slot0._mo.uid) then
-		if not string.nilorempty(HeroGroupModel.instance:getCurrentBattleConfig() and slot2.restrictReason) then
-			ToastController.instance:showToastWithString(slot3)
+	if HeroGroupModel.instance:isRestrict(arg_10_0._mo.uid) then
+		local var_10_1 = HeroGroupModel.instance:getCurrentBattleConfig()
+		local var_10_2 = var_10_1 and var_10_1.restrictReason
+
+		if not string.nilorempty(var_10_2) then
+			ToastController.instance:showToastWithString(var_10_2)
 		end
 
 		return
 	end
 
-	if slot0._isSelect and slot0._enableDeselect and not slot0._mo.isPosLock then
-		slot0._view:selectCell(slot0._index, false)
+	if arg_10_0._isSelect and arg_10_0._enableDeselect and not arg_10_0._mo.isPosLock then
+		arg_10_0._view:selectCell(arg_10_0._index, false)
 		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnClickHeroEditItem)
 	else
-		slot0._view:selectCell(slot0._index, true)
+		arg_10_0._view:selectCell(arg_10_0._index, true)
 	end
 end
 
-function slot0.enableDeselect(slot0, slot1)
-	slot0._enableDeselect = slot1
+function var_0_0.enableDeselect(arg_11_0, arg_11_1)
+	arg_11_0._enableDeselect = arg_11_1
 end
 
-function slot0.onDestroy(slot0)
+function var_0_0.onDestroy(arg_12_0)
+	return
 end
 
-function slot0.getAnimator(slot0)
-	return slot0._animator
+function var_0_0.getAnimator(arg_13_0)
+	return arg_13_0._animator
 end
 
-return slot0
+return var_0_0

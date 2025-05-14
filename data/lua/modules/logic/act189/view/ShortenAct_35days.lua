@@ -1,29 +1,31 @@
-module("modules.logic.act189.view.ShortenAct_35days", package.seeall)
+﻿module("modules.logic.act189.view.ShortenAct_35days", package.seeall)
 
-slot0 = class("ShortenAct_35days", ShortenActStyleItem_impl)
+local var_0_0 = class("ShortenAct_35days", ShortenActStyleItem_impl)
 
-function slot0.onInitView(slot0)
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+function var_0_0.onInitView(arg_1_0)
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0.ctor(slot0, ...)
-	uv0.super.ctor(slot0, ...)
+function var_0_0.ctor(arg_4_0, ...)
+	var_0_0.super.ctor(arg_4_0, ...)
 end
 
-function slot0._editableInitView(slot0)
-	uv0.super._editableInitView(slot0)
+function var_0_0._editableInitView(arg_5_0)
+	var_0_0.super._editableInitView(arg_5_0)
 end
 
-function slot0.onDestroyView(slot0)
-	uv0.super.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_6_0)
+	var_0_0.super.onDestroyView(arg_6_0)
 end
 
-return slot0
+return var_0_0

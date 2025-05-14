@@ -1,9 +1,9 @@
-module("modules.logic.ressplit.work.ResSplitSpecialWork", package.seeall)
+﻿module("modules.logic.ressplit.work.ResSplitSpecialWork", package.seeall)
 
-slot0 = class("ResSplitSpecialWork", BaseWork)
+local var_0_0 = class("ResSplitSpecialWork", BaseWork)
 
-function slot0.onStart(slot0, slot1)
-	slot2 = {
+function var_0_0.onStart(arg_1_0, arg_1_1)
+	local var_1_0 = {
 		"singlebg/rouge/",
 		"ui/viewres/rouge/",
 		"atlassrc/ui_modules/rouge/",
@@ -66,7 +66,7 @@ function slot0.onStart(slot0, slot1)
 		"scenes/v2a0_m_s15_sj/",
 		"singlebg_lang/txt_turnbackrecommend/"
 	}
-	slot3 = {
+	local var_1_1 = {
 		"1_2lvhuemeng",
 		"1_2lvhuemeng_1",
 		"xuzhangkaichangpv_2k",
@@ -83,19 +83,7 @@ function slot0.onStart(slot0, slot1)
 		"1_5_opening_1",
 		"1_7_enter"
 	}
-	slot5 = {
-		FightHelper.getEffectUrlWithLod(FightPreloadEffectWork.buff_chuchang),
-		FightHelper.getEffectUrlWithLod(FightPreloadEffectWork.buff_siwang),
-		FightHelper.getEffectUrlWithLod(FightPreloadEffectWork.buff_siwang_monster),
-		FightHelper.getEffectUrlWithLod(FightPreloadEffectWork.buff_zhunbeigongji),
-		FightHelper.getEffectUrlWithLod(FightPreloadEffectWork.scene_mask_default),
-		"effects/prefabs/buff/buff_shuxingzengjia.prefab"
-	}
-	slot6 = {
-		"effects/prefabs/xingti"
-	}
-
-	for slot10, slot11 in pairs({
+	local var_1_2 = {
 		"effects/prefabs/buff/shuzhen_zaowu_znegyi_1_2.prefab",
 		"effects/prefabs/buff/ydzrdzwxm_zengyi.prefab",
 		"effects/prefabs/buff/buff_lg_mu.prefab",
@@ -327,27 +315,40 @@ function slot0.onStart(slot0, slot1)
 		"singlebg/fighttechniquetips/zhandoutujian_yuezhangnvshi.png",
 		"singlebg/fighttechniquetips/zhandoutujian_zhanbuyaojing.png",
 		"singlebg/fighttechniquetips/zhandoutujian_zhuangtaixiaoguo.png"
-	}) do
-		ResSplitModel.instance:setExclude(ResSplitEnum.Path, slot11, true)
+	}
+	local var_1_3 = {
+		FightHelper.getEffectUrlWithLod(FightPreloadEffectWork.buff_chuchang),
+		FightHelper.getEffectUrlWithLod(FightPreloadEffectWork.buff_siwang),
+		FightHelper.getEffectUrlWithLod(FightPreloadEffectWork.buff_siwang_monster),
+		FightHelper.getEffectUrlWithLod(FightPreloadEffectWork.buff_zhunbeigongji),
+		FightHelper.getEffectUrlWithLod(FightPreloadEffectWork.scene_mask_default),
+		"effects/prefabs/buff/buff_shuxingzengjia.prefab"
+	}
+	local var_1_4 = {
+		"effects/prefabs/xingti"
+	}
+
+	for iter_1_0, iter_1_1 in pairs(var_1_2) do
+		ResSplitModel.instance:setExclude(ResSplitEnum.Path, iter_1_1, true)
 	end
 
-	for slot10, slot11 in pairs(slot5) do
-		ResSplitModel.instance:setExclude(ResSplitEnum.Path, slot11, false)
+	for iter_1_2, iter_1_3 in pairs(var_1_3) do
+		ResSplitModel.instance:setExclude(ResSplitEnum.Path, iter_1_3, false)
 	end
 
-	for slot10, slot11 in pairs(slot2) do
-		ResSplitModel.instance:setExclude(ResSplitEnum.Folder, slot11, true)
+	for iter_1_4, iter_1_5 in pairs(var_1_0) do
+		ResSplitModel.instance:setExclude(ResSplitEnum.Folder, iter_1_5, true)
 	end
 
-	for slot10, slot11 in pairs(slot6) do
-		ResSplitModel.instance:setExclude(ResSplitEnum.Folder, slot11, false)
+	for iter_1_6, iter_1_7 in pairs(var_1_4) do
+		ResSplitModel.instance:setExclude(ResSplitEnum.Folder, iter_1_7, false)
 	end
 
-	for slot10, slot11 in pairs(slot3) do
-		ResSplitModel.instance:setExclude(ResSplitEnum.Video, slot11, true)
+	for iter_1_8, iter_1_9 in pairs(var_1_1) do
+		ResSplitModel.instance:setExclude(ResSplitEnum.Video, iter_1_9, true)
 	end
 
-	slot0:onDone(true)
+	arg_1_0:onDone(true)
 end
 
-return slot0
+return var_0_0

@@ -1,20 +1,20 @@
-module("modules.logic.fight.view.work.FunctionWork", package.seeall)
+﻿module("modules.logic.fight.view.work.FunctionWork", package.seeall)
 
-slot0 = class("FunctionWork", BaseWork)
+local var_0_0 = class("FunctionWork", BaseWork)
 
-function slot0.ctor(slot0, slot1, slot2, slot3)
-	slot0:setParam(slot1, slot2, slot3)
+function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	arg_1_0:setParam(arg_1_1, arg_1_2, arg_1_3)
 end
 
-function slot0.setParam(slot0, slot1, slot2, slot3)
-	slot0._func = slot1
-	slot0._target = slot2
-	slot0._param = slot3
+function var_0_0.setParam(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
+	arg_2_0._func = arg_2_1
+	arg_2_0._target = arg_2_2
+	arg_2_0._param = arg_2_3
 end
 
-function slot0.onStart(slot0)
-	slot0._func(slot0._target, slot0._param)
-	slot0:onDone(true)
+function var_0_0.onStart(arg_3_0)
+	arg_3_0._func(arg_3_0._target, arg_3_0._param)
+	arg_3_0:onDone(true)
 end
 
-return slot0
+return var_0_0

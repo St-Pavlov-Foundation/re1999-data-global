@@ -1,96 +1,102 @@
-module("modules.logic.fight.system.flow.FightRoundSequence", package.seeall)
+﻿module("modules.logic.fight.system.flow.FightRoundSequence", package.seeall)
 
-slot0 = class("FightRoundSequence", BaseFightSequence)
+local var_0_0 = class("FightRoundSequence", BaseFightSequence)
 
-function slot0.buildFlow(slot0, slot1)
-	uv0.super.buildFlow(slot0)
+function var_0_0.buildFlow(arg_1_0, arg_1_1)
+	var_0_0.super.buildFlow(arg_1_0)
 
-	slot0.roundMO = slot1
+	arg_1_0.roundMO = arg_1_1
 
-	slot0:buildRoundFlows()
+	arg_1_0:buildRoundFlows()
 end
 
-function slot0.stop(slot0)
-	uv0.super.stop(slot0)
+function var_0_0.stop(arg_2_0)
+	var_0_0.super.stop(arg_2_0)
 
-	if slot0._skillFlowList then
-		for slot4, slot5 in ipairs(slot0._skillFlowList) do
-			slot5:stopSkillFlow()
+	if arg_2_0._skillFlowList then
+		for iter_2_0, iter_2_1 in ipairs(arg_2_0._skillFlowList) do
+			iter_2_1:stopSkillFlow()
 		end
 	end
 end
 
-slot0.roundTempData = {}
+var_0_0.roundTempData = {}
 
-function slot0.buildRoundFlows(slot0)
-	uv0.roundTempData = {}
+function var_0_0.buildRoundFlows(arg_3_0)
+	var_0_0.roundTempData = {}
 
-	slot0:addWork(WorkWaitSeconds.New(0.01))
-	slot0:addWork(FightWork2Work.New(FightWorkDialogueBeforeRoundStart))
-	slot0:addWork(FightWorkRoundStart.New())
+	arg_3_0:addWork(WorkWaitSeconds.New(0.01))
+	arg_3_0:addWork(FightWork2Work.New(FightWorkDialogueBeforeRoundStart))
+	arg_3_0:addWork(FightWorkRoundStart.New())
 
-	slot1, slot0._skillFlowList = FightStepBuilder.buildStepWorkList(slot0.roundMO and slot0.roundMO.fightStepMOs)
+	local var_3_0, var_3_1 = FightStepBuilder.buildStepWorkList(arg_3_0.roundMO and arg_3_0.roundMO.fightStepMOs)
 
-	if not slot1 or #slot1 == 0 then
+	arg_3_0._skillFlowList = var_3_1
+
+	if not var_3_0 or #var_3_0 == 0 then
 		return
 	end
 
-	slot3 = 1
+	local var_3_2 = 1
 
-	while slot3 <= #slot1 do
-		slot3 = slot3 + 1
+	while var_3_2 <= #var_3_0 do
+		local var_3_3 = var_3_0[var_3_2]
 
-		slot0:addWork(slot1[slot3])
+		var_3_2 = var_3_2 + 1
+
+		arg_3_0:addWork(var_3_3)
 	end
 
-	slot0:addWork(WorkWaitSeconds.New(0.1 / FightModel.instance:getSpeed()))
-	slot0:addWork(FightWorkWaitForSkillsDone.New(slot0._skillFlowList))
-	slot0:addWork(FightWorkRoundEnd.New())
-	slot0:addWork(FightWorkFbStory.New(FightWorkFbStory.Type_EnterWave))
+	arg_3_0:addWork(WorkWaitSeconds.New(0.1 / FightModel.instance:getSpeed()))
+	arg_3_0:addWork(FightWorkWaitForSkillsDone.New(arg_3_0._skillFlowList))
+	arg_3_0:addWork(FightWorkRoundEnd.New())
+	arg_3_0:addWork(FightWorkFbStory.New(FightWorkFbStory.Type_EnterWave))
 
 	if not FightModel.instance:isFinish() then
 		if FightModel.instance:getVersion() < 4 then
-			slot0:addWork(FightWorkDistributeCard.New())
-			slot0:addWork(FunctionWork.New(function ()
+			arg_3_0:addWork(FightWorkDistributeCard.New())
+			arg_3_0:addWork(FunctionWork.New(function()
 				FightController.instance:setCurStage(FightEnum.Stage.Play)
 			end))
 		end
 
-		slot5, slot6 = FightStepBuilder.buildStepWorkList(slot0.roundMO and slot0.roundMO.nextRoundBeginStepMOs)
+		local var_3_4, var_3_5 = FightStepBuilder.buildStepWorkList(arg_3_0.roundMO and arg_3_0.roundMO.nextRoundBeginStepMOs)
 
-		if slot5 and #slot5 > 0 then
-			for slot10, slot11 in ipairs(slot5) do
-				slot0:addWork(slot11)
+		if var_3_4 and #var_3_4 > 0 then
+			for iter_3_0, iter_3_1 in ipairs(var_3_4) do
+				arg_3_0:addWork(iter_3_1)
 			end
 		end
 
-		slot0:addWork(FightWorkShowRoundView.New())
-		slot0:addWork(FunctionWork.New(function ()
+		arg_3_0:addWork(FightWorkShowRoundView.New())
+		arg_3_0:addWork(FunctionWork.New(function()
 			GameSceneMgr.instance:getCurScene().camera:enablePostProcessSmooth(false)
 			GameSceneMgr.instance:getCurScene().camera:resetParam()
 		end))
-		slot0:addWork(FightWorkShowBuffDialog.New())
-		slot0:addWork(FightWorkCorrectData.New())
+		arg_3_0:addWork(FightWorkShowBuffDialog.New())
+		arg_3_0:addWork(FightWorkCorrectData.New())
 	end
 
-	slot0:addWork(FightWorkClearAfterRound.New())
-	slot0:addWork(FunctionWork.New(function ()
+	arg_3_0:addWork(FightWorkClearAfterRound.New())
+	arg_3_0:addWork(FunctionWork.New(function()
 		FightDataMgr.instance:afterPlayRoundProto(FightDataModel.instance.cacheRoundProto)
 	end))
-	slot0:addWork(FightWorkCompareDataAfterPlay.New())
-	slot0:addWork(FunctionWork.New(slot0._refreshPosition, slot0))
+	arg_3_0:addWork(FightWorkCompareDataAfterPlay.New())
+	arg_3_0:addWork(FunctionWork.New(arg_3_0._refreshPosition, arg_3_0))
 end
 
-function slot0._refreshPosition(slot0)
-	for slot5, slot6 in ipairs(FightHelper.getAllEntitys()) do
-		slot6:resetStandPos()
+function var_0_0._refreshPosition(arg_7_0)
+	local var_7_0 = FightHelper.getAllEntitys()
 
-		if slot6.nameUI then
-			slot6.nameUI._nameUIVisible = true
+	for iter_7_0, iter_7_1 in ipairs(var_7_0) do
+		iter_7_1:resetStandPos()
 
-			slot6.nameUI:setActive(true)
+		if iter_7_1.nameUI then
+			iter_7_1.nameUI._nameUIVisible = true
+
+			iter_7_1.nameUI:setActive(true)
 		end
 	end
 end
 
-return slot0
+return var_0_0

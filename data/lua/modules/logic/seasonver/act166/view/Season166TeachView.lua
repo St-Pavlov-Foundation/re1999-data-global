@@ -1,211 +1,242 @@
-module("modules.logic.seasonver.act166.view.Season166TeachView", package.seeall)
+﻿module("modules.logic.seasonver.act166.view.Season166TeachView", package.seeall)
 
-slot0 = class("Season166TeachView", BaseView)
+local var_0_0 = class("Season166TeachView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_bg")
-	slot0._btncloseReward = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_closeReward")
-	slot0._goteachContent = gohelper.findChild(slot0.viewGO, "#go_teachContent")
-	slot0._goteachItem = gohelper.findChild(slot0.viewGO, "#go_teachContent/#go_teachItem")
-	slot0._gotopleft = gohelper.findChild(slot0.viewGO, "#go_topleft")
-	slot0._gorewardContent = gohelper.findChild(slot0.viewGO, "#go_rewardContent")
-	slot0._gorewardWindow = gohelper.findChild(slot0.viewGO, "#go_rewardContent/#go_rewardWindow")
-	slot0._gorewardItem = gohelper.findChild(slot0.viewGO, "#go_rewardContent/#go_rewardWindow/#go_rewardItem")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
+	arg_1_0._btncloseReward = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_closeReward")
+	arg_1_0._goteachContent = gohelper.findChild(arg_1_0.viewGO, "#go_teachContent")
+	arg_1_0._goteachItem = gohelper.findChild(arg_1_0.viewGO, "#go_teachContent/#go_teachItem")
+	arg_1_0._gotopleft = gohelper.findChild(arg_1_0.viewGO, "#go_topleft")
+	arg_1_0._gorewardContent = gohelper.findChild(arg_1_0.viewGO, "#go_rewardContent")
+	arg_1_0._gorewardWindow = gohelper.findChild(arg_1_0.viewGO, "#go_rewardContent/#go_rewardWindow")
+	arg_1_0._gorewardItem = gohelper.findChild(arg_1_0.viewGO, "#go_rewardContent/#go_rewardWindow/#go_rewardItem")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btncloseReward:AddClickListener(slot0._btncloseRewardOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btncloseReward:AddClickListener(arg_2_0._btncloseRewardOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btncloseReward:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btncloseReward:RemoveClickListener()
 end
 
-function slot0._btncloseRewardOnClick(slot0)
-	for slot4, slot5 in pairs(slot0.rewardWindowTab) do
-		gohelper.setActive(slot5.window, false)
+function var_0_0._btncloseRewardOnClick(arg_4_0)
+	for iter_4_0, iter_4_1 in pairs(arg_4_0.rewardWindowTab) do
+		gohelper.setActive(iter_4_1.window, false)
 
-		slot5.isShow = false
+		iter_4_1.isShow = false
 	end
 end
 
-function slot0._btnRewardOnClick(slot0, slot1)
-	for slot5, slot6 in pairs(slot0.rewardWindowTab) do
-		if slot5 == slot1 then
-			slot6.isShow = not slot6.isShow
+function var_0_0._btnRewardOnClick(arg_5_0, arg_5_1)
+	for iter_5_0, iter_5_1 in pairs(arg_5_0.rewardWindowTab) do
+		if iter_5_0 == arg_5_1 then
+			iter_5_1.isShow = not iter_5_1.isShow
 		else
-			slot6.isShow = false
+			iter_5_1.isShow = false
 		end
 
-		gohelper.setActive(slot6.window, slot6.isShow)
+		gohelper.setActive(iter_5_1.window, iter_5_1.isShow)
 	end
 end
 
-function slot0._btnTeachItemOnClick(slot0, slot1)
-	slot0:_btncloseRewardOnClick()
+function var_0_0._btnTeachItemOnClick(arg_6_0, arg_6_1)
+	arg_6_0:_btncloseRewardOnClick()
 
-	slot3 = slot0.Season166MO.teachInfoMap[slot1.preTeachId]
+	local var_6_0 = arg_6_0.Season166MO.teachInfoMap[arg_6_1.teachId]
+	local var_6_1 = arg_6_0.Season166MO.teachInfoMap[arg_6_1.preTeachId]
+	local var_6_2 = arg_6_1.preTeachId == 0 or arg_6_1.preTeachId > 0 and var_6_1 and var_6_1.passCount > 0
 
-	if not slot0.Season166MO.teachInfoMap[slot1.teachId] or not (slot1.preTeachId == 0 or slot1.preTeachId > 0 and slot3 and slot3.passCount > 0) then
+	if not var_6_0 or not var_6_2 then
 		GameFacade.showToast(ToastEnum.Season166TeachLock)
 	else
-		slot5 = slot1.episodeId
-		slot7 = slot1.teachId
+		local var_6_3 = arg_6_1.episodeId
+		local var_6_4 = DungeonConfig.instance:getEpisodeCO(var_6_3)
+		local var_6_5 = arg_6_1.teachId
+		local var_6_6 = 0
 
-		Season166TeachModel.instance:initTeachData(slot0.actId, slot7)
-		Season166Model.instance:setBattleContext(slot0.actId, slot5, nil, 0, nil, slot7)
-		DungeonFightController.instance:enterSeasonFight(DungeonConfig.instance:getEpisodeCO(slot5).chapterId, slot5)
+		Season166TeachModel.instance:initTeachData(arg_6_0.actId, var_6_5)
+		Season166Model.instance:setBattleContext(arg_6_0.actId, var_6_3, nil, var_6_6, nil, var_6_5)
+		DungeonFightController.instance:enterSeasonFight(var_6_4.chapterId, var_6_3)
 	end
 end
 
-function slot0._editableInitView(slot0)
-	slot0.teachItemTab = slot0:getUserDataTb_()
-	slot0.rewardWindowTab = slot0:getUserDataTb_()
-	slot0.localUnlockStateTab = slot0:getUserDataTb_()
+function var_0_0._editableInitView(arg_7_0)
+	arg_7_0.teachItemTab = arg_7_0:getUserDataTb_()
+	arg_7_0.rewardWindowTab = arg_7_0:getUserDataTb_()
+	arg_7_0.localUnlockStateTab = arg_7_0:getUserDataTb_()
 
-	gohelper.setActive(slot0._goteachItem, false)
-	gohelper.setActive(slot0._gorewardWindow, false)
+	gohelper.setActive(arg_7_0._goteachItem, false)
+	gohelper.setActive(arg_7_0._gorewardWindow, false)
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_8_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0.actId = slot0.viewParam.actId
+function var_0_0.onOpen(arg_9_0)
+	arg_9_0.actId = arg_9_0.viewParam.actId
 
 	AudioMgr.instance:trigger(AudioEnum.VersionActivity2_2Season166.play_ui_shiji_tv_noise)
-	slot0:createTeachItem()
-	slot0:createRewardItem()
-	slot0:refreshTeachItem()
+	arg_9_0:createTeachItem()
+	arg_9_0:createRewardItem()
+	arg_9_0:refreshTeachItem()
 end
 
-function slot0.createTeachItem(slot0)
-	for slot5, slot6 in ipairs(Season166Config.instance:getAllSeasonTeachCos()) do
-		if not slot0.teachItemTab[slot6.teachId] then
-			slot7 = {
-				config = slot6,
-				pos = gohelper.findChild(slot0._goteachContent, "go_teachPos" .. slot5)
+function var_0_0.createTeachItem(arg_10_0)
+	local var_10_0 = Season166Config.instance:getAllSeasonTeachCos()
+
+	for iter_10_0, iter_10_1 in ipairs(var_10_0) do
+		local var_10_1 = arg_10_0.teachItemTab[iter_10_1.teachId]
+
+		if not var_10_1 then
+			var_10_1 = {
+				config = iter_10_1,
+				pos = gohelper.findChild(arg_10_0._goteachContent, "go_teachPos" .. iter_10_0)
 			}
-			slot7.item = gohelper.clone(slot0._goteachItem, slot7.pos, "teachItem" .. slot5)
-			slot7.imageIndex = gohelper.findChildImage(slot7.item, "title/image_index")
-			slot7.txtName = gohelper.findChildText(slot7.item, "title/txt_name")
-			slot7.imageIcon = gohelper.findChildImage(slot7.item, "image_icon")
-			slot7.txtDesc = gohelper.findChildText(slot7.item, "desc/txt_desc")
-			slot7.goLock = gohelper.findChild(slot7.item, "go_lock")
-			slot7.goFinish = gohelper.findChild(slot7.item, "go_finish")
-			slot7.btnReward = gohelper.findChildButtonWithAudio(slot7.item, "btn_reward")
-			slot7.btnClick = gohelper.findChildButtonWithAudio(slot7.item, "btn_click")
+			var_10_1.item = gohelper.clone(arg_10_0._goteachItem, var_10_1.pos, "teachItem" .. iter_10_0)
+			var_10_1.imageIndex = gohelper.findChildImage(var_10_1.item, "title/image_index")
+			var_10_1.txtName = gohelper.findChildText(var_10_1.item, "title/txt_name")
+			var_10_1.imageIcon = gohelper.findChildImage(var_10_1.item, "image_icon")
+			var_10_1.txtDesc = gohelper.findChildText(var_10_1.item, "desc/txt_desc")
+			var_10_1.goLock = gohelper.findChild(var_10_1.item, "go_lock")
+			var_10_1.goFinish = gohelper.findChild(var_10_1.item, "go_finish")
+			var_10_1.btnReward = gohelper.findChildButtonWithAudio(var_10_1.item, "btn_reward")
+			var_10_1.btnClick = gohelper.findChildButtonWithAudio(var_10_1.item, "btn_click")
 
-			slot7.btnReward:AddClickListener(slot0._btnRewardOnClick, slot0, slot7.config.teachId)
-			slot7.btnClick:AddClickListener(slot0._btnTeachItemOnClick, slot0, slot7.config)
+			var_10_1.btnReward:AddClickListener(arg_10_0._btnRewardOnClick, arg_10_0, var_10_1.config.teachId)
+			var_10_1.btnClick:AddClickListener(arg_10_0._btnTeachItemOnClick, arg_10_0, var_10_1.config)
 
-			slot7.anim = slot7.item:GetComponent(gohelper.Type_Animator)
-			slot0.teachItemTab[slot6.teachId] = slot7
+			var_10_1.anim = var_10_1.item:GetComponent(gohelper.Type_Animator)
+			arg_10_0.teachItemTab[iter_10_1.teachId] = var_10_1
 		end
 
-		gohelper.setActive(slot7.item, true)
-		UISpriteSetMgr.instance:setSeason166Sprite(slot7.imageIndex, "season_teach_num" .. slot5, true)
+		gohelper.setActive(var_10_1.item, true)
+		UISpriteSetMgr.instance:setSeason166Sprite(var_10_1.imageIndex, "season_teach_num" .. iter_10_0, true)
 
-		slot7.txtName.text = slot6.name
-		slot7.txtDesc.text = slot6.desc
+		var_10_1.txtName.text = iter_10_1.name
+		var_10_1.txtDesc.text = iter_10_1.desc
 	end
 end
 
-function slot0.createRewardItem(slot0)
-	for slot5, slot6 in ipairs(Season166Config.instance:getAllSeasonTeachCos()) do
-		if not slot0.rewardWindowTab[slot6.teachId] then
-			slot7 = {
-				pos = gohelper.findChild(slot0._gorewardContent, "go_rewardPos" .. slot5)
+function var_0_0.createRewardItem(arg_11_0)
+	local var_11_0 = Season166Config.instance:getAllSeasonTeachCos()
+
+	for iter_11_0, iter_11_1 in ipairs(var_11_0) do
+		local var_11_1 = arg_11_0.rewardWindowTab[iter_11_1.teachId]
+
+		if not var_11_1 then
+			var_11_1 = {
+				pos = gohelper.findChild(arg_11_0._gorewardContent, "go_rewardPos" .. iter_11_0)
 			}
-			slot7.window = gohelper.clone(slot0._gorewardWindow, slot7.pos, "rewardWindow" .. slot5)
-			slot7.rewardItem = gohelper.findChild(slot7.window, "#go_rewardItem")
-			slot7.isShow = false
-			slot7.rewardList = slot0:getUserDataTb_()
-			slot0.rewardWindowTab[slot6.teachId] = slot7
+			var_11_1.window = gohelper.clone(arg_11_0._gorewardWindow, var_11_1.pos, "rewardWindow" .. iter_11_0)
+			var_11_1.rewardItem = gohelper.findChild(var_11_1.window, "#go_rewardItem")
+			var_11_1.isShow = false
+			var_11_1.rewardList = arg_11_0:getUserDataTb_()
+			arg_11_0.rewardWindowTab[iter_11_1.teachId] = var_11_1
 		end
 
-		gohelper.setActive(slot7.window, true)
-		gohelper.setActive(slot7.rewardItem, false)
+		gohelper.setActive(var_11_1.window, true)
+		gohelper.setActive(var_11_1.rewardItem, false)
 
-		for slot12, slot13 in ipairs(string.split(slot6.firstBonus, "|")) do
-			if not slot7.rewardList[slot12] then
-				slot14 = {
-					rewardItem = gohelper.clone(slot7.rewardItem, slot7.window, "rewardItem" .. slot12)
+		local var_11_2 = string.split(iter_11_1.firstBonus, "|")
+
+		for iter_11_2, iter_11_3 in ipairs(var_11_2) do
+			local var_11_3 = var_11_1.rewardList[iter_11_2]
+
+			if not var_11_3 then
+				var_11_3 = {
+					rewardItem = gohelper.clone(var_11_1.rewardItem, var_11_1.window, "rewardItem" .. iter_11_2)
 				}
-				slot14.itemPos = gohelper.findChild(slot14.rewardItem, "go_rewardItemPos")
-				slot14.goGet = gohelper.findChild(slot14.rewardItem, "go_get")
-				slot14.item = IconMgr.instance:getCommonPropItemIcon(slot14.itemPos)
-				slot7.rewardList[slot12] = slot14
+				var_11_3.itemPos = gohelper.findChild(var_11_3.rewardItem, "go_rewardItemPos")
+				var_11_3.goGet = gohelper.findChild(var_11_3.rewardItem, "go_get")
+				var_11_3.item = IconMgr.instance:getCommonPropItemIcon(var_11_3.itemPos)
+				var_11_1.rewardList[iter_11_2] = var_11_3
 			end
 
-			gohelper.setActive(slot14.rewardItem, true)
+			gohelper.setActive(var_11_3.rewardItem, true)
 
-			slot15 = string.splitToNumber(slot13, "#")
+			local var_11_4 = string.splitToNumber(iter_11_3, "#")
 
-			slot14.item:setMOValue(slot15[1], slot15[2], slot15[3])
-			slot14.item:setHideLvAndBreakFlag(true)
-			slot14.item:hideEquipLvAndBreak(true)
-			slot14.item:setCountFontSize(51)
+			var_11_3.item:setMOValue(var_11_4[1], var_11_4[2], var_11_4[3])
+			var_11_3.item:setHideLvAndBreakFlag(true)
+			var_11_3.item:hideEquipLvAndBreak(true)
+			var_11_3.item:setCountFontSize(51)
 		end
 
-		for slot12 = #slot8 + 1, #slot7.rewardList do
-			gohelper.setActive(slot7.rewardList[slot12].rewardItem, false)
+		for iter_11_4 = #var_11_2 + 1, #var_11_1.rewardList do
+			gohelper.setActive(var_11_1.rewardList[iter_11_4].rewardItem, false)
 		end
+	end
+end
+
+function var_0_0.refreshTeachItem(arg_12_0)
+	arg_12_0.Season166MO = Season166Model.instance:getActInfo(arg_12_0.actId)
+
+	local var_12_0 = Season166Model.instance:getLocalUnlockState(Season166Enum.TeachLockSaveKey)
+
+	for iter_12_0, iter_12_1 in pairs(arg_12_0.teachItemTab) do
+		local var_12_1 = iter_12_1.config
+		local var_12_2 = arg_12_0.Season166MO.teachInfoMap[var_12_1.teachId]
+		local var_12_3 = arg_12_0.Season166MO.teachInfoMap[var_12_1.preTeachId]
+		local var_12_4 = var_12_1.preTeachId == 0 or var_12_1.preTeachId > 0 and var_12_3 and var_12_3.passCount > 0
+		local var_12_5 = not var_12_2 or not var_12_4
+		local var_12_6 = var_12_2 and var_12_2.passCount > 0
+
+		gohelper.setActive(iter_12_1.goLock, var_12_5)
+		gohelper.setActive(iter_12_1.goFinish, var_12_6)
+
+		local var_12_7 = arg_12_0.rewardWindowTab[var_12_1.teachId]
+		local var_12_8 = var_12_7.rewardList
+
+		for iter_12_2, iter_12_3 in pairs(var_12_8) do
+			gohelper.setActive(iter_12_3.goGet, var_12_6)
+		end
+
+		gohelper.setActive(var_12_7.window, var_12_7.isShow)
+
+		local var_12_9 = var_12_5 and string.format("season_teach_lv%d_locked", iter_12_0) or string.format("season_teach_lv%d", iter_12_0)
+
+		UISpriteSetMgr.instance:setSeason166Sprite(iter_12_1.imageIcon, var_12_9, true)
+
+		iter_12_1.isLock = var_12_5 and Season166Enum.LockState or Season166Enum.UnlockState
+
+		if not var_12_5 and (not var_12_0[iter_12_0] or var_12_0[iter_12_0] == Season166Enum.LockState) then
+			iter_12_1.anim:Play(UIAnimationName.Unlock, 0, 0)
+		end
+	end
+
+	arg_12_0:saveUnlockState()
+end
+
+function var_0_0.saveUnlockState(arg_13_0)
+	local var_13_0 = {}
+
+	for iter_13_0, iter_13_1 in ipairs(arg_13_0.teachItemTab) do
+		local var_13_1 = string.format("%s|%s", iter_13_0, iter_13_1.isLock)
+
+		table.insert(var_13_0, var_13_1)
+	end
+
+	local var_13_2 = cjson.encode(var_13_0)
+
+	Season166Controller.instance:savePlayerPrefs(Season166Enum.TeachLockSaveKey, var_13_2)
+end
+
+function var_0_0.onClose(arg_14_0)
+	arg_14_0:saveUnlockState()
+end
+
+function var_0_0.onDestroyView(arg_15_0)
+	for iter_15_0, iter_15_1 in pairs(arg_15_0.teachItemTab) do
+		iter_15_1.btnReward:RemoveClickListener()
+		iter_15_1.btnClick:RemoveClickListener()
 	end
 end
 
-function slot0.refreshTeachItem(slot0)
-	slot0.Season166MO = Season166Model.instance:getActInfo(slot0.actId)
-	slot1 = Season166Model.instance:getLocalUnlockState(Season166Enum.TeachLockSaveKey)
-
-	for slot5, slot6 in pairs(slot0.teachItemTab) do
-		slot7 = slot6.config
-		slot8 = slot0.Season166MO.teachInfoMap[slot7.teachId]
-		slot9 = slot0.Season166MO.teachInfoMap[slot7.preTeachId]
-
-		gohelper.setActive(slot6.goLock, not slot8 or not (slot7.preTeachId == 0 or slot7.preTeachId > 0 and slot9 and slot9.passCount > 0))
-		gohelper.setActive(slot6.goFinish, slot8 and slot8.passCount > 0)
-
-		for slot18, slot19 in pairs(slot0.rewardWindowTab[slot7.teachId].rewardList) do
-			gohelper.setActive(slot19.goGet, slot12)
-		end
-
-		gohelper.setActive(slot13.window, slot13.isShow)
-		UISpriteSetMgr.instance:setSeason166Sprite(slot6.imageIcon, slot11 and string.format("season_teach_lv%d_locked", slot5) or string.format("season_teach_lv%d", slot5), true)
-
-		slot6.isLock = slot11 and Season166Enum.LockState or Season166Enum.UnlockState
-
-		if not slot11 and (not slot1[slot5] or slot1[slot5] == Season166Enum.LockState) then
-			slot6.anim:Play(UIAnimationName.Unlock, 0, 0)
-		end
-	end
-
-	slot0:saveUnlockState()
-end
-
-function slot0.saveUnlockState(slot0)
-	slot1 = {}
-
-	for slot5, slot6 in ipairs(slot0.teachItemTab) do
-		table.insert(slot1, string.format("%s|%s", slot5, slot6.isLock))
-	end
-
-	Season166Controller.instance:savePlayerPrefs(Season166Enum.TeachLockSaveKey, cjson.encode(slot1))
-end
-
-function slot0.onClose(slot0)
-	slot0:saveUnlockState()
-end
-
-function slot0.onDestroyView(slot0)
-	for slot4, slot5 in pairs(slot0.teachItemTab) do
-		slot5.btnReward:RemoveClickListener()
-		slot5.btnClick:RemoveClickListener()
-	end
-end
-
-return slot0
+return var_0_0

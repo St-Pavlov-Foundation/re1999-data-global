@@ -1,97 +1,115 @@
-module("modules.logic.activity.view.Vxax_Special_BaseView", package.seeall)
+﻿module("modules.logic.activity.view.Vxax_Special_BaseView", package.seeall)
 
-slot0 = class("Vxax_Special_BaseView", Activity101SignViewBase)
+local var_0_0 = class("Vxax_Special_BaseView", Activity101SignViewBase)
 
-function slot0.ctor(slot0, ...)
-	uv0.super.ctor(slot0, ...)
+function var_0_0.ctor(arg_1_0, ...)
+	var_0_0.super.ctor(arg_1_0, ...)
 end
 
-function slot0.onDestroyView(slot0)
-	Activity101SignViewBase._internal_onDestroy(slot0)
+function var_0_0.onDestroyView(arg_2_0)
+	Activity101SignViewBase._internal_onDestroy(arg_2_0)
 end
 
-function slot0.internal_onOpen(slot0)
-	if slot0:openMode() == Activity101SignViewBase.eOpenMode.ActivityBeginnerView then
-		slot0:internal_set_actId(slot0.viewParam.actId)
-		gohelper.addChild(slot0.viewParam.parent, slot0.viewGO)
-		slot0:_internal_onOpen()
-		slot0:_refresh()
-	elseif slot1 == slot2.PaiLian then
-		slot0:_internal_onOpen()
-		slot0:_refresh()
+function var_0_0.internal_onOpen(arg_3_0)
+	local var_3_0 = arg_3_0:openMode()
+	local var_3_1 = Activity101SignViewBase.eOpenMode
+
+	if var_3_0 == var_3_1.ActivityBeginnerView then
+		local var_3_2 = arg_3_0.viewParam.actId
+		local var_3_3 = arg_3_0.viewParam.parent
+
+		arg_3_0:internal_set_actId(var_3_2)
+		gohelper.addChild(var_3_3, arg_3_0.viewGO)
+		arg_3_0:_internal_onOpen()
+		arg_3_0:_refresh()
+	elseif var_3_0 == var_3_1.PaiLian then
+		arg_3_0:_internal_onOpen()
+		arg_3_0:_refresh()
 	else
 		assert(false)
 	end
 end
 
-function slot0.addEvents(slot0)
-	uv0.super.addEvents(slot0)
+function var_0_0.addEvents(arg_4_0)
+	var_0_0.super.addEvents(arg_4_0)
 end
 
-function slot0.removeEvents(slot0)
-	uv0.super.removeEvents(slot0)
+function var_0_0.removeEvents(arg_5_0)
+	var_0_0.super.removeEvents(arg_5_0)
 end
 
-function slot0.addReward(slot0, slot1, slot2, slot3)
-	slot4 = slot3.New({
-		parent = slot0,
-		baseViewContainer = slot0.viewContainer
+function var_0_0.addReward(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
+	local var_6_0 = arg_6_3.New({
+		parent = arg_6_0,
+		baseViewContainer = arg_6_0.viewContainer
 	})
 
-	slot4:setIndex(slot1)
-	slot4:init(slot2)
-	table.insert(slot0.__itemList, slot4)
+	var_6_0:setIndex(arg_6_1)
+	var_6_0:init(arg_6_2)
+	table.insert(arg_6_0.__itemList, var_6_0)
 
-	return slot4
+	return var_6_0
 end
 
-function slot0._createList(slot0)
-	if slot0.__itemList then
+function var_0_0._createList(arg_7_0)
+	if arg_7_0.__itemList then
 		return
 	end
 
-	slot0.__itemList = {}
+	arg_7_0.__itemList = {}
 
-	for slot5, slot6 in ipairs(slot0:getDataList()) do
-		slot0:addReward(slot5, slot0:onFindChind_RewardGo(slot5), V2a3_Special_SignItem):onUpdateMO(slot6)
+	local var_7_0 = arg_7_0:getDataList()
+
+	for iter_7_0, iter_7_1 in ipairs(var_7_0) do
+		local var_7_1 = arg_7_0:onFindChind_RewardGo(iter_7_0)
+
+		arg_7_0:addReward(iter_7_0, var_7_1, V2a3_Special_SignItem):onUpdateMO(iter_7_1)
 	end
 end
 
-function slot0._refreshList(slot0, slot1)
-	slot2 = nil
+function var_0_0._refreshList(arg_8_0, arg_8_1)
+	local var_8_0
 
-	slot0:onRefreshList((not slot1 or slot0:getTempDataList()) and slot0:getDataList())
+	if arg_8_1 then
+		var_8_0 = arg_8_0:getTempDataList()
+	else
+		var_8_0 = arg_8_0:getDataList()
+	end
+
+	arg_8_0:onRefreshList(var_8_0)
 end
 
-function slot0.onRefreshList(slot0, slot1)
-	if not slot1 then
+function var_0_0.onRefreshList(arg_9_0, arg_9_1)
+	if not arg_9_1 then
 		return
 	end
 
-	slot2 = slot0.__itemList
+	local var_9_0 = arg_9_0.__itemList
 
-	for slot6, slot7 in ipairs(slot1) do
-		if slot2[slot6] then
-			slot8:onUpdateMO(slot7)
-			slot8:setActive(true)
+	for iter_9_0, iter_9_1 in ipairs(arg_9_1) do
+		local var_9_1 = var_9_0[iter_9_0]
+
+		if var_9_1 then
+			var_9_1:onUpdateMO(iter_9_1)
+			var_9_1:setActive(true)
 		end
 	end
 
-	for slot6 = #slot1 + 1, #slot2 do
-		slot2[slot6]:setActive(false)
+	for iter_9_2 = #arg_9_1 + 1, #var_9_0 do
+		var_9_0[iter_9_2]:setActive(false)
 	end
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0:_refresh()
+function var_0_0.onUpdateParam(arg_10_0)
+	arg_10_0:_refresh()
 end
 
-function slot0.onFindChind_RewardGo(slot0, slot1)
+function var_0_0.onFindChind_RewardGo(arg_11_0, arg_11_1)
 	assert(false, "please override this function")
 end
 
-function slot0.onStart(slot0)
-	slot0:_createList()
+function var_0_0.onStart(arg_12_0)
+	arg_12_0:_createList()
 end
 
-return slot0
+return var_0_0

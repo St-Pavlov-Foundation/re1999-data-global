@@ -1,173 +1,202 @@
-module("modules.logic.character.view.CharacterLevelItem", package.seeall)
+﻿module("modules.logic.character.view.CharacterLevelItem", package.seeall)
 
-slot0 = class("CharacterLevelItem", ListScrollCellExtend)
-slot1 = 1
-slot2 = 0.75
-slot3 = 1
-slot4 = 0.5
+local var_0_0 = class("CharacterLevelItem", ListScrollCellExtend)
+local var_0_1 = 1
+local var_0_2 = 0.75
+local var_0_3 = 1
+local var_0_4 = 0.5
 
-function slot0.onInitView(slot0)
-	slot0._click = gohelper.getClickWithDefaultAudio(slot0.viewGO)
-	slot0._gocurlv = gohelper.findChild(slot0.viewGO, "#go_curLv")
-	slot0._transcurlv = slot0._gocurlv.transform
-	slot0._txtcurlv = gohelper.findChildText(slot0.viewGO, "#go_curLv/#txt_curLvNum")
-	slot0._txtlvnum = gohelper.findChildText(slot0.viewGO, "#txt_LvNum")
-	slot0._translvnum = slot0._txtlvnum.transform
-	slot0._txtefflvnum = gohelper.findChildText(slot0.viewGO, "#txt_LvNum/#txt_leveleffect")
-	slot0._goline = gohelper.findChild(slot0.viewGO, "#go_line")
-	slot0._gomax = gohelper.findChild(slot0.viewGO, "#go_Max")
-	slot0._animator = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._click = gohelper.getClickWithDefaultAudio(arg_1_0.viewGO)
+	arg_1_0._gocurlv = gohelper.findChild(arg_1_0.viewGO, "#go_curLv")
+	arg_1_0._transcurlv = arg_1_0._gocurlv.transform
+	arg_1_0._txtcurlv = gohelper.findChildText(arg_1_0.viewGO, "#go_curLv/#txt_curLvNum")
+	arg_1_0._txtlvnum = gohelper.findChildText(arg_1_0.viewGO, "#txt_LvNum")
+	arg_1_0._translvnum = arg_1_0._txtlvnum.transform
+	arg_1_0._txtefflvnum = gohelper.findChildText(arg_1_0.viewGO, "#txt_LvNum/#txt_leveleffect")
+	arg_1_0._goline = gohelper.findChild(arg_1_0.viewGO, "#go_line")
+	arg_1_0._gomax = gohelper.findChild(arg_1_0.viewGO, "#go_Max")
+	arg_1_0._animator = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._click:AddClickListener(slot0.onClick, slot0)
-	slot0:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, slot0._onItemChanged, slot0)
-	slot0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, slot0._onItemChanged, slot0)
-	slot0:addEventCb(CharacterController.instance, CharacterEvent.characterLevelItemPlayEff, slot0._onPlayLevelUpEff, slot0)
-	slot0:addEventCb(CharacterController.instance, CharacterEvent.levelUpChangePreviewLevel, slot0._onChangePreviewLevel, slot0)
-	slot0:addEventCb(CharacterController.instance, CharacterEvent.levelScrollChange, slot0._onLevelScrollChange, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._click:AddClickListener(arg_2_0.onClick, arg_2_0)
+	arg_2_0:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_2_0._onItemChanged, arg_2_0)
+	arg_2_0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_2_0._onItemChanged, arg_2_0)
+	arg_2_0:addEventCb(CharacterController.instance, CharacterEvent.characterLevelItemPlayEff, arg_2_0._onPlayLevelUpEff, arg_2_0)
+	arg_2_0:addEventCb(CharacterController.instance, CharacterEvent.levelUpChangePreviewLevel, arg_2_0._onChangePreviewLevel, arg_2_0)
+	arg_2_0:addEventCb(CharacterController.instance, CharacterEvent.levelScrollChange, arg_2_0._onLevelScrollChange, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._click:RemoveClickListener()
-	slot0:removeEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, slot0._onItemChanged, slot0)
-	slot0:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, slot0._onItemChanged, slot0)
-	slot0:removeEventCb(CharacterController.instance, CharacterEvent.characterLevelItemPlayEff, slot0._onPlayLevelUpEff, slot0)
-	slot0:removeEventCb(CharacterController.instance, CharacterEvent.levelUpChangePreviewLevel, slot0._onChangePreviewLevel, slot0)
-	slot0:removeEventCb(CharacterController.instance, CharacterEvent.levelScrollChange, slot0._onLevelScrollChange, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._click:RemoveClickListener()
+	arg_3_0:removeEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_3_0._onItemChanged, arg_3_0)
+	arg_3_0:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_3_0._onItemChanged, arg_3_0)
+	arg_3_0:removeEventCb(CharacterController.instance, CharacterEvent.characterLevelItemPlayEff, arg_3_0._onPlayLevelUpEff, arg_3_0)
+	arg_3_0:removeEventCb(CharacterController.instance, CharacterEvent.levelUpChangePreviewLevel, arg_3_0._onChangePreviewLevel, arg_3_0)
+	arg_3_0:removeEventCb(CharacterController.instance, CharacterEvent.levelScrollChange, arg_3_0._onLevelScrollChange, arg_3_0)
 end
 
-function slot0.onClick(slot0)
-	if not slot0._mo then
+function var_0_0.onClick(arg_4_0)
+	if not arg_4_0._mo then
 		return
 	end
 
-	CharacterController.instance:dispatchEvent(CharacterEvent.levelUpClickLevel, slot0._mo.level)
+	CharacterController.instance:dispatchEvent(CharacterEvent.levelUpClickLevel, arg_4_0._mo.level)
 end
 
-function slot0._onItemChanged(slot0)
-	if not slot0._view then
+function var_0_0._onItemChanged(arg_5_0)
+	if not arg_5_0._view then
 		return
 	end
 
-	if slot0._view.viewContainer and slot1:getWaitHeroLevelUpRefresh() then
+	local var_5_0 = arg_5_0._view.viewContainer
+
+	if var_5_0 and var_5_0:getWaitHeroLevelUpRefresh() then
 		return
 	end
 
-	slot0:refresh()
+	arg_5_0:refresh()
 end
 
-function slot0._onPlayLevelUpEff(slot0, slot1)
-	slot2 = slot0._mo and slot0._mo.heroId
+function var_0_0._onPlayLevelUpEff(arg_6_0, arg_6_1)
+	local var_6_0 = arg_6_0._mo and arg_6_0._mo.heroId
 
-	if not (slot2 and HeroModel.instance:getByHeroId(slot2)) then
+	if not (var_6_0 and HeroModel.instance:getByHeroId(var_6_0)) then
 		return
 	end
 
-	if slot0._mo.level == slot1 then
-		slot0._animator:Play("click", 0, 0)
+	if arg_6_0._mo.level == arg_6_1 then
+		arg_6_0._animator:Play("click", 0, 0)
 	end
 end
 
-function slot0._onChangePreviewLevel(slot0, slot1)
-	if not slot0._view then
+function var_0_0._onChangePreviewLevel(arg_7_0, arg_7_1)
+	if not arg_7_0._view then
 		return
 	end
 
-	if slot0._view.viewContainer and slot2:getWaitHeroLevelUpRefresh() then
+	local var_7_0 = arg_7_0._view.viewContainer
+
+	if var_7_0 and var_7_0:getWaitHeroLevelUpRefresh() then
 		return
 	end
 
-	slot0:refreshCurLevelMark()
+	arg_7_0:refreshCurLevelMark()
 end
 
-function slot0._onLevelScrollChange(slot0, slot1)
-	if slot0._itemOffset < (slot1 and math.abs(slot1) or 0) then
-		slot0:refreshScale(-slot1, -slot0._rightBoundary, -slot0._itemOffset)
+function var_0_0._onLevelScrollChange(arg_8_0, arg_8_1)
+	arg_8_1 = arg_8_1 and math.abs(arg_8_1) or 0
+
+	if arg_8_1 > arg_8_0._itemOffset then
+		arg_8_0:refreshScale(-arg_8_1, -arg_8_0._rightBoundary, -arg_8_0._itemOffset)
 	else
-		slot0:refreshScale(slot1, slot0._leftBoundary, slot0._itemOffset)
+		arg_8_0:refreshScale(arg_8_1, arg_8_0._leftBoundary, arg_8_0._itemOffset)
 	end
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_9_0)
+	return
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
-	slot3 = slot0._view.viewContainer:getLevelItemWidth()
-	slot4 = slot3 / 2
-	slot0._itemOffset = (slot0._index - 1) * slot3
-	slot0._rightBoundary = slot0._itemOffset + slot4
-	slot0._leftBoundary = slot0._itemOffset - slot4
+function var_0_0.onUpdateMO(arg_10_0, arg_10_1)
+	arg_10_0._mo = arg_10_1
 
-	slot0:refresh()
-	slot0:_onLevelScrollChange(slot0._view.viewContainer.characterLevelUpView:getContentOffset())
-	slot0._animator:Play("idle", 0, 0)
+	local var_10_0 = arg_10_0._view.viewContainer:getLevelItemWidth()
+	local var_10_1 = var_10_0 / 2
+
+	arg_10_0._itemOffset = (arg_10_0._index - 1) * var_10_0
+	arg_10_0._rightBoundary = arg_10_0._itemOffset + var_10_1
+	arg_10_0._leftBoundary = arg_10_0._itemOffset - var_10_1
+
+	arg_10_0:refresh()
+
+	local var_10_2 = arg_10_0._view.viewContainer.characterLevelUpView:getContentOffset()
+
+	arg_10_0:_onLevelScrollChange(var_10_2)
+	arg_10_0._animator:Play("idle", 0, 0)
 end
 
-function slot0.refresh(slot0)
-	slot1 = slot0._mo and HeroConfig.instance:getShowLevel(slot0._mo.level) or ""
-	slot0._txtcurlv.text = slot1
-	slot0._txtlvnum.text = slot1
-	slot0._txtefflvnum.text = slot1
-	slot2 = slot0._mo and slot0._mo.heroId
+function var_0_0.refresh(arg_11_0)
+	local var_11_0 = arg_11_0._mo and HeroConfig.instance:getShowLevel(arg_11_0._mo.level) or ""
 
-	if not (slot2 and HeroModel.instance:getByHeroId(slot2)) then
+	arg_11_0._txtcurlv.text = var_11_0
+	arg_11_0._txtlvnum.text = var_11_0
+	arg_11_0._txtefflvnum.text = var_11_0
+
+	local var_11_1 = arg_11_0._mo and arg_11_0._mo.heroId
+	local var_11_2 = var_11_1 and HeroModel.instance:getByHeroId(var_11_1)
+
+	if not var_11_2 then
 		return
 	end
 
-	slot4 = true
-	slot11 = slot0._mo.level
+	local var_11_3 = true
+	local var_11_4 = var_11_2.level
+	local var_11_5 = arg_11_0._mo.level
+	local var_11_6 = HeroConfig.instance:getLevelUpItems(var_11_1, var_11_4, var_11_5)
 
-	for slot11, slot12 in ipairs(HeroConfig.instance:getLevelUpItems(slot2, slot3.level, slot11)) do
-		if ItemModel.instance:getItemQuantity(tonumber(slot12.type), tonumber(slot12.id)) < tonumber(slot12.quantity) then
-			slot4 = false
+	for iter_11_0, iter_11_1 in ipairs(var_11_6) do
+		local var_11_7 = tonumber(iter_11_1.type)
+		local var_11_8 = tonumber(iter_11_1.id)
+
+		if tonumber(iter_11_1.quantity) > ItemModel.instance:getItemQuantity(var_11_7, var_11_8) then
+			var_11_3 = false
 
 			break
 		end
 	end
 
-	slot8 = slot1
+	local var_11_9 = var_11_0
 
-	if not slot4 then
-		slot8 = string.format("<color=#793426>%s</color>", slot1)
+	if not var_11_3 then
+		var_11_9 = string.format("<color=#793426>%s</color>", var_11_0)
 	end
 
-	slot0._txtlvnum.text = slot8
+	arg_11_0._txtlvnum.text = var_11_9
 
-	gohelper.setActive(slot0._gomax, slot6 == CharacterModel.instance:getrankEffects(slot2, slot3.rank)[1])
-	slot0:refreshCurLevelMark()
+	local var_11_10 = CharacterModel.instance:getrankEffects(var_11_1, var_11_2.rank)[1]
+
+	gohelper.setActive(arg_11_0._gomax, var_11_5 == var_11_10)
+	arg_11_0:refreshCurLevelMark()
 end
 
-function slot0.refreshCurLevelMark(slot0)
-	slot1 = false
-	slot2 = slot0._mo and slot0._mo.heroId
+function var_0_0.refreshCurLevelMark(arg_12_0)
+	local var_12_0 = false
+	local var_12_1 = arg_12_0._mo and arg_12_0._mo.heroId
+	local var_12_2 = var_12_1 and HeroModel.instance:getByHeroId(var_12_1)
 
-	if slot2 and HeroModel.instance:getByHeroId(slot2) and slot0._mo.level == (slot0._view.viewContainer:getLocalUpLevel() or slot3.level) then
-		slot1 = slot5.characterLevelUpView.previewLevel ~= slot4
+	if var_12_2 then
+		local var_12_3 = arg_12_0._mo.level
+		local var_12_4 = arg_12_0._view.viewContainer
+
+		if var_12_3 == (var_12_4:getLocalUpLevel() or var_12_2.level) then
+			var_12_0 = var_12_4.characterLevelUpView.previewLevel ~= var_12_3
+		end
 	end
 
-	gohelper.setActive(slot0._gocurlv, slot1)
-	gohelper.setActive(slot0._goline, not slot1)
-	gohelper.setActive(slot0._txtlvnum.gameObject, not slot1)
+	gohelper.setActive(arg_12_0._gocurlv, var_12_0)
+	gohelper.setActive(arg_12_0._goline, not var_12_0)
+	gohelper.setActive(arg_12_0._txtlvnum.gameObject, not var_12_0)
 end
 
-function slot0.refreshScale(slot0, slot1, slot2, slot3)
-	if not slot1 or not slot2 or not slot3 then
+function var_0_0.refreshScale(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
+	if not arg_13_1 or not arg_13_2 or not arg_13_3 then
 		return
 	end
 
-	slot4 = GameUtil.remap(slot1, slot2, slot3, uv0, uv1)
+	local var_13_0 = GameUtil.remap(arg_13_1, arg_13_2, arg_13_3, var_0_2, var_0_1)
 
-	transformhelper.setLocalScale(slot0._translvnum, slot4, slot4, slot4)
+	transformhelper.setLocalScale(arg_13_0._translvnum, var_13_0, var_13_0, var_13_0)
 
-	slot6 = slot0._txtlvnum.color
-	slot6.a = GameUtil.remap(slot1, slot2, slot3, uv2, uv3)
-	slot0._txtlvnum.color = slot6
+	local var_13_1
+
+	var_13_1.a, var_13_1 = GameUtil.remap(arg_13_1, arg_13_2, arg_13_3, var_0_4, var_0_3), arg_13_0._txtlvnum.color
+	arg_13_0._txtlvnum.color = var_13_1
 end
 
-return slot0
+return var_0_0

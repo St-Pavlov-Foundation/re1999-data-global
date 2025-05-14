@@ -1,40 +1,40 @@
-module("modules.logic.fight.system.work.FightWorkSpCardAdd", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkSpCardAdd", package.seeall)
 
-slot0 = class("FightWorkSpCardAdd", FightEffectBase)
+local var_0_0 = class("FightWorkSpCardAdd", FightEffectBase)
 
-function slot0.onStart(slot0)
-	if not FightCardDataHelper.cardChangeIsMySide(slot0._actEffectMO) then
-		slot0:onDone(true)
+function var_0_0.onStart(arg_1_0)
+	if not FightCardDataHelper.cardChangeIsMySide(arg_1_0._actEffectMO) then
+		arg_1_0:onDone(true)
 
 		return
 	end
 
 	FightController.instance:dispatchEvent(FightEvent.SetHandCardVisible, true)
 
-	slot1 = FightCardInfoMO.New()
+	local var_1_0 = FightCardInfoMO.New()
 
-	slot1:init({
+	var_1_0:init({
 		uid = "0",
-		skillId = slot0._actEffectMO.effectNum
+		skillId = arg_1_0._actEffectMO.effectNum
 	})
 
-	slot2 = FightCardModel.instance:getHandCards()
+	local var_1_1 = FightCardModel.instance:getHandCards()
 
-	table.insert(slot2, slot1)
-	FightCardModel.instance:coverCard(slot2)
+	table.insert(var_1_1, var_1_0)
+	FightCardModel.instance:coverCard(var_1_1)
 
-	slot0._revertVisible = true
+	arg_1_0._revertVisible = true
 
 	FightController.instance:dispatchEvent(FightEvent.SetHandCardVisible, true)
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_ui_add_universalcard)
-	FightController.instance:dispatchEvent(FightEvent.SpCardAdd, #slot2)
-	slot0:com_registTimer(slot0._delayAfterPerformance, 0.7 / FightModel.instance:getUISpeed())
+	FightController.instance:dispatchEvent(FightEvent.SpCardAdd, #var_1_1)
+	arg_1_0:com_registTimer(arg_1_0._delayAfterPerformance, 0.7 / FightModel.instance:getUISpeed())
 end
 
-function slot0.clearWork(slot0)
-	if slot0._revertVisible then
+function var_0_0.clearWork(arg_2_0)
+	if arg_2_0._revertVisible then
 		FightController.instance:dispatchEvent(FightEvent.SetHandCardVisible, true, true)
 	end
 end
 
-return slot0
+return var_0_0

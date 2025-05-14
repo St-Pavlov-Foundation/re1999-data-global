@@ -1,48 +1,48 @@
-module("modules.logic.room.view.manufacture.RoomTransportCritterInfo", package.seeall)
+﻿module("modules.logic.room.view.manufacture.RoomTransportCritterInfo", package.seeall)
 
-slot0 = class("RoomTransportCritterInfo", LuaCompBase)
+local var_0_0 = class("RoomTransportCritterInfo", LuaCompBase)
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
-	slot0._gohas = gohelper.findChild(slot0.go, "#go_has")
-	slot0._gocrittericon = gohelper.findChild(slot0.go, "#go_has/#go_critterIcon")
-	slot0._gonone = gohelper.findChild(slot0.go, "#go_none")
-	slot0._goselected = gohelper.findChild(slot0.go, "#go_selected")
-	slot0._btnclick = gohelper.findChildClickWithDefaultAudio(slot0.go, "#btn_click")
-	slot0._goplaceEff = gohelper.findChild(slot0.go, "#add")
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.go = arg_1_1
+	arg_1_0._gohas = gohelper.findChild(arg_1_0.go, "#go_has")
+	arg_1_0._gocrittericon = gohelper.findChild(arg_1_0.go, "#go_has/#go_critterIcon")
+	arg_1_0._gonone = gohelper.findChild(arg_1_0.go, "#go_none")
+	arg_1_0._goselected = gohelper.findChild(arg_1_0.go, "#go_selected")
+	arg_1_0._btnclick = gohelper.findChildClickWithDefaultAudio(arg_1_0.go, "#btn_click")
+	arg_1_0._goplaceEff = gohelper.findChild(arg_1_0.go, "#add")
 end
 
-function slot0.addEventListeners(slot0)
-	slot0._btnclick:AddClickListener(slot0._onClick, slot0)
-	slot0:addEventCb(ManufactureController.instance, ManufactureEvent.ChangeSelectedTransportPath, slot0._onChangeSelectedTransportPath, slot0)
-	slot0:addEventCb(CritterController.instance, CritterEvent.PlayAddCritterEff, slot0._onAddCritter, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, slot0._onCloseView, slot0)
+function var_0_0.addEventListeners(arg_2_0)
+	arg_2_0._btnclick:AddClickListener(arg_2_0._onClick, arg_2_0)
+	arg_2_0:addEventCb(ManufactureController.instance, ManufactureEvent.ChangeSelectedTransportPath, arg_2_0._onChangeSelectedTransportPath, arg_2_0)
+	arg_2_0:addEventCb(CritterController.instance, CritterEvent.PlayAddCritterEff, arg_2_0._onAddCritter, arg_2_0)
+	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_2_0._onCloseView, arg_2_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0._btnclick:RemoveClickListener()
-	slot0:removeEventCb(ManufactureController.instance, ManufactureEvent.ChangeSelectedTransportPath, slot0._onChangeSelectedTransportPath, slot0)
-	slot0:removeEventCb(CritterController.instance, CritterEvent.PlayAddCritterEff, slot0._onAddCritter, slot0)
-	slot0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, slot0._onCloseView, slot0)
+function var_0_0.removeEventListeners(arg_3_0)
+	arg_3_0._btnclick:RemoveClickListener()
+	arg_3_0:removeEventCb(ManufactureController.instance, ManufactureEvent.ChangeSelectedTransportPath, arg_3_0._onChangeSelectedTransportPath, arg_3_0)
+	arg_3_0:removeEventCb(CritterController.instance, CritterEvent.PlayAddCritterEff, arg_3_0._onAddCritter, arg_3_0)
+	arg_3_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_3_0._onCloseView, arg_3_0)
 end
 
-function slot0._onClick(slot0)
-	ManufactureController.instance:clickTransportCritterSlotItem(slot0.pathId)
+function var_0_0._onClick(arg_4_0)
+	ManufactureController.instance:clickTransportCritterSlotItem(arg_4_0.pathId)
 end
 
-function slot0._onChangeSelectedTransportPath(slot0)
-	slot0:refreshSelected()
+function var_0_0._onChangeSelectedTransportPath(arg_5_0)
+	arg_5_0:refreshSelected()
 end
 
-function slot0._onAddCritter(slot0, slot1, slot2)
-	if not slot1 or not slot2 then
+function var_0_0._onAddCritter(arg_6_0, arg_6_1, arg_6_2)
+	if not arg_6_1 or not arg_6_2 then
 		return
 	end
 
-	if slot1[slot0.pathId] then
-		for slot6, slot7 in ipairs(slot1[slot0.pathId]) do
-			if slot0.critterUid == slot7 then
-				slot0:playPlaceCritterEff()
+	if arg_6_1[arg_6_0.pathId] then
+		for iter_6_0, iter_6_1 in ipairs(arg_6_1[arg_6_0.pathId]) do
+			if arg_6_0.critterUid == iter_6_1 then
+				arg_6_0:playPlaceCritterEff()
 
 				break
 			end
@@ -50,62 +50,63 @@ function slot0._onAddCritter(slot0, slot1, slot2)
 	end
 end
 
-function slot0._onCloseView(slot0, slot1)
-	if slot1 == ViewName.RoomCritterOneKeyView and slot0._playEffWaitCloseView then
-		slot0:playPlaceCritterEff()
+function var_0_0._onCloseView(arg_7_0, arg_7_1)
+	if arg_7_1 == ViewName.RoomCritterOneKeyView and arg_7_0._playEffWaitCloseView then
+		arg_7_0:playPlaceCritterEff()
 	end
 end
 
-function slot0.setData(slot0, slot1, slot2)
-	slot0.critterUid = slot1
-	slot0.pathId = slot2
-	slot0._playEffWaitCloseView = false
+function var_0_0.setData(arg_8_0, arg_8_1, arg_8_2)
+	arg_8_0.critterUid = arg_8_1
+	arg_8_0.pathId = arg_8_2
+	arg_8_0._playEffWaitCloseView = false
 
-	slot0:setCritter()
-	slot0:refresh()
-	gohelper.setActive(slot0.go, true)
+	arg_8_0:setCritter()
+	arg_8_0:refresh()
+	gohelper.setActive(arg_8_0.go, true)
 end
 
-function slot0.setCritter(slot0)
-	if slot0.critterUid then
-		if not slot0.critterIcon then
-			slot0.critterIcon = IconMgr.instance:getCommonCritterIcon(slot0._gocrittericon)
+function var_0_0.setCritter(arg_9_0)
+	if arg_9_0.critterUid then
+		if not arg_9_0.critterIcon then
+			arg_9_0.critterIcon = IconMgr.instance:getCommonCritterIcon(arg_9_0._gocrittericon)
 		end
 
-		slot0.critterIcon:setMOValue(slot0.critterUid)
-		slot0.critterIcon:showMood()
+		arg_9_0.critterIcon:setMOValue(arg_9_0.critterUid)
+		arg_9_0.critterIcon:showMood()
 	end
 
-	gohelper.setActive(slot0._gohas, slot0.critterUid)
-	gohelper.setActive(slot0._gonone, not slot0.critterUid)
+	gohelper.setActive(arg_9_0._gohas, arg_9_0.critterUid)
+	gohelper.setActive(arg_9_0._gonone, not arg_9_0.critterUid)
 end
 
-function slot0.refresh(slot0)
-	slot0:refreshSelected()
+function var_0_0.refresh(arg_10_0)
+	arg_10_0:refreshSelected()
 end
 
-function slot0.refreshSelected(slot0)
-	slot1 = false
+function var_0_0.refreshSelected(arg_11_0)
+	local var_11_0 = false
 
-	if slot0.pathId and ManufactureModel.instance:getSelectedTransportPath() == slot0.pathId then
-		slot1 = true
+	if arg_11_0.pathId and ManufactureModel.instance:getSelectedTransportPath() == arg_11_0.pathId then
+		var_11_0 = true
 	end
 
-	gohelper.setActive(slot0._goselected, slot1)
+	gohelper.setActive(arg_11_0._goselected, var_11_0)
 end
 
-function slot0.playPlaceCritterEff(slot0)
+function var_0_0.playPlaceCritterEff(arg_12_0)
 	if ViewMgr.instance:isOpen(ViewName.RoomCritterOneKeyView) then
-		slot0._playEffWaitCloseView = true
+		arg_12_0._playEffWaitCloseView = true
 	else
-		gohelper.setActive(slot0._goplaceEff, false)
-		gohelper.setActive(slot0._goplaceEff, true)
+		gohelper.setActive(arg_12_0._goplaceEff, false)
+		gohelper.setActive(arg_12_0._goplaceEff, true)
 
-		slot0._playEffWaitCloseView = false
+		arg_12_0._playEffWaitCloseView = false
 	end
 end
 
-function slot0.onDestroy(slot0)
+function var_0_0.onDestroy(arg_13_0)
+	return
 end
 
-return slot0
+return var_0_0

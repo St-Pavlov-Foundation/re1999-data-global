@@ -1,52 +1,58 @@
-module("modules.logic.versionactivity2_1.aergusi.view.AergusiDialogTaskItem", package.seeall)
+﻿module("modules.logic.versionactivity2_1.aergusi.view.AergusiDialogTaskItem", package.seeall)
 
-slot0 = class("AergusiDialogTaskItem", LuaCompBase)
+local var_0_0 = class("AergusiDialogTaskItem", LuaCompBase)
 
-function slot0.init(slot0, slot1, slot2)
-	slot0.go = slot1
-	slot0._index = slot2
-	slot0._groupId = 0
-	slot0._txttarget2desc = gohelper.findChildText(slot1, "#txt_target2desc")
-	slot0._goTargetFinished = gohelper.findChild(slot1, "#go_TargetFinished")
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0.go = arg_1_1
+	arg_1_0._index = arg_1_2
+	arg_1_0._groupId = 0
+	arg_1_0._txttarget2desc = gohelper.findChildText(arg_1_1, "#txt_target2desc")
+	arg_1_0._goTargetFinished = gohelper.findChild(arg_1_1, "#go_TargetFinished")
 
-	gohelper.setSibling(slot1, 2)
-	slot0:_addEvents()
+	gohelper.setSibling(arg_1_1, 2)
+	arg_1_0:_addEvents()
 end
 
-function slot0.hide(slot0)
-	gohelper.setActive(slot0.go, false)
+function var_0_0.hide(arg_2_0)
+	gohelper.setActive(arg_2_0.go, false)
 end
 
-function slot0.setCo(slot0, slot1)
-	slot0._groupId = slot1
+function var_0_0.setCo(arg_3_0, arg_3_1)
+	arg_3_0._groupId = arg_3_1
 end
 
-function slot0.refreshItem(slot0)
-	gohelper.setActive(slot0.go, false)
+function var_0_0.refreshItem(arg_4_0)
+	gohelper.setActive(arg_4_0.go, false)
 
-	if LuaUtil.getStrLen(AergusiConfig.instance:getEvidenceConfig(slot0._groupId).conditionStr) == 0 then
+	local var_4_0 = AergusiConfig.instance:getEvidenceConfig(arg_4_0._groupId)
+
+	if LuaUtil.getStrLen(var_4_0.conditionStr) == 0 then
 		return
 	end
 
-	gohelper.setActive(slot0.go, true)
+	gohelper.setActive(arg_4_0.go, true)
 
-	if AergusiDialogModel.instance:getCurDialogGroup() ~= slot0._groupId then
-		slot0._txttarget2desc.text = string.format("<s>%s</s>", slot1.conditionStr)
+	local var_4_1 = AergusiDialogModel.instance:getCurDialogGroup()
+
+	if var_4_1 ~= arg_4_0._groupId then
+		arg_4_0._txttarget2desc.text = string.format("<s>%s</s>", var_4_0.conditionStr)
 	else
-		slot0._txttarget2desc.text = slot1.conditionStr
+		arg_4_0._txttarget2desc.text = var_4_0.conditionStr
 	end
 
-	gohelper.setActive(slot0._goTargetFinished, slot2 ~= slot0._groupId)
+	gohelper.setActive(arg_4_0._goTargetFinished, var_4_1 ~= arg_4_0._groupId)
 end
 
-function slot0._addEvents(slot0)
+function var_0_0._addEvents(arg_5_0)
+	return
 end
 
-function slot0._removeEvents(slot0)
+function var_0_0._removeEvents(arg_6_0)
+	return
 end
 
-function slot0.destroy(slot0)
-	slot0:_removeEvents()
+function var_0_0.destroy(arg_7_0)
+	arg_7_0:_removeEvents()
 end
 
-return slot0
+return var_0_0

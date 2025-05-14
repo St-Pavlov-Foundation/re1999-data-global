@@ -1,161 +1,175 @@
-module("modules.logic.activity.view.show.ActivityDreamShowView", package.seeall)
+﻿module("modules.logic.activity.view.show.ActivityDreamShowView", package.seeall)
 
-slot0 = class("ActivityDreamShowView", BaseView)
+local var_0_0 = class("ActivityDreamShowView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "bg/#simage_bg")
-	slot0._simageicon = gohelper.findChildSingleImage(slot0.viewGO, "bg/#simage_icon")
-	slot0._txttime = gohelper.findChildText(slot0.viewGO, "title/time/#txt_time")
-	slot0._txtdesc = gohelper.findChildText(slot0.viewGO, "title/#txt_desc")
-	slot0._txttask = gohelper.findChildText(slot0.viewGO, "reward/rewardItem/#txt_task")
-	slot0._gorewardTask = gohelper.findChild(slot0.viewGO, "reward/rewardItem/rewarditem")
-	slot0._simagerewardicon = gohelper.findChildSingleImage(slot0.viewGO, "reward/rewardItem/rewarditem/#simage_rewardicon")
-	slot0._gocanget = gohelper.findChild(slot0.viewGO, "reward/rewardItem/rewarditem/#go_canget")
-	slot0._btnrewardicon = gohelper.findChildButtonWithAudio(slot0.viewGO, "reward/rewardItem/rewarditem/#btn_rewardIcon")
-	slot0._gofinished = gohelper.findChild(slot0.viewGO, "reward/rewardItem/rewarditem/#go_finished")
-	slot0._scrollreward = gohelper.findChildScrollRect(slot0.viewGO, "reward/rewardPreview/#scroll_reward")
-	slot0._gorewardContent = gohelper.findChild(slot0.viewGO, "reward/rewardPreview/#scroll_reward/Viewport/#go_rewardContent")
-	slot0._gorewarditem = gohelper.findChild(slot0.viewGO, "reward/rewardPreview/#scroll_reward/Viewport/#go_rewardContent/#go_rewarditem")
-	slot0._btnjump = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_jump")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_bg")
+	arg_1_0._simageicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_icon")
+	arg_1_0._txttime = gohelper.findChildText(arg_1_0.viewGO, "title/time/#txt_time")
+	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "title/#txt_desc")
+	arg_1_0._txttask = gohelper.findChildText(arg_1_0.viewGO, "reward/rewardItem/#txt_task")
+	arg_1_0._gorewardTask = gohelper.findChild(arg_1_0.viewGO, "reward/rewardItem/rewarditem")
+	arg_1_0._simagerewardicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "reward/rewardItem/rewarditem/#simage_rewardicon")
+	arg_1_0._gocanget = gohelper.findChild(arg_1_0.viewGO, "reward/rewardItem/rewarditem/#go_canget")
+	arg_1_0._btnrewardicon = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "reward/rewardItem/rewarditem/#btn_rewardIcon")
+	arg_1_0._gofinished = gohelper.findChild(arg_1_0.viewGO, "reward/rewardItem/rewarditem/#go_finished")
+	arg_1_0._scrollreward = gohelper.findChildScrollRect(arg_1_0.viewGO, "reward/rewardPreview/#scroll_reward")
+	arg_1_0._gorewardContent = gohelper.findChild(arg_1_0.viewGO, "reward/rewardPreview/#scroll_reward/Viewport/#go_rewardContent")
+	arg_1_0._gorewarditem = gohelper.findChild(arg_1_0.viewGO, "reward/rewardPreview/#scroll_reward/Viewport/#go_rewardContent/#go_rewarditem")
+	arg_1_0._btnjump = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_jump")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnrewardicon:AddClickListener(slot0._btncangetOnClick, slot0)
-	slot0._btnjump:AddClickListener(slot0._btnjumpOnClick, slot0)
-	slot0:addEventCb(TaskController.instance, TaskEvent.SetTaskList, slot0.refreshTask, slot0)
-	slot0:addEventCb(TaskController.instance, TaskEvent.OnFinishTask, slot0.refreshTask, slot0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, slot0.onViewOpenedFinish, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnrewardicon:AddClickListener(arg_2_0._btncangetOnClick, arg_2_0)
+	arg_2_0._btnjump:AddClickListener(arg_2_0._btnjumpOnClick, arg_2_0)
+	arg_2_0:addEventCb(TaskController.instance, TaskEvent.SetTaskList, arg_2_0.refreshTask, arg_2_0)
+	arg_2_0:addEventCb(TaskController.instance, TaskEvent.OnFinishTask, arg_2_0.refreshTask, arg_2_0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, arg_2_0.onViewOpenedFinish, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnrewardicon:RemoveClickListener()
-	slot0._btnjump:RemoveClickListener()
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, slot0.onViewOpenedFinish, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnrewardicon:RemoveClickListener()
+	arg_3_0._btnjump:RemoveClickListener()
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, arg_3_0.onViewOpenedFinish, arg_3_0)
 end
 
-slot0.ShowCount = 1
-slot0.taskConfigId = 160002
-slot0.unlimitDay = 42
+var_0_0.ShowCount = 1
+var_0_0.taskConfigId = 160002
+var_0_0.unlimitDay = 42
 
-function slot0._btncangetOnClick(slot0)
-	if slot0._taskMo.hasFinished then
-		TaskRpc.instance:sendFinishTaskRequest(slot0._taskMo.id)
+function var_0_0._btncangetOnClick(arg_4_0)
+	if arg_4_0._taskMo.hasFinished then
+		TaskRpc.instance:sendFinishTaskRequest(arg_4_0._taskMo.id)
 	else
-		MaterialTipController.instance:showMaterialInfo(tonumber(slot0._rewardCo[1]), tonumber(slot0._rewardCo[2]))
+		MaterialTipController.instance:showMaterialInfo(tonumber(arg_4_0._rewardCo[1]), tonumber(arg_4_0._rewardCo[2]))
 	end
 end
 
-function slot0._btnjumpOnClick(slot0)
-	if slot0._config.jumpId ~= 0 then
-		if JumpController.instance:isJumpOpen(slot1) and JumpController.instance:canJumpNew(JumpConfig.instance:getJumpConfig(slot1).param) then
-			GameFacade.jump(slot1, nil, slot0)
+function var_0_0._btnjumpOnClick(arg_5_0)
+	local var_5_0 = arg_5_0._config.jumpId
+
+	if var_5_0 ~= 0 then
+		local var_5_1 = JumpConfig.instance:getJumpConfig(var_5_0)
+
+		if JumpController.instance:isJumpOpen(var_5_0) and JumpController.instance:canJumpNew(var_5_1.param) then
+			GameFacade.jump(var_5_0, nil, arg_5_0)
 		else
 			GameFacade.showToast(ToastEnum.DreamShow)
 		end
 	end
 end
 
-function slot0._editableInitView(slot0)
-	slot0._simagebg:LoadImage(ResUrl.getActivityBg("full/img_dream_bg"))
-	slot0._simageicon:LoadImage(ResUrl.getActivityBg("show/img_dream_lihui"))
+function var_0_0._editableInitView(arg_6_0)
+	arg_6_0._simagebg:LoadImage(ResUrl.getActivityBg("full/img_dream_bg"))
+	arg_6_0._simageicon:LoadImage(ResUrl.getActivityBg("show/img_dream_lihui"))
 
-	slot0._rewardItems = slot0:getUserDataTb_()
+	arg_6_0._rewardItems = arg_6_0:getUserDataTb_()
 
-	gohelper.setActive(slot0._gorewarditem, false)
-	gohelper.setActive(slot0._gorewardTask, false)
+	gohelper.setActive(arg_6_0._gorewarditem, false)
+	gohelper.setActive(arg_6_0._gorewardTask, false)
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_7_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	gohelper.addChild(slot0.viewParam.parent, slot0.viewGO)
+function var_0_0.onOpen(arg_8_0)
+	local var_8_0 = arg_8_0.viewParam.parent
 
-	slot0._actId = slot0.viewParam.actId
+	gohelper.addChild(var_8_0, arg_8_0.viewGO)
+
+	arg_8_0._actId = arg_8_0.viewParam.actId
 
 	TaskRpc.instance:sendGetTaskInfoRequest({
 		TaskEnum.TaskType.ActivityShow
 	})
-	slot0:refreshUI()
+	arg_8_0:refreshUI()
 end
 
-function slot0.refreshUI(slot0)
-	slot0._config = ActivityConfig.instance:getActivityShowTaskList(slot0._actId, 1)
-	slot0._txtdesc.text = slot0._config.actDesc
-	slot1, slot2 = ActivityModel.instance:getRemainTime(slot0._actId)
-	slot0._txttime.text = uv0.unlimitDay < slot1 and luaLang("activityshow_unlimittime") or string.format(luaLang("activityshow_remaintime"), slot1, slot2)
+function var_0_0.refreshUI(arg_9_0)
+	arg_9_0._config = ActivityConfig.instance:getActivityShowTaskList(arg_9_0._actId, 1)
+	arg_9_0._txtdesc.text = arg_9_0._config.actDesc
 
-	for slot7 = 1, #string.split(slot0._config.showBonus, "|") do
-		if not slot0._rewardItems[slot7] then
-			slot8 = slot0:getUserDataTb_()
-			slot8.go = gohelper.clone(slot0._gorewarditem, slot0._gorewardContent, "rewarditem" .. slot7)
-			slot8.item = IconMgr.instance:getCommonPropItemIcon(slot8.go)
+	local var_9_0, var_9_1 = ActivityModel.instance:getRemainTime(arg_9_0._actId)
 
-			table.insert(slot0._rewardItems, slot8)
+	arg_9_0._txttime.text = var_9_0 > var_0_0.unlimitDay and luaLang("activityshow_unlimittime") or string.format(luaLang("activityshow_remaintime"), var_9_0, var_9_1)
+
+	local var_9_2 = string.split(arg_9_0._config.showBonus, "|")
+
+	for iter_9_0 = 1, #var_9_2 do
+		if not arg_9_0._rewardItems[iter_9_0] then
+			local var_9_3 = arg_9_0:getUserDataTb_()
+
+			var_9_3.go = gohelper.clone(arg_9_0._gorewarditem, arg_9_0._gorewardContent, "rewarditem" .. iter_9_0)
+			var_9_3.item = IconMgr.instance:getCommonPropItemIcon(var_9_3.go)
+
+			table.insert(arg_9_0._rewardItems, var_9_3)
 		end
 
-		gohelper.setActive(slot0._rewardItems[slot7].go, true)
+		gohelper.setActive(arg_9_0._rewardItems[iter_9_0].go, true)
 
-		slot9 = string.splitToNumber(slot3[slot7], "#")
+		local var_9_4 = string.splitToNumber(var_9_2[iter_9_0], "#")
 
-		slot0._rewardItems[slot7].item:setMOValue(slot9[1], slot9[2], slot9[3])
-		slot0._rewardItems[slot7].item:isShowCount(slot9[4] == uv0.ShowCount)
-		slot0._rewardItems[slot7].item:setCountFontSize(56)
-		slot0._rewardItems[slot7].item:setHideLvAndBreakFlag(true)
-		slot0._rewardItems[slot7].item:hideEquipLvAndBreak(true)
+		arg_9_0._rewardItems[iter_9_0].item:setMOValue(var_9_4[1], var_9_4[2], var_9_4[3])
+		arg_9_0._rewardItems[iter_9_0].item:isShowCount(var_9_4[4] == var_0_0.ShowCount)
+		arg_9_0._rewardItems[iter_9_0].item:setCountFontSize(56)
+		arg_9_0._rewardItems[iter_9_0].item:setHideLvAndBreakFlag(true)
+		arg_9_0._rewardItems[iter_9_0].item:hideEquipLvAndBreak(true)
 	end
 
-	for slot7 = #slot3 + 1, #slot0._rewardItems do
-		gohelper.setActive(slot0._rewardItems[slot7].go, false)
+	for iter_9_1 = #var_9_2 + 1, #arg_9_0._rewardItems do
+		gohelper.setActive(arg_9_0._rewardItems[iter_9_1].go, false)
 	end
 
-	slot0:refreshTask()
+	arg_9_0:refreshTask()
 end
 
-function slot0.refreshTask(slot0)
-	gohelper.setActive(slot0._gorewardTask, true)
+function var_0_0.refreshTask(arg_10_0)
+	gohelper.setActive(arg_10_0._gorewardTask, true)
 
-	slot1 = TaskConfig.instance:getTaskActivityShowConfig(uv0.taskConfigId)
-	slot0._txttask.text = slot1.desc
-	slot0._rewardCo = string.splitToNumber(slot1.bonus, "#")
-	slot2, slot3 = ItemModel.instance:getItemConfigAndIcon(slot0._rewardCo[1], slot0._rewardCo[2], true)
+	local var_10_0 = TaskConfig.instance:getTaskActivityShowConfig(var_0_0.taskConfigId)
 
-	slot0._simagerewardicon:LoadImage(slot3)
+	arg_10_0._txttask.text = var_10_0.desc
+	arg_10_0._rewardCo = string.splitToNumber(var_10_0.bonus, "#")
 
-	slot0._taskMo = TaskModel.instance:getTaskMoList(TaskEnum.TaskType.ActivityShow, slot1.activityId)[1]
+	local var_10_1, var_10_2 = ItemModel.instance:getItemConfigAndIcon(arg_10_0._rewardCo[1], arg_10_0._rewardCo[2], true)
 
-	if slot0._taskMo.config.maxFinishCount <= slot0._taskMo.finishCount then
-		gohelper.setActive(slot0._gofinished, true)
-		gohelper.setActive(slot0._gocanget, false)
-		SLFramework.UGUI.GuiHelper.SetColor(slot0._simagerewardicon.gameObject:GetComponent(gohelper.Type_Image), "#666666")
-	elseif slot0._taskMo.hasFinished then
-		gohelper.setActive(slot0._gofinished, false)
-		gohelper.setActive(slot0._gocanget, true)
-		SLFramework.UGUI.GuiHelper.SetColor(slot0._simagerewardicon.gameObject:GetComponent(gohelper.Type_Image), "#FFFFFF")
+	arg_10_0._simagerewardicon:LoadImage(var_10_2)
+
+	arg_10_0._taskMo = TaskModel.instance:getTaskMoList(TaskEnum.TaskType.ActivityShow, var_10_0.activityId)[1]
+
+	if arg_10_0._taskMo.finishCount >= arg_10_0._taskMo.config.maxFinishCount then
+		gohelper.setActive(arg_10_0._gofinished, true)
+		gohelper.setActive(arg_10_0._gocanget, false)
+		SLFramework.UGUI.GuiHelper.SetColor(arg_10_0._simagerewardicon.gameObject:GetComponent(gohelper.Type_Image), "#666666")
+	elseif arg_10_0._taskMo.hasFinished then
+		gohelper.setActive(arg_10_0._gofinished, false)
+		gohelper.setActive(arg_10_0._gocanget, true)
+		SLFramework.UGUI.GuiHelper.SetColor(arg_10_0._simagerewardicon.gameObject:GetComponent(gohelper.Type_Image), "#FFFFFF")
 	else
-		gohelper.setActive(slot0._gofinished, false)
-		gohelper.setActive(slot0._gocanget, false)
-		SLFramework.UGUI.GuiHelper.SetColor(slot0._simagerewardicon.gameObject:GetComponent(gohelper.Type_Image), "#FFFFFF")
+		gohelper.setActive(arg_10_0._gofinished, false)
+		gohelper.setActive(arg_10_0._gocanget, false)
+		SLFramework.UGUI.GuiHelper.SetColor(arg_10_0._simagerewardicon.gameObject:GetComponent(gohelper.Type_Image), "#FFFFFF")
 	end
 end
 
-function slot0.onViewOpenedFinish(slot0, slot1)
-	if slot1 == ViewName.DungeonView then
+function var_0_0.onViewOpenedFinish(arg_11_0, arg_11_1)
+	if arg_11_1 == ViewName.DungeonView then
 		ViewMgr.instance:closeView(ViewName.ActivityBeginnerView, true)
 	end
 end
 
-function slot0.onClose(slot0)
-	TaskDispatcher.cancelTask(slot0._closeAllView, slot0)
+function var_0_0.onClose(arg_12_0)
+	TaskDispatcher.cancelTask(arg_12_0._closeAllView, arg_12_0)
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simagebg:UnLoadImage()
-	slot0._simageicon:UnLoadImage()
+function var_0_0.onDestroyView(arg_13_0)
+	arg_13_0._simagebg:UnLoadImage()
+	arg_13_0._simageicon:UnLoadImage()
 end
 
-return slot0
+return var_0_0

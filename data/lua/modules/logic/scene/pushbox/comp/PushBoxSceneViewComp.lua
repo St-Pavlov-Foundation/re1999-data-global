@@ -1,13 +1,13 @@
-module("modules.logic.scene.pushbox.comp.PushBoxSceneViewComp", package.seeall)
+﻿module("modules.logic.scene.pushbox.comp.PushBoxSceneViewComp", package.seeall)
 
-slot0 = class("PushBoxSceneViewComp", BaseSceneComp)
+local var_0_0 = class("PushBoxSceneViewComp", BaseSceneComp)
 
-function slot0.onScenePrepared(slot0, slot1, slot2)
+function var_0_0.onScenePrepared(arg_1_0, arg_1_1, arg_1_2)
 	ViewMgr.instance:openView(ViewName.VersionActivityPushBoxLevelView)
 end
 
-function slot0.onSceneClose(slot0, slot1, slot2)
+function var_0_0.onSceneClose(arg_2_0, arg_2_1, arg_2_2)
 	ViewMgr.instance:closeView(ViewName.PushBoxView)
 end
 
-return slot0
+return var_0_0

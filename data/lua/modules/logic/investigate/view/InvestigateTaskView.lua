@@ -1,65 +1,72 @@
-module("modules.logic.investigate.view.InvestigateTaskView", package.seeall)
+﻿module("modules.logic.investigate.view.InvestigateTaskView", package.seeall)
 
-slot0 = class("InvestigateTaskView", BaseView)
+local var_0_0 = class("InvestigateTaskView", BaseView)
 
-function slot0.onInitView(slot0)
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+function var_0_0.onInitView(arg_1_0)
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_4_0)
+	return
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_5_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0:addEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, slot0.refreshRight, slot0)
-	slot0:addEventCb(TaskController.instance, TaskEvent.OnFinishTask, slot0.refreshRight, slot0)
-	slot0:addEventCb(TaskController.instance, TaskEvent.UpdateTaskList, slot0.refreshRight, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, slot0._onOpenViewFinish, slot0)
+function var_0_0.onOpen(arg_6_0)
+	arg_6_0:addEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, arg_6_0.refreshRight, arg_6_0)
+	arg_6_0:addEventCb(TaskController.instance, TaskEvent.OnFinishTask, arg_6_0.refreshRight, arg_6_0)
+	arg_6_0:addEventCb(TaskController.instance, TaskEvent.UpdateTaskList, arg_6_0.refreshRight, arg_6_0)
+	arg_6_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, arg_6_0._onOpenViewFinish, arg_6_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.Act1_6DungeonEnterTaskView)
-	slot0:refreshLeft()
+	arg_6_0:refreshLeft()
 	InvestigateTaskListModel.instance:clear()
 	TaskRpc.instance:sendGetTaskInfoRequest({
 		TaskEnum.TaskType.Investigate
-	}, slot0._oneClaimReward, slot0)
+	}, arg_6_0._oneClaimReward, arg_6_0)
 end
 
-function slot0._oneClaimReward(slot0)
-	slot0:refreshRight()
+function var_0_0._oneClaimReward(arg_7_0)
+	arg_7_0:refreshRight()
 end
 
-function slot0.refreshLeft(slot0)
-	slot0:refreshRemainTime()
+function var_0_0.refreshLeft(arg_8_0)
+	arg_8_0:refreshRemainTime()
 end
 
-function slot0.refreshRemainTime(slot0)
+function var_0_0.refreshRemainTime(arg_9_0)
+	return
 end
 
-function slot0.refreshRight(slot0)
+function var_0_0.refreshRight(arg_10_0)
 	InvestigateTaskListModel.instance:initTask()
 	InvestigateTaskListModel.instance:sortTaskMoList()
 	InvestigateTaskListModel.instance:refreshList()
 end
 
-function slot0._onOpenViewFinish(slot0, slot1)
-	if slot1 == ViewName.InvestigateOpinionTabView then
-		slot0:closeThis()
+function var_0_0._onOpenViewFinish(arg_11_0, arg_11_1)
+	if arg_11_1 == ViewName.InvestigateOpinionTabView then
+		arg_11_0:closeThis()
 	end
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_12_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_13_0)
+	return
 end
 
-return slot0
+return var_0_0

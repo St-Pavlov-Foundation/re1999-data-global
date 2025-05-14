@@ -1,20 +1,20 @@
-module("modules.logic.voyage.config.Activity1001Config", package.seeall)
+﻿module("modules.logic.voyage.config.Activity1001Config", package.seeall)
 
-slot0 = class("Activity1001Config", BaseConfig)
+local var_0_0 = class("Activity1001Config", BaseConfig)
 
-function slot0.ctor(slot0, slot1)
-	slot0.__activityId = slot1
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0.__activityId = arg_1_1
 end
 
-function slot0.checkActivityId(slot0, slot1)
-	return slot0.__activityId == slot1
+function var_0_0.checkActivityId(arg_2_0, arg_2_1)
+	return arg_2_0.__activityId == arg_2_1
 end
 
-function slot0.getActivityId(slot0)
-	return slot0.__activityId
+function var_0_0.getActivityId(arg_3_0)
+	return arg_3_0.__activityId
 end
 
-function slot0.reqConfigNames(slot0)
+function var_0_0.reqConfigNames(arg_4_0)
 	return {
 		"activity1001",
 		"activity1001_ext",
@@ -22,68 +22,76 @@ function slot0.reqConfigNames(slot0)
 	}
 end
 
-function slot1(slot0, slot1, slot2)
-	if not slot2 then
-		return lua_activity1001_ext.configDict[slot0][slot1]
+local function var_0_1(arg_5_0, arg_5_1, arg_5_2)
+	if not arg_5_2 then
+		return lua_activity1001_ext.configDict[arg_5_0][arg_5_1]
 	end
 
-	return lua_activity1001_ext.configDict[slot0] and slot3[slot1] or nil
+	local var_5_0 = lua_activity1001_ext.configDict[arg_5_0]
+
+	return var_5_0 and var_5_0[arg_5_1] or nil
 end
 
-function slot2(slot0, slot1)
-	return lua_activity1001.configDict[slot0][slot1]
+local function var_0_2(arg_6_0, arg_6_1)
+	return lua_activity1001.configDict[arg_6_0][arg_6_1]
 end
 
-function slot0.getCO(slot0, slot1)
-	return uv0(slot0.__activityId, slot1, true) or uv1(slot0.__activityId, slot1)
+function var_0_0.getCO(arg_7_0, arg_7_1)
+	return var_0_1(arg_7_0.__activityId, arg_7_1, true) or var_0_2(arg_7_0.__activityId, arg_7_1)
 end
 
-function slot0.getRewardStr(slot0, slot1)
-	if slot0:getCO(slot1).mailId then
-		return lua_mail.configDict[slot2.mailId].attachment
+function var_0_0.getRewardStr(arg_8_0, arg_8_1)
+	local var_8_0 = arg_8_0:getCO(arg_8_1)
+
+	if var_8_0.mailId then
+		return lua_mail.configDict[var_8_0.mailId].attachment
 	else
-		return slot2.rewards
+		return var_8_0.rewards
 	end
 end
 
-function slot0.getTitle(slot0)
-	for slot5, slot6 in pairs(lua_activity1001_ext.configDict[slot0.__activityId]) do
-		if not string.nilorempty(slot6.title) then
-			return slot6.title
+function var_0_0.getTitle(arg_9_0)
+	local var_9_0 = lua_activity1001_ext.configDict[arg_9_0.__activityId]
+
+	for iter_9_0, iter_9_1 in pairs(var_9_0) do
+		if not string.nilorempty(iter_9_1.title) then
+			return iter_9_1.title
 		end
 	end
 
 	return ""
 end
 
-function slot0._createOrGetShowTaskList(slot0)
-	if slot0.__taskList then
-		return slot0.__taskList
+function var_0_0._createOrGetShowTaskList(arg_10_0)
+	if arg_10_0.__taskList then
+		return arg_10_0.__taskList
 	end
 
-	for slot5, slot6 in ipairs(lua_activity1001.configList) do
-		if slot6.activityId == slot0.__activityId then
-			table.insert({}, slot6)
+	local var_10_0 = {}
+
+	for iter_10_0, iter_10_1 in ipairs(lua_activity1001.configList) do
+		if iter_10_1.activityId == arg_10_0.__activityId then
+			table.insert(var_10_0, iter_10_1)
 		end
 	end
 
-	for slot5, slot6 in ipairs(lua_activity1001_ext.configList) do
-		if slot6.activityId == slot0.__activityId then
-			table.insert(slot1, slot6)
+	for iter_10_2, iter_10_3 in ipairs(lua_activity1001_ext.configList) do
+		if iter_10_3.activityId == arg_10_0.__activityId then
+			table.insert(var_10_0, iter_10_3)
 		end
 	end
 
-	table.sort(slot1, function (slot0, slot1)
-		if slot0.sort ~= slot1.sort then
-			return slot0.sort < slot1.sort
+	table.sort(var_10_0, function(arg_11_0, arg_11_1)
+		if arg_11_0.sort ~= arg_11_1.sort then
+			return arg_11_0.sort < arg_11_1.sort
 		end
 
-		return slot0.id < slot1.id
+		return arg_11_0.id < arg_11_1.id
 	end)
 
-	slot0.__taskList = slot1
+	arg_10_0.__taskList = var_10_0
 
-	return slot1
+	return var_10_0
 end
 
-return slot0
+return var_0_0

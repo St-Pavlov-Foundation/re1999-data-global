@@ -1,23 +1,24 @@
-module("modules.logic.versionactivity2_1.lanshoupa.view.LanShouPaMapViewAudio", package.seeall)
+﻿module("modules.logic.versionactivity2_1.lanshoupa.view.LanShouPaMapViewAudio", package.seeall)
 
-slot0 = class("LanShouPaMapViewAudio", BaseView)
+local var_0_0 = class("LanShouPaMapViewAudio", BaseView)
 
-function slot0.onInitView(slot0)
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+function var_0_0.onInitView(arg_1_0)
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_2_0)
+	return
 end
 
-function slot0._onCloseGameView(slot0, slot1)
-	if (slot1 == ViewName.LanShouPaGameView or slot1 == ViewName.StoryFrontView) and slot0:_isCanPlayAmbient() then
-		slot0:playAmbientAudio()
+function var_0_0._onCloseGameView(arg_3_0, arg_3_1)
+	if (arg_3_1 == ViewName.LanShouPaGameView or arg_3_1 == ViewName.StoryFrontView) and arg_3_0:_isCanPlayAmbient() then
+		arg_3_0:playAmbientAudio()
 	end
 end
 
-function slot0._isCanPlayAmbient(slot0)
+function var_0_0._isCanPlayAmbient(arg_4_0)
 	if ViewMgr.instance:isOpen(ViewName.LanShouPaGameView) or ViewMgr.instance:isOpen(ViewName.StoryFrontView) then
 		return false
 	end
@@ -25,30 +26,32 @@ function slot0._isCanPlayAmbient(slot0)
 	return true
 end
 
-function slot0._onOpenGameView(slot0, slot1)
-	if slot1 ~= ViewName.LanShouPaGameView and slot1 == ViewName.StoryFrontView then
-		-- Nothing
+function var_0_0._onOpenGameView(arg_5_0, arg_5_1)
+	if arg_5_1 ~= ViewName.LanShouPaGameView and arg_5_1 == ViewName.StoryFrontView then
+		-- block empty
 	end
 end
 
-function slot0.onOpen(slot0)
-	slot0:playAmbientAudio()
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, slot0._onCloseGameView, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, slot0._onOpenGameView, slot0)
+function var_0_0.onOpen(arg_6_0)
+	arg_6_0:playAmbientAudio()
+	arg_6_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_6_0._onCloseGameView, arg_6_0)
+	arg_6_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_6_0._onOpenGameView, arg_6_0)
 end
 
-function slot0.playAmbientAudio(slot0)
+function var_0_0.playAmbientAudio(arg_7_0)
+	return
 end
 
-function slot0.closeAmbientSound(slot0)
-	if slot0._ambientAudioId then
-		AudioMgr.instance:stopPlayingID(slot0._ambientAudioId)
+function var_0_0.closeAmbientSound(arg_8_0)
+	if arg_8_0._ambientAudioId then
+		AudioMgr.instance:stopPlayingID(arg_8_0._ambientAudioId)
 
-		slot0._ambientAudioId = nil
+		arg_8_0._ambientAudioId = nil
 	end
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_9_0)
+	return
 end
 
-return slot0
+return var_0_0

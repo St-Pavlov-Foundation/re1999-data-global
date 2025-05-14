@@ -1,136 +1,149 @@
-module("modules.logic.rouge.view.RougeCollectionDragItem", package.seeall)
+﻿module("modules.logic.rouge.view.RougeCollectionDragItem", package.seeall)
 
-slot0 = class("RougeCollectionDragItem", RougeCollectionSizeBagItem)
+local var_0_0 = class("RougeCollectionDragItem", RougeCollectionSizeBagItem)
 
-function slot0.onInit(slot0, slot1, slot2)
-	slot0:createCollectionGO(slot1, slot2)
-	uv0.super.onInit(slot0, slot0.viewGO)
+function var_0_0.onInit(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0:createCollectionGO(arg_1_1, arg_1_2)
+	var_0_0.super.onInit(arg_1_0, arg_1_0.viewGO)
 
-	slot0._gocenter = gohelper.findChild(slot0.viewGO, "go_center")
-	slot0._simageiconeffect = gohelper.findChildSingleImage(slot0.viewGO, "go_center/simage_icon/icon_effect")
-	slot0._godisconnect = gohelper.findChild(slot0.viewGO, "go_center/go_disconnect")
-	slot0._animator = gohelper.onceAddComponent(slot0.viewGO, gohelper.Type_Animator)
-	slot0._animator.enabled = false
-	slot0._activeEffectMap = {}
+	arg_1_0._gocenter = gohelper.findChild(arg_1_0.viewGO, "go_center")
+	arg_1_0._simageiconeffect = gohelper.findChildSingleImage(arg_1_0.viewGO, "go_center/simage_icon/icon_effect")
+	arg_1_0._godisconnect = gohelper.findChild(arg_1_0.viewGO, "go_center/go_disconnect")
+	arg_1_0._animator = gohelper.onceAddComponent(arg_1_0.viewGO, gohelper.Type_Animator)
+	arg_1_0._animator.enabled = false
+	arg_1_0._activeEffectMap = {}
 
-	slot0:setAnimatorEnabled(false)
-	slot0:setShowTypeFlagVisible(false)
-	slot0:setPivot(0, 1)
-	slot0:addEventCb(RougeCollectionChessController.instance, RougeEvent.UpdateActiveEffect, slot0.updateActiveEffectTag, slot0)
+	arg_1_0:setAnimatorEnabled(false)
+	arg_1_0:setShowTypeFlagVisible(false)
+	arg_1_0:setPivot(0, 1)
+	arg_1_0:addEventCb(RougeCollectionChessController.instance, RougeEvent.UpdateActiveEffect, arg_1_0.updateActiveEffectTag, arg_1_0)
 end
 
-function slot0.createCollectionGO(slot0, slot1, slot2)
-	if slot2._gochessitem then
-		slot0.viewGO = gohelper.cloneInPlace(slot3, slot1)
-		slot0.viewGO.transform.anchorMin = Vector2.New(0.5, 0.5)
-		slot0.viewGO.transform.anchorMax = Vector2.New(0.5, 0.5)
-		slot0.viewGO.transform.pivot = Vector2.New(0.5, 0.5)
+function var_0_0.createCollectionGO(arg_2_0, arg_2_1, arg_2_2)
+	local var_2_0 = arg_2_2._gochessitem
 
-		gohelper.setActive(slot0.viewGO, true)
+	if var_2_0 then
+		arg_2_0.viewGO = gohelper.cloneInPlace(var_2_0, arg_2_1)
+		arg_2_0.viewGO.transform.anchorMin = Vector2.New(0.5, 0.5)
+		arg_2_0.viewGO.transform.anchorMax = Vector2.New(0.5, 0.5)
+		arg_2_0.viewGO.transform.pivot = Vector2.New(0.5, 0.5)
+
+		gohelper.setActive(arg_2_0.viewGO, true)
 	end
 end
 
-function slot0.getCollectionTransform(slot0)
-	return slot0.viewGO and slot0.viewGO.transform
+function var_0_0.getCollectionTransform(arg_3_0)
+	return arg_3_0.viewGO and arg_3_0.viewGO.transform
 end
 
-function slot0.setPivot(slot0, slot1, slot2)
-	slot0.viewGO.transform.pivot = Vector2(slot1, slot2)
+function var_0_0.setPivot(arg_4_0, arg_4_1, arg_4_2)
+	arg_4_0.viewGO.transform.pivot = Vector2(arg_4_1, arg_4_2)
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	uv0.super.onUpdateMO(slot0, slot1)
-	slot0:updateCollectionPosition()
-	slot0._simageiconeffect:LoadImage(RougeCollectionHelper.getCollectionIconUrl(slot0._mo.cfgId))
-	slot0:_selectCollection()
+function var_0_0.onUpdateMO(arg_5_0, arg_5_1)
+	var_0_0.super.onUpdateMO(arg_5_0, arg_5_1)
+	arg_5_0:updateCollectionPosition()
+
+	local var_5_0 = RougeCollectionHelper.getCollectionIconUrl(arg_5_0._mo.cfgId)
+
+	arg_5_0._simageiconeffect:LoadImage(var_5_0)
+	arg_5_0:_selectCollection()
 end
 
-function slot0.onUpdateRotateAngle(slot0)
-	uv0.super.onUpdateRotateAngle(slot0)
-	slot0:updateElectirDisconnnectFlagPos()
+function var_0_0.onUpdateRotateAngle(arg_6_0)
+	var_0_0.super.onUpdateRotateAngle(arg_6_0)
+	arg_6_0:updateElectirDisconnnectFlagPos()
 end
 
-function slot0.updateCollectionRotation(slot0, slot1)
-	transformhelper.setLocalRotation(slot0._gocenter.transform, 0, 0, slot1)
+function var_0_0.updateCollectionRotation(arg_7_0, arg_7_1)
+	transformhelper.setLocalRotation(arg_7_0._gocenter.transform, 0, 0, arg_7_1)
 end
 
-function slot0.refreshSlotCell(slot0, slot1, slot2, slot3)
-	slot0:setCellAnchor(slot1, slot2, slot3)
-	slot0:checkAndPlaceAroundLine(slot1, slot2)
+function var_0_0.refreshSlotCell(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
+	arg_8_0:setCellAnchor(arg_8_1, arg_8_2, arg_8_3)
+	arg_8_0:checkAndPlaceAroundLine(arg_8_1, arg_8_2)
 end
 
-function slot0.setParent(slot0, slot1)
-	if not slot1 or slot0._curParentTran == slot1 then
+function var_0_0.setParent(arg_9_0, arg_9_1)
+	if not arg_9_1 or arg_9_0._curParentTran == arg_9_1 then
 		return
 	end
 
-	slot0.viewGO.transform:SetParent(slot1)
+	arg_9_0.viewGO.transform:SetParent(arg_9_1)
 
-	slot0._curParentTran = slot1
+	arg_9_0._curParentTran = arg_9_1
 end
 
-function slot0.setShowTypeFlagVisible(slot0, slot1)
-	slot0._isElectriDisconnect = slot1 and slot0._activeEffectMap[RougeEnum.EffectActiveType.Electric] == false
+function var_0_0.setShowTypeFlagVisible(arg_10_0, arg_10_1)
+	arg_10_0._isElectriDisconnect = arg_10_1 and arg_10_0._activeEffectMap[RougeEnum.EffectActiveType.Electric] == false
 
-	gohelper.setActive(slot0._simageiconeffect.gameObject, slot1 and slot0._activeEffectMap[RougeEnum.EffectActiveType.LevelUp] or slot1 and slot0._activeEffectMap[RougeEnum.EffectActiveType.Engulf])
-	gohelper.setActive(slot0._godisconnect, slot0._isElectriDisconnect)
-	slot0:updateElectirDisconnnectFlagPos()
+	local var_10_0 = arg_10_1 and arg_10_0._activeEffectMap[RougeEnum.EffectActiveType.LevelUp]
+	local var_10_1 = arg_10_1 and arg_10_0._activeEffectMap[RougeEnum.EffectActiveType.Engulf]
+
+	gohelper.setActive(arg_10_0._simageiconeffect.gameObject, var_10_0 or var_10_1)
+	gohelper.setActive(arg_10_0._godisconnect, arg_10_0._isElectriDisconnect)
+	arg_10_0:updateElectirDisconnnectFlagPos()
 end
 
-slot0.BaseElectricDisconnectFlagPosX = 0
+var_0_0.BaseElectricDisconnectFlagPosX = 0
 
-function slot0.updateElectirDisconnnectFlagPos(slot0)
-	if not slot0._isElectriDisconnect then
+function var_0_0.updateElectirDisconnnectFlagPos(arg_11_0)
+	if not arg_11_0._isElectriDisconnect then
 		return
 	end
 
-	slot4 = 0
+	local var_11_0 = arg_11_0._mo:getRotation()
+	local var_11_1 = RougeCollectionConfig.instance:getShapeMatrix(arg_11_0._mo.cfgId, var_11_0)[1]
+	local var_11_2 = 0
 
-	for slot8 = 1, #RougeCollectionConfig.instance:getShapeMatrix(slot0._mo.cfgId, slot0._mo:getRotation())[1] do
-		if slot3[slot8] and slot3[slot8] > 0 then
-			slot4 = slot8 - 1
+	for iter_11_0 = 1, #var_11_1 do
+		if var_11_1[iter_11_0] and var_11_1[iter_11_0] > 0 then
+			var_11_2 = iter_11_0 - 1
 
 			break
 		end
 	end
 
-	recthelper.setAnchorX(slot0._godisconnect.transform, uv0.BaseElectricDisconnectFlagPosX + slot4 * RougeCollectionHelper.CollectionSlotCellSize.x)
+	local var_11_3 = var_11_2 * RougeCollectionHelper.CollectionSlotCellSize.x
+	local var_11_4 = var_0_0.BaseElectricDisconnectFlagPosX + var_11_3
+
+	recthelper.setAnchorX(arg_11_0._godisconnect.transform, var_11_4)
 end
 
-function slot0.updateActiveEffectTag(slot0, slot1, slot2, slot3)
-	if slot0._mo and slot1 == slot0._mo.id then
-		slot0._activeEffectMap = slot0._activeEffectMap or {}
-		slot0._activeEffectMap[slot2] = slot3
+function var_0_0.updateActiveEffectTag(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
+	if arg_12_0._mo and arg_12_1 == arg_12_0._mo.id then
+		arg_12_0._activeEffectMap = arg_12_0._activeEffectMap or {}
+		arg_12_0._activeEffectMap[arg_12_2] = arg_12_3
 
-		slot0:setShowTypeFlagVisible(true)
+		arg_12_0:setShowTypeFlagVisible(true)
 	end
 end
 
-function slot0.setSelectFrameVisible(slot0, slot1)
-	uv0.super.setSelectFrameVisible(slot0, slot1)
-	slot0:setShapeCellsVisible(slot1)
+function var_0_0.setSelectFrameVisible(arg_13_0, arg_13_1)
+	var_0_0.super.setSelectFrameVisible(arg_13_0, arg_13_1)
+	arg_13_0:setShapeCellsVisible(arg_13_1)
 end
 
-function slot0.setAnimatorEnabled(slot0, slot1)
-	slot0._animator.enabled = slot1
+function var_0_0.setAnimatorEnabled(arg_14_0, arg_14_1)
+	arg_14_0._animator.enabled = arg_14_1
 end
 
-function slot0.playAnim(slot0, slot1)
-	slot0:setAnimatorEnabled(true)
-	slot0._animator:Play(slot1, 0, 0)
+function var_0_0.playAnim(arg_15_0, arg_15_1)
+	arg_15_0:setAnimatorEnabled(true)
+	arg_15_0._animator:Play(arg_15_1, 0, 0)
 end
 
-function slot0.reset(slot0)
-	uv0.super.reset(slot0)
-	transformhelper.setLocalRotation(slot0._gocenter.transform, 0, 0, 0)
-	slot0:setAnimatorEnabled(false)
-	slot0:setShowTypeFlagVisible(false)
-	gohelper.setActive(slot0._simageiconeffect.gameObject, false)
-	tabletool.clear(slot0._activeEffectMap)
+function var_0_0.reset(arg_16_0)
+	var_0_0.super.reset(arg_16_0)
+	transformhelper.setLocalRotation(arg_16_0._gocenter.transform, 0, 0, 0)
+	arg_16_0:setAnimatorEnabled(false)
+	arg_16_0:setShowTypeFlagVisible(false)
+	gohelper.setActive(arg_16_0._simageiconeffect.gameObject, false)
+	tabletool.clear(arg_16_0._activeEffectMap)
 end
 
-function slot0.destroy(slot0)
-	uv0.super.destroy(slot0)
+function var_0_0.destroy(arg_17_0)
+	var_0_0.super.destroy(arg_17_0)
 end
 
-return slot0
+return var_0_0

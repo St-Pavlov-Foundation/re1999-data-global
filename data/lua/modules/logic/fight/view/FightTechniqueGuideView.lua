@@ -1,113 +1,124 @@
-module("modules.logic.fight.view.FightTechniqueGuideView", package.seeall)
+﻿module("modules.logic.fight.view.FightTechniqueGuideView", package.seeall)
 
-slot0 = class("FightTechniqueGuideView", BaseView)
+local var_0_0 = class("FightTechniqueGuideView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gotargetframe = gohelper.findChild(slot0.viewGO, "#go_targetframe")
-	slot0._goguidContent = gohelper.findChild(slot0.viewGO, "#go_guidContent")
-	slot0._goguideitem = gohelper.findChild(slot0.viewGO, "#go_guidContent/#go_guideitem")
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gotargetframe = gohelper.findChild(arg_1_0.viewGO, "#go_targetframe")
+	arg_1_0._goguidContent = gohelper.findChild(arg_1_0.viewGO, "#go_guidContent")
+	arg_1_0._goguideitem = gohelper.findChild(arg_1_0.viewGO, "#go_guidContent/#go_guideitem")
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseOnClick(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_5_0)
+	return
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0:refresh()
+function var_0_0.onUpdateParam(arg_6_0)
+	arg_6_0:refresh()
 end
 
-function slot0.onOpen(slot0)
-	slot0:refresh()
+function var_0_0.onOpen(arg_7_0)
+	arg_7_0:refresh()
 end
 
-function slot0.refresh(slot0)
+function var_0_0.refresh(arg_8_0)
 	TaskDispatcher.cancelTask(FightWorkFocusMonster.showCardPart, FightWorkFocusMonster)
 
-	slot0._entityMO = slot0.viewParam.entity
-	slot0._config = slot0.viewParam.config
-	slot0._is_enter_type = slot0._config.invokeType == FightWorkFocusMonster.invokeType.Enter
+	arg_8_0._entityMO = arg_8_0.viewParam.entity
+	arg_8_0._config = arg_8_0.viewParam.config
+	arg_8_0._is_enter_type = arg_8_0._config.invokeType == FightWorkFocusMonster.invokeType.Enter
 
-	if slot0._entityMO then
+	if arg_8_0._entityMO then
 		FightMsgMgr.sendMsg(FightMsgId.CameraFocusChanged, true)
-		FightWorkFocusMonster.focusCamera(slot0._entityMO.id)
+		FightWorkFocusMonster.focusCamera(arg_8_0._entityMO.id)
 		FightController.instance:dispatchEvent(FightEvent.OnCameraFocusChanged, true)
 	end
 
-	slot0._show_des = string.split(slot0._config.des, "|")
-	slot0._show_icon = string.split(slot0._config.icon, "|")
-	slot0._isActivityVersion = string.split(slot0._config.isActivityVersion, "|")
+	arg_8_0._show_des = string.split(arg_8_0._config.des, "|")
+	arg_8_0._show_icon = string.split(arg_8_0._config.icon, "|")
+	arg_8_0._isActivityVersion = string.split(arg_8_0._config.isActivityVersion, "|")
 
-	gohelper.CreateObjList(slot0, slot0._onItemShow, slot0._show_des, slot0._goguidContent, slot0._goguideitem)
-	FightHelper.setMonsterGuideFocusState(slot0._config)
+	gohelper.CreateObjList(arg_8_0, arg_8_0._onItemShow, arg_8_0._show_des, arg_8_0._goguidContent, arg_8_0._goguideitem)
+	FightHelper.setMonsterGuideFocusState(arg_8_0._config)
 end
 
-function slot0._onItemShow(slot0, slot1, slot2, slot3)
-	slot4 = slot1.transform
-	slot7 = slot4:Find("go_career").gameObject
-	slot4:Find("img_desc/txt_desc"):GetComponent(gohelper.Type_TextMesh).text = string.gsub(string.gsub(slot0._show_des[slot3], "%【", string.format("<color=%s>", "#F87D42")), "%】", "</color>")
+function var_0_0._onItemShow(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
+	local var_9_0 = arg_9_1.transform
+	local var_9_1 = gohelper.findChildSingleImage(arg_9_1, "simage_guideicon")
+	local var_9_2 = var_9_0:Find("img_desc/txt_desc"):GetComponent(gohelper.Type_TextMesh)
+	local var_9_3 = var_9_0:Find("go_career").gameObject
+	local var_9_4 = arg_9_0._show_des[arg_9_3]
+	local var_9_5 = string.gsub(var_9_4, "%【", string.format("<color=%s>", "#F87D42"))
 
-	gohelper.findChildSingleImage(slot1, "simage_guideicon"):LoadImage(ResUrl.getFightTechniqueGuide(slot0._show_icon[slot3], slot0._isActivityVersion[slot3] == "1") or "")
+	var_9_2.text = string.gsub(var_9_5, "%】", "</color>")
 
-	if not slot0._images then
-		slot0._images = {}
+	var_9_1:LoadImage(ResUrl.getFightTechniqueGuide(arg_9_0._show_icon[arg_9_3], arg_9_0._isActivityVersion[arg_9_3] == "1") or "")
+
+	if not arg_9_0._images then
+		arg_9_0._images = {}
 	end
 
-	table.insert(slot0._images, slot5)
+	table.insert(arg_9_0._images, var_9_1)
 
-	slot9 = gohelper.findChildImage(slot7, "image_bg")
-	slot10 = nil
+	local var_9_6 = gohelper.findChildImage(var_9_3, "image_bg")
+	local var_9_7
+	local var_9_8 = arg_9_0._entityMO and arg_9_0._entityMO.modelId or arg_9_0.viewParam.modelId
 
-	if slot0._entityMO and slot0._entityMO.modelId or slot0.viewParam.modelId then
-		slot10 = lua_monster.configDict[slot11] and slot12.career
+	if var_9_8 then
+		local var_9_9 = lua_monster.configDict[var_9_8]
+
+		var_9_7 = var_9_9 and var_9_9.career
 	end
 
-	slot12 = nil
+	local var_9_10
 
-	if slot10 and slot10 ~= 5 and slot10 ~= 6 then
-		slot12 = FightConfig.instance:restrainedBy(slot10)
+	if var_9_7 and var_9_7 ~= 5 and var_9_7 ~= 6 then
+		var_9_10 = FightConfig.instance:restrainedBy(var_9_7)
 
-		SLFramework.UGUI.GuiHelper.SetColor(slot9, ({
+		local var_9_11 = {
 			"#473115",
 			"#192c40",
 			"#243829",
 			"#4d2525",
 			"#462b48",
 			"#564d26"
-		})[slot12])
-		UISpriteSetMgr.instance:setCommonSprite(gohelper.findChildImage(slot7, "image_career"), "lssx_" .. slot12)
+		}
+
+		SLFramework.UGUI.GuiHelper.SetColor(var_9_6, var_9_11[var_9_10])
+		UISpriteSetMgr.instance:setCommonSprite(gohelper.findChildImage(var_9_3, "image_career"), "lssx_" .. var_9_10)
 	end
 
-	gohelper.setActive(slot7, slot12 and slot3 == 1)
+	gohelper.setActive(var_9_3, var_9_10 and arg_9_3 == 1)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_10_0)
 	FightWorkFocusMonster.cancelFocusCamera()
 end
 
-function slot0.onDestroyView(slot0)
-	if slot0._images then
-		for slot4, slot5 in ipairs(slot0._images) do
-			slot5:UnLoadImage()
+function var_0_0.onDestroyView(arg_11_0)
+	if arg_11_0._images then
+		for iter_11_0, iter_11_1 in ipairs(arg_11_0._images) do
+			iter_11_1:UnLoadImage()
 		end
 	end
 
-	slot0._images = nil
+	arg_11_0._images = nil
 end
 
-return slot0
+return var_0_0

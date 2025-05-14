@@ -1,105 +1,116 @@
-module("modules.logic.patface.config.PatFaceConfig", package.seeall)
+﻿module("modules.logic.patface.config.PatFaceConfig", package.seeall)
 
-slot0 = class("PatFaceConfig", BaseConfig)
+local var_0_0 = class("PatFaceConfig", BaseConfig)
 
-function slot0.ctor(slot0)
-	slot0._patFaceConfigList = {}
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._patFaceConfigList = {}
 end
 
-function slot0.reqConfigNames(slot0)
+function var_0_0.reqConfigNames(arg_2_0)
 	return {
 		"pat_face"
 	}
 end
 
-function slot0.onConfigLoaded(slot0, slot1, slot2)
-	if slot0[string.format("%sConfigLoaded", slot1)] then
-		slot4(slot0, slot2)
+function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
+	local var_3_0 = arg_3_0[string.format("%sConfigLoaded", arg_3_1)]
+
+	if var_3_0 then
+		var_3_0(arg_3_0, arg_3_2)
 	end
 end
 
-function slot1(slot0, slot1)
-	if (slot0.order or 0) ~= (slot1.order or 0) then
-		return slot2 < slot3
+local function var_0_1(arg_4_0, arg_4_1)
+	local var_4_0 = arg_4_0.order or 0
+	local var_4_1 = arg_4_1.order or 0
+
+	if var_4_0 ~= var_4_1 then
+		return var_4_0 < var_4_1
 	end
 
-	return slot0.id < slot1.id
+	return arg_4_0.id < arg_4_1.id
 end
 
-function slot0.pat_faceConfigLoaded(slot0, slot1)
-	slot2 = {}
+function var_0_0.pat_faceConfigLoaded(arg_5_0, arg_5_1)
+	local var_5_0 = {}
 
-	for slot6, slot7 in ipairs(slot1.configList) do
-		slot2[#slot2 + 1] = {
-			id = slot7.id,
-			order = slot7.patFaceOrder,
-			config = slot7
+	for iter_5_0, iter_5_1 in ipairs(arg_5_1.configList) do
+		local var_5_1 = iter_5_1.id
+
+		var_5_0[#var_5_0 + 1] = {
+			id = var_5_1,
+			order = iter_5_1.patFaceOrder,
+			config = iter_5_1
 		}
 	end
 
-	table.sort(slot2, uv0)
+	table.sort(var_5_0, var_0_1)
 
-	slot0._patFaceConfigList = slot2
+	arg_5_0._patFaceConfigList = var_5_0
 end
 
-function slot2(slot0, slot1)
-	slot2 = nil
+local function var_0_2(arg_6_0, arg_6_1)
+	local var_6_0
 
-	if slot0 then
-		slot2 = lua_pat_face.configDict[slot0]
+	if arg_6_0 then
+		var_6_0 = lua_pat_face.configDict[arg_6_0]
 	end
 
-	if not slot2 and not slot1 then
-		logError(string.format("PatFaceConfig:getCfg error, cfg is nil, id:%s", slot0))
+	if not var_6_0 and not arg_6_1 then
+		logError(string.format("PatFaceConfig:getCfg error, cfg is nil, id:%s", arg_6_0))
 	end
 
-	return slot2
+	return var_6_0
 end
 
-function slot0.getPatFaceActivityId(slot0, slot1)
-	slot2 = 0
+function var_0_0.getPatFaceActivityId(arg_7_0, arg_7_1)
+	local var_7_0 = 0
+	local var_7_1 = var_0_2(arg_7_1)
 
-	if uv0(slot1) then
-		slot2 = slot3.patFaceActivityId
+	if var_7_1 then
+		var_7_0 = var_7_1.patFaceActivityId
 	end
 
-	return slot2
+	return var_7_0
 end
 
-function slot0.getPatFaceViewName(slot0, slot1)
-	slot2 = ""
+function var_0_0.getPatFaceViewName(arg_8_0, arg_8_1)
+	local var_8_0 = ""
+	local var_8_1 = var_0_2(arg_8_1)
 
-	if uv0(slot1) then
-		slot2 = slot3.patFaceViewName
+	if var_8_1 then
+		var_8_0 = var_8_1.patFaceViewName
 	end
 
-	return slot2
+	return var_8_0
 end
 
-function slot0.getPatFaceStoryId(slot0, slot1)
-	slot2 = 0
+function var_0_0.getPatFaceStoryId(arg_9_0, arg_9_1)
+	local var_9_0 = 0
+	local var_9_1 = var_0_2(arg_9_1)
 
-	if uv0(slot1) then
-		slot2 = slot3.patFaceStoryId
+	if var_9_1 then
+		var_9_0 = var_9_1.patFaceStoryId
 	end
 
-	return slot2
+	return var_9_0
 end
 
-function slot0.getPatFaceOrder(slot0, slot1)
-	slot2 = 0
+function var_0_0.getPatFaceOrder(arg_10_0, arg_10_1)
+	local var_10_0 = 0
+	local var_10_1 = var_0_2(arg_10_1)
 
-	if uv0(slot1) then
-		slot2 = slot3.patFaceOrder
+	if var_10_1 then
+		var_10_0 = var_10_1.patFaceOrder
 	end
 
-	return slot2
+	return var_10_0
 end
 
-function slot0.getPatFaceConfigList(slot0)
-	return slot0._patFaceConfigList or {}
+function var_0_0.getPatFaceConfigList(arg_11_0)
+	return arg_11_0._patFaceConfigList or {}
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

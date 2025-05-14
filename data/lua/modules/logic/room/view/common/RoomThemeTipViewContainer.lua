@@ -1,33 +1,34 @@
-module("modules.logic.room.view.common.RoomThemeTipViewContainer", package.seeall)
+﻿module("modules.logic.room.view.common.RoomThemeTipViewContainer", package.seeall)
 
-slot0 = class("RoomThemeTipViewContainer", BaseViewContainer)
+local var_0_0 = class("RoomThemeTipViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, RoomThemeTipView.New())
+	table.insert(var_1_0, RoomThemeTipView.New())
 
-	slot2 = ListScrollParam.New()
-	slot2.scrollGOPath = "content/go_scroll/#scroll_item"
-	slot2.prefabType = ScrollEnum.ScrollPrefabFromView
-	slot2.prefabUrl = "content/themeitem"
-	slot2.cellClass = RoomThemeTipItem
-	slot2.scrollDir = ScrollEnum.ScrollDirV
-	slot2.lineCount = 1
-	slot2.cellWidth = 680
-	slot2.cellHeight = 60
-	slot2.cellSpaceH = 0
-	slot2.cellSpaceV = 4
-	slot2.startSpace = 0
-	slot2.endSpace = 0
+	local var_1_1 = ListScrollParam.New()
 
-	table.insert(slot1, LuaListScrollView.New(RoomThemeItemListModel.instance, slot2))
+	var_1_1.scrollGOPath = "content/go_scroll/#scroll_item"
+	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromView
+	var_1_1.prefabUrl = "content/themeitem"
+	var_1_1.cellClass = RoomThemeTipItem
+	var_1_1.scrollDir = ScrollEnum.ScrollDirV
+	var_1_1.lineCount = 1
+	var_1_1.cellWidth = 680
+	var_1_1.cellHeight = 60
+	var_1_1.cellSpaceH = 0
+	var_1_1.cellSpaceV = 4
+	var_1_1.startSpace = 0
+	var_1_1.endSpace = 0
 
-	return slot1
+	table.insert(var_1_0, LuaListScrollView.New(RoomThemeItemListModel.instance, var_1_1))
+
+	return var_1_0
 end
 
-function slot0.onContainerClickModalMask(slot0)
-	slot0:closeThis()
+function var_0_0.onContainerClickModalMask(arg_2_0)
+	arg_2_0:closeThis()
 end
 
-return slot0
+return var_0_0

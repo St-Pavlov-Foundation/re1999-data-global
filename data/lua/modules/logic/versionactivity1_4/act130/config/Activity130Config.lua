@@ -1,17 +1,17 @@
-module("modules.logic.versionactivity1_4.act130.config.Activity130Config", package.seeall)
+﻿module("modules.logic.versionactivity1_4.act130.config.Activity130Config", package.seeall)
 
-slot0 = class("Activity130Config", BaseConfig)
+local var_0_0 = class("Activity130Config", BaseConfig)
 
-function slot0.ctor(slot0)
-	slot0._act130EpisodeConfig = nil
-	slot0._act130DecryptConfig = nil
-	slot0._act130OperGroupConfig = nil
-	slot0._act130ElementConfig = nil
-	slot0._act130DialogList = nil
-	slot0._act130TaskConfig = nil
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._act130EpisodeConfig = nil
+	arg_1_0._act130DecryptConfig = nil
+	arg_1_0._act130OperGroupConfig = nil
+	arg_1_0._act130ElementConfig = nil
+	arg_1_0._act130DialogList = nil
+	arg_1_0._act130TaskConfig = nil
 end
 
-function slot0.reqConfigNames(slot0)
+function var_0_0.reqConfigNames(arg_2_0)
 	return {
 		"activity130_episode",
 		"activity130_decrypt",
@@ -22,114 +22,126 @@ function slot0.reqConfigNames(slot0)
 	}
 end
 
-function slot0.onConfigLoaded(slot0, slot1, slot2)
-	if slot1 == "activity130_episode" then
-		slot0._act130EpisodeConfig = slot2
-	elseif slot1 == "activity130_decrypt" then
-		slot0._act130DecryptConfig = slot2
-	elseif slot1 == "activity130_oper_group" then
-		slot0._act130OperGroupConfig = slot2
-	elseif slot1 == "activity130_element" then
-		slot0._act130ElementConfig = slot2
-	elseif slot1 == "activity130_dialog" then
-		slot0:_initDialog()
-	elseif slot1 == "activity130_task" then
-		slot0._act130TaskConfig = slot2
+function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_1 == "activity130_episode" then
+		arg_3_0._act130EpisodeConfig = arg_3_2
+	elseif arg_3_1 == "activity130_decrypt" then
+		arg_3_0._act130DecryptConfig = arg_3_2
+	elseif arg_3_1 == "activity130_oper_group" then
+		arg_3_0._act130OperGroupConfig = arg_3_2
+	elseif arg_3_1 == "activity130_element" then
+		arg_3_0._act130ElementConfig = arg_3_2
+	elseif arg_3_1 == "activity130_dialog" then
+		arg_3_0:_initDialog()
+	elseif arg_3_1 == "activity130_task" then
+		arg_3_0._act130TaskConfig = arg_3_2
 	end
 end
 
-function slot0.getActivity130EpisodeCos(slot0, slot1)
-	return slot0._act130EpisodeConfig.configDict[slot1]
+function var_0_0.getActivity130EpisodeCos(arg_4_0, arg_4_1)
+	return arg_4_0._act130EpisodeConfig.configDict[arg_4_1]
 end
 
-function slot0.getActivity130EpisodeCo(slot0, slot1, slot2)
-	return slot0._act130EpisodeConfig.configDict[slot1][slot2]
+function var_0_0.getActivity130EpisodeCo(arg_5_0, arg_5_1, arg_5_2)
+	return arg_5_0._act130EpisodeConfig.configDict[arg_5_1][arg_5_2]
 end
 
-function slot0.getActivity130DecryptCos(slot0, slot1)
-	return slot0._act130DecryptConfig.configDict[slot1]
+function var_0_0.getActivity130DecryptCos(arg_6_0, arg_6_1)
+	return arg_6_0._act130DecryptConfig.configDict[arg_6_1]
 end
 
-function slot0.getActivity130DecryptCo(slot0, slot1, slot2)
-	return slot0._act130DecryptConfig.configDict[slot1][slot2]
+function var_0_0.getActivity130DecryptCo(arg_7_0, arg_7_1, arg_7_2)
+	return arg_7_0._act130DecryptConfig.configDict[arg_7_1][arg_7_2]
 end
 
-function slot0.getActivity130OperateGroupCos(slot0, slot1, slot2)
-	return slot0._act130OperGroupConfig.configDict[slot1][slot2]
+function var_0_0.getActivity130OperateGroupCos(arg_8_0, arg_8_1, arg_8_2)
+	return arg_8_0._act130OperGroupConfig.configDict[arg_8_1][arg_8_2]
 end
 
-function slot0.getActivity130ElementCo(slot0, slot1, slot2)
-	return slot0._act130ElementConfig.configDict[slot1][slot2]
+function var_0_0.getActivity130ElementCo(arg_9_0, arg_9_1, arg_9_2)
+	return arg_9_0._act130ElementConfig.configDict[arg_9_1][arg_9_2]
 end
 
-function slot0.getActivity130DialogCo(slot0, slot1, slot2)
-	return lua_activity130_dialog.configDict[slot1][slot2]
+function var_0_0.getActivity130DialogCo(arg_10_0, arg_10_1, arg_10_2)
+	return lua_activity130_dialog.configDict[arg_10_1][arg_10_2]
 end
 
-function slot0._initDialog(slot0)
-	slot0._act130DialogList = {}
-	slot1 = nil
+function var_0_0._initDialog(arg_11_0)
+	arg_11_0._act130DialogList = {}
 
-	for slot6, slot7 in ipairs(lua_activity130_dialog.configList) do
-		if not slot0._act130DialogList[slot7.id] then
-			slot1 = "0"
-			slot0._act130DialogList[slot7.id] = {
+	local var_11_0
+	local var_11_1 = "0"
+
+	for iter_11_0, iter_11_1 in ipairs(lua_activity130_dialog.configList) do
+		local var_11_2 = arg_11_0._act130DialogList[iter_11_1.id]
+
+		if not var_11_2 then
+			var_11_2 = {
 				optionParamList = {}
 			}
+			var_11_0 = var_11_1
+			arg_11_0._act130DialogList[iter_11_1.id] = var_11_2
 		end
 
-		if not string.nilorempty(slot7.option_param) then
-			table.insert(slot8.optionParamList, tonumber(slot7.option_param))
+		if not string.nilorempty(iter_11_1.option_param) then
+			table.insert(var_11_2.optionParamList, tonumber(iter_11_1.option_param))
 		end
 
-		if slot7.type == "selector" then
-			slot8[slot1] = slot8[slot7.param] or {}
-			slot8[slot1].type = slot7.type
-			slot8[slot1].option_param = slot7.option_param
-		elseif slot7.type == "selectorend" then
-			slot1 = slot2
-		elseif slot7.type == "random" then
-			slot8[slot9] = slot8[slot7.param] or {}
-			slot8[slot9].type = slot7.type
-			slot8[slot9].option_param = slot7.option_param
+		if iter_11_1.type == "selector" then
+			var_11_0 = iter_11_1.param
+			var_11_2[var_11_0] = var_11_2[var_11_0] or {}
+			var_11_2[var_11_0].type = iter_11_1.type
+			var_11_2[var_11_0].option_param = iter_11_1.option_param
+		elseif iter_11_1.type == "selectorend" then
+			var_11_0 = var_11_1
+		elseif iter_11_1.type == "random" then
+			local var_11_3 = iter_11_1.param
 
-			table.insert(slot8[slot9], slot7)
+			var_11_2[var_11_3] = var_11_2[var_11_3] or {}
+			var_11_2[var_11_3].type = iter_11_1.type
+			var_11_2[var_11_3].option_param = iter_11_1.option_param
+
+			table.insert(var_11_2[var_11_3], iter_11_1)
 		else
-			slot8[slot1] = slot8[slot1] or {}
+			var_11_2[var_11_0] = var_11_2[var_11_0] or {}
 
-			table.insert(slot8[slot1], slot7)
+			table.insert(var_11_2[var_11_0], iter_11_1)
 		end
 	end
 end
 
-function slot0.getDialog(slot0, slot1, slot2)
-	return slot0._act130DialogList[slot1] and slot3[slot2]
+function var_0_0.getDialog(arg_12_0, arg_12_1, arg_12_2)
+	local var_12_0 = arg_12_0._act130DialogList[arg_12_1]
+
+	return var_12_0 and var_12_0[arg_12_2]
 end
 
-function slot0.getOptionParamList(slot0, slot1)
-	return slot0._act130DialogList[slot1] and slot2.optionParamList
+function var_0_0.getOptionParamList(arg_13_0, arg_13_1)
+	local var_13_0 = arg_13_0._act130DialogList[arg_13_1]
+
+	return var_13_0 and var_13_0.optionParamList
 end
 
-function slot0.getActivity130TaskCo(slot0, slot1)
-	return slot0._act130TaskConfig.configDict[slot1]
+function var_0_0.getActivity130TaskCo(arg_14_0, arg_14_1)
+	return arg_14_0._act130TaskConfig.configDict[arg_14_1]
 end
 
-function slot0.getTaskByActId(slot0, slot1)
-	slot2 = {}
+function var_0_0.getTaskByActId(arg_15_0, arg_15_1)
+	local var_15_0 = {}
 
-	for slot6, slot7 in ipairs(slot0._act130TaskConfig.configList) do
-		if slot7.activityId == slot1 then
-			table.insert(slot2, slot7)
+	for iter_15_0, iter_15_1 in ipairs(arg_15_0._act130TaskConfig.configList) do
+		if iter_15_1.activityId == arg_15_1 then
+			table.insert(var_15_0, iter_15_1)
 		end
 	end
 
-	return slot2
+	return var_15_0
 end
 
-function slot0.getOperGroup(slot0, slot1, slot2)
-	return slot0._act130OperGroupConfig.configDict[slot1][slot2]
+function var_0_0.getOperGroup(arg_16_0, arg_16_1, arg_16_2)
+	return arg_16_0._act130OperGroupConfig.configDict[arg_16_1][arg_16_2]
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

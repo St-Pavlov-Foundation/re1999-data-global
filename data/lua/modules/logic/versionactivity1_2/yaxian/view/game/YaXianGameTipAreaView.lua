@@ -1,301 +1,319 @@
-module("modules.logic.versionactivity1_2.yaxian.view.game.YaXianGameTipAreaView", package.seeall)
+﻿module("modules.logic.versionactivity1_2.yaxian.view.game.YaXianGameTipAreaView", package.seeall)
 
-slot0 = class("YaXianGameTipAreaView", BaseView)
+local var_0_0 = class("YaXianGameTipAreaView", BaseView)
 
-function slot0.onInitView(slot0)
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+function var_0_0.onInitView(arg_1_0)
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0:addEventCb(YaXianGameController.instance, YaXianEvent.RefreshAllInteractAlertArea, slot0.refreshAllInteractArea, slot0)
-	slot0:addEventCb(YaXianGameController.instance, YaXianEvent.ShowCanWalkGround, slot0.refreshCanWalkGround, slot0)
-	slot0:addEventCb(YaXianGameController.instance, YaXianEvent.OnUpdateEffectInfo, slot0.onUpdateEffectInfo, slot0)
-	slot0:addEventCb(YaXianGameController.instance, YaXianEvent.DeleteInteractObj, slot0.recycleEnemyInteractTipArea, slot0)
-	slot0:addEventCb(YaXianGameController.instance, YaXianEvent.OnResetView, slot0.resetMapView, slot0)
-	slot0:addEventCb(YaXianGameController.instance, YaXianEvent.MainResLoadDone, slot0.onMainResLoadDone, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0:addEventCb(YaXianGameController.instance, YaXianEvent.RefreshAllInteractAlertArea, arg_2_0.refreshAllInteractArea, arg_2_0)
+	arg_2_0:addEventCb(YaXianGameController.instance, YaXianEvent.ShowCanWalkGround, arg_2_0.refreshCanWalkGround, arg_2_0)
+	arg_2_0:addEventCb(YaXianGameController.instance, YaXianEvent.OnUpdateEffectInfo, arg_2_0.onUpdateEffectInfo, arg_2_0)
+	arg_2_0:addEventCb(YaXianGameController.instance, YaXianEvent.DeleteInteractObj, arg_2_0.recycleEnemyInteractTipArea, arg_2_0)
+	arg_2_0:addEventCb(YaXianGameController.instance, YaXianEvent.OnResetView, arg_2_0.resetMapView, arg_2_0)
+	arg_2_0:addEventCb(YaXianGameController.instance, YaXianEvent.MainResLoadDone, arg_2_0.onMainResLoadDone, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0._alarmItemDict = {}
-	slot0._alarmItemPool = {}
-	slot0._targetPosItemDict = {}
-	slot0._targetPosItemPool = {}
-	slot0._canWalkItems = {}
-	slot0._canWalkItemPool = {}
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._alarmItemDict = {}
+	arg_4_0._alarmItemPool = {}
+	arg_4_0._targetPosItemDict = {}
+	arg_4_0._targetPosItemPool = {}
+	arg_4_0._canWalkItems = {}
+	arg_4_0._canWalkItemPool = {}
 end
 
-function slot0.onMainResLoadDone(slot0, slot1)
-	if slot0.initResDone then
+function var_0_0.onMainResLoadDone(arg_5_0, arg_5_1)
+	if arg_5_0.initResDone then
 		return
 	end
 
-	slot0.loader = slot1
-	slot0.sceneGo = slot0.viewContainer:getRootSceneGo()
-	slot0.sceneTipContainer = UnityEngine.GameObject.New("tipAreaContainer")
+	arg_5_0.loader = arg_5_1
+	arg_5_0.sceneGo = arg_5_0.viewContainer:getRootSceneGo()
+	arg_5_0.sceneTipContainer = UnityEngine.GameObject.New("tipAreaContainer")
 
-	slot0.sceneTipContainer.transform:SetParent(slot0.sceneGo.transform, false)
-	transformhelper.setLocalPos(slot0.sceneTipContainer.transform, 0, 0, YaXianGameEnum.ContainerOffsetZ.TipArea)
+	arg_5_0.sceneTipContainer.transform:SetParent(arg_5_0.sceneGo.transform, false)
+	transformhelper.setLocalPos(arg_5_0.sceneTipContainer.transform, 0, 0, YaXianGameEnum.ContainerOffsetZ.TipArea)
 
-	slot0.alarmPrefab = slot0.loader:getAssetItem(YaXianGameEnum.SceneResPath.AlarmItem):GetResource()
-	slot0.targetPrefab = slot0.loader:getAssetItem(YaXianGameEnum.SceneResPath.TargetItem):GetResource()
-	slot0.canWalkPrefab = slot0.loader:getAssetItem(YaXianGameEnum.SceneResPath.DirItem):GetResource()
-	slot0.initResDone = true
+	arg_5_0.alarmPrefab = arg_5_0.loader:getAssetItem(YaXianGameEnum.SceneResPath.AlarmItem):GetResource()
+	arg_5_0.targetPrefab = arg_5_0.loader:getAssetItem(YaXianGameEnum.SceneResPath.TargetItem):GetResource()
+	arg_5_0.canWalkPrefab = arg_5_0.loader:getAssetItem(YaXianGameEnum.SceneResPath.DirItem):GetResource()
+	arg_5_0.initResDone = true
 end
 
-function slot0.onUpdateEffectInfo(slot0)
-	slot0:refreshCanWalkGround(slot0.preIsShow)
+function var_0_0.onUpdateEffectInfo(arg_6_0)
+	arg_6_0:refreshCanWalkGround(arg_6_0.preIsShow)
 end
 
-function slot0.refreshAllInteractArea(slot0, slot1)
-	for slot5, slot6 in ipairs(YaXianGameModel.instance:getInteractMoList()) do
-		slot0:refreshInteractAlertArea(slot6, slot1)
-		slot0:refreshTargetPosArea(slot6, slot1)
+function var_0_0.refreshAllInteractArea(arg_7_0, arg_7_1)
+	for iter_7_0, iter_7_1 in ipairs(YaXianGameModel.instance:getInteractMoList()) do
+		arg_7_0:refreshInteractAlertArea(iter_7_1, arg_7_1)
+		arg_7_0:refreshTargetPosArea(iter_7_1, arg_7_1)
 	end
 end
 
-function slot0.refreshCanWalkGround(slot0, slot1)
-	slot0.preIsShow = slot1
+function var_0_0.refreshCanWalkGround(arg_8_0, arg_8_1)
+	arg_8_0.preIsShow = arg_8_1
 
-	slot0:recycleAllCanWalkItem()
+	arg_8_0:recycleAllCanWalkItem()
 
 	if not YaXianGameController.instance:isSelectingPlayer() then
 		return
 	end
 
-	if slot1 then
-		slot2 = YaXianGameModel.instance:getPlayerInteractMo()
-		slot3 = slot0:getCanWalkTargetPosDict(slot2.posX, slot2.posY)
+	if arg_8_1 then
+		local var_8_0 = YaXianGameModel.instance:getPlayerInteractMo()
+		local var_8_1 = arg_8_0:getCanWalkTargetPosDict(var_8_0.posX, var_8_0.posY)
 
-		YaXianGameModel.instance:setCanWalkTargetPosDict(slot3)
+		YaXianGameModel.instance:setCanWalkTargetPosDict(var_8_1)
 
-		for slot7, slot8 in pairs(slot3) do
-			slot9 = slot0:createCanWalkItem(slot8.x, slot8.y)
+		for iter_8_0, iter_8_1 in pairs(var_8_1) do
+			local var_8_2 = arg_8_0:createCanWalkItem(iter_8_1.x, iter_8_1.y)
 
-			gohelper.setActive(slot9.goNormal, true)
-			gohelper.setActive(slot9.goCenter, false)
+			gohelper.setActive(var_8_2.goNormal, true)
+			gohelper.setActive(var_8_2.goCenter, false)
 		end
 
-		slot4 = slot0:createCanWalkItem(slot2.posX, slot2.posY)
+		local var_8_3 = arg_8_0:createCanWalkItem(var_8_0.posX, var_8_0.posY)
 
-		gohelper.setActive(slot4.goNormal, false)
-		gohelper.setActive(slot4.goCenter, true)
+		gohelper.setActive(var_8_3.goNormal, false)
+		gohelper.setActive(var_8_3.goCenter, true)
 	end
 end
 
-function slot0.refreshInteractAlertArea(slot0, slot1, slot2)
-	slot0:recycleInteractAlertArea(slot1.id)
+function var_0_0.refreshInteractAlertArea(arg_9_0, arg_9_1, arg_9_2)
+	arg_9_0:recycleInteractAlertArea(arg_9_1.id)
 
-	if not slot2 then
+	if not arg_9_2 then
 		return
 	end
 
-	if slot1 and slot1.alertPosList and #slot3 > 0 then
-		slot4, slot5 = nil
+	local var_9_0 = arg_9_1 and arg_9_1.alertPosList
 
-		for slot9, slot10 in ipairs(slot3) do
-			slot4 = slot0:createAlarmGroundItem(slot10.posX, slot10.posY)
+	if var_9_0 and #var_9_0 > 0 then
+		local var_9_1
+		local var_9_2
 
-			if not slot0._alarmItemDict[slot1.id] then
-				slot0._alarmItemDict[slot1.id] = {}
+		for iter_9_0, iter_9_1 in ipairs(var_9_0) do
+			local var_9_3 = arg_9_0:createAlarmGroundItem(iter_9_1.posX, iter_9_1.posY)
+			local var_9_4 = arg_9_0._alarmItemDict[arg_9_1.id]
+
+			if not var_9_4 then
+				var_9_4 = {}
+				arg_9_0._alarmItemDict[arg_9_1.id] = var_9_4
 			end
 
-			table.insert(slot5, slot4)
+			table.insert(var_9_4, var_9_3)
 		end
 	end
 end
 
-function slot0.refreshTargetPosArea(slot0, slot1, slot2)
-	slot0:recycleInteractTargetPosArea(slot1.id)
+function var_0_0.refreshTargetPosArea(arg_10_0, arg_10_1, arg_10_2)
+	arg_10_0:recycleInteractTargetPosArea(arg_10_1.id)
 
-	if not slot2 then
+	if not arg_10_2 then
 		return
 	end
 
-	if slot1.nextPos then
-		slot0._targetPosItemDict[slot1.id] = slot0:createTargetPosItem(slot1.nextPos.posX, slot1.nextPos.posY)
+	if arg_10_1.nextPos then
+		local var_10_0 = arg_10_0:createTargetPosItem(arg_10_1.nextPos.posX, arg_10_1.nextPos.posY)
+
+		arg_10_0._targetPosItemDict[arg_10_1.id] = var_10_0
 	end
 end
 
-function slot0.getCanWalkTargetPosDict(slot0, slot1, slot2)
-	slot3 = YaXianGameModel.instance:hasInVisibleEffect()
-	slot5 = 0
+function var_0_0.getCanWalkTargetPosDict(arg_11_0, arg_11_1, arg_11_2)
+	local var_11_0 = YaXianGameModel.instance:hasInVisibleEffect()
+	local var_11_1 = YaXianGameModel.instance:hasThroughWallEffect()
+	local var_11_2 = 0
 
-	if YaXianGameModel.instance:hasThroughWallEffect() then
-		slot5 = YaXianConfig.instance:getThroughSkillDistance()
+	if var_11_1 then
+		var_11_2 = YaXianConfig.instance:getThroughSkillDistance()
 	end
 
-	slot6 = {}
+	local var_11_3 = {}
 
-	slot0:getMoveTargetPos(slot6, slot1, slot2, YaXianGameEnum.MoveDirection.Left, slot5, slot3)
-	slot0:getMoveTargetPos(slot6, slot1, slot2, YaXianGameEnum.MoveDirection.Right, slot5, slot3)
-	slot0:getMoveTargetPos(slot6, slot1, slot2, YaXianGameEnum.MoveDirection.Bottom, slot5, slot3)
-	slot0:getMoveTargetPos(slot6, slot1, slot2, YaXianGameEnum.MoveDirection.Top, slot5, slot3)
+	arg_11_0:getMoveTargetPos(var_11_3, arg_11_1, arg_11_2, YaXianGameEnum.MoveDirection.Left, var_11_2, var_11_0)
+	arg_11_0:getMoveTargetPos(var_11_3, arg_11_1, arg_11_2, YaXianGameEnum.MoveDirection.Right, var_11_2, var_11_0)
+	arg_11_0:getMoveTargetPos(var_11_3, arg_11_1, arg_11_2, YaXianGameEnum.MoveDirection.Bottom, var_11_2, var_11_0)
+	arg_11_0:getMoveTargetPos(var_11_3, arg_11_1, arg_11_2, YaXianGameEnum.MoveDirection.Top, var_11_2, var_11_0)
 
-	return slot6
+	return var_11_3
 end
 
-function slot0.getMoveTargetPos(slot0, slot1, slot2, slot3, slot4, slot5, slot6)
-	slot7, slot8, slot9 = YaXianGameController.instance:getMoveTargetPos({
-		posX = slot2,
-		posY = slot3,
-		moveDirection = slot4,
-		throughDistance = slot5,
-		isHide = slot6
+function var_0_0.getMoveTargetPos(arg_12_0, arg_12_1, arg_12_2, arg_12_3, arg_12_4, arg_12_5, arg_12_6)
+	local var_12_0, var_12_1, var_12_2 = YaXianGameController.instance:getMoveTargetPos({
+		posX = arg_12_2,
+		posY = arg_12_3,
+		moveDirection = arg_12_4,
+		throughDistance = arg_12_5,
+		isHide = arg_12_6
 	})
 
-	if slot7 == slot2 and slot8 == slot3 then
-		slot1[slot4] = nil
+	if var_12_0 == arg_12_2 and var_12_1 == arg_12_3 then
+		arg_12_1[arg_12_4] = nil
 	else
-		slot1[slot4] = {
-			x = slot7,
-			y = slot8,
-			passedWall = slot9
+		arg_12_1[arg_12_4] = {
+			x = var_12_0,
+			y = var_12_1,
+			passedWall = var_12_2
 		}
 	end
 end
 
-function slot0.createAlarmGroundItem(slot0, slot1, slot2)
-	slot3 = nil
+function var_0_0.createAlarmGroundItem(arg_13_0, arg_13_1, arg_13_2)
+	local var_13_0
+	local var_13_1 = #arg_13_0._alarmItemPool
 
-	if #slot0._alarmItemPool > 0 then
-		slot3 = slot0._alarmItemPool[slot4]
-		slot0._alarmItemPool[slot4] = nil
+	if var_13_1 > 0 then
+		var_13_0 = arg_13_0._alarmItemPool[var_13_1]
+		arg_13_0._alarmItemPool[var_13_1] = nil
 	end
 
-	if not slot3 then
-		slot3 = slot0:getUserDataTb_()
-		slot3.go = gohelper.clone(slot0.alarmPrefab, slot0.sceneTipContainer, "alarmItem")
-		slot3.sceneTf = slot3.go.transform
+	if not var_13_0 then
+		var_13_0 = arg_13_0:getUserDataTb_()
+		var_13_0.go = gohelper.clone(arg_13_0.alarmPrefab, arg_13_0.sceneTipContainer, "alarmItem")
+		var_13_0.sceneTf = var_13_0.go.transform
 	end
 
-	gohelper.setActive(slot3.go, true)
+	gohelper.setActive(var_13_0.go, true)
 
-	slot5, slot6, slot7 = YaXianGameHelper.calcTilePosInScene(slot1, slot2)
+	local var_13_2, var_13_3, var_13_4 = YaXianGameHelper.calcTilePosInScene(arg_13_1, arg_13_2)
 
-	transformhelper.setLocalPos(slot3.sceneTf, slot5, slot6, slot7 + YaXianGameEnum.AlertOffsetZ)
+	transformhelper.setLocalPos(var_13_0.sceneTf, var_13_2, var_13_3, var_13_4 + YaXianGameEnum.AlertOffsetZ)
 
-	return slot3
+	return var_13_0
 end
 
-function slot0.createTargetPosItem(slot0, slot1, slot2)
-	slot3 = nil
+function var_0_0.createTargetPosItem(arg_14_0, arg_14_1, arg_14_2)
+	local var_14_0
 
-	if #slot0._targetPosItemPool > 0 then
-		slot3 = table.remove(slot0._targetPosItemPool)
+	if #arg_14_0._targetPosItemPool > 0 then
+		var_14_0 = table.remove(arg_14_0._targetPosItemPool)
 	end
 
-	if not slot3 then
-		slot3 = slot0:getUserDataTb_()
-		slot3.go = gohelper.clone(slot0.targetPrefab, slot0.sceneTipContainer, "targetPosItem")
-		slot3.sceneTf = slot3.go.transform
+	if not var_14_0 then
+		var_14_0 = arg_14_0:getUserDataTb_()
+		var_14_0.go = gohelper.clone(arg_14_0.targetPrefab, arg_14_0.sceneTipContainer, "targetPosItem")
+		var_14_0.sceneTf = var_14_0.go.transform
 	end
 
-	gohelper.setActive(slot3.go, true)
+	gohelper.setActive(var_14_0.go, true)
 
-	slot5, slot6, slot7 = YaXianGameHelper.calcTilePosInScene(slot1, slot2)
+	local var_14_1, var_14_2, var_14_3 = YaXianGameHelper.calcTilePosInScene(arg_14_1, arg_14_2)
 
-	transformhelper.setLocalPos(slot3.sceneTf, slot5, slot6, slot7)
+	transformhelper.setLocalPos(var_14_0.sceneTf, var_14_1, var_14_2, var_14_3)
 
-	return slot3
+	return var_14_0
 end
 
-function slot0.createCanWalkItem(slot0, slot1, slot2)
-	slot3 = nil
+function var_0_0.createCanWalkItem(arg_15_0, arg_15_1, arg_15_2)
+	local var_15_0
+	local var_15_1 = #arg_15_0._canWalkItemPool
 
-	if #slot0._canWalkItemPool > 0 then
-		slot3 = slot0._canWalkItemPool[slot4]
-		slot0._canWalkItemPool[slot4] = nil
+	if var_15_1 > 0 then
+		var_15_0 = arg_15_0._canWalkItemPool[var_15_1]
+		arg_15_0._canWalkItemPool[var_15_1] = nil
 	end
 
-	if not slot3 then
-		slot3 = slot0:getUserDataTb_()
-		slot3.go = gohelper.clone(slot0.canWalkPrefab, slot0.sceneTipContainer, "canWalkItem")
-		slot3.sceneTf = slot3.go.transform
-		slot3.goCenter = gohelper.findChild(slot3.go, "#go_center")
-		slot3.goNormal = gohelper.findChild(slot3.go, "#go_normal")
+	if not var_15_0 then
+		var_15_0 = arg_15_0:getUserDataTb_()
+		var_15_0.go = gohelper.clone(arg_15_0.canWalkPrefab, arg_15_0.sceneTipContainer, "canWalkItem")
+		var_15_0.sceneTf = var_15_0.go.transform
+		var_15_0.goCenter = gohelper.findChild(var_15_0.go, "#go_center")
+		var_15_0.goNormal = gohelper.findChild(var_15_0.go, "#go_normal")
 	end
 
-	gohelper.setActive(slot3.go, true)
+	gohelper.setActive(var_15_0.go, true)
 
-	slot5, slot6, slot7 = YaXianGameHelper.calcTilePosInScene(slot1, slot2)
+	local var_15_2, var_15_3, var_15_4 = YaXianGameHelper.calcTilePosInScene(arg_15_1, arg_15_2)
 
-	transformhelper.setLocalPos(slot3.sceneTf, slot5, slot6, slot7)
-	table.insert(slot0._canWalkItems, slot3)
+	transformhelper.setLocalPos(var_15_0.sceneTf, var_15_2, var_15_3, var_15_4)
+	table.insert(arg_15_0._canWalkItems, var_15_0)
 
-	return slot3
+	return var_15_0
 end
 
-function slot0.recycleInteractAlertArea(slot0, slot1)
-	if slot0._alarmItemDict[slot1] and #slot2 > 0 then
-		for slot6 = 1, #slot2 do
-			gohelper.setActive(slot2[slot6].go, false)
-			table.insert(slot0._alarmItemPool, slot2[slot6])
+function var_0_0.recycleInteractAlertArea(arg_16_0, arg_16_1)
+	local var_16_0 = arg_16_0._alarmItemDict[arg_16_1]
+
+	if var_16_0 and #var_16_0 > 0 then
+		for iter_16_0 = 1, #var_16_0 do
+			gohelper.setActive(var_16_0[iter_16_0].go, false)
+			table.insert(arg_16_0._alarmItemPool, var_16_0[iter_16_0])
 		end
 
-		slot2 = nil
-		slot0._alarmItemDict[slot1] = nil
+		local var_16_1
+
+		arg_16_0._alarmItemDict[arg_16_1] = nil
 	end
 end
 
-function slot0.recycleInteractTargetPosArea(slot0, slot1)
-	if slot0._targetPosItemDict[slot1] then
-		gohelper.setActive(slot2.go, false)
-		table.insert(slot0._targetPosItemPool, slot2)
+function var_0_0.recycleInteractTargetPosArea(arg_17_0, arg_17_1)
+	local var_17_0 = arg_17_0._targetPosItemDict[arg_17_1]
 
-		slot0._targetPosItemDict[slot1] = nil
+	if var_17_0 then
+		gohelper.setActive(var_17_0.go, false)
+		table.insert(arg_17_0._targetPosItemPool, var_17_0)
+
+		arg_17_0._targetPosItemDict[arg_17_1] = nil
 	end
 end
 
-function slot0.recycleEnemyInteractTipArea(slot0, slot1)
-	slot0:recycleInteractTargetPosArea(slot1)
-	slot0:recycleInteractAlertArea(slot1)
+function var_0_0.recycleEnemyInteractTipArea(arg_18_0, arg_18_1)
+	arg_18_0:recycleInteractTargetPosArea(arg_18_1)
+	arg_18_0:recycleInteractAlertArea(arg_18_1)
 end
 
-function slot0.recycleAllAlarmItem(slot0)
-	for slot4, slot5 in pairs(slot0._alarmItemDict) do
-		for slot9 = 1, #slot5 do
-			gohelper.setActive(slot5[slot9].go, false)
-			table.insert(slot0._alarmItemPool, slot5[slot9])
+function var_0_0.recycleAllAlarmItem(arg_19_0)
+	for iter_19_0, iter_19_1 in pairs(arg_19_0._alarmItemDict) do
+		for iter_19_2 = 1, #iter_19_1 do
+			gohelper.setActive(iter_19_1[iter_19_2].go, false)
+			table.insert(arg_19_0._alarmItemPool, iter_19_1[iter_19_2])
 		end
 
-		slot5 = nil
-		slot0._alarmItemDict[slot4] = nil
+		iter_19_1 = nil
+		arg_19_0._alarmItemDict[iter_19_0] = nil
 	end
 end
 
-function slot0.recycleAllCanWalkItem(slot0)
-	for slot4, slot5 in pairs(slot0._canWalkItems) do
-		gohelper.setActive(slot5.go, false)
-		table.insert(slot0._canWalkItemPool, slot5)
+function var_0_0.recycleAllCanWalkItem(arg_20_0)
+	for iter_20_0, iter_20_1 in pairs(arg_20_0._canWalkItems) do
+		gohelper.setActive(iter_20_1.go, false)
+		table.insert(arg_20_0._canWalkItemPool, iter_20_1)
 
-		slot0._canWalkItems[slot4] = nil
+		arg_20_0._canWalkItems[iter_20_0] = nil
 	end
 end
 
-function slot0.recycleAllTargetPosItem(slot0)
-	for slot4, slot5 in pairs(slot0._targetPosItemDict) do
-		gohelper.setActive(slot5.go, false)
-		table.insert(slot0._targetPosItemPool, slot5)
+function var_0_0.recycleAllTargetPosItem(arg_21_0)
+	for iter_21_0, iter_21_1 in pairs(arg_21_0._targetPosItemDict) do
+		gohelper.setActive(iter_21_1.go, false)
+		table.insert(arg_21_0._targetPosItemPool, iter_21_1)
 
-		slot0._targetPosItemDict[slot4] = nil
+		arg_21_0._targetPosItemDict[iter_21_0] = nil
 	end
 end
 
-function slot0.resetMapView(slot0)
-	slot0:recycleAllAlarmItem()
-	slot0:recycleAllCanWalkItem()
-	slot0:recycleAllTargetPosItem()
+function var_0_0.resetMapView(arg_22_0)
+	arg_22_0:recycleAllAlarmItem()
+	arg_22_0:recycleAllCanWalkItem()
+	arg_22_0:recycleAllTargetPosItem()
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_23_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_24_0)
+	return
 end
 
-return slot0
+return var_0_0

@@ -1,12 +1,12 @@
-module("modules.logic.explore.view.ExploreViewContainer", package.seeall)
+﻿module("modules.logic.explore.view.ExploreViewContainer", package.seeall)
 
-slot0 = class("ExploreViewContainer", BaseViewContainer)
+local var_0_0 = class("ExploreViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		ExploreView.New(),
 		ExploreSmallMapView.New()
 	}
 end
 
-return slot0
+return var_0_0

@@ -1,55 +1,58 @@
-module("modules.logic.playercard.view.comp.PlayerCardAchievementSelectIcon", package.seeall)
+﻿module("modules.logic.playercard.view.comp.PlayerCardAchievementSelectIcon", package.seeall)
 
-slot0 = class("PlayerCardAchievementSelectIcon", UserDataDispose)
+local var_0_0 = class("PlayerCardAchievementSelectIcon", UserDataDispose)
 
-function slot0.init(slot0, slot1, slot2)
-	slot0:__onInit()
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0:__onInit()
 
-	slot0.viewGO = slot1
-	slot0.iconGO = slot2
+	arg_1_0.viewGO = arg_1_1
+	arg_1_0.iconGO = arg_1_2
 
-	slot0:initComponents()
+	arg_1_0:initComponents()
 end
 
-function slot0.initComponents(slot0)
-	slot0._goicon = gohelper.findChild(slot0.viewGO, "#go_icon")
-	slot0._icon = AchievementMainIcon.New()
+function var_0_0.initComponents(arg_2_0)
+	arg_2_0._goicon = gohelper.findChild(arg_2_0.viewGO, "#go_icon")
+	arg_2_0._icon = AchievementMainIcon.New()
 
-	slot0._icon:init(slot0.iconGO)
-	slot0._icon:setClickCall(slot0.onClickSelf, slot0)
-	gohelper.addChild(slot0._goicon, slot0.iconGO)
+	arg_2_0._icon:init(arg_2_0.iconGO)
+	arg_2_0._icon:setClickCall(arg_2_0.onClickSelf, arg_2_0)
+	gohelper.addChild(arg_2_0._goicon, arg_2_0.iconGO)
 end
 
-function slot0.setData(slot0, slot1)
-	slot0.taskCO = slot1
+function var_0_0.setData(arg_3_0, arg_3_1)
+	arg_3_0.taskCO = arg_3_1
 
-	slot0:refreshUI()
+	arg_3_0:refreshUI()
 end
 
-function slot0.refreshUI(slot0)
-	slot0._icon:setData(slot0.taskCO)
-	slot0._icon:setBgVisible(true)
+function var_0_0.refreshUI(arg_4_0)
+	arg_4_0._icon:setData(arg_4_0.taskCO)
+	arg_4_0._icon:setBgVisible(true)
 
-	slot1 = PlayerCardAchievementSelectListModel.instance:isSingleSelected(slot0.taskCO.id)
+	local var_4_0 = PlayerCardAchievementSelectListModel.instance:isSingleSelected(arg_4_0.taskCO.id)
 
-	slot0._icon:setSelectIconVisible(slot1)
+	arg_4_0._icon:setSelectIconVisible(var_4_0)
 
-	if slot1 then
-		slot0._icon:setSelectIndex(PlayerCardAchievementSelectListModel.instance:getSelectOrderIndex(slot0.taskCO.id))
+	if var_4_0 then
+		arg_4_0._icon:setSelectIndex(PlayerCardAchievementSelectListModel.instance:getSelectOrderIndex(arg_4_0.taskCO.id))
 	end
 end
 
-function slot0.onClickSelf(slot0)
-	PlayerCardAchievementSelectController.instance:changeSingleSelect(slot0.taskCO.id)
-	AudioMgr.instance:trigger(PlayerCardAchievementSelectListModel.instance:isSingleSelected(slot0.taskCO.id) and AudioEnum.UI.play_ui_hero_card_click or AudioEnum.UI.play_ui_hero_card_gone)
+function var_0_0.onClickSelf(arg_5_0)
+	PlayerCardAchievementSelectController.instance:changeSingleSelect(arg_5_0.taskCO.id)
+
+	local var_5_0 = PlayerCardAchievementSelectListModel.instance:isSingleSelected(arg_5_0.taskCO.id)
+
+	AudioMgr.instance:trigger(var_5_0 and AudioEnum.UI.play_ui_hero_card_click or AudioEnum.UI.play_ui_hero_card_gone)
 end
 
-function slot0.dispose(slot0)
-	if slot0._icon then
-		slot0._icon:dispose()
+function var_0_0.dispose(arg_6_0)
+	if arg_6_0._icon then
+		arg_6_0._icon:dispose()
 	end
 
-	slot0:__onDispose()
+	arg_6_0:__onDispose()
 end
 
-return slot0
+return var_0_0

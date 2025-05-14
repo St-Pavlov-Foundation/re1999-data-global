@@ -1,25 +1,26 @@
-module("modules.logic.equip.view.EquipChooseViewContainer", package.seeall)
+﻿module("modules.logic.equip.view.EquipChooseViewContainer", package.seeall)
 
-slot0 = class("EquipChooseViewContainer", BaseViewContainer)
+local var_0_0 = class("EquipChooseViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = ListScrollParam.New()
-	slot1.scrollGOPath = "#scroll_equip"
-	slot1.prefabType = ScrollEnum.ScrollPrefabFromRes
-	slot1.prefabUrl = slot0._viewSetting.otherRes[1]
-	slot1.cellClass = EquipChooseItem
-	slot1.scrollDir = ScrollEnum.ScrollDirV
-	slot1.lineCount = 4
-	slot1.cellWidth = 232
-	slot1.cellHeight = 232
-	slot1.cellSpaceH = 15
-	slot1.cellSpaceV = 15
-	slot1.startSpace = 60
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = ListScrollParam.New()
+
+	var_1_0.scrollGOPath = "#scroll_equip"
+	var_1_0.prefabType = ScrollEnum.ScrollPrefabFromRes
+	var_1_0.prefabUrl = arg_1_0._viewSetting.otherRes[1]
+	var_1_0.cellClass = EquipChooseItem
+	var_1_0.scrollDir = ScrollEnum.ScrollDirV
+	var_1_0.lineCount = 4
+	var_1_0.cellWidth = 232
+	var_1_0.cellHeight = 232
+	var_1_0.cellSpaceH = 15
+	var_1_0.cellSpaceV = 15
+	var_1_0.startSpace = 60
 
 	return {
-		LuaListScrollView.New(EquipChooseListModel.instance, slot1),
+		LuaListScrollView.New(EquipChooseListModel.instance, var_1_0),
 		EquipChooseView.New()
 	}
 end
 
-return slot0
+return var_0_0

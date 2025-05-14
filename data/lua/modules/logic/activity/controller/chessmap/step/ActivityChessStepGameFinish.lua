@@ -1,41 +1,48 @@
-module("modules.logic.activity.controller.chessmap.step.ActivityChessStepGameFinish", package.seeall)
+﻿module("modules.logic.activity.controller.chessmap.step.ActivityChessStepGameFinish", package.seeall)
 
-slot0 = class("ActivityChessStepGameFinish", ActivityChessStepBase)
+local var_0_0 = class("ActivityChessStepGameFinish", ActivityChessStepBase)
 
-function slot0.start(slot0)
-	slot0:processSelectObj()
-	slot0:processWinStatus()
+function var_0_0.start(arg_1_0)
+	arg_1_0:processSelectObj()
+	arg_1_0:processWinStatus()
 end
 
-function slot0.processSelectObj(slot0)
+function var_0_0.processSelectObj(arg_2_0)
 	ActivityChessGameController.instance:setSelectObj(nil)
 end
 
-function slot0.processWinStatus(slot0)
-	if slot0.originData.win == true then
+function var_0_0.processWinStatus(arg_3_0)
+	if arg_3_0.originData.win == true then
 		logNormal("game clear!")
 		ActivityChessGameController.instance:gameClear()
 	else
 		logNormal("game over!")
 
-		if slot0.originData.failReason == ActivityChessEnum.FailReason.FailInteract then
-			slot2 = ActivityChessGameController.instance.interacts
+		if arg_3_0.originData.failReason == ActivityChessEnum.FailReason.FailInteract then
+			local var_3_0 = arg_3_0.originData.failCharacter
+			local var_3_1 = ActivityChessGameController.instance.interacts
 
-			if slot0.originData.failCharacter ~= 0 and slot2 then
-				slot6 = "OnChessFailPause" .. Activity109ChessModel.instance:getEpisodeId() .. "_" .. (slot2:get(slot1).config and slot4.id or "")
+			if var_3_0 ~= 0 and var_3_1 then
+				local var_3_2 = var_3_1:get(var_3_0).config
+				local var_3_3 = Activity109ChessModel.instance:getEpisodeId()
+				local var_3_4 = "OnChessFailPause" .. var_3_3 .. "_" .. (var_3_2 and var_3_2.id or "")
+				local var_3_5 = GuideEvent[var_3_4]
+				local var_3_6 = GuideEvent.OnChessFailContinue
+				local var_3_7 = var_0_0._gameOver
+				local var_3_8 = arg_3_0
 
-				GuideController.instance:GuideFlowPauseAndContinue(slot6, GuideEvent[slot6], GuideEvent.OnChessFailContinue, uv0._gameOver, slot0)
+				GuideController.instance:GuideFlowPauseAndContinue(var_3_4, var_3_5, var_3_6, var_3_7, var_3_8)
 
 				return
 			end
 		end
 
-		slot0:_gameOver()
+		arg_3_0:_gameOver()
 	end
 end
 
-function slot0._gameOver(slot0)
+function var_0_0._gameOver(arg_4_0)
 	ActivityChessGameController.instance:gameOver()
 end
 
-return slot0
+return var_0_0

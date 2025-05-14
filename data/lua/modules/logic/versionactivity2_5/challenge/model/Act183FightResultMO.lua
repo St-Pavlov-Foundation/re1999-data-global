@@ -1,23 +1,23 @@
-module("modules.logic.versionactivity2_5.challenge.model.Act183FightResultMO", package.seeall)
+﻿module("modules.logic.versionactivity2_5.challenge.model.Act183FightResultMO", package.seeall)
 
-slot0 = pureTable("Act183FightResultMO")
+local var_0_0 = pureTable("Act183FightResultMO")
 
-function slot0.init(slot0, slot1)
-	slot0._episodeId = slot1.episodeId
-	slot0._heroes = Act183Helper.rpcInfosToList(slot1.heroes, Act183HeroMO)
-	slot0._unlockConditions = {}
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0._episodeId = arg_1_1.episodeId
+	arg_1_0._heroes = Act183Helper.rpcInfosToList(arg_1_1.heroes, Act183HeroMO)
+	arg_1_0._unlockConditions = {}
 
-	tabletool.addValues(slot0._unlockConditions, slot1.unlockConditions)
+	tabletool.addValues(arg_1_0._unlockConditions, arg_1_1.unlockConditions)
 end
 
-function slot0.getHeroes(slot0)
-	return slot0._heroes
+function var_0_0.getHeroes(arg_2_0)
+	return arg_2_0._heroes
 end
 
-function slot0.isConditionPass(slot0, slot1)
-	if slot0._unlockConditions then
-		return tabletool.indexOf(slot0._unlockConditions, slot1) ~= nil
+function var_0_0.isConditionPass(arg_3_0, arg_3_1)
+	if arg_3_0._unlockConditions then
+		return tabletool.indexOf(arg_3_0._unlockConditions, arg_3_1) ~= nil
 	end
 end
 
-return slot0
+return var_0_0

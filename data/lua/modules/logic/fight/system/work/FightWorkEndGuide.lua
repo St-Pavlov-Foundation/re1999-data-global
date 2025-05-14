@@ -1,13 +1,13 @@
-module("modules.logic.fight.system.work.FightWorkEndGuide", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkEndGuide", package.seeall)
 
-slot0 = class("FightWorkEndGuide", BaseWork)
+local var_0_0 = class("FightWorkEndGuide", BaseWork)
 
-function slot0.onStart(slot0)
-	FightController.instance:GuideFlowPauseAndContinue("OnGuideFightEndPause", FightEvent.OnGuideFightEndPause, FightEvent.OnGuideFightEndContinue, slot0._done, slot0)
+function var_0_0.onStart(arg_1_0)
+	FightController.instance:GuideFlowPauseAndContinue("OnGuideFightEndPause", FightEvent.OnGuideFightEndPause, FightEvent.OnGuideFightEndContinue, arg_1_0._done, arg_1_0)
 end
 
-function slot0._done(slot0)
-	slot0:onDone(true)
+function var_0_0._done(arg_2_0)
+	arg_2_0:onDone(true)
 end
 
-return slot0
+return var_0_0

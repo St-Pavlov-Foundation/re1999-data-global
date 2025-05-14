@@ -1,13 +1,13 @@
-module("modules.logic.rouge.map.view.nextlayer.RougeNextLayerViewContainer", package.seeall)
+﻿module("modules.logic.rouge.map.view.nextlayer.RougeNextLayerViewContainer", package.seeall)
 
-slot0 = class("RougeNextLayerViewContainer", BaseViewContainer)
+local var_0_0 = class("RougeNextLayerViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, RougeNextLayerView.New())
+	table.insert(var_1_0, RougeNextLayerView.New())
 
-	return slot1
+	return var_1_0
 end
 
-return slot0
+return var_0_0

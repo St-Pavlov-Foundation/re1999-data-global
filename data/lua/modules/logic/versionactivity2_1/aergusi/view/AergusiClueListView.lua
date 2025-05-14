@@ -1,37 +1,37 @@
-module("modules.logic.versionactivity2_1.aergusi.view.AergusiClueListView", package.seeall)
+﻿module("modules.logic.versionactivity2_1.aergusi.view.AergusiClueListView", package.seeall)
 
-slot0 = class("AergusiClueListView", BaseView)
+local var_0_0 = class("AergusiClueListView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._scrollclueitems = gohelper.findChildScrollRect(slot0.viewGO, "Left/#scroll_clueitems")
-	slot0._goscrollcontent = gohelper.findChild(slot0.viewGO, "Left/#scroll_clueitems/viewport/content")
-	slot0._btntimes = gohelper.findChildButtonWithAudio(slot0.viewGO, "Left/titlebg/titlecn/#btn_times")
-	slot0._gotimegrey = gohelper.findChild(slot0.viewGO, "Left/titlebg/titlecn/#btn_times/grey")
-	slot0._txttimes = gohelper.findChildText(slot0.viewGO, "Left/titlebg/titlecn/#btn_times/#txt_times")
-	slot0._btnmix = gohelper.findChildButtonWithAudio(slot0.viewGO, "Left/#btn_mix")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._scrollclueitems = gohelper.findChildScrollRect(arg_1_0.viewGO, "Left/#scroll_clueitems")
+	arg_1_0._goscrollcontent = gohelper.findChild(arg_1_0.viewGO, "Left/#scroll_clueitems/viewport/content")
+	arg_1_0._btntimes = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/titlebg/titlecn/#btn_times")
+	arg_1_0._gotimegrey = gohelper.findChild(arg_1_0.viewGO, "Left/titlebg/titlecn/#btn_times/grey")
+	arg_1_0._txttimes = gohelper.findChildText(arg_1_0.viewGO, "Left/titlebg/titlecn/#btn_times/#txt_times")
+	arg_1_0._btnmix = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/#btn_mix")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnmix:AddClickListener(slot0._btnmixOnClick, slot0)
-	slot0._btntimes:AddClickListener(slot0._btntimesOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnmix:AddClickListener(arg_2_0._btnmixOnClick, arg_2_0)
+	arg_2_0._btntimes:AddClickListener(arg_2_0._btntimesOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnmix:RemoveClickListener()
-	slot0._btntimes:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnmix:RemoveClickListener()
+	arg_3_0._btntimes:RemoveClickListener()
 end
 
-function slot0._btnmixOnClick(slot0)
+function var_0_0._btnmixOnClick(arg_4_0)
 	AergusiModel.instance:setMergeClueOpen(true)
 	AergusiController.instance:dispatchEvent(AergusiEvent.OnClickStartMergeClue)
 end
 
-function slot0._btntimesOnClick(slot0)
-	if not slot0.viewParam.couldPrompt then
+function var_0_0._btntimesOnClick(arg_5_0)
+	if not arg_5_0.viewParam.couldPrompt then
 		return
 	end
 
@@ -39,268 +39,315 @@ function slot0._btntimesOnClick(slot0)
 		return
 	end
 
-	if not AergusiDialogModel.instance:getNextPromptOperate(true) then
-		if not AergusiDialogModel.instance:getLastPromptOperate(true) or not slot3.clueId or slot0.viewParam.stepId ~= slot3.stepId then
+	local var_5_0 = AergusiDialogModel.instance:getNextPromptOperate(true)
+
+	if not var_5_0 then
+		local var_5_1 = AergusiDialogModel.instance:getLastPromptOperate(true)
+
+		if not var_5_1 or not var_5_1.clueId or arg_5_0.viewParam.stepId ~= var_5_1.stepId then
+			var_5_1 = AergusiDialogModel.instance:getLastPromptOperate(false)
+
 			GameFacade.showToast(ToastEnum.Act163HasTiped)
-			AergusiController.instance:dispatchEvent(AergusiEvent.OnClickShowResultTip, AergusiDialogModel.instance:getLastPromptOperate(false))
-			slot0:closeThis()
+			AergusiController.instance:dispatchEvent(AergusiEvent.OnClickShowResultTip, var_5_1)
+			arg_5_0:closeThis()
 
 			return
 		end
 
 		GameFacade.showToast(ToastEnum.Act163HasTiped)
-		slot0:_showTipClue(slot3.clueId)
+		arg_5_0:_showTipClue(var_5_1.clueId)
 
 		return
-	elseif slot0.viewParam.stepId ~= slot2.stepId and not AergusiDialogModel.instance:getNextPromptOperate(false) then
+	elseif arg_5_0.viewParam.stepId ~= var_5_0.stepId and not AergusiDialogModel.instance:getNextPromptOperate(false) then
 		GameFacade.showToast(ToastEnum.Act163HasTiped)
-		AergusiController.instance:dispatchEvent(AergusiEvent.OnClickShowResultTip, AergusiDialogModel.instance:getLastPromptOperate(false))
-		slot0:closeThis()
+
+		local var_5_2 = AergusiDialogModel.instance:getLastPromptOperate(false)
+
+		AergusiController.instance:dispatchEvent(AergusiEvent.OnClickShowResultTip, var_5_2)
+		arg_5_0:closeThis()
 
 		return
 	end
 
-	Activity163Rpc.instance:sendAct163EvidenceOperationRequest(VersionActivity2_1Enum.ActivityId.Aergusi, slot0.viewParam.episodeId, AergusiEnum.OperationType.Tip, "", slot0._onShowTipFinished, slot0)
+	local var_5_3 = VersionActivity2_1Enum.ActivityId.Aergusi
+	local var_5_4 = arg_5_0.viewParam.episodeId
+	local var_5_5 = AergusiEnum.OperationType.Tip
+	local var_5_6 = ""
+
+	Activity163Rpc.instance:sendAct163EvidenceOperationRequest(var_5_3, var_5_4, var_5_5, var_5_6, arg_5_0._onShowTipFinished, arg_5_0)
 end
 
-function slot0._onShowTipFinished(slot0, slot1, slot2, slot3)
-	if slot2 ~= 0 then
+function var_0_0._onShowTipFinished(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
+	if arg_6_2 ~= 0 then
 		return
 	end
 
-	if slot0.viewParam.stepId ~= AergusiDialogModel.instance:getNextPromptOperate(true).stepId then
-		slot0:closeThis()
+	local var_6_0 = AergusiDialogModel.instance:getNextPromptOperate(true)
 
-		slot4 = AergusiDialogModel.instance:getNextPromptOperate(false)
+	if arg_6_0.viewParam.stepId ~= var_6_0.stepId then
+		arg_6_0:closeThis()
 
-		AergusiController.instance:dispatchEvent(AergusiEvent.OnClickShowResultTip, slot4)
-		AergusiDialogModel.instance:addPromptOperate(slot4, false)
+		var_6_0 = AergusiDialogModel.instance:getNextPromptOperate(false)
+
+		AergusiController.instance:dispatchEvent(AergusiEvent.OnClickShowResultTip, var_6_0)
+		AergusiDialogModel.instance:addPromptOperate(var_6_0, false)
 
 		return
 	end
 
-	slot0:_showTipClue(slot4.clueId)
-	AergusiDialogModel.instance:addPromptOperate(slot4, true)
+	arg_6_0:_showTipClue(var_6_0.clueId)
+	AergusiDialogModel.instance:addPromptOperate(var_6_0, true)
 end
 
-function slot0._showTipClue(slot0, slot1)
-	if not slot1 or slot1 <= 0 then
+function var_0_0._showTipClue(arg_7_0, arg_7_1)
+	if not arg_7_1 or arg_7_1 <= 0 then
 		return
 	end
 
-	AergusiModel.instance:setCurClueId(slot1)
-	table.insert({}, slot1)
+	AergusiModel.instance:setCurClueId(arg_7_1)
 
-	if AergusiConfig.instance:getClueConfig(slot1).materialId ~= "" then
-		for slot8, slot9 in ipairs(string.splitToNumber(slot2.materialId, "#")) do
-			table.insert(slot3, slot9)
+	local var_7_0 = AergusiConfig.instance:getClueConfig(arg_7_1)
+	local var_7_1 = {}
+
+	table.insert(var_7_1, arg_7_1)
+
+	if var_7_0.materialId ~= "" then
+		local var_7_2 = string.splitToNumber(var_7_0.materialId, "#")
+
+		for iter_7_0, iter_7_1 in ipairs(var_7_2) do
+			table.insert(var_7_1, iter_7_1)
 		end
 	end
 
-	for slot7, slot8 in pairs(slot0._clueItems) do
-		slot9 = false
+	for iter_7_2, iter_7_3 in pairs(arg_7_0._clueItems) do
+		local var_7_3 = false
 
-		for slot13, slot14 in pairs(slot3) do
-			if slot8:getClueId() == slot14 then
-				slot9 = true
+		for iter_7_4, iter_7_5 in pairs(var_7_1) do
+			if iter_7_3:getClueId() == iter_7_5 then
+				var_7_3 = true
 			end
 		end
 
-		slot8:showTips(slot9)
+		iter_7_3:showTips(var_7_3)
 	end
 
 	AergusiController.instance:dispatchEvent(AergusiEvent.OnPlayPromptTip)
 end
 
-function slot0._editableInitView(slot0)
-	slot0._drag = UIDragListenerHelper.New()
+function var_0_0._editableInitView(arg_8_0)
+	arg_8_0._drag = UIDragListenerHelper.New()
 
-	slot0._drag:createByScrollRect(slot0._scrollclueitems.gameObject)
-	slot0:_addEvents()
+	arg_8_0._drag:createByScrollRect(arg_8_0._scrollclueitems.gameObject)
+	arg_8_0:_addEvents()
 
-	slot0._clueLines = {}
+	arg_8_0._clueLines = {}
 
-	for slot4 = 1, 3 do
-		slot5 = gohelper.findChild(slot0._scrollclueitems.gameObject, "viewport/content/Line" .. slot4)
-		slot6 = {
-			go = slot5,
-			anim = slot5:GetComponent(typeof(slot10)),
+	for iter_8_0 = 1, 3 do
+		local var_8_0 = gohelper.findChild(arg_8_0._scrollclueitems.gameObject, "viewport/content/Line" .. iter_8_0)
+		local var_8_1 = {
+			go = var_8_0,
+			anim = var_8_0:GetComponent(typeof(UnityEngine.Animator)),
 			items = {}
 		}
-		slot10 = UnityEngine.Animator
 
-		for slot10 = 1, 3 do
-			slot6.items[slot10] = {
-				root = gohelper.findChild(slot6.go, string.format("clue%s_%s", slot4, slot10))
-			}
-			slot6.items[slot10].go = slot0:getResInst(slot0.viewContainer:getSetting().otherRes[1], slot6.items[slot10].root, "clueitem")
+		for iter_8_1 = 1, 3 do
+			var_8_1.items[iter_8_1] = {}
+			var_8_1.items[iter_8_1].root = gohelper.findChild(var_8_1.go, string.format("clue%s_%s", iter_8_0, iter_8_1))
+
+			local var_8_2 = arg_8_0:getResInst(arg_8_0.viewContainer:getSetting().otherRes[1], var_8_1.items[iter_8_1].root, "clueitem")
+
+			var_8_1.items[iter_8_1].go = var_8_2
 		end
 
-		slot0._clueLines[slot4] = slot6
+		arg_8_0._clueLines[iter_8_0] = var_8_1
 	end
 
-	slot0._clueItems = {}
+	arg_8_0._clueItems = {}
 end
 
-function slot0.onOpen(slot0)
-	slot0._isInEpisode = slot0.viewParam and slot0.viewParam.episodeId > 0
-	slot0._clueConfigs = slot0:_getClueConfigs()
+function var_0_0.onOpen(arg_9_0)
+	arg_9_0._isInEpisode = arg_9_0.viewParam and arg_9_0.viewParam.episodeId > 0
+	arg_9_0._clueConfigs = arg_9_0:_getClueConfigs()
 
-	AergusiModel.instance:setCurClueId(slot0._clueConfigs[1].clueId)
-	slot0:_refreshClueRoots()
-	slot0:_refreshItem()
-	slot0:_refreshBtn()
-	slot0:_playRootsAnim("move1")
+	local var_9_0 = arg_9_0._clueConfigs[1].clueId
+
+	AergusiModel.instance:setCurClueId(var_9_0)
+	arg_9_0:_refreshClueRoots()
+	arg_9_0:_refreshItem()
+	arg_9_0:_refreshBtn()
+	arg_9_0:_playRootsAnim("move1")
 
 	if AergusiDialogModel.instance:getUnlockAutoShow() then
-		if not AergusiDialogModel.instance:getNextPromptOperate(true) then
+		local var_9_1 = AergusiDialogModel.instance:getNextPromptOperate(true)
+
+		if not var_9_1 then
+			local var_9_2 = AergusiDialogModel.instance:getLastPromptOperate(true, arg_9_0.viewParam.stepId)
+
 			GameFacade.showToast(ToastEnum.Act163HasTiped)
-			slot0:_showTipClue(AergusiDialogModel.instance:getLastPromptOperate(true, slot0.viewParam.stepId).clueId)
+			arg_9_0:_showTipClue(var_9_2.clueId)
 
 			return
 		end
 
-		slot0:_showTipClue(slot2.clueId)
+		arg_9_0:_showTipClue(var_9_1.clueId)
 	end
 end
 
-function slot0._playRootsAnim(slot0, slot1)
-	for slot5, slot6 in pairs(slot0._clueLines) do
-		slot6.anim:Play(slot1, 0, 0)
+function var_0_0._playRootsAnim(arg_10_0, arg_10_1)
+	for iter_10_0, iter_10_1 in pairs(arg_10_0._clueLines) do
+		iter_10_1.anim:Play(arg_10_1, 0, 0)
 	end
 end
 
-function slot0._refreshClueRoots(slot0)
-	slot1 = #slot0._clueConfigs % 3 == 0 and math.floor(#slot0._clueConfigs / 3) or math.floor(#slot0._clueConfigs / 3) + 1
+function var_0_0._refreshClueRoots(arg_11_0)
+	local var_11_0 = #arg_11_0._clueConfigs % 3 == 0 and math.floor(#arg_11_0._clueConfigs / 3) or math.floor(#arg_11_0._clueConfigs / 3) + 1
 
-	for slot5, slot6 in ipairs(slot0._clueLines) do
-		gohelper.setActive(slot6.go, false)
+	for iter_11_0, iter_11_1 in ipairs(arg_11_0._clueLines) do
+		gohelper.setActive(iter_11_1.go, false)
 	end
 
-	for slot5 = 1, slot1 do
-		if not slot0._clueLines[slot5] then
-			slot7 = gohelper.cloneInPlace(slot0._clueLines[slot5 % 3 == 0 and 3 or slot5 % 3].go, "Line" .. tostring(slot5))
-			slot8 = {
-				go = slot7,
-				anim = slot7:GetComponent(typeof(slot12)),
+	for iter_11_2 = 1, var_11_0 do
+		if not arg_11_0._clueLines[iter_11_2] then
+			local var_11_1 = iter_11_2 % 3 == 0 and 3 or iter_11_2 % 3
+			local var_11_2 = gohelper.cloneInPlace(arg_11_0._clueLines[var_11_1].go, "Line" .. tostring(iter_11_2))
+			local var_11_3 = {
+				go = var_11_2,
+				anim = var_11_2:GetComponent(typeof(UnityEngine.Animator)),
 				items = {}
 			}
-			slot12 = UnityEngine.Animator
 
-			for slot12 = 1, 3 do
-				slot8.items[slot12] = {
-					root = gohelper.findChild(slot8.go, string.format("clue%s_%s", slot6, slot12))
-				}
-				slot8.items[slot12].go = gohelper.findChild(slot8.items[slot12].root, "clueitem")
+			for iter_11_3 = 1, 3 do
+				var_11_3.items[iter_11_3] = {}
+				var_11_3.items[iter_11_3].root = gohelper.findChild(var_11_3.go, string.format("clue%s_%s", var_11_1, iter_11_3))
+
+				local var_11_4 = gohelper.findChild(var_11_3.items[iter_11_3].root, "clueitem")
+
+				var_11_3.items[iter_11_3].go = var_11_4
 			end
 
-			slot0._clueLines[slot5] = slot8
+			arg_11_0._clueLines[iter_11_2] = var_11_3
 		end
 
-		gohelper.setActive(slot0._clueLines[slot5].go, true)
+		gohelper.setActive(arg_11_0._clueLines[iter_11_2].go, true)
 	end
 
-	if #slot0._clueConfigs % 3 > 0 then
-		for slot5 = #slot0._clueConfigs % 3, 3 do
-			gohelper.setActive(slot0._clueLines[slot1].items[slot5].go, false)
+	if #arg_11_0._clueConfigs % 3 > 0 then
+		for iter_11_4 = #arg_11_0._clueConfigs % 3, 3 do
+			gohelper.setActive(arg_11_0._clueLines[var_11_0].items[iter_11_4].go, false)
 		end
 	end
 end
 
-function slot0._getClueConfigs(slot0)
-	slot1 = {}
+function var_0_0._getClueConfigs(arg_12_0)
+	local var_12_0 = {}
 
-	return (not slot0._isInEpisode or AergusiModel.instance:getEpisodeClueConfigs(slot0.viewParam.episodeId, slot0._isInEpisode)) and AergusiModel.instance:getAllClues(slot0._isInEpisode)
-end
-
-function slot0._refreshItem(slot0)
-	for slot4, slot5 in pairs(slot0._clueItems) do
-		slot5:hide()
-	end
-
-	for slot4, slot5 in ipairs(slot0._clueConfigs) do
-		if not slot0._clueItems[slot4] then
-			slot6 = slot4 % 3 == 0 and math.floor(slot4 / 3) or math.floor(slot4 / 3) + 1
-			slot8 = AergusiClueItem.New()
-
-			slot8:init(slot0._clueLines[slot6].items[slot4 - 3 * (slot6 - 1)].go, slot4)
-
-			slot0._clueItems[slot4] = slot8
-		end
-
-		slot0._clueItems[slot4]:setInEpisode(slot0._isInEpisode)
-		slot0._clueItems[slot4]:refresh(slot5, slot0.viewParam and slot0.viewParam.stepId)
-	end
-end
-
-function slot0._refreshBtn(slot0)
-	slot1 = false
-
-	if slot0.viewParam and slot0.viewParam.episodeId then
-		slot0._txttimes.text = AergusiDialogModel.instance:getLeftPromptTimes()
-		slot1 = AergusiConfig.instance:getEvidenceConfig(AergusiDialogModel.instance:getCurDialogGroup()).showFusion > 0 and #AergusiModel.instance:getCouldMergeClues(slot0._clueConfigs) > 0
-
-		gohelper.setActive(slot0._btntimes.gameObject, true)
-		gohelper.setActive(slot0._gotimegrey, not slot0.viewParam.couldPrompt or slot2 <= 0)
+	if arg_12_0._isInEpisode then
+		var_12_0 = AergusiModel.instance:getEpisodeClueConfigs(arg_12_0.viewParam.episodeId, arg_12_0._isInEpisode)
 	else
-		gohelper.setActive(slot0._btntimes.gameObject, false)
+		var_12_0 = AergusiModel.instance:getAllClues(arg_12_0._isInEpisode)
 	end
 
-	if slot1 then
+	return var_12_0
+end
+
+function var_0_0._refreshItem(arg_13_0)
+	for iter_13_0, iter_13_1 in pairs(arg_13_0._clueItems) do
+		iter_13_1:hide()
+	end
+
+	for iter_13_2, iter_13_3 in ipairs(arg_13_0._clueConfigs) do
+		if not arg_13_0._clueItems[iter_13_2] then
+			local var_13_0 = iter_13_2 % 3 == 0 and math.floor(iter_13_2 / 3) or math.floor(iter_13_2 / 3) + 1
+			local var_13_1 = iter_13_2 - 3 * (var_13_0 - 1)
+			local var_13_2 = AergusiClueItem.New()
+			local var_13_3 = arg_13_0._clueLines[var_13_0].items[var_13_1].go
+
+			var_13_2:init(var_13_3, iter_13_2)
+
+			arg_13_0._clueItems[iter_13_2] = var_13_2
+		end
+
+		arg_13_0._clueItems[iter_13_2]:setInEpisode(arg_13_0._isInEpisode)
+		arg_13_0._clueItems[iter_13_2]:refresh(iter_13_3, arg_13_0.viewParam and arg_13_0.viewParam.stepId)
+	end
+end
+
+function var_0_0._refreshBtn(arg_14_0)
+	local var_14_0 = false
+
+	if arg_14_0.viewParam and arg_14_0.viewParam.episodeId then
+		local var_14_1 = AergusiDialogModel.instance:getLeftPromptTimes()
+
+		arg_14_0._txttimes.text = var_14_1
+
+		local var_14_2 = AergusiDialogModel.instance:getCurDialogGroup()
+		local var_14_3 = AergusiConfig.instance:getEvidenceConfig(var_14_2)
+		local var_14_4 = AergusiModel.instance:getCouldMergeClues(arg_14_0._clueConfigs)
+
+		var_14_0 = var_14_3.showFusion > 0 and #var_14_4 > 0
+
+		gohelper.setActive(arg_14_0._btntimes.gameObject, true)
+		gohelper.setActive(arg_14_0._gotimegrey, not arg_14_0.viewParam.couldPrompt or var_14_1 <= 0)
+	else
+		gohelper.setActive(arg_14_0._btntimes.gameObject, false)
+	end
+
+	if var_14_0 then
 		AergusiController.instance:dispatchEvent(AergusiEvent.OnGuideShowClueMerge)
 	end
 
-	gohelper.setActive(slot0._btnmix.gameObject, slot1)
+	gohelper.setActive(arg_14_0._btnmix.gameObject, var_14_0)
 end
 
-function slot0._addEvents(slot0)
-	AergusiController.instance:registerCallback(AergusiEvent.StartOperation, slot0._onRefreshClueList, slot0)
-	AergusiController.instance:registerCallback(AergusiEvent.OnPlayMergeSuccess, slot0._onRefreshClueList, slot0)
-	slot0._drag:registerCallback(slot0._drag.EventBegin, slot0._onDragBegin, slot0)
-	slot0._drag:registerCallback(slot0._drag.EventEnd, slot0._onDragEnd, slot0)
+function var_0_0._addEvents(arg_15_0)
+	AergusiController.instance:registerCallback(AergusiEvent.StartOperation, arg_15_0._onRefreshClueList, arg_15_0)
+	AergusiController.instance:registerCallback(AergusiEvent.OnPlayMergeSuccess, arg_15_0._onRefreshClueList, arg_15_0)
+	arg_15_0._drag:registerCallback(arg_15_0._drag.EventBegin, arg_15_0._onDragBegin, arg_15_0)
+	arg_15_0._drag:registerCallback(arg_15_0._drag.EventEnd, arg_15_0._onDragEnd, arg_15_0)
 end
 
-function slot0._removeEvents(slot0)
-	AergusiController.instance:unregisterCallback(AergusiEvent.StartOperation, slot0._onRefreshClueList, slot0)
-	AergusiController.instance:unregisterCallback(AergusiEvent.OnPlayMergeSuccess, slot0._onRefreshClueList, slot0)
-	slot0._drag:release()
+function var_0_0._removeEvents(arg_16_0)
+	AergusiController.instance:unregisterCallback(AergusiEvent.StartOperation, arg_16_0._onRefreshClueList, arg_16_0)
+	AergusiController.instance:unregisterCallback(AergusiEvent.OnPlayMergeSuccess, arg_16_0._onRefreshClueList, arg_16_0)
+	arg_16_0._drag:release()
 end
 
-function slot0._onDragBegin(slot0)
-	slot0._positionX, slot0._positionY = transformhelper.getPos(slot0._goscrollcontent.transform)
+function var_0_0._onDragBegin(arg_17_0)
+	arg_17_0._positionX, arg_17_0._positionY = transformhelper.getPos(arg_17_0._goscrollcontent.transform)
 end
 
-function slot0._onDragEnd(slot0)
-	slot1, slot2 = transformhelper.getPos(slot0._goscrollcontent.transform)
+function var_0_0._onDragEnd(arg_18_0)
+	local var_18_0, var_18_1 = transformhelper.getPos(arg_18_0._goscrollcontent.transform)
 
-	if slot2 - 50 < slot0._positionY then
-		slot0:_playRootsAnim("move2")
-	elseif slot0._positionY < slot2 + 50 then
-		slot0:_playRootsAnim("move1")
+	if var_18_1 - 50 < arg_18_0._positionY then
+		arg_18_0:_playRootsAnim("move2")
+	elseif var_18_1 + 50 > arg_18_0._positionY then
+		arg_18_0:_playRootsAnim("move1")
 	end
 end
 
-function slot0._onRefreshClueList(slot0)
-	slot0._clueConfigs = slot0:_getClueConfigs()
+function var_0_0._onRefreshClueList(arg_19_0)
+	arg_19_0._clueConfigs = arg_19_0:_getClueConfigs()
 
-	slot0:_refreshClueRoots()
-	slot0:_refreshItem()
-	slot0:_refreshBtn()
+	arg_19_0:_refreshClueRoots()
+	arg_19_0:_refreshItem()
+	arg_19_0:_refreshBtn()
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_20_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	slot0:_removeEvents()
+function var_0_0.onDestroyView(arg_21_0)
+	arg_21_0:_removeEvents()
 
-	if slot0._clueItems then
-		for slot4, slot5 in pairs(slot0._clueItems) do
-			slot5:destroy()
+	if arg_21_0._clueItems then
+		for iter_21_0, iter_21_1 in pairs(arg_21_0._clueItems) do
+			iter_21_1:destroy()
 		end
 
-		slot0._clueItems = nil
+		arg_21_0._clueItems = nil
 	end
 end
 
-return slot0
+return var_0_0

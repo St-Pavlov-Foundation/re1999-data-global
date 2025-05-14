@@ -1,100 +1,118 @@
-module("modules.logic.bossrush.model.V2a1_BossRush_SpecialScheduleViewListModel", package.seeall)
+﻿module("modules.logic.bossrush.model.V2a1_BossRush_SpecialScheduleViewListModel", package.seeall)
 
-slot0 = class("V2a1_BossRush_SpecialScheduleViewListModel", ListScrollModel)
+local var_0_0 = class("V2a1_BossRush_SpecialScheduleViewListModel", ListScrollModel)
 
-function slot0.setStaticData(slot0, slot1)
-	slot0._staticData = slot1
+function var_0_0.setStaticData(arg_1_0, arg_1_1)
+	arg_1_0._staticData = arg_1_1
 end
 
-function slot0.claimRewardByIndex(slot0, slot1)
-	if not slot0:getByIndex(slot1) then
+function var_0_0.claimRewardByIndex(arg_2_0, arg_2_1)
+	local var_2_0 = arg_2_0:getByIndex(arg_2_1)
+
+	if not var_2_0 then
 		return
 	end
 
-	slot2.finishCount = math.min(slot2.finishCount + 1, slot2.config.maxFinishCount)
-	slot2.hasFinished = false
+	local var_2_1 = var_2_0.id
+	local var_2_2 = var_2_0.config
 
-	slot0:sort(slot0._sort)
-	TaskRpc.instance:sendFinishTaskRequest(slot2.id)
+	var_2_0.finishCount = math.min(var_2_0.finishCount + 1, var_2_2.maxFinishCount)
+	var_2_0.hasFinished = false
+
+	arg_2_0:sort(arg_2_0._sort)
+	TaskRpc.instance:sendFinishTaskRequest(var_2_1)
 end
 
-function slot0.getStaticData(slot0)
-	return slot0._staticData
+function var_0_0.getStaticData(arg_3_0)
+	return arg_3_0._staticData
 end
 
-function slot0._sort(slot0, slot1)
-	if slot0.getAll then
+function var_0_0._sort(arg_4_0, arg_4_1)
+	if arg_4_0.getAll then
 		return true
 	end
 
-	if slot1.getAll then
+	if arg_4_1.getAll then
 		return false
 	end
 
-	slot4 = slot0.id
-	slot5 = slot1.id
-	slot6 = slot0.config.maxFinishCount <= slot0.finishCount and 1 or 0
-	slot7 = slot1.config.maxFinishCount <= slot1.finishCount and 1 or 0
-	slot10 = slot0.maxProgress
-	slot11 = slot1.maxProgress
+	local var_4_0 = arg_4_0.config
+	local var_4_1 = arg_4_1.config
+	local var_4_2 = arg_4_0.id
+	local var_4_3 = arg_4_1.id
+	local var_4_4 = arg_4_0.finishCount >= var_4_0.maxFinishCount and 1 or 0
+	local var_4_5 = arg_4_1.finishCount >= var_4_1.maxFinishCount and 1 or 0
+	local var_4_6 = arg_4_0.hasFinished and 1 or 0
+	local var_4_7 = arg_4_1.hasFinished and 1 or 0
+	local var_4_8 = arg_4_0.maxProgress
+	local var_4_9 = arg_4_1.maxProgress
 
-	if (slot0.hasFinished and 1 or 0) ~= (slot1.hasFinished and 1 or 0) then
-		return slot9 < slot8
+	if var_4_6 ~= var_4_7 then
+		return var_4_7 < var_4_6
 	end
 
-	if slot6 ~= slot7 then
-		return slot6 < slot7
+	if var_4_4 ~= var_4_5 then
+		return var_4_4 < var_4_5
 	end
 
-	if slot10 ~= slot11 then
-		return slot10 < slot11
+	if var_4_8 ~= var_4_9 then
+		return var_4_8 < var_4_9
 	end
 
-	return slot4 < slot5
+	return var_4_2 < var_4_3
 end
 
-function slot0.getFinishCount(slot0, slot1, slot2)
-	for slot7, slot8 in pairs(slot1) do
-		if slot8.config and slot8.config.stage == slot2 and slot8.finishCount < slot8.config.maxFinishCount and slot8.hasFinished then
-			slot3 = 0 + 1
+function var_0_0.getFinishCount(arg_5_0, arg_5_1, arg_5_2)
+	local var_5_0 = 0
+
+	for iter_5_0, iter_5_1 in pairs(arg_5_1) do
+		if iter_5_1.config and iter_5_1.config.stage == arg_5_2 and iter_5_1.finishCount < iter_5_1.config.maxFinishCount and iter_5_1.hasFinished then
+			var_5_0 = var_5_0 + 1
 		end
 	end
 
-	return slot3
+	return var_5_0
 end
 
-function slot0.setMoList(slot0, slot1)
-	if slot0:getFinishCount(BossRushModel.instance:getLayer4RewardMoListByStage(slot1), slot1) > 1 then
-		table.insert(slot2, 1, {
+function var_0_0.setMoList(arg_6_0, arg_6_1)
+	local var_6_0 = BossRushModel.instance:getLayer4RewardMoListByStage(arg_6_1)
+
+	if arg_6_0:getFinishCount(var_6_0, arg_6_1) > 1 then
+		table.insert(var_6_0, 1, {
 			getAll = true,
-			stage = slot1
+			stage = arg_6_1
 		})
 	end
 
-	table.sort(slot2, slot0._sort)
-	slot0:setList(slot2)
+	table.sort(var_6_0, arg_6_0._sort)
+	arg_6_0:setList(var_6_0)
 end
 
-function slot0.getAllTask(slot0, slot1)
-	slot3 = {}
+function var_0_0.getAllTask(arg_7_0, arg_7_1)
+	local var_7_0 = BossRushModel.instance:getLayer4RewardMoListByStage(arg_7_1)
+	local var_7_1 = {}
 
-	for slot7, slot8 in pairs(BossRushModel.instance:getLayer4RewardMoListByStage(slot1)) do
-		table.insert(slot3, slot8.id)
+	for iter_7_0, iter_7_1 in pairs(var_7_0) do
+		table.insert(var_7_1, iter_7_1.id)
 	end
 
-	return slot3
+	return var_7_1
 end
 
-function slot0.isReddot(slot0, slot1)
-	if BossRushModel.instance:getLayer4RewardMoListByStage(slot1) then
-		for slot6, slot7 in pairs(slot2) do
-			if slot7.finishCount < slot7.config.maxFinishCount and slot7.hasFinished then
+function var_0_0.isReddot(arg_8_0, arg_8_1)
+	local var_8_0 = BossRushModel.instance:getLayer4RewardMoListByStage(arg_8_1)
+
+	if var_8_0 then
+		for iter_8_0, iter_8_1 in pairs(var_8_0) do
+			local var_8_1 = iter_8_1.config
+
+			if iter_8_1.finishCount < var_8_1.maxFinishCount and iter_8_1.hasFinished then
 				return true
 			end
 		end
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

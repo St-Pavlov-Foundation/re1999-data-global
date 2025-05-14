@@ -1,117 +1,136 @@
-module("modules.logic.chessgame.config.ChessConfig", package.seeall)
+﻿module("modules.logic.chessgame.config.ChessConfig", package.seeall)
 
-slot0 = class("ChessConfig", BaseConfig)
+local var_0_0 = class("ChessConfig", BaseConfig)
 
-function slot0.ctor(slot0)
+function var_0_0.ctor(arg_1_0)
+	return
 end
 
-function slot0.reqConfigNames(slot0)
+function var_0_0.reqConfigNames(arg_2_0)
 	return {}
 end
 
-function slot0.onConfigLoaded(slot0, slot1, slot2)
+function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
+	return
 end
 
-function slot0._registerConfigIns(slot0)
+function var_0_0._registerConfigIns(arg_4_0)
 	return {
 		[VersionActivity2_1Enum.ActivityId.LanShouPa] = Activity164Config.instance
 	}
 end
 
-function slot0._getConfigIns(slot0, slot1)
-	if not slot0._configMap then
-		slot0._configMap = slot0:_registerConfigIns()
-		slot2 = {
+function var_0_0._getConfigIns(arg_5_0, arg_5_1)
+	if not arg_5_0._configMap then
+		arg_5_0._configMap = arg_5_0:_registerConfigIns()
+
+		local var_5_0 = {
 			"getEpisodeCo",
 			"getTipsCo",
 			"getBubbleCo",
 			"getBubbleCoByGroup"
 		}
 
-		for slot6, slot7 in pairs(slot0._configMap) do
-			for slot11, slot12 in ipairs(slot2) do
-				if not slot7[slot12] or type(slot7[slot12]) ~= "function" then
-					logError(string.format("[%s] can not find function [%s]", slot7.__cname, slot12))
+		for iter_5_0, iter_5_1 in pairs(arg_5_0._configMap) do
+			for iter_5_2, iter_5_3 in ipairs(var_5_0) do
+				if not iter_5_1[iter_5_3] or type(iter_5_1[iter_5_3]) ~= "function" then
+					logError(string.format("[%s] can not find function [%s]", iter_5_1.__cname, iter_5_3))
 				end
 			end
 		end
 	end
 
-	if not slot0._configMap[slot1] then
-		logError(string.format("version activity Id[%s] 没注册", slot1))
+	if not arg_5_0._configMap[arg_5_1] then
+		logError(string.format("version activity Id[%s] 没注册", arg_5_1))
 	end
 
-	return slot0._configMap[slot1]
+	return arg_5_0._configMap[arg_5_1]
 end
 
-function slot0.getMapCo(slot0, slot1, slot2)
-	if slot0:_getConfigIns(slot1) then
-		if slot3.getEpisodeCo then
-			return ChessGameConfig.instance:getMapCo(slot3:getEpisodeCo(slot1, slot2).mapIds)
+function var_0_0.getMapCo(arg_6_0, arg_6_1, arg_6_2)
+	local var_6_0 = arg_6_0:_getConfigIns(arg_6_1)
+
+	if var_6_0 then
+		if var_6_0.getEpisodeCo then
+			local var_6_1 = var_6_0:getEpisodeCo(arg_6_1, arg_6_2)
+
+			return (ChessGameConfig.instance:getMapCo(var_6_1.mapIds))
 		else
-			logError(string.format("version activity Id[%s]注册类[%s]无 getMapCo接口", slot1, slot3.__cname))
+			logError(string.format("version activity Id[%s]注册类[%s]无 getMapCo接口", arg_6_1, var_6_0.__cname))
 		end
 	end
 
 	return nil
 end
 
-function slot0.getEpisodeCo(slot0, slot1, slot2)
-	if slot0:_getConfigIns(slot1) then
-		if slot3.getEpisodeCo then
-			return slot3:getEpisodeCo(slot1, slot2)
+function var_0_0.getEpisodeCo(arg_7_0, arg_7_1, arg_7_2)
+	local var_7_0 = arg_7_0:_getConfigIns(arg_7_1)
+
+	if var_7_0 then
+		if var_7_0.getEpisodeCo then
+			return var_7_0:getEpisodeCo(arg_7_1, arg_7_2)
 		else
-			logError(string.format("version activity Id[%s]注册类[%s]无 getMapCo接口", slot1, slot3.__cname))
+			logError(string.format("version activity Id[%s]注册类[%s]无 getMapCo接口", arg_7_1, var_7_0.__cname))
 		end
 	end
 
 	return nil
 end
 
-function slot0.isStoryEpisode(slot0, slot1, slot2)
-	if slot0:_getConfigIns(slot1) and slot3.isStoryEpisode then
-		return slot3:isStoryEpisode(slot1, slot2)
+function var_0_0.isStoryEpisode(arg_8_0, arg_8_1, arg_8_2)
+	local var_8_0 = arg_8_0:_getConfigIns(arg_8_1)
+
+	if var_8_0 and var_8_0.isStoryEpisode then
+		return var_8_0:isStoryEpisode(arg_8_1, arg_8_2)
 	end
 
 	return false
 end
 
-function slot0.getTipsCo(slot0, slot1, slot2)
-	if slot0:_getConfigIns(slot1) and slot3.getTipsCo then
-		return slot3:getTipsCo(slot1, slot2)
+function var_0_0.getTipsCo(arg_9_0, arg_9_1, arg_9_2)
+	local var_9_0 = arg_9_0:_getConfigIns(arg_9_1)
+
+	if var_9_0 and var_9_0.getTipsCo then
+		return var_9_0:getTipsCo(arg_9_1, arg_9_2)
 	end
 
 	return nil
 end
 
-function slot0.getBubbleCoByGroup(slot0, slot1, slot2)
-	if slot0:_getConfigIns(slot1) and slot3.getBubbleCoByGroup then
-		return slot3:getBubbleCoByGroup(slot1, slot2)
+function var_0_0.getBubbleCoByGroup(arg_10_0, arg_10_1, arg_10_2)
+	local var_10_0 = arg_10_0:_getConfigIns(arg_10_1)
+
+	if var_10_0 and var_10_0.getBubbleCoByGroup then
+		return var_10_0:getBubbleCoByGroup(arg_10_1, arg_10_2)
 	end
 
 	return nil
 end
 
-function slot0.getChapterEpisodeId(slot0, slot1)
-	if slot0:_getConfigIns(slot1) then
-		if slot2.getChapterEpisodeId then
-			return slot2:getChapterEpisodeId(slot1)
+function var_0_0.getChapterEpisodeId(arg_11_0, arg_11_1)
+	local var_11_0 = arg_11_0:_getConfigIns(arg_11_1)
+
+	if var_11_0 then
+		if var_11_0.getChapterEpisodeId then
+			return var_11_0:getChapterEpisodeId(arg_11_1)
 		else
-			logError(string.format("version activity Id[%s]注册类[%s]无 getChapterEpisodeId 接口", slot1, slot2.__cname))
+			logError(string.format("version activity Id[%s]注册类[%s]无 getChapterEpisodeId 接口", arg_11_1, var_11_0.__cname))
 		end
 	end
 
 	return nil
 end
 
-function slot0.getEffectCo(slot0, slot1, slot2)
-	if slot0:_getConfigIns(slot1) and slot3.getEffectCo then
-		return slot3:getEffectCo(slot1, slot2)
+function var_0_0.getEffectCo(arg_12_0, arg_12_1, arg_12_2)
+	local var_12_0 = arg_12_0:_getConfigIns(arg_12_1)
+
+	if var_12_0 and var_12_0.getEffectCo then
+		return var_12_0:getEffectCo(arg_12_1, arg_12_2)
 	end
 
 	return nil
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

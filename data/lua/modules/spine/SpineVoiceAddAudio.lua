@@ -1,36 +1,37 @@
-module("modules.spine.SpineVoiceAddAudio", package.seeall)
+﻿module("modules.spine.SpineVoiceAddAudio", package.seeall)
 
-slot0 = class("SpineVoiceAddAudio")
+local var_0_0 = class("SpineVoiceAddAudio")
 
-function slot0.ctor(slot0)
+function var_0_0.ctor(arg_1_0)
+	return
 end
 
-function slot0.init(slot0, slot1, slot2)
-	slot0._audioId = slot1
+function var_0_0.init(arg_2_0, arg_2_1, arg_2_2)
+	arg_2_0._audioId = arg_2_1
 
-	if slot2 < 0.1 then
-		slot0:_playAddAudio()
+	if arg_2_2 < 0.1 then
+		arg_2_0:_playAddAudio()
 
 		return
 	end
 
-	TaskDispatcher.runDelay(slot0._playAddAudio, slot0, slot2)
+	TaskDispatcher.runDelay(arg_2_0._playAddAudio, arg_2_0, arg_2_2)
 end
 
-function slot0._playAddAudio(slot0)
-	if slot0._audioId and slot0._audioId > 0 then
-		AudioMgr.instance:trigger(slot0._audioId)
+function var_0_0._playAddAudio(arg_3_0)
+	if arg_3_0._audioId and arg_3_0._audioId > 0 then
+		AudioMgr.instance:trigger(arg_3_0._audioId)
 	end
 end
 
-function slot0.onDestroy(slot0)
-	if slot0._audioId and slot0._audioId > 0 then
-		AudioMgr.instance:stopPlayingID(slot0._audioId)
+function var_0_0.onDestroy(arg_4_0)
+	if arg_4_0._audioId and arg_4_0._audioId > 0 then
+		AudioMgr.instance:stopPlayingID(arg_4_0._audioId)
 	end
 
-	slot0._audioId = nil
+	arg_4_0._audioId = nil
 
-	TaskDispatcher.cancelTask(slot0._playAddAudio, slot0)
+	TaskDispatcher.cancelTask(arg_4_0._playAddAudio, arg_4_0)
 end
 
-return slot0
+return var_0_0

@@ -1,74 +1,75 @@
-module("modules.logic.pcInput.activityAdapter.RoomActivityAdapter", package.seeall)
+﻿module("modules.logic.pcInput.activityAdapter.RoomActivityAdapter", package.seeall)
 
-slot0 = class("RoomActivityAdapter", BaseActivityAdapter)
-slot0.keytoFunction = {
-	function ()
+local var_0_0 = class("RoomActivityAdapter", BaseActivityAdapter)
+
+var_0_0.keytoFunction = {
+	function()
 		HelpController.instance:showHelp(HelpEnum.HelpId.RoomOb, true)
 	end,
-	function ()
+	function()
 		if ViewMgr.instance:IsPopUpViewOpen() then
 			return
 		end
 
 		PCInputController.instance:dispatchEvent(PCInputEvent.NotifyRoomMarket)
 	end,
-	function ()
+	function()
 		if ViewMgr.instance:IsPopUpViewOpen() then
 			return
 		end
 
 		PCInputController.instance:dispatchEvent(PCInputEvent.NotifyRoomBellTower)
 	end,
-	function ()
+	function()
 		if ViewMgr.instance:IsPopUpViewOpen() then
 			return
 		end
 
 		PCInputController.instance:dispatchEvent(PCInputEvent.NotifyRoomCharactorFaith)
 	end,
-	function ()
+	function()
 		if ViewMgr.instance:IsPopUpViewOpen() then
 			return
 		end
 
 		PCInputController.instance:dispatchEvent(PCInputEvent.NotifyRoomCharactorFaithFull)
 	end,
-	function ()
+	function()
 		if ViewMgr.instance:IsPopUpViewOpen() then
 			return
 		end
 
 		PCInputController.instance:dispatchEvent(PCInputEvent.NotifyHide)
 	end,
-	function ()
+	function()
 		if ViewMgr.instance:IsPopUpViewOpen() then
 			return
 		end
 
 		PCInputController.instance:dispatchEvent(PCInputEvent.Notifylocate)
 	end,
-	[9] = function ()
+	[9] = function()
 		if ViewMgr.instance:IsPopUpViewOpen() then
 			return
 		end
 
 		PCInputController.instance:dispatchEvent(PCInputEvent.NotifyBuy)
 	end,
-	[10] = function ()
+	[10] = function()
 		if ViewMgr.instance:IsPopUpViewOpen() then
 			return
 		end
 
 		PCInputController.instance:dispatchEvent(PCInputEvent.NotifyLayout)
 	end,
-	[11] = function ()
+	[11] = function()
 		if ViewMgr.instance:IsPopUpViewOpen() then
 			return
 		end
 
 		PCInputController.instance:dispatchEvent(PCInputEvent.NotifyPlace)
 	end,
-	[12] = function ()
+	[12] = function()
 		if ViewMgr.instance:IsPopUpViewOpen() then
 			return
 		end
@@ -77,7 +78,7 @@ slot0.keytoFunction = {
 	end
 }
 
-function slot0.checkCanOpen(slot0)
+function var_0_0.checkCanOpen(arg_12_0)
 	if ViewMgr.instance:IsPopUpViewOpen() then
 		return false
 	end
@@ -85,29 +86,29 @@ function slot0.checkCanOpen(slot0)
 	return true
 end
 
-function slot0.ctor(slot0)
-	BaseActivityAdapter.ctor(slot0)
+function var_0_0.ctor(arg_13_0)
+	BaseActivityAdapter.ctor(arg_13_0)
 
-	slot0.keytoFunction = uv0.keytoFunction
-	slot0.activitid = PCInputModel.Activity.room
+	arg_13_0.keytoFunction = var_0_0.keytoFunction
+	arg_13_0.activitid = PCInputModel.Activity.room
 
-	slot0:registerFunction()
+	arg_13_0:registerFunction()
 end
 
-function slot0.OnkeyUp(slot0, slot1)
+function var_0_0.OnkeyUp(arg_14_0, arg_14_1)
 	if GuideModel.instance:isDoingClickGuide() or not GuideModel.instance:isGuideFinish(406) then
 		return
 	end
 
-	BaseActivityAdapter.OnkeyUp(slot0, slot1)
+	BaseActivityAdapter.OnkeyUp(arg_14_0, arg_14_1)
 end
 
-function slot0.OnkeyDown(slot0, slot1)
+function var_0_0.OnkeyDown(arg_15_0, arg_15_1)
 	if GuideModel.instance:isDoingClickGuide() or not GuideModel.instance:isGuideFinish(406) then
 		return
 	end
 
-	BaseActivityAdapter.OnkeyUp(slot0, slot1)
+	BaseActivityAdapter.OnkeyUp(arg_15_0, arg_15_1)
 end
 
-return slot0
+return var_0_0

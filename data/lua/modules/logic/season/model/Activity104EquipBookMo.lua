@@ -1,16 +1,17 @@
-slot0 = pureTable("Activity104EquipBookMo")
+﻿local var_0_0 = pureTable("Activity104EquipBookMo")
 
-function slot0.ctor(slot0)
+function var_0_0.ctor(arg_1_0)
+	return
 end
 
-function slot0.init(slot0, slot1)
-	slot0.id = slot1
-	slot0.count = 0
-	slot0.isNew = false
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.id = arg_2_1
+	arg_2_0.count = 0
+	arg_2_0.isNew = false
 end
 
-function slot0.setIsNew(slot0, slot1)
-	slot0.isNew = slot1
+function var_0_0.setIsNew(arg_3_0, arg_3_1)
+	arg_3_0.isNew = arg_3_1
 end
 
-return slot0
+return var_0_0

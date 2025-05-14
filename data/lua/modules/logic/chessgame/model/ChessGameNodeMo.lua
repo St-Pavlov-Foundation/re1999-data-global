@@ -1,32 +1,32 @@
-module("modules.logic.chessgame.model.ChessGameNodeMo", package.seeall)
+﻿module("modules.logic.chessgame.model.ChessGameNodeMo", package.seeall)
 
-slot0 = pureTable("ChessGameNodeMo")
+local var_0_0 = pureTable("ChessGameNodeMo")
 
-function slot0.setNode(slot0, slot1)
-	slot0.x = slot1.x
-	slot0.y = slot1.y
-	slot0.noWalkCount = 0
-	slot0.noWalkCanDestoryCount = 0
+function var_0_0.setNode(arg_1_0, arg_1_1)
+	arg_1_0.x = arg_1_1.x
+	arg_1_0.y = arg_1_1.y
+	arg_1_0.noWalkCount = 0
+	arg_1_0.noWalkCanDestoryCount = 0
 end
 
-function slot0.addNoWalkCount(slot0, slot1, slot2)
-	if slot2 then
-		slot0.noWalkCanDestoryCount = slot0.noWalkCanDestoryCount + slot1
+function var_0_0.addNoWalkCount(arg_2_0, arg_2_1, arg_2_2)
+	if arg_2_2 then
+		arg_2_0.noWalkCanDestoryCount = arg_2_0.noWalkCanDestoryCount + arg_2_1
 	else
-		slot0.noWalkCount = slot0.noWalkCount + slot1
+		arg_2_0.noWalkCount = arg_2_0.noWalkCount + arg_2_1
 	end
 end
 
-function slot0.isCanWalk(slot0, slot1)
-	if slot0.noWalkCount > 0 then
+function var_0_0.isCanWalk(arg_3_0, arg_3_1)
+	if arg_3_0.noWalkCount > 0 then
 		return false
 	end
 
-	if slot1 then
+	if arg_3_1 then
 		return true
 	else
-		return slot0.noWalkCanDestoryCount > 0
+		return arg_3_0.noWalkCanDestoryCount > 0
 	end
 end
 
-return slot0
+return var_0_0

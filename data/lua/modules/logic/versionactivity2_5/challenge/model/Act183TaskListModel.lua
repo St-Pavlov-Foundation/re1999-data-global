@@ -1,145 +1,176 @@
-module("modules.logic.versionactivity2_5.challenge.model.Act183TaskListModel", package.seeall)
+﻿module("modules.logic.versionactivity2_5.challenge.model.Act183TaskListModel", package.seeall)
 
-slot0 = class("Act183TaskListModel", MixScrollModel)
+local var_0_0 = class("Act183TaskListModel", MixScrollModel)
 
-function slot0.init(slot0, slot1, slot2)
-	slot0._activityId = slot1
-	slot0._taskType = slot2
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0._activityId = arg_1_1
+	arg_1_0._taskType = arg_1_2
 
-	slot0:_buildTaskMap()
-	slot0:refresh()
+	arg_1_0:_buildTaskMap()
+	arg_1_0:refresh()
 end
 
-function slot0._buildTaskMap(slot0)
-	slot0._taskTypeMap = {}
+function var_0_0._buildTaskMap(arg_2_0)
+	arg_2_0._taskTypeMap = {}
 
-	if TaskModel.instance:getTaskMoList(TaskEnum.TaskType.Activity183, slot0._activityId) then
-		for slot5, slot6 in ipairs(slot1) do
-			slot8 = slot6.config and slot7.type
-			slot0._taskTypeMap[slot8] = slot0._taskTypeMap[slot8] or {}
+	local var_2_0 = TaskModel.instance:getTaskMoList(TaskEnum.TaskType.Activity183, arg_2_0._activityId)
 
-			table.insert(slot0._taskTypeMap[slot8], slot6)
+	if var_2_0 then
+		for iter_2_0, iter_2_1 in ipairs(var_2_0) do
+			local var_2_1 = iter_2_1.config
+			local var_2_2 = var_2_1 and var_2_1.type
+
+			arg_2_0._taskTypeMap[var_2_2] = arg_2_0._taskTypeMap[var_2_2] or {}
+
+			table.insert(arg_2_0._taskTypeMap[var_2_2], iter_2_1)
 		end
 	end
 
-	for slot5, slot6 in pairs(slot0._taskTypeMap) do
-		table.sort(slot6, slot0._taskMoListSortFunc)
+	for iter_2_2, iter_2_3 in pairs(arg_2_0._taskTypeMap) do
+		table.sort(iter_2_3, arg_2_0._taskMoListSortFunc)
 	end
 end
 
-function slot0.getTaskMosByType(slot0, slot1)
-	return slot0._taskTypeMap and slot0._taskTypeMap[slot1]
+function var_0_0.getTaskMosByType(arg_3_0, arg_3_1)
+	return arg_3_0._taskTypeMap and arg_3_0._taskTypeMap[arg_3_1]
 end
 
-function slot0._taskMoListSortFunc(slot0, slot1)
-	if slot0.config.groupId ~= slot1.config.groupId then
-		return slot4 < slot5
+function var_0_0._taskMoListSortFunc(arg_4_0, arg_4_1)
+	local var_4_0 = arg_4_0.config
+	local var_4_1 = arg_4_1.config
+	local var_4_2 = var_4_0.groupId
+	local var_4_3 = var_4_1.groupId
+
+	if var_4_2 ~= var_4_3 then
+		return var_4_2 < var_4_3
 	end
 
-	return slot0.id < slot1.id
+	return arg_4_0.id < arg_4_1.id
 end
 
-function slot0.refresh(slot0)
-	slot0:setList(slot0:_createTaskItemMoList(slot0._taskTypeMap and slot0._taskTypeMap[slot0._taskType] or {}))
+function var_0_0.refresh(arg_5_0)
+	local var_5_0 = arg_5_0._taskTypeMap and arg_5_0._taskTypeMap[arg_5_0._taskType]
+
+	var_5_0 = var_5_0 or {}
+
+	local var_5_1 = arg_5_0:_createTaskItemMoList(var_5_0)
+
+	arg_5_0:setList(var_5_1)
 end
 
-function slot0.getInfoList(slot0, slot1)
-	slot0._mixCellInfo = {}
+function var_0_0.getInfoList(arg_6_0, arg_6_1)
+	arg_6_0._mixCellInfo = {}
 
-	for slot6, slot7 in ipairs(slot0:getList()) do
-		if Act183Enum.TaskItemHeightMap[slot7.type] then
-			table.insert(slot0._mixCellInfo, SLFramework.UGUI.MixCellInfo.New(slot8, slot9, slot6))
+	local var_6_0 = arg_6_0:getList()
+
+	for iter_6_0, iter_6_1 in ipairs(var_6_0) do
+		local var_6_1 = iter_6_1.type
+		local var_6_2 = Act183Enum.TaskItemHeightMap[var_6_1]
+
+		if var_6_2 then
+			local var_6_3 = SLFramework.UGUI.MixCellInfo.New(var_6_1, var_6_2, iter_6_0)
+
+			table.insert(arg_6_0._mixCellInfo, var_6_3)
 		else
-			logError(string.format("任务条缺少高度配置(Act183Enum.TaskItemHeightMap) dataType = %s", slot8))
+			logError(string.format("任务条缺少高度配置(Act183Enum.TaskItemHeightMap) dataType = %s", var_6_1))
 		end
 	end
 
-	return slot0._mixCellInfo
+	return arg_6_0._mixCellInfo
 end
 
-function slot0._createTaskItemMoList(slot0, slot1)
-	slot3 = {}
-	slot4 = {}
-	slot5 = {}
+function var_0_0._createTaskItemMoList(arg_7_0, arg_7_1)
+	local var_7_0
+	local var_7_1 = {}
+	local var_7_2 = {}
+	local var_7_3 = {}
 
-	for slot9, slot10 in ipairs(slot1) do
-		slot13 = slot10.id
+	for iter_7_0, iter_7_1 in ipairs(arg_7_1) do
+		local var_7_4 = iter_7_1.config.groupId
+		local var_7_5 = iter_7_1.id
 
-		if nil ~= slot10.config.groupId then
-			slot0:_addGroupItemToList(slot4, slot3)
-			table.insert(slot3, slot0:_createItemMo(Act183Enum.TaskListItemType.Head, slot10))
+		if var_7_0 ~= var_7_4 then
+			arg_7_0:_addGroupItemToList(var_7_2, var_7_1)
+			table.insert(var_7_1, arg_7_0:_createItemMo(Act183Enum.TaskListItemType.Head, iter_7_1))
 		end
 
-		if slot10 then
-			table.insert(slot4, slot0:_createItemMo(Act183Enum.TaskListItemType.Task, slot10))
+		if iter_7_1 then
+			table.insert(var_7_2, arg_7_0:_createItemMo(Act183Enum.TaskListItemType.Task, iter_7_1))
 
-			if Act183Helper.isTaskCanGetReward(slot13) then
-				table.insert(slot5, slot10)
+			if Act183Helper.isTaskCanGetReward(var_7_5) then
+				table.insert(var_7_3, iter_7_1)
 			end
 
-			slot2 = slot12
+			var_7_0 = var_7_4
 		else
-			logError(string.format("缺少任务数据 taskId = %s", slot13))
+			logError(string.format("缺少任务数据 taskId = %s", var_7_5))
 		end
 	end
 
-	slot0:_addGroupItemToList(slot4, slot3)
-	slot0:_addOneKeyItemToList(slot5, slot3)
+	arg_7_0:_addGroupItemToList(var_7_2, var_7_1)
+	arg_7_0:_addOneKeyItemToList(var_7_3, var_7_1)
 
-	return slot3
+	return var_7_1
 end
 
-function slot0._addOneKeyItemToList(slot0, slot1, slot2)
-	if not slot1 or #slot1 <= 1 then
-		slot0._oneKeyTaskItem = nil
+function var_0_0._addOneKeyItemToList(arg_8_0, arg_8_1, arg_8_2)
+	if not arg_8_1 or #arg_8_1 <= 1 then
+		arg_8_0._oneKeyTaskItem = nil
 
 		return
 	end
 
-	slot0._oneKeyTaskItem = slot0:_createItemMo(Act183Enum.TaskListItemType.OneKey, slot1)
+	arg_8_0._oneKeyTaskItem = arg_8_0:_createItemMo(Act183Enum.TaskListItemType.OneKey, arg_8_1)
 end
 
-function slot0.getOneKeyTaskItem(slot0)
-	return slot0._oneKeyTaskItem
+function var_0_0.getOneKeyTaskItem(arg_9_0)
+	return arg_9_0._oneKeyTaskItem
 end
 
-function slot0._addGroupItemToList(slot0, slot1, slot2)
-	if slot1 and #slot1 > 0 then
-		table.sort(slot1, slot0._taskItemListSortFunc)
-		tabletool.addValues(slot2, slot1)
+function var_0_0._addGroupItemToList(arg_10_0, arg_10_1, arg_10_2)
+	if arg_10_1 and #arg_10_1 > 0 then
+		table.sort(arg_10_1, arg_10_0._taskItemListSortFunc)
+		tabletool.addValues(arg_10_2, arg_10_1)
 
-		slot1 = {}
+		arg_10_1 = {}
 	end
 end
 
-function slot0._createItemMo(slot0, slot1, slot2)
+function var_0_0._createItemMo(arg_11_0, arg_11_1, arg_11_2)
 	return {
-		type = slot1,
-		data = slot2
+		type = arg_11_1,
+		data = arg_11_2
 	}
 end
 
-function slot0._taskItemListSortFunc(slot0, slot1)
-	if slot0.data.config.groupId ~= slot1.data.config.groupId then
-		return slot4 < slot5
+function var_0_0._taskItemListSortFunc(arg_12_0, arg_12_1)
+	local var_12_0 = arg_12_0.data.config
+	local var_12_1 = arg_12_1.data.config
+	local var_12_2 = var_12_0.groupId
+	local var_12_3 = var_12_1.groupId
+
+	if var_12_2 ~= var_12_3 then
+		return var_12_2 < var_12_3
 	end
 
-	slot6 = slot0.data.id
-	slot7 = slot1.data.id
-	slot9 = Act183Helper.isTaskHasGetReward(slot6)
-	slot11 = Act183Helper.isTaskHasGetReward(slot7)
+	local var_12_4 = arg_12_0.data.id
+	local var_12_5 = arg_12_1.data.id
+	local var_12_6 = Act183Helper.isTaskCanGetReward(var_12_4)
+	local var_12_7 = Act183Helper.isTaskHasGetReward(var_12_4)
+	local var_12_8 = Act183Helper.isTaskCanGetReward(var_12_5)
+	local var_12_9 = Act183Helper.isTaskHasGetReward(var_12_5)
 
-	if Act183Helper.isTaskCanGetReward(slot6) ~= Act183Helper.isTaskCanGetReward(slot7) then
-		return slot8
+	if var_12_6 ~= var_12_8 then
+		return var_12_6
 	end
 
-	if slot9 ~= slot11 then
-		return not slot9
+	if var_12_7 ~= var_12_9 then
+		return not var_12_7
 	end
 
-	return slot6 < slot7
+	return var_12_4 < var_12_5
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

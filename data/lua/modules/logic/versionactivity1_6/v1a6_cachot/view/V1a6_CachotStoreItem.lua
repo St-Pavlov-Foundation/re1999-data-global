@@ -1,75 +1,81 @@
-module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotStoreItem", package.seeall)
+﻿module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotStoreItem", package.seeall)
 
-slot0 = class("V1a6_CachotStoreItem", ListScrollCell)
+local var_0_0 = class("V1a6_CachotStoreItem", ListScrollCell)
 
-function slot0.init(slot0, slot1)
-	slot0._txtname = gohelper.findChildTextMesh(slot1, "txt_name")
-	slot0._txtcost = gohelper.findChildTextMesh(slot1, "txt_cost")
-	slot0._gosoldout = gohelper.findChild(slot1, "go_soldout")
-	slot0._simageicon = gohelper.findChildSingleImage(slot1, "simage_icon")
-	slot0._imageicon = gohelper.findChildImage(slot1, "image_icon")
-	slot0._btnclick = gohelper.findChildButtonWithAudio(slot1, "btn_click")
-	slot0._goenchantlist = gohelper.findChild(slot1, "go_enchantlist")
-	slot0._gohole = gohelper.findChild(slot1, "go_enchantlist/go_hole")
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0._txtname = gohelper.findChildTextMesh(arg_1_1, "txt_name")
+	arg_1_0._txtcost = gohelper.findChildTextMesh(arg_1_1, "txt_cost")
+	arg_1_0._gosoldout = gohelper.findChild(arg_1_1, "go_soldout")
+	arg_1_0._simageicon = gohelper.findChildSingleImage(arg_1_1, "simage_icon")
+	arg_1_0._imageicon = gohelper.findChildImage(arg_1_1, "image_icon")
+	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_1, "btn_click")
+	arg_1_0._goenchantlist = gohelper.findChild(arg_1_1, "go_enchantlist")
+	arg_1_0._gohole = gohelper.findChild(arg_1_1, "go_enchantlist/go_hole")
 end
 
-function slot0.addEventListeners(slot0)
-	slot0._btnclick:AddClickListener(slot0._onClickItem, slot0)
+function var_0_0.addEventListeners(arg_2_0)
+	arg_2_0._btnclick:AddClickListener(arg_2_0._onClickItem, arg_2_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0._btnclick:RemoveClickListener()
+function var_0_0.removeEventListeners(arg_3_0)
+	arg_3_0._btnclick:RemoveClickListener()
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
+function var_0_0.onUpdateMO(arg_4_0, arg_4_1)
+	arg_4_0._mo = arg_4_1
 
-	gohelper.setActive(slot0._simageicon, false)
-	gohelper.setActive(slot0._goenchantlist, false)
+	local var_4_0 = lua_rogue_goods.configDict[arg_4_1.id]
 
-	slot0._imageicon.enabled = false
+	gohelper.setActive(arg_4_0._simageicon, false)
+	gohelper.setActive(arg_4_0._goenchantlist, false)
 
-	if lua_rogue_goods.configDict[slot1.id].creator ~= 0 then
-		gohelper.setActive(slot0._simageicon, true)
+	arg_4_0._imageicon.enabled = false
 
-		if not lua_rogue_collection.configDict[slot2.creator] then
-			logError("商店出售不存在的藏品" .. slot2.creator)
+	if var_4_0.creator ~= 0 then
+		gohelper.setActive(arg_4_0._simageicon, true)
+
+		local var_4_1 = lua_rogue_collection.configDict[var_4_0.creator]
+
+		if not var_4_1 then
+			logError("商店出售不存在的藏品" .. var_4_0.creator)
 
 			return
 		end
 
-		slot0._txtname.text = slot3.name
+		arg_4_0._txtname.text = var_4_1.name
 
-		slot0._simageicon:LoadImage(ResUrl.getV1a6CachotIcon("collection/" .. slot3.icon))
-		gohelper.setActive(slot0._goenchantlist, true)
-		V1a6_CachotCollectionHelper.createCollectionHoles(slot3, slot0._goenchantlist, slot0._gohole)
-	elseif slot2.event ~= 0 then
-		slot0._imageicon.enabled = true
+		arg_4_0._simageicon:LoadImage(ResUrl.getV1a6CachotIcon("collection/" .. var_4_1.icon))
+		gohelper.setActive(arg_4_0._goenchantlist, true)
+		V1a6_CachotCollectionHelper.createCollectionHoles(var_4_1, arg_4_0._goenchantlist, arg_4_0._gohole)
+	elseif var_4_0.event ~= 0 then
+		arg_4_0._imageicon.enabled = true
 
-		if V1a6_CachotEventConfig.instance:getDescCoByEventId(slot2.event) then
-			slot0._txtname.text = slot3.title
+		local var_4_2 = V1a6_CachotEventConfig.instance:getDescCoByEventId(var_4_0.event)
 
-			UISpriteSetMgr.instance:setV1a6CachotSprite(slot0._imageicon, slot3.icon)
+		if var_4_2 then
+			arg_4_0._txtname.text = var_4_2.title
+
+			UISpriteSetMgr.instance:setV1a6CachotSprite(arg_4_0._imageicon, var_4_2.icon)
 		else
-			logError("未处理事件 " .. slot2.event)
+			logError("未处理事件 " .. var_4_0.event)
 		end
 	else
-		logError("肉鸽商品配置错误 id" .. slot2.id)
+		logError("肉鸽商品配置错误 id" .. var_4_0.id)
 	end
 
-	slot0._txtcost.text = slot2.price
+	arg_4_0._txtcost.text = var_4_0.price
 
-	gohelper.setActive(slot0._gosoldout, slot1.buyCount > 0)
+	gohelper.setActive(arg_4_0._gosoldout, arg_4_1.buyCount > 0)
 end
 
-function slot0._onClickItem(slot0)
-	ViewMgr.instance:openView(ViewName.V1a6_CachotNormalStoreGoodsView, lua_rogue_goods.configDict[slot0._mo.id])
+function var_0_0._onClickItem(arg_5_0)
+	ViewMgr.instance:openView(ViewName.V1a6_CachotNormalStoreGoodsView, lua_rogue_goods.configDict[arg_5_0._mo.id])
 end
 
-function slot0.onDestroy(slot0)
-	if slot0._simageicon then
-		slot0._simageicon:UnLoadImage()
+function var_0_0.onDestroy(arg_6_0)
+	if arg_6_0._simageicon then
+		arg_6_0._simageicon:UnLoadImage()
 	end
 end
 
-return slot0
+return var_0_0

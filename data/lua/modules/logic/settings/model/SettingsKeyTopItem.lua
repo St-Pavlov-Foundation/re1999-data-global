@@ -1,41 +1,42 @@
-module("modules.logic.settings.model.SettingsKeyTopItem", package.seeall)
+﻿module("modules.logic.settings.model.SettingsKeyTopItem", package.seeall)
 
-slot0 = class("SettingsKeyTopItem", ListScrollCell)
+local var_0_0 = class("SettingsKeyTopItem", ListScrollCell)
 
-function slot0.init(slot0, slot1)
-	slot0._go = slot1
-	slot0._goUnchoose = gohelper.findChild(slot0._go, "#go_unchoose")
-	slot0._goChoose = gohelper.findChild(slot0._go, "#go_choose")
-	slot0._btn = gohelper.findChildButtonWithAudio(slot0._go, "btn")
-	slot0._txtunchoose = gohelper.findChildText(slot0._go, "#go_unchoose/#txt_unchoose")
-	slot0._txtchoose = gohelper.findChildText(slot0._go, "#go_choose/#txt_choose")
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0._go = arg_1_1
+	arg_1_0._goUnchoose = gohelper.findChild(arg_1_0._go, "#go_unchoose")
+	arg_1_0._goChoose = gohelper.findChild(arg_1_0._go, "#go_choose")
+	arg_1_0._btn = gohelper.findChildButtonWithAudio(arg_1_0._go, "btn")
+	arg_1_0._txtunchoose = gohelper.findChildText(arg_1_0._go, "#go_unchoose/#txt_unchoose")
+	arg_1_0._txtchoose = gohelper.findChildText(arg_1_0._go, "#go_choose/#txt_choose")
 end
 
-function slot0.onSelect(slot0, slot1)
-	slot0._goUnchoose:SetActive(not slot1)
-	slot0._goChoose:SetActive(slot1)
+function var_0_0.onSelect(arg_2_0, arg_2_1)
+	arg_2_0._goUnchoose:SetActive(not arg_2_1)
+	arg_2_0._goChoose:SetActive(arg_2_1)
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
-	slot0._txtunchoose.text = slot1.name
-	slot0._txtchoose.text = slot1.name
+function var_0_0.onUpdateMO(arg_3_0, arg_3_1)
+	arg_3_0._mo = arg_3_1
+	arg_3_0._txtunchoose.text = arg_3_1.name
+	arg_3_0._txtchoose.text = arg_3_1.name
 end
 
-function slot0.addEventListeners(slot0)
-	slot0._btn:AddClickListener(slot0.OnClick, slot0)
+function var_0_0.addEventListeners(arg_4_0)
+	arg_4_0._btn:AddClickListener(arg_4_0.OnClick, arg_4_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0._btn:RemoveClickListener()
+function var_0_0.removeEventListeners(arg_5_0)
+	arg_5_0._btn:RemoveClickListener()
 end
 
-function slot0.onDestroy(slot0)
+function var_0_0.onDestroy(arg_6_0)
+	return
 end
 
-function slot0.OnClick(slot0)
-	slot0._view:selectCell(slot0._index, true)
-	SettingsController.instance:dispatchEvent(SettingsEvent.OnKeyMapChange, slot0._index)
+function var_0_0.OnClick(arg_7_0)
+	arg_7_0._view:selectCell(arg_7_0._index, true)
+	SettingsController.instance:dispatchEvent(SettingsEvent.OnKeyMapChange, arg_7_0._index)
 end
 
-return slot0
+return var_0_0

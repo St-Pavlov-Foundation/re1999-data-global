@@ -1,73 +1,79 @@
-module("modules.logic.explore.view.ExploreBonusRewardView", package.seeall)
+﻿module("modules.logic.explore.view.ExploreBonusRewardView", package.seeall)
 
-slot0 = class("ExploreBonusRewardView", BaseView)
+local var_0_0 = class("ExploreBonusRewardView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._btnclose1 = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close1")
-	slot0._btnclose2 = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close2")
-	slot0._gobtns = gohelper.findChild(slot0.viewGO, "#go_btns")
-	slot0._gobtnsitem = gohelper.findChild(slot0.viewGO, "#go_btns/#btn_level")
-	slot0._txtnum = gohelper.findChildTextMesh(slot0.viewGO, "top/title/#txt_num")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnclose1 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close1")
+	arg_1_0._btnclose2 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close2")
+	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_btns")
+	arg_1_0._gobtnsitem = gohelper.findChild(arg_1_0.viewGO, "#go_btns/#btn_level")
+	arg_1_0._txtnum = gohelper.findChildTextMesh(arg_1_0.viewGO, "top/title/#txt_num")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose1:AddClickListener(slot0.closeThis, slot0)
-	slot0._btnclose2:AddClickListener(slot0.closeThis, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose1:AddClickListener(arg_2_0.closeThis, arg_2_0)
+	arg_2_0._btnclose2:AddClickListener(arg_2_0.closeThis, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose1:RemoveClickListener()
-	slot0._btnclose2:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose1:RemoveClickListener()
+	arg_3_0._btnclose2:RemoveClickListener()
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_4_0)
 	AudioMgr.instance:trigger(AudioEnum.VersionActivity1_2.play_ui_lvhu_level_unlock)
 
-	slot1 = slot0.viewParam
-	slot2 = DungeonConfig.instance:getChapterEpisodeCOList(slot1.id)
-	slot0._episodeCoList = slot2
-	slot0._btns = {}
+	local var_4_0 = arg_4_0.viewParam
+	local var_4_1 = DungeonConfig.instance:getChapterEpisodeCOList(var_4_0.id)
 
-	gohelper.CreateObjList(slot0, slot0.createItem, slot2, slot0._gobtns, slot0._gobtnsitem)
+	arg_4_0._episodeCoList = var_4_1
+	arg_4_0._btns = {}
 
-	slot3, slot4, slot5, slot6, slot7, slot8 = ExploreSimpleModel.instance:getChapterCoinCount(slot1.id)
-	slot0._txtnum.text = string.format("<color=#f68736>%d</color>/%d", slot3, slot6)
+	gohelper.CreateObjList(arg_4_0, arg_4_0.createItem, var_4_1, arg_4_0._gobtns, arg_4_0._gobtnsitem)
 
-	slot0:onClickLevel(1)
+	local var_4_2, var_4_3, var_4_4, var_4_5, var_4_6, var_4_7 = ExploreSimpleModel.instance:getChapterCoinCount(var_4_0.id)
+
+	arg_4_0._txtnum.text = string.format("<color=#f68736>%d</color>/%d", var_4_2, var_4_5)
+
+	arg_4_0:onClickLevel(1)
 end
 
-function slot0.createItem(slot0, slot1, slot2, slot3)
-	slot4 = gohelper.findChildTextMesh(slot1, "#txt_name")
-	slot4.text = slot2.name
+function var_0_0.createItem(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
+	local var_5_0 = gohelper.findChildTextMesh(arg_5_1, "#txt_name")
+	local var_5_1 = gohelper.findChild(arg_5_1, "#select_btn")
 
-	slot0:addClickCb(gohelper.findButtonWithAudio(slot1), slot0.onClickLevel, slot0, slot3)
+	var_5_0.text = arg_5_2.name
 
-	slot0._btns[slot3] = {
-		slot4,
-		gohelper.findChildImage(slot1, ""),
-		gohelper.findChild(slot1, "#select_btn")
+	local var_5_2 = gohelper.findChildImage(arg_5_1, "")
+	local var_5_3 = gohelper.findButtonWithAudio(arg_5_1)
+
+	arg_5_0:addClickCb(var_5_3, arg_5_0.onClickLevel, arg_5_0, arg_5_3)
+
+	arg_5_0._btns[arg_5_3] = {
+		var_5_0,
+		var_5_2,
+		var_5_1
 	}
 end
 
-function slot0.onClickLevel(slot0, slot1)
-	slot5 = ExploreConfig.instance
-	slot6 = slot5
+function var_0_0.onClickLevel(arg_6_0, arg_6_1)
+	local var_6_0 = arg_6_0._episodeCoList[arg_6_1]
 
-	ExploreTaskModel.instance:getTaskList(0):setList(slot5.getRewardConfig(slot6, slot0.viewParam.id, slot0._episodeCoList[slot1].id))
+	ExploreTaskModel.instance:getTaskList(0):setList(ExploreConfig.instance:getRewardConfig(arg_6_0.viewParam.id, var_6_0.id))
 
-	for slot6 = 1, #slot0._btns do
-		ZProj.UGUIHelper.SetColorAlpha(slot0._btns[slot6][1], slot6 == slot1 and 1 or 0.5)
-		ZProj.UGUIHelper.SetColorAlpha(slot0._btns[slot6][2], slot6 == slot1 and 1 or 0.3)
-		gohelper.setActive(slot0._btns[slot6][3], slot6 == slot1)
+	for iter_6_0 = 1, #arg_6_0._btns do
+		ZProj.UGUIHelper.SetColorAlpha(arg_6_0._btns[iter_6_0][1], iter_6_0 == arg_6_1 and 1 or 0.5)
+		ZProj.UGUIHelper.SetColorAlpha(arg_6_0._btns[iter_6_0][2], iter_6_0 == arg_6_1 and 1 or 0.3)
+		gohelper.setActive(arg_6_0._btns[iter_6_0][3], iter_6_0 == arg_6_1)
 	end
 end
 
-function slot0.onClickModalMask(slot0)
-	slot0:closeThis()
+function var_0_0.onClickModalMask(arg_7_0)
+	arg_7_0:closeThis()
 end
 
-return slot0
+return var_0_0

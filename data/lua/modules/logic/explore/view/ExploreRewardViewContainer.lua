@@ -1,50 +1,53 @@
-module("modules.logic.explore.view.ExploreRewardViewContainer", package.seeall)
+﻿module("modules.logic.explore.view.ExploreRewardViewContainer", package.seeall)
 
-slot0 = class("ExploreRewardViewContainer", BaseViewContainer)
+local var_0_0 = class("ExploreRewardViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = ListScrollParam.New()
-	slot1.scrollGOPath = "mask/#scroll_view1"
-	slot1.prefabType = ScrollEnum.ScrollPrefabFromView
-	slot1.prefabUrl = "#go_rewarditem"
-	slot1.cellClass = ExploreBonusItem
-	slot1.scrollDir = ScrollEnum.ScrollDirV
-	slot1.lineCount = 1
-	slot1.cellWidth = 700
-	slot1.cellHeight = 154
-	slot1.cellSpaceH = 0
-	slot1.cellSpaceV = 0
-	slot1.startSpace = 25
-	slot1.frameUpdateMs = 100
-	slot2 = ListScrollParam.New()
-	slot2.scrollGOPath = "mask/#scroll_view2"
-	slot2.prefabType = ScrollEnum.ScrollPrefabFromView
-	slot2.prefabUrl = "#go_rewarditem"
-	slot2.cellClass = ExploreBonusItem
-	slot2.scrollDir = ScrollEnum.ScrollDirV
-	slot2.lineCount = 1
-	slot2.cellWidth = 700
-	slot2.cellHeight = 154
-	slot2.cellSpaceH = 0
-	slot2.cellSpaceV = 0
-	slot2.startSpace = 25
-	slot2.frameUpdateMs = 100
-	slot3 = {
-		[slot7] = (slot7 - 1) * 0.06
-	}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = ListScrollParam.New()
 
-	for slot7 = 1, 10 do
+	var_1_0.scrollGOPath = "mask/#scroll_view1"
+	var_1_0.prefabType = ScrollEnum.ScrollPrefabFromView
+	var_1_0.prefabUrl = "#go_rewarditem"
+	var_1_0.cellClass = ExploreBonusItem
+	var_1_0.scrollDir = ScrollEnum.ScrollDirV
+	var_1_0.lineCount = 1
+	var_1_0.cellWidth = 700
+	var_1_0.cellHeight = 154
+	var_1_0.cellSpaceH = 0
+	var_1_0.cellSpaceV = 0
+	var_1_0.startSpace = 25
+	var_1_0.frameUpdateMs = 100
+
+	local var_1_1 = ListScrollParam.New()
+
+	var_1_1.scrollGOPath = "mask/#scroll_view2"
+	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromView
+	var_1_1.prefabUrl = "#go_rewarditem"
+	var_1_1.cellClass = ExploreBonusItem
+	var_1_1.scrollDir = ScrollEnum.ScrollDirV
+	var_1_1.lineCount = 1
+	var_1_1.cellWidth = 700
+	var_1_1.cellHeight = 154
+	var_1_1.cellSpaceH = 0
+	var_1_1.cellSpaceV = 0
+	var_1_1.startSpace = 25
+	var_1_1.frameUpdateMs = 100
+
+	local var_1_2 = {}
+
+	for iter_1_0 = 1, 10 do
+		var_1_2[iter_1_0] = (iter_1_0 - 1) * 0.06
 	end
 
 	return {
 		ExploreRewardView.New(),
-		LuaListScrollViewWithAnimator.New(ExploreTaskModel.instance:getTaskList(1), slot1, slot3),
-		LuaListScrollViewWithAnimator.New(ExploreTaskModel.instance:getTaskList(2), slot2, slot3),
+		LuaListScrollViewWithAnimator.New(ExploreTaskModel.instance:getTaskList(1), var_1_0, var_1_2),
+		LuaListScrollViewWithAnimator.New(ExploreTaskModel.instance:getTaskList(2), var_1_1, var_1_2),
 		TabViewGroup.New(1, "#go_btns")
 	}
 end
 
-function slot0.buildTabViews(slot0, slot1)
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 	return {
 		NavigateButtonsView.New({
 			true,
@@ -54,4 +57,4 @@ function slot0.buildTabViews(slot0, slot1)
 	}
 end
 
-return slot0
+return var_0_0

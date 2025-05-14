@@ -1,40 +1,41 @@
-module("modules.logic.versionactivity2_4.pinball.entity.PinballResEntity", package.seeall)
+﻿module("modules.logic.versionactivity2_4.pinball.entity.PinballResEntity", package.seeall)
 
-slot0 = class("PinballResEntity", PinballColliderEntity)
+local var_0_0 = class("PinballResEntity", PinballColliderEntity)
 
-function slot0.doHit(slot0, slot1)
-	if slot0.isDead then
+function var_0_0.doHit(arg_1_0, arg_1_1)
+	if arg_1_0.isDead then
 		return
 	end
 
-	slot0:onHitCount(slot1)
+	arg_1_0:onHitCount(arg_1_1)
 
-	if slot0.isDead then
-		slot0._waitAnim = true
+	if arg_1_0.isDead then
+		arg_1_0._waitAnim = true
 
-		TaskDispatcher.runDelay(slot0._delayDestory, slot0, 1.5)
-		slot0:playAnim("disapper")
+		TaskDispatcher.runDelay(arg_1_0._delayDestory, arg_1_0, 1.5)
+		arg_1_0:playAnim("disapper")
 	else
-		slot0:playAnim("hit")
+		arg_1_0:playAnim("hit")
 	end
 end
 
-function slot0.onHitCount(slot0, slot1)
+function var_0_0.onHitCount(arg_2_0, arg_2_1)
+	return
 end
 
-function slot0._delayDestory(slot0)
-	gohelper.destroy(slot0.go)
+function var_0_0._delayDestory(arg_3_0)
+	gohelper.destroy(arg_3_0.go)
 end
 
-function slot0.onDestroy(slot0)
-	uv0.super.onDestroy(slot0)
-	TaskDispatcher.cancelTask(slot0._delayDestory, slot0)
+function var_0_0.onDestroy(arg_4_0)
+	var_0_0.super.onDestroy(arg_4_0)
+	TaskDispatcher.cancelTask(arg_4_0._delayDestory, arg_4_0)
 end
 
-function slot0.dispose(slot0)
-	if not slot0._waitAnim then
-		gohelper.destroy(slot0.go)
+function var_0_0.dispose(arg_5_0)
+	if not arg_5_0._waitAnim then
+		gohelper.destroy(arg_5_0.go)
 	end
 end
 
-return slot0
+return var_0_0

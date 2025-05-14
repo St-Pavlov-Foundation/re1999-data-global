@@ -1,80 +1,92 @@
-module("modules.logic.room.view.manufacture.RoomViewUITradeBuildingItem", package.seeall)
+﻿module("modules.logic.room.view.manufacture.RoomViewUITradeBuildingItem", package.seeall)
 
-slot0 = class("RoomViewUITradeBuildingItem", RoomViewUIBaseItem)
+local var_0_0 = class("RoomViewUITradeBuildingItem", RoomViewUIBaseItem)
 
-function slot0._customOnInit(slot0)
-	slot0._gomain = gohelper.findChild(slot0._gocontainer, "bubblebg/#go_main")
-	slot0._imagebuildingicon = gohelper.findChildImage(slot0._gocontainer, "#image_buildingicon")
-	slot0._txtnamecn = gohelper.findChildText(slot0._gocontainer, "bottom/txt_buildingName")
-	slot0._goreddot = gohelper.findChild(slot0._gocontainer, "bottom/#go_reddot")
-	slot0._txtnamecn.text = luaLang("room_trade_name")
+function var_0_0._customOnInit(arg_1_0)
+	arg_1_0._gomain = gohelper.findChild(arg_1_0._gocontainer, "bubblebg/#go_main")
+	arg_1_0._imagebuildingicon = gohelper.findChildImage(arg_1_0._gocontainer, "#image_buildingicon")
+	arg_1_0._txtnamecn = gohelper.findChildText(arg_1_0._gocontainer, "bottom/txt_buildingName")
+	arg_1_0._goreddot = gohelper.findChild(arg_1_0._gocontainer, "bottom/#go_reddot")
+	arg_1_0._txtnamecn.text = luaLang("room_trade_name")
 
-	UISpriteSetMgr.instance:setCritterSprite(slot0._imagebuildingicon, "critter_buildingicon_6")
-	gohelper.setActive(slot0._gomain, true)
+	UISpriteSetMgr.instance:setCritterSprite(arg_1_0._imagebuildingicon, "critter_buildingicon_6")
+	gohelper.setActive(arg_1_0._gomain, true)
 end
 
-function slot0._customAddEventListeners(slot0)
-	slot0:refreshUI(true)
+function var_0_0._customAddEventListeners(arg_2_0)
+	arg_2_0:refreshUI(true)
 end
 
-function slot0._customRemoveEventListeners(slot0)
+function var_0_0._customRemoveEventListeners(arg_3_0)
+	return
 end
 
-function slot0._onClick(slot0, slot1, slot2)
+function var_0_0._onClick(arg_4_0, arg_4_1, arg_4_2)
 	ManufactureController.instance:openRoomTradeView()
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
 end
 
-function slot0.refreshUI(slot0, slot1)
-	slot0:_refreshShow(slot1)
-	slot0:_refreshPosition()
+function var_0_0.refreshUI(arg_5_0, arg_5_1)
+	arg_5_0:_refreshShow(arg_5_1)
+	arg_5_0:_refreshPosition()
 end
 
-function slot0._refreshShow(slot0, slot1)
+function var_0_0._refreshShow(arg_6_0, arg_6_1)
 	if RoomBuildingController.instance:isBuildingListShow() or RoomCharacterController.instance:isCharacterListShow() then
-		slot0:_setShow(false, slot1)
+		arg_6_0:_setShow(false, arg_6_1)
 
 		return
 	end
 
-	if slot0._scene.camera:getCameraState() ~= RoomEnum.CameraState.Overlook and slot2 ~= RoomEnum.CameraState.OverlookAll then
-		slot0:_setShow(false, slot1)
+	local var_6_0 = arg_6_0._scene.camera:getCameraState()
+
+	if var_6_0 ~= RoomEnum.CameraState.Overlook and var_6_0 ~= RoomEnum.CameraState.OverlookAll then
+		arg_6_0:_setShow(false, arg_6_1)
 
 		return
 	end
 
 	if RoomMapController.instance:isInRoomInitBuildingViewCamera() then
-		slot0:_setShow(false, slot1)
+		arg_6_0:_setShow(false, arg_6_1)
 
 		return
 	end
 
-	slot0:_setShow(slot0:getBuildingEntity() ~= nil, slot1)
+	local var_6_1 = arg_6_0:getBuildingEntity() ~= nil
+
+	arg_6_0:_setShow(var_6_1, arg_6_1)
 end
 
-function slot0.getUI3DPos(slot0)
-	if not slot0:getBuildingEntity() then
-		slot0:_setShow(false, true)
+function var_0_0.getUI3DPos(arg_7_0)
+	local var_7_0 = arg_7_0:getBuildingEntity()
+
+	if not var_7_0 then
+		arg_7_0:_setShow(false, true)
 
 		return Vector3.zero
 	end
 
-	slot4 = slot1:getHeadGO() and slot3.transform.position or slot1.containerGO.transform.position
+	local var_7_1 = var_7_0.containerGO
+	local var_7_2 = var_7_0:getHeadGO()
+	local var_7_3 = var_7_2 and var_7_2.transform.position or var_7_1.transform.position
+	local var_7_4 = Vector3(var_7_3.x, var_7_3.y, var_7_3.z)
 
-	return RoomBendingHelper.worldToBendingSimple(Vector3(slot4.x, slot4.y, slot4.z))
+	return (RoomBendingHelper.worldToBendingSimple(var_7_4))
 end
 
-function slot0.getBuildingEntity(slot0)
-	slot1 = nil
+function var_0_0.getBuildingEntity(arg_8_0)
+	local var_8_0
+	local var_8_1 = ManufactureModel.instance:getTradeBuildingListInOrder()
 
-	if ManufactureModel.instance:getTradeBuildingListInOrder() then
-		slot1 = slot2[1].buildingUid
+	if var_8_1 then
+		var_8_0 = var_8_1[1].buildingUid
 	end
 
-	return slot0._scene.buildingmgr:getBuildingEntity(slot1, SceneTag.RoomBuilding)
+	return (arg_8_0._scene.buildingmgr:getBuildingEntity(var_8_0, SceneTag.RoomBuilding))
 end
 
-function slot0._customOnDestory(slot0)
+function var_0_0._customOnDestory(arg_9_0)
+	return
 end
 
-return slot0
+return var_0_0

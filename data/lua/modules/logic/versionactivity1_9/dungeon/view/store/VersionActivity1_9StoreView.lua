@@ -1,58 +1,63 @@
-module("modules.logic.versionactivity1_9.dungeon.view.store.VersionActivity1_9StoreView", package.seeall)
+﻿module("modules.logic.versionactivity1_9.dungeon.view.store.VersionActivity1_9StoreView", package.seeall)
 
-slot0 = class("VersionActivity1_9StoreView", BaseView)
+local var_0_0 = class("VersionActivity1_9StoreView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_bg")
-	slot0._scrollstore = gohelper.findChildScrollRect(slot0.viewGO, "#scroll_store")
-	slot0._goContent = gohelper.findChild(slot0.viewGO, "#scroll_store/Viewport/#go_Content")
-	slot0._gostoreItem = gohelper.findChild(slot0.viewGO, "#scroll_store/Viewport/#go_Content/#go_storeItem")
-	slot0._gostoregoodsitem = gohelper.findChild(slot0.viewGO, "#scroll_store/Viewport/#go_Content/#go_storeItem/#go_storegoodsitem")
-	slot0._txttime = gohelper.findChildText(slot0.viewGO, "title/#txt_time")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
+	arg_1_0._scrollstore = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_store")
+	arg_1_0._goContent = gohelper.findChild(arg_1_0.viewGO, "#scroll_store/Viewport/#go_Content")
+	arg_1_0._gostoreItem = gohelper.findChild(arg_1_0.viewGO, "#scroll_store/Viewport/#go_Content/#go_storeItem")
+	arg_1_0._gostoregoodsitem = gohelper.findChild(arg_1_0.viewGO, "#scroll_store/Viewport/#go_Content/#go_storeItem/#go_storegoodsitem")
+	arg_1_0._txttime = gohelper.findChildText(arg_1_0.viewGO, "title/#txt_time")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0._simagebg:LoadImage("singlebg/v1a9_mainactivity_singlebg/v1a9_store_fullbg.png")
-	slot0:addEventCb(VersionActivityController.instance, VersionActivityEvent.OnBuy107GoodsSuccess, slot0.onBuyGoodsSuccess, slot0)
-	slot0:addEventCb(JumpController.instance, JumpEvent.BeforeJump, slot0.closeThis, slot0)
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._simagebg:LoadImage("singlebg/v1a9_mainactivity_singlebg/v1a9_store_fullbg.png")
+	arg_4_0:addEventCb(VersionActivityController.instance, VersionActivityEvent.OnBuy107GoodsSuccess, arg_4_0.onBuyGoodsSuccess, arg_4_0)
+	arg_4_0:addEventCb(JumpController.instance, JumpEvent.BeforeJump, arg_4_0.closeThis, arg_4_0)
 end
 
-function slot0.onBuyGoodsSuccess(slot0)
-	slot0:refreshStore()
+function var_0_0.onBuyGoodsSuccess(arg_5_0)
+	arg_5_0:refreshStore()
 end
 
-function slot0.onOpen(slot0)
-	slot0:refreshUI()
+function var_0_0.onOpen(arg_6_0)
+	arg_6_0:refreshUI()
 end
 
-function slot0.refreshUI(slot0)
-	slot0:refreshStore()
-	slot0:refreshTime()
+function var_0_0.refreshUI(arg_7_0)
+	arg_7_0:refreshStore()
+	arg_7_0:refreshTime()
 end
 
-function slot0.refreshStore(slot0)
+function var_0_0.refreshStore(arg_8_0)
 	VersionActivity1_9StoreListModel.instance:refreshStore()
 end
 
-function slot0.refreshTime(slot0)
-	slot0._txttime.text = TimeUtil.SecondToActivityTimeFormat(ActivityModel.instance:getActivityInfo()[VersionActivity1_9Enum.ActivityId.DungeonStore]:getRealEndTimeStamp() - ServerTime.now())
+function var_0_0.refreshTime(arg_9_0)
+	local var_9_0 = ActivityModel.instance:getActivityInfo()[VersionActivity1_9Enum.ActivityId.DungeonStore]:getRealEndTimeStamp() - ServerTime.now()
+
+	arg_9_0._txttime.text = TimeUtil.SecondToActivityTimeFormat(var_9_0)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_10_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simagebg:UnLoadImage()
+function var_0_0.onDestroyView(arg_11_0)
+	arg_11_0._simagebg:UnLoadImage()
 end
 
-return slot0
+return var_0_0

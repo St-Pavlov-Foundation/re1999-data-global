@@ -1,58 +1,66 @@
-module("modules.logic.activity.controller.chessmap.ActivityChessGameTree", package.seeall)
+﻿module("modules.logic.activity.controller.chessmap.ActivityChessGameTree", package.seeall)
 
-slot0 = class("ActivityChessGameTree")
-slot0.MaxBucket = 9
+local var_0_0 = class("ActivityChessGameTree")
 
-function slot0.buildTree(slot0, slot1)
-	slot0.allNodes = {}
-	slot2 = 50
-	slot3 = {
-		slot1
+var_0_0.MaxBucket = 9
+
+function var_0_0.buildTree(arg_1_0, arg_1_1)
+	arg_1_0.allNodes = {}
+
+	local var_1_0 = 50
+	local var_1_1 = {
+		arg_1_1
 	}
-	slot4 = 1
+	local var_1_2 = 1
 
-	while #slot3 > 0 and slot4 <= slot2 do
-		if slot2 < slot4 + 1 then
+	while #var_1_1 > 0 and var_1_2 <= var_1_0 do
+		var_1_2 = var_1_2 + 1
+
+		if var_1_0 < var_1_2 then
 			logError("max exclusive !")
 
 			break
 		end
 
-		slot5 = table.remove(slot3)
+		local var_1_3 = table.remove(var_1_1)
 
-		table.insert(slot0.allNodes, slot5)
+		table.insert(arg_1_0.allNodes, var_1_3)
 
-		for slot9, slot10 in pairs(slot5.nodes) do
-			slot0:processChildNode(slot5, slot10, slot10.x, slot10.y, true)
-			slot0:processChildNode(slot5, slot10, slot10.x - ActivityChessEnum.ClickRangeX, slot10.y)
-			slot0:processChildNode(slot5, slot10, slot10.x + ActivityChessEnum.ClickRangeX, slot10.y)
-			slot0:processChildNode(slot5, slot10, slot10.x, slot10.y - ActivityChessEnum.ClickRangeY)
-			slot0:processChildNode(slot5, slot10, slot10.x, slot10.y + ActivityChessEnum.ClickRangeY)
+		for iter_1_0, iter_1_1 in pairs(var_1_3.nodes) do
+			arg_1_0:processChildNode(var_1_3, iter_1_1, iter_1_1.x, iter_1_1.y, true)
+			arg_1_0:processChildNode(var_1_3, iter_1_1, iter_1_1.x - ActivityChessEnum.ClickRangeX, iter_1_1.y)
+			arg_1_0:processChildNode(var_1_3, iter_1_1, iter_1_1.x + ActivityChessEnum.ClickRangeX, iter_1_1.y)
+			arg_1_0:processChildNode(var_1_3, iter_1_1, iter_1_1.x, iter_1_1.y - ActivityChessEnum.ClickRangeY)
+			arg_1_0:processChildNode(var_1_3, iter_1_1, iter_1_1.x, iter_1_1.y + ActivityChessEnum.ClickRangeY)
 		end
 
-		for slot9 = 1, 4 do
-			if uv0.MaxBucket < #slot5.children[slot9].nodes then
-				slot0:growToBranch(slot10)
-				table.insert(slot3, slot10)
+		for iter_1_2 = 1, 4 do
+			local var_1_4 = var_1_3.children[iter_1_2]
+
+			if #var_1_4.nodes > var_0_0.MaxBucket then
+				arg_1_0:growToBranch(var_1_4)
+				table.insert(var_1_1, var_1_4)
 			end
 		end
 	end
 
-	logNormal("build tree in " .. tostring(slot4))
+	logNormal("build tree in " .. tostring(var_1_2))
 
-	slot0.root = slot1
+	arg_1_0.root = arg_1_1
 end
 
-function slot0.processChildNode(slot0, slot1, slot2, slot3, slot4)
-	if not slot0:getFixNode(slot1, slot3, slot4).keys[slot2] then
-		table.insert(slot5.nodes, slot2)
-		table.insert(slot5.centerNodes, slot2)
+function var_0_0.processChildNode(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4)
+	local var_2_0 = arg_2_0:getFixNode(arg_2_1, arg_2_3, arg_2_4)
 
-		slot5.keys[slot2] = true
+	if not var_2_0.keys[arg_2_2] then
+		table.insert(var_2_0.nodes, arg_2_2)
+		table.insert(var_2_0.centerNodes, arg_2_2)
+
+		var_2_0.keys[arg_2_2] = true
 	end
 end
 
-function slot0.createLeaveNode(slot0)
+function var_0_0.createLeaveNode(arg_3_0)
 	return {
 		nodes = {},
 		keys = {},
@@ -60,50 +68,57 @@ function slot0.createLeaveNode(slot0)
 	}
 end
 
-function slot0.growToBranch(slot0, slot1)
-	for slot9, slot10 in pairs(slot1.centerNodes) do
-		slot2 = math.min(9999, slot10.x)
-		slot3 = math.min(9999, slot10.y)
-		slot4 = math.max(-9999, slot10.x)
-		slot5 = math.max(-9999, slot10.y)
+function var_0_0.growToBranch(arg_4_0, arg_4_1)
+	local var_4_0 = 9999
+	local var_4_1 = 9999
+	local var_4_2 = -9999
+	local var_4_3 = -9999
+
+	for iter_4_0, iter_4_1 in pairs(arg_4_1.centerNodes) do
+		var_4_0 = math.min(var_4_0, iter_4_1.x)
+		var_4_1 = math.min(var_4_1, iter_4_1.y)
+		var_4_2 = math.max(var_4_2, iter_4_1.x)
+		var_4_3 = math.max(var_4_3, iter_4_1.y)
 	end
 
-	slot1.x = (slot2 + slot4) * 0.5
-	slot1.y = (slot3 + slot5) * 0.5
-	slot1.children = {}
+	arg_4_1.x = (var_4_0 + var_4_2) * 0.5
+	arg_4_1.y = (var_4_1 + var_4_3) * 0.5
+	arg_4_1.children = {}
 
-	for slot9 = 1, 4 do
-		slot1.children[slot9] = slot0:createLeaveNode()
-		slot1.children[slot9].parent = slot1
+	for iter_4_2 = 1, 4 do
+		arg_4_1.children[iter_4_2] = arg_4_0:createLeaveNode()
+		arg_4_1.children[iter_4_2].parent = arg_4_1
 	end
 end
 
-function slot0.getFixNode(slot0, slot1, slot2, slot3)
-	if slot1.x < slot2 then
-		if slot1.y < slot3 then
-			return slot1.children[1]
+function var_0_0.getFixNode(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
+	if arg_5_2 > arg_5_1.x then
+		if arg_5_3 > arg_5_1.y then
+			return arg_5_1.children[1]
 		else
-			return slot1.children[4]
+			return arg_5_1.children[4]
 		end
-	elseif slot1.y < slot3 then
-		return slot1.children[2]
+	elseif arg_5_3 > arg_5_1.y then
+		return arg_5_1.children[2]
 	else
-		return slot1.children[3]
+		return arg_5_1.children[3]
 	end
 end
 
-function slot0.search(slot0, slot1, slot2)
-	slot3 = slot0.root
+function var_0_0.search(arg_6_0, arg_6_1, arg_6_2)
+	local var_6_0 = arg_6_0.root
 
-	while slot3.children ~= nil do
-		slot3 = slot0:getFixNode(slot3, slot1, slot2)
+	while var_6_0.children ~= nil do
+		var_6_0 = arg_6_0:getFixNode(var_6_0, arg_6_1, arg_6_2)
 	end
 
-	if slot3.parent ~= nil then
-		return slot4.nodes
+	local var_6_1 = var_6_0.parent
+
+	if var_6_1 ~= nil then
+		return var_6_1.nodes
 	else
-		return slot3.nodes
+		return var_6_0.nodes
 	end
 end
 
-return slot0
+return var_0_0

@@ -1,32 +1,34 @@
-module("modules.logic.versionactivity1_5.aizila.view.AiZiLaRecordViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity1_5.aizila.view.AiZiLaRecordViewContainer", package.seeall)
 
-slot0 = class("AiZiLaRecordViewContainer", BaseViewContainer)
+local var_0_0 = class("AiZiLaRecordViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
-	slot0._equipView = AiZiLaRecordView.New()
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, slot0._equipView)
-	table.insert(slot1, TabViewGroup.New(1, "#go_BackBtns"))
+	arg_1_0._equipView = AiZiLaRecordView.New()
 
-	return slot1
+	table.insert(var_1_0, arg_1_0._equipView)
+	table.insert(var_1_0, TabViewGroup.New(1, "#go_BackBtns"))
+
+	return var_1_0
 end
 
-function slot0.onContainerClickModalMask(slot0)
+function var_0_0.onContainerClickModalMask(arg_2_0)
+	return
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
-		slot0._navigateButtonsView = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_3_0, arg_3_1)
+	if arg_3_1 == 1 then
+		arg_3_0._navigateButtonsView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
 		return {
-			slot0._navigateButtonsView
+			arg_3_0._navigateButtonsView
 		}
 	end
 end
 
-return slot0
+return var_0_0

@@ -1,22 +1,23 @@
-module("modules.logic.explore.model.mo.ExploreRuneUnitMO", package.seeall)
+﻿module("modules.logic.explore.model.mo.ExploreRuneUnitMO", package.seeall)
 
-slot0 = class("ExploreRuneUnitMO", ExploreBaseUnitMO)
+local var_0_0 = class("ExploreRuneUnitMO", ExploreBaseUnitMO)
 
-function slot0.activeStateChange(slot0, slot1)
+function var_0_0.activeStateChange(arg_1_0, arg_1_1)
+	return
 end
 
-function slot0.checkActiveCount(slot0)
-	if not slot0._countSource then
+function var_0_0.checkActiveCount(arg_2_0)
+	if not arg_2_0._countSource then
 		return
 	end
 
-	for slot4, slot5 in pairs(slot0._countSource) do
-		if slot0:isInteractActiveState() then
-			ExploreCounterModel.instance:add(slot5, slot0.id)
+	for iter_2_0, iter_2_1 in pairs(arg_2_0._countSource) do
+		if arg_2_0:isInteractActiveState() then
+			ExploreCounterModel.instance:add(iter_2_1, arg_2_0.id)
 		else
-			ExploreCounterModel.instance:reduce(slot5, slot0.id)
+			ExploreCounterModel.instance:reduce(iter_2_1, arg_2_0.id)
 		end
 	end
 end
 
-return slot0
+return var_0_0

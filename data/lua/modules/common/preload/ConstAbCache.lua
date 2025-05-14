@@ -1,9 +1,9 @@
-module("modules.common.preload.ConstAbCache", package.seeall)
+﻿module("modules.common.preload.ConstAbCache", package.seeall)
 
-slot0 = class("ConstAbCache")
+local var_0_0 = class("ConstAbCache")
 
-function slot0.ctor(slot0)
-	slot0._pathTab = {
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._pathTab = {
 		"ui/viewres/rpcblock/rpcblock.prefab",
 		PostProcessingMgr.MainHighProfilePath,
 		PostProcessingMgr.MainMiddleProfilePath,
@@ -13,36 +13,36 @@ function slot0.ctor(slot0)
 		ExploreScenePPVolume.ExploreLowProfilePath,
 		PostProcessingMgr.CaptureResPath
 	}
-	slot0._pathResTab = {}
+	arg_1_0._pathResTab = {}
 end
 
-function slot0.getRes(slot0, slot1)
-	return slot0._pathResTab[slot1]
+function var_0_0.getRes(arg_2_0, arg_2_1)
+	return arg_2_0._pathResTab[arg_2_1]
 end
 
-function slot0.startLoad(slot0, slot1, slot2)
-	slot0._finishCb = slot1
-	slot0._finishCbObj = slot2
-	slot0._needCount = #slot0._pathTab
+function var_0_0.startLoad(arg_3_0, arg_3_1, arg_3_2)
+	arg_3_0._finishCb = arg_3_1
+	arg_3_0._finishCbObj = arg_3_2
+	arg_3_0._needCount = #arg_3_0._pathTab
 
-	for slot6, slot7 in ipairs(slot0._pathTab) do
-		loadAbAsset(slot7, false, slot0._onLoadOne, slot0)
+	for iter_3_0, iter_3_1 in ipairs(arg_3_0._pathTab) do
+		loadAbAsset(iter_3_1, false, arg_3_0._onLoadOne, arg_3_0)
 	end
 end
 
-function slot0._onLoadOne(slot0, slot1)
-	if slot1.IsLoadSuccess then
-		slot1:Retain()
+function var_0_0._onLoadOne(arg_4_0, arg_4_1)
+	if arg_4_1.IsLoadSuccess then
+		arg_4_1:Retain()
 
-		slot0._pathResTab[slot1.ResPath] = slot1:GetResource()
-		slot0._needCount = slot0._needCount - 1
+		arg_4_0._pathResTab[arg_4_1.ResPath] = arg_4_1:GetResource()
+		arg_4_0._needCount = arg_4_0._needCount - 1
 
-		if slot0._needCount == 0 then
-			if slot0._finishCb then
-				slot0._finishCb(slot0._finishCbObj)
+		if arg_4_0._needCount == 0 then
+			if arg_4_0._finishCb then
+				arg_4_0._finishCb(arg_4_0._finishCbObj)
 
-				slot0._finishCb = nil
-				slot0._finishCbObj = nil
+				arg_4_0._finishCb = nil
+				arg_4_0._finishCbObj = nil
 			end
 
 			logNormal("ConstAbCache 预加载ab资源完成了!")
@@ -51,9 +51,9 @@ function slot0._onLoadOne(slot0, slot1)
 		return
 	end
 
-	logError("ConstAbCache 预加载ab资源失败，path = " .. slot1.ResPath)
+	logError("ConstAbCache 预加载ab资源失败，path = " .. arg_4_1.ResPath)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

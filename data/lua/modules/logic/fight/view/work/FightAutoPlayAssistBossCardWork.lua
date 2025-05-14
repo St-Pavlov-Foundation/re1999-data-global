@@ -1,41 +1,41 @@
-module("modules.logic.fight.view.work.FightAutoPlayAssistBossCardWork", package.seeall)
+﻿module("modules.logic.fight.view.work.FightAutoPlayAssistBossCardWork", package.seeall)
 
-slot0 = class("FightAutoPlayAssistBossCardWork", BaseWork)
+local var_0_0 = class("FightAutoPlayAssistBossCardWork", BaseWork)
 
-function slot0.ctor(slot0, slot1)
-	slot0._beginRoundOp = slot1
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0._beginRoundOp = arg_1_1
 end
 
-function slot0.onStart(slot0, slot1)
-	if slot0._beginRoundOp then
-		FightController.instance:dispatchEvent(FightEvent.AutoToSelectSkillTarget, slot0._beginRoundOp.toId)
+function var_0_0.onStart(arg_2_0, arg_2_1)
+	if arg_2_0._beginRoundOp then
+		FightController.instance:dispatchEvent(FightEvent.AutoToSelectSkillTarget, arg_2_0._beginRoundOp.toId)
 	end
 
-	if not slot0._beginRoundOp then
-		return slot0:onDone(true)
+	if not arg_2_0._beginRoundOp then
+		return arg_2_0:onDone(true)
 	end
 
-	TaskDispatcher.runDelay(slot0._delayDone, slot0, 3)
+	TaskDispatcher.runDelay(arg_2_0._delayDone, arg_2_0, 3)
 
-	slot2 = FightCardModel.instance:playAssistBossHandCardOp(slot0._beginRoundOp.param1, slot0._beginRoundOp.toId)
+	local var_2_0 = FightCardModel.instance:playAssistBossHandCardOp(arg_2_0._beginRoundOp.param1, arg_2_0._beginRoundOp.toId)
 
-	FightController.instance:dispatchEvent(FightEvent.AddPlayOperationData, slot2)
+	FightController.instance:dispatchEvent(FightEvent.AddPlayOperationData, var_2_0)
 	FightController.instance:dispatchEvent(FightEvent.onNoActCostMoveFlowOver)
-	FightController.instance:dispatchEvent(FightEvent.RefreshPlayCardRoundOp, slot2)
-	FightController.instance:dispatchEvent(FightEvent.OnPlayAssistBossCardFlowDone, slot2)
-	FightDataHelper.paTaMgr:playAssistBossSkillBySkillId(slot2.param1)
+	FightController.instance:dispatchEvent(FightEvent.RefreshPlayCardRoundOp, var_2_0)
+	FightController.instance:dispatchEvent(FightEvent.OnPlayAssistBossCardFlowDone, var_2_0)
+	FightDataHelper.paTaMgr:playAssistBossSkillBySkillId(var_2_0.param1)
 	FightController.instance:dispatchEvent(FightEvent.OnAssistBossPowerChange)
 	FightController.instance:dispatchEvent(FightEvent.OnAssistBossCDChange)
-	slot0:onDone(true)
+	arg_2_0:onDone(true)
 end
 
-function slot0._delayDone(slot0)
+function var_0_0._delayDone(arg_3_0)
 	logError("自动战斗打协助boss牌超时")
-	slot0:onDone(true)
+	arg_3_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
-	TaskDispatcher.cancelTask(slot0._delayDone, slot0)
+function var_0_0.clearWork(arg_4_0)
+	TaskDispatcher.cancelTask(arg_4_0._delayDone, arg_4_0)
 end
 
-return slot0
+return var_0_0

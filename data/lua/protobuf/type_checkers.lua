@@ -1,55 +1,55 @@
-slot0 = type
-slot1 = error
-slot2 = string
+﻿local var_0_0 = type
+local var_0_1 = error
+local var_0_2 = string
 
 module("protobuf.type_checkers")
 
-function TypeChecker(slot0)
-	slot1 = slot0
+function TypeChecker(arg_1_0)
+	local var_1_0 = arg_1_0
 
-	return function (slot0)
-		slot1 = uv0(slot0)
+	return function(arg_2_0)
+		local var_2_0 = var_0_0(arg_2_0)
 
-		if uv1[uv0(slot0)] == nil then
-			uv2(uv3.format("%s has type %s, but expected one of: %s", slot0, uv0(slot0), uv1))
+		if var_1_0[var_0_0(arg_2_0)] == nil then
+			var_0_1(var_0_2.format("%s has type %s, but expected one of: %s", arg_2_0, var_0_0(arg_2_0), var_1_0))
 		end
 	end
 end
 
 function Int32ValueChecker()
-	slot0 = -2147483648
-	slot1 = 2147483647
+	local var_3_0 = -2147483648
+	local var_3_1 = 2147483647
 
-	return function (slot0)
-		if uv0(slot0) ~= "number" then
-			uv1(uv2.format("%s has type %s, but expected one of: number", slot0, uv0(slot0)))
+	return function(arg_4_0)
+		if var_0_0(arg_4_0) ~= "number" then
+			var_0_1(var_0_2.format("%s has type %s, but expected one of: number", arg_4_0, var_0_0(arg_4_0)))
 		end
 
-		if slot0 < uv3 or uv4 < slot0 then
-			uv1("Value out of range: " .. slot0)
+		if arg_4_0 < var_3_0 or arg_4_0 > var_3_1 then
+			var_0_1("Value out of range: " .. arg_4_0)
 		end
 	end
 end
 
-function Uint32ValueChecker(slot0)
-	slot1 = 0
-	slot2 = 4294967295.0
+function Uint32ValueChecker(arg_5_0)
+	local var_5_0 = 0
+	local var_5_1 = 4294967295
 
-	return function (slot0)
-		if uv0(slot0) ~= "number" then
-			uv1(uv2.format("%s has type %s, but expected one of: number", slot0, uv0(slot0)))
+	return function(arg_6_0)
+		if var_0_0(arg_6_0) ~= "number" then
+			var_0_1(var_0_2.format("%s has type %s, but expected one of: number", arg_6_0, var_0_0(arg_6_0)))
 		end
 
-		if slot0 < uv3 or uv4 < slot0 then
-			uv1("Value out of range: " .. slot0)
+		if arg_6_0 < var_5_0 or arg_6_0 > var_5_1 then
+			var_0_1("Value out of range: " .. arg_6_0)
 		end
 	end
 end
 
 function UnicodeValueChecker()
-	return function (slot0)
-		if uv0(slot0) ~= "string" then
-			uv1(uv2.format("%s has type %s, but expected one of: string", slot0, uv0(slot0)))
+	return function(arg_8_0)
+		if var_0_0(arg_8_0) ~= "string" then
+			var_0_1(var_0_2.format("%s has type %s, but expected one of: string", arg_8_0, var_0_0(arg_8_0)))
 		end
 	end
 end

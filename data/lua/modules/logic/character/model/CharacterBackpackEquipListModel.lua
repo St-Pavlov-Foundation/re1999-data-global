@@ -1,142 +1,147 @@
-module("modules.logic.character.model.CharacterBackpackEquipListModel", package.seeall)
+﻿module("modules.logic.character.model.CharacterBackpackEquipListModel", package.seeall)
 
-slot0 = class("CharacterBackpackEquipListModel", ListScrollModel)
+local var_0_0 = class("CharacterBackpackEquipListModel", ListScrollModel)
 
-function slot0.init(slot0)
-	slot0._levelAscend = false
-	slot0._qualityAscend = false
-	slot0._timeAscend = false
-	slot0._btnTag = 1
+function var_0_0.init(arg_1_0)
+	arg_1_0._levelAscend = false
+	arg_1_0._qualityAscend = false
+	arg_1_0._timeAscend = false
+	arg_1_0._btnTag = 1
 end
 
-function slot0.getBtnTag(slot0)
-	return slot0._btnTag
+function var_0_0.getBtnTag(arg_2_0)
+	return arg_2_0._btnTag
 end
 
-function slot0.getRankState(slot0)
-	return slot0._levelAscend and 1 or -1, slot0._qualityAscend and 1 or -1, slot0._timeAscend and 1 or -1
+function var_0_0.getRankState(arg_3_0)
+	return arg_3_0._levelAscend and 1 or -1, arg_3_0._qualityAscend and 1 or -1, arg_3_0._timeAscend and 1 or -1
 end
 
-function slot0.updateModel(slot0)
-	slot0._equipList = slot0._equipList or {}
+function var_0_0.updateModel(arg_4_0)
+	arg_4_0._equipList = arg_4_0._equipList or {}
 
-	slot0:setList(slot0._equipList)
+	arg_4_0:setList(arg_4_0._equipList)
 end
 
-function slot0.getCount(slot0)
-	return slot0._equipList and #slot0._equipList or 0
+function var_0_0.getCount(arg_5_0)
+	return arg_5_0._equipList and #arg_5_0._equipList or 0
 end
 
-function slot0.setEquipList(slot0)
-	slot0._equipList = {}
+function var_0_0.setEquipList(arg_6_0)
+	arg_6_0._equipList = {}
 
-	for slot5, slot6 in ipairs(EquipModel.instance:getEquips()) do
-		if slot6.config then
-			table.insert(slot0._equipList, slot6)
+	local var_6_0 = EquipModel.instance:getEquips()
+
+	for iter_6_0, iter_6_1 in ipairs(var_6_0) do
+		if iter_6_1.config then
+			table.insert(arg_6_0._equipList, iter_6_1)
 		end
 	end
 
-	slot0:sortEquipList()
-	slot0:setList(slot0._equipList)
+	arg_6_0:sortEquipList()
+	arg_6_0:setList(arg_6_0._equipList)
 end
 
-function slot0.setEquipListNew(slot0, slot1)
-	slot0._equipList = slot1
+function var_0_0.setEquipListNew(arg_7_0, arg_7_1)
+	arg_7_0._equipList = arg_7_1
 
-	slot0:sortEquipList()
-	slot0:setList(slot0._equipList)
+	arg_7_0:sortEquipList()
+	arg_7_0:setList(arg_7_0._equipList)
 end
 
-function slot0.sortEquipList(slot0)
-	if slot0._btnTag == 1 then
-		slot0:_sortByLevel()
-	elseif slot0._btnTag == 2 then
-		slot0:_sortByQuality()
-	elseif slot0._btnTag == 3 then
-		slot0:_sortByTime()
+function var_0_0.sortEquipList(arg_8_0)
+	if arg_8_0._btnTag == 1 then
+		arg_8_0:_sortByLevel()
+	elseif arg_8_0._btnTag == 2 then
+		arg_8_0:_sortByQuality()
+	elseif arg_8_0._btnTag == 3 then
+		arg_8_0:_sortByTime()
 	end
 end
 
-function slot0.sortByLevel(slot0)
-	slot0._qualityAscend = false
-	slot0._timeAscend = false
+function var_0_0.sortByLevel(arg_9_0)
+	arg_9_0._qualityAscend = false
+	arg_9_0._timeAscend = false
 
-	if slot0._btnTag == 1 then
-		slot0._levelAscend = not slot0._levelAscend
+	if arg_9_0._btnTag == 1 then
+		arg_9_0._levelAscend = not arg_9_0._levelAscend
 	else
-		slot0._btnTag = 1
+		arg_9_0._btnTag = 1
 	end
 
-	slot0:_sortByLevel()
-	slot0:setList(slot0._equipList)
+	arg_9_0:_sortByLevel()
+	arg_9_0:setList(arg_9_0._equipList)
 end
 
-function slot0._sortByLevel(slot0)
-	table.sort(slot0._equipList, EquipHelper.sortByLevelFunc)
+function var_0_0._sortByLevel(arg_10_0)
+	table.sort(arg_10_0._equipList, EquipHelper.sortByLevelFunc)
 end
 
-function slot0.sortByQuality(slot0)
-	slot0._levelAscend = false
-	slot0._timeAscend = false
+function var_0_0.sortByQuality(arg_11_0)
+	arg_11_0._levelAscend = false
+	arg_11_0._timeAscend = false
 
-	if slot0._btnTag == 2 then
-		slot0._qualityAscend = not slot0._qualityAscend
+	if arg_11_0._btnTag == 2 then
+		arg_11_0._qualityAscend = not arg_11_0._qualityAscend
 	else
-		slot0._btnTag = 2
+		arg_11_0._btnTag = 2
 	end
 
-	slot0:_sortByQuality()
-	slot0:setList(slot0._equipList)
+	arg_11_0:_sortByQuality()
+	arg_11_0:setList(arg_11_0._equipList)
 end
 
-function slot0._sortByQuality(slot0)
-	table.sort(slot0._equipList, EquipHelper.sortByQualityFunc)
+function var_0_0._sortByQuality(arg_12_0)
+	table.sort(arg_12_0._equipList, EquipHelper.sortByQualityFunc)
 end
 
-function slot0.sortByTime(slot0)
-	slot0._levelAscend = false
-	slot0._qualityAscend = false
+function var_0_0.sortByTime(arg_13_0)
+	arg_13_0._levelAscend = false
+	arg_13_0._qualityAscend = false
 
-	if slot0._btnTag == 3 then
-		slot0._timeAscend = not slot0._timeAscend
+	if arg_13_0._btnTag == 3 then
+		arg_13_0._timeAscend = not arg_13_0._timeAscend
 	else
-		slot0._btnTag = 3
+		arg_13_0._btnTag = 3
 	end
 
-	slot0:_sortByTime()
-	slot0:setList(slot0._equipList)
+	arg_13_0:_sortByTime()
+	arg_13_0:setList(arg_13_0._equipList)
 end
 
-function slot0._sortByTime(slot0)
-	table.sort(slot0._equipList, EquipHelper.sortByTimeFunc)
+function var_0_0._sortByTime(arg_14_0)
+	table.sort(arg_14_0._equipList, EquipHelper.sortByTimeFunc)
 end
 
-function slot0._getEquipList(slot0)
-	return slot0._equipList
+function var_0_0._getEquipList(arg_15_0)
+	return arg_15_0._equipList
 end
 
-function slot0.openEquipView(slot0)
-	slot0:init()
+function var_0_0.openEquipView(arg_16_0)
+	arg_16_0:init()
 
-	slot0.equipUidToHeroMo = {}
-	slot1 = HeroGroupModel.instance:getCurGroupMO()
+	arg_16_0.equipUidToHeroMo = {}
 
-	for slot7, slot8 in pairs(slot1:getAllPosEquips()) do
-		slot0.equipUidToHeroMo[slot8.equipUid[1]] = HeroModel.instance:getById(slot1.heroList[slot7 + 1])
+	local var_16_0 = HeroGroupModel.instance:getCurGroupMO()
+	local var_16_1 = var_16_0:getAllPosEquips()
+	local var_16_2 = var_16_0.heroList
+
+	for iter_16_0, iter_16_1 in pairs(var_16_1) do
+		arg_16_0.equipUidToHeroMo[iter_16_1.equipUid[1]] = HeroModel.instance:getById(var_16_2[iter_16_0 + 1])
 	end
 end
 
-function slot0.getHeroMoByEquipUid(slot0, slot1)
-	return slot0.equipUidToHeroMo and slot0.equipUidToHeroMo[slot1]
+function var_0_0.getHeroMoByEquipUid(arg_17_0, arg_17_1)
+	return arg_17_0.equipUidToHeroMo and arg_17_0.equipUidToHeroMo[arg_17_1]
 end
 
-function slot0.clearEquipList(slot0)
-	slot0._equipList = nil
-	slot0.equipUidToHeroMo = nil
+function var_0_0.clearEquipList(arg_18_0)
+	arg_18_0._equipList = nil
+	arg_18_0.equipUidToHeroMo = nil
 
-	slot0:clear()
+	arg_18_0:clear()
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

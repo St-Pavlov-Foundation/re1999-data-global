@@ -1,13 +1,14 @@
-module("modules.logic.scene.pushbox.logic.PushBoxGameMgr", package.seeall)
+﻿module("modules.logic.scene.pushbox.logic.PushBoxGameMgr", package.seeall)
 
-slot0 = class("PushBoxGameMgr", BaseSceneComp)
-slot0.Direction = {
+local var_0_0 = class("PushBoxGameMgr", BaseSceneComp)
+
+var_0_0.Direction = {
 	Down = 2,
 	Up = 1,
 	Left = 3,
 	Right = 4
 }
-slot0.ElementType = {
+var_0_0.ElementType = {
 	WallPicUp2 = 52,
 	Goal = 0,
 	Enemy = 6,
@@ -35,48 +36,51 @@ slot0.ElementType = {
 	Empty = 1
 }
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.setCharacterPos(slot0, slot1, slot2, slot3)
-	slot0.character:setPos(slot1, slot2, slot3)
+function var_0_0.setCharacterPos(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
+	arg_2_0.character:setPos(arg_2_1, arg_2_2, arg_2_3)
 end
 
-function slot0.stepOver(slot0)
-	if slot0:detectGameOver() then
+function var_0_0.stepOver(arg_3_0)
+	if arg_3_0:detectGameOver() then
 		return
 	end
 
-	slot0.step_data:markStepData()
+	arg_3_0.step_data:markStepData()
 
-	if slot0:getCell(slot0.character:getPosX(), slot0.character:getPosY()):getCellType() == uv0.ElementType.Goal and slot1:doorIsOpend() then
-		slot0._isFinish = true
+	local var_3_0 = arg_3_0:getCell(arg_3_0.character:getPosX(), arg_3_0.character:getPosY())
 
-		if not PushBoxModel.instance:getPassData(slot0:getCurStageID()) then
-			uv0.finishNewEpisode = true
-		elseif PushBoxModel.instance:getPassData(slot0:getCurStageID()).state == 0 then
-			uv0.finishNewEpisode = true
+	if var_3_0:getCellType() == var_0_0.ElementType.Goal and var_3_0:doorIsOpend() then
+		arg_3_0._isFinish = true
+
+		if not PushBoxModel.instance:getPassData(arg_3_0:getCurStageID()) then
+			var_0_0.finishNewEpisode = true
+		elseif PushBoxModel.instance:getPassData(arg_3_0:getCurStageID()).state == 0 then
+			var_0_0.finishNewEpisode = true
 		else
-			uv0.finishNewEpisode = false
+			var_0_0.finishNewEpisode = false
 		end
 
-		PushBoxController.instance:registerCallback(PushBoxEvent.DataEvent.FinishEpisodeReply, slot0._onFinishEpisodeReply, slot0)
-		PushBoxRpc.instance:sendFinishEpisodeRequest(PushBoxModel.instance:getCurActivityID(), slot0:getCurStageID(), slot0.step_data:getStepCount(), slot0.data:getCurWarning())
+		PushBoxController.instance:registerCallback(PushBoxEvent.DataEvent.FinishEpisodeReply, arg_3_0._onFinishEpisodeReply, arg_3_0)
+		PushBoxRpc.instance:sendFinishEpisodeRequest(PushBoxModel.instance:getCurActivityID(), arg_3_0:getCurStageID(), arg_3_0.step_data:getStepCount(), arg_3_0.data:getCurWarning())
 	end
 end
 
-function slot0._onFinishEpisodeReply(slot0, slot1)
-	if slot1 == 0 then
-		PushBoxController.instance:dispatchEvent(PushBoxEvent.GameWin, slot0.data:getCurWarning())
+function var_0_0._onFinishEpisodeReply(arg_4_0, arg_4_1)
+	if arg_4_1 == 0 then
+		PushBoxController.instance:dispatchEvent(PushBoxEvent.GameWin, arg_4_0.data:getCurWarning())
 	end
 end
 
-function slot0.detectGameOver(slot0)
-	if slot0._isFinish then
+function var_0_0.detectGameOver(arg_5_0)
+	if arg_5_0._isFinish then
 		return
 	end
 
-	if slot0.data:gameOver() then
+	if arg_5_0.data:gameOver() then
 		PushBoxController.instance:dispatchEvent(PushBoxEvent.GameOver)
 
 		return true
@@ -85,215 +89,222 @@ function slot0.detectGameOver(slot0)
 	return false
 end
 
-function slot0.revertStep(slot0)
-	slot0._reverting = true
+function var_0_0.revertStep(arg_6_0)
+	arg_6_0._reverting = true
 
-	slot0.step_data:_onRevertStep()
+	arg_6_0.step_data:_onRevertStep()
 
-	slot0._reverting = false
+	arg_6_0._reverting = false
 
-	PushBoxController.instance:dispatchEvent(PushBoxEvent.RefreshWarningNum, slot0:getCurWarning())
+	PushBoxController.instance:dispatchEvent(PushBoxEvent.RefreshWarningNum, arg_6_0:getCurWarning())
 end
 
-function slot0.revertGame(slot0)
-	if slot0.step_data:getStepCount() == 0 then
+function var_0_0.revertGame(arg_7_0)
+	if arg_7_0.step_data:getStepCount() == 0 then
 		GameFacade.showToast(ToastEnum.PushBoxGame)
 
 		return
 	end
 
-	slot0:onSceneClose()
-	slot0:onSceneStart()
-	slot0:startGame(slot0:getCurStageID())
-	PushBoxController.instance:dispatchEvent(PushBoxEvent.RefreshWarningNum, slot0:getCurWarning())
+	arg_7_0:onSceneClose()
+	arg_7_0:onSceneStart()
+	arg_7_0:startGame(arg_7_0:getCurStageID())
+	PushBoxController.instance:dispatchEvent(PushBoxEvent.RefreshWarningNum, arg_7_0:getCurWarning())
 end
 
-function slot0.getCurWarning(slot0)
-	return slot0.data:getCurWarning()
+function var_0_0.getCurWarning(arg_8_0)
+	return arg_8_0.data:getCurWarning()
 end
 
-function slot0.changeWarning(slot0, slot1)
-	if slot0._reverting then
+function var_0_0.changeWarning(arg_9_0, arg_9_1)
+	if arg_9_0._reverting then
 		return
 	end
 
-	if slot0:getCell(slot0.character:getPosX(), slot0.character:getPosY()):getCellType() == uv0.ElementType.Fan then
+	if arg_9_0:getCell(arg_9_0.character:getPosX(), arg_9_0.character:getPosY()):getCellType() == var_0_0.ElementType.Fan then
 		return
 	end
 
-	slot0.data:changeWarning(slot1)
-	PushBoxController.instance:dispatchEvent(PushBoxEvent.RefreshWarningNum, slot0:getCurWarning())
+	arg_9_0.data:changeWarning(arg_9_1)
+	PushBoxController.instance:dispatchEvent(PushBoxEvent.RefreshWarningNum, arg_9_0:getCurWarning())
 end
 
-function slot0.setWarning(slot0, slot1)
-	slot0.data:setWarning(slot1)
+function var_0_0.setWarning(arg_10_0, arg_10_1)
+	arg_10_0.data:setWarning(arg_10_1)
 end
 
-function slot0.setCellInvincible(slot0, slot1, slot2, slot3)
-	for slot8, slot9 in ipairs(slot0.cell_mgr._cell_list) do
-		if math.abs(slot2 - slot9:getPosX()) <= 1 and math.abs(slot3 - slot9:getPosY()) <= 1 then
-			slot9:setCellInvincible(slot1)
+function var_0_0.setCellInvincible(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
+	local var_11_0 = arg_11_0.cell_mgr._cell_list
+
+	for iter_11_0, iter_11_1 in ipairs(var_11_0) do
+		if math.abs(arg_11_2 - iter_11_1:getPosX()) <= 1 and math.abs(arg_11_3 - iter_11_1:getPosY()) <= 1 then
+			iter_11_1:setCellInvincible(arg_11_1)
 		end
 	end
 
-	if not slot1 then
+	if not arg_11_1 then
 		PushBoxController.instance:dispatchEvent(PushBoxEvent.RefreshFanElement)
 		PushBoxController.instance:dispatchEvent(PushBoxEvent.StepFinished)
-		slot0:detectGameOver()
+		arg_11_0:detectGameOver()
 	end
 end
 
-function slot0.cellIsInvincible(slot0, slot1, slot2)
-	return slot0:getCell(slot1, slot2):getInvincible()
+function var_0_0.cellIsInvincible(arg_12_0, arg_12_1, arg_12_2)
+	return arg_12_0:getCell(arg_12_1, arg_12_2):getInvincible()
 end
 
-function slot0.characterInArea(slot0, slot1, slot2)
-	if slot1 == slot0.character:getPosX() and slot2 == slot0.character:getPosY() then
+function var_0_0.characterInArea(arg_13_0, arg_13_1, arg_13_2)
+	if arg_13_1 == arg_13_0.character:getPosX() and arg_13_2 == arg_13_0.character:getPosY() then
 		return true
 	end
 end
 
-function slot0.cellHasBox(slot0, slot1, slot2)
-	return slot0:getCell(slot1, slot2):getBox()
+function var_0_0.cellHasBox(arg_14_0, arg_14_1, arg_14_2)
+	return arg_14_0:getCell(arg_14_1, arg_14_2):getBox()
 end
 
-function slot0.pushBox(slot0, slot1, slot2, slot3, slot4)
-	slot0.cell_mgr:pushBox(slot1, slot2, slot3, slot4)
+function var_0_0.pushBox(arg_15_0, arg_15_1, arg_15_2, arg_15_3, arg_15_4)
+	arg_15_0.cell_mgr:pushBox(arg_15_1, arg_15_2, arg_15_3, arg_15_4)
 end
 
-function slot0._onMove(slot0, slot1)
-	slot0.character:move(slot1)
+function var_0_0._onMove(arg_16_0, arg_16_1)
+	arg_16_0.character:move(arg_16_1)
 end
 
-function slot0.getCell(slot0, slot1, slot2)
-	return slot0.cell_mgr:getCell(slot1, slot2)
+function var_0_0.getCell(arg_17_0, arg_17_1, arg_17_2)
+	return arg_17_0.cell_mgr:getCell(arg_17_1, arg_17_2)
 end
 
-function slot0.getElement(slot0, slot1, slot2, slot3)
-	return slot0.cell_mgr:getElement(slot1, slot2, slot3)
+function var_0_0.getElement(arg_18_0, arg_18_1, arg_18_2, arg_18_3)
+	return arg_18_0.cell_mgr:getElement(arg_18_1, arg_18_2, arg_18_3)
 end
 
-function slot0.outOfBounds(slot0, slot1, slot2)
-	return not slot0.cell_mgr:getCell(slot1, slot2)
+function var_0_0.outOfBounds(arg_19_0, arg_19_1, arg_19_2)
+	return not arg_19_0.cell_mgr:getCell(arg_19_1, arg_19_2)
 end
 
-function slot0.detectCellData(slot0)
-	slot0.cell_mgr:detectCellData()
+function var_0_0.detectCellData(arg_20_0)
+	arg_20_0.cell_mgr:detectCellData()
 end
 
-function slot0.getElementLogicList(slot0, slot1)
-	return slot0.cell_mgr._element_logic[slot1] or {}
+function var_0_0.getElementLogicList(arg_21_0, arg_21_1)
+	return arg_21_0.cell_mgr._element_logic[arg_21_1] or {}
 end
 
-function slot0.getEnemyIndex(slot0, slot1)
-	for slot7, slot8 in ipairs(slot0:getElementLogicList(uv0.ElementType.Enemy)) do
-		if slot1 == slot8 then
-			return 0 + 1
+function var_0_0.getEnemyIndex(arg_22_0, arg_22_1)
+	local var_22_0 = arg_22_0:getElementLogicList(var_0_0.ElementType.Enemy)
+	local var_22_1 = 0
+
+	for iter_22_0, iter_22_1 in ipairs(var_22_0) do
+		var_22_1 = var_22_1 + 1
+
+		if arg_22_1 == iter_22_1 then
+			return var_22_1
 		end
 	end
 
-	return slot3
+	return var_22_1
 end
 
-function slot0.typeIsLight(slot0, slot1)
-	return slot1 == uv0.ElementType.LightUp or slot1 == uv0.ElementType.LightDown or slot1 == uv0.ElementType.LightLeft or slot1 == uv0.ElementType.LightRight
+function var_0_0.typeIsLight(arg_23_0, arg_23_1)
+	return arg_23_1 == var_0_0.ElementType.LightUp or arg_23_1 == var_0_0.ElementType.LightDown or arg_23_1 == var_0_0.ElementType.LightLeft or arg_23_1 == var_0_0.ElementType.LightRight
 end
 
-function slot0.typeIsDoor(slot0, slot1)
-	return slot1 == uv0.ElementType.Goal
+function var_0_0.typeIsDoor(arg_24_0, arg_24_1)
+	return arg_24_1 == var_0_0.ElementType.Goal
 end
 
-function slot0.typeIsEnemy(slot0, slot1)
-	return slot1 == uv0.ElementType.Enemy
+function var_0_0.typeIsEnemy(arg_25_0, arg_25_1)
+	return arg_25_1 == var_0_0.ElementType.Enemy
 end
 
-function slot0.typeIsCharacter(slot0, slot1)
-	return slot1 == uv0.ElementType.Character
+function var_0_0.typeIsCharacter(arg_26_0, arg_26_1)
+	return arg_26_1 == var_0_0.ElementType.Character
 end
 
-function slot0.typeIsMechanics(slot0, slot1)
-	return slot1 == uv0.ElementType.Mechanics
+function var_0_0.typeIsMechanics(arg_27_0, arg_27_1)
+	return arg_27_1 == var_0_0.ElementType.Mechanics
 end
 
-function slot0.getConfig(slot0)
-	return PushBoxEpisodeConfig.instance:getConfig(slot0._stage_id)
+function var_0_0.getConfig(arg_28_0)
+	return PushBoxEpisodeConfig.instance:getConfig(arg_28_0._stage_id)
 end
 
-function slot0.onSceneStart(slot0, slot1, slot2)
-	PushBoxController.instance:registerCallback(PushBoxEvent.Move, slot0._onMove, slot0)
+function var_0_0.onSceneStart(arg_29_0, arg_29_1, arg_29_2)
+	PushBoxController.instance:registerCallback(PushBoxEvent.Move, arg_29_0._onMove, arg_29_0)
 
-	slot0._scene = slot0:getCurScene()
-	slot0._scene_root = slot0._scene:getSceneContainerGO()
+	arg_29_0._scene = arg_29_0:getCurScene()
+	arg_29_0._scene_root = arg_29_0._scene:getSceneContainerGO()
 end
 
-function slot0.onSceneClose(slot0)
-	slot0:releaseComs()
-	PushBoxController.instance:unregisterCallback(PushBoxEvent.Move, slot0._onMove, slot0)
-	PushBoxController.instance:unregisterCallback(PushBoxEvent.DataEvent.FinishEpisodeReply, slot0._onFinishEpisodeReply, slot0)
+function var_0_0.onSceneClose(arg_30_0)
+	arg_30_0:releaseComs()
+	PushBoxController.instance:unregisterCallback(PushBoxEvent.Move, arg_30_0._onMove, arg_30_0)
+	PushBoxController.instance:unregisterCallback(PushBoxEvent.DataEvent.FinishEpisodeReply, arg_30_0._onFinishEpisodeReply, arg_30_0)
 end
 
-function slot0.releaseComs(slot0)
-	if slot0.cell_mgr then
-		slot0.cell_mgr:releaseSelf()
+function var_0_0.releaseComs(arg_31_0)
+	if arg_31_0.cell_mgr then
+		arg_31_0.cell_mgr:releaseSelf()
 
-		slot0.cell_mgr = nil
+		arg_31_0.cell_mgr = nil
 	end
 
-	if slot0.character then
-		slot0.character:releaseSelf()
+	if arg_31_0.character then
+		arg_31_0.character:releaseSelf()
 
-		slot0.character = nil
+		arg_31_0.character = nil
 	end
 
-	if slot0.step_data then
-		slot0.step_data:releaseSelf()
+	if arg_31_0.step_data then
+		arg_31_0.step_data:releaseSelf()
 
-		slot0.step_data = nil
+		arg_31_0.step_data = nil
 	end
 
-	if slot0.data then
-		slot0.data:releaseSelf()
+	if arg_31_0.data then
+		arg_31_0.data:releaseSelf()
 
-		slot0.data = nil
+		arg_31_0.data = nil
 	end
 end
 
-function slot0.getCurStageID(slot0)
-	return slot0._stage_id
+function var_0_0.getCurStageID(arg_32_0)
+	return arg_32_0._stage_id
 end
 
-function slot0.initComs(slot0)
-	slot0.cell_mgr = PushBoxCellMgr.New(slot0)
-	slot0.character = PushBoxCharacter.New(slot0)
-	slot0.step_data = PushBoxStepDataMgr.New(slot0)
-	slot0.data = PushBoxDataMgr.New(slot0)
+function var_0_0.initComs(arg_33_0)
+	arg_33_0.cell_mgr = PushBoxCellMgr.New(arg_33_0)
+	arg_33_0.character = PushBoxCharacter.New(arg_33_0)
+	arg_33_0.step_data = PushBoxStepDataMgr.New(arg_33_0)
+	arg_33_0.data = PushBoxDataMgr.New(arg_33_0)
 end
 
-function slot0.playOpenAni(slot0)
-	slot0._scene_root.transform:GetChild(0):GetComponent(typeof(UnityEngine.Animator)):Play("open", 0, 0)
+function var_0_0.playOpenAni(arg_34_0)
+	arg_34_0._scene_root.transform:GetChild(0):GetComponent(typeof(UnityEngine.Animator)):Play("open", 0, 0)
 end
 
-function slot0.hideRoot(slot0)
-	gohelper.setActive(slot0._scene_root.transform:GetChild(0).gameObject, false)
+function var_0_0.hideRoot(arg_35_0)
+	gohelper.setActive(arg_35_0._scene_root.transform:GetChild(0).gameObject, false)
 end
 
-function slot0.gameIsFinish(slot0)
-	return slot0._isFinish
+function var_0_0.gameIsFinish(arg_36_0)
+	return arg_36_0._isFinish
 end
 
-function slot0.startGame(slot0, slot1)
-	slot0._isFinish = nil
+function var_0_0.startGame(arg_37_0, arg_37_1)
+	arg_37_0._isFinish = nil
 
-	slot0:releaseComs()
-	slot0:initComs()
+	arg_37_0:releaseComs()
+	arg_37_0:initComs()
 
-	slot0._stage_id = slot1
+	arg_37_0._stage_id = arg_37_1
 
-	slot0.cell_mgr:init()
-	slot0.character:init()
-	slot0.step_data:init()
-	slot0.data:init()
+	arg_37_0.cell_mgr:init()
+	arg_37_0.character:init()
+	arg_37_0.step_data:init()
+	arg_37_0.data:init()
 	PushBoxController.instance:dispatchEvent(PushBoxEvent.StartElement)
 end
 
-return slot0
+return var_0_0

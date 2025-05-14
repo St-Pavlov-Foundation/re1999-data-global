@@ -1,22 +1,23 @@
-module("modules.logic.versionactivity2_1.lanshoupa.model.LanShouPaStoryListModel", package.seeall)
+﻿module("modules.logic.versionactivity2_1.lanshoupa.model.LanShouPaStoryListModel", package.seeall)
 
-slot0 = class("LanShouPaStoryListModel", ListScrollModel)
+local var_0_0 = class("LanShouPaStoryListModel", ListScrollModel)
 
-function slot0.init(slot0, slot1, slot2)
-	slot4 = {}
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
+	local var_1_0 = Activity164Config.instance:getStoryList(arg_1_1, arg_1_2)
+	local var_1_1 = {}
 
-	if Activity164Config.instance:getStoryList(slot1, slot2) then
-		for slot8, slot9 in ipairs(slot3) do
-			slot10 = LanShouPaStoryMO.New()
+	if var_1_0 then
+		for iter_1_0, iter_1_1 in ipairs(var_1_0) do
+			local var_1_2 = LanShouPaStoryMO.New()
 
-			slot10:init(slot8, slot9)
-			table.insert(slot4, slot10)
+			var_1_2:init(iter_1_0, iter_1_1)
+			table.insert(var_1_1, var_1_2)
 		end
 	end
 
-	slot0:setList(slot4)
+	arg_1_0:setList(var_1_1)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

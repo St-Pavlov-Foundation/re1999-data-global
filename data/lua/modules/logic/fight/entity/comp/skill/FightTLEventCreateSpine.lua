@@ -1,199 +1,237 @@
-module("modules.logic.fight.entity.comp.skill.FightTLEventCreateSpine", package.seeall)
+﻿module("modules.logic.fight.entity.comp.skill.FightTLEventCreateSpine", package.seeall)
 
-slot0 = class("FightTLEventCreateSpine")
+local var_0_0 = class("FightTLEventCreateSpine")
 
-function slot0.ctor(slot0)
-	slot0._spineGO = nil
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._spineGO = nil
 end
 
-function slot0.getSkinSpineName(slot0, slot1)
-	if string.nilorempty(slot0) or slot1 == 0 then
-		return slot0
+function var_0_0.getSkinSpineName(arg_2_0, arg_2_1)
+	if string.nilorempty(arg_2_0) or arg_2_1 == 0 then
+		return arg_2_0
 	end
 
-	slot2 = string.split(slot0, "#")
-	slot3 = slot2[1]
+	local var_2_0 = string.split(arg_2_0, "#")
+	local var_2_1 = var_2_0[1]
 
-	if not (slot2[2] and slot2[2] == "1") then
-		return slot3
+	if not (var_2_0[2] and var_2_0[2] == "1") then
+		return var_2_1
 	end
 
-	if string.find(slot3, "%[") then
-		slot3 = string.gsub(slot3, "%[%d-%]", slot1)
+	if string.find(var_2_1, "%[") then
+		var_2_1 = string.gsub(var_2_1, "%[%d-%]", arg_2_1)
 	end
 
-	if lua_skin.configDict[slot1] and not string.nilorempty(slot5.spine) then
-		slot7 = string.split(slot3, "_")
-		slot7[1] = string.split(slot5.spine, "_")[1]
+	local var_2_2 = lua_skin.configDict[arg_2_1]
 
-		return table.concat(slot7, "_")
+	if var_2_2 and not string.nilorempty(var_2_2.spine) then
+		local var_2_3 = string.split(var_2_2.spine, "_")
+		local var_2_4 = string.split(var_2_1, "_")
+
+		var_2_4[1] = var_2_3[1]
+
+		return table.concat(var_2_4, "_")
 	end
 
-	return slot3
+	return var_2_1
 end
 
-function slot0.handleSkillEvent(slot0, slot1, slot2, slot3)
-	slot0._paramsArr = slot3
-	slot0._attacker = FightHelper.getEntity(slot1.fromId)
-	slot4 = string.split(slot3[1], "#")
-	slot6 = slot0._attacker:getMO() and slot5:getSpineSkinCO()
-	slot0._skinId = slot6 and slot6.id or 0
-	slot7 = slot6 and uv0.getSkinSpineName(slot3[1], slot0._skinId) or slot3[1]
-	slot8 = slot3[2]
+function var_0_0.handleSkillEvent(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
+	arg_3_0._paramsArr = arg_3_3
+	arg_3_0._attacker = FightHelper.getEntity(arg_3_1.fromId)
 
-	if not string.nilorempty(slot3[3]) then
-		slot9 = string.splitToNumber(slot3[3], ",")[1] or 0
-		slot10 = slot12[2] or 0
-		slot11 = slot12[3] or 0
+	local var_3_0 = string.split(arg_3_3[1], "#")
+	local var_3_1 = arg_3_0._attacker:getMO()
+	local var_3_2 = var_3_1 and var_3_1:getSpineSkinCO()
+
+	arg_3_0._skinId = var_3_2 and var_3_2.id or 0
+
+	local var_3_3 = var_3_2 and var_0_0.getSkinSpineName(arg_3_3[1], arg_3_0._skinId) or arg_3_3[1]
+	local var_3_4 = arg_3_3[2]
+	local var_3_5 = 0
+	local var_3_6 = 0
+	local var_3_7 = 0
+
+	if not string.nilorempty(arg_3_3[3]) then
+		local var_3_8 = string.splitToNumber(arg_3_3[3], ",")
+
+		var_3_5 = var_3_8[1] or var_3_5
+		var_3_6 = var_3_8[2] or var_3_6
+		var_3_7 = var_3_8[3] or var_3_7
 	end
 
-	slot12 = tonumber(slot3[4]) or -1
-	slot13 = tonumber(slot3[5]) or 1
-	slot14 = slot1.stepUid .. "_" .. (string.nilorempty(slot3[6]) and slot7 or slot3[6])
-	slot15 = tonumber(slot3[7]) or 1
-	slot16 = tonumber(slot3[8]) or 0
+	local var_3_9 = tonumber(arg_3_3[4]) or -1
+	local var_3_10 = tonumber(arg_3_3[5]) or 1
+	local var_3_11 = arg_3_1.stepUid .. "_" .. (string.nilorempty(arg_3_3[6]) and var_3_3 or arg_3_3[6])
+	local var_3_12 = tonumber(arg_3_3[7]) or 1
+	local var_3_13 = tonumber(arg_3_3[8]) or 0
 
-	if not slot0._attacker:isMySide() and slot3[9] ~= "4" then
-		slot9 = -slot9
+	if not arg_3_0._attacker:isMySide() and arg_3_3[9] ~= "4" then
+		var_3_5 = -var_3_5
 	end
 
-	slot17 = slot0:_getHangPointGO(slot1, slot15)
-	slot18 = 0
-	slot18 = slot12 == -1 and (FightRenderOrderMgr.instance:getOrder(slot1.fromId) or 0) / FightEnum.OrderRegion * FightEnum.OrderRegion + 1 or slot12 == -2 and (FightRenderOrderMgr.instance:getOrder(slot1.toId) or 0) / FightEnum.OrderRegion * FightEnum.OrderRegion + (tonumber(slot3[13]) or 0) or slot12 * FightEnum.OrderRegion
-	slot19 = {}
+	local var_3_14 = arg_3_0:_getHangPointGO(arg_3_1, var_3_12)
+	local var_3_15 = 0
 
-	if slot3[10] == "1" then
-		slot19 = FightHelper.getDefenders(slot1, true)
+	if var_3_9 == -1 then
+		var_3_15 = (FightRenderOrderMgr.instance:getOrder(arg_3_1.fromId) or 0) / FightEnum.OrderRegion * FightEnum.OrderRegion
+		var_3_15 = var_3_15 + 1
+	elseif var_3_9 == -2 then
+		var_3_15 = (FightRenderOrderMgr.instance:getOrder(arg_3_1.toId) or 0) / FightEnum.OrderRegion * FightEnum.OrderRegion
+		var_3_15 = var_3_15 + (tonumber(arg_3_3[13]) or 0)
 	else
-		table.insert(slot19, FightHelper.getEntity(slot1.toId))
+		var_3_15 = var_3_9 * FightEnum.OrderRegion
 	end
 
-	slot0._spineEntityList = {}
+	local var_3_16 = {}
 
-	for slot24 = 1, slot3[10] == "1" and #slot19 or 1 do
-		slot25 = slot19[slot24]
-		slot26 = 0
-		slot27 = 0
-		slot28 = 0
+	if arg_3_3[10] == "1" then
+		var_3_16 = FightHelper.getDefenders(arg_3_1, true)
+	else
+		table.insert(var_3_16, FightHelper.getEntity(arg_3_1.toId))
+	end
 
-		if slot3[9] == "1" then
-			if slot15 == 1 then
-				slot26, slot27, slot28 = transformhelper.getLocalPos(slot0._attacker.go.transform)
+	arg_3_0._spineEntityList = {}
+
+	local var_3_17 = arg_3_3[10] == "1" and #var_3_16 or 1
+
+	for iter_3_0 = 1, var_3_17 do
+		local var_3_18 = var_3_16[iter_3_0]
+		local var_3_19 = 0
+		local var_3_20 = 0
+		local var_3_21 = 0
+
+		if arg_3_3[9] == "1" then
+			if var_3_12 == 1 then
+				var_3_19, var_3_20, var_3_21 = transformhelper.getLocalPos(arg_3_0._attacker.go.transform)
 			else
-				slot26, slot27, slot28 = transformhelper.getPos(slot0._attacker.go.transform)
+				var_3_19, var_3_20, var_3_21 = transformhelper.getPos(arg_3_0._attacker.go.transform)
 			end
-		elseif slot3[9] == "2" and slot25 then
-			if slot15 == 1 then
-				slot26, slot27, slot28 = transformhelper.getLocalPos(slot25.go.transform)
+		elseif arg_3_3[9] == "2" and var_3_18 then
+			if var_3_12 == 1 then
+				var_3_19, var_3_20, var_3_21 = transformhelper.getLocalPos(var_3_18.go.transform)
 			else
-				slot26, slot27, slot28 = transformhelper.getPos(slot25.go.transform)
+				var_3_19, var_3_20, var_3_21 = transformhelper.getPos(var_3_18.go.transform)
 			end
 		end
 
-		slot0:_createSpine(slot7, slot3[10] == "1" and slot14 .. "_multi_" .. slot24 or slot14, slot16, slot13, slot9 + slot26, slot10 + slot27, slot11 + slot28, slot17, slot18, slot8)
+		local var_3_22 = var_3_5 + var_3_19
+		local var_3_23 = var_3_6 + var_3_20
+		local var_3_24 = var_3_7 + var_3_21
+		local var_3_25 = arg_3_3[10] == "1" and var_3_11 .. "_multi_" .. iter_3_0 or var_3_11
+
+		arg_3_0:_createSpine(var_3_3, var_3_25, var_3_13, var_3_10, var_3_22, var_3_23, var_3_24, var_3_14, var_3_15, var_3_4)
 	end
 
-	slot0:_setupEntityLookAt(slot3[11])
+	arg_3_0:_setupEntityLookAt(arg_3_3[11])
 end
 
-function slot0.handleSkillEventEnd(slot0)
-	slot0:_clear()
+function var_0_0.handleSkillEventEnd(arg_4_0)
+	arg_4_0:_clear()
 end
 
-function slot0._setupEntityLookAt(slot0, slot1)
-	if slot1 and slot1 == "1" then
-		TaskDispatcher.runRepeat(slot0._onTickLookAtCamera, slot0, 0.01)
+function var_0_0._setupEntityLookAt(arg_5_0, arg_5_1)
+	if arg_5_1 and arg_5_1 == "1" then
+		TaskDispatcher.runRepeat(arg_5_0._onTickLookAtCamera, arg_5_0, 0.01)
 	end
 end
 
-function slot0._onTickLookAtCamera(slot0)
-	for slot5, slot6 in ipairs(slot0._spineEntityList) do
-		GameSceneMgr.instance:getScene(SceneType.Fight).entityMgr:adjustSpineLookRotation(slot6)
+function var_0_0._onTickLookAtCamera(arg_6_0)
+	local var_6_0 = GameSceneMgr.instance:getScene(SceneType.Fight).entityMgr
+
+	for iter_6_0, iter_6_1 in ipairs(arg_6_0._spineEntityList) do
+		var_6_0:adjustSpineLookRotation(iter_6_1)
 	end
 end
 
-function slot0._createSpine(slot0, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9, slot10)
-	slot13 = GameSceneMgr.instance:getCurScene().entityMgr:buildTempSpineByName(slot1, slot2, slot0._attacker:getSide(), slot3 == 1)
+function var_0_0._createSpine(arg_7_0, arg_7_1, arg_7_2, arg_7_3, arg_7_4, arg_7_5, arg_7_6, arg_7_7, arg_7_8, arg_7_9, arg_7_10)
+	local var_7_0 = GameSceneMgr.instance:getCurScene().entityMgr
+	local var_7_1 = arg_7_0._attacker:getSide()
+	local var_7_2 = var_7_0:buildTempSpineByName(arg_7_1, arg_7_2, var_7_1, arg_7_3 == 1)
 
-	slot13.variantHeart:setEntity(slot0._attacker)
-	slot13:setScale(slot4)
+	var_7_2.variantHeart:setEntity(arg_7_0._attacker)
+	var_7_2:setScale(arg_7_4)
 
-	if slot8 then
-		gohelper.addChild(slot8, slot13.go)
+	if arg_7_8 then
+		gohelper.addChild(arg_7_8, var_7_2.go)
 	end
 
-	if slot0._paramsArr[7] == "3" or slot0._paramsArr[7] == "4" then
-		transformhelper.setPos(slot13.go.transform, slot5, slot6, slot7)
+	if arg_7_0._paramsArr[7] == "3" or arg_7_0._paramsArr[7] == "4" then
+		transformhelper.setPos(var_7_2.go.transform, arg_7_5, arg_7_6, arg_7_7)
 	else
-		transformhelper.setLocalPos(slot13.go.transform, slot5, slot6, slot7)
+		transformhelper.setLocalPos(var_7_2.go.transform, arg_7_5, arg_7_6, arg_7_7)
 	end
 
-	slot13:setRenderOrder(slot9)
+	var_7_2:setRenderOrder(arg_7_9)
 
-	if not string.nilorempty(slot10) then
-		slot13.spine:play(slot10)
+	if not string.nilorempty(arg_7_10) then
+		var_7_2.spine:play(arg_7_10)
 
-		if slot0._attacker and slot0._attacker.skill and slot0._attacker.skill:sameSkillPlaying() and not string.nilorempty(slot0._paramsArr[12]) then
-			slot13.spine._skeletonAnim:Jump2Time(tonumber(slot0._paramsArr[12]))
+		if arg_7_0._attacker and arg_7_0._attacker.skill and arg_7_0._attacker.skill:sameSkillPlaying() and not string.nilorempty(arg_7_0._paramsArr[12]) then
+			var_7_2.spine._skeletonAnim:Jump2Time(tonumber(arg_7_0._paramsArr[12]))
 		end
 	end
 
-	if slot0._paramsArr[14] == "1" then
-		FightController.instance:dispatchEvent(FightEvent.EntrustTempEntity, slot13)
+	if arg_7_0._paramsArr[14] == "1" then
+		FightController.instance:dispatchEvent(FightEvent.EntrustTempEntity, var_7_2)
 	end
 
-	if not string.nilorempty(slot0._paramsArr[15]) then
-		GameSceneMgr.instance:getCurScene().entityMgr:removeUnitData(slot13:getTag(), slot13.id)
-		FightMsgMgr.sendMsg(FightMsgId.SetBossEvolution, slot13, tonumber(slot0._paramsArr[15]))
-		FightController.instance:dispatchEvent(FightEvent.SetBossEvolution, slot13, tonumber(slot0._paramsArr[15]))
+	if not string.nilorempty(arg_7_0._paramsArr[15]) then
+		GameSceneMgr.instance:getCurScene().entityMgr:removeUnitData(var_7_2:getTag(), var_7_2.id)
+		FightMsgMgr.sendMsg(FightMsgId.SetBossEvolution, var_7_2, tonumber(arg_7_0._paramsArr[15]))
+		FightController.instance:dispatchEvent(FightEvent.SetBossEvolution, var_7_2, tonumber(arg_7_0._paramsArr[15]))
 	end
 
-	table.insert(slot0._spineEntityList, slot13)
+	table.insert(arg_7_0._spineEntityList, var_7_2)
 end
 
-function slot0._getHangPointGO(slot0, slot1, slot2)
-	if slot2 == 2 then
+function var_0_0._getHangPointGO(arg_8_0, arg_8_1, arg_8_2)
+	if arg_8_2 == 2 then
 		return CameraMgr.instance:getCameraTraceGO()
-	elseif slot2 == 3 then
-		return FightHelper.getEntity(slot1.fromId) and slot3.go
-	elseif slot2 == 4 then
-		return FightHelper.getEntity(slot1.toId) and slot3.go
+	elseif arg_8_2 == 3 then
+		local var_8_0 = FightHelper.getEntity(arg_8_1.fromId)
+
+		return var_8_0 and var_8_0.go
+	elseif arg_8_2 == 4 then
+		local var_8_1 = FightHelper.getEntity(arg_8_1.toId)
+
+		return var_8_1 and var_8_1.go
 	end
 end
 
-function slot0.reset(slot0)
-	slot0:_clear()
+function var_0_0.reset(arg_9_0)
+	arg_9_0:_clear()
 end
 
-function slot0.dispose(slot0)
-	slot0:_clear()
+function var_0_0.dispose(arg_10_0)
+	arg_10_0:_clear()
 end
 
-function slot0._clear(slot0)
-	TaskDispatcher.cancelTask(slot0._onTickLookAtCamera, slot0)
+function var_0_0._clear(arg_11_0)
+	TaskDispatcher.cancelTask(arg_11_0._onTickLookAtCamera, arg_11_0)
 
-	if slot0._spineEntityList then
-		for slot4, slot5 in ipairs(slot0._spineEntityList) do
-			slot6 = GameSceneMgr.instance:getCurScene().entityMgr
-			slot7 = true
+	if arg_11_0._spineEntityList then
+		for iter_11_0, iter_11_1 in ipairs(arg_11_0._spineEntityList) do
+			local var_11_0 = GameSceneMgr.instance:getCurScene().entityMgr
+			local var_11_1 = true
 
-			if slot0._paramsArr[14] == "1" then
-				slot7 = false
+			if arg_11_0._paramsArr[14] == "1" then
+				var_11_1 = false
 			end
 
-			if not string.nilorempty(slot0._paramsArr[15]) then
-				slot7 = false
+			if not string.nilorempty(arg_11_0._paramsArr[15]) then
+				var_11_1 = false
 			end
 
-			if slot7 then
-				slot6:removeUnit(slot5:getTag(), slot5.id)
+			if var_11_1 then
+				var_11_0:removeUnit(iter_11_1:getTag(), iter_11_1.id)
 			end
 
-			slot5 = nil
+			iter_11_1 = nil
 		end
 	end
 
-	slot0._spineEntityList = nil
+	arg_11_0._spineEntityList = nil
 end
 
-return slot0
+return var_0_0

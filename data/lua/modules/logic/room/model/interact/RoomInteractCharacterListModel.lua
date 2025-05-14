@@ -1,175 +1,190 @@
-module("modules.logic.room.model.interact.RoomInteractCharacterListModel", package.seeall)
+﻿module("modules.logic.room.model.interact.RoomInteractCharacterListModel", package.seeall)
 
-slot0 = class("RoomInteractCharacterListModel", ListScrollModel)
+local var_0_0 = class("RoomInteractCharacterListModel", ListScrollModel)
 
-function slot0.onInit(slot0)
-	slot0:_clearData()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:_clearData()
 end
 
-function slot0.reInit(slot0)
-	slot0:_clearData()
+function var_0_0.reInit(arg_2_0)
+	arg_2_0:_clearData()
 end
 
-function slot0.clear(slot0)
-	uv0.super.clear(slot0)
-	slot0:_clearData()
+function var_0_0.clear(arg_3_0)
+	var_0_0.super.clear(arg_3_0)
+	arg_3_0:_clearData()
 end
 
-function slot0._clearData(slot0)
-	slot0:clearMapData()
-	slot0:clearFilterData()
+function var_0_0._clearData(arg_4_0)
+	arg_4_0:clearMapData()
+	arg_4_0:clearFilterData()
 
-	slot0._heroMODict = nil
+	arg_4_0._heroMODict = nil
 end
 
-function slot0.clearMapData(slot0)
-	uv0.super.clear(slot0)
+function var_0_0.clearMapData(arg_5_0)
+	var_0_0.super.clear(arg_5_0)
 
-	slot0._selectHeroId = nil
+	arg_5_0._selectHeroId = nil
 end
 
-function slot0.clearFilterData(slot0)
-	slot0._filterCareerDict = {}
-	slot0._order = RoomCharacterEnum.CharacterOrderType.RareDown
+function var_0_0.clearFilterData(arg_6_0)
+	arg_6_0._filterCareerDict = {}
+	arg_6_0._order = RoomCharacterEnum.CharacterOrderType.RareDown
 end
 
-function slot0.setCharacterList(slot0)
-	slot1 = {}
-	slot0._heroMODict = slot0._heroMODict or {}
-	slot3 = RoomInteractBuildingModel.instance
+function var_0_0.setCharacterList(arg_7_0)
+	local var_7_0 = {}
+	local var_7_1 = HeroModel.instance:getList()
 
-	for slot7, slot8 in ipairs(HeroModel.instance:getList()) do
-		if RoomConfig.instance:getRoomCharacterConfig(slot8.skin) and RoomCharacterModel.instance:getCharacterMOById(slot8.heroId) then
-			slot12 = slot8.heroId
+	arg_7_0._heroMODict = arg_7_0._heroMODict or {}
 
-			if slot0:isFilterCareer(slot8.config.career) then
-				if not slot0._heroMODict[slot12] then
-					slot14 = RoomInteractCharacterMO.New()
+	local var_7_2 = RoomInteractBuildingModel.instance
 
-					slot14:init({
+	for iter_7_0, iter_7_1 in ipairs(var_7_1) do
+		local var_7_3 = iter_7_1.config.career
+		local var_7_4 = RoomConfig.instance:getRoomCharacterConfig(iter_7_1.skin)
+		local var_7_5 = RoomCharacterModel.instance:getCharacterMOById(iter_7_1.heroId)
+
+		if var_7_4 and var_7_5 then
+			local var_7_6 = iter_7_1.heroId
+
+			if arg_7_0:isFilterCareer(var_7_3) then
+				local var_7_7 = arg_7_0._heroMODict[var_7_6]
+
+				if not var_7_7 then
+					var_7_7 = RoomInteractCharacterMO.New()
+
+					var_7_7:init({
 						use = false,
-						heroId = slot12
+						heroId = var_7_6
 					})
 
-					slot0._heroMODict[slot12] = slot14
+					arg_7_0._heroMODict[var_7_6] = var_7_7
 				end
 
-				slot14.use = slot3:isSelectHeroId(slot12)
+				var_7_7.use = var_7_2:isSelectHeroId(var_7_6)
 
-				table.insert(slot1, slot14)
+				table.insert(var_7_0, var_7_7)
 			end
 		end
 	end
 
-	table.sort(slot1, slot0:_getSortFunction())
-	slot0:setList(slot1)
-	slot0:_refreshSelect()
+	table.sort(var_7_0, arg_7_0:_getSortFunction())
+	arg_7_0:setList(var_7_0)
+	arg_7_0:_refreshSelect()
 end
 
-function slot0.updateCharacterList(slot0)
-	for slot6, slot7 in ipairs(slot0:getList()) do
-		slot7.use = RoomInteractBuildingModel.instance:isSelectHeroId(slot7.heroId)
+function var_0_0.updateCharacterList(arg_8_0)
+	local var_8_0 = arg_8_0:getList()
+	local var_8_1 = RoomInteractBuildingModel.instance
+
+	for iter_8_0, iter_8_1 in ipairs(var_8_0) do
+		iter_8_1.use = var_8_1:isSelectHeroId(iter_8_1.heroId)
 	end
 
-	slot0:onModelUpdate()
+	arg_8_0:onModelUpdate()
 end
 
-function slot0._getSortFunction(slot0)
-	if slot0._sortFunc then
-		return slot0._sortFunc
+function var_0_0._getSortFunction(arg_9_0)
+	if arg_9_0._sortFunc then
+		return arg_9_0._sortFunc
 	end
 
-	function slot0._sortFunc(slot0, slot1)
-		if slot0.heroConfig.rare ~= slot1.heroConfig.rare then
-			if uv0:getOrder() == RoomCharacterEnum.CharacterOrderType.RareUp then
-				return slot0.heroConfig.rare < slot1.heroConfig.rare
-			elseif slot2 == RoomCharacterEnum.CharacterOrderType.RareDown then
-				return slot1.heroConfig.rare < slot0.heroConfig.rare
+	function arg_9_0._sortFunc(arg_10_0, arg_10_1)
+		if arg_10_0.heroConfig.rare ~= arg_10_1.heroConfig.rare then
+			local var_10_0 = arg_9_0:getOrder()
+
+			if var_10_0 == RoomCharacterEnum.CharacterOrderType.RareUp then
+				return arg_10_0.heroConfig.rare < arg_10_1.heroConfig.rare
+			elseif var_10_0 == RoomCharacterEnum.CharacterOrderType.RareDown then
+				return arg_10_0.heroConfig.rare > arg_10_1.heroConfig.rare
 			end
 		end
 
-		if slot0.id ~= slot1.id then
-			return slot0.id < slot1.id
+		if arg_10_0.id ~= arg_10_1.id then
+			return arg_10_0.id < arg_10_1.id
 		end
 	end
 
-	return slot0._sortFunc
+	return arg_9_0._sortFunc
 end
 
-function slot0.setOrder(slot0, slot1)
-	slot0._order = slot1
+function var_0_0.setOrder(arg_11_0, arg_11_1)
+	arg_11_0._order = arg_11_1
 end
 
-function slot0.getOrder(slot0)
-	return slot0._order
+function var_0_0.getOrder(arg_12_0)
+	return arg_12_0._order
 end
 
-function slot0.setFilterCareer(slot0, slot1)
-	slot0._filterCareerDict = {}
+function var_0_0.setFilterCareer(arg_13_0, arg_13_1)
+	arg_13_0._filterCareerDict = {}
 
-	if slot1 and #slot1 > 0 then
-		for slot5, slot6 in ipairs(slot1) do
-			slot0._filterCareerDict[slot6] = true
-		end
-	end
-end
-
-function slot0.getFilterCareer(slot0)
-	for slot4, slot5 in pairs(slot0._filterCareerDict) do
-		if slot5 == true then
-			return slot4
+	if arg_13_1 and #arg_13_1 > 0 then
+		for iter_13_0, iter_13_1 in ipairs(arg_13_1) do
+			arg_13_0._filterCareerDict[iter_13_1] = true
 		end
 	end
 end
 
-function slot0.isFilterCareer(slot0, slot1)
-	return slot0:isFilterCareerEmpty() or slot0._filterCareerDict[slot1]
+function var_0_0.getFilterCareer(arg_14_0)
+	for iter_14_0, iter_14_1 in pairs(arg_14_0._filterCareerDict) do
+		if iter_14_1 == true then
+			return iter_14_0
+		end
+	end
 end
 
-function slot0.isFilterCareerEmpty(slot0)
-	return not LuaUtil.tableNotEmpty(slot0._filterCareerDict)
+function var_0_0.isFilterCareer(arg_15_0, arg_15_1)
+	return arg_15_0:isFilterCareerEmpty() or arg_15_0._filterCareerDict[arg_15_1]
 end
 
-function slot0.clearSelect(slot0)
-	for slot4, slot5 in ipairs(slot0._scrollViews) do
-		slot5:setSelect(nil)
+function var_0_0.isFilterCareerEmpty(arg_16_0)
+	return not LuaUtil.tableNotEmpty(arg_16_0._filterCareerDict)
+end
+
+function var_0_0.clearSelect(arg_17_0)
+	for iter_17_0, iter_17_1 in ipairs(arg_17_0._scrollViews) do
+		iter_17_1:setSelect(nil)
 	end
 
-	slot0._selectHeroId = nil
+	arg_17_0._selectHeroId = nil
 end
 
-function slot0._refreshSelect(slot0)
-	slot1 = nil
+function var_0_0._refreshSelect(arg_18_0)
+	local var_18_0
+	local var_18_1 = arg_18_0:getList()
 
-	for slot6, slot7 in ipairs(slot0:getList()) do
-		if slot7.id == slot0._selectHeroId then
-			slot1 = slot7
+	for iter_18_0, iter_18_1 in ipairs(var_18_1) do
+		if iter_18_1.id == arg_18_0._selectHeroId then
+			var_18_0 = iter_18_1
 		end
 	end
 
-	for slot6, slot7 in ipairs(slot0._scrollViews) do
-		slot7:setSelect(slot1)
+	for iter_18_2, iter_18_3 in ipairs(arg_18_0._scrollViews) do
+		iter_18_3:setSelect(var_18_0)
 	end
 end
 
-function slot0.setSelect(slot0, slot1)
-	slot0._selectHeroId = slot1
+function var_0_0.setSelect(arg_19_0, arg_19_1)
+	arg_19_0._selectHeroId = arg_19_1
 
-	slot0:_refreshSelect()
+	arg_19_0:_refreshSelect()
 end
 
-function slot0.initCharacter(slot0)
-	slot0:setCharacterList()
+function var_0_0.initCharacter(arg_20_0)
+	arg_20_0:setCharacterList()
 end
 
-function slot0.initFilter(slot0)
-	slot0:setFilterCareer()
+function var_0_0.initFilter(arg_21_0)
+	arg_21_0:setFilterCareer()
 end
 
-function slot0.initOrder(slot0)
-	slot0._order = RoomCharacterEnum.CharacterOrderType.RareDown
+function var_0_0.initOrder(arg_22_0)
+	arg_22_0._order = RoomCharacterEnum.CharacterOrderType.RareDown
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

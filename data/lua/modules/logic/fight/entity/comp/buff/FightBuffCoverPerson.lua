@@ -1,86 +1,92 @@
-module("modules.logic.fight.entity.comp.buff.FightBuffCoverPerson", package.seeall)
+﻿module("modules.logic.fight.entity.comp.buff.FightBuffCoverPerson", package.seeall)
 
-slot0 = class("FightBuffCoverPerson")
-slot1 = {
+local var_0_0 = class("FightBuffCoverPerson")
+local var_0_1 = {
 	2,
 	3,
 	5,
 	10
 }
 
-function slot0.onBuffStart(slot0, slot1, slot2)
-	slot0.entity = slot1
-	slot0.buffMO = slot2
-	slot0._celebrityCharm = slot0:_calcCelebrityCharm()
-	slot0._useCelebrityCharm = 0
+function var_0_0.onBuffStart(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0.entity = arg_1_1
+	arg_1_0.buffMO = arg_1_2
+	arg_1_0._celebrityCharm = arg_1_0:_calcCelebrityCharm()
+	arg_1_0._useCelebrityCharm = 0
 
-	FightController.instance:registerCallback(FightEvent.AddPlayOperationData, slot0._onAddPlayOperationData, slot0)
-	FightController.instance:registerCallback(FightEvent.OnResetCard, slot0._onResetCard, slot0)
-	FightController.instance:registerCallback(FightEvent.RespBeginRound, slot0._respBeginRound, slot0)
-	FightController.instance:registerCallback(FightEvent.OnStageChange, slot0._onStageChange, slot0)
+	FightController.instance:registerCallback(FightEvent.AddPlayOperationData, arg_1_0._onAddPlayOperationData, arg_1_0)
+	FightController.instance:registerCallback(FightEvent.OnResetCard, arg_1_0._onResetCard, arg_1_0)
+	FightController.instance:registerCallback(FightEvent.RespBeginRound, arg_1_0._respBeginRound, arg_1_0)
+	FightController.instance:registerCallback(FightEvent.OnStageChange, arg_1_0._onStageChange, arg_1_0)
 end
 
-function slot0._removeEvents(slot0)
-	FightController.instance:unregisterCallback(FightEvent.AddPlayOperationData, slot0._onAddPlayOperationData, slot0)
-	FightController.instance:unregisterCallback(FightEvent.OnResetCard, slot0._onResetCard, slot0)
-	FightController.instance:unregisterCallback(FightEvent.RespBeginRound, slot0._respBeginRound, slot0)
-	FightController.instance:unregisterCallback(FightEvent.OnStageChange, slot0._onStageChange, slot0)
+function var_0_0._removeEvents(arg_2_0)
+	FightController.instance:unregisterCallback(FightEvent.AddPlayOperationData, arg_2_0._onAddPlayOperationData, arg_2_0)
+	FightController.instance:unregisterCallback(FightEvent.OnResetCard, arg_2_0._onResetCard, arg_2_0)
+	FightController.instance:unregisterCallback(FightEvent.RespBeginRound, arg_2_0._respBeginRound, arg_2_0)
+	FightController.instance:unregisterCallback(FightEvent.OnStageChange, arg_2_0._onStageChange, arg_2_0)
 end
 
-function slot0._onAddPlayOperationData(slot0, slot1)
-	if slot1.operType ~= FightEnum.CardOpType.PlayCard then
+function var_0_0._onAddPlayOperationData(arg_3_0, arg_3_1)
+	if arg_3_1.operType ~= FightEnum.CardOpType.PlayCard then
 		return
 	end
 
-	if slot1.belongToEntityId ~= slot0.entity.id then
+	if arg_3_1.belongToEntityId ~= arg_3_0.entity.id then
 		return
 	end
 
-	slot2 = slot1.skillId
-	slot3 = lua_skill.configDict[slot2].name
+	local var_3_0 = arg_3_1.skillId
+	local var_3_1 = lua_skill.configDict[var_3_0].name
+	local var_3_2 = arg_3_0.entity:getMO():getSkillLv(var_3_0) or 1
+	local var_3_3 = var_0_1[var_3_2]
 
-	if uv0[slot0.entity:getMO():getSkillLv(slot2) or 1] + slot0._useCelebrityCharm <= slot0._celebrityCharm then
-		slot0._useCelebrityCharm = slot0._useCelebrityCharm + slot5
+	if var_3_3 + arg_3_0._useCelebrityCharm <= arg_3_0._celebrityCharm then
+		arg_3_0._useCelebrityCharm = arg_3_0._useCelebrityCharm + var_3_3
 
-		slot1:copyCard()
+		arg_3_1:copyCard()
 	end
 end
 
-function slot0._onResetCard(slot0)
-	slot0._useCelebrityCharm = 0
+function var_0_0._onResetCard(arg_4_0)
+	arg_4_0._useCelebrityCharm = 0
 end
 
-function slot0._respBeginRound(slot0)
-	slot0._useCelebrityCharm = 0
+function var_0_0._respBeginRound(arg_5_0)
+	arg_5_0._useCelebrityCharm = 0
 end
 
-function slot0._onStageChange(slot0, slot1)
-	if slot1 == FightEnum.Stage.Card or slot1 == FightEnum.Stage.AutoCard then
-		slot0._useCelebrityCharm = 0
-		slot0._celebrityCharm = slot0:_calcCelebrityCharm()
+function var_0_0._onStageChange(arg_6_0, arg_6_1)
+	if arg_6_1 == FightEnum.Stage.Card or arg_6_1 == FightEnum.Stage.AutoCard then
+		arg_6_0._useCelebrityCharm = 0
+		arg_6_0._celebrityCharm = arg_6_0:_calcCelebrityCharm()
 	end
 end
 
-function slot0.onBuffEnd(slot0)
-	slot0:_removeEvents()
+function var_0_0.onBuffEnd(arg_7_0)
+	arg_7_0:_removeEvents()
 end
 
-function slot0.reset(slot0)
-	slot0:_removeEvents()
+function var_0_0.reset(arg_8_0)
+	arg_8_0:_removeEvents()
 end
 
-function slot0.dispose(slot0)
-	slot0:_removeEvents()
+function var_0_0.dispose(arg_9_0)
+	arg_9_0:_removeEvents()
 end
 
-function slot0._calcCelebrityCharm(slot0)
-	for slot5, slot6 in pairs(slot0.entity:getMO():getBuffDic()) do
-		if (lua_skill_buff.configDict[slot6.buffId] and lua_skill_bufftype.configDict[slot7.typeId]).id == FightEnum.BuffTypeId_CelebrityCharm then
-			slot1 = 0 + 1
+function var_0_0._calcCelebrityCharm(arg_10_0)
+	local var_10_0 = 0
+
+	for iter_10_0, iter_10_1 in pairs(arg_10_0.entity:getMO():getBuffDic()) do
+		local var_10_1 = lua_skill_buff.configDict[iter_10_1.buffId]
+
+		if (var_10_1 and lua_skill_bufftype.configDict[var_10_1.typeId]).id == FightEnum.BuffTypeId_CelebrityCharm then
+			var_10_0 = var_10_0 + 1
 		end
 	end
 
-	return slot1
+	return var_10_0
 end
 
-return slot0
+return var_0_0

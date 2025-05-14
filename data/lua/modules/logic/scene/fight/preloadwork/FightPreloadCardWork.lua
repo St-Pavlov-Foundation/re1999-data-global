@@ -1,7 +1,7 @@
-module("modules.logic.scene.fight.preloadwork.FightPreloadCardWork", package.seeall)
+﻿module("modules.logic.scene.fight.preloadwork.FightPreloadCardWork", package.seeall)
 
-slot0 = class("FightPreloadCardWork", BaseWork)
-slot1 = {
+local var_0_0 = class("FightPreloadCardWork", BaseWork)
+local var_0_1 = {
 	[9120110] = {
 		"305613"
 	},
@@ -16,43 +16,54 @@ slot1 = {
 	}
 }
 
-function slot0.onStart(slot0, slot1)
-	slot2 = {}
+function var_0_0.onStart(arg_1_0, arg_1_1)
+	local var_1_0 = {}
+	local var_1_1 = FightModel.instance:getCurRoundMO()
 
-	if FightModel.instance:getCurRoundMO() and slot3.teamACards1 then
-		for slot7, slot8 in ipairs(slot3.teamACards1) do
-			if not tabletool.indexOf(slot2, ResUrl.getSkillIcon(lua_skill.configDict[slot8.skillId].icon)) then
-				table.insert(slot2, slot10)
+	if var_1_1 and var_1_1.teamACards1 then
+		for iter_1_0, iter_1_1 in ipairs(var_1_1.teamACards1) do
+			local var_1_2 = lua_skill.configDict[iter_1_1.skillId]
+			local var_1_3 = ResUrl.getSkillIcon(var_1_2.icon)
+
+			if not tabletool.indexOf(var_1_0, var_1_3) then
+				table.insert(var_1_0, var_1_3)
 			end
 		end
 	end
 
-	if uv0[FightModel.instance:getFightParam().battleId] then
-		for slot9, slot10 in ipairs(slot5) do
-			table.insert(slot2, ResUrl.getHeadIconSmall(slot10))
+	local var_1_4 = FightModel.instance:getFightParam().battleId
+	local var_1_5 = var_0_1[var_1_4]
+
+	if var_1_5 then
+		for iter_1_2, iter_1_3 in ipairs(var_1_5) do
+			local var_1_6 = ResUrl.getHeadIconSmall(iter_1_3)
+
+			table.insert(var_1_0, var_1_6)
 		end
 	end
 
-	slot0._loader = MultiAbLoader.New()
+	arg_1_0._loader = MultiAbLoader.New()
 
-	slot0._loader:setPathList(slot2)
-	slot0._loader:startLoad(slot0._onLoadFinish, slot0)
+	arg_1_0._loader:setPathList(var_1_0)
+	arg_1_0._loader:startLoad(arg_1_0._onLoadFinish, arg_1_0)
 end
 
-function slot0._onLoadFinish(slot0, slot1)
-	for slot6, slot7 in ipairs(slot1:getAssetItemDict()) do
-		slot0.context.callback(slot0.context.callbackObj, slot7)
+function var_0_0._onLoadFinish(arg_2_0, arg_2_1)
+	local var_2_0 = arg_2_1:getAssetItemDict()
+
+	for iter_2_0, iter_2_1 in ipairs(var_2_0) do
+		arg_2_0.context.callback(arg_2_0.context.callbackObj, iter_2_1)
 	end
 
-	slot0:onDone(true)
+	arg_2_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
-	if slot0._loader then
-		slot0._loader:dispose()
+function var_0_0.clearWork(arg_3_0)
+	if arg_3_0._loader then
+		arg_3_0._loader:dispose()
 
-		slot0._loader = nil
+		arg_3_0._loader = nil
 	end
 end
 
-return slot0
+return var_0_0

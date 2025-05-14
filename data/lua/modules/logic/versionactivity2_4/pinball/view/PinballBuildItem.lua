@@ -1,75 +1,94 @@
-module("modules.logic.versionactivity2_4.pinball.view.PinballBuildItem", package.seeall)
+﻿module("modules.logic.versionactivity2_4.pinball.view.PinballBuildItem", package.seeall)
 
-slot0 = class("PinballBuildItem", LuaCompBase)
+local var_0_0 = class("PinballBuildItem", LuaCompBase)
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
-	slot0._goselect = gohelper.findChild(slot1, "#go_select")
-	slot0._imageicon = gohelper.findChildSingleImage(slot1, "#image_icon")
-	slot0._godone = gohelper.findChild(slot1, "#go_done")
-	slot0._golock = gohelper.findChild(slot1, "#go_lock")
-	slot0._txtname = gohelper.findChildTextMesh(slot1, "#txt_name")
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.go = arg_1_1
+	arg_1_0._goselect = gohelper.findChild(arg_1_1, "#go_select")
+	arg_1_0._imageicon = gohelper.findChildSingleImage(arg_1_1, "#image_icon")
+	arg_1_0._godone = gohelper.findChild(arg_1_1, "#go_done")
+	arg_1_0._golock = gohelper.findChild(arg_1_1, "#go_lock")
+	arg_1_0._txtname = gohelper.findChildTextMesh(arg_1_1, "#txt_name")
 end
 
-function slot0.initData(slot0, slot1, slot2)
-	slot0._data = slot1
-	slot0._index = slot2
-	slot0._txtname.text = slot0._data.name
+function var_0_0.initData(arg_2_0, arg_2_1, arg_2_2)
+	arg_2_0._data = arg_2_1
+	arg_2_0._index = arg_2_2
+	arg_2_0._txtname.text = arg_2_0._data.name
 
-	gohelper.setActive(slot0._golock, slot0:isLock())
-	gohelper.setActive(slot0._godone, slot0:isDone())
+	gohelper.setActive(arg_2_0._golock, arg_2_0:isLock())
+	gohelper.setActive(arg_2_0._godone, arg_2_0:isDone())
 end
 
-function slot0.isDone(slot0)
-	if slot0._data.limit <= PinballModel.instance:getBuildingNum(slot0._data.id) then
+function var_0_0.isDone(arg_3_0)
+	if PinballModel.instance:getBuildingNum(arg_3_0._data.id) >= arg_3_0._data.limit then
 		return true
 	end
 
 	return false
 end
 
-function slot0.isLock(slot0, slot1)
-	if string.nilorempty(slot0._data.condition) then
+function var_0_0.isLock(arg_4_0, arg_4_1)
+	local var_4_0 = arg_4_0._data.condition
+
+	if string.nilorempty(var_4_0) then
 		return false
 	end
 
-	for slot7, slot8 in pairs(GameUtil.splitString2(slot2, true)) do
-		if slot8[1] == PinballEnum.ConditionType.Talent then
-			if not PinballModel.instance:getTalentMo(slot8[2]) then
-				if slot1 then
-					GameFacade.showToast(ToastEnum.Act178TalentCondition, lua_activity178_talent.configDict[VersionActivity2_4Enum.ActivityId.Pinball][slot10].name)
+	local var_4_1 = GameUtil.splitString2(var_4_0, true)
+
+	for iter_4_0, iter_4_1 in pairs(var_4_1) do
+		local var_4_2 = iter_4_1[1]
+
+		if var_4_2 == PinballEnum.ConditionType.Talent then
+			local var_4_3 = iter_4_1[2]
+
+			if not PinballModel.instance:getTalentMo(var_4_3) then
+				if arg_4_1 then
+					local var_4_4 = lua_activity178_talent.configDict[VersionActivity2_4Enum.ActivityId.Pinball][var_4_3]
+
+					GameFacade.showToast(ToastEnum.Act178TalentCondition, var_4_4.name)
 				end
 
 				return true
 			end
-		elseif slot9 == PinballEnum.ConditionType.Score and PinballModel.instance.maxProsperity < slot8[2] then
-			if slot1 then
-				GameFacade.showToast(ToastEnum.Act178ScoreCondition, PinballConfig.instance:getScoreLevel(VersionActivity2_4Enum.ActivityId.Pinball, slot10))
-			end
+		elseif var_4_2 == PinballEnum.ConditionType.Score then
+			local var_4_5 = iter_4_1[2]
 
-			return true
+			if var_4_5 > PinballModel.instance.maxProsperity then
+				if arg_4_1 then
+					local var_4_6 = PinballConfig.instance:getScoreLevel(VersionActivity2_4Enum.ActivityId.Pinball, var_4_5)
+
+					GameFacade.showToast(ToastEnum.Act178ScoreCondition, var_4_6)
+				end
+
+				return true
+			end
 		end
 	end
 
 	return false
 end
 
-function slot0.setSelect(slot0, slot1)
-	gohelper.setActive(slot0._goselect, slot1)
+function var_0_0.setSelect(arg_5_0, arg_5_1)
+	gohelper.setActive(arg_5_0._goselect, arg_5_1)
 
-	slot3 = 1
+	local var_5_0 = arg_5_0:isDone()
+	local var_5_1 = 1
 
-	if not slot0:isDone() and not slot1 then
-		slot3 = 1
-	elseif slot2 and not slot1 then
-		slot3 = 2
-	elseif slot2 and slot1 then
-		slot3 = 3
-	elseif not slot2 and slot1 then
-		slot3 = 4
+	if not var_5_0 and not arg_5_1 then
+		var_5_1 = 1
+	elseif var_5_0 and not arg_5_1 then
+		var_5_1 = 2
+	elseif var_5_0 and arg_5_1 then
+		var_5_1 = 3
+	elseif not var_5_0 and arg_5_1 then
+		var_5_1 = 4
 	end
 
-	slot0._imageicon:LoadImage(string.format("singlebg/v2a4_tutushizi_singlebg/building/%s_%s.png", slot0._data.icon, slot3))
+	local var_5_2 = arg_5_0._data.icon
+
+	arg_5_0._imageicon:LoadImage(string.format("singlebg/v2a4_tutushizi_singlebg/building/%s_%s.png", var_5_2, var_5_1))
 end
 
-return slot0
+return var_0_0

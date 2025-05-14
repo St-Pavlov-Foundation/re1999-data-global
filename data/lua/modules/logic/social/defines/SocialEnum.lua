@@ -1,24 +1,25 @@
-module("modules.logic.social.defines.SocialEnum", package.seeall)
+﻿module("modules.logic.social.defines.SocialEnum", package.seeall)
 
-slot0 = _M
-slot0.MaxSaveMessageCount = 200
-slot0.ChannelType = {
+local var_0_0 = _M
+
+var_0_0.MaxSaveMessageCount = 200
+var_0_0.ChannelType = {
 	Friend = 1
 }
-slot0.Type = {
+var_0_0.Type = {
 	Search = 2,
 	Recommend = 5,
 	Request = 4,
 	Black = 3,
 	Friend = 1
 }
-slot0.TabIndex = {
+var_0_0.TabIndex = {
 	Search = 2,
 	Friend = 1,
 	Black = 4,
 	Request = 3
 }
-slot0.SearchFriendCD = 2
-slot0.FriendChatCD = 2
+var_0_0.SearchFriendCD = 2
+var_0_0.FriendChatCD = 2
 
-return slot0
+return var_0_0

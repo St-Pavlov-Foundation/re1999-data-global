@@ -1,8 +1,8 @@
-module("modules.logic.weekwalk.config.WeekWalkConfig", package.seeall)
+﻿module("modules.logic.weekwalk.config.WeekWalkConfig", package.seeall)
 
-slot0 = class("WeekWalkConfig", BaseConfig)
+local var_0_0 = class("WeekWalkConfig", BaseConfig)
 
-function slot0.reqConfigNames(slot0)
+function var_0_0.reqConfigNames(arg_1_0)
 	return {
 		"weekwalk",
 		"weekwalk_element",
@@ -22,136 +22,154 @@ function slot0.reqConfigNames(slot0)
 	}
 end
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_2_0)
+	return
 end
 
-function slot0.onConfigLoaded(slot0, slot1, slot2)
-	if slot1 == "weekwalk_dialog" then
-		slot0:_initDialog()
-	elseif slot1 == "weekwalk" then
-		slot0:_initWeekwalk()
+function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_1 == "weekwalk_dialog" then
+		arg_3_0:_initDialog()
+	elseif arg_3_1 == "weekwalk" then
+		arg_3_0:_initWeekwalk()
 	end
 end
 
-function slot0.getSceneConfigByLayer(slot0, slot1)
-	for slot5, slot6 in ipairs(lua_weekwalk.configList) do
-		if slot6.layer == slot1 then
-			return lua_weekwalk_scene.configDict[slot6.sceneId]
+function var_0_0.getSceneConfigByLayer(arg_4_0, arg_4_1)
+	for iter_4_0, iter_4_1 in ipairs(lua_weekwalk.configList) do
+		if iter_4_1.layer == arg_4_1 then
+			return lua_weekwalk_scene.configDict[iter_4_1.sceneId]
 		end
 	end
 end
 
-function slot0._initWeekwalk(slot0)
-	slot0._issueList = {}
+function var_0_0._initWeekwalk(arg_5_0)
+	arg_5_0._issueList = {}
 
-	for slot4, slot5 in ipairs(lua_weekwalk.configList) do
-		if slot5.issueId > 0 then
-			slot6 = slot0._issueList[slot5.issueId] or {}
-			slot0._issueList[slot5.issueId] = slot6
+	for iter_5_0, iter_5_1 in ipairs(lua_weekwalk.configList) do
+		if iter_5_1.issueId > 0 then
+			local var_5_0 = arg_5_0._issueList[iter_5_1.issueId] or {}
 
-			table.insert(slot6, slot5)
+			arg_5_0._issueList[iter_5_1.issueId] = var_5_0
+
+			table.insert(var_5_0, iter_5_1)
 		end
 	end
 end
 
-function slot0.getDeepLayer(slot0, slot1)
-	return slot0._issueList[slot1]
+function var_0_0.getDeepLayer(arg_6_0, arg_6_1)
+	return arg_6_0._issueList[arg_6_1]
 end
 
-function slot0._initDialog(slot0)
-	slot0._dialogList = {}
-	slot1 = nil
+function var_0_0._initDialog(arg_7_0)
+	arg_7_0._dialogList = {}
 
-	for slot6, slot7 in ipairs(lua_weekwalk_dialog.configList) do
-		if not slot0._dialogList[slot7.id] then
-			slot1 = "0"
-			slot0._dialogList[slot7.id] = {
+	local var_7_0
+	local var_7_1 = "0"
+
+	for iter_7_0, iter_7_1 in ipairs(lua_weekwalk_dialog.configList) do
+		local var_7_2 = arg_7_0._dialogList[iter_7_1.id]
+
+		if not var_7_2 then
+			var_7_2 = {
 				optionParamList = {}
 			}
+			var_7_0 = var_7_1
+			arg_7_0._dialogList[iter_7_1.id] = var_7_2
 		end
 
-		if not string.nilorempty(slot7.option_param) then
-			table.insert(slot8.optionParamList, tonumber(slot7.option_param))
+		if not string.nilorempty(iter_7_1.option_param) then
+			table.insert(var_7_2.optionParamList, tonumber(iter_7_1.option_param))
 		end
 
-		if slot7.type == "selector" then
-			slot8[slot1] = slot8[slot7.param] or {}
-			slot8[slot1].type = slot7.type
-			slot8[slot1].option_param = slot7.option_param
-		elseif slot7.type == "selectorend" then
-			slot1 = slot2
-		elseif slot7.type == "random" then
-			slot8[slot9] = slot8[slot7.param] or {}
-			slot8[slot9].type = slot7.type
-			slot8[slot9].option_param = slot7.option_param
+		if iter_7_1.type == "selector" then
+			var_7_0 = iter_7_1.param
+			var_7_2[var_7_0] = var_7_2[var_7_0] or {}
+			var_7_2[var_7_0].type = iter_7_1.type
+			var_7_2[var_7_0].option_param = iter_7_1.option_param
+		elseif iter_7_1.type == "selectorend" then
+			var_7_0 = var_7_1
+		elseif iter_7_1.type == "random" then
+			local var_7_3 = iter_7_1.param
 
-			table.insert(slot8[slot9], slot7)
+			var_7_2[var_7_3] = var_7_2[var_7_3] or {}
+			var_7_2[var_7_3].type = iter_7_1.type
+			var_7_2[var_7_3].option_param = iter_7_1.option_param
+
+			table.insert(var_7_2[var_7_3], iter_7_1)
 		else
-			slot8[slot1] = slot8[slot1] or {}
+			var_7_2[var_7_0] = var_7_2[var_7_0] or {}
 
-			table.insert(slot8[slot1], slot7)
+			table.insert(var_7_2[var_7_0], iter_7_1)
 		end
 	end
 end
 
-function slot0.getDialog(slot0, slot1, slot2)
-	return slot0._dialogList[slot1] and slot3[slot2]
+function var_0_0.getDialog(arg_8_0, arg_8_1, arg_8_2)
+	local var_8_0 = arg_8_0._dialogList[arg_8_1]
+
+	return var_8_0 and var_8_0[arg_8_2]
 end
 
-function slot0.getOptionParamList(slot0, slot1)
-	return slot0._dialogList[slot1] and slot2.optionParamList
+function var_0_0.getOptionParamList(arg_9_0, arg_9_1)
+	local var_9_0 = arg_9_0._dialogList[arg_9_1]
+
+	return var_9_0 and var_9_0.optionParamList
 end
 
-function slot0.getMapConfig(slot0, slot1)
-	return lua_weekwalk.configDict[slot1]
+function var_0_0.getMapConfig(arg_10_0, arg_10_1)
+	return lua_weekwalk.configDict[arg_10_1]
 end
 
-function slot0.getMapTypeConfig(slot0, slot1)
-	if not slot1 then
+function var_0_0.getMapTypeConfig(arg_11_0, arg_11_1)
+	if not arg_11_1 then
 		return nil
 	end
 
-	return lua_weekwalk_type.configDict[slot0:getMapConfig(slot1).type]
+	local var_11_0 = arg_11_0:getMapConfig(arg_11_1)
+
+	return lua_weekwalk_type.configDict[var_11_0.type]
 end
 
-function slot0.getElementConfig(slot0, slot1)
-	if not lua_weekwalk_element.configDict[slot1] then
-		logError(string.format("getElementConfig no config id:%s", slot1))
+function var_0_0.getElementConfig(arg_12_0, arg_12_1)
+	local var_12_0 = lua_weekwalk_element.configDict[arg_12_1]
+
+	if not var_12_0 then
+		logError(string.format("getElementConfig no config id:%s", arg_12_1))
 	end
 
-	return slot2
+	return var_12_0
 end
 
-function slot0.getLevelConfig(slot0, slot1)
-	return lua_weekwalk_level.configDict[slot1]
+function var_0_0.getLevelConfig(arg_13_0, arg_13_1)
+	return lua_weekwalk_level.configDict[arg_13_1]
 end
 
-function slot0.getBonus(slot0, slot1, slot2)
-	return lua_weekwalk_bonus.configDict[slot1][slot2].bonus
+function var_0_0.getBonus(arg_14_0, arg_14_1, arg_14_2)
+	return lua_weekwalk_bonus.configDict[arg_14_1][arg_14_2].bonus
 end
 
-function slot0.getQuestionConfig(slot0, slot1)
-	return lua_weekwalk_question.configDict[slot1]
+function var_0_0.getQuestionConfig(arg_15_0, arg_15_1)
+	return lua_weekwalk_question.configDict[arg_15_1]
 end
 
-function slot0.getMapBranchCoList(slot0, slot1)
-	if slot0.mapIdToBranchCoDict then
-		return slot0.mapIdToBranchCoDict[slot1]
+function var_0_0.getMapBranchCoList(arg_16_0, arg_16_1)
+	if arg_16_0.mapIdToBranchCoDict then
+		return arg_16_0.mapIdToBranchCoDict[arg_16_1]
 	end
 
-	slot0.mapIdToBranchCoDict = {}
+	arg_16_0.mapIdToBranchCoDict = {}
 
-	for slot5, slot6 in ipairs(lua_weekwalk_branch.configList) do
-		if not slot0.mapIdToBranchCoDict[slot6.mapId] then
-			slot0.mapIdToBranchCoDict[slot6.mapId] = {}
+	for iter_16_0, iter_16_1 in ipairs(lua_weekwalk_branch.configList) do
+		if not arg_16_0.mapIdToBranchCoDict[iter_16_1.mapId] then
+			arg_16_0.mapIdToBranchCoDict[iter_16_1.mapId] = {}
 		end
 
-		table.insert(slot0.mapIdToBranchCoDict[slot6.mapId], slot6)
+		table.insert(arg_16_0.mapIdToBranchCoDict[iter_16_1.mapId], iter_16_1)
 	end
 
-	return slot0.mapIdToBranchCoDict[slot1]
+	return arg_16_0.mapIdToBranchCoDict[arg_16_1]
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

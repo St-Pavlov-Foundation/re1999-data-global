@@ -1,86 +1,96 @@
-module("modules.logic.seasonver.act123.view2_0.Season123_2_0StoreView", package.seeall)
+﻿module("modules.logic.seasonver.act123.view2_0.Season123_2_0StoreView", package.seeall)
 
-slot0 = class("Season123_2_0StoreView", BaseView)
+local var_0_0 = class("Season123_2_0StoreView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._txttime = gohelper.findChildText(slot0.viewGO, "title/#txt_time")
-	slot0._goContent = gohelper.findChild(slot0.viewGO, "mask/#scroll_store/Viewport/#go_Content")
-	slot0._gobtns = gohelper.findChild(slot0.viewGO, "#go_btns")
-	slot0._gorighttop = gohelper.findChild(slot0.viewGO, "#go_righttop")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._txttime = gohelper.findChildText(arg_1_0.viewGO, "title/#txt_time")
+	arg_1_0._goContent = gohelper.findChild(arg_1_0.viewGO, "mask/#scroll_store/Viewport/#go_Content")
+	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_btns")
+	arg_1_0._gorighttop = gohelper.findChild(arg_1_0.viewGO, "#go_righttop")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0.storeItemList = slot0:getUserDataTb_()
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0.storeItemList = arg_4_0:getUserDataTb_()
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_5_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0:addEventCb(VersionActivityController.instance, VersionActivityEvent.OnGet107GoodsInfo, slot0._onGet107GoodsInfo, slot0)
-	slot0:addEventCb(VersionActivityController.instance, VersionActivityEvent.OnBuy107GoodsSuccess, slot0._onBuyGoodsSuccess, slot0)
+function var_0_0.onOpen(arg_6_0)
+	arg_6_0:addEventCb(VersionActivityController.instance, VersionActivityEvent.OnGet107GoodsInfo, arg_6_0._onGet107GoodsInfo, arg_6_0)
+	arg_6_0:addEventCb(VersionActivityController.instance, VersionActivityEvent.OnBuy107GoodsSuccess, arg_6_0._onBuyGoodsSuccess, arg_6_0)
 
-	slot0.actId = slot0.viewParam.actId
+	arg_6_0.actId = arg_6_0.viewParam.actId
 
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_leimi_souvenir_open)
-	TaskDispatcher.runRepeat(slot0.refreshTime, slot0, TimeUtil.OneMinuteSecond)
-	slot0:refreshTime()
-	slot0:refreshStoreContent()
+	TaskDispatcher.runRepeat(arg_6_0.refreshTime, arg_6_0, TimeUtil.OneMinuteSecond)
+	arg_6_0:refreshTime()
+	arg_6_0:refreshStoreContent()
 end
 
-function slot0._onGet107GoodsInfo(slot0, slot1)
-	if slot1 ~= slot0.actId then
+function var_0_0._onGet107GoodsInfo(arg_7_0, arg_7_1)
+	if arg_7_1 ~= arg_7_0.actId then
 		return
 	end
 
-	slot0:refreshStoreContent()
+	arg_7_0:refreshStoreContent()
 end
 
-function slot0._onBuyGoodsSuccess(slot0, slot1)
-	if slot1 ~= slot0.actId then
+function var_0_0._onBuyGoodsSuccess(arg_8_0, arg_8_1)
+	if arg_8_1 ~= arg_8_0.actId then
 		return
 	end
 
-	slot0:refreshStoreContent()
+	arg_8_0:refreshStoreContent()
 end
 
-function slot0.refreshStoreContent(slot0)
-	slot2 = {}
+function var_0_0.refreshStoreContent(arg_9_0)
+	local var_9_0 = ActivityStoreConfig.instance:getActivityStoreGroupDict(arg_9_0.actId)
+	local var_9_1 = {}
 
-	if ActivityStoreConfig.instance:getActivityStoreGroupDict(slot0.actId) then
-		for slot6, slot7 in pairs(slot1) do
-			for slot11, slot12 in pairs(slot7) do
-				table.insert(slot2, slot12)
+	if var_9_0 then
+		for iter_9_0, iter_9_1 in pairs(var_9_0) do
+			for iter_9_2, iter_9_3 in pairs(iter_9_1) do
+				table.insert(var_9_1, iter_9_3)
 			end
 		end
 	end
 
-	Season123StoreModel.instance:setStoreItemList(slot2)
+	Season123StoreModel.instance:setStoreItemList(var_9_1)
 end
 
-function slot0.refreshTime(slot0)
-	slot2 = ActivityModel.instance:getActMO(slot0.actId):getRealEndTimeStamp() - ServerTime.now()
-	slot4 = slot2 % TimeUtil.OneDaySecond
-	slot0._txttime.text = string.format(luaLang("versionactivitystoreview_remaintime"), Mathf.Floor(slot2 / TimeUtil.OneDaySecond), Mathf.Floor(slot4 / TimeUtil.OneHourSecond), Mathf.Ceil(slot4 % TimeUtil.OneHourSecond / TimeUtil.OneMinuteSecond))
+function var_0_0.refreshTime(arg_10_0)
+	local var_10_0 = ActivityModel.instance:getActMO(arg_10_0.actId):getRealEndTimeStamp() - ServerTime.now()
+	local var_10_1 = Mathf.Floor(var_10_0 / TimeUtil.OneDaySecond)
+	local var_10_2 = var_10_0 % TimeUtil.OneDaySecond
+	local var_10_3 = Mathf.Floor(var_10_2 / TimeUtil.OneHourSecond)
+	local var_10_4 = var_10_2 % TimeUtil.OneHourSecond
+	local var_10_5 = Mathf.Ceil(var_10_4 / TimeUtil.OneMinuteSecond)
+
+	arg_10_0._txttime.text = string.format(luaLang("versionactivitystoreview_remaintime"), var_10_1, var_10_3, var_10_5)
 end
 
-function slot0.onClose(slot0)
-	TaskDispatcher.cancelTask(slot0.refreshTime, slot0)
-	slot0:removeEventCb(VersionActivityController.instance, VersionActivityEvent.OnGet107GoodsInfo, slot0._onGet107GoodsInfo, slot0)
-	slot0:removeEventCb(VersionActivityController.instance, VersionActivityEvent.OnBuy107GoodsSuccess, slot0._onBuyGoodsSuccess, slot0)
+function var_0_0.onClose(arg_11_0)
+	TaskDispatcher.cancelTask(arg_11_0.refreshTime, arg_11_0)
+	arg_11_0:removeEventCb(VersionActivityController.instance, VersionActivityEvent.OnGet107GoodsInfo, arg_11_0._onGet107GoodsInfo, arg_11_0)
+	arg_11_0:removeEventCb(VersionActivityController.instance, VersionActivityEvent.OnBuy107GoodsSuccess, arg_11_0._onBuyGoodsSuccess, arg_11_0)
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_12_0)
+	return
 end
 
-return slot0
+return var_0_0

@@ -1,100 +1,122 @@
-module("modules.logic.versionactivity1_4.act130.view.Activity130CollectView", package.seeall)
+﻿module("modules.logic.versionactivity1_4.act130.view.Activity130CollectView", package.seeall)
 
-slot0 = class("Activity130CollectView", BaseView)
+local var_0_0 = class("Activity130CollectView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._btnCloseMask = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_CloseMask")
-	slot0._simagePanelBG = gohelper.findChildSingleImage(slot0.viewGO, "BG/#simage_PanelBG")
-	slot0._txtTitle = gohelper.findChildText(slot0.viewGO, "Title/txt_Title")
-	slot0._goquestion = gohelper.findChild(slot0.viewGO, "Question")
-	slot0._txtQuestion = gohelper.findChildText(slot0.viewGO, "Question/#txt_Question")
-	slot0._scrollChapterList = gohelper.findChildScrollRect(slot0.viewGO, "#scroll_ChapterList")
-	slot0._gocontent = gohelper.findChild(slot0.viewGO, "#scroll_ChapterList/Viewport/Content")
-	slot0._goEmpty = gohelper.findChild(slot0.viewGO, "#go_Empty")
-	slot0._txtEmpty = gohelper.findChildText(slot0.viewGO, "#go_Empty/#txt_Empty")
-	slot0._btnClose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_Close")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnCloseMask = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_CloseMask")
+	arg_1_0._simagePanelBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "BG/#simage_PanelBG")
+	arg_1_0._txtTitle = gohelper.findChildText(arg_1_0.viewGO, "Title/txt_Title")
+	arg_1_0._goquestion = gohelper.findChild(arg_1_0.viewGO, "Question")
+	arg_1_0._txtQuestion = gohelper.findChildText(arg_1_0.viewGO, "Question/#txt_Question")
+	arg_1_0._scrollChapterList = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_ChapterList")
+	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "#scroll_ChapterList/Viewport/Content")
+	arg_1_0._goEmpty = gohelper.findChild(arg_1_0.viewGO, "#go_Empty")
+	arg_1_0._txtEmpty = gohelper.findChildText(arg_1_0.viewGO, "#go_Empty/#txt_Empty")
+	arg_1_0._btnClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_Close")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnCloseMask:AddClickListener(slot0._btnCloseMaskOnClick, slot0)
-	slot0._btnClose:AddClickListener(slot0._btnCloseOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnCloseMask:AddClickListener(arg_2_0._btnCloseMaskOnClick, arg_2_0)
+	arg_2_0._btnClose:AddClickListener(arg_2_0._btnCloseOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnCloseMask:RemoveClickListener()
-	slot0._btnClose:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnCloseMask:RemoveClickListener()
+	arg_3_0._btnClose:RemoveClickListener()
 end
 
-function slot0._btnCloseMaskOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btnCloseMaskOnClick(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0._btnCloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btnCloseOnClick(arg_5_0)
+	arg_5_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
-	NavigateMgr.instance:addEscape(ViewName.Activity130CollectView, slot0._btnCloseOnClick, slot0)
+function var_0_0._editableInitView(arg_6_0)
+	NavigateMgr.instance:addEscape(ViewName.Activity130CollectView, arg_6_0._btnCloseOnClick, arg_6_0)
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_7_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0._collectItems = {}
-	slot0._config = Activity130Config.instance:getActivity130EpisodeCo(VersionActivity1_4Enum.ActivityId.Role37, Activity130Model.instance:getCurEpisodeId())
+function var_0_0.onOpen(arg_8_0)
+	arg_8_0._collectItems = {}
 
-	slot0:_refreshItem()
+	local var_8_0 = VersionActivity1_4Enum.ActivityId.Role37
+	local var_8_1 = Activity130Model.instance:getCurEpisodeId()
+
+	arg_8_0._config = Activity130Config.instance:getActivity130EpisodeCo(var_8_0, var_8_1)
+
+	arg_8_0:_refreshItem()
 end
 
-function slot0._refreshItem(slot0)
-	gohelper.setActive(slot0._goquestion, Activity130Model.instance:getEpisodeOperGroupId(slot0._config.episodeId) ~= 0)
+function var_0_0._refreshItem(arg_9_0)
+	local var_9_0 = Activity130Model.instance:getEpisodeOperGroupId(arg_9_0._config.episodeId)
 
-	if slot1 ~= 0 then
-		slot0._txtQuestion.text = Activity130Config.instance:getActivity130DecryptCo(VersionActivity1_4Enum.ActivityId.Role37, Activity130Model.instance:getDecryptIdByGroupId(Activity130Model.instance:getEpisodeOperGroupId(slot0._config.episodeId))).puzzleTxt
+	gohelper.setActive(arg_9_0._goquestion, var_9_0 ~= 0)
+
+	if var_9_0 ~= 0 then
+		local var_9_1 = VersionActivity1_4Enum.ActivityId.Role37
+		local var_9_2 = Activity130Model.instance:getEpisodeOperGroupId(arg_9_0._config.episodeId)
+		local var_9_3 = Activity130Model.instance:getDecryptIdByGroupId(var_9_2)
+		local var_9_4 = Activity130Config.instance:getActivity130DecryptCo(var_9_1, var_9_3)
+
+		arg_9_0._txtQuestion.text = var_9_4.puzzleTxt
 	end
 
-	if #Activity130Model.instance:getCollects(slot0._config.episodeId) < 1 then
-		gohelper.setActive(slot0._goEmpty, true)
-		gohelper.setActive(slot0._scrollChapterList.gameObject, false)
+	local var_9_5 = Activity130Model.instance:getCollects(arg_9_0._config.episodeId)
 
-		slot3, slot4 = Activity130Model.instance:getEpisodeTaskTip(slot0._config.episodeId)
+	if #var_9_5 < 1 then
+		gohelper.setActive(arg_9_0._goEmpty, true)
+		gohelper.setActive(arg_9_0._scrollChapterList.gameObject, false)
 
-		if slot3 ~= 0 then
-			slot0._txtEmpty.text = Activity130Config.instance:getActivity130DialogCo(slot3, slot4).content
+		local var_9_6, var_9_7 = Activity130Model.instance:getEpisodeTaskTip(arg_9_0._config.episodeId)
+
+		if var_9_6 ~= 0 then
+			local var_9_8 = Activity130Config.instance:getActivity130DialogCo(var_9_6, var_9_7)
+
+			arg_9_0._txtEmpty.text = var_9_8.content
 		end
 
 		return
 	end
 
-	gohelper.setActive(slot0._goEmpty, false)
-	gohelper.setActive(slot0._scrollChapterList.gameObject, true)
+	gohelper.setActive(arg_9_0._goEmpty, false)
+	gohelper.setActive(arg_9_0._scrollChapterList.gameObject, true)
 
-	for slot6, slot7 in pairs(slot0._collectItems) do
-		slot7:hideItems()
+	for iter_9_0, iter_9_1 in pairs(arg_9_0._collectItems) do
+		iter_9_1:hideItems()
 	end
 
-	for slot6 = 1, #slot2 do
-		if not slot0._collectItems[slot6] then
-			slot8 = slot0:getResInst(slot0.viewContainer:getSetting().otherRes[1], slot0._gocontent, "item" .. tostring(slot6))
-			slot9 = MonoHelper.addNoUpdateLuaComOnceToGo(slot8, Activity130CollectItem)
+	for iter_9_2 = 1, #var_9_5 do
+		if not arg_9_0._collectItems[iter_9_2] then
+			local var_9_9 = arg_9_0.viewContainer:getSetting().otherRes[1]
+			local var_9_10 = arg_9_0:getResInst(var_9_9, arg_9_0._gocontent, "item" .. tostring(iter_9_2))
+			local var_9_11 = MonoHelper.addNoUpdateLuaComOnceToGo(var_9_10, Activity130CollectItem)
 
-			slot9:init(slot8)
-			table.insert(slot0._collectItems, slot9)
+			var_9_11:init(var_9_10)
+			table.insert(arg_9_0._collectItems, var_9_11)
 		end
 
-		slot0._collectItems[slot6]:setItem(Activity130Config.instance:getActivity130OperateGroupCos(VersionActivity1_4Enum.ActivityId.Role37, slot1)[slot2[slot6]], slot6)
+		local var_9_12 = VersionActivity1_4Enum.ActivityId.Role37
+		local var_9_13 = Activity130Config.instance:getActivity130OperateGroupCos(var_9_12, var_9_0)[var_9_5[iter_9_2]]
+
+		arg_9_0._collectItems[iter_9_2]:setItem(var_9_13, iter_9_2)
 	end
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_10_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_11_0)
+	return
 end
 
-return slot0
+return var_0_0

@@ -1,684 +1,788 @@
-module("modules.logic.room.view.RoomInitBuildingViewChange", package.seeall)
+﻿module("modules.logic.room.view.RoomInitBuildingViewChange", package.seeall)
 
-slot0 = class("RoomInitBuildingViewChange", BaseView)
+local var_0_0 = class("RoomInitBuildingViewChange", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gochange = gohelper.findChild(slot0.viewGO, "right/#go_part/#go_change")
-	slot0._goCategory = gohelper.findChild(slot0.viewGO, "left/#scroll_catagory")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gochange = gohelper.findChild(arg_1_0.viewGO, "right/#go_part/#go_change")
+	arg_1_0._goCategory = gohelper.findChild(arg_1_0.viewGO, "left/#scroll_catagory")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btncoin:AddClickListener(slot0._btncoinOnClick, slot0)
-	slot0._inputvalue:AddOnValueChanged(slot0._onValueChanged, slot0)
-	slot0._btnnoformula:AddClickListener(slot0._btnnoformulaOnClick, slot0)
-	slot0._btncombine:AddClickListener(slot0._btncombineOnClick, slot0)
-	slot0._btnproduct:AddClickListener(slot0._btnproductOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btncoin:AddClickListener(arg_2_0._btncoinOnClick, arg_2_0)
+	arg_2_0._inputvalue:AddOnValueChanged(arg_2_0._onValueChanged, arg_2_0)
+	arg_2_0._btnnoformula:AddClickListener(arg_2_0._btnnoformulaOnClick, arg_2_0)
+	arg_2_0._btncombine:AddClickListener(arg_2_0._btncombineOnClick, arg_2_0)
+	arg_2_0._btnproduct:AddClickListener(arg_2_0._btnproductOnClick, arg_2_0)
 
-	slot1 = {
-		0.5
-	}
+	local var_2_0 = {}
 
-	for slot5 = 2, RoomBuildingEnum.MachineSlotMaxCount do
-		table.insert(slot1, math.max(0.7 * slot1[slot5 - 1], 0.1))
+	var_2_0[1] = 0.5
+
+	for iter_2_0 = 2, RoomBuildingEnum.MachineSlotMaxCount do
+		local var_2_1 = 0.7 * var_2_0[iter_2_0 - 1]
+		local var_2_2 = math.max(var_2_1, 0.1)
+
+		table.insert(var_2_0, var_2_2)
 	end
 
-	slot0._subPress = SLFramework.UGUI.UILongPressListener.Get(slot0._gosub)
+	arg_2_0._subPress = SLFramework.UGUI.UILongPressListener.Get(arg_2_0._gosub)
 
-	slot0._subPress:SetLongPressTime(slot1)
-	slot0._subPress:AddLongPressListener(slot0._subLongPressTimeEnd, slot0)
+	arg_2_0._subPress:SetLongPressTime(var_2_0)
+	arg_2_0._subPress:AddLongPressListener(arg_2_0._subLongPressTimeEnd, arg_2_0)
 
-	slot0._subClick = SLFramework.UGUI.UIClickListener.Get(slot0._gosub)
+	arg_2_0._subClick = SLFramework.UGUI.UIClickListener.Get(arg_2_0._gosub)
 
-	slot0._subClick:AddClickListener(slot0._subClickOnClick, slot0)
-	slot0._subClick:AddClickUpListener(slot0._subClickUp, slot0)
+	arg_2_0._subClick:AddClickListener(arg_2_0._subClickOnClick, arg_2_0)
+	arg_2_0._subClick:AddClickUpListener(arg_2_0._subClickUp, arg_2_0)
 
-	slot0._addPress = SLFramework.UGUI.UILongPressListener.Get(slot0._goadd)
+	arg_2_0._addPress = SLFramework.UGUI.UILongPressListener.Get(arg_2_0._goadd)
 
-	slot0._addPress:SetLongPressTime(slot1)
-	slot0._addPress:AddLongPressListener(slot0._addLongPressTimeEnd, slot0)
+	arg_2_0._addPress:SetLongPressTime(var_2_0)
+	arg_2_0._addPress:AddLongPressListener(arg_2_0._addLongPressTimeEnd, arg_2_0)
 
-	slot0._addClick = SLFramework.UGUI.UIClickListener.Get(slot0._goadd)
+	arg_2_0._addClick = SLFramework.UGUI.UIClickListener.Get(arg_2_0._goadd)
 
-	slot0._addClick:AddClickListener(slot0._addClickOnClick, slot0)
-	slot0._addClick:AddClickUpListener(slot0._addClickUp, slot0)
-	slot0:addEventCb(RoomController.instance, RoomEvent.StartProductionLineReply, slot0._startProductionLine, slot0)
-	slot0:addEventCb(RoomMapController.instance, RoomEvent.ChangeSelectFormulaToTopLevel, slot0._refreshNeedTag, slot0)
-	slot0:addEventCb(RoomMapController.instance, RoomEvent.SelectFormulaIdChanged, slot0._onSelectFormulaIdChanged, slot0)
-	slot0:addEventCb(RoomMapController.instance, RoomEvent.ShowInitBuildingChangeTitle, slot0._onShowInitBuildingChangeTitle, slot0)
-	slot0:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, slot0._refresh, slot0)
-	slot0:addEventCb(RoomMapController.instance, RoomEvent.RefreshNeedFormula, slot0._refreshNeedTag, slot0)
-	slot0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, slot0._refresh, slot0)
-	slot0:addEventCb(JumpController.instance, JumpEvent.JumpBtnClick, slot0._onJumpBtnClick, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, slot0._onOpenView, slot0)
+	arg_2_0._addClick:AddClickListener(arg_2_0._addClickOnClick, arg_2_0)
+	arg_2_0._addClick:AddClickUpListener(arg_2_0._addClickUp, arg_2_0)
+	arg_2_0:addEventCb(RoomController.instance, RoomEvent.StartProductionLineReply, arg_2_0._startProductionLine, arg_2_0)
+	arg_2_0:addEventCb(RoomMapController.instance, RoomEvent.ChangeSelectFormulaToTopLevel, arg_2_0._refreshNeedTag, arg_2_0)
+	arg_2_0:addEventCb(RoomMapController.instance, RoomEvent.SelectFormulaIdChanged, arg_2_0._onSelectFormulaIdChanged, arg_2_0)
+	arg_2_0:addEventCb(RoomMapController.instance, RoomEvent.ShowInitBuildingChangeTitle, arg_2_0._onShowInitBuildingChangeTitle, arg_2_0)
+	arg_2_0:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_2_0._refresh, arg_2_0)
+	arg_2_0:addEventCb(RoomMapController.instance, RoomEvent.RefreshNeedFormula, arg_2_0._refreshNeedTag, arg_2_0)
+	arg_2_0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_2_0._refresh, arg_2_0)
+	arg_2_0:addEventCb(JumpController.instance, JumpEvent.JumpBtnClick, arg_2_0._onJumpBtnClick, arg_2_0)
+	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_2_0._onOpenView, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btncoin:RemoveClickListener()
-	slot0._inputvalue:RemoveOnValueChanged()
-	slot0._btnnoformula:RemoveClickListener()
-	slot0._btncombine:RemoveClickListener()
-	slot0._btnproduct:RemoveClickListener()
-	slot0._subPress:RemoveLongPressListener()
-	slot0._subClick:RemoveClickListener()
-	slot0._subClick:RemoveClickUpListener()
-	slot0._addPress:RemoveLongPressListener()
-	slot0._addClick:RemoveClickListener()
-	slot0._addClick:RemoveClickUpListener()
-	slot0:removeEventCb(RoomController.instance, RoomEvent.StartProductionLineReply, slot0._startProductionLine, slot0)
-	slot0:removeEventCb(RoomMapController.instance, RoomEvent.ChangeSelectFormulaToTopLevel, slot0._refreshNeedTag, slot0)
-	slot0:removeEventCb(RoomMapController.instance, RoomEvent.SelectFormulaIdChanged, slot0._onSelectFormulaIdChanged, slot0)
-	slot0:removeEventCb(RoomMapController.instance, RoomEvent.ShowInitBuildingChangeTitle, slot0._onShowInitBuildingChangeTitle, slot0)
-	slot0:removeEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, slot0._refresh, slot0)
-	slot0:removeEventCb(RoomMapController.instance, RoomEvent.RefreshNeedFormula, slot0._refreshNeedTag, slot0)
-	slot0:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, slot0._refresh, slot0)
-	slot0:removeEventCb(JumpController.instance, JumpEvent.JumpBtnClick, slot0._onJumpBtnClick, slot0)
-	slot0:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenView, slot0._onOpenView, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btncoin:RemoveClickListener()
+	arg_3_0._inputvalue:RemoveOnValueChanged()
+	arg_3_0._btnnoformula:RemoveClickListener()
+	arg_3_0._btncombine:RemoveClickListener()
+	arg_3_0._btnproduct:RemoveClickListener()
+	arg_3_0._subPress:RemoveLongPressListener()
+	arg_3_0._subClick:RemoveClickListener()
+	arg_3_0._subClick:RemoveClickUpListener()
+	arg_3_0._addPress:RemoveLongPressListener()
+	arg_3_0._addClick:RemoveClickListener()
+	arg_3_0._addClick:RemoveClickUpListener()
+	arg_3_0:removeEventCb(RoomController.instance, RoomEvent.StartProductionLineReply, arg_3_0._startProductionLine, arg_3_0)
+	arg_3_0:removeEventCb(RoomMapController.instance, RoomEvent.ChangeSelectFormulaToTopLevel, arg_3_0._refreshNeedTag, arg_3_0)
+	arg_3_0:removeEventCb(RoomMapController.instance, RoomEvent.SelectFormulaIdChanged, arg_3_0._onSelectFormulaIdChanged, arg_3_0)
+	arg_3_0:removeEventCb(RoomMapController.instance, RoomEvent.ShowInitBuildingChangeTitle, arg_3_0._onShowInitBuildingChangeTitle, arg_3_0)
+	arg_3_0:removeEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_3_0._refresh, arg_3_0)
+	arg_3_0:removeEventCb(RoomMapController.instance, RoomEvent.RefreshNeedFormula, arg_3_0._refreshNeedTag, arg_3_0)
+	arg_3_0:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_3_0._refresh, arg_3_0)
+	arg_3_0:removeEventCb(JumpController.instance, JumpEvent.JumpBtnClick, arg_3_0._onJumpBtnClick, arg_3_0)
+	arg_3_0:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_3_0._onOpenView, arg_3_0)
 end
 
-function slot0._onJumpBtnClick(slot0, slot1)
-	if slot0.viewParam and slot0.viewParam.openInOutside and JumpConfig.instance:getJumpView(slot1) ~= JumpEnum.JumpView.RoomProductLineView and slot2 ~= JumpEnum.JumpView.StoreView then
-		slot0:closeThis()
+function var_0_0._onJumpBtnClick(arg_4_0, arg_4_1)
+	if arg_4_0.viewParam and arg_4_0.viewParam.openInOutside then
+		local var_4_0 = JumpConfig.instance:getJumpView(arg_4_1)
+
+		if var_4_0 ~= JumpEnum.JumpView.RoomProductLineView and var_4_0 ~= JumpEnum.JumpView.StoreView then
+			arg_4_0:closeThis()
+		end
 	end
 end
 
-function slot0._btncoinOnClick(slot0)
-	if slot0._toatalNeedSocre and slot0._toatalNeedSocre > 0 then
-		-- Nothing
-	end
-
-	MaterialTipController.instance:showMaterialInfo(MaterialEnum.MaterialType.Currency, CurrencyEnum.CurrencyType.Gold, nil, , , {
+function var_0_0._btncoinOnClick(arg_5_0)
+	local var_5_0 = {
 		type = MaterialEnum.MaterialType.Currency,
 		id = CurrencyEnum.CurrencyType.Gold,
 		sceneType = GameSceneMgr.instance:getCurSceneType(),
-		openedViewNameList = JumpController.instance:getCurrentOpenedView(),
-		quantity = slot0._toatalNeedSocre
-	})
+		openedViewNameList = JumpController.instance:getCurrentOpenedView()
+	}
+
+	if arg_5_0._toatalNeedSocre and arg_5_0._toatalNeedSocre > 0 then
+		var_5_0.quantity = arg_5_0._toatalNeedSocre
+	end
+
+	MaterialTipController.instance:showMaterialInfo(MaterialEnum.MaterialType.Currency, CurrencyEnum.CurrencyType.Gold, nil, nil, nil, var_5_0)
 end
 
-function slot0._btncombineOnClick(slot0)
-	if not RoomFormulaListModel.instance:getSelectFormulaId() or slot1 == 0 then
+function var_0_0._btncombineOnClick(arg_6_0)
+	local var_6_0 = RoomFormulaListModel.instance:getSelectFormulaId()
+
+	if not var_6_0 or var_6_0 == 0 then
 		GameFacade.showToast(ToastEnum.RoomInitBuildingToast)
 
 		return
 	end
 
-	slot2 = RoomFormulaListModel.instance:getSelectFormulaCombineCount()
+	local var_6_1 = RoomFormulaListModel.instance:getSelectFormulaCombineCount()
 
-	if slot0.isEasyCombine then
-		if not RoomProductionHelper.getFormulaProduceItem(slot1) then
+	if arg_6_0.isEasyCombine then
+		local var_6_2 = RoomProductionHelper.getFormulaProduceItem(var_6_0)
+
+		if not var_6_2 then
 			return
 		end
 
-		slot5, slot6 = RoomProductionHelper.getEasyCombineFormulaAndCostItemList(slot1, slot2)
+		local var_6_3 = {}
+		local var_6_4, var_6_5 = RoomProductionHelper.getEasyCombineFormulaAndCostItemList(var_6_0, var_6_1)
 
-		if slot5 then
-			ViewMgr.instance:openView(ViewName.RoomFormulaMsgBoxView, {
-				costItemAndFormulaIdList = slot6,
-				produce = {
-					type = slot3.type,
-					id = slot3.id,
-					quantity = slot2
-				},
-				lineId = slot0.viewContainer:getSelectLine(),
-				callback = slot0.setStartFormulaStrId,
-				callbackObj = slot0
-			})
+		if var_6_4 then
+			var_6_3.costItemAndFormulaIdList = var_6_5
+			var_6_3.produce = {
+				type = var_6_2.type,
+				id = var_6_2.id,
+				quantity = var_6_1
+			}
+			var_6_3.lineId = arg_6_0.viewContainer:getSelectLine()
+			var_6_3.callback = arg_6_0.setStartFormulaStrId
+			var_6_3.callbackObj = arg_6_0
+
+			ViewMgr.instance:openView(ViewName.RoomFormulaMsgBoxView, var_6_3)
 		else
 			GameFacade.showToast(ToastEnum.RoomFormulaCantUse)
 		end
 	else
-		if not RoomProductionHelper.isEnoughCoin(slot1, slot2) then
+		if not RoomProductionHelper.isEnoughCoin(var_6_0, var_6_1) then
 			GameFacade.showToast(ToastEnum.RoomFormulaNotEnoughCoin)
 
 			return
 		end
 
-		if not RoomProductionHelper.isEnoughMaterial(slot1, slot2) then
+		if not RoomProductionHelper.isEnoughMaterial(var_6_0, var_6_1) then
 			GameFacade.showToast(ToastEnum.RoomFormulaCantUse)
 
 			return
 		end
 
+		local var_6_6 = arg_6_0.viewContainer:getSelectLine()
+		local var_6_7 = RoomProductionModel.instance:getLineMO(var_6_6)
+
 		PopupController.instance:setPause("roominitbuildingview_changestart", true)
 		UIBlockMgr.instance:startBlock("roominitbuildingview_changestart")
-		slot0:setStartFormulaStrId()
-		RoomRpc.instance:sendStartProductionLineRequest(RoomProductionModel.instance:getLineMO(slot0.viewContainer:getSelectLine()).id, {
+		arg_6_0:setStartFormulaStrId()
+		RoomRpc.instance:sendStartProductionLineRequest(var_6_7.id, {
 			{
-				formulaId = slot1,
-				count = slot2
+				formulaId = var_6_0,
+				count = var_6_1
 			}
 		})
 	end
 end
 
-function slot0._btnproductOnClick(slot0)
-	if ViewMgr.instance:isOpen(ViewName.RoomFormulaView) and RoomFormulaListModel.instance:getSelectFormulaId() and slot1 ~= 0 and RoomProductionHelper.getFormulaProduceItem(slot1) then
-		slot3 = RoomFormulaListModel.instance:getSelectFormulaCombineCount()
+function var_0_0._btnproductOnClick(arg_7_0)
+	if ViewMgr.instance:isOpen(ViewName.RoomFormulaView) then
+		local var_7_0 = RoomFormulaListModel.instance:getSelectFormulaId()
 
-		MaterialTipController.instance:showMaterialInfo(slot2.type, slot2.id, nil, , , {
-			type = slot2.type,
-			id = slot2.id,
-			quantity = slot3,
-			sceneType = GameSceneMgr.instance:getCurSceneType(),
-			openedViewNameList = JumpController.instance:getCurrentOpenedView()
-		}, nil, slot3, true, slot0.jumpFinishCallback, slot0)
+		if var_7_0 and var_7_0 ~= 0 then
+			local var_7_1 = RoomProductionHelper.getFormulaProduceItem(var_7_0)
+
+			if var_7_1 then
+				local var_7_2 = RoomFormulaListModel.instance:getSelectFormulaCombineCount()
+				local var_7_3 = {
+					type = var_7_1.type,
+					id = var_7_1.id,
+					quantity = var_7_2,
+					sceneType = GameSceneMgr.instance:getCurSceneType(),
+					openedViewNameList = JumpController.instance:getCurrentOpenedView()
+				}
+
+				MaterialTipController.instance:showMaterialInfo(var_7_1.type, var_7_1.id, nil, nil, nil, var_7_3, nil, var_7_2, true, arg_7_0.jumpFinishCallback, arg_7_0)
+			end
+		end
 	end
 
-	slot0:_openSelectFormulaView()
+	arg_7_0:_openSelectFormulaView()
 end
 
-function slot0.jumpFinishCallback(slot0)
+function var_0_0.jumpFinishCallback(arg_8_0)
 	RoomMapController.instance:dispatchEvent(RoomEvent.RefreshNeedFormula)
 	RoomMapController.instance:dispatchEvent(RoomEvent.RefreshNeedFormulaItem)
 end
 
-function slot0._btnitemOnClick(slot0, slot1)
-	if slot0._materialItemList[slot1] and slot2.costItem then
+function var_0_0._btnitemOnClick(arg_9_0, arg_9_1)
+	local var_9_0 = arg_9_0._materialItemList[arg_9_1]
+
+	if var_9_0 and var_9_0.costItem then
 		if ViewMgr.instance:isOpen(ViewName.RoomFormulaView) then
-			if not slot2.isEmpty then
-				slot2.costItem:_onClick(true)
+			if not var_9_0.isEmpty then
+				var_9_0.costItem:_onClick(true)
 			end
 		else
-			slot0:_openSelectFormulaView()
+			arg_9_0:_openSelectFormulaView()
 		end
 	else
-		slot0:_openSelectFormulaView()
+		arg_9_0:_openSelectFormulaView()
 	end
 end
 
-function slot0._openSelectFormulaView(slot0)
+function var_0_0._openSelectFormulaView(arg_10_0)
+	local var_10_0 = arg_10_0.viewContainer:getSelectLine()
+	local var_10_1 = RoomProductionModel.instance:getLineMO(var_10_0)
+
 	if not ViewMgr.instance:isOpen(ViewName.RoomFormulaView) then
 		ViewMgr.instance:openView(ViewName.RoomFormulaView, {
-			lineMO = RoomProductionModel.instance:getLineMO(slot0.viewContainer:getSelectLine()),
+			lineMO = var_10_1,
 			buildingType = RoomBuildingEnum.FormulaBuildingType.Change,
-			openInOutside = slot0.viewParam and slot0.viewParam.openInOutside
+			openInOutside = arg_10_0.viewParam and arg_10_0.viewParam.openInOutside
 		})
 	end
 
-	slot0:_setTitleAndCategoryVisibility(false)
+	arg_10_0:_setTitleAndCategoryVisibility(false)
 end
 
-function slot0._subLongPressTimeEnd(slot0)
-	if not RoomFormulaListModel.instance:getSelectFormulaId() or slot1 == 0 then
+function var_0_0._subLongPressTimeEnd(arg_11_0)
+	local var_11_0 = RoomFormulaListModel.instance:getSelectFormulaId()
+
+	if not var_11_0 or var_11_0 == 0 then
 		GameFacade.showToast(ToastEnum.RoomInitBuildingToast)
 
 		return
 	end
 
-	if slot0._blockLongPress then
+	if arg_11_0._blockLongPress then
 		return
 	end
 
-	slot0._isLongPress = true
+	local var_11_1 = arg_11_0._isLongPress
 
-	if not slot0._isLongPress and slot0:_trySetCount(RoomFormulaListModel.instance:getSelectFormulaCombineCount() - 1, true) then
+	arg_11_0._isLongPress = true
+
+	local var_11_2 = RoomFormulaListModel.instance:getSelectFormulaCombineCount()
+	local var_11_3 = arg_11_0:_trySetCount(var_11_2 - 1, true)
+
+	if not var_11_1 and var_11_3 then
 		AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
 	end
 end
 
-function slot0._subClickOnClick(slot0)
-	if not RoomFormulaListModel.instance:getSelectFormulaId() or slot1 == 0 then
+function var_0_0._subClickOnClick(arg_12_0)
+	local var_12_0 = RoomFormulaListModel.instance:getSelectFormulaId()
+
+	if not var_12_0 or var_12_0 == 0 then
 		GameFacade.showToast(ToastEnum.RoomInitBuildingToast)
 
 		return
 	end
 
-	if slot0:_trySetCount(RoomFormulaListModel.instance:getSelectFormulaCombineCount() - 1, true) then
+	local var_12_1 = RoomFormulaListModel.instance:getSelectFormulaCombineCount()
+
+	if arg_12_0:_trySetCount(var_12_1 - 1, true) then
 		AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
 	end
 end
 
-function slot0._subClickUp(slot0)
-	slot0._blockLongPress = false
-	slot0._isLongPress = false
+function var_0_0._subClickUp(arg_13_0)
+	arg_13_0._blockLongPress = false
+	arg_13_0._isLongPress = false
 end
 
-function slot0._addLongPressTimeEnd(slot0)
-	if not RoomFormulaListModel.instance:getSelectFormulaId() or slot1 == 0 then
+function var_0_0._addLongPressTimeEnd(arg_14_0)
+	local var_14_0 = RoomFormulaListModel.instance:getSelectFormulaId()
+
+	if not var_14_0 or var_14_0 == 0 then
 		GameFacade.showToast(ToastEnum.RoomInitBuildingToast)
 
 		return
 	end
 
-	if slot0._blockLongPress then
+	if arg_14_0._blockLongPress then
 		return
 	end
 
-	if not slot0._isLongPress then
+	if not arg_14_0._isLongPress then
 		AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
 	end
 
-	slot0._isLongPress = true
+	local var_14_1 = arg_14_0._isLongPress
 
-	if not slot0._isLongPress and slot0:_trySetCount(RoomFormulaListModel.instance:getSelectFormulaCombineCount() + 1, true, true) then
+	arg_14_0._isLongPress = true
+
+	local var_14_2 = RoomFormulaListModel.instance:getSelectFormulaCombineCount()
+	local var_14_3 = arg_14_0:_trySetCount(var_14_2 + 1, true, true)
+
+	if not var_14_1 and var_14_3 then
 		AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
 	end
 end
 
-function slot0._addClickOnClick(slot0)
-	if not RoomFormulaListModel.instance:getSelectFormulaId() or slot1 == 0 then
+function var_0_0._addClickOnClick(arg_15_0)
+	local var_15_0 = RoomFormulaListModel.instance:getSelectFormulaId()
+
+	if not var_15_0 or var_15_0 == 0 then
 		GameFacade.showToast(ToastEnum.RoomInitBuildingToast)
 
 		return
 	end
 
-	if slot0:_trySetCount(RoomFormulaListModel.instance:getSelectFormulaCombineCount() + 1, true, true) then
+	local var_15_1 = RoomFormulaListModel.instance:getSelectFormulaCombineCount()
+
+	if arg_15_0:_trySetCount(var_15_1 + 1, true, true) then
 		AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
 	end
 end
 
-function slot0._addClickUp(slot0)
-	slot0._blockLongPress = false
-	slot0._isLongPress = false
+function var_0_0._addClickUp(arg_16_0)
+	arg_16_0._blockLongPress = false
+	arg_16_0._isLongPress = false
 end
 
-function slot0._onValueChanged(slot0, slot1)
-	if not RoomFormulaListModel.instance:getSelectFormulaId() or slot2 == 0 then
+function var_0_0._onValueChanged(arg_17_0, arg_17_1)
+	local var_17_0 = RoomFormulaListModel.instance:getSelectFormulaId()
+
+	if not var_17_0 or var_17_0 == 0 then
 		return
 	end
 
-	if tonumber(slot1) then
-		slot0:_trySetCount(slot3, true)
+	local var_17_1 = tonumber(arg_17_1)
+
+	if var_17_1 then
+		arg_17_0:_trySetCount(var_17_1, true)
 	else
-		slot0:_trySetCount(1, true)
+		arg_17_0:_trySetCount(1, true)
 	end
 end
 
-function slot0._btnnoformulaOnClick(slot0)
+function var_0_0._btnnoformulaOnClick(arg_18_0)
 	GameFacade.showToast(ToastEnum.RoomInitBuildingToast)
 end
 
-function slot0._onSelectFormulaIdChanged(slot0, slot1)
-	if slot1 ~= RoomFormulaListModel.instance:getSelectFormulaStrId() then
-		slot3 = true
+function var_0_0._onSelectFormulaIdChanged(arg_19_0, arg_19_1)
+	local var_19_0 = RoomFormulaListModel.instance:getSelectFormulaStrId()
 
-		if not string.nilorempty(slot2) then
-			slot4 = RoomFormulaModel.instance:getFormulaMo(slot2)
-			slot3 = slot4:isTreeFormula() or not slot4:getIsExpandTree()
+	if arg_19_1 ~= var_19_0 then
+		local var_19_1 = true
+
+		if not string.nilorempty(var_19_0) then
+			local var_19_2 = RoomFormulaModel.instance:getFormulaMo(var_19_0)
+			local var_19_3 = not var_19_2:isTreeFormula()
+			local var_19_4 = var_19_2:getIsExpandTree()
+
+			var_19_1 = var_19_3 and not var_19_4
 		end
 
-		if not slot1 or slot3 then
-			slot0:_resetCount()
+		if not arg_19_1 or var_19_1 then
+			arg_19_0:_resetCount()
 		end
 	end
 
-	slot0:_refreshFormula()
+	arg_19_0:_refreshFormula()
 
-	if slot2 then
-		gohelper.setActive(slot0._gobgvx, false)
-		gohelper.setActive(slot0._gobgvx, true)
+	if var_19_0 then
+		gohelper.setActive(arg_19_0._gobgvx, false)
+		gohelper.setActive(arg_19_0._gobgvx, true)
 	end
 end
 
-function slot0._startProductionLine(slot0)
-	RoomMapController.instance:dispatchEvent(RoomEvent.OnChangePartStart, slot0._startFormulaStrId)
+function var_0_0._startProductionLine(arg_20_0)
+	RoomMapController.instance:dispatchEvent(RoomEvent.OnChangePartStart, arg_20_0._startFormulaStrId)
 	PopupController.instance:setPause("roominitbuildingview_changestart", false)
 	UIBlockMgr.instance:endBlock("roominitbuildingview_changestart")
-	slot0:_resetCount()
-	slot0:_refreshFormula()
-	gohelper.setActive(slot0._gohechengeffect, false)
-	gohelper.setActive(slot0._gohechengeffect, true)
+	arg_20_0:_resetCount()
+	arg_20_0:_refreshFormula()
+	gohelper.setActive(arg_20_0._gohechengeffect, false)
+	gohelper.setActive(arg_20_0._gohechengeffect, true)
 	AudioMgr.instance:trigger(AudioEnum.Room.play_ui_home_fountain_mix)
 end
 
-function slot0._onShowInitBuildingChangeTitle(slot0)
-	slot0:_setTitleAndCategoryVisibility(true)
+function var_0_0._onShowInitBuildingChangeTitle(arg_21_0)
+	arg_21_0:_setTitleAndCategoryVisibility(true)
 end
 
-function slot0._onOpenView(slot0, slot1)
-	if slot1 == ViewName.RoomFormulaView then
-		slot0:_setTitleAndCategoryVisibility(false)
+function var_0_0._onOpenView(arg_22_0, arg_22_1)
+	if arg_22_1 == ViewName.RoomFormulaView then
+		arg_22_0:_setTitleAndCategoryVisibility(false)
 	end
 end
 
-function slot0._setTitleAndCategoryVisibility(slot0, slot1)
-	slot0.viewContainer:setIsShowTitle(slot1)
-	gohelper.setActive(slot0._goCategory, slot1)
+function var_0_0._setTitleAndCategoryVisibility(arg_23_0, arg_23_1)
+	arg_23_0.viewContainer:setIsShowTitle(arg_23_1)
+	gohelper.setActive(arg_23_0._goCategory, arg_23_1)
 end
 
-function slot0._editableInitView(slot0)
-	slot0._gocombine3 = gohelper.findChild(slot0._gochange, "combine/#go_combine3")
-	slot0._goproduct = gohelper.findChild(slot0._gochange, "go_product")
-	slot0._simageproducticon = gohelper.findChildSingleImage(slot0._gochange, "combine/combineproduct/go_product/simage_producticon")
-	slot0._imageproductrare = gohelper.findChildImage(slot0._gochange, "combine/combineproduct/go_product/image_productrare")
-	slot0._inputvalue = gohelper.findChildTextMeshInputField(slot0._gochange, "go_product/productnum/valuebg/input_value")
-	slot0._btnnoformula = gohelper.findChildButtonWithAudio(slot0._gochange, "go_product/productnum/valuebg/btn_noformula")
-	slot0._gosub = gohelper.findChild(slot0._gochange, "go_product/productnum/sub/go_sub")
-	slot0._goadd = gohelper.findChild(slot0._gochange, "go_product/productnum/add/go_add")
-	slot0._txtgold = gohelper.findChildText(slot0._gochange, "combine/go_combine3/itemcoin/go_gooditem/countbg/txt_gold")
-	slot0._goempty = gohelper.findChild(slot0._gochange, "combine/go_combine3/itemcoin/go_empty")
-	slot0._gogooditem = gohelper.findChild(slot0._gochange, "combine/go_combine3/itemcoin/go_gooditem")
-	slot0._btncoin = gohelper.findChildButtonWithAudio(slot0._gochange, "combine/go_combine3/itemcoin/btn_coin")
-	slot0._btnproduct = gohelper.findChildButtonWithAudio(slot0._gochange, "combine/combineproduct/btn_product")
-	slot0._goproducticon = gohelper.findChild(slot0._gochange, "combine/combineproduct/btn_product/icon")
-	slot0._goproductadd = gohelper.findChild(slot0._gochange, "combine/combineproduct/go_add")
-	slot0._goCanCombine = gohelper.findChild(slot0._gochange, "combine/combineproduct/#go_Mix")
-	slot0._txtCanCombine = gohelper.findChildText(slot0._gochange, "combine/combineproduct/#go_Mix/#txt_Mix")
-	slot0._btncombine = gohelper.findChildButton(slot0._gochange, "go_product/btn_combine")
-	slot0._golevelupbeffect = gohelper.findChild(slot0._gochange, "go_product/btn_combine/#go_levelupbeffect")
-	slot0._txtCombine = gohelper.findChildText(slot0._gochange, "go_product/btn_combine/textcn")
-	slot0._simagecombinebg = gohelper.findChildSingleImage(slot0._gochange, "combine/go_combine3/#simage_combinebg")
-	slot0._gocoinitempos = gohelper.findChild(slot0._gochange, "combine/go_combine3/itemcoin/go_gooditem/go_gooditempos")
-	slot0._txtNeed = gohelper.findChildText(slot0._gochange, "go_product/#txt_NeedProp")
-	slot0._gobgvx = gohelper.findChild(slot0._gochange, "combine/go_combine3/#bgvx")
-	slot0._gohechengeffect = gohelper.findChild(slot0._gochange, "combine/#hechengeffect")
-	slot4 = "bg_hechengdiban"
+function var_0_0._editableInitView(arg_24_0)
+	arg_24_0._gocombine3 = gohelper.findChild(arg_24_0._gochange, "combine/#go_combine3")
+	arg_24_0._goproduct = gohelper.findChild(arg_24_0._gochange, "go_product")
+	arg_24_0._simageproducticon = gohelper.findChildSingleImage(arg_24_0._gochange, "combine/combineproduct/go_product/simage_producticon")
+	arg_24_0._imageproductrare = gohelper.findChildImage(arg_24_0._gochange, "combine/combineproduct/go_product/image_productrare")
+	arg_24_0._inputvalue = gohelper.findChildTextMeshInputField(arg_24_0._gochange, "go_product/productnum/valuebg/input_value")
+	arg_24_0._btnnoformula = gohelper.findChildButtonWithAudio(arg_24_0._gochange, "go_product/productnum/valuebg/btn_noformula")
+	arg_24_0._gosub = gohelper.findChild(arg_24_0._gochange, "go_product/productnum/sub/go_sub")
+	arg_24_0._goadd = gohelper.findChild(arg_24_0._gochange, "go_product/productnum/add/go_add")
+	arg_24_0._txtgold = gohelper.findChildText(arg_24_0._gochange, "combine/go_combine3/itemcoin/go_gooditem/countbg/txt_gold")
+	arg_24_0._goempty = gohelper.findChild(arg_24_0._gochange, "combine/go_combine3/itemcoin/go_empty")
+	arg_24_0._gogooditem = gohelper.findChild(arg_24_0._gochange, "combine/go_combine3/itemcoin/go_gooditem")
+	arg_24_0._btncoin = gohelper.findChildButtonWithAudio(arg_24_0._gochange, "combine/go_combine3/itemcoin/btn_coin")
+	arg_24_0._btnproduct = gohelper.findChildButtonWithAudio(arg_24_0._gochange, "combine/combineproduct/btn_product")
+	arg_24_0._goproducticon = gohelper.findChild(arg_24_0._gochange, "combine/combineproduct/btn_product/icon")
+	arg_24_0._goproductadd = gohelper.findChild(arg_24_0._gochange, "combine/combineproduct/go_add")
+	arg_24_0._goCanCombine = gohelper.findChild(arg_24_0._gochange, "combine/combineproduct/#go_Mix")
+	arg_24_0._txtCanCombine = gohelper.findChildText(arg_24_0._gochange, "combine/combineproduct/#go_Mix/#txt_Mix")
+	arg_24_0._btncombine = gohelper.findChildButton(arg_24_0._gochange, "go_product/btn_combine")
+	arg_24_0._golevelupbeffect = gohelper.findChild(arg_24_0._gochange, "go_product/btn_combine/#go_levelupbeffect")
+	arg_24_0._txtCombine = gohelper.findChildText(arg_24_0._gochange, "go_product/btn_combine/textcn")
+	arg_24_0._simagecombinebg = gohelper.findChildSingleImage(arg_24_0._gochange, "combine/go_combine3/#simage_combinebg")
+	arg_24_0._gocoinitempos = gohelper.findChild(arg_24_0._gochange, "combine/go_combine3/itemcoin/go_gooditem/go_gooditempos")
+	arg_24_0._txtNeed = gohelper.findChildText(arg_24_0._gochange, "go_product/#txt_NeedProp")
+	arg_24_0._gobgvx = gohelper.findChild(arg_24_0._gochange, "combine/go_combine3/#bgvx")
+	arg_24_0._gohechengeffect = gohelper.findChild(arg_24_0._gochange, "combine/#hechengeffect")
 
-	slot0._simagecombinebg:LoadImage(ResUrl.getRoomImage(slot4))
-	gohelper.addUIClickAudio(slot0._btnproduct.gameObject, AudioEnum.UI.UI_transverse_tabs_click)
+	arg_24_0._simagecombinebg:LoadImage(ResUrl.getRoomImage("bg_hechengdiban"))
+	gohelper.addUIClickAudio(arg_24_0._btnproduct.gameObject, AudioEnum.UI.UI_transverse_tabs_click)
 
-	slot0._materialItemList = {}
+	arg_24_0._materialItemList = {}
 
-	for slot4 = 1, 3 do
-		slot5 = slot0:getUserDataTb_()
-		slot5.go = gohelper.findChild(slot0._gochange, "combine/go_combine3/item" .. slot4)
-		slot5.goempty = gohelper.findChild(slot5.go, "go_empty")
-		slot5.gogooditem = gohelper.findChild(slot5.go, "go_gooditem")
-		slot5.gogooditempos = gohelper.findChild(slot5.go, "go_gooditem/go_gooditempos")
-		slot5.txtcount = gohelper.findChildText(slot5.go, "go_gooditem/countbg/txt_count")
-		slot5.btnitem = gohelper.findChildButtonWithAudio(slot5.go, "btn_item")
+	for iter_24_0 = 1, 3 do
+		local var_24_0 = arg_24_0:getUserDataTb_()
 
-		slot5.btnitem:AddClickListener(function (slot0)
-			slot0:_btnitemOnClick(uv0)
-		end, slot0)
-		gohelper.addUIClickAudio(slot5.btnitem.gameObject, AudioEnum.UI.UI_transverse_tabs_click)
+		var_24_0.go = gohelper.findChild(arg_24_0._gochange, "combine/go_combine3/item" .. iter_24_0)
+		var_24_0.goempty = gohelper.findChild(var_24_0.go, "go_empty")
+		var_24_0.gogooditem = gohelper.findChild(var_24_0.go, "go_gooditem")
+		var_24_0.gogooditempos = gohelper.findChild(var_24_0.go, "go_gooditem/go_gooditempos")
+		var_24_0.txtcount = gohelper.findChildText(var_24_0.go, "go_gooditem/countbg/txt_count")
+		var_24_0.btnitem = gohelper.findChildButtonWithAudio(var_24_0.go, "btn_item")
 
-		slot5.isEmpty = false
+		var_24_0.btnitem:AddClickListener(function(arg_25_0)
+			arg_25_0:_btnitemOnClick(iter_24_0)
+		end, arg_24_0)
+		gohelper.addUIClickAudio(var_24_0.btnitem.gameObject, AudioEnum.UI.UI_transverse_tabs_click)
 
-		table.insert(slot0._materialItemList, slot5)
+		var_24_0.isEmpty = false
+
+		table.insert(arg_24_0._materialItemList, var_24_0)
 	end
 
-	slot0._coinItem = IconMgr.instance:getRoomGoodsItem(slot0._gocoinitempos, slot0.viewContainer)
+	arg_24_0._coinItem = IconMgr.instance:getRoomGoodsItem(arg_24_0._gocoinitempos, arg_24_0.viewContainer)
 
-	slot0._coinItem:canShowRareCircle(false)
-	slot0._coinItem:setMOValue(MaterialEnum.MaterialType.Currency, CurrencyEnum.CurrencyType.Gold, 0)
-	slot0._coinItem:isEnableClick(false)
-	slot0._coinItem:isShowCount(false)
-	slot0._coinItem:setRecordFarmItem(true)
-	slot0._coinItem:setConsume(true)
+	arg_24_0._coinItem:canShowRareCircle(false)
+	arg_24_0._coinItem:setMOValue(MaterialEnum.MaterialType.Currency, CurrencyEnum.CurrencyType.Gold, 0)
+	arg_24_0._coinItem:isEnableClick(false)
+	arg_24_0._coinItem:isShowCount(false)
+	arg_24_0._coinItem:setRecordFarmItem(true)
+	arg_24_0._coinItem:setConsume(true)
 	RoomBuildingFormulaController.instance:resetSelectFormulaStrId()
 end
 
-function slot0.onOpen(slot0)
-	slot0:_refresh()
+function var_0_0.onOpen(arg_26_0)
+	arg_26_0:_refresh()
 
-	if slot0.viewParam and slot0.viewParam.showFormulaView then
-		slot0.viewContainer:setSelectLine(7)
-		slot0:_openSelectFormulaView()
+	if arg_26_0.viewParam and arg_26_0.viewParam.showFormulaView then
+		arg_26_0.viewContainer:setSelectLine(7)
+		arg_26_0:_openSelectFormulaView()
 	end
 end
 
-function slot0._refresh(slot0)
-	slot0:_refreshFormula()
+function var_0_0._refresh(arg_27_0)
+	arg_27_0:_refreshFormula()
 end
 
-function slot0._refreshFormula(slot0)
-	slot2 = RoomFormulaListModel.instance:getSelectFormulaId() and slot1 ~= 0
-	slot0._inputvalue.inputField.interactable = slot2
+function var_0_0._refreshFormula(arg_28_0)
+	local var_28_0 = RoomFormulaListModel.instance:getSelectFormulaId()
+	local var_28_1 = var_28_0 and var_28_0 ~= 0
 
-	gohelper.setActive(slot0._btnnoformula.gameObject, not slot2)
-	gohelper.setActive(slot0._goproducticon.gameObject, slot2)
+	arg_28_0._inputvalue.inputField.interactable = var_28_1
 
-	if slot2 then
-		slot0:_refreshSelect()
+	gohelper.setActive(arg_28_0._btnnoformula.gameObject, not var_28_1)
+	gohelper.setActive(arg_28_0._goproducticon.gameObject, var_28_1)
+
+	if var_28_1 then
+		arg_28_0:_refreshSelect()
 	else
-		slot0:_refreshEmpty()
+		arg_28_0:_refreshEmpty()
 	end
 
-	slot0:_refreshNeedTag()
-	slot0:_refreshCombineBtn()
-	slot0:_refreshInputField()
+	arg_28_0:_refreshNeedTag()
+	arg_28_0:_refreshCombineBtn()
+	arg_28_0:_refreshInputField()
 end
 
-function slot0._refreshSelect(slot0)
-	slot0:_refreshProduce()
-	slot0:_refreshCostCoinCount()
-	slot0:_refreshCostMaterial()
+function var_0_0._refreshSelect(arg_29_0)
+	arg_29_0:_refreshProduce()
+	arg_29_0:_refreshCostCoinCount()
+	arg_29_0:_refreshCostMaterial()
 end
 
-function slot0._refreshCostCoinCount(slot0)
-	slot1 = 0
-	slot2 = 0
+function var_0_0._refreshCostCoinCount(arg_30_0)
+	local var_30_0 = 0
+	local var_30_1 = 0
+	local var_30_2 = RoomFormulaListModel.instance:getSelectFormulaId()
+	local var_30_3 = RoomProductionHelper.getCostCoinItemList(var_30_2)[1]
 
-	if RoomProductionHelper.getCostCoinItemList(RoomFormulaListModel.instance:getSelectFormulaId())[1] then
-		slot1 = slot5.quantity or 0
-		slot2 = ItemModel.instance:getItemQuantity(slot5.type, slot5.id)
+	if var_30_3 then
+		var_30_0 = var_30_3.quantity or 0
+		var_30_1 = ItemModel.instance:getItemQuantity(var_30_3.type, var_30_3.id)
 	end
 
-	if slot2 < slot1 * RoomFormulaListModel.instance:getSelectFormulaCombineCount() then
-		slot0._txtgold.text = string.format("<color=#d97373>%s</color>", slot7)
+	local var_30_4 = var_30_0 * RoomFormulaListModel.instance:getSelectFormulaCombineCount()
+
+	if var_30_1 < var_30_4 then
+		arg_30_0._txtgold.text = string.format("<color=#d97373>%s</color>", var_30_4)
 	else
-		slot0._txtgold.text = GameUtil.numberDisplay(slot7)
+		arg_30_0._txtgold.text = GameUtil.numberDisplay(var_30_4)
 	end
 
-	slot0._toatalNeedSocre = slot7
+	arg_30_0._toatalNeedSocre = var_30_4
 
-	gohelper.setActive(slot0._gogooditem, slot7 > 0)
-	gohelper.setActive(slot0._goempty, slot7 <= 0)
+	gohelper.setActive(arg_30_0._gogooditem, var_30_4 > 0)
+	gohelper.setActive(arg_30_0._goempty, var_30_4 <= 0)
 end
 
-function slot0._refreshCostMaterial(slot0)
-	slot2 = RoomFormulaListModel.instance:getSelectFormulaCombineCount()
-	slot7 = #slot0._materialItemList
+function var_0_0._refreshCostMaterial(arg_31_0)
+	local var_31_0 = RoomFormulaListModel.instance:getSelectFormulaId()
+	local var_31_1 = RoomFormulaListModel.instance:getSelectFormulaCombineCount()
+	local var_31_2 = RoomProductionHelper.getCostMaterialItemList(var_31_0)
 
-	for slot7 = 1, math.min(#RoomProductionHelper.getCostMaterialItemList(RoomFormulaListModel.instance:getSelectFormulaId()), slot7) do
-		slot8 = slot3[slot7]
+	for iter_31_0 = 1, math.min(#var_31_2, #arg_31_0._materialItemList) do
+		local var_31_3 = var_31_2[iter_31_0]
+		local var_31_4 = arg_31_0._materialItemList[iter_31_0]
 
-		if slot0._materialItemList[slot7] then
-			slot9.costItem = slot9.costItem or IconMgr.instance:getRoomGoodsItem(slot9.gogooditempos, slot0.viewContainer)
+		if var_31_4 then
+			var_31_4.costItem = var_31_4.costItem or IconMgr.instance:getRoomGoodsItem(var_31_4.gogooditempos, arg_31_0.viewContainer)
 
-			slot9.costItem:canShowRareCircle(false)
-			slot9.costItem:setMOValue(slot8.type, slot8.id, slot8.quantity * slot2)
-			slot9.costItem:isEnableClick(false)
-			slot9.costItem:isShowCount(false)
-			slot9.costItem:setRecordFarmItem(true)
-			slot9.costItem:setConsume(true)
-			slot9.costItem:setJumpFinishCallback(slot0.jumpFinishCallback, slot0)
+			var_31_4.costItem:canShowRareCircle(false)
+			var_31_4.costItem:setMOValue(var_31_3.type, var_31_3.id, var_31_3.quantity * var_31_1)
+			var_31_4.costItem:isEnableClick(false)
+			var_31_4.costItem:isShowCount(false)
+			var_31_4.costItem:setRecordFarmItem(true)
+			var_31_4.costItem:setConsume(true)
+			var_31_4.costItem:setJumpFinishCallback(arg_31_0.jumpFinishCallback, arg_31_0)
 
-			if ItemModel.instance:getItemQuantity(slot8.type, slot8.id) < slot8.quantity * slot2 then
-				slot9.txtcount.text = string.format("<color=#d97373>%s/%s</color>", slot10, slot11)
+			local var_31_5 = ItemModel.instance:getItemQuantity(var_31_3.type, var_31_3.id)
+			local var_31_6 = var_31_3.quantity * var_31_1
 
-				slot9.costItem:setGrayscale(true)
+			if var_31_5 < var_31_6 then
+				var_31_4.txtcount.text = string.format("<color=#d97373>%s/%s</color>", var_31_5, var_31_6)
+
+				var_31_4.costItem:setGrayscale(true)
 			else
-				slot9.txtcount.text = string.format("%s/%s", RoomProductionHelper.formatItemNum(slot10), slot11)
+				var_31_4.txtcount.text = string.format("%s/%s", RoomProductionHelper.formatItemNum(var_31_5), var_31_6)
 
-				slot9.costItem:setGrayscale(false)
+				var_31_4.costItem:setGrayscale(false)
 			end
 
-			slot9.isEmpty = false
+			var_31_4.isEmpty = false
 
-			gohelper.setActive(slot9.go, true)
-			gohelper.setActive(slot9.goempty, false)
-			gohelper.setActive(slot9.gogooditem, true)
+			gohelper.setActive(var_31_4.go, true)
+			gohelper.setActive(var_31_4.goempty, false)
+			gohelper.setActive(var_31_4.gogooditem, true)
 		end
 	end
 
-	for slot7 = math.min(#slot3, #slot0._materialItemList) + 1, #slot0._materialItemList do
-		slot8 = slot0._materialItemList[slot7]
-		slot8.isEmpty = true
+	for iter_31_1 = math.min(#var_31_2, #arg_31_0._materialItemList) + 1, #arg_31_0._materialItemList do
+		local var_31_7 = arg_31_0._materialItemList[iter_31_1]
 
-		gohelper.setActive(slot8.go, true)
-		gohelper.setActive(slot8.goempty, true)
-		gohelper.setActive(slot8.gogooditem, false)
+		var_31_7.isEmpty = true
+
+		gohelper.setActive(var_31_7.go, true)
+		gohelper.setActive(var_31_7.goempty, true)
+		gohelper.setActive(var_31_7.gogooditem, false)
 	end
 end
 
-function slot0._refreshProduce(slot0)
-	slot2 = RoomProductionHelper.getFormulaProduceItem(RoomFormulaListModel.instance:getSelectFormulaId())
+function var_0_0._refreshProduce(arg_32_0)
+	local var_32_0 = RoomFormulaListModel.instance:getSelectFormulaId()
+	local var_32_1 = RoomProductionHelper.getFormulaProduceItem(var_32_0)
 
-	gohelper.setActive(slot0._simageproducticon.gameObject, slot2)
-	gohelper.setActive(slot0._imageproductrare.gameObject, slot2)
-	gohelper.setActive(slot0._goproductadd, slot2 == nil)
+	gohelper.setActive(arg_32_0._simageproducticon.gameObject, var_32_1)
+	gohelper.setActive(arg_32_0._imageproductrare.gameObject, var_32_1)
+	gohelper.setActive(arg_32_0._goproductadd, var_32_1 == nil)
 
-	if slot2 then
-		slot3, slot4 = ItemModel.instance:getItemConfigAndIcon(slot2.type, slot2.id)
+	if var_32_1 then
+		local var_32_2, var_32_3 = ItemModel.instance:getItemConfigAndIcon(var_32_1.type, var_32_1.id)
 
-		slot0._simageproducticon:LoadImage(slot4)
-		UISpriteSetMgr.instance:setRoomSprite(slot0._imageproductrare, "huangyuan_pz_" .. CharacterEnum.Color[slot3.rare])
+		arg_32_0._simageproducticon:LoadImage(var_32_3)
+		UISpriteSetMgr.instance:setRoomSprite(arg_32_0._imageproductrare, "huangyuan_pz_" .. CharacterEnum.Color[var_32_2.rare])
 	end
 end
 
-function slot0._refreshEmpty(slot0)
-	slot4 = 0
+function var_0_0._refreshEmpty(arg_33_0)
+	arg_33_0._inputvalue:SetText(tostring(0))
+	gohelper.setActive(arg_33_0._simageproducticon.gameObject, false)
+	gohelper.setActive(arg_33_0._imageproductrare.gameObject, false)
+	gohelper.setActive(arg_33_0._goproductadd, true)
 
-	slot0._inputvalue:SetText(tostring(slot4))
-	gohelper.setActive(slot0._simageproducticon.gameObject, false)
-	gohelper.setActive(slot0._imageproductrare.gameObject, false)
-	gohelper.setActive(slot0._goproductadd, true)
-
-	for slot4, slot5 in ipairs(slot0._materialItemList) do
-		gohelper.setActive(slot5.go, true)
-		gohelper.setActive(slot5.goempty, true)
-		gohelper.setActive(slot5.gogooditem, false)
+	for iter_33_0, iter_33_1 in ipairs(arg_33_0._materialItemList) do
+		gohelper.setActive(iter_33_1.go, true)
+		gohelper.setActive(iter_33_1.goempty, true)
+		gohelper.setActive(iter_33_1.gogooditem, false)
 	end
 
-	gohelper.setActive(slot0._goempty, true)
-	gohelper.setActive(slot0._gogooditem, false)
+	gohelper.setActive(arg_33_0._goempty, true)
+	gohelper.setActive(arg_33_0._gogooditem, false)
 end
 
-function slot0._refreshNeedTag(slot0)
-	slot1, slot2, slot3 = nil
+function var_0_0._refreshNeedTag(arg_34_0)
+	local var_34_0
+	local var_34_1
+	local var_34_2
+	local var_34_3 = RoomFormulaListModel.instance:getSelectFormulaMo()
 
-	if RoomFormulaListModel.instance:getSelectFormulaMo() then
-		slot3 = RoomProductionHelper.getFormulaNeedQuantity(slot4:getId())
+	if var_34_3 then
+		local var_34_4 = var_34_3:getId()
+		local var_34_5 = var_34_3:getFormulaId()
 
-		if RoomProductionHelper.getFormulaProduceItem(slot4:getFormulaId()) then
-			slot2 = ItemModel.instance:getItemQuantity(slot7.type, slot7.id)
+		var_34_2 = RoomProductionHelper.getFormulaNeedQuantity(var_34_4)
+
+		local var_34_6 = RoomProductionHelper.getFormulaProduceItem(var_34_5)
+
+		if var_34_6 then
+			var_34_1 = ItemModel.instance:getItemQuantity(var_34_6.type, var_34_6.id)
 		end
 
-		slot1 = slot4:isTreeFormula() and "room_formula_need_desc2" or "room_formula_need_desc3"
+		var_34_0 = var_34_3:isTreeFormula() and "room_formula_need_desc2" or "room_formula_need_desc3"
 	end
 
-	if slot2 and slot3 and slot1 and slot3 ~= 0 then
-		slot5 = "#D97373"
+	if var_34_1 and var_34_2 and var_34_0 and var_34_2 ~= 0 then
+		local var_34_7 = "#D97373"
 
-		if slot3 <= slot2 then
-			slot5 = "#81ce83"
+		if var_34_2 <= var_34_1 then
+			var_34_7 = "#81ce83"
 		end
 
-		slot0._txtNeed.text = formatLuaLang(slot1, string.format("<color=%s>%s</color>/%s", slot5, GameUtil.numberDisplay(slot2), GameUtil.numberDisplay(slot3)))
+		local var_34_8 = GameUtil.numberDisplay(var_34_1)
+		local var_34_9 = GameUtil.numberDisplay(var_34_2)
+		local var_34_10 = string.format("<color=%s>%s</color>/%s", var_34_7, var_34_8, var_34_9)
 
-		gohelper.setActive(slot0._txtNeed.gameObject, true)
+		arg_34_0._txtNeed.text = formatLuaLang(var_34_0, var_34_10)
+
+		gohelper.setActive(arg_34_0._txtNeed.gameObject, true)
 	else
-		gohelper.setActive(slot0._txtNeed.gameObject, false)
+		gohelper.setActive(arg_34_0._txtNeed.gameObject, false)
 	end
 end
 
-function slot0._refreshCombineBtn(slot0)
-	slot2 = false
-	slot3 = 0
+function var_0_0._refreshCombineBtn(arg_35_0)
+	local var_35_0 = RoomFormulaListModel.instance:getSelectFormulaId()
+	local var_35_1 = false
+	local var_35_2 = 0
 
-	if RoomFormulaListModel.instance:getSelectFormulaId() and slot1 ~= 0 then
-		slot2 = RoomProductionHelper.getTotalCanCombineNum(slot1) ~= 0
+	if var_35_0 and var_35_0 ~= 0 then
+		var_35_2 = RoomProductionHelper.getTotalCanCombineNum(var_35_0)
+		var_35_1 = var_35_2 ~= 0
 	end
 
-	slot4 = false
-	slot5 = "room_formula_combine"
-	slot6 = false
+	local var_35_3 = false
+	local var_35_4 = "room_formula_combine"
+	local var_35_5 = false
 
-	if slot2 then
-		slot0._txtCanCombine.text = formatLuaLang("room_formula_can_combine", GameUtil.numberDisplay(slot3))
-		slot8 = RoomFormulaListModel.instance:getSelectFormulaCombineCount()
+	if var_35_1 then
+		local var_35_6 = GameUtil.numberDisplay(var_35_2)
 
-		if RoomProductionHelper.isEnoughCoin(slot1, slot8) and RoomProductionHelper.isEnoughMaterial(slot1, slot8) then
-			slot6 = true
-		elseif slot8 <= slot3 then
-			slot6 = true
-			slot5 = "room_formula_easy_combine"
+		arg_35_0._txtCanCombine.text = formatLuaLang("room_formula_can_combine", var_35_6)
+
+		local var_35_7 = RoomFormulaListModel.instance:getSelectFormulaCombineCount()
+		local var_35_8 = RoomProductionHelper.isEnoughCoin(var_35_0, var_35_7)
+		local var_35_9 = RoomProductionHelper.isEnoughMaterial(var_35_0, var_35_7)
+
+		var_35_3 = var_35_8 and var_35_9
+
+		if var_35_3 then
+			var_35_5 = true
+		elseif var_35_7 <= var_35_2 then
+			var_35_5 = true
+			var_35_4 = "room_formula_easy_combine"
 		end
 	end
 
-	slot0._txtCombine.text = luaLang(slot5)
-	slot0.isEasyCombine = not slot4
+	arg_35_0._txtCombine.text = luaLang(var_35_4)
+	arg_35_0.isEasyCombine = not var_35_3
 
-	gohelper.setActive(slot0._goCanCombine, slot2)
-	gohelper.setActive(slot0._golevelupbeffect, slot6)
-	ZProj.UGUIHelper.SetGrayscale(slot0._btncombine.gameObject, not slot6)
+	gohelper.setActive(arg_35_0._goCanCombine, var_35_1)
+	gohelper.setActive(arg_35_0._golevelupbeffect, var_35_5)
+	ZProj.UGUIHelper.SetGrayscale(arg_35_0._btncombine.gameObject, not var_35_5)
 end
 
-function slot0._refreshInputField(slot0)
-	if string.nilorempty(RoomFormulaListModel.instance:getSelectFormulaStrId()) then
+function var_0_0._refreshInputField(arg_36_0)
+	local var_36_0 = RoomFormulaListModel.instance:getSelectFormulaStrId()
+
+	if string.nilorempty(var_36_0) then
 		return
 	end
 
-	slot0._inputvalue:RemoveOnValueChanged()
-	slot0._inputvalue:SetText(tostring(RoomFormulaListModel.instance:getSelectFormulaCombineCount()))
-	slot0._inputvalue:AddOnValueChanged(slot0._onValueChanged, slot0)
+	local var_36_1 = RoomFormulaListModel.instance:getSelectFormulaCombineCount()
+
+	arg_36_0._inputvalue:RemoveOnValueChanged()
+	arg_36_0._inputvalue:SetText(tostring(var_36_1))
+	arg_36_0._inputvalue:AddOnValueChanged(arg_36_0._onValueChanged, arg_36_0)
 end
 
-function slot0.setStartFormulaStrId(slot0)
-	slot0._startFormulaStrId = RoomFormulaListModel.instance:getSelectFormulaStrId()
+function var_0_0.setStartFormulaStrId(arg_37_0)
+	arg_37_0._startFormulaStrId = RoomFormulaListModel.instance:getSelectFormulaStrId()
 end
 
-function slot0._resetCount(slot0)
-	if string.nilorempty(RoomFormulaListModel.instance:getSelectFormulaStrId()) then
+function var_0_0._resetCount(arg_38_0)
+	local var_38_0 = RoomFormulaListModel.instance:getSelectFormulaStrId()
+
+	if string.nilorempty(var_38_0) then
 		return
 	end
 
-	if RoomFormulaModel.instance:getFormulaMo(slot1) then
-		slot2:resetFormulaCombineCount()
+	local var_38_1 = RoomFormulaModel.instance:getFormulaMo(var_38_0)
+
+	if var_38_1 then
+		var_38_1:resetFormulaCombineCount()
 	end
 end
 
-function slot0._trySetCount(slot0, slot1, slot2, slot3)
-	if string.nilorempty(RoomFormulaListModel.instance:getSelectFormulaStrId()) then
+function var_0_0._trySetCount(arg_39_0, arg_39_1, arg_39_2, arg_39_3)
+	local var_39_0 = RoomFormulaListModel.instance:getSelectFormulaStrId()
+
+	if string.nilorempty(var_39_0) then
 		return
 	end
 
-	slot5 = true
+	local var_39_1 = true
+	local var_39_2 = math.max(1, arg_39_1)
 
-	if math.max(1, slot1) >= 0 and RoomBuildingEnum.MachineSlotMaxCount < slot6 then
-		slot6 = RoomBuildingEnum.MachineSlotMaxCount
+	if var_39_2 >= 0 and var_39_2 > RoomBuildingEnum.MachineSlotMaxCount then
+		var_39_2 = RoomBuildingEnum.MachineSlotMaxCount
 
-		if slot2 and not slot0._blockLongPress then
+		if arg_39_2 and not arg_39_0._blockLongPress then
 			GameFacade.showToast(ToastEnum.RoomInitBuildingSetCount)
 
-			slot5 = false
+			var_39_1 = false
 		end
 
-		slot0:_setBlockLongPress()
+		arg_39_0:_setBlockLongPress()
 	end
 
-	if RoomFormulaListModel.instance:getSelectFormulaCombineCount() < slot6 and slot3 then
-		gohelper.setActive(slot0._gobgvx, false)
-		gohelper.setActive(slot0._gobgvx, true)
+	if var_39_2 > RoomFormulaListModel.instance:getSelectFormulaCombineCount() and arg_39_3 then
+		gohelper.setActive(arg_39_0._gobgvx, false)
+		gohelper.setActive(arg_39_0._gobgvx, true)
 	end
 
-	if RoomFormulaModel.instance:getFormulaMo(slot4) then
-		slot8:setFormulaCombineCount(slot6)
+	local var_39_3 = RoomFormulaModel.instance:getFormulaMo(var_39_0)
+
+	if var_39_3 then
+		var_39_3:setFormulaCombineCount(var_39_2)
 	end
 
-	slot0:_refreshFormula()
+	arg_39_0:_refreshFormula()
 
-	return slot5
+	return var_39_1
 end
 
-function slot0._setBlockLongPress(slot0)
-	if slot0._isLongPress then
-		slot0._blockLongPress = true
+function var_0_0._setBlockLongPress(arg_40_0)
+	if arg_40_0._isLongPress then
+		arg_40_0._blockLongPress = true
 	end
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_41_0)
 	JumpModel.instance:clearRecordFarmItem()
 end
 
-function slot0.onDestroyView(slot0)
-	slot4 = false
-
-	PopupController.instance:setPause("roominitbuildingview_changestart", slot4)
+function var_0_0.onDestroyView(arg_42_0)
+	PopupController.instance:setPause("roominitbuildingview_changestart", false)
 	UIBlockMgr.instance:endBlock("roominitbuildingview_changestart")
 
-	for slot4, slot5 in ipairs(slot0._materialItemList) do
-		slot5.btnitem:RemoveClickListener()
+	for iter_42_0, iter_42_1 in ipairs(arg_42_0._materialItemList) do
+		iter_42_1.btnitem:RemoveClickListener()
 	end
 
-	slot0._simageproducticon:UnLoadImage()
-	slot0._simagecombinebg:UnLoadImage()
+	arg_42_0._simageproducticon:UnLoadImage()
+	arg_42_0._simagecombinebg:UnLoadImage()
 end
 
-return slot0
+return var_0_0

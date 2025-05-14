@@ -1,29 +1,31 @@
-module("modules.logic.fight.entity.comp.skill.FightTLEventSpeed", package.seeall)
+﻿module("modules.logic.fight.entity.comp.skill.FightTLEventSpeed", package.seeall)
 
-slot0 = class("FightTLEventSpeed")
+local var_0_0 = class("FightTLEventSpeed")
 
-function slot0.handleSkillEvent(slot0, slot1, slot2, slot3)
-	if tonumber(slot3[1]) then
-		GameTimeMgr.instance:setTimeScale(GameTimeMgr.TimeScaleType.FightTLEventSpeed, slot4)
+function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	local var_1_0 = tonumber(arg_1_3[1])
+
+	if var_1_0 then
+		GameTimeMgr.instance:setTimeScale(GameTimeMgr.TimeScaleType.FightTLEventSpeed, var_1_0)
 	else
 		logError("变速帧参数有误")
 	end
 end
 
-function slot0.handleSkillEventEnd(slot0)
-	slot0:_resetSpeed()
+function var_0_0.handleSkillEventEnd(arg_2_0)
+	arg_2_0:_resetSpeed()
 end
 
-function slot0._resetSpeed(slot0)
+function var_0_0._resetSpeed(arg_3_0)
 	GameTimeMgr.instance:setTimeScale(GameTimeMgr.TimeScaleType.FightTLEventSpeed, 1)
 end
 
-function slot0.reset(slot0)
-	slot0:_resetSpeed()
+function var_0_0.reset(arg_4_0)
+	arg_4_0:_resetSpeed()
 end
 
-function slot0.dispose(slot0)
-	slot0:_resetSpeed()
+function var_0_0.dispose(arg_5_0)
+	arg_5_0:_resetSpeed()
 end
 
-return slot0
+return var_0_0

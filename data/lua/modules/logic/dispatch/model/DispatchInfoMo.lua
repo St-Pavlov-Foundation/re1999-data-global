@@ -1,43 +1,46 @@
-module("modules.logic.dispatch.model.DispatchInfoMo", package.seeall)
+﻿module("modules.logic.dispatch.model.DispatchInfoMo", package.seeall)
 
-slot0 = pureTable("DispatchInfoMo")
+local var_0_0 = pureTable("DispatchInfoMo")
 
-function slot0.init(slot0, slot1)
-	slot0.id = slot1.elementId
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.id = arg_1_1.elementId
 
-	slot0:updateMO(slot1)
+	arg_1_0:updateMO(arg_1_1)
 end
 
-function slot0.updateMO(slot0, slot1)
-	slot0.dispatchId = slot1.dispatchId
-	slot0.endTime = Mathf.Floor(tonumber(slot1.endTime) / 1000)
-	slot0.heroIdList = slot1.heroIdList
+function var_0_0.updateMO(arg_2_0, arg_2_1)
+	arg_2_0.dispatchId = arg_2_1.dispatchId
+	arg_2_0.endTime = Mathf.Floor(tonumber(arg_2_1.endTime) / 1000)
+	arg_2_0.heroIdList = arg_2_1.heroIdList
 end
 
-function slot0.getDispatchId(slot0)
-	return slot0.dispatchId
+function var_0_0.getDispatchId(arg_3_0)
+	return arg_3_0.dispatchId
 end
 
-function slot0.getHeroIdList(slot0)
-	return slot0.heroIdList
+function var_0_0.getHeroIdList(arg_4_0)
+	return arg_4_0.heroIdList
 end
 
-function slot0.getRemainTime(slot0)
-	return Mathf.Max(slot0.endTime - ServerTime.now(), 0)
+function var_0_0.getRemainTime(arg_5_0)
+	return Mathf.Max(arg_5_0.endTime - ServerTime.now(), 0)
 end
 
-function slot0.getRemainTimeStr(slot0)
-	slot1 = slot0:getRemainTime()
+function var_0_0.getRemainTimeStr(arg_6_0)
+	local var_6_0 = arg_6_0:getRemainTime()
+	local var_6_1 = math.floor(var_6_0 / TimeUtil.OneHourSecond)
+	local var_6_2 = math.floor(var_6_0 % TimeUtil.OneHourSecond / TimeUtil.OneMinuteSecond)
+	local var_6_3 = var_6_0 % TimeUtil.OneMinuteSecond
 
-	return string.format("%02d : %02d : %02d", math.floor(slot1 / TimeUtil.OneHourSecond), math.floor(slot1 % TimeUtil.OneHourSecond / TimeUtil.OneMinuteSecond), slot1 % TimeUtil.OneMinuteSecond)
+	return string.format("%02d : %02d : %02d", var_6_1, var_6_2, var_6_3)
 end
 
-function slot0.isRunning(slot0)
-	return ServerTime.now() < slot0.endTime
+function var_0_0.isRunning(arg_7_0)
+	return arg_7_0.endTime > ServerTime.now()
 end
 
-function slot0.isFinish(slot0)
-	return slot0.endTime <= ServerTime.now()
+function var_0_0.isFinish(arg_8_0)
+	return arg_8_0.endTime <= ServerTime.now()
 end
 
-return slot0
+return var_0_0

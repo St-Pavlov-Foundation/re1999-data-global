@@ -1,39 +1,45 @@
-module("modules.logic.seasonver.act123.controller.Season123EnemyController", package.seeall)
+﻿module("modules.logic.seasonver.act123.controller.Season123EnemyController", package.seeall)
 
-slot0 = class("Season123EnemyController", BaseController)
+local var_0_0 = class("Season123EnemyController", BaseController)
 
-function slot0.onOpenView(slot0, slot1, slot2, slot3)
-	Season123EnemyModel.instance:init(slot1, slot2, slot3)
+function var_0_0.onOpenView(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	Season123EnemyModel.instance:init(arg_1_1, arg_1_2, arg_1_3)
 end
 
-function slot0.onCloseView(slot0)
+function var_0_0.onCloseView(arg_2_0)
 	Season123EnemyModel.instance:release()
 end
 
-function slot0.switchTab(slot0, slot1)
-	if Season123EnemyModel.instance:getSelectedIndex() ~= slot1 then
-		Season123EnemyModel.instance:setSelectIndex(slot1)
+function var_0_0.switchTab(arg_3_0, arg_3_1)
+	if Season123EnemyModel.instance:getSelectedIndex() ~= arg_3_1 then
+		Season123EnemyModel.instance:setSelectIndex(arg_3_1)
 		Season123Controller.instance:dispatchEvent(Season123Event.EnemyDetailSwitchTab)
 	end
 end
 
-function slot0.selectMonster(slot0, slot1, slot2)
-	if not Season123EnemyModel.instance:getCurrentBattleGroupIds() then
+function var_0_0.selectMonster(arg_4_0, arg_4_1, arg_4_2)
+	local var_4_0 = Season123EnemyModel.instance:getCurrentBattleGroupIds()
+
+	if not var_4_0 then
 		return
 	end
 
-	if not Season123EnemyModel.instance:getMonsterIds(slot3[slot1]) then
+	local var_4_1 = Season123EnemyModel.instance:getMonsterIds(var_4_0[arg_4_1])
+
+	if not var_4_1 then
 		return
 	end
 
-	if slot4[slot2] ~= Season123EnemyModel.instance.selectMonsterId then
-		Season123EnemyModel.instance:setEnemySelectMonsterId(slot1, slot2, slot5)
+	local var_4_2 = var_4_1[arg_4_2]
+
+	if var_4_2 ~= Season123EnemyModel.instance.selectMonsterId then
+		Season123EnemyModel.instance:setEnemySelectMonsterId(arg_4_1, arg_4_2, var_4_2)
 		Season123Controller.instance:dispatchEvent(Season123Event.EnemyDetailSelectEnemy)
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-LuaEventSystem.addEventMechanism(slot0.instance)
+LuaEventSystem.addEventMechanism(var_0_0.instance)
 
-return slot0
+return var_0_0

@@ -1,306 +1,328 @@
-module("modules.logic.versionactivity2_3.warmup.view.V2a3_WarmUpLeftView", package.seeall)
+﻿module("modules.logic.versionactivity2_3.warmup.view.V2a3_WarmUpLeftView", package.seeall)
 
-slot0 = class("V2a3_WarmUpLeftView", BaseView)
+local var_0_0 = class("V2a3_WarmUpLeftView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._Middle = gohelper.findChild(slot0.viewGO, "Middle")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._Middle = gohelper.findChild(arg_1_0.viewGO, "Middle")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-slot1 = -1
-slot2 = 0
-slot3 = 1
-slot4 = SLFramework.AnimatorPlayer
-slot5 = ZProj.TweenHelper
-slot6 = UIMesh
-slot7 = {
+local var_0_1 = -1
+local var_0_2 = 0
+local var_0_3 = 1
+local var_0_4 = SLFramework.AnimatorPlayer
+local var_0_5 = ZProj.TweenHelper
+local var_0_6 = UIMesh
+local var_0_7 = {
 	DraggedDone = 1
 }
 
-function slot0._editableInitView(slot0)
-	slot0._drag = UIDragListenerHelper.New()
-	slot0._draggedState = uv0
-	slot0._needWaitCount = 0
-	slot0._iconGo = gohelper.findChild(slot0._Middle, "#icon")
-	slot0._simageicon = gohelper.findChild(slot0._iconGo, "#simage_icon"):GetComponent(typeof(uv1))
-	slot0._centerGo = gohelper.findChild(slot0._Middle, "#go_center")
-	slot0._centerTrans = slot0._centerGo.transform
-	slot0._dragGo = gohelper.findChild(slot0._centerGo, "#go_drag")
-	slot0._firstGo = gohelper.findChild(slot0._Middle, "first")
-	slot0._dec2Go = gohelper.findChild(slot0._firstGo, "dec2")
-	slot0._rudderTran = slot0._dec2Go.transform
-	slot0._firstAnimPlayer = uv2.Get(slot0._firstGo)
-	slot0._firstAnimator = slot0._firstAnimPlayer.animator
-	slot0._iconAnimPlayer = uv2.Get(slot0._iconGo)
-	slot0._iconAnimator = slot0._iconAnimPlayer.animator
-	slot0._firstAnimator.enabled = false
-	slot0._dragEnabled = false
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._drag = UIDragListenerHelper.New()
+	arg_4_0._draggedState = var_0_1
+	arg_4_0._needWaitCount = 0
+	arg_4_0._iconGo = gohelper.findChild(arg_4_0._Middle, "#icon")
+	arg_4_0._simageicon = gohelper.findChild(arg_4_0._iconGo, "#simage_icon"):GetComponent(typeof(var_0_6))
+	arg_4_0._centerGo = gohelper.findChild(arg_4_0._Middle, "#go_center")
+	arg_4_0._centerTrans = arg_4_0._centerGo.transform
+	arg_4_0._dragGo = gohelper.findChild(arg_4_0._centerGo, "#go_drag")
+	arg_4_0._firstGo = gohelper.findChild(arg_4_0._Middle, "first")
+	arg_4_0._dec2Go = gohelper.findChild(arg_4_0._firstGo, "dec2")
+	arg_4_0._rudderTran = arg_4_0._dec2Go.transform
+	arg_4_0._firstAnimPlayer = var_0_4.Get(arg_4_0._firstGo)
+	arg_4_0._firstAnimator = arg_4_0._firstAnimPlayer.animator
+	arg_4_0._iconAnimPlayer = var_0_4.Get(arg_4_0._iconGo)
+	arg_4_0._iconAnimator = arg_4_0._iconAnimPlayer.animator
+	arg_4_0._firstAnimator.enabled = false
+	arg_4_0._dragEnabled = false
 
-	slot0:_setActive_drag(true)
+	arg_4_0:_setActive_drag(true)
 end
 
-function slot0.onDestroyView(slot0)
-	GameUtil.onDestroyViewMember_TweenId(slot0, "_tweener")
-	GameUtil.onDestroyViewMember(slot0, "_drag")
+function var_0_0.onDestroyView(arg_5_0)
+	GameUtil.onDestroyViewMember_TweenId(arg_5_0, "_tweener")
+	GameUtil.onDestroyViewMember(arg_5_0, "_drag")
 end
 
-function slot0.onDataUpdateFirst(slot0)
-	slot0._draggedState = slot0:_checkIsDone() and uv0 or uv1
+function var_0_0.onDataUpdateFirst(arg_6_0)
+	local var_6_0 = arg_6_0:_checkIsDone()
 
-	slot0._drag:create(slot0._dragGo)
-	slot0._drag:registerCallback(slot0._drag.EventBegin, slot0._onDragBegin, slot0)
-	slot0._drag:registerCallback(slot0._drag.EventDragging, slot0._onDrag, slot0)
-	slot0._drag:registerCallback(slot0._drag.EventEnd, slot0._onDragEnd, slot0)
+	arg_6_0._draggedState = var_6_0 and var_0_2 or var_0_1
 
-	slot0._centerScreenPosV2 = recthelper.uiPosToScreenPos(slot0._centerTrans)
+	arg_6_0._drag:create(arg_6_0._dragGo)
+	arg_6_0._drag:registerCallback(arg_6_0._drag.EventBegin, arg_6_0._onDragBegin, arg_6_0)
+	arg_6_0._drag:registerCallback(arg_6_0._drag.EventDragging, arg_6_0._onDrag, arg_6_0)
+	arg_6_0._drag:registerCallback(arg_6_0._drag.EventEnd, arg_6_0._onDragEnd, arg_6_0)
 
-	slot0:_setActive_icon(slot1)
-	slot0:_setActive_rudder(not slot1)
+	arg_6_0._centerScreenPosV2 = recthelper.uiPosToScreenPos(arg_6_0._centerTrans)
+
+	arg_6_0:_setActive_icon(var_6_0)
+	arg_6_0:_setActive_rudder(not var_6_0)
 end
 
-function slot0.onDataUpdate(slot0)
-	slot0._hasDraggedAngle = 0
+function var_0_0.onDataUpdate(arg_7_0)
+	arg_7_0._hasDraggedAngle = 0
 
-	slot0:_refresh()
+	arg_7_0:_refresh()
 end
 
-function slot0.onSwitchEpisode(slot0)
-	if slot0._draggedState == uv0 and not slot0:_checkIsDone() then
-		slot0._draggedState = uv1 - 1
-	elseif slot0._draggedState < uv1 and slot1 then
-		slot0._draggedState = uv0
+function var_0_0.onSwitchEpisode(arg_8_0)
+	local var_8_0 = arg_8_0:_checkIsDone()
+
+	if arg_8_0._draggedState == var_0_2 and not var_8_0 then
+		arg_8_0._draggedState = var_0_1 - 1
+	elseif arg_8_0._draggedState < var_0_1 and var_8_0 then
+		arg_8_0._draggedState = var_0_2
 	end
 
-	slot0._hasDraggedAngle = 0
+	arg_8_0._hasDraggedAngle = 0
 
-	slot0:_refresh()
+	arg_8_0:_refresh()
 end
 
-function slot0._episodeId(slot0)
-	return slot0.viewContainer:getCurSelectedEpisode()
+function var_0_0._episodeId(arg_9_0)
+	return arg_9_0.viewContainer:getCurSelectedEpisode()
 end
 
-function slot0._getImgResUrl(slot0, slot1)
-	return slot0.viewContainer:getImgResUrl(slot0:_episode2Index(slot1))
+function var_0_0._getImgResUrl(arg_10_0, arg_10_1)
+	local var_10_0 = arg_10_0:_episode2Index(arg_10_1)
+
+	return arg_10_0.viewContainer:getImgResUrl(var_10_0)
 end
 
-function slot0._episode2Index(slot0, slot1)
-	return slot0.viewContainer:episode2Index(slot1 or slot0:_episodeId())
+function var_0_0._episode2Index(arg_11_0, arg_11_1)
+	return arg_11_0.viewContainer:episode2Index(arg_11_1 or arg_11_0:_episodeId())
 end
 
-function slot0._checkIsDone(slot0, slot1)
-	return slot0.viewContainer:checkIsDone(slot1 or slot0:_episodeId())
+function var_0_0._checkIsDone(arg_12_0, arg_12_1)
+	return arg_12_0.viewContainer:checkIsDone(arg_12_1 or arg_12_0:_episodeId())
 end
 
-function slot0._saveStateDone(slot0, slot1, slot2)
-	slot0.viewContainer:saveStateDone(slot2 or slot0:_episodeId(), slot1)
+function var_0_0._saveStateDone(arg_13_0, arg_13_1, arg_13_2)
+	arg_13_0.viewContainer:saveStateDone(arg_13_2 or arg_13_0:_episodeId(), arg_13_1)
 end
 
-function slot0._saveState(slot0, slot1, slot2)
-	assert(slot1 ~= 1999, "please call _saveStateDone instead")
-	slot0.viewContainer:saveState(slot2 or slot0:_episodeId(), slot1)
+function var_0_0._saveState(arg_14_0, arg_14_1, arg_14_2)
+	assert(arg_14_1 ~= 1999, "please call _saveStateDone instead")
+	arg_14_0.viewContainer:saveState(arg_14_2 or arg_14_0:_episodeId(), arg_14_1)
 end
 
-function slot0._getState(slot0, slot1, slot2)
-	return slot0.viewContainer:getState(slot2 or slot0:_episodeId(), slot1)
+function var_0_0._getState(arg_15_0, arg_15_1, arg_15_2)
+	return arg_15_0.viewContainer:getState(arg_15_2 or arg_15_0:_episodeId(), arg_15_1)
 end
 
-function slot0._setActive_drag(slot0, slot1)
-	gohelper.setActive(slot0._dragGo, slot1)
+function var_0_0._setActive_drag(arg_16_0, arg_16_1)
+	gohelper.setActive(arg_16_0._dragGo, arg_16_1)
 end
 
-function slot0._setActive_guide(slot0, slot1)
+function var_0_0._setActive_guide(arg_17_0, arg_17_1)
+	return
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_18_0)
+	return
 end
 
-function slot0.onClose(slot0)
-	slot0:_clearFrameTimer()
-	GameUtil.onDestroyViewMember_TweenId(slot0, "_tweener")
+function var_0_0.onClose(arg_19_0)
+	arg_19_0:_clearFrameTimer()
+	GameUtil.onDestroyViewMember_TweenId(arg_19_0, "_tweener")
 end
 
-function slot0._refresh(slot0)
-	slot2 = slot0:_checkIsDone()
+function var_0_0._refresh(arg_20_0)
+	local var_20_0 = arg_20_0:_episodeId()
+	local var_20_1 = arg_20_0:_checkIsDone()
 
-	slot0:_loadImage(slot0:_episodeId())
-	slot0:_setActive_icon(slot2)
-	slot0:_setActive_rudder(not slot2)
-	slot0:_setActive_guide(not slot2 and slot0._draggedState <= uv0)
+	arg_20_0:_loadImage(var_20_0)
+	arg_20_0:_setActive_icon(var_20_1)
+	arg_20_0:_setActive_rudder(not var_20_1)
+	arg_20_0:_setActive_guide(not var_20_1 and arg_20_0._draggedState <= var_0_1)
 
-	if slot2 then
-		slot0._dragEnabled = false
-	elseif slot0:_getState() == 0 then
-		slot0._dragEnabled = true
-
-		slot0:_playAnim_Rudder_idle()
-	elseif uv1.DraggedDone == slot3 then
-		slot0._dragEnabled = false
-
-		slot0:_playAnim_Rudder_click()
+	if var_20_1 then
+		arg_20_0._dragEnabled = false
 	else
-		logError("[V2a3_WarmUpLeftView] invalid state:" .. slot3)
+		local var_20_2 = arg_20_0:_getState()
+
+		if var_20_2 == 0 then
+			arg_20_0._dragEnabled = true
+
+			arg_20_0:_playAnim_Rudder_idle()
+		elseif var_0_7.DraggedDone == var_20_2 then
+			arg_20_0._dragEnabled = false
+
+			arg_20_0:_playAnim_Rudder_click()
+		else
+			logError("[V2a3_WarmUpLeftView] invalid state:" .. var_20_2)
+		end
 	end
 end
 
-function slot0._getImgRes(slot0, slot1)
-	return slot0.viewContainer:getRes(slot0:_getImgResUrl(slot1))
+function var_0_0._getImgRes(arg_21_0, arg_21_1)
+	local var_21_0 = arg_21_0:_getImgResUrl(arg_21_1)
+
+	return arg_21_0.viewContainer:getRes(var_21_0)
 end
 
-function slot0._loadImage(slot0, slot1)
-	slot0._simageicon.texture = slot0:_getImgRes(slot1)
+function var_0_0._loadImage(arg_22_0, arg_22_1)
+	local var_22_0 = arg_22_0:_getImgRes(arg_22_1)
 
-	slot0._simageicon:SetMaterialDirty()
+	arg_22_0._simageicon.texture = var_22_0
+
+	arg_22_0._simageicon:SetMaterialDirty()
 end
 
-function slot0._setActive_icon(slot0, slot1)
-	gohelper.setActive(slot0._iconGo, slot1)
+function var_0_0._setActive_icon(arg_23_0, arg_23_1)
+	gohelper.setActive(arg_23_0._iconGo, arg_23_1)
 end
 
-function slot0._setActive_rudder(slot0, slot1)
-	gohelper.setActive(slot0._firstGo, slot1)
+function var_0_0._setActive_rudder(arg_24_0, arg_24_1)
+	gohelper.setActive(arg_24_0._firstGo, arg_24_1)
 end
 
-function slot0._canDrag(slot0)
-	return slot0._dragEnabled
+function var_0_0._canDrag(arg_25_0)
+	return arg_25_0._dragEnabled
 end
 
-function slot0._onDragBegin(slot0)
-	slot0:_clearFrameTimer()
+function var_0_0._onDragBegin(arg_26_0)
+	arg_26_0:_clearFrameTimer()
 
-	if not slot0:_canDrag() then
+	if not arg_26_0:_canDrag() then
 		return
 	end
 
-	slot0:_setActive_guide(false)
+	arg_26_0:_setActive_guide(false)
 
-	slot0._draggedState = uv0
+	arg_26_0._draggedState = var_0_3
 end
 
-slot8 = 240
+local var_0_8 = 240
 
-function slot0._onDrag(slot0, slot1)
-	if not slot0:_canDrag() then
+function var_0_0._onDrag(arg_27_0, arg_27_1)
+	if not arg_27_0:_canDrag() then
 		return
 	end
 
-	slot0._hasDraggedAngle = slot0._hasDraggedAngle or 0
-	slot2, slot3, slot4 = slot1:quaternionToMouse(slot0._rudderTran, slot0._centerScreenPosV2)
+	arg_27_0._hasDraggedAngle = arg_27_0._hasDraggedAngle or 0
 
-	if slot4 then
+	local var_27_0, var_27_1, var_27_2 = arg_27_1:quaternionToMouse(arg_27_0._rudderTran, arg_27_0._centerScreenPosV2)
+
+	if var_27_2 then
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_shenghuo_rudder_turn_loop_20234004)
-		slot0:_createFTimer()
+		arg_27_0:_createFTimer()
 
-		slot0._rudderTran.rotation = slot0._rudderTran.rotation * slot2
-		slot0._hasDraggedAngle = slot0._hasDraggedAngle + slot3
+		arg_27_0._rudderTran.rotation = arg_27_0._rudderTran.rotation * var_27_0
+		arg_27_0._hasDraggedAngle = arg_27_0._hasDraggedAngle + var_27_1
 	end
 
-	if uv0 <= slot0._hasDraggedAngle then
-		slot0._dragEnabled = false
+	if arg_27_0._hasDraggedAngle >= var_0_8 then
+		arg_27_0._dragEnabled = false
 
-		slot0:_saveState(uv1.DraggedDone)
+		arg_27_0:_saveState(var_0_7.DraggedDone)
 		AudioMgr.instance:trigger(AudioEnum.UI.stop_ui_shenghuo_rudder_turn_loop_20234005)
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_shenghuo_rudder_reset_20234006)
-		slot0:_playAnim_Rudder_click()
+		arg_27_0:_playAnim_Rudder_click()
 	end
 end
 
-function slot0._onDragEnd(slot0)
-	slot0:_clearFrameTimer()
+function var_0_0._onDragEnd(arg_28_0)
+	arg_28_0:_clearFrameTimer()
 	AudioMgr.instance:trigger(AudioEnum.UI.stop_ui_shenghuo_rudder_turn_loop_20234005)
 
-	if not slot0:_canDrag() then
+	if not arg_28_0:_canDrag() then
 		return
 	end
 end
 
-function slot0._resetRudder(slot0, slot1, slot2, slot3)
-	GameUtil.onDestroyViewMember_TweenId(slot0, "_tweener")
+function var_0_0._resetRudder(arg_29_0, arg_29_1, arg_29_2, arg_29_3)
+	arg_29_1 = arg_29_1 or 0.7
 
-	slot0._tweener = uv0.DOLocalRotate(slot0._rudderTran, 0, 0, 0, slot1 or 0.7, slot2, slot3, nil, EaseType.OutCirc)
+	GameUtil.onDestroyViewMember_TweenId(arg_29_0, "_tweener")
+
+	arg_29_0._tweener = var_0_5.DOLocalRotate(arg_29_0._rudderTran, 0, 0, 0, arg_29_1, arg_29_2, arg_29_3, nil, EaseType.OutCirc)
 end
 
-function slot0._playAnim_Rudder(slot0, slot1, slot2, slot3)
-	slot0._firstAnimator.enabled = true
+function var_0_0._playAnim_Rudder(arg_30_0, arg_30_1, arg_30_2, arg_30_3)
+	arg_30_0._firstAnimator.enabled = true
 
-	slot0._firstAnimPlayer:Play(slot1, slot2, slot3)
+	arg_30_0._firstAnimPlayer:Play(arg_30_1, arg_30_2, arg_30_3)
 end
 
-function slot0._playAnim_Icon(slot0, slot1, slot2, slot3)
-	slot0:_setActive_icon(true)
+function var_0_0._playAnim_Icon(arg_31_0, arg_31_1, arg_31_2, arg_31_3)
+	arg_31_0:_setActive_icon(true)
 
-	slot0._iconAnimator.enabled = true
+	arg_31_0._iconAnimator.enabled = true
 
-	slot0._iconAnimPlayer:Play(slot1, slot2, slot3)
+	arg_31_0._iconAnimPlayer:Play(arg_31_1, arg_31_2, arg_31_3)
 end
 
-function slot0._playAnim_Rudder_idle(slot0)
-	slot0._firstAnimator.enabled = true
+function var_0_0._playAnim_Rudder_idle(arg_32_0)
+	arg_32_0._firstAnimator.enabled = true
 
-	slot0._firstAnimator:Play(UIAnimationName.Idle, 0, 1)
-	slot0._firstAnimator:Update(0)
+	arg_32_0._firstAnimator:Play(UIAnimationName.Idle, 0, 1)
+	arg_32_0._firstAnimator:Update(0)
 
-	slot0._firstAnimator.enabled = false
+	arg_32_0._firstAnimator.enabled = false
 end
 
-function slot0._playAnim_Rudder_click(slot0)
-	slot0:_playAnim_Rudder(UIAnimationName.Click, slot0._onAfterClickAnim, slot0)
+function var_0_0._playAnim_Rudder_click(arg_33_0)
+	arg_33_0:_playAnim_Rudder(UIAnimationName.Click, arg_33_0._onAfterClickAnim, arg_33_0)
 end
 
-function slot0._onAfterClickAnim(slot0)
-	slot0._needWaitCount = 2
+function var_0_0._onAfterClickAnim(arg_34_0)
+	arg_34_0._needWaitCount = 2
 
-	slot0:_playAnim_Rudder(UIAnimationName.Close, slot0._onFinishAnim, slot0)
-	slot0:_playAnim_Icon(UIAnimationName.In, slot0._onFinishAnim, slot0)
+	arg_34_0:_playAnim_Rudder(UIAnimationName.Close, arg_34_0._onFinishAnim, arg_34_0)
+	arg_34_0:_playAnim_Icon(UIAnimationName.In, arg_34_0._onFinishAnim, arg_34_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_taskinterface_2000011)
 end
 
-function slot0._onFinishAnim(slot0)
-	slot0._needWaitCount = slot0._needWaitCount - 1
+function var_0_0._onFinishAnim(arg_35_0)
+	arg_35_0._needWaitCount = arg_35_0._needWaitCount - 1
 
-	if slot0._needWaitCount > 0 then
+	if arg_35_0._needWaitCount > 0 then
 		return
 	end
 
-	slot0:_saveStateDone(true)
-	slot0.viewContainer:openDesc()
+	arg_35_0:_saveStateDone(true)
+	arg_35_0.viewContainer:openDesc()
 end
 
-slot9 = 3
-slot10 = 1e-06
+local var_0_9 = 3
+local var_0_10 = 1e-06
 
-function slot0._checkIsDragging(slot0)
-	if slot0._checkDraggingCount == uv0 then
-		slot0:_clearFrameTimer()
-	elseif slot0._checkDraggingCount < uv0 then
-		slot0._checkDraggingCount = math.abs(slot0._lastDraggedAngle - slot0._hasDraggedAngle) < uv1 and slot0._checkDraggingCount + 1 or 0
-		slot0._lastDraggedAngle = slot0._hasDraggedAngle
+function var_0_0._checkIsDragging(arg_36_0)
+	if arg_36_0._checkDraggingCount == var_0_9 then
+		arg_36_0:_clearFrameTimer()
+	elseif arg_36_0._checkDraggingCount < var_0_9 then
+		arg_36_0._checkDraggingCount = math.abs(arg_36_0._lastDraggedAngle - arg_36_0._hasDraggedAngle) < var_0_10 and arg_36_0._checkDraggingCount + 1 or 0
+		arg_36_0._lastDraggedAngle = arg_36_0._hasDraggedAngle
 	end
 end
 
-function slot0._createFTimer(slot0)
-	if not slot0._fTimer then
-		slot0._fTimer = FrameTimerController.instance:register(slot0._checkIsDragging, slot0, 3, 9)
+function var_0_0._createFTimer(arg_37_0)
+	if not arg_37_0._fTimer then
+		arg_37_0._fTimer = FrameTimerController.instance:register(arg_37_0._checkIsDragging, arg_37_0, 3, 9)
 
-		slot0._fTimer:Start()
+		arg_37_0._fTimer:Start()
 	end
 end
 
-function slot0._clearFrameTimer(slot0)
+function var_0_0._clearFrameTimer(arg_38_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.stop_ui_shenghuo_rudder_turn_loop_20234005)
-	FrameTimerController.onDestroyViewMember(slot0, "_fTimer")
+	FrameTimerController.onDestroyViewMember(arg_38_0, "_fTimer")
 
-	slot0._checkDraggingCount = 0
-	slot0._lastDraggedAngle = slot0._hasDraggedAngle
+	arg_38_0._checkDraggingCount = 0
+	arg_38_0._lastDraggedAngle = arg_38_0._hasDraggedAngle
 end
 
-return slot0
+return var_0_0

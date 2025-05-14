@@ -1,27 +1,29 @@
-module("modules.logic.fight.controller.FightConditionTargetHelper", package.seeall)
+﻿module("modules.logic.fight.controller.FightConditionTargetHelper", package.seeall)
 
-slot0 = _M
+local var_0_0 = _M
 
-function slot0.initConditionTargetHandle()
-	if not uv0.ConditionTargetHandle then
-		uv0.ConditionTargetHandle = {
-			[FightEnum.ConditionTarget.Self] = uv0.getSelfConditionTarget
+function var_0_0.initConditionTargetHandle()
+	if not var_0_0.ConditionTargetHandle then
+		var_0_0.ConditionTargetHandle = {
+			[FightEnum.ConditionTarget.Self] = var_0_0.getSelfConditionTarget
 		}
 	end
 end
 
-function slot0.getTarget(slot0, slot1, slot2)
-	uv0.initConditionTargetHandle()
+function var_0_0.getTarget(arg_2_0, arg_2_1, arg_2_2)
+	var_0_0.initConditionTargetHandle()
 
-	if uv0.ConditionTargetHandle[slot0] then
-		return slot3(slot0, slot1, slot2)
+	local var_2_0 = var_0_0.ConditionTargetHandle[arg_2_0]
+
+	if var_2_0 then
+		return var_2_0(arg_2_0, arg_2_1, arg_2_2)
 	end
 
-	return slot2
+	return arg_2_2
 end
 
-function slot0.getSelfConditionTarget(slot0, slot1, slot2)
-	return slot1
+function var_0_0.getSelfConditionTarget(arg_3_0, arg_3_1, arg_3_2)
+	return arg_3_1
 end
 
-return slot0
+return var_0_0

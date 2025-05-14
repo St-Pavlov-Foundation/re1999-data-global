@@ -1,75 +1,80 @@
-module("modules.logic.fight.view.assistboss.FightAssistBoss3", package.seeall)
+﻿module("modules.logic.fight.view.assistboss.FightAssistBoss3", package.seeall)
 
-slot0 = class("FightAssistBoss3", FightAssistBossBase)
+local var_0_0 = class("FightAssistBoss3", FightAssistBossBase)
 
-function slot0.setPrefabPath(slot0)
-	slot0.prefabPath = "ui/viewres/assistboss/boss3.prefab"
+function var_0_0.setPrefabPath(arg_1_0)
+	arg_1_0.prefabPath = "ui/viewres/assistboss/boss3.prefab"
 end
 
-function slot0.initView(slot0)
-	uv0.super.initView(slot0)
+function var_0_0.initView(arg_2_0)
+	var_0_0.super.initView(arg_2_0)
 
-	slot0.goStage1 = gohelper.findChild(slot0.viewGo, "head/stage1")
-	slot0.goStage2 = gohelper.findChild(slot0.viewGo, "head/stage2")
-	slot0.goStage3 = gohelper.findChild(slot0.viewGo, "head/stage3")
-	slot0.stageList = slot0:getUserDataTb_()
-	slot0.stageList[1] = slot0.goStage1
-	slot0.stageList[2] = slot0.goStage2
-	slot0.stageList[3] = slot0.goStage3
-	slot0.goEnergy3 = gohelper.findChild(slot0.viewGo, "energy_3")
-	slot0.goEnergy4 = gohelper.findChild(slot0.viewGo, "energy_4")
-	slot0.imageEnergy3 = gohelper.findChildImage(slot0.viewGo, "energy_3/go_energy")
-	slot0.imageEnergy4 = gohelper.findChildImage(slot0.viewGo, "energy_4/go_energy")
+	arg_2_0.goStage1 = gohelper.findChild(arg_2_0.viewGo, "head/stage1")
+	arg_2_0.goStage2 = gohelper.findChild(arg_2_0.viewGo, "head/stage2")
+	arg_2_0.goStage3 = gohelper.findChild(arg_2_0.viewGo, "head/stage3")
+	arg_2_0.stageList = arg_2_0:getUserDataTb_()
+	arg_2_0.stageList[1] = arg_2_0.goStage1
+	arg_2_0.stageList[2] = arg_2_0.goStage2
+	arg_2_0.stageList[3] = arg_2_0.goStage3
+	arg_2_0.goEnergy3 = gohelper.findChild(arg_2_0.viewGo, "energy_3")
+	arg_2_0.goEnergy4 = gohelper.findChild(arg_2_0.viewGo, "energy_4")
+	arg_2_0.imageEnergy3 = gohelper.findChildImage(arg_2_0.viewGo, "energy_3/go_energy")
+	arg_2_0.imageEnergy4 = gohelper.findChildImage(arg_2_0.viewGo, "energy_4/go_energy")
 end
 
-function slot0.addEvents(slot0)
-	uv0.super.addEvents(slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.OnSwitchAssistBossSkill, slot0.onSwitchAssistBossSkill, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.OnSwitchAssistBossSpine, slot0.onSwitchAssistBossSpine, slot0)
+function var_0_0.addEvents(arg_3_0)
+	var_0_0.super.addEvents(arg_3_0)
+	arg_3_0:addEventCb(FightController.instance, FightEvent.OnSwitchAssistBossSkill, arg_3_0.onSwitchAssistBossSkill, arg_3_0)
+	arg_3_0:addEventCb(FightController.instance, FightEvent.OnSwitchAssistBossSpine, arg_3_0.onSwitchAssistBossSpine, arg_3_0)
 end
 
-function slot0.refreshUI(slot0)
-	uv0.super.refreshUI(slot0)
-	slot0:refreshEnergyType()
+function var_0_0.refreshUI(arg_4_0)
+	var_0_0.super.refreshUI(arg_4_0)
+	arg_4_0:refreshEnergyType()
 end
 
-function slot0.refreshEnergyType(slot0)
-	gohelper.setActive(slot0.goEnergy3, #FightDataHelper.paTaMgr:getBossSkillInfoList() == 3)
-	gohelper.setActive(slot0.goEnergy4, slot2 == 4)
+function var_0_0.refreshEnergyType(arg_5_0)
+	local var_5_0 = #FightDataHelper.paTaMgr:getBossSkillInfoList()
+
+	gohelper.setActive(arg_5_0.goEnergy3, var_5_0 == 3)
+	gohelper.setActive(arg_5_0.goEnergy4, var_5_0 == 4)
 end
 
-function slot0.onSwitchAssistBossSkill(slot0)
-	slot0:refreshEnergyType()
-	slot0:refreshPower()
-	slot0:refreshCD()
+function var_0_0.onSwitchAssistBossSkill(arg_6_0)
+	arg_6_0:refreshEnergyType()
+	arg_6_0:refreshPower()
+	arg_6_0:refreshCD()
 end
 
-slot0.StageThresholdValue1 = 25
-slot0.StageThresholdValue2 = 50
-slot0.StageThresholdValue3 = 100
+var_0_0.StageThresholdValue1 = 25
+var_0_0.StageThresholdValue2 = 50
+var_0_0.StageThresholdValue3 = 100
 
-function slot0.refreshPower(slot0)
-	uv0.super.refreshPower(slot0)
+function var_0_0.refreshPower(arg_7_0)
+	var_0_0.super.refreshPower(arg_7_0)
 
-	slot3 = slot0.imageEnergy3
+	local var_7_0 = FightDataHelper.paTaMgr:getBossSkillInfoList()
+	local var_7_1 = var_7_0 and #var_7_0
+	local var_7_2 = arg_7_0.imageEnergy3
 
-	if (FightDataHelper.paTaMgr:getBossSkillInfoList() and #slot1) == 4 then
-		slot3 = slot0.imageEnergy4
+	if var_7_1 == 4 then
+		var_7_2 = arg_7_0.imageEnergy4
 	end
 
-	slot4, slot5 = FightDataHelper.paTaMgr:getAssistBossPower()
+	local var_7_3, var_7_4 = FightDataHelper.paTaMgr:getAssistBossPower()
 
-	slot0:setFillAmount(slot3, slot4 / slot5)
+	arg_7_0:setFillAmount(var_7_2, var_7_3 / var_7_4)
 
-	slot6 = 0
+	local var_7_5 = 0
+	local var_7_6 = var_7_3 < var_0_0.StageThresholdValue1 and 0 or var_7_3 < var_0_0.StageThresholdValue2 and 1 or var_7_3 < var_0_0.StageThresholdValue3 and 2 or 3
 
-	for slot10, slot11 in ipairs(slot0.stageList) do
-		gohelper.setActive(slot11, slot10 == (slot4 < uv0.StageThresholdValue1 and 0 or slot4 < uv0.StageThresholdValue2 and 1 or slot4 < uv0.StageThresholdValue3 and 2 or 3))
+	for iter_7_0, iter_7_1 in ipairs(arg_7_0.stageList) do
+		gohelper.setActive(iter_7_1, iter_7_0 == var_7_6)
 	end
 end
 
-function slot0.onSwitchAssistBossSpine(slot0)
-	slot0:refreshHeadImage()
+function var_0_0.onSwitchAssistBossSpine(arg_8_0)
+	arg_8_0:refreshHeadImage()
 end
 
-return slot0
+return var_0_0

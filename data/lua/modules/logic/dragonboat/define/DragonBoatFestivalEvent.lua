@@ -1,7 +1,8 @@
-module("modules.logic.dragonboat.define.DragonBoatFestivalEvent", package.seeall)
+﻿module("modules.logic.dragonboat.define.DragonBoatFestivalEvent", package.seeall)
 
-slot0 = _M
-slot0.SelectItem = 1001
-slot0.ShowMapFinished = 1002
+local var_0_0 = _M
 
-return slot0
+var_0_0.SelectItem = 1001
+var_0_0.ShowMapFinished = 1002
+
+return var_0_0

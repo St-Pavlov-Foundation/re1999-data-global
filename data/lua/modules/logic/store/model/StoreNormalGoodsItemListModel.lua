@@ -1,103 +1,123 @@
-module("modules.logic.store.model.StoreNormalGoodsItemListModel", package.seeall)
+﻿module("modules.logic.store.model.StoreNormalGoodsItemListModel", package.seeall)
 
-slot0 = class("StoreNormalGoodsItemListModel", ListScrollModel)
+local var_0_0 = class("StoreNormalGoodsItemListModel", ListScrollModel)
 
-function slot0.setMOList(slot0, slot1, slot2)
-	slot0._moList = {}
+function var_0_0.setMOList(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0._moList = {}
 
-	if slot2 then
-		for slot7, slot8 in ipairs(FurnaceTreasureModel.instance:getGoodsListByStoreId(slot2)) do
-			if FurnaceTreasureModel.instance:getGoodsRemainCount(slot2, slot8) and slot9 > 0 then
-				slot11 = StoreGoodsMO.New()
+	if arg_1_2 then
+		local var_1_0 = FurnaceTreasureModel.instance:getGoodsListByStoreId(arg_1_2)
 
-				slot11:intiActGoods(slot2, slot8, FurnaceTreasureModel.instance:getGoodsPoolId(slot2, slot8))
+		for iter_1_0, iter_1_1 in ipairs(var_1_0) do
+			local var_1_1 = FurnaceTreasureModel.instance:getGoodsRemainCount(arg_1_2, iter_1_1)
 
-				slot0._moList[#slot0._moList + 1] = slot11
+			if var_1_1 and var_1_1 > 0 then
+				local var_1_2 = FurnaceTreasureModel.instance:getGoodsPoolId(arg_1_2, iter_1_1)
+				local var_1_3 = StoreGoodsMO.New()
+
+				var_1_3:intiActGoods(arg_1_2, iter_1_1, var_1_2)
+
+				arg_1_0._moList[#arg_1_0._moList + 1] = var_1_3
 			end
 		end
 	end
 
-	if slot1 then
-		for slot6, slot7 in pairs(slot1) do
-			table.insert(slot0._moList, slot7)
+	if arg_1_1 then
+		for iter_1_2, iter_1_3 in pairs(arg_1_1) do
+			table.insert(arg_1_0._moList, iter_1_3)
 		end
 	end
 
-	if #slot0._moList > 1 then
-		table.sort(slot0._moList, slot0._sortFunction)
+	if #arg_1_0._moList > 1 then
+		table.sort(arg_1_0._moList, arg_1_0._sortFunction)
 	end
 
-	slot0:setList(slot0._moList)
+	arg_1_0:setList(arg_1_0._moList)
 end
 
-function slot0._sortFunction(slot0, slot1)
-	if slot0:getIsActGoods() ~= slot1:getIsActGoods() then
-		return slot2
+function var_0_0._sortFunction(arg_2_0, arg_2_1)
+	local var_2_0 = arg_2_0:getIsActGoods()
+
+	if var_2_0 ~= arg_2_1:getIsActGoods() then
+		return var_2_0
 	end
 
-	if slot2 then
-		return slot0:getActGoodsId() < slot1:getActGoodsId()
+	if var_2_0 then
+		return arg_2_0:getActGoodsId() < arg_2_1:getActGoodsId()
 	end
 
-	slot4 = StoreConfig.instance:getGoodsConfig(slot0.goodsId)
-	slot5 = StoreConfig.instance:getGoodsConfig(slot1.goodsId)
+	local var_2_1 = StoreConfig.instance:getGoodsConfig(arg_2_0.goodsId)
+	local var_2_2 = StoreConfig.instance:getGoodsConfig(arg_2_1.goodsId)
+	local var_2_3 = var_0_0._isStoreItemCountLimit(arg_2_0)
+	local var_2_4 = var_0_0._isStoreItemCountLimit(arg_2_1)
 
-	if uv0._isStoreItemCountLimit(slot0) and not uv0._isStoreItemCountLimit(slot1) then
+	if var_2_3 and not var_2_4 then
 		return false
-	elseif not slot6 and slot7 then
+	elseif not var_2_3 and var_2_4 then
 		return true
 	end
 
-	slot10 = uv0._isStoreItemUnlock(slot0.goodsId)
-	slot11 = uv0._isStoreItemUnlock(slot1.goodsId)
+	local var_2_5 = var_0_0._isStoreItemSoldOut(arg_2_0.goodsId)
+	local var_2_6 = var_0_0._isStoreItemSoldOut(arg_2_1.goodsId)
+	local var_2_7 = var_0_0._isStoreItemUnlock(arg_2_0.goodsId)
+	local var_2_8 = var_0_0._isStoreItemUnlock(arg_2_1.goodsId)
 
-	if not uv0._isStoreItemSoldOut(slot0.goodsId) and uv0._isStoreItemSoldOut(slot1.goodsId) then
+	if not var_2_5 and var_2_6 then
 		return true
-	elseif slot8 and not slot9 then
+	elseif var_2_5 and not var_2_6 then
 		return false
 	end
 
-	if slot0:alreadyHas() ~= slot1:alreadyHas() then
-		return slot13
+	local var_2_9 = arg_2_0:alreadyHas()
+	local var_2_10 = arg_2_1:alreadyHas()
+
+	if var_2_9 ~= var_2_10 then
+		return var_2_10
 	end
 
-	if slot10 and not slot11 then
+	if var_2_7 and not var_2_8 then
 		return true
-	elseif not slot10 and slot11 then
+	elseif not var_2_7 and var_2_8 then
 		return false
 	end
 
-	if uv0.needWeekWalkLayerUnlock(slot0.goodsId) ~= uv0.needWeekWalkLayerUnlock(slot1.goodsId) then
-		if slot14 then
+	local var_2_11 = var_0_0.needWeekWalkLayerUnlock(arg_2_0.goodsId)
+
+	if var_2_11 ~= var_0_0.needWeekWalkLayerUnlock(arg_2_1.goodsId) then
+		if var_2_11 then
 			return false
 		end
 
 		return true
 	end
 
-	if slot4.order < slot5.order then
+	if var_2_1.order < var_2_2.order then
 		return true
-	elseif slot5.order < slot4.order then
+	elseif var_2_1.order > var_2_2.order then
 		return false
 	end
 
-	if slot4.id < slot5.id then
+	if var_2_1.id < var_2_2.id then
 		return true
-	elseif slot5.id < slot4.id then
+	elseif var_2_1.id > var_2_2.id then
 		return false
 	end
 end
 
-function slot0._isStoreItemUnlock(slot0)
-	if not StoreConfig.instance:getGoodsConfig(slot0).needEpisodeId or slot1 == 0 then
+function var_0_0._isStoreItemUnlock(arg_3_0)
+	local var_3_0 = StoreConfig.instance:getGoodsConfig(arg_3_0).needEpisodeId
+
+	if not var_3_0 or var_3_0 == 0 then
 		return true
 	end
 
-	return DungeonModel.instance:hasPassLevelAndStory(slot1)
+	return DungeonModel.instance:hasPassLevelAndStory(var_3_0)
 end
 
-function slot0.needWeekWalkLayerUnlock(slot0)
-	if StoreConfig.instance:getGoodsConfig(slot0).needWeekwalkLayer <= 0 then
+function var_0_0.needWeekWalkLayerUnlock(arg_4_0)
+	local var_4_0 = StoreConfig.instance:getGoodsConfig(arg_4_0).needWeekwalkLayer
+
+	if var_4_0 <= 0 then
 		return false
 	end
 
@@ -105,25 +125,30 @@ function slot0.needWeekWalkLayerUnlock(slot0)
 		return true
 	end
 
-	return WeekWalkModel.instance:getMaxLayerId() < slot1
+	return var_4_0 > WeekWalkModel.instance:getMaxLayerId()
 end
 
-function slot0._isStoreItemSoldOut(slot0)
-	return StoreModel.instance:getGoodsMO(slot0):isSoldOut()
+function var_0_0._isStoreItemSoldOut(arg_5_0)
+	return StoreModel.instance:getGoodsMO(arg_5_0):isSoldOut()
 end
 
-function slot0._isStoreItemCountLimit(slot0)
-	if not slot0:getLimitSoldNum() or slot1 == 0 then
+function var_0_0._isStoreItemCountLimit(arg_6_0)
+	local var_6_0 = arg_6_0:getLimitSoldNum()
+
+	if not var_6_0 or var_6_0 == 0 then
 		return false
 	end
 
-	slot3 = GameUtil.splitString2(slot0.config.product, true)
+	local var_6_1 = arg_6_0.config.product
+	local var_6_2 = GameUtil.splitString2(var_6_1, true)
+	local var_6_3 = var_6_2[1][1]
+	local var_6_4 = var_6_2[1][2]
 
-	if slot3[1][1] == MaterialEnum.MaterialType.Equip then
-		return slot1 <= EquipModel.instance:getEquipQuantity(slot3[1][2])
+	if var_6_3 == MaterialEnum.MaterialType.Equip then
+		return var_6_0 <= EquipModel.instance:getEquipQuantity(var_6_4)
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

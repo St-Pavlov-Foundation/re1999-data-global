@@ -1,146 +1,157 @@
-module("modules.logic.versionactivity2_5.autochess.view.game.AutoChessGameView", package.seeall)
+﻿module("modules.logic.versionactivity2_5.autochess.view.game.AutoChessGameView", package.seeall)
 
-slot0 = class("AutoChessGameView", BaseView)
+local var_0_0 = class("AutoChessGameView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gotouch = gohelper.findChild(slot0.viewGO, "UI/#go_touch")
-	slot0._goFightRoot = gohelper.findChild(slot0.viewGO, "UI/#go_FightRoot")
-	slot0._btnStop = gohelper.findChildButtonWithAudio(slot0.viewGO, "UI/#go_FightRoot/#btn_Stop")
-	slot0._btnResume = gohelper.findChildButtonWithAudio(slot0.viewGO, "UI/#go_FightRoot/#btn_Resume")
-	slot0._btnSkip = gohelper.findChildButtonWithAudio(slot0.viewGO, "UI/#go_FightRoot/#btn_Skip")
-	slot0._goScoreTarget = gohelper.findChild(slot0.viewGO, "UI/#go_ScoreTarget")
-	slot0._goLight1 = gohelper.findChild(slot0.viewGO, "UI/#go_ScoreTarget/icon/#go_Light1")
-	slot0._goLight2 = gohelper.findChild(slot0.viewGO, "UI/#go_ScoreTarget/icon1/#go_Light2")
-	slot0._goLight3 = gohelper.findChild(slot0.viewGO, "UI/#go_ScoreTarget/icon2/#go_Light3")
-	slot0._txtScoreTarget = gohelper.findChildText(slot0.viewGO, "UI/#go_ScoreTarget/#txt_ScoreTarget")
-	slot0._goDamageTip = gohelper.findChild(slot0.viewGO, "UI/#go_DamageTip")
-	slot0._txtDamageTip = gohelper.findChildText(slot0.viewGO, "UI/#go_DamageTip/#txt_DamageTip")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gotouch = gohelper.findChild(arg_1_0.viewGO, "UI/#go_touch")
+	arg_1_0._goFightRoot = gohelper.findChild(arg_1_0.viewGO, "UI/#go_FightRoot")
+	arg_1_0._btnStop = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "UI/#go_FightRoot/#btn_Stop")
+	arg_1_0._btnResume = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "UI/#go_FightRoot/#btn_Resume")
+	arg_1_0._btnSkip = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "UI/#go_FightRoot/#btn_Skip")
+	arg_1_0._goScoreTarget = gohelper.findChild(arg_1_0.viewGO, "UI/#go_ScoreTarget")
+	arg_1_0._goLight1 = gohelper.findChild(arg_1_0.viewGO, "UI/#go_ScoreTarget/icon/#go_Light1")
+	arg_1_0._goLight2 = gohelper.findChild(arg_1_0.viewGO, "UI/#go_ScoreTarget/icon1/#go_Light2")
+	arg_1_0._goLight3 = gohelper.findChild(arg_1_0.viewGO, "UI/#go_ScoreTarget/icon2/#go_Light3")
+	arg_1_0._txtScoreTarget = gohelper.findChildText(arg_1_0.viewGO, "UI/#go_ScoreTarget/#txt_ScoreTarget")
+	arg_1_0._goDamageTip = gohelper.findChild(arg_1_0.viewGO, "UI/#go_DamageTip")
+	arg_1_0._txtDamageTip = gohelper.findChildText(arg_1_0.viewGO, "UI/#go_DamageTip/#txt_DamageTip")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnStop:AddClickListener(slot0._btnStopOnClick, slot0)
-	slot0._btnResume:AddClickListener(slot0._btnResumeOnClick, slot0)
-	slot0._btnSkip:AddClickListener(slot0._btnSkipOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnStop:AddClickListener(arg_2_0._btnStopOnClick, arg_2_0)
+	arg_2_0._btnResume:AddClickListener(arg_2_0._btnResumeOnClick, arg_2_0)
+	arg_2_0._btnSkip:AddClickListener(arg_2_0._btnSkipOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnStop:RemoveClickListener()
-	slot0._btnResume:RemoveClickListener()
-	slot0._btnSkip:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnStop:RemoveClickListener()
+	arg_3_0._btnResume:RemoveClickListener()
+	arg_3_0._btnSkip:RemoveClickListener()
 end
 
-function slot0._onEscapeBtnClick(slot0)
+function var_0_0._onEscapeBtnClick(arg_4_0)
+	return
 end
 
-function slot0._btnResumeOnClick(slot0)
-	gohelper.setActive(slot0._btnStop, true)
-	gohelper.setActive(slot0._btnResume, false)
+function var_0_0._btnResumeOnClick(arg_5_0)
+	gohelper.setActive(arg_5_0._btnStop, true)
+	gohelper.setActive(arg_5_0._btnResume, false)
 	AutoChessController.instance:dispatchEvent(AutoChessEvent.StopFight, false)
 end
 
-function slot0._btnStopOnClick(slot0)
-	gohelper.setActive(slot0._btnStop, false)
-	gohelper.setActive(slot0._btnResume, true)
+function var_0_0._btnStopOnClick(arg_6_0)
+	gohelper.setActive(arg_6_0._btnStop, false)
+	gohelper.setActive(arg_6_0._btnResume, true)
 	AutoChessController.instance:dispatchEvent(AutoChessEvent.StopFight, true)
 end
 
-function slot0._btnSkipOnClick(slot0)
+function var_0_0._btnSkipOnClick(arg_7_0)
 	AutoChessController.instance:dispatchEvent(AutoChessEvent.SkipFight)
 end
 
-function slot0._editableInitView(slot0)
-	NavigateMgr.instance:addEscape(slot0.viewName, slot0._onEscapeBtnClick, slot0)
+function var_0_0._editableInitView(arg_8_0)
+	NavigateMgr.instance:addEscape(arg_8_0.viewName, arg_8_0._onEscapeBtnClick, arg_8_0)
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_9_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0:addEventCb(AutoChessController.instance, AutoChessEvent.StartFight, slot0.onStartFight, slot0)
-	slot0:addEventCb(AutoChessController.instance, AutoChessEvent.EndFight, slot0.onEndFight, slot0)
-	slot0:addEventCb(AutoChessController.instance, AutoChessEvent.NextRound, slot0.onNextRound, slot0)
-	slot0:addEventCb(AutoChessController.instance, AutoChessEvent.CheckEnemyTeam, slot0.onCheckEnemy, slot0)
+function var_0_0.onOpen(arg_10_0)
+	arg_10_0:addEventCb(AutoChessController.instance, AutoChessEvent.StartFight, arg_10_0.onStartFight, arg_10_0)
+	arg_10_0:addEventCb(AutoChessController.instance, AutoChessEvent.EndFight, arg_10_0.onEndFight, arg_10_0)
+	arg_10_0:addEventCb(AutoChessController.instance, AutoChessEvent.NextRound, arg_10_0.onNextRound, arg_10_0)
+	arg_10_0:addEventCb(AutoChessController.instance, AutoChessEvent.CheckEnemyTeam, arg_10_0.onCheckEnemy, arg_10_0)
 
-	slot0.chessMo = AutoChessModel.instance:getChessMo()
-	slot0.actId = Activity182Model.instance:getCurActId()
+	arg_10_0.chessMo = AutoChessModel.instance:getChessMo()
+	arg_10_0.actId = Activity182Model.instance:getCurActId()
 
-	slot0:refreshUI()
+	arg_10_0:refreshUI()
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_11_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	TaskDispatcher.cancelTask(slot0.delayShowFightRoot, slot0)
-	TaskDispatcher.cancelTask(slot0.delayLightStar, slot0)
+function var_0_0.onDestroyView(arg_12_0)
+	TaskDispatcher.cancelTask(arg_12_0.delayShowFightRoot, arg_12_0)
+	TaskDispatcher.cancelTask(arg_12_0.delayLightStar, arg_12_0)
 end
 
-function slot0.refreshUI(slot0)
-	gohelper.setActive(slot0._goLight1, false)
-	gohelper.setActive(slot0._goLight2, false)
-	gohelper.setActive(slot0._goLight3, false)
+function var_0_0.refreshUI(arg_13_0)
+	gohelper.setActive(arg_13_0._goLight1, false)
+	gohelper.setActive(arg_13_0._goLight2, false)
+	gohelper.setActive(arg_13_0._goLight3, false)
 
-	slot1 = lua_auto_chess_round.configDict[slot0.actId][slot0.chessMo.sceneRound]
-	slot2 = string.split(slot1.assess, "#")
-	slot0._txtScoreTarget.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("autochess_gameview_startarget"), string.format("%s/%s/%s", slot2[1], slot2[2], slot2[3]))
-	slot0._txtDamageTip.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("autochess_gameview_damagelimit"), slot1.maxdamage)
+	local var_13_0 = lua_auto_chess_round.configDict[arg_13_0.actId][arg_13_0.chessMo.sceneRound]
+	local var_13_1 = string.split(var_13_0.assess, "#")
+	local var_13_2 = string.format("%s/%s/%s", var_13_1[1], var_13_1[2], var_13_1[3])
+	local var_13_3 = luaLang("autochess_gameview_startarget")
+
+	arg_13_0._txtScoreTarget.text = GameUtil.getSubPlaceholderLuaLangOneParam(var_13_3, var_13_2)
+
+	local var_13_4 = luaLang("autochess_gameview_damagelimit")
+
+	arg_13_0._txtDamageTip.text = GameUtil.getSubPlaceholderLuaLangOneParam(var_13_4, var_13_0.maxdamage)
 end
 
-function slot0.onStartFight(slot0)
+function var_0_0.onStartFight(arg_14_0)
 	ViewMgr.instance:openView(ViewName.AutoChessStartFightView)
-	TaskDispatcher.runDelay(slot0.delayShowFightRoot, slot0, 0.5)
+	TaskDispatcher.runDelay(arg_14_0.delayShowFightRoot, arg_14_0, 0.5)
 end
 
-function slot0.delayShowFightRoot(slot0)
-	gohelper.setActive(slot0._gotouch, false)
-	gohelper.setActive(slot0._goFightRoot, true)
-	gohelper.setActive(slot0._goScoreTarget, true)
-	gohelper.setActive(slot0._goDamageTip, true)
+function var_0_0.delayShowFightRoot(arg_15_0)
+	gohelper.setActive(arg_15_0._gotouch, false)
+	gohelper.setActive(arg_15_0._goFightRoot, true)
+	gohelper.setActive(arg_15_0._goScoreTarget, true)
+	gohelper.setActive(arg_15_0._goDamageTip, true)
 end
 
-function slot0.onEndFight(slot0)
-	if AutoChessModel.instance.resultData and slot1.star ~= 0 then
+function var_0_0.onEndFight(arg_16_0)
+	local var_16_0 = AutoChessModel.instance.resultData
+
+	if var_16_0 and var_16_0.star ~= 0 then
 		AutoChessHelper.lockScreen("AutoChessGameViewLightStar", true)
 
-		slot0.maxStar = slot1.star <= 3 and slot1.star or 3
-		slot0.lightIndex = 0
+		arg_16_0.maxStar = var_16_0.star <= 3 and var_16_0.star or 3
+		arg_16_0.lightIndex = 0
 
-		slot0:delayLightStar()
-		TaskDispatcher.runRepeat(slot0.delayLightStar, slot0, 0.5)
+		arg_16_0:delayLightStar()
+		TaskDispatcher.runRepeat(arg_16_0.delayLightStar, arg_16_0, 0.5)
 	else
 		AutoChessController.instance:openResultView()
 	end
 end
 
-function slot0.delayLightStar(slot0)
-	slot0.lightIndex = slot0.lightIndex + 1
+function var_0_0.delayLightStar(arg_17_0)
+	arg_17_0.lightIndex = arg_17_0.lightIndex + 1
 
-	if slot0.maxStar < slot0.lightIndex then
-		TaskDispatcher.cancelTask(slot0.delayLightStar, slot0)
+	if arg_17_0.lightIndex > arg_17_0.maxStar then
+		TaskDispatcher.cancelTask(arg_17_0.delayLightStar, arg_17_0)
 		AutoChessHelper.lockScreen("AutoChessGameViewLightStar", false)
 		AutoChessController.instance:openResultView()
 	else
-		gohelper.setActive(slot0["_goLight" .. slot0.lightIndex], true)
+		gohelper.setActive(arg_17_0["_goLight" .. arg_17_0.lightIndex], true)
 	end
 end
 
-function slot0.onNextRound(slot0)
-	slot0:refreshUI()
-	gohelper.setActive(slot0._btnStop, true)
-	gohelper.setActive(slot0._btnResume, false)
-	gohelper.setActive(slot0._gotouch, true)
-	gohelper.setActive(slot0._goFightRoot, false)
-	gohelper.setActive(slot0._goScoreTarget, false)
-	gohelper.setActive(slot0._goDamageTip, false)
+function var_0_0.onNextRound(arg_18_0)
+	arg_18_0:refreshUI()
+	gohelper.setActive(arg_18_0._btnStop, true)
+	gohelper.setActive(arg_18_0._btnResume, false)
+	gohelper.setActive(arg_18_0._gotouch, true)
+	gohelper.setActive(arg_18_0._goFightRoot, false)
+	gohelper.setActive(arg_18_0._goScoreTarget, false)
+	gohelper.setActive(arg_18_0._goDamageTip, false)
 end
 
-function slot0.onCheckEnemy(slot0, slot1)
-	gohelper.setActive(slot0._goScoreTarget, slot1)
-	gohelper.setActive(slot0._goDamageTip, slot1)
+function var_0_0.onCheckEnemy(arg_19_0, arg_19_1)
+	gohelper.setActive(arg_19_0._goScoreTarget, arg_19_1)
+	gohelper.setActive(arg_19_0._goDamageTip, arg_19_1)
 end
 
-return slot0
+return var_0_0

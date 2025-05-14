@@ -1,32 +1,32 @@
-module("modules.logic.battlepass.model.BpBonusMO", package.seeall)
+﻿module("modules.logic.battlepass.model.BpBonusMO", package.seeall)
 
-slot0 = pureTable("BpBonusMO")
+local var_0_0 = pureTable("BpBonusMO")
 
-function slot0.init(slot0, slot1)
-	slot0.id = slot1.level
-	slot0.level = slot1.level
-	slot0.hasGetfreeBonus = slot1.hasGetfreeBonus
-	slot0.hasGetPayBonus = slot1.hasGetPayBonus
-	slot0.hasGetSpfreeBonus = slot1.hasGetSpfreeBonus
-	slot0.hasGetSpPayBonus = slot1.hasGetSpPayBonus
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.id = arg_1_1.level
+	arg_1_0.level = arg_1_1.level
+	arg_1_0.hasGetfreeBonus = arg_1_1.hasGetfreeBonus
+	arg_1_0.hasGetPayBonus = arg_1_1.hasGetPayBonus
+	arg_1_0.hasGetSpfreeBonus = arg_1_1.hasGetSpfreeBonus
+	arg_1_0.hasGetSpPayBonus = arg_1_1.hasGetSpPayBonus
 end
 
-function slot0.updateServerInfo(slot0, slot1)
-	if slot1:HasField("hasGetfreeBonus") then
-		slot0.hasGetfreeBonus = slot1.hasGetfreeBonus
+function var_0_0.updateServerInfo(arg_2_0, arg_2_1)
+	if arg_2_1:HasField("hasGetfreeBonus") then
+		arg_2_0.hasGetfreeBonus = arg_2_1.hasGetfreeBonus
 	end
 
-	if slot1:HasField("hasGetPayBonus") then
-		slot0.hasGetPayBonus = slot1.hasGetPayBonus
+	if arg_2_1:HasField("hasGetPayBonus") then
+		arg_2_0.hasGetPayBonus = arg_2_1.hasGetPayBonus
 	end
 
-	if slot1:HasField("hasGetSpfreeBonus") then
-		slot0.hasGetSpfreeBonus = slot1.hasGetSpfreeBonus
+	if arg_2_1:HasField("hasGetSpfreeBonus") then
+		arg_2_0.hasGetSpfreeBonus = arg_2_1.hasGetSpfreeBonus
 	end
 
-	if slot1:HasField("hasGetSpPayBonus") then
-		slot0.hasGetSpPayBonus = slot1.hasGetSpPayBonus
+	if arg_2_1:HasField("hasGetSpPayBonus") then
+		arg_2_0.hasGetSpPayBonus = arg_2_1.hasGetSpPayBonus
 	end
 end
 
-return slot0
+return var_0_0

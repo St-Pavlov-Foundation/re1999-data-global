@@ -1,41 +1,47 @@
-module("modules.logic.rouge.config.RougeConfig1", package.seeall)
+﻿module("modules.logic.rouge.config.RougeConfig1", package.seeall)
 
-slot0 = class("RougeConfig1", RougeConfig)
+local var_0_0 = class("RougeConfig1", RougeConfig)
 
-function slot0.season(slot0)
+function var_0_0.season(arg_1_0)
 	return 1
 end
 
-function slot0.openUnlockId(slot0)
+function var_0_0.openUnlockId(arg_2_0)
 	return OpenEnum.UnlockFunc.Rouge1
 end
 
-function slot0.achievementJumpId(slot0)
-	return tonumber(lua_rouge_const.configDict[RougeEnum.Const.AchievementJumpId].value)
+function var_0_0.achievementJumpId(arg_3_0)
+	return (tonumber(lua_rouge_const.configDict[RougeEnum.Const.AchievementJumpId].value))
 end
 
-function slot0.getRougeDifficultyViewStyleIndex(slot0, slot1)
-	if not slot1 then
+function var_0_0.getRougeDifficultyViewStyleIndex(arg_4_0, arg_4_1)
+	if not arg_4_1 then
 		return
 	end
 
-	return math.min(tonumber(slot0:getConstValueByID(12)) or 1, math.ceil(slot1 / (tonumber(slot0:getConstValueByID(11)) or 1)))
+	local var_4_0 = tonumber(arg_4_0:getConstValueByID(11)) or 1
+	local var_4_1 = tonumber(arg_4_0:getConstValueByID(12)) or 1
+	local var_4_2 = math.ceil(arg_4_1 / var_4_0)
+
+	return math.min(var_4_1, var_4_2)
 end
 
-function slot0.calcStyleCOPassiveSkillDescsList(slot0, slot1)
-	slot2 = {
-		slot1.passiveSkillDescs
+function var_0_0.calcStyleCOPassiveSkillDescsList(arg_5_0, arg_5_1)
+	local var_5_0 = {
+		arg_5_1.passiveSkillDescs
 	}
-	slot4 = slot1["passiveSkillDescs" .. tostring(2)]
+	local var_5_1 = 2
+	local var_5_2 = arg_5_1["passiveSkillDescs" .. tostring(var_5_1)]
 
-	while slot4 do
-		slot2[#slot2 + 1] = slot4
-		slot4 = slot1["passiveSkillDescs" .. tostring(slot3 + 1)]
+	while var_5_2 do
+		var_5_0[#var_5_0 + 1] = var_5_2
+		var_5_1 = var_5_1 + 1
+		var_5_2 = arg_5_1["passiveSkillDescs" .. tostring(var_5_1)]
 	end
 
-	return slot2
+	return var_5_0
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

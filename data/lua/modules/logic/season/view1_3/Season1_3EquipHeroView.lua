@@ -1,284 +1,320 @@
-module("modules.logic.season.view1_3.Season1_3EquipHeroView", package.seeall)
+﻿module("modules.logic.season.view1_3.Season1_3EquipHeroView", package.seeall)
 
-slot0 = class("Season1_3EquipHeroView", BaseView)
+local var_0_0 = class("Season1_3EquipHeroView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagebg1 = gohelper.findChildSingleImage(slot0.viewGO, "bg/#simage_bg1")
-	slot0._btnequip = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_normal/right/#btn_equip")
-	slot0._btnopenhandbook = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_normal/right/#btn_openhandbook")
-	slot0._btnopenhandbook2 = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_empty/#btn_openhandbook2")
-	slot0._goempty = gohelper.findChild(slot0.viewGO, "#go_empty")
-	slot0._gonormal = gohelper.findChild(slot0.viewGO, "#go_normal")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagebg1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_bg1")
+	arg_1_0._btnequip = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_normal/right/#btn_equip")
+	arg_1_0._btnopenhandbook = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_normal/right/#btn_openhandbook")
+	arg_1_0._btnopenhandbook2 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_empty/#btn_openhandbook2")
+	arg_1_0._goempty = gohelper.findChild(arg_1_0.viewGO, "#go_empty")
+	arg_1_0._gonormal = gohelper.findChild(arg_1_0.viewGO, "#go_normal")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnequip:AddClickListener(slot0._btnequipOnClick, slot0)
-	slot0._btnopenhandbook:AddClickListener(slot0._btnhandbookOnClick, slot0)
-	slot0._btnopenhandbook2:AddClickListener(slot0._btnhandbookOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnequip:AddClickListener(arg_2_0._btnequipOnClick, arg_2_0)
+	arg_2_0._btnopenhandbook:AddClickListener(arg_2_0._btnhandbookOnClick, arg_2_0)
+	arg_2_0._btnopenhandbook2:AddClickListener(arg_2_0._btnhandbookOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnequip:RemoveClickListener()
-	slot0._btnopenhandbook:RemoveClickListener()
-	slot0._btnopenhandbook2:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnequip:RemoveClickListener()
+	arg_3_0._btnopenhandbook:RemoveClickListener()
+	arg_3_0._btnopenhandbook2:RemoveClickListener()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._simagebg1:LoadImage(ResUrl.getSeasonIcon("full/hechengye_bj.jpg"))
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._simagebg1:LoadImage(ResUrl.getSeasonIcon("full/hechengye_bj.jpg"))
 
-	slot0._animator = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	slot0._animEventWrap = slot0.viewGO:GetComponent(typeof(ZProj.AnimationEventWrap))
+	arg_4_0._animator = arg_4_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	arg_4_0._animEventWrap = arg_4_0.viewGO:GetComponent(typeof(ZProj.AnimationEventWrap))
 
-	slot0._animEventWrap:AddEventListener("switch", slot0.handleSwitchAnimFrame, slot0)
+	arg_4_0._animEventWrap:AddEventListener("switch", arg_4_0.handleSwitchAnimFrame, arg_4_0)
 
-	slot0._goNormalRight = gohelper.findChild(slot0._gonormal, "right")
-	slot0._slotItems = {}
+	arg_4_0._goNormalRight = gohelper.findChild(arg_4_0._gonormal, "right")
+	arg_4_0._slotItems = {}
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simagebg1:UnLoadImage()
-	slot0._animEventWrap:RemoveAllEventListener()
+function var_0_0.onDestroyView(arg_5_0)
+	arg_5_0._simagebg1:UnLoadImage()
+	arg_5_0._animEventWrap:RemoveAllEventListener()
 
-	for slot4, slot5 in pairs(slot0._slotItems) do
-		gohelper.setActive(slot5.goPos, true)
+	for iter_5_0, iter_5_1 in pairs(arg_5_0._slotItems) do
+		gohelper.setActive(iter_5_1.goPos, true)
 
-		if slot5.icon then
-			slot5.icon:disposeUI()
-			gohelper.destroy(slot5.icon.viewGO)
+		if iter_5_1.icon then
+			iter_5_1.icon:disposeUI()
+			gohelper.destroy(iter_5_1.icon.viewGO)
 		end
 	end
 
-	if slot0._descItem and slot0._descItem.simageBlackMask then
-		slot0._descItem.simageBlackMask:UnLoadImage()
+	if arg_5_0._descItem and arg_5_0._descItem.simageBlackMask then
+		arg_5_0._descItem.simageBlackMask:UnLoadImage()
 	end
 
 	Activity104EquipController.instance:onCloseView()
 end
 
-function slot0.onOpen(slot0)
-	slot0:addEventCb(Activity104EquipController.instance, Activity104EquipEvent.EquipUpdate, slot0.handleEquipUpdate, slot0)
-	slot0:addEventCb(Activity104EquipController.instance, Activity104EquipEvent.EquipChangeCard, slot0.handleEquipCardChanged, slot0)
-	slot0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnSnapshotSaveSucc, slot0.handleSaveSucc, slot0)
-	Activity104EquipController.instance:onOpenView(slot0.viewParam.actId, slot0.viewParam.group or 1, Activity104EquipItemListModel.MainCharPos, slot0.viewParam.slot or 1)
-	slot0:refreshUI()
+function var_0_0.onOpen(arg_6_0)
+	local var_6_0 = Activity104EquipItemListModel.MainCharPos
+	local var_6_1 = arg_6_0.viewParam.actId
+	local var_6_2 = arg_6_0.viewParam.slot or 1
+	local var_6_3 = arg_6_0.viewParam.group or 1
+
+	arg_6_0:addEventCb(Activity104EquipController.instance, Activity104EquipEvent.EquipUpdate, arg_6_0.handleEquipUpdate, arg_6_0)
+	arg_6_0:addEventCb(Activity104EquipController.instance, Activity104EquipEvent.EquipChangeCard, arg_6_0.handleEquipCardChanged, arg_6_0)
+	arg_6_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnSnapshotSaveSucc, arg_6_0.handleSaveSucc, arg_6_0)
+	Activity104EquipController.instance:onOpenView(var_6_1, var_6_3, var_6_0, var_6_2)
+	arg_6_0:refreshUI()
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_7_0)
+	return
 end
 
-function slot0.refreshUI(slot0)
-	slot1 = Activity104EquipItemListModel.instance:getCount() == 0
+function var_0_0.refreshUI(arg_8_0)
+	local var_8_0 = Activity104EquipItemListModel.instance:getCount() == 0
 
-	gohelper.setActive(slot0._goempty, slot1)
-	gohelper.setActive(slot0._goNormalRight, not slot1)
-	slot0:refreshDescGroup()
-	slot0:refreshSlots()
+	gohelper.setActive(arg_8_0._goempty, var_8_0)
+	gohelper.setActive(arg_8_0._goNormalRight, not var_8_0)
+	arg_8_0:refreshDescGroup()
+	arg_8_0:refreshSlots()
 end
 
-function slot0.handleEquipUpdate(slot0)
-	slot0:refreshDescGroup()
-	slot0:refreshSlots()
+function var_0_0.handleEquipUpdate(arg_9_0)
+	arg_9_0:refreshDescGroup()
+	arg_9_0:refreshSlots()
 end
 
-function slot0.refreshSlots(slot0)
-	for slot4 = 1, Activity104EquipItemListModel.HeroMaxPos do
-		slot0:refreshSlot(slot4)
+function var_0_0.refreshSlots(arg_10_0)
+	for iter_10_0 = 1, Activity104EquipItemListModel.HeroMaxPos do
+		arg_10_0:refreshSlot(iter_10_0)
 	end
 end
 
-function slot0.refreshSlot(slot0, slot1)
-	gohelper.setActive(slot0:getOrCreateSlot(slot1).goSelect, false)
+function var_0_0.refreshSlot(arg_11_0, arg_11_1)
+	local var_11_0 = arg_11_0:getOrCreateSlot(arg_11_1)
+	local var_11_1 = Activity104EquipItemListModel.instance.curEquipMap[arg_11_1]
 
-	if Activity104EquipItemListModel.instance.curEquipMap[slot1] == Activity104EquipItemListModel.EmptyUid then
-		gohelper.setActive(slot2.goPos, false)
-		gohelper.setActive(slot2.goEmpty, true)
-		gohelper.setActive(slot2.goRareEffect, false)
+	gohelper.setActive(var_11_0.goSelect, false)
+
+	if var_11_1 == Activity104EquipItemListModel.EmptyUid then
+		gohelper.setActive(var_11_0.goPos, false)
+		gohelper.setActive(var_11_0.goEmpty, true)
+		gohelper.setActive(var_11_0.goRareEffect, false)
 	else
-		gohelper.setActive(slot2.goPos, true)
-		gohelper.setActive(slot2.goRareEffect, true)
-		gohelper.setActive(slot2.goEmpty, false)
+		gohelper.setActive(var_11_0.goPos, true)
+		gohelper.setActive(var_11_0.goRareEffect, true)
+		gohelper.setActive(var_11_0.goEmpty, false)
 
-		if Activity104EquipItemListModel.instance:getEquipMO(slot3) then
-			slot0:getOrCreateSlotIcon(slot2):updateData(slot5.itemId)
+		local var_11_2 = arg_11_0:getOrCreateSlotIcon(var_11_0)
+		local var_11_3 = Activity104EquipItemListModel.instance:getEquipMO(var_11_1)
+
+		if var_11_3 then
+			var_11_2:updateData(var_11_3.itemId)
 		end
 	end
 end
 
-function slot0.refreshDescGroup(slot0)
-	slot1 = Activity104EquipItemListModel.instance.curPos
+function var_0_0.refreshDescGroup(arg_12_0)
+	local var_12_0 = Activity104EquipItemListModel.instance.curPos
+	local var_12_1 = Activity104EquipItemListModel.instance.curSelectSlot
+	local var_12_2 = Activity104EquipItemListModel.instance.curEquipMap[var_12_1]
 
-	slot0:refreshDesc(slot0:getOrCreateDesc(), Activity104EquipItemListModel.instance.curEquipMap[Activity104EquipItemListModel.instance.curSelectSlot])
+	arg_12_0:refreshDesc(arg_12_0:getOrCreateDesc(), var_12_2)
 end
 
-function slot0.refreshDesc(slot0, slot1, slot2)
-	if slot2 == Activity104EquipItemListModel.EmptyUid then
-		gohelper.setActive(slot1.go, false)
+function var_0_0.refreshDesc(arg_13_0, arg_13_1, arg_13_2)
+	if arg_13_2 == Activity104EquipItemListModel.EmptyUid then
+		gohelper.setActive(arg_13_1.go, false)
 	else
-		gohelper.setActive(slot1.go, true)
-		slot1.simageBlackMask:LoadImage(ResUrl.getSeasonIcon("black4.png"))
+		gohelper.setActive(arg_13_1.go, true)
+		arg_13_1.simageBlackMask:LoadImage(ResUrl.getSeasonIcon("black4.png"))
 
-		if Activity104EquipItemListModel.instance:getEquipMO(slot2) then
-			if SeasonConfig.instance:getSeasonEquipCo(slot3.itemId) then
-				slot1.txtName.text = string.format("[%s]", slot4.name)
-				slot5 = SeasonEquipMetaUtils.getCareerColorDarkBg(slot3.itemId)
+		local var_13_0 = Activity104EquipItemListModel.instance:getEquipMO(arg_13_2)
 
-				slot0:refreshProps(slot4, slot1, slot5)
-				slot0:refreshSkills(slot4, slot1, slot5)
+		if var_13_0 then
+			local var_13_1 = SeasonConfig.instance:getSeasonEquipCo(var_13_0.itemId)
+
+			if var_13_1 then
+				arg_13_1.txtName.text = string.format("[%s]", var_13_1.name)
+
+				local var_13_2 = SeasonEquipMetaUtils.getCareerColorDarkBg(var_13_0.itemId)
+
+				arg_13_0:refreshProps(var_13_1, arg_13_1, var_13_2)
+				arg_13_0:refreshSkills(var_13_1, arg_13_1, var_13_2)
 			else
-				logError(string.format("can't find season equip config, id = [%s]", slot3.itemId))
+				logError(string.format("can't find season equip config, id = [%s]", var_13_0.itemId))
 			end
 		else
-			logError(string.format("can't find season equip MO, itemUid = [%s]", slot2))
+			logError(string.format("can't find season equip MO, itemUid = [%s]", arg_13_2))
 		end
 	end
 end
 
-function slot0.refreshProps(slot0, slot1, slot2, slot3)
-	slot4 = {}
-	slot5 = false
+function var_0_0.refreshProps(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
+	local var_14_0 = {}
+	local var_14_1 = false
 
-	if slot1 and slot1.attrId ~= 0 then
-		for slot10, slot11 in ipairs(SeasonEquipMetaUtils.getEquipPropsStrList(slot1.attrId)) do
-			slot12 = slot0:getOrCreatePropText(slot10, slot2)
+	if arg_14_1 and arg_14_1.attrId ~= 0 then
+		local var_14_2 = SeasonEquipMetaUtils.getEquipPropsStrList(arg_14_1.attrId)
 
-			gohelper.setActive(slot12.go, true)
+		for iter_14_0, iter_14_1 in ipairs(var_14_2) do
+			local var_14_3 = arg_14_0:getOrCreatePropText(iter_14_0, arg_14_2)
 
-			slot12.txtDesc.text = slot11
+			gohelper.setActive(var_14_3.go, true)
 
-			SLFramework.UGUI.GuiHelper.SetColor(slot12.txtDesc, slot3)
+			var_14_3.txtDesc.text = iter_14_1
 
-			slot4[slot12] = true
-			slot5 = true
+			SLFramework.UGUI.GuiHelper.SetColor(var_14_3.txtDesc, arg_14_3)
+
+			var_14_0[var_14_3] = true
+			var_14_1 = true
 		end
 	end
 
-	for slot9, slot10 in pairs(slot2.propItems) do
-		if not slot4[slot10] then
-			gohelper.setActive(slot10.go, false)
+	for iter_14_2, iter_14_3 in pairs(arg_14_2.propItems) do
+		if not var_14_0[iter_14_3] then
+			gohelper.setActive(iter_14_3.go, false)
 		end
 	end
 
-	gohelper.setActive(slot2.goAttrParent, slot5)
+	gohelper.setActive(arg_14_2.goAttrParent, var_14_1)
 end
 
-function slot0.refreshSkills(slot0, slot1, slot2, slot3)
-	slot5 = {
-		[slot11] = true
-	}
+function var_0_0.refreshSkills(arg_15_0, arg_15_1, arg_15_2, arg_15_3)
+	local var_15_0 = SeasonEquipMetaUtils.getSkillEffectStrList(arg_15_1)
+	local var_15_1 = {}
 
-	for slot9, slot10 in ipairs(SeasonEquipMetaUtils.getSkillEffectStrList(slot1)) do
-		slot11 = slot0:getOrCreateSkillText(slot9, slot2)
+	for iter_15_0, iter_15_1 in ipairs(var_15_0) do
+		local var_15_2 = arg_15_0:getOrCreateSkillText(iter_15_0, arg_15_2)
 
-		gohelper.setActive(slot11.go, true)
+		gohelper.setActive(var_15_2.go, true)
 
-		slot11.txtDesc.text = slot10
+		var_15_2.txtDesc.text = iter_15_1
 
-		SLFramework.UGUI.GuiHelper.SetColor(slot11.txtDesc, slot3)
+		SLFramework.UGUI.GuiHelper.SetColor(var_15_2.txtDesc, arg_15_3)
+
+		var_15_1[var_15_2] = true
 	end
 
-	for slot9, slot10 in pairs(slot2.skillItems) do
-		if not slot5[slot10] then
-			gohelper.setActive(slot10.go, false)
+	for iter_15_2, iter_15_3 in pairs(arg_15_2.skillItems) do
+		if not var_15_1[iter_15_3] then
+			gohelper.setActive(iter_15_3.go, false)
 		end
 	end
 end
 
-function slot0.getOrCreatePropText(slot0, slot1, slot2)
-	if not slot2.propItems[slot1] then
-		slot3 = slot0:getUserDataTb_()
-		slot3.go = gohelper.cloneInPlace(slot2.goAttrDesc, "propname_" .. tostring(slot1))
-		slot3.txtDesc = gohelper.findChildText(slot3.go, "txt_attributedesc")
-		slot2.propItems[slot1] = slot3
+function var_0_0.getOrCreatePropText(arg_16_0, arg_16_1, arg_16_2)
+	local var_16_0 = arg_16_2.propItems[arg_16_1]
+
+	if not var_16_0 then
+		var_16_0 = arg_16_0:getUserDataTb_()
+		var_16_0.go = gohelper.cloneInPlace(arg_16_2.goAttrDesc, "propname_" .. tostring(arg_16_1))
+		var_16_0.txtDesc = gohelper.findChildText(var_16_0.go, "txt_attributedesc")
+		arg_16_2.propItems[arg_16_1] = var_16_0
 	end
 
-	return slot3
+	return var_16_0
 end
 
-function slot0.getOrCreateSkillText(slot0, slot1, slot2)
-	if not slot2.skillItems[slot1] then
-		slot3 = slot0:getUserDataTb_()
-		slot3.go = gohelper.cloneInPlace(slot2.goSkillDesc, "skill_" .. tostring(slot1))
-		slot3.txtDesc = gohelper.findChildText(slot3.go, "txt_skilldesc")
-		slot2.skillItems[slot1] = slot3
+function var_0_0.getOrCreateSkillText(arg_17_0, arg_17_1, arg_17_2)
+	local var_17_0 = arg_17_2.skillItems[arg_17_1]
+
+	if not var_17_0 then
+		var_17_0 = arg_17_0:getUserDataTb_()
+		var_17_0.go = gohelper.cloneInPlace(arg_17_2.goSkillDesc, "skill_" .. tostring(arg_17_1))
+		var_17_0.txtDesc = gohelper.findChildText(var_17_0.go, "txt_skilldesc")
+		arg_17_2.skillItems[arg_17_1] = var_17_0
 	end
 
-	return slot3
+	return var_17_0
 end
 
-function slot0.getOrCreateSlot(slot0, slot1)
-	if not slot0._slotItems[slot1] then
-		slot2 = slot0:getUserDataTb_()
-		slot2.go = gohelper.findChild(slot0.viewGO, "#go_normal/left/equipSlot/slot" .. tostring(slot1))
-		slot2.goEmpty = gohelper.findChild(slot2.go, "go_empty")
-		slot2.goPos = gohelper.findChild(slot2.go, "go_equip/go_pos")
-		slot2.goSelect = gohelper.findChild(slot2.go, "go_equip/go_select")
-		slot2.goRareEffect = gohelper.findChild(slot2.go, "go_rareeffect")
-		slot0._slotItems[slot1] = slot2
+function var_0_0.getOrCreateSlot(arg_18_0, arg_18_1)
+	local var_18_0 = arg_18_0._slotItems[arg_18_1]
+
+	if not var_18_0 then
+		var_18_0 = arg_18_0:getUserDataTb_()
+		var_18_0.go = gohelper.findChild(arg_18_0.viewGO, "#go_normal/left/equipSlot/slot" .. tostring(arg_18_1))
+		var_18_0.goEmpty = gohelper.findChild(var_18_0.go, "go_empty")
+		var_18_0.goPos = gohelper.findChild(var_18_0.go, "go_equip/go_pos")
+		var_18_0.goSelect = gohelper.findChild(var_18_0.go, "go_equip/go_select")
+		var_18_0.goRareEffect = gohelper.findChild(var_18_0.go, "go_rareeffect")
+		arg_18_0._slotItems[arg_18_1] = var_18_0
 	end
 
-	return slot2
+	return var_18_0
 end
 
-function slot0.getOrCreateSlotIcon(slot0, slot1)
-	if not slot1.icon then
-		slot1.icon = MonoHelper.addNoUpdateLuaComOnceToGo(slot0:getResInst(slot0.viewContainer:getSetting().otherRes[2], slot1.goPos, "icon"), Season1_3CelebrityCardEquip)
+function var_0_0.getOrCreateSlotIcon(arg_19_0, arg_19_1)
+	local var_19_0 = arg_19_1.icon
+
+	if not var_19_0 then
+		local var_19_1 = arg_19_0.viewContainer:getSetting().otherRes[2]
+		local var_19_2 = arg_19_0:getResInst(var_19_1, arg_19_1.goPos, "icon")
+
+		var_19_0 = MonoHelper.addNoUpdateLuaComOnceToGo(var_19_2, Season1_3CelebrityCardEquip)
+		arg_19_1.icon = var_19_0
 	end
 
-	return slot2
+	return var_19_0
 end
 
-function slot0.getOrCreateDesc(slot0)
-	if not slot0._descItem then
-		slot1 = slot0:getUserDataTb_()
-		slot1.go = gohelper.findChild(slot0.viewGO, "#go_normal/left/equipDesc/#go_equipDesc")
-		slot1.goEffect = gohelper.findChild(slot1.go, "#go_effect")
-		slot1.txtName = gohelper.findChildText(slot1.go, "#go_effect/txt_name")
-		slot1.txtDesc = gohelper.findChildText(slot1.go, "#go_effect/scroll_desc/Viewport/#txt_desc")
-		slot1.goAttrDesc = gohelper.findChild(slot1.go, "#go_effect/scroll_desc/Viewport/Content/attrlist/#go_attributeitem")
-		slot1.goSkillDesc = gohelper.findChild(slot1.go, "#go_effect/scroll_desc/Viewport/Content/skilldesc/#go_skilldescitem")
-		slot1.goAttrParent = gohelper.findChild(slot1.go, "#go_effect/scroll_desc/Viewport/Content/attrlist")
-		slot1.simageBlackMask = gohelper.findChildSingleImage(slot1.go, "#go_effect/simage_blackmask")
-		slot1.propItems = {}
-		slot1.skillItems = {}
-		slot0._descItem = slot1
+function var_0_0.getOrCreateDesc(arg_20_0)
+	local var_20_0 = arg_20_0._descItem
+
+	if not var_20_0 then
+		var_20_0 = arg_20_0:getUserDataTb_()
+		var_20_0.go = gohelper.findChild(arg_20_0.viewGO, "#go_normal/left/equipDesc/#go_equipDesc")
+		var_20_0.goEffect = gohelper.findChild(var_20_0.go, "#go_effect")
+		var_20_0.txtName = gohelper.findChildText(var_20_0.go, "#go_effect/txt_name")
+		var_20_0.txtDesc = gohelper.findChildText(var_20_0.go, "#go_effect/scroll_desc/Viewport/#txt_desc")
+		var_20_0.goAttrDesc = gohelper.findChild(var_20_0.go, "#go_effect/scroll_desc/Viewport/Content/attrlist/#go_attributeitem")
+		var_20_0.goSkillDesc = gohelper.findChild(var_20_0.go, "#go_effect/scroll_desc/Viewport/Content/skilldesc/#go_skilldescitem")
+		var_20_0.goAttrParent = gohelper.findChild(var_20_0.go, "#go_effect/scroll_desc/Viewport/Content/attrlist")
+		var_20_0.simageBlackMask = gohelper.findChildSingleImage(var_20_0.go, "#go_effect/simage_blackmask")
+		var_20_0.propItems = {}
+		var_20_0.skillItems = {}
+		arg_20_0._descItem = var_20_0
 	end
 
-	return slot1
+	return var_20_0
 end
 
-function slot0.handleSaveSucc(slot0, slot1)
-	if slot0._isManualSave then
+function var_0_0.handleSaveSucc(arg_21_0, arg_21_1)
+	if arg_21_0._isManualSave then
 		GameFacade.showToast(Activity104EquipController.Toast_Save_Succ)
-		slot0:closeThis()
+		arg_21_0:closeThis()
 	end
 end
 
-function slot0.handleSwitchAnimFrame(slot0)
+function var_0_0.handleSwitchAnimFrame(arg_22_0)
 	logNormal("refresh by switch anim frame")
-	slot0:refreshSlots()
-	slot0:refreshDescGroup()
+	arg_22_0:refreshSlots()
+	arg_22_0:refreshDescGroup()
 end
 
-function slot0.handleEquipCardChanged(slot0, slot1)
-	slot0._animator:Play("switch", 0, 0)
+function var_0_0.handleEquipCardChanged(arg_23_0, arg_23_1)
+	arg_23_0._animator:Play("switch", 0, 0)
 end
 
-function slot0._btnequipOnClick(slot0)
-	slot0._isManualSave = Activity104EquipController.instance:checkCanSaveSlot()
+function var_0_0._btnequipOnClick(arg_24_0)
+	arg_24_0._isManualSave = Activity104EquipController.instance:checkCanSaveSlot()
 
-	if slot0._isManualSave then
+	if arg_24_0._isManualSave then
 		Activity104EquipController.instance:saveShowSlot()
 	end
 end
 
-function slot0._btnhandbookOnClick(slot0)
+function var_0_0._btnhandbookOnClick(arg_25_0)
 	ViewMgr.instance:openView(ViewName.Season1_3EquipBookView, {
-		actId = slot0.viewParam.actId
+		actId = arg_25_0.viewParam.actId
 	})
 end
 
-return slot0
+return var_0_0

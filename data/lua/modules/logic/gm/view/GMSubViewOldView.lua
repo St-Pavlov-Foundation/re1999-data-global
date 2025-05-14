@@ -1,26 +1,26 @@
-module("modules.logic.gm.view.GMSubViewOldView", package.seeall)
+﻿module("modules.logic.gm.view.GMSubViewOldView", package.seeall)
 
-slot0 = Color.New(0.88, 0.84, 0.5, 1)
-slot1 = Color.New(0.75, 0.75, 0.75, 0.75)
-slot2 = class("GMSubViewOldView", GMSubViewBase)
+local var_0_0 = Color.New(0.88, 0.84, 0.5, 1)
+local var_0_1 = Color.New(0.75, 0.75, 0.75, 0.75)
+local var_0_2 = class("GMSubViewOldView", GMSubViewBase)
 
-function slot2.onOpen(slot0)
-	slot0:addSubViewGo("ALL")
+function var_0_2.onOpen(arg_1_0)
+	arg_1_0:addSubViewGo("ALL")
 end
 
-function slot2._onToggleValueChanged(slot0, slot1, slot2)
-	if slot2 then
-		if not slot0._subViewContent then
-			slot0:initViewContent()
+function var_0_2._onToggleValueChanged(arg_2_0, arg_2_1, arg_2_2)
+	if arg_2_2 then
+		if not arg_2_0._subViewContent then
+			arg_2_0:initViewContent()
 		end
 
-		slot0.viewContainer:selectToggle(slot0._toggleWrap)
+		arg_2_0.viewContainer:selectToggle(arg_2_0._toggleWrap)
 	end
 
-	gohelper.setActive(slot0._mainViewBg, slot2)
-	gohelper.setActive(slot0._mainViewPort, slot2)
+	gohelper.setActive(arg_2_0._mainViewBg, arg_2_2)
+	gohelper.setActive(arg_2_0._mainViewPort, arg_2_2)
 
-	slot0._toggleImage.color = slot2 and uv0 or uv1
+	arg_2_0._toggleImage.color = arg_2_2 and var_0_0 or var_0_1
 end
 
-return slot2
+return var_0_2

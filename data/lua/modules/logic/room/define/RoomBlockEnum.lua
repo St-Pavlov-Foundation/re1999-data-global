@@ -1,9 +1,10 @@
-module("modules.logic.room.define.RoomBlockEnum", package.seeall)
+﻿module("modules.logic.room.define.RoomBlockEnum", package.seeall)
 
-slot0 = _M
-slot0.BlockSize = 0.499
-slot0.EmptyBlockDistanceStyleCount = 1
-slot0.BlockState = {
+local var_0_0 = _M
+
+var_0_0.BlockSize = 0.499
+var_0_0.EmptyBlockDistanceStyleCount = 1
+var_0_0.BlockState = {
 	Water = 2,
 	Inventory = 4,
 	WaterReform = 6,
@@ -11,37 +12,37 @@ slot0.BlockState = {
 	Temp = 3,
 	Map = 1
 }
-slot0.OpState = {
+var_0_0.OpState = {
 	Back = 2,
 	Normal = 1
 }
-slot0.UseState = {
+var_0_0.UseState = {
 	TransportPath = 2,
 	Normal = 1
 }
-slot0.CleanType = {
+var_0_0.CleanType = {
 	CleanLand = 1,
 	Normal = 0
 }
-slot0.OwnType = {
+var_0_0.OwnType = {
 	Special = 1,
 	Package = 0
 }
-slot0.BlockType = {
+var_0_0.BlockType = {
 	Snow2 = 16,
 	Snow = 15,
 	Green = 1
 }
-slot0.BlockLinkEffectGOPath = {
-	[slot0.BlockType.Green] = "junsi"
+var_0_0.BlockLinkEffectGOPath = {
+	[var_0_0.BlockType.Green] = "junsi"
 }
-slot0.FootPrintDict = {
-	[slot0.BlockType.Snow] = true,
-	[slot0.BlockType.Snow2] = true
+var_0_0.FootPrintDict = {
+	[var_0_0.BlockType.Snow] = true,
+	[var_0_0.BlockType.Snow2] = true
 }
-slot0.EmptyDefineId = 1
-slot0.PlaceEffectAnimatorCloseTime = 0.16666666666666666
-slot0.InitBlockDegreeValue = 48
-slot0.WaterReformCommonDefineId = 292
+var_0_0.EmptyDefineId = 1
+var_0_0.PlaceEffectAnimatorCloseTime = 0.16666666666666666
+var_0_0.InitBlockDegreeValue = 48
+var_0_0.WaterReformCommonDefineId = 292
 
-return slot0
+return var_0_0

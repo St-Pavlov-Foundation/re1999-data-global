@@ -1,11 +1,11 @@
-module("modules.logic.versionactivity1_7.lantern.view.LanternFestivalViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity1_7.lantern.view.LanternFestivalViewContainer", package.seeall)
 
-slot0 = class("LanternFestivalViewContainer", BaseViewContainer)
+local var_0_0 = class("LanternFestivalViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		LanternFestivalView.New()
 	}
 end
 
-return slot0
+return var_0_0

@@ -1,295 +1,335 @@
-module("modules.logic.tower.model.TowerTaskModel", package.seeall)
+﻿module("modules.logic.tower.model.TowerTaskModel", package.seeall)
 
-slot0 = class("TowerTaskModel", MixScrollModel)
+local var_0_0 = class("TowerTaskModel", MixScrollModel)
 
-function slot0.onInit(slot0)
-	slot0.tempTaskModel = BaseModel.New()
-	slot0.ColumnCount = 1
-	slot0.OpenAnimTime = 0.06
-	slot0.OpenAnimStartTime = 0
-	slot0.AnimRowCount = 6
+function var_0_0.onInit(arg_1_0)
+	arg_1_0.tempTaskModel = BaseModel.New()
+	arg_1_0.ColumnCount = 1
+	arg_1_0.OpenAnimTime = 0.06
+	arg_1_0.OpenAnimStartTime = 0
+	arg_1_0.AnimRowCount = 6
 
-	slot0:reInit()
+	arg_1_0:reInit()
 end
 
-function slot0.reInit(slot0)
-	slot0.tempTaskModel:clear()
-	uv0.super.clear(slot0)
+function var_0_0.reInit(arg_2_0)
+	arg_2_0.tempTaskModel:clear()
+	var_0_0.super.clear(arg_2_0)
 
-	slot0.limitTimeTaskMap = {}
-	slot0.limitTimeTaskList = {}
-	slot0.bossTaskMap = {}
-	slot0.bossTaskList = {}
-	slot0.reddotShowMap = {}
-	slot0._itemStartAnimTime = nil
+	arg_2_0.limitTimeTaskMap = {}
+	arg_2_0.limitTimeTaskList = {}
+	arg_2_0.bossTaskMap = {}
+	arg_2_0.bossTaskList = {}
+	arg_2_0.reddotShowMap = {}
+	arg_2_0._itemStartAnimTime = nil
 
-	slot0:cleanData()
+	arg_2_0:cleanData()
 end
 
-function slot0.cleanData(slot0)
-	slot0.curSelectToweId = 1
-	slot0.curSelectTowerType = TowerEnum.TowerType.Limited
+function var_0_0.cleanData(arg_3_0)
+	arg_3_0.curSelectToweId = 1
+	arg_3_0.curSelectTowerType = TowerEnum.TowerType.Limited
 end
 
-function slot0.setTaskInfoList(slot0, slot1)
-	slot2 = {}
-	slot0.limitTimeTaskMap = {}
-	slot0.bossTaskMap = {}
+function var_0_0.setTaskInfoList(arg_4_0, arg_4_1)
+	local var_4_0 = {}
 
-	for slot6, slot7 in pairs(slot1) do
-		if not slot7.config then
-			if not TowerConfig.instance:getTowerTaskConfig(slot7.id) then
-				logError("爬塔任务配置表id不存在,请检查: " .. tostring(slot7.id))
+	arg_4_0.limitTimeTaskMap = {}
+	arg_4_0.bossTaskMap = {}
+
+	for iter_4_0, iter_4_1 in pairs(arg_4_1) do
+		if not iter_4_1.config then
+			local var_4_1 = TowerConfig.instance:getTowerTaskConfig(iter_4_1.id)
+
+			if not var_4_1 then
+				logError("爬塔任务配置表id不存在,请检查: " .. tostring(iter_4_1.id))
 			end
 
-			slot7:init(slot7, slot8)
+			iter_4_1:init(iter_4_1, var_4_1)
 		end
 
-		table.insert(slot2, slot7)
+		table.insert(var_4_0, iter_4_1)
 	end
 
-	slot0.tempTaskModel:setList(slot2)
+	arg_4_0.tempTaskModel:setList(var_4_0)
 
-	for slot6, slot7 in ipairs(slot0.tempTaskModel:getList()) do
-		slot0:initTaskMap(slot7)
+	for iter_4_2, iter_4_3 in ipairs(arg_4_0.tempTaskModel:getList()) do
+		arg_4_0:initTaskMap(iter_4_3)
 	end
 
-	slot0:initTaskList()
-	slot0:sortList()
-	slot0:checkRedDot()
+	arg_4_0:initTaskList()
+	arg_4_0:sortList()
+	arg_4_0:checkRedDot()
 end
 
-function slot0.initTaskMap(slot0, slot1)
-	slot2 = slot1.config.taskGroupId
-	slot4 = TowerConfig.instance:getTowerLimitedCoByTaskGroupId(slot2)
+function var_0_0.initTaskMap(arg_5_0, arg_5_1)
+	local var_5_0 = arg_5_1.config.taskGroupId
+	local var_5_1 = TowerConfig.instance:getTowerBossTimeCoByTaskGroupId(var_5_0)
+	local var_5_2 = TowerConfig.instance:getTowerLimitedCoByTaskGroupId(var_5_0)
 
-	if TowerConfig.instance:getTowerBossTimeCoByTaskGroupId(slot2) then
-		if not slot0.bossTaskMap[slot3.towerId] then
-			slot0.bossTaskMap[slot3.towerId] = {}
+	if var_5_1 then
+		if not arg_5_0.bossTaskMap[var_5_1.towerId] then
+			local var_5_3 = {}
+
+			arg_5_0.bossTaskMap[var_5_1.towerId] = var_5_3
 		end
 
-		slot0.bossTaskMap[slot3.towerId][slot1.id] = slot1
-	elseif slot4 then
-		slot0.limitTimeTaskMap[slot1.id] = slot1
-	end
-end
-
-function slot0.initTaskList(slot0)
-	slot0.limitTimeTaskList = {}
-
-	for slot4, slot5 in pairs(slot0.limitTimeTaskMap) do
-		table.insert(slot0.limitTimeTaskList, slot5)
-	end
-
-	slot0.bossTaskList = {}
-
-	for slot4, slot5 in pairs(slot0.bossTaskMap) do
-		slot0.bossTaskList[slot4] = {}
-
-		for slot9, slot10 in pairs(slot5) do
-			table.insert(slot0.bossTaskList[slot4], slot10)
-		end
+		arg_5_0.bossTaskMap[var_5_1.towerId][arg_5_1.id] = arg_5_1
+	elseif var_5_2 then
+		arg_5_0.limitTimeTaskMap[arg_5_1.id] = arg_5_1
 	end
 end
 
-function slot0.sortList(slot0)
-	if #slot0.limitTimeTaskList > 0 then
-		table.sort(slot0.limitTimeTaskList, uv0.limitTimeSortFunc)
+function var_0_0.initTaskList(arg_6_0)
+	arg_6_0.limitTimeTaskList = {}
+
+	for iter_6_0, iter_6_1 in pairs(arg_6_0.limitTimeTaskMap) do
+		table.insert(arg_6_0.limitTimeTaskList, iter_6_1)
 	end
 
-	if tabletool.len(slot0.bossTaskList) > 0 then
-		for slot4, slot5 in ipairs(slot0.bossTaskList) do
-			table.sort(slot5, uv0.bossSortFunc)
+	arg_6_0.bossTaskList = {}
+
+	for iter_6_2, iter_6_3 in pairs(arg_6_0.bossTaskMap) do
+		arg_6_0.bossTaskList[iter_6_2] = {}
+
+		for iter_6_4, iter_6_5 in pairs(iter_6_3) do
+			table.insert(arg_6_0.bossTaskList[iter_6_2], iter_6_5)
 		end
 	end
 end
 
-function slot0.bossSortFunc(slot0, slot1)
-	if (slot0.config.maxProgress <= slot0.finishCount and 3 or slot0.hasFinished and 1 or 2) ~= (slot1.config.maxProgress <= slot1.finishCount and 3 or slot1.hasFinished and 1 or 2) then
-		return slot2 < slot3
+function var_0_0.sortList(arg_7_0)
+	if #arg_7_0.limitTimeTaskList > 0 then
+		table.sort(arg_7_0.limitTimeTaskList, var_0_0.limitTimeSortFunc)
+	end
+
+	if tabletool.len(arg_7_0.bossTaskList) > 0 then
+		for iter_7_0, iter_7_1 in ipairs(arg_7_0.bossTaskList) do
+			table.sort(iter_7_1, var_0_0.bossSortFunc)
+		end
+	end
+end
+
+function var_0_0.bossSortFunc(arg_8_0, arg_8_1)
+	local var_8_0 = arg_8_0.finishCount >= arg_8_0.config.maxProgress and 3 or arg_8_0.hasFinished and 1 or 2
+	local var_8_1 = arg_8_1.finishCount >= arg_8_1.config.maxProgress and 3 or arg_8_1.hasFinished and 1 or 2
+
+	if var_8_0 ~= var_8_1 then
+		return var_8_0 < var_8_1
 	else
-		return slot0.config.id < slot1.config.id
+		return arg_8_0.config.id < arg_8_1.config.id
 	end
 end
 
-function slot0.limitTimeSortFunc(slot0, slot1)
-	if (slot0.finishCount >= 1 and slot0.config.maxProgress <= slot0.progress and 3 or slot0.hasFinished and 1 or 2) ~= (slot1.finishCount >= 1 and slot1.config.maxProgress <= slot1.progress and 3 or slot1.hasFinished and 1 or 2) then
-		return slot2 < slot3
+function var_0_0.limitTimeSortFunc(arg_9_0, arg_9_1)
+	local var_9_0 = arg_9_0.finishCount >= 1 and arg_9_0.progress >= arg_9_0.config.maxProgress and 3 or arg_9_0.hasFinished and 1 or 2
+	local var_9_1 = arg_9_1.finishCount >= 1 and arg_9_1.progress >= arg_9_1.config.maxProgress and 3 or arg_9_1.hasFinished and 1 or 2
+
+	if var_9_0 ~= var_9_1 then
+		return var_9_0 < var_9_1
 	else
-		return slot0.config.id < slot1.config.id
+		return arg_9_0.config.id < arg_9_1.config.id
 	end
 end
 
-function slot0.updateTaskInfo(slot0, slot1)
-	slot2 = false
+function var_0_0.updateTaskInfo(arg_10_0, arg_10_1)
+	local var_10_0 = false
 
-	if GameUtil.getTabLen(slot0.tempTaskModel:getList()) == 0 then
+	if GameUtil.getTabLen(arg_10_0.tempTaskModel:getList()) == 0 then
 		return
 	end
 
-	for slot6, slot7 in ipairs(slot1) do
-		if slot7.type == TaskEnum.TaskType.Tower then
-			if not slot0.tempTaskModel:getById(slot7.id) then
-				if TowerConfig.instance:getTowerTaskConfig(slot7.id) then
-					slot8 = TaskMo.New()
+	for iter_10_0, iter_10_1 in ipairs(arg_10_1) do
+		if iter_10_1.type == TaskEnum.TaskType.Tower then
+			local var_10_1 = arg_10_0.tempTaskModel:getById(iter_10_1.id)
 
-					slot8:init(slot7, slot9)
-					slot0.tempTaskModel:addAtLast(slot8)
-					slot0:initTaskMap(slot8)
+			if not var_10_1 then
+				local var_10_2 = TowerConfig.instance:getTowerTaskConfig(iter_10_1.id)
+
+				if var_10_2 then
+					var_10_1 = TaskMo.New()
+
+					var_10_1:init(iter_10_1, var_10_2)
+					arg_10_0.tempTaskModel:addAtLast(var_10_1)
+					arg_10_0:initTaskMap(var_10_1)
 				else
-					logError("Season123TaskCo by id is not exit: " .. tostring(slot7.id))
+					logError("Season123TaskCo by id is not exit: " .. tostring(iter_10_1.id))
 				end
 			else
-				slot8:update(slot7)
+				var_10_1:update(iter_10_1)
 			end
 
-			slot0:initTaskMap(slot8)
+			arg_10_0:initTaskMap(var_10_1)
 
-			slot2 = true
+			var_10_0 = true
 		end
 	end
 
-	if slot2 then
-		slot0:initTaskList()
-		slot0:sortList()
-		slot0:checkRedDot()
+	if var_10_0 then
+		arg_10_0:initTaskList()
+		arg_10_0:sortList()
+		arg_10_0:checkRedDot()
 	end
 
-	return slot2
+	return var_10_0
 end
 
-function slot0.checkRedDot(slot0)
-	if tabletool.len(slot0.limitTimeTaskList) > 0 then
-		slot0.reddotShowMap[TowerEnum.TowerType.Limited] = slot0:getTaskItemCanGetCount(slot0.limitTimeTaskList) > 0
+function var_0_0.checkRedDot(arg_11_0)
+	if tabletool.len(arg_11_0.limitTimeTaskList) > 0 then
+		local var_11_0 = arg_11_0:getTaskItemCanGetCount(arg_11_0.limitTimeTaskList)
+
+		arg_11_0.reddotShowMap[TowerEnum.TowerType.Limited] = var_11_0 > 0
 	end
 
-	if tabletool.len(slot0.bossTaskList) > 0 then
-		slot0.reddotShowMap[TowerEnum.TowerType.Boss] = {}
+	if tabletool.len(arg_11_0.bossTaskList) > 0 then
+		arg_11_0.reddotShowMap[TowerEnum.TowerType.Boss] = {}
 
-		for slot4, slot5 in pairs(slot0.bossTaskList) do
-			slot0.reddotShowMap[TowerEnum.TowerType.Boss][slot4] = slot0:getTaskItemCanGetCount(slot5) > 0
+		for iter_11_0, iter_11_1 in pairs(arg_11_0.bossTaskList) do
+			local var_11_1 = arg_11_0:getTaskItemCanGetCount(iter_11_1)
+
+			arg_11_0.reddotShowMap[TowerEnum.TowerType.Boss][iter_11_0] = var_11_1 > 0
 		end
 	end
 end
 
-function slot0.canShowReddot(slot0, slot1, slot2)
-	if slot1 == TowerEnum.TowerType.Limited then
-		return slot0.reddotShowMap[slot1]
+function var_0_0.canShowReddot(arg_12_0, arg_12_1, arg_12_2)
+	if arg_12_1 == TowerEnum.TowerType.Limited then
+		return arg_12_0.reddotShowMap[arg_12_1]
 	else
-		return slot0.reddotShowMap[slot1][slot2]
+		return arg_12_0.reddotShowMap[arg_12_1][arg_12_2]
 	end
 end
 
-function slot0.setCurSelectTowerTypeAndId(slot0, slot1, slot2)
-	slot0.curSelectTowerType = slot1
-	slot0.curSelectToweId = slot2
+function var_0_0.setCurSelectTowerTypeAndId(arg_13_0, arg_13_1, arg_13_2)
+	arg_13_0.curSelectTowerType = arg_13_1
+	arg_13_0.curSelectToweId = arg_13_2
 end
 
-function slot0.refreshList(slot0, slot1)
-	if slot0:getTaskItemCanGetCount(tabletool.copy(slot0:getCurTaskList(slot1) or {})) > 1 then
-		table.insert(slot3, 1, {
+function var_0_0.refreshList(arg_14_0, arg_14_1)
+	local var_14_0 = arg_14_0:getCurTaskList(arg_14_1) or {}
+	local var_14_1 = tabletool.copy(var_14_0)
+
+	if arg_14_0:getTaskItemCanGetCount(var_14_1) > 1 then
+		table.insert(var_14_1, 1, {
 			id = 0,
 			canGetAll = true
 		})
 	end
 
-	slot0:setList(slot3)
-	slot0:checkRedDot()
+	arg_14_0:setList(var_14_1)
+	arg_14_0:checkRedDot()
 	TowerController.instance:dispatchEvent(TowerEvent.TowerRefreshTask)
 end
 
-function slot0.getAllCanGetList(slot0)
-	slot1 = {}
+function var_0_0.getAllCanGetList(arg_15_0)
+	local var_15_0 = {}
+	local var_15_1 = arg_15_0:getCurTaskList() or {}
 
-	for slot6, slot7 in ipairs(slot0:getCurTaskList() or {}) do
-		if slot7.config and slot7.config.maxProgress <= slot7.progress and slot7.finishCount == 0 then
-			table.insert(slot1, slot7.id)
+	for iter_15_0, iter_15_1 in ipairs(var_15_1) do
+		if iter_15_1.config and iter_15_1.progress >= iter_15_1.config.maxProgress and iter_15_1.finishCount == 0 then
+			table.insert(var_15_0, iter_15_1.id)
 		end
 	end
 
-	return slot1
+	return var_15_0
 end
 
-function slot0.getCurTaskList(slot0, slot1)
-	slot2 = {}
-	slot0.curSelectTowerType = slot1 or slot0.curSelectTowerType
+function var_0_0.getCurTaskList(arg_16_0, arg_16_1)
+	local var_16_0 = {}
 
-	if slot0.curSelectTowerType == TowerEnum.TowerType.Limited then
-		slot2 = slot0.limitTimeTaskList
-	elseif slot0.curSelectTowerType == TowerEnum.TowerType.Boss then
-		slot2 = slot0.bossTaskList[slot0.curSelectToweId]
+	arg_16_0.curSelectTowerType = arg_16_1 or arg_16_0.curSelectTowerType
+
+	if arg_16_0.curSelectTowerType == TowerEnum.TowerType.Limited then
+		var_16_0 = arg_16_0.limitTimeTaskList
+	elseif arg_16_0.curSelectTowerType == TowerEnum.TowerType.Boss then
+		var_16_0 = arg_16_0.bossTaskList[arg_16_0.curSelectToweId]
 	end
 
-	return slot2
+	return var_16_0
 end
 
-function slot0.getTaskItemRewardCount(slot0, slot1)
-	for slot6, slot7 in ipairs(slot1) do
-		if slot7.config.maxProgress <= slot7.progress then
-			slot2 = 0 + 1
+function var_0_0.getTaskItemRewardCount(arg_17_0, arg_17_1)
+	local var_17_0 = 0
+
+	for iter_17_0, iter_17_1 in ipairs(arg_17_1) do
+		if iter_17_1.progress >= iter_17_1.config.maxProgress then
+			var_17_0 = var_17_0 + 1
 		end
 	end
 
-	return slot2
+	return var_17_0
 end
 
-function slot0.getTaskItemCanGetCount(slot0, slot1)
-	for slot6, slot7 in pairs(slot1) do
-		if slot7.config.maxProgress <= slot7.progress and slot7.finishCount == 0 then
-			slot2 = 0 + 1
+function var_0_0.getTaskItemCanGetCount(arg_18_0, arg_18_1)
+	local var_18_0 = 0
+
+	for iter_18_0, iter_18_1 in pairs(arg_18_1) do
+		if iter_18_1.progress >= iter_18_1.config.maxProgress and iter_18_1.finishCount == 0 then
+			var_18_0 = var_18_0 + 1
 		end
 	end
 
-	return slot2
+	return var_18_0
 end
 
-function slot0.getTaskItemFinishedCount(slot0, slot1)
-	for slot6, slot7 in ipairs(slot1) do
-		if slot0:isTaskFinished(slot7) then
-			slot2 = 0 + 1
+function var_0_0.getTaskItemFinishedCount(arg_19_0, arg_19_1)
+	local var_19_0 = 0
+
+	for iter_19_0, iter_19_1 in ipairs(arg_19_1) do
+		if arg_19_0:isTaskFinished(iter_19_1) then
+			var_19_0 = var_19_0 + 1
 		end
 	end
 
-	return slot2
+	return var_19_0
 end
 
-function slot0.isTaskFinished(slot0, slot1)
-	return slot1.finishCount > 0 and slot1.config.maxProgress <= slot1.progress
+function var_0_0.isTaskFinished(arg_20_0, arg_20_1)
+	return arg_20_1.finishCount > 0 and arg_20_1.progress >= arg_20_1.config.maxProgress
 end
 
-function slot0.isTaskFinishedById(slot0, slot1)
-	return slot0.tempTaskModel:getById(slot1) and slot2.config.maxProgress <= slot2.progress
+function var_0_0.isTaskFinishedById(arg_21_0, arg_21_1)
+	local var_21_0 = arg_21_0.tempTaskModel:getById(arg_21_1)
+
+	return var_21_0 and var_21_0.progress >= var_21_0.config.maxProgress
 end
 
-function slot0.getDelayPlayTime(slot0, slot1)
-	if slot1 == nil then
+function var_0_0.getDelayPlayTime(arg_22_0, arg_22_1)
+	if arg_22_1 == nil then
 		return -1
 	end
 
-	if slot0._itemStartAnimTime == nil then
-		slot0._itemStartAnimTime = Time.time + slot0.OpenAnimStartTime
+	local var_22_0 = Time.time
+
+	if arg_22_0._itemStartAnimTime == nil then
+		arg_22_0._itemStartAnimTime = var_22_0 + arg_22_0.OpenAnimStartTime
 	end
 
-	if not slot0:getIndex(slot1) or slot3 > slot0.AnimRowCount * slot0.ColumnCount then
+	local var_22_1 = arg_22_0:getIndex(arg_22_1)
+
+	if not var_22_1 or var_22_1 > arg_22_0.AnimRowCount * arg_22_0.ColumnCount then
 		return -1
 	end
 
-	if slot2 - slot0._itemStartAnimTime - (math.floor((slot3 - 1) / slot0.ColumnCount) * slot0.OpenAnimTime + slot0.OpenAnimStartTime) > 0.1 then
+	local var_22_2 = math.floor((var_22_1 - 1) / arg_22_0.ColumnCount) * arg_22_0.OpenAnimTime + arg_22_0.OpenAnimStartTime
+
+	if var_22_0 - arg_22_0._itemStartAnimTime - var_22_2 > 0.1 then
 		return -1
 	else
-		return slot4
+		return var_22_2
 	end
 end
 
-function slot0.getTotalTaskRewardCount(slot0)
-	slot1 = slot0.tempTaskModel:getList()
+function var_0_0.getTotalTaskRewardCount(arg_23_0)
+	local var_23_0 = arg_23_0.tempTaskModel:getList()
+	local var_23_1 = #var_23_0
 
-	return slot0:getTaskItemRewardCount(slot1), #slot1
+	return arg_23_0:getTaskItemRewardCount(var_23_0), var_23_1
 end
 
-function slot0.checkHasBossTask(slot0)
-	for slot4, slot5 in pairs(slot0.bossTaskMap) do
-		if tabletool.len(slot5) > 0 then
+function var_0_0.checkHasBossTask(arg_24_0)
+	for iter_24_0, iter_24_1 in pairs(arg_24_0.bossTaskMap) do
+		if tabletool.len(iter_24_1) > 0 then
 			return true
 		end
 	end
@@ -297,6 +337,6 @@ function slot0.checkHasBossTask(slot0)
 	return false
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

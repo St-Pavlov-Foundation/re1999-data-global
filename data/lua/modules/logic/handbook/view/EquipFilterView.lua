@@ -1,207 +1,212 @@
-module("modules.logic.handbook.view.EquipFilterView", package.seeall)
+﻿module("modules.logic.handbook.view.EquipFilterView", package.seeall)
 
-slot0 = class("EquipFilterView", BaseView)
+local var_0_0 = class("EquipFilterView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close")
-	slot0._goobtain = gohelper.findChild(slot0.viewGO, "container/layoutgroup/#go_obtain")
-	slot0._goget = gohelper.findChild(slot0.viewGO, "container/layoutgroup/#go_obtain/obtainContainer/#go_get")
-	slot0._gonotget = gohelper.findChild(slot0.viewGO, "container/layoutgroup/#go_obtain/obtainContainer/#go_notget")
-	slot0._goTag = gohelper.findChild(slot0.viewGO, "container/layoutgroup/#go_tag")
-	slot0._goTagContainer = gohelper.findChild(slot0.viewGO, "container/layoutgroup/#go_tag/#go_tagContainer")
-	slot0._gotagItem = gohelper.findChild(slot0.viewGO, "container/layoutgroup/#go_tag/#go_tagContainer/#go_tagItem")
-	slot0._btnreset = gohelper.findChildButtonWithAudio(slot0.viewGO, "container/#btn_reset")
-	slot0._btnconfirm = gohelper.findChildButtonWithAudio(slot0.viewGO, "container/#btn_confirm")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
+	arg_1_0._goobtain = gohelper.findChild(arg_1_0.viewGO, "container/layoutgroup/#go_obtain")
+	arg_1_0._goget = gohelper.findChild(arg_1_0.viewGO, "container/layoutgroup/#go_obtain/obtainContainer/#go_get")
+	arg_1_0._gonotget = gohelper.findChild(arg_1_0.viewGO, "container/layoutgroup/#go_obtain/obtainContainer/#go_notget")
+	arg_1_0._goTag = gohelper.findChild(arg_1_0.viewGO, "container/layoutgroup/#go_tag")
+	arg_1_0._goTagContainer = gohelper.findChild(arg_1_0.viewGO, "container/layoutgroup/#go_tag/#go_tagContainer")
+	arg_1_0._gotagItem = gohelper.findChild(arg_1_0.viewGO, "container/layoutgroup/#go_tag/#go_tagContainer/#go_tagItem")
+	arg_1_0._btnreset = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "container/#btn_reset")
+	arg_1_0._btnconfirm = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "container/#btn_confirm")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
-	slot0._btnreset:AddClickListener(slot0._btnresetOnClick, slot0)
-	slot0._btnconfirm:AddClickListener(slot0._btnconfirmOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+	arg_2_0._btnreset:AddClickListener(arg_2_0._btnresetOnClick, arg_2_0)
+	arg_2_0._btnconfirm:AddClickListener(arg_2_0._btnconfirmOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
-	slot0._btnreset:RemoveClickListener()
-	slot0._btnconfirm:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
+	arg_3_0._btnreset:RemoveClickListener()
+	arg_3_0._btnconfirm:RemoveClickListener()
 end
 
-slot0.Color = {
+var_0_0.Color = {
 	SelectColor = Color.New(1, 0.486, 0.25, 1),
 	NormalColor = Color.New(0.898, 0.898, 0.898, 1)
 }
 
-function slot0._btncloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseOnClick(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0._btnresetOnClick(slot0)
-	slot0.filterMo:reset()
-	slot0:refreshUI()
+function var_0_0._btnresetOnClick(arg_5_0)
+	arg_5_0.filterMo:reset()
+	arg_5_0:refreshUI()
 end
 
-function slot0._btnconfirmOnClick(slot0)
-	EquipFilterModel.instance:applyMo(slot0.filterMo)
-	slot0:closeThis()
+function var_0_0._btnconfirmOnClick(arg_6_0)
+	EquipFilterModel.instance:applyMo(arg_6_0.filterMo)
+	arg_6_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
-	gohelper.setActive(slot0._gotagItem, false)
+function var_0_0._editableInitView(arg_7_0)
+	gohelper.setActive(arg_7_0._gotagItem, false)
 end
 
-function slot0.initObtainItem(slot0)
-	if not slot0.obtainItemGet then
-		slot0.obtainItemGet = slot0:createObtainItem(slot0._goget)
-		slot0.obtainItemGet.type = EquipFilterModel.ObtainEnum.Get
+function var_0_0.initObtainItem(arg_8_0)
+	if not arg_8_0.obtainItemGet then
+		arg_8_0.obtainItemGet = arg_8_0:createObtainItem(arg_8_0._goget)
+		arg_8_0.obtainItemGet.type = EquipFilterModel.ObtainEnum.Get
 	end
 
-	if not slot0.obtainItemNotGet then
-		slot0.obtainItemNotGet = slot0:createObtainItem(slot0._gonotget)
-		slot0.obtainItemNotGet.type = EquipFilterModel.ObtainEnum.NotGet
+	if not arg_8_0.obtainItemNotGet then
+		arg_8_0.obtainItemNotGet = arg_8_0:createObtainItem(arg_8_0._gonotget)
+		arg_8_0.obtainItemNotGet.type = EquipFilterModel.ObtainEnum.NotGet
 	end
 end
 
-function slot0.createObtainItem(slot0, slot1)
-	slot2 = slot0:getUserDataTb_()
-	slot2.go = slot1
-	slot2.goUnSelect = gohelper.findChild(slot2.go, "unselected")
-	slot2.goSelect = gohelper.findChild(slot2.go, "selected")
-	slot2.btnClick = gohelper.findChildClick(slot2.go, "click")
+function var_0_0.createObtainItem(arg_9_0, arg_9_1)
+	local var_9_0 = arg_9_0:getUserDataTb_()
 
-	slot2.btnClick:AddClickListener(slot0.onClickObtainTypeItem, slot0, slot2)
+	var_9_0.go = arg_9_1
+	var_9_0.goUnSelect = gohelper.findChild(var_9_0.go, "unselected")
+	var_9_0.goSelect = gohelper.findChild(var_9_0.go, "selected")
+	var_9_0.btnClick = gohelper.findChildClick(var_9_0.go, "click")
 
-	return slot2
+	var_9_0.btnClick:AddClickListener(arg_9_0.onClickObtainTypeItem, arg_9_0, var_9_0)
+
+	return var_9_0
 end
 
-function slot0.initTagItem(slot0)
-	if slot0.tagItemList then
+function var_0_0.initTagItem(arg_10_0)
+	if arg_10_0.tagItemList then
 		return
 	end
 
-	slot0.tagItemList = {}
-	slot1 = nil
+	arg_10_0.tagItemList = {}
 
-	for slot5, slot6 in ipairs(EquipFilterModel.getAllTagList()) do
-		slot1 = slot0:createTypeItem()
-		slot1.tagCo = slot6
+	local var_10_0
 
-		gohelper.setActive(slot1.go, true)
+	for iter_10_0, iter_10_1 in ipairs(EquipFilterModel.getAllTagList()) do
+		local var_10_1 = arg_10_0:createTypeItem()
 
-		slot1.tagText.text = slot6.name
+		var_10_1.tagCo = iter_10_1
 
-		table.insert(slot0.tagItemList, slot1)
+		gohelper.setActive(var_10_1.go, true)
+
+		var_10_1.tagText.text = iter_10_1.name
+
+		table.insert(arg_10_0.tagItemList, var_10_1)
 	end
 end
 
-function slot0.createTypeItem(slot0)
-	slot1 = slot0:getUserDataTb_()
-	slot1.go = gohelper.cloneInPlace(slot0._gotagItem)
-	slot1.tagText = gohelper.findChildText(slot1.go, "tagText")
-	slot1.goSelect = gohelper.findChild(slot1.go, "selected")
-	slot1.goUnSelect = gohelper.findChild(slot1.go, "unselected")
-	slot1.btnClick = gohelper.findChildClickWithAudio(slot1.go, "click", AudioEnum.UI.UI_Common_Click)
+function var_0_0.createTypeItem(arg_11_0)
+	local var_11_0 = arg_11_0:getUserDataTb_()
 
-	slot1.btnClick:AddClickListener(slot0.onClickTagItem, slot0, slot1)
+	var_11_0.go = gohelper.cloneInPlace(arg_11_0._gotagItem)
+	var_11_0.tagText = gohelper.findChildText(var_11_0.go, "tagText")
+	var_11_0.goSelect = gohelper.findChild(var_11_0.go, "selected")
+	var_11_0.goUnSelect = gohelper.findChild(var_11_0.go, "unselected")
+	var_11_0.btnClick = gohelper.findChildClickWithAudio(var_11_0.go, "click", AudioEnum.UI.UI_Common_Click)
 
-	return slot1
+	var_11_0.btnClick:AddClickListener(arg_11_0.onClickTagItem, arg_11_0, var_11_0)
+
+	return var_11_0
 end
 
-function slot0.onClickTagItem(slot0, slot1)
-	if slot0:isSelectTag(slot1.tagCo.id) then
-		tabletool.removeValue(slot0.filterMo.selectTagList, slot1.tagCo.id)
+function var_0_0.onClickTagItem(arg_12_0, arg_12_1)
+	if arg_12_0:isSelectTag(arg_12_1.tagCo.id) then
+		tabletool.removeValue(arg_12_0.filterMo.selectTagList, arg_12_1.tagCo.id)
 	else
-		table.insert(slot0.filterMo.selectTagList, slot1.tagCo.id)
+		table.insert(arg_12_0.filterMo.selectTagList, arg_12_1.tagCo.id)
 	end
 
-	slot0:refreshTagIsSelect(slot1)
+	arg_12_0:refreshTagIsSelect(arg_12_1)
 end
 
-function slot0.onClickObtainTypeItem(slot0, slot1)
-	if slot0.filterMo.obtainShowType == slot1.type then
-		slot0.filterMo.obtainShowType = EquipFilterModel.ObtainEnum.All
+function var_0_0.onClickObtainTypeItem(arg_13_0, arg_13_1)
+	if arg_13_0.filterMo.obtainShowType == arg_13_1.type then
+		arg_13_0.filterMo.obtainShowType = EquipFilterModel.ObtainEnum.All
 	else
-		slot0.filterMo.obtainShowType = slot1.type
+		arg_13_0.filterMo.obtainShowType = arg_13_1.type
 	end
 
-	slot0:refreshObtainTypeUIContainer()
+	arg_13_0:refreshObtainTypeUIContainer()
 end
 
-function slot0.initViewParam(slot0)
-	slot0.isNotShowObtain = slot0.viewContainer.viewParam and slot0.viewContainer.viewParam.isNotShowObtain
-	slot0.parentViewName = slot0.viewContainer.viewParam and slot0.viewContainer.viewParam.viewName
+function var_0_0.initViewParam(arg_14_0)
+	arg_14_0.isNotShowObtain = arg_14_0.viewContainer.viewParam and arg_14_0.viewContainer.viewParam.isNotShowObtain
+	arg_14_0.parentViewName = arg_14_0.viewContainer.viewParam and arg_14_0.viewContainer.viewParam.viewName
 end
 
-function slot0.onOpen(slot0)
-	slot0:initViewParam()
+function var_0_0.onOpen(arg_15_0)
+	arg_15_0:initViewParam()
 
-	slot0.filterMo = EquipFilterModel.instance:getFilterMo(slot0.parentViewName):clone()
+	arg_15_0.filterMo = EquipFilterModel.instance:getFilterMo(arg_15_0.parentViewName):clone()
 
-	if slot0.isNotShowObtain then
-		gohelper.setActive(slot0._goobtain, false)
+	if arg_15_0.isNotShowObtain then
+		gohelper.setActive(arg_15_0._goobtain, false)
 	else
-		gohelper.setActive(slot0._goobtain, true)
-		slot0:initObtainItem()
+		gohelper.setActive(arg_15_0._goobtain, true)
+		arg_15_0:initObtainItem()
 	end
 
-	slot0:initTagItem()
-	slot0:refreshUI()
+	arg_15_0:initTagItem()
+	arg_15_0:refreshUI()
 end
 
-function slot0.refreshUI(slot0)
-	if not slot0.isNotShowObtain then
-		slot0:refreshObtainTypeUIContainer()
+function var_0_0.refreshUI(arg_16_0)
+	if not arg_16_0.isNotShowObtain then
+		arg_16_0:refreshObtainTypeUIContainer()
 	end
 
-	slot0:refreshTagUIContainer()
+	arg_16_0:refreshTagUIContainer()
 end
 
-function slot0.refreshObtainTypeUIContainer(slot0)
-	slot0:refreshObtainTypeItemIsSelect(slot0.obtainItemGet)
-	slot0:refreshObtainTypeItemIsSelect(slot0.obtainItemNotGet)
+function var_0_0.refreshObtainTypeUIContainer(arg_17_0)
+	arg_17_0:refreshObtainTypeItemIsSelect(arg_17_0.obtainItemGet)
+	arg_17_0:refreshObtainTypeItemIsSelect(arg_17_0.obtainItemNotGet)
 end
 
-function slot0.refreshTagUIContainer(slot0)
-	for slot4, slot5 in ipairs(slot0.tagItemList) do
-		slot0:refreshTagIsSelect(slot5)
-	end
-end
-
-function slot0.refreshObtainTypeItemIsSelect(slot0, slot1)
-	slot2 = slot0.filterMo.obtainShowType == slot1.type
-
-	gohelper.setActive(slot1.goSelect, slot2)
-	gohelper.setActive(slot1.goUnSelect, not slot2)
-end
-
-function slot0.refreshTagIsSelect(slot0, slot1)
-	slot2 = slot0:isSelectTag(slot1.tagCo.id)
-
-	gohelper.setActive(slot1.goSelect, slot2)
-	gohelper.setActive(slot1.goUnSelect, not slot2)
-
-	slot1.tagText.color = slot2 and uv0.Color.SelectColor or uv0.Color.NormalColor
-end
-
-function slot0.isSelectTag(slot0, slot1)
-	return next(slot0.filterMo.selectTagList) and tabletool.indexOf(slot0.filterMo.selectTagList, slot1)
-end
-
-function slot0.onClose(slot0)
-end
-
-function slot0.onDestroyView(slot0)
-	for slot4, slot5 in ipairs(slot0.tagItemList) do
-		slot5.btnClick:RemoveClickListener()
-	end
-
-	if not slot0.isNotShowObtain then
-		slot0.obtainItemGet.btnClick:RemoveClickListener()
-		slot0.obtainItemNotGet.btnClick:RemoveClickListener()
+function var_0_0.refreshTagUIContainer(arg_18_0)
+	for iter_18_0, iter_18_1 in ipairs(arg_18_0.tagItemList) do
+		arg_18_0:refreshTagIsSelect(iter_18_1)
 	end
 end
 
-return slot0
+function var_0_0.refreshObtainTypeItemIsSelect(arg_19_0, arg_19_1)
+	local var_19_0 = arg_19_0.filterMo.obtainShowType == arg_19_1.type
+
+	gohelper.setActive(arg_19_1.goSelect, var_19_0)
+	gohelper.setActive(arg_19_1.goUnSelect, not var_19_0)
+end
+
+function var_0_0.refreshTagIsSelect(arg_20_0, arg_20_1)
+	local var_20_0 = arg_20_0:isSelectTag(arg_20_1.tagCo.id)
+
+	gohelper.setActive(arg_20_1.goSelect, var_20_0)
+	gohelper.setActive(arg_20_1.goUnSelect, not var_20_0)
+
+	arg_20_1.tagText.color = var_20_0 and var_0_0.Color.SelectColor or var_0_0.Color.NormalColor
+end
+
+function var_0_0.isSelectTag(arg_21_0, arg_21_1)
+	return next(arg_21_0.filterMo.selectTagList) and tabletool.indexOf(arg_21_0.filterMo.selectTagList, arg_21_1)
+end
+
+function var_0_0.onClose(arg_22_0)
+	return
+end
+
+function var_0_0.onDestroyView(arg_23_0)
+	for iter_23_0, iter_23_1 in ipairs(arg_23_0.tagItemList) do
+		iter_23_1.btnClick:RemoveClickListener()
+	end
+
+	if not arg_23_0.isNotShowObtain then
+		arg_23_0.obtainItemGet.btnClick:RemoveClickListener()
+		arg_23_0.obtainItemNotGet.btnClick:RemoveClickListener()
+	end
+end
+
+return var_0_0

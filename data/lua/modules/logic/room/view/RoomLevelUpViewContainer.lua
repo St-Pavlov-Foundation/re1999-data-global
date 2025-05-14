@@ -1,18 +1,18 @@
-module("modules.logic.room.view.RoomLevelUpViewContainer", package.seeall)
+﻿module("modules.logic.room.view.RoomLevelUpViewContainer", package.seeall)
 
-slot0 = class("RoomLevelUpViewContainer", BaseViewContainer)
+local var_0_0 = class("RoomLevelUpViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, RoomLevelUpView.New())
-	table.insert(slot1, RoomViewTopRight.New())
+	table.insert(var_1_0, RoomLevelUpView.New())
+	table.insert(var_1_0, RoomViewTopRight.New())
 
-	return slot1
+	return var_1_0
 end
 
-function slot0.onContainerClickModalMask(slot0)
+function var_0_0.onContainerClickModalMask(arg_2_0)
 	ViewMgr.instance:closeView(ViewName.RoomLevelUpView, nil, true)
 end
 
-return slot0
+return var_0_0

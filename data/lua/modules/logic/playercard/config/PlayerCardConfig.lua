@@ -1,57 +1,58 @@
-module("modules.logic.playercard.config.PlayerCardConfig", package.seeall)
+﻿module("modules.logic.playercard.config.PlayerCardConfig", package.seeall)
 
-slot0 = class("PlayerCardConfig", BaseConfig)
+local var_0_0 = class("PlayerCardConfig", BaseConfig)
 
-function slot0.ctor(slot0)
+function var_0_0.ctor(arg_1_0)
+	return
 end
 
-function slot0.reqConfigNames(slot0)
+function var_0_0.reqConfigNames(arg_2_0)
 	return {
 		"playercard",
 		"player_newspaper"
 	}
 end
 
-function slot0.onConfigLoaded(slot0, slot1, slot2)
-	if slot1 == "playercard" then
-		slot0.playcardBaseInfoConfig = slot2
-	elseif slot1 == "player_newspaper" then
-		slot0.playcardProgressConfig = slot2
+function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_1 == "playercard" then
+		arg_3_0.playcardBaseInfoConfig = arg_3_2
+	elseif arg_3_1 == "player_newspaper" then
+		arg_3_0.playcardProgressConfig = arg_3_2
 	end
 end
 
-function slot0.getCardBaseInfoList(slot0)
-	return slot0.playcardBaseInfoConfig.configList
+function var_0_0.getCardBaseInfoList(arg_4_0)
+	return arg_4_0.playcardBaseInfoConfig.configList
 end
 
-function slot0.getCardBaseInfoById(slot0, slot1)
-	return slot0.playcardBaseInfoConfig.configList[slot1]
+function var_0_0.getCardBaseInfoById(arg_5_0, arg_5_1)
+	return arg_5_0.playcardBaseInfoConfig.configList[arg_5_1]
 end
 
-function slot0.getCardProgressList(slot0)
-	return slot0.playcardProgressConfig.configList
+function var_0_0.getCardProgressList(arg_6_0)
+	return arg_6_0.playcardProgressConfig.configList
 end
 
-function slot0.getCardProgressById(slot0, slot1)
-	return slot0.playcardProgressConfig.configList[slot1]
+function var_0_0.getCardProgressById(arg_7_0, arg_7_1)
+	return arg_7_0.playcardProgressConfig.configList[arg_7_1]
 end
 
-function slot0.getBgPath(slot0, slot1)
-	if not slot1 then
+function var_0_0.getBgPath(arg_8_0, arg_8_1)
+	if not arg_8_1 then
 		return "ui/viewres/player/playercard/playercardview_bg.prefab"
 	else
-		return string.format("ui/viewres/player/playercard/playercardview_bg_%s.prefab", slot1)
+		return string.format("ui/viewres/player/playercard/playercardview_bg_%s.prefab", arg_8_1)
 	end
 end
 
-function slot0.getTopEffectPath(slot0, slot1)
-	if not slot1 then
+function var_0_0.getTopEffectPath(arg_9_0, arg_9_1)
+	if not arg_9_1 then
 		return "ui/viewres/player/playercard/playercardview_effect.prefab"
 	else
-		return string.format("ui/viewres/player/playercard/playercardview_playercardview_effect_%s.prefab", slot1)
+		return string.format("ui/viewres/player/playercard/playercardview_playercardview_effect_%s.prefab", arg_9_1)
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

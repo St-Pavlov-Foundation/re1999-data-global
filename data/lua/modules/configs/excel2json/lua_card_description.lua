@@ -1,6 +1,7 @@
-module("modules.configs.excel2json.lua_card_description", package.seeall)
+﻿module("modules.configs.excel2json.lua_card_description", package.seeall)
 
-slot1 = {
+local var_0_0 = {}
+local var_0_1 = {
 	card2 = 4,
 	card1 = 2,
 	cardname_en = 5,
@@ -10,17 +11,17 @@ slot1 = {
 	carddescription1 = 7,
 	attribute = 3
 }
-slot2 = {
+local var_0_2 = {
 	"id"
 }
-slot3 = {
+local var_0_3 = {
 	carddescription1 = 2,
 	carddescription2 = 3,
 	cardname = 1
 }
 
-return {
-	onLoad = function (slot0)
-		uv0.configList, uv0.configDict = JsonToLuaParser.parse(slot0, uv1, uv2, uv3)
-	end
-}
+function var_0_0.onLoad(arg_1_0)
+	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+end
+
+return var_0_0

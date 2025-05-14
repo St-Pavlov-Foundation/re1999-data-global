@@ -1,32 +1,36 @@
-module("modules.logic.settings.controller.SettingsRoleVoiceController", package.seeall)
+﻿module("modules.logic.settings.controller.SettingsRoleVoiceController", package.seeall)
 
-slot0 = class("SettingsRoleVoiceController", BaseController)
+local var_0_0 = class("SettingsRoleVoiceController", BaseController)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.onInitFinish(slot0)
+function var_0_0.onInitFinish(arg_2_0)
+	return
 end
 
-function slot0.addConstEvents(slot0)
+function var_0_0.addConstEvents(arg_3_0)
+	return
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_4_0)
+	return
 end
 
-function slot0.openSettingRoleVoiceView(slot0)
+function var_0_0.openSettingRoleVoiceView(arg_5_0)
 	ViewMgr.instance:openView(ViewName.SettingsRoleVoiceView)
 end
 
-function slot0.setCharVoiceLangPrefValue(slot0, slot1, slot2)
-	for slot6, slot7 in ipairs(slot1) do
-		SettingsRoleVoiceModel.instance:setCharVoiceLangPrefValue(slot2, slot7.heroId)
+function var_0_0.setCharVoiceLangPrefValue(arg_6_0, arg_6_1, arg_6_2)
+	for iter_6_0, iter_6_1 in ipairs(arg_6_1) do
+		SettingsRoleVoiceModel.instance:setCharVoiceLangPrefValue(arg_6_2, iter_6_1.heroId)
 	end
 
 	GameFacade.showToast(ToastEnum.SettingCharVoiceLang)
-	slot0:dispatchEvent(SettingsEvent.OnCharVoiceTypeChanged, slot1)
+	arg_6_0:dispatchEvent(SettingsEvent.OnCharVoiceTypeChanged, arg_6_1)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

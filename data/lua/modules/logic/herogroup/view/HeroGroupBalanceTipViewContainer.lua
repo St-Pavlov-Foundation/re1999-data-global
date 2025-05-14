@@ -1,11 +1,11 @@
-module("modules.logic.herogroup.view.HeroGroupBalanceTipViewContainer", package.seeall)
+﻿module("modules.logic.herogroup.view.HeroGroupBalanceTipViewContainer", package.seeall)
 
-slot0 = class("HeroGroupBalanceTipViewContainer", BaseViewContainer)
+local var_0_0 = class("HeroGroupBalanceTipViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		HeroGroupBalanceTipView.New()
 	}
 end
 
-return slot0
+return var_0_0

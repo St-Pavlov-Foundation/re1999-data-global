@@ -1,9 +1,9 @@
-module("modules.spine.SpineLookDir", package.seeall)
+﻿module("modules.spine.SpineLookDir", package.seeall)
 
-slot0 = {
-	Left = 1,
-	Right = -1
-}
-slot0.Default = slot0.Left
+local var_0_0 = {}
 
-return slot0
+var_0_0.Left = 1
+var_0_0.Right = -1
+var_0_0.Default = var_0_0.Left
+
+return var_0_0

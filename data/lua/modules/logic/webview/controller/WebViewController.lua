@@ -1,151 +1,207 @@
-slot0 = string.format
-slot1 = table.insert
-slot2 = table.concat
+﻿local var_0_0 = string.format
+local var_0_1 = table.insert
+local var_0_2 = table.concat
 
 module("modules.logic.webview.controller.WebViewController", package.seeall)
 
-slot3 = class("WebViewController")
+local var_0_3 = class("WebViewController")
 
-function slot3.openWebView(slot0, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9, slot10)
+function var_0_3.openWebView(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4, arg_1_5, arg_1_6, arg_1_7, arg_1_8, arg_1_9, arg_1_10)
 	if SLFramework.FrameworkSettings.IsEditor or BootNativeUtil.isWindows() then
-		if slot2 then
-			slot1 = slot0:getRecordUserUrl(slot1)
+		if arg_1_2 then
+			arg_1_1 = arg_1_0:getRecordUserUrl(arg_1_1)
 		end
 
-		GameUtil.openURL(slot1)
+		GameUtil.openURL(arg_1_1)
 
 		return
 	end
 
-	if string.nilorempty(slot1) then
+	if string.nilorempty(arg_1_1) then
 		logError("url 不能为空")
 
 		return
 	end
 
 	ViewMgr.instance:openView(ViewName.WebView, {
-		url = slot1,
-		needRecordUser = slot2,
-		callback = slot3,
-		callbackObj = slot4,
-		left = slot5,
-		top = slot6,
-		right = slot7,
-		bottom = slot8,
-		autoTop = slot9,
-		autoBottom = slot10
+		url = arg_1_1,
+		needRecordUser = arg_1_2,
+		callback = arg_1_3,
+		callbackObj = arg_1_4,
+		left = arg_1_5,
+		top = arg_1_6,
+		right = arg_1_7,
+		bottom = arg_1_8,
+		autoTop = arg_1_9,
+		autoBottom = arg_1_10
 	})
 end
 
-function slot3.getRecordUserUrl(slot0, slot1)
-	if string.nilorempty(slot1) then
-		return slot1
+function var_0_3.getRecordUserUrl(arg_2_0, arg_2_1)
+	if string.nilorempty(arg_2_1) then
+		return arg_2_1
 	end
 
-	slot2 = {
-		slot1 .. "?" .. string.format("timestamp=%s", ServerTime.now() * 1000)
+	local var_2_0 = {
+		arg_2_1 .. "?" .. string.format("timestamp=%s", ServerTime.now() * 1000)
 	}
 
-	table.insert(slot2, string.format("gameId=%s", SDKMgr.instance:getGameId()))
-	table.insert(slot2, string.format("gameRoleId=%s", PlayerModel.instance:getMyUserId()))
-	table.insert(slot2, string.format("channelUserId=%s", LoginModel.instance.channelUserId))
-	table.insert(slot2, string.format("deviceModel=%s", slot0:urlEncode(UnityEngine.SystemInfo.deviceModel)))
-	table.insert(slot2, string.format("deviceId=%s", SDKMgr.instance:getDeviceInfo().deviceId))
-	table.insert(slot2, string.format("os=%s", slot0:urlEncode(UnityEngine.SystemInfo.operatingSystem)))
-	table.insert(slot2, string.format("token=%s", SDKMgr.instance:getGameSdkToken()))
-	table.insert(slot2, string.format("channelId=%s", SDKMgr.instance:getChannelId()))
-	table.insert(slot2, string.format("isEmulator=%s", SDKMgr.instance:isEmulator() and 1 or 0))
+	table.insert(var_2_0, string.format("gameId=%s", SDKMgr.instance:getGameId()))
+	table.insert(var_2_0, string.format("gameRoleId=%s", PlayerModel.instance:getMyUserId()))
+	table.insert(var_2_0, string.format("channelUserId=%s", LoginModel.instance.channelUserId))
 
-	return table.concat(slot2, "&")
+	local var_2_1 = string.format("deviceModel=%s", arg_2_0:urlEncode(UnityEngine.SystemInfo.deviceModel))
+
+	table.insert(var_2_0, var_2_1)
+	table.insert(var_2_0, string.format("deviceId=%s", SDKMgr.instance:getDeviceInfo().deviceId))
+
+	local var_2_2 = string.format("os=%s", arg_2_0:urlEncode(UnityEngine.SystemInfo.operatingSystem))
+
+	table.insert(var_2_0, var_2_2)
+	table.insert(var_2_0, string.format("token=%s", SDKMgr.instance:getGameSdkToken()))
+	table.insert(var_2_0, string.format("channelId=%s", SDKMgr.instance:getChannelId()))
+	table.insert(var_2_0, string.format("isEmulator=%s", SDKMgr.instance:isEmulator() and 1 or 0))
+
+	return table.concat(var_2_0, "&")
 end
 
-function slot3.urlEncode(slot0, slot1)
-	return string.gsub(string.gsub(slot1, "([^%w%.%- ])", function (slot0)
-		return string.format("%%%02X", string.byte(slot0))
-	end), " ", "+")
+function var_0_3.urlEncode(arg_3_0, arg_3_1)
+	arg_3_1 = string.gsub(arg_3_1, "([^%w%.%- ])", function(arg_4_0)
+		return string.format("%%%02X", string.byte(arg_4_0))
+	end)
+
+	return (string.gsub(arg_3_1, " ", "+"))
 end
 
-function slot3.getVideoUrl(slot0, slot1, slot2)
-	slot4 = {
-		string.format(slot0:getVideoUrlHead(), slot1) .. string.format("gameId=%s", SDKMgr.instance:getGameId())
+function var_0_3.getVideoUrl(arg_5_0, arg_5_1, arg_5_2)
+	local var_5_0 = arg_5_0:getVideoUrlHead()
+	local var_5_1 = string.format(var_5_0, arg_5_1)
+	local var_5_2 = {
+		var_5_1 .. string.format("gameId=%s", SDKMgr.instance:getGameId())
 	}
 
-	table.insert(slot4, string.format("accountId=%s", LoginModel.instance.channelUserId))
-	table.insert(slot4, string.format("roleId=%s", PlayerModel.instance:getMyUserId()))
-	table.insert(slot4, string.format("skinId=%s", slot2))
-	table.insert(slot4, string.format("language=%s", uv0.instance:urlEncode(LangSettings.instance:getCurLangKeyByShortCut(true))))
-	table.insert(slot4, string.format("deviceType=%s", TurnBackInvitationModel.instance:getCurrentDeviceType()))
+	table.insert(var_5_2, string.format("accountId=%s", LoginModel.instance.channelUserId))
+	table.insert(var_5_2, string.format("roleId=%s", PlayerModel.instance:getMyUserId()))
+	table.insert(var_5_2, string.format("skinId=%s", arg_5_2))
 
-	return table.concat(slot4, "&")
+	local var_5_3 = var_0_3.instance:urlEncode(LangSettings.instance:getCurLangKeyByShortCut(true))
+
+	table.insert(var_5_2, string.format("language=%s", var_5_3))
+
+	local var_5_4 = TurnBackInvitationModel.instance:getCurrentDeviceType()
+
+	table.insert(var_5_2, string.format("deviceType=%s", var_5_4))
+
+	return (table.concat(var_5_2, "&"))
 end
 
-function slot3.getVideoUrlHead(slot0)
-	slot2 = nil
-	slot4 = GameChannelConfig.getServerType() == GameChannelConfig.ServerType.OutRelease or slot3 == GameChannelConfig.ServerType.OutPreview
+function var_0_3.getVideoUrlHead(arg_6_0)
+	local var_6_0 = SDKMgr.instance:getGameId()
+	local var_6_1
+	local var_6_2 = GameChannelConfig.getServerType()
+	local var_6_3 = var_6_2 == GameChannelConfig.ServerType.OutRelease or var_6_2 == GameChannelConfig.ServerType.OutPreview
 
-	return tostring(SDKMgr.instance:getGameId()) == "50001" and (slot4 and "https://re.bluepoch.com/event/skinvideo/%s?" or "https://re-test.sl916.com/event/skinvideo/%s?") or slot4 and "https://reverse1999.bluepoch.com/event/skinvideo/%s?" or "https://re1999-hwtest.sl916.com/event/skinvideo/%s?"
+	if tostring(var_6_0) == "50001" then
+		var_6_1 = var_6_3 and "https://re.bluepoch.com/event/skinvideo/%s?" or "https://re-test.sl916.com/event/skinvideo/%s?"
+	else
+		var_6_1 = var_6_3 and "https://reverse1999.bluepoch.com/event/skinvideo/%s?" or "https://re1999-hwtest.sl916.com/event/skinvideo/%s?"
+	end
+
+	return var_6_1
 end
 
-function slot3.getWebViewTopOffset(slot0, slot1, slot2, slot3)
-	slot1 = slot1 or UnityEngine.Screen.width
-	slot2 = slot2 or UnityEngine.Screen.height
-	slot3 = slot3 or WebViewEnum.DefaultMargin.Top
-	slot6 = 1920 / 1080
-	slot8 = slot1 / slot6
-	slot9 = 0
-	slot10 = 0
-	slot11 = 0.5
+function var_0_3.getWebViewTopOffset(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
+	arg_7_1 = arg_7_1 or UnityEngine.Screen.width
+	arg_7_2 = arg_7_2 or UnityEngine.Screen.height
+	arg_7_3 = arg_7_3 or WebViewEnum.DefaultMargin.Top
 
-	return slot1 / slot2 >= slot6 - 0.01 and math.max(0, (slot2 - slot8) * slot11) + slot3 * slot2 / slot4 or slot7 <= slot6 - 0.01 and math.max(0, (slot2 - slot8) * slot11) + slot3 * slot8 / slot4 or slot3 * slot8 / slot4
+	local var_7_0 = 1080
+	local var_7_1 = 1920 / var_7_0
+	local var_7_2 = arg_7_1 / arg_7_2
+	local var_7_3 = arg_7_1 / var_7_1
+	local var_7_4 = 0
+	local var_7_5 = 0
+	local var_7_6 = 0.5
+
+	if var_7_2 >= var_7_1 - 0.01 then
+		local var_7_7 = arg_7_3 * (arg_7_2 / var_7_0)
+
+		var_7_5 = math.max(0, (arg_7_2 - var_7_3) * var_7_6) + var_7_7
+	elseif var_7_2 <= var_7_1 - 0.01 then
+		local var_7_8 = arg_7_3 * (var_7_3 / var_7_0)
+
+		var_7_5 = math.max(0, (arg_7_2 - var_7_3) * var_7_6) + var_7_8
+	else
+		var_7_5 = arg_7_3 * (var_7_3 / var_7_0)
+	end
+
+	return var_7_5
 end
 
-function slot3.getWebViewBottomOffset(slot0, slot1, slot2, slot3)
-	slot1 = slot1 or UnityEngine.Screen.width
-	slot2 = slot2 or UnityEngine.Screen.height
-	slot3 = slot3 or WebViewEnum.DefaultMargin.Bottom
-	slot6 = 1920 / 1080
-	slot8 = slot1 / slot6
-	slot9 = 0
-	slot10 = 0
-	slot11 = 0.5
+function var_0_3.getWebViewBottomOffset(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
+	arg_8_1 = arg_8_1 or UnityEngine.Screen.width
+	arg_8_2 = arg_8_2 or UnityEngine.Screen.height
+	arg_8_3 = arg_8_3 or WebViewEnum.DefaultMargin.Bottom
 
-	return slot1 / slot2 >= slot6 - 0.01 and math.max(0, (slot2 - slot8) * slot11) + slot3 * slot2 / slot4 or slot7 <= slot6 - 0.01 and math.max(0, (slot2 - slot8) * slot11) + slot3 * slot8 / slot4 or slot3 * slot8 / slot4
+	local var_8_0 = 1080
+	local var_8_1 = 1920 / var_8_0
+	local var_8_2 = arg_8_1 / arg_8_2
+	local var_8_3 = arg_8_1 / var_8_1
+	local var_8_4 = 0
+	local var_8_5 = 0
+	local var_8_6 = 0.5
+
+	if var_8_2 >= var_8_1 - 0.01 then
+		local var_8_7 = arg_8_3 * (arg_8_2 / var_8_0)
+
+		var_8_5 = math.max(0, (arg_8_2 - var_8_3) * var_8_6) + var_8_7
+	elseif var_8_2 <= var_8_1 - 0.01 then
+		local var_8_8 = arg_8_3 * (var_8_3 / var_8_0)
+
+		var_8_5 = math.max(0, (arg_8_2 - var_8_3) * var_8_6) + var_8_8
+	else
+		var_8_5 = arg_8_3 * (var_8_3 / var_8_0)
+	end
+
+	return var_8_5
 end
 
-function slot3.urlParse(slot0)
-	if string.split(slot0, "?") and slot1[2] then
-		for slot6, slot7 in string.gmatch(slot1[2], "([^&=]+)=([^&=]*)") do
-			-- Nothing
+function var_0_3.urlParse(arg_9_0)
+	local var_9_0 = string.split(arg_9_0, "?")
+
+	if var_9_0 and var_9_0[2] then
+		local var_9_1 = {}
+
+		for iter_9_0, iter_9_1 in string.gmatch(var_9_0[2], "([^&=]+)=([^&=]*)") do
+			var_9_1[iter_9_0] = iter_9_1
 		end
 
-		return {
-			[slot6] = slot7
-		}
+		return var_9_1
 	end
 
 	return nil
 end
 
-function slot3.simpleOpenWebView(slot0, slot1, slot2, slot3, slot4)
-	slot5 = {}
+function var_0_3.simpleOpenWebView(arg_10_0, arg_10_1, arg_10_2, arg_10_3, arg_10_4)
+	local var_10_0 = {}
 
-	uv0(slot5, slot1 .. "?" .. uv1("timestamp=%s", ServerTime.now() * 1000))
-	uv0(slot5, uv1("gameId=%s", SDKMgr.instance:getGameId()))
-	uv0(slot5, uv1("gameRoleId=%s", PlayerModel.instance:getMyUserId()))
-	uv0(slot5, uv1("channelUserId=%s", LoginModel.instance.channelUserId))
-	uv0(slot5, uv1("deviceModel=%s", uv2.instance:urlEncode(UnityEngine.SystemInfo.deviceModel)))
-	uv0(slot5, uv1("deviceId=%s", SDKMgr.instance:getDeviceInfo().deviceId))
-	uv0(slot5, uv1("os=%s", uv2.instance:urlEncode(UnityEngine.SystemInfo.operatingSystem)))
-	uv0(slot5, uv1("token=%s", SDKMgr.instance:getGameSdkToken()))
-	uv0(slot5, uv1("channelId=%s", SDKMgr.instance:getChannelId()))
-	uv0(slot5, uv1("isEmulator=%s", SDKMgr.instance:isEmulator() and 1 or 0))
+	var_0_1(var_10_0, arg_10_1 .. "?" .. var_0_0("timestamp=%s", ServerTime.now() * 1000))
+	var_0_1(var_10_0, var_0_0("gameId=%s", SDKMgr.instance:getGameId()))
+	var_0_1(var_10_0, var_0_0("gameRoleId=%s", PlayerModel.instance:getMyUserId()))
+	var_0_1(var_10_0, var_0_0("channelUserId=%s", LoginModel.instance.channelUserId))
+	var_0_1(var_10_0, var_0_0("deviceModel=%s", var_0_3.instance:urlEncode(UnityEngine.SystemInfo.deviceModel)))
+	var_0_1(var_10_0, var_0_0("deviceId=%s", SDKMgr.instance:getDeviceInfo().deviceId))
+	var_0_1(var_10_0, var_0_0("os=%s", var_0_3.instance:urlEncode(UnityEngine.SystemInfo.operatingSystem)))
+	var_0_1(var_10_0, var_0_0("token=%s", SDKMgr.instance:getGameSdkToken()))
+	var_0_1(var_10_0, var_0_0("channelId=%s", SDKMgr.instance:getChannelId()))
+	var_0_1(var_10_0, var_0_0("isEmulator=%s", SDKMgr.instance:isEmulator() and 1 or 0))
 
-	slot6 = uv3(slot5, "&")
+	local var_10_1 = var_0_2(var_10_0, "&")
 
-	logNormal(slot6)
-	slot0:openWebView(slot6, slot2, slot3, slot4)
+	logNormal(var_10_1)
+	arg_10_0:openWebView(var_10_1, arg_10_2, arg_10_3, arg_10_4)
 end
 
-slot3.instance = slot3.New()
+var_0_3.instance = var_0_3.New()
 
-return slot3
+return var_0_3

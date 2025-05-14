@@ -1,168 +1,193 @@
-module("modules.logic.versionactivity1_5.aizila.model.AiZiLaTaskListModel", package.seeall)
+﻿module("modules.logic.versionactivity1_5.aizila.model.AiZiLaTaskListModel", package.seeall)
 
-slot0 = class("AiZiLaTaskListModel", ListScrollModel)
+local var_0_0 = class("AiZiLaTaskListModel", ListScrollModel)
 
-function slot0.init(slot0)
-	for slot9, slot10 in ipairs(AiZiLaConfig.instance:getTaskList(VersionActivity1_5Enum.ActivityId.AiZiLa)) do
-		slot11 = AiZiLaTaskMO.New()
+function var_0_0.init(arg_1_0)
+	local var_1_0 = TaskModel.instance:getAllUnlockTasks(TaskEnum.TaskType.RoleAiZiLa) or {}
+	local var_1_1 = {}
+	local var_1_2 = VersionActivity1_5Enum.ActivityId.AiZiLa
+	local var_1_3 = AiZiLaConfig.instance:getTaskList(var_1_2)
+	local var_1_4 = 0
 
-		slot11:init(slot10, (TaskModel.instance:getAllUnlockTasks(TaskEnum.TaskType.RoleAiZiLa) or {})[slot10.id])
-		table.insert({}, slot11)
+	for iter_1_0, iter_1_1 in ipairs(var_1_3) do
+		local var_1_5 = AiZiLaTaskMO.New()
 
-		if slot11:alreadyGotReward() then
-			slot5 = 0 + 1
+		var_1_5:init(iter_1_1, var_1_0[iter_1_1.id])
+		table.insert(var_1_1, var_1_5)
+
+		if var_1_5:alreadyGotReward() then
+			var_1_4 = var_1_4 + 1
 		end
 	end
 
-	if slot5 > 1 then
-		slot6 = AiZiLaTaskMO.New()
-		slot6.id = AiZiLaEnum.TaskMOAllFinishId
-		slot6.activityId = slot3
+	if var_1_4 > 1 then
+		local var_1_6 = AiZiLaTaskMO.New()
 
-		table.insert(slot2, 1, slot6)
+		var_1_6.id = AiZiLaEnum.TaskMOAllFinishId
+		var_1_6.activityId = var_1_2
+
+		table.insert(var_1_1, 1, var_1_6)
 	end
 
-	table.sort(slot2, uv0.sortMO)
+	table.sort(var_1_1, var_0_0.sortMO)
 
-	slot0._hasRankDiff = false
+	arg_1_0._hasRankDiff = false
 
-	slot0:_refreshShowTab(slot2)
-	slot0:setList(slot2)
+	arg_1_0:_refreshShowTab(var_1_1)
+	arg_1_0:setList(var_1_1)
 end
 
-function slot0.sortMO(slot0, slot1)
-	if uv0.getSortIndex(slot0) ~= uv0.getSortIndex(slot1) then
-		return slot2 < slot3
-	elseif slot0.id ~= slot1.id then
-		return slot0.id < slot1.id
+function var_0_0.sortMO(arg_2_0, arg_2_1)
+	local var_2_0 = var_0_0.getSortIndex(arg_2_0)
+	local var_2_1 = var_0_0.getSortIndex(arg_2_1)
+
+	if var_2_0 ~= var_2_1 then
+		return var_2_0 < var_2_1
+	elseif arg_2_0.id ~= arg_2_1.id then
+		return arg_2_0.id < arg_2_1.id
 	end
 end
 
-function slot0.getSortIndex(slot0)
-	if slot0.id == AiZiLaEnum.TaskMOAllFinishId then
+function var_0_0.getSortIndex(arg_3_0)
+	if arg_3_0.id == AiZiLaEnum.TaskMOAllFinishId then
 		return 1
 	end
 
-	if slot0:isFinished() then
-		return 99 + (slot0:isMainTask() and 0 or 200)
-	elseif slot0:alreadyGotReward() then
-		return 2 + slot1
+	local var_3_0 = arg_3_0:isMainTask() and 0 or 200
+
+	if arg_3_0:isFinished() then
+		return 99 + var_3_0
+	elseif arg_3_0:alreadyGotReward() then
+		return 2 + var_3_0
 	end
 
-	return 50 + slot1
+	return 50 + var_3_0
 end
 
-function slot0.createMO(slot0, slot1, slot2)
+function var_0_0.createMO(arg_4_0, arg_4_1, arg_4_2)
 	return {
-		config = slot2.config,
-		originTaskMO = slot2
+		config = arg_4_2.config,
+		originTaskMO = arg_4_2
 	}
 end
 
-function slot0.getRankDiff(slot0, slot1)
-	if slot0._hasRankDiff and slot1 then
-		slot3 = slot0:getIndex(slot1)
+function var_0_0.getRankDiff(arg_5_0, arg_5_1)
+	if arg_5_0._hasRankDiff and arg_5_1 then
+		local var_5_0 = tabletool.indexOf(arg_5_0._idIdxList, arg_5_1.id)
+		local var_5_1 = arg_5_0:getIndex(arg_5_1)
 
-		if tabletool.indexOf(slot0._idIdxList, slot1.id) and slot3 then
-			slot0._idIdxList[slot2] = -2
+		if var_5_0 and var_5_1 then
+			arg_5_0._idIdxList[var_5_0] = -2
 
-			return slot3 - slot2
+			return var_5_1 - var_5_0
 		end
 	end
 
 	return 0
 end
 
-function slot0.refreshRankDiff(slot0)
-	slot0._idIdxList = {}
+function var_0_0.refreshRankDiff(arg_6_0)
+	arg_6_0._idIdxList = {}
 
-	for slot5, slot6 in ipairs(slot0:getList()) do
-		table.insert(slot0._idIdxList, slot6.id)
+	local var_6_0 = arg_6_0:getList()
+
+	for iter_6_0, iter_6_1 in ipairs(var_6_0) do
+		table.insert(arg_6_0._idIdxList, iter_6_1.id)
 	end
 end
 
-function slot0.refreshShowTab(slot0)
-	slot0:_refreshShowTab(slot0:getList())
+function var_0_0.refreshShowTab(arg_7_0)
+	arg_7_0:_refreshShowTab(arg_7_0:getList())
 end
 
-function slot0._refreshShowTab(slot0, slot1)
-	for slot6, slot7 in ipairs(slot1) do
-		slot8 = slot7:isMainTask()
+function var_0_0._refreshShowTab(arg_8_0, arg_8_1)
+	local var_8_0
 
-		if slot7.id ~= AiZiLaEnum.TaskMOAllFinishId and nil ~= slot8 then
-			slot2 = slot8
+	for iter_8_0, iter_8_1 in ipairs(arg_8_1) do
+		local var_8_1 = iter_8_1:isMainTask()
 
-			slot7:setShowTab(true)
+		if iter_8_1.id ~= AiZiLaEnum.TaskMOAllFinishId and var_8_0 ~= var_8_1 then
+			var_8_0 = var_8_1
+
+			iter_8_1:setShowTab(true)
 		else
-			slot7:setShowTab(false)
+			iter_8_1:setShowTab(false)
 		end
 	end
 end
 
-function slot0.getInfoList(slot0, slot1)
-	slot2 = {}
-	slot3 = slot0:getList()
+function var_0_0.getInfoList(arg_9_0, arg_9_1)
+	local var_9_0 = {}
+	local var_9_1 = arg_9_0:getList()
 
-	slot0:_refreshShowTab(slot3)
+	arg_9_0:_refreshShowTab(var_9_1)
 
-	for slot7, slot8 in ipairs(slot3) do
-		table.insert(slot2, SLFramework.UGUI.MixCellInfo.New(slot7, slot8:getLineHeight(), slot7))
+	for iter_9_0, iter_9_1 in ipairs(var_9_1) do
+		local var_9_2 = SLFramework.UGUI.MixCellInfo.New(iter_9_0, iter_9_1:getLineHeight(), iter_9_0)
+
+		table.insert(var_9_0, var_9_2)
 	end
 
-	return slot2
+	return var_9_0
 end
 
-function slot0.preFinish(slot0, slot1)
-	if not slot1 then
+function var_0_0.preFinish(arg_10_0, arg_10_1)
+	if not arg_10_1 then
 		return
 	end
 
-	slot2 = false
-	slot0._hasRankDiff = false
+	local var_10_0 = false
 
-	slot0:refreshRankDiff()
+	arg_10_0._hasRankDiff = false
 
-	slot3 = 0
-	slot4 = slot0:getList()
+	arg_10_0:refreshRankDiff()
 
-	if slot1.id == AiZiLaEnum.TaskMOAllFinishId then
-		for slot8, slot9 in ipairs(slot4) do
-			if slot9:alreadyGotReward() and slot9.id ~= AiZiLaEnum.TaskMOAllFinishId then
-				slot9.preFinish = true
-				slot2 = true
-				slot3 = slot3 + 1
+	local var_10_1 = 0
+	local var_10_2 = arg_10_0:getList()
+
+	if arg_10_1.id == AiZiLaEnum.TaskMOAllFinishId then
+		for iter_10_0, iter_10_1 in ipairs(var_10_2) do
+			if iter_10_1:alreadyGotReward() and iter_10_1.id ~= AiZiLaEnum.TaskMOAllFinishId then
+				iter_10_1.preFinish = true
+				var_10_0 = true
+				var_10_1 = var_10_1 + 1
 			end
 		end
-	elseif slot1:alreadyGotReward() then
-		slot1.preFinish = true
-		slot2 = true
-		slot3 = slot3 + 1
+	elseif arg_10_1:alreadyGotReward() then
+		arg_10_1.preFinish = true
+		var_10_0 = true
+		var_10_1 = var_10_1 + 1
 	end
 
-	if slot2 then
-		if slot0:getById(AiZiLaEnum.TaskMOAllFinishId) and slot0:getGotRewardCount() < slot3 + 1 then
-			tabletool.removeValue(slot4, slot5)
+	if var_10_0 then
+		local var_10_3 = arg_10_0:getById(AiZiLaEnum.TaskMOAllFinishId)
+
+		if var_10_3 and arg_10_0:getGotRewardCount() < var_10_1 + 1 then
+			tabletool.removeValue(var_10_2, var_10_3)
 		end
 
-		slot0._hasRankDiff = true
+		arg_10_0._hasRankDiff = true
 
-		table.sort(slot4, uv0.sortMO)
-		slot0:setList(slot4)
+		table.sort(var_10_2, var_0_0.sortMO)
+		arg_10_0:setList(var_10_2)
 
-		slot0._hasRankDiff = false
+		arg_10_0._hasRankDiff = false
 	end
 end
 
-function slot0.getGotRewardCount(slot0, slot1)
-	for slot7, slot8 in ipairs(slot1 or slot0:getList()) do
-		if slot8:alreadyGotReward() and not slot8.preFinish and slot8.id ~= AiZiLaEnum.TaskMOAllFinishId then
-			slot3 = 0 + 1
+function var_0_0.getGotRewardCount(arg_11_0, arg_11_1)
+	local var_11_0 = arg_11_1 or arg_11_0:getList()
+	local var_11_1 = 0
+
+	for iter_11_0, iter_11_1 in ipairs(var_11_0) do
+		if iter_11_1:alreadyGotReward() and not iter_11_1.preFinish and iter_11_1.id ~= AiZiLaEnum.TaskMOAllFinishId then
+			var_11_1 = var_11_1 + 1
 		end
 	end
 
-	return slot3
+	return var_11_1
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

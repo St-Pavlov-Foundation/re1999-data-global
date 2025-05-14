@@ -1,14 +1,15 @@
-module("modules.logic.player.view.WaterMarkViewContainer", package.seeall)
+﻿module("modules.logic.player.view.WaterMarkViewContainer", package.seeall)
 
-slot0 = class("WaterMarkViewContainer", BaseViewContainer)
+local var_0_0 = class("WaterMarkViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
-	slot0.waterMarkView = WaterMarkView.New()
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, slot0.waterMarkView)
+	arg_1_0.waterMarkView = WaterMarkView.New()
 
-	return slot1
+	table.insert(var_1_0, arg_1_0.waterMarkView)
+
+	return var_1_0
 end
 
-return slot0
+return var_0_0

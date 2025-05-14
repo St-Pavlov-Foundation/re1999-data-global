@@ -1,21 +1,21 @@
-module("modules.logic.room.view.critter.RoomCritterTrainReportViewContainer", package.seeall)
+﻿module("modules.logic.room.view.critter.RoomCritterTrainReportViewContainer", package.seeall)
 
-slot0 = class("RoomCritterTrainReportViewContainer", BaseViewContainer)
+local var_0_0 = class("RoomCritterTrainReportViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, RoomCritterTrainReportView.New())
+	table.insert(var_1_0, RoomCritterTrainReportView.New())
 
-	return slot1
+	return var_1_0
 end
 
-function slot0.playCloseTransition(slot0)
-	ZProj.ProjAnimatorPlayer.Get(slot0.viewGO):Play(UIAnimationName.Close, slot0.onCloseAnimDone, slot0)
+function var_0_0.playCloseTransition(arg_2_0)
+	ZProj.ProjAnimatorPlayer.Get(arg_2_0.viewGO):Play(UIAnimationName.Close, arg_2_0.onCloseAnimDone, arg_2_0)
 end
 
-function slot0.onCloseAnimDone(slot0)
-	slot0:onPlayCloseTransitionFinish()
+function var_0_0.onCloseAnimDone(arg_3_0)
+	arg_3_0:onPlayCloseTransitionFinish()
 end
 
-return slot0
+return var_0_0

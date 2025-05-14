@@ -1,9 +1,10 @@
-module("modules.logic.versionactivity1_6.goldenmilletpresent.define.GoldenMilletEnum", package.seeall)
+﻿module("modules.logic.versionactivity1_6.goldenmilletpresent.define.GoldenMilletEnum", package.seeall)
 
-slot0 = _M
-slot0.REWARD_INDEX = 1
-slot0.DISPLAY_SKIN_COUNT = 5
-slot0.Index2Skin = {
+local var_0_0 = _M
+
+var_0_0.REWARD_INDEX = 1
+var_0_0.DISPLAY_SKIN_COUNT = 5
+var_0_0.Index2Skin = {
 	300904,
 	309803,
 	308303,
@@ -11,4 +12,4 @@ slot0.Index2Skin = {
 	301202
 }
 
-return slot0
+return var_0_0

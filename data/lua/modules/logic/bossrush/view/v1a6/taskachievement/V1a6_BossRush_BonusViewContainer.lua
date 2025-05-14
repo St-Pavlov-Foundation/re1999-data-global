@@ -1,121 +1,125 @@
-module("modules.logic.bossrush.view.v1a6.taskachievement.V1a6_BossRush_BonusViewContainer", package.seeall)
+﻿module("modules.logic.bossrush.view.v1a6.taskachievement.V1a6_BossRush_BonusViewContainer", package.seeall)
 
-slot0 = class("V1a6_BossRush_BonusViewContainer", BaseViewContainer)
+local var_0_0 = class("V1a6_BossRush_BonusViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, TabViewGroup.New(1, "top_left"))
-	table.insert(slot1, V1a6_BossRush_TabViewGroup.New(2, "#go_bonus"))
-	table.insert(slot1, V1a6_BossRush_BonusView.New())
+	table.insert(var_1_0, TabViewGroup.New(1, "top_left"))
+	table.insert(var_1_0, V1a6_BossRush_TabViewGroup.New(2, "#go_bonus"))
+	table.insert(var_1_0, V1a6_BossRush_BonusView.New())
 
-	return slot1
+	return var_1_0
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
-		slot0.navigationView = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == 1 then
+		arg_2_0.navigationView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
 		return {
-			slot0.navigationView
+			arg_2_0.navigationView
 		}
-	elseif slot1 == 2 then
-		slot2 = {
-			[slot6] = (slot6 - 1) * 0.07
-		}
+	elseif arg_2_1 == 2 then
+		local var_2_0 = {}
 
-		for slot6 = 1, 10 do
+		for iter_2_0 = 1, 10 do
+			var_2_0[iter_2_0] = (iter_2_0 - 1) * 0.07
 		end
 
-		slot3 = ListScrollParam.New()
-		slot3.cellClass = V1a6_BossRush_AchievementItem
-		slot3.prefabType = ScrollEnum.ScrollPrefabFromRes
-		slot3.prefabUrl = slot0._viewSetting.otherRes[1]
-		slot3.scrollGOPath = "Right/#scroll_ScoreList"
-		slot3.scrollDir = ScrollEnum.ScrollDirV
-		slot3.lineCount = 1
-		slot3.cellWidth = 964
-		slot3.cellHeight = 162
-		slot3.cellSpaceH = 0
-		slot3.cellSpaceV = 0
-		slot3.startSpace = 0
-		slot3.sortMode = ScrollEnum.ScrollSortDown
-		slot0._achievementScrollView = LuaListScrollViewWithAnimator.New(V1a4_BossRush_ScoreTaskAchievementListModel.instance, slot3, slot2)
-		slot0._achievementView = V1a6_BossRush_AchievementView.New()
-		slot4 = ListScrollParam.New()
-		slot4.cellClass = V1a6_BossRush_ScheduleItem
-		slot4.prefabType = ScrollEnum.ScrollPrefabFromRes
-		slot4.prefabUrl = slot0._viewSetting.otherRes[2]
-		slot4.scrollGOPath = "Right/#scroll_ScoreList"
-		slot4.scrollDir = ScrollEnum.ScrollDirV
-		slot4.lineCount = 1
-		slot4.cellWidth = 964
-		slot4.cellHeight = 162
-		slot4.cellSpaceH = 0
-		slot4.cellSpaceV = 0
-		slot4.startSpace = 0
-		slot4.sortMode = ScrollEnum.ScrollSortDown
-		slot0._scheduleScrollView = LuaListScrollViewWithAnimator.New(V1a4_BossRush_ScheduleViewListModel.instance, slot4, slot2)
-		slot0._scheduleView = V1a6_BossRush_ScheduleView.New()
-		slot5 = ListScrollParam.New()
-		slot5.cellClass = V2a1_BossRush_SpecialScheduleItem
-		slot5.prefabType = ScrollEnum.ScrollPrefabFromRes
-		slot5.prefabUrl = slot0._viewSetting.otherRes[4]
-		slot5.scrollGOPath = "Right/#scroll_ScoreList"
-		slot5.scrollDir = ScrollEnum.ScrollDirV
-		slot5.lineCount = 1
-		slot5.cellWidth = 964
-		slot5.cellHeight = 162
-		slot5.cellSpaceH = 0
-		slot5.cellSpaceV = 0
-		slot5.startSpace = 0
-		slot5.sortMode = ScrollEnum.ScrollSortDown
-		slot0._specialScheduleScrollView = LuaListScrollViewWithAnimator.New(V2a1_BossRush_SpecialScheduleViewListModel.instance, slot5, slot2)
-		slot0._specialScheduleView = V2a1_BossRush_SpecialScheduleView.New()
+		local var_2_1 = ListScrollParam.New()
+
+		var_2_1.cellClass = V1a6_BossRush_AchievementItem
+		var_2_1.prefabType = ScrollEnum.ScrollPrefabFromRes
+		var_2_1.prefabUrl = arg_2_0._viewSetting.otherRes[1]
+		var_2_1.scrollGOPath = "Right/#scroll_ScoreList"
+		var_2_1.scrollDir = ScrollEnum.ScrollDirV
+		var_2_1.lineCount = 1
+		var_2_1.cellWidth = 964
+		var_2_1.cellHeight = 162
+		var_2_1.cellSpaceH = 0
+		var_2_1.cellSpaceV = 0
+		var_2_1.startSpace = 0
+		var_2_1.sortMode = ScrollEnum.ScrollSortDown
+		arg_2_0._achievementScrollView = LuaListScrollViewWithAnimator.New(V1a4_BossRush_ScoreTaskAchievementListModel.instance, var_2_1, var_2_0)
+		arg_2_0._achievementView = V1a6_BossRush_AchievementView.New()
+
+		local var_2_2 = ListScrollParam.New()
+
+		var_2_2.cellClass = V1a6_BossRush_ScheduleItem
+		var_2_2.prefabType = ScrollEnum.ScrollPrefabFromRes
+		var_2_2.prefabUrl = arg_2_0._viewSetting.otherRes[2]
+		var_2_2.scrollGOPath = "Right/#scroll_ScoreList"
+		var_2_2.scrollDir = ScrollEnum.ScrollDirV
+		var_2_2.lineCount = 1
+		var_2_2.cellWidth = 964
+		var_2_2.cellHeight = 162
+		var_2_2.cellSpaceH = 0
+		var_2_2.cellSpaceV = 0
+		var_2_2.startSpace = 0
+		var_2_2.sortMode = ScrollEnum.ScrollSortDown
+		arg_2_0._scheduleScrollView = LuaListScrollViewWithAnimator.New(V1a4_BossRush_ScheduleViewListModel.instance, var_2_2, var_2_0)
+		arg_2_0._scheduleView = V1a6_BossRush_ScheduleView.New()
+
+		local var_2_3 = ListScrollParam.New()
+
+		var_2_3.cellClass = V2a1_BossRush_SpecialScheduleItem
+		var_2_3.prefabType = ScrollEnum.ScrollPrefabFromRes
+		var_2_3.prefabUrl = arg_2_0._viewSetting.otherRes[4]
+		var_2_3.scrollGOPath = "Right/#scroll_ScoreList"
+		var_2_3.scrollDir = ScrollEnum.ScrollDirV
+		var_2_3.lineCount = 1
+		var_2_3.cellWidth = 964
+		var_2_3.cellHeight = 162
+		var_2_3.cellSpaceH = 0
+		var_2_3.cellSpaceV = 0
+		var_2_3.startSpace = 0
+		var_2_3.sortMode = ScrollEnum.ScrollSortDown
+		arg_2_0._specialScheduleScrollView = LuaListScrollViewWithAnimator.New(V2a1_BossRush_SpecialScheduleViewListModel.instance, var_2_3, var_2_0)
+		arg_2_0._specialScheduleView = V2a1_BossRush_SpecialScheduleView.New()
 
 		return {
 			MultiView.New({
-				slot0._specialScheduleView,
-				slot0._specialScheduleScrollView
+				arg_2_0._specialScheduleView,
+				arg_2_0._specialScheduleScrollView
 			}),
 			MultiView.New({
-				slot0._achievementView,
-				slot0._achievementScrollView
+				arg_2_0._achievementView,
+				arg_2_0._achievementScrollView
 			}),
 			MultiView.New({
-				slot0._scheduleView,
-				slot0._scheduleScrollView
+				arg_2_0._scheduleView,
+				arg_2_0._scheduleScrollView
 			})
 		}
 	end
 end
 
-function slot0.getScrollAnimRemoveItem(slot0, slot1)
-	if slot1 == BossRushEnum.BonusViewTab.AchievementTab then
-		return ListScrollAnimRemoveItem.Get(slot0._achievementScrollView)
-	elseif slot1 == BossRushEnum.BonusViewTab.ScheduleTab then
-		return ListScrollAnimRemoveItem.Get(slot0._scheduleScrollView)
-	elseif slot1 == BossRushEnum.BonusViewTab.SpecialScheduleTab then
-		return ListScrollAnimRemoveItem.Get(slot0._specialScheduleScrollView)
+function var_0_0.getScrollAnimRemoveItem(arg_3_0, arg_3_1)
+	if arg_3_1 == BossRushEnum.BonusViewTab.AchievementTab then
+		return ListScrollAnimRemoveItem.Get(arg_3_0._achievementScrollView)
+	elseif arg_3_1 == BossRushEnum.BonusViewTab.ScheduleTab then
+		return ListScrollAnimRemoveItem.Get(arg_3_0._scheduleScrollView)
+	elseif arg_3_1 == BossRushEnum.BonusViewTab.SpecialScheduleTab then
+		return ListScrollAnimRemoveItem.Get(arg_3_0._specialScheduleScrollView)
 	end
 end
 
-function slot0.getTabView(slot0, slot1)
-	if slot1 == BossRushEnum.BonusViewTab.AchievementTab then
-		return slot0._achievementView
-	elseif slot1 == BossRushEnum.BonusViewTab.ScheduleTab then
-		return slot0._scheduleView
-	elseif slot1 == BossRushEnum.BonusViewTab.SpecialScheduleTab then
-		return slot0._specialScheduleView
+function var_0_0.getTabView(arg_4_0, arg_4_1)
+	if arg_4_1 == BossRushEnum.BonusViewTab.AchievementTab then
+		return arg_4_0._achievementView
+	elseif arg_4_1 == BossRushEnum.BonusViewTab.ScheduleTab then
+		return arg_4_0._scheduleView
+	elseif arg_4_1 == BossRushEnum.BonusViewTab.SpecialScheduleTab then
+		return arg_4_0._specialScheduleView
 	end
 end
 
-function slot0.selectTabView(slot0, slot1)
-	slot0:dispatchEvent(ViewEvent.ToSwitchTab, 2, slot1)
+function var_0_0.selectTabView(arg_5_0, arg_5_1)
+	arg_5_0:dispatchEvent(ViewEvent.ToSwitchTab, 2, arg_5_1)
 end
 
-return slot0
+return var_0_0

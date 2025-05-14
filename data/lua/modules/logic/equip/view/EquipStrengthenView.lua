@@ -1,125 +1,129 @@
-module("modules.logic.equip.view.EquipStrengthenView", package.seeall)
+﻿module("modules.logic.equip.view.EquipStrengthenView", package.seeall)
 
-slot0 = class("EquipStrengthenView", BaseView)
+local var_0_0 = class("EquipStrengthenView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gobeforewhite = gohelper.findChild(slot0.viewGO, "layoutgroup/progress/bar/#go_barPos/#go_beforewhite")
-	slot0._imagewhite = gohelper.findChildImage(slot0.viewGO, "layoutgroup/progress/bar/#go_barPos/#image_white")
-	slot0._goafterwhite = gohelper.findChild(slot0.viewGO, "layoutgroup/progress/bar/#go_barPos/#go_afterwhite")
-	slot0._imagegreen1 = gohelper.findChildImage(slot0.viewGO, "layoutgroup/progress/bar/#go_barPos/#image_green1")
-	slot0._gofullexp = gohelper.findChild(slot0.viewGO, "layoutgroup/progress/bar/#go_barPos/#go_fullexp")
-	slot0._txtaddexp = gohelper.findChildText(slot0.viewGO, "layoutgroup/progress/bar/#go_barPos/#txt_addexp")
-	slot0._txtexp = gohelper.findChildText(slot0.viewGO, "layoutgroup/progress/bar/#go_barPos/#txt_exp")
-	slot0._gomaxbreakbartip = gohelper.findChild(slot0.viewGO, "layoutgroup/progress/bar/#go_barPos/#go_maxbreakbartip")
-	slot0._gobarPos = gohelper.findChild(slot0.viewGO, "layoutgroup/progress/bar/#go_barPos")
-	slot0._txtcurlevel = gohelper.findChildText(slot0.viewGO, "layoutgroup/progress/#txt_curlevel")
-	slot0._golevelupeffect = gohelper.findChild(slot0.viewGO, "layoutgroup/progress/#go_leveup")
-	slot0._txttotallevel = gohelper.findChildText(slot0.viewGO, "layoutgroup/progress/#txt_curlevel/#txt_totallevel")
-	slot0._goengravingEffect = gohelper.findChild(slot0.viewGO, "layoutgroup/progress/#engraving")
-	slot0._gomaxbreaktip = gohelper.findChild(slot0.viewGO, "#go_maxbreaktip")
-	slot0._golevelup = gohelper.findChild(slot0.viewGO, "layoutgroup/attribute/container/#go_levelup")
-	slot0._gostrengthenattr = gohelper.findChild(slot0.viewGO, "layoutgroup/attribute/container/#go_strengthenattr")
-	slot0._gobreakeffect = gohelper.findChild(slot0.viewGO, "layoutgroup/attribute/container/#go_breakeffect")
-	slot0._gocost = gohelper.findChild(slot0.viewGO, "#go_cost")
-	slot0._imagecurrency = gohelper.findChildImage(slot0.viewGO, "#go_cost/strengthen_cost/currency/#simage_currency")
-	slot0._txtcurrency = gohelper.findChildText(slot0.viewGO, "#go_cost/strengthen_cost/currency/#txt_currency")
-	slot0._gonocurrency = gohelper.findChild(slot0.viewGO, "#go_cost/strengthen_cost/currency/#go_nocurrency")
-	slot0._gobtns = gohelper.findChild(slot0.viewGO, "#go_cost/#go_btns")
-	slot0._btnupgrade = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_cost/#go_btns/start/#btn_upgrade")
-	slot0._btnbreak = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_cost/#go_btns/break/#btn_break")
-	slot0._txtcostcount = gohelper.findChildText(slot0.viewGO, "#go_cost/title/#txt_costcount")
-	slot0._gobreakcount = gohelper.findChild(slot0.viewGO, "#go_cost/title/#go_breakcount")
-	slot0._goimprove = gohelper.findChild(slot0.viewGO, "#go_improve")
-	slot0._btnfastadd = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_cost/fast/#btn_fastadd")
-	slot0._gosortbtns = gohelper.findChild(slot0.viewGO, "#go_improve/#go_sortbtns")
-	slot0._btnlvrank = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_improve/#go_sortbtns/#btn_lvrank")
-	slot0._btnrarerank = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_improve/#go_sortbtns/#btn_rarerank")
-	slot0._btnfilter = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_improve/#go_sortbtns/#btn_filter")
-	slot0._btnback = gohelper.findChildButton(slot0.viewGO, "#go_improve/#btn_back")
-	slot0._golackequip = gohelper.findChild(slot0.viewGO, "#go_improve/#go_lackequip")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gobeforewhite = gohelper.findChild(arg_1_0.viewGO, "layoutgroup/progress/bar/#go_barPos/#go_beforewhite")
+	arg_1_0._imagewhite = gohelper.findChildImage(arg_1_0.viewGO, "layoutgroup/progress/bar/#go_barPos/#image_white")
+	arg_1_0._goafterwhite = gohelper.findChild(arg_1_0.viewGO, "layoutgroup/progress/bar/#go_barPos/#go_afterwhite")
+	arg_1_0._imagegreen1 = gohelper.findChildImage(arg_1_0.viewGO, "layoutgroup/progress/bar/#go_barPos/#image_green1")
+	arg_1_0._gofullexp = gohelper.findChild(arg_1_0.viewGO, "layoutgroup/progress/bar/#go_barPos/#go_fullexp")
+	arg_1_0._txtaddexp = gohelper.findChildText(arg_1_0.viewGO, "layoutgroup/progress/bar/#go_barPos/#txt_addexp")
+	arg_1_0._txtexp = gohelper.findChildText(arg_1_0.viewGO, "layoutgroup/progress/bar/#go_barPos/#txt_exp")
+	arg_1_0._gomaxbreakbartip = gohelper.findChild(arg_1_0.viewGO, "layoutgroup/progress/bar/#go_barPos/#go_maxbreakbartip")
+	arg_1_0._gobarPos = gohelper.findChild(arg_1_0.viewGO, "layoutgroup/progress/bar/#go_barPos")
+	arg_1_0._txtcurlevel = gohelper.findChildText(arg_1_0.viewGO, "layoutgroup/progress/#txt_curlevel")
+	arg_1_0._golevelupeffect = gohelper.findChild(arg_1_0.viewGO, "layoutgroup/progress/#go_leveup")
+	arg_1_0._txttotallevel = gohelper.findChildText(arg_1_0.viewGO, "layoutgroup/progress/#txt_curlevel/#txt_totallevel")
+	arg_1_0._goengravingEffect = gohelper.findChild(arg_1_0.viewGO, "layoutgroup/progress/#engraving")
+	arg_1_0._gomaxbreaktip = gohelper.findChild(arg_1_0.viewGO, "#go_maxbreaktip")
+	arg_1_0._golevelup = gohelper.findChild(arg_1_0.viewGO, "layoutgroup/attribute/container/#go_levelup")
+	arg_1_0._gostrengthenattr = gohelper.findChild(arg_1_0.viewGO, "layoutgroup/attribute/container/#go_strengthenattr")
+	arg_1_0._gobreakeffect = gohelper.findChild(arg_1_0.viewGO, "layoutgroup/attribute/container/#go_breakeffect")
+	arg_1_0._gocost = gohelper.findChild(arg_1_0.viewGO, "#go_cost")
+	arg_1_0._imagecurrency = gohelper.findChildImage(arg_1_0.viewGO, "#go_cost/strengthen_cost/currency/#simage_currency")
+	arg_1_0._txtcurrency = gohelper.findChildText(arg_1_0.viewGO, "#go_cost/strengthen_cost/currency/#txt_currency")
+	arg_1_0._gonocurrency = gohelper.findChild(arg_1_0.viewGO, "#go_cost/strengthen_cost/currency/#go_nocurrency")
+	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_cost/#go_btns")
+	arg_1_0._btnupgrade = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_cost/#go_btns/start/#btn_upgrade")
+	arg_1_0._btnbreak = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_cost/#go_btns/break/#btn_break")
+	arg_1_0._txtcostcount = gohelper.findChildText(arg_1_0.viewGO, "#go_cost/title/#txt_costcount")
+	arg_1_0._gobreakcount = gohelper.findChild(arg_1_0.viewGO, "#go_cost/title/#go_breakcount")
+	arg_1_0._goimprove = gohelper.findChild(arg_1_0.viewGO, "#go_improve")
+	arg_1_0._btnfastadd = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_cost/fast/#btn_fastadd")
+	arg_1_0._gosortbtns = gohelper.findChild(arg_1_0.viewGO, "#go_improve/#go_sortbtns")
+	arg_1_0._btnlvrank = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_improve/#go_sortbtns/#btn_lvrank")
+	arg_1_0._btnrarerank = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_improve/#go_sortbtns/#btn_rarerank")
+	arg_1_0._btnfilter = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_improve/#go_sortbtns/#btn_filter")
+	arg_1_0._btnback = gohelper.findChildButton(arg_1_0.viewGO, "#go_improve/#btn_back")
+	arg_1_0._golackequip = gohelper.findChild(arg_1_0.viewGO, "#go_improve/#go_lackequip")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnupgrade:AddClickListener(slot0._btnupgradeOnClick, slot0)
-	slot0._btnbreak:AddClickListener(slot0._btnbreakOnClick, slot0)
-	slot0._btnfastadd:AddClickListener(slot0._btnfastaddOnClick, slot0)
-	slot0._btnlvrank:AddClickListener(slot0._btnlvrankOnClick, slot0)
-	slot0._btnrarerank:AddClickListener(slot0._btnrarerankOnClick, slot0)
-	slot0._btnback:AddClickListener(slot0._btnbackOnClick, slot0)
-	slot0._btnfilter:AddClickListener(slot0._btnfilterOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnupgrade:AddClickListener(arg_2_0._btnupgradeOnClick, arg_2_0)
+	arg_2_0._btnbreak:AddClickListener(arg_2_0._btnbreakOnClick, arg_2_0)
+	arg_2_0._btnfastadd:AddClickListener(arg_2_0._btnfastaddOnClick, arg_2_0)
+	arg_2_0._btnlvrank:AddClickListener(arg_2_0._btnlvrankOnClick, arg_2_0)
+	arg_2_0._btnrarerank:AddClickListener(arg_2_0._btnrarerankOnClick, arg_2_0)
+	arg_2_0._btnback:AddClickListener(arg_2_0._btnbackOnClick, arg_2_0)
+	arg_2_0._btnfilter:AddClickListener(arg_2_0._btnfilterOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnupgrade:RemoveClickListener()
-	slot0._btnbreak:RemoveClickListener()
-	slot0._btnfastadd:RemoveClickListener()
-	slot0._btnlvrank:RemoveClickListener()
-	slot0._btnrarerank:RemoveClickListener()
-	slot0._btnback:RemoveClickListener()
-	slot0._btnfilter:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnupgrade:RemoveClickListener()
+	arg_3_0._btnbreak:RemoveClickListener()
+	arg_3_0._btnfastadd:RemoveClickListener()
+	arg_3_0._btnlvrank:RemoveClickListener()
+	arg_3_0._btnrarerank:RemoveClickListener()
+	arg_3_0._btnback:RemoveClickListener()
+	arg_3_0._btnfilter:RemoveClickListener()
 end
 
-slot0.ShowContainerStatusEnum = {
+var_0_0.ShowContainerStatusEnum = {
 	ShowBreak = 2,
 	ShowUpgrade = 1,
 	ShowMax = 3
 }
-slot0.LevelChangeAnimationTime = 0.5
-slot0.Color = {
+var_0_0.LevelChangeAnimationTime = 0.5
+var_0_0.Color = {
 	NormalColor = Color.New(0.8509803921568627, 0.6274509803921569, 0.43529411764705883, 1),
 	NextColor = Color.New(0.5137254901960784, 0.7372549019607844, 0.5176470588235295, 1)
 }
 
-function slot0._btnfilterOnClick(slot0)
+function var_0_0._btnfilterOnClick(arg_4_0)
 	ViewMgr.instance:openView(ViewName.EquipFilterView, {
 		isNotShowObtain = true,
-		viewName = slot0.viewName
+		viewName = arg_4_0.viewName
 	})
 end
 
-function slot0._btnlvrankOnClick(slot0)
+function var_0_0._btnlvrankOnClick(arg_5_0)
 	EquipChooseListModel.instance:sordByLevel()
-	slot0:_refreshEquipBtnIcon()
+	arg_5_0:_refreshEquipBtnIcon()
 end
 
-function slot0._btnrarerankOnClick(slot0)
+function var_0_0._btnrarerankOnClick(arg_6_0)
 	EquipChooseListModel.instance:sordByQuality()
-	slot0:_refreshEquipBtnIcon()
+	arg_6_0:_refreshEquipBtnIcon()
 end
 
-function slot0._refreshEquipBtnIcon(slot0)
-	gohelper.setActive(slot0._equipLvBtns[1], EquipChooseListModel.instance:getBtnTag() ~= 1)
-	gohelper.setActive(slot0._equipLvBtns[2], slot1 == 1)
-	gohelper.setActive(slot0._equipQualityBtns[1], slot1 ~= 2)
-	gohelper.setActive(slot0._equipQualityBtns[2], slot1 == 2)
+function var_0_0._refreshEquipBtnIcon(arg_7_0)
+	local var_7_0 = EquipChooseListModel.instance:getBtnTag()
 
-	slot2, slot3 = EquipChooseListModel.instance:getRankState()
+	gohelper.setActive(arg_7_0._equipLvBtns[1], var_7_0 ~= 1)
+	gohelper.setActive(arg_7_0._equipLvBtns[2], var_7_0 == 1)
+	gohelper.setActive(arg_7_0._equipQualityBtns[1], var_7_0 ~= 2)
+	gohelper.setActive(arg_7_0._equipQualityBtns[2], var_7_0 == 2)
 
-	transformhelper.setLocalScale(slot0._equipLvArrow[1], 1, slot2, 1)
-	transformhelper.setLocalScale(slot0._equipLvArrow[2], 1, slot2, 1)
-	transformhelper.setLocalScale(slot0._equipQualityArrow[1], 1, slot3, 1)
-	transformhelper.setLocalScale(slot0._equipQualityArrow[2], 1, slot3, 1)
+	local var_7_1, var_7_2 = EquipChooseListModel.instance:getRankState()
+
+	transformhelper.setLocalScale(arg_7_0._equipLvArrow[1], 1, var_7_1, 1)
+	transformhelper.setLocalScale(arg_7_0._equipLvArrow[2], 1, var_7_1, 1)
+	transformhelper.setLocalScale(arg_7_0._equipQualityArrow[1], 1, var_7_2, 1)
+	transformhelper.setLocalScale(arg_7_0._equipQualityArrow[2], 1, var_7_2, 1)
 end
 
-function slot0._btnbackOnClick(slot0)
+function var_0_0._btnbackOnClick(arg_8_0)
 	EquipController.instance:dispatchEvent(EquipEvent.onChangeStrengthenScrollState, false)
 end
 
-function slot0._btnfastaddOnClick(slot0)
-	if slot0.breaking then
+function var_0_0._btnfastaddOnClick(arg_9_0)
+	if arg_9_0.breaking then
 		return
 	end
 
 	EquipChooseListModel.instance:fastAddEquip()
 end
 
-function slot0._btnupgradeOnClick(slot0)
-	if not EquipChooseListModel.instance:getChooseEquipList() or #slot1 == 0 then
-		if slot0._goimprove.activeSelf then
+function var_0_0._btnupgradeOnClick(arg_10_0)
+	local var_10_0 = EquipChooseListModel.instance:getChooseEquipList()
+
+	if not var_10_0 or #var_10_0 == 0 then
+		if arg_10_0._goimprove.activeSelf then
 			GameFacade.showToast(ToastEnum.EquipStrengthenNoItem)
 		end
 
@@ -128,694 +132,748 @@ function slot0._btnupgradeOnClick(slot0)
 		return
 	end
 
-	if not slot0._enoughGold then
+	if not arg_10_0._enoughGold then
 		GameFacade.showToast(ToastEnum.EquipStrengthenNoGold)
 
 		return
 	end
 
-	slot3 = false
+	local var_10_1 = {}
+	local var_10_2 = false
+	local var_10_3 = false
 
-	for slot8, slot9 in ipairs(slot1) do
-		table.insert({}, {
-			slot9.uid,
-			slot9._chooseNum
+	for iter_10_0, iter_10_1 in ipairs(var_10_0) do
+		table.insert(var_10_1, {
+			iter_10_1.uid,
+			iter_10_1._chooseNum
 		})
 
-		slot4 = false or EquipChooseListModel.instance:getHeroMoByEquipUid(slot9.uid)
+		var_10_3 = var_10_3 or EquipChooseListModel.instance:getHeroMoByEquipUid(iter_10_1.uid)
 
-		if slot9.config.isExpEquip == 0 and slot9.config.rare >= 4 then
-			slot3 = true
+		if iter_10_1.config.isExpEquip == 0 and iter_10_1.config.rare >= 4 then
+			var_10_2 = true
 		end
 	end
 
-	if (slot4 ~= nil or slot3) and (slot0._playerSaveTabs.saveTime == nil or slot0._playerSaveTabs.saveTime ~= os.date("*t", ServerTime.nowInLocal() - 18000).day) then
-		EquipController.instance:openEquipStrengthenAlertView({
-			callback = function (slot0)
-				if slot0 then
-					uv0._playerSaveTabs.saveTime = uv1.day
-					uv0._playUserIdTabs[uv0._curPlayerInfoId] = uv0._playerSaveTabs
+	local var_10_4 = os.date("*t", ServerTime.nowInLocal() - 18000)
 
-					PlayerPrefsHelper.setString(PlayerPrefsKey.EquipStrengthen, cjson.encode(uv0._playUserIdTabs))
+	if (var_10_3 ~= nil or var_10_2) and (arg_10_0._playerSaveTabs.saveTime == nil or arg_10_0._playerSaveTabs.saveTime ~= var_10_4.day) then
+		EquipController.instance:openEquipStrengthenAlertView({
+			callback = function(arg_11_0)
+				if arg_11_0 then
+					arg_10_0._playerSaveTabs.saveTime = var_10_4.day
+					arg_10_0._playUserIdTabs[arg_10_0._curPlayerInfoId] = arg_10_0._playerSaveTabs
+
+					local var_11_0 = cjson.encode(arg_10_0._playUserIdTabs)
+
+					PlayerPrefsHelper.setString(PlayerPrefsKey.EquipStrengthen, var_11_0)
 				end
 
-				EquipRpc.instance:sendEquipStrengthenRequest(uv0._equipMO.uid, uv2)
+				EquipRpc.instance:sendEquipStrengthenRequest(arg_10_0._equipMO.uid, var_10_1)
 			end,
-			content = slot4 == nil and luaLang("equip_lang_3") or luaLang("equip_lang_2")
+			content = var_10_3 == nil and luaLang("equip_lang_3") or luaLang("equip_lang_2")
 		})
 	else
-		EquipRpc.instance:sendEquipStrengthenRequest(slot0._equipMO.uid, slot2)
+		EquipRpc.instance:sendEquipStrengthenRequest(arg_10_0._equipMO.uid, var_10_1)
 	end
 end
 
-function slot0._hideGravingEffect(slot0)
-	gohelper.setActive(slot0._goengravingEffect, false)
+function var_0_0._hideGravingEffect(arg_12_0)
+	gohelper.setActive(arg_12_0._goengravingEffect, false)
 end
 
-function slot0._btnbreakOnClick(slot0)
-	if not slot0._enoughBreak then
+function var_0_0._btnbreakOnClick(arg_13_0)
+	if not arg_13_0._enoughBreak then
 		return
 	end
 
-	if not slot0._enoughGold then
+	if not arg_13_0._enoughGold then
 		GameFacade.showToast(ToastEnum.EquipStrengthenNoGold)
 
 		return
 	end
 
-	slot0.breaking = true
+	arg_13_0.breaking = true
 
-	EquipChooseListModel.instance:setIsLock(slot0.breaking)
-	EquipRpc.instance:sendEquipBreakRequest(slot0._equipMO.uid)
+	EquipChooseListModel.instance:setIsLock(arg_13_0.breaking)
+	EquipRpc.instance:sendEquipBreakRequest(arg_13_0._equipMO.uid)
 end
 
-function slot0._hideLevelUpEffect(slot0)
-	gohelper.setActive(slot0._golevelupeffect, false)
+function var_0_0._hideLevelUpEffect(arg_14_0)
+	gohelper.setActive(arg_14_0._golevelupeffect, false)
 end
 
-function slot0._editableInitView(slot0)
-	slot0.breakSuccessAnimationTime = slot0._golevelupeffect:GetComponent(typeof(UnityEngine.Animation)).clip.length
-	slot0._animimprove = slot0._goimprove:GetComponent(typeof(UnityEngine.Animator))
-	slot0._viewAnim = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	slot0._strengthenattrs = slot0:getUserDataTb_()
+function var_0_0._editableInitView(arg_15_0)
+	arg_15_0.breakSuccessAnimationTime = arg_15_0._golevelupeffect:GetComponent(typeof(UnityEngine.Animation)).clip.length
+	arg_15_0._animimprove = arg_15_0._goimprove:GetComponent(typeof(UnityEngine.Animator))
+	arg_15_0._viewAnim = arg_15_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	arg_15_0._strengthenattrs = arg_15_0:getUserDataTb_()
 
-	gohelper.setActive(slot0._gostrengthenattr, false)
+	gohelper.setActive(arg_15_0._gostrengthenattr, false)
 
-	slot0._whiteWidth = recthelper.getWidth(slot0._imagewhite.transform)
-	slot0.imageBreakIcon = gohelper.findChildImage(slot0._gobreakeffect, "image_icon")
-	slot0.txtBreakAttrName = gohelper.findChildText(slot0._gobreakeffect, "txt_name")
-	slot0.txtBreakValue = gohelper.findChildText(slot0._gobreakeffect, "txt_value")
-	slot0.txtBreakPreValue = gohelper.findChildText(slot0._gobreakeffect, "txt_prevalue")
-	slot0.goBreakRightArrow = gohelper.findChild(slot0._gobreakeffect, "go_rightarrow")
-	slot0.goNotFilter = gohelper.findChild(slot0.viewGO, "#go_improve/#go_sortbtns/#btn_filter/#go_notfilter")
-	slot0.goFilter = gohelper.findChild(slot0.viewGO, "#go_improve/#go_sortbtns/#btn_filter/#go_filter")
-	slot5 = CurrencyConfig.instance:getCurrencyCo(CurrencyEnum.CurrencyType.Gold).icon .. "_1"
+	arg_15_0._whiteWidth = recthelper.getWidth(arg_15_0._imagewhite.transform)
+	arg_15_0.imageBreakIcon = gohelper.findChildImage(arg_15_0._gobreakeffect, "image_icon")
+	arg_15_0.txtBreakAttrName = gohelper.findChildText(arg_15_0._gobreakeffect, "txt_name")
+	arg_15_0.txtBreakValue = gohelper.findChildText(arg_15_0._gobreakeffect, "txt_value")
+	arg_15_0.txtBreakPreValue = gohelper.findChildText(arg_15_0._gobreakeffect, "txt_prevalue")
+	arg_15_0.goBreakRightArrow = gohelper.findChild(arg_15_0._gobreakeffect, "go_rightarrow")
+	arg_15_0.goNotFilter = gohelper.findChild(arg_15_0.viewGO, "#go_improve/#go_sortbtns/#btn_filter/#go_notfilter")
+	arg_15_0.goFilter = gohelper.findChild(arg_15_0.viewGO, "#go_improve/#go_sortbtns/#btn_filter/#go_filter")
 
-	UISpriteSetMgr.instance:setCurrencyItemSprite(slot0._imagecurrency, slot5)
+	local var_15_0 = CurrencyConfig.instance:getCurrencyCo(CurrencyEnum.CurrencyType.Gold).icon
 
-	slot0._equipLvBtns = slot0:getUserDataTb_()
-	slot0._equipLvArrow = slot0:getUserDataTb_()
-	slot0._equipQualityBtns = slot0:getUserDataTb_()
-	slot0._equipQualityArrow = slot0:getUserDataTb_()
+	UISpriteSetMgr.instance:setCurrencyItemSprite(arg_15_0._imagecurrency, var_15_0 .. "_1")
 
-	for slot5 = 1, 2 do
-		slot0._equipLvBtns[slot5] = gohelper.findChild(slot0._btnlvrank.gameObject, "btn" .. tostring(slot5))
-		slot0._equipLvArrow[slot5] = gohelper.findChild(slot0._equipLvBtns[slot5], "txt/arrow").transform
-		slot0._equipQualityBtns[slot5] = gohelper.findChild(slot0._btnrarerank.gameObject, "btn" .. tostring(slot5))
-		slot0._equipQualityArrow[slot5] = gohelper.findChild(slot0._equipQualityBtns[slot5], "txt/arrow").transform
+	arg_15_0._equipLvBtns = arg_15_0:getUserDataTb_()
+	arg_15_0._equipLvArrow = arg_15_0:getUserDataTb_()
+	arg_15_0._equipQualityBtns = arg_15_0:getUserDataTb_()
+	arg_15_0._equipQualityArrow = arg_15_0:getUserDataTb_()
+
+	for iter_15_0 = 1, 2 do
+		arg_15_0._equipLvBtns[iter_15_0] = gohelper.findChild(arg_15_0._btnlvrank.gameObject, "btn" .. tostring(iter_15_0))
+		arg_15_0._equipLvArrow[iter_15_0] = gohelper.findChild(arg_15_0._equipLvBtns[iter_15_0], "txt/arrow").transform
+		arg_15_0._equipQualityBtns[iter_15_0] = gohelper.findChild(arg_15_0._btnrarerank.gameObject, "btn" .. tostring(iter_15_0))
+		arg_15_0._equipQualityArrow[iter_15_0] = gohelper.findChild(arg_15_0._equipQualityBtns[iter_15_0], "txt/arrow").transform
 	end
 
-	gohelper.setActive(slot0._equipLvArrow[1].gameObject, false)
-	gohelper.setActive(slot0._equipQualityArrow[1].gameObject, false)
-	gohelper.addUIClickAudio(slot0._btnlvrank.gameObject, AudioEnum.UI.UI_Common_Click)
-	gohelper.addUIClickAudio(slot0._btnrarerank.gameObject, AudioEnum.UI.UI_Common_Click)
-	gohelper.addUIClickAudio(slot0._btnbreak.gameObject, AudioEnum.HeroGroupUI.Play_UI_Inking_Finish)
-	gohelper.addUIClickAudio(slot0._btnupgrade.gameObject, AudioEnum.HeroGroupUI.Play_UI_Inking_Finish)
-	gohelper.addUIClickAudio(slot0._btnfastadd.gameObject, AudioEnum.HeroGroupUI.Play_UI_Inking_Addall)
+	gohelper.setActive(arg_15_0._equipLvArrow[1].gameObject, false)
+	gohelper.setActive(arg_15_0._equipQualityArrow[1].gameObject, false)
+	gohelper.addUIClickAudio(arg_15_0._btnlvrank.gameObject, AudioEnum.UI.UI_Common_Click)
+	gohelper.addUIClickAudio(arg_15_0._btnrarerank.gameObject, AudioEnum.UI.UI_Common_Click)
+	gohelper.addUIClickAudio(arg_15_0._btnbreak.gameObject, AudioEnum.HeroGroupUI.Play_UI_Inking_Finish)
+	gohelper.addUIClickAudio(arg_15_0._btnupgrade.gameObject, AudioEnum.HeroGroupUI.Play_UI_Inking_Finish)
+	gohelper.addUIClickAudio(arg_15_0._btnfastadd.gameObject, AudioEnum.HeroGroupUI.Play_UI_Inking_Addall)
 
-	slot0._enoughBreak = false
-	slot0.breaking = false
+	arg_15_0._enoughBreak = false
+	arg_15_0.breaking = false
 
-	EquipChooseListModel.instance:setIsLock(slot0.breaking)
+	EquipChooseListModel.instance:setIsLock(arg_15_0.breaking)
 
-	slot0.initDropDone = false
+	arg_15_0.initDropDone = false
 
-	slot0:initFilterDrop()
+	arg_15_0:initFilterDrop()
 
-	slot0._goupgrade = gohelper.findChild(slot0._gobtns, "start")
-	slot0._gobreak = gohelper.findChild(slot0._gobtns, "break")
+	arg_15_0._goupgrade = gohelper.findChild(arg_15_0._gobtns, "start")
+	arg_15_0._gobreak = gohelper.findChild(arg_15_0._gobtns, "break")
 
-	gohelper.setActive(slot0._goimprove, false)
+	gohelper.setActive(arg_15_0._goimprove, false)
 
-	slot0.initDropDone = true
-	slot0.showContainerStatus = uv0.ShowContainerStatusEnum.ShowUpgrade
+	arg_15_0.initDropDone = true
+	arg_15_0.showContainerStatus = var_0_0.ShowContainerStatusEnum.ShowUpgrade
 
-	slot0:setBtnBackWidth()
-	slot0:addEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, slot0.setBtnBackWidth, slot0)
+	arg_15_0:setBtnBackWidth()
+	arg_15_0:addEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, arg_15_0.setBtnBackWidth, arg_15_0)
 end
 
-function slot0.setBtnBackWidth(slot0)
-	recthelper.setWidth(slot0._btnback.gameObject.transform, 0.45 * recthelper.getWidth(slot0._goimprove.transform))
+function var_0_0.setBtnBackWidth(arg_16_0)
+	local var_16_0 = recthelper.getWidth(arg_16_0._goimprove.transform)
+
+	recthelper.setWidth(arg_16_0._btnback.gameObject.transform, 0.45 * var_16_0)
 end
 
-function slot0.onDropHide(slot0)
-	transformhelper.setLocalScale(slot0.trDropArrow, 1, 1, 1)
+function var_0_0.onDropHide(arg_17_0)
+	transformhelper.setLocalScale(arg_17_0.trDropArrow, 1, 1, 1)
 end
 
-function slot0.onDropShow(slot0)
-	transformhelper.setLocalScale(slot0.trDropArrow, 1, -1, 1)
+function var_0_0.onDropShow(arg_18_0)
+	transformhelper.setLocalScale(arg_18_0.trDropArrow, 1, -1, 1)
 end
 
-function slot0.initFilterDrop(slot0)
-	slot0.dropFilter = gohelper.findChildDropdown(slot0._gocost, "#drop_filter")
-	slot0.trDropArrow = gohelper.findChildComponent(slot0.dropFilter.gameObject, "Arrow", typeof(UnityEngine.Transform))
-	slot0.dropClick = gohelper.getClick(slot0.dropFilter.gameObject)
-	slot0.dropExtend = DropDownExtend.Get(slot0.dropFilter.gameObject)
-	slot4 = slot0.onDropHide
+function var_0_0.initFilterDrop(arg_19_0)
+	arg_19_0.dropFilter = gohelper.findChildDropdown(arg_19_0._gocost, "#drop_filter")
+	arg_19_0.trDropArrow = gohelper.findChildComponent(arg_19_0.dropFilter.gameObject, "Arrow", typeof(UnityEngine.Transform))
+	arg_19_0.dropClick = gohelper.getClick(arg_19_0.dropFilter.gameObject)
+	arg_19_0.dropExtend = DropDownExtend.Get(arg_19_0.dropFilter.gameObject)
 
-	slot0.dropExtend:init(slot0.onDropShow, slot4, slot0)
+	arg_19_0.dropExtend:init(arg_19_0.onDropShow, arg_19_0.onDropHide, arg_19_0)
 
-	slot0.filterRareLevelList = {}
+	arg_19_0.filterRareLevelList = {}
 
-	for slot4 = 2, EquipConfig.instance:getMaxFilterRare() do
-		table.insert(slot0.filterRareLevelList, slot4)
+	for iter_19_0 = 2, EquipConfig.instance:getMaxFilterRare() do
+		table.insert(arg_19_0.filterRareLevelList, iter_19_0)
 	end
 
-	slot1 = {}
+	local var_19_0 = {}
 
-	for slot5, slot6 in ipairs(slot0.filterRareLevelList) do
-		if slot6 == 0 then
-			table.insert(slot1, luaLang("equip_filter_all"))
+	for iter_19_1, iter_19_2 in ipairs(arg_19_0.filterRareLevelList) do
+		if iter_19_2 == 0 then
+			table.insert(var_19_0, luaLang("equip_filter_all"))
 		else
-			table.insert(slot1, string.format(luaLang("equip_filter_str"), slot6))
+			table.insert(var_19_0, string.format(luaLang("equip_filter_str"), iter_19_2))
 		end
 	end
 
-	slot0.dropFilter:ClearOptions()
-	slot0.dropFilter:AddOptions(slot1)
-	slot0.dropFilter:AddOnValueChanged(slot0.onDropValueChanged, slot0)
-	slot0.dropClick:AddClickListener(function ()
+	arg_19_0.dropFilter:ClearOptions()
+	arg_19_0.dropFilter:AddOptions(var_19_0)
+	arg_19_0.dropFilter:AddOnValueChanged(arg_19_0.onDropValueChanged, arg_19_0)
+	arg_19_0.dropClick:AddClickListener(function()
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_set_click)
-	end, slot0)
+	end, arg_19_0)
 
-	for slot6, slot7 in ipairs(slot0.filterRareLevelList) do
-		if slot7 == EquipChooseListModel.instance:getFilterRare() then
-			slot0.dropFilter:SetValue(slot6 - 1)
+	local var_19_1 = EquipChooseListModel.instance:getFilterRare()
+
+	for iter_19_3, iter_19_4 in ipairs(arg_19_0.filterRareLevelList) do
+		if iter_19_4 == var_19_1 then
+			arg_19_0.dropFilter:SetValue(iter_19_3 - 1)
 
 			break
 		end
 	end
 end
 
-function slot0.onDropValueChanged(slot0, slot1)
-	if not slot0.initDropDone then
+function var_0_0.onDropValueChanged(arg_21_0, arg_21_1)
+	if not arg_21_0.initDropDone then
 		return
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_set_volume_button)
-	EquipChooseListModel.instance:setFilterRare(slot0.filterRareLevelList[slot1 + 1])
+	EquipChooseListModel.instance:setFilterRare(arg_21_0.filterRareLevelList[arg_21_1 + 1])
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_22_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0.filterMo = EquipFilterModel.instance:generateFilterMo(slot0.viewName)
-	slot0._equipMO = slot0.viewContainer.viewParam.equipMO
-	slot0._config = slot0._equipMO.config
-	slot0._equipMaxLv = EquipConfig.instance:getMaxLevel(slot0._config)
+function var_0_0.onOpen(arg_23_0)
+	arg_23_0.filterMo = EquipFilterModel.instance:generateFilterMo(arg_23_0.viewName)
+	arg_23_0._equipMO = arg_23_0.viewContainer.viewParam.equipMO
+	arg_23_0._config = arg_23_0._equipMO.config
+	arg_23_0._equipMaxLv = EquipConfig.instance:getMaxLevel(arg_23_0._config)
 
-	slot0:addEventCb(EquipController.instance, EquipEvent.onEquipStrengthenReply, slot0._onEquipStrengthenReply, slot0)
-	slot0:addEventCb(EquipController.instance, EquipEvent.onChooseChange, slot0._onChooseChange, slot0)
-	slot0:addEventCb(EquipController.instance, EquipEvent.onDeleteEquip, slot0._onUpdateEquip, slot0)
-	slot0:addEventCb(EquipController.instance, EquipEvent.onUpdateEquip, slot0._onUpdateEquip, slot0)
-	slot0:addEventCb(EquipController.instance, EquipEvent.onStrengthenFast, slot0._btnfastaddOnClick, slot0)
-	slot0:addEventCb(EquipController.instance, EquipEvent.onStrengthenUpgrade, slot0._btnupgradeOnClick, slot0)
-	slot0:addEventCb(EquipController.instance, EquipEvent.onBreakSuccess, slot0._onBreakSuccess, slot0)
-	slot0:addEventCb(EquipController.instance, EquipEvent.onEquipLockChange, slot0._onEquipLockChange, slot0)
-	slot0:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, slot0._refreshBreakCostIcon, slot0)
-	slot0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, slot0.refreshCost, slot0)
-	slot0:addEventCb(EquipController.instance, EquipEvent.OnEquipTypeHasChange, slot0.onEquipTypeHasChange, slot0)
-	EquipChooseListModel.instance:initEquipMo(slot0._equipMO, false)
-	EquipChooseListModel.instance:initEquipList(slot0.filterCareer)
+	arg_23_0:addEventCb(EquipController.instance, EquipEvent.onEquipStrengthenReply, arg_23_0._onEquipStrengthenReply, arg_23_0)
+	arg_23_0:addEventCb(EquipController.instance, EquipEvent.onChooseChange, arg_23_0._onChooseChange, arg_23_0)
+	arg_23_0:addEventCb(EquipController.instance, EquipEvent.onDeleteEquip, arg_23_0._onUpdateEquip, arg_23_0)
+	arg_23_0:addEventCb(EquipController.instance, EquipEvent.onUpdateEquip, arg_23_0._onUpdateEquip, arg_23_0)
+	arg_23_0:addEventCb(EquipController.instance, EquipEvent.onStrengthenFast, arg_23_0._btnfastaddOnClick, arg_23_0)
+	arg_23_0:addEventCb(EquipController.instance, EquipEvent.onStrengthenUpgrade, arg_23_0._btnupgradeOnClick, arg_23_0)
+	arg_23_0:addEventCb(EquipController.instance, EquipEvent.onBreakSuccess, arg_23_0._onBreakSuccess, arg_23_0)
+	arg_23_0:addEventCb(EquipController.instance, EquipEvent.onEquipLockChange, arg_23_0._onEquipLockChange, arg_23_0)
+	arg_23_0:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_23_0._refreshBreakCostIcon, arg_23_0)
+	arg_23_0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_23_0.refreshCost, arg_23_0)
+	arg_23_0:addEventCb(EquipController.instance, EquipEvent.OnEquipTypeHasChange, arg_23_0.onEquipTypeHasChange, arg_23_0)
+	EquipChooseListModel.instance:initEquipMo(arg_23_0._equipMO, false)
+	EquipChooseListModel.instance:initEquipList(arg_23_0.filterCareer)
 
-	slot0._playUserIdTabs = slot0:getUserDataTb_()
-	slot0._playerSaveTabs = slot0:getUserDataTb_()
+	arg_23_0._playUserIdTabs = arg_23_0:getUserDataTb_()
+	arg_23_0._playerSaveTabs = arg_23_0:getUserDataTb_()
 
-	if not string.nilorempty(PlayerPrefsHelper.getString(PlayerPrefsKey.EquipStrengthen, "")) then
-		slot0._playUserIdTabs = cjson.decode(slot1)
+	local var_23_0 = PlayerPrefsHelper.getString(PlayerPrefsKey.EquipStrengthen, "")
+
+	if not string.nilorempty(var_23_0) then
+		arg_23_0._playUserIdTabs = cjson.decode(var_23_0)
 	end
 
-	slot0._curPlayerInfoId = PlayerModel.instance:getPlayinfo().userId
+	arg_23_0._curPlayerInfoId = PlayerModel.instance:getPlayinfo().userId
 
-	if slot0._playUserIdTabs[slot0._curPlayerInfoId] == nil then
-		slot0._playerSaveTabs.saveTime = nil
-		slot0._playUserIdTabs[slot0._curPlayerInfoId] = slot0._playerSaveTabs
+	if arg_23_0._playUserIdTabs[arg_23_0._curPlayerInfoId] == nil then
+		arg_23_0._playerSaveTabs.saveTime = nil
+		arg_23_0._playUserIdTabs[arg_23_0._curPlayerInfoId] = arg_23_0._playerSaveTabs
 	else
-		slot0._playerSaveTabs = slot0._playUserIdTabs[slot0._curPlayerInfoId]
+		arg_23_0._playerSaveTabs = arg_23_0._playUserIdTabs[arg_23_0._curPlayerInfoId]
 	end
 
-	slot0:showContainer()
-	slot0:updateLevelInfo(slot0._equipMO.level)
+	arg_23_0:showContainer()
+	arg_23_0:updateLevelInfo(arg_23_0._equipMO.level)
 
-	if slot0.viewContainer:getIsOpenLeftBackpack() then
-		slot0.viewContainer.equipView:hideRefineScrollAndShowStrengthenScroll()
+	if arg_23_0.viewContainer:getIsOpenLeftBackpack() then
+		arg_23_0.viewContainer.equipView:hideRefineScrollAndShowStrengthenScroll()
 	else
-		gohelper.setActive(slot0._goimprove, false)
+		gohelper.setActive(arg_23_0._goimprove, false)
 	end
 
-	slot0._viewAnim:Play(UIAnimationName.Open)
-	slot0:playOutsideNodeAnimation(UIAnimationName.Open)
-	slot0.viewContainer:playCurrencyViewAnimation("go_righttop_ina")
+	arg_23_0._viewAnim:Play(UIAnimationName.Open)
+	arg_23_0:playOutsideNodeAnimation(UIAnimationName.Open)
+	arg_23_0.viewContainer:playCurrencyViewAnimation("go_righttop_ina")
 end
 
-function slot0.showContainer(slot0)
-	if slot0._equipMO.level == slot0._equipMaxLv then
-		slot0.showContainerStatus = uv0.ShowContainerStatusEnum.ShowMax
+function var_0_0.showContainer(arg_24_0)
+	if arg_24_0._equipMO.level == arg_24_0._equipMaxLv then
+		arg_24_0.showContainerStatus = var_0_0.ShowContainerStatusEnum.ShowMax
 
-		slot0:hideUpgradeAndBreakContainer()
+		arg_24_0:hideUpgradeAndBreakContainer()
 
 		return
 	end
 
-	if slot0._equipMO.level == EquipConfig.instance:getCurrentBreakLevelMaxLevel(slot0._equipMO) then
-		slot0.showContainerStatus = uv0.ShowContainerStatusEnum.ShowBreak
+	if arg_24_0._equipMO.level == EquipConfig.instance:getCurrentBreakLevelMaxLevel(arg_24_0._equipMO) then
+		arg_24_0.showContainerStatus = var_0_0.ShowContainerStatusEnum.ShowBreak
 
-		slot0:showBreakContainer()
+		arg_24_0:showBreakContainer()
 
 		return
 	end
 
-	slot0.showContainerStatus = uv0.ShowContainerStatusEnum.ShowUpgrade
+	arg_24_0.showContainerStatus = var_0_0.ShowContainerStatusEnum.ShowUpgrade
 
-	slot0:showUpgradeContainer()
+	arg_24_0:showUpgradeContainer()
 end
 
-function slot0.showScrollContainer(slot0)
-	slot0.isShow = true
+function var_0_0.showScrollContainer(arg_25_0)
+	arg_25_0.isShow = true
 
 	EquipChooseListModel.instance:setEquipList()
-	slot0:refreshEquipChooseEmptyContainer()
-	slot0:_refreshEquipBtnIcon()
-	gohelper.setActive(slot0._goimprove, true)
-	slot0._animimprove:Play("go_improve_in")
+	arg_25_0:refreshEquipChooseEmptyContainer()
+	arg_25_0:_refreshEquipBtnIcon()
+	gohelper.setActive(arg_25_0._goimprove, true)
+	arg_25_0._animimprove:Play("go_improve_in")
 end
 
-function slot0.hideScrollContainer(slot0)
-	slot0.isShow = false
+function var_0_0.hideScrollContainer(arg_26_0)
+	arg_26_0.isShow = false
 
-	slot0._animimprove:Play("go_improve_out")
-	TaskDispatcher.runDelay(slot0._hideImprove, slot0, EquipEnum.AnimationDurationTime)
+	arg_26_0._animimprove:Play("go_improve_out")
+	TaskDispatcher.runDelay(arg_26_0._hideImprove, arg_26_0, EquipEnum.AnimationDurationTime)
 end
 
-function slot0.refreshEquipChooseEmptyContainer(slot0)
-	gohelper.setActive(slot0._golackequip, EquipChooseListModel.instance:getCount() == 0)
+function var_0_0.refreshEquipChooseEmptyContainer(arg_27_0)
+	local var_27_0 = EquipChooseListModel.instance:getCount()
+
+	gohelper.setActive(arg_27_0._golackequip, var_27_0 == 0)
 end
 
-function slot0._hideImprove(slot0)
-	gohelper.setActive(slot0._goimprove, false)
+function var_0_0._hideImprove(arg_28_0)
+	gohelper.setActive(arg_28_0._goimprove, false)
 end
 
-function slot0.onEquipTypeHasChange(slot0, slot1)
-	if slot1 ~= slot0.viewName then
+function var_0_0.onEquipTypeHasChange(arg_29_0, arg_29_1)
+	if arg_29_1 ~= arg_29_0.viewName then
 		return
 	end
 
-	slot0.viewContainer.equipView:setStrengthenScrollVerticalNormalizedPosition(1)
-	EquipChooseListModel.instance:initEquipList(slot0.filterMo, true)
+	arg_29_0.viewContainer.equipView:setStrengthenScrollVerticalNormalizedPosition(1)
+	EquipChooseListModel.instance:initEquipList(arg_29_0.filterMo, true)
 	EquipChooseListModel.instance:setEquipList()
-	slot0:refreshFilterBtn()
+	arg_29_0:refreshFilterBtn()
 end
 
-function slot0.refreshFilterBtn(slot0)
-	slot1 = slot0.filterMo:isFiltering()
+function var_0_0.refreshFilterBtn(arg_30_0)
+	local var_30_0 = arg_30_0.filterMo:isFiltering()
 
-	gohelper.setActive(slot0.goNotFilter, not slot1)
-	gohelper.setActive(slot0.goFilter, slot1)
+	gohelper.setActive(arg_30_0.goNotFilter, not var_30_0)
+	gohelper.setActive(arg_30_0.goFilter, var_30_0)
 end
 
-function slot0._onUpdateEquip(slot0)
-	if slot0.tabContainer._curTabId ~= EquipCategoryListModel.ViewIndex.EquipStrengthenViewIndex then
+function var_0_0._onUpdateEquip(arg_31_0)
+	if arg_31_0.tabContainer._curTabId ~= EquipCategoryListModel.ViewIndex.EquipStrengthenViewIndex then
 		return
 	end
 
-	EquipChooseListModel.instance:initEquipList(slot0.career, true)
+	EquipChooseListModel.instance:initEquipList(arg_31_0.career, true)
 	EquipChooseListModel.instance:setEquipList()
-	slot0:refreshEquipChooseEmptyContainer()
+	arg_31_0:refreshEquipChooseEmptyContainer()
 end
 
-function slot0._updateCostItemList(slot0)
-	if EquipChooseListModel.instance:calcStrengthen() > 0 then
-		slot0._txtaddexp.text = "EXP+" .. slot1
+function var_0_0._updateCostItemList(arg_32_0)
+	local var_32_0 = EquipChooseListModel.instance:calcStrengthen()
+
+	if var_32_0 > 0 then
+		arg_32_0._txtaddexp.text = "EXP+" .. var_32_0
 	else
-		slot0._txtaddexp.text = ""
+		arg_32_0._txtaddexp.text = ""
 	end
 
-	slot0:showStrengthenEffect(slot1)
+	arg_32_0:showStrengthenEffect(var_32_0)
 end
 
-function slot0._onChooseChange(slot0)
-	slot0._txtcostcount.text = string.format("%s<color=#E8E5DF>(%s/%s)</color>", luaLang("p_equip_8"), EquipChooseListModel.instance:getChooseEquipsNum(), EquipEnum.StrengthenMaxCount)
+function var_0_0._onChooseChange(arg_33_0)
+	arg_33_0._txtcostcount.text = string.format("%s<color=#E8E5DF>(%s/%s)</color>", luaLang("p_equip_8"), EquipChooseListModel.instance:getChooseEquipsNum(), EquipEnum.StrengthenMaxCount)
 
-	slot0:_updateCostItemList()
+	arg_33_0:_updateCostItemList()
 end
 
-function slot0.playExpAnimationEffect(slot0)
-	TaskDispatcher.cancelTask(slot0._hideGravingEffect, slot0)
-	gohelper.setActive(slot0._goengravingEffect, true)
-	TaskDispatcher.runDelay(slot0._hideGravingEffect, slot0, 0.8)
+function var_0_0.playExpAnimationEffect(arg_34_0)
+	TaskDispatcher.cancelTask(arg_34_0._hideGravingEffect, arg_34_0)
+	gohelper.setActive(arg_34_0._goengravingEffect, true)
+	TaskDispatcher.runDelay(arg_34_0._hideGravingEffect, arg_34_0, 0.8)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_inscription_engrave)
 end
 
-function slot0.playExpBreakAnimationEffect(slot0)
-	gohelper.setActive(slot0._golevelupeffect, true)
+function var_0_0.playExpBreakAnimationEffect(arg_35_0)
+	gohelper.setActive(arg_35_0._golevelupeffect, true)
 end
 
-function slot0._onEquipStrengthenReply(slot0)
-	slot0.isUpgradeReply = true
+function var_0_0._onEquipStrengthenReply(arg_36_0)
+	arg_36_0.isUpgradeReply = true
 
-	EquipChooseListModel.instance:initEquipList(slot0.career, false)
+	EquipChooseListModel.instance:initEquipList(arg_36_0.career, false)
 	EquipChooseListModel.instance:setEquipList()
-	slot0:refreshEquipChooseEmptyContainer()
+	arg_36_0:refreshEquipChooseEmptyContainer()
 	EquipChooseListModel.instance:resetSelectedEquip()
-	slot0:playExpAnimationEffect()
+	arg_36_0:playExpAnimationEffect()
 
-	slot0._expList = nil
+	arg_36_0._expList = nil
 
-	slot0:showContainer()
+	arg_36_0:showContainer()
 
-	slot0.isUpgradeReply = false
+	arg_36_0.isUpgradeReply = false
 end
 
-function slot0.showStrengthenEffect(slot0, slot1)
-	if slot0._equipMaxLv == slot0._equipMO.level then
+function var_0_0.showStrengthenEffect(arg_37_0, arg_37_1)
+	if arg_37_0._equipMaxLv == arg_37_0._equipMO.level then
 		return
 	end
 
-	slot3 = slot0._equipMO.level
+	arg_37_1 = arg_37_1 or 0
 
-	recthelper.setWidth(slot0._imagegreen1.transform, 0)
+	local var_37_0 = EquipConfig.instance:getEquipStrengthenCostCo(arg_37_0._config.rare, arg_37_0._equipMO.level + 1)
+	local var_37_1 = arg_37_0._equipMO.level
 
-	slot4 = false
+	recthelper.setWidth(arg_37_0._imagegreen1.transform, 0)
 
-	if (slot1 or 0) > 0 then
-		slot4 = EquipConfig.instance:getStrengthenToLv(slot0._config.rare, slot0._equipMO.level, slot0._equipMO.exp + slot1) ~= slot0._equipMO.level
-		slot0._enoughGold = slot0:setCurrencyValue(EquipConfig.instance:getStrengthenToLvCost(slot0._config.rare, slot0._equipMO.level, slot0._equipMO.exp, slot1))
+	local var_37_2 = false
 
-		slot0:showExpAnimation(slot1, EquipConfig.instance:getEquipStrengthenCostCo(slot0._config.rare, slot0._equipMO.level + 1))
+	if arg_37_1 > 0 then
+		var_37_1 = EquipConfig.instance:getStrengthenToLv(arg_37_0._config.rare, arg_37_0._equipMO.level, arg_37_0._equipMO.exp + arg_37_1)
+		var_37_2 = var_37_1 ~= arg_37_0._equipMO.level
+
+		local var_37_3 = EquipConfig.instance:getStrengthenToLvCost(arg_37_0._config.rare, arg_37_0._equipMO.level, arg_37_0._equipMO.exp, arg_37_1)
+
+		arg_37_0._enoughGold = arg_37_0:setCurrencyValue(var_37_3)
+
+		arg_37_0:showExpAnimation(arg_37_1, var_37_0)
 	else
-		slot0._enoughGold = slot0:setCurrencyValue(0)
-		slot0._txtcurrency.text = ""
+		arg_37_0._enoughGold = arg_37_0:setCurrencyValue(0)
+		arg_37_0._txtcurrency.text = ""
 
-		SLFramework.UGUI.GuiHelper.SetColor(slot0._txtcurrency, "#E8E5DF")
+		SLFramework.UGUI.GuiHelper.SetColor(arg_37_0._txtcurrency, "#E8E5DF")
 
-		if slot0._expList then
-			slot0:showExpAnimation(slot1, slot2)
+		if arg_37_0._expList then
+			arg_37_0:showExpAnimation(arg_37_1, var_37_0)
 
-			slot0._expList = nil
+			arg_37_0._expList = nil
 		end
 	end
 
-	ZProj.UGUIHelper.SetGrayscale(slot0._btnupgrade.gameObject, slot1 <= 0)
+	ZProj.UGUIHelper.SetGrayscale(arg_37_0._btnupgrade.gameObject, arg_37_1 <= 0)
 
-	slot5, slot6 = EquipConfig.instance:getStrengthenToLvExpInfo(slot0._config.rare, slot0._equipMO.level, slot0._equipMO.exp, slot1)
+	local var_37_4, var_37_5 = EquipConfig.instance:getStrengthenToLvExpInfo(arg_37_0._config.rare, arg_37_0._equipMO.level, arg_37_0._equipMO.exp, arg_37_1)
+	local var_37_6 = arg_37_0._whiteWidth * math.min(arg_37_0._equipMO.exp / var_37_0.exp, 1)
 
-	recthelper.setWidth(slot0._imagewhite.transform, slot0._whiteWidth * math.min(slot0._equipMO.exp / slot2.exp, 1))
+	recthelper.setWidth(arg_37_0._imagewhite.transform, var_37_6)
 
-	slot0._txtexp.text = string.format("%s/%s", slot5, slot6)
+	arg_37_0._txtexp.text = string.format("%s/%s", var_37_4, var_37_5)
 
-	slot0:setAttribute(slot1, slot4, slot2, slot3)
+	arg_37_0:setAttribute(arg_37_1, var_37_2, var_37_0, var_37_1)
 end
 
-function slot0.setAttribute(slot0, slot1, slot2, slot3, slot4)
-	slot0._upgrade = slot2
-	slot0._addexp = slot1
-	slot0._attrIndex = 1
+function var_0_0.setAttribute(arg_38_0, arg_38_1, arg_38_2, arg_38_3, arg_38_4)
+	arg_38_0._upgrade = arg_38_2
+	arg_38_0._addexp = arg_38_1
+	arg_38_0._attrIndex = 1
 
-	if slot2 then
-		slot5, slot6, slot7, slot8 = EquipConfig.instance:getEquipAddBaseAttr(slot0._equipMO)
-		slot9, slot10, slot11, slot12 = EquipConfig.instance:getEquipAddBaseAttr(slot0._equipMO, slot4)
+	if arg_38_2 then
+		local var_38_0, var_38_1, var_38_2, var_38_3 = EquipConfig.instance:getEquipAddBaseAttr(arg_38_0._equipMO)
+		local var_38_4, var_38_5, var_38_6, var_38_7 = EquipConfig.instance:getEquipAddBaseAttr(arg_38_0._equipMO, arg_38_4)
 
-		slot0:showAttr(CharacterEnum.AttrId.Attack, 0, slot10, slot6, slot3)
-		slot0:showAttr(CharacterEnum.AttrId.Hp, 0, slot9, slot5, slot3)
-		slot0:showAttr(CharacterEnum.AttrId.Defense, 0, slot11, slot7, slot3)
-		slot0:showAttr(CharacterEnum.AttrId.Mdefense, 0, slot12, slot8, slot3)
+		arg_38_0:showAttr(CharacterEnum.AttrId.Attack, 0, var_38_5, var_38_1, arg_38_3)
+		arg_38_0:showAttr(CharacterEnum.AttrId.Hp, 0, var_38_4, var_38_0, arg_38_3)
+		arg_38_0:showAttr(CharacterEnum.AttrId.Defense, 0, var_38_6, var_38_2, arg_38_3)
+		arg_38_0:showAttr(CharacterEnum.AttrId.Mdefense, 0, var_38_7, var_38_3, arg_38_3)
 	else
-		slot5, slot6, slot7, slot8 = EquipConfig.instance:getEquipAddBaseAttr(slot0._equipMO)
+		local var_38_8, var_38_9, var_38_10, var_38_11 = EquipConfig.instance:getEquipAddBaseAttr(arg_38_0._equipMO)
 
-		slot0:showAttr(CharacterEnum.AttrId.Attack, 0, slot6)
-		slot0:showAttr(CharacterEnum.AttrId.Hp, 0, slot5)
-		slot0:showAttr(CharacterEnum.AttrId.Defense, 0, slot7)
-		slot0:showAttr(CharacterEnum.AttrId.Mdefense, 0, slot8)
+		arg_38_0:showAttr(CharacterEnum.AttrId.Attack, 0, var_38_9)
+		arg_38_0:showAttr(CharacterEnum.AttrId.Hp, 0, var_38_8)
+		arg_38_0:showAttr(CharacterEnum.AttrId.Defense, 0, var_38_10)
+		arg_38_0:showAttr(CharacterEnum.AttrId.Mdefense, 0, var_38_11)
 	end
 
-	for slot8 = slot0._attrIndex, #slot0._strengthenattrs do
-		gohelper.setActive(slot0._strengthenattrs[slot8].go, false)
+	for iter_38_0 = arg_38_0._attrIndex, #arg_38_0._strengthenattrs do
+		gohelper.setActive(arg_38_0._strengthenattrs[iter_38_0].go, false)
 	end
 
-	slot5, slot6 = EquipConfig.instance:getEquipCurrentBreakLvAttrEffect(slot0._config, slot0._equipMO.breakLv)
+	local var_38_12, var_38_13 = EquipConfig.instance:getEquipCurrentBreakLvAttrEffect(arg_38_0._config, arg_38_0._equipMO.breakLv)
 
-	if slot5 then
-		gohelper.setActive(slot0._gobreakeffect, true)
-		UISpriteSetMgr.instance:setCommonSprite(slot0.imageBreakIcon, "icon_att_" .. slot5)
+	if var_38_12 then
+		gohelper.setActive(arg_38_0._gobreakeffect, true)
+		UISpriteSetMgr.instance:setCommonSprite(arg_38_0.imageBreakIcon, "icon_att_" .. var_38_12)
 
-		slot0.txtBreakAttrName.text = EquipHelper.getAttrBreakText(slot5)
+		arg_38_0.txtBreakAttrName.text = EquipHelper.getAttrBreakText(var_38_12)
 
-		gohelper.setAsLastSibling(slot0._gobreakeffect)
+		gohelper.setAsLastSibling(arg_38_0._gobreakeffect)
 
-		if slot0.showContainerStatus == uv0.ShowContainerStatusEnum.ShowBreak then
-			slot7, slot8 = EquipConfig.instance:getEquipCurrentBreakLvAttrEffect(slot0._config, slot0._equipMO.breakLv + 1)
-			slot0.txtBreakPreValue.text = EquipHelper.getAttrPercentValueStr(slot6)
-			slot0.txtBreakValue.text = EquipHelper.getAttrPercentValueStr(slot8)
-			slot0.txtBreakValue.color = uv0.Color.NextColor
+		if arg_38_0.showContainerStatus == var_0_0.ShowContainerStatusEnum.ShowBreak then
+			local var_38_14, var_38_15 = EquipConfig.instance:getEquipCurrentBreakLvAttrEffect(arg_38_0._config, arg_38_0._equipMO.breakLv + 1)
 
-			gohelper.setActive(slot0.goBreakRightArrow, true)
-			gohelper.setActive(slot0.txtBreakPreValue, true)
+			arg_38_0.txtBreakPreValue.text = EquipHelper.getAttrPercentValueStr(var_38_13)
+			arg_38_0.txtBreakValue.text = EquipHelper.getAttrPercentValueStr(var_38_15)
+			arg_38_0.txtBreakValue.color = var_0_0.Color.NextColor
+
+			gohelper.setActive(arg_38_0.goBreakRightArrow, true)
+			gohelper.setActive(arg_38_0.txtBreakPreValue, true)
 		else
-			slot0.txtBreakValue.color = uv0.Color.NormalColor
+			arg_38_0.txtBreakValue.color = var_0_0.Color.NormalColor
 
-			gohelper.setActive(slot0.goBreakRightArrow, false)
-			gohelper.setActive(slot0.txtBreakPreValue, false)
+			gohelper.setActive(arg_38_0.goBreakRightArrow, false)
+			gohelper.setActive(arg_38_0.txtBreakPreValue, false)
 
-			slot0.txtBreakValue.text = EquipHelper.getAttrPercentValueStr(slot6)
+			arg_38_0.txtBreakValue.text = EquipHelper.getAttrPercentValueStr(var_38_13)
 		end
 	else
-		gohelper.setActive(slot0._gobreakeffect, false)
+		gohelper.setActive(arg_38_0._gobreakeffect, false)
 	end
 end
 
-function slot0.showBreakLv(slot0, slot1, slot2)
-	for slot8 = 1, slot1.transform.childCount do
-		UISpriteSetMgr.instance:setEquipSprite(gohelper.onceAddComponent(slot3:GetChild(slot8 - 1).gameObject, gohelper.Type_Image), slot8 <= slot2 and "xx_11" or "xx_10")
+function var_0_0.showBreakLv(arg_39_0, arg_39_1, arg_39_2)
+	local var_39_0 = arg_39_1.transform
+	local var_39_1 = var_39_0.childCount
+
+	for iter_39_0 = 1, var_39_1 do
+		local var_39_2 = var_39_0:GetChild(iter_39_0 - 1)
+		local var_39_3 = gohelper.onceAddComponent(var_39_2.gameObject, gohelper.Type_Image)
+
+		UISpriteSetMgr.instance:setEquipSprite(var_39_3, iter_39_0 <= arg_39_2 and "xx_11" or "xx_10")
 	end
 end
 
-function slot0.calcTotalExp(slot0, slot1)
-	if not slot1 then
+function var_0_0.calcTotalExp(arg_40_0, arg_40_1)
+	if not arg_40_1 then
 		return 0, 0
 	end
 
-	return slot1[1], slot1[2]
+	return arg_40_1[1], arg_40_1[2]
 end
 
-function slot0.showExpAnimation(slot0, slot1, slot2)
-	if slot0.isUpgradeReply then
+function var_0_0.showExpAnimation(arg_41_0, arg_41_1, arg_41_2)
+	if arg_41_0.isUpgradeReply then
 		return
 	end
 
-	slot4 = nil
-	slot0._expList, slot4 = EquipConfig.instance:getStrengthenToLvCostExp(slot0._config.rare, slot0._equipMO.level, slot0._equipMO.exp, slot1, slot0._equipMO.breakLv)
-	slot5, slot6 = slot0:calcTotalExp(slot0._expList)
-	slot7, slot8 = slot0:calcTotalExp(slot0._expList)
+	local var_41_0 = arg_41_0._expList
+	local var_41_1
+	local var_41_2
 
-	if slot0._sequence then
-		slot0._sequence:destroy()
+	arg_41_0._expList, var_41_2 = EquipConfig.instance:getStrengthenToLvCostExp(arg_41_0._config.rare, arg_41_0._equipMO.level, arg_41_0._equipMO.exp, arg_41_1, arg_41_0._equipMO.breakLv)
+
+	local var_41_3, var_41_4 = arg_41_0:calcTotalExp(var_41_0)
+	local var_41_5, var_41_6 = arg_41_0:calcTotalExp(arg_41_0._expList)
+
+	if arg_41_0._sequence then
+		arg_41_0._sequence:destroy()
 	end
 
-	slot9 = EquipConfig.instance:getCurrentBreakLevelMaxLevel(slot0._equipMO)
+	local var_41_7 = EquipConfig.instance:getCurrentBreakLevelMaxLevel(arg_41_0._equipMO)
 
-	slot0:setExpProgressStatus(false)
+	local function var_41_8(arg_42_0)
+		local var_42_0 = var_41_5 + arg_42_0
+		local var_42_1 = Mathf.Floor(var_42_0)
+		local var_42_2 = var_42_0 - var_42_1
+		local var_42_3 = arg_41_0._equipMO.level + var_42_1
 
-	slot0.tweenWork = TweenWork.New({
+		if var_41_6 >= var_41_4 and var_42_3 >= var_41_7 or var_41_6 <= var_41_4 and arg_41_0._equipMO.level + var_41_6 + var_41_5 >= var_41_7 then
+			if arg_41_0.tweenWork then
+				arg_41_0.tweenWork:clearWork()
+				arg_41_0:setExpProgressStatus(true)
+				arg_41_0:updateLevelInfo(var_41_7)
+				arg_41_0:setMaxLevelTxtExp(true)
+			end
+
+			return
+		end
+
+		if var_42_1 > 0 then
+			recthelper.setWidth(arg_41_0._imagewhite.transform, 0)
+			arg_41_0._imagegreen1.transform:SetParent(arg_41_0._goafterwhite.transform)
+		else
+			if arg_41_2 then
+				local var_42_4 = arg_41_0._whiteWidth * math.min(arg_41_0._equipMO.exp / arg_41_2.exp, 1)
+
+				recthelper.setWidth(arg_41_0._imagewhite.transform, var_42_4)
+			end
+
+			arg_41_0._imagegreen1.transform:SetParent(arg_41_0._gobeforewhite.transform)
+		end
+
+		recthelper.setWidth(arg_41_0._imagegreen1.transform, var_42_2 * arg_41_0._whiteWidth)
+		arg_41_0:updateLevelInfo(var_42_3)
+	end
+
+	local var_41_9 = arg_41_0._skipExpAnimation and 0 or 0.2
+
+	arg_41_0:setExpProgressStatus(false)
+
+	arg_41_0.tweenWork = TweenWork.New({
 		type = "DOTweenFloat",
-		from = slot6,
-		to = slot8,
-		t = slot0._skipExpAnimation and 0 or 0.2,
-		frameCb = function (slot0)
-			slot1 = uv0 + slot0
-			slot2 = Mathf.Floor(slot1)
-			slot3 = slot1 - slot2
-
-			if uv3 <= uv2 and uv4 <= uv1._equipMO.level + slot2 or uv2 <= uv3 and uv4 <= uv1._equipMO.level + uv2 + uv0 then
-				if uv1.tweenWork then
-					uv1.tweenWork:clearWork()
-					uv1:setExpProgressStatus(true)
-					uv1:updateLevelInfo(uv4)
-					uv1:setMaxLevelTxtExp(true)
-				end
-
-				return
-			end
-
-			if slot2 > 0 then
-				recthelper.setWidth(uv1._imagewhite.transform, 0)
-				uv1._imagegreen1.transform:SetParent(uv1._goafterwhite.transform)
-			else
-				if uv5 then
-					recthelper.setWidth(uv1._imagewhite.transform, uv1._whiteWidth * math.min(uv1._equipMO.exp / uv5.exp, 1))
-				end
-
-				uv1._imagegreen1.transform:SetParent(uv1._gobeforewhite.transform)
-			end
-
-			recthelper.setWidth(uv1._imagegreen1.transform, slot3 * uv1._whiteWidth)
-			uv1:updateLevelInfo(slot4)
-		end,
+		from = var_41_4,
+		to = var_41_6,
+		t = var_41_9,
+		frameCb = var_41_8,
 		ease = EaseType.Linear
 	})
-	slot0._sequence = FlowSequence.New()
+	arg_41_0._sequence = FlowSequence.New()
 
-	slot0._sequence:addWork(slot0.tweenWork)
-	slot0._sequence:registerDoneListener(function ()
-		if uv0 then
-			uv1:setExpProgressStatus(true)
-			uv1:updateLevelInfo(uv2)
-			uv1:setMaxLevelTxtExp(true)
+	arg_41_0._sequence:addWork(arg_41_0.tweenWork)
+	arg_41_0._sequence:registerDoneListener(function()
+		if var_41_2 then
+			arg_41_0:setExpProgressStatus(true)
+			arg_41_0:updateLevelInfo(var_41_7)
+			arg_41_0:setMaxLevelTxtExp(true)
 		end
 	end)
-	slot0._sequence:start()
+	arg_41_0._sequence:start()
 end
 
-function slot0.updateLevelInfo(slot0, slot1)
-	slot2 = EquipConfig.instance:getCurrentBreakLevelMaxLevel(slot0._equipMO)
-	slot0._txttotallevel.text = string.format("<color=#E8E5DF>/%s</color>", slot2)
-	slot0._txtcurlevel.text = math.min(slot1, slot2)
+function var_0_0.updateLevelInfo(arg_44_0, arg_44_1)
+	local var_44_0 = EquipConfig.instance:getCurrentBreakLevelMaxLevel(arg_44_0._equipMO)
+	local var_44_1 = string.format("<color=#E8E5DF>/%s</color>", var_44_0)
+
+	arg_44_0._txttotallevel.text = var_44_1
+	arg_44_0._txtcurlevel.text = math.min(arg_44_1, var_44_0)
 end
 
-function slot0.showAttr(slot0, slot1, slot2, slot3, slot4, slot5)
-	if slot3 <= -1 then
+function var_0_0.showAttr(arg_45_0, arg_45_1, arg_45_2, arg_45_3, arg_45_4, arg_45_5)
+	if arg_45_3 <= -1 then
 		return
 	end
 
-	slot6 = slot4 and slot4 < slot3
-	slot7 = HeroConfig.instance:getHeroAttributeCO(slot1)
+	local var_45_0 = arg_45_4 and arg_45_4 < arg_45_3
+	local var_45_1 = HeroConfig.instance:getHeroAttributeCO(arg_45_1)
+	local var_45_2 = arg_45_0._attrIndex
+	local var_45_3 = arg_45_0._strengthenattrs[var_45_2]
 
-	if not slot0._strengthenattrs[slot0._attrIndex] then
-		slot9 = slot0:getUserDataTb_()
-		slot9.go = gohelper.cloneInPlace(slot0._gostrengthenattr, "item" .. slot8)
-		slot9.txtvalue = gohelper.findChildText(slot9.go, "layout/txt_value")
-		slot9.txtname = gohelper.findChildText(slot9.go, "layout/txt_name")
-		slot9.imageicon = gohelper.findChildImage(slot9.go, "image_icon")
-		slot9.txtprevvalue = gohelper.findChildText(slot9.go, "layout/txt_prevvalue")
-		slot9.gorightarrow = gohelper.findChild(slot9.go, "layout/go_rightarrow")
-		slot9.bg = gohelper.findChild(slot9.go, "layout/go_bg")
+	if not var_45_3 then
+		var_45_3 = arg_45_0:getUserDataTb_()
+		var_45_3.go = gohelper.cloneInPlace(arg_45_0._gostrengthenattr, "item" .. var_45_2)
+		var_45_3.txtvalue = gohelper.findChildText(var_45_3.go, "layout/txt_value")
+		var_45_3.txtname = gohelper.findChildText(var_45_3.go, "layout/txt_name")
+		var_45_3.imageicon = gohelper.findChildImage(var_45_3.go, "image_icon")
+		var_45_3.txtprevvalue = gohelper.findChildText(var_45_3.go, "layout/txt_prevvalue")
+		var_45_3.gorightarrow = gohelper.findChild(var_45_3.go, "layout/go_rightarrow")
+		var_45_3.bg = gohelper.findChild(var_45_3.go, "layout/go_bg")
 
-		table.insert(slot0._strengthenattrs, slot9)
+		table.insert(arg_45_0._strengthenattrs, var_45_3)
 	end
 
-	gohelper.setActive(slot9.bg, slot8 % 2 == 0)
-	CharacterController.instance:SetAttriIcon(slot9.imageicon, slot1, GameUtil.parseColor("#736E6A"))
+	gohelper.setActive(var_45_3.bg, var_45_2 % 2 == 0)
+	CharacterController.instance:SetAttriIcon(var_45_3.imageicon, arg_45_1, GameUtil.parseColor("#736E6A"))
 
-	slot9.txtvalue.text = slot0._upgrade and EquipConfig.instance:dirGetEquipValueStr(slot2, slot3) or "+0"
+	var_45_3.txtvalue.text = arg_45_0._upgrade and EquipConfig.instance:dirGetEquipValueStr(arg_45_2, arg_45_3) or "+0"
 
-	if slot0._upgrade and slot0._addexp > 0 then
-		SLFramework.UGUI.GuiHelper.SetColor(slot9.txtvalue, "#83BC84")
+	if arg_45_0._upgrade and arg_45_0._addexp > 0 then
+		SLFramework.UGUI.GuiHelper.SetColor(var_45_3.txtvalue, "#83BC84")
 	else
-		SLFramework.UGUI.GuiHelper.SetColor(slot9.txtvalue, "#CAC8C5")
+		SLFramework.UGUI.GuiHelper.SetColor(var_45_3.txtvalue, "#CAC8C5")
 	end
 
-	slot9.txtname.text = slot7.name
-	slot9.txtprevvalue.text = slot6 and EquipConfig.instance:dirGetEquipValueStr(slot2, slot4) or EquipConfig.instance:dirGetEquipValueStr(slot2, slot3)
+	var_45_3.txtname.text = var_45_1.name
+	var_45_3.txtprevvalue.text = var_45_0 and EquipConfig.instance:dirGetEquipValueStr(arg_45_2, arg_45_4) or EquipConfig.instance:dirGetEquipValueStr(arg_45_2, arg_45_3)
 
-	gohelper.setActive(slot9.gorightarrow, true)
-	gohelper.setActive(slot9.go, true)
+	gohelper.setActive(var_45_3.gorightarrow, true)
+	gohelper.setActive(var_45_3.go, true)
 
-	slot0._attrIndex = slot0._attrIndex + 1
+	arg_45_0._attrIndex = arg_45_0._attrIndex + 1
 
-	if not slot5 then
-		slot9.txtvalue.text = slot9.txtprevvalue.text
+	if not arg_45_5 then
+		var_45_3.txtvalue.text = var_45_3.txtprevvalue.text
 
-		gohelper.setActive(slot9.txtprevvalue.gameObject, false)
-		gohelper.setActive(slot9.gorightarrow, false)
+		gohelper.setActive(var_45_3.txtprevvalue.gameObject, false)
+		gohelper.setActive(var_45_3.gorightarrow, false)
 	else
-		gohelper.setActive(slot9.txtprevvalue.gameObject, true)
-		gohelper.setActive(slot9.gorightarrow, true)
+		gohelper.setActive(var_45_3.txtprevvalue.gameObject, true)
+		gohelper.setActive(var_45_3.gorightarrow, true)
 	end
 end
 
-function slot0.showUpgradeContainer(slot0)
+function var_0_0.showUpgradeContainer(arg_46_0)
 	EquipSelectedListModel.instance:initList()
-	slot0:_onChooseChange()
+	arg_46_0:_onChooseChange()
 	EquipController.instance:dispatchEvent(EquipEvent.onShowStrengthenListModelContainer)
-	gohelper.setActive(slot0._gocost, true)
-	gohelper.setActive(slot0._gostart, true)
-	gohelper.setActive(slot0._gobreak, false)
-	slot0._gomaxbreaktip:SetActive(false)
-	slot0._gomaxbreakbartip:SetActive(false)
-	gohelper.setActive(slot0._golevelup, false)
-	gohelper.setActive(slot0._gobreakcount, false)
-	gohelper.setActive(slot0._txtcostcount.gameObject, true)
-	gohelper.setActive(slot0._goupgrade, true)
-	gohelper.setActive(slot0._gobreak, false)
-	slot0:setExpProgressStatus(false)
-	slot0:refreshFilterBtn()
+	gohelper.setActive(arg_46_0._gocost, true)
+	gohelper.setActive(arg_46_0._gostart, true)
+	gohelper.setActive(arg_46_0._gobreak, false)
+	arg_46_0._gomaxbreaktip:SetActive(false)
+	arg_46_0._gomaxbreakbartip:SetActive(false)
+	gohelper.setActive(arg_46_0._golevelup, false)
+	gohelper.setActive(arg_46_0._gobreakcount, false)
+	gohelper.setActive(arg_46_0._txtcostcount.gameObject, true)
+	gohelper.setActive(arg_46_0._goupgrade, true)
+	gohelper.setActive(arg_46_0._gobreak, false)
+	arg_46_0:setExpProgressStatus(false)
+	arg_46_0:refreshFilterBtn()
 end
 
-function slot0.showBreakContainer(slot0)
-	if not EquipConfig.instance:getNextBreakLevelCostCo(slot0._equipMO) or not slot1.cost then
+function var_0_0.showBreakContainer(arg_47_0)
+	local var_47_0 = EquipConfig.instance:getNextBreakLevelCostCo(arg_47_0._equipMO)
+
+	if not var_47_0 or not var_47_0.cost then
 		return
 	end
 
-	slot0._enoughBreak = slot0:setBreakCostIconAndDispatchEvent(slot1)
-	slot0._enoughGold = slot0:setCurrencyValue(slot1.scoreCost)
+	arg_47_0._enoughBreak = arg_47_0:setBreakCostIconAndDispatchEvent(var_47_0)
+	arg_47_0._enoughGold = arg_47_0:setCurrencyValue(var_47_0.scoreCost)
 
-	slot0:setAttribute(0, false)
-	ZProj.UGUIHelper.SetGrayscale(slot0._btnbreak.gameObject, not slot0._enoughBreak or not slot0._enoughGold)
-	gohelper.setActive(slot0._gocost, true)
-	gohelper.setActive(slot0._gostart, false)
-	gohelper.setActive(slot0._gobreak, true)
-	slot0._gomaxbreaktip:SetActive(false)
-	slot0._gomaxbreakbartip:SetActive(false)
-	gohelper.setActive(slot0._golevelup, true)
-	gohelper.setActive(slot0._gobreakcount, true)
-	gohelper.setActive(slot0._txtcostcount.gameObject, false)
-	gohelper.setActive(slot0._goupgrade, false)
-	gohelper.setActive(slot0._gobreak, true)
-	slot0:setExpProgressStatus(true)
-	slot0:setMaxLevelTxtExp()
+	arg_47_0:setAttribute(0, false)
+	ZProj.UGUIHelper.SetGrayscale(arg_47_0._btnbreak.gameObject, not arg_47_0._enoughBreak or not arg_47_0._enoughGold)
+	gohelper.setActive(arg_47_0._gocost, true)
+	gohelper.setActive(arg_47_0._gostart, false)
+	gohelper.setActive(arg_47_0._gobreak, true)
+	arg_47_0._gomaxbreaktip:SetActive(false)
+	arg_47_0._gomaxbreakbartip:SetActive(false)
+	gohelper.setActive(arg_47_0._golevelup, true)
+	gohelper.setActive(arg_47_0._gobreakcount, true)
+	gohelper.setActive(arg_47_0._txtcostcount.gameObject, false)
+	gohelper.setActive(arg_47_0._goupgrade, false)
+	gohelper.setActive(arg_47_0._gobreak, true)
+	arg_47_0:setExpProgressStatus(true)
+	arg_47_0:setMaxLevelTxtExp()
 
-	gohelper.findChildText(slot0._golevelup, "layout/txt_prevvalue").text = string.format("%s/%s", slot0._equipMO.level, EquipConfig.instance:getCurrentBreakLevelMaxLevel(slot0._equipMO))
-	gohelper.findChildText(slot0._golevelup, "layout/txt_value").text = string.format("%s/%s", slot0._equipMO.level, EquipConfig.instance:getNextBreakLevelMaxLevel(slot0._equipMO))
+	local var_47_1 = gohelper.findChildText(arg_47_0._golevelup, "layout/txt_prevvalue")
+	local var_47_2 = gohelper.findChildText(arg_47_0._golevelup, "layout/txt_value")
+
+	var_47_1.text = string.format("%s/%s", arg_47_0._equipMO.level, EquipConfig.instance:getCurrentBreakLevelMaxLevel(arg_47_0._equipMO))
+	var_47_2.text = string.format("%s/%s", arg_47_0._equipMO.level, EquipConfig.instance:getNextBreakLevelMaxLevel(arg_47_0._equipMO))
 end
 
-function slot0.hideUpgradeAndBreakContainer(slot0)
+function var_0_0.hideUpgradeAndBreakContainer(arg_48_0)
 	EquipController.instance:dispatchEvent(EquipEvent.onHideBreakAndStrengthenListModelContainer)
-	slot0:setAttribute(0, false)
-	slot0:setMaxLevelTxtExp()
+	arg_48_0:setAttribute(0, false)
+	arg_48_0:setMaxLevelTxtExp()
 
-	slot0._txttotallevel.text = ""
-	slot0._txtcurlevel.text = slot0._equipMO.level
+	arg_48_0._txttotallevel.text = ""
+	arg_48_0._txtcurlevel.text = arg_48_0._equipMO.level
 
-	recthelper.setWidth(slot0._imagewhite.transform, slot0._whiteWidth)
-	slot0._gomaxbreaktip:SetActive(true)
-	slot0:hideStrengthenScroll()
-	slot0._gomaxbreakbartip:SetActive(false)
-	slot0._gocost:SetActive(false)
-	slot0:setExpProgressStatus(true)
+	recthelper.setWidth(arg_48_0._imagewhite.transform, arg_48_0._whiteWidth)
+	arg_48_0._gomaxbreaktip:SetActive(true)
+	arg_48_0:hideStrengthenScroll()
+	arg_48_0._gomaxbreakbartip:SetActive(false)
+	arg_48_0._gocost:SetActive(false)
+	arg_48_0:setExpProgressStatus(true)
 end
 
-function slot0.setMaxLevelTxtExp(slot0, slot1)
-	slot3 = EquipConfig.instance:getEquipStrengthenCostCo(slot0._config.rare, EquipConfig.instance:getCurrentBreakLevelMaxLevel(slot0._equipMO)).exp
-	slot0._txtexp.text = string.format("%s/%s", tostring(slot3), tostring(slot3))
+function var_0_0.setMaxLevelTxtExp(arg_49_0, arg_49_1)
+	local var_49_0 = EquipConfig.instance:getCurrentBreakLevelMaxLevel(arg_49_0._equipMO)
+	local var_49_1 = EquipConfig.instance:getEquipStrengthenCostCo(arg_49_0._config.rare, var_49_0).exp
 
-	if not slot1 then
-		slot0._txtaddexp.text = ""
+	arg_49_0._txtexp.text = string.format("%s/%s", tostring(var_49_1), tostring(var_49_1))
+
+	if not arg_49_1 then
+		arg_49_0._txtaddexp.text = ""
 	end
 end
 
-function slot0.setCurrencyValue(slot0, slot1)
-	slot2 = false
+function var_0_0.setCurrencyValue(arg_50_0, arg_50_1)
+	local var_50_0 = false
 
-	if slot1 <= CurrencyModel.instance:getGold() then
-		SLFramework.UGUI.GuiHelper.SetColor(slot0._txtcurrency, "#E8E5DF")
+	if arg_50_1 <= CurrencyModel.instance:getGold() then
+		SLFramework.UGUI.GuiHelper.SetColor(arg_50_0._txtcurrency, "#E8E5DF")
 
-		slot2 = true
+		var_50_0 = true
 	else
-		SLFramework.UGUI.GuiHelper.SetColor(slot0._txtcurrency, "#CC4E4E")
+		SLFramework.UGUI.GuiHelper.SetColor(arg_50_0._txtcurrency, "#CC4E4E")
 
-		slot2 = false
+		var_50_0 = false
 	end
 
-	slot0._txtcurrency.text = slot1 ~= 0 and slot1 or ""
+	arg_50_0._txtcurrency.text = arg_50_1 ~= 0 and arg_50_1 or ""
 
-	gohelper.setActive(slot0._gonocurrency, slot1 <= 0)
+	gohelper.setActive(arg_50_0._gonocurrency, arg_50_1 <= 0)
 
-	return slot2
+	return var_50_0
 end
 
-function slot0.enoughBreakConsume(slot0, slot1)
-	for slot5 = 1, #slot1 do
-		if ItemModel.instance:getItemQuantity(slot1[slot5].type, slot1[slot5].id) < slot1[slot5].quantity then
+function var_0_0.enoughBreakConsume(arg_51_0, arg_51_1)
+	for iter_51_0 = 1, #arg_51_1 do
+		if ItemModel.instance:getItemQuantity(arg_51_1[iter_51_0].type, arg_51_1[iter_51_0].id) < arg_51_1[iter_51_0].quantity then
 			return false
 		end
 	end
@@ -823,165 +881,178 @@ function slot0.enoughBreakConsume(slot0, slot1)
 	return true
 end
 
-function slot0.setExpProgressStatus(slot0, slot1)
-	gohelper.setActive(slot0._gofullexp, slot1)
-	gohelper.setActive(slot0._goafterwhite, not slot1)
-	gohelper.setActive(slot0._imagewhite.gameObject, not slot1)
+function var_0_0.setExpProgressStatus(arg_52_0, arg_52_1)
+	gohelper.setActive(arg_52_0._gofullexp, arg_52_1)
+	gohelper.setActive(arg_52_0._goafterwhite, not arg_52_1)
+	gohelper.setActive(arg_52_0._imagewhite.gameObject, not arg_52_1)
 end
 
-function slot0._onBreakSuccess(slot0)
-	slot0:showContainer()
+function var_0_0._onBreakSuccess(arg_53_0)
+	arg_53_0:showContainer()
 
-	if slot0.flow then
-		slot0.flow:destroy()
+	if arg_53_0.flow then
+		arg_53_0.flow:destroy()
 	end
 
-	slot0.flow = FlowSequence.New()
+	arg_53_0.flow = FlowSequence.New()
 
-	if slot0.viewContainer:isOpenLeftStrengthenScroll() then
-		slot0.flow:addWork(DelayFuncWork.New(slot0.hideStrengthenScroll, slot0, EquipEnum.AnimationDurationTime))
+	if arg_53_0.viewContainer:isOpenLeftStrengthenScroll() then
+		arg_53_0.flow:addWork(DelayFuncWork.New(arg_53_0.hideStrengthenScroll, arg_53_0, EquipEnum.AnimationDurationTime))
 	end
 
-	slot0.flow:addWork(DelayFuncWork.New(function ()
+	arg_53_0.flow:addWork(DelayFuncWork.New(function()
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_inscription_breach)
-	end, slot0, 0.3))
-	slot0.flow:addWork(DelayFuncWork.New(slot0.playExpBreakAnimationEffect, slot0, slot0.breakSuccessAnimationTime))
-	slot0.flow:addWork(DelayFuncWork.New(slot0._hideLevelUpEffect, slot0, 0))
-	slot0.flow:addWork(DelayFuncWork.New(slot0.levelChangeAnimation, slot0, uv0.LevelChangeAnimationTime))
-	slot0.flow:addWork(DelayFuncWork.New(slot0.refreshLevelInfo, slot0, 0))
-	slot0.flow:registerDoneListener(slot0.onBreakAnimationDone, slot0)
-	slot0.flow:start()
+	end, arg_53_0, 0.3))
+	arg_53_0.flow:addWork(DelayFuncWork.New(arg_53_0.playExpBreakAnimationEffect, arg_53_0, arg_53_0.breakSuccessAnimationTime))
+	arg_53_0.flow:addWork(DelayFuncWork.New(arg_53_0._hideLevelUpEffect, arg_53_0, 0))
+	arg_53_0.flow:addWork(DelayFuncWork.New(arg_53_0.levelChangeAnimation, arg_53_0, var_0_0.LevelChangeAnimationTime))
+	arg_53_0.flow:addWork(DelayFuncWork.New(arg_53_0.refreshLevelInfo, arg_53_0, 0))
+	arg_53_0.flow:registerDoneListener(arg_53_0.onBreakAnimationDone, arg_53_0)
+	arg_53_0.flow:start()
 end
 
-function slot0.onBreakAnimationDone(slot0)
-	slot0.breaking = false
+function var_0_0.onBreakAnimationDone(arg_55_0)
+	arg_55_0.breaking = false
 
-	EquipChooseListModel.instance:setIsLock(slot0.breaking)
+	EquipChooseListModel.instance:setIsLock(arg_55_0.breaking)
 end
 
-function slot0._onEquipLockChange(slot0, slot1)
-	if slot1.isLock then
-		EquipChooseListModel.instance:deselectEquip(EquipModel.instance:getEquip(slot1.uid))
+function var_0_0._onEquipLockChange(arg_56_0, arg_56_1)
+	local var_56_0 = arg_56_1.uid
+
+	if arg_56_1.isLock then
+		local var_56_1 = EquipModel.instance:getEquip(var_56_0)
+
+		EquipChooseListModel.instance:deselectEquip(var_56_1)
 	end
 end
 
-function slot0.hideStrengthenScroll(slot0)
+function var_0_0.hideStrengthenScroll(arg_57_0)
 	EquipController.instance:dispatchEvent(EquipEvent.onChangeStrengthenScrollState, false)
 end
 
-function slot0.levelChangeAnimation(slot0)
-	slot1 = EquipConfig.instance:getCurrentBreakLevelMaxLevel(slot0._equipMO)
-	slot2 = EquipConfig.instance:_getBreakLevelMaxLevel(slot0._equipMO.config.rare, slot0._equipMO.breakLv - 1)
+function var_0_0.levelChangeAnimation(arg_58_0)
+	local var_58_0 = EquipConfig.instance:getCurrentBreakLevelMaxLevel(arg_58_0._equipMO)
+	local var_58_1 = EquipConfig.instance:_getBreakLevelMaxLevel(arg_58_0._equipMO.config.rare, arg_58_0._equipMO.breakLv - 1)
 
-	if slot0.tweenId then
-		ZProj.TweenHelper.KillById(slot0.tweenId)
+	if arg_58_0.tweenId then
+		ZProj.TweenHelper.KillById(arg_58_0.tweenId)
 	end
 
-	slot0.tweenId = ZProj.TweenHelper.DOTweenFloat(slot2, slot1, uv0.LevelChangeAnimationTime, slot0.setMaxLevel, slot0.tweenDone, slot0, nil, EaseType.Linear)
+	arg_58_0.tweenId = ZProj.TweenHelper.DOTweenFloat(var_58_1, var_58_0, var_0_0.LevelChangeAnimationTime, arg_58_0.setMaxLevel, arg_58_0.tweenDone, arg_58_0, nil, EaseType.Linear)
 end
 
-function slot0.setMaxLevel(slot0, slot1)
-	slot0._txttotallevel.text = "/" .. slot1
+function var_0_0.setMaxLevel(arg_59_0, arg_59_1)
+	arg_59_0._txttotallevel.text = "/" .. arg_59_1
 end
 
-function slot0.tweenDone(slot0)
-	slot0.tweenId = nil
+function var_0_0.tweenDone(arg_60_0)
+	arg_60_0.tweenId = nil
 end
 
-function slot0.refreshLevelInfo(slot0)
-	slot0:updateLevelInfo(slot0._equipMO.level)
+function var_0_0.refreshLevelInfo(arg_61_0)
+	arg_61_0:updateLevelInfo(arg_61_0._equipMO.level)
 end
 
-function slot0.setBreakCostIconAndDispatchEvent(slot0, slot1)
-	slot2 = {}
+function var_0_0.setBreakCostIconAndDispatchEvent(arg_62_0, arg_62_1)
+	local var_62_0 = {}
+	local var_62_1 = string.split(arg_62_1.cost, "|")
 
-	for slot7 = 1, #string.split(slot1.cost, "|") do
-		slot8 = string.splitToNumber(slot3[slot7], "#")
+	for iter_62_0 = 1, #var_62_1 do
+		local var_62_2 = string.splitToNumber(var_62_1[iter_62_0], "#")
+		local var_62_3 = {
+			type = tonumber(var_62_2[1]),
+			id = tonumber(var_62_2[2]),
+			quantity = tonumber(var_62_2[3])
+		}
 
-		table.insert(slot2, {
-			type = tonumber(slot8[1]),
-			id = tonumber(slot8[2]),
-			quantity = tonumber(slot8[3])
-		})
+		table.insert(var_62_0, var_62_3)
 	end
 
-	EquipController.instance:dispatchEvent(EquipEvent.onShowBreakCostListModelContainer, slot3)
+	EquipController.instance:dispatchEvent(EquipEvent.onShowBreakCostListModelContainer, var_62_1)
 
-	return slot0:enoughBreakConsume(slot2)
+	return arg_62_0:enoughBreakConsume(var_62_0)
 end
 
-function slot0._refreshBreakCostIcon(slot0)
-	slot0._enoughBreak = slot0:setBreakCostIconAndDispatchEvent(EquipConfig.instance:getNextBreakLevelCostCo(slot0._equipMO))
+function var_0_0._refreshBreakCostIcon(arg_63_0)
+	local var_63_0 = EquipConfig.instance:getNextBreakLevelCostCo(arg_63_0._equipMO)
 
-	ZProj.UGUIHelper.SetGrayscale(slot0._btnbreak.gameObject, not slot0._enoughBreak or not slot0._enoughGold)
+	arg_63_0._enoughBreak = arg_63_0:setBreakCostIconAndDispatchEvent(var_63_0)
+
+	ZProj.UGUIHelper.SetGrayscale(arg_63_0._btnbreak.gameObject, not arg_63_0._enoughBreak or not arg_63_0._enoughGold)
 end
 
-function slot0.refreshCost(slot0)
-	if slot0.showContainerStatus == uv0.ShowContainerStatusEnum.ShowUpgrade then
-		slot0._enoughGold = slot0:setCurrencyValue(EquipConfig.instance:getStrengthenToLvCost(slot0._config.rare, slot0._equipMO.level, slot0._equipMO.exp, EquipChooseListModel.instance:calcStrengthen()))
-	elseif slot0.showContainerStatus == uv0.ShowContainerStatusEnum.ShowBreak then
-		if not EquipConfig.instance:getNextBreakLevelCostCo(slot0._equipMO) or not slot1.cost then
+function var_0_0.refreshCost(arg_64_0)
+	if arg_64_0.showContainerStatus == var_0_0.ShowContainerStatusEnum.ShowUpgrade then
+		local var_64_0 = EquipChooseListModel.instance:calcStrengthen()
+		local var_64_1 = EquipConfig.instance:getStrengthenToLvCost(arg_64_0._config.rare, arg_64_0._equipMO.level, arg_64_0._equipMO.exp, var_64_0)
+
+		arg_64_0._enoughGold = arg_64_0:setCurrencyValue(var_64_1)
+	elseif arg_64_0.showContainerStatus == var_0_0.ShowContainerStatusEnum.ShowBreak then
+		local var_64_2 = EquipConfig.instance:getNextBreakLevelCostCo(arg_64_0._equipMO)
+
+		if not var_64_2 or not var_64_2.cost then
 			return
 		end
 
-		slot0._enoughGold = slot0:setCurrencyValue(slot1.scoreCost)
+		arg_64_0._enoughGold = arg_64_0:setCurrencyValue(var_64_2.scoreCost)
 	end
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_65_0)
 	EquipChooseListModel.instance:clearEquipList()
 	EquipSelectedListModel.instance:clearList()
 
-	slot0._expList = nil
+	arg_65_0._expList = nil
 
 	EquipController.instance:dispatchEvent(EquipEvent.onCloseEquipStrengthenView)
 	EquipBreakCostListModel.instance:clearList()
 	ViewMgr.instance:closeView(ViewName.EquipInfoTipsView)
 
-	if slot0.flow then
-		slot0.flow:destroy()
+	if arg_65_0.flow then
+		arg_65_0.flow:destroy()
 	end
 
-	slot0.flow = nil
-	slot0.breaking = false
+	arg_65_0.flow = nil
+	arg_65_0.breaking = false
 
-	EquipChooseListModel.instance:setIsLock(slot0.breaking)
+	EquipChooseListModel.instance:setIsLock(arg_65_0.breaking)
 
-	if slot0.tweenId then
-		ZProj.TweenHelper.KillById(slot0.tweenId)
+	if arg_65_0.tweenId then
+		ZProj.TweenHelper.KillById(arg_65_0.tweenId)
 	end
 
-	slot0:playCloseAnimation()
+	arg_65_0:playCloseAnimation()
 end
 
-function slot0.playCloseAnimation(slot0)
-	slot0._viewAnim:Play(UIAnimationName.Close)
-	slot0:playOutsideNodeAnimation(UIAnimationName.Close)
-	slot0.viewContainer:playCurrencyViewAnimation("go_righttop_out")
+function var_0_0.playCloseAnimation(arg_66_0)
+	arg_66_0._viewAnim:Play(UIAnimationName.Close)
+	arg_66_0:playOutsideNodeAnimation(UIAnimationName.Close)
+	arg_66_0.viewContainer:playCurrencyViewAnimation("go_righttop_out")
 end
 
-function slot0.playOutsideNodeAnimation(slot0, slot1)
-	if slot0.showContainerStatus == uv0.ShowContainerStatusEnum.ShowUpgrade then
-		slot0.viewContainer.equipView.costEquipScrollAnim:Play(slot1)
-	elseif slot0.showContainerStatus == uv0.ShowContainerStatusEnum.ShowBreak then
-		slot0.viewContainer.equipView.breakEquipScrollAnim:Play(slot1)
-	end
-end
-
-function slot0.onDestroyView(slot0)
-	EquipFilterModel.instance:clear(slot0.viewName)
-	TaskDispatcher.cancelTask(slot0._hideGravingEffect, slot0)
-	TaskDispatcher.cancelTask(slot0._hideImprove, slot0)
-	slot0.dropFilter:RemoveOnValueChanged()
-	slot0.dropClick:RemoveClickListener()
-
-	if slot0._sequence then
-		slot0._sequence:destroy()
-	end
-
-	if slot0.dropExtend then
-		slot0.dropExtend:dispose()
+function var_0_0.playOutsideNodeAnimation(arg_67_0, arg_67_1)
+	if arg_67_0.showContainerStatus == var_0_0.ShowContainerStatusEnum.ShowUpgrade then
+		arg_67_0.viewContainer.equipView.costEquipScrollAnim:Play(arg_67_1)
+	elseif arg_67_0.showContainerStatus == var_0_0.ShowContainerStatusEnum.ShowBreak then
+		arg_67_0.viewContainer.equipView.breakEquipScrollAnim:Play(arg_67_1)
 	end
 end
 
-return slot0
+function var_0_0.onDestroyView(arg_68_0)
+	EquipFilterModel.instance:clear(arg_68_0.viewName)
+	TaskDispatcher.cancelTask(arg_68_0._hideGravingEffect, arg_68_0)
+	TaskDispatcher.cancelTask(arg_68_0._hideImprove, arg_68_0)
+	arg_68_0.dropFilter:RemoveOnValueChanged()
+	arg_68_0.dropClick:RemoveClickListener()
+
+	if arg_68_0._sequence then
+		arg_68_0._sequence:destroy()
+	end
+
+	if arg_68_0.dropExtend then
+		arg_68_0.dropExtend:dispose()
+	end
+end
+
+return var_0_0

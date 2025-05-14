@@ -1,8 +1,8 @@
-module("modules.logic.room.config.ManufactureConfig", package.seeall)
+﻿module("modules.logic.room.config.ManufactureConfig", package.seeall)
 
-slot0 = class("ManufactureConfig", BaseConfig)
+local var_0_0 = class("ManufactureConfig", BaseConfig)
 
-function slot0.reqConfigNames(slot0)
+function var_0_0.reqConfigNames(arg_1_0)
 	return {
 		"manufacture_const",
 		"trade_level",
@@ -15,595 +15,704 @@ function slot0.reqConfigNames(slot0)
 	}
 end
 
-function slot0.onInit(slot0)
-	slot0._levelGroupDict = {}
-	slot0._tradeLevelGroupDict = {}
-	slot0._belongBuildingDict = nil
-	slot0._belongBuildingTypeDict = nil
-	slot0._itemId2ManufactureItemDict = nil
-	slot0._levelUnlockDict = {}
+function var_0_0.onInit(arg_2_0)
+	arg_2_0._levelGroupDict = {}
+	arg_2_0._tradeLevelGroupDict = {}
+	arg_2_0._belongBuildingDict = nil
+	arg_2_0._belongBuildingTypeDict = nil
+	arg_2_0._itemId2ManufactureItemDict = nil
+	arg_2_0._levelUnlockDict = {}
 end
 
-function slot0.onConfigLoaded(slot0, slot1, slot2)
-	if slot0[string.format("%sConfigLoaded", slot1)] then
-		slot4(slot0, slot2)
+function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
+	local var_3_0 = arg_3_0[string.format("%sConfigLoaded", arg_3_1)]
+
+	if var_3_0 then
+		var_3_0(arg_3_0, arg_3_2)
 	end
 end
 
-function slot0.manufacture_itemConfigLoaded(slot0, slot1)
-	slot0._itemId2ManufactureItemDict = {}
+function var_0_0.manufacture_itemConfigLoaded(arg_4_0, arg_4_1)
+	arg_4_0._itemId2ManufactureItemDict = {}
 
-	for slot5, slot6 in pairs(slot1.configList) do
-		if not slot0._itemId2ManufactureItemDict[slot6.itemId] then
-			slot0._itemId2ManufactureItemDict[slot7] = {}
+	for iter_4_0, iter_4_1 in pairs(arg_4_1.configList) do
+		local var_4_0 = iter_4_1.itemId
+		local var_4_1 = arg_4_0._itemId2ManufactureItemDict[var_4_0]
+
+		if not var_4_1 then
+			var_4_1 = {}
+			arg_4_0._itemId2ManufactureItemDict[var_4_0] = var_4_1
 		end
 
-		table.insert(slot8, slot5)
+		table.insert(var_4_1, iter_4_0)
 	end
 end
 
-function slot0.trade_levelConfigLoaded(slot0, slot1)
-	if not slot0._systemUnlockLevel then
-		slot0._systemUnlockLevel = {}
+function var_0_0.trade_levelConfigLoaded(arg_5_0, arg_5_1)
+	if not arg_5_0._systemUnlockLevel then
+		arg_5_0._systemUnlockLevel = {}
 	end
 
-	for slot5, slot6 in pairs(slot1.configList) do
-		if not string.nilorempty(slot6.unlockId) then
-			for slot11, slot12 in ipairs(string.splitToNumber(slot6.unlockId, "#")) do
-				slot0._systemUnlockLevel[slot12] = slot6.level
+	for iter_5_0, iter_5_1 in pairs(arg_5_1.configList) do
+		if not string.nilorempty(iter_5_1.unlockId) then
+			local var_5_0 = string.splitToNumber(iter_5_1.unlockId, "#")
+
+			for iter_5_2, iter_5_3 in ipairs(var_5_0) do
+				arg_5_0._systemUnlockLevel[iter_5_3] = iter_5_1.level
 			end
 		end
 	end
 end
 
-function slot0.manufacture_buildingConfigLoaded(slot0, slot1)
-	for slot5, slot6 in pairs(slot1.configList) do
-		if not slot0._levelUnlockDict[slot6.placeTradeLevel] then
-			slot0._levelUnlockDict[slot7] = {}
+function var_0_0.manufacture_buildingConfigLoaded(arg_6_0, arg_6_1)
+	for iter_6_0, iter_6_1 in pairs(arg_6_1.configList) do
+		local var_6_0 = iter_6_1.placeTradeLevel
+		local var_6_1 = arg_6_0._levelUnlockDict[var_6_0]
+
+		if not var_6_1 then
+			var_6_1 = {}
+			arg_6_0._levelUnlockDict[var_6_0] = var_6_1
 		end
 
-		if not slot8[RoomTradeEnum.LevelUnlock.NewBuilding] then
-			slot8[RoomTradeEnum.LevelUnlock.NewBuilding] = {}
+		local var_6_2 = var_6_1[RoomTradeEnum.LevelUnlock.NewBuilding]
+
+		if not var_6_2 then
+			var_6_2 = {}
+			var_6_1[RoomTradeEnum.LevelUnlock.NewBuilding] = var_6_2
 		end
 
-		table.insert(slot9, slot6.id)
+		table.insert(var_6_2, iter_6_1.id)
 	end
 end
 
-function slot0.manufacture_building_levelConfigLoaded(slot0, slot1)
-	slot0._levelGroupDict = {}
+function var_0_0.manufacture_building_levelConfigLoaded(arg_7_0, arg_7_1)
+	arg_7_0._levelGroupDict = {}
 
-	for slot5, slot6 in pairs(slot1.configDict) do
-		slot7 = {
+	for iter_7_0, iter_7_1 in pairs(arg_7_1.configDict) do
+		local var_7_0 = {
 			maxLevel = 0,
 			maxSlotCount = 0,
 			manufactureItem2LevelDict = {}
 		}
 
-		for slot11, slot12 in pairs(slot6) do
-			if slot7.maxLevel < slot11 then
-				slot7.maxLevel = slot11
+		for iter_7_2, iter_7_3 in pairs(iter_7_1) do
+			if iter_7_2 > var_7_0.maxLevel then
+				var_7_0.maxLevel = iter_7_2
 			end
 
-			if slot7.maxSlotCount < slot12.slotCount then
-				slot7.maxSlotCount = slot13
+			local var_7_1 = iter_7_3.slotCount
+
+			if var_7_1 > var_7_0.maxSlotCount then
+				var_7_0.maxSlotCount = var_7_1
 			end
 
-			for slot18, slot19 in ipairs(string.splitToNumber(slot12.productions, "#")) do
-				slot7.manufactureItem2LevelDict[slot19] = slot11
+			local var_7_2 = string.splitToNumber(iter_7_3.productions, "#")
+
+			for iter_7_4, iter_7_5 in ipairs(var_7_2) do
+				var_7_0.manufactureItem2LevelDict[iter_7_5] = iter_7_2
 			end
 
-			if not slot0._levelUnlockDict[slot12.needTradeLevel] then
-				slot0._levelUnlockDict[slot15] = {}
+			local var_7_3 = iter_7_3.needTradeLevel
+			local var_7_4 = arg_7_0._levelUnlockDict[var_7_3]
+
+			if not var_7_4 then
+				var_7_4 = {}
+				arg_7_0._levelUnlockDict[var_7_3] = var_7_4
 			end
 
-			if not slot16[RoomTradeEnum.LevelUnlock.BuildingMaxLevel] then
-				slot16[RoomTradeEnum.LevelUnlock.BuildingMaxLevel] = {}
+			local var_7_5 = var_7_4[RoomTradeEnum.LevelUnlock.BuildingMaxLevel]
+
+			if not var_7_5 then
+				var_7_5 = {}
+				var_7_4[RoomTradeEnum.LevelUnlock.BuildingMaxLevel] = var_7_5
 			end
 
-			if slot11 > 1 then
-				table.insert(slot17, {
-					groupId = slot5,
-					Level = slot11
-				})
+			if iter_7_2 > 1 then
+				local var_7_6 = {
+					groupId = iter_7_0,
+					Level = iter_7_2
+				}
+
+				table.insert(var_7_5, var_7_6)
 			end
 		end
 
-		slot0._levelGroupDict[slot5] = slot7
+		arg_7_0._levelGroupDict[iter_7_0] = var_7_0
 	end
 end
 
-function slot0.manufacture_building_trade_levelConfigLoaded(slot0, slot1)
-	slot0._tradeLevelGroupDict = {}
+function var_0_0.manufacture_building_trade_levelConfigLoaded(arg_8_0, arg_8_1)
+	arg_8_0._tradeLevelGroupDict = {}
 
-	for slot5, slot6 in pairs(slot1.configDict) do
-		slot7 = {
+	for iter_8_0, iter_8_1 in pairs(arg_8_1.configDict) do
+		local var_8_0 = {
 			totalCritterCount = 0
 		}
 
-		for slot11, slot12 in pairs(slot6) do
-			if slot7.totalCritterCount < slot12.maxCritterCount then
-				slot7.totalCritterCount = slot13
+		for iter_8_2, iter_8_3 in pairs(iter_8_1) do
+			local var_8_1 = iter_8_3.maxCritterCount
+
+			if var_8_1 > var_8_0.totalCritterCount then
+				var_8_0.totalCritterCount = var_8_1
 			end
 		end
 
-		slot0._tradeLevelGroupDict[slot5] = slot7
+		arg_8_0._tradeLevelGroupDict[iter_8_0] = var_8_0
 	end
 end
 
-function slot0.getManufactureConstCfg(slot0, slot1, slot2)
-	slot3 = nil
+function var_0_0.getManufactureConstCfg(arg_9_0, arg_9_1, arg_9_2)
+	local var_9_0
 
-	if slot1 then
-		slot3 = lua_manufacture_const.configDict[slot1]
+	if arg_9_1 then
+		var_9_0 = lua_manufacture_const.configDict[arg_9_1]
 	end
 
-	if not slot3 and slot2 then
-		logError(string.format("ManufactureConfig:getManufactureConstCfg error, cfg is nil, constId:%s", slot1))
+	if not var_9_0 and arg_9_2 then
+		logError(string.format("ManufactureConfig:getManufactureConstCfg error, cfg is nil, constId:%s", arg_9_1))
 	end
 
-	return slot3
+	return var_9_0
 end
 
-function slot0.getManufactureConst(slot0, slot1)
-	slot2 = nil
+function var_0_0.getManufactureConst(arg_10_0, arg_10_1)
+	local var_10_0
+	local var_10_1 = arg_10_0:getManufactureConstCfg(arg_10_1, true)
 
-	if slot0:getManufactureConstCfg(slot1, true) then
-		slot2 = slot3.value
+	if var_10_1 then
+		var_10_0 = var_10_1.value
 	end
 
-	return slot2
+	return var_10_0
 end
 
-function slot0.getTradeLevelCfg(slot0, slot1, slot2)
-	if not lua_trade_level.configDict[slot1] and slot2 then
-		logError(string.format("ManufactureConfig:getTradeLevelCfg error, cfg is nil, level:%s", slot1))
+function var_0_0.getTradeLevelCfg(arg_11_0, arg_11_1, arg_11_2)
+	local var_11_0 = lua_trade_level.configDict[arg_11_1]
+
+	if not var_11_0 and arg_11_2 then
+		logError(string.format("ManufactureConfig:getTradeLevelCfg error, cfg is nil, level:%s", arg_11_1))
 	end
 
-	return slot3
+	return var_11_0
 end
 
-function slot0.getUnlockSystemTradeLevel(slot0, slot1, slot2)
-	return slot0._systemUnlockLevel[slot1]
+function var_0_0.getUnlockSystemTradeLevel(arg_12_0, arg_12_1, arg_12_2)
+	return arg_12_0._systemUnlockLevel[arg_12_1]
 end
 
-function slot0.getManufactureBuildingCfg(slot0, slot1, slot2)
-	if not lua_manufacture_building.configDict[slot1] and slot2 then
-		logError(string.format("ManufactureConfig:getManufactureBuildingCfg error, cfg is nil, buildingId:%s", slot1))
+function var_0_0.getManufactureBuildingCfg(arg_13_0, arg_13_1, arg_13_2)
+	local var_13_0 = lua_manufacture_building.configDict[arg_13_1]
+
+	if not var_13_0 and arg_13_2 then
+		logError(string.format("ManufactureConfig:getManufactureBuildingCfg error, cfg is nil, buildingId:%s", arg_13_1))
 	end
 
-	return slot3
+	return var_13_0
 end
 
-function slot0.getRestBuildingCfg(slot0, slot1, slot2)
-	if not lua_rest_building.configDict[slot1] and slot2 then
-		logError(string.format("ManufactureConfig:getRestBuildingCfg error, cfg is nil, buildingId:%s", slot1))
+function var_0_0.getRestBuildingCfg(arg_14_0, arg_14_1, arg_14_2)
+	local var_14_0 = lua_rest_building.configDict[arg_14_1]
+
+	if not var_14_0 and arg_14_2 then
+		logError(string.format("ManufactureConfig:getRestBuildingCfg error, cfg is nil, buildingId:%s", arg_14_1))
 	end
 
-	return slot3
+	return var_14_0
 end
 
-function slot0.isManufactureBuilding(slot0, slot1)
-	slot2 = false
+function var_0_0.isManufactureBuilding(arg_15_0, arg_15_1)
+	local var_15_0 = false
+	local var_15_1 = RoomConfig.instance:getBuildingType(arg_15_1)
 
-	if RoomConfig.instance:getBuildingType(slot1) == RoomBuildingEnum.BuildingType.Collect or slot3 == RoomBuildingEnum.BuildingType.Process or slot3 == RoomBuildingEnum.BuildingType.Manufacture then
-		slot2 = true
+	if var_15_1 == RoomBuildingEnum.BuildingType.Collect or var_15_1 == RoomBuildingEnum.BuildingType.Process or var_15_1 == RoomBuildingEnum.BuildingType.Manufacture then
+		var_15_0 = true
 	end
 
-	return slot2
+	return var_15_0
 end
 
-function slot0.isManufactureItemBelongBuilding(slot0, slot1, slot2)
-	slot3 = false
+function var_0_0.isManufactureItemBelongBuilding(arg_16_0, arg_16_1, arg_16_2)
+	local var_16_0 = false
+	local var_16_1 = arg_16_0:getBuildingUpgradeGroup(arg_16_1)
 
-	if (slot0._levelGroupDict[slot0:getBuildingUpgradeGroup(slot1)] and slot0._levelGroupDict[slot4].manufactureItem2LevelDict)[slot2] then
-		slot3 = true
+	if (arg_16_0._levelGroupDict[var_16_1] and arg_16_0._levelGroupDict[var_16_1].manufactureItem2LevelDict)[arg_16_2] then
+		var_16_0 = true
 	end
 
-	return slot3
+	return var_16_0
 end
 
-function slot0.getManufactureItemBelongBuildingList(slot0, slot1)
-	slot0:_initManufactureItemBelongBuildingDict()
+function var_0_0.getManufactureItemBelongBuildingList(arg_17_0, arg_17_1)
+	arg_17_0:_initManufactureItemBelongBuildingDict()
 
-	return slot0._belongBuildingDict[slot1] or {}
+	return arg_17_0._belongBuildingDict[arg_17_1] or {}
 end
 
-function slot0.getManufactureItemBelongBuildingType(slot0, slot1)
-	slot0:_initManufactureItemBelongBuildingDict()
+function var_0_0.getManufactureItemBelongBuildingType(arg_18_0, arg_18_1)
+	arg_18_0:_initManufactureItemBelongBuildingDict()
 
-	return slot0._belongBuildingTypeDict[slot1]
+	return arg_18_0._belongBuildingTypeDict[arg_18_1]
 end
 
-function slot0._initManufactureItemBelongBuildingDict(slot0)
-	if slot0._belongBuildingDict or slot0._belongBuildingTypeDict then
+function var_0_0._initManufactureItemBelongBuildingDict(arg_19_0)
+	if arg_19_0._belongBuildingDict or arg_19_0._belongBuildingTypeDict then
 		return
 	end
 
-	slot0._belongBuildingDict = {}
-	slot0._belongBuildingTypeDict = {}
+	arg_19_0._belongBuildingDict = {}
+	arg_19_0._belongBuildingTypeDict = {}
 
-	for slot4, slot5 in ipairs(lua_manufacture_building.configList) do
-		if slot5.upgradeGroupId and slot6 ~= 0 then
-			if slot0._levelGroupDict[slot6] and slot0._levelGroupDict[slot6].manufactureItem2LevelDict then
-				slot9 = RoomConfig.instance:getBuildingType(slot5.id)
+	for iter_19_0, iter_19_1 in ipairs(lua_manufacture_building.configList) do
+		local var_19_0 = iter_19_1.upgradeGroupId
 
-				for slot13, slot14 in pairs(slot8) do
-					if not slot0._belongBuildingDict[slot13] then
-						slot0._belongBuildingDict[slot13] = {}
+		if var_19_0 and var_19_0 ~= 0 then
+			local var_19_1 = iter_19_1.id
+			local var_19_2 = arg_19_0._levelGroupDict[var_19_0] and arg_19_0._levelGroupDict[var_19_0].manufactureItem2LevelDict
+
+			if var_19_2 then
+				local var_19_3 = RoomConfig.instance:getBuildingType(var_19_1)
+
+				for iter_19_2, iter_19_3 in pairs(var_19_2) do
+					local var_19_4 = arg_19_0._belongBuildingDict[iter_19_2]
+
+					if not var_19_4 then
+						var_19_4 = {}
+						arg_19_0._belongBuildingDict[iter_19_2] = var_19_4
 					end
 
-					slot15[#slot15 + 1] = slot7
+					var_19_4[#var_19_4 + 1] = var_19_1
 
-					if not slot0._belongBuildingTypeDict[slot13] then
-						slot0._belongBuildingTypeDict[slot13] = slot9
-					elseif slot16 ~= slot9 then
-						logError(string.format("ManufactureConfig:_initManufactureItemBelongBuildingDict error, buildingType repeated manufactureItemId:%s hasBuildingType:%s newBuildingType:%s", slot13, slot16, slot9))
+					local var_19_5 = arg_19_0._belongBuildingTypeDict[iter_19_2]
+
+					if not var_19_5 then
+						arg_19_0._belongBuildingTypeDict[iter_19_2] = var_19_3
+					elseif var_19_5 ~= var_19_3 then
+						logError(string.format("ManufactureConfig:_initManufactureItemBelongBuildingDict error, buildingType repeated manufactureItemId:%s hasBuildingType:%s newBuildingType:%s", iter_19_2, var_19_5, var_19_3))
 					end
 				end
 			else
-				logError(string.format("ManufactureConfig:_initManufactureItemBelongBuildingDict error, no manu2LevelDict, groupId:%s", slot6))
+				logError(string.format("ManufactureConfig:_initManufactureItemBelongBuildingDict error, no manu2LevelDict, groupId:%s", var_19_0))
 			end
 		end
 	end
 end
 
-function slot0.getManufactureItemNeedLevel(slot0, slot1, slot2)
-	slot3 = nil
+function var_0_0.getManufactureItemNeedLevel(arg_20_0, arg_20_1, arg_20_2)
+	local var_20_0
 
-	if slot0:isManufactureItemBelongBuilding(slot1, slot2) then
-		slot3 = (slot0._levelGroupDict[slot0:getBuildingUpgradeGroup(slot1)] and slot0._levelGroupDict[slot5].manufactureItem2LevelDict)[slot2]
+	if arg_20_0:isManufactureItemBelongBuilding(arg_20_1, arg_20_2) then
+		local var_20_1 = arg_20_0:getBuildingUpgradeGroup(arg_20_1)
+
+		var_20_0 = (arg_20_0._levelGroupDict[var_20_1] and arg_20_0._levelGroupDict[var_20_1].manufactureItem2LevelDict)[arg_20_2]
 	else
-		logError(string.format("ManufactureConfig:getManufactureItemNeedLevel error, can't product, buildingId:%s manufactureItemId:%s", slot1, slot2))
+		logError(string.format("ManufactureConfig:getManufactureItemNeedLevel error, can't product, buildingId:%s manufactureItemId:%s", arg_20_1, arg_20_2))
 	end
 
-	return slot3
+	return var_20_0
 end
 
-function slot0.getAllManufactureItems(slot0, slot1)
-	slot2 = {}
-	slot3 = slot0:getBuildingUpgradeGroup(slot1)
+function var_0_0.getAllManufactureItems(arg_21_0, arg_21_1)
+	local var_21_0 = {}
+	local var_21_1 = arg_21_0:getBuildingUpgradeGroup(arg_21_1)
 
-	if slot0._levelGroupDict and slot0._levelGroupDict[slot3] then
-		for slot7, slot8 in pairs(slot0._levelGroupDict[slot3].manufactureItem2LevelDict) do
-			slot2[#slot2 + 1] = slot7
+	if arg_21_0._levelGroupDict and arg_21_0._levelGroupDict[var_21_1] then
+		for iter_21_0, iter_21_1 in pairs(arg_21_0._levelGroupDict[var_21_1].manufactureItem2LevelDict) do
+			var_21_0[#var_21_0 + 1] = iter_21_0
 		end
 	end
 
-	return slot2
+	return var_21_0
 end
 
-function slot0.getAllLevelUnlockInfo(slot0, slot1)
-	return slot0._levelUnlockDict[slot1]
+function var_0_0.getAllLevelUnlockInfo(arg_22_0, arg_22_1)
+	return arg_22_0._levelUnlockDict[arg_22_1]
 end
 
-function slot0.getBuildingUpgradeGroup(slot0, slot1)
-	slot2 = 0
+function var_0_0.getBuildingUpgradeGroup(arg_23_0, arg_23_1)
+	local var_23_0 = 0
+	local var_23_1 = arg_23_0:getManufactureBuildingCfg(arg_23_1)
 
-	if slot0:getManufactureBuildingCfg(slot1) then
-		slot2 = slot3.upgradeGroupId
+	if var_23_1 then
+		var_23_0 = var_23_1.upgradeGroupId
 	end
 
-	return slot2
+	return var_23_0
 end
 
-function slot0.getBuildingIdsByGroup(slot0, slot1)
-	slot2 = {}
+function var_0_0.getBuildingIdsByGroup(arg_24_0, arg_24_1)
+	local var_24_0 = {}
 
-	for slot6, slot7 in ipairs(lua_manufacture_building.configList) do
-		if slot7.upgradeGroupId == slot1 then
-			table.insert(slot2, slot7.id)
+	for iter_24_0, iter_24_1 in ipairs(lua_manufacture_building.configList) do
+		if iter_24_1.upgradeGroupId == arg_24_1 then
+			table.insert(var_24_0, iter_24_1.id)
 		end
 	end
 
-	return slot2
+	return var_24_0
 end
 
-function slot0.getTrainsBuildingCos(slot0)
-	slot1 = {}
+function var_0_0.getTrainsBuildingCos(arg_25_0)
+	local var_25_0 = {}
 
-	for slot5, slot6 in ipairs(lua_manufacture_building.configList) do
-		if slot0:isManufactureBuilding(slot6.id) then
-			table.insert(slot1, slot6)
+	for iter_25_0, iter_25_1 in ipairs(lua_manufacture_building.configList) do
+		if arg_25_0:isManufactureBuilding(iter_25_1.id) then
+			table.insert(var_25_0, iter_25_1)
 		end
 	end
 
-	return slot1
+	return var_25_0
 end
 
-function slot0.getBuildingTradeLevelGroup(slot0, slot1)
-	slot2 = 0
+function var_0_0.getBuildingTradeLevelGroup(arg_26_0, arg_26_1)
+	local var_26_0 = 0
+	local var_26_1 = arg_26_0:getManufactureBuildingCfg(arg_26_1)
 
-	if slot0:getManufactureBuildingCfg(slot1) then
-		slot2 = slot3.tradeGroupId
+	if var_26_1 then
+		var_26_0 = var_26_1.tradeGroupId
 	end
 
-	return slot2
+	return var_26_0
 end
 
-function slot0.getBuildingCameraIds(slot0, slot1)
-	slot2 = nil
+function var_0_0.getBuildingCameraIds(arg_27_0, arg_27_1)
+	local var_27_0
+	local var_27_1 = arg_27_0:getManufactureBuildingCfg(arg_27_1)
 
-	if slot0:getManufactureBuildingCfg(slot1) then
-		slot2 = slot3.cameraIds
+	if var_27_1 then
+		var_27_0 = var_27_1.cameraIds
 	end
 
-	return slot2
+	return var_27_0
 end
 
-function slot0.getBuildingCameraIdByIndex(slot0, slot1, slot2)
-	return string.splitToNumber(slot0:getBuildingCameraIds(slot1), "#") and slot4[slot2 or 1]
+function var_0_0.getBuildingCameraIdByIndex(arg_28_0, arg_28_1, arg_28_2)
+	arg_28_2 = arg_28_2 or 1
+
+	local var_28_0 = arg_28_0:getBuildingCameraIds(arg_28_1)
+	local var_28_1 = string.splitToNumber(var_28_0, "#")
+
+	return var_28_1 and var_28_1[arg_28_2]
 end
 
-function slot0.getBuildingSlotCount(slot0, slot1, slot2)
-	slot3 = 0
+function var_0_0.getBuildingSlotCount(arg_29_0, arg_29_1, arg_29_2)
+	local var_29_0 = 0
 
-	if slot2 then
-		slot3 = slot0:getSlotCount(slot0:getBuildingUpgradeGroup(slot1), slot2)
+	if arg_29_2 then
+		local var_29_1 = arg_29_0:getBuildingUpgradeGroup(arg_29_1)
+
+		var_29_0 = arg_29_0:getSlotCount(var_29_1, arg_29_2)
 	else
 		logError("ManufactureConfig:getBuildingSlotCount error, buildingLevel is nil")
 	end
 
-	return slot3
+	return var_29_0
 end
 
-function slot0.getBuildingTotalSlotCount(slot0, slot1)
-	slot2 = 0
+function var_0_0.getBuildingTotalSlotCount(arg_30_0, arg_30_1)
+	local var_30_0 = 0
+	local var_30_1 = arg_30_0:getBuildingUpgradeGroup(arg_30_1)
 
-	if slot0._levelGroupDict[slot0:getBuildingUpgradeGroup(slot1)] then
-		slot2 = slot0._levelGroupDict[slot3].maxSlotCount
+	if arg_30_0._levelGroupDict[var_30_1] then
+		var_30_0 = arg_30_0._levelGroupDict[var_30_1].maxSlotCount
 	end
 
-	return slot2
+	return var_30_0
 end
 
-function slot0.getBuildingMaxLevel(slot0, slot1)
-	slot2 = 0
+function var_0_0.getBuildingMaxLevel(arg_31_0, arg_31_1)
+	local var_31_0 = 0
+	local var_31_1 = arg_31_0:getBuildingUpgradeGroup(arg_31_1)
 
-	if slot0._levelGroupDict[slot0:getBuildingUpgradeGroup(slot1)] then
-		slot2 = slot0._levelGroupDict[slot3].maxLevel
+	if arg_31_0._levelGroupDict[var_31_1] then
+		var_31_0 = arg_31_0._levelGroupDict[var_31_1].maxLevel
 	end
 
-	return slot2
+	return var_31_0
 end
 
-function slot0.getBuildingCanPlaceCritterCount(slot0, slot1, slot2)
-	slot3 = 0
+function var_0_0.getBuildingCanPlaceCritterCount(arg_32_0, arg_32_1, arg_32_2)
+	local var_32_0 = 0
 
-	if slot2 then
-		slot3 = slot0:getCritterCount(slot0:getBuildingTradeLevelGroup(slot1), slot2)
+	if arg_32_2 then
+		local var_32_1 = arg_32_0:getBuildingTradeLevelGroup(arg_32_1)
+
+		var_32_0 = arg_32_0:getCritterCount(var_32_1, arg_32_2)
 	else
 		logError("ManufactureConfig:getBuildingCanPlaceCritterCount error, buildingLevel is nil")
 	end
 
-	return slot3
+	return var_32_0
 end
 
-function slot0.getTotalBuildingCritterCount(slot0, slot1)
-	slot2 = 0
+function var_0_0.getTotalBuildingCritterCount(arg_33_0, arg_33_1)
+	local var_33_0 = 0
+	local var_33_1 = arg_33_0:getBuildingTradeLevelGroup(arg_33_1)
 
-	if slot0._tradeLevelGroupDict[slot0:getBuildingTradeLevelGroup(slot1)] then
-		slot2 = slot0._tradeLevelGroupDict[slot3].totalCritterCount
+	if arg_33_0._tradeLevelGroupDict[var_33_1] then
+		var_33_0 = arg_33_0._tradeLevelGroupDict[var_33_1].totalCritterCount
 	end
 
-	return slot2
+	return var_33_0
 end
 
-function slot0.getRestBuildingSeatSlotCost(slot0, slot1)
-	slot2 = {}
+function var_0_0.getRestBuildingSeatSlotCost(arg_34_0, arg_34_1)
+	local var_34_0 = {}
+	local var_34_1 = arg_34_0:getRestBuildingCfg(arg_34_1, true)
 
-	if slot0:getRestBuildingCfg(slot1, true) and GameUtil.splitString2(slot3.buySlotCost, true) then
-		for slot8, slot9 in ipairs(slot4) do
-			slot2[#slot2 + 1] = {
-				type = slot9[1],
-				id = slot9[2],
-				quantity = slot9[3]
-			}
+	if var_34_1 then
+		local var_34_2 = GameUtil.splitString2(var_34_1.buySlotCost, true)
+
+		if var_34_2 then
+			for iter_34_0, iter_34_1 in ipairs(var_34_2) do
+				var_34_0[#var_34_0 + 1] = {
+					type = iter_34_1[1],
+					id = iter_34_1[2],
+					quantity = iter_34_1[3]
+				}
+			end
 		end
 	end
 
-	return slot2
+	return var_34_0
 end
 
-function slot0.getManufactureBuildingIcon(slot0, slot1)
-	slot2 = nil
+function var_0_0.getManufactureBuildingIcon(arg_35_0, arg_35_1)
+	local var_35_0
+	local var_35_1 = arg_35_0:getManufactureBuildingCfg(arg_35_1)
 
-	if slot0:getManufactureBuildingCfg(slot1) then
-		slot2 = slot3.buildIcon
+	if var_35_1 then
+		var_35_0 = var_35_1.buildIcon
 	end
 
-	return slot2
+	return var_35_0
 end
 
-function slot0.getManufactureBuildingLevelCfg(slot0, slot1, slot2, slot3)
-	if not (lua_manufacture_building_level.configDict[slot1] and lua_manufacture_building_level.configDict[slot1][slot2]) and slot3 then
-		logError(string.format("ManufactureConfig:getManufactureBuildingLevelCfg error, cfg is nil, groupId:%s, level:%s", slot1, slot2))
+function var_0_0.getManufactureBuildingLevelCfg(arg_36_0, arg_36_1, arg_36_2, arg_36_3)
+	local var_36_0 = lua_manufacture_building_level.configDict[arg_36_1] and lua_manufacture_building_level.configDict[arg_36_1][arg_36_2]
+
+	if not var_36_0 and arg_36_3 then
+		logError(string.format("ManufactureConfig:getManufactureBuildingLevelCfg error, cfg is nil, groupId:%s, level:%s", arg_36_1, arg_36_2))
 	end
 
-	return slot4
+	return var_36_0
 end
 
-function slot0.getUpgradeCostItemList(slot0, slot1, slot2)
-	slot3 = {}
+function var_0_0.getUpgradeCostItemList(arg_37_0, arg_37_1, arg_37_2)
+	local var_37_0 = {}
+	local var_37_1 = arg_37_0:getManufactureBuildingLevelCfg(arg_37_1, arg_37_2, true)
 
-	if slot0:getManufactureBuildingLevelCfg(slot1, slot2, true) and GameUtil.splitString2(slot4.cost, true) then
-		for slot9, slot10 in ipairs(slot5) do
-			slot3[#slot3 + 1] = {
-				type = slot10[1],
-				id = slot10[2],
-				quantity = slot10[3]
-			}
+	if var_37_1 then
+		local var_37_2 = GameUtil.splitString2(var_37_1.cost, true)
+
+		if var_37_2 then
+			for iter_37_0, iter_37_1 in ipairs(var_37_2) do
+				var_37_0[#var_37_0 + 1] = {
+					type = iter_37_1[1],
+					id = iter_37_1[2],
+					quantity = iter_37_1[3]
+				}
+			end
 		end
 	end
 
-	return slot3
+	return var_37_0
 end
 
-function slot0.getNewManufactureItemList(slot0, slot1, slot2)
-	slot3 = {}
+function var_0_0.getNewManufactureItemList(arg_38_0, arg_38_1, arg_38_2)
+	local var_38_0 = {}
+	local var_38_1 = arg_38_0:getManufactureBuildingLevelCfg(arg_38_1, arg_38_2, true)
 
-	if slot0:getManufactureBuildingLevelCfg(slot1, slot2, true) then
-		slot3 = string.splitToNumber(slot4.productions, "#")
+	if var_38_1 then
+		var_38_0 = string.splitToNumber(var_38_1.productions, "#")
 	end
 
-	return slot3
+	return var_38_0
 end
 
-function slot0.getNeedTradeLevel(slot0, slot1, slot2)
-	slot3 = nil
+function var_0_0.getNeedTradeLevel(arg_39_0, arg_39_1, arg_39_2)
+	local var_39_0
+	local var_39_1 = arg_39_0:getManufactureBuildingLevelCfg(arg_39_1, arg_39_2, true)
 
-	if slot0:getManufactureBuildingLevelCfg(slot1, slot2, true) then
-		slot3 = slot4.needTradeLevel
+	if var_39_1 then
+		var_39_0 = var_39_1.needTradeLevel
 	end
 
-	return slot3
+	return var_39_0
 end
 
-function slot0.getSlotCount(slot0, slot1, slot2)
-	slot3 = 0
+function var_0_0.getSlotCount(arg_40_0, arg_40_1, arg_40_2)
+	local var_40_0 = 0
+	local var_40_1 = arg_40_0:getManufactureBuildingLevelCfg(arg_40_1, arg_40_2, true)
 
-	if slot0:getManufactureBuildingLevelCfg(slot1, slot2, true) then
-		slot3 = slot4.slotCount
+	if var_40_1 then
+		var_40_0 = var_40_1.slotCount
 	end
 
-	return slot3
+	return var_40_0
 end
 
-function slot0.getSlotUnlockNeedLevel(slot0, slot1, slot2)
-	slot3 = 0
+function var_0_0.getSlotUnlockNeedLevel(arg_41_0, arg_41_1, arg_41_2)
+	local var_41_0 = 0
+	local var_41_1 = lua_manufacture_building_level.configDict[arg_41_1]
 
-	if lua_manufacture_building_level.configDict[slot1] then
-		slot5 = nil
+	if var_41_1 then
+		local var_41_2
 
-		for slot9, slot10 in pairs(slot4) do
-			if slot2 <= slot10.slotCount and (not slot5 or slot9 < slot5) then
-				slot5 = slot9
+		for iter_41_0, iter_41_1 in pairs(var_41_1) do
+			if arg_41_2 <= iter_41_1.slotCount and (not var_41_2 or iter_41_0 < var_41_2) then
+				var_41_2 = iter_41_0
 			end
 		end
 
-		slot3 = slot5 or slot3
+		var_41_0 = var_41_2 or var_41_0
 	end
 
-	return slot3
+	return var_41_0
 end
 
-function slot0.getManufactureBuildingTradeLevelCfg(slot0, slot1, slot2, slot3)
-	if not (lua_manufacture_building_trade_level.configDict[slot1] and lua_manufacture_building_trade_level.configDict[slot1][slot2]) and slot3 then
-		logError(string.format("ManufactureConfig:getManufactureBuildingTradeLevelCfg error, cfg is nil, tradeGroupId:%s, tradeLevel:%s", slot1, slot2))
+function var_0_0.getManufactureBuildingTradeLevelCfg(arg_42_0, arg_42_1, arg_42_2, arg_42_3)
+	local var_42_0 = lua_manufacture_building_trade_level.configDict[arg_42_1] and lua_manufacture_building_trade_level.configDict[arg_42_1][arg_42_2]
+
+	if not var_42_0 and arg_42_3 then
+		logError(string.format("ManufactureConfig:getManufactureBuildingTradeLevelCfg error, cfg is nil, tradeGroupId:%s, tradeLevel:%s", arg_42_1, arg_42_2))
 	end
 
-	return slot4
+	return var_42_0
 end
 
-function slot0.getCritterCount(slot0, slot1, slot2)
-	slot3 = 0
+function var_0_0.getCritterCount(arg_43_0, arg_43_1, arg_43_2)
+	local var_43_0 = 0
 
-	for slot7 = slot2, 0, -1 do
-		if slot0:getManufactureBuildingTradeLevelCfg(slot1, slot7) then
-			slot3 = slot8.maxCritterCount
+	for iter_43_0 = arg_43_2, 0, -1 do
+		local var_43_1 = arg_43_0:getManufactureBuildingTradeLevelCfg(arg_43_1, iter_43_0)
+
+		if var_43_1 then
+			var_43_0 = var_43_1.maxCritterCount
 
 			break
 		end
 	end
 
-	return slot3
+	return var_43_0
 end
 
-function slot0.getManufactureItemCfg(slot0, slot1, slot2)
-	if not lua_manufacture_item.configDict[slot1] and slot2 then
-		logError(string.format("ManufactureConfig:getManufactureItemCfg error, cfg is nil, itemId:%s", slot1))
+function var_0_0.getManufactureItemCfg(arg_44_0, arg_44_1, arg_44_2)
+	local var_44_0 = lua_manufacture_item.configDict[arg_44_1]
+
+	if not var_44_0 and arg_44_2 then
+		logError(string.format("ManufactureConfig:getManufactureItemCfg error, cfg is nil, itemId:%s", arg_44_1))
 	end
 
-	return slot3
+	return var_44_0
 end
 
-function slot0.getNeedMatItemList(slot0, slot1)
-	slot2 = {}
+function var_0_0.getNeedMatItemList(arg_45_0, arg_45_1)
+	local var_45_0 = {}
+	local var_45_1 = arg_45_0:getManufactureItemCfg(arg_45_1, true)
 
-	if slot0:getManufactureItemCfg(slot1, true) and GameUtil.splitString2(slot3.needMat, true) then
-		for slot8, slot9 in ipairs(slot4) do
-			slot2[#slot2 + 1] = {
-				id = slot9[1],
-				quantity = slot9[2]
-			}
+	if var_45_1 then
+		local var_45_2 = GameUtil.splitString2(var_45_1.needMat, true)
+
+		if var_45_2 then
+			for iter_45_0, iter_45_1 in ipairs(var_45_2) do
+				var_45_0[#var_45_0 + 1] = {
+					id = iter_45_1[1],
+					quantity = iter_45_1[2]
+				}
+			end
 		end
 	end
 
-	return slot2
+	return var_45_0
 end
 
-function slot0.getItemId(slot0, slot1)
-	slot2 = nil
+function var_0_0.getItemId(arg_46_0, arg_46_1)
+	local var_46_0
+	local var_46_1 = arg_46_0:getManufactureItemCfg(arg_46_1, true)
 
-	if slot0:getManufactureItemCfg(slot1, true) then
-		slot2 = slot3.itemId
+	if var_46_1 then
+		var_46_0 = var_46_1.itemId
 	end
 
-	return slot2
+	return var_46_0
 end
 
-function slot0.getUnitCount(slot0, slot1)
-	slot2 = 0
+function var_0_0.getUnitCount(arg_47_0, arg_47_1)
+	local var_47_0 = 0
+	local var_47_1 = arg_47_0:getManufactureItemCfg(arg_47_1, true)
 
-	if slot0:getManufactureItemCfg(slot1, true) then
-		slot2 = slot3.unitCount
+	if var_47_1 then
+		var_47_0 = var_47_1.unitCount
 	end
 
-	return slot2
+	return var_47_0
 end
 
-function slot0.getNeedTime(slot0, slot1)
-	slot2 = 0
+function var_0_0.getNeedTime(arg_48_0, arg_48_1)
+	local var_48_0 = 0
+	local var_48_1 = arg_48_0:getManufactureItemCfg(arg_48_1, true)
 
-	if slot0:getManufactureItemCfg(slot1, true) then
-		slot2 = slot3.needTime
+	if var_48_1 then
+		var_48_0 = var_48_1.needTime
 	end
 
-	return slot2
+	return var_48_0
 end
 
-function slot0.getBatchIconPath(slot0, slot1)
-	slot2 = nil
+function var_0_0.getBatchIconPath(arg_49_0, arg_49_1)
+	local var_49_0
+	local var_49_1 = arg_49_0:getManufactureItemCfg(arg_49_1, true)
 
-	if slot0:getManufactureItemCfg(slot1, true) and not string.nilorempty(slot3.batchIcon) then
-		slot2 = ResUrl.getPropItemIcon(slot3.batchIcon)
+	if var_49_1 and not string.nilorempty(var_49_1.batchIcon) then
+		var_49_0 = ResUrl.getPropItemIcon(var_49_1.batchIcon)
 	end
 
-	return slot2
+	return var_49_0
 end
 
-function slot0.getBatchName(slot0, slot1)
-	slot2 = nil
+function var_0_0.getBatchName(arg_50_0, arg_50_1)
+	local var_50_0
+	local var_50_1 = arg_50_0:getManufactureItemCfg(arg_50_1, true)
 
-	if slot0:getManufactureItemCfg(slot1, true) then
-		slot2 = slot3.batchName
+	if var_50_1 then
+		var_50_0 = var_50_1.batchName
 	end
 
-	return slot2
+	return var_50_0
 end
 
-function slot0.getManufactureItemName(slot0, slot1)
-	if string.nilorempty(slot0:getBatchName(slot1)) then
-		slot2 = ItemConfig.instance:getItemNameById(slot0:getItemId(slot1))
+function var_0_0.getManufactureItemName(arg_51_0, arg_51_1)
+	local var_51_0 = arg_51_0:getBatchName(arg_51_1)
+
+	if string.nilorempty(var_51_0) then
+		local var_51_1 = arg_51_0:getItemId(arg_51_1)
+
+		var_51_0 = ItemConfig.instance:getItemNameById(var_51_1)
 	end
 
-	return slot2
+	return var_51_0
 end
 
-function slot0.getManufactureItemListByItemId(slot0, slot1)
-	return slot0._itemId2ManufactureItemDict and slot0._itemId2ManufactureItemDict[slot1] or {}
+function var_0_0.getManufactureItemListByItemId(arg_52_0, arg_52_1)
+	return arg_52_0._itemId2ManufactureItemDict and arg_52_0._itemId2ManufactureItemDict[arg_52_1] or {}
 end
 
-function slot0.getManufactureItemUnitCountRange(slot0, slot1)
-	for slot9, slot10 in ipairs(slot0:getManufactureItemListByItemId(slot0:getItemId(slot1))) do
-		slot11 = slot0:getUnitCount(slot10)
-		slot2 = math.max(slot0:getUnitCount(slot1), slot11)
-		slot3 = math.min(slot0:getUnitCount(slot1), slot11)
+function var_0_0.getManufactureItemUnitCountRange(arg_53_0, arg_53_1)
+	local var_53_0 = arg_53_0:getUnitCount(arg_53_1)
+	local var_53_1 = arg_53_0:getUnitCount(arg_53_1)
+	local var_53_2 = arg_53_0:getItemId(arg_53_1)
+	local var_53_3 = arg_53_0:getManufactureItemListByItemId(var_53_2)
+
+	for iter_53_0, iter_53_1 in ipairs(var_53_3) do
+		local var_53_4 = arg_53_0:getUnitCount(iter_53_1)
+
+		var_53_0 = math.max(var_53_0, var_53_4)
+		var_53_1 = math.min(var_53_1, var_53_4)
 	end
 
-	return slot2, slot3
+	return var_53_0, var_53_1
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

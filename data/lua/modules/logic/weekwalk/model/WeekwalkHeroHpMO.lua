@@ -1,17 +1,17 @@
-module("modules.logic.weekwalk.model.WeekwalkHeroHpMO", package.seeall)
+﻿module("modules.logic.weekwalk.model.WeekwalkHeroHpMO", package.seeall)
 
-slot0 = pureTable("WeekwalkHeroHpMO")
+local var_0_0 = pureTable("WeekwalkHeroHpMO")
 
-function slot0.init(slot0, slot1)
-	slot0.heroId = slot1.heroId
-	slot0.hp = slot1.hp
-	slot0.buff = slot1.buff
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.heroId = arg_1_1.heroId
+	arg_1_0.hp = arg_1_1.hp
+	arg_1_0.buff = arg_1_1.buff
 end
 
-function slot0.setValue(slot0, slot1, slot2, slot3)
-	slot0.heroId = slot1
-	slot0.buff = slot2
-	slot0.hp = slot3
+function var_0_0.setValue(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
+	arg_2_0.heroId = arg_2_1
+	arg_2_0.buff = arg_2_2
+	arg_2_0.hp = arg_2_3
 end
 
-return slot0
+return var_0_0

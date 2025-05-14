@@ -1,37 +1,43 @@
-module("modules.logic.versionactivity2_4.wuerlixi.controller.WuErLiXiHelper", package.seeall)
+﻿module("modules.logic.versionactivity2_4.wuerlixi.controller.WuErLiXiHelper", package.seeall)
 
-slot0 = class("WuErLiXiHelper")
+local var_0_0 = class("WuErLiXiHelper")
 
-function slot0.getUnitSpriteName(slot0, slot1)
-	if slot0 == WuErLiXiEnum.UnitType.SignalEnd or slot0 == WuErLiXiEnum.UnitType.Obstacle or slot0 == WuErLiXiEnum.UnitType.Key then
-		return string.format("v2a4_wuerlixi_unit_icon%s_%s", slot0, slot1 and 2 or 1)
+function var_0_0.getUnitSpriteName(arg_1_0, arg_1_1)
+	local var_1_0 = arg_1_1 and 2 or 1
+
+	if arg_1_0 == WuErLiXiEnum.UnitType.SignalEnd or arg_1_0 == WuErLiXiEnum.UnitType.Obstacle or arg_1_0 == WuErLiXiEnum.UnitType.Key then
+		return string.format("v2a4_wuerlixi_unit_icon%s_%s", arg_1_0, var_1_0)
 	end
 
-	return string.format("v2a4_wuerlixi_unit_icon%s", slot0)
+	return string.format("v2a4_wuerlixi_unit_icon%s", arg_1_0)
 end
 
-function slot0.getLimitTimeStr()
-	if not ActivityModel.instance:getActMO(VersionActivity2_4Enum.ActivityId.WuErLiXi) then
+function var_0_0.getLimitTimeStr()
+	local var_2_0 = ActivityModel.instance:getActMO(VersionActivity2_4Enum.ActivityId.WuErLiXi)
+
+	if not var_2_0 then
 		return ""
 	end
 
-	if slot0:getRealEndTimeStamp() - ServerTime.now() > 0 then
-		return TimeUtil.SecondToActivityTimeFormat(slot1)
+	local var_2_1 = var_2_0:getRealEndTimeStamp() - ServerTime.now()
+
+	if var_2_1 > 0 then
+		return TimeUtil.SecondToActivityTimeFormat(var_2_1)
 	end
 
 	return ""
 end
 
-function slot0.getOppositeDir(slot0)
-	return math.abs((2 + slot0) % 4)
+function var_0_0.getOppositeDir(arg_3_0)
+	return math.abs((2 + arg_3_0) % 4)
 end
 
-function slot0.getNextDir(slot0)
-	return (slot0 + 1) % 4
+function var_0_0.getNextDir(arg_4_0)
+	return (arg_4_0 + 1) % 4
 end
 
-function slot0.getPreDir(slot0)
-	return (4 + slot0 - 1) % 4
+function var_0_0.getPreDir(arg_5_0)
+	return (4 + arg_5_0 - 1) % 4
 end
 
-return slot0
+return var_0_0

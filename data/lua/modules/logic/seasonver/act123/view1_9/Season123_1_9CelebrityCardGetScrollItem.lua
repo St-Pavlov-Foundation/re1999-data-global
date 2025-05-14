@@ -1,12 +1,13 @@
-module("modules.logic.seasonver.act123.view1_9.Season123_1_9CelebrityCardGetScrollItem", package.seeall)
+﻿module("modules.logic.seasonver.act123.view1_9.Season123_1_9CelebrityCardGetScrollItem", package.seeall)
 
-slot0 = class("Season123_1_9CelebrityCardGetScrollItem", Season123_1_9CelebrityCardGetItem)
+local var_0_0 = class("Season123_1_9CelebrityCardGetScrollItem", Season123_1_9CelebrityCardGetItem)
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_1_0)
+	return
 end
 
-function slot0.onScrollItemRefreshData(slot0, slot1)
-	slot0:refreshData(slot1)
+function var_0_0.onScrollItemRefreshData(arg_2_0, arg_2_1)
+	arg_2_0:refreshData(arg_2_1)
 end
 
-return slot0
+return var_0_0

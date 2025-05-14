@@ -1,47 +1,48 @@
-module("modules.logic.rouge.view.RougeCollectionEnchantViewContainer", package.seeall)
+﻿module("modules.logic.rouge.view.RougeCollectionEnchantViewContainer", package.seeall)
 
-slot0 = class("RougeCollectionEnchantViewContainer", BaseViewContainer)
+local var_0_0 = class("RougeCollectionEnchantViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = ListScrollParam.New()
-	slot1.scrollGOPath = "right/#scroll_enchants"
-	slot1.prefabType = ScrollEnum.ScrollPrefabFromView
-	slot1.prefabUrl = "right/#scroll_enchants/Viewport/Content/#go_enchantitem"
-	slot1.cellClass = RougeCollectionEnchantListItem
-	slot1.scrollDir = ScrollEnum.ScrollDirV
-	slot1.lineCount = 3
-	slot1.cellWidth = 186
-	slot1.cellHeight = 186
-	slot1.cellSpaceH = 0
-	slot1.cellSpaceV = 0
-	slot1.startSpace = 9
-	slot1.endSpace = 0
-	slot0._enchantScrollView = LuaListScrollView.New(RougeCollectionEnchantListModel.instance, slot1)
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = ListScrollParam.New()
+
+	var_1_0.scrollGOPath = "right/#scroll_enchants"
+	var_1_0.prefabType = ScrollEnum.ScrollPrefabFromView
+	var_1_0.prefabUrl = "right/#scroll_enchants/Viewport/Content/#go_enchantitem"
+	var_1_0.cellClass = RougeCollectionEnchantListItem
+	var_1_0.scrollDir = ScrollEnum.ScrollDirV
+	var_1_0.lineCount = 3
+	var_1_0.cellWidth = 186
+	var_1_0.cellHeight = 186
+	var_1_0.cellSpaceH = 0
+	var_1_0.cellSpaceV = 0
+	var_1_0.startSpace = 9
+	var_1_0.endSpace = 0
+	arg_1_0._enchantScrollView = LuaListScrollView.New(RougeCollectionEnchantListModel.instance, var_1_0)
 
 	return {
 		TabViewGroup.New(1, "#go_btns"),
 		TabViewGroup.New(2, "#go_rougemapdetailcontainer"),
 		RougeCollectionEnchantView.New(),
-		slot0._enchantScrollView
+		arg_1_0._enchantScrollView
 	}
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
-		slot0._navigateButtonView = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == 1 then
+		arg_2_0._navigateButtonView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
 		return {
-			slot0._navigateButtonView
+			arg_2_0._navigateButtonView
 		}
-	elseif slot1 == 2 then
+	elseif arg_2_1 == 2 then
 		return {
 			RougeCollectionDetailBtnComp.New()
 		}
 	end
 end
 
-return slot0
+return var_0_0

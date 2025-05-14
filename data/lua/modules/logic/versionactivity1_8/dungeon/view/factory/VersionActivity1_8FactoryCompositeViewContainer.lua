@@ -1,11 +1,11 @@
-module("modules.logic.versionactivity1_8.dungeon.view.factory.VersionActivity1_8FactoryCompositeViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity1_8.dungeon.view.factory.VersionActivity1_8FactoryCompositeViewContainer", package.seeall)
 
-slot0 = class("VersionActivity1_8FactoryCompositeViewContainer", BaseViewContainer)
+local var_0_0 = class("VersionActivity1_8FactoryCompositeViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		VersionActivity1_8FactoryCompositeView.New()
 	}
 end
 
-return slot0
+return var_0_0

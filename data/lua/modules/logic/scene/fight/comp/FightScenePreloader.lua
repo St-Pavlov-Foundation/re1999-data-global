@@ -1,60 +1,65 @@
-module("modules.logic.scene.fight.comp.FightScenePreloader", package.seeall)
+﻿module("modules.logic.scene.fight.comp.FightScenePreloader", package.seeall)
 
-slot0 = class("FightScenePreloader", BaseSceneComp)
+local var_0_0 = class("FightScenePreloader", BaseSceneComp)
 
-function slot0.onInit(slot0)
-	slot0._scene = slot0:getCurScene()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._scene = arg_1_0:getCurScene()
 end
 
-function slot0.startPreload(slot0, slot1)
-	slot3 = FightModel.instance:getFightParam() and slot2.episodeId
+function var_0_0.startPreload(arg_2_0, arg_2_1)
+	local var_2_0 = FightModel.instance:getFightParam()
+	local var_2_1 = var_2_0 and var_2_0.episodeId
+	local var_2_2 = var_2_0 and var_2_0.battleId or var_2_1 and DungeonConfig.instance:getEpisodeBattleId(var_2_1)
 
-	if not slot1 and FightPreloadController.instance:hasPreload(slot2 and slot2.battleId or slot3 and DungeonConfig.instance:getEpisodeBattleId(slot3)) then
-		slot0:_onPreloadFinish()
+	if not arg_2_1 and FightPreloadController.instance:hasPreload(var_2_2) then
+		arg_2_0:_onPreloadFinish()
 
 		return
 	end
 
-	slot7 = {}
-	slot8 = {}
-	slot9 = {}
-	slot11 = FightDataHelper.entityMgr:getEnemyNormalList()
-	slot12 = FightDataHelper.entityMgr:getMySubList()
+	local var_2_3 = {}
+	local var_2_4 = {}
+	local var_2_5 = {}
+	local var_2_6 = {}
+	local var_2_7 = {}
+	local var_2_8 = FightDataHelper.entityMgr:getMyNormalList()
+	local var_2_9 = FightDataHelper.entityMgr:getEnemyNormalList()
+	local var_2_10 = FightDataHelper.entityMgr:getMySubList()
 
-	for slot16, slot17 in ipairs(FightDataHelper.entityMgr:getMyNormalList()) do
-		table.insert({}, slot17.modelId)
-		table.insert({}, slot17.skin)
+	for iter_2_0, iter_2_1 in ipairs(var_2_8) do
+		table.insert(var_2_3, iter_2_1.modelId)
+		table.insert(var_2_4, iter_2_1.skin)
 	end
 
-	for slot16, slot17 in ipairs(slot11) do
-		table.insert(slot7, slot17.modelId)
-		table.insert(slot8, slot17.skin)
+	for iter_2_2, iter_2_3 in ipairs(var_2_9) do
+		table.insert(var_2_5, iter_2_3.modelId)
+		table.insert(var_2_6, iter_2_3.skin)
 	end
 
-	for slot16, slot17 in ipairs(slot12) do
-		table.insert(slot9, slot17.skin)
+	for iter_2_4, iter_2_5 in ipairs(var_2_10) do
+		table.insert(var_2_7, iter_2_5.skin)
 	end
 
-	FightController.instance:registerCallback(FightEvent.OnPreloadFinish, slot0._onPreloadFinish, slot0)
+	FightController.instance:registerCallback(FightEvent.OnPreloadFinish, arg_2_0._onPreloadFinish, arg_2_0)
 
 	if FightModel.instance.needFightReconnect then
-		FightPreloadController.instance:preloadReconnect(slot4, slot5, slot6, slot7, slot8, slot9)
-	elseif slot1 then
-		FightPreloadController.instance:preloadSecond(slot4, slot5, slot6, slot7, slot8, slot9)
+		FightPreloadController.instance:preloadReconnect(var_2_2, var_2_3, var_2_4, var_2_5, var_2_6, var_2_7)
+	elseif arg_2_1 then
+		FightPreloadController.instance:preloadSecond(var_2_2, var_2_3, var_2_4, var_2_5, var_2_6, var_2_7)
 	else
-		FightPreloadController.instance:preloadFirst(slot4, slot5, slot6, slot7, slot8, slot9)
+		FightPreloadController.instance:preloadFirst(var_2_2, var_2_3, var_2_4, var_2_5, var_2_6, var_2_7)
 	end
 end
 
-function slot0._onPreloadFinish(slot0)
-	FightController.instance:unregisterCallback(FightEvent.OnPreloadFinish, slot0._onPreloadFinish, slot0)
-	slot0:dispatchEvent(FightSceneEvent.OnPreloadFinish)
+function var_0_0._onPreloadFinish(arg_3_0)
+	FightController.instance:unregisterCallback(FightEvent.OnPreloadFinish, arg_3_0._onPreloadFinish, arg_3_0)
+	arg_3_0:dispatchEvent(FightSceneEvent.OnPreloadFinish)
 end
 
-function slot0.onSceneClose(slot0)
+function var_0_0.onSceneClose(arg_4_0)
 	FightPreloadController.instance:dispose()
 	FightRoundPreloadController.instance:dispose()
-	FightController.instance:unregisterCallback(FightEvent.OnPreloadFinish, slot0._onPreloadFinish, slot0)
+	FightController.instance:unregisterCallback(FightEvent.OnPreloadFinish, arg_4_0._onPreloadFinish, arg_4_0)
 end
 
-return slot0
+return var_0_0

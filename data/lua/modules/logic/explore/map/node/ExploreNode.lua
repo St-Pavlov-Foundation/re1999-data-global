@@ -1,77 +1,92 @@
-module("modules.logic.explore.map.node.ExploreNode", package.seeall)
+﻿module("modules.logic.explore.map.node.ExploreNode", package.seeall)
 
-slot0 = class("ExploreNode")
+local var_0_0 = class("ExploreNode")
 
-function slot0.ctor(slot0, slot1)
-	slot0.open = true
-	slot0.pos = Vector3.zero
-	slot0.openKeyDic = {}
-	slot0.keyOpen = true
-	slot0.height = slot1[3] or 0
-	slot0.areaId = slot1[4] or 0
-	slot0.cameraId = slot1[5] or 0
-	slot0.nodeType = ExploreEnum.NodeType.Normal
-	slot0.rawHeight = slot0.height
-	slot0._canPassItem = true
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0.open = true
+	arg_1_0.pos = Vector3.zero
+	arg_1_0.openKeyDic = {}
+	arg_1_0.keyOpen = true
 
-	slot0:setWalkableKey(ExploreHelper.getKeyXY(slot1[1], slot1[2]))
+	local var_1_0 = ExploreHelper.getKeyXY(arg_1_1[1], arg_1_1[2])
+
+	arg_1_0.height = arg_1_1[3] or 0
+	arg_1_0.areaId = arg_1_1[4] or 0
+	arg_1_0.cameraId = arg_1_1[5] or 0
+	arg_1_0.nodeType = ExploreEnum.NodeType.Normal
+	arg_1_0.rawHeight = arg_1_0.height
+	arg_1_0._canPassItem = true
+
+	arg_1_0:setWalkableKey(var_1_0)
 end
 
-function slot0.setNodeType(slot0, slot1)
-	slot0.nodeType = slot1
+function var_0_0.setNodeType(arg_2_0, arg_2_1)
+	arg_2_0.nodeType = arg_2_1
 end
 
-function slot0.isWalkable(slot0, slot1, slot2)
-	if not ExploreModel.instance:isAreaShow(slot0.areaId) then
+function var_0_0.isWalkable(arg_3_0, arg_3_1, arg_3_2)
+	if not ExploreModel.instance:isAreaShow(arg_3_0.areaId) then
 		return false
 	end
 
-	if not slot2 and not slot0._canPassItem and slot0:isRoleUseItem() then
+	if not arg_3_2 and not arg_3_0._canPassItem and arg_3_0:isRoleUseItem() then
 		return false
 	end
 
-	return (slot1 or slot0.height) == slot0.height and slot0.open and slot0.keyOpen
+	arg_3_1 = arg_3_1 or arg_3_0.height
+
+	return arg_3_1 == arg_3_0.height and arg_3_0.open and arg_3_0.keyOpen
 end
 
-function slot0.isRoleUseItem(slot0)
-	if ExploreController.instance:getMap():getNowStatus() == ExploreEnum.MapStatus.MoveUnit then
+function var_0_0.isRoleUseItem(arg_4_0)
+	local var_4_0 = ExploreController.instance:getMap()
+
+	if var_4_0:getNowStatus() == ExploreEnum.MapStatus.MoveUnit then
 		return true
 	end
 
-	if ExploreBackpackModel.instance:getById(ExploreModel.instance:getUseItemUid()) and slot4.itemEffect == ExploreEnum.ItemEffect.Active then
+	local var_4_1 = ExploreModel.instance:getUseItemUid()
+	local var_4_2 = ExploreBackpackModel.instance:getById(var_4_1)
+
+	if var_4_2 and var_4_2.itemEffect == ExploreEnum.ItemEffect.Active then
 		return true
 	end
 
-	if slot1:getUnit(tonumber(slot3), true) and slot5:getUnitType() == ExploreEnum.ItemType.PipePot then
+	local var_4_3 = var_4_0:getUnit(tonumber(var_4_1), true)
+
+	if var_4_3 and var_4_3:getUnitType() == ExploreEnum.ItemType.PipePot then
 		return true
 	end
 
 	return false
 end
 
-function slot0.setWalkableKey(slot0, slot1)
-	slot0.pos.x, slot0.pos.y = ExploreHelper.getXYByKey(slot1)
-	slot0.walkableKey = slot1
+function var_0_0.setWalkableKey(arg_5_0, arg_5_1)
+	local var_5_0, var_5_1 = ExploreHelper.getXYByKey(arg_5_1)
+
+	arg_5_0.walkableKey = arg_5_1
+	arg_5_0.pos.x = var_5_0
+	arg_5_0.pos.y = var_5_1
 end
 
-function slot0.setCanPassItem(slot0, slot1)
-	slot0._canPassItem = slot1
+function var_0_0.setCanPassItem(arg_6_0, arg_6_1)
+	arg_6_0._canPassItem = arg_6_1
 end
 
-function slot0.updateOpenKey(slot0, slot1, slot2)
-	if slot2 then
-		slot0.openKeyDic[slot1] = nil
+function var_0_0.updateOpenKey(arg_7_0, arg_7_1, arg_7_2)
+	if arg_7_2 then
+		arg_7_0.openKeyDic[arg_7_1] = nil
 	else
-		slot0.openKeyDic[slot1] = slot2
+		arg_7_0.openKeyDic[arg_7_1] = arg_7_2
 	end
 
-	slot0.keyOpen = true
+	arg_7_0.keyOpen = true
 
-	for slot6, slot7 in pairs(slot0.openKeyDic) do
-		slot0.keyOpen = false
+	for iter_7_0, iter_7_1 in pairs(arg_7_0.openKeyDic) do
+		arg_7_0.keyOpen = false
 
 		break
 	end
 end
 
-return slot0
+return var_0_0

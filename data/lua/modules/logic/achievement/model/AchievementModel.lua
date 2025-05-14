@@ -1,153 +1,177 @@
-module("modules.logic.achievement.model.AchievementModel", package.seeall)
+﻿module("modules.logic.achievement.model.AchievementModel", package.seeall)
 
-slot0 = class("AchievementModel", BaseModel)
+local var_0_0 = class("AchievementModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0._levelMap = {}
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._levelMap = {}
 end
 
-function slot0.reInit(slot0)
-	slot0:release()
+function var_0_0.reInit(arg_2_0)
+	arg_2_0:release()
 
-	slot0._levelMap = {}
+	arg_2_0._levelMap = {}
 end
 
-function slot0.release(slot0)
-	slot0._record = nil
-	slot0._achievementMap = nil
-	slot0._levelMap = nil
-	slot0._isInited = false
+function var_0_0.release(arg_3_0)
+	arg_3_0._record = nil
+	arg_3_0._achievementMap = nil
+	arg_3_0._levelMap = nil
+	arg_3_0._isInited = false
 end
 
-function slot0.initDatas(slot0, slot1)
-	slot0:checkBuildAchievementMap()
+function var_0_0.initDatas(arg_4_0, arg_4_1)
+	arg_4_0:checkBuildAchievementMap()
 
-	slot0._isInited = true
-	slot2 = {}
+	arg_4_0._isInited = true
 
-	if slot1 then
-		for slot6 = 1, #slot1 do
-			if AchievementConfig.instance:getTask(slot1[slot6].id) then
-				slot9 = AchiementTaskMO.New()
+	local var_4_0 = {}
 
-				slot9:init(slot8)
-				slot9:updateByServerData(slot7)
-				table.insert(slot2, slot9)
+	if arg_4_1 then
+		for iter_4_0 = 1, #arg_4_1 do
+			local var_4_1 = arg_4_1[iter_4_0]
+			local var_4_2 = AchievementConfig.instance:getTask(var_4_1.id)
+
+			if var_4_2 then
+				local var_4_3 = AchiementTaskMO.New()
+
+				var_4_3:init(var_4_2)
+				var_4_3:updateByServerData(var_4_1)
+				table.insert(var_4_0, var_4_3)
 			end
 		end
 	end
 
-	slot0:setList(slot2)
-	slot0:updateLevelMap()
+	arg_4_0:setList(var_4_0)
+	arg_4_0:updateLevelMap()
 end
 
-function slot0.updateDatas(slot0, slot1)
-	slot0:checkBuildAchievementMap()
+function var_0_0.updateDatas(arg_5_0, arg_5_1)
+	arg_5_0:checkBuildAchievementMap()
 
-	if not slot1 then
+	if not arg_5_1 then
 		return
 	end
 
-	slot2 = {}
+	local var_5_0 = {}
 
-	for slot6 = 1, #slot1 do
-		if slot0:getById(slot1[slot6].id) == nil then
-			if AchievementConfig.instance:getTask(slot7.id) then
-				slot8 = AchiementTaskMO.New()
+	for iter_5_0 = 1, #arg_5_1 do
+		local var_5_1 = arg_5_1[iter_5_0]
+		local var_5_2 = arg_5_0:getById(var_5_1.id)
 
-				slot8:init(slot9)
-				slot8:updateByServerData(slot7)
-				slot0:addAtLast(slot8)
+		if var_5_2 == nil then
+			local var_5_3 = AchievementConfig.instance:getTask(var_5_1.id)
+
+			if var_5_3 then
+				var_5_2 = AchiementTaskMO.New()
+
+				var_5_2:init(var_5_3)
+				var_5_2:updateByServerData(var_5_1)
+				arg_5_0:addAtLast(var_5_2)
 			end
 		else
-			slot8:updateByServerData(slot7)
+			local var_5_4 = var_5_2.hasFinished
 
-			if slot8.hasFinished and not slot8.hasFinished then
-				table.insert(slot2, slot8)
+			var_5_2:updateByServerData(var_5_1)
+
+			if var_5_2.hasFinished and not var_5_4 then
+				table.insert(var_5_0, var_5_2)
 			end
 		end
 	end
 
-	slot0:updateLevelMap()
+	arg_5_0:updateLevelMap()
 
-	return slot2
+	return var_5_0
 end
 
-function slot0.updateLevelMap(slot0)
-	for slot4, slot5 in pairs(slot0._achievementMap) do
-		slot6 = 0
+function var_0_0.updateLevelMap(arg_6_0)
+	for iter_6_0, iter_6_1 in pairs(arg_6_0._achievementMap) do
+		local var_6_0 = 0
 
-		for slot10, slot11 in ipairs(slot5) do
-			if slot0:getById(slot11.id) and slot12.hasFinished then
-				slot6 = slot11.level
+		for iter_6_2, iter_6_3 in ipairs(iter_6_1) do
+			local var_6_1 = arg_6_0:getById(iter_6_3.id)
+
+			if var_6_1 and var_6_1.hasFinished then
+				var_6_0 = iter_6_3.level
 			end
 		end
 
-		slot0._levelMap[slot4] = slot6
+		arg_6_0._levelMap[iter_6_0] = var_6_0
 	end
 end
 
-function slot0.checkBuildAchievementMap(slot0)
-	slot0._achievementMap = {}
+function var_0_0.checkBuildAchievementMap(arg_7_0)
+	arg_7_0._achievementMap = {}
 
-	for slot5, slot6 in ipairs(AchievementConfig.instance:getAllTasks()) do
-		slot0._achievementMap[slot6.achievementId] = slot0._achievementMap[slot6.achievementId] or {}
+	local var_7_0 = AchievementConfig.instance:getAllTasks()
 
-		table.insert(slot0._achievementMap[slot6.achievementId], slot6)
+	for iter_7_0, iter_7_1 in ipairs(var_7_0) do
+		arg_7_0._achievementMap[iter_7_1.achievementId] = arg_7_0._achievementMap[iter_7_1.achievementId] or {}
+
+		table.insert(arg_7_0._achievementMap[iter_7_1.achievementId], iter_7_1)
 	end
 
-	for slot5, slot6 in pairs(slot0._achievementMap) do
-		if not AchievementConfig.instance:getAchievement(slot5) then
-			logError("achievementId in achievement_task not in config : [" .. tostring(slot5) .. "]")
+	for iter_7_2, iter_7_3 in pairs(arg_7_0._achievementMap) do
+		if not AchievementConfig.instance:getAchievement(iter_7_2) then
+			logError("achievementId in achievement_task not in config : [" .. tostring(iter_7_2) .. "]")
 		end
 
-		table.sort(slot6, uv0.sortMapTask)
+		table.sort(iter_7_3, var_0_0.sortMapTask)
 	end
 end
 
-function slot0.sortMapTask(slot0, slot1)
-	return slot0.level < slot1.level
+function var_0_0.sortMapTask(arg_8_0, arg_8_1)
+	return arg_8_0.level < arg_8_1.level
 end
 
-function slot0.getAchievementLevel(slot0, slot1)
-	if slot0._levelMap then
-		return slot0._levelMap[slot1] or 0
+function var_0_0.getAchievementLevel(arg_9_0, arg_9_1)
+	if arg_9_0._levelMap then
+		return arg_9_0._levelMap[arg_9_1] or 0
 	end
 
 	return 0
 end
 
-function slot0.getGroupLevel(slot0, slot1)
-	slot2 = 0
+function var_0_0.getGroupLevel(arg_10_0, arg_10_1)
+	local var_10_0 = 0
+	local var_10_1 = AchievementConfig.instance:getAchievementsByGroupId(arg_10_1)
 
-	if AchievementConfig.instance:getAchievementsByGroupId(slot1) then
-		for slot7, slot8 in pairs(slot3) do
-			if slot2 < slot0:getAchievementLevel(slot8.id) then
-				slot2 = slot9
+	if var_10_1 then
+		for iter_10_0, iter_10_1 in pairs(var_10_1) do
+			local var_10_2 = arg_10_0:getAchievementLevel(iter_10_1.id)
+
+			if var_10_0 < var_10_2 then
+				var_10_0 = var_10_2
 			end
 		end
 	end
 
-	return slot2
+	return var_10_0
 end
 
-function slot0.cleanAchievementNew(slot0, slot1)
-	if not slot1 then
-		return false
+function var_0_0.cleanAchievementNew(arg_11_0, arg_11_1)
+	local var_11_0 = false
+
+	if not arg_11_1 then
+		return var_11_0
 	end
 
-	for slot6 = 1, #slot1 do
-		slot0:getById(slot1[slot6]).isNew = false
-		slot2 = true
+	for iter_11_0 = 1, #arg_11_1 do
+		arg_11_0:getById(arg_11_1[iter_11_0]).isNew = false
+		var_11_0 = true
 	end
 
-	return slot2
+	return var_11_0
 end
 
-function slot0.achievementHasNew(slot0, slot1)
-	if slot0:getAchievementTaskCoList(slot1) then
-		for slot6, slot7 in ipairs(slot2) do
-			if slot0:getById(slot7.id) and slot8.isNew then
+function var_0_0.achievementHasNew(arg_12_0, arg_12_1)
+	local var_12_0 = arg_12_0:getAchievementTaskCoList(arg_12_1)
+
+	if var_12_0 then
+		for iter_12_0, iter_12_1 in ipairs(var_12_0) do
+			local var_12_1 = arg_12_0:getById(iter_12_1.id)
+
+			if var_12_1 and var_12_1.isNew then
 				return true
 			end
 		end
@@ -156,48 +180,60 @@ function slot0.achievementHasNew(slot0, slot1)
 	return false
 end
 
-function slot0.getAchievementTaskCoList(slot0, slot1)
-	if slot0._achievementMap then
-		return slot0._achievementMap[slot1]
+function var_0_0.getAchievementTaskCoList(arg_13_0, arg_13_1)
+	if arg_13_0._achievementMap then
+		return arg_13_0._achievementMap[arg_13_1]
 	end
 end
 
-function slot0.getGroupUnlockTime(slot0, slot1)
-	slot2 = nil
+function var_0_0.getGroupUnlockTime(arg_14_0, arg_14_1)
+	local var_14_0
+	local var_14_1 = AchievementConfig.instance:getAchievementsByGroupId(arg_14_1)
 
-	if AchievementConfig.instance:getAchievementsByGroupId(slot1) then
-		for slot7, slot8 in ipairs(slot3) do
-			if slot0:getAchievementTaskCoList(slot8.id) then
-				for slot13, slot14 in ipairs(slot9) do
-					if slot0:getById(slot14.id) and slot15.hasFinished and (not slot2 or slot15.finishTime < slot2) then
-						slot2 = slot15.finishTime
+	if var_14_1 then
+		for iter_14_0, iter_14_1 in ipairs(var_14_1) do
+			local var_14_2 = arg_14_0:getAchievementTaskCoList(iter_14_1.id)
+
+			if var_14_2 then
+				for iter_14_2, iter_14_3 in ipairs(var_14_2) do
+					local var_14_3 = arg_14_0:getById(iter_14_3.id)
+
+					if var_14_3 and var_14_3.hasFinished and (not var_14_0 or var_14_0 > var_14_3.finishTime) then
+						var_14_0 = var_14_3.finishTime
 					end
 				end
 			end
 		end
 	end
 
-	return slot2
+	return var_14_0
 end
 
-function slot0.getAchievementUnlockTime(slot0, slot1)
-	slot2 = nil
+function var_0_0.getAchievementUnlockTime(arg_15_0, arg_15_1)
+	local var_15_0
+	local var_15_1 = arg_15_0:getAchievementTaskCoList(arg_15_1)
 
-	if slot0:getAchievementTaskCoList(slot1) then
-		for slot7, slot8 in ipairs(slot3) do
-			if slot0:getById(slot8.id) and slot9.hasFinished and (not slot2 or slot9.finishTime < slot2) then
-				slot2 = slot9.finishTime
+	if var_15_1 then
+		for iter_15_0, iter_15_1 in ipairs(var_15_1) do
+			local var_15_2 = arg_15_0:getById(iter_15_1.id)
+
+			if var_15_2 and var_15_2.hasFinished and (not var_15_0 or var_15_0 > var_15_2.finishTime) then
+				var_15_0 = var_15_2.finishTime
 			end
 		end
 	end
 
-	return slot2
+	return var_15_0
 end
 
-function slot0.achievementHasLocked(slot0, slot1)
-	if slot0:getAchievementTaskCoList(slot1) then
-		for slot6, slot7 in ipairs(slot2) do
-			if slot0:getById(slot7.id) and slot8.hasFinished then
+function var_0_0.achievementHasLocked(arg_16_0, arg_16_1)
+	local var_16_0 = arg_16_0:getAchievementTaskCoList(arg_16_1)
+
+	if var_16_0 then
+		for iter_16_0, iter_16_1 in ipairs(var_16_0) do
+			local var_16_1 = arg_16_0:getById(iter_16_1.id)
+
+			if var_16_1 and var_16_1.hasFinished then
 				return false
 			end
 		end
@@ -206,10 +242,12 @@ function slot0.achievementHasLocked(slot0, slot1)
 	return true
 end
 
-function slot0.achievementGroupHasLocked(slot0, slot1)
-	if AchievementConfig.instance:getAchievementsByGroupId(slot1) then
-		for slot6, slot7 in pairs(slot2) do
-			if not slot0:achievementHasLocked(slot7.id) then
+function var_0_0.achievementGroupHasLocked(arg_17_0, arg_17_1)
+	local var_17_0 = AchievementConfig.instance:getAchievementsByGroupId(arg_17_1)
+
+	if var_17_0 then
+		for iter_17_0, iter_17_1 in pairs(var_17_0) do
+			if not arg_17_0:achievementHasLocked(iter_17_1.id) then
 				return false
 			end
 		end
@@ -218,36 +256,47 @@ function slot0.achievementGroupHasLocked(slot0, slot1)
 	return true
 end
 
-function slot0.isGroupFinished(slot0, slot1)
-	slot3 = false
+function var_0_0.isGroupFinished(arg_18_0, arg_18_1)
+	local var_18_0 = AchievementConfig.instance:getAchievementsByGroupId(arg_18_1)
+	local var_18_1 = false
 
-	if AchievementConfig.instance:getAchievementsByGroupId(slot1) then
-		for slot7, slot8 in pairs(slot2) do
-			if slot0:getAchievementTaskCoList(slot8.id) then
-				slot10 = false
+	if var_18_0 then
+		for iter_18_0, iter_18_1 in pairs(var_18_0) do
+			local var_18_2 = arg_18_0:getAchievementTaskCoList(iter_18_1.id)
 
-				for slot14, slot15 in pairs(slot9) do
-					if not (slot0:getById(slot15.id) and slot16.hasFinished) then
+			if var_18_2 then
+				local var_18_3 = false
+
+				for iter_18_2, iter_18_3 in pairs(var_18_2) do
+					local var_18_4 = arg_18_0:getById(iter_18_3.id)
+
+					var_18_3 = var_18_4 and var_18_4.hasFinished
+
+					if not var_18_3 then
 						break
 					end
 				end
 
-				slot3 = slot10
+				var_18_1 = var_18_3
 
-				if not slot10 then
+				if not var_18_3 then
 					break
 				end
 			end
 		end
 	end
 
-	return slot3
+	return var_18_1
 end
 
-function slot0.isAchievementFinished(slot0, slot1)
-	if slot0:getAchievementTaskCoList(slot1) then
-		for slot6, slot7 in ipairs(slot2) do
-			if not slot0:getById(slot7.id) or not slot8.hasFinished then
+function var_0_0.isAchievementFinished(arg_19_0, arg_19_1)
+	local var_19_0 = arg_19_0:getAchievementTaskCoList(arg_19_1)
+
+	if var_19_0 then
+		for iter_19_0, iter_19_1 in ipairs(var_19_0) do
+			local var_19_1 = arg_19_0:getById(iter_19_1.id)
+
+			if not var_19_1 or not var_19_1.hasFinished then
 				return false
 			end
 		end
@@ -256,28 +305,36 @@ function slot0.isAchievementFinished(slot0, slot1)
 	end
 end
 
-function slot0.getGroupFinishTaskList(slot0, slot1)
-	if AchievementConfig.instance:getAchievementsByGroupId(slot1) then
-		slot3 = {}
+function var_0_0.getGroupFinishTaskList(arg_20_0, arg_20_1)
+	local var_20_0 = AchievementConfig.instance:getAchievementsByGroupId(arg_20_1)
 
-		for slot7, slot8 in ipairs(slot2) do
-			if AchievementConfig.instance:getTasksByAchievementId(slot8.id) then
-				for slot13, slot14 in ipairs(slot9) do
-					if slot0:getById(slot14.id) and slot15.hasFinished then
-						table.insert(slot3, slot14)
+	if var_20_0 then
+		local var_20_1 = {}
+
+		for iter_20_0, iter_20_1 in ipairs(var_20_0) do
+			local var_20_2 = AchievementConfig.instance:getTasksByAchievementId(iter_20_1.id)
+
+			if var_20_2 then
+				for iter_20_2, iter_20_3 in ipairs(var_20_2) do
+					local var_20_3 = arg_20_0:getById(iter_20_3.id)
+
+					if var_20_3 and var_20_3.hasFinished then
+						table.insert(var_20_1, iter_20_3)
 					end
 				end
 			end
 		end
 
-		return slot3
+		return var_20_1
 	end
 end
 
-function slot0.isAchievementTaskFinished(slot0, slot1)
-	return slot0:getById(slot1) and slot2.hasFinished
+function var_0_0.isAchievementTaskFinished(arg_21_0, arg_21_1)
+	local var_21_0 = arg_21_0:getById(arg_21_1)
+
+	return var_21_0 and var_21_0.hasFinished
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

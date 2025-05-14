@@ -1,35 +1,39 @@
-module("modules.logic.enemyinfo.view.BaseEnemyInfoViewContainer", package.seeall)
+﻿module("modules.logic.enemyinfo.view.BaseEnemyInfoViewContainer", package.seeall)
 
-slot0 = class("BaseEnemyInfoViewContainer", BaseViewContainer)
+local var_0_0 = class("BaseEnemyInfoViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	for slot7, slot8 in ipairs({
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = EnemyInfoLayoutMo.New()
+	local var_1_1 = EnemyInfoMo.New()
+	local var_1_2 = {
 		EnemyInfoEnterView.New(),
 		EnemyInfoLayoutView.New(),
 		EnemyInfoLeftView.New(),
 		EnemyInfoRightView.New(),
 		EnemyInfoTipView.New(),
 		TabViewGroup.New(1, "#go_btns")
-	}) do
-		slot8.layoutMo = EnemyInfoLayoutMo.New()
-		slot8.enemyInfoMo = EnemyInfoMo.New()
+	}
+
+	for iter_1_0, iter_1_1 in ipairs(var_1_2) do
+		iter_1_1.layoutMo = var_1_0
+		iter_1_1.enemyInfoMo = var_1_1
 	end
 
-	return slot3
+	return var_1_2
 end
 
-function slot0.onContainerInit(slot0)
-	uv0.super.onContainerInit(slot0)
+function var_0_0.onContainerInit(arg_2_0)
+	var_0_0.super.onContainerInit(arg_2_0)
 
-	if slot0._views then
-		for slot4, slot5 in ipairs(slot0._views) do
-			slot5.viewParam = slot0.viewParam
+	if arg_2_0._views then
+		for iter_2_0, iter_2_1 in ipairs(arg_2_0._views) do
+			iter_2_1.viewParam = arg_2_0.viewParam
 		end
 	end
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
+function var_0_0.buildTabViews(arg_3_0, arg_3_1)
+	if arg_3_1 == 1 then
 		return {
 			NavigateButtonsView.New({
 				true,
@@ -40,4 +44,4 @@ function slot0.buildTabViews(slot0, slot1)
 	end
 end
 
-return slot0
+return var_0_0

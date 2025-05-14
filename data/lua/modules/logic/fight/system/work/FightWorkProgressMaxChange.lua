@@ -1,13 +1,14 @@
-module("modules.logic.fight.system.work.FightWorkProgressMaxChange", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkProgressMaxChange", package.seeall)
 
-slot0 = class("FightWorkProgressMaxChange", FightEffectBase)
+local var_0_0 = class("FightWorkProgressMaxChange", FightEffectBase)
 
-function slot0.onStart(slot0)
-	slot0:com_sendMsg(FightMsgId.FightMaxProgressValueChange)
-	slot0:onDone(true)
+function var_0_0.onStart(arg_1_0)
+	arg_1_0:com_sendMsg(FightMsgId.FightMaxProgressValueChange)
+	arg_1_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
+function var_0_0.clearWork(arg_2_0)
+	return
 end
 
-return slot0
+return var_0_0

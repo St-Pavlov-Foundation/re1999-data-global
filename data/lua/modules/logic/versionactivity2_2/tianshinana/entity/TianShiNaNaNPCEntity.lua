@@ -1,3 +1,3 @@
-module("modules.logic.versionactivity2_2.tianshinana.entity.TianShiNaNaNPCEntity", package.seeall)
+﻿module("modules.logic.versionactivity2_2.tianshinana.entity.TianShiNaNaNPCEntity", package.seeall)
 
-return class("TianShiNaNaNPCEntity", TianShiNaNaUnitEntityBase)
+return (class("TianShiNaNaNPCEntity", TianShiNaNaUnitEntityBase))

@@ -1,16 +1,20 @@
-module("modules.logic.fight.system.work.FightWorkGuardChange", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkGuardChange", package.seeall)
 
-slot0 = class("FightWorkGuardChange", FightEffectBase)
+local var_0_0 = class("FightWorkGuardChange", FightEffectBase)
 
-function slot0.onStart(slot0)
-	if FightDataHelper.entityMgr:getById(slot0._actEffectMO.targetId) then
-		FightController.instance:dispatchEvent(FightEvent.EntityGuardChange, slot2.id, slot0._actEffectMO.effectNum, slot2.guard)
+function var_0_0.onStart(arg_1_0)
+	local var_1_0 = arg_1_0._actEffectMO
+	local var_1_1 = FightDataHelper.entityMgr:getById(var_1_0.targetId)
+
+	if var_1_1 then
+		FightController.instance:dispatchEvent(FightEvent.EntityGuardChange, var_1_1.id, arg_1_0._actEffectMO.effectNum, var_1_1.guard)
 	end
 
-	slot0:onDone(true)
+	arg_1_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
+function var_0_0.clearWork(arg_2_0)
+	return
 end
 
-return slot0
+return var_0_0

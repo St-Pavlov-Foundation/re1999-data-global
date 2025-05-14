@@ -1,37 +1,37 @@
-module("modules.logic.currency.config.CurrencyConfig", package.seeall)
+﻿module("modules.logic.currency.config.CurrencyConfig", package.seeall)
 
-slot0 = class("CurrencyConfig", BaseConfig)
+local var_0_0 = class("CurrencyConfig", BaseConfig)
 
-function slot0.ctor(slot0)
-	slot0._currencyConfig = nil
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._currencyConfig = nil
 end
 
-function slot0.reqConfigNames(slot0)
+function var_0_0.reqConfigNames(arg_2_0)
 	return {
 		"currency"
 	}
 end
 
-function slot0.onConfigLoaded(slot0, slot1, slot2)
-	if slot1 == "currency" then
-		slot0._currencyConfig = slot2
+function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_1 == "currency" then
+		arg_3_0._currencyConfig = arg_3_2
 	end
 end
 
-function slot0.getCurrencyCo(slot0, slot1)
-	return slot0._currencyConfig.configDict[slot1]
+function var_0_0.getCurrencyCo(arg_4_0, arg_4_1)
+	return arg_4_0._currencyConfig.configDict[arg_4_1]
 end
 
-function slot0.getAllCurrency(slot0)
-	slot1 = {}
+function var_0_0.getAllCurrency(arg_5_0)
+	local var_5_0 = {}
 
-	for slot5, slot6 in pairs(slot0._currencyConfig.configDict) do
-		table.insert(slot1, slot5)
+	for iter_5_0, iter_5_1 in pairs(arg_5_0._currencyConfig.configDict) do
+		table.insert(var_5_0, iter_5_0)
 	end
 
-	return slot1
+	return var_5_0
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

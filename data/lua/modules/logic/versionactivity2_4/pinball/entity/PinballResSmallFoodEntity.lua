@@ -1,17 +1,17 @@
-module("modules.logic.versionactivity2_4.pinball.entity.PinballResSmallFoodEntity", package.seeall)
+﻿module("modules.logic.versionactivity2_4.pinball.entity.PinballResSmallFoodEntity", package.seeall)
 
-slot0 = class("PinballResSmallFoodEntity", PinballResEntity)
+local var_0_0 = class("PinballResSmallFoodEntity", PinballResEntity)
 
-function slot0.initByCo(slot0, slot1)
-	uv0.super.initByCo(slot0, slot1)
+function var_0_0.initByCo(arg_1_0, arg_1_1)
+	var_0_0.super.initByCo(arg_1_0, arg_1_1)
 
-	slot0._initDt = UnityEngine.Time.realtimeSinceStartup
+	arg_1_0._initDt = UnityEngine.Time.realtimeSinceStartup
 end
 
-function slot0.onHitCount(slot0)
-	PinballModel.instance:addGameRes(slot0.resType, slot0.resNum)
-	PinballEntityMgr.instance:addNumShow(slot0.resNum, slot0.x + slot0.width, slot0.y + slot0.height)
-	PinballEntityMgr.instance:removeEntity(slot0.id)
+function var_0_0.onHitCount(arg_2_0)
+	PinballModel.instance:addGameRes(arg_2_0.resType, arg_2_0.resNum)
+	PinballEntityMgr.instance:addNumShow(arg_2_0.resNum, arg_2_0.x + arg_2_0.width, arg_2_0.y + arg_2_0.height)
+	PinballEntityMgr.instance:removeEntity(arg_2_0.id)
 end
 
-return slot0
+return var_0_0

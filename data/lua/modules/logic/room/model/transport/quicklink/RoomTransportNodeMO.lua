@@ -1,19 +1,19 @@
-module("modules.logic.room.model.transport.quicklink.RoomTransportNodeMO", package.seeall)
+﻿module("modules.logic.room.model.transport.quicklink.RoomTransportNodeMO", package.seeall)
 
-slot0 = pureTable("RoomTransportNodeMO")
+local var_0_0 = pureTable("RoomTransportNodeMO")
 
-function slot0.init(slot0, slot1)
-	slot0.hexPoint = slot1
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.hexPoint = arg_1_1
 
-	slot0:resetParam()
+	arg_1_0:resetParam()
 end
 
-function slot0.resetParam(slot0)
-	slot0.isBuilding = false
-	slot0.linkNum = 0
-	slot0.searchIndex = -1
-	slot0.isBlock = false
-	slot0.isSelectPath = false
+function var_0_0.resetParam(arg_2_0)
+	arg_2_0.isBuilding = false
+	arg_2_0.linkNum = 0
+	arg_2_0.searchIndex = -1
+	arg_2_0.isBlock = false
+	arg_2_0.isSelectPath = false
 end
 
-return slot0
+return var_0_0

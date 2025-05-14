@@ -1,77 +1,78 @@
-module("modules.logic.gm.model.GMLangTxtModel", package.seeall)
+﻿module("modules.logic.gm.model.GMLangTxtModel", package.seeall)
 
-slot0 = class("GMLangTxtModel", ListScrollModel)
+local var_0_0 = class("GMLangTxtModel", ListScrollModel)
 
-function slot0.ctor(slot0)
-	uv0.super.ctor(slot0)
+function var_0_0.ctor(arg_1_0)
+	var_0_0.super.ctor(arg_1_0)
 
-	slot0._allText = {}
-	slot0._txtIndex = 1
-	slot0.search = ""
+	arg_1_0._allText = {}
+	arg_1_0._txtIndex = 1
+	arg_1_0.search = ""
 end
 
-function slot0.reInit(slot0)
-	slot0._hasInit = nil
+function var_0_0.reInit(arg_2_0)
+	arg_2_0._hasInit = nil
 end
 
-function slot0.setSearch(slot0, slot1)
-	slot0.search = slot1
+function var_0_0.setSearch(arg_3_0, arg_3_1)
+	arg_3_0.search = arg_3_1
 
-	slot0:reInit()
-	slot0:updateModel()
+	arg_3_0:reInit()
+	arg_3_0:updateModel()
 end
 
-function slot0.getSearch(slot0)
-	return slot0.search
+function var_0_0.getSearch(arg_4_0)
+	return arg_4_0.search
 end
 
-function slot0.clearAll(slot0, slot1)
-	slot0._allText = {}
-	slot0._txtIndex = 1
+function var_0_0.clearAll(arg_5_0, arg_5_1)
+	arg_5_0._allText = {}
+	arg_5_0._txtIndex = 1
 
-	slot0:setList({})
+	arg_5_0:setList({})
 end
 
-function slot0.addLangTxt(slot0, slot1)
-	if slot0._allText[slot1] then
+function var_0_0.addLangTxt(arg_6_0, arg_6_1)
+	if arg_6_0._allText[arg_6_1] then
 		return
 	end
 
-	slot0._allText[slot1] = {
-		id = slot0._txtIndex,
-		txt = slot1
+	arg_6_0._allText[arg_6_1] = {
+		id = arg_6_0._txtIndex,
+		txt = arg_6_1
 	}
-	slot0._txtIndex = slot0._txtIndex + 1
+	arg_6_0._txtIndex = arg_6_0._txtIndex + 1
 
-	slot0:addAtLast(slot0._allText[slot1])
+	arg_6_0:addAtLast(arg_6_0._allText[arg_6_1])
 end
 
-function slot0.updateModel(slot0)
-	if not slot0._hasInit then
-		slot0._hasInit = true
-		slot1 = {}
+function var_0_0.updateModel(arg_7_0)
+	if not arg_7_0._hasInit then
+		arg_7_0._hasInit = true
 
-		for slot5, slot6 in pairs(slot0._allText) do
-			slot7 = true
+		local var_7_0 = {}
 
-			if slot0.search then
-				slot7 = string.find(slot5, slot0.search)
+		for iter_7_0, iter_7_1 in pairs(arg_7_0._allText) do
+			local var_7_1 = true
+
+			if arg_7_0.search then
+				var_7_1 = string.find(iter_7_0, arg_7_0.search)
 			end
 
-			if slot7 then
-				table.insert(slot1, slot6)
+			if var_7_1 then
+				table.insert(var_7_0, iter_7_1)
 			end
 		end
 
-		table.sort(slot1, function (slot0, slot1)
-			return slot0.id < slot1.id
+		table.sort(var_7_0, function(arg_8_0, arg_8_1)
+			return arg_8_0.id < arg_8_1.id
 		end)
-		slot0:setList(slot1)
+		arg_7_0:setList(var_7_0)
 	else
-		slot0:onModelUpdate()
+		arg_7_0:onModelUpdate()
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

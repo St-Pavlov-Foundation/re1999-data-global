@@ -1,10 +1,11 @@
-module("modules.logic.summon.defines.SummonEnum", package.seeall)
+﻿module("modules.logic.summon.defines.SummonEnum", package.seeall)
 
-slot0 = _M
-slot0.SummonSceneId = 501
-slot0.SummonEquipSceneId = 502
-slot0.SummonCharScenePath = "scenes/m_s06_summon/m_s06_summon_p_real.prefab"
-slot0.SummonEquipPreloadPath = {
+local var_0_0 = _M
+
+var_0_0.SummonSceneId = 501
+var_0_0.SummonEquipSceneId = 502
+var_0_0.SummonCharScenePath = "scenes/m_s06_summon/m_s06_summon_p_real.prefab"
+var_0_0.SummonEquipPreloadPath = {
 	EquipUISR = "scenes/m_s03_xx/s03_ui_sr.prefab",
 	EquipBoomR = "scenes/m_s03_xx/equip_r.prefab",
 	EquipUIN = "scenes/m_s03_xx/s03_ui_n.prefab",
@@ -14,7 +15,7 @@ slot0.SummonEquipPreloadPath = {
 	EquipBoomSR = "scenes/m_s03_xx/equip_sr.prefab",
 	EquipBoomSSR = "scenes/m_s03_xx/equip_ssr.prefab"
 }
-slot0.SummonCharPreloadPath = {
+var_0_0.SummonCharPreloadPath = {
 	UIN = "scenes/m_s06_summon/s06_ui_n.prefab",
 	SceneSRStep1 = "scenes/m_s06_summon/s06_effect_sr_chuxian_1.prefab",
 	UIR = "scenes/m_s06_summon/s06_ui_r.prefab",
@@ -42,89 +43,89 @@ slot0.SummonCharPreloadPath = {
 	SceneNStep1 = "scenes/m_s06_summon/s06_effect_n_chuxian_1.prefab",
 	SceneNStep2 = "scenes/m_s06_summon/s06_effect_n_chuxian_2.prefab"
 }
-slot0.SummonLuckyBagPreloadPath = {
+var_0_0.SummonLuckyBagPreloadPath = {
 	UILuckyBag = "scenes/m_s06_summon/s06_ui_luckybag.prefab"
 }
-slot0.SummonPreloadPath = tabletool.copy(slot0.SummonEquipPreloadPath)
+var_0_0.SummonPreloadPath = tabletool.copy(var_0_0.SummonEquipPreloadPath)
 
-for slot4, slot5 in pairs(slot0.SummonCharPreloadPath) do
-	slot0.SummonPreloadPath[slot4] = slot5
+for iter_0_0, iter_0_1 in pairs(var_0_0.SummonCharPreloadPath) do
+	var_0_0.SummonPreloadPath[iter_0_0] = iter_0_1
 end
 
-slot0.SummonQualityDefine = {
+var_0_0.SummonQualityDefine = {
 	"N",
 	"N",
 	"R",
 	"SR",
 	"SSR"
 }
-slot0.TenAnimationName = "m_s06_summon_anim_a"
-slot0.SingleAnimationName = "m_s06_summon_anim_b"
-slot0.EquipTenAnimationName = "m_s03_xx_p_a"
-slot0.EquipSingleAnimationName = "m_s03_xx_p_b"
-slot0.SummonSkipCharacterAnimationName = "m_s06_summon_anim_c"
-slot0.SummonSkipAnimationName = "none"
-slot0.InitialStateAnimationName = "m_s06_summon_anim_in"
-slot0.InitialStateEquipAnimationName = "m_s03_xx_p_in"
-slot0.GuideInitialStateAnimationName = "m_s06_summon_anim_story02"
-slot0.SummonOpenAnimationName = "m_s06_summon_anim_story01"
-slot0.SummonFogAnimationName = "m_s06_summon_anim_story02"
-slot0.SummonWheelAnimationName = "m_s06_summon_anim_story03"
-slot0.SummonCharAnimationEnter = "open"
-slot0.SummonCharAnimationSwitch = "switch"
-slot0.SummonEquipAnimationSwitch = "switch"
-slot0.AnimationName = {
-	[slot0.SummonPreloadPath.UIN] = "m_s06_summon_anim_b04",
-	[slot0.SummonPreloadPath.UIR] = "m_s06_summon_anim_b03",
-	[slot0.SummonPreloadPath.UISR] = "m_s06_summon_anim_b02",
-	[slot0.SummonPreloadPath.UISSR] = "m_s06_summon_anim_b01",
-	[slot0.SummonPreloadPath.EquipUIN] = "m_s06_summon_anim_b04",
-	[slot0.SummonPreloadPath.EquipUIR] = "m_s06_summon_anim_b03",
-	[slot0.SummonPreloadPath.EquipUISR] = "m_s06_summon_anim_b02",
-	[slot0.SummonPreloadPath.EquipUISSR] = "m_s06_summon_anim_b01",
-	[slot0.SummonLuckyBagPreloadPath.UILuckyBag] = "m_s06_summon_anim_b01"
+var_0_0.TenAnimationName = "m_s06_summon_anim_a"
+var_0_0.SingleAnimationName = "m_s06_summon_anim_b"
+var_0_0.EquipTenAnimationName = "m_s03_xx_p_a"
+var_0_0.EquipSingleAnimationName = "m_s03_xx_p_b"
+var_0_0.SummonSkipCharacterAnimationName = "m_s06_summon_anim_c"
+var_0_0.SummonSkipAnimationName = "none"
+var_0_0.InitialStateAnimationName = "m_s06_summon_anim_in"
+var_0_0.InitialStateEquipAnimationName = "m_s03_xx_p_in"
+var_0_0.GuideInitialStateAnimationName = "m_s06_summon_anim_story02"
+var_0_0.SummonOpenAnimationName = "m_s06_summon_anim_story01"
+var_0_0.SummonFogAnimationName = "m_s06_summon_anim_story02"
+var_0_0.SummonWheelAnimationName = "m_s06_summon_anim_story03"
+var_0_0.SummonCharAnimationEnter = "open"
+var_0_0.SummonCharAnimationSwitch = "switch"
+var_0_0.SummonEquipAnimationSwitch = "switch"
+var_0_0.AnimationName = {
+	[var_0_0.SummonPreloadPath.UIN] = "m_s06_summon_anim_b04",
+	[var_0_0.SummonPreloadPath.UIR] = "m_s06_summon_anim_b03",
+	[var_0_0.SummonPreloadPath.UISR] = "m_s06_summon_anim_b02",
+	[var_0_0.SummonPreloadPath.UISSR] = "m_s06_summon_anim_b01",
+	[var_0_0.SummonPreloadPath.EquipUIN] = "m_s06_summon_anim_b04",
+	[var_0_0.SummonPreloadPath.EquipUIR] = "m_s06_summon_anim_b03",
+	[var_0_0.SummonPreloadPath.EquipUISR] = "m_s06_summon_anim_b02",
+	[var_0_0.SummonPreloadPath.EquipUISSR] = "m_s06_summon_anim_b01",
+	[var_0_0.SummonLuckyBagPreloadPath.UILuckyBag] = "m_s06_summon_anim_b01"
 }
-slot0.UIMaterialPath = {
-	[slot0.SummonPreloadPath.UIN] = {
+var_0_0.UIMaterialPath = {
+	[var_0_0.SummonPreloadPath.UIN] = {
 		"s06_ui_obj_a/s06_ui_obj_d001",
 		"s06_ui_obj_a_mirror/s06_ui_obj_d001"
 	},
-	[slot0.SummonPreloadPath.UIR] = {
+	[var_0_0.SummonPreloadPath.UIR] = {
 		"s06_ui_obj_a/s06_ui_obj_c001",
 		"s06_ui_obj_a_mirror/s06_ui_obj_c001"
 	},
-	[slot0.SummonPreloadPath.UISR] = {
+	[var_0_0.SummonPreloadPath.UISR] = {
 		"s06_ui_obj_a/s06_ui_obj_b001",
 		"s06_ui_obj_a_mirror/s06_ui_obj_b001"
 	},
-	[slot0.SummonPreloadPath.UISSR] = {
+	[var_0_0.SummonPreloadPath.UISSR] = {
 		"s06_ui_obj_a/s06_ui_obj_a001",
 		"s06_ui_obj_a_mirror/s06_ui_obj_a001"
 	},
-	[slot0.SummonPreloadPath.EquipUIN] = {
+	[var_0_0.SummonPreloadPath.EquipUIN] = {
 		"s03_ui_obj_a/s03_ui_obj_a001"
 	},
-	[slot0.SummonPreloadPath.EquipUIR] = {
+	[var_0_0.SummonPreloadPath.EquipUIR] = {
 		"s03_ui_obj_a/s03_ui_obj_a001"
 	},
-	[slot0.SummonPreloadPath.EquipUISR] = {
+	[var_0_0.SummonPreloadPath.EquipUISR] = {
 		"s03_ui_obj_a/s03_ui_obj_a001"
 	},
-	[slot0.SummonPreloadPath.EquipUISSR] = {
+	[var_0_0.SummonPreloadPath.EquipUISSR] = {
 		"s03_ui_obj_a/s03_ui_obj_a001"
 	},
-	[slot0.SummonLuckyBagPreloadPath.UILuckyBag] = {
+	[var_0_0.SummonLuckyBagPreloadPath.UILuckyBag] = {
 		"s06_ui_obj_a",
 		"s06_ui_obj_a_mirror"
 	}
 }
-slot0.BoomEquipEffectAnimationName = {
-	[slot0.SummonPreloadPath.EquipBoomN] = "s03_ui_ssr_in",
-	[slot0.SummonPreloadPath.EquipBoomR] = "s03_ui_ssr_in",
-	[slot0.SummonPreloadPath.EquipBoomSR] = "s03_ui_ssr_in",
-	[slot0.SummonPreloadPath.EquipBoomSSR] = "s03_ui_ssr_in"
+var_0_0.BoomEquipEffectAnimationName = {
+	[var_0_0.SummonPreloadPath.EquipBoomN] = "s03_ui_ssr_in",
+	[var_0_0.SummonPreloadPath.EquipBoomR] = "s03_ui_ssr_in",
+	[var_0_0.SummonPreloadPath.EquipBoomSR] = "s03_ui_ssr_in",
+	[var_0_0.SummonPreloadPath.EquipBoomSSR] = "s03_ui_ssr_in"
 }
-slot0.EquipUIAnim = {
+var_0_0.EquipUIAnim = {
 	RootGachaStartRare3 = "_white",
 	RootGachaIn = "go_controller_in",
 	LightGacha10 = "shiying02_x10_in",
@@ -134,11 +135,11 @@ slot0.EquipUIAnim = {
 	RootGachaStart10Prefix = "go_controller_summonequip_x10",
 	LightGacha1 = "shiying01_x1_in"
 }
-slot0.EquipFloatIconFrameNode = "s03_ui_obj_a"
-slot0.EquipFloatIconFrameBeforeOpen = "scenes/dynamic/m_s03_xx/textures/m_s03_ui_obj.png"
-slot0.EquipFloatIconFrameOpened = "scenes/dynamic/m_s03_xx/textures/m_s03_ui_open.png"
-slot0.EquipDefaultIconPath = "singlebg/summon/equip/xray.png"
-slot0.Type = {
+var_0_0.EquipFloatIconFrameNode = "s03_ui_obj_a"
+var_0_0.EquipFloatIconFrameBeforeOpen = "scenes/dynamic/m_s03_xx/textures/m_s03_ui_obj.png"
+var_0_0.EquipFloatIconFrameOpened = "scenes/dynamic/m_s03_xx/textures/m_s03_ui_open.png"
+var_0_0.EquipDefaultIconPath = "singlebg/summon/equip/xray.png"
+var_0_0.Type = {
 	Limit = 6,
 	NewPlayer = 201,
 	CustomPick = 7,
@@ -150,85 +151,85 @@ slot0.Type = {
 	DoubleSsrUp = 202,
 	Normal = 2
 }
-slot0.ResultType = {
+var_0_0.ResultType = {
 	Char = 1,
 	Equip = 2,
 	MaxCount = 2
 }
-slot0.SummonCallingType = {
+var_0_0.SummonCallingType = {
 	Summon = 1,
 	SummonSimulation = 2
 }
-slot0.TabContentIndex = {
+var_0_0.TabContentIndex = {
 	CharNormal = 1,
 	CharNewbie = 3,
 	EquipNormal = 2,
 	EquipProbUp = 5,
 	CharProbUp = 4
 }
-slot0.Type2PageIndex = {
-	slot0.TabContentIndex.CharNewbie,
-	slot0.TabContentIndex.CharNormal,
-	slot0.TabContentIndex.CharProbUp,
-	slot0.TabContentIndex.CharProbUp,
-	slot0.TabContentIndex.CharProbUp,
-	slot0.TabContentIndex.CharProbUp,
-	slot0.TabContentIndex.CharProbUp,
-	[slot0.Type.NewPlayer] = slot0.TabContentIndex.CharProbUp,
-	[slot0.Type.DoubleSsrUp] = slot0.TabContentIndex.CharProbUp,
-	[10] = slot0.TabContentIndex.EquipNormal,
-	[11] = slot0.TabContentIndex.EquipProbUp
+var_0_0.Type2PageIndex = {
+	[var_0_0.Type.NewPlayer] = var_0_0.TabContentIndex.CharProbUp,
+	[var_0_0.Type.DoubleSsrUp] = var_0_0.TabContentIndex.CharProbUp,
+	var_0_0.TabContentIndex.CharNewbie,
+	var_0_0.TabContentIndex.CharNormal,
+	var_0_0.TabContentIndex.CharProbUp,
+	var_0_0.TabContentIndex.CharProbUp,
+	var_0_0.TabContentIndex.CharProbUp,
+	var_0_0.TabContentIndex.CharProbUp,
+	var_0_0.TabContentIndex.CharProbUp,
+	[10] = var_0_0.TabContentIndex.EquipNormal,
+	[11] = var_0_0.TabContentIndex.EquipProbUp
 }
-slot0.Type2Result = {
-	slot0.ResultType.Char,
-	slot0.ResultType.Char,
-	slot0.ResultType.Char,
-	slot0.ResultType.Char,
-	slot0.ResultType.Char,
-	slot0.ResultType.Char,
-	slot0.ResultType.Char,
-	[10] = slot0.ResultType.Equip,
-	[11] = slot0.ResultType.Equip
+var_0_0.Type2Result = {
+	var_0_0.ResultType.Char,
+	var_0_0.ResultType.Char,
+	var_0_0.ResultType.Char,
+	var_0_0.ResultType.Char,
+	var_0_0.ResultType.Char,
+	var_0_0.ResultType.Char,
+	var_0_0.ResultType.Char,
+	[10] = var_0_0.ResultType.Equip,
+	[11] = var_0_0.ResultType.Equip
 }
-slot0.GuidePoolId = 2
-slot0.GuideIdSet = {
-	[163.0] = 1,
-	[103.0] = 1
+var_0_0.GuidePoolId = 2
+var_0_0.GuideIdSet = {
+	[163] = 1,
+	[103] = 1
 }
-slot0.HistoryColor = {
+var_0_0.HistoryColor = {
 	"#272525bf",
 	"#272525bf",
 	"#272525bf",
 	"#aa7e1d",
 	"#bc4d02"
 }
-slot0.HistoryNameStarFormat = {
+var_0_0.HistoryNameStarFormat = {
 	"%s",
 	"%s",
 	"%s",
 	"%s(5    )",
 	"%s(6    )"
 }
-slot0.DetailParagraphType = {
+var_0_0.DetailParagraphType = {
 	SpaceOne = 1,
 	Normal = 0
 }
-slot0.BannerFlagType = {
+var_0_0.BannerFlagType = {
 	Limit = 3,
 	Activity = 2,
 	Newbie = 1,
 	Reprint = 4
 }
-slot0.TenSummonAgainOpen = false
-slot0.MultiProbUp4ShowRate = 25
-slot0.LuckyBagRare = 5
-slot0.CustomPickRare = 5
-slot0.PoolId = {
+var_0_0.TenSummonAgainOpen = false
+var_0_0.MultiProbUp4ShowRate = 25
+var_0_0.LuckyBagRare = 5
+var_0_0.CustomPickRare = 5
+var_0_0.PoolId = {
 	Normal = 2,
 	QuNiang = 16111
 }
-slot0.ChooseNeedFirstHeroIds = {
+var_0_0.ChooseNeedFirstHeroIds = {
 	3025
 }
 
-return slot0
+return var_0_0

@@ -1,32 +1,37 @@
-module("modules.logic.versionactivity1_9.semmelweisgift.view.SemmelWeisGiftView", package.seeall)
+﻿module("modules.logic.versionactivity1_9.semmelweisgift.view.SemmelWeisGiftView", package.seeall)
 
-slot0 = class("SemmelWeisGiftView", DecalogPresentView)
+local var_0_0 = class("SemmelWeisGiftView", DecalogPresentView)
 
-function slot0.onInitView(slot0)
-	slot0._txtremainTime = gohelper.findChildText(slot0.viewGO, "Root/image_TimeBG/#txt_remainTime")
-	slot0._btnClaim = gohelper.findChildButtonWithAudio(slot0.viewGO, "Root/#btn_Claim")
-	slot0._goNormal = gohelper.findChild(slot0.viewGO, "Root/#btn_Claim/#go_Normal")
-	slot0._goHasReceived = gohelper.findChild(slot0.viewGO, "Root/#btn_Claim/#go_Received")
-	slot0._btnClose = gohelper.findChildButtonWithAudio(slot0.viewGO, "Root/#btn_Close")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._txtremainTime = gohelper.findChildText(arg_1_0.viewGO, "Root/image_TimeBG/#txt_remainTime")
+	arg_1_0._btnClaim = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Root/#btn_Claim")
+	arg_1_0._goNormal = gohelper.findChild(arg_1_0.viewGO, "Root/#btn_Claim/#go_Normal")
+	arg_1_0._goHasReceived = gohelper.findChild(arg_1_0.viewGO, "Root/#btn_Claim/#go_Received")
+	arg_1_0._btnClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Root/#btn_Close")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0._btnClaimOnClick(slot0)
+function var_0_0._btnClaimOnClick(arg_2_0)
 	SemmelWeisGiftController.instance:receiveSemmelWeisGift()
 end
 
-function slot0.refreshReceiveStatus(slot0)
-	slot3 = ActivityType101Model.instance:isType101RewardCouldGet(SemmelWeisGiftModel.instance:getSemmelWeisGiftActId(), SemmelWeisGiftModel.REWARD_INDEX)
+function var_0_0.refreshReceiveStatus(arg_3_0)
+	local var_3_0 = SemmelWeisGiftModel.instance:getSemmelWeisGiftActId()
+	local var_3_1 = SemmelWeisGiftModel.REWARD_INDEX
+	local var_3_2 = ActivityType101Model.instance:isType101RewardCouldGet(var_3_0, var_3_1)
 
-	gohelper.setActive(slot0._goNormal, slot3)
-	gohelper.setActive(slot0._goHasReceived, not slot3)
+	gohelper.setActive(arg_3_0._goNormal, var_3_2)
+	gohelper.setActive(arg_3_0._goHasReceived, not var_3_2)
 end
 
-function slot0.refreshRemainTime(slot0)
-	slot0._txtremainTime.text = string.format(luaLang("remain"), ActivityModel.instance:getActMO(SemmelWeisGiftModel.instance:getSemmelWeisGiftActId()):getRemainTimeStr3(false, true))
+function var_0_0.refreshRemainTime(arg_4_0)
+	local var_4_0 = SemmelWeisGiftModel.instance:getSemmelWeisGiftActId()
+	local var_4_1 = ActivityModel.instance:getActMO(var_4_0):getRemainTimeStr3(false, true)
+
+	arg_4_0._txtremainTime.text = string.format(luaLang("remain"), var_4_1)
 end
 
-return slot0
+return var_0_0

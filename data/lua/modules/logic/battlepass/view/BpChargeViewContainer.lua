@@ -1,41 +1,41 @@
-module("modules.logic.battlepass.view.BpChargeViewContainer", package.seeall)
+﻿module("modules.logic.battlepass.view.BpChargeViewContainer", package.seeall)
 
-slot0 = class("BpChargeViewContainer", BaseViewContainer)
+local var_0_0 = class("BpChargeViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, TabViewGroup.New(1, "#go_btns"))
-	table.insert(slot1, BpChargeView.New())
+	table.insert(var_1_0, TabViewGroup.New(1, "#go_btns"))
+	table.insert(var_1_0, BpChargeView.New())
 
-	return slot1
+	return var_1_0
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
-		slot0.navigationView = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == 1 then
+		arg_2_0.navigationView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
 		return {
-			slot0.navigationView
+			arg_2_0.navigationView
 		}
 	end
 end
 
-function slot0.playOpenTransition(slot0)
-	slot1 = "open"
+function var_0_0.playOpenTransition(arg_3_0)
+	local var_3_0 = "open"
 
-	if slot0.viewParam and slot0.viewParam.first then
-		slot1 = "first"
+	if arg_3_0.viewParam and arg_3_0.viewParam.first then
+		var_3_0 = "first"
 	end
 
-	uv0.super.playOpenTransition(slot0, {
+	var_0_0.super.playOpenTransition(arg_3_0, {
 		duration = 3,
-		anim = slot1
+		anim = var_3_0
 	})
 end
 
-return slot0
+return var_0_0

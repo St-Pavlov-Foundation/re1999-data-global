@@ -1,86 +1,91 @@
-module("modules.logic.versionactivity2_1.aergusi.rpc.Activity163Rpc", package.seeall)
+﻿module("modules.logic.versionactivity2_1.aergusi.rpc.Activity163Rpc", package.seeall)
 
-slot0 = class("Activity163Rpc", BaseRpc)
-slot0.instance = slot0.New()
+local var_0_0 = class("Activity163Rpc", BaseRpc)
 
-function slot0.sendGet163InfosRequest(slot0, slot1, slot2, slot3)
-	slot4 = Activity163Module_pb.Get163InfosRequest()
-	slot4.activityId = slot1
+var_0_0.instance = var_0_0.New()
 
-	return slot0:sendMsg(slot4, slot2, slot3)
+function var_0_0.sendGet163InfosRequest(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	local var_1_0 = Activity163Module_pb.Get163InfosRequest()
+
+	var_1_0.activityId = arg_1_1
+
+	return arg_1_0:sendMsg(var_1_0, arg_1_2, arg_1_3)
 end
 
-function slot0.onReceiveGet163InfosReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveGet163InfosReply(arg_2_0, arg_2_1, arg_2_2)
+	if arg_2_1 ~= 0 then
 		return
 	end
 
-	AergusiModel.instance:setEpisodeInfos(slot2.actInfo.episodeInfo)
-	AergusiModel.instance:setReadClueList(slot2.actInfo.readClueIds)
+	AergusiModel.instance:setEpisodeInfos(arg_2_2.actInfo.episodeInfo)
+	AergusiModel.instance:setReadClueList(arg_2_2.actInfo.readClueIds)
 	AergusiController.instance:dispatchEvent(AergusiEvent.ActInfoUpdate)
 end
 
-function slot0.onReceiveAct163InfoPush(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveAct163InfoPush(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_1 ~= 0 then
 		return
 	end
 
-	AergusiModel.instance:setEpisodeInfos(slot2.actInfo.episodeInfo)
+	AergusiModel.instance:setEpisodeInfos(arg_3_2.actInfo.episodeInfo)
 	AergusiController.instance:dispatchEvent(AergusiEvent.ActInfoUpdate)
 end
 
-function slot0.sendAct163StartEvidenceRequest(slot0, slot1, slot2, slot3, slot4)
-	slot5 = Activity163Module_pb.Act163StartEvidenceRequest()
-	slot5.activityId = slot1
-	slot5.episodeId = slot2
+function var_0_0.sendAct163StartEvidenceRequest(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4)
+	local var_4_0 = Activity163Module_pb.Act163StartEvidenceRequest()
 
-	return slot0:sendMsg(slot5, slot3, slot4)
+	var_4_0.activityId = arg_4_1
+	var_4_0.episodeId = arg_4_2
+
+	return arg_4_0:sendMsg(var_4_0, arg_4_3, arg_4_4)
 end
 
-function slot0.onReceiveAct163StartEvidenceReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveAct163StartEvidenceReply(arg_5_0, arg_5_1, arg_5_2)
+	if arg_5_1 ~= 0 then
 		return
 	end
 
-	AergusiModel.instance:setEpisodeUnlockAutoTipProcess(slot2.progress)
-	AergusiModel.instance:setEvidenceInfo(slot2.episodeId, slot2.evidenceInfo)
+	AergusiModel.instance:setEpisodeUnlockAutoTipProcess(arg_5_2.progress)
+	AergusiModel.instance:setEvidenceInfo(arg_5_2.episodeId, arg_5_2.evidenceInfo)
 	AergusiController.instance:dispatchEvent(AergusiEvent.StartEpisode)
 end
 
-function slot0.sendAct163EvidenceOperationRequest(slot0, slot1, slot2, slot3, slot4, slot5, slot6)
-	slot7 = Activity163Module_pb.Act163EvidenceOperationRequest()
-	slot7.activityId = slot1
-	slot7.episodeId = slot2
-	slot7.operationType = slot3
-	slot7.params = slot4
+function var_0_0.sendAct163EvidenceOperationRequest(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4, arg_6_5, arg_6_6)
+	local var_6_0 = Activity163Module_pb.Act163EvidenceOperationRequest()
 
-	return slot0:sendMsg(slot7, slot5, slot6)
+	var_6_0.activityId = arg_6_1
+	var_6_0.episodeId = arg_6_2
+	var_6_0.operationType = arg_6_3
+	var_6_0.params = arg_6_4
+
+	return arg_6_0:sendMsg(var_6_0, arg_6_5, arg_6_6)
 end
 
-function slot0.onReceiveAct163EvidenceOperationReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveAct163EvidenceOperationReply(arg_7_0, arg_7_1, arg_7_2)
+	if arg_7_1 ~= 0 then
 		return
 	end
 
-	AergusiModel.instance:setEvidenceInfo(slot2.episodeId, slot2.evidenceInfo)
-	AergusiController.instance:dispatchEvent(AergusiEvent.StartOperation, slot2.operationType, slot2.operationResult)
+	AergusiModel.instance:setEvidenceInfo(arg_7_2.episodeId, arg_7_2.evidenceInfo)
+	AergusiController.instance:dispatchEvent(AergusiEvent.StartOperation, arg_7_2.operationType, arg_7_2.operationResult)
 end
 
-function slot0.sendAct163ReadClueRequest(slot0, slot1, slot2, slot3, slot4)
-	slot5 = Activity163Module_pb.Act163ReadClueRequest()
-	slot5.activityId = slot1
-	slot5.clueId = slot2
+function var_0_0.sendAct163ReadClueRequest(arg_8_0, arg_8_1, arg_8_2, arg_8_3, arg_8_4)
+	local var_8_0 = Activity163Module_pb.Act163ReadClueRequest()
 
-	return slot0:sendMsg(slot5, slot3, slot4)
+	var_8_0.activityId = arg_8_1
+	var_8_0.clueId = arg_8_2
+
+	return arg_8_0:sendMsg(var_8_0, arg_8_3, arg_8_4)
 end
 
-function slot0.onReceiveAct163ReadClueReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveAct163ReadClueReply(arg_9_0, arg_9_1, arg_9_2)
+	if arg_9_1 ~= 0 then
 		return
 	end
 
-	AergusiModel.instance:setClueReaded(slot2.clueId)
-	AergusiController.instance:dispatchEvent(AergusiEvent.OnClueReadUpdate, slot2.clueId)
+	AergusiModel.instance:setClueReaded(arg_9_2.clueId)
+	AergusiController.instance:dispatchEvent(AergusiEvent.OnClueReadUpdate, arg_9_2.clueId)
 end
 
-return slot0
+return var_0_0

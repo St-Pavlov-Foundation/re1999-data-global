@@ -1,34 +1,34 @@
-module("modules.logic.fight.view.work.FightWorkAutoPlayerFinisherSkill", package.seeall)
+﻿module("modules.logic.fight.view.work.FightWorkAutoPlayerFinisherSkill", package.seeall)
 
-slot0 = class("FightWorkAutoPlayerFinisherSkill", BaseWork)
+local var_0_0 = class("FightWorkAutoPlayerFinisherSkill", BaseWork)
 
-function slot0.ctor(slot0, slot1)
-	slot0._beginRoundOp = slot1
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0._beginRoundOp = arg_1_1
 end
 
-function slot0.onStart(slot0, slot1)
-	if not slot0._beginRoundOp then
-		return slot0:onDone(true)
+function var_0_0.onStart(arg_2_0, arg_2_1)
+	if not arg_2_0._beginRoundOp then
+		return arg_2_0:onDone(true)
 	end
 
-	FightController.instance:dispatchEvent(FightEvent.AutoToSelectSkillTarget, slot0._beginRoundOp.toId)
-	TaskDispatcher.runDelay(slot0._delayDone, slot0, 3)
+	FightController.instance:dispatchEvent(FightEvent.AutoToSelectSkillTarget, arg_2_0._beginRoundOp.toId)
+	TaskDispatcher.runDelay(arg_2_0._delayDone, arg_2_0, 3)
 
-	slot2 = FightCardModel.instance:playPlayerFinisherSkill(slot0._beginRoundOp.param1, slot0._beginRoundOp.toId)
+	local var_2_0 = FightCardModel.instance:playPlayerFinisherSkill(arg_2_0._beginRoundOp.param1, arg_2_0._beginRoundOp.toId)
 
-	FightController.instance:dispatchEvent(FightEvent.AddPlayOperationData, slot2)
+	FightController.instance:dispatchEvent(FightEvent.AddPlayOperationData, var_2_0)
 	FightController.instance:dispatchEvent(FightEvent.onNoActCostMoveFlowOver)
-	FightController.instance:dispatchEvent(FightEvent.RefreshPlayCardRoundOp, slot2)
-	FightController.instance:dispatchEvent(FightEvent.OnPlayCardFlowDone, slot2)
-	slot0:onDone(true)
+	FightController.instance:dispatchEvent(FightEvent.RefreshPlayCardRoundOp, var_2_0)
+	FightController.instance:dispatchEvent(FightEvent.OnPlayCardFlowDone, var_2_0)
+	arg_2_0:onDone(true)
 end
 
-function slot0._delayDone(slot0)
-	slot0:onDone(true)
+function var_0_0._delayDone(arg_3_0)
+	arg_3_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
-	TaskDispatcher.cancelTask(slot0._delayDone, slot0)
+function var_0_0.clearWork(arg_4_0)
+	TaskDispatcher.cancelTask(arg_4_0._delayDone, arg_4_0)
 end
 
-return slot0
+return var_0_0

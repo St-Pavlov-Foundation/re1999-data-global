@@ -1,62 +1,62 @@
-module("modules.logic.versionactivity2_4.wuerlixi.model.WuErLiXiMapSignalItemMo", package.seeall)
+﻿module("modules.logic.versionactivity2_4.wuerlixi.model.WuErLiXiMapSignalItemMo", package.seeall)
 
-slot0 = pureTable("WuErLiXiMapSignalItemMo")
+local var_0_0 = pureTable("WuErLiXiMapSignalItemMo")
 
-function slot0.ctor(slot0)
-	slot0.rayId = 0
-	slot0.rayDir = 0
-	slot0.rayType = WuErLiXiEnum.RayType.NormalSignal
-	slot0.startNodeMo = {}
-	slot0.endNodeMo = {}
-	slot0.startPos = {}
-	slot0.endPos = {}
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.rayId = 0
+	arg_1_0.rayDir = 0
+	arg_1_0.rayType = WuErLiXiEnum.RayType.NormalSignal
+	arg_1_0.startNodeMo = {}
+	arg_1_0.endNodeMo = {}
+	arg_1_0.startPos = {}
+	arg_1_0.endPos = {}
 end
 
-function slot0.init(slot0, slot1, slot2, slot3, slot4, slot5)
-	slot0.rayId = slot1
-	slot0.rayType = slot2
-	slot0.rayDir = slot3
-	slot0.startNodeMo = slot4
-	slot0.endNodeMo = slot5
-	slot0.startPos = {
-		slot4.x,
-		slot4.y
+function var_0_0.init(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4, arg_2_5)
+	arg_2_0.rayId = arg_2_1
+	arg_2_0.rayType = arg_2_2
+	arg_2_0.rayDir = arg_2_3
+	arg_2_0.startNodeMo = arg_2_4
+	arg_2_0.endNodeMo = arg_2_5
+	arg_2_0.startPos = {
+		arg_2_4.x,
+		arg_2_4.y
 	}
-	slot0.endPos = {
-		slot5.x,
-		slot5.y
-	}
-end
-
-function slot0.reset(slot0, slot1, slot2, slot3, slot4)
-	slot0.rayId = slot1
-	slot0.rayType = slot2
-	slot0.rayDir = slot3
-	slot0.endNodeMo = slot4
-	slot0.endPos = {
-		slot4.x,
-		slot4.y
+	arg_2_0.endPos = {
+		arg_2_5.x,
+		arg_2_5.y
 	}
 end
 
-function slot0.setId(slot0, slot1)
-	slot0.rayId = slot1
+function var_0_0.reset(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
+	arg_3_0.rayId = arg_3_1
+	arg_3_0.rayType = arg_3_2
+	arg_3_0.rayDir = arg_3_3
+	arg_3_0.endNodeMo = arg_3_4
+	arg_3_0.endPos = {
+		arg_3_4.x,
+		arg_3_4.y
+	}
 end
 
-function slot0.setType(slot0, slot1)
-	slot0.rayType = slot1
+function var_0_0.setId(arg_4_0, arg_4_1)
+	arg_4_0.rayId = arg_4_1
 end
 
-function slot0.setRayDir(slot0, slot1)
-	slot0.rayDir = slot1
+function var_0_0.setType(arg_5_0, arg_5_1)
+	arg_5_0.rayType = arg_5_1
 end
 
-function slot0.resetEndNodeMo(slot0, slot1)
-	slot0.endNodeMo = slot1
+function var_0_0.setRayDir(arg_6_0, arg_6_1)
+	arg_6_0.rayDir = arg_6_1
 end
 
-function slot0.getSignalLength(slot0)
-	return math.abs(slot0.startPos[1] + slot0.startPos[2] - slot0.endPos[1] - slot0.endPos[2]) + 1
+function var_0_0.resetEndNodeMo(arg_7_0, arg_7_1)
+	arg_7_0.endNodeMo = arg_7_1
 end
 
-return slot0
+function var_0_0.getSignalLength(arg_8_0)
+	return math.abs(arg_8_0.startPos[1] + arg_8_0.startPos[2] - arg_8_0.endPos[1] - arg_8_0.endPos[2]) + 1
+end
+
+return var_0_0

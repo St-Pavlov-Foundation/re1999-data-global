@@ -1,32 +1,34 @@
-module("modules.logic.act201.model.Activity201Mo", package.seeall)
+﻿module("modules.logic.act201.model.Activity201Mo", package.seeall)
 
-slot0 = pureTable("Activity201Mo")
+local var_0_0 = pureTable("Activity201Mo")
 
-function slot0.ctor(slot0)
-	slot0.invitePlayers = {}
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.invitePlayers = {}
 end
 
-function slot0.init(slot0, slot1)
-	slot0.activityId = slot1.activityId
-	slot0.isTurnBack = slot1.isTurnback
-	slot0.inviteCode = slot1.inviteCode
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.activityId = arg_2_1.activityId
+	arg_2_0.isTurnBack = arg_2_1.isTurnback
+	arg_2_0.inviteCode = arg_2_1.inviteCode
 
-	slot0:refreshInvitaPlayerInfo(slot1.invitePlayers)
+	arg_2_0:refreshInvitaPlayerInfo(arg_2_1.invitePlayers)
 end
 
-function slot0.refreshInvitaPlayerInfo(slot0, slot1)
-	tabletool.clear(slot0.invitePlayers)
+function var_0_0.refreshInvitaPlayerInfo(arg_3_0, arg_3_1)
+	tabletool.clear(arg_3_0.invitePlayers)
 
-	if slot1 and #slot1 > 0 then
-		for slot5, slot6 in ipairs(slot1) do
-			table.insert(slot0.invitePlayers, {
-				name = slot6.name,
-				userId = slot6.userId,
-				portrait = slot6.portrait,
-				roleType = slot6.roleType
-			})
+	if arg_3_1 and #arg_3_1 > 0 then
+		for iter_3_0, iter_3_1 in ipairs(arg_3_1) do
+			local var_3_0 = {
+				name = iter_3_1.name,
+				userId = iter_3_1.userId,
+				portrait = iter_3_1.portrait,
+				roleType = iter_3_1.roleType
+			}
+
+			table.insert(arg_3_0.invitePlayers, var_3_0)
 		end
 	end
 end
 
-return slot0
+return var_0_0

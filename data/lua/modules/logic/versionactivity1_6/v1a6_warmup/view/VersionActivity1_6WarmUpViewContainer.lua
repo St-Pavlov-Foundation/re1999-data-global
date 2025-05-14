@@ -1,11 +1,11 @@
-module("modules.logic.versionactivity1_6.v1a6_warmup.view.VersionActivity1_6WarmUpViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity1_6.v1a6_warmup.view.VersionActivity1_6WarmUpViewContainer", package.seeall)
 
-slot0 = class("VersionActivity1_6WarmUpViewContainer", BaseViewContainer)
+local var_0_0 = class("VersionActivity1_6WarmUpViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		VersionActivity1_6WarmUpView.New()
 	}
 end
 
-return slot0
+return var_0_0

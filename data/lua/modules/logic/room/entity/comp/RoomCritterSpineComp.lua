@@ -1,377 +1,436 @@
-module("modules.logic.room.entity.comp.RoomCritterSpineComp", package.seeall)
+﻿module("modules.logic.room.entity.comp.RoomCritterSpineComp", package.seeall)
 
-slot0 = class("RoomCritterSpineComp", RoomBaseSpineComp)
+local var_0_0 = class("RoomCritterSpineComp", RoomBaseSpineComp)
 
-function slot0.onInit(slot0)
-	slot1 = slot0.entity:getMO()
-	slot0._critterId = slot1.critterId
-	slot0._skinId = slot1:getSkinId()
-	slot0._spinePrefabRes = RoomResHelper.getCritterPath(slot0._skinId)
-	slot0._materialRes = RoomCharacterEnum.MaterialPath
-	slot0._shouldShowSpine = false
-	slot0._isInDistance = false
-	slot0._isShow = false
-	slot0._isHide = false
-	slot0._touchTamingRate = 0.6
+function var_0_0.onInit(arg_1_0)
+	local var_1_0 = arg_1_0.entity:getMO()
 
-	slot0:_cameraTransformUpdate()
-	slot0:_refreshSpineShow()
+	arg_1_0._critterId = var_1_0.critterId
+	arg_1_0._skinId = var_1_0:getSkinId()
+	arg_1_0._spinePrefabRes = RoomResHelper.getCritterPath(arg_1_0._skinId)
+	arg_1_0._materialRes = RoomCharacterEnum.MaterialPath
+	arg_1_0._shouldShowSpine = false
+	arg_1_0._isInDistance = false
+	arg_1_0._isShow = false
+	arg_1_0._isHide = false
+	arg_1_0._touchTamingRate = 0.6
+
+	arg_1_0:_cameraTransformUpdate()
+	arg_1_0:_refreshSpineShow()
 end
 
-function slot0.resetInit(slot0)
-	if not slot0.entity:getMO() then
+function var_0_0.resetInit(arg_2_0)
+	local var_2_0 = arg_2_0.entity:getMO()
+
+	if not var_2_0 then
 		return
 	end
 
-	if slot0._skinId ~= slot1:getSkinId() then
-		slot0._critterId = slot1.critterId
-		slot0._skinId = slot1:getSkinId()
+	if arg_2_0._skinId ~= var_2_0:getSkinId() then
+		arg_2_0._critterId = var_2_0.critterId
+		arg_2_0._skinId = var_2_0:getSkinId()
 
-		slot0:clearSpine()
-		slot0:_refreshSpineShow()
+		arg_2_0:clearSpine()
+		arg_2_0:_refreshSpineShow()
 	end
 end
 
-function slot0.addResToLoader(slot0, slot1)
-	slot1:addPath(slot0._spinePrefabRes)
-	slot1:addPath(slot0._materialRes)
-	slot0.entity.critterspineeffect:addResToLoader(slot1)
+function var_0_0.addResToLoader(arg_3_0, arg_3_1)
+	arg_3_1:addPath(arg_3_0._spinePrefabRes)
+	arg_3_1:addPath(arg_3_0._materialRes)
+	arg_3_0.entity.critterspineeffect:addResToLoader(arg_3_1)
 end
 
-function slot0._onLoadOneFail(slot0, slot1, slot2)
-	logError("RoomCritterSpineComp: 加载失败, url: " .. slot2.ResPath)
+function var_0_0._onLoadOneFail(arg_4_0, arg_4_1, arg_4_2)
+	logError("RoomCritterSpineComp: 加载失败, url: " .. arg_4_2.ResPath)
 end
 
-function slot0._onLoadFinish(slot0, slot1)
-	uv0.super._onLoadFinish(slot0, slot1)
+function var_0_0._onLoadFinish(arg_5_0, arg_5_1)
+	var_0_0.super._onLoadFinish(arg_5_0, arg_5_1)
 
-	slot0._mountheadGO = gohelper.findChild(slot0._spineGO, "mountroot/mounthead")
+	arg_5_0._mountheadGO = gohelper.findChild(arg_5_0._spineGO, "mountroot/mounthead")
 
-	if slot0._mountheadGO then
-		slot0._mountheadGOTrs = slot0._mountheadGO.transform
+	if arg_5_0._mountheadGO then
+		arg_5_0._mountheadGOTrs = arg_5_0._mountheadGO.transform
 	end
 
-	slot0:_spawnShadowGO(slot1)
-	slot0:_updateShadowOffset()
-	slot0:_cameraTransformUpdate()
-	slot0:setScale(slot0._initScale)
-	slot0.entity.critterspineeffect:spawnEffect(slot1)
-	slot0:refreshAnimState()
+	arg_5_0:_spawnShadowGO(arg_5_1)
+	arg_5_0:_updateShadowOffset()
+	arg_5_0:_cameraTransformUpdate()
+	arg_5_0:setScale(arg_5_0._initScale)
+	arg_5_0.entity.critterspineeffect:spawnEffect(arg_5_1)
+	arg_5_0:refreshAnimState()
 end
 
-function slot0._spawnShadowGO(slot0, slot1)
-	slot0._shadowGO = gohelper.clone(slot0._scene.preloader:getResource(RoomScenePreloader.ResEffectCharacterShadow), slot0.entity.containerGO, "shadow")
-	slot0._shadowGOTrs = slot0._shadowGO.transform
-	slot0._shadowGO:GetComponent(typeof(UnityEngine.MeshRenderer)).sortingLayerName = "Default"
+function var_0_0._spawnShadowGO(arg_6_0, arg_6_1)
+	local var_6_0 = arg_6_0._scene.preloader:getResource(RoomScenePreloader.ResEffectCharacterShadow)
 
-	transformhelper.setLocalPos(slot0._shadowGOTrs, 0, 0.01, 0)
+	arg_6_0._shadowGO = gohelper.clone(var_6_0, arg_6_0.entity.containerGO, "shadow")
+	arg_6_0._shadowGOTrs = arg_6_0._shadowGO.transform
+	arg_6_0._shadowGO:GetComponent(typeof(UnityEngine.MeshRenderer)).sortingLayerName = "Default"
+
+	transformhelper.setLocalPos(arg_6_0._shadowGOTrs, 0, 0.01, 0)
 end
 
-function slot0.setScale(slot0, slot1)
-	if not slot1 then
+function var_0_0.setScale(arg_7_0, arg_7_1)
+	if not arg_7_1 then
 		return
 	end
 
-	if gohelper.isNil(slot0._spineGOTrs) then
-		slot0._initScale = slot1
+	if gohelper.isNil(arg_7_0._spineGOTrs) then
+		arg_7_0._initScale = arg_7_1
 	else
-		transformhelper.setLocalScale(slot0._spineGOTrs, slot1, slot1, slot1)
+		transformhelper.setLocalScale(arg_7_0._spineGOTrs, arg_7_1, arg_7_1, arg_7_1)
 	end
 end
 
-function slot0.addEventListeners(slot0)
-	RoomMapController.instance:registerCallback(RoomEvent.CameraTransformUpdate, slot0._cameraTransformUpdate, slot0)
-	RoomCharacterController.instance:registerCallback(RoomEvent.RefreshSpineShow, slot0._refreshSpineShow, slot0)
-	RoomMapController.instance:registerCallback(RoomEvent.CameraTransformUpdate, slot0._updateShadowOffset, slot0)
-	RoomCharacterController.instance:registerCallback(RoomEvent.UpdateCharacterMove, slot0._onUpdate, slot0)
-	slot0:addEventCb(ManufactureController.instance, ManufactureEvent.ManufactureInfoUpdate, slot0._onManufactureInfoUpdate, slot0)
-	slot0:addEventCb(ManufactureController.instance, ManufactureEvent.ManufactureBuildingInfoChange, slot0._onManufactureInfoUpdate, slot0)
-	slot0:addEventCb(CritterController.instance, CritterEvent.CritterFeedFood, slot0._onFeedFood, slot0)
-	slot0:addEventCb(CritterController.instance, CritterEvent.CritterInfoPushUpdate, slot0._onCritterInfoUpdate, slot0)
+function var_0_0.addEventListeners(arg_8_0)
+	RoomMapController.instance:registerCallback(RoomEvent.CameraTransformUpdate, arg_8_0._cameraTransformUpdate, arg_8_0)
+	RoomCharacterController.instance:registerCallback(RoomEvent.RefreshSpineShow, arg_8_0._refreshSpineShow, arg_8_0)
+	RoomMapController.instance:registerCallback(RoomEvent.CameraTransformUpdate, arg_8_0._updateShadowOffset, arg_8_0)
+	RoomCharacterController.instance:registerCallback(RoomEvent.UpdateCharacterMove, arg_8_0._onUpdate, arg_8_0)
+	arg_8_0:addEventCb(ManufactureController.instance, ManufactureEvent.ManufactureInfoUpdate, arg_8_0._onManufactureInfoUpdate, arg_8_0)
+	arg_8_0:addEventCb(ManufactureController.instance, ManufactureEvent.ManufactureBuildingInfoChange, arg_8_0._onManufactureInfoUpdate, arg_8_0)
+	arg_8_0:addEventCb(CritterController.instance, CritterEvent.CritterFeedFood, arg_8_0._onFeedFood, arg_8_0)
+	arg_8_0:addEventCb(CritterController.instance, CritterEvent.CritterInfoPushUpdate, arg_8_0._onCritterInfoUpdate, arg_8_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	RoomMapController.instance:unregisterCallback(RoomEvent.CameraTransformUpdate, slot0._cameraTransformUpdate, slot0)
-	RoomCharacterController.instance:unregisterCallback(RoomEvent.RefreshSpineShow, slot0._refreshSpineShow, slot0)
-	RoomMapController.instance:unregisterCallback(RoomEvent.CameraTransformUpdate, slot0._updateShadowOffset, slot0)
-	RoomCharacterController.instance:unregisterCallback(RoomEvent.UpdateCharacterMove, slot0._onUpdate, slot0)
-	slot0:removeEventCb(ManufactureController.instance, ManufactureEvent.ManufactureInfoUpdate, slot0._onManufactureInfoUpdate, slot0)
-	slot0:removeEventCb(ManufactureController.instance, ManufactureEvent.ManufactureBuildingInfoChange, slot0._onManufactureInfoUpdate, slot0)
-	slot0:removeEventCb(CritterController.instance, CritterEvent.CritterFeedFood, slot0._onFeedFood, slot0)
-	slot0:removeEventCb(CritterController.instance, CritterEvent.CritterInfoPushUpdate, slot0._onCritterInfoUpdate, slot0)
+function var_0_0.removeEventListeners(arg_9_0)
+	RoomMapController.instance:unregisterCallback(RoomEvent.CameraTransformUpdate, arg_9_0._cameraTransformUpdate, arg_9_0)
+	RoomCharacterController.instance:unregisterCallback(RoomEvent.RefreshSpineShow, arg_9_0._refreshSpineShow, arg_9_0)
+	RoomMapController.instance:unregisterCallback(RoomEvent.CameraTransformUpdate, arg_9_0._updateShadowOffset, arg_9_0)
+	RoomCharacterController.instance:unregisterCallback(RoomEvent.UpdateCharacterMove, arg_9_0._onUpdate, arg_9_0)
+	arg_9_0:removeEventCb(ManufactureController.instance, ManufactureEvent.ManufactureInfoUpdate, arg_9_0._onManufactureInfoUpdate, arg_9_0)
+	arg_9_0:removeEventCb(ManufactureController.instance, ManufactureEvent.ManufactureBuildingInfoChange, arg_9_0._onManufactureInfoUpdate, arg_9_0)
+	arg_9_0:removeEventCb(CritterController.instance, CritterEvent.CritterFeedFood, arg_9_0._onFeedFood, arg_9_0)
+	arg_9_0:removeEventCb(CritterController.instance, CritterEvent.CritterInfoPushUpdate, arg_9_0._onCritterInfoUpdate, arg_9_0)
 end
 
-function slot0._onUpdate(slot0)
-	if slot0._shadowPointGOTrs and slot0._shadowGOTrs then
-		slot1, slot2, slot3 = transformhelper.getPos(slot0._shadowPointGOTrs)
+function var_0_0._onUpdate(arg_10_0)
+	if arg_10_0._shadowPointGOTrs and arg_10_0._shadowGOTrs then
+		local var_10_0, var_10_1, var_10_2 = transformhelper.getPos(arg_10_0._shadowPointGOTrs)
 
-		transformhelper.setPos(slot0._shadowGOTrs, slot1, slot2, slot3)
+		transformhelper.setPos(arg_10_0._shadowGOTrs, var_10_0, var_10_1, var_10_2)
 	end
 end
 
-function slot0.touch(slot0, slot1)
-	slot2 = slot0.entity:getMO()
+function var_0_0.touch(arg_11_0, arg_11_1)
+	local var_11_0 = arg_11_0.entity:getMO()
 
-	if slot0._touchTamingRate <= math.random() then
+	if math.random() >= arg_11_0._touchTamingRate then
 		return
 	end
 
-	TaskDispatcher.cancelTask(slot0._touchAfter, slot0)
+	TaskDispatcher.cancelTask(arg_11_0._touchAfter, arg_11_0)
 
-	if slot1 and slot2 then
-		slot2.isTouch = true
-		slot0._touchAction = true
+	if arg_11_1 and var_11_0 then
+		local var_11_1 = 10
 
-		TaskDispatcher.runDelay(slot0._touchAfter, slot0, 10)
-		slot0:play(slot0:_getTouchStateName(), false, true)
+		var_11_0.isTouch = true
+		arg_11_0._touchAction = true
+
+		TaskDispatcher.runDelay(arg_11_0._touchAfter, arg_11_0, var_11_1)
+		arg_11_0:play(arg_11_0:_getTouchStateName(), false, true)
 	else
-		slot0:refreshAnimState()
+		arg_11_0:refreshAnimState()
 	end
 end
 
-function slot0._touchAfter(slot0)
-	TaskDispatcher.cancelTask(slot0._touchAfter, slot0)
+function var_0_0._touchAfter(arg_12_0)
+	TaskDispatcher.cancelTask(arg_12_0._touchAfter, arg_12_0)
 
-	if slot0.entity:getMO() then
-		slot1.isTouch = false
+	local var_12_0 = arg_12_0.entity:getMO()
+
+	if var_12_0 then
+		var_12_0.isTouch = false
 	end
 
-	slot0._touchAction = false
+	arg_12_0._touchAction = false
 end
 
-function slot0._getTouchStateName(slot0)
-	slot1 = RoomCharacterEnum.CharacterTamingAnimList
+function var_0_0._getTouchStateName(arg_13_0)
+	local var_13_0 = RoomCharacterEnum.CharacterTamingAnimList
 
-	return slot1[math.random(1, #slot1)] or slot1[1]
+	return var_13_0[math.random(1, #var_13_0)] or var_13_0[1]
 end
 
-function slot0._onManufactureInfoUpdate(slot0, slot1)
-	if not (slot0.entity:getMO() and slot2:getStayBuilding()) then
+function var_0_0._onManufactureInfoUpdate(arg_14_0, arg_14_1)
+	local var_14_0 = arg_14_0.entity:getMO()
+	local var_14_1 = var_14_0 and var_14_0:getStayBuilding()
+
+	if not var_14_1 then
 		return
 	end
 
-	if slot1 and not slot1[slot3] then
+	if arg_14_1 and not arg_14_1[var_14_1] then
 		return
 	end
 
-	slot0:refreshAnimState()
+	arg_14_0:refreshAnimState()
 end
 
-function slot0._onFeedFood(slot0, slot1)
-	if not slot0.entity:getMO() or not slot2:getId() or slot1 and not slot1[slot3] then
+function var_0_0._onFeedFood(arg_15_0, arg_15_1)
+	local var_15_0 = arg_15_0.entity:getMO()
+	local var_15_1 = var_15_0 and var_15_0:getId()
+
+	if not var_15_1 or arg_15_1 and not arg_15_1[var_15_1] then
 		return
 	end
 
-	slot5 = CritterModel.instance:getCritterMOByUid(slot3):getMoodValue()
-	slot7 = tonumber(ManufactureConfig.instance:getManufactureConst(RoomManufactureEnum.ConstId.CritterMaxMood)) or 0
-	slot8 = RoomCharacterEnum.CharacterAnimStateName.SleepEnd
+	local var_15_2 = CritterModel.instance:getCritterMOByUid(var_15_1):getMoodValue()
+	local var_15_3 = ManufactureConfig.instance:getManufactureConst(RoomManufactureEnum.ConstId.CritterMaxMood)
+	local var_15_4 = tonumber(var_15_3) or 0
+	local var_15_5 = RoomCharacterEnum.CharacterAnimStateName.SleepEnd
 
-	if slot0._curAnimState == RoomCharacterEnum.CharacterAnimStateName.Idle or slot0._curAnimState == RoomCharacterEnum.CharacterAnimStateName.SpecialIdle then
-		slot8 = RoomCharacterEnum.CharacterAnimStateName.Eat
+	if arg_15_0._curAnimState == RoomCharacterEnum.CharacterAnimStateName.Idle or arg_15_0._curAnimState == RoomCharacterEnum.CharacterAnimStateName.SpecialIdle then
+		var_15_5 = RoomCharacterEnum.CharacterAnimStateName.Eat
 	end
 
-	if slot7 <= slot5 then
-		slot0:_realSetMoveState(RoomCharacterEnum.CharacterMoveState.MaxMoodEating)
+	if var_15_4 <= var_15_2 then
+		arg_15_0:_realSetMoveState(RoomCharacterEnum.CharacterMoveState.MaxMoodEating)
 	end
 
-	slot0:play(slot8, false)
+	arg_15_0:play(var_15_5, false)
 end
 
-function slot0._onCritterInfoUpdate(slot0, slot1)
-	if not slot0.entity:getMO() or not slot2:getId() or slot1 and not slot1[slot3] then
+function var_0_0._onCritterInfoUpdate(arg_16_0, arg_16_1)
+	local var_16_0 = arg_16_0.entity:getMO()
+	local var_16_1 = var_16_0 and var_16_0:getId()
+
+	if not var_16_1 or arg_16_1 and not arg_16_1[var_16_1] then
 		return
 	end
 
-	slot0:refreshAnimState()
+	arg_16_0:refreshAnimState()
 end
 
-function slot0._refreshSpineShow(slot0)
-	slot0._shouldShowSpine = RoomCharacterController.instance:checkCanSpineShow(slot0._scene.camera:getCameraState())
+function var_0_0._refreshSpineShow(arg_17_0)
+	local var_17_0 = arg_17_0._scene.camera:getCameraState()
 
-	slot0:_refreshShowSpine()
+	arg_17_0._shouldShowSpine = RoomCharacterController.instance:checkCanSpineShow(var_17_0)
+
+	arg_17_0:_refreshShowSpine()
 end
 
-function slot0._refreshShowSpine(slot0, slot1)
-	if slot0._isInDistance and slot0._shouldShowSpine then
-		if not slot0._isShow or slot1 then
-			slot0._isShow = true
-			slot0._isHide = false
+function var_0_0._refreshShowSpine(arg_18_0, arg_18_1)
+	if arg_18_0._isInDistance and arg_18_0._shouldShowSpine then
+		if not arg_18_0._isShow or arg_18_1 then
+			arg_18_0._isShow = true
+			arg_18_0._isHide = false
 
-			slot0:showSpine()
+			arg_18_0:showSpine()
 		end
-	elseif not slot0._isHide or slot1 then
-		slot0._isShow = false
-		slot0._isHide = true
+	elseif not arg_18_0._isHide or arg_18_1 then
+		arg_18_0._isShow = false
+		arg_18_0._isHide = true
 
-		slot0:hideSpine()
+		arg_18_0:hideSpine()
 	end
 end
 
-function slot0.refreshAnimState(slot0)
-	if not slot0.entity:getMO() then
+function var_0_0.refreshAnimState(arg_19_0)
+	local var_19_0 = arg_19_0.entity:getMO()
+
+	if not var_19_0 then
 		return
 	end
 
-	slot0.entity:stopCommonInteractionEff(RoomCharacterEnum.CommonEffect.CritterAngry)
+	arg_19_0.entity:stopCommonInteractionEff(RoomCharacterEnum.CommonEffect.CritterAngry)
 
-	if RoomMapBuildingModel.instance:getBuildingMOById(slot1:getStayBuilding()) and slot3.buildingId then
-		slot5 = RoomConfig.instance:getBuildingType(slot4)
+	local var_19_1 = var_19_0:getStayBuilding()
+	local var_19_2 = RoomMapBuildingModel.instance:getBuildingMOById(var_19_1)
+	local var_19_3 = var_19_2 and var_19_2.buildingId
 
-		if ManufactureConfig.instance:isManufactureBuilding(slot4) then
-			slot0:playManufactureAnim(slot3)
-		elseif slot5 == RoomBuildingEnum.BuildingType.Rest then
-			slot0:playRestingAnim()
+	if var_19_3 then
+		local var_19_4 = RoomConfig.instance:getBuildingType(var_19_3)
+
+		if ManufactureConfig.instance:isManufactureBuilding(var_19_3) then
+			arg_19_0:playManufactureAnim(var_19_2)
+		elseif var_19_4 == RoomBuildingEnum.BuildingType.Rest then
+			arg_19_0:playRestingAnim()
 		end
-	elseif slot1.isTouch then
-		if slot0._touchAction then
-			slot0:play(slot0:_getTouchStateName(), false, false)
+	elseif var_19_0.isTouch then
+		if arg_19_0._touchAction then
+			arg_19_0:play(arg_19_0:_getTouchStateName(), false, false)
 		else
-			slot5, slot6 = slot0:getIdleAnim()
+			local var_19_5, var_19_6 = arg_19_0:getIdleAnim()
 
-			slot0:play(slot5, slot6, false)
+			arg_19_0:play(var_19_5, var_19_6, false)
 		end
 	else
-		slot5 = slot1.critterId
-		slot7 = RoomCritterModel.instance:getTempCritterMO()
+		local var_19_7 = var_19_0.critterId
+		local var_19_8 = arg_19_0:getAnimState()
+		local var_19_9 = RoomCritterModel.instance:getTempCritterMO()
 
-		if slot0:getAnimState() ~= RoomCharacterEnum.CharacterAnimStateName.SpecialIdle or RoomCharacterHelper.getAnimStateName(slot0._moveState, slot5) ~= RoomCharacterHelper.getIdleAnimStateName(slot5) or slot7 and slot7.id == slot0.entity.id then
-			slot8 = nil
+		if var_19_8 ~= RoomCharacterEnum.CharacterAnimStateName.SpecialIdle or RoomCharacterHelper.getAnimStateName(arg_19_0._moveState, var_19_7) ~= RoomCharacterHelper.getIdleAnimStateName(var_19_7) or var_19_9 and var_19_9.id == arg_19_0.entity.id then
+			local var_19_10
 
-			slot0:play((slot0._moveState ~= RoomCharacterEnum.CharacterMoveState.Idle or slot0:getIdleAnim()) and RoomCharacterHelper.getAnimStateName(slot0._moveState, slot5), RoomCharacterEnum.CharacterLoopAnimState[slot0._moveState] or false, false)
-		end
-	end
-end
-
-function slot0.play(slot0, slot1, slot2, slot3)
-	if not slot1 then
-		return
-	end
-
-	if not slot0._skeletonAnim then
-		return
-	end
-
-	if not (slot3 or false or slot1 ~= slot0._curAnimState or (slot2 or false) ~= slot0._isLoop) then
-		return
-	end
-
-	slot0._curAnimState = slot1
-	slot0._isLoop = slot2
-
-	if slot0._skeletonAnim:HasAnimation(slot1) then
-		slot0._skeletonAnim:SetAnimation(0, slot1, slot0._isLoop, 0)
-		slot0.entity.critterspineeffect:play(slot1)
-	else
-		logError(string.format("critterId:%s  skinId:%s  animName:%s  goName:%s  Animation Name not exist ", slot0._critterId, slot0._skinId, slot1, gohelper.isNil(slot0._spineGO) and "nil" or slot0._spineGO.name))
-	end
-end
-
-function slot0.playManufactureAnim(slot0, slot1)
-	slot6, slot7 = slot0:getIdleAnim()
-
-	if CritterModel.instance:getCritterMOByUid(slot0.entity:getMO():getId()):getMoodValue() > 0 then
-		if slot1:getManufactureState() == RoomManufactureEnum.ManufactureState.Running then
-			slot6 = RoomCharacterEnum.CharacterAnimStateName.Produce
-
-			if RoomConfig.instance:getBuildingType(slot1.buildingId) == RoomBuildingEnum.BuildingType.Collect then
-				slot6 = RoomCharacterEnum.CharacterAnimStateName.Collect
+			if arg_19_0._moveState == RoomCharacterEnum.CharacterMoveState.Idle then
+				var_19_10 = arg_19_0:getIdleAnim()
+			else
+				var_19_10 = RoomCharacterHelper.getAnimStateName(arg_19_0._moveState, var_19_7)
 			end
 
-			slot7 = true
-		elseif slot8 == RoomManufactureEnum.ManufactureState.Stop then
-			slot6 = RoomCharacterEnum.CharacterAnimStateName.Sleep
-			slot7 = true
+			arg_19_0:play(var_19_10, RoomCharacterEnum.CharacterLoopAnimState[arg_19_0._moveState] or false, false)
 		end
-	else
-		slot0.entity:playCommonInteractionEff(RoomCharacterEnum.CommonEffect.CritterAngry)
 	end
-
-	slot0:play(slot6, slot7)
 end
 
-function slot0.playRestingAnim(slot0)
-	slot7, slot8 = slot0:getIdleAnim()
-	slot11 = slot2 == ManufactureModel.instance:getNewRestCritter()
+function var_0_0.play(arg_20_0, arg_20_1, arg_20_2, arg_20_3)
+	if not arg_20_1 then
+		return
+	end
 
-	if CritterModel.instance:getCritterMOByUid(slot0.entity:getMO():getId()):getMoodValue() < (tonumber(ManufactureConfig.instance:getManufactureConst(RoomManufactureEnum.ConstId.CritterMaxMood)) or 0) then
-		if slot0._curAnimState and slot0._moveState == RoomCharacterEnum.CharacterMoveState.Sleep then
+	if not arg_20_0._skeletonAnim then
+		return
+	end
+
+	arg_20_2 = arg_20_2 or false
+	arg_20_3 = arg_20_3 or false
+
+	if not (arg_20_3 or arg_20_1 ~= arg_20_0._curAnimState or arg_20_2 ~= arg_20_0._isLoop) then
+		return
+	end
+
+	arg_20_0._curAnimState = arg_20_1
+	arg_20_0._isLoop = arg_20_2
+
+	if arg_20_0._skeletonAnim:HasAnimation(arg_20_1) then
+		arg_20_0._skeletonAnim:SetAnimation(0, arg_20_1, arg_20_0._isLoop, 0)
+		arg_20_0.entity.critterspineeffect:play(arg_20_1)
+	else
+		local var_20_0 = gohelper.isNil(arg_20_0._spineGO) and "nil" or arg_20_0._spineGO.name
+
+		logError(string.format("critterId:%s  skinId:%s  animName:%s  goName:%s  Animation Name not exist ", arg_20_0._critterId, arg_20_0._skinId, arg_20_1, var_20_0))
+	end
+end
+
+function var_0_0.playManufactureAnim(arg_21_0, arg_21_1)
+	local var_21_0 = arg_21_0.entity:getMO():getId()
+	local var_21_1 = CritterModel.instance:getCritterMOByUid(var_21_0):getMoodValue()
+	local var_21_2, var_21_3 = arg_21_0:getIdleAnim()
+	local var_21_4 = arg_21_1:getManufactureState()
+
+	if var_21_1 > 0 then
+		if var_21_4 == RoomManufactureEnum.ManufactureState.Running then
+			var_21_2 = RoomCharacterEnum.CharacterAnimStateName.Produce
+
+			if RoomConfig.instance:getBuildingType(arg_21_1.buildingId) == RoomBuildingEnum.BuildingType.Collect then
+				var_21_2 = RoomCharacterEnum.CharacterAnimStateName.Collect
+			end
+
+			var_21_3 = true
+		elseif var_21_4 == RoomManufactureEnum.ManufactureState.Stop then
+			var_21_2 = RoomCharacterEnum.CharacterAnimStateName.Sleep
+			var_21_3 = true
+		end
+	else
+		arg_21_0.entity:playCommonInteractionEff(RoomCharacterEnum.CommonEffect.CritterAngry)
+	end
+
+	arg_21_0:play(var_21_2, var_21_3)
+end
+
+function var_0_0.playRestingAnim(arg_22_0)
+	local var_22_0 = arg_22_0.entity:getMO():getId()
+	local var_22_1 = CritterModel.instance:getCritterMOByUid(var_22_0):getMoodValue()
+	local var_22_2 = ManufactureConfig.instance:getManufactureConst(RoomManufactureEnum.ConstId.CritterMaxMood)
+	local var_22_3 = tonumber(var_22_2) or 0
+	local var_22_4, var_22_5 = arg_22_0:getIdleAnim()
+	local var_22_6 = arg_22_0._moveState == RoomCharacterEnum.CharacterMoveState.Sleep
+	local var_22_7 = var_22_0 == ManufactureModel.instance:getNewRestCritter()
+
+	if var_22_1 < var_22_3 then
+		if arg_22_0._curAnimState and var_22_6 then
 			return
 		end
 
-		if slot11 then
-			slot8 = false
+		if var_22_7 then
+			var_22_5 = false
 
 			ManufactureModel.instance:setNewRestCritter()
 
-			slot7 = RoomCharacterEnum.CharacterAnimStateName.SleepStart
+			var_22_4 = RoomCharacterEnum.CharacterAnimStateName.SleepStart
 		else
-			slot7 = RoomCharacterEnum.CharacterAnimStateName.Sleep
+			var_22_4 = RoomCharacterEnum.CharacterAnimStateName.Sleep
 		end
 
-		slot0:_realSetMoveState(RoomCharacterEnum.CharacterMoveState.Sleep)
-	elseif not slot11 and slot0._curAnimState then
-		if not slot9 then
+		arg_22_0:_realSetMoveState(RoomCharacterEnum.CharacterMoveState.Sleep)
+	elseif not var_22_7 and arg_22_0._curAnimState then
+		if not var_22_6 then
 			return
 		end
 
-		slot8 = false
-		slot7 = RoomCharacterEnum.CharacterAnimStateName.SleepEnd
+		var_22_5 = false
+		var_22_4 = RoomCharacterEnum.CharacterAnimStateName.SleepEnd
 
-		slot0:_realSetMoveState(RoomCharacterEnum.CharacterMoveState.Idle)
+		arg_22_0:_realSetMoveState(RoomCharacterEnum.CharacterMoveState.Idle)
 	end
 
-	slot0:play(slot7, slot8)
+	arg_22_0:play(var_22_4, var_22_5)
 end
 
-function slot0._onAnimCallback(slot0, slot1, slot2, slot3)
-	if not (slot2 == SpineAnimEvent.ActionComplete) then
+function var_0_0._onAnimCallback(arg_23_0, arg_23_1, arg_23_2, arg_23_3)
+	if not (arg_23_2 == SpineAnimEvent.ActionComplete) then
 		return
 	end
 
-	slot5 = nil
-	slot6 = true
+	local var_23_0
+	local var_23_1 = true
 
-	if slot1 == RoomCharacterEnum.CharacterAnimStateName.Idle then
-		slot5, slot6 = slot0:getIdleAnim()
+	if arg_23_1 == RoomCharacterEnum.CharacterAnimStateName.Idle then
+		var_23_0, var_23_1 = arg_23_0:getIdleAnim()
 	else
-		if slot0._curAnimState ~= slot1 or slot0._isLoop then
+		if arg_23_0._curAnimState ~= arg_23_1 or arg_23_0._isLoop then
 			return
 		end
 
-		if slot0._moveState == RoomCharacterEnum.CharacterMoveState.MaxMoodEating and (RoomCharacterHelper.getNextAnimStateName(slot0._moveState, slot1) and slot5 == slot1 or RoomCharacterHelper.getIdleAnimStateName(slot0._critterId)) == RoomCharacterEnum.CharacterAnimStateName.Idle then
-			slot0:_realSetMoveState(RoomCharacterEnum.CharacterMoveState.Idle)
+		var_23_0 = RoomCharacterHelper.getNextAnimStateName(arg_23_0._moveState, arg_23_1)
+
+		if var_23_0 then
+			var_23_1 = var_23_0 == arg_23_1
+		else
+			var_23_0 = RoomCharacterHelper.getIdleAnimStateName(arg_23_0._critterId)
+		end
+
+		if arg_23_0._moveState == RoomCharacterEnum.CharacterMoveState.MaxMoodEating and var_23_0 == RoomCharacterEnum.CharacterAnimStateName.Idle then
+			arg_23_0:_realSetMoveState(RoomCharacterEnum.CharacterMoveState.Idle)
 		end
 	end
 
-	slot0:play(slot5, slot6, false)
+	arg_23_0:play(var_23_0, var_23_1, false)
 end
 
-function slot0.playAnim(slot0, slot1, slot2, slot3, slot4, slot5)
-	slot0._callback = slot4
-	slot0._callbackObj = slot5
+function var_0_0.playAnim(arg_24_0, arg_24_1, arg_24_2, arg_24_3, arg_24_4, arg_24_5)
+	local var_24_0 = arg_24_0:_checkAnimator(arg_24_1)
 
-	if not slot4 then
-		if slot0:_checkAnimator(slot1) then
-			slot0._animator.enabled = true
+	arg_24_0._callback = arg_24_4
+	arg_24_0._callbackObj = arg_24_5
 
-			slot0._animator:Play(slot2, 0, slot3 or 0)
+	if not arg_24_4 then
+		if var_24_0 then
+			arg_24_0._animator.enabled = true
+
+			arg_24_0._animator:Play(arg_24_2, 0, arg_24_3 or 0)
 		end
 	else
-		TaskDispatcher.cancelTask(slot0._animDone, slot0)
+		TaskDispatcher.cancelTask(arg_24_0._animDone, arg_24_0)
 
-		if slot6 then
-			slot0._animatorPlayer:Play(slot2, slot0._animDone, slot0)
+		if var_24_0 then
+			arg_24_0._animatorPlayer:Play(arg_24_2, arg_24_0._animDone, arg_24_0)
 		else
-			TaskDispatcher.runDelay(slot0._animDone, slot0, 0.1)
+			TaskDispatcher.runDelay(arg_24_0._animDone, arg_24_0, 0.1)
 		end
 	end
 end
 
-function slot0._checkAnimator(slot0, slot1)
-	if slot0._scene.preloader:getResource(slot1) then
-		slot0._animator = gohelper.onceAddComponent(slot0.entity.containerGO, typeof(UnityEngine.Animator))
-		slot0._animatorPlayer = gohelper.onceAddComponent(slot0.entity.containerGO, typeof(SLFramework.AnimatorPlayer))
-		slot0._animator.runtimeAnimatorController = slot2
+function var_0_0._checkAnimator(arg_25_0, arg_25_1)
+	local var_25_0 = arg_25_0._scene.preloader:getResource(arg_25_1)
+
+	if var_25_0 then
+		arg_25_0._animator = gohelper.onceAddComponent(arg_25_0.entity.containerGO, typeof(UnityEngine.Animator))
+		arg_25_0._animatorPlayer = gohelper.onceAddComponent(arg_25_0.entity.containerGO, typeof(SLFramework.AnimatorPlayer))
+		arg_25_0._animator.runtimeAnimatorController = var_25_0
 
 		return true
 	end
@@ -379,142 +438,147 @@ function slot0._checkAnimator(slot0, slot1)
 	return false
 end
 
-function slot0.clearAnim(slot0)
-	slot0._callback = nil
-	slot0._callbackObj = nil
+function var_0_0.clearAnim(arg_26_0)
+	arg_26_0._callback = nil
+	arg_26_0._callbackObj = nil
 
-	if slot0._animatorPlayer then
-		UnityEngine.Component.DestroyImmediate(slot0._animatorPlayer)
+	if arg_26_0._animatorPlayer then
+		UnityEngine.Component.DestroyImmediate(arg_26_0._animatorPlayer)
 
-		slot0._animatorPlayer = nil
+		arg_26_0._animatorPlayer = nil
 	end
 
-	if slot0._animator then
-		UnityEngine.Component.DestroyImmediate(slot0._animator)
+	if arg_26_0._animator then
+		UnityEngine.Component.DestroyImmediate(arg_26_0._animator)
 
-		slot0._animator = nil
-	end
-end
-
-function slot0._animDone(slot0)
-	if slot0._callback then
-		slot0._callback(slot0._callbackObj)
+		arg_26_0._animator = nil
 	end
 end
 
-function slot0.changeMoveState(slot0, slot1)
-	if slot0._moveState == slot1 then
+function var_0_0._animDone(arg_27_0)
+	if arg_27_0._callback then
+		arg_27_0._callback(arg_27_0._callbackObj)
+	end
+end
+
+function var_0_0.changeMoveState(arg_28_0, arg_28_1)
+	if arg_28_0._moveState == arg_28_1 then
 		return
 	end
 
-	slot0:_realSetMoveState(slot1)
-	slot0:refreshAnimState()
+	arg_28_0:_realSetMoveState(arg_28_1)
+	arg_28_0:refreshAnimState()
 end
 
-function slot0._realSetMoveState(slot0, slot1)
-	slot0._moveState = slot1
+function var_0_0._realSetMoveState(arg_29_0, arg_29_1)
+	arg_29_0._moveState = arg_29_1
 end
 
-function slot0.characterPosChanged(slot0)
-	slot0:_cameraTransformUpdate()
+function var_0_0.characterPosChanged(arg_30_0)
+	arg_30_0:_cameraTransformUpdate()
 end
 
-function slot0._cameraTransformUpdate(slot0)
-	slot2, slot3, slot4 = transformhelper.getPos(slot0.goTrs)
+function var_0_0._cameraTransformUpdate(arg_31_0)
+	local var_31_0 = arg_31_0._scene.camera:getCameraFocus()
+	local var_31_1, var_31_2, var_31_3 = transformhelper.getPos(arg_31_0.goTrs)
+	local var_31_4 = Vector2(var_31_1, var_31_3)
+	local var_31_5 = Vector2.Distance(var_31_0, var_31_4)
 
-	if Vector2.Distance(slot0._scene.camera:getCameraFocus(), Vector2(slot2, slot4)) < 3.5 then
-		slot0._isInDistance = true
-	elseif slot6 > 4.5 then
-		slot0._isInDistance = false
+	if var_31_5 < 3.5 then
+		arg_31_0._isInDistance = true
+	elseif var_31_5 > 4.5 then
+		arg_31_0._isInDistance = false
 	end
 
-	slot0:_refreshShowSpine()
+	arg_31_0:_refreshShowSpine()
 
-	if slot0._spineGO and slot0._spineGO.activeInHierarchy then
-		slot0:refreshRotation()
+	if arg_31_0._spineGO and arg_31_0._spineGO.activeInHierarchy then
+		arg_31_0:refreshRotation()
 	end
 end
 
-function slot0._updateShadowOffset(slot0)
-	if not slot0._material then
+function var_0_0._updateShadowOffset(arg_32_0)
+	if not arg_32_0._material then
 		return
 	end
 
-	slot0._material:SetVector("_ShadowOffset", slot0._scene.character:getShadowOffset())
+	local var_32_0 = arg_32_0._scene.character:getShadowOffset()
+
+	arg_32_0._material:SetVector("_ShadowOffset", var_32_0)
 end
 
-function slot0.getIdleAnim(slot0)
-	slot1 = true
-	slot2 = RoomCharacterHelper.getIdleAnimStateName(slot0._critterId)
+function var_0_0.getIdleAnim(arg_33_0)
+	local var_33_0 = true
+	local var_33_1 = RoomCharacterHelper.getIdleAnimStateName(arg_33_0._critterId)
 
-	if slot0:isRandomSpecialRate() then
-		slot1 = false
-		slot2 = RoomCharacterEnum.CharacterAnimStateName.SpecialIdle
+	if arg_33_0:isRandomSpecialRate() then
+		var_33_0 = false
+		var_33_1 = RoomCharacterEnum.CharacterAnimStateName.SpecialIdle
 	end
 
-	return slot2, slot1
+	return var_33_1, var_33_0
 end
 
-function slot0.isRandomSpecialRate(slot0)
-	slot1 = false
+function var_0_0.isRandomSpecialRate(arg_34_0)
+	local var_34_0 = false
 
-	if math.random() < slot0.entity:getMO():getSpecialRate() then
-		slot1 = true
+	if arg_34_0.entity:getMO():getSpecialRate() > math.random() then
+		var_34_0 = true
 	end
 
-	return slot1
+	return var_34_0
 end
 
-function slot0.isShowAnimShadow(slot0)
+function var_0_0.isShowAnimShadow(arg_35_0)
 	return true
 end
 
-function slot0.getShadowGO(slot0)
-	return slot0._shadowGO
+function var_0_0.getShadowGO(arg_36_0)
+	return arg_36_0._shadowGO
 end
 
-function slot0.getMountheadGO(slot0)
-	return slot0._mountheadGO
+function var_0_0.getMountheadGO(arg_37_0)
+	return arg_37_0._mountheadGO
 end
 
-function slot0.getMountheadGOTrs(slot0)
-	return slot0._mountheadGOTrs
+function var_0_0.getMountheadGOTrs(arg_38_0)
+	return arg_38_0._mountheadGOTrs
 end
 
-function slot0.clearSpine(slot0)
-	if slot0.entity and slot0.entity.critterspineeffect then
-		slot0.entity.critterspineeffect:clearEffect()
+function var_0_0.clearSpine(arg_39_0)
+	if arg_39_0.entity and arg_39_0.entity.critterspineeffect then
+		arg_39_0.entity.critterspineeffect:clearEffect()
 	end
 
-	uv0.super.clearSpine(slot0)
+	var_0_0.super.clearSpine(arg_39_0)
 
-	if slot0._loader then
-		slot0._loader:dispose()
+	if arg_39_0._loader then
+		arg_39_0._loader:dispose()
 
-		slot0._loader = nil
+		arg_39_0._loader = nil
 	end
 
-	if slot0._shadowGO then
-		gohelper.destroy(slot0._shadowGO)
+	if arg_39_0._shadowGO then
+		gohelper.destroy(arg_39_0._shadowGO)
 
-		slot0._shadowGO = nil
-		slot0._shadowGOTrs = nil
+		arg_39_0._shadowGO = nil
+		arg_39_0._shadowGOTrs = nil
 	end
 
-	slot0._skeletonAnim = nil
-	slot0._curAnimState = nil
-	slot0._isLoop = nil
-	slot0._mountheadGO = nil
-	slot0._mountheadGOTrs = nil
-	slot0._shadowPointGOTrs = nil
+	arg_39_0._skeletonAnim = nil
+	arg_39_0._curAnimState = nil
+	arg_39_0._isLoop = nil
+	arg_39_0._mountheadGO = nil
+	arg_39_0._mountheadGOTrs = nil
+	arg_39_0._shadowPointGOTrs = nil
 
-	slot0.entity:stopAllCommonInteractionEff()
-	TaskDispatcher.cancelTask(slot0._animDone, slot0)
+	arg_39_0.entity:stopAllCommonInteractionEff()
+	TaskDispatcher.cancelTask(arg_39_0._animDone, arg_39_0)
 end
 
-function slot0.beforeDestroy(slot0)
-	slot0:removeEventListeners()
-	slot0:clearSpine()
+function var_0_0.beforeDestroy(arg_40_0)
+	arg_40_0:removeEventListeners()
+	arg_40_0:clearSpine()
 end
 
-return slot0
+return var_0_0

@@ -1,80 +1,87 @@
-module("modules.logic.versionactivity1_2.yaxian.controller.game.YaXianStateMgr", package.seeall)
+﻿module("modules.logic.versionactivity1_2.yaxian.controller.game.YaXianStateMgr", package.seeall)
 
-slot0 = class("YaXianStateMgr")
+local var_0_0 = class("YaXianStateMgr")
 
-function slot0.ctor(slot0)
-	slot0._curEventData = nil
-	slot0._curEvent = nil
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._curEventData = nil
+	arg_1_0._curEvent = nil
 end
 
-slot0.EventClzMap = {
+var_0_0.EventClzMap = {
 	[YaXianGameEnum.GameStateType.Battle] = YaXianStateBattle,
 	[YaXianGameEnum.GameStateType.UseItem] = YaXianStateUseItem,
 	[YaXianGameEnum.GameStateType.FinishEvent] = YaXianStateFinishEvent
 }
 
-function slot0.setCurEvent(slot0, slot1)
-	if slot1 ~= nil and not string.nilorempty(slot1.param) then
-		slot0._curEventData = cjson.decode(slot1.param)
+function var_0_0.setCurEvent(arg_2_0, arg_2_1)
+	if arg_2_1 ~= nil and not string.nilorempty(arg_2_1.param) then
+		arg_2_0._curEventData = cjson.decode(arg_2_1.param)
 	else
-		slot0._curEventData = nil
+		arg_2_0._curEventData = nil
 	end
 
-	slot0:buildEventState()
+	arg_2_0:buildEventState()
 end
 
-function slot0.setCurEventByObj(slot0, slot1)
-	if slot1 then
-		slot0._curEventData = slot1
+function var_0_0.setCurEventByObj(arg_3_0, arg_3_1)
+	if arg_3_1 then
+		arg_3_0._curEventData = arg_3_1
 	else
-		slot0._curEventData = nil
+		arg_3_0._curEventData = nil
 	end
 
-	slot0:buildEventState()
+	arg_3_0:buildEventState()
 end
 
-function slot0.buildEventState(slot0)
-	slot1 = nil
-	slot1 = (slot0._curEventData or YaXianGameEnum.GameStateType.Normal) and slot0._curEventData.eventType
+function var_0_0.buildEventState(arg_4_0)
+	local var_4_0
 
-	if slot0._curEvent and slot0._curEvent:getStateType() == slot1 then
+	if not arg_4_0._curEventData then
+		var_4_0 = YaXianGameEnum.GameStateType.Normal
+	else
+		var_4_0 = arg_4_0._curEventData.eventType
+	end
+
+	if arg_4_0._curEvent and arg_4_0._curEvent:getStateType() == var_4_0 then
 		return
 	end
 
-	if uv0.EventClzMap[slot1] then
-		slot0:disposeEventState()
+	local var_4_1 = var_0_0.EventClzMap[var_4_0]
 
-		slot0._curEvent = slot2.New()
+	if var_4_1 then
+		arg_4_0:disposeEventState()
 
-		slot0._curEvent:init(slot0._curEventData)
-		slot0._curEvent:start()
+		arg_4_0._curEvent = var_4_1.New()
+
+		arg_4_0._curEvent:init(arg_4_0._curEventData)
+		arg_4_0._curEvent:start()
 	end
 end
 
-function slot0.setLockState(slot0)
-	slot0:disposeEventState()
+function var_0_0.setLockState(arg_5_0)
+	arg_5_0:disposeEventState()
 
-	slot0._curEventData = nil
-	slot0._curEvent = YaXianStateLock.New()
+	arg_5_0._curEventData = nil
+	arg_5_0._curEvent = YaXianStateLock.New()
 
-	slot0._curEvent:init()
-	slot0._curEvent:start()
+	arg_5_0._curEvent:init()
+	arg_5_0._curEvent:start()
 end
 
-function slot0.disposeEventState(slot0)
-	if slot0._curEvent ~= nil then
-		slot0._curEvent:dispose()
+function var_0_0.disposeEventState(arg_6_0)
+	if arg_6_0._curEvent ~= nil then
+		arg_6_0._curEvent:dispose()
 
-		slot0._curEvent = nil
+		arg_6_0._curEvent = nil
 	end
 end
 
-function slot0.getCurEvent(slot0)
-	return slot0._curEvent
+function var_0_0.getCurEvent(arg_7_0)
+	return arg_7_0._curEvent
 end
 
-function slot0.removeAll(slot0)
-	slot0:disposeEventState()
+function var_0_0.removeAll(arg_8_0)
+	arg_8_0:disposeEventState()
 end
 
-return slot0
+return var_0_0

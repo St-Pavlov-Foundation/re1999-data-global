@@ -1,70 +1,80 @@
-module("modules.logic.chessgame.game.interact.ChessInteractHunter", package.seeall)
+﻿module("modules.logic.chessgame.game.interact.ChessInteractHunter", package.seeall)
 
-slot0 = class("ChessInteractHunter", ChessInteractBase)
+local var_0_0 = class("ChessInteractHunter", ChessInteractBase)
 
-function slot0.onSelectCall(slot0)
+function var_0_0.onSelectCall(arg_1_0)
+	return
 end
 
-function slot0.onCancelSelect(slot0)
+function var_0_0.onCancelSelect(arg_2_0)
+	return
 end
 
-function slot0.onSelectPos(slot0, slot1, slot2)
+function var_0_0.onSelectPos(arg_3_0, arg_3_1, arg_3_2)
+	return
 end
 
-function slot0.onAvatarLoaded(slot0)
-	uv0.super.onAvatarLoaded(slot0)
+function var_0_0.onAvatarLoaded(arg_4_0)
+	var_0_0.super.onAvatarLoaded(arg_4_0)
 	ChessGameController.instance:dispatchEvent(ChessGameEvent.SetAlarmAreaVisible, {
 		visible = true
 	})
 end
 
-function slot0.onMoveBegin(slot0)
+function var_0_0.onMoveBegin(arg_5_0)
 	ChessGameController.instance:dispatchEvent(ChessGameEvent.SetAlarmAreaVisible, {
 		visible = false
 	})
 end
 
-function slot0.onDrawAlert(slot0, slot1)
-	slot3 = slot0._target.mo.posY
-	slot1[slot2] = slot1[slot0._target.mo.posX] or {}
-	slot1[slot2][slot3] = slot1[slot2][slot3] or {}
+function var_0_0.onDrawAlert(arg_6_0, arg_6_1)
+	local var_6_0 = arg_6_0._target.mo.posX
+	local var_6_1 = arg_6_0._target.mo.posY
 
-	table.insert(slot1[slot2][slot3], false)
+	arg_6_1[var_6_0] = arg_6_1[var_6_0] or {}
+	arg_6_1[var_6_0][var_6_1] = arg_6_1[var_6_0][var_6_1] or {}
+
+	table.insert(arg_6_1[var_6_0][var_6_1], false)
 end
 
-function slot0.refreshAlarmArea(slot0)
+function var_0_0.refreshAlarmArea(arg_7_0)
 	ChessGameController.instance:dispatchEvent(ChessGameEvent.SetAlarmAreaVisible, {
 		visible = true
 	})
 end
 
-function slot0.breakObstacle(slot0, slot1, slot2, slot3)
-	slot4, slot5 = slot1.mo:getXY()
+function var_0_0.breakObstacle(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
+	local var_8_0, var_8_1 = arg_8_1.mo:getXY()
+	local var_8_2 = (arg_8_0._target.mo.posX + var_8_0) / 2
+	local var_8_3 = (arg_8_0._target.mo.posY + var_8_1) / 2
 
-	slot0:onMoveBegin()
+	arg_8_0:onMoveBegin()
 
-	function slot8()
-		uv0:refreshAlarmArea()
-		uv1:getHandler():playBreakAnim(uv2, uv3)
+	local function var_8_4()
+		arg_8_0:refreshAlarmArea()
+		arg_8_1:getHandler():playBreakAnim(arg_8_2, arg_8_3)
 	end
 
-	slot0:moveTo((slot0._target.mo.posX + slot4) / 2, (slot0._target.mo.posY + slot5) / 2, function ()
-		uv0:moveTo(uv0._target.mo.posX, uv0._target.mo.posY, uv1, uv0)
-	end, slot0)
+	local function var_8_5()
+		arg_8_0:moveTo(arg_8_0._target.mo.posX, arg_8_0._target.mo.posY, var_8_4, arg_8_0)
+	end
+
+	arg_8_0:moveTo(var_8_2, var_8_3, var_8_5, arg_8_0)
 end
 
-function slot0.moveTo(slot0, slot1, slot2, slot3, slot4)
-	uv0.super.moveTo(slot0, slot1, slot2, slot3, slot4)
+function var_0_0.moveTo(arg_11_0, arg_11_1, arg_11_2, arg_11_3, arg_11_4)
+	var_0_0.super.moveTo(arg_11_0, arg_11_1, arg_11_2, arg_11_3, arg_11_4)
 end
 
-function slot0.setAlertActive(slot0, slot1)
+function var_0_0.setAlertActive(arg_12_0, arg_12_1)
+	return
 end
 
-function slot0.dispose(slot0)
+function var_0_0.dispose(arg_13_0)
 	ChessGameController.instance:dispatchEvent(ChessGameEvent.SetAlarmAreaVisible, {
 		visible = false
 	})
-	uv0.super.dispose(slot0)
+	var_0_0.super.dispose(arg_13_0)
 end
 
-return slot0
+return var_0_0

@@ -1,65 +1,71 @@
-module("modules.logic.room.model.trade.RoomProductionMo", package.seeall)
+﻿module("modules.logic.room.model.trade.RoomProductionMo", package.seeall)
 
-slot0 = class("RoomProductionMo")
+local var_0_0 = class("RoomProductionMo")
 
-function slot0.ctor(slot0)
-	slot0.productionId = nil
-	slot0.quantity = nil
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.productionId = nil
+	arg_1_0.quantity = nil
 end
 
-function slot0.initMo(slot0, slot1)
-	slot0.productionId = slot1.productionId
-	slot0.quantity = slot1.quantity or 0
-	slot0.co = ManufactureConfig.instance:getManufactureItemCfg(slot0.productionId)
+function var_0_0.initMo(arg_2_0, arg_2_1)
+	arg_2_0.productionId = arg_2_1.productionId
+	arg_2_0.quantity = arg_2_1.quantity or 0
+	arg_2_0.co = ManufactureConfig.instance:getManufactureItemCfg(arg_2_0.productionId)
 end
 
-function slot0.getCurQuantity(slot0)
-	return ManufactureModel.instance:getManufactureItemCount(slot0.productionId, false)
+function var_0_0.getCurQuantity(arg_3_0)
+	return ManufactureModel.instance:getManufactureItemCount(arg_3_0.productionId, false)
 end
 
-function slot0.isEnoughCount(slot0)
-	slot1 = slot0:getCurQuantity() or 0
+function var_0_0.isEnoughCount(arg_4_0)
+	local var_4_0 = arg_4_0:getCurQuantity() or 0
 
-	return slot0.quantity <= slot1, slot1
+	return var_4_0 >= arg_4_0.quantity, var_4_0
 end
 
-function slot0.getQuantityStr(slot0)
-	slot1 = "#a63838"
-	slot2 = luaLang("room_trade_progress")
-	slot3, slot4 = slot0:isEnoughCount()
+function var_0_0.getQuantityStr(arg_5_0)
+	local var_5_0 = "#a63838"
+	local var_5_1 = luaLang("room_trade_progress")
+	local var_5_2, var_5_3 = arg_5_0:isEnoughCount()
 
-	if slot3 then
-		slot1 = "#220F04"
-	elseif not slot0:isPlacedProduceBuilding() or slot0:checkProduceBuildingLevel() then
-		slot1 = "#6F6F6F"
-		slot2 = luaLang("room_trade_progress_wrong")
+	if var_5_2 then
+		var_5_0 = "#220F04"
+	elseif not arg_5_0:isPlacedProduceBuilding() or arg_5_0:checkProduceBuildingLevel() then
+		var_5_0 = "#6F6F6F"
+		var_5_1 = luaLang("room_trade_progress_wrong")
 	end
 
-	return GameUtil.getSubPlaceholderLuaLangThreeParam(slot2, slot1, GameUtil.numberDisplay(slot4), GameUtil.numberDisplay(slot0.quantity))
+	return GameUtil.getSubPlaceholderLuaLangThreeParam(var_5_1, var_5_0, GameUtil.numberDisplay(var_5_3), GameUtil.numberDisplay(arg_5_0.quantity))
 end
 
-function slot0.isPlacedProduceBuilding(slot0)
-	return ManufactureController.instance:checkPlaceProduceBuilding(slot0.productionId)
+function var_0_0.isPlacedProduceBuilding(arg_6_0)
+	return (ManufactureController.instance:checkPlaceProduceBuilding(arg_6_0.productionId))
 end
 
-function slot0.checkProduceBuildingLevel(slot0)
-	slot1, slot2 = ManufactureController.instance:checkProduceBuildingLevel(slot0.productionId)
+function var_0_0.checkProduceBuildingLevel(arg_7_0)
+	local var_7_0, var_7_1 = ManufactureController.instance:checkProduceBuildingLevel(arg_7_0.productionId)
 
-	return slot1, slot2
+	return var_7_0, var_7_1
 end
 
-function slot0.getItem(slot0)
-	if slot0.co then
-		return MaterialEnum.MaterialType.Item, slot0.co.itemId
+function var_0_0.getItem(arg_8_0)
+	local var_8_0 = MaterialEnum.MaterialType.Item
+
+	if arg_8_0.co then
+		local var_8_1 = arg_8_0.co.itemId
+
+		return var_8_0, var_8_1
 	end
 end
 
-function slot0.getOrderPrice(slot0)
-	return slot0:getOneOrderPrice() * slot0.quantity
+function var_0_0.getOrderPrice(arg_9_0)
+	return arg_9_0:getOneOrderPrice() * arg_9_0.quantity
 end
 
-function slot0.getOneOrderPrice(slot0)
-	return slot0.co and slot0.co.orderPrice * (ManufactureConfig.instance:getManufactureConst(RoomManufactureEnum.ConstId.OrderPriceMul) or 1) or 0
+function var_0_0.getOneOrderPrice(arg_10_0)
+	local var_10_0 = ManufactureConfig.instance:getManufactureConst(RoomManufactureEnum.ConstId.OrderPriceMul) or 1
+
+	return arg_10_0.co and arg_10_0.co.orderPrice * var_10_0 or 0
 end
 
-return slot0
+return var_0_0

@@ -1,79 +1,95 @@
-module("modules.logic.room.view.common.RoomStoreGoodsTipItem", package.seeall)
+﻿module("modules.logic.room.view.common.RoomStoreGoodsTipItem", package.seeall)
 
-slot0 = class("RoomStoreGoodsTipItem", ListScrollCellExtend)
+local var_0_0 = class("RoomStoreGoodsTipItem", ListScrollCellExtend)
 
-function slot0.onInitView(slot0)
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+function var_0_0.onInitView(arg_1_0)
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0._goeprice = gohelper.findChild(slot0.viewGO, "go_price")
-	slot0._gofinish = gohelper.findChild(slot0.viewGO, "go_finish")
-	slot0._txtgold = gohelper.findChildText(slot0.viewGO, "go_price/txt_gold")
-	slot0._imagegold = gohelper.findChildImage(slot0.viewGO, "go_price/node/image_gold")
-	slot0._txtname = gohelper.findChildText(slot0.viewGO, "txt_name")
-	slot0._txtnum = gohelper.findChildText(slot0.viewGO, "txt_num")
-	slot0._imgbg = slot0.viewGO:GetComponent(gohelper.Type_Image)
-	slot0._txtowner = gohelper.findChildText(slot0.viewGO, "go_finish/txt_owner")
-	slot0._parenttrs = slot0.viewGO.transform.parent
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._goeprice = gohelper.findChild(arg_4_0.viewGO, "go_price")
+	arg_4_0._gofinish = gohelper.findChild(arg_4_0.viewGO, "go_finish")
+	arg_4_0._txtgold = gohelper.findChildText(arg_4_0.viewGO, "go_price/txt_gold")
+	arg_4_0._imagegold = gohelper.findChildImage(arg_4_0.viewGO, "go_price/node/image_gold")
+	arg_4_0._txtname = gohelper.findChildText(arg_4_0.viewGO, "txt_name")
+	arg_4_0._txtnum = gohelper.findChildText(arg_4_0.viewGO, "txt_num")
+	arg_4_0._imgbg = arg_4_0.viewGO:GetComponent(gohelper.Type_Image)
+	arg_4_0._txtowner = gohelper.findChildText(arg_4_0.viewGO, "go_finish/txt_owner")
+	arg_4_0._parenttrs = arg_4_0.viewGO.transform.parent
 end
 
-function slot0._refreshUI(slot0)
-	slot3 = slot0._roomStoreItemMO:getNeedNum() <= slot0._roomStoreItemMO:getItemQuantity()
+function var_0_0._refreshUI(arg_5_0)
+	local var_5_0 = arg_5_0._roomStoreItemMO:getItemQuantity()
+	local var_5_1 = arg_5_0._roomStoreItemMO:getNeedNum()
+	local var_5_2 = var_5_1 <= var_5_0
 
-	gohelper.setActive(slot0._goeprice, not slot3)
-	gohelper.setActive(slot0._gofinish, slot3)
+	gohelper.setActive(arg_5_0._goeprice, not var_5_2)
+	gohelper.setActive(arg_5_0._gofinish, var_5_2)
 
-	if slot3 then
-		slot0._txtowner.text = string.format(luaLang("roommaterialtipview_owner"), tostring(slot1))
+	if var_5_2 then
+		arg_5_0._txtowner.text = string.format(luaLang("roommaterialtipview_owner"), tostring(var_5_0))
 	end
 
-	slot0._txtname.text = slot0._roomStoreItemMO:getItemConfig() and slot4.name or ""
-	slot0._txtnum.text = slot0:_getStateStr(slot2, slot1)
+	local var_5_3 = arg_5_0._roomStoreItemMO:getItemConfig()
 
-	if not slot3 then
-		slot7 = nil
+	arg_5_0._txtname.text = var_5_3 and var_5_3.name or ""
+	arg_5_0._txtnum.text = arg_5_0:_getStateStr(var_5_1, var_5_0)
 
-		if not (not RoomStoreItemListModel.instance:getIsSelectCurrency() and slot0._roomStoreItemMO:checkShowTicket()) then
-			slot9 = slot0._roomStoreItemMO:getCostById(RoomStoreItemListModel.instance:getCostId() or 1)
-			slot12, slot13 = ItemModel.instance:getItemConfigAndIcon(slot9.itemType, slot9.itemId)
-			slot7 = slot12.icon
+	if not var_5_2 then
+		local var_5_4 = arg_5_0._roomStoreItemMO:checkShowTicket()
+		local var_5_5 = not RoomStoreItemListModel.instance:getIsSelectCurrency() and var_5_4
+		local var_5_6
+		local var_5_7 = RoomStoreItemListModel.instance:getCostId()
+
+		if not var_5_5 then
+			local var_5_8 = arg_5_0._roomStoreItemMO:getCostById(var_5_7 or 1)
+			local var_5_9 = var_5_8.itemType
+			local var_5_10 = var_5_8.itemId
+			local var_5_11, var_5_12 = ItemModel.instance:getItemConfigAndIcon(var_5_9, var_5_10)
+
+			var_5_6 = var_5_11.icon
 		else
-			slot7 = slot0._roomStoreItemMO:getTicketId()
+			var_5_6 = arg_5_0._roomStoreItemMO:getTicketId()
 		end
 
-		UISpriteSetMgr.instance:setCurrencyItemSprite(slot0._imagegold, string.format("%s_1", slot7))
+		local var_5_13 = string.format("%s_1", var_5_6)
 
-		if not slot6 then
-			slot0._txtgold.text = slot0._roomStoreItemMO:getTotalPriceByCostId(slot8)
+		UISpriteSetMgr.instance:setCurrencyItemSprite(arg_5_0._imagegold, var_5_13)
+
+		if not var_5_5 then
+			arg_5_0._txtgold.text = arg_5_0._roomStoreItemMO:getTotalPriceByCostId(var_5_7)
 		else
-			slot0._txtgold.text = 1
+			arg_5_0._txtgold.text = 1
 		end
 	end
 end
 
-function slot0._getStateStr(slot0, slot1, slot2)
-	return string.format("%s/%s", slot2, slot1)
+function var_0_0._getStateStr(arg_6_0, arg_6_1, arg_6_2)
+	return string.format("%s/%s", arg_6_2, arg_6_1)
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._roomStoreItemMO = slot1
+function var_0_0.onUpdateMO(arg_7_0, arg_7_1)
+	arg_7_0._roomStoreItemMO = arg_7_1
 
-	slot0:_refreshUI()
+	arg_7_0:_refreshUI()
 end
 
-function slot0.onSelect(slot0, slot1)
+function var_0_0.onSelect(arg_8_0, arg_8_1)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_9_0)
+	return
 end
 
-return slot0
+return var_0_0

@@ -1,166 +1,189 @@
-module("modules.logic.battlepass.model.BpTaskModel", package.seeall)
+﻿module("modules.logic.battlepass.model.BpTaskModel", package.seeall)
 
-slot0 = class("BpTaskModel", ListScrollModel)
+local var_0_0 = class("BpTaskModel", ListScrollModel)
 
-function slot0.onInit(slot0)
-	slot0.serverTaskModel = BaseModel.New()
-	slot0.showQuickFinishTask = false
-	slot0.haveTurnBackTask = false
+function var_0_0.onInit(arg_1_0)
+	arg_1_0.serverTaskModel = BaseModel.New()
+	arg_1_0.showQuickFinishTask = false
+	arg_1_0.haveTurnBackTask = false
 end
 
-function slot0.reInit(slot0)
-	slot0.haveTurnBackTask = false
-	slot0.showQuickFinishTask = false
+function var_0_0.reInit(arg_2_0)
+	arg_2_0.haveTurnBackTask = false
+	arg_2_0.showQuickFinishTask = false
 
-	slot0.serverTaskModel:clear()
+	arg_2_0.serverTaskModel:clear()
 end
 
-function slot0.onGetInfo(slot0, slot1)
-	slot2 = {}
+function var_0_0.onGetInfo(arg_3_0, arg_3_1)
+	local var_3_0 = {}
 
-	for slot6, slot7 in ipairs(slot1) do
-		if BpConfig.instance:getTaskCO(slot7.id) then
-			slot9 = TaskMo.New()
+	for iter_3_0, iter_3_1 in ipairs(arg_3_1) do
+		local var_3_1 = BpConfig.instance:getTaskCO(iter_3_1.id)
 
-			slot9:init(slot7, slot8)
-			table.insert(slot2, slot9)
+		if var_3_1 then
+			local var_3_2 = TaskMo.New()
+
+			var_3_2:init(iter_3_1, var_3_1)
+			table.insert(var_3_0, var_3_2)
 		else
-			logError("Bp task config not find:" .. tostring(slot7.id))
+			logError("Bp task config not find:" .. tostring(iter_3_1.id))
 		end
 	end
 
-	slot0.serverTaskModel:setList(slot2)
-	slot0:sortList()
-	slot0:_checkRedDot()
+	arg_3_0.serverTaskModel:setList(var_3_0)
+	arg_3_0:sortList()
+	arg_3_0:_checkRedDot()
 end
 
-function slot0.sortList(slot0)
-	slot0.serverTaskModel:sort(function (slot0, slot1)
-		if (slot0.finishCount > 0 and 3 or slot0.config.maxProgress <= slot0.progress and 1 or 2) ~= (slot1.finishCount > 0 and 3 or slot1.config.maxProgress <= slot1.progress and 1 or 2) then
-			return slot2 < slot3
+function var_0_0.sortList(arg_4_0)
+	arg_4_0.serverTaskModel:sort(function(arg_5_0, arg_5_1)
+		local var_5_0 = arg_5_0.finishCount > 0 and 3 or arg_5_0.progress >= arg_5_0.config.maxProgress and 1 or 2
+		local var_5_1 = arg_5_1.finishCount > 0 and 3 or arg_5_1.progress >= arg_5_1.config.maxProgress and 1 or 2
+
+		if var_5_0 ~= var_5_1 then
+			return var_5_0 < var_5_1
 		else
-			if slot0.config.sortId ~= slot1.config.sortId then
-				return slot0.config.sortId < slot1.config.sortId
+			if arg_5_0.config.sortId ~= arg_5_1.config.sortId then
+				return arg_5_0.config.sortId < arg_5_1.config.sortId
 			end
 
-			return slot0.config.id < slot1.config.id
+			return arg_5_0.config.id < arg_5_1.config.id
 		end
 	end)
-	slot0:onModelUpdate()
+	arg_4_0:onModelUpdate()
 end
 
-function slot0._checkRedDot(slot0)
-	slot1 = BpModel.instance:isWeeklyScoreFull()
-	slot2 = 0
+function var_0_0._checkRedDot(arg_6_0)
+	local var_6_0 = BpModel.instance:isWeeklyScoreFull()
+	local var_6_1 = 0
 
-	for slot6, slot7 in ipairs(slot0.serverTaskModel:getList()) do
-		if slot7.config.bpId == BpModel.instance.id then
-			if slot7.config.maxProgress <= slot7.progress and slot7.finishCount == 0 then
-				if slot7.config.loopType == 5 then
-					slot8 = 3
+	for iter_6_0, iter_6_1 in ipairs(arg_6_0.serverTaskModel:getList()) do
+		if iter_6_1.config.bpId == BpModel.instance.id then
+			if iter_6_1.progress >= iter_6_1.config.maxProgress and iter_6_1.finishCount == 0 then
+				local var_6_2 = iter_6_1.config.loopType
+
+				if var_6_2 == 5 then
+					var_6_2 = 3
 				end
 
-				if not slot1 or slot1 and slot8 == 3 then
-					slot2 = slot2 + 1
+				if not var_6_0 or var_6_0 and var_6_2 == 3 then
+					var_6_1 = var_6_1 + 1
 				end
 			end
 
-			if slot7.config.turnbackTask then
-				slot0.haveTurnBackTask = true
+			if iter_6_1.config.turnbackTask then
+				arg_6_0.haveTurnBackTask = true
 			end
 		end
 	end
 
-	slot0.showQuickFinishTask = slot2 >= 1
+	arg_6_0.showQuickFinishTask = var_6_1 >= 1
 end
 
-function slot0.getHaveRedDot(slot0, slot1)
-	if slot1 == 3 then
+function var_0_0.getHaveRedDot(arg_7_0, arg_7_1)
+	if arg_7_1 == 3 then
 		return RedDotModel.instance:isDotShow(RedDotEnum.DotNode.BattlePassTask, 3) or RedDotModel.instance:isDotShow(RedDotEnum.DotNode.BattlePassTask, 5)
 	else
-		return RedDotModel.instance:isDotShow(RedDotEnum.DotNode.BattlePassTask, slot1)
+		return RedDotModel.instance:isDotShow(RedDotEnum.DotNode.BattlePassTask, arg_7_1)
 	end
 end
 
-function slot0.updateInfo(slot0, slot1)
-	slot2 = nil
+function var_0_0.updateInfo(arg_8_0, arg_8_1)
+	local var_8_0
 
-	for slot6, slot7 in ipairs(slot1) do
-		if slot7.type == TaskEnum.TaskType.BattlePass then
-			if slot0.serverTaskModel:getById(slot7.id) then
-				slot8:update(slot7)
-			elseif BpConfig.instance:getTaskCO(slot7.id) then
-				slot8 = TaskMo.New()
+	for iter_8_0, iter_8_1 in ipairs(arg_8_1) do
+		if iter_8_1.type == TaskEnum.TaskType.BattlePass then
+			local var_8_1 = arg_8_0.serverTaskModel:getById(iter_8_1.id)
 
-				slot8:init(slot7, slot9)
-				slot0.serverTaskModel:addAtLast(slot8)
+			if var_8_1 then
+				var_8_1:update(iter_8_1)
 			else
-				logError("Bp task config not find:" .. tostring(slot7.id))
+				local var_8_2 = BpConfig.instance:getTaskCO(iter_8_1.id)
+
+				if var_8_2 then
+					local var_8_3 = TaskMo.New()
+
+					var_8_3:init(iter_8_1, var_8_2)
+					arg_8_0.serverTaskModel:addAtLast(var_8_3)
+				else
+					logError("Bp task config not find:" .. tostring(iter_8_1.id))
+				end
 			end
 
-			slot2 = true
+			var_8_0 = true
 		end
 	end
 
-	if slot2 then
-		slot0:sortList()
-		slot0:_checkRedDot()
+	if var_8_0 then
+		arg_8_0:sortList()
+		arg_8_0:_checkRedDot()
 	end
 
-	return slot2
+	return var_8_0
 end
 
-function slot0.deleteInfo(slot0, slot1)
-	for slot6, slot7 in pairs(slot1) do
-		if slot0.serverTaskModel:getById(slot7) then
-			-- Nothing
+function var_0_0.deleteInfo(arg_9_0, arg_9_1)
+	local var_9_0 = {}
+
+	for iter_9_0, iter_9_1 in pairs(arg_9_1) do
+		local var_9_1 = arg_9_0.serverTaskModel:getById(iter_9_1)
+
+		if var_9_1 then
+			var_9_0[iter_9_1] = var_9_1
 		end
 	end
 
-	for slot6, slot7 in pairs({
-		[slot7] = slot8
-	}) do
-		slot0.serverTaskModel:remove(slot7)
+	for iter_9_2, iter_9_3 in pairs(var_9_0) do
+		arg_9_0.serverTaskModel:remove(iter_9_3)
 	end
 
-	if next(slot2) and true or false then
-		slot0:sortList()
-		slot0:_checkRedDot()
+	local var_9_2 = next(var_9_0) and true or false
+
+	if var_9_2 then
+		arg_9_0:sortList()
+		arg_9_0:_checkRedDot()
 	end
 
-	return slot3
+	return var_9_2
 end
 
-function slot0.refreshListView(slot0, slot1)
-	slot2 = {}
+function var_0_0.refreshListView(arg_10_0, arg_10_1)
+	local var_10_0 = {}
+	local var_10_1 = arg_10_0.serverTaskModel:getList()
 
-	for slot7, slot8 in ipairs(slot0.serverTaskModel:getList()) do
-		if slot8.config.loopType == 5 then
-			slot9 = 3
+	for iter_10_0, iter_10_1 in ipairs(var_10_1) do
+		local var_10_2 = iter_10_1.config.loopType
+
+		if var_10_2 == 5 then
+			var_10_2 = 3
 		end
 
-		if slot8.config.bpId == BpModel.instance.id and slot9 == slot1 then
-			slot11 = true
+		if iter_10_1.config.bpId == BpModel.instance.id and var_10_2 == arg_10_1 then
+			local var_10_3 = BpConfig.instance.taskPreposeIds
+			local var_10_4 = true
 
-			if BpConfig.instance.taskPreposeIds[slot8.config.id] then
-				for slot15 in pairs(slot10[slot8.config.id]) do
-					if slot0.serverTaskModel:getById(slot15) and slot16.finishCount == 0 then
-						slot11 = false
+			if var_10_3[iter_10_1.config.id] then
+				for iter_10_2 in pairs(var_10_3[iter_10_1.config.id]) do
+					local var_10_5 = arg_10_0.serverTaskModel:getById(iter_10_2)
+
+					if var_10_5 and var_10_5.finishCount == 0 then
+						var_10_4 = false
 
 						break
 					end
 				end
 			end
 
-			if slot11 then
-				table.insert(slot2, slot8)
+			if var_10_4 then
+				table.insert(var_10_0, iter_10_1)
 			end
 		end
 	end
 
-	slot0:setList(slot2)
+	arg_10_0:setList(var_10_0)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

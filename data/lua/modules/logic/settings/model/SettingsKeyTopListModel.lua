@@ -1,7 +1,7 @@
-module("modules.logic.settings.model.SettingsKeyTopListModel", package.seeall)
+﻿module("modules.logic.settings.model.SettingsKeyTopListModel", package.seeall)
 
-slot0 = class("SettingsKeyTopListModel", ListScrollModel)
-slot1 = {
+local var_0_0 = class("SettingsKeyTopListModel", ListScrollModel)
+local var_0_1 = {
 	{
 		id = PCInputModel.Activity.MainActivity
 	},
@@ -16,21 +16,24 @@ slot1 = {
 	}
 }
 
-function slot0.InitList(slot0)
-	slot1 = {}
+function var_0_0.InitList(arg_1_0)
+	local var_1_0 = {}
+	local var_1_1 = pcInputConfig.instance:getKeyBlock()
 
-	for slot6, slot7 in ipairs(uv0) do
-		if pcInputConfig.instance:getKeyBlock()[slot7.id] then
-			table.insert(slot1, {
-				id = slot7.id,
-				name = slot8.name
+	for iter_1_0, iter_1_1 in ipairs(var_0_1) do
+		local var_1_2 = var_1_1[iter_1_1.id]
+
+		if var_1_2 then
+			table.insert(var_1_0, {
+				id = iter_1_1.id,
+				name = var_1_2.name
 			})
 		end
 	end
 
-	slot0:setList(slot1)
+	arg_1_0:setList(var_1_0)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

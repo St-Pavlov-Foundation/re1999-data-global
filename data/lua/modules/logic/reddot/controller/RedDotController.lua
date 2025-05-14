@@ -1,81 +1,85 @@
-module("modules.logic.reddot.controller.RedDotController", package.seeall)
+﻿module("modules.logic.reddot.controller.RedDotController", package.seeall)
 
-slot0 = class("RedDotController", BaseController)
+local var_0_0 = class("RedDotController", BaseController)
 
-function slot0.onInit(slot0)
-	slot0:reInit()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:reInit()
 end
 
-function slot0.reInit(slot0)
-	TaskDispatcher.cancelTask(slot0._checkExpire, slot0)
+function var_0_0.reInit(arg_2_0)
+	TaskDispatcher.cancelTask(arg_2_0._checkExpire, arg_2_0)
 end
 
-function slot0.onInitFinish(slot0)
+function var_0_0.onInitFinish(arg_3_0)
+	return
 end
 
-function slot0.addConstEvents(slot0)
+function var_0_0.addConstEvents(arg_4_0)
+	return
 end
 
-function slot0.addNotEventRedDot(slot0, slot1, slot2, slot3, slot4)
-	slot5 = MonoHelper.addNoUpdateLuaComOnceToGo(slot1, CommonRedDotIconNoEvent)
+function var_0_0.addNotEventRedDot(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4)
+	local var_5_0 = MonoHelper.addNoUpdateLuaComOnceToGo(arg_5_1, CommonRedDotIconNoEvent)
 
-	slot5:setShowType(slot4)
-	slot5:setCheckShowRedDotFunc(slot2, slot3)
+	var_5_0:setShowType(arg_5_4)
+	var_5_0:setCheckShowRedDotFunc(arg_5_2, arg_5_3)
 
-	return slot5
+	return var_5_0
 end
 
-function slot0.addRedDotTag(slot0, slot1, slot2, slot3, slot4, slot5)
-	slot6 = MonoHelper.addNoUpdateLuaComOnceToGo(slot1, CommonRedDotTag)
+function var_0_0.addRedDotTag(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4, arg_6_5)
+	local var_6_0 = MonoHelper.addNoUpdateLuaComOnceToGo(arg_6_1, CommonRedDotTag)
 
-	slot6:setId(slot2, slot3)
-	slot6:overrideRefreshDotFunc(slot4, slot5)
-	slot6:refreshDot()
+	var_6_0:setId(arg_6_2, arg_6_3)
+	var_6_0:overrideRefreshDotFunc(arg_6_4, arg_6_5)
+	var_6_0:refreshDot()
 
-	return slot6
+	return var_6_0
 end
 
-function slot0.addRedDot(slot0, slot1, slot2, slot3, slot4, slot5)
-	return slot0:addMultiRedDot(slot1, {
+function var_0_0.addRedDot(arg_7_0, arg_7_1, arg_7_2, arg_7_3, arg_7_4, arg_7_5)
+	return arg_7_0:addMultiRedDot(arg_7_1, {
 		{
-			id = slot2,
-			uid = slot3
+			id = arg_7_2,
+			uid = arg_7_3
 		}
-	}, slot4, slot5)
+	}, arg_7_4, arg_7_5)
 end
 
-function slot0.addMultiRedDot(slot0, slot1, slot2, slot3, slot4)
-	slot5 = MonoHelper.getLuaComFromGo(slot1, CommonRedDotIcon) or MonoHelper.addNoUpdateLuaComOnceToGo(slot1, CommonRedDotIcon)
+function var_0_0.addMultiRedDot(arg_8_0, arg_8_1, arg_8_2, arg_8_3, arg_8_4)
+	local var_8_0 = MonoHelper.getLuaComFromGo(arg_8_1, CommonRedDotIcon) or MonoHelper.addNoUpdateLuaComOnceToGo(arg_8_1, CommonRedDotIcon)
 
-	slot5:setMultiId(slot2)
-	slot5:overrideRefreshDotFunc(slot3, slot4)
-	slot5:refreshDot()
+	var_8_0:setMultiId(arg_8_2)
+	var_8_0:overrideRefreshDotFunc(arg_8_3, arg_8_4)
+	var_8_0:refreshDot()
 
-	return slot5
+	return var_8_0
 end
 
-function slot0.getRedDotComp(slot0, slot1)
-	return MonoHelper.getLuaComFromGo(slot1, CommonRedDotIcon)
+function var_0_0.getRedDotComp(arg_9_0, arg_9_1)
+	return (MonoHelper.getLuaComFromGo(arg_9_1, CommonRedDotIcon))
 end
 
-function slot0.CheckExpireDot(slot0)
-	TaskDispatcher.cancelTask(slot0._checkExpire, slot0)
-	TaskDispatcher.runRepeat(slot0._checkExpire, slot0, 1)
+function var_0_0.CheckExpireDot(arg_10_0)
+	TaskDispatcher.cancelTask(arg_10_0._checkExpire, arg_10_0)
+	TaskDispatcher.runRepeat(arg_10_0._checkExpire, arg_10_0, 1)
 end
 
-function slot0._checkExpire(slot0)
-	if RedDotModel.instance:getLatestExpireTime() == 0 then
-		TaskDispatcher.cancelTask(slot0._checkExpire, slot0)
+function var_0_0._checkExpire(arg_11_0)
+	local var_11_0 = RedDotModel.instance:getLatestExpireTime()
+
+	if var_11_0 == 0 then
+		TaskDispatcher.cancelTask(arg_11_0._checkExpire, arg_11_0)
 
 		return
 	end
 
-	if slot1 <= ServerTime.now() then
-		TaskDispatcher.cancelTask(slot0._checkExpire, slot0)
+	if var_11_0 <= ServerTime.now() then
+		TaskDispatcher.cancelTask(arg_11_0._checkExpire, arg_11_0)
 		RedDotRpc.instance:sendGetRedDotInfosRequest()
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

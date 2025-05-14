@@ -1,59 +1,66 @@
-module("modules.logic.room.view.critter.detail.RoomCritterDetailSkillItem", package.seeall)
+﻿module("modules.logic.room.view.critter.detail.RoomCritterDetailSkillItem", package.seeall)
 
-slot0 = class("RoomCritterDetailSkillItem", LuaCompBase)
+local var_0_0 = class("RoomCritterDetailSkillItem", LuaCompBase)
 
-function slot0.onInitView(slot0)
-	slot0._txtskillname = gohelper.findChildText(slot0.viewGO, "title/#txt_skillname")
-	slot0._imageicon = gohelper.findChildImage(slot0.viewGO, "title/#txt_skillname/#image_icon")
-	slot0._txtskilldec = gohelper.findChildText(slot0.viewGO, "#txt_skilldec")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._txtskillname = gohelper.findChildText(arg_1_0.viewGO, "title/#txt_skillname")
+	arg_1_0._imageicon = gohelper.findChildImage(arg_1_0.viewGO, "title/#txt_skillname/#image_icon")
+	arg_1_0._txtskilldec = gohelper.findChildText(arg_1_0.viewGO, "#txt_skilldec")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0.init(slot0, slot1)
-	slot0.viewGO = slot1
+function var_0_0.init(arg_4_0, arg_4_1)
+	arg_4_0.viewGO = arg_4_1
 
-	slot0:onInitView()
+	arg_4_0:onInitView()
 end
 
-function slot0.addEventListeners(slot0)
-	slot0:addEvents()
+function var_0_0.addEventListeners(arg_5_0)
+	arg_5_0:addEvents()
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0:removeEvents()
+function var_0_0.removeEventListeners(arg_6_0)
+	arg_6_0:removeEvents()
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_7_0)
+	return
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_8_0)
+	return
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_9_0)
+	return
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_10_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_11_0)
+	return
 end
 
-function slot0.onRefreshMo(slot0, slot1)
-	slot0._txtskillname.text = slot1 and slot1.name
-	slot0._txtskilldec.text = slot1 and slot1.desc
+function var_0_0.onRefreshMo(arg_12_0, arg_12_1)
+	arg_12_0._txtskillname.text = arg_12_1 and arg_12_1.name
+	arg_12_0._txtskilldec.text = arg_12_1 and arg_12_1.desc
 
-	if slot0._imageicon and not string.nilorempty(slot1.skillIcon) then
-		UISpriteSetMgr.instance:setCritterSprite(slot0._imageicon, slot1.skillIcon)
+	if arg_12_0._imageicon and not string.nilorempty(arg_12_1.skillIcon) then
+		UISpriteSetMgr.instance:setCritterSprite(arg_12_0._imageicon, arg_12_1.skillIcon)
 	end
 end
 
-return slot0
+return var_0_0

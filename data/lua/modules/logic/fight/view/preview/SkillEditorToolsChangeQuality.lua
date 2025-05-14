@@ -1,67 +1,77 @@
-module("modules.logic.fight.view.preview.SkillEditorToolsChangeQuality", package.seeall)
+﻿module("modules.logic.fight.view.preview.SkillEditorToolsChangeQuality", package.seeall)
 
-slot0 = class("SkillEditorToolsChangeQuality", BaseViewExtended)
+local var_0_0 = class("SkillEditorToolsChangeQuality", BaseViewExtended)
 
-function slot0.onInitView(slot0)
+function var_0_0.onInitView(arg_1_0)
+	return
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_3_0)
+	return
 end
 
-function slot0.onRefreshViewParam(slot0)
+function var_0_0.onRefreshViewParam(arg_4_0)
+	return
 end
 
-function slot0._onBtnClick(slot0)
-	slot0:getParentView():hideToolsBtnList()
-	gohelper.setActive(slot0._btn, true)
+function var_0_0._onBtnClick(arg_5_0)
+	arg_5_0:getParentView():hideToolsBtnList()
+	gohelper.setActive(arg_5_0._btn, true)
 end
 
-function slot0.onOpen(slot0)
-	slot0:getParentView():addToolBtn("画质", slot0._onBtnClick, slot0)
+function var_0_0.onOpen(arg_6_0)
+	arg_6_0:getParentView():addToolBtn("画质", arg_6_0._onBtnClick, arg_6_0)
 
-	slot0._btn = slot0:getParentView():addToolViewObj("画质")
-	slot0._item = gohelper.findChild(slot0._btn, "variant")
+	arg_6_0._btn = arg_6_0:getParentView():addToolViewObj("画质")
+	arg_6_0._item = gohelper.findChild(arg_6_0._btn, "variant")
 
-	slot0:_showData()
+	arg_6_0:_showData()
 end
 
-function slot0._showData(slot0)
-	slot0:com_createObjList(slot0._onItemShow, {
+function var_0_0._showData(arg_7_0)
+	local var_7_0 = {
 		ModuleEnum.Performance.High,
 		ModuleEnum.Performance.Middle,
 		ModuleEnum.Performance.Low
-	}, slot0._btn, slot0._item)
+	}
+
+	arg_7_0:com_createObjList(arg_7_0._onItemShow, var_7_0, arg_7_0._btn, arg_7_0._item)
 end
 
-function slot0._onItemShow(slot0, slot1, slot2, slot3)
-	slot4 = gohelper.findChildText(slot1, "Text")
-	slot5 = ""
+function var_0_0._onItemShow(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
+	local var_8_0 = gohelper.findChildText(arg_8_1, "Text")
+	local var_8_1 = ""
 
-	if slot2 == ModuleEnum.Performance.High then
-		slot5 = "高"
-	elseif slot2 == ModuleEnum.Performance.Middle then
-		slot5 = "中"
-	elseif slot2 == ModuleEnum.Performance.Low then
-		slot5 = "低"
+	if arg_8_2 == ModuleEnum.Performance.High then
+		var_8_1 = "高"
+	elseif arg_8_2 == ModuleEnum.Performance.Middle then
+		var_8_1 = "中"
+	elseif arg_8_2 == ModuleEnum.Performance.Low then
+		var_8_1 = "低"
 	end
 
-	slot4.text = slot5
+	var_8_0.text = var_8_1
 
-	slot0:addClickCb(gohelper.getClick(slot1), slot0._onItemClick, slot0, slot2)
+	local var_8_2 = gohelper.getClick(arg_8_1)
+
+	arg_8_0:addClickCb(var_8_2, arg_8_0._onItemClick, arg_8_0, arg_8_2)
 end
 
-function slot0._onItemClick(slot0, slot1)
-	GameGlobalMgr.instance:getScreenState():setLocalQuality(slot1)
+function var_0_0._onItemClick(arg_9_0, arg_9_1)
+	GameGlobalMgr.instance:getScreenState():setLocalQuality(arg_9_1)
 	FightEffectPool.dispose()
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_10_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_11_0)
+	return
 end
 
-return slot0
+return var_0_0

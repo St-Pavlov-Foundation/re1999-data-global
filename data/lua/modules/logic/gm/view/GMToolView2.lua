@@ -1,506 +1,573 @@
-module("modules.logic.gm.view.GMToolView2", package.seeall)
+﻿module("modules.logic.gm.view.GMToolView2", package.seeall)
 
-slot0 = class("GMToolView2", BaseView)
+local var_0_0 = class("GMToolView2", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._inpDumpHierarchy = gohelper.findChildTextMeshInputField(slot0.viewGO, "viewport/content/item16/inpText")
-	slot0._btnDumpHierarchy = gohelper.findChildButtonWithAudio(slot0.viewGO, "viewport/content/item16/btnDumpHierarchy")
-	slot0._btnHierarchy = gohelper.findChildButtonWithAudio(slot0.viewGO, "viewport/content/item16/btnHierarchy")
-	slot0._btnSkillPreview = gohelper.findChildButtonWithAudio(slot0.viewGO, "viewport/content/item9/btnSkillPreview")
-	slot0._btnVersion = gohelper.findChildButtonWithAudio(slot0.viewGO, "viewport/content/item17/btnVersion")
-	slot0._btnHardware = gohelper.findChildButtonWithAudio(slot0.viewGO, "viewport/content/item17/btnHardware")
-	slot0._sliderRenderScale = gohelper.findChildSlider(slot0.viewGO, "viewport/content/item19/Slider")
-	slot0._txtRenderScale = gohelper.findChildText(slot0.viewGO, "viewport/content/item19/Text")
-	slot0._btnRoomOb = gohelper.findChildButtonWithAudio(slot0.viewGO, "viewport/content/item23/btnRoomOb")
-	slot0._btnRoomMap = gohelper.findChildButtonWithAudio(slot0.viewGO, "viewport/content/item23/btnRoomMap")
-	slot0._btnRoomDebug = gohelper.findChildButtonWithAudio(slot0.viewGO, "viewport/content/item23/btnRoomDebug")
-	slot0._btnRoomDebugBuildingArea = gohelper.findChildButtonWithAudio(slot0.viewGO, "viewport/content/item23/btnRoomDebugBuildingArea")
-	slot0._btnForbidFightEffect = gohelper.findChildButtonWithAudio(slot0.viewGO, "viewport/content/item26/Button1")
-	slot0._btnCancelForbidFightEffect = gohelper.findChildButtonWithAudio(slot0.viewGO, "viewport/content/item26/Button2")
-	slot0._btnTest1 = gohelper.findChildButtonWithAudio(slot0.viewGO, "viewport/content/item27/Button1")
-	slot0._btnTest2 = gohelper.findChildButtonWithAudio(slot0.viewGO, "viewport/content/item27/Button2")
-	slot0._btnTest3 = gohelper.findChildButtonWithAudio(slot0.viewGO, "viewport/content/item27/Button3")
-	slot0._sliderRoomRotateSpeed = gohelper.findChildSlider(slot0.viewGO, "viewport/content/item43/Slider")
-	slot0._txtRoomRotateSpeed = gohelper.findChildText(slot0.viewGO, "viewport/content/item43/txtValue")
-	slot0._sliderRoomMoveSpeed = gohelper.findChildSlider(slot0.viewGO, "viewport/content/item44/Slider")
-	slot0._txtRoomMoveSpeed = gohelper.findChildText(slot0.viewGO, "viewport/content/item44/txtValue")
-	slot0._sliderRoomScaleSpeed = gohelper.findChildSlider(slot0.viewGO, "viewport/content/item45/Slider")
-	slot0._txtRoomScaleSpeed = gohelper.findChildText(slot0.viewGO, "viewport/content/item45/txtValue")
-	slot0._silderRoomTouchSpeed = gohelper.findChildSlider(slot0.viewGO, "viewport/content/roomTouchSpeed/Slider")
-	slot0._txtRoomTouchSpeed = gohelper.findChildText(slot0.viewGO, "viewport/content/roomTouchSpeed/txtValue")
-	slot0._textCheckAudio2 = gohelper.findChildText(slot0.viewGO, "viewport/content/item47/btnCheckAudio2/Text")
-	slot0._textCallAudioGCThreshold = gohelper.findChildTextMeshInputField(slot0.viewGO, "viewport/content/item47/InputField")
-	slot0._inpTestAudio = gohelper.findChildInputField(slot0.viewGO, "viewport/content/testAudio1/inpTextAudio")
-	slot0._inpBeginTestAudio = gohelper.findChildInputField(slot0.viewGO, "viewport/content/testAudio1/inpTextAudioBegin")
-	slot0._inpEndTestAudio = gohelper.findChildInputField(slot0.viewGO, "viewport/content/testAudio1/inpTextAudioEnd")
-	slot0._btnLoadTestAudio = gohelper.findChildButtonWithAudio(slot0.viewGO, "viewport/content/testAudio2/btnLoadTestAudio")
-	slot0._btnUnloadTestAudio = gohelper.findChildButtonWithAudio(slot0.viewGO, "viewport/content/testAudio2/btnUnloadTestAudio")
-	slot0._dropRoomClock = gohelper.findChildDropdown(slot0.viewGO, "viewport/content/roomclock/Dropdown")
-	slot0._btnRoomBuildingCamera = gohelper.findChildButtonWithAudio(slot0.viewGO, "viewport/content/roomclock/btnRoomBuildingCamera")
-	slot0._visualToggle = gohelper.findChildToggle(slot0.viewGO, "viewport/content/item48/visualToggle")
-	slot0._visualToggle.isOn = GMController.instance:getVisualInteractive()
-	slot0._dropActivity = gohelper.findChildDropdown(slot0.viewGO, "viewport/content/versionactivity/activityDropdown")
-	slot0._dropActivityStatus = gohelper.findChildDropdown(slot0.viewGO, "viewport/content/versionactivity/activityStatusDropdown")
-	slot0._btnChangeActivity = gohelper.findChildButtonWithAudio(slot0.viewGO, "viewport/content/versionactivity1/btnChangeActivity")
-	slot0._btnResetActivity = gohelper.findChildButtonWithAudio(slot0.viewGO, "viewport/content/versionactivity1/btnResetActivity")
-	slot0._btnEnterActivity = gohelper.findChildButtonWithAudio(slot0.viewGO, "viewport/content/versionactivity2/btnEnterActivity")
-	slot0._btnResetActivityUnlockAnim = gohelper.findChildButtonWithAudio(slot0.viewGO, "viewport/content/versionactivity2/btnResetUnlockAnim")
-	slot0._btnEnterDialogue = gohelper.findChildButtonWithAudio(slot0.viewGO, "viewport/content/item51/Button")
-	slot0._inputDialogue = gohelper.findChildTextMeshInputField(slot0.viewGO, "viewport/content/item51/dialogueInput")
-	slot0._startEditV1a5HoleBtn = gohelper.findChildButtonWithAudio(slot0.viewGO, "viewport/content/item52/startEditV1a5HoleBtn")
-	slot0._endEditV1a5HoleBtn = gohelper.findChildButtonWithAudio(slot0.viewGO, "viewport/content/item52/endEditV1a5HoleBtn")
-	slot1 = gohelper.cloneInPlace(slot0._btnHardware.gameObject, "btnOnekeyFightSucc")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._inpDumpHierarchy = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "viewport/content/item16/inpText")
+	arg_1_0._btnDumpHierarchy = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/item16/btnDumpHierarchy")
+	arg_1_0._btnHierarchy = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/item16/btnHierarchy")
+	arg_1_0._btnSkillPreview = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/item9/btnSkillPreview")
+	arg_1_0._btnVersion = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/item17/btnVersion")
+	arg_1_0._btnHardware = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/item17/btnHardware")
+	arg_1_0._sliderRenderScale = gohelper.findChildSlider(arg_1_0.viewGO, "viewport/content/item19/Slider")
+	arg_1_0._txtRenderScale = gohelper.findChildText(arg_1_0.viewGO, "viewport/content/item19/Text")
+	arg_1_0._btnRoomOb = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/item23/btnRoomOb")
+	arg_1_0._btnRoomMap = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/item23/btnRoomMap")
+	arg_1_0._btnRoomDebug = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/item23/btnRoomDebug")
+	arg_1_0._btnRoomDebugBuildingArea = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/item23/btnRoomDebugBuildingArea")
+	arg_1_0._btnForbidFightEffect = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/item26/Button1")
+	arg_1_0._btnCancelForbidFightEffect = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/item26/Button2")
+	arg_1_0._btnTest1 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/item27/Button1")
+	arg_1_0._btnTest2 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/item27/Button2")
+	arg_1_0._btnTest3 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/item27/Button3")
+	arg_1_0._sliderRoomRotateSpeed = gohelper.findChildSlider(arg_1_0.viewGO, "viewport/content/item43/Slider")
+	arg_1_0._txtRoomRotateSpeed = gohelper.findChildText(arg_1_0.viewGO, "viewport/content/item43/txtValue")
+	arg_1_0._sliderRoomMoveSpeed = gohelper.findChildSlider(arg_1_0.viewGO, "viewport/content/item44/Slider")
+	arg_1_0._txtRoomMoveSpeed = gohelper.findChildText(arg_1_0.viewGO, "viewport/content/item44/txtValue")
+	arg_1_0._sliderRoomScaleSpeed = gohelper.findChildSlider(arg_1_0.viewGO, "viewport/content/item45/Slider")
+	arg_1_0._txtRoomScaleSpeed = gohelper.findChildText(arg_1_0.viewGO, "viewport/content/item45/txtValue")
+	arg_1_0._silderRoomTouchSpeed = gohelper.findChildSlider(arg_1_0.viewGO, "viewport/content/roomTouchSpeed/Slider")
+	arg_1_0._txtRoomTouchSpeed = gohelper.findChildText(arg_1_0.viewGO, "viewport/content/roomTouchSpeed/txtValue")
+	arg_1_0._textCheckAudio2 = gohelper.findChildText(arg_1_0.viewGO, "viewport/content/item47/btnCheckAudio2/Text")
+	arg_1_0._textCallAudioGCThreshold = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "viewport/content/item47/InputField")
+	arg_1_0._inpTestAudio = gohelper.findChildInputField(arg_1_0.viewGO, "viewport/content/testAudio1/inpTextAudio")
+	arg_1_0._inpBeginTestAudio = gohelper.findChildInputField(arg_1_0.viewGO, "viewport/content/testAudio1/inpTextAudioBegin")
+	arg_1_0._inpEndTestAudio = gohelper.findChildInputField(arg_1_0.viewGO, "viewport/content/testAudio1/inpTextAudioEnd")
+	arg_1_0._btnLoadTestAudio = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/testAudio2/btnLoadTestAudio")
+	arg_1_0._btnUnloadTestAudio = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/testAudio2/btnUnloadTestAudio")
+	arg_1_0._dropRoomClock = gohelper.findChildDropdown(arg_1_0.viewGO, "viewport/content/roomclock/Dropdown")
+	arg_1_0._btnRoomBuildingCamera = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/roomclock/btnRoomBuildingCamera")
+	arg_1_0._visualToggle = gohelper.findChildToggle(arg_1_0.viewGO, "viewport/content/item48/visualToggle")
+	arg_1_0._visualToggle.isOn = GMController.instance:getVisualInteractive()
+	arg_1_0._dropActivity = gohelper.findChildDropdown(arg_1_0.viewGO, "viewport/content/versionactivity/activityDropdown")
+	arg_1_0._dropActivityStatus = gohelper.findChildDropdown(arg_1_0.viewGO, "viewport/content/versionactivity/activityStatusDropdown")
+	arg_1_0._btnChangeActivity = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/versionactivity1/btnChangeActivity")
+	arg_1_0._btnResetActivity = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/versionactivity1/btnResetActivity")
+	arg_1_0._btnEnterActivity = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/versionactivity2/btnEnterActivity")
+	arg_1_0._btnResetActivityUnlockAnim = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/versionactivity2/btnResetUnlockAnim")
+	arg_1_0._btnEnterDialogue = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/item51/Button")
+	arg_1_0._inputDialogue = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "viewport/content/item51/dialogueInput")
+	arg_1_0._startEditV1a5HoleBtn = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/item52/startEditV1a5HoleBtn")
+	arg_1_0._endEditV1a5HoleBtn = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/item52/endEditV1a5HoleBtn")
 
-	recthelper.setAnchorX(slot1.transform, 210)
+	local var_1_0 = gohelper.cloneInPlace(arg_1_0._btnHardware.gameObject, "btnOnekeyFightSucc")
 
-	gohelper.findChildText(slot1, "Text").text = "战斗胜利"
-	slot0._btnOnekeyFightSucc = gohelper.getClick(slot1)
+	recthelper.setAnchorX(var_1_0.transform, 210)
+
+	gohelper.findChildText(var_1_0, "Text").text = "战斗胜利"
+	arg_1_0._btnOnekeyFightSucc = gohelper.getClick(var_1_0)
 end
 
-function slot0.addEvents(slot0)
-	slot0:_AddClickListener(slot0._btnDumpHierarchy, slot0._onClickBtnDumpHierarchy, slot0)
-	slot0:_AddClickListener(slot0._btnHierarchy, slot0._onClickBtnHierarchy, slot0)
-	slot0:_AddClickListener(slot0._btnSkillPreview, slot0._onClickBtnSkillPreview, slot0)
-	slot0:_AddClickListener(slot0._btnVersion, slot0._onClickBtnVersion, slot0)
-	slot0:_AddClickListener(slot0._btnHardware, slot0._onClickBtnHardware, slot0)
-	slot0:_AddOnValueChanged(slot0._sliderRenderScale, slot0._onRenderScaleChange, slot0)
-	slot0:_AddClickListener(slot0._btnRoomOb, slot0._onClickBtnRoomOb, slot0)
-	slot0:_AddClickListener(slot0._btnRoomMap, slot0._onClickBtnRoomMap, slot0)
-	slot0:_AddClickListener(slot0._btnRoomDebug, slot0._onClickBtnRoomDebug, slot0)
-	slot0:_AddClickListener(slot0._btnRoomDebugBuildingArea, slot0._onClickRoomDebugBuildingArea, slot0)
-	slot0:_AddClickListener(slot0._btnForbidFightEffect, slot0._onClickForbidFightEffect, slot0)
-	slot0:_AddClickListener(slot0._btnCancelForbidFightEffect, slot0._onClickCancelForbidFightEffect, slot0)
-	slot0:_AddClickListener(slot0._btnTest1, slot0._onClickTest1, slot0)
-	slot0:_AddClickListener(slot0._btnTest2, slot0._onClickTest2, slot0)
-	slot0:_AddClickListener(slot0._btnTest3, slot0._onClickTest3, slot0)
-	slot0:_AddOnValueChanged(slot0._sliderRoomRotateSpeed, slot0._onRoomRotateSpeedChange, slot0)
-	slot0:_AddOnValueChanged(slot0._sliderRoomMoveSpeed, slot0._onRoomMoveSpeedChange, slot0)
-	slot0:_AddOnValueChanged(slot0._sliderRoomScaleSpeed, slot0._onRoomScaleSpeedChange, slot0)
-	slot0:_AddOnValueChanged(slot0._silderRoomTouchSpeed, slot0._onRoomTouchSpeedChange, slot0)
-	slot0:_AddClickListener(slot0._btnLoadTestAudio, slot0._onClickLoadTestAudio, slot0)
-	slot0:_AddClickListener(slot0._btnUnloadTestAudio, slot0._onClickUnloadTestAudio, slot0)
-	slot0:_AddOnValueChanged(slot0._visualToggle, slot0._onVisualToggleValueChange, slot0)
-	slot0:_AddOnValueChanged(slot0._dropRoomClock, slot0._onRoomClockSelectChanged, slot0)
-	slot0:_AddClickListener(slot0._btnRoomBuildingCamera, slot0._onClickRoomBuildingCamera, slot0)
-	slot0:_AddClickListener(slot0._btnChangeActivity, slot0._onClickChangeActivityBtn, slot0)
-	slot0:_AddClickListener(slot0._btnResetActivity, slot0._onClickResetActivityBtn, slot0)
-	slot0:_AddClickListener(slot0._btnEnterActivity, slot0._onClickEnterActivity, slot0)
-	slot0:_AddClickListener(slot0._btnResetActivityUnlockAnim, slot0._onClickResetActivityUnlockAim, slot0)
-	slot0:_AddOnValueChanged(slot0._dropActivity, slot0._onActivityDropValueChange, slot0)
-	slot0:_AddOnValueChanged(slot0._dropActivityStatus, slot0._onActivityStatusDropValueChange, slot0)
-	slot0:_AddClickListener(slot0._btnOnekeyFightSucc, slot0._onClickOnekeyFightSucc, slot0)
-	slot0:_AddClickListener(slot0._btnEnterDialogue, slot0._onClickEnterDialogue, slot0)
-	slot0:_AddClickListener(slot0._startEditV1a5HoleBtn, slot0._onClickStartEditV1a5HoleBtn, slot0)
-	slot0:_AddClickListener(slot0._endEditV1a5HoleBtn, slot0._onClickEndEditV1a5HoleBtn, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0:_AddClickListener(arg_2_0._btnDumpHierarchy, arg_2_0._onClickBtnDumpHierarchy, arg_2_0)
+	arg_2_0:_AddClickListener(arg_2_0._btnHierarchy, arg_2_0._onClickBtnHierarchy, arg_2_0)
+	arg_2_0:_AddClickListener(arg_2_0._btnSkillPreview, arg_2_0._onClickBtnSkillPreview, arg_2_0)
+	arg_2_0:_AddClickListener(arg_2_0._btnVersion, arg_2_0._onClickBtnVersion, arg_2_0)
+	arg_2_0:_AddClickListener(arg_2_0._btnHardware, arg_2_0._onClickBtnHardware, arg_2_0)
+	arg_2_0:_AddOnValueChanged(arg_2_0._sliderRenderScale, arg_2_0._onRenderScaleChange, arg_2_0)
+	arg_2_0:_AddClickListener(arg_2_0._btnRoomOb, arg_2_0._onClickBtnRoomOb, arg_2_0)
+	arg_2_0:_AddClickListener(arg_2_0._btnRoomMap, arg_2_0._onClickBtnRoomMap, arg_2_0)
+	arg_2_0:_AddClickListener(arg_2_0._btnRoomDebug, arg_2_0._onClickBtnRoomDebug, arg_2_0)
+	arg_2_0:_AddClickListener(arg_2_0._btnRoomDebugBuildingArea, arg_2_0._onClickRoomDebugBuildingArea, arg_2_0)
+	arg_2_0:_AddClickListener(arg_2_0._btnForbidFightEffect, arg_2_0._onClickForbidFightEffect, arg_2_0)
+	arg_2_0:_AddClickListener(arg_2_0._btnCancelForbidFightEffect, arg_2_0._onClickCancelForbidFightEffect, arg_2_0)
+	arg_2_0:_AddClickListener(arg_2_0._btnTest1, arg_2_0._onClickTest1, arg_2_0)
+	arg_2_0:_AddClickListener(arg_2_0._btnTest2, arg_2_0._onClickTest2, arg_2_0)
+	arg_2_0:_AddClickListener(arg_2_0._btnTest3, arg_2_0._onClickTest3, arg_2_0)
+	arg_2_0:_AddOnValueChanged(arg_2_0._sliderRoomRotateSpeed, arg_2_0._onRoomRotateSpeedChange, arg_2_0)
+	arg_2_0:_AddOnValueChanged(arg_2_0._sliderRoomMoveSpeed, arg_2_0._onRoomMoveSpeedChange, arg_2_0)
+	arg_2_0:_AddOnValueChanged(arg_2_0._sliderRoomScaleSpeed, arg_2_0._onRoomScaleSpeedChange, arg_2_0)
+	arg_2_0:_AddOnValueChanged(arg_2_0._silderRoomTouchSpeed, arg_2_0._onRoomTouchSpeedChange, arg_2_0)
+	arg_2_0:_AddClickListener(arg_2_0._btnLoadTestAudio, arg_2_0._onClickLoadTestAudio, arg_2_0)
+	arg_2_0:_AddClickListener(arg_2_0._btnUnloadTestAudio, arg_2_0._onClickUnloadTestAudio, arg_2_0)
+	arg_2_0:_AddOnValueChanged(arg_2_0._visualToggle, arg_2_0._onVisualToggleValueChange, arg_2_0)
+	arg_2_0:_AddOnValueChanged(arg_2_0._dropRoomClock, arg_2_0._onRoomClockSelectChanged, arg_2_0)
+	arg_2_0:_AddClickListener(arg_2_0._btnRoomBuildingCamera, arg_2_0._onClickRoomBuildingCamera, arg_2_0)
+	arg_2_0:_AddClickListener(arg_2_0._btnChangeActivity, arg_2_0._onClickChangeActivityBtn, arg_2_0)
+	arg_2_0:_AddClickListener(arg_2_0._btnResetActivity, arg_2_0._onClickResetActivityBtn, arg_2_0)
+	arg_2_0:_AddClickListener(arg_2_0._btnEnterActivity, arg_2_0._onClickEnterActivity, arg_2_0)
+	arg_2_0:_AddClickListener(arg_2_0._btnResetActivityUnlockAnim, arg_2_0._onClickResetActivityUnlockAim, arg_2_0)
+	arg_2_0:_AddOnValueChanged(arg_2_0._dropActivity, arg_2_0._onActivityDropValueChange, arg_2_0)
+	arg_2_0:_AddOnValueChanged(arg_2_0._dropActivityStatus, arg_2_0._onActivityStatusDropValueChange, arg_2_0)
+	arg_2_0:_AddClickListener(arg_2_0._btnOnekeyFightSucc, arg_2_0._onClickOnekeyFightSucc, arg_2_0)
+	arg_2_0:_AddClickListener(arg_2_0._btnEnterDialogue, arg_2_0._onClickEnterDialogue, arg_2_0)
+	arg_2_0:_AddClickListener(arg_2_0._startEditV1a5HoleBtn, arg_2_0._onClickStartEditV1a5HoleBtn, arg_2_0)
+	arg_2_0:_AddClickListener(arg_2_0._endEditV1a5HoleBtn, arg_2_0._onClickEndEditV1a5HoleBtn, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0:_RemoveClickListener(slot0._btnDumpHierarchy)
-	slot0:_RemoveClickListener(slot0._btnHierarchy)
-	slot0:_RemoveClickListener(slot0._btnSkillPreview)
-	slot0:_RemoveClickListener(slot0._btnVersion)
-	slot0:_RemoveClickListener(slot0._btnHardware)
-	slot0:_RemoveOnValueChanged(slot0._sliderRenderScale)
-	slot0:_RemoveClickListener(slot0._btnRoomOb)
-	slot0:_RemoveClickListener(slot0._btnRoomMap)
-	slot0:_RemoveClickListener(slot0._btnRoomDebug)
-	slot0:_RemoveClickListener(slot0._btnRoomDebugBuildingArea)
-	slot0:_RemoveClickListener(slot0._btnForbidFightEffect)
-	slot0:_RemoveClickListener(slot0._btnCancelForbidFightEffect)
-	slot0:_RemoveClickListener(slot0._btnTest1)
-	slot0:_RemoveClickListener(slot0._btnTest2)
-	slot0:_RemoveClickListener(slot0._btnTest3)
-	slot0:_RemoveOnValueChanged(slot0._sliderRoomRotateSpeed)
-	slot0:_RemoveOnValueChanged(slot0._sliderRoomMoveSpeed)
-	slot0:_RemoveOnValueChanged(slot0._sliderRoomScaleSpeed)
-	slot0:_RemoveOnValueChanged(slot0._silderRoomTouchSpeed)
-	slot0:_RemoveClickListener(slot0._btnLoadTestAudio)
-	slot0:_RemoveClickListener(slot0._btnUnloadTestAudio)
-	slot0:_RemoveOnValueChanged(slot0._visualToggle)
-	slot0:_RemoveOnValueChanged(slot0._dropRoomClock)
-	slot0:_RemoveClickListener(slot0._btnRoomBuildingCamera)
-	slot0:_RemoveClickListener(slot0._btnChangeActivity)
-	slot0:_RemoveClickListener(slot0._btnResetActivity)
-	slot0:_RemoveOnValueChanged(slot0._dropActivity)
-	slot0:_RemoveOnValueChanged(slot0._dropActivityStatus)
-	slot0:_RemoveClickListener(slot0._btnEnterActivity)
-	slot0:_RemoveClickListener(slot0._btnResetActivityUnlockAnim)
-	slot0:_RemoveClickListener(slot0._btnOnekeyFightSucc)
-	slot0:_RemoveClickListener(slot0._btnEnterDialogue)
-	slot0:_RemoveClickListener(slot0._startEditV1a5HoleBtn)
-	slot0:_RemoveClickListener(slot0._endEditV1a5HoleBtn)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0:_RemoveClickListener(arg_3_0._btnDumpHierarchy)
+	arg_3_0:_RemoveClickListener(arg_3_0._btnHierarchy)
+	arg_3_0:_RemoveClickListener(arg_3_0._btnSkillPreview)
+	arg_3_0:_RemoveClickListener(arg_3_0._btnVersion)
+	arg_3_0:_RemoveClickListener(arg_3_0._btnHardware)
+	arg_3_0:_RemoveOnValueChanged(arg_3_0._sliderRenderScale)
+	arg_3_0:_RemoveClickListener(arg_3_0._btnRoomOb)
+	arg_3_0:_RemoveClickListener(arg_3_0._btnRoomMap)
+	arg_3_0:_RemoveClickListener(arg_3_0._btnRoomDebug)
+	arg_3_0:_RemoveClickListener(arg_3_0._btnRoomDebugBuildingArea)
+	arg_3_0:_RemoveClickListener(arg_3_0._btnForbidFightEffect)
+	arg_3_0:_RemoveClickListener(arg_3_0._btnCancelForbidFightEffect)
+	arg_3_0:_RemoveClickListener(arg_3_0._btnTest1)
+	arg_3_0:_RemoveClickListener(arg_3_0._btnTest2)
+	arg_3_0:_RemoveClickListener(arg_3_0._btnTest3)
+	arg_3_0:_RemoveOnValueChanged(arg_3_0._sliderRoomRotateSpeed)
+	arg_3_0:_RemoveOnValueChanged(arg_3_0._sliderRoomMoveSpeed)
+	arg_3_0:_RemoveOnValueChanged(arg_3_0._sliderRoomScaleSpeed)
+	arg_3_0:_RemoveOnValueChanged(arg_3_0._silderRoomTouchSpeed)
+	arg_3_0:_RemoveClickListener(arg_3_0._btnLoadTestAudio)
+	arg_3_0:_RemoveClickListener(arg_3_0._btnUnloadTestAudio)
+	arg_3_0:_RemoveOnValueChanged(arg_3_0._visualToggle)
+	arg_3_0:_RemoveOnValueChanged(arg_3_0._dropRoomClock)
+	arg_3_0:_RemoveClickListener(arg_3_0._btnRoomBuildingCamera)
+	arg_3_0:_RemoveClickListener(arg_3_0._btnChangeActivity)
+	arg_3_0:_RemoveClickListener(arg_3_0._btnResetActivity)
+	arg_3_0:_RemoveOnValueChanged(arg_3_0._dropActivity)
+	arg_3_0:_RemoveOnValueChanged(arg_3_0._dropActivityStatus)
+	arg_3_0:_RemoveClickListener(arg_3_0._btnEnterActivity)
+	arg_3_0:_RemoveClickListener(arg_3_0._btnResetActivityUnlockAnim)
+	arg_3_0:_RemoveClickListener(arg_3_0._btnOnekeyFightSucc)
+	arg_3_0:_RemoveClickListener(arg_3_0._btnEnterDialogue)
+	arg_3_0:_RemoveClickListener(arg_3_0._startEditV1a5HoleBtn)
+	arg_3_0:_RemoveClickListener(arg_3_0._endEditV1a5HoleBtn)
 end
 
-function slot0._AddClickListener(slot0, slot1, slot2, slot3)
-	if slot1 then
-		slot1:AddClickListener(slot2, slot3)
+function var_0_0._AddClickListener(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
+	if arg_4_1 then
+		arg_4_1:AddClickListener(arg_4_2, arg_4_3)
 	end
 end
 
-function slot0._RemoveClickListener(slot0, slot1)
-	if slot1 then
-		slot1:RemoveClickListener()
+function var_0_0._RemoveClickListener(arg_5_0, arg_5_1)
+	if arg_5_1 then
+		arg_5_1:RemoveClickListener()
 	end
 end
 
-function slot0._AddOnValueChanged(slot0, slot1, slot2, slot3)
-	if slot1 then
-		slot1:AddOnValueChanged(slot2, slot3)
+function var_0_0._AddOnValueChanged(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
+	if arg_6_1 then
+		arg_6_1:AddOnValueChanged(arg_6_2, arg_6_3)
 	end
 end
 
-function slot0._RemoveOnValueChanged(slot0, slot1)
-	if slot1 then
-		slot1:RemoveOnValueChanged()
+function var_0_0._RemoveOnValueChanged(arg_7_0, arg_7_1)
+	if arg_7_1 then
+		arg_7_1:RemoveOnValueChanged()
 	end
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_8_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot1 = CameraMgr.instance:getRenderScale() or 1
+function var_0_0.onOpen(arg_9_0)
+	local var_9_0 = CameraMgr.instance:getRenderScale() or 1
 
-	slot0._sliderRenderScale:SetValue(slot1)
+	arg_9_0._sliderRenderScale:SetValue(var_9_0)
 
-	slot0._txtRenderScale.text = string.format("RenderScale\n%.2f", slot1)
+	arg_9_0._txtRenderScale.text = string.format("RenderScale\n%.2f", var_9_0)
 
-	slot0._sliderRoomRotateSpeed:SetValue((RoomController.instance.rotateSpeed - 0.2) / 1.8)
-	slot0._sliderRoomMoveSpeed:SetValue((RoomController.instance.moveSpeed - 0.2) / 1.8)
-	slot0._sliderRoomScaleSpeed:SetValue((RoomController.instance.scaleSpeed - 0.2) / 1.8)
+	arg_9_0._sliderRoomRotateSpeed:SetValue((RoomController.instance.rotateSpeed - 0.2) / 1.8)
+	arg_9_0._sliderRoomMoveSpeed:SetValue((RoomController.instance.moveSpeed - 0.2) / 1.8)
+	arg_9_0._sliderRoomScaleSpeed:SetValue((RoomController.instance.scaleSpeed - 0.2) / 1.8)
 
-	if slot0._silderRoomTouchSpeed then
-		slot0._silderRoomTouchSpeed:SetValue((RoomController.instance.touchMoveSpeed - 0.2) / 1.8)
+	if arg_9_0._silderRoomTouchSpeed then
+		arg_9_0._silderRoomTouchSpeed:SetValue((RoomController.instance.touchMoveSpeed - 0.2) / 1.8)
 	end
 
-	if slot0._dropRoomClock then
-		slot2 = {
+	if arg_9_0._dropRoomClock then
+		local var_9_1 = {
 			"选择时间"
 		}
 
-		for slot6 = 1, 24 do
-			table.insert(slot2, slot6 .. "时")
+		for iter_9_0 = 1, 24 do
+			table.insert(var_9_1, iter_9_0 .. "时")
 		end
 
-		slot0._dropRoomClock:ClearOptions()
-		slot0._dropRoomClock:AddOptions(slot2)
+		arg_9_0._dropRoomClock:ClearOptions()
+		arg_9_0._dropRoomClock:AddOptions(var_9_1)
 	end
 
-	slot0:initActivityDrop()
-	slot0:initActivityEnterFunc()
+	arg_9_0:initActivityDrop()
+	arg_9_0:initActivityEnterFunc()
 end
 
-function slot0.initActivityDrop(slot0)
-	if not _G[string.format("VersionActivity%sEnum", ActivityLiveMgr.instance:getLiveMgrVersion())] then
-		logError("GMToolView2 initActivityDrop getLiveMgrVersion error version:" .. tostring(slot1))
+function var_0_0.initActivityDrop(arg_10_0)
+	local var_10_0 = ActivityLiveMgr.instance:getLiveMgrVersion()
+	local var_10_1 = _G[string.format("VersionActivity%sEnum", var_10_0)]
+
+	if not var_10_1 then
+		logError("GMToolView2 initActivityDrop getLiveMgrVersion error version:" .. tostring(var_10_0))
 
 		return
 	end
 
-	slot0.activityIdList = {}
-	slot0.activityShowStrList = {}
-	slot4 = {}
-
-	tabletool.addValues(slot4, slot2.ActivityId)
-
-	slot8 = slot1
-	slot0.activityAll = {
-		[string.format("%sall", slot8)] = slot4
+	local var_10_2 = {
+		var_10_1.ActivityId
 	}
 
-	for slot8, slot9 in ipairs({
-		slot2.ActivityId
-	}) do
-		for slot13, slot14 in pairs(slot9) do
-			if type(slot14) == "table" then
-				for slot18, slot19 in pairs(slot14) do
-					table.insert(slot0.activityIdList, slot19)
+	arg_10_0.activityIdList = {}
+	arg_10_0.activityShowStrList = {}
+
+	local var_10_3 = {}
+
+	tabletool.addValues(var_10_3, var_10_1.ActivityId)
+
+	arg_10_0.activityAll = {
+		[string.format("%sall", var_10_0)] = var_10_3
+	}
+
+	for iter_10_0, iter_10_1 in ipairs(var_10_2) do
+		for iter_10_2, iter_10_3 in pairs(iter_10_1) do
+			if type(iter_10_3) == "table" then
+				for iter_10_4, iter_10_5 in pairs(iter_10_3) do
+					table.insert(arg_10_0.activityIdList, iter_10_5)
 				end
 			else
-				table.insert(slot0.activityIdList, slot14)
+				table.insert(arg_10_0.activityIdList, iter_10_3)
 			end
 		end
 	end
 
-	for slot8, slot9 in ipairs(slot0.activityIdList) do
-		table.insert(slot0.activityShowStrList, (lua_activity.configDict[slot9] and slot10.name or "") .. string.format("(%s)", slot9))
+	for iter_10_6, iter_10_7 in ipairs(arg_10_0.activityIdList) do
+		local var_10_4 = lua_activity.configDict[iter_10_7]
+
+		table.insert(arg_10_0.activityShowStrList, (var_10_4 and var_10_4.name or "") .. string.format("(%s)", iter_10_7))
 	end
 
-	for slot8, slot9 in pairs(slot0.activityAll) do
-		table.insert(slot0.activityIdList, 1, slot8)
-		table.insert(slot0.activityShowStrList, 1, slot8)
+	for iter_10_8, iter_10_9 in pairs(arg_10_0.activityAll) do
+		table.insert(arg_10_0.activityIdList, 1, iter_10_8)
+		table.insert(arg_10_0.activityShowStrList, 1, iter_10_8)
 	end
 
-	slot0.statusList = {
+	arg_10_0.statusList = {
 		ActivityEnum.ActivityStatus.Normal,
 		ActivityEnum.ActivityStatus.NotOpen,
 		ActivityEnum.ActivityStatus.Expired,
 		ActivityEnum.ActivityStatus.NotUnlock,
 		ActivityEnum.ActivityStatus.NotOnLine
 	}
-	slot0.statusShowStrList = {
+	arg_10_0.statusShowStrList = {
 		"正常开启状态",
 		"未达到开启时间",
 		"活动已结束",
 		"活动未解锁",
 		"活动已下线"
 	}
-	slot0.selectActivityIndex = 1
-	slot0.selectStatusIndex = 1
+	arg_10_0.selectActivityIndex = 1
+	arg_10_0.selectStatusIndex = 1
 
-	if slot0._dropActivity then
-		slot0._dropActivity:ClearOptions()
-		slot0._dropActivityStatus:ClearOptions()
-		slot0._dropActivity:AddOptions(slot0.activityShowStrList)
-		slot0._dropActivityStatus:AddOptions(slot0.statusShowStrList)
+	if arg_10_0._dropActivity then
+		arg_10_0._dropActivity:ClearOptions()
+		arg_10_0._dropActivityStatus:ClearOptions()
+		arg_10_0._dropActivity:AddOptions(arg_10_0.activityShowStrList)
+		arg_10_0._dropActivityStatus:AddOptions(arg_10_0.statusShowStrList)
 	end
 end
 
-function slot0.onOpenFinish(slot0)
-	slot0.isOpenFinish = true
+function var_0_0.onOpenFinish(arg_11_0)
+	arg_11_0.isOpenFinish = true
 end
 
-function slot0.onClose(slot0)
-	ZProj.AudioManager.Instance:SetErrorCallback(nil, )
-	TaskDispatcher.cancelTask(slot0._checkCallAudiosLoop, slot0)
+function var_0_0.onClose(arg_12_0)
+	ZProj.AudioManager.Instance:SetErrorCallback(nil, nil)
+	TaskDispatcher.cancelTask(arg_12_0._checkCallAudiosLoop, arg_12_0)
 end
 
-function slot0._checkLowerName(slot0, slot1)
-	slot2 = {}
-	slot3 = {}
+function var_0_0._checkLowerName(arg_13_0, arg_13_1)
+	local var_13_0 = {}
+	local var_13_1 = {}
 
-	for slot7, slot8 in ipairs(slot1) do
-		slot9 = AudioConfig.instance:getAudioCOById(slot8)
+	for iter_13_0, iter_13_1 in ipairs(arg_13_1) do
+		local var_13_2 = AudioConfig.instance:getAudioCOById(iter_13_1)
 
-		if string.lower(slot9.bankName) ~= slot9.bankName and not slot3[slot9.bankName] then
-			slot3[slot9.bankName] = true
+		if string.lower(var_13_2.bankName) ~= var_13_2.bankName and not var_13_1[var_13_2.bankName] then
+			var_13_1[var_13_2.bankName] = true
 
-			table.insert(slot2, "bank: " .. slot9.bankName)
+			table.insert(var_13_0, "bank: " .. var_13_2.bankName)
 		end
 
-		if string.lower(slot9.eventName) ~= slot9.eventName then
-			table.insert(slot2, "event: " .. slot9.eventName)
+		if string.lower(var_13_2.eventName) ~= var_13_2.eventName then
+			table.insert(var_13_0, "event: " .. var_13_2.eventName)
 		end
 	end
 
-	if #slot2 > 0 then
-		logError("大小写问题：\n" .. table.concat(slot2, "\n"))
+	if #var_13_0 > 0 then
+		logError("大小写问题：\n" .. table.concat(var_13_0, "\n"))
 	end
 end
 
-function slot0._checkAudioConfigs(slot0, slot1, slot2)
-	for slot6, slot7 in ipairs(slot1.configList) do
-		if slot7.id and slot7.id > 0 and not tabletool.indexOf(slot0._audioConfigs, slot7.id) then
-			table.insert(slot0._audioConfigs, slot7.id)
+function var_0_0._checkAudioConfigs(arg_14_0, arg_14_1, arg_14_2)
+	for iter_14_0, iter_14_1 in ipairs(arg_14_1.configList) do
+		if iter_14_1.id and iter_14_1.id > 0 and not tabletool.indexOf(arg_14_0._audioConfigs, iter_14_1.id) then
+			table.insert(arg_14_0._audioConfigs, iter_14_1.id)
 
-			slot0._audioId2Excel = slot0._audioId2Excel or {}
-			slot0._audioId2Excel[slot7.id] = slot2
+			arg_14_0._audioId2Excel = arg_14_0._audioId2Excel or {}
+			arg_14_0._audioId2Excel[iter_14_1.id] = arg_14_2
 		end
 	end
 end
 
-function slot0._onClickLoadTestAudio(slot0)
-	slot0:_testAudioParseParam(true, slot0._inpTestAudio:GetText() or "", slot0._inpBeginTestAudio:GetText() or "", slot0._inpEndTestAudio:GetText() or "")
+function var_0_0._onClickLoadTestAudio(arg_15_0)
+	local var_15_0 = arg_15_0._inpTestAudio:GetText() or ""
+	local var_15_1 = arg_15_0._inpBeginTestAudio:GetText() or ""
+	local var_15_2 = arg_15_0._inpEndTestAudio:GetText() or ""
+
+	arg_15_0:_testAudioParseParam(true, var_15_0, var_15_1, var_15_2)
 end
 
-function slot0._onClickUnloadTestAudio(slot0)
-	slot0:_testAudioParseParam(false, slot0._inpTestAudio:GetText() or "", slot0._inpBeginTestAudio:GetText() or "", slot0._inpEndTestAudio:GetText() or "")
+function var_0_0._onClickUnloadTestAudio(arg_16_0)
+	local var_16_0 = arg_16_0._inpTestAudio:GetText() or ""
+	local var_16_1 = arg_16_0._inpBeginTestAudio:GetText() or ""
+	local var_16_2 = arg_16_0._inpEndTestAudio:GetText() or ""
+
+	arg_16_0:_testAudioParseParam(false, var_16_0, var_16_1, var_16_2)
 end
 
-function slot0._testAudioParseParam(slot0, slot1, slot2, slot3, slot4)
-	if string.nilorempty(slot2) then
+function var_0_0._testAudioParseParam(arg_17_0, arg_17_1, arg_17_2, arg_17_3, arg_17_4)
+	if string.nilorempty(arg_17_2) then
 		return
 	end
 
-	slot7 = string.format("%s/audios/%s", SLFramework.FrameworkSettings.AssetRootDir, SLFramework.FrameworkSettings.CurPlatformName)
+	local var_17_0 = SLFramework.FrameworkSettings.CurPlatformName
+	local var_17_1 = SLFramework.FrameworkSettings.AssetRootDir
+	local var_17_2 = string.format("%s/audios/%s", var_17_1, var_17_0)
+	local var_17_3 = tonumber(arg_17_3)
 
-	if tonumber(slot3) then
-		if not tonumber(slot4) or slot9 < slot8 then
-			slot9 = slot8
+	if var_17_3 then
+		local var_17_4 = tonumber(arg_17_4)
+
+		if not var_17_4 or var_17_4 < var_17_3 then
+			var_17_4 = var_17_3
 		end
 
-		slot0:_multiLoadOrUnloadAudio(slot2, slot8, slot9, slot7, slot1)
+		arg_17_0:_multiLoadOrUnloadAudio(arg_17_2, var_17_3, var_17_4, var_17_2, arg_17_1)
 	else
-		slot0:_singleLoadOrUnloadAudio(slot0:_getAudioNameWithSuffix(slot2), slot7, slot1, true)
+		local var_17_5 = arg_17_0:_getAudioNameWithSuffix(arg_17_2)
+
+		arg_17_0:_singleLoadOrUnloadAudio(var_17_5, var_17_2, arg_17_1, true)
 	end
 end
 
-function slot0._getAudioNameWithSuffix(slot0, slot1, slot2)
-	slot3 = string.format("%s.bnk", slot1)
+function var_0_0._getAudioNameWithSuffix(arg_18_0, arg_18_1, arg_18_2)
+	local var_18_0 = string.format("%s.bnk", arg_18_1)
 
-	if slot2 then
-		slot3 = string.format("%s_%s.bnk", slot1, slot2)
+	if arg_18_2 then
+		var_18_0 = string.format("%s_%s.bnk", arg_18_1, arg_18_2)
 	end
 
-	return slot3
+	return var_18_0
 end
 
-function slot0._singleLoadOrUnloadAudio(slot0, slot1, slot2, slot3, slot4)
-	if SLFramework.FileHelper.IsFileExists(string.format("%s/%s", slot2, slot1)) or SLFramework.FileHelper.IsFileExists(string.format("%s/%s/%s", slot2, AudioMgr.instance:getCurLang(), slot1)) then
-		if slot3 then
-			ZProj.AudioManager.Instance:LoadBank(slot1)
-			logNormal("加载音频---" .. slot1)
+function var_0_0._singleLoadOrUnloadAudio(arg_19_0, arg_19_1, arg_19_2, arg_19_3, arg_19_4)
+	local var_19_0 = string.format("%s/%s", arg_19_2, arg_19_1)
+	local var_19_1 = AudioMgr.instance:getCurLang()
+	local var_19_2 = string.format("%s/%s/%s", arg_19_2, var_19_1, arg_19_1)
+
+	if SLFramework.FileHelper.IsFileExists(var_19_0) or SLFramework.FileHelper.IsFileExists(var_19_2) then
+		if arg_19_3 then
+			ZProj.AudioManager.Instance:LoadBank(arg_19_1)
+			logNormal("加载音频---" .. arg_19_1)
 		else
-			ZProj.AudioManager.Instance:UnloadBank(slot1)
-			logNormal("卸载音频---" .. slot1)
+			ZProj.AudioManager.Instance:UnloadBank(arg_19_1)
+			logNormal("卸载音频---" .. arg_19_1)
 
-			if slot4 then
-				GameGCMgr.instance:dispatchEvent(GameGCEvent.AudioGC, slot0)
+			if arg_19_4 then
+				GameGCMgr.instance:dispatchEvent(GameGCEvent.AudioGC, arg_19_0)
 			end
 		end
 	else
-		logError(string.format("音频文件：%s 不存在，平台：%s，语言：%s", slot1, SLFramework.FrameworkSettings.CurPlatformName, slot6))
+		local var_19_3 = SLFramework.FrameworkSettings.CurPlatformName
+		local var_19_4 = string.format("音频文件：%s 不存在，平台：%s，语言：%s", arg_19_1, var_19_3, var_19_1)
+
+		logError(var_19_4)
 	end
 end
 
-function slot0._multiLoadOrUnloadAudio(slot0, slot1, slot2, slot3, slot4, slot5)
-	for slot9 = slot2, slot3 do
-		slot0:_singleLoadOrUnloadAudio(slot0:_getAudioNameWithSuffix(slot1, slot9), slot4, slot5, false)
+function var_0_0._multiLoadOrUnloadAudio(arg_20_0, arg_20_1, arg_20_2, arg_20_3, arg_20_4, arg_20_5)
+	for iter_20_0 = arg_20_2, arg_20_3 do
+		local var_20_0 = arg_20_0:_getAudioNameWithSuffix(arg_20_1, iter_20_0)
+
+		arg_20_0:_singleLoadOrUnloadAudio(var_20_0, arg_20_4, arg_20_5, false)
 	end
 
-	if not slot5 then
-		GameGCMgr.instance:dispatchEvent(GameGCEvent.AudioGC, slot0)
+	if not arg_20_5 then
+		GameGCMgr.instance:dispatchEvent(GameGCEvent.AudioGC, arg_20_0)
 	end
 end
 
-function slot0._onClickBtnDumpHierarchy(slot0)
-	slot0:closeThis()
+function var_0_0._onClickBtnDumpHierarchy(arg_21_0)
+	arg_21_0:closeThis()
 
-	if not string.nilorempty(slot0._inpDumpHierarchy:GetText()) then
-		slot1 = tonumber(slot2) or 100
+	local var_21_0 = 100
+	local var_21_1 = arg_21_0._inpDumpHierarchy:GetText()
+
+	var_21_0 = not string.nilorempty(var_21_1) and tonumber(var_21_1) or var_21_0
+
+	local var_21_2 = SLFramework.GameObjectHelper.GetRootGameObjects()
+	local var_21_3 = {}
+
+	for iter_21_0 = 0, var_21_2.Length - 1 do
+		local var_21_4 = var_21_2[iter_21_0]
+
+		arg_21_0:_dumpGOSelf(var_21_4.transform, var_21_3, 0)
+		arg_21_0:_dumpChildren(var_21_4.transform, var_21_3, 1, var_21_0)
 	end
 
-	slot4 = {}
+	local var_21_5 = table.concat(var_21_3, "\n")
 
-	for slot8 = 0, SLFramework.GameObjectHelper.GetRootGameObjects().Length - 1 do
-		slot9 = slot3[slot8]
-
-		slot0:_dumpGOSelf(slot9.transform, slot4, 0)
-		slot0:_dumpChildren(slot9.transform, slot4, 1, slot1)
-	end
-
-	slot5 = table.concat(slot4, "\n")
-
-	logError("\n" .. slot5)
-	ZProj.GameHelper.SetSystemBuffer(slot5)
+	logError("\n" .. var_21_5)
+	ZProj.GameHelper.SetSystemBuffer(var_21_5)
 	GameFacade.showToast(ToastEnum.IconId, "Hierarchy信息已复制到粘贴板")
 end
 
-function slot0._onClickBtnHierarchy(slot0)
-	slot0:closeThis()
+function var_0_0._onClickBtnHierarchy(arg_22_0)
+	arg_22_0:closeThis()
 	ViewMgr.instance:openView(ViewName.HierarchyView)
 end
 
-function slot0._dumpGOSelf(slot0, slot1, slot2, slot3)
-	for slot8 = 1, slot3 do
-		slot4 = "" .. " - "
+function var_0_0._dumpGOSelf(arg_23_0, arg_23_1, arg_23_2, arg_23_3)
+	local var_23_0 = ""
+
+	for iter_23_0 = 1, arg_23_3 do
+		var_23_0 = var_23_0 .. " - "
 	end
 
-	if slot1:GetComponent(typeof(UnityEngine.RectTransform)) then
-		if slot1:GetComponent(typeof(UnityEngine.CanvasGroup)) then
-			slot4 = slot4 .. "[" .. slot1.name .. "]" .. (slot1.gameObject.activeSelf and " √" or " ×") .. string.format(" rectPos(%s,%s)", slot0:_getIntOrFloat2Str(slot1.anchoredPosition.x), slot0:_getIntOrFloat2Str(slot1.anchoredPosition.y)) .. string.format(" canvasGroup.alpha(%s)", slot0:_getIntOrFloat2Str(slot7.alpha))
+	local var_23_1 = var_23_0 .. "[" .. arg_23_1.name .. "]" .. (arg_23_1.gameObject.activeSelf and " √" or " ×")
+
+	if arg_23_1:GetComponent(typeof(UnityEngine.RectTransform)) then
+		local var_23_2 = arg_23_0:_getIntOrFloat2Str(arg_23_1.anchoredPosition.x)
+		local var_23_3 = arg_23_0:_getIntOrFloat2Str(arg_23_1.anchoredPosition.y)
+
+		var_23_1 = var_23_1 .. string.format(" rectPos(%s,%s)", var_23_2, var_23_3)
+
+		local var_23_4 = arg_23_1:GetComponent(typeof(UnityEngine.CanvasGroup))
+
+		if var_23_4 then
+			local var_23_5 = arg_23_0:_getIntOrFloat2Str(var_23_4.alpha)
+
+			var_23_1 = var_23_1 .. string.format(" canvasGroup.alpha(%s)", var_23_5)
 		end
 	else
-		slot4 = slot4 .. string.format(" pos(%s,%s,%s)", slot0:_getIntOrFloat2Str(slot1.localPosition.x), slot0:_getIntOrFloat2Str(slot1.localPosition.y), slot0:_getIntOrFloat2Str(slot1.localPosition.z))
+		local var_23_6 = arg_23_0:_getIntOrFloat2Str(arg_23_1.localPosition.x)
+		local var_23_7 = arg_23_0:_getIntOrFloat2Str(arg_23_1.localPosition.y)
+		local var_23_8 = arg_23_0:_getIntOrFloat2Str(arg_23_1.localPosition.z)
+
+		var_23_1 = var_23_1 .. string.format(" pos(%s,%s,%s)", var_23_6, var_23_7, var_23_8)
 	end
 
-	if slot1.localScale.x == slot1.localScale.y and slot1.localScale.x == slot1.localScale.z then
-		if slot1.localScale.x ~= 1 then
-			slot4 = slot4 .. string.format(" scale(%s)", slot0:_getIntOrFloat2Str(slot1.localScale.x))
+	if arg_23_1.localScale.x == arg_23_1.localScale.y and arg_23_1.localScale.x == arg_23_1.localScale.z then
+		if arg_23_1.localScale.x ~= 1 then
+			local var_23_9 = arg_23_0:_getIntOrFloat2Str(arg_23_1.localScale.x)
+
+			var_23_1 = var_23_1 .. string.format(" scale(%s)", var_23_9)
 		end
 	else
-		slot4 = slot4 .. string.format(" scale(%s,%s,%s)", slot0:_getIntOrFloat2Str(slot1.localScale.x), slot0:_getIntOrFloat2Str(slot1.localScale.y), slot0:_getIntOrFloat2Str(slot1.localScale.z))
+		local var_23_10 = arg_23_0:_getIntOrFloat2Str(arg_23_1.localScale.x)
+		local var_23_11 = arg_23_0:_getIntOrFloat2Str(arg_23_1.localScale.y)
+		local var_23_12 = arg_23_0:_getIntOrFloat2Str(arg_23_1.localScale.z)
+
+		var_23_1 = var_23_1 .. string.format(" scale(%s,%s,%s)", var_23_10, var_23_11, var_23_12)
 	end
 
-	table.insert(slot2, slot4)
+	table.insert(arg_23_2, var_23_1)
 end
 
-function slot0._getIntOrFloat2Str(slot0, slot1)
-	if math.floor(slot1 * 100 + 0.5) / 100 % 1 == 0 then
-		return tostring(slot2)
-	elseif slot2 % 0.1 == 0 then
-		return string.format("%.1f", slot2)
+function var_0_0._getIntOrFloat2Str(arg_24_0, arg_24_1)
+	local var_24_0 = math.floor(arg_24_1 * 100 + 0.5) / 100
+
+	if var_24_0 % 1 == 0 then
+		return tostring(var_24_0)
+	elseif var_24_0 % 0.1 == 0 then
+		return string.format("%.1f", var_24_0)
 	else
-		return string.format("%.2f", slot2)
+		return string.format("%.2f", var_24_0)
 	end
 end
 
-function slot0._dumpChildren(slot0, slot1, slot2, slot3, slot4)
-	for slot8 = 0, slot1.childCount - 1 do
-		slot0:_dumpGOSelf(slot1:GetChild(slot8), slot2, slot3)
+function var_0_0._dumpChildren(arg_25_0, arg_25_1, arg_25_2, arg_25_3, arg_25_4)
+	for iter_25_0 = 0, arg_25_1.childCount - 1 do
+		local var_25_0 = arg_25_1:GetChild(iter_25_0)
 
-		if slot3 < slot4 - 1 then
-			slot0:_dumpChildren(slot9, slot2, slot3 + 1, slot4)
+		arg_25_0:_dumpGOSelf(var_25_0, arg_25_2, arg_25_3)
+
+		if arg_25_3 < arg_25_4 - 1 then
+			arg_25_0:_dumpChildren(var_25_0, arg_25_2, arg_25_3 + 1, arg_25_4)
 		end
 	end
 end
 
-function slot0._onClickBtnSkillPreview(slot0)
+function var_0_0._onClickBtnSkillPreview(arg_26_0)
 	SkillEditorMgr.instance:start()
 end
 
-function slot0._onClickBtnVersion(slot0)
-	slot1 = SDKMgr.instance:getGameId()
-	slot2 = BootNativeUtil.getAppVersion()
-	slot3 = SLFramework.GameUpdate.HotUpdateInfoMgr.LocalResVersionStr
-	slot4 = "gameId=" .. slot1 .. "  type=" .. type(slot1)
-	slot5 = "appVersion=" .. slot2 .. "  type=" .. type(slot2)
-	slot6 = "hotUpdateVersion=" .. slot3 .. "  type=" .. type(slot3)
+function var_0_0._onClickBtnVersion(arg_27_0)
+	local var_27_0 = SDKMgr.instance:getGameId()
+	local var_27_1 = BootNativeUtil.getAppVersion()
+	local var_27_2 = SLFramework.GameUpdate.HotUpdateInfoMgr.LocalResVersionStr
+	local var_27_3 = "gameId=" .. var_27_0 .. "  type=" .. type(var_27_0)
+	local var_27_4 = "appVersion=" .. var_27_1 .. "  type=" .. type(var_27_1)
+	local var_27_5 = "hotUpdateVersion=" .. var_27_2 .. "  type=" .. type(var_27_2)
 
-	logError(slot4)
-	logError(slot5)
-	logError(slot6)
-	MessageBoxController.instance:showMsgBoxByStr(slot4 .. "\n" .. slot5 .. "\n" .. slot6)
+	logError(var_27_3)
+	logError(var_27_4)
+	logError(var_27_5)
+	MessageBoxController.instance:showMsgBoxByStr(var_27_3 .. "\n" .. var_27_4 .. "\n" .. var_27_5)
 end
 
-slot1 = {
+local var_0_1 = {
 	[ModuleEnum.Performance.High] = "高配",
 	[ModuleEnum.Performance.Middle] = "中配",
 	[ModuleEnum.Performance.Low] = "低配"
 }
 
-function slot0._onClickBtnHardware(slot0)
-	slot5, slot6 = HardwareUtil.getPerformanceGrade()
-	slot8 = "设备名: " .. (UnityEngine.SystemInfo.deviceModel or "nil")
-	slot9 = "CPU: " .. (BootNativeUtil.getCpuName() or "nil")
-	slot10 = "GPU: " .. (UnityEngine.SystemInfo.graphicsDeviceName or "nil")
-	slot11 = "Memory: " .. (UnityEngine.SystemInfo.systemMemorySize or "nil")
-	slot12 = "硬件分级：" .. uv0[slot5] .. " by " .. slot6
-	slot13 = "设备DPI：" .. UnityEngine.Screen.dpi
-	slot14 = "分辨率：" .. UnityEngine.Screen.currentResolution:ToString()
+function var_0_0._onClickBtnHardware(arg_28_0)
+	local var_28_0 = UnityEngine.SystemInfo.deviceModel
+	local var_28_1 = BootNativeUtil.getCpuName()
+	local var_28_2 = UnityEngine.SystemInfo.graphicsDeviceName
+	local var_28_3 = UnityEngine.SystemInfo.systemMemorySize
+	local var_28_4, var_28_5 = HardwareUtil.getPerformanceGrade()
+	local var_28_6 = var_0_1[var_28_4]
+	local var_28_7 = "设备名: " .. (var_28_0 or "nil")
+	local var_28_8 = "CPU: " .. (var_28_1 or "nil")
+	local var_28_9 = "GPU: " .. (var_28_2 or "nil")
+	local var_28_10 = "Memory: " .. (var_28_3 or "nil")
+	local var_28_11 = "硬件分级：" .. var_28_6 .. " by " .. var_28_5
+	local var_28_12 = "设备DPI：" .. UnityEngine.Screen.dpi
+	local var_28_13 = "分辨率：" .. UnityEngine.Screen.currentResolution:ToString()
 
-	logError(slot8)
-	logError(slot9)
-	logError(slot10)
-	logError(slot11)
-	logError(slot12)
-	logError(slot13)
-	logError(slot14)
-	MessageBoxController.instance:showMsgBoxByStr(slot8)
-	MessageBoxController.instance:showMsgBoxByStr(slot9 .. "\n" .. slot10)
-	MessageBoxController.instance:showMsgBoxByStr(slot11 .. "\n" .. slot12)
-	MessageBoxController.instance:showMsgBoxByStr(slot13 .. "\n" .. slot14)
+	logError(var_28_7)
+	logError(var_28_8)
+	logError(var_28_9)
+	logError(var_28_10)
+	logError(var_28_11)
+	logError(var_28_12)
+	logError(var_28_13)
+	MessageBoxController.instance:showMsgBoxByStr(var_28_7)
+	MessageBoxController.instance:showMsgBoxByStr(var_28_8 .. "\n" .. var_28_9)
+	MessageBoxController.instance:showMsgBoxByStr(var_28_10 .. "\n" .. var_28_11)
+	MessageBoxController.instance:showMsgBoxByStr(var_28_12 .. "\n" .. var_28_13)
 end
 
-function slot0._onRenderScaleChange(slot0, slot1, slot2)
-	CameraMgr.instance:setRenderScale(slot2)
+function var_0_0._onRenderScaleChange(arg_29_0, arg_29_1, arg_29_2)
+	CameraMgr.instance:setRenderScale(arg_29_2)
 
-	slot0._txtRenderScale.text = string.format("RenderScale\n%.2f", slot2)
+	arg_29_0._txtRenderScale.text = string.format("RenderScale\n%.2f", arg_29_2)
 end
 
-function slot0._onClickBtnRoomOb(slot0)
+function var_0_0._onClickBtnRoomOb(arg_30_0)
 	RoomController.instance:enterRoom(RoomEnum.GameMode.Ob)
 end
 
-function slot0._onClickBtnRoomMap(slot0)
+function var_0_0._onClickBtnRoomMap(arg_31_0)
 	RoomController.instance:enterRoom(RoomEnum.GameMode.Edit)
 end
 
-function slot0._onClickBtnRoomDebug(slot0)
+function var_0_0._onClickBtnRoomDebug(arg_32_0)
 	ViewMgr.instance:openView(ViewName.RoomDebugEntranceView)
 end
 
-function slot0._onClickRoomDebugBuildingArea(slot0)
+function var_0_0._onClickRoomDebugBuildingArea(arg_33_0)
 	if GameSceneMgr.instance:getCurSceneType() == SceneType.Room then
 		RoomDebugController.instance:openBuildingAreaView()
 	else
@@ -508,149 +575,163 @@ function slot0._onClickRoomDebugBuildingArea(slot0)
 	end
 end
 
-function slot0._onClickForbidFightEffect(slot0)
+function var_0_0._onClickForbidFightEffect(arg_34_0)
 	FightEffectPool.isForbidEffect = true
 end
 
-function slot0._onClickCancelForbidFightEffect(slot0)
+function var_0_0._onClickCancelForbidFightEffect(arg_35_0)
 	FightEffectPool.isForbidEffect = nil
 end
 
-function slot0._onClickTest1(slot0)
+function var_0_0._onClickTest1(arg_36_0)
 	ViewMgr.instance:openView(ViewName.GMLangTxtView)
 end
 
-function slot0._onQueryProductDetailsCallBack(slot0)
+function var_0_0._onQueryProductDetailsCallBack(arg_37_0)
 	logError("_onQueryProductDetailsCallBack")
 end
 
-function slot0._onClickTest2(slot0)
+function var_0_0._onClickTest2(arg_38_0)
 	logError("test2")
 	System.GC.Collect(2, System.GCCollectionMode.Forced, true, true)
 end
 
-function slot0._onClickTest3(slot0)
+function var_0_0._onClickTest3(arg_39_0)
 	logError("test3")
 
 	if GameSceneMgr.instance:getCurSceneType() == SceneType.Room and RoomController.instance:isObMode() then
-		slot3 = GameSceneMgr.instance:getCurScene()
+		local var_39_0 = RoomMapVehicleEntity:getTag()
+		local var_39_1 = RoomMapVehicleModel.instance:getList()
+		local var_39_2 = GameSceneMgr.instance:getCurScene()
 
-		for slot7, slot8 in ipairs(RoomMapVehicleModel.instance:getList()) do
-			if slot3.vehiclemgr:getUnit(RoomMapVehicleEntity:getTag(), slot8.id) then
-				slot3.cameraFollow:setFollowTarget(slot9.cameraFollowTargetComp)
+		for iter_39_0, iter_39_1 in ipairs(var_39_1) do
+			local var_39_3 = var_39_2.vehiclemgr:getUnit(var_39_0, iter_39_1.id)
+
+			if var_39_3 then
+				var_39_2.cameraFollow:setFollowTarget(var_39_3.cameraFollowTargetComp)
 
 				return
 			end
 		end
 
-		GameFacade.showToast(94, "GM交通工具数量：" .. #slot2)
+		GameFacade.showToast(94, "GM交通工具数量：" .. #var_39_1)
 	else
 		GameFacade.showToast(94, "GM需要进入小屋后观察模式下使用。")
 	end
 end
 
-function slot0._onRoomRotateSpeedChange(slot0, slot1, slot2)
-	slot3 = 0.2 + 1.8 * slot2
-	RoomController.instance.rotateSpeed = slot3
-	slot0._txtRoomRotateSpeed.text = string.format("%.2f", slot3)
+function var_0_0._onRoomRotateSpeedChange(arg_40_0, arg_40_1, arg_40_2)
+	local var_40_0 = 0.2 + 1.8 * arg_40_2
+
+	RoomController.instance.rotateSpeed = var_40_0
+	arg_40_0._txtRoomRotateSpeed.text = string.format("%.2f", var_40_0)
 end
 
-function slot0._onRoomMoveSpeedChange(slot0, slot1, slot2)
-	slot3 = 0.2 + 1.8 * slot2
-	RoomController.instance.moveSpeed = slot3
-	slot0._txtRoomMoveSpeed.text = string.format("%.2f", slot3)
+function var_0_0._onRoomMoveSpeedChange(arg_41_0, arg_41_1, arg_41_2)
+	local var_41_0 = 0.2 + 1.8 * arg_41_2
+
+	RoomController.instance.moveSpeed = var_41_0
+	arg_41_0._txtRoomMoveSpeed.text = string.format("%.2f", var_41_0)
 end
 
-function slot0._onRoomScaleSpeedChange(slot0, slot1, slot2)
-	slot3 = 0.2 + 1.8 * slot2
-	RoomController.instance.scaleSpeed = slot3
-	slot0._txtRoomScaleSpeed.text = string.format("%.2f", slot3)
+function var_0_0._onRoomScaleSpeedChange(arg_42_0, arg_42_1, arg_42_2)
+	local var_42_0 = 0.2 + 1.8 * arg_42_2
+
+	RoomController.instance.scaleSpeed = var_42_0
+	arg_42_0._txtRoomScaleSpeed.text = string.format("%.2f", var_42_0)
 end
 
-function slot0._onRoomTouchSpeedChange(slot0, slot1, slot2)
-	slot3 = 0.2 + 1.8 * slot2
-	RoomController.instance.touchMoveSpeed = slot3
-	slot0._txtRoomTouchSpeed.text = string.format("%.2f", slot3)
+function var_0_0._onRoomTouchSpeedChange(arg_43_0, arg_43_1, arg_43_2)
+	local var_43_0 = 0.2 + 1.8 * arg_43_2
+
+	RoomController.instance.touchMoveSpeed = var_43_0
+	arg_43_0._txtRoomTouchSpeed.text = string.format("%.2f", var_43_0)
 end
 
-function slot0._onVisualToggleValueChange(slot0, slot1, slot2)
-	if not slot0.isOpenFinish then
+function var_0_0._onVisualToggleValueChange(arg_44_0, arg_44_1, arg_44_2)
+	if not arg_44_0.isOpenFinish then
 		return
 	end
 
-	GMController.instance:setVisualInteractive(slot2)
+	GMController.instance:setVisualInteractive(arg_44_2)
 
-	if slot2 then
+	if arg_44_2 then
 		GMController.instance:getVisualInteractiveMgr():start()
 	else
 		GMController.instance:getVisualInteractiveMgr():stop()
 	end
 end
 
-function slot0._onRoomClockSelectChanged(slot0, slot1)
-	if slot1 >= 1 or slot1 <= 24 then
-		RoomMapController.instance:dispatchEvent(RoomEvent.OnHourReporting, slot1)
+function var_0_0._onRoomClockSelectChanged(arg_45_0, arg_45_1)
+	if arg_45_1 >= 1 or arg_45_1 <= 24 then
+		RoomMapController.instance:dispatchEvent(RoomEvent.OnHourReporting, arg_45_1)
 	end
 end
 
-function slot0._onClickRoomBuildingCamera(slot0)
+function var_0_0._onClickRoomBuildingCamera(arg_46_0)
 	if GameSceneMgr.instance:getCurSceneType() == SceneType.Room then
 		RoomDebugController.instance:openBuildingCamerView()
-		slot0:closeThis()
+		arg_46_0:closeThis()
 	else
 		GameFacade.showToast(94, "GM需要进入小屋后使用。")
 	end
 end
 
-function slot0._onClickChangeActivityBtn(slot0)
-	if slot0.activityAll[slot0.activityIdList[slot0.selectActivityIndex or 1]] then
-		for slot5, slot6 in pairs(slot0.activityAll[slot1]) do
-			slot0:_changeActivityInfo(slot6)
+function var_0_0._onClickChangeActivityBtn(arg_47_0)
+	local var_47_0 = arg_47_0.activityIdList[arg_47_0.selectActivityIndex or 1]
+
+	if arg_47_0.activityAll[var_47_0] then
+		for iter_47_0, iter_47_1 in pairs(arg_47_0.activityAll[var_47_0]) do
+			arg_47_0:_changeActivityInfo(iter_47_1)
 		end
 
 		return
 	end
 
-	slot0:_changeActivityInfo(slot1)
+	arg_47_0:_changeActivityInfo(var_47_0)
 end
 
-function slot0._changeActivityInfo(slot0, slot1)
-	slot3 = slot0.selectStatusIndex or 1
-	slot3 = ActivityModel.instance:getActivityInfo()[slot1]
+function var_0_0._changeActivityInfo(arg_48_0, arg_48_1)
+	local var_48_0 = arg_48_0.statusList[arg_48_0.selectStatusIndex or 1]
+	local var_48_1 = ActivityModel.instance:getActivityInfo()[arg_48_1]
 
-	if ActivityHelper.getActivityStatus(slot1) == slot0.statusList[slot3] then
+	if ActivityHelper.getActivityStatus(arg_48_1) == var_48_0 then
 		return
 	end
 
-	slot3.config = slot0:copyConfig(slot3.config)
+	local var_48_2 = ServerTime.now() * 1000
+	local var_48_3 = TimeUtil.maxDateTimeStamp * 1000
 
-	if slot2 == ActivityEnum.ActivityStatus.Normal then
-		slot3.startTime = ServerTime.now() * 1000 - 1
-		slot3.endTime = TimeUtil.maxDateTimeStamp * 1000
-		slot3.config.openId = 0
-		slot3.online = true
-	elseif slot2 == ActivityEnum.ActivityStatus.NotOpen then
-		slot3.startTime = slot6
-	elseif slot2 == ActivityEnum.ActivityStatus.Expired then
-		slot3.startTime = slot5 - 1
-		slot3.endTime = slot3.startTime
-	elseif slot2 == ActivityEnum.ActivityStatus.NotUnlock then
-		slot3.startTime = slot5 - 1
-		slot3.endTime = slot6
-		slot3.config.openId = slot1
-		OpenModel.instance._unlocks[slot1] = false
-	elseif slot2 == ActivityEnum.ActivityStatus.NotOnLine then
-		slot3.startTime = slot5 - 1
-		slot3.endTime = slot6
-		slot3.config.openId = 0
-		slot3.online = false
+	var_48_1.config = arg_48_0:copyConfig(var_48_1.config)
+
+	if var_48_0 == ActivityEnum.ActivityStatus.Normal then
+		var_48_1.startTime = var_48_2 - 1
+		var_48_1.endTime = var_48_3
+		var_48_1.config.openId = 0
+		var_48_1.online = true
+	elseif var_48_0 == ActivityEnum.ActivityStatus.NotOpen then
+		var_48_1.startTime = var_48_3
+	elseif var_48_0 == ActivityEnum.ActivityStatus.Expired then
+		var_48_1.startTime = var_48_2 - 1
+		var_48_1.endTime = var_48_1.startTime
+	elseif var_48_0 == ActivityEnum.ActivityStatus.NotUnlock then
+		var_48_1.startTime = var_48_2 - 1
+		var_48_1.endTime = var_48_3
+		var_48_1.config.openId = arg_48_1
+		OpenModel.instance._unlocks[arg_48_1] = false
+	elseif var_48_0 == ActivityEnum.ActivityStatus.NotOnLine then
+		var_48_1.startTime = var_48_2 - 1
+		var_48_1.endTime = var_48_3
+		var_48_1.config.openId = 0
+		var_48_1.online = false
 	end
 
-	ActivityController.instance:dispatchEvent(ActivityEvent.RefreshActivityState, slot1)
+	ActivityController.instance:dispatchEvent(ActivityEvent.RefreshActivityState, arg_48_1)
 end
 
-function slot0.copyConfig(slot0, slot1)
-	for slot7, slot8 in pairs({
+function var_0_0.copyConfig(arg_49_0, arg_49_1)
+	local var_49_0 = {}
+	local var_49_1 = {
 		logoName = 9,
 		name = 3,
 		banner = 13,
@@ -677,49 +758,52 @@ function slot0.copyConfig(slot0, slot1)
 		joinCondition = 10,
 		displayPriority = 12,
 		nameEn = 4
-	}) do
-		-- Nothing
+	}
+
+	for iter_49_0, iter_49_1 in pairs(var_49_1) do
+		var_49_0[iter_49_0] = arg_49_1[iter_49_0]
 	end
 
-	return {
-		[slot7] = slot1[slot7]
-	}
+	return var_49_0
 end
 
-function slot0._onClickResetActivityBtn(slot0)
+function var_0_0._onClickResetActivityBtn(arg_50_0)
 	ActivityRpc.instance:sendGetActivityInfosRequest()
 end
 
-function slot0._onActivityDropValueChange(slot0, slot1)
-	slot0.selectActivityIndex = slot1 + 1
+function var_0_0._onActivityDropValueChange(arg_51_0, arg_51_1)
+	arg_51_0.selectActivityIndex = arg_51_1 + 1
 end
 
-function slot0._onActivityStatusDropValueChange(slot0, slot1)
-	slot0.selectStatusIndex = slot1 + 1
+function var_0_0._onActivityStatusDropValueChange(arg_52_0, arg_52_1)
+	arg_52_0.selectStatusIndex = arg_52_1 + 1
 end
 
-function slot0._onClickResetActivityUnlockAim(slot0)
+function var_0_0._onClickResetActivityUnlockAim(arg_53_0)
 	PlayerPrefsHelper.deleteKey(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.PlayedActUnlockAnimationKey))
 
 	VersionActivityBaseController.instance.playedActUnlockAnimationList = nil
 end
 
-function slot0._onClickEnterActivity(slot0)
-	if not slot0._activityEnterFuncMap[slot0.activityIdList[slot0.selectActivityIndex or 1]] then
+function var_0_0._onClickEnterActivity(arg_54_0)
+	local var_54_0 = arg_54_0.activityIdList[arg_54_0.selectActivityIndex or 1]
+	local var_54_1 = arg_54_0._activityEnterFuncMap[var_54_0]
+
+	if not var_54_1 then
 		return
 	end
 
-	slot3 = slot0._activityEnterFuncParamsMap[slot1]
+	local var_54_2 = arg_54_0._activityEnterFuncParamsMap[var_54_0]
 
-	slot2(slot3.obj, slot3.params)
+	var_54_1(var_54_2.obj, var_54_2.params)
 end
 
-function slot0.initActivityEnterFunc(slot0)
-	slot0._activityEnterFuncMap = {
+function var_0_0.initActivityEnterFunc(arg_55_0)
+	arg_55_0._activityEnterFuncMap = {
 		[11304] = Activity1_3ChessController.openMapView,
 		[12204] = LoperaController.openLoperaMainView
 	}
-	slot0._activityEnterFuncParamsMap = {
+	arg_55_0._activityEnterFuncParamsMap = {
 		[11304] = {
 			params = 1,
 			obj = Activity1_3ChessController
@@ -730,45 +814,50 @@ function slot0.initActivityEnterFunc(slot0)
 	}
 end
 
-function slot0._onClickOnekeyFightSucc(slot0)
-	slot0:closeThis()
+function var_0_0._onClickOnekeyFightSucc(arg_56_0)
+	arg_56_0:closeThis()
 	GMRpc.instance:sendGMRequest("set fight 1")
 end
 
-function slot0._onClickEnterDialogue(slot0)
-	if not tonumber(slot0._inputDialogue:GetText()) then
+function var_0_0._onClickEnterDialogue(arg_57_0)
+	local var_57_0 = arg_57_0._inputDialogue:GetText()
+	local var_57_1 = tonumber(var_57_0)
+
+	if not var_57_1 then
 		return
 	end
 
-	if lua_tip_dialog.configDict[slot1] then
-		TipDialogController.instance:openTipDialogView(slot1)
+	if lua_tip_dialog.configDict[var_57_1] then
+		TipDialogController.instance:openTipDialogView(var_57_1)
 
 		return
 	end
 
-	if not DialogueConfig.instance:getDialogueCo(slot1) then
+	if not DialogueConfig.instance:getDialogueCo(var_57_1) then
 		GameFacade.showToastString("对话id不存在，请检查配置")
 	end
 
-	DialogueController.instance:enterDialogue(slot1)
+	DialogueController.instance:enterDialogue(var_57_1)
 end
 
-function slot0._onClickStartEditV1a5HoleBtn(slot0)
-	if not ViewMgr.instance:getContainer(ViewName.VersionActivity1_5DungeonMapView) then
+function var_0_0._onClickStartEditV1a5HoleBtn(arg_58_0)
+	local var_58_0 = ViewMgr.instance:getContainer(ViewName.VersionActivity1_5DungeonMapView)
+
+	if not var_58_0 then
 		ToastController.instance:showToastWithString("请先打开1.5副本界面")
 
 		return
 	end
 
-	if not slot1:isOpenFinish() then
+	if not var_58_0:isOpenFinish() then
 		ToastController.instance:showToastWithString("请等待1.5副本界面打开完成")
 
 		return
 	end
 
-	slot0.holeEditView = EditorV1a5DungeonHoleView.start(slot1)
+	arg_58_0.holeEditView = EditorV1a5DungeonHoleView.start(var_58_0)
 
-	slot0:closeThis()
+	arg_58_0:closeThis()
 end
 
-return slot0
+return var_0_0

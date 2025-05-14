@@ -1,9 +1,9 @@
-module("modules.logic.explore.model.ExploreRewardModel", package.seeall)
+﻿module("modules.logic.explore.model.ExploreRewardModel", package.seeall)
 
-slot0 = class("ExploreRewardModel", ListScrollModel)
+local var_0_0 = class("ExploreRewardModel", ListScrollModel)
 
-function slot0.test(slot0)
-	slot0:setList({
+function var_0_0.test(arg_1_0)
+	arg_1_0:setList({
 		{},
 		{},
 		{},
@@ -14,6 +14,6 @@ function slot0.test(slot0)
 	})
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

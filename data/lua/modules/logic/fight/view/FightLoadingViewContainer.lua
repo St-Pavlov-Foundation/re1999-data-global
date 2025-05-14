@@ -1,11 +1,11 @@
-module("modules.logic.fight.view.FightLoadingViewContainer", package.seeall)
+﻿module("modules.logic.fight.view.FightLoadingViewContainer", package.seeall)
 
-slot0 = class("FightLoadingViewContainer", BaseViewContainer)
+local var_0_0 = class("FightLoadingViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		FightLoadingView.New()
 	}
 end
 
-return slot0
+return var_0_0

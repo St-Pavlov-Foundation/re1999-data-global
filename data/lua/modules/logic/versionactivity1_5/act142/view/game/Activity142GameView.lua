@@ -1,297 +1,323 @@
-module("modules.logic.versionactivity1_5.act142.view.game.Activity142GameView", package.seeall)
+﻿module("modules.logic.versionactivity1_5.act142.view.game.Activity142GameView", package.seeall)
 
-slot0 = class("Activity142GameView", BaseView)
-slot1 = 5
+local var_0_0 = class("Activity142GameView", BaseView)
+local var_0_1 = 5
 
-function slot0.onInitView(slot0)
-	slot0._txtStage = gohelper.findChildText(slot0.viewGO, "Top/#txt_Stage")
-	slot0._txtTitle = gohelper.findChildText(slot0.viewGO, "Top/#txt_Title")
-	slot0._goTips = gohelper.findChild(slot0.viewGO, "Top/Tips")
-	slot0._txtTips = gohelper.findChildText(slot0.viewGO, "Top/Tips/image_TipsBG/#txt_Tips")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._txtStage = gohelper.findChildText(arg_1_0.viewGO, "Top/#txt_Stage")
+	arg_1_0._txtTitle = gohelper.findChildText(arg_1_0.viewGO, "Top/#txt_Title")
+	arg_1_0._goTips = gohelper.findChild(arg_1_0.viewGO, "Top/Tips")
+	arg_1_0._txtTips = gohelper.findChildText(arg_1_0.viewGO, "Top/Tips/image_TipsBG/#txt_Tips")
 
-	gohelper.setActive(slot0._goTips, false)
+	gohelper.setActive(arg_1_0._goTips, false)
 
-	slot0._goMainTargetFinishBg = gohelper.findChild(slot0.viewGO, "LeftTop/TargetList/Target1/image_TargetFinishedBG")
-	slot0._imgMainTargetIcon = gohelper.findChildImage(slot0.viewGO, "LeftTop/TargetList/Target1/image_TargetIcon")
-	slot0._goMainTargetLightIcon = gohelper.findChild(slot0.viewGO, "LeftTop/TargetList/Target1/image_TargetIcon/image_TargetIconLight")
-	slot0._txtMainTargetDesc = gohelper.findChildText(slot0.viewGO, "LeftTop/TargetList/Target1/#txt_TargetDesc")
-	slot0._goMainTargetFinishEff = gohelper.findChild(slot0.viewGO, "LeftTop/TargetList/Target1/vx_finish")
+	arg_1_0._goMainTargetFinishBg = gohelper.findChild(arg_1_0.viewGO, "LeftTop/TargetList/Target1/image_TargetFinishedBG")
+	arg_1_0._imgMainTargetIcon = gohelper.findChildImage(arg_1_0.viewGO, "LeftTop/TargetList/Target1/image_TargetIcon")
+	arg_1_0._goMainTargetLightIcon = gohelper.findChild(arg_1_0.viewGO, "LeftTop/TargetList/Target1/image_TargetIcon/image_TargetIconLight")
+	arg_1_0._txtMainTargetDesc = gohelper.findChildText(arg_1_0.viewGO, "LeftTop/TargetList/Target1/#txt_TargetDesc")
+	arg_1_0._goMainTargetFinishEff = gohelper.findChild(arg_1_0.viewGO, "LeftTop/TargetList/Target1/vx_finish")
 
-	gohelper.setActive(slot0._goMainTargetFinishBg, true)
-	gohelper.setActive(slot0._goMainTargetLightIcon, false)
-	gohelper.setActive(slot0._goMainTargetFinishEff, false)
+	gohelper.setActive(arg_1_0._goMainTargetFinishBg, true)
+	gohelper.setActive(arg_1_0._goMainTargetLightIcon, false)
+	gohelper.setActive(arg_1_0._goMainTargetFinishEff, false)
 
-	slot0._goSubTargetFinishBg = gohelper.findChild(slot0.viewGO, "LeftTop/TargetList/Target2/image_TargetFinishedBG")
-	slot0._imgSubTargetIcon = gohelper.findChildImage(slot0.viewGO, "LeftTop/TargetList/Target2/image_TargetIcon")
-	slot0._goSubTargetLightIcon = gohelper.findChild(slot0.viewGO, "LeftTop/TargetList/Target2/image_TargetIcon/image_TargetIconLight")
-	slot0._txtSubTargetDesc = gohelper.findChildText(slot0.viewGO, "LeftTop/TargetList/Target2/#txt_TargetDesc")
-	slot0._goSubTargetFinishEff = gohelper.findChild(slot0.viewGO, "LeftTop/TargetList/Target2/vx_finish")
+	arg_1_0._goSubTargetFinishBg = gohelper.findChild(arg_1_0.viewGO, "LeftTop/TargetList/Target2/image_TargetFinishedBG")
+	arg_1_0._imgSubTargetIcon = gohelper.findChildImage(arg_1_0.viewGO, "LeftTop/TargetList/Target2/image_TargetIcon")
+	arg_1_0._goSubTargetLightIcon = gohelper.findChild(arg_1_0.viewGO, "LeftTop/TargetList/Target2/image_TargetIcon/image_TargetIconLight")
+	arg_1_0._txtSubTargetDesc = gohelper.findChildText(arg_1_0.viewGO, "LeftTop/TargetList/Target2/#txt_TargetDesc")
+	arg_1_0._goSubTargetFinishEff = gohelper.findChild(arg_1_0.viewGO, "LeftTop/TargetList/Target2/vx_finish")
 
-	gohelper.setActive(slot0._goSubTargetFinishBg, false)
-	gohelper.setActive(slot0._goSubTargetLightIcon, false)
-	gohelper.setActive(slot0._goSubTargetFinishEff, false)
+	gohelper.setActive(arg_1_0._goSubTargetFinishBg, false)
+	gohelper.setActive(arg_1_0._goSubTargetLightIcon, false)
+	gohelper.setActive(arg_1_0._goSubTargetFinishEff, false)
 
-	slot0._btnBacktrack = gohelper.findChildButtonWithAudio(slot0.viewGO, "RightTop/#btn_Backtrack")
-	slot0._btnResetBtn = gohelper.findChildButtonWithAudio(slot0.viewGO, "RightTop/#btn_Reset")
-	slot0._goChangeMapEff = gohelper.findChild(slot0.viewGO, "#go_excessive")
+	arg_1_0._btnBacktrack = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "RightTop/#btn_Backtrack")
+	arg_1_0._btnResetBtn = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "RightTop/#btn_Reset")
+	arg_1_0._goChangeMapEff = gohelper.findChild(arg_1_0.viewGO, "#go_excessive")
 
-	gohelper.setActive(slot0._goChangeMapEff, false)
+	gohelper.setActive(arg_1_0._goChangeMapEff, false)
 
-	slot0._changeMapAnimator = gohelper.findChild(slot0.viewGO, "#go_excessive/anim"):GetComponent(Va3ChessEnum.ComponentType.Animator)
-	slot0._goCloseEyeEff = gohelper.findChild(slot0.viewGO, "excessive")
+	arg_1_0._changeMapAnimator = gohelper.findChild(arg_1_0.viewGO, "#go_excessive/anim"):GetComponent(Va3ChessEnum.ComponentType.Animator)
+	arg_1_0._goCloseEyeEff = gohelper.findChild(arg_1_0.viewGO, "excessive")
 
-	gohelper.setActive(slot0._goCloseEyeEff, false)
+	gohelper.setActive(arg_1_0._goCloseEyeEff, false)
 
-	slot0._closeEyeAnimatorPlayer = ZProj.ProjAnimatorPlayer.Get(gohelper.findChild(slot0.viewGO, "excessive/anim"))
-	slot0._viewAnimator = slot0.viewGO:GetComponent(Va3ChessEnum.ComponentType.Animator)
+	local var_1_0 = gohelper.findChild(arg_1_0.viewGO, "excessive/anim")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	arg_1_0._closeEyeAnimatorPlayer = ZProj.ProjAnimatorPlayer.Get(var_1_0)
+	arg_1_0._viewAnimator = arg_1_0.viewGO:GetComponent(Va3ChessEnum.ComponentType.Animator)
+
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.SetViewVictory, slot0.onSetViewVictory, slot0)
-	slot0:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.SetViewFail, slot0.onSetViewFail, slot0)
-	slot0:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.GameResultQuit, slot0.onResultQuit, slot0)
-	slot0:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.GameToastUpdate, slot0._onToastUpdate, slot0)
-	slot0:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.CurrentConditionUpdate, slot0.refreshConditions, slot0)
-	slot0:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.GameMapDataUpdate, slot0.refreshUI, slot0)
-	slot0._btnBacktrack:AddClickListener(slot0._btnBackTrackOnClick, slot0)
-	slot0._btnResetBtn:AddClickListener(slot0._btnResetBtnOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.SetViewVictory, arg_2_0.onSetViewVictory, arg_2_0)
+	arg_2_0:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.SetViewFail, arg_2_0.onSetViewFail, arg_2_0)
+	arg_2_0:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.GameResultQuit, arg_2_0.onResultQuit, arg_2_0)
+	arg_2_0:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.GameToastUpdate, arg_2_0._onToastUpdate, arg_2_0)
+	arg_2_0:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.CurrentConditionUpdate, arg_2_0.refreshConditions, arg_2_0)
+	arg_2_0:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.GameMapDataUpdate, arg_2_0.refreshUI, arg_2_0)
+	arg_2_0._btnBacktrack:AddClickListener(arg_2_0._btnBackTrackOnClick, arg_2_0)
+	arg_2_0._btnResetBtn:AddClickListener(arg_2_0._btnResetBtnOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0:removeEventCb(Va3ChessGameController.instance, Va3ChessEvent.SetViewVictory, slot0.onSetViewVictory, slot0)
-	slot0:removeEventCb(Va3ChessGameController.instance, Va3ChessEvent.SetViewFail, slot0.onSetViewFail, slot0)
-	slot0:removeEventCb(Va3ChessGameController.instance, Va3ChessEvent.GameResultQuit, slot0.onResultQuit, slot0)
-	slot0:removeEventCb(Va3ChessGameController.instance, Va3ChessEvent.GameToastUpdate, slot0._onToastUpdate, slot0)
-	slot0:removeEventCb(Va3ChessGameController.instance, Va3ChessEvent.CurrentConditionUpdate, slot0.refreshConditions, slot0)
-	slot0:removeEventCb(Va3ChessGameController.instance, Va3ChessEvent.GameMapDataUpdate, slot0.refreshUI, slot0)
-	slot0._btnResetBtn:RemoveClickListener()
-	slot0._btnBacktrack:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0:removeEventCb(Va3ChessGameController.instance, Va3ChessEvent.SetViewVictory, arg_3_0.onSetViewVictory, arg_3_0)
+	arg_3_0:removeEventCb(Va3ChessGameController.instance, Va3ChessEvent.SetViewFail, arg_3_0.onSetViewFail, arg_3_0)
+	arg_3_0:removeEventCb(Va3ChessGameController.instance, Va3ChessEvent.GameResultQuit, arg_3_0.onResultQuit, arg_3_0)
+	arg_3_0:removeEventCb(Va3ChessGameController.instance, Va3ChessEvent.GameToastUpdate, arg_3_0._onToastUpdate, arg_3_0)
+	arg_3_0:removeEventCb(Va3ChessGameController.instance, Va3ChessEvent.CurrentConditionUpdate, arg_3_0.refreshConditions, arg_3_0)
+	arg_3_0:removeEventCb(Va3ChessGameController.instance, Va3ChessEvent.GameMapDataUpdate, arg_3_0.refreshUI, arg_3_0)
+	arg_3_0._btnResetBtn:RemoveClickListener()
+	arg_3_0._btnBacktrack:RemoveClickListener()
 end
 
-function slot0.onSetViewVictory(slot0)
-	slot0:refreshConditions()
+function var_0_0.onSetViewVictory(arg_4_0)
+	arg_4_0:refreshConditions()
 	Activity142Helper.openWinResult()
 	Activity142StatController.instance:statSuccess()
 end
 
-function slot0.onSetViewFail(slot0)
-	slot0:back2CheckPointWithEff(true)
+function var_0_0.onSetViewFail(arg_5_0)
+	arg_5_0:back2CheckPointWithEff(true)
 end
 
-function slot0.onResultQuit(slot0)
-	if not slot0:_getEpisodeCfg() or slot1.storyClear == 0 then
-		slot0:closeThis()
+function var_0_0.onResultQuit(arg_6_0)
+	local var_6_0 = arg_6_0:_getEpisodeCfg()
+
+	if not var_6_0 or var_6_0.storyClear == 0 then
+		arg_6_0:closeThis()
 
 		return
 	end
 
-	if slot1.storyRepeat == 1 or not StoryModel.instance:isStoryHasPlayed(slot1.storyClear) then
+	local var_6_1 = var_6_0.storyClear
+
+	if var_6_0.storyRepeat == 1 or not StoryModel.instance:isStoryHasPlayed(var_6_1) then
+		local var_6_2 = {}
+
+		var_6_2.blur = true
+		var_6_2.mark = true
+		var_6_2.hideStartAndEndDark = true
+		var_6_2.isReplay = false
+
 		StoryController.instance:playStories({
-			slot2
-		}, {
-			blur = true,
-			mark = true,
-			hideStartAndEndDark = true,
-			isReplay = false
-		}, slot0.closeThis, slot0)
+			var_6_1
+		}, var_6_2, arg_6_0.closeThis, arg_6_0)
 	else
-		slot0:closeThis()
+		arg_6_0:closeThis()
 	end
 end
 
-function slot0._onToastUpdate(slot0, slot1)
-	if Va3ChessModel.instance:getActId() ~= Va3ChessEnum.ActivityId.Act142 then
+function var_0_0._onToastUpdate(arg_7_0, arg_7_1)
+	local var_7_0 = Va3ChessModel.instance:getActId()
+
+	if var_7_0 ~= Va3ChessEnum.ActivityId.Act142 then
 		return
 	end
 
-	if not Va3ChessConfig.instance:getTipsCfg(slot2, slot1) then
+	local var_7_1 = Va3ChessConfig.instance:getTipsCfg(var_7_0, arg_7_1)
+
+	if not var_7_1 then
 		return
 	end
 
-	if slot3.audioId and slot3.audioId ~= 0 then
-		AudioMgr.instance:trigger(slot3.audioId)
+	if var_7_1.audioId and var_7_1.audioId ~= 0 then
+		AudioMgr.instance:trigger(var_7_1.audioId)
 	end
 
-	TaskDispatcher.cancelTask(slot0._onHideToast, slot0)
-	TaskDispatcher.runDelay(slot0._onHideToast, slot0, uv0)
+	TaskDispatcher.cancelTask(arg_7_0._onHideToast, arg_7_0)
+	TaskDispatcher.runDelay(arg_7_0._onHideToast, arg_7_0, var_0_1)
 
-	slot0._txtTips.text = slot3.tips
+	arg_7_0._txtTips.text = var_7_1.tips
 
-	gohelper.setActive(slot0._goTips, true)
+	gohelper.setActive(arg_7_0._goTips, true)
 end
 
-function slot0._onHideToast(slot0)
-	gohelper.setActive(slot0._goTips, false)
+function var_0_0._onHideToast(arg_8_0)
+	gohelper.setActive(arg_8_0._goTips, false)
 end
 
-function slot0._btnBackTrackOnClick(slot0)
+function var_0_0._btnBackTrackOnClick(arg_9_0)
 	if Va3ChessGameController.instance:isNeedBlock() then
 		return
 	end
 
-	GameFacade.showMessageBox(MessageBoxIdDefine.Activity142BackTrace, MsgBoxEnum.BoxType.Yes_No, slot0.back2CheckPointWithEff, nil, , slot0)
+	GameFacade.showMessageBox(MessageBoxIdDefine.Activity142BackTrace, MsgBoxEnum.BoxType.Yes_No, arg_9_0.back2CheckPointWithEff, nil, nil, arg_9_0)
 end
 
-function slot0._btnResetBtnOnClick(slot0)
+function var_0_0._btnResetBtnOnClick(arg_10_0)
 	if Va3ChessGameController.instance:isNeedBlock() then
 		return
 	end
 
-	GameFacade.showMessageBox(MessageBoxIdDefine.PushBoxReset, MsgBoxEnum.BoxType.Yes_No, slot0.resetWithEff, nil, , slot0)
+	GameFacade.showMessageBox(MessageBoxIdDefine.PushBoxReset, MsgBoxEnum.BoxType.Yes_No, arg_10_0.resetWithEff, nil, nil, arg_10_0)
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_11_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0:refreshUI()
+function var_0_0.onOpen(arg_12_0)
+	arg_12_0:refreshUI()
 	AudioMgr.instance:trigger(AudioEnum.chess_activity142.EnterGameView)
 end
 
-function slot0._getEpisodeCfg(slot0)
-	slot1 = Va3ChessModel.instance:getActId()
-	slot2 = Va3ChessModel.instance:getEpisodeId()
+function var_0_0._getEpisodeCfg(arg_13_0)
+	local var_13_0 = Va3ChessModel.instance:getActId()
+	local var_13_1 = Va3ChessModel.instance:getEpisodeId()
 
-	if slot0._episodeCfg and slot0._episodeCfg.activity == slot1 and slot0._episodeCfg.id == slot2 then
-		return slot0._episodeCfg
+	if arg_13_0._episodeCfg and arg_13_0._episodeCfg.activity == var_13_0 and arg_13_0._episodeCfg.id == var_13_1 then
+		return arg_13_0._episodeCfg
 	end
 
-	if slot1 ~= nil and slot2 ~= nil then
-		slot0._episodeCfg = Va3ChessConfig.instance:getEpisodeCo(slot1, slot2)
+	if var_13_0 ~= nil and var_13_1 ~= nil then
+		arg_13_0._episodeCfg = Va3ChessConfig.instance:getEpisodeCo(var_13_0, var_13_1)
 
-		return slot0._episodeCfg
+		return arg_13_0._episodeCfg
 	end
 end
 
-function slot0.refreshUI(slot0)
-	if slot0:_getEpisodeCfg() then
-		slot0._txtStage.text = slot1.orderId
-		slot0._txtTitle.text = slot1.name
+function var_0_0.refreshUI(arg_14_0)
+	local var_14_0 = arg_14_0:_getEpisodeCfg()
+
+	if var_14_0 then
+		arg_14_0._txtStage.text = var_14_0.orderId
+		arg_14_0._txtTitle.text = var_14_0.name
 	end
 
-	slot0:refreshConditions()
+	arg_14_0:refreshConditions()
 end
 
-function slot0.refreshConditions(slot0)
-	if not slot0:_getEpisodeCfg() then
+function var_0_0.refreshConditions(arg_15_0)
+	local var_15_0 = arg_15_0:_getEpisodeCfg()
+
+	if not var_15_0 then
 		return
 	end
 
-	slot0._txtMainTargetDesc.text = slot1.mainConditionStr
+	local var_15_1 = var_15_0.activityId
 
-	if slot0._lastIsFinishAllMainCon ~= Activity142Helper.checkConditionIsFinish(slot1.mainConfition, slot1.activityId) then
-		slot0._lastIsFinishAllMainCon = slot3
+	arg_15_0._txtMainTargetDesc.text = var_15_0.mainConditionStr
 
-		slot0:_isTriggerFinish(slot3, slot0._goMainTargetLightIcon, nil, slot0._goMainTargetFinishEff)
+	local var_15_2 = Activity142Helper.checkConditionIsFinish(var_15_0.mainConfition, var_15_1)
+
+	if arg_15_0._lastIsFinishAllMainCon ~= var_15_2 then
+		arg_15_0._lastIsFinishAllMainCon = var_15_2
+
+		arg_15_0:_isTriggerFinish(var_15_2, arg_15_0._goMainTargetLightIcon, nil, arg_15_0._goMainTargetFinishEff)
 	end
 
-	slot0._txtSubTargetDesc.text = slot1.conditionStr
+	arg_15_0._txtSubTargetDesc.text = var_15_0.conditionStr
 
-	if slot0._lastIsFinishAllSubCon ~= Activity142Helper.checkConditionIsFinish(slot1.extStarCondition, slot2) then
-		slot0._lastIsFinishAllSubCon = slot4
+	local var_15_3 = Activity142Helper.checkConditionIsFinish(var_15_0.extStarCondition, var_15_1)
 
-		slot0:_isTriggerFinish(slot4, slot0._goSubTargetLightIcon, nil, slot0._goSubTargetFinishEff)
+	if arg_15_0._lastIsFinishAllSubCon ~= var_15_3 then
+		arg_15_0._lastIsFinishAllSubCon = var_15_3
+
+		arg_15_0:_isTriggerFinish(var_15_3, arg_15_0._goSubTargetLightIcon, nil, arg_15_0._goSubTargetFinishEff)
 	end
 end
 
-function slot0._isTriggerFinish(slot0, slot1, slot2, slot3, slot4)
-	if not gohelper.isNil(slot2) then
-		gohelper.setActive(slot2, slot1)
+function var_0_0._isTriggerFinish(arg_16_0, arg_16_1, arg_16_2, arg_16_3, arg_16_4)
+	if not gohelper.isNil(arg_16_2) then
+		gohelper.setActive(arg_16_2, arg_16_1)
 	end
 
-	if not gohelper.isNil(slot3) then
-		gohelper.setActive(slot3, slot1)
+	if not gohelper.isNil(arg_16_3) then
+		gohelper.setActive(arg_16_3, arg_16_1)
 	end
 
-	if not gohelper.isNil(slot4) then
-		if slot1 then
-			gohelper.setActive(slot4, false)
-			gohelper.setActive(slot4, true)
+	if not gohelper.isNil(arg_16_4) then
+		if arg_16_1 then
+			gohelper.setActive(arg_16_4, false)
+			gohelper.setActive(arg_16_4, true)
 		else
-			gohelper.setActive(slot4, false)
+			gohelper.setActive(arg_16_4, false)
 		end
 	end
 end
 
-function slot0.back2CheckPointWithEff(slot0, slot1)
+function var_0_0.back2CheckPointWithEff(arg_17_0, arg_17_1)
 	Activity142Helper.setAct142UIBlock(true, Activity142Enum.RETURN_CHECK_POINT)
 
-	if slot1 then
+	if arg_17_1 then
 		Activity142StatController.instance:statFail()
 	else
 		Activity142StatController.instance:statBack2CheckPoint()
 	end
 
-	slot0:_playCloseEyeAnim(true, slot0.beginBack2CheckPoint, slot0)
+	arg_17_0:_playCloseEyeAnim(true, arg_17_0.beginBack2CheckPoint, arg_17_0)
 end
 
-function slot0.beginBack2CheckPoint(slot0)
-	Activity142Controller.instance:act142Back2CheckPoint(slot0.onBackCheckPointCb, slot0)
+function var_0_0.beginBack2CheckPoint(arg_18_0)
+	Activity142Controller.instance:act142Back2CheckPoint(arg_18_0.onBackCheckPointCb, arg_18_0)
 end
 
-function slot0.onBackCheckPointCb(slot0, slot1, slot2, slot3)
-	TaskDispatcher.cancelTask(slot0.back2CheckPointFinish, slot0)
-	TaskDispatcher.runDelay(slot0.back2CheckPointFinish, slot0, Activity142Enum.GAME_VIEW_CLOSE_EYE_TIME)
+function var_0_0.onBackCheckPointCb(arg_19_0, arg_19_1, arg_19_2, arg_19_3)
+	TaskDispatcher.cancelTask(arg_19_0.back2CheckPointFinish, arg_19_0)
+	TaskDispatcher.runDelay(arg_19_0.back2CheckPointFinish, arg_19_0, Activity142Enum.GAME_VIEW_CLOSE_EYE_TIME)
 end
 
-function slot0.back2CheckPointFinish(slot0)
-	slot0:_playCloseEyeAnim(false, slot0.back2CheckPointWithEffComplete, slot0)
+function var_0_0.back2CheckPointFinish(arg_20_0)
+	arg_20_0:_playCloseEyeAnim(false, arg_20_0.back2CheckPointWithEffComplete, arg_20_0)
 end
 
-function slot0.back2CheckPointWithEffComplete(slot0)
+function var_0_0.back2CheckPointWithEffComplete(arg_21_0)
 	Activity142Helper.setAct142UIBlock(false, Activity142Enum.RETURN_CHECK_POINT)
 end
 
-function slot0.resetWithEff(slot0)
+function var_0_0.resetWithEff(arg_22_0)
 	Activity142Helper.setAct142UIBlock(true, Activity142Enum.RESET_GAME)
 	Activity142StatController.instance:statReset()
-	slot0:_playCloseEyeAnim(true, slot0.beginReset, slot0)
+	arg_22_0:_playCloseEyeAnim(true, arg_22_0.beginReset, arg_22_0)
 end
 
-function slot0.beginReset(slot0)
-	Activity142Controller.instance:act142ResetGame(slot0.onResetCb, slot0)
+function var_0_0.beginReset(arg_23_0)
+	Activity142Controller.instance:act142ResetGame(arg_23_0.onResetCb, arg_23_0)
 end
 
-function slot0.onResetCb(slot0, slot1, slot2, slot3)
-	TaskDispatcher.cancelTask(slot0.onResetFinish, slot0)
-	TaskDispatcher.runDelay(slot0.onResetFinish, slot0, Activity142Enum.GAME_VIEW_CLOSE_EYE_TIME)
+function var_0_0.onResetCb(arg_24_0, arg_24_1, arg_24_2, arg_24_3)
+	TaskDispatcher.cancelTask(arg_24_0.onResetFinish, arg_24_0)
+	TaskDispatcher.runDelay(arg_24_0.onResetFinish, arg_24_0, Activity142Enum.GAME_VIEW_CLOSE_EYE_TIME)
 end
 
-function slot0.onResetFinish(slot0)
-	slot0:_playCloseEyeAnim(false, slot0.resetWithEffComplete, slot0)
+function var_0_0.onResetFinish(arg_25_0)
+	arg_25_0:_playCloseEyeAnim(false, arg_25_0.resetWithEffComplete, arg_25_0)
 end
 
-function slot0.resetWithEffComplete(slot0)
+function var_0_0.resetWithEffComplete(arg_26_0)
 	Activity142Helper.setAct142UIBlock(false, Activity142Enum.RESET_GAME)
 end
 
-function slot0._playCloseEyeAnim(slot0, slot1, slot2, slot3)
-	if gohelper.isNil(slot0._goCloseEyeEff) or gohelper.isNil(slot0._closeEyeAnimatorPlayer) then
-		if slot2 then
-			slot2(slot3)
+function var_0_0._playCloseEyeAnim(arg_27_0, arg_27_1, arg_27_2, arg_27_3)
+	if gohelper.isNil(arg_27_0._goCloseEyeEff) or gohelper.isNil(arg_27_0._closeEyeAnimatorPlayer) then
+		if arg_27_2 then
+			arg_27_2(arg_27_3)
 		end
 
 		return
 	end
 
-	gohelper.setActive(slot0._goCloseEyeEff, true)
-	slot0._closeEyeAnimatorPlayer:Play(slot1 and Activity142Enum.GAME_VIEW_EYE_CLOSE_ANIM or Activity142Enum.GAME_VIEW_EYE_OPEN_ANIM, slot2, slot3)
+	gohelper.setActive(arg_27_0._goCloseEyeEff, true)
 
-	if slot1 then
+	local var_27_0 = arg_27_1 and Activity142Enum.GAME_VIEW_EYE_CLOSE_ANIM or Activity142Enum.GAME_VIEW_EYE_OPEN_ANIM
+
+	arg_27_0._closeEyeAnimatorPlayer:Play(var_27_0, arg_27_2, arg_27_3)
+
+	if arg_27_1 then
 		AudioMgr.instance:trigger(AudioEnum.chess_activity142.CloseEye)
 	end
 end
 
-function slot0.onClose(slot0)
-	TaskDispatcher.cancelTask(slot0._onHideToast, slot0)
-	TaskDispatcher.cancelTask(slot0.back2CheckPointFinish, slot0)
-	TaskDispatcher.cancelTask(slot0.onResetFinish, slot0)
-	slot0:back2CheckPointWithEffComplete()
-	slot0:resetWithEffComplete()
+function var_0_0.onClose(arg_28_0)
+	TaskDispatcher.cancelTask(arg_28_0._onHideToast, arg_28_0)
+	TaskDispatcher.cancelTask(arg_28_0.back2CheckPointFinish, arg_28_0)
+	TaskDispatcher.cancelTask(arg_28_0.onResetFinish, arg_28_0)
+	arg_28_0:back2CheckPointWithEffComplete()
+	arg_28_0:resetWithEffComplete()
 end
 
-return slot0
+return var_0_0

@@ -1,50 +1,56 @@
-module("modules.logic.room.entity.comp.RoomCharacterSpineEffectComp", package.seeall)
+﻿module("modules.logic.room.entity.comp.RoomCharacterSpineEffectComp", package.seeall)
 
-slot0 = class("RoomCharacterSpineEffectComp", RoomBaseSpineEffectComp)
+local var_0_0 = class("RoomCharacterSpineEffectComp", RoomBaseSpineEffectComp)
 
-function slot0.onInit(slot0, slot1)
-	slot2 = slot0.entity:getMO()
-	slot0._skinId = slot2.skinId
-	slot0._heroId = slot2.heroId
+function var_0_0.onInit(arg_1_0, arg_1_1)
+	local var_1_0 = arg_1_0.entity:getMO()
+
+	arg_1_0._skinId = var_1_0.skinId
+	arg_1_0._heroId = var_1_0.heroId
 end
 
-function slot0._logNotPoint(slot0, slot1)
-	logNormal(string.format("[export_角色交互特效] 角色挂点找不到, heroId:%s skinId:%s  id:%s  animName:%s point:%s", slot0._heroId, slot0._skinId, slot1.id, slot1.animName, slot1.point))
+function var_0_0._logNotPoint(arg_2_0, arg_2_1)
+	logNormal(string.format("[export_角色交互特效] 角色挂点找不到, heroId:%s skinId:%s  id:%s  animName:%s point:%s", arg_2_0._heroId, arg_2_0._skinId, arg_2_1.id, arg_2_1.animName, arg_2_1.point))
 end
 
-function slot0._logResError(slot0, slot1)
-	logError(string.format("RoomCharacterSpineEffectComp 加载失败, heroId:%s skinId:%s  id:%s  animName:%s  effectRes:%s", slot0._heroId, slot0._skinId, slot1.id, slot1.animName, slot1.effectRes))
+function var_0_0._logResError(arg_3_0, arg_3_1)
+	logError(string.format("RoomCharacterSpineEffectComp 加载失败, heroId:%s skinId:%s  id:%s  animName:%s  effectRes:%s", arg_3_0._heroId, arg_3_0._skinId, arg_3_1.id, arg_3_1.animName, arg_3_1.effectRes))
 end
 
-function slot0.getEffectCfgList(slot0)
-	slot2 = {}
+function var_0_0.getEffectCfgList(arg_4_0)
+	local var_4_0 = arg_4_0.entity:getMO()
+	local var_4_1 = {}
+	local var_4_2 = RoomConfig.instance:getCharacterEffectList(var_4_0 and var_4_0.skinId)
 
-	if RoomConfig.instance:getCharacterEffectList(slot0.entity:getMO() and slot1.skinId) then
-		for slot7, slot8 in ipairs(slot3) do
-			if not RoomCharacterEnum.maskInteractAnim[slot8.animName] then
-				table.insert(slot2, slot8)
+	if var_4_2 then
+		for iter_4_0, iter_4_1 in ipairs(var_4_2) do
+			if not RoomCharacterEnum.maskInteractAnim[iter_4_1.animName] then
+				table.insert(var_4_1, iter_4_1)
 			end
 		end
 	end
 
-	return slot2
+	return var_4_1
 end
 
-function slot0.getSpineComp(slot0)
-	return slot0.entity.characterspine
+function var_0_0.getSpineComp(arg_5_0)
+	return arg_5_0.entity.characterspine
 end
 
-function slot0.onPlayShowEffect(slot0, slot1, slot2, slot3)
-	slot0:_specialIdleEffect(slot1, slot2, slot3)
+function var_0_0.onPlayShowEffect(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
+	arg_6_0:_specialIdleEffect(arg_6_1, arg_6_2, arg_6_3)
 end
 
-function slot0._specialIdleEffect(slot0, slot1, slot2, slot3)
-	if RoomCharacterEnum.CharacterAnimStateName.SpecialIdle == slot1 and slot0._prefabNameDict then
-		slot4 = slot0._prefabNameDict[slot3]
+function var_0_0._specialIdleEffect(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
+	if RoomCharacterEnum.CharacterAnimStateName.SpecialIdle == arg_7_1 and arg_7_0._prefabNameDict then
+		local var_7_0 = arg_7_0._prefabNameDict[arg_7_3]
+		local var_7_1 = arg_7_0.entity.characterspine:getLookDir()
+		local var_7_2 = gohelper.findChild(arg_7_2, var_7_0 .. "_r")
+		local var_7_3 = gohelper.findChild(arg_7_2, var_7_0 .. "_l")
 
-		gohelper.setActive(gohelper.findChild(slot2, slot4 .. "_r"), slot0.entity.characterspine:getLookDir() == SpineLookDir.Left)
-		gohelper.setActive(gohelper.findChild(slot2, slot4 .. "_l"), slot5 == SpineLookDir.Right)
+		gohelper.setActive(var_7_2, var_7_1 == SpineLookDir.Left)
+		gohelper.setActive(var_7_3, var_7_1 == SpineLookDir.Right)
 	end
 end
 
-return slot0
+return var_0_0

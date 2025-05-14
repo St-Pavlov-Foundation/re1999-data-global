@@ -1,311 +1,345 @@
-module("modules.logic.currency.view.CurrencyView", package.seeall)
+﻿module("modules.logic.currency.view.CurrencyView", package.seeall)
 
-slot0 = class("CurrencyView", BaseView)
+local var_0_0 = class("CurrencyView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gocurrency = gohelper.findChild(slot0.viewGO, "#go_container/#go_currency")
-	slot0._gocontainer = gohelper.findChild(slot0.viewGO, "#go_container")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gocurrency = gohelper.findChild(arg_1_0.viewGO, "#go_container/#go_currency")
+	arg_1_0._gocontainer = gohelper.findChild(arg_1_0.viewGO, "#go_container")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._btncurrencyOnClick(slot0)
-	slot1 = slot0.self
+function var_0_0._btncurrencyOnClick(arg_4_0)
+	local var_4_0 = arg_4_0.self
+	local var_4_1 = arg_4_0.index
 
-	slot1:_btncurrencyClick(slot1.param[slot0.index])
+	var_4_0:_btncurrencyClick(var_4_0.param[var_4_1])
 end
 
-function slot0._btncurrencyClick(slot0, slot1)
-	if not slot1 then
+function var_0_0._btncurrencyClick(arg_5_0, arg_5_1)
+	if not arg_5_1 then
 		return
 	end
 
-	if slot0.overrideClickFunc then
-		return slot0.overrideClickFunc(slot0.overrideClickFuncObj, slot1)
+	if arg_5_0.overrideClickFunc then
+		return arg_5_0.overrideClickFunc(arg_5_0.overrideClickFuncObj, arg_5_1)
 	end
 
-	if type(slot1) == "number" then
-		MaterialTipController.instance:showMaterialInfo(MaterialEnum.MaterialType.Currency, slot1, false, nil, slot0._cantJump)
+	if type(arg_5_1) == "number" then
+		MaterialTipController.instance:showMaterialInfo(MaterialEnum.MaterialType.Currency, arg_5_1, false, nil, arg_5_0._cantJump)
 	else
-		MaterialTipController.instance:showMaterialInfo(slot1.type, slot1.id, false, nil, slot0._cantJump)
+		MaterialTipController.instance:showMaterialInfo(arg_5_1.type, arg_5_1.id, false, nil, arg_5_0._cantJump)
 	end
 
-	if slot0._callback then
-		slot0._callback(slot0._callbackObj)
+	if arg_5_0._callback then
+		arg_5_0._callback(arg_5_0._callbackObj)
 	end
 end
 
-function slot0.setOpenCallback(slot0, slot1, slot2)
-	slot0._openCallback = slot1
-	slot0._openCallbackObj = slot2
+function var_0_0.setOpenCallback(arg_6_0, arg_6_1, arg_6_2)
+	arg_6_0._openCallback = arg_6_1
+	arg_6_0._openCallbackObj = arg_6_2
 end
 
-function slot0.ctor(slot0, slot1, slot2, slot3, slot4, slot5)
-	uv0.super.ctor(slot0)
+function var_0_0.ctor(arg_7_0, arg_7_1, arg_7_2, arg_7_3, arg_7_4, arg_7_5)
+	var_0_0.super.ctor(arg_7_0)
 
-	slot0.param = slot1
-	slot0._callback = slot2
-	slot0._callbackObj = slot3
-	slot0._localItemsEvent = slot4
-	slot0._cantJump = slot5
+	arg_7_0.param = arg_7_1
+	arg_7_0._callback = arg_7_2
+	arg_7_0._callbackObj = arg_7_3
+	arg_7_0._localItemsEvent = arg_7_4
+	arg_7_0._cantJump = arg_7_5
 end
 
-function slot0.overrideCurrencyClickFunc(slot0, slot1, slot2)
-	slot0.overrideClickFunc = slot1
-	slot0.overrideClickFuncObj = slot2
+function var_0_0.overrideCurrencyClickFunc(arg_8_0, arg_8_1, arg_8_2)
+	arg_8_0.overrideClickFunc = arg_8_1
+	arg_8_0.overrideClickFuncObj = arg_8_2
 end
 
-function slot0._onLocalItemChanged(slot0, slot1, slot2)
-	slot0._minusItemDict = {}
+function var_0_0._onLocalItemChanged(arg_9_0, arg_9_1, arg_9_2)
+	arg_9_0._minusItemDict = {}
 
-	if slot1 then
-		for slot6 = 1, #slot1 do
-			if slot1[slot6].type == MaterialEnum.MaterialType.Currency then
-				slot0._minusItemDict[slot7.id] = (slot0._minusItemDict[slot7.id] or 0) + slot7.quantity
+	if arg_9_1 then
+		for iter_9_0 = 1, #arg_9_1 do
+			local var_9_0 = arg_9_1[iter_9_0]
+
+			if var_9_0.type == MaterialEnum.MaterialType.Currency then
+				arg_9_0._minusItemDict[var_9_0.id] = (arg_9_0._minusItemDict[var_9_0.id] or 0) + var_9_0.quantity
 			end
 		end
 	end
 
-	if slot2 then
+	if arg_9_2 then
 		return
 	end
 
-	slot0:_onCurrencyChange()
+	arg_9_0:_onCurrencyChange()
 end
 
-function slot0._onClick(slot0)
-	if not slot0.self.param[slot0.index] then
+function var_0_0._onClick(arg_10_0)
+	local var_10_0 = arg_10_0.self
+	local var_10_1 = arg_10_0.index
+	local var_10_2 = var_10_0.param[var_10_1]
+
+	if not var_10_2 then
 		return
 	end
 
-	if type(slot3) == "number" then
-		CurrencyJumpHandler.JumpByCurrency(slot3)
-	elseif slot3.jumpFunc then
-		slot3.jumpFunc()
+	if type(var_10_2) == "number" then
+		local var_10_3 = var_10_2
+
+		CurrencyJumpHandler.JumpByCurrency(var_10_3)
+	elseif var_10_2.jumpFunc then
+		var_10_2.jumpFunc()
 	end
 end
 
-slot1 = CurrencyEnum.CurrencyType
+local var_0_1 = CurrencyEnum.CurrencyType
 
-function slot0._editableInitView(slot0)
-	gohelper.setActive(slot0._gocurrency, false)
+function var_0_0._editableInitView(arg_11_0)
+	gohelper.setActive(arg_11_0._gocurrency, false)
 
-	slot0._animator = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	slot0._currencyObjs = {}
-	slot0._currentItemIndex = nil
+	arg_11_0._animator = arg_11_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	arg_11_0._currencyObjs = {}
+	arg_11_0._currentItemIndex = nil
 
-	if not slot0.param then
+	if not arg_11_0.param then
 		logError("没有传入货币类型给CurrencyView")
 
 		return
 	end
 
-	slot0._initialized = true
+	arg_11_0._initialized = true
 
-	slot0:_onCurrencyChange()
+	arg_11_0:_onCurrencyChange()
 end
 
-function slot0.setCurrencyType(slot0, slot1)
-	slot0.param = slot1
+function var_0_0.setCurrencyType(arg_12_0, arg_12_1)
+	arg_12_0.param = arg_12_1
 
-	slot0:_onCurrencyChange()
+	arg_12_0:_onCurrencyChange()
 end
 
-function slot0.onDestroyView(slot0)
-	for slot4, slot5 in ipairs(slot0._currencyObjs) do
-		slot5.simage:UnLoadImage()
-		slot5.btn:RemoveClickListener()
-		slot5.btncurrency:RemoveClickListener()
+function var_0_0.onDestroyView(arg_13_0)
+	for iter_13_0, iter_13_1 in ipairs(arg_13_0._currencyObjs) do
+		iter_13_1.simage:UnLoadImage()
+		iter_13_1.btn:RemoveClickListener()
+		iter_13_1.btncurrency:RemoveClickListener()
 	end
 end
 
-function slot0.onOpen(slot0)
-	slot0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, slot0._onCurrencyChange, slot0)
-	slot0:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, slot0._onCurrencyChange, slot0)
+function var_0_0.onOpen(arg_14_0)
+	arg_14_0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_14_0._onCurrencyChange, arg_14_0)
+	arg_14_0:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_14_0._onCurrencyChange, arg_14_0)
 
-	if slot0._localItemsEvent then
-		slot0:addEventCb(CharacterController.instance, CharacterEvent.levelUplocalItem, slot0._onLocalItemChanged, slot0)
+	if arg_14_0._localItemsEvent then
+		arg_14_0:addEventCb(CharacterController.instance, CharacterEvent.levelUplocalItem, arg_14_0._onLocalItemChanged, arg_14_0)
 	end
 
-	if slot0.viewContainer.viewParam and slot0.viewContainer.viewParam.enterViewName == ViewName.HeroGroupEditView then
-		slot0._animator:Play("currencyview_in2")
+	if arg_14_0.viewContainer.viewParam and arg_14_0.viewContainer.viewParam.enterViewName == ViewName.HeroGroupEditView then
+		arg_14_0._animator:Play("currencyview_in2")
 	else
-		slot0._animator:Play("currencyview_in")
+		arg_14_0._animator:Play("currencyview_in")
 	end
 
-	if slot0._openCallback then
-		slot0._openCallback(slot0._openCallbackObj)
+	if arg_14_0._openCallback then
+		arg_14_0._openCallback(arg_14_0._openCallbackObj)
 
-		slot0._openCallback = nil
-		slot0._openCallbackObj = nil
+		arg_14_0._openCallback = nil
+		arg_14_0._openCallbackObj = nil
 	end
 end
 
-function slot0.onClose(slot0)
-	TaskDispatcher.cancelTask(slot0._onRefreshDeadlineUI, slot0)
-	slot0:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, slot0._onCurrencyChange, slot0)
-	slot0:removeEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, slot0._onCurrencyChange, slot0)
+function var_0_0.onClose(arg_15_0)
+	TaskDispatcher.cancelTask(arg_15_0._onRefreshDeadlineUI, arg_15_0)
+	arg_15_0:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_15_0._onCurrencyChange, arg_15_0)
+	arg_15_0:removeEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_15_0._onCurrencyChange, arg_15_0)
 
-	if slot0.viewContainer.viewParam and slot0.viewContainer.viewParam.enterViewName == ViewName.HeroGroupEditView then
-		slot0._animator:Play("currencyview_out2")
+	if arg_15_0.viewContainer.viewParam and arg_15_0.viewContainer.viewParam.enterViewName == ViewName.HeroGroupEditView then
+		arg_15_0._animator:Play("currencyview_out2")
 	else
-		slot0._animator:Play("currencyview_out")
+		arg_15_0._animator:Play("currencyview_out")
 	end
 end
 
-function slot0._onCurrencyChange(slot0)
-	if not slot0.param then
-		gohelper.setActive(slot0._gocontainer, false)
+function var_0_0._onCurrencyChange(arg_16_0)
+	if not arg_16_0.param then
+		gohelper.setActive(arg_16_0._gocontainer, false)
 
 		return
 	end
 
-	if not slot0._initialized then
+	if not arg_16_0._initialized then
 		return
 	end
 
-	slot2 = 1
+	local var_16_0 = #arg_16_0.param
+	local var_16_1 = 1
 
-	for slot6 = #slot0.param, 1, -1 do
-		gohelper.setSibling(slot0:getCurrencyItem(slot6).go, slot2)
+	for iter_16_0 = var_16_0, 1, -1 do
+		local var_16_2 = arg_16_0:getCurrencyItem(iter_16_0)
+		local var_16_3 = arg_16_0.param[iter_16_0]
 
-		slot2 = slot2 + 1
+		gohelper.setSibling(var_16_2.go, var_16_1)
 
-		if slot0.param[slot6] then
-			slot9 = false
+		var_16_1 = var_16_1 + 1
 
-			if type(slot8) == "number" then
-				slot10 = slot8
-				slot12 = CurrencyConfig.instance:getCurrencyCo(slot10)
+		if var_16_3 then
+			local var_16_4 = false
 
-				if slot0._minusItemDict and slot0._minusItemDict[slot10] then
-					slot13 = (CurrencyModel.instance:getCurrency(slot10) and slot11.quantity or 0) - slot0._minusItemDict[slot10]
+			if type(var_16_3) == "number" then
+				local var_16_5 = var_16_3
+				local var_16_6 = CurrencyModel.instance:getCurrency(var_16_5)
+				local var_16_7 = CurrencyConfig.instance:getCurrencyCo(var_16_5)
+				local var_16_8 = var_16_6 and var_16_6.quantity or 0
+
+				if arg_16_0._minusItemDict and arg_16_0._minusItemDict[var_16_5] then
+					var_16_8 = var_16_8 - arg_16_0._minusItemDict[var_16_5]
 				end
 
-				if slot0.showMaxLimit then
-					slot7.txt.text = string.format("%s/%s", GameUtil.numberDisplay(slot13), GameUtil.numberDisplay(slot12.maxLimit))
+				if arg_16_0.showMaxLimit then
+					var_16_2.txt.text = string.format("%s/%s", GameUtil.numberDisplay(var_16_8), GameUtil.numberDisplay(var_16_7.maxLimit))
 				else
-					slot7.txt.text = GameUtil.numberDisplay(slot13)
+					var_16_2.txt.text = GameUtil.numberDisplay(var_16_8)
 				end
 
-				slot7.go:SetActive(true)
-				UISpriteSetMgr.instance:setCurrencyItemSprite(slot7.image, slot12.icon .. "_1")
+				var_16_2.go:SetActive(true)
 
-				if slot0:isNeedShieldAddBtn() then
-					gohelper.setActive(slot7.btn.gameObject, false)
+				local var_16_9 = var_16_7.icon
+
+				UISpriteSetMgr.instance:setCurrencyItemSprite(var_16_2.image, var_16_9 .. "_1")
+
+				if arg_16_0:isNeedShieldAddBtn() then
+					gohelper.setActive(var_16_2.btn.gameObject, false)
 				end
 
-				if slot10 == CurrencyEnum.CurrencyType.Power then
-					slot0.powerItemObj = slot7
+				if var_16_5 == CurrencyEnum.CurrencyType.Power then
+					arg_16_0.powerItemObj = var_16_2
 
-					slot0:_onRefreshDeadline()
+					arg_16_0:_onRefreshDeadline()
 				end
 
-				slot9 = false
+				var_16_4 = false
 			else
-				slot12 = slot8.isIcon
-				slot7.txt.text = GameUtil.numberDisplay(slot8.quantity or ItemModel.instance:getItemQuantity(slot8.type, slot8.id))
+				local var_16_10 = var_16_3.type
+				local var_16_11 = var_16_3.id
+				local var_16_12 = var_16_3.isIcon
+				local var_16_13 = var_16_3.quantity or ItemModel.instance:getItemQuantity(var_16_10, var_16_11)
 
-				slot7.go:SetActive(true)
+				var_16_2.txt.text = GameUtil.numberDisplay(var_16_13)
 
-				if slot8.isCurrencySprite then
-					UISpriteSetMgr.instance:setCurrencyItemSprite(slot7.image, tostring(slot8.icon or slot11) .. "_1")
+				var_16_2.go:SetActive(true)
+
+				if var_16_3.isCurrencySprite then
+					local var_16_14 = var_16_3.icon or var_16_11
+
+					UISpriteSetMgr.instance:setCurrencyItemSprite(var_16_2.image, tostring(var_16_14) .. "_1")
 				else
-					if not slot8.icon then
-						if slot12 then
-							slot14 = ItemModel.instance:getItemSmallIcon(slot11)
+					local var_16_15 = var_16_3.icon
+
+					if not var_16_15 then
+						if var_16_12 then
+							var_16_15 = ItemModel.instance:getItemSmallIcon(var_16_11)
 						else
-							slot15, slot14 = ItemModel.instance:getItemConfigAndIcon(slot10, slot11, slot12)
+							local var_16_16, var_16_17 = ItemModel.instance:getItemConfigAndIcon(var_16_10, var_16_11, var_16_12)
+
+							var_16_15 = var_16_17
 						end
 					end
 
-					slot7.simage:LoadImage(slot14)
+					var_16_2.simage:LoadImage(var_16_15)
 				end
 
-				if slot0:isNeedShieldAddBtn() then
-					gohelper.setActive(slot7.btn.gameObject, false)
+				if arg_16_0:isNeedShieldAddBtn() then
+					gohelper.setActive(var_16_2.btn.gameObject, false)
 				end
 
-				if slot10 == MaterialEnum.MaterialType.PowerPotion then
-					slot0.powerItemObj = slot7
+				if var_16_10 == MaterialEnum.MaterialType.PowerPotion then
+					arg_16_0.powerItemObj = var_16_2
 
-					slot0:_onRefreshDeadline()
+					arg_16_0:_onRefreshDeadline()
 				end
 
-				slot9 = not slot8.isCurrencySprite
+				var_16_4 = not var_16_3.isCurrencySprite
 			end
 
-			gohelper.setActive(slot7.image.gameObject, not slot9)
-			gohelper.setActive(slot7.simage.gameObject, slot9)
+			gohelper.setActive(var_16_2.image.gameObject, not var_16_4)
+			gohelper.setActive(var_16_2.simage.gameObject, var_16_4)
 		else
-			slot7.go:SetActive(false)
+			var_16_2.go:SetActive(false)
 		end
 	end
 
-	if slot1 < #slot0._currencyObjs then
-		for slot6 = slot1 + 1, #slot0._currencyObjs do
-			slot0:getCurrencyItem(slot6).go:SetActive(false)
+	if var_16_0 < #arg_16_0._currencyObjs then
+		for iter_16_1 = var_16_0 + 1, #arg_16_0._currencyObjs do
+			arg_16_0:getCurrencyItem(iter_16_1).go:SetActive(false)
 		end
 	end
 
-	gohelper.setActive(slot0._gocontainer, slot1 > 0)
+	gohelper.setActive(arg_16_0._gocontainer, var_16_0 > 0)
 
 	if OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.BanDiamond) then
-		slot0:_hideAddBtn(CurrencyEnum.CurrencyType.Diamond)
+		arg_16_0:_hideAddBtn(CurrencyEnum.CurrencyType.Diamond)
 	end
 end
 
-function slot0.getCurrencyItem(slot0, slot1)
-	if not slot0._currencyObjs[slot1] then
-		slot2 = slot0:getUserDataTb_()
-		slot3 = gohelper.cloneInPlace(slot0._gocurrency, "currency")
-		slot2.go = slot3
-		slot2.btn = gohelper.findChildButtonWithAudio(slot3, "#btn_currency/#btn")
-		slot2.simage = gohelper.findChildSingleImage(slot3, "#btn_currency/#simage")
-		slot2.image = gohelper.findChildImage(slot3, "#btn_currency/#image")
-		slot2.btncurrency = gohelper.findChildButtonWithAudio(slot3, "#btn_currency")
-		slot2.txt = gohelper.findChildText(slot3, "#btn_currency/content/#txt")
-		slot2.click = gohelper.findChild(slot3, "#btn_currency/click")
-		slot2.goCurrentTime = gohelper.findChild(slot3, "#btn_currency/#go_currenttime")
-		slot2.txtTime = gohelper.findChildText(slot3, "#btn_currency/#go_currenttime/timetxt")
-		slot2.deadlineEffect = gohelper.findChild(slot3, "#btn_currency/#effect")
+function var_0_0.getCurrencyItem(arg_17_0, arg_17_1)
+	local var_17_0 = arg_17_0._currencyObjs[arg_17_1]
 
-		slot2.btn:AddClickListener(slot0._onClick, {
-			self = slot0,
-			index = slot1
+	if not var_17_0 then
+		var_17_0 = arg_17_0:getUserDataTb_()
+
+		local var_17_1 = gohelper.cloneInPlace(arg_17_0._gocurrency, "currency")
+
+		var_17_0.go = var_17_1
+		var_17_0.btn = gohelper.findChildButtonWithAudio(var_17_1, "#btn_currency/#btn")
+		var_17_0.simage = gohelper.findChildSingleImage(var_17_1, "#btn_currency/#simage")
+		var_17_0.image = gohelper.findChildImage(var_17_1, "#btn_currency/#image")
+		var_17_0.btncurrency = gohelper.findChildButtonWithAudio(var_17_1, "#btn_currency")
+		var_17_0.txt = gohelper.findChildText(var_17_1, "#btn_currency/content/#txt")
+		var_17_0.click = gohelper.findChild(var_17_1, "#btn_currency/click")
+		var_17_0.goCurrentTime = gohelper.findChild(var_17_1, "#btn_currency/#go_currenttime")
+		var_17_0.txtTime = gohelper.findChildText(var_17_1, "#btn_currency/#go_currenttime/timetxt")
+		var_17_0.deadlineEffect = gohelper.findChild(var_17_1, "#btn_currency/#effect")
+
+		var_17_0.btn:AddClickListener(arg_17_0._onClick, {
+			self = arg_17_0,
+			index = arg_17_1
 		})
-		slot2.btncurrency:AddClickListener(slot0._btncurrencyOnClick, {
-			self = slot0,
-			index = slot1
+		var_17_0.btncurrency:AddClickListener(arg_17_0._btncurrencyOnClick, {
+			self = arg_17_0,
+			index = arg_17_1
 		})
 
-		slot0._currencyObjs[slot1] = slot2
+		arg_17_0._currencyObjs[arg_17_1] = var_17_0
 
-		gohelper.setActive(slot2.go, true)
+		gohelper.setActive(var_17_0.go, true)
 	end
 
-	return slot2
+	return var_17_0
 end
 
-function slot0.isNeedShieldAddBtn(slot0)
-	if slot0.foreShowBtn then
+function var_0_0.isNeedShieldAddBtn(arg_18_0)
+	if arg_18_0.foreShowBtn then
 		return false
 	end
 
-	if slot0.foreHideBtn then
+	if arg_18_0.foreHideBtn then
 		return true
 	end
 
-	if not uv0.needShieldAddBtnViews then
-		uv0.needShieldAddBtnViews = {
+	if not var_0_0.needShieldAddBtnViews then
+		var_0_0.needShieldAddBtnViews = {
 			[ViewName.StoreSkinConfirmView] = 1,
 			[ViewName.CharacterLevelUpView] = 1,
 			[ViewName.StoreView] = 1,
@@ -333,49 +367,56 @@ function slot0.isNeedShieldAddBtn(slot0)
 		}
 	end
 
-	if not slot0.viewName then
+	if not arg_18_0.viewName then
 		return false
 	end
 
-	return uv0.needShieldAddBtnViews[slot0.viewName] == 1
+	return var_0_0.needShieldAddBtnViews[arg_18_0.viewName] == 1
 end
 
-function slot0._hideAddBtn(slot0, slot1)
-	for slot6 = #slot0.param, 1, -1 do
-		if slot0.param[slot6] == slot1 then
-			gohelper.setActive(slot0:getCurrencyItem(slot6).btn.gameObject, false)
+function var_0_0._hideAddBtn(arg_19_0, arg_19_1)
+	for iter_19_0 = #arg_19_0.param, 1, -1 do
+		if arg_19_0.param[iter_19_0] == arg_19_1 then
+			local var_19_0 = arg_19_0:getCurrencyItem(iter_19_0)
+
+			gohelper.setActive(var_19_0.btn.gameObject, false)
 		end
 	end
 end
 
-function slot0._onRefreshDeadline(slot0)
-	slot0:_onRefreshDeadlineUI()
-	TaskDispatcher.runRepeat(slot0._onRefreshDeadlineUI, slot0, 1)
+function var_0_0._onRefreshDeadline(arg_20_0)
+	arg_20_0:_onRefreshDeadlineUI()
+	TaskDispatcher.runRepeat(arg_20_0._onRefreshDeadlineUI, arg_20_0, 1)
 end
 
-function slot0._onRefreshDeadlineUI(slot0)
-	if CurrencyController.instance:getPowerItemDeadLineTime() and slot1 > 0 then
-		if slot1 - ServerTime.now() <= 0 then
+function var_0_0._onRefreshDeadlineUI(arg_21_0)
+	local var_21_0 = CurrencyController.instance:getPowerItemDeadLineTime()
+
+	if var_21_0 and var_21_0 > 0 then
+		local var_21_1 = var_21_0 - ServerTime.now()
+
+		if var_21_1 <= 0 then
 			ItemRpc.instance:sendGetItemListRequest()
 			ItemRpc.instance:sendAutoUseExpirePowerItemRequest()
-			gohelper.setActive(slot0.powerItemObj.goCurrentTime, false)
-			gohelper.setActive(slot0.powerItemObj.deadlineEffect, false)
-			TaskDispatcher.cancelTask(slot0._onRefreshDeadlineUI, slot0)
+			gohelper.setActive(arg_21_0.powerItemObj.goCurrentTime, false)
+			gohelper.setActive(arg_21_0.powerItemObj.deadlineEffect, false)
+			TaskDispatcher.cancelTask(arg_21_0._onRefreshDeadlineUI, arg_21_0)
 
 			return
 		end
 
-		slot3, slot4, slot5 = TimeUtil.secondToRoughTime(slot2, true)
-		slot0.powerItemObj.txtTime.text = string.format("%s%s", slot3, slot4)
+		local var_21_2, var_21_3, var_21_4 = TimeUtil.secondToRoughTime(var_21_1, true)
 
-		gohelper.setActive(slot0.powerItemObj.goCurrentTime, not slot5)
-		gohelper.setActive(slot0.powerItemObj.deadlineEffect, not slot5)
+		arg_21_0.powerItemObj.txtTime.text = string.format("%s%s", var_21_2, var_21_3)
+
+		gohelper.setActive(arg_21_0.powerItemObj.goCurrentTime, not var_21_4)
+		gohelper.setActive(arg_21_0.powerItemObj.deadlineEffect, not var_21_4)
 	else
-		gohelper.setActive(slot0.powerItemObj.goCurrentTime, false)
-		gohelper.setActive(slot0.powerItemObj.deadlineEffect, false)
+		gohelper.setActive(arg_21_0.powerItemObj.goCurrentTime, false)
+		gohelper.setActive(arg_21_0.powerItemObj.deadlineEffect, false)
 	end
 end
 
-slot0.prefabPath = "ui/viewres/common/currencyview.prefab"
+var_0_0.prefabPath = "ui/viewres/common/currencyview.prefab"
 
-return slot0
+return var_0_0

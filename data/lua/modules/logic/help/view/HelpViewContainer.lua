@@ -1,34 +1,34 @@
-module("modules.logic.help.view.HelpViewContainer", package.seeall)
+﻿module("modules.logic.help.view.HelpViewContainer", package.seeall)
 
-slot0 = class("HelpViewContainer", BaseViewContainer)
+local var_0_0 = class("HelpViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		HelpView.New(),
 		TabViewGroup.New(1, "#go_btns")
 	}
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	slot0._navigateButtonsView = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	arg_2_0._navigateButtonsView = NavigateButtonsView.New({
 		false,
 		false,
 		false
 	})
 
 	return {
-		slot0._navigateButtonsView
+		arg_2_0._navigateButtonsView
 	}
 end
 
-function slot0.setBtnShow(slot0, slot1)
-	if slot0._navigateButtonsView then
-		slot0._navigateButtonsView:setParam({
-			slot1,
+function var_0_0.setBtnShow(arg_3_0, arg_3_1)
+	if arg_3_0._navigateButtonsView then
+		arg_3_0._navigateButtonsView:setParam({
+			arg_3_1,
 			false,
 			false
 		})
 	end
 end
 
-return slot0
+return var_0_0

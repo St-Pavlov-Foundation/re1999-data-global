@@ -1,255 +1,293 @@
-module("modules.logic.room.view.common.RoomBuildingLevelUpView", package.seeall)
+﻿module("modules.logic.room.view.common.RoomBuildingLevelUpView", package.seeall)
 
-slot0 = class("RoomBuildingLevelUpView", BaseView)
-slot1 = 43
+local var_0_0 = class("RoomBuildingLevelUpView", BaseView)
+local var_0_1 = 43
 
-function slot0.onInitView(slot0)
-	slot0._simageproductIcon = gohelper.findChildSingleImage(slot0.viewGO, "root/info/#simage_productIcon")
-	slot0._txtnamecn = gohelper.findChildText(slot0.viewGO, "root/info/#txt_namecn")
-	slot0._txtnameen = gohelper.findChildText(slot0.viewGO, "root/info/#txt_namecn/#txt_nameen")
-	slot0._imageicon = gohelper.findChildImage(slot0.viewGO, "root/info/#txt_namecn/#image_icon")
-	slot0._golevelupInfoItem = gohelper.findChild(slot0.viewGO, "root/levelupInfo/#go_levelupInfoItem")
-	slot0._txtlevelupInfo = gohelper.findChildText(slot0.viewGO, "root/levelupInfo/#go_levelupInfoItem/#txt_levelupInfo")
-	slot0._txtcurNum = gohelper.findChildText(slot0.viewGO, "root/levelupInfo/#go_levelupInfoItem/#txt_curNum")
-	slot0._txtnextNum = gohelper.findChildText(slot0.viewGO, "root/levelupInfo/#go_levelupInfoItem/#txt_nextNum")
-	slot0._gocost = gohelper.findChild(slot0.viewGO, "root/costs")
-	slot0._gocostitem = gohelper.findChild(slot0.viewGO, "root/costs/content/#go_costitem")
-	slot0._btnlevelup = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/#btn_levelup")
-	slot0._goreddot = gohelper.findChild(slot0.viewGO, "root/#btn_levelup/#go_reddot")
-	slot0._golevelupbeffect = gohelper.findChild(slot0.viewGO, "root/#btn_levelup/#go_reddot/#go_levelupbeffect")
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/#btn_close")
-	slot0._txtNeed = gohelper.findChildText(slot0.viewGO, "root/#txt_need")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simageproductIcon = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/info/#simage_productIcon")
+	arg_1_0._txtnamecn = gohelper.findChildText(arg_1_0.viewGO, "root/info/#txt_namecn")
+	arg_1_0._txtnameen = gohelper.findChildText(arg_1_0.viewGO, "root/info/#txt_namecn/#txt_nameen")
+	arg_1_0._imageicon = gohelper.findChildImage(arg_1_0.viewGO, "root/info/#txt_namecn/#image_icon")
+	arg_1_0._golevelupInfoItem = gohelper.findChild(arg_1_0.viewGO, "root/levelupInfo/#go_levelupInfoItem")
+	arg_1_0._txtlevelupInfo = gohelper.findChildText(arg_1_0.viewGO, "root/levelupInfo/#go_levelupInfoItem/#txt_levelupInfo")
+	arg_1_0._txtcurNum = gohelper.findChildText(arg_1_0.viewGO, "root/levelupInfo/#go_levelupInfoItem/#txt_curNum")
+	arg_1_0._txtnextNum = gohelper.findChildText(arg_1_0.viewGO, "root/levelupInfo/#go_levelupInfoItem/#txt_nextNum")
+	arg_1_0._gocost = gohelper.findChild(arg_1_0.viewGO, "root/costs")
+	arg_1_0._gocostitem = gohelper.findChild(arg_1_0.viewGO, "root/costs/content/#go_costitem")
+	arg_1_0._btnlevelup = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_levelup")
+	arg_1_0._goreddot = gohelper.findChild(arg_1_0.viewGO, "root/#btn_levelup/#go_reddot")
+	arg_1_0._golevelupbeffect = gohelper.findChild(arg_1_0.viewGO, "root/#btn_levelup/#go_reddot/#go_levelupbeffect")
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_close")
+	arg_1_0._txtNeed = gohelper.findChildText(arg_1_0.viewGO, "root/#txt_need")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnlevelup:AddClickListener(slot0._btnlevelupOnClick, slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
-	slot0:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, slot0._onItemChanged, slot0)
-	slot0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, slot0._onItemChanged, slot0)
-	slot0:addEventCb(RoomMapController.instance, RoomEvent.BuildingLevelUpPush, slot0._onBuildingLevelUp, slot0)
-	slot0:addEventCb(ManufactureController.instance, ManufactureEvent.TradeLevelChange, slot0._onTradeLevelChange, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnlevelup:AddClickListener(arg_2_0._btnlevelupOnClick, arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+	arg_2_0:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_2_0._onItemChanged, arg_2_0)
+	arg_2_0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_2_0._onItemChanged, arg_2_0)
+	arg_2_0:addEventCb(RoomMapController.instance, RoomEvent.BuildingLevelUpPush, arg_2_0._onBuildingLevelUp, arg_2_0)
+	arg_2_0:addEventCb(ManufactureController.instance, ManufactureEvent.TradeLevelChange, arg_2_0._onTradeLevelChange, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnlevelup:RemoveClickListener()
-	slot0._btnclose:RemoveClickListener()
-	slot0:removeEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, slot0._onItemChanged, slot0)
-	slot0:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, slot0._onItemChanged, slot0)
-	slot0:removeEventCb(RoomMapController.instance, RoomEvent.BuildingLevelUpPush, slot0._onBuildingLevelUp, slot0)
-	slot0:removeEventCb(ManufactureController.instance, ManufactureEvent.TradeLevelChange, slot0._onTradeLevelChange, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnlevelup:RemoveClickListener()
+	arg_3_0._btnclose:RemoveClickListener()
+	arg_3_0:removeEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_3_0._onItemChanged, arg_3_0)
+	arg_3_0:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_3_0._onItemChanged, arg_3_0)
+	arg_3_0:removeEventCb(RoomMapController.instance, RoomEvent.BuildingLevelUpPush, arg_3_0._onBuildingLevelUp, arg_3_0)
+	arg_3_0:removeEventCb(ManufactureController.instance, ManufactureEvent.TradeLevelChange, arg_3_0._onTradeLevelChange, arg_3_0)
 end
 
-function slot0._btnlevelupOnClick(slot0)
-	if not slot0._isCanUpgrade then
-		if not slot0._costEnough then
+function var_0_0._btnlevelupOnClick(arg_4_0)
+	if not arg_4_0._isCanUpgrade then
+		if not arg_4_0._costEnough then
 			GameFacade.showToast(ToastEnum.RoomUpgradeFailByNotEnough)
-		elseif slot0._extraCheckFailToast then
-			GameFacade.showToast(slot0._extraCheckFailToast)
+		elseif arg_4_0._extraCheckFailToast then
+			GameFacade.showToast(arg_4_0._extraCheckFailToast)
 		end
 
 		return
 	end
 
-	if slot0._costInfoList and #slot0._costInfoList > 0 then
-		GameFacade.showMessageBox(MessageBoxIdDefine.RoomUpgradeManufactureBuilding, MsgBoxEnum.BoxType.Yes_No, slot0._confirmLevelUp, nil, , slot0)
+	if arg_4_0._costInfoList and #arg_4_0._costInfoList > 0 then
+		GameFacade.showMessageBox(MessageBoxIdDefine.RoomUpgradeManufactureBuilding, MsgBoxEnum.BoxType.Yes_No, arg_4_0._confirmLevelUp, nil, nil, arg_4_0)
 	else
-		slot0:_confirmLevelUp()
+		arg_4_0:_confirmLevelUp()
 	end
 end
 
-function slot0._confirmLevelUp(slot0)
-	ManufactureController.instance:upgradeManufactureBuilding(slot0._buildingUid)
+function var_0_0._confirmLevelUp(arg_5_0)
+	ManufactureController.instance:upgradeManufactureBuilding(arg_5_0._buildingUid)
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseOnClick(arg_6_0)
+	arg_6_0:closeThis()
 end
 
-function slot0._onItemChanged(slot0)
-	slot0:refreshCost()
-	slot0:refreshCanUpgrade()
+function var_0_0._onItemChanged(arg_7_0)
+	arg_7_0:refreshCost()
+	arg_7_0:refreshCanUpgrade()
 end
 
-function slot0._onBuildingLevelUp(slot0, slot1)
-	if not slot1 or not slot1[slot0._buildingUid] then
+function var_0_0._onBuildingLevelUp(arg_8_0, arg_8_1)
+	if not arg_8_1 or not arg_8_1[arg_8_0._buildingUid] then
 		return
 	end
 
 	ViewMgr.instance:closeView(ViewName.RoomBuildingLevelUpView, true, false)
 	ViewMgr.instance:openView(ViewName.RoomManufactureBuildingLevelUpTipsView, {
-		buildingUid = slot0._buildingUid
+		buildingUid = arg_8_0._buildingUid
 	})
 end
 
-function slot0._onTradeLevelChange(slot0)
-	slot0:refreshCanUpgrade()
+function var_0_0._onTradeLevelChange(arg_9_0)
+	arg_9_0:refreshCanUpgrade()
 end
 
-function slot0._editableInitView(slot0)
-	gohelper.setActive(slot0._golevelupInfoItem, false)
-	gohelper.setActive(slot0._gocostitem, false)
+function var_0_0._editableInitView(arg_10_0)
+	gohelper.setActive(arg_10_0._golevelupInfoItem, false)
+	gohelper.setActive(arg_10_0._gocostitem, false)
 
-	slot0._levelUpInfoItemList = {}
-	slot0._costItemList = {}
+	arg_10_0._levelUpInfoItemList = {}
+	arg_10_0._costItemList = {}
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0._buildingUid = slot0.viewParam.buildingUid
-	slot0._levelUpInfoList = slot0.viewParam.levelUpInfoList
-	slot0._costInfoList = slot0.viewParam.costInfoList or {}
-	slot0._extraCheckFunc = slot0.viewParam.extraCheckFunc
-	slot0._extraCheckFuncObj = slot0.viewParam.extraCheckFuncObj
+function var_0_0.onUpdateParam(arg_11_0)
+	arg_11_0._buildingUid = arg_11_0.viewParam.buildingUid
+	arg_11_0._levelUpInfoList = arg_11_0.viewParam.levelUpInfoList
+	arg_11_0._costInfoList = arg_11_0.viewParam.costInfoList or {}
+	arg_11_0._extraCheckFunc = arg_11_0.viewParam.extraCheckFunc
+	arg_11_0._extraCheckFuncObj = arg_11_0.viewParam.extraCheckFuncObj
 
-	slot0:refreshUI()
+	arg_11_0:refreshUI()
 end
 
-function slot0.onOpen(slot0)
-	slot0:onUpdateParam()
+function var_0_0.onOpen(arg_12_0)
+	arg_12_0:onUpdateParam()
 	AudioMgr.instance:trigger(AudioEnum.Room.play_ui_home_yield_open)
 end
 
-function slot0.refreshUI(slot0)
-	slot0:refreshTitleInfo()
-	slot0:refreshLevelUpInfo()
-	slot0:refreshCost()
-	slot0:refreshCanUpgrade()
+function var_0_0.refreshUI(arg_13_0)
+	arg_13_0:refreshTitleInfo()
+	arg_13_0:refreshLevelUpInfo()
+	arg_13_0:refreshCost()
+	arg_13_0:refreshCanUpgrade()
 end
 
-function slot0.refreshTitleInfo(slot0)
-	slot1 = RoomMapBuildingModel.instance:getBuildingMOById(slot0._buildingUid)
-	slot0._txtnamecn.text = slot1.config.name
-	slot0._txtnameen.text = slot1.config.nameEn
+function var_0_0.refreshTitleInfo(arg_14_0)
+	local var_14_0 = RoomMapBuildingModel.instance:getBuildingMOById(arg_14_0._buildingUid)
 
-	UISpriteSetMgr.instance:setRoomSprite(slot0._imageicon, ManufactureConfig.instance:getManufactureBuildingIcon(slot1.buildingId))
+	arg_14_0._txtnamecn.text = var_14_0.config.name
+	arg_14_0._txtnameen.text = var_14_0.config.nameEn
 
-	if not string.nilorempty(slot1:getLevelUpIcon()) then
-		slot0._simageproductIcon:LoadImage(ResUrl.getRoomImage("critter/" .. slot3))
+	local var_14_1 = ManufactureConfig.instance:getManufactureBuildingIcon(var_14_0.buildingId)
+
+	UISpriteSetMgr.instance:setRoomSprite(arg_14_0._imageicon, var_14_1)
+
+	local var_14_2 = var_14_0:getLevelUpIcon()
+
+	if not string.nilorempty(var_14_2) then
+		arg_14_0._simageproductIcon:LoadImage(ResUrl.getRoomImage("critter/" .. var_14_2))
 	else
-		slot0._simageproductIcon:LoadImage(ResUrl.getRoomImage("building/" .. slot1:getIcon()))
+		local var_14_3 = var_14_0:getIcon()
+
+		arg_14_0._simageproductIcon:LoadImage(ResUrl.getRoomImage("building/" .. var_14_3))
 	end
 end
 
-function slot0.refreshLevelUpInfo(slot0)
-	if not slot0._levelUpInfoList then
+function var_0_0.refreshLevelUpInfo(arg_15_0)
+	if not arg_15_0._levelUpInfoList then
 		return
 	end
 
-	for slot4, slot5 in ipairs(slot0._levelUpInfoList) do
-		if not slot0._levelUpInfoItemList[slot4] then
-			slot6 = slot0:getUserDataTb_()
-			slot6.go = gohelper.cloneInPlace(slot0._golevelupInfoItem, "item" .. slot4)
-			slot6.trans = slot6.go.transform
-			slot6.bg = gohelper.findChild(slot6.go, "go_bg")
-			slot6.txtdesc = gohelper.findChildText(slot6.go, "#txt_levelupInfo")
-			slot6.goDesc = gohelper.findChild(slot6.go, "#go_desc")
-			slot6.curNum = gohelper.findChildText(slot6.go, "#go_desc/#txt_curNum")
-			slot6.nextNum = gohelper.findChildText(slot6.go, "#go_desc/#txt_nextNum")
-			slot6.goNewItemLayout = gohelper.findChild(slot6.go, "#go_newItemLayout")
-			slot6.goNewItem = gohelper.findChild(slot6.go, "#go_newItemLayout/#go_newItem")
+	for iter_15_0, iter_15_1 in ipairs(arg_15_0._levelUpInfoList) do
+		local var_15_0 = arg_15_0._levelUpInfoItemList[iter_15_0]
 
-			table.insert(slot0._levelUpInfoItemList, slot6)
+		if not var_15_0 then
+			var_15_0 = arg_15_0:getUserDataTb_()
+			var_15_0.go = gohelper.cloneInPlace(arg_15_0._golevelupInfoItem, "item" .. iter_15_0)
+			var_15_0.trans = var_15_0.go.transform
+			var_15_0.bg = gohelper.findChild(var_15_0.go, "go_bg")
+			var_15_0.txtdesc = gohelper.findChildText(var_15_0.go, "#txt_levelupInfo")
+			var_15_0.goDesc = gohelper.findChild(var_15_0.go, "#go_desc")
+			var_15_0.curNum = gohelper.findChildText(var_15_0.go, "#go_desc/#txt_curNum")
+			var_15_0.nextNum = gohelper.findChildText(var_15_0.go, "#go_desc/#txt_nextNum")
+			var_15_0.goNewItemLayout = gohelper.findChild(var_15_0.go, "#go_newItemLayout")
+			var_15_0.goNewItem = gohelper.findChild(var_15_0.go, "#go_newItemLayout/#go_newItem")
+
+			table.insert(arg_15_0._levelUpInfoItemList, var_15_0)
 		end
 
-		slot6.txtdesc.text = slot5.desc
-		slot7 = recthelper.getHeight(slot6.trans)
+		var_15_0.txtdesc.text = iter_15_1.desc
 
-		if slot5.newItemInfoList and true or false then
-			gohelper.CreateObjList(slot0, slot0._onSetNewItem, slot5.newItemInfoList, slot6.goNewItemLayout, slot6.goNewItem)
+		local var_15_1 = recthelper.getHeight(var_15_0.trans)
+		local var_15_2 = iter_15_1.newItemInfoList and true or false
 
-			slot7 = recthelper.getHeight(slot6.goNewItemLayout.transform)
+		if var_15_2 then
+			gohelper.CreateObjList(arg_15_0, arg_15_0._onSetNewItem, iter_15_1.newItemInfoList, var_15_0.goNewItemLayout, var_15_0.goNewItem)
+
+			var_15_1 = recthelper.getHeight(var_15_0.goNewItemLayout.transform)
 		else
-			slot6.curNum.text = slot5.currentDesc
-			slot6.nextNum.text = slot5.nextDesc
+			var_15_0.curNum.text = iter_15_1.currentDesc
+			var_15_0.nextNum.text = iter_15_1.nextDesc
 		end
 
-		recthelper.setHeight(slot6.trans, slot7)
-		gohelper.setActive(slot6.goDesc, not slot8)
-		gohelper.setActive(slot6.goNewItemLayout, slot8)
-		gohelper.setActive(slot6.bg, slot4 % 2 ~= 0)
-		gohelper.setActive(slot6.go, true)
+		recthelper.setHeight(var_15_0.trans, var_15_1)
+		gohelper.setActive(var_15_0.goDesc, not var_15_2)
+		gohelper.setActive(var_15_0.goNewItemLayout, var_15_2)
+		gohelper.setActive(var_15_0.bg, iter_15_0 % 2 ~= 0)
+		gohelper.setActive(var_15_0.go, true)
 	end
 
-	for slot4 = #slot0._levelUpInfoList + 1, #slot0._levelUpInfoItemList do
-		gohelper.setActive(slot0._levelUpInfoItemList[slot4].go, false)
+	for iter_15_2 = #arg_15_0._levelUpInfoList + 1, #arg_15_0._levelUpInfoItemList do
+		local var_15_3 = arg_15_0._levelUpInfoItemList[iter_15_2]
+
+		gohelper.setActive(var_15_3.go, false)
 	end
 end
 
-function slot0._onSetNewItem(slot0, slot1, slot2, slot3)
-	slot6 = slot2.quantity or 0
-	slot7 = IconMgr.instance:getCommonItemIcon(slot1)
+function var_0_0._onSetNewItem(arg_16_0, arg_16_1, arg_16_2, arg_16_3)
+	local var_16_0 = arg_16_2.type
+	local var_16_1 = arg_16_2.id
+	local var_16_2 = arg_16_2.quantity or 0
+	local var_16_3 = IconMgr.instance:getCommonItemIcon(arg_16_1)
 
-	slot7:setCountFontSize(uv0)
-	slot7:setMOValue(slot2.type, slot2.id, slot6)
-	slot7:isShowCount(slot6 ~= 0)
+	var_16_3:setCountFontSize(var_0_1)
+	var_16_3:setMOValue(var_16_0, var_16_1, var_16_2)
+	var_16_3:isShowCount(var_16_2 ~= 0)
 end
 
-function slot0.refreshCost(slot0)
-	slot0._costEnough = true
-	slot1 = slot0._costInfoList and #slot0._costInfoList > 0
+function var_0_0.refreshCost(arg_17_0)
+	arg_17_0._costEnough = true
 
-	gohelper.setActive(slot0._gocost, slot1)
+	local var_17_0 = arg_17_0._costInfoList and #arg_17_0._costInfoList > 0
 
-	if not slot1 then
+	gohelper.setActive(arg_17_0._gocost, var_17_0)
+
+	if not var_17_0 then
 		return
 	end
 
-	for slot5, slot6 in ipairs(slot0._costInfoList) do
-		slot11 = slot6.quantity <= ItemModel.instance:getItemQuantity(slot6.type, slot6.id)
+	for iter_17_0, iter_17_1 in ipairs(arg_17_0._costInfoList) do
+		local var_17_1 = iter_17_1.type
+		local var_17_2 = iter_17_1.id
+		local var_17_3 = iter_17_1.quantity
+		local var_17_4 = ItemModel.instance:getItemQuantity(var_17_1, var_17_2)
+		local var_17_5 = var_17_3 <= var_17_4
+		local var_17_6 = arg_17_0._costItemList[iter_17_0]
 
-		if not slot0._costItemList[slot5] then
-			slot12 = slot0:getUserDataTb_()
-			slot12.index = slot5
-			slot12.go = gohelper.cloneInPlace(slot0._gocostitem, "item" .. slot5)
-			slot12.parent = gohelper.findChild(slot12.go, "go_itempos")
-			slot12.itemIcon = IconMgr.instance:getCommonItemIcon(slot12.parent)
+		if not var_17_6 then
+			var_17_6 = arg_17_0:getUserDataTb_()
+			var_17_6.index = iter_17_0
+			var_17_6.go = gohelper.cloneInPlace(arg_17_0._gocostitem, "item" .. iter_17_0)
+			var_17_6.parent = gohelper.findChild(var_17_6.go, "go_itempos")
+			var_17_6.itemIcon = IconMgr.instance:getCommonItemIcon(var_17_6.parent)
 
-			table.insert(slot0._costItemList, slot12)
+			table.insert(arg_17_0._costItemList, var_17_6)
 		end
 
-		slot12.itemIcon:setMOValue(slot7, slot8, slot9)
-		slot12.itemIcon:setCountFontSize(uv0)
-		slot12.itemIcon:setOnBeforeClickCallback(JumpController.commonIconBeforeClickSetRecordItem, slot0)
+		var_17_6.itemIcon:setMOValue(var_17_1, var_17_2, var_17_3)
+		var_17_6.itemIcon:setCountFontSize(var_0_1)
+		var_17_6.itemIcon:setOnBeforeClickCallback(JumpController.commonIconBeforeClickSetRecordItem, arg_17_0)
 
-		slot13 = slot7 == MaterialEnum.MaterialType.Currency
-		slot14 = ""
-		slot12.itemIcon:getCount().text = (not slot11 or (not slot13 or GameUtil.numberDisplay(slot9)) and string.format("%s/%s", GameUtil.numberDisplay(slot10), GameUtil.numberDisplay(slot9))) and (not slot13 or string.format("<color=#d97373>%s</color>", GameUtil.numberDisplay(slot9))) and string.format("<color=#d97373>%s</color>/%s", GameUtil.numberDisplay(slot10), GameUtil.numberDisplay(slot9))
-		slot0._costEnough = slot0._costEnough and slot11
+		local var_17_7 = var_17_1 == MaterialEnum.MaterialType.Currency
+		local var_17_8 = ""
 
-		gohelper.setActive(slot12.go, true)
+		if var_17_5 then
+			if var_17_7 then
+				var_17_8 = GameUtil.numberDisplay(var_17_3)
+			else
+				var_17_8 = string.format("%s/%s", GameUtil.numberDisplay(var_17_4), GameUtil.numberDisplay(var_17_3))
+			end
+		elseif var_17_7 then
+			var_17_8 = string.format("<color=#d97373>%s</color>", GameUtil.numberDisplay(var_17_3))
+		else
+			var_17_8 = string.format("<color=#d97373>%s</color>/%s", GameUtil.numberDisplay(var_17_4), GameUtil.numberDisplay(var_17_3))
+		end
+
+		var_17_6.itemIcon:getCount().text = var_17_8
+		arg_17_0._costEnough = arg_17_0._costEnough and var_17_5
+
+		gohelper.setActive(var_17_6.go, true)
 	end
 
-	for slot5 = #slot0._costInfoList + 1, #slot0._costItemList do
-		gohelper.setActive(slot0._costItemList[slot5].go, false)
+	for iter_17_2 = #arg_17_0._costInfoList + 1, #arg_17_0._costItemList do
+		local var_17_9 = arg_17_0._costItemList[iter_17_2]
+
+		gohelper.setActive(var_17_9.go, false)
 	end
 end
 
-function slot0.refreshCanUpgrade(slot0)
-	slot1 = true
-	slot2, slot3 = nil
+function var_0_0.refreshCanUpgrade(arg_18_0)
+	local var_18_0 = true
+	local var_18_1
+	local var_18_2
 
-	if slot0._extraCheckFunc then
-		slot1, slot2, slot6 = slot0._extraCheckFunc(slot0._extraCheckFuncObj, slot0._buildingUid)
-		slot0._txtNeed.text = slot6 or ""
+	if arg_18_0._extraCheckFunc then
+		var_18_0, var_18_1, var_18_2 = arg_18_0._extraCheckFunc(arg_18_0._extraCheckFuncObj, arg_18_0._buildingUid)
+		arg_18_0._txtNeed.text = var_18_2 or ""
 	end
 
-	gohelper.setActive(slot0._txtNeed, slot3)
+	gohelper.setActive(arg_18_0._txtNeed, var_18_2)
 
-	slot0._isCanUpgrade = slot1 and slot0._costEnough
-	slot0._extraCheckFailToast = slot2
+	arg_18_0._isCanUpgrade = var_18_0 and arg_18_0._costEnough
+	arg_18_0._extraCheckFailToast = var_18_1
 
-	ZProj.UGUIHelper.SetGrayscale(slot0._btnlevelup.gameObject, not slot0._isCanUpgrade)
-	gohelper.setActive(slot0._golevelupbeffect, slot0._isCanUpgrade)
+	ZProj.UGUIHelper.SetGrayscale(arg_18_0._btnlevelup.gameObject, not arg_18_0._isCanUpgrade)
+	gohelper.setActive(arg_18_0._golevelupbeffect, arg_18_0._isCanUpgrade)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_19_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simageproductIcon:UnLoadImage()
+function var_0_0.onDestroyView(arg_20_0)
+	arg_20_0._simageproductIcon:UnLoadImage()
 end
 
-return slot0
+return var_0_0

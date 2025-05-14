@@ -1,57 +1,62 @@
-module("modules.logic.summon.model.SummonMainPoolMO", package.seeall)
+﻿module("modules.logic.summon.model.SummonMainPoolMO", package.seeall)
 
-slot0 = pureTable("SummonMainPoolMO")
-slot1 = require("modules.logic.summon.model.SummonSpPoolMO")
+local var_0_0 = pureTable("SummonMainPoolMO")
+local var_0_1 = require("modules.logic.summon.model.SummonSpPoolMO")
 
-function slot0.onOffTimestamp(slot0)
-	if not slot0.customPickMO:isValid() then
-		return slot0.onlineTime, slot0.offlineTime
+function var_0_0.onOffTimestamp(arg_1_0)
+	local var_1_0 = arg_1_0.onlineTime
+	local var_1_1 = arg_1_0.offlineTime
+
+	if not arg_1_0.customPickMO:isValid() then
+		return var_1_0, var_1_1
 	end
 
-	slot3, slot2 = slot0.customPickMO:onOffTimestamp()
+	local var_1_2, var_1_3 = arg_1_0.customPickMO:onOffTimestamp()
 
-	if slot3 > 0 then
-		slot1 = slot3
+	if var_1_2 > 0 then
+		var_1_0 = var_1_2
+		var_1_1 = var_1_3
 	end
 
-	return slot1, slot2
+	return var_1_0, var_1_1
 end
 
-function slot0.init(slot0, slot1)
-	slot0.id = slot1.poolId
-	slot0.luckyBagMO = SummonLuckyBagMO.New()
-	slot0.customPickMO = uv0.New()
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.id = arg_2_1.poolId
+	arg_2_0.luckyBagMO = SummonLuckyBagMO.New()
+	arg_2_0.customPickMO = var_0_1.New()
 
-	slot0:update(slot1)
+	arg_2_0:update(arg_2_1)
 end
 
-function slot0.update(slot0, slot1)
-	slot0.offlineTime = slot1.offlineTime or 0
-	slot0.onlineTime = slot1.onlineTime or 0
-	slot0.haveFree = slot1.haveFree or false
-	slot0.usedFreeCount = slot1.usedFreeCount or 0
+function var_0_0.update(arg_3_0, arg_3_1)
+	arg_3_0.offlineTime = arg_3_1.offlineTime or 0
+	arg_3_0.onlineTime = arg_3_1.onlineTime or 0
+	arg_3_0.haveFree = arg_3_1.haveFree or false
+	arg_3_0.usedFreeCount = arg_3_1.usedFreeCount or 0
 
-	if slot1.luckyBagInfo then
-		slot0.luckyBagMO:update(slot1.luckyBagInfo)
+	if arg_3_1.luckyBagInfo then
+		arg_3_0.luckyBagMO:update(arg_3_1.luckyBagInfo)
 	end
 
-	if slot1.spPoolInfo then
-		slot0.customPickMO:update(slot1.spPoolInfo)
+	if arg_3_1.spPoolInfo then
+		arg_3_0.customPickMO:update(arg_3_1.spPoolInfo)
 	end
 
-	slot0.discountTime = slot1.discountTime or 0
-	slot0.canGetGuaranteeSRCount = slot1.canGetGuaranteeSRCount or 0
-	slot0.guaranteeSRCountDown = slot1.guaranteeSRCountDown or 0
+	arg_3_0.discountTime = arg_3_1.discountTime or 0
+	arg_3_0.canGetGuaranteeSRCount = arg_3_1.canGetGuaranteeSRCount or 0
+	arg_3_0.guaranteeSRCountDown = arg_3_1.guaranteeSRCountDown or 0
 end
 
-function slot0.isOpening(slot0)
-	if slot0.offlineTime == 0 and slot0.onlineTime == 0 then
+function var_0_0.isOpening(arg_4_0)
+	if arg_4_0.offlineTime == 0 and arg_4_0.onlineTime == 0 then
 		return true
 	end
 
-	slot2, slot3 = slot0:onOffTimestamp()
+	local var_4_0 = ServerTime.now()
+	local var_4_1, var_4_2 = arg_4_0:onOffTimestamp()
 
-	return slot2 <= ServerTime.now() and slot1 <= slot3
+	return var_4_1 <= var_4_0 and var_4_0 <= var_4_2
 end
 
-return slot0
+return var_0_0

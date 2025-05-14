@@ -1,45 +1,46 @@
-module("modules.logic.login.view.FixResTipView", package.seeall)
+﻿module("modules.logic.login.view.FixResTipView", package.seeall)
 
-slot0 = class("FixResTipView", BaseView)
+local var_0_0 = class("FixResTipView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._btntouchClose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_touchClose")
-	slot0._simagetipbg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_tipbg")
-	slot0._txttip = gohelper.findChildText(slot0.viewGO, "centerTip/#txt_tip")
-	slot0._toggletip = gohelper.findChildToggle(slot0.viewGO, "centerTip/#toggle_tip")
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close")
-	slot0._btnfix = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_fix")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btntouchClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_touchClose")
+	arg_1_0._simagetipbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_tipbg")
+	arg_1_0._txttip = gohelper.findChildText(arg_1_0.viewGO, "centerTip/#txt_tip")
+	arg_1_0._toggletip = gohelper.findChildToggle(arg_1_0.viewGO, "centerTip/#toggle_tip")
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
+	arg_1_0._btnfix = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_fix")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btntouchClose:AddClickListener(slot0._btntouchCloseOnClick, slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
-	slot0._btnfix:AddClickListener(slot0._btnfixOnClick, slot0)
-	slot0._toggletip:AddOnValueChanged(slot0._toggleTipOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btntouchClose:AddClickListener(arg_2_0._btntouchCloseOnClick, arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+	arg_2_0._btnfix:AddClickListener(arg_2_0._btnfixOnClick, arg_2_0)
+	arg_2_0._toggletip:AddOnValueChanged(arg_2_0._toggleTipOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btntouchClose:RemoveClickListener()
-	slot0._btnclose:RemoveClickListener()
-	slot0._btnfix:RemoveClickListener()
-	slot0._toggletip:RemoveOnValueChanged()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btntouchClose:RemoveClickListener()
+	arg_3_0._btnclose:RemoveClickListener()
+	arg_3_0._btnfix:RemoveClickListener()
+	arg_3_0._toggletip:RemoveOnValueChanged()
 end
 
-function slot0._btntouchCloseOnClick(slot0)
+function var_0_0._btntouchCloseOnClick(arg_4_0)
+	return
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseOnClick(arg_5_0)
+	arg_5_0:closeThis()
 end
 
-function slot0._btnfixOnClick(slot0)
-	if slot0._toggletip.isOn then
+function var_0_0._btnfixOnClick(arg_6_0)
+	if arg_6_0._toggletip.isOn then
 		SLFramework.FileHelper.DeleteFile(SLFramework.ResChecker.OutVersionPath)
-		GameFacade.showMessageBox(MessageBoxIdDefine.FixFinished, MsgBoxEnum.BoxType.Yes, function ()
+		GameFacade.showMessageBox(MessageBoxIdDefine.FixFinished, MsgBoxEnum.BoxType.Yes, function()
 			if BootNativeUtil.isAndroid() then
 				if SDKMgr.restartGame ~= nil then
 					SDKMgr.instance:restartGame()
@@ -50,36 +51,38 @@ function slot0._btnfixOnClick(slot0)
 				ProjBooter.instance:quitGame()
 			end
 		end)
-	elseif slot0.viewParam.callback then
-		slot0.viewParam.callback(slot0.viewParam.callbackObj)
+	elseif arg_6_0.viewParam.callback then
+		arg_6_0.viewParam.callback(arg_6_0.viewParam.callbackObj)
 	end
 
-	slot0:closeThis()
+	arg_6_0:closeThis()
 end
 
-function slot0._toggleTipOnClick(slot0)
+function var_0_0._toggleTipOnClick(arg_8_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
 end
 
-function slot0._editableInitView(slot0)
-	slot0._toggletip.isOn = true
+function var_0_0._editableInitView(arg_9_0)
+	arg_9_0._toggletip.isOn = true
 
-	slot0._simagetipbg:LoadImage(ResUrl.getMessageIcon("bg_tanchuang"))
+	arg_9_0._simagetipbg:LoadImage(ResUrl.getMessageIcon("bg_tanchuang"))
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_10_0)
+	return
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_11_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
-	NavigateMgr.instance:addEscape(slot0.viewName, slot0._btncloseOnClick, slot0)
+	NavigateMgr.instance:addEscape(arg_11_0.viewName, arg_11_0._btncloseOnClick, arg_11_0)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_12_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simagetipbg:UnLoadImage()
+function var_0_0.onDestroyView(arg_13_0)
+	arg_13_0._simagetipbg:UnLoadImage()
 end
 
-return slot0
+return var_0_0

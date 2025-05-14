@@ -1,40 +1,40 @@
-module("modules.logic.fight.model.restart.FightRestartAbandonType.FightRestartAbandonType1", package.seeall)
+﻿module("modules.logic.fight.model.restart.FightRestartAbandonType.FightRestartAbandonType1", package.seeall)
 
-slot0 = class("FightRestartAbandonType1", FightRestartAbandonTypeBase)
+local var_0_0 = class("FightRestartAbandonType1", FightRestartAbandonTypeBase)
 
-function slot0.ctor(slot0, slot1, slot2, slot3, slot4)
-	slot0:__onInit()
+function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4)
+	arg_1_0:__onInit()
 
-	slot0._fight_work = slot1
-	slot0._fightParam = slot2
-	slot0._episode_config = slot3
-	slot0._chapter_config = slot4
+	arg_1_0._fight_work = arg_1_1
+	arg_1_0._fightParam = arg_1_2
+	arg_1_0._episode_config = arg_1_3
+	arg_1_0._chapter_config = arg_1_4
 end
 
-function slot0.canRestart(slot0)
-	return slot0:episodeCostIsEnough()
+function var_0_0.canRestart(arg_2_0)
+	return (arg_2_0:episodeCostIsEnough())
 end
 
-function slot0.startAbandon(slot0)
-	DungeonFightController.instance:registerCallback(DungeonEvent.OnEndDungeonReply, slot0._startRequestFight, slot0)
+function var_0_0.startAbandon(arg_3_0)
+	DungeonFightController.instance:registerCallback(DungeonEvent.OnEndDungeonReply, arg_3_0._startRequestFight, arg_3_0)
 	DungeonFightController.instance:sendEndFightRequest(true)
 end
 
-function slot0._startRequestFight(slot0, slot1)
-	DungeonFightController.instance:unregisterCallback(DungeonEvent.OnEndDungeonReply, slot0._startRequestFight, slot0)
+function var_0_0._startRequestFight(arg_4_0, arg_4_1)
+	DungeonFightController.instance:unregisterCallback(DungeonEvent.OnEndDungeonReply, arg_4_0._startRequestFight, arg_4_0)
 
-	if slot1 ~= 0 then
+	if arg_4_1 ~= 0 then
 		FightSystem.instance:restartFightFail()
 
 		return
 	end
 
-	slot0._fight_work:onDone(true)
+	arg_4_0._fight_work:onDone(true)
 end
 
-function slot0.releaseSelf(slot0)
-	DungeonFightController.instance:unregisterCallback(DungeonEvent.OnEndDungeonReply, slot0._startRequestFight, slot0)
-	slot0:__onDispose()
+function var_0_0.releaseSelf(arg_5_0)
+	DungeonFightController.instance:unregisterCallback(DungeonEvent.OnEndDungeonReply, arg_5_0._startRequestFight, arg_5_0)
+	arg_5_0:__onDispose()
 end
 
-return slot0
+return var_0_0

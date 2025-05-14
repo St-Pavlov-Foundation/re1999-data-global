@@ -1,65 +1,65 @@
-module("modules.logic.versionactivity1_5.dungeon.view.dispatch.VersionActivity1_5DispatchSelectHeroItem", package.seeall)
+﻿module("modules.logic.versionactivity1_5.dungeon.view.dispatch.VersionActivity1_5DispatchSelectHeroItem", package.seeall)
 
-slot0 = class("VersionActivity1_5DispatchSelectHeroItem", UserDataDispose)
+local var_0_0 = class("VersionActivity1_5DispatchSelectHeroItem", UserDataDispose)
 
-function slot0.createItem(slot0, slot1)
-	slot2 = uv0.New()
+function var_0_0.createItem(arg_1_0, arg_1_1)
+	local var_1_0 = var_0_0.New()
 
-	slot2:init(slot0, slot1)
+	var_1_0:init(arg_1_0, arg_1_1)
 
-	return slot2
+	return var_1_0
 end
 
-function slot0.init(slot0, slot1, slot2)
-	slot0:__onInit()
+function var_0_0.init(arg_2_0, arg_2_1, arg_2_2)
+	arg_2_0:__onInit()
 
-	slot0.index = slot2
-	slot0.go = slot1
-	slot0.goHero = gohelper.findChild(slot0.go, "#go_hero")
-	slot0.simageHeroIcon = gohelper.findChildSingleImage(slot0.go, "#go_hero/#simage_heroicon")
-	slot0.imageCareer = gohelper.findChildImage(slot0.go, "#go_hero/#image_career")
-	slot0.click = gohelper.getClick(slot0.go)
+	arg_2_0.index = arg_2_2
+	arg_2_0.go = arg_2_1
+	arg_2_0.goHero = gohelper.findChild(arg_2_0.go, "#go_hero")
+	arg_2_0.simageHeroIcon = gohelper.findChildSingleImage(arg_2_0.go, "#go_hero/#simage_heroicon")
+	arg_2_0.imageCareer = gohelper.findChildImage(arg_2_0.go, "#go_hero/#image_career")
+	arg_2_0.click = gohelper.getClick(arg_2_0.go)
 
-	slot0.click:AddClickListener(slot0.onClickSelf, slot0)
-	gohelper.setActive(slot0.goHero, false)
-	slot0:addEventCb(VersionActivity1_5DungeonController.instance, VersionActivity1_5DungeonEvent.ChangeSelectedHero, slot0.refreshUI, slot0)
+	arg_2_0.click:AddClickListener(arg_2_0.onClickSelf, arg_2_0)
+	gohelper.setActive(arg_2_0.goHero, false)
+	arg_2_0:addEventCb(VersionActivity1_5DungeonController.instance, VersionActivity1_5DungeonEvent.ChangeSelectedHero, arg_2_0.refreshUI, arg_2_0)
 end
 
-function slot0.onClickSelf(slot0)
+function var_0_0.onClickSelf(arg_3_0)
 	if not VersionActivity1_5HeroListModel.instance:canChangeHeroMo() then
 		return
 	end
 
 	VersionActivity1_5DungeonController.instance:dispatchEvent(VersionActivity1_5DungeonEvent.ChangeDispatchHeroContainerEvent, true)
 
-	if slot0.mo == nil then
+	if arg_3_0.mo == nil then
 		return
 	end
 
-	VersionActivity1_5HeroListModel.instance:deselectMo(slot0.mo)
+	VersionActivity1_5HeroListModel.instance:deselectMo(arg_3_0.mo)
 end
 
-function slot0.isSelected(slot0)
-	return slot0.mo ~= nil
+function var_0_0.isSelected(arg_4_0)
+	return arg_4_0.mo ~= nil
 end
 
-function slot0.refreshUI(slot0)
-	slot0.mo = VersionActivity1_5HeroListModel.instance:getSelectedMoByIndex(slot0.index)
+function var_0_0.refreshUI(arg_5_0)
+	arg_5_0.mo = VersionActivity1_5HeroListModel.instance:getSelectedMoByIndex(arg_5_0.index)
 
-	gohelper.setActive(slot0.goHero, slot0:isSelected())
+	gohelper.setActive(arg_5_0.goHero, arg_5_0:isSelected())
 
-	if slot0:isSelected() then
-		slot0.heroCo = slot0.mo.config
+	if arg_5_0:isSelected() then
+		arg_5_0.heroCo = arg_5_0.mo.config
 
-		slot0.simageHeroIcon:LoadImage(ResUrl.getRoomHeadIcon(slot0.heroCo.id .. "01"))
-		UISpriteSetMgr.instance:setCommonSprite(slot0.imageCareer, "lssx_" .. slot0.heroCo.career)
+		arg_5_0.simageHeroIcon:LoadImage(ResUrl.getRoomHeadIcon(arg_5_0.heroCo.id .. "01"))
+		UISpriteSetMgr.instance:setCommonSprite(arg_5_0.imageCareer, "lssx_" .. arg_5_0.heroCo.career)
 	end
 end
 
-function slot0.destroy(slot0)
-	slot0.simageHeroIcon:UnLoadImage()
-	slot0.click:RemoveClickListener()
-	slot0:__onDispose()
+function var_0_0.destroy(arg_6_0)
+	arg_6_0.simageHeroIcon:UnLoadImage()
+	arg_6_0.click:RemoveClickListener()
+	arg_6_0:__onDispose()
 end
 
-return slot0
+return var_0_0

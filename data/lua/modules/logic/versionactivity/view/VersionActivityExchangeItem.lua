@@ -1,183 +1,203 @@
-module("modules.logic.versionactivity.view.VersionActivityExchangeItem", package.seeall)
+﻿module("modules.logic.versionactivity.view.VersionActivityExchangeItem", package.seeall)
 
-slot0 = class("VersionActivityExchangeItem", LuaCompBase)
+local var_0_0 = class("VersionActivityExchangeItem", LuaCompBase)
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
-	slot0._txtneed = gohelper.findChildText(slot0.go, "state/txt_need")
-	slot0._gounfinishstate = gohelper.findChild(slot0.go, "state/go_unfinishstate")
-	slot0._gofinishstate = gohelper.findChild(slot0.go, "state/go_finishstate")
-	slot0._gorewardcontent = gohelper.findChild(slot0.go, "#go_rewardcontent")
-	slot0._btnclick = gohelper.findChildButtonWithAudio(slot0.go, "btn_click")
-	slot0._goget = gohelper.findChild(slot0.go, "go_get")
-	slot0._golingqu = gohelper.findChild(slot0.go, "go_get/#lingqu")
-	slot0._gofinish = gohelper.findChild(slot0.go, "go_finish")
-	slot0._gounfinish = gohelper.findChild(slot0.go, "go_unfinish")
-	slot0._goselected = gohelper.findChild(slot0.go, "go_selected")
-	slot0._goselectedbg = gohelper.findChildSingleImage(slot0.go, "go_selected/bg")
-	slot0._gorewarditem = gohelper.findChild(slot0.go, "#go_rewardcontent/anim/#go_rewarditem")
-	slot0._imgiconbgunselect = gohelper.findChildImage(slot0.go, "hero/img_iconbgunselect")
-	slot0._imgiconbgselect = gohelper.findChildImage(slot0.go, "hero/img_iconbgselect")
-	slot0._imgheadicon = gohelper.findChildSingleImage(slot0.go, "hero/mask/img_headicon")
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.go = arg_1_1
+	arg_1_0._txtneed = gohelper.findChildText(arg_1_0.go, "state/txt_need")
+	arg_1_0._gounfinishstate = gohelper.findChild(arg_1_0.go, "state/go_unfinishstate")
+	arg_1_0._gofinishstate = gohelper.findChild(arg_1_0.go, "state/go_finishstate")
+	arg_1_0._gorewardcontent = gohelper.findChild(arg_1_0.go, "#go_rewardcontent")
+	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.go, "btn_click")
+	arg_1_0._goget = gohelper.findChild(arg_1_0.go, "go_get")
+	arg_1_0._golingqu = gohelper.findChild(arg_1_0.go, "go_get/#lingqu")
+	arg_1_0._gofinish = gohelper.findChild(arg_1_0.go, "go_finish")
+	arg_1_0._gounfinish = gohelper.findChild(arg_1_0.go, "go_unfinish")
+	arg_1_0._goselected = gohelper.findChild(arg_1_0.go, "go_selected")
+	arg_1_0._goselectedbg = gohelper.findChildSingleImage(arg_1_0.go, "go_selected/bg")
+	arg_1_0._gorewarditem = gohelper.findChild(arg_1_0.go, "#go_rewardcontent/anim/#go_rewarditem")
+	arg_1_0._imgiconbgunselect = gohelper.findChildImage(arg_1_0.go, "hero/img_iconbgunselect")
+	arg_1_0._imgiconbgselect = gohelper.findChildImage(arg_1_0.go, "hero/img_iconbgselect")
+	arg_1_0._imgheadicon = gohelper.findChildSingleImage(arg_1_0.go, "hero/mask/img_headicon")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEventListeners(slot0)
-	slot0._btnclick:AddClickListener(slot0._btnClickOnClick, slot0)
-	slot0:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, slot0.updateLingqu, slot0)
+function var_0_0.addEventListeners(arg_2_0)
+	arg_2_0._btnclick:AddClickListener(arg_2_0._btnClickOnClick, arg_2_0)
+	arg_2_0:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_2_0.updateLingqu, arg_2_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0._btnclick:RemoveClickListener()
-	slot0:removeEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, slot0.updateLingqu, slot0)
+function var_0_0.removeEventListeners(arg_3_0)
+	arg_3_0._btnclick:RemoveClickListener()
+	arg_3_0:removeEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_3_0.updateLingqu, arg_3_0)
 end
 
-function slot0._btnClickOnClick(slot0)
-	if slot0.state == -1 then
-		-- Nothing
-	elseif slot0.state == 1 then
-		StoryController.instance:playStory(slot0.config.storyId, {
-			mark = true
-		})
-	elseif slot0.needArr[3] <= ItemModel.instance:getItemQuantity(slot0.needArr[1], slot0.needArr[2]) then
-		StoryController.instance:playStory(slot0.config.storyId, {
-			mark = true
-		}, slot0.sendExchange112Request, slot0)
+function var_0_0._btnClickOnClick(arg_4_0)
+	if arg_4_0.state == -1 then
+		-- block empty
+	elseif arg_4_0.state == 1 then
+		local var_4_0 = {}
+
+		var_4_0.mark = true
+
+		StoryController.instance:playStory(arg_4_0.config.storyId, var_4_0)
+	elseif ItemModel.instance:getItemQuantity(arg_4_0.needArr[1], arg_4_0.needArr[2]) >= arg_4_0.needArr[3] then
+		local var_4_1 = {}
+
+		var_4_1.mark = true
+
+		StoryController.instance:playStory(arg_4_0.config.storyId, var_4_1, arg_4_0.sendExchange112Request, arg_4_0)
 	else
-		ToastController.instance:showToast(3202, ItemModel.instance:getItemConfigAndIcon(slot0.needArr[1], slot0.needArr[2]) and slot2.name or slot0.needArr[2])
+		local var_4_2 = ItemModel.instance:getItemConfigAndIcon(arg_4_0.needArr[1], arg_4_0.needArr[2])
+
+		ToastController.instance:showToast(3202, var_4_2 and var_4_2.name or arg_4_0.needArr[2])
 	end
 
-	slot0:onClick()
+	arg_4_0:onClick()
 end
 
-function slot0.sendExchange112Request(slot0)
-	if slot0.state == 0 then
+function var_0_0.sendExchange112Request(arg_5_0)
+	if arg_5_0.state == 0 then
 		UIBlockMgr.instance:startBlock("VersionActivityExchangeItem")
 
-		if slot0._animatorPlayer then
-			slot0._animatorPlayer:Play(UIAnimationName.Close, slot0.sendRequest, slot0)
+		if arg_5_0._animatorPlayer then
+			arg_5_0._animatorPlayer:Play(UIAnimationName.Close, arg_5_0.sendRequest, arg_5_0)
 		else
-			slot0:sendRequest()
+			arg_5_0:sendRequest()
 		end
 	end
 
 	gohelper.setActive(PostProcessingMgr.instance._unitPPVolume.gameObject, false)
 end
 
-function slot0.sendRequest(slot0)
+function var_0_0.sendRequest(arg_6_0)
 	UIBlockMgr.instance:endBlock("VersionActivityExchangeItem")
-	Activity112Rpc.instance:sendExchange112Request(slot0.config.activityId, slot0.config.id)
+	Activity112Rpc.instance:sendExchange112Request(arg_6_0.config.activityId, arg_6_0.config.id)
 end
 
-function slot0.onClick(slot0)
-	slot0.selectFunc(slot0.selectFuncObj, slot0.config)
+function var_0_0.onClick(arg_7_0)
+	arg_7_0.selectFunc(arg_7_0.selectFuncObj, arg_7_0.config)
 end
 
-function slot0._editableInitView(slot0)
-	slot0.rewardItemList = {}
-	slot0.click = gohelper.findChildClick(slot0.go, "")
+function var_0_0._editableInitView(arg_8_0)
+	arg_8_0.rewardItemList = {}
+	arg_8_0.click = gohelper.findChildClick(arg_8_0.go, "")
 
-	slot0.click:AddClickListener(slot0.onClick, slot0)
-	slot0._goselectedbg:LoadImage(ResUrl.getVersionActivityExchangeIcon("img_bg_jiangjilan_xuanzhong"))
+	arg_8_0.click:AddClickListener(arg_8_0.onClick, arg_8_0)
+	arg_8_0._goselectedbg:LoadImage(ResUrl.getVersionActivityExchangeIcon("img_bg_jiangjilan_xuanzhong"))
 
-	slot0._animator = slot0.go:GetComponent(typeof(UnityEngine.Animator))
-	slot0._animatorPlayer = SLFramework.AnimatorPlayer.Get(slot0.go)
-	slot0._gorewardcontentcg = gohelper.findChild(slot0._gorewardcontent, "anim"):GetComponent(typeof(UnityEngine.CanvasGroup))
+	arg_8_0._animator = arg_8_0.go:GetComponent(typeof(UnityEngine.Animator))
+	arg_8_0._animatorPlayer = SLFramework.AnimatorPlayer.Get(arg_8_0.go)
+	arg_8_0._gorewardcontentcg = gohelper.findChild(arg_8_0._gorewardcontent, "anim"):GetComponent(typeof(UnityEngine.CanvasGroup))
 end
 
-function slot0.setSelectFunc(slot0, slot1, slot2)
-	slot0.selectFunc = slot1
-	slot0.selectFuncObj = slot2
+function var_0_0.setSelectFunc(arg_9_0, arg_9_1, arg_9_2)
+	arg_9_0.selectFunc = arg_9_1
+	arg_9_0.selectFuncObj = arg_9_2
 end
 
-function slot0.updateSelect(slot0, slot1)
-	gohelper.setActive(slot0._goselected, slot0.config.id == slot1)
-	gohelper.setActive(slot0._imgiconbgselect.gameObject, slot0.config.id == slot1)
-	gohelper.setActive(slot0._imgiconbgunselect.gameObject, slot0.config.id ~= slot1)
+function var_0_0.updateSelect(arg_10_0, arg_10_1)
+	gohelper.setActive(arg_10_0._goselected, arg_10_0.config.id == arg_10_1)
+	gohelper.setActive(arg_10_0._imgiconbgselect.gameObject, arg_10_0.config.id == arg_10_1)
+	gohelper.setActive(arg_10_0._imgiconbgunselect.gameObject, arg_10_0.config.id ~= arg_10_1)
 end
 
-slot0.DefaultHeadOffsetX = 2.4
-slot0.DefaultHeadOffsetY = -70.9
+var_0_0.DefaultHeadOffsetX = 2.4
+var_0_0.DefaultHeadOffsetY = -70.9
 
-function slot0.updateItem(slot0, slot1, slot2, slot3)
-	slot0.config = slot1
-	slot0.needArr = string.splitToNumber(slot1.items, "#")
+function var_0_0.updateItem(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
+	arg_11_0.config = arg_11_1
+	arg_11_0.needArr = string.splitToNumber(arg_11_1.items, "#")
 
-	slot0._imgheadicon:LoadImage(slot1.head)
-	recthelper.setAnchor(slot0._imgheadicon.transform, string.splitToNumber(slot1.chatheadsOffSet, "#")[1] or uv0.DefaultHeadOffsetX, slot4[2] or uv0.DefaultHeadOffsetY)
+	arg_11_0._imgheadicon:LoadImage(arg_11_1.head)
 
-	slot0.state = -1
-	slot0.state = VersionActivity112Model.instance:getRewardState(slot0.config.activityId, slot0.config.id)
+	local var_11_0 = string.splitToNumber(arg_11_1.chatheadsOffSet, "#")
 
-	for slot9, slot10 in ipairs(GameUtil.splitString2(slot1.bonus, true)) do
-		if slot0.rewardItemList[slot9] == nil then
-			slot11 = {
-				go = gohelper.cloneInPlace(slot0._gorewarditem, "item" .. slot9)
+	recthelper.setAnchor(arg_11_0._imgheadicon.transform, var_11_0[1] or var_0_0.DefaultHeadOffsetX, var_11_0[2] or var_0_0.DefaultHeadOffsetY)
+
+	arg_11_0.state = -1
+	arg_11_0.state = VersionActivity112Model.instance:getRewardState(arg_11_0.config.activityId, arg_11_0.config.id)
+
+	local var_11_1 = GameUtil.splitString2(arg_11_1.bonus, true)
+
+	for iter_11_0, iter_11_1 in ipairs(var_11_1) do
+		local var_11_2 = arg_11_0.rewardItemList[iter_11_0]
+
+		if var_11_2 == nil then
+			var_11_2 = {
+				go = gohelper.cloneInPlace(arg_11_0._gorewarditem, "item" .. iter_11_0)
 			}
-			slot11.icon = IconMgr.instance:getCommonItemIcon(gohelper.findChild(slot11.go, "go_iconroot"))
-			slot0.rewardItemList[slot9] = slot11
+
+			local var_11_3 = gohelper.findChild(var_11_2.go, "go_iconroot")
+
+			var_11_2.icon = IconMgr.instance:getCommonItemIcon(var_11_3)
+			arg_11_0.rewardItemList[iter_11_0] = var_11_2
 		end
 
-		slot11.icon:setMOValue(slot10[1], slot10[2], slot10[3])
-		slot11.icon:isShowCount(true)
-		slot11.icon:setScale(0.5, 0.5, 0.5)
-		slot11.icon:setCountFontSize(52)
-		gohelper.setActive(slot11.go, true)
-		gohelper.setActive(gohelper.findChild(slot11.go, "go_finish"), slot0.state == 1)
+		var_11_2.icon:setMOValue(iter_11_1[1], iter_11_1[2], iter_11_1[3])
+		var_11_2.icon:isShowCount(true)
+		var_11_2.icon:setScale(0.5, 0.5, 0.5)
+		var_11_2.icon:setCountFontSize(52)
+		gohelper.setActive(var_11_2.go, true)
+		gohelper.setActive(gohelper.findChild(var_11_2.go, "go_finish"), arg_11_0.state == 1)
 	end
 
-	for slot9 = #slot5 + 1, #slot0.rewardItemList do
-		gohelper.setActive(slot0.rewardItemList[slot9].go, false)
+	for iter_11_2 = #var_11_1 + 1, #arg_11_0.rewardItemList do
+		gohelper.setActive(arg_11_0.rewardItemList[iter_11_2].go, false)
 	end
 
-	slot0._gorewardcontentcg.alpha = slot0.state == 1 and 0.45 or 1
+	arg_11_0._gorewardcontentcg.alpha = arg_11_0.state == 1 and 0.45 or 1
 
-	gohelper.setActive(slot0._gofinish, slot0.state == 1)
+	gohelper.setActive(arg_11_0._gofinish, arg_11_0.state == 1)
 
-	slot0._txtneed.text = slot0.needArr[3]
+	arg_11_0._txtneed.text = arg_11_0.needArr[3]
 
-	slot0:updateNeed()
-	slot0:updateLingqu()
+	arg_11_0:updateNeed()
+	arg_11_0:updateLingqu()
 
-	slot0._animator.enabled = true
+	arg_11_0._animator.enabled = true
 
-	if slot3 then
-		slot0._animator:Play(UIAnimationName.Open, 0, 0)
-		slot0._animator:Update(0)
+	if arg_11_3 then
+		arg_11_0._animator:Play(UIAnimationName.Open, 0, 0)
+		arg_11_0._animator:Update(0)
 
-		if slot0._animator:GetCurrentAnimatorStateInfo(0).length <= 0 then
-			slot7 = 1
+		local var_11_4 = arg_11_0._animator:GetCurrentAnimatorStateInfo(0).length
+
+		if var_11_4 <= 0 then
+			var_11_4 = 1
 		end
 
-		slot0._animator:Play(UIAnimationName.Open, 0, -0.066 * (slot2 - 1) / slot7)
-		slot0._animator:Update(0)
+		arg_11_0._animator:Play(UIAnimationName.Open, 0, -0.066 * (arg_11_2 - 1) / var_11_4)
+		arg_11_0._animator:Update(0)
 	else
-		slot0._animator:Play(UIAnimationName.Open, 0, 1)
-		slot0._animator:Update(0)
+		arg_11_0._animator:Play(UIAnimationName.Open, 0, 1)
+		arg_11_0._animator:Update(0)
 	end
 end
 
-function slot0.updateNeed(slot0)
-	gohelper.setActive(slot0._gounfinishstate, ItemModel.instance:getItemQuantity(slot0.needArr[1], slot0.needArr[2]) < slot0.needArr[3])
-	gohelper.setActive(slot0._gofinishstate, slot0.needArr[3] <= slot1)
+function var_0_0.updateNeed(arg_12_0)
+	local var_12_0 = ItemModel.instance:getItemQuantity(arg_12_0.needArr[1], arg_12_0.needArr[2])
+
+	gohelper.setActive(arg_12_0._gounfinishstate, var_12_0 < arg_12_0.needArr[3])
+	gohelper.setActive(arg_12_0._gofinishstate, var_12_0 >= arg_12_0.needArr[3])
 end
 
-function slot0.updateLingqu(slot0)
-	slot1 = ItemModel.instance:getItemQuantity(slot0.needArr[1], slot0.needArr[2])
+function var_0_0.updateLingqu(arg_13_0)
+	local var_13_0 = ItemModel.instance:getItemQuantity(arg_13_0.needArr[1], arg_13_0.needArr[2])
 
-	gohelper.setActive(slot0._golingqu, true)
-	gohelper.setActive(slot0._goget, slot0.state == 0 and slot0.needArr[3] <= slot1)
-	gohelper.setActive(slot0._gounfinish, slot0.state == 0 and slot1 < slot0.needArr[3])
+	gohelper.setActive(arg_13_0._golingqu, true)
+	gohelper.setActive(arg_13_0._goget, arg_13_0.state == 0 and var_13_0 >= arg_13_0.needArr[3])
+	gohelper.setActive(arg_13_0._gounfinish, arg_13_0.state == 0 and var_13_0 < arg_13_0.needArr[3])
 end
 
-function slot0.onDestroyView(slot0)
-	slot0.rewardItemList = nil
+function var_0_0.onDestroyView(arg_14_0)
+	arg_14_0.rewardItemList = nil
 
-	slot0.click:RemoveClickListener()
-	slot0._goselectedbg:UnLoadImage()
+	arg_14_0.click:RemoveClickListener()
+	arg_14_0._goselectedbg:UnLoadImage()
 end
 
-return slot0
+return var_0_0

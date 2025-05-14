@@ -1,117 +1,120 @@
-module("modules.logic.settings.view.SettingsAccountView", package.seeall)
+﻿module("modules.logic.settings.view.SettingsAccountView", package.seeall)
 
-slot0 = class("SettingsAccountView", BaseView)
+local var_0_0 = class("SettingsAccountView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._btnaccount = gohelper.findChildButtonWithAudio(slot0.viewGO, "Scroll View/Viewport/layout/accountInfo/content/#btn_account")
-	slot0._btnaccountlogout = gohelper.findChildButtonWithAudio(slot0.viewGO, "Scroll View/Viewport/layout/accountlogout/content/#btn_accountlogout")
-	slot0._btncdkey = gohelper.findChildButtonWithAudio(slot0.viewGO, "Scroll View/Viewport/layout/cdkey/content/#btn_cdkey")
-	slot0._btnexit = gohelper.findChildButtonWithAudio(slot0.viewGO, "Scroll View/Viewport/layout/other/content/#btn_exit")
-	slot0._btnPrivacy = gohelper.findChildClick(slot0.viewGO, "agreement/txtPrivacy")
-	slot0._btnPersonal = gohelper.findChildClick(slot0.viewGO, "agreement/txtPersonal")
-	slot0._btnThirdParty = gohelper.findChildClick(slot0.viewGO, "agreement/txtThirdParty")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnaccount = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Scroll View/Viewport/layout/accountInfo/content/#btn_account")
+	arg_1_0._btnaccountlogout = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Scroll View/Viewport/layout/accountlogout/content/#btn_accountlogout")
+	arg_1_0._btncdkey = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Scroll View/Viewport/layout/cdkey/content/#btn_cdkey")
+	arg_1_0._btnexit = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Scroll View/Viewport/layout/other/content/#btn_exit")
+	arg_1_0._btnPrivacy = gohelper.findChildClick(arg_1_0.viewGO, "agreement/txtPrivacy")
+	arg_1_0._btnPersonal = gohelper.findChildClick(arg_1_0.viewGO, "agreement/txtPersonal")
+	arg_1_0._btnThirdParty = gohelper.findChildClick(arg_1_0.viewGO, "agreement/txtThirdParty")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnaccount:AddClickListener(slot0._btnaccountOnClick, slot0)
-	slot0._btnaccountlogout:AddClickListener(slot0._btnaccountlogoutOnClick, slot0)
-	slot0._btncdkey:AddClickListener(slot0._btncdkeyOnClick, slot0)
-	slot0._btnexit:AddClickListener(slot0._btnexitOnClick, slot0)
-	slot0._btnPrivacy:AddClickListener(slot0._btnPrivacyOnClick, slot0)
-	slot0._btnPersonal:AddClickListener(slot0._btnPersonalOnClick, slot0)
-	slot0._btnThirdParty:AddClickListener(slot0._btnThirdPartyOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnaccount:AddClickListener(arg_2_0._btnaccountOnClick, arg_2_0)
+	arg_2_0._btnaccountlogout:AddClickListener(arg_2_0._btnaccountlogoutOnClick, arg_2_0)
+	arg_2_0._btncdkey:AddClickListener(arg_2_0._btncdkeyOnClick, arg_2_0)
+	arg_2_0._btnexit:AddClickListener(arg_2_0._btnexitOnClick, arg_2_0)
+	arg_2_0._btnPrivacy:AddClickListener(arg_2_0._btnPrivacyOnClick, arg_2_0)
+	arg_2_0._btnPersonal:AddClickListener(arg_2_0._btnPersonalOnClick, arg_2_0)
+	arg_2_0._btnThirdParty:AddClickListener(arg_2_0._btnThirdPartyOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnaccount:RemoveClickListener()
-	slot0._btnaccountlogout:RemoveClickListener()
-	slot0._btncdkey:RemoveClickListener()
-	slot0._btnexit:RemoveClickListener()
-	slot0._btnPrivacy:RemoveClickListener()
-	slot0._btnPersonal:RemoveClickListener()
-	slot0._btnThirdParty:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnaccount:RemoveClickListener()
+	arg_3_0._btnaccountlogout:RemoveClickListener()
+	arg_3_0._btncdkey:RemoveClickListener()
+	arg_3_0._btnexit:RemoveClickListener()
+	arg_3_0._btnPrivacy:RemoveClickListener()
+	arg_3_0._btnPersonal:RemoveClickListener()
+	arg_3_0._btnThirdParty:RemoveClickListener()
 end
 
-function slot0._btnaccountOnClick(slot0)
-	if slot0.isShowUserCenter then
+function var_0_0._btnaccountOnClick(arg_4_0)
+	if arg_4_0.isShowUserCenter then
 		SDKMgr.instance:showUserCenter()
 	end
 end
 
-function slot0._btnaccountlogoutOnClick(slot0)
+function var_0_0._btnaccountlogoutOnClick(arg_5_0)
 	SDKMgr.instance:unregisterSdk()
 end
 
-function slot0._btncdkeyOnClick(slot0)
+function var_0_0._btncdkeyOnClick(arg_6_0)
 	ViewMgr.instance:openView(ViewName.SettingsCdkeyView)
 end
 
-function slot0._btnexitOnClick(slot0)
+function var_0_0._btnexitOnClick(arg_7_0)
 	SDKController.instance:openSDKExitView()
 end
 
-function slot0._editableInitView(slot0)
-	slot0.goAccountContainer = gohelper.findChild(slot0.viewGO, "Scroll View/Viewport/layout/accountInfo")
-	slot0.goCdkContainer = gohelper.findChild(slot0.viewGO, "Scroll View/Viewport/layout/cdkey")
-	slot0.goAccountLogoutContainer = gohelper.findChild(slot0.viewGO, "Scroll View/Viewport/layout/accountlogout")
+function var_0_0._editableInitView(arg_8_0)
+	arg_8_0.goAccountContainer = gohelper.findChild(arg_8_0.viewGO, "Scroll View/Viewport/layout/accountInfo")
+	arg_8_0.goCdkContainer = gohelper.findChild(arg_8_0.viewGO, "Scroll View/Viewport/layout/cdkey")
+	arg_8_0.goAccountLogoutContainer = gohelper.findChild(arg_8_0.viewGO, "Scroll View/Viewport/layout/accountlogout")
 
-	gohelper.setActive(slot0.goAccountLogoutContainer, false)
+	gohelper.setActive(arg_8_0.goAccountLogoutContainer, false)
 
 	if VersionValidator.instance:isInReviewing() and SLFramework.FrameworkSettings.IsIOSPlayer() then
-		gohelper.setActive(slot0.goCdkContainer, false)
+		gohelper.setActive(arg_8_0.goCdkContainer, false)
 	end
 
 	if not HotUpdateVoiceMgr.IsGuoFu then
-		gohelper.setActive(slot0._btnPrivacy.gameObject, false)
-		gohelper.setActive(slot0._btnPersonal.gameObject, false)
-		gohelper.setActive(slot0._btnThirdParty.gameObject, false)
+		gohelper.setActive(arg_8_0._btnPrivacy.gameObject, false)
+		gohelper.setActive(arg_8_0._btnPersonal.gameObject, false)
+		gohelper.setActive(arg_8_0._btnThirdParty.gameObject, false)
 	end
 
-	slot0:addEventCb(SettingsController.instance, SettingsEvent.OnChangeLangTxt, slot0._OnChangeLangTxt, slot0)
+	arg_8_0:addEventCb(SettingsController.instance, SettingsEvent.OnChangeLangTxt, arg_8_0._OnChangeLangTxt, arg_8_0)
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_9_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0.isShowUserCenter = SDKMgr.instance:isShowUserCenter()
+function var_0_0.onOpen(arg_10_0)
+	arg_10_0.isShowUserCenter = SDKMgr.instance:isShowUserCenter()
 
-	gohelper.setActive(slot0.goAccountContainer, slot0.isShowUserCenter)
-	logNormal("get sdk showCenter : " .. tostring(slot0.isShowUserCenter))
+	gohelper.setActive(arg_10_0.goAccountContainer, arg_10_0.isShowUserCenter)
+	logNormal("get sdk showCenter : " .. tostring(arg_10_0.isShowUserCenter))
 end
 
-function slot0._btnPrivacyOnClick(slot0)
+function var_0_0._btnPrivacyOnClick(arg_11_0)
 	GameUtil.openURL("https://m.sl916.com/protocol.html")
 end
 
-function slot0._btnPersonalOnClick(slot0)
+function var_0_0._btnPersonalOnClick(arg_12_0)
 	GameUtil.openURL("https://m.sl916.com/collected.html")
 end
 
-function slot0._btnThirdPartyOnClick(slot0)
+function var_0_0._btnThirdPartyOnClick(arg_13_0)
 	GameUtil.openURL("https://m.sl916.com/personal.html")
 end
 
-function slot0._OnChangeLangTxt(slot0)
+function var_0_0._OnChangeLangTxt(arg_14_0)
 	if LangSettings.instance:isEn() then
-		recthelper.setAnchor(slot0._btnPrivacy.transform, -395, -375)
-		recthelper.setAnchor(slot0._btnPersonal.transform, 112, -375)
-		recthelper.setAnchor(slot0._btnThirdParty.transform, -225, -445)
+		recthelper.setAnchor(arg_14_0._btnPrivacy.transform, -395, -375)
+		recthelper.setAnchor(arg_14_0._btnPersonal.transform, 112, -375)
+		recthelper.setAnchor(arg_14_0._btnThirdParty.transform, -225, -445)
 	else
-		recthelper.setAnchor(slot0._btnPrivacy.transform, -457, -445)
-		recthelper.setAnchor(slot0._btnPersonal.transform, -122, -445)
-		recthelper.setAnchor(slot0._btnThirdParty.transform, -312.67, -445)
+		recthelper.setAnchor(arg_14_0._btnPrivacy.transform, -457, -445)
+		recthelper.setAnchor(arg_14_0._btnPersonal.transform, -122, -445)
+		recthelper.setAnchor(arg_14_0._btnThirdParty.transform, -312.67, -445)
 	end
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_15_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_16_0)
+	return
 end
 
-return slot0
+return var_0_0

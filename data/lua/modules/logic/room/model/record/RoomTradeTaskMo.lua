@@ -1,37 +1,37 @@
-module("modules.logic.room.model.record.RoomTradeTaskMo", package.seeall)
+﻿module("modules.logic.room.model.record.RoomTradeTaskMo", package.seeall)
 
-slot0 = class("RoomTradeTaskMo")
+local var_0_0 = class("RoomTradeTaskMo")
 
-function slot0.ctor(slot0)
-	slot0.id = nil
-	slot0.progress = nil
-	slot0.hasFinish = nil
-	slot0.new = nil
-	slot0.finishTime = nil
-	slot0.co = nil
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.id = nil
+	arg_1_0.progress = nil
+	arg_1_0.hasFinish = nil
+	arg_1_0.new = nil
+	arg_1_0.finishTime = nil
+	arg_1_0.co = nil
 end
 
-function slot0.initMo(slot0, slot1, slot2)
-	slot0.id = slot1.id
-	slot0.progress = slot1.progress
-	slot0.hasFinish = slot1.hasFinish
-	slot0.new = slot1.new
-	slot0.finishTime = slot1.finishTime
-	slot0.co = slot2
+function var_0_0.initMo(arg_2_0, arg_2_1, arg_2_2)
+	arg_2_0.id = arg_2_1.id
+	arg_2_0.progress = arg_2_1.progress
+	arg_2_0.hasFinish = arg_2_1.hasFinish
+	arg_2_0.new = arg_2_1.new
+	arg_2_0.finishTime = arg_2_1.finishTime
+	arg_2_0.co = arg_2_2
 end
 
-function slot0.setNew(slot0, slot1)
-	slot0.new = false
+function var_0_0.setNew(arg_3_0, arg_3_1)
+	arg_3_0.new = false
 end
 
-function slot0.isFinish(slot0)
-	if slot0.co then
-		return slot0.co.maxProgress <= slot0.progress
+function var_0_0.isFinish(arg_4_0)
+	if arg_4_0.co then
+		return arg_4_0.progress >= arg_4_0.co.maxProgress
 	end
 end
 
-function slot0.isNormalTask(slot0)
+function var_0_0.isNormalTask(arg_5_0)
 	return true
 end
 
-return slot0
+return var_0_0

@@ -1,129 +1,129 @@
-module("modules.logic.character.view.CharacterView", package.seeall)
+﻿module("modules.logic.character.view.CharacterView", package.seeall)
 
-slot0 = class("CharacterView", BaseView)
-slot1 = 5
+local var_0_0 = class("CharacterView", BaseView)
+local var_0_1 = 5
 
-function slot0.onInitView(slot0)
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "anim/bgcanvas/bg/#simage_bg")
-	slot0._simageplayerbg = gohelper.findChildSingleImage(slot0.viewGO, "anim/bgcanvas/bg/#simage_playerbg")
-	slot0._gospine = gohelper.findChild(slot0.viewGO, "anim/#go_herocontainer/dynamiccontainer/#go_spine")
-	slot0._simagestatic = gohelper.findChildSingleImage(slot0.viewGO, "anim/#go_herocontainer/staticcontainer/#simage_static")
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "anim/go_btns/#btn_close")
-	slot0._btnhome = gohelper.findChildButtonWithAudio(slot0.viewGO, "anim/go_btns/#btn_home")
-	slot0._btndata = gohelper.findChildButtonWithAudio(slot0.viewGO, "anim/go_btns/#btn_data")
-	slot0._godatareddot = gohelper.findChild(slot0.viewGO, "anim/go_btns/#btn_data/#go_datareddot")
-	slot0._btnskin = gohelper.findChildButtonWithAudio(slot0.viewGO, "anim/go_btns/#btn_skin")
-	slot0._btnfavor = gohelper.findChildButtonWithAudio(slot0.viewGO, "anim/go_btns/#btn_favor")
-	slot0._imagefavor = gohelper.findChildImage(slot0.viewGO, "anim/go_btns/#btn_favor")
-	slot0._btnhelp = gohelper.findChildButtonWithAudio(slot0.viewGO, "anim/go_btns/#btn_help")
-	slot0._gorare = gohelper.findChild(slot0.viewGO, "anim/info/#go_rare")
-	slot0._imagecareericon = gohelper.findChildImage(slot0.viewGO, "anim/info/#image_careericon")
-	slot0._imagedmgtype = gohelper.findChildImage(slot0.viewGO, "anim/info/#image_dmgtype")
-	slot0._txtnamecn = gohelper.findChildText(slot0.viewGO, "anim/info/#txt_namecn")
-	slot0._txtnameen = gohelper.findChildText(slot0.viewGO, "anim/info/#txt_namecn/#txt_nameen")
-	slot0._txttrust = gohelper.findChildText(slot0.viewGO, "anim/info/trust/#txt_trust")
-	slot0._slidertrust = gohelper.findChildSlider(slot0.viewGO, "anim/info/trust/#slider_trust")
-	slot0._gocareer = gohelper.findChild(slot0.viewGO, "anim/#go_career")
-	slot0._btnattribute = gohelper.findChildButtonWithAudio(slot0.viewGO, "anim/attribute/#btn_attribute")
-	slot0._goattributenode = gohelper.findChild(slot0.viewGO, "anim/attribute")
-	slot0._goattribute = gohelper.findChild(slot0.viewGO, "anim/attribute/#go_attribute")
-	slot0._goattributetipsnode = gohelper.findChild(slot0.viewGO, "anim/#go_attributetips")
-	slot0._animatorattributetipsnode = slot0._goattributetipsnode:GetComponent(typeof(UnityEngine.Animator))
-	slot0._goattributetips = gohelper.findChild(slot0.viewGO, "anim/#go_attributetips/#go_attribute")
-	slot0._txtlevel = gohelper.findChildText(slot0.viewGO, "anim/level/lvtxt/#txt_level")
-	slot0._txtlevelmax = gohelper.findChildText(slot0.viewGO, "anim/level/lvtxt/#txt_level/#txt_levelmax")
-	slot0._btnlevel = gohelper.findChildButtonWithAudio(slot0.viewGO, "anim/level/#btn_level")
-	slot0._gorankeyes = gohelper.findChild(slot0.viewGO, "anim/rank/#go_rankeyes")
-	slot0._goranklights = gohelper.findChild(slot0.viewGO, "anim/rank/#go_ranklights")
-	slot0._btnrank = gohelper.findChildButtonWithAudio(slot0.viewGO, "anim/rank/#btn_rank")
-	slot0._gorankreddot = gohelper.findChild(slot0.viewGO, "anim/rank/#go_rankreddot")
-	slot0._goskill = gohelper.findChild(slot0.viewGO, "anim/layout/#go_skill")
-	slot0._btnpassiveskill = gohelper.findChildButtonWithAudio(slot0.viewGO, "anim/passiveskill/#btn_passiveskill")
-	slot0._txtpassivename = gohelper.findChildText(slot0.viewGO, "anim/passiveskill/bg/passiveskillimage/#txt_passivename")
-	slot0._gopassiveskills = gohelper.findChild(slot0.viewGO, "anim/passiveskill/#go_passiveskills")
-	slot0._btnexskill = gohelper.findChildButtonWithAudio(slot0.viewGO, "anim/layout/rightbottom/exskill/#btn_exskill")
-	slot0._goexskills = gohelper.findChild(slot0.viewGO, "anim/layout/rightbottom/exskill/#go_exskills")
-	slot0._goexskillreddot = gohelper.findChild(slot0.viewGO, "anim/layout/rightbottom/exskill/#go_exskillreddot")
-	slot0._gotalent = gohelper.findChild(slot0.viewGO, "anim/layout/rightbottom/#go_talent")
-	slot0._txttalentcn = gohelper.findChildText(slot0.viewGO, "anim/layout/rightbottom/#go_talent/talentcn")
-	slot0._txttalenten = gohelper.findChildText(slot0.viewGO, "anim/layout/rightbottom/#go_talent/talentcn/talenten")
-	slot0._btntalent = gohelper.findChildButtonWithAudio(slot0.viewGO, "anim/layout/rightbottom/#go_talent/#btn_talent")
-	slot0._gotalents = gohelper.findChild(slot0.viewGO, "anim/layout/rightbottom/#go_talent/#go_talents")
-	slot0._gotalentstyle = gohelper.findChild(slot0.viewGO, "anim/layout/rightbottom/#go_talent/#go_talentstyle")
-	slot0._imageicon = gohelper.findChildImage(slot0.viewGO, "anim/layout/rightbottom/#go_talent/#go_talentstyle/#image_icon")
-	slot0._txttalentvalue = gohelper.findChildText(slot0.viewGO, "anim/layout/rightbottom/#go_talent/#txt_talentvalue")
-	slot0._gotalentlock = gohelper.findChild(slot0.viewGO, "anim/layout/rightbottom/#go_talent/#go_talentlock")
-	slot0._gotalentreddot = gohelper.findChild(slot0.viewGO, "anim/layout/rightbottom/#go_talent/#go_talentreddot")
-	slot0._gocontentbg = gohelper.findChild(slot0.viewGO, "anim/bottom/#go_contentbg")
-	slot0._txtanacn = gohelper.findChildText(slot0.viewGO, "anim/bottom/#txt_ana_cn")
-	slot0._txtanaen = gohelper.findChildText(slot0.viewGO, "anim/bottom/#txt_ana_en")
-	slot0._godynamiccontainer = gohelper.findChild(slot0.viewGO, "anim/#go_herocontainer/dynamiccontainer")
-	slot0._gostaticcontainer = gohelper.findChild(slot0.viewGO, "anim/#go_herocontainer/staticcontainer")
-	slot0._goherocontainer = gohelper.findChild(slot0.viewGO, "anim/#go_herocontainer")
-	slot0._simagesignature = gohelper.findChildSingleImage(slot0.viewGO, "anim/bottom/#simage_signature")
-	slot0._golevelimage = gohelper.findChild(slot0.viewGO, "anim/level/levelimage")
-	slot0._golevelicon = gohelper.findChild(slot0.viewGO, "anim/level/addicon")
-	slot0._golevelimagetrial = gohelper.findChild(slot0.viewGO, "anim/level/#go_levelimagetrial")
-	slot0._gorankimage = gohelper.findChild(slot0.viewGO, "anim/rank/rankimage")
-	slot0._gorankicon = gohelper.findChild(slot0.viewGO, "anim/rank/addicon")
-	slot0._gorankimagetrial = gohelper.findChild(slot0.viewGO, "anim/rank/#go_rankimagetrial")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "anim/bgcanvas/bg/#simage_bg")
+	arg_1_0._simageplayerbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "anim/bgcanvas/bg/#simage_playerbg")
+	arg_1_0._gospine = gohelper.findChild(arg_1_0.viewGO, "anim/#go_herocontainer/dynamiccontainer/#go_spine")
+	arg_1_0._simagestatic = gohelper.findChildSingleImage(arg_1_0.viewGO, "anim/#go_herocontainer/staticcontainer/#simage_static")
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "anim/go_btns/#btn_close")
+	arg_1_0._btnhome = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "anim/go_btns/#btn_home")
+	arg_1_0._btndata = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "anim/go_btns/#btn_data")
+	arg_1_0._godatareddot = gohelper.findChild(arg_1_0.viewGO, "anim/go_btns/#btn_data/#go_datareddot")
+	arg_1_0._btnskin = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "anim/go_btns/#btn_skin")
+	arg_1_0._btnfavor = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "anim/go_btns/#btn_favor")
+	arg_1_0._imagefavor = gohelper.findChildImage(arg_1_0.viewGO, "anim/go_btns/#btn_favor")
+	arg_1_0._btnhelp = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "anim/go_btns/#btn_help")
+	arg_1_0._gorare = gohelper.findChild(arg_1_0.viewGO, "anim/info/#go_rare")
+	arg_1_0._imagecareericon = gohelper.findChildImage(arg_1_0.viewGO, "anim/info/#image_careericon")
+	arg_1_0._imagedmgtype = gohelper.findChildImage(arg_1_0.viewGO, "anim/info/#image_dmgtype")
+	arg_1_0._txtnamecn = gohelper.findChildText(arg_1_0.viewGO, "anim/info/#txt_namecn")
+	arg_1_0._txtnameen = gohelper.findChildText(arg_1_0.viewGO, "anim/info/#txt_namecn/#txt_nameen")
+	arg_1_0._txttrust = gohelper.findChildText(arg_1_0.viewGO, "anim/info/trust/#txt_trust")
+	arg_1_0._slidertrust = gohelper.findChildSlider(arg_1_0.viewGO, "anim/info/trust/#slider_trust")
+	arg_1_0._gocareer = gohelper.findChild(arg_1_0.viewGO, "anim/#go_career")
+	arg_1_0._btnattribute = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "anim/attribute/#btn_attribute")
+	arg_1_0._goattributenode = gohelper.findChild(arg_1_0.viewGO, "anim/attribute")
+	arg_1_0._goattribute = gohelper.findChild(arg_1_0.viewGO, "anim/attribute/#go_attribute")
+	arg_1_0._goattributetipsnode = gohelper.findChild(arg_1_0.viewGO, "anim/#go_attributetips")
+	arg_1_0._animatorattributetipsnode = arg_1_0._goattributetipsnode:GetComponent(typeof(UnityEngine.Animator))
+	arg_1_0._goattributetips = gohelper.findChild(arg_1_0.viewGO, "anim/#go_attributetips/#go_attribute")
+	arg_1_0._txtlevel = gohelper.findChildText(arg_1_0.viewGO, "anim/level/lvtxt/#txt_level")
+	arg_1_0._txtlevelmax = gohelper.findChildText(arg_1_0.viewGO, "anim/level/lvtxt/#txt_level/#txt_levelmax")
+	arg_1_0._btnlevel = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "anim/level/#btn_level")
+	arg_1_0._gorankeyes = gohelper.findChild(arg_1_0.viewGO, "anim/rank/#go_rankeyes")
+	arg_1_0._goranklights = gohelper.findChild(arg_1_0.viewGO, "anim/rank/#go_ranklights")
+	arg_1_0._btnrank = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "anim/rank/#btn_rank")
+	arg_1_0._gorankreddot = gohelper.findChild(arg_1_0.viewGO, "anim/rank/#go_rankreddot")
+	arg_1_0._goskill = gohelper.findChild(arg_1_0.viewGO, "anim/layout/#go_skill")
+	arg_1_0._btnpassiveskill = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "anim/passiveskill/#btn_passiveskill")
+	arg_1_0._txtpassivename = gohelper.findChildText(arg_1_0.viewGO, "anim/passiveskill/bg/passiveskillimage/#txt_passivename")
+	arg_1_0._gopassiveskills = gohelper.findChild(arg_1_0.viewGO, "anim/passiveskill/#go_passiveskills")
+	arg_1_0._btnexskill = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "anim/layout/rightbottom/exskill/#btn_exskill")
+	arg_1_0._goexskills = gohelper.findChild(arg_1_0.viewGO, "anim/layout/rightbottom/exskill/#go_exskills")
+	arg_1_0._goexskillreddot = gohelper.findChild(arg_1_0.viewGO, "anim/layout/rightbottom/exskill/#go_exskillreddot")
+	arg_1_0._gotalent = gohelper.findChild(arg_1_0.viewGO, "anim/layout/rightbottom/#go_talent")
+	arg_1_0._txttalentcn = gohelper.findChildText(arg_1_0.viewGO, "anim/layout/rightbottom/#go_talent/talentcn")
+	arg_1_0._txttalenten = gohelper.findChildText(arg_1_0.viewGO, "anim/layout/rightbottom/#go_talent/talentcn/talenten")
+	arg_1_0._btntalent = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "anim/layout/rightbottom/#go_talent/#btn_talent")
+	arg_1_0._gotalents = gohelper.findChild(arg_1_0.viewGO, "anim/layout/rightbottom/#go_talent/#go_talents")
+	arg_1_0._gotalentstyle = gohelper.findChild(arg_1_0.viewGO, "anim/layout/rightbottom/#go_talent/#go_talentstyle")
+	arg_1_0._imageicon = gohelper.findChildImage(arg_1_0.viewGO, "anim/layout/rightbottom/#go_talent/#go_talentstyle/#image_icon")
+	arg_1_0._txttalentvalue = gohelper.findChildText(arg_1_0.viewGO, "anim/layout/rightbottom/#go_talent/#txt_talentvalue")
+	arg_1_0._gotalentlock = gohelper.findChild(arg_1_0.viewGO, "anim/layout/rightbottom/#go_talent/#go_talentlock")
+	arg_1_0._gotalentreddot = gohelper.findChild(arg_1_0.viewGO, "anim/layout/rightbottom/#go_talent/#go_talentreddot")
+	arg_1_0._gocontentbg = gohelper.findChild(arg_1_0.viewGO, "anim/bottom/#go_contentbg")
+	arg_1_0._txtanacn = gohelper.findChildText(arg_1_0.viewGO, "anim/bottom/#txt_ana_cn")
+	arg_1_0._txtanaen = gohelper.findChildText(arg_1_0.viewGO, "anim/bottom/#txt_ana_en")
+	arg_1_0._godynamiccontainer = gohelper.findChild(arg_1_0.viewGO, "anim/#go_herocontainer/dynamiccontainer")
+	arg_1_0._gostaticcontainer = gohelper.findChild(arg_1_0.viewGO, "anim/#go_herocontainer/staticcontainer")
+	arg_1_0._goherocontainer = gohelper.findChild(arg_1_0.viewGO, "anim/#go_herocontainer")
+	arg_1_0._simagesignature = gohelper.findChildSingleImage(arg_1_0.viewGO, "anim/bottom/#simage_signature")
+	arg_1_0._golevelimage = gohelper.findChild(arg_1_0.viewGO, "anim/level/levelimage")
+	arg_1_0._golevelicon = gohelper.findChild(arg_1_0.viewGO, "anim/level/addicon")
+	arg_1_0._golevelimagetrial = gohelper.findChild(arg_1_0.viewGO, "anim/level/#go_levelimagetrial")
+	arg_1_0._gorankimage = gohelper.findChild(arg_1_0.viewGO, "anim/rank/rankimage")
+	arg_1_0._gorankicon = gohelper.findChild(arg_1_0.viewGO, "anim/rank/addicon")
+	arg_1_0._gorankimagetrial = gohelper.findChild(arg_1_0.viewGO, "anim/rank/#go_rankimagetrial")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
-	slot0._btnhome:AddClickListener(slot0._btnhomeOnClick, slot0)
-	slot0._btndata:AddClickListener(slot0._btndataOnClick, slot0)
-	slot0._btnskin:AddClickListener(slot0._btnskinOnClick, slot0)
-	slot0._btnfavor:AddClickListener(slot0._btnfavorOnClick, slot0)
-	slot0._btnhelp:AddClickListener(slot0._btnhelpOnClick, slot0)
-	slot0._btnattribute:AddClickListener(slot0._btnattributeOnClick, slot0)
-	slot0._btnlevel:AddClickListener(slot0._btnlevelOnClick, slot0)
-	slot0._btnrank:AddClickListener(slot0._btnrankOnClick, slot0)
-	slot0._btnpassiveskill:AddClickListener(slot0._btnpassiveskillOnClick, slot0)
-	slot0._btnexskill:AddClickListener(slot0._btnexskillOnClick, slot0)
-	slot0._btntalent:AddClickListener(slot0._btntalentOnClick, slot0)
-	GameStateMgr.instance:registerCallback(GameStateEvent.onApplicationPause, slot0._onApplicationPause, slot0)
-	slot0:addEventCb(CharacterController.instance, CharacterEvent.levelUpChangePreviewLevel, slot0._refreshAttributeTips, slot0)
-	slot0:addEventCb(CharacterController.instance, CharacterEvent.onTalentStyleRead, slot0._refreshTalentRed, slot0)
-	slot0:addEventCb(CharacterController.instance, CharacterEvent.onUseTalentStyleReply, slot0._onRefreshStyleIcon, slot0)
-	slot0:addEventCb(CharacterController.instance, CharacterEvent.UseTalentTemplateReply, slot0._onRefreshStyleIcon, slot0)
-	slot0:addEventCb(HeroResonanceController.instance, HeroResonanceEvent.UseShareCode, slot0._onRefreshStyleIcon, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+	arg_2_0._btnhome:AddClickListener(arg_2_0._btnhomeOnClick, arg_2_0)
+	arg_2_0._btndata:AddClickListener(arg_2_0._btndataOnClick, arg_2_0)
+	arg_2_0._btnskin:AddClickListener(arg_2_0._btnskinOnClick, arg_2_0)
+	arg_2_0._btnfavor:AddClickListener(arg_2_0._btnfavorOnClick, arg_2_0)
+	arg_2_0._btnhelp:AddClickListener(arg_2_0._btnhelpOnClick, arg_2_0)
+	arg_2_0._btnattribute:AddClickListener(arg_2_0._btnattributeOnClick, arg_2_0)
+	arg_2_0._btnlevel:AddClickListener(arg_2_0._btnlevelOnClick, arg_2_0)
+	arg_2_0._btnrank:AddClickListener(arg_2_0._btnrankOnClick, arg_2_0)
+	arg_2_0._btnpassiveskill:AddClickListener(arg_2_0._btnpassiveskillOnClick, arg_2_0)
+	arg_2_0._btnexskill:AddClickListener(arg_2_0._btnexskillOnClick, arg_2_0)
+	arg_2_0._btntalent:AddClickListener(arg_2_0._btntalentOnClick, arg_2_0)
+	GameStateMgr.instance:registerCallback(GameStateEvent.onApplicationPause, arg_2_0._onApplicationPause, arg_2_0)
+	arg_2_0:addEventCb(CharacterController.instance, CharacterEvent.levelUpChangePreviewLevel, arg_2_0._refreshAttributeTips, arg_2_0)
+	arg_2_0:addEventCb(CharacterController.instance, CharacterEvent.onTalentStyleRead, arg_2_0._refreshTalentRed, arg_2_0)
+	arg_2_0:addEventCb(CharacterController.instance, CharacterEvent.onUseTalentStyleReply, arg_2_0._onRefreshStyleIcon, arg_2_0)
+	arg_2_0:addEventCb(CharacterController.instance, CharacterEvent.UseTalentTemplateReply, arg_2_0._onRefreshStyleIcon, arg_2_0)
+	arg_2_0:addEventCb(HeroResonanceController.instance, HeroResonanceEvent.UseShareCode, arg_2_0._onRefreshStyleIcon, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
-	slot0._btnhome:RemoveClickListener()
-	slot0._btndata:RemoveClickListener()
-	slot0._btnskin:RemoveClickListener()
-	slot0._btnfavor:RemoveClickListener()
-	slot0._btnhelp:RemoveClickListener()
-	slot0._btnattribute:RemoveClickListener()
-	slot0._btnlevel:RemoveClickListener()
-	slot0._btnrank:RemoveClickListener()
-	slot0._btnpassiveskill:RemoveClickListener()
-	slot0._btnexskill:RemoveClickListener()
-	slot0._btntalent:RemoveClickListener()
-	GameStateMgr.instance:unregisterCallback(GameStateEvent.onApplicationPause, slot0._onApplicationPause, slot0)
-	slot0:removeEventCb(CharacterController.instance, CharacterEvent.levelUpChangePreviewLevel, slot0._refreshAttributeTips, slot0)
-	slot0:removeEventCb(CharacterController.instance, CharacterEvent.onTalentStyleRead, slot0._refreshTalentRed, slot0)
-	slot0:removeEventCb(CharacterController.instance, CharacterEvent.onUseTalentStyleReply, slot0._onRefreshStyleIcon, slot0)
-	slot0:removeEventCb(CharacterController.instance, CharacterEvent.UseTalentTemplateReply, slot0._onRefreshStyleIcon, slot0)
-	slot0:removeEventCb(CharacterController.instance, CharacterEvent.OnMarkFavorSuccess, slot0._markFavorSuccess, slot0)
-	slot0:removeEventCb(HeroResonanceController.instance, HeroResonanceEvent.UseShareCode, slot0._onRefreshStyleIcon, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
+	arg_3_0._btnhome:RemoveClickListener()
+	arg_3_0._btndata:RemoveClickListener()
+	arg_3_0._btnskin:RemoveClickListener()
+	arg_3_0._btnfavor:RemoveClickListener()
+	arg_3_0._btnhelp:RemoveClickListener()
+	arg_3_0._btnattribute:RemoveClickListener()
+	arg_3_0._btnlevel:RemoveClickListener()
+	arg_3_0._btnrank:RemoveClickListener()
+	arg_3_0._btnpassiveskill:RemoveClickListener()
+	arg_3_0._btnexskill:RemoveClickListener()
+	arg_3_0._btntalent:RemoveClickListener()
+	GameStateMgr.instance:unregisterCallback(GameStateEvent.onApplicationPause, arg_3_0._onApplicationPause, arg_3_0)
+	arg_3_0:removeEventCb(CharacterController.instance, CharacterEvent.levelUpChangePreviewLevel, arg_3_0._refreshAttributeTips, arg_3_0)
+	arg_3_0:removeEventCb(CharacterController.instance, CharacterEvent.onTalentStyleRead, arg_3_0._refreshTalentRed, arg_3_0)
+	arg_3_0:removeEventCb(CharacterController.instance, CharacterEvent.onUseTalentStyleReply, arg_3_0._onRefreshStyleIcon, arg_3_0)
+	arg_3_0:removeEventCb(CharacterController.instance, CharacterEvent.UseTalentTemplateReply, arg_3_0._onRefreshStyleIcon, arg_3_0)
+	arg_3_0:removeEventCb(CharacterController.instance, CharacterEvent.OnMarkFavorSuccess, arg_3_0._markFavorSuccess, arg_3_0)
+	arg_3_0:removeEventCb(HeroResonanceController.instance, HeroResonanceEvent.UseShareCode, arg_3_0._onRefreshStyleIcon, arg_3_0)
 end
 
-slot0.HpAttrId = 101
-slot0.AttackAttrId = 102
-slot0.DefenseAttrId = 103
-slot0.MdefenseAttrId = 104
-slot0.TechnicAttrId = 105
-slot0.RankIconOffset = 51.38
-slot0.AttrIconColor = GameUtil.parseColor("#9b795e")
-slot0.AttrIdList = {
+var_0_0.HpAttrId = 101
+var_0_0.AttackAttrId = 102
+var_0_0.DefenseAttrId = 103
+var_0_0.MdefenseAttrId = 104
+var_0_0.TechnicAttrId = 105
+var_0_0.RankIconOffset = 51.38
+var_0_0.AttrIconColor = GameUtil.parseColor("#9b795e")
+var_0_0.AttrIdList = {
 	CharacterEnum.AttrId.Hp,
 	CharacterEnum.AttrId.Defense,
 	CharacterEnum.AttrId.Technic,
@@ -131,1261 +131,1421 @@ slot0.AttrIdList = {
 	CharacterEnum.AttrId.Attack
 }
 
-function slot0._editableInitView(slot0)
-	gohelper.addUIClickAudio(slot0._btnlevel.gameObject, AudioEnum.UI.Play_Ui_Level_Unfold)
-	gohelper.addUIClickAudio(slot0._btndata.gameObject, AudioEnum.UI.UI_role_introduce_open)
-	gohelper.addUIClickAudio(slot0._btnskin.gameObject, AudioEnum.UI.UI_role_skin_open)
-	gohelper.addUIClickAudio(slot0._btnhelp.gameObject, AudioEnum.UI.UI_help_open)
-	gohelper.addUIClickAudio(slot0._btnclose.gameObject, AudioEnum.UI.UI_Rolesclose)
-	gohelper.addUIClickAudio(slot0._btnhome.gameObject, AudioEnum.UI.UI_Rolesclose)
-	gohelper.addUIClickAudio(slot0._btnattribute.gameObject, AudioEnum.UI.Play_ui_role_description)
-	gohelper.addUIClickAudio(slot0._btntalent.gameObject, AudioEnum.UI.play_ui_admission_open)
-	gohelper.addUIClickAudio(slot0._btnrank.gameObject, AudioEnum.UI.play_ui_role_insight_open)
-	gohelper.setActive(slot0._btnskin.gameObject, CharacterEnum.SkinOpen)
-	gohelper.setActive(slot0._btnhelp.gameObject, HelpModel.instance:isShowedHelp(HelpEnum.HelpId.Character))
-	slot0._simagebg:LoadImage(ResUrl.getCommonViewBg("full/juese_bj"))
+function var_0_0._editableInitView(arg_4_0)
+	gohelper.addUIClickAudio(arg_4_0._btnlevel.gameObject, AudioEnum.UI.Play_Ui_Level_Unfold)
+	gohelper.addUIClickAudio(arg_4_0._btndata.gameObject, AudioEnum.UI.UI_role_introduce_open)
+	gohelper.addUIClickAudio(arg_4_0._btnskin.gameObject, AudioEnum.UI.UI_role_skin_open)
+	gohelper.addUIClickAudio(arg_4_0._btnhelp.gameObject, AudioEnum.UI.UI_help_open)
+	gohelper.addUIClickAudio(arg_4_0._btnclose.gameObject, AudioEnum.UI.UI_Rolesclose)
+	gohelper.addUIClickAudio(arg_4_0._btnhome.gameObject, AudioEnum.UI.UI_Rolesclose)
+	gohelper.addUIClickAudio(arg_4_0._btnattribute.gameObject, AudioEnum.UI.Play_ui_role_description)
+	gohelper.addUIClickAudio(arg_4_0._btntalent.gameObject, AudioEnum.UI.play_ui_admission_open)
+	gohelper.addUIClickAudio(arg_4_0._btnrank.gameObject, AudioEnum.UI.play_ui_role_insight_open)
+	gohelper.setActive(arg_4_0._btnskin.gameObject, CharacterEnum.SkinOpen)
 
-	slot5 = "guangyun"
+	local var_4_0 = HelpModel.instance:isShowedHelp(HelpEnum.HelpId.Character)
 
-	slot0._simageplayerbg:LoadImage(ResUrl.getCharacterIcon(slot5))
+	gohelper.setActive(arg_4_0._btnhelp.gameObject, var_4_0)
+	arg_4_0._simagebg:LoadImage(ResUrl.getCommonViewBg("full/juese_bj"))
+	arg_4_0._simageplayerbg:LoadImage(ResUrl.getCharacterIcon("guangyun"))
 
-	slot0._uiSpine = GuiModelAgent.Create(slot0._gospine, true)
-	slot0._rareStars = slot0:getUserDataTb_()
+	arg_4_0._uiSpine = GuiModelAgent.Create(arg_4_0._gospine, true)
+	arg_4_0._rareStars = arg_4_0:getUserDataTb_()
 
-	for slot5 = 1, 6 do
-		slot0._rareStars[slot5] = gohelper.findChild(slot0._gorare, "rare" .. slot5)
+	for iter_4_0 = 1, 6 do
+		arg_4_0._rareStars[iter_4_0] = gohelper.findChild(arg_4_0._gorare, "rare" .. iter_4_0)
 	end
 
-	slot0._careerlabels = slot0:getUserDataTb_()
+	arg_4_0._careerlabels = arg_4_0:getUserDataTb_()
 
-	for slot5 = 1, 3 do
-		slot0._careerlabels[slot5] = gohelper.findChildText(slot0._gocareer, "careerlabel" .. slot5)
+	for iter_4_1 = 1, 3 do
+		arg_4_0._careerlabels[iter_4_1] = gohelper.findChildText(arg_4_0._gocareer, "careerlabel" .. iter_4_1)
 	end
 
-	slot0._attributevalues = {}
-	slot0._levelUpAttributeValues = {}
+	arg_4_0._attributevalues = {}
+	arg_4_0._levelUpAttributeValues = {}
 
-	for slot5 = 1, uv0 do
-		slot6 = slot0:getUserDataTb_()
-		slot6.value = gohelper.findChildText(slot0._goattribute, "attribute" .. tostring(slot5) .. "/txt_attribute")
-		slot6.name = gohelper.findChildText(slot0._goattribute, "attribute" .. tostring(slot5) .. "/name")
-		slot6.icon = gohelper.findChildImage(slot0._goattribute, "attribute" .. tostring(slot5) .. "/icon")
-		slot6.rate = gohelper.findChildImage(slot0._goattribute, "attribute" .. tostring(slot5) .. "/rate")
+	for iter_4_2 = 1, var_0_1 do
+		local var_4_1 = arg_4_0:getUserDataTb_()
 
-		gohelper.setActive(slot6.rate.gameObject, false)
+		var_4_1.value = gohelper.findChildText(arg_4_0._goattribute, "attribute" .. tostring(iter_4_2) .. "/txt_attribute")
+		var_4_1.name = gohelper.findChildText(arg_4_0._goattribute, "attribute" .. tostring(iter_4_2) .. "/name")
+		var_4_1.icon = gohelper.findChildImage(arg_4_0._goattribute, "attribute" .. tostring(iter_4_2) .. "/icon")
+		var_4_1.rate = gohelper.findChildImage(arg_4_0._goattribute, "attribute" .. tostring(iter_4_2) .. "/rate")
 
-		slot0._attributevalues[slot5] = slot6
-		slot7 = slot0:getUserDataTb_()
-		slot8 = "attribute" .. tostring(slot5)
-		slot7.value = gohelper.findChildText(slot0._goattributetips, slot8 .. "/txt_attribute")
-		slot7.newValue = gohelper.findChildText(slot0._goattributetips, slot8 .. "/txt_attribute/txt_attribute2")
-		slot7.newValueArrow = gohelper.findChildImage(slot0._goattributetips, slot8 .. "/txt_attribute/image_Arrow")
-		slot7.name = gohelper.findChildText(slot0._goattributetips, slot8 .. "/name")
-		slot7.icon = gohelper.findChildImage(slot0._goattributetips, slot8 .. "/icon")
-		slot0._levelUpAttributeValues[slot5] = slot7
+		gohelper.setActive(var_4_1.rate.gameObject, false)
+
+		arg_4_0._attributevalues[iter_4_2] = var_4_1
+
+		local var_4_2 = arg_4_0:getUserDataTb_()
+		local var_4_3 = "attribute" .. tostring(iter_4_2)
+
+		var_4_2.value = gohelper.findChildText(arg_4_0._goattributetips, var_4_3 .. "/txt_attribute")
+		var_4_2.newValue = gohelper.findChildText(arg_4_0._goattributetips, var_4_3 .. "/txt_attribute/txt_attribute2")
+		var_4_2.newValueArrow = gohelper.findChildImage(arg_4_0._goattributetips, var_4_3 .. "/txt_attribute/image_Arrow")
+		var_4_2.name = gohelper.findChildText(arg_4_0._goattributetips, var_4_3 .. "/name")
+		var_4_2.icon = gohelper.findChildImage(arg_4_0._goattributetips, var_4_3 .. "/icon")
+		arg_4_0._levelUpAttributeValues[iter_4_2] = var_4_2
 	end
 
-	slot0._ranklights = {}
+	arg_4_0._ranklights = {}
 
-	for slot5 = 1, 3 do
-		slot6 = slot0:getUserDataTb_()
-		slot10 = slot5
-		slot6.go = gohelper.findChild(slot0._goranklights, "light" .. slot10)
-		slot6.lights = slot0:getUserDataTb_()
+	for iter_4_3 = 1, 3 do
+		local var_4_4 = arg_4_0:getUserDataTb_()
 
-		for slot10 = 1, slot5 do
-			table.insert(slot6.lights, gohelper.findChild(slot6.go, "star" .. slot10))
+		var_4_4.go = gohelper.findChild(arg_4_0._goranklights, "light" .. iter_4_3)
+		var_4_4.lights = arg_4_0:getUserDataTb_()
+
+		for iter_4_4 = 1, iter_4_3 do
+			table.insert(var_4_4.lights, gohelper.findChild(var_4_4.go, "star" .. iter_4_4))
 		end
 
-		slot0._ranklights[slot5] = slot6
+		arg_4_0._ranklights[iter_4_3] = var_4_4
 	end
 
-	slot0._skillContainer = MonoHelper.addNoUpdateLuaComOnceToGo(slot0._goskill, CharacterSkillContainer)
-	slot0._passiveskillitems = {}
+	arg_4_0._skillContainer = MonoHelper.addNoUpdateLuaComOnceToGo(arg_4_0._goskill, CharacterSkillContainer)
+	arg_4_0._passiveskillitems = {}
 
-	for slot5 = 1, 3 do
-		slot6 = slot0:getUserDataTb_()
-		slot6.go = gohelper.findChild(slot0._gopassiveskills, "passiveskill" .. tostring(slot5))
-		slot6.on = gohelper.findChild(slot6.go, "on")
-		slot6.off = gohelper.findChild(slot6.go, "off")
-		slot0._passiveskillitems[slot5] = slot6
+	for iter_4_5 = 1, 3 do
+		local var_4_5 = arg_4_0:getUserDataTb_()
+
+		var_4_5.go = gohelper.findChild(arg_4_0._gopassiveskills, "passiveskill" .. tostring(iter_4_5))
+		var_4_5.on = gohelper.findChild(var_4_5.go, "on")
+		var_4_5.off = gohelper.findChild(var_4_5.go, "off")
+		arg_4_0._passiveskillitems[iter_4_5] = var_4_5
 	end
 
-	slot0._exskills = slot0:getUserDataTb_()
+	arg_4_0._exskills = arg_4_0:getUserDataTb_()
 
-	for slot5 = 1, 5 do
-		slot0._exskills[slot5] = gohelper.findChild(slot0._goexskills, "exskill" .. tostring(slot5))
+	for iter_4_6 = 1, 5 do
+		arg_4_0._exskills[iter_4_6] = gohelper.findChild(arg_4_0._goexskills, "exskill" .. tostring(iter_4_6))
 	end
 
-	slot0._drag = SLFramework.UGUI.UIDragListener.Get(slot0._goherocontainer)
-	slot0._signatureDrag = SLFramework.UGUI.UIDragListener.Get(slot0._simagesignature.gameObject)
-	slot0._trustclick = SLFramework.UGUI.UIClickListener.Get(slot0._txttrust.gameObject)
-	slot0._careerclick = SLFramework.UGUI.UIClickListener.Get(slot0._imagecareericon.gameObject)
-	slot0._signatureClick = SLFramework.UGUI.UIClickListener.Get(slot0._simagesignature.gameObject)
-	slot0._enableSwitchDrawing = false
-	slot0._gopifu = gohelper.findChild(slot0.viewGO, "anim/bottom/#pifu")
+	arg_4_0._drag = SLFramework.UGUI.UIDragListener.Get(arg_4_0._goherocontainer)
+	arg_4_0._signatureDrag = SLFramework.UGUI.UIDragListener.Get(arg_4_0._simagesignature.gameObject)
+	arg_4_0._trustclick = SLFramework.UGUI.UIClickListener.Get(arg_4_0._txttrust.gameObject)
+	arg_4_0._careerclick = SLFramework.UGUI.UIClickListener.Get(arg_4_0._imagecareericon.gameObject)
+	arg_4_0._signatureClick = SLFramework.UGUI.UIClickListener.Get(arg_4_0._simagesignature.gameObject)
+	arg_4_0._enableSwitchDrawing = false
+	arg_4_0._gopifu = gohelper.findChild(arg_4_0.viewGO, "anim/bottom/#pifu")
 
-	gohelper.setActive(slot0._gopifu, slot0._enableSwitchDrawing)
-	slot0:_addListener()
+	gohelper.setActive(arg_4_0._gopifu, arg_4_0._enableSwitchDrawing)
+	arg_4_0:_addListener()
 
-	slot0._originSpineRootPosX = recthelper.getAnchorX(slot0._goherocontainer.transform)
-	slot0._animator = ZProj.ProjAnimatorPlayer.Get(slot0.viewGO)
-	slot0._herocontainerCanvasGroup = slot0._goherocontainer:GetComponent(typeof(UnityEngine.CanvasGroup))
-	slot0._hasMoveIcon = false
+	arg_4_0._originSpineRootPosX = recthelper.getAnchorX(arg_4_0._goherocontainer.transform)
+	arg_4_0._animator = ZProj.ProjAnimatorPlayer.Get(arg_4_0.viewGO)
+	arg_4_0._herocontainerCanvasGroup = arg_4_0._goherocontainer:GetComponent(typeof(UnityEngine.CanvasGroup))
+	arg_4_0._hasMoveIcon = false
 
-	gohelper.setActive(slot0._goattributenode, true)
-	slot0._animatorattributetipsnode:Play("close", 0, 1)
+	gohelper.setActive(arg_4_0._goattributenode, true)
+	arg_4_0._animatorattributetipsnode:Play("close", 0, 1)
 
-	slot0._talentRedType1 = gohelper.findChild(slot0._gotalentreddot, "type1")
-	slot0._talentRedNew = gohelper.findChild(slot0._gotalentreddot, "new")
+	arg_4_0._talentRedType1 = gohelper.findChild(arg_4_0._gotalentreddot, "type1")
+	arg_4_0._talentRedNew = gohelper.findChild(arg_4_0._gotalentreddot, "new")
 end
 
-function slot0._refreshHelp(slot0)
-	gohelper.setActive(slot0._btnhelp.gameObject, HelpModel.instance:isShowedHelp(HelpEnum.HelpId.Character) and (slot0._heroMO and slot0:isOwnHero()))
+function var_0_0._refreshHelp(arg_5_0)
+	local var_5_0 = arg_5_0._heroMO and arg_5_0:isOwnHero()
+	local var_5_1 = HelpModel.instance:isShowedHelp(HelpEnum.HelpId.Character)
+
+	gohelper.setActive(arg_5_0._btnhelp.gameObject, var_5_1 and var_5_0)
 end
 
-function slot0._takeoffAllTalentCube(slot0)
-	HeroRpc.instance:TakeoffAllTalentCubeRequest(slot0._heroMO.heroId)
+function var_0_0._takeoffAllTalentCube(arg_6_0)
+	HeroRpc.instance:TakeoffAllTalentCubeRequest(arg_6_0._heroMO.heroId)
 end
 
-function slot0._addDrag(slot0)
-	if not slot0._drag then
+function var_0_0._addDrag(arg_7_0)
+	if not arg_7_0._drag then
 		return
 	end
 
-	slot0._drag:AddDragBeginListener(slot0._onDragBegin, slot0)
-	slot0._drag:AddDragListener(slot0._onDrag, slot0)
-	slot0._drag:AddDragEndListener(slot0._onDragEnd, slot0)
-	slot0._signatureDrag:AddDragBeginListener(slot0._onDragBegin, slot0)
-	slot0._signatureDrag:AddDragListener(slot0._onDrag, slot0)
-	slot0._signatureDrag:AddDragEndListener(slot0._onDragEnd, slot0)
+	arg_7_0._drag:AddDragBeginListener(arg_7_0._onDragBegin, arg_7_0)
+	arg_7_0._drag:AddDragListener(arg_7_0._onDrag, arg_7_0)
+	arg_7_0._drag:AddDragEndListener(arg_7_0._onDragEnd, arg_7_0)
+	arg_7_0._signatureDrag:AddDragBeginListener(arg_7_0._onDragBegin, arg_7_0)
+	arg_7_0._signatureDrag:AddDragListener(arg_7_0._onDrag, arg_7_0)
+	arg_7_0._signatureDrag:AddDragEndListener(arg_7_0._onDragEnd, arg_7_0)
 end
 
-function slot0._addListener(slot0)
-	slot0._trustclick:AddClickListener(slot0._onOpenTrustTip, slot0)
-	slot0._careerclick:AddClickListener(slot0._onOpenCareerTip, slot0)
-	slot0._signatureClick:AddClickListener(slot0._switchDrawingOnClick, slot0)
-	slot0:addEventCb(CharacterController.instance, CharacterEvent.TakeoffAllTalentCube, slot0._takeoffAllTalentCube, slot0)
-	slot0:addEventCb(CharacterController.instance, CharacterEvent.successHeroRankUp, slot0._refreshView, slot0)
-	slot0:addEventCb(CharacterController.instance, CharacterEvent.successHeroLevelUp, slot0._refreshView, slot0)
-	slot0:addEventCb(CharacterController.instance, CharacterEvent.successHeroTalentUp, slot0._refreshView, slot0)
-	slot0:addEventCb(CharacterController.instance, CharacterEvent.successHeroExSkillUp, slot0._refreshView, slot0)
-	slot0:addEventCb(CharacterController.instance, CharacterEvent.successDressUpSkin, slot0._successDressUpSkin, slot0)
-	slot0:addEventCb(RedDotController.instance, RedDotEvent.RefreshClientCharacterDot, slot0._refreshRedDot, slot0)
-	slot0:addEventCb(CharacterController.instance, CharacterEvent.levelUpAttribute, slot0._onAttributeChanged, slot0)
-	slot0:addEventCb(CharacterController.instance, CharacterEvent.HeroUpdatePush, slot0._onAttributeChanged, slot0)
-	slot0:addEventCb(CharacterController.instance, CharacterEvent.showCharacterRankUpView, slot0._showCharacterRankUpView, slot0)
-	slot0:addEventCb(CharacterController.instance, CharacterEvent.OnMarkFavorSuccess, slot0._markFavorSuccess, slot0)
-	slot0:addEventCb(HelpController.instance, HelpEvent.RefreshHelp, slot0._refreshHelp, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenFullView, slot0._onOpenFullView, slot0, LuaEventSystem.Low)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenFullViewFinish, slot0._onOpenFullViewFinish, slot0, LuaEventSystem.Low)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, slot0._onOpenView, slot0, LuaEventSystem.Low)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, slot0._onOpenViewFinish, slot0, LuaEventSystem.Low)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, slot0._onCloseViewFinish, slot0, LuaEventSystem.Low)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseFullView, slot0._onCloseFullView, slot0, LuaEventSystem.Low)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, slot0._onCloseView, slot0, LuaEventSystem.Low)
-	slot0:addEventCb(EquipController.instance, EquipEvent.onUpdateEquip, slot0.onEquipChange, slot0)
-	slot0:addEventCb(EquipController.instance, EquipEvent.onDeleteEquip, slot0.onEquipChange, slot0)
+function var_0_0._addListener(arg_8_0)
+	arg_8_0._trustclick:AddClickListener(arg_8_0._onOpenTrustTip, arg_8_0)
+	arg_8_0._careerclick:AddClickListener(arg_8_0._onOpenCareerTip, arg_8_0)
+	arg_8_0._signatureClick:AddClickListener(arg_8_0._switchDrawingOnClick, arg_8_0)
+	arg_8_0:addEventCb(CharacterController.instance, CharacterEvent.TakeoffAllTalentCube, arg_8_0._takeoffAllTalentCube, arg_8_0)
+	arg_8_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroRankUp, arg_8_0._refreshView, arg_8_0)
+	arg_8_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroLevelUp, arg_8_0._refreshView, arg_8_0)
+	arg_8_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroTalentUp, arg_8_0._refreshView, arg_8_0)
+	arg_8_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroExSkillUp, arg_8_0._refreshView, arg_8_0)
+	arg_8_0:addEventCb(CharacterController.instance, CharacterEvent.successDressUpSkin, arg_8_0._successDressUpSkin, arg_8_0)
+	arg_8_0:addEventCb(RedDotController.instance, RedDotEvent.RefreshClientCharacterDot, arg_8_0._refreshRedDot, arg_8_0)
+	arg_8_0:addEventCb(CharacterController.instance, CharacterEvent.levelUpAttribute, arg_8_0._onAttributeChanged, arg_8_0)
+	arg_8_0:addEventCb(CharacterController.instance, CharacterEvent.HeroUpdatePush, arg_8_0._onAttributeChanged, arg_8_0)
+	arg_8_0:addEventCb(CharacterController.instance, CharacterEvent.showCharacterRankUpView, arg_8_0._showCharacterRankUpView, arg_8_0)
+	arg_8_0:addEventCb(CharacterController.instance, CharacterEvent.OnMarkFavorSuccess, arg_8_0._markFavorSuccess, arg_8_0)
+	arg_8_0:addEventCb(HelpController.instance, HelpEvent.RefreshHelp, arg_8_0._refreshHelp, arg_8_0)
+	arg_8_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenFullView, arg_8_0._onOpenFullView, arg_8_0, LuaEventSystem.Low)
+	arg_8_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenFullViewFinish, arg_8_0._onOpenFullViewFinish, arg_8_0, LuaEventSystem.Low)
+	arg_8_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_8_0._onOpenView, arg_8_0, LuaEventSystem.Low)
+	arg_8_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, arg_8_0._onOpenViewFinish, arg_8_0, LuaEventSystem.Low)
+	arg_8_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_8_0._onCloseViewFinish, arg_8_0, LuaEventSystem.Low)
+	arg_8_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseFullView, arg_8_0._onCloseFullView, arg_8_0, LuaEventSystem.Low)
+	arg_8_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_8_0._onCloseView, arg_8_0, LuaEventSystem.Low)
+	arg_8_0:addEventCb(EquipController.instance, EquipEvent.onUpdateEquip, arg_8_0.onEquipChange, arg_8_0)
+	arg_8_0:addEventCb(EquipController.instance, EquipEvent.onDeleteEquip, arg_8_0.onEquipChange, arg_8_0)
 end
 
-function slot0._markFavorSuccess(slot0)
-	slot0._heroMO = HeroModel.instance:getByHeroId(slot0._heroMO.heroId)
+function var_0_0._markFavorSuccess(arg_9_0)
+	arg_9_0._heroMO = HeroModel.instance:getByHeroId(arg_9_0._heroMO.heroId)
 
-	slot0:_refreshBtn()
+	arg_9_0:_refreshBtn()
 end
 
-function slot0._onApplicationPause(slot0, slot1)
-	if slot1 then
-		slot0:_resetSpinePos(false)
+function var_0_0._onApplicationPause(arg_10_0, arg_10_1)
+	if arg_10_1 then
+		arg_10_0:_resetSpinePos(false)
 	end
 end
 
-function slot0._setModelVisible(slot0, slot1)
-	TaskDispatcher.cancelTask(slot0._delaySetModelHide, slot0)
+function var_0_0._setModelVisible(arg_11_0, arg_11_1)
+	TaskDispatcher.cancelTask(arg_11_0._delaySetModelHide, arg_11_0)
 
-	if slot1 then
-		slot0._uiSpine:setLayer(UnityLayer.Unit)
-		slot0._uiSpine:setModelVisible(slot1)
-		slot0._uiSpine:showModelEffect()
+	if arg_11_1 then
+		arg_11_0._uiSpine:setLayer(UnityLayer.Unit)
+		arg_11_0._uiSpine:setModelVisible(arg_11_1)
+		arg_11_0._uiSpine:showModelEffect()
 	else
-		slot0._uiSpine:setLayer(UnityLayer.Water)
-		slot0._uiSpine:hideModelEffect()
-		TaskDispatcher.runDelay(slot0._delaySetModelHide, slot0, 1)
+		arg_11_0._uiSpine:setLayer(UnityLayer.Water)
+		arg_11_0._uiSpine:hideModelEffect()
+		TaskDispatcher.runDelay(arg_11_0._delaySetModelHide, arg_11_0, 1)
 	end
 end
 
-function slot0._delaySetModelHide(slot0)
-	if slot0._uiSpine then
-		slot0._uiSpine:setModelVisible(false)
+function var_0_0._delaySetModelHide(arg_12_0)
+	if arg_12_0._uiSpine then
+		arg_12_0._uiSpine:setModelVisible(false)
 	end
 end
 
-function slot0._showCharacterRankUpView(slot0, slot1)
-	if not slot0._uiSpine then
+function var_0_0._showCharacterRankUpView(arg_13_0, arg_13_1)
+	if not arg_13_0._uiSpine then
 		return
 	end
 
-	slot0:_setModelVisible(false)
+	arg_13_0:_setModelVisible(false)
 
-	if slot1 then
-		slot0:playCloseViewAnim(slot1)
+	if arg_13_1 then
+		arg_13_0:playCloseViewAnim(arg_13_1)
 	end
 end
 
-function slot0._onOpenView(slot0, slot1)
+function var_0_0._onOpenView(arg_14_0, arg_14_1)
+	return
 end
 
-function slot0._onOpenViewFinish(slot0, slot1)
-	if slot1 == ViewName.CharacterRankUpResultView and slot0._uiSpine then
-		slot0._uiSpine:hideModelEffect()
+function var_0_0._onOpenViewFinish(arg_15_0, arg_15_1)
+	if arg_15_1 == ViewName.CharacterRankUpResultView and arg_15_0._uiSpine then
+		arg_15_0._uiSpine:hideModelEffect()
 	end
 
-	if slot1 ~= ViewName.CharacterGetView then
+	if arg_15_1 ~= ViewName.CharacterGetView then
 		return
 	end
 
-	if slot0._uiSpine then
-		slot0:_setModelVisible(false)
+	if arg_15_0._uiSpine then
+		arg_15_0:_setModelVisible(false)
 	end
 end
 
-function slot0._successDressUpSkin(slot0)
-	slot0.needSwitchSkin = true
+function var_0_0._successDressUpSkin(arg_16_0)
+	arg_16_0.needSwitchSkin = true
 end
 
-function slot0._onCloseView(slot0, slot1)
-	if ViewHelper.instance:checkViewOnTheTop(slot0.viewName) then
-		slot0:setShaderKeyWord()
+function var_0_0._onCloseView(arg_17_0, arg_17_1)
+	if ViewHelper.instance:checkViewOnTheTop(arg_17_0.viewName) then
+		arg_17_0:setShaderKeyWord()
 
-		if slot0.needSwitchSkin then
-			slot0:_refreshSkin()
+		if arg_17_0.needSwitchSkin then
+			arg_17_0:_refreshSkin()
 
-			slot0.needSwitchSkin = false
+			arg_17_0.needSwitchSkin = false
 		end
 	end
 
-	if slot1 == ViewName.CharacterLevelUpView then
-		gohelper.setActive(slot0._goattributenode, true)
-		slot0._animatorattributetipsnode:Play("close", 0, 0)
+	if arg_17_1 == ViewName.CharacterLevelUpView then
+		gohelper.setActive(arg_17_0._goattributenode, true)
+		arg_17_0._animatorattributetipsnode:Play("close", 0, 0)
 	end
 end
 
-function slot0._onCloseViewFinish(slot0, slot1)
-	if ViewHelper.instance:checkViewOnTheTop(slot0.viewName) then
-		slot0:setShaderKeyWord()
+function var_0_0._onCloseViewFinish(arg_18_0, arg_18_1)
+	if ViewHelper.instance:checkViewOnTheTop(arg_18_0.viewName) then
+		arg_18_0:setShaderKeyWord()
 	end
 
-	if slot1 == ViewName.CharacterRankUpResultView and slot0._uiSpine then
-		slot0._uiSpine:showModelEffect()
+	if arg_18_1 == ViewName.CharacterRankUpResultView and arg_18_0._uiSpine then
+		arg_18_0._uiSpine:showModelEffect()
 	end
 
-	if slot1 ~= ViewName.CharacterGetView then
+	if arg_18_1 ~= ViewName.CharacterGetView then
 		return
 	end
 
-	if not slot0._uiSpine then
+	if not arg_18_0._uiSpine then
 		return
 	end
 
-	slot0:_setModelVisible(true)
+	arg_18_0:_setModelVisible(true)
 end
 
-function slot0._onOpenFullView(slot0, slot1)
-	if not slot0._uiSpine or slot1 == ViewName.CharacterView then
+function var_0_0._onOpenFullView(arg_19_0, arg_19_1)
+	if not arg_19_0._uiSpine or arg_19_1 == ViewName.CharacterView then
 		return
 	end
 
-	slot0:_setModelVisible(false)
+	arg_19_0:_setModelVisible(false)
 end
 
-function slot0._onOpenFullViewFinish(slot0, slot1)
+function var_0_0._onOpenFullViewFinish(arg_20_0, arg_20_1)
 	if ViewMgr.instance:isOpen(ViewName.CharacterGetView) then
 		return
 	end
 
-	if not slot0._uiSpine or slot1 == ViewName.CharacterView then
+	if not arg_20_0._uiSpine or arg_20_1 == ViewName.CharacterView then
 		return
 	end
 
-	if slot1 ~= ViewName.CharacterView then
-		slot0._uiSpine:stopVoice()
+	if arg_20_1 ~= ViewName.CharacterView then
+		arg_20_0._uiSpine:stopVoice()
 	else
 		return
 	end
 
-	slot0:_setModelVisible(slot0.viewContainer._isVisible)
+	arg_20_0:_setModelVisible(arg_20_0.viewContainer._isVisible)
 end
 
-function slot0._onCloseFullView(slot0, slot1)
-	if slot0._animator and slot0:isEnterCharacterView() then
-		slot0:playAnim(UIAnimationName.Open)
-		slot0.viewContainer:getEquipView():playOpenAnim()
+function var_0_0._onCloseFullView(arg_21_0, arg_21_1)
+	if arg_21_0._animator and arg_21_0:isEnterCharacterView() then
+		arg_21_0:playAnim(UIAnimationName.Open)
+		arg_21_0.viewContainer:getEquipView():playOpenAnim()
 	end
 
 	if ViewMgr.instance:isOpen(ViewName.CharacterGetView) then
 		return
 	end
 
-	if not slot0._uiSpine then
+	if not arg_21_0._uiSpine then
 		return
 	end
 
-	slot0:_setModelVisible(slot0.viewContainer._isVisible)
-	slot0:_checkGuide()
+	arg_21_0:_setModelVisible(arg_21_0.viewContainer._isVisible)
+	arg_21_0:_checkGuide()
 end
 
-function slot0.isEnterCharacterView(slot0)
-	for slot5 = #ViewMgr.instance:getOpenViewNameList(), 1, -1 do
-		if ViewMgr.instance:getSetting(slot1[slot5]).layer == ViewMgr.instance:getSetting(slot0.viewName).layer then
-			return slot1[slot5] == slot0.viewName
+function var_0_0.isEnterCharacterView(arg_22_0)
+	local var_22_0 = ViewMgr.instance:getOpenViewNameList()
+
+	for iter_22_0 = #var_22_0, 1, -1 do
+		if ViewMgr.instance:getSetting(var_22_0[iter_22_0]).layer == ViewMgr.instance:getSetting(arg_22_0.viewName).layer then
+			return var_22_0[iter_22_0] == arg_22_0.viewName
 		end
 	end
 
 	return false
 end
 
-function slot0.onOpenFinish(slot0)
-	slot0:_addDrag()
+function var_0_0.onOpenFinish(arg_23_0)
+	arg_23_0:_addDrag()
 
-	slot0._isOpenFinish = true
+	arg_23_0._isOpenFinish = true
 
-	if slot0._spineLoadedFinish then
-		slot0:_onSpineLoaded()
+	if arg_23_0._spineLoadedFinish then
+		arg_23_0:_onSpineLoaded()
 	end
 
-	if not GuideModel.instance:isGuideRunning(GuideEnum.VerticalDrawingSwitchingGuide) or not slot0._showSwitchDrawingGuide then
-		slot1 = slot0.viewContainer.helpShowView
+	if not GuideModel.instance:isGuideRunning(GuideEnum.VerticalDrawingSwitchingGuide) or not arg_23_0._showSwitchDrawingGuide then
+		local var_23_0 = arg_23_0.viewContainer.helpShowView
 
-		slot1:setHelpId(HelpEnum.HelpId.Character)
-		slot1:setDelayTime(0.5)
-		slot1:tryShowHelp()
+		var_23_0:setHelpId(HelpEnum.HelpId.Character)
+		var_23_0:setDelayTime(0.5)
+		var_23_0:tryShowHelp()
 	end
 end
 
-function slot0._onOpenTrustTip(slot0)
-	logNormal("打开信赖值tip, 达到下一百分比羁绊值需要 " .. slot0.nextFaith .. " 的羁绊值")
+function var_0_0._onOpenTrustTip(arg_24_0)
+	logNormal("打开信赖值tip, 达到下一百分比羁绊值需要 " .. arg_24_0.nextFaith .. " 的羁绊值")
 end
 
-function slot0._onOpenCareerTip(slot0)
+function var_0_0._onOpenCareerTip(arg_25_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Mission_switch)
 	ViewMgr.instance:openView(ViewName.HeroGroupCareerTipView)
 end
 
-function slot0._closeLevelUpview(slot0)
+function var_0_0._closeLevelUpview(arg_26_0)
 	if ViewMgr.instance:isOpen(ViewName.CharacterLevelUpView) then
 		ViewMgr.instance:closeView(ViewName.CharacterLevelUpView, nil, true)
 	end
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:_closeLevelUpview()
-	slot0:closeThis()
+function var_0_0._btncloseOnClick(arg_27_0)
+	arg_27_0:_closeLevelUpview()
+	arg_27_0:closeThis()
 end
 
-function slot0._btnhomeOnClick(slot0)
-	slot0:_closeLevelUpview()
+function var_0_0._btnhomeOnClick(arg_28_0)
+	arg_28_0:_closeLevelUpview()
 	NavigateButtonsView.homeClick()
 end
 
-function slot0._btndataOnClick(slot0)
-	slot0:_closeLevelUpview()
-	slot0:playCloseViewAnim(function ()
-		CharacterController.instance:openCharacterDataView(uv0._heroMO.heroId)
-	end)
-end
+function var_0_0._btndataOnClick(arg_29_0)
+	arg_29_0:_closeLevelUpview()
 
-function slot0._btnskinOnClick(slot0)
-	slot0:_closeLevelUpview()
-
-	if slot0._uiSpine then
-		slot0:_setModelVisible(false)
+	local function var_29_0()
+		CharacterController.instance:openCharacterDataView(arg_29_0._heroMO.heroId)
 	end
 
-	slot0:playCloseViewAnim(function ()
-		CharacterController.instance:openCharacterSkinView(uv0._heroMO)
-	end)
+	arg_29_0:playCloseViewAnim(var_29_0)
 end
 
-function slot0._btnfavorOnClick(slot0)
-	if not slot0._heroMO.isFavor and CommonConfig.instance:getConstNum(ConstEnum.MaxFavorHeroCount) <= #HeroModel.instance:getAllFavorHeros() then
+function var_0_0._btnskinOnClick(arg_31_0)
+	arg_31_0:_closeLevelUpview()
+
+	if arg_31_0._uiSpine then
+		arg_31_0:_setModelVisible(false)
+	end
+
+	local function var_31_0()
+		CharacterController.instance:openCharacterSkinView(arg_31_0._heroMO)
+	end
+
+	arg_31_0:playCloseViewAnim(var_31_0)
+end
+
+function var_0_0._btnfavorOnClick(arg_33_0)
+	local var_33_0 = not arg_33_0._heroMO.isFavor
+
+	if var_33_0 and #HeroModel.instance:getAllFavorHeros() >= CommonConfig.instance:getConstNum(ConstEnum.MaxFavorHeroCount) then
 		GameFacade.showToast(ToastEnum.OverFavorMaxCount)
 
 		return
 	end
 
-	HeroRpc.instance:setMarkHeroFavorRequest(slot0._heroMO.heroId, slot1)
+	local var_33_1 = arg_33_0._heroMO.heroId
+
+	HeroRpc.instance:setMarkHeroFavorRequest(var_33_1, var_33_0)
 end
 
-function slot0._btnhelpOnClick(slot0)
-	slot0:_closeLevelUpview()
+function var_0_0._btnhelpOnClick(arg_34_0)
+	arg_34_0:_closeLevelUpview()
 	HelpController.instance:showHelp(HelpEnum.HelpId.Character)
 end
 
-function slot0._btnattributeOnClick(slot0)
-	CharacterController.instance:openCharacterTipView({
-		tag = "attribute",
-		heroMo = slot0._heroMO,
-		heroid = slot0._heroMO.heroId,
-		equips = slot0._heroMO.defaultEquipUid ~= "0" and {
-			slot0._heroMO.defaultEquipUid
-		} or nil,
-		trialEquipMo = slot0._heroMO.trialEquipMo
-	})
+function var_0_0._btnattributeOnClick(arg_35_0)
+	local var_35_0 = {}
+
+	var_35_0.tag = "attribute"
+	var_35_0.heroMo = arg_35_0._heroMO
+	var_35_0.heroid = arg_35_0._heroMO.heroId
+	var_35_0.equips = arg_35_0._heroMO.defaultEquipUid ~= "0" and {
+		arg_35_0._heroMO.defaultEquipUid
+	} or nil
+	var_35_0.trialEquipMo = arg_35_0._heroMO.trialEquipMo
+
+	CharacterController.instance:openCharacterTipView(var_35_0)
 end
 
-function slot0._btnlevelOnClick(slot0)
-	CharacterController.instance:openCharacterLevelUpView(slot0._heroMO, ViewName.CharacterView)
-	slot0._animatorattributetipsnode:Play("open", 0, 0)
-	gohelper.setActive(slot0._goattributenode, false)
+function var_0_0._btnlevelOnClick(arg_36_0)
+	CharacterController.instance:openCharacterLevelUpView(arg_36_0._heroMO, ViewName.CharacterView)
+	arg_36_0._animatorattributetipsnode:Play("open", 0, 0)
+	gohelper.setActive(arg_36_0._goattributenode, false)
 end
 
-function slot0._btnrankOnClick(slot0)
-	if not slot0._uiSpine then
+function var_0_0._btnrankOnClick(arg_37_0)
+	if not arg_37_0._uiSpine then
 		return
 	end
 
-	slot0:_setModelVisible(false)
-	slot0:playCloseViewAnim(function ()
-		CharacterController.instance:openCharacterRankUpView(uv0._heroMO)
-	end)
+	arg_37_0:_setModelVisible(false)
+
+	local function var_37_0()
+		CharacterController.instance:openCharacterRankUpView(arg_37_0._heroMO)
+	end
+
+	arg_37_0:playCloseViewAnim(var_37_0)
 end
 
-function slot0._btnpassiveskillOnClick(slot0)
-	CharacterController.instance:openCharacterTipView({
-		tag = "passiveskill",
-		heroid = slot0._heroMO.heroId,
-		anchorParams = {
-			Vector2.New(1, 0.5),
-			Vector2.New(1, 0.5)
-		},
-		tipPos = Vector2.New(-292, -51.1),
-		buffTipsX = -770,
-		heroMo = slot0._heroMO
-	})
+function var_0_0._btnpassiveskillOnClick(arg_39_0)
+	local var_39_0 = {}
+
+	var_39_0.tag = "passiveskill"
+	var_39_0.heroid = arg_39_0._heroMO.heroId
+	var_39_0.anchorParams = {
+		Vector2.New(1, 0.5),
+		Vector2.New(1, 0.5)
+	}
+	var_39_0.tipPos = Vector2.New(-292, -51.1)
+	var_39_0.buffTipsX = -770
+	var_39_0.heroMo = arg_39_0._heroMO
+
+	CharacterController.instance:openCharacterTipView(var_39_0)
 end
 
-function slot0._btnexskillOnClick(slot0)
-	if slot0._heroMO and slot0._heroMO:isNoShowExSkill() then
+function var_0_0._btnexskillOnClick(arg_40_0)
+	if arg_40_0._heroMO and arg_40_0._heroMO:isNoShowExSkill() then
 		GameFacade.showToast(ToastEnum.TrialHeroClickExSkill)
 
 		return
 	end
 
-	slot0:playCloseViewAnim(function ()
+	local function var_40_0()
 		CharacterController.instance:openCharacterExSkillView({
-			heroId = uv0._heroMO.heroId,
-			heroMo = uv0._heroMO,
-			fromHeroDetailView = uv0._fromHeroDetailView,
-			hideTrialTip = uv0._hideTrialTip
+			heroId = arg_40_0._heroMO.heroId,
+			heroMo = arg_40_0._heroMO,
+			fromHeroDetailView = arg_40_0._fromHeroDetailView,
+			hideTrialTip = arg_40_0._hideTrialTip
 		})
-	end)
+	end
+
+	arg_40_0:playCloseViewAnim(var_40_0)
 end
 
-function slot0._btntalentOnClick(slot0)
-	if slot0._heroMO:isOtherPlayerHero() and not slot0._heroMO:getOtherPlayerIsOpenTalent() then
+function var_0_0._btntalentOnClick(arg_42_0)
+	local var_42_0 = arg_42_0._heroMO:isOtherPlayerHero()
+
+	if var_42_0 and not arg_42_0._heroMO:getOtherPlayerIsOpenTalent() then
 		GameFacade.showToast(ToastEnum.TalentNotUnlock)
 
 		return
 	end
 
-	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Talent) or slot0._heroMO:isTrial() or slot1 then
-		if slot0._heroMO.rank < CharacterEnum.TalentRank then
-			if slot0._heroMO.config.heroType == CharacterEnum.HumanHeroType then
-				GameFacade.showToast(ToastEnum.CharacterType6, slot0._heroMO.config.name)
+	local var_42_1 = arg_42_0._heroMO:isTrial()
+
+	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Talent) or var_42_1 or var_42_0 then
+		if arg_42_0._heroMO.rank < CharacterEnum.TalentRank then
+			if arg_42_0._heroMO.config.heroType == CharacterEnum.HumanHeroType then
+				GameFacade.showToast(ToastEnum.CharacterType6, arg_42_0._heroMO.config.name)
 			else
-				GameFacade.showToast(ToastEnum.Character, slot0._heroMO.config.name)
+				GameFacade.showToast(ToastEnum.Character, arg_42_0._heroMO.config.name)
 			end
 
 			return
 		end
 
-		if not slot0:isOwnHero() then
+		local var_42_2 = arg_42_0:isOwnHero()
+
+		if not var_42_2 then
 			CharacterController.instance:openCharacterTalentTipView({
 				open_type = 0,
 				isTrial = true,
-				hero_id = slot0._heroMO.heroId,
-				hero_mo = slot0._heroMO,
-				isOwnHero = slot3
+				hero_id = arg_42_0._heroMO.heroId,
+				hero_mo = arg_42_0._heroMO,
+				isOwnHero = var_42_2
 			})
 
 			return
 		end
 
-		CharacterController.instance:setTalentHeroId(slot0._heroMO.heroId)
-		slot0:playCloseViewAnim(function ()
+		CharacterController.instance:setTalentHeroId(arg_42_0._heroMO.heroId)
+
+		local function var_42_3()
 			CharacterController.instance:openCharacterTalentView({
-				heroid = uv0._heroMO.heroId,
-				heroMo = uv0._heroMO
+				heroid = arg_42_0._heroMO.heroId,
+				heroMo = arg_42_0._heroMO
 			})
-		end)
+		end
+
+		arg_42_0:playCloseViewAnim(var_42_3)
 	else
 		GameFacade.showToast(OpenModel.instance:getFuncUnlockDesc(OpenEnum.UnlockFunc.Talent))
 	end
 end
 
-function slot0._switchDrawingOnClick(slot0)
-	if not slot0._enableSwitchDrawing or slot0._isDragingSpine then
+function var_0_0._switchDrawingOnClick(arg_44_0)
+	if not arg_44_0._enableSwitchDrawing or arg_44_0._isDragingSpine then
 		return
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
-	CharacterDataConfig.instance:setCharacterDrawingState(slot1.characterId, (CharacterDataConfig.instance:getCharacterDrawingState(SkinConfig.instance:getSkinCo(slot0._heroMO.skin).characterId) ~= CharacterEnum.DrawingState.Static or CharacterEnum.DrawingState.Dynamic) and CharacterEnum.DrawingState.Static)
-	slot0:_refreshDrawingState()
-end
 
-function slot0._initExternalParams(slot0)
-	slot0._hideHomeBtn = uv0._externalParam and slot1.hideHomeBtn
-	slot0._isOwnHero = slot1 and slot1.isOwnHero
-	slot0._fromHeroDetailView = slot1 and slot1.fromHeroDetailView
-	slot0._hideTrialTip = slot1 and slot1.hideTrialTip
+	local var_44_0 = SkinConfig.instance:getSkinCo(arg_44_0._heroMO.skin)
+	local var_44_1 = CharacterDataConfig.instance:getCharacterDrawingState(var_44_0.characterId)
 
-	slot0.viewContainer:setIsOwnHero(slot1)
-
-	uv0._externalParam = nil
-end
-
-function slot0.onOpen(slot0)
-	slot0:_initExternalParams()
-
-	slot0._heroMO = slot0.viewParam
-	slot0._playGreetingVoices = true
-	slot0._spineNeedHide = true
-
-	slot0:_refreshView()
-	NavigateMgr.instance:addEscape(ViewName.CharacterView, slot0._btncloseOnClick, slot0)
-	slot0:_checkGuide()
-end
-
-function slot0._refreshRedDot(slot0)
-	if not slot0:isOwnHero() then
-		gohelper.setActive(slot0._goexskillreddot, false)
-		gohelper.setActive(slot0._gorankreddot, false)
-		gohelper.setActive(slot0._godatareddot, false)
-		slot0:_showRedDot(false)
-
-		return
-	end
-
-	gohelper.setActive(slot0._goexskillreddot, CharacterModel.instance:isHeroCouldExskillUp(slot0._heroMO.heroId))
-	gohelper.setActive(slot0._gorankreddot, CharacterModel.instance:isHeroCouldRankUp(slot0._heroMO.heroId))
-	gohelper.setActive(slot0._godatareddot, CharacterModel.instance:hasCultureRewardGet(slot0._heroMO.heroId) or CharacterModel.instance:hasItemRewardGet(slot0._heroMO.heroId))
-	slot0:_refreshTalentRed()
-end
-
-function slot0._showRedDot(slot0, slot1, slot2)
-	if slot1 then
-		gohelper.setActive(slot0._gotalentreddot, true)
-		gohelper.setActive(slot0._talentRedType1, slot2 == 1)
-		gohelper.setActive(slot0._talentRedNew, slot2 == 2)
+	if var_44_1 == CharacterEnum.DrawingState.Static then
+		var_44_1 = CharacterEnum.DrawingState.Dynamic
 	else
-		gohelper.setActive(slot0._gotalentreddot, false)
-	end
-end
-
-function slot0._refreshTalentRed(slot0)
-	slot0:_showRedDot(true, slot0._heroMO.isShowTalentStyleRed and 2 or CharacterModel.instance:heroTalentRedPoint(slot0._heroMO.heroId) and 1 or 0)
-end
-
-function slot0._refreshView(slot0)
-	slot0:_unmarkNew()
-	slot0:_refreshBtn()
-	slot0:_refreshSkill()
-	slot0:_refreshDrawingState()
-	slot0:_refreshSpine()
-	slot0:_refreshInfo()
-	slot0:_refreshCareer()
-	slot0:_refreshAttribute()
-	slot0:_refreshLevel()
-	slot0:_refreshRank()
-	slot0:_refreshPassiveSkill()
-	slot0:_refreshExSkill()
-	slot0:_refreshTalent()
-	slot0:_refreshSignature()
-	slot0:_refreshRedDot()
-end
-
-function slot0.isOwnHero(slot0)
-	if slot0._isOwnHero ~= nil then
-		return slot0._isOwnHero
+		var_44_1 = CharacterEnum.DrawingState.Static
 	end
 
-	return slot0._heroMO and slot0._heroMO:isOwnHero()
+	CharacterDataConfig.instance:setCharacterDrawingState(var_44_0.characterId, var_44_1)
+	arg_44_0:_refreshDrawingState()
 end
 
-function slot0._refreshBtn(slot0)
-	slot1 = slot0:isOwnHero()
+function var_0_0._initExternalParams(arg_45_0)
+	local var_45_0 = var_0_0._externalParam
 
-	gohelper.setActive(slot0._btnhome.gameObject, not slot0._hideHomeBtn)
-	gohelper.setActive(slot0._btnhelp.gameObject, HelpModel.instance:isShowedHelp(HelpEnum.HelpId.Character) and slot1)
-	gohelper.setActive(slot0._btnskin.gameObject, CharacterEnum.SkinOpen and slot1)
-	gohelper.setActive(slot0._btnfavor.gameObject, slot1)
-	gohelper.setActive(slot0._btndata.gameObject, slot1)
-	gohelper.setActive(slot0._btnlevel.gameObject, slot1)
-	gohelper.setActive(slot0._btnrank.gameObject, slot1)
-	gohelper.setActive(slot0._golevelimage, slot1)
-	gohelper.setActive(slot0._golevelicon.gameObject, slot1)
-	gohelper.setActive(slot0._gorankicon, slot1)
-	gohelper.setActive(slot0._gorankimage, slot1)
-	gohelper.setActive(slot0._golevelimagetrial, not slot1)
-	gohelper.setActive(slot0._gorankimagetrial, not slot1)
+	arg_45_0._hideHomeBtn = var_45_0 and var_45_0.hideHomeBtn
+	arg_45_0._isOwnHero = var_45_0 and var_45_0.isOwnHero
+	arg_45_0._fromHeroDetailView = var_45_0 and var_45_0.fromHeroDetailView
+	arg_45_0._hideTrialTip = var_45_0 and var_45_0.hideTrialTip
 
-	if not slot1 and not slot0._hasMoveIcon then
-		recthelper.setAnchorX(slot0._gorankeyes.transform, recthelper.getAnchorX(slot0._gorankeyes.transform) + uv0.RankIconOffset)
-		recthelper.setAnchorX(slot0._goranklights.transform, recthelper.getAnchorX(slot0._goranklights.transform) + uv0.RankIconOffset)
+	arg_45_0.viewContainer:setIsOwnHero(var_45_0)
 
-		slot0._hasMoveIcon = true
-	end
-
-	UISpriteSetMgr.instance:setCommonSprite(slot0._imagefavor, slot0._heroMO.isFavor and "btn_favor_light" or "btn_favor_dark")
+	var_0_0._externalParam = nil
 end
 
-function slot0._refreshSkin(slot0)
-	slot0._spineNeedHide = true
+function var_0_0.onOpen(arg_46_0)
+	arg_46_0:_initExternalParams()
 
-	slot0:_refreshDrawingState()
-	slot0:_refreshSpine()
+	arg_46_0._heroMO = arg_46_0.viewParam
+	arg_46_0._playGreetingVoices = true
+	arg_46_0._spineNeedHide = true
+
+	arg_46_0:_refreshView()
+	NavigateMgr.instance:addEscape(ViewName.CharacterView, arg_46_0._btncloseOnClick, arg_46_0)
+	arg_46_0:_checkGuide()
 end
 
-function slot0._unmarkNew(slot0)
-	if slot0._heroMO and slot0._heroMO.isNew then
-		HeroRpc.instance:sendUnMarkIsNewRequest(slot0._heroMO.heroId)
-	end
-end
+function var_0_0._refreshRedDot(arg_47_0)
+	if not arg_47_0:isOwnHero() then
+		gohelper.setActive(arg_47_0._goexskillreddot, false)
+		gohelper.setActive(arg_47_0._gorankreddot, false)
+		gohelper.setActive(arg_47_0._godatareddot, false)
+		arg_47_0:_showRedDot(false)
 
-function slot0._onDragBegin(slot0, slot1, slot2)
-	slot0._startPos = slot2.position.x
-
-	slot0:playAnim(UIAnimationName.SwitchClose)
-
-	slot0._isDragingSpine = true
-
-	if slot0._uiSpine then
-		slot0._uiSpine:showDragEffect(false)
-	end
-end
-
-function slot0._onDrag(slot0, slot1, slot2)
-	if not slot0._isDragingSpine then
 		return
 	end
 
-	recthelper.setAnchorX(slot0._goherocontainer.transform, recthelper.getAnchorX(slot0._goherocontainer.transform) + slot2.delta.x * 1)
+	local var_47_0 = CharacterModel.instance:isHeroCouldExskillUp(arg_47_0._heroMO.heroId)
 
-	slot0._herocontainerCanvasGroup.alpha = 1 - Mathf.Abs(slot0._startPos - slot2.position.x) * 0.001
+	gohelper.setActive(arg_47_0._goexskillreddot, var_47_0)
+
+	local var_47_1 = CharacterModel.instance:isHeroCouldRankUp(arg_47_0._heroMO.heroId)
+
+	gohelper.setActive(arg_47_0._gorankreddot, var_47_1)
+
+	local var_47_2 = CharacterModel.instance:hasCultureRewardGet(arg_47_0._heroMO.heroId) or CharacterModel.instance:hasItemRewardGet(arg_47_0._heroMO.heroId)
+
+	gohelper.setActive(arg_47_0._godatareddot, var_47_2)
+	arg_47_0:_refreshTalentRed()
 end
 
-function slot0._onDragEnd(slot0, slot1, slot2)
-	if not slot0._isDragingSpine then
+function var_0_0._showRedDot(arg_48_0, arg_48_1, arg_48_2)
+	if arg_48_1 then
+		gohelper.setActive(arg_48_0._gotalentreddot, true)
+		gohelper.setActive(arg_48_0._talentRedType1, arg_48_2 == 1)
+		gohelper.setActive(arg_48_0._talentRedNew, arg_48_2 == 2)
+	else
+		gohelper.setActive(arg_48_0._gotalentreddot, false)
+	end
+end
+
+function var_0_0._refreshTalentRed(arg_49_0)
+	local var_49_0 = CharacterModel.instance:heroTalentRedPoint(arg_49_0._heroMO.heroId)
+	local var_49_1 = arg_49_0._heroMO.isShowTalentStyleRed and 2 or var_49_0 and 1 or 0
+
+	arg_49_0:_showRedDot(true, var_49_1)
+end
+
+function var_0_0._refreshView(arg_50_0)
+	arg_50_0:_unmarkNew()
+	arg_50_0:_refreshBtn()
+	arg_50_0:_refreshSkill()
+	arg_50_0:_refreshDrawingState()
+	arg_50_0:_refreshSpine()
+	arg_50_0:_refreshInfo()
+	arg_50_0:_refreshCareer()
+	arg_50_0:_refreshAttribute()
+	arg_50_0:_refreshLevel()
+	arg_50_0:_refreshRank()
+	arg_50_0:_refreshPassiveSkill()
+	arg_50_0:_refreshExSkill()
+	arg_50_0:_refreshTalent()
+	arg_50_0:_refreshSignature()
+	arg_50_0:_refreshRedDot()
+end
+
+function var_0_0.isOwnHero(arg_51_0)
+	if arg_51_0._isOwnHero ~= nil then
+		return arg_51_0._isOwnHero
+	end
+
+	return arg_51_0._heroMO and arg_51_0._heroMO:isOwnHero()
+end
+
+function var_0_0._refreshBtn(arg_52_0)
+	local var_52_0 = arg_52_0:isOwnHero()
+	local var_52_1 = HelpModel.instance:isShowedHelp(HelpEnum.HelpId.Character)
+
+	gohelper.setActive(arg_52_0._btnhome.gameObject, not arg_52_0._hideHomeBtn)
+	gohelper.setActive(arg_52_0._btnhelp.gameObject, var_52_1 and var_52_0)
+	gohelper.setActive(arg_52_0._btnskin.gameObject, CharacterEnum.SkinOpen and var_52_0)
+	gohelper.setActive(arg_52_0._btnfavor.gameObject, var_52_0)
+	gohelper.setActive(arg_52_0._btndata.gameObject, var_52_0)
+	gohelper.setActive(arg_52_0._btnlevel.gameObject, var_52_0)
+	gohelper.setActive(arg_52_0._btnrank.gameObject, var_52_0)
+	gohelper.setActive(arg_52_0._golevelimage, var_52_0)
+	gohelper.setActive(arg_52_0._golevelicon.gameObject, var_52_0)
+	gohelper.setActive(arg_52_0._gorankicon, var_52_0)
+	gohelper.setActive(arg_52_0._gorankimage, var_52_0)
+	gohelper.setActive(arg_52_0._golevelimagetrial, not var_52_0)
+	gohelper.setActive(arg_52_0._gorankimagetrial, not var_52_0)
+
+	if not var_52_0 and not arg_52_0._hasMoveIcon then
+		recthelper.setAnchorX(arg_52_0._gorankeyes.transform, recthelper.getAnchorX(arg_52_0._gorankeyes.transform) + var_0_0.RankIconOffset)
+		recthelper.setAnchorX(arg_52_0._goranklights.transform, recthelper.getAnchorX(arg_52_0._goranklights.transform) + var_0_0.RankIconOffset)
+
+		arg_52_0._hasMoveIcon = true
+	end
+
+	UISpriteSetMgr.instance:setCommonSprite(arg_52_0._imagefavor, arg_52_0._heroMO.isFavor and "btn_favor_light" or "btn_favor_dark")
+end
+
+function var_0_0._refreshSkin(arg_53_0)
+	arg_53_0._spineNeedHide = true
+
+	arg_53_0:_refreshDrawingState()
+	arg_53_0:_refreshSpine()
+end
+
+function var_0_0._unmarkNew(arg_54_0)
+	if arg_54_0._heroMO and arg_54_0._heroMO.isNew then
+		HeroRpc.instance:sendUnMarkIsNewRequest(arg_54_0._heroMO.heroId)
+	end
+end
+
+function var_0_0._onDragBegin(arg_55_0, arg_55_1, arg_55_2)
+	arg_55_0._startPos = arg_55_2.position.x
+
+	arg_55_0:playAnim(UIAnimationName.SwitchClose)
+
+	arg_55_0._isDragingSpine = true
+
+	if arg_55_0._uiSpine then
+		arg_55_0._uiSpine:showDragEffect(false)
+	end
+end
+
+function var_0_0._onDrag(arg_56_0, arg_56_1, arg_56_2)
+	if not arg_56_0._isDragingSpine then
 		return
 	end
 
-	if slot0._uiSpine then
-		slot0._uiSpine:showDragEffect(true)
+	local var_56_0 = arg_56_2.position.x
+	local var_56_1 = 1
+	local var_56_2 = recthelper.getAnchorX(arg_56_0._goherocontainer.transform) + arg_56_2.delta.x * var_56_1
+
+	recthelper.setAnchorX(arg_56_0._goherocontainer.transform, var_56_2)
+
+	local var_56_3 = 0.001
+
+	arg_56_0._herocontainerCanvasGroup.alpha = 1 - Mathf.Abs(arg_56_0._startPos - var_56_0) * var_56_3
+end
+
+function var_0_0._onDragEnd(arg_57_0, arg_57_1, arg_57_2)
+	if not arg_57_0._isDragingSpine then
+		return
 	end
 
-	slot4 = false
-	slot5 = false
+	if arg_57_0._uiSpine then
+		arg_57_0._uiSpine:showDragEffect(true)
+	end
 
-	if slot0._startPos < slot2.position.x and slot3 - slot0._startPos >= 300 then
-		if CharacterBackpackCardListModel.instance:getLastCharacterCard(slot0._heroMO.heroId) then
+	local var_57_0 = arg_57_2.position.x
+	local var_57_1 = false
+	local var_57_2 = false
+
+	if var_57_0 > arg_57_0._startPos and var_57_0 - arg_57_0._startPos >= 300 then
+		local var_57_3 = CharacterBackpackCardListModel.instance:getLastCharacterCard(arg_57_0._heroMO.heroId)
+
+		if var_57_3 then
 			AudioMgr.instance:trigger(AudioEnum.UI.play_ui_character_view_switch)
 
-			slot0._heroMO = slot6
-			slot0.viewContainer.viewParam = slot0._heroMO
-			slot0._playGreetingVoices = true
-			slot0._delayPlayVoiceTime = 0.3
-			slot5 = true
-			slot0._spineNeedHide = true
+			arg_57_0._heroMO = var_57_3
+			arg_57_0.viewContainer.viewParam = arg_57_0._heroMO
+			arg_57_0._playGreetingVoices = true
+			arg_57_0._delayPlayVoiceTime = 0.3
+			var_57_2 = true
+			arg_57_0._spineNeedHide = true
 
-			slot0:_refreshView()
-			CharacterController.instance:dispatchEvent(CharacterEvent.RefreshDefaultEquip, slot0._heroMO)
-			CharacterController.instance:dispatchEvent(CharacterEvent.OnSwitchSpine, slot0._heroMO)
+			arg_57_0:_refreshView()
+			CharacterController.instance:dispatchEvent(CharacterEvent.RefreshDefaultEquip, arg_57_0._heroMO)
+			CharacterController.instance:dispatchEvent(CharacterEvent.OnSwitchSpine, arg_57_0._heroMO)
 		end
-	elseif slot3 < slot0._startPos and slot0._startPos - slot3 >= 300 and CharacterBackpackCardListModel.instance:getNextCharacterCard(slot0._heroMO.heroId) then
-		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_character_view_switch)
+	elseif var_57_0 < arg_57_0._startPos and arg_57_0._startPos - var_57_0 >= 300 then
+		local var_57_4 = CharacterBackpackCardListModel.instance:getNextCharacterCard(arg_57_0._heroMO.heroId)
 
-		slot0._heroMO = slot6
-		slot0.viewContainer.viewParam = slot0._heroMO
-		slot0._playGreetingVoices = true
-		slot0._delayPlayVoiceTime = 0.3
-		slot5 = true
-		slot0._spineNeedHide = true
+		if var_57_4 then
+			AudioMgr.instance:trigger(AudioEnum.UI.play_ui_character_view_switch)
 
-		slot0:_refreshView()
-		CharacterController.instance:dispatchEvent(CharacterEvent.RefreshDefaultEquip, slot0._heroMO)
-		CharacterController.instance:dispatchEvent(CharacterEvent.OnSwitchSpine, slot0._heroMO)
+			arg_57_0._heroMO = var_57_4
+			arg_57_0.viewContainer.viewParam = arg_57_0._heroMO
+			arg_57_0._playGreetingVoices = true
+			arg_57_0._delayPlayVoiceTime = 0.3
+			var_57_2 = true
+			arg_57_0._spineNeedHide = true
 
-		slot4 = true
+			arg_57_0:_refreshView()
+			CharacterController.instance:dispatchEvent(CharacterEvent.RefreshDefaultEquip, arg_57_0._heroMO)
+			CharacterController.instance:dispatchEvent(CharacterEvent.OnSwitchSpine, arg_57_0._heroMO)
+
+			var_57_1 = true
+		end
 	end
 
-	slot0:_resetSpinePos(slot5, slot4)
+	arg_57_0:_resetSpinePos(var_57_2, var_57_1)
 
-	slot0._isDragingSpine = false
+	arg_57_0._isDragingSpine = false
 end
 
-function slot0._resetSpinePos(slot0, slot1, slot2)
-	slot6 = recthelper.getAnchorX(slot0._goherocontainer.transform)
+function var_0_0._resetSpinePos(arg_58_0, arg_58_1, arg_58_2)
+	local var_58_0 = recthelper.getAnchorX(arg_58_0._goherocontainer.transform)
+	local var_58_1 = -800
+	local var_58_2 = 800
+	local var_58_3 = var_58_0
 
-	if slot1 then
-		recthelper.setAnchorX(slot0._goherocontainer.transform, slot2 and -800 or 800)
+	if arg_58_1 then
+		local var_58_4 = arg_58_2 and var_58_1 or var_58_2
+
+		recthelper.setAnchorX(arg_58_0._goherocontainer.transform, var_58_4)
 	end
 
-	ZProj.UGUIHelper.RebuildLayout(slot0._goherocontainer.transform)
+	ZProj.UGUIHelper.RebuildLayout(arg_58_0._goherocontainer.transform)
 
-	slot9 = slot1 and 0.5 or 0.3
+	local var_58_5 = 0.3
+	local var_58_6 = 0.5
+	local var_58_7 = arg_58_1 and var_58_6 or var_58_5
 
-	if slot0._dragTweenId then
-		ZProj.TweenHelper.KillById(slot0._dragTweenId)
+	if arg_58_0._dragTweenId then
+		ZProj.TweenHelper.KillById(arg_58_0._dragTweenId)
 	end
 
-	slot0._dragTweenId = ZProj.TweenHelper.DOAnchorPosX(slot0._goherocontainer.transform, slot0._originSpineRootPosX, slot9, nil, slot0, nil, EaseType.OutQuart)
+	arg_58_0._dragTweenId = ZProj.TweenHelper.DOAnchorPosX(arg_58_0._goherocontainer.transform, arg_58_0._originSpineRootPosX, var_58_7, nil, arg_58_0, nil, EaseType.OutQuart)
 
-	slot0:playAnim(UIAnimationName.SwitchOpen)
-	slot0.viewContainer:getEquipView():playOpenAnim()
+	arg_58_0:playAnim(UIAnimationName.SwitchOpen)
+	arg_58_0.viewContainer:getEquipView():playOpenAnim()
 
-	slot0._herocontainerCanvasGroup.alpha = 1
+	arg_58_0._herocontainerCanvasGroup.alpha = 1
 end
 
-function slot0._refreshSignature(slot0)
-	slot0._simagesignature:UnLoadImage()
-	slot0._simagesignature:LoadImage(ResUrl.getSignature(slot0._heroMO.config.signature))
+function var_0_0._refreshSignature(arg_59_0)
+	local var_59_0 = arg_59_0._heroMO.config
+
+	arg_59_0._simagesignature:UnLoadImage()
+	arg_59_0._simagesignature:LoadImage(ResUrl.getSignature(var_59_0.signature))
 end
 
-function slot0._refreshSpine(slot0)
-	if slot0._uiSpine then
-		TaskDispatcher.cancelTask(slot0._playSpineVoice, slot0)
-		slot0._uiSpine:onDestroy()
-		slot0._uiSpine:stopVoice()
+function var_0_0._refreshSpine(arg_60_0)
+	if arg_60_0._uiSpine then
+		TaskDispatcher.cancelTask(arg_60_0._playSpineVoice, arg_60_0)
+		arg_60_0._uiSpine:onDestroy()
+		arg_60_0._uiSpine:stopVoice()
 
-		slot0._uiSpine = nil
+		arg_60_0._uiSpine = nil
 	end
 
-	slot0._uiSpine = GuiModelAgent.Create(slot0._gospine, true)
-	slot1 = SkinConfig.instance:getSkinCo(slot0._heroMO.skin)
+	arg_60_0._uiSpine = GuiModelAgent.Create(arg_60_0._gospine, true)
 
-	slot0._uiSpine:setResPath(slot1, slot0._onSpineLoaded, slot0)
+	local var_60_0 = SkinConfig.instance:getSkinCo(arg_60_0._heroMO.skin)
 
-	slot2 = SkinConfig.instance:getSkinOffset(slot1.characterViewOffset)
+	arg_60_0._uiSpine:setResPath(var_60_0, arg_60_0._onSpineLoaded, arg_60_0)
 
-	recthelper.setAnchor(slot0._gospine.transform, tonumber(slot2[1]), tonumber(slot2[2]))
-	transformhelper.setLocalScale(slot0._gospine.transform, tonumber(slot2[3]), tonumber(slot2[3]), tonumber(slot2[3]))
+	local var_60_1 = SkinConfig.instance:getSkinOffset(var_60_0.characterViewOffset)
 
-	slot3 = SkinConfig.instance:getSkinOffset(slot1.haloOffset)
-	slot6 = tonumber(slot3[3])
+	recthelper.setAnchor(arg_60_0._gospine.transform, tonumber(var_60_1[1]), tonumber(var_60_1[2]))
+	transformhelper.setLocalScale(arg_60_0._gospine.transform, tonumber(var_60_1[3]), tonumber(var_60_1[3]), tonumber(var_60_1[3]))
 
-	recthelper.setAnchor(slot0._simageplayerbg.transform, tonumber(slot3[1]), tonumber(slot3[2]))
-	transformhelper.setLocalScale(slot0._simageplayerbg.transform, slot6, slot6, slot6)
+	local var_60_2 = SkinConfig.instance:getSkinOffset(var_60_0.haloOffset)
+	local var_60_3 = tonumber(var_60_2[1])
+	local var_60_4 = tonumber(var_60_2[2])
+	local var_60_5 = tonumber(var_60_2[3])
+
+	recthelper.setAnchor(arg_60_0._simageplayerbg.transform, var_60_3, var_60_4)
+	transformhelper.setLocalScale(arg_60_0._simageplayerbg.transform, var_60_5, var_60_5, var_60_5)
 end
 
-function slot0._onSpineLoaded(slot0)
-	if slot0._uiSpine then
-		slot0._uiSpine:initSkinDragEffect(slot0._heroMO.skin)
+function var_0_0._onSpineLoaded(arg_61_0)
+	if arg_61_0._uiSpine then
+		arg_61_0._uiSpine:initSkinDragEffect(arg_61_0._heroMO.skin)
 	end
 
-	slot0._spineLoadedFinish = true
+	arg_61_0._spineLoadedFinish = true
 
-	if not slot0._isOpenFinish then
+	if not arg_61_0._isOpenFinish then
 		return
 	end
 
-	if not slot0._playGreetingVoices then
+	if not arg_61_0._playGreetingVoices then
 		return
 	end
 
-	if not slot0._uiSpine then
+	if not arg_61_0._uiSpine then
 		return
 	end
 
-	if not slot0._gospine.activeInHierarchy then
+	if not arg_61_0._gospine.activeInHierarchy then
 		return
 	end
 
-	slot0._playGreetingVoices = nil
-	slot2 = CharacterDataConfig.instance:getCharacterDrawingState(slot0._heroMO.heroId)
+	arg_61_0._playGreetingVoices = nil
+
+	local var_61_0 = arg_61_0._heroMO.heroId
+	local var_61_1 = CharacterDataConfig.instance:getCharacterDrawingState(var_61_0)
 
 	if ViewMgr.instance:isOpen(ViewName.CharacterRankUpView) then
 		return
 	end
 
-	if slot2 == CharacterEnum.DrawingState.Dynamic then
-		if slot0:isOwnHero() then
-			slot0._greetingVoices = HeroModel.instance:getVoiceConfig(slot1, CharacterEnum.VoiceType.Greeting)
+	if var_61_1 == CharacterEnum.DrawingState.Dynamic then
+		if arg_61_0:isOwnHero() then
+			arg_61_0._greetingVoices = HeroModel.instance:getVoiceConfig(var_61_0, CharacterEnum.VoiceType.Greeting)
 		else
-			slot0._greetingVoices = {}
+			arg_61_0._greetingVoices = {}
 
-			if CharacterDataConfig.instance:getCharacterVoicesCo(slot1) then
-				for slot7, slot8 in pairs(slot3) do
-					if slot8.type == CharacterEnum.VoiceType.Greeting and CharacterDataConfig.instance:checkVoiceSkin(slot8, slot0._heroMO.skin) then
-						table.insert(slot0._greetingVoices, slot8)
+			local var_61_2 = CharacterDataConfig.instance:getCharacterVoicesCo(var_61_0)
+
+			if var_61_2 then
+				for iter_61_0, iter_61_1 in pairs(var_61_2) do
+					if iter_61_1.type == CharacterEnum.VoiceType.Greeting and CharacterDataConfig.instance:checkVoiceSkin(iter_61_1, arg_61_0._heroMO.skin) then
+						table.insert(arg_61_0._greetingVoices, iter_61_1)
 					end
 				end
 			end
 		end
 
-		if slot0._greetingVoices and #slot0._greetingVoices > 0 then
-			TaskDispatcher.cancelTask(slot0._playSpineVoice, slot0)
-			TaskDispatcher.runDelay(slot0._playSpineVoice, slot0, slot0._delayPlayVoiceTime or 0)
+		if arg_61_0._greetingVoices and #arg_61_0._greetingVoices > 0 then
+			TaskDispatcher.cancelTask(arg_61_0._playSpineVoice, arg_61_0)
+			TaskDispatcher.runDelay(arg_61_0._playSpineVoice, arg_61_0, arg_61_0._delayPlayVoiceTime or 0)
 
-			slot0._delayPlayVoiceTime = 0
+			arg_61_0._delayPlayVoiceTime = 0
 		end
 	end
 end
 
-function slot0._playSpineVoice(slot0)
-	if not slot0._uiSpine then
+function var_0_0._playSpineVoice(arg_62_0)
+	if not arg_62_0._uiSpine then
 		return
 	end
 
-	slot0._uiSpine:playVoice(slot0._greetingVoices[1], nil, slot0._txtanacn, slot0._txtanaen, slot0._gocontentbg)
+	arg_62_0._uiSpine:playVoice(arg_62_0._greetingVoices[1], nil, arg_62_0._txtanacn, arg_62_0._txtanaen, arg_62_0._gocontentbg)
 end
 
-function slot0._refreshDrawingState(slot0)
-	slot1 = false
+function var_0_0._refreshDrawingState(arg_63_0)
+	local var_63_0 = false
+	local var_63_1 = SkinConfig.instance:getSkinCo(arg_63_0._heroMO.skin)
 
-	if SkinConfig.instance:getSkinCo(slot0._heroMO.skin).showDrawingSwitch == 1 then
-		slot0._enableSwitchDrawing = true
+	if var_63_1.showDrawingSwitch == 1 then
+		arg_63_0._enableSwitchDrawing = true
 
-		if CharacterDataConfig.instance:getCharacterDrawingState(slot2.characterId) == CharacterEnum.DrawingState.Static then
-			slot1 = true
+		if CharacterDataConfig.instance:getCharacterDrawingState(var_63_1.characterId) == CharacterEnum.DrawingState.Static then
+			var_63_0 = true
 		end
 	else
-		slot0._enableSwitchDrawing = false
+		arg_63_0._enableSwitchDrawing = false
 
-		CharacterDataConfig.instance:setCharacterDrawingState(slot2.characterId, CharacterEnum.DrawingState.Dynamic)
+		CharacterDataConfig.instance:setCharacterDrawingState(var_63_1.characterId, CharacterEnum.DrawingState.Dynamic)
 	end
 
-	if slot0._heroMO.isSettingSkinOffset then
-		slot1 = true
+	if arg_63_0._heroMO.isSettingSkinOffset then
+		var_63_0 = true
 	end
 
-	if slot0._spineNeedHide and slot1 then
-		gohelper.setActive(slot0._godynamiccontainer, false)
+	if arg_63_0._spineNeedHide and var_63_0 then
+		gohelper.setActive(arg_63_0._godynamiccontainer, false)
 	else
-		gohelper.setActive(slot0._godynamiccontainer, true)
+		gohelper.setActive(arg_63_0._godynamiccontainer, true)
 	end
 
-	slot0._spineNeedHide = false
-	slot3 = slot1 and 0.01 or 1
+	arg_63_0._spineNeedHide = false
 
-	transformhelper.setLocalScale(slot0._godynamiccontainer.transform, slot3, slot3, slot3)
+	local var_63_2 = var_63_0 and 0.01 or 1
 
-	if not slot1 then
-		slot0._uiSpine:hideModelEffect()
-		slot0._uiSpine:showModelEffect()
+	transformhelper.setLocalScale(arg_63_0._godynamiccontainer.transform, var_63_2, var_63_2, var_63_2)
+
+	if not var_63_0 then
+		arg_63_0._uiSpine:hideModelEffect()
+		arg_63_0._uiSpine:showModelEffect()
 	end
 
-	gohelper.setActive(slot0._gostaticcontainer, slot1)
+	gohelper.setActive(arg_63_0._gostaticcontainer, var_63_0)
 
-	if slot1 then
-		slot0._playGreetingVoices = nil
+	if var_63_0 then
+		arg_63_0._playGreetingVoices = nil
 
-		if slot0._uiSpine then
-			slot0._uiSpine:stopVoice()
+		if arg_63_0._uiSpine then
+			arg_63_0._uiSpine:stopVoice()
 		end
 
-		slot0._simagestatic:LoadImage(ResUrl.getHeadIconImg(slot2.drawing), slot0._loadedImage, slot0)
+		arg_63_0._simagestatic:LoadImage(ResUrl.getHeadIconImg(var_63_1.drawing), arg_63_0._loadedImage, arg_63_0)
 	else
-		slot0._simagestatic:UnLoadImage()
-		slot0:_setModelVisible(true)
+		arg_63_0._simagestatic:UnLoadImage()
+		arg_63_0:_setModelVisible(true)
 	end
 
-	gohelper.setActive(slot0._gopifu, slot0._enableSwitchDrawing)
+	gohelper.setActive(arg_63_0._gopifu, arg_63_0._enableSwitchDrawing)
 end
 
-function slot0._checkGuide(slot0)
-	slot0._showSwitchDrawingGuide = false
+function var_0_0._checkGuide(arg_64_0)
+	arg_64_0._showSwitchDrawingGuide = false
 
-	if not slot0._enableSwitchDrawing then
+	if not arg_64_0._enableSwitchDrawing then
 		return
 	end
 
-	if not slot0.viewContainer._isVisible then
+	if not arg_64_0.viewContainer._isVisible then
 		return
 	end
 
-	slot1 = false
+	local var_64_0 = false
+	local var_64_1 = HeroModel.instance:getList()
 
-	for slot6, slot7 in ipairs(HeroModel.instance:getList()) do
-		if slot7.rank > 1 and slot7.config.rare >= 3 then
-			slot1 = true
+	for iter_64_0, iter_64_1 in ipairs(var_64_1) do
+		if iter_64_1.rank > 1 and iter_64_1.config.rare >= 3 then
+			var_64_0 = true
 
 			break
 		end
 	end
 
-	if slot1 then
+	if var_64_0 then
 		CharacterController.instance:dispatchEvent(CharacterEvent.OnGuideSwitchDrawing)
 	end
 
-	slot0._showSwitchDrawingGuide = slot1
+	arg_64_0._showSwitchDrawingGuide = var_64_0
 end
 
-function slot0._loadedImage(slot0)
-	gohelper.onceAddComponent(slot0._simagestatic.gameObject, gohelper.Type_Image):SetNativeSize()
+function var_0_0._loadedImage(arg_65_0)
+	local var_65_0 = SkinConfig.instance:getSkinCo(arg_65_0._heroMO.skin)
 
-	if not string.nilorempty(SkinConfig.instance:getSkinCo(slot0._heroMO.skin).characterViewImgOffset) then
-		slot3 = string.splitToNumber(slot2, "#")
+	gohelper.onceAddComponent(arg_65_0._simagestatic.gameObject, gohelper.Type_Image):SetNativeSize()
 
-		recthelper.setAnchor(slot0._simagestatic.transform, tonumber(slot3[1]), tonumber(slot3[2]))
-		transformhelper.setLocalScale(slot0._simagestatic.transform, tonumber(slot3[3]), tonumber(slot3[3]), tonumber(slot3[3]))
+	local var_65_1 = var_65_0.characterViewImgOffset
+
+	if not string.nilorempty(var_65_1) then
+		local var_65_2 = string.splitToNumber(var_65_1, "#")
+
+		recthelper.setAnchor(arg_65_0._simagestatic.transform, tonumber(var_65_2[1]), tonumber(var_65_2[2]))
+		transformhelper.setLocalScale(arg_65_0._simagestatic.transform, tonumber(var_65_2[3]), tonumber(var_65_2[3]), tonumber(var_65_2[3]))
 	else
-		recthelper.setAnchor(slot0._simagestatic.transform, 0, 0)
-		transformhelper.setLocalScale(slot0._simagestatic.transform, 1, 1, 1)
+		recthelper.setAnchor(arg_65_0._simagestatic.transform, 0, 0)
+		transformhelper.setLocalScale(arg_65_0._simagestatic.transform, 1, 1, 1)
 	end
 end
 
-function slot0._refreshInfo(slot0)
-	for slot4 = 1, 6 do
-		gohelper.setActive(slot0._rareStars[slot4], slot4 <= CharacterEnum.Star[slot0._heroMO.config.rare])
+function var_0_0._refreshInfo(arg_66_0)
+	for iter_66_0 = 1, 6 do
+		gohelper.setActive(arg_66_0._rareStars[iter_66_0], iter_66_0 <= CharacterEnum.Star[arg_66_0._heroMO.config.rare])
 	end
 
-	UISpriteSetMgr.instance:setCharactergetSprite(slot0._imagecareericon, "charactercareer" .. tostring(slot0._heroMO.config.career))
-	UISpriteSetMgr.instance:setCommonSprite(slot0._imagedmgtype, "dmgtype" .. tostring(slot0._heroMO.config.dmgType))
+	UISpriteSetMgr.instance:setCharactergetSprite(arg_66_0._imagecareericon, "charactercareer" .. tostring(arg_66_0._heroMO.config.career))
+	UISpriteSetMgr.instance:setCommonSprite(arg_66_0._imagedmgtype, "dmgtype" .. tostring(arg_66_0._heroMO.config.dmgType))
 
-	slot1 = slot0:_getFaithPercent()
-	slot0._txttrust.text = slot1 * 100 .. "%"
+	local var_66_0 = arg_66_0:_getFaithPercent()
 
-	slot0._slidertrust:SetValue(slot1)
+	arg_66_0._txttrust.text = var_66_0 * 100 .. "%"
 
-	slot0._txtnamecn.text = slot0._heroMO:getHeroName()
-	slot0._txtnameen.text = slot0._heroMO.config.nameEng
-	slot0._txttalentcn.text = luaLang("talent_character_talentcn" .. CharacterEnum.TalentTxtByHeroType[slot0._heroMO.config.heroType])
-	slot0._txttalenten.text = luaLang("talent_character_talenten" .. CharacterEnum.TalentTxtByHeroType[slot0._heroMO.config.heroType])
+	arg_66_0._slidertrust:SetValue(var_66_0)
+
+	arg_66_0._txtnamecn.text = arg_66_0._heroMO:getHeroName()
+	arg_66_0._txtnameen.text = arg_66_0._heroMO.config.nameEng
+	arg_66_0._txttalentcn.text = luaLang("talent_character_talentcn" .. CharacterEnum.TalentTxtByHeroType[arg_66_0._heroMO.config.heroType])
+	arg_66_0._txttalenten.text = luaLang("talent_character_talenten" .. CharacterEnum.TalentTxtByHeroType[arg_66_0._heroMO.config.heroType])
 end
 
-function slot0._getFaithPercent(slot0)
-	slot1 = HeroConfig.instance:getFaithPercent(slot0._heroMO.faith)
-	slot0.nextFaith = slot1[2]
+function var_0_0._getFaithPercent(arg_67_0)
+	local var_67_0 = HeroConfig.instance:getFaithPercent(arg_67_0._heroMO.faith)
 
-	return slot1[1]
+	arg_67_0.nextFaith = var_67_0[2]
+
+	return var_67_0[1]
 end
 
-function slot0._refreshCareer(slot0)
-	slot2 = {}
+function var_0_0._refreshCareer(arg_68_0)
+	local var_68_0 = arg_68_0._heroMO.config.battleTag
+	local var_68_1 = {}
 
-	if not string.nilorempty(slot0._heroMO.config.battleTag) then
-		slot2 = string.split(slot1, "#")
+	if not string.nilorempty(var_68_0) then
+		var_68_1 = string.split(var_68_0, "#")
 	end
 
-	for slot6 = 1, 3 do
-		if slot6 <= #slot2 then
-			slot0._careerlabels[slot6].text = HeroConfig.instance:getBattleTagConfigCO(slot2[slot6]).tagName
+	for iter_68_0 = 1, 3 do
+		if iter_68_0 <= #var_68_1 then
+			arg_68_0._careerlabels[iter_68_0].text = HeroConfig.instance:getBattleTagConfigCO(var_68_1[iter_68_0]).tagName
 		else
-			slot0._careerlabels[slot6].text = ""
+			arg_68_0._careerlabels[iter_68_0].text = ""
 		end
 	end
 end
 
-function slot0._onAttributeChanged(slot0, slot1, slot2)
-	if not slot2 or slot2 == slot0._heroMO.heroId then
-		slot0:_refreshAttribute(slot1)
+function var_0_0._onAttributeChanged(arg_69_0, arg_69_1, arg_69_2)
+	if not arg_69_2 or arg_69_2 == arg_69_0._heroMO.heroId then
+		arg_69_0:_refreshAttribute(arg_69_1)
 	end
 end
 
-function slot0.onEquipChange(slot0)
-	if not slot0.viewParam:hasDefaultEquip() then
+function var_0_0.onEquipChange(arg_70_0)
+	if not arg_70_0.viewParam:hasDefaultEquip() then
 		return
 	end
 
-	slot0:_refreshAttribute()
+	arg_70_0:_refreshAttribute()
 end
 
-function slot0._refreshAttribute(slot0, slot1)
-	slot2 = slot0._heroMO
-	slot3 = slot2:getHeroBaseAttrDict(slot1)
-	slot4 = HeroConfig.instance:talentGainTab2IDTab(slot2:getTalentGain(slot1))
-	slot6 = slot2.destinyStoneMo:getAddAttrValues()
-	slot7 = {
-		[slot12] = 0
-	}
+function var_0_0._refreshAttribute(arg_71_0, arg_71_1)
+	local var_71_0 = arg_71_0._heroMO
+	local var_71_1 = var_71_0:getHeroBaseAttrDict(arg_71_1)
+	local var_71_2 = HeroConfig.instance:talentGainTab2IDTab(var_71_0:getTalentGain(arg_71_1))
+	local var_71_3 = var_71_0.destinyStoneMo
+	local var_71_4 = var_71_3:getAddAttrValues()
+	local var_71_5 = {}
 
-	for slot11, slot12 in ipairs(uv0.AttrIdList) do
-		-- Nothing
+	for iter_71_0, iter_71_1 in ipairs(var_0_0.AttrIdList) do
+		var_71_5[iter_71_1] = 0
 	end
 
-	if not slot0._heroMO:isOtherPlayerHero() and slot0._heroMO:hasDefaultEquip() then
-		slot10 = slot0._heroMO and slot0._heroMO:getTrialEquipMo() or EquipModel.instance:getEquip(slot0._heroMO.defaultEquipUid)
-		slot7[CharacterEnum.AttrId.Hp], slot7[CharacterEnum.AttrId.Attack], slot7[CharacterEnum.AttrId.Defense], slot7[CharacterEnum.AttrId.Mdefense] = EquipConfig.instance:getEquipAddBaseAttr(slot10)
+	local var_71_6 = arg_71_0._heroMO:isOtherPlayerHero()
+	local var_71_7 = arg_71_0._heroMO:hasDefaultEquip()
 
-		for slot19, slot20 in ipairs(uv0.AttrIdList) do
-			if EquipConfig.instance:getEquipBreakAddAttrValueDict(slot10.config, slot10.breakLv)[slot20] ~= 0 then
-				slot7[slot20] = slot7[slot20] + math.floor(slot21 / 100 * slot3[slot20])
+	if not var_71_6 and var_71_7 then
+		local var_71_8 = arg_71_0._heroMO and arg_71_0._heroMO:getTrialEquipMo()
+
+		var_71_8 = var_71_8 or EquipModel.instance:getEquip(arg_71_0._heroMO.defaultEquipUid)
+
+		local var_71_9, var_71_10, var_71_11, var_71_12 = EquipConfig.instance:getEquipAddBaseAttr(var_71_8)
+
+		var_71_5[CharacterEnum.AttrId.Attack] = var_71_10
+		var_71_5[CharacterEnum.AttrId.Hp] = var_71_9
+		var_71_5[CharacterEnum.AttrId.Defense] = var_71_11
+		var_71_5[CharacterEnum.AttrId.Mdefense] = var_71_12
+
+		local var_71_13 = EquipConfig.instance:getEquipBreakAddAttrValueDict(var_71_8.config, var_71_8.breakLv)
+
+		for iter_71_2, iter_71_3 in ipairs(var_0_0.AttrIdList) do
+			local var_71_14 = var_71_13[iter_71_3]
+
+			if var_71_14 ~= 0 then
+				var_71_5[iter_71_3] = var_71_5[iter_71_3] + math.floor(var_71_14 / 100 * var_71_1[iter_71_3])
 			end
 		end
 	end
 
-	for slot13, slot14 in ipairs(uv0.AttrIdList) do
-		slot17 = slot3[slot14] + slot7[slot14] + (slot4[slot14] and slot4[slot14].value and math.floor(slot4[slot14].value) or 0) + (slot5 and slot5:getAddValueByAttrId(slot6, slot14) or 0)
-		slot0._attributevalues[slot13].value.text = slot17
-		slot18 = HeroConfig.instance:getHeroAttributeCO(slot14)
-		slot0._attributevalues[slot13].name.text = slot18.name
+	for iter_71_4, iter_71_5 in ipairs(var_0_0.AttrIdList) do
+		local var_71_15 = var_71_2[iter_71_5] and var_71_2[iter_71_5].value and math.floor(var_71_2[iter_71_5].value) or 0
+		local var_71_16 = var_71_3 and var_71_3:getAddValueByAttrId(var_71_4, iter_71_5) or 0
+		local var_71_17 = var_71_1[iter_71_5] + var_71_5[iter_71_5] + var_71_15 + var_71_16
 
-		CharacterController.instance:SetAttriIcon(slot0._attributevalues[slot13].icon, slot14, uv0.AttrIconColor)
+		arg_71_0._attributevalues[iter_71_4].value.text = var_71_17
 
-		slot19 = slot0._levelUpAttributeValues[slot13]
-		slot19.value.text = slot17
-		slot19.name.text = slot18.name
+		local var_71_18 = HeroConfig.instance:getHeroAttributeCO(iter_71_5)
 
-		CharacterController.instance:SetAttriIcon(slot19.icon, slot14, uv0.AttrIconColor)
+		arg_71_0._attributevalues[iter_71_4].name.text = var_71_18.name
+
+		CharacterController.instance:SetAttriIcon(arg_71_0._attributevalues[iter_71_4].icon, iter_71_5, var_0_0.AttrIconColor)
+
+		local var_71_19 = arg_71_0._levelUpAttributeValues[iter_71_4]
+
+		var_71_19.value.text = var_71_17
+		var_71_19.name.text = var_71_18.name
+
+		CharacterController.instance:SetAttriIcon(var_71_19.icon, iter_71_5, var_0_0.AttrIconColor)
 	end
 end
 
-function slot0._refreshAttributeTips(slot0, slot1)
-	slot3 = slot0._heroMO.level
+function var_0_0._refreshAttributeTips(arg_72_0, arg_72_1)
+	local var_72_0 = arg_72_0._heroMO
+	local var_72_1 = var_72_0.level
 
-	if not slot1 or slot1 < slot3 then
-		for slot7, slot8 in ipairs(slot0._levelUpAttributeValues) do
-			slot8.newValue.text = 0
+	if not arg_72_1 or arg_72_1 < var_72_1 then
+		for iter_72_0, iter_72_1 in ipairs(arg_72_0._levelUpAttributeValues) do
+			iter_72_1.newValue.text = 0
 		end
 
 		return
 	end
 
-	slot4 = slot1 == slot3
-	slot5 = slot2:getHeroBaseAttrDict(slot1)
-	slot6 = HeroConfig.instance:talentGainTab2IDTab(slot2:getTalentGain(slot1))
-	slot8 = slot2.destinyStoneMo:getAddAttrValues()
-	slot9 = {
-		[slot14] = 0
-	}
+	local var_72_2 = arg_72_1 == var_72_1
+	local var_72_3 = var_72_0:getHeroBaseAttrDict(arg_72_1)
+	local var_72_4 = HeroConfig.instance:talentGainTab2IDTab(var_72_0:getTalentGain(arg_72_1))
+	local var_72_5 = var_72_0.destinyStoneMo
+	local var_72_6 = var_72_5:getAddAttrValues()
+	local var_72_7 = {}
 
-	for slot13, slot14 in ipairs(uv0.AttrIdList) do
-		-- Nothing
+	for iter_72_2, iter_72_3 in ipairs(var_0_0.AttrIdList) do
+		var_72_7[iter_72_3] = 0
 	end
 
-	if slot2:hasDefaultEquip() then
-		slot11 = EquipModel.instance:getEquip(slot2.defaultEquipUid)
-		slot9[CharacterEnum.AttrId.Hp], slot9[CharacterEnum.AttrId.Attack], slot9[CharacterEnum.AttrId.Defense], slot9[CharacterEnum.AttrId.Mdefense] = EquipConfig.instance:getEquipAddBaseAttr(slot11)
+	if var_72_0:hasDefaultEquip() then
+		local var_72_8 = EquipModel.instance:getEquip(var_72_0.defaultEquipUid)
+		local var_72_9, var_72_10, var_72_11, var_72_12 = EquipConfig.instance:getEquipAddBaseAttr(var_72_8)
 
-		for slot20, slot21 in ipairs(uv0.AttrIdList) do
-			if EquipConfig.instance:getEquipBreakAddAttrValueDict(slot11.config, slot11.breakLv)[slot21] ~= 0 then
-				slot9[slot21] = slot9[slot21] + math.floor(slot22 / 100 * slot5[slot21])
+		var_72_7[CharacterEnum.AttrId.Attack] = var_72_10
+		var_72_7[CharacterEnum.AttrId.Hp] = var_72_9
+		var_72_7[CharacterEnum.AttrId.Defense] = var_72_11
+		var_72_7[CharacterEnum.AttrId.Mdefense] = var_72_12
+
+		local var_72_13 = EquipConfig.instance:getEquipBreakAddAttrValueDict(var_72_8.config, var_72_8.breakLv)
+
+		for iter_72_4, iter_72_5 in ipairs(var_0_0.AttrIdList) do
+			local var_72_14 = var_72_13[iter_72_5]
+
+			if var_72_14 ~= 0 then
+				var_72_7[iter_72_5] = var_72_7[iter_72_5] + math.floor(var_72_14 / 100 * var_72_3[iter_72_5])
 			end
 		end
 	end
 
-	for slot14, slot15 in ipairs(uv0.AttrIdList) do
-		slot0._levelUpAttributeValues[slot14].newValue.text = slot5[slot15] + slot9[slot15] + (slot6[slot15] and slot6[slot15].value and math.floor(slot6[slot15].value) or 0) + (slot7 and slot7:getAddValueByAttrId(slot8, slot15) or 0)
-		slot21 = slot4 and "#C7C3C0" or "#65B96F"
-		slot20.color = GameUtil.parseColor(slot21)
-		slot19.newValueArrow.color = GameUtil.parseColor(slot21)
+	for iter_72_6, iter_72_7 in ipairs(var_0_0.AttrIdList) do
+		local var_72_15 = var_72_4[iter_72_7] and var_72_4[iter_72_7].value and math.floor(var_72_4[iter_72_7].value) or 0
+		local var_72_16 = var_72_5 and var_72_5:getAddValueByAttrId(var_72_6, iter_72_7) or 0
+		local var_72_17 = var_72_3[iter_72_7] + var_72_7[iter_72_7] + var_72_15 + var_72_16
+		local var_72_18 = arg_72_0._levelUpAttributeValues[iter_72_6]
+		local var_72_19 = var_72_18.newValue
+
+		var_72_19.text = var_72_17
+
+		local var_72_20 = var_72_2 and "#C7C3C0" or "#65B96F"
+
+		var_72_19.color = GameUtil.parseColor(var_72_20)
+		var_72_18.newValueArrow.color = GameUtil.parseColor(var_72_20)
 	end
 end
 
-function slot0._refreshLevel(slot0)
-	slot2 = HeroConfig.instance:getShowLevel(CharacterModel.instance:getrankEffects(slot0._heroMO.heroId, slot0._heroMO.rank)[1])
-	slot3 = HeroConfig.instance:getShowLevel(slot0._heroMO.level) .. "/"
+function var_0_0._refreshLevel(arg_73_0)
+	local var_73_0 = HeroConfig.instance:getShowLevel(arg_73_0._heroMO.level)
+	local var_73_1 = HeroConfig.instance:getShowLevel(CharacterModel.instance:getrankEffects(arg_73_0._heroMO.heroId, arg_73_0._heroMO.rank)[1])
+	local var_73_2 = var_73_0 .. "/"
 
-	if slot0._heroMO:getIsBalance() then
-		slot3 = string.format("<color=#81abe5>%s</color>/", slot1)
+	if arg_73_0._heroMO:getIsBalance() then
+		var_73_2 = string.format("<color=#81abe5>%s</color>/", var_73_0)
 	end
 
-	slot0._txtlevel.text = slot3
-	slot0._txtlevelmax.text = slot2
+	arg_73_0._txtlevel.text = var_73_2
+	arg_73_0._txtlevelmax.text = var_73_1
 end
 
-function slot0._refreshRank(slot0)
-	slot2 = slot0._heroMO.rank
+function var_0_0._refreshRank(arg_74_0)
+	local var_74_0 = arg_74_0._heroMO.config.rare
+	local var_74_1 = arg_74_0._heroMO.rank
+	local var_74_2 = HeroConfig.instance:getMaxRank(var_74_0)
 
-	for slot7 = 1, 3 do
-		gohelper.setActive(slot0._ranklights[slot7].go, HeroConfig.instance:getMaxRank(slot0._heroMO.config.rare) == slot7)
+	for iter_74_0 = 1, 3 do
+		gohelper.setActive(arg_74_0._ranklights[iter_74_0].go, var_74_2 == iter_74_0)
 
-		for slot11 = 1, slot7 do
-			if slot11 <= slot2 - 1 then
-				SLFramework.UGUI.GuiHelper.SetColor(slot0._ranklights[slot7].lights[slot11]:GetComponent("Image"), "#feb73b")
+		for iter_74_1 = 1, iter_74_0 do
+			if iter_74_1 <= var_74_1 - 1 then
+				SLFramework.UGUI.GuiHelper.SetColor(arg_74_0._ranklights[iter_74_0].lights[iter_74_1]:GetComponent("Image"), "#feb73b")
 			else
-				SLFramework.UGUI.GuiHelper.SetColor(slot0._ranklights[slot7].lights[slot11]:GetComponent("Image"), "#737373")
+				SLFramework.UGUI.GuiHelper.SetColor(arg_74_0._ranklights[iter_74_0].lights[iter_74_1]:GetComponent("Image"), "#737373")
 			end
 		end
 	end
 end
 
-function slot0._refreshSkill(slot0)
-	slot0._skillContainer:onUpdateMO(slot0._heroMO.heroId, nil, slot0._heroMO)
+function var_0_0._refreshSkill(arg_75_0)
+	arg_75_0._skillContainer:onUpdateMO(arg_75_0._heroMO.heroId, nil, arg_75_0._heroMO)
 end
 
-function slot0._refreshPassiveSkill(slot0)
-	if not lua_skill.configDict[slot0._heroMO:getpassiveskillsCO()[1].skillPassive] then
-		logError("找不到被动技能, skillId: " .. tostring(slot3))
+function var_0_0._refreshPassiveSkill(arg_76_0)
+	local var_76_0 = arg_76_0._heroMO:getpassiveskillsCO()
+	local var_76_1 = var_76_0[1].skillPassive
+	local var_76_2 = lua_skill.configDict[var_76_1]
+
+	if not var_76_2 then
+		logError("找不到被动技能, skillId: " .. tostring(var_76_1))
 
 		return
 	end
 
-	slot0._txtpassivename.text = slot4.name
+	arg_76_0._txtpassivename.text = var_76_2.name
 
-	for slot8 = 1, #slot1 do
-		slot9 = CharacterModel.instance:isPassiveUnlockByHeroMo(slot0._heroMO, slot8)
+	for iter_76_0 = 1, #var_76_0 do
+		local var_76_3 = CharacterModel.instance:isPassiveUnlockByHeroMo(arg_76_0._heroMO, iter_76_0)
 
-		gohelper.setActive(slot0._passiveskillitems[slot8].on, slot9)
-		gohelper.setActive(slot0._passiveskillitems[slot8].off, not slot9)
-		gohelper.setActive(slot0._passiveskillitems[slot8].go, true)
+		gohelper.setActive(arg_76_0._passiveskillitems[iter_76_0].on, var_76_3)
+		gohelper.setActive(arg_76_0._passiveskillitems[iter_76_0].off, not var_76_3)
+		gohelper.setActive(arg_76_0._passiveskillitems[iter_76_0].go, true)
 	end
 
-	for slot8 = #slot1 + 1, #slot0._passiveskillitems do
-		gohelper.setActive(slot0._passiveskillitems[slot8].go, false)
+	for iter_76_1 = #var_76_0 + 1, #arg_76_0._passiveskillitems do
+		gohelper.setActive(arg_76_0._passiveskillitems[iter_76_1].go, false)
 	end
 end
 
-function slot0._refreshExSkill(slot0)
-	for slot4 = 1, 5 do
-		if slot4 <= slot0._heroMO.exSkillLevel then
-			SLFramework.UGUI.GuiHelper.SetColor(slot0._exskills[slot4]:GetComponent("Image"), "#feb73b")
+function var_0_0._refreshExSkill(arg_77_0)
+	for iter_77_0 = 1, 5 do
+		if iter_77_0 <= arg_77_0._heroMO.exSkillLevel then
+			SLFramework.UGUI.GuiHelper.SetColor(arg_77_0._exskills[iter_77_0]:GetComponent("Image"), "#feb73b")
 		else
-			SLFramework.UGUI.GuiHelper.SetColor(slot0._exskills[slot4]:GetComponent("Image"), "#737373")
+			SLFramework.UGUI.GuiHelper.SetColor(arg_77_0._exskills[iter_77_0]:GetComponent("Image"), "#737373")
 		end
 	end
 end
 
-function slot0._refreshTalent(slot0)
-	slot3 = false
-	slot5 = nil
-	slot3 = (not slot0._heroMO:isOtherPlayerHero() or slot0._heroMO:getOtherPlayerIsOpenTalent()) and (OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Talent) or slot0._heroMO:isTrial())
+function var_0_0._refreshTalent(arg_78_0)
+	local var_78_0 = arg_78_0._heroMO:isOwnHero()
+	local var_78_1 = OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.Talent) or not var_78_0
+	local var_78_2 = false
+	local var_78_3 = arg_78_0._heroMO:isOtherPlayerHero()
+	local var_78_4
 
-	gohelper.setActive(slot0._gotalent, OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.Talent) or not slot0._heroMO:isOwnHero())
-	gohelper.setActive(slot0._gotalentlock, not slot3)
-	ZProj.UGUIHelper.SetGrayscale(slot0._gotalents, not slot3)
-	slot0:_showTalentStyleBtn()
-
-	slot0._txttalentvalue.text = HeroResonanceConfig.instance:getTalentConfig(slot0._heroMO.heroId, slot0._heroMO.talent + 1) and slot0._heroMO.talent or luaLang("character_max_overseas")
-end
-
-function slot0._showTalentStyleBtn(slot0)
-	slot2 = TalentStyleModel.instance:isUnlockStyleSystem(slot0._heroMO.talent)
-
-	if not slot0._heroMO:isOwnHero() and not slot2 and not slot2 then
-		slot0:_showTalentBtn()
-
-		return
-	end
-
-	slot4 = slot0._heroMO.talentCubeInfos:getMainCubeMo()
-
-	if slot0._heroMO:getHeroUseCubeStyleId() == 0 or not slot4 then
-		slot0:_showTalentBtn()
-
-		return
-	end
-
-	if HeroResonanceConfig.instance:getTalentStyle(slot4.id) and slot6[slot3] then
-		slot8, slot9 = slot7:getStyleTagIcon()
-		slot0._imageicon.color = GameUtil.parseColor(slot7._styleCo.color)
-
-		UISpriteSetMgr.instance:setCharacterTalentSprite(slot0._imageicon, slot9)
-		gohelper.setActive(slot0._gotalentstyle, true)
-		gohelper.setActive(slot0._gotalents, false)
+	if var_78_3 then
+		var_78_2 = arg_78_0._heroMO:getOtherPlayerIsOpenTalent()
 	else
-		slot0:_showTalentBtn()
+		var_78_2 = OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Talent) or arg_78_0._heroMO:isTrial()
+	end
+
+	gohelper.setActive(arg_78_0._gotalent, var_78_1)
+	gohelper.setActive(arg_78_0._gotalentlock, not var_78_2)
+	ZProj.UGUIHelper.SetGrayscale(arg_78_0._gotalents, not var_78_2)
+	arg_78_0:_showTalentStyleBtn()
+
+	arg_78_0._txttalentvalue.text = HeroResonanceConfig.instance:getTalentConfig(arg_78_0._heroMO.heroId, arg_78_0._heroMO.talent + 1) and arg_78_0._heroMO.talent or luaLang("character_max_overseas")
+end
+
+function var_0_0._showTalentStyleBtn(arg_79_0)
+	local var_79_0 = arg_79_0._heroMO:isOwnHero()
+	local var_79_1 = TalentStyleModel.instance:isUnlockStyleSystem(arg_79_0._heroMO.talent)
+
+	if not var_79_0 and not var_79_1 and not var_79_1 then
+		arg_79_0:_showTalentBtn()
+
+		return
+	end
+
+	local var_79_2 = arg_79_0._heroMO:getHeroUseCubeStyleId()
+	local var_79_3 = arg_79_0._heroMO.talentCubeInfos:getMainCubeMo()
+
+	if var_79_2 == 0 or not var_79_3 then
+		arg_79_0:_showTalentBtn()
+
+		return
+	end
+
+	local var_79_4 = var_79_3.id
+	local var_79_5 = HeroResonanceConfig.instance:getTalentStyle(var_79_4)
+	local var_79_6 = var_79_5 and var_79_5[var_79_2]
+
+	if var_79_6 then
+		local var_79_7, var_79_8 = var_79_6:getStyleTagIcon()
+		local var_79_9 = var_79_6._styleCo.color
+
+		arg_79_0._imageicon.color = GameUtil.parseColor(var_79_9)
+
+		UISpriteSetMgr.instance:setCharacterTalentSprite(arg_79_0._imageicon, var_79_8)
+		gohelper.setActive(arg_79_0._gotalentstyle, true)
+		gohelper.setActive(arg_79_0._gotalents, false)
+	else
+		arg_79_0:_showTalentBtn()
 	end
 end
 
-function slot0._showTalentBtn(slot0)
-	gohelper.setActive(slot0._gotalentstyle, false)
-	gohelper.setActive(slot0._gotalents, true)
+function var_0_0._showTalentBtn(arg_80_0)
+	gohelper.setActive(arg_80_0._gotalentstyle, false)
+	gohelper.setActive(arg_80_0._gotalents, true)
 end
 
-function slot0._onRefreshStyleIcon(slot0)
-	slot0:_showTalentStyleBtn()
+function var_0_0._onRefreshStyleIcon(arg_81_0)
+	arg_81_0:_showTalentStyleBtn()
 end
 
-function slot0.onClose(slot0)
-	if slot0._drag then
-		slot0._drag:RemoveDragBeginListener()
-		slot0._drag:RemoveDragEndListener()
-		slot0._drag:RemoveDragListener()
+function var_0_0.onClose(arg_82_0)
+	if arg_82_0._drag then
+		arg_82_0._drag:RemoveDragBeginListener()
+		arg_82_0._drag:RemoveDragEndListener()
+		arg_82_0._drag:RemoveDragListener()
 	end
 
-	if slot0._signatureDrag then
-		slot0._signatureDrag:RemoveDragBeginListener()
-		slot0._signatureDrag:RemoveDragEndListener()
-		slot0._signatureDrag:RemoveDragListener()
+	if arg_82_0._signatureDrag then
+		arg_82_0._signatureDrag:RemoveDragBeginListener()
+		arg_82_0._signatureDrag:RemoveDragEndListener()
+		arg_82_0._signatureDrag:RemoveDragListener()
 	end
 
-	slot0._trustclick:RemoveClickListener()
-	slot0._careerclick:RemoveClickListener()
-	slot0._signatureClick:RemoveClickListener()
+	arg_82_0._trustclick:RemoveClickListener()
+	arg_82_0._careerclick:RemoveClickListener()
+	arg_82_0._signatureClick:RemoveClickListener()
 
-	if slot0._uiSpine then
-		slot0._uiSpine:stopVoice()
+	if arg_82_0._uiSpine then
+		arg_82_0._uiSpine:stopVoice()
 	end
 
-	if slot0._dragTweenId then
-		ZProj.TweenHelper.KillById(slot0._dragTweenId)
+	if arg_82_0._dragTweenId then
+		ZProj.TweenHelper.KillById(arg_82_0._dragTweenId)
 
-		slot0._dragTweenId = nil
+		arg_82_0._dragTweenId = nil
 	end
 
-	TaskDispatcher.cancelTask(slot0._playSpineVoice, slot0)
-	TaskDispatcher.cancelTask(slot0._delaySetModelHide, slot0)
-	slot0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, slot0._onCloseViewFinish, slot0)
-	slot0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseFullView, slot0._onCloseFullView, slot0)
-	slot0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, slot0._onCloseView, slot0)
+	TaskDispatcher.cancelTask(arg_82_0._playSpineVoice, arg_82_0)
+	TaskDispatcher.cancelTask(arg_82_0._delaySetModelHide, arg_82_0)
+	arg_82_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_82_0._onCloseViewFinish, arg_82_0)
+	arg_82_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseFullView, arg_82_0._onCloseFullView, arg_82_0)
+	arg_82_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_82_0._onCloseView, arg_82_0)
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0._playGreetingVoices = true
+function var_0_0.onUpdateParam(arg_83_0)
+	arg_83_0._playGreetingVoices = true
 
-	slot0:clear()
-	slot0:_refreshView()
+	arg_83_0:clear()
+	arg_83_0:_refreshView()
 end
 
-function slot0.clear(slot0)
-	slot0._simagestatic:UnLoadImage()
-	slot0._simagesignature:UnLoadImage()
+function var_0_0.clear(arg_84_0)
+	arg_84_0._simagestatic:UnLoadImage()
+	arg_84_0._simagesignature:UnLoadImage()
 end
 
-function slot0.playCloseViewAnim(slot0, slot1)
-	if slot0._tempFunc then
-		TaskDispatcher.cancelTask(slot0._tempFunc, slot0)
+function var_0_0.playCloseViewAnim(arg_85_0, arg_85_1)
+	if arg_85_0._tempFunc then
+		TaskDispatcher.cancelTask(arg_85_0._tempFunc, arg_85_0)
 	end
 
-	slot0:playAnim(UIAnimationName.Close)
+	arg_85_0:playAnim(UIAnimationName.Close)
 
-	slot0._tempFunc = slot1
+	arg_85_0._tempFunc = arg_85_1
 
-	UIBlockMgr.instance:startBlock(slot0.viewName .. "ViewCloseAnim")
-	TaskDispatcher.runDelay(slot0._closeAnimFinish, slot0, 0.18)
+	UIBlockMgr.instance:startBlock(arg_85_0.viewName .. "ViewCloseAnim")
+	TaskDispatcher.runDelay(arg_85_0._closeAnimFinish, arg_85_0, 0.18)
 end
 
-function slot0._closeAnimFinish(slot0)
-	UIBlockMgr.instance:endBlock(slot0.viewName .. "ViewCloseAnim")
-	slot0:_tempFunc()
+function var_0_0._closeAnimFinish(arg_86_0)
+	UIBlockMgr.instance:endBlock(arg_86_0.viewName .. "ViewCloseAnim")
+	arg_86_0:_tempFunc()
 end
 
-function slot0.playAnim(slot0, slot1)
-	slot0._isAnim = true
+function var_0_0.playAnim(arg_87_0, arg_87_1)
+	arg_87_0._isAnim = true
 
-	slot0:setShaderKeyWord()
-	slot0._animator:Play(slot1, slot0.onAnimDone, slot0)
+	arg_87_0:setShaderKeyWord()
+	arg_87_0._animator:Play(arg_87_1, arg_87_0.onAnimDone, arg_87_0)
 end
 
-function slot0.onAnimDone(slot0)
-	slot0._isAnim = false
+function var_0_0.onAnimDone(arg_88_0)
+	arg_88_0._isAnim = false
 
-	slot0:setShaderKeyWord()
+	arg_88_0:setShaderKeyWord()
 end
 
-function slot0.setShaderKeyWord(slot0)
-	if slot0._isDragingSpine or slot0._isAnim then
+function var_0_0.setShaderKeyWord(arg_89_0)
+	if arg_89_0._isDragingSpine or arg_89_0._isAnim then
 		UnityEngine.Shader.EnableKeyword("_CLIPALPHA_ON")
 	else
 		UnityEngine.Shader.DisableKeyword("_CLIPALPHA_ON")
 	end
 end
 
-function slot0.onDestroyView(slot0)
-	if slot0._uiSpine then
-		slot0._uiSpine:onDestroy()
+function var_0_0.onDestroyView(arg_90_0)
+	if arg_90_0._uiSpine then
+		arg_90_0._uiSpine:onDestroy()
 
-		slot0._uiSpine = nil
+		arg_90_0._uiSpine = nil
 	end
 
-	slot0._simageplayerbg:UnLoadImage()
-	slot0._simagebg:UnLoadImage()
-	slot0:clear()
-	TaskDispatcher.cancelTask(slot0._closeAnimFinish, slot0)
-	TaskDispatcher.cancelTask(slot0._delaySetModelHide, slot0)
-	TaskDispatcher.cancelTask(slot0._playSpineVoice, slot0)
+	arg_90_0._simageplayerbg:UnLoadImage()
+	arg_90_0._simagebg:UnLoadImage()
+	arg_90_0:clear()
+	TaskDispatcher.cancelTask(arg_90_0._closeAnimFinish, arg_90_0)
+	TaskDispatcher.cancelTask(arg_90_0._delaySetModelHide, arg_90_0)
+	TaskDispatcher.cancelTask(arg_90_0._playSpineVoice, arg_90_0)
 	UnityEngine.Shader.DisableKeyword("_CLIPALPHA_ON")
 end
 
-return slot0
+return var_0_0

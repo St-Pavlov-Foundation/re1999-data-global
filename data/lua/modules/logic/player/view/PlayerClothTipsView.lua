@@ -1,8 +1,9 @@
-module("modules.logic.player.view.PlayerClothTipsView", package.seeall)
+﻿module("modules.logic.player.view.PlayerClothTipsView", package.seeall)
 
-slot0 = class("PlayerClothTipsView", BaseView)
+local var_0_0 = class("PlayerClothTipsView", BaseView)
 
-function slot0.onInitView(slot0)
+function var_0_0.onInitView(arg_1_0)
+	return
 end
 
-return slot0
+return var_0_0

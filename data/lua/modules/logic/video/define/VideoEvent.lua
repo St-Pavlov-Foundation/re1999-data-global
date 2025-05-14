@@ -1,7 +1,8 @@
-module("modules.logic.video.define.VideoEvent", package.seeall)
+﻿module("modules.logic.video.define.VideoEvent", package.seeall)
 
-slot0 = _M
-slot0.OnVideoPlayFinished = 1
-slot0.OnVideoPlayOverTime = 2
+local var_0_0 = _M
 
-return slot0
+var_0_0.OnVideoPlayFinished = 1
+var_0_0.OnVideoPlayOverTime = 2
+
+return var_0_0

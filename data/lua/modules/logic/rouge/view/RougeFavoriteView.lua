@@ -1,104 +1,114 @@
-module("modules.logic.rouge.view.RougeFavoriteView", package.seeall)
+﻿module("modules.logic.rouge.view.RougeFavoriteView", package.seeall)
 
-slot0 = class("RougeFavoriteView", BaseView)
+local var_0_0 = class("RougeFavoriteView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagefullbg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_fullbg")
-	slot0._simagemask = gohelper.findChildSingleImage(slot0.viewGO, "#simage_mask")
-	slot0._gorole4 = gohelper.findChild(slot0.viewGO, "#go_role4")
-	slot0._gorole3 = gohelper.findChild(slot0.viewGO, "#go_role3")
-	slot0._goluoleilai = gohelper.findChild(slot0.viewGO, "#go_luoleilai")
-	slot0._gorole2 = gohelper.findChild(slot0.viewGO, "#go_role2")
-	slot0._gorole1 = gohelper.findChild(slot0.viewGO, "#go_role1")
-	slot0._gohailuo = gohelper.findChild(slot0.viewGO, "#go_hailuo")
-	slot0._btnstory = gohelper.findChildButtonWithAudio(slot0.viewGO, "Left/#btn_story")
-	slot0._gonewstory = gohelper.findChild(slot0.viewGO, "Left/#btn_story/#go_new_story")
-	slot0._btnillustration = gohelper.findChildButtonWithAudio(slot0.viewGO, "Left/#btn_illustration")
-	slot0._gonewillustration = gohelper.findChild(slot0.viewGO, "Left/#btn_illustration/#go_new_illustration")
-	slot0._btnfaction = gohelper.findChildButtonWithAudio(slot0.viewGO, "Left/#btn_faction")
-	slot0._gonewfaction = gohelper.findChild(slot0.viewGO, "Left/#btn_faction/#go_new_faction")
-	slot0._btnresult = gohelper.findChildButtonWithAudio(slot0.viewGO, "Left/#btn_result")
-	slot0._btncollection = gohelper.findChildButtonWithAudio(slot0.viewGO, "Left/#btn_collection")
-	slot0._gonewcollection = gohelper.findChild(slot0.viewGO, "Left/#btn_collection/#go_new_collection")
-	slot0._golefttop = gohelper.findChild(slot0.viewGO, "#go_lefttop")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagefullbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_fullbg")
+	arg_1_0._simagemask = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_mask")
+	arg_1_0._gorole4 = gohelper.findChild(arg_1_0.viewGO, "#go_role4")
+	arg_1_0._gorole3 = gohelper.findChild(arg_1_0.viewGO, "#go_role3")
+	arg_1_0._goluoleilai = gohelper.findChild(arg_1_0.viewGO, "#go_luoleilai")
+	arg_1_0._gorole2 = gohelper.findChild(arg_1_0.viewGO, "#go_role2")
+	arg_1_0._gorole1 = gohelper.findChild(arg_1_0.viewGO, "#go_role1")
+	arg_1_0._gohailuo = gohelper.findChild(arg_1_0.viewGO, "#go_hailuo")
+	arg_1_0._btnstory = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/#btn_story")
+	arg_1_0._gonewstory = gohelper.findChild(arg_1_0.viewGO, "Left/#btn_story/#go_new_story")
+	arg_1_0._btnillustration = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/#btn_illustration")
+	arg_1_0._gonewillustration = gohelper.findChild(arg_1_0.viewGO, "Left/#btn_illustration/#go_new_illustration")
+	arg_1_0._btnfaction = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/#btn_faction")
+	arg_1_0._gonewfaction = gohelper.findChild(arg_1_0.viewGO, "Left/#btn_faction/#go_new_faction")
+	arg_1_0._btnresult = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/#btn_result")
+	arg_1_0._btncollection = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/#btn_collection")
+	arg_1_0._gonewcollection = gohelper.findChild(arg_1_0.viewGO, "Left/#btn_collection/#go_new_collection")
+	arg_1_0._golefttop = gohelper.findChild(arg_1_0.viewGO, "#go_lefttop")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnstory:AddClickListener(slot0._btnstoryOnClick, slot0)
-	slot0._btnillustration:AddClickListener(slot0._btnillustrationOnClick, slot0)
-	slot0._btnfaction:AddClickListener(slot0._btnfactionOnClick, slot0)
-	slot0._btnresult:AddClickListener(slot0._btnresultOnClick, slot0)
-	slot0._btncollection:AddClickListener(slot0._btncollectionOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnstory:AddClickListener(arg_2_0._btnstoryOnClick, arg_2_0)
+	arg_2_0._btnillustration:AddClickListener(arg_2_0._btnillustrationOnClick, arg_2_0)
+	arg_2_0._btnfaction:AddClickListener(arg_2_0._btnfactionOnClick, arg_2_0)
+	arg_2_0._btnresult:AddClickListener(arg_2_0._btnresultOnClick, arg_2_0)
+	arg_2_0._btncollection:AddClickListener(arg_2_0._btncollectionOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnstory:RemoveClickListener()
-	slot0._btnillustration:RemoveClickListener()
-	slot0._btnfaction:RemoveClickListener()
-	slot0._btnresult:RemoveClickListener()
-	slot0._btncollection:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnstory:RemoveClickListener()
+	arg_3_0._btnillustration:RemoveClickListener()
+	arg_3_0._btnfaction:RemoveClickListener()
+	arg_3_0._btnresult:RemoveClickListener()
+	arg_3_0._btncollection:RemoveClickListener()
 end
 
-function slot0._btnresultOnClick(slot0)
+function var_0_0._btnresultOnClick(arg_4_0)
 	RougeController.instance:openRougeResultReportView()
 end
 
-function slot0._btncollectionOnClick(slot0)
+function var_0_0._btncollectionOnClick(arg_5_0)
 	RougeController.instance:openRougeFavoriteCollectionView()
 end
 
-function slot0._btnfactionOnClick(slot0)
+function var_0_0._btnfactionOnClick(arg_6_0)
 	RougeController.instance:openRougeFactionIllustrationView()
 end
 
-function slot0._btnillustrationOnClick(slot0)
+function var_0_0._btnillustrationOnClick(arg_7_0)
 	RougeController.instance:openRougeIllustrationListView()
 end
 
-function slot0._btnstoryOnClick(slot0)
+function var_0_0._btnstoryOnClick(arg_8_0)
 	RougeController.instance:openRougeReviewView()
 end
 
-function slot0._editableInitView(slot0)
-	slot0:_updateNewFlag()
-	slot0:addEventCb(RougeController.instance, RougeEvent.OnUpdateFavoriteReddot, slot0._updateNewFlag, slot0)
+function var_0_0._editableInitView(arg_9_0)
+	arg_9_0:_updateNewFlag()
+	arg_9_0:addEventCb(RougeController.instance, RougeEvent.OnUpdateFavoriteReddot, arg_9_0._updateNewFlag, arg_9_0)
 end
 
-function slot0._updateNewFlag(slot0)
-	gohelper.setActive(slot0._gonewstory, RougeFavoriteModel.instance:getReddotNum(RougeEnum.FavoriteType.Story) > 0)
-	gohelper.setActive(slot0._gonewillustration, RougeFavoriteModel.instance:getReddotNum(RougeEnum.FavoriteType.Illustration) > 0)
-	gohelper.setActive(slot0._gonewfaction, RougeFavoriteModel.instance:getReddotNum(RougeEnum.FavoriteType.Faction) > 0)
-	gohelper.setActive(slot0._gonewcollection, RougeFavoriteModel.instance:getReddotNum(RougeEnum.FavoriteType.Collection) > 0)
+function var_0_0._updateNewFlag(arg_10_0)
+	gohelper.setActive(arg_10_0._gonewstory, RougeFavoriteModel.instance:getReddotNum(RougeEnum.FavoriteType.Story) > 0)
+	gohelper.setActive(arg_10_0._gonewillustration, RougeFavoriteModel.instance:getReddotNum(RougeEnum.FavoriteType.Illustration) > 0)
+	gohelper.setActive(arg_10_0._gonewfaction, RougeFavoriteModel.instance:getReddotNum(RougeEnum.FavoriteType.Faction) > 0)
+	gohelper.setActive(arg_10_0._gonewcollection, RougeFavoriteModel.instance:getReddotNum(RougeEnum.FavoriteType.Collection) > 0)
 end
 
-function slot0.showEnding(slot0)
-	gohelper.setActive(slot0._gohailuo, RougeOutsideModel.instance:getRougeGameRecord().passEndIdMap[string.splitToNumber(RougeConfig1.instance:getConstValueByID(RougeEnum.Const.FavoriteEndingShow), "#")[1]] ~= nil)
-	gohelper.setActive(slot0._goluoleilai, slot3.passEndIdMap[slot2[2]] ~= nil)
+function var_0_0.showEnding(arg_11_0)
+	local var_11_0 = RougeConfig1.instance:getConstValueByID(RougeEnum.Const.FavoriteEndingShow)
+	local var_11_1 = string.splitToNumber(var_11_0, "#")
+	local var_11_2 = RougeOutsideModel.instance:getRougeGameRecord()
+
+	gohelper.setActive(arg_11_0._gohailuo, var_11_2.passEndIdMap[var_11_1[1]] ~= nil)
+	gohelper.setActive(arg_11_0._goluoleilai, var_11_2.passEndIdMap[var_11_1[2]] ~= nil)
 end
 
-function slot0.randomRoleShow(slot0)
-	if slot0["_gorole" .. math.random(1, 5)] then
-		gohelper.setActive(slot2, true)
+function var_0_0.randomRoleShow(arg_12_0)
+	local var_12_0 = math.random(1, 5)
+	local var_12_1 = arg_12_0["_gorole" .. var_12_0]
+
+	if var_12_1 then
+		gohelper.setActive(var_12_1, true)
 	end
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_13_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0:randomRoleShow()
-	slot0:showEnding()
+function var_0_0.onOpen(arg_14_0)
+	arg_14_0:randomRoleShow()
+	arg_14_0:showEnding()
 	AudioMgr.instance:trigger(AudioEnum.UI.RougeFavoriteAudio1)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_15_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_16_0)
+	return
 end
 
-return slot0
+return var_0_0

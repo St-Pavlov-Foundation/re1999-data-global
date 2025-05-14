@@ -1,135 +1,152 @@
-module("modules.logic.room.model.map.RoomShowBlockPackageListModel", package.seeall)
+﻿module("modules.logic.room.model.map.RoomShowBlockPackageListModel", package.seeall)
 
-slot0 = class("RoomShowBlockPackageListModel", ListScrollModel)
+local var_0_0 = class("RoomShowBlockPackageListModel", ListScrollModel)
 
-function slot0.ctor(slot0)
-	uv0.super.ctor(slot0)
+function var_0_0.ctor(arg_1_0)
+	var_0_0.super.ctor(arg_1_0)
 
-	function slot0._selectSortFunc(slot0, slot1)
-		if uv0._selectBlockPackageId == slot0.id ~= (uv0._selectBlockPackageId == slot1.id) then
-			if slot2 then
+	function arg_1_0._selectSortFunc(arg_2_0, arg_2_1)
+		local var_2_0 = arg_1_0._selectBlockPackageId == arg_2_0.id
+		local var_2_1 = arg_1_0._selectBlockPackageId == arg_2_1.id
+
+		if var_2_0 ~= var_2_1 then
+			if var_2_0 then
 				return true
-			elseif slot3 then
+			elseif var_2_1 then
 				return false
 			end
 		end
 
-		if slot0.num < 1 ~= (slot1.num < 1) then
-			return slot5
+		local var_2_2 = arg_2_0.num < 1
+		local var_2_3 = arg_2_1.num < 1
+
+		if var_2_2 ~= var_2_3 then
+			return var_2_3
 		end
 
-		slot6 = nil
+		local var_2_4
 
-		if uv0._isSortRate then
-			if slot0.rare ~= slot1.rare then
-				if uv0._isSortOrder then
-					return slot0.rare < slot1.rare
+		if arg_1_0._isSortRate then
+			if arg_2_0.rare ~= arg_2_1.rare then
+				if arg_1_0._isSortOrder then
+					return arg_2_0.rare < arg_2_1.rare
 				else
-					return slot1.rare < slot0.rare
+					return arg_2_0.rare > arg_2_1.rare
 				end
 			end
 
-			if slot0.num ~= slot1.num then
-				return slot1.num < slot0.num
+			if arg_2_0.num ~= arg_2_1.num then
+				return arg_2_0.num > arg_2_1.num
 			end
 		else
-			if slot0.num ~= slot1.num then
-				if uv0._isSortOrder then
-					return slot0.num < slot1.num
+			if arg_2_0.num ~= arg_2_1.num then
+				if arg_1_0._isSortOrder then
+					return arg_2_0.num < arg_2_1.num
 				else
-					return slot1.num < slot0.num
+					return arg_2_0.num > arg_2_1.num
 				end
 			end
 
-			if slot0.rare ~= slot1.rare then
-				return slot1.rare < slot0.rare
+			if arg_2_0.rare ~= arg_2_1.rare then
+				return arg_2_0.rare > arg_2_1.rare
 			end
 		end
 
-		if slot0.id ~= slot1.id then
-			return slot0.id < slot1.id
+		if arg_2_0.id ~= arg_2_1.id then
+			return arg_2_0.id < arg_2_1.id
 		end
 	end
 end
 
-function slot0.getSortRate(slot0)
-	return slot0._isSortRate
+function var_0_0.getSortRate(arg_3_0)
+	return arg_3_0._isSortRate
 end
 
-function slot0.getSortOrder(slot0)
-	return slot0._isSortOrder
+function var_0_0.getSortOrder(arg_4_0)
+	return arg_4_0._isSortOrder
 end
 
-function slot0.setSortParam(slot0, slot1, slot2)
-	slot0._isSortOrder = slot2
-	slot0._isSortRate = slot1
+function var_0_0.setSortParam(arg_5_0, arg_5_1, arg_5_2)
+	arg_5_0._isSortOrder = arg_5_2
+	arg_5_0._isSortRate = arg_5_1
 
-	slot0:sort(slot0._selectSortFunc)
+	arg_5_0:sort(arg_5_0._selectSortFunc)
 end
 
-function slot0.setShowBlockList(slot0)
-	slot1 = {}
+function var_0_0.setShowBlockList(arg_6_0)
+	local var_6_0 = {}
+	local var_6_1 = RoomInventoryBlockModel.instance:getInventoryBlockPackageMOList()
 
-	for slot6 = 1, #RoomInventoryBlockModel.instance:getInventoryBlockPackageMOList() do
-		if RoomConfig.instance:getBlockPackageConfig(slot2[slot6].id) and slot0:_checkTheme(slot7.id) then
-			slot9 = RoomShowBlockPackageMO.New()
+	for iter_6_0 = 1, #var_6_1 do
+		local var_6_2 = var_6_1[iter_6_0]
+		local var_6_3 = RoomConfig.instance:getBlockPackageConfig(var_6_2.id)
 
-			slot9:init(slot7.id, slot7:getUnUseCount(), slot8.rare or 0)
-			table.insert(slot1, slot9)
+		if var_6_3 and arg_6_0:_checkTheme(var_6_2.id) then
+			local var_6_4 = RoomShowBlockPackageMO.New()
+
+			var_6_4:init(var_6_2.id, var_6_2:getUnUseCount(), var_6_3.rare or 0)
+			table.insert(var_6_0, var_6_4)
 		end
 	end
 
-	table.sort(slot1, slot0._selectSortFunc)
-	slot0:setList(slot1)
-	slot0:setSelect(nil)
+	table.sort(var_6_0, arg_6_0._selectSortFunc)
+	arg_6_0:setList(var_6_0)
+	arg_6_0:setSelect(nil)
 end
 
-function slot0._checkTheme(slot0, slot1)
-	if not RoomThemeFilterListModel.instance:getIsAll() and slot2:getSelectCount() > 0 and not slot2:isSelectById(RoomConfig.instance:getThemeIdByItem(slot1, MaterialEnum.MaterialType.BlockPackage)) then
-		return false
+function var_0_0._checkTheme(arg_7_0, arg_7_1)
+	local var_7_0 = RoomThemeFilterListModel.instance
+
+	if not var_7_0:getIsAll() and var_7_0:getSelectCount() > 0 then
+		local var_7_1 = RoomConfig.instance:getThemeIdByItem(arg_7_1, MaterialEnum.MaterialType.BlockPackage)
+
+		if not var_7_0:isSelectById(var_7_1) then
+			return false
+		end
 	end
 
 	return true
 end
 
-function slot0.clearSelect(slot0)
-	for slot4, slot5 in ipairs(slot0._scrollViews) do
-		slot5:setSelect(nil)
+function var_0_0.clearSelect(arg_8_0)
+	for iter_8_0, iter_8_1 in ipairs(arg_8_0._scrollViews) do
+		iter_8_1:setSelect(nil)
 	end
 
-	slot0._selectBlockPackageId = nil
+	arg_8_0._selectBlockPackageId = nil
 end
 
-function slot0._refreshSelect(slot0)
-	slot1 = nil
+function var_0_0._refreshSelect(arg_9_0)
+	local var_9_0
+	local var_9_1 = arg_9_0:getList()
 
-	for slot6, slot7 in ipairs(slot0:getList()) do
-		if slot7.id == slot0._selectBlockPackageId then
-			slot1 = slot7
+	for iter_9_0, iter_9_1 in ipairs(var_9_1) do
+		if iter_9_1.id == arg_9_0._selectBlockPackageId then
+			var_9_0 = iter_9_1
 
 			break
 		end
 	end
 
-	for slot6, slot7 in ipairs(slot0._scrollViews) do
-		slot7:setSelect(slot1)
+	for iter_9_2, iter_9_3 in ipairs(arg_9_0._scrollViews) do
+		iter_9_3:setSelect(var_9_0)
 	end
 end
 
-function slot0.setSelect(slot0, slot1)
-	slot0._selectBlockPackageId = slot1
+function var_0_0.setSelect(arg_10_0, arg_10_1)
+	arg_10_0._selectBlockPackageId = arg_10_1
 
-	slot0:_refreshSelect()
+	arg_10_0:_refreshSelect()
 end
 
-function slot0.initShow(slot0, slot1)
-	slot0._isSortRate = true
-	slot0._isSortOrder = true
-	slot0._selectBlockPackageId = slot1
+function var_0_0.initShow(arg_11_0, arg_11_1)
+	arg_11_0._isSortRate = true
+	arg_11_0._isSortOrder = true
+	arg_11_0._selectBlockPackageId = arg_11_1
 
-	slot0:setShowBlockList()
+	arg_11_0:setShowBlockList()
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

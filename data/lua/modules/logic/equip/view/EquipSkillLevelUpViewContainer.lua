@@ -1,11 +1,11 @@
-module("modules.logic.equip.view.EquipSkillLevelUpViewContainer", package.seeall)
+﻿module("modules.logic.equip.view.EquipSkillLevelUpViewContainer", package.seeall)
 
-slot0 = class("EquipSkillLevelUpViewContainer", BaseViewContainer)
+local var_0_0 = class("EquipSkillLevelUpViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		EquipSkillLevelUpView.New()
 	}
 end
 
-return slot0
+return var_0_0

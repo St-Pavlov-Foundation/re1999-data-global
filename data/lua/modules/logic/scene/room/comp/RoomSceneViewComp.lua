@@ -1,65 +1,64 @@
-module("modules.logic.scene.room.comp.RoomSceneViewComp", package.seeall)
+﻿module("modules.logic.scene.room.comp.RoomSceneViewComp", package.seeall)
 
-slot0 = class("RoomSceneViewComp", BaseSceneComp)
-slot0.OnOpenView = 1
+local var_0_0 = class("RoomSceneViewComp", BaseSceneComp)
 
-function slot0.onInit(slot0)
+var_0_0.OnOpenView = 1
+
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.init(slot0, slot1, slot2)
-	slot0._scene = slot0:getCurScene()
-	slot6 = slot0._onOpenView
-	slot7 = slot0
+function var_0_0.init(arg_2_0, arg_2_1, arg_2_2)
+	arg_2_0._scene = arg_2_0:getCurScene()
 
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, slot6, slot7)
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, arg_2_0._onOpenView, arg_2_0)
 
-	slot0._views = {
+	arg_2_0._views = {
 		[ViewName.RoomView] = false
 	}
 
-	for slot6, slot7 in pairs(slot0._views) do
-		ViewMgr.instance:openView(slot6, true)
+	for iter_2_0, iter_2_1 in pairs(arg_2_0._views) do
+		ViewMgr.instance:openView(iter_2_0, true)
 	end
 end
 
-function slot0._onOpenView(slot0, slot1)
-	if slot0._views[slot1] ~= nil then
-		slot0._views[slot1] = true
+function var_0_0._onOpenView(arg_3_0, arg_3_1)
+	if arg_3_0._views[arg_3_1] ~= nil then
+		arg_3_0._views[arg_3_1] = true
 
-		slot0:_check()
+		arg_3_0:_check()
 	end
 end
 
-function slot0._check(slot0)
-	for slot4, slot5 in pairs(slot0._views) do
-		if slot5 == false then
+function var_0_0._check(arg_4_0)
+	for iter_4_0, iter_4_1 in pairs(arg_4_0._views) do
+		if iter_4_1 == false then
 			return
 		end
 	end
 
-	for slot5, slot6 in ipairs(RoomController.instance:getOpenViews()) do
-		if slot6.viewName == ViewName.RoomInitBuildingView then
-			RoomMapController.instance:openRoomInitBuildingView(0, slot6.param)
+	local var_4_0 = RoomController.instance:getOpenViews()
+
+	for iter_4_2, iter_4_3 in ipairs(var_4_0) do
+		if iter_4_3.viewName == ViewName.RoomInitBuildingView then
+			RoomMapController.instance:openRoomInitBuildingView(0, iter_4_3.param)
 		else
-			ViewMgr.instance:openView(slot6.viewName, slot6.param)
+			ViewMgr.instance:openView(iter_4_3.viewName, iter_4_3.param)
 		end
 	end
 
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenView, slot0._onOpenView, slot0)
-	slot0:dispatchEvent(uv0.OnOpenView)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenView, arg_4_0._onOpenView, arg_4_0)
+	arg_4_0:dispatchEvent(var_0_0.OnOpenView)
 end
 
-function slot0.onSceneClose(slot0)
-	slot4 = slot0._onOpenView
-	slot5 = slot0
+function var_0_0.onSceneClose(arg_5_0)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenView, arg_5_0._onOpenView, arg_5_0)
 
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenView, slot4, slot5)
-
-	for slot4, slot5 in pairs(slot0._views) do
-		ViewMgr.instance:closeView(slot4, true)
+	for iter_5_0, iter_5_1 in pairs(arg_5_0._views) do
+		ViewMgr.instance:closeView(iter_5_0, true)
 	end
 
 	ViewMgr.instance:closeAllPopupViews()
 end
 
-return slot0
+return var_0_0

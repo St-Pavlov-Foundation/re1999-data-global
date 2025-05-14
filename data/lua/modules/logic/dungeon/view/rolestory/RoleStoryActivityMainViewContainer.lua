@@ -1,103 +1,108 @@
-module("modules.logic.dungeon.view.rolestory.RoleStoryActivityMainViewContainer", package.seeall)
+﻿module("modules.logic.dungeon.view.rolestory.RoleStoryActivityMainViewContainer", package.seeall)
 
-slot0 = class("RoleStoryActivityMainViewContainer", BaseViewContainer)
+local var_0_0 = class("RoleStoryActivityMainViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
-	slot0.actView = RoleStoryActivityView.New()
-	slot0.challengeView = RoleStoryActivityChallengeView.New()
-	slot0.mainView = RoleStoryActivityMainView.New()
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, RoleStoryActivityBgView.New())
-	table.insert(slot1, RoleStoryItemRewardView.New())
-	table.insert(slot1, slot0.mainView)
-	table.insert(slot1, slot0.actView)
-	table.insert(slot1, slot0.challengeView)
-	table.insert(slot1, TabViewGroup.New(1, "#go_topleft"))
-	table.insert(slot1, TabViewGroup.New(2, "#go_topright"))
+	arg_1_0.actView = RoleStoryActivityView.New()
+	arg_1_0.challengeView = RoleStoryActivityChallengeView.New()
+	arg_1_0.mainView = RoleStoryActivityMainView.New()
 
-	return slot1
+	table.insert(var_1_0, RoleStoryActivityBgView.New())
+	table.insert(var_1_0, RoleStoryItemRewardView.New())
+	table.insert(var_1_0, arg_1_0.mainView)
+	table.insert(var_1_0, arg_1_0.actView)
+	table.insert(var_1_0, arg_1_0.challengeView)
+	table.insert(var_1_0, TabViewGroup.New(1, "#go_topleft"))
+	table.insert(var_1_0, TabViewGroup.New(2, "#go_topright"))
+
+	return var_1_0
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
-		slot0._navigateButtonsView = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == 1 then
+		arg_2_0._navigateButtonsView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
-		slot0._navigateButtonsView:setOverrideClose(slot0.overrideClose, slot0)
+		arg_2_0._navigateButtonsView:setOverrideClose(arg_2_0.overrideClose, arg_2_0)
 
 		return {
-			slot0._navigateButtonsView
+			arg_2_0._navigateButtonsView
 		}
 	end
 
-	slot0.currencyView = CurrencyView.New({
+	local var_2_0 = {
 		{
 			isIcon = true,
 			type = MaterialEnum.MaterialType.Item,
 			id = CommonConfig.instance:getConstNum(ConstEnum.RoleStoryActivityItemId)
 		}
-	})
-	slot0.currencyView.foreHideBtn = true
+	}
+
+	arg_2_0.currencyView = CurrencyView.New(var_2_0)
+	arg_2_0.currencyView.foreHideBtn = true
 
 	return {
-		slot0.currencyView
+		arg_2_0.currencyView
 	}
 end
 
-function slot0.refreshCurrency(slot0, slot1)
-	slot0.currencyView:setCurrencyType(slot1)
+function var_0_0.refreshCurrency(arg_3_0, arg_3_1)
+	arg_3_0.currencyView:setCurrencyType(arg_3_1)
 end
 
-function slot0.overrideClose(slot0)
-	if not slot0.mainView._showActView then
+function var_0_0.overrideClose(arg_4_0)
+	if not arg_4_0.mainView._showActView then
 		RoleStoryController.instance:dispatchEvent(RoleStoryEvent.ChangeMainViewShow, true)
 
 		return
 	end
 
-	ViewMgr.instance:closeView(slot0.viewName, nil, true)
+	ViewMgr.instance:closeView(arg_4_0.viewName, nil, true)
 end
 
-function slot0.onContainerClose(slot0)
-	if slot0:isManualClose() and not ViewMgr.instance:isOpen(ViewName.MainView) then
+function var_0_0.onContainerClose(arg_5_0)
+	if arg_5_0:isManualClose() and not ViewMgr.instance:isOpen(ViewName.MainView) then
 		ViewMgr.instance:openView(ViewName.MainView)
 	end
 end
 
-function slot0.playAnim(slot0, slot1, slot2, slot3)
-	if not gohelper.isNil(slot0:__getAnimatorPlayer()) then
-		slot4:Play(slot1, slot2, slot3)
+function var_0_0.playAnim(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
+	local var_6_0 = arg_6_0:__getAnimatorPlayer()
+
+	if not gohelper.isNil(var_6_0) then
+		var_6_0:Play(arg_6_1, arg_6_2, arg_6_3)
 	end
 end
 
-function slot0.playOpenTransition(slot0)
-	if slot0.mainView._showActView then
-		-- Nothing
+function var_0_0.playOpenTransition(arg_7_0)
+	local var_7_0 = {}
+
+	if arg_7_0.mainView._showActView then
+		var_7_0.anim = "open"
+		var_7_0.duration = 0.67
 	else
-		slot1.anim = "challenge"
-		slot1.duration = 0.6
+		var_7_0.anim = "challenge"
+		var_7_0.duration = 0.6
 	end
 
-	uv0.super.playOpenTransition(slot0, {
-		anim = "open",
-		duration = 0.67
-	})
+	var_0_0.super.playOpenTransition(arg_7_0, var_7_0)
 end
 
-function slot0._setVisible(slot0, slot1)
-	uv0.super._setVisible(slot0, slot1)
+function var_0_0._setVisible(arg_8_0, arg_8_1)
+	var_0_0.super._setVisible(arg_8_0, arg_8_1)
 
-	if slot0.mainView then
-		slot0.mainView:onSetVisible()
+	if arg_8_0.mainView then
+		arg_8_0.mainView:onSetVisible()
 	end
 end
 
-function slot0.getVisible(slot0)
-	return slot0._isVisible
+function var_0_0.getVisible(arg_9_0)
+	return arg_9_0._isVisible
 end
 
-return slot0
+return var_0_0

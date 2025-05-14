@@ -1,29 +1,37 @@
-module("modules.logic.versionactivity1_3.va3chess.game.step.Va3ChessStepBrazierTrigger", package.seeall)
+﻿module("modules.logic.versionactivity1_3.va3chess.game.step.Va3ChessStepBrazierTrigger", package.seeall)
 
-slot0 = class("Va3ChessStepBrazierTrigger", Va3ChessStepBase)
+local var_0_0 = class("Va3ChessStepBrazierTrigger", Va3ChessStepBase)
 
-function slot0.start(slot0)
-	if Va3ChessGameController.instance.interacts and slot2:get(slot0.originData.brazierId) then
-		if slot3.originData then
-			slot3.originData:setBrazierIsLight(true)
+function var_0_0.start(arg_1_0)
+	local var_1_0 = arg_1_0.originData.brazierId
+	local var_1_1 = Va3ChessGameController.instance.interacts
+	local var_1_2 = var_1_1 and var_1_1:get(var_1_0)
+
+	if var_1_2 then
+		if var_1_2.originData then
+			var_1_2.originData:setBrazierIsLight(true)
 		end
 
-		if slot3:getHandler() and slot4.refreshBrazier then
-			slot4:refreshBrazier()
+		local var_1_3 = var_1_2:getHandler()
+
+		if var_1_3 and var_1_3.refreshBrazier then
+			var_1_3:refreshBrazier()
 			AudioMgr.instance:trigger(AudioEnum.chess_activity142.LightBrazier)
 		end
 	end
 
-	Va3ChessGameModel.instance:setFireBallCount(slot0.originData.fireballNum, true)
-	slot0:finish()
+	local var_1_4 = arg_1_0.originData.fireballNum
+
+	Va3ChessGameModel.instance:setFireBallCount(var_1_4, true)
+	arg_1_0:finish()
 end
 
-function slot0.finish(slot0)
-	uv0.super.finish(slot0)
+function var_0_0.finish(arg_2_0)
+	var_0_0.super.finish(arg_2_0)
 end
 
-function slot0.dispose(slot0)
-	uv0.super.dispose(slot0)
+function var_0_0.dispose(arg_3_0)
+	var_0_0.super.dispose(arg_3_0)
 end
 
-return slot0
+return var_0_0

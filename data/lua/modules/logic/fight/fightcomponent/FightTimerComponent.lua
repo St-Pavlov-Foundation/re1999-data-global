@@ -1,53 +1,53 @@
-module("modules.logic.fight.fightcomponent.FightTimerComponent", package.seeall)
+﻿module("modules.logic.fight.fightcomponent.FightTimerComponent", package.seeall)
 
-slot0 = class("FightTimerComponent", FightBaseClass)
+local var_0_0 = class("FightTimerComponent", FightBaseClass)
 
-function slot0.onConstructor(slot0)
-	slot0._timerList = {}
+function var_0_0.onConstructor(arg_1_0)
+	arg_1_0._timerList = {}
 end
 
-function slot0.cancelTimer(slot0, slot1)
-	if not slot1 then
+function var_0_0.cancelTimer(arg_2_0, arg_2_1)
+	if not arg_2_1 then
 		return
 	end
 
-	slot1.isDone = true
+	arg_2_1.isDone = true
 end
 
-function slot0.registRepeatTimer(slot0, slot1, slot2, slot3, slot4, slot5)
-	slot6 = FightTimer.registRepeatTimer(slot1, slot2, slot3, slot4, slot5)
+function var_0_0.registRepeatTimer(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4, arg_3_5)
+	local var_3_0 = FightTimer.registRepeatTimer(arg_3_1, arg_3_2, arg_3_3, arg_3_4, arg_3_5)
 
-	table.insert(slot0._timerList, slot6)
+	table.insert(arg_3_0._timerList, var_3_0)
 
-	return slot6
+	return var_3_0
 end
 
-function slot0.restartRepeatTimer(slot0, slot1, slot2, slot3, slot4)
-	return FightTimer.restartRepeatTimer(slot1, slot2, slot3, slot4)
+function var_0_0.restartRepeatTimer(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4)
+	return FightTimer.restartRepeatTimer(arg_4_1, arg_4_2, arg_4_3, arg_4_4)
 end
 
-function slot0.registSingleTimer(slot0, slot1, slot2, slot3, slot4, slot5, slot6)
-	if slot1 then
-		if slot1.isDone then
-			return slot0:registRepeatTimer(slot2, slot3, slot4, slot5, slot6)
+function var_0_0.registSingleTimer(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4, arg_5_5, arg_5_6)
+	if arg_5_1 then
+		if arg_5_1.isDone then
+			return arg_5_0:registRepeatTimer(arg_5_2, arg_5_3, arg_5_4, arg_5_5, arg_5_6)
 		else
-			slot1:restart(slot4, slot5, slot6)
+			arg_5_1:restart(arg_5_4, arg_5_5, arg_5_6)
 
-			return slot1
+			return arg_5_1
 		end
 	else
-		return slot0:registRepeatTimer(slot2, slot3, slot4, slot5, slot6)
+		return arg_5_0:registRepeatTimer(arg_5_2, arg_5_3, arg_5_4, arg_5_5, arg_5_6)
 	end
 end
 
-function slot0.releaseAllTimer(slot0)
-	for slot4, slot5 in ipairs(slot0._timerList) do
-		slot5.isDone = true
+function var_0_0.releaseAllTimer(arg_6_0)
+	for iter_6_0, iter_6_1 in ipairs(arg_6_0._timerList) do
+		iter_6_1.isDone = true
 	end
 end
 
-function slot0.onDestructor(slot0)
-	slot0:releaseAllTimer()
+function var_0_0.onDestructor(arg_7_0)
+	arg_7_0:releaseAllTimer()
 end
 
-return slot0
+return var_0_0

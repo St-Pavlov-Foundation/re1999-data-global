@@ -1,37 +1,45 @@
-module("modules.logic.versionactivity2_5.challenge.view.Act183ReportView", package.seeall)
+﻿module("modules.logic.versionactivity2_5.challenge.view.Act183ReportView", package.seeall)
 
-slot0 = class("Act183ReportView", BaseView)
+local var_0_0 = class("Act183ReportView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gotopleft = gohelper.findChild(slot0.viewGO, "root/#go_topleft")
-	slot0._scrollreview = gohelper.findChildScrollRect(slot0.viewGO, "root/#scroll_review")
-	slot0._goempty = gohelper.findChild(slot0.viewGO, "root/#go_empty")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gotopleft = gohelper.findChild(arg_1_0.viewGO, "root/#go_topleft")
+	arg_1_0._scrollreview = gohelper.findChildScrollRect(arg_1_0.viewGO, "root/#scroll_review")
+	arg_1_0._goempty = gohelper.findChild(arg_1_0.viewGO, "root/#go_empty")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_4_0)
+	return
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_5_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	gohelper.setActive(slot0._goempty, Act183ReportListModel.instance:getCount() <= 0)
+function var_0_0.onOpen(arg_6_0)
+	local var_6_0 = Act183ReportListModel.instance:getCount()
+
+	gohelper.setActive(arg_6_0._goempty, var_6_0 <= 0)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_7_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_8_0)
+	return
 end
 
-return slot0
+return var_0_0

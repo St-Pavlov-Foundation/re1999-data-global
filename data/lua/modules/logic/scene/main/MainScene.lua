@@ -1,15 +1,15 @@
-module("modules.logic.scene.main.MainScene", package.seeall)
+﻿module("modules.logic.scene.main.MainScene", package.seeall)
 
-slot0 = class("MainScene", BaseScene)
+local var_0_0 = class("MainScene", BaseScene)
 
-function slot0._createAllComps(slot0)
-	slot0:_addComp("director", MainSceneDirector)
-	slot0:_addComp("level", MainSceneLevelComp)
-	slot0:_addComp("camera", MainSceneCameraComp)
-	slot0:_addComp("view", MainSceneViewComp)
-	slot0:_addComp("gyro", MainSceneGyroComp)
-	slot0:_addComp("bgm", CommonSceneBgmComp)
-	slot0:_addComp("yearAnimation", MainSceneYearAnimationComp)
+function var_0_0._createAllComps(arg_1_0)
+	arg_1_0:_addComp("director", MainSceneDirector)
+	arg_1_0:_addComp("level", MainSceneLevelComp)
+	arg_1_0:_addComp("camera", MainSceneCameraComp)
+	arg_1_0:_addComp("view", MainSceneViewComp)
+	arg_1_0:_addComp("gyro", MainSceneGyroComp)
+	arg_1_0:_addComp("bgm", CommonSceneBgmComp)
+	arg_1_0:_addComp("yearAnimation", MainSceneYearAnimationComp)
 end
 
-return slot0
+return var_0_0

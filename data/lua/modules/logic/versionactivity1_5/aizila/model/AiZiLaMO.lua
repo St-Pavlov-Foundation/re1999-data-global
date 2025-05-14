@@ -1,10 +1,10 @@
-module("modules.logic.versionactivity1_5.aizila.model.AiZiLaMO", package.seeall)
+﻿module("modules.logic.versionactivity1_5.aizila.model.AiZiLaMO", package.seeall)
 
-slot0 = pureTable("AiZiLaMO")
+local var_0_0 = pureTable("AiZiLaMO")
 
-function slot0.init(slot0, slot1)
-	slot0.id = slot1
-	slot0.activityId = slot1
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.id = arg_1_1
+	arg_1_0.activityId = arg_1_1
 end
 
-return slot0
+return var_0_0

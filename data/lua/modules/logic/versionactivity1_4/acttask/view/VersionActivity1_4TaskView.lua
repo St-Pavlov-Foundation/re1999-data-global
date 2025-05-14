@@ -1,190 +1,204 @@
-module("modules.logic.versionactivity1_4.acttask.view.VersionActivity1_4TaskView", package.seeall)
+﻿module("modules.logic.versionactivity1_4.acttask.view.VersionActivity1_4TaskView", package.seeall)
 
-slot0 = class("VersionActivity1_4TaskView", BaseView)
+local var_0_0 = class("VersionActivity1_4TaskView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0.simageFullBg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_FullBG")
-	slot0.txtTime = gohelper.findChildTextMesh(slot0.viewGO, "Left/LimitTime/image_LimitTimeBG/#txt_LimitTime")
-	slot0.btnNote = gohelper.findChildButtonWithAudio(slot0.viewGO, "Left/Note/#btn_note")
-	slot0.goFinish = gohelper.findChild(slot0.viewGO, "Left/Note/#simage_finished")
-	slot0.btnReward = gohelper.findChildButtonWithAudio(slot0.viewGO, "btnReward")
-	slot0.simageIcon = gohelper.findChildSingleImage(slot0.viewGO, "btnReward/#simage_icon")
-	slot0._redDot = RedDotController.instance:addRedDot(gohelper.findChild(slot0.viewGO, "Left/#go_reddot"), 1095)
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0.simageFullBg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_FullBG")
+	arg_1_0.txtTime = gohelper.findChildTextMesh(arg_1_0.viewGO, "Left/LimitTime/image_LimitTimeBG/#txt_LimitTime")
+	arg_1_0.btnNote = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Left/Note/#btn_note")
+	arg_1_0.goFinish = gohelper.findChild(arg_1_0.viewGO, "Left/Note/#simage_finished")
+	arg_1_0.btnReward = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btnReward")
+	arg_1_0.simageIcon = gohelper.findChildSingleImage(arg_1_0.viewGO, "btnReward/#simage_icon")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	local var_1_0 = gohelper.findChild(arg_1_0.viewGO, "Left/#go_reddot")
+
+	arg_1_0._redDot = RedDotController.instance:addRedDot(var_1_0, 1095)
+
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0.simageFullBg:LoadImage("singlebg/v1a4_taskview_singlebg/v1a4_taskview_fullbg.png")
-	slot0:addClickCb(slot0.btnReward, slot0.onClickRewad, slot0)
-	slot0:addClickCb(slot0.btnNote, slot0.onClickNote, slot0)
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0.simageFullBg:LoadImage("singlebg/v1a4_taskview_singlebg/v1a4_taskview_fullbg.png")
+	arg_4_0:addClickCb(arg_4_0.btnReward, arg_4_0.onClickRewad, arg_4_0)
+	arg_4_0:addClickCb(arg_4_0.btnNote, arg_4_0.onClickNote, arg_4_0)
 end
 
-function slot0.onClickRewad(slot0)
-	slot0.viewContainer:getScrollView():moveToByCheckFunc(function (slot0)
-		return slot0.config and slot0.config.isKeyReward == 1 and slot0.finishCount < slot0.config.maxFinishCount
-	end, 0.5, slot0.onFouceReward, slot0)
+function var_0_0.onClickRewad(arg_5_0)
+	arg_5_0.viewContainer:getScrollView():moveToByCheckFunc(function(arg_6_0)
+		return arg_6_0.config and arg_6_0.config.isKeyReward == 1 and arg_6_0.finishCount < arg_6_0.config.maxFinishCount
+	end, 0.5, arg_5_0.onFouceReward, arg_5_0)
 end
 
-function slot0.onFouceReward(slot0)
+function var_0_0.onFouceReward(arg_7_0)
+	return
 end
 
-function slot0.onClickNote(slot0)
+function var_0_0.onClickNote(arg_8_0)
 	Activity132Controller.instance:openCollectView(VersionActivity1_4Enum.ActivityId.Collect)
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_9_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_mission_open)
 
-	slot0.actId = slot0.viewParam.activityId
+	arg_9_0.actId = arg_9_0.viewParam.activityId
 
-	slot0:initTab()
+	arg_9_0:initTab()
 	TaskRpc.instance:sendGetTaskInfoRequest({
 		TaskEnum.TaskType.ActivityDungeon
-	}, slot0._onOpen, slot0)
-	ActivityEnterMgr.instance:enterActivity(slot0.actId)
+	}, arg_9_0._onOpen, arg_9_0)
+	ActivityEnterMgr.instance:enterActivity(arg_9_0.actId)
 	ActivityRpc.instance:sendActivityNewStageReadRequest({
-		slot0.actId
+		arg_9_0.actId
 	})
 end
 
-function slot0.initTab(slot0)
-	slot0.tabList = {}
+function var_0_0.initTab(arg_10_0)
+	arg_10_0.tabList = {}
 
-	for slot4 = 1, 3 do
-		slot0.tabList[slot4] = slot0:createTab(slot4)
+	for iter_10_0 = 1, 3 do
+		arg_10_0.tabList[iter_10_0] = arg_10_0:createTab(iter_10_0)
 	end
 end
 
-function slot0.createTab(slot0, slot1)
-	slot2 = slot0:getUserDataTb_()
-	slot2.actId = slot0.actId
-	slot2.index = slot1
-	slot2.go = gohelper.findChild(slot0.viewGO, string.format("Top/#go_tab%s", slot1))
-	slot2.goChoose = gohelper.findChild(slot2.go, "#go_choose")
-	slot2.goRed = gohelper.findChild(slot2.go, "#go_reddot")
-	slot2.btn = gohelper.findChildButtonWithAudio(slot2.go, "#btn")
+function var_0_0.createTab(arg_11_0, arg_11_1)
+	local var_11_0 = arg_11_0:getUserDataTb_()
 
-	function slot2.refreshRed(slot0)
-		slot0.redDot.show = VersionActivity1_4TaskListModel.instance:checkTaskRedByPage(slot0.actId, slot0.index)
+	var_11_0.actId = arg_11_0.actId
+	var_11_0.index = arg_11_1
+	var_11_0.go = gohelper.findChild(arg_11_0.viewGO, string.format("Top/#go_tab%s", arg_11_1))
+	var_11_0.goChoose = gohelper.findChild(var_11_0.go, "#go_choose")
+	var_11_0.goRed = gohelper.findChild(var_11_0.go, "#go_reddot")
+	var_11_0.btn = gohelper.findChildButtonWithAudio(var_11_0.go, "#btn")
 
-		slot0.redDot:showRedDot(1)
+	function var_11_0.refreshRed(arg_12_0)
+		arg_12_0.redDot.show = VersionActivity1_4TaskListModel.instance:checkTaskRedByPage(arg_12_0.actId, arg_12_0.index)
+
+		arg_12_0.redDot:showRedDot(1)
 	end
 
-	slot2.redDot = MonoHelper.addNoUpdateLuaComOnceToGo(slot2.goRed, CommonRedDotIcon)
+	var_11_0.redDot = MonoHelper.addNoUpdateLuaComOnceToGo(var_11_0.goRed, CommonRedDotIcon)
 
-	slot2.redDot:setMultiId({
+	var_11_0.redDot:setMultiId({
 		id = 1096
 	})
-	slot2.redDot:overrideRefreshDotFunc(slot2.refreshRed, slot2)
-	slot2.redDot:refreshDot()
-	slot0:addClickCb(slot2.btn, slot0.onClickTab, slot0, slot1)
+	var_11_0.redDot:overrideRefreshDotFunc(var_11_0.refreshRed, var_11_0)
+	var_11_0.redDot:refreshDot()
+	arg_11_0:addClickCb(var_11_0.btn, arg_11_0.onClickTab, arg_11_0, arg_11_1)
 
-	return slot2
+	return var_11_0
 end
 
-function slot0.refreshTabRed(slot0)
-	for slot4, slot5 in pairs(slot0.tabList) do
-		slot5.redDot:refreshDot()
+function var_0_0.refreshTabRed(arg_13_0)
+	for iter_13_0, iter_13_1 in pairs(arg_13_0.tabList) do
+		iter_13_1.redDot:refreshDot()
 	end
 end
 
-function slot0.onClickTab(slot0, slot1)
-	if slot0.tabIndex == slot1 then
+function var_0_0.onClickTab(arg_14_0, arg_14_1)
+	if arg_14_0.tabIndex == arg_14_1 then
 		return
 	end
 
-	slot0.tabIndex = slot1
+	arg_14_0.tabIndex = arg_14_1
 
-	for slot5, slot6 in ipairs(slot0.tabList) do
-		gohelper.setActive(slot6.goChoose, slot5 == slot0.tabIndex)
+	for iter_14_0, iter_14_1 in ipairs(arg_14_0.tabList) do
+		gohelper.setActive(iter_14_1.goChoose, iter_14_0 == arg_14_0.tabIndex)
 	end
 
-	slot0:refreshRight()
+	arg_14_0:refreshRight()
 end
 
-function slot0._onOpen(slot0)
-	slot0:addEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, slot0.refreshRight, slot0)
-	slot0:addEventCb(TaskController.instance, TaskEvent.OnFinishTask, slot0.refreshRight, slot0)
-	slot0:addEventCb(TaskController.instance, TaskEvent.UpdateTaskList, slot0.refreshRight, slot0)
-	TaskDispatcher.runRepeat(slot0.refreshRemainTime, slot0, TimeUtil.OneMinuteSecond)
-	slot0:refreshLeft()
-	slot0:onClickTab(1)
+function var_0_0._onOpen(arg_15_0)
+	arg_15_0:addEventCb(TaskController.instance, TaskEvent.SuccessGetBonus, arg_15_0.refreshRight, arg_15_0)
+	arg_15_0:addEventCb(TaskController.instance, TaskEvent.OnFinishTask, arg_15_0.refreshRight, arg_15_0)
+	arg_15_0:addEventCb(TaskController.instance, TaskEvent.UpdateTaskList, arg_15_0.refreshRight, arg_15_0)
+	TaskDispatcher.runRepeat(arg_15_0.refreshRemainTime, arg_15_0, TimeUtil.OneMinuteSecond)
+	arg_15_0:refreshLeft()
+	arg_15_0:onClickTab(1)
 end
 
-function slot0.refreshLeft(slot0)
-	slot0:refreshRemainTime()
+function var_0_0.refreshLeft(arg_16_0)
+	arg_16_0:refreshRemainTime()
 end
 
-function slot0.refreshRemainTime(slot0)
-	slot0.txtTime.text = string.format(luaLang("remain"), slot0:_getRemainTimeStr(ActivityModel.instance:getActMO(slot0.actId)))
+function var_0_0.refreshRemainTime(arg_17_0)
+	local var_17_0 = ActivityModel.instance:getActMO(arg_17_0.actId)
+
+	arg_17_0.txtTime.text = string.format(luaLang("remain"), arg_17_0:_getRemainTimeStr(var_17_0))
 end
 
-function slot0.refreshRight(slot0)
-	VersionActivity1_4TaskListModel.instance:sortTaskMoList(slot0.actId, slot0.tabIndex)
+function var_0_0.refreshRight(arg_18_0)
+	VersionActivity1_4TaskListModel.instance:sortTaskMoList(arg_18_0.actId, arg_18_0.tabIndex)
 
-	slot2 = VersionActivity1_4TaskListModel.instance:getKeyRewardMo() ~= nil
+	local var_18_0 = VersionActivity1_4TaskListModel.instance:getKeyRewardMo()
+	local var_18_1 = var_18_0 ~= nil
 
-	gohelper.setActive(slot0.btnReward, slot2)
+	gohelper.setActive(arg_18_0.btnReward, var_18_1)
 
-	if slot2 then
-		slot4 = GameUtil.splitString2(slot1.config.bonus, true, "|", "#")[1]
-		slot7, slot8 = ItemModel.instance:getItemConfigAndIcon(slot4[1], slot4[2], true)
+	if var_18_1 then
+		local var_18_2 = GameUtil.splitString2(var_18_0.config.bonus, true, "|", "#")[1]
+		local var_18_3 = var_18_2[1]
+		local var_18_4 = var_18_2[2]
+		local var_18_5, var_18_6 = ItemModel.instance:getItemConfigAndIcon(var_18_3, var_18_4, true)
 
-		slot0.simageIcon:LoadImage(slot8)
+		arg_18_0.simageIcon:LoadImage(var_18_6)
 	end
 
-	gohelper.setActive(slot0.goFinish, VersionActivity1_4TaskListModel.instance.allTaskFinish)
-	slot0:refreshTabRed()
+	gohelper.setActive(arg_18_0.goFinish, VersionActivity1_4TaskListModel.instance.allTaskFinish)
+	arg_18_0:refreshTabRed()
 end
 
-function slot0.onClose(slot0)
-	TaskDispatcher.cancelTask(slot0.refreshRemainTime, slot0)
+function var_0_0.onClose(arg_19_0)
+	TaskDispatcher.cancelTask(arg_19_0.refreshRemainTime, arg_19_0)
 end
 
-function slot0.onDestroyView(slot0)
-	slot0.simageFullBg:UnLoadImage()
-	slot0.simageIcon:UnLoadImage()
+function var_0_0.onDestroyView(arg_20_0)
+	arg_20_0.simageFullBg:UnLoadImage()
+	arg_20_0.simageIcon:UnLoadImage()
 end
 
-function slot0._getRemainTimeStr(slot0, slot1)
-	slot2 = nil
+function var_0_0._getRemainTimeStr(arg_21_0, arg_21_1)
+	local var_21_0
 
-	if slot1 then
-		slot2 = slot1:getRealEndTimeStamp() - ServerTime.now()
+	if arg_21_1 then
+		var_21_0 = arg_21_1:getRealEndTimeStamp() - ServerTime.now()
 	end
 
-	if not slot2 or slot2 <= 0 then
+	if not var_21_0 or var_21_0 <= 0 then
 		return luaLang("turnback_end")
 	end
 
-	slot3, slot4, slot5, slot6 = TimeUtil.secondsToDDHHMMSS(slot2)
+	local var_21_1, var_21_2, var_21_3, var_21_4 = TimeUtil.secondsToDDHHMMSS(var_21_0)
 
-	if slot3 > 0 then
+	if var_21_1 > 0 then
+		local var_21_5 = luaLang("time_day")
+
 		if LangSettings.instance:isEn() then
-			slot7 = luaLang("time_day") .. " "
+			var_21_5 = var_21_5 .. " "
 		end
 
-		return slot3 .. slot7 .. slot4 .. luaLang("time_hour2")
+		return (var_21_1 .. var_21_5) .. var_21_2 .. luaLang("time_hour2")
 	end
 
-	if slot4 > 0 then
-		return slot4 .. luaLang("time_hour2")
+	if var_21_2 > 0 then
+		return var_21_2 .. luaLang("time_hour2")
 	end
 
-	if slot5 <= 0 then
-		slot5 = "<1"
+	if var_21_3 <= 0 then
+		var_21_3 = "<1"
 	end
 
-	return slot5 .. luaLang("time_minute2")
+	return var_21_3 .. luaLang("time_minute2")
 end
 
-return slot0
+return var_0_0

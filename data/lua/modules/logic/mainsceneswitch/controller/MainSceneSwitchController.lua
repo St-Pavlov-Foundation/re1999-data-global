@@ -1,79 +1,87 @@
-module("modules.logic.mainsceneswitch.controller.MainSceneSwitchController", package.seeall)
+﻿module("modules.logic.mainsceneswitch.controller.MainSceneSwitchController", package.seeall)
 
-slot0 = class("MainSceneSwitchController", BaseController)
+local var_0_0 = class("MainSceneSwitchController", BaseController)
 
-function slot0.onInit(slot0)
-	slot0:reInit()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:reInit()
 end
 
-function slot0.onInitFinish(slot0)
+function var_0_0.onInitFinish(arg_2_0)
+	return
 end
 
-function slot0.addConstEvents(slot0)
-	LoginController.instance:registerCallback(LoginEvent.OnGetInfoFinish, slot0._onGetInfoFinish, slot0)
+function var_0_0.addConstEvents(arg_3_0)
+	LoginController.instance:registerCallback(LoginEvent.OnGetInfoFinish, arg_3_0._onGetInfoFinish, arg_3_0)
 end
 
-function slot0.reInit(slot0)
-	slot0._startSwitchTime = 0
+function var_0_0.reInit(arg_4_0)
+	arg_4_0._startSwitchTime = 0
 
-	GameSceneMgr.instance:unregisterCallback(SceneEventName.OnLevelLoaded, slot0._onLevelLoaded, slot0)
+	GameSceneMgr.instance:unregisterCallback(SceneEventName.OnLevelLoaded, arg_4_0._onLevelLoaded, arg_4_0)
 end
 
-function slot0._onGetInfoFinish(slot0)
+function var_0_0._onGetInfoFinish(arg_5_0)
 	MainSceneSwitchModel.instance:initSceneId()
 end
 
-function slot0.isSwitching(slot0)
-	return Time.realtimeSinceStartup - slot0._startSwitchTime <= 10
+function var_0_0.isSwitching(arg_6_0)
+	return Time.realtimeSinceStartup - arg_6_0._startSwitchTime <= 10
 end
 
-function slot0.switchScene(slot0)
+function var_0_0.switchScene(arg_7_0)
 	if GameSceneMgr.instance:getCurSceneType() ~= SceneType.Main then
 		return
 	end
 
-	slot0:dispatchEvent(MainSceneSwitchEvent.StartSwitchScene)
+	arg_7_0:dispatchEvent(MainSceneSwitchEvent.StartSwitchScene)
 
-	slot0._startSwitchTime = Time.realtimeSinceStartup
+	arg_7_0._startSwitchTime = Time.realtimeSinceStartup
 
-	GameSceneMgr.instance:registerCallback(SceneEventName.OnLevelLoaded, slot0._onLevelLoaded, slot0)
+	GameSceneMgr.instance:registerCallback(SceneEventName.OnLevelLoaded, arg_7_0._onLevelLoaded, arg_7_0)
 	GameSceneMgr.instance:getCurScene().level:switchLevel()
 end
 
-function slot0._onLevelLoaded(slot0)
-	slot1 = Time.realtimeSinceStartup - slot0._startSwitchTime
-	slot0._startSwitchTime = 0
+function var_0_0._onLevelLoaded(arg_8_0)
+	local var_8_0 = Time.realtimeSinceStartup - arg_8_0._startSwitchTime
 
-	GameSceneMgr.instance:unregisterCallback(SceneEventName.OnLevelLoaded, slot0._onLevelLoaded, slot0)
+	arg_8_0._startSwitchTime = 0
+
+	GameSceneMgr.instance:unregisterCallback(SceneEventName.OnLevelLoaded, arg_8_0._onLevelLoaded, arg_8_0)
 
 	if GameSceneMgr.instance:getCurSceneType() ~= SceneType.Main then
 		return
 	end
 
-	slot0:dispatchEvent(MainSceneSwitchEvent.SwitchSceneFinish)
+	arg_8_0:dispatchEvent(MainSceneSwitchEvent.SwitchSceneFinish)
 end
 
-function slot0.getLightColor(slot0, slot1)
-	return lua_scene_settings.configDict[slot1]["lightColor" .. slot0]
+function var_0_0.getLightColor(arg_9_0, arg_9_1)
+	local var_9_0 = arg_9_1
+
+	return lua_scene_settings.configDict[var_9_0]["lightColor" .. arg_9_0]
 end
 
-function slot0.getPrefabLightStartRotation(slot0, slot1)
-	return lua_scene_settings.configDict[slot1].prefabLightStartRotation[slot0]
+function var_0_0.getPrefabLightStartRotation(arg_10_0, arg_10_1)
+	local var_10_0 = arg_10_1
+
+	return lua_scene_settings.configDict[var_10_0].prefabLightStartRotation[arg_10_0]
 end
 
-function slot0.getEffectLightStartRotation(slot0, slot1)
-	return lua_scene_settings.configDict[slot1].effectLightStartRotation[slot0]
+function var_0_0.getEffectLightStartRotation(arg_11_0, arg_11_1)
+	local var_11_0 = arg_11_1
+
+	return lua_scene_settings.configDict[var_11_0].effectLightStartRotation[arg_11_0]
 end
 
-function slot0.closeReddot()
+function var_0_0.closeReddot()
 	if RedDotModel.instance:isDotShow(RedDotEnum.DotNode.MainSceneSwitch, 0) then
 		RedDotRpc.instance:sendShowRedDotRequest(RedDotEnum.DotNode.MainSceneSwitch, false)
 	end
 end
 
-function slot0.AnySceneHasReddot()
-	for slot3, slot4 in ipairs(lua_scene_switch.configList) do
-		if slot4.defaultUnlock ~= 1 and uv0.sceneHasReddot(slot4.id) then
+function var_0_0.AnySceneHasReddot()
+	for iter_13_0, iter_13_1 in ipairs(lua_scene_switch.configList) do
+		if iter_13_1.defaultUnlock ~= 1 and var_0_0.sceneHasReddot(iter_13_1.id) then
 			return true
 		end
 	end
@@ -81,13 +89,14 @@ function slot0.AnySceneHasReddot()
 	return false
 end
 
-function slot0.sceneHasReddot(slot0)
+function var_0_0.sceneHasReddot(arg_14_0)
 	return false
 end
 
-function slot0.closeSceneReddot(slot0)
+function var_0_0.closeSceneReddot(arg_15_0)
+	return
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

@@ -1,11 +1,12 @@
-module("modules.logic.versionactivity1_3.act126.config.Activity126Config", package.seeall)
+﻿module("modules.logic.versionactivity1_3.act126.config.Activity126Config", package.seeall)
 
-slot0 = class("Activity126Config", BaseConfig)
+local var_0_0 = class("Activity126Config", BaseConfig)
 
-function slot0.ctor(slot0)
+function var_0_0.ctor(arg_1_0)
+	return
 end
 
-function slot0.reqConfigNames(slot0)
+function var_0_0.reqConfigNames(arg_2_0)
 	return {
 		"activity126_buff",
 		"activity126_const",
@@ -17,44 +18,46 @@ function slot0.reqConfigNames(slot0)
 	}
 end
 
-function slot0.onConfigLoaded(slot0, slot1, slot2)
-	if slot1 == "activity126_dreamland" then
-		slot0:_dealDreamlandTask()
+function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_1 == "activity126_dreamland" then
+		arg_3_0:_dealDreamlandTask()
 	end
 end
 
-function slot0.getConst(slot0, slot1, slot2)
-	return lua_activity126_const.configDict[slot1][slot2]
+function var_0_0.getConst(arg_4_0, arg_4_1, arg_4_2)
+	return lua_activity126_const.configDict[arg_4_1][arg_4_2]
 end
 
-function slot0.getHoroscopeConfig(slot0, slot1, slot2)
-	return lua_activity126_horoscope.configDict[slot2][slot1]
+function var_0_0.getHoroscopeConfig(arg_5_0, arg_5_1, arg_5_2)
+	return lua_activity126_horoscope.configDict[arg_5_2][arg_5_1]
 end
 
-function slot0.getStarConfig(slot0, slot1, slot2)
-	return lua_activity126_star.configDict[slot2][slot1]
+function var_0_0.getStarConfig(arg_6_0, arg_6_1, arg_6_2)
+	return lua_activity126_star.configDict[arg_6_2][arg_6_1]
 end
 
-function slot0._dealDreamlandTask(slot0)
-	slot0._taskDic = {}
+function var_0_0._dealDreamlandTask(arg_7_0)
+	arg_7_0._taskDic = {}
 
-	for slot4, slot5 in ipairs(lua_activity126_dreamland.configList) do
-		for slot10, slot11 in ipairs(string.splitToNumber(slot5.battleIds, "#")) do
-			slot0._taskDic[slot11] = slot5
+	for iter_7_0, iter_7_1 in ipairs(lua_activity126_dreamland.configList) do
+		local var_7_0 = string.splitToNumber(iter_7_1.battleIds, "#")
+
+		for iter_7_2, iter_7_3 in ipairs(var_7_0) do
+			arg_7_0._taskDic[iter_7_3] = iter_7_1
 		end
 	end
 end
 
-function slot0.getDramlandTask(slot0, slot1)
-	if slot0._taskeDic then
-		return slot0._taskDic[slot1]
+function var_0_0.getDramlandTask(arg_8_0, arg_8_1)
+	if arg_8_0._taskeDic then
+		return arg_8_0._taskDic[arg_8_1]
 	end
 
-	slot0:_dealDreamlandTask()
+	arg_8_0:_dealDreamlandTask()
 
-	return slot0._taskDic[slot1]
+	return arg_8_0._taskDic[arg_8_1]
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

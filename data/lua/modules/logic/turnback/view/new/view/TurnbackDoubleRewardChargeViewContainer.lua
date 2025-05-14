@@ -1,24 +1,24 @@
-module("modules.logic.turnback.view.new.view.TurnbackDoubleRewardChargeViewContainer", package.seeall)
+﻿module("modules.logic.turnback.view.new.view.TurnbackDoubleRewardChargeViewContainer", package.seeall)
 
-slot0 = class("TurnbackDoubleRewardChargeViewContainer", BaseViewContainer)
+local var_0_0 = class("TurnbackDoubleRewardChargeViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, TurnbackDoubleRewardChargeView.New())
-	table.insert(slot1, TabViewGroup.New(1, "#go_topright"))
+	table.insert(var_1_0, TurnbackDoubleRewardChargeView.New())
+	table.insert(var_1_0, TabViewGroup.New(1, "#go_topright"))
 
-	return slot1
+	return var_1_0
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
-		slot0._currencyView = CurrencyView.New({})
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == 1 then
+		arg_2_0._currencyView = CurrencyView.New({})
 
 		return {
-			slot0._currencyView
+			arg_2_0._currencyView
 		}
 	end
 end
 
-return slot0
+return var_0_0

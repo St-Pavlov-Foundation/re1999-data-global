@@ -1,62 +1,63 @@
-module("modules.logic.fight.model.data.FightEntityEXDataMgr", package.seeall)
+﻿module("modules.logic.fight.model.data.FightEntityEXDataMgr", package.seeall)
 
-slot0 = FightDataClass("FightEntityEXDataMgr")
+local var_0_0 = FightDataClass("FightEntityEXDataMgr")
 
-function slot0.onConstructor(slot0)
-	slot0._exDataDic = {}
+function var_0_0.onConstructor(arg_1_0)
+	arg_1_0._exDataDic = {}
 end
 
-function slot0.getEntityEXData(slot0, slot1)
-	slot2 = slot0._exDataDic[slot1]
-	slot3 = slot2
+function var_0_0.getEntityEXData(arg_2_0, arg_2_1)
+	local var_2_0 = arg_2_0._exDataDic[arg_2_1]
+	local var_2_1 = var_2_0
 
-	if not slot2 then
-		slot0._exDataDic[slot1] = {}
+	if not var_2_0 then
+		var_2_0 = {}
+		arg_2_0._exDataDic[arg_2_1] = var_2_0
 	end
 
-	return slot2, slot3
+	return var_2_0, var_2_1
 end
 
-function slot0.setEXDataAfterAddEntityMO(slot0, slot1)
-	slot2 = slot0:getEntityEXData(slot1.id)
+function var_0_0.setEXDataAfterAddEntityMO(arg_3_0, arg_3_1)
+	local var_3_0 = arg_3_0:getEntityEXData(arg_3_1.id)
 
-	tabletool.clear(slot2)
-	slot0:initEntityExData(slot2)
+	tabletool.clear(var_3_0)
+	arg_3_0:initEntityExData(var_3_0)
 end
 
-function slot0.initEntityExData(slot0, slot1)
-	slot0:initAboutExpoint(slot1)
+function var_0_0.initEntityExData(arg_4_0, arg_4_1)
+	arg_4_0:initAboutExpoint(arg_4_1)
 end
 
-function slot0.initAboutExpoint(slot0, slot1)
-	slot1.playCardAddExPoint = 1
-	slot1.simulateAddExpoint = 0
+function var_0_0.initAboutExpoint(arg_5_0, arg_5_1)
+	arg_5_1.playCardAddExPoint = 1
+	arg_5_1.simulateAddExpoint = 0
 end
 
-function slot0.onStageChanged(slot0)
-	for slot4, slot5 in pairs(slot0._exDataDic) do
-		slot0:initAboutExpoint(slot5)
+function var_0_0.onStageChanged(arg_6_0)
+	for iter_6_0, iter_6_1 in pairs(arg_6_0._exDataDic) do
+		arg_6_0:initAboutExpoint(iter_6_1)
 	end
 end
 
-function slot0.addExPoint(slot0, slot1)
-	slot2, slot3 = slot0:getEntityEXData(slot1)
+function var_0_0.addExPoint(arg_7_0, arg_7_1)
+	local var_7_0, var_7_1 = arg_7_0:getEntityEXData(arg_7_1)
 
-	if not slot3 then
-		slot0:initAboutExpoint(slot2)
+	if not var_7_1 then
+		arg_7_0:initAboutExpoint(var_7_0)
 	end
 
-	slot2.simulateAddExpoint = slot2.simulateAddExpoint + slot2.playCardAddExPoint
+	var_7_0.simulateAddExpoint = var_7_0.simulateAddExpoint + var_7_0.playCardAddExPoint
 end
 
-function slot0.getSimulateAddExpoint(slot0, slot1)
-	slot2, slot3 = slot0:getEntityEXData(slot1)
+function var_0_0.getSimulateAddExpoint(arg_8_0, arg_8_1)
+	local var_8_0, var_8_1 = arg_8_0:getEntityEXData(arg_8_1)
 
-	if not slot3 then
-		slot0:initAboutExpoint(slot2)
+	if not var_8_1 then
+		arg_8_0:initAboutExpoint(var_8_0)
 	end
 
-	return slot2.simulateAddExpoint
+	return var_8_0.simulateAddExpoint
 end
 
-return slot0
+return var_0_0

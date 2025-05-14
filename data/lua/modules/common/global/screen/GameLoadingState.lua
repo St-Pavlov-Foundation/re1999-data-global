@@ -1,117 +1,125 @@
-module("modules.common.global.screen.GameLoadingState", package.seeall)
+﻿module("modules.common.global.screen.GameLoadingState", package.seeall)
 
-slot0 = class("GameLoadingState")
-slot0.LoadingView = 1
-slot0.LoadingBlackView = 2
-slot0.LoadingBlackView2 = 3
-slot0.LoadingHeadsetView = 4
-slot0.LoadingRoomView = 5
-slot0.LoadingDownloadView = 6
-slot0.LoadingCachotView = 7
-slot0.LoadingCachotChangeView = 8
-slot1 = {
-	[slot0.LoadingView] = ViewName.LoadingView,
-	[slot0.LoadingBlackView] = ViewName.LoadingBlackView,
-	[slot0.LoadingBlackView2] = ViewName.LoadingBlackView2,
-	[slot0.LoadingHeadsetView] = ViewName.LoadingHeadsetView,
-	[slot0.LoadingRoomView] = ViewName.LoadingRoomView,
-	[slot0.LoadingDownloadView] = ViewName.LoadingDownloadView,
-	[slot0.LoadingCachotView] = ViewName.V1a6_CachotLoadingView,
-	[slot0.LoadingCachotChangeView] = ViewName.V1a6_CachotLayerChangeView
+local var_0_0 = class("GameLoadingState")
+
+var_0_0.LoadingView = 1
+var_0_0.LoadingBlackView = 2
+var_0_0.LoadingBlackView2 = 3
+var_0_0.LoadingHeadsetView = 4
+var_0_0.LoadingRoomView = 5
+var_0_0.LoadingDownloadView = 6
+var_0_0.LoadingCachotView = 7
+var_0_0.LoadingCachotChangeView = 8
+
+local var_0_1 = {
+	[var_0_0.LoadingView] = ViewName.LoadingView,
+	[var_0_0.LoadingBlackView] = ViewName.LoadingBlackView,
+	[var_0_0.LoadingBlackView2] = ViewName.LoadingBlackView2,
+	[var_0_0.LoadingHeadsetView] = ViewName.LoadingHeadsetView,
+	[var_0_0.LoadingRoomView] = ViewName.LoadingRoomView,
+	[var_0_0.LoadingDownloadView] = ViewName.LoadingDownloadView,
+	[var_0_0.LoadingCachotView] = ViewName.V1a6_CachotLoadingView,
+	[var_0_0.LoadingCachotChangeView] = ViewName.V1a6_CachotLayerChangeView
 }
-slot2 = {
-	[ViewName.LoadingView] = slot0.LoadingView,
-	[ViewName.LoadingBlackView] = slot0.LoadingBlackView,
-	[ViewName.LoadingBlackView2] = slot0.LoadingBlackView2,
-	[ViewName.LoadingHeadsetView] = slot0.LoadingHeadsetView,
-	[ViewName.LoadingRoomView] = slot0.LoadingRoomView,
-	[ViewName.LoadingDownloadView] = slot0.LoadingDownloadView,
-	[ViewName.V1a6_CachotLoadingView] = slot0.LoadingCachotView,
-	[ViewName.V1a6_CachotLayerChangeView] = slot0.LoadingCachotChangeView
+local var_0_2 = {
+	[ViewName.LoadingView] = var_0_0.LoadingView,
+	[ViewName.LoadingBlackView] = var_0_0.LoadingBlackView,
+	[ViewName.LoadingBlackView2] = var_0_0.LoadingBlackView2,
+	[ViewName.LoadingHeadsetView] = var_0_0.LoadingHeadsetView,
+	[ViewName.LoadingRoomView] = var_0_0.LoadingRoomView,
+	[ViewName.LoadingDownloadView] = var_0_0.LoadingDownloadView,
+	[ViewName.V1a6_CachotLoadingView] = var_0_0.LoadingCachotView,
+	[ViewName.V1a6_CachotLayerChangeView] = var_0_0.LoadingCachotChangeView
 }
 
-function slot0.ctor(slot0)
-	slot0:addConstEvents()
+function var_0_0.ctor(arg_1_0)
+	arg_1_0:addConstEvents()
 
-	slot0._loadingType = nil
-	slot0._showLoadingView = nil
+	arg_1_0._loadingType = nil
+	arg_1_0._showLoadingView = nil
 end
 
-function slot0.addConstEvents(slot0)
-	GameSceneMgr.instance:registerCallback(SceneEventName.OpenLoading, slot0._openLoading, slot0)
-	GameSceneMgr.instance:registerCallback(SceneEventName.CloseLoading, slot0._closeLoading, slot0)
-	GameSceneMgr.instance:registerCallback(SceneEventName.SetLoadingTypeOnce, slot0._setLoadingTypeOnce, slot0)
-	GameSceneMgr.instance:registerCallback(SceneEventName.WaitViewOpenCloseLoading, slot0._waitViewOpenCloseLoading, slot0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, slot0._checkOpenView, slot0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, slot0._onCloseView, slot0)
+function var_0_0.addConstEvents(arg_2_0)
+	GameSceneMgr.instance:registerCallback(SceneEventName.OpenLoading, arg_2_0._openLoading, arg_2_0)
+	GameSceneMgr.instance:registerCallback(SceneEventName.CloseLoading, arg_2_0._closeLoading, arg_2_0)
+	GameSceneMgr.instance:registerCallback(SceneEventName.SetLoadingTypeOnce, arg_2_0._setLoadingTypeOnce, arg_2_0)
+	GameSceneMgr.instance:registerCallback(SceneEventName.WaitViewOpenCloseLoading, arg_2_0._waitViewOpenCloseLoading, arg_2_0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, arg_2_0._checkOpenView, arg_2_0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, arg_2_0._onCloseView, arg_2_0)
 end
 
-function slot0.getLoadingType(slot0)
-	return slot0._loadingType
+function var_0_0.getLoadingType(arg_3_0)
+	return arg_3_0._loadingType
 end
 
-function slot0._onCloseView(slot0, slot1)
-	if uv0[slot1] then
-		slot0._showLoadingView = nil
+function var_0_0._onCloseView(arg_4_0, arg_4_1)
+	if var_0_2[arg_4_1] then
+		arg_4_0._showLoadingView = nil
 	end
 end
 
-function slot0._setLoadingTypeOnce(slot0, slot1)
-	slot0._loadingType = tonumber(slot1)
+function var_0_0._setLoadingTypeOnce(arg_5_0, arg_5_1)
+	arg_5_0._loadingType = tonumber(arg_5_1)
 end
 
-function slot0._checkOpenView(slot0, slot1, slot2)
-	if slot0._viewName and slot0._viewName == slot1 then
-		slot0._viewName = nil
+function var_0_0._checkOpenView(arg_6_0, arg_6_1, arg_6_2)
+	if arg_6_0._viewName and arg_6_0._viewName == arg_6_1 then
+		arg_6_0._viewName = nil
 
-		slot0:_closeLoading()
+		arg_6_0:_closeLoading()
 	end
 end
 
-function slot0._waitViewOpenCloseLoading(slot0, slot1)
-	logNormal("GameLoadingState waitViewName:" .. slot1)
+function var_0_0._waitViewOpenCloseLoading(arg_7_0, arg_7_1)
+	logNormal("GameLoadingState waitViewName:" .. arg_7_1)
 
-	slot0._viewName = slot1
+	arg_7_0._viewName = arg_7_1
 end
 
-function slot0.getLoadingViewName(slot0)
-	return slot0._showLoadingView
+function var_0_0.getLoadingViewName(arg_8_0)
+	return arg_8_0._showLoadingView
 end
 
-function slot0._openLoading(slot0, slot1, slot2)
-	if slot0._showLoadingView then
+function var_0_0._openLoading(arg_9_0, arg_9_1, arg_9_2)
+	if arg_9_0._showLoadingView then
 		GameSceneMgr.instance:dispatchEvent(SceneEventName.AgainOpenLoading)
 	else
-		slot0._loadingType = nil
-		slot4 = slot0._loadingType and uv0[slot3] or uv0[1]
-		slot0._showLoadingView = slot4
+		local var_9_0 = arg_9_0._loadingType
 
-		ViewMgr.instance:openView(slot4, slot1)
+		arg_9_0._loadingType = nil
+
+		local var_9_1 = var_9_0 and var_0_1[var_9_0] or var_0_1[1]
+
+		arg_9_0._showLoadingView = var_9_1
+
+		ViewMgr.instance:openView(var_9_1, arg_9_1)
 	end
 end
 
-function slot0._closeLoading(slot0)
-	if slot0._viewName then
+function var_0_0._closeLoading(arg_10_0)
+	if arg_10_0._viewName then
 		return
 	end
 
-	if slot0._showLoadingView == ViewName.LoadingView then
+	if arg_10_0._showLoadingView == ViewName.LoadingView then
 		if ViewMgr.instance:isOpen(ViewName.LoadingView) then
 			GameSceneMgr.instance:dispatchEvent(SceneEventName.DelayCloseLoading)
-		elseif ViewMgr.instance:isOpening(slot0._showLoadingView) then
-			ViewMgr.instance:closeView(slot0._showLoadingView)
+		elseif ViewMgr.instance:isOpening(arg_10_0._showLoadingView) then
+			ViewMgr.instance:closeView(arg_10_0._showLoadingView)
 		else
-			slot0._showLoadingView = nil
+			arg_10_0._showLoadingView = nil
 		end
-	elseif slot0._showLoadingView == ViewName.LoadingHeadsetView then
-		-- Nothing
-	elseif slot0._showLoadingView == ViewName.V1a6_CachotLoadingView then
-		-- Nothing
-	elseif slot0._showLoadingView ~= ViewName.V1a6_CachotLayerChangeView then
-		ViewMgr.instance:closeView(slot0._showLoadingView)
+	elseif arg_10_0._showLoadingView == ViewName.LoadingHeadsetView then
+		-- block empty
+	elseif arg_10_0._showLoadingView == ViewName.V1a6_CachotLoadingView then
+		-- block empty
+	elseif arg_10_0._showLoadingView == ViewName.V1a6_CachotLayerChangeView then
+		-- block empty
+	else
+		ViewMgr.instance:closeView(arg_10_0._showLoadingView)
 
-		slot0._showLoadingView = nil
+		arg_10_0._showLoadingView = nil
 	end
 end
 
-return slot0
+return var_0_0

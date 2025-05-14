@@ -1,108 +1,136 @@
-module("modules.logic.scene.fight.comp.FightScenePreviewEntityMgr", package.seeall)
+﻿module("modules.logic.scene.fight.comp.FightScenePreviewEntityMgr", package.seeall)
 
-slot0 = class("FightScenePreviewEntityMgr", BaseSceneUnitMgr)
+local var_0_0 = class("FightScenePreviewEntityMgr", BaseSceneUnitMgr)
 
-function slot0.ctor(slot0, slot1)
-	uv0.super.ctor(slot0, slot1)
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	var_0_0.super.ctor(arg_1_0, arg_1_1)
 
-	slot0._containerGO = gohelper.findChild(slot0:getCurScene():getSceneContainerGO(), "Entitys")
+	arg_1_0._containerGO = gohelper.findChild(arg_1_0:getCurScene():getSceneContainerGO(), "Entitys")
 end
 
-function slot0.spawnEntity(slot0)
-	return
+function var_0_0.spawnEntity(arg_2_0)
+	do return end
 
-	slot2 = "represent2"
-	slot4 = FightModel.instance:getFightParam().episodeId and DungeonConfig.instance:getEpisodeCO(slot3)
+	local var_2_0 = FightModel.instance:getFightParam()
+	local var_2_1 = "represent2"
+	local var_2_2 = var_2_0.episodeId
+	local var_2_3 = var_2_2 and DungeonConfig.instance:getEpisodeCO(var_2_2)
+	local var_2_4 = var_2_3 and DungeonConfig.instance:getChapterCO(var_2_3.chapterId)
 
-	if slot4 and DungeonConfig.instance:getChapterCO(slot4.chapterId) and FightEnum.SpecialFaction[slot5.type] then
-		slot2 = "represent1"
+	if var_2_4 and FightEnum.SpecialFaction[var_2_4.type] then
+		var_2_1 = "represent1"
 	end
 
-	if string.nilorempty(lua_battle.configDict[slot1.battleId].monsterGroupIds) then
+	local var_2_5 = var_2_0.battleId
+	local var_2_6 = lua_battle.configDict[var_2_5].monsterGroupIds
+
+	if string.nilorempty(var_2_6) then
 		return
 	end
 
-	slot9 = {}
+	local var_2_7 = {}
+	local var_2_8 = string.splitToNumber(var_2_6, "#")
 
-	for slot14, slot15 in ipairs(string.splitToNumber(slot8, "#")) do
-		slot16 = lua_monster_group.configDict[slot15]
-		slot17 = slot16.bossId
+	for iter_2_0, iter_2_1 in ipairs(var_2_8) do
+		local var_2_9 = lua_monster_group.configDict[iter_2_1]
+		local var_2_10 = var_2_9.bossId
+		local var_2_11 = var_2_9.monster
 
-		if not string.nilorempty(slot16.monster) then
-			for slot23, slot24 in ipairs(string.splitToNumber(slot18, "#")) do
-				if not lua_monster_skill_template.configDict[lua_monster.configDict[slot24].skillTemplate] then
-					logError("怪物表技能模版不存在，怪物id = " .. slot25.id .. ", 模版id = " .. slot25.skillTemplate)
+		if not string.nilorempty(var_2_11) then
+			local var_2_12 = string.splitToNumber(var_2_11, "#")
+
+			for iter_2_2, iter_2_3 in ipairs(var_2_12) do
+				local var_2_13 = lua_monster.configDict[iter_2_3]
+				local var_2_14 = lua_monster_skill_template.configDict[var_2_13.skillTemplate]
+
+				if not var_2_14 then
+					logError("怪物表技能模版不存在，怪物id = " .. var_2_13.id .. ", 模版id = " .. var_2_13.skillTemplate)
 				end
 
-				if not tonumber(slot26[slot2]) or slot27 <= 0 then
-					slot27 = tonumber(slot26.represent2)
+				local var_2_15 = tonumber(var_2_14[var_2_1])
+
+				if not var_2_15 or var_2_15 <= 0 then
+					var_2_15 = tonumber(var_2_14.represent2)
 				end
 
-				if slot27 and slot27 > 0 then
-					if FightHelper.isBossId(slot17, slot24) then
-						slot0:_spawnFactionEntity(slot27)
+				if var_2_15 and var_2_15 > 0 then
+					if FightHelper.isBossId(var_2_10, iter_2_3) then
+						arg_2_0:_spawnFactionEntity(var_2_15)
 
 						return
 					else
-						slot9[slot27] = (slot9[slot27] or 0) + 1
+						var_2_7[var_2_15] = (var_2_7[var_2_15] or 0) + 1
 					end
 				end
 			end
 		end
 	end
 
-	slot12 = 0
+	local var_2_16 = 0
+	local var_2_17 = 0
 
-	for slot16, slot17 in pairs(slot9) do
-		if 0 < slot17 then
-			slot11 = slot17
-			slot12 = slot16
-		elseif slot17 == slot11 and slot16 < slot12 then
-			slot12 = slot16
+	for iter_2_4, iter_2_5 in pairs(var_2_7) do
+		if var_2_16 < iter_2_5 then
+			var_2_16 = iter_2_5
+			var_2_17 = iter_2_4
+		elseif iter_2_5 == var_2_16 and iter_2_4 < var_2_17 then
+			var_2_17 = iter_2_4
 		end
 	end
 
-	if slot12 > 0 then
-		slot0:_spawnFactionEntity(slot12)
+	if var_2_17 > 0 then
+		arg_2_0:_spawnFactionEntity(var_2_17)
 	end
 end
 
-function slot0._spawnFactionEntity(slot0, slot1)
-	if not (FightEnum.FactionToSkin[slot1] and FightConfig.instance:getSkinCO(slot2)) then
+function var_0_0._spawnFactionEntity(arg_3_0, arg_3_1)
+	local var_3_0 = FightEnum.FactionToSkin[arg_3_1]
+	local var_3_1 = var_3_0 and FightConfig.instance:getSkinCO(var_3_0)
+
+	if not var_3_1 then
 		return
 	end
 
-	slot0:_buildTempSpineByName("preview", slot3, FightEnum.EntitySide.EnemySide)
+	arg_3_0:_buildTempSpineByName("preview", var_3_1, FightEnum.EntitySide.EnemySide)
 end
 
-function slot0.destroyEntity(slot0)
-	slot0:removeAllUnits()
+function var_0_0.destroyEntity(arg_4_0)
+	arg_4_0:removeAllUnits()
 end
 
-function slot0.onSceneClose(slot0)
-	uv0.super.onSceneClose(slot0)
+function var_0_0.onSceneClose(arg_5_0)
+	var_0_0.super.onSceneClose(arg_5_0)
 end
 
-function slot0._buildTempSpineByName(slot0, slot1, slot2, slot3)
-	slot5 = MonoHelper.addLuaComOnceToGo(gohelper.create3d(slot0._containerGO, slot1), FightEntityTemp, slot1)
+function var_0_0._buildTempSpineByName(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
+	local var_6_0 = gohelper.create3d(arg_6_0._containerGO, arg_6_1)
+	local var_6_1 = MonoHelper.addLuaComOnceToGo(var_6_0, FightEntityTemp, arg_6_1)
+	local var_6_2 = FightHelper.getSpineLookDir(arg_6_3)
 
-	slot5:setSide(slot3)
-	slot0:addUnit(slot5)
-	slot5:loadSpineBySkin(slot2, slot0._onTempSpineLoaded, slot0)
-	slot5.spine:changeLookDir(FightHelper.getSpineLookDir(slot3))
-	slot5.spine:play(SpineAnimState.idle1, true, true)
-	transformhelper.setLocalPos(slot5.go.transform, unpack(cjson.decode(CommonConfig.instance:getConstStr(ConstEnum.HeroGroupPreviewPos))))
-	slot5:setSpeed(FightModel.instance:getSpeed())
+	var_6_1:setSide(arg_6_3)
+	arg_6_0:addUnit(var_6_1)
+	var_6_1:loadSpineBySkin(arg_6_2, arg_6_0._onTempSpineLoaded, arg_6_0)
+	var_6_1.spine:changeLookDir(var_6_2)
 
-	return slot5
+	local var_6_3 = SpineAnimState.idle1
+
+	var_6_1.spine:play(var_6_3, true, true)
+
+	local var_6_4 = CommonConfig.instance:getConstStr(ConstEnum.HeroGroupPreviewPos)
+	local var_6_5 = cjson.decode(var_6_4)
+
+	transformhelper.setLocalPos(var_6_1.go.transform, unpack(var_6_5))
+	var_6_1:setSpeed(FightModel.instance:getSpeed())
+
+	return var_6_1
 end
 
-function slot0._onTempSpineLoaded(slot0, slot1, slot2)
-	if slot1 then
-		GameSceneMgr.instance:getCurScene().bloom:addEntity(slot2)
-		FightMsgMgr.sendMsg(FightMsgId.SpineLoadFinish, slot1)
-		FightController.instance:dispatchEvent(FightEvent.OnSpineLoaded, slot1)
+function var_0_0._onTempSpineLoaded(arg_7_0, arg_7_1, arg_7_2)
+	if arg_7_1 then
+		GameSceneMgr.instance:getCurScene().bloom:addEntity(arg_7_2)
+		FightMsgMgr.sendMsg(FightMsgId.SpineLoadFinish, arg_7_1)
+		FightController.instance:dispatchEvent(FightEvent.OnSpineLoaded, arg_7_1)
 	end
 end
 
-return slot0
+return var_0_0

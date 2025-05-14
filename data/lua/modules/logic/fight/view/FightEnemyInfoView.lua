@@ -1,51 +1,57 @@
-module("modules.logic.fight.view.FightEnemyInfoView", package.seeall)
+﻿module("modules.logic.fight.view.FightEnemyInfoView", package.seeall)
 
-slot0 = class("FightEnemyInfoView", BaseView)
+local var_0_0 = class("FightEnemyInfoView", BaseView)
 
-function slot0.onInitView(slot0)
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+function var_0_0.onInitView(arg_1_0)
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.GMHideFightView, slot0._checkHideUI, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.OnCameraFocusChanged, slot0._onCameraFocusChanged, slot0)
-	slot0:addEventCb(PCInputController.instance, PCInputEvent.NotifyBattleOpenEnemyInfo, slot0.OnOpenEnemyInfo, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0:addEventCb(FightController.instance, FightEvent.GMHideFightView, arg_2_0._checkHideUI, arg_2_0)
+	arg_2_0:addEventCb(FightController.instance, FightEvent.OnCameraFocusChanged, arg_2_0._onCameraFocusChanged, arg_2_0)
+	arg_2_0:addEventCb(PCInputController.instance, PCInputEvent.NotifyBattleOpenEnemyInfo, arg_2_0.OnOpenEnemyInfo, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0:removeEventCb(FightController.instance, FightEvent.GMHideFightView, slot0._checkHideUI, slot0)
-	slot0:removeEventCb(FightController.instance, FightEvent.OnCameraFocusChanged, slot0._onCameraFocusChanged, slot0)
-	slot0:removeEventCb(PCInputController.instance, PCInputEvent.NotifyBattleOpenEnemyInfo, slot0.OnOpenEnemyInfo, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0:removeEventCb(FightController.instance, FightEvent.GMHideFightView, arg_3_0._checkHideUI, arg_3_0)
+	arg_3_0:removeEventCb(FightController.instance, FightEvent.OnCameraFocusChanged, arg_3_0._onCameraFocusChanged, arg_3_0)
+	arg_3_0:removeEventCb(PCInputController.instance, PCInputEvent.NotifyBattleOpenEnemyInfo, arg_3_0.OnOpenEnemyInfo, arg_3_0)
 end
 
-function slot0._editableInitView(slot0)
-	slot0.enemyInfoBtn = gohelper.findChildButton(slot0.viewGO, "root/topLeftContent/enemyinfo/#btn_enemyinfo")
-	slot0.enemyInfoGo = gohelper.findChild(slot0.viewGO, "root/topLeftContent/enemyinfo/")
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0.enemyInfoBtn = gohelper.findChildButton(arg_4_0.viewGO, "root/topLeftContent/enemyinfo/#btn_enemyinfo")
+	arg_4_0.enemyInfoGo = gohelper.findChild(arg_4_0.viewGO, "root/topLeftContent/enemyinfo/")
 
-	gohelper.setActive(slot0.enemyInfoGo, OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.FightBack) and not FightReplayModel.instance:isReplay() and GMFightShowState.leftMonster)
+	local var_4_0 = OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.FightBack)
+	local var_4_1 = FightReplayModel.instance:isReplay()
 
-	if slot1 then
-		slot0.enemyInfoBtn:AddClickListener(slot0.enemyInfoBtnOnClick, slot0)
+	gohelper.setActive(arg_4_0.enemyInfoGo, var_4_0 and not var_4_1 and GMFightShowState.leftMonster)
+
+	if var_4_0 then
+		arg_4_0.enemyInfoBtn:AddClickListener(arg_4_0.enemyInfoBtnOnClick, arg_4_0)
 	end
 end
 
-function slot0.OnOpenEnemyInfo(slot0)
+function var_0_0.OnOpenEnemyInfo(arg_5_0)
 	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.FightBack) then
-		slot0:enemyInfoBtnOnClick()
+		arg_5_0:enemyInfoBtnOnClick()
 	end
 end
 
-function slot0._onCameraFocusChanged(slot0, slot1)
-	slot0._isFocus = slot1
+function var_0_0._onCameraFocusChanged(arg_6_0, arg_6_1)
+	arg_6_0._isFocus = arg_6_1
 end
 
-function slot0._checkHideUI(slot0)
-	gohelper.setActive(slot0.enemyInfoGo, OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.FightBack) and not FightReplayModel.instance:isReplay() and GMFightShowState.leftMonster)
+function var_0_0._checkHideUI(arg_7_0)
+	local var_7_0 = OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.FightBack)
+	local var_7_1 = FightReplayModel.instance:isReplay()
+
+	gohelper.setActive(arg_7_0.enemyInfoGo, var_7_0 and not var_7_1 and GMFightShowState.leftMonster)
 end
 
-function slot0.enemyInfoBtnOnClick(slot0)
+function var_0_0.enemyInfoBtnOnClick(arg_8_0)
 	if FightReplayModel.instance:isReplay() then
 		return
 	end
@@ -78,7 +84,7 @@ function slot0.enemyInfoBtnOnClick(slot0)
 		return
 	end
 
-	if slot0._isFocus then
+	if arg_8_0._isFocus then
 		logNormal("正在查看怪物详情，不给点")
 
 		return
@@ -88,11 +94,11 @@ function slot0.enemyInfoBtnOnClick(slot0)
 		return
 	end
 
-	slot0.viewContainer:openFightFocusView()
+	arg_8_0.viewContainer:openFightFocusView()
 end
 
-function slot0.onClose(slot0)
-	slot0.enemyInfoBtn:RemoveClickListener()
+function var_0_0.onClose(arg_9_0)
+	arg_9_0.enemyInfoBtn:RemoveClickListener()
 end
 
-return slot0
+return var_0_0

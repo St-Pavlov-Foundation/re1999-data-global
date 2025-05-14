@@ -1,28 +1,28 @@
-module("modules.logic.seasonver.act123.view.Season123PickHeroEntryViewContainer", package.seeall)
+﻿module("modules.logic.seasonver.act123.view.Season123PickHeroEntryViewContainer", package.seeall)
 
-slot0 = class("Season123PickHeroEntryViewContainer", BaseViewContainer)
+local var_0_0 = class("Season123PickHeroEntryViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		Season123CheckCloseView.New(),
 		Season123PickHeroEntryView.New()
 	}
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
-		slot0._navigateButtonView = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == 1 then
+		arg_2_0._navigateButtonView = NavigateButtonsView.New({
 			true,
 			false,
 			true
 		})
 
-		slot0._navigateButtonView:setHelpId(HelpEnum.HelpId.Season1_7SelectHeroHelp)
+		arg_2_0._navigateButtonView:setHelpId(HelpEnum.HelpId.Season1_7SelectHeroHelp)
 
 		return {
-			slot0._navigateButtonView
+			arg_2_0._navigateButtonView
 		}
 	end
 end
 
-return slot0
+return var_0_0

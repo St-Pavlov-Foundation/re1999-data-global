@@ -1,193 +1,214 @@
-module("modules.logic.weekwalk.view.WeekWalkReviveView", package.seeall)
+﻿module("modules.logic.weekwalk.view.WeekWalkReviveView", package.seeall)
 
-slot0 = class("WeekWalkReviveView", BaseView)
+local var_0_0 = class("WeekWalkReviveView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_bg")
-	slot0._txtruledesc = gohelper.findChildText(slot0.viewGO, "#txt_ruledesc")
-	slot0._btndetail = gohelper.findChildButtonWithAudio(slot0.viewGO, "bottomLeft/#btn_detail")
-	slot0._btnok = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_ok")
-	slot0._gocardlist = gohelper.findChild(slot0.viewGO, "#go_cardlist")
-	slot0._gotemplate = gohelper.findChild(slot0.viewGO, "#go_cardlist/#go_template")
-	slot0._gorecommendAttr = gohelper.findChild(slot0.viewGO, "#go_recommendAttr")
-	slot0._goattritem = gohelper.findChild(slot0.viewGO, "#go_recommendAttr/attrlist/#go_attritem")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
+	arg_1_0._txtruledesc = gohelper.findChildText(arg_1_0.viewGO, "#txt_ruledesc")
+	arg_1_0._btndetail = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "bottomLeft/#btn_detail")
+	arg_1_0._btnok = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_ok")
+	arg_1_0._gocardlist = gohelper.findChild(arg_1_0.viewGO, "#go_cardlist")
+	arg_1_0._gotemplate = gohelper.findChild(arg_1_0.viewGO, "#go_cardlist/#go_template")
+	arg_1_0._gorecommendAttr = gohelper.findChild(arg_1_0.viewGO, "#go_recommendAttr")
+	arg_1_0._goattritem = gohelper.findChild(arg_1_0.viewGO, "#go_recommendAttr/attrlist/#go_attritem")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btndetail:AddClickListener(slot0._btndetailOnClick, slot0)
-	slot0._btnok:AddClickListener(slot0._btnokOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btndetail:AddClickListener(arg_2_0._btndetailOnClick, arg_2_0)
+	arg_2_0._btnok:AddClickListener(arg_2_0._btnokOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btndetail:RemoveClickListener()
-	slot0._btnok:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btndetail:RemoveClickListener()
+	arg_3_0._btnok:RemoveClickListener()
 end
 
-function slot0._btndetailOnClick(slot0)
-	EnemyInfoController.instance:openWeekWalkEnemyInfoView(slot0._mapInfo.id)
+function var_0_0._btndetailOnClick(arg_4_0)
+	EnemyInfoController.instance:openWeekWalkEnemyInfoView(arg_4_0._mapInfo.id)
 end
 
-function slot0._btnokOnClick(slot0)
-	slot1 = {}
+function var_0_0._btnokOnClick(arg_5_0)
+	local var_5_0 = {}
 
-	for slot5, slot6 in pairs(slot0._heroItemList) do
-		if slot6._isSelected then
-			table.insert(slot1, slot6._mo.heroId)
+	for iter_5_0, iter_5_1 in pairs(arg_5_0._heroItemList) do
+		if iter_5_1._isSelected then
+			table.insert(var_5_0, iter_5_1._mo.heroId)
 		end
 	end
 
-	if #slot1 <= 0 then
+	if #var_5_0 <= 0 then
 		return
 	end
 
-	WeekwalkRpc.instance:sendSelectNotCdHeroRequest(slot1)
+	WeekwalkRpc.instance:sendSelectNotCdHeroRequest(var_5_0)
 end
 
-function slot0._editableInitView(slot0)
-	slot0:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnSelectNotCdHeroReply, slot0.closeThis, slot0)
-	slot0._simagebg:LoadImage(ResUrl.getWeekWalkBg("full/bg_beijigntu.png"))
-	gohelper.addUIClickAudio(slot0._btnok.gameObject, AudioEnum.WeekWalk.play_artificial_ui_commonchoose)
-	gohelper.addUIClickAudio(slot0._btndetail.gameObject, AudioEnum.UI.play_ui_action_explore)
+function var_0_0._editableInitView(arg_6_0)
+	arg_6_0:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnSelectNotCdHeroReply, arg_6_0.closeThis, arg_6_0)
+	arg_6_0._simagebg:LoadImage(ResUrl.getWeekWalkBg("full/bg_beijigntu.png"))
+	gohelper.addUIClickAudio(arg_6_0._btnok.gameObject, AudioEnum.WeekWalk.play_artificial_ui_commonchoose)
+	gohelper.addUIClickAudio(arg_6_0._btndetail.gameObject, AudioEnum.UI.play_ui_action_explore)
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_7_0)
+	return
 end
 
-function slot0._recommendCareer(slot0)
-	if not slot0._mapInfo:getNoStarBattleInfo() then
-		gohelper.setActive(slot0._gorecommendAttr, false)
+function var_0_0._recommendCareer(arg_8_0)
+	local var_8_0 = arg_8_0._mapInfo:getNoStarBattleInfo()
+
+	if not var_8_0 then
+		gohelper.setActive(arg_8_0._gorecommendAttr, false)
 
 		return
 	end
 
-	slot5, slot6 = FightHelper.getAttributeCounter(string.splitToNumber(lua_battle.configDict[slot1.battleId].monsterGroupIds, "#"))
+	local var_8_1 = var_8_0.battleId
+	local var_8_2 = lua_battle.configDict[var_8_1]
+	local var_8_3 = string.splitToNumber(var_8_2.monsterGroupIds, "#")
+	local var_8_4, var_8_5 = FightHelper.getAttributeCounter(var_8_3)
+	local var_8_6 = #var_8_4
 
-	gohelper.setActive(slot0._gorecommendAttr, #slot5 > 0)
+	gohelper.setActive(arg_8_0._gorecommendAttr, var_8_6 > 0)
 
-	if slot7 > 0 then
-		for slot11, slot12 in ipairs(slot5) do
-			slot14 = gohelper.cloneInPlace(slot0._goattritem)
+	if var_8_6 > 0 then
+		for iter_8_0, iter_8_1 in ipairs(var_8_4) do
+			local var_8_7 = "career_" .. iter_8_1
+			local var_8_8 = gohelper.cloneInPlace(arg_8_0._goattritem)
 
-			gohelper.setActive(slot14, true)
-			UISpriteSetMgr.instance:setHeroGroupSprite(gohelper.findChildImage(slot14, "icon"), "career_" .. slot12)
+			gohelper.setActive(var_8_8, true)
+
+			local var_8_9 = gohelper.findChildImage(var_8_8, "icon")
+
+			UISpriteSetMgr.instance:setHeroGroupSprite(var_8_9, var_8_7)
 		end
 	end
 end
 
-function slot0.onOpen(slot0)
-	slot0._mapInfo = WeekWalkModel.instance:getCurMapInfo()
-	slot0._mapConfig = WeekWalkModel.instance:getCurMapConfig()
-	slot0._heroItemList = {}
-	slot0._txtruledesc.text = formatLuaLang("weekwalkreviveview_ruledesc", slot0._mapConfig.notCdHeroCount)
+function var_0_0.onOpen(arg_9_0)
+	arg_9_0._mapInfo = WeekWalkModel.instance:getCurMapInfo()
+	arg_9_0._mapConfig = WeekWalkModel.instance:getCurMapConfig()
+	arg_9_0._heroItemList = {}
+	arg_9_0._txtruledesc.text = formatLuaLang("weekwalkreviveview_ruledesc", arg_9_0._mapConfig.notCdHeroCount)
 
-	slot0:_showHeroList()
-	slot0:_updateBtn()
-	slot0:_recommendCareer()
+	arg_9_0:_showHeroList()
+	arg_9_0:_updateBtn()
+	arg_9_0:_recommendCareer()
 
 	if GameSceneMgr.instance:getCurSceneType() == SceneType.Fight then
-		slot0:_playBgm(AudioEnum.WeekWalk.play_artificial_layer_type_1)
+		arg_9_0:_playBgm(AudioEnum.WeekWalk.play_artificial_layer_type_1)
 	end
 end
 
-function slot0._playBgm(slot0, slot1)
-	slot0._bgmId = slot1
+function var_0_0._playBgm(arg_10_0, arg_10_1)
+	arg_10_0._bgmId = arg_10_1
 
-	AudioMgr.instance:trigger(slot0._bgmId)
+	AudioMgr.instance:trigger(arg_10_0._bgmId)
 end
 
-function slot0._stopBgm(slot0)
-	if slot0._bgmId then
+function var_0_0._stopBgm(arg_11_0)
+	if arg_11_0._bgmId then
 		AudioMgr.instance:trigger(AudioEnum.WeekWalk.stop_sleepwalkingaudio)
 
-		slot0._bgmId = nil
+		arg_11_0._bgmId = nil
 	end
 end
 
-function slot0._showHeroList(slot0)
-	for slot5, slot6 in ipairs(slot0._mapInfo:getHeroInfoList()) do
-		slot0:_addHeroItem(slot6)
+function var_0_0._showHeroList(arg_12_0)
+	local var_12_0 = arg_12_0._mapInfo:getHeroInfoList()
+
+	for iter_12_0, iter_12_1 in ipairs(var_12_0) do
+		arg_12_0:_addHeroItem(iter_12_1)
 	end
 end
 
-function slot0._addHeroItem(slot0, slot1)
-	slot2 = gohelper.cloneInPlace(slot0._gotemplate)
+function var_0_0._addHeroItem(arg_13_0, arg_13_1)
+	local var_13_0 = gohelper.cloneInPlace(arg_13_0._gotemplate)
 
-	gohelper.setActive(slot2, true)
+	gohelper.setActive(var_13_0, true)
 
-	slot3 = gohelper.findChild(slot2, "go_retain")
+	local var_13_1 = gohelper.findChild(var_13_0, "go_retain")
 
-	gohelper.setActive(slot3, false)
+	gohelper.setActive(var_13_1, false)
 
-	slot5 = IconMgr.instance:getCommonHeroItem(gohelper.findChild(slot2, "hero"))
-	slot7 = HeroModel.instance:getByHeroId(slot1.heroId)
+	local var_13_2 = gohelper.findChild(var_13_0, "hero")
+	local var_13_3 = IconMgr.instance:getCommonHeroItem(var_13_2)
+	local var_13_4 = arg_13_1.heroId
+	local var_13_5 = HeroModel.instance:getByHeroId(var_13_4)
 
-	slot5:onUpdateMO(slot7)
-	slot5:addClickListener(slot0._heroItemClick, slot0)
-	slot5:setDamage(true)
-	slot5:setNewShow(false)
-	slot5:setEffectVisible(false)
-	slot5:setInjuryTxtVisible(false)
+	var_13_3:onUpdateMO(var_13_5)
+	var_13_3:addClickListener(arg_13_0._heroItemClick, arg_13_0)
+	var_13_3:setDamage(true)
+	var_13_3:setNewShow(false)
+	var_13_3:setEffectVisible(false)
+	var_13_3:setInjuryTxtVisible(false)
 
-	slot8 = slot0:getUserDataTb_()
-	slot8._mo = slot7
-	slot8._isSelected = false
-	slot8._heroItem = slot5
-	slot8._retainGo = slot3
-	slot0._heroItemList[slot7] = slot8
+	local var_13_6 = arg_13_0:getUserDataTb_()
+
+	var_13_6._mo = var_13_5
+	var_13_6._isSelected = false
+	var_13_6._heroItem = var_13_3
+	var_13_6._retainGo = var_13_1
+	arg_13_0._heroItemList[var_13_5] = var_13_6
 end
 
-function slot0._heroItemClick(slot0, slot1)
+function var_0_0._heroItemClick(arg_14_0, arg_14_1)
+	local var_14_0 = arg_14_0._heroItemList[arg_14_1]
+
 	AudioMgr.instance:trigger(AudioEnum.WeekWalk.play_artificial_ui_fight_choosecard)
 
-	if not slot0._heroItemList[slot1]._isSelected and slot0._canRevive then
+	if not var_14_0._isSelected and arg_14_0._canRevive then
 		GameFacade.showToast(ToastEnum.WeekWalkRevive)
 
 		return
 	end
 
-	slot2._isSelected = not slot2._isSelected
+	var_14_0._isSelected = not var_14_0._isSelected
 
-	slot0:_updateBtn()
+	arg_14_0:_updateBtn()
 end
 
-function slot0._updateBtn(slot0)
-	for slot6, slot7 in pairs(slot0._heroItemList) do
-		slot2 = 0 + 1
+function var_0_0._updateBtn(arg_15_0)
+	local var_15_0 = 0
+	local var_15_1 = 0
 
-		if slot7._isSelected then
-			slot1 = 0 + 1
+	for iter_15_0, iter_15_1 in pairs(arg_15_0._heroItemList) do
+		var_15_1 = var_15_1 + 1
+
+		if iter_15_1._isSelected then
+			var_15_0 = var_15_0 + 1
 		end
 	end
 
-	slot0._canRevive = math.min(slot2, slot0._mapConfig.notCdHeroCount) <= slot1
-	slot0._btnok.button.interactable = slot0._canRevive
+	arg_15_0._canRevive = var_15_0 >= math.min(var_15_1, arg_15_0._mapConfig.notCdHeroCount)
+	arg_15_0._btnok.button.interactable = arg_15_0._canRevive
 
-	for slot7, slot8 in pairs(slot0._heroItemList) do
-		slot8._heroItem:setSelect(false)
+	for iter_15_2, iter_15_3 in pairs(arg_15_0._heroItemList) do
+		iter_15_3._heroItem:setSelect(false)
 
-		if slot8._isSelected then
-			gohelper.setActive(slot8._retainGo, true)
-			slot8._heroItem:setDamage(false)
-			slot8._heroItem:setInjuryTxtVisible(false)
-			slot8._heroItem:setSelect(true)
+		if iter_15_3._isSelected then
+			gohelper.setActive(iter_15_3._retainGo, true)
+			iter_15_3._heroItem:setDamage(false)
+			iter_15_3._heroItem:setInjuryTxtVisible(false)
+			iter_15_3._heroItem:setSelect(true)
 		else
-			gohelper.setActive(slot8._retainGo, false)
-			slot8._heroItem:setDamage(true)
-			slot8._heroItem:setInjuryTxtVisible(false)
+			gohelper.setActive(iter_15_3._retainGo, false)
+			iter_15_3._heroItem:setDamage(true)
+			iter_15_3._heroItem:setInjuryTxtVisible(false)
 		end
 	end
 end
 
-function slot0.onClose(slot0)
-	slot0:_stopBgm()
+function var_0_0.onClose(arg_16_0)
+	arg_16_0:_stopBgm()
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simagebg:UnLoadImage()
+function var_0_0.onDestroyView(arg_17_0)
+	arg_17_0._simagebg:UnLoadImage()
 end
 
-return slot0
+return var_0_0

@@ -1,11 +1,11 @@
-module("modules.logic.explore.view.ExploreBlackViewContainer", package.seeall)
+﻿module("modules.logic.explore.view.ExploreBlackViewContainer", package.seeall)
 
-slot0 = class("ExploreBlackViewContainer", BaseViewContainer)
+local var_0_0 = class("ExploreBlackViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		ExploreBlackView.New()
 	}
 end
 
-return slot0
+return var_0_0

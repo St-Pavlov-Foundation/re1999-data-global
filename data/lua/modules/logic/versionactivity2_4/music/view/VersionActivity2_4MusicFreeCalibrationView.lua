@@ -1,57 +1,64 @@
-module("modules.logic.versionactivity2_4.music.view.VersionActivity2_4MusicFreeCalibrationView", package.seeall)
+﻿module("modules.logic.versionactivity2_4.music.view.VersionActivity2_4MusicFreeCalibrationView", package.seeall)
 
-slot0 = class("VersionActivity2_4MusicFreeCalibrationView", BaseView)
+local var_0_0 = class("VersionActivity2_4MusicFreeCalibrationView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gocalibrationlist = gohelper.findChild(slot0.viewGO, "root/#go_calibrationlist")
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/#btn_close")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gocalibrationlist = gohelper.findChild(arg_1_0.viewGO, "root/#go_calibrationlist")
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_close")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseOnClick(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0.onClickModalMask(slot0)
-	slot0:closeThis()
+function var_0_0.onClickModalMask(arg_5_0)
+	arg_5_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._itemList = slot0:getUserDataTb_()
+function var_0_0._editableInitView(arg_6_0)
+	arg_6_0._itemList = arg_6_0:getUserDataTb_()
 
-	for slot4 = 1, 3 do
-		slot0:_addItem(slot4):onUpdateMO(slot4)
+	for iter_6_0 = 1, 3 do
+		arg_6_0:_addItem(iter_6_0):onUpdateMO(iter_6_0)
 	end
 end
 
-function slot0._addItem(slot0, slot1)
-	slot4 = MonoHelper.addNoUpdateLuaComOnceToGo(slot0:getResInst(slot0.viewContainer:getSetting().otherRes[1], slot0._gocalibrationlist), VersionActivity2_4MusicFreeCalibrationItem)
-	slot0._itemList[slot1] = slot4
+function var_0_0._addItem(arg_7_0, arg_7_1)
+	local var_7_0 = arg_7_0.viewContainer:getSetting().otherRes[1]
+	local var_7_1 = arg_7_0:getResInst(var_7_0, arg_7_0._gocalibrationlist)
+	local var_7_2 = MonoHelper.addNoUpdateLuaComOnceToGo(var_7_1, VersionActivity2_4MusicFreeCalibrationItem)
 
-	return slot4
+	arg_7_0._itemList[arg_7_1] = var_7_2
+
+	return var_7_2
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_8_0)
+	return
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_9_0)
+	return
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_10_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_11_0)
+	return
 end
 
-return slot0
+return var_0_0

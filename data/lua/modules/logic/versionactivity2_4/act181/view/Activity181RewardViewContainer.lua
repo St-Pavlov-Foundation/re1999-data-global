@@ -1,13 +1,13 @@
-module("modules.logic.versionactivity2_4.act181.view.Activity181RewardViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity2_4.act181.view.Activity181RewardViewContainer", package.seeall)
 
-slot0 = class("Activity181RewardViewContainer", BaseViewContainer)
+local var_0_0 = class("Activity181RewardViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, Activity181RewardView.New())
+	table.insert(var_1_0, Activity181RewardView.New())
 
-	return slot1
+	return var_1_0
 end
 
-return slot0
+return var_0_0

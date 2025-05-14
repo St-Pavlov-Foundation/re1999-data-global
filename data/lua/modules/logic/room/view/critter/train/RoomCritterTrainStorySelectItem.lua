@@ -1,123 +1,126 @@
-module("modules.logic.room.view.critter.train.RoomCritterTrainStorySelectItem", package.seeall)
+﻿module("modules.logic.room.view.critter.train.RoomCritterTrainStorySelectItem", package.seeall)
 
-slot0 = class("RoomCritterTrainStorySelectItem")
+local var_0_0 = class("RoomCritterTrainStorySelectItem")
 
-function slot0.init(slot0, slot1, slot2)
-	slot0.go = gohelper.cloneInPlace(slot1, string.format("selectItem%s", slot2))
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0.go = gohelper.cloneInPlace(arg_1_1, string.format("selectItem%s", arg_1_2))
 
-	gohelper.setActive(slot0.go, false)
+	gohelper.setActive(arg_1_0.go, false)
 
-	slot0._btnselect = gohelper.findChildButtonWithAudio(slot0.go, "btnselect")
-	slot0._goselectlight = gohelper.findChild(slot0.go, "btnselect/light")
-	slot0._gobgdark = gohelper.findChild(slot0.go, "bgdark")
-	slot0._imageicon = gohelper.findChildImage(slot0.go, "bgdark/icon")
-	slot0._txtcontentdark = gohelper.findChildText(slot0.go, "bgdark/txtcontentdark")
-	slot0._txtnum = gohelper.findChildText(slot0.go, "bgdark/#txt_num")
-	slot0._golvup = gohelper.findChild(slot0.go, "go_lvup")
-	slot0._txtlvup = gohelper.findChildText(slot0.go, "go_lvup/txt_lvup")
-	slot0._goup = gohelper.findChild(slot0.go, "go_up")
-	slot0._gonum = gohelper.findChild(slot0.go, "go_num")
-	slot0._txtcountnum = gohelper.findChildText(slot0.go, "go_num/#txt_num")
-	slot0._btncancel = gohelper.findChildButtonWithAudio(slot0.go, "btncancel")
-	slot0._goselecteff = gohelper.findChild(slot0.go, "#selecteff")
+	arg_1_0._btnselect = gohelper.findChildButtonWithAudio(arg_1_0.go, "btnselect")
+	arg_1_0._goselectlight = gohelper.findChild(arg_1_0.go, "btnselect/light")
+	arg_1_0._gobgdark = gohelper.findChild(arg_1_0.go, "bgdark")
+	arg_1_0._imageicon = gohelper.findChildImage(arg_1_0.go, "bgdark/icon")
+	arg_1_0._txtcontentdark = gohelper.findChildText(arg_1_0.go, "bgdark/txtcontentdark")
+	arg_1_0._txtnum = gohelper.findChildText(arg_1_0.go, "bgdark/#txt_num")
+	arg_1_0._golvup = gohelper.findChild(arg_1_0.go, "go_lvup")
+	arg_1_0._txtlvup = gohelper.findChildText(arg_1_0.go, "go_lvup/txt_lvup")
+	arg_1_0._goup = gohelper.findChild(arg_1_0.go, "go_up")
+	arg_1_0._gonum = gohelper.findChild(arg_1_0.go, "go_num")
+	arg_1_0._txtcountnum = gohelper.findChildText(arg_1_0.go, "go_num/#txt_num")
+	arg_1_0._btncancel = gohelper.findChildButtonWithAudio(arg_1_0.go, "btncancel")
+	arg_1_0._goselecteff = gohelper.findChild(arg_1_0.go, "#selecteff")
 
-	gohelper.setActive(slot0._golvup, false)
-	gohelper.setActive(slot0._goselecteff, false)
-	slot0:_addEvents()
+	gohelper.setActive(arg_1_0._golvup, false)
+	gohelper.setActive(arg_1_0._goselecteff, false)
+	arg_1_0:_addEvents()
 end
 
-function slot0._addEvents(slot0)
-	slot0._btnselect:AddClickListener(slot0._btnselectOnClick, slot0)
-	slot0._btncancel:AddClickListener(slot0._btncancelOnClick, slot0)
+function var_0_0._addEvents(arg_2_0)
+	arg_2_0._btnselect:AddClickListener(arg_2_0._btnselectOnClick, arg_2_0)
+	arg_2_0._btncancel:AddClickListener(arg_2_0._btncancelOnClick, arg_2_0)
 end
 
-function slot0._removeEvents(slot0)
-	slot0._btnselect:RemoveClickListener()
-	slot0._btncancel:RemoveClickListener()
+function var_0_0._removeEvents(arg_3_0)
+	arg_3_0._btnselect:RemoveClickListener()
+	arg_3_0._btncancel:RemoveClickListener()
 end
 
-function slot0.show(slot0, slot1, slot2, slot3, slot4)
-	slot0._optionId = slot1
-	slot0._count = slot4
-	slot0._attributeMO = slot2.trainInfo:getEventOptionMOByOptionId(slot3, slot1).addAttriButes[1]
-	slot0._attributeInfo = slot2:getAttributeInfoByType(slot0._attributeMO.attributeId)
-	slot0._addAttributeValue = slot2.trainInfo:getAddAttributeValue(slot0._attributeMO.attributeId)
-	slot0._attributeCo = CritterConfig.instance:getCritterAttributeCfg(slot0._attributeMO.attributeId)
-	slot0._critterMo = slot2
-	slot0._eventId = slot3
+function var_0_0.show(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4)
+	arg_4_0._optionId = arg_4_1
+	arg_4_0._count = arg_4_4
+	arg_4_0._attributeMO = arg_4_2.trainInfo:getEventOptionMOByOptionId(arg_4_3, arg_4_1).addAttriButes[1]
+	arg_4_0._attributeInfo = arg_4_2:getAttributeInfoByType(arg_4_0._attributeMO.attributeId)
+	arg_4_0._addAttributeValue = arg_4_2.trainInfo:getAddAttributeValue(arg_4_0._attributeMO.attributeId)
+	arg_4_0._attributeCo = CritterConfig.instance:getCritterAttributeCfg(arg_4_0._attributeMO.attributeId)
+	arg_4_0._critterMo = arg_4_2
+	arg_4_0._eventId = arg_4_3
 
-	slot0:_refreshItem()
+	arg_4_0:_refreshItem()
 end
 
-function slot0._btncancelOnClick(slot0)
-	if RoomTrainCritterModel.instance:getSelectOptionCount(slot0._optionId) <= 0 then
+function var_0_0._btncancelOnClick(arg_5_0)
+	if RoomTrainCritterModel.instance:getSelectOptionCount(arg_5_0._optionId) <= 0 then
 		return
 	end
 
-	RoomController.instance:dispatchEvent(RoomEvent.CritterTrainAttributeCancel, slot0._attributeCo.id, slot0._optionId)
+	RoomController.instance:dispatchEvent(RoomEvent.CritterTrainAttributeCancel, arg_5_0._attributeCo.id, arg_5_0._optionId)
 end
 
-function slot0._btnselectOnClick(slot0)
-	gohelper.setActive(slot0._goselecteff, false)
-	TaskDispatcher.cancelTask(slot0._playSelectFinished, slot0)
+function var_0_0._btnselectOnClick(arg_6_0)
+	gohelper.setActive(arg_6_0._goselecteff, false)
+	TaskDispatcher.cancelTask(arg_6_0._playSelectFinished, arg_6_0)
 
 	if RoomTrainCritterModel.instance:getSelectOptionLimitCount() <= 0 then
 		return
 	end
 
-	if slot0._count and slot0._count < 1 then
-		gohelper.setActive(slot0._goselecteff, true)
-		TaskDispatcher.runDelay(slot0._playSelectFinished, slot0, 0.34)
+	if arg_6_0._count and arg_6_0._count < 1 then
+		gohelper.setActive(arg_6_0._goselecteff, true)
+		TaskDispatcher.runDelay(arg_6_0._playSelectFinished, arg_6_0, 0.34)
 	end
 
-	RoomController.instance:dispatchEvent(RoomEvent.CritterTrainAttributeSelected, slot0._attributeCo.id, slot0._optionId)
+	RoomController.instance:dispatchEvent(RoomEvent.CritterTrainAttributeSelected, arg_6_0._attributeCo.id, arg_6_0._optionId)
 end
 
-function slot0._playSelectFinished(slot0)
-	gohelper.setActive(slot0._goselecteff, false)
+function var_0_0._playSelectFinished(arg_7_0)
+	gohelper.setActive(arg_7_0._goselecteff, false)
 end
 
-function slot0._refreshItem(slot0)
-	gohelper.setActive(slot0._goselectlight, slot0._count and slot0._count > 0)
-	gohelper.setActive(slot0._btncancel.gameObject, slot0._count and slot0._count > 0)
-	ZProj.TweenHelper.KillByObj(slot0.go)
+function var_0_0._refreshItem(arg_8_0)
+	gohelper.setActive(arg_8_0._goselectlight, arg_8_0._count and arg_8_0._count > 0)
+	gohelper.setActive(arg_8_0._btncancel.gameObject, arg_8_0._count and arg_8_0._count > 0)
+	ZProj.TweenHelper.KillByObj(arg_8_0.go)
 
-	if not slot0.go.activeSelf then
-		gohelper.setActive(slot0.go, true)
-		ZProj.TweenHelper.DOFadeCanvasGroup(slot0.go, 0, 1, 0.6)
+	if not arg_8_0.go.activeSelf then
+		gohelper.setActive(arg_8_0.go, true)
+		ZProj.TweenHelper.DOFadeCanvasGroup(arg_8_0.go, 0, 1, 0.6)
 	end
 
-	slot0._txtcontentdark.text = slot0._attributeCo.name
+	arg_8_0._txtcontentdark.text = arg_8_0._attributeCo.name
 
-	UISpriteSetMgr.instance:setCritterSprite(slot0._imageicon, slot0._attributeCo.icon)
+	UISpriteSetMgr.instance:setCritterSprite(arg_8_0._imageicon, arg_8_0._attributeCo.icon)
 
-	slot0._txtnum.text = string.format("+%.02f", slot0._attributeMO.value)
+	arg_8_0._txtnum.text = string.format("+%.02f", arg_8_0._attributeMO.value)
 
-	gohelper.setActive(slot0._gonum, slot0._count and slot0._count > 0)
+	gohelper.setActive(arg_8_0._gonum, arg_8_0._count and arg_8_0._count > 0)
 
-	slot0._txtcountnum.text = slot0._count or 0
-	slot1 = false
+	arg_8_0._txtcountnum.text = arg_8_0._count or 0
 
-	if CritterConfig.instance:getCritterHeroPreferenceCfg(slot0._critterMo.trainInfo.heroId).effectAttribute == slot0._attributeMO.attributeId then
-		slot1 = true
+	local var_8_0 = false
+
+	if CritterConfig.instance:getCritterHeroPreferenceCfg(arg_8_0._critterMo.trainInfo.heroId).effectAttribute == arg_8_0._attributeMO.attributeId then
+		var_8_0 = true
 	end
 
-	gohelper.setActive(slot0._goup, slot1)
+	gohelper.setActive(arg_8_0._goup, var_8_0)
 
-	slot3 = slot0._attributeInfo.value + slot0._addAttributeValue
-	slot6 = CritterConfig.instance:getCritterAttributeLevelCfgByValue(RoomTrainCritterModel.instance:getSelectOptionCount(slot0._optionId) * slot0._attributeMO.value + slot3).level
+	local var_8_1 = arg_8_0._attributeInfo.value + arg_8_0._addAttributeValue
+	local var_8_2 = CritterConfig.instance:getCritterAttributeLevelCfgByValue(var_8_1).level
+	local var_8_3 = RoomTrainCritterModel.instance:getSelectOptionCount(arg_8_0._optionId)
+	local var_8_4 = CritterConfig.instance:getCritterAttributeLevelCfgByValue(var_8_3 * arg_8_0._attributeMO.value + var_8_1).level
 
-	if CritterConfig.instance:getCritterAttributeLevelCfgByValue(slot3).level == CritterConfig.instance:getMaxCritterAttributeLevelCfg().level then
-		slot0._txtnum.text = string.format("+%.02f(MAX)", slot0._attributeMO.value)
+	if var_8_2 == CritterConfig.instance:getMaxCritterAttributeLevelCfg().level then
+		arg_8_0._txtnum.text = string.format("+%.02f(MAX)", arg_8_0._attributeMO.value)
 	end
 
-	gohelper.setActive(slot0._golvup, slot4 < slot6)
+	gohelper.setActive(arg_8_0._golvup, var_8_2 < var_8_4)
 end
 
-function slot0.destroy(slot0)
-	slot0:_removeEvents()
-	TaskDispatcher.cancelTask(slot0._playSelectFinished, slot0)
-	ZProj.TweenHelper.KillByObj(slot0.go)
+function var_0_0.destroy(arg_9_0)
+	arg_9_0:_removeEvents()
+	TaskDispatcher.cancelTask(arg_9_0._playSelectFinished, arg_9_0)
+	ZProj.TweenHelper.KillByObj(arg_9_0.go)
 end
 
-return slot0
+return var_0_0

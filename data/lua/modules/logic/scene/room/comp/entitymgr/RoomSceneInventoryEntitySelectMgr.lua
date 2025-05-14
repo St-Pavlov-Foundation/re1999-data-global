@@ -1,42 +1,43 @@
-module("modules.logic.scene.room.comp.entitymgr.RoomSceneInventoryEntitySelectMgr", package.seeall)
+﻿module("modules.logic.scene.room.comp.entitymgr.RoomSceneInventoryEntitySelectMgr", package.seeall)
 
-slot0 = class("RoomSceneInventoryEntitySelectMgr", BaseSceneUnitMgr)
+local var_0_0 = class("RoomSceneInventoryEntitySelectMgr", BaseSceneUnitMgr)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.init(slot0, slot1, slot2)
-	slot0._scene = slot0:getCurScene()
-	slot0._inventoryRootGO = slot0._scene.go.inventoryRootGO
-	slot0._inventoryBlockIdList = {}
-	slot0._entityPosInfoList = {}
-	slot0._locationParamDic = {}
+function var_0_0.init(arg_2_0, arg_2_1, arg_2_2)
+	arg_2_0._scene = arg_2_0:getCurScene()
+	arg_2_0._inventoryRootGO = arg_2_0._scene.go.inventoryRootGO
+	arg_2_0._inventoryBlockIdList = {}
+	arg_2_0._entityPosInfoList = {}
+	arg_2_0._locationParamDic = {}
 
-	for slot6 = 1, 24 do
-		table.insert(slot0._entityPosInfoList, {
+	for iter_2_0 = 1, 24 do
+		table.insert(arg_2_0._entityPosInfoList, {
 			blockId = 0,
 			remove = false,
-			index = slot6
+			index = iter_2_0
 		})
 	end
 
-	slot0:refreshInventoryBlock()
+	arg_2_0:refreshInventoryBlock()
 end
 
-function slot0.refreshInventoryBlock(slot0)
+function var_0_0.refreshInventoryBlock(arg_3_0)
 	if not RoomController.instance:isEditMode() then
 		return
 	end
 
-	if slot0:_isHasEntity() then
-		slot0._scene.camera:refreshOrthCamera()
+	if arg_3_0:_isHasEntity() then
+		arg_3_0._scene.camera:refreshOrthCamera()
 	end
 end
 
-function slot0._isHasEntity(slot0)
-	if slot0._entityPosInfoList then
-		for slot4, slot5 in ipairs(slot0._entityPosInfoList) do
-			if slot5.blockId ~= 0 then
+function var_0_0._isHasEntity(arg_4_0)
+	if arg_4_0._entityPosInfoList then
+		for iter_4_0, iter_4_1 in ipairs(arg_4_0._entityPosInfoList) do
+			if iter_4_1.blockId ~= 0 then
 				return true
 			end
 		end
@@ -45,199 +46,223 @@ function slot0._isHasEntity(slot0)
 	return false
 end
 
-function slot0.addBlockEntity(slot0, slot1, slot2)
-	if slot1 then
-		slot0:_setTransform(slot0:_getOrcreateUnit(slot1, slot2), slot0:_findIndexById(slot1))
-		slot0:refreshInventoryBlock()
+function var_0_0.addBlockEntity(arg_5_0, arg_5_1, arg_5_2)
+	if arg_5_1 then
+		local var_5_0 = arg_5_0:_getOrcreateUnit(arg_5_1, arg_5_2)
+
+		arg_5_0:_setTransform(var_5_0, arg_5_0:_findIndexById(arg_5_1))
+		arg_5_0:refreshInventoryBlock()
 	end
 end
 
-function slot0.removeBlockEntity(slot0, slot1)
-	if slot1 then
-		slot0:_deleteById(slot1)
-		slot0:refreshInventoryBlock()
+function var_0_0.removeBlockEntity(arg_6_0, arg_6_1)
+	if arg_6_1 then
+		arg_6_0:_deleteById(arg_6_1)
+		arg_6_0:refreshInventoryBlock()
 	end
 end
 
-function slot0.getIndexById(slot0, slot1)
-	for slot5, slot6 in ipairs(slot0._entityPosInfoList) do
-		if slot6.blockId == slot1 then
-			return slot6.index
+function var_0_0.getIndexById(arg_7_0, arg_7_1)
+	for iter_7_0, iter_7_1 in ipairs(arg_7_0._entityPosInfoList) do
+		if iter_7_1.blockId == arg_7_1 then
+			return iter_7_1.index
 		end
 	end
 end
 
-function slot0._removeIndexById(slot0, slot1)
-	for slot5, slot6 in ipairs(slot0._entityPosInfoList) do
-		if slot6.blockId == slot1 then
-			slot6.blockId = 0
+function var_0_0._removeIndexById(arg_8_0, arg_8_1)
+	for iter_8_0, iter_8_1 in ipairs(arg_8_0._entityPosInfoList) do
+		if iter_8_1.blockId == arg_8_1 then
+			iter_8_1.blockId = 0
 
-			return slot6.index
+			return iter_8_1.index
 		end
 	end
 end
 
-function slot0._findIndexById(slot0, slot1)
-	if slot0:getIndexById(slot1) then
-		return slot2
+function var_0_0._findIndexById(arg_9_0, arg_9_1)
+	local var_9_0 = arg_9_0:getIndexById(arg_9_1)
+
+	if var_9_0 then
+		return var_9_0
 	end
 
-	for slot6, slot7 in ipairs(slot0._entityPosInfoList) do
-		if slot7.blockId == 0 then
-			slot7.blockId = slot1
+	for iter_9_0, iter_9_1 in ipairs(arg_9_0._entityPosInfoList) do
+		if iter_9_1.blockId == 0 then
+			iter_9_1.blockId = arg_9_1
 
-			return slot7.index
+			return iter_9_1.index
 		end
 	end
 end
 
-function slot0._getOrcreateUnit(slot0, slot1, slot2)
-	if not slot0:getUnit(SceneTag.RoomInventoryBlock, slot1) then
-		slot4 = gohelper.create3d(slot0._inventoryRootGO, string.format("block_%d", slot1))
-		slot3 = MonoHelper.addNoUpdateLuaComOnceToGo(slot4, RoomInventoryBlockEntity, {
-			entityId = slot1,
-			isWaterReform = slot2
+function var_0_0._getOrcreateUnit(arg_10_0, arg_10_1, arg_10_2)
+	local var_10_0 = arg_10_0:getUnit(SceneTag.RoomInventoryBlock, arg_10_1)
+
+	if not var_10_0 then
+		local var_10_1 = gohelper.create3d(arg_10_0._inventoryRootGO, string.format("block_%d", arg_10_1))
+
+		var_10_0 = MonoHelper.addNoUpdateLuaComOnceToGo(var_10_1, RoomInventoryBlockEntity, {
+			entityId = arg_10_1,
+			isWaterReform = arg_10_2
 		})
-		slot3.retainCount = 1
+		var_10_0.retainCount = 1
 
-		slot0:addUnit(slot3)
-		table.insert(slot0._inventoryBlockIdList, slot1)
-		gohelper.addChild(slot0._inventoryRootGO, slot4)
+		arg_10_0:addUnit(var_10_0)
+		table.insert(arg_10_0._inventoryBlockIdList, arg_10_1)
+		gohelper.addChild(arg_10_0._inventoryRootGO, var_10_1)
 	else
-		slot3.retainCount = slot3.retainCount + 1
+		var_10_0.retainCount = var_10_0.retainCount + 1
 	end
 
-	slot0:refreshInventoryBlock()
+	arg_10_0:refreshInventoryBlock()
 
-	return slot3
+	return var_10_0
 end
 
-function slot0._deleteById(slot0, slot1)
-	if slot0:getUnit(SceneTag.RoomInventoryBlock, slot1) then
-		slot2.retainCount = slot2.retainCount - 1
+function var_0_0._deleteById(arg_11_0, arg_11_1)
+	local var_11_0 = arg_11_0:getUnit(SceneTag.RoomInventoryBlock, arg_11_1)
 
-		if slot2.retainCount < 1 then
-			slot2.retainCount = 0
+	if var_11_0 then
+		var_11_0.retainCount = var_11_0.retainCount - 1
 
-			slot0:_removeIndexById(slot1)
+		if var_11_0.retainCount < 1 then
+			var_11_0.retainCount = 0
+
+			arg_11_0:_removeIndexById(arg_11_1)
 		end
 	else
-		slot0:_removeIndexById(slot1)
+		arg_11_0:_removeIndexById(arg_11_1)
 	end
 
-	if not slot0._isHasDelayCheckRetainTask then
-		slot0._isHasDelayCheckRetainTask = true
+	if not arg_11_0._isHasDelayCheckRetainTask then
+		arg_11_0._isHasDelayCheckRetainTask = true
 
-		TaskDispatcher.runDelay(slot0._onDelayCheckRetain, slot0, 0.06666666666666667)
+		TaskDispatcher.runDelay(arg_11_0._onDelayCheckRetain, arg_11_0, 0.06666666666666667)
 	end
 
-	slot0:refreshInventoryBlock()
+	arg_11_0:refreshInventoryBlock()
 end
 
-function slot0._onDelayCheckRetain(slot0)
-	slot0._isHasDelayCheckRetainTask = false
+function var_0_0._onDelayCheckRetain(arg_12_0)
+	arg_12_0._isHasDelayCheckRetainTask = false
 
-	for slot5 = #slot0._inventoryBlockIdList, 1, -1 do
-		if not slot0:getIndexById(slot1[slot5]) then
-			table.remove(slot1, slot5)
-			slot0:removeUnit(SceneTag.RoomInventoryBlock, slot6)
+	local var_12_0 = arg_12_0._inventoryBlockIdList
+
+	for iter_12_0 = #var_12_0, 1, -1 do
+		local var_12_1 = var_12_0[iter_12_0]
+
+		if not arg_12_0:getIndexById(var_12_1) then
+			table.remove(var_12_0, iter_12_0)
+			arg_12_0:removeUnit(SceneTag.RoomInventoryBlock, var_12_1)
 		end
 	end
 
-	slot0:refreshInventoryBlock()
+	arg_12_0:refreshInventoryBlock()
 end
 
-function slot0._setTransform(slot0, slot1, slot2)
-	slot3 = slot1.goTrs
-	slot4 = slot0:_getLocationParam(slot2)
+function var_0_0._setTransform(arg_13_0, arg_13_1, arg_13_2)
+	local var_13_0 = arg_13_1.goTrs
+	local var_13_1 = arg_13_0:_getLocationParam(arg_13_2)
 
-	transformhelper.setLocalScale(slot3, slot4.scale, slot4.scale, slot4.scale)
-	transformhelper.setLocalRotation(slot3, slot4.rotationX, slot4.rotationY, slot4.rotationZ)
-	slot1:setLocalPos(slot4.positionX, slot4.positionY, slot4.positionZ)
-	slot1:refreshBlock()
-	slot1:refreshRotation()
-	slot0:refreshInventoryBlock()
+	transformhelper.setLocalScale(var_13_0, var_13_1.scale, var_13_1.scale, var_13_1.scale)
+	transformhelper.setLocalRotation(var_13_0, var_13_1.rotationX, var_13_1.rotationY, var_13_1.rotationZ)
+	arg_13_1:setLocalPos(var_13_1.positionX, var_13_1.positionY, var_13_1.positionZ)
+	arg_13_1:refreshBlock()
+	arg_13_1:refreshRotation()
+	arg_13_0:refreshInventoryBlock()
 end
 
-function slot0.moveForward(slot0)
-	slot0:refreshInventoryBlock()
+function var_0_0.moveForward(arg_14_0)
+	arg_14_0:refreshInventoryBlock()
 end
 
-function slot0.playForwardAnim(slot0, slot1, slot2)
-	slot0:_removeAnim()
+function var_0_0.playForwardAnim(arg_15_0, arg_15_1, arg_15_2)
+	arg_15_0:_removeAnim()
 
-	if slot1 then
-		slot0._forwardAnimCallback = slot1
-		slot0._forwardAnimCallbackObj = slot2
-		slot0._isDelayForwardAminRun = true
+	if arg_15_1 then
+		arg_15_0._forwardAnimCallback = arg_15_1
+		arg_15_0._forwardAnimCallbackObj = arg_15_2
+		arg_15_0._isDelayForwardAminRun = true
 
-		TaskDispatcher.runDelay(slot0._delayForwardAnimCallback, slot0, 0.11)
+		TaskDispatcher.runDelay(arg_15_0._delayForwardAnimCallback, arg_15_0, 0.11)
 	end
 
-	slot0:refreshInventoryBlock()
+	arg_15_0:refreshInventoryBlock()
 end
 
-function slot0._removeAnim(slot0)
-	slot0._forwardAnimCallback = nil
-	slot0._forwardAnimCallbackObj = nil
+function var_0_0._removeAnim(arg_16_0)
+	arg_16_0._forwardAnimCallback = nil
+	arg_16_0._forwardAnimCallbackObj = nil
 
-	if slot0._isDelayForwardAminRun then
-		slot0._isDelayForwardAminRun = false
+	if arg_16_0._isDelayForwardAminRun then
+		arg_16_0._isDelayForwardAminRun = false
 
-		TaskDispatcher.cancelTask(slot0._delayForwardAnimCallback, slot0)
+		TaskDispatcher.cancelTask(arg_16_0._delayForwardAnimCallback, arg_16_0)
 	end
 end
 
-function slot0._delayForwardAnimCallback(slot0)
-	slot0._isDelayForwardAminRun = false
+function var_0_0._delayForwardAnimCallback(arg_17_0)
+	arg_17_0._isDelayForwardAminRun = false
 
-	if slot0._forwardAnimCallback then
-		if slot0._forwardAnimCallbackObj then
-			slot0._forwardAnimCallback(slot0._forwardAnimCallbackObj)
+	if arg_17_0._forwardAnimCallback then
+		if arg_17_0._forwardAnimCallbackObj then
+			arg_17_0._forwardAnimCallback(arg_17_0._forwardAnimCallbackObj)
 		else
-			slot0._forwardAnimCallback()
+			arg_17_0._forwardAnimCallback()
 		end
 	end
 
-	slot0:refreshInventoryBlock()
+	arg_17_0:refreshInventoryBlock()
 end
 
-function slot0._getLocationParam(slot0, slot1)
-	if not slot0._locationParamDic[slot1] then
-		slot2 = {}
-		slot0._locationParamDic[slot1] = slot2
-		slot3 = slot1 - 1
-		slot2.positionX = -2.51 + math.floor(slot3 % 6) * 1
-		slot2.positionY = 0.15
-		slot2.positionZ = -1.55 + math.floor(slot3 / 6) * 1.3125
-		slot2.rotationX = 26
-		slot2.rotationY = 0
-		slot2.rotationZ = 0
-		slot2.scale = 0.9
+function var_0_0._getLocationParam(arg_18_0, arg_18_1)
+	local var_18_0 = arg_18_0._locationParamDic[arg_18_1]
+
+	if not var_18_0 then
+		var_18_0 = {}
+		arg_18_0._locationParamDic[arg_18_1] = var_18_0
+
+		local var_18_1 = arg_18_1 - 1
+		local var_18_2 = 1
+		local var_18_3 = 1.3125
+		local var_18_4 = math.floor(var_18_1 % 6)
+		local var_18_5 = math.floor(var_18_1 / 6)
+
+		var_18_0.positionX = -2.51 + var_18_4 * var_18_2
+		var_18_0.positionY = 0.15
+		var_18_0.positionZ = -1.55 + var_18_5 * var_18_3
+		var_18_0.rotationX = 26
+		var_18_0.rotationY = 0
+		var_18_0.rotationZ = 0
+		var_18_0.scale = 0.9
 	end
 
-	return slot2
+	return var_18_0
 end
 
-function slot0.refreshRemainBlock(slot0)
+function var_0_0.refreshRemainBlock(arg_19_0)
+	return
 end
 
-function slot0.getBlockEntity(slot0, slot1)
-	return slot0:getTagUnitDict(SceneTag.RoomInventoryBlock) and slot2[slot1]
+function var_0_0.getBlockEntity(arg_20_0, arg_20_1)
+	local var_20_0 = arg_20_0:getTagUnitDict(SceneTag.RoomInventoryBlock)
+
+	return var_20_0 and var_20_0[arg_20_1]
 end
 
-function slot0.onSceneClose(slot0)
-	uv0.super.onSceneClose(slot0)
-	TaskDispatcher.cancelTask(slot0._onDelayCheckRetain, slot0)
+function var_0_0.onSceneClose(arg_21_0)
+	var_0_0.super.onSceneClose(arg_21_0)
+	TaskDispatcher.cancelTask(arg_21_0._onDelayCheckRetain, arg_21_0)
 
-	slot0._inventoryBlockIdList = {}
+	arg_21_0._inventoryBlockIdList = {}
 
-	slot0:_removeAnim()
-	slot0:removeAllUnits()
+	arg_21_0:_removeAnim()
+	arg_21_0:removeAllUnits()
 end
 
-function slot0.addUnit(slot0, slot1)
-	uv0.super.addUnit(slot0, slot1)
+function var_0_0.addUnit(arg_22_0, arg_22_1)
+	var_0_0.super.addUnit(arg_22_0, arg_22_1)
 end
 
-return slot0
+return var_0_0

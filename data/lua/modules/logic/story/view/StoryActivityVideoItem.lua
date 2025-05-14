@@ -1,157 +1,160 @@
-module("modules.logic.story.view.StoryActivityVideoItem", package.seeall)
+﻿module("modules.logic.story.view.StoryActivityVideoItem", package.seeall)
 
-slot0 = class("StoryActivityVideoItem")
+local var_0_0 = class("StoryActivityVideoItem")
 
-function slot0.ctor(slot0, slot1)
-	slot0.viewGO = slot1
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0.viewGO = arg_1_1
 end
 
-function slot0.playVideo(slot0, slot1, slot2)
-	if slot1 then
-		slot0._videoName = string.split(slot1, ".")[1]
+function var_0_0.playVideo(arg_2_0, arg_2_1, arg_2_2)
+	if arg_2_1 then
+		arg_2_0._videoName = string.split(arg_2_1, ".")[1]
 	else
-		slot0._videoName = nil
+		arg_2_0._videoName = nil
 	end
 
-	slot2 = slot2 or {}
-	slot0._loop = slot2.loop
-	slot0._videoStartCallback = slot2.startCallback
-	slot0._videoStartCallbackObj = slot2.startCallbackObj
-	slot0._videoOutCallback = slot2.outCallback
-	slot0._videoOutCallbackObj = slot2.outCallbackObj
-	slot0._audioId = slot2.audioId
-	slot0._audioNoStopByFinish = slot2.audioNoStopByFinish
+	arg_2_2 = arg_2_2 or {}
+	arg_2_0._loop = arg_2_2.loop
+	arg_2_0._videoStartCallback = arg_2_2.startCallback
+	arg_2_0._videoStartCallbackObj = arg_2_2.startCallbackObj
+	arg_2_0._videoOutCallback = arg_2_2.outCallback
+	arg_2_0._videoOutCallbackObj = arg_2_2.outCallbackObj
+	arg_2_0._audioId = arg_2_2.audioId
+	arg_2_0._audioNoStopByFinish = arg_2_2.audioNoStopByFinish
 
-	if slot0._videoName then
-		if not slot0._videoGo then
-			slot0:_build()
+	if arg_2_0._videoName then
+		if not arg_2_0._videoGo then
+			arg_2_0:_build()
 		end
 
-		slot0:_playVideo()
+		arg_2_0:_playVideo()
 	else
-		slot0:onVideoStart()
+		arg_2_0:onVideoStart()
 	end
 end
 
-function slot0._build(slot0)
-	slot0._videoGo = gohelper.create2d(slot0.viewGO, slot0._videoName)
-	slot0._avProVideoPlayer = gohelper.onceAddComponent(slot0._videoGo, typeof(ZProj.AvProUGUIPlayer))
-	slot0._displauUGUI = gohelper.onceAddComponent(slot0._videoGo, typeof(RenderHeads.Media.AVProVideo.DisplayUGUI))
-	slot0._displauUGUI.ScaleMode = UnityEngine.ScaleMode.ScaleAndCrop
+function var_0_0._build(arg_3_0)
+	arg_3_0._videoGo = gohelper.create2d(arg_3_0.viewGO, arg_3_0._videoName)
+	arg_3_0._avProVideoPlayer = gohelper.onceAddComponent(arg_3_0._videoGo, typeof(ZProj.AvProUGUIPlayer))
+	arg_3_0._displauUGUI = gohelper.onceAddComponent(arg_3_0._videoGo, typeof(RenderHeads.Media.AVProVideo.DisplayUGUI))
+	arg_3_0._displauUGUI.ScaleMode = UnityEngine.ScaleMode.ScaleAndCrop
 
-	slot0._avProVideoPlayer:AddDisplayUGUI(slot0._displauUGUI)
-	slot0._avProVideoPlayer:SetEventListener(slot0._onVideoEvent, slot0)
-	recthelper.setSize(slot0._videoGo.transform, 2592, 1080)
+	arg_3_0._avProVideoPlayer:AddDisplayUGUI(arg_3_0._displauUGUI)
+	arg_3_0._avProVideoPlayer:SetEventListener(arg_3_0._onVideoEvent, arg_3_0)
+	recthelper.setSize(arg_3_0._videoGo.transform, 2592, 1080)
 end
 
-function slot0._playVideo(slot0)
-	gohelper.setActive(slot0._videoGo, true)
-	slot0._avProVideoPlayer:LoadMedia(langVideoUrl(slot0._videoName))
-	StoryModel.instance:setSpecialVideoPlaying(slot0._videoName)
-	TaskDispatcher.runDelay(slot0._startVideo, slot0, 0.1)
+function var_0_0._playVideo(arg_4_0)
+	gohelper.setActive(arg_4_0._videoGo, true)
+
+	local var_4_0 = langVideoUrl(arg_4_0._videoName)
+
+	arg_4_0._avProVideoPlayer:LoadMedia(var_4_0)
+	StoryModel.instance:setSpecialVideoPlaying(arg_4_0._videoName)
+	TaskDispatcher.runDelay(arg_4_0._startVideo, arg_4_0, 0.1)
 
 	if BootNativeUtil.isIOS() then
-		TaskDispatcher.runRepeat(slot0._detectPause, slot0, 0.05)
+		TaskDispatcher.runRepeat(arg_4_0._detectPause, arg_4_0, 0.05)
 	end
 end
 
-function slot0._startVideo(slot0)
-	slot0._avProVideoPlayer:Play(slot0._displauUGUI, slot0._loop)
+function var_0_0._startVideo(arg_5_0)
+	arg_5_0._avProVideoPlayer:Play(arg_5_0._displauUGUI, arg_5_0._loop)
 end
 
-function slot0.onVideoStart(slot0)
-	if slot0._audioId then
-		AudioEffectMgr.instance:playAudio(slot0._audioId)
+function var_0_0.onVideoStart(arg_6_0)
+	if arg_6_0._audioId then
+		AudioEffectMgr.instance:playAudio(arg_6_0._audioId)
 	end
 
-	if slot0._videoStartCallback then
-		slot0._videoStartCallback(slot0._videoStartCallbackObj)
-	end
-end
-
-function slot0.onVideoOut(slot0, slot1)
-	slot0:hide(slot1)
-
-	if slot0._videoOutCallback then
-		slot0._videoOutCallback(slot0._videoOutCallbackObj)
+	if arg_6_0._videoStartCallback then
+		arg_6_0._videoStartCallback(arg_6_0._videoStartCallbackObj)
 	end
 end
 
-function slot0._onVideoEvent(slot0, slot1, slot2, slot3)
-	if slot3 ~= AvProEnum.ErrorCode.None then
-		slot0:hide(true)
-	end
+function var_0_0.onVideoOut(arg_7_0, arg_7_1)
+	arg_7_0:hide(arg_7_1)
 
-	if slot2 == AvProEnum.PlayerStatus.FirstFrameReady then
-		slot0:onVideoStart()
-	end
-
-	if slot2 == AvProEnum.PlayerStatus.FinishedPlaying then
-		slot0:onVideoOut(true)
+	if arg_7_0._videoOutCallback then
+		arg_7_0._videoOutCallback(arg_7_0._videoOutCallbackObj)
 	end
 end
 
-function slot0.hide(slot0, slot1)
-	if slot0._avProVideoPlayer then
-		slot0._avProVideoPlayer:Stop()
+function var_0_0._onVideoEvent(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
+	if arg_8_3 ~= AvProEnum.ErrorCode.None then
+		arg_8_0:hide(true)
+	end
+
+	if arg_8_2 == AvProEnum.PlayerStatus.FirstFrameReady then
+		arg_8_0:onVideoStart()
+	end
+
+	if arg_8_2 == AvProEnum.PlayerStatus.FinishedPlaying then
+		arg_8_0:onVideoOut(true)
+	end
+end
+
+function var_0_0.hide(arg_9_0, arg_9_1)
+	if arg_9_0._avProVideoPlayer then
+		arg_9_0._avProVideoPlayer:Stop()
 	end
 
 	if BootNativeUtil.isIOS() then
-		TaskDispatcher.cancelTask(slot0._detectPause, slot0)
+		TaskDispatcher.cancelTask(arg_9_0._detectPause, arg_9_0)
 	end
 
-	if slot1 then
-		if not slot0._audioNoStopByFinish then
-			slot0:stopAudio()
+	if arg_9_1 then
+		if not arg_9_0._audioNoStopByFinish then
+			arg_9_0:stopAudio()
 		end
 	else
-		slot0:stopAudio()
+		arg_9_0:stopAudio()
 	end
 
-	gohelper.setActive(slot0._videoGo, false)
+	gohelper.setActive(arg_9_0._videoGo, false)
 end
 
-function slot0._detectPause(slot0)
-	if slot0._avProVideoPlayer:IsPaused() then
-		slot0._avProVideoPlayer:Play()
-	end
-end
-
-function slot0.stopAudio(slot0)
-	if slot0._audioId then
-		AudioEffectMgr.instance:stopAudio(slot0._audioId)
-
-		slot0._audioId = nil
+function var_0_0._detectPause(arg_10_0)
+	if arg_10_0._avProVideoPlayer:IsPaused() then
+		arg_10_0._avProVideoPlayer:Play()
 	end
 end
 
-function slot0.onDestroy(slot0)
-	if slot0._videoName then
-		StoryModel.instance:setSpecialVideoEnd(slot0._videoName)
+function var_0_0.stopAudio(arg_11_0)
+	if arg_11_0._audioId then
+		AudioEffectMgr.instance:stopAudio(arg_11_0._audioId)
+
+		arg_11_0._audioId = nil
+	end
+end
+
+function var_0_0.onDestroy(arg_12_0)
+	if arg_12_0._videoName then
+		StoryModel.instance:setSpecialVideoEnd(arg_12_0._videoName)
 	end
 
-	if slot0._avProVideoPlayer ~= nil then
-		slot0._avProVideoPlayer:Clear()
+	if arg_12_0._avProVideoPlayer ~= nil then
+		arg_12_0._avProVideoPlayer:Clear()
 
-		slot0._avProVideoPlayer = nil
+		arg_12_0._avProVideoPlayer = nil
 	end
 
 	if BootNativeUtil.isIOS() then
-		TaskDispatcher.cancelTask(slot0._detectPause, slot0)
+		TaskDispatcher.cancelTask(arg_12_0._detectPause, arg_12_0)
 	end
 
-	if slot0._videoGo then
-		gohelper.destroy(slot0._videoGo)
+	if arg_12_0._videoGo then
+		gohelper.destroy(arg_12_0._videoGo)
 
-		slot0._videoGo = nil
+		arg_12_0._videoGo = nil
 	end
 
-	slot0._videoOutCallback = nil
-	slot0._videoOutCallbackObj = nil
-	slot0._videoStartCallback = nil
-	slot0._videoStartCallbackObj = nil
+	arg_12_0._videoOutCallback = nil
+	arg_12_0._videoOutCallbackObj = nil
+	arg_12_0._videoStartCallback = nil
+	arg_12_0._videoStartCallbackObj = nil
 
-	slot0:stopAudio()
+	arg_12_0:stopAudio()
 end
 
-return slot0
+return var_0_0

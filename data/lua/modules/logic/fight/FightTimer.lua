@@ -1,57 +1,57 @@
-module("modules.logic.fight.FightTimer", package.seeall)
+﻿module("modules.logic.fight.FightTimer", package.seeall)
 
-slot0 = class("FightTimer")
-slot1 = {}
-slot2 = 0
-slot3 = 10
+local var_0_0 = class("FightTimer")
+local var_0_1 = {}
+local var_0_2 = 0
+local var_0_3 = 10
 
-function slot0.registTimer(slot0, slot1, slot2, slot3)
-	return uv0.registRepeatTimer(slot0, slot1, slot2, 1, slot3)
+function var_0_0.registTimer(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	return var_0_0.registRepeatTimer(arg_1_0, arg_1_1, arg_1_2, 1, arg_1_3)
 end
 
-function slot0.registRepeatTimer(slot0, slot1, slot2, slot3, slot4)
-	slot5 = FightTimerItem.New(slot2, slot3, slot0, slot1, slot4)
+function var_0_0.registRepeatTimer(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4)
+	local var_2_0 = FightTimerItem.New(arg_2_2, arg_2_3, arg_2_0, arg_2_1, arg_2_4)
 
-	table.insert(uv0, slot5)
+	table.insert(var_0_1, var_2_0)
 
-	return slot5
+	return var_2_0
 end
 
-function slot0.cancelTimer(slot0)
-	if not slot0 then
+function var_0_0.cancelTimer(arg_3_0)
+	if not arg_3_0 then
 		return
 	end
 
-	slot0.isDone = true
+	arg_3_0.isDone = true
 end
 
-function slot0.restartRepeatTimer(slot0, slot1, slot2, slot3)
-	slot0:restart(slot1, slot2, slot3)
-	table.insert(uv0, slot0)
+function var_0_0.restartRepeatTimer(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
+	arg_4_0:restart(arg_4_1, arg_4_2, arg_4_3)
+	table.insert(var_0_1, arg_4_0)
 
-	return slot0
+	return arg_4_0
 end
 
-function slot0.update()
-	slot0 = Time.deltaTime
+function var_0_0.update()
+	local var_5_0 = Time.deltaTime
 
-	for slot4, slot5 in ipairs(uv0) do
-		slot5:update(slot0)
+	for iter_5_0, iter_5_1 in ipairs(var_0_1) do
+		iter_5_1:update(var_5_0)
 	end
 
-	uv1 = uv1 + slot0
+	var_0_2 = var_0_2 + var_5_0
 
-	if uv2 < uv1 then
-		uv1 = 0
+	if var_0_2 > var_0_3 then
+		var_0_2 = 0
 
-		for slot4 = #uv0, 1, -1 do
-			if uv0[slot4].isDone then
-				table.remove(uv0, slot4)
+		for iter_5_2 = #var_0_1, 1, -1 do
+			if var_0_1[iter_5_2].isDone then
+				table.remove(var_0_1, iter_5_2)
 			end
 		end
 	end
 end
 
-UpdateBeat:Add(slot0.update, slot0)
+UpdateBeat:Add(var_0_0.update, var_0_0)
 
-return slot0
+return var_0_0

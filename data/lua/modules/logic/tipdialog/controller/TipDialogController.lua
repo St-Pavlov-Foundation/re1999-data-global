@@ -1,30 +1,36 @@
-module("modules.logic.tipdialog.controller.TipDialogController", package.seeall)
+﻿module("modules.logic.tipdialog.controller.TipDialogController", package.seeall)
 
-slot0 = class("TipDialogController", BaseController)
+local var_0_0 = class("TipDialogController", BaseController)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.onInitFinish(slot0)
+function var_0_0.onInitFinish(arg_2_0)
+	return
 end
 
-function slot0.addConstEvents(slot0)
+function var_0_0.addConstEvents(arg_3_0)
+	return
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_4_0)
+	return
 end
 
-function slot0.openTipDialogView(slot0, slot1, slot2, slot3, slot4, slot5, slot6)
-	ViewMgr.instance:openView(ViewName.TipDialogView, {
-		dialogId = slot1,
-		callback = slot2,
-		callbackTarget = slot3,
-		auto = slot4,
-		autoplayTime = slot5,
-		widthPercentage = slot6
-	})
+function var_0_0.openTipDialogView(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4, arg_5_5, arg_5_6)
+	local var_5_0 = {
+		dialogId = arg_5_1,
+		callback = arg_5_2,
+		callbackTarget = arg_5_3,
+		auto = arg_5_4,
+		autoplayTime = arg_5_5,
+		widthPercentage = arg_5_6
+	}
+
+	ViewMgr.instance:openView(ViewName.TipDialogView, var_5_0)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

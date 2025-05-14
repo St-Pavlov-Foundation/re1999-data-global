@@ -1,129 +1,131 @@
-module("modules.logic.rouge.model.rpcmo.RougeInfoMO", package.seeall)
+﻿module("modules.logic.rouge.model.rpcmo.RougeInfoMO", package.seeall)
 
-slot0 = pureTable("RougeInfoMO")
+local var_0_0 = pureTable("RougeInfoMO")
 
-function slot0.init(slot0, slot1)
-	if slot1:HasField("season") then
-		slot0.season = slot1.season
+function var_0_0.init(arg_1_0, arg_1_1)
+	if arg_1_1:HasField("season") then
+		arg_1_0.season = arg_1_1.season
 	else
-		slot0.season = nil
+		arg_1_0.season = nil
 	end
 
-	slot0.version = {}
+	arg_1_0.version = {}
 
-	for slot5, slot6 in ipairs(slot1.version) do
-		table.insert(slot0.version, slot6)
+	for iter_1_0, iter_1_1 in ipairs(arg_1_1.version) do
+		table.insert(arg_1_0.version, iter_1_1)
 	end
 
-	slot0.state = slot1.state
-	slot0.difficulty = slot1.difficulty
-	slot0.lastReward = slot1.lastReward
-	slot0.selectRewardNum = slot1.selectRewardNum
-	slot0.selectRewardId = slot1.selectRewardId
-	slot0.style = slot1.style
-	slot0.teamLevel = slot1.teamLevel
-	slot0.teamExp = slot1.teamExp
-	slot0.teamSize = slot1.teamSize
-	slot0.coin = slot1.coin
-	slot0.talentPoint = slot1.talentPoint
-	slot0.power = slot1.power
-	slot0.powerLimit = slot1.powerLimit
-	slot0.endId = slot1.endId
-	slot0.endId = slot1.endId
-	slot0.retryNum = slot1.retryNum
-	slot0.gameNum = slot1.gameNum
+	arg_1_0.state = arg_1_1.state
+	arg_1_0.difficulty = arg_1_1.difficulty
+	arg_1_0.lastReward = arg_1_1.lastReward
+	arg_1_0.selectRewardNum = arg_1_1.selectRewardNum
+	arg_1_0.selectRewardId = arg_1_1.selectRewardId
+	arg_1_0.style = arg_1_1.style
+	arg_1_0.teamLevel = arg_1_1.teamLevel
+	arg_1_0.teamExp = arg_1_1.teamExp
+	arg_1_0.teamSize = arg_1_1.teamSize
+	arg_1_0.coin = arg_1_1.coin
+	arg_1_0.talentPoint = arg_1_1.talentPoint
+	arg_1_0.power = arg_1_1.power
+	arg_1_0.powerLimit = arg_1_1.powerLimit
+	arg_1_0.endId = arg_1_1.endId
+	arg_1_0.endId = arg_1_1.endId
+	arg_1_0.retryNum = arg_1_1.retryNum
+	arg_1_0.gameNum = arg_1_1.gameNum
 
-	slot0:updateTeamInfo(slot1.teamInfo)
+	arg_1_0:updateTeamInfo(arg_1_1.teamInfo)
 
-	if slot1.talentTree then
-		slot0:updateTalentInfo(slot1.talentTree.rougeTalent)
+	if arg_1_1.talentTree then
+		arg_1_0:updateTalentInfo(arg_1_1.talentTree.rougeTalent)
 	end
 
 	RougeCollectionModel.instance:init()
-	RougeCollectionModel.instance:onReceiveNewInfo2Slot(slot1.bag.layouts)
-	RougeCollectionModel.instance:onReceiveNewInfo2Bag(slot1.warehouse.items)
-	slot0:updateEffect(slot1.effectInfo)
-	slot0:updateGameLimiterInfo(slot1)
+	RougeCollectionModel.instance:onReceiveNewInfo2Slot(arg_1_1.bag.layouts)
+	RougeCollectionModel.instance:onReceiveNewInfo2Bag(arg_1_1.warehouse.items)
+	arg_1_0:updateEffect(arg_1_1.effectInfo)
+	arg_1_0:updateGameLimiterInfo(arg_1_1)
 end
 
-function slot0.updateTeamInfo(slot0, slot1)
-	slot0.teamInfo = RougeTeamInfoMO.New()
+function var_0_0.updateTeamInfo(arg_2_0, arg_2_1)
+	arg_2_0.teamInfo = RougeTeamInfoMO.New()
 
-	slot0.teamInfo:init(slot1)
+	arg_2_0.teamInfo:init(arg_2_1)
 end
 
-function slot0.updateTeamLife(slot0, slot1)
-	if not slot0.teamInfo then
+function var_0_0.updateTeamLife(arg_3_0, arg_3_1)
+	if not arg_3_0.teamInfo then
 		return
 	end
 
-	slot0.teamInfo:updateTeamLife(slot1)
+	arg_3_0.teamInfo:updateTeamLife(arg_3_1)
 end
 
-function slot0.updateTeamLifeAndDispatchEvent(slot0, slot1)
-	if not slot0.teamInfo then
+function var_0_0.updateTeamLifeAndDispatchEvent(arg_4_0, arg_4_1)
+	if not arg_4_0.teamInfo then
 		return
 	end
 
-	slot0.teamInfo:updateTeamLifeAndDispatchEvent(slot1)
+	arg_4_0.teamInfo:updateTeamLifeAndDispatchEvent(arg_4_1)
 end
 
-function slot0.updateExtraHeroInfo(slot0, slot1)
-	if not slot0.teamInfo then
+function var_0_0.updateExtraHeroInfo(arg_5_0, arg_5_1)
+	if not arg_5_0.teamInfo then
 		return
 	end
 
-	slot0.teamInfo:updateExtraHeroInfo(slot1)
+	arg_5_0.teamInfo:updateExtraHeroInfo(arg_5_1)
 end
 
-function slot0.updateTalentInfo(slot0, slot1)
-	slot0.talentInfo = GameUtil.rpcInfosToList(slot1, RougeTalentMO)
+function var_0_0.updateTalentInfo(arg_6_0, arg_6_1)
+	arg_6_0.talentInfo = GameUtil.rpcInfosToList(arg_6_1, RougeTalentMO)
 end
 
-function slot0.isContinueLast(slot0)
-	return slot0.state ~= RougeEnum.State.Empty and slot0.state ~= RougeEnum.State.isEnd
+function var_0_0.isContinueLast(arg_7_0)
+	return arg_7_0.state ~= RougeEnum.State.Empty and arg_7_0.state ~= RougeEnum.State.isEnd
 end
 
-function slot0.isCanSelectRewards(slot0)
-	return #slot0.lastReward > 0
+function var_0_0.isCanSelectRewards(arg_8_0)
+	return #arg_8_0.lastReward > 0
 end
 
-function slot0.updateEffect(slot0, slot1)
-	slot0.effectDict = slot0.effectDict or {}
+function var_0_0.updateEffect(arg_9_0, arg_9_1)
+	arg_9_0.effectDict = arg_9_0.effectDict or {}
 
-	for slot5, slot6 in ipairs(slot1) do
-		for slot11, slot12 in ipairs(slot6.effectId) do
-			if not slot0.effectDict[slot12] then
-				slot0.effectDict[slot12] = RougeMapConfig.instance:getRougeEffect(slot12)
+	for iter_9_0, iter_9_1 in ipairs(arg_9_1) do
+		local var_9_0 = iter_9_1.effectId
+
+		for iter_9_2, iter_9_3 in ipairs(var_9_0) do
+			if not arg_9_0.effectDict[iter_9_3] then
+				arg_9_0.effectDict[iter_9_3] = RougeMapConfig.instance:getRougeEffect(iter_9_3)
 			end
 		end
 	end
 end
 
-function slot0.getEffectDict(slot0)
-	return slot0.effectDict
+function var_0_0.getEffectDict(arg_10_0)
+	return arg_10_0.effectDict
 end
 
-function slot0.getDeadHeroNum(slot0)
-	return slot0.teamInfo and slot0.teamInfo:getDeadHeroNum() or 0
+function var_0_0.getDeadHeroNum(arg_11_0)
+	return arg_11_0.teamInfo and arg_11_0.teamInfo:getDeadHeroNum() or 0
 end
 
-function slot0.updateGameLimiterInfo(slot0, slot1)
-	slot0._gameLimiterMo = nil
+function var_0_0.updateGameLimiterInfo(arg_12_0, arg_12_1)
+	arg_12_0._gameLimiterMo = nil
 
-	if slot1:HasField("limiterInfo") then
-		slot0._gameLimiterMo = RougeGameLimiterMO.New()
+	if arg_12_1:HasField("limiterInfo") then
+		arg_12_0._gameLimiterMo = RougeGameLimiterMO.New()
 
-		slot0._gameLimiterMo:init(slot1.limiterInfo)
+		arg_12_0._gameLimiterMo:init(arg_12_1.limiterInfo)
 	end
 end
 
-function slot0.getGameLimiterMo(slot0)
-	return slot0._gameLimiterMo
+function var_0_0.getGameLimiterMo(arg_13_0)
+	return arg_13_0._gameLimiterMo
 end
 
-function slot0.checkMountDlc(slot0)
-	return slot0.version and #slot0.version > 0
+function var_0_0.checkMountDlc(arg_14_0)
+	return arg_14_0.version and #arg_14_0.version > 0
 end
 
-return slot0
+return var_0_0

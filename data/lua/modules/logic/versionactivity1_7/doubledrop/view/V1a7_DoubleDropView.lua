@@ -1,92 +1,111 @@
-module("modules.logic.versionactivity1_7.doubledrop.view.V1a7_DoubleDropView", package.seeall)
+﻿module("modules.logic.versionactivity1_7.doubledrop.view.V1a7_DoubleDropView", package.seeall)
 
-slot0 = class("V1a7_DoubleDropView", BaseView)
+local var_0_0 = class("V1a7_DoubleDropView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._txtTime = gohelper.findChildTextMesh(slot0.viewGO, "go_time/#go_deadline2/#txt_deadline2")
-	slot0._txtDesc = gohelper.findChildTextMesh(slot0.viewGO, "go_desc/#scroll_desc/Viewport/#txt_desc")
-	slot0._txtTotalTimes = gohelper.findChildTextMesh(slot0.viewGO, "go_times/go_total/#txt_totaltimes")
-	slot0._goToday = gohelper.findChild(slot0.viewGO, "go_times/go_today")
-	slot0._txtTotalDayTimes = gohelper.findChildTextMesh(slot0.viewGO, "go_times/go_today/#txt_totalday")
-	slot0._btnJump = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_jump")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._txtTime = gohelper.findChildTextMesh(arg_1_0.viewGO, "go_time/#go_deadline2/#txt_deadline2")
+	arg_1_0._txtDesc = gohelper.findChildTextMesh(arg_1_0.viewGO, "go_desc/#scroll_desc/Viewport/#txt_desc")
+	arg_1_0._txtTotalTimes = gohelper.findChildTextMesh(arg_1_0.viewGO, "go_times/go_total/#txt_totaltimes")
+	arg_1_0._goToday = gohelper.findChild(arg_1_0.viewGO, "go_times/go_today")
+	arg_1_0._txtTotalDayTimes = gohelper.findChildTextMesh(arg_1_0.viewGO, "go_times/go_today/#txt_totalday")
+	arg_1_0._btnJump = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_jump")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0:addClickCb(slot0._btnJump, slot0._onClickJump, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0:addClickCb(arg_2_0._btnJump, arg_2_0._onClickJump, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0:removeClickCb(slot0._btnJump)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0:removeClickCb(arg_3_0._btnJump)
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_4_0)
+	return
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0.actId = slot0.viewParam.actId
+function var_0_0.onUpdateParam(arg_5_0)
+	arg_5_0.actId = arg_5_0.viewParam.actId
 
-	slot0:refresh()
+	arg_5_0:refresh()
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_6_0)
 	StatController.instance:track(StatEnum.EventName.EnterDoubleEquip)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_mln_page_turn)
-	gohelper.addChild(slot0.viewParam.parent, slot0.viewGO)
 
-	slot0.actId = slot0.viewParam.actId
+	local var_6_0 = arg_6_0.viewParam.parent
 
-	slot0:refresh()
+	gohelper.addChild(var_6_0, arg_6_0.viewGO)
+
+	arg_6_0.actId = arg_6_0.viewParam.actId
+
+	arg_6_0:refresh()
 end
 
-function slot0.refresh(slot0)
-	if (slot2 and slot2.config and slot2.config.totalLimit or 0) - (DoubleDropModel.instance:getById(slot0.actId) and slot2.totalCount or 0) > 0 then
-		slot0._txtTotalTimes.text = string.format("<color=#DE9854>%s</color>/%s", slot5, slot4)
+function var_0_0.refresh(arg_7_0)
+	local var_7_0 = arg_7_0.actId
+	local var_7_1 = DoubleDropModel.instance:getById(var_7_0)
+	local var_7_2 = var_7_1 and var_7_1.totalCount or 0
+	local var_7_3 = var_7_1 and var_7_1.config and var_7_1.config.totalLimit or 0
+	local var_7_4 = var_7_3 - var_7_2
+
+	if var_7_4 > 0 then
+		arg_7_0._txtTotalTimes.text = string.format("<color=#DE9854>%s</color>/%s", var_7_4, var_7_3)
 	else
-		slot0._txtTotalTimes.text = string.format("<color=#BF2E11>%s</color>/%s", slot5, slot4)
+		arg_7_0._txtTotalTimes.text = string.format("<color=#BF2E11>%s</color>/%s", var_7_4, var_7_3)
 	end
 
-	slot6, slot7 = DoubleDropModel.instance:getDailyRemainTimes(slot1)
+	local var_7_5, var_7_6 = DoubleDropModel.instance:getDailyRemainTimes(var_7_0)
 
-	if slot6 > 0 then
-		slot0._txtTotalDayTimes.text = string.format("<color=#DE9854>%s</color>/%s", slot6, slot7)
+	if var_7_5 > 0 then
+		arg_7_0._txtTotalDayTimes.text = string.format("<color=#DE9854>%s</color>/%s", var_7_5, var_7_6)
 	else
-		slot0._txtTotalDayTimes.text = string.format("<color=#BF2E11>%s</color>/%s", slot6, slot7)
+		arg_7_0._txtTotalDayTimes.text = string.format("<color=#BF2E11>%s</color>/%s", var_7_5, var_7_6)
 	end
 
-	gohelper.setActive(slot0._goToday, slot5 > 0)
+	gohelper.setActive(arg_7_0._goToday, var_7_4 > 0)
 
-	slot0._txtDesc.text = ActivityConfig.instance:getActivityCo(slot1) and slot8.actDesc or ""
+	local var_7_7 = ActivityConfig.instance:getActivityCo(var_7_0)
 
-	slot0:refreshRemainTime()
-	TaskDispatcher.cancelTask(slot0.refreshRemainTime, slot0)
-	TaskDispatcher.runRepeat(slot0.refreshRemainTime, slot0, 1)
+	arg_7_0._txtDesc.text = var_7_7 and var_7_7.actDesc or ""
+
+	arg_7_0:refreshRemainTime()
+	TaskDispatcher.cancelTask(arg_7_0.refreshRemainTime, arg_7_0)
+	TaskDispatcher.runRepeat(arg_7_0.refreshRemainTime, arg_7_0, 1)
 end
 
-function slot0.refreshRemainTime(slot0)
-	if not ActivityModel.instance:getActMO(slot0.actId) then
+function var_0_0.refreshRemainTime(arg_8_0)
+	local var_8_0 = ActivityModel.instance:getActMO(arg_8_0.actId)
+
+	if not var_8_0 then
 		return
 	end
 
-	if slot1:getRealEndTimeStamp() - ServerTime.now() > 0 then
-		slot0._txtTime.text = TimeUtil.SecondToActivityTimeFormat(slot2)
+	local var_8_1 = var_8_0:getRealEndTimeStamp() - ServerTime.now()
+
+	if var_8_1 > 0 then
+		local var_8_2 = TimeUtil.SecondToActivityTimeFormat(var_8_1)
+
+		arg_8_0._txtTime.text = var_8_2
 	else
-		slot0._txtTime.text = luaLang("ended")
+		arg_8_0._txtTime.text = luaLang("ended")
 	end
 end
 
-function slot0._onClickJump(slot0)
+function var_0_0._onClickJump(arg_9_0)
 	GameFacade.jump(3601)
 end
 
-function slot0.onClose(slot0)
-	TaskDispatcher.cancelTask(slot0.refreshRemainTime, slot0)
+function var_0_0.onClose(arg_10_0)
+	TaskDispatcher.cancelTask(arg_10_0.refreshRemainTime, arg_10_0)
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_11_0)
+	return
 end
 
-return slot0
+return var_0_0

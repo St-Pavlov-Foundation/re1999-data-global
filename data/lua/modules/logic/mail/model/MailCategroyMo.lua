@@ -1,56 +1,58 @@
-module("modules.logic.mail.model.MailCategroyMo", package.seeall)
+﻿module("modules.logic.mail.model.MailCategroyMo", package.seeall)
 
-slot0 = class("MailCategroyMo")
+local var_0_0 = class("MailCategroyMo")
 
-function slot0.ctor(slot0)
-	slot0.id = 0
-	slot0.mailId = 1
-	slot0.state = MailEnum.ReadStatus.Unread
-	slot0.createTime = 0
-	slot0.params = ""
-	slot0.itemGroup = {}
-	slot0.sender = ""
-	slot0.senderMap = {}
-	slot0.senderType = 1
-	slot0.titleMap = {}
-	slot0.title = ""
-	slot0.contentMap = {}
-	slot0.icon = ""
-	slot0.addressee = ""
-	slot0.copy = ""
-	slot0.jumpTitle = ""
-	slot0.jump = ""
-	slot0.expireTime = 0
-	slot0.image = ""
-	slot0.needShowToast = 0
-	slot0.specialTag = nil
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.id = 0
+	arg_1_0.mailId = 1
+	arg_1_0.state = MailEnum.ReadStatus.Unread
+	arg_1_0.createTime = 0
+	arg_1_0.params = ""
+	arg_1_0.itemGroup = {}
+	arg_1_0.sender = ""
+	arg_1_0.senderMap = {}
+	arg_1_0.senderType = 1
+	arg_1_0.titleMap = {}
+	arg_1_0.title = ""
+	arg_1_0.contentMap = {}
+	arg_1_0.icon = ""
+	arg_1_0.addressee = ""
+	arg_1_0.copy = ""
+	arg_1_0.jumpTitle = ""
+	arg_1_0.jump = ""
+	arg_1_0.expireTime = 0
+	arg_1_0.image = ""
+	arg_1_0.needShowToast = 0
+	arg_1_0.specialTag = nil
 end
 
-function slot0.init(slot0, slot1)
-	slot0.mailId = slot1.id
-	slot0.sender = slot0:getTemplateSender()
-	slot0.title = slot0:getTemplateTitle()
-	slot0.icon = slot1.icon
-	slot0.addressee = slot1.addressee
-	slot0.copy = slot1.copy
-	slot0.jumpTitle = slot0:getTemplateJumpTitle()
-	slot0.jump = slot1.jump
-	slot0.image = slot1.image
-	slot0.specialTag = slot1.specialTag
-	slot0.senderType = slot1.senderType
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.mailId = arg_2_1.id
+	arg_2_0.sender = arg_2_0:getTemplateSender()
+	arg_2_0.title = arg_2_0:getTemplateTitle()
+	arg_2_0.icon = arg_2_1.icon
+	arg_2_0.addressee = arg_2_1.addressee
+	arg_2_0.copy = arg_2_1.copy
+	arg_2_0.jumpTitle = arg_2_0:getTemplateJumpTitle()
+	arg_2_0.jump = arg_2_1.jump
+	arg_2_0.image = arg_2_1.image
+	arg_2_0.specialTag = arg_2_1.specialTag
+	arg_2_0.senderType = arg_2_1.senderType
 end
 
-function slot0.getItem(slot0, slot1, slot2)
-	slot3 = {}
+function var_0_0.getItem(arg_3_0, arg_3_1, arg_3_2)
+	local var_3_0 = {}
 
-	if slot2 then
-		for slot7, slot8 in ipairs(slot2) do
-			slot9 = string.split(slot8, "#")
+	if arg_3_2 then
+		for iter_3_0, iter_3_1 in ipairs(arg_3_2) do
+			local var_3_1 = string.split(iter_3_1, "#")
 
-			for slot13, slot14 in ipairs(slot1) do
-				if slot9[1] == string.split(slot14, "#")[1] and slot9[2] == slot15[2] and slot9[3] == slot15[3] then
-					table.insert(slot3, slot14)
-					table.remove(slot1, slot13)
+			for iter_3_2, iter_3_3 in ipairs(arg_3_1) do
+				local var_3_2 = string.split(iter_3_3, "#")
+
+				if var_3_1[1] == var_3_2[1] and var_3_1[2] == var_3_2[2] and var_3_1[3] == var_3_2[3] then
+					table.insert(var_3_0, iter_3_3)
+					table.remove(arg_3_1, iter_3_2)
 
 					break
 				end
@@ -58,148 +60,186 @@ function slot0.getItem(slot0, slot1, slot2)
 		end
 	end
 
-	for slot7 = 1, #slot1 do
-		table.insert(slot3, slot1[slot7])
+	for iter_3_4 = 1, #arg_3_1 do
+		local var_3_3 = arg_3_1[iter_3_4]
+
+		table.insert(var_3_0, var_3_3)
 	end
 
-	for slot7, slot8 in pairs(slot3) do
-		table.insert(slot0.itemGroup, string.split(slot8, "#"))
-	end
-end
+	for iter_3_5, iter_3_6 in pairs(var_3_0) do
+		local var_3_4 = string.split(iter_3_6, "#")
 
-function slot0.getExpireTime(slot0, slot1)
-	slot0.expireTime = slot1
-end
-
-function slot0.getRpc(slot0, slot1, slot2, slot3, slot4, slot5, slot6)
-	slot0.id = tonumber(slot4)
-	slot0.state = slot1
-	slot0.createTime = slot2
-	slot0.params = slot3
-	slot0.needShowToast = slot5
-	slot0.mailId = slot6
-end
-
-function slot0.getMailType1(slot0, slot1)
-	slot0.mailId = 0
-	slot0.id = tonumber(slot1.incrId)
-	slot0.params = slot1.params
-	slot0.state = slot1.state
-	slot0.createTime = slot1.createTime
-	slot0.senderMap = cjson.decode(slot1.sender)
-	slot0.titleMap = cjson.decode(slot1.title)
-	slot0.contentMap = cjson.decode(slot1.content)
-	slot0.copy = slot1.copy
-	slot0.expireTime = slot1.expireTime
-	slot0.senderType = slot1.senderType or 1
-	slot0.jumpTitle = not string.nilorempty(slot1.jumpTitle) and cjson.decode(slot1.jumpTitle) or nil
-	slot0.jump = not string.nilorempty(slot1.jump) and cjson.decode(slot1.jump) or nil
-end
-
-function slot0.getLangTitle(slot0)
-	if string.nilorempty(slot0.titleMap[LangSettings.instance:getCurLangShortcut()]) then
-		slot2 = slot0.titleMap[LangSettings.instance:getDefaultLangShortcut()] or slot0:getTemplateTitle()
-	end
-
-	if slot2 then
-		return slot2
+		table.insert(arg_3_0.itemGroup, var_3_4)
 	end
 end
 
-function slot0.getJumpLink(slot0)
-	if slot0.mailId == 0 then
-		if slot0.jump then
-			if string.nilorempty(slot0.jump[LangSettings.instance:getCurLangShortcut()]) then
-				slot2 = slot0.jump[LangSettings.instance:getDefaultLangShortcut()] or ""
+function var_0_0.getExpireTime(arg_4_0, arg_4_1)
+	arg_4_0.expireTime = arg_4_1
+end
+
+function var_0_0.getRpc(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4, arg_5_5, arg_5_6)
+	arg_5_0.id = tonumber(arg_5_4)
+	arg_5_0.state = arg_5_1
+	arg_5_0.createTime = arg_5_2
+	arg_5_0.params = arg_5_3
+	arg_5_0.needShowToast = arg_5_5
+	arg_5_0.mailId = arg_5_6
+end
+
+function var_0_0.getMailType1(arg_6_0, arg_6_1)
+	arg_6_0.mailId = 0
+	arg_6_0.id = tonumber(arg_6_1.incrId)
+	arg_6_0.params = arg_6_1.params
+	arg_6_0.state = arg_6_1.state
+	arg_6_0.createTime = arg_6_1.createTime
+	arg_6_0.senderMap = cjson.decode(arg_6_1.sender)
+	arg_6_0.titleMap = cjson.decode(arg_6_1.title)
+	arg_6_0.contentMap = cjson.decode(arg_6_1.content)
+	arg_6_0.copy = arg_6_1.copy
+	arg_6_0.expireTime = arg_6_1.expireTime
+	arg_6_0.senderType = arg_6_1.senderType or 1
+	arg_6_0.jumpTitle = not string.nilorempty(arg_6_1.jumpTitle) and cjson.decode(arg_6_1.jumpTitle) or nil
+	arg_6_0.jump = not string.nilorempty(arg_6_1.jump) and cjson.decode(arg_6_1.jump) or nil
+end
+
+function var_0_0.getLangTitle(arg_7_0)
+	local var_7_0 = LangSettings.instance:getCurLangShortcut()
+	local var_7_1 = arg_7_0.titleMap[var_7_0]
+
+	if string.nilorempty(var_7_1) then
+		local var_7_2 = LangSettings.instance:getDefaultLangShortcut()
+
+		var_7_1 = arg_7_0.titleMap[var_7_2] or arg_7_0:getTemplateTitle()
+	end
+
+	if var_7_1 then
+		return var_7_1
+	end
+end
+
+function var_0_0.getJumpLink(arg_8_0)
+	if arg_8_0.mailId == 0 then
+		local var_8_0 = LangSettings.instance:getCurLangShortcut()
+
+		if arg_8_0.jump then
+			local var_8_1 = arg_8_0.jump[var_8_0]
+
+			if string.nilorempty(var_8_1) then
+				local var_8_2 = LangSettings.instance:getDefaultLangShortcut()
+
+				var_8_1 = arg_8_0.jump[var_8_2] or ""
 			end
 
-			return slot2
+			return var_8_1
 		end
 	end
 
-	return slot0.jump
+	return arg_8_0.jump
 end
 
-function slot0.getSenderType(slot0)
-	if slot0.senderType == 0 or slot0.senderType == nil then
+function var_0_0.getSenderType(arg_9_0)
+	if arg_9_0.senderType == 0 or arg_9_0.senderType == nil then
 		return 1
 	end
 
-	return slot0.senderType
+	return arg_9_0.senderType
 end
 
-function slot0.getTemplateTitle(slot0)
-	if not lua_mail.configDict[slot0.mailId] then
+function var_0_0.getTemplateTitle(arg_10_0)
+	local var_10_0 = lua_mail.configDict[arg_10_0.mailId]
+
+	if not var_10_0 then
 		return ""
 	end
 
-	return slot1.title
+	return var_10_0.title
 end
 
-function slot0.getTemplateJumpTitle(slot0)
-	if slot0.mailId == 0 then
-		if slot0.jumpTitle then
-			if string.nilorempty(slot0.jumpTitle[LangSettings.instance:getCurLangShortcut()]) then
-				slot2 = slot0.jumpTitle[LangSettings.instance:getDefaultLangShortcut()] or ""
+function var_0_0.getTemplateJumpTitle(arg_11_0)
+	if arg_11_0.mailId == 0 then
+		local var_11_0 = LangSettings.instance:getCurLangShortcut()
+
+		if arg_11_0.jumpTitle then
+			local var_11_1 = arg_11_0.jumpTitle[var_11_0]
+
+			if string.nilorempty(var_11_1) then
+				local var_11_2 = LangSettings.instance:getDefaultLangShortcut()
+
+				var_11_1 = arg_11_0.jumpTitle[var_11_2] or ""
 			end
 
-			return slot2
+			return var_11_1
 		else
 			return ""
 		end
 	end
 
-	return lua_mail.configDict[slot0.mailId].jumpTitle
+	return lua_mail.configDict[arg_11_0.mailId].jumpTitle
 end
 
-function slot0.getLangSender(slot0)
-	if string.nilorempty(slot0.senderMap[LangSettings.instance:getCurLangShortcut()]) then
-		slot2 = slot0.senderMap[LangSettings.instance:getDefaultLangShortcut()] or slot0:getTemplateSender()
+function var_0_0.getLangSender(arg_12_0)
+	local var_12_0 = LangSettings.instance:getCurLangShortcut()
+	local var_12_1 = arg_12_0.senderMap[var_12_0]
+
+	if string.nilorempty(var_12_1) then
+		local var_12_2 = LangSettings.instance:getDefaultLangShortcut()
+
+		var_12_1 = arg_12_0.senderMap[var_12_2] or arg_12_0:getTemplateSender()
 	end
 
-	if slot2 then
-		return slot2
+	if var_12_1 then
+		return var_12_1
 	end
 end
 
-function slot0.getTemplateSender(slot0)
-	if not lua_mail.configDict[slot0.mailId] then
+function var_0_0.getTemplateSender(arg_13_0)
+	local var_13_0 = lua_mail.configDict[arg_13_0.mailId]
+
+	if not var_13_0 then
 		return ""
 	end
 
-	return slot1.sender
+	return var_13_0.sender
 end
 
-function slot0.haveBonus(slot0)
-	return slot0.itemGroup[1][3] ~= nil
+function var_0_0.haveBonus(arg_14_0)
+	return arg_14_0.itemGroup[1][3] ~= nil
 end
 
-function slot0.getLangContent(slot0)
-	if string.nilorempty(slot0.contentMap[LangSettings.instance:getCurLangShortcut()]) then
-		slot2 = slot0.contentMap[LangSettings.instance:getDefaultLangShortcut()] or slot0:getTemplateContent()
+function var_0_0.getLangContent(arg_15_0)
+	local var_15_0 = LangSettings.instance:getCurLangShortcut()
+	local var_15_1 = arg_15_0.contentMap[var_15_0]
+
+	if string.nilorempty(var_15_1) then
+		local var_15_2 = LangSettings.instance:getDefaultLangShortcut()
+
+		var_15_1 = arg_15_0.contentMap[var_15_2] or arg_15_0:getTemplateContent()
 	end
 
-	if slot2 then
-		return slot2
+	if var_15_1 then
+		return var_15_1
 	end
 end
 
-function slot0.getTemplateContent(slot0)
-	if not lua_mail.configDict[slot0.mailId] then
+function var_0_0.getTemplateContent(arg_16_0)
+	local var_16_0 = lua_mail.configDict[arg_16_0.mailId]
+
+	if not var_16_0 then
 		return ""
 	end
 
-	if slot0.params ~= "" then
-		slot2 = slot1.content
+	if arg_16_0.params ~= "" then
+		local var_16_1 = var_16_0.content
+		local var_16_2 = string.split(arg_16_0.params, "#")
 
-		for slot7, slot8 in ipairs(string.split(slot0.params, "#")) do
-			slot3[slot7] = serverLang(slot8)
+		for iter_16_0, iter_16_1 in ipairs(var_16_2) do
+			var_16_2[iter_16_0] = serverLang(iter_16_1)
 		end
 
-		return GameUtil.getSubPlaceholderLuaLang(slot2, slot3)
+		return (GameUtil.getSubPlaceholderLuaLang(var_16_1, var_16_2))
 	else
-		return slot1.content
+		return var_16_0.content
 	end
 end
 
-return slot0
+return var_0_0

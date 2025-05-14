@@ -1,7 +1,8 @@
-module("modules.logic.jump.defines.JumpEvent", package.seeall)
+﻿module("modules.logic.jump.defines.JumpEvent", package.seeall)
 
-slot0 = _M
-slot0.JumpBtnClick = 1001
-slot0.BeforeJump = 1002
+local var_0_0 = _M
 
-return slot0
+var_0_0.JumpBtnClick = 1001
+var_0_0.BeforeJump = 1002
+
+return var_0_0

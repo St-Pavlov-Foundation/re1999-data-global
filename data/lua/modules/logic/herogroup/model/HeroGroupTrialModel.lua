@@ -1,173 +1,187 @@
-module("modules.logic.herogroup.model.HeroGroupTrialModel", package.seeall)
+﻿module("modules.logic.herogroup.model.HeroGroupTrialModel", package.seeall)
 
-slot0 = class("HeroGroupTrialModel", BaseModel)
+local var_0_0 = class("HeroGroupTrialModel", BaseModel)
 
-function slot0.ctor(slot0)
-	slot0.curBattleId = nil
-	slot0._limitNum = 0
-	slot0._trialEquipMo = BaseModel.New()
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.curBattleId = nil
+	arg_1_0._limitNum = 0
+	arg_1_0._trialEquipMo = BaseModel.New()
 
-	uv0.super.ctor(slot0)
+	var_0_0.super.ctor(arg_1_0)
 end
 
-function slot0.setTrialByBattleId(slot0, slot1)
-	if slot0.curBattleId == (slot1 or HeroGroupModel.instance.battleId) then
+function var_0_0.setTrialByBattleId(arg_2_0, arg_2_1)
+	arg_2_1 = arg_2_1 or HeroGroupModel.instance.battleId
+
+	if arg_2_0.curBattleId == arg_2_1 then
 		return
 	end
 
-	slot0.curBattleId = slot1
+	arg_2_0.curBattleId = arg_2_1
 
-	if not lua_battle.configDict[slot1] then
+	local var_2_0 = lua_battle.configDict[arg_2_1]
+
+	if not var_2_0 then
 		return
 	end
 
-	slot0._trialEquipMo:clear()
-	uv0.super.clear(slot0)
+	arg_2_0._trialEquipMo:clear()
+	var_0_0.super.clear(arg_2_0)
 
-	if not string.nilorempty(slot2.trialHeros) then
-		for slot7, slot8 in pairs(GameUtil.splitString2(slot2.trialHeros, true)) do
-			slot9 = slot8[1]
+	if not string.nilorempty(var_2_0.trialHeros) then
+		local var_2_1 = GameUtil.splitString2(var_2_0.trialHeros, true)
 
-			if lua_hero_trial.configDict[slot9] and lua_hero_trial.configDict[slot9][slot8[2] or 0] then
-				slot12 = HeroMo.New()
+		for iter_2_0, iter_2_1 in pairs(var_2_1) do
+			local var_2_2 = iter_2_1[1]
+			local var_2_3 = iter_2_1[2] or 0
 
-				slot12:initFromTrial(unpack(slot8))
-				slot0:addAtLast(slot12)
+			if lua_hero_trial.configDict[var_2_2] and lua_hero_trial.configDict[var_2_2][var_2_3] then
+				local var_2_4 = HeroMo.New()
+
+				var_2_4:initFromTrial(unpack(iter_2_1))
+				arg_2_0:addAtLast(var_2_4)
 			else
-				logError(string.format("试用角色配置不存在:%s#%s", slot9, slot10))
+				logError(string.format("试用角色配置不存在:%s#%s", var_2_2, var_2_3))
 			end
 		end
 	end
 
-	if not string.nilorempty(slot2.trialEquips) then
-		for slot7, slot8 in pairs(string.splitToNumber(slot2.trialEquips, "|")) do
-			if lua_equip_trial.configDict[slot8] then
-				slot10 = EquipMO.New()
+	if not string.nilorempty(var_2_0.trialEquips) then
+		local var_2_5 = string.splitToNumber(var_2_0.trialEquips, "|")
 
-				slot10:initByTrialEquipCO(slot9)
-				slot0._trialEquipMo:addAtLast(slot10)
+		for iter_2_2, iter_2_3 in pairs(var_2_5) do
+			local var_2_6 = lua_equip_trial.configDict[iter_2_3]
+
+			if var_2_6 then
+				local var_2_7 = EquipMO.New()
+
+				var_2_7:initByTrialEquipCO(var_2_6)
+				arg_2_0._trialEquipMo:addAtLast(var_2_7)
 			else
-				logError("试用心相配置不存在" .. tostring(slot8))
+				logError("试用心相配置不存在" .. tostring(iter_2_3))
 			end
 		end
 	end
 
-	slot0._limitNum = slot2.trialLimit
+	arg_2_0._limitNum = var_2_0.trialLimit
 
-	if ToughBattleModel.instance:getAddTrialHeros() then
-		slot7 = slot0._limitNum
-		slot0._limitNum = math.min(4, #slot3 + slot7)
+	local var_2_8 = ToughBattleModel.instance:getAddTrialHeros()
 
-		for slot7, slot8 in pairs(slot3) do
-			slot9 = HeroMo.New()
+	if var_2_8 then
+		arg_2_0._limitNum = math.min(4, #var_2_8 + arg_2_0._limitNum)
 
-			slot9:initFromTrial(slot8)
-			slot0:addAtLast(slot9)
+		for iter_2_4, iter_2_5 in pairs(var_2_8) do
+			local var_2_9 = HeroMo.New()
+
+			var_2_9:initFromTrial(iter_2_5)
+			arg_2_0:addAtLast(var_2_9)
 		end
 	end
 end
 
-slot1 = false
-slot2 = false
+local var_0_1 = false
+local var_0_2 = false
 
-function slot0.sortByLevelAndRare(slot0, slot1, slot2)
-	uv0 = slot1
-	uv1 = slot2
+function var_0_0.sortByLevelAndRare(arg_3_0, arg_3_1, arg_3_2)
+	var_0_1 = arg_3_1
+	var_0_2 = arg_3_2
 
-	slot0:sort(uv2.sortMoFunc)
+	arg_3_0:sort(var_0_0.sortMoFunc)
 end
 
-function slot0.sortMoFunc(slot0, slot1)
-	if uv0 then
-		if slot0.level ~= slot1.level then
-			if uv1 then
-				return slot0.level < slot1.level
+function var_0_0.sortMoFunc(arg_4_0, arg_4_1)
+	if var_0_1 then
+		if arg_4_0.level ~= arg_4_1.level then
+			if var_0_2 then
+				return arg_4_0.level < arg_4_1.level
 			else
-				return slot1.level < slot0.level
+				return arg_4_0.level > arg_4_1.level
 			end
-		elseif slot0.config.rare ~= slot1.config.rare then
-			return slot1.config.rare < slot0.config.rare
+		elseif arg_4_0.config.rare ~= arg_4_1.config.rare then
+			return arg_4_0.config.rare > arg_4_1.config.rare
 		end
-	elseif slot0.config.rare ~= slot1.config.rare then
-		if uv1 then
-			return slot0.config.rare < slot1.config.rare
+	elseif arg_4_0.config.rare ~= arg_4_1.config.rare then
+		if var_0_2 then
+			return arg_4_0.config.rare < arg_4_1.config.rare
 		else
-			return slot1.config.rare < slot0.config.rare
+			return arg_4_0.config.rare > arg_4_1.config.rare
 		end
-	elseif slot0.level ~= slot1.level then
-		return slot1.level < slot0.level
+	elseif arg_4_0.level ~= arg_4_1.level then
+		return arg_4_0.level > arg_4_1.level
 	end
 
-	return slot0.config.id < slot1.config.id
+	return arg_4_0.config.id < arg_4_1.config.id
 end
 
-function slot0.setFilter(slot0, slot1, slot2)
-	slot0._filterDmgs = slot1
-	slot0._filterCareers = slot2
+function var_0_0.setFilter(arg_5_0, arg_5_1, arg_5_2)
+	arg_5_0._filterDmgs = arg_5_1
+	arg_5_0._filterCareers = arg_5_2
 end
 
-function slot0.getFilterList(slot0)
-	slot0:checkBattleIdIsVaild()
+function var_0_0.getFilterList(arg_6_0)
+	arg_6_0:checkBattleIdIsVaild()
 
-	slot1 = {}
+	local var_6_0 = {}
 
-	for slot5, slot6 in ipairs(slot0:getList()) do
-		if (not slot0._filterCareers or tabletool.indexOf(slot0._filterCareers, slot6.config.career)) and (not slot0._filterDmgs or tabletool.indexOf(slot0._filterDmgs, slot6.config.dmgType)) then
-			table.insert(slot1, slot6)
+	for iter_6_0, iter_6_1 in ipairs(arg_6_0:getList()) do
+		if (not arg_6_0._filterCareers or tabletool.indexOf(arg_6_0._filterCareers, iter_6_1.config.career)) and (not arg_6_0._filterDmgs or tabletool.indexOf(arg_6_0._filterDmgs, iter_6_1.config.dmgType)) then
+			table.insert(var_6_0, iter_6_1)
 		end
 	end
 
-	return slot1
+	return var_6_0
 end
 
-function slot0.clear(slot0)
-	slot0.curBattleId = nil
-	slot0._limitNum = 0
+function var_0_0.clear(arg_7_0)
+	arg_7_0.curBattleId = nil
+	arg_7_0._limitNum = 0
 
-	slot0._trialEquipMo:clear()
-	uv0.super.clear(slot0)
+	arg_7_0._trialEquipMo:clear()
+	var_0_0.super.clear(arg_7_0)
 end
 
-function slot0.getLimitNum(slot0)
-	slot0:checkBattleIdIsVaild()
+function var_0_0.getLimitNum(arg_8_0)
+	arg_8_0:checkBattleIdIsVaild()
 
-	return slot0._limitNum
+	return arg_8_0._limitNum
 end
 
-function slot0.getHeroMo(slot0, slot1)
-	return slot0:getById(tostring(slot1 - 1099511627776.0))
+function var_0_0.getHeroMo(arg_9_0, arg_9_1)
+	return arg_9_0:getById(tostring(arg_9_1 - 1099511627776))
 end
 
-function slot0.getEquipMo(slot0, slot1)
-	return slot0._trialEquipMo:getById(tonumber(slot1))
+function var_0_0.getEquipMo(arg_10_0, arg_10_1)
+	return arg_10_0._trialEquipMo:getById(tonumber(arg_10_1))
 end
 
-function slot0.getTrialEquipList(slot0)
-	return slot0._trialEquipMo:getList()
+function var_0_0.getTrialEquipList(arg_11_0)
+	return arg_11_0._trialEquipMo:getList()
 end
 
-function slot0.checkBattleIdIsVaild(slot0)
-	if slot0.curBattleId and HeroGroupModel.instance.battleId and HeroGroupModel.instance.battleId > 0 and slot0.curBattleId ~= HeroGroupModel.instance.battleId then
-		slot0:clear()
+function var_0_0.checkBattleIdIsVaild(arg_12_0)
+	if arg_12_0.curBattleId and HeroGroupModel.instance.battleId and HeroGroupModel.instance.battleId > 0 and arg_12_0.curBattleId ~= HeroGroupModel.instance.battleId then
+		arg_12_0:clear()
 	end
 end
 
-function slot0.isOnlyUseTrial(slot0)
-	slot0:checkBattleIdIsVaild()
+function var_0_0.isOnlyUseTrial(arg_13_0)
+	arg_13_0:checkBattleIdIsVaild()
 
-	if not slot0.curBattleId then
+	if not arg_13_0.curBattleId then
 		return false
 	end
 
-	return slot0._limitNum > 0 and lua_battle.configDict[slot0.curBattleId].onlyTrial == 1
+	local var_13_0 = lua_battle.configDict[arg_13_0.curBattleId]
+
+	return arg_13_0._limitNum > 0 and var_13_0.onlyTrial == 1
 end
 
-function slot0.haveTrialEquip(slot0)
-	slot0:checkBattleIdIsVaild()
+function var_0_0.haveTrialEquip(arg_14_0)
+	arg_14_0:checkBattleIdIsVaild()
 
-	return slot0._trialEquipMo:getCount() > 0
+	return arg_14_0._trialEquipMo:getCount() > 0
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

@@ -1,47 +1,51 @@
-module("modules.logic.activity.model.chessmap.Activity109ChessModel", package.seeall)
+﻿module("modules.logic.activity.model.chessmap.Activity109ChessModel", package.seeall)
 
-slot0 = class("Activity109ChessModel", BaseModel)
+local var_0_0 = class("Activity109ChessModel", BaseModel)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_2_0)
+	return
 end
 
-function slot0.setEpisodeId(slot0, slot1)
-	slot0._currentEpisodeId = slot1
+function var_0_0.setEpisodeId(arg_3_0, arg_3_1)
+	arg_3_0._currentEpisodeId = arg_3_1
 
-	if not slot1 then
-		slot0._currentMapId = nil
+	if not arg_3_1 then
+		arg_3_0._currentMapId = nil
 
 		return
 	end
 
-	if Activity109Config.instance:getEpisodeCo(slot0._activityId, slot1) then
-		slot0._currentMapId = slot2.mapId
-	else
-		logError("activity109_episode not found! id = " .. tostring(slot1) .. ", in act = " .. tostring(slot0._activityId))
+	local var_3_0 = Activity109Config.instance:getEpisodeCo(arg_3_0._activityId, arg_3_1)
 
-		slot0._currentMapId = nil
+	if var_3_0 then
+		arg_3_0._currentMapId = var_3_0.mapId
+	else
+		logError("activity109_episode not found! id = " .. tostring(arg_3_1) .. ", in act = " .. tostring(arg_3_0._activityId))
+
+		arg_3_0._currentMapId = nil
 	end
 end
 
-function slot0.setActId(slot0, slot1)
-	slot0._activityId = slot1
+function var_0_0.setActId(arg_4_0, arg_4_1)
+	arg_4_0._activityId = arg_4_1
 end
 
-function slot0.getActId(slot0)
-	return slot0._activityId
+function var_0_0.getActId(arg_5_0)
+	return arg_5_0._activityId
 end
 
-function slot0.getEpisodeId(slot0)
-	return slot0._currentEpisodeId
+function var_0_0.getEpisodeId(arg_6_0)
+	return arg_6_0._currentEpisodeId
 end
 
-function slot0.getMapId(slot0)
-	return slot0._currentMapId
+function var_0_0.getMapId(arg_7_0)
+	return arg_7_0._currentMapId
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

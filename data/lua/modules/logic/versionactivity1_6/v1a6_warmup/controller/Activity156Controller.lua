@@ -1,27 +1,34 @@
-module("modules.logic.versionactivity1_6.v1a6_warmup.controller.Activity156Controller", package.seeall)
+﻿module("modules.logic.versionactivity1_6.v1a6_warmup.controller.Activity156Controller", package.seeall)
 
-slot0 = class("Activity156Controller", BaseController)
+local var_0_0 = class("Activity156Controller", BaseController)
 
-function slot0.getAct125InfoFromServer(slot0, slot1)
-	Activity156Rpc.instance:sendGetAct125InfosRequest(slot1 or ActivityEnum.Activity.Activity1_6WarmUp)
+function var_0_0.getAct125InfoFromServer(arg_1_0, arg_1_1)
+	arg_1_1 = arg_1_1 or ActivityEnum.Activity.Activity1_6WarmUp
+
+	Activity156Rpc.instance:sendGetAct125InfosRequest(arg_1_1)
 end
 
-function slot0.onFinishActEpisode(slot0, slot1, slot2, slot3)
-	Activity156Rpc.instance:sendFinishAct125EpisodeRequest(slot1, slot2, slot3)
+function var_0_0.onFinishActEpisode(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
+	Activity156Rpc.instance:sendFinishAct125EpisodeRequest(arg_2_1, arg_2_2, arg_2_3)
 end
 
-slot1 = PlayerPrefsKey.FirstEnterAct125Today .. "#" .. ActivityEnum.Activity.Activity1_6WarmUp .. "#"
+local var_0_1 = PlayerPrefsKey.FirstEnterAct125Today .. "#" .. ActivityEnum.Activity.Activity1_6WarmUp .. "#"
 
-function slot0.isActFirstEnterToday(slot0)
-	slot3 = os.date("*t", ServerTime.nowInLocal())
+function var_0_0.isActFirstEnterToday(arg_3_0)
+	local var_3_0 = var_0_1 .. tostring(PlayerModel.instance:getPlayinfo().userId)
+	local var_3_1 = ServerTime.nowInLocal()
+	local var_3_2 = os.date("*t", var_3_1)
 
-	if PlayerPrefsHelper.hasKey(uv0 .. tostring(PlayerModel.instance:getPlayinfo().userId)) then
-		slot3.hour = 5
-		slot3.min = 0
-		slot3.sec = 0
-		slot5 = os.time(slot3)
+	if PlayerPrefsHelper.hasKey(var_3_0) then
+		local var_3_3 = tonumber(PlayerPrefsHelper.getString(var_3_0, var_3_1))
 
-		if tonumber(PlayerPrefsHelper.getString(slot1, slot2)) and TimeUtil.getDiffDay(slot2, slot4) < 1 and (slot2 - slot5) * (slot4 - slot5) > 0 then
+		var_3_2.hour = 5
+		var_3_2.min = 0
+		var_3_2.sec = 0
+
+		local var_3_4 = os.time(var_3_2)
+
+		if var_3_3 and TimeUtil.getDiffDay(var_3_1, var_3_3) < 1 and (var_3_1 - var_3_4) * (var_3_3 - var_3_4) > 0 then
 			return false
 		end
 	end
@@ -29,17 +36,20 @@ function slot0.isActFirstEnterToday(slot0)
 	return true
 end
 
-function slot0.saveEnterActDateInfo(slot0)
-	PlayerPrefsHelper.setString(uv0 .. tostring(PlayerModel.instance:getPlayinfo().userId), tostring(ServerTime.nowInLocal()))
+function var_0_0.saveEnterActDateInfo(arg_4_0)
+	local var_4_0 = var_0_1 .. tostring(PlayerModel.instance:getPlayinfo().userId)
+	local var_4_1 = ServerTime.nowInLocal()
+
+	PlayerPrefsHelper.setString(var_4_0, tostring(var_4_1))
 end
 
-function slot0.setCurSelectedEpisode(slot0, slot1, slot2)
-	if slot1 ~= Activity156Model.instance:getCurSelectedEpisode() then
-		if Activity156Model.instance:isEpisodeUnLock(slot1) then
-			Activity156Model.instance:setCurSelectedEpisode(slot1)
+function var_0_0.setCurSelectedEpisode(arg_5_0, arg_5_1, arg_5_2)
+	if arg_5_1 ~= Activity156Model.instance:getCurSelectedEpisode() then
+		if Activity156Model.instance:isEpisodeUnLock(arg_5_1) then
+			Activity156Model.instance:setCurSelectedEpisode(arg_5_1)
 
-			if not slot2 then
-				slot0:notifyUpdateView()
+			if not arg_5_2 then
+				arg_5_0:notifyUpdateView()
 			end
 		else
 			GameFacade.showToast(ToastEnum.ConditionLock)
@@ -47,16 +57,20 @@ function slot0.setCurSelectedEpisode(slot0, slot1, slot2)
 	end
 end
 
-function slot0.tryReceiveEpisodeRewards(slot0, slot1)
-	if not Activity156Model.instance:isEpisodeHasReceivedReward(Activity156Model.instance:getCurSelectedEpisode()) then
-		Activity156Rpc.instance:sendFinishAct125EpisodeRequest(slot1 or ActivityEnum.Activity.Activity1_6WarmUp, slot2)
+function var_0_0.tryReceiveEpisodeRewards(arg_6_0, arg_6_1)
+	arg_6_1 = arg_6_1 or ActivityEnum.Activity.Activity1_6WarmUp
+
+	local var_6_0 = Activity156Model.instance:getCurSelectedEpisode()
+
+	if not Activity156Model.instance:isEpisodeHasReceivedReward(var_6_0) then
+		Activity156Rpc.instance:sendFinishAct125EpisodeRequest(arg_6_1, var_6_0)
 	end
 end
 
-function slot0.notifyUpdateView(slot0)
-	uv0.instance:dispatchEvent(Activity156Event.DataUpdate)
+function var_0_0.notifyUpdateView(arg_7_0)
+	var_0_0.instance:dispatchEvent(Activity156Event.DataUpdate)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

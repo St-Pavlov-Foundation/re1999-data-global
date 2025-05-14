@@ -1,53 +1,57 @@
-module("modules.logic.versionactivity1_2.trade.model.Activity117RewardMO", package.seeall)
+﻿module("modules.logic.versionactivity1_2.trade.model.Activity117RewardMO", package.seeall)
 
-slot0 = pureTable("Activity117RewardMO")
+local var_0_0 = pureTable("Activity117RewardMO")
 
-function slot0.init(slot0, slot1)
-	slot0.actId = slot1.activityId
-	slot0.id = slot1.id
-	slot0.needScore = slot1.needScore
-	slot0.co = slot1
-	slot0.rewardItems = slot0:getRewardItems()
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.actId = arg_1_1.activityId
+	arg_1_0.id = arg_1_1.id
+	arg_1_0.needScore = arg_1_1.needScore
+	arg_1_0.co = arg_1_1
+	arg_1_0.rewardItems = arg_1_0:getRewardItems()
 
-	slot0:resetData()
+	arg_1_0:resetData()
 end
 
-function slot0.resetData(slot0)
-	slot0.alreadyGot = false
+function var_0_0.resetData(arg_2_0)
+	arg_2_0.alreadyGot = false
 end
 
-function slot0.updateServerData(slot0, slot1)
-	slot0.alreadyGot = slot1
+function var_0_0.updateServerData(arg_3_0, arg_3_1)
+	arg_3_0.alreadyGot = arg_3_1
 end
 
-function slot0.getRewardItems(slot0)
-	for slot6, slot7 in ipairs(string.split(slot0.co.bonus, "|")) do
-		-- Nothing
+function var_0_0.getRewardItems(arg_4_0)
+	local var_4_0 = {}
+	local var_4_1 = string.split(arg_4_0.co.bonus, "|")
+
+	for iter_4_0, iter_4_1 in ipairs(var_4_1) do
+		var_4_0[iter_4_0] = string.splitToNumber(iter_4_1, "#")
 	end
 
-	return {
-		[slot6] = string.splitToNumber(slot7, "#")
-	}
+	return var_4_0
 end
 
-function slot0.getStatus(slot0)
-	if slot0.alreadyGot then
+function var_0_0.getStatus(arg_5_0)
+	if arg_5_0.alreadyGot then
 		return Activity117Enum.Status.AlreadyGot
 	end
 
-	if slot0.needScore <= Activity117Model.instance:getCurrentScore(slot0.actId) then
+	if Activity117Model.instance:getCurrentScore(arg_5_0.actId) >= arg_5_0.needScore then
 		return Activity117Enum.Status.CanGet
 	end
 
 	return Activity117Enum.Status.NotEnough
 end
 
-function slot0.sortFunc(slot0, slot1)
-	if slot0:getStatus() ~= slot1:getStatus() then
-		return slot2 < slot3
+function var_0_0.sortFunc(arg_6_0, arg_6_1)
+	local var_6_0 = arg_6_0:getStatus()
+	local var_6_1 = arg_6_1:getStatus()
+
+	if var_6_0 ~= var_6_1 then
+		return var_6_0 < var_6_1
 	end
 
-	return slot0.id < slot1.id
+	return arg_6_0.id < arg_6_1.id
 end
 
-return slot0
+return var_0_0

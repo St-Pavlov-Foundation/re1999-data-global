@@ -1,9 +1,10 @@
-module("modules.logic.tipdialog.model.TipDialogEnum", package.seeall)
+﻿module("modules.logic.tipdialog.model.TipDialogEnum", package.seeall)
 
-slot0 = _M
-slot0.dialogType = {
+local var_0_0 = _M
+
+var_0_0.dialogType = {
 	talk = "talk",
 	dialog = "dialog"
 }
 
-return slot0
+return var_0_0

@@ -1,82 +1,82 @@
-module("modules.logic.versionactivity2_1.aergusi.view.AergusiDialogRoleRightItem", package.seeall)
+﻿module("modules.logic.versionactivity2_1.aergusi.view.AergusiDialogRoleRightItem", package.seeall)
 
-slot0 = class("AergusiDialogRoleRightItem", AergusiDialogRoleItemBase)
-slot1 = -4.9039
-slot2 = 22
+local var_0_0 = class("AergusiDialogRoleRightItem", AergusiDialogRoleItemBase)
+local var_0_1 = -4.9039
+local var_0_2 = 22
 
-function slot0.ctor(slot0, ...)
-	uv0.super.ctor(slot0, ...)
+function var_0_0.ctor(arg_1_0, ...)
+	var_0_0.super.ctor(arg_1_0, ...)
 end
 
-function slot0.init(slot0, slot1, slot2)
-	slot0.go = slot1
-	slot0._resPath = slot2
-	slot0._golight = gohelper.findChild(slot1, "light")
-	slot0._gochess = gohelper.findChild(slot1, "#chessitem")
-	slot0._simagechess = gohelper.findChildSingleImage(slot1, "#chessitem/#chess")
-	slot0._gotalk = gohelper.findChild(slot1, "go_talking")
-	slot0._gobubble = gohelper.findChild(slot1, "go_bubble")
-	slot0._gospeakbubble = gohelper.findChild(slot1, "go_bubble/go_speakbubble")
-	slot0._txtspeakbubbledesc = gohelper.findChildText(slot1, "go_bubble/go_speakbubble/txt_dec")
-	slot0._gothinkbubble = gohelper.findChild(slot1, "go_bubble/go_thinkbubble")
-	slot0._txtthinkbubbledesc = gohelper.findChildText(slot1, "go_bubble/go_thinkbubble/txt_dec")
-	slot0._goemo = gohelper.findChild(slot1, "emobg")
-	slot0._chessAni = slot0._gochess:GetComponent(typeof(UnityEngine.Animator))
+function var_0_0.init(arg_2_0, arg_2_1, arg_2_2)
+	arg_2_0.go = arg_2_1
+	arg_2_0._resPath = arg_2_2
+	arg_2_0._golight = gohelper.findChild(arg_2_1, "light")
+	arg_2_0._gochess = gohelper.findChild(arg_2_1, "#chessitem")
+	arg_2_0._simagechess = gohelper.findChildSingleImage(arg_2_1, "#chessitem/#chess")
+	arg_2_0._gotalk = gohelper.findChild(arg_2_1, "go_talking")
+	arg_2_0._gobubble = gohelper.findChild(arg_2_1, "go_bubble")
+	arg_2_0._gospeakbubble = gohelper.findChild(arg_2_1, "go_bubble/go_speakbubble")
+	arg_2_0._txtspeakbubbledesc = gohelper.findChildText(arg_2_1, "go_bubble/go_speakbubble/txt_dec")
+	arg_2_0._gothinkbubble = gohelper.findChild(arg_2_1, "go_bubble/go_thinkbubble")
+	arg_2_0._txtthinkbubbledesc = gohelper.findChildText(arg_2_1, "go_bubble/go_thinkbubble/txt_dec")
+	arg_2_0._goemo = gohelper.findChild(arg_2_1, "emobg")
+	arg_2_0._chessAni = arg_2_0._gochess:GetComponent(typeof(UnityEngine.Animator))
 
-	gohelper.setActive(slot0.go, true)
-	gohelper.setActive(slot0._golight, false)
-	gohelper.setActive(slot0._gotalk, false)
-	gohelper.setActive(slot0._gobubble, false)
-	gohelper.setActive(slot0._goemo, false)
-	slot0._simagechess:LoadImage(ResUrl.getV2a1AergusiSingleBg(slot0._resPath))
+	gohelper.setActive(arg_2_0.go, true)
+	gohelper.setActive(arg_2_0._golight, false)
+	gohelper.setActive(arg_2_0._gotalk, false)
+	gohelper.setActive(arg_2_0._gobubble, false)
+	gohelper.setActive(arg_2_0._goemo, false)
+	arg_2_0._simagechess:LoadImage(ResUrl.getV2a1AergusiSingleBg(arg_2_0._resPath))
 
-	slot0._txtspeakbubbledescMarkTopIndex = slot0:createMarktopCmp(slot0._txtspeakbubbledesc)
-	slot0._txtthinkbubbledescMarkTopIndex = slot0:createMarktopCmp(slot0._txtthinkbubbledesc)
+	arg_2_0._txtspeakbubbledescMarkTopIndex = arg_2_0:createMarktopCmp(arg_2_0._txtspeakbubbledesc)
+	arg_2_0._txtthinkbubbledescMarkTopIndex = arg_2_0:createMarktopCmp(arg_2_0._txtthinkbubbledesc)
 
-	slot0:setTopOffset(slot0._txtspeakbubbledescMarkTopIndex, 0, uv0)
-	slot0:setTopOffset(slot0._txtthinkbubbledescMarkTopIndex, 0, uv0)
-	slot0:setLineSpacing(slot0._txtspeakbubbledescMarkTopIndex, uv1)
-	slot0:setLineSpacing(slot0._txtthinkbubbledescMarkTopIndex, uv1)
+	arg_2_0:setTopOffset(arg_2_0._txtspeakbubbledescMarkTopIndex, 0, var_0_1)
+	arg_2_0:setTopOffset(arg_2_0._txtthinkbubbledescMarkTopIndex, 0, var_0_1)
+	arg_2_0:setLineSpacing(arg_2_0._txtspeakbubbledescMarkTopIndex, var_0_2)
+	arg_2_0:setLineSpacing(arg_2_0._txtthinkbubbledescMarkTopIndex, var_0_2)
 end
 
-function slot0.showTalking(slot0)
-	slot0._chessAni:Play("jump", 0, 0)
-	gohelper.setActive(slot0._golight, true)
-	gohelper.setActive(slot0._gotalk, true)
-	TaskDispatcher.runDelay(slot0.hideTalking, slot0, 3)
+function var_0_0.showTalking(arg_3_0)
+	arg_3_0._chessAni:Play("jump", 0, 0)
+	gohelper.setActive(arg_3_0._golight, true)
+	gohelper.setActive(arg_3_0._gotalk, true)
+	TaskDispatcher.runDelay(arg_3_0.hideTalking, arg_3_0, 3)
 end
 
-function slot0.hideTalking(slot0)
-	TaskDispatcher.cancelTask(slot0.hideTalking, slot0)
-	gohelper.setActive(slot0._gotalk, false)
-	gohelper.setActive(slot0._golight, false)
+function var_0_0.hideTalking(arg_4_0)
+	TaskDispatcher.cancelTask(arg_4_0.hideTalking, arg_4_0)
+	gohelper.setActive(arg_4_0._gotalk, false)
+	gohelper.setActive(arg_4_0._golight, false)
 end
 
-function slot0.showEmo(slot0)
-	gohelper.setActive(slot0._goemo, true)
+function var_0_0.showEmo(arg_5_0)
+	gohelper.setActive(arg_5_0._goemo, true)
 end
 
-function slot0.showBubble(slot0, slot1)
-	gohelper.setActive(slot0._gobubble, true)
+function var_0_0.showBubble(arg_6_0, arg_6_1)
+	gohelper.setActive(arg_6_0._gobubble, true)
 
-	if slot1.bubbleType == AergusiEnum.DialogBubbleType.Speaker then
-		gohelper.setActive(slot0._gospeakbubble, true)
-		gohelper.setActive(slot0._gothinkbubble, false)
-		slot0:setTextWithMarktopByIndex(slot0._txtspeakbubbledescMarkTopIndex, slot1.content)
+	if arg_6_1.bubbleType == AergusiEnum.DialogBubbleType.Speaker then
+		gohelper.setActive(arg_6_0._gospeakbubble, true)
+		gohelper.setActive(arg_6_0._gothinkbubble, false)
+		arg_6_0:setTextWithMarktopByIndex(arg_6_0._txtspeakbubbledescMarkTopIndex, arg_6_1.content)
 	else
-		gohelper.setActive(slot0._gothinkbubble, true)
-		gohelper.setActive(slot0._gospeakbubble, false)
-		slot0:setTextWithMarktopByIndex(slot0._txtthinkbubbledescMarkTopIndex, slot1.content)
+		gohelper.setActive(arg_6_0._gothinkbubble, true)
+		gohelper.setActive(arg_6_0._gospeakbubble, false)
+		arg_6_0:setTextWithMarktopByIndex(arg_6_0._txtthinkbubbledescMarkTopIndex, arg_6_1.content)
 	end
 end
 
-function slot0.hideBubble(slot0)
-	gohelper.setActive(slot0._gobubble, false)
+function var_0_0.hideBubble(arg_7_0)
+	gohelper.setActive(arg_7_0._gobubble, false)
 end
 
-function slot0.destroy(slot0)
-	slot0._simagechess:UnLoadImage()
-	uv0.super.destroy(slot0)
+function var_0_0.destroy(arg_8_0)
+	arg_8_0._simagechess:UnLoadImage()
+	var_0_0.super.destroy(arg_8_0)
 end
 
-return slot0
+return var_0_0

@@ -1,185 +1,207 @@
-module("modules.logic.versionactivity2_4.music.view.VersionActivity2_4MusicBeatResultView", package.seeall)
+﻿module("modules.logic.versionactivity2_4.music.view.VersionActivity2_4MusicBeatResultView", package.seeall)
 
-slot0 = class("VersionActivity2_4MusicBeatResultView", BaseView)
+local var_0_0 = class("VersionActivity2_4MusicBeatResultView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gostoptitle = gohelper.findChild(slot0.viewGO, "root/#go_stoptitle")
-	slot0._gofailtitle = gohelper.findChild(slot0.viewGO, "root/#go_failtitle")
-	slot0._gosuccesstitle = gohelper.findChild(slot0.viewGO, "root/#go_successtitle")
-	slot0._txtscorefailed = gohelper.findChildText(slot0.viewGO, "root/scoregroup/#txt_scorefailed")
-	slot0._txtscore = gohelper.findChildText(slot0.viewGO, "root/scoregroup/#txt_score")
-	slot0._txtmaxscore = gohelper.findChildText(slot0.viewGO, "root/scoregroup/#txt_maxscore")
-	slot0._gocombolist = gohelper.findChild(slot0.viewGO, "root/evaluatelayout/#go_combolist")
-	slot0._goevaluatelist = gohelper.findChild(slot0.viewGO, "root/evaluatelayout/#go_evaluatelist")
-	slot0._btncontinuegame = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/btn/#btn_continuegame")
-	slot0._btnaccompany = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/btn/#btn_accompany")
-	slot0._btnrestart = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/btn/#btn_restart")
-	slot0._btnquitgame = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/btn/#btn_quitgame")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gostoptitle = gohelper.findChild(arg_1_0.viewGO, "root/#go_stoptitle")
+	arg_1_0._gofailtitle = gohelper.findChild(arg_1_0.viewGO, "root/#go_failtitle")
+	arg_1_0._gosuccesstitle = gohelper.findChild(arg_1_0.viewGO, "root/#go_successtitle")
+	arg_1_0._txtscorefailed = gohelper.findChildText(arg_1_0.viewGO, "root/scoregroup/#txt_scorefailed")
+	arg_1_0._txtscore = gohelper.findChildText(arg_1_0.viewGO, "root/scoregroup/#txt_score")
+	arg_1_0._txtmaxscore = gohelper.findChildText(arg_1_0.viewGO, "root/scoregroup/#txt_maxscore")
+	arg_1_0._gocombolist = gohelper.findChild(arg_1_0.viewGO, "root/evaluatelayout/#go_combolist")
+	arg_1_0._goevaluatelist = gohelper.findChild(arg_1_0.viewGO, "root/evaluatelayout/#go_evaluatelist")
+	arg_1_0._btncontinuegame = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/btn/#btn_continuegame")
+	arg_1_0._btnaccompany = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/btn/#btn_accompany")
+	arg_1_0._btnrestart = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/btn/#btn_restart")
+	arg_1_0._btnquitgame = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/btn/#btn_quitgame")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btncontinuegame:AddClickListener(slot0._btncontinuegameOnClick, slot0)
-	slot0._btnaccompany:AddClickListener(slot0._btnaccompanyOnClick, slot0)
-	slot0._btnrestart:AddClickListener(slot0._btnrestartOnClick, slot0)
-	slot0._btnquitgame:AddClickListener(slot0._btnquitgameOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btncontinuegame:AddClickListener(arg_2_0._btncontinuegameOnClick, arg_2_0)
+	arg_2_0._btnaccompany:AddClickListener(arg_2_0._btnaccompanyOnClick, arg_2_0)
+	arg_2_0._btnrestart:AddClickListener(arg_2_0._btnrestartOnClick, arg_2_0)
+	arg_2_0._btnquitgame:AddClickListener(arg_2_0._btnquitgameOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btncontinuegame:RemoveClickListener()
-	slot0._btnaccompany:RemoveClickListener()
-	slot0._btnrestart:RemoveClickListener()
-	slot0._btnquitgame:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btncontinuegame:RemoveClickListener()
+	arg_3_0._btnaccompany:RemoveClickListener()
+	arg_3_0._btnrestart:RemoveClickListener()
+	arg_3_0._btnquitgame:RemoveClickListener()
 end
 
-function slot0._btncontinuegameOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncontinuegameOnClick(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0._btnaccompanyOnClick(slot0)
+function var_0_0._btnaccompanyOnClick(arg_5_0)
 	VersionActivity2_4MusicController.instance:openVersionActivity2_4MusicFreeAccompanyView()
 end
 
-function slot0._btnrestartOnClick(slot0)
-	VersionActivity2_4MusicController.instance:dispatchEvent(VersionActivity2_4MusicEvent.BeatModeEnd, slot0._isPause)
-	slot0:closeThis()
+function var_0_0._btnrestartOnClick(arg_6_0)
+	VersionActivity2_4MusicController.instance:dispatchEvent(VersionActivity2_4MusicEvent.BeatModeEnd, arg_6_0._isPause)
+	arg_6_0:closeThis()
 end
 
-function slot0._btnquitgameOnClick(slot0)
+function var_0_0._btnquitgameOnClick(arg_7_0)
 	ViewMgr.instance:closeView(ViewName.VersionActivity2_4MusicBeatView)
-	slot0:closeThis()
+	arg_7_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_8_0)
 	AudioMgr.instance:trigger(AudioEnum.Bakaluoer.play_ui_diqiu_settle_accounts)
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_9_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0._gradeList = VersionActivity2_4MusicBeatModel.instance:getGradleList()
-	slot0._episodeId = VersionActivity2_4MusicBeatModel.instance:getEpisodeId()
-	slot0._episodeConfig = Activity179Config.instance:getEpisodeConfig(slot0._episodeId)
-	slot0._beatId = slot0._episodeConfig.beatId
-	slot0._beatConfig = Activity179Config.instance:getBeatConfig(slot0._beatId)
-	slot0._txtmaxscore.text = "/" .. slot0._beatConfig.targetId
-	slot0._comboList = Activity179Config.instance:getComboList(slot0._beatId)
+function var_0_0.onOpen(arg_10_0)
+	arg_10_0._gradeList = VersionActivity2_4MusicBeatModel.instance:getGradleList()
+	arg_10_0._episodeId = VersionActivity2_4MusicBeatModel.instance:getEpisodeId()
+	arg_10_0._episodeConfig = Activity179Config.instance:getEpisodeConfig(arg_10_0._episodeId)
+	arg_10_0._beatId = arg_10_0._episodeConfig.beatId
+	arg_10_0._beatConfig = Activity179Config.instance:getBeatConfig(arg_10_0._beatId)
+	arg_10_0._txtmaxscore.text = "/" .. arg_10_0._beatConfig.targetId
+	arg_10_0._comboList = Activity179Config.instance:getComboList(arg_10_0._beatId)
 
-	slot0:_parseGradeList()
+	arg_10_0:_parseGradeList()
 
-	slot0._canPass = slot0._beatConfig.targetId <= slot0._totalScore
-	slot0._isPause = slot0.viewParam and slot0.viewParam.isPause
-	slot0._isForceSuccess = slot0.viewParam and slot0.viewParam.isForceSuccess
+	arg_10_0._canPass = arg_10_0._beatConfig.targetId <= arg_10_0._totalScore
+	arg_10_0._isPause = arg_10_0.viewParam and arg_10_0.viewParam.isPause
+	arg_10_0._isForceSuccess = arg_10_0.viewParam and arg_10_0.viewParam.isForceSuccess
 
-	if not slot0._isPause then
-		slot0._isSuccess = slot0._beatConfig.targetId <= slot0._totalScore
-		slot0._isFail = not slot0._isSuccess
+	if not arg_10_0._isPause then
+		arg_10_0._isSuccess = arg_10_0._beatConfig.targetId <= arg_10_0._totalScore
+		arg_10_0._isFail = not arg_10_0._isSuccess
 	else
-		slot0._isSuccess = false
-		slot0._isFail = false
+		arg_10_0._isSuccess = false
+		arg_10_0._isFail = false
 	end
 
-	if slot0._isForceSuccess then
-		slot0._isSuccess = true
-		slot0._isFail = false
+	if arg_10_0._isForceSuccess then
+		arg_10_0._isSuccess = true
+		arg_10_0._isFail = false
 	end
 
-	gohelper.setActive(slot0._btncontinuegame, slot0._isPause)
-	gohelper.setActive(slot0._btnaccompany, slot0._isPause)
-	gohelper.setActive(slot0._gostoptitle, slot0._isPause)
-	gohelper.setActive(slot0._gofailtitle, slot0._isFail)
-	gohelper.setActive(slot0._gosuccesstitle, slot0._isSuccess)
-	gohelper.setActive(slot0._txtscore, slot0._canPass)
-	gohelper.setActive(slot0._txtscorefailed, not slot0._canPass)
+	gohelper.setActive(arg_10_0._btncontinuegame, arg_10_0._isPause)
+	gohelper.setActive(arg_10_0._btnaccompany, arg_10_0._isPause)
+	gohelper.setActive(arg_10_0._gostoptitle, arg_10_0._isPause)
+	gohelper.setActive(arg_10_0._gofailtitle, arg_10_0._isFail)
+	gohelper.setActive(arg_10_0._gosuccesstitle, arg_10_0._isSuccess)
+	gohelper.setActive(arg_10_0._txtscore, arg_10_0._canPass)
+	gohelper.setActive(arg_10_0._txtscorefailed, not arg_10_0._canPass)
 end
 
-function slot0._getComboConfig(slot0, slot1)
-	for slot6 = #slot0._comboList, 1, -1 do
-		if slot0._comboList[slot6].combo <= slot1 or slot6 == 1 then
-			return slot7, slot6
+function var_0_0._getComboConfig(arg_11_0, arg_11_1)
+	for iter_11_0 = #arg_11_0._comboList, 1, -1 do
+		local var_11_0 = arg_11_0._comboList[iter_11_0]
+
+		if arg_11_1 >= var_11_0.combo or iter_11_0 == 1 then
+			return var_11_0, iter_11_0
 		end
 	end
 end
 
-function slot0._parseGradeList(slot0)
-	slot0._totalScore = 0
-	slot0._gradeValues = {}
-	slot1 = 0
-	slot2 = 0
+function var_0_0._parseGradeList(arg_12_0)
+	arg_12_0._totalScore = 0
+	arg_12_0._gradeValues = {}
 
-	for slot6, slot7 in ipairs(slot0._gradeList) do
-		slot0._gradeValues[slot7] = (slot0._gradeValues[slot7] or 0) + 1
+	local var_12_0 = 0
+	local var_12_1 = 0
 
-		if slot7 == VersionActivity2_4MusicEnum.BeatGrade.Miss then
-			slot1 = 0
+	for iter_12_0, iter_12_1 in ipairs(arg_12_0._gradeList) do
+		local var_12_2 = arg_12_0._gradeValues[iter_12_1] or 0
+
+		arg_12_0._gradeValues[iter_12_1] = var_12_2 + 1
+
+		if iter_12_1 == VersionActivity2_4MusicEnum.BeatGrade.Miss then
+			var_12_0 = 0
 		else
-			slot2 = math.max(slot2, slot1 + 1)
+			var_12_0 = var_12_0 + 1
+			var_12_1 = math.max(var_12_1, var_12_0)
 		end
 	end
 
-	slot3, slot4 = slot0:_getComboConfig(slot2)
-	slot6 = slot3.score * (slot3.combo <= slot2 and 1 or 0)
-	slot0._totalScore = slot0._totalScore + slot6
+	local var_12_3, var_12_4 = arg_12_0:_getComboConfig(var_12_1)
+	local var_12_5 = var_12_1 >= var_12_3.combo and 1 or 0
+	local var_12_6 = var_12_3.score * var_12_5
 
-	slot0:_addComboItem(slot4, slot2, slot6)
+	arg_12_0._totalScore = arg_12_0._totalScore + var_12_6
 
-	for slot10 = VersionActivity2_4MusicEnum.BeatGrade.Perfect, VersionActivity2_4MusicEnum.BeatGrade.Miss do
-		slot0._totalScore = slot0._totalScore + VersionActivity2_4MusicBeatModel.instance:getGradeScore(slot10) * (slot0._gradeValues[slot10] or 0)
+	arg_12_0:_addComboItem(var_12_4, var_12_1, var_12_6)
+
+	for iter_12_2 = VersionActivity2_4MusicEnum.BeatGrade.Perfect, VersionActivity2_4MusicEnum.BeatGrade.Miss do
+		local var_12_7 = arg_12_0._gradeValues[iter_12_2] or 0
+		local var_12_8 = VersionActivity2_4MusicBeatModel.instance:getGradeScore(iter_12_2)
+
+		arg_12_0._totalScore = arg_12_0._totalScore + var_12_8 * var_12_7
 	end
 
-	slot0._curIndex = VersionActivity2_4MusicEnum.BeatGrade.Perfect
+	arg_12_0._curIndex = VersionActivity2_4MusicEnum.BeatGrade.Perfect
 
-	TaskDispatcher.cancelTask(slot0._createItem, slot0)
-	TaskDispatcher.runRepeat(slot0._createItem, slot0, 0.16)
-	slot0:_createItem()
+	TaskDispatcher.cancelTask(arg_12_0._createItem, arg_12_0)
+	TaskDispatcher.runRepeat(arg_12_0._createItem, arg_12_0, 0.16)
+	arg_12_0:_createItem()
 
-	slot0._tweenId = ZProj.TweenHelper.DOTweenFloat(0, slot0._totalScore, 0.3, slot0._scoreAnimFrame, slot0._scoreAnimFinish, slot0)
+	arg_12_0._tweenId = ZProj.TweenHelper.DOTweenFloat(0, arg_12_0._totalScore, 0.3, arg_12_0._scoreAnimFrame, arg_12_0._scoreAnimFinish, arg_12_0)
 end
 
-function slot0._scoreAnimFrame(slot0, slot1)
-	slot2 = math.floor(slot1)
-	slot0._txtscore.text = slot2
-	slot0._txtscorefailed.text = slot2
+function var_0_0._scoreAnimFrame(arg_13_0, arg_13_1)
+	local var_13_0 = math.floor(arg_13_1)
+
+	arg_13_0._txtscore.text = var_13_0
+	arg_13_0._txtscorefailed.text = var_13_0
 end
 
-function slot0._scoreAnimFinish(slot0)
-	slot0._txtscore.text = slot0._totalScore
-	slot0._txtscorefailed.text = slot0._totalScore
+function var_0_0._scoreAnimFinish(arg_14_0)
+	arg_14_0._txtscore.text = arg_14_0._totalScore
+	arg_14_0._txtscorefailed.text = arg_14_0._totalScore
 end
 
-function slot0._createItem(slot0)
-	slot0:_addGradeItem(slot0._curIndex, slot0._gradeValues[slot0._curIndex] or 0)
+function var_0_0._createItem(arg_15_0)
+	local var_15_0 = arg_15_0._gradeValues[arg_15_0._curIndex] or 0
 
-	slot0._curIndex = slot0._curIndex + 1
+	arg_15_0:_addGradeItem(arg_15_0._curIndex, var_15_0)
 
-	if VersionActivity2_4MusicEnum.BeatGrade.Miss < slot0._curIndex then
-		TaskDispatcher.cancelTask(slot0._createItem, slot0)
-	end
-end
+	arg_15_0._curIndex = arg_15_0._curIndex + 1
 
-function slot0._addComboItem(slot0, slot1, slot2, slot3)
-	MonoHelper.addNoUpdateLuaComOnceToGo(slot0:getResInst(slot0.viewContainer:getSetting().otherRes[1], slot0._gocombolist), VersionActivity2_4MusicBeatResultComboItem):onUpdateMO(slot1, slot2, slot3)
-end
-
-function slot0._addGradeItem(slot0, slot1, slot2)
-	MonoHelper.addNoUpdateLuaComOnceToGo(slot0:getResInst(slot0.viewContainer:getSetting().otherRes[2], slot0._goevaluatelist), VersionActivity2_4MusicBeatResultEvaluateItem):onUpdateMO(slot1, slot2)
-end
-
-function slot0.onClose(slot0)
-	TaskDispatcher.cancelTask(slot0._createItem, slot0)
-
-	if slot0._tweenId then
-		ZProj.TweenHelper.KillById(slot0._tweenId)
-
-		slot0._tweenId = nil
+	if arg_15_0._curIndex > VersionActivity2_4MusicEnum.BeatGrade.Miss then
+		TaskDispatcher.cancelTask(arg_15_0._createItem, arg_15_0)
 	end
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0._addComboItem(arg_16_0, arg_16_1, arg_16_2, arg_16_3)
+	local var_16_0 = arg_16_0.viewContainer:getSetting().otherRes[1]
+	local var_16_1 = arg_16_0:getResInst(var_16_0, arg_16_0._gocombolist)
+
+	MonoHelper.addNoUpdateLuaComOnceToGo(var_16_1, VersionActivity2_4MusicBeatResultComboItem):onUpdateMO(arg_16_1, arg_16_2, arg_16_3)
 end
 
-return slot0
+function var_0_0._addGradeItem(arg_17_0, arg_17_1, arg_17_2)
+	local var_17_0 = arg_17_0.viewContainer:getSetting().otherRes[2]
+	local var_17_1 = arg_17_0:getResInst(var_17_0, arg_17_0._goevaluatelist)
+
+	MonoHelper.addNoUpdateLuaComOnceToGo(var_17_1, VersionActivity2_4MusicBeatResultEvaluateItem):onUpdateMO(arg_17_1, arg_17_2)
+end
+
+function var_0_0.onClose(arg_18_0)
+	TaskDispatcher.cancelTask(arg_18_0._createItem, arg_18_0)
+
+	if arg_18_0._tweenId then
+		ZProj.TweenHelper.KillById(arg_18_0._tweenId)
+
+		arg_18_0._tweenId = nil
+	end
+end
+
+function var_0_0.onDestroyView(arg_19_0)
+	return
+end
+
+return var_0_0

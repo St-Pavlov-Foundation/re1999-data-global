@@ -1,49 +1,53 @@
-module("modules.logic.versionactivity1_3.chess.view.Activity1_3ChessMapViewAnim", package.seeall)
+﻿module("modules.logic.versionactivity1_3.chess.view.Activity1_3ChessMapViewAnim", package.seeall)
 
-slot0 = class("Activity1_3ChessMapViewAnim", BaseView)
+local var_0_0 = class("Activity1_3ChessMapViewAnim", BaseView)
 
-function slot0.onInitView(slot0)
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+function var_0_0.onInitView(arg_1_0)
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0:addEventCb(Activity1_3ChessController.instance, Activity1_3ChessEvent.ShowPassEpisodeEffect, slot0.playPathAnim, slot0)
-	slot0:addEventCb(Activity1_3ChessController.instance, Activity1_3ChessEvent.SetNodePathEffectToPassNode, slot0.refreshPathToPassNode, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0:addEventCb(Activity1_3ChessController.instance, Activity1_3ChessEvent.ShowPassEpisodeEffect, arg_2_0.playPathAnim, arg_2_0)
+	arg_2_0:addEventCb(Activity1_3ChessController.instance, Activity1_3ChessEvent.SetNodePathEffectToPassNode, arg_2_0.refreshPathToPassNode, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0._path1Mterials = slot0:_findUIMeshMaterIals("Map/Path1/path_go")
-	slot0._path2Mterials = slot0:_findUIMeshMaterIals("Map/Path2/path_go")
-	slot0._pathMaterialDict = {
-		slot0._path1Mterials,
-		slot0._path2Mterials
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._path1Mterials = arg_4_0:_findUIMeshMaterIals("Map/Path1/path_go")
+	arg_4_0._path2Mterials = arg_4_0:_findUIMeshMaterIals("Map/Path2/path_go")
+	arg_4_0._pathMaterialDict = {
+		arg_4_0._path1Mterials,
+		arg_4_0._path2Mterials
 	}
 
-	slot0:_initPathAnimParams()
+	arg_4_0:_initPathAnimParams()
 end
 
-function slot0._findUIMeshMaterIals(slot0, slot1)
-	slot4 = slot0:getUserDataTb_()
+function var_0_0._findUIMeshMaterIals(arg_5_0, arg_5_1)
+	local var_5_0 = gohelper.findChild(arg_5_0.viewGO, arg_5_1):GetComponentsInChildren(typeof(UIMesh), true)
+	local var_5_1 = arg_5_0:getUserDataTb_()
 
-	RoomHelper.cArrayToLuaTable(gohelper.findChild(slot0.viewGO, slot1):GetComponentsInChildren(typeof(UIMesh), true), slot4)
+	RoomHelper.cArrayToLuaTable(var_5_0, var_5_1)
 
-	slot5 = slot0:getUserDataTb_()
+	local var_5_2 = arg_5_0:getUserDataTb_()
 
-	for slot9, slot10 in ipairs(slot4) do
-		if slot10.material then
-			slot5[#slot5 + 1] = slot11
+	for iter_5_0, iter_5_1 in ipairs(var_5_1) do
+		local var_5_3 = iter_5_1.material
+
+		if var_5_3 then
+			var_5_2[#var_5_2 + 1] = var_5_3
 		end
 	end
 
-	return slot5
+	return var_5_2
 end
 
-slot1 = {
+local var_0_1 = {
 	{
 		{
 			1,
@@ -90,156 +94,179 @@ slot1 = {
 	}
 }
 
-function slot0._initPathAnimParams(slot0)
-	slot0._pathConsDict = {}
-	slot1 = Va3ChessEnum.ActivityId.Act122
-	slot2 = Activity122Config.instance
+function var_0_0._initPathAnimParams(arg_6_0)
+	arg_6_0._pathConsDict = {}
 
-	for slot6, slot7 in pairs(uv0) do
-		if slot2:getChapterEpisodeList(slot1, slot6) then
-			slot10 = slot2:getChapterEpisodeList(slot1, slot6 + 1)
-			slot0._pathConsDict[slot6] = {}
+	local var_6_0 = Va3ChessEnum.ActivityId.Act122
+	local var_6_1 = Activity122Config.instance
 
-			if slot2:getChapterEpisodeList(slot1, slot6 - 1) and #slot9 > 0 then
-				slot0:_addPathAnimParams(slot11, slot7, slot9[#slot9], false)
+	for iter_6_0, iter_6_1 in pairs(var_0_1) do
+		local var_6_2 = var_6_1:getChapterEpisodeList(var_6_0, iter_6_0)
+
+		if var_6_2 then
+			local var_6_3 = var_6_1:getChapterEpisodeList(var_6_0, iter_6_0 - 1)
+			local var_6_4 = var_6_1:getChapterEpisodeList(var_6_0, iter_6_0 + 1)
+			local var_6_5 = {}
+
+			arg_6_0._pathConsDict[iter_6_0] = var_6_5
+
+			if var_6_3 and #var_6_3 > 0 then
+				arg_6_0:_addPathAnimParams(var_6_5, iter_6_1, var_6_3[#var_6_3], false)
 			end
 
-			for slot15, slot16 in ipairs(slot8) do
-				slot0:_addPathAnimParams(slot11, slot7, slot16, true)
+			for iter_6_2, iter_6_3 in ipairs(var_6_2) do
+				arg_6_0:_addPathAnimParams(var_6_5, iter_6_1, iter_6_3, true)
 			end
 
-			if slot10 and #slot10 > 0 then
-				slot0:_addPathAnimParams(slot11, slot7, slot10[1], false)
+			if var_6_4 and #var_6_4 > 0 then
+				arg_6_0:_addPathAnimParams(var_6_5, iter_6_1, var_6_4[1], false)
 			end
 		end
 	end
 end
 
-function slot0._addPathAnimParams(slot0, slot1, slot2, slot3, slot4)
-	if #slot1 + 1 <= #slot2 then
-		table.insert(slot1, {
-			pathParams = slot2[slot5],
-			isEpisode = slot4,
-			episodeCfg = slot3
-		})
+function var_0_0._addPathAnimParams(arg_7_0, arg_7_1, arg_7_2, arg_7_3, arg_7_4)
+	local var_7_0 = #arg_7_1 + 1
+
+	if var_7_0 <= #arg_7_2 then
+		local var_7_1 = {
+			pathParams = arg_7_2[var_7_0],
+			isEpisode = arg_7_4,
+			episodeCfg = arg_7_3
+		}
+
+		table.insert(arg_7_1, var_7_1)
 	end
 end
 
-function slot0.onOpen(slot0)
-	if not slot0._pathToPassNode then
-		slot0:refreshPathToOpenNode()
+function var_0_0.onOpen(arg_8_0)
+	if not arg_8_0._pathToPassNode then
+		arg_8_0:refreshPathToOpenNode()
 	end
 end
 
-function slot0.onSetVisible(slot0, slot1)
-	if slot1 then
-		-- Nothing
+function var_0_0.onSetVisible(arg_9_0, arg_9_1)
+	if arg_9_1 then
+		-- block empty
 	end
 end
 
-function slot0.onDestroyView(slot0)
-	if slot0._pathTweenId then
-		ZProj.TweenHelper.KillById(slot0._pathTweenId)
+function var_0_0.onDestroyView(arg_10_0)
+	if arg_10_0._pathTweenId then
+		ZProj.TweenHelper.KillById(arg_10_0._pathTweenId)
 
-		slot0._pathTweenId = nil
+		arg_10_0._pathTweenId = nil
 	end
 end
 
-function slot0.refreshPathToOpenNode(slot0)
-	for slot4, slot5 in pairs(slot0._pathMaterialDict) do
-		slot6, slot7 = slot0:_getPathPatams(slot4)
+function var_0_0.refreshPathToOpenNode(arg_11_0)
+	for iter_11_0, iter_11_1 in pairs(arg_11_0._pathMaterialDict) do
+		local var_11_0, var_11_1 = arg_11_0:_getPathPatams(iter_11_0)
 
-		if slot6 and slot7 > 0 then
-			slot0:_setPathMaterialsValue(slot5, slot6[2])
+		if var_11_0 and var_11_1 > 0 then
+			arg_11_0:_setPathMaterialsValue(iter_11_1, var_11_0[2])
 		else
-			slot0:_setPathMaterialsValue(slot5, 1)
+			arg_11_0:_setPathMaterialsValue(iter_11_1, 1)
 		end
 	end
 end
 
-function slot0.refreshPathToPassNode(slot0)
-	slot0._pathToPassNode = true
+function var_0_0.refreshPathToPassNode(arg_12_0)
+	arg_12_0._pathToPassNode = true
 
-	for slot4, slot5 in pairs(slot0._pathMaterialDict) do
-		slot6, slot7 = slot0:_getPathPatams(slot4)
+	for iter_12_0, iter_12_1 in pairs(arg_12_0._pathMaterialDict) do
+		local var_12_0, var_12_1 = arg_12_0:_getPathPatams(iter_12_0)
 
-		if slot6 and slot7 > 0 then
-			slot0:_setPathMaterialsValue(slot5, slot6[1])
+		if var_12_0 and var_12_1 > 0 then
+			arg_12_0:_setPathMaterialsValue(iter_12_1, var_12_0[1])
 		else
-			slot0:_setPathMaterialsValue(slot5, 1)
+			arg_12_0:_setPathMaterialsValue(iter_12_1, 1)
 		end
 	end
 end
 
-function slot0.playPathAnim(slot0)
-	slot0._pathToPassNode = false
+function var_0_0.playPathAnim(arg_13_0)
+	arg_13_0._pathToPassNode = false
 
-	if Activity122Config.instance:getEpisodeCo(Va3ChessEnum.ActivityId.Act122, Activity122Model.instance:getCurEpisodeId()) then
-		slot4, slot5 = slot0:_getPathPatams(slot3.chapterId)
+	local var_13_0 = Va3ChessEnum.ActivityId.Act122
+	local var_13_1 = Activity122Model.instance:getCurEpisodeId()
+	local var_13_2 = Activity122Config.instance:getEpisodeCo(var_13_0, var_13_1)
 
-		if slot4 and slot5 > 0 then
-			slot0:_playPathAnim(slot0._pathMaterialDict[slot3.chapterId], slot4)
+	if var_13_2 then
+		local var_13_3, var_13_4 = arg_13_0:_getPathPatams(var_13_2.chapterId)
+
+		if var_13_3 and var_13_4 > 0 then
+			arg_13_0:_playPathAnim(arg_13_0._pathMaterialDict[var_13_2.chapterId], var_13_3)
 		end
 	end
 end
 
-function slot0._playPathAnim(slot0, slot1, slot2)
-	if not slot1 or not slot2 then
+function var_0_0._playPathAnim(arg_14_0, arg_14_1, arg_14_2)
+	if not arg_14_1 or not arg_14_2 then
 		return
 	end
 
-	if slot0._tweenMaterials and slot0._tweenParams then
-		slot0:_onPathFinish()
+	if arg_14_0._tweenMaterials and arg_14_0._tweenParams then
+		arg_14_0:_onPathFinish()
 	end
 
-	if slot0._pathTweenId then
-		ZProj.TweenHelper.KillById(slot0._pathTweenId)
+	if arg_14_0._pathTweenId then
+		ZProj.TweenHelper.KillById(arg_14_0._pathTweenId)
 
-		slot0._pathTweenId = nil
+		arg_14_0._pathTweenId = nil
 	end
 
-	slot0._tweenMaterials = slot1
-	slot0._tweenParams = slot2
-	slot0._pathTweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, 2, slot0._onPathFrame, slot0._onPathFinish, slot0, nil, EaseType.Linear)
+	arg_14_0._tweenMaterials = arg_14_1
+	arg_14_0._tweenParams = arg_14_2
+	arg_14_0._pathTweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, 2, arg_14_0._onPathFrame, arg_14_0._onPathFinish, arg_14_0, nil, EaseType.Linear)
 end
 
-function slot0._onPathFrame(slot0, slot1)
-	slot0:_setPathMaterialsValue(slot0._tweenMaterials, slot0._tweenParams[1] + (slot0._tweenParams[2] - slot0._tweenParams[1]) * slot1)
+function var_0_0._onPathFrame(arg_15_0, arg_15_1)
+	local var_15_0 = arg_15_0._tweenParams[1] + (arg_15_0._tweenParams[2] - arg_15_0._tweenParams[1]) * arg_15_1
+
+	arg_15_0:_setPathMaterialsValue(arg_15_0._tweenMaterials, var_15_0)
 end
 
-function slot0._onPathFinish(slot0)
-	slot0._tweenMaterials = nil
-	slot0._tweenParams = nil
+function var_0_0._onPathFinish(arg_16_0)
+	local var_16_0 = arg_16_0._tweenParams[2]
+	local var_16_1 = arg_16_0._tweenMaterials
 
-	slot0:_setPathMaterialsValue(slot0._tweenMaterials, slot0._tweenParams[2])
+	arg_16_0._tweenMaterials = nil
+	arg_16_0._tweenParams = nil
+
+	arg_16_0:_setPathMaterialsValue(var_16_1, var_16_0)
 end
 
-function slot0._setPathMaterialsValue(slot0, slot1, slot2)
-	slot7 = 0
+function var_0_0._setPathMaterialsValue(arg_17_0, arg_17_1, arg_17_2)
+	local var_17_0 = Vector4.New(arg_17_2, 0.01, 0, 0)
 
-	for slot7, slot8 in ipairs(slot1) do
-		slot8:SetVector("_DissolveControl", Vector4.New(slot2, 0.01, 0, slot7))
+	for iter_17_0, iter_17_1 in ipairs(arg_17_1) do
+		iter_17_1:SetVector("_DissolveControl", var_17_0)
 	end
 end
 
-function slot0._getPathPatams(slot0, slot1)
-	slot3 = 0
-	slot4 = nil
+function var_0_0._getPathPatams(arg_18_0, arg_18_1)
+	local var_18_0 = arg_18_0._pathConsDict[arg_18_1]
+	local var_18_1 = 0
+	local var_18_2
 
-	if slot0._pathConsDict[slot1] then
-		for slot8, slot9 in ipairs(slot2) do
-			if slot9.isEpisode and Activity122Model.instance:isEpisodeOpen(slot9.episodeCfg.id) or not slot9.isEpisode and Activity1_3ChessController.instance:isChapterOpen(slot9.episodeCfg.chapterId) then
-				slot3 = slot8
-				slot4 = slot9
+	if var_18_0 then
+		for iter_18_0, iter_18_1 in ipairs(var_18_0) do
+			local var_18_3 = iter_18_1.isEpisode and Activity122Model.instance:isEpisodeOpen(iter_18_1.episodeCfg.id)
+			local var_18_4 = not iter_18_1.isEpisode and Activity1_3ChessController.instance:isChapterOpen(iter_18_1.episodeCfg.chapterId)
+
+			if var_18_3 or var_18_4 then
+				var_18_1 = iter_18_0
+				var_18_2 = iter_18_1
 			end
 		end
 	end
 
-	if slot4 then
-		return slot4.pathParams, slot3
+	if var_18_2 then
+		return var_18_2.pathParams, var_18_1
 	end
 
-	return nil, slot3
+	return nil, var_18_1
 end
 
-return slot0
+return var_0_0

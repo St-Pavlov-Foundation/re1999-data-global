@@ -1,33 +1,33 @@
-module("modules.logic.room.entity.work.RoomAtmosphereFlowSequence", package.seeall)
+﻿module("modules.logic.room.entity.work.RoomAtmosphereFlowSequence", package.seeall)
 
-slot0 = class("RoomAtmosphereFlowSequence", FlowSequence)
-slot1 = "done"
+local var_0_0 = class("RoomAtmosphereFlowSequence", FlowSequence)
+local var_0_1 = "done"
 
-function slot0.ctor(slot0, slot1)
-	uv0.super.ctor(slot0)
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	var_0_0.super.ctor(arg_1_0)
 
-	slot0._doneParam = slot1
+	arg_1_0._doneParam = arg_1_1
 end
 
-function slot0.setAllWorkAudioIsFade(slot0, slot1)
-	for slot5, slot6 in ipairs(slot0._workList) do
-		slot6:setAudioIsFade(slot1)
+function var_0_0.setAllWorkAudioIsFade(arg_2_0, arg_2_1)
+	for iter_2_0, iter_2_1 in ipairs(arg_2_0._workList) do
+		iter_2_1:setAudioIsFade(arg_2_1)
 	end
 end
 
-function slot0.onDone(slot0, slot1)
-	slot0.isSuccess = slot1
-	slot0.status = WorkStatus.Done
+function var_0_0.onDone(arg_3_0, arg_3_1)
+	arg_3_0.isSuccess = arg_3_1
+	arg_3_0.status = WorkStatus.Done
 
-	slot0:clearWork()
+	arg_3_0:clearWork()
 
-	if slot0.parent then
-		slot0.parent:onWorkDone(slot0)
+	if arg_3_0.parent then
+		arg_3_0.parent:onWorkDone(arg_3_0)
 	end
 
-	if slot0._dispatcher then
-		slot0._dispatcher:dispatchEvent(uv0, slot1, slot0._doneParam)
+	if arg_3_0._dispatcher then
+		arg_3_0._dispatcher:dispatchEvent(var_0_1, arg_3_1, arg_3_0._doneParam)
 	end
 end
 
-return slot0
+return var_0_0

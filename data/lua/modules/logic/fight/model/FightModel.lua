@@ -1,30 +1,30 @@
-module("modules.logic.fight.model.FightModel", package.seeall)
+﻿module("modules.logic.fight.model.FightModel", package.seeall)
 
-slot0 = class("FightModel", BaseModel)
+local var_0_0 = class("FightModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0._fightParam = nil
-	slot0._curStage = nil
-	slot0._curWaveId = 1
-	slot0._curRoundId = 1
-	slot0._roundInc = 1
-	slot0._curRoundMO = nil
-	slot0._historyRoundMOList = nil
-	slot0._isFinish = false
-	slot0._recordMO = nil
-	slot0.maxRound = 1
-	slot0.maxWave = 1
-	slot0.power = 0
-	slot0.clothId = 0
-	slot0._clothSkillDict = nil
-	slot0.needFightReconnect = false
-	slot0._fightReason = nil
-	slot0._isAuto = false
-	slot0._userSpeed = 1
-	slot0._gmOpenFightJoin = false
-	slot0._isClickEnemy = false
-	slot0.autoPlayCardList = {}
-	slot0._guideParam = {
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._fightParam = nil
+	arg_1_0._curStage = nil
+	arg_1_0._curWaveId = 1
+	arg_1_0._curRoundId = 1
+	arg_1_0._roundInc = 1
+	arg_1_0._curRoundMO = nil
+	arg_1_0._historyRoundMOList = nil
+	arg_1_0._isFinish = false
+	arg_1_0._recordMO = nil
+	arg_1_0.maxRound = 1
+	arg_1_0.maxWave = 1
+	arg_1_0.power = 0
+	arg_1_0.clothId = 0
+	arg_1_0._clothSkillDict = nil
+	arg_1_0.needFightReconnect = false
+	arg_1_0._fightReason = nil
+	arg_1_0._isAuto = false
+	arg_1_0._userSpeed = 1
+	arg_1_0._gmOpenFightJoin = false
+	arg_1_0._isClickEnemy = false
+	arg_1_0.autoPlayCardList = {}
+	arg_1_0._guideParam = {
 		OnGuideFightEndPause = false,
 		OnGuideEntityDeadPause = false,
 		OnGuideDistributePause = false,
@@ -32,141 +32,150 @@ function slot0.onInit(slot0)
 		OnGuideFightEndPause_sp = false,
 		OnGuideBeforeSkillPause = false
 	}
-	slot0._startFinish = false
-	slot0.roundOffset = 0
+	arg_1_0._startFinish = false
+	arg_1_0.roundOffset = 0
 end
 
-function slot0.reInit(slot0)
-	slot0._curStage = nil
-	slot0.needFightReconnect = false
+function var_0_0.reInit(arg_2_0)
+	arg_2_0._curStage = nil
+	arg_2_0.needFightReconnect = false
 end
 
-function slot0.clear(slot0)
+function var_0_0.clear(arg_3_0)
 	FightWorkBFSGSkillStart.BeiFangShaoGeUniqueSkill = false
-	uv0.forceParallelSkill = false
-	slot0._curStage = nil
-	slot0._curWaveId = 1
+	var_0_0.forceParallelSkill = false
+	arg_3_0._curStage = nil
+	arg_3_0._curWaveId = 1
 
 	FightPlayCardModel.instance:clearUsedCards()
-	slot0:resetRTPCSpeedTo1()
+	arg_3_0:resetRTPCSpeedTo1()
 
-	slot0._userSpeed = 1
-	slot0._historyRoundMOList = nil
+	arg_3_0._userSpeed = 1
+	arg_3_0._historyRoundMOList = nil
 
-	slot0:getMagicCircleInfo():clear()
+	arg_3_0:getMagicCircleInfo():clear()
 
-	slot0.stressBehaviourDict = nil
-	slot0.entitySpAttrMoDict = nil
-	slot0.notifyEntityId = nil
-	slot0.canContractList = nil
-	slot0.contractEntityUid = nil
-	slot0.beContractEntityUid = nil
-	slot0.roundOffset = 0
+	arg_3_0.stressBehaviourDict = nil
+	arg_3_0.entitySpAttrMoDict = nil
+	arg_3_0.notifyEntityId = nil
+	arg_3_0.canContractList = nil
+	arg_3_0.contractEntityUid = nil
+	arg_3_0.beContractEntityUid = nil
+	arg_3_0.roundOffset = 0
 end
 
-function slot0.onRestart(slot0)
-	slot0:clear()
+function var_0_0.onRestart(arg_4_0)
+	arg_4_0:clear()
 end
 
-function slot0.setFightParam(slot0, slot1)
-	slot0._historyRoundMOList = nil
-	slot0._fightParam = slot1
-	slot0.maxWave = slot0._fightParam.monsterGroupIds and #slot0._fightParam.monsterGroupIds or 0
+function var_0_0.setFightParam(arg_5_0, arg_5_1)
+	arg_5_0._historyRoundMOList = nil
+	arg_5_0._fightParam = arg_5_1
+	arg_5_0.maxWave = arg_5_0._fightParam.monsterGroupIds and #arg_5_0._fightParam.monsterGroupIds or 0
 end
 
-function slot0.getGuideParam(slot0)
-	return slot0._guideParam
+function var_0_0.getGuideParam(arg_6_0)
+	return arg_6_0._guideParam
 end
 
-function slot0.getFightParam(slot0)
-	return slot0._fightParam
+function var_0_0.getFightParam(arg_7_0)
+	return arg_7_0._fightParam
 end
 
-function slot0.updateMySide(slot0, slot1)
-	if slot0:getFightParam() then
-		slot2:setMySide(slot1.clothId, slot1.heroList, slot1.subHeroList, slot1.equips, slot1.activity104Equips, slot1.trialHeroList, slot1.extraList, slot1.assistBossId)
+function var_0_0.updateMySide(arg_8_0, arg_8_1)
+	local var_8_0 = arg_8_0:getFightParam()
+
+	if var_8_0 then
+		var_8_0:setMySide(arg_8_1.clothId, arg_8_1.heroList, arg_8_1.subHeroList, arg_8_1.equips, arg_8_1.activity104Equips, arg_8_1.trialHeroList, arg_8_1.extraList, arg_8_1.assistBossId)
 	end
 end
 
-function slot0.recordFightGroup(slot0, slot1)
-	slot0.last_fightGroup = slot1
+function var_0_0.recordFightGroup(arg_9_0, arg_9_1)
+	arg_9_0.last_fightGroup = arg_9_1
 end
 
-function slot0.getCurWaveId(slot0)
-	return slot0._curWaveId
+function var_0_0.getCurWaveId(arg_10_0)
+	return arg_10_0._curWaveId
 end
 
-function slot0.getCurRoundId(slot0)
-	return slot0._curRoundId - slot0.roundOffset
+function var_0_0.getCurRoundId(arg_11_0)
+	return arg_11_0._curRoundId - arg_11_0.roundOffset
 end
 
-function slot0.getMaxRound(slot0)
-	return slot0.maxRound - slot0.roundOffset
+function var_0_0.getMaxRound(arg_12_0)
+	return arg_12_0.maxRound - arg_12_0.roundOffset
 end
 
-function slot0.setRoundOffset(slot0, slot1)
-	slot0.roundOffset = slot1 or 0
+function var_0_0.setRoundOffset(arg_13_0, arg_13_1)
+	arg_13_1 = arg_13_1 or 0
+	arg_13_0.roundOffset = arg_13_1
 end
 
-function slot0.getCurRoundMO(slot0)
-	return slot0._curRoundMO
+function var_0_0.getCurRoundMO(arg_14_0)
+	return arg_14_0._curRoundMO
 end
 
-function slot0.getRecordMO(slot0)
-	return slot0._recordMO
+function var_0_0.getRecordMO(arg_15_0)
+	return arg_15_0._recordMO
 end
 
-function slot0.clearRecordMO(slot0)
-	slot0._recordMO = nil
+function var_0_0.clearRecordMO(arg_16_0)
+	arg_16_0._recordMO = nil
 end
 
-function slot0.getFightReason(slot0)
-	return slot0._fightReason
+function var_0_0.getFightReason(arg_17_0)
+	return arg_17_0._fightReason
 end
 
-function slot0.getHistoryRoundMOList(slot0)
-	return slot0._historyRoundMOList
+function var_0_0.getHistoryRoundMOList(arg_18_0)
+	return arg_18_0._historyRoundMOList
 end
 
-function slot0.getSelectMonsterGroupId(slot0, slot1, slot2)
-	slot3 = slot0._fightParam
+function var_0_0.getSelectMonsterGroupId(arg_19_0, arg_19_1, arg_19_2)
+	local var_19_0 = arg_19_0._fightParam
 
-	if not slot2 then
-		return slot3 and slot3.monsterGroupIds and slot3.monsterGroupIds[slot1]
+	if not arg_19_2 then
+		return var_19_0 and var_19_0.monsterGroupIds and var_19_0.monsterGroupIds[arg_19_1]
 	end
 
-	if not slot3 or slot3.battleId ~= slot2 then
-		FightParam.New():setBattleId(slot2)
+	if not var_19_0 or var_19_0.battleId ~= arg_19_2 then
+		var_19_0 = FightParam.New()
+
+		var_19_0:setBattleId(arg_19_2)
 	end
 
-	return slot3 and slot3.monsterGroupIds and slot3.monsterGroupIds[slot1]
+	return var_19_0 and var_19_0.monsterGroupIds and var_19_0.monsterGroupIds[arg_19_1]
 end
 
-function slot0.getCurMonsterGroupId(slot0)
-	return slot0._fightParam and slot0._fightParam.monsterGroupIds and slot0._fightParam.monsterGroupIds[slot0._curWaveId]
+function var_0_0.getCurMonsterGroupId(arg_20_0)
+	return arg_20_0._fightParam and arg_20_0._fightParam.monsterGroupIds and arg_20_0._fightParam.monsterGroupIds[arg_20_0._curWaveId]
 end
 
-function slot0.isShowSettlement(slot0)
-	return slot0._fightParam and slot0._fightParam.isShowSettlement
+function var_0_0.isShowSettlement(arg_21_0)
+	return arg_21_0._fightParam and arg_21_0._fightParam.isShowSettlement
 end
 
-function slot0.getAfterStory(slot0)
-	if slot0._fightParam and slot0._fightParam.episodeId and DungeonConfig.instance:getEpisodeCO(slot0._fightParam.episodeId) then
-		return slot1.afterStory
+function var_0_0.getAfterStory(arg_22_0)
+	if arg_22_0._fightParam and arg_22_0._fightParam.episodeId then
+		local var_22_0 = DungeonConfig.instance:getEpisodeCO(arg_22_0._fightParam.episodeId)
+
+		if var_22_0 then
+			return var_22_0.afterStory
+		end
 	end
 
 	return 0
 end
 
-function slot0.getCurStage(slot0)
-	return slot0._curStage
+function var_0_0.getCurStage(arg_23_0)
+	return arg_23_0._curStage
 end
 
-function slot0.inFight(slot0)
-	return slot0._curStage ~= nil
+function var_0_0.inFight(arg_24_0)
+	return arg_24_0._curStage ~= nil
 end
 
-slot1 = {
+local var_0_1 = {
 	"起始回合",
 	"发牌",
 	"玩家自由打牌",
@@ -178,591 +187,621 @@ slot1 = {
 	"主角技能"
 }
 
-function slot0.getCurStageDesc(slot0)
-	return uv0[slot0._curStage] or "nil"
+function var_0_0.getCurStageDesc(arg_25_0)
+	return var_0_1[arg_25_0._curStage] or "nil"
 end
 
-function slot0.setCurStage(slot0, slot1)
-	slot0._curStage = slot1
+function var_0_0.setCurStage(arg_26_0, arg_26_1)
+	arg_26_0._curStage = arg_26_1
 
-	if slot1 == FightEnum.Stage.StartRound then
-		slot0._startFinish = false
-	elseif slot1 == FightEnum.Stage.Card or slot1 == FightEnum.Stage.AutoCard then
-		slot0._startFinish = true
+	if arg_26_1 == FightEnum.Stage.StartRound then
+		arg_26_0._startFinish = false
+	elseif arg_26_1 == FightEnum.Stage.Card or arg_26_1 == FightEnum.Stage.AutoCard then
+		arg_26_0._startFinish = true
 	end
 end
 
-function slot0.isStartFinish(slot0)
-	return slot0._startFinish
+function var_0_0.isStartFinish(arg_27_0)
+	return arg_27_0._startFinish
 end
 
-function slot0.isFinish(slot0)
-	return slot0._isFinish
+function var_0_0.isFinish(arg_28_0)
+	return arg_28_0._isFinish
 end
 
-function slot0.getBattleId(slot0)
-	return slot0._battleId
+function var_0_0.getBattleId(arg_29_0)
+	return arg_29_0._battleId
 end
 
-function slot0.clearBattleId(slot0)
-	slot0._battleId = nil
+function var_0_0.clearBattleId(arg_30_0)
+	arg_30_0._battleId = nil
 end
 
-function slot0.initSpeedConfig(slot0)
-	if not slot0._normalSpeed then
-		slot0._normalSpeed = {
+function var_0_0.initSpeedConfig(arg_31_0)
+	if not arg_31_0._normalSpeed then
+		arg_31_0._normalSpeed = {
 			1,
 			CommonConfig.instance:getConstNum(ConstEnum.FightSpeed)
 		}
-		slot1 = FightStrUtil.instance:getSplitString2Cache(CommonConfig.instance:getConstStr(ConstEnum.FightReplaySpeed), true, "|", "#")
-		slot0._replaySpeed = {
-			slot1[1][1],
-			slot1[2][1]
+
+		local var_31_0 = CommonConfig.instance:getConstStr(ConstEnum.FightReplaySpeed)
+		local var_31_1 = FightStrUtil.instance:getSplitString2Cache(var_31_0, true, "|", "#")
+
+		arg_31_0._replaySpeed = {
+			var_31_1[1][1],
+			var_31_1[2][1]
 		}
-		slot0._replayUISpeed = {
-			slot1[1][2],
-			slot1[2][2]
+		arg_31_0._replayUISpeed = {
+			var_31_1[1][2],
+			var_31_1[2][2]
 		}
-		slot2 = FightStrUtil.instance:getSplitToNumberCache(CommonConfig.instance:getConstStr(ConstEnum.bossSkillFightSpeed), "#")
-		slot0._bossSkillNormalSpeed = {
-			slot2[1],
-			slot2[2]
+
+		local var_31_2 = FightStrUtil.instance:getSplitToNumberCache(CommonConfig.instance:getConstStr(ConstEnum.bossSkillFightSpeed), "#")
+
+		arg_31_0._bossSkillNormalSpeed = {
+			var_31_2[1],
+			var_31_2[2]
 		}
-		slot2 = FightStrUtil.instance:getSplitToNumberCache(CommonConfig.instance:getConstStr(ConstEnum.bossSkillFightReplaySpeed), "#")
-		slot0._bossSkillReplaySpeed = {
-			slot2[1],
-			slot2[2]
+
+		local var_31_3 = FightStrUtil.instance:getSplitToNumberCache(CommonConfig.instance:getConstStr(ConstEnum.bossSkillFightReplaySpeed), "#")
+
+		arg_31_0._bossSkillReplaySpeed = {
+			var_31_3[1],
+			var_31_3[2]
 		}
-		slot2 = GameUtil.splitString2(lua_activity174_const.configDict[Activity174Enum.ConstKey.FightSpeed].value, true)
-		slot0._douQuQuSpeed = {
-			slot2[1][1],
-			slot2[2][1]
+
+		local var_31_4 = GameUtil.splitString2(lua_activity174_const.configDict[Activity174Enum.ConstKey.FightSpeed].value, true)
+
+		arg_31_0._douQuQuSpeed = {
+			var_31_4[1][1],
+			var_31_4[2][1]
 		}
-		slot0._douQuQuUISpeed = {
-			slot2[1][2],
-			slot2[2][2]
+		arg_31_0._douQuQuUISpeed = {
+			var_31_4[1][2],
+			var_31_4[2][2]
 		}
 	end
 end
 
-function slot0.getSpeed(slot0)
-	if uv0.instance.useExclusiveSpeed then
-		return uv0.instance.useExclusiveSpeed
+function var_0_0.getSpeed(arg_32_0)
+	if var_0_0.instance.useExclusiveSpeed then
+		return var_0_0.instance.useExclusiveSpeed
 	end
 
-	slot0:initSpeedConfig()
+	arg_32_0:initSpeedConfig()
 
 	if FightDataHelper.fieldMgr:isDouQuQu() then
-		return slot0._douQuQuSpeed[slot0._userSpeed] or 1
+		return arg_32_0._douQuQuSpeed[arg_32_0._userSpeed] or 1
 	end
 
 	if FightReplayModel.instance:isReplay() then
-		if uv0.instance.useBossSkillSpeed then
-			return slot0._bossSkillReplaySpeed[slot0._userSpeed] or 1
+		if var_0_0.instance.useBossSkillSpeed then
+			return arg_32_0._bossSkillReplaySpeed[arg_32_0._userSpeed] or 1
 		end
 
-		return slot0._replaySpeed[slot0._userSpeed] or 1
+		return arg_32_0._replaySpeed[arg_32_0._userSpeed] or 1
 	else
-		if uv0.instance.useBossSkillSpeed then
-			return slot0._bossSkillNormalSpeed[slot0._userSpeed] or 1
+		if var_0_0.instance.useBossSkillSpeed then
+			return arg_32_0._bossSkillNormalSpeed[arg_32_0._userSpeed] or 1
 		end
 
-		return slot0._normalSpeed[slot0._userSpeed] or 1
+		return arg_32_0._normalSpeed[arg_32_0._userSpeed] or 1
 	end
 end
 
-function slot0.getNormalSpeed(slot0)
-	slot0:initSpeedConfig()
+function var_0_0.getNormalSpeed(arg_33_0)
+	arg_33_0:initSpeedConfig()
 
-	return slot0._normalSpeed[1] or 1
+	return arg_33_0._normalSpeed[1] or 1
 end
 
-function slot0.getReplaySpeed(slot0)
-	slot0:initSpeedConfig()
+function var_0_0.getReplaySpeed(arg_34_0)
+	arg_34_0:initSpeedConfig()
 
-	return slot0._replaySpeed[1] or 1
+	return arg_34_0._replaySpeed[1] or 1
 end
 
-function slot0.getUISpeed(slot0)
-	slot0:initSpeedConfig()
+function var_0_0.getUISpeed(arg_35_0)
+	arg_35_0:initSpeedConfig()
 
 	if FightDataHelper.fieldMgr:isDouQuQu() then
-		return slot0._douQuQuUISpeed[slot0._userSpeed] or 1
+		return arg_35_0._douQuQuUISpeed[arg_35_0._userSpeed] or 1
 	end
 
 	if FightReplayModel.instance:isReplay() then
-		return slot0._replayUISpeed[slot0._userSpeed] or 1
+		return arg_35_0._replayUISpeed[arg_35_0._userSpeed] or 1
 	else
 		return 1
 	end
 end
 
-function slot0.setGMSpeed(slot0, slot1, slot2)
-	slot0._normalSpeed = {
-		slot1,
-		slot1
+function var_0_0.setGMSpeed(arg_36_0, arg_36_1, arg_36_2)
+	arg_36_0._normalSpeed = {
+		arg_36_1,
+		arg_36_1
 	}
-	slot0._replaySpeed = {
-		slot2,
-		slot2
+	arg_36_0._replaySpeed = {
+		arg_36_2,
+		arg_36_2
 	}
 
-	if slot0:getCurStage() then
-		slot0:updateRTPCSpeed()
+	if arg_36_0:getCurStage() then
+		arg_36_0:updateRTPCSpeed()
 	end
 end
 
-function slot0.getUserSpeed(slot0)
-	return slot0._userSpeed
+function var_0_0.getUserSpeed(arg_37_0)
+	return arg_37_0._userSpeed
 end
 
-function slot0.setUserSpeed(slot0, slot1)
-	slot0._userSpeed = slot1 or 1
+function var_0_0.setUserSpeed(arg_38_0, arg_38_1)
+	arg_38_0._userSpeed = arg_38_1 or 1
 
-	slot0:updateRTPCSpeed()
+	arg_38_0:updateRTPCSpeed()
 end
 
-function slot0.updateRTPCSpeed(slot0)
-	AudioMgr.instance:setRTPCValue(FightEnum.GameSpeedRTPC, slot0:getSpeed())
+function var_0_0.updateRTPCSpeed(arg_39_0)
+	AudioMgr.instance:setRTPCValue(FightEnum.GameSpeedRTPC, arg_39_0:getSpeed())
 end
 
-function slot0.resetRTPCSpeedTo1(slot0)
+function var_0_0.resetRTPCSpeedTo1(arg_40_0)
 	AudioMgr.instance:setRTPCValue(FightEnum.GameSpeedRTPC, 1)
 end
 
-function slot0.isAuto(slot0)
-	return slot0._isAuto
+function var_0_0.isAuto(arg_41_0)
+	return arg_41_0._isAuto
 end
 
-function slot0.setAuto(slot0, slot1)
-	if not slot1 and slot0._isAuto then
-		slot0._isAuto = slot1
+function var_0_0.setAuto(arg_42_0, arg_42_1)
+	if not arg_42_1 and arg_42_0._isAuto then
+		arg_42_0._isAuto = arg_42_1
 
 		FightCardModel.instance:setCurSelectEntityId(0)
 		FightCardModel.instance:resetCurSelectEntityIdDefault()
 	end
 
-	slot0._isAuto = slot1
+	arg_42_0._isAuto = arg_42_1
 
-	if slot1 then
+	if arg_42_1 then
 		FightDataHelper.stageMgr:enterFightState(FightStageMgr.FightStateType.Auto)
 	else
 		FightDataHelper.stageMgr:exitFightState(FightStageMgr.FightStateType.Auto)
 	end
 end
 
-function slot0.switchGMFightJoin(slot0)
-	slot0._gmOpenFightJoin = not slot0._gmOpenFightJoin
+function var_0_0.switchGMFightJoin(arg_43_0)
+	arg_43_0._gmOpenFightJoin = not arg_43_0._gmOpenFightJoin
 end
 
-function slot0.isGMFightJoin(slot0)
-	return slot0._gmOpenFightJoin
+function var_0_0.isGMFightJoin(arg_44_0)
+	return arg_44_0._gmOpenFightJoin
 end
 
-function slot0.checkEnterUseFreeLimit(slot0)
-	slot0._useFreeLimit = false
-	slot0._checkFreeLimitChapterType = nil
+function var_0_0.checkEnterUseFreeLimit(arg_45_0)
+	arg_45_0._useFreeLimit = false
+	arg_45_0._checkFreeLimitChapterType = nil
 
-	if DungeonConfig.instance:getEpisodeCO(DungeonModel.instance.curSendEpisodeId) and DungeonConfig.instance:getChapterCO(slot2.chapterId) and slot3.enterAfterFreeLimit > 0 then
-		if DungeonModel.instance:getChapterRemainingNum(slot3.type) > 0 then
-			slot0._useFreeLimit = true
+	local var_45_0 = DungeonModel.instance.curSendEpisodeId
+	local var_45_1 = DungeonConfig.instance:getEpisodeCO(var_45_0)
+	local var_45_2 = var_45_1 and DungeonConfig.instance:getChapterCO(var_45_1.chapterId)
+
+	if var_45_2 and var_45_2.enterAfterFreeLimit > 0 then
+		if DungeonModel.instance:getChapterRemainingNum(var_45_2.type) > 0 then
+			arg_45_0._useFreeLimit = true
 		else
-			slot0._checkFreeLimitChapterType = slot3.type
+			arg_45_0._checkFreeLimitChapterType = var_45_2.type
 		end
 	end
 end
 
-function slot0.isEnterUseFreeLimit(slot0)
-	if slot0._useFreeLimit then
+function var_0_0.isEnterUseFreeLimit(arg_46_0)
+	if arg_46_0._useFreeLimit then
 		return true
 	end
 
-	return slot0._checkFreeLimitChapterType and DungeonModel.instance:getChapterRemainingNum(slot0._checkFreeLimitChapterType) > 0
+	return arg_46_0._checkFreeLimitChapterType and DungeonModel.instance:getChapterRemainingNum(arg_46_0._checkFreeLimitChapterType) > 0
 end
 
-function slot0.canParallelSkill(slot0, slot1)
-	if uv0.forceParallelSkill then
+function var_0_0.canParallelSkill(arg_47_0, arg_47_1)
+	if var_0_0.forceParallelSkill then
 		return true
 	end
 
-	if slot1 and slot1.custom_ingoreParallelSkill then
+	if arg_47_1 and arg_47_1.custom_ingoreParallelSkill then
 		return false
 	end
 
-	return slot0:isAuto() or FightReplayModel.instance:isReplay() or slot0:isGMFightJoin()
+	return arg_47_0:isAuto() or FightReplayModel.instance:isReplay() or arg_47_0:isGMFightJoin()
 end
 
-function slot0.updateFight(slot0, slot1, slot2)
-	slot0._version = uv0.GMForceVersion or slot1.version or 0
-	slot0._isRecord = slot1.isRecord
-	slot0._fightActType = slot1.fightActType or FightEnum.FightActType.Normal
+function var_0_0.updateFight(arg_48_0, arg_48_1, arg_48_2)
+	arg_48_0._version = var_0_0.GMForceVersion or arg_48_1.version or 0
+	arg_48_0._isRecord = arg_48_1.isRecord
+	arg_48_0._fightActType = arg_48_1.fightActType or FightEnum.FightActType.Normal
 
-	if slot0._fightActType == 0 then
-		slot0._fightActType = FightEnum.FightActType.Normal
+	if arg_48_0._fightActType == 0 then
+		arg_48_0._fightActType = FightEnum.FightActType.Normal
 	end
 
-	if not slot2 then
-		FightController.instance:dispatchEvent(FightEvent.CacheFightProto, FightEnum.CacheProtoType.Fight, slot1)
+	if not arg_48_2 then
+		FightController.instance:dispatchEvent(FightEvent.CacheFightProto, FightEnum.CacheProtoType.Fight, arg_48_1)
 	end
 
-	if slot0._version >= 3 then
-		if not slot2 then
-			slot0._curRoundId = slot1.curRound
+	if arg_48_0._version >= 3 then
+		if not arg_48_2 then
+			arg_48_0._curRoundId = arg_48_1.curRound
 		end
 	else
-		slot0._curRoundId = slot1.curRound
+		arg_48_0._curRoundId = arg_48_1.curRound
 	end
 
-	slot0._curWaveId = slot1.curWave
-	slot0.maxRound = slot1.maxRound
+	arg_48_0._curWaveId = arg_48_1.curWave
+	arg_48_0.maxRound = arg_48_1.maxRound
 
-	if not slot2 then
-		slot0._isFinish = slot1.isFinish
+	if not arg_48_2 then
+		arg_48_0._isFinish = arg_48_1.isFinish
 	end
 
-	slot0.power = slot1.attacker.power
-	slot0.clothId = slot1.attacker.clothId
-	slot0._battleId = slot1.battleId
-	slot0.exTeamStr = slot1.attacker.exTeamStr
+	arg_48_0.power = arg_48_1.attacker.power
+	arg_48_0.clothId = arg_48_1.attacker.clothId
+	arg_48_0._battleId = arg_48_1.battleId
+	arg_48_0.exTeamStr = arg_48_1.attacker.exTeamStr
 
-	if slot1:HasField("attacker") and #slot1.attacker.skillInfos > 0 then
-		slot0:_updatePlayerSkillInfo(slot1.attacker.skillInfos)
+	if arg_48_1:HasField("attacker") and #arg_48_1.attacker.skillInfos > 0 then
+		arg_48_0:_updatePlayerSkillInfo(arg_48_1.attacker.skillInfos)
 	end
 
-	if slot1:HasField("magicCircle") then
-		slot0:getMagicCircleInfo():refreshData(slot1.magicCircle)
+	if arg_48_1:HasField("magicCircle") then
+		arg_48_0:getMagicCircleInfo():refreshData(arg_48_1.magicCircle)
 	end
 end
 
-function slot0.updateFightRound(slot0, slot1)
-	FightController.instance:dispatchEvent(FightEvent.CacheFightProto, FightEnum.CacheProtoType.Round, slot1)
-	FightLocalDataMgr.instance:beforePlayRoundProto(slot1)
-	FightDataMgr.instance:beforePlayRoundProto(slot1)
-	xpcall(FightDataMgr.dealRoundProto, __G__TRACKBACK__, FightLocalDataMgr.instance, slot1)
-	FightLocalDataMgr.instance:afterPlayRoundProto(slot1)
+function var_0_0.updateFightRound(arg_49_0, arg_49_1)
+	FightController.instance:dispatchEvent(FightEvent.CacheFightProto, FightEnum.CacheProtoType.Round, arg_49_1)
+	FightLocalDataMgr.instance:beforePlayRoundProto(arg_49_1)
+	FightDataMgr.instance:beforePlayRoundProto(arg_49_1)
+	xpcall(FightDataMgr.dealRoundProto, __G__TRACKBACK__, FightLocalDataMgr.instance, arg_49_1)
+	FightLocalDataMgr.instance:afterPlayRoundProto(arg_49_1)
 
-	slot0._curRoundMO = slot0._curRoundMO or FightRoundMO.New()
+	arg_49_0._curRoundMO = arg_49_0._curRoundMO or FightRoundMO.New()
 
-	slot0._curRoundMO:init(slot1)
-	slot0:updateSpAttributeMo(slot1.heroSpAttributes)
+	arg_49_0._curRoundMO:init(arg_49_1)
+	arg_49_0:updateSpAttributeMo(arg_49_1.heroSpAttributes)
 
-	slot0._isFinish = slot0._curRoundMO.isFinish
-	slot0.power = slot0._curRoundMO.power
+	arg_49_0._isFinish = arg_49_0._curRoundMO.isFinish
+	arg_49_0.power = arg_49_0._curRoundMO.power
 
-	if slot1:HasField("actPoint") then
-		FightCardModel.instance.nextRoundActPoint = slot0._curRoundMO.actPoint
+	if arg_49_1:HasField("actPoint") then
+		FightCardModel.instance.nextRoundActPoint = arg_49_0._curRoundMO.actPoint
 	end
 
-	if slot1:HasField("moveNum") then
-		FightCardModel.instance.nextRoundMoveNum = slot0._curRoundMO.moveNum
+	if arg_49_1:HasField("moveNum") then
+		FightCardModel.instance.nextRoundMoveNum = arg_49_0._curRoundMO.moveNum
 	end
 
-	if #slot1.skillInfos > 0 then
-		slot0:_updatePlayerSkillInfo(slot1.skillInfos)
+	if #arg_49_1.skillInfos > 0 then
+		arg_49_0:_updatePlayerSkillInfo(arg_49_1.skillInfos)
 	end
 
-	if slot0:getVersion() < 1 then
-		FightPlayCardModel.instance:updateFightRound(slot0._curRoundMO)
+	if arg_49_0:getVersion() < 1 then
+		FightPlayCardModel.instance:updateFightRound(arg_49_0._curRoundMO)
 	end
 
-	slot0.autoPlayCardList = {}
+	arg_49_0.autoPlayCardList = {}
 end
 
-function slot0.updateSpAttributeMo(slot0, slot1)
-	if #slot1 == 0 then
+function var_0_0.updateSpAttributeMo(arg_50_0, arg_50_1)
+	if #arg_50_1 == 0 then
 		return
 	end
 
-	slot0.entitySpAttrMoDict = slot0.entitySpAttrMoDict or {}
+	arg_50_0.entitySpAttrMoDict = arg_50_0.entitySpAttrMoDict or {}
 
-	for slot5, slot6 in ipairs(slot1) do
-		if not slot0.entitySpAttrMoDict[slot6.uid] then
-			slot0.entitySpAttrMoDict[slot7] = HeroSpAttributeMO.New()
+	for iter_50_0, iter_50_1 in ipairs(arg_50_1) do
+		local var_50_0 = iter_50_1.uid
+		local var_50_1 = arg_50_0.entitySpAttrMoDict[var_50_0]
+
+		if not var_50_1 then
+			var_50_1 = HeroSpAttributeMO.New()
+			arg_50_0.entitySpAttrMoDict[var_50_0] = var_50_1
 		end
 
-		slot8:init(slot7, slot6.attribute)
+		var_50_1:init(var_50_0, iter_50_1.attribute)
 	end
 end
 
-function slot0.getSpAttributeMo(slot0, slot1)
-	return slot0.entitySpAttrMoDict and slot0.entitySpAttrMoDict[slot1]
+function var_0_0.getSpAttributeMo(arg_51_0, arg_51_1)
+	return arg_51_0.entitySpAttrMoDict and arg_51_0.entitySpAttrMoDict[arg_51_1]
 end
 
-function slot0.updateClothSkillRound(slot0, slot1)
-	FightController.instance:dispatchEvent(FightEvent.CacheFightProto, FightEnum.CacheProtoType.Round, slot1)
-	FightLocalDataMgr.instance:beforePlayRoundProto(slot1)
-	FightDataMgr.instance:beforePlayRoundProto(slot1)
-	xpcall(FightDataMgr.dealRoundProto, __G__TRACKBACK__, FightLocalDataMgr.instance, slot1)
-	FightLocalDataMgr.instance:afterPlayRoundProto(slot1)
+function var_0_0.updateClothSkillRound(arg_52_0, arg_52_1)
+	FightController.instance:dispatchEvent(FightEvent.CacheFightProto, FightEnum.CacheProtoType.Round, arg_52_1)
+	FightLocalDataMgr.instance:beforePlayRoundProto(arg_52_1)
+	FightDataMgr.instance:beforePlayRoundProto(arg_52_1)
+	xpcall(FightDataMgr.dealRoundProto, __G__TRACKBACK__, FightLocalDataMgr.instance, arg_52_1)
+	FightLocalDataMgr.instance:afterPlayRoundProto(arg_52_1)
 
-	slot0._curRoundMO = slot0._curRoundMO or FightRoundMO.New()
+	arg_52_0._curRoundMO = arg_52_0._curRoundMO or FightRoundMO.New()
 
-	slot0._curRoundMO:updateClothSkillRound(slot1)
+	arg_52_0._curRoundMO:updateClothSkillRound(arg_52_1)
 
-	slot0._isFinish = slot0._curRoundMO.isFinish
-	slot0.power = slot0._curRoundMO.power
+	arg_52_0._isFinish = arg_52_0._curRoundMO.isFinish
+	arg_52_0.power = arg_52_0._curRoundMO.power
 
-	if slot1:HasField("actPoint") then
-		FightCardModel.instance.nextRoundActPoint = slot0._curRoundMO.actPoint
+	if arg_52_1:HasField("actPoint") then
+		FightCardModel.instance.nextRoundActPoint = arg_52_0._curRoundMO.actPoint
 	end
 
-	if slot1:HasField("moveNum") then
-		FightCardModel.instance.nextRoundMoveNum = slot0._curRoundMO.moveNum
+	if arg_52_1:HasField("moveNum") then
+		FightCardModel.instance.nextRoundMoveNum = arg_52_0._curRoundMO.moveNum
 	end
 
-	if #slot1.skillInfos > 0 then
-		slot0:_updatePlayerSkillInfo(slot1.skillInfos)
-	end
-end
-
-function slot0.onAutoRound(slot0, slot1)
-	slot0.autoPlayCardList = {}
-
-	for slot5, slot6 in ipairs(slot1) do
-		slot7 = FightBeginRoundOp.New()
-
-		slot7:init(slot6)
-		table.insert(slot0.autoPlayCardList, slot7)
+	if #arg_52_1.skillInfos > 0 then
+		arg_52_0:_updatePlayerSkillInfo(arg_52_1.skillInfos)
 	end
 end
 
-function slot0._updatePlayerSkillInfo(slot0, slot1)
-	slot0._clothSkillList = {}
-	slot0._clothSkillDict = {}
+function var_0_0.onAutoRound(arg_53_0, arg_53_1)
+	arg_53_0.autoPlayCardList = {}
 
-	for slot5, slot6 in ipairs(slot1) do
-		slot7 = {
-			skillId = slot6.skillId,
-			cd = slot6.cd,
-			needPower = slot6.needPower,
-			type = slot6.type
+	for iter_53_0, iter_53_1 in ipairs(arg_53_1) do
+		local var_53_0 = FightBeginRoundOp.New()
+
+		var_53_0:init(iter_53_1)
+		table.insert(arg_53_0.autoPlayCardList, var_53_0)
+	end
+end
+
+function var_0_0._updatePlayerSkillInfo(arg_54_0, arg_54_1)
+	arg_54_0._clothSkillList = {}
+	arg_54_0._clothSkillDict = {}
+
+	for iter_54_0, iter_54_1 in ipairs(arg_54_1) do
+		local var_54_0 = {
+			skillId = iter_54_1.skillId,
+			cd = iter_54_1.cd,
+			needPower = iter_54_1.needPower,
+			type = iter_54_1.type
 		}
 
-		table.insert(slot0._clothSkillList, slot7)
+		table.insert(arg_54_0._clothSkillList, var_54_0)
 
-		slot0._clothSkillDict[slot6.skillId] = slot7
+		arg_54_0._clothSkillDict[iter_54_1.skillId] = var_54_0
 	end
 end
 
-function slot0.onEndRound(slot0)
-	if slot0._curRoundMO then
-		slot0._historyRoundMOList = slot0._historyRoundMOList or {}
+function var_0_0.onEndRound(arg_55_0)
+	if arg_55_0._curRoundMO then
+		arg_55_0._historyRoundMOList = arg_55_0._historyRoundMOList or {}
 
-		table.insert(slot0._historyRoundMOList, slot0._curRoundMO:clone())
+		table.insert(arg_55_0._historyRoundMOList, arg_55_0._curRoundMO:clone())
 	end
 
-	if uv0.instance:getVersion() < 3 then
-		slot0._curRoundId = slot0._curRoundId + slot0._roundInc
+	if var_0_0.instance:getVersion() >= 3 then
+		-- block empty
+	else
+		arg_55_0._curRoundId = arg_55_0._curRoundId + arg_55_0._roundInc
 	end
 
-	slot0._roundInc = 1
-	slot0.hasNextWave = false
-	slot0._nextWaveMsg = nil
-	slot0.cacheWaveMsg = nil
+	arg_55_0._roundInc = 1
+	arg_55_0.hasNextWave = false
+	arg_55_0._nextWaveMsg = nil
+	arg_55_0.cacheWaveMsg = nil
 
-	slot0:clearStressBehaviour()
+	arg_55_0:clearStressBehaviour()
 end
 
-function slot0.updateRecord(slot0, slot1)
-	slot0._recordMO = slot0._recordMO or FightRecordMO.New()
+function var_0_0.updateRecord(arg_56_0, arg_56_1)
+	arg_56_0._recordMO = arg_56_0._recordMO or FightRecordMO.New()
 
-	slot0._recordMO:init(slot1)
+	arg_56_0._recordMO:init(arg_56_1)
 
-	slot0._lastFightResult = slot0._recordMO.fightResult
+	arg_56_0._lastFightResult = arg_56_0._recordMO.fightResult
 end
 
-function slot0.getLastFightResult(slot0)
-	return slot0._lastFightResult
+function var_0_0.getLastFightResult(arg_57_0)
+	return arg_57_0._lastFightResult
 end
 
-function slot0.onEndFight(slot0)
-	slot0._isFinish = true
-	slot0._curRoundMO = nil
-	slot0._clothSkillList = nil
-	slot0._clothSkillDict = nil
-	slot0._nextWaveMsg = nil
-	slot0.hasNextWave = false
-	slot0.cacheWaveMsg = nil
+function var_0_0.onEndFight(arg_58_0)
+	arg_58_0._isFinish = true
+	arg_58_0._curRoundMO = nil
+	arg_58_0._clothSkillList = nil
+	arg_58_0._clothSkillDict = nil
+	arg_58_0._nextWaveMsg = nil
+	arg_58_0.hasNextWave = false
+	arg_58_0.cacheWaveMsg = nil
 end
 
-function slot0.updateFightReason(slot0, slot1)
-	slot0._fightReason = slot0._fightReason or FightReasonMO.New()
+function var_0_0.updateFightReason(arg_59_0, arg_59_1)
+	arg_59_0._fightReason = arg_59_0._fightReason or FightReasonMO.New()
 
-	slot0._fightReason:init(slot1)
+	arg_59_0._fightReason:init(arg_59_1)
 end
 
-function slot0.setNextWaveMsg(slot0, slot1)
-	slot0._nextWaveMsg = slot0._nextWaveMsg or {}
+function var_0_0.setNextWaveMsg(arg_60_0, arg_60_1)
+	arg_60_0._nextWaveMsg = arg_60_0._nextWaveMsg or {}
 
-	table.insert(slot0._nextWaveMsg, slot1)
+	table.insert(arg_60_0._nextWaveMsg, arg_60_1)
 
-	slot0.cacheWaveMsg = slot0.cacheWaveMsg or {}
+	arg_60_0.cacheWaveMsg = arg_60_0.cacheWaveMsg or {}
 
-	table.insert(slot0.cacheWaveMsg, slot1)
+	table.insert(arg_60_0.cacheWaveMsg, arg_60_1)
 
-	slot0._roundInc = 0
-	slot0.hasNextWave = true
+	arg_60_0._roundInc = 0
+	arg_60_0.hasNextWave = true
 end
 
-function slot0.getNextWaveMsg(slot0)
-	return slot0._nextWaveMsg and slot0._nextWaveMsg[1]
+function var_0_0.getNextWaveMsg(arg_61_0)
+	return arg_61_0._nextWaveMsg and arg_61_0._nextWaveMsg[1]
 end
 
-function slot0.getAndRemoveNextWaveMsg(slot0)
-	return slot0._nextWaveMsg and table.remove(slot0._nextWaveMsg, 1)
+function var_0_0.getAndRemoveNextWaveMsg(arg_62_0)
+	return arg_62_0._nextWaveMsg and table.remove(arg_62_0._nextWaveMsg, 1)
 end
 
-function slot0.getAndRemoveCacheWaveMsg(slot0)
-	return slot0.cacheWaveMsg and table.remove(slot0.cacheWaveMsg, 1)
+function var_0_0.getAndRemoveCacheWaveMsg(arg_63_0)
+	return arg_63_0.cacheWaveMsg and table.remove(arg_63_0.cacheWaveMsg, 1)
 end
 
-function slot0.getClothSkillList(slot0)
-	return slot0._clothSkillList
+function var_0_0.getClothSkillList(arg_64_0)
+	return arg_64_0._clothSkillList
 end
 
-function slot0.setClickEnemyState(slot0, slot1)
-	slot0._isClickEnemy = slot1
+function var_0_0.setClickEnemyState(arg_65_0, arg_65_1)
+	arg_65_0._isClickEnemy = arg_65_1
 end
 
-function slot0.getClickEnemyState(slot0)
-	return slot0._isClickEnemy
+function var_0_0.getClickEnemyState(arg_66_0)
+	return arg_66_0._isClickEnemy
 end
 
-function slot0.recordPassModel(slot0, slot1)
-	slot0.curFightModel = slot1.isRecord
-	slot2 = (not string.nilorempty(PlayerPrefsHelper.getString(uv0.getPrefsKeyFightPassModel(), "")) or {}) and cjson.decode(slot2)
+function var_0_0.recordPassModel(arg_67_0, arg_67_1)
+	arg_67_0.curFightModel = arg_67_1.isRecord
 
-	if slot0._fightParam then
-		slot2[tostring(slot0._fightParam.episodeId)] = slot1.isRecord
+	local var_67_0 = PlayerPrefsHelper.getString(var_0_0.getPrefsKeyFightPassModel(), "")
+
+	if string.nilorempty(var_67_0) then
+		var_67_0 = {}
+	else
+		var_67_0 = cjson.decode(var_67_0)
 	end
 
-	PlayerPrefsHelper.setString(uv0.getPrefsKeyFightPassModel(), cjson.encode(slot2))
+	if arg_67_0._fightParam then
+		var_67_0[tostring(arg_67_0._fightParam.episodeId)] = arg_67_1.isRecord
+	end
+
+	PlayerPrefsHelper.setString(var_0_0.getPrefsKeyFightPassModel(), cjson.encode(var_67_0))
 end
 
-function slot0.getPrefsKeyFightPassModel()
+function var_0_0.getPrefsKeyFightPassModel()
 	return PlayerModel.instance:getMyUserId() .. PlayerPrefsKey.FightPassModel
 end
 
-function slot0.setWaitIndicatorAnimation(slot0, slot1)
-	slot0.waitIndicatorAnimation = slot1
+function var_0_0.setWaitIndicatorAnimation(arg_69_0, arg_69_1)
+	arg_69_0.waitIndicatorAnimation = arg_69_1
 end
 
-function slot0.isWaitIndicatorAnimation(slot0)
-	return slot0.waitIndicatorAnimation
+function var_0_0.isWaitIndicatorAnimation(arg_70_0)
+	return arg_70_0.waitIndicatorAnimation
 end
 
-function slot0.refreshBattleId(slot0, slot1)
-	slot0._battleId = slot1.battleId
+function var_0_0.refreshBattleId(arg_71_0, arg_71_1)
+	arg_71_0._battleId = arg_71_1.battleId
 
-	if slot0._fightParam then
-		slot0._fightParam:setBattleId(slot0._battleId)
+	if arg_71_0._fightParam then
+		arg_71_0._fightParam:setBattleId(arg_71_0._battleId)
 	end
 end
 
-function slot0.getMagicCircleInfo(slot0)
-	slot0._magicCircleInfo = slot0._magicCircleInfo or FightMagicCircleInfo.New()
+function var_0_0.getMagicCircleInfo(arg_72_0)
+	arg_72_0._magicCircleInfo = arg_72_0._magicCircleInfo or FightMagicCircleInfo.New()
 
-	return slot0._magicCircleInfo
+	return arg_72_0._magicCircleInfo
 end
 
-function slot0.getVersion(slot0)
-	return slot0._version or 0
+function var_0_0.getVersion(arg_73_0)
+	return arg_73_0._version or 0
 end
 
-function slot0.getFightActType(slot0)
-	return slot0._fightActType
+function var_0_0.getFightActType(arg_74_0)
+	return arg_74_0._fightActType
 end
 
-function slot0.isRecord(slot0)
-	return slot0._isRecord
+function var_0_0.isRecord(arg_75_0)
+	return arg_75_0._isRecord
 end
 
-function slot0.setRougeExData(slot0, slot1, slot2)
-	slot4[1] = string.split(uv0.instance.exTeamStr, "#")[1] or 0
-	slot4[2] = slot4[2] or 0
-	slot4[3] = slot4[3] or 0
-	slot4[4] = slot4[4] or cjson.encode({})
-	slot4[slot1] = slot2
-	uv0.instance.exTeamStr = string.format("%s#%s#%s#%s", slot4[1], slot4[2], slot4[3], slot4[4])
+function var_0_0.setRougeExData(arg_76_0, arg_76_1, arg_76_2)
+	local var_76_0 = var_0_0.instance.exTeamStr
+	local var_76_1 = string.split(var_76_0, "#")
+
+	var_76_1[1] = var_76_1[1] or 0
+	var_76_1[2] = var_76_1[2] or 0
+	var_76_1[3] = var_76_1[3] or 0
+	var_76_1[4] = var_76_1[4] or cjson.encode({})
+	var_76_1[arg_76_1] = arg_76_2
+	var_0_0.instance.exTeamStr = string.format("%s#%s#%s#%s", var_76_1[1], var_76_1[2], var_76_1[3], var_76_1[4])
 end
 
-function slot0.getRougeExData(slot0, slot1)
-	slot2 = string.split(uv0.instance.exTeamStr, "#")
+function var_0_0.getRougeExData(arg_77_0, arg_77_1)
+	local var_77_0 = string.split(var_0_0.instance.exTeamStr, "#")
 
-	if slot1 == FightEnum.ExIndexForRouge.SupportHeroSkill then
-		return slot2[slot1] or cjson.encode({})
+	if arg_77_1 == FightEnum.ExIndexForRouge.SupportHeroSkill then
+		return var_77_0[arg_77_1] or cjson.encode({})
 	end
 
-	return tonumber(slot2[slot1]) or 0
+	return tonumber(var_77_0[arg_77_1]) or 0
 end
 
-function slot0.isAbort(slot0)
-	return slot0._recordMO and slot0._recordMO.fightResult == FightEnum.FightResult.Abort
+function var_0_0.isAbort(arg_78_0)
+	return arg_78_0._recordMO and arg_78_0._recordMO.fightResult == FightEnum.FightResult.Abort
 end
 
-function slot0.isFail(slot0)
-	return slot0._recordMO and slot0._recordMO.fightResult == FightEnum.FightResult.Fail
+function var_0_0.isFail(arg_79_0)
+	return arg_79_0._recordMO and arg_79_0._recordMO.fightResult == FightEnum.FightResult.Fail
 end
 
-function slot0.setCurSceneOriginPos(slot0, slot1, slot2, slot3)
-	slot0.originZ = slot3
-	slot0.originY = slot2
-	slot0.originX = slot1
+function var_0_0.setCurSceneOriginPos(arg_80_0, arg_80_1, arg_80_2, arg_80_3)
+	arg_80_0.originX, arg_80_0.originY, arg_80_0.originZ = arg_80_1, arg_80_2, arg_80_3
 end
 
-function slot0.getCurSceneOriginPos(slot0)
-	return slot0.originX, slot0.originY, slot0.originZ
+function var_0_0.getCurSceneOriginPos(arg_81_0)
+	return arg_81_0.originX, arg_81_0.originY, arg_81_0.originZ
 end
 
-function slot0.isSeason2(slot0)
-	return slot0:getFightActType() == FightEnum.FightActType.Season2
+function var_0_0.isSeason2(arg_82_0)
+	return arg_82_0:getFightActType() == FightEnum.FightActType.Season2
 end
 
-function slot0.recordDelayHandleStressBehaviour(slot0, slot1)
-	if not slot1 then
+function var_0_0.recordDelayHandleStressBehaviour(arg_83_0, arg_83_1)
+	if not arg_83_1 then
 		return
 	end
 
-	slot0.stressBehaviourDict = slot0.stressBehaviourDict or {}
+	arg_83_0.stressBehaviourDict = arg_83_0.stressBehaviourDict or {}
 
-	if not slot0.stressBehaviourDict[slot1.targetId] then
-		slot0.stressBehaviourDict[slot1.targetId] = {}
+	local var_83_0 = arg_83_0.stressBehaviourDict[arg_83_1.targetId]
+
+	if not var_83_0 then
+		var_83_0 = {}
+		arg_83_0.stressBehaviourDict[arg_83_1.targetId] = var_83_0
 	end
 
-	table.insert(slot2, slot1)
+	table.insert(var_83_0, arg_83_1)
 end
 
-function slot0.popNoHandledStressBehaviour(slot0, slot1)
-	slot2 = slot1 and slot0.stressBehaviourDict and slot0.stressBehaviourDict[slot1]
+function var_0_0.popNoHandledStressBehaviour(arg_84_0, arg_84_1)
+	local var_84_0 = arg_84_1 and arg_84_0.stressBehaviourDict and arg_84_0.stressBehaviourDict[arg_84_1]
 
-	return slot2 and table.remove(slot2, 1)
+	return var_84_0 and table.remove(var_84_0, 1)
 end
 
-function slot0.clearStressBehaviour(slot0)
-	if slot0.stressBehaviourDict then
-		for slot4, slot5 in pairs(slot0.stressBehaviourDict) do
-			tabletool.clear(slot5)
+function var_0_0.clearStressBehaviour(arg_85_0)
+	if arg_85_0.stressBehaviourDict then
+		for iter_85_0, iter_85_1 in pairs(arg_85_0.stressBehaviourDict) do
+			tabletool.clear(iter_85_1)
 		end
 	end
 end
 
-function slot0.setNotifyContractInfo(slot0, slot1, slot2)
-	slot0.notifyEntityId = slot1
-	slot0.canContractList = slot2
+function var_0_0.setNotifyContractInfo(arg_86_0, arg_86_1, arg_86_2)
+	arg_86_0.notifyEntityId = arg_86_1
+	arg_86_0.canContractList = arg_86_2
 end
 
-function slot0.setContractEntityUid(slot0, slot1)
-	slot0.contractEntityUid = slot1
+function var_0_0.setContractEntityUid(arg_87_0, arg_87_1)
+	arg_87_0.contractEntityUid = arg_87_1
 end
 
-function slot0.setBeContractEntityUid(slot0, slot1)
-	slot0.beContractEntityUid = slot1
+function var_0_0.setBeContractEntityUid(arg_88_0, arg_88_1)
+	arg_88_0.beContractEntityUid = arg_88_1
 end
 
-function slot0.isBeContractEntity(slot0, slot1)
-	return slot1 == slot0.beContractEntityUid
+function var_0_0.isBeContractEntity(arg_89_0, arg_89_1)
+	return arg_89_1 == arg_89_0.beContractEntityUid
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

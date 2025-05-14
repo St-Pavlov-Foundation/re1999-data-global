@@ -1,100 +1,112 @@
-module("modules.logic.room.utils.pathfinding.BaseAStarFinder", package.seeall)
+﻿module("modules.logic.room.utils.pathfinding.BaseAStarFinder", package.seeall)
 
-slot0 = class("BaseAStarFinder")
+local var_0_0 = class("BaseAStarFinder")
 
-function slot0.ctor(slot0)
+function var_0_0.ctor(arg_1_0)
+	return
 end
 
-function slot0.pathFinding(slot0, slot1, slot2)
-	if slot1 == slot2 then
+function var_0_0.pathFinding(arg_2_0, arg_2_1, arg_2_2)
+	if arg_2_1 == arg_2_2 then
 		return {}
 	end
 
-	if not slot0:isWalkable(slot1) or not slot0:isWalkable(slot2) then
+	if not arg_2_0:isWalkable(arg_2_1) or not arg_2_0:isWalkable(arg_2_2) then
 		return nil
 	end
 
-	slot5 = {
+	local var_2_0 = {}
+	local var_2_1 = {}
+	local var_2_2 = {
 		cost = 0,
-		point = slot1,
-		heuristic = slot0:heuristic(slot1, slot2)
+		point = arg_2_1,
+		heuristic = arg_2_0:heuristic(arg_2_1, arg_2_2)
 	}
 
-	return slot0:_pathFinding(slot1, slot2, {
-		[tostring(slot5.point)] = slot5
-	}, {})
+	var_2_0[tostring(var_2_2.point)] = var_2_2
+
+	return (arg_2_0:_pathFinding(arg_2_1, arg_2_2, var_2_0, var_2_1))
 end
 
-function slot0._pathFinding(slot0, slot1, slot2, slot3, slot4)
-	while LuaUtil.tableNotEmpty(slot3) do
-		slot7, slot8 = slot0:getConnectPointsAndCost(slot0:_getNextNode(slot3).point)
+function var_0_0._pathFinding(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
+	while LuaUtil.tableNotEmpty(arg_3_3) do
+		local var_3_0 = arg_3_0:_getNextNode(arg_3_3)
+		local var_3_1 = var_3_0.point
+		local var_3_2, var_3_3 = arg_3_0:getConnectPointsAndCost(var_3_1)
 
-		for slot12 = 1, #slot7 do
-			slot14 = slot8[slot12] or 0
+		for iter_3_0 = 1, #var_3_2 do
+			local var_3_4 = var_3_2[iter_3_0]
+			local var_3_5 = var_3_3[iter_3_0] or 0
 
-			if not slot4[tostring(slot7[slot12])] and slot0:isWalkable(slot13) then
-				if not slot3[tostring(slot13)] or slot5.cost + slot14 < slot16.cost then
-					slot16 = {
-						point = slot13,
-						cost = slot5.cost + slot14,
-						heuristic = slot0:heuristic(slot13, slot2),
-						last = slot5
+			if not arg_3_4[tostring(var_3_4)] and arg_3_0:isWalkable(var_3_4) then
+				local var_3_6 = var_3_0.cost + var_3_5
+				local var_3_7 = arg_3_3[tostring(var_3_4)]
+
+				if not var_3_7 or var_3_6 < var_3_7.cost then
+					var_3_7 = {
+						point = var_3_4,
+						cost = var_3_0.cost + var_3_5,
+						heuristic = arg_3_0:heuristic(var_3_4, arg_3_2),
+						last = var_3_0
 					}
-					slot3[tostring(slot16.point)] = slot16
+					arg_3_3[tostring(var_3_7.point)] = var_3_7
 				end
 
-				if slot16.point == slot2 then
-					return slot0:_makePath(slot16)
+				if var_3_7.point == arg_3_2 then
+					return arg_3_0:_makePath(var_3_7)
 				end
 			end
 		end
 
-		slot4[tostring(slot5.point)] = slot5
+		arg_3_4[tostring(var_3_0.point)] = var_3_0
 	end
 
 	return nil
 end
 
-function slot0._getNextNode(slot0, slot1)
-	slot2 = nil
+function var_0_0._getNextNode(arg_4_0, arg_4_1)
+	local var_4_0
 
-	for slot6, slot7 in pairs(slot1) do
-		if not slot2 or slot7.cost + slot7.heuristic < slot2.cost + slot2.heuristic then
-			slot2 = slot7
+	for iter_4_0, iter_4_1 in pairs(arg_4_1) do
+		if not var_4_0 or iter_4_1.cost + iter_4_1.heuristic < var_4_0.cost + var_4_0.heuristic then
+			var_4_0 = iter_4_1
 		end
 	end
 
-	slot1[tostring(slot2.point)] = nil
+	arg_4_1[tostring(var_4_0.point)] = nil
 
-	return slot2
+	return var_4_0
 end
 
-function slot0._makePath(slot0, slot1)
-	slot2 = {}
-	slot3 = slot1
+function var_0_0._makePath(arg_5_0, arg_5_1)
+	local var_5_0 = {}
+	local var_5_1 = arg_5_1
 
-	while slot3.last ~= nil do
-		table.insert(slot2, slot3.point)
+	while var_5_1.last ~= nil do
+		table.insert(var_5_0, var_5_1.point)
 
-		slot3 = slot3.last
+		var_5_1 = var_5_1.last
 	end
 
-	slot4 = {}
+	local var_5_2 = {}
 
-	for slot8 = #slot2, 1, -1 do
-		table.insert(slot4, slot2[slot8])
+	for iter_5_0 = #var_5_0, 1, -1 do
+		table.insert(var_5_2, var_5_0[iter_5_0])
 	end
 
-	return slot4
+	return var_5_2
 end
 
-function slot0.getConnectPointsAndCost(slot0, slot1)
+function var_0_0.getConnectPointsAndCost(arg_6_0, arg_6_1)
+	return
 end
 
-function slot0.heuristic(slot0, slot1, slot2)
+function var_0_0.heuristic(arg_7_0, arg_7_1, arg_7_2)
+	return
 end
 
-function slot0.isWalkable(slot0, slot1)
+function var_0_0.isWalkable(arg_8_0, arg_8_1)
+	return
 end
 
-return slot0
+return var_0_0

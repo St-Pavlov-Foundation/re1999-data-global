@@ -1,8 +1,8 @@
-module("modules.logic.character.view.CharacterTalentLevelUpViewContainer", package.seeall)
+﻿module("modules.logic.character.view.CharacterTalentLevelUpViewContainer", package.seeall)
 
-slot0 = class("CharacterTalentLevelUpViewContainer", BaseViewContainer)
+local var_0_0 = class("CharacterTalentLevelUpViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		TabViewGroup.New(1, "#go_lefttop"),
 		TabViewGroup.New(2, "#go_righttop"),
@@ -10,36 +10,39 @@ function slot0.buildViews(slot0)
 	}
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
-		slot0._navigateButtonView = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == 1 then
+		arg_2_0._navigateButtonView = NavigateButtonsView.New({
 			true,
 			true,
 			true
 		}, HelpEnum.HelpId.Talent)
 
 		return {
-			slot0._navigateButtonView
+			arg_2_0._navigateButtonView
 		}
-	elseif slot1 == 2 then
+	elseif arg_2_1 == 2 then
+		local var_2_0 = CurrencyEnum.CurrencyType
+		local var_2_1 = {
+			var_2_0.Gold
+		}
+
 		return {
-			CurrencyView.New({
-				CurrencyEnum.CurrencyType.Gold
-			})
+			CurrencyView.New(var_2_1)
 		}
 	end
 end
 
-function slot0.playOpenTransition(slot0)
-	slot0:onPlayOpenTransitionFinish()
+function var_0_0.playOpenTransition(arg_3_0)
+	arg_3_0:onPlayOpenTransitionFinish()
 end
 
-function slot0.playCloseTransition(slot0)
+function var_0_0.playCloseTransition(arg_4_0)
 	AudioMgr.instance:trigger(AudioEnum.Talent.play_ui_resonate_open)
-	uv0.super.playCloseTransition(slot0, {
+	var_0_0.super.playCloseTransition(arg_4_0, {
 		anim = "charactertalentlevelup_out"
 	})
-	CharacterController.instance:dispatchEvent(CharacterEvent.playTalentViewBackAni, slot0._head_close_ani1 or "2_1", slot0._head_close_ani1 and true or false, slot0._head_close_ani2 or "ani_2_1", true)
+	CharacterController.instance:dispatchEvent(CharacterEvent.playTalentViewBackAni, arg_4_0._head_close_ani1 or "2_1", arg_4_0._head_close_ani1 and true or false, arg_4_0._head_close_ani2 or "ani_2_1", true)
 end
 
-return slot0
+return var_0_0

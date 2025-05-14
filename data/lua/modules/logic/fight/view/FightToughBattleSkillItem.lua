@@ -1,157 +1,165 @@
-module("modules.logic.fight.view.FightToughBattleSkillItem", package.seeall)
+﻿module("modules.logic.fight.view.FightToughBattleSkillItem", package.seeall)
 
-slot0 = class("FightToughBattleSkillItem", LuaCompBase)
+local var_0_0 = class("FightToughBattleSkillItem", LuaCompBase)
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
-	slot0._goselect = gohelper.findChild(slot1, "#go_Selected")
-	slot0._btn = gohelper.getClickWithDefaultAudio(slot1, "btn")
-	slot0._gonum = gohelper.findChild(slot1, "#go_Num")
-	slot0._txtnum = gohelper.findChildTextMesh(slot1, "#go_Num/#txt_Num")
-	slot0._simagechar = gohelper.findChildSingleImage(slot1, "#simage_Char")
-	slot0._iconImage = gohelper.findChildImage(slot1, "#simage_Char")
-	slot0._goDetails = gohelper.findChild(slot1, "#go_details")
-	slot0._txtDetailTitle = gohelper.findChildTextMesh(slot0._goDetails, "details/#scroll_details/Viewport/Content/#txt_title")
-	slot0._txtDetailContent = gohelper.findChildTextMesh(slot0._goDetails, "details/#scroll_details/Viewport/Content/#txt_details")
-	slot0._ani = gohelper.onceAddComponent(slot1, typeof(UnityEngine.Animator))
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.go = arg_1_1
+	arg_1_0._goselect = gohelper.findChild(arg_1_1, "#go_Selected")
+	arg_1_0._btn = gohelper.getClickWithDefaultAudio(arg_1_1, "btn")
+	arg_1_0._gonum = gohelper.findChild(arg_1_1, "#go_Num")
+	arg_1_0._txtnum = gohelper.findChildTextMesh(arg_1_1, "#go_Num/#txt_Num")
+	arg_1_0._simagechar = gohelper.findChildSingleImage(arg_1_1, "#simage_Char")
+	arg_1_0._iconImage = gohelper.findChildImage(arg_1_1, "#simage_Char")
+	arg_1_0._goDetails = gohelper.findChild(arg_1_1, "#go_details")
+	arg_1_0._txtDetailTitle = gohelper.findChildTextMesh(arg_1_0._goDetails, "details/#scroll_details/Viewport/Content/#txt_title")
+	arg_1_0._txtDetailContent = gohelper.findChildTextMesh(arg_1_0._goDetails, "details/#scroll_details/Viewport/Content/#txt_details")
+	arg_1_0._ani = gohelper.onceAddComponent(arg_1_1, typeof(UnityEngine.Animator))
 end
 
-function slot0.addEventListeners(slot0)
-	slot0._btn:AddClickListener(slot0.clickIcon, slot0)
+function var_0_0.addEventListeners(arg_2_0)
+	arg_2_0._btn:AddClickListener(arg_2_0.clickIcon, arg_2_0)
 
-	slot0._long = SLFramework.UGUI.UILongPressListener.Get(slot0._btn.gameObject)
+	arg_2_0._long = SLFramework.UGUI.UILongPressListener.Get(arg_2_0._btn.gameObject)
 
-	slot0._long:SetLongPressTime({
+	arg_2_0._long:SetLongPressTime({
 		0.5,
 		99999
 	})
-	slot0._long:AddLongPressListener(slot0._onLongPress, slot0)
-	FightController.instance:registerCallback(FightEvent.OnRoundSequenceFinish, slot0.updateSkillRound, slot0)
-	FightController.instance:registerCallback(FightEvent.OnEntityDead, slot0.checkHeroIsDead, slot0)
-	FightController.instance:registerCallback(FightEvent.TouchFightViewScreen, slot0._onTouchFightViewScreen, slot0)
-	FightController.instance:registerCallback(FightEvent.OnClothSkillRoundSequenceFinish, slot0.updateSkillRound, slot0)
+	arg_2_0._long:AddLongPressListener(arg_2_0._onLongPress, arg_2_0)
+	FightController.instance:registerCallback(FightEvent.OnRoundSequenceFinish, arg_2_0.updateSkillRound, arg_2_0)
+	FightController.instance:registerCallback(FightEvent.OnEntityDead, arg_2_0.checkHeroIsDead, arg_2_0)
+	FightController.instance:registerCallback(FightEvent.TouchFightViewScreen, arg_2_0._onTouchFightViewScreen, arg_2_0)
+	FightController.instance:registerCallback(FightEvent.OnClothSkillRoundSequenceFinish, arg_2_0.updateSkillRound, arg_2_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0._btn:RemoveClickListener()
-	slot0._long:RemoveLongPressListener()
-	FightController.instance:unregisterCallback(FightEvent.OnRoundSequenceFinish, slot0.updateSkillRound, slot0)
-	FightController.instance:unregisterCallback(FightEvent.OnEntityDead, slot0.checkHeroIsDead, slot0)
-	FightController.instance:unregisterCallback(FightEvent.TouchFightViewScreen, slot0._onTouchFightViewScreen, slot0)
-	FightController.instance:unregisterCallback(FightEvent.OnClothSkillRoundSequenceFinish, slot0.updateSkillRound, slot0)
+function var_0_0.removeEventListeners(arg_3_0)
+	arg_3_0._btn:RemoveClickListener()
+	arg_3_0._long:RemoveLongPressListener()
+	FightController.instance:unregisterCallback(FightEvent.OnRoundSequenceFinish, arg_3_0.updateSkillRound, arg_3_0)
+	FightController.instance:unregisterCallback(FightEvent.OnEntityDead, arg_3_0.checkHeroIsDead, arg_3_0)
+	FightController.instance:unregisterCallback(FightEvent.TouchFightViewScreen, arg_3_0._onTouchFightViewScreen, arg_3_0)
+	FightController.instance:unregisterCallback(FightEvent.OnClothSkillRoundSequenceFinish, arg_3_0.updateSkillRound, arg_3_0)
 end
 
-function slot0.setCo(slot0, slot1)
-	slot0._co = slot1
+function var_0_0.setCo(arg_4_0, arg_4_1)
+	arg_4_0._co = arg_4_1
 
-	slot0:refreshView()
+	arg_4_0:refreshView()
 end
 
-function slot0.refreshView(slot0)
-	if not slot0._co then
+function var_0_0.refreshView(arg_5_0)
+	if not arg_5_0._co then
 		return
 	end
 
-	gohelper.setActive(slot0._gonum, false)
-	slot0._simagechar:LoadImage(ResUrl.getHandbookheroIcon(slot0._co.icon))
+	gohelper.setActive(arg_5_0._gonum, false)
+	arg_5_0._simagechar:LoadImage(ResUrl.getHandbookheroIcon(arg_5_0._co.icon))
 
-	if slot0._co.type == ToughBattleEnum.HeroType.Hero then
-		slot0._trialId = tonumber(slot0._co.param) or 0
+	if arg_5_0._co.type == ToughBattleEnum.HeroType.Hero then
+		arg_5_0._trialId = tonumber(arg_5_0._co.param) or 0
 
-		slot0:checkHeroIsDead()
-	elseif slot0._co.type == ToughBattleEnum.HeroType.Rule then
-		slot0._ani:Play("passive", 0, 0)
-	elseif slot0._co.type == ToughBattleEnum.HeroType.Skill then
-		slot0._skillId = string.splitToNumber(slot0._co.param, "#")[1] or 0
+		arg_5_0:checkHeroIsDead()
+	elseif arg_5_0._co.type == ToughBattleEnum.HeroType.Rule then
+		arg_5_0._ani:Play("passive", 0, 0)
+	elseif arg_5_0._co.type == ToughBattleEnum.HeroType.Skill then
+		arg_5_0._skillId = string.splitToNumber(arg_5_0._co.param, "#")[1] or 0
 
-		slot0:updateSkillRound()
+		arg_5_0:updateSkillRound()
 	end
 
-	slot0._txtDetailTitle.text = slot0._co.name
-	slot0._txtDetailContent.text = HeroSkillModel.instance:skillDesToSpot(slot0._co.desc)
+	arg_5_0._txtDetailTitle.text = arg_5_0._co.name
+	arg_5_0._txtDetailContent.text = HeroSkillModel.instance:skillDesToSpot(arg_5_0._co.desc)
 end
 
-function slot0.checkHeroIsDead(slot0)
-	if not slot0._co or slot0._co.type ~= ToughBattleEnum.HeroType.Hero then
+function var_0_0.checkHeroIsDead(arg_6_0)
+	if not arg_6_0._co or arg_6_0._co.type ~= ToughBattleEnum.HeroType.Hero then
 		return
 	end
 
-	slot2 = nil
+	local var_6_0 = FightDataHelper.entityMgr:getNormalList(FightEnum.EntitySide.MySide)
+	local var_6_1
 
-	for slot6, slot7 in ipairs(FightDataHelper.entityMgr:getNormalList(FightEnum.EntitySide.MySide)) do
-		if slot7.trialId == slot0._trialId then
-			slot2 = slot7
+	for iter_6_0, iter_6_1 in ipairs(var_6_0) do
+		if iter_6_1.trialId == arg_6_0._trialId then
+			var_6_1 = iter_6_1
 
 			break
 		end
 	end
 
-	SLFramework.UGUI.GuiHelper.SetColor(slot0._simagechar.gameObject:GetComponent(gohelper.Type_Image), slot2 and "#FFFFFF" or "#c8c8c8")
+	local var_6_2 = var_6_1 and "#FFFFFF" or "#c8c8c8"
 
-	if slot2 then
-		slot0._ani:Play("passive", 0, 0)
-	elseif slot0.go.activeInHierarchy then
-		slot0._ani:Play("die", 0, 0)
-		TaskDispatcher.runDelay(slot0._destoryThis, slot0, 0.667)
+	SLFramework.UGUI.GuiHelper.SetColor(arg_6_0._simagechar.gameObject:GetComponent(gohelper.Type_Image), var_6_2)
+
+	if var_6_1 then
+		arg_6_0._ani:Play("passive", 0, 0)
+	elseif arg_6_0.go.activeInHierarchy then
+		arg_6_0._ani:Play("die", 0, 0)
+		TaskDispatcher.runDelay(arg_6_0._destoryThis, arg_6_0, 0.667)
 	else
-		slot0._isDeaded = true
+		arg_6_0._isDeaded = true
 	end
 end
 
-function slot0.onEnable(slot0)
-	if slot0._isDeaded and slot0._ani then
-		slot0._ani:Play("die", 0, 0)
-		TaskDispatcher.runDelay(slot0._destoryThis, slot0, 0.667)
+function var_0_0.onEnable(arg_7_0)
+	if arg_7_0._isDeaded and arg_7_0._ani then
+		arg_7_0._ani:Play("die", 0, 0)
+		TaskDispatcher.runDelay(arg_7_0._destoryThis, arg_7_0, 0.667)
 	end
 end
 
-function slot0._destoryThis(slot0)
-	gohelper.destroy(slot0.go)
+function var_0_0._destoryThis(arg_8_0)
+	gohelper.destroy(arg_8_0.go)
 end
 
-function slot0.onDestroy(slot0)
-	TaskDispatcher.cancelTask(slot0._destoryThis, slot0)
+function var_0_0.onDestroy(arg_9_0)
+	TaskDispatcher.cancelTask(arg_9_0._destoryThis, arg_9_0)
 end
 
-function slot0.updateSkillRound(slot0)
-	if not slot0._co or slot0._co.type ~= ToughBattleEnum.HeroType.Skill then
+function var_0_0.updateSkillRound(arg_10_0)
+	if not arg_10_0._co or arg_10_0._co.type ~= ToughBattleEnum.HeroType.Skill then
 		return
 	end
 
-	if slot0:getCd() > 0 then
-		gohelper.setActive(slot0._gonum, true)
+	local var_10_0 = arg_10_0:getCd()
 
-		slot0._txtnum.text = slot1
+	if var_10_0 > 0 then
+		gohelper.setActive(arg_10_0._gonum, true)
+
+		arg_10_0._txtnum.text = var_10_0
 	else
-		gohelper.setActive(slot0._gonum, false)
+		gohelper.setActive(arg_10_0._gonum, false)
 	end
 
-	SLFramework.UGUI.GuiHelper.SetColor(slot0._simagechar.gameObject:GetComponent(gohelper.Type_Image), slot1 <= 0 and "#FFFFFF" or "#808080")
+	local var_10_1 = var_10_0 <= 0 and "#FFFFFF" or "#808080"
 
-	if slot1 <= 0 then
-		slot0._ani:Play("active", 0, 0)
+	SLFramework.UGUI.GuiHelper.SetColor(arg_10_0._simagechar.gameObject:GetComponent(gohelper.Type_Image), var_10_1)
+
+	if var_10_0 <= 0 then
+		arg_10_0._ani:Play("active", 0, 0)
 	else
-		slot0._ani:Play("cooling", 0, 0)
+		arg_10_0._ani:Play("cooling", 0, 0)
 	end
 end
 
-function slot0.getCd(slot0)
-	slot1 = 0
+function var_0_0.getCd(arg_11_0)
+	local var_11_0 = 0
+	local var_11_1 = FightModel.instance:getClothSkillList()
 
-	if FightModel.instance:getClothSkillList() and #slot2 > 0 then
-		for slot6, slot7 in pairs(slot2) do
-			if slot7.skillId == slot0._skillId then
-				slot1 = slot7.cd
+	if var_11_1 and #var_11_1 > 0 then
+		for iter_11_0, iter_11_1 in pairs(var_11_1) do
+			if iter_11_1.skillId == arg_11_0._skillId then
+				var_11_0 = iter_11_1.cd
 
 				break
 			end
 		end
 	end
 
-	return slot1
+	return var_11_0
 end
 
-function slot0.clickIcon(slot0)
+function var_0_0.clickIcon(arg_12_0)
 	if FightViewHandCard.blockOperate or FightModel.instance:isAuto() then
 		return
 	end
@@ -164,11 +172,11 @@ function slot0.clickIcon(slot0)
 		return
 	end
 
-	if not slot0._co or slot0._co.type ~= ToughBattleEnum.HeroType.Skill then
+	if not arg_12_0._co or arg_12_0._co.type ~= ToughBattleEnum.HeroType.Skill then
 		return
 	end
 
-	if slot0:getCd() > 0 then
+	if arg_12_0:getCd() > 0 then
 		return
 	end
 
@@ -176,15 +184,15 @@ function slot0.clickIcon(slot0)
 		FightRpc.instance:sendResetRoundRequest()
 	end
 
-	FightRpc.instance:sendUseClothSkillRequest(slot0._skillId, nil, , FightEnum.ClothSkillType.ClothSkill)
+	FightRpc.instance:sendUseClothSkillRequest(arg_12_0._skillId, nil, nil, FightEnum.ClothSkillType.ClothSkill)
 end
 
-function slot0._onLongPress(slot0)
-	gohelper.setActive(slot0._goDetails, true)
+function var_0_0._onLongPress(arg_13_0)
+	gohelper.setActive(arg_13_0._goDetails, true)
 end
 
-function slot0._onTouchFightViewScreen(slot0)
-	gohelper.setActive(slot0._goDetails, false)
+function var_0_0._onTouchFightViewScreen(arg_14_0)
+	gohelper.setActive(arg_14_0._goDetails, false)
 end
 
-return slot0
+return var_0_0

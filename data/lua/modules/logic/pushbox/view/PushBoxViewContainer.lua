@@ -1,26 +1,26 @@
-module("modules.logic.pushbox.view.PushBoxViewContainer", package.seeall)
+﻿module("modules.logic.pushbox.view.PushBoxViewContainer", package.seeall)
 
-slot0 = class("PushBoxViewContainer", BaseViewContainer)
+local var_0_0 = class("PushBoxViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		TabViewGroup.New(1, "#go_btns"),
 		PushBoxView.New()
 	}
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
-		slot0._navigateButtonView = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == 1 then
+		arg_2_0._navigateButtonView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
 		return {
-			slot0._navigateButtonView
+			arg_2_0._navigateButtonView
 		}
 	end
 end
 
-return slot0
+return var_0_0

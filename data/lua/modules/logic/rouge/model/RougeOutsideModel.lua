@@ -1,302 +1,338 @@
-module("modules.logic.rouge.model.RougeOutsideModel", package.seeall)
+﻿module("modules.logic.rouge.model.RougeOutsideModel", package.seeall)
 
-slot0 = class("RougeOutsideModel", BaseModel)
+local var_0_0 = class("RougeOutsideModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0:reInit()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:reInit()
 end
 
-function slot0.reInit(slot0)
-	slot0:_setRougeSeason(nil, RougeConfig1.instance:season())
+function var_0_0.reInit(arg_2_0)
+	arg_2_0:_setRougeSeason(nil, RougeConfig1.instance:season())
 end
 
-function slot0.onReceiveGetRougeOutsideInfoReply(slot0, slot1)
-	slot0:updateRougeOutsideInfo(slot1.rougeInfo)
+function var_0_0.onReceiveGetRougeOutsideInfoReply(arg_3_0, arg_3_1)
+	arg_3_0:updateRougeOutsideInfo(arg_3_1.rougeInfo)
 end
 
-function slot0.updateRougeOutsideInfo(slot0, slot1)
-	slot0:_setRougeSeason(slot1)
+function var_0_0.updateRougeOutsideInfo(arg_4_0, arg_4_1)
+	arg_4_0:_setRougeSeason(arg_4_1)
 
-	slot0._rougeGameRecord = slot0._rougeGameRecord or RougeGameRecordInfoMO.New()
+	arg_4_0._rougeGameRecord = arg_4_0._rougeGameRecord or RougeGameRecordInfoMO.New()
 
-	slot0._rougeGameRecord:init(slot1.gameRecordInfo)
-	RougeFavoriteModel.instance:initReviews(slot1.review)
+	arg_4_0._rougeGameRecord:init(arg_4_1.gameRecordInfo)
+	RougeFavoriteModel.instance:initReviews(arg_4_1.review)
 	RougeOutsideController.instance:dispatchEvent(RougeEvent.OnUpdateRougeOutsideInfo)
 end
 
-function slot0.getRougeGameRecord(slot0)
-	return slot0._rougeGameRecord
+function var_0_0.getRougeGameRecord(arg_5_0)
+	return arg_5_0._rougeGameRecord
 end
 
-function slot0._setRougeSeason(slot0, slot1, slot2)
-	if slot1 ~= nil then
-		slot0._rougeInfo = slot1
+function var_0_0._setRougeSeason(arg_6_0, arg_6_1, arg_6_2)
+	if arg_6_1 ~= nil then
+		arg_6_0._rougeInfo = arg_6_1
 	else
-		assert(tonumber(slot2))
+		assert(tonumber(arg_6_2))
 
-		slot0._rougeInfo = RougeOutsideModule_pb.GetRougeOutsideInfoReply()
+		arg_6_0._rougeInfo = RougeOutsideModule_pb.GetRougeOutsideInfoReply()
 
-		rawset(slot0._rougeInfo, "season", slot2)
+		rawset(arg_6_0._rougeInfo, "season", arg_6_2)
 	end
 
-	slot2 = slot2 or slot0:season()
+	arg_6_2 = arg_6_2 or arg_6_0:season()
 
-	if not slot0._config or slot0._config:season() ~= slot2 then
-		slot0._config = _G["RougeConfig" .. slot2].instance
+	if not arg_6_0._config or arg_6_0._config:season() ~= arg_6_2 then
+		arg_6_0._config = _G["RougeConfig" .. arg_6_2].instance
 	end
 end
 
-function slot0.config(slot0)
-	return slot0._config
+function var_0_0.config(arg_7_0)
+	return arg_7_0._config
 end
 
-function slot0.openUnlockId(slot0)
-	return slot0._config:openUnlockId()
+function var_0_0.openUnlockId(arg_8_0)
+	return arg_8_0._config:openUnlockId()
 end
 
-function slot0.season(slot0)
-	slot1 = nil
+function var_0_0.season(arg_9_0)
+	local var_9_0
 
-	if slot0._rougeInfo then
-		slot1 = slot0._rougeInfo.season
+	if arg_9_0._rougeInfo then
+		var_9_0 = arg_9_0._rougeInfo.season
 	end
 
-	if not slot1 and slot0._config then
-		slot1 = slot0._config:season()
+	if not var_9_0 and arg_9_0._config then
+		var_9_0 = arg_9_0._config:season()
 	end
 
-	if not slot1 then
+	if not var_9_0 then
 		return 1
 	end
 
-	return math.max(slot1, 1)
+	return math.max(var_9_0, 1)
 end
 
-function slot0.isUnlock(slot0)
-	return OpenModel.instance:isFunctionUnlock(slot0:openUnlockId())
+function var_0_0.isUnlock(arg_10_0)
+	local var_10_0 = arg_10_0:openUnlockId()
+
+	return OpenModel.instance:isFunctionUnlock(var_10_0)
 end
 
-function slot0.passedDifficulty(slot0)
-	if not slot0._rougeGameRecord then
+function var_0_0.passedDifficulty(arg_11_0)
+	if not arg_11_0._rougeGameRecord then
 		return 0
 	end
 
-	return slot0._rougeGameRecord.maxDifficulty or 0
+	return arg_11_0._rougeGameRecord.maxDifficulty or 0
 end
 
-function slot0.isPassedDifficulty(slot0, slot1)
-	return slot1 <= slot0:passedDifficulty()
+function var_0_0.isPassedDifficulty(arg_12_0, arg_12_1)
+	return arg_12_1 <= arg_12_0:passedDifficulty()
 end
 
-function slot0.isOpenedDifficulty(slot0, slot1)
-	return slot0:isPassedDifficulty(slot0._config:getDifficultyCO(slot1).preDifficulty)
+function var_0_0.isOpenedDifficulty(arg_13_0, arg_13_1)
+	local var_13_0 = arg_13_0._config:getDifficultyCO(arg_13_1)
+
+	return arg_13_0:isPassedDifficulty(var_13_0.preDifficulty)
 end
 
-function slot0.isOpenedStyle(slot0, slot1)
-	if not slot1 then
+function var_0_0.isOpenedStyle(arg_14_0, arg_14_1)
+	if not arg_14_1 then
 		return
 	end
 
-	if not slot0._config:getStyleConfig(slot1).unlockType or slot3 == 0 then
+	local var_14_0 = arg_14_0._config:getStyleConfig(arg_14_1)
+	local var_14_1 = var_14_0.unlockType
+
+	if not var_14_1 or var_14_1 == 0 then
 		return true
 	end
 
-	return RougeMapUnlockHelper.checkIsUnlock(slot3, slot2.unlockParam)
+	return RougeMapUnlockHelper.checkIsUnlock(var_14_1, var_14_0.unlockParam)
 end
 
-function slot0.endCdTs(slot0)
-	if not slot0._rougeGameRecord then
+function var_0_0.endCdTs(arg_15_0)
+	if not arg_15_0._rougeGameRecord then
 		return 0
 	end
 
-	if slot0._rougeGameRecord:lastGameEndTimestamp() <= 0 then
+	local var_15_0 = arg_15_0._rougeGameRecord:lastGameEndTimestamp()
+
+	if var_15_0 <= 0 then
 		return 0
 	end
 
-	if slot0._config:getAbortCDDuration() == 0 then
+	local var_15_1 = arg_15_0._config:getAbortCDDuration()
+
+	if var_15_1 == 0 then
 		return 0
 	end
 
-	return slot1 + slot2
+	return var_15_0 + var_15_1
 end
 
-function slot0.leftCdSec(slot0)
-	return slot0:endCdTs() - ServerTime.now()
+function var_0_0.leftCdSec(arg_16_0)
+	return arg_16_0:endCdTs() - ServerTime.now()
 end
 
-function slot0.isInCdStart(slot0)
-	return slot0:leftCdSec() > 0
+function var_0_0.isInCdStart(arg_17_0)
+	return arg_17_0:leftCdSec() > 0
 end
 
-function slot0.getDifficultyInfoList(slot0, slot1)
-	slot3 = {}
+function var_0_0.getDifficultyInfoList(arg_18_0, arg_18_1)
+	local var_18_0 = arg_18_0._config:getDifficultyCOListByVersions(arg_18_1)
+	local var_18_1 = {}
 
-	for slot7, slot8 in ipairs(slot0._config:getDifficultyCOListByVersions(slot1)) do
-		slot9 = slot8.difficulty
+	for iter_18_0, iter_18_1 in ipairs(var_18_0) do
+		local var_18_2 = iter_18_1.difficulty
 
-		table.insert(slot3, {
-			difficulty = slot9,
-			difficultyCO = slot8,
-			isUnLocked = slot0:isOpenedDifficulty(slot9)
+		table.insert(var_18_1, {
+			difficulty = var_18_2,
+			difficultyCO = iter_18_1,
+			isUnLocked = arg_18_0:isOpenedDifficulty(var_18_2)
 		})
 	end
 
-	table.sort(slot3, function (slot0, slot1)
-		if slot0.difficulty ~= slot1.difficulty then
-			return slot2 < slot3
+	table.sort(var_18_1, function(arg_19_0, arg_19_1)
+		local var_19_0 = arg_19_0.difficulty
+		local var_19_1 = arg_19_1.difficulty
+
+		if var_19_0 ~= var_19_1 then
+			return var_19_0 < var_19_1
 		end
 	end)
 
-	return slot3
+	return var_18_1
 end
 
-function slot0.getStyleInfoList(slot0, slot1)
-	slot3 = {}
+function var_0_0.getStyleInfoList(arg_20_0, arg_20_1)
+	local var_20_0 = arg_20_0._config:getStyleCOListByVersions(arg_20_1)
+	local var_20_1 = {}
 
-	for slot7, slot8 in ipairs(slot0._config:getStyleCOListByVersions(slot1)) do
-		slot3[#slot3 + 1] = slot0:_createStyleMo(slot8)
+	for iter_20_0, iter_20_1 in ipairs(var_20_0) do
+		var_20_1[#var_20_1 + 1] = arg_20_0:_createStyleMo(iter_20_1)
 	end
 
-	table.sort(slot3, uv0._styleSortFunc)
+	table.sort(var_20_1, var_0_0._styleSortFunc)
 
-	return slot3
+	return var_20_1
 end
 
-function slot0._createStyleMo(slot0, slot1)
-	slot2 = slot1.id
+function var_0_0._createStyleMo(arg_21_0, arg_21_1)
+	local var_21_0 = arg_21_1.id
 
 	return {
-		style = slot2,
-		styleCO = slot1,
-		isUnLocked = slot0:isOpenedStyle(slot2)
+		style = var_21_0,
+		styleCO = arg_21_1,
+		isUnLocked = arg_21_0:isOpenedStyle(var_21_0)
 	}
 end
 
-function slot0._styleSortFunc(slot0, slot1)
-	if (slot0.isUnLocked and 1 or 0) ~= (slot1.isUnLocked and 1 or 0) then
-		return slot3 < slot2
+function var_0_0._styleSortFunc(arg_22_0, arg_22_1)
+	local var_22_0 = arg_22_0.isUnLocked and 1 or 0
+	local var_22_1 = arg_22_1.isUnLocked and 1 or 0
+
+	if var_22_0 ~= var_22_1 then
+		return var_22_1 < var_22_0
 	end
 
-	return slot0.style < slot1.style
+	return arg_22_0.style < arg_22_1.style
 end
 
-function slot0.getSeasonStyleInfoList(slot0)
-	slot2 = {}
+function var_0_0.getSeasonStyleInfoList(arg_23_0)
+	local var_23_0 = arg_23_0._config:getSeasonStyleConfigs()
+	local var_23_1 = {}
 
-	for slot6, slot7 in ipairs(slot0._config:getSeasonStyleConfigs()) do
-		slot2[#slot2 + 1] = slot0:_createStyleMo(slot7)
+	for iter_23_0, iter_23_1 in ipairs(var_23_0) do
+		var_23_1[#var_23_1 + 1] = arg_23_0:_createStyleMo(iter_23_1)
 	end
 
-	table.sort(slot2, uv0._styleSortFunc)
+	table.sort(var_23_1, var_0_0._styleSortFunc)
 
-	return slot2
+	return var_23_1
 end
 
-slot1 = 1
-slot2 = 0
+local var_0_1 = 1
+local var_0_2 = 0
 
-function slot0.getIsNewUnlockDifficulty(slot0, slot1)
-	return slot0:_getUnlockDifficulty(slot1, uv0) == uv1
+function var_0_0.getIsNewUnlockDifficulty(arg_24_0, arg_24_1)
+	return arg_24_0:_getUnlockDifficulty(arg_24_1, var_0_2) == var_0_1
 end
 
-function slot0.setIsNewUnlockDifficulty(slot0, slot1, slot2)
-	slot0:_saveUnlockDifficulty(slot1, slot2 and uv0 or uv1)
+function var_0_0.setIsNewUnlockDifficulty(arg_25_0, arg_25_1, arg_25_2)
+	arg_25_0:_saveUnlockDifficulty(arg_25_1, arg_25_2 and var_0_1 or var_0_2)
 end
 
-function slot0.getIsNewUnlockStyle(slot0, slot1)
-	return slot0:_getUnlockStyle(slot1, uv0) == uv1
+function var_0_0.getIsNewUnlockStyle(arg_26_0, arg_26_1)
+	return arg_26_0:_getUnlockStyle(arg_26_1, var_0_2) == var_0_1
 end
 
-function slot0.setIsNewUnlockStyle(slot0, slot1, slot2)
-	slot0:_saveUnlockStyle(slot1, slot2 and uv0 or uv1)
+function var_0_0.setIsNewUnlockStyle(arg_27_0, arg_27_1, arg_27_2)
+	arg_27_0:_saveUnlockStyle(arg_27_1, arg_27_2 and var_0_1 or var_0_2)
 end
 
-slot3 = "RougeOutside|"
-slot4 = "LastMark|"
+local var_0_3 = "RougeOutside|"
+local var_0_4 = "LastMark|"
 
-function slot0._getPrefsKeyPrefix(slot0)
-	return uv0 .. tostring(slot0:season()) .. tostring(table.concat(RougeModel.instance:getVersion(), "#"))
+function var_0_0._getPrefsKeyPrefix(arg_28_0)
+	local var_28_0 = arg_28_0:season()
+	local var_28_1 = RougeModel.instance:getVersion()
+	local var_28_2 = table.concat(var_28_1, "#")
+
+	return var_0_3 .. tostring(var_28_0) .. tostring(var_28_2)
 end
 
-function slot0._saveInteger(slot0, slot1, slot2)
-	GameUtil.playerPrefsSetNumberByUserId(slot1, slot2)
+function var_0_0._saveInteger(arg_29_0, arg_29_1, arg_29_2)
+	GameUtil.playerPrefsSetNumberByUserId(arg_29_1, arg_29_2)
 end
 
-function slot0._getInteger(slot0, slot1, slot2)
-	return GameUtil.playerPrefsGetNumberByUserId(slot1, slot2)
+function var_0_0._getInteger(arg_30_0, arg_30_1, arg_30_2)
+	return GameUtil.playerPrefsGetNumberByUserId(arg_30_1, arg_30_2)
 end
 
-slot5 = "D|"
+local var_0_5 = "D|"
 
-function slot0._getPrefsKeyDifficulty(slot0, slot1)
-	assert(type(slot1) == "number")
+function var_0_0._getPrefsKeyDifficulty(arg_31_0, arg_31_1)
+	assert(type(arg_31_1) == "number")
 
-	return slot0:_getPrefsKeyPrefix() .. uv0 .. tostring(slot1)
+	return arg_31_0:_getPrefsKeyPrefix() .. var_0_5 .. tostring(arg_31_1)
 end
 
-function slot0._saveUnlockDifficulty(slot0, slot1, slot2)
-	slot0:_saveInteger(slot0:_getPrefsKeyDifficulty(slot1), slot2)
+function var_0_0._saveUnlockDifficulty(arg_32_0, arg_32_1, arg_32_2)
+	local var_32_0 = arg_32_0:_getPrefsKeyDifficulty(arg_32_1)
+
+	arg_32_0:_saveInteger(var_32_0, arg_32_2)
 end
 
-function slot0._getUnlockDifficulty(slot0, slot1, slot2)
-	return slot0:_getInteger(slot0:_getPrefsKeyDifficulty(slot1), slot2)
+function var_0_0._getUnlockDifficulty(arg_33_0, arg_33_1, arg_33_2)
+	local var_33_0 = arg_33_0:_getPrefsKeyDifficulty(arg_33_1)
+
+	return arg_33_0:_getInteger(var_33_0, arg_33_2)
 end
 
-function slot0._getPrefsKeyLastMarkDifficulty(slot0)
-	return slot0:_getPrefsKeyPrefix() .. uv0 .. uv1
+function var_0_0._getPrefsKeyLastMarkDifficulty(arg_34_0)
+	return arg_34_0:_getPrefsKeyPrefix() .. var_0_4 .. var_0_5
 end
 
-function slot0.setLastMarkSelectedDifficulty(slot0, slot1)
-	slot0:_saveInteger(slot0:_getPrefsKeyLastMarkDifficulty(), slot1)
+function var_0_0.setLastMarkSelectedDifficulty(arg_35_0, arg_35_1)
+	local var_35_0 = arg_35_0:_getPrefsKeyLastMarkDifficulty()
+
+	arg_35_0:_saveInteger(var_35_0, arg_35_1)
 end
 
-function slot0.getLastMarkSelectedDifficulty(slot0, slot1)
-	return slot0:_getInteger(slot0:_getPrefsKeyLastMarkDifficulty(), slot1)
+function var_0_0.getLastMarkSelectedDifficulty(arg_36_0, arg_36_1)
+	local var_36_0 = arg_36_0:_getPrefsKeyLastMarkDifficulty()
+
+	return arg_36_0:_getInteger(var_36_0, arg_36_1)
 end
 
-slot6 = "S|"
+local var_0_6 = "S|"
 
-function slot0._getPrefsKeyStyle(slot0, slot1)
-	assert(type(slot1) == "number")
+function var_0_0._getPrefsKeyStyle(arg_37_0, arg_37_1)
+	assert(type(arg_37_1) == "number")
 
-	return slot0:_getPrefsKeyPrefix() .. uv0 .. tostring(slot1)
+	return arg_37_0:_getPrefsKeyPrefix() .. var_0_6 .. tostring(arg_37_1)
 end
 
-function slot0._saveUnlockStyle(slot0, slot1, slot2)
-	slot0:_saveInteger(slot0:_getPrefsKeyStyle(slot1), slot2)
+function var_0_0._saveUnlockStyle(arg_38_0, arg_38_1, arg_38_2)
+	local var_38_0 = arg_38_0:_getPrefsKeyStyle(arg_38_1)
+
+	arg_38_0:_saveInteger(var_38_0, arg_38_2)
 end
 
-function slot0._getUnlockStyle(slot0, slot1, slot2)
-	return slot0:_getInteger(slot0:_getPrefsKeyStyle(slot1), slot2)
+function var_0_0._getUnlockStyle(arg_39_0, arg_39_1, arg_39_2)
+	local var_39_0 = arg_39_0:_getPrefsKeyStyle(arg_39_1)
+
+	return arg_39_0:_getInteger(var_39_0, arg_39_2)
 end
 
-function slot0.passedLayerId(slot0, slot1)
-	if not slot0._rougeGameRecord then
+function var_0_0.passedLayerId(arg_40_0, arg_40_1)
+	if not arg_40_0._rougeGameRecord then
 		return false
 	end
 
-	return slot0._rougeGameRecord:passedLayerId(slot1)
+	return arg_40_0._rougeGameRecord:passedLayerId(arg_40_1)
 end
 
-function slot0.collectionIsPass(slot0, slot1)
-	if not slot0._rougeGameRecord then
+function var_0_0.collectionIsPass(arg_41_0, arg_41_1)
+	if not arg_41_0._rougeGameRecord then
 		return false
 	end
 
-	return slot0._rougeGameRecord:collectionIsPass(slot1)
+	return arg_41_0._rougeGameRecord:collectionIsPass(arg_41_1)
 end
 
-function slot0.storyIsPass(slot0, slot1)
-	if not slot0._rougeGameRecord then
+function var_0_0.storyIsPass(arg_42_0, arg_42_1)
+	if not arg_42_0._rougeGameRecord then
 		return false
 	end
 
-	return slot0._rougeGameRecord:storyIsPass(slot1)
+	return arg_42_0._rougeGameRecord:storyIsPass(arg_42_1)
 end
 
-function slot0.passedAnyEventId(slot0, slot1)
-	for slot5, slot6 in ipairs(slot1) do
-		if slot0:passedEventId(slot6) then
+function var_0_0.passedAnyEventId(arg_43_0, arg_43_1)
+	for iter_43_0, iter_43_1 in ipairs(arg_43_1) do
+		if arg_43_0:passedEventId(iter_43_1) then
 			return true
 		end
 	end
@@ -304,77 +340,79 @@ function slot0.passedAnyEventId(slot0, slot1)
 	return false
 end
 
-function slot0.passedEventId(slot0, slot1)
-	if not slot0._rougeGameRecord then
+function var_0_0.passedEventId(arg_44_0, arg_44_1)
+	if not arg_44_0._rougeGameRecord then
 		return false
 	end
 
-	return slot0._rougeGameRecord:passedEventId(slot1)
+	return arg_44_0._rougeGameRecord:passedEventId(arg_44_1)
 end
 
-function slot0.passAnyOneEnd(slot0)
-	return slot0._rougeGameRecord and slot0._rougeGameRecord:passAnyOneEnd()
+function var_0_0.passAnyOneEnd(arg_45_0)
+	return arg_45_0._rougeGameRecord and arg_45_0._rougeGameRecord:passAnyOneEnd()
 end
 
-function slot0.passEndId(slot0, slot1)
-	return slot0._rougeGameRecord and slot0._rougeGameRecord:passEndId(slot1)
+function var_0_0.passEndId(arg_46_0, arg_46_1)
+	return arg_46_0._rougeGameRecord and arg_46_0._rougeGameRecord:passEndId(arg_46_1)
 end
 
-function slot0.passEntrustId(slot0, slot1)
-	return slot0._rougeGameRecord and slot0._rougeGameRecord:passEntrustId(slot1)
+function var_0_0.passEntrustId(arg_47_0, arg_47_1)
+	return arg_47_0._rougeGameRecord and arg_47_0._rougeGameRecord:passEntrustId(arg_47_1)
 end
 
-function slot0.getGeniusBranchStartViewInfo(slot0, slot1)
-	if not RougeTalentModel.instance:isTalentUnlock(slot1) then
+function var_0_0.getGeniusBranchStartViewInfo(arg_48_0, arg_48_1)
+	if not RougeTalentModel.instance:isTalentUnlock(arg_48_1) then
 		return 0
 	end
 
-	return slot0._config:getGeniusBranchStartViewInfo(slot1)
+	return arg_48_0._config:getGeniusBranchStartViewInfo(arg_48_1)
 end
 
-function slot0.getGeniusBranchStartViewDeltaValue(slot0, slot1, slot2)
-	return slot0:getGeniusBranchStartViewInfo(slot1)[slot2] or 0
+function var_0_0.getGeniusBranchStartViewDeltaValue(arg_49_0, arg_49_1, arg_49_2)
+	return arg_49_0:getGeniusBranchStartViewInfo(arg_49_1)[arg_49_2] or 0
 end
 
-function slot0.getGeniusBranchStartViewAllInfo(slot0)
-	slot1 = {
-		[slot7] = false
-	}
+function var_0_0.getGeniusBranchStartViewAllInfo(arg_50_0)
+	local var_50_0 = {}
+	local var_50_1 = arg_50_0._config:getGeniusBranchIdListWithStartView()
 
-	for slot6, slot7 in ipairs(slot0._config:getGeniusBranchIdListWithStartView()) do
-		-- Nothing
+	for iter_50_0, iter_50_1 in ipairs(var_50_1) do
+		var_50_0[iter_50_1] = false
 	end
 
-	RougeTalentModel.instance:calcTalentUnlockIds(slot1)
+	RougeTalentModel.instance:calcTalentUnlockIds(var_50_0)
 
-	slot3 = {}
+	local var_50_2 = {}
 
-	for slot7, slot8 in pairs(slot1) do
-		if slot8 then
-			for slot13, slot14 in pairs(slot0._config:getGeniusBranchStartViewInfo(slot7)) do
-				slot3[slot13] = (slot3[slot13] or 0) + slot14
+	for iter_50_2, iter_50_3 in pairs(var_50_0) do
+		if iter_50_3 then
+			local var_50_3 = arg_50_0._config:getGeniusBranchStartViewInfo(iter_50_2)
+
+			for iter_50_4, iter_50_5 in pairs(var_50_3) do
+				var_50_2[iter_50_4] = (var_50_2[iter_50_4] or 0) + iter_50_5
 			end
 		end
 	end
 
-	return slot3
+	return var_50_2
 end
 
-function slot0.getStartViewAllInfo(slot0, slot1)
-	slot3 = slot0:getGeniusBranchStartViewAllInfo()
-	slot4 = {}
+function var_0_0.getStartViewAllInfo(arg_51_0, arg_51_1)
+	local var_51_0 = arg_51_0._config:getDifficultyCOStartViewInfo(arg_51_1)
+	local var_51_1 = arg_51_0:getGeniusBranchStartViewAllInfo()
+	local var_51_2 = {}
 
-	for slot8, slot9 in pairs(slot0._config:getDifficultyCOStartViewInfo(slot1)) do
-		slot4[slot8] = (slot4[slot8] or 0) + slot9
+	for iter_51_0, iter_51_1 in pairs(var_51_0) do
+		var_51_2[iter_51_0] = (var_51_2[iter_51_0] or 0) + iter_51_1
 	end
 
-	for slot8, slot9 in pairs(slot3) do
-		slot4[slot8] = (slot4[slot8] or 0) + slot9
+	for iter_51_2, iter_51_3 in pairs(var_51_1) do
+		var_51_2[iter_51_2] = (var_51_2[iter_51_2] or 0) + iter_51_3
 	end
 
-	return slot4
+	return var_51_2
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

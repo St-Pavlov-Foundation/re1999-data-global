@@ -1,35 +1,35 @@
-module("modules.logic.backpack.config.BackpackConfig", package.seeall)
+﻿module("modules.logic.backpack.config.BackpackConfig", package.seeall)
 
-slot0 = class("BackpackConfig", BaseConfig)
+local var_0_0 = class("BackpackConfig", BaseConfig)
 
-function slot0.ctor(slot0)
-	slot0._tabConfig = nil
-	slot0._subclassConfig = nil
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._tabConfig = nil
+	arg_1_0._subclassConfig = nil
 end
 
-function slot0.reqConfigNames(slot0)
+function var_0_0.reqConfigNames(arg_2_0)
 	return {
 		"backpack",
 		"subclass_priority"
 	}
 end
 
-function slot0.onConfigLoaded(slot0, slot1, slot2)
-	if slot1 == "backpack" then
-		slot0._tabConfig = slot2
-	elseif slot1 == "subclass_priority" then
-		slot0._subclassConfig = slot2
+function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_1 == "backpack" then
+		arg_3_0._tabConfig = arg_3_2
+	elseif arg_3_1 == "subclass_priority" then
+		arg_3_0._subclassConfig = arg_3_2
 	end
 end
 
-function slot0.getCategoryCO(slot0)
-	return slot0._tabConfig.configDict
+function var_0_0.getCategoryCO(arg_4_0)
+	return arg_4_0._tabConfig.configDict
 end
 
-function slot0.getSubclassCo(slot0)
-	return slot0._subclassConfig.configDict
+function var_0_0.getSubclassCo(arg_5_0)
+	return arg_5_0._subclassConfig.configDict
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

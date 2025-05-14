@@ -1,28 +1,28 @@
-module("modules.logic.seasonver.act166.model.Season166TalentMO", package.seeall)
+﻿module("modules.logic.seasonver.act166.model.Season166TalentMO", package.seeall)
 
-slot0 = pureTable("Season166TalentMO")
+local var_0_0 = pureTable("Season166TalentMO")
 
-function slot0.ctor(slot0)
-	slot0.id = 0
-	slot0.level = 1
-	slot0.skillIds = {}
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.id = 0
+	arg_1_0.level = 1
+	arg_1_0.skillIds = {}
 end
 
-function slot0.setData(slot0, slot1)
-	slot0.id = slot1.id
-	slot0.level = slot1.level
+function var_0_0.setData(arg_2_0, arg_2_1)
+	arg_2_0.id = arg_2_1.id
+	arg_2_0.level = arg_2_1.level
 
-	slot0:updateSkillIds(slot1.skillIds)
+	arg_2_0:updateSkillIds(arg_2_1.skillIds)
 
-	slot0.config = lua_activity166_talent_style.configDict[slot1.id][slot1.level]
+	arg_2_0.config = lua_activity166_talent_style.configDict[arg_2_1.id][arg_2_1.level]
 end
 
-function slot0.updateSkillIds(slot0, slot1)
-	tabletool.clear(slot0.skillIds)
+function var_0_0.updateSkillIds(arg_3_0, arg_3_1)
+	tabletool.clear(arg_3_0.skillIds)
 
-	for slot5, slot6 in ipairs(slot1) do
-		slot0.skillIds[slot5] = slot6
+	for iter_3_0, iter_3_1 in ipairs(arg_3_1) do
+		arg_3_0.skillIds[iter_3_0] = iter_3_1
 	end
 end
 
-return slot0
+return var_0_0

@@ -1,25 +1,25 @@
-module("modules.logic.guide.controller.action.impl.WaitGuideActionFightRoundBegin", package.seeall)
+﻿module("modules.logic.guide.controller.action.impl.WaitGuideActionFightRoundBegin", package.seeall)
 
-slot0 = class("WaitGuideActionFightRoundBegin", BaseGuideAction)
+local var_0_0 = class("WaitGuideActionFightRoundBegin", BaseGuideAction)
 
-function slot0.onStart(slot0, slot1)
-	uv0.super.onStart(slot0, slot1)
-	FightController.instance:registerCallback(FightEvent.OnStartSequenceFinish, slot0._onRoundStart, slot0)
-	FightController.instance:registerCallback(FightEvent.OnRoundSequenceFinish, slot0._onRoundStart, slot0)
+function var_0_0.onStart(arg_1_0, arg_1_1)
+	var_0_0.super.onStart(arg_1_0, arg_1_1)
+	FightController.instance:registerCallback(FightEvent.OnStartSequenceFinish, arg_1_0._onRoundStart, arg_1_0)
+	FightController.instance:registerCallback(FightEvent.OnRoundSequenceFinish, arg_1_0._onRoundStart, arg_1_0)
 end
 
-function slot0._onRoundStart(slot0)
-	slot1 = FightModel.instance:getCurStage()
+function var_0_0._onRoundStart(arg_2_0)
+	local var_2_0 = FightModel.instance:getCurStage()
 
-	if FightDataHelper.stageMgr:inFightState(FightStageMgr.FightStateType.Distribute1Card) or slot1 == FightEnum.Stage.Distribute or slot1 == FightEnum.Stage.Card then
-		slot0:clearWork()
-		slot0:onDone(true)
+	if FightDataHelper.stageMgr:inFightState(FightStageMgr.FightStateType.Distribute1Card) or var_2_0 == FightEnum.Stage.Distribute or var_2_0 == FightEnum.Stage.Card then
+		arg_2_0:clearWork()
+		arg_2_0:onDone(true)
 	end
 end
 
-function slot0.clearWork(slot0)
-	FightController.instance:unregisterCallback(FightEvent.OnStartSequenceFinish, slot0._onRoundStart, slot0)
-	FightController.instance:unregisterCallback(FightEvent.OnRoundSequenceFinish, slot0._onRoundStart, slot0)
+function var_0_0.clearWork(arg_3_0)
+	FightController.instance:unregisterCallback(FightEvent.OnStartSequenceFinish, arg_3_0._onRoundStart, arg_3_0)
+	FightController.instance:unregisterCallback(FightEvent.OnRoundSequenceFinish, arg_3_0._onRoundStart, arg_3_0)
 end
 
-return slot0
+return var_0_0

@@ -1,11 +1,13 @@
-module("modules.logic.versionactivity1_3.va3chess.game.step.Va3ChessStepTargetUpdate", package.seeall)
+﻿module("modules.logic.versionactivity1_3.va3chess.game.step.Va3ChessStepTargetUpdate", package.seeall)
 
-slot0 = class("Va3ChessStepTargetUpdate", Va3ChessStepBase)
+local var_0_0 = class("Va3ChessStepTargetUpdate", Va3ChessStepBase)
 
-function slot0.start(slot0)
-	Va3ChessGameModel.instance:setFinishedTargetNum(slot0.originData.targetNum)
+function var_0_0.start(arg_1_0)
+	local var_1_0 = arg_1_0.originData
+
+	Va3ChessGameModel.instance:setFinishedTargetNum(var_1_0.targetNum)
 	Va3ChessGameController.instance:dispatchEvent(Va3ChessEvent.TargetUpdate)
-	slot0:finish()
+	arg_1_0:finish()
 end
 
-return slot0
+return var_0_0

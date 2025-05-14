@@ -1,12 +1,12 @@
-module("modules.logic.versionactivity1_3.act126.model.UserDungeonSpStatusMO", package.seeall)
+﻿module("modules.logic.versionactivity1_3.act126.model.UserDungeonSpStatusMO", package.seeall)
 
-slot0 = pureTable("UserDungeonSpStatusMO")
+local var_0_0 = pureTable("UserDungeonSpStatusMO")
 
-function slot0.init(slot0, slot1)
-	slot0.chapterId = slot1.chapterId
-	slot0.episodeId = slot1.episodeId
-	slot0.status = slot1.status
-	slot0.refreshTime = slot1.refreshTime
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.chapterId = arg_1_1.chapterId
+	arg_1_0.episodeId = arg_1_1.episodeId
+	arg_1_0.status = arg_1_1.status
+	arg_1_0.refreshTime = arg_1_1.refreshTime
 end
 
-return slot0
+return var_0_0

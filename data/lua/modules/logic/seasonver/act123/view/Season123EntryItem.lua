@@ -1,218 +1,241 @@
-module("modules.logic.seasonver.act123.view.Season123EntryItem", package.seeall)
+﻿module("modules.logic.seasonver.act123.view.Season123EntryItem", package.seeall)
 
-slot0 = class("Season123EntryItem", UserDataDispose)
+local var_0_0 = class("Season123EntryItem", UserDataDispose)
 
-function slot0.ctor(slot0)
-	slot0:__onInit()
+function var_0_0.ctor(arg_1_0)
+	arg_1_0:__onInit()
 end
 
-function slot0.dispose(slot0)
-	TaskDispatcher.cancelTask(slot0._enterEpiosdeList, slot0)
-	slot0:removeEvents()
-	slot0:__onDispose()
+function var_0_0.dispose(arg_2_0)
+	TaskDispatcher.cancelTask(arg_2_0._enterEpiosdeList, arg_2_0)
+	arg_2_0:removeEvents()
+	arg_2_0:__onDispose()
 end
 
-function slot0.init(slot0, slot1, slot2)
-	slot0.viewGO = slot1
-	slot0.anim = slot2
+function var_0_0.init(arg_3_0, arg_3_1, arg_3_2)
+	arg_3_0.viewGO = arg_3_1
+	arg_3_0.anim = arg_3_2
 
-	slot0:initComponent()
+	arg_3_0:initComponent()
 end
 
-function slot0.initComponent(slot0)
-	slot0._btnentrance = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_entrance")
-	slot0._txtpassround = gohelper.findChildText(slot0.viewGO, "#go_time/#txt_time")
-	slot0._txtmapname = gohelper.findChildText(slot0.viewGO, "#txt_mapname")
-	slot0._gotime = gohelper.findChild(slot0.viewGO, "#go_time")
-	slot0._btnrecords = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_records")
-	slot0._gonew = gohelper.findChild(slot0.viewGO, "#go_new")
-	slot0._gofighting = gohelper.findChild(slot0.viewGO, "#go_fighting")
-	slot0._gounlockline = gohelper.findChild(slot0.viewGO, "decorates/line")
-	slot0._goprogress = gohelper.findChild(slot0.viewGO, "progress")
-	slot0._progressActives = slot0:getUserDataTb_()
-	slot0._progressDeactives = slot0:getUserDataTb_()
-	slot0._progressHard = slot0:getUserDataTb_()
-	slot0._progressAnim = slot0:getUserDataTb_()
+function var_0_0.initComponent(arg_4_0)
+	arg_4_0._btnentrance = gohelper.findChildButtonWithAudio(arg_4_0.viewGO, "#btn_entrance")
+	arg_4_0._txtpassround = gohelper.findChildText(arg_4_0.viewGO, "#go_time/#txt_time")
+	arg_4_0._txtmapname = gohelper.findChildText(arg_4_0.viewGO, "#txt_mapname")
+	arg_4_0._gotime = gohelper.findChild(arg_4_0.viewGO, "#go_time")
+	arg_4_0._btnrecords = gohelper.findChildButtonWithAudio(arg_4_0.viewGO, "#btn_records")
+	arg_4_0._gonew = gohelper.findChild(arg_4_0.viewGO, "#go_new")
+	arg_4_0._gofighting = gohelper.findChild(arg_4_0.viewGO, "#go_fighting")
+	arg_4_0._gounlockline = gohelper.findChild(arg_4_0.viewGO, "decorates/line")
+	arg_4_0._goprogress = gohelper.findChild(arg_4_0.viewGO, "progress")
+	arg_4_0._progressActives = arg_4_0:getUserDataTb_()
+	arg_4_0._progressDeactives = arg_4_0:getUserDataTb_()
+	arg_4_0._progressHard = arg_4_0:getUserDataTb_()
+	arg_4_0._progressAnim = arg_4_0:getUserDataTb_()
 
-	for slot4 = 1, Activity123Enum.SeasonStageStepCount do
-		slot0._progressActives[slot4] = gohelper.findChild(slot0.viewGO, string.format("progress/#go_progress%s/light", slot4))
-		slot0._progressDeactives[slot4] = gohelper.findChild(slot0.viewGO, string.format("progress/#go_progress%s/dark", slot4))
-		slot0._progressHard[slot4] = gohelper.findChild(slot0.viewGO, string.format("progress/#go_progress%s/red", slot4))
-		slot0._progressAnim[slot4] = gohelper.findChild(slot0.viewGO, string.format("progress/#go_progress%s/levelup", slot4))
+	for iter_4_0 = 1, Activity123Enum.SeasonStageStepCount do
+		arg_4_0._progressActives[iter_4_0] = gohelper.findChild(arg_4_0.viewGO, string.format("progress/#go_progress%s/light", iter_4_0))
+		arg_4_0._progressDeactives[iter_4_0] = gohelper.findChild(arg_4_0.viewGO, string.format("progress/#go_progress%s/dark", iter_4_0))
+		arg_4_0._progressHard[iter_4_0] = gohelper.findChild(arg_4_0.viewGO, string.format("progress/#go_progress%s/red", iter_4_0))
+		arg_4_0._progressAnim[iter_4_0] = gohelper.findChild(arg_4_0.viewGO, string.format("progress/#go_progress%s/levelup", iter_4_0))
 	end
 
-	slot0._golocked = gohelper.findChild(slot0.viewGO, "#go_locked")
-	slot0._txtunlocktime = gohelper.findChildText(slot0.viewGO, "#go_locked/#txt_lockedtime")
+	arg_4_0._golocked = gohelper.findChild(arg_4_0.viewGO, "#go_locked")
+	arg_4_0._txtunlocktime = gohelper.findChildText(arg_4_0.viewGO, "#go_locked/#txt_lockedtime")
 
-	slot0._btnentrance:AddClickListener(slot0._btnentranceOnClick, slot0)
-	slot0._btnrecords:AddClickListener(slot0._btnrecordsOnClick, slot0)
+	arg_4_0._btnentrance:AddClickListener(arg_4_0._btnentranceOnClick, arg_4_0)
+	arg_4_0._btnrecords:AddClickListener(arg_4_0._btnrecordsOnClick, arg_4_0)
 
-	slot0.animLock = slot0._golocked:GetComponent(gohelper.Type_Animator)
+	arg_4_0.animLock = arg_4_0._golocked:GetComponent(gohelper.Type_Animator)
 
-	TaskDispatcher.runRepeat(slot0.refreshLockRepeat, slot0, 3)
+	TaskDispatcher.runRepeat(arg_4_0.refreshLockRepeat, arg_4_0, 3)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnentrance:RemoveClickListener()
-	slot0._btnrecords:RemoveClickListener()
-	TaskDispatcher.cancelTask(slot0.refreshLockRepeat, slot0)
+function var_0_0.removeEvents(arg_5_0)
+	arg_5_0._btnentrance:RemoveClickListener()
+	arg_5_0._btnrecords:RemoveClickListener()
+	TaskDispatcher.cancelTask(arg_5_0.refreshLockRepeat, arg_5_0)
 end
 
-function slot0.initData(slot0, slot1)
-	slot0._actId = slot1
+function var_0_0.initData(arg_6_0, arg_6_1)
+	arg_6_0._actId = arg_6_1
 
-	slot0:refreshUI()
+	arg_6_0:refreshUI()
 end
 
-function slot0.refreshUI(slot0)
-	slot0._stageId = Season123EntryModel.instance:getCurrentStage()
+function var_0_0.refreshUI(arg_7_0)
+	arg_7_0._stageId = Season123EntryModel.instance:getCurrentStage()
 
-	if not slot0._stageId then
+	if not arg_7_0._stageId then
 		return
 	end
 
-	if Season123Config.instance:getStageCo(slot0._actId, slot0._stageId) then
-		slot0._txtmapname.text = slot1.name
+	local var_7_0 = Season123Config.instance:getStageCo(arg_7_0._actId, arg_7_0._stageId)
+
+	if var_7_0 then
+		arg_7_0._txtmapname.text = var_7_0.name
 	end
 
-	gohelper.setActive(slot0._gofighting, Season123ProgressUtils.stageInChallenge(slot0._actId, slot0._stageId))
-	slot0:refreshRound()
-	slot0:refreshLock()
-	slot0:refreshProgress()
-	slot0:refreshNew()
-	slot0:refreshRecordBtn()
+	gohelper.setActive(arg_7_0._gofighting, Season123ProgressUtils.stageInChallenge(arg_7_0._actId, arg_7_0._stageId))
+	arg_7_0:refreshRound()
+	arg_7_0:refreshLock()
+	arg_7_0:refreshProgress()
+	arg_7_0:refreshNew()
+	arg_7_0:refreshRecordBtn()
 end
 
-function slot0.refreshRound(slot0)
-	if Season123Model.instance:getActInfo(slot0._actId) then
-		if slot1:getStageMO(slot0._stageId) and slot2:alreadyPass() then
-			if slot2.minRound == 0 then
-				gohelper.setActive(slot0._gotime, false)
-			else
-				gohelper.setActive(slot0._gotime, true)
+function var_0_0.refreshRound(arg_8_0)
+	local var_8_0 = Season123Model.instance:getActInfo(arg_8_0._actId)
 
-				slot0._txtpassround.text = tostring(slot3)
+	if var_8_0 then
+		local var_8_1 = var_8_0:getStageMO(arg_8_0._stageId)
+
+		if var_8_1 and var_8_1:alreadyPass() then
+			local var_8_2 = var_8_1.minRound
+
+			if var_8_2 == 0 then
+				gohelper.setActive(arg_8_0._gotime, false)
+			else
+				gohelper.setActive(arg_8_0._gotime, true)
+
+				arg_8_0._txtpassround.text = tostring(var_8_2)
 			end
 		else
-			gohelper.setActive(slot0._gotime, false)
+			gohelper.setActive(arg_8_0._gotime, false)
 		end
 	else
-		gohelper.setActive(slot0._gotime, false)
+		gohelper.setActive(arg_8_0._gotime, false)
 	end
 end
 
-function slot0.refreshLock(slot0)
-	slot1, slot2, slot3 = Season123ProgressUtils.isStageUnlock(slot0._actId, slot0._stageId)
+function var_0_0.refreshLock(arg_9_0)
+	local var_9_0, var_9_1, var_9_2 = Season123ProgressUtils.isStageUnlock(arg_9_0._actId, arg_9_0._stageId)
 
-	if slot2 == Activity123Enum.PreCondition.OpenTime then
-		if slot3.showSec then
-			slot0._txtunlocktime.text = string.format(luaLang("season123_overview_unlocktime_custom"), string.format("%s%s", TimeUtil.secondToRoughTime2(slot3.remainTime)))
+	if var_9_1 == Activity123Enum.PreCondition.OpenTime then
+		if var_9_2.showSec then
+			local var_9_3 = string.format("%s%s", TimeUtil.secondToRoughTime2(var_9_2.remainTime))
+
+			arg_9_0._txtunlocktime.text = string.format(luaLang("season123_overview_unlocktime_custom"), var_9_3)
 		else
-			slot0._txtunlocktime.text = string.format(luaLang("season123_overview_unlocktime"), slot3.day)
+			arg_9_0._txtunlocktime.text = string.format(luaLang("season123_overview_unlocktime"), var_9_2.day)
 		end
 	else
-		slot0._txtunlocktime.text = string.format(luaLang("season123_entry_is_lock"), slot3)
+		arg_9_0._txtunlocktime.text = string.format(luaLang("season123_entry_is_lock"), var_9_2)
 	end
 
-	if slot1 then
-		if Season123EntryModel.instance:needPlayUnlockAnim(slot0._actId, slot0._stageId) then
-			gohelper.setActive(slot0._gounlockline, false)
-			gohelper.setActive(slot0._golocked, true)
-			slot0.animLock:Play("unlock", 0, 0)
+	if var_9_0 then
+		if Season123EntryModel.instance:needPlayUnlockAnim(arg_9_0._actId, arg_9_0._stageId) then
+			gohelper.setActive(arg_9_0._gounlockline, false)
+			gohelper.setActive(arg_9_0._golocked, true)
+			arg_9_0.animLock:Play("unlock", 0, 0)
 			AudioMgr.instance:trigger(AudioEnum.UI.season123_stage_unlock)
-			Season123EntryModel.instance:setAlreadyUnLock(slot0._actId, slot0._stageId)
+			Season123EntryModel.instance:setAlreadyUnLock(arg_9_0._actId, arg_9_0._stageId)
 		else
-			gohelper.setActive(slot0._golocked, false)
-			gohelper.setActive(slot0._gounlockline, true)
+			gohelper.setActive(arg_9_0._golocked, false)
+			gohelper.setActive(arg_9_0._gounlockline, true)
 		end
 	else
-		gohelper.setActive(slot0._gounlockline, false)
-		gohelper.setActive(slot0._golocked, true)
+		gohelper.setActive(arg_9_0._gounlockline, false)
+		gohelper.setActive(arg_9_0._golocked, true)
 	end
 end
 
-function slot0.refreshProgress(slot0)
-	slot1 = Season123EntryModel.instance:stageIsPassed(slot0._stageId)
+function var_0_0.refreshProgress(arg_10_0)
+	local var_10_0 = Season123EntryModel.instance:stageIsPassed(arg_10_0._stageId)
+	local var_10_1 = var_10_0
 
-	gohelper.setActive(slot0._goprogress, slot1)
+	gohelper.setActive(arg_10_0._goprogress, var_10_0)
 
-	if slot1 then
-		slot3, slot4 = Season123ProgressUtils.getStageProgressStep(slot0._actId, slot0._stageId)
-		slot2 = slot1 and slot4 > 0
+	if var_10_0 then
+		local var_10_2, var_10_3 = Season123ProgressUtils.getStageProgressStep(arg_10_0._actId, arg_10_0._stageId)
 
-		for slot8 = 1, Activity123Enum.SeasonStageStepCount do
-			slot9 = slot8 <= slot3
+		var_10_1 = var_10_1 and var_10_3 > 0
 
-			gohelper.setActive(slot0._progressActives[slot8], slot9 and slot8 < slot4)
-			gohelper.setActive(slot0._progressDeactives[slot8], not slot9 and slot8 <= slot4)
-			gohelper.setActive(slot0._progressHard[slot8], slot8 == slot4 and slot3 == slot4)
+		for iter_10_0 = 1, Activity123Enum.SeasonStageStepCount do
+			local var_10_4 = iter_10_0 <= var_10_2
+			local var_10_5 = iter_10_0 <= var_10_3
+
+			gohelper.setActive(arg_10_0._progressActives[iter_10_0], var_10_4 and iter_10_0 < var_10_3)
+			gohelper.setActive(arg_10_0._progressDeactives[iter_10_0], not var_10_4 and var_10_5)
+			gohelper.setActive(arg_10_0._progressHard[iter_10_0], iter_10_0 == var_10_3 and var_10_2 == var_10_3)
 		end
 	end
 
-	if slot0._gounlockline.activeSelf and not slot2 then
-		gohelper.setActive(slot0._gounlockline, false)
+	if arg_10_0._gounlockline.activeSelf and not var_10_1 then
+		gohelper.setActive(arg_10_0._gounlockline, false)
 	end
 end
 
-function slot0.refreshNew(slot0)
-	if not Season123Model.instance:getActInfo(slot0._actId) then
-		gohelper.setActive(slot0._gonew, false)
+function var_0_0.refreshNew(arg_11_0)
+	local var_11_0 = Season123Model.instance:getActInfo(arg_11_0._actId)
+
+	if not var_11_0 then
+		gohelper.setActive(arg_11_0._gonew, false)
 
 		return
 	end
 
-	slot2, slot3, slot4 = Season123ProgressUtils.isStageUnlock(slot0._actId, slot0._stageId)
+	local var_11_1, var_11_2, var_11_3 = Season123ProgressUtils.isStageUnlock(arg_11_0._actId, arg_11_0._stageId)
+	local var_11_4 = var_11_0:getStageMO(arg_11_0._stageId)
 
-	if not slot1:getStageMO(slot0._stageId) then
-		gohelper.setActive(slot0._gonew, false)
-
-		return
-	end
-
-	gohelper.setActive(slot0._gonew, slot2 and slot5:isNeverTry())
-end
-
-function slot0.refreshRecordBtn(slot0)
-	if not Season123Model.instance:getActInfo(slot0._actId) then
-		gohelper.setActive(slot0._btnrecords, false)
+	if not var_11_4 then
+		gohelper.setActive(arg_11_0._gonew, false)
 
 		return
 	end
 
-	gohelper.setActive(slot0._btnrecords, slot1:getStageMO(slot0._stageId) and slot2.isPass)
+	gohelper.setActive(arg_11_0._gonew, var_11_1 and var_11_4:isNeverTry())
 end
 
-function slot0.refreshLockRepeat(slot0)
-	slot0:refreshLock()
-	slot0:refreshProgress()
+function var_0_0.refreshRecordBtn(arg_12_0)
+	local var_12_0 = Season123Model.instance:getActInfo(arg_12_0._actId)
+
+	if not var_12_0 then
+		gohelper.setActive(arg_12_0._btnrecords, false)
+
+		return
+	end
+
+	local var_12_1 = var_12_0:getStageMO(arg_12_0._stageId)
+
+	gohelper.setActive(arg_12_0._btnrecords, var_12_1 and var_12_1.isPass)
 end
 
-function slot0._btnentranceOnClick(slot0)
-	logNormal("_btnentranceOnClick ： " .. tostring(slot0._stageId))
+function var_0_0.refreshLockRepeat(arg_13_0)
+	arg_13_0:refreshLock()
+	arg_13_0:refreshProgress()
+end
 
-	slot2 = Season123Model.instance:getActInfo(slot0._actId)
-	slot3, slot4, slot5 = Season123ProgressUtils.isStageUnlock(slot0._actId, slot0._stageId)
+function var_0_0._btnentranceOnClick(arg_14_0)
+	logNormal("_btnentranceOnClick ： " .. tostring(arg_14_0._stageId))
 
-	if slot3 then
-		if Season123EntryController.instance:openStage(slot0._stageId) then
-			slot0.anim:Play(UIAnimationName.Close)
+	local var_14_0 = arg_14_0._actId
+	local var_14_1 = Season123Model.instance:getActInfo(var_14_0)
+	local var_14_2, var_14_3, var_14_4 = Season123ProgressUtils.isStageUnlock(arg_14_0._actId, arg_14_0._stageId)
+
+	if var_14_2 then
+		if Season123EntryController.instance:openStage(arg_14_0._stageId) then
+			arg_14_0.anim:Play(UIAnimationName.Close)
 			Season123Controller.instance:dispatchEvent(Season123Event.EnterEpiosdeList, true)
-			TaskDispatcher.runDelay(slot0._enterEpiosdeList, slot0, 0.17)
+			TaskDispatcher.runDelay(arg_14_0._enterEpiosdeList, arg_14_0, 0.17)
 		end
 	else
-		GameFacade.showToast(ToastEnum.SeasonStageLockTip, Season123Config.instance:getStageCo(slot0._actId, slot0._stageId).name)
+		local var_14_5 = Season123Config.instance:getStageCo(arg_14_0._actId, arg_14_0._stageId)
+
+		GameFacade.showToast(ToastEnum.SeasonStageLockTip, var_14_5.name)
 	end
 end
 
-function slot0._enterEpiosdeList(slot0)
+function var_0_0._enterEpiosdeList(arg_15_0)
 	ViewMgr.instance:openView(Season123Controller.instance:getEpisodeListViewName(), {
 		actId = Season123EntryModel.instance.activityId,
-		stage = slot0._stageId
+		stage = arg_15_0._stageId
 	})
 end
 
-function slot0._btnrecordsOnClick(slot0)
-	Season123EntryController.instance:openStageRecords(slot0._stageId)
+function var_0_0._btnrecordsOnClick(arg_16_0)
+	Season123EntryController.instance:openStageRecords(arg_16_0._stageId)
 end
 
-return slot0
+return var_0_0

@@ -1,13 +1,13 @@
-module("modules.logic.turnback.view.new.view.TurnbackNewBenfitViewContainer", package.seeall)
+﻿module("modules.logic.turnback.view.new.view.TurnbackNewBenfitViewContainer", package.seeall)
 
-slot0 = class("TurnbackNewBenfitViewContainer", BaseViewContainer)
+local var_0_0 = class("TurnbackNewBenfitViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, TurnbackNewBenfitView.New())
+	table.insert(var_1_0, TurnbackNewBenfitView.New())
 
-	return slot1
+	return var_1_0
 end
 
-return slot0
+return var_0_0

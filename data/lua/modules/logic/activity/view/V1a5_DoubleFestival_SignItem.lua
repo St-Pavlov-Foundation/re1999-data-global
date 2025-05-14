@@ -1,148 +1,168 @@
-module("modules.logic.activity.view.V1a5_DoubleFestival_SignItem", package.seeall)
+﻿module("modules.logic.activity.view.V1a5_DoubleFestival_SignItem", package.seeall)
 
-slot0 = class("V1a5_DoubleFestival_SignItem", Activity101SignViewItemBase)
+local var_0_0 = class("V1a5_DoubleFestival_SignItem", Activity101SignViewItemBase)
 
-function slot0.onInitView(slot0)
-	slot0._goNormalBG = gohelper.findChild(slot0.viewGO, "Root/#go_NormalBG")
-	slot0._goSelectedBG = gohelper.findChild(slot0.viewGO, "Root/#go_SelectedBG")
-	slot0._goFinishedImg = gohelper.findChild(slot0.viewGO, "Root/#go_FinishedImg")
-	slot0._txtDay = gohelper.findChildText(slot0.viewGO, "Root/#txt_Day")
-	slot0._txtDayEn = gohelper.findChildText(slot0.viewGO, "Root/#txt_DayEn")
-	slot0._goTomorrowTag = gohelper.findChild(slot0.viewGO, "Root/#go_TomorrowTag")
-	slot0._goitem1 = gohelper.findChild(slot0.viewGO, "Root/Item/#go_item1")
-	slot0._goitem2 = gohelper.findChild(slot0.viewGO, "Root/Item/#go_item2")
-	slot0._goIcon1 = gohelper.findChild(slot0.viewGO, "Root/Item/#go_item2/#go_Icon1")
-	slot0._goIcon2 = gohelper.findChild(slot0.viewGO, "Root/Item/#go_item2/#go_Icon2")
-	slot0._txtName = gohelper.findChildText(slot0.viewGO, "Root/#txt_Name")
-	slot0._goFinishedBG = gohelper.findChild(slot0.viewGO, "Root/#go_FinishedBG")
-	slot0._goTick1 = gohelper.findChild(slot0.viewGO, "Root/#go_FinishedBG/#go_Tick1")
-	slot0._goTick2 = gohelper.findChild(slot0.viewGO, "Root/#go_FinishedBG/#go_Tick2")
-	slot0._txtWish = gohelper.findChildText(slot0.viewGO, "Root/#go_FinishedBG/#txt_Wish")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goNormalBG = gohelper.findChild(arg_1_0.viewGO, "Root/#go_NormalBG")
+	arg_1_0._goSelectedBG = gohelper.findChild(arg_1_0.viewGO, "Root/#go_SelectedBG")
+	arg_1_0._goFinishedImg = gohelper.findChild(arg_1_0.viewGO, "Root/#go_FinishedImg")
+	arg_1_0._txtDay = gohelper.findChildText(arg_1_0.viewGO, "Root/#txt_Day")
+	arg_1_0._txtDayEn = gohelper.findChildText(arg_1_0.viewGO, "Root/#txt_DayEn")
+	arg_1_0._goTomorrowTag = gohelper.findChild(arg_1_0.viewGO, "Root/#go_TomorrowTag")
+	arg_1_0._goitem1 = gohelper.findChild(arg_1_0.viewGO, "Root/Item/#go_item1")
+	arg_1_0._goitem2 = gohelper.findChild(arg_1_0.viewGO, "Root/Item/#go_item2")
+	arg_1_0._goIcon1 = gohelper.findChild(arg_1_0.viewGO, "Root/Item/#go_item2/#go_Icon1")
+	arg_1_0._goIcon2 = gohelper.findChild(arg_1_0.viewGO, "Root/Item/#go_item2/#go_Icon2")
+	arg_1_0._txtName = gohelper.findChildText(arg_1_0.viewGO, "Root/#txt_Name")
+	arg_1_0._goFinishedBG = gohelper.findChild(arg_1_0.viewGO, "Root/#go_FinishedBG")
+	arg_1_0._goTick1 = gohelper.findChild(arg_1_0.viewGO, "Root/#go_FinishedBG/#go_Tick1")
+	arg_1_0._goTick2 = gohelper.findChild(arg_1_0.viewGO, "Root/#go_FinishedBG/#go_Tick2")
+	arg_1_0._txtWish = gohelper.findChildText(arg_1_0.viewGO, "Root/#go_FinishedBG/#txt_Wish")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-slot1 = string.format
-slot2 = string.splitToNumber
-slot3 = string.split
+local var_0_1 = string.format
+local var_0_2 = string.splitToNumber
+local var_0_3 = string.split
 
-function slot0._editableInitView(slot0)
-	slot0._anim = slot0.viewGO:GetComponent(gohelper.Type_Animator)
-	slot0._itemClick = gohelper.getClickWithAudio(slot0._goSelectedBG)
-	slot0._itemClick2 = gohelper.getClickWithAudio(slot0._goNormalBG)
-	slot0._itemClickBless = gohelper.getClickWithAudio(slot0._txtWish.gameObject)
-	slot0._itemList = {}
-	slot0._item = IconMgr.instance:getCommonPropItemIcon(slot0._goitem1)
-	slot0._kelinqu = gohelper.findChild(slot0.viewGO, "Root/#go_SelectedBG/kelinqu")
-	slot0._txtWish.text = ""
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._anim = arg_4_0.viewGO:GetComponent(gohelper.Type_Animator)
+	arg_4_0._itemClick = gohelper.getClickWithAudio(arg_4_0._goSelectedBG)
+	arg_4_0._itemClick2 = gohelper.getClickWithAudio(arg_4_0._goNormalBG)
+	arg_4_0._itemClickBless = gohelper.getClickWithAudio(arg_4_0._txtWish.gameObject)
+	arg_4_0._itemList = {}
+	arg_4_0._item = IconMgr.instance:getCommonPropItemIcon(arg_4_0._goitem1)
+	arg_4_0._kelinqu = gohelper.findChild(arg_4_0.viewGO, "Root/#go_SelectedBG/kelinqu")
+	arg_4_0._txtWish.text = ""
 end
 
-function slot0._editableAddEvents(slot0)
-	slot0._itemClick:AddClickListener(slot0._onItemClick, slot0)
-	slot0._itemClick2:AddClickListener(slot0._onItemClick, slot0)
-	slot0._itemClickBless:AddClickListener(slot0._onClickBless, slot0)
+function var_0_0._editableAddEvents(arg_5_0)
+	arg_5_0._itemClick:AddClickListener(arg_5_0._onItemClick, arg_5_0)
+	arg_5_0._itemClick2:AddClickListener(arg_5_0._onItemClick, arg_5_0)
+	arg_5_0._itemClickBless:AddClickListener(arg_5_0._onClickBless, arg_5_0)
 end
 
-function slot0._editableRemoveEvents(slot0)
-	slot0._itemClick:RemoveClickListener()
-	slot0._itemClick2:RemoveClickListener()
-	slot0._itemClickBless:RemoveClickListener()
+function var_0_0._editableRemoveEvents(arg_6_0)
+	arg_6_0._itemClick:RemoveClickListener()
+	arg_6_0._itemClick2:RemoveClickListener()
+	arg_6_0._itemClickBless:RemoveClickListener()
 end
 
-function slot0.onRefresh(slot0)
-	slot1 = slot0._mo.data[1]
-	slot2 = slot0._index
-	slot3 = ActivityType101Model.instance:isType101RewardGet(slot1, slot2)
-	slot4 = ActivityType101Model.instance:isType101RewardCouldGet(slot1, slot2)
-	slot5 = ActivityType101Model.instance:getType101LoginCount(slot1)
-	slot9 = #uv0(ActivityConfig.instance:getNorSignActivityCo(slot1, slot2).bonus, "|") == 1
+function var_0_0.onRefresh(arg_7_0)
+	local var_7_0 = arg_7_0._mo.data[1]
+	local var_7_1 = arg_7_0._index
+	local var_7_2 = ActivityType101Model.instance:isType101RewardGet(var_7_0, var_7_1)
+	local var_7_3 = ActivityType101Model.instance:isType101RewardCouldGet(var_7_0, var_7_1)
+	local var_7_4 = ActivityType101Model.instance:getType101LoginCount(var_7_0)
+	local var_7_5 = ActivityConfig.instance:getNorSignActivityCo(var_7_0, var_7_1)
+	local var_7_6 = var_0_3(var_7_5.bonus, "|")
+	local var_7_7 = #var_7_6
+	local var_7_8 = var_7_7 == 1
 
-	gohelper.setActive(slot0._goitem1, slot9)
-	gohelper.setActive(slot0._goTick1, slot9)
-	gohelper.setActive(slot0._kelinqu, slot9)
-	gohelper.setActive(slot0._goitem2, not slot9)
-	gohelper.setActive(slot0._goTick2, not slot9)
+	gohelper.setActive(arg_7_0._goitem1, var_7_8)
+	gohelper.setActive(arg_7_0._goTick1, var_7_8)
+	gohelper.setActive(arg_7_0._kelinqu, var_7_8)
+	gohelper.setActive(arg_7_0._goitem2, not var_7_8)
+	gohelper.setActive(arg_7_0._goTick2, not var_7_8)
 
-	slot0._txtName.text = ""
+	arg_7_0._txtName.text = ""
 
-	if slot9 then
-		slot10 = uv1(slot7[1], "#")
+	if var_7_8 then
+		local var_7_9 = var_0_2(var_7_6[1], "#")
 
-		slot0:_refreshRewardItem(slot0._item, slot10)
+		arg_7_0:_refreshRewardItem(arg_7_0._item, var_7_9)
 
-		slot0._txtName.text = ItemModel.instance:getItemConfig(slot10[1], slot10[2]).name
+		local var_7_10 = ItemModel.instance:getItemConfig(var_7_9[1], var_7_9[2])
+
+		arg_7_0._txtName.text = var_7_10.name
 	else
-		for slot13 = 1, slot8 do
-			slot14 = uv1(slot7[slot13], "#")
+		for iter_7_0 = 1, var_7_7 do
+			local var_7_11 = var_0_2(var_7_6[iter_7_0], "#")
+			local var_7_12 = arg_7_0._itemList[iter_7_0]
 
-			if not slot0._itemList[slot13] then
-				table.insert(slot0._itemList, IconMgr.instance:getCommonPropItemIcon(slot0["_goIcon" .. slot13]))
+			if not var_7_12 then
+				var_7_12 = IconMgr.instance:getCommonPropItemIcon(arg_7_0["_goIcon" .. iter_7_0])
+
+				table.insert(arg_7_0._itemList, var_7_12)
 			end
 
-			slot0:_refreshRewardItem(slot15, slot14)
+			arg_7_0:_refreshRewardItem(var_7_12, var_7_11)
 		end
 	end
 
-	slot0._txtDay.text = slot2 < 10 and "0" .. slot2 or slot2
-	slot0._txtDayEn.text = uv2("DAY\n%s", GameUtil.getEnglishNumber(slot2))
+	arg_7_0._txtDay.text = var_7_1 < 10 and "0" .. var_7_1 or var_7_1
+	arg_7_0._txtDayEn.text = var_0_1("DAY\n%s", GameUtil.getEnglishNumber(var_7_1))
 
-	gohelper.setActive(slot0._goSelectedBG, slot4)
-	gohelper.setActive(slot0._goTomorrowTag, slot2 == slot5 + 1)
-	gohelper.setActive(slot0._goFinishedBG, slot3)
-	gohelper.setActive(slot0._goFinishedImg, slot3)
+	gohelper.setActive(arg_7_0._goSelectedBG, var_7_3)
+	gohelper.setActive(arg_7_0._goTomorrowTag, var_7_1 == var_7_4 + 1)
+	gohelper.setActive(arg_7_0._goFinishedBG, var_7_2)
+	gohelper.setActive(arg_7_0._goFinishedImg, var_7_2)
 
-	if ActivityType101Config.instance:getDoubleFestivalCOByDay(slot1, slot2) then
-		slot0._txtWish.text = slot10.btnDesc
+	local var_7_13 = ActivityType101Config.instance:getDoubleFestivalCOByDay(var_7_0, var_7_1)
+
+	if var_7_13 then
+		arg_7_0._txtWish.text = var_7_13.btnDesc
 	end
 end
 
-function slot0._refreshRewardItem(slot0, slot1, slot2)
-	slot1:setMOValue(slot2[1], slot2[2], slot2[3])
-	slot1:setCountFontSize(46)
-	slot1:setHideLvAndBreakFlag(true)
-	slot1:hideEquipLvAndBreak(true)
-	slot1:customOnClickCallback(function ()
-		if ActivityType101Model.instance:isType101RewardCouldGet(uv0._mo.data[1], uv0._index) then
-			ActivityType101Model.instance:setCurIndex(slot1)
-			Activity101Rpc.instance:sendGet101BonusRequest(slot0, slot1)
+function var_0_0._refreshRewardItem(arg_8_0, arg_8_1, arg_8_2)
+	arg_8_1:setMOValue(arg_8_2[1], arg_8_2[2], arg_8_2[3])
+	arg_8_1:setCountFontSize(46)
+	arg_8_1:setHideLvAndBreakFlag(true)
+	arg_8_1:hideEquipLvAndBreak(true)
+	arg_8_1:customOnClickCallback(function()
+		local var_9_0 = arg_8_0._mo.data[1]
+		local var_9_1 = arg_8_0._index
+
+		if ActivityType101Model.instance:isType101RewardCouldGet(var_9_0, var_9_1) then
+			ActivityType101Model.instance:setCurIndex(var_9_1)
+			Activity101Rpc.instance:sendGet101BonusRequest(var_9_0, var_9_1)
 
 			return
 		end
 
-		MaterialTipController.instance:showMaterialInfo(uv1[1], uv1[2])
+		MaterialTipController.instance:showMaterialInfo(arg_8_2[1], arg_8_2[2])
 	end)
 end
 
-function slot0._onClickBless(slot0)
+function var_0_0._onClickBless(arg_10_0)
 	AudioMgr.instance:trigger(AudioEnum.ui_activity.play_ui_feedback_open)
+
+	local var_10_0 = arg_10_0._index
+
 	ViewMgr.instance:openView(ViewName.V1a5_DoubleFestival_WishPanel, {
-		day = slot0._index
+		day = var_10_0
 	})
 end
 
-function slot0._onItemClick(slot0)
-	slot1 = slot0._mo.data[1]
+function var_0_0._onItemClick(arg_11_0)
+	local var_11_0 = arg_11_0._mo.data[1]
+	local var_11_1 = arg_11_0._index
 
 	AudioMgr.instance:trigger(AudioEnum.UI.Store_Good_Click)
 
-	slot4 = ActivityType101Model.instance:getType101LoginCount(slot1)
+	local var_11_2 = ActivityType101Model.instance:isType101RewardCouldGet(var_11_0, var_11_1)
+	local var_11_3 = ActivityType101Model.instance:getType101LoginCount(var_11_0)
 
-	if ActivityType101Model.instance:isType101RewardCouldGet(slot1, slot0._index) then
-		ActivityType101Model.instance:setCurIndex(slot2)
-		Activity101Rpc.instance:sendGet101BonusRequest(slot1, slot2)
+	if var_11_2 then
+		ActivityType101Model.instance:setCurIndex(var_11_1)
+		Activity101Rpc.instance:sendGet101BonusRequest(var_11_0, var_11_1)
 	end
 
-	if slot4 < slot2 then
+	if var_11_3 < var_11_1 then
 		GameFacade.showToast(ToastEnum.NorSign)
 	end
 end
 
-return slot0
+return var_0_0

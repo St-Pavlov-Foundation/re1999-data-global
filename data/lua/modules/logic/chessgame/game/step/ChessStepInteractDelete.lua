@@ -1,26 +1,31 @@
-module("modules.logic.chessgame.game.step.ChessStepInteractDelete", package.seeall)
+﻿module("modules.logic.chessgame.game.step.ChessStepInteractDelete", package.seeall)
 
-slot0 = class("ChessStepInteractDelete", BaseWork)
+local var_0_0 = class("ChessStepInteractDelete", BaseWork)
 
-function slot0.init(slot0, slot1)
-	slot0.originData = slot1
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.originData = arg_1_1
 end
 
-function slot0.onStart(slot0)
-	slot0:deleteInteractObj()
+function var_0_0.onStart(arg_2_0)
+	arg_2_0:deleteInteractObj()
 end
 
-function slot0.deleteInteractObj(slot0)
-	if ChessGameInteractModel.instance:getInteractById(slot0.originData.id) and slot2:isInCurrentMap() then
-		ChessGameController.instance.interactsMgr:get(slot1):getHandler():showDestoryAni(slot0._deleteAnimCallback, slot0)
+function var_0_0.deleteInteractObj(arg_3_0)
+	local var_3_0 = arg_3_0.originData.id
+	local var_3_1 = ChessGameInteractModel.instance:getInteractById(var_3_0)
+
+	if var_3_1 and var_3_1:isInCurrentMap() then
+		ChessGameController.instance.interactsMgr:get(var_3_0):getHandler():showDestoryAni(arg_3_0._deleteAnimCallback, arg_3_0)
 	else
-		slot0:_deleteAnimCallback()
+		arg_3_0:_deleteAnimCallback()
 	end
 end
 
-function slot0._deleteAnimCallback(slot0)
-	ChessGameController.instance:deleteInteractObj(slot0.originData.id)
-	slot0:onDone(true)
+function var_0_0._deleteAnimCallback(arg_4_0)
+	local var_4_0 = arg_4_0.originData.id
+
+	ChessGameController.instance:deleteInteractObj(var_4_0)
+	arg_4_0:onDone(true)
 end
 
-return slot0
+return var_0_0

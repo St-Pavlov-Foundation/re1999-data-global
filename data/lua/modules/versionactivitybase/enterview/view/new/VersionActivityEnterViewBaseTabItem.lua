@@ -1,130 +1,136 @@
-module("modules.versionactivitybase.enterview.view.new.VersionActivityEnterViewBaseTabItem", package.seeall)
+﻿module("modules.versionactivitybase.enterview.view.new.VersionActivityEnterViewBaseTabItem", package.seeall)
 
-slot0 = class("VersionActivityEnterViewBaseTabItem", LuaCompBase)
+local var_0_0 = class("VersionActivityEnterViewBaseTabItem", LuaCompBase)
 
-function slot0.init(slot0, slot1)
-	if gohelper.isNil(slot1) then
+function var_0_0.init(arg_1_0, arg_1_1)
+	if gohelper.isNil(arg_1_1) then
 		return
 	end
 
-	slot0.go = slot1
-	slot0.rectTr = slot0.go:GetComponent(gohelper.Type_RectTransform)
-	slot0.click = gohelper.getClickWithDefaultAudio(slot0.go)
+	arg_1_0.go = arg_1_1
+	arg_1_0.rectTr = arg_1_0.go:GetComponent(gohelper.Type_RectTransform)
+	arg_1_0.click = gohelper.getClickWithDefaultAudio(arg_1_0.go)
 
-	slot0:_editableInitView()
-	gohelper.setActive(slot0.go, true)
+	arg_1_0:_editableInitView()
+	gohelper.setActive(arg_1_0.go, true)
 end
 
-function slot0.setData(slot0, slot1, slot2)
-	slot0.index = slot1
-	slot0.actSetting = slot2
-	slot0.redDotUid = slot2.redDotUid or 0
-	slot0.storeId = slot2.storeId
+function var_0_0.setData(arg_2_0, arg_2_1, arg_2_2)
+	arg_2_0.index = arg_2_1
+	arg_2_0.actSetting = arg_2_2
+	arg_2_0.redDotUid = arg_2_2.redDotUid or 0
+	arg_2_0.storeId = arg_2_2.storeId
 
-	slot0:updateActId()
-	slot0:afterSetData()
-	TaskDispatcher.runRepeat(slot0.refreshTag, slot0, TimeUtil.OneMinuteSecond)
+	arg_2_0:updateActId()
+	arg_2_0:afterSetData()
+	TaskDispatcher.runRepeat(arg_2_0.refreshTag, arg_2_0, TimeUtil.OneMinuteSecond)
 end
 
-function slot0.updateActId(slot0)
-	if VersionActivityEnterHelper.getActId(slot0.actSetting) == slot0.actId then
+function var_0_0.updateActId(arg_3_0)
+	local var_3_0 = VersionActivityEnterHelper.getActId(arg_3_0.actSetting)
+
+	if var_3_0 == arg_3_0.actId then
 		return false
 	end
 
-	slot0.actId = slot1
-	slot0.activityCo = ActivityConfig.instance:getActivityCo(slot0.actId)
+	arg_3_0.actId = var_3_0
+	arg_3_0.activityCo = ActivityConfig.instance:getActivityCo(arg_3_0.actId)
 
 	return true
 end
 
-function slot0.setClickFunc(slot0, slot1, slot2)
-	slot0.customClick = slot1
-	slot0.customClickObj = slot2
+function var_0_0.setClickFunc(arg_4_0, arg_4_1, arg_4_2)
+	arg_4_0.customClick = arg_4_1
+	arg_4_0.customClickObj = arg_4_2
 end
 
-function slot0.addEventListeners(slot0)
-	slot0:addEventCb(RedDotController.instance, RedDotEvent.UpdateActTag, slot0.refreshTag, slot0)
-	slot0:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, slot0.onRefreshActivity, slot0)
-	slot0:addEventCb(VersionActivityBaseController.instance, VersionActivityEnterViewEvent.SelectActId, slot0.refreshSelect, slot0)
-	slot0.click:AddClickListener(slot0.onClick, slot0)
+function var_0_0.addEventListeners(arg_5_0)
+	arg_5_0:addEventCb(RedDotController.instance, RedDotEvent.UpdateActTag, arg_5_0.refreshTag, arg_5_0)
+	arg_5_0:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_5_0.onRefreshActivity, arg_5_0)
+	arg_5_0:addEventCb(VersionActivityBaseController.instance, VersionActivityEnterViewEvent.SelectActId, arg_5_0.refreshSelect, arg_5_0)
+	arg_5_0.click:AddClickListener(arg_5_0.onClick, arg_5_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0:removeEventCb(RedDotController.instance, RedDotEvent.UpdateActTag, slot0.refreshTag, slot0)
-	slot0:removeEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, slot0.onRefreshActivity, slot0)
-	slot0:removeEventCb(VersionActivityBaseController.instance, VersionActivityEnterViewEvent.SelectActId, slot0.refreshSelect, slot0)
-	slot0.click:RemoveClickListener()
+function var_0_0.removeEventListeners(arg_6_0)
+	arg_6_0:removeEventCb(RedDotController.instance, RedDotEvent.UpdateActTag, arg_6_0.refreshTag, arg_6_0)
+	arg_6_0:removeEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_6_0.onRefreshActivity, arg_6_0)
+	arg_6_0:removeEventCb(VersionActivityBaseController.instance, VersionActivityEnterViewEvent.SelectActId, arg_6_0.refreshSelect, arg_6_0)
+	arg_6_0.click:RemoveClickListener()
 end
 
-function slot0.onRefreshActivity(slot0, slot1)
-	if slot0.actId ~= slot1 then
+function var_0_0.onRefreshActivity(arg_7_0, arg_7_1)
+	if arg_7_0.actId ~= arg_7_1 then
 		return
 	end
 
-	slot0:refreshTag()
+	arg_7_0:refreshTag()
 end
 
-function slot0.refreshSelect(slot0, slot1)
-	slot0.isSelect = slot1 == slot0.actId
+function var_0_0.refreshSelect(arg_8_0, arg_8_1)
+	arg_8_0.isSelect = arg_8_1 == arg_8_0.actId
 
-	slot0:childRefreshSelect()
+	arg_8_0:childRefreshSelect()
 end
 
-function slot0.onClick(slot0)
-	if slot0.isSelect then
+function var_0_0.onClick(arg_9_0)
+	if arg_9_0.isSelect then
 		return
 	end
 
-	if slot0.customClick then
-		slot0.customClick(slot0.customClickObj, slot0)
-
-		return
-	end
-
-	slot2, slot3, slot4 = ActivityHelper.getActivityStatusAndToast(slot0.storeId or slot0.actId)
-
-	if slot2 == ActivityEnum.ActivityStatus.Normal or slot2 == ActivityEnum.ActivityStatus.NotUnlock then
-		slot0.animator:Play("click", 0, 0)
-		VersionActivityBaseController.instance:dispatchEvent(VersionActivityEnterViewEvent.SelectActId, slot0.actId, slot0)
+	if arg_9_0.customClick then
+		arg_9_0.customClick(arg_9_0.customClickObj, arg_9_0)
 
 		return
 	end
 
-	if slot3 then
-		GameFacade.showToastWithTableParam(slot3, slot4)
+	local var_9_0 = arg_9_0.storeId or arg_9_0.actId
+	local var_9_1, var_9_2, var_9_3 = ActivityHelper.getActivityStatusAndToast(var_9_0)
+
+	if var_9_1 == ActivityEnum.ActivityStatus.Normal or var_9_1 == ActivityEnum.ActivityStatus.NotUnlock then
+		arg_9_0.animator:Play("click", 0, 0)
+		VersionActivityBaseController.instance:dispatchEvent(VersionActivityEnterViewEvent.SelectActId, arg_9_0.actId, arg_9_0)
+
+		return
+	end
+
+	if var_9_2 then
+		GameFacade.showToastWithTableParam(var_9_2, var_9_3)
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.TeachNote.play_ui_closehouse)
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_10_0)
 	logError("override VersionActivityEnterViewBaseTabItem:_editableInitView")
 end
 
-function slot0.afterSetData(slot0)
+function var_0_0.afterSetData(arg_11_0)
+	return
 end
 
-function slot0.childRefreshSelect(slot0)
+function var_0_0.childRefreshSelect(arg_12_0)
 	logError("override VersionActivityEnterViewBaseTabItem:childRefreshSelect")
 end
 
-function slot0.childRefreshUI(slot0)
+function var_0_0.childRefreshUI(arg_13_0)
+	return
 end
 
-function slot0.refreshTag(slot0)
+function var_0_0.refreshTag(arg_14_0)
+	return
 end
 
-function slot0.refreshUI(slot0)
-	slot0:childRefreshUI()
-	slot0:refreshTag()
+function var_0_0.refreshUI(arg_15_0)
+	arg_15_0:childRefreshUI()
+	arg_15_0:refreshTag()
 end
 
-function slot0.getAnchorY(slot0)
-	return recthelper.getAnchorY(slot0.rectTr)
+function var_0_0.getAnchorY(arg_16_0)
+	return recthelper.getAnchorY(arg_16_0.rectTr)
 end
 
-function slot0.dispose(slot0)
-	TaskDispatcher.cancelTask(slot0.refreshTag, slot0)
+function var_0_0.dispose(arg_17_0)
+	TaskDispatcher.cancelTask(arg_17_0.refreshTag, arg_17_0)
 end
 
-return slot0
+return var_0_0

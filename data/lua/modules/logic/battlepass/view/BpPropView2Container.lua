@@ -1,11 +1,11 @@
-module("modules.logic.battlepass.view.BpPropView2Container", package.seeall)
+﻿module("modules.logic.battlepass.view.BpPropView2Container", package.seeall)
 
-slot0 = class("BpPropView2Container", BaseViewContainer)
+local var_0_0 = class("BpPropView2Container", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		BpPropView2.New()
 	}
 end
 
-return slot0
+return var_0_0

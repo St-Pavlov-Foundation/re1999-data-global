@@ -1,46 +1,46 @@
-module("modules.logic.gm.view.GMFightSimulateRightItem", package.seeall)
+﻿module("modules.logic.gm.view.GMFightSimulateRightItem", package.seeall)
 
-slot0 = class("GMFightSimulateRightItem", ListScrollCell)
-slot1 = Color.New(1, 0.8, 0.8, 1)
-slot2 = Color.white
-slot3 = nil
+local var_0_0 = class("GMFightSimulateRightItem", ListScrollCell)
+local var_0_1 = Color.New(1, 0.8, 0.8, 1)
+local var_0_2 = Color.white
+local var_0_3
 
-function slot0.init(slot0, slot1)
-	slot0._btn = gohelper.findChildButtonWithAudio(slot1, "btn")
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0._btn = gohelper.findChildButtonWithAudio(arg_1_1, "btn")
 
-	slot0._btn:AddClickListener(slot0._onClickItem, slot0)
+	arg_1_0._btn:AddClickListener(arg_1_0._onClickItem, arg_1_0)
 
-	slot0._imgBtn = gohelper.findChildImage(slot1, "btn")
-	slot0._txtName = gohelper.findChildText(slot1, "btn/Text")
+	arg_1_0._imgBtn = gohelper.findChildImage(arg_1_1, "btn")
+	arg_1_0._txtName = gohelper.findChildText(arg_1_1, "btn/Text")
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._episodeCO = slot1
-	slot0._txtName.text = slot0._episodeCO.name
-	slot0._imgBtn.color = slot0._episodeCO.id == uv0 and uv1 or uv2
+function var_0_0.onUpdateMO(arg_2_0, arg_2_1)
+	arg_2_0._episodeCO = arg_2_1
+	arg_2_0._txtName.text = arg_2_0._episodeCO.name
+	arg_2_0._imgBtn.color = arg_2_0._episodeCO.id == var_0_3 and var_0_1 or var_0_2
 end
 
-function slot0._onClickItem(slot0)
-	uv0 = slot0._episodeCO.id
-	slot0._imgBtn.color = uv1
+function var_0_0._onClickItem(arg_3_0)
+	var_0_3 = arg_3_0._episodeCO.id
+	arg_3_0._imgBtn.color = var_0_1
 
-	slot0._view:closeThis()
+	arg_3_0._view:closeThis()
 
-	if DungeonModel.isBattleEpisode(slot0._episodeCO) then
+	if DungeonModel.isBattleEpisode(arg_3_0._episodeCO) then
 		JumpModel.instance.jumpFromFightSceneParam = "99"
 
-		DungeonFightController.instance:enterFight(slot0._episodeCO.chapterId, slot0._episodeCO.id)
+		DungeonFightController.instance:enterFight(arg_3_0._episodeCO.chapterId, arg_3_0._episodeCO.id)
 	else
-		logError("GMToolView 不支持该类型的关卡" .. slot0._episodeCO.id)
+		logError("GMToolView 不支持该类型的关卡" .. arg_3_0._episodeCO.id)
 	end
 end
 
-function slot0.onDestroy(slot0)
-	if slot0._btn then
-		slot0._btn:RemoveClickListener()
+function var_0_0.onDestroy(arg_4_0)
+	if arg_4_0._btn then
+		arg_4_0._btn:RemoveClickListener()
 
-		slot0._btn = nil
+		arg_4_0._btn = nil
 	end
 end
 
-return slot0
+return var_0_0

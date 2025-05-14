@@ -1,38 +1,38 @@
-module("modules.logic.seasonver.act123.model.Season123PickAssistMO", package.seeall)
+﻿module("modules.logic.seasonver.act123.model.Season123PickAssistMO", package.seeall)
 
-slot0 = pureTable("Season123PickAssistMO")
+local var_0_0 = pureTable("Season123PickAssistMO")
 
-function slot0.init(slot0, slot1)
-	slot0.id = slot1.heroUid
-	slot0.assistMO = Season123AssistHeroMO.New()
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.id = arg_1_1.heroUid
+	arg_1_0.assistMO = Season123AssistHeroMO.New()
 
-	slot0.assistMO:init(slot1)
+	arg_1_0.assistMO:init(arg_1_1)
 
-	slot0.heroMO = Season123HeroUtils.createHeroMOByAssistMO(slot0.assistMO, true)
+	arg_1_0.heroMO = Season123HeroUtils.createHeroMOByAssistMO(arg_1_0.assistMO, true)
 end
 
-function slot0.getId(slot0)
-	return slot0.id
+function var_0_0.getId(arg_2_0)
+	return arg_2_0.id
 end
 
-function slot0.isSameHero(slot0, slot1)
-	slot2 = false
+function var_0_0.isSameHero(arg_3_0, arg_3_1)
+	local var_3_0 = false
 
-	if slot1 then
-		slot2 = slot0:getId() == slot1:getId()
+	if arg_3_1 then
+		var_3_0 = arg_3_0:getId() == arg_3_1:getId()
 	end
 
-	return slot2
+	return var_3_0
 end
 
-function slot0.getPlayerInfo(slot0)
+function var_0_0.getPlayerInfo(arg_4_0)
 	return {
-		userId = slot0.assistMO.userId,
-		name = slot0.assistMO.name,
-		level = slot0.assistMO.userLevel,
-		portrait = slot0.assistMO.portrait,
-		bg = slot0.assistMO.bg
+		userId = arg_4_0.assistMO.userId,
+		name = arg_4_0.assistMO.name,
+		level = arg_4_0.assistMO.userLevel,
+		portrait = arg_4_0.assistMO.portrait,
+		bg = arg_4_0.assistMO.bg
 	}
 end
 
-return slot0
+return var_0_0

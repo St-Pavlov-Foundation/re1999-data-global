@@ -1,113 +1,116 @@
-module("modules.logic.versionactivity1_3.jialabona.view.JiaLaBoNaMapViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity1_3.jialabona.view.JiaLaBoNaMapViewContainer", package.seeall)
 
-slot0 = class("JiaLaBoNaMapViewContainer", BaseViewContainer)
+local var_0_0 = class("JiaLaBoNaMapViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
-	slot0._mapViewScene = JiaLaBoNaMapScene.New()
-	slot0._viewAnim = JiaLaBoNaMapViewAnim.New()
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, slot0._mapViewScene)
-	table.insert(slot1, JiaLaBoNaMapView.New())
-	table.insert(slot1, slot0._viewAnim)
-	table.insert(slot1, JiaLaBoNaMapViewAudio.New())
-	table.insert(slot1, TabViewGroup.New(1, "#go_BackBtns"))
+	arg_1_0._mapViewScene = JiaLaBoNaMapScene.New()
+	arg_1_0._viewAnim = JiaLaBoNaMapViewAnim.New()
 
-	return slot1
+	table.insert(var_1_0, arg_1_0._mapViewScene)
+	table.insert(var_1_0, JiaLaBoNaMapView.New())
+	table.insert(var_1_0, arg_1_0._viewAnim)
+	table.insert(var_1_0, JiaLaBoNaMapViewAudio.New())
+	table.insert(var_1_0, TabViewGroup.New(1, "#go_BackBtns"))
+
+	return var_1_0
 end
 
-function slot0.onContainerClickModalMask(slot0)
+function var_0_0.onContainerClickModalMask(arg_2_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Mail_switch)
-	slot0:closeThis()
+	arg_2_0:closeThis()
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
-		slot0._navigateButtonsView = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_3_0, arg_3_1)
+	if arg_3_1 == 1 then
+		arg_3_0._navigateButtonsView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
-		slot0._navigateButtonsView:setOverrideClose(slot0._overrideCloseFunc, slot0)
+		arg_3_0._navigateButtonsView:setOverrideClose(arg_3_0._overrideCloseFunc, arg_3_0)
 
 		return {
-			slot0._navigateButtonsView
+			arg_3_0._navigateButtonsView
 		}
 	end
 end
 
-slot0.UI_COLSE_BLOCK_KEY = "JiaLaBoNaMapViewContainer_COLSE_BLOCK_KEY"
+var_0_0.UI_COLSE_BLOCK_KEY = "JiaLaBoNaMapViewContainer_COLSE_BLOCK_KEY"
 
-function slot0._overrideCloseFunc(slot0)
-	UIBlockMgr.instance:startBlock(uv0.UI_COLSE_BLOCK_KEY)
-	slot0._viewAnim:playViewAnimator(UIAnimationName.Close)
-	TaskDispatcher.runDelay(slot0._onDelayCloseView, slot0, JiaLaBoNaEnum.AnimatorTime.MapViewClose)
+function var_0_0._overrideCloseFunc(arg_4_0)
+	UIBlockMgr.instance:startBlock(var_0_0.UI_COLSE_BLOCK_KEY)
+	arg_4_0._viewAnim:playViewAnimator(UIAnimationName.Close)
+	TaskDispatcher.runDelay(arg_4_0._onDelayCloseView, arg_4_0, JiaLaBoNaEnum.AnimatorTime.MapViewClose)
 end
 
-function slot0._onDelayCloseView(slot0)
-	UIBlockMgr.instance:endBlock(uv0.UI_COLSE_BLOCK_KEY)
-	slot0._viewAnim:closeThis()
+function var_0_0._onDelayCloseView(arg_5_0)
+	UIBlockMgr.instance:endBlock(var_0_0.UI_COLSE_BLOCK_KEY)
+	arg_5_0._viewAnim:closeThis()
 end
 
-function slot0.switchPage(slot0, slot1, slot2)
-	if slot0._mapViewScene then
-		slot0._mapViewScene:switchPage(slot1)
+function var_0_0.switchPage(arg_6_0, arg_6_1, arg_6_2)
+	if arg_6_0._mapViewScene then
+		arg_6_0._mapViewScene:switchPage(arg_6_1)
 
-		if not string.nilorempty(slot2) then
-			slot0._mapViewScene:playSceneAnim(slot2)
+		if not string.nilorempty(arg_6_2) then
+			arg_6_0._mapViewScene:playSceneAnim(arg_6_2)
 		end
 	end
 end
 
-function slot0.refreshInteract(slot0, slot1)
-	if slot0._mapViewScene then
-		slot0._mapViewScene:refreshInteract(slot1)
+function var_0_0.refreshInteract(arg_7_0, arg_7_1)
+	if arg_7_0._mapViewScene then
+		arg_7_0._mapViewScene:refreshInteract(arg_7_1)
 	end
 end
 
-function slot0._setVisible(slot0, slot1)
-	uv0.super._setVisible(slot0, slot1)
+function var_0_0._setVisible(arg_8_0, arg_8_1)
+	var_0_0.super._setVisible(arg_8_0, arg_8_1)
 
-	if slot0._mapViewScene then
-		if not ViewMgr.instance:isOpen(ViewName.JiaLaBoNaStoryView) or slot1 then
-			slot0._mapViewScene:setSceneActive(slot1)
+	if arg_8_0._mapViewScene then
+		local var_8_0 = ViewMgr.instance:isOpen(ViewName.JiaLaBoNaStoryView)
+
+		if not var_8_0 or arg_8_1 then
+			arg_8_0._mapViewScene:setSceneActive(arg_8_1)
 		end
 
-		if slot0._lastMapViewSceneVisible ~= slot1 then
-			slot0._lastMapViewSceneVisible = slot1
+		if arg_8_0._lastMapViewSceneVisible ~= arg_8_1 then
+			arg_8_0._lastMapViewSceneVisible = arg_8_1
 
-			if slot1 and not slot2 then
-				slot0._mapViewScene:playSceneAnim(UIAnimationName.Open)
-				slot0._viewAnim:playViewAnimator(UIAnimationName.Open)
+			if arg_8_1 and not var_8_0 then
+				arg_8_0._mapViewScene:playSceneAnim(UIAnimationName.Open)
+				arg_8_0._viewAnim:playViewAnimator(UIAnimationName.Open)
 			end
 		end
 	end
 end
 
-function slot0.switchScene(slot0, slot1)
-	if slot0._viewAnim then
-		slot0._viewAnim:switchScene(slot1)
+function var_0_0.switchScene(arg_9_0, arg_9_1)
+	if arg_9_0._viewAnim then
+		arg_9_0._viewAnim:switchScene(arg_9_1)
 	end
 end
 
-function slot0.playPathAnim(slot0)
-	if slot0._viewAnim then
-		slot0._viewAnim:playPathAnim()
+function var_0_0.playPathAnim(arg_10_0)
+	if arg_10_0._viewAnim then
+		arg_10_0._viewAnim:playPathAnim()
 	end
 end
 
-function slot0.refreshPathPoin(slot0)
-	if slot0._viewAnim then
-		slot0._viewAnim:refreshPathPoin()
+function var_0_0.refreshPathPoin(arg_11_0)
+	if arg_11_0._viewAnim then
+		arg_11_0._viewAnim:refreshPathPoin()
 	end
 end
 
-function slot0.onContainerInit(slot0)
+function var_0_0.onContainerInit(arg_12_0)
 	ActivityEnterMgr.instance:enterActivity(VersionActivity1_3Enum.ActivityId.Act306)
 	ActivityRpc.instance:sendActivityNewStageReadRequest({
 		VersionActivity1_3Enum.ActivityId.Act306
 	})
 end
 
-return slot0
+return var_0_0

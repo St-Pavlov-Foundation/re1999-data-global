@@ -1,67 +1,67 @@
-module("modules.logic.seasonver.act123.view2_3.Season123_2_3HeroGroupFightView", package.seeall)
+﻿module("modules.logic.seasonver.act123.view2_3.Season123_2_3HeroGroupFightView", package.seeall)
 
-slot0 = class("Season123_2_3HeroGroupFightView", BaseView)
+local var_0_0 = class("Season123_2_3HeroGroupFightView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gocontainer = gohelper.findChild(slot0.viewGO, "#go_container")
-	slot0._goreplayready = gohelper.findChild(slot0.viewGO, "#go_container/#go_replayready")
-	slot0._gotopbtns = gohelper.findChild(slot0.viewGO, "#go_container/#go_btns/#go_topbtns")
-	slot0._btnrecommend = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_container/#go_btns/#go_topbtns/btn_recommend")
-	slot0._btnrestrain = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_container/#go_btns/#go_topbtns/#btn_RestraintInfo")
-	slot0._gobtncontain = gohelper.findChild(slot0.viewGO, "#go_container/btnContain")
-	slot0._btncloth = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_container/btnContain/btnCloth")
-	slot0._txtclothname = gohelper.findChildText(slot0.viewGO, "#go_container/btnContain/btnCloth/#txt_clothName")
-	slot0._txtclothnameen = gohelper.findChildText(slot0.viewGO, "#go_container/btnContain/btnCloth/#txt_clothName/#txt_clothNameEn")
-	slot0._btnstartseason = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_container/btnContain/horizontal/#btn_startseason")
-	slot0._btnstartseasonreplay = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_container/btnContain/horizontal/#btn_startseasonreplay")
-	slot0._btnseasonreplay = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_container/btnContain/horizontal/#btn_seasonreplay")
-	slot0._imagereplaybg = gohelper.findChildImage(slot0.viewGO, "#go_container/btnContain/horizontal/#btn_seasonreplay/replayAnimRoot/#image_seasonreplaybg")
-	slot0._imagereplayicon = gohelper.findChildImage(slot0.viewGO, "#go_container/btnContain/horizontal/#btn_seasonreplay/replayAnimRoot/#image_seasonreplayicon")
-	slot0._txtreplaycount = gohelper.findChildText(slot0.viewGO, "#go_container/btnContain/horizontal/#btn_seasonreplay/replayAnimRoot/#txt_seasonreplaycount")
-	slot0._dropseasonherogroup = gohelper.findChildDropdown(slot0.viewGO, "#go_container/btnContain/horizontal/#drop_seasonherogroup")
-	slot0._goherogroupcontain = gohelper.findChild(slot0.viewGO, "herogroupcontain")
-	slot0._gocontainer2 = gohelper.findChild(slot0.viewGO, "#go_container2")
-	slot0._gomask = gohelper.findChild(slot0.viewGO, "#go_container2/#go_mask")
-	slot0._goreplaybtn = gohelper.findChild(slot0.viewGO, "#go_container/btnContain/horizontal/#go_replayBtn")
-	slot0._gocost = gohelper.findChild(slot0.viewGO, "#go_container/btnContain/horizontal/#btn_startseason/#go_cost")
-	slot0._btnseasonreplaygroup = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_container/btnContain/horizontal/#go_replayBtn/replayAnimRoot/btnReplay")
-	slot0._gomemorytimes = gohelper.findChild(slot0.viewGO, "#go_container/btnContain/horizontal/#go_replayBtn/replayAnimRoot/#go_memorytimes")
-	slot0._txtmemorytimes = gohelper.findChildText(slot0.viewGO, "#go_container/btnContain/horizontal/#go_replayBtn/replayAnimRoot/#go_memorytimes/bg/#txt_memorytimes")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gocontainer = gohelper.findChild(arg_1_0.viewGO, "#go_container")
+	arg_1_0._goreplayready = gohelper.findChild(arg_1_0.viewGO, "#go_container/#go_replayready")
+	arg_1_0._gotopbtns = gohelper.findChild(arg_1_0.viewGO, "#go_container/#go_btns/#go_topbtns")
+	arg_1_0._btnrecommend = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_container/#go_btns/#go_topbtns/btn_recommend")
+	arg_1_0._btnrestrain = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_container/#go_btns/#go_topbtns/#btn_RestraintInfo")
+	arg_1_0._gobtncontain = gohelper.findChild(arg_1_0.viewGO, "#go_container/btnContain")
+	arg_1_0._btncloth = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_container/btnContain/btnCloth")
+	arg_1_0._txtclothname = gohelper.findChildText(arg_1_0.viewGO, "#go_container/btnContain/btnCloth/#txt_clothName")
+	arg_1_0._txtclothnameen = gohelper.findChildText(arg_1_0.viewGO, "#go_container/btnContain/btnCloth/#txt_clothName/#txt_clothNameEn")
+	arg_1_0._btnstartseason = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_container/btnContain/horizontal/#btn_startseason")
+	arg_1_0._btnstartseasonreplay = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_container/btnContain/horizontal/#btn_startseasonreplay")
+	arg_1_0._btnseasonreplay = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_container/btnContain/horizontal/#btn_seasonreplay")
+	arg_1_0._imagereplaybg = gohelper.findChildImage(arg_1_0.viewGO, "#go_container/btnContain/horizontal/#btn_seasonreplay/replayAnimRoot/#image_seasonreplaybg")
+	arg_1_0._imagereplayicon = gohelper.findChildImage(arg_1_0.viewGO, "#go_container/btnContain/horizontal/#btn_seasonreplay/replayAnimRoot/#image_seasonreplayicon")
+	arg_1_0._txtreplaycount = gohelper.findChildText(arg_1_0.viewGO, "#go_container/btnContain/horizontal/#btn_seasonreplay/replayAnimRoot/#txt_seasonreplaycount")
+	arg_1_0._dropseasonherogroup = gohelper.findChildDropdown(arg_1_0.viewGO, "#go_container/btnContain/horizontal/#drop_seasonherogroup")
+	arg_1_0._goherogroupcontain = gohelper.findChild(arg_1_0.viewGO, "herogroupcontain")
+	arg_1_0._gocontainer2 = gohelper.findChild(arg_1_0.viewGO, "#go_container2")
+	arg_1_0._gomask = gohelper.findChild(arg_1_0.viewGO, "#go_container2/#go_mask")
+	arg_1_0._goreplaybtn = gohelper.findChild(arg_1_0.viewGO, "#go_container/btnContain/horizontal/#go_replayBtn")
+	arg_1_0._gocost = gohelper.findChild(arg_1_0.viewGO, "#go_container/btnContain/horizontal/#btn_startseason/#go_cost")
+	arg_1_0._btnseasonreplaygroup = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_container/btnContain/horizontal/#go_replayBtn/replayAnimRoot/btnReplay")
+	arg_1_0._gomemorytimes = gohelper.findChild(arg_1_0.viewGO, "#go_container/btnContain/horizontal/#go_replayBtn/replayAnimRoot/#go_memorytimes")
+	arg_1_0._txtmemorytimes = gohelper.findChildText(arg_1_0.viewGO, "#go_container/btnContain/horizontal/#go_replayBtn/replayAnimRoot/#go_memorytimes/bg/#txt_memorytimes")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btncloth:AddClickListener(slot0._btnclothOnClock, slot0)
-	slot0._btnrecommend:AddClickListener(slot0._btnrecommendOnClick, slot0)
-	slot0._btnrestrain:AddClickListener(slot0._btnrestrainOnClick, slot0)
-	slot0._btnstartseason:AddClickListener(slot0._btnstartseasonOnClick, slot0)
-	slot0._btnstartseasonreplay:AddClickListener(slot0._btnstartseasonOnClick, slot0)
-	slot0._btnseasonreplay:AddClickListener(slot0._btnseasonreplayOnClick, slot0)
-	slot0._btnseasonreplaygroup:AddClickListener(slot0._btnseasonreplayOnClick, slot0)
-	slot0._dropseasonherogroup:AddOnValueChanged(slot0._groupDropValueChanged, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btncloth:AddClickListener(arg_2_0._btnclothOnClock, arg_2_0)
+	arg_2_0._btnrecommend:AddClickListener(arg_2_0._btnrecommendOnClick, arg_2_0)
+	arg_2_0._btnrestrain:AddClickListener(arg_2_0._btnrestrainOnClick, arg_2_0)
+	arg_2_0._btnstartseason:AddClickListener(arg_2_0._btnstartseasonOnClick, arg_2_0)
+	arg_2_0._btnstartseasonreplay:AddClickListener(arg_2_0._btnstartseasonOnClick, arg_2_0)
+	arg_2_0._btnseasonreplay:AddClickListener(arg_2_0._btnseasonreplayOnClick, arg_2_0)
+	arg_2_0._btnseasonreplaygroup:AddClickListener(arg_2_0._btnseasonreplayOnClick, arg_2_0)
+	arg_2_0._dropseasonherogroup:AddOnValueChanged(arg_2_0._groupDropValueChanged, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btncloth:RemoveClickListener()
-	slot0._btnrecommend:RemoveClickListener()
-	slot0._btnrestrain:RemoveClickListener()
-	slot0._btnstartseason:RemoveClickListener()
-	slot0._btnseasonreplay:RemoveClickListener()
-	slot0._btnseasonreplaygroup:RemoveClickListener()
-	slot0._btnstartseasonreplay:RemoveClickListener()
-	slot0._dropseasonherogroup:RemoveOnValueChanged()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btncloth:RemoveClickListener()
+	arg_3_0._btnrecommend:RemoveClickListener()
+	arg_3_0._btnrestrain:RemoveClickListener()
+	arg_3_0._btnstartseason:RemoveClickListener()
+	arg_3_0._btnseasonreplay:RemoveClickListener()
+	arg_3_0._btnseasonreplaygroup:RemoveClickListener()
+	arg_3_0._btnstartseasonreplay:RemoveClickListener()
+	arg_3_0._dropseasonherogroup:RemoveOnValueChanged()
 end
 
-function slot0._btnrecommendOnClick(slot0)
+function var_0_0._btnrecommendOnClick(arg_4_0)
 	FightFailRecommendController.instance:onClickRecommend()
-	slot0:_updateRecommendEffect()
-	DungeonRpc.instance:sendGetEpisodeHeroRecommendRequest(slot0._episodeId, slot0._receiveRecommend, slot0)
+	arg_4_0:_updateRecommendEffect()
+	DungeonRpc.instance:sendGetEpisodeHeroRecommendRequest(arg_4_0._episodeId, arg_4_0._receiveRecommend, arg_4_0)
 end
 
-function slot0._btnclothOnClock(slot0)
+function var_0_0._btnclothOnClock(arg_5_0)
 	if HeroGroupModel.instance:getCurGroupMO().isReplay then
 		return
 	end
@@ -73,169 +73,190 @@ function slot0._btnclothOnClock(slot0)
 	end
 end
 
-function slot0._btnrestrainOnClick(slot0)
+function var_0_0._btnrestrainOnClick(arg_6_0)
 	ViewMgr.instance:openView(ViewName.HeroGroupCareerTipView)
 end
 
-slot0.UIBlock_SeasonFight = "UIBlock_SeasonFight"
+var_0_0.UIBlock_SeasonFight = "UIBlock_SeasonFight"
 
-function slot0._btnstartseasonOnClick(slot0)
-	if not slot0._blockStart then
-		if not slot0:_onClickStart() then
+function var_0_0._btnstartseasonOnClick(arg_7_0)
+	if not arg_7_0._blockStart then
+		if not arg_7_0:_onClickStart() then
 			return
 		end
 
-		slot0._blockStart = true
+		arg_7_0._blockStart = true
 
-		UIBlockMgr.instance:startBlock(uv0.UIBlock_SeasonFight)
+		UIBlockMgr.instance:startBlock(var_0_0.UIBlock_SeasonFight)
 	end
 end
 
-function slot0._btnseasonreplayOnClick(slot0)
-	slot0:_onClickReplay()
+function var_0_0._btnseasonreplayOnClick(arg_8_0)
+	arg_8_0:_onClickReplay()
 end
 
-function slot0._groupDropValueChanged(slot0, slot1)
-	if slot0._isDropInited then
+function var_0_0._groupDropValueChanged(arg_9_0, arg_9_1)
+	if arg_9_0._isDropInited then
 		GameFacade.showToast(ToastEnum.SeasonGroupChanged)
 	end
 
-	if Season123HeroGroupModel.instance:isEpisodeSeason123() and slot1 + 1 ~= Season123Model.instance:getActInfo(slot0.viewParam.actId).heroGroupSnapshotSubId then
-		Season123HeroGroupController.instance:switchHeroGroup(slot3)
+	if Season123HeroGroupModel.instance:isEpisodeSeason123() then
+		local var_9_0 = arg_9_0.viewParam.actId
+		local var_9_1 = arg_9_1 + 1
+
+		if var_9_1 ~= Season123Model.instance:getActInfo(var_9_0).heroGroupSnapshotSubId then
+			Season123HeroGroupController.instance:switchHeroGroup(var_9_1)
+		end
 	end
 end
 
-function slot0._editableInitView(slot0)
-	slot0:_initComponent()
-	slot0:_initData()
-	slot0:_addEvents()
+function var_0_0._editableInitView(arg_10_0)
+	arg_10_0:_initComponent()
+	arg_10_0:_initData()
+	arg_10_0:_addEvents()
 end
 
-function slot0.onDestroyView(slot0)
-	if slot0._superCardItem then
-		slot0._superCardItem:destroy()
+function var_0_0.onDestroyView(arg_11_0)
+	if arg_11_0._superCardItem then
+		arg_11_0._superCardItem:destroy()
 
-		slot0._superCardItem = nil
+		arg_11_0._superCardItem = nil
 	end
 
 	Season123HeroGroupController.instance:onCloseView()
-	UIBlockMgr.instance:endBlock(uv0.UIBlock_SeasonFight)
+	UIBlockMgr.instance:endBlock(var_0_0.UIBlock_SeasonFight)
 end
 
-function slot0.onOpen(slot0)
-	Season123HeroGroupController.instance:onOpenView(slot0.viewParam.actId, slot0.viewParam.layer, slot0.viewParam.episodeId, slot0.viewParam.stage)
-	slot0:initSeason123FightGroupDrop()
-	slot0:_checkFirstPosHasEquip()
-	slot0:_refreshUI()
-	slot0:_checkReplay()
-	slot0:_refreshReplay()
-	slot0:_updateRecommendEffect()
-	slot0:_initDataOnOpen()
+function var_0_0.onOpen(arg_12_0)
+	local var_12_0 = arg_12_0.viewParam.actId
+	local var_12_1 = arg_12_0.viewParam.layer
+	local var_12_2 = arg_12_0.viewParam.episodeId
+	local var_12_3 = arg_12_0.viewParam.stage
+
+	Season123HeroGroupController.instance:onOpenView(var_12_0, var_12_1, var_12_2, var_12_3)
+	arg_12_0:initSeason123FightGroupDrop()
+	arg_12_0:_checkFirstPosHasEquip()
+	arg_12_0:_refreshUI()
+	arg_12_0:_checkReplay()
+	arg_12_0:_refreshReplay()
+	arg_12_0:_updateRecommendEffect()
+	arg_12_0:_initDataOnOpen()
 
 	if Season123HeroGroupModel.instance:isEpisodeSeason123() then
 		Season123Controller.instance:dispatchEvent(Season123Event.EnterMainEpiosdeHeroGroupView)
 	end
 end
 
-function slot0._initComponent(slot0)
-	slot0._anim = slot0._gocontainer:GetComponent(typeof(UnityEngine.Animator))
-	slot0._heroContainAnim = slot0._goherogroupcontain:GetComponent(typeof(UnityEngine.Animator))
-	slot0._btnContainAnim = slot0._gobtncontain:GetComponent(typeof(UnityEngine.Animator))
+function var_0_0._initComponent(arg_13_0)
+	arg_13_0._anim = arg_13_0._gocontainer:GetComponent(typeof(UnityEngine.Animator))
+	arg_13_0._heroContainAnim = arg_13_0._goherogroupcontain:GetComponent(typeof(UnityEngine.Animator))
+	arg_13_0._btnContainAnim = arg_13_0._gobtncontain:GetComponent(typeof(UnityEngine.Animator))
 end
 
-function slot0._initData(slot0)
-	gohelper.addUIClickAudio(slot0._btnstartseason.gameObject, AudioEnum.HeroGroupUI.Play_UI_Formation_Action)
-	gohelper.addUIClickAudio(slot0._btnseasonreplay.gameObject, AudioEnum.UI.Play_UI_Player_Interface_Close)
-	gohelper.addUIClickAudio(slot0._btnrestrain.gameObject, AudioEnum.UI.Play_UI_Tipsopen)
-	gohelper.addUIClickAudio(slot0._dropseasonherogroup.gameObject, AudioEnum.UI.UI_transverse_tabs_click)
+function var_0_0._initData(arg_14_0)
+	gohelper.addUIClickAudio(arg_14_0._btnstartseason.gameObject, AudioEnum.HeroGroupUI.Play_UI_Formation_Action)
+	gohelper.addUIClickAudio(arg_14_0._btnseasonreplay.gameObject, AudioEnum.UI.Play_UI_Player_Interface_Close)
+	gohelper.addUIClickAudio(arg_14_0._btnrestrain.gameObject, AudioEnum.UI.Play_UI_Tipsopen)
+	gohelper.addUIClickAudio(arg_14_0._dropseasonherogroup.gameObject, AudioEnum.UI.UI_transverse_tabs_click)
 	AudioMgr.instance:trigger(AudioEnum.HeroGroupUI.Play_UI_Action_Cardsopen)
-	NavigateMgr.instance:addEscape(Season123Controller.instance:getHeroGroupFightViewName(), slot0._onEscapeBtnClick, slot0)
+	NavigateMgr.instance:addEscape(Season123Controller.instance:getHeroGroupFightViewName(), arg_14_0._onEscapeBtnClick, arg_14_0)
 
-	slot0._iconGO = slot0:getResInst(slot0.viewContainer:getSetting().otherRes[1], slot0._btncloth.gameObject)
+	arg_14_0._iconGO = arg_14_0:getResInst(arg_14_0.viewContainer:getSetting().otherRes[1], arg_14_0._btncloth.gameObject)
 
-	recthelper.setAnchor(slot0._iconGO.transform, -100, 1)
+	recthelper.setAnchor(arg_14_0._iconGO.transform, -100, 1)
 
-	slot0._tweeningId = 0
-	slot0._replayMode = false
+	arg_14_0._tweeningId = 0
+	arg_14_0._replayMode = false
 
-	gohelper.setActive(slot0._gomask, false)
+	gohelper.setActive(arg_14_0._gomask, false)
 end
 
-function slot0._initDataOnOpen(slot0)
+function var_0_0._initDataOnOpen(arg_15_0)
 	if Season123HeroGroupModel.instance:isEpisodeSeason123() then
-		slot0._dropseasonherogroup:SetValue(Season123Model.instance:getActInfo(slot0.viewParam.actId).heroGroupSnapshotSubId - 1)
+		local var_15_0 = Season123Model.instance:getActInfo(arg_15_0.viewParam.actId).heroGroupSnapshotSubId
+
+		arg_15_0._dropseasonherogroup:SetValue(var_15_0 - 1)
 	else
-		slot0._dropseasonherogroup:SetValue(1)
+		arg_15_0._dropseasonherogroup:SetValue(1)
 	end
 
-	gohelper.setActive(slot0._goseasoncontain, true)
+	gohelper.setActive(arg_15_0._goseasoncontain, true)
 
-	slot0._isDropInited = true
+	arg_15_0._isDropInited = true
 end
 
-function slot0._addEvents(slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenFullView, slot0._onOpenFullView, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, slot0._onCloseView, slot0)
-	slot0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyHeroGroup, slot0._onModifyHeroGroup, slot0)
-	slot0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnSnapshotSaveSucc, slot0._onModifySnapshot, slot0)
-	slot0:addEventCb(Season123Controller.instance, Season123Event.HeroGroupIndexChanged, slot0._onModifySnapshot, slot0)
-	slot0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnClickHeroGroupItem, slot0._onClickHeroGroupItem, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.RespBeginFight, slot0._respBeginFight, slot0)
-	slot0:addEventCb(HeroGroupController.instance, HeroGroupEvent.PlayHeroGroupExitEffect, slot0._playHeroGroupExitEffect, slot0)
-	slot0:addEventCb(HeroGroupController.instance, HeroGroupEvent.PlayCloseHeroGroupAnimation, slot0._playCloseHeroGroupAnimation, slot0)
-	slot0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnUseRecommendGroup, slot0._onUseRecommendGroup, slot0)
-	slot0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, slot0._onCurrencyChange, slot0)
-	slot0:addEventCb(HeroGroupController.instance, HeroGroupEvent.ShowGuideDragEffect, slot0._showGuideDragEffect, slot0)
-	slot0:addEventCb(HeroGroupController.instance, HeroGroupEvent.HeroMoveForward, slot0._heroMoveForward, slot0)
-	slot0:addEventCb(Season123Controller.instance, Season123Event.StartFightFailed, slot0.handleStartFightFailed, slot0)
+function var_0_0._addEvents(arg_16_0)
+	arg_16_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenFullView, arg_16_0._onOpenFullView, arg_16_0)
+	arg_16_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_16_0._onCloseView, arg_16_0)
+	arg_16_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyHeroGroup, arg_16_0._onModifyHeroGroup, arg_16_0)
+	arg_16_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnSnapshotSaveSucc, arg_16_0._onModifySnapshot, arg_16_0)
+	arg_16_0:addEventCb(Season123Controller.instance, Season123Event.HeroGroupIndexChanged, arg_16_0._onModifySnapshot, arg_16_0)
+	arg_16_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnClickHeroGroupItem, arg_16_0._onClickHeroGroupItem, arg_16_0)
+	arg_16_0:addEventCb(FightController.instance, FightEvent.RespBeginFight, arg_16_0._respBeginFight, arg_16_0)
+	arg_16_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.PlayHeroGroupExitEffect, arg_16_0._playHeroGroupExitEffect, arg_16_0)
+	arg_16_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.PlayCloseHeroGroupAnimation, arg_16_0._playCloseHeroGroupAnimation, arg_16_0)
+	arg_16_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnUseRecommendGroup, arg_16_0._onUseRecommendGroup, arg_16_0)
+	arg_16_0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_16_0._onCurrencyChange, arg_16_0)
+	arg_16_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.ShowGuideDragEffect, arg_16_0._showGuideDragEffect, arg_16_0)
+	arg_16_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.HeroMoveForward, arg_16_0._heroMoveForward, arg_16_0)
+	arg_16_0:addEventCb(Season123Controller.instance, Season123Event.StartFightFailed, arg_16_0.handleStartFightFailed, arg_16_0)
 end
 
-function slot0._checkReplay(slot0)
-	slot4 = PlayerPrefsHelper.getString(FightModel.getPrefsKeyFightPassModel(), "")
+function var_0_0._checkReplay(arg_17_0)
+	local var_17_0 = OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.FightReplay)
+	local var_17_1 = DungeonModel.instance:getEpisodeInfo(HeroGroupModel.instance.episodeId)
+	local var_17_2 = var_17_1 and var_17_1.star == DungeonEnum.StarType.Advanced and var_17_1.hasRecord
+	local var_17_3 = PlayerPrefsHelper.getString(FightModel.getPrefsKeyFightPassModel(), "")
 
-	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.FightReplay) and (DungeonModel.instance:getEpisodeInfo(HeroGroupModel.instance.episodeId) and slot2.star == DungeonEnum.StarType.Advanced and slot2.hasRecord) and not string.nilorempty(slot4) and cjson.decode(slot4)[tostring(slot0._episodeId)] and not slot0._replayMode then
-		slot0._replayMode = true
+	if var_17_0 and var_17_2 and not string.nilorempty(var_17_3) and cjson.decode(var_17_3)[tostring(arg_17_0._episodeId)] and not arg_17_0._replayMode then
+		arg_17_0._replayMode = true
 
-		slot0:_refreshBtns()
+		arg_17_0:_refreshBtns()
 
-		slot0._replayFightGroupMO = HeroGroupModel.instance:getReplayParam()
+		arg_17_0._replayFightGroupMO = HeroGroupModel.instance:getReplayParam()
 
-		if not slot0._replayFightGroupMO then
-			slot0:addEventCb(FightController.instance, FightEvent.RespGetFightRecordGroupReply, slot0._onGetFightRecordGroupReply, slot0)
+		if not arg_17_0._replayFightGroupMO then
+			arg_17_0:addEventCb(FightController.instance, FightEvent.RespGetFightRecordGroupReply, arg_17_0._onGetFightRecordGroupReply, arg_17_0)
 			FightRpc.instance:sendGetFightRecordGroupRequest(HeroGroupModel.instance.episodeId)
 		else
-			slot0:_switchReplayGroup()
+			arg_17_0:_switchReplayGroup()
 		end
 	end
 end
 
-function slot0.initSeason123FightGroupDrop(slot0)
-	slot1 = {}
+function var_0_0.initSeason123FightGroupDrop(arg_18_0)
+	local var_18_0 = {}
 
-	slot0._dropseasonherogroup:ClearOptions()
-	slot0._dropseasonherogroup:AddOptions((not Season123HeroGroupModel.instance:isEpisodeSeason123() or {
-		luaLang("season_herogroup_one"),
-		luaLang("season_herogroup_two"),
-		luaLang("season_herogroup_three"),
-		luaLang("season_herogroup_four")
-	}) and {
-		luaLang("season_herogroup_one")
-	})
+	if Season123HeroGroupModel.instance:isEpisodeSeason123() then
+		var_18_0 = {
+			luaLang("season_herogroup_one"),
+			luaLang("season_herogroup_two"),
+			luaLang("season_herogroup_three"),
+			luaLang("season_herogroup_four")
+		}
+	else
+		var_18_0 = {
+			luaLang("season_herogroup_one")
+		}
+	end
+
+	arg_18_0._dropseasonherogroup:ClearOptions()
+	arg_18_0._dropseasonherogroup:AddOptions(var_18_0)
 end
 
-function slot0._receiveRecommend(slot0, slot1, slot2, slot3)
-	if slot2 ~= 0 then
+function var_0_0._receiveRecommend(arg_19_0, arg_19_1, arg_19_2, arg_19_3)
+	if arg_19_2 ~= 0 then
 		return
 	end
 
-	ViewMgr.instance:openView(ViewName.HeroGroupRecommendView, slot3)
+	ViewMgr.instance:openView(ViewName.HeroGroupRecommendView, arg_19_3)
 end
 
-function slot0._onClickReplay(slot0)
+function var_0_0._onClickReplay(arg_20_0)
 	if not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.FightReplay) then
-		slot1, slot2 = OpenModel.instance:getFuncUnlockDesc(OpenEnum.UnlockFunc.FightReplay)
+		local var_20_0, var_20_1 = OpenModel.instance:getFuncUnlockDesc(OpenEnum.UnlockFunc.FightReplay)
 
-		GameFacade.showToast(slot1, slot2)
+		GameFacade.showToast(var_20_0, var_20_1)
 
 		return
 	end
@@ -244,221 +265,239 @@ function slot0._onClickReplay(slot0)
 		return
 	end
 
-	slot1 = DungeonConfig.instance:getEpisodeCO(HeroGroupModel.instance.episodeId)
+	local var_20_2 = DungeonConfig.instance:getEpisodeCO(HeroGroupModel.instance.episodeId)
+	local var_20_3 = DungeonModel.instance:getEpisodeInfo(HeroGroupModel.instance.episodeId)
+	local var_20_4 = var_20_3 and var_20_3.hasRecord
+	local var_20_5 = var_20_2 and var_20_2.firstBattleId > 0
 
-	if not (DungeonModel.instance:getEpisodeInfo(HeroGroupModel.instance.episodeId) and slot2.hasRecord) and (slot1 and slot1.firstBattleId > 0) then
+	if not var_20_4 and var_20_5 then
 		GameFacade.showToast(ToastEnum.CantRecordReplay)
 
 		return
 	end
 
-	if Season123Model.instance:isEpisodeAdvance(HeroGroupModel.instance.episodeId) and slot2.hasRecord then
+	if Season123Model.instance:isEpisodeAdvance(HeroGroupModel.instance.episodeId) and var_20_3.hasRecord then
 		GameFacade.showToast(ToastEnum.SeasonAdvanceLevelNoReplay)
 
 		return
 	end
 
-	if not slot3 then
+	if not var_20_4 then
 		GameFacade.showToast(ToastEnum.SeasonHeroGroupStarNoAdvanced)
 
 		return
 	end
 
-	if slot0._replayMode then
-		slot0._replayMode = false
+	if arg_20_0._replayMode then
+		arg_20_0._replayMode = false
 
-		slot0._btnContainAnim:Play(UIAnimationName.Switch, 0, 0)
+		arg_20_0._btnContainAnim:Play(UIAnimationName.Switch, 0, 0)
 	else
-		slot0._btnContainAnim:Play(UIAnimationName.Switch, 0, 0)
+		arg_20_0._btnContainAnim:Play(UIAnimationName.Switch, 0, 0)
 
-		slot0._replayMode = true
+		arg_20_0._replayMode = true
 	end
 
 	Season123HeroGroupModel.instance:saveMultiplication()
-	slot0:_refreshBtns()
+	arg_20_0:_refreshBtns()
 
-	if slot0._replayMode and not slot0._replayFightGroupMO then
-		slot0:addEventCb(FightController.instance, FightEvent.RespGetFightRecordGroupReply, slot0._onGetFightRecordGroupReply, slot0)
+	if arg_20_0._replayMode and not arg_20_0._replayFightGroupMO then
+		arg_20_0:addEventCb(FightController.instance, FightEvent.RespGetFightRecordGroupReply, arg_20_0._onGetFightRecordGroupReply, arg_20_0)
 		FightRpc.instance:sendGetFightRecordGroupRequest(HeroGroupModel.instance.episodeId)
 
 		return
 	end
 
-	slot0:_switchReplayGroup(slot0._replayMode)
+	arg_20_0:_switchReplayGroup(arg_20_0._replayMode)
 end
 
-function slot0._switchReplayGroup(slot0, slot1)
-	slot0:_refreshTips()
-	gohelper.setActive(slot0._goreplayready, slot0._replayMode)
-	gohelper.setActive(slot0._gomemorytimes, slot0._replayMode)
-	UISpriteSetMgr.instance:setHeroGroupSprite(slot0._imagereplayicon, slot0._replayMode and "btn_replay_pause" or "btn_replay_play")
+function var_0_0._switchReplayGroup(arg_21_0, arg_21_1)
+	arg_21_0:_refreshTips()
+	gohelper.setActive(arg_21_0._goreplayready, arg_21_0._replayMode)
+	gohelper.setActive(arg_21_0._gomemorytimes, arg_21_0._replayMode)
+	UISpriteSetMgr.instance:setHeroGroupSprite(arg_21_0._imagereplayicon, arg_21_0._replayMode and "btn_replay_pause" or "btn_replay_play")
 
-	if slot1 ~= slot0._replayMode then
-		TaskDispatcher.cancelTask(slot0._switchReplayMul, slot0)
-		TaskDispatcher.runDelay(slot0._switchReplayMul, slot0, 0.1)
+	if arg_21_1 ~= arg_21_0._replayMode then
+		TaskDispatcher.cancelTask(arg_21_0._switchReplayMul, arg_21_0)
+		TaskDispatcher.runDelay(arg_21_0._switchReplayMul, arg_21_0, 0.1)
 	else
-		slot0:_switchReplayMul()
+		arg_21_0:_switchReplayMul()
 	end
 
-	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.PlayHeroGroupHeroEffect, slot0._replayMode and "swicth" or "open")
+	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.PlayHeroGroupHeroEffect, arg_21_0._replayMode and "swicth" or "open")
 
-	if slot0._replayMode then
-		slot0:_updateReplayHeroGroupList()
+	if arg_21_0._replayMode then
+		arg_21_0:_updateReplayHeroGroupList()
 
-		slot0._txtmemorytimes.text = slot0._replayFightGroupMO.recordRound
+		arg_21_0._txtmemorytimes.text = arg_21_0._replayFightGroupMO.recordRound
 	else
 		Season123HeroGroupController.instance:changeReplayMode2Manual()
-		slot0:_refreshCloth()
-		gohelper.setActive(slot0._goherogroupcontain, false)
-		gohelper.setActive(slot0._goherogroupcontain, true)
+		arg_21_0:_refreshCloth()
+		gohelper.setActive(arg_21_0._goherogroupcontain, false)
+		gohelper.setActive(arg_21_0._goherogroupcontain, true)
 	end
 
 	Season123Controller.instance:dispatchEvent(Season123Event.RecordRspMainCardRefresh)
 end
 
-function slot0._refreshTips(slot0)
+function var_0_0._refreshTips(arg_22_0)
+	return
 end
 
-function slot0._updateReplayHeroGroupList(slot0)
-	HeroGroupModel.instance:setReplayParam(slot0._replayFightGroupMO)
-	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.SelectHeroGroup, slot0._replayFightGroupMO.id)
-	slot0:_refreshCloth()
-	gohelper.setActive(slot0._goherogroupcontain, false)
-	gohelper.setActive(slot0._goherogroupcontain, true)
+function var_0_0._updateReplayHeroGroupList(arg_23_0)
+	HeroGroupModel.instance:setReplayParam(arg_23_0._replayFightGroupMO)
+	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.SelectHeroGroup, arg_23_0._replayFightGroupMO.id)
+	arg_23_0:_refreshCloth()
+	gohelper.setActive(arg_23_0._goherogroupcontain, false)
+	gohelper.setActive(arg_23_0._goherogroupcontain, true)
 end
 
-function slot0._switchReplayMul(slot0)
-	slot0._txtreplaycount.text = slot0._replayMode and luaLang("multiple") .. Season123HeroGroupModel.instance.multiplication or ""
+function var_0_0._switchReplayMul(arg_24_0)
+	arg_24_0._txtreplaycount.text = arg_24_0._replayMode and luaLang("multiple") .. Season123HeroGroupModel.instance.multiplication or ""
 end
 
-function slot0._heroMoveForward(slot0, slot1)
-	HeroGroupEditListModel.instance:setMoveHeroId(tonumber(slot1))
+function var_0_0._heroMoveForward(arg_25_0, arg_25_1)
+	HeroGroupEditListModel.instance:setMoveHeroId(tonumber(arg_25_1))
 end
 
-function slot0.handleStartFightFailed(slot0)
-	slot0._blockStart = false
+function var_0_0.handleStartFightFailed(arg_26_0)
+	arg_26_0._blockStart = false
 
-	UIBlockMgr.instance:endBlock(uv0.UIBlock_SeasonFight)
+	UIBlockMgr.instance:endBlock(var_0_0.UIBlock_SeasonFight)
 end
 
-function slot0.isReplayMode(slot0)
-	return slot0._replayMode
+function var_0_0.isReplayMode(arg_27_0)
+	return arg_27_0._replayMode
 end
 
-function slot0._onCurrencyChange(slot0, slot1)
-	if not slot1[CurrencyEnum.CurrencyType.Power] then
+function var_0_0._onCurrencyChange(arg_28_0, arg_28_1)
+	if not arg_28_1[CurrencyEnum.CurrencyType.Power] then
 		return
 	end
 
-	slot0:_refreshBtns()
+	arg_28_0:_refreshBtns()
 end
 
-function slot0._respBeginFight(slot0)
-	gohelper.setActive(slot0._gomask, true)
+function var_0_0._respBeginFight(arg_29_0)
+	gohelper.setActive(arg_29_0._gomask, true)
 end
 
-function slot0._onOpenFullView(slot0, slot1)
+function var_0_0._onOpenFullView(arg_30_0, arg_30_1)
 	AudioMgr.instance:trigger(AudioEnum.UI.Stop_HeroNormalVoc)
 end
 
-function slot0._onCloseView(slot0, slot1)
-	if slot1 == ViewName.EquipInfoTeamShowView then
-		slot0:_checkFirstPosHasEquip()
+function var_0_0._onCloseView(arg_31_0, arg_31_1)
+	if arg_31_1 == ViewName.EquipInfoTeamShowView then
+		arg_31_0:_checkFirstPosHasEquip()
 	end
 end
 
-function slot0._getMultiplicationKey(slot0)
-	return string.format("%s#%d", PlayerPrefsKey.Multiplication .. PlayerModel.instance:getMyUserId(), slot0._episodeId)
+function var_0_0._getMultiplicationKey(arg_32_0)
+	return string.format("%s#%d", PlayerPrefsKey.Multiplication .. PlayerModel.instance:getMyUserId(), arg_32_0._episodeId)
 end
 
-function slot0._updateRecommendEffect(slot0)
-	gohelper.setActive(slot0._goRecommendEffect, FightFailRecommendController.instance:needShowRecommend(slot0._episodeId))
+function var_0_0._updateRecommendEffect(arg_33_0)
+	gohelper.setActive(arg_33_0._goRecommendEffect, FightFailRecommendController.instance:needShowRecommend(arg_33_0._episodeId))
 end
 
-function slot0._onEscapeBtnClick(slot0)
-	if not slot0._gomask.gameObject.activeInHierarchy then
-		slot0.viewContainer:_closeCallback()
+function var_0_0._onEscapeBtnClick(arg_34_0)
+	if not arg_34_0._gomask.gameObject.activeInHierarchy then
+		arg_34_0.viewContainer:_closeCallback()
 	end
 end
 
-function slot0._refreshUI(slot0)
-	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.SelectHeroGroup, HeroGroupModel.instance:getCurGroupId())
+function var_0_0._refreshUI(arg_35_0)
+	local var_35_0 = HeroGroupModel.instance:getCurGroupId()
 
-	slot0._episodeId = HeroGroupModel.instance.episodeId
-	slot0.episodeConfig = DungeonConfig.instance:getEpisodeCO(slot0._episodeId)
-	slot0._chapterConfig = DungeonConfig.instance:getChapterCO(slot0.episodeConfig.chapterId)
+	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.SelectHeroGroup, var_35_0)
+
+	arg_35_0._episodeId = HeroGroupModel.instance.episodeId
+	arg_35_0.episodeConfig = DungeonConfig.instance:getEpisodeCO(arg_35_0._episodeId)
+	arg_35_0._chapterConfig = DungeonConfig.instance:getChapterCO(arg_35_0.episodeConfig.chapterId)
 
 	if Season123HeroGroupModel.instance:isEpisodeSeason123() then
-		gohelper.setActive(slot0._btnrecommend, false)
+		gohelper.setActive(arg_35_0._btnrecommend, false)
 	else
-		gohelper.setActive(slot0._btnrecommend, true)
+		gohelper.setActive(arg_35_0._btnrecommend, true)
 	end
 
-	slot0:_refreshBtns()
-	slot0:_refreshCloth()
+	arg_35_0:_refreshBtns()
+	arg_35_0:_refreshCloth()
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_36_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.Stop_HeroNormalVoc)
-	slot0:_removeEvents()
-	ZProj.TweenHelper.KillById(slot0._tweeningId)
-	TaskDispatcher.cancelTask(slot0._closeHeroContainAnim, slot0)
+	arg_36_0:_removeEvents()
+	ZProj.TweenHelper.KillById(arg_36_0._tweeningId)
+	TaskDispatcher.cancelTask(arg_36_0._closeHeroContainAnim, arg_36_0)
 
-	if slot0._dragEffectLoader then
-		slot0._dragEffectLoader:dispose()
+	if arg_36_0._dragEffectLoader then
+		arg_36_0._dragEffectLoader:dispose()
 
-		slot0._dragEffectLoader = nil
+		arg_36_0._dragEffectLoader = nil
 	end
 end
 
-function slot0._removeEvents(slot0)
-	slot0:removeEventCb(HeroGroupController.instance, HeroGroupEvent.OnSnapshotSaveSucc, slot0._onModifySnapshot, slot0)
-	slot0:removeEventCb(FightController.instance, FightEvent.RespGetFightRecordGroupReply, slot0._onGetFightRecordGroupReply, slot0)
+function var_0_0._removeEvents(arg_37_0)
+	arg_37_0:removeEventCb(HeroGroupController.instance, HeroGroupEvent.OnSnapshotSaveSucc, arg_37_0._onModifySnapshot, arg_37_0)
+	arg_37_0:removeEventCb(FightController.instance, FightEvent.RespGetFightRecordGroupReply, arg_37_0._onGetFightRecordGroupReply, arg_37_0)
 end
 
-function slot0._refreshReplay(slot0)
-	slot1 = OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.FightReplay)
-	slot2 = OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.FightReplay)
+function var_0_0._refreshReplay(arg_38_0)
+	local var_38_0 = OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.FightReplay)
+	local var_38_1 = OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.FightReplay)
 
-	gohelper.setActive(slot0._btnseasonreplay.gameObject, slot0.episodeConfig and slot0.episodeConfig.canUseRecord == 1 and not slot0._replayMode)
+	gohelper.setActive(arg_38_0._btnseasonreplay.gameObject, arg_38_0.episodeConfig and arg_38_0.episodeConfig.canUseRecord == 1 and not arg_38_0._replayMode)
 
-	slot4 = DungeonModel.instance:getEpisodeInfo(HeroGroupModel.instance.episodeId) and slot3.hasRecord
+	local var_38_2 = DungeonModel.instance:getEpisodeInfo(HeroGroupModel.instance.episodeId)
+	local var_38_3 = var_38_2 and var_38_2.hasRecord
 
-	ZProj.UGUIHelper.SetColorAlpha(slot0._imagereplaybg, slot2 and slot4 and 1 or 0.75)
+	ZProj.UGUIHelper.SetColorAlpha(arg_38_0._imagereplaybg, var_38_1 and var_38_3 and 1 or 0.75)
 
-	slot0._txtreplaycount.text = slot0._replayMode and luaLang("multiple") .. Season123HeroGroupModel.instance.multiplication or ""
+	arg_38_0._txtreplaycount.text = arg_38_0._replayMode and luaLang("multiple") .. Season123HeroGroupModel.instance.multiplication or ""
 
-	UISpriteSetMgr.instance:setHeroGroupSprite(slot0._imagereplayicon, slot2 and slot4 and "btn_replay_play" or "btn_replay_lack")
-	gohelper.setActive(slot0._gomemorytimes, slot0._replayMode)
+	UISpriteSetMgr.instance:setHeroGroupSprite(arg_38_0._imagereplayicon, var_38_1 and var_38_3 and "btn_replay_play" or "btn_replay_lack")
+	gohelper.setActive(arg_38_0._gomemorytimes, arg_38_0._replayMode)
 end
 
-function slot0._refreshCloth(slot0)
-	slot2 = OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.LeadRoleSkill)
-	slot4 = PlayerClothModel.instance:getById(HeroGroupModel.instance:getCurGroupMO().clothId)
+function var_0_0._refreshCloth(arg_39_0)
+	local var_39_0 = HeroGroupModel.instance:getCurGroupMO()
+	local var_39_1 = OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.LeadRoleSkill)
+	local var_39_2 = var_39_0.clothId
+	local var_39_3 = PlayerClothModel.instance:getById(var_39_2)
 
-	gohelper.setActive(slot0._txtclothname.gameObject, slot4)
+	gohelper.setActive(arg_39_0._txtclothname.gameObject, var_39_3)
 
-	if slot4 then
-		slot5 = lua_cloth.configDict[slot4.clothId]
-		slot6 = slot4.level or 0
-		slot0._txtclothname.text = slot5.name
-		slot0._txtclothnameen.text = slot5.enname
+	if var_39_3 then
+		local var_39_4 = lua_cloth.configDict[var_39_3.clothId]
+
+		if not var_39_3.level then
+			local var_39_5 = 0
+		end
+
+		arg_39_0._txtclothname.text = var_39_4.name
+		arg_39_0._txtclothnameen.text = var_39_4.enname
 	end
 
-	for slot8, slot9 in ipairs(lua_cloth.configList) do
-		if not gohelper.isNil(gohelper.findChild(slot0._iconGO, tostring(slot9.id))) then
-			gohelper.setActive(slot10, slot9.id == slot3)
+	for iter_39_0, iter_39_1 in ipairs(lua_cloth.configList) do
+		local var_39_6 = gohelper.findChild(arg_39_0._iconGO, tostring(iter_39_1.id))
+
+		if not gohelper.isNil(var_39_6) then
+			gohelper.setActive(var_39_6, iter_39_1.id == var_39_2)
 		end
 	end
 
-	gohelper.setActive(slot0._btncloth.gameObject, uv0.showCloth())
+	gohelper.setActive(arg_39_0._btncloth.gameObject, var_0_0.showCloth())
 end
 
-function slot0._getEpisodeConfigAndBattleConfig()
-	return slot0, DungeonConfig.instance:getEpisodeCO(HeroGroupModel.instance.episodeId) and lua_battle.configDict[slot0.battleId]
+function var_0_0._getEpisodeConfigAndBattleConfig()
+	local var_40_0 = DungeonConfig.instance:getEpisodeCO(HeroGroupModel.instance.episodeId)
+	local var_40_1 = var_40_0 and lua_battle.configDict[var_40_0.battleId]
+
+	return var_40_0, var_40_1
 end
 
-function slot0.showCloth()
+function var_0_0.showCloth()
 	if PlayerClothModel.instance:getSpEpisodeClothID() then
 		return true
 	end
@@ -467,124 +506,135 @@ function slot0.showCloth()
 		return false
 	end
 
-	slot1, slot2 = uv0._getEpisodeConfigAndBattleConfig()
+	local var_41_0, var_41_1 = var_0_0._getEpisodeConfigAndBattleConfig()
 
-	if slot2 and slot2.noClothSkill == 1 then
+	if var_41_1 and var_41_1.noClothSkill == 1 then
 		return false
 	end
 
-	slot4 = PlayerClothModel.instance:getById(HeroGroupModel.instance:getCurGroupMO().clothId)
-	slot6 = false
+	local var_41_2 = HeroGroupModel.instance:getCurGroupMO()
+	local var_41_3 = PlayerClothModel.instance:getById(var_41_2.clothId)
+	local var_41_4 = PlayerClothModel.instance:getList()
+	local var_41_5 = false
 
-	for slot10, slot11 in ipairs(PlayerClothModel.instance:getList()) do
-		slot6 = true
+	for iter_41_0, iter_41_1 in ipairs(var_41_4) do
+		var_41_5 = true
 
 		break
 	end
 
-	return slot6
+	return var_41_5
 end
 
-function slot0._onModifyHeroGroup(slot0)
-	slot0:_refreshCloth()
+function var_0_0._onModifyHeroGroup(arg_42_0)
+	arg_42_0:_refreshCloth()
 end
 
-function slot0._onModifySnapshot(slot0)
-	slot0:_refreshCloth()
+function var_0_0._onModifySnapshot(arg_43_0)
+	arg_43_0:_refreshCloth()
 end
 
-function slot0._onClickHeroGroupItem(slot0, slot1)
-	slot2 = HeroGroupModel.instance:getCurGroupMO()
-	slot3 = slot2:getPosEquips(slot1 - 1).equipUid
+function var_0_0._onClickHeroGroupItem(arg_44_0, arg_44_1)
+	local var_44_0 = HeroGroupModel.instance:getCurGroupMO()
+	local var_44_1 = var_44_0:getPosEquips(arg_44_1 - 1).equipUid
 
-	if slot2 then
-		HeroSingleGroupModel.instance:setSingleGroup(slot2, true)
+	if var_44_0 then
+		HeroSingleGroupModel.instance:setSingleGroup(var_44_0, true)
 	end
 
 	if Season123HeroGroupModel.instance:isEpisodeSeason123() or Season123HeroGroupModel.instance:isEpisodeSeason123Retail() then
-		slot0._param = tabletool.copy(slot0.viewParam)
-		slot0._param.singleGroupMOId = slot1
-		slot0._param.originalHeroUid = HeroSingleGroupModel.instance:getHeroUid(slot1)
-		slot0._param.equips = slot3
+		arg_44_0._param = tabletool.copy(arg_44_0.viewParam)
+		arg_44_0._param.singleGroupMOId = arg_44_1
+		arg_44_0._param.originalHeroUid = HeroSingleGroupModel.instance:getHeroUid(arg_44_1)
+		arg_44_0._param.equips = var_44_1
 
-		ViewMgr.instance:openView(Season123Controller.instance:getHeroGroupEditViewName(), slot0._param)
+		ViewMgr.instance:openView(Season123Controller.instance:getHeroGroupEditViewName(), arg_44_0._param)
 	else
-		slot0._param = {
-			singleGroupMOId = slot1,
-			originalHeroUid = HeroSingleGroupModel.instance:getHeroUid(slot1),
-			adventure = HeroGroupModel.instance:isAdventureOrWeekWalk(),
-			equips = slot3
-		}
+		arg_44_0._param = {}
+		arg_44_0._param.singleGroupMOId = arg_44_1
+		arg_44_0._param.originalHeroUid = HeroSingleGroupModel.instance:getHeroUid(arg_44_1)
+		arg_44_0._param.adventure = HeroGroupModel.instance:isAdventureOrWeekWalk()
+		arg_44_0._param.equips = var_44_1
 
-		ViewMgr.instance:openView(ViewName.HeroGroupEditView, slot0._param)
+		ViewMgr.instance:openView(ViewName.HeroGroupEditView, arg_44_0._param)
 	end
 end
 
-function slot0._checkFirstPosHasEquip(slot0)
-	if not HeroGroupModel.instance:getCurGroupMO() then
+function var_0_0._checkFirstPosHasEquip(arg_45_0)
+	local var_45_0 = HeroGroupModel.instance:getCurGroupMO()
+
+	if not var_45_0 then
 		return
 	end
 
-	slot3 = slot1:getPosEquips(0).equipUid and slot2[1]
+	local var_45_1 = var_45_0:getPosEquips(0).equipUid
+	local var_45_2 = var_45_1 and var_45_1[1]
 
-	if slot3 and EquipModel.instance:getEquip(slot3) then
+	if var_45_2 and EquipModel.instance:getEquip(var_45_2) then
 		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnFirstPosHasEquip)
 	end
 end
 
-function slot0._showGuideDragEffect(slot0, slot1)
-	if slot0._dragEffectLoader then
-		slot0._dragEffectLoader:dispose()
+function var_0_0._showGuideDragEffect(arg_46_0, arg_46_1)
+	if arg_46_0._dragEffectLoader then
+		arg_46_0._dragEffectLoader:dispose()
 
-		slot0._dragEffectLoader = nil
+		arg_46_0._dragEffectLoader = nil
 	end
 
-	if tonumber(slot1) == 1 then
-		slot0._dragEffectLoader = PrefabInstantiate.Create(slot0.viewGO)
+	if tonumber(arg_46_1) == 1 then
+		arg_46_0._dragEffectLoader = PrefabInstantiate.Create(arg_46_0.viewGO)
 
-		slot0._dragEffectLoader:startLoad("ui/viewres/guide/guide_herogroup.prefab")
+		arg_46_0._dragEffectLoader:startLoad("ui/viewres/guide/guide_herogroup.prefab")
 	end
 end
 
-function slot0._onClickStart(slot0)
-	slot3 = tonumber(string.split(string.split(slot0.episodeConfig.cost, "|")[1], "#")[3] or 0)
+function var_0_0._onClickStart(arg_47_0)
+	local var_47_0 = string.split(arg_47_0.episodeConfig.cost, "|")
+	local var_47_1 = string.split(var_47_0[1], "#")
+	local var_47_2 = tonumber(var_47_1[3] or 0)
+	local var_47_3 = 10104
 
-	if HeroGroupModel.instance.episodeId == 10104 and not DungeonModel.instance:hasPassLevel(slot4) then
-		for slot10, slot11 in ipairs(HeroSingleGroupModel.instance:getList()) do
-			if not slot11:isEmpty() then
-				slot6 = 0 + 1
+	if HeroGroupModel.instance.episodeId == var_47_3 and not DungeonModel.instance:hasPassLevel(var_47_3) then
+		local var_47_4 = HeroSingleGroupModel.instance:getList()
+		local var_47_5 = 0
+
+		for iter_47_0, iter_47_1 in ipairs(var_47_4) do
+			if not iter_47_1:isEmpty() then
+				var_47_5 = var_47_5 + 1
 			end
 		end
 
-		if slot6 < 2 then
+		if var_47_5 < 2 then
 			GameFacade.showToast(ToastEnum.HeroSingleGroupCount)
 
 			return
 		end
 	end
 
-	return slot0:_enterFight()
+	return arg_47_0:_enterFight()
 end
 
-function slot0._enterFight(slot0)
-	slot1 = false
+function var_0_0._enterFight(arg_48_0)
+	local var_48_0 = false
 
 	if HeroGroupModel.instance.episodeId then
-		slot0._closeWithEnteringFight = true
+		arg_48_0._closeWithEnteringFight = true
+		var_48_0 = FightController.instance:setFightHeroGroup()
 
-		if FightController.instance:setFightHeroGroup() then
-			slot2 = FightModel.instance:getFightParam()
+		if var_48_0 then
+			local var_48_1 = FightModel.instance:getFightParam()
 
-			if slot0._replayMode then
-				slot2.isReplay = true
-				slot2.multiplication = Season123HeroGroupModel.instance.multiplication
+			if arg_48_0._replayMode then
+				var_48_1.isReplay = true
+				var_48_1.multiplication = Season123HeroGroupModel.instance.multiplication
 
-				Season123HeroGroupController.instance:sendStartAct123Battle(slot2.chapterId, slot2.episodeId, slot2, Season123HeroGroupModel.instance.multiplication, nil, true)
+				Season123HeroGroupController.instance:sendStartAct123Battle(var_48_1.chapterId, var_48_1.episodeId, var_48_1, Season123HeroGroupModel.instance.multiplication, nil, true)
 			else
-				slot2.isReplay = false
-				slot2.multiplication = 1
+				var_48_1.isReplay = false
+				var_48_1.multiplication = 1
 
-				Season123HeroGroupController.instance:sendStartAct123Battle(slot2.chapterId, slot2.episodeId, slot2, 1)
+				Season123HeroGroupController.instance:sendStartAct123Battle(var_48_1.chapterId, var_48_1.episodeId, var_48_1, 1)
 			end
 
 			AudioMgr.instance:trigger(AudioEnum.UI.Stop_HeroNormalVoc)
@@ -593,69 +643,69 @@ function slot0._enterFight(slot0)
 		logError("没选中关卡，无法开始战斗")
 	end
 
-	return slot1
+	return var_48_0
 end
 
-function slot0._onUseRecommendGroup(slot0)
-	if slot0._replayMode then
-		slot0._replayMode = false
+function var_0_0._onUseRecommendGroup(arg_49_0)
+	if arg_49_0._replayMode then
+		arg_49_0._replayMode = false
 
-		slot0:_refreshBtns()
-		slot0:_switchReplayGroup()
+		arg_49_0:_refreshBtns()
+		arg_49_0:_switchReplayGroup()
 	end
 end
 
-function slot0._refreshBtns(slot0)
-	gohelper.setActive(slot0._goreplaybtn, slot0._replayMode)
-	gohelper.setActive(slot0._dropseasonherogroup.gameObject, not slot0._replayMode)
-	gohelper.setActive(slot0._gocost, slot0._replayMode)
-	gohelper.setActive(slot0._btnseasonreplay, not slot0._replayMode)
-	gohelper.setActive(slot0._btnstartseason, not slot0._replayMode)
-	gohelper.setActive(slot0._btnstartseasonreplay, slot0._replayMode)
+function var_0_0._refreshBtns(arg_50_0)
+	gohelper.setActive(arg_50_0._goreplaybtn, arg_50_0._replayMode)
+	gohelper.setActive(arg_50_0._dropseasonherogroup.gameObject, not arg_50_0._replayMode)
+	gohelper.setActive(arg_50_0._gocost, arg_50_0._replayMode)
+	gohelper.setActive(arg_50_0._btnseasonreplay, not arg_50_0._replayMode)
+	gohelper.setActive(arg_50_0._btnstartseason, not arg_50_0._replayMode)
+	gohelper.setActive(arg_50_0._btnstartseasonreplay, arg_50_0._replayMode)
 end
 
-function slot0._onGetFightRecordGroupReply(slot0, slot1)
-	slot0:removeEventCb(FightController.instance, FightEvent.RespGetFightRecordGroupReply, slot0._onGetFightRecordGroupReply, slot0)
-	Season123HeroGroupController.processReplayGroupMO(slot1)
+function var_0_0._onGetFightRecordGroupReply(arg_51_0, arg_51_1)
+	arg_51_0:removeEventCb(FightController.instance, FightEvent.RespGetFightRecordGroupReply, arg_51_0._onGetFightRecordGroupReply, arg_51_0)
+	Season123HeroGroupController.processReplayGroupMO(arg_51_1)
 
-	slot0._replayFightGroupMO = slot1
+	arg_51_0._replayFightGroupMO = arg_51_1
 
-	if not slot0._replayMode then
+	if not arg_51_0._replayMode then
 		return
 	end
 
-	slot0:_switchReplayGroup()
-	slot0:_updateReplayHeroGroup()
+	arg_51_0:_switchReplayGroup()
+	arg_51_0:_updateReplayHeroGroup()
 end
 
-function slot0._updateReplayHeroGroup(slot0)
-	HeroGroupModel.instance:setReplayParam(slot0._replayFightGroupMO)
-	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.SelectHeroGroup, slot0._replayFightGroupMO.id)
-	slot0:_refreshCloth()
-	gohelper.setActive(slot0._goherogroupcontain, false)
-	gohelper.setActive(slot0._goherogroupcontain, true)
+function var_0_0._updateReplayHeroGroup(arg_52_0)
+	HeroGroupModel.instance:setReplayParam(arg_52_0._replayFightGroupMO)
+	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.SelectHeroGroup, arg_52_0._replayFightGroupMO.id)
+	arg_52_0:_refreshCloth()
+	gohelper.setActive(arg_52_0._goherogroupcontain, false)
+	gohelper.setActive(arg_52_0._goherogroupcontain, true)
 	Season123Controller.instance:dispatchEvent(Season123Event.RecordRspMainCardRefresh)
 end
 
-function slot0._playHeroGroupExitEffect(slot0)
-	slot0._anim:Play("close", 0, 0)
-	slot0._btnContainAnim:Play("close", 0, 0)
+function var_0_0._playHeroGroupExitEffect(arg_53_0)
+	arg_53_0._anim:Play("close", 0, 0)
+	arg_53_0._btnContainAnim:Play("close", 0, 0)
 end
 
-function slot0._playCloseHeroGroupAnimation(slot0)
-	slot0._anim:Play("close", 0, 0)
-	slot0._btnContainAnim:Play("close", 0, 0)
+function var_0_0._playCloseHeroGroupAnimation(arg_54_0)
+	arg_54_0._anim:Play("close", 0, 0)
+	arg_54_0._btnContainAnim:Play("close", 0, 0)
 
-	slot0._heroContainAnim.enabled = true
+	arg_54_0._heroContainAnim.enabled = true
 
-	slot0._heroContainAnim:Play("herogroupcontain_out", 0, 0)
-	TaskDispatcher.runDelay(slot0._closeHeroContainAnim, slot0, 0.133)
+	arg_54_0._heroContainAnim:Play("herogroupcontain_out", 0, 0)
+	TaskDispatcher.runDelay(arg_54_0._closeHeroContainAnim, arg_54_0, 0.133)
 end
 
-function slot0._closeHeroContainAnim(slot0)
-	if slot0._heroContainAnim then
-		slot0._heroContainAnim.enabled = false
+function var_0_0._closeHeroContainAnim(arg_55_0)
+	if arg_55_0._heroContainAnim then
+		arg_55_0._heroContainAnim.enabled = false
 	end
 end
 
-return slot0
+return var_0_0

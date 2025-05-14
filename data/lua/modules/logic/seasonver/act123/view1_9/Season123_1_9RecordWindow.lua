@@ -1,90 +1,100 @@
-module("modules.logic.seasonver.act123.view1_9.Season123_1_9RecordWindow", package.seeall)
+﻿module("modules.logic.seasonver.act123.view1_9.Season123_1_9RecordWindow", package.seeall)
 
-slot0 = class("Season123_1_9RecordWindow", BaseView)
-slot1 = 5
-slot2 = 0.06
-slot3 = 0.2
+local var_0_0 = class("Season123_1_9RecordWindow", BaseView)
+local var_0_1 = 5
+local var_0_2 = 0.06
+local var_0_3 = 0.2
 
-function slot0.onInitView(slot0)
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close")
-	slot0._gobestrecorditem = gohelper.findChild(slot0.viewGO, "#go_bestrecorditem")
-	slot0._goContent = gohelper.findChild(slot0.viewGO, "#scroll_recordlist/Viewport/Content")
-	slot0._gorecorditem = gohelper.findChild(slot0.viewGO, "#scroll_recordlist/Viewport/Content/#go_recorditem")
-	slot0._goempty = gohelper.findChild(slot0.viewGO, "#go_empty")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
+	arg_1_0._gobestrecorditem = gohelper.findChild(arg_1_0.viewGO, "#go_bestrecorditem")
+	arg_1_0._goContent = gohelper.findChild(arg_1_0.viewGO, "#scroll_recordlist/Viewport/Content")
+	arg_1_0._gorecorditem = gohelper.findChild(arg_1_0.viewGO, "#scroll_recordlist/Viewport/Content/#go_recorditem")
+	arg_1_0._goempty = gohelper.findChild(arg_1_0.viewGO, "#go_empty")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:onClickModalMask()
+function var_0_0._btncloseOnClick(arg_4_0)
+	arg_4_0:onClickModalMask()
 end
 
-function slot0.onClickModalMask(slot0)
-	slot0:closeThis()
+function var_0_0.onClickModalMask(arg_5_0)
+	arg_5_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
-	gohelper.setActive(slot0._gorecorditem, false)
+function var_0_0._editableInitView(arg_6_0)
+	gohelper.setActive(arg_6_0._gorecorditem, false)
 end
 
-function slot0.onOpen(slot0)
-	if Season123RecordModel.instance:getRecordList(true) and #slot1 > 0 then
-		MonoHelper.addNoUpdateLuaComOnceToGo(slot0._gobestrecorditem, Season123_1_9RecordWindowItem):onUpdateMO(slot1[1])
-		gohelper.setActive(slot0._gobestrecorditem, true)
+function var_0_0.onOpen(arg_7_0)
+	local var_7_0 = Season123RecordModel.instance:getRecordList(true)
+
+	if var_7_0 and #var_7_0 > 0 then
+		MonoHelper.addNoUpdateLuaComOnceToGo(arg_7_0._gobestrecorditem, Season123_1_9RecordWindowItem):onUpdateMO(var_7_0[1])
+		gohelper.setActive(arg_7_0._gobestrecorditem, true)
 	else
-		gohelper.setActive(slot0._gobestrecorditem, false)
+		gohelper.setActive(arg_7_0._gobestrecorditem, false)
 	end
 
-	if Season123RecordModel.instance:getRecordList(false) and #slot2 > 0 then
-		gohelper.setActive(slot0._goempty, false)
-		UIBlockMgr.instance:startBlock(slot0.viewName .. "itemPlayAnim")
-		gohelper.CreateObjList(slot0, slot0._onRecordItemLoad, slot2, slot0._goContent, slot0._gorecorditem, Season123_1_9RecordWindowItem)
-		TaskDispatcher.runDelay(slot0._onItemPlayAnimFinish, slot0, uv0 * uv1 + uv2)
+	local var_7_1 = Season123RecordModel.instance:getRecordList(false)
+
+	if var_7_1 and #var_7_1 > 0 then
+		gohelper.setActive(arg_7_0._goempty, false)
+		UIBlockMgr.instance:startBlock(arg_7_0.viewName .. "itemPlayAnim")
+		gohelper.CreateObjList(arg_7_0, arg_7_0._onRecordItemLoad, var_7_1, arg_7_0._goContent, arg_7_0._gorecorditem, Season123_1_9RecordWindowItem)
+
+		local var_7_2 = var_0_1 * var_0_2 + var_0_3
+
+		TaskDispatcher.runDelay(arg_7_0._onItemPlayAnimFinish, arg_7_0, var_7_2)
 	else
-		gohelper.setActive(slot0._goempty, true)
+		gohelper.setActive(arg_7_0._goempty, true)
 	end
 end
 
-function slot0._onRecordItemLoad(slot0, slot1, slot2, slot3)
-	if not slot2 then
+function var_0_0._onRecordItemLoad(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
+	if not arg_8_2 then
 		return
 	end
 
-	slot4 = slot3
-	slot5 = true
+	local var_8_0 = arg_8_3
+	local var_8_1 = true
 
-	if uv0 < slot3 then
-		slot4 = uv0
-		slot5 = false
+	if arg_8_3 > var_0_1 then
+		var_8_0 = var_0_1
+		var_8_1 = false
 	end
 
-	if not slot2.isEmpty then
-		slot1:onLoad(slot4 * uv1, slot5)
+	local var_8_2 = var_8_0 * var_0_2
+
+	if not arg_8_2.isEmpty then
+		arg_8_1:onLoad(var_8_2, var_8_1)
 	end
 
-	slot1:onUpdateMO(slot2)
+	arg_8_1:onUpdateMO(arg_8_2)
 end
 
-function slot0._onItemPlayAnimFinish(slot0)
-	UIBlockMgr.instance:endBlock(slot0.viewName .. "itemPlayAnim")
+function var_0_0._onItemPlayAnimFinish(arg_9_0)
+	UIBlockMgr.instance:endBlock(arg_9_0.viewName .. "itemPlayAnim")
 end
 
-function slot0.onClose(slot0)
-	TaskDispatcher.cancelTask(slot0._onItemPlayAnimFinish, slot0)
-	slot0:_onItemPlayAnimFinish()
+function var_0_0.onClose(arg_10_0)
+	TaskDispatcher.cancelTask(arg_10_0._onItemPlayAnimFinish, arg_10_0)
+	arg_10_0:_onItemPlayAnimFinish()
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_11_0)
+	return
 end
 
-return slot0
+return var_0_0

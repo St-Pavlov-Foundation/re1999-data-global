@@ -1,108 +1,117 @@
-module("modules.logic.equip.model.EquipInfoTeamListModel", package.seeall)
+﻿module("modules.logic.equip.model.EquipInfoTeamListModel", package.seeall)
 
-slot0 = class("EquipInfoTeamListModel", EquipInfoBaseListModel)
+local var_0_0 = class("EquipInfoTeamListModel", EquipInfoBaseListModel)
 
-function slot0.onOpen(slot0, slot1, slot2)
-	slot0.heroMo = slot1.heroMo
+function var_0_0.onOpen(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0.heroMo = arg_1_1.heroMo
 
-	slot0:initTeamEquipList(slot1, slot2)
+	arg_1_0:initTeamEquipList(arg_1_1, arg_1_2)
 
-	slot0.curGroupMO = slot1.heroGroupMo or HeroGroupModel.instance:getCurGroupMO()
-	slot0.maxHeroNum = slot1.maxHeroNum
-	slot0.posIndex = slot1.posIndex
+	arg_1_0.curGroupMO = arg_1_1.heroGroupMo or HeroGroupModel.instance:getCurGroupMO()
+	arg_1_0.maxHeroNum = arg_1_1.maxHeroNum
+	arg_1_0.posIndex = arg_1_1.posIndex
 
-	if slot1 and slot1.heroMo and slot1.heroMo:isOtherPlayerHero() then
-		slot0.otherPlayerHeroMo = slot1.heroMo
+	if arg_1_1 and arg_1_1.heroMo and arg_1_1.heroMo:isOtherPlayerHero() then
+		arg_1_0.otherPlayerHeroMo = arg_1_1.heroMo
 	end
 
-	slot0:setCurrentSelectEquipMo(slot1.equipMo or slot0.equipMoList and slot0.equipMoList[1])
-	slot0:initInTeamEquipUidToHero()
+	local var_1_0 = arg_1_1.equipMo or arg_1_0.equipMoList and arg_1_0.equipMoList[1]
+
+	arg_1_0:setCurrentSelectEquipMo(var_1_0)
+	arg_1_0:initInTeamEquipUidToHero()
 end
 
-function slot0.initTeamEquipList(slot0, slot1, slot2)
-	if (slot1.equipMo and slot1.equipMo.equipType) == EquipEnum.ClientEquipType.TrialHero then
-		slot0.equipMoList = {
-			slot1.equipMo
+function var_0_0.initTeamEquipList(arg_2_0, arg_2_1, arg_2_2)
+	if (arg_2_1.equipMo and arg_2_1.equipMo.equipType) == EquipEnum.ClientEquipType.TrialHero then
+		arg_2_0.equipMoList = {
+			arg_2_1.equipMo
 		}
 	else
-		slot0:initEquipList(slot2)
+		arg_2_0:initEquipList(arg_2_2)
 	end
 end
 
-function slot0.initEquipList(slot0, slot1)
-	slot0.equipMoList = {}
-	slot2 = slot1:isFiltering()
+function var_0_0.initEquipList(arg_3_0, arg_3_1)
+	arg_3_0.equipMoList = {}
+
+	local var_3_0 = arg_3_1:isFiltering()
 
 	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Equip) then
-		for slot6, slot7 in ipairs(EquipModel.instance:getEquips()) do
-			if EquipHelper.isNormalEquip(slot7.config) then
-				if slot2 then
-					if slot1:checkIsIncludeTag(slot7.config) then
-						table.insert(slot0.equipMoList, slot7)
+		for iter_3_0, iter_3_1 in ipairs(EquipModel.instance:getEquips()) do
+			if EquipHelper.isNormalEquip(iter_3_1.config) then
+				if var_3_0 then
+					if arg_3_1:checkIsIncludeTag(iter_3_1.config) then
+						table.insert(arg_3_0.equipMoList, iter_3_1)
 					end
 				else
-					table.insert(slot0.equipMoList, slot7)
+					table.insert(arg_3_0.equipMoList, iter_3_1)
 				end
 			end
 		end
 	end
 
-	for slot6, slot7 in ipairs(HeroGroupTrialModel.instance:getTrialEquipList()) do
-		if slot2 then
-			if slot1:checkIsIncludeTag(slot7.config) then
-				table.insert(slot0.equipMoList, slot7)
+	for iter_3_2, iter_3_3 in ipairs(HeroGroupTrialModel.instance:getTrialEquipList()) do
+		if var_3_0 then
+			if arg_3_1:checkIsIncludeTag(iter_3_3.config) then
+				table.insert(arg_3_0.equipMoList, iter_3_3)
 			end
 		else
-			table.insert(slot0.equipMoList, slot7)
+			table.insert(arg_3_0.equipMoList, iter_3_3)
 		end
 	end
 
-	slot0:resortEquip()
+	arg_3_0:resortEquip()
 end
 
-function slot0.initInTeamEquipUidToHero(slot0)
-	slot0.equipUidToHeroMo = {}
+function var_0_0.initInTeamEquipUidToHero(arg_4_0)
+	arg_4_0.equipUidToHeroMo = {}
 
-	for slot5, slot6 in pairs(slot0.curGroupMO.equips) do
-		if not slot0.maxHeroNum or slot5 + 1 <= slot0.maxHeroNum then
-			if slot0.curGroupMO.heroList[slot5 + 1] and tonumber(slot7) < 0 then
-				slot0.equipUidToHeroMo[slot6.equipUid[1]] = HeroGroupTrialModel.instance:getById(slot7)
-			elseif slot0.otherPlayerHeroMo and slot0.otherPlayerHeroMo.uid == slot7 then
-				slot0.equipUidToHeroMo[slot6.equipUid[1]] = slot0.otherPlayerHeroMo
+	local var_4_0 = arg_4_0.curGroupMO.heroList
+
+	for iter_4_0, iter_4_1 in pairs(arg_4_0.curGroupMO.equips) do
+		if not arg_4_0.maxHeroNum or iter_4_0 + 1 <= arg_4_0.maxHeroNum then
+			local var_4_1 = var_4_0[iter_4_0 + 1]
+
+			if var_4_1 and tonumber(var_4_1) < 0 then
+				arg_4_0.equipUidToHeroMo[iter_4_1.equipUid[1]] = HeroGroupTrialModel.instance:getById(var_4_1)
+			elseif arg_4_0.otherPlayerHeroMo and arg_4_0.otherPlayerHeroMo.uid == var_4_1 then
+				arg_4_0.equipUidToHeroMo[iter_4_1.equipUid[1]] = arg_4_0.otherPlayerHeroMo
 			else
-				slot0.equipUidToHeroMo[slot6.equipUid[1]] = HeroModel.instance:getById(slot7)
+				arg_4_0.equipUidToHeroMo[iter_4_1.equipUid[1]] = HeroModel.instance:getById(var_4_1)
 			end
 		end
 	end
 end
 
-function slot0.getGroupCurrentPosEquip(slot0, slot1)
-	return slot0.curGroupMO:getPosEquips(slot1 or slot0.posIndex).equipUid
+function var_0_0.getGroupCurrentPosEquip(arg_5_0, arg_5_1)
+	return arg_5_0.curGroupMO:getPosEquips(arg_5_1 or arg_5_0.posIndex).equipUid
 end
 
-function slot0.getCurrentPosIndex(slot0)
-	return slot0.posIndex
+function var_0_0.getCurrentPosIndex(arg_6_0)
+	return arg_6_0.posIndex
 end
 
-function slot0.getRequestData(slot0, slot1, slot2)
-	return slot0.curGroupMO.groupId, slot1, {
-		slot2
+function var_0_0.getRequestData(arg_7_0, arg_7_1, arg_7_2)
+	local var_7_0 = {
+		arg_7_2
 	}
+
+	return arg_7_0.curGroupMO.groupId, arg_7_1, var_7_0
 end
 
-function slot0.getHeroMoByEquipUid(slot0, slot1)
-	return slot0.equipUidToHeroMo and slot0.equipUidToHeroMo[slot1]
+function var_0_0.getHeroMoByEquipUid(arg_8_0, arg_8_1)
+	return arg_8_0.equipUidToHeroMo and arg_8_0.equipUidToHeroMo[arg_8_1]
 end
 
-function slot0.clear(slot0)
-	slot0:onInit()
+function var_0_0.clear(arg_9_0)
+	arg_9_0:onInit()
 
-	slot0.selectedEquipMo = nil
-	slot0.curGroupMO = nil
-	slot0.posIndex = nil
-	slot0.equipUidToHeroMo = nil
+	arg_9_0.selectedEquipMo = nil
+	arg_9_0.curGroupMO = nil
+	arg_9_0.posIndex = nil
+	arg_9_0.equipUidToHeroMo = nil
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

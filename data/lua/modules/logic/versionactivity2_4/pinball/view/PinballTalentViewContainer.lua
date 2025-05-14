@@ -1,24 +1,26 @@
-module("modules.logic.versionactivity2_4.pinball.view.PinballTalentViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity2_4.pinball.view.PinballTalentViewContainer", package.seeall)
 
-slot0 = class("PinballTalentViewContainer", BaseViewContainer)
+local var_0_0 = class("PinballTalentViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		PinballTalentView.New(),
 		TabViewGroup.New(1, "#go_topleft")
 	}
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == 1 then
+		local var_2_0 = NavigateButtonsView.New({
+			true,
+			false,
+			false
+		})
+
 		return {
-			NavigateButtonsView.New({
-				true,
-				false,
-				false
-			})
+			var_2_0
 		}
 	end
 end
 
-return slot0
+return var_0_0

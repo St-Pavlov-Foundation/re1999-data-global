@@ -1,62 +1,78 @@
-module("modules.logic.settings.model.SettingsRoleVoiceModel", package.seeall)
+﻿module("modules.logic.settings.model.SettingsRoleVoiceModel", package.seeall)
 
-slot0 = class("SettingsRoleVoiceModel", BaseModel)
+local var_0_0 = class("SettingsRoleVoiceModel", BaseModel)
 
-function slot0._getValidLangStr(slot0, slot1)
-	slot2 = GameConfig:GetCurVoiceShortcut()
-	slot4 = false
+function var_0_0._getValidLangStr(arg_1_0, arg_1_1)
+	local var_1_0 = GameConfig:GetCurVoiceShortcut()
+	local var_1_1 = SettingsVoicePackageModel.instance:getPackInfo(arg_1_1)
+	local var_1_2 = false
 
-	if SettingsVoicePackageModel.instance:getPackInfo(slot1) and not slot3:needDownload() then
-		slot4 = true
+	if var_1_1 and not var_1_1:needDownload() then
+		var_1_2 = true
 	end
 
-	slot5 = slot4 and slot1 or slot2
+	local var_1_3 = var_1_2 and arg_1_1 or var_1_0
 
-	return LangSettings.shortCut2LangIdxTab[slot5], slot5, slot1 == slot2
+	return LangSettings.shortCut2LangIdxTab[var_1_3], var_1_3, arg_1_1 == var_1_0
 end
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_2_0)
+	return
 end
 
-function slot0.setCharVoiceLangPrefValue(slot0, slot1, slot2)
-	slot3 = type(slot1) == "number" and LangSettings.shortcutTab[slot1] or slot1
+function var_0_0.setCharVoiceLangPrefValue(arg_3_0, arg_3_1, arg_3_2)
+	local var_3_0 = type(arg_3_1) == "number" and LangSettings.shortcutTab[arg_3_1] or arg_3_1
 
-	slot0:statCharVoiceData(StatEnum.EventName.ChangeCharVoiceLang, slot2, slot3)
-	PlayerPrefsHelper.setString(PlayerModel.instance:getPlayerPrefsKey(SettingsEnum.CharVoiceLangPrefsKey .. slot2 .. "_"), slot3)
+	arg_3_0:statCharVoiceData(StatEnum.EventName.ChangeCharVoiceLang, arg_3_2, var_3_0)
+
+	local var_3_1 = PlayerModel.instance:getPlayerPrefsKey(SettingsEnum.CharVoiceLangPrefsKey .. arg_3_2 .. "_")
+
+	PlayerPrefsHelper.setString(var_3_1, var_3_0)
 end
 
-function slot0.getCharVoiceLangPrefValue(slot0, slot1)
-	slot4 = false
+function var_0_0.getCharVoiceLangPrefValue(arg_4_0, arg_4_1)
+	local var_4_0 = PlayerModel.instance:getPlayerPrefsKey(SettingsEnum.CharVoiceLangPrefsKey .. arg_4_1 .. "_")
+	local var_4_1 = PlayerPrefsHelper.getString(var_4_0)
+	local var_4_2 = false
 
-	if type(PlayerPrefsHelper.getString(PlayerModel.instance:getPlayerPrefsKey(SettingsEnum.CharVoiceLangPrefsKey .. slot1 .. "_"))) ~= "string" or string.nilorempty(slot3) then
-		slot3 = GameConfig:GetCurVoiceShortcut()
-		slot4 = true
+	if type(var_4_1) ~= "string" or string.nilorempty(var_4_1) then
+		var_4_1 = GameConfig:GetCurVoiceShortcut()
+
+		local var_4_3 = true
 	end
 
-	slot5 = LangSettings.shortCut2LangIdxTab[slot3]
-	slot6, slot7, slot8 = slot0:_getValidLangStr(slot3)
+	local var_4_4 = LangSettings.shortCut2LangIdxTab[var_4_1]
+	local var_4_5, var_4_6, var_4_7 = arg_4_0:_getValidLangStr(var_4_1)
+	local var_4_8 = var_4_7
+	local var_4_9 = var_4_6
 
-	return slot6, slot7, slot8
+	return var_4_5, var_4_9, var_4_8
 end
 
-function slot0.statCharVoiceData(slot0, slot1, slot2, slot3)
-	if not HeroConfig.instance:getHeroCO(slot2) then
+function var_0_0.statCharVoiceData(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
+	local var_5_0 = HeroConfig.instance:getHeroCO(arg_5_2)
+
+	if not var_5_0 then
 		return
 	end
 
-	if slot1 == StatEnum.EventName.ChangeCharVoiceLang then
-		slot6, slot7, slot8 = slot0:getCharVoiceLangPrefValue(slot2)
+	local var_5_1 = {
+		[StatEnum.EventProperties.HeroId] = tonumber(arg_5_2),
+		[StatEnum.EventProperties.HeroName] = var_5_0.name
+	}
+
+	if arg_5_1 == StatEnum.EventName.ChangeCharVoiceLang then
+		local var_5_2, var_5_3, var_5_4 = arg_5_0:getCharVoiceLangPrefValue(arg_5_2)
+		local var_5_5 = GameConfig:GetCurVoiceShortcut()
+
+		var_5_1[StatEnum.EventProperties.CharVoiceLang] = arg_5_3
+		var_5_1[StatEnum.EventProperties.GlobalVoiceLang] = var_5_5
+		var_5_1[StatEnum.EventProperties.CharVoiceLangBefore] = var_5_4 and var_5_5 or var_5_3
 	end
 
-	StatController.instance:track(slot1, {
-		[StatEnum.EventProperties.HeroId] = tonumber(slot2),
-		[StatEnum.EventProperties.HeroName] = slot4.name,
-		[StatEnum.EventProperties.CharVoiceLang] = slot3,
-		[StatEnum.EventProperties.GlobalVoiceLang] = GameConfig:GetCurVoiceShortcut(),
-		[StatEnum.EventProperties.CharVoiceLangBefore] = slot8 and slot9 or slot7
-	})
+	StatController.instance:track(arg_5_1, var_5_1)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

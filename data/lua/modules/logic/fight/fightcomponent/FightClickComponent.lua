@@ -1,29 +1,33 @@
-module("modules.logic.fight.fightcomponent.FightClickComponent", package.seeall)
+﻿module("modules.logic.fight.fightcomponent.FightClickComponent", package.seeall)
 
-slot0 = class("FightClickComponent", FightBaseClass)
+local var_0_0 = class("FightClickComponent", FightBaseClass)
 
-function slot0.onConstructor(slot0)
-	slot0._clickDic = {}
+function var_0_0.onConstructor(arg_1_0)
+	arg_1_0._clickDic = {}
 end
 
-function slot0.registClick(slot0, slot1, slot2, slot3, slot4)
-	slot0._clickDic[slot1:GetInstanceID()] = slot1
+function var_0_0.registClick(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4)
+	local var_2_0 = arg_2_1:GetInstanceID()
 
-	slot1:AddClickListener(slot2, slot3, slot4)
+	arg_2_0._clickDic[var_2_0] = arg_2_1
+
+	arg_2_1:AddClickListener(arg_2_2, arg_2_3, arg_2_4)
 end
 
-function slot0.removeClick(slot0, slot1)
-	if slot0._clickDic[slot1:GetInstanceID()] then
-		slot0._clickDic[slot2]:RemoveClickListener()
+function var_0_0.removeClick(arg_3_0, arg_3_1)
+	local var_3_0 = arg_3_1:GetInstanceID()
 
-		slot0._clickDic[slot2] = nil
+	if arg_3_0._clickDic[var_3_0] then
+		arg_3_0._clickDic[var_3_0]:RemoveClickListener()
+
+		arg_3_0._clickDic[var_3_0] = nil
 	end
 end
 
-function slot0.onDestructor(slot0)
-	for slot4, slot5 in pairs(slot0._clickDic) do
-		slot5:RemoveClickListener()
+function var_0_0.onDestructor(arg_4_0)
+	for iter_4_0, iter_4_1 in pairs(arg_4_0._clickDic) do
+		iter_4_1:RemoveClickListener()
 	end
 end
 
-return slot0
+return var_0_0

@@ -1,205 +1,222 @@
-module("modules.logic.activity.view.Activity101SignViewItemBase", package.seeall)
+﻿module("modules.logic.activity.view.Activity101SignViewItemBase", package.seeall)
 
-slot0 = class("Activity101SignViewItemBase", ListScrollCellExtend)
-slot1 = 0.03
-slot2 = 0.25
-slot3 = false
+local var_0_0 = class("Activity101SignViewItemBase", ListScrollCellExtend)
+local var_0_1 = 0.03
+local var_0_2 = 0.25
+local var_0_3 = false
 
-function slot0._optimizePlayOpenAnim(slot0)
-	if slot0._index <= slot0:getScrollModel():getStartPinIndex() then
-		uv0 = true
+function var_0_0._optimizePlayOpenAnim(arg_1_0)
+	if arg_1_0:getScrollModel():getStartPinIndex() >= arg_1_0._index then
+		var_0_3 = true
 	end
 
-	if uv0 then
-		slot0:playOpenAnim()
+	if var_0_3 then
+		arg_1_0:playOpenAnim()
 	end
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
+function var_0_0.onUpdateMO(arg_2_0, arg_2_1)
+	arg_2_0._mo = arg_2_1
 
-	if slot0:isLimitedScrollViewItem() then
-		slot0:_optimizePlayOpenAnim()
+	if arg_2_0:isLimitedScrollViewItem() then
+		arg_2_0:_optimizePlayOpenAnim()
 	end
 
-	slot0:onRefresh()
-	slot0:_refresh_TomorrowTagGo()
+	arg_2_0:onRefresh()
+	arg_2_0:_refresh_TomorrowTagGo()
 end
 
-function slot0._animCmp(slot0)
-	if not slot0._anim then
-		slot0._anim = slot0.viewGO:GetComponent(gohelper.Type_Animator)
+function var_0_0._animCmp(arg_3_0)
+	if not arg_3_0._anim then
+		arg_3_0._anim = arg_3_0.viewGO:GetComponent(gohelper.Type_Animator)
 
-		assert(slot0._anim, "can not found anim component!!")
+		assert(arg_3_0._anim, "can not found anim component!!")
 	end
 
-	return slot0._anim
+	return arg_3_0._anim
 end
 
-function slot0.onDestroyView(slot0)
-	TaskDispatcher.cancelTask(slot0._playOpenInner, slot0)
+function var_0_0.onDestroyView(arg_4_0)
+	TaskDispatcher.cancelTask(arg_4_0._playOpenInner, arg_4_0)
 
-	uv0 = false
+	var_0_3 = false
 end
 
-function slot0._onItemClick(slot0)
-	slot2 = slot0._index
+function var_0_0._onItemClick(arg_5_0)
+	local var_5_0 = arg_5_0:actId()
+	local var_5_1 = arg_5_0._index
 
 	AudioMgr.instance:trigger(AudioEnum.UI.Store_Good_Click)
 
-	if not ActivityModel.instance:isActOnLine(slot0:actId()) then
+	if not ActivityModel.instance:isActOnLine(var_5_0) then
 		GameFacade.showToast(ToastEnum.BattlePass)
 
 		return
 	end
 
-	slot4 = ActivityType101Model.instance:getType101LoginCount(slot1)
+	local var_5_2 = ActivityType101Model.instance:isType101RewardCouldGet(var_5_0, var_5_1)
+	local var_5_3 = ActivityType101Model.instance:getType101LoginCount(var_5_0)
 
-	if ActivityType101Model.instance:isType101RewardCouldGet(slot1, slot2) then
-		Activity101Rpc.instance:sendGet101BonusRequest(slot1, slot2)
+	if var_5_2 then
+		Activity101Rpc.instance:sendGet101BonusRequest(var_5_0, var_5_1)
 	end
 
-	if slot4 < slot2 then
+	if var_5_3 < var_5_1 then
 		GameFacade.showToast(ToastEnum.NorSign)
 	end
 end
 
-function slot0._playOpenInner(slot0)
-	slot0:setActive(true)
-	slot0:_animCmp():Play(UIAnimationName.Open, 0, 0)
+function var_0_0._playOpenInner(arg_6_0)
+	arg_6_0:setActive(true)
+	arg_6_0:_animCmp():Play(UIAnimationName.Open, 0, 0)
 end
 
-function slot0.playOpenAnim(slot0)
-	if slot0._mo.__isPlayedOpenAnim then
-		slot0:_playIdle()
+function var_0_0.playOpenAnim(arg_7_0)
+	local var_7_0 = arg_7_0._mo
+
+	if var_7_0.__isPlayedOpenAnim then
+		arg_7_0:_playIdle()
 
 		return
 	end
 
-	slot1.__isPlayedOpenAnim = true
-	slot2 = slot0._index
-	slot3 = nil
+	var_7_0.__isPlayedOpenAnim = true
 
-	if slot0:isLimitedScrollViewItem() then
-		if slot2 < slot0:getScrollModel():getStartPinIndex() then
-			slot0:_playIdle()
+	local var_7_1 = arg_7_0._index
+	local var_7_2
+
+	if arg_7_0:isLimitedScrollViewItem() then
+		local var_7_3 = arg_7_0:getScrollModel():getStartPinIndex()
+
+		if var_7_1 < var_7_3 then
+			arg_7_0:_playIdle()
 
 			return
 		end
 
-		if uv1 < math.max(0, slot2 - slot5 + 1) * uv0 then
-			slot3 = uv1
+		var_7_2 = math.max(0, var_7_1 - var_7_3 + 1) * var_0_1
 
-			slot0:_playIdle()
+		if var_7_2 > var_0_2 then
+			var_7_2 = var_0_2
+
+			arg_7_0:_playIdle()
 
 			return
 		end
 	else
-		slot3 = slot2 * uv0
+		var_7_2 = var_7_1 * var_0_1
 	end
 
-	slot0:setActive(false)
-	TaskDispatcher.runDelay(slot0._playOpenInner, slot0, slot3)
+	arg_7_0:setActive(false)
+	TaskDispatcher.runDelay(arg_7_0._playOpenInner, arg_7_0, var_7_2)
 end
 
-function slot0._playIdle(slot0)
-	slot0:_animCmp():Play(UIAnimationName.Idle, 0, 1)
+function var_0_0._playIdle(arg_8_0)
+	arg_8_0:_animCmp():Play(UIAnimationName.Idle, 0, 1)
 end
 
-function slot0.setActive(slot0, slot1)
-	gohelper.setActive(slot0.viewGO, slot1)
+function var_0_0.setActive(arg_9_0, arg_9_1)
+	gohelper.setActive(arg_9_0.viewGO, arg_9_1)
 end
 
-function slot0.isLimitedScrollViewItem(slot0)
-	return type(slot0._view.getScrollModel) ~= "function"
+function var_0_0.isLimitedScrollViewItem(arg_10_0)
+	local var_10_0 = arg_10_0._view
+
+	return type(var_10_0.getScrollModel) ~= "function"
 end
 
-function slot0.getScrollModel(slot0)
-	slot1 = slot0._view
+function var_0_0.getScrollModel(arg_11_0)
+	local var_11_0 = arg_11_0._view
 
-	if slot0:isLimitedScrollViewItem() then
-		return slot1._model
+	if arg_11_0:isLimitedScrollViewItem() then
+		return var_11_0._model
 	end
 
-	return slot1:getScrollModel()
+	return var_11_0:getScrollModel()
 end
 
-function slot0._refreshRewardItem(slot0, slot1, slot2)
-	slot1:setMOValue(slot2[1], slot2[2], slot2[3])
-	slot1:setCountFontSize(46)
-	slot1:setHideLvAndBreakFlag(true)
-	slot1:hideEquipLvAndBreak(true)
-	slot1:customOnClickCallback(function ()
-		slot1 = uv0._index
+function var_0_0._refreshRewardItem(arg_12_0, arg_12_1, arg_12_2)
+	arg_12_1:setMOValue(arg_12_2[1], arg_12_2[2], arg_12_2[3])
+	arg_12_1:setCountFontSize(46)
+	arg_12_1:setHideLvAndBreakFlag(true)
+	arg_12_1:hideEquipLvAndBreak(true)
+	arg_12_1:customOnClickCallback(function()
+		local var_13_0 = arg_12_0:actId()
+		local var_13_1 = arg_12_0._index
 
-		if not ActivityModel.instance:isActOnLine(uv0:actId()) then
+		if not ActivityModel.instance:isActOnLine(var_13_0) then
 			GameFacade.showToast(ToastEnum.BattlePass)
 
 			return
 		end
 
-		if ActivityType101Model.instance:isType101RewardCouldGet(slot0, slot1) then
-			Activity101Rpc.instance:sendGet101BonusRequest(slot0, slot1)
+		if ActivityType101Model.instance:isType101RewardCouldGet(var_13_0, var_13_1) then
+			Activity101Rpc.instance:sendGet101BonusRequest(var_13_0, var_13_1)
 
 			return
 		end
 
-		MaterialTipController.instance:showMaterialInfo(uv1[1], uv1[2])
+		MaterialTipController.instance:showMaterialInfo(arg_12_2[1], arg_12_2[2])
 	end)
 end
 
-function slot0._setActive_TomorrowTagGo(slot0, slot1)
-	gohelper.setActive(slot0:_tomorrowTagGo(), slot1)
+function var_0_0._setActive_TomorrowTagGo(arg_14_0, arg_14_1)
+	gohelper.setActive(arg_14_0:_tomorrowTagGo(), arg_14_1)
 end
 
-function slot0._setActive_kelingquGo(slot0, slot1)
-	gohelper.setActive(slot0:_kelingquGo(), slot1)
+function var_0_0._setActive_kelingquGo(arg_15_0, arg_15_1)
+	gohelper.setActive(arg_15_0:_kelingquGo(), arg_15_1)
 end
 
-slot4 = 86400
+local var_0_4 = 86400
 
-function slot0._refresh_TomorrowTagGo(slot0)
-	slot0:_setActive_TomorrowTagGo(slot0._index == ActivityType101Model.instance:getType101LoginCount(slot0:actId()) + 1 and uv0 <= slot0:getRemainTimeSec() or false)
+function var_0_0._refresh_TomorrowTagGo(arg_16_0)
+	local var_16_0 = arg_16_0:actId()
+	local var_16_1 = arg_16_0._index == ActivityType101Model.instance:getType101LoginCount(var_16_0) + 1 and arg_16_0:getRemainTimeSec() >= var_0_4 or false
+
+	arg_16_0:_setActive_TomorrowTagGo(var_16_1)
 end
 
-function slot0.actId(slot0)
-	return slot0._mo.data[1]
+function var_0_0.actId(arg_17_0)
+	return arg_17_0._mo.data[1]
 end
 
-function slot0.view(slot0)
-	return slot0._view
+function var_0_0.view(arg_18_0)
+	return arg_18_0._view
 end
 
-function slot0.viewContainer(slot0)
-	return slot0:view().viewContainer
+function var_0_0.viewContainer(arg_19_0)
+	return arg_19_0:view().viewContainer
 end
 
-function slot0.getRemainTimeSec(slot0)
-	return ActivityModel.instance:getRemainTimeSec(slot0:actId()) or 0
+function var_0_0.getRemainTimeSec(arg_20_0)
+	local var_20_0 = arg_20_0:actId()
+
+	return ActivityModel.instance:getRemainTimeSec(var_20_0) or 0
 end
 
-function slot0.onRefresh(slot0)
+function var_0_0.onRefresh(arg_21_0)
 	assert(false, "please override thid function")
 end
 
-function slot0._kelingquGo(slot0)
-	if not slot0._kelinquGo then
-		if slot0._goSelectedBG then
-			slot0._kelinquGo = gohelper.findChild(slot0._goSelectedBG, "kelinqu")
+function var_0_0._kelingquGo(arg_22_0)
+	if not arg_22_0._kelinquGo then
+		if arg_22_0._goSelectedBG then
+			arg_22_0._kelinquGo = gohelper.findChild(arg_22_0._goSelectedBG, "kelinqu")
 		else
-			slot0._kelinquGo = gohelper.findChild(slot0.viewGO, "Root/#go_SelectedBG/kelinqu")
+			arg_22_0._kelinquGo = gohelper.findChild(arg_22_0.viewGO, "Root/#go_SelectedBG/kelinqu")
 		end
 	end
 
-	return slot0._kelinquGo
+	return arg_22_0._kelinquGo
 end
 
-function slot0._tomorrowTagGo(slot0)
-	if not slot0._goTomorrowTag then
-		slot0._goTomorrowTag = gohelper.findChild(slot0.viewGO, "Root/#go_TomorrowTag")
+function var_0_0._tomorrowTagGo(arg_23_0)
+	if not arg_23_0._goTomorrowTag then
+		arg_23_0._goTomorrowTag = gohelper.findChild(arg_23_0.viewGO, "Root/#go_TomorrowTag")
 	end
 
-	return slot0._goTomorrowTag
+	return arg_23_0._goTomorrowTag
 end
 
-return slot0
+return var_0_0

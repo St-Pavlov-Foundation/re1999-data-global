@@ -1,13 +1,13 @@
-module("modules.logic.versionactivity2_2.tianshinana.config.TianShiNaNaConfig", package.seeall)
+﻿module("modules.logic.versionactivity2_2.tianshinana.config.TianShiNaNaConfig", package.seeall)
 
-slot0 = class("TianShiNaNaConfig", BaseConfig)
+local var_0_0 = class("TianShiNaNaConfig", BaseConfig)
 
-function slot0.onInit(slot0)
-	slot0._mapCos = {}
-	slot0._taskDict = {}
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._mapCos = {}
+	arg_1_0._taskDict = {}
 end
 
-function slot0.reqConfigNames(slot0)
+function var_0_0.reqConfigNames(arg_2_0)
 	return {
 		"activity167_episode",
 		"activity167_task",
@@ -15,76 +15,81 @@ function slot0.reqConfigNames(slot0)
 	}
 end
 
-function slot0.getMapCo(slot0, slot1)
-	if not slot0._mapCos[slot1] then
-		slot2 = TianShiNaNaMapCo.New()
+function var_0_0.getMapCo(arg_3_0, arg_3_1)
+	if not arg_3_0._mapCos[arg_3_1] then
+		local var_3_0 = TianShiNaNaMapCo.New()
+		local var_3_1 = addGlobalModule("modules.configs.tianshinana.lua_tianshinana_map_" .. tostring(arg_3_1), "lua_tianshinana_map_" .. tostring(arg_3_1))
 
-		if not addGlobalModule("modules.configs.tianshinana.lua_tianshinana_map_" .. tostring(slot1), "lua_tianshinana_map_" .. tostring(slot1)) then
-			logError("天使娜娜地图配置不存在" .. slot1)
+		if not var_3_1 then
+			logError("天使娜娜地图配置不存在" .. arg_3_1)
 
 			return
 		end
 
-		slot2:init(slot3)
+		var_3_0:init(var_3_1)
 
-		slot0._mapCos[slot1] = slot2
+		arg_3_0._mapCos[arg_3_1] = var_3_0
 	end
 
-	return slot0._mapCos[slot1]
+	return arg_3_0._mapCos[arg_3_1]
 end
 
-function slot0.getEpisodeByMapId(slot0, slot1)
-	if not slot0._mapIdToEpisodeCo then
-		slot0._mapIdToEpisodeCo = {}
+function var_0_0.getEpisodeByMapId(arg_4_0, arg_4_1)
+	if not arg_4_0._mapIdToEpisodeCo then
+		arg_4_0._mapIdToEpisodeCo = {}
 
-		for slot5, slot6 in ipairs(lua_activity167_episode.configList) do
-			slot0._mapIdToEpisodeCo[slot6.mapId] = slot6
+		for iter_4_0, iter_4_1 in ipairs(lua_activity167_episode.configList) do
+			arg_4_0._mapIdToEpisodeCo[iter_4_1.mapId] = iter_4_1
 		end
 	end
 
-	return slot0._mapIdToEpisodeCo[slot1]
+	return arg_4_0._mapIdToEpisodeCo[arg_4_1]
 end
 
-function slot0.getEpisodeCoList(slot0, slot1)
-	if not slot0._episodeDict then
-		slot0._episodeDict = {}
+function var_0_0.getEpisodeCoList(arg_5_0, arg_5_1)
+	if not arg_5_0._episodeDict then
+		arg_5_0._episodeDict = {}
 
-		for slot5, slot6 in ipairs(lua_activity167_episode.configList) do
-			if not slot0._episodeDict[slot6.activityId] then
-				slot0._episodeDict[slot6.activityId] = {}
+		for iter_5_0, iter_5_1 in ipairs(lua_activity167_episode.configList) do
+			if not arg_5_0._episodeDict[iter_5_1.activityId] then
+				arg_5_0._episodeDict[iter_5_1.activityId] = {}
 			end
 
-			table.insert(slot0._episodeDict[slot6.activityId], slot6)
+			table.insert(arg_5_0._episodeDict[iter_5_1.activityId], iter_5_1)
 		end
 	end
 
-	return slot0._episodeDict[slot1] or {}
+	return arg_5_0._episodeDict[arg_5_1] or {}
 end
 
-function slot0.getBubbleCo(slot0, slot1, slot2)
-	if not lua_activity167_bubble.configDict[slot1] then
+function var_0_0.getBubbleCo(arg_6_0, arg_6_1, arg_6_2)
+	local var_6_0 = lua_activity167_bubble.configDict[arg_6_1]
+
+	if not var_6_0 then
 		return
 	end
 
-	return slot3[slot2]
+	return var_6_0[arg_6_2]
 end
 
-function slot0.getTaskByActId(slot0, slot1)
-	if not slot0._taskDict[slot1] then
-		slot2 = {}
+function var_0_0.getTaskByActId(arg_7_0, arg_7_1)
+	local var_7_0 = arg_7_0._taskDict[arg_7_1]
 
-		for slot6, slot7 in ipairs(lua_activity167_task.configList) do
-			if slot7.activityId == slot1 then
-				table.insert(slot2, slot7)
+	if not var_7_0 then
+		var_7_0 = {}
+
+		for iter_7_0, iter_7_1 in ipairs(lua_activity167_task.configList) do
+			if iter_7_1.activityId == arg_7_1 then
+				table.insert(var_7_0, iter_7_1)
 			end
 		end
 
-		slot0._taskDict[slot1] = slot2
+		arg_7_0._taskDict[arg_7_1] = var_7_0
 	end
 
-	return slot2
+	return var_7_0
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

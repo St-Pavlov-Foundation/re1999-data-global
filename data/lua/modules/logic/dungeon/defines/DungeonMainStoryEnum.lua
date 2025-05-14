@@ -1,23 +1,24 @@
-module("modules.logic.dungeon.defines.DungeonMainStoryEnum", package.seeall)
+﻿module("modules.logic.dungeon.defines.DungeonMainStoryEnum", package.seeall)
 
-slot0 = _M
-slot0.ChapterWidth = {
+local var_0_0 = _M
+
+var_0_0.ChapterWidth = {
 	Special = 270,
 	Section = 410,
 	Normal = 340
 }
-slot0.ChapterPosY = {
+var_0_0.ChapterPosY = {
 	Special = -110,
 	Section = -100,
 	Normal = -100
 }
-slot0.ChapterStartPosX = 80
-slot0.SectionSpace = 100
-slot0.ChapterSpace = 0
-slot0.TipLineWidthOffsetX = -67
-slot0.FlowTipOffsetX = -80
-slot0.FlowLineOffsetWidth = 120
-slot0.AnimTime = 0.16
-slot0.SectionAnimTime = 0.3
+var_0_0.ChapterStartPosX = 80
+var_0_0.SectionSpace = 100
+var_0_0.ChapterSpace = 0
+var_0_0.TipLineWidthOffsetX = -67
+var_0_0.FlowTipOffsetX = -80
+var_0_0.FlowLineOffsetWidth = 120
+var_0_0.AnimTime = 0.16
+var_0_0.SectionAnimTime = 0.3
 
-return slot0
+return var_0_0

@@ -1,121 +1,134 @@
-module("modules.logic.backpack.view.BackpackCategoryListItem", package.seeall)
+﻿module("modules.logic.backpack.view.BackpackCategoryListItem", package.seeall)
 
-slot0 = class("BackpackCategoryListItem", ListScrollCell)
+local var_0_0 = class("BackpackCategoryListItem", ListScrollCell)
 
-function slot0.init(slot0, slot1)
-	slot0._bgs = slot0:getUserDataTb_()
-	slot0._nameTxt = slot0:getUserDataTb_()
-	slot0._subnameTxt = slot0:getUserDataTb_()
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0._bgs = arg_1_0:getUserDataTb_()
+	arg_1_0._nameTxt = arg_1_0:getUserDataTb_()
+	arg_1_0._subnameTxt = arg_1_0:getUserDataTb_()
 
-	for slot5 = 1, 2 do
-		slot0._bgs[slot5] = gohelper.findChild(slot1, "bg" .. tostring(slot5))
-		slot0._nameTxt[slot5] = gohelper.findChildText(slot0._bgs[slot5], "#txt_itemcn" .. tostring(slot5))
-		slot0._subnameTxt[slot5] = gohelper.findChildText(slot0._bgs[slot5], "#txt_itemen" .. tostring(slot5))
+	for iter_1_0 = 1, 2 do
+		arg_1_0._bgs[iter_1_0] = gohelper.findChild(arg_1_1, "bg" .. tostring(iter_1_0))
+		arg_1_0._nameTxt[iter_1_0] = gohelper.findChildText(arg_1_0._bgs[iter_1_0], "#txt_itemcn" .. tostring(iter_1_0))
+		arg_1_0._subnameTxt[iter_1_0] = gohelper.findChildText(arg_1_0._bgs[iter_1_0], "#txt_itemen" .. tostring(iter_1_0))
 	end
 
-	gohelper.setActive(slot0._bgs[2], false)
+	gohelper.setActive(arg_1_0._bgs[2], false)
 
-	slot0._btnCategory = SLFramework.UGUI.UIClickListener.Get(slot1)
-	slot0._deadline1 = gohelper.findChild(slot1, "bg1/#txt_itemcn1/deadline1")
-	slot0._deadlinebg = gohelper.findChildImage(slot1, "bg1/#txt_itemcn1/deadline1/deadlinebg")
-	slot0._deadlineTxt1 = gohelper.findChildText(slot0._deadline1, "deadlinetxt")
-	slot0._deadlineEffect = gohelper.findChild(slot0._deadline1, "#effect")
-	slot0._deadlinetimeicon = gohelper.findChildImage(slot0._deadline1, "deadlinetxt/timeicon")
-	slot0._format1 = gohelper.findChildText(slot0._deadline1, "deadlinetxt/format")
-	slot0._lastIsDay = nil
+	arg_1_0._btnCategory = SLFramework.UGUI.UIClickListener.Get(arg_1_1)
+	arg_1_0._deadline1 = gohelper.findChild(arg_1_1, "bg1/#txt_itemcn1/deadline1")
+	arg_1_0._deadlinebg = gohelper.findChildImage(arg_1_1, "bg1/#txt_itemcn1/deadline1/deadlinebg")
+	arg_1_0._deadlineTxt1 = gohelper.findChildText(arg_1_0._deadline1, "deadlinetxt")
+	arg_1_0._deadlineEffect = gohelper.findChild(arg_1_0._deadline1, "#effect")
+	arg_1_0._deadlinetimeicon = gohelper.findChildImage(arg_1_0._deadline1, "deadlinetxt/timeicon")
+	arg_1_0._format1 = gohelper.findChildText(arg_1_0._deadline1, "deadlinetxt/format")
+	arg_1_0._lastIsDay = nil
 end
 
-function slot0.addEventListeners(slot0)
-	slot0._btnCategory:AddClickListener(slot0._onItemClick, slot0)
-	TaskDispatcher.runRepeat(slot0._onRefreshDeadline, slot0, 1)
+function var_0_0.addEventListeners(arg_2_0)
+	arg_2_0._btnCategory:AddClickListener(arg_2_0._onItemClick, arg_2_0)
+	TaskDispatcher.runRepeat(arg_2_0._onRefreshDeadline, arg_2_0, 1)
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0._btnCategory:RemoveClickListener()
-	TaskDispatcher.cancelTask(slot0._onRefreshDeadline, slot0, 1)
+function var_0_0.removeEventListeners(arg_3_0)
+	arg_3_0._btnCategory:RemoveClickListener()
+	TaskDispatcher.cancelTask(arg_3_0._onRefreshDeadline, arg_3_0, 1)
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
-	slot2 = slot0:_isSelected()
+function var_0_0.onUpdateMO(arg_4_0, arg_4_1)
+	arg_4_0._mo = arg_4_1
 
-	gohelper.setActive(slot0._bgs[1], not slot2)
-	gohelper.setActive(slot0._bgs[2], slot2)
+	local var_4_0 = arg_4_0:_isSelected()
 
-	if slot2 then
-		slot0._nameTxt[2].text = slot1.name
-		slot0._subnameTxt[2].text = slot1.subname
+	gohelper.setActive(arg_4_0._bgs[1], not var_4_0)
+	gohelper.setActive(arg_4_0._bgs[2], var_4_0)
+
+	if var_4_0 then
+		arg_4_0._nameTxt[2].text = arg_4_1.name
+		arg_4_0._subnameTxt[2].text = arg_4_1.subname
 	else
-		slot0._nameTxt[1].text = slot1.name
-		slot0._subnameTxt[1].text = slot1.subname
+		arg_4_0._nameTxt[1].text = arg_4_1.name
+		arg_4_0._subnameTxt[1].text = arg_4_1.subname
 	end
 
-	slot0:_onRefreshDeadline()
+	arg_4_0:_onRefreshDeadline()
 end
 
-function slot0._onRefreshDeadline(slot0)
-	if slot0:_isSelected() then
+function var_0_0._onRefreshDeadline(arg_5_0)
+	if arg_5_0:_isSelected() then
 		return
 	end
 
-	slot1, slot2, slot3, slot4, slot5, slot6, slot7 = nil
+	local var_5_0
+	local var_5_1
+	local var_5_2
+	local var_5_3
+	local var_5_4
+	local var_5_5
+	local var_5_6
+	local var_5_7 = arg_5_0._deadline1
 
-	if slot0._mo.id == ItemEnum.CategoryType.Equip then
-		gohelper.setActive(slot0._deadline1, false)
+	if arg_5_0._mo.id == ItemEnum.CategoryType.Equip then
+		gohelper.setActive(var_5_7, false)
 
 		return
 	end
 
-	slot2 = slot0._deadlineTxt1
-	slot3 = slot0._format1
-	slot5 = slot0._deadlinebg
-	slot6 = slot0._deadlinetimeicon
-	slot7 = slot0._deadlineEffect
+	local var_5_8 = arg_5_0._deadlineTxt1
+	local var_5_9 = arg_5_0._format1
+	local var_5_10 = arg_5_0._deadlinebg
+	local var_5_11 = arg_5_0._deadlinetimeicon
+	local var_5_12 = arg_5_0._deadlineEffect
+	local var_5_13 = BackpackModel.instance:getCategoryItemsDeadline(arg_5_0._mo.id)
 
-	if BackpackModel.instance:getCategoryItemsDeadline(slot0._mo.id) and slot8 > 0 and slot0._mo.id ~= 0 then
-		gohelper.setActive(slot1, true)
+	if var_5_13 and var_5_13 > 0 and arg_5_0._mo.id ~= 0 then
+		gohelper.setActive(var_5_7, true)
 
-		if math.floor(slot8 - ServerTime.now()) <= 0 then
-			gohelper.setActive(slot1, false)
+		local var_5_14 = math.floor(var_5_13 - ServerTime.now())
+
+		if var_5_14 <= 0 then
+			gohelper.setActive(var_5_7, false)
 
 			return
 		end
 
-		slot2.text, slot3.text, slot4 = TimeUtil.secondToRoughTime(slot9, true)
+		local var_5_15
 
-		if slot0._lastIsDay == nil or slot0._lastIsDay ~= slot4 then
-			UISpriteSetMgr.instance:setCommonSprite(slot5, slot4 and "daojishi_01" or "daojishi_02")
-			UISpriteSetMgr.instance:setCommonSprite(slot6, slot4 and "daojishiicon_01" or "daojishiicon_02")
-			SLFramework.UGUI.GuiHelper.SetColor(slot2, slot4 and "#98D687" or "#E99B56")
-			SLFramework.UGUI.GuiHelper.SetColor(slot3, slot4 and "#98D687" or "#E99B56")
-			gohelper.setActive(slot7, not slot4)
+		var_5_8.text, var_5_9.text, var_5_15 = TimeUtil.secondToRoughTime(var_5_14, true)
 
-			slot0._lastIsDay = slot4
+		if arg_5_0._lastIsDay == nil or arg_5_0._lastIsDay ~= var_5_15 then
+			UISpriteSetMgr.instance:setCommonSprite(var_5_10, var_5_15 and "daojishi_01" or "daojishi_02")
+			UISpriteSetMgr.instance:setCommonSprite(var_5_11, var_5_15 and "daojishiicon_01" or "daojishiicon_02")
+			SLFramework.UGUI.GuiHelper.SetColor(var_5_8, var_5_15 and "#98D687" or "#E99B56")
+			SLFramework.UGUI.GuiHelper.SetColor(var_5_9, var_5_15 and "#98D687" or "#E99B56")
+			gohelper.setActive(var_5_12, not var_5_15)
+
+			arg_5_0._lastIsDay = var_5_15
 		end
 	else
-		gohelper.setActive(slot1, false)
+		gohelper.setActive(var_5_7, false)
 	end
 
-	gohelper.setActive(slot0._deadline2, false)
+	gohelper.setActive(arg_5_0._deadline2, false)
 end
 
-function slot0._isSelected(slot0)
-	return slot0._mo.id == BackpackModel.instance:getCurCategoryId()
+function var_0_0._isSelected(arg_6_0)
+	return arg_6_0._mo.id == BackpackModel.instance:getCurCategoryId()
 end
 
-function slot0._onItemClick(slot0)
-	if slot0:_isSelected() then
+function var_0_0._onItemClick(arg_7_0)
+	if arg_7_0:_isSelected() then
 		return
 	end
 
 	BackpackModel.instance:setItemAniHasShown(false)
-	BackpackModel.instance:setCurCategoryId(slot0._mo.id)
+	BackpackModel.instance:setCurCategoryId(arg_7_0._mo.id)
 	BackpackController.instance:dispatchEvent(BackpackEvent.SelectCategory)
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Universal_Click)
 end
 
-function slot0.onDestroy(slot0)
-	slot0._lastIsDay = nil
+function var_0_0.onDestroy(arg_8_0)
+	arg_8_0._lastIsDay = nil
 end
 
-return slot0
+return var_0_0

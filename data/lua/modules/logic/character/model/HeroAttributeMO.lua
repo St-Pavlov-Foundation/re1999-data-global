@@ -1,20 +1,20 @@
-module("modules.logic.character.model.HeroAttributeMO", package.seeall)
+﻿module("modules.logic.character.model.HeroAttributeMO", package.seeall)
 
-slot0 = pureTable("HeroAttributeMO")
+local var_0_0 = pureTable("HeroAttributeMO")
 
-function slot0.init(slot0, slot1)
-	slot0.original_max_hp = slot1.hp
-	slot0.hp = slot1.hp
-	slot0.attack = slot1.attack
-	slot0.defense = slot1.defense
-	slot0.mdefense = slot1.mdefense
-	slot0.technic = slot1.technic
-	slot0.multiHpIdx = slot1.multiHpIdx
-	slot0.multiHpNum = slot1.multiHpNum
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.original_max_hp = arg_1_1.hp
+	arg_1_0.hp = arg_1_1.hp
+	arg_1_0.attack = arg_1_1.attack
+	arg_1_0.defense = arg_1_1.defense
+	arg_1_0.mdefense = arg_1_1.mdefense
+	arg_1_0.technic = arg_1_1.technic
+	arg_1_0.multiHpIdx = arg_1_1.multiHpIdx
+	arg_1_0.multiHpNum = arg_1_1.multiHpNum
 end
 
-function slot0.getCurMultiHpIndex(slot0)
-	return slot0.multiHpIdx
+function var_0_0.getCurMultiHpIndex(arg_2_0)
+	return arg_2_0.multiHpIdx
 end
 
-return slot0
+return var_0_0

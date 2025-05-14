@@ -1,10 +1,10 @@
-module("modules.logic.room.model.common.RoomThemeMO", package.seeall)
+﻿module("modules.logic.room.model.common.RoomThemeMO", package.seeall)
 
-slot0 = pureTable("RoomThemeMO")
+local var_0_0 = pureTable("RoomThemeMO")
 
-function slot0.init(slot0, slot1, slot2)
-	slot0.id = slot1
-	slot0.config = slot2 or RoomConfig.instance:getThemeConfig(slot1)
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0.id = arg_1_1
+	arg_1_0.config = arg_1_2 or RoomConfig.instance:getThemeConfig(arg_1_1)
 end
 
-return slot0
+return var_0_0

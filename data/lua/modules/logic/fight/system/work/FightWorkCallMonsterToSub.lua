@@ -1,10 +1,10 @@
-module("modules.logic.fight.system.work.FightWorkCallMonsterToSub", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkCallMonsterToSub", package.seeall)
 
-slot0 = class("FightWorkCallMonsterToSub", FightEffectBase)
+local var_0_0 = class("FightWorkCallMonsterToSub", FightEffectBase)
 
-function slot0.onStart(slot0)
-	slot0:com_sendFightEvent(FightEvent.AddSubEntity)
-	slot0:onDone(true)
+function var_0_0.onStart(arg_1_0)
+	arg_1_0:com_sendFightEvent(FightEvent.AddSubEntity)
+	arg_1_0:onDone(true)
 end
 
-return slot0
+return var_0_0

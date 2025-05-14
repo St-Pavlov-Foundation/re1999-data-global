@@ -1,8 +1,8 @@
-module("modules.logic.versionactivity2_5.enter.view.VersionActivity2_5EnterViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity2_5.enter.view.VersionActivity2_5EnterViewContainer", package.seeall)
 
-slot0 = class("VersionActivity2_5EnterViewContainer", BaseViewContainer)
+local var_0_0 = class("VersionActivity2_5EnterViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		VersionActivity2_5EnterView.New(),
 		VersionActivity2_5EnterBgmView.New(),
@@ -11,78 +11,83 @@ function slot0.buildViews(slot0)
 	}
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
-		slot0._navigateButtonView = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == 1 then
+		arg_2_0._navigateButtonView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
 		return {
-			slot0._navigateButtonView
+			arg_2_0._navigateButtonView
 		}
-	elseif slot1 == 2 then
-		slot2 = {
-			[#slot2 + 1] = VersionActivity2_5DungeonEnterView.New(),
-			[#slot2 + 1] = VersionActivity2_5ChallengeEnterView.New(),
-			[#slot2 + 1] = V2a5_v1a6_ReactivityEnterview.New(),
-			[#slot2 + 1] = V1a6_BossRush_EnterView.New(),
-			[#slot2 + 1] = VersionActivity2_5LiangYueEnterView.New(),
-			[#slot2 + 1] = VersionActivity2_5FeiLinShiDuoEnterView.New(),
-			[#slot2 + 1] = RoleStoryEnterView.New(),
-			[#slot2 + 1] = ActivityWeekWalkDeepShowView.New(),
-			[#slot2 + 1] = TowerMainEntryView.New(),
-			[#slot2 + 1] = VersionActivity2_5AutoChessEnterView.New()
-		}
+	elseif arg_2_1 == 2 then
+		local var_2_0 = {}
 
-		return slot2
+		var_2_0[#var_2_0 + 1] = VersionActivity2_5DungeonEnterView.New()
+		var_2_0[#var_2_0 + 1] = VersionActivity2_5ChallengeEnterView.New()
+		var_2_0[#var_2_0 + 1] = V2a5_v1a6_ReactivityEnterview.New()
+		var_2_0[#var_2_0 + 1] = V1a6_BossRush_EnterView.New()
+		var_2_0[#var_2_0 + 1] = VersionActivity2_5LiangYueEnterView.New()
+		var_2_0[#var_2_0 + 1] = VersionActivity2_5FeiLinShiDuoEnterView.New()
+		var_2_0[#var_2_0 + 1] = RoleStoryEnterView.New()
+		var_2_0[#var_2_0 + 1] = ActivityWeekWalkDeepShowView.New()
+		var_2_0[#var_2_0 + 1] = TowerMainEntryView.New()
+		var_2_0[#var_2_0 + 1] = VersionActivity2_5AutoChessEnterView.New()
+
+		return var_2_0
 	end
 end
 
-function slot0.selectActTab(slot0, slot1, slot2)
-	slot0.activityId = slot2
+function var_0_0.selectActTab(arg_3_0, arg_3_1, arg_3_2)
+	arg_3_0.activityId = arg_3_2
 
-	slot0:dispatchEvent(ViewEvent.ToSwitchTab, 2, slot1)
+	arg_3_0:dispatchEvent(ViewEvent.ToSwitchTab, 2, arg_3_1)
 end
 
-function slot0.onContainerInit(slot0)
-	if not slot0.viewParam then
+function var_0_0.onContainerInit(arg_4_0)
+	if not arg_4_0.viewParam then
 		return
 	end
 
-	slot0.isFirstPlaySubViewAnim = true
+	arg_4_0.isFirstPlaySubViewAnim = true
 
-	ActivityStageHelper.recordActivityStage(slot0.viewParam.activityIdList or {})
+	local var_4_0 = arg_4_0.viewParam.activityIdList or {}
 
-	slot0.activityId = slot0.viewParam.jumpActId
+	ActivityStageHelper.recordActivityStage(var_4_0)
 
-	if VersionActivityEnterHelper.getTabIndex(slot0.viewParam.activitySettingList or {}, slot0.activityId) ~= 1 then
-		slot0.viewParam.defaultTabIds = {
-			[2] = slot3
-		}
+	arg_4_0.activityId = arg_4_0.viewParam.jumpActId
+
+	local var_4_1 = arg_4_0.viewParam.activitySettingList or {}
+	local var_4_2 = VersionActivityEnterHelper.getTabIndex(var_4_1, arg_4_0.activityId)
+
+	if var_4_2 ~= 1 then
+		arg_4_0.viewParam.defaultTabIds = {}
+		arg_4_0.viewParam.defaultTabIds[2] = var_4_2
 	end
 
-	slot5 = VersionActivityEnterHelper.getActId(slot2[slot3])
+	local var_4_3 = var_4_1[var_4_2]
+	local var_4_4 = VersionActivityEnterHelper.getActId(var_4_3)
 
-	ActivityEnterMgr.instance:enterActivity(slot5)
+	ActivityEnterMgr.instance:enterActivity(var_4_4)
 	ActivityRpc.instance:sendActivityNewStageReadRequest({
-		slot5
+		var_4_4
 	})
 end
 
-function slot0.onContainerClose(slot0)
-	if slot0:isManualClose() and not ViewMgr.instance:isOpen(ViewName.MainView) then
+function var_0_0.onContainerClose(arg_5_0)
+	if arg_5_0:isManualClose() and not ViewMgr.instance:isOpen(ViewName.MainView) then
 		ViewMgr.instance:openView(ViewName.MainView)
 	end
 end
 
-function slot0.getIsFirstPlaySubViewAnim(slot0)
-	return slot0.isFirstPlaySubViewAnim
+function var_0_0.getIsFirstPlaySubViewAnim(arg_6_0)
+	return arg_6_0.isFirstPlaySubViewAnim
 end
 
-function slot0.markPlayedSubViewAnim(slot0)
-	slot0.isFirstPlaySubViewAnim = false
+function var_0_0.markPlayedSubViewAnim(arg_7_0)
+	arg_7_0.isFirstPlaySubViewAnim = false
 end
 
-return slot0
+return var_0_0

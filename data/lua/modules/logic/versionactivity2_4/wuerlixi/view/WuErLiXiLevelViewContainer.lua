@@ -1,42 +1,42 @@
-module("modules.logic.versionactivity2_4.wuerlixi.view.WuErLiXiLevelViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity2_4.wuerlixi.view.WuErLiXiLevelViewContainer", package.seeall)
 
-slot0 = class("WuErLiXiLevelViewContainer", BaseViewContainer)
+local var_0_0 = class("WuErLiXiLevelViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, WuErLiXiLevelView.New())
-	table.insert(slot1, TabViewGroup.New(1, "#go_btns"))
+	table.insert(var_1_0, WuErLiXiLevelView.New())
+	table.insert(var_1_0, TabViewGroup.New(1, "#go_btns"))
 
-	return slot1
+	return var_1_0
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
-		slot0._navigateButtonsView = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == 1 then
+		arg_2_0._navigateButtonsView = NavigateButtonsView.New({
 			true,
 			true,
 			false
 		})
 
-		slot0._navigateButtonsView:setOverrideClose(slot0.overrideOnCloseClick, slot0)
+		arg_2_0._navigateButtonsView:setOverrideClose(arg_2_0.overrideOnCloseClick, arg_2_0)
 
 		return {
-			slot0._navigateButtonsView
+			arg_2_0._navigateButtonsView
 		}
 	end
 end
 
-function slot0.onContainerInit(slot0)
+function var_0_0.onContainerInit(arg_3_0)
 	ActivityEnterMgr.instance:enterActivity(VersionActivity2_4Enum.ActivityId.WuErLiXi)
 	ActivityRpc.instance:sendActivityNewStageReadRequest({
 		VersionActivity2_4Enum.ActivityId.WuErLiXi
 	})
 end
 
-function slot0.overrideOnCloseClick(slot0)
+function var_0_0.overrideOnCloseClick(arg_4_0)
 	WuErLiXiModel.instance:setCurEpisodeIndex(0)
-	slot0:closeThis()
+	arg_4_0:closeThis()
 end
 
-return slot0
+return var_0_0

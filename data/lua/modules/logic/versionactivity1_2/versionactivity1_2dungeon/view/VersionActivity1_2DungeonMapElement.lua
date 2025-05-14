@@ -1,245 +1,276 @@
-module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.view.VersionActivity1_2DungeonMapElement", package.seeall)
+﻿module("modules.logic.versionactivity1_2.versionactivity1_2dungeon.view.VersionActivity1_2DungeonMapElement", package.seeall)
 
-slot0 = class("VersionActivity1_2DungeonMapElement", DungeonMapElement)
+local var_0_0 = class("VersionActivity1_2DungeonMapElement", DungeonMapElement)
 
-function slot0.ctor(slot0, slot1)
-	slot0._config = slot1[1]
-	slot0._mapScene = slot1[2]
-	slot0._sceneElements = slot1[3]
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0._config = arg_1_1[1]
+	arg_1_0._mapScene = arg_1_1[2]
+	arg_1_0._sceneElements = arg_1_1[3]
 end
 
-function slot0.getElementId(slot0)
-	return slot0._config.id
+function var_0_0.getElementId(arg_2_0)
+	return arg_2_0._config.id
 end
 
-function slot0.init(slot0, slot1)
-	slot0._wenhaoGo = slot0:getUserDataTb_()
-	slot0._finishGo = slot0:getUserDataTb_()
-	slot0._go = slot1
-	slot0._transform = slot1.transform
+function var_0_0.init(arg_3_0, arg_3_1)
+	arg_3_0._wenhaoGo = arg_3_0:getUserDataTb_()
+	arg_3_0._finishGo = arg_3_0:getUserDataTb_()
+	arg_3_0._go = arg_3_1
+	arg_3_0._transform = arg_3_1.transform
 
-	transformhelper.setLocalPos(slot0._transform, string.splitToNumber(slot0._config.pos, "#")[1] or 0, slot2[2] or 0, slot2[3] or 0)
+	local var_3_0 = string.splitToNumber(arg_3_0._config.pos, "#")
 
-	if slot0._resLoader then
+	transformhelper.setLocalPos(arg_3_0._transform, var_3_0[1] or 0, var_3_0[2] or 0, var_3_0[3] or 0)
+
+	if arg_3_0._resLoader then
 		return
 	end
 
-	slot0._resLoader = MultiAbLoader.New()
+	arg_3_0._resLoader = MultiAbLoader.New()
 
-	slot0._resLoader:addPath(slot0._config.res)
+	arg_3_0._resLoader:addPath(arg_3_0._config.res)
 
-	slot0._effectPath = {}
+	arg_3_0._effectPath = {}
 
-	if not string.nilorempty(slot0._config.effect) then
-		table.insert(slot0._effectPath, slot0._config.effect)
-		slot0._resLoader:addPath(slot0._config.effect)
+	if not string.nilorempty(arg_3_0._config.effect) then
+		table.insert(arg_3_0._effectPath, arg_3_0._config.effect)
+		arg_3_0._resLoader:addPath(arg_3_0._config.effect)
 	end
 
-	if slot0._config.type == DungeonEnum.ElementType.Activity1_2Building_Trap then
-		slot3 = "scenes/m_s08_hddt/prefab/lhem_icon_qh.prefab"
+	if arg_3_0._config.type == DungeonEnum.ElementType.Activity1_2Building_Trap then
+		local var_3_1 = "scenes/m_s08_hddt/prefab/lhem_icon_qh.prefab"
 
-		table.insert(slot0._effectPath, slot3)
-		slot0._resLoader:addPath(slot3)
-	elseif slot0._config.type == DungeonEnum.ElementType.Activity1_2Building_Upgrade then
-		slot3 = "scenes/m_s08_hddt/prefab/lhem_icon_ck.prefab"
+		table.insert(arg_3_0._effectPath, var_3_1)
+		arg_3_0._resLoader:addPath(var_3_1)
+	elseif arg_3_0._config.type == DungeonEnum.ElementType.Activity1_2Building_Upgrade then
+		local var_3_2 = "scenes/m_s08_hddt/prefab/lhem_icon_ck.prefab"
 
-		table.insert(slot0._effectPath, slot3)
-		slot0._resLoader:addPath(slot3)
+		table.insert(arg_3_0._effectPath, var_3_2)
+		arg_3_0._resLoader:addPath(var_3_2)
 	end
 
-	slot0._resLoader:startLoad(slot0._onResLoaded, slot0)
+	arg_3_0._resLoader:startLoad(arg_3_0._onResLoaded, arg_3_0)
 end
 
-function slot0.hide(slot0)
-	gohelper.setActive(slot0._go, false)
+function var_0_0.hide(arg_4_0)
+	gohelper.setActive(arg_4_0._go, false)
 end
 
-function slot0.show(slot0)
-	gohelper.setActive(slot0._go, true)
+function var_0_0.show(arg_5_0)
+	gohelper.setActive(arg_5_0._go, true)
 end
 
-function slot0.hasEffect(slot0)
-	return slot0._effectPath
+function var_0_0.hasEffect(arg_6_0)
+	return arg_6_0._effectPath
 end
 
-function slot0.showArrow(slot0)
-	if slot0._config.type == DungeonEnum.ElementType.DailyEpisode then
-		return slot0._go.activeInHierarchy
+function var_0_0.showArrow(arg_7_0)
+	if arg_7_0._config.type == DungeonEnum.ElementType.DailyEpisode then
+		return arg_7_0._go.activeInHierarchy
 	end
 
-	return slot0._config.showArrow == 1
+	return arg_7_0._config.showArrow == 1
 end
 
-function slot0.isValid(slot0)
-	return not gohelper.isNil(slot0._go)
+function var_0_0.isValid(arg_8_0)
+	return not gohelper.isNil(arg_8_0._go)
 end
 
-function slot0.setWenHaoVisible(slot0, slot1)
-	if slot1 then
-		slot0:setWenHaoAnim("wenhao_a_001_in")
+function var_0_0.setWenHaoVisible(arg_9_0, arg_9_1)
+	if arg_9_1 then
+		arg_9_0:setWenHaoAnim("wenhao_a_001_in")
 	else
-		slot2 = "wenhao_a_001_out"
+		local var_9_0 = "wenhao_a_001_out"
 
-		if (slot0._config.type == DungeonEnum.ElementType.Activity1_2Fight or VersionActivity1_2DungeonConfig.instance:getBuildingConfigsByElementID(slot0._config.id)) and slot0._sceneElements.curSelectId == slot0._config.id then
-			slot2 = "click"
-			slot0._sceneElements.curSelectId = nil
+		if (arg_9_0._config.type == DungeonEnum.ElementType.Activity1_2Fight or VersionActivity1_2DungeonConfig.instance:getBuildingConfigsByElementID(arg_9_0._config.id)) and arg_9_0._sceneElements.curSelectId == arg_9_0._config.id then
+			var_9_0 = "click"
+			arg_9_0._sceneElements.curSelectId = nil
 		end
 
-		slot0:setWenHaoAnim(slot2)
+		arg_9_0:setWenHaoAnim(var_9_0)
 	end
 end
 
-function slot0.setWenHaoAnim(slot0, slot1)
-	slot0._wenhaoAnimName = slot1
+function var_0_0.setWenHaoAnim(arg_10_0, arg_10_1)
+	arg_10_0._wenhaoAnimName = arg_10_1
 
-	if #slot0._wenhaoGo > 0 then
-		for slot5, slot6 in ipairs(slot0._wenhaoGo) do
-			if not gohelper.isNil(slot6) and slot6.activeInHierarchy then
-				SLFramework.AnimatorPlayer.Get(slot6):Play(slot1, slot0._wenHaoAnimDone, slot0)
+	if #arg_10_0._wenhaoGo > 0 then
+		for iter_10_0, iter_10_1 in ipairs(arg_10_0._wenhaoGo) do
+			if not gohelper.isNil(iter_10_1) and iter_10_1.activeInHierarchy then
+				SLFramework.AnimatorPlayer.Get(iter_10_1):Play(arg_10_1, arg_10_0._wenHaoAnimDone, arg_10_0)
 			end
 		end
 	end
 end
 
-function slot0._wenHaoAnimDone(slot0)
-	if slot0._wenhaoAnimName == "finish" then
-		gohelper.destroy(slot0._go)
-		DungeonController.instance:dispatchEvent(DungeonMapElementEvent.OnFinishAndDisposeElement, slot0._config)
+function var_0_0._wenHaoAnimDone(arg_11_0)
+	if arg_11_0._wenhaoAnimName == "finish" then
+		gohelper.destroy(arg_11_0._go)
+		DungeonController.instance:dispatchEvent(DungeonMapElementEvent.OnFinishAndDisposeElement, arg_11_0._config)
 	end
 end
 
-function slot0._destroyGo(slot0)
-	gohelper.destroy(slot0._go)
+function var_0_0._destroyGo(arg_12_0)
+	gohelper.destroy(arg_12_0._go)
 end
 
-function slot0._destroyItemGo(slot0)
-	gohelper.destroy(slot0._itemGo)
+function var_0_0._destroyItemGo(arg_13_0)
+	gohelper.destroy(arg_13_0._itemGo)
 end
 
-function slot0.setFinish(slot0)
-	if #slot0._wenhaoGo == 0 then
-		slot0:_destroyGo()
+function var_0_0.setFinish(arg_14_0)
+	if #arg_14_0._wenhaoGo == 0 then
+		arg_14_0:_destroyGo()
 
 		return
 	end
 
-	slot0:removeEventListeners()
-	slot0:setWenHaoAnim("finish")
+	arg_14_0:removeEventListeners()
+	arg_14_0:setWenHaoAnim("finish")
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_elementdisappear)
-	TaskDispatcher.runDelay(slot0._destroyItemGo, slot0, 0.77)
-	TaskDispatcher.runDelay(slot0._destroyGo, slot0, 1.6)
+	TaskDispatcher.runDelay(arg_14_0._destroyItemGo, arg_14_0, 0.77)
+	TaskDispatcher.runDelay(arg_14_0._destroyGo, arg_14_0, 1.6)
 end
 
-function slot0.setFinishAndDotDestroy(slot0)
-	if #slot0._wenhaoGo == 0 then
+function var_0_0.setFinishAndDotDestroy(arg_15_0)
+	if #arg_15_0._wenhaoGo == 0 then
 		return
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_elementdisappear)
 
-	if #slot0._finishGo > 0 then
-		for slot4, slot5 in ipairs(slot0._finishGo) do
-			gohelper.setActive(slot5, true)
+	if #arg_15_0._finishGo > 0 then
+		for iter_15_0, iter_15_1 in ipairs(arg_15_0._finishGo) do
+			gohelper.setActive(iter_15_1, true)
 
-			if slot5.activeInHierarchy then
-				SLFramework.AnimatorPlayer.Get(slot5):Play(UIAnimationName.Open, slot0.setFinishAndDotDestroyAnimationDone, slot0)
+			if iter_15_1.activeInHierarchy then
+				SLFramework.AnimatorPlayer.Get(iter_15_1):Play(UIAnimationName.Open, arg_15_0.setFinishAndDotDestroyAnimationDone, arg_15_0)
 			end
 		end
 	else
-		slot0:dispose()
+		arg_15_0:dispose()
 	end
 end
 
-function slot0.setFinishAndDotDestroyAnimationDone(slot0)
-	slot0.animatorPlayer:Play(UIAnimationName.Idle, function ()
-	end, slot0)
-	slot0:dispose()
+function var_0_0.setFinishAndDotDestroyAnimationDone(arg_16_0)
+	arg_16_0.animatorPlayer:Play(UIAnimationName.Idle, function()
+		return
+	end, arg_16_0)
+	arg_16_0:dispose()
 end
 
-function slot0.onDown(slot0)
-	slot0:_onDown()
+function var_0_0.onDown(arg_18_0)
+	arg_18_0:_onDown()
 end
 
-function slot0._onDown(slot0)
-	slot0._sceneElements:setElementDown(slot0)
+function var_0_0._onDown(arg_19_0)
+	arg_19_0._sceneElements:setElementDown(arg_19_0)
 end
 
-function slot0.onClick(slot0)
+function var_0_0.onClick(arg_20_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_lvhu_building_click)
-	slot0._sceneElements:clickElement(slot0._config.id)
+	arg_20_0._sceneElements:clickElement(arg_20_0._config.id)
 end
 
-function slot0._onResLoaded(slot0)
-	slot0._itemGo = gohelper.clone(slot0._resLoader:getAssetItem(slot0._config.res):GetResource(slot0._config.res), slot0._go)
+function var_0_0._onResLoaded(arg_21_0)
+	local var_21_0 = arg_21_0._resLoader:getAssetItem(arg_21_0._config.res):GetResource(arg_21_0._config.res)
 
-	if slot0._config.resScale and slot3 ~= 0 then
-		transformhelper.setLocalScale(slot0._itemGo.transform, slot3, slot3, 1)
+	arg_21_0._itemGo = gohelper.clone(var_21_0, arg_21_0._go)
+
+	local var_21_1 = arg_21_0._config.resScale
+
+	if var_21_1 and var_21_1 ~= 0 then
+		transformhelper.setLocalScale(arg_21_0._itemGo.transform, var_21_1, var_21_1, 1)
 	end
 
-	gohelper.setLayer(slot0._itemGo, UnityLayer.Scene, true)
-	DungeonMapElement.addBoxColliderListener(slot0._itemGo, slot0._onDown, slot0)
-	transformhelper.setLocalPos(slot0._itemGo.transform, 0, 0, -1)
+	gohelper.setLayer(arg_21_0._itemGo, UnityLayer.Scene, true)
+	DungeonMapElement.addBoxColliderListener(arg_21_0._itemGo, arg_21_0._onDown, arg_21_0)
+	transformhelper.setLocalPos(arg_21_0._itemGo.transform, 0, 0, -1)
 
-	if #slot0._effectPath > 0 then
-		for slot7, slot8 in ipairs(slot0._effectPath) do
-			gohelper.addChild(slot0._go, UnityEngine.GameObject.New("effect" .. slot7))
+	if #arg_21_0._effectPath > 0 then
+		for iter_21_0, iter_21_1 in ipairs(arg_21_0._effectPath) do
+			local var_21_2 = UnityEngine.GameObject.New("effect" .. iter_21_0)
 
-			slot0._offsetX = string.splitToNumber(slot0._config.tipOffsetPos, "#")[1] or 0
-			slot0._offsetY = slot10[2] or 0
-			slot11 = slot0._effectPath[slot7]
-			slot14 = gohelper.clone(slot0._resLoader:getAssetItem(slot11):GetResource(slot11), slot9, "root")
+			gohelper.addChild(arg_21_0._go, var_21_2)
 
-			DungeonMapElement.addBoxColliderListener(slot14, slot0._onDown, slot0)
-			transformhelper.setLocalPos(slot14.transform, slot0._offsetX, slot0._offsetY, -3)
+			local var_21_3 = string.splitToNumber(arg_21_0._config.tipOffsetPos, "#")
 
-			if gohelper.findChildComponent(slot14, "ani", typeof(UnityEngine.Animator)) then
-				slot15:Play("lhem_icon_loop", 0, math.random(0, 100) / 100)
+			arg_21_0._offsetX = var_21_3[1] or 0
+			arg_21_0._offsetY = var_21_3[2] or 0
+
+			local var_21_4 = arg_21_0._effectPath[iter_21_0]
+			local var_21_5 = arg_21_0._resLoader:getAssetItem(var_21_4):GetResource(var_21_4)
+			local var_21_6 = gohelper.clone(var_21_5, var_21_2, "root")
+
+			DungeonMapElement.addBoxColliderListener(var_21_6, arg_21_0._onDown, arg_21_0)
+			transformhelper.setLocalPos(var_21_6.transform, arg_21_0._offsetX, arg_21_0._offsetY, -3)
+
+			local var_21_7 = gohelper.findChildComponent(var_21_6, "ani", typeof(UnityEngine.Animator))
+
+			if var_21_7 then
+				local var_21_8 = math.random(0, 100)
+
+				var_21_7:Play("lhem_icon_loop", 0, var_21_8 / 100)
 			end
 
-			slot16 = gohelper.findChild(slot14, "ani/yuanjian_new_07/gou")
+			local var_21_9 = gohelper.findChild(var_21_6, "ani/yuanjian_new_07/gou")
 
-			gohelper.setActive(slot16, false)
+			gohelper.setActive(var_21_9, false)
 
-			if slot16 then
-				table.insert(slot0._finishGo, slot16)
+			if var_21_9 then
+				table.insert(arg_21_0._finishGo, var_21_9)
 			end
 
-			if slot0._mapScene:showInteractiveItem() then
-				slot0:setWenHaoVisible(false)
-			elseif slot0._wenhaoAnimName then
-				slot0:setWenHaoAnim(slot0._wenhaoAnimName)
+			if arg_21_0._mapScene:showInteractiveItem() then
+				arg_21_0:setWenHaoVisible(false)
+			elseif arg_21_0._wenhaoAnimName then
+				arg_21_0:setWenHaoAnim(arg_21_0._wenhaoAnimName)
 			end
 
-			if string.find(slot11, "hddt_front_lubiao_a_002") then
-				slot19 = gohelper.findChild(slot14, "ani/plane"):GetComponent(typeof(UnityEngine.Renderer)).material
-				slot20 = slot19:GetVector("_Frame")
-				slot20.w = DungeonEnum.ElementTypeIconIndex[string.format("%s0", slot0._config.type)]
+			if string.find(var_21_4, "hddt_front_lubiao_a_002") then
+				local var_21_10 = gohelper.findChild(var_21_6, "ani/plane"):GetComponent(typeof(UnityEngine.Renderer)).material
+				local var_21_11 = var_21_10:GetVector("_Frame")
 
-				slot19:SetVector("_Frame", slot20)
+				var_21_11.w = DungeonEnum.ElementTypeIconIndex[string.format("%s0", arg_21_0._config.type)]
+
+				var_21_10:SetVector("_Frame", var_21_11)
 			end
 
-			table.insert(slot0._wenhaoGo, slot14)
+			table.insert(arg_21_0._wenhaoGo, var_21_6)
 
-			for slot20 = 1, 2 do
-				if gohelper.findChild(slot14, string.format("ani/icon%d/anim/biaoti/txt", slot20)) then
-					slot21:GetComponent(typeof(TMPro.TextMeshPro)).text = slot0._config.title
+			for iter_21_2 = 1, 2 do
+				local var_21_12 = gohelper.findChild(var_21_6, string.format("ani/icon%d/anim/biaoti/txt", iter_21_2))
 
-					if slot0._config.type == DungeonEnum.ElementType.DailyEpisode and VersionActivity1_2DungeonModel.instance:getDailyEpisodeConfigByElementId(slot0._config.id) then
-						slot22.text = slot23.name
+				if var_21_12 then
+					local var_21_13 = var_21_12:GetComponent(typeof(TMPro.TextMeshPro))
+
+					var_21_13.text = arg_21_0._config.title
+
+					if arg_21_0._config.type == DungeonEnum.ElementType.DailyEpisode then
+						local var_21_14 = VersionActivity1_2DungeonModel.instance:getDailyEpisodeConfigByElementId(arg_21_0._config.id)
+
+						if var_21_14 then
+							var_21_13.text = var_21_14.name
+						end
 					end
 				end
 			end
 		end
 	end
 
-	VersionActivity1_2DungeonController.instance:dispatchEvent(VersionActivity1_2DungeonEvent.addElementItem, slot0._config.id)
+	VersionActivity1_2DungeonController.instance:dispatchEvent(VersionActivity1_2DungeonEvent.addElementItem, arg_21_0._config.id)
 
-	if FightModel.instance:getFightParam() and slot4.episodeId then
-		if DungeonConfig.instance:getEpisodeCO(slot5) and slot6.chapterId == 12701 then
+	local var_21_15 = FightModel.instance:getFightParam()
+	local var_21_16 = var_21_15 and var_21_15.episodeId
+
+	if var_21_16 then
+		local var_21_17 = DungeonConfig.instance:getEpisodeCO(var_21_16)
+
+		if var_21_17 and var_21_17.chapterId == 12701 then
 			return
 		end
 
-		if slot0._config.param == tostring(slot5) then
+		if arg_21_0._config.param == tostring(var_21_16) then
 			DungeonMapModel.instance.lastElementBattleId = nil
 
 			if GuideModel.instance:isFlagEnable(GuideModel.GuideFlag.SkipClickElement) then
@@ -248,93 +279,96 @@ function slot0._onResLoaded(slot0)
 
 			DungeonMapModel.instance.directFocusElement = true
 
-			slot0:onClick()
+			arg_21_0:onClick()
 
 			DungeonMapModel.instance.directFocusElement = false
 		end
 	end
 end
 
-function slot0._onSetEpisodeListVisible(slot0, slot1)
-	slot0:setWenHaoVisible(slot1)
+function var_0_0._onSetEpisodeListVisible(arg_22_0, arg_22_1)
+	arg_22_0:setWenHaoVisible(arg_22_1)
 end
 
-function slot0._afterCollectLastShow(slot0)
+function var_0_0._afterCollectLastShow(arg_23_0)
+	return
 end
 
-function slot0.addEventListeners(slot0)
-	DungeonController.instance:registerCallback(DungeonEvent.OnSetEpisodeListVisible, slot0._onSetEpisodeListVisible, slot0)
-	slot0:addEventCb(VersionActivity1_2DungeonController.instance, VersionActivity1_2DungeonEvent.afterCollectLastShow, slot0._afterCollectLastShow, slot0)
+function var_0_0.addEventListeners(arg_24_0)
+	DungeonController.instance:registerCallback(DungeonEvent.OnSetEpisodeListVisible, arg_24_0._onSetEpisodeListVisible, arg_24_0)
+	arg_24_0:addEventCb(VersionActivity1_2DungeonController.instance, VersionActivity1_2DungeonEvent.afterCollectLastShow, arg_24_0._afterCollectLastShow, arg_24_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	DungeonController.instance:unregisterCallback(DungeonEvent.OnSetEpisodeListVisible, slot0._onSetEpisodeListVisible, slot0)
+function var_0_0.removeEventListeners(arg_25_0)
+	DungeonController.instance:unregisterCallback(DungeonEvent.OnSetEpisodeListVisible, arg_25_0._onSetEpisodeListVisible, arg_25_0)
 end
 
-function slot0.onStart(slot0)
+function var_0_0.onStart(arg_26_0)
+	return
 end
 
-function slot0.addBoxCollider2D(slot0)
-	slot1 = ZProj.BoxColliderClickListener.Get(slot0)
-	slot2 = gohelper.onceAddComponent(slot0, typeof(UnityEngine.BoxCollider2D))
-	slot2.enabled = true
-	slot2.size = Vector2(1.5, 1.5)
+function var_0_0.addBoxCollider2D(arg_27_0)
+	local var_27_0 = ZProj.BoxColliderClickListener.Get(arg_27_0)
+	local var_27_1 = gohelper.onceAddComponent(arg_27_0, typeof(UnityEngine.BoxCollider2D))
 
-	slot1:SetIgnoreUI(true)
+	var_27_1.enabled = true
+	var_27_1.size = Vector2(1.5, 1.5)
 
-	return slot1
+	var_27_0:SetIgnoreUI(true)
+
+	return var_27_0
 end
 
-function slot0.addBoxColliderListener(slot0, slot1, slot2)
-	DungeonMapElement.addBoxCollider2D(slot0):AddClickListener(slot1, slot2)
+function var_0_0.addBoxColliderListener(arg_28_0, arg_28_1, arg_28_2)
+	DungeonMapElement.addBoxCollider2D(arg_28_0):AddClickListener(arg_28_1, arg_28_2)
 end
 
-function slot0.dispose(slot0)
-	slot0._itemGo = nil
-	slot0._go = nil
-	slot0.animatorPlayer = nil
+function var_0_0.dispose(arg_29_0)
+	arg_29_0._itemGo = nil
+	arg_29_0._go = nil
+	arg_29_0.animatorPlayer = nil
 
-	if slot0._resLoader then
-		slot0._resLoader:dispose()
+	if arg_29_0._resLoader then
+		arg_29_0._resLoader:dispose()
 
-		slot0._resLoader = nil
+		arg_29_0._resLoader = nil
 	end
 
-	TaskDispatcher.cancelTask(slot0._destroyItemGo, slot0)
-	TaskDispatcher.cancelTask(slot0._destroyGo, slot0)
+	TaskDispatcher.cancelTask(arg_29_0._destroyItemGo, arg_29_0)
+	TaskDispatcher.cancelTask(arg_29_0._destroyGo, arg_29_0)
 end
 
-function slot0.onDestroy(slot0)
-	if slot0._itemGo then
-		gohelper.destroy(slot0._itemGo)
+function var_0_0.onDestroy(arg_30_0)
+	if arg_30_0._itemGo then
+		gohelper.destroy(arg_30_0._itemGo)
 
-		slot0._itemGo = nil
+		arg_30_0._itemGo = nil
 	end
 
-	if slot0._wenhaoGo then
-		for slot4, slot5 in ipairs(slot0._wenhaoGo) do
-			gohelper.destroy(slot5)
+	if arg_30_0._wenhaoGo then
+		for iter_30_0, iter_30_1 in ipairs(arg_30_0._wenhaoGo) do
+			gohelper.destroy(iter_30_1)
 		end
 	end
 
-	if slot0._go then
-		gohelper.destroy(slot0._go)
+	if arg_30_0._go then
+		gohelper.destroy(arg_30_0._go)
 
-		slot0._go = nil
+		arg_30_0._go = nil
 	end
 
-	if slot0._resLoader then
-		slot0._resLoader:dispose()
+	if arg_30_0._resLoader then
+		arg_30_0._resLoader:dispose()
 
-		slot0._resLoader = nil
+		arg_30_0._resLoader = nil
 	end
 
-	if slot0.animatorPlayer then
-		slot0.animatorPlayer = nil
+	if arg_30_0.animatorPlayer then
+		arg_30_0.animatorPlayer = nil
 	end
 
-	TaskDispatcher.cancelTask(slot0._destroyItemGo, slot0)
-	TaskDispatcher.cancelTask(slot0._destroyGo, slot0)
+	TaskDispatcher.cancelTask(arg_30_0._destroyItemGo, arg_30_0)
+	TaskDispatcher.cancelTask(arg_30_0._destroyGo, arg_30_0)
 end
 
-return slot0
+return var_0_0

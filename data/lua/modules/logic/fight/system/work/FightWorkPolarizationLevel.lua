@@ -1,16 +1,17 @@
-module("modules.logic.fight.system.work.FightWorkPolarizationLevel", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkPolarizationLevel", package.seeall)
 
-slot0 = class("FightWorkPolarizationLevel", FightEffectBase)
+local var_0_0 = class("FightWorkPolarizationLevel", FightEffectBase)
 
-function slot0.onStart(slot0)
+function var_0_0.onStart(arg_1_0)
 	FightRoundSequence.roundTempData.PolarizationLevel = FightRoundSequence.roundTempData.PolarizationLevel or {}
-	FightRoundSequence.roundTempData.PolarizationLevel[slot0._actEffectMO.configEffect] = slot0._actEffectMO
+	FightRoundSequence.roundTempData.PolarizationLevel[arg_1_0._actEffectMO.configEffect] = arg_1_0._actEffectMO
 
-	FightController.instance:dispatchEvent(FightEvent.PolarizationLevel, slot0._actEffectMO.effectNum)
-	slot0:onDone(true)
+	FightController.instance:dispatchEvent(FightEvent.PolarizationLevel, arg_1_0._actEffectMO.effectNum)
+	arg_1_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
+function var_0_0.clearWork(arg_2_0)
+	return
 end
 
-return slot0
+return var_0_0

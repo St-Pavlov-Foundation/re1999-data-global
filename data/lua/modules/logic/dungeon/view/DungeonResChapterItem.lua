@@ -1,187 +1,198 @@
-module("modules.logic.dungeon.view.DungeonResChapterItem", package.seeall)
+﻿module("modules.logic.dungeon.view.DungeonResChapterItem", package.seeall)
 
-slot0 = class("DungeonResChapterItem", BaseChildView)
+local var_0_0 = class("DungeonResChapterItem", BaseChildView)
 
-function slot0.onInitView(slot0)
-	slot0._anim = gohelper.findChild(slot0.viewGO, "anim"):GetComponent(typeof(UnityEngine.Animator))
-	slot0._simageicon = gohelper.findChildSingleImage(slot0.viewGO, "anim/#simage_icon")
-	slot0._golock = gohelper.findChild(slot0.viewGO, "anim/#go_lock")
-	slot0._goopentime = gohelper.findChild(slot0.viewGO, "anim/#go_opentime")
-	slot0._btnclick = gohelper.findChild(slot0.viewGO, "anim/#btn_click")
-	slot0._txtdeadline = gohelper.findChildText(slot0.viewGO, "anim/#txt_deadline")
-	slot0._gospecialopen = gohelper.findChild(slot0.viewGO, "anim/#go_specialopen")
-	slot0._goequipmap = gohelper.findChild(slot0.viewGO, "anim/#go_equipmap")
-	slot0._imagefightcountbg = gohelper.findChildImage(slot0.viewGO, "anim/#go_equipmap/fightcount/txt/#image_fightcountbg")
-	slot0._txtfightcount = gohelper.findChildText(slot0.viewGO, "anim/#go_equipmap/fightcount/txt/#txt_fightcount")
-	slot0._gofightcountbg = gohelper.findChild(slot0.viewGO, "anim/#go_equipmap/fightcount/bg")
-	slot0._goremainfightcountbg = gohelper.findChild(slot0.viewGO, "anim/#go_equipmap/fightcount/bg2")
-	slot0._goTurnBackTip = gohelper.findChild(slot0.viewGO, "anim/turnback_tipsbg")
-	slot0._txtTurnBackTip = gohelper.findChildText(slot0.viewGO, "anim/turnback_tipsbg/tips")
-	slot0._goDoubleDropTip = gohelper.findChild(slot0.viewGO, "anim/#go_doubledroptip")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._anim = gohelper.findChild(arg_1_0.viewGO, "anim"):GetComponent(typeof(UnityEngine.Animator))
+	arg_1_0._simageicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "anim/#simage_icon")
+	arg_1_0._golock = gohelper.findChild(arg_1_0.viewGO, "anim/#go_lock")
+	arg_1_0._goopentime = gohelper.findChild(arg_1_0.viewGO, "anim/#go_opentime")
+	arg_1_0._btnclick = gohelper.findChild(arg_1_0.viewGO, "anim/#btn_click")
+	arg_1_0._txtdeadline = gohelper.findChildText(arg_1_0.viewGO, "anim/#txt_deadline")
+	arg_1_0._gospecialopen = gohelper.findChild(arg_1_0.viewGO, "anim/#go_specialopen")
+	arg_1_0._goequipmap = gohelper.findChild(arg_1_0.viewGO, "anim/#go_equipmap")
+	arg_1_0._imagefightcountbg = gohelper.findChildImage(arg_1_0.viewGO, "anim/#go_equipmap/fightcount/txt/#image_fightcountbg")
+	arg_1_0._txtfightcount = gohelper.findChildText(arg_1_0.viewGO, "anim/#go_equipmap/fightcount/txt/#txt_fightcount")
+	arg_1_0._gofightcountbg = gohelper.findChild(arg_1_0.viewGO, "anim/#go_equipmap/fightcount/bg")
+	arg_1_0._goremainfightcountbg = gohelper.findChild(arg_1_0.viewGO, "anim/#go_equipmap/fightcount/bg2")
+	arg_1_0._goTurnBackTip = gohelper.findChild(arg_1_0.viewGO, "anim/turnback_tipsbg")
+	arg_1_0._txtTurnBackTip = gohelper.findChildText(arg_1_0.viewGO, "anim/turnback_tipsbg/tips")
+	arg_1_0._goDoubleDropTip = gohelper.findChild(arg_1_0.viewGO, "anim/#go_doubledroptip")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0:addEventCb(DungeonController.instance, DungeonEvent.OnClickDungeonCategory, slot0.replayEnterAnim, slot0)
-	slot0:addEventCb(TurnbackController.instance, TurnbackEvent.RefreshView, slot0.onUpdateParam, slot0)
-	slot0:addEventCb(TurnbackController.instance, TurnbackEvent.RefreshView, slot0.onUpdateParam, slot0)
-	slot0:addEventCb(ActivityController.instance, ActivityEvent.RefreshDoubleDropInfo, slot0.showDoubleDropTips, slot0)
-	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, slot0.onUpdateParam, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0:addEventCb(DungeonController.instance, DungeonEvent.OnClickDungeonCategory, arg_2_0.replayEnterAnim, arg_2_0)
+	arg_2_0:addEventCb(TurnbackController.instance, TurnbackEvent.RefreshView, arg_2_0.onUpdateParam, arg_2_0)
+	arg_2_0:addEventCb(TurnbackController.instance, TurnbackEvent.RefreshView, arg_2_0.onUpdateParam, arg_2_0)
+	arg_2_0:addEventCb(ActivityController.instance, ActivityEvent.RefreshDoubleDropInfo, arg_2_0.showDoubleDropTips, arg_2_0)
+	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, arg_2_0.onUpdateParam, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0:removeEventCb(DungeonController.instance, DungeonEvent.OnClickDungeonCategory, slot0.replayEnterAnim, slot0)
-	slot0:removeEventCb(TurnbackController.instance, TurnbackEvent.RefreshView, slot0.onUpdateParam, slot0)
-	TimeDispatcher.instance:unregisterCallback(TimeDispatcher.OnDailyRefresh, slot0.onUpdateParam, slot0)
-	slot0:removeEventCb(ActivityController.instance, ActivityEvent.RefreshDoubleDropInfo, slot0.onUpdateParam, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0:removeEventCb(DungeonController.instance, DungeonEvent.OnClickDungeonCategory, arg_3_0.replayEnterAnim, arg_3_0)
+	arg_3_0:removeEventCb(TurnbackController.instance, TurnbackEvent.RefreshView, arg_3_0.onUpdateParam, arg_3_0)
+	TimeDispatcher.instance:unregisterCallback(TimeDispatcher.OnDailyRefresh, arg_3_0.onUpdateParam, arg_3_0)
+	arg_3_0:removeEventCb(ActivityController.instance, ActivityEvent.RefreshDoubleDropInfo, arg_3_0.onUpdateParam, arg_3_0)
 end
 
-slot0.AudioConfig = {
+var_0_0.AudioConfig = {
 	[DungeonEnum.ChapterListType.Resource] = AudioEnum.UI.play_ui_checkpoint_sources_open,
 	[DungeonEnum.ChapterListType.Insight] = AudioEnum.UI.UI_checkpoint_Insight_open
 }
 
-function slot0._btncategoryOnClick(slot0)
-	if slot0._chapterCo.type == DungeonEnum.ChapterType.Gold then
+function var_0_0._btncategoryOnClick(arg_4_0)
+	if arg_4_0._chapterCo.type == DungeonEnum.ChapterType.Gold then
 		if not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.GoldDungeon) then
 			GameFacade.showToast(OpenModel.instance:getFuncUnlockDesc(OpenEnum.UnlockFunc.GoldDungeon))
 
 			return
 		end
-	elseif slot0._chapterCo.type == DungeonEnum.ChapterType.Exp then
+	elseif arg_4_0._chapterCo.type == DungeonEnum.ChapterType.Exp then
 		if not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.ExperienceDungeon) then
 			GameFacade.showToast(OpenModel.instance:getFuncUnlockDesc(OpenEnum.UnlockFunc.ExperienceDungeon))
 
 			return
 		end
-	elseif slot0._chapterCo.type == DungeonEnum.ChapterType.Buildings then
+	elseif arg_4_0._chapterCo.type == DungeonEnum.ChapterType.Buildings then
 		if not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Buildings) then
 			GameFacade.showToast(OpenModel.instance:getFuncUnlockDesc(OpenEnum.UnlockFunc.Buildings))
 
 			return
 		end
-	elseif slot0._chapterCo.type == DungeonEnum.ChapterType.Equip and not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.EquipDungeon) then
+	elseif arg_4_0._chapterCo.type == DungeonEnum.ChapterType.Equip and not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.EquipDungeon) then
 		GameFacade.showToast(OpenModel.instance:getFuncUnlockDesc(OpenEnum.UnlockFunc.EquipDungeon))
 
 		return
 	end
 
-	slot0:playAudio()
+	arg_4_0:playAudio()
 
-	if slot0._chapterCo.type == DungeonEnum.ChapterType.Break then
-		if slot0._openTimeValid == false then
-			GameFacade.showToast(ToastEnum.DungeonResChapter, slot0._chapterCo.name)
+	if arg_4_0._chapterCo.type == DungeonEnum.ChapterType.Break then
+		if arg_4_0._openTimeValid == false then
+			GameFacade.showToast(ToastEnum.DungeonResChapter, arg_4_0._chapterCo.name)
 
 			return
 		end
-	elseif slot0._openTimeValid == false then
-		GameFacade.showToast(ToastEnum.DungeonResChapter, slot0._chapterCo.name)
+	elseif arg_4_0._openTimeValid == false then
+		GameFacade.showToast(ToastEnum.DungeonResChapter, arg_4_0._chapterCo.name)
 
 		return
 	end
 
-	DungeonModel.instance:changeCategory(slot0._chapterCo.type, false)
-	DungeonController.instance:openDungeonChapterView({
-		chapterId = DungeonChapterListModel.instance:getOpenTimeValidEquipChapterId(slot0._chapterCo.id)
-	})
+	DungeonModel.instance:changeCategory(arg_4_0._chapterCo.type, false)
+
+	local var_4_0 = {
+		chapterId = DungeonChapterListModel.instance:getOpenTimeValidEquipChapterId(arg_4_0._chapterCo.id)
+	}
+
+	DungeonController.instance:openDungeonChapterView(var_4_0)
 end
 
-function slot0.playAudio(slot0)
-	slot1, slot2, slot3 = DungeonModel.instance:getChapterListTypes()
-	slot4 = nil
+function var_0_0.playAudio(arg_5_0)
+	local var_5_0, var_5_1, var_5_2 = DungeonModel.instance:getChapterListTypes()
+	local var_5_3
 
-	AudioMgr.instance:trigger((not slot2 or uv0.AudioConfig[DungeonEnum.ChapterListType.Resource]) and (not slot3 or uv0.AudioConfig[DungeonEnum.ChapterListType.Insight]) and uv0.AudioConfig[DungeonEnum.ChapterListType.Resource])
-end
-
-function slot0._editableInitView(slot0)
-	slot0._click = SLFramework.UGUI.UIClickListener.Get(slot0._btnclick.gameObject)
-end
-
-function slot0.onOpen(slot0)
-	slot0._click:AddClickListener(slot0._btncategoryOnClick, slot0)
-	slot0:initItemEffect()
-end
-
-function slot0.onClose(slot0)
-	slot0._click:RemoveClickListener()
-end
-
-function slot0.onUpdateParam(slot0)
-	slot0._chapterCo = slot0.viewParam
-	slot0._openTimeValid = true
-
-	gohelper.setActive(slot0._golock, false)
-
-	slot1 = LuaUtil.isEmptyStr(slot0._chapterCo.openDay) == false
-
-	if slot0._chapterCo.id == DungeonEnum.EquipDungeonChapterId then
-		slot1 = false
+	if var_5_1 then
+		var_5_3 = var_0_0.AudioConfig[DungeonEnum.ChapterListType.Resource]
+	elseif var_5_2 then
+		var_5_3 = var_0_0.AudioConfig[DungeonEnum.ChapterListType.Insight]
+	else
+		var_5_3 = var_0_0.AudioConfig[DungeonEnum.ChapterListType.Resource]
 	end
 
-	slot0:showEquip(slot0._chapterCo)
-	slot0:showTurnBackAddition()
-	slot0:showDoubleDropTips()
-	gohelper.setActive(slot0._goopentime, slot1)
-	gohelper.setActive(slot0._txtdeadline.gameObject, false)
-	gohelper.setActive(slot0._gospecialopen, false)
+	AudioMgr.instance:trigger(var_5_3)
+end
 
-	if slot1 then
-		slot0._openTimeValid = false
-		slot2 = ServerTime.weekDayInServerLocal()
-		slot7 = "#"
-		slot3 = GameUtil.splitString2(slot0._chapterCo.openDay, true, "|", slot7)
-		slot0._weekTextTab = slot0:getUserDataTb_()
+function var_0_0._editableInitView(arg_6_0)
+	arg_6_0._click = SLFramework.UGUI.UIClickListener.Get(arg_6_0._btnclick.gameObject)
+end
 
-		for slot7 = 1, 4 do
-			slot8 = slot0:getUserDataTb_()
-			slot8.go = gohelper.findChild(slot0.viewGO, "anim/#go_opentime/everyweek/weekbg" .. tostring(slot7))
-			slot8.txt = gohelper.findChildText(slot8.go, "#txt_week" .. tostring(slot7))
-			slot0._weekTextTab[slot7] = slot8
+function var_0_0.onOpen(arg_7_0)
+	arg_7_0._click:AddClickListener(arg_7_0._btncategoryOnClick, arg_7_0)
+	arg_7_0:initItemEffect()
+end
 
-			gohelper.setActive(slot0._weekTextTab[slot7].go, false)
+function var_0_0.onClose(arg_8_0)
+	arg_8_0._click:RemoveClickListener()
+end
+
+function var_0_0.onUpdateParam(arg_9_0)
+	arg_9_0._chapterCo = arg_9_0.viewParam
+	arg_9_0._openTimeValid = true
+
+	gohelper.setActive(arg_9_0._golock, false)
+
+	local var_9_0 = LuaUtil.isEmptyStr(arg_9_0._chapterCo.openDay) == false
+
+	if arg_9_0._chapterCo.id == DungeonEnum.EquipDungeonChapterId then
+		var_9_0 = false
+	end
+
+	arg_9_0:showEquip(arg_9_0._chapterCo)
+	arg_9_0:showTurnBackAddition()
+	arg_9_0:showDoubleDropTips()
+	gohelper.setActive(arg_9_0._goopentime, var_9_0)
+	gohelper.setActive(arg_9_0._txtdeadline.gameObject, false)
+	gohelper.setActive(arg_9_0._gospecialopen, false)
+
+	if var_9_0 then
+		arg_9_0._openTimeValid = false
+
+		local var_9_1 = ServerTime.weekDayInServerLocal()
+		local var_9_2 = GameUtil.splitString2(arg_9_0._chapterCo.openDay, true, "|", "#")
+
+		arg_9_0._weekTextTab = arg_9_0:getUserDataTb_()
+
+		for iter_9_0 = 1, 4 do
+			local var_9_3 = arg_9_0:getUserDataTb_()
+
+			var_9_3.go = gohelper.findChild(arg_9_0.viewGO, "anim/#go_opentime/everyweek/weekbg" .. tostring(iter_9_0))
+			var_9_3.txt = gohelper.findChildText(var_9_3.go, "#txt_week" .. tostring(iter_9_0))
+			arg_9_0._weekTextTab[iter_9_0] = var_9_3
+
+			gohelper.setActive(arg_9_0._weekTextTab[iter_9_0].go, false)
 		end
 
-		for slot7, slot8 in ipairs(slot3) do
-			for slot12, slot13 in ipairs(slot8) do
-				slot14 = tonumber(slot13)
+		for iter_9_1, iter_9_2 in ipairs(var_9_2) do
+			for iter_9_3, iter_9_4 in ipairs(iter_9_2) do
+				local var_9_4 = tonumber(iter_9_4)
 
-				gohelper.setActive(slot0._weekTextTab[slot12].go, true)
+				gohelper.setActive(arg_9_0._weekTextTab[iter_9_3].go, true)
 
-				slot0._weekTextTab[slot12].txt.text = TimeUtil.weekDayToLangStr(slot14)
+				arg_9_0._weekTextTab[iter_9_3].txt.text = TimeUtil.weekDayToLangStr(var_9_4)
 
-				if slot14 == slot2 then
-					slot0._openTimeValid = true
+				if var_9_4 == var_9_1 then
+					arg_9_0._openTimeValid = true
 				end
 			end
 		end
 
-		if slot0._chapterCo.type == DungeonEnum.ChapterType.Break then
-			if slot0._openTimeValid == false then
-				gohelper.setActive(slot0._golock, true)
+		if arg_9_0._chapterCo.type == DungeonEnum.ChapterType.Break then
+			if arg_9_0._openTimeValid == false then
+				gohelper.setActive(arg_9_0._golock, true)
 			end
-		elseif slot0._openTimeValid == false then
-			gohelper.setActive(slot0._golock, true)
+		elseif arg_9_0._openTimeValid == false then
+			gohelper.setActive(arg_9_0._golock, true)
 		end
 	end
 
-	slot0:_showGoldEffect()
-	slot0:setItemEffect()
+	arg_9_0:_showGoldEffect()
+	arg_9_0:setItemEffect()
 end
 
-function slot0._showGoldEffect(slot0)
-	slot1 = DungeonModel.instance:getEquipRemainingNum() > 0
+function var_0_0._showGoldEffect(arg_10_0)
+	local var_10_0 = DungeonModel.instance:getEquipRemainingNum() > 0
 
-	gohelper.setActive(slot0._gofightcountbg, not slot1)
-	gohelper.setActive(slot0._goremainfightcountbg, slot1)
+	gohelper.setActive(arg_10_0._gofightcountbg, not var_10_0)
+	gohelper.setActive(arg_10_0._goremainfightcountbg, var_10_0)
 end
 
-function slot0.initItemEffect(slot0)
-	slot0._itemEffectTabs = slot0:getUserDataTb_()
-
-	for slot5, slot6 in pairs({
+function var_0_0.initItemEffect(arg_11_0)
+	local var_11_0 = {
 		DungeonEnum.ChapterId.ResourceExp,
 		DungeonEnum.ChapterId.ResourceGold,
 		DungeonEnum.EquipDungeonChapterId,
@@ -190,77 +201,93 @@ function slot0.initItemEffect(slot0)
 		DungeonEnum.ChapterId.InsightSylvanus,
 		DungeonEnum.ChapterId.InsightBrutes,
 		DungeonEnum.ChapterId.HarvestDungeonChapterId
-	}) do
-		slot7 = slot0:getUserDataTb_()
-		slot7.id = slot6
-		slot7.go = gohelper.findChild(slot0.viewGO, "anim/item_" .. slot1[slot5])
-		slot7.anim = slot7.go:GetComponent(typeof(UnityEngine.Animator))
+	}
 
-		gohelper.setActive(slot7.go, false)
-		table.insert(slot0._itemEffectTabs, slot7)
+	arg_11_0._itemEffectTabs = arg_11_0:getUserDataTb_()
+
+	for iter_11_0, iter_11_1 in pairs(var_11_0) do
+		local var_11_1 = arg_11_0:getUserDataTb_()
+
+		var_11_1.id = iter_11_1
+		var_11_1.go = gohelper.findChild(arg_11_0.viewGO, "anim/item_" .. var_11_0[iter_11_0])
+		var_11_1.anim = var_11_1.go:GetComponent(typeof(UnityEngine.Animator))
+
+		gohelper.setActive(var_11_1.go, false)
+		table.insert(arg_11_0._itemEffectTabs, var_11_1)
 	end
 end
 
-function slot0.setItemEffect(slot0)
-	for slot4, slot5 in pairs(slot0._itemEffectTabs) do
-		if slot5.id == slot0._chapterCo.id then
-			gohelper.setActive(slot5.go, true)
-			slot0:setLockState(slot5.anim)
+function var_0_0.setItemEffect(arg_12_0)
+	for iter_12_0, iter_12_1 in pairs(arg_12_0._itemEffectTabs) do
+		if iter_12_1.id == arg_12_0._chapterCo.id then
+			gohelper.setActive(iter_12_1.go, true)
+			arg_12_0:setLockState(iter_12_1.anim)
 		else
-			gohelper.setActive(slot5.go, false)
+			gohelper.setActive(iter_12_1.go, false)
 		end
 	end
 end
 
-function slot0.replayEnterAnim(slot0)
-	slot0._anim:Play("dungeonreschapteritem_in", 0, 0)
+function var_0_0.replayEnterAnim(arg_13_0)
+	arg_13_0._anim:Play("dungeonreschapteritem_in", 0, 0)
 end
 
-function slot0.showEquip(slot0, slot1)
-	slot2 = slot1.enterAfterFreeLimit > 0
+function var_0_0.showEquip(arg_14_0, arg_14_1)
+	local var_14_0 = arg_14_1.enterAfterFreeLimit > 0
 
-	gohelper.setActive(slot0._goequipmap, slot2)
+	gohelper.setActive(arg_14_0._goequipmap, var_14_0)
 
-	if not slot2 then
+	if not var_14_0 then
 		return
 	end
 
-	slot0._remainCount = DungeonModel.instance:getChapterRemainingNum(slot1.type)
-	slot3 = slot0._remainCount == 0 and "#E25D34" or "#CC6230"
-	slot0._txtfightcount.text = string.format("<color=%s>%s</color>", slot3, slot0._remainCount)
+	arg_14_0._remainCount = DungeonModel.instance:getChapterRemainingNum(arg_14_1.type)
 
-	SLFramework.UGUI.GuiHelper.SetColor(slot0._imagefightcountbg, slot3)
+	local var_14_1 = arg_14_0._remainCount == 0 and "#E25D34" or "#CC6230"
+
+	arg_14_0._txtfightcount.text = string.format("<color=%s>%s</color>", var_14_1, arg_14_0._remainCount)
+
+	SLFramework.UGUI.GuiHelper.SetColor(arg_14_0._imagefightcountbg, var_14_1)
 end
 
-function slot0.showTurnBackAddition(slot0)
-	if TurnbackModel.instance:isShowTurnBackAddition(slot0._chapterCo.id) then
-		slot0._txtTurnBackTip.text = formatLuaLang("turnback_addition", string.format("%s%%", TurnbackConfig.instance:getAdditionRate(TurnbackModel.instance:getCurTurnbackId()) / 10))
+function var_0_0.showTurnBackAddition(arg_15_0)
+	local var_15_0 = TurnbackModel.instance:isShowTurnBackAddition(arg_15_0._chapterCo.id)
+
+	if var_15_0 then
+		local var_15_1 = TurnbackModel.instance:getCurTurnbackId()
+		local var_15_2 = TurnbackConfig.instance:getAdditionRate(var_15_1)
+		local var_15_3 = string.format("%s%%", var_15_2 / 10)
+
+		arg_15_0._txtTurnBackTip.text = formatLuaLang("turnback_addition", var_15_3)
 	end
 
-	gohelper.setActive(slot0._goTurnBackTip, slot1)
+	gohelper.setActive(arg_15_0._goTurnBackTip, var_15_0)
 
-	slot0.isShowAddition = slot1
+	arg_15_0.isShowAddition = var_15_0
 end
 
-function slot0.showDoubleDropTips(slot0)
-	if slot0.isShowAddition then
-		gohelper.setActive(slot0._goDoubleDropTip, false)
+function var_0_0.showDoubleDropTips(arg_16_0)
+	if arg_16_0.isShowAddition then
+		gohelper.setActive(arg_16_0._goDoubleDropTip, false)
 
 		return
 	end
 
-	gohelper.setActive(slot0._goDoubleDropTip, DoubleDropModel.instance:isShowDoubleByChapter(slot0._chapterCo.id, true))
+	local var_16_0 = DoubleDropModel.instance:isShowDoubleByChapter(arg_16_0._chapterCo.id, true)
+
+	gohelper.setActive(arg_16_0._goDoubleDropTip, var_16_0)
 end
 
-function slot0.setLockState(slot0, slot1)
-	if slot0._openTimeValid then
-		slot1:Play("item_in01", 0, 0)
+function var_0_0.setLockState(arg_17_0, arg_17_1)
+	if arg_17_0._openTimeValid then
+		arg_17_1:Play("item_in01", 0, 0)
 	else
-		slot1:Play("item_in02", 0, 0)
+		arg_17_1:Play("item_in02", 0, 0)
 	end
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_18_0)
+	return
 end
 
-return slot0
+return var_0_0

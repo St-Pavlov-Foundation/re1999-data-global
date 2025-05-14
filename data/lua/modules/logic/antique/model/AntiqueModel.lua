@@ -1,61 +1,61 @@
-module("modules.logic.antique.model.AntiqueModel", package.seeall)
+﻿module("modules.logic.antique.model.AntiqueModel", package.seeall)
 
-slot0 = class("AntiqueModel", BaseModel)
+local var_0_0 = class("AntiqueModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0._antiqueList = {}
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._antiqueList = {}
 end
 
-function slot0.reInit(slot0)
-	slot0._antiqueList = {}
+function var_0_0.reInit(arg_2_0)
+	arg_2_0._antiqueList = {}
 end
 
-function slot0.getAntique(slot0, slot1)
-	return slot0._antiqueList[slot1]
+function var_0_0.getAntique(arg_3_0, arg_3_1)
+	return arg_3_0._antiqueList[arg_3_1]
 end
 
-function slot0.getAntiqueList(slot0)
-	return slot0._antiqueList
+function var_0_0.getAntiqueList(arg_4_0)
+	return arg_4_0._antiqueList
 end
 
-function slot0.setAntiqueInfo(slot0, slot1)
-	slot0._antiqueList = {}
+function var_0_0.setAntiqueInfo(arg_5_0, arg_5_1)
+	arg_5_0._antiqueList = {}
 
-	for slot5, slot6 in ipairs(slot1) do
-		slot7 = AntiqueMo.New()
+	for iter_5_0, iter_5_1 in ipairs(arg_5_1) do
+		local var_5_0 = AntiqueMo.New()
 
-		slot7:init(slot6)
+		var_5_0:init(iter_5_1)
 
-		slot0._antiqueList[tonumber(slot6.antiqueId)] = slot7
+		arg_5_0._antiqueList[tonumber(iter_5_1.antiqueId)] = var_5_0
 	end
 end
 
-function slot0.updateAntiqueInfo(slot0, slot1)
-	for slot5, slot6 in ipairs(slot1) do
-		if not slot0._antiqueList[slot6.antiqueId] then
-			slot7 = AntiqueMo.New()
+function var_0_0.updateAntiqueInfo(arg_6_0, arg_6_1)
+	for iter_6_0, iter_6_1 in ipairs(arg_6_1) do
+		if not arg_6_0._antiqueList[iter_6_1.antiqueId] then
+			local var_6_0 = AntiqueMo.New()
 
-			slot7:init(slot6)
+			var_6_0:init(iter_6_1)
 
-			slot0._antiqueList[tonumber(slot6.antiqueId)] = slot7
+			arg_6_0._antiqueList[tonumber(iter_6_1.antiqueId)] = var_6_0
 		else
-			slot0._antiqueList[slot6.antiqueId]:reset(slot6)
+			arg_6_0._antiqueList[iter_6_1.antiqueId]:reset(iter_6_1)
 		end
 	end
 end
 
-function slot0.getAntiqueGetTime(slot0, slot1)
-	return slot0._antiqueList[slot1] or 0
+function var_0_0.getAntiqueGetTime(arg_7_0, arg_7_1)
+	return arg_7_0._antiqueList[arg_7_1] or 0
 end
 
-function slot0.getAntiques(slot0)
-	return slot0._antiqueList
+function var_0_0.getAntiques(arg_8_0)
+	return arg_8_0._antiqueList
 end
 
-function slot0.isAntiqueUnlock(slot0)
-	return next(slot0._antiqueList)
+function var_0_0.isAntiqueUnlock(arg_9_0)
+	return next(arg_9_0._antiqueList)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

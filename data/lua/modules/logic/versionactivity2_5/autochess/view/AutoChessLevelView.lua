@@ -1,78 +1,81 @@
-module("modules.logic.versionactivity2_5.autochess.view.AutoChessLevelView", package.seeall)
+﻿module("modules.logic.versionactivity2_5.autochess.view.AutoChessLevelView", package.seeall)
 
-slot0 = class("AutoChessLevelView", BaseView)
+local var_0_0 = class("AutoChessLevelView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._goStageRoot = gohelper.findChild(slot0.viewGO, "#go_StageRoot")
-	slot0._gotopleft = gohelper.findChild(slot0.viewGO, "#go_topleft")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goStageRoot = gohelper.findChild(arg_1_0.viewGO, "#go_StageRoot")
+	arg_1_0._gotopleft = gohelper.findChild(arg_1_0.viewGO, "#go_topleft")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_2_0)
+	return
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_3_0)
 	AudioMgr.instance:trigger(AudioEnum.AutoChess.play_ui_tangren_copy_enter)
 
-	slot0.levelItemDic = slot0:getUserDataTb_()
+	arg_3_0.levelItemDic = arg_3_0:getUserDataTb_()
 
-	for slot4 = 1, 6 do
-		slot5 = lua_auto_chess_episode.configList[slot4]
-		slot6 = gohelper.findChild(slot0._goStageRoot, "go_Stage" .. slot4)
-		slot9 = MonoHelper.addNoUpdateLuaComOnceToGo(slot0:getResInst(AutoChessEnum.LevelItemPath, slot6, "stage" .. slot4), AutoChessLevelItem, slot0)
-		slot9.goArrow = gohelper.findChild(slot6, "go_Arrow" .. slot4)
+	for iter_3_0 = 1, 6 do
+		local var_3_0 = lua_auto_chess_episode.configList[iter_3_0]
+		local var_3_1 = gohelper.findChild(arg_3_0._goStageRoot, "go_Stage" .. iter_3_0)
+		local var_3_2 = arg_3_0:getResInst(AutoChessEnum.LevelItemPath, var_3_1, "stage" .. iter_3_0)
+		local var_3_3
 
-		slot9:setData(slot5)
+		var_3_3.goArrow, var_3_3 = gohelper.findChild(var_3_1, "go_Arrow" .. iter_3_0), MonoHelper.addNoUpdateLuaComOnceToGo(var_3_2, AutoChessLevelItem, arg_3_0)
 
-		slot10, slot11, slot12 = transformhelper.getLocalRotation(slot6.transform)
+		var_3_3:setData(var_3_0)
 
-		transformhelper.setLocalRotation(slot9._goRewardTips.transform, 0, 0, -slot12)
+		local var_3_4, var_3_5, var_3_6 = transformhelper.getLocalRotation(var_3_1.transform)
 
-		slot0.levelItemDic[slot5.id] = slot9
+		transformhelper.setLocalRotation(var_3_3._goRewardTips.transform, 0, 0, -var_3_6)
+
+		arg_3_0.levelItemDic[var_3_0.id] = var_3_3
 	end
 end
 
-function slot0.onClickItem(slot0, slot1)
-	if slot0.openRewardId then
-		slot0.levelItemDic[slot0.openRewardId]:closeReward()
+function var_0_0.onClickItem(arg_4_0, arg_4_1)
+	if arg_4_0.openRewardId then
+		arg_4_0.levelItemDic[arg_4_0.openRewardId]:closeReward()
 
-		slot0.openRewardId = nil
+		arg_4_0.openRewardId = nil
 	else
-		slot0.levelItemDic[slot1]:enterLevel()
+		arg_4_0.levelItemDic[arg_4_1]:enterLevel()
 	end
 end
 
-function slot0.onOpenItemReward(slot0, slot1)
-	if slot0.openRewardId then
-		slot0.levelItemDic[slot0.openRewardId]:closeReward()
+function var_0_0.onOpenItemReward(arg_5_0, arg_5_1)
+	if arg_5_0.openRewardId then
+		arg_5_0.levelItemDic[arg_5_0.openRewardId]:closeReward()
 
-		slot0.openRewardId = nil
+		arg_5_0.openRewardId = nil
 	else
-		slot0.levelItemDic[slot1]:openReward()
+		arg_5_0.levelItemDic[arg_5_1]:openReward()
 
-		slot0.openRewardId = slot1
+		arg_5_0.openRewardId = arg_5_1
 	end
 end
 
-function slot0.onCloseItemReward(slot0, slot1)
-	slot0.levelItemDic[slot1]:closeReward()
+function var_0_0.onCloseItemReward(arg_6_0, arg_6_1)
+	arg_6_0.levelItemDic[arg_6_1]:closeReward()
 
-	slot0.openRewardId = nil
+	arg_6_0.openRewardId = nil
 end
 
-function slot0.onGiveUpGame(slot0, slot1)
-	if slot0.openRewardId then
-		slot0.levelItemDic[slot0.openRewardId]:closeReward()
+function var_0_0.onGiveUpGame(arg_7_0, arg_7_1)
+	if arg_7_0.openRewardId then
+		arg_7_0.levelItemDic[arg_7_0.openRewardId]:closeReward()
 
-		slot0.openRewardId = nil
+		arg_7_0.openRewardId = nil
 	else
-		GameFacade.showOptionMessageBox(MessageBoxIdDefine.AutoChessGiveUpGame, MsgBoxEnum.BoxType.Yes_No, MsgBoxEnum.optionType.Daily, function ()
+		GameFacade.showOptionMessageBox(MessageBoxIdDefine.AutoChessGiveUpGame, MsgBoxEnum.BoxType.Yes_No, MsgBoxEnum.optionType.Daily, function()
 			AutoChessRpc.instance:sendAutoChessGiveUpRequest(AutoChessEnum.ModuleId.PVE)
 		end)
 	end
 end
 
-return slot0
+return var_0_0

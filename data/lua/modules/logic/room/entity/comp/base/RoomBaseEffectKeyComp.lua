@@ -1,34 +1,38 @@
-module("modules.logic.room.entity.comp.base.RoomBaseEffectKeyComp", package.seeall)
+﻿module("modules.logic.room.entity.comp.base.RoomBaseEffectKeyComp", package.seeall)
 
-slot0 = class("RoomBaseEffectKeyComp", LuaCompBase)
+local var_0_0 = class("RoomBaseEffectKeyComp", LuaCompBase)
 
-function slot0.ctor(slot0, slot1)
-	slot0.entity = slot1
-	slot0._effectKey = slot1:getMainEffectKey()
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0.entity = arg_1_1
+	arg_1_0._effectKey = arg_1_1:getMainEffectKey()
 end
 
-function slot0.setEffectKey(slot0, slot1)
-	slot0._effectKey = slot1
+function var_0_0.setEffectKey(arg_2_0, arg_2_1)
+	arg_2_0._effectKey = arg_2_1
 end
 
-function slot0.onRebuildEffectGO(slot0)
+function var_0_0.onRebuildEffectGO(arg_3_0)
+	return
 end
 
-function slot0.onReturnEffectGO(slot0)
+function var_0_0.onReturnEffectGO(arg_4_0)
+	return
 end
 
-function slot0.onEffectReturn(slot0, slot1, slot2)
-	if slot0._effectKey == slot1 then
-		slot0:onReturnEffectGO()
+function var_0_0.onEffectReturn(arg_5_0, arg_5_1, arg_5_2)
+	if arg_5_0._effectKey == arg_5_1 then
+		arg_5_0:onReturnEffectGO()
 	end
 end
 
-function slot0.onEffectRebuild(slot0)
-	if slot0.entity.effect:isHasEffectGOByKey(slot0._effectKey) and not slot1:isSameResByKey(slot0._effectKey, slot0._effectRes) then
-		slot0._effectRes = slot1:getEffectRes(slot0._effectKey)
+function var_0_0.onEffectRebuild(arg_6_0)
+	local var_6_0 = arg_6_0.entity.effect
 
-		slot0:onRebuildEffectGO()
+	if var_6_0:isHasEffectGOByKey(arg_6_0._effectKey) and not var_6_0:isSameResByKey(arg_6_0._effectKey, arg_6_0._effectRes) then
+		arg_6_0._effectRes = var_6_0:getEffectRes(arg_6_0._effectKey)
+
+		arg_6_0:onRebuildEffectGO()
 	end
 end
 
-return slot0
+return var_0_0

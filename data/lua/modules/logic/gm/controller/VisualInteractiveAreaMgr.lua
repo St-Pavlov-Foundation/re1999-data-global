@@ -1,174 +1,190 @@
-module("modules.logic.gm.controller.VisualInteractiveAreaMgr", package.seeall)
+﻿module("modules.logic.gm.controller.VisualInteractiveAreaMgr", package.seeall)
 
-slot0 = class("VisualInteractiveAreaMgr")
-slot0.maskItemPath = "ui/viewres/gm/visualmaskitem.prefab"
-slot0.LoadStatus = {
+local var_0_0 = class("VisualInteractiveAreaMgr")
+
+var_0_0.maskItemPath = "ui/viewres/gm/visualmaskitem.prefab"
+var_0_0.LoadStatus = {
 	Loaded = 3,
 	LoadFail = 4,
 	Loading = 2,
 	None = 1
 }
-slot0.needCheckComponentList = {
+var_0_0.needCheckComponentList = {
 	SLFramework.UGUI.ButtonWrap,
 	SLFramework.UGUI.UIClickListener
 }
-slot0.CloneMaskGoName = "cloneMaskItem"
-slot0.MaxStackLevel = 50
+var_0_0.CloneMaskGoName = "cloneMaskItem"
+var_0_0.MaxStackLevel = 50
 
-function slot0.init(slot0)
-	slot0:loadMaskItem()
-	slot0:createPool()
+function var_0_0.init(arg_1_0)
+	arg_1_0:loadMaskItem()
+	arg_1_0:createPool()
 
-	slot0.viewName2MaskGoListDict = {}
+	arg_1_0.viewName2MaskGoListDict = {}
 end
 
-function slot0.loadMaskItem(slot0)
-	slot0.loadStatus = uv0.LoadStatus.Loading
+function var_0_0.loadMaskItem(arg_2_0)
+	arg_2_0.loadStatus = var_0_0.LoadStatus.Loading
 
-	loadAbAsset(uv0.maskItemPath, true, slot0._onLoadCallback, slot0)
+	loadAbAsset(var_0_0.maskItemPath, true, arg_2_0._onLoadCallback, arg_2_0)
 end
 
-function slot0._onLoadCallback(slot0, slot1)
-	if slot1.IsLoadSuccess then
-		slot0.assetItem = slot1
+function var_0_0._onLoadCallback(arg_3_0, arg_3_1)
+	if arg_3_1.IsLoadSuccess then
+		arg_3_0.assetItem = arg_3_1
 
-		slot0.assetItem:Retain()
+		arg_3_0.assetItem:Retain()
 
-		slot0.maskItemGo = gohelper.clone(slot0.assetItem:GetResource(uv0.maskItemPath), ViewMgr.instance:getUIRoot())
+		arg_3_0.maskItemGo = gohelper.clone(arg_3_0.assetItem:GetResource(var_0_0.maskItemPath), ViewMgr.instance:getUIRoot())
 
-		gohelper.setActive(slot0.maskItemGo, false)
+		gohelper.setActive(arg_3_0.maskItemGo, false)
 
-		slot0.loadStatus = uv0.LoadStatus.Loaded
+		arg_3_0.loadStatus = var_0_0.LoadStatus.Loaded
 
-		if slot0.needDelayShowMask then
-			slot0:showAllViewMaskGo()
+		if arg_3_0.needDelayShowMask then
+			arg_3_0:showAllViewMaskGo()
 		end
 	else
-		slot0.maskItemGo = nil
-		slot0.loadStatus = uv0.LoadStatus.LoadFail
+		arg_3_0.maskItemGo = nil
+		arg_3_0.loadStatus = var_0_0.LoadStatus.LoadFail
 
 		logError("load fail ...")
 	end
 end
 
-function slot0.createPool(slot0)
-	slot0.maskGoPool = {}
-	slot0.poolGO = gohelper.create2d(ViewMgr.instance:getUIRoot(), "maskPool")
-	slot0.poolTr = slot0.poolGO.transform
+function var_0_0.createPool(arg_4_0)
+	arg_4_0.maskGoPool = {}
+	arg_4_0.poolGO = gohelper.create2d(ViewMgr.instance:getUIRoot(), "maskPool")
+	arg_4_0.poolTr = arg_4_0.poolGO.transform
 
-	gohelper.setActive(slot0.poolGO, false)
+	gohelper.setActive(arg_4_0.poolGO, false)
 end
 
-function slot0.beforeStart(slot0)
-	slot0.listSourceFunc = LuaListScrollView.onUpdateFinish
+function var_0_0.beforeStart(arg_5_0)
+	arg_5_0.listSourceFunc = LuaListScrollView.onUpdateFinish
 
-	function LuaListScrollView.onUpdateFinish(slot0)
-		uv0.listSourceFunc(slot0)
-		uv0:showMaskGoByGo(slot0._csListScroll.gameObject, slot0.viewName)
+	function LuaListScrollView.onUpdateFinish(arg_6_0)
+		arg_5_0.listSourceFunc(arg_6_0)
+		arg_5_0:showMaskGoByGo(arg_6_0._csListScroll.gameObject, arg_6_0.viewName)
 	end
 
-	slot0.tableViewSourceFunc = TabViewGroup._finishCallback
+	arg_5_0.tableViewSourceFunc = TabViewGroup._finishCallback
 
-	function TabViewGroup._finishCallback(slot0, slot1)
-		uv0.tableViewSourceFunc(slot0, slot1)
-		uv0:showMaskGoByGo(slot0.viewGO, slot0.viewName)
+	function TabViewGroup._finishCallback(arg_7_0, arg_7_1)
+		arg_5_0.tableViewSourceFunc(arg_7_0, arg_7_1)
+		arg_5_0:showMaskGoByGo(arg_7_0.viewGO, arg_7_0.viewName)
 	end
 end
 
-function slot0.beforeStop(slot0)
-	LuaListScrollView.onUpdateFinish = slot0.listSourceFunc
-	TabViewGroup._finishCallback = slot0.tableViewSourceFunc
+function var_0_0.beforeStop(arg_8_0)
+	LuaListScrollView.onUpdateFinish = arg_8_0.listSourceFunc
+	TabViewGroup._finishCallback = arg_8_0.tableViewSourceFunc
 end
 
-function slot0.start(slot0)
-	slot0:beforeStart()
+function var_0_0.start(arg_9_0)
+	arg_9_0:beforeStart()
 
-	if slot0.loadStatus ~= uv0.LoadStatus.Loaded then
-		slot0.needDelayShowMask = true
+	if arg_9_0.loadStatus ~= var_0_0.LoadStatus.Loaded then
+		arg_9_0.needDelayShowMask = true
 	else
-		slot0:showAllViewMaskGo()
+		arg_9_0:showAllViewMaskGo()
 	end
 
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, slot0.onOpenView, slot0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, slot0.onCloseView, slot0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, arg_9_0.onOpenView, arg_9_0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, arg_9_0.onCloseView, arg_9_0)
 end
 
-function slot0.stop(slot0)
-	slot0:beforeStop()
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenView, slot0.onOpenView, slot0)
+function var_0_0.stop(arg_10_0)
+	arg_10_0:beforeStop()
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenView, arg_10_0.onOpenView, arg_10_0)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, arg_10_0.onCloseView, arg_10_0)
 
-	slot5 = slot0
+	local var_10_0 = ViewMgr.instance:getOpenViewNameList()
 
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, slot0.onCloseView, slot5)
-
-	for slot5, slot6 in ipairs(ViewMgr.instance:getOpenViewNameList()) do
-		slot0:recycleMaskGoByViewName(slot6)
+	for iter_10_0, iter_10_1 in ipairs(var_10_0) do
+		arg_10_0:recycleMaskGoByViewName(iter_10_1)
 	end
 end
 
-function slot0.onOpenView(slot0, slot1)
-	slot0:showMaskGoByViewName(slot1)
+function var_0_0.onOpenView(arg_11_0, arg_11_1)
+	arg_11_0:showMaskGoByViewName(arg_11_1)
 end
 
-function slot0.onCloseView(slot0, slot1)
-	slot0:recycleMaskGoByViewName(slot1)
+function var_0_0.onCloseView(arg_12_0, arg_12_1)
+	arg_12_0:recycleMaskGoByViewName(arg_12_1)
 end
 
-function slot0.showAllViewMaskGo(slot0)
-	for slot5, slot6 in ipairs(ViewMgr.instance:getOpenViewNameList()) do
-		if not slot0.viewName2MaskGoListDict[slot6] then
-			slot0:showMaskGoByViewName(slot6)
+function var_0_0.showAllViewMaskGo(arg_13_0)
+	local var_13_0 = ViewMgr.instance:getOpenViewNameList()
+
+	for iter_13_0, iter_13_1 in ipairs(var_13_0) do
+		if not arg_13_0.viewName2MaskGoListDict[iter_13_1] then
+			arg_13_0:showMaskGoByViewName(iter_13_1)
 		end
 	end
 end
 
-function slot0.showMaskGoByViewName(slot0, slot1)
-	slot0:showMaskGoByGo(ViewMgr.instance:getContainer(slot1).viewGO, slot1)
+function var_0_0.showMaskGoByViewName(arg_14_0, arg_14_1)
+	local var_14_0 = ViewMgr.instance:getContainer(arg_14_1)
+
+	arg_14_0:showMaskGoByGo(var_14_0.viewGO, arg_14_1)
 end
 
-function slot0.showMaskGoByGo(slot0, slot1, slot2, slot3, slot4)
-	if uv0.MaxStackLevel < (slot4 or 1) then
+function var_0_0.showMaskGoByGo(arg_15_0, arg_15_1, arg_15_2, arg_15_3, arg_15_4)
+	arg_15_4 = arg_15_4 or 1
+
+	if arg_15_4 > var_0_0.MaxStackLevel then
 		logError("stack overflow ...")
 
 		return
 	end
 
-	if not slot1 or not slot1.transform then
+	if not arg_15_1 or not arg_15_1.transform then
 		logError("go not be null")
 
 		return
 	end
 
-	if not slot0.viewName2MaskGoListDict[slot2] then
-		slot0.viewName2MaskGoListDict[slot2] = {}
+	if not arg_15_0.viewName2MaskGoListDict[arg_15_2] then
+		arg_15_0.viewName2MaskGoListDict[arg_15_2] = {}
 	end
 
-	slot0.currentViewNameMaskList = slot0.viewName2MaskGoListDict[slot2]
+	arg_15_0.currentViewNameMaskList = arg_15_0.viewName2MaskGoListDict[arg_15_2]
 
-	slot0:addMaskGo(slot1, slot3)
+	arg_15_0:addMaskGo(arg_15_1, arg_15_3)
 
-	for slot9 = 1, slot1.transform.childCount do
-		slot0:showMaskGoByGo(slot5:GetChild(slot9 - 1).gameObject, slot2, slot3 or slot0:checkNeedAddMask(slot1, slot3), slot4 + 1)
-	end
-end
+	arg_15_3 = arg_15_3 or arg_15_0:checkNeedAddMask(arg_15_1, arg_15_3)
 
-function slot0.addMaskGo(slot0, slot1, slot2)
-	if slot0:checkNeedAddMask(slot1, slot2) and slot0:addMaskItemGo(slot1) then
-		table.insert(slot0.currentViewNameMaskList, slot3)
+	local var_15_0 = arg_15_1.transform
+
+	for iter_15_0 = 1, var_15_0.childCount do
+		arg_15_0:showMaskGoByGo(var_15_0:GetChild(iter_15_0 - 1).gameObject, arg_15_2, arg_15_3, arg_15_4 + 1)
 	end
 end
 
-function slot0.checkNeedAddMask(slot0, slot1, slot2)
-	if slot2 then
-		if slot1:GetComponent(gohelper.Type_Graphic) and slot3.raycastTarget then
+function var_0_0.addMaskGo(arg_16_0, arg_16_1, arg_16_2)
+	if arg_16_0:checkNeedAddMask(arg_16_1, arg_16_2) then
+		local var_16_0 = arg_16_0:addMaskItemGo(arg_16_1)
+
+		if var_16_0 then
+			table.insert(arg_16_0.currentViewNameMaskList, var_16_0)
+		end
+	end
+end
+
+function var_0_0.checkNeedAddMask(arg_17_0, arg_17_1, arg_17_2)
+	if arg_17_2 then
+		local var_17_0 = arg_17_1:GetComponent(gohelper.Type_Graphic)
+
+		if var_17_0 and var_17_0.raycastTarget then
 			return true
 		else
 			return false
 		end
 	end
 
-	for slot6, slot7 in ipairs(uv0.needCheckComponentList) do
-		if slot1:GetComponent(typeof(slot7)) then
+	for iter_17_0, iter_17_1 in ipairs(var_0_0.needCheckComponentList) do
+		if arg_17_1:GetComponent(typeof(iter_17_1)) then
 			return true
 		end
 	end
@@ -176,58 +192,62 @@ function slot0.checkNeedAddMask(slot0, slot1, slot2)
 	return false
 end
 
-function slot0.addMaskItemGo(slot0, slot1)
-	if gohelper.findChild(slot1, uv0.CloneMaskGoName) then
+function var_0_0.addMaskItemGo(arg_18_0, arg_18_1)
+	if gohelper.findChild(arg_18_1, var_0_0.CloneMaskGoName) then
 		return nil
 	end
 
-	slot2 = table.remove(slot0.maskGoPool) or gohelper.clone(slot0.maskItemGo, slot1, uv0.CloneMaskGoName)
+	local var_18_0 = table.remove(arg_18_0.maskGoPool) or gohelper.clone(arg_18_0.maskItemGo, arg_18_1, var_0_0.CloneMaskGoName)
 
-	slot2.transform:SetParent(slot1.transform)
+	var_18_0.transform:SetParent(arg_18_1.transform)
 
-	slot2.transform.offsetMax = Vector2.zero
-	slot2.transform.offsetMin = Vector2.zero
+	var_18_0.transform.offsetMax = Vector2.zero
+	var_18_0.transform.offsetMin = Vector2.zero
 
-	transformhelper.setLocalRotation(slot2.transform, 0, 0, 0)
-	transformhelper.setLocalScale(slot2.transform, 1, 1, 1)
+	transformhelper.setLocalRotation(var_18_0.transform, 0, 0, 0)
+	transformhelper.setLocalScale(var_18_0.transform, 1, 1, 1)
 
-	if gohelper.findChildText(slot2, "txt_size") then
-		slot3.text = string.format("%.1f%s%.1f", recthelper.getWidth(slot2.transform), luaLang("multiple"), recthelper.getHeight(slot2.transform))
+	local var_18_1 = gohelper.findChildText(var_18_0, "txt_size")
+
+	if var_18_1 then
+		var_18_1.text = string.format("%.1f%s%.1f", recthelper.getWidth(var_18_0.transform), luaLang("multiple"), recthelper.getHeight(var_18_0.transform))
 	end
 
-	gohelper.setActive(slot2, true)
+	gohelper.setActive(var_18_0, true)
 
-	return slot2
+	return var_18_0
 end
 
-function slot0.recycleMaskGoByViewName(slot0, slot1)
-	if slot0.viewName2MaskGoListDict[slot1] then
-		for slot6, slot7 in ipairs(slot2) do
-			if not gohelper.isNil(slot7) then
-				slot7.transform:SetParent(slot0.poolTr)
-				table.insert(slot0.maskGoPool, slot7)
+function var_0_0.recycleMaskGoByViewName(arg_19_0, arg_19_1)
+	local var_19_0 = arg_19_0.viewName2MaskGoListDict[arg_19_1]
+
+	if var_19_0 then
+		for iter_19_0, iter_19_1 in ipairs(var_19_0) do
+			if not gohelper.isNil(iter_19_1) then
+				iter_19_1.transform:SetParent(arg_19_0.poolTr)
+				table.insert(arg_19_0.maskGoPool, iter_19_1)
 			end
 		end
 
-		slot0.viewName2MaskGoListDict[slot1] = nil
+		arg_19_0.viewName2MaskGoListDict[arg_19_1] = nil
 	end
 end
 
-function slot0.dispose(slot0)
-	if slot0.loadStatus == uv0.LoadStatus.Loading then
-		removeAssetLoadCb(uv0.maskItemPath, slot0._onLoadCallback, slot0)
+function var_0_0.dispose(arg_20_0)
+	if arg_20_0.loadStatus == var_0_0.LoadStatus.Loading then
+		removeAssetLoadCb(var_0_0.maskItemPath, arg_20_0._onLoadCallback, arg_20_0)
 	end
 
-	if slot0.assetItem then
-		slot0.assetItem:Release()
+	if arg_20_0.assetItem then
+		arg_20_0.assetItem:Release()
 	end
 
-	slot0:stop()
+	arg_20_0:stop()
 
-	slot0.maskGoPool = nil
+	arg_20_0.maskGoPool = nil
 
-	gohelper.destroy(slot0.maskItemGo)
-	gohelper.destroy(slot0.poolGO)
+	gohelper.destroy(arg_20_0.maskItemGo)
+	gohelper.destroy(arg_20_0.poolGO)
 end
 
-return slot0
+return var_0_0

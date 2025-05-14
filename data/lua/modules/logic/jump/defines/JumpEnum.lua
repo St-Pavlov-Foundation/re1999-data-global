@@ -1,16 +1,17 @@
-module("modules.logic.jump.defines.JumpEnum", package.seeall)
+﻿module("modules.logic.jump.defines.JumpEnum", package.seeall)
 
-slot0 = _M
-slot0.JumpStage = {
+local var_0_0 = _M
+
+var_0_0.JumpStage = {
 	Jumping = 1,
 	Done = 3,
 	None = 0
 }
-slot0.JumpResult = {
+var_0_0.JumpResult = {
 	Fail = 2,
 	Success = 1
 }
-slot0.JumpView = {
+var_0_0.JumpView = {
 	RoleStoryActivity = 31,
 	SignInView = 21,
 	SummonView = 2,
@@ -58,11 +59,11 @@ slot0.JumpView = {
 	CharacterBackpackViewWithCharacter = 6,
 	TaskView = 12
 }
-slot0.CharacterBackpack = {
+var_0_0.CharacterBackpack = {
 	Character = 1,
 	Equip = 2
 }
-slot0.DungeonChapterType = {
+var_0_0.DungeonChapterType = {
 	WeekWalk = 9,
 	Story = 1,
 	Explore = 10,
@@ -70,20 +71,20 @@ slot0.DungeonChapterType = {
 	RoleStory = 19,
 	Resource = 3
 }
-slot0.HandbookType = {
+var_0_0.HandbookType = {
 	Story = 3,
 	Equip = 2,
 	Character = 1,
 	CG = 4
 }
-slot0.JumpId = {
+var_0_0.JumpId = {
 	GlowCharge = 10175,
 	Activity173 = 10012236,
 	DecorateStorePay = 10177,
 	RoomStoreTabFluff = 10012240,
 	RoomStore = 10172
 }
-slot0.ActIdEnum = {
+var_0_0.ActIdEnum = {
 	Act1_4DungeonStore = 11406,
 	Act1_3Act304 = 11304,
 	Act107 = 11112,
@@ -131,12 +132,12 @@ slot0.ActIdEnum = {
 	Act1_6GeTian = VersionActivity1_6Enum.ActivityId.Role2,
 	Act1_9WarmUp = ActivityEnum.Activity.Activity1_9WarmUp
 }
-slot0.LeiMiTeBeiSubJumpId = {
+var_0_0.LeiMiTeBeiSubJumpId = {
 	DungeonHardMode = 2,
 	LeiMiTeBeiStore = 3,
 	DungeonStoryMode = 1
 }
-slot0.Activity1_2DungeonJump = {
+var_0_0.Activity1_2DungeonJump = {
 	Jump2Daily = 6,
 	Task = 4,
 	Hard = 2,
@@ -145,13 +146,13 @@ slot0.Activity1_2DungeonJump = {
 	Jump2Dungeon = 5,
 	Normal = 1
 }
-slot0.Activity1_3DungeonJump = {
+var_0_0.Activity1_3DungeonJump = {
 	Daily = 3,
 	Hard = 2,
 	Buff = 5,
 	Astrology = 4,
 	Normal = 1
 }
-slot0.BPChargeView = 610002
+var_0_0.BPChargeView = 610002
 
-return slot0
+return var_0_0

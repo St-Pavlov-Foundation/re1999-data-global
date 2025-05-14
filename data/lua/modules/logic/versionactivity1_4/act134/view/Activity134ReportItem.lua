@@ -1,85 +1,102 @@
-module("modules.logic.versionactivity1_4.act134.view.Activity134ReportItem", package.seeall)
+﻿module("modules.logic.versionactivity1_4.act134.view.Activity134ReportItem", package.seeall)
 
-slot0 = class("Activity134ReportItem", LuaCompBase)
+local var_0_0 = class("Activity134ReportItem", LuaCompBase)
 
-function slot0.init(slot0, slot1, slot2)
-	slot0.template = slot1
-	slot0.viewGO = slot2
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0.template = arg_1_1
+	arg_1_0.viewGO = arg_1_2
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_4_0)
+	return
 end
 
-function slot0._editableAddEvents(slot0)
+function var_0_0._editableAddEvents(arg_5_0)
+	return
 end
 
-function slot0._editableRemoveEvents(slot0)
+function var_0_0._editableRemoveEvents(arg_6_0)
+	return
 end
 
-function slot0.onDestroy(slot0)
-	for slot4, slot5 in ipairs(slot0.charaterIcon) do
-		slot5:UnLoadImage()
+function var_0_0.onDestroy(arg_7_0)
+	for iter_7_0, iter_7_1 in ipairs(arg_7_0.charaterIcon) do
+		iter_7_1:UnLoadImage()
 	end
 end
 
-function slot0.initMo(slot0, slot1, slot2)
-	slot0.index = slot1
-	slot0.mo = slot2
-	slot0.typeList = {}
-	slot0.charaterIcon = {}
+function var_0_0.initMo(arg_8_0, arg_8_1, arg_8_2)
+	arg_8_0.index = arg_8_1
+	arg_8_0.mo = arg_8_2
+	arg_8_0.typeList = {}
 
-	for slot7, slot8 in ipairs(slot2.desc) do
-		gohelper.setActive(gohelper.clone(slot0.template, slot0.viewGO, slot7).gameObject, true)
+	local var_8_0 = arg_8_2.storyType
 
-		if slot2.storyType == 1 then
-			slot0:setItemOneType(slot8, slot9)
-		elseif slot3 == 2 then
-			slot0:setItemTwoType(slot8, slot9)
-		elseif slot3 == 3 then
-			slot0:setItemThreeType(slot8, slot9)
+	arg_8_0.charaterIcon = {}
+
+	for iter_8_0, iter_8_1 in ipairs(arg_8_2.desc) do
+		local var_8_1 = gohelper.clone(arg_8_0.template, arg_8_0.viewGO, iter_8_0)
+
+		gohelper.setActive(var_8_1.gameObject, true)
+
+		if var_8_0 == 1 then
+			arg_8_0:setItemOneType(iter_8_1, var_8_1)
+		elseif var_8_0 == 2 then
+			arg_8_0:setItemTwoType(iter_8_1, var_8_1)
+		elseif var_8_0 == 3 then
+			arg_8_0:setItemThreeType(iter_8_1, var_8_1)
 		else
-			slot0:setItemFourType(slot8, slot9)
+			arg_8_0:setItemFourType(iter_8_1, var_8_1)
 		end
 	end
 end
 
-function slot0.setItemOneType(slot0, slot1, slot2)
-	slot3 = gohelper.findChildSingleImage(slot2, "bg/#simage_role")
-	slot4 = gohelper.findChildText(slot2, "right/#txt_title")
-	slot5 = gohelper.findChildText(slot2, "right/#txt_dec")
+function var_0_0.setItemOneType(arg_9_0, arg_9_1, arg_9_2)
+	local var_9_0 = gohelper.findChildSingleImage(arg_9_2, "bg/#simage_role")
+	local var_9_1 = gohelper.findChildText(arg_9_2, "right/#txt_title")
+	local var_9_2 = gohelper.findChildText(arg_9_2, "right/#txt_dec")
 
-	if not string.nilorempty(slot1.charaterIcon) then
-		slot3:LoadImage(ResUrl.getV1a4DustRecordsIcon(string.format("v1a4_dustyrecords_role_" .. slot1.charaterIcon)))
-		table.insert(slot0.charaterIcon, slot3)
+	if not string.nilorempty(arg_9_1.charaterIcon) then
+		local var_9_3 = string.format("v1a4_dustyrecords_role_" .. arg_9_1.charaterIcon)
+
+		var_9_0:LoadImage(ResUrl.getV1a4DustRecordsIcon(var_9_3))
+		table.insert(arg_9_0.charaterIcon, var_9_0)
 	end
 
-	if #string.split(slot1.desc, "<split>") > 1 then
-		slot4.text = slot6[1]
-		slot5.text = slot6[2]
+	local var_9_4 = string.split(arg_9_1.desc, "<split>")
+
+	if #var_9_4 > 1 then
+		var_9_1.text = var_9_4[1]
+		var_9_2.text = var_9_4[2]
 	end
 end
 
-function slot0.setItemTwoType(slot0, slot1, slot2)
-	gohelper.findChildText(slot2, "bg/#txt_dec").text = slot1.desc
-	gohelper.findChildText(slot2, "bg/#txt_name").text = slot1.formMan and slot1.formMan or ""
+function var_0_0.setItemTwoType(arg_10_0, arg_10_1, arg_10_2)
+	local var_10_0 = gohelper.findChildText(arg_10_2, "bg/#txt_dec")
+	local var_10_1 = gohelper.findChildText(arg_10_2, "bg/#txt_name")
+
+	var_10_0.text = arg_10_1.desc
+	var_10_1.text = arg_10_1.formMan and arg_10_1.formMan or ""
 end
 
-function slot0.setItemThreeType(slot0, slot1, slot2)
-	gohelper.findChildText(slot2, "#txt_dec").text = slot1.desc
+function var_0_0.setItemThreeType(arg_11_0, arg_11_1, arg_11_2)
+	gohelper.findChildText(arg_11_2, "#txt_dec").text = arg_11_1.desc
 end
 
-function slot0.setItemFourType(slot0, slot1, slot2)
-	gohelper.findChildText(slot2, "#txt_dec").text = slot1.desc
+function var_0_0.setItemFourType(arg_12_0, arg_12_1, arg_12_2)
+	gohelper.findChildText(arg_12_2, "#txt_dec").text = arg_12_1.desc
 end
 
-return slot0
+return var_0_0

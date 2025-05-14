@@ -1,316 +1,377 @@
-module("modules.logic.seasonver.act166.view2_4.Season166_2_4TalentSelectView", package.seeall)
+﻿module("modules.logic.seasonver.act166.view2_4.Season166_2_4TalentSelectView", package.seeall)
 
-slot0 = class("Season166_2_4TalentSelectView", BaseView)
+local var_0_0 = class("Season166_2_4TalentSelectView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._txttitleen = gohelper.findChildText(slot0.viewGO, "root/left/#txt_titleen")
-	slot0._txttitle = gohelper.findChildText(slot0.viewGO, "root/left/#txt_title")
-	slot0._txtbasicSkill = gohelper.findChildText(slot0.viewGO, "root/left/#txt_basicSkill")
-	slot0._gotopleft = gohelper.findChild(slot0.viewGO, "#go_topleft")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._txttitleen = gohelper.findChildText(arg_1_0.viewGO, "root/left/#txt_titleen")
+	arg_1_0._txttitle = gohelper.findChildText(arg_1_0.viewGO, "root/left/#txt_title")
+	arg_1_0._txtbasicSkill = gohelper.findChildText(arg_1_0.viewGO, "root/left/#txt_basicSkill")
+	arg_1_0._gotopleft = gohelper.findChild(arg_1_0.viewGO, "#go_topleft")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0:addEventCb(Season166Controller.instance, Season166Event.SetTalentSkill, slot0.OnSetTalentSkill, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0:addEventCb(Season166Controller.instance, Season166Event.SetTalentSkill, arg_2_0.OnSetTalentSkill, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-slot1 = {
+local var_0_1 = {
 	Lock = 4,
 	Full = 2,
 	Select = 3,
 	Normal = 1
 }
 
-function slot0._editableInitView(slot0)
-	SkillHelper.addHyperLinkClick(slot0._txtbasicSkill, slot0.clcikHyperLink, slot0)
+function var_0_0._editableInitView(arg_4_0)
+	SkillHelper.addHyperLinkClick(arg_4_0._txtbasicSkill, arg_4_0.clcikHyperLink, arg_4_0)
 
-	slot0.unlockStateTab = slot0:getUserDataTb_()
-	slot0.localUnlockStateTab = slot0:getUserDataTb_()
+	arg_4_0.unlockStateTab = arg_4_0:getUserDataTb_()
+	arg_4_0.localUnlockStateTab = arg_4_0:getUserDataTb_()
 end
 
-function slot0.onOpen(slot0)
-	if slot0.viewParam and slot0.viewParam.talentId then
-		slot0.actId = Season166Model.instance:getCurSeasonId()
-		slot0.talentId = slot0.viewParam.talentId
-		slot0.talentConfig = lua_activity166_talent.configDict[slot0.actId][slot0.talentId]
-		slot0._txttitle.text = slot0.talentConfig.name
-		slot0._txttitleen.text = slot0.talentConfig.nameEn
+function var_0_0.onOpen(arg_5_0)
+	if arg_5_0.viewParam and arg_5_0.viewParam.talentId then
+		arg_5_0.actId = Season166Model.instance:getCurSeasonId()
+		arg_5_0.talentId = arg_5_0.viewParam.talentId
+		arg_5_0.talentConfig = lua_activity166_talent.configDict[arg_5_0.actId][arg_5_0.talentId]
+		arg_5_0._txttitle.text = arg_5_0.talentConfig.name
+		arg_5_0._txttitleen.text = arg_5_0.talentConfig.nameEn
 
-		if string.nilorempty(slot0.talentConfig.baseSkillIds) then
-			slot1 = slot0.talentConfig.baseSkillIds2
+		local var_5_0 = arg_5_0.talentConfig.baseSkillIds
+
+		if string.nilorempty(var_5_0) then
+			var_5_0 = arg_5_0.talentConfig.baseSkillIds2
 		end
 
-		slot0._txtbasicSkill.text = SkillHelper.buildDesc(FightConfig.instance:getSkillEffectDesc("", lua_skill_effect.configDict[string.splitToNumber(slot1, "#")[1]]))
-		slot0.styleCfgDic = lua_activity166_talent_style.configDict[slot0.talentId]
-		slot0.talentInfo = Season166Model.instance:getTalentInfo(slot0.actId, slot0.talentId)
-		slot0.baseConfig = Season166Config.instance:getBaseSpotByTalentId(slot0.actId, slot0.talentId)
+		local var_5_1 = string.splitToNumber(var_5_0, "#")
+		local var_5_2 = lua_skill_effect.configDict[var_5_1[1]]
+		local var_5_3 = FightConfig.instance:getSkillEffectDesc("", var_5_2)
 
-		slot0:refreshTalentParam(slot0.talentInfo)
-		slot0:_initSkillItem()
-		slot0:_initLeftArea()
-		slot0:_initMiddleArea()
-		slot0:playUnlockEffect()
+		arg_5_0._txtbasicSkill.text = SkillHelper.buildDesc(var_5_3)
+		arg_5_0.styleCfgDic = lua_activity166_talent_style.configDict[arg_5_0.talentId]
+		arg_5_0.talentInfo = Season166Model.instance:getTalentInfo(arg_5_0.actId, arg_5_0.talentId)
+		arg_5_0.baseConfig = Season166Config.instance:getBaseSpotByTalentId(arg_5_0.actId, arg_5_0.talentId)
+
+		arg_5_0:refreshTalentParam(arg_5_0.talentInfo)
+		arg_5_0:_initSkillItem()
+		arg_5_0:_initLeftArea()
+		arg_5_0:_initMiddleArea()
+		arg_5_0:playUnlockEffect()
 	else
 		logError("please open view with talentId")
 	end
 end
 
-function slot0.onClose(slot0)
-	slot0:saveUnlockState()
+function var_0_0.onClose(arg_6_0)
+	arg_6_0:saveUnlockState()
 end
 
-function slot0.refreshTalentParam(slot0, slot1)
-	slot0.talentLvl = slot1.level
-	slot0.maxSlot = slot1.config.slot
+function var_0_0.refreshTalentParam(arg_7_0, arg_7_1)
+	arg_7_0.talentLvl = arg_7_1.level
+	arg_7_0.maxSlot = arg_7_1.config.slot
 end
 
-function slot0._initLeftArea(slot0)
-	slot0.selectSkillList = {}
+function var_0_0._initLeftArea(arg_8_0)
+	arg_8_0.selectSkillList = {}
 
-	for slot4 = 1, 3 do
-		slot5 = slot0:getUserDataTb_()
-		slot5.go = gohelper.findChild(slot0.viewGO, "root/left/basicSkill/" .. slot4)
-		slot5.goUnequip = gohelper.findChild(slot5.go, "unequip")
-		slot5.goWhiteBg = gohelper.findChild(slot5.go, "unequip/bg2")
-		slot5.goEquiped = gohelper.findChild(slot5.go, "equiped")
-		slot5.animEquip = slot5.goEquiped:GetComponent(gohelper.Type_Animation)
-		slot5.txtDesc = gohelper.findChildText(slot5.go, "equiped/txt_desc")
+	for iter_8_0 = 1, 3 do
+		local var_8_0 = arg_8_0:getUserDataTb_()
 
-		SkillHelper.addHyperLinkClick(slot5.txtDesc, slot0.clcikHyperLink, slot0)
-		UISpriteSetMgr.instance:setSeason166Sprite(gohelper.findChildImage(slot5.go, "equiped/txt_desc/slot"), "season166_talentree_pointl" .. tostring(slot0.talentConfig.sortIndex))
-		gohelper.setActive(gohelper.findChild(slot5.go, "equiped/txt_desc/slot/" .. slot0.talentConfig.sortIndex), true)
+		var_8_0.go = gohelper.findChild(arg_8_0.viewGO, "root/left/basicSkill/" .. iter_8_0)
+		var_8_0.goUnequip = gohelper.findChild(var_8_0.go, "unequip")
+		var_8_0.goWhiteBg = gohelper.findChild(var_8_0.go, "unequip/bg2")
+		var_8_0.goEquiped = gohelper.findChild(var_8_0.go, "equiped")
+		var_8_0.animEquip = var_8_0.goEquiped:GetComponent(gohelper.Type_Animation)
+		var_8_0.txtDesc = gohelper.findChildText(var_8_0.go, "equiped/txt_desc")
 
-		slot5.goLock = gohelper.findChild(slot5.go, "locked")
-		gohelper.findChildText(slot5.go, "locked/txt_desc").text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("season166_talent_selectlock"), slot0.styleCfgDic[slot4].needStar, slot0.baseConfig.name)
-		slot5.anim = slot5.go:GetComponent(gohelper.Type_Animator)
-		slot0.selectSkillList[slot4] = slot5
+		SkillHelper.addHyperLinkClick(var_8_0.txtDesc, arg_8_0.clcikHyperLink, arg_8_0)
+
+		local var_8_1 = gohelper.findChildImage(var_8_0.go, "equiped/txt_desc/slot")
+
+		UISpriteSetMgr.instance:setSeason166Sprite(var_8_1, "season166_talentree_pointl" .. tostring(arg_8_0.talentConfig.sortIndex))
+
+		local var_8_2 = gohelper.findChild(var_8_0.go, "equiped/txt_desc/slot/" .. arg_8_0.talentConfig.sortIndex)
+
+		gohelper.setActive(var_8_2, true)
+
+		var_8_0.goLock = gohelper.findChild(var_8_0.go, "locked")
+
+		local var_8_3 = gohelper.findChildText(var_8_0.go, "locked/txt_desc")
+		local var_8_4 = arg_8_0.styleCfgDic[iter_8_0].needStar
+
+		var_8_3.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("season166_talent_selectlock"), var_8_4, arg_8_0.baseConfig.name)
+		var_8_0.anim = var_8_0.go:GetComponent(gohelper.Type_Animator)
+		arg_8_0.selectSkillList[iter_8_0] = var_8_0
 	end
 
-	slot0:_refreshSelectSkill()
+	arg_8_0:_refreshSelectSkill()
 end
 
-function slot0._initMiddleArea(slot0)
-	slot2 = gohelper.findChild(slot0.viewGO, "root/middle/talent" .. slot0.talentConfig.sortIndex)
-	slot0.equipSlotList = slot0:getUserDataTb_()
-	slot0.equipSlotLightList = slot0:getUserDataTb_()
+function var_0_0._initMiddleArea(arg_9_0)
+	local var_9_0 = arg_9_0.talentConfig.sortIndex
+	local var_9_1 = gohelper.findChild(arg_9_0.viewGO, "root/middle/talent" .. var_9_0)
 
-	for slot6 = 1, 3 do
-		slot0.equipSlotList[slot6] = gohelper.findChild(slot2, "equipslot/" .. slot6)
+	arg_9_0.equipSlotList = arg_9_0:getUserDataTb_()
+	arg_9_0.equipSlotLightList = arg_9_0:getUserDataTb_()
 
-		gohelper.setActive(slot0.equipSlotList[slot6], slot6 <= slot0.maxSlot)
+	for iter_9_0 = 1, 3 do
+		local var_9_2 = "equipslot/" .. iter_9_0
 
-		slot0.equipSlotLightList[slot6] = gohelper.findChild(slot2, "equipslot/" .. slot6 .. "/light")
+		arg_9_0.equipSlotList[iter_9_0] = gohelper.findChild(var_9_1, var_9_2)
+
+		gohelper.setActive(arg_9_0.equipSlotList[iter_9_0], iter_9_0 <= arg_9_0.maxSlot)
+
+		local var_9_3 = "equipslot/" .. iter_9_0 .. "/light"
+
+		arg_9_0.equipSlotLightList[iter_9_0] = gohelper.findChild(var_9_1, var_9_3)
 	end
 
-	gohelper.setActive(slot2, true)
-	slot0:_refreshMiddlSlot()
+	gohelper.setActive(var_9_1, true)
+	arg_9_0:_refreshMiddlSlot()
 end
 
-function slot0._initSkillItem(slot0)
-	slot0.skillUnlockLvlDic = {}
-	slot0.skillIds = {}
+function var_0_0._initSkillItem(arg_10_0)
+	arg_10_0.skillUnlockLvlDic = {}
+	arg_10_0.skillIds = {}
 
-	for slot4, slot5 in ipairs(slot0.styleCfgDic) do
-		slot6 = string.splitToNumber(slot5.skillId, "#")
-		slot7 = string.splitToNumber(slot5.skillId2, "#")
+	for iter_10_0, iter_10_1 in ipairs(arg_10_0.styleCfgDic) do
+		local var_10_0 = string.splitToNumber(iter_10_1.skillId, "#")
+		local var_10_1 = string.splitToNumber(iter_10_1.skillId2, "#")
 
-		tabletool.addValues(slot0.skillIds, slot6)
-		tabletool.addValues(slot0.skillIds, slot7)
+		tabletool.addValues(arg_10_0.skillIds, var_10_0)
+		tabletool.addValues(arg_10_0.skillIds, var_10_1)
 
-		slot8 = {}
+		local var_10_2 = {}
 
-		tabletool.addValues(slot8, slot6)
-		tabletool.addValues(slot8, slot7)
+		tabletool.addValues(var_10_2, var_10_0)
+		tabletool.addValues(var_10_2, var_10_1)
 
-		slot0.skillUnlockLvlDic[slot5.level] = slot8
+		arg_10_0.skillUnlockLvlDic[iter_10_1.level] = var_10_2
 	end
 
-	slot0.skillItemDic = {}
+	arg_10_0.skillItemDic = {}
 
-	for slot4 = 1, 6 do
-		slot5 = gohelper.findChild(slot0.viewGO, "root/right/#scroll_skill/Viewport/Content/skillItem" .. slot4)
+	for iter_10_2 = 1, 6 do
+		local var_10_3 = gohelper.findChild(arg_10_0.viewGO, "root/right/#scroll_skill/Viewport/Content/skillItem" .. iter_10_2)
+		local var_10_4 = arg_10_0.skillIds[iter_10_2]
 
-		if slot0.skillIds[slot4] then
-			slot7 = slot0:getUserDataTb_()
-			slot7.effctConfig = lua_skill_effect.configDict[slot6]
-			slot7.canvasGroup = gohelper.findChild(slot5, "content"):GetComponent(gohelper.Type_CanvasGroup)
-			slot7.goslot = gohelper.findChild(slot5, "content/slot/go_slotLight")
-			slot7.txtdesc = gohelper.findChildText(slot5, "content/txt_desc")
-			slot7.txtdesc.text = FightConfig.instance:getSkillEffectDesc("", slot7.effctConfig)
+		if var_10_4 then
+			local var_10_5 = arg_10_0:getUserDataTb_()
 
-			UISpriteSetMgr.instance:setSeason166Sprite(gohelper.findChildImage(slot5, "content/slot/go_slotLight"), "season166_talentree_pointl" .. tostring(slot0.talentConfig.sortIndex))
+			var_10_5.effctConfig = lua_skill_effect.configDict[var_10_4]
+			var_10_5.canvasGroup = gohelper.findChild(var_10_3, "content"):GetComponent(gohelper.Type_CanvasGroup)
+			var_10_5.goslot = gohelper.findChild(var_10_3, "content/slot/go_slotLight")
+			var_10_5.txtdesc = gohelper.findChildText(var_10_3, "content/txt_desc")
+			var_10_5.txtdesc.text = FightConfig.instance:getSkillEffectDesc("", var_10_5.effctConfig)
 
-			slot7.select = gohelper.findChild(slot5, "select")
-			slot7.normal = gohelper.findChild(slot5, "normal")
-			slot7.full = gohelper.findChild(slot5, "full")
-			slot7.lock = gohelper.findChild(slot5, "lock")
-			gohelper.findChildText(slot5, "lock/txt_locktips").text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("season166_talent_selectlock"), slot0.styleCfgDic[slot0:getSkillUnlockLvl(slot6)].needStar, slot0.baseConfig.name)
-			slot7.anim = slot5:GetComponent(gohelper.Type_Animator)
+			local var_10_6 = gohelper.findChildImage(var_10_3, "content/slot/go_slotLight")
 
-			slot0:addClickCb(gohelper.findChildButtonWithAudio(slot5, "click"), slot0._clickItem, slot0, slot6)
+			UISpriteSetMgr.instance:setSeason166Sprite(var_10_6, "season166_talentree_pointl" .. tostring(arg_10_0.talentConfig.sortIndex))
 
-			slot0.skillItemDic[slot6] = slot7
+			var_10_5.select = gohelper.findChild(var_10_3, "select")
+			var_10_5.normal = gohelper.findChild(var_10_3, "normal")
+			var_10_5.full = gohelper.findChild(var_10_3, "full")
+			var_10_5.lock = gohelper.findChild(var_10_3, "lock")
+
+			local var_10_7 = gohelper.findChildText(var_10_3, "lock/txt_locktips")
+			local var_10_8 = arg_10_0:getSkillUnlockLvl(var_10_4)
+			local var_10_9 = arg_10_0.styleCfgDic[var_10_8].needStar
+
+			var_10_7.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("season166_talent_selectlock"), var_10_9, arg_10_0.baseConfig.name)
+			var_10_5.anim = var_10_3:GetComponent(gohelper.Type_Animator)
+
+			local var_10_10 = gohelper.findChildButtonWithAudio(var_10_3, "click")
+
+			arg_10_0:addClickCb(var_10_10, arg_10_0._clickItem, arg_10_0, var_10_4)
+
+			arg_10_0.skillItemDic[var_10_4] = var_10_5
 		else
-			gohelper.setActive(slot5, false)
+			gohelper.setActive(var_10_3, false)
 		end
 	end
 
-	slot0:_refreshSkillItemStatus()
+	arg_10_0:_refreshSkillItemStatus()
 end
 
-function slot0._refreshSelectSkill(slot0, slot1)
-	slot3 = #slot0.talentInfo.skillIds + 1
+function var_0_0._refreshSelectSkill(arg_11_0, arg_11_1)
+	local var_11_0 = arg_11_0.talentInfo.skillIds
+	local var_11_1 = #var_11_0 + 1
 
-	for slot7, slot8 in ipairs(slot0.selectSkillList) do
-		if slot7 == slot3 and slot3 <= slot0.maxSlot then
-			gohelper.setActive(slot8.goWhiteBg, true)
+	for iter_11_0, iter_11_1 in ipairs(arg_11_0.selectSkillList) do
+		if iter_11_0 == var_11_1 and var_11_1 <= arg_11_0.maxSlot then
+			gohelper.setActive(iter_11_1.goWhiteBg, true)
 		else
-			gohelper.setActive(slot8.goWhiteBg, false)
+			gohelper.setActive(iter_11_1.goWhiteBg, false)
 		end
 
-		if slot0.maxSlot < slot7 then
-			gohelper.setActive(slot8.goUnequip, false)
-			gohelper.setActive(slot8.goEquiped, false)
-			gohelper.setActive(slot8.goLock, true)
-		elseif slot7 > #slot2 then
-			gohelper.setActive(slot8.goUnequip, true)
-			gohelper.setActive(slot8.goEquiped, false)
-			gohelper.setActive(slot8.goLock, false)
+		if iter_11_0 > arg_11_0.maxSlot then
+			gohelper.setActive(iter_11_1.goUnequip, false)
+			gohelper.setActive(iter_11_1.goEquiped, false)
+			gohelper.setActive(iter_11_1.goLock, true)
+		elseif iter_11_0 > #var_11_0 then
+			gohelper.setActive(iter_11_1.goUnequip, true)
+			gohelper.setActive(iter_11_1.goEquiped, false)
+			gohelper.setActive(iter_11_1.goLock, false)
 		else
-			slot8.txtDesc.text = SkillHelper.buildDesc(FightConfig.instance:getSkillEffectDesc("", lua_skill_effect.configDict[slot2[slot7]]))
+			local var_11_2 = lua_skill_effect.configDict[var_11_0[iter_11_0]]
+			local var_11_3 = FightConfig.instance:getSkillEffectDesc("", var_11_2)
 
-			gohelper.setActive(slot8.goUnequip, false)
-			gohelper.setActive(slot8.goEquiped, true)
-			gohelper.setActive(slot8.goLock, false)
+			iter_11_1.txtDesc.text = SkillHelper.buildDesc(var_11_3)
 
-			if slot1 and slot7 == #slot2 then
-				slot8.animEquip:Play("equiped_open")
+			gohelper.setActive(iter_11_1.goUnequip, false)
+			gohelper.setActive(iter_11_1.goEquiped, true)
+			gohelper.setActive(iter_11_1.goLock, false)
+
+			if arg_11_1 and iter_11_0 == #var_11_0 then
+				iter_11_1.animEquip:Play("equiped_open")
 				AudioMgr.instance:trigger(AudioEnum.Season166.play_ui_checkpoint_light)
 			end
 		end
 	end
 end
 
-function slot0._refreshMiddlSlot(slot0)
-	for slot5 = 1, slot0.maxSlot do
-		gohelper.setActive(slot0.equipSlotLightList[slot5], slot5 <= #slot0.talentInfo.skillIds)
+function var_0_0._refreshMiddlSlot(arg_12_0)
+	local var_12_0 = #arg_12_0.talentInfo.skillIds
+
+	for iter_12_0 = 1, arg_12_0.maxSlot do
+		gohelper.setActive(arg_12_0.equipSlotLightList[iter_12_0], iter_12_0 <= var_12_0)
 	end
 end
 
-function slot0._refreshSkillItemStatus(slot0)
-	for slot4, slot5 in pairs(slot0.skillItemDic) do
-		slot6 = slot0:getSkillUnlockLvl(slot4)
-		slot8 = slot0.styleCfgDic[slot6]
+function var_0_0._refreshSkillItemStatus(arg_13_0)
+	for iter_13_0, iter_13_1 in pairs(arg_13_0.skillItemDic) do
+		local var_13_0 = arg_13_0:getSkillUnlockLvl(iter_13_0)
+		local var_13_1 = arg_13_0:InferSkillStatus(iter_13_0, var_13_0)
+		local var_13_2 = arg_13_0.styleCfgDic[var_13_0]
 
-		if slot0:InferSkillStatus(slot4, slot6) == uv0.Full or slot7 == uv0.Lock then
-			slot5.canvasGroup.alpha = 0.5
+		if var_13_1 == var_0_1.Full or var_13_1 == var_0_1.Lock then
+			iter_13_1.canvasGroup.alpha = 0.5
 		else
-			slot5.canvasGroup.alpha = 1
+			iter_13_1.canvasGroup.alpha = 1
 		end
 
-		gohelper.setActive(slot5.select, slot7 == uv0.Select)
-		gohelper.setActive(slot5.goslot, slot7 == uv0.Select)
-		gohelper.setActive(slot5.normal, slot7 == uv0.Normal)
-		gohelper.setActive(slot5.full, slot7 == uv0.Full)
-		gohelper.setActive(slot5.lock, slot7 == uv0.Lock)
+		gohelper.setActive(iter_13_1.select, var_13_1 == var_0_1.Select)
+		gohelper.setActive(iter_13_1.goslot, var_13_1 == var_0_1.Select)
+		gohelper.setActive(iter_13_1.normal, var_13_1 == var_0_1.Normal)
+		gohelper.setActive(iter_13_1.full, var_13_1 == var_0_1.Full)
+		gohelper.setActive(iter_13_1.lock, var_13_1 == var_0_1.Lock)
 
-		slot9 = slot7 ~= uv0.Lock and slot8.needStar > 0
-		slot0.unlockStateTab[slot4] = slot9 and Season166Enum.UnlockState or Season166Enum.LockState
-		slot5.isUnlock = slot9
+		local var_13_3 = var_13_1 ~= var_0_1.Lock and var_13_2.needStar > 0
+
+		arg_13_0.unlockStateTab[iter_13_0] = var_13_3 and Season166Enum.UnlockState or Season166Enum.LockState
+		iter_13_1.isUnlock = var_13_3
 	end
 end
 
-function slot0._clickItem(slot0, slot1)
-	if slot0:InferSkillStatus(slot1, slot0:getSkillUnlockLvl(slot1)) == uv0.Normal then
-		slot4 = tabletool.copy(slot0.talentInfo.skillIds)
-		slot4[#slot4 + 1] = slot1
+function var_0_0._clickItem(arg_14_0, arg_14_1)
+	local var_14_0 = arg_14_0:getSkillUnlockLvl(arg_14_1)
+	local var_14_1 = arg_14_0:InferSkillStatus(arg_14_1, var_14_0)
 
-		Activity166Rpc.instance:SendAct166SetTalentSkillRequest(slot0.actId, slot0.talentId, slot4)
-	elseif slot3 == uv0.Select then
-		slot4 = tabletool.copy(slot0.talentInfo.skillIds)
+	if var_14_1 == var_0_1.Normal then
+		local var_14_2 = tabletool.copy(arg_14_0.talentInfo.skillIds)
 
-		tabletool.removeValue(slot4, slot1)
-		Activity166Rpc.instance:SendAct166SetTalentSkillRequest(slot0.actId, slot0.talentId, slot4)
+		var_14_2[#var_14_2 + 1] = arg_14_1
+
+		Activity166Rpc.instance:SendAct166SetTalentSkillRequest(arg_14_0.actId, arg_14_0.talentId, var_14_2)
+	elseif var_14_1 == var_0_1.Select then
+		local var_14_3 = tabletool.copy(arg_14_0.talentInfo.skillIds)
+
+		tabletool.removeValue(var_14_3, arg_14_1)
+		Activity166Rpc.instance:SendAct166SetTalentSkillRequest(arg_14_0.actId, arg_14_0.talentId, var_14_3)
 	end
 end
 
-function slot0.OnSetTalentSkill(slot0, slot1, slot2)
-	if slot0.talentId == slot1 then
-		slot0:_refreshSkillItemStatus()
-		slot0:_refreshSelectSkill(slot2)
-		slot0:_refreshMiddlSlot()
-		slot0:saveUnlockState()
+function var_0_0.OnSetTalentSkill(arg_15_0, arg_15_1, arg_15_2)
+	if arg_15_0.talentId == arg_15_1 then
+		arg_15_0:_refreshSkillItemStatus()
+		arg_15_0:_refreshSelectSkill(arg_15_2)
+		arg_15_0:_refreshMiddlSlot()
+		arg_15_0:saveUnlockState()
 	end
 end
 
-function slot0.InferSkillStatus(slot0, slot1, slot2)
-	if slot0.talentLvl < slot2 then
-		return uv0.Lock
+function var_0_0.InferSkillStatus(arg_16_0, arg_16_1, arg_16_2)
+	if arg_16_2 > arg_16_0.talentLvl then
+		return var_0_1.Lock
 	end
 
-	if tabletool.indexOf(slot0.talentInfo.skillIds, slot1) then
-		return uv0.Select
+	if tabletool.indexOf(arg_16_0.talentInfo.skillIds, arg_16_1) then
+		return var_0_1.Select
 	end
 
-	if slot0.maxSlot <= #slot0.talentInfo.skillIds then
-		return uv0.Full
+	if #arg_16_0.talentInfo.skillIds >= arg_16_0.maxSlot then
+		return var_0_1.Full
 	end
 
-	return uv0.Normal
+	return var_0_1.Normal
 end
 
-function slot0.getSkillUnlockLvl(slot0, slot1)
-	for slot5, slot6 in pairs(slot0.skillUnlockLvlDic) do
-		if tabletool.indexOf(slot6, slot1) then
-			return slot5
+function var_0_0.getSkillUnlockLvl(arg_17_0, arg_17_1)
+	for iter_17_0, iter_17_1 in pairs(arg_17_0.skillUnlockLvlDic) do
+		if tabletool.indexOf(iter_17_1, arg_17_1) then
+			return iter_17_0
 		end
 	end
 
 	return 0
 end
 
-function slot0.playUnlockEffect(slot0)
-	if Season166Controller.instance:getPlayerPrefs(Season166Enum.TalentLvlLocalSaveKey .. slot0.talentId, 0) < slot0.talentInfo.level then
-		for slot6 = 1, slot2 do
-			if slot6 == slot2 then
-				slot0.selectSkillList[slot6].anim:Play("unlock")
+function var_0_0.playUnlockEffect(arg_18_0)
+	local var_18_0 = Season166Controller.instance:getPlayerPrefs(Season166Enum.TalentLvlLocalSaveKey .. arg_18_0.talentId, 0)
+	local var_18_1 = arg_18_0.talentInfo.level
+
+	if var_18_0 < var_18_1 then
+		for iter_18_0 = 1, var_18_1 do
+			local var_18_2 = arg_18_0.selectSkillList[iter_18_0]
+
+			if iter_18_0 == var_18_1 then
+				var_18_2.anim:Play("unlock")
 				AudioMgr.instance:trigger(AudioEnum.Season166.play_ui_checkpoint_unlock)
 			end
 
-			for slot11 = 1, 2 do
-				if slot6 == slot2 then
-					slot0.skillItemDic[slot0.skillIds[(slot6 - 1) * 2 + slot11]].anim:Play("unlock")
+			for iter_18_1 = 1, 2 do
+				local var_18_3 = arg_18_0.skillIds[(iter_18_0 - 1) * 2 + iter_18_1]
+				local var_18_4 = arg_18_0.skillItemDic[var_18_3]
+
+				if iter_18_0 == var_18_1 then
+					var_18_4.anim:Play("unlock")
 				end
 			end
 		end
 
-		Season166Controller.instance:savePlayerPrefs(Season166Enum.TalentLvlLocalSaveKey .. slot0.talentId, slot2)
+		Season166Controller.instance:savePlayerPrefs(Season166Enum.TalentLvlLocalSaveKey .. arg_18_0.talentId, var_18_1)
 	end
 end
 
-function slot0.isTalentSelect(slot0, slot1)
-	return tabletool.indexOf(slot0.talentInfo.skillIds, slot1)
+function var_0_0.isTalentSelect(arg_19_0, arg_19_1)
+	local var_19_0 = arg_19_0.talentInfo.skillIds
+
+	return tabletool.indexOf(var_19_0, arg_19_1)
 end
 
-function slot0.saveUnlockState(slot0)
-	slot1 = {}
-	slot2 = Season166Model.instance:getTalentLocalSaveKey(slot0.talentId)
+function var_0_0.saveUnlockState(arg_20_0)
+	local var_20_0 = {}
+	local var_20_1 = Season166Model.instance:getTalentLocalSaveKey(arg_20_0.talentId)
 
-	for slot6, slot7 in pairs(slot0.unlockStateTab) do
-		table.insert(slot1, string.format("%s|%s", slot6, slot7))
+	for iter_20_0, iter_20_1 in pairs(arg_20_0.unlockStateTab) do
+		local var_20_2 = string.format("%s|%s", iter_20_0, iter_20_1)
+
+		table.insert(var_20_0, var_20_2)
 	end
 
-	Season166Controller.instance:savePlayerPrefs(slot2, cjson.encode(slot1))
+	local var_20_3 = cjson.encode(var_20_0)
+
+	Season166Controller.instance:savePlayerPrefs(var_20_1, var_20_3)
 end
 
-function slot0.clcikHyperLink(slot0, slot1, slot2)
-	CommonBuffTipController.instance:openCommonTipViewWithCustomPos(slot1, Vector2(-305, 30))
+function var_0_0.clcikHyperLink(arg_21_0, arg_21_1, arg_21_2)
+	CommonBuffTipController.instance:openCommonTipViewWithCustomPos(arg_21_1, Vector2(-305, 30))
 end
 
-return slot0
+return var_0_0

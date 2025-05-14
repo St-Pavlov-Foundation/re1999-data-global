@@ -1,15 +1,15 @@
-module("modules.logic.room.model.interact.RoomInteractCharacterMO", package.seeall)
+﻿module("modules.logic.room.model.interact.RoomInteractCharacterMO", package.seeall)
 
-slot0 = pureTable("RoomInteractCharacterMO")
+local var_0_0 = pureTable("RoomInteractCharacterMO")
 
-function slot0.init(slot0, slot1)
-	slot0.id = slot1.heroId
-	slot0.use = slot1.use
-	slot0.heroMO = HeroModel.instance:getByHeroId(slot0.id)
-	slot0.heroId = slot0.heroMO.heroId
-	slot0.skinId = slot0.heroMO.skin
-	slot0.heroConfig = HeroConfig.instance:getHeroCO(slot0.heroId)
-	slot0.skinConfig = SkinConfig.instance:getSkinCo(slot0.skinId)
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.id = arg_1_1.heroId
+	arg_1_0.use = arg_1_1.use
+	arg_1_0.heroMO = HeroModel.instance:getByHeroId(arg_1_0.id)
+	arg_1_0.heroId = arg_1_0.heroMO.heroId
+	arg_1_0.skinId = arg_1_0.heroMO.skin
+	arg_1_0.heroConfig = HeroConfig.instance:getHeroCO(arg_1_0.heroId)
+	arg_1_0.skinConfig = SkinConfig.instance:getSkinCo(arg_1_0.skinId)
 end
 
-return slot0
+return var_0_0

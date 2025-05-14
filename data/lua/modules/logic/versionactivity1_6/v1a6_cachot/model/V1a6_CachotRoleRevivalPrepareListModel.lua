@@ -1,29 +1,33 @@
-module("modules.logic.versionactivity1_6.v1a6_cachot.model.V1a6_CachotRoleRevivalPrepareListModel", package.seeall)
+﻿module("modules.logic.versionactivity1_6.v1a6_cachot.model.V1a6_CachotRoleRevivalPrepareListModel", package.seeall)
 
-slot0 = class("V1a6_CachotRoleRevivalPrepareListModel", ListScrollModel)
+local var_0_0 = class("V1a6_CachotRoleRevivalPrepareListModel", ListScrollModel)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.reInit(slot0)
-	slot0:onInit()
+function var_0_0.reInit(arg_2_0)
+	arg_2_0:onInit()
 end
 
-function slot0.initList(slot0)
-	slot1 = {}
+function var_0_0.initList(arg_3_0)
+	local var_3_0 = {}
+	local var_3_1 = V1a6_CachotModel.instance:getTeamInfo()
 
-	for slot6, slot7 in ipairs(V1a6_CachotModel.instance:getTeamInfo().lifes) do
-		if slot7.life <= 0 then
-			slot9 = HeroSingleGroupMO.New()
-			slot9.heroUid = HeroModel.instance:getByHeroId(slot7.heroId).uid
+	for iter_3_0, iter_3_1 in ipairs(var_3_1.lifes) do
+		if iter_3_1.life <= 0 then
+			local var_3_2 = HeroModel.instance:getByHeroId(iter_3_1.heroId)
+			local var_3_3 = HeroSingleGroupMO.New()
 
-			table.insert(slot1, slot9)
+			var_3_3.heroUid = var_3_2.uid
+
+			table.insert(var_3_0, var_3_3)
 		end
 	end
 
-	slot0:setList(slot1)
+	arg_3_0:setList(var_3_0)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

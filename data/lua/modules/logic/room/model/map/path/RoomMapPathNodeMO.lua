@@ -1,61 +1,61 @@
-module("modules.logic.room.model.map.path.RoomMapPathNodeMO", package.seeall)
+﻿module("modules.logic.room.model.map.path.RoomMapPathNodeMO", package.seeall)
 
-slot0 = pureTable("RoomMapPathNodeMO")
+local var_0_0 = pureTable("RoomMapPathNodeMO")
 
-function slot0.init(slot0, slot1, slot2, slot3)
-	slot0.id = slot1
-	slot0.hexPoint = slot2
-	slot0.resourceId = slot3
-	slot0.resId = slot3
-	slot0.directionDic = {}
-	slot0.connectNode = {}
-	slot0.directionList = {}
-	slot0.neighborNum = 0
-	slot0.connectNodeNum = 0
-	slot0.searchIndex = 0
-	slot0.hasBuilding = false
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	arg_1_0.id = arg_1_1
+	arg_1_0.hexPoint = arg_1_2
+	arg_1_0.resourceId = arg_1_3
+	arg_1_0.resId = arg_1_3
+	arg_1_0.directionDic = {}
+	arg_1_0.connectNode = {}
+	arg_1_0.directionList = {}
+	arg_1_0.neighborNum = 0
+	arg_1_0.connectNodeNum = 0
+	arg_1_0.searchIndex = 0
+	arg_1_0.hasBuilding = false
 end
 
-function slot0.addDirection(slot0, slot1)
-	slot0.directionDic[slot1] = true
+function var_0_0.addDirection(arg_2_0, arg_2_1)
+	arg_2_0.directionDic[arg_2_1] = true
 
-	if slot1 >= 1 and slot1 <= 6 and not tabletool.indexOf(slot0.directionList) then
-		table.insert(slot0.directionList, slot1)
+	if arg_2_1 >= 1 and arg_2_1 <= 6 and not tabletool.indexOf(arg_2_0.directionList) then
+		table.insert(arg_2_0.directionList, arg_2_1)
 	end
 end
 
-function slot0.getConnectDirection(slot0, slot1)
-	return (slot1 + 3 - 1) % 6 + 1
+function var_0_0.getConnectDirection(arg_3_0, arg_3_1)
+	return (arg_3_1 + 3 - 1) % 6 + 1
 end
 
-function slot0.isHasDirection(slot0, slot1)
-	return slot0.directionDic[slot1] ~= nil
+function var_0_0.isHasDirection(arg_4_0, arg_4_1)
+	return arg_4_0.directionDic[arg_4_1] ~= nil
 end
 
-function slot0.setConnctNode(slot0, slot1, slot2)
-	if slot0.directionDic[slot1] ~= nil then
-		slot0.connectNode[slot1] = slot2
+function var_0_0.setConnctNode(arg_5_0, arg_5_1, arg_5_2)
+	if arg_5_0.directionDic[arg_5_1] ~= nil then
+		arg_5_0.connectNode[arg_5_1] = arg_5_2
 	end
 end
 
-function slot0.getConnctNode(slot0, slot1)
-	return slot0.connectNode[slot1]
+function var_0_0.getConnctNode(arg_6_0, arg_6_1)
+	return arg_6_0.connectNode[arg_6_1]
 end
 
-function slot0.getDirectionNum(slot0)
-	return #slot0.directionList
+function var_0_0.getDirectionNum(arg_7_0)
+	return #arg_7_0.directionList
 end
 
-function slot0.isEndNode(slot0)
-	return slot0.connectNodeNum <= 1
+function var_0_0.isEndNode(arg_8_0)
+	return arg_8_0.connectNodeNum <= 1
 end
 
-function slot0.isNotConnctDirection(slot0)
-	return slot0.connectNodeNum < #slot0.directionList
+function var_0_0.isNotConnctDirection(arg_9_0)
+	return #arg_9_0.directionList > arg_9_0.connectNodeNum
 end
 
-function slot0.isSideNode(slot0)
-	return slot0.neighborNum <= 6
+function var_0_0.isSideNode(arg_10_0)
+	return arg_10_0.neighborNum <= 6
 end
 
-return slot0
+return var_0_0

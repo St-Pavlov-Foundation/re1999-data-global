@@ -1,44 +1,46 @@
-module("modules.logic.login.controller.work.LoginPreLoadWork", package.seeall)
+﻿module("modules.logic.login.controller.work.LoginPreLoadWork", package.seeall)
 
-slot0 = class("LoginPreLoadWork", BaseWork)
-slot1 = {
+local var_0_0 = class("LoginPreLoadWork", BaseWork)
+local var_0_1 = {
 	"ui/viewres/scene/loadingview.prefab",
 	"ui/viewres/scene/loadingblackview.prefab",
 	"ui/viewres/scene/loadingheadsetview.prefab"
 }
 
-function slot0.onStart(slot0, slot1)
-	if not slot0._loader then
+function var_0_0.onStart(arg_1_0, arg_1_1)
+	if not arg_1_0._loader then
 		UIBlockMgr.instance:startBlock(UIBlockKey.Loading)
 
-		slot0._loader = MultiAbLoader.New()
+		arg_1_0._loader = MultiAbLoader.New()
 
-		slot0._loader:setPathList(uv0)
-		slot0._loader:startLoad(slot0._onLoaded, slot0)
+		arg_1_0._loader:setPathList(var_0_1)
+		arg_1_0._loader:startLoad(arg_1_0._onLoaded, arg_1_0)
 	else
-		slot0:_done()
+		arg_1_0:_done()
 	end
 end
 
-function slot0._onLoaded(slot0)
+function var_0_0._onLoaded(arg_2_0)
 	UIBlockMgr.instance:endBlock(UIBlockKey.Loading)
-	slot0:_done()
+	arg_2_0:_done()
 end
 
-function slot0._isFirstGuide(slot0)
+function var_0_0._isFirstGuide(arg_3_0)
 	return not (GuideModel.instance:isGuideFinish(101) or GuideController.instance:isForbidGuides())
 end
 
-function slot0._done(slot0)
-	gohelper.setActive(gohelper.find("UIRoot/OriginBg"), false)
+function var_0_0._done(arg_4_0)
+	local var_4_0 = gohelper.find("UIRoot/OriginBg")
+
+	gohelper.setActive(var_4_0, false)
 	ViewMgr.instance:closeView(ViewName.LoginView)
 
-	if slot0:_isFirstGuide() then
+	if arg_4_0:_isFirstGuide() then
 		GameSceneMgr.instance:dispatchEvent(SceneEventName.SetLoadingTypeOnce, GameLoadingState.LoadingHeadsetView)
 	end
 
 	GameSceneMgr.instance:dispatchEvent(SceneEventName.OpenLoading, SceneType.Main)
-	slot0:onDone(true)
+	arg_4_0:onDone(true)
 end
 
-return slot0
+return var_0_0

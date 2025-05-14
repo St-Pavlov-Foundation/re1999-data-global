@@ -1,40 +1,42 @@
-module("modules.logic.versionactivity1_6.v1a6_cachot.model.V1a6_CachotCollectionUnLockListModel", package.seeall)
+﻿module("modules.logic.versionactivity1_6.v1a6_cachot.model.V1a6_CachotCollectionUnLockListModel", package.seeall)
 
-slot0 = class("V1a6_CachotCollectionUnLockListModel", ListScrollModel)
+local var_0_0 = class("V1a6_CachotCollectionUnLockListModel", ListScrollModel)
 
-function slot0.release(slot0)
-	slot0.unlockCollections = nil
+function var_0_0.release(arg_1_0)
+	arg_1_0.unlockCollections = nil
 end
 
-function slot0.saveUnlockCollectionList(slot0, slot1)
-	slot0.unlockCollections = slot0.unlockCollections or {}
+function var_0_0.saveUnlockCollectionList(arg_2_0, arg_2_1)
+	arg_2_0.unlockCollections = arg_2_0.unlockCollections or {}
 
-	if slot1 then
-		for slot5, slot6 in ipairs(slot1) do
-			table.insert(slot0.unlockCollections, {
-				id = slot6
-			})
+	if arg_2_1 then
+		for iter_2_0, iter_2_1 in ipairs(arg_2_1) do
+			local var_2_0 = {
+				id = iter_2_1
+			}
+
+			table.insert(arg_2_0.unlockCollections, var_2_0)
 		end
 	end
 end
 
-function slot0.onInitData(slot0)
-	if not slot0.unlockCollections then
+function var_0_0.onInitData(arg_3_0)
+	if not arg_3_0.unlockCollections then
 		return
 	end
 
-	table.sort(slot0.unlockCollections, slot0.sortFunc)
-	slot0:setList(slot0.unlockCollections)
+	table.sort(arg_3_0.unlockCollections, arg_3_0.sortFunc)
+	arg_3_0:setList(arg_3_0.unlockCollections)
 end
 
-function slot0.sortFunc(slot0, slot1)
-	return slot0.id < slot1.id
+function var_0_0.sortFunc(arg_4_0, arg_4_1)
+	return arg_4_0.id < arg_4_1.id
 end
 
-function slot0.getNewUnlockCollectionsCount(slot0)
-	return slot0.unlockCollections and #slot0.unlockCollections or 0
+function var_0_0.getNewUnlockCollectionsCount(arg_5_0)
+	return arg_5_0.unlockCollections and #arg_5_0.unlockCollections or 0
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

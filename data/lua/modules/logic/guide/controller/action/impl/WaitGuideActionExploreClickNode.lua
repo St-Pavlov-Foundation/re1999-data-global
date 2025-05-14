@@ -1,81 +1,87 @@
-module("modules.logic.guide.controller.action.impl.WaitGuideActionExploreClickNode", package.seeall)
+﻿module("modules.logic.guide.controller.action.impl.WaitGuideActionExploreClickNode", package.seeall)
 
-slot0 = class("WaitGuideActionExploreClickNode", BaseGuideAction)
+local var_0_0 = class("WaitGuideActionExploreClickNode", BaseGuideAction)
 
-function slot0.onStart(slot0, slot1)
-	slot4 = tonumber(slot2[2]) or 0
-	slot5 = tonumber(slot2[3]) or 0
-	slot7, slot8 = ExploreMapModel.instance:getHeroPos()
+function var_0_0.onStart(arg_1_0, arg_1_1)
+	local var_1_0 = string.split(arg_1_0.actionParam, "#")
+	local var_1_1 = tonumber(var_1_0[1]) or 0
+	local var_1_2 = tonumber(var_1_0[2]) or 0
+	local var_1_3 = tonumber(var_1_0[3]) or 0
+	local var_1_4 = ExploreController.instance:getMap():getNowStatus()
+	local var_1_5, var_1_6 = ExploreMapModel.instance:getHeroPos()
 
-	if slot7 == (tonumber(string.split(slot0.actionParam, "#")[1]) or 0) and slot8 == slot4 and ExploreController.instance:getMap():getNowStatus() == ExploreEnum.MapStatus.Normal then
-		slot0:onDone(true)
+	if var_1_5 == var_1_1 and var_1_6 == var_1_2 and var_1_4 == ExploreEnum.MapStatus.Normal then
+		arg_1_0:onDone(true)
 
 		return
 	end
 
-	slot10 = 0
+	local var_1_7 = ExploreMapModel.instance:getNode(ExploreHelper.getKeyXY(var_1_1, var_1_2))
+	local var_1_8 = 0
 
-	if ExploreMapModel.instance:getNode(ExploreHelper.getKeyXY(slot3, slot4)) then
-		slot10 = slot9.rawHeight
+	if var_1_7 then
+		var_1_8 = var_1_7.rawHeight
 	end
 
-	slot0._targetPos = Vector3.New(slot3 + 0.5, slot10 + slot5, slot4 + 0.5)
+	local var_1_9 = var_1_8 + var_1_3
 
-	ExploreController.instance:registerCallback(ExploreEvent.OnCharacterPosChange, slot0._setMaskPosAndClickAction, slot0)
-	GameGlobalMgr.instance:registerCallback(GameStateEvent.OnScreenResize, slot0._setMaskPosAndClickAction, slot0)
+	arg_1_0._targetPos = Vector3.New(var_1_1 + 0.5, var_1_9, var_1_2 + 0.5)
+
+	ExploreController.instance:registerCallback(ExploreEvent.OnCharacterPosChange, arg_1_0._setMaskPosAndClickAction, arg_1_0)
+	GameGlobalMgr.instance:registerCallback(GameStateEvent.OnScreenResize, arg_1_0._setMaskPosAndClickAction, arg_1_0)
 
 	if not ViewMgr.instance:isOpenFinish(ViewName.GuideView) then
-		ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, slot0._checkOpenViewFinish, slot0)
+		ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, arg_1_0._checkOpenViewFinish, arg_1_0)
 	else
-		slot0:_setMaskPosAndClickAction()
+		arg_1_0:_setMaskPosAndClickAction()
 	end
 end
 
-function slot0._checkOpenViewFinish(slot0, slot1, slot2)
-	if ViewName.GuideView ~= slot1 then
+function var_0_0._checkOpenViewFinish(arg_2_0, arg_2_1, arg_2_2)
+	if ViewName.GuideView ~= arg_2_1 then
 		return
 	end
 
-	slot0:_setMaskPosAndClickAction()
+	arg_2_0:_setMaskPosAndClickAction()
 end
 
-function slot0._setMaskPosAndClickAction(slot0)
+function var_0_0._setMaskPosAndClickAction(arg_3_0)
 	if not ViewMgr.instance:isOpenFinish(ViewName.GuideView) then
 		return
 	end
 
-	GuideController.instance:dispatchEvent(GuideEvent.SetMaskPosition, slot0._targetPos, true)
-	GuideViewMgr.instance:setHoleClickCallback(slot0._onHoldClick, slot0)
+	GuideController.instance:dispatchEvent(GuideEvent.SetMaskPosition, arg_3_0._targetPos, true)
+	GuideViewMgr.instance:setHoleClickCallback(arg_3_0._onHoldClick, arg_3_0)
 end
 
-function slot0._getScreenPos(slot0)
-	return CameraMgr.instance:getMainCamera():WorldToScreenPoint(slot0._targetPos)
+function var_0_0._getScreenPos(arg_4_0)
+	return CameraMgr.instance:getMainCamera():WorldToScreenPoint(arg_4_0._targetPos)
 end
 
-function slot0._onHoldClick(slot0, slot1)
-	slot2 = slot0:_getScreenPos()
+function var_0_0._onHoldClick(arg_5_0, arg_5_1)
+	local var_5_0 = arg_5_0:_getScreenPos()
 
-	if slot1 or not slot0._isForceGuide or slot0:isOutScreen(slot2) then
-		ExploreController.instance:dispatchEvent(ExploreEvent.OnClickMap, slot2)
+	if arg_5_1 or not arg_5_0._isForceGuide or arg_5_0:isOutScreen(var_5_0) then
+		ExploreController.instance:dispatchEvent(ExploreEvent.OnClickMap, var_5_0)
 		GuideController.instance:dispatchEvent(GuideEvent.SetMaskPosition, nil)
 		GuideViewMgr.instance:close()
-		slot0:onDone(true)
+		arg_5_0:onDone(true)
 	end
 end
 
-function slot0.isOutScreen(slot0, slot1)
-	if slot1.x < 0 or slot1.y < 0 or UnityEngine.Screen.width < slot1.x or UnityEngine.Screen.height < slot1.y then
+function var_0_0.isOutScreen(arg_6_0, arg_6_1)
+	if arg_6_1.x < 0 or arg_6_1.y < 0 or arg_6_1.x > UnityEngine.Screen.width or arg_6_1.y > UnityEngine.Screen.height then
 		return true
 	end
 
 	return false
 end
 
-function slot0.clearWork(slot0)
-	GuideViewMgr.instance:setHoleClickCallback(nil, )
-	ExploreController.instance:unregisterCallback(ExploreEvent.OnCharacterPosChange, slot0._setMaskPosAndClickAction, slot0)
-	GameGlobalMgr.instance:unregisterCallback(GameStateEvent.OnScreenResize, slot0._setMaskPosAndClickAction, slot0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, slot0._checkOpenViewFinish, slot0)
+function var_0_0.clearWork(arg_7_0)
+	GuideViewMgr.instance:setHoleClickCallback(nil, nil)
+	ExploreController.instance:unregisterCallback(ExploreEvent.OnCharacterPosChange, arg_7_0._setMaskPosAndClickAction, arg_7_0)
+	GameGlobalMgr.instance:unregisterCallback(GameStateEvent.OnScreenResize, arg_7_0._setMaskPosAndClickAction, arg_7_0)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, arg_7_0._checkOpenViewFinish, arg_7_0)
 end
 
-return slot0
+return var_0_0

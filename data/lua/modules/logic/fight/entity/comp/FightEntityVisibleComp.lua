@@ -1,92 +1,93 @@
-module("modules.logic.fight.entity.comp.FightEntityVisibleComp", package.seeall)
+﻿module("modules.logic.fight.entity.comp.FightEntityVisibleComp", package.seeall)
 
-slot0 = class("FightEntityVisibleComp", LuaCompBase)
+local var_0_0 = class("FightEntityVisibleComp", LuaCompBase)
 
-function slot0.ctor(slot0, slot1)
-	slot0.entity = slot1
-	slot0._hideByEntity = nil
-	slot0._hideBySkill = nil
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0.entity = arg_1_1
+	arg_1_0._hideByEntity = nil
+	arg_1_0._hideBySkill = nil
 
-	FightController.instance:registerCallback(FightEvent.OnSkillPlayStart, slot0._onSkillPlayStart, slot0)
-	FightController.instance:registerCallback(FightEvent.OnSkillPlayFinish, slot0._onSkillPlayFinish, slot0)
-	FightController.instance:registerCallback(FightEvent.SetEntityVisibleByTimeline, slot0._setEntityVisibleByTimeline, slot0)
+	FightController.instance:registerCallback(FightEvent.OnSkillPlayStart, arg_1_0._onSkillPlayStart, arg_1_0)
+	FightController.instance:registerCallback(FightEvent.OnSkillPlayFinish, arg_1_0._onSkillPlayFinish, arg_1_0)
+	FightController.instance:registerCallback(FightEvent.SetEntityVisibleByTimeline, arg_1_0._setEntityVisibleByTimeline, arg_1_0)
 end
 
-function slot0.addEventListeners(slot0)
+function var_0_0.addEventListeners(arg_2_0)
+	return
 end
 
-function slot0.beforeDestroy(slot0)
-	FightController.instance:unregisterCallback(FightEvent.OnSkillPlayStart, slot0._onSkillPlayStart, slot0)
-	FightController.instance:unregisterCallback(FightEvent.OnSkillPlayFinish, slot0._onSkillPlayFinish, slot0)
-	FightController.instance:unregisterCallback(FightEvent.SetEntityVisibleByTimeline, slot0._setEntityVisibleByTimeline, slot0)
+function var_0_0.beforeDestroy(arg_3_0)
+	FightController.instance:unregisterCallback(FightEvent.OnSkillPlayStart, arg_3_0._onSkillPlayStart, arg_3_0)
+	FightController.instance:unregisterCallback(FightEvent.OnSkillPlayFinish, arg_3_0._onSkillPlayFinish, arg_3_0)
+	FightController.instance:unregisterCallback(FightEvent.SetEntityVisibleByTimeline, arg_3_0._setEntityVisibleByTimeline, arg_3_0)
 end
 
-function slot0._onSkillPlayStart(slot0, slot1, slot2, slot3)
-	if slot2 == FightEnum.AppearTimelineSkillId then
+function var_0_0._onSkillPlayStart(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
+	if arg_4_2 == FightEnum.AppearTimelineSkillId then
 		return
 	end
 
-	if FightHelper.getRelativeEntityIdDict(slot3)[slot0.entity.id] then
-		slot0.entity:setAlpha(1, 0)
+	if FightHelper.getRelativeEntityIdDict(arg_4_3)[arg_4_0.entity.id] then
+		arg_4_0.entity:setAlpha(1, 0)
 
-		slot0._hideByEntity = nil
-		slot0._hideBySkill = nil
+		arg_4_0._hideByEntity = nil
+		arg_4_0._hideBySkill = nil
 	end
 end
 
-function slot0._onSkillPlayFinish(slot0, slot1, slot2, slot3)
-	if slot1.skill and slot1.skill:sameSkillPlaying() then
+function var_0_0._onSkillPlayFinish(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
+	if arg_5_1.skill and arg_5_1.skill:sameSkillPlaying() then
 		return
 	end
 
-	FightController.instance:dispatchEvent(FightEvent.SetEntityFootEffectVisible, slot0.entity.id, true)
+	FightController.instance:dispatchEvent(FightEvent.SetEntityFootEffectVisible, arg_5_0.entity.id, true)
 
 	if FightWorkStepChangeHero.playingChangeHero or FightWorkChangeHero.playingChangeHero then
 		return
 	end
 
 	if not FightSkillMgr.instance:isPlayingAnyTimeline() then
-		slot0.entity:setAlpha(1, 0)
+		arg_5_0.entity:setAlpha(1, 0)
 
-		slot0._hideByEntity = nil
-		slot0._hideBySkill = nil
-	elseif slot0._hideByEntity and slot0._hideByEntity == slot1.id and slot0._hideBySkill == slot2 then
-		slot0.entity:setAlpha(1, 0)
+		arg_5_0._hideByEntity = nil
+		arg_5_0._hideBySkill = nil
+	elseif arg_5_0._hideByEntity and arg_5_0._hideByEntity == arg_5_1.id and arg_5_0._hideBySkill == arg_5_2 then
+		arg_5_0.entity:setAlpha(1, 0)
 
-		slot0._hideByEntity = nil
-		slot0._hideBySkill = nil
-	elseif slot3.stepUid == FightTLEventEntityVisible.latestStepUid then
-		slot0.entity:setAlpha(1, 0)
+		arg_5_0._hideByEntity = nil
+		arg_5_0._hideBySkill = nil
+	elseif arg_5_3.stepUid == FightTLEventEntityVisible.latestStepUid then
+		arg_5_0.entity:setAlpha(1, 0)
 
-		slot0._hideByEntity = nil
-		slot0._hideBySkill = nil
+		arg_5_0._hideByEntity = nil
+		arg_5_0._hideBySkill = nil
 	end
 end
 
-function slot0._setEntityVisibleByTimeline(slot0, slot1, slot2, slot3, slot4)
-	if slot0.entity.id ~= slot1.id then
+function var_0_0._setEntityVisibleByTimeline(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4)
+	if arg_6_0.entity.id ~= arg_6_1.id then
 		return
 	end
 
-	if slot3 then
-		slot0.entity:setAlpha(1, slot4)
+	if arg_6_3 then
+		arg_6_0.entity:setAlpha(1, arg_6_4)
 
-		slot0._hideByEntity = nil
-		slot0._hideBySkill = nil
+		arg_6_0._hideByEntity = nil
+		arg_6_0._hideBySkill = nil
 	else
-		slot0.entity:setAlpha(0, slot4)
+		arg_6_0.entity:setAlpha(0, arg_6_4)
 
-		slot0._hideByEntity = slot1.id
-		slot0._hideBySkill = slot2.actId
+		arg_6_0._hideByEntity = arg_6_1.id
+		arg_6_0._hideBySkill = arg_6_2.actId
 	end
 
-	if not slot3 then
-		FightFloatMgr.instance:hideEntityEquipFloat(slot1.id)
+	if not arg_6_3 then
+		FightFloatMgr.instance:hideEntityEquipFloat(arg_6_1.id)
 	end
 
-	if not FightSkillMgr.instance:isUniqueSkill(slot1, slot2) then
-		FightController.instance:dispatchEvent(FightEvent.SetEntityFootEffectVisible, slot1.id, slot3)
+	if not FightSkillMgr.instance:isUniqueSkill(arg_6_1, arg_6_2) then
+		FightController.instance:dispatchEvent(FightEvent.SetEntityFootEffectVisible, arg_6_1.id, arg_6_3)
 	end
 end
 
-return slot0
+return var_0_0

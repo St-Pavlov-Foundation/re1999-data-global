@@ -1,112 +1,122 @@
-module("modules.logic.scene.room.comp.entitymgr.RoomSceneCharacterEntityMgr", package.seeall)
+﻿module("modules.logic.scene.room.comp.entitymgr.RoomSceneCharacterEntityMgr", package.seeall)
 
-slot0 = class("RoomSceneCharacterEntityMgr", BaseSceneUnitMgr)
+local var_0_0 = class("RoomSceneCharacterEntityMgr", BaseSceneUnitMgr)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.init(slot0, slot1, slot2)
-	slot0._scene = slot0:getCurScene()
+function var_0_0.init(arg_2_0, arg_2_1, arg_2_2)
+	arg_2_0._scene = arg_2_0:getCurScene()
 
 	if RoomController.instance:isEditMode() then
 		return
 	end
 
-	for slot7, slot8 in ipairs(RoomCharacterModel.instance:getList()) do
-		slot0:spawnRoomCharacter(slot8)
+	local var_2_0 = RoomCharacterModel.instance:getList()
+
+	for iter_2_0, iter_2_1 in ipairs(var_2_0) do
+		arg_2_0:spawnRoomCharacter(iter_2_1)
 	end
 
-	if not slot0:getUnit(SceneTag.Untagged, 1) then
-		slot0:_spawnEffect(RoomEnum.EffectKey.CharacterFootPrintGOKey, RoomCharacterFootPrintEntity, 1)
+	if not arg_2_0:getUnit(SceneTag.Untagged, 1) then
+		arg_2_0:_spawnEffect(RoomEnum.EffectKey.CharacterFootPrintGOKey, RoomCharacterFootPrintEntity, 1)
 	end
 end
 
-function slot0.spawnRoomCharacter(slot0, slot1)
-	return slot0:_spawnRoomCharacter(slot1)
+function var_0_0.spawnRoomCharacter(arg_3_0, arg_3_1)
+	return arg_3_0:_spawnRoomCharacter(arg_3_1)
 end
 
-function slot0._spawnRoomCharacter(slot0, slot1, slot2)
+function var_0_0._spawnRoomCharacter(arg_4_0, arg_4_1, arg_4_2)
 	if not RoomController.instance:isObMode() and not RoomController.instance:isVisitMode() then
 		return
 	end
 
-	slot4 = slot1.currentPosition
-	slot6 = MonoHelper.addNoUpdateLuaComOnceToGo(gohelper.create3d(slot0._scene.go.characterRoot, string.format("%s", slot1.id)), RoomCharacterEntity, slot1.id)
+	local var_4_0 = arg_4_0._scene.go.characterRoot
+	local var_4_1 = arg_4_1.currentPosition
+	local var_4_2 = gohelper.create3d(var_4_0, string.format("%s", arg_4_1.id))
+	local var_4_3 = MonoHelper.addNoUpdateLuaComOnceToGo(var_4_2, RoomCharacterEntity, arg_4_1.id)
 
-	if slot2 ~= true then
-		slot0:addUnit(slot6)
+	if arg_4_2 ~= true then
+		arg_4_0:addUnit(var_4_3)
 	end
 
-	gohelper.addChild(slot3, slot5)
-	slot6:setLocalPos(slot4.x, slot4.y, slot4.z)
+	gohelper.addChild(var_4_0, var_4_2)
+	var_4_3:setLocalPos(var_4_1.x, var_4_1.y, var_4_1.z)
 	RoomCharacterController.instance:dispatchEvent(RoomEvent.CharacterEntityChanged)
 
-	return slot6
+	return var_4_3
 end
 
-function slot0._spawnEffect(slot0, slot1, slot2, slot3)
-	slot4 = slot0._scene.go.characterRoot
-	slot5 = gohelper.create3d(slot4, slot1)
-	slot6 = MonoHelper.addNoUpdateLuaComOnceToGo(slot5, slot2, slot3)
+function var_0_0._spawnEffect(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
+	local var_5_0 = arg_5_0._scene.go.characterRoot
+	local var_5_1 = gohelper.create3d(var_5_0, arg_5_1)
+	local var_5_2 = MonoHelper.addNoUpdateLuaComOnceToGo(var_5_1, arg_5_2, arg_5_3)
 
-	gohelper.addChild(slot4, slot5)
-	slot0:addUnit(slot6)
+	gohelper.addChild(var_5_0, var_5_1)
+	arg_5_0:addUnit(var_5_2)
 
-	return slot6
+	return var_5_2
 end
 
-function slot0.moveTo(slot0, slot1, slot2)
-	slot1:setLocalPos(slot2.x, slot2.y, slot2.z)
+function var_0_0.moveTo(arg_6_0, arg_6_1, arg_6_2)
+	arg_6_1:setLocalPos(arg_6_2.x, arg_6_2.y, arg_6_2.z)
 end
 
-function slot0.destroyCharacter(slot0, slot1)
-	slot0:removeUnit(slot1:getTag(), slot1.id)
+function var_0_0.destroyCharacter(arg_7_0, arg_7_1)
+	arg_7_0:removeUnit(arg_7_1:getTag(), arg_7_1.id)
 	RoomCharacterController.instance:dispatchEvent(RoomEvent.CharacterEntityChanged)
 end
 
-function slot0.getCharacterEntity(slot0, slot1, slot2)
-	slot3 = (not slot2 or slot2 == SceneTag.RoomCharacter) and slot0:getTagUnitDict(SceneTag.RoomCharacter)
+function var_0_0.getCharacterEntity(arg_8_0, arg_8_1, arg_8_2)
+	local var_8_0 = (not arg_8_2 or arg_8_2 == SceneTag.RoomCharacter) and arg_8_0:getTagUnitDict(SceneTag.RoomCharacter)
 
-	return slot3 and slot3[slot1]
+	return var_8_0 and var_8_0[arg_8_1]
 end
 
-function slot0.spawnTempCharacterByMO(slot0, slot1)
-	if slot0._tempCharacterEntity then
-		if slot1 and slot0._tempCharacterEntity.id == slot1.id then
-			return slot0._tempCharacterEntity
+function var_0_0.spawnTempCharacterByMO(arg_9_0, arg_9_1)
+	if arg_9_0._tempCharacterEntity then
+		if arg_9_1 and arg_9_0._tempCharacterEntity.id == arg_9_1.id then
+			return arg_9_0._tempCharacterEntity
 		end
 
-		slot0._tempCharacterEntity = nil
+		local var_9_0 = arg_9_0._tempCharacterEntity
 
-		slot0:destroyUnit(slot0._tempCharacterEntity)
+		arg_9_0._tempCharacterEntity = nil
+
+		arg_9_0:destroyUnit(var_9_0)
 	end
 
-	if slot1 then
-		slot0._tempCharacterEntity = slot0:_spawnRoomCharacter(slot1, true)
+	if arg_9_1 then
+		arg_9_0._tempCharacterEntity = arg_9_0:_spawnRoomCharacter(arg_9_1, true)
 	end
 
-	return slot0._tempCharacterEntity
+	return arg_9_0._tempCharacterEntity
 end
 
-function slot0.getTempCharacterEntity(slot0)
-	return slot0._tempCharacterEntity
+function var_0_0.getTempCharacterEntity(arg_10_0)
+	return arg_10_0._tempCharacterEntity
 end
 
-function slot0.getRoomCharacterEntityDict(slot0)
-	return slot0._tagUnitDict[SceneTag.RoomCharacter] or {}
+function var_0_0.getRoomCharacterEntityDict(arg_11_0)
+	return arg_11_0._tagUnitDict[SceneTag.RoomCharacter] or {}
 end
 
-function slot0._onUpdate(slot0)
+function var_0_0._onUpdate(arg_12_0)
+	return
 end
 
-function slot0.onSceneClose(slot0)
-	uv0.super.onSceneClose(slot0)
+function var_0_0.onSceneClose(arg_13_0)
+	var_0_0.super.onSceneClose(arg_13_0)
 
-	if slot0._tempCharacterEntity then
-		slot0._tempCharacterEntity = nil
+	local var_13_0 = arg_13_0._tempCharacterEntity
 
-		slot0:destroyUnit(slot1)
+	if var_13_0 then
+		arg_13_0._tempCharacterEntity = nil
+
+		arg_13_0:destroyUnit(var_13_0)
 	end
 end
 
-return slot0
+return var_0_0

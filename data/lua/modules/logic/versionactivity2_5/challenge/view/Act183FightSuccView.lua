@@ -1,83 +1,96 @@
-module("modules.logic.versionactivity2_5.challenge.view.Act183FightSuccView", package.seeall)
+﻿module("modules.logic.versionactivity2_5.challenge.view.Act183FightSuccView", package.seeall)
 
-slot0 = class("Act183FightSuccView", FightSuccView)
+local var_0_0 = class("Act183FightSuccView", FightSuccView)
 
-function slot0.onInitView(slot0)
-	uv0.super.onInitView(slot0)
+function var_0_0.onInitView(arg_1_0)
+	var_0_0.super.onInitView(arg_1_0)
 
-	slot0._additionitem = gohelper.findChild(slot0.viewGO, "goalcontent/goallist/addition")
+	arg_1_0._additionitem = gohelper.findChild(arg_1_0.viewGO, "goalcontent/goallist/addition")
 end
 
-function slot0._onClickClose(slot0)
-	if not slot0._canClick or slot0._isStartToCloseView then
+function var_0_0._onClickClose(arg_2_0)
+	if not arg_2_0._canClick or arg_2_0._isStartToCloseView then
 		return
 	end
 
-	if slot0._reChallenge and slot0._episodeType ~= Act183Enum.EpisodeType.Boss and ActivityHelper.getActivityStatus(slot0._activityId) == ActivityEnum.ActivityStatus.Normal then
-		GameFacade.showMessageBox(MessageBoxIdDefine.Act183ReplaceResult, MsgBoxEnum.BoxType.Yes_No, slot0._confrimReplaceResult, slot0._cancelReplaceResult, nil, slot0, slot0)
+	local var_2_0 = ActivityHelper.getActivityStatus(arg_2_0._activityId)
+
+	if arg_2_0._reChallenge and arg_2_0._episodeType ~= Act183Enum.EpisodeType.Boss and var_2_0 == ActivityEnum.ActivityStatus.Normal then
+		GameFacade.showMessageBox(MessageBoxIdDefine.Act183ReplaceResult, MsgBoxEnum.BoxType.Yes_No, arg_2_0._confrimReplaceResult, arg_2_0._cancelReplaceResult, nil, arg_2_0, arg_2_0)
 
 		return
 	end
 
-	slot0:_reallyStartToCloseView()
+	arg_2_0:_reallyStartToCloseView()
 end
 
-function slot0._confrimReplaceResult(slot0)
-	Activity183Rpc.instance:sendAct183ReplaceResultRequest(slot0._activityId, slot0._episodeId, slot0._reallyStartToCloseView, slot0)
+function var_0_0._confrimReplaceResult(arg_3_0)
+	Activity183Rpc.instance:sendAct183ReplaceResultRequest(arg_3_0._activityId, arg_3_0._episodeId, arg_3_0._reallyStartToCloseView, arg_3_0)
 end
 
-function slot0._cancelReplaceResult(slot0)
+function var_0_0._cancelReplaceResult(arg_4_0)
 	Act183Model.instance:clearBattleFinishedInfo()
-	slot0:_reallyStartToCloseView()
+	arg_4_0:_reallyStartToCloseView()
 end
 
-function slot0._reallyStartToCloseView(slot0)
-	uv0.super._onClickClose(slot0)
+function var_0_0._reallyStartToCloseView(arg_5_0)
+	var_0_0.super._onClickClose(arg_5_0)
 
-	slot0._isStartToCloseView = true
+	arg_5_0._isStartToCloseView = true
 end
 
-function slot0.onOpen(slot0)
-	uv0.super.onOpen(slot0)
+function var_0_0.onOpen(arg_6_0)
+	var_0_0.super.onOpen(arg_6_0)
 
-	slot0._conditionItemTab = slot0:getUserDataTb_()
+	arg_6_0._conditionItemTab = arg_6_0:getUserDataTb_()
 
-	slot0:initBattleFinishInfo()
-	slot0:refreshFightConditions()
-	NavigateMgr.instance:addEscape(slot0.viewName, slot0._onClickClose, slot0)
+	arg_6_0:initBattleFinishInfo()
+	arg_6_0:refreshFightConditions()
+	NavigateMgr.instance:addEscape(arg_6_0.viewName, arg_6_0._onClickClose, arg_6_0)
 end
 
-function slot0.initBattleFinishInfo(slot0)
-	slot1 = Act183Model.instance:getBattleFinishedInfo()
-	slot0._activityId = slot1.activityId
-	slot0._episodeMo = slot1.episodeMo
-	slot0._fightResultMo = slot1.fightResultMo
-	slot0._episodeId = slot0._episodeMo and slot0._episodeMo:getEpisodeId()
-	slot0._episodeType = slot0._episodeMo and slot0._episodeMo:getEpisodeType()
-	slot0._reChallenge = slot1 and slot1.reChallenge
+function var_0_0.initBattleFinishInfo(arg_7_0)
+	local var_7_0 = Act183Model.instance:getBattleFinishedInfo()
+
+	arg_7_0._activityId = var_7_0.activityId
+	arg_7_0._episodeMo = var_7_0.episodeMo
+	arg_7_0._fightResultMo = var_7_0.fightResultMo
+	arg_7_0._episodeId = arg_7_0._episodeMo and arg_7_0._episodeMo:getEpisodeId()
+	arg_7_0._episodeType = arg_7_0._episodeMo and arg_7_0._episodeMo:getEpisodeType()
+	arg_7_0._reChallenge = var_7_0 and var_7_0.reChallenge
 end
 
-function slot0.refreshFightConditions(slot0)
-	if slot0._episodeMo:getConditionIds() then
-		for slot5, slot6 in ipairs(slot1) do
-			slot0:_getOrCreateConditionItem(slot5).txtcondition.text = Act183Config.instance:getConditionCo(slot6) and slot9.decs1 or ""
+function var_0_0.refreshFightConditions(arg_8_0)
+	local var_8_0 = arg_8_0._episodeMo:getConditionIds()
 
-			UISpriteSetMgr.instance:setChallengeSprite(slot7.imagestar, slot0._fightResultMo:isConditionPass(slot6) and "v2a5_challenge_dungeon_reward_star_01" or "v2a5_challenge_dungeon_reward_star_02", true)
-			gohelper.setActive(slot7.viewGO, true)
+	if var_8_0 then
+		for iter_8_0, iter_8_1 in ipairs(var_8_0) do
+			local var_8_1 = arg_8_0:_getOrCreateConditionItem(iter_8_0)
+			local var_8_2 = arg_8_0._fightResultMo:isConditionPass(iter_8_1)
+			local var_8_3 = Act183Config.instance:getConditionCo(iter_8_1)
+
+			var_8_1.txtcondition.text = var_8_3 and var_8_3.decs1 or ""
+
+			local var_8_4 = var_8_2 and "v2a5_challenge_dungeon_reward_star_01" or "v2a5_challenge_dungeon_reward_star_02"
+
+			UISpriteSetMgr.instance:setChallengeSprite(var_8_1.imagestar, var_8_4, true)
+			gohelper.setActive(var_8_1.viewGO, true)
 		end
 	end
 end
 
-function slot0._getOrCreateConditionItem(slot0, slot1)
-	if not slot0._conditionItemTab[slot1] then
-		slot2 = slot0:getUserDataTb_()
-		slot2.viewGO = gohelper.cloneInPlace(slot0._additionitem, "fightcondition_" .. slot1)
-		slot2.txtcondition = gohelper.findChildText(slot2.viewGO, "condition")
-		slot2.imagestar = gohelper.findChildImage(slot2.viewGO, "star")
-		slot0._conditionItemTab[slot1] = slot2
+function var_0_0._getOrCreateConditionItem(arg_9_0, arg_9_1)
+	local var_9_0 = arg_9_0._conditionItemTab[arg_9_1]
+
+	if not var_9_0 then
+		var_9_0 = arg_9_0:getUserDataTb_()
+		var_9_0.viewGO = gohelper.cloneInPlace(arg_9_0._additionitem, "fightcondition_" .. arg_9_1)
+		var_9_0.txtcondition = gohelper.findChildText(var_9_0.viewGO, "condition")
+		var_9_0.imagestar = gohelper.findChildImage(var_9_0.viewGO, "star")
+		arg_9_0._conditionItemTab[arg_9_1] = var_9_0
 	end
 
-	return slot2
+	return var_9_0
 end
 
-return slot0
+return var_0_0

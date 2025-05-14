@@ -1,234 +1,270 @@
-module("modules.logic.fight.entity.comp.skill.FightTLEventCatapult", package.seeall)
+﻿module("modules.logic.fight.entity.comp.skill.FightTLEventCatapult", package.seeall)
 
-slot0 = class("FightTLEventCatapult")
+local var_0_0 = class("FightTLEventCatapult")
 
-function slot0.handleSkillEvent(slot0, slot1, slot2, slot3)
-	slot0._paramsArr = slot3
-	slot0._fightStepMO = slot1
-	slot0._duration = slot2
-	slot0.index = FightTLHelper.getNumberParam(slot3[1])
-	slot0.effectName = slot3[2]
-	slot0.hangPoint = slot3[3]
-	slot4 = FightTLHelper.getTableParam(slot3[4], ",", true)
-	slot5 = FightTLHelper.getTableParam(slot3[5], ",", true)
-	slot0.bezierParam = slot3[6]
-	slot0.catapultAudio = FightTLHelper.getNumberParam(slot3[7])
-	slot0.hitEffectName = slot3[8]
-	slot0.hitStartTime = FightTLHelper.getNumberParam(slot3[9]) or 0.01
-	slot0.hitEffectHangPoint = slot3[10]
-	slot0.hitAudio = FightTLHelper.getNumberParam(slot3[11])
-	slot0.buffIdList = FightTLHelper.getTableParam(slot3[12], "#", true)
-	slot0.buffStartTime = FightTLHelper.getNumberParam(slot3[13]) or 0.01
-	slot0.alwaysForceLookForward = FightTLHelper.getBoolParam(slot3[14])
-	slot0.catapultReleaseTime = FightTLHelper.getNumberParam(slot3[15])
-	slot0.hitReleaseTime = FightTLHelper.getNumberParam(slot3[16])
+function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	arg_1_0._paramsArr = arg_1_3
+	arg_1_0._fightStepMO = arg_1_1
+	arg_1_0._duration = arg_1_2
+	arg_1_0.index = FightTLHelper.getNumberParam(arg_1_3[1])
+	arg_1_0.effectName = arg_1_3[2]
+	arg_1_0.hangPoint = arg_1_3[3]
 
-	if string.nilorempty(slot0.effectName) then
+	local var_1_0 = FightTLHelper.getTableParam(arg_1_3[4], ",", true)
+	local var_1_1 = FightTLHelper.getTableParam(arg_1_3[5], ",", true)
+
+	arg_1_0.bezierParam = arg_1_3[6]
+	arg_1_0.catapultAudio = FightTLHelper.getNumberParam(arg_1_3[7])
+	arg_1_0.hitEffectName = arg_1_3[8]
+	arg_1_0.hitStartTime = FightTLHelper.getNumberParam(arg_1_3[9]) or 0.01
+	arg_1_0.hitEffectHangPoint = arg_1_3[10]
+	arg_1_0.hitAudio = FightTLHelper.getNumberParam(arg_1_3[11])
+	arg_1_0.buffIdList = FightTLHelper.getTableParam(arg_1_3[12], "#", true)
+	arg_1_0.buffStartTime = FightTLHelper.getNumberParam(arg_1_3[13]) or 0.01
+	arg_1_0.alwaysForceLookForward = FightTLHelper.getBoolParam(arg_1_3[14])
+	arg_1_0.catapultReleaseTime = FightTLHelper.getNumberParam(arg_1_3[15])
+	arg_1_0.hitReleaseTime = FightTLHelper.getNumberParam(arg_1_3[16])
+
+	if string.nilorempty(arg_1_0.effectName) then
 		logError("effect name is nil")
 
 		return
 	end
 
-	slot0.skillUser = FightHelper.getEntity(slot1.fromId)
-	slot0.side = slot0.skillUser:getSide()
-	slot0.skillUserId = slot0.skillUser.id
-	slot7 = slot0:getEndEntity()
+	arg_1_0.skillUser = FightHelper.getEntity(arg_1_1.fromId)
+	arg_1_0.side = arg_1_0.skillUser:getSide()
+	arg_1_0.skillUserId = arg_1_0.skillUser.id
 
-	if not slot0:getStartEntity() then
+	local var_1_2 = arg_1_0:getStartEntity()
+	local var_1_3 = arg_1_0:getEndEntity()
+
+	if not var_1_2 then
 		return
 	end
 
-	if not slot7 then
+	if not var_1_3 then
 		return
 	end
 
-	slot0.startEntity = slot6
-	slot0.endEntity = slot7
-	slot0.catapultBuffCount = slot0:getCatapultBuffCount(slot0.index + 1)
-	slot10, slot11, slot12 = transformhelper.getPos(slot6:getHangPoint(slot0.hangPoint).transform)
-	slot13, slot14, slot15 = transformhelper.getPos(slot7:getHangPoint(slot0.hangPoint).transform)
-	slot0.effectWrap = slot0.skillUser.effect:addGlobalEffect(slot0.effectName, nil, slot0.catapultReleaseTime)
+	arg_1_0.startEntity = var_1_2
+	arg_1_0.endEntity = var_1_3
+	arg_1_0.catapultBuffCount = arg_1_0:getCatapultBuffCount(arg_1_0.index + 1)
 
-	FightRenderOrderMgr.instance:onAddEffectWrap(slot0.skillUserId, slot0.effectWrap)
-	slot0:startBezierMove(slot10 + slot4[1], slot11 + slot4[2], slot12, slot13 + slot5[1], slot14 + slot5[2], slot15)
-	slot0:changeLookDir()
-	slot0:playHitEffect()
-	slot0:playAddBuff()
-	slot0:playAddFirstBuff()
+	local var_1_4 = var_1_2:getHangPoint(arg_1_0.hangPoint)
+	local var_1_5 = var_1_3:getHangPoint(arg_1_0.hangPoint)
+	local var_1_6, var_1_7, var_1_8 = transformhelper.getPos(var_1_4.transform)
+	local var_1_9, var_1_10, var_1_11 = transformhelper.getPos(var_1_5.transform)
+
+	arg_1_0.effectWrap = arg_1_0.skillUser.effect:addGlobalEffect(arg_1_0.effectName, nil, arg_1_0.catapultReleaseTime)
+
+	FightRenderOrderMgr.instance:onAddEffectWrap(arg_1_0.skillUserId, arg_1_0.effectWrap)
+	arg_1_0:startBezierMove(var_1_6 + var_1_0[1], var_1_7 + var_1_0[2], var_1_8, var_1_9 + var_1_1[1], var_1_10 + var_1_1[2], var_1_11)
+	arg_1_0:changeLookDir()
+	arg_1_0:playHitEffect()
+	arg_1_0:playAddBuff()
+	arg_1_0:playAddFirstBuff()
 end
 
-function slot0.playAddFirstBuff(slot0)
-	if slot0.index ~= 1 then
+function var_0_0.playAddFirstBuff(arg_2_0)
+	if arg_2_0.index ~= 1 then
 		return
 	end
 
-	if slot0:getCatapultBuffCount(slot0.index) < 1 then
+	local var_2_0 = arg_2_0:getCatapultBuffCount(arg_2_0.index)
+
+	if var_2_0 < 1 then
 		return
 	end
 
-	for slot8, slot9 in ipairs(slot0._fightStepMO.actEffectMOs) do
-		if not slot9:isDone() and slot0.startEntity.id == slot9.targetId and slot9.effectType == FightEnum.EffectType.BUFFADD and slot0:inCheckNeedPlayBuff(slot9.effectNum) then
-			FightSkillBuffMgr.instance:playSkillBuff(slot0._fightStepMO, slot9)
-			FightDataHelper.playEffectData(slot9)
+	local var_2_1 = FightEnum.EffectType.BUFFADD
+	local var_2_2 = arg_2_0.startEntity.id
+	local var_2_3 = 0
 
-			if slot1 <= 0 + 1 then
+	for iter_2_0, iter_2_1 in ipairs(arg_2_0._fightStepMO.actEffectMOs) do
+		if not iter_2_1:isDone() and var_2_2 == iter_2_1.targetId and iter_2_1.effectType == var_2_1 and arg_2_0:inCheckNeedPlayBuff(iter_2_1.effectNum) then
+			var_2_3 = var_2_3 + 1
+
+			FightSkillBuffMgr.instance:playSkillBuff(arg_2_0._fightStepMO, iter_2_1)
+			FightDataHelper.playEffectData(iter_2_1)
+
+			if var_2_0 <= var_2_3 then
 				return
 			end
 		end
 	end
 end
 
-function slot0.getCatapultBuffCount(slot0, slot1)
-	for slot6, slot7 in ipairs(slot0._fightStepMO.actEffectMOs) do
-		if slot7.effectType == FightEnum.EffectType.CATAPULTBUFF and slot7.effectNum == slot1 then
-			return tonumber(slot7.reserveId)
+function var_0_0.getCatapultBuffCount(arg_3_0, arg_3_1)
+	local var_3_0 = FightEnum.EffectType.CATAPULTBUFF
+
+	for iter_3_0, iter_3_1 in ipairs(arg_3_0._fightStepMO.actEffectMOs) do
+		if iter_3_1.effectType == var_3_0 and iter_3_1.effectNum == arg_3_1 then
+			return tonumber(iter_3_1.reserveId)
 		end
 	end
 
 	return 0
 end
 
-function slot0.getStartEntity(slot0)
+function var_0_0.getStartEntity(arg_4_0)
 	if SkillEditorMgr and SkillEditorMgr.instance.inEditMode then
-		return slot0:getPosEntity(slot0.index)
+		return arg_4_0:getPosEntity(arg_4_0.index)
 	else
-		return slot0:get217EffectEntity(slot0.index)
+		return arg_4_0:get217EffectEntity(arg_4_0.index)
 	end
 end
 
-function slot0.getEndEntity(slot0)
+function var_0_0.getEndEntity(arg_5_0)
 	if SkillEditorMgr and SkillEditorMgr.instance.inEditMode then
-		return slot0:getPosEntity(slot0.index + 1)
+		return arg_5_0:getPosEntity(arg_5_0.index + 1)
 	else
-		return slot0:get217EffectEntity(slot0.index + 1)
+		return arg_5_0:get217EffectEntity(arg_5_0.index + 1)
 	end
 end
 
-function slot0.get217EffectEntity(slot0, slot1)
-	for slot6, slot7 in ipairs(slot0._fightStepMO.actEffectMOs) do
-		if slot7.effectType == FightEnum.EffectType.CATAPULTBUFF and slot7.effectNum == slot1 then
-			return GameSceneMgr.instance:getCurScene().entityMgr:getEntity(slot7.targetId)
+function var_0_0.get217EffectEntity(arg_6_0, arg_6_1)
+	local var_6_0 = FightEnum.EffectType.CATAPULTBUFF
+
+	for iter_6_0, iter_6_1 in ipairs(arg_6_0._fightStepMO.actEffectMOs) do
+		if iter_6_1.effectType == var_6_0 and iter_6_1.effectNum == arg_6_1 then
+			local var_6_1 = iter_6_1.targetId
+
+			return (GameSceneMgr.instance:getCurScene().entityMgr:getEntity(var_6_1))
 		end
 	end
 end
 
-function slot0.getPosEntity(slot0, slot1)
-	return GameSceneMgr.instance:getCurScene().entityMgr:getEntityByPosId(SceneTag.UnitMonster, slot1) or slot2.entityMgr:getEntityByPosId(SceneTag.UnitMonster, 1)
+function var_0_0.getPosEntity(arg_7_0, arg_7_1)
+	local var_7_0 = GameSceneMgr.instance:getCurScene()
+
+	return var_7_0.entityMgr:getEntityByPosId(SceneTag.UnitMonster, arg_7_1) or var_7_0.entityMgr:getEntityByPosId(SceneTag.UnitMonster, 1)
 end
 
-function slot0.startBezierMove(slot0, slot1, slot2, slot3, slot4, slot5, slot6)
-	slot0.effectWrap:setWorldPos(slot1, slot2, slot3)
+function var_0_0.startBezierMove(arg_8_0, arg_8_1, arg_8_2, arg_8_3, arg_8_4, arg_8_5, arg_8_6)
+	arg_8_0.effectWrap:setWorldPos(arg_8_1, arg_8_2, arg_8_3)
 
-	slot0.mover = MonoHelper.addLuaComOnceToGo(slot0.effectWrap.containerGO, UnitMoverBezier)
+	arg_8_0.mover = MonoHelper.addLuaComOnceToGo(arg_8_0.effectWrap.containerGO, UnitMoverBezier)
 
-	MonoHelper.addLuaComOnceToGo(slot0.effectWrap.containerGO, UnitMoverHandler)
-	slot0.mover:setBezierParam(slot0.bezierParam)
-	slot0.mover:simpleMove(slot1, slot2, slot3, slot4, slot5, slot6, slot0._duration)
-	FightAudioMgr.instance:playAudio(slot0.catapultAudio)
+	MonoHelper.addLuaComOnceToGo(arg_8_0.effectWrap.containerGO, UnitMoverHandler)
+	arg_8_0.mover:setBezierParam(arg_8_0.bezierParam)
+	arg_8_0.mover:simpleMove(arg_8_1, arg_8_2, arg_8_3, arg_8_4, arg_8_5, arg_8_6, arg_8_0._duration)
+	FightAudioMgr.instance:playAudio(arg_8_0.catapultAudio)
 end
 
-function slot0.changeLookDir(slot0)
-	if not slot0.alwaysForceLookForward then
+function var_0_0.changeLookDir(arg_9_0)
+	if not arg_9_0.alwaysForceLookForward then
 		return
 	end
 
-	slot0.tempForwards = Vector3.New()
+	arg_9_0.tempForwards = Vector3.New()
 
-	slot0.mover:registerCallback(UnitMoveEvent.PosChanged, slot0._onPosChange, slot0)
+	arg_9_0.mover:registerCallback(UnitMoveEvent.PosChanged, arg_9_0._onPosChange, arg_9_0)
 end
 
-function slot0.playHitEffect(slot0)
-	if string.nilorempty(slot0.hitEffectName) then
+function var_0_0.playHitEffect(arg_10_0)
+	if string.nilorempty(arg_10_0.hitEffectName) then
 		return
 	end
 
-	TaskDispatcher.cancelTask(slot0._playHitEffect, slot0)
-	TaskDispatcher.runDelay(slot0._playHitEffect, slot0, slot0.hitStartTime)
+	TaskDispatcher.cancelTask(arg_10_0._playHitEffect, arg_10_0)
+	TaskDispatcher.runDelay(arg_10_0._playHitEffect, arg_10_0, arg_10_0.hitStartTime)
 end
 
-function slot0._playHitEffect(slot0)
-	slot1 = slot0.endEntity.effect:addHangEffect(slot0.hitEffectName, slot0.hitEffectHangPoint, nil, slot0.hitReleaseTime)
+function var_0_0._playHitEffect(arg_11_0)
+	local var_11_0 = arg_11_0.endEntity.effect:addHangEffect(arg_11_0.hitEffectName, arg_11_0.hitEffectHangPoint, nil, arg_11_0.hitReleaseTime)
 
-	slot1:setLocalPos(0, 0, 0)
-	FightRenderOrderMgr.instance:onAddEffectWrap(slot0.endEntity.id, slot1)
-	FightAudioMgr.instance:playAudio(slot0.hitAudio)
+	var_11_0:setLocalPos(0, 0, 0)
+	FightRenderOrderMgr.instance:onAddEffectWrap(arg_11_0.endEntity.id, var_11_0)
+	FightAudioMgr.instance:playAudio(arg_11_0.hitAudio)
 end
 
-function slot0.playAddBuff(slot0)
-	if not slot0.buffIdList then
+function var_0_0.playAddBuff(arg_12_0)
+	if not arg_12_0.buffIdList then
 		return
 	end
 
-	TaskDispatcher.cancelTask(slot0._playAddBuff, slot0)
-	TaskDispatcher.runDelay(slot0._playAddBuff, slot0, slot0.buffStartTime)
+	TaskDispatcher.cancelTask(arg_12_0._playAddBuff, arg_12_0)
+	TaskDispatcher.runDelay(arg_12_0._playAddBuff, arg_12_0, arg_12_0.buffStartTime)
 end
 
-function slot0._playAddBuff(slot0)
-	for slot7, slot8 in ipairs(slot0._fightStepMO.actEffectMOs) do
-		if not slot8:isDone() and slot0.endEntity.id == slot8.targetId and slot8.effectType == FightEnum.EffectType.BUFFADD and slot0:inCheckNeedPlayBuff(slot8.effectNum) then
-			FightSkillBuffMgr.instance:playSkillBuff(slot0._fightStepMO, slot8)
-			FightDataHelper.playEffectData(slot8)
+function var_0_0._playAddBuff(arg_13_0)
+	local var_13_0 = FightEnum.EffectType.BUFFADD
+	local var_13_1 = arg_13_0.endEntity.id
+	local var_13_2 = 0
 
-			if slot0.catapultBuffCount <= 0 + 1 then
+	for iter_13_0, iter_13_1 in ipairs(arg_13_0._fightStepMO.actEffectMOs) do
+		if not iter_13_1:isDone() and var_13_1 == iter_13_1.targetId and iter_13_1.effectType == var_13_0 and arg_13_0:inCheckNeedPlayBuff(iter_13_1.effectNum) then
+			var_13_2 = var_13_2 + 1
+
+			FightSkillBuffMgr.instance:playSkillBuff(arg_13_0._fightStepMO, iter_13_1)
+			FightDataHelper.playEffectData(iter_13_1)
+
+			if var_13_2 >= arg_13_0.catapultBuffCount then
 				return
 			end
 		end
 	end
 end
 
-function slot0.inCheckNeedPlayBuff(slot0, slot1)
-	return slot0.buffIdList and slot1 and tabletool.indexOf(slot0.buffIdList, slot1)
+function var_0_0.inCheckNeedPlayBuff(arg_14_0, arg_14_1)
+	return arg_14_0.buffIdList and arg_14_1 and tabletool.indexOf(arg_14_0.buffIdList, arg_14_1)
 end
 
-function slot0._onPosChange(slot0, slot1)
-	slot2, slot3, slot4 = slot1:getPos()
-	slot5, slot6, slot7 = slot1:getPrePos()
+function var_0_0._onPosChange(arg_15_0, arg_15_1)
+	local var_15_0, var_15_1, var_15_2 = arg_15_1:getPos()
+	local var_15_3, var_15_4, var_15_5 = arg_15_1:getPrePos()
 
-	slot0.tempForwards:Set(slot2 - slot5, slot3 - slot6, slot4 - slot7)
+	arg_15_0.tempForwards:Set(var_15_0 - var_15_3, var_15_1 - var_15_4, var_15_2 - var_15_5)
 
-	if slot0.tempForwards:Magnitude() < 1e-06 then
+	if arg_15_0.tempForwards:Magnitude() < 1e-06 then
 		return
 	end
 
-	slot11 = Quaternion.LookRotation(slot0.tempForwards, Vector3.up) * FightHelper.getEffectLookDirQuaternion(slot0.side) * FightEnum.RotationQuaternion.Ninety
+	local var_15_6 = Quaternion.LookRotation(arg_15_0.tempForwards, Vector3.up)
+	local var_15_7 = FightHelper.getEffectLookDirQuaternion(arg_15_0.side)
+	local var_15_8 = FightEnum.RotationQuaternion.Ninety
+	local var_15_9 = var_15_6 * var_15_7 * var_15_8
 
-	transformhelper.setRotation(slot0.effectWrap.containerTr, slot11.x, slot11.y, slot11.z, slot11.w)
+	transformhelper.setRotation(arg_15_0.effectWrap.containerTr, var_15_9.x, var_15_9.y, var_15_9.z, var_15_9.w)
 end
 
-function slot0.removeEffectMover(slot0)
-	if not slot0.effectWrap then
+function var_0_0.removeEffectMover(arg_16_0)
+	local var_16_0 = arg_16_0.effectWrap
+
+	if not var_16_0 then
 		return
 	end
 
-	MonoHelper.removeLuaComFromGo(slot1.containerGO, UnitMoverBezier)
-	MonoHelper.removeLuaComFromGo(slot1.containerGO, UnitMoverHandler)
+	MonoHelper.removeLuaComFromGo(var_16_0.containerGO, UnitMoverBezier)
+	MonoHelper.removeLuaComFromGo(var_16_0.containerGO, UnitMoverHandler)
 
-	slot0.effectWrap = nil
+	arg_16_0.effectWrap = nil
 end
 
-function slot0.handleSkillEventEnd(slot0)
+function var_0_0.handleSkillEventEnd(arg_17_0)
+	return
 end
 
-function slot0.onSkillEnd(slot0)
-	slot0:clear()
+function var_0_0.onSkillEnd(arg_18_0)
+	arg_18_0:clear()
 end
 
-function slot0.clear(slot0)
-	slot0:removeEffectMover()
-	TaskDispatcher.cancelTask(slot0._playHitEffect, slot0)
-	TaskDispatcher.cancelTask(slot0._playAddBuff, slot0)
+function var_0_0.clear(arg_19_0)
+	arg_19_0:removeEffectMover()
+	TaskDispatcher.cancelTask(arg_19_0._playHitEffect, arg_19_0)
+	TaskDispatcher.cancelTask(arg_19_0._playAddBuff, arg_19_0)
 
-	slot0.mover = nil
-	slot0.skillUser = nil
-	slot0.skillUser = nil
-	slot0.side = nil
-	slot0.skillUserId = nil
-	slot0.startEntity = nil
-	slot0.endEntity = nil
+	arg_19_0.mover = nil
+	arg_19_0.skillUser = nil
+	arg_19_0.skillUser = nil
+	arg_19_0.side = nil
+	arg_19_0.skillUserId = nil
+	arg_19_0.startEntity = nil
+	arg_19_0.endEntity = nil
 end
 
-function slot0.dispose(slot0)
-	slot0:clear()
+function var_0_0.dispose(arg_20_0)
+	arg_20_0:clear()
 end
 
-return slot0
+return var_0_0

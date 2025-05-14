@@ -1,146 +1,149 @@
-module("modules.logic.room.entity.RoomTransportSiteEntity", package.seeall)
+﻿module("modules.logic.room.entity.RoomTransportSiteEntity", package.seeall)
 
-slot0 = class("RoomTransportSiteEntity", RoomBaseEntity)
+local var_0_0 = class("RoomTransportSiteEntity", RoomBaseEntity)
 
-function slot0.ctor(slot0, slot1)
-	uv0.super.ctor(slot0)
-	slot0:setEntityId(slot1)
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	var_0_0.super.ctor(arg_1_0)
+	arg_1_0:setEntityId(arg_1_1)
 end
 
-function slot0.setEntityId(slot0, slot1)
-	slot0.id = slot1
-	slot0.entityId = slot0.id
+function var_0_0.setEntityId(arg_2_0, arg_2_1)
+	arg_2_0.id = arg_2_1
+	arg_2_0.entityId = arg_2_0.id
 end
 
-function slot0.getTag(slot0)
+function var_0_0.getTag(arg_3_0)
 	return SceneTag.RoomBuilding
 end
 
-function slot0.init(slot0, slot1)
-	slot0.containerGO = gohelper.create3d(slot1, RoomEnum.EntityChildKey.ContainerGOKey)
-	slot0.staticContainerGO = slot0.containerGO
-	slot0.containerGOTrs = slot0.containerGO.transform
-	slot0.goTrs = slot1.transform
+function var_0_0.init(arg_4_0, arg_4_1)
+	arg_4_0.containerGO = gohelper.create3d(arg_4_1, RoomEnum.EntityChildKey.ContainerGOKey)
+	arg_4_0.staticContainerGO = arg_4_0.containerGO
+	arg_4_0.containerGOTrs = arg_4_0.containerGO.transform
+	arg_4_0.goTrs = arg_4_1.transform
 
-	uv0.super.init(slot0, slot1)
+	var_0_0.super.init(arg_4_0, arg_4_1)
 end
 
-function slot0.playAudio(slot0, slot1)
-	if slot1 and slot1 ~= 0 then
-		slot0.__isHasAuidoTrigger = true
+function var_0_0.playAudio(arg_5_0, arg_5_1)
+	if arg_5_1 and arg_5_1 ~= 0 then
+		arg_5_0.__isHasAuidoTrigger = true
 
-		AudioMgr.instance:trigger(slot1, slot0.go)
+		AudioMgr.instance:trigger(arg_5_1, arg_5_0.go)
 	end
 end
 
-function slot0.initComponents(slot0)
-	slot0:addComp("effect", RoomEffectComp)
-	slot0:addComp("alphaThresholdComp", RoomAlphaThresholdComp)
-	slot0:addComp("collider", RoomColliderComp)
-	slot0:addComp("nightlight", RoomNightLightComp)
+function var_0_0.initComponents(arg_6_0)
+	arg_6_0:addComp("effect", RoomEffectComp)
+	arg_6_0:addComp("alphaThresholdComp", RoomAlphaThresholdComp)
+	arg_6_0:addComp("collider", RoomColliderComp)
+	arg_6_0:addComp("nightlight", RoomNightLightComp)
 end
 
-function slot0.onStart(slot0)
-	uv0.super.onStart(slot0)
+function var_0_0.onStart(arg_7_0)
+	var_0_0.super.onStart(arg_7_0)
 end
 
-function slot0.refreshBuilding(slot0)
-	if not slot0.effect:isHasEffectGOByKey(RoomEnum.EffectKey.BuildingGOKey) then
-		slot0.effect:addParams({
+function var_0_0.refreshBuilding(arg_8_0)
+	if not arg_8_0.effect:isHasEffectGOByKey(RoomEnum.EffectKey.BuildingGOKey) then
+		arg_8_0.effect:addParams({
 			[RoomEnum.EffectKey.BuildingGOKey] = {
 				res = "scenes/m_s07_xiaowu/prefab/building/2_2_simulate/simulate_tingchezhan_1.prefab",
 				pathfinding = true,
 				deleteChildPath = "0"
 			}
 		})
-		slot0.effect:refreshEffect()
+		arg_8_0.effect:refreshEffect()
 	end
 end
 
-function slot0.setLocalPos(slot0, slot1, slot2, slot3, slot4)
-	ZProj.TweenHelper.KillByObj(slot0.goTrs)
+function var_0_0.setLocalPos(arg_9_0, arg_9_1, arg_9_2, arg_9_3, arg_9_4)
+	ZProj.TweenHelper.KillByObj(arg_9_0.goTrs)
 
-	if slot4 then
-		ZProj.TweenHelper.DOLocalMove(slot0.goTrs, slot1, slot2, slot3, 0.1)
+	if arg_9_4 then
+		ZProj.TweenHelper.DOLocalMove(arg_9_0.goTrs, arg_9_1, arg_9_2, arg_9_3, 0.1)
 	else
-		transformhelper.setLocalPos(slot0.goTrs, slot1, slot2, slot3)
+		transformhelper.setLocalPos(arg_9_0.goTrs, arg_9_1, arg_9_2, arg_9_3)
 	end
 end
 
-function slot0.getAlphaThresholdValue(slot0)
+function var_0_0.getAlphaThresholdValue(arg_10_0)
 	return nil
 end
 
-function slot0.onEffectRebuild(slot0)
-	if not slot0._isSmokeAnimPlaying then
-		slot0:_playSmokeAnim(false)
+function var_0_0.onEffectRebuild(arg_11_0)
+	if not arg_11_0._isSmokeAnimPlaying then
+		arg_11_0:_playSmokeAnim(false)
 	end
 
-	if slot0:getBodyGO() then
+	if arg_11_0:getBodyGO() then
 		RoomMapController.instance:dispatchEvent(RoomEvent.RoomVieiwConfirmRefreshUI)
 	end
 end
 
-function slot0.getBodyGO(slot0)
-	return slot0:_findBuildingGOChild(RoomEnum.EntityChildKey.BodyGOKey)
+function var_0_0.getBodyGO(arg_12_0)
+	return arg_12_0:_findBuildingGOChild(RoomEnum.EntityChildKey.BodyGOKey)
 end
 
-function slot0.getHeadGO(slot0)
-	return slot0:_findBuildingGOChild(RoomEnum.EntityChildKey.HeadGOKey)
+function var_0_0.getHeadGO(arg_13_0)
+	return arg_13_0:_findBuildingGOChild(RoomEnum.EntityChildKey.HeadGOKey)
 end
 
-function slot0.playAnimator(slot0, slot1)
-	return slot0.effect:playEffectAnimator(RoomEnum.EffectKey.BuildingGOKey, slot1)
+function var_0_0.playAnimator(arg_14_0, arg_14_1)
+	return arg_14_0.effect:playEffectAnimator(RoomEnum.EffectKey.BuildingGOKey, arg_14_1)
 end
 
-function slot0.playSmokeEffect(slot0)
-	slot0:_returnSmokeEffect()
-	slot0:_playSmokeAnim(true)
+function var_0_0.playSmokeEffect(arg_15_0)
+	arg_15_0:_returnSmokeEffect()
+	arg_15_0:_playSmokeAnim(true)
 
-	slot0._isSmokeAnimPlaying = true
+	arg_15_0._isSmokeAnimPlaying = true
 
-	TaskDispatcher.runDelay(slot0._delayReturnSmokeEffect, slot0, 3)
+	TaskDispatcher.runDelay(arg_15_0._delayReturnSmokeEffect, arg_15_0, 3)
 end
 
-function slot0._delayReturnSmokeEffect(slot0)
-	slot0._isSmokeAnimPlaying = false
+function var_0_0._delayReturnSmokeEffect(arg_16_0)
+	arg_16_0._isSmokeAnimPlaying = false
 
-	slot0:_playSmokeAnim(false)
+	arg_16_0:_playSmokeAnim(false)
 end
 
-function slot0._returnSmokeEffect(slot0)
-	TaskDispatcher.cancelTask(slot0._delayReturnSmokeEffect, slot0)
+function var_0_0._returnSmokeEffect(arg_17_0)
+	TaskDispatcher.cancelTask(arg_17_0._delayReturnSmokeEffect, arg_17_0)
 end
 
-function slot0._playSmokeAnim(slot0, slot1)
-	if slot0:_findBuildingGOChild(RoomEnum.EntityChildKey.SmokeGOKey) then
-		if slot1 then
-			gohelper.setActive(slot2, false)
+function var_0_0._playSmokeAnim(arg_18_0, arg_18_1)
+	local var_18_0 = arg_18_0:_findBuildingGOChild(RoomEnum.EntityChildKey.SmokeGOKey)
+
+	if var_18_0 then
+		if arg_18_1 then
+			gohelper.setActive(var_18_0, false)
 		end
 
-		gohelper.setActive(slot2, slot1)
+		gohelper.setActive(var_18_0, arg_18_1)
 	end
 end
 
-function slot0._findBuildingGOChild(slot0, slot1)
-	return slot0.effect:getGameObjectByPath(RoomEnum.EffectKey.BuildingGOKey, slot1)
+function var_0_0._findBuildingGOChild(arg_19_0, arg_19_1)
+	return arg_19_0.effect:getGameObjectByPath(RoomEnum.EffectKey.BuildingGOKey, arg_19_1)
 end
 
-function slot0.beforeDestroy(slot0)
-	ZProj.TweenHelper.KillByObj(slot0.goTrs)
-	slot0:_returnSmokeEffect()
-	slot0:removeEvent()
+function var_0_0.beforeDestroy(arg_20_0)
+	ZProj.TweenHelper.KillByObj(arg_20_0.goTrs)
+	arg_20_0:_returnSmokeEffect()
+	arg_20_0:removeEvent()
 end
 
-function slot0.removeEvent(slot0)
+function var_0_0.removeEvent(arg_21_0)
+	return
 end
 
-function slot0.getMO(slot0)
+function var_0_0.getMO(arg_22_0)
 	return nil
 end
 
-function slot0.getCharacterMeshRendererList(slot0)
-	return slot0.effect:getMeshRenderersByKey(RoomEnum.EffectKey.BuildingGOKey)
+function var_0_0.getCharacterMeshRendererList(arg_23_0)
+	return arg_23_0.effect:getMeshRenderersByKey(RoomEnum.EffectKey.BuildingGOKey)
 end
 
-return slot0
+return var_0_0

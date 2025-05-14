@@ -1,11 +1,13 @@
-module("modules.logic.room.entity.comp.RoomCharacterFollowPathComp", package.seeall)
+﻿module("modules.logic.room.entity.comp.RoomCharacterFollowPathComp", package.seeall)
 
-slot0 = class("RoomCharacterFollowPathComp", RoomBaseFollowPathComp)
+local var_0_0 = class("RoomCharacterFollowPathComp", RoomBaseFollowPathComp)
 
-function slot0.onStopMove(slot0)
+function var_0_0.onStopMove(arg_1_0)
+	return
 end
 
-function slot0.onStartMove(slot0)
+function var_0_0.onStartMove(arg_2_0)
+	return
 end
 
-return slot0
+return var_0_0

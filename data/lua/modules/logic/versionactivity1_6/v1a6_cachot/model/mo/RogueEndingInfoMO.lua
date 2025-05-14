@@ -1,82 +1,84 @@
-module("modules.logic.versionactivity1_6.v1a6_cachot.model.mo.RogueEndingInfoMO", package.seeall)
+﻿module("modules.logic.versionactivity1_6.v1a6_cachot.model.mo.RogueEndingInfoMO", package.seeall)
 
-slot0 = pureTable("RogueEndingInfoMO")
+local var_0_0 = pureTable("RogueEndingInfoMO")
 
-function slot0.init(slot0, slot1)
-	slot0._activityId = slot1.activityId
-	slot0._difficulty = slot1.difficulty
-	slot0._heros = slot1.heroId
-	slot0._roomId = slot1.roomId
-	slot0._roomNum = slot1.roomNum
-	slot0._currencyTotal = slot1.currencyTotal
-	slot0._collections = slot1.collections
-	slot0._isFinish = slot1.isFinish
-	slot0._score = slot1.score
-	slot0._doubleScore = slot1.doubleScore
-	slot0._bonus = slot1.bonus
-	slot0._ending = slot1.ending
-	slot0._layer = slot1.layer
-	slot0._failReason = slot1.failReason
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0._activityId = arg_1_1.activityId
+	arg_1_0._difficulty = arg_1_1.difficulty
+	arg_1_0._heros = arg_1_1.heroId
+	arg_1_0._roomId = arg_1_1.roomId
+	arg_1_0._roomNum = arg_1_1.roomNum
+	arg_1_0._currencyTotal = arg_1_1.currencyTotal
+	arg_1_0._collections = arg_1_1.collections
+	arg_1_0._isFinish = arg_1_1.isFinish
+	arg_1_0._score = arg_1_1.score
+	arg_1_0._doubleScore = arg_1_1.doubleScore
+	arg_1_0._bonus = arg_1_1.bonus
+	arg_1_0._ending = arg_1_1.ending
+	arg_1_0._layer = arg_1_1.layer
+	arg_1_0._failReason = arg_1_1.failReason
 
-	slot0:initFinishEvents(slot1)
+	arg_1_0:initFinishEvents(arg_1_1)
 
-	slot0._isEnterEndingFlow = false
+	arg_1_0._isEnterEndingFlow = false
 end
 
-function slot0.initFinishEvents(slot0, slot1)
-	slot0.finishEventList = slot0.finishEventList or {}
+function var_0_0.initFinishEvents(arg_2_0, arg_2_1)
+	local var_2_0 = arg_2_1.finishEvents
 
-	tabletool.clear(slot0.finishEventList)
+	arg_2_0.finishEventList = arg_2_0.finishEventList or {}
 
-	if slot1.finishEvents then
-		for slot6, slot7 in ipairs(slot2) do
-			table.insert(slot0.finishEventList, slot7)
+	tabletool.clear(arg_2_0.finishEventList)
+
+	if var_2_0 then
+		for iter_2_0, iter_2_1 in ipairs(var_2_0) do
+			table.insert(arg_2_0.finishEventList, iter_2_1)
 		end
 	end
 end
 
-function slot0.getFinishEventList(slot0)
-	return slot0.finishEventList
+function var_0_0.getFinishEventList(arg_3_0)
+	return arg_3_0.finishEventList
 end
 
-function slot0.getFinishEventNum(slot0)
-	return slot0.finishEventList and #slot0.finishEventList or 0
+function var_0_0.getFinishEventNum(arg_4_0)
+	return arg_4_0.finishEventList and #arg_4_0.finishEventList or 0
 end
 
-function slot0.getLayer(slot0)
-	return slot0._layer
+function var_0_0.getLayer(arg_5_0)
+	return arg_5_0._layer
 end
 
-function slot0.getRoomNum(slot0)
-	return slot0._roomNum
+function var_0_0.getRoomNum(arg_6_0)
+	return arg_6_0._roomNum
 end
 
-function slot0.getDifficulty(slot0)
-	return slot0._difficulty
+function var_0_0.getDifficulty(arg_7_0)
+	return arg_7_0._difficulty
 end
 
-function slot0.getScore(slot0)
-	return slot0._score
+function var_0_0.getScore(arg_8_0)
+	return arg_8_0._score
 end
 
-function slot0.isDoubleScore(slot0)
-	return slot0._doubleScore > 0
+function var_0_0.isDoubleScore(arg_9_0)
+	return arg_9_0._doubleScore > 0
 end
 
-function slot0.isFinish(slot0)
-	return slot0._isFinish
+function var_0_0.isFinish(arg_10_0)
+	return arg_10_0._isFinish
 end
 
-function slot0.getFailReason(slot0)
-	return slot0._failReason
+function var_0_0.getFailReason(arg_11_0)
+	return arg_11_0._failReason
 end
 
-function slot0.onEnterEndingFlow(slot0)
-	slot0._isEnterEndingFlow = true
+function var_0_0.onEnterEndingFlow(arg_12_0)
+	arg_12_0._isEnterEndingFlow = true
 end
 
-function slot0.isEnterEndingFlow(slot0)
-	return slot0._isEnterEndingFlow
+function var_0_0.isEnterEndingFlow(arg_13_0)
+	return arg_13_0._isEnterEndingFlow
 end
 
-return slot0
+return var_0_0

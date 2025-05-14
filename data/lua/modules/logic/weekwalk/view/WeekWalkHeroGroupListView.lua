@@ -1,55 +1,59 @@
-module("modules.logic.weekwalk.view.WeekWalkHeroGroupListView", package.seeall)
+﻿module("modules.logic.weekwalk.view.WeekWalkHeroGroupListView", package.seeall)
 
-slot0 = class("WeekWalkHeroGroupListView", HeroGroupListView)
+local var_0_0 = class("WeekWalkHeroGroupListView", HeroGroupListView)
 
-function slot0._getHeroItemCls(slot0)
+function var_0_0._getHeroItemCls(arg_1_0)
 	return WeekWalkHeroGroupHeroItem
 end
 
-function slot0._checkRestrictHero(slot0)
-	slot1 = {}
+function var_0_0._checkRestrictHero(arg_2_0)
+	local var_2_0 = {}
 
-	for slot5, slot6 in ipairs(slot0._heroItemList) do
-		if slot6:checkWeekWalkCd() then
-			table.insert(slot1, slot7)
+	for iter_2_0, iter_2_1 in ipairs(arg_2_0._heroItemList) do
+		local var_2_1 = iter_2_1:checkWeekWalkCd()
+
+		if var_2_1 then
+			table.insert(var_2_0, var_2_1)
 		end
 	end
 
-	if #slot1 == 0 then
+	if #var_2_0 == 0 then
 		return
 	end
 
 	UIBlockMgr.instance:startBlock("removeWeekWalkInCdHero")
 
-	slot0._heroInCdList = slot1
+	arg_2_0._heroInCdList = var_2_0
 
-	TaskDispatcher.runDelay(slot0._removeWeekWalkInCdHero, slot0, 1.5)
+	TaskDispatcher.runDelay(arg_2_0._removeWeekWalkInCdHero, arg_2_0, 1.5)
 end
 
-function slot0._removeWeekWalkInCdHero(slot0)
+function var_0_0._removeWeekWalkInCdHero(arg_3_0)
 	UIBlockMgr.instance:endBlock("removeWeekWalkInCdHero")
 
-	if not slot0._heroInCdList then
+	if not arg_3_0._heroInCdList then
 		return
 	end
 
-	slot0._heroInCdList = nil
+	local var_3_0 = arg_3_0._heroInCdList
 
-	for slot5, slot6 in ipairs(slot0._heroInCdList) do
-		HeroSingleGroupModel.instance:remove(slot6)
+	arg_3_0._heroInCdList = nil
+
+	for iter_3_0, iter_3_1 in ipairs(var_3_0) do
+		HeroSingleGroupModel.instance:remove(iter_3_1)
 	end
 
-	for slot5, slot6 in ipairs(slot0._heroItemList) do
-		slot6:resetGrayFactor()
+	for iter_3_2, iter_3_3 in ipairs(arg_3_0._heroItemList) do
+		iter_3_3:resetGrayFactor()
 	end
 
 	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnModifyHeroGroup)
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_4_0)
 	UIBlockMgr.instance:endBlock("removeWeekWalkInCdHero")
-	TaskDispatcher.cancelTask(slot0._removeWeekWalkInCdHero, slot0)
-	uv0.super.onDestroyView(slot0)
+	TaskDispatcher.cancelTask(arg_4_0._removeWeekWalkInCdHero, arg_4_0)
+	var_0_0.super.onDestroyView(arg_4_0)
 end
 
-return slot0
+return var_0_0

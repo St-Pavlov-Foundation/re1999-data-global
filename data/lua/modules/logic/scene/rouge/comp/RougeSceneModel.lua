@@ -1,11 +1,13 @@
-module("modules.logic.scene.rouge.comp.RougeSceneModel", package.seeall)
+﻿module("modules.logic.scene.rouge.comp.RougeSceneModel", package.seeall)
 
-slot0 = class("RougeSceneModel", BaseSceneComp)
+local var_0_0 = class("RougeSceneModel", BaseSceneComp)
 
-function slot0.onSceneStart(slot0, slot1, slot2)
+function var_0_0.onSceneStart(arg_1_0, arg_1_1, arg_1_2)
+	return
 end
 
-function slot0.onSceneClose(slot0)
+function var_0_0.onSceneClose(arg_2_0)
+	return
 end
 
-return slot0
+return var_0_0

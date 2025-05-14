@@ -1,81 +1,90 @@
-module("modules.logic.reactivity.controller.ReactivityController", package.seeall)
+﻿module("modules.logic.reactivity.controller.ReactivityController", package.seeall)
 
-slot0 = class("ReactivityController", BaseController)
+local var_0_0 = class("ReactivityController", BaseController)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.onInitFinish(slot0)
+function var_0_0.onInitFinish(arg_2_0)
+	return
 end
 
-function slot0.openReactivityTaskView(slot0, slot1)
-	slot0:_enterActivityView(ViewName.ReactivityTaskView, slot1, slot0._openTaskView, slot0)
+function var_0_0.openReactivityTaskView(arg_3_0, arg_3_1)
+	arg_3_0:_enterActivityView(ViewName.ReactivityTaskView, arg_3_1, arg_3_0._openTaskView, arg_3_0)
 end
 
-function slot0._openTaskView(slot0, slot1, slot2)
+function var_0_0._openTaskView(arg_4_0, arg_4_1, arg_4_2)
 	TaskRpc.instance:sendGetTaskInfoRequest({
 		TaskEnum.TaskType.ActivityDungeon
-	}, function ()
-		ViewMgr.instance:openView(uv0, {
-			actId = uv1
+	}, function()
+		ViewMgr.instance:openView(arg_4_1, {
+			actId = arg_4_2
 		})
 	end)
 end
 
-function slot0.getCurReactivityId(slot0)
-	for slot4, slot5 in pairs(ReactivityEnum.ActivityDefine) do
-		if ActivityHelper.getActivityStatus(slot4) == ActivityEnum.ActivityStatus.Normal or slot6 == ActivityEnum.ActivityStatus.NotUnlock or ActivityHelper.getActivityStatus(slot5.storeActId) == ActivityEnum.ActivityStatus.Normal then
-			return slot4
+function var_0_0.getCurReactivityId(arg_6_0)
+	for iter_6_0, iter_6_1 in pairs(ReactivityEnum.ActivityDefine) do
+		local var_6_0 = ActivityHelper.getActivityStatus(iter_6_0)
+		local var_6_1 = ActivityHelper.getActivityStatus(iter_6_1.storeActId)
+
+		if var_6_0 == ActivityEnum.ActivityStatus.Normal or var_6_0 == ActivityEnum.ActivityStatus.NotUnlock or var_6_1 == ActivityEnum.ActivityStatus.Normal then
+			return iter_6_0
 		end
 	end
 end
 
-function slot0.openReactivityStoreView(slot0, slot1)
-	if not ReactivityEnum.ActivityDefine[slot1] then
+function var_0_0.openReactivityStoreView(arg_7_0, arg_7_1)
+	local var_7_0 = ReactivityEnum.ActivityDefine[arg_7_1]
+
+	if not var_7_0 then
 		return
 	end
 
-	slot0:_enterActivityView(ViewName.ReactivityStoreView, slot2.storeActId, slot0._openStoreView, slot0)
+	local var_7_1 = var_7_0.storeActId
+
+	arg_7_0:_enterActivityView(ViewName.ReactivityStoreView, var_7_1, arg_7_0._openStoreView, arg_7_0)
 end
 
-function slot0._openStoreView(slot0, slot1, slot2)
-	Activity107Rpc.instance:sendGet107GoodsInfoRequest(slot2, function ()
-		ViewMgr.instance:openView(uv0, {
-			actId = uv1
+function var_0_0._openStoreView(arg_8_0, arg_8_1, arg_8_2)
+	Activity107Rpc.instance:sendGet107GoodsInfoRequest(arg_8_2, function()
+		ViewMgr.instance:openView(arg_8_1, {
+			actId = arg_8_2
 		})
 	end)
 end
 
-function slot0._enterActivityView(slot0, slot1, slot2, slot3, slot4, slot5)
-	slot6, slot7, slot8 = ActivityHelper.getActivityStatusAndToast(slot2)
+function var_0_0._enterActivityView(arg_10_0, arg_10_1, arg_10_2, arg_10_3, arg_10_4, arg_10_5)
+	local var_10_0, var_10_1, var_10_2 = ActivityHelper.getActivityStatusAndToast(arg_10_2)
 
-	if slot6 ~= ActivityEnum.ActivityStatus.Normal then
-		if slot7 then
-			GameFacade.showToastWithTableParam(slot7, slot8)
+	if var_10_0 ~= ActivityEnum.ActivityStatus.Normal then
+		if var_10_1 then
+			GameFacade.showToastWithTableParam(var_10_1, var_10_2)
 		end
 
 		return
 	end
 
-	if slot3 then
-		slot3(slot4, slot1, slot2, slot5)
+	if arg_10_3 then
+		arg_10_3(arg_10_4, arg_10_1, arg_10_2, arg_10_5)
 
 		return
 	end
 
-	slot9 = {
-		actId = slot2
+	local var_10_3 = {
+		actId = arg_10_2
 	}
 
-	if slot5 then
-		for slot13, slot14 in pairs(slot5) do
-			slot9[slot13] = slot14
+	if arg_10_5 then
+		for iter_10_0, iter_10_1 in pairs(arg_10_5) do
+			var_10_3[iter_10_0] = iter_10_1
 		end
 	end
 
-	ViewMgr.instance:openView(slot1, slot9)
+	ViewMgr.instance:openView(arg_10_1, var_10_3)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

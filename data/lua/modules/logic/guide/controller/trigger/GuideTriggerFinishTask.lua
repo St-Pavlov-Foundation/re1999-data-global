@@ -1,27 +1,30 @@
-module("modules.logic.guide.controller.trigger.GuideTriggerFinishTask", package.seeall)
+﻿module("modules.logic.guide.controller.trigger.GuideTriggerFinishTask", package.seeall)
 
-slot0 = class("GuideTriggerFinishTask", BaseGuideTrigger)
+local var_0_0 = class("GuideTriggerFinishTask", BaseGuideTrigger)
 
-function slot0.ctor(slot0, slot1)
-	uv0.super.ctor(slot0, slot1)
-	GameSceneMgr.instance:registerCallback(SceneType.Main, slot0._onMainScene, slot0)
-	TaskController.instance:registerCallback(TaskEvent.OnFinishTask, slot0._checkStartGuide, slot0)
-	TaskController.instance:registerCallback(TaskEvent.SetTaskList, slot0._checkStartGuide, slot0)
-	TaskController.instance:registerCallback(TaskEvent.UpdateTaskList, slot0._checkStartGuide, slot0)
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	var_0_0.super.ctor(arg_1_0, arg_1_1)
+	GameSceneMgr.instance:registerCallback(SceneType.Main, arg_1_0._onMainScene, arg_1_0)
+	TaskController.instance:registerCallback(TaskEvent.OnFinishTask, arg_1_0._checkStartGuide, arg_1_0)
+	TaskController.instance:registerCallback(TaskEvent.SetTaskList, arg_1_0._checkStartGuide, arg_1_0)
+	TaskController.instance:registerCallback(TaskEvent.UpdateTaskList, arg_1_0._checkStartGuide, arg_1_0)
 end
 
-function slot0.assertGuideSatisfy(slot0, slot1, slot2)
-	return TaskModel.instance:getTaskById(tonumber(slot2)) and slot4.config.maxFinishCount <= slot4.finishCount
+function var_0_0.assertGuideSatisfy(arg_2_0, arg_2_1, arg_2_2)
+	local var_2_0 = tonumber(arg_2_2)
+	local var_2_1 = TaskModel.instance:getTaskById(var_2_0)
+
+	return var_2_1 and var_2_1.finishCount >= var_2_1.config.maxFinishCount
 end
 
-function slot0._onMainScene(slot0, slot1, slot2)
-	if slot2 == 1 then
-		slot0:checkStartGuide()
+function var_0_0._onMainScene(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_2 == 1 then
+		arg_3_0:checkStartGuide()
 	end
 end
 
-function slot0._checkStartGuide(slot0)
-	slot0:checkStartGuide()
+function var_0_0._checkStartGuide(arg_4_0)
+	arg_4_0:checkStartGuide()
 end
 
-return slot0
+return var_0_0

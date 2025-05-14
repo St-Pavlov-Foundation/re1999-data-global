@@ -1,216 +1,233 @@
-module("modules.logic.gm.view.v1a5.EditorV1a5DungeonHoleView", package.seeall)
+﻿module("modules.logic.gm.view.v1a5.EditorV1a5DungeonHoleView", package.seeall)
 
-slot0 = class("EditorV1a5DungeonHoleView", UserDataDispose)
-slot1 = "ui/viewres/gm/v1a5holeedit.prefab"
+local var_0_0 = class("EditorV1a5DungeonHoleView", UserDataDispose)
+local var_0_1 = "ui/viewres/gm/v1a5holeedit.prefab"
 
-function slot0.start(slot0)
-	slot1 = uv0.New()
+function var_0_0.start(arg_1_0)
+	local var_1_0 = var_0_0.New()
 
-	slot1:__onInit()
-	slot1:init(slot0)
+	var_1_0:__onInit()
+	var_1_0:init(arg_1_0)
 
-	return slot1
+	return var_1_0
 end
 
-function slot0.init(slot0, slot1)
-	if slot1._views[7] and not slot2.delete then
-		slot2:onRecycleAllElement()
-		slot2:onClose()
-		slot2:onDestroyView()
-		slot2:__onDispose()
+function var_0_0.init(arg_2_0, arg_2_1)
+	local var_2_0 = arg_2_1._views[7]
 
-		slot2.delete = true
+	if var_2_0 and not var_2_0.delete then
+		var_2_0:onRecycleAllElement()
+		var_2_0:onClose()
+		var_2_0:onDestroyView()
+		var_2_0:__onDispose()
+
+		var_2_0.delete = true
 	end
 
-	slot0.viewGO = slot1.viewGO
-	slot0.viewContainer = slot1
-	slot0.viewName = slot1.viewName
-	slot0._godispatcharea = gohelper.findChild(slot0.viewGO, "#go_dispatcharea")
-	slot0._goareaitem = gohelper.findChild(slot0.viewGO, "#go_dispatcharea/#go_areaitem")
+	arg_2_0.viewGO = arg_2_1.viewGO
+	arg_2_0.viewContainer = arg_2_1
+	arg_2_0.viewName = arg_2_1.viewName
+	arg_2_0._godispatcharea = gohelper.findChild(arg_2_0.viewGO, "#go_dispatcharea")
+	arg_2_0._goareaitem = gohelper.findChild(arg_2_0.viewGO, "#go_dispatcharea/#go_areaitem")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_2_0._editableInitView then
+		arg_2_0:_editableInitView()
 	end
 end
 
-function slot0._editableInitView(slot0)
-	gohelper.setActive(slot0._godispatcharea, true)
-	gohelper.setActive(slot0._goareaitem, false)
+function var_0_0._editableInitView(arg_3_0)
+	gohelper.setActive(arg_3_0._godispatcharea, true)
+	gohelper.setActive(arg_3_0._goareaitem, false)
 
-	slot0.transform = slot0._godispatcharea:GetComponent(gohelper.Type_RectTransform)
-	slot0.areaItemList = {}
-	slot0.shaderParamList = slot0:getUserDataTb_()
-	slot0.shaderParamValueList = {}
+	arg_3_0.transform = arg_3_0._godispatcharea:GetComponent(gohelper.Type_RectTransform)
+	arg_3_0.areaItemList = {}
+	arg_3_0.shaderParamList = arg_3_0:getUserDataTb_()
+	arg_3_0.shaderParamValueList = {}
 
-	for slot4 = 1, VersionActivity1_5DungeonEnum.MaxHoleNum do
-		table.insert(slot0.shaderParamList, UnityEngine.Shader.PropertyToID("_TransPos_" .. slot4))
-		table.insert(slot0.shaderParamValueList, Vector4.zero)
+	for iter_3_0 = 1, VersionActivity1_5DungeonEnum.MaxHoleNum do
+		table.insert(arg_3_0.shaderParamList, UnityEngine.Shader.PropertyToID("_TransPos_" .. iter_3_0))
+		table.insert(arg_3_0.shaderParamValueList, Vector4.zero)
 	end
 
-	slot0.sceneGo = slot0.viewContainer.mapScene:getSceneGo()
-	slot0.sceneTrans = slot0.sceneGo.transform
+	arg_3_0.sceneGo = arg_3_0.viewContainer.mapScene:getSceneGo()
+	arg_3_0.sceneTrans = arg_3_0.sceneGo.transform
 
-	if not gohelper.findChild(slot0.sceneGo, "Obj-Plant/FogOfWar/m_s14_hddt_mask") then
-		logError("not found shader mask go, " .. slot0.sceneGo.name)
+	local var_3_0 = gohelper.findChild(arg_3_0.sceneGo, "Obj-Plant/FogOfWar/m_s14_hddt_mask")
+
+	if not var_3_0 then
+		logError("not found shader mask go, " .. arg_3_0.sceneGo.name)
 
 		return
 	end
 
-	slot0.shader = slot1:GetComponent(typeof(UnityEngine.MeshRenderer)).sharedMaterial
+	arg_3_0.shader = var_3_0:GetComponent(typeof(UnityEngine.MeshRenderer)).sharedMaterial
 
-	slot0:hideAllHoles()
-	slot0:changeTestPos(0, 0)
-	slot0:addEventCb(VersionActivity1_5DungeonController.instance, VersionActivity1_5DungeonEvent.OnMapPosChanged, slot0.onMapPosChanged, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, slot0.onCloseView, slot0)
+	arg_3_0:hideAllHoles()
+	arg_3_0:changeTestPos(0, 0)
+	arg_3_0:addEventCb(VersionActivity1_5DungeonController.instance, VersionActivity1_5DungeonEvent.OnMapPosChanged, arg_3_0.onMapPosChanged, arg_3_0)
+	arg_3_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_3_0.onCloseView, arg_3_0)
 
-	slot0.loader = PrefabInstantiate.Create(slot0.viewGO)
+	arg_3_0.loader = PrefabInstantiate.Create(arg_3_0.viewGO)
 
-	slot0.loader:startLoad(uv0, slot0.onLoadFinish, slot0)
+	arg_3_0.loader:startLoad(var_0_1, arg_3_0.onLoadFinish, arg_3_0)
 end
 
-function slot0.onLoadFinish(slot0)
-	slot0.itemList = {}
-	slot0.go = slot0.loader:getInstGO()
-	slot0.keyList = {
+function var_0_0.onLoadFinish(arg_4_0)
+	arg_4_0.itemList = {}
+	arg_4_0.go = arg_4_0.loader:getInstGO()
+	arg_4_0.keyList = {
 		"X",
 		"Y"
 	}
 
-	for slot4, slot5 in ipairs(slot0.keyList) do
-		slot0:initItem(slot5)
+	for iter_4_0, iter_4_1 in ipairs(arg_4_0.keyList) do
+		arg_4_0:initItem(iter_4_1)
 	end
 
-	slot0.closeBtn = gohelper.findChildButtonWithAudio(slot0.go, "closeBtn")
+	arg_4_0.closeBtn = gohelper.findChildButtonWithAudio(arg_4_0.go, "closeBtn")
 
-	slot0.closeBtn:AddClickListener(slot0.onClickCloseBtn, slot0)
+	arg_4_0.closeBtn:AddClickListener(arg_4_0.onClickCloseBtn, arg_4_0)
 end
 
-function slot0.hideAllHoles(slot0)
-	for slot4 = 1, VersionActivity1_5DungeonEnum.MaxHoleNum do
-		slot5 = slot0.shaderParamValueList[slot4]
+function var_0_0.hideAllHoles(arg_5_0)
+	for iter_5_0 = 1, VersionActivity1_5DungeonEnum.MaxHoleNum do
+		local var_5_0 = arg_5_0.shaderParamValueList[iter_5_0]
 
-		slot5:Set(VersionActivity1_5DungeonEnum.OutSideAreaPos.X, VersionActivity1_5DungeonEnum.OutSideAreaPos.Y)
-		slot0.shader:SetVector(slot0.shaderParamList[slot4], slot5)
+		var_5_0:Set(VersionActivity1_5DungeonEnum.OutSideAreaPos.X, VersionActivity1_5DungeonEnum.OutSideAreaPos.Y)
+		arg_5_0.shader:SetVector(arg_5_0.shaderParamList[iter_5_0], var_5_0)
 	end
 end
 
-function slot0.changeTestPos(slot0, slot1, slot2)
-	slot0.configPosX = slot1
-	slot0.configPosY = slot2
+function var_0_0.changeTestPos(arg_6_0, arg_6_1, arg_6_2)
+	arg_6_0.configPosX = arg_6_1
+	arg_6_0.configPosY = arg_6_2
 
-	slot0:onMapPosChanged()
+	arg_6_0:onMapPosChanged()
 end
 
-function slot0.onMapPosChanged(slot0)
-	slot1, slot2 = nil
-	slot3, slot4, slot5 = transformhelper.getPos(slot0.sceneTrans)
-	slot6 = slot0.shaderParamValueList[1]
+function var_0_0.onMapPosChanged(arg_7_0)
+	local var_7_0
+	local var_7_1
+	local var_7_2, var_7_3, var_7_4 = transformhelper.getPos(arg_7_0.sceneTrans)
+	local var_7_5 = arg_7_0.configPosX + var_7_2
+	local var_7_6 = arg_7_0.configPosY + var_7_3
+	local var_7_7 = arg_7_0.shaderParamValueList[1]
 
-	slot6:Set(slot0.configPosX + slot3, slot0.configPosY + slot4)
-	slot0.shader:SetVector(slot0.shaderParamList[1], slot6)
-	slot0:refreshAreaItem(1)
+	var_7_7:Set(var_7_5, var_7_6)
+	arg_7_0.shader:SetVector(arg_7_0.shaderParamList[1], var_7_7)
+	arg_7_0:refreshAreaItem(1)
 end
 
-function slot0.refreshAreaItem(slot0, slot1)
-	slot2 = slot0.areaItemList[slot1] or slot0:createAreaItem()
+function var_0_0.refreshAreaItem(arg_8_0, arg_8_1)
+	local var_8_0 = arg_8_0.areaItemList[arg_8_1] or arg_8_0:createAreaItem()
 
-	gohelper.setActive(slot2.go, true)
+	gohelper.setActive(var_8_0.go, true)
 
-	slot4 = recthelper.worldPosToAnchorPos(slot0.shaderParamValueList[slot1], slot0.transform)
+	local var_8_1 = arg_8_0.shaderParamValueList[arg_8_1]
+	local var_8_2 = recthelper.worldPosToAnchorPos(var_8_1, arg_8_0.transform)
 
-	recthelper.setAnchor(slot2.rectTr, slot4.x, slot4.y + VersionActivity1_5DungeonEnum.AreaItemOffsetY)
+	recthelper.setAnchor(var_8_0.rectTr, var_8_2.x, var_8_2.y + VersionActivity1_5DungeonEnum.AreaItemOffsetY)
 end
 
-function slot0.createAreaItem(slot0)
-	slot1 = slot0:getUserDataTb_()
-	slot1.go = gohelper.cloneInPlace(slot0._goareaitem)
-	slot1.rectTr = slot1.go:GetComponent(gohelper.Type_RectTransform)
+function var_0_0.createAreaItem(arg_9_0)
+	local var_9_0 = arg_9_0:getUserDataTb_()
 
-	table.insert(slot0.areaItemList, slot1)
+	var_9_0.go = gohelper.cloneInPlace(arg_9_0._goareaitem)
+	var_9_0.rectTr = var_9_0.go:GetComponent(gohelper.Type_RectTransform)
 
-	return slot1
+	table.insert(arg_9_0.areaItemList, var_9_0)
+
+	return var_9_0
 end
 
-function slot0.initItem(slot0, slot1)
-	slot2 = slot0:getUserDataTb_()
-	slot2.go = gohelper.findChild(slot0.go, "item" .. slot1)
+function var_0_0.initItem(arg_10_0, arg_10_1)
+	local var_10_0 = arg_10_0:getUserDataTb_()
 
-	if not slot2.go then
-		logError("not found item " .. tostring(slot1))
+	var_10_0.go = gohelper.findChild(arg_10_0.go, "item" .. arg_10_1)
+
+	if not var_10_0.go then
+		logError("not found item " .. tostring(arg_10_1))
 
 		return
 	end
 
-	slot2.txtValue = gohelper.findChildText(slot2.go, "value")
-	slot2.reduceBtn = gohelper.findChildButtonWithAudio(slot2.go, "reducebtn")
-	slot2.addBtn = gohelper.findChildButtonWithAudio(slot2.go, "addbtn")
-	slot2.intervalInput = gohelper.findChildTextMeshInputField(slot2.go, "intervalInput")
+	var_10_0.txtValue = gohelper.findChildText(var_10_0.go, "value")
+	var_10_0.reduceBtn = gohelper.findChildButtonWithAudio(var_10_0.go, "reducebtn")
+	var_10_0.addBtn = gohelper.findChildButtonWithAudio(var_10_0.go, "addbtn")
+	var_10_0.intervalInput = gohelper.findChildTextMeshInputField(var_10_0.go, "intervalInput")
 
-	slot2.reduceBtn:AddClickListener(slot0.onClickReduceBtn, slot0, slot2)
-	slot2.addBtn:AddClickListener(slot0.onClickAddBtn, slot0, slot2)
+	var_10_0.reduceBtn:AddClickListener(arg_10_0.onClickReduceBtn, arg_10_0, var_10_0)
+	var_10_0.addBtn:AddClickListener(arg_10_0.onClickAddBtn, arg_10_0, var_10_0)
 
-	slot2.value = 0
-	slot2.txtValue.text = slot2.value
+	var_10_0.value = 0
+	var_10_0.txtValue.text = var_10_0.value
 
-	slot2.intervalInput:SetText(1)
-	table.insert(slot0.itemList, slot2)
+	var_10_0.intervalInput:SetText(1)
+	table.insert(arg_10_0.itemList, var_10_0)
 
-	return slot2
+	return var_10_0
 end
 
-function slot0.onClickReduceBtn(slot0, slot1)
-	if not tonumber(slot1.intervalInput:GetText()) then
+function var_0_0.onClickReduceBtn(arg_11_0, arg_11_1)
+	local var_11_0 = tonumber(arg_11_1.intervalInput:GetText())
+
+	if not var_11_0 then
 		ToastController.instance:showToastWithString("间隔请输入数字")
 
 		return
 	end
 
-	slot1.value = slot1.value - slot2
-	slot1.txtValue.text = slot1.value
+	arg_11_1.value = arg_11_1.value - var_11_0
+	arg_11_1.txtValue.text = arg_11_1.value
 
-	slot0:setConfigPos()
+	arg_11_0:setConfigPos()
 end
 
-function slot0.onClickAddBtn(slot0, slot1)
-	if not tonumber(slot1.intervalInput:GetText()) then
+function var_0_0.onClickAddBtn(arg_12_0, arg_12_1)
+	local var_12_0 = tonumber(arg_12_1.intervalInput:GetText())
+
+	if not var_12_0 then
 		ToastController.instance:showToastWithString("间隔请输入数字")
 
 		return
 	end
 
-	slot1.value = slot1.value + slot2
-	slot1.txtValue.text = slot1.value
+	arg_12_1.value = arg_12_1.value + var_12_0
+	arg_12_1.txtValue.text = arg_12_1.value
 
-	slot0:setConfigPos()
+	arg_12_0:setConfigPos()
 end
 
-function slot0.setConfigPos(slot0)
-	slot0:changeTestPos(slot0.itemList[1].value, slot0.itemList[2].value)
+function var_0_0.setConfigPos(arg_13_0)
+	local var_13_0 = arg_13_0.itemList[1].value
+	local var_13_1 = arg_13_0.itemList[2].value
+
+	arg_13_0:changeTestPos(var_13_0, var_13_1)
 end
 
-function slot0.onClickCloseBtn(slot0)
-	slot0:close()
+function var_0_0.onClickCloseBtn(arg_14_0)
+	arg_14_0:close()
 end
 
-function slot0.onCloseView(slot0, slot1)
-	if slot1 == ViewName.VersionActivity1_5DungeonMapView then
-		slot0:close()
+function var_0_0.onCloseView(arg_15_0, arg_15_1)
+	if arg_15_1 == ViewName.VersionActivity1_5DungeonMapView then
+		arg_15_0:close()
 	end
 end
 
-function slot0.close(slot0)
-	for slot4, slot5 in ipairs(slot0.itemList) do
-		slot5.reduceBtn:RemoveClickListener()
-		slot5.addBtn:RemoveClickListener()
+function var_0_0.close(arg_16_0)
+	for iter_16_0, iter_16_1 in ipairs(arg_16_0.itemList) do
+		iter_16_1.reduceBtn:RemoveClickListener()
+		iter_16_1.addBtn:RemoveClickListener()
 	end
 
-	for slot4, slot5 in ipairs(slot0.areaItemList) do
-		gohelper.destroy(slot5.go)
+	for iter_16_2, iter_16_3 in ipairs(arg_16_0.areaItemList) do
+		gohelper.destroy(iter_16_3.go)
 	end
 
-	slot0.closeBtn:RemoveClickListener()
-	gohelper.destroy(slot0.go)
-	slot0:__onDispose()
+	arg_16_0.closeBtn:RemoveClickListener()
+	gohelper.destroy(arg_16_0.go)
+	arg_16_0:__onDispose()
 end
 
-return slot0
+return var_0_0

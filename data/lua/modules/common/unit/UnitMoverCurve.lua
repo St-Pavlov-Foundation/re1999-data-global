@@ -1,193 +1,197 @@
-module("modules.common.unit.UnitMoverCurve", package.seeall)
+﻿module("modules.common.unit.UnitMoverCurve", package.seeall)
 
-slot0 = class("UnitMoverCurve", LuaCompBase)
+local var_0_0 = class("UnitMoverCurve", LuaCompBase)
 
-function slot0.ctor(slot0)
-	slot0._timeScale = 1
-	slot0._currTime = 0
-	slot0._duration = 0
-	slot0._wayPointBegin = nil
-	slot0._wayPointEnd = nil
-	slot0._wayPointValue = nil
-	slot0._animationCurve = nil
-	slot0._tCurve = nil
-	slot0._getTimeFunction = nil
-	slot0._getTimeObject = nil
-	slot0._x_move_curve = nil
-	slot0._y_move_curve = nil
-	slot0._z_move_curve = nil
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._timeScale = 1
+	arg_1_0._currTime = 0
+	arg_1_0._duration = 0
+	arg_1_0._wayPointBegin = nil
+	arg_1_0._wayPointEnd = nil
+	arg_1_0._wayPointValue = nil
+	arg_1_0._animationCurve = nil
+	arg_1_0._tCurve = nil
+	arg_1_0._getTimeFunction = nil
+	arg_1_0._getTimeObject = nil
+	arg_1_0._x_move_curve = nil
+	arg_1_0._y_move_curve = nil
+	arg_1_0._z_move_curve = nil
 
-	LuaEventSystem.addEventMechanism(slot0)
+	LuaEventSystem.addEventMechanism(arg_1_0)
 end
 
-function slot0.setCurveParam(slot0, slot1)
-	slot0._animationCurve = ZProj.AnimationCurveHelper.GetAnimationCurve(slot1)
+function var_0_0.setCurveParam(arg_2_0, arg_2_1)
+	arg_2_0._animationCurve = ZProj.AnimationCurveHelper.GetAnimationCurve(arg_2_1)
 
-	if not slot0._animationCurve then
+	if not arg_2_0._animationCurve then
 		logError("动画曲线参数错误")
 	end
 end
 
-function slot0.setTCurveParam(slot0, slot1)
-	slot0._tCurve = nil
+function var_0_0.setTCurveParam(arg_3_0, arg_3_1)
+	arg_3_0._tCurve = nil
 
-	if not string.nilorempty(slot1) then
-		slot0._tCurve = ZProj.AnimationCurveHelper.GetAnimationCurve(slot1)
+	if not string.nilorempty(arg_3_1) then
+		arg_3_0._tCurve = ZProj.AnimationCurveHelper.GetAnimationCurve(arg_3_1)
 	end
 end
 
-function slot0.setEaseType(slot0, slot1)
-	slot0._easeType = slot1 or EaseType.Linear
+function var_0_0.setEaseType(arg_4_0, arg_4_1)
+	arg_4_0._easeType = arg_4_1 or EaseType.Linear
 end
 
-function slot0.setTimeScale(slot0, slot1)
-	slot0._timeScale = slot1
+function var_0_0.setTimeScale(arg_5_0, arg_5_1)
+	arg_5_0._timeScale = arg_5_1
 end
 
-function slot0.simpleMove(slot0, slot1, slot2, slot3, slot4, slot5, slot6, slot7)
-	slot0:setPosDirectly(slot1, slot2, slot3)
+function var_0_0.simpleMove(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4, arg_6_5, arg_6_6, arg_6_7)
+	arg_6_0:setPosDirectly(arg_6_1, arg_6_2, arg_6_3)
 
-	slot0._currTime = 0
-	slot0._duration = slot7
-	slot0._wayPointBegin = {
-		x = slot1,
-		y = slot2,
-		z = slot3
+	arg_6_0._currTime = 0
+	arg_6_0._duration = arg_6_7
+	arg_6_0._wayPointBegin = {
+		x = arg_6_1,
+		y = arg_6_2,
+		z = arg_6_3
 	}
-	slot0._wayPointEnd = {
-		x = slot4,
-		y = slot5,
-		z = slot6
+	arg_6_0._wayPointEnd = {
+		x = arg_6_4,
+		y = arg_6_5,
+		z = arg_6_6
 	}
-	slot0._wayPointValue = {
-		x = slot4 - slot1,
-		y = slot5 - slot2,
-		z = slot6 - slot3
+	arg_6_0._wayPointValue = {
+		x = arg_6_4 - arg_6_1,
+		y = arg_6_5 - arg_6_2,
+		z = arg_6_6 - arg_6_3
 	}
 end
 
-function slot0.setPosDirectly(slot0, slot1, slot2, slot3)
-	slot0._wayPointBegin = nil
-	slot0._wayPointValue = nil
-	slot0._yOffset = nil
-	slot0._posX = slot1
-	slot0._posY = slot2
-	slot0._posZ = slot3
+function var_0_0.setPosDirectly(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
+	arg_7_0._wayPointBegin = nil
+	arg_7_0._wayPointValue = nil
+	arg_7_0._yOffset = nil
+	arg_7_0._posX = arg_7_1
+	arg_7_0._posY = arg_7_2
+	arg_7_0._posZ = arg_7_3
 
-	slot0:dispatchEvent(UnitMoveEvent.PosChanged, slot0)
+	arg_7_0:dispatchEvent(UnitMoveEvent.PosChanged, arg_7_0)
 end
 
-function slot0.setGetTimeFunction(slot0, slot1, slot2)
-	slot0._getTimeFunction = slot1
-	slot0._getTimeObject = slot2
+function var_0_0.setGetTimeFunction(arg_8_0, arg_8_1, arg_8_2)
+	arg_8_0._getTimeFunction = arg_8_1
+	arg_8_0._getTimeObject = arg_8_2
 end
 
-function slot0.getCurWayPoint(slot0)
-	return slot0._curWayPoint
+function var_0_0.getCurWayPoint(arg_9_0)
+	return arg_9_0._curWayPoint
 end
 
-function slot0.getPos(slot0)
-	return slot0._posX, slot0._posY + (slot0._yOffset or 0), slot0._posZ
+function var_0_0.getPos(arg_10_0)
+	return arg_10_0._posX, arg_10_0._posY + (arg_10_0._yOffset or 0), arg_10_0._posZ
 end
 
-function slot0.onUpdate(slot0)
-	if not slot0._wayPointBegin then
+function var_0_0.onUpdate(arg_11_0)
+	if not arg_11_0._wayPointBegin then
 		return
 	end
 
-	if slot0._getTimeFunction then
-		slot0._currTime = slot0._getTimeFunction(slot0._getTimeObject)
+	if arg_11_0._getTimeFunction then
+		arg_11_0._currTime = arg_11_0._getTimeFunction(arg_11_0._getTimeObject)
 	else
-		slot0._currTime = slot0._currTime + Time.deltaTime * slot0._timeScale
+		arg_11_0._currTime = arg_11_0._currTime + Time.deltaTime * arg_11_0._timeScale
 	end
 
-	if slot0._duration <= slot0._currTime then
-		slot0._posX = slot0._wayPointEnd.x
-		slot0._posY = slot0._wayPointEnd.y
-		slot0._posZ = slot0._wayPointEnd.z
-		slot0._wayPointBegin = nil
-		slot0._wayPointEnd = nil
-		slot0._wayPointValue = nil
+	if arg_11_0._currTime >= arg_11_0._duration then
+		arg_11_0._posX = arg_11_0._wayPointEnd.x
+		arg_11_0._posY = arg_11_0._wayPointEnd.y
+		arg_11_0._posZ = arg_11_0._wayPointEnd.z
+		arg_11_0._wayPointBegin = nil
+		arg_11_0._wayPointEnd = nil
+		arg_11_0._wayPointValue = nil
 
-		slot0:dispatchEvent(UnitMoveEvent.PosChanged, slot0)
-		slot0:dispatchEvent(UnitMoveEvent.Arrive, slot0)
+		arg_11_0:dispatchEvent(UnitMoveEvent.PosChanged, arg_11_0)
+		arg_11_0:dispatchEvent(UnitMoveEvent.Arrive, arg_11_0)
 	else
-		if slot0._animationCurve then
-			slot0._yOffset = slot0._animationCurve:Evaluate(LuaTween.tween(slot0._currTime / slot0._duration, 0, 1, 1, slot0._easeType))
+		local var_11_0 = arg_11_0._currTime / arg_11_0._duration
+		local var_11_1 = LuaTween.tween(var_11_0, 0, 1, 1, arg_11_0._easeType)
+
+		if arg_11_0._animationCurve then
+			arg_11_0._yOffset = arg_11_0._animationCurve:Evaluate(var_11_1)
 		end
 
-		if slot0._tCurve then
-			slot3 = slot0._tCurve:Evaluate(slot2) / 10
-			slot0._posX = slot0._wayPointBegin.x * (1 - slot3) + slot0._wayPointEnd.x * slot3
-			slot0._posY = slot0._wayPointBegin.y * (1 - slot3) + slot0._wayPointEnd.y * slot3
-			slot0._posZ = slot0._wayPointBegin.z * (1 - slot3) + slot0._wayPointEnd.z * slot3
+		if arg_11_0._tCurve then
+			local var_11_2 = arg_11_0._tCurve:Evaluate(var_11_1) / 10
+
+			arg_11_0._posX = arg_11_0._wayPointBegin.x * (1 - var_11_2) + arg_11_0._wayPointEnd.x * var_11_2
+			arg_11_0._posY = arg_11_0._wayPointBegin.y * (1 - var_11_2) + arg_11_0._wayPointEnd.y * var_11_2
+			arg_11_0._posZ = arg_11_0._wayPointBegin.z * (1 - var_11_2) + arg_11_0._wayPointEnd.z * var_11_2
 		else
-			if slot0._x_move_curve then
-				slot0._posX = slot0._wayPointBegin.x + (slot0._wayPointEnd.x - slot0._wayPointBegin.x) * slot0._x_move_curve:Evaluate(slot2) / 10
+			if arg_11_0._x_move_curve then
+				arg_11_0._posX = arg_11_0._wayPointBegin.x + (arg_11_0._wayPointEnd.x - arg_11_0._wayPointBegin.x) * arg_11_0._x_move_curve:Evaluate(var_11_1) / 10
 			else
-				slot0._posX = LuaTween.tween(slot0._currTime, slot0._wayPointBegin.x, slot0._wayPointValue.x, slot0._duration, slot0._easeType)
+				arg_11_0._posX = LuaTween.tween(arg_11_0._currTime, arg_11_0._wayPointBegin.x, arg_11_0._wayPointValue.x, arg_11_0._duration, arg_11_0._easeType)
 			end
 
-			if slot0._y_move_curve then
-				slot0._posY = slot0._wayPointBegin.y + (slot0._wayPointEnd.y - slot0._wayPointBegin.y) * slot0._y_move_curve:Evaluate(slot2) / 10
+			if arg_11_0._y_move_curve then
+				arg_11_0._posY = arg_11_0._wayPointBegin.y + (arg_11_0._wayPointEnd.y - arg_11_0._wayPointBegin.y) * arg_11_0._y_move_curve:Evaluate(var_11_1) / 10
 			else
-				slot0._posY = LuaTween.tween(slot0._currTime, slot0._wayPointBegin.y, slot0._wayPointValue.y, slot0._duration, slot0._easeType)
+				arg_11_0._posY = LuaTween.tween(arg_11_0._currTime, arg_11_0._wayPointBegin.y, arg_11_0._wayPointValue.y, arg_11_0._duration, arg_11_0._easeType)
 			end
 
-			if slot0._z_move_curve then
-				slot0._posZ = slot0._wayPointBegin.z + (slot0._wayPointEnd.z - slot0._wayPointBegin.z) * slot0._z_move_curve:Evaluate(slot2) / 10
+			if arg_11_0._z_move_curve then
+				arg_11_0._posZ = arg_11_0._wayPointBegin.z + (arg_11_0._wayPointEnd.z - arg_11_0._wayPointBegin.z) * arg_11_0._z_move_curve:Evaluate(var_11_1) / 10
 			else
-				slot0._posZ = LuaTween.tween(slot0._currTime, slot0._wayPointBegin.z, slot0._wayPointValue.z, slot0._duration, slot0._easeType)
+				arg_11_0._posZ = LuaTween.tween(arg_11_0._currTime, arg_11_0._wayPointBegin.z, arg_11_0._wayPointValue.z, arg_11_0._duration, arg_11_0._easeType)
 			end
 		end
 
-		slot0:dispatchEvent(UnitMoveEvent.PosChanged, slot0)
+		arg_11_0:dispatchEvent(UnitMoveEvent.PosChanged, arg_11_0)
 	end
 end
 
-function slot0.setXMoveCruve(slot0, slot1)
-	if string.nilorempty(slot1) then
+function var_0_0.setXMoveCruve(arg_12_0, arg_12_1)
+	if string.nilorempty(arg_12_1) then
 		return
 	end
 
-	slot0._x_move_curve = ZProj.AnimationCurveHelper.GetAnimationCurve(slot1)
+	arg_12_0._x_move_curve = ZProj.AnimationCurveHelper.GetAnimationCurve(arg_12_1)
 
-	if not slot0._x_move_curve then
+	if not arg_12_0._x_move_curve then
 		logError("X轴位移曲线参数错误")
 	end
 end
 
-function slot0.setYMoveCruve(slot0, slot1)
-	if string.nilorempty(slot1) then
+function var_0_0.setYMoveCruve(arg_13_0, arg_13_1)
+	if string.nilorempty(arg_13_1) then
 		return
 	end
 
-	slot0._y_move_curve = ZProj.AnimationCurveHelper.GetAnimationCurve(slot1)
+	arg_13_0._y_move_curve = ZProj.AnimationCurveHelper.GetAnimationCurve(arg_13_1)
 
-	if not slot0._y_move_curve then
+	if not arg_13_0._y_move_curve then
 		logError("Y轴位移曲线参数错误")
 	end
 end
 
-function slot0.setZMoveCruve(slot0, slot1)
-	if string.nilorempty(slot1) then
+function var_0_0.setZMoveCruve(arg_14_0, arg_14_1)
+	if string.nilorempty(arg_14_1) then
 		return
 	end
 
-	slot0._z_move_curve = ZProj.AnimationCurveHelper.GetAnimationCurve(slot1)
+	arg_14_0._z_move_curve = ZProj.AnimationCurveHelper.GetAnimationCurve(arg_14_1)
 
-	if not slot0._z_move_curve then
+	if not arg_14_0._z_move_curve then
 		logError("Z轴位移曲线参数错误")
 	end
 end
 
-function slot0.onDestroy(slot0)
-	slot0._animationCurve = nil
-	slot0._tCurve = nil
-	slot0._x_move_curve = nil
-	slot0._y_move_curve = nil
-	slot0._z_move_curve = nil
-	slot0._yOffset = nil
+function var_0_0.onDestroy(arg_15_0)
+	arg_15_0._animationCurve = nil
+	arg_15_0._tCurve = nil
+	arg_15_0._x_move_curve = nil
+	arg_15_0._y_move_curve = nil
+	arg_15_0._z_move_curve = nil
+	arg_15_0._yOffset = nil
 end
 
-return slot0
+return var_0_0

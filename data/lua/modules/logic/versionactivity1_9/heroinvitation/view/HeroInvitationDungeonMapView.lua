@@ -1,92 +1,98 @@
-module("modules.logic.versionactivity1_9.heroinvitation.view.HeroInvitationDungeonMapView", package.seeall)
+﻿module("modules.logic.versionactivity1_9.heroinvitation.view.HeroInvitationDungeonMapView", package.seeall)
 
-slot0 = class("HeroInvitationDungeonMapView", BaseView)
+local var_0_0 = class("HeroInvitationDungeonMapView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0.btnInvitation = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_topright/#btn_invitation")
-	slot0.goNormal = gohelper.findChild(slot0.viewGO, "#go_topright/#btn_invitation/reward/normal")
-	slot0._animTipsReward = slot0.goNormal:GetComponent(typeof(UnityEngine.Animation))
-	slot0._goEffect = gohelper.findChild(slot0.goNormal, "huan")
-	slot0.txtNormalTotal = gohelper.findChildTextMesh(slot0.goNormal, "layout/#txt_Total")
-	slot0.txtNormalNum = gohelper.findChildTextMesh(slot0.goNormal, "layout/#txt_Num")
-	slot0.goFinish = gohelper.findChild(slot0.viewGO, "#go_topright/#btn_invitation/reward/finished")
-	slot0.goRed = gohelper.findChild(slot0.viewGO, "#go_topright/#btn_invitation/#go_reddot")
-	slot0.txtFinishTotal = gohelper.findChildTextMesh(slot0.goFinish, "layout/#txt_Total")
-	slot0.txtFinishNum = gohelper.findChildTextMesh(slot0.goFinish, "layout/#txt_Num")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0.btnInvitation = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_topright/#btn_invitation")
+	arg_1_0.goNormal = gohelper.findChild(arg_1_0.viewGO, "#go_topright/#btn_invitation/reward/normal")
+	arg_1_0._animTipsReward = arg_1_0.goNormal:GetComponent(typeof(UnityEngine.Animation))
+	arg_1_0._goEffect = gohelper.findChild(arg_1_0.goNormal, "huan")
+	arg_1_0.txtNormalTotal = gohelper.findChildTextMesh(arg_1_0.goNormal, "layout/#txt_Total")
+	arg_1_0.txtNormalNum = gohelper.findChildTextMesh(arg_1_0.goNormal, "layout/#txt_Num")
+	arg_1_0.goFinish = gohelper.findChild(arg_1_0.viewGO, "#go_topright/#btn_invitation/reward/finished")
+	arg_1_0.goRed = gohelper.findChild(arg_1_0.viewGO, "#go_topright/#btn_invitation/#go_reddot")
+	arg_1_0.txtFinishTotal = gohelper.findChildTextMesh(arg_1_0.goFinish, "layout/#txt_Total")
+	arg_1_0.txtFinishNum = gohelper.findChildTextMesh(arg_1_0.goFinish, "layout/#txt_Num")
 
-	RedDotController.instance:addRedDot(slot0.goRed, RedDotEnum.DotNode.HeroInvitationReward, 0, slot0.refreshRed, slot0)
+	RedDotController.instance:addRedDot(arg_1_0.goRed, RedDotEnum.DotNode.HeroInvitationReward, 0, arg_1_0.refreshRed, arg_1_0)
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0:addClickCb(slot0.btnInvitation, slot0.onClickBtnInvitation, slot0)
-	slot0:addEventCb(DungeonController.instance, DungeonEvent.OnRemoveElement, slot0.refreshInvitation, slot0)
-	slot0:addEventCb(HeroInvitationController.instance, HeroInvitationEvent.UpdateInfo, slot0.refreshInvitation, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0:addClickCb(arg_2_0.btnInvitation, arg_2_0.onClickBtnInvitation, arg_2_0)
+	arg_2_0:addEventCb(DungeonController.instance, DungeonEvent.OnRemoveElement, arg_2_0.refreshInvitation, arg_2_0)
+	arg_2_0:addEventCb(HeroInvitationController.instance, HeroInvitationEvent.UpdateInfo, arg_2_0.refreshInvitation, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_4_0)
+	return
 end
 
-function slot0.onClickBtnInvitation(slot0)
+function var_0_0.onClickBtnInvitation(arg_5_0)
 	ViewMgr.instance:openView(ViewName.HeroInvitationView)
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0:refreshView()
+function var_0_0.onUpdateParam(arg_6_0)
+	arg_6_0:refreshView()
 end
 
-function slot0.onOpen(slot0)
-	slot0:refreshView()
-	TaskDispatcher.runDelay(slot0._loadMap, slot0, 0.1)
+function var_0_0.onOpen(arg_7_0)
+	arg_7_0:refreshView()
+	TaskDispatcher.runDelay(arg_7_0._loadMap, arg_7_0, 0.1)
 end
 
-function slot0._loadMap(slot0)
+function var_0_0._loadMap(arg_8_0)
+	local var_8_0 = DungeonConfig.instance:getChapterMapCfg(DungeonModel.instance.curLookChapterId, 0)
+
 	DungeonController.instance:dispatchEvent(DungeonEvent.OnChangeMap, {
-		DungeonConfig.instance:getChapterMapCfg(DungeonModel.instance.curLookChapterId, 0)
+		var_8_0
 	})
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_9_0)
+	return
 end
 
-function slot0.refreshView(slot0)
-	slot0:refreshInvitation()
+function var_0_0.refreshView(arg_10_0)
+	arg_10_0:refreshInvitation()
 end
 
-function slot0.refreshInvitation(slot0)
-	slot1 = HeroInvitationModel.instance.finalReward
+function var_0_0.refreshInvitation(arg_11_0)
+	local var_11_0 = HeroInvitationModel.instance.finalReward
 
-	gohelper.setActive(slot0.goNormal, not slot1)
-	gohelper.setActive(slot0.goFinish, slot1)
+	gohelper.setActive(arg_11_0.goNormal, not var_11_0)
+	gohelper.setActive(arg_11_0.goFinish, var_11_0)
 
-	slot2, slot3 = HeroInvitationModel.instance:getInvitationFinishCount()
-	slot0.txtNormalTotal.text = slot3
-	slot0.txtNormalNum.text = slot2
-	slot0.txtFinishTotal.text = slot3
-	slot0.txtFinishNum.text = slot2
+	local var_11_1, var_11_2 = HeroInvitationModel.instance:getInvitationFinishCount()
+
+	arg_11_0.txtNormalTotal.text = var_11_2
+	arg_11_0.txtNormalNum.text = var_11_1
+	arg_11_0.txtFinishTotal.text = var_11_2
+	arg_11_0.txtFinishNum.text = var_11_1
 end
 
-function slot0.refreshRed(slot0, slot1)
-	if slot1 then
-		slot1:defaultRefreshDot()
-		gohelper.setActive(slot0._goEffect, slot1.show)
+function var_0_0.refreshRed(arg_12_0, arg_12_1)
+	if arg_12_1 then
+		arg_12_1:defaultRefreshDot()
+		gohelper.setActive(arg_12_0._goEffect, arg_12_1.show)
 
-		if slot1.show then
-			slot0._animTipsReward:Play("btn_tipreward_loop")
+		if arg_12_1.show then
+			arg_12_0._animTipsReward:Play("btn_tipreward_loop")
 		else
-			slot0._animTipsReward:Play("btn_tipreward")
+			arg_12_0._animTipsReward:Play("btn_tipreward")
 		end
 	end
 end
 
-function slot0.onDestroyView(slot0)
-	TaskDispatcher.cancelTask(slot0._loadMap, slot0)
+function var_0_0.onDestroyView(arg_13_0)
+	TaskDispatcher.cancelTask(arg_13_0._loadMap, arg_13_0)
 end
 
-return slot0
+return var_0_0

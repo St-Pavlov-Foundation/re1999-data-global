@@ -1,183 +1,202 @@
-module("modules.logic.room.view.manufacture.RoomOneKeyView", package.seeall)
+﻿module("modules.logic.room.view.manufacture.RoomOneKeyView", package.seeall)
 
-slot0 = class("RoomOneKeyView", BaseView)
+local var_0_0 = class("RoomOneKeyView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._btnfill = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/#btn_fill")
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/#btn_close")
-	slot0._goAddPop = gohelper.findChild(slot0.viewGO, "right/#go_addPop")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnfill = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_fill")
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_close")
+	arg_1_0._goAddPop = gohelper.findChild(arg_1_0.viewGO, "right/#go_addPop")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnfill:AddClickListener(slot0._btnfillOnClick, slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
-	slot0:addEventCb(ManufactureController.instance, ManufactureEvent.OneKeySelectCustomManufactureItem, slot0.refreshCustomizeItem, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnfill:AddClickListener(arg_2_0._btnfillOnClick, arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+	arg_2_0:addEventCb(ManufactureController.instance, ManufactureEvent.OneKeySelectCustomManufactureItem, arg_2_0.refreshCustomizeItem, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnfill:RemoveClickListener()
-	slot0._btnclose:RemoveClickListener()
-	slot0:removeEventCb(ManufactureController.instance, ManufactureEvent.OneKeySelectCustomManufactureItem, slot0.refreshCustomizeItem, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnfill:RemoveClickListener()
+	arg_3_0._btnclose:RemoveClickListener()
+	arg_3_0:removeEventCb(ManufactureController.instance, ManufactureEvent.OneKeySelectCustomManufactureItem, arg_3_0.refreshCustomizeItem, arg_3_0)
 end
 
-function slot0._btnfillOnClick(slot0)
-	ManufactureController.instance:oneKeyManufactureItem(slot0.curOneKeyType)
+function var_0_0._btnfillOnClick(arg_4_0)
+	ManufactureController.instance:oneKeyManufactureItem(arg_4_0.curOneKeyType)
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseOnClick(arg_5_0)
+	arg_5_0:closeThis()
 end
 
-function slot0._btnclickOnClick(slot0, slot1)
-	if slot0.curOneKeyType and slot0.curOneKeyType == slot1 then
+function var_0_0._btnclickOnClick(arg_6_0, arg_6_1)
+	if arg_6_0.curOneKeyType and arg_6_0.curOneKeyType == arg_6_1 then
 		return
 	end
 
-	slot2 = nil
+	local var_6_0
+	local var_6_1 = arg_6_1 == RoomManufactureEnum.OneKeyType.Customize
 
-	if slot0.curOneKeyType and slot1 == RoomManufactureEnum.OneKeyType.Customize then
-		slot2 = "left"
-	elseif slot0.curOneKeyType == RoomManufactureEnum.OneKeyType.Customize then
-		slot2 = "back"
+	if arg_6_0.curOneKeyType and var_6_1 then
+		var_6_0 = "left"
+	elseif arg_6_0.curOneKeyType == RoomManufactureEnum.OneKeyType.Customize then
+		var_6_0 = "back"
 	end
 
-	if slot0._viewAnimator and not string.nilorempty(slot2) then
-		slot0._viewAnimator.enabled = true
+	if arg_6_0._viewAnimator and not string.nilorempty(var_6_0) then
+		arg_6_0._viewAnimator.enabled = true
 
-		slot0._viewAnimator:Play(slot2, 0, 0)
+		arg_6_0._viewAnimator:Play(var_6_0, 0, 0)
 	end
 
-	slot0:setAddPopActive(slot3)
+	arg_6_0:setAddPopActive(var_6_1)
 
-	slot0.curOneKeyType = slot1
+	arg_6_0.curOneKeyType = arg_6_1
 
-	if slot0.optionItemDict then
-		for slot7, slot8 in pairs(slot0.optionItemDict) do
-			gohelper.setActive(slot8.goselected, slot7 == slot1)
+	if arg_6_0.optionItemDict then
+		for iter_6_0, iter_6_1 in pairs(arg_6_0.optionItemDict) do
+			gohelper.setActive(iter_6_1.goselected, iter_6_0 == arg_6_1)
 		end
 	end
 end
 
-function slot0.onClickModalMask(slot0)
-	slot0:closeThis()
+function var_0_0.onClickModalMask(arg_7_0)
+	arg_7_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
-	slot4 = UnityEngine.Animator
-	slot0._viewAnimator = slot0.viewGO:GetComponent(typeof(slot4))
+function var_0_0._editableInitView(arg_8_0)
+	arg_8_0._viewAnimator = arg_8_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
 
-	slot0:clearOptionItem()
+	arg_8_0:clearOptionItem()
 
-	for slot4, slot5 in pairs(RoomManufactureEnum.OneKeyType) do
-		slot0.optionItemDict[slot5] = slot0:createOptionItem(gohelper.findChild(slot0.viewGO, "root/#scroll_option/Viewport/Content/#go_type" .. slot5), slot5)
+	for iter_8_0, iter_8_1 in pairs(RoomManufactureEnum.OneKeyType) do
+		local var_8_0 = gohelper.findChild(arg_8_0.viewGO, "root/#scroll_option/Viewport/Content/#go_type" .. iter_8_1)
+
+		arg_8_0.optionItemDict[iter_8_1] = arg_8_0:createOptionItem(var_8_0, iter_8_1)
 	end
 
-	slot0:_btnclickOnClick(ManufactureModel.instance:getRecordOneKeyType())
+	local var_8_1 = ManufactureModel.instance:getRecordOneKeyType()
+
+	arg_8_0:_btnclickOnClick(var_8_1)
 end
 
-function slot0.createOptionItem(slot0, slot1, slot2)
-	slot3 = slot0:getUserDataTb_()
-	slot3.oneKeyType = slot2
-	slot3.txtdesc = gohelper.findChildText(slot1, "#txt_desc")
-	slot3.godesc = slot3.txtdesc.gameObject
-	slot3.goselected = gohelper.findChild(slot1, "selectdBg/#go_selected")
-	slot3.btnclick = gohelper.findChildClickWithAudio(slot1, "#btn_click")
+function var_0_0.createOptionItem(arg_9_0, arg_9_1, arg_9_2)
+	local var_9_0 = arg_9_0:getUserDataTb_()
 
-	slot3.btnclick:AddClickListener(slot0._btnclickOnClick, slot0, slot2)
+	var_9_0.oneKeyType = arg_9_2
+	var_9_0.txtdesc = gohelper.findChildText(arg_9_1, "#txt_desc")
+	var_9_0.godesc = var_9_0.txtdesc.gameObject
+	var_9_0.goselected = gohelper.findChild(arg_9_1, "selectdBg/#go_selected")
+	var_9_0.btnclick = gohelper.findChildClickWithAudio(arg_9_1, "#btn_click")
 
-	slot3.gohasItem = gohelper.findChild(slot1, "#go_hasItem")
+	var_9_0.btnclick:AddClickListener(arg_9_0._btnclickOnClick, arg_9_0, arg_9_2)
 
-	if not gohelper.isNil(slot3.gohasItem) then
-		slot3.rarebg = gohelper.findChildImage(slot1, "#go_hasItem/#image_quality")
-		slot3.itemicon = gohelper.findChildSingleImage(slot1, "#go_hasItem/#image_quality/#simage_productionIcon")
-		slot3.txtitemname = gohelper.findChildText(slot1, "#go_hasItem/#image_quality/#txt_name")
-		slot3.txtitemnum = gohelper.findChildText(slot1, "#go_hasItem/#txt_num")
+	var_9_0.gohasItem = gohelper.findChild(arg_9_1, "#go_hasItem")
+
+	if not gohelper.isNil(var_9_0.gohasItem) then
+		var_9_0.rarebg = gohelper.findChildImage(arg_9_1, "#go_hasItem/#image_quality")
+		var_9_0.itemicon = gohelper.findChildSingleImage(arg_9_1, "#go_hasItem/#image_quality/#simage_productionIcon")
+		var_9_0.txtitemname = gohelper.findChildText(arg_9_1, "#go_hasItem/#image_quality/#txt_name")
+		var_9_0.txtitemnum = gohelper.findChildText(arg_9_1, "#go_hasItem/#txt_num")
 	end
 
-	return slot3
+	return var_9_0
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_10_0)
+	return
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_11_0)
 	if not RoomTradeModel.instance:isGetOrderInfo() then
 		RoomRpc.instance:sendGetOrderInfoRequest()
 	end
 
-	slot0:refreshCustomizeItem()
+	arg_11_0:refreshCustomizeItem()
 end
 
-function slot0.refreshCustomizeItem(slot0)
-	if not slot0.optionItemDict[RoomManufactureEnum.OneKeyType.Customize] or gohelper.isNil(slot1.gohasItem) then
+function var_0_0.refreshCustomizeItem(arg_12_0)
+	local var_12_0 = arg_12_0.optionItemDict[RoomManufactureEnum.OneKeyType.Customize]
+
+	if not var_12_0 or gohelper.isNil(var_12_0.gohasItem) then
 		return
 	end
 
-	slot2, slot3 = OneKeyAddPopListModel.instance:getSelectedManufactureItem()
+	local var_12_1, var_12_2 = OneKeyAddPopListModel.instance:getSelectedManufactureItem()
 
-	if slot2 then
-		slot5, slot6 = ItemModel.instance:getItemConfigAndIcon(MaterialEnum.MaterialType.Item, ManufactureConfig.instance:getItemId(slot2))
+	if var_12_1 then
+		local var_12_3 = ManufactureConfig.instance:getItemId(var_12_1)
+		local var_12_4, var_12_5 = ItemModel.instance:getItemConfigAndIcon(MaterialEnum.MaterialType.Item, var_12_3)
+		local var_12_6 = RoomManufactureEnum.RareImageMap[var_12_4.rare]
 
-		UISpriteSetMgr.instance:setCritterSprite(slot1.rarebg, RoomManufactureEnum.RareImageMap[slot5.rare])
-		slot1.itemicon:LoadImage(ManufactureConfig.instance:getBatchIconPath(slot2) or slot6)
+		UISpriteSetMgr.instance:setCritterSprite(var_12_0.rarebg, var_12_6)
 
-		slot1.txtitemname.text = string.split(ManufactureConfig.instance:getManufactureItemName(slot2), "*")[1]
-		slot1.txtitemnum.text = luaLang("multiple") .. slot3
+		var_12_5 = ManufactureConfig.instance:getBatchIconPath(var_12_1) or var_12_5
+
+		var_12_0.itemicon:LoadImage(var_12_5)
+
+		local var_12_7 = ManufactureConfig.instance:getManufactureItemName(var_12_1)
+		local var_12_8 = string.split(var_12_7, "*")
+
+		var_12_0.txtitemname.text = var_12_8[1]
+		var_12_0.txtitemnum.text = luaLang("multiple") .. var_12_2
 	end
 
-	gohelper.setActive(slot1.gohasItem, slot2)
-	gohelper.setActive(slot1.godesc, not slot2)
+	gohelper.setActive(var_12_0.gohasItem, var_12_1)
+	gohelper.setActive(var_12_0.godesc, not var_12_1)
 end
 
-function slot0.setAddPopActive(slot0, slot1)
-	if slot0.isShowAddPop == slot1 then
+function var_0_0.setAddPopActive(arg_13_0, arg_13_1)
+	if arg_13_0.isShowAddPop == arg_13_1 then
 		return
 	end
 
-	slot2 = slot0.isShowAddPop
-	slot0.isShowAddPop = slot1
-	slot3 = slot0.isShowAddPop and "#B97B45" or "#ACACAC"
+	local var_13_0 = arg_13_0.isShowAddPop
 
-	if slot0.optionItemDict[RoomManufactureEnum.OneKeyType.Customize] then
-		UIColorHelper.set(slot4.txtdesc, slot3)
-		UIColorHelper.set(slot4.txtitemname, slot3)
+	arg_13_0.isShowAddPop = arg_13_1
+
+	local var_13_1 = arg_13_0.isShowAddPop and "#B97B45" or "#ACACAC"
+	local var_13_2 = arg_13_0.optionItemDict[RoomManufactureEnum.OneKeyType.Customize]
+
+	if var_13_2 then
+		UIColorHelper.set(var_13_2.txtdesc, var_13_1)
+		UIColorHelper.set(var_13_2.txtitemname, var_13_1)
 	end
 
-	gohelper.setActive(slot0._goAddPop, slot0.isShowAddPop)
+	gohelper.setActive(arg_13_0._goAddPop, arg_13_0.isShowAddPop)
 
-	if slot2 and not OneKeyAddPopListModel.instance:getSelectedManufactureItem() then
-		slot0:_btnclickOnClick(RoomManufactureEnum.OneKeyType.ShortTime)
+	if var_13_0 and not OneKeyAddPopListModel.instance:getSelectedManufactureItem() then
+		arg_13_0:_btnclickOnClick(RoomManufactureEnum.OneKeyType.ShortTime)
 	end
 end
 
-function slot0.clearOptionItem(slot0)
-	if slot0.optionItemDict then
-		for slot4, slot5 in pairs(slot0.optionItemDict) do
-			if slot5.itemicon then
-				slot5.itemicon:UnLoadImage()
+function var_0_0.clearOptionItem(arg_14_0)
+	if arg_14_0.optionItemDict then
+		for iter_14_0, iter_14_1 in pairs(arg_14_0.optionItemDict) do
+			if iter_14_1.itemicon then
+				iter_14_1.itemicon:UnLoadImage()
 
-				slot5.itemicon = nil
+				iter_14_1.itemicon = nil
 			end
 
-			if slot5.btnclick then
-				slot5.btnclick:RemoveClickListener()
+			if iter_14_1.btnclick then
+				iter_14_1.btnclick:RemoveClickListener()
 			end
 		end
 	end
 
-	slot0.optionItemDict = {}
+	arg_14_0.optionItemDict = {}
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_15_0)
 	OneKeyAddPopListModel.instance:resetSelectManufactureItemFromCache()
 end
 
-function slot0.onDestroyView(slot0)
-	slot0:clearOptionItem()
+function var_0_0.onDestroyView(arg_16_0)
+	arg_16_0:clearOptionItem()
 end
 
-return slot0
+return var_0_0

@@ -1,72 +1,72 @@
-module("modules.logic.activity.view.V2a3_Special_FullSignView", package.seeall)
+﻿module("modules.logic.activity.view.V2a3_Special_FullSignView", package.seeall)
 
-slot0 = class("V2a3_Special_FullSignView", V2a3_Special_BaseView)
+local var_0_0 = class("V2a3_Special_FullSignView", V2a3_Special_BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._txtLimitTime = gohelper.findChildText(slot0.viewGO, "Root/LimitTime/image_LimitTimeBG/#txt_LimitTime")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._txtLimitTime = gohelper.findChildText(arg_1_0.viewGO, "Root/LimitTime/image_LimitTimeBG/#txt_LimitTime")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	uv0.super.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	var_0_0.super.addEvents(arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	uv0.super.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	var_0_0.super.removeEvents(arg_3_0)
 end
 
-function slot0.ctor(slot0, ...)
-	uv0.super.ctor(slot0, ...)
+function var_0_0.ctor(arg_4_0, ...)
+	var_0_0.super.ctor(arg_4_0, ...)
 
-	slot0._inited = false
+	arg_4_0._inited = false
 
-	slot0:internal_set_openMode(Activity101SignViewBase.eOpenMode.ActivityBeginnerView)
+	arg_4_0:internal_set_openMode(Activity101SignViewBase.eOpenMode.ActivityBeginnerView)
 end
 
-function slot0._editableInitView(slot0)
-	slot0._txtLimitTime.text = ""
+function var_0_0._editableInitView(arg_5_0)
+	arg_5_0._txtLimitTime.text = ""
 end
 
-function slot0.onOpen(slot0)
-	slot0:_clearTimeTick()
-	TaskDispatcher.runRepeat(slot0._refreshTimeTick, slot0, 1)
+function var_0_0.onOpen(arg_6_0)
+	arg_6_0:_clearTimeTick()
+	TaskDispatcher.runRepeat(arg_6_0._refreshTimeTick, arg_6_0, 1)
 
-	if not slot0._inited then
-		slot0:internal_onOpen()
+	if not arg_6_0._inited then
+		arg_6_0:internal_onOpen()
 
-		slot0._inited = true
+		arg_6_0._inited = true
 	else
-		slot0:_refresh()
+		arg_6_0:_refresh()
 	end
 end
 
-function slot0.onClose(slot0)
-	slot0:_clearTimeTick()
+function var_0_0.onClose(arg_7_0)
+	arg_7_0:_clearTimeTick()
 end
 
-function slot0.onDestroyView(slot0)
-	slot0:_clearTimeTick()
-	uv0.super.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_8_0)
+	arg_8_0:_clearTimeTick()
+	var_0_0.super.onDestroyView(arg_8_0)
 end
 
-function slot0._clearTimeTick(slot0)
-	TaskDispatcher.cancelTask(slot0._refreshTimeTick, slot0)
+function var_0_0._clearTimeTick(arg_9_0)
+	TaskDispatcher.cancelTask(arg_9_0._refreshTimeTick, arg_9_0)
 end
 
-function slot0.onRefresh(slot0)
-	slot0:_refreshList()
-	slot0:_refreshTimeTick()
+function var_0_0.onRefresh(arg_10_0)
+	arg_10_0:_refreshList()
+	arg_10_0:_refreshTimeTick()
 end
 
-function slot0._refreshTimeTick(slot0)
-	slot0._txtLimitTime.text = slot0:getRemainTimeStr()
+function var_0_0._refreshTimeTick(arg_11_0)
+	arg_11_0._txtLimitTime.text = arg_11_0:getRemainTimeStr()
 end
 
-function slot0.onFindChind_RewardGo(slot0, slot1)
-	return gohelper.findChild(slot0.viewGO, "Root/reward/node" .. slot1)
+function var_0_0.onFindChind_RewardGo(arg_12_0, arg_12_1)
+	return gohelper.findChild(arg_12_0.viewGO, "Root/reward/node" .. arg_12_1)
 end
 
-return slot0
+return var_0_0

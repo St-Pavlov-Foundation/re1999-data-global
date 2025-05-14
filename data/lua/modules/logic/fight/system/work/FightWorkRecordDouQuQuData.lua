@@ -1,16 +1,21 @@
-module("modules.logic.fight.system.work.FightWorkRecordDouQuQuData", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkRecordDouQuQuData", package.seeall)
 
-slot0 = class("FightWorkRecordDouQuQuData", FightWorkItem)
+local var_0_0 = class("FightWorkRecordDouQuQuData", FightWorkItem)
 
-function slot0.onStart(slot0)
-	slot1.entity2HeroId = FightDataModel.instance.douQuQuMgr.entity2HeroId or {}
-	slot1.entity2HeroId[slot1.index] = {}
+function var_0_0.onStart(arg_1_0)
+	local var_1_0 = FightDataModel.instance.douQuQuMgr
 
-	for slot6, slot7 in pairs(FightDataHelper.entityMgr:getAllEntityMO()) do
-		slot1.entity2HeroId[slot2][slot7.id] = slot7.modelId
+	var_1_0.entity2HeroId = var_1_0.entity2HeroId or {}
+
+	local var_1_1 = var_1_0.index
+
+	var_1_0.entity2HeroId[var_1_1] = {}
+
+	for iter_1_0, iter_1_1 in pairs(FightDataHelper.entityMgr:getAllEntityMO()) do
+		var_1_0.entity2HeroId[var_1_1][iter_1_1.id] = iter_1_1.modelId
 	end
 
-	slot0:onDone(true)
+	arg_1_0:onDone(true)
 end
 
-return slot0
+return var_0_0

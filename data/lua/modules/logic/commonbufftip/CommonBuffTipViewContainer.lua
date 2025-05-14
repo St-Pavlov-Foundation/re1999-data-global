@@ -1,15 +1,15 @@
-module("modules.logic.commonbufftip.CommonBuffTipViewContainer", package.seeall)
+﻿module("modules.logic.commonbufftip.CommonBuffTipViewContainer", package.seeall)
 
-slot0 = class("CommonBuffTipViewContainer", BaseViewContainer)
+local var_0_0 = class("CommonBuffTipViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		CommonBuffTipView.New()
 	}
 end
 
-function slot0.onContainerClickModalMask(slot0)
-	slot0:closeThis()
+function var_0_0.onContainerClickModalMask(arg_2_0)
+	arg_2_0:closeThis()
 end
 
-return slot0
+return var_0_0

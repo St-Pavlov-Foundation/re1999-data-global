@@ -1,74 +1,77 @@
-module("modules.logic.toughbattle.view.ToughBattleSkillView", package.seeall)
+﻿module("modules.logic.toughbattle.view.ToughBattleSkillView", package.seeall)
 
-slot0 = class("ToughBattleSkillView", BaseView)
+local var_0_0 = class("ToughBattleSkillView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simgrole = gohelper.findChildSingleImage(slot0.viewGO, "root/view/role/#simage_role")
-	slot0._txttitle = gohelper.findChildTextMesh(slot0.viewGO, "root/view/title/titletxt")
-	slot0._txtskilldes = gohelper.findChildTextMesh(slot0.viewGO, "root/view/#txt_desc")
-	slot0._txtnormaldes = gohelper.findChildTextMesh(slot0.viewGO, "root/view/#txt_desc/#txt_desc2")
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/view/#btn_closebtn")
-	slot0._goBuffContainer = gohelper.findChild(slot0.viewGO, "root/#go_buffContainer")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simgrole = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/view/role/#simage_role")
+	arg_1_0._txttitle = gohelper.findChildTextMesh(arg_1_0.viewGO, "root/view/title/titletxt")
+	arg_1_0._txtskilldes = gohelper.findChildTextMesh(arg_1_0.viewGO, "root/view/#txt_desc")
+	arg_1_0._txtnormaldes = gohelper.findChildTextMesh(arg_1_0.viewGO, "root/view/#txt_desc/#txt_desc2")
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/view/#btn_closebtn")
+	arg_1_0._goBuffContainer = gohelper.findChild(arg_1_0.viewGO, "root/#go_buffContainer")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0.closeThis, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0.closeThis, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
 end
 
-function slot0._editableInitView(slot0)
-	gohelper.setActive(slot0._goBuffContainer, false)
+function var_0_0._editableInitView(arg_4_0)
+	gohelper.setActive(arg_4_0._goBuffContainer, false)
 end
 
-function slot0.onOpen(slot0)
-	slot0:refreshSkillInfo(slot0.viewParam.showCo)
+function var_0_0.onOpen(arg_5_0)
+	arg_5_0:refreshSkillInfo(arg_5_0.viewParam.showCo)
 
-	if slot0.viewParam.isShowList then
-		slot0:createAndSelect()
+	if arg_5_0.viewParam.isShowList then
+		arg_5_0:createAndSelect()
 	end
 end
 
-function slot0.createAndSelect(slot0)
-	slot2 = MonoHelper.addNoUpdateLuaComOnceToGo(slot0:getResInst(slot0.viewContainer._viewSetting.otherRes.rolelist, slot0.viewGO, "rolelist"), ToughBattleRoleListComp, slot0.viewParam)
+function var_0_0.createAndSelect(arg_6_0)
+	local var_6_0 = arg_6_0:getResInst(arg_6_0.viewContainer._viewSetting.otherRes.rolelist, arg_6_0.viewGO, "rolelist")
+	local var_6_1 = MonoHelper.addNoUpdateLuaComOnceToGo(var_6_0, ToughBattleRoleListComp, arg_6_0.viewParam)
 
-	slot2:setClickCallBack(slot0.onRoleSelect, slot0)
+	var_6_1:setClickCallBack(arg_6_0.onRoleSelect, arg_6_0)
 
-	slot0._roleList = slot2
+	arg_6_0._roleList = var_6_1
 
-	slot2:setSelect(slot0.viewParam.showCo)
+	var_6_1:setSelect(arg_6_0.viewParam.showCo)
 end
 
-function slot0.onRoleSelect(slot0, slot1)
-	slot0:refreshSkillInfo(slot1)
-	slot0._roleList:setSelect(slot1)
+function var_0_0.onRoleSelect(arg_7_0, arg_7_1)
+	arg_7_0:refreshSkillInfo(arg_7_1)
+	arg_7_0._roleList:setSelect(arg_7_1)
 end
 
-function slot0.refreshSkillInfo(slot0, slot1)
-	slot0._simgrole:LoadImage("singlebg/toughbattle_singlebg/role/rolehalfpic" .. slot1.sort .. ".png")
+function var_0_0.refreshSkillInfo(arg_8_0, arg_8_1)
+	arg_8_0._simgrole:LoadImage("singlebg/toughbattle_singlebg/role/rolehalfpic" .. arg_8_1.sort .. ".png")
 
-	if not lua_siege_battle_hero.configDict[slot1.heroId] then
-		logError("no hero co" .. slot1.heroId)
+	local var_8_0 = lua_siege_battle_hero.configDict[arg_8_1.heroId]
+
+	if not var_8_0 then
+		logError("no hero co" .. arg_8_1.heroId)
 	else
-		slot0._txttitle.text = slot2.name
-		slot0._txtskilldes.text = slot2.desc
+		arg_8_0._txttitle.text = var_8_0.name
+		arg_8_0._txtskilldes.text = var_8_0.desc
 	end
 
-	slot0._txtnormaldes.text = slot1.instructionDesc
+	arg_8_0._txtnormaldes.text = arg_8_1.instructionDesc
 end
 
-function slot0.onClickModalMask(slot0)
-	slot0:closeThis()
+function var_0_0.onClickModalMask(arg_9_0)
+	arg_9_0:closeThis()
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simgrole:UnLoadImage()
+function var_0_0.onDestroyView(arg_10_0)
+	arg_10_0._simgrole:UnLoadImage()
 end
 
-return slot0
+return var_0_0

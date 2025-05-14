@@ -1,77 +1,84 @@
-module("modules.logic.chessgame.game.effect.ChessEffectBase", package.seeall)
+﻿module("modules.logic.chessgame.game.effect.ChessEffectBase", package.seeall)
 
-slot0 = class("ChessEffectBase")
+local var_0_0 = class("ChessEffectBase")
 
-function slot0.ctor(slot0, slot1)
-	slot0._target = slot1
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0._target = arg_1_1
 end
 
-function slot0.dispose(slot0)
-	slot0:onDispose()
+function var_0_0.dispose(arg_2_0)
+	arg_2_0:onDispose()
 
-	if slot0._loader then
-		slot0._loader:dispose()
+	if arg_2_0._loader then
+		arg_2_0._loader:dispose()
 
-		slot0._loader = nil
+		arg_2_0._loader = nil
 	end
 
-	gohelper.destroy(slot0.effectGO)
+	gohelper.destroy(arg_2_0.effectGO)
 
-	slot0.effectGO = nil
+	arg_2_0.effectGO = nil
 end
 
-function slot0.onDispose(slot0)
+function var_0_0.onDispose(arg_3_0)
+	return
 end
 
-function slot0.onAvatarFinish(slot0, slot1)
-	if slot0._isLoading then
+function var_0_0.onAvatarFinish(arg_4_0, arg_4_1)
+	if arg_4_0._isLoading then
 		return
 	end
 
-	if not slot0.isLoadFinish then
-		slot0._isLoading = true
-		slot0.effectGO = UnityEngine.GameObject.New("effect_" .. slot1)
-		slot0._loader = PrefabInstantiate.Create(slot0.effectGO)
+	if not arg_4_0.isLoadFinish then
+		arg_4_0._isLoading = true
+		arg_4_0.effectGO = UnityEngine.GameObject.New("effect_" .. arg_4_1)
+		arg_4_0._loader = PrefabInstantiate.Create(arg_4_0.effectGO)
 
-		gohelper.addChild(slot0._target.avatar.effectNode, slot0.effectGO)
-		transformhelper.setLocalPos(slot0.effectGO.transform, 0, 0, 0)
-		transformhelper.setLocalScale(slot0.effectGO.transform, 0.8, 0.8, 0.8)
-		slot0._loader:startLoad(ChessGameEnum.ChessGameEnum.EffectPath[slot1], slot0.onSceneObjectLoadFinish, slot0)
+		gohelper.addChild(arg_4_0._target.avatar.effectNode, arg_4_0.effectGO)
+		transformhelper.setLocalPos(arg_4_0.effectGO.transform, 0, 0, 0)
+		transformhelper.setLocalScale(arg_4_0.effectGO.transform, 0.8, 0.8, 0.8)
+
+		local var_4_0 = ChessGameEnum.ChessGameEnum.EffectPath[arg_4_1]
+
+		arg_4_0._loader:startLoad(var_4_0, arg_4_0.onSceneObjectLoadFinish, arg_4_0)
 	else
-		gohelper.setActive(slot0.effectGO, true)
-		ChessGameInteractModel.instance:setShowEffect(slot0._target.mo.id)
+		gohelper.setActive(arg_4_0.effectGO, true)
+		ChessGameInteractModel.instance:setShowEffect(arg_4_0._target.mo.id)
 	end
 end
 
-function slot0.onSceneObjectLoadFinish(slot0)
-	if slot0._loader and slot0._loader:getInstGO() then
-		slot0.isLoadFinish = true
-		slot0._isLoading = false
+function var_0_0.onSceneObjectLoadFinish(arg_5_0)
+	if arg_5_0._loader and arg_5_0._loader:getInstGO() then
+		arg_5_0.isLoadFinish = true
+		arg_5_0._isLoading = false
 
-		transformhelper.setLocalPos(slot0._loader:getInstGO().transform, 0, 0, 0)
-		ChessGameInteractModel.instance:setShowEffect(slot0._target.mo.id)
-		slot0:onAvatarLoaded()
+		transformhelper.setLocalPos(arg_5_0._loader:getInstGO().transform, 0, 0, 0)
+		ChessGameInteractModel.instance:setShowEffect(arg_5_0._target.mo.id)
+		arg_5_0:onAvatarLoaded()
 	end
 end
 
-function slot0.hideEffect(slot0)
-	if slot0.effectGO then
-		gohelper.setActive(slot0.effectGO, false)
-		ChessGameInteractModel.instance:setHideEffect(slot0._target.mo.id)
+function var_0_0.hideEffect(arg_6_0)
+	if arg_6_0.effectGO then
+		gohelper.setActive(arg_6_0.effectGO, false)
+		ChessGameInteractModel.instance:setHideEffect(arg_6_0._target.mo.id)
 	end
 end
 
-function slot0.getIsLoadEffect(slot0)
-	return slot0.isLoadFinish
+function var_0_0.getIsLoadEffect(arg_7_0)
+	return arg_7_0.isLoadFinish
 end
 
-function slot0.onSelected(slot0)
+function var_0_0.onSelected(arg_8_0)
+	return
 end
 
-function slot0.onCancelSelect(slot0)
+function var_0_0.onCancelSelect(arg_9_0)
+	return
 end
 
-function slot0.onAvatarLoaded(slot0)
+function var_0_0.onAvatarLoaded(arg_10_0)
+	return
 end
 
-return slot0
+return var_0_0

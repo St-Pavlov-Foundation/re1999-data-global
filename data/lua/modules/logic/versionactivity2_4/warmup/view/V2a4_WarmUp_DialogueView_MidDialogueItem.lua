@@ -1,58 +1,64 @@
-module("modules.logic.versionactivity2_4.warmup.view.V2a4_WarmUp_DialogueView_MidDialogueItem", package.seeall)
+﻿module("modules.logic.versionactivity2_4.warmup.view.V2a4_WarmUp_DialogueView_MidDialogueItem", package.seeall)
 
-slot0 = class("V2a4_WarmUp_DialogueView_MidDialogueItem", V2a4_WarmUpDialogueItemBase)
+local var_0_0 = class("V2a4_WarmUp_DialogueView_MidDialogueItem", V2a4_WarmUpDialogueItemBase)
 
-function slot0.onInitView(slot0)
-	slot0._txtcontent = gohelper.findChildText(slot0.viewGO, "#txt_content")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._txtcontent = gohelper.findChildText(arg_1_0.viewGO, "#txt_content")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0.ctor(slot0, ...)
-	uv0.super.ctor(slot0, ...)
+function var_0_0.ctor(arg_4_0, ...)
+	var_0_0.super.ctor(arg_4_0, ...)
 end
 
-function slot0._editableInitView(slot0)
-	uv0.super._editableInitView(slot0)
+function var_0_0._editableInitView(arg_5_0)
+	var_0_0.super._editableInitView(arg_5_0)
 
-	slot0._txtGo = slot0._txtcontent.gameObject
-	slot0._txtTrans = slot0._txtGo.transform
-	slot0._oriTxtHeight = recthelper.getHeight(slot0._txtTrans)
-	slot0._oriTxtWidth = recthelper.getWidth(slot0._txtTrans)
+	arg_5_0._txtGo = arg_5_0._txtcontent.gameObject
+	arg_5_0._txtTrans = arg_5_0._txtGo.transform
+	arg_5_0._oriTxtHeight = recthelper.getHeight(arg_5_0._txtTrans)
+	arg_5_0._oriTxtWidth = recthelper.getWidth(arg_5_0._txtTrans)
 end
 
-function slot0.getTemplateGo(slot0)
-	return slot0:parent()._gomiddialogueItem
+function var_0_0.getTemplateGo(arg_6_0)
+	return arg_6_0:parent()._gomiddialogueItem
 end
 
-function slot0.setData(slot0, slot1)
-	uv0.super.setData(slot0, slot1)
-	slot0:setText(V2a4_WarmUpConfig.instance:getDialogDesc(slot1.dialogCO))
-	slot0:onFlush()
+function var_0_0.setData(arg_7_0, arg_7_1)
+	var_0_0.super.setData(arg_7_0, arg_7_1)
+
+	local var_7_0 = arg_7_1.dialogCO
+	local var_7_1 = V2a4_WarmUpConfig.instance:getDialogDesc(var_7_0)
+
+	arg_7_0:setText(var_7_1)
+	arg_7_0:onFlush()
 end
 
-function slot0.onDestroyView(slot0)
-	uv0.super.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_8_0)
+	var_0_0.super.onDestroyView(arg_8_0)
 end
 
-function slot0.onRefreshLineInfo(slot0)
-	slot1 = slot0:preferredHeightTxt()
+function var_0_0.onRefreshLineInfo(arg_9_0)
+	local var_9_0 = arg_9_0:preferredHeightTxt()
 
-	recthelper.setSize(slot0._txtTrans, slot0._oriTxtWidth, slot1)
-	slot0:addContentItem(slot1)
-	slot0:stepEnd()
+	recthelper.setSize(arg_9_0._txtTrans, arg_9_0._oriTxtWidth, var_9_0)
+	arg_9_0:addContentItem(var_9_0)
+	arg_9_0:stepEnd()
 end
 
-function slot0.setGray(slot0, slot1)
-	slot0:grayscale(slot1, slot0._txtGo)
+function var_0_0.setGray(arg_10_0, arg_10_1)
+	arg_10_0:grayscale(arg_10_1, arg_10_0._txtGo)
 end
 
-return slot0
+return var_0_0

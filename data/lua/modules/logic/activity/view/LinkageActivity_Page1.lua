@@ -1,13 +1,15 @@
-module("modules.logic.activity.view.LinkageActivity_Page1", package.seeall)
+﻿module("modules.logic.activity.view.LinkageActivity_Page1", package.seeall)
 
-slot0 = class("LinkageActivity_Page1", LinkageActivity_PageBase)
+local var_0_0 = class("LinkageActivity_Page1", LinkageActivity_PageBase)
 
-function slot0.ctor(slot0, ...)
-	uv0.super.ctor(slot0, ...)
+function var_0_0.ctor(arg_1_0, ...)
+	var_0_0.super.ctor(arg_1_0, ...)
 end
 
-function slot0.getDurationTimeStr(slot0)
-	return StoreController.instance:getRecommendStoreTime(slot0:getLinkageActivityCO())
+function var_0_0.getDurationTimeStr(arg_2_0)
+	local var_2_0 = arg_2_0:getLinkageActivityCO()
+
+	return StoreController.instance:getRecommendStoreTime(var_2_0)
 end
 
-return slot0
+return var_0_0

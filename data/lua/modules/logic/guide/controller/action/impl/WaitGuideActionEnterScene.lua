@@ -1,28 +1,28 @@
-module("modules.logic.guide.controller.action.impl.WaitGuideActionEnterScene", package.seeall)
+﻿module("modules.logic.guide.controller.action.impl.WaitGuideActionEnterScene", package.seeall)
 
-slot0 = class("WaitGuideActionEnterScene", BaseGuideAction)
+local var_0_0 = class("WaitGuideActionEnterScene", BaseGuideAction)
 
-function slot0.onStart(slot0, slot1)
-	uv0.super.onStart(slot0, slot1)
+function var_0_0.onStart(arg_1_0, arg_1_1)
+	var_0_0.super.onStart(arg_1_0, arg_1_1)
 
-	slot0._sceneType = SceneType[slot0.actionParam]
+	arg_1_0._sceneType = SceneType[arg_1_0.actionParam]
 
-	if GameSceneMgr.instance:getCurSceneType() == slot0._sceneType and not GameSceneMgr.instance:isLoading() then
-		slot0:onDone(true)
+	if GameSceneMgr.instance:getCurSceneType() == arg_1_0._sceneType and not GameSceneMgr.instance:isLoading() then
+		arg_1_0:onDone(true)
 	else
-		GameSceneMgr.instance:registerCallback(slot0._sceneType, slot0._onEnterScene, slot0)
+		GameSceneMgr.instance:registerCallback(arg_1_0._sceneType, arg_1_0._onEnterScene, arg_1_0)
 	end
 end
 
-function slot0._onEnterScene(slot0, slot1, slot2)
-	if slot2 == 1 then
-		GameSceneMgr.instance:unregisterCallback(slot0._sceneType, slot0._onEnterScene, slot0)
-		slot0:onDone(true)
+function var_0_0._onEnterScene(arg_2_0, arg_2_1, arg_2_2)
+	if arg_2_2 == 1 then
+		GameSceneMgr.instance:unregisterCallback(arg_2_0._sceneType, arg_2_0._onEnterScene, arg_2_0)
+		arg_2_0:onDone(true)
 	end
 end
 
-function slot0.clearWork(slot0)
-	GameSceneMgr.instance:unregisterCallback(slot0._sceneType, slot0._onEnterScene, slot0)
+function var_0_0.clearWork(arg_3_0)
+	GameSceneMgr.instance:unregisterCallback(arg_3_0._sceneType, arg_3_0._onEnterScene, arg_3_0)
 end
 
-return slot0
+return var_0_0

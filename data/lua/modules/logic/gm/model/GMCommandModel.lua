@@ -1,21 +1,21 @@
-module("modules.logic.gm.model.GMCommandModel", package.seeall)
+﻿module("modules.logic.gm.model.GMCommandModel", package.seeall)
 
-slot0 = class("GMCommandModel", ListScrollModel)
+local var_0_0 = class("GMCommandModel", ListScrollModel)
 
-function slot0.reInit(slot0)
-	slot0._hasInit = nil
+function var_0_0.reInit(arg_1_0)
+	arg_1_0._hasInit = nil
 end
 
-function slot0.checkInitList(slot0)
-	if slot0._hasInit then
+function var_0_0.checkInitList(arg_2_0)
+	if arg_2_0._hasInit then
 		return
 	end
 
-	slot0._hasInit = true
+	arg_2_0._hasInit = true
 
-	slot0:setList(lua_gm_command.configList)
+	arg_2_0:setList(lua_gm_command.configList)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

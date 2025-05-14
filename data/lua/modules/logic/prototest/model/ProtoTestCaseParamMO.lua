@@ -1,187 +1,196 @@
-module("modules.logic.prototest.model.ProtoTestCaseParamMO", package.seeall)
+﻿module("modules.logic.prototest.model.ProtoTestCaseParamMO", package.seeall)
 
-slot0 = pureTable("ProtoTestCaseParamMO")
+local var_0_0 = pureTable("ProtoTestCaseParamMO")
 
-function slot0.initProto(slot0, slot1, slot2, slot3)
-	slot0.key = slot2.name
-	slot0.value = slot3
-	slot0.id = slot2.number
-	slot0.pType = slot2.type
-	slot0.pLabel = slot2.label
-	slot0.repeated = false
+function var_0_0.initProto(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	arg_1_0.key = arg_1_2.name
+	arg_1_0.value = arg_1_3
+	arg_1_0.id = arg_1_2.number
+	arg_1_0.pType = arg_1_2.type
+	arg_1_0.pLabel = arg_1_2.label
+	arg_1_0.repeated = false
 
-	if slot0:isRepeated() then
-		slot0.value = ProtoParamHelper.buildRepeatedParamsByProto(slot3 or {}, slot0)
+	if arg_1_0:isRepeated() then
+		arg_1_0.value = ProtoParamHelper.buildRepeatedParamsByProto(arg_1_3 or {}, arg_1_0)
 
-		if slot2.message_type then
-			slot0.struct = slot2.message_type.name
+		if arg_1_2.message_type then
+			arg_1_0.struct = arg_1_2.message_type.name
 		end
-	elseif slot0:isProtoType() then
-		if slot3 then
-			slot0.struct = getmetatable(slot3)._descriptor.name
-			slot0.value = ProtoParamHelper.buildProtoParamsByProto(slot3, slot0)
+	elseif arg_1_0:isProtoType() then
+		if arg_1_3 then
+			arg_1_0.struct = getmetatable(arg_1_3)._descriptor.name
+			arg_1_0.value = ProtoParamHelper.buildProtoParamsByProto(arg_1_3, arg_1_0)
 		else
-			slot0.struct = slot2.message_type.name
-			slot0.value = ProtoParamHelper.buildProtoParamsByProto(ProtoParamHelper.buildProtoByStructName(slot0.struct), slot0)
+			arg_1_0.struct = arg_1_2.message_type.name
+
+			local var_1_0 = ProtoParamHelper.buildProtoByStructName(arg_1_0.struct)
+
+			arg_1_0.value = ProtoParamHelper.buildProtoParamsByProto(var_1_0, arg_1_0)
 		end
 	end
 end
 
-function slot0.initProtoRepeated(slot0, slot1, slot2, slot3)
-	slot0.key = slot2
-	slot0.value = slot3
-	slot0.id = slot2
-	slot0.pType = slot1.pType
-	slot0.pLabel = ProtoEnum.LabelType.optional
-	slot0.repeated = true
+function var_0_0.initProtoRepeated(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
+	arg_2_0.key = arg_2_2
+	arg_2_0.value = arg_2_3
+	arg_2_0.id = arg_2_2
+	arg_2_0.pType = arg_2_1.pType
+	arg_2_0.pLabel = ProtoEnum.LabelType.optional
+	arg_2_0.repeated = true
 
-	if slot0:isProtoType() then
-		slot0.struct = getmetatable(slot3)._descriptor.name
-		slot0.value = ProtoParamHelper.buildProtoParamsByProto(slot3, slot0)
+	if arg_2_0:isProtoType() then
+		arg_2_0.struct = getmetatable(arg_2_3)._descriptor.name
+		arg_2_0.value = ProtoParamHelper.buildProtoParamsByProto(arg_2_3, arg_2_0)
 	end
 end
 
-function slot0.isProtoType(slot0)
-	return slot0.pType == ProtoEnum.ParamType.proto
+function var_0_0.isProtoType(arg_3_0)
+	return arg_3_0.pType == ProtoEnum.ParamType.proto
 end
 
-function slot0.isOptional(slot0)
-	return slot0.pLabel == ProtoEnum.LabelType.optional
+function var_0_0.isOptional(arg_4_0)
+	return arg_4_0.pLabel == ProtoEnum.LabelType.optional
 end
 
-function slot0.isRepeated(slot0)
-	return slot0.pLabel == ProtoEnum.LabelType.repeated
+function var_0_0.isRepeated(arg_5_0)
+	return arg_5_0.pLabel == ProtoEnum.LabelType.repeated
 end
 
-function slot0.getParamDescLine(slot0)
-	if slot0:isRepeated() then
-		slot1 = {}
+function var_0_0.getParamDescLine(arg_6_0)
+	if arg_6_0:isRepeated() then
+		local var_6_0 = {}
 
-		for slot5, slot6 in ipairs(slot0.value) do
-			table.insert(slot1, slot6:getParamDescLine())
+		for iter_6_0, iter_6_1 in ipairs(arg_6_0.value) do
+			table.insert(var_6_0, iter_6_1:getParamDescLine())
 		end
 
-		return string.format("%s:{%s}", slot0.key, table.concat(slot1, ","))
-	elseif slot0:isProtoType() then
-		slot1 = {}
+		return string.format("%s:{%s}", arg_6_0.key, table.concat(var_6_0, ","))
+	elseif arg_6_0:isProtoType() then
+		local var_6_1 = {}
 
-		if slot0.value then
-			for slot5, slot6 in ipairs(slot0.value) do
-				table.insert(slot1, slot6:getParamDescLine())
+		if arg_6_0.value then
+			for iter_6_2, iter_6_3 in ipairs(arg_6_0.value) do
+				table.insert(var_6_1, iter_6_3:getParamDescLine())
 			end
 		end
 
-		if slot0.repeated then
-			return string.format("{%s}", table.concat(slot1, ","))
+		if arg_6_0.repeated then
+			return string.format("{%s}", table.concat(var_6_1, ","))
 		else
-			return string.format("%s:{%s}", slot0.key, table.concat(slot1, ","))
+			return string.format("%s:{%s}", arg_6_0.key, table.concat(var_6_1, ","))
 		end
-	elseif slot0.repeated then
-		return cjson.encode(slot0.value)
+	elseif arg_6_0.repeated then
+		return cjson.encode(arg_6_0.value)
 	else
-		return string.format("%s:%s", slot0.key, slot0.value)
+		return string.format("%s:%s", arg_6_0.key, arg_6_0.value)
 	end
 end
 
-function slot0.clone(slot0)
-	slot1 = uv0.New()
-	slot1.key = slot0.key
-	slot1.value = slot0.value
-	slot1.id = slot0.id
-	slot1.pType = slot0.pType
-	slot1.pLabel = slot0.pLabel
-	slot1.struct = slot0.struct
-	slot1.repeated = slot0.repeated
+function var_0_0.clone(arg_7_0)
+	local var_7_0 = var_0_0.New()
 
-	if slot0:isRepeated() then
-		slot1.value = {}
+	var_7_0.key = arg_7_0.key
+	var_7_0.value = arg_7_0.value
+	var_7_0.id = arg_7_0.id
+	var_7_0.pType = arg_7_0.pType
+	var_7_0.pLabel = arg_7_0.pLabel
+	var_7_0.struct = arg_7_0.struct
+	var_7_0.repeated = arg_7_0.repeated
 
-		for slot5, slot6 in ipairs(slot0.value) do
-			table.insert(slot1.value, slot6:clone())
+	if arg_7_0:isRepeated() then
+		var_7_0.value = {}
+
+		for iter_7_0, iter_7_1 in ipairs(arg_7_0.value) do
+			table.insert(var_7_0.value, iter_7_1:clone())
 		end
-	elseif slot0:isProtoType() then
-		slot1.value = {}
+	elseif arg_7_0:isProtoType() then
+		var_7_0.value = {}
 
-		for slot5, slot6 in ipairs(slot0.value) do
-			table.insert(slot1.value, slot6:clone())
+		for iter_7_2, iter_7_3 in ipairs(arg_7_0.value) do
+			local var_7_1 = iter_7_3:clone()
+
+			table.insert(var_7_0.value, var_7_1)
 		end
 	end
 
-	return slot1
+	return var_7_0
 end
 
-function slot0.fillProtoMsg(slot0, slot1)
-	if not slot0.value then
+function var_0_0.fillProtoMsg(arg_8_0, arg_8_1)
+	if not arg_8_0.value then
 		return
 	end
 
-	if slot0:isRepeated() then
-		for slot5, slot6 in ipairs(slot0.value) do
-			slot6:fillProtoMsg(slot1[slot0.key])
+	if arg_8_0:isRepeated() then
+		for iter_8_0, iter_8_1 in ipairs(arg_8_0.value) do
+			iter_8_1:fillProtoMsg(arg_8_1[arg_8_0.key])
 		end
-	elseif slot0:isProtoType() then
-		if slot0.repeated then
-			slot2 = ProtoParamHelper.buildProtoByStructName(slot0.struct)
+	elseif arg_8_0:isProtoType() then
+		if arg_8_0.repeated then
+			local var_8_0 = ProtoParamHelper.buildProtoByStructName(arg_8_0.struct)
 
-			for slot6, slot7 in ipairs(slot0.value) do
-				slot7:fillProtoMsg(slot2)
+			for iter_8_2, iter_8_3 in ipairs(arg_8_0.value) do
+				iter_8_3:fillProtoMsg(var_8_0)
 			end
 
-			table.insert(slot1, slot2)
+			table.insert(arg_8_1, var_8_0)
 		else
-			for slot5, slot6 in ipairs(slot0.value) do
-				slot6:fillProtoMsg(slot1[slot0.key])
+			for iter_8_4, iter_8_5 in ipairs(arg_8_0.value) do
+				iter_8_5:fillProtoMsg(arg_8_1[arg_8_0.key])
 			end
 		end
-	elseif slot0.repeated then
-		table.insert(slot1, slot0.value)
+	elseif arg_8_0.repeated then
+		table.insert(arg_8_1, arg_8_0.value)
 	else
-		if not slot1 then
-			logError(slot0.key)
+		if not arg_8_1 then
+			logError(arg_8_0.key)
 		end
 
-		slot1[slot0.key] = slot0.value
+		arg_8_1[arg_8_0.key] = arg_8_0.value
 	end
 end
 
-function slot0.serialize(slot0)
-	if slot0:isRepeated() or slot0:isProtoType() then
-		for slot5, slot6 in ipairs(slot0.value) do
-			table.insert(slot1.value, slot6:serialize())
-		end
-	end
-
-	return {
-		key = slot0.key,
-		value = slot0.value,
-		id = slot0.id,
-		pType = slot0.pType,
-		pLabel = slot0.pLabel,
-		repeated = slot0.repeated,
-		struct = slot0.struct,
-		value = {}
+function var_0_0.serialize(arg_9_0)
+	local var_9_0 = {
+		key = arg_9_0.key,
+		value = arg_9_0.value,
+		id = arg_9_0.id,
+		pType = arg_9_0.pType,
+		pLabel = arg_9_0.pLabel,
+		repeated = arg_9_0.repeated,
+		struct = arg_9_0.struct
 	}
+
+	if arg_9_0:isRepeated() or arg_9_0:isProtoType() then
+		var_9_0.value = {}
+
+		for iter_9_0, iter_9_1 in ipairs(arg_9_0.value) do
+			table.insert(var_9_0.value, iter_9_1:serialize())
+		end
+	end
+
+	return var_9_0
 end
 
-function slot0.deserialize(slot0, slot1)
-	slot0.key = slot1.key
-	slot0.value = slot1.value
-	slot0.id = slot1.id
-	slot0.pType = slot1.pType
-	slot0.pLabel = slot1.pLabel
-	slot0.repeated = slot1.repeated
-	slot0.struct = slot1.struct
+function var_0_0.deserialize(arg_10_0, arg_10_1)
+	arg_10_0.key = arg_10_1.key
+	arg_10_0.value = arg_10_1.value
+	arg_10_0.id = arg_10_1.id
+	arg_10_0.pType = arg_10_1.pType
+	arg_10_0.pLabel = arg_10_1.pLabel
+	arg_10_0.repeated = arg_10_1.repeated
+	arg_10_0.struct = arg_10_1.struct
 
-	if slot0:isRepeated() or slot0:isProtoType() then
-		slot0.value = {}
+	if arg_10_0:isRepeated() or arg_10_0:isProtoType() then
+		arg_10_0.value = {}
 
-		for slot5, slot6 in ipairs(slot1.value) do
-			slot7 = uv0.New()
+		for iter_10_0, iter_10_1 in ipairs(arg_10_1.value) do
+			local var_10_0 = var_0_0.New()
 
-			slot7:deserialize(slot6)
-			table.insert(slot0.value, slot7)
+			var_10_0:deserialize(iter_10_1)
+			table.insert(arg_10_0.value, var_10_0)
 		end
 	end
 end
 
-return slot0
+return var_0_0

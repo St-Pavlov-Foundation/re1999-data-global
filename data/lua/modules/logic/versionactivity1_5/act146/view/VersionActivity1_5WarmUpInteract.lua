@@ -1,173 +1,190 @@
-module("modules.logic.versionactivity1_5.act146.view.VersionActivity1_5WarmUpInteract", package.seeall)
+﻿module("modules.logic.versionactivity1_5.act146.view.VersionActivity1_5WarmUpInteract", package.seeall)
 
-slot0 = class("VersionActivity1_5WarmUpInteract", BaseView)
+local var_0_0 = class("VersionActivity1_5WarmUpInteract", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._godragarea = gohelper.findChild(slot0.viewGO, "Middle/#go_dragarea")
-	slot0._goguide1 = gohelper.findChild(slot0.viewGO, "Middle/#go_guide1")
-	slot0._goguide2 = gohelper.findChild(slot0.viewGO, "Middle/#go_guide2")
-	slot0._imagePhotoMask1 = gohelper.findChildImage(slot0.viewGO, "Middle/#go_mail2/image_PhotoMask/#image_PhotoMask1")
-	slot0._imagePhotoMask2 = gohelper.findChildImage(slot0.viewGO, "Middle/#go_mail2/image_PhotoMask/#image_PhotoMask2")
-	slot0._imagePhotoMask3 = gohelper.findChildImage(slot0.viewGO, "Middle/#go_mail2/image_PhotoMask/#image_PhotoMask3")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._godragarea = gohelper.findChild(arg_1_0.viewGO, "Middle/#go_dragarea")
+	arg_1_0._goguide1 = gohelper.findChild(arg_1_0.viewGO, "Middle/#go_guide1")
+	arg_1_0._goguide2 = gohelper.findChild(arg_1_0.viewGO, "Middle/#go_guide2")
+	arg_1_0._imagePhotoMask1 = gohelper.findChildImage(arg_1_0.viewGO, "Middle/#go_mail2/image_PhotoMask/#image_PhotoMask1")
+	arg_1_0._imagePhotoMask2 = gohelper.findChildImage(arg_1_0.viewGO, "Middle/#go_mail2/image_PhotoMask/#image_PhotoMask2")
+	arg_1_0._imagePhotoMask3 = gohelper.findChildImage(arg_1_0.viewGO, "Middle/#go_mail2/image_PhotoMask/#image_PhotoMask3")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0:addEventCb(Activity146Controller.instance, Activity146Event.DataUpdate, slot0._onDataUpdate, slot0)
-	slot0._drag:AddDragListener(slot0._onDragging, slot0)
-	slot0._drag:AddDragBeginListener(slot0._onBeginDrag, slot0)
-	slot0._drag:AddDragEndListener(slot0._onEndDrag, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0:addEventCb(Activity146Controller.instance, Activity146Event.DataUpdate, arg_2_0._onDataUpdate, arg_2_0)
+	arg_2_0._drag:AddDragListener(arg_2_0._onDragging, arg_2_0)
+	arg_2_0._drag:AddDragBeginListener(arg_2_0._onBeginDrag, arg_2_0)
+	arg_2_0._drag:AddDragEndListener(arg_2_0._onEndDrag, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0:removeEventCb(Activity146Controller.instance, Activity146Event.DataUpdate, slot0._onDataUpdate, slot0)
-	slot0._drag:RemoveDragListener()
-	slot0._drag:RemoveDragBeginListener()
-	slot0._drag:RemoveDragEndListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0:removeEventCb(Activity146Controller.instance, Activity146Event.DataUpdate, arg_3_0._onDataUpdate, arg_3_0)
+	arg_3_0._drag:RemoveDragListener()
+	arg_3_0._drag:RemoveDragBeginListener()
+	arg_3_0._drag:RemoveDragEndListener()
 end
 
-slot0.InteractType = {
+var_0_0.InteractType = {
 	Counting = 2,
 	Vertical = 1
 }
 
-function slot0._onBeginDrag(slot0, slot1, slot2)
-	if uv0.DragFuncMap[slot0._interactType] and slot3.onBegin then
-		slot3.onBegin(slot0, slot1, slot2)
+function var_0_0._onBeginDrag(arg_4_0, arg_4_1, arg_4_2)
+	local var_4_0 = var_0_0.DragFuncMap[arg_4_0._interactType]
+
+	if var_4_0 and var_4_0.onBegin then
+		var_4_0.onBegin(arg_4_0, arg_4_1, arg_4_2)
 	end
 end
 
-function slot0._onDragging(slot0, slot1, slot2)
-	if uv0.DragFuncMap[slot0._interactType] and slot3.onDrag then
-		slot3.onDrag(slot0, slot1, slot2)
+function var_0_0._onDragging(arg_5_0, arg_5_1, arg_5_2)
+	local var_5_0 = var_0_0.DragFuncMap[arg_5_0._interactType]
+
+	if var_5_0 and var_5_0.onDrag then
+		var_5_0.onDrag(arg_5_0, arg_5_1, arg_5_2)
 	end
 end
 
-function slot0._onEndDrag(slot0, slot1, slot2)
-	if uv0.DragFuncMap[slot0._interactType] and slot3.onEnd then
-		slot3.onEnd(slot0, slot1, slot2)
+function var_0_0._onEndDrag(arg_6_0, arg_6_1, arg_6_2)
+	local var_6_0 = var_0_0.DragFuncMap[arg_6_0._interactType]
+
+	if var_6_0 and var_6_0.onEnd then
+		var_6_0.onEnd(arg_6_0, arg_6_1, arg_6_2)
 	end
 end
 
-function slot0._onBeginDragVertical(slot0, slot1, slot2)
-	slot0._isPassEpisode = false
-	slot0._dragLengthen = 0
+function var_0_0._onBeginDragVertical(arg_7_0, arg_7_1, arg_7_2)
+	arg_7_0._isPassEpisode = false
+	arg_7_0._dragLengthen = 0
 
-	gohelper.setActive(slot0._goguide1, false)
-	gohelper.setActive(slot0._goguide2, false)
+	gohelper.setActive(arg_7_0._goguide1, false)
+	gohelper.setActive(arg_7_0._goguide2, false)
 
-	slot0._atticletterOpeningId = AudioMgr.instance:trigger(AudioEnum.UI.play_ui_wulu_atticletter_opening)
+	arg_7_0._atticletterOpeningId = AudioMgr.instance:trigger(AudioEnum.UI.play_ui_wulu_atticletter_opening)
 end
 
-slot1 = 80
+local var_0_1 = 80
 
-function slot0._onDraggingVertical(slot0, slot1, slot2)
-	if not slot0._isPassEpisode and Mathf.Abs(slot2.delta.x) <= Mathf.Abs(slot2.delta.y) then
-		slot0._dragLengthen = slot0._dragLengthen + slot4
+function var_0_0._onDraggingVertical(arg_8_0, arg_8_1, arg_8_2)
+	local var_8_0 = Mathf.Abs(arg_8_2.delta.x)
+	local var_8_1 = Mathf.Abs(arg_8_2.delta.y)
+	local var_8_2 = var_8_0 <= var_8_1
 
-		if Mathf.Clamp(slot0._dragLengthen / uv0, 0, 1) >= 1 then
-			slot0._isPassEpisode = true
+	if not arg_8_0._isPassEpisode and var_8_2 then
+		arg_8_0._dragLengthen = arg_8_0._dragLengthen + var_8_1
+
+		if Mathf.Clamp(arg_8_0._dragLengthen / var_0_1, 0, 1) >= 1 then
+			arg_8_0._isPassEpisode = true
 		end
 	end
 end
 
-function slot0._onEndDragVertical(slot0)
-	if slot0._isPassEpisode then
+function var_0_0._onEndDragVertical(arg_9_0)
+	if arg_9_0._isPassEpisode then
 		Activity146Controller.instance:dispatchEvent(Activity146Event.OnEpisodeFinished)
 	end
 
-	if slot0._atticletterOpeningId then
-		AudioMgr.instance:stopPlayingID(slot0._atticletterOpeningId)
+	if arg_9_0._atticletterOpeningId then
+		AudioMgr.instance:stopPlayingID(arg_9_0._atticletterOpeningId)
 
-		slot0._atticletterOpeningId = nil
+		arg_9_0._atticletterOpeningId = nil
 	end
 end
 
-slot2 = 3
-slot3 = 10
+local var_0_2 = 3
+local var_0_3 = 10
 
-function slot0._onBeginDragCounting(slot0, slot1, slot2)
-	slot0._isPassEpisode = false
-	slot0._dragLengthenX = 0
-	slot0._dragLengthenY = 0
+function var_0_0._onBeginDragCounting(arg_10_0, arg_10_1, arg_10_2)
+	arg_10_0._isPassEpisode = false
+	arg_10_0._dragLengthenX = 0
+	arg_10_0._dragLengthenY = 0
 
-	gohelper.setActive(slot0._goguide1, false)
-	gohelper.setActive(slot0._goguide2, false)
+	gohelper.setActive(arg_10_0._goguide1, false)
+	gohelper.setActive(arg_10_0._goguide2, false)
 end
 
-slot4 = {
+local var_0_4 = {
 	"1st",
 	"2nd",
 	"3rd"
 }
 
-function slot0._onDraggingCounting(slot0, slot1, slot2)
-	if not slot0._isPassEpisode then
-		slot3 = false
+function var_0_0._onDraggingCounting(arg_11_0, arg_11_1, arg_11_2)
+	if not arg_11_0._isPassEpisode then
+		local var_11_0 = false
 
-		if uv0 < Mathf.Abs(slot2.delta.x) and slot2.delta.x * slot0._dragLengthenX <= 0 then
-			slot3 = true
-		elseif uv0 < Mathf.Abs(slot2.delta.y) and slot2.delta.y * slot0._dragLengthenY <= 0 then
-			slot3 = true
+		if Mathf.Abs(arg_11_2.delta.x) > var_0_3 and arg_11_2.delta.x * arg_11_0._dragLengthenX <= 0 then
+			var_11_0 = true
+		elseif Mathf.Abs(arg_11_2.delta.y) > var_0_3 and arg_11_2.delta.y * arg_11_0._dragLengthenY <= 0 then
+			var_11_0 = true
 		end
 
-		if slot3 then
-			slot0._dragLengthenX = slot2.delta.x
-			slot0._dragLengthenY = slot2.delta.y
-			slot0._dragCount = slot0._dragCount or 0
-			slot0._dragCount = slot0._dragCount + 1
+		if var_11_0 then
+			arg_11_0._dragLengthenX = arg_11_2.delta.x
+			arg_11_0._dragLengthenY = arg_11_2.delta.y
+			arg_11_0._dragCount = arg_11_0._dragCount or 0
+			arg_11_0._dragCount = arg_11_0._dragCount + 1
 
-			slot0._photoMaskAnim:Play(uv1[slot0._dragCount] or "idle", 0, 0)
+			local var_11_1 = var_0_4[arg_11_0._dragCount] or "idle"
+
+			arg_11_0._photoMaskAnim:Play(var_11_1, 0, 0)
 			AudioMgr.instance:trigger(AudioEnum.UI.play_ui_wulu_atticletter_cleaning)
 
-			if uv2 <= slot0._dragCount then
-				slot0._isPassEpisode = true
+			if arg_11_0._dragCount >= var_0_2 then
+				arg_11_0._isPassEpisode = true
 			end
 		end
 	end
 end
 
-function slot0._onEndDragCounting(slot0)
-	if slot0._isPassEpisode then
+function var_0_0._onEndDragCounting(arg_12_0)
+	if arg_12_0._isPassEpisode then
 		Activity146Controller.instance:dispatchEvent(Activity146Event.OnEpisodeFinished)
 	end
 end
 
-function slot0._editableInitView(slot0)
-	slot0._drag = SLFramework.UGUI.UIDragListener.Get(slot0._godragarea)
-	slot0._photoMaskAnim = gohelper.onceAddComponent(gohelper.findChild(slot0.viewGO, "Middle/#go_mail2/image_PhotoMask"), typeof(UnityEngine.Animator))
+function var_0_0._editableInitView(arg_13_0)
+	arg_13_0._drag = SLFramework.UGUI.UIDragListener.Get(arg_13_0._godragarea)
+
+	local var_13_0 = gohelper.findChild(arg_13_0.viewGO, "Middle/#go_mail2/image_PhotoMask")
+
+	arg_13_0._photoMaskAnim = gohelper.onceAddComponent(var_13_0, typeof(UnityEngine.Animator))
 end
 
-function slot0._onDataUpdate(slot0)
-	slot0._interactType = Activity146Config.instance:getEpisodeInteractType(slot0.viewParam.actId, Activity146Model.instance:getCurSelectedEpisode())
+function var_0_0._onDataUpdate(arg_14_0)
+	local var_14_0 = Activity146Model.instance:getCurSelectedEpisode()
 
-	slot0._photoMaskAnim:Play("idle", 0, 0)
+	arg_14_0._interactType = Activity146Config.instance:getEpisodeInteractType(arg_14_0.viewParam.actId, var_14_0)
 
-	slot0._dragCount = 0
+	arg_14_0._photoMaskAnim:Play("idle", 0, 0)
+
+	arg_14_0._dragCount = 0
 end
 
-slot0.DragFuncMap = {
-	[slot0.InteractType.Counting] = {
-		onBegin = slot0._onBeginDragCounting,
-		onDrag = slot0._onDraggingCounting,
-		onEnd = slot0._onEndDragCounting
+var_0_0.DragFuncMap = {
+	[var_0_0.InteractType.Counting] = {
+		onBegin = var_0_0._onBeginDragCounting,
+		onDrag = var_0_0._onDraggingCounting,
+		onEnd = var_0_0._onEndDragCounting
 	},
-	[slot0.InteractType.Vertical] = {
-		onBegin = slot0._onBeginDragVertical,
-		onDrag = slot0._onDraggingVertical,
-		onEnd = slot0._onEndDragVertical
+	[var_0_0.InteractType.Vertical] = {
+		onBegin = var_0_0._onBeginDragVertical,
+		onDrag = var_0_0._onDraggingVertical,
+		onEnd = var_0_0._onEndDragVertical
 	}
 }
 
-function slot0.onClose(slot0)
-	if slot0._atticletterOpeningId then
-		AudioMgr.instance:stopPlayingID(slot0._atticletterOpeningId)
+function var_0_0.onClose(arg_15_0)
+	if arg_15_0._atticletterOpeningId then
+		AudioMgr.instance:stopPlayingID(arg_15_0._atticletterOpeningId)
 
-		slot0._atticletterOpeningId = nil
+		arg_15_0._atticletterOpeningId = nil
 	end
 end
 
-return slot0
+return var_0_0

@@ -1,35 +1,35 @@
-module("modules.logic.activity.model.chessmap.Activity109ChessGameTaskMO", package.seeall)
+﻿module("modules.logic.activity.model.chessmap.Activity109ChessGameTaskMO", package.seeall)
 
-slot0 = pureTable("Activity109ChessGameTaskMO")
+local var_0_0 = pureTable("Activity109ChessGameTaskMO")
 
-function slot0.init(slot0, slot1)
-	slot0.id = slot1.id
-	slot0.config = slot1.config
-	slot0.taskMO = slot1
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.id = arg_1_1.id
+	arg_1_0.config = arg_1_1.config
+	arg_1_0.taskMO = arg_1_1
 end
 
-function slot0.updateMO(slot0, slot1)
-	slot0.taskMO = slot1
+function var_0_0.updateMO(arg_2_0, arg_2_1)
+	arg_2_0.taskMO = arg_2_1
 end
 
-function slot0.isLock(slot0)
-	return slot0.taskMO == nil
+function var_0_0.isLock(arg_3_0)
+	return arg_3_0.taskMO == nil
 end
 
-function slot0.isFinished(slot0)
-	if slot0.taskMO then
-		return slot0.taskMO.hasFinished
+function var_0_0.isFinished(arg_4_0)
+	if arg_4_0.taskMO then
+		return arg_4_0.taskMO.hasFinished
 	end
 
 	return false
 end
 
-function slot0.alreadyGotReward(slot0)
-	if slot0.taskMO then
-		return slot0.taskMO.finishCount > 0
+function var_0_0.alreadyGotReward(arg_5_0)
+	if arg_5_0.taskMO then
+		return arg_5_0.taskMO.finishCount > 0
 	end
 
 	return false
 end
 
-return slot0
+return var_0_0

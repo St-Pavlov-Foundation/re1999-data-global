@@ -1,436 +1,493 @@
-module("modules.logic.store.view.StoreSkinGoodsView", package.seeall)
+﻿module("modules.logic.store.view.StoreSkinGoodsView", package.seeall)
 
-slot0 = class("StoreSkinGoodsView", BaseView)
-slot1 = {
+local var_0_0 = class("StoreSkinGoodsView", BaseView)
+local var_0_1 = {
 	45,
 	-46,
 	0
 }
-slot2 = {
+local var_0_2 = {
 	-460,
 	0,
 	0
 }
-slot3 = 0.85
-slot4 = "singlebg/signature/color/img_dressing1.png"
+local var_0_3 = 0.85
+local var_0_4 = "singlebg/signature/color/img_dressing1.png"
 
-function slot0.onInitView(slot0)
-	slot0._simagerightbg = gohelper.findChildSingleImage(slot0.viewGO, "view/bgroot/#simage_rightbg")
-	slot0._simageleftbg = gohelper.findChildSingleImage(slot0.viewGO, "view/bgroot/#simage_leftbg")
-	slot0._simageicon = gohelper.findChildSingleImage(slot0.viewGO, "view/bgroot/#simage_icon")
-	slot0._gooffTag = gohelper.findChild(slot0.viewGO, "view/bgroot/#simage_icon/#go_offTag")
-	slot0._txtoff = gohelper.findChildText(slot0.viewGO, "view/bgroot/#simage_icon/#go_offTag/#txt_off")
-	slot0._simagedreesing = gohelper.findChildSingleImage(slot0.viewGO, "view/bgroot/#simage_dreesing")
-	slot0._btnbuy = gohelper.findChildButtonWithAudio(slot0.viewGO, "view/#btn_buy")
-	slot0._txtmaterialNum = gohelper.findChildText(slot0.viewGO, "view/propinfo/cost/price/#txt_materialNum")
-	slot0._simagematerial = gohelper.findChildImage(slot0.viewGO, "view/propinfo/cost/price/#txt_materialNum/#simage_material")
-	slot0._txtprice = gohelper.findChildText(slot0.viewGO, "view/propinfo/cost/price/#txt_price")
-	slot0._godeduction = gohelper.findChild(slot0.viewGO, "view/propinfo/cost/#go_deduction")
-	slot0._txtdeduction = gohelper.findChildTextMesh(slot0.viewGO, "view/propinfo/cost/#go_deduction/#txt_deduction")
-	slot0._txtskinname = gohelper.findChildText(slot0.viewGO, "view/propinfo/#txt_skinname")
-	slot0._txtdesc = gohelper.findChildText(slot0.viewGO, "view/propinfo/content/desc/#txt_desc")
-	slot0._txtusedesc = gohelper.findChildText(slot0.viewGO, "view/propinfo/content/desc/usedesc")
-	slot0._goleftbg = gohelper.findChild(slot0.viewGO, "view/propinfo/content/remain/#go_leftbg")
-	slot0._txtremainday = gohelper.findChildText(slot0.viewGO, "view/propinfo/content/remain/#go_leftbg/#txt_remainday")
-	slot0._gorightbg = gohelper.findChild(slot0.viewGO, "view/propinfo/content/remain/#go_rightbg")
-	slot0._txtremain = gohelper.findChildText(slot0.viewGO, "view/propinfo/content/remain/#go_rightbg/#txt_remain")
-	slot0._scrollproduct = gohelper.findChildScrollRect(slot0.viewGO, "view/propinfo/#scroll_product")
-	slot0._goicon = gohelper.findChild(slot0.viewGO, "view/propinfo/#scroll_product/product/go_goods/#go_icon")
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "view/#btn_close")
-	slot0._godeco = gohelper.findChild(slot0.viewGO, "view/bgroot/deco")
-	slot0._simageGeneralSkinIcon = gohelper.findChildSingleImage(slot0.viewGO, "view/bgroot/#simage_icon")
-	slot0._simageUniqueSkinIcon = gohelper.findChildSingleImage(slot0.viewGO, "view/bgroot/#simage_s+icon")
-	slot0._imageUniqueSkinIcon = gohelper.findChildImage(slot0.viewGO, "view/bgroot/#simage_s+icon")
-	slot0._goUniqueSkinsImage = gohelper.findChild(slot0.viewGO, "view/bgroot/#simage_s+icon")
-	slot0._goUniqueSkinsSpineRoot = gohelper.findChild(slot0.viewGO, "view/bgroot/#simage_s+spineroot")
-	slot0._goUniqueSkinsTitle = gohelper.findChild(slot0.viewGO, "view/bgroot/#simage_s+decoration")
-	slot0._simageUniqueSkinSpineRoot = gohelper.findChildSingleImage(slot0.viewGO, "view/bgroot/#simage_s+spineroot")
-	slot0._imageUniqueSkinSpineRoot = gohelper.findChildImage(slot0.viewGO, "view/bgroot/#simage_s+spineroot")
-	slot0._goUniqueSkinsSpineRoot2 = gohelper.findChild(slot0.viewGO, "view/bgroot/#simage_s+spineroot2")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagerightbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "view/bgroot/#simage_rightbg")
+	arg_1_0._simageleftbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "view/bgroot/#simage_leftbg")
+	arg_1_0._simageicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "view/bgroot/#simage_icon")
+	arg_1_0._gooffTag = gohelper.findChild(arg_1_0.viewGO, "view/bgroot/#simage_icon/#go_offTag")
+	arg_1_0._txtoff = gohelper.findChildText(arg_1_0.viewGO, "view/bgroot/#simage_icon/#go_offTag/#txt_off")
+	arg_1_0._simagedreesing = gohelper.findChildSingleImage(arg_1_0.viewGO, "view/bgroot/#simage_dreesing")
+	arg_1_0._btnbuy = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "view/#btn_buy")
+	arg_1_0._txtmaterialNum = gohelper.findChildText(arg_1_0.viewGO, "view/propinfo/cost/price/#txt_materialNum")
+	arg_1_0._simagematerial = gohelper.findChildImage(arg_1_0.viewGO, "view/propinfo/cost/price/#txt_materialNum/#simage_material")
+	arg_1_0._txtprice = gohelper.findChildText(arg_1_0.viewGO, "view/propinfo/cost/price/#txt_price")
+	arg_1_0._godeduction = gohelper.findChild(arg_1_0.viewGO, "view/propinfo/cost/#go_deduction")
+	arg_1_0._txtdeduction = gohelper.findChildTextMesh(arg_1_0.viewGO, "view/propinfo/cost/#go_deduction/#txt_deduction")
+	arg_1_0._txtskinname = gohelper.findChildText(arg_1_0.viewGO, "view/propinfo/#txt_skinname")
+	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "view/propinfo/content/desc/#txt_desc")
+	arg_1_0._txtusedesc = gohelper.findChildText(arg_1_0.viewGO, "view/propinfo/content/desc/usedesc")
+	arg_1_0._goleftbg = gohelper.findChild(arg_1_0.viewGO, "view/propinfo/content/remain/#go_leftbg")
+	arg_1_0._txtremainday = gohelper.findChildText(arg_1_0.viewGO, "view/propinfo/content/remain/#go_leftbg/#txt_remainday")
+	arg_1_0._gorightbg = gohelper.findChild(arg_1_0.viewGO, "view/propinfo/content/remain/#go_rightbg")
+	arg_1_0._txtremain = gohelper.findChildText(arg_1_0.viewGO, "view/propinfo/content/remain/#go_rightbg/#txt_remain")
+	arg_1_0._scrollproduct = gohelper.findChildScrollRect(arg_1_0.viewGO, "view/propinfo/#scroll_product")
+	arg_1_0._goicon = gohelper.findChild(arg_1_0.viewGO, "view/propinfo/#scroll_product/product/go_goods/#go_icon")
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "view/#btn_close")
+	arg_1_0._godeco = gohelper.findChild(arg_1_0.viewGO, "view/bgroot/deco")
+	arg_1_0._simageGeneralSkinIcon = gohelper.findChildSingleImage(arg_1_0.viewGO, "view/bgroot/#simage_icon")
+	arg_1_0._simageUniqueSkinIcon = gohelper.findChildSingleImage(arg_1_0.viewGO, "view/bgroot/#simage_s+icon")
+	arg_1_0._imageUniqueSkinIcon = gohelper.findChildImage(arg_1_0.viewGO, "view/bgroot/#simage_s+icon")
+	arg_1_0._goUniqueSkinsImage = gohelper.findChild(arg_1_0.viewGO, "view/bgroot/#simage_s+icon")
+	arg_1_0._goUniqueSkinsSpineRoot = gohelper.findChild(arg_1_0.viewGO, "view/bgroot/#simage_s+spineroot")
+	arg_1_0._goUniqueSkinsTitle = gohelper.findChild(arg_1_0.viewGO, "view/bgroot/#simage_s+decoration")
+	arg_1_0._simageUniqueSkinSpineRoot = gohelper.findChildSingleImage(arg_1_0.viewGO, "view/bgroot/#simage_s+spineroot")
+	arg_1_0._imageUniqueSkinSpineRoot = gohelper.findChildImage(arg_1_0.viewGO, "view/bgroot/#simage_s+spineroot")
+	arg_1_0._goUniqueSkinsSpineRoot2 = gohelper.findChild(arg_1_0.viewGO, "view/bgroot/#simage_s+spineroot2")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnbuy:AddClickListener(slot0._btnbuyOnClick, slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnbuy:AddClickListener(arg_2_0._btnbuyOnClick, arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnbuy:RemoveClickListener()
-	slot0._btnclose:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnbuy:RemoveClickListener()
+	arg_3_0._btnclose:RemoveClickListener()
 
-	if slot0.btnIcon then
-		slot0.btnIcon:RemoveClickListener()
+	if arg_3_0.btnIcon then
+		arg_3_0.btnIcon:RemoveClickListener()
 	end
 end
 
-function slot0._btnbuyOnClick(slot0)
-	slot1 = ItemModel.instance:getItemQuantity(slot0._costType, slot0._costId)
+function var_0_0._btnbuyOnClick(arg_4_0)
+	local var_4_0 = ItemModel.instance:getItemQuantity(arg_4_0._costType, arg_4_0._costId)
+	local var_4_1 = arg_4_0._costQuantity
 
-	if slot0.deductionInfo then
-		slot2 = math.max(0, slot0._costQuantity - slot0.deductionInfo.deductionCount)
+	if arg_4_0.deductionInfo then
+		var_4_1 = math.max(0, var_4_1 - arg_4_0.deductionInfo.deductionCount)
 	end
 
-	if slot0.isActivityStore then
-		if slot1 < slot2 then
-			GameFacade.showToast(ToastEnum.DiamondBuy, slot0.costName)
+	if arg_4_0.isActivityStore then
+		if var_4_0 < var_4_1 then
+			GameFacade.showToast(ToastEnum.DiamondBuy, arg_4_0.costName)
 		else
-			slot0:_buyGoods()
+			arg_4_0:_buyGoods()
 		end
-	elseif CurrencyController.instance:checkDiamondEnough(slot2, slot0.jumpCallBack, slot0) then
-		slot0:_buyGoods()
+	elseif CurrencyController.instance:checkDiamondEnough(var_4_1, arg_4_0.jumpCallBack, arg_4_0) then
+		arg_4_0:_buyGoods()
 	end
 end
 
-function slot0._buyGoods(slot0)
-	if slot0.isActivityStore then
-		Activity107Rpc.instance:sendBuy107GoodsRequest(slot0._mo.activityId, slot0._mo.id, 1)
+function var_0_0._buyGoods(arg_5_0)
+	if arg_5_0.isActivityStore then
+		Activity107Rpc.instance:sendBuy107GoodsRequest(arg_5_0._mo.activityId, arg_5_0._mo.id, 1)
 	else
-		StoreController.instance:buyGoods(slot0._mo, 1, slot0._buyCallback, slot0)
+		StoreController.instance:buyGoods(arg_5_0._mo, 1, arg_5_0._buyCallback, arg_5_0)
 	end
 end
 
-function slot0.jumpCallBack(slot0)
+function var_0_0.jumpCallBack(arg_6_0)
 	ViewMgr.instance:closeView(ViewName.StoreSkinPreviewView)
-	slot0:closeThis()
+	arg_6_0:closeThis()
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseOnClick(arg_7_0)
+	arg_7_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._simageleftbg:LoadImage(ResUrl.getCommonIcon("bg_1"))
-	slot0._simagerightbg:LoadImage(ResUrl.getCommonIcon("bg_2"))
+function var_0_0._editableInitView(arg_8_0)
+	arg_8_0._simageleftbg:LoadImage(ResUrl.getCommonIcon("bg_1"))
+	arg_8_0._simagerightbg:LoadImage(ResUrl.getCommonIcon("bg_2"))
 
-	slot0._goremain = gohelper.findChild(slot0.viewGO, "view/propinfo/content/remain")
-	slot0._gonormaltitle = gohelper.findChild(slot0.viewGO, "view/bgroot/#go_normal_title")
-	slot0._goadvancedtitle = gohelper.findChild(slot0.viewGO, "view/bgroot/#go_advanced_title")
+	arg_8_0._goremain = gohelper.findChild(arg_8_0.viewGO, "view/propinfo/content/remain")
+	arg_8_0._gonormaltitle = gohelper.findChild(arg_8_0.viewGO, "view/bgroot/#go_normal_title")
+	arg_8_0._goadvancedtitle = gohelper.findChild(arg_8_0.viewGO, "view/bgroot/#go_advanced_title")
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_9_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0.isActivityStore = slot0.viewParam.isActivityStore
+function var_0_0.onOpen(arg_10_0)
+	arg_10_0.isActivityStore = arg_10_0.viewParam.isActivityStore
 
-	if slot0.isActivityStore then
-		slot0:addEventCb(VersionActivityController.instance, VersionActivityEvent.OnBuy107GoodsSuccess, slot0._btncloseOnClick, slot0)
-		slot0:_updateActivityStore()
+	if arg_10_0.isActivityStore then
+		arg_10_0:addEventCb(VersionActivityController.instance, VersionActivityEvent.OnBuy107GoodsSuccess, arg_10_0._btncloseOnClick, arg_10_0)
+		arg_10_0:_updateActivityStore()
 	else
-		slot0:_updateSkinStore()
+		arg_10_0:_updateSkinStore()
 	end
 
-	slot0._txtusedesc.text = string.format(CommonConfig.instance:getConstStr(ConstEnum.StoreSkinGood), lua_character.configDict[slot0.skinCo.characterId].name)
+	local var_10_0 = lua_character.configDict[arg_10_0.skinCo.characterId].name
+
+	arg_10_0._txtusedesc.text = string.format(CommonConfig.instance:getConstStr(ConstEnum.StoreSkinGood), var_10_0)
 end
 
-function slot0._updateActivityStore(slot0)
-	slot0._mo = slot0.viewParam.goodsMO
-	slot0.skinCo = SkinConfig.instance:getSkinCo(string.splitToNumber(slot0._mo.product, "#")[2])
-	slot0._txtskinname.text = slot0.skinCo.characterSkin
-	slot0._txtdesc.text = slot0.skinCo.skinDescription
+function var_0_0._updateActivityStore(arg_11_0)
+	arg_11_0._mo = arg_11_0.viewParam.goodsMO
 
-	recthelper.setAnchorY(slot0._txtdesc.transform, -100)
+	local var_11_0 = arg_11_0._mo.product
+	local var_11_1 = string.splitToNumber(var_11_0, "#")[2]
 
-	slot4 = string.splitToNumber(slot0._mo.cost, "#")
-	slot0._costType = slot4[1]
-	slot0._costId = slot4[2]
-	slot0._costQuantity = slot4[3]
-	slot5, slot6 = ItemModel.instance:getItemConfigAndIcon(slot0._costType, slot0._costId)
-	slot0.costName = slot5.name
+	arg_11_0.skinCo = SkinConfig.instance:getSkinCo(var_11_1)
+	arg_11_0._txtskinname.text = arg_11_0.skinCo.characterSkin
+	arg_11_0._txtdesc.text = arg_11_0.skinCo.skinDescription
 
-	if slot0._costQuantity <= ItemModel.instance:getItemQuantity(slot0._costType, slot0._costId) then
-		SLFramework.UGUI.GuiHelper.SetColor(slot0._txtmaterialNum, "#393939")
+	recthelper.setAnchorY(arg_11_0._txtdesc.transform, -100)
+
+	local var_11_2 = string.splitToNumber(arg_11_0._mo.cost, "#")
+
+	arg_11_0._costType = var_11_2[1]
+	arg_11_0._costId = var_11_2[2]
+	arg_11_0._costQuantity = var_11_2[3]
+
+	local var_11_3, var_11_4 = ItemModel.instance:getItemConfigAndIcon(arg_11_0._costType, arg_11_0._costId)
+
+	arg_11_0.costName = var_11_3.name
+
+	if ItemModel.instance:getItemQuantity(arg_11_0._costType, arg_11_0._costId) >= arg_11_0._costQuantity then
+		SLFramework.UGUI.GuiHelper.SetColor(arg_11_0._txtmaterialNum, "#393939")
 	else
-		SLFramework.UGUI.GuiHelper.SetColor(slot0._txtmaterialNum, "#bf2e11")
+		SLFramework.UGUI.GuiHelper.SetColor(arg_11_0._txtmaterialNum, "#bf2e11")
 	end
 
-	slot0._txtmaterialNum.text = slot0._costQuantity
+	arg_11_0._txtmaterialNum.text = arg_11_0._costQuantity
 
-	UISpriteSetMgr.instance:setCurrencyItemSprite(slot0._simagematerial, string.format("%s_1", slot5.icon))
-	slot0.viewContainer:setCurrencyType({
-		slot0._costId
+	local var_11_5 = var_11_3.icon
+	local var_11_6 = string.format("%s_1", var_11_5)
+
+	UISpriteSetMgr.instance:setCurrencyItemSprite(arg_11_0._simagematerial, var_11_6)
+	arg_11_0.viewContainer:setCurrencyType({
+		arg_11_0._costId
 	})
-	slot0._simageicon:LoadImage(ResUrl.getStoreSkin(slot3))
+	arg_11_0._simageicon:LoadImage(ResUrl.getStoreSkin(var_11_1))
 
-	if not slot0.btnIcon then
-		slot0.btnIcon = gohelper.getClick(slot0._simageicon.gameObject)
+	if not arg_11_0.btnIcon then
+		arg_11_0.btnIcon = gohelper.getClick(arg_11_0._simageicon.gameObject)
 
-		slot0.btnIcon:AddClickListener(slot0.onClickIcon, slot0)
+		arg_11_0.btnIcon:AddClickListener(arg_11_0.onClickIcon, arg_11_0)
 	end
 
-	gohelper.setActive(slot0._txtprice.gameObject, false)
-	slot0:_enableRemain(false)
-	gohelper.setActive(slot0._gooffTag, false)
-	gohelper.setActive(slot0._gonormaltitle, true)
-	gohelper.setActive(slot0._goadvancedtitle, false)
+	gohelper.setActive(arg_11_0._txtprice.gameObject, false)
+	arg_11_0:_enableRemain(false)
+	gohelper.setActive(arg_11_0._gooffTag, false)
+	gohelper.setActive(arg_11_0._gonormaltitle, true)
+	gohelper.setActive(arg_11_0._goadvancedtitle, false)
 end
 
-function slot0._updateSkinStore(slot0)
-	slot0._mo = slot0.viewParam.goodsMO
-	slot0.skinCo = SkinConfig.instance:getSkinCo(string.splitToNumber(slot0._mo.config.product, "#")[2])
-	slot5 = string.splitToNumber(slot0._mo.config.cost, "#")
-	slot0._costType = slot5[1]
-	slot0._costId = slot5[2]
-	slot0._costQuantity = slot5[3]
+function var_0_0._updateSkinStore(arg_12_0)
+	arg_12_0._mo = arg_12_0.viewParam.goodsMO
 
-	if not string.nilorempty(slot0._mo.config.deductionItem) then
-		if ItemModel.instance:getItemCount(GameUtil.splitString2(slot0._mo.config.deductionItem, true)[1][2]) > 0 then
-			slot0.deductionInfo = {
-				deductionCount = slot6[2][1],
+	local var_12_0 = arg_12_0._mo.config.product
+	local var_12_1 = string.splitToNumber(var_12_0, "#")[2]
+
+	arg_12_0.skinCo = SkinConfig.instance:getSkinCo(var_12_1)
+
+	local var_12_2 = arg_12_0._mo.config
+	local var_12_3 = string.splitToNumber(var_12_2.cost, "#")
+
+	arg_12_0._costType = var_12_3[1]
+	arg_12_0._costId = var_12_3[2]
+	arg_12_0._costQuantity = var_12_3[3]
+
+	if not string.nilorempty(arg_12_0._mo.config.deductionItem) then
+		local var_12_4 = GameUtil.splitString2(arg_12_0._mo.config.deductionItem, true)
+
+		if ItemModel.instance:getItemCount(var_12_4[1][2]) > 0 then
+			arg_12_0.deductionInfo = {
+				deductionCount = var_12_4[2][1],
 				currencyType = {
 					isCurrencySprite = true,
-					type = slot6[1][1],
-					id = slot6[1][2]
+					type = var_12_4[1][1],
+					id = var_12_4[1][2]
 				}
 			}
 		end
 	else
-		slot0.deductionInfo = nil
+		arg_12_0.deductionInfo = nil
 	end
 
-	slot0:_refreshSkinDesc(slot4, slot0.skinCo)
-	slot0:_refreshSkinCost(slot4)
-	slot0:_refreshSkinIcon(slot4)
+	arg_12_0:_refreshSkinDesc(var_12_2, arg_12_0.skinCo)
+	arg_12_0:_refreshSkinCost(var_12_2)
+	arg_12_0:_refreshSkinIcon(var_12_2)
 end
 
-function slot0._refreshSkinDesc(slot0, slot1, slot2)
-	slot0._txtskinname.text = slot2.characterSkin
-	slot0._txtdesc.text = slot2.skinDescription
+function var_0_0._refreshSkinDesc(arg_13_0, arg_13_1, arg_13_2)
+	arg_13_0._txtskinname.text = arg_13_2.characterSkin
+	arg_13_0._txtdesc.text = arg_13_2.skinDescription
 
-	if slot0._mo:getOfflineTime() > 0 then
-		slot0:_enableRemain(true)
+	local var_13_0 = arg_13_0._mo:getOfflineTime()
 
-		slot0._txtremainday.text = string.format("%s%s", TimeUtil.secondToRoughTime(math.floor(slot3 - ServerTime.now())))
+	if var_13_0 > 0 then
+		local var_13_1 = math.floor(var_13_0 - ServerTime.now())
+
+		arg_13_0:_enableRemain(true)
+
+		arg_13_0._txtremainday.text = string.format("%s%s", TimeUtil.secondToRoughTime(var_13_1))
 	else
-		gohelper.setActive(slot0._goremain, false)
-		slot0:_enableRemain(false)
+		gohelper.setActive(arg_13_0._goremain, false)
+		arg_13_0:_enableRemain(false)
 	end
 
-	gohelper.setActive(slot0._gooffTag, slot1.originalCost > 0)
+	gohelper.setActive(arg_13_0._gooffTag, arg_13_1.originalCost > 0)
 
-	slot0._txtoff.text = string.format("-%d%%", 100 - math.ceil(slot0._costQuantity / slot1.originalCost * 100))
+	local var_13_2 = arg_13_0._costQuantity / arg_13_1.originalCost
+	local var_13_3 = math.ceil(var_13_2 * 100)
+
+	arg_13_0._txtoff.text = string.format("-%d%%", 100 - var_13_3)
 end
 
-function slot0._refreshSkinCost(slot0, slot1)
-	slot2, slot3 = ItemModel.instance:getItemConfigAndIcon(slot0._costType, slot0._costId)
+function var_0_0._refreshSkinCost(arg_14_0, arg_14_1)
+	local var_14_0, var_14_1 = ItemModel.instance:getItemConfigAndIcon(arg_14_0._costType, arg_14_0._costId)
+	local var_14_2 = arg_14_0._costQuantity
 
-	if slot0.deductionInfo then
-		slot4 = math.max(0, slot0._costQuantity - slot0.deductionInfo.deductionCount)
+	if arg_14_0.deductionInfo then
+		var_14_2 = math.max(0, var_14_2 - arg_14_0.deductionInfo.deductionCount)
 
-		gohelper.setActive(slot0._godeduction, true)
+		gohelper.setActive(arg_14_0._godeduction, true)
 
-		slot0._txtdeduction.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("bp_deduction_item_count"), tostring(slot0.deductionInfo.deductionCount), ItemModel.instance:getItemConfigAndIcon(slot0._costType, slot0._costId).name)
+		local var_14_3 = ItemModel.instance:getItemConfigAndIcon(arg_14_0._costType, arg_14_0._costId)
+
+		arg_14_0._txtdeduction.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("bp_deduction_item_count"), tostring(arg_14_0.deductionInfo.deductionCount), var_14_3.name)
 	else
-		gohelper.setActive(slot0._godeduction, false)
+		gohelper.setActive(arg_14_0._godeduction, false)
 	end
 
-	if slot4 <= ItemModel.instance:getItemQuantity(slot0._costType, slot0._costId) then
-		SLFramework.UGUI.GuiHelper.SetColor(slot0._txtmaterialNum, "#393939")
+	if var_14_2 <= ItemModel.instance:getItemQuantity(arg_14_0._costType, arg_14_0._costId) then
+		SLFramework.UGUI.GuiHelper.SetColor(arg_14_0._txtmaterialNum, "#393939")
 	else
-		SLFramework.UGUI.GuiHelper.SetColor(slot0._txtmaterialNum, "#bf2e11")
+		SLFramework.UGUI.GuiHelper.SetColor(arg_14_0._txtmaterialNum, "#bf2e11")
 	end
 
-	slot0._txtmaterialNum.text = slot4
+	arg_14_0._txtmaterialNum.text = var_14_2
 
-	UISpriteSetMgr.instance:setCurrencyItemSprite(slot0._simagematerial, string.format("%s_1", slot2.icon))
+	local var_14_4 = var_14_0.icon
+	local var_14_5 = string.format("%s_1", var_14_4)
 
-	slot8 = {}
+	UISpriteSetMgr.instance:setCurrencyItemSprite(arg_14_0._simagematerial, var_14_5)
 
-	if slot0._costId ~= CurrencyEnum.CurrencyType.Diamond then
-		table.insert(slot8, CurrencyEnum.CurrencyType.Diamond)
+	local var_14_6 = {}
+
+	if arg_14_0._costId ~= CurrencyEnum.CurrencyType.Diamond then
+		table.insert(var_14_6, CurrencyEnum.CurrencyType.Diamond)
 	end
 
-	table.insert(slot8, slot0._costId)
+	table.insert(var_14_6, arg_14_0._costId)
 
-	if slot0.deductionInfo then
-		table.insert(slot8, slot0.deductionInfo.currencyType)
+	if arg_14_0.deductionInfo then
+		table.insert(var_14_6, arg_14_0.deductionInfo.currencyType)
 	end
 
-	slot0.viewContainer:setCurrencyType(slot8)
-	gohelper.setActive(slot0._txtprice.gameObject, slot1.originalCost > 0 or slot0.deductionInfo)
+	arg_14_0.viewContainer:setCurrencyType(var_14_6)
+	gohelper.setActive(arg_14_0._txtprice.gameObject, arg_14_1.originalCost > 0 or arg_14_0.deductionInfo)
 
-	slot0._txtprice.text = slot1.originalCost > 0 and slot1.originalCost or slot0._costQuantity
+	arg_14_0._txtprice.text = arg_14_1.originalCost > 0 and arg_14_1.originalCost or arg_14_0._costQuantity
 end
 
-function slot0._refreshSkinIcon(slot0, slot1)
-	slot2 = slot0._mo.config.isAdvancedSkin or slot0._mo.config.skinLevel == 1
-	slot3 = slot0._mo.config.skinLevel == 2
+function var_0_0._refreshSkinIcon(arg_15_0, arg_15_1)
+	local var_15_0 = arg_15_0._mo.config.isAdvancedSkin or arg_15_0._mo.config.skinLevel == 1
+	local var_15_1 = arg_15_0._mo.config.skinLevel == 2
 
-	gohelper.setActive(slot0._godeco, not slot3)
-	gohelper.setActive(slot0._gonormaltitle, not slot2 and not slot3)
-	gohelper.setActive(slot0._goadvancedtitle, slot2)
-	gohelper.setActive(slot0._simageGeneralSkinIcon.gameObject, not slot3)
-	gohelper.setActive(slot0._goUniqueSkinsImage, slot3)
-	gohelper.setActive(slot0._goUniqueSkinsSpineRoot, slot3)
-	gohelper.setActive(slot0._goUniqueSkinsSpineRoot2, slot3)
-	gohelper.setActive(slot0._goUniqueSkinsTitle, slot3)
+	gohelper.setActive(arg_15_0._godeco, not var_15_1)
+	gohelper.setActive(arg_15_0._gonormaltitle, not var_15_0 and not var_15_1)
+	gohelper.setActive(arg_15_0._goadvancedtitle, var_15_0)
+	gohelper.setActive(arg_15_0._simageGeneralSkinIcon.gameObject, not var_15_1)
+	gohelper.setActive(arg_15_0._goUniqueSkinsImage, var_15_1)
+	gohelper.setActive(arg_15_0._goUniqueSkinsSpineRoot, var_15_1)
+	gohelper.setActive(arg_15_0._goUniqueSkinsSpineRoot2, var_15_1)
+	gohelper.setActive(arg_15_0._goUniqueSkinsTitle, var_15_1)
 
-	if slot3 then
-		slot0._simagedreesing:LoadImage(ResUrl.getCharacterSkinIcon("bg_zhuangshi"))
+	local var_15_2 = var_0_4
 
-		slot5 = slot0._mo.config.bigImg
+	if var_15_1 then
+		arg_15_0._simagedreesing:LoadImage(ResUrl.getCharacterSkinIcon("bg_zhuangshi"))
 
-		if not string.nilorempty(slot0._mo.config.spineParams) then
-			slot7 = string.split(slot6, "#")
-			slot9 = slot7[1]
-			slot10 = slot7[2]
-			slot11 = string.splitToNumber(slot7[3], ",")
-			slot12 = slot7[6]
+		local var_15_3 = arg_15_0._mo.config.bigImg
+		local var_15_4 = arg_15_0._mo.config.spineParams
 
-			if #slot7 > 6 then
-				slot4 = slot7[7] or uv0
-			end
+		if not string.nilorempty(var_15_4) then
+			local var_15_5 = string.split(var_15_4, "#")
+			local var_15_6 = #var_15_5
+			local var_15_7 = var_15_5[1]
+			local var_15_8 = var_15_5[2]
+			local var_15_9 = string.splitToNumber(var_15_5[3], ",")
+			local var_15_10 = var_15_5[6]
 
-			if slot0._skinSpine then
-				slot0._skinSpine:setResPath(slot9, slot0._onSpine1Loaded, slot0, true)
+			var_15_2 = var_15_6 > 6 and var_15_5[7] or var_15_2
+
+			if arg_15_0._skinSpine then
+				arg_15_0._skinSpine:setResPath(var_15_7, arg_15_0._onSpine1Loaded, arg_15_0, true)
 			else
-				slot0._skinSpineGO = gohelper.create2d(slot0._goUniqueSkinsSpineRoot, "uniqueSkinSpine")
+				arg_15_0._skinSpineGO = gohelper.create2d(arg_15_0._goUniqueSkinsSpineRoot, "uniqueSkinSpine")
 
-				transformhelper.setLocalPos(slot0._skinSpineGO.transform, slot11[1], slot11[2], 0)
+				local var_15_11 = arg_15_0._skinSpineGO.transform
 
-				slot0._skinSpine = GuiSpine.Create(slot0._skinSpineGO, false)
+				transformhelper.setLocalPos(var_15_11, var_15_9[1], var_15_9[2], 0)
 
-				slot0._skinSpine:setResPath(slot9, slot0._onSpine1Loaded, slot0, true)
+				arg_15_0._skinSpine = GuiSpine.Create(arg_15_0._skinSpineGO, false)
 
-				if not string.nilorempty(slot10) then
-					slot0._skinSpineGO2 = gohelper.create2d(slot0._goUniqueSkinsSpineRoot2, "uniqueSkinSpine2")
+				arg_15_0._skinSpine:setResPath(var_15_7, arg_15_0._onSpine1Loaded, arg_15_0, true)
 
-					transformhelper.setLocalPos(slot0._skinSpineGO2.transform, slot11[1], slot11[2], 0)
+				if not string.nilorempty(var_15_8) then
+					arg_15_0._skinSpineGO2 = gohelper.create2d(arg_15_0._goUniqueSkinsSpineRoot2, "uniqueSkinSpine2")
 
-					slot0._skinSpine2 = GuiSpine.Create(slot0._skinSpineGO2, false)
+					local var_15_12 = arg_15_0._skinSpineGO2.transform
 
-					slot0._skinSpine2:setResPath(slot10, slot0._onSpine2Loaded, slot0, true)
+					transformhelper.setLocalPos(var_15_12, var_15_9[1], var_15_9[2], 0)
+
+					arg_15_0._skinSpine2 = GuiSpine.Create(arg_15_0._skinSpineGO2, false)
+
+					arg_15_0._skinSpine2:setResPath(var_15_8, arg_15_0._onSpine2Loaded, arg_15_0, true)
 				end
 			end
 
-			if not string.nilorempty(slot12) then
-				slot0._simageUniqueSkinIcon:LoadImage(slot12)
-				slot0._simageUniqueSkinSpineRoot:LoadImage(slot12)
+			if not string.nilorempty(var_15_10) then
+				arg_15_0._simageUniqueSkinIcon:LoadImage(var_15_10)
+				arg_15_0._simageUniqueSkinSpineRoot:LoadImage(var_15_10)
 			else
-				gohelper.setActive(slot0._uniqueImagebg.gameObject, false)
+				gohelper.setActive(arg_15_0._uniqueImagebg.gameObject, false)
 			end
 
-			gohelper.setActive(slot0._skinSpineGO, true)
-		elseif string.find(slot5, "prefab") then
-			gohelper.setActive(slot0._goUniqueSkinsTitle, false)
+			gohelper.setActive(arg_15_0._skinSpineGO, true)
+		elseif string.find(var_15_3, "prefab") then
+			gohelper.setActive(arg_15_0._goUniqueSkinsTitle, false)
 
-			slot7 = string.split(slot5, "#")
-			slot9 = slot7[1]
-			slot10 = slot7[3]
+			local var_15_13 = string.split(var_15_3, "#")
+			local var_15_14 = #var_15_13
+			local var_15_15 = var_15_13[1]
+			local var_15_16 = var_15_13[3]
 
-			if #slot7 > 3 then
-				slot4 = slot7[4] or slot4
-			end
+			var_15_2 = var_15_14 > 3 and var_15_13[4] or var_15_2
 
-			if slot0._skinSpine then
-				slot0._skinSpine:setResPath(slot9, slot0._onSpineLoaded, slot0, true)
+			if arg_15_0._skinSpine then
+				arg_15_0._skinSpine:setResPath(var_15_15, arg_15_0._onSpineLoaded, arg_15_0, true)
 			else
-				slot0._skinSpineGO = gohelper.create2d(slot0._goUniqueSkinsSpineRoot, "uniqueSkinSpine")
-				slot0._skinSpine = GuiSpine.Create(slot0._skinSpineGO, false)
+				arg_15_0._skinSpineGO = gohelper.create2d(arg_15_0._goUniqueSkinsSpineRoot, "uniqueSkinSpine")
+				arg_15_0._skinSpine = GuiSpine.Create(arg_15_0._skinSpineGO, false)
 
-				transformhelper.setLocalPos(slot0._skinSpineGO.transform, uv1[1], uv1[2], uv1[3])
-				slot0._skinSpine:setResPath(slot9, slot0._onSpineLoaded, slot0, true)
-				transformhelper.setLocalPos(slot0._goUniqueSkinsSpineRoot.transform, uv2[1], uv2[2], 0)
+				transformhelper.setLocalPos(arg_15_0._skinSpineGO.transform, var_0_1[1], var_0_1[2], var_0_1[3])
+				arg_15_0._skinSpine:setResPath(var_15_15, arg_15_0._onSpineLoaded, arg_15_0, true)
+				transformhelper.setLocalPos(arg_15_0._goUniqueSkinsSpineRoot.transform, var_0_2[1], var_0_2[2], 0)
 			end
 
-			slot0._simageUniqueSkinIcon:LoadImage(slot10, slot0._loadedSpineBgDone, slot0)
-			transformhelper.setLocalPos(slot0._simageUniqueSkinIcon.transform, uv2[1], uv2[2], uv2[3])
-			slot0._imageUniqueSkinIcon:SetNativeSize()
-			slot0._imageUniqueSkinSpineRoot:SetNativeSize()
-			gohelper.setActive(slot0._skinSpineGO, true)
-		elseif not string.nilorempty(slot5) then
-			slot0._simageUniqueSkinIcon:LoadImage(slot0._mo.config.bigImg)
+			arg_15_0._simageUniqueSkinIcon:LoadImage(var_15_16, arg_15_0._loadedSpineBgDone, arg_15_0)
+			transformhelper.setLocalPos(arg_15_0._simageUniqueSkinIcon.transform, var_0_2[1], var_0_2[2], var_0_2[3])
+			arg_15_0._imageUniqueSkinIcon:SetNativeSize()
+			arg_15_0._imageUniqueSkinSpineRoot:SetNativeSize()
+			gohelper.setActive(arg_15_0._skinSpineGO, true)
+		elseif not string.nilorempty(var_15_3) then
+			arg_15_0._simageUniqueSkinIcon:LoadImage(arg_15_0._mo.config.bigImg)
 		else
-			slot0._simageUniqueSkinIcon:LoadImage(ResUrl.getHeadSkinIconMiddle(303202))
+			arg_15_0._simageUniqueSkinIcon:LoadImage(ResUrl.getHeadSkinIconMiddle(303202))
 		end
-	elseif string.nilorempty(slot1.bigImg) == false then
-		slot0._simageGeneralSkinIcon:LoadImage(slot1.bigImg)
+	elseif string.nilorempty(arg_15_1.bigImg) == false then
+		arg_15_0._simageGeneralSkinIcon:LoadImage(arg_15_1.bigImg)
 	else
-		slot0._simageGeneralSkinIcon:LoadImage(ResUrl.getHeadSkinIconMiddle(303202))
+		arg_15_0._simageGeneralSkinIcon:LoadImage(ResUrl.getHeadSkinIconMiddle(303202))
 	end
 
-	slot0._simagedreesing:LoadImage(slot4, slot0._loadedSignImage, slot0)
+	arg_15_0._simagedreesing:LoadImage(var_15_2, arg_15_0._loadedSignImage, arg_15_0)
 end
 
-function slot0._loadedSignImage(slot0)
-	gohelper.onceAddComponent(slot0._simagedreesing.gameObject, gohelper.Type_Image):SetNativeSize()
+function var_0_0._loadedSignImage(arg_16_0)
+	gohelper.onceAddComponent(arg_16_0._simagedreesing.gameObject, gohelper.Type_Image):SetNativeSize()
 end
 
-function slot0._loadedSpineBgDone(slot0)
-	gohelper.onceAddComponent(slot0._simageUniqueSkinIcon.gameObject, gohelper.Type_Image):SetNativeSize()
+function var_0_0._loadedSpineBgDone(arg_17_0)
+	gohelper.onceAddComponent(arg_17_0._simageUniqueSkinIcon.gameObject, gohelper.Type_Image):SetNativeSize()
 end
 
-function slot0._onSpine1Loaded(slot0)
-	transformhelper.setLocalScale(slot0._skinSpine:getSpineTr(), uv0, uv0, 1)
+function var_0_0._onSpine1Loaded(arg_18_0)
+	local var_18_0 = arg_18_0._skinSpine:getSpineTr()
+
+	transformhelper.setLocalScale(var_18_0, var_0_3, var_0_3, 1)
 end
 
-function slot0._onSpine2Loaded(slot0)
-	transformhelper.setLocalScale(slot0._skinSpine2:getSpineTr(), uv0, uv0, 1)
+function var_0_0._onSpine2Loaded(arg_19_0)
+	local var_19_0 = arg_19_0._skinSpine2:getSpineTr()
+
+	transformhelper.setLocalScale(var_19_0, var_0_3, var_0_3, 1)
 end
 
-function slot0._onSpineLoaded(slot0)
-	slot5 = slot0._skinSpine:getSpineTr()
-	slot6 = slot0._simageUniqueSkinIcon.transform
+function var_0_0._onSpineLoaded(arg_20_0)
+	local var_20_0 = 0
+	local var_20_1 = 0
+	local var_20_2 = 0.88
+	local var_20_3 = 0.84
+	local var_20_4 = arg_20_0._skinSpine:getSpineTr()
+	local var_20_5 = arg_20_0._simageUniqueSkinIcon.transform
 
-	recthelper.setAnchor(slot5, recthelper.getAnchor(slot6))
-	recthelper.setWidth(slot5, recthelper.getWidth(slot6))
-	recthelper.setHeight(slot5, recthelper.getHeight(slot6))
-	recthelper.setAnchor(slot5, 0, 0)
-	transformhelper.setLocalScale(slot5, 0.88, 0.84, 1)
-	slot0:setSpineRaycastTarget(slot0._raycastTarget)
+	recthelper.setAnchor(var_20_4, recthelper.getAnchor(var_20_5))
+	recthelper.setWidth(var_20_4, recthelper.getWidth(var_20_5))
+	recthelper.setHeight(var_20_4, recthelper.getHeight(var_20_5))
+	recthelper.setAnchor(var_20_4, var_20_0, var_20_1)
+	transformhelper.setLocalScale(var_20_4, var_20_2, var_20_3, 1)
+	arg_20_0:setSpineRaycastTarget(arg_20_0._raycastTarget)
 end
 
-function slot0.setSpineRaycastTarget(slot0, slot1)
-	slot0._raycastTarget = slot1 == true and true or false
+function var_0_0.setSpineRaycastTarget(arg_21_0, arg_21_1)
+	arg_21_0._raycastTarget = arg_21_1 == true and true or false
 
-	if slot0._skinSpine and slot0._skinSpine:getSkeletonGraphic() then
-		slot2.raycastTarget = slot0._raycastTarget
+	if arg_21_0._skinSpine then
+		local var_21_0 = arg_21_0._skinSpine:getSkeletonGraphic()
+
+		if var_21_0 then
+			var_21_0.raycastTarget = arg_21_0._raycastTarget
+		end
 	end
 end
 
-function slot0._buyCallback(slot0, slot1, slot2, slot3)
-	if slot2 == 0 then
-		slot0:closeThis()
+function var_0_0._buyCallback(arg_22_0, arg_22_1, arg_22_2, arg_22_3)
+	if arg_22_2 == 0 then
+		arg_22_0:closeThis()
 		ViewMgr.instance:closeView(ViewName.StoreSkinPreviewView)
 	end
 end
 
-function slot0._enableRemain(slot0, slot1)
-	gohelper.setActive(slot0._goremain, slot1)
-	recthelper.setAnchorY(slot0._txtdesc.transform, slot1 and -140 or -88)
+function var_0_0._enableRemain(arg_23_0, arg_23_1)
+	gohelper.setActive(arg_23_0._goremain, arg_23_1)
+
+	local var_23_0 = arg_23_1 and -140 or -88
+
+	recthelper.setAnchorY(arg_23_0._txtdesc.transform, var_23_0)
 end
 
-function slot0.onClickIcon(slot0)
-	if not slot0.skinCo then
+function var_0_0.onClickIcon(arg_24_0)
+	if not arg_24_0.skinCo then
 		return
 	end
 
-	MaterialTipController.instance:showMaterialInfo(MaterialEnum.MaterialType.HeroSkin, slot0.skinCo.id, false, nil, false)
+	MaterialTipController.instance:showMaterialInfo(MaterialEnum.MaterialType.HeroSkin, arg_24_0.skinCo.id, false, nil, false)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_25_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simageleftbg:UnLoadImage()
-	slot0._simagerightbg:UnLoadImage()
-	slot0._simagedreesing:UnLoadImage()
+function var_0_0.onDestroyView(arg_26_0)
+	arg_26_0._simageleftbg:UnLoadImage()
+	arg_26_0._simagerightbg:UnLoadImage()
+	arg_26_0._simagedreesing:UnLoadImage()
 
-	if slot0._skinSpine then
-		slot0._skinSpine:doClear()
+	if arg_26_0._skinSpine then
+		arg_26_0._skinSpine:doClear()
 
-		slot0._skinSpine = nil
+		arg_26_0._skinSpine = nil
 	end
 
-	if slot0._skinSpine2 then
-		slot0._skinSpine2:doClear()
+	if arg_26_0._skinSpine2 then
+		arg_26_0._skinSpine2:doClear()
 
-		slot0._skinSpine2 = nil
+		arg_26_0._skinSpine2 = nil
 	end
 end
 
-return slot0
+return var_0_0

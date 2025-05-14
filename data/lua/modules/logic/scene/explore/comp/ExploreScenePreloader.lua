@@ -1,76 +1,83 @@
-module("modules.logic.scene.explore.comp.ExploreScenePreloader", package.seeall)
+﻿module("modules.logic.scene.explore.comp.ExploreScenePreloader", package.seeall)
 
-slot0 = class("ExploreScenePreloader", BaseSceneComp)
-slot1 = typeof(UnityEngine.ShaderVariantCollection)
-slot2 = {
+local var_0_0 = class("ExploreScenePreloader", BaseSceneComp)
+local var_0_1 = typeof(UnityEngine.ShaderVariantCollection)
+local var_0_2 = {
 	[ModuleEnum.Performance.High] = "explore/shaders/svc_high.shadervariants",
 	[ModuleEnum.Performance.Middle] = "explore/shaders/svc_medium.shadervariants",
 	[ModuleEnum.Performance.Low] = "explore/shaders/svc_low.shadervariants"
 }
 
-function slot0.init(slot0, slot1, slot2)
-	slot0._loader = SequenceAbLoader.New()
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0._loader = SequenceAbLoader.New()
 
-	slot0._loader:addPath(ResUrl.getExploreEffectPath(ExploreConstValue.ClickEffect))
-	slot0._loader:addPath(ResUrl.getExploreEffectPath(ExploreConstValue.PlaceEffect))
-	slot0._loader:addPath(ResUrl.getExploreEffectPath(ExploreConstValue.MapLightEffect))
+	arg_1_0._loader:addPath(ResUrl.getExploreEffectPath(ExploreConstValue.ClickEffect))
+	arg_1_0._loader:addPath(ResUrl.getExploreEffectPath(ExploreConstValue.PlaceEffect))
+	arg_1_0._loader:addPath(ResUrl.getExploreEffectPath(ExploreConstValue.MapLightEffect))
 
 	if not GameResMgr.IsFromEditorDir then
-		slot0._loader:addPath("explore/shaders")
+		arg_1_0._loader:addPath("explore/shaders")
 	end
 
-	slot0._loader:setConcurrentCount(10)
-	slot0._loader:startLoad(slot0._onPreloadFinish, slot0)
+	arg_1_0._loader:setConcurrentCount(10)
+	arg_1_0._loader:startLoad(arg_1_0._onPreloadFinish, arg_1_0)
 end
 
-function slot0.getResByPath(slot0, slot1)
-	if not slot0._loader:getAssetItem(slot1) or not slot2.IsLoadSuccess then
-		logError("资源加载失败 。。。 " .. slot1)
+function var_0_0.getResByPath(arg_2_0, arg_2_1)
+	local var_2_0 = arg_2_0._loader:getAssetItem(arg_2_1)
+
+	if not var_2_0 or not var_2_0.IsLoadSuccess then
+		logError("资源加载失败 。。。 " .. arg_2_1)
 
 		return
 	end
 
-	return slot2:GetResource()
+	return var_2_0:GetResource()
 end
 
-function slot0._onPreloadFinish(slot0)
+function var_0_0._onPreloadFinish(arg_3_0)
 	if not GameResMgr.IsFromEditorDir then
-		slot0:warmupShader()
+		arg_3_0:warmupShader()
 	end
 
-	slot0:dispatchEvent(ExploreEvent.OnExplorePreloadFinish)
+	arg_3_0:dispatchEvent(ExploreEvent.OnExplorePreloadFinish)
 end
 
-function slot0.warmupShader(slot0)
-	slot1 = slot0._loader:getAssetItem("explore/shaders")
+function var_0_0.warmupShader(arg_4_0)
+	local var_4_0 = arg_4_0._loader:getAssetItem("explore/shaders")
 
 	if not GameResMgr.IsFromEditorDir then
-		slot2 = GameGlobalMgr.instance:getScreenState():getLocalQuality()
-		slot3 = SLFramework.GameUpdate.HotUpdateInfoMgr.LocalResVersionStr
-		slot5 = {}
+		local var_4_1 = GameGlobalMgr.instance:getScreenState():getLocalQuality()
+		local var_4_2 = SLFramework.GameUpdate.HotUpdateInfoMgr.LocalResVersionStr
+		local var_4_3 = PlayerPrefsHelper.getString(PlayerPrefsKey.ExploreShaderWarmupVersion, "")
+		local var_4_4 = {}
 
-		if string.find(PlayerPrefsHelper.getString(PlayerPrefsKey.ExploreShaderWarmupVersion, ""), "^%[") then
-			slot5 = cjson.decode(slot4)
+		if string.find(var_4_3, "^%[") then
+			var_4_4 = cjson.decode(var_4_3)
 		end
 
-		if slot5[1] ~= slot3 then
-			slot5 = {
-				slot3
+		if var_4_4[1] ~= var_4_2 then
+			var_4_4 = {
+				var_4_2
 			}
 		end
 
-		if not tabletool.indexOf(slot5, uv0[slot2]) then
+		if not tabletool.indexOf(var_4_4, var_0_2[var_4_1]) then
 			if isDebugBuild then
 				SLFramework.TimeWatch.Instance:Start()
 				logWarn("开始密室Shader预热 。。。 ")
 			end
 
-			if slot1 and slot1.IsLoadSuccess and slot1:GetResource(uv0[slot2], uv1) then
-				slot6:WarmUp()
+			if var_4_0 and var_4_0.IsLoadSuccess then
+				local var_4_5 = var_4_0:GetResource(var_0_2[var_4_1], var_0_1)
+
+				if var_4_5 then
+					var_4_5:WarmUp()
+				end
 			end
 
-			table.insert(slot5, uv0[slot2])
-			PlayerPrefsHelper.setString(PlayerPrefsKey.ExploreShaderWarmupVersion, cjson.encode(slot5))
+			table.insert(var_4_4, var_0_2[var_4_1])
+			PlayerPrefsHelper.setString(PlayerPrefsKey.ExploreShaderWarmupVersion, cjson.encode(var_4_4))
 
 			if isDebugBuild then
 				logWarn("密室Shader预热结束 。。。 " .. SLFramework.TimeWatch.Instance:Watch())
@@ -79,12 +86,12 @@ function slot0.warmupShader(slot0)
 	end
 end
 
-function slot0.onSceneClose(slot0, slot1, slot2)
-	if slot0._loader then
-		slot0._loader:dispose()
+function var_0_0.onSceneClose(arg_5_0, arg_5_1, arg_5_2)
+	if arg_5_0._loader then
+		arg_5_0._loader:dispose()
 
-		slot0._loader = nil
+		arg_5_0._loader = nil
 	end
 end
 
-return slot0
+return var_0_0

@@ -1,9 +1,10 @@
-module("modules.logic.prototest.model.ProtoEnum", package.seeall)
+﻿module("modules.logic.prototest.model.ProtoEnum", package.seeall)
 
-slot0 = _M
-slot0.OnClickModifyItem = 1
-slot0.OnClickReqListItem = 2
-slot0.LabelType = {
+local var_0_0 = _M
+
+var_0_0.OnClickModifyItem = 1
+var_0_0.OnClickReqListItem = 2
+var_0_0.LabelType = {
 	"optional",
 	"required",
 	"repeated",
@@ -11,7 +12,7 @@ slot0.LabelType = {
 	optional = 1,
 	required = 2
 }
-slot0.ParamType = {
+var_0_0.ParamType = {
 	nil,
 	nil,
 	"int64",
@@ -33,7 +34,7 @@ slot0.ParamType = {
 	int64 = 3,
 	uint64 = 4
 }
-slot0.DefaultValue = {
+var_0_0.DefaultValue = {
 	bool = {
 		"true",
 		"false"
@@ -72,10 +73,10 @@ slot0.DefaultValue = {
 		""
 	}
 }
-slot0.IgnoreCmdList = {
-	[19233.0] = true,
-	[24032.0] = true,
-	[-16648.0] = true
+var_0_0.IgnoreCmdList = {
+	[19233] = true,
+	[24032] = true,
+	[-16648] = true
 }
 
-return slot0
+return var_0_0

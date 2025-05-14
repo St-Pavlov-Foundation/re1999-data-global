@@ -1,49 +1,51 @@
-module("modules.logic.rouge.map.map.itemcomp.RougeMapEpisodeItem", package.seeall)
+﻿module("modules.logic.rouge.map.map.itemcomp.RougeMapEpisodeItem", package.seeall)
 
-slot0 = class("RougeMapEpisodeItem", UserDataDispose)
+local var_0_0 = class("RougeMapEpisodeItem", UserDataDispose)
 
-function slot0.init(slot0, slot1, slot2)
-	slot0:__onInit()
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0:__onInit()
 
-	slot0.episodeMo = slot1
-	slot0.map = slot2
-	slot0.parentGo = slot0.map.goLayerNodeContainer
-	slot0.index = slot1.id
+	arg_1_0.episodeMo = arg_1_1
+	arg_1_0.map = arg_1_2
+	arg_1_0.parentGo = arg_1_0.map.goLayerNodeContainer
+	arg_1_0.index = arg_1_1.id
 
-	slot0:createGo()
-	slot0:createNodeItemList()
+	arg_1_0:createGo()
+	arg_1_0:createNodeItemList()
 end
 
-function slot0.createGo(slot0)
-	slot0.go = gohelper.create3d(slot0.parentGo, "episode" .. slot0.index)
-	slot0.tr = slot0.go:GetComponent(gohelper.Type_Transform)
+function var_0_0.createGo(arg_2_0)
+	arg_2_0.go = gohelper.create3d(arg_2_0.parentGo, "episode" .. arg_2_0.index)
+	arg_2_0.tr = arg_2_0.go:GetComponent(gohelper.Type_Transform)
 
-	transformhelper.setLocalPos(slot0.tr, RougeMapHelper.getEpisodePosX(slot0.index), 0, 0)
+	transformhelper.setLocalPos(arg_2_0.tr, RougeMapHelper.getEpisodePosX(arg_2_0.index), 0, 0)
 end
 
-function slot0.createNodeItemList(slot0)
-	slot0.nodeItemList = {}
-	slot1 = slot0.episodeMo:getNodeMoList()
-	slot0.posType = #slot1
+function var_0_0.createNodeItemList(arg_3_0)
+	arg_3_0.nodeItemList = {}
 
-	for slot5, slot6 in ipairs(slot1) do
-		slot7 = RougeMapNodeItem.New()
+	local var_3_0 = arg_3_0.episodeMo:getNodeMoList()
 
-		slot7:init(slot6, slot0.map, slot0)
-		table.insert(slot0.nodeItemList, slot7)
+	arg_3_0.posType = #var_3_0
+
+	for iter_3_0, iter_3_1 in ipairs(var_3_0) do
+		local var_3_1 = RougeMapNodeItem.New()
+
+		var_3_1:init(iter_3_1, arg_3_0.map, arg_3_0)
+		table.insert(arg_3_0.nodeItemList, var_3_1)
 	end
 end
 
-function slot0.getNodeItemList(slot0)
-	return slot0.nodeItemList
+function var_0_0.getNodeItemList(arg_4_0)
+	return arg_4_0.nodeItemList
 end
 
-function slot0.destroy(slot0)
-	for slot4, slot5 in ipairs(slot0.nodeItemList) do
-		slot5:destroy()
+function var_0_0.destroy(arg_5_0)
+	for iter_5_0, iter_5_1 in ipairs(arg_5_0.nodeItemList) do
+		iter_5_1:destroy()
 	end
 
-	slot0:__onDispose()
+	arg_5_0:__onDispose()
 end
 
-return slot0
+return var_0_0

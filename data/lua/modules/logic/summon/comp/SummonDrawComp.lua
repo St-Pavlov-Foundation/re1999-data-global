@@ -1,13 +1,14 @@
-module("modules.logic.summon.comp.SummonDrawComp", package.seeall)
+﻿module("modules.logic.summon.comp.SummonDrawComp", package.seeall)
 
-slot0 = class("SummonDrawComp", LuaCompBase)
-slot0.RareColor = {
+local var_0_0 = class("SummonDrawComp", LuaCompBase)
+
+var_0_0.RareColor = {
 	[2] = Vector4(0.8666666666666667, 0.8666666666666667, 0.8666666666666667, 1),
 	[3] = Vector4(0.9763822004027117, 0.82616955418691, 1.3041188830553703, 1),
 	[4] = Vector4(1.7411015986799718, 1.567903010329608, 1.0391915301021821, 1),
 	[5] = Vector4(2.1185473757902837, 1.3088407871374528, 0.4325829720200056, 1)
 }
-slot0.Settings = {
+var_0_0.Settings = {
 	attenuation = 300000,
 	minFinishSpeed = 3000,
 	waterShowSpeed = 100,
@@ -20,189 +21,200 @@ slot0.Settings = {
 		0.7
 	}
 }
-slot0.StepAudio = {
+var_0_0.StepAudio = {
 	AudioEnum.Summon.play_ui_callfor_cordage01,
 	AudioEnum.Summon.play_ui_callfor_cordage02,
 	AudioEnum.Summon.play_ui_callfor_cordage03
 }
-slot0.StepCount = 3
-slot0.WaterInLeft = 1
-slot0.WaterInRight = 2
+var_0_0.StepCount = 3
+var_0_0.WaterInLeft = 1
+var_0_0.WaterInRight = 2
 
-function slot0.ctor(slot0, slot1)
-	slot0._rootGO = gohelper.findChild(slot1, "anim")
-	slot0._rootTf = slot0._rootGO.transform
-	slot0._wheelGO = gohelper.findChild(slot1, "anim/StandStill/Obj-Plant/s06_Obj_d")
-	slot0._wheelMirrorGO = gohelper.findChild(slot1, "anim/StandStill/Obj-Plant/s06_Obj_d/s06_Obj_d (1)")
-	slot0._waterGO = gohelper.findChild(slot1, "anim/StandStill/Ground/s06_ground_a")
-	slot0._ropeGO = gohelper.findChild(slot1, "anim/StandStill/Obj-Plant/s06_Obj_c002")
-	slot0._ropeGlowGO = gohelper.findChild(slot1, "anim/StandStill/Obj-Plant/s06_Obj_c002/lineglow")
-	slot0._lightGO = gohelper.findChild(slot1, "anim/Directional Light")
-	slot0._lightGlowGO = gohelper.findChild(slot1, "anim/SceneEffect/light_glow")
-	slot0._lineGlowGO = gohelper.findChild(slot1, "anim/StandStill/Obj-Plant/s06_Obj_c002/lineglow/lineglow")
-	slot0._spotLightGO = gohelper.findChild(slot1, "anim/Spot Light")
-	slot0._gachaEffectRootGO = gohelper.findChild(slot1, "anim/GachaEffect")
-	slot0._wheelEffectRootGO = gohelper.findChild(slot1, "anim/WheelEffect/root")
-	slot0._ropeAnim = slot0._ropeGO:GetComponent(typeof(UnityEngine.Animator))
-	slot0._ropeAnim.enabled = false
-	slot0._wheelEffectRootTf = slot0._wheelEffectRootGO.transform
-	slot0._canDraw = true
-	slot0._finished = true
-	slot0._turning = false
-	slot0._updateDragAngle = 0
-	slot0._prevAngle = 0
-	slot0._angle = 0
-	slot0._speed = 0
-	slot0._attenuation = uv0.Settings.attenuation
-	slot0._accelaration = uv0.Settings.accelaration
-	slot0._finishSpeed = -100
-	slot0._playerTurnDegree = uv0.Settings.playerTurnDegree
-	slot0._autoTurnDegree = uv0.Settings.autoTurnDegree
-	slot0._minFinishSpeed = uv0.Settings.minFinishSpeed
-	slot0._stopFinishThreshold = 5
-	slot0._currentDrawStep = 0
-	slot0._maxWaterEffect = 0.1
-	slot0._startAttachEffectDegree = 10
-	slot0._stepEffectWraps = {}
-	slot0._stepEffectRunning = {}
-	slot0._waterEffectLWrap = nil
-	slot0._waterEffectRWrap = nil
-	slot0._waterEffectRunning = false
-	slot0._waterEffectRunningPos = 0
-	slot0._waterDelayCheckTime = 0.3
-	slot0._wheelLightWrap = nil
-	slot0._curAnimSpeed = 1
-	slot0._ropeAnimName = nil
-	slot0._canTrigger = true
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0._rootGO = gohelper.findChild(arg_1_1, "anim")
+	arg_1_0._rootTf = arg_1_0._rootGO.transform
+	arg_1_0._wheelGO = gohelper.findChild(arg_1_1, "anim/StandStill/Obj-Plant/s06_Obj_d")
+	arg_1_0._wheelMirrorGO = gohelper.findChild(arg_1_1, "anim/StandStill/Obj-Plant/s06_Obj_d/s06_Obj_d (1)")
+	arg_1_0._waterGO = gohelper.findChild(arg_1_1, "anim/StandStill/Ground/s06_ground_a")
+	arg_1_0._ropeGO = gohelper.findChild(arg_1_1, "anim/StandStill/Obj-Plant/s06_Obj_c002")
+	arg_1_0._ropeGlowGO = gohelper.findChild(arg_1_1, "anim/StandStill/Obj-Plant/s06_Obj_c002/lineglow")
+	arg_1_0._lightGO = gohelper.findChild(arg_1_1, "anim/Directional Light")
+	arg_1_0._lightGlowGO = gohelper.findChild(arg_1_1, "anim/SceneEffect/light_glow")
+	arg_1_0._lineGlowGO = gohelper.findChild(arg_1_1, "anim/StandStill/Obj-Plant/s06_Obj_c002/lineglow/lineglow")
+	arg_1_0._spotLightGO = gohelper.findChild(arg_1_1, "anim/Spot Light")
+	arg_1_0._gachaEffectRootGO = gohelper.findChild(arg_1_1, "anim/GachaEffect")
+	arg_1_0._wheelEffectRootGO = gohelper.findChild(arg_1_1, "anim/WheelEffect/root")
+	arg_1_0._ropeAnim = arg_1_0._ropeGO:GetComponent(typeof(UnityEngine.Animator))
+	arg_1_0._ropeAnim.enabled = false
+	arg_1_0._wheelEffectRootTf = arg_1_0._wheelEffectRootGO.transform
+	arg_1_0._canDraw = true
+	arg_1_0._finished = true
+	arg_1_0._turning = false
+	arg_1_0._updateDragAngle = 0
+	arg_1_0._prevAngle = 0
+	arg_1_0._angle = 0
+	arg_1_0._speed = 0
+	arg_1_0._attenuation = var_0_0.Settings.attenuation
+	arg_1_0._accelaration = var_0_0.Settings.accelaration
+	arg_1_0._finishSpeed = -100
+	arg_1_0._playerTurnDegree = var_0_0.Settings.playerTurnDegree
+	arg_1_0._autoTurnDegree = var_0_0.Settings.autoTurnDegree
+	arg_1_0._minFinishSpeed = var_0_0.Settings.minFinishSpeed
+	arg_1_0._stopFinishThreshold = 5
+	arg_1_0._currentDrawStep = 0
+	arg_1_0._maxWaterEffect = 0.1
+	arg_1_0._startAttachEffectDegree = 10
+	arg_1_0._stepEffectWraps = {}
+	arg_1_0._stepEffectRunning = {}
+	arg_1_0._waterEffectLWrap = nil
+	arg_1_0._waterEffectRWrap = nil
+	arg_1_0._waterEffectRunning = false
+	arg_1_0._waterEffectRunningPos = 0
+	arg_1_0._waterDelayCheckTime = 0.3
+	arg_1_0._wheelLightWrap = nil
+	arg_1_0._curAnimSpeed = 1
+	arg_1_0._ropeAnimName = nil
+	arg_1_0._canTrigger = true
 
-	slot0:onCreate()
+	arg_1_0:onCreate()
 end
 
-function slot0.onCreate(slot0)
-	slot0._wheelMeshRenderer = slot0._wheelGO:GetComponent(typeof(UnityEngine.MeshRenderer))
-	slot0._wheelMaterialPropertyBlock = UnityEngine.MaterialPropertyBlock.New()
-	slot0._wheelMirrorMeshRenderer = slot0._wheelMirrorGO:GetComponent(typeof(UnityEngine.MeshRenderer))
-	slot0._wheelMirrorMaterialPropertyBlock = UnityEngine.MaterialPropertyBlock.New()
-	slot0._waterMeshRenderer = slot0._waterGO:GetComponent(typeof(UnityEngine.MeshRenderer))
-	slot0._waterMaterialPropertyBlock = UnityEngine.MaterialPropertyBlock.New()
-	slot0._ropeMeshRenderer = slot0._ropeGO:GetComponent(typeof(UnityEngine.MeshRenderer))
-	slot0._ropeMaterialPropertyBlock = UnityEngine.MaterialPropertyBlock.New()
-	slot0._light = slot0._lightGO:GetComponent(typeof(UnityEngine.Light))
-	slot0._lightGlowMeshRenderer = slot0._lightGlowGO:GetComponent(typeof(UnityEngine.MeshRenderer))
-	slot0._lightGlowMaterialPropertyBlock = UnityEngine.MaterialPropertyBlock.New()
-	slot0._lineGlowMeshRenderer = slot0._lineGlowGO:GetComponent(typeof(UnityEngine.MeshRenderer))
-	slot0._lineGlowMaterialPropertyBlock = UnityEngine.MaterialPropertyBlock.New()
-	slot0._spotLight = slot0._spotLightGO:GetComponent(typeof(UnityEngine.Light))
+function var_0_0.onCreate(arg_2_0)
+	arg_2_0._wheelMeshRenderer = arg_2_0._wheelGO:GetComponent(typeof(UnityEngine.MeshRenderer))
+	arg_2_0._wheelMaterialPropertyBlock = UnityEngine.MaterialPropertyBlock.New()
+	arg_2_0._wheelMirrorMeshRenderer = arg_2_0._wheelMirrorGO:GetComponent(typeof(UnityEngine.MeshRenderer))
+	arg_2_0._wheelMirrorMaterialPropertyBlock = UnityEngine.MaterialPropertyBlock.New()
+	arg_2_0._waterMeshRenderer = arg_2_0._waterGO:GetComponent(typeof(UnityEngine.MeshRenderer))
+	arg_2_0._waterMaterialPropertyBlock = UnityEngine.MaterialPropertyBlock.New()
+	arg_2_0._ropeMeshRenderer = arg_2_0._ropeGO:GetComponent(typeof(UnityEngine.MeshRenderer))
+	arg_2_0._ropeMaterialPropertyBlock = UnityEngine.MaterialPropertyBlock.New()
+	arg_2_0._light = arg_2_0._lightGO:GetComponent(typeof(UnityEngine.Light))
+	arg_2_0._lightGlowMeshRenderer = arg_2_0._lightGlowGO:GetComponent(typeof(UnityEngine.MeshRenderer))
+	arg_2_0._lightGlowMaterialPropertyBlock = UnityEngine.MaterialPropertyBlock.New()
+	arg_2_0._lineGlowMeshRenderer = arg_2_0._lineGlowGO:GetComponent(typeof(UnityEngine.MeshRenderer))
+	arg_2_0._lineGlowMaterialPropertyBlock = UnityEngine.MaterialPropertyBlock.New()
+	arg_2_0._spotLight = arg_2_0._spotLightGO:GetComponent(typeof(UnityEngine.Light))
 end
 
-function slot0.onUpdate(slot0)
-	slot0:updateForDraw()
-	slot0:updateForAnimStep()
-	slot0:updateForWater()
-	slot0:updateForAnimSpeed()
-	slot0:updateForAttenuation()
-	slot0:updateForAudioLoop()
+function var_0_0.onUpdate(arg_3_0)
+	arg_3_0:updateForDraw()
+	arg_3_0:updateForAnimStep()
+	arg_3_0:updateForWater()
+	arg_3_0:updateForAnimSpeed()
+	arg_3_0:updateForAttenuation()
+	arg_3_0:updateForAudioLoop()
 end
 
-function slot0.updateForDraw(slot0)
-	if slot0._finished then
+function var_0_0.updateForDraw(arg_4_0)
+	if arg_4_0._finished then
 		return
 	end
 
-	if slot0._canDraw then
-		if slot0._updateDragAngle > 0 and slot0._speed < 0 or slot0._updateDragAngle < 0 and slot0._speed > 0 then
-			slot0._speed = slot0._accelaration * slot0._updateDragAngle
+	if arg_4_0._canDraw then
+		if arg_4_0._updateDragAngle > 0 and arg_4_0._speed < 0 or arg_4_0._updateDragAngle < 0 and arg_4_0._speed > 0 then
+			arg_4_0._speed = arg_4_0._accelaration * arg_4_0._updateDragAngle
 		else
-			slot0._speed = slot0._speed + slot0._accelaration * slot0._updateDragAngle
+			arg_4_0._speed = arg_4_0._speed + arg_4_0._accelaration * arg_4_0._updateDragAngle
 		end
 
-		slot0._updateDragAngle = 0
+		arg_4_0._updateDragAngle = 0
 	else
-		slot1 = (slot0._angle - slot0._playerTurnDegree) / slot0._autoTurnDegree
-		slot0._speed = slot0._finishSpeed * (1 - slot1 * slot1)
+		local var_4_0 = (arg_4_0._angle - arg_4_0._playerTurnDegree) / arg_4_0._autoTurnDegree
 
-		if math.abs(slot0._speed) < math.max(5, slot0._finishSpeed) then
-			slot0:_completeDraw()
+		arg_4_0._speed = arg_4_0._finishSpeed * (1 - var_4_0 * var_4_0)
+
+		if math.abs(arg_4_0._speed) < math.max(5, arg_4_0._finishSpeed) then
+			arg_4_0:_completeDraw()
 		end
 	end
 
-	slot0:_addAngle(slot0._speed * Time.deltaTime)
-	slot0:_setSpeedEffect(slot0._speed, Time.deltaTime)
+	arg_4_0:_addAngle(arg_4_0._speed * Time.deltaTime)
+	arg_4_0:_setSpeedEffect(arg_4_0._speed, Time.deltaTime)
 
-	if math.abs(slot0._speed) > 100 then
-		if slot0._canTrigger then
-			slot0._canTrigger = false
+	if math.abs(arg_4_0._speed) > 100 then
+		if arg_4_0._canTrigger then
+			arg_4_0._canTrigger = false
 		end
 	else
-		slot0._canTrigger = true
+		arg_4_0._canTrigger = true
 	end
 end
 
-function slot0.updateForAnimStep(slot0)
-	if slot0._canDraw then
-		slot2 = slot0._ropeAnimName
-		slot4 = 0
-		slot0._ropeAnimName = nil
+function var_0_0.updateForAnimStep(arg_5_0)
+	local var_5_0 = arg_5_0._playerTurnDegree
 
-		if slot0._startAttachEffectDegree <= slot0._angle then
-			if slot0._angle / slot0._playerTurnDegree < uv0.Settings.manualStepDegree[1] then
-				slot4 = 1
-			elseif slot3 < uv0.Settings.manualStepDegree[2] then
-				slot4 = 2
-				slot0._ropeAnimName = "xian1"
+	if arg_5_0._canDraw then
+		local var_5_1 = arg_5_0._ropeAnimName
+		local var_5_2 = arg_5_0._angle / var_5_0
+		local var_5_3 = 0
+
+		arg_5_0._ropeAnimName = nil
+
+		if arg_5_0._angle >= arg_5_0._startAttachEffectDegree then
+			if var_5_2 < var_0_0.Settings.manualStepDegree[1] then
+				var_5_3 = 1
+			elseif var_5_2 < var_0_0.Settings.manualStepDegree[2] then
+				var_5_3 = 2
+				arg_5_0._ropeAnimName = "xian1"
 			else
-				slot4 = 3
-				slot0._ropeAnimName = "xian2"
+				var_5_3 = 3
+				arg_5_0._ropeAnimName = "xian2"
 			end
 		end
 
-		if slot4 ~= slot0._currentDrawStep then
-			slot0._currentDrawStep = slot4
+		if var_5_3 ~= arg_5_0._currentDrawStep then
+			arg_5_0._currentDrawStep = var_5_3
 
-			slot0:_setCurGachaEffect()
+			arg_5_0:_setCurGachaEffect()
 		end
 
-		if slot2 ~= slot0._ropeAnimName then
-			if slot0._ropeAnimName then
-				slot0._ropeAnim.enabled = true
+		if var_5_1 ~= arg_5_0._ropeAnimName then
+			if arg_5_0._ropeAnimName then
+				arg_5_0._ropeAnim.enabled = true
 
-				slot0._ropeAnim:Play(slot0._ropeAnimName, 0, 0)
+				arg_5_0._ropeAnim:Play(arg_5_0._ropeAnimName, 0, 0)
 			else
-				slot0._ropeAnim.enabled = false
+				arg_5_0._ropeAnim.enabled = false
 			end
 		end
 	end
 end
 
-function slot0.updateForWater(slot0)
-	if slot0._waterEffectLWrap and slot0._waterEffectRWrap then
-		if uv0.Settings.waterShowSpeed <= math.abs(slot0._speed) then
-			if (slot0._speed > 0 and uv0.WaterInLeft or uv0.WaterInRight) == uv0.WaterInLeft and slot0._waterEffectRunningPos ~= uv0.WaterInLeft then
-				slot0._waterEffectLWrap:stopParticle()
-				slot0._waterEffectRWrap:startParticle()
+function var_0_0.updateForWater(arg_6_0)
+	if arg_6_0._waterEffectLWrap and arg_6_0._waterEffectRWrap then
+		local var_6_0 = math.abs(arg_6_0._speed) >= var_0_0.Settings.waterShowSpeed
 
-				slot0._waterEffectRunningPos = uv0.WaterInLeft
-				slot0._lastWaterTime = Time.time
+		if var_6_0 then
+			local var_6_1 = arg_6_0._speed > 0 and var_0_0.WaterInLeft or var_0_0.WaterInRight
+
+			if var_6_1 == var_0_0.WaterInLeft and arg_6_0._waterEffectRunningPos ~= var_0_0.WaterInLeft then
+				arg_6_0._waterEffectLWrap:stopParticle()
+				arg_6_0._waterEffectRWrap:startParticle()
+
+				arg_6_0._waterEffectRunningPos = var_0_0.WaterInLeft
+				arg_6_0._lastWaterTime = Time.time
 
 				AudioMgr.instance:trigger(AudioEnum.Summon.play_ui_callfor_spray)
-			elseif slot3 == uv0.WaterInRight and slot0._waterEffectRunningPos ~= uv0.WaterInRight then
-				slot0._waterEffectRWrap:stopParticle()
-				slot0._waterEffectLWrap:startParticle()
+			elseif var_6_1 == var_0_0.WaterInRight and arg_6_0._waterEffectRunningPos ~= var_0_0.WaterInRight then
+				arg_6_0._waterEffectRWrap:stopParticle()
+				arg_6_0._waterEffectLWrap:startParticle()
 
-				slot0._waterEffectRunningPos = uv0.WaterInRight
-				slot0._lastWaterTime = Time.time
+				arg_6_0._waterEffectRunningPos = var_0_0.WaterInRight
+				arg_6_0._lastWaterTime = Time.time
 
 				AudioMgr.instance:trigger(AudioEnum.Summon.play_ui_callfor_spray)
 			end
 
-			slot0._waterEffectRunning = true
-		elseif not slot2 and slot0._waterEffectRunning then
-			if slot0._lastWaterTime and slot0._waterDelayCheckTime <= Time.time - slot0._lastWaterTime then
-				slot0._waterEffectLWrap:stopParticle()
-				slot0._waterEffectRWrap:stopParticle()
+			arg_6_0._waterEffectRunning = true
+		elseif not var_6_0 and arg_6_0._waterEffectRunning then
+			local var_6_2 = Time.time
 
-				slot0._waterEffectRunning = false
-				slot0._waterEffectRunningPos = 0
+			if arg_6_0._lastWaterTime and var_6_2 - arg_6_0._lastWaterTime >= arg_6_0._waterDelayCheckTime then
+				arg_6_0._waterEffectLWrap:stopParticle()
+				arg_6_0._waterEffectRWrap:stopParticle()
+
+				arg_6_0._waterEffectRunning = false
+				arg_6_0._waterEffectRunningPos = 0
 
 				AudioMgr.instance:trigger(AudioEnum.Summon.stop_ui_callfor_spray)
 			end
@@ -210,502 +222,543 @@ function slot0.updateForWater(slot0)
 	end
 end
 
-function slot0.updateForAudioLoop(slot0)
-	if slot0._finished then
+function var_0_0.updateForAudioLoop(arg_7_0)
+	if arg_7_0._finished then
 		return
 	end
 
-	if not slot0._audioLoopRunning and math.abs(slot0._speed) > 0 then
-		slot0._audioLoopRunning = true
+	local var_7_0 = math.abs(arg_7_0._speed)
+
+	if not arg_7_0._audioLoopRunning and var_7_0 > 0 then
+		arg_7_0._audioLoopRunning = true
 
 		AudioMgr.instance:trigger(AudioEnum.Summon.play_ui_callfor_waterwheelloop)
-	elseif slot0._audioLoopRunning and slot1 <= 0.01 then
-		slot0._audioLoopRunning = false
+	elseif arg_7_0._audioLoopRunning and var_7_0 <= 0.01 then
+		arg_7_0._audioLoopRunning = false
 
 		AudioMgr.instance:trigger(AudioEnum.Summon.stop_ui_callfor_waterwheelloop)
 		AudioMgr.instance:trigger(AudioEnum.Summon.play_ui_callfor_waterwheelstop)
 	end
 end
 
-function slot0.updateForAnimSpeed(slot0)
-	if slot0._angle ~= slot0._lastFrameAngle then
-		slot0:_refreshAttachEffectSpeed()
+function var_0_0.updateForAnimSpeed(arg_8_0)
+	if arg_8_0._angle ~= arg_8_0._lastFrameAngle then
+		arg_8_0:_refreshAttachEffectSpeed()
 
-		slot0._lastFrameAngle = slot0._angle
+		arg_8_0._lastFrameAngle = arg_8_0._angle
 	end
 end
 
-function slot0.updateForAttenuation(slot0)
-	if slot0._canDraw then
-		if slot0._speed > 0 then
-			slot0._speed = math.max(0, slot0._speed - slot0._attenuation * Time.deltaTime)
+function var_0_0.updateForAttenuation(arg_9_0)
+	if arg_9_0._canDraw then
+		if arg_9_0._speed > 0 then
+			arg_9_0._speed = math.max(0, arg_9_0._speed - arg_9_0._attenuation * Time.deltaTime)
 
-			if slot0._angle <= 0 then
-				slot0._speed = 0
+			if arg_9_0._angle <= 0 then
+				arg_9_0._speed = 0
 			end
 		else
-			slot0._speed = math.min(0, slot0._speed + slot0._attenuation * Time.deltaTime)
+			arg_9_0._speed = math.min(0, arg_9_0._speed + arg_9_0._attenuation * Time.deltaTime)
 		end
 	end
 end
 
-function slot0._refreshAttachEffectSpeed(slot0)
-	if slot0._angle / slot0._playerTurnDegree > 0 and slot2 <= 1 then
-		slot0._curAnimSpeed = Mathf.Lerp(1, uv0.Settings.speedUpRate, slot2)
+function var_0_0._refreshAttachEffectSpeed(arg_10_0)
+	local var_10_0 = arg_10_0._playerTurnDegree
+	local var_10_1 = arg_10_0._angle / var_10_0
+
+	if var_10_1 > 0 and var_10_1 <= 1 then
+		arg_10_0._curAnimSpeed = Mathf.Lerp(1, var_0_0.Settings.speedUpRate, var_10_1)
 	else
-		slot0._curAnimSpeed = 1
+		arg_10_0._curAnimSpeed = 1
 	end
 
-	for slot6, slot7 in pairs(slot0._stepEffectWraps) do
-		if slot7:getIsActive() then
-			if (uv0.Settings.manualStepDegree[slot6] or 1) - (uv0.Settings.manualStepDegree[slot6 - 1] or 0) >= 0 then
-				slot8 = (slot2 - slot9) / (slot8 - slot9)
+	for iter_10_0, iter_10_1 in pairs(arg_10_0._stepEffectWraps) do
+		if iter_10_1:getIsActive() then
+			local var_10_2 = var_0_0.Settings.manualStepDegree[iter_10_0] or 1
+			local var_10_3 = var_0_0.Settings.manualStepDegree[iter_10_0 - 1] or 0
+
+			if var_10_2 - var_10_3 >= 0 then
+				var_10_2 = (var_10_1 - var_10_3) / (var_10_2 - var_10_3)
 			end
 
-			slot7:setSpeed(Mathf.Lerp(1, uv0.Settings.speedUpRate, slot8))
+			local var_10_4 = Mathf.Lerp(1, var_0_0.Settings.speedUpRate, var_10_2)
+
+			iter_10_1:setSpeed(var_10_4)
 		end
 	end
 end
 
-function slot0._addAngle(slot0, slot1)
-	if slot0._finished then
+function var_0_0._addAngle(arg_11_0, arg_11_1)
+	if arg_11_0._finished then
 		return
 	end
 
-	slot0._angle = math.max(0, math.min(slot0._playerTurnDegree + slot0._autoTurnDegree, slot0._angle - slot1))
+	arg_11_0._angle = math.max(0, math.min(arg_11_0._playerTurnDegree + arg_11_0._autoTurnDegree, arg_11_0._angle - arg_11_1))
 
-	slot0:_setAngleEffect(slot0._angle)
+	arg_11_0:_setAngleEffect(arg_11_0._angle)
 
-	if slot0._angle >= slot0._playerTurnDegree + slot0._autoTurnDegree then
-		slot0:_completeDraw()
+	if arg_11_0._angle >= arg_11_0._playerTurnDegree + arg_11_0._autoTurnDegree then
+		arg_11_0:_completeDraw()
 
-		slot0._canDraw = false
-		slot0._turning = false
-	elseif slot0._canDraw and slot0._playerTurnDegree <= slot0._angle then
-		slot0._canDraw = false
-		slot0._turning = false
-		slot0._speed = math.min(slot0._speed, slot0._minFinishSpeed)
-		slot0._finishSpeed = slot0._speed
+		arg_11_0._canDraw = false
+		arg_11_0._turning = false
+	elseif arg_11_0._canDraw and arg_11_0._angle >= arg_11_0._playerTurnDegree then
+		arg_11_0._canDraw = false
+		arg_11_0._turning = false
+		arg_11_0._speed = math.min(arg_11_0._speed, arg_11_0._minFinishSpeed)
+		arg_11_0._finishSpeed = arg_11_0._speed
 	end
 
-	slot2 = 1 - slot0._angle / (slot0._playerTurnDegree + slot0._autoTurnDegree)
+	local var_11_0 = 1 - arg_11_0._angle / (arg_11_0._playerTurnDegree + arg_11_0._autoTurnDegree)
+	local var_11_1 = math.max(0, var_11_0 * var_11_0)
 
-	slot0:setEffect(math.max(0, slot2 * slot2))
+	arg_11_0:setEffect(var_11_1)
 end
 
-function slot0._setAngleEffect(slot0, slot1)
-	if slot0._wheelMeshRenderer and slot0._wheelMaterialPropertyBlock then
-		slot2 = slot0._wheelMeshRenderer.material:GetVector("_Rotation")
+function var_0_0._setAngleEffect(arg_12_0, arg_12_1)
+	if arg_12_0._wheelMeshRenderer and arg_12_0._wheelMaterialPropertyBlock then
+		local var_12_0 = arg_12_0._wheelMeshRenderer.material:GetVector("_Rotation")
 
-		slot0._wheelMaterialPropertyBlock:SetVector("_Rotation", Vector4.New(slot2.x, slot2.y, slot1, slot2.w))
-		slot0._wheelMeshRenderer:SetPropertyBlock(slot0._wheelMaterialPropertyBlock)
+		arg_12_0._wheelMaterialPropertyBlock:SetVector("_Rotation", Vector4.New(var_12_0.x, var_12_0.y, arg_12_1, var_12_0.w))
+		arg_12_0._wheelMeshRenderer:SetPropertyBlock(arg_12_0._wheelMaterialPropertyBlock)
 	end
 
-	if slot0._wheelMirrorMeshRenderer and slot0._wheelMirrorMaterialPropertyBlock then
-		slot2 = slot0._wheelMirrorMeshRenderer.material:GetVector("_Rotation")
+	if arg_12_0._wheelMirrorMeshRenderer and arg_12_0._wheelMirrorMaterialPropertyBlock then
+		local var_12_1 = arg_12_0._wheelMirrorMeshRenderer.material:GetVector("_Rotation")
 
-		slot0._wheelMirrorMaterialPropertyBlock:SetVector("_Rotation", Vector4.New(slot2.x, slot2.y, slot1, slot2.w))
-		slot0._wheelMirrorMeshRenderer:SetPropertyBlock(slot0._wheelMirrorMaterialPropertyBlock)
+		arg_12_0._wheelMirrorMaterialPropertyBlock:SetVector("_Rotation", Vector4.New(var_12_1.x, var_12_1.y, arg_12_1, var_12_1.w))
+		arg_12_0._wheelMirrorMeshRenderer:SetPropertyBlock(arg_12_0._wheelMirrorMaterialPropertyBlock)
 	end
 
-	if slot0._wheelLightWrap and not gohelper.isNil(slot0._wheelEffectRootTf) then
-		transformhelper.setLocalRotation(slot0._wheelEffectRootTf, 0, 0, -slot1)
-	end
-end
-
-function slot0.setEffect(slot0, slot1)
-	if slot0._ropeMeshRenderer and slot0._ropeMaterialPropertyBlock then
-		slot2 = slot0._ropeMeshRenderer.material:GetVector("_EdgeWith")
-		slot3 = 0
-		slot4 = 0
-
-		if slot1 > 0.75 then
-			slot3 = 16 * (slot1 - 0.75)
-		end
-
-		if slot1 < 0.75 then
-			slot4 = 1.5 * (0.75 - slot1)
-		end
-
-		slot0._ropeMaterialPropertyBlock:SetVector("_EdgeWith", Vector4.New(slot2.x, slot3, slot4, slot2.w))
-		slot0._ropeMeshRenderer:SetPropertyBlock(slot0._ropeMaterialPropertyBlock)
-	end
-
-	if slot0._ropeGlowGO then
-		slot2, slot3, slot4 = transformhelper.getLocalScale(slot0._ropeGlowGO.transform)
-		slot5 = 0
-
-		if slot1 < 0.75 then
-			slot5 = 0.6666666666666666 * (0.75 - slot1)
-		end
-
-		transformhelper.setLocalScale(slot0._ropeGlowGO.transform, slot5, slot3, slot4)
-	end
-
-	if slot0._lightGlowGO then
-		slot2 = 0
-
-		if slot1 < 0.75 then
-			slot2 = 32 * (0.75 - slot1)
-		end
-
-		gohelper.setActive(slot0._lightGlowGO, slot2 > 0)
-		transformhelper.setLocalScale(slot0._lightGlowGO.transform, slot2, slot2, slot2)
-	end
-
-	if slot0._lightGlowMeshRenderer and slot0._lightGlowMaterialPropertyBlock then
-		slot2 = slot0._lightGlowMeshRenderer.material:GetVector("_MainColor")
-		slot3 = 0
-
-		if slot1 < 0.75 then
-			slot3 = 164 * (0.75 - slot1)
-		end
-
-		slot0._lightGlowMaterialPropertyBlock:SetVector("_MainColor", Vector4.New(slot2.x, slot2.y, slot2.z, slot3 / 255))
-		slot0._lightGlowMeshRenderer:SetPropertyBlock(slot0._lightGlowMaterialPropertyBlock)
-	end
-
-	if slot0._rootGO then
-		slot4, slot5 = transformhelper.getLocalPos(slot0._rootGO.transform)
-		slot6, slot7, slot8 = transformhelper.getLocalRotation(slot0._rootGO.transform)
-
-		transformhelper.setLocalPos(slot0._rootGO.transform, slot4, slot5, -6 * (1 - slot1))
-		transformhelper.setLocalRotation(slot0._rootGO.transform, 1 - slot1, slot7, slot8)
-	end
-
-	if slot0._light then
-		slot2 = slot0._light.color
-		slot3 = 26 * (1 - slot1)
-		slot0._light.color = Color(slot3 / 255, slot3 / 255, slot3 / 255, 0)
-	end
-
-	if not slot0._tweened and slot0._fake and slot0._rare == 5 and slot1 < 0.3 then
-		slot0._tweened = true
-		slot0._tweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, 0.3, slot0._tween, nil, slot0)
-	end
-
-	if slot0._spotLight then
-		slot0._spotLight.range = 45 * (1 - slot1)
+	if arg_12_0._wheelLightWrap and not gohelper.isNil(arg_12_0._wheelEffectRootTf) then
+		transformhelper.setLocalRotation(arg_12_0._wheelEffectRootTf, 0, 0, -arg_12_1)
 	end
 end
 
-function slot0._setSpeedEffect(slot0, slot1, slot2)
-	if slot0._waterMeshRenderer and slot0._waterMaterialPropertyBlock then
-		slot3 = slot0._waterMeshRenderer.material:GetVector("_Radial")
-		slot4 = slot3.w
+function var_0_0.setEffect(arg_13_0, arg_13_1)
+	if arg_13_0._ropeMeshRenderer and arg_13_0._ropeMaterialPropertyBlock then
+		local var_13_0 = arg_13_0._ropeMeshRenderer.material:GetVector("_EdgeWith")
+		local var_13_1 = 0
+		local var_13_2 = 0
 
-		slot0._waterMaterialPropertyBlock:SetVector("_Radial", Vector4.New(slot3.x, slot3.y, slot3.z, math.min(math.abs(slot1 / 500) * slot0._maxWaterEffect, slot0._maxWaterEffect)))
-		slot0._waterMeshRenderer:SetPropertyBlock(slot0._waterMaterialPropertyBlock)
+		if arg_13_1 > 0.75 then
+			var_13_1 = 16 * (arg_13_1 - 0.75)
+		end
+
+		if arg_13_1 < 0.75 then
+			var_13_2 = 1.5 * (0.75 - arg_13_1)
+		end
+
+		arg_13_0._ropeMaterialPropertyBlock:SetVector("_EdgeWith", Vector4.New(var_13_0.x, var_13_1, var_13_2, var_13_0.w))
+		arg_13_0._ropeMeshRenderer:SetPropertyBlock(arg_13_0._ropeMaterialPropertyBlock)
+	end
+
+	if arg_13_0._ropeGlowGO then
+		local var_13_3, var_13_4, var_13_5 = transformhelper.getLocalScale(arg_13_0._ropeGlowGO.transform)
+		local var_13_6 = 0
+
+		if arg_13_1 < 0.75 then
+			var_13_6 = 0.6666666666666666 * (0.75 - arg_13_1)
+		end
+
+		transformhelper.setLocalScale(arg_13_0._ropeGlowGO.transform, var_13_6, var_13_4, var_13_5)
+	end
+
+	if arg_13_0._lightGlowGO then
+		local var_13_7 = 0
+
+		if arg_13_1 < 0.75 then
+			var_13_7 = 32 * (0.75 - arg_13_1)
+		end
+
+		gohelper.setActive(arg_13_0._lightGlowGO, var_13_7 > 0)
+		transformhelper.setLocalScale(arg_13_0._lightGlowGO.transform, var_13_7, var_13_7, var_13_7)
+	end
+
+	if arg_13_0._lightGlowMeshRenderer and arg_13_0._lightGlowMaterialPropertyBlock then
+		local var_13_8 = arg_13_0._lightGlowMeshRenderer.material:GetVector("_MainColor")
+		local var_13_9 = 0
+
+		if arg_13_1 < 0.75 then
+			var_13_9 = 164 * (0.75 - arg_13_1)
+		end
+
+		arg_13_0._lightGlowMaterialPropertyBlock:SetVector("_MainColor", Vector4.New(var_13_8.x, var_13_8.y, var_13_8.z, var_13_9 / 255))
+		arg_13_0._lightGlowMeshRenderer:SetPropertyBlock(arg_13_0._lightGlowMaterialPropertyBlock)
+	end
+
+	if arg_13_0._rootGO then
+		local var_13_10 = -6 * (1 - arg_13_1)
+		local var_13_11 = 1 - arg_13_1
+		local var_13_12, var_13_13 = transformhelper.getLocalPos(arg_13_0._rootGO.transform)
+		local var_13_14, var_13_15, var_13_16 = transformhelper.getLocalRotation(arg_13_0._rootGO.transform)
+
+		transformhelper.setLocalPos(arg_13_0._rootGO.transform, var_13_12, var_13_13, var_13_10)
+		transformhelper.setLocalRotation(arg_13_0._rootGO.transform, var_13_11, var_13_15, var_13_16)
+	end
+
+	if arg_13_0._light then
+		local var_13_17 = arg_13_0._light.color
+		local var_13_18 = 26 * (1 - arg_13_1)
+
+		arg_13_0._light.color = Color(var_13_18 / 255, var_13_18 / 255, var_13_18 / 255, 0)
+	end
+
+	if not arg_13_0._tweened and arg_13_0._fake and arg_13_0._rare == 5 and arg_13_1 < 0.3 then
+		arg_13_0._tweened = true
+		arg_13_0._tweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, 0.3, arg_13_0._tween, nil, arg_13_0)
+	end
+
+	if arg_13_0._spotLight then
+		arg_13_0._spotLight.range = 45 * (1 - arg_13_1)
 	end
 end
 
-function slot0._setCurGachaEffect(slot0)
-	slot1 = {}
-	slot2 = false
+function var_0_0._setSpeedEffect(arg_14_0, arg_14_1, arg_14_2)
+	if arg_14_0._waterMeshRenderer and arg_14_0._waterMaterialPropertyBlock then
+		local var_14_0 = arg_14_0._waterMeshRenderer.material:GetVector("_Radial")
+		local var_14_1 = var_14_0.w
+		local var_14_2 = math.min(math.abs(arg_14_1 / 500) * arg_14_0._maxWaterEffect, arg_14_0._maxWaterEffect)
 
-	for slot7 = 1, uv0.StepCount do
-		if slot0._stepEffectWraps[slot7] ~= nil then
-			if not slot0._stepEffectRunning[slot7] and (slot7 <= slot0._currentDrawStep and slot0._startAttachEffectDegree <= slot0._angle) then
-				slot8:setActive(true)
-				slot8:setSpeed(slot0._curAnimSpeed)
+		arg_14_0._waterMaterialPropertyBlock:SetVector("_Radial", Vector4.New(var_14_0.x, var_14_0.y, var_14_0.z, var_14_2))
+		arg_14_0._waterMeshRenderer:SetPropertyBlock(arg_14_0._waterMaterialPropertyBlock)
+	end
+end
 
-				slot0._stepEffectRunning[slot7] = true
-				slot2 = true
-			elseif slot10 and not slot9 then
-				slot8:setActive(false)
+function var_0_0._setCurGachaEffect(arg_15_0)
+	local var_15_0 = {}
+	local var_15_1 = false
+	local var_15_2 = arg_15_0._angle >= arg_15_0._startAttachEffectDegree
 
-				slot0._stepEffectRunning[slot7] = false
-				slot2 = true
+	for iter_15_0 = 1, var_0_0.StepCount do
+		local var_15_3 = arg_15_0._stepEffectWraps[iter_15_0]
+
+		if var_15_3 ~= nil then
+			local var_15_4 = iter_15_0 <= arg_15_0._currentDrawStep and var_15_2
+			local var_15_5 = arg_15_0._stepEffectRunning[iter_15_0]
+
+			if not var_15_5 and var_15_4 then
+				var_15_3:setActive(true)
+				var_15_3:setSpeed(arg_15_0._curAnimSpeed)
+
+				arg_15_0._stepEffectRunning[iter_15_0] = true
+				var_15_1 = true
+			elseif var_15_5 and not var_15_4 then
+				var_15_3:setActive(false)
+
+				arg_15_0._stepEffectRunning[iter_15_0] = false
+				var_15_1 = true
 			end
 		end
 	end
 
-	if slot0._wheelLightWrap then
-		slot0._wheelLightWrap:setActive(slot3)
+	if arg_15_0._wheelLightWrap then
+		arg_15_0._wheelLightWrap:setActive(var_15_2)
 	end
 
-	if slot2 then
-		slot0:_refreshAttachEffectSpeed()
-		slot0:stopStepAudio()
+	if var_15_1 then
+		arg_15_0:_refreshAttachEffectSpeed()
+		arg_15_0:stopStepAudio()
 
-		if uv0.StepAudio[slot0._currentDrawStep] then
-			AudioMgr.instance:trigger(uv0.StepAudio[slot0._currentDrawStep])
+		if var_0_0.StepAudio[arg_15_0._currentDrawStep] then
+			AudioMgr.instance:trigger(var_0_0.StepAudio[arg_15_0._currentDrawStep])
 		end
 	end
 end
 
-function slot0._loadStepEffects(slot0)
-	if not string.nilorempty(SummonEnum.SummonQualityDefine[slot0._rare]) then
-		for slot5 = 1, uv0.StepCount do
-			slot8 = nil
+function var_0_0._loadStepEffects(arg_16_0)
+	local var_16_0 = SummonEnum.SummonQualityDefine[arg_16_0._rare]
 
-			if not string.nilorempty(SummonEnum.SummonPreloadPath[string.format("Scene%sStep%s", slot1, slot5)]) then
-				slot8 = SummonEffectPool.getEffect(slot7, slot0._gachaEffectRootGO)
+	if not string.nilorempty(var_16_0) then
+		for iter_16_0 = 1, var_0_0.StepCount do
+			local var_16_1 = string.format("Scene%sStep%s", var_16_0, iter_16_0)
+			local var_16_2 = SummonEnum.SummonPreloadPath[var_16_1]
+			local var_16_3
+
+			if not string.nilorempty(var_16_2) then
+				var_16_3 = SummonEffectPool.getEffect(var_16_2, arg_16_0._gachaEffectRootGO)
 			end
 
-			if slot8 ~= nil then
-				slot0._stepEffectWraps[slot5] = slot8
+			if var_16_3 ~= nil then
+				arg_16_0._stepEffectWraps[iter_16_0] = var_16_3
 
-				slot8:setActive(false)
+				var_16_3:setActive(false)
 			end
 		end
 	end
 end
 
-function slot0._loadWaterEffect(slot0)
-	if string.nilorempty(SummonEnum.SummonQualityDefine[slot0._rare]) then
+function var_0_0._loadWaterEffect(arg_17_0)
+	local var_17_0 = SummonEnum.SummonQualityDefine[arg_17_0._rare]
+
+	if string.nilorempty(var_17_0) then
 		return
 	end
 
-	if not slot0._waterEffectLWrap then
-		slot0._waterEffectLWrap = SummonEffectPool.getEffect(SummonEnum.SummonPreloadPath.SceneRollWaterL, slot0._gachaEffectRootGO)
+	if not arg_17_0._waterEffectLWrap then
+		local var_17_1 = SummonEnum.SummonPreloadPath.SceneRollWaterL
 
-		slot0._waterEffectLWrap:stopParticle()
+		arg_17_0._waterEffectLWrap = SummonEffectPool.getEffect(var_17_1, arg_17_0._gachaEffectRootGO)
+
+		arg_17_0._waterEffectLWrap:stopParticle()
 	end
 
-	if not slot0._waterEffectRWrap then
-		slot0._waterEffectRWrap = SummonEffectPool.getEffect(SummonEnum.SummonPreloadPath.SceneRollWaterR, slot0._gachaEffectRootGO)
+	if not arg_17_0._waterEffectRWrap then
+		local var_17_2 = SummonEnum.SummonPreloadPath.SceneRollWaterR
 
-		slot0._waterEffectRWrap:stopParticle()
+		arg_17_0._waterEffectRWrap = SummonEffectPool.getEffect(var_17_2, arg_17_0._gachaEffectRootGO)
+
+		arg_17_0._waterEffectRWrap:stopParticle()
 	end
 end
 
-function slot0._loadWheelEffect(slot0)
-	if string.nilorempty(SummonEnum.SummonQualityDefine[slot0._rare]) then
+function var_0_0._loadWheelEffect(arg_18_0)
+	local var_18_0 = SummonEnum.SummonQualityDefine[arg_18_0._rare]
+
+	if string.nilorempty(var_18_0) then
 		return
 	end
 
-	if not slot0._wheelLightWrap then
-		if not string.nilorempty(SummonEnum.SummonPreloadPath[string.format("Scene%sWheel", slot1)]) then
-			slot0._wheelLightWrap = SummonEffectPool.getEffect(slot3, slot0._wheelEffectRootGO)
+	if not arg_18_0._wheelLightWrap then
+		local var_18_1 = string.format("Scene%sWheel", var_18_0)
+		local var_18_2 = SummonEnum.SummonPreloadPath[var_18_1]
 
-			slot0._wheelLightWrap:setActive(false)
+		if not string.nilorempty(var_18_2) then
+			arg_18_0._wheelLightWrap = SummonEffectPool.getEffect(var_18_2, arg_18_0._wheelEffectRootGO)
+
+			arg_18_0._wheelLightWrap:setActive(false)
 		else
-			logError("can't find keyName = [" .. tostring(slot2) .. "] in path")
+			logError("can't find keyName = [" .. tostring(var_18_1) .. "] in path")
 		end
 	end
 end
 
-function slot0.onDestroy(slot0)
-	slot0:stopAudio()
-	slot0:recycleEffects()
+function var_0_0.onDestroy(arg_19_0)
+	arg_19_0:stopAudio()
+	arg_19_0:recycleEffects()
 
-	if slot0._tweenId then
-		ZProj.TweenHelper.KillById(slot0._tweenId)
+	if arg_19_0._tweenId then
+		ZProj.TweenHelper.KillById(arg_19_0._tweenId)
 
-		slot0._tweenId = nil
+		arg_19_0._tweenId = nil
 	end
 
-	slot0._wheelGO = nil
-	slot0._wheelMirrorGO = nil
-	slot0._waterGO = nil
-	slot0._wheelMeshRenderer = nil
-	slot0._wheelMirrorMeshRenderer = nil
-	slot0._waterMeshRenderer = nil
-	slot0._ropeMeshRenderer = nil
-	slot0._lightGlowMeshRenderer = nil
-	slot0._lineGlowMeshRenderer = nil
+	arg_19_0._wheelGO = nil
+	arg_19_0._wheelMirrorGO = nil
+	arg_19_0._waterGO = nil
+	arg_19_0._wheelMeshRenderer = nil
+	arg_19_0._wheelMirrorMeshRenderer = nil
+	arg_19_0._waterMeshRenderer = nil
+	arg_19_0._ropeMeshRenderer = nil
+	arg_19_0._lightGlowMeshRenderer = nil
+	arg_19_0._lineGlowMeshRenderer = nil
 
-	if slot0._wheelMaterialPropertyBlock then
-		slot0._wheelMaterialPropertyBlock:Clear()
+	if arg_19_0._wheelMaterialPropertyBlock then
+		arg_19_0._wheelMaterialPropertyBlock:Clear()
 
-		slot0._wheelMaterialPropertyBlock = nil
+		arg_19_0._wheelMaterialPropertyBlock = nil
 	end
 
-	if slot0._wheelMirrorMaterialPropertyBlock then
-		slot0._wheelMirrorMaterialPropertyBlock:Clear()
+	if arg_19_0._wheelMirrorMaterialPropertyBlock then
+		arg_19_0._wheelMirrorMaterialPropertyBlock:Clear()
 
-		slot0._wheelMirrorMaterialPropertyBlock = nil
+		arg_19_0._wheelMirrorMaterialPropertyBlock = nil
 	end
 
-	if slot0._waterMaterialPropertyBlock then
-		slot0._waterMaterialPropertyBlock:Clear()
+	if arg_19_0._waterMaterialPropertyBlock then
+		arg_19_0._waterMaterialPropertyBlock:Clear()
 
-		slot0._waterMaterialPropertyBlock = nil
+		arg_19_0._waterMaterialPropertyBlock = nil
 	end
 
-	if slot0._ropeMaterialPropertyBlock then
-		slot0._ropeMaterialPropertyBlock:Clear()
+	if arg_19_0._ropeMaterialPropertyBlock then
+		arg_19_0._ropeMaterialPropertyBlock:Clear()
 
-		slot0._ropeMaterialPropertyBlock = nil
+		arg_19_0._ropeMaterialPropertyBlock = nil
 	end
 
-	if slot0._lightGlowMaterialPropertyBlock then
-		slot0._lightGlowMaterialPropertyBlock:Clear()
+	if arg_19_0._lightGlowMaterialPropertyBlock then
+		arg_19_0._lightGlowMaterialPropertyBlock:Clear()
 
-		slot0._lightGlowMaterialPropertyBlock = nil
+		arg_19_0._lightGlowMaterialPropertyBlock = nil
 	end
 
-	if slot0._lineGlowMaterialPropertyBlock then
-		slot0._lineGlowMaterialPropertyBlock:Clear()
+	if arg_19_0._lineGlowMaterialPropertyBlock then
+		arg_19_0._lineGlowMaterialPropertyBlock:Clear()
 
-		slot0._lineGlowMaterialPropertyBlock = nil
+		arg_19_0._lineGlowMaterialPropertyBlock = nil
 	end
 end
 
-function slot0.resetDraw(slot0, slot1)
-	if slot0._tweenId then
-		ZProj.TweenHelper.KillById(slot0._tweenId)
+function var_0_0.resetDraw(arg_20_0, arg_20_1)
+	if arg_20_0._tweenId then
+		ZProj.TweenHelper.KillById(arg_20_0._tweenId)
 
-		slot0._tweenId = nil
+		arg_20_0._tweenId = nil
 	end
 
-	slot0._currentDrawStep = 0
-	slot0._tweened = false
-	slot0._prevAngle = 0
-	slot0._angle = 0
-	slot0._speed = 0
-	slot0._updateDragAngle = 0
-	slot0._finished = false
-	slot0._turning = false
-	slot0._canDraw = true
-	slot0._canTrigger = true
-	slot0._curAnimSpeed = 1
-	slot0._rare = slot1
-	slot0._fake = math.random(0, 100) < 50
-	slot2 = uv0.RareColor[slot0._rare] or uv0.RareColor[2]
+	arg_20_0._currentDrawStep = 0
+	arg_20_0._tweened = false
+	arg_20_0._prevAngle = 0
+	arg_20_0._angle = 0
+	arg_20_0._speed = 0
+	arg_20_0._updateDragAngle = 0
+	arg_20_0._finished = false
+	arg_20_0._turning = false
+	arg_20_0._canDraw = true
+	arg_20_0._canTrigger = true
+	arg_20_0._curAnimSpeed = 1
+	arg_20_0._rare = arg_20_1
+	arg_20_0._fake = math.random(0, 100) < 50
 
-	if slot0._rare == 5 and slot0._fake then
-		slot2 = uv0.RareColor[4]
+	local var_20_0 = var_0_0.RareColor[arg_20_0._rare] or var_0_0.RareColor[2]
+
+	if arg_20_0._rare == 5 and arg_20_0._fake then
+		var_20_0 = var_0_0.RareColor[4]
 	end
 
-	if slot0._lineGlowMeshRenderer and slot0._lineGlowMaterialPropertyBlock then
-		slot0._lineGlowMaterialPropertyBlock:SetVector("_MainColor", slot2)
-		slot0._lineGlowMeshRenderer:SetPropertyBlock(slot0._lineGlowMaterialPropertyBlock)
+	if arg_20_0._lineGlowMeshRenderer and arg_20_0._lineGlowMaterialPropertyBlock then
+		arg_20_0._lineGlowMaterialPropertyBlock:SetVector("_MainColor", var_20_0)
+		arg_20_0._lineGlowMeshRenderer:SetPropertyBlock(arg_20_0._lineGlowMaterialPropertyBlock)
 	end
 
-	if slot0._ropeMeshRenderer and slot0._ropeMaterialPropertyBlock then
-		slot0._ropeMaterialPropertyBlock:SetVector("_AddCol", slot2)
-		slot0._ropeMeshRenderer:SetPropertyBlock(slot0._ropeMaterialPropertyBlock)
+	if arg_20_0._ropeMeshRenderer and arg_20_0._ropeMaterialPropertyBlock then
+		arg_20_0._ropeMaterialPropertyBlock:SetVector("_AddCol", var_20_0)
+		arg_20_0._ropeMeshRenderer:SetPropertyBlock(arg_20_0._ropeMaterialPropertyBlock)
 	end
 
-	slot0._ropeAnim.enabled = false
-	slot0._ropeAnimName = nil
+	arg_20_0._ropeAnim.enabled = false
+	arg_20_0._ropeAnimName = nil
 
-	slot0:recycleEffects()
-	slot0:_loadWaterEffect()
-	slot0:_loadWheelEffect()
-	slot0:_loadStepEffects()
+	arg_20_0:recycleEffects()
+	arg_20_0:_loadWaterEffect()
+	arg_20_0:_loadWheelEffect()
+	arg_20_0:_loadStepEffects()
 end
 
-function slot0.skip(slot0)
-	slot0:setEffect(1)
+function var_0_0.skip(arg_21_0)
+	arg_21_0:setEffect(1)
 
-	if slot0._finished then
+	if arg_21_0._finished then
 		return
 	end
 
-	slot0._currentDrawStep = 0
-	slot0._tweened = false
-	slot0._prevAngle = 0
-	slot0._speed = 0
-	slot0._updateDragAngle = 0
-	slot0._finished = false
-	slot0._turning = false
-	slot0._canDraw = true
-	slot0._canTrigger = true
-	slot0._curAnimSpeed = 1
-	slot0._ropeAnim.enabled = false
-	slot0._ropeAnimName = nil
+	arg_21_0._currentDrawStep = 0
+	arg_21_0._tweened = false
+	arg_21_0._prevAngle = 0
+	arg_21_0._speed = 0
+	arg_21_0._updateDragAngle = 0
+	arg_21_0._finished = false
+	arg_21_0._turning = false
+	arg_21_0._canDraw = true
+	arg_21_0._canTrigger = true
+	arg_21_0._curAnimSpeed = 1
+	arg_21_0._ropeAnim.enabled = false
+	arg_21_0._ropeAnimName = nil
 
-	slot0:stopAudio()
-	slot0:recycleEffects()
+	arg_21_0:stopAudio()
+	arg_21_0:recycleEffects()
 end
 
-function slot0.recycleEffects(slot0)
-	if slot0._waterEffectLWrap ~= nil then
-		SummonEffectPool.returnEffect(slot0._waterEffectLWrap)
+function var_0_0.recycleEffects(arg_22_0)
+	if arg_22_0._waterEffectLWrap ~= nil then
+		SummonEffectPool.returnEffect(arg_22_0._waterEffectLWrap)
 
-		slot0._waterEffectLWrap = nil
+		arg_22_0._waterEffectLWrap = nil
 	end
 
-	if slot0._waterEffectRWrap ~= nil then
-		SummonEffectPool.returnEffect(slot0._waterEffectRWrap)
+	if arg_22_0._waterEffectRWrap ~= nil then
+		SummonEffectPool.returnEffect(arg_22_0._waterEffectRWrap)
 
-		slot0._waterEffectRWrap = nil
+		arg_22_0._waterEffectRWrap = nil
 	end
 
-	slot0._waterEffectRunning = false
-	slot0._waterEffectRunningPos = 0
+	arg_22_0._waterEffectRunning = false
+	arg_22_0._waterEffectRunningPos = 0
 
-	if slot0._wheelLightWrap ~= nil then
-		SummonEffectPool.returnEffect(slot0._wheelLightWrap)
+	if arg_22_0._wheelLightWrap ~= nil then
+		SummonEffectPool.returnEffect(arg_22_0._wheelLightWrap)
 
-		slot0._wheelLightWrap = nil
+		arg_22_0._wheelLightWrap = nil
 	end
 
-	for slot4, slot5 in pairs(slot0._stepEffectWraps) do
-		SummonEffectPool.returnEffect(slot5)
+	for iter_22_0, iter_22_1 in pairs(arg_22_0._stepEffectWraps) do
+		SummonEffectPool.returnEffect(iter_22_1)
 
-		slot0._stepEffectWraps[slot4] = nil
+		arg_22_0._stepEffectWraps[iter_22_0] = nil
 	end
 
-	for slot4 = 1, uv0.StepCount do
-		slot0._stepEffectRunning[slot4] = false
+	for iter_22_2 = 1, var_0_0.StepCount do
+		arg_22_0._stepEffectRunning[iter_22_2] = false
 	end
 end
 
-function slot0.stopStepAudio(slot0)
+function var_0_0.stopStepAudio(arg_23_0)
 	AudioMgr.instance:trigger(AudioEnum.Summon.stop_ui_callfor_cordage01)
 	AudioMgr.instance:trigger(AudioEnum.Summon.stop_ui_callfor_cordage02)
 	AudioMgr.instance:trigger(AudioEnum.Summon.stop_ui_callfor_cordage03)
 end
 
-function slot0.stopAudio(slot0)
-	slot0._audioLoopRunning = false
+function var_0_0.stopAudio(arg_24_0)
+	arg_24_0._audioLoopRunning = false
 
 	AudioMgr.instance:trigger(AudioEnum.Summon.stop_ui_callfor_waterwheelloop)
 	AudioMgr.instance:trigger(AudioEnum.Summon.stop_ui_callfor_spray)
-	slot0:stopStepAudio()
+	arg_24_0:stopStepAudio()
 end
 
-function slot0._tween(slot0, slot1)
-	if slot0._lineGlowMeshRenderer and slot0._lineGlowMaterialPropertyBlock then
-		slot0._lineGlowMaterialPropertyBlock:SetVector("_MainColor", uv0.RareColor[4] * (1 - slot1) + uv0.RareColor[5] * slot1)
-		slot0._lineGlowMeshRenderer:SetPropertyBlock(slot0._lineGlowMaterialPropertyBlock)
+function var_0_0._tween(arg_25_0, arg_25_1)
+	if arg_25_0._lineGlowMeshRenderer and arg_25_0._lineGlowMaterialPropertyBlock then
+		local var_25_0 = var_0_0.RareColor[4]
+		local var_25_1 = var_0_0.RareColor[5]
+		local var_25_2 = var_25_0 * (1 - arg_25_1) + var_25_1 * arg_25_1
+
+		arg_25_0._lineGlowMaterialPropertyBlock:SetVector("_MainColor", var_25_2)
+		arg_25_0._lineGlowMeshRenderer:SetPropertyBlock(arg_25_0._lineGlowMaterialPropertyBlock)
 	end
 end
 
-function slot0.startTurn(slot0)
-	if not slot0._canDraw then
+function var_0_0.startTurn(arg_26_0)
+	if not arg_26_0._canDraw then
 		return
 	end
 
-	slot0._turning = true
-	slot0._speed = 0
+	arg_26_0._turning = true
+	arg_26_0._speed = 0
 end
 
-function slot0.updateAngle(slot0, slot1)
-	if not slot0._canDraw then
+function var_0_0.updateAngle(arg_27_0, arg_27_1)
+	if not arg_27_0._canDraw then
 		return
 	end
 
-	slot0._turning = true
-	slot0._updateDragAngle = slot0._updateDragAngle + slot1
+	arg_27_0._turning = true
+	arg_27_0._updateDragAngle = arg_27_0._updateDragAngle + arg_27_1
 end
 
-function slot0.endTurn(slot0)
-	if not slot0._canDraw then
+function var_0_0.endTurn(arg_28_0)
+	if not arg_28_0._canDraw then
 		return
 	end
 
-	slot0._turning = false
+	arg_28_0._turning = false
 end
 
-function slot0.getStepEffectContainer(slot0)
-	return slot0._gachaEffectRootGO
+function var_0_0.getStepEffectContainer(arg_29_0)
+	return arg_29_0._gachaEffectRootGO
 end
 
-function slot0._completeDraw(slot0)
-	if slot0._finished then
+function var_0_0._completeDraw(arg_30_0)
+	if arg_30_0._finished then
 		return
 	end
 
-	slot0._finished = true
+	arg_30_0._finished = true
 
-	slot0:stopAudio()
-	slot0:recycleEffects()
+	arg_30_0:stopAudio()
+	arg_30_0:recycleEffects()
 	SummonController.instance:dispatchEvent(SummonEvent.onSummonDraw)
 end
 
-return slot0
+return var_0_0

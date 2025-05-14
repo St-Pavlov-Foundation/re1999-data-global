@@ -1,35 +1,36 @@
-module("modules.logic.versionactivity2_5.feilinshiduo.defines.FeiLinShiDuoEnum", package.seeall)
+﻿module("modules.logic.versionactivity2_5.feilinshiduo.defines.FeiLinShiDuoEnum", package.seeall)
 
-slot0 = _M
-slot0.TestMapId = 101
-slot0.GameSceneRootName = "FeiLinShiDuoGame"
-slot0.ColorIconName = "colorIcon"
-slot0.PlayerMoveSpeed = 250
-slot0.PlayerPushBoxSpeed = 125
-slot0.SceneMoveSpeed = 0.2
-slot0.FallSpeed = 50
-slot0.jumpAnimTime = 0.4
-slot0.climbSpeed = 150
-slot0.MinTimeDeltaTime = 0.04
-slot0.SceneDefaultScale = 2
-slot0.SlotWidth = 100
-slot0.HalfSlotWidth = slot0.SlotWidth / 2
-slot0.RoleResPath = "roles/v2a5_act185/act185_ui.prefab"
-slot0.PlayerScale = 0.3
-slot0.startMoveAddSpeed = 0.5
-slot0.endMoveAddSpeed = 1
-slot0.touchCheckRange = 4
-slot0.touchElementRange = 20
-slot0.doorTouchCheckRang = 15
-slot0.stairsTouchCheckRange = 40
-slot0.BlindnessModeKey = "FeiLinShiDuoBlindnessMode"
-slot0.checkDir = {
+local var_0_0 = _M
+
+var_0_0.TestMapId = 101
+var_0_0.GameSceneRootName = "FeiLinShiDuoGame"
+var_0_0.ColorIconName = "colorIcon"
+var_0_0.PlayerMoveSpeed = 250
+var_0_0.PlayerPushBoxSpeed = 125
+var_0_0.SceneMoveSpeed = 0.2
+var_0_0.FallSpeed = 50
+var_0_0.jumpAnimTime = 0.4
+var_0_0.climbSpeed = 150
+var_0_0.MinTimeDeltaTime = 0.04
+var_0_0.SceneDefaultScale = 2
+var_0_0.SlotWidth = 100
+var_0_0.HalfSlotWidth = var_0_0.SlotWidth / 2
+var_0_0.RoleResPath = "roles/v2a5_act185/act185_ui.prefab"
+var_0_0.PlayerScale = 0.3
+var_0_0.startMoveAddSpeed = 0.5
+var_0_0.endMoveAddSpeed = 1
+var_0_0.touchCheckRange = 4
+var_0_0.touchElementRange = 20
+var_0_0.doorTouchCheckRang = 15
+var_0_0.stairsTouchCheckRange = 40
+var_0_0.BlindnessModeKey = "FeiLinShiDuoBlindnessMode"
+var_0_0.checkDir = {
 	Top = 2,
 	Right = 3,
 	Left = 1,
 	Bottom = 4
 }
-slot0.ObjectType = {
+var_0_0.ObjectType = {
 	Option = 6,
 	ColorPlane = 2,
 	Door = 7,
@@ -41,58 +42,58 @@ slot0.ObjectType = {
 	Jump = 5,
 	Stairs = 8
 }
-slot0.ColorType = {
+var_0_0.ColorType = {
 	Blue = 3,
 	Green = 2,
 	Red = 1,
 	Yellow = 4,
 	None = 0
 }
-slot0.ColorStr = {
-	[slot0.ColorType.None] = "#808080",
-	[slot0.ColorType.Red] = "#995558",
-	[slot0.ColorType.Green] = "#648E83",
-	[slot0.ColorType.Blue] = "#5D6D97",
-	[slot0.ColorType.Yellow] = "#8E8C64"
+var_0_0.ColorStr = {
+	[var_0_0.ColorType.None] = "#808080",
+	[var_0_0.ColorType.Red] = "#995558",
+	[var_0_0.ColorType.Green] = "#648E83",
+	[var_0_0.ColorType.Blue] = "#5D6D97",
+	[var_0_0.ColorType.Yellow] = "#8E8C64"
 }
-slot0.playerColor = UnityEngine.Shader.PropertyToID("_Color")
-slot0.GroupName = {
-	[slot0.ObjectType.Wall] = "Walls",
-	[slot0.ObjectType.ColorPlane] = "ColorPlanes",
-	[slot0.ObjectType.Box] = "Boxs",
-	[slot0.ObjectType.Trap] = "Traps",
-	[slot0.ObjectType.Jump] = "Jumps",
-	[slot0.ObjectType.Option] = "Options",
-	[slot0.ObjectType.Door] = "Doors",
-	[slot0.ObjectType.Stairs] = "Stairs",
-	[slot0.ObjectType.Start] = "Start",
-	[slot0.ObjectType.Target] = "Target"
+var_0_0.playerColor = UnityEngine.Shader.PropertyToID("_Color")
+var_0_0.GroupName = {
+	[var_0_0.ObjectType.Wall] = "Walls",
+	[var_0_0.ObjectType.ColorPlane] = "ColorPlanes",
+	[var_0_0.ObjectType.Box] = "Boxs",
+	[var_0_0.ObjectType.Trap] = "Traps",
+	[var_0_0.ObjectType.Jump] = "Jumps",
+	[var_0_0.ObjectType.Option] = "Options",
+	[var_0_0.ObjectType.Door] = "Doors",
+	[var_0_0.ObjectType.Stairs] = "Stairs",
+	[var_0_0.ObjectType.Start] = "Start",
+	[var_0_0.ObjectType.Target] = "Target"
 }
-slot0.ParentName = {
-	[slot0.ObjectType.Wall] = "wallItem",
-	[slot0.ObjectType.ColorPlane] = "colorplaneItem",
-	[slot0.ObjectType.Box] = "boxItem",
-	[slot0.ObjectType.Trap] = "trapItem",
-	[slot0.ObjectType.Jump] = "jumpItem",
-	[slot0.ObjectType.Option] = "optionItem",
-	[slot0.ObjectType.Door] = "doorItem",
-	[slot0.ObjectType.Stairs] = "stairItem",
-	[slot0.ObjectType.Start] = "startItem",
-	[slot0.ObjectType.Target] = "targetItem"
+var_0_0.ParentName = {
+	[var_0_0.ObjectType.Wall] = "wallItem",
+	[var_0_0.ObjectType.ColorPlane] = "colorplaneItem",
+	[var_0_0.ObjectType.Box] = "boxItem",
+	[var_0_0.ObjectType.Trap] = "trapItem",
+	[var_0_0.ObjectType.Jump] = "jumpItem",
+	[var_0_0.ObjectType.Option] = "optionItem",
+	[var_0_0.ObjectType.Door] = "doorItem",
+	[var_0_0.ObjectType.Stairs] = "stairItem",
+	[var_0_0.ObjectType.Start] = "startItem",
+	[var_0_0.ObjectType.Target] = "targetItem"
 }
-slot0.ItemName = {
-	[slot0.ObjectType.Wall] = "wall",
-	[slot0.ObjectType.ColorPlane] = "colorplane",
-	[slot0.ObjectType.Box] = "box",
-	[slot0.ObjectType.Trap] = "trap",
-	[slot0.ObjectType.Jump] = "jump",
-	[slot0.ObjectType.Option] = "option",
-	[slot0.ObjectType.Door] = "door",
-	[slot0.ObjectType.Stairs] = "stair",
-	[slot0.ObjectType.Start] = "start",
-	[slot0.ObjectType.Target] = "target"
+var_0_0.ItemName = {
+	[var_0_0.ObjectType.Wall] = "wall",
+	[var_0_0.ObjectType.ColorPlane] = "colorplane",
+	[var_0_0.ObjectType.Box] = "box",
+	[var_0_0.ObjectType.Trap] = "trap",
+	[var_0_0.ObjectType.Jump] = "jump",
+	[var_0_0.ObjectType.Option] = "option",
+	[var_0_0.ObjectType.Door] = "door",
+	[var_0_0.ObjectType.Stairs] = "stair",
+	[var_0_0.ObjectType.Start] = "start",
+	[var_0_0.ObjectType.Target] = "target"
 }
-slot0.GuideDataList = {
+var_0_0.GuideDataList = {
 	{
 		mapId = 101,
 		guideId = 25101,
@@ -148,4 +149,4 @@ slot0.GuideDataList = {
 	}
 }
 
-return slot0
+return var_0_0

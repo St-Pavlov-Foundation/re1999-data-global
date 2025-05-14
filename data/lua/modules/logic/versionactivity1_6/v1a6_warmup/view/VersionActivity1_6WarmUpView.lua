@@ -1,150 +1,159 @@
-module("modules.logic.versionactivity1_6.v1a6_warmup.view.VersionActivity1_6WarmUpView", package.seeall)
+﻿module("modules.logic.versionactivity1_6.v1a6_warmup.view.VersionActivity1_6WarmUpView", package.seeall)
 
-slot0 = class("VersionActivity1_6WarmUpView", BaseView)
+local var_0_0 = class("VersionActivity1_6WarmUpView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simageTitle = gohelper.findChildSingleImage(slot0.viewGO, "Right/#simage_Title")
-	slot0._txtLimitTime = gohelper.findChildText(slot0.viewGO, "Right/LimitTime/#txt_LimitTime")
-	slot0._scrollTaskTabList = gohelper.findChildScrollRect(slot0.viewGO, "Right/TaskTab/#scroll_TaskTabList")
-	slot0._goradiotaskitem = gohelper.findChild(slot0.viewGO, "Right/TaskTab/#scroll_TaskTabList/Viewport/Content/#go_radiotaskitem")
-	slot0._txtTaskTitle = gohelper.findChildText(slot0.viewGO, "Right/TaskPanel/Title/#txt_TaskTitle")
-	slot0._txtTaskFMChannelNum = gohelper.findChildText(slot0.viewGO, "Right/TaskPanel/Title/#txt_TaskFMChannelNum")
-	slot0._scrollTaskDesc = gohelper.findChildScrollRect(slot0.viewGO, "Right/TaskPanel/#scroll_TaskDesc")
-	slot0._goTaskDescViewPort = gohelper.findChild(slot0.viewGO, "Right/TaskPanel/#scroll_TaskDesc/Viewport")
-	slot0._rectmask2D = slot0._goTaskDescViewPort:GetComponent(typeof(UnityEngine.UI.RectMask2D))
-	slot0._txtTaskContent = gohelper.findChildText(slot0.viewGO, "Right/TaskPanel/#scroll_TaskDesc/Viewport/#txt_TaskContent")
-	slot0._scrollReward = gohelper.findChildScrollRect(slot0.viewGO, "Right/RawardPanel/#scroll_Reward")
-	slot0._goWrongChannel = gohelper.findChild(slot0.viewGO, "Right/TaskPanel/#go_WrongChannel")
-	slot0._gorewarditem = gohelper.findChild(slot0.viewGO, "Right/RawardPanel/#scroll_Reward/Viewport/Content/#go_rewarditem")
-	slot0._txtTitle = gohelper.findChildText(slot0.viewGO, "Middle/titlebg/#txt_title")
-	slot0._btnplay = gohelper.findChildButtonWithAudio(slot0.viewGO, "Middle/#btn_play")
-	slot0._btnreplay = gohelper.findChildButtonWithAudio(slot0.viewGO, "Middle/#btn_replay")
-	slot0._btngetreward = gohelper.findChildButtonWithAudio(slot0.viewGO, "Right/RawardPanel/#btn_getreward")
-	slot0._goMiddle = gohelper.findChildSingleImage(slot0.viewGO, "Middle")
-	slot0._txtmusictime = gohelper.findChildText(slot0.viewGO, "Middle/#go_playing/#txt_time")
-	slot0._middleAnim = slot0._goMiddle:GetComponent(typeof(UnityEngine.Animator))
-	slot0._anim = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	slot0._isPlayingEpisodeDesc = false
-	slot0.isGetingReward = false
-	slot0._isReselectCloseFunc = false
-	slot0._bottom = 400
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simageTitle = gohelper.findChildSingleImage(arg_1_0.viewGO, "Right/#simage_Title")
+	arg_1_0._txtLimitTime = gohelper.findChildText(arg_1_0.viewGO, "Right/LimitTime/#txt_LimitTime")
+	arg_1_0._scrollTaskTabList = gohelper.findChildScrollRect(arg_1_0.viewGO, "Right/TaskTab/#scroll_TaskTabList")
+	arg_1_0._goradiotaskitem = gohelper.findChild(arg_1_0.viewGO, "Right/TaskTab/#scroll_TaskTabList/Viewport/Content/#go_radiotaskitem")
+	arg_1_0._txtTaskTitle = gohelper.findChildText(arg_1_0.viewGO, "Right/TaskPanel/Title/#txt_TaskTitle")
+	arg_1_0._txtTaskFMChannelNum = gohelper.findChildText(arg_1_0.viewGO, "Right/TaskPanel/Title/#txt_TaskFMChannelNum")
+	arg_1_0._scrollTaskDesc = gohelper.findChildScrollRect(arg_1_0.viewGO, "Right/TaskPanel/#scroll_TaskDesc")
+	arg_1_0._goTaskDescViewPort = gohelper.findChild(arg_1_0.viewGO, "Right/TaskPanel/#scroll_TaskDesc/Viewport")
+	arg_1_0._rectmask2D = arg_1_0._goTaskDescViewPort:GetComponent(typeof(UnityEngine.UI.RectMask2D))
+	arg_1_0._txtTaskContent = gohelper.findChildText(arg_1_0.viewGO, "Right/TaskPanel/#scroll_TaskDesc/Viewport/#txt_TaskContent")
+	arg_1_0._scrollReward = gohelper.findChildScrollRect(arg_1_0.viewGO, "Right/RawardPanel/#scroll_Reward")
+	arg_1_0._goWrongChannel = gohelper.findChild(arg_1_0.viewGO, "Right/TaskPanel/#go_WrongChannel")
+	arg_1_0._gorewarditem = gohelper.findChild(arg_1_0.viewGO, "Right/RawardPanel/#scroll_Reward/Viewport/Content/#go_rewarditem")
+	arg_1_0._txtTitle = gohelper.findChildText(arg_1_0.viewGO, "Middle/titlebg/#txt_title")
+	arg_1_0._btnplay = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Middle/#btn_play")
+	arg_1_0._btnreplay = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Middle/#btn_replay")
+	arg_1_0._btngetreward = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/RawardPanel/#btn_getreward")
+	arg_1_0._goMiddle = gohelper.findChildSingleImage(arg_1_0.viewGO, "Middle")
+	arg_1_0._txtmusictime = gohelper.findChildText(arg_1_0.viewGO, "Middle/#go_playing/#txt_time")
+	arg_1_0._middleAnim = arg_1_0._goMiddle:GetComponent(typeof(UnityEngine.Animator))
+	arg_1_0._anim = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	arg_1_0._isPlayingEpisodeDesc = false
+	arg_1_0.isGetingReward = false
+	arg_1_0._isReselectCloseFunc = false
+	arg_1_0._bottom = 400
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	Activity156Controller.instance:registerCallback(Activity156Event.DataUpdate, slot0.refreshUI, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, slot0._onRewardRefresh, slot0)
-	slot0:addEventCb(TimeDispatcher.instance, TimeDispatcher.OnDailyRefresh, slot0._onDailyRefresh, slot0)
-	slot0._btnplay:AddClickListener(slot0._playSong, slot0)
-	slot0._btnreplay:AddClickListener(slot0._playSong, slot0)
-	slot0._btngetreward:AddClickListener(slot0._btngetrewardOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	Activity156Controller.instance:registerCallback(Activity156Event.DataUpdate, arg_2_0.refreshUI, arg_2_0)
+	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_2_0._onRewardRefresh, arg_2_0)
+	arg_2_0:addEventCb(TimeDispatcher.instance, TimeDispatcher.OnDailyRefresh, arg_2_0._onDailyRefresh, arg_2_0)
+	arg_2_0._btnplay:AddClickListener(arg_2_0._playSong, arg_2_0)
+	arg_2_0._btnreplay:AddClickListener(arg_2_0._playSong, arg_2_0)
+	arg_2_0._btngetreward:AddClickListener(arg_2_0._btngetrewardOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	Activity156Controller.instance:unregisterCallback(Activity156Event.DataUpdate, slot0.refreshUI, slot0)
-	slot0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, slot0._onRewardRefresh, slot0)
-	slot0:removeEventCb(TimeDispatcher.instance, TimeDispatcher.OnDailyRefresh, slot0._onDailyRefresh, slot0)
-	slot0._btnplay:RemoveClickListener()
-	slot0._btnreplay:RemoveClickListener()
-	slot0._btngetreward:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	Activity156Controller.instance:unregisterCallback(Activity156Event.DataUpdate, arg_3_0.refreshUI, arg_3_0)
+	arg_3_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_3_0._onRewardRefresh, arg_3_0)
+	arg_3_0:removeEventCb(TimeDispatcher.instance, TimeDispatcher.OnDailyRefresh, arg_3_0._onDailyRefresh, arg_3_0)
+	arg_3_0._btnplay:RemoveClickListener()
+	arg_3_0._btnreplay:RemoveClickListener()
+	arg_3_0._btngetreward:RemoveClickListener()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._episodeItemTab = {}
-	slot0._rewardItemTab = slot0:getUserDataTb_()
-	slot0._goTaskContent = gohelper.findChild(slot0.viewGO, "Right/TaskTab/#scroll_TaskTabList/Viewport/Content")
-	slot0._scrollCanvasGroup = gohelper.onceAddComponent(slot0._scrollTaskDesc.gameObject, typeof(UnityEngine.CanvasGroup))
-	slot0._goTaskScrollArrow = gohelper.findChild(slot0.viewGO, "Right/TaskPanel/#scroll_TaskDesc/gameobject")
-	slot0._episodeCanGetInfoDict = {}
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._episodeItemTab = {}
+	arg_4_0._rewardItemTab = arg_4_0:getUserDataTb_()
+	arg_4_0._goTaskContent = gohelper.findChild(arg_4_0.viewGO, "Right/TaskTab/#scroll_TaskTabList/Viewport/Content")
+	arg_4_0._scrollCanvasGroup = gohelper.onceAddComponent(arg_4_0._scrollTaskDesc.gameObject, typeof(UnityEngine.CanvasGroup))
+	arg_4_0._goTaskScrollArrow = gohelper.findChild(arg_4_0.viewGO, "Right/TaskPanel/#scroll_TaskDesc/gameobject")
+	arg_4_0._episodeCanGetInfoDict = {}
 end
 
-function slot0._btngetrewardOnClick(slot0)
-	Activity156Controller.instance:tryReceiveEpisodeRewards(slot0._actId)
+function var_0_0._btngetrewardOnClick(arg_5_0)
+	Activity156Controller.instance:tryReceiveEpisodeRewards(arg_5_0._actId)
 end
 
-function slot0.onOpen(slot0)
-	gohelper.addChild(slot0.viewParam.parent, slot0.viewGO)
+function var_0_0.onOpen(arg_6_0)
+	local var_6_0 = arg_6_0.viewParam.parent
 
-	slot0._actId = ActivityEnum.Activity.Activity1_6WarmUp
-	slot0._config = Activity156Config.instance:getAct156Config(slot0._actId)
+	gohelper.addChild(var_6_0, arg_6_0.viewGO)
 
-	Activity156Controller.instance:getAct125InfoFromServer(slot0._actId)
+	arg_6_0._actId = ActivityEnum.Activity.Activity1_6WarmUp
+	arg_6_0._config = Activity156Config.instance:getAct156Config(arg_6_0._actId)
+
+	Activity156Controller.instance:getAct125InfoFromServer(arg_6_0._actId)
 end
 
-function slot0.refreshUI(slot0)
-	slot0:_refreshData()
-	slot0:_showDeadline()
-	slot0:_initEpisodeList()
-	slot0:_initRewards()
-	slot0:_initView()
+function var_0_0.refreshUI(arg_7_0)
+	arg_7_0:_refreshData()
+	arg_7_0:_showDeadline()
+	arg_7_0:_initEpisodeList()
+	arg_7_0:_initRewards()
+	arg_7_0:_initView()
 end
 
-function slot0._initView(slot0)
-	if Activity156Model.instance:checkLocalIsPlay(slot0._curSelectedLvId) then
-		if Activity156Model.instance:isEpisodeHasReceivedReward(slot0._curSelectedLvId) then
-			for slot6, slot7 in pairs(slot0._rewardItemTab) do
-				gohelper.setActive(slot7.gocanget, false)
+function var_0_0._initView(arg_8_0)
+	local var_8_0 = Activity156Model.instance:isEpisodeHasReceivedReward(arg_8_0._curSelectedLvId)
+	local var_8_1 = Activity156Model.instance:checkLocalIsPlay(arg_8_0._curSelectedLvId)
+
+	if var_8_1 then
+		if var_8_0 then
+			for iter_8_0, iter_8_1 in pairs(arg_8_0._rewardItemTab) do
+				gohelper.setActive(iter_8_1.gocanget, false)
 			end
 		else
-			for slot6, slot7 in pairs(slot0._rewardItemTab) do
-				gohelper.setActive(slot7.gocanget, true)
+			for iter_8_2, iter_8_3 in pairs(arg_8_0._rewardItemTab) do
+				gohelper.setActive(iter_8_3.gocanget, true)
 			end
 
-			gohelper.setActive(slot0._btngetreward.gameObject, true)
+			gohelper.setActive(arg_8_0._btngetreward.gameObject, true)
 		end
 	else
-		gohelper.setActive(slot0._btngetreward.gameObject, false)
+		gohelper.setActive(arg_8_0._btngetreward.gameObject, false)
 	end
 
-	if slot1 or slot2 then
-		slot0._rectmask2D.padding = Vector4(0, 0, 0, 0)
+	if var_8_0 or var_8_1 then
+		arg_8_0._rectmask2D.padding = Vector4(0, 0, 0, 0)
 
-		gohelper.setActive(slot0._goWrongChannel, false)
-		gohelper.setActive(slot0._goTaskScrollArrow, true)
+		gohelper.setActive(arg_8_0._goWrongChannel, false)
+		gohelper.setActive(arg_8_0._goTaskScrollArrow, true)
 	else
-		slot0._rectmask2D.padding = Vector4(0, slot0._bottom, 0, 0)
+		arg_8_0._rectmask2D.padding = Vector4(0, arg_8_0._bottom, 0, 0)
 
-		gohelper.setActive(slot0._goWrongChannel, true)
-		gohelper.setActive(slot0._goTaskScrollArrow, false)
+		gohelper.setActive(arg_8_0._goWrongChannel, true)
+		gohelper.setActive(arg_8_0._goTaskScrollArrow, false)
 	end
 
-	gohelper.setActive(slot0._btnreplay.gameObject, slot2)
-	gohelper.setActive(slot0._btnplay.gameObject, not slot2)
+	gohelper.setActive(arg_8_0._btnreplay.gameObject, var_8_1)
+	gohelper.setActive(arg_8_0._btnplay.gameObject, not var_8_1)
 end
 
-function slot0._refreshData(slot0)
-	slot0._curSelectedLvId = Activity156Model.instance:getCurSelectedEpisode()
+function var_0_0._refreshData(arg_9_0)
+	arg_9_0._curSelectedLvId = Activity156Model.instance:getCurSelectedEpisode()
 
-	if not slot0._curSelectedLvId then
-		slot0._curSelectedLvId = Activity156Model.instance:getLastEpisode()
+	if not arg_9_0._curSelectedLvId then
+		arg_9_0._curSelectedLvId = Activity156Model.instance:getLastEpisode()
 
-		Activity156Model.instance:setCurSelectedEpisode(slot0._curSelectedLvId)
+		Activity156Model.instance:setCurSelectedEpisode(arg_9_0._curSelectedLvId)
 	end
 
-	slot1 = Activity156Config.instance:getEpisodeConfig(slot0._curSelectedLvId)
-	slot0._descHeight = SLFramework.UGUI.GuiHelper.GetPreferredHeight(slot0._txtTaskContent, slot1.text)
-	slot0._txtTaskContent.text = slot1.text
-	slot0._txtTitle.text = Activity156Config.instance:getEpisodeConfig(slot0._curSelectedLvId).name
+	local var_9_0 = Activity156Config.instance:getEpisodeConfig(arg_9_0._curSelectedLvId)
 
-	recthelper.setAnchorY(slot0._txtTaskContent.transform, 0)
-	gohelper.setActive(slot0._goWrongChannel, true)
-	gohelper.setActive(slot0._goTaskScrollArrow, false)
+	arg_9_0._descHeight = SLFramework.UGUI.GuiHelper.GetPreferredHeight(arg_9_0._txtTaskContent, var_9_0.text)
+	arg_9_0._txtTaskContent.text = var_9_0.text
+
+	local var_9_1 = Activity156Config.instance:getEpisodeConfig(arg_9_0._curSelectedLvId)
+
+	arg_9_0._txtTitle.text = var_9_1.name
+
+	recthelper.setAnchorY(arg_9_0._txtTaskContent.transform, 0)
+	gohelper.setActive(arg_9_0._goWrongChannel, true)
+	gohelper.setActive(arg_9_0._goTaskScrollArrow, false)
 end
 
-function slot0._showDeadline(slot0)
-	slot0:_onRefreshDeadline()
-	TaskDispatcher.cancelTask(slot0._onRefreshDeadline, slot0)
-	TaskDispatcher.runRepeat(slot0._onRefreshDeadline, slot0, 60)
+function var_0_0._showDeadline(arg_10_0)
+	arg_10_0:_onRefreshDeadline()
+	TaskDispatcher.cancelTask(arg_10_0._onRefreshDeadline, arg_10_0)
+	TaskDispatcher.runRepeat(arg_10_0._onRefreshDeadline, arg_10_0, 60)
 end
 
-function slot0._onRefreshDeadline(slot0)
-	slot0._txtLimitTime.text = ActivityHelper.getActivityRemainTimeStr(slot0._actId)
+function var_0_0._onRefreshDeadline(arg_11_0)
+	arg_11_0._txtLimitTime.text = ActivityHelper.getActivityRemainTimeStr(arg_11_0._actId)
 end
 
-slot0.AnimSwitchMode = {
+var_0_0.AnimSwitchMode = {
 	UnFinish2Finish = 3,
 	Finish = 1,
 	Finish2UnFinish = 4,
@@ -152,347 +161,385 @@ slot0.AnimSwitchMode = {
 	None = 0
 }
 
-function slot0._initEpisodeList(slot0)
-	for slot5 = 1, Activity156Config.instance:getEpisodeCount(slot0._actId) do
-		if not slot0._episodeItemTab[slot5] then
-			slot6 = slot0:getUserDataTb_()
-			slot6.episodeItemGo = gohelper.cloneInPlace(slot0._goradiotaskitem, "taskItem" .. slot5)
-			slot7 = slot6.episodeItemGo
-			slot6.txtDateUnSelected = gohelper.findChildText(slot7, "txt_DateUnSelected")
-			slot6.goDateSelected = gohelper.findChild(slot7, "image_Selected")
-			slot6.txtDateSelected = gohelper.findChildText(slot7, "image_Selected/txt_DateSelected")
-			slot6.finishEffectGo = gohelper.findChild(slot7, "image_Selected/Wave_effect2")
-			slot6.imagewave = gohelper.findChildImage(slot7, "image_Selected/image_wave")
-			slot6.goDateLocked = gohelper.findChild(slot7, "image_Locked")
-			slot6.click = gohelper.findChildButton(slot7, "btn_click")
+function var_0_0._initEpisodeList(arg_12_0)
+	local var_12_0 = Activity156Config.instance:getEpisodeCount(arg_12_0._actId)
 
-			slot6.click:AddClickListener(slot0._taskItemOnClick, slot0, slot5)
+	for iter_12_0 = 1, var_12_0 do
+		local var_12_1 = arg_12_0._episodeItemTab[iter_12_0]
 
-			slot0._episodeItemTab[slot5] = slot6
+		if not var_12_1 then
+			var_12_1 = arg_12_0:getUserDataTb_()
+			var_12_1.episodeItemGo = gohelper.cloneInPlace(arg_12_0._goradiotaskitem, "taskItem" .. iter_12_0)
+
+			local var_12_2 = var_12_1.episodeItemGo
+
+			var_12_1.txtDateUnSelected = gohelper.findChildText(var_12_2, "txt_DateUnSelected")
+			var_12_1.goDateSelected = gohelper.findChild(var_12_2, "image_Selected")
+			var_12_1.txtDateSelected = gohelper.findChildText(var_12_2, "image_Selected/txt_DateSelected")
+			var_12_1.finishEffectGo = gohelper.findChild(var_12_2, "image_Selected/Wave_effect2")
+			var_12_1.imagewave = gohelper.findChildImage(var_12_2, "image_Selected/image_wave")
+			var_12_1.goDateLocked = gohelper.findChild(var_12_2, "image_Locked")
+			var_12_1.click = gohelper.findChildButton(var_12_2, "btn_click")
+
+			var_12_1.click:AddClickListener(arg_12_0._taskItemOnClick, arg_12_0, iter_12_0)
+
+			arg_12_0._episodeItemTab[iter_12_0] = var_12_1
 		end
 
-		slot6.txtDateUnSelected.text = string.format("Day.%s", slot5)
-		slot6.txtDateSelected.text = string.format("Day.%s", slot5)
+		var_12_1.txtDateUnSelected.text = string.format("Day.%s", iter_12_0)
+		var_12_1.txtDateSelected.text = string.format("Day.%s", iter_12_0)
 
-		gohelper.setActive(slot6.episodeItemGo, true)
+		gohelper.setActive(var_12_1.episodeItemGo, true)
 
-		slot7 = slot5 == slot0._curSelectedLvId
+		local var_12_3 = iter_12_0 == arg_12_0._curSelectedLvId
 
-		gohelper.setActive(slot6.goDateSelected, slot7)
-		gohelper.setActive(slot6.txtDateUnSelected.gameObject, not slot7)
-		gohelper.setActive(slot6.goDateLocked, not Activity156Model.instance:reallyOpen(slot0._actId, slot5))
+		gohelper.setActive(var_12_1.goDateSelected, var_12_3)
+		gohelper.setActive(var_12_1.txtDateUnSelected.gameObject, not var_12_3)
+
+		local var_12_4 = not Activity156Model.instance:reallyOpen(arg_12_0._actId, iter_12_0)
+
+		gohelper.setActive(var_12_1.goDateLocked, var_12_4)
 	end
 
-	ZProj.UGUIHelper.RebuildLayout(slot0._goTaskContent.transform)
+	ZProj.UGUIHelper.RebuildLayout(arg_12_0._goTaskContent.transform)
 
-	slot0._scrollTaskTabList.horizontalNormalizedPosition = slot0:_getScrollTargetValue(1, slot1, slot0._curSelectedLvId)
+	arg_12_0._scrollTaskTabList.horizontalNormalizedPosition = arg_12_0:_getScrollTargetValue(1, var_12_0, arg_12_0._curSelectedLvId)
 end
 
-function slot0._getScrollTargetValue(slot0, slot1, slot2, slot3)
-	if slot3 == 1 then
+function var_0_0._getScrollTargetValue(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
+	if arg_13_3 == 1 then
 		return 0
 	end
 
-	return 1 / (slot2 - slot1) * (slot3 - slot1)
+	return 1 / (arg_13_2 - arg_13_1) * (arg_13_3 - arg_13_1)
 end
 
-function slot0._taskItemOnClick(slot0, slot1)
-	slot2 = Activity156Model.instance:getCurSelectedEpisode()
-	slot3 = Activity156Model.instance:isEpisodeUnLock(slot1)
+function var_0_0._taskItemOnClick(arg_14_0, arg_14_1)
+	local var_14_0 = Activity156Model.instance:getCurSelectedEpisode()
+	local var_14_1 = Activity156Model.instance:isEpisodeUnLock(arg_14_1)
 
-	if not Activity156Model.instance:isOpen(slot0._actId, slot1) then
+	if not Activity156Model.instance:isOpen(arg_14_0._actId, arg_14_1) then
 		return
 	end
 
-	function slot0._switchCallBack()
-		TaskDispatcher.cancelTask(uv0._switchCallBack, uv0)
+	function arg_14_0._switchCallBack()
+		TaskDispatcher.cancelTask(arg_14_0._switchCallBack, arg_14_0)
 
-		uv0._txtTitle.text = Activity156Config.instance:getEpisodeConfig(uv0._curSelectedLvId).name
+		local var_15_0 = Activity156Config.instance:getEpisodeConfig(arg_14_0._curSelectedLvId)
 
-		uv0:refreshUI()
+		arg_14_0._txtTitle.text = var_15_0.name
+
+		arg_14_0:refreshUI()
 	end
 
-	if slot2 ~= slot1 and slot3 then
-		slot0._anim:Play("switch", 0, 0)
-		TaskDispatcher.runDelay(slot0._switchCallBack, slot0, 0.3)
+	if var_14_0 ~= arg_14_1 and var_14_1 then
+		arg_14_0._anim:Play("switch", 0, 0)
+		TaskDispatcher.runDelay(arg_14_0._switchCallBack, arg_14_0, 0.3)
 	end
 
-	Activity156Controller.instance:setCurSelectedEpisode(slot1, true)
+	Activity156Controller.instance:setCurSelectedEpisode(arg_14_1, true)
 
-	if not Activity156Model.instance:checkIsPlayingMusicId(slot1) then
-		slot0:_initMusic()
-		slot0._middleAnim:Play("idle", 0, 0)
+	if not Activity156Model.instance:checkIsPlayingMusicId(arg_14_1) then
+		arg_14_0:_initMusic()
+		arg_14_0._middleAnim:Play("idle", 0, 0)
 	end
 
-	if slot0._isReselectCloseFunc then
-		slot0:_revertViewCloseCheckFunc()
+	if arg_14_0._isReselectCloseFunc then
+		arg_14_0:_revertViewCloseCheckFunc()
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
 end
 
-function slot0._initRewards(slot0)
-	slot0._rewardCount = #string.split(slot0._config[slot0._curSelectedLvId].bonus, "|")
+function var_0_0._initRewards(arg_16_0)
+	local var_16_0 = arg_16_0._config[arg_16_0._curSelectedLvId].bonus
+	local var_16_1 = string.split(var_16_0, "|")
 
-	for slot6 = 1, slot0._rewardCount do
-		if not slot0._rewardItemTab[slot6] then
-			slot7 = {
-				go = gohelper.cloneInPlace(slot0._gorewarditem, "rewarditem" .. slot6)
+	arg_16_0._rewardCount = #var_16_1
+
+	for iter_16_0 = 1, arg_16_0._rewardCount do
+		if not arg_16_0._rewardItemTab[iter_16_0] then
+			local var_16_2 = {
+				go = gohelper.cloneInPlace(arg_16_0._gorewarditem, "rewarditem" .. iter_16_0)
 			}
-			slot7.icon = IconMgr.instance:getCommonPropItemIcon(gohelper.findChild(slot7.go, "go_icon"))
-			slot7.goreceive = gohelper.findChild(slot7.go, "go_receive")
-			slot7.gocanget = gohelper.findChild(slot7.go, "go_canget")
-			slot7.hasgetAnim = gohelper.findChild(slot7.go, "go_receive/go_hasget"):GetComponent(typeof(UnityEngine.Animator))
+			local var_16_3 = gohelper.findChild(var_16_2.go, "go_icon")
 
-			table.insert(slot0._rewardItemTab, slot7)
+			var_16_2.icon = IconMgr.instance:getCommonPropItemIcon(var_16_3)
+			var_16_2.goreceive = gohelper.findChild(var_16_2.go, "go_receive")
+			var_16_2.gocanget = gohelper.findChild(var_16_2.go, "go_canget")
+			var_16_2.hasgetAnim = gohelper.findChild(var_16_2.go, "go_receive/go_hasget"):GetComponent(typeof(UnityEngine.Animator))
+
+			table.insert(arg_16_0._rewardItemTab, var_16_2)
 		end
 
-		gohelper.setActive(slot0._rewardItemTab[slot6].go, true)
+		gohelper.setActive(arg_16_0._rewardItemTab[iter_16_0].go, true)
 
-		if Activity156Model.instance:isEpisodeHasReceivedReward(slot0._curSelectedLvId) then
-			gohelper.setActive(slot0._rewardItemTab[slot6].goreceive, true)
+		if Activity156Model.instance:isEpisodeHasReceivedReward(arg_16_0._curSelectedLvId) then
+			gohelper.setActive(arg_16_0._rewardItemTab[iter_16_0].goreceive, true)
 		else
-			gohelper.setActive(slot0._rewardItemTab[slot6].goreceive, Activity156Model.instance:isEpisodeFinished(slot0._curSelectedLvId) and not slot0.isGetingReward)
+			local var_16_4 = Activity156Model.instance:isEpisodeFinished(arg_16_0._curSelectedLvId)
+
+			gohelper.setActive(arg_16_0._rewardItemTab[iter_16_0].goreceive, var_16_4 and not arg_16_0.isGetingReward)
 		end
 
-		slot8 = string.splitToNumber(slot2[slot6], "#")
+		local var_16_5 = string.splitToNumber(var_16_1[iter_16_0], "#")
 
-		slot0._rewardItemTab[slot6].icon:setMOValue(slot8[1], slot8[2], slot8[3])
-		slot0._rewardItemTab[slot6].icon:setCountFontSize(42)
-		slot0._rewardItemTab[slot6].icon:setScale(0.5)
+		arg_16_0._rewardItemTab[iter_16_0].icon:setMOValue(var_16_5[1], var_16_5[2], var_16_5[3])
+		arg_16_0._rewardItemTab[iter_16_0].icon:setCountFontSize(42)
+		arg_16_0._rewardItemTab[iter_16_0].icon:setScale(0.5)
 	end
 
-	for slot6 = slot0._rewardCount + 1, #slot0._rewardItemTab do
-		gohelper.setActive(slot0._rewardItemTab[slot6].go, false)
+	for iter_16_1 = arg_16_0._rewardCount + 1, #arg_16_0._rewardItemTab do
+		gohelper.setActive(arg_16_0._rewardItemTab[iter_16_1].go, false)
 	end
 end
 
-function slot0._onRewardRefresh(slot0, slot1)
-	if slot1 == ViewName.CommonPropView then
-		for slot5, slot6 in pairs(slot0._rewardItemTab) do
-			gohelper.setActive(slot6.gocanget, false)
+function var_0_0._onRewardRefresh(arg_17_0, arg_17_1)
+	if arg_17_1 == ViewName.CommonPropView then
+		for iter_17_0, iter_17_1 in pairs(arg_17_0._rewardItemTab) do
+			gohelper.setActive(iter_17_1.gocanget, false)
 		end
 
-		slot0:_onGetRewardAnim(uv0.AnimSwitchMode.UnFinish2Finish)
+		arg_17_0:_onGetRewardAnim(var_0_0.AnimSwitchMode.UnFinish2Finish)
 	end
 end
 
-function slot0._onGetRewardAnim(slot0, slot1)
-	for slot6 = 1, slot0._rewardCount do
-		gohelper.setActive(slot0._rewardItemTab[slot6].goreceive, true)
-		slot0._rewardItemTab[slot6].hasgetAnim:Play(slot1 == uv0.AnimSwitchMode.UnFinish2Finish and "go_hasget_in" or "go_hasget_idle", 0, 0)
+function var_0_0._onGetRewardAnim(arg_18_0, arg_18_1)
+	local var_18_0 = arg_18_1 == var_0_0.AnimSwitchMode.UnFinish2Finish and "go_hasget_in" or "go_hasget_idle"
+
+	for iter_18_0 = 1, arg_18_0._rewardCount do
+		gohelper.setActive(arg_18_0._rewardItemTab[iter_18_0].goreceive, true)
+		arg_18_0._rewardItemTab[iter_18_0].hasgetAnim:Play(var_18_0, 0, 0)
 	end
 
-	slot0.isGetingReward = false
+	arg_18_0.isGetingReward = false
 end
 
-function slot0._onDailyRefresh(slot0)
-	if slot0._actId then
-		Activity156Controller.instance:getAct125InfoFromServer(slot0._actId)
+function var_0_0._onDailyRefresh(arg_19_0)
+	if arg_19_0._actId then
+		Activity156Controller.instance:getAct125InfoFromServer(arg_19_0._actId)
 	end
 end
 
-function slot0._messageBoxYesFunc(slot0)
+function var_0_0._messageBoxYesFunc(arg_20_0)
 	ViewMgr.instance:closeView(ViewName.ActivityBeginnerView)
 end
 
-function slot0._checkIsPlayingDesc(slot0)
-	if slot0._isPlayingEpisodeDesc and not Activity156Model.instance:checkLocalIsPlay(slot0._curSelectedLvId) then
-		GameFacade.showMessageBox(MessageBoxIdDefine.V1a5_WarmUpPlayingQuitCheck, MsgBoxEnum.BoxType.Yes_No, slot0._messageBoxYesFunc, nil, , slot0, slot0)
+function var_0_0._checkIsPlayingDesc(arg_21_0)
+	local var_21_0 = Activity156Model.instance:checkLocalIsPlay(arg_21_0._curSelectedLvId)
+
+	if arg_21_0._isPlayingEpisodeDesc and not var_21_0 then
+		GameFacade.showMessageBox(MessageBoxIdDefine.V1a5_WarmUpPlayingQuitCheck, MsgBoxEnum.BoxType.Yes_No, arg_21_0._messageBoxYesFunc, nil, nil, arg_21_0, arg_21_0)
 	end
 end
 
-function slot0._overrideViewCloseCheckFunc(slot0)
-	if ViewMgr.instance:getContainer(ViewName.ActivityBeginnerView) and slot1.navigationView then
-		slot0._originCloseCheckFunc = slot2._closeCheckFunc
-		slot0._originCloseCheckObj = slot2._closeCheckObj
-		slot0._originHomeCheckFunc = slot2._homeCheckFunc
-		slot0._originHomeCheckObj = slot2._homeCheckObj
+function var_0_0._overrideViewCloseCheckFunc(arg_22_0)
+	local var_22_0 = ViewMgr.instance:getContainer(ViewName.ActivityBeginnerView)
 
-		slot2:setCloseCheck(slot0._checkIsPlayingDesc, slot0)
-		slot2:setHomeCheck(slot0._checkIsPlayingDesc, slot0)
+	if var_22_0 then
+		local var_22_1 = var_22_0.navigationView
+
+		if var_22_1 then
+			arg_22_0._originCloseCheckFunc = var_22_1._closeCheckFunc
+			arg_22_0._originCloseCheckObj = var_22_1._closeCheckObj
+			arg_22_0._originHomeCheckFunc = var_22_1._homeCheckFunc
+			arg_22_0._originHomeCheckObj = var_22_1._homeCheckObj
+
+			var_22_1:setCloseCheck(arg_22_0._checkIsPlayingDesc, arg_22_0)
+			var_22_1:setHomeCheck(arg_22_0._checkIsPlayingDesc, arg_22_0)
+		end
 	end
 
-	slot0._isReselectCloseFunc = true
+	arg_22_0._isReselectCloseFunc = true
 end
 
-function slot0._revertViewCloseCheckFunc(slot0)
-	if ViewMgr.instance:getContainer(ViewName.ActivityBeginnerView) and slot1.navigationView then
-		slot2:setCloseCheck(slot0._originCloseCheckFunc, slot0._originCloseCheckObj)
-		slot2:setHomeCheck(slot0._originHomeCheckFunc, slot0._originHomeCheckObj)
+function var_0_0._revertViewCloseCheckFunc(arg_23_0)
+	local var_23_0 = ViewMgr.instance:getContainer(ViewName.ActivityBeginnerView)
+
+	if var_23_0 then
+		local var_23_1 = var_23_0.navigationView
+
+		if var_23_1 then
+			var_23_1:setCloseCheck(arg_23_0._originCloseCheckFunc, arg_23_0._originCloseCheckObj)
+			var_23_1:setHomeCheck(arg_23_0._originHomeCheckFunc, arg_23_0._originHomeCheckObj)
+		end
 	end
 
-	slot0._originCloseCheckFunc = nil
-	slot0._originCloseCheckObj = nil
-	slot0._originHomeCheckFunc = nil
-	slot0._originHomeCheckObj = nil
-	slot0._isReselectCloseFunc = false
+	arg_23_0._originCloseCheckFunc = nil
+	arg_23_0._originCloseCheckObj = nil
+	arg_23_0._originHomeCheckFunc = nil
+	arg_23_0._originHomeCheckObj = nil
+	arg_23_0._isReselectCloseFunc = false
 end
 
-function slot0._playSong(slot0)
-	if Activity156Model.instance:checkIsPlayingMusicId(slot0._curSelectedLvId) then
+function var_0_0._playSong(arg_24_0)
+	if Activity156Model.instance:checkIsPlayingMusicId(arg_24_0._curSelectedLvId) then
 		return
 	end
 
-	slot1 = Activity156Config.instance:getEpisodeConfig(slot0._curSelectedLvId)
-	slot2 = Activity156Enum.DayToMusic[slot0._curSelectedLvId]
+	local var_24_0 = Activity156Config.instance:getEpisodeConfig(arg_24_0._curSelectedLvId)
+	local var_24_1 = Activity156Enum.DayToMusic[arg_24_0._curSelectedLvId]
 
-	slot0:_initMusic()
+	arg_24_0:_initMusic()
 
-	if not Activity156Model.instance:checkLocalIsPlay(slot0._curSelectedLvId) then
-		slot0:_overrideViewCloseCheckFunc()
+	if not Activity156Model.instance:checkLocalIsPlay(arg_24_0._curSelectedLvId) then
+		arg_24_0:_overrideViewCloseCheckFunc()
 	end
 
-	slot0.playaudioId = AudioMgr.instance:trigger(slot2)
+	arg_24_0.playaudioId = AudioMgr.instance:trigger(var_24_1)
 
-	Activity156Model.instance:setIsPlayingMusicId(slot0._curSelectedLvId)
+	Activity156Model.instance:setIsPlayingMusicId(arg_24_0._curSelectedLvId)
 
-	slot0.desctime = slot1.time
-	slot0.musictime = slot1.musictime or 10
-	slot0._txtmusictime.text = formatLuaLang("VersionActivity1_6WarmUpView_musictime", slot0.musictime)
+	arg_24_0.desctime = var_24_0.time
+	arg_24_0.musictime = var_24_0.musictime or 10
+	arg_24_0._txtmusictime.text = formatLuaLang("VersionActivity1_6WarmUpView_musictime", arg_24_0.musictime)
 
-	slot0:_playEpisodeDesc(slot0.desctime, slot0._onPlayEpisodeDescFinished, slot0)
+	arg_24_0:_playEpisodeDesc(arg_24_0.desctime, arg_24_0._onPlayEpisodeDescFinished, arg_24_0)
 
-	slot0._scrollCanvasGroup.blocksRaycasts = false
+	arg_24_0._scrollCanvasGroup.blocksRaycasts = false
 
-	TaskDispatcher.runDelay(slot0._playsongcallback, slot0, slot0.musictime)
-	slot0._middleAnim:Update(0)
-	slot0._middleAnim:Play("play", 0, 0)
-	TaskDispatcher.runRepeat(slot0._remainMusicTime, slot0, 1, slot0.musictime)
+	TaskDispatcher.runDelay(arg_24_0._playsongcallback, arg_24_0, arg_24_0.musictime)
+	arg_24_0._middleAnim:Update(0)
+	arg_24_0._middleAnim:Play("play", 0, 0)
+	TaskDispatcher.runRepeat(arg_24_0._remainMusicTime, arg_24_0, 1, arg_24_0.musictime)
 end
 
-function slot0._remainMusicTime(slot0)
-	slot0.musictime = slot0.musictime - 1
-	slot0._txtmusictime.text = formatLuaLang("VersionActivity1_6WarmUpView_musictime", slot0.musictime)
+function var_0_0._remainMusicTime(arg_25_0)
+	arg_25_0.musictime = arg_25_0.musictime - 1
+	arg_25_0._txtmusictime.text = formatLuaLang("VersionActivity1_6WarmUpView_musictime", arg_25_0.musictime)
 
-	if slot0.musictime == 0 then
-		TaskDispatcher.cancelTask(slot0._remainMusicTime, slot0)
+	if arg_25_0.musictime == 0 then
+		TaskDispatcher.cancelTask(arg_25_0._remainMusicTime, arg_25_0)
 
 		return
 	end
 end
 
-function slot0._playsongcallback(slot0)
-	slot0._middleAnim:Play("close", 0, 0)
-	slot0:_initMusic()
+function var_0_0._playsongcallback(arg_26_0)
+	arg_26_0._middleAnim:Play("close", 0, 0)
+	arg_26_0:_initMusic()
 end
 
-function slot0._onPlayEpisodeDescFinished(slot0)
-	slot0._scrollCanvasGroup.blocksRaycasts = true
-	slot0._isPlayingEpisodeDesc = false
+function var_0_0._onPlayEpisodeDescFinished(arg_27_0)
+	arg_27_0._scrollCanvasGroup.blocksRaycasts = true
+	arg_27_0._isPlayingEpisodeDesc = false
 
-	slot0:_revertViewCloseCheckFunc()
-	slot0:_checkIsPlayingButNoCompeleteDesc()
+	arg_27_0:_revertViewCloseCheckFunc()
+	arg_27_0:_checkIsPlayingButNoCompeleteDesc()
 
-	if Activity156Model.instance:isEpisodeHasReceivedReward(slot0._curSelectedLvId) then
+	if Activity156Model.instance:isEpisodeHasReceivedReward(arg_27_0._curSelectedLvId) then
 		return
 	end
 
-	slot0.isGetingReward = true
+	arg_27_0.isGetingReward = true
 
-	Activity156Model.instance:setLocalIsPlay(slot0._curSelectedLvId)
+	Activity156Model.instance:setLocalIsPlay(arg_27_0._curSelectedLvId)
 
-	for slot4, slot5 in pairs(slot0._rewardItemTab) do
-		gohelper.setActive(slot5.gocanget, true)
+	for iter_27_0, iter_27_1 in pairs(arg_27_0._rewardItemTab) do
+		gohelper.setActive(iter_27_1.gocanget, true)
 	end
 
-	Activity156Controller.instance:setCurSelectedEpisode(slot0._curSelectedLvId)
-	gohelper.setActive(slot0._btngetreward.gameObject, true)
-	gohelper.setActive(slot0._btnreplay.gameObject, true)
+	Activity156Controller.instance:setCurSelectedEpisode(arg_27_0._curSelectedLvId)
+	gohelper.setActive(arg_27_0._btngetreward.gameObject, true)
+	gohelper.setActive(arg_27_0._btnreplay.gameObject, true)
 end
 
-function slot0._playEpisodeDesc(slot0, slot1, slot2, slot3)
-	if slot0._tweenId then
-		ZProj.TweenHelper.KillById(slot0._tweenId)
+function var_0_0._playEpisodeDesc(arg_28_0, arg_28_1, arg_28_2, arg_28_3)
+	if arg_28_0._tweenId then
+		ZProj.TweenHelper.KillById(arg_28_0._tweenId)
 
-		slot0._tweenId = nil
+		arg_28_0._tweenId = nil
 	end
 
-	slot0._tweenId = ZProj.TweenHelper.DOTweenFloat(1, 0, slot1, slot0.everyFrame, slot2, slot3, nil)
+	arg_28_0._tweenId = ZProj.TweenHelper.DOTweenFloat(1, 0, arg_28_1, arg_28_0.everyFrame, arg_28_2, arg_28_3, nil)
 
-	gohelper.setActive(slot0._goWrongChannel, false)
+	gohelper.setActive(arg_28_0._goWrongChannel, false)
 
-	slot0._isPlayingEpisodeDesc = true
+	arg_28_0._isPlayingEpisodeDesc = true
 end
 
-function slot0.everyFrame(slot0, slot1)
-	slot0._rectmask2D.padding = Vector4(0, Mathf.Lerp(0, slot0._bottom, slot1), 0, 0)
+function var_0_0.everyFrame(arg_29_0, arg_29_1)
+	arg_29_0._rectmask2D.padding = Vector4(0, Mathf.Lerp(0, arg_29_0._bottom, arg_29_1), 0, 0)
 end
 
-function slot0._checkIsPlayingButNoCompeleteDesc(slot0)
-	if slot0.playaudioId and slot0._descHeight - slot0._bottom > 0 then
-		slot3 = slot1 * slot0.desctime / slot0._bottom
+function var_0_0._checkIsPlayingButNoCompeleteDesc(arg_30_0)
+	if arg_30_0.playaudioId then
+		local var_30_0 = arg_30_0._descHeight - arg_30_0._bottom
 
-		if slot0._movetweenId then
-			ZProj.TweenHelper.KillById(slot0._movetweenId)
+		if var_30_0 > 0 then
+			local var_30_1 = var_30_0 * (arg_30_0.desctime / arg_30_0._bottom)
 
-			slot0._movetweenId = nil
+			if arg_30_0._movetweenId then
+				ZProj.TweenHelper.KillById(arg_30_0._movetweenId)
+
+				arg_30_0._movetweenId = nil
+			end
+
+			arg_30_0._movetweenId = ZProj.TweenHelper.DOLocalMoveY(arg_30_0._txtTaskContent.transform, var_30_0, var_30_1)
+
+			gohelper.setActive(arg_30_0._goTaskScrollArrow, true)
 		end
-
-		slot0._movetweenId = ZProj.TweenHelper.DOLocalMoveY(slot0._txtTaskContent.transform, slot1, slot3)
-
-		gohelper.setActive(slot0._goTaskScrollArrow, true)
 	end
 end
 
-function slot0._initMusic(slot0)
-	if slot0.playaudioId then
-		slot0:_stopAudio()
+function var_0_0._initMusic(arg_31_0)
+	if arg_31_0.playaudioId then
+		arg_31_0:_stopAudio()
 
-		slot0.playaudioId = nil
+		arg_31_0.playaudioId = nil
 
-		if slot0._playsongcallback then
-			TaskDispatcher.cancelTask(slot0._playsongcallback, slot0)
+		if arg_31_0._playsongcallback then
+			TaskDispatcher.cancelTask(arg_31_0._playsongcallback, arg_31_0)
 
-			slot0._playsongcallback = nil
+			arg_31_0._playsongcallback = nil
 		end
 
-		if slot0._tweenId then
-			ZProj.TweenHelper.KillById(slot0._tweenId)
+		if arg_31_0._tweenId then
+			ZProj.TweenHelper.KillById(arg_31_0._tweenId)
 
-			slot0._tweenId = nil
+			arg_31_0._tweenId = nil
 		end
 
-		if slot0._movetweenId then
-			ZProj.TweenHelper.KillById(slot0._movetweenId)
+		if arg_31_0._movetweenId then
+			ZProj.TweenHelper.KillById(arg_31_0._movetweenId)
 
-			slot0._movetweenId = nil
+			arg_31_0._movetweenId = nil
 		end
 
 		Activity156Model.instance:cleanIsPlayingMusicId()
 
-		slot0._scrollCanvasGroup.blocksRaycasts = true
+		arg_31_0._scrollCanvasGroup.blocksRaycasts = true
 
-		TaskDispatcher.cancelTask(slot0._remainMusicTime, slot0)
+		TaskDispatcher.cancelTask(arg_31_0._remainMusicTime, arg_31_0)
 	end
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_32_0)
 	Activity156Model.instance:cleanCurSelectedEpisode()
 	Activity156Model.instance:cleanIsPlayingMusicId()
-	slot0:_initMusic()
-	slot0:_revertViewCloseCheckFunc()
+	arg_32_0:_initMusic()
+	arg_32_0:_revertViewCloseCheckFunc()
 end
 
-function slot0._stopAudio(slot0)
+function var_0_0._stopAudio(arg_33_0)
 	AudioMgr.instance:trigger(AudioEnum.ui_andamtte1_6_music.stop_ui_andamtte1_6_music)
 end
 
-function slot0.onDestroyView(slot0)
-	TaskDispatcher.cancelTask(slot0._switchCallBack, slot0)
-	TaskDispatcher.cancelTask(slot0._onRefreshDeadline, slot0)
-	TaskDispatcher.cancelTask(slot0._playsongcallback, slot0)
-	TaskDispatcher.cancelTask(slot0._remainMusicTime, slot0)
+function var_0_0.onDestroyView(arg_34_0)
+	TaskDispatcher.cancelTask(arg_34_0._switchCallBack, arg_34_0)
+	TaskDispatcher.cancelTask(arg_34_0._onRefreshDeadline, arg_34_0)
+	TaskDispatcher.cancelTask(arg_34_0._playsongcallback, arg_34_0)
+	TaskDispatcher.cancelTask(arg_34_0._remainMusicTime, arg_34_0)
 
-	if slot0._episodeItemTab then
-		for slot4, slot5 in pairs(slot0._episodeItemTab) do
-			slot5.click:RemoveClickListener()
+	if arg_34_0._episodeItemTab then
+		for iter_34_0, iter_34_1 in pairs(arg_34_0._episodeItemTab) do
+			iter_34_1.click:RemoveClickListener()
 
-			slot5 = nil
+			iter_34_1 = nil
 		end
 	end
 
-	slot0._config = nil
+	arg_34_0._config = nil
 end
 
-return slot0
+return var_0_0

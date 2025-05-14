@@ -1,44 +1,60 @@
-module("modules.logic.rouge.map.view.fightsucc.RougeFightSuccessHeroItem", package.seeall)
+﻿module("modules.logic.rouge.map.view.fightsucc.RougeFightSuccessHeroItem", package.seeall)
 
-slot0 = class("RougeFightSuccessHeroItem", RougeLuaCompBase)
+local var_0_0 = class("RougeFightSuccessHeroItem", RougeLuaCompBase)
 
-function slot0.init(slot0, slot1)
-	uv0.super.init(slot0, slot1)
+function var_0_0.init(arg_1_0, arg_1_1)
+	var_0_0.super.init(arg_1_0, arg_1_1)
 
-	slot0.go = slot1
-	slot0.slider = gohelper.findChildSlider(slot1, "#slider_hp")
-	slot0.simageRole = gohelper.findChildSingleImage(slot1, "hero/#simage_rolehead")
-	slot0.goDead = gohelper.findChild(slot1, "#go_dead")
+	arg_1_0.go = arg_1_1
+	arg_1_0.slider = gohelper.findChildSlider(arg_1_1, "#slider_hp")
+	arg_1_0.simageRole = gohelper.findChildSingleImage(arg_1_1, "hero/#simage_rolehead")
+	arg_1_0.goDead = gohelper.findChild(arg_1_1, "#go_dead")
 end
 
-function slot0.refreshHero(slot0, slot1)
-	if (slot1 and slot1.heroId) ~= 0 then
-		gohelper.setActive(slot0.go, true)
-		slot0.simageRole:LoadImage(ResUrl.getRoomHeadIcon(slot0:getHeroHeadIcon(slot2)))
+function var_0_0.refreshHero(arg_2_0, arg_2_1)
+	local var_2_0 = arg_2_1 and arg_2_1.heroId
 
-		if (RougeModel.instance:getFightResultInfo() and slot4:getLife(slot2)) <= 0 then
-			slot0.slider:SetValue(0)
-			gohelper.setActive(slot0.goDead, true)
+	if var_2_0 ~= 0 then
+		gohelper.setActive(arg_2_0.go, true)
+
+		local var_2_1 = arg_2_0:getHeroHeadIcon(var_2_0)
+
+		arg_2_0.simageRole:LoadImage(ResUrl.getRoomHeadIcon(var_2_1))
+
+		local var_2_2 = RougeModel.instance:getFightResultInfo()
+		local var_2_3 = var_2_2 and var_2_2:getLife(var_2_0)
+
+		if var_2_3 <= 0 then
+			arg_2_0.slider:SetValue(0)
+			gohelper.setActive(arg_2_0.goDead, true)
 		else
-			slot0.slider:SetValue(slot5 / 1000)
-			gohelper.setActive(slot0.goDead, false)
+			arg_2_0.slider:SetValue(var_2_3 / 1000)
+			gohelper.setActive(arg_2_0.goDead, false)
 		end
 
-		slot0:tickUpdateDLCs(slot1)
+		arg_2_0:tickUpdateDLCs(arg_2_1)
 	end
 end
 
-function slot0.getHeroHeadIcon(slot0, slot1)
-	slot4 = nil
-	slot4 = (not (RougeModel.instance:getTeamInfo() and slot2:isAssistHero(slot1)) or slot2:getAssistHeroMo()) and HeroModel.instance:getByHeroId(slot1)
-	slot5 = slot4 and slot4.skin
-	slot6 = slot5 and lua_skin.configDict[slot5]
+function var_0_0.getHeroHeadIcon(arg_3_0, arg_3_1)
+	local var_3_0 = RougeModel.instance:getTeamInfo()
+	local var_3_1 = var_3_0 and var_3_0:isAssistHero(arg_3_1)
+	local var_3_2
 
-	return slot6 and slot6.headIcon or slot1 .. "01"
+	if var_3_1 then
+		var_3_2 = var_3_0:getAssistHeroMo()
+	else
+		var_3_2 = HeroModel.instance:getByHeroId(arg_3_1)
+	end
+
+	local var_3_3 = var_3_2 and var_3_2.skin
+	local var_3_4 = var_3_3 and lua_skin.configDict[var_3_3]
+
+	return var_3_4 and var_3_4.headIcon or arg_3_1 .. "01"
 end
 
-function slot0.onDestroyView(slot0)
-	slot0.simageRole:UnLoadImage()
+function var_0_0.onDestroyView(arg_4_0)
+	arg_4_0.simageRole:UnLoadImage()
 end
 
-return slot0
+return var_0_0

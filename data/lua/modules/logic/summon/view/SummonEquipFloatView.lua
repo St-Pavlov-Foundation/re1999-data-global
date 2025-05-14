@@ -1,290 +1,344 @@
-module("modules.logic.summon.view.SummonEquipFloatView", package.seeall)
+﻿module("modules.logic.summon.view.SummonEquipFloatView", package.seeall)
 
-slot0 = class("SummonEquipFloatView", BaseView)
+local var_0_0 = class("SummonEquipFloatView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._goresult = gohelper.findChild(slot0.viewGO, "#go_result")
-	slot0._goresultitem = gohelper.findChild(slot0.viewGO, "#go_result/resultcontent/#go_resultitem")
-	slot0._btnopenall = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_result/#btn_openall")
-	slot0._btnreturn = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_result/#btn_return")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goresult = gohelper.findChild(arg_1_0.viewGO, "#go_result")
+	arg_1_0._goresultitem = gohelper.findChild(arg_1_0.viewGO, "#go_result/resultcontent/#go_resultitem")
+	arg_1_0._btnopenall = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_result/#btn_openall")
+	arg_1_0._btnreturn = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_result/#btn_return")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnopenall:AddClickListener(slot0._btnopenallOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnopenall:AddClickListener(arg_2_0._btnopenallOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnopenall:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnopenall:RemoveClickListener()
 end
 
-function slot0._btnopenallOnClick(slot0)
+function var_0_0._btnopenallOnClick(arg_4_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_click)
 
-	for slot4 = 1, 10 do
-		slot0:openSummonResult(slot4, true)
+	for iter_4_0 = 1, 10 do
+		arg_4_0:openSummonResult(iter_4_0, true)
 	end
 
 	SummonController.instance:nextSummonPopupParam()
 end
 
-function slot0.handleSkip(slot0)
-	if not slot0._isDrawing or not slot0.summonResult then
+function var_0_0.handleSkip(arg_5_0)
+	if not arg_5_0._isDrawing or not arg_5_0.summonResult then
 		return
 	end
 
 	SummonController.instance:clearSummonPopupList()
 
-	if #slot0.summonResult == 1 then
-		slot2, slot3 = SummonModel.instance:openSummonEquipResult(1)
+	local var_5_0 = #arg_5_0.summonResult
 
-		if slot2 then
+	if var_5_0 == 1 then
+		local var_5_1, var_5_2 = SummonModel.instance:openSummonEquipResult(1)
+
+		if var_5_1 then
+			local var_5_3 = var_5_1.equipId
+
 			ViewMgr.instance:openView(ViewName.SummonEquipGainView, {
 				skipVideo = true,
-				equipId = slot2.equipId,
-				summonResultMo = slot2
+				equipId = var_5_3,
+				summonResultMo = var_5_1
 			})
 		end
-	elseif slot1 >= 10 then
-		for slot5 = 1, 10 do
-			SummonModel.instance:openSummonResult(slot5)
+	elseif var_5_0 >= 10 then
+		for iter_5_0 = 1, 10 do
+			SummonModel.instance:openSummonResult(iter_5_0)
 		end
 
-		if not SummonController.instance:getLastPoolId() then
+		local var_5_4 = SummonController.instance:getLastPoolId()
+
+		if not var_5_4 then
 			return
 		end
 
-		if not SummonConfig.instance:getSummonPool(slot2) then
+		local var_5_5 = SummonConfig.instance:getSummonPool(var_5_4)
+
+		if not var_5_5 then
 			return
 		end
 
 		ViewMgr.instance:openView(ViewName.SummonResultView, {
-			summonResultList = slot0.summonResult,
-			curPool = slot3
+			summonResultList = arg_5_0.summonResult,
+			curPool = var_5_5
 		})
 	end
 end
 
-function slot0._editableInitView(slot0)
-	gohelper.setActive(slot0._goresultitem, false)
+function var_0_0._editableInitView(arg_6_0)
+	gohelper.setActive(arg_6_0._goresultitem, false)
 
-	slot0._resultitems = {}
-	slot0._summonUIEffects = slot0:getUserDataTb_()
+	arg_6_0._resultitems = {}
+	arg_6_0._summonUIEffects = arg_6_0:getUserDataTb_()
 end
 
-function slot0.onOpen(slot0)
-	slot0:addEventCb(SummonController.instance, SummonEvent.onSummonReply, slot0.startDraw, slot0)
-	slot0:addEventCb(SummonController.instance, SummonEvent.onSummonAnimRareEffect, slot0.handleSummonAnimRareEffect, slot0)
-	slot0:addEventCb(SummonController.instance, SummonEvent.onSummonAnimEnd, slot0.handleSummonAnimEnd, slot0)
-	slot0:addEventCb(SummonController.instance, SummonEvent.onSummonEquipEnd, slot0.handleSummonEnd, slot0)
-	slot0:addEventCb(SummonController.instance, SummonEvent.onSummonSkip, slot0.handleSkip, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, slot0.handleCloseView, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, slot0.handleOpenView, slot0)
+function var_0_0.onOpen(arg_7_0)
+	arg_7_0:addEventCb(SummonController.instance, SummonEvent.onSummonReply, arg_7_0.startDraw, arg_7_0)
+	arg_7_0:addEventCb(SummonController.instance, SummonEvent.onSummonAnimRareEffect, arg_7_0.handleSummonAnimRareEffect, arg_7_0)
+	arg_7_0:addEventCb(SummonController.instance, SummonEvent.onSummonAnimEnd, arg_7_0.handleSummonAnimEnd, arg_7_0)
+	arg_7_0:addEventCb(SummonController.instance, SummonEvent.onSummonEquipEnd, arg_7_0.handleSummonEnd, arg_7_0)
+	arg_7_0:addEventCb(SummonController.instance, SummonEvent.onSummonSkip, arg_7_0.handleSkip, arg_7_0)
+	arg_7_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_7_0.handleCloseView, arg_7_0)
+	arg_7_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_7_0.handleOpenView, arg_7_0)
 end
 
-function slot0.onClose(slot0)
-	slot0:removeEventCb(SummonController.instance, SummonEvent.onSummonReply, slot0.startDraw, slot0)
-	slot0:removeEventCb(SummonController.instance, SummonEvent.onSummonAnimRareEffect, slot0.handleSummonAnimRareEffect, slot0)
-	slot0:removeEventCb(SummonController.instance, SummonEvent.onSummonAnimEnd, slot0.handleSummonAnimEnd, slot0)
-	slot0:removeEventCb(SummonController.instance, SummonEvent.onSummonEquipEnd, slot0.handleSummonEnd, slot0)
-	slot0:removeEventCb(SummonController.instance, SummonEvent.onSummonSkip, slot0.handleSkip, slot0)
-	slot0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, slot0.handleCloseView, slot0)
-	slot0:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenView, slot0.handleOpenView, slot0)
+function var_0_0.onClose(arg_8_0)
+	arg_8_0:removeEventCb(SummonController.instance, SummonEvent.onSummonReply, arg_8_0.startDraw, arg_8_0)
+	arg_8_0:removeEventCb(SummonController.instance, SummonEvent.onSummonAnimRareEffect, arg_8_0.handleSummonAnimRareEffect, arg_8_0)
+	arg_8_0:removeEventCb(SummonController.instance, SummonEvent.onSummonAnimEnd, arg_8_0.handleSummonAnimEnd, arg_8_0)
+	arg_8_0:removeEventCb(SummonController.instance, SummonEvent.onSummonEquipEnd, arg_8_0.handleSummonEnd, arg_8_0)
+	arg_8_0:removeEventCb(SummonController.instance, SummonEvent.onSummonSkip, arg_8_0.handleSkip, arg_8_0)
+	arg_8_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_8_0.handleCloseView, arg_8_0)
+	arg_8_0:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_8_0.handleOpenView, arg_8_0)
 end
 
-function slot0.startDraw(slot0)
+function var_0_0.startDraw(arg_9_0)
 	SummonController.instance:clearSummonPopupList()
 
-	slot0.summonResult = SummonModel.instance:getSummonResult(true)
+	arg_9_0.summonResult = SummonModel.instance:getSummonResult(true)
 
-	slot0:recycleEffect()
+	arg_9_0:recycleEffect()
 
-	slot0._isDrawing = true
+	arg_9_0._isDrawing = true
 end
 
-function slot0.handleSummonAnimEnd(slot0)
-	slot0:initSummonResult()
+function var_0_0.handleSummonAnimEnd(arg_10_0)
+	arg_10_0:initSummonResult()
 end
 
-function slot0.handleSummonEnd(slot0)
-	slot0:recycleEffect()
+function var_0_0.handleSummonEnd(arg_11_0)
+	arg_11_0:recycleEffect()
 end
 
-function slot0.handleSummonAnimRareEffect(slot0)
-	slot1 = nil
+function var_0_0.handleSummonAnimRareEffect(arg_12_0)
+	local var_12_0
 
-	for slot5 = 1, #slot0.summonResult do
-		slot8 = ""
-		slot9 = ""
-		slot8 = (EquipConfig.instance:getEquipCo(slot0.summonResult[slot5].equipId).rare > 2 or SummonEnum.SummonPreloadPath.EquipUIN) and (slot7.rare ~= 3 or SummonEnum.SummonPreloadPath.EquipUIR) and (slot7.rare ~= 4 or SummonEnum.SummonPreloadPath.EquipUISR) and SummonEnum.SummonPreloadPath.EquipUISSR
-		slot10 = SummonEffectPool.getEffect(slot8, ((#slot0.summonResult <= 1 or SummonController.instance:getUINodes()) and SummonController.instance:getOnlyUINode())[slot5])
-
-		slot10:setAnimationName(SummonEnum.AnimationName[slot8])
-		slot10:play()
-		slot10:loadEquipWaitingClick()
-		slot10:setEquipFrame(false)
-		table.insert(slot0._summonUIEffects, slot10)
+	if #arg_12_0.summonResult > 1 then
+		var_12_0 = SummonController.instance:getUINodes()
+	else
+		var_12_0 = SummonController.instance:getOnlyUINode()
 	end
-end
 
-function slot0.initSummonResult(slot0)
-	slot0._waitEffectList = {}
-	slot0._waitNormalEffectList = {}
-	slot1 = nil
-	slot1 = (#slot0.summonResult <= 1 or SummonController.instance:getUINodes()) and SummonController.instance:getOnlyUINode()
+	for iter_12_0 = 1, #arg_12_0.summonResult do
+		local var_12_1 = arg_12_0.summonResult[iter_12_0]
+		local var_12_2 = EquipConfig.instance:getEquipCo(var_12_1.equipId)
+		local var_12_3 = ""
+		local var_12_4 = ""
 
-	for slot5 = 1, #slot0.summonResult do
-		slot6 = slot0.summonResult[slot5]
-
-		if not slot0._resultitems[slot5] then
-			slot7 = slot0:getUserDataTb_()
-			slot7.go = gohelper.cloneInPlace(slot0._goresultitem, "item" .. slot5)
-			slot7.index = slot5
-			slot7.btnopen = gohelper.findChildButtonWithAudio(slot7.go, "btn_open")
-
-			slot7.btnopen:AddClickListener(slot0.onClickItem, slot0, slot7)
-			table.insert(slot0._resultitems, slot7)
+		if var_12_2.rare <= 2 then
+			var_12_3 = SummonEnum.SummonPreloadPath.EquipUIN
+		elseif var_12_2.rare == 3 then
+			var_12_3 = SummonEnum.SummonPreloadPath.EquipUIR
+		elseif var_12_2.rare == 4 then
+			var_12_3 = SummonEnum.SummonPreloadPath.EquipUISR
+		else
+			var_12_3 = SummonEnum.SummonPreloadPath.EquipUISSR
 		end
 
-		if slot1[slot5] then
-			slot11 = recthelper.worldPosToAnchorPos(gohelper.findChild(slot8, "btn/btnTopLeft").transform.position, slot0.viewGO.transform)
-			slot12 = recthelper.worldPosToAnchorPos(gohelper.findChild(slot8, "btn/btnBottomRight").transform.position, slot0.viewGO.transform)
+		local var_12_5 = SummonEnum.AnimationName[var_12_3]
+		local var_12_6 = SummonEffectPool.getEffect(var_12_3, var_12_0[iter_12_0])
 
-			recthelper.setAnchor(slot7.go.transform, (slot11.x + slot12.x) / 2, (slot11.y + slot12.y) / 2)
-			recthelper.setHeight(slot7.go.transform, math.abs(slot11.y - slot12.y))
-			recthelper.setWidth(slot7.go.transform, math.abs(slot12.x - slot11.x))
-		end
-
-		gohelper.setActive(slot7.btnopen.gameObject, true)
-		gohelper.setActive(slot7.go, true)
-	end
-
-	for slot5 = #slot0.summonResult + 1, #slot0._resultitems do
-		gohelper.setActive(slot0._resultitems[slot5].go, false)
+		var_12_6:setAnimationName(var_12_5)
+		var_12_6:play()
+		var_12_6:loadEquipWaitingClick()
+		var_12_6:setEquipFrame(false)
+		table.insert(arg_12_0._summonUIEffects, var_12_6)
 	end
 end
 
-function slot0.onClickItem(slot0, slot1)
+function var_0_0.initSummonResult(arg_13_0)
+	arg_13_0._waitEffectList = {}
+	arg_13_0._waitNormalEffectList = {}
+
+	local var_13_0
+
+	if #arg_13_0.summonResult > 1 then
+		var_13_0 = SummonController.instance:getUINodes()
+	else
+		var_13_0 = SummonController.instance:getOnlyUINode()
+	end
+
+	for iter_13_0 = 1, #arg_13_0.summonResult do
+		local var_13_1 = arg_13_0.summonResult[iter_13_0]
+		local var_13_2 = arg_13_0._resultitems[iter_13_0]
+
+		if not var_13_2 then
+			var_13_2 = arg_13_0:getUserDataTb_()
+			var_13_2.go = gohelper.cloneInPlace(arg_13_0._goresultitem, "item" .. iter_13_0)
+			var_13_2.index = iter_13_0
+			var_13_2.btnopen = gohelper.findChildButtonWithAudio(var_13_2.go, "btn_open")
+
+			var_13_2.btnopen:AddClickListener(arg_13_0.onClickItem, arg_13_0, var_13_2)
+			table.insert(arg_13_0._resultitems, var_13_2)
+		end
+
+		local var_13_3 = var_13_0[iter_13_0]
+
+		if var_13_3 then
+			local var_13_4 = gohelper.findChild(var_13_3, "btn/btnTopLeft")
+			local var_13_5 = gohelper.findChild(var_13_3, "btn/btnBottomRight")
+			local var_13_6 = recthelper.worldPosToAnchorPos(var_13_4.transform.position, arg_13_0.viewGO.transform)
+			local var_13_7 = recthelper.worldPosToAnchorPos(var_13_5.transform.position, arg_13_0.viewGO.transform)
+
+			recthelper.setAnchor(var_13_2.go.transform, (var_13_6.x + var_13_7.x) / 2, (var_13_6.y + var_13_7.y) / 2)
+			recthelper.setHeight(var_13_2.go.transform, math.abs(var_13_6.y - var_13_7.y))
+			recthelper.setWidth(var_13_2.go.transform, math.abs(var_13_7.x - var_13_6.x))
+		end
+
+		gohelper.setActive(var_13_2.btnopen.gameObject, true)
+		gohelper.setActive(var_13_2.go, true)
+	end
+
+	for iter_13_1 = #arg_13_0.summonResult + 1, #arg_13_0._resultitems do
+		gohelper.setActive(arg_13_0._resultitems[iter_13_1].go, false)
+	end
+end
+
+function var_0_0.onClickItem(arg_14_0, arg_14_1)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_click)
-	slot0:openSummonResult(slot1.index)
+	arg_14_0:openSummonResult(arg_14_1.index)
 	SummonController.instance:nextSummonPopupParam()
 end
 
-function slot0.openSummonResult(slot0, slot1, slot2)
-	slot3, slot4 = SummonModel.instance:openSummonEquipResult(slot1)
-	slot6 = #slot0.summonResult >= 10
+function var_0_0.openSummonResult(arg_15_0, arg_15_1, arg_15_2)
+	local var_15_0, var_15_1 = SummonModel.instance:openSummonEquipResult(arg_15_1)
+	local var_15_2 = arg_15_0.summonResult
+	local var_15_3 = #var_15_2 >= 10
 
-	if slot3 then
-		if not slot2 then
-			logNormal(string.format("获得心相:%s", EquipConfig.instance:getEquipCo(slot3.equipId).name))
+	if var_15_0 then
+		local var_15_4 = var_15_0.equipId
+		local var_15_5 = EquipConfig.instance:getEquipCo(var_15_4)
+
+		if not arg_15_2 then
+			logNormal(string.format("获得心相:%s", var_15_5.name))
 		end
 
-		if slot0._resultitems[slot1] then
-			gohelper.setActive(slot0._resultitems[slot1].btnopen.gameObject, false)
+		if arg_15_0._resultitems[arg_15_1] then
+			gohelper.setActive(arg_15_0._resultitems[arg_15_1].btnopen.gameObject, false)
 		end
 
-		if not slot6 or not slot2 or slot8.rare >= 5 then
-			table.insert(slot0._waitEffectList, {
-				index = slot1,
-				equipId = slot7
+		if not var_15_3 or not arg_15_2 or var_15_5.rare >= 5 then
+			table.insert(arg_15_0._waitEffectList, {
+				index = arg_15_1,
+				equipId = var_15_4
 			})
 			SummonController.instance:insertSummonPopupList(PopupEnum.PriorityType.GainCharacterView, ViewName.SummonEquipGainView, {
-				equipId = slot7,
-				summonResultMo = slot3,
-				isSummonTen = slot6
+				equipId = var_15_4,
+				summonResultMo = var_15_0,
+				isSummonTen = var_15_3
 			})
-		elseif not slot2 then
-			slot9 = slot0._summonUIEffects[slot1]
+		elseif not arg_15_2 then
+			local var_15_6 = arg_15_0._summonUIEffects[arg_15_1]
 
-			slot9:setEquipFrame(true)
-			slot9:loadEquipIcon(slot7)
+			var_15_6:setEquipFrame(true)
+			var_15_6:loadEquipIcon(var_15_4)
 		else
-			table.insert(slot0._waitNormalEffectList, {
-				index = slot1,
-				equipId = slot7
+			table.insert(arg_15_0._waitNormalEffectList, {
+				index = arg_15_1,
+				equipId = var_15_4
 			})
 		end
 
 		if SummonModel.instance:isAllOpened() then
-			gohelper.setActive(slot0._btnopenall.gameObject, false)
+			gohelper.setActive(arg_15_0._btnopenall.gameObject, false)
 
-			if not slot6 then
-				gohelper.setActive(slot0._btnreturn.gameObject, true)
+			if not var_15_3 then
+				gohelper.setActive(arg_15_0._btnreturn.gameObject, true)
 			else
-				if not SummonController.instance:getLastPoolId() then
+				local var_15_7 = SummonController.instance:getLastPoolId()
+
+				if not var_15_7 then
 					return
 				end
 
-				if not SummonConfig.instance:getSummonPool(slot9) then
+				local var_15_8 = SummonConfig.instance:getSummonPool(var_15_7)
+
+				if not var_15_8 then
 					return
 				end
 
 				SummonController.instance:insertSummonPopupList(PopupEnum.PriorityType.SummonResultView, ViewName.SummonResultView, {
-					summonResultList = slot5,
-					curPool = slot10
+					summonResultList = var_15_2,
+					curPool = var_15_8
 				})
 			end
 		end
 	end
 end
 
-function slot0._refreshIcons(slot0)
-	if (not slot0._waitEffectList or #slot0._waitEffectList <= 1) and slot0._waitNormalEffectList and #slot0._waitNormalEffectList > 0 then
-		for slot4, slot5 in ipairs(slot0._waitNormalEffectList) do
-			if slot0._summonUIEffects[slot5.index] then
-				slot8:setEquipFrame(true)
-				slot8:loadEquipIcon(slot5.equipId)
+function var_0_0._refreshIcons(arg_16_0)
+	if (not arg_16_0._waitEffectList or #arg_16_0._waitEffectList <= 1) and arg_16_0._waitNormalEffectList and #arg_16_0._waitNormalEffectList > 0 then
+		for iter_16_0, iter_16_1 in ipairs(arg_16_0._waitNormalEffectList) do
+			local var_16_0 = iter_16_1.index
+			local var_16_1 = iter_16_1.equipId
+			local var_16_2 = arg_16_0._summonUIEffects[var_16_0]
+
+			if var_16_2 then
+				var_16_2:setEquipFrame(true)
+				var_16_2:loadEquipIcon(var_16_1)
 			end
 		end
 	end
 
-	if not slot0._waitEffectList or #slot0._waitEffectList <= 0 then
+	if not arg_16_0._waitEffectList or #arg_16_0._waitEffectList <= 0 then
 		return
 	end
 
-	slot1 = slot0._waitEffectList[1]
+	local var_16_3 = arg_16_0._waitEffectList[1]
 
-	table.remove(slot0._waitEffectList, 1)
+	table.remove(arg_16_0._waitEffectList, 1)
 
-	slot3 = slot1.equipId
+	local var_16_4 = var_16_3.index
+	local var_16_5 = var_16_3.equipId
+	local var_16_6 = arg_16_0._summonUIEffects[var_16_4]
 
-	if not slot0._summonUIEffects[slot1.index] then
+	if not var_16_6 then
 		return
 	end
 
-	slot4:setEquipFrame(true)
-	slot4:loadEquipIcon(slot3)
+	var_16_6:setEquipFrame(true)
+	var_16_6:loadEquipIcon(var_16_5)
 end
 
-function slot0.handleCloseView(slot0, slot1)
-	if slot1 == ViewName.SummonEquipGainView then
-		slot0:_refreshIcons()
+function var_0_0.handleCloseView(arg_17_0, arg_17_1)
+	if arg_17_1 == ViewName.SummonEquipGainView then
+		arg_17_0:_refreshIcons()
 	end
 end
 
-function slot0.handleOpenView(slot0, slot1)
-	if slot1 == ViewName.SummonResultView then
-		slot0:_refreshIcons()
+function var_0_0.handleOpenView(arg_18_0, arg_18_1)
+	if arg_18_1 == ViewName.SummonResultView then
+		arg_18_0:_refreshIcons()
 	end
 end
 
-function slot0.recycleEffect(slot0)
-	if slot0._summonUIEffects then
-		for slot4 = 1, #slot0._summonUIEffects do
-			SummonEffectPool.returnEffect(slot0._summonUIEffects[slot4])
+function var_0_0.recycleEffect(arg_19_0)
+	if arg_19_0._summonUIEffects then
+		for iter_19_0 = 1, #arg_19_0._summonUIEffects do
+			local var_19_0 = arg_19_0._summonUIEffects[iter_19_0]
 
-			slot0._summonUIEffects[slot4] = nil
+			SummonEffectPool.returnEffect(var_19_0)
+
+			arg_19_0._summonUIEffects[iter_19_0] = nil
 		end
 	end
 end
 
-function slot0.onDestroyView(slot0)
-	for slot4 = 1, #slot0._resultitems do
-		slot0._resultitems[slot4].btnopen:RemoveClickListener()
+function var_0_0.onDestroyView(arg_20_0)
+	for iter_20_0 = 1, #arg_20_0._resultitems do
+		arg_20_0._resultitems[iter_20_0].btnopen:RemoveClickListener()
 	end
 end
 
-return slot0
+return var_0_0

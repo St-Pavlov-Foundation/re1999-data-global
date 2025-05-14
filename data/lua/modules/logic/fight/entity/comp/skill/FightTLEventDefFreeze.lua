@@ -1,7 +1,7 @@
-module("modules.logic.fight.entity.comp.skill.FightTLEventDefFreeze", package.seeall)
+﻿module("modules.logic.fight.entity.comp.skill.FightTLEventDefFreeze", package.seeall)
 
-slot0 = class("FightTLEventDefFreeze")
-slot1 = {
+local var_0_0 = class("FightTLEventDefFreeze")
+local var_0_1 = {
 	[FightEnum.EffectType.MISS] = true,
 	[FightEnum.EffectType.DAMAGE] = true,
 	[FightEnum.EffectType.CRIT] = true,
@@ -12,117 +12,140 @@ slot1 = {
 	[FightEnum.EffectType.SHIELD] = true
 }
 
-function slot0.handleSkillEvent(slot0, slot1, slot2, slot3)
-	slot4 = slot2 * FightModel.instance:getSpeed()
-	slot0._action = slot3[1]
-	slot5 = tonumber(slot3[2]) or 0
-	slot0._defenders = slot0:_getDefenders(slot1, slot3[3])
+function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	local var_1_0 = arg_1_2 * FightModel.instance:getSpeed()
 
-	if not string.nilorempty(slot0._action) then
-		for slot9, slot10 in ipairs(slot0._defenders) do
-			slot10.spine:play(slot0._action, false, true)
+	arg_1_0._action = arg_1_3[1]
+
+	local var_1_1 = tonumber(arg_1_3[2]) or 0
+
+	arg_1_0._defenders = arg_1_0:_getDefenders(arg_1_1, arg_1_3[3])
+
+	if not string.nilorempty(arg_1_0._action) then
+		for iter_1_0, iter_1_1 in ipairs(arg_1_0._defenders) do
+			iter_1_1.spine:play(arg_1_0._action, false, true)
 		end
 	end
 
-	if slot5 < slot4 then
-		if slot5 == 0 then
-			slot0:_startFreeze()
+	if var_1_1 < var_1_0 then
+		if var_1_1 == 0 then
+			arg_1_0:_startFreeze()
 		else
-			TaskDispatcher.runDelay(slot0._startFreeze, slot0, slot5 / FightModel.instance:getSpeed())
+			local var_1_2 = var_1_1 / FightModel.instance:getSpeed()
+
+			TaskDispatcher.runDelay(arg_1_0._startFreeze, arg_1_0, var_1_2)
 		end
 	else
 		logWarn("Skill Freeze param invalid, startTime >= duration")
 	end
 end
 
-function slot0.handleSkillEventEnd(slot0)
-	slot0:_onDurationEnd()
+function var_0_0.handleSkillEventEnd(arg_2_0)
+	arg_2_0:_onDurationEnd()
 end
 
-function slot0._getDefenders(slot0, slot1, slot2)
-	slot3 = 2
-	slot4 = {}
+function var_0_0._getDefenders(arg_3_0, arg_3_1, arg_3_2)
+	local var_3_0 = 2
+	local var_3_1 = {}
 
-	if not string.nilorempty(slot2) then
-		slot3 = tonumber(string.split(slot2, "#")[1])
+	if not string.nilorempty(arg_3_2) then
+		var_3_0 = tonumber(string.split(arg_3_2, "#")[1])
 	end
 
-	slot5 = {}
+	local var_3_2 = {}
 
-	for slot9, slot10 in ipairs(slot1.actEffectMOs) do
-		if uv0[slot10.effectType] then
-			if slot3 == 1 then
-				slot11 = FightHelper.getEntity(slot1.fromId)
-				slot4[slot11.id] = slot11
-			elseif slot3 == 2 then
-				if FightHelper.getEntity(slot1.fromId):getSide() ~= FightHelper.getEntity(slot10.targetId):getSide() then
-					slot4[slot12.id] = slot12
+	for iter_3_0, iter_3_1 in ipairs(arg_3_1.actEffectMOs) do
+		if var_0_1[iter_3_1.effectType] then
+			if var_3_0 == 1 then
+				local var_3_3 = FightHelper.getEntity(arg_3_1.fromId)
+
+				var_3_1[var_3_3.id] = var_3_3
+			elseif var_3_0 == 2 then
+				local var_3_4 = FightHelper.getEntity(arg_3_1.fromId):getSide()
+				local var_3_5 = FightHelper.getEntity(iter_3_1.targetId)
+
+				if var_3_4 ~= var_3_5:getSide() then
+					var_3_1[var_3_5.id] = var_3_5
 				end
-			elseif slot3 == 3 then
-				for slot16, slot17 in ipairs(FightHelper.getSideEntitys(FightHelper.getEntity(slot1.fromId):getSide())) do
-					slot4[slot17.id] = slot17
+			elseif var_3_0 == 3 then
+				local var_3_6 = FightHelper.getEntity(arg_3_1.fromId)
+				local var_3_7 = FightHelper.getSideEntitys(var_3_6:getSide())
+
+				for iter_3_2, iter_3_3 in ipairs(var_3_7) do
+					var_3_1[iter_3_3.id] = iter_3_3
 				end
-			elseif slot3 == 4 then
-				for slot16, slot17 in ipairs(FightHelper.getSideEntitys(FightHelper.getEntity(slot1.toId):getSide())) do
-					slot4[slot17.id] = slot17
+			elseif var_3_0 == 4 then
+				local var_3_8 = FightHelper.getEntity(arg_3_1.toId)
+				local var_3_9 = FightHelper.getSideEntitys(var_3_8:getSide())
+
+				for iter_3_4, iter_3_5 in ipairs(var_3_9) do
+					var_3_1[iter_3_5.id] = iter_3_5
 				end
-			elseif slot3 == 5 then
-				for slot15, slot16 in ipairs(FightHelper.getSideEntitys(FightEnum.EntitySide.MySide)) do
-					slot4[slot16.id] = slot16
+			elseif var_3_0 == 5 then
+				local var_3_10 = FightHelper.getSideEntitys(FightEnum.EntitySide.MySide)
+
+				for iter_3_6, iter_3_7 in ipairs(var_3_10) do
+					var_3_1[iter_3_7.id] = iter_3_7
 				end
 
-				for slot15, slot16 in ipairs(FightHelper.getSideEntitys(FightEnum.EntitySide.EnemySide)) do
-					slot4[slot16.id] = slot16
+				local var_3_11 = FightHelper.getSideEntitys(FightEnum.EntitySide.EnemySide)
+
+				for iter_3_8, iter_3_9 in ipairs(var_3_11) do
+					var_3_1[iter_3_9.id] = iter_3_9
 				end
-			elseif slot3 == 6 then
-				slot11 = FightHelper.getEntity(slot1.toId)
-				slot4[slot11.id] = slot11
-			elseif slot3 == 7 then
-				for slot15 = 2, #string.splitToNumber(slot2, "#") do
-					slot16 = FightHelper.getEntity(slot11[slot15])
-					slot4[slot16.id] = slot16
+			elseif var_3_0 == 6 then
+				local var_3_12 = FightHelper.getEntity(arg_3_1.toId)
+
+				var_3_1[var_3_12.id] = var_3_12
+			elseif var_3_0 == 7 then
+				local var_3_13 = string.splitToNumber(arg_3_2, "#")
+
+				for iter_3_10 = 2, #var_3_13 do
+					local var_3_14 = FightHelper.getEntity(var_3_13[iter_3_10])
+
+					var_3_1[var_3_14.id] = var_3_14
 				end
 			end
 		end
 	end
 
-	for slot9, slot10 in pairs(slot4) do
-		table.insert(slot5, slot10)
+	for iter_3_11, iter_3_12 in pairs(var_3_1) do
+		table.insert(var_3_2, iter_3_12)
 	end
 
-	return slot5
+	return var_3_2
 end
 
-function slot0._startFreeze(slot0)
-	for slot4, slot5 in ipairs(slot0._defenders) do
-		slot5.spine:setFreeze(true)
+function var_0_0._startFreeze(arg_4_0)
+	for iter_4_0, iter_4_1 in ipairs(arg_4_0._defenders) do
+		iter_4_1.spine:setFreeze(true)
 	end
 end
 
-function slot0._onDurationEnd(slot0)
-	for slot4, slot5 in ipairs(slot0._defenders) do
-		if slot5.spine:getAnimState() == slot0._action then
-			slot5:resetAnimState()
+function var_0_0._onDurationEnd(arg_5_0)
+	for iter_5_0, iter_5_1 in ipairs(arg_5_0._defenders) do
+		if iter_5_1.spine:getAnimState() == arg_5_0._action then
+			iter_5_1:resetAnimState()
 		end
 	end
 
-	slot0:reset()
+	arg_5_0:reset()
 end
 
-function slot0.reset(slot0)
-	if slot0._defenders then
-		for slot4, slot5 in ipairs(slot0._defenders) do
-			slot5.spine:setFreeze(false)
+function var_0_0.reset(arg_6_0)
+	if arg_6_0._defenders then
+		for iter_6_0, iter_6_1 in ipairs(arg_6_0._defenders) do
+			iter_6_1.spine:setFreeze(false)
 		end
 	end
 
-	slot0._defenders = nil
+	arg_6_0._defenders = nil
 
-	TaskDispatcher.cancelTask(slot0._startFreeze, slot0)
+	TaskDispatcher.cancelTask(arg_6_0._startFreeze, arg_6_0)
 end
 
-function slot0.dispose(slot0)
-	slot0:reset()
+function var_0_0.dispose(arg_7_0)
+	arg_7_0:reset()
 end
 
-return slot0
+return var_0_0

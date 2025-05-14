@@ -1,27 +1,31 @@
-module("modules.logic.versionactivity2_3.zhixinquaner.maze.base.view.PuzzleMazeBaseAlert", package.seeall)
+﻿module("modules.logic.versionactivity2_3.zhixinquaner.maze.base.view.PuzzleMazeBaseAlert", package.seeall)
 
-slot0 = class("PuzzleMazeBaseAlert", UserDataDispose)
+local var_0_0 = class("PuzzleMazeBaseAlert", UserDataDispose)
 
-function slot0.ctor(slot0, slot1)
-	uv0.super.ctor(slot0, slot1)
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	var_0_0.super.ctor(arg_1_0, arg_1_1)
 
-	slot0.go = slot1
+	arg_1_0.go = arg_1_1
 end
 
-function slot0.onInit(slot0, slot1, slot2, slot3)
-	slot0.mo = slot1
+function var_0_0.onInit(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
+	arg_2_0.mo = arg_2_1
 end
 
-function slot0.onEnable(slot0, slot1)
+function var_0_0.onEnable(arg_3_0, arg_3_1)
+	return
 end
 
-function slot0.onDisable(slot0)
+function var_0_0.onDisable(arg_4_0)
+	return
 end
 
-function slot0.onRecycle(slot0)
+function var_0_0.onRecycle(arg_5_0)
+	return
 end
 
-function slot0.getKey(slot0)
+function var_0_0.getKey(arg_6_0)
+	return
 end
 
-return slot0
+return var_0_0

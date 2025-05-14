@@ -1,35 +1,40 @@
-module("modules.logic.chessgame.game.step.ChessStepBreakObstacle", package.seeall)
+﻿module("modules.logic.chessgame.game.step.ChessStepBreakObstacle", package.seeall)
 
-slot0 = class("ChessStepBreakObstacle", BaseWork)
+local var_0_0 = class("ChessStepBreakObstacle", BaseWork)
 
-function slot0.init(slot0, slot1)
-	slot0.originData = slot1
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.originData = arg_1_1
 end
 
-function slot0.onStart(slot0)
-	slot0:breakObstacle()
+function var_0_0.onStart(arg_2_0)
+	arg_2_0:breakObstacle()
 end
 
-function slot0.breakObstacle(slot0)
-	slot4 = ChessGameController.instance.interactsMgr:get(slot0.originData.obstacleId)
+function var_0_0.breakObstacle(arg_3_0)
+	local var_3_0 = arg_3_0.originData.hunterId
+	local var_3_1 = ChessGameController.instance.interactsMgr:get(var_3_0)
+	local var_3_2 = arg_3_0.originData.obstacleId
+	local var_3_3 = ChessGameController.instance.interactsMgr:get(var_3_2)
 
-	if not ChessGameController.instance.interactsMgr:get(slot0.originData.hunterId) or not slot4 then
-		slot0:onDone(true)
+	if not var_3_1 or not var_3_3 then
+		arg_3_0:onDone(true)
 
 		return
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.VersionActivity2_1ChessGame.play_ui_wangshi_bad)
-	slot2:getHandler():breakObstacle(slot4, slot0._onFlowDone, slot0)
+	var_3_1:getHandler():breakObstacle(var_3_3, arg_3_0._onFlowDone, arg_3_0)
 end
 
-function slot0._onFlowDone(slot0)
-	if ChessGameModel.instance:getCatchObj() and slot1.mo.id == slot0.originData.obstacleId then
+function var_0_0._onFlowDone(arg_4_0)
+	local var_4_0 = ChessGameModel.instance:getCatchObj()
+
+	if var_4_0 and var_4_0.mo.id == arg_4_0.originData.obstacleId then
 		ChessGameModel.instance:setCatchObj(nil)
 	end
 
-	ChessGameController.instance:deleteInteractObj(slot0.originData.obstacleId)
-	slot0:onDone(true)
+	ChessGameController.instance:deleteInteractObj(arg_4_0.originData.obstacleId)
+	arg_4_0:onDone(true)
 end
 
-return slot0
+return var_0_0

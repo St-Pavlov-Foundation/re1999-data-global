@@ -1,71 +1,79 @@
-module("modules.logic.versionactivity2_4.music.model.Activity179Model", package.seeall)
+﻿module("modules.logic.versionactivity2_4.music.model.Activity179Model", package.seeall)
 
-slot0 = class("Activity179Model", BaseModel)
+local var_0_0 = class("Activity179Model", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0:reInit()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:reInit()
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_2_0)
+	return
 end
 
-function slot0.reInit(slot0)
-	slot0._episodeMap = {}
-	slot0._activityId = nil
+function var_0_0.reInit(arg_3_0)
+	arg_3_0._episodeMap = {}
+	arg_3_0._activityId = nil
 end
 
-function slot0.getActivityId(slot0)
-	slot0._activityId = slot0._activityId or VersionActivity2_4Enum.ActivityId.MusicGame
+function var_0_0.getActivityId(arg_4_0)
+	arg_4_0._activityId = arg_4_0._activityId or VersionActivity2_4Enum.ActivityId.MusicGame
 
-	return slot0._activityId
+	return arg_4_0._activityId
 end
 
-function slot0.getConstValue(slot0, slot1)
-	return Activity179Config.instance:getConstValue(slot0:getActivityId(), slot1)
+function var_0_0.getConstValue(arg_5_0, arg_5_1)
+	return Activity179Config.instance:getConstValue(arg_5_0:getActivityId(), arg_5_1)
 end
 
-function slot0.initEpisodeList(slot0, slot1)
-	slot0._episodeMap = {}
+function var_0_0.initEpisodeList(arg_6_0, arg_6_1)
+	arg_6_0._episodeMap = {}
 
-	for slot5, slot6 in ipairs(slot1) do
-		slot0:updateEpisode(slot6)
+	for iter_6_0, iter_6_1 in ipairs(arg_6_1) do
+		arg_6_0:updateEpisode(iter_6_1)
 	end
 end
 
-function slot0.updateEpisode(slot0, slot1)
-	slot2 = slot0._episodeMap[slot1.episodeId] or Act179EpisodeMO.New()
+function var_0_0.updateEpisode(arg_7_0, arg_7_1)
+	local var_7_0 = arg_7_0._episodeMap[arg_7_1.episodeId] or Act179EpisodeMO.New()
 
-	slot2:init(slot1)
+	var_7_0:init(arg_7_1)
 
-	slot0._episodeMap[slot1.episodeId] = slot2
+	arg_7_0._episodeMap[arg_7_1.episodeId] = var_7_0
 end
 
-function slot0.getEpisodeMo(slot0, slot1)
-	return slot0._episodeMap[slot1]
+function var_0_0.getEpisodeMo(arg_8_0, arg_8_1)
+	return arg_8_0._episodeMap[arg_8_1]
 end
 
-function slot0.episodeIsFinished(slot0, slot1)
-	return slot0:getEpisodeMo(slot1) and slot2.isFinished
+function var_0_0.episodeIsFinished(arg_9_0, arg_9_1)
+	local var_9_0 = arg_9_0:getEpisodeMo(arg_9_1)
+
+	return var_9_0 and var_9_0.isFinished
 end
 
-function slot0.getCalibration(slot0)
-	return (tonumber(PlayerPrefsHelper.getNumber(PlayerPrefsKey.Activity179Calibration, 0)) or 0) / 1000
+function var_0_0.getCalibration(arg_10_0)
+	local var_10_0 = PlayerPrefsHelper.getNumber(PlayerPrefsKey.Activity179Calibration, 0)
+	local var_10_1
+
+	var_10_1 = tonumber(var_10_0) or 0
+
+	return var_10_1 / 1000
 end
 
-function slot0.setCalibration(slot0, slot1)
-	return PlayerPrefsHelper.setNumber(PlayerPrefsKey.Activity179Calibration, slot1)
+function var_0_0.setCalibration(arg_11_0, arg_11_1)
+	return PlayerPrefsHelper.setNumber(PlayerPrefsKey.Activity179Calibration, arg_11_1)
 end
 
-function slot0.clearSelectedEpisodeId(slot0)
-	slot0._selectedEpisodeId = nil
+function var_0_0.clearSelectedEpisodeId(arg_12_0)
+	arg_12_0._selectedEpisodeId = nil
 end
 
-function slot0.getSelectedEpisodeId(slot0)
-	slot0._selectedEpisodeId = slot0._selectedEpisodeId or GameUtil.playerPrefsGetNumberByUserId(PlayerPrefsKey.Version2_4MusicSelectEpisode, VersionActivity2_4MusicEnum.FirstEpisodeId)
+function var_0_0.getSelectedEpisodeId(arg_13_0)
+	arg_13_0._selectedEpisodeId = arg_13_0._selectedEpisodeId or GameUtil.playerPrefsGetNumberByUserId(PlayerPrefsKey.Version2_4MusicSelectEpisode, VersionActivity2_4MusicEnum.FirstEpisodeId)
 
-	return slot0._selectedEpisodeId
+	return arg_13_0._selectedEpisodeId
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

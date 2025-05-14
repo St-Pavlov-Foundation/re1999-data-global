@@ -1,42 +1,43 @@
-module("modules.logic.equip.controller.EquipEvent", package.seeall)
+﻿module("modules.logic.equip.controller.EquipEvent", package.seeall)
 
-slot0 = _M
-slot0.onChooseEquip = 1
-slot0.onDeleteEquip = 2
-slot0.onUpdateEquip = 3
-slot0.onChooseAttr = 4
-slot0.onStrengthenFast = 5
-slot0.onStrengthenUpgrade = 6
-slot0.onDecomposeSuccess = 7
-slot0.onChangeStrengthenScrollState = 9
-slot0.onHideChooseEquipList = 10
-slot0.onChooseChange = 11
-slot0.onBreakMaxLevel = 12
-slot0.onEquipStrengthenReply = 13
-slot0.onRefreshEquipResolveList = 14
-slot0.onSelectResolveScrollItem = 15
-slot0.onShowBreakCostListModelContainer = 16
-slot0.onShowStrengthenListModelContainer = 17
-slot0.onHideBreakAndStrengthenListModelContainer = 18
-slot0.onBreakSuccess = 19
-slot0.onSelectRefineScrollItem = 20
-slot0.onEquipRefineReply = 21
-slot0.onChangeRefineScrollState = 50
-slot0.onCloseEquipStrengthenView = 51
-slot0.onAddEquipToPlayEffect = 52
-slot0.onOpenEquipScroll = 53
-slot0.onOpenRefineEquipScroll = 54
-slot0.onCloseEquipRefineView = 55
-slot0.onEquipLockChange = 56
-slot0.onCloseEquipLevelUpView = 57
-slot0.onRefreshRefineEquipList = 58
-slot0.ChangeSelectedEquip = 59
-slot0.OnRefineSelectedEquipChange = 60
-slot0.OnEquipTypeHasChange = 61
-slot0.equipHasRefine = 100
-slot0.onGuideChooseEquip = 201
-slot0.OnEquipDecomposeSelectEquipChange = 301
-slot0.OnEquipDecomposeSortStatusChange = 302
-slot0.OnEquipBeforeDecompose = 303
+local var_0_0 = _M
 
-return slot0
+var_0_0.onChooseEquip = 1
+var_0_0.onDeleteEquip = 2
+var_0_0.onUpdateEquip = 3
+var_0_0.onChooseAttr = 4
+var_0_0.onStrengthenFast = 5
+var_0_0.onStrengthenUpgrade = 6
+var_0_0.onDecomposeSuccess = 7
+var_0_0.onChangeStrengthenScrollState = 9
+var_0_0.onHideChooseEquipList = 10
+var_0_0.onChooseChange = 11
+var_0_0.onBreakMaxLevel = 12
+var_0_0.onEquipStrengthenReply = 13
+var_0_0.onRefreshEquipResolveList = 14
+var_0_0.onSelectResolveScrollItem = 15
+var_0_0.onShowBreakCostListModelContainer = 16
+var_0_0.onShowStrengthenListModelContainer = 17
+var_0_0.onHideBreakAndStrengthenListModelContainer = 18
+var_0_0.onBreakSuccess = 19
+var_0_0.onSelectRefineScrollItem = 20
+var_0_0.onEquipRefineReply = 21
+var_0_0.onChangeRefineScrollState = 50
+var_0_0.onCloseEquipStrengthenView = 51
+var_0_0.onAddEquipToPlayEffect = 52
+var_0_0.onOpenEquipScroll = 53
+var_0_0.onOpenRefineEquipScroll = 54
+var_0_0.onCloseEquipRefineView = 55
+var_0_0.onEquipLockChange = 56
+var_0_0.onCloseEquipLevelUpView = 57
+var_0_0.onRefreshRefineEquipList = 58
+var_0_0.ChangeSelectedEquip = 59
+var_0_0.OnRefineSelectedEquipChange = 60
+var_0_0.OnEquipTypeHasChange = 61
+var_0_0.equipHasRefine = 100
+var_0_0.onGuideChooseEquip = 201
+var_0_0.OnEquipDecomposeSelectEquipChange = 301
+var_0_0.OnEquipDecomposeSortStatusChange = 302
+var_0_0.OnEquipBeforeDecompose = 303
+
+return var_0_0

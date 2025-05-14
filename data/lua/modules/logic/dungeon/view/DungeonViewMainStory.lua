@@ -1,374 +1,419 @@
-module("modules.logic.dungeon.view.DungeonViewMainStory", package.seeall)
+﻿module("modules.logic.dungeon.view.DungeonViewMainStory", package.seeall)
 
-slot0 = class("DungeonViewMainStory", BaseView)
+local var_0_0 = class("DungeonViewMainStory", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._scrollchapter = gohelper.findChildScrollRect(slot0.viewGO, "#go_story/chapterlist/#scroll_chapter")
-	slot0._gocontent = gohelper.findChild(slot0.viewGO, "#go_story/chapterlist/#scroll_chapter/content")
-	slot0._gotip = gohelper.findChild(slot0.viewGO, "#go_story/#go_mainstorytip")
-	slot0._btntip = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_story/#go_mainstorytip/#btn_tip")
-	slot0._txttipname = gohelper.findChildText(slot0.viewGO, "#go_story/#go_mainstorytip/#txt_tipname")
-	slot0._txttipnameen = gohelper.findChildText(slot0.viewGO, "#go_story/#go_mainstorytip/#txt_tipname_en")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._scrollchapter = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_story/chapterlist/#scroll_chapter")
+	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "#go_story/chapterlist/#scroll_chapter/content")
+	arg_1_0._gotip = gohelper.findChild(arg_1_0.viewGO, "#go_story/#go_mainstorytip")
+	arg_1_0._btntip = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_story/#go_mainstorytip/#btn_tip")
+	arg_1_0._txttipname = gohelper.findChildText(arg_1_0.viewGO, "#go_story/#go_mainstorytip/#txt_tipname")
+	arg_1_0._txttipnameen = gohelper.findChildText(arg_1_0.viewGO, "#go_story/#go_mainstorytip/#txt_tipname_en")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btntip:AddClickListener(slot0._btntipOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btntip:AddClickListener(arg_2_0._btntipOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btntip:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btntip:RemoveClickListener()
 end
 
-function slot0._btntipOnClick(slot0)
-	if slot0._curSelectedSectionItem then
-		slot0._curSelectedSectionItem:externalClickTip()
+function var_0_0._btntipOnClick(arg_4_0)
+	if arg_4_0._curSelectedSectionItem then
+		arg_4_0._curSelectedSectionItem:externalClickTip()
 	end
 end
 
-function slot0._setSelectedSectionItem(slot0, slot1)
-	slot0._curSelectedSectionItem = slot1
+function var_0_0._setSelectedSectionItem(arg_5_0, arg_5_1)
+	arg_5_0._curSelectedSectionItem = arg_5_1
 
-	if not slot1 then
-		gohelper.setActive(slot0._gotip, false)
+	if not arg_5_1 then
+		gohelper.setActive(arg_5_0._gotip, false)
 	else
-		slot0:_updateNames()
+		arg_5_0:_updateNames()
 	end
 end
 
-function slot0._updateNames(slot0)
-	slot0._txttipname.text = slot0._curSelectedSectionItem:getSectionName()
-	slot0._txttipnameen.text = slot0._curSelectedSectionItem:getSectionNameEn()
+function var_0_0._updateNames(arg_6_0)
+	arg_6_0._txttipname.text = arg_6_0._curSelectedSectionItem:getSectionName()
+	arg_6_0._txttipnameen.text = arg_6_0._curSelectedSectionItem:getSectionNameEn()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._sectionList = slot0:getUserDataTb_()
-	slot0._chapterList = slot0:getUserDataTb_()
-	slot0._curSelectedSectionItem = nil
-	slot0._showChapterItemList = slot0:getUserDataTb_()
-	slot0._posX = 0
-	slot0._anchorVec = Vector2(0, 1)
-	slot0._targetSectionId = -1
-	slot0._gocontenttransform = slot0._gocontent.transform
-	slot1 = slot0._gocontenttransform
-	slot2 = slot0._anchorVec
-	slot1.pivot = slot2
-	slot1.anchorMin = slot2
-	slot1.anchorMax = slot2
-	slot1.anchoredPosition = Vector2.zero
+function var_0_0._editableInitView(arg_7_0)
+	arg_7_0._sectionList = arg_7_0:getUserDataTb_()
+	arg_7_0._chapterList = arg_7_0:getUserDataTb_()
+	arg_7_0._curSelectedSectionItem = nil
+	arg_7_0._showChapterItemList = arg_7_0:getUserDataTb_()
+	arg_7_0._posX = 0
+	arg_7_0._anchorVec = Vector2(0, 1)
+	arg_7_0._targetSectionId = -1
+	arg_7_0._gocontenttransform = arg_7_0._gocontent.transform
 
-	recthelper.setHeight(slot1, 748)
+	local var_7_0 = arg_7_0._gocontenttransform
+	local var_7_1 = arg_7_0._anchorVec
 
-	slot0._gotemplatecell = gohelper.findChild(slot0.viewGO, "#go_story/chapterlist/#scroll_chapter/content/templatecell")
+	var_7_0.pivot = var_7_1
+	var_7_0.anchorMin = var_7_1
+	var_7_0.anchorMax = var_7_1
+	var_7_0.anchoredPosition = Vector2.zero
 
-	gohelper.setActive(slot0._gotemplatecell, false)
-	slot0:addEventCb(DungeonController.instance, DungeonEvent.SelectMainStorySection, slot0._onSelectMainStorySection, slot0)
-	slot0:addEventCb(DungeonController.instance, DungeonEvent.OnFocusNormalChapter, slot0._onOnFocusNormalChapter, slot0)
+	recthelper.setHeight(var_7_0, 748)
+
+	arg_7_0._gotemplatecell = gohelper.findChild(arg_7_0.viewGO, "#go_story/chapterlist/#scroll_chapter/content/templatecell")
+
+	gohelper.setActive(arg_7_0._gotemplatecell, false)
+	arg_7_0:addEventCb(DungeonController.instance, DungeonEvent.SelectMainStorySection, arg_7_0._onSelectMainStorySection, arg_7_0)
+	arg_7_0:addEventCb(DungeonController.instance, DungeonEvent.OnFocusNormalChapter, arg_7_0._onOnFocusNormalChapter, arg_7_0)
 end
 
-function slot0.onScrollChange(slot0)
-	if not slot0._curSelectedSectionItem then
-		slot0._showFlowTipBtn = false
+function var_0_0.onScrollChange(arg_8_0)
+	if not arg_8_0._curSelectedSectionItem then
+		arg_8_0._showFlowTipBtn = false
 
-		gohelper.setActive(slot0._gotip, false)
+		gohelper.setActive(arg_8_0._gotip, false)
 
 		return
 	end
 
-	slot3 = recthelper.getAnchorX(slot0._gocontenttransform) <= -(slot0._curSelectedSectionItem:getPosX() + DungeonMainStoryEnum.FlowTipOffsetX)
+	local var_8_0 = recthelper.getAnchorX(arg_8_0._gocontenttransform)
+	local var_8_1 = arg_8_0._curSelectedSectionItem:getPosX() + DungeonMainStoryEnum.FlowTipOffsetX
+	local var_8_2 = var_8_0 <= -var_8_1
+	local var_8_3 = math.abs(var_8_1 - var_8_0)
+	local var_8_4 = arg_8_0._curSelectedSectionItem:getLineWidth() - var_8_3 + DungeonMainStoryEnum.FlowLineOffsetWidth
 
-	recthelper.setWidth(slot0._btntip.transform, slot0._curSelectedSectionItem:getLineWidth() - math.abs(slot2 - slot1) + DungeonMainStoryEnum.FlowLineOffsetWidth)
-	gohelper.setActive(slot0._gotip, slot3)
-	slot0._curSelectedSectionItem:setTipVisible(not slot3)
+	recthelper.setWidth(arg_8_0._btntip.transform, var_8_4)
+	gohelper.setActive(arg_8_0._gotip, var_8_2)
+	arg_8_0._curSelectedSectionItem:setTipVisible(not var_8_2)
 
-	if not slot0._showFlowTipBtn then
-		slot0._showFlowTipBtn = true
+	if not arg_8_0._showFlowTipBtn then
+		arg_8_0._showFlowTipBtn = true
 
-		slot0:_updateNames()
+		arg_8_0:_updateNames()
 	end
 end
 
-function slot0._onSelectMainStorySection(slot0)
-	if DungeonMainStoryModel.instance:getChapterList(DungeonMainStoryModel.instance:getSelectedSectionId()) and #slot2 > 0 then
-		slot0:_selectFocusNormalChapter(slot2[#slot2].id)
+function var_0_0._onSelectMainStorySection(arg_9_0)
+	local var_9_0 = DungeonMainStoryModel.instance:getSelectedSectionId()
+	local var_9_1 = DungeonMainStoryModel.instance:getChapterList(var_9_0)
+
+	if var_9_1 and #var_9_1 > 0 then
+		arg_9_0:_selectFocusNormalChapter(var_9_1[#var_9_1].id)
 
 		return
 	end
 
-	slot0:_selectFocusNormalChapter()
+	arg_9_0:_selectFocusNormalChapter()
 end
 
-function slot0._selectFocusNormalChapter(slot0, slot1)
-	slot0:_beFocusChapter(slot1)
+function var_0_0._selectFocusNormalChapter(arg_10_0, arg_10_1)
+	arg_10_0:_beFocusChapter(arg_10_1)
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_11_0)
+	return
 end
 
-function slot0._onOnFocusNormalChapter(slot0, slot1)
-	slot0:_beFocusChapter(slot1)
+function var_0_0._onOnFocusNormalChapter(arg_12_0, arg_12_1)
+	arg_12_0:_beFocusChapter(arg_12_1)
 end
 
-function slot0._beFocusChapter(slot0, slot1)
-	slot2 = slot1 and DungeonConfig.instance:getChapterDivideSectionId(slot1)
-	slot0._sameSectionId = slot2 == slot0._targetSectionId
-	slot0._beFocusChapterId = slot1
-	slot0._targetSectionId = slot2
+function var_0_0._beFocusChapter(arg_13_0, arg_13_1)
+	local var_13_0 = arg_13_1 and DungeonConfig.instance:getChapterDivideSectionId(arg_13_1)
 
-	slot0:_playChapterFocusEffect()
+	arg_13_0._sameSectionId = var_13_0 == arg_13_0._targetSectionId
+	arg_13_0._beFocusChapterId = arg_13_1
+	arg_13_0._targetSectionId = var_13_0
+
+	arg_13_0:_playChapterFocusEffect()
 end
 
-function slot0._killTween(slot0)
-	if slot0.tweenId then
-		ZProj.TweenHelper.KillById(slot0.tweenId)
+function var_0_0._killTween(arg_14_0)
+	if arg_14_0.tweenId then
+		ZProj.TweenHelper.KillById(arg_14_0.tweenId)
 
-		slot0.tweenId = nil
+		arg_14_0.tweenId = nil
 	end
 end
 
-function slot0._tweenHorizontalPosition(slot0)
-	slot0:_killTween()
+function var_0_0._tweenHorizontalPosition(arg_15_0)
+	arg_15_0:_killTween()
 
-	slot0.tweenId = ZProj.TweenHelper.DOTweenFloat(slot0._scrollchapter.horizontalNormalizedPosition, 0, DungeonMainStoryEnum.AnimTime, slot0._tweenFrameCallback, nil, slot0)
+	arg_15_0.tweenId = ZProj.TweenHelper.DOTweenFloat(arg_15_0._scrollchapter.horizontalNormalizedPosition, 0, DungeonMainStoryEnum.AnimTime, arg_15_0._tweenFrameCallback, nil, arg_15_0)
 end
 
-function slot0._tweenFrameCallback(slot0, slot1)
-	slot0._scrollchapter.horizontalNormalizedPosition = slot1
+function var_0_0._tweenFrameCallback(arg_16_0, arg_16_1)
+	arg_16_0._scrollchapter.horizontalNormalizedPosition = arg_16_1
 end
 
-function slot0._playChapterFocusEffect(slot0)
-	slot0._hasOldSelectedSectionItem = nil
+function var_0_0._playChapterFocusEffect(arg_17_0)
+	arg_17_0._hasOldSelectedSectionItem = nil
 
-	if #slot0._showChapterItemList > 0 then
-		slot0:_tweenHorizontalPosition()
+	if #arg_17_0._showChapterItemList > 0 then
+		arg_17_0:_tweenHorizontalPosition()
 
-		for slot4, slot5 in ipairs(slot0._showChapterItemList) do
-			slot5:playCloseAnim()
+		for iter_17_0, iter_17_1 in ipairs(arg_17_0._showChapterItemList) do
+			iter_17_1:playCloseAnim()
 		end
 
-		for slot4, slot5 in pairs(slot0._sectionList) do
-			slot5:moveToUnFoldPosX()
+		for iter_17_2, iter_17_3 in pairs(arg_17_0._sectionList) do
+			iter_17_3:moveToUnFoldPosX()
 		end
 
-		if slot0._curSelectedSectionItem and not slot0._sameSectionId then
-			slot0._hasOldSelectedSectionItem = true
+		if arg_17_0._curSelectedSectionItem and not arg_17_0._sameSectionId then
+			arg_17_0._hasOldSelectedSectionItem = true
 
-			slot0._curSelectedSectionItem:playAnimName("close")
+			arg_17_0._curSelectedSectionItem:playAnimName("close")
 		end
 
-		TaskDispatcher.cancelTask(slot0._applyFocusChapter, slot0)
-		TaskDispatcher.runDelay(slot0._applyFocusChapter, slot0, DungeonMainStoryEnum.AnimTime)
-		slot0:_startBlock(DungeonMainStoryEnum.AnimTime)
+		TaskDispatcher.cancelTask(arg_17_0._applyFocusChapter, arg_17_0)
+		TaskDispatcher.runDelay(arg_17_0._applyFocusChapter, arg_17_0, DungeonMainStoryEnum.AnimTime)
+		arg_17_0:_startBlock(DungeonMainStoryEnum.AnimTime)
 
 		return
 	end
 
-	slot0:_applyFocusChapter()
+	arg_17_0:_applyFocusChapter()
 end
 
-function slot0._applyFocusChapter(slot0)
-	slot0:_focusNormalChapter(slot0._beFocusChapterId)
+function var_0_0._applyFocusChapter(arg_18_0)
+	arg_18_0:_focusNormalChapter(arg_18_0._beFocusChapterId)
 end
 
-function slot0._focusNormalChapter(slot0, slot1)
-	slot0._curFocusChapterId = nil
-	slot0._curFocusChapterPosX = nil
+function var_0_0._focusNormalChapter(arg_19_0, arg_19_1)
+	arg_19_0._curFocusChapterId = nil
+	arg_19_0._curFocusChapterPosX = nil
 
-	if slot1 and DungeonConfig.instance:getChapterDivideSectionId(slot1) then
-		DungeonMainStoryModel.instance:setSectionSelected(slot2)
+	if arg_19_1 then
+		local var_19_0 = DungeonConfig.instance:getChapterDivideSectionId(arg_19_1)
 
-		slot0._curFocusChapterId = slot1
+		if var_19_0 then
+			DungeonMainStoryModel.instance:setSectionSelected(var_19_0)
+
+			arg_19_0._curFocusChapterId = arg_19_1
+		end
 	end
 
-	slot0:_showAllChapterList()
+	arg_19_0:_showAllChapterList()
 
-	if slot0._curFocusChapterPosX then
-		slot0._scrollchapter.movementType = 2
+	if arg_19_0._curFocusChapterPosX then
+		arg_19_0._scrollchapter.movementType = 2
 
-		recthelper.setAnchorX(slot0._gocontent.transform, -(slot0._curFocusChapterPosX - recthelper.getWidth(slot0._scrollchapter.transform) / 2))
-		TaskDispatcher.cancelTask(slot0._resetMovementType, slot0)
-		TaskDispatcher.runDelay(slot0._resetMovementType, slot0, 0)
+		local var_19_1 = arg_19_0._curFocusChapterPosX - recthelper.getWidth(arg_19_0._scrollchapter.transform) / 2
+
+		recthelper.setAnchorX(arg_19_0._gocontent.transform, -var_19_1)
+		TaskDispatcher.cancelTask(arg_19_0._resetMovementType, arg_19_0)
+		TaskDispatcher.runDelay(arg_19_0._resetMovementType, arg_19_0, 0)
 	end
 
-	TaskDispatcher.cancelTask(slot0.onScrollChange, slot0)
-	TaskDispatcher.runDelay(slot0.onScrollChange, slot0, 0)
-	slot0:onScrollChange()
+	TaskDispatcher.cancelTask(arg_19_0.onScrollChange, arg_19_0)
+	TaskDispatcher.runDelay(arg_19_0.onScrollChange, arg_19_0, 0)
+	arg_19_0:onScrollChange()
 end
 
-slot1 = "DungeonViewMainStoryBlock"
+local var_0_1 = "DungeonViewMainStoryBlock"
 
-function slot0._startBlock(slot0, slot1)
-	TaskDispatcher.cancelTask(slot0._endBlock, slot0)
-	TaskDispatcher.runDelay(slot0._endBlock, slot0, slot1 + DungeonMainStoryEnum.SectionAnimTime)
-	UIBlockMgr.instance:startBlock(uv0)
+function var_0_0._startBlock(arg_20_0, arg_20_1)
+	TaskDispatcher.cancelTask(arg_20_0._endBlock, arg_20_0)
+	TaskDispatcher.runDelay(arg_20_0._endBlock, arg_20_0, arg_20_1 + DungeonMainStoryEnum.SectionAnimTime)
+	UIBlockMgr.instance:startBlock(var_0_1)
 end
 
-function slot0._endBlock(slot0)
-	UIBlockMgr.instance:endBlock(uv0)
+function var_0_0._endBlock(arg_21_0)
+	UIBlockMgr.instance:endBlock(var_0_1)
 end
 
-function slot0._resetMovementType(slot0)
-	slot0._scrollchapter.movementType = 1
+function var_0_0._resetMovementType(arg_22_0)
+	arg_22_0._scrollchapter.movementType = 1
 end
 
-function slot0._initSectionSelected(slot0)
-	for slot4, slot5 in ipairs(lua_chapter_divide.configList) do
-		if DungeonMainStoryModel.instance:getChapterList(slot5.sectionId) and #slot7 > 0 and not DungeonModel.instance:chapterIsLock(slot7[1].id) then
-			DungeonMainStoryModel.instance:setSectionSelected(slot6)
+function var_0_0._initSectionSelected(arg_23_0)
+	for iter_23_0, iter_23_1 in ipairs(lua_chapter_divide.configList) do
+		local var_23_0 = iter_23_1.sectionId
+		local var_23_1 = DungeonMainStoryModel.instance:getChapterList(var_23_0)
+
+		if var_23_1 and #var_23_1 > 0 and not DungeonModel.instance:chapterIsLock(var_23_1[1].id) then
+			DungeonMainStoryModel.instance:setSectionSelected(var_23_0)
 		end
 	end
 end
 
-function slot0._showAllChapterList(slot0)
-	tabletool.clear(slot0._showChapterItemList)
-	slot0:_setSelectedSectionItem(nil)
+function var_0_0._showAllChapterList(arg_24_0)
+	tabletool.clear(arg_24_0._showChapterItemList)
+	arg_24_0:_setSelectedSectionItem(nil)
 
-	slot0._startPosX = 147.5
-	slot0._posX = slot0._startPosX
-	slot0._sectionPosX = slot0._startPosX
-	slot1 = 0
+	arg_24_0._startPosX = 147.5
+	arg_24_0._posX = arg_24_0._startPosX
+	arg_24_0._sectionPosX = arg_24_0._startPosX
 
-	for slot5, slot6 in ipairs(lua_chapter_divide.configList) do
-		if DungeonMainStoryModel.instance:getChapterList(slot6.sectionId) and #slot8 > 0 then
-			slot0:_showOneSectionChapterList(slot7, slot8, slot1)
+	local var_24_0 = 0
 
-			slot1 = slot1 + #slot8
+	for iter_24_0, iter_24_1 in ipairs(lua_chapter_divide.configList) do
+		local var_24_1 = iter_24_1.sectionId
+		local var_24_2 = DungeonMainStoryModel.instance:getChapterList(var_24_1)
+
+		if var_24_2 and #var_24_2 > 0 then
+			arg_24_0:_showOneSectionChapterList(var_24_1, var_24_2, var_24_0)
+
+			var_24_0 = var_24_0 + #var_24_2
 		end
 
-		slot0._posX = slot0._posX + DungeonMainStoryEnum.SectionSpace
+		arg_24_0._posX = arg_24_0._posX + DungeonMainStoryEnum.SectionSpace
 	end
 
-	recthelper.setWidth(slot0._gocontent.transform, slot0._posX)
+	recthelper.setWidth(arg_24_0._gocontent.transform, arg_24_0._posX)
 end
 
-function slot0._getSectionItem(slot0, slot1)
-	if not slot0._sectionList[slot1] then
-		slot4 = gohelper.cloneInPlace(slot0._gotemplatecell, "section")
+function var_0_0._getSectionItem(arg_25_0, arg_25_1)
+	local var_25_0 = arg_25_0._sectionList[arg_25_1]
 
-		gohelper.setActive(slot4, true)
+	if not var_25_0 then
+		local var_25_1 = arg_25_0.viewContainer:getSetting().otherRes.section_item
+		local var_25_2 = gohelper.cloneInPlace(arg_25_0._gotemplatecell, "section")
 
-		slot2 = MonoHelper.addNoUpdateLuaComOnceToGo(slot0:getResInst(slot0.viewContainer:getSetting().otherRes.section_item, slot4, tostring(slot1)), DungeonSectionItem)
-		slot0._sectionList[slot1] = slot2
-		slot6 = slot2.viewGO.transform
-		slot7 = Vector2(0, 1)
-		slot6.pivot = slot7
-		slot6.anchorMin = slot7
-		slot6.anchorMax = slot7
+		gohelper.setActive(var_25_2, true)
 
-		recthelper.setWidth(slot6, DungeonMainStoryEnum.ChapterWidth.Section)
+		local var_25_3 = arg_25_0:getResInst(var_25_1, var_25_2, tostring(arg_25_1))
+
+		var_25_0 = MonoHelper.addNoUpdateLuaComOnceToGo(var_25_3, DungeonSectionItem)
+		arg_25_0._sectionList[arg_25_1] = var_25_0
+
+		local var_25_4 = var_25_0.viewGO.transform
+		local var_25_5 = Vector2(0, 1)
+
+		var_25_4.pivot = var_25_5
+		var_25_4.anchorMin = var_25_5
+		var_25_4.anchorMax = var_25_5
+
+		recthelper.setWidth(var_25_4, DungeonMainStoryEnum.ChapterWidth.Section)
 	end
 
-	return slot2
+	return var_25_0
 end
 
-function slot0._getChapterItem(slot0, slot1, slot2)
-	if not slot0._chapterList[slot1] then
-		slot6 = gohelper.cloneInPlace(slot0._gotemplatecell, "cell" .. slot2 - 1)
+function var_0_0._getChapterItem(arg_26_0, arg_26_1, arg_26_2)
+	local var_26_0 = arg_26_0._chapterList[arg_26_1]
 
-		gohelper.setActive(slot6, true)
+	if not var_26_0 then
+		local var_26_1 = DungeonModel.instance:isSpecialMainPlot(arg_26_1)
+		local var_26_2 = var_26_1 and arg_26_0.viewContainer:getSetting().otherRes.mini_item or arg_26_0.viewContainer:getSetting().otherRes[1]
+		local var_26_3 = gohelper.cloneInPlace(arg_26_0._gotemplatecell, "cell" .. arg_26_2 - 1)
 
-		slot0._chapterList[slot1] = MonoHelper.addNoUpdateLuaComOnceToGo(slot0:getResInst(DungeonModel.instance:isSpecialMainPlot(slot1) and slot0.viewContainer:getSetting().otherRes.mini_item or slot0.viewContainer:getSetting().otherRes[1], slot6, slot4 and "mini_item" or LuaListScrollView.PrefabInstName), slot4 and DungeonChapterMiniItem or DungeonChapterItem)
+		gohelper.setActive(var_26_3, true)
 
-		if slot4 then
-			recthelper.setWidth(slot6.transform, DungeonMainStoryEnum.ChapterWidth.Special)
-			recthelper.setWidth(slot3.viewGO.transform, DungeonMainStoryEnum.ChapterWidth.Special)
+		local var_26_4 = arg_26_0:getResInst(var_26_2, var_26_3, var_26_1 and "mini_item" or LuaListScrollView.PrefabInstName)
+
+		var_26_0 = MonoHelper.addNoUpdateLuaComOnceToGo(var_26_4, var_26_1 and DungeonChapterMiniItem or DungeonChapterItem)
+		arg_26_0._chapterList[arg_26_1] = var_26_0
+
+		if var_26_1 then
+			recthelper.setWidth(var_26_3.transform, DungeonMainStoryEnum.ChapterWidth.Special)
+			recthelper.setWidth(var_26_0.viewGO.transform, DungeonMainStoryEnum.ChapterWidth.Special)
 		else
-			recthelper.setWidth(slot6.transform, DungeonMainStoryEnum.ChapterWidth.Normal)
-			recthelper.setWidth(slot3.viewGO.transform, DungeonMainStoryEnum.ChapterWidth.Normal)
+			recthelper.setWidth(var_26_3.transform, DungeonMainStoryEnum.ChapterWidth.Normal)
+			recthelper.setWidth(var_26_0.viewGO.transform, DungeonMainStoryEnum.ChapterWidth.Normal)
 		end
 
-		slot8 = slot3.viewGO.transform
-		slot9 = slot0._anchorVec
-		slot8.pivot = slot9
-		slot8.anchorMin = slot9
-		slot8.anchorMax = slot9
+		local var_26_5 = var_26_0.viewGO.transform
+		local var_26_6 = arg_26_0._anchorVec
+
+		var_26_5.pivot = var_26_6
+		var_26_5.anchorMin = var_26_6
+		var_26_5.anchorMax = var_26_6
 	end
 
-	return slot3
+	return var_26_0
 end
 
-function slot0._showSectionItem(slot0, slot1)
-	slot0:_getSectionItem(slot1):onUpdateMO(lua_chapter_divide.configDict[slot1])
+function var_0_0._showSectionItem(arg_27_0, arg_27_1)
+	local var_27_0 = arg_27_0:_getSectionItem(arg_27_1)
 
-	if DungeonMainStoryModel.instance:sectionIsSelected(slot1) then
-		slot0:_setSelectedSectionItem(slot2)
-		slot2:playAnimName("unfold")
+	var_27_0:onUpdateMO(lua_chapter_divide.configDict[arg_27_1])
+
+	if DungeonMainStoryModel.instance:sectionIsSelected(arg_27_1) then
+		arg_27_0:_setSelectedSectionItem(var_27_0)
+		var_27_0:playAnimName("unfold")
 	end
 
-	slot3 = slot0._posX
+	local var_27_1 = arg_27_0._posX
 
-	recthelper.setAnchor(slot2.viewGO.transform.parent, slot3, DungeonMainStoryEnum.ChapterPosY.Section)
-	slot2:setPosX(slot3)
-	slot2:setUnFoldPosX(slot0._sectionPosX)
+	recthelper.setAnchor(var_27_0.viewGO.transform.parent, var_27_1, DungeonMainStoryEnum.ChapterPosY.Section)
+	var_27_0:setPosX(var_27_1)
+	var_27_0:setUnFoldPosX(arg_27_0._sectionPosX)
 
-	slot0._posX = slot0._posX + DungeonMainStoryEnum.ChapterWidth.Section
-	slot0._sectionPosX = slot0._sectionPosX + DungeonMainStoryEnum.ChapterWidth.Section
+	arg_27_0._posX = arg_27_0._posX + DungeonMainStoryEnum.ChapterWidth.Section
+	arg_27_0._sectionPosX = arg_27_0._sectionPosX + DungeonMainStoryEnum.ChapterWidth.Section
 
-	if slot0._posX ~= slot0._sectionPosX then
-		recthelper.setAnchor(slot2.viewGO.transform.parent, slot0._sectionPosX, DungeonMainStoryEnum.ChapterPosY.Section)
-		slot2:moveToPosX()
+	if arg_27_0._posX ~= arg_27_0._sectionPosX then
+		recthelper.setAnchor(var_27_0.viewGO.transform.parent, arg_27_0._sectionPosX, DungeonMainStoryEnum.ChapterPosY.Section)
+		var_27_0:moveToPosX()
 	end
 end
 
-function slot0._hideChpaterList(slot0, slot1)
-	for slot5, slot6 in ipairs(slot1) do
-		if slot0._chapterList[slot6.id] then
-			recthelper.setAnchorY(slot7.viewGO.transform.parent, 2000)
+function var_0_0._hideChpaterList(arg_28_0, arg_28_1)
+	for iter_28_0, iter_28_1 in ipairs(arg_28_1) do
+		local var_28_0 = arg_28_0._chapterList[iter_28_1.id]
+
+		if var_28_0 then
+			recthelper.setAnchorY(var_28_0.viewGO.transform.parent, 2000)
 		end
 	end
 end
 
-function slot0._showOneSectionChapterList(slot0, slot1, slot2, slot3)
-	slot0:_showSectionItem(slot1)
+function var_0_0._showOneSectionChapterList(arg_29_0, arg_29_1, arg_29_2, arg_29_3)
+	arg_29_0:_showSectionItem(arg_29_1)
 
-	if not DungeonMainStoryModel.instance:sectionIsSelected(slot1) then
-		slot0:_hideChpaterList(slot2)
+	if not DungeonMainStoryModel.instance:sectionIsSelected(arg_29_1) then
+		arg_29_0:_hideChpaterList(arg_29_2)
 
 		return
 	end
 
-	slot0._posX = slot0._posX + DungeonMainStoryEnum.ChapterStartPosX
+	arg_29_0._posX = arg_29_0._posX + DungeonMainStoryEnum.ChapterStartPosX
 
-	for slot7, slot8 in ipairs(slot2) do
-		slot9 = DungeonModel.instance:isSpecialMainPlot(slot8.id)
-		slot10 = slot0:_getChapterItem(slot8.id, slot3 + slot7)
+	for iter_29_0, iter_29_1 in ipairs(arg_29_2) do
+		local var_29_0 = DungeonModel.instance:isSpecialMainPlot(iter_29_1.id)
+		local var_29_1 = arg_29_0:_getChapterItem(iter_29_1.id, arg_29_3 + iter_29_0)
 
-		slot10:onUpdateMO(slot8)
+		var_29_1:onUpdateMO(iter_29_1)
 
-		slot0._showChapterItemList[slot7] = slot10
+		arg_29_0._showChapterItemList[iter_29_0] = var_29_1
 
-		if slot10:getIsPlayCloseAnim() then
-			slot10:playIdleAnim()
+		if var_29_1:getIsPlayCloseAnim() then
+			var_29_1:playIdleAnim()
 		end
 
-		if slot8.id == slot0._curFocusChapterId then
-			slot0._curFocusChapterPosX = slot0._posX
+		local var_29_2 = arg_29_0._posX
+
+		if iter_29_1.id == arg_29_0._curFocusChapterId then
+			arg_29_0._curFocusChapterPosX = var_29_2
 		end
 
-		if slot9 then
-			recthelper.setAnchor(slot10.viewGO.transform.parent, slot11, DungeonMainStoryEnum.ChapterPosY.Special)
+		if var_29_0 then
+			recthelper.setAnchor(var_29_1.viewGO.transform.parent, var_29_2, DungeonMainStoryEnum.ChapterPosY.Special)
 
-			slot0._posX = slot0._posX + DungeonMainStoryEnum.ChapterWidth.Special
+			arg_29_0._posX = arg_29_0._posX + DungeonMainStoryEnum.ChapterWidth.Special
 		else
-			recthelper.setAnchor(slot10.viewGO.transform.parent, slot11, DungeonMainStoryEnum.ChapterPosY.Normal)
+			recthelper.setAnchor(var_29_1.viewGO.transform.parent, var_29_2, DungeonMainStoryEnum.ChapterPosY.Normal)
 
-			slot0._posX = slot0._posX + DungeonMainStoryEnum.ChapterWidth.Normal
+			arg_29_0._posX = arg_29_0._posX + DungeonMainStoryEnum.ChapterWidth.Normal
 		end
 
-		if slot7 ~= #slot2 then
-			slot0._posX = slot0._posX + DungeonMainStoryEnum.ChapterSpace
+		if iter_29_0 ~= #arg_29_2 then
+			arg_29_0._posX = arg_29_0._posX + DungeonMainStoryEnum.ChapterSpace
 		end
 	end
 end
 
-function slot0.onClose(slot0)
-	TaskDispatcher.cancelTask(slot0._resetMovementType, slot0)
-	TaskDispatcher.cancelTask(slot0._applyFocusChapter, slot0)
-	TaskDispatcher.cancelTask(slot0.onScrollChange, slot0)
-	slot0:_endBlock()
+function var_0_0.onClose(arg_30_0)
+	TaskDispatcher.cancelTask(arg_30_0._resetMovementType, arg_30_0)
+	TaskDispatcher.cancelTask(arg_30_0._applyFocusChapter, arg_30_0)
+	TaskDispatcher.cancelTask(arg_30_0.onScrollChange, arg_30_0)
+	arg_30_0:_endBlock()
 end
 
-return slot0
+return var_0_0

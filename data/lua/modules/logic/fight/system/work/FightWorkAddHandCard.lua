@@ -1,48 +1,56 @@
-module("modules.logic.fight.system.work.FightWorkAddHandCard", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkAddHandCard", package.seeall)
 
-slot0 = class("FightWorkAddHandCard", FightEffectBase)
+local var_0_0 = class("FightWorkAddHandCard", FightEffectBase)
 
-function slot0.onStart(slot0)
-	if not FightCardDataHelper.cardChangeIsMySide(slot0._actEffectMO) then
-		slot0:onDone(true)
+function var_0_0.onStart(arg_1_0)
+	if not FightCardDataHelper.cardChangeIsMySide(arg_1_0._actEffectMO) then
+		arg_1_0:onDone(true)
 
 		return
 	end
 
-	slot0._revertVisible = true
+	arg_1_0._revertVisible = true
 
 	FightController.instance:dispatchEvent(FightEvent.SetHandCardVisible, true)
-	FightCardInfoMO.New():init(slot0._actEffectMO.cardInfo)
 
-	if slot0._actEffectMO.cardInfo.skillId == 0 then
-		slot2 = ""
+	local var_1_0 = FightCardInfoMO.New()
 
-		if FightLocalDataMgr.instance:getEntityById(slot0._actEffectMO.cardInfo.uid) then
-			slot2 = slot3:getEntityName() or ""
+	var_1_0:init(arg_1_0._actEffectMO.cardInfo)
+
+	if arg_1_0._actEffectMO.cardInfo.skillId == 0 then
+		local var_1_1 = ""
+		local var_1_2 = FightLocalDataMgr.instance:getEntityById(arg_1_0._actEffectMO.cardInfo.uid)
+
+		if var_1_2 then
+			var_1_1 = var_1_2:getEntityName() or ""
 		end
 
-		logError(string.format("服务器下发了一张技能id为0的卡牌,卡牌归属者uid:%s,归属者名称:%s,所属步骤类型:%s, actId:%s", slot0._actEffectMO.cardInfo.uid, slot2, slot0._fightStepMO.actType, slot0._fightStepMO.actId))
+		local var_1_3 = "服务器下发了一张技能id为0的卡牌,卡牌归属者uid:%s,归属者名称:%s,所属步骤类型:%s, actId:%s"
+
+		logError(string.format(var_1_3, arg_1_0._actEffectMO.cardInfo.uid, var_1_1, arg_1_0._fightStepMO.actType, arg_1_0._fightStepMO.actId))
 	end
 
-	slot2 = FightCardModel.instance:getHandCards()
+	local var_1_4 = FightCardModel.instance:getHandCards()
 
-	table.insert(slot2, slot1)
-	FightCardModel.instance:coverCard(slot2)
+	table.insert(var_1_4, var_1_0)
+	FightCardModel.instance:coverCard(var_1_4)
 
 	if FightModel.instance:getVersion() >= 4 then
-		slot0:com_registTimer(slot0._delayAfterPerformance, 0.5)
-		FightController.instance:dispatchEvent(FightEvent.AddHandCard, slot1)
+		local var_1_5 = 0.5
+
+		arg_1_0:com_registTimer(arg_1_0._delayAfterPerformance, var_1_5)
+		FightController.instance:dispatchEvent(FightEvent.AddHandCard, var_1_0)
 	else
-		FightCardModel.instance:coverCard(FightCardModel.calcCardsAfterCombine(slot2))
+		FightCardModel.instance:coverCard(FightCardModel.calcCardsAfterCombine(var_1_4))
 		FightController.instance:dispatchEvent(FightEvent.RefreshHandCard)
-		slot0:onDone(true)
+		arg_1_0:onDone(true)
 	end
 end
 
-function slot0.clearWork(slot0)
-	if slot0._revertVisible then
+function var_0_0.clearWork(arg_2_0)
+	if arg_2_0._revertVisible then
 		FightController.instance:dispatchEvent(FightEvent.SetHandCardVisible, true, true)
 	end
 end
 
-return slot0
+return var_0_0

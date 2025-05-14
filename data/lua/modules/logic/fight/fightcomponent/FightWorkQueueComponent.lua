@@ -1,54 +1,58 @@
-module("modules.logic.fight.fightcomponent.FightWorkQueueComponent", package.seeall)
+﻿module("modules.logic.fight.fightcomponent.FightWorkQueueComponent", package.seeall)
 
-slot0 = class("FightWorkQueueComponent", FightBaseClass)
+local var_0_0 = class("FightWorkQueueComponent", FightBaseClass)
 
-function slot0.onConstructor(slot0)
-	slot0.workQueue = {}
+function var_0_0.onConstructor(arg_1_0)
+	arg_1_0.workQueue = {}
 end
 
-function slot0.addWork(slot0, slot1, slot2)
-	table.insert(slot0.workQueue, {
-		work = slot1,
-		context = slot2
+function var_0_0.addWork(arg_2_0, arg_2_1, arg_2_2)
+	table.insert(arg_2_0.workQueue, {
+		work = arg_2_1,
+		context = arg_2_2
 	})
 
-	if #slot0.workQueue == 1 then
-		slot1:registFinishCallback(slot0._onQueueWorkFinish, slot0)
+	if #arg_2_0.workQueue == 1 then
+		arg_2_1:registFinishCallback(arg_2_0._onQueueWorkFinish, arg_2_0)
 
-		return slot1:start(slot2)
+		return arg_2_1:start(arg_2_2)
 	end
 end
 
-function slot0.registWork(slot0, slot1, ...)
-	slot2 = slot0:newClass(slot1, ...)
+function var_0_0.registWork(arg_3_0, arg_3_1, ...)
+	local var_3_0 = arg_3_0:newClass(arg_3_1, ...)
 
-	slot0:addWork(slot2)
+	arg_3_0:addWork(var_3_0)
 
-	return slot2
+	return var_3_0
 end
 
-function slot0.registWorkWithContext(slot0, slot1, slot2, ...)
-	slot3 = slot0:newClass(slot1, ...)
+function var_0_0.registWorkWithContext(arg_4_0, arg_4_1, arg_4_2, ...)
+	local var_4_0 = arg_4_0:newClass(arg_4_1, ...)
 
-	slot0:addWork(slot3, slot2)
+	arg_4_0:addWork(var_4_0, arg_4_2)
 
-	return slot3
+	return var_4_0
 end
 
-function slot0._onQueueWorkFinish(slot0)
-	if slot0.workQueue then
-		table.remove(slot1, 1)
+function var_0_0._onQueueWorkFinish(arg_5_0)
+	local var_5_0 = arg_5_0.workQueue
 
-		if slot1[1] then
-			return slot2.work:start(slot2.context)
+	if var_5_0 then
+		table.remove(var_5_0, 1)
+
+		local var_5_1 = var_5_0[1]
+
+		if var_5_1 then
+			return var_5_1.work:start(var_5_1.context)
 		end
 	end
 end
 
-function slot0.onDestructor(slot0)
-	for slot4 = #slot0.workQueue, 1, -1 do
-		slot0.workQueue[slot4]:disposeSelf()
+function var_0_0.onDestructor(arg_6_0)
+	for iter_6_0 = #arg_6_0.workQueue, 1, -1 do
+		arg_6_0.workQueue[iter_6_0]:disposeSelf()
 	end
 end
 
-return slot0
+return var_0_0

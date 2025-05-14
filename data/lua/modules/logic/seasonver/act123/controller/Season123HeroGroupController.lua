@@ -1,302 +1,370 @@
-module("modules.logic.seasonver.act123.controller.Season123HeroGroupController", package.seeall)
+﻿module("modules.logic.seasonver.act123.controller.Season123HeroGroupController", package.seeall)
 
-slot0 = class("Season123HeroGroupController", BaseController)
+local var_0_0 = class("Season123HeroGroupController", BaseController)
 
-function slot0.onOpenView(slot0, slot1, slot2, slot3, slot4)
-	Season123Controller.instance:registerCallback(Season123Event.HeroGroupIndexChanged, slot0.handleHeroGroupIndexChanged, slot0)
-	FightController.instance:registerCallback(FightEvent.RespGetFightRecordGroupReply, slot0.handleGetFightRecordGroupReply, slot0)
+function var_0_0.onOpenView(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4)
+	Season123Controller.instance:registerCallback(Season123Event.HeroGroupIndexChanged, arg_1_0.handleHeroGroupIndexChanged, arg_1_0)
+	FightController.instance:registerCallback(FightEvent.RespGetFightRecordGroupReply, arg_1_0.handleGetFightRecordGroupReply, arg_1_0)
 
-	if Season123Model.instance:getBattleContext() and DungeonConfig.instance:getEpisodeCO(slot5.episodeId) then
-		HeroGroupTrialModel.instance:setTrialByBattleId(slot6.battleId)
+	local var_1_0 = Season123Model.instance:getBattleContext()
+
+	if var_1_0 then
+		local var_1_1 = DungeonConfig.instance:getEpisodeCO(var_1_0.episodeId)
+
+		if var_1_1 then
+			HeroGroupTrialModel.instance:setTrialByBattleId(var_1_1.battleId)
+		end
 	end
 
 	CharacterModel.instance:setAppendHeroMOs(nil)
-	Season123HeroGroupModel.instance:init(slot1, slot2, slot3, slot4)
-	Season123HeroGroupEditModel.instance:init(slot1, slot2, slot3, slot4)
-	Season123HeroGroupQuickEditModel.instance:init(slot1, slot2, slot3, slot4)
+	Season123HeroGroupModel.instance:init(arg_1_1, arg_1_2, arg_1_3, arg_1_4)
+	Season123HeroGroupEditModel.instance:init(arg_1_1, arg_1_2, arg_1_3, arg_1_4)
+	Season123HeroGroupQuickEditModel.instance:init(arg_1_1, arg_1_2, arg_1_3, arg_1_4)
 end
 
-function slot0.onCloseView(slot0)
-	Season123Controller.instance:unregisterCallback(Season123Event.HeroGroupIndexChanged, slot0.handleHeroGroupIndexChanged, slot0)
-	FightController.instance:unregisterCallback(FightEvent.RespGetFightRecordGroupReply, slot0.handleGetFightRecordGroupReply, slot0)
-	slot0:saveCurrentHeroGroup()
+function var_0_0.onCloseView(arg_2_0)
+	Season123Controller.instance:unregisterCallback(Season123Event.HeroGroupIndexChanged, arg_2_0.handleHeroGroupIndexChanged, arg_2_0)
+	FightController.instance:unregisterCallback(FightEvent.RespGetFightRecordGroupReply, arg_2_0.handleGetFightRecordGroupReply, arg_2_0)
+	arg_2_0:saveCurrentHeroGroup()
 	CharacterModel.instance:setAppendHeroMOs(nil)
 end
 
-function slot0.checkSeason123HeroGroup(slot0)
+function var_0_0.checkSeason123HeroGroup(arg_3_0)
 	if Season123HeroGroupModel.instance:isEpisodeSeason123() then
-		uv0.checkHeroGroupAvailable(Season123HeroGroupModel.instance.activityId, Season123HeroGroupModel.instance.stage, Season123HeroGroupModel.instance.layer)
+		local var_3_0 = Season123HeroGroupModel.instance.activityId
+		local var_3_1 = Season123HeroGroupModel.instance.stage
+		local var_3_2 = Season123HeroGroupModel.instance.layer
+
+		var_0_0.checkHeroGroupAvailable(var_3_0, var_3_1, var_3_2)
 	end
 end
 
-function slot0.changeReplayMode2Manual(slot0)
+function var_0_0.changeReplayMode2Manual(arg_4_0)
 	HeroGroupModel.instance:setParam(HeroGroupModel.instance.battleId, HeroGroupModel.instance.episodeId, HeroGroupModel.instance.adventure)
-	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.SelectHeroGroup, HeroGroupModel.instance:getCurGroupMO().id)
-	uv0.instance:checkSeason123HeroGroup(Season123HeroGroupModel.instance.activityId, Season123HeroGroupModel.instance.stage, Season123HeroGroupModel.instance.layer)
+
+	local var_4_0 = HeroGroupModel.instance:getCurGroupMO().id
+
+	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.SelectHeroGroup, var_4_0)
+
+	local var_4_1 = Season123HeroGroupModel.instance.activityId
+	local var_4_2 = Season123HeroGroupModel.instance.stage
+	local var_4_3 = Season123HeroGroupModel.instance.layer
+
+	var_0_0.instance:checkSeason123HeroGroup(var_4_1, var_4_2, var_4_3)
 end
 
-function slot0.switchHeroGroup(slot0, slot1)
-	slot0:saveCurrentHeroGroup()
-	Activity123Rpc.instance:sendAct123ChangeFightGroupRequest(Season123HeroGroupModel.instance.activityId, slot1)
+function var_0_0.switchHeroGroup(arg_5_0, arg_5_1)
+	arg_5_0:saveCurrentHeroGroup()
+
+	local var_5_0 = Season123HeroGroupModel.instance.activityId
+
+	Activity123Rpc.instance:sendAct123ChangeFightGroupRequest(var_5_0, arg_5_1)
 end
 
-function slot0.saveCurrentHeroGroup(slot0)
-	if not Season123HeroGroupModel.instance.activityId then
+function var_0_0.saveCurrentHeroGroup(arg_6_0)
+	local var_6_0 = Season123HeroGroupModel.instance.activityId
+
+	if not var_6_0 then
 		return
 	end
 
-	if not Season123Model.instance:getActInfo(slot1) then
+	local var_6_1 = Season123Model.instance:getActInfo(var_6_0)
+
+	if not var_6_1 then
 		return
 	end
 
-	uv0.saveHeroGroup(slot1, slot2.heroGroupSnapshotSubId)
+	var_0_0.saveHeroGroup(var_6_0, var_6_1.heroGroupSnapshotSubId)
 end
 
-function slot0.saveHeroGroup(slot0, slot1)
-	if not Season123Model.instance:getActInfo(slot0) then
+function var_0_0.saveHeroGroup(arg_7_0, arg_7_1)
+	local var_7_0 = Season123Model.instance:getActInfo(arg_7_0)
+
+	if not var_7_0 then
 		return
 	end
 
-	slot3 = nil
+	local var_7_1
 
 	if Season123HeroGroupModel.instance:isEpisodeSeason123() then
-		slot3 = slot2.heroGroupSnapshot[slot1]
+		var_7_1 = var_7_0.heroGroupSnapshot[arg_7_1]
 	elseif Season123HeroGroupModel.instance:isEpisodeSeason123Retail() then
-		slot3 = slot2.retailHeroGroups[slot1]
+		var_7_1 = var_7_0.retailHeroGroups[arg_7_1]
 	end
 
-	if not slot3 then
+	if not var_7_1 then
 		return
 	end
 
-	uv0.instance:syncHeroGroup(slot3, slot2.heroGroupSnapshotSubId, slot0)
+	var_0_0.instance:syncHeroGroup(var_7_1, var_7_0.heroGroupSnapshotSubId, arg_7_0)
 end
 
-function slot0.openHeroGroupView(slot0, slot1, slot2)
-	if not Season123Model.instance:getBattleContext() then
+function var_0_0.openHeroGroupView(arg_8_0, arg_8_1, arg_8_2)
+	local var_8_0 = Season123Model.instance:getBattleContext()
+
+	if not var_8_0 then
 		return
 	end
 
-	Season123HeroGroupModel.instance:init(slot3.actId, slot3.layer, slot3.episodeId, slot3.stage)
+	Season123HeroGroupModel.instance:init(var_8_0.actId, var_8_0.layer, var_8_0.episodeId, var_8_0.stage)
 	HeroGroupModel.instance:setReplayParam(nil)
-	HeroGroupModel.instance:setParam(slot1, slot2)
+	HeroGroupModel.instance:setParam(arg_8_1, arg_8_2)
 
-	slot7 = PlayerPrefsHelper.getString(FightModel.getPrefsKeyFightPassModel(), "")
+	local var_8_1 = OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.FightReplay)
+	local var_8_2 = DungeonModel.instance:getEpisodeInfo(arg_8_2)
+	local var_8_3 = var_8_2 and var_8_2.star == DungeonEnum.StarType.Advanced and var_8_2.hasRecord
+	local var_8_4 = PlayerPrefsHelper.getString(FightModel.getPrefsKeyFightPassModel(), "")
 
-	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.FightReplay) and (DungeonModel.instance:getEpisodeInfo(slot2) and slot5.star == DungeonEnum.StarType.Advanced and slot5.hasRecord) and not string.nilorempty(slot7) and cjson.decode(slot7)[tostring(slot2)] then
-		FightController.instance:registerCallback(FightEvent.RespGetFightRecordGroupReply, slot0.handleGetFightRecordGroupReply, slot0)
-		FightRpc.instance:sendGetFightRecordGroupRequest(slot2)
+	if var_8_1 and var_8_3 and not string.nilorempty(var_8_4) and cjson.decode(var_8_4)[tostring(arg_8_2)] then
+		FightController.instance:registerCallback(FightEvent.RespGetFightRecordGroupReply, arg_8_0.handleGetFightRecordGroupReply, arg_8_0)
+		FightRpc.instance:sendGetFightRecordGroupRequest(arg_8_2)
 
 		return
 	end
 
 	Season123Controller.instance:openHeroGroupFightView({
-		actId = slot3.actId,
-		layer = slot3.layer,
-		episodeId = slot3.episodeId,
-		stage = slot3.stage
+		actId = var_8_0.actId,
+		layer = var_8_0.layer,
+		episodeId = var_8_0.episodeId,
+		stage = var_8_0.stage
 	})
 end
 
-function slot0.handleGetFightRecordGroupReply(slot0, slot1)
-	FightController.instance:unregisterCallback(FightEvent.RespGetFightRecordGroupReply, slot0.handleGetFightRecordGroupReply, slot0)
-	HeroGroupModel.instance:setReplayParam(slot1)
+function var_0_0.handleGetFightRecordGroupReply(arg_9_0, arg_9_1)
+	FightController.instance:unregisterCallback(FightEvent.RespGetFightRecordGroupReply, arg_9_0.handleGetFightRecordGroupReply, arg_9_0)
+	HeroGroupModel.instance:setReplayParam(arg_9_1)
 
-	if Season123Model.instance:getBattleContext() then
+	local var_9_0 = Season123Model.instance:getBattleContext()
+
+	if var_9_0 then
 		Season123Controller.instance:openHeroGroupFightView({
-			actId = slot2.actId,
-			layer = slot2.layer,
-			episodeId = slot2.episodeId,
-			stage = slot2.stage
+			actId = var_9_0.actId,
+			layer = var_9_0.layer,
+			episodeId = var_9_0.episodeId,
+			stage = var_9_0.stage
 		})
 	end
 end
 
-function slot0.changeEquipFromSelect(slot0, slot1, slot2)
-	slot3 = Season123HeroGroupModel.instance.activityId
-	slot4 = {
-		index = slot1,
+function var_0_0.changeEquipFromSelect(arg_10_0, arg_10_1, arg_10_2)
+	local var_10_0 = Season123HeroGroupModel.instance.activityId
+	local var_10_1 = {
+		index = arg_10_1,
 		equipUid = {}
 	}
 
-	for slot8, slot9 in ipairs(slot2) do
-		table.insert(slot4.equipUid, slot9)
+	for iter_10_0, iter_10_1 in ipairs(arg_10_2) do
+		table.insert(var_10_1.equipUid, iter_10_1)
 	end
 
-	slot5 = HeroGroupModel.instance:getCurGroupMO()
-	slot5.equips[slot1].equipUid = slot2
+	local var_10_2 = HeroGroupModel.instance:getCurGroupMO()
 
-	slot5:updatePosEquips(slot4)
-	uv0.instance:syncHeroGroup(slot5, slot0)
+	var_10_2.equips[arg_10_1].equipUid = arg_10_2
+
+	var_10_2:updatePosEquips(var_10_1)
+	var_0_0.instance:syncHeroGroup(var_10_2, arg_10_0)
 end
 
-function slot0.checkUnloadHero(slot0, slot1, slot2, slot3)
-	if not HeroGroupModel.instance:getCurGroupMO().heroList then
+function var_0_0.checkUnloadHero(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
+	local var_11_0 = HeroGroupModel.instance:getCurGroupMO()
+
+	if not var_11_0.heroList then
 		return
 	end
 
-	if not Season123Model.instance:getActInfo(slot0) then
+	if not Season123Model.instance:getActInfo(arg_11_0) then
 		return
 	end
 
-	slot6 = false
-	slot7 = nil
+	local var_11_1 = false
+	local var_11_2
 
-	for slot11, slot12 in ipairs(slot4.heroList) do
-		if slot12 ~= Activity123Enum.EmptyUid and (Season123Model.instance:getSeasonHeroMO(slot0, slot1, slot2, slot12) == nil or slot13.hpRate == nil or slot13.hpRate <= 0) then
-			if slot3 then
-				slot4.heroList[slot11] = Activity123Enum.EmptyUid
+	for iter_11_0, iter_11_1 in ipairs(var_11_0.heroList) do
+		if iter_11_1 ~= Activity123Enum.EmptyUid then
+			local var_11_3 = Season123Model.instance:getSeasonHeroMO(arg_11_0, arg_11_1, arg_11_2, iter_11_1)
+
+			if var_11_3 == nil or var_11_3.hpRate == nil or var_11_3.hpRate <= 0 then
+				if arg_11_3 then
+					var_11_0.heroList[iter_11_0] = Activity123Enum.EmptyUid
+				end
+
+				var_11_2 = var_11_2 or {}
+				var_11_2[iter_11_1] = true
+				var_11_1 = true
 			end
-
-			(slot7 or {})[slot12] = true
-			slot6 = true
 		end
 	end
 
-	return slot6, slot7
+	return var_11_1, var_11_2
 end
 
-function slot0.checkUnlockLockPos(slot0, slot1, slot2)
-	slot3 = HeroGroupModel.instance:getCurGroupMO()
-	slot4 = Season123HeroGroupUtils.getUnlockSlotSet(slot0)
+function var_0_0.checkUnlockLockPos(arg_12_0, arg_12_1, arg_12_2)
+	local var_12_0 = HeroGroupModel.instance:getCurGroupMO()
+	local var_12_1 = Season123HeroGroupUtils.getUnlockSlotSet(arg_12_0)
+	local var_12_2 = Season123Model.instance:getActInfo(arg_12_0)
 
-	if not Season123Model.instance:getActInfo(slot0) then
+	if not var_12_2 then
 		return false
 	end
 
-	if not slot5:getStageMO(slot1) then
+	if not var_12_2:getStageMO(arg_12_1) then
 		return false
 	end
 
-	slot7 = false
-	slot8 = nil
+	local var_12_3 = false
+	local var_12_4
 
-	for slot12, slot13 in pairs(slot3.activity104Equips) do
-		if slot13.equipUid then
-			for slot17, slot18 in pairs(slot13.equipUid) do
-				if not slot4[Season123Model.instance:getUnlockCardIndex(slot13.index, slot17)] and not string.nilorempty(slot18) and slot18 ~= Activity123Enum.EmptyUid then
-					slot13.equipUid[slot17] = Activity123Enum.EmptyUid
+	for iter_12_0, iter_12_1 in pairs(var_12_0.activity104Equips) do
+		if iter_12_1.equipUid then
+			for iter_12_2, iter_12_3 in pairs(iter_12_1.equipUid) do
+				local var_12_5 = Season123Model.instance:getUnlockCardIndex(iter_12_1.index, iter_12_2)
 
-					table.insert(slot8 or {}, slot19)
+				if not var_12_1[var_12_5] and not string.nilorempty(iter_12_3) and iter_12_3 ~= Activity123Enum.EmptyUid then
+					iter_12_1.equipUid[iter_12_2] = Activity123Enum.EmptyUid
+					var_12_4 = var_12_4 or {}
 
-					slot7 = true
+					table.insert(var_12_4, var_12_5)
+
+					var_12_3 = true
 				end
 			end
 		end
 	end
 
-	return slot7
+	return var_12_3
 end
 
-function slot0.checkHeroGroupAvailable(slot0, slot1, slot2)
-	if uv0.checkUnloadHero(slot0, slot1, slot2, true) or uv0.checkUnlockLockPos(slot0, slot1, slot2) or uv0.checkEquipClothSkill() then
-		slot6 = HeroGroupModel.instance:getCurGroupMO()
+function var_0_0.checkHeroGroupAvailable(arg_13_0, arg_13_1, arg_13_2)
+	local var_13_0 = var_0_0.checkEquipClothSkill()
+	local var_13_1 = var_0_0.checkUnloadHero(arg_13_0, arg_13_1, arg_13_2, true)
+	local var_13_2 = var_0_0.checkUnlockLockPos(arg_13_0, arg_13_1, arg_13_2)
 
-		if not Season123Model.instance:getActInfo(slot0) or not slot6 then
+	if var_13_1 or var_13_2 or var_13_0 then
+		local var_13_3 = HeroGroupModel.instance:getCurGroupMO()
+		local var_13_4 = Season123Model.instance:getActInfo(arg_13_0)
+
+		if not var_13_4 or not var_13_3 then
 			return
 		end
 
-		logNormal(string.format("season heroGroupId = [%s] role need unload.", slot7.heroGroupSnapshotSubId))
-		uv0.instance:syncHeroGroup(slot6, slot7.heroGroupSnapshotSubId, slot0)
+		logNormal(string.format("season heroGroupId = [%s] role need unload.", var_13_4.heroGroupSnapshotSubId))
+		var_0_0.instance:syncHeroGroup(var_13_3, var_13_4.heroGroupSnapshotSubId, arg_13_0)
 	end
 end
 
-function slot0.syncHeroGroup(slot0, slot1, slot2, slot3)
-	Season123HeroGroupModel.instance.lastSyncGroupActId = slot3 or Season123HeroGroupModel.instance.activityId
+function var_0_0.syncHeroGroup(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
+	Season123HeroGroupModel.instance.lastSyncGroupActId = arg_14_3 or Season123HeroGroupModel.instance.activityId
 
-	if HeroGroupModel.instance:getCurGroupMO() == slot1 then
-		HeroSingleGroupModel.instance:setSingleGroup(slot4, true)
+	local var_14_0 = HeroGroupModel.instance:getCurGroupMO()
+
+	if var_14_0 == arg_14_1 then
+		HeroSingleGroupModel.instance:setSingleGroup(var_14_0, true)
 	end
+
+	local var_14_1 = {
+		groupIndex = arg_14_2,
+		heroGroup = arg_14_1
+	}
 
 	if Season123HeroGroupModel.instance:isEpisodeSeason123() then
-		HeroGroupModel.instance:setHeroGroupSnapshot(ModuleEnum.HeroGroupType.Season123, DungeonModel.instance.curSendEpisodeId, true, {
-			groupIndex = slot2,
-			heroGroup = slot1
-		})
+		HeroGroupModel.instance:setHeroGroupSnapshot(ModuleEnum.HeroGroupType.Season123, DungeonModel.instance.curSendEpisodeId, true, var_14_1)
 	elseif Season123HeroGroupModel.instance:isEpisodeSeason123Retail() then
-		HeroGroupModel.instance:setHeroGroupSnapshot(ModuleEnum.HeroGroupType.Season123Retail, DungeonModel.instance.curSendEpisodeId, true, slot5)
+		HeroGroupModel.instance:setHeroGroupSnapshot(ModuleEnum.HeroGroupType.Season123Retail, DungeonModel.instance.curSendEpisodeId, true, var_14_1)
 	end
 end
 
-function slot0.handleHeroGroupIndexChanged(slot0)
-	slot2 = Season123HeroGroupModel.instance.stage
-	slot3 = Season123HeroGroupModel.instance.layer
+function var_0_0.handleHeroGroupIndexChanged(arg_15_0)
+	local var_15_0 = Season123HeroGroupModel.instance.activityId
+	local var_15_1 = Season123HeroGroupModel.instance.stage
+	local var_15_2 = Season123HeroGroupModel.instance.layer
 
-	slot0:checkSeason123HeroGroup()
+	arg_15_0:checkSeason123HeroGroup()
 
-	if Season123Model.instance:getActInfo(Season123HeroGroupModel.instance.activityId) and HeroGroupModel.instance:getCurGroupMO() == slot4:getCurHeroGroup() then
+	local var_15_3 = Season123Model.instance:getActInfo(var_15_0)
+
+	if var_15_3 and HeroGroupModel.instance:getCurGroupMO() == var_15_3:getCurHeroGroup() then
 		HeroGroupModel.instance:setCurGroupId(HeroGroupModel.instance:getCurGroupId())
 	end
 end
 
-function slot0.sendStartAct123Battle(slot0, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9)
-	slot10 = Season123HeroGroupModel.instance.activityId
-	slot11 = Season123HeroGroupModel.instance.layer
+function var_0_0.sendStartAct123Battle(arg_16_0, arg_16_1, arg_16_2, arg_16_3, arg_16_4, arg_16_5, arg_16_6, arg_16_7, arg_16_8, arg_16_9)
+	local var_16_0 = Season123HeroGroupModel.instance.activityId
+	local var_16_1 = Season123HeroGroupModel.instance.layer
 
 	if Season123HeroGroupModel.instance:isEpisodeSeason123Retail() then
-		slot11 = -1
+		var_16_1 = -1
 	end
 
-	Activity123Rpc.instance:sendStartAct123BattleRequest(slot10, slot11, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9)
+	Activity123Rpc.instance:sendStartAct123BattleRequest(var_16_0, var_16_1, arg_16_1, arg_16_2, arg_16_3, arg_16_4, arg_16_5, arg_16_6, arg_16_7, arg_16_8, arg_16_9)
 end
 
-function slot0.replaceHeroesDefaultEquip(slot0, slot1)
-	slot4 = HeroGroupModel.instance:getCurGroupMO().equips
-	slot5 = nil
+function var_0_0.replaceHeroesDefaultEquip(arg_17_0, arg_17_1)
+	local var_17_0 = Season123HeroGroupModel.instance.activityId
+	local var_17_1 = HeroGroupModel.instance:getCurGroupMO().equips
+	local var_17_2
 
-	for slot9, slot10 in ipairs(slot1) do
-		if Season123HeroUtils.getHeroMO(Season123HeroGroupModel.instance.activityId, slot10, Season123HeroGroupModel.instance.stage) and slot5:hasDefaultEquip() then
-			for slot14, slot15 in pairs(slot4) do
-				if slot15.equipUid[1] == slot5.defaultEquipUid then
-					slot15.equipUid[1] = "0"
+	for iter_17_0, iter_17_1 in ipairs(arg_17_1) do
+		local var_17_3 = Season123HeroUtils.getHeroMO(var_17_0, iter_17_1, Season123HeroGroupModel.instance.stage)
+
+		if var_17_3 and var_17_3:hasDefaultEquip() then
+			for iter_17_2, iter_17_3 in pairs(var_17_1) do
+				if iter_17_3.equipUid[1] == var_17_3.defaultEquipUid then
+					iter_17_3.equipUid[1] = "0"
 
 					break
 				end
 			end
 
-			slot4[slot9 - 1].equipUid[1] = slot5.defaultEquipUid
+			var_17_1[iter_17_0 - 1].equipUid[1] = var_17_3.defaultEquipUid
 		end
 	end
 end
 
-function slot0.setMultiplication(slot0, slot1)
-	if slot1 <= Season123HeroGroupModel.instance:getMultiplicationTicket() then
-		Season123HeroGroupModel.instance.multiplication = slot1
+function var_0_0.setMultiplication(arg_18_0, arg_18_1)
+	if arg_18_1 <= Season123HeroGroupModel.instance:getMultiplicationTicket() then
+		Season123HeroGroupModel.instance.multiplication = arg_18_1
 
 		Season123HeroGroupModel.instance:saveMultiplication()
 	end
 end
 
-function slot0.checkEquipClothSkill()
+function var_0_0.checkEquipClothSkill()
 	if not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.LeadRoleSkill) then
 		return
 	end
 
-	if PlayerClothModel.instance:getById(HeroGroupModel.instance:getCurGroupMO().clothId) then
+	local var_19_0 = HeroGroupModel.instance:getCurGroupMO()
+
+	if PlayerClothModel.instance:getById(var_19_0.clothId) then
 		return
 	end
 
-	for slot5, slot6 in ipairs(PlayerClothModel.instance:getList()) do
-		if PlayerClothModel.instance:hasCloth(slot6.id) then
-			HeroGroupModel.instance:replaceCloth(slot6.id)
+	local var_19_1 = PlayerClothModel.instance:getList()
+
+	for iter_19_0, iter_19_1 in ipairs(var_19_1) do
+		if PlayerClothModel.instance:hasCloth(iter_19_1.id) then
+			HeroGroupModel.instance:replaceCloth(iter_19_1.id)
 
 			return true
 		end
 	end
 end
 
-function slot0.processReplayGroupMO(slot0)
-	if slot0.isReplay then
-		if slot0.replay_activity104Equip_data["-100000"] and slot0.activity104Equips[Activity123Enum.MainCharPos] then
-			for slot6 = 1, #slot1 do
-				slot2.equipUid[slot6] = slot1[slot6].equipUid
+function var_0_0.processReplayGroupMO(arg_20_0)
+	if arg_20_0.isReplay then
+		local var_20_0 = arg_20_0.replay_activity104Equip_data["-100000"]
+		local var_20_1 = arg_20_0.activity104Equips[Activity123Enum.MainCharPos]
+
+		if var_20_0 and var_20_1 then
+			for iter_20_0 = 1, #var_20_0 do
+				var_20_1.equipUid[iter_20_0] = var_20_0[iter_20_0].equipUid
 			end
 		end
 
-		Season123HeroGroupUtils.formation104Equips(slot0)
+		Season123HeroGroupUtils.formation104Equips(arg_20_0)
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

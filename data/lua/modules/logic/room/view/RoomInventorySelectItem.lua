@@ -1,100 +1,108 @@
-module("modules.logic.room.view.RoomInventorySelectItem", package.seeall)
+﻿module("modules.logic.room.view.RoomInventorySelectItem", package.seeall)
 
-slot0 = class("RoomInventorySelectItem", ListScrollCellExtend)
+local var_0_0 = class("RoomInventorySelectItem", ListScrollCellExtend)
 
-function slot0.onInitView(slot0)
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+function var_0_0.onInitView(arg_1_0)
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnItem:AddClickListener(slot0._onBtnItemClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnItem:AddClickListener(arg_2_0._onBtnItemClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnItem:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnItem:RemoveClickListener()
 end
 
-function slot0._editableAddEvents(slot0)
-	RoomMapController.instance:registerCallback(RoomEvent.BackBlockListDataChanged, slot0._onBackBlockChanged, slot0)
-	RoomMapController.instance:registerCallback(RoomEvent.BackBlockPlayUIAnim, slot0._onPlayAnim, slot0)
+function var_0_0._editableAddEvents(arg_4_0)
+	RoomMapController.instance:registerCallback(RoomEvent.BackBlockListDataChanged, arg_4_0._onBackBlockChanged, arg_4_0)
+	RoomMapController.instance:registerCallback(RoomEvent.BackBlockPlayUIAnim, arg_4_0._onPlayAnim, arg_4_0)
 end
 
-function slot0._editableRemoveEvents(slot0)
-	RoomMapController.instance:unregisterCallback(RoomEvent.BackBlockListDataChanged, slot0._onBackBlockChanged, slot0)
-	RoomMapController.instance:unregisterCallback(RoomEvent.BackBlockPlayUIAnim, slot0._onPlayAnim, slot0)
+function var_0_0._editableRemoveEvents(arg_5_0)
+	RoomMapController.instance:unregisterCallback(RoomEvent.BackBlockListDataChanged, arg_5_0._onBackBlockChanged, arg_5_0)
+	RoomMapController.instance:unregisterCallback(RoomEvent.BackBlockPlayUIAnim, arg_5_0._onPlayAnim, arg_5_0)
 end
 
-function slot0._editableInitView(slot0)
-	slot0._rtIndex = OrthCameraRTMgr.instance:getNewIndex()
-	slot0._goselect = gohelper.findChild(slot0.viewGO, "go_select")
-	slot0._goempty = gohelper.findChild(slot0.viewGO, "go_empty")
-	slot0._goicon = gohelper.findChild(slot0.viewGO, "go_icon")
-	slot0._gobirthicon = gohelper.findChild(slot0.viewGO, "go_birthicon")
-	slot0._simagebirthhero = gohelper.findChildSingleImage(slot0.viewGO, "go_birthicon/simage_birthhero")
-	slot0._goonbirthdayicon = gohelper.findChild(slot0.viewGO, "go_birthicon/#image_onbirthday")
-	slot0._animator = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	slot0._btnItem = gohelper.findChildButtonWithAudio(slot0.viewGO, "go_icon")
-	slot0._rawImageIcon = gohelper.onceAddComponent(slot0._goicon, gohelper.Type_RawImage)
+function var_0_0._editableInitView(arg_6_0)
+	arg_6_0._rtIndex = OrthCameraRTMgr.instance:getNewIndex()
+	arg_6_0._goselect = gohelper.findChild(arg_6_0.viewGO, "go_select")
+	arg_6_0._goempty = gohelper.findChild(arg_6_0.viewGO, "go_empty")
+	arg_6_0._goicon = gohelper.findChild(arg_6_0.viewGO, "go_icon")
+	arg_6_0._gobirthicon = gohelper.findChild(arg_6_0.viewGO, "go_birthicon")
+	arg_6_0._simagebirthhero = gohelper.findChildSingleImage(arg_6_0.viewGO, "go_birthicon/simage_birthhero")
+	arg_6_0._goonbirthdayicon = gohelper.findChild(arg_6_0.viewGO, "go_birthicon/#image_onbirthday")
+	arg_6_0._animator = arg_6_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	arg_6_0._btnItem = gohelper.findChildButtonWithAudio(arg_6_0.viewGO, "go_icon")
+	arg_6_0._rawImageIcon = gohelper.onceAddComponent(arg_6_0._goicon, gohelper.Type_RawImage)
 
-	OrthCameraRTMgr.instance:setRawImageUvRect(slot0._rawImageIcon, slot0._rtIndex)
-	SLFramework.UGUI.GuiHelper.SetColor(slot0._rawImageIcon, "#BFB5A3")
+	OrthCameraRTMgr.instance:setRawImageUvRect(arg_6_0._rawImageIcon, arg_6_0._rtIndex)
 
-	slot0._scene = GameSceneMgr.instance:getCurScene()
+	local var_6_0 = "#BFB5A3"
 
-	gohelper.setActive(slot0._goempty, false)
+	SLFramework.UGUI.GuiHelper.SetColor(arg_6_0._rawImageIcon, var_6_0)
 
-	slot0._backBlockIds = {}
+	arg_6_0._scene = GameSceneMgr.instance:getCurScene()
+
+	gohelper.setActive(arg_6_0._goempty, false)
+
+	arg_6_0._backBlockIds = {}
 end
 
-function slot0._onBackBlockChanged(slot0, slot1, slot2, slot3, slot4)
-	if slot2 then
-		if slot0:_IsShow() then
-			slot0:_playBackBlockAnim(slot1, false, slot4)
+function var_0_0._onBackBlockChanged(arg_7_0, arg_7_1, arg_7_2, arg_7_3, arg_7_4)
+	if arg_7_2 then
+		if arg_7_0:_IsShow() then
+			arg_7_0:_playBackBlockAnim(arg_7_1, false, arg_7_4)
 		else
-			tabletool.addValues(slot0._backBlockIds, slot1)
+			tabletool.addValues(arg_7_0._backBlockIds, arg_7_1)
 		end
 	end
 end
 
-function slot0._onPlayAnim(slot0)
-	if slot0:_IsShow() and #slot0._backBlockIds > 0 then
-		slot0._backBlockIds = {}
+function var_0_0._onPlayAnim(arg_8_0)
+	if arg_8_0:_IsShow() and #arg_8_0._backBlockIds > 0 then
+		local var_8_0 = arg_8_0._backBlockIds
 
-		slot0:_playBackBlockAnim(slot0._backBlockIds, true)
+		arg_8_0._backBlockIds = {}
+
+		arg_8_0:_playBackBlockAnim(var_8_0, true)
 	end
 end
 
-function slot0._playBackBlockAnim(slot0, slot1, slot2, slot3)
-	slot5 = nil
+function var_0_0._playBackBlockAnim(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
+	arg_9_1 = arg_9_1 or {}
 
-	if slot2 then
-		if slot0._blockMO and tabletool.indexOf(slot1 or {}, slot0._blockMO.id) then
-			slot5 = "dikuai03"
+	local var_9_0 = arg_9_0._blockMO and tabletool.indexOf(arg_9_1, arg_9_0._blockMO.id)
+	local var_9_1
+
+	if arg_9_2 then
+		if var_9_0 then
+			var_9_1 = "dikuai03"
 		end
-	elseif slot4 then
-		slot5 = "dikuai01"
+	elseif var_9_0 then
+		var_9_1 = "dikuai01"
 	else
-		slot6 = true
+		local var_9_2 = true
 
-		if slot3 and slot0._index then
-			slot6 = slot3 < slot0._index
+		if arg_9_3 and arg_9_0._index then
+			var_9_2 = arg_9_3 < arg_9_0._index
 		end
 
-		if slot6 then
-			slot5 = "dikuai02"
+		if var_9_2 then
+			var_9_1 = "dikuai02"
 		end
 	end
 
-	if not slot5 then
+	if not var_9_1 then
 		return
 	end
 
-	slot0._animator:Play(slot5, 0, 0)
+	arg_9_0._animator:Play(var_9_1, 0, 0)
 end
 
-function slot0._IsShow(slot0)
+function var_0_0._IsShow(arg_10_0)
 	if RoomMapBlockModel.instance:isBackMore() or RoomBuildingController.instance:isBuildingListShow() then
 		return false
 	end
@@ -102,35 +110,37 @@ function slot0._IsShow(slot0)
 	return true
 end
 
-function slot0._onBtnItemClick(slot0)
-	if not slot0._blockMO then
+function var_0_0._onBtnItemClick(arg_11_0)
+	if not arg_11_0._blockMO then
 		return
 	end
 
-	slot1 = slot0._blockMO
+	local var_11_0 = arg_11_0._blockMO
+	local var_11_1 = arg_11_0._blockMO.id
 
-	RoomShowBlockListModel.instance:setSelect(slot0._blockMO.id)
+	RoomShowBlockListModel.instance:setSelect(var_11_1)
 
-	slot4 = slot0._scene.fsm:getCurStateName()
+	local var_11_2 = arg_11_0._scene
+	local var_11_3 = var_11_2.fsm:getCurStateName()
 
 	if RoomHelper.isFSMState(RoomEnum.FSMEditState.PlaceConfirm) then
-		slot5 = RoomMapBlockModel.instance:getTempBlockMO()
-		slot6 = HexMath.hexToPosition(slot5.hexPoint, RoomBlockEnum.BlockSize)
+		local var_11_4 = RoomMapBlockModel.instance:getTempBlockMO()
+		local var_11_5 = HexMath.hexToPosition(var_11_4.hexPoint, RoomBlockEnum.BlockSize)
 
-		if slot5.id == slot2 then
-			if RoomHelper.isOutCameraFocusCenter(slot6) then
-				if not slot3.camera:isTweening() then
-					slot3.camera:tweenCamera({
-						focusX = slot6.x,
-						focusY = slot6.y
+		if var_11_4.id == var_11_1 then
+			if RoomHelper.isOutCameraFocusCenter(var_11_5) then
+				if not var_11_2.camera:isTweening() then
+					var_11_2.camera:tweenCamera({
+						focusX = var_11_5.x,
+						focusY = var_11_5.y
 					})
 				end
 			else
 				GameFacade.showToast(ToastEnum.RoomInventorySelect)
 			end
 		else
-			slot3.fsm:triggerEvent(RoomSceneEvent.TryPlaceBlock, {
-				hexPoint = slot5.hexPoint
+			var_11_2.fsm:triggerEvent(RoomSceneEvent.TryPlaceBlock, {
+				hexPoint = var_11_4.hexPoint
 			})
 		end
 	end
@@ -138,71 +148,89 @@ function slot0._onBtnItemClick(slot0)
 	RoomMapController.instance:dispatchEvent(RoomEvent.SelectBlock)
 end
 
-function slot0._refreshBlock(slot0, slot1, slot2)
-	if slot2 then
-		slot0._scene.inventorymgr:removeBlockEntity(slot2)
+function var_0_0._refreshBlock(arg_12_0, arg_12_1, arg_12_2)
+	if arg_12_2 then
+		arg_12_0._scene.inventorymgr:removeBlockEntity(arg_12_2)
 	end
 
-	if slot1 then
-		slot0._scene.inventorymgr:addBlockEntity(slot1)
-		OrthCameraRTMgr.instance:setRawImageUvRect(slot0._rawImageIcon, slot0._scene.inventorymgr:getIndexById(slot1))
-	end
-end
+	if arg_12_1 then
+		arg_12_0._scene.inventorymgr:addBlockEntity(arg_12_1)
 
-function slot0.getBlockMO(slot0)
-	return slot0._blockMO
-end
+		local var_12_0 = arg_12_0._scene.inventorymgr:getIndexById(arg_12_1)
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._blockMO = slot1
-
-	slot0:_refreshBlock(slot1 and slot1.id, slot0._blockMO and slot0._blockMO.id)
-
-	slot4 = slot0._blockMO and slot0._blockMO.packageId == RoomBlockPackageEnum.ID.RoleBirthday
-
-	gohelper.setActive(slot0._gobirthicon, slot4)
-
-	if slot4 then
-		slot0:_refreshCharacter(slot3)
+		OrthCameraRTMgr.instance:setRawImageUvRect(arg_12_0._rawImageIcon, var_12_0)
 	end
 end
 
-function slot0.onSelect(slot0, slot1)
-	gohelper.setActive(slot0._goselect, slot1)
+function var_0_0.getBlockMO(arg_13_0)
+	return arg_13_0._blockMO
 end
 
-function slot0.onDestroyView(slot0)
-	if slot0._blockMO then
-		slot0._scene.inventorymgr:removeBlockEntity(slot0._blockMO.id)
-	end
+function var_0_0.onUpdateMO(arg_14_0, arg_14_1)
+	local var_14_0 = arg_14_0._blockMO and arg_14_0._blockMO.id
+	local var_14_1 = arg_14_1 and arg_14_1.id
 
-	if slot0._rawImageIcon then
-		slot0._rawImageIcon.texture = nil
-	end
+	arg_14_0._blockMO = arg_14_1
 
-	slot0._simagebirthhero:UnLoadImage()
+	arg_14_0:_refreshBlock(var_14_1, var_14_0)
+
+	local var_14_2 = arg_14_0._blockMO and arg_14_0._blockMO.packageId == RoomBlockPackageEnum.ID.RoleBirthday
+
+	gohelper.setActive(arg_14_0._gobirthicon, var_14_2)
+
+	if var_14_2 then
+		arg_14_0:_refreshCharacter(var_14_1)
+	end
 end
 
-function slot0._refreshCharacter(slot0, slot1)
-	if not RoomConfig.instance:getSpecialBlockConfig(slot1) then
+function var_0_0.onSelect(arg_15_0, arg_15_1)
+	gohelper.setActive(arg_15_0._goselect, arg_15_1)
+end
+
+function var_0_0.onDestroyView(arg_16_0)
+	if arg_16_0._blockMO then
+		arg_16_0._scene.inventorymgr:removeBlockEntity(arg_16_0._blockMO.id)
+	end
+
+	if arg_16_0._rawImageIcon then
+		arg_16_0._rawImageIcon.texture = nil
+	end
+
+	arg_16_0._simagebirthhero:UnLoadImage()
+end
+
+function var_0_0._refreshCharacter(arg_17_0, arg_17_1)
+	local var_17_0 = RoomConfig.instance:getSpecialBlockConfig(arg_17_1)
+
+	if not var_17_0 then
 		return
 	end
 
-	gohelper.setActive(slot0._goonbirthdayicon, RoomCharacterModel.instance:isOnBirthday(slot2.heroId))
+	local var_17_1 = RoomCharacterModel.instance:isOnBirthday(var_17_0.heroId)
 
-	if not slot0:_findSkinIdByHeroId(slot2.heroId) then
+	gohelper.setActive(arg_17_0._goonbirthdayicon, var_17_1)
+
+	local var_17_2 = arg_17_0:_findSkinIdByHeroId(var_17_0.heroId)
+
+	if not var_17_2 then
 		return
 	end
 
-	slot0._simagebirthhero:LoadImage(ResUrl.getHeadIconSmall(SkinConfig.instance:getSkinCo(slot4).headIcon))
+	local var_17_3 = SkinConfig.instance:getSkinCo(var_17_2)
+
+	arg_17_0._simagebirthhero:LoadImage(ResUrl.getHeadIconSmall(var_17_3.headIcon))
 end
 
-function slot0._findSkinIdByHeroId(slot0, slot1)
-	if RoomCharacterModel.instance:getCharacterMOById(slot1) then
-		return slot2.skinId
+function var_0_0._findSkinIdByHeroId(arg_18_0, arg_18_1)
+	local var_18_0 = RoomCharacterModel.instance:getCharacterMOById(arg_18_1)
+
+	if var_18_0 then
+		return var_18_0.skinId
 	end
 
-	return HeroConfig.instance:getHeroCO(slot1) and slot3.skinId or nil
+	local var_18_1 = HeroConfig.instance:getHeroCO(arg_18_1)
+
+	return var_18_1 and var_18_1.skinId or nil
 end
 
-return slot0
+return var_0_0

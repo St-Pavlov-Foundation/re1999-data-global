@@ -1,128 +1,139 @@
-module("modules.logic.store.model.StorePackageGoodsMO", package.seeall)
+﻿module("modules.logic.store.model.StorePackageGoodsMO", package.seeall)
 
-slot0 = pureTable("StorePackageGoodsMO")
+local var_0_0 = pureTable("StorePackageGoodsMO")
 
-function slot0.initCharge(slot0, slot1, slot2)
-	slot0.isChargeGoods = true
-	slot0.belongStoreId = slot1
-	slot0.goodsId = slot2.id
-	slot0.id = slot0.goodsId
-	slot0.buyCount = slot2.buyCount
-	slot0.config = StoreConfig.instance:getChargeGoodsConfig(slot0.goodsId)
-	slot0.buyLevel = 0
+function var_0_0.initCharge(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0.isChargeGoods = true
+	arg_1_0.belongStoreId = arg_1_1
+	arg_1_0.goodsId = arg_1_2.id
+	arg_1_0.id = arg_1_0.goodsId
+	arg_1_0.buyCount = arg_1_2.buyCount
+	arg_1_0.config = StoreConfig.instance:getChargeGoodsConfig(arg_1_0.goodsId)
+	arg_1_0.buyLevel = 0
 
-	if slot0.id == StoreEnum.LittleMonthCardGoodsId then
-		slot0.refreshTime = StoreEnum.ChargeRefreshTime.None
-		slot0.maxBuyCount = StoreConfig.instance:getMonthCardAddConfig(slot0.id).limit
+	if arg_1_0.id == StoreEnum.LittleMonthCardGoodsId then
+		local var_1_0 = StoreConfig.instance:getMonthCardAddConfig(arg_1_0.id)
+
+		arg_1_0.refreshTime = StoreEnum.ChargeRefreshTime.None
+		arg_1_0.maxBuyCount = var_1_0.limit
 	else
-		slot4 = GameUtil.splitString2(slot0.config.limit, true)[1]
-		slot0.refreshTime = slot4[1]
+		local var_1_1 = GameUtil.splitString2(arg_1_0.config.limit, true)
+		local var_1_2 = var_1_1[1]
 
-		if slot4[1] == StoreEnum.ChargeRefreshTime.None then
-			slot0.maxBuyCount = 0
+		arg_1_0.refreshTime = var_1_2[1]
+
+		if var_1_2[1] == StoreEnum.ChargeRefreshTime.None then
+			arg_1_0.maxBuyCount = 0
 		else
-			slot0.maxBuyCount = slot4[2]
+			arg_1_0.maxBuyCount = var_1_2[2]
 		end
 
-		for slot8, slot9 in ipairs(slot3) do
-			if slot9[1] == StoreEnum.ChargeRefreshTime.Level then
-				slot0.buyLevel = slot9[2]
+		for iter_1_0, iter_1_1 in ipairs(var_1_1) do
+			if iter_1_1[1] == StoreEnum.ChargeRefreshTime.Level then
+				arg_1_0.buyLevel = iter_1_1[2]
 			end
 		end
 	end
 
-	slot0.cost = StoreConfig.instance:getChargeGoodsPrice(slot0.id)
+	arg_1_0.cost = StoreConfig.instance:getChargeGoodsPrice(arg_1_0.id)
 
-	if string.nilorempty(slot0.config.offlineTime) then
-		slot0.offlineTime = 0
+	if string.nilorempty(arg_1_0.config.offlineTime) then
+		arg_1_0.offlineTime = 0
 	else
-		slot0.offlineTime = TimeUtil.stringToTimestamp(slot0.config.offlineTime)
+		arg_1_0.offlineTime = TimeUtil.stringToTimestamp(arg_1_0.config.offlineTime)
 	end
 
-	slot0._offInfos = string.split(slot0.config.offTag, "#")
+	arg_1_0._offInfos = string.split(arg_1_0.config.offTag, "#")
 
-	slot0:initRedDotTime()
+	arg_1_0:initRedDotTime()
 end
 
-function slot0.init(slot0, slot1, slot2, slot3, slot4)
-	slot0.isChargeGoods = false
-	slot0.belongStoreId = slot1
-	slot0.goodsId = slot2
-	slot0.id = slot0.goodsId
-	slot0.buyCount = slot3
-	slot0.offlineTime = slot4
-	slot0.config = StoreConfig.instance:getGoodsConfig(slot0.goodsId)
-	slot0.maxBuyCount = slot0.config.maxBuyCount
-	slot0.refreshTime = slot0.config.refreshTime
-	slot0.cost = slot0.config.cost
-	slot0.buyLevel = slot0.config.buyLevel
-	slot0._offInfos = string.split(slot0.config.offTag, "#")
+function var_0_0.init(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4)
+	arg_2_0.isChargeGoods = false
+	arg_2_0.belongStoreId = arg_2_1
+	arg_2_0.goodsId = arg_2_2
+	arg_2_0.id = arg_2_0.goodsId
+	arg_2_0.buyCount = arg_2_3
+	arg_2_0.offlineTime = arg_2_4
+	arg_2_0.config = StoreConfig.instance:getGoodsConfig(arg_2_0.goodsId)
+	arg_2_0.maxBuyCount = arg_2_0.config.maxBuyCount
+	arg_2_0.refreshTime = arg_2_0.config.refreshTime
+	arg_2_0.cost = arg_2_0.config.cost
+	arg_2_0.buyLevel = arg_2_0.config.buyLevel
+	arg_2_0._offInfos = string.split(arg_2_0.config.offTag, "#")
 
-	if slot4 == nil then
-		slot0.offlineTime = TimeUtil.stringToTimestamp(slot0.config.offlineTime)
+	if arg_2_4 == nil then
+		arg_2_0.offlineTime = TimeUtil.stringToTimestamp(arg_2_0.config.offlineTime)
 	end
 
-	slot0:initRedDotTime()
+	arg_2_0:initRedDotTime()
 end
 
-function slot0.initRedDotTime(slot0)
-	if string.nilorempty(slot0.config.newStartTime) then
-		slot0.newStartTime = 0
+function var_0_0.initRedDotTime(arg_3_0)
+	if string.nilorempty(arg_3_0.config.newStartTime) then
+		arg_3_0.newStartTime = 0
 	else
-		slot0.newStartTime = TimeUtil.stringToTimestamp(slot0.config.newStartTime)
+		arg_3_0.newStartTime = TimeUtil.stringToTimestamp(arg_3_0.config.newStartTime)
 	end
 
-	if string.nilorempty(slot0.config.newEndTime) then
-		slot0.newEndTime = 0
+	if string.nilorempty(arg_3_0.config.newEndTime) then
+		arg_3_0.newEndTime = 0
 	else
-		slot0.newEndTime = TimeUtil.stringToTimestamp(slot0.config.newEndTime)
+		arg_3_0.newEndTime = TimeUtil.stringToTimestamp(arg_3_0.config.newEndTime)
 	end
 end
 
-function slot0.alreadyHas(slot0)
-	slot2 = string.split(slot0.config.product, "#")
+function var_0_0.alreadyHas(arg_4_0)
+	local var_4_0 = arg_4_0.config.product
+	local var_4_1 = string.split(var_4_0, "#")
+	local var_4_2 = tonumber(var_4_1[1])
+	local var_4_3 = tonumber(var_4_1[2])
 
-	if tonumber(slot2[1]) == MaterialEnum.MaterialType.PlayerCloth then
-		return PlayerClothModel.instance:hasCloth(tonumber(slot2[2]))
+	if var_4_2 == MaterialEnum.MaterialType.PlayerCloth then
+		return PlayerClothModel.instance:hasCloth(var_4_3)
 	else
 		return false
 	end
 end
 
-function slot0.isSoldOut(slot0)
-	if slot0.maxBuyCount > 0 and slot0.maxBuyCount <= slot0.buyCount then
+function var_0_0.isSoldOut(arg_5_0)
+	if arg_5_0.maxBuyCount > 0 and arg_5_0.maxBuyCount <= arg_5_0.buyCount then
 		return true
 	end
 
 	return false
 end
 
-function slot0.isLevelOpen(slot0)
-	return slot0.buyLevel <= PlayerModel.instance:getPlayerLevel()
+function var_0_0.isLevelOpen(arg_6_0)
+	return arg_6_0.buyLevel <= PlayerModel.instance:getPlayerLevel()
 end
 
-function slot0.checkPreGoodsSoldOut(slot0)
-	if slot0.config.preGoodsId == 0 then
+function var_0_0.checkPreGoodsSoldOut(arg_7_0)
+	if arg_7_0.config.preGoodsId == 0 then
 		return true
 	end
 
-	return (StoreModel.instance:getGoodsMO(slot0.config.preGoodsId) and slot1:isSoldOut()) == true
+	local var_7_0 = StoreModel.instance:getGoodsMO(arg_7_0.config.preGoodsId)
+
+	return (var_7_0 and var_7_0:isSoldOut()) == true
 end
 
-function slot0.getDiscount(slot0)
-	if slot0._offInfos[1] == StoreEnum.Discount.Discount then
-		return slot0._offInfos[2] or 0
+function var_0_0.getDiscount(arg_8_0)
+	if arg_8_0._offInfos[1] == StoreEnum.Discount.Discount then
+		return arg_8_0._offInfos[2] or 0
 	end
 
 	return 0
 end
 
-function slot0.needShowNew(slot0)
-	if slot0:isSoldOut() then
+function var_0_0.needShowNew(arg_9_0)
+	if arg_9_0:isSoldOut() then
 		return false
 	else
-		return slot0.newStartTime <= ServerTime.now() and slot1 <= slot0.newEndTime
+		local var_9_0 = ServerTime.now()
+
+		return var_9_0 >= arg_9_0.newStartTime and var_9_0 <= arg_9_0.newEndTime
 	end
 end
 
-return slot0
+return var_0_0

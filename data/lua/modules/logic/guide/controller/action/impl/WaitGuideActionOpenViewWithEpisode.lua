@@ -1,32 +1,33 @@
-module("modules.logic.guide.controller.action.impl.WaitGuideActionOpenViewWithEpisode", package.seeall)
+﻿module("modules.logic.guide.controller.action.impl.WaitGuideActionOpenViewWithEpisode", package.seeall)
 
-slot0 = class("WaitGuideActionOpenViewWithEpisode", BaseGuideAction)
+local var_0_0 = class("WaitGuideActionOpenViewWithEpisode", BaseGuideAction)
 
-function slot0.onStart(slot0, slot1)
-	uv0.super.onStart(slot0, slot1)
+function var_0_0.onStart(arg_1_0, arg_1_1)
+	var_0_0.super.onStart(arg_1_0, arg_1_1)
 
-	slot2 = string.split(slot0.actionParam, "#")
-	slot0._viewName = ViewName[slot2[1]]
-	slot0._targetEposideId = tonumber(slot2[2])
+	local var_1_0 = string.split(arg_1_0.actionParam, "#")
 
-	if ViewMgr.instance:isOpen(slot0._viewName) and slot0._targetEposideId == DungeonModel.instance.curLookEpisodeId then
-		slot0:onDone(true)
+	arg_1_0._viewName = ViewName[var_1_0[1]]
+	arg_1_0._targetEposideId = tonumber(var_1_0[2])
+
+	if ViewMgr.instance:isOpen(arg_1_0._viewName) and arg_1_0._targetEposideId == DungeonModel.instance.curLookEpisodeId then
+		arg_1_0:onDone(true)
 
 		return
 	end
 
-	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, slot0._checkOpenView, slot0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, arg_1_0._checkOpenView, arg_1_0)
 end
 
-function slot0._checkOpenView(slot0, slot1, slot2)
-	if slot0._viewName == slot1 and slot0._targetEposideId == DungeonModel.instance.curLookEpisodeId then
-		slot0:clearWork()
-		slot0:onDone(true)
+function var_0_0._checkOpenView(arg_2_0, arg_2_1, arg_2_2)
+	if arg_2_0._viewName == arg_2_1 and arg_2_0._targetEposideId == DungeonModel.instance.curLookEpisodeId then
+		arg_2_0:clearWork()
+		arg_2_0:onDone(true)
 	end
 end
 
-function slot0.clearWork(slot0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, slot0._checkOpenView, slot0)
+function var_0_0.clearWork(arg_3_0)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, arg_3_0._checkOpenView, arg_3_0)
 end
 
-return slot0
+return var_0_0

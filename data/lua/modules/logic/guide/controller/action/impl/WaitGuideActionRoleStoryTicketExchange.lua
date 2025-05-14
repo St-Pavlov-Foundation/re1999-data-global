@@ -1,35 +1,35 @@
-module("modules.logic.guide.controller.action.impl.WaitGuideActionRoleStoryTicketExchange", package.seeall)
+﻿module("modules.logic.guide.controller.action.impl.WaitGuideActionRoleStoryTicketExchange", package.seeall)
 
-slot0 = class("WaitGuideActionRoleStoryTicketExchange", BaseGuideAction)
-slot1 = 1.6
+local var_0_0 = class("WaitGuideActionRoleStoryTicketExchange", BaseGuideAction)
+local var_0_1 = 1.6
 
-function slot0.onStart(slot0, slot1)
-	uv0.super.onStart(slot0, slot1)
+function var_0_0.onStart(arg_1_0, arg_1_1)
+	var_0_0.super.onStart(arg_1_0, arg_1_1)
 
-	slot2 = RoleStoryModel.instance.lastExchangeTime
+	local var_1_0 = RoleStoryModel.instance.lastExchangeTime
 
 	if CommonConfig.instance:getConstNum(ConstEnum.RoleStoryPowerCost) <= RoleStoryModel.instance:getLeftNum() and RoleStoryModel.instance:checkTodayCanExchange() then
-		RoleStoryController.instance:registerCallback(RoleStoryEvent.ExchangeTick, slot0._onExchangeTick, slot0)
-	elseif slot2 and Time.time - slot2 < uv1 then
-		slot0:_onExchangeTick()
+		RoleStoryController.instance:registerCallback(RoleStoryEvent.ExchangeTick, arg_1_0._onExchangeTick, arg_1_0)
+	elseif var_1_0 and Time.time - var_1_0 < var_0_1 then
+		arg_1_0:_onExchangeTick()
 	else
-		slot0:onDone(true)
+		arg_1_0:onDone(true)
 	end
 end
 
-function slot0._onExchangeTick(slot0)
-	RoleStoryController.instance:unregisterCallback(RoleStoryEvent.ExchangeTick, slot0._onExchangeTick, slot0)
-	GuideBlockMgr.instance:startBlock(uv0)
-	TaskDispatcher.runDelay(slot0._onDone, slot0, uv0)
+function var_0_0._onExchangeTick(arg_2_0)
+	RoleStoryController.instance:unregisterCallback(RoleStoryEvent.ExchangeTick, arg_2_0._onExchangeTick, arg_2_0)
+	GuideBlockMgr.instance:startBlock(var_0_1)
+	TaskDispatcher.runDelay(arg_2_0._onDone, arg_2_0, var_0_1)
 end
 
-function slot0._onDone(slot0)
-	slot0:onDone(true)
+function var_0_0._onDone(arg_3_0)
+	arg_3_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
-	TaskDispatcher.cancelTask(slot0._onDone, true)
-	RoleStoryController.instance:unregisterCallback(RoleStoryEvent.ExchangeTick, slot0._onExchangeTick, slot0)
+function var_0_0.clearWork(arg_4_0)
+	TaskDispatcher.cancelTask(arg_4_0._onDone, true)
+	RoleStoryController.instance:unregisterCallback(RoleStoryEvent.ExchangeTick, arg_4_0._onExchangeTick, arg_4_0)
 end
 
-return slot0
+return var_0_0

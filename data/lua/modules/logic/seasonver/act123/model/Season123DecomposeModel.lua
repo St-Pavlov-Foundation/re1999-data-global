@@ -1,242 +1,266 @@
-module("modules.logic.seasonver.act123.model.Season123DecomposeModel", package.seeall)
+﻿module("modules.logic.seasonver.act123.model.Season123DecomposeModel", package.seeall)
 
-slot0 = class("Season123DecomposeModel", ListScrollModel)
+local var_0_0 = class("Season123DecomposeModel", ListScrollModel)
 
-function slot0.onInit(slot0)
-	slot0:release()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:release()
 end
 
-function slot0.release(slot0)
-	slot0._itemStartAnimTime = nil
-	slot0._itemUid2HeroUid = nil
-	slot0._itemMap = {}
-	slot0.curSelectItemDict = {}
-	slot0.curSelectItemCount = 0
-	slot0.rareSelectTab = {}
-	slot0.tagSelectTab = {}
-	slot0.rareAscendState = false
-	slot0.curOverPartSelectIndex = 1
-	slot0.itemColunmCount = 6
-	slot0.AnimRowCount = 4
-	slot0.OpenAnimTime = 0.06
-	slot0.OpenAnimStartTime = 0.05
+function var_0_0.release(arg_2_0)
+	arg_2_0._itemStartAnimTime = nil
+	arg_2_0._itemUid2HeroUid = nil
+	arg_2_0._itemMap = {}
+	arg_2_0.curSelectItemDict = {}
+	arg_2_0.curSelectItemCount = 0
+	arg_2_0.rareSelectTab = {}
+	arg_2_0.tagSelectTab = {}
+	arg_2_0.rareAscendState = false
+	arg_2_0.curOverPartSelectIndex = 1
+	arg_2_0.itemColunmCount = 6
+	arg_2_0.AnimRowCount = 4
+	arg_2_0.OpenAnimTime = 0.06
+	arg_2_0.OpenAnimStartTime = 0.05
 end
 
-function slot0.clear(slot0)
-	uv0.super.clear(slot0)
+function var_0_0.clear(arg_3_0)
+	var_0_0.super.clear(arg_3_0)
 end
 
-function slot0.initDatas(slot0, slot1)
-	slot0.curActId = slot1
-	slot0.curSelectItemDict = {}
-	slot0.curSelectItemCount = 0
-	slot0.rareSelectTab = {}
-	slot0.tagSelectTab = {}
-	slot0.rareAscendState = false
-	slot0.curOverPartSelectIndex = slot0.curOverPartSelectIndex or 1
-	slot0.itemColunmCount = 6
+function var_0_0.initDatas(arg_4_0, arg_4_1)
+	arg_4_0.curActId = arg_4_1
+	arg_4_0.curSelectItemDict = {}
+	arg_4_0.curSelectItemCount = 0
+	arg_4_0.rareSelectTab = {}
+	arg_4_0.tagSelectTab = {}
+	arg_4_0.rareAscendState = false
+	arg_4_0.curOverPartSelectIndex = arg_4_0.curOverPartSelectIndex or 1
+	arg_4_0.itemColunmCount = 6
 
-	slot0:initPosList()
-	slot0:initList()
+	arg_4_0:initPosList()
+	arg_4_0:initList()
 end
 
-function slot0.initList(slot0)
-	slot1 = {}
-	slot0._itemMap = Season123Model.instance:getAllItemMo(slot0.curActId) or {}
+function var_0_0.initList(arg_5_0)
+	local var_5_0 = {}
 
-	for slot5, slot6 in pairs(slot0._itemMap) do
-		if Season123Config.instance:getSeasonEquipCo(slot6.itemId) and not Season123EquipMetaUtils.isBanActivity(slot7, slot0.curActId) and slot0:isCardCanShow(slot7) then
-			table.insert(slot1, slot6)
+	arg_5_0._itemMap = Season123Model.instance:getAllItemMo(arg_5_0.curActId) or {}
+
+	for iter_5_0, iter_5_1 in pairs(arg_5_0._itemMap) do
+		local var_5_1 = Season123Config.instance:getSeasonEquipCo(iter_5_1.itemId)
+
+		if var_5_1 and not Season123EquipMetaUtils.isBanActivity(var_5_1, arg_5_0.curActId) and arg_5_0:isCardCanShow(var_5_1) then
+			table.insert(var_5_0, iter_5_1)
 		end
 	end
 
-	table.sort(slot1, uv0.sortItemMOList)
-	slot0:setList(slot1)
+	table.sort(var_5_0, var_0_0.sortItemMOList)
+	arg_5_0:setList(var_5_0)
 end
 
-function slot0.initPosList(slot0)
-	slot0._itemUid2HeroUid = {}
+function var_0_0.initPosList(arg_6_0)
+	arg_6_0._itemUid2HeroUid = {}
 
-	if not Season123Model.instance:getSeasonAllHeroGroup(slot0.curActId) then
+	local var_6_0 = Season123Model.instance:getSeasonAllHeroGroup(arg_6_0.curActId)
+
+	if not var_6_0 then
 		return
 	end
 
-	for slot5, slot6 in ipairs(slot1) do
-		if slot6.activity104Equips then
-			slot0:parseHeroGroupEquips(slot6, slot7)
+	for iter_6_0, iter_6_1 in ipairs(var_6_0) do
+		local var_6_1 = iter_6_1.activity104Equips
+
+		if var_6_1 then
+			arg_6_0:parseHeroGroupEquips(iter_6_1, var_6_1)
 		end
 	end
 end
 
-function slot0.parseHeroGroupEquips(slot0, slot1, slot2)
-	slot0._itemMap = Season123Model.instance:getAllItemMo(slot0.curActId) or {}
+function var_0_0.parseHeroGroupEquips(arg_7_0, arg_7_1, arg_7_2)
+	arg_7_0._itemMap = Season123Model.instance:getAllItemMo(arg_7_0.curActId) or {}
 
-	for slot6, slot7 in pairs(slot2) do
-		slot8 = slot7.index
-		slot9 = slot1:getHeroByIndex(slot8 + 1)
+	for iter_7_0, iter_7_1 in pairs(arg_7_2) do
+		local var_7_0 = iter_7_1.index
+		local var_7_1 = arg_7_1:getHeroByIndex(var_7_0 + 1)
 
-		if slot8 == Activity123Enum.MainCharPos then
-			slot9 = Activity123Enum.MainRoleHeroUid
+		if var_7_0 == Activity123Enum.MainCharPos then
+			var_7_1 = Activity123Enum.MainRoleHeroUid
 		end
 
-		if slot9 then
-			for slot13, slot14 in pairs(slot7.equipUid) do
-				if slot14 ~= Activity123Enum.EmptyUid and (not slot0._itemUid2HeroUid[slot14] or slot0._itemUid2HeroUid[slot14] == Activity123Enum.EmptyUid) and slot0._itemMap[slot14] ~= nil then
-					slot0._itemUid2HeroUid[slot14] = slot9
+		if var_7_1 then
+			for iter_7_2, iter_7_3 in pairs(iter_7_1.equipUid) do
+				if iter_7_3 ~= Activity123Enum.EmptyUid and (not arg_7_0._itemUid2HeroUid[iter_7_3] or arg_7_0._itemUid2HeroUid[iter_7_3] == Activity123Enum.EmptyUid) and arg_7_0._itemMap[iter_7_3] ~= nil then
+					arg_7_0._itemUid2HeroUid[iter_7_3] = var_7_1
 				end
 			end
 		end
 	end
 end
 
-function slot0.isCardCanShow(slot0, slot1)
-	return slot0:isCardCanShowByRare(slot1.rare) and slot0:isCardCanShowByTag(slot1)
+function var_0_0.isCardCanShow(arg_8_0, arg_8_1)
+	local var_8_0 = arg_8_1.rare
+	local var_8_1 = arg_8_0:isCardCanShowByRare(var_8_0)
+	local var_8_2 = arg_8_0:isCardCanShowByTag(arg_8_1)
+
+	return var_8_1 and var_8_2
 end
 
-function slot0.isCardCanShowByRare(slot0, slot1)
-	slot2 = false
-	slot3 = false
+function var_0_0.isCardCanShowByRare(arg_9_0, arg_9_1)
+	local var_9_0 = false
+	local var_9_1 = false
 
-	for slot7, slot8 in pairs(slot0.rareSelectTab) do
-		if slot7 == slot1 then
-			slot2 = slot8
+	for iter_9_0, iter_9_1 in pairs(arg_9_0.rareSelectTab) do
+		if iter_9_0 == arg_9_1 then
+			var_9_0 = iter_9_1
 		end
 
-		if slot8 then
-			slot3 = true
+		if iter_9_1 then
+			var_9_1 = true
 		end
 	end
 
-	return slot2 or not slot3
+	return var_9_0 or not var_9_1
 end
 
-function slot0.isCardCanShowByTag(slot0, slot1)
-	slot2 = false
-	slot3 = false
-	slot4 = string.split(slot1.tag, "#")
+function var_0_0.isCardCanShowByTag(arg_10_0, arg_10_1)
+	local var_10_0 = false
+	local var_10_1 = false
+	local var_10_2 = string.split(arg_10_1.tag, "#")
 
-	for slot8, slot9 in pairs(slot0.tagSelectTab) do
-		for slot13, slot14 in ipairs(slot4) do
-			if slot0.tagSelectTab[tonumber(slot14)] then
-				slot2 = true
+	for iter_10_0, iter_10_1 in pairs(arg_10_0.tagSelectTab) do
+		for iter_10_2, iter_10_3 in ipairs(var_10_2) do
+			if arg_10_0.tagSelectTab[tonumber(iter_10_3)] then
+				var_10_0 = true
 			end
 		end
 
-		if slot9 then
-			slot3 = true
+		if iter_10_1 then
+			var_10_1 = true
 		end
 	end
 
-	return slot2 or not slot3
+	return var_10_0 or not var_10_1
 end
 
-function slot0.getDelayPlayTime(slot0, slot1)
-	if slot1 == nil then
+function var_0_0.getDelayPlayTime(arg_11_0, arg_11_1)
+	if arg_11_1 == nil then
 		return -1
 	end
 
-	if slot0._itemStartAnimTime == nil then
-		slot0._itemStartAnimTime = Time.time + slot0.OpenAnimStartTime
+	local var_11_0 = Time.time
+
+	if arg_11_0._itemStartAnimTime == nil then
+		arg_11_0._itemStartAnimTime = var_11_0 + arg_11_0.OpenAnimStartTime
 	end
 
-	if not slot0:getIndex(slot1) or slot3 > slot0.AnimRowCount * slot0.itemColunmCount then
+	local var_11_1 = arg_11_0:getIndex(arg_11_1)
+
+	if not var_11_1 or var_11_1 > arg_11_0.AnimRowCount * arg_11_0.itemColunmCount then
 		return -1
 	end
 
-	if slot2 - slot0._itemStartAnimTime - (math.floor((slot3 - 1) / slot0.itemColunmCount) * slot0.OpenAnimTime + slot0.OpenAnimStartTime) > 0.1 then
+	local var_11_2 = math.floor((var_11_1 - 1) / arg_11_0.itemColunmCount) * arg_11_0.OpenAnimTime + arg_11_0.OpenAnimStartTime
+
+	if var_11_0 - arg_11_0._itemStartAnimTime - var_11_2 > 0.1 then
 		return -1
 	else
-		return slot4
+		return var_11_2
 	end
 end
 
-function slot0.setItemCellCount(slot0, slot1)
-	slot0.itemColunmCount = slot1 or 6
+function var_0_0.setItemCellCount(arg_12_0, arg_12_1)
+	arg_12_0.itemColunmCount = arg_12_1 or 6
 end
 
-function slot0.sortItemMOList(slot0, slot1)
-	slot2 = uv0.instance:getItemUidToHeroUid(slot0.uid) ~= nil
-	slot3 = uv0.instance:getItemUidToHeroUid(slot1.uid) ~= nil
-	slot5 = Season123Config.instance:getSeasonEquipCo(slot1.itemId)
+function var_0_0.sortItemMOList(arg_13_0, arg_13_1)
+	local var_13_0 = var_0_0.instance:getItemUidToHeroUid(arg_13_0.uid) ~= nil
+	local var_13_1 = var_0_0.instance:getItemUidToHeroUid(arg_13_1.uid) ~= nil
+	local var_13_2 = Season123Config.instance:getSeasonEquipCo(arg_13_0.itemId)
+	local var_13_3 = Season123Config.instance:getSeasonEquipCo(arg_13_1.itemId)
 
-	if Season123Config.instance:getSeasonEquipCo(slot0.itemId) ~= nil and slot5 ~= nil then
-		if slot4.isMain == Activity123Enum.isMainRole ~= (slot5.isMain == Activity123Enum.isMainRole) then
-			return slot6
+	if var_13_2 ~= nil and var_13_3 ~= nil then
+		local var_13_4 = var_13_2.isMain == Activity123Enum.isMainRole
+
+		if var_13_4 ~= (var_13_3.isMain == Activity123Enum.isMainRole) then
+			return var_13_4
 		end
 
-		if slot4.rare ~= slot5.rare then
-			if uv0.instance.rareAscendState then
-				return slot4.rare < slot5.rare
+		if var_13_2.rare ~= var_13_3.rare then
+			if var_0_0.instance.rareAscendState then
+				return var_13_2.rare < var_13_3.rare
 			else
-				return slot5.rare < slot4.rare
+				return var_13_2.rare > var_13_3.rare
 			end
 		else
-			if slot4.equipId ~= slot5.equipId then
-				return slot5.equipId < slot4.equipId
+			if var_13_2.equipId ~= var_13_3.equipId then
+				return var_13_2.equipId > var_13_3.equipId
 			end
 
-			if (uv0.instance.curSelectItemDict[slot0.uid] ~= nil and uv0.instance.curSelectItemDict[slot0.uid] ~= false) ~= (uv0.instance.curSelectItemDict[slot1.uid] ~= nil and uv0.instance.curSelectItemDict[slot1.uid] ~= false) then
-				return slot8
+			local var_13_5 = var_0_0.instance.curSelectItemDict[arg_13_0.uid] ~= nil and var_0_0.instance.curSelectItemDict[arg_13_0.uid] ~= false
+
+			if var_13_5 ~= (var_0_0.instance.curSelectItemDict[arg_13_1.uid] ~= nil and var_0_0.instance.curSelectItemDict[arg_13_1.uid] ~= false) then
+				return var_13_5
 			end
 
-			if slot2 ~= slot3 then
-				return slot3
+			if var_13_0 ~= var_13_1 then
+				return var_13_1
 			end
 
-			return slot0.uid < slot1.uid
+			return arg_13_0.uid < arg_13_1.uid
 		end
 	else
-		return slot0.uid < slot1.uid
+		return arg_13_0.uid < arg_13_1.uid
 	end
 end
 
-function slot0.getItemUidToHeroUid(slot0, slot1)
-	return slot0._itemUid2HeroUid[slot1]
+function var_0_0.getItemUidToHeroUid(arg_14_0, arg_14_1)
+	return arg_14_0._itemUid2HeroUid[arg_14_1]
 end
 
-function slot0.setCurSelectItemUid(slot0, slot1)
-	if not slot0.curSelectItemDict[slot1] then
-		slot0.curSelectItemDict[slot1] = slot0._itemMap[slot1]
-		slot0.curSelectItemCount = slot0.curSelectItemCount + 1
+function var_0_0.setCurSelectItemUid(arg_15_0, arg_15_1)
+	if not arg_15_0.curSelectItemDict[arg_15_1] then
+		local var_15_0 = arg_15_0._itemMap[arg_15_1]
+
+		arg_15_0.curSelectItemDict[arg_15_1] = var_15_0
+		arg_15_0.curSelectItemCount = arg_15_0.curSelectItemCount + 1
 	else
-		slot0.curSelectItemDict[slot1] = nil
-		slot0.curSelectItemCount = slot0.curSelectItemCount - 1
+		arg_15_0.curSelectItemDict[arg_15_1] = nil
+		arg_15_0.curSelectItemCount = arg_15_0.curSelectItemCount - 1
 	end
 end
 
-function slot0.isSelectedItem(slot0, slot1)
-	return slot0.curSelectItemDict[slot1] ~= nil
+function var_0_0.isSelectedItem(arg_16_0, arg_16_1)
+	return arg_16_0.curSelectItemDict[arg_16_1] ~= nil
 end
 
-function slot0.clearCurSelectItem(slot0)
-	slot0.curSelectItemDict = {}
-	slot0.curSelectItemCount = 0
+function var_0_0.clearCurSelectItem(arg_17_0)
+	arg_17_0.curSelectItemDict = {}
+	arg_17_0.curSelectItemCount = 0
 end
 
-function slot0.setRareSelectItem(slot0, slot1)
-	for slot5, slot6 in pairs(slot1) do
-		slot0.rareSelectTab[slot5] = slot6
+function var_0_0.setRareSelectItem(arg_18_0, arg_18_1)
+	for iter_18_0, iter_18_1 in pairs(arg_18_1) do
+		arg_18_0.rareSelectTab[iter_18_0] = iter_18_1
 	end
 end
 
-function slot0.setTagSelectItem(slot0, slot1)
-	for slot5, slot6 in pairs(slot1) do
-		slot0.tagSelectTab[slot5] = slot6
+function var_0_0.setTagSelectItem(arg_19_0, arg_19_1)
+	for iter_19_0, iter_19_1 in pairs(arg_19_1) do
+		arg_19_0.tagSelectTab[iter_19_0] = iter_19_1
 	end
 end
 
-function slot0.hasSelectFilterItem(slot0)
-	if GameUtil.getTabLen(slot0.rareSelectTab) > 0 then
-		for slot4, slot5 in pairs(slot0.rareSelectTab) do
-			if slot5 then
+function var_0_0.hasSelectFilterItem(arg_20_0)
+	if GameUtil.getTabLen(arg_20_0.rareSelectTab) > 0 then
+		for iter_20_0, iter_20_1 in pairs(arg_20_0.rareSelectTab) do
+			if iter_20_1 then
 				return true
 			end
 		end
 	end
 
-	if GameUtil.getTabLen(slot0.tagSelectTab) > 0 then
-		for slot4, slot5 in pairs(slot0.tagSelectTab) do
-			if slot5 then
+	if GameUtil.getTabLen(arg_20_0.tagSelectTab) > 0 then
+		for iter_20_2, iter_20_3 in pairs(arg_20_0.tagSelectTab) do
+			if iter_20_3 then
 				return true
 			end
 		end
@@ -245,81 +269,86 @@ function slot0.hasSelectFilterItem(slot0)
 	return false
 end
 
-function slot0.setRareAscendState(slot0, slot1)
-	slot0.rareAscendState = slot1
+function var_0_0.setRareAscendState(arg_21_0, arg_21_1)
+	arg_21_0.rareAscendState = arg_21_1
 end
 
-function slot0.sortDecomposeItemListByRare(slot0)
-	slot1 = slot0:getList()
+function var_0_0.sortDecomposeItemListByRare(arg_22_0)
+	local var_22_0 = arg_22_0:getList()
 
-	table.sort(slot1, uv0.sortItemMOList)
-	slot0:setList(slot1)
+	table.sort(var_22_0, var_0_0.sortItemMOList)
+	arg_22_0:setList(var_22_0)
 end
 
-function slot0.setCurOverPartSelectIndex(slot0, slot1)
-	slot0.curOverPartSelectIndex = slot1
+function var_0_0.setCurOverPartSelectIndex(arg_23_0, arg_23_1)
+	arg_23_0.curOverPartSelectIndex = arg_23_1
 end
 
-function slot0.selectOverPartItem(slot0)
-	if slot0:getCount() == 0 then
+function var_0_0.selectOverPartItem(arg_24_0)
+	if arg_24_0:getCount() == 0 then
 		return
 	end
 
-	slot0:clearCurSelectItem()
+	arg_24_0:clearCurSelectItem()
 
 	if Season123EquipBookModel.instance:getCount() == 0 then
-		Season123EquipBookModel.instance:initDatas(slot0.curActId)
+		Season123EquipBookModel.instance:initDatas(arg_24_0.curActId)
 	end
 
 	Season123EquipBookModel.instance:getAllEquipItem()
 
-	slot3 = 0
+	local var_24_0 = arg_24_0:getList()
+	local var_24_1 = 0
+	local var_24_2 = -1
 
-	for slot8, slot9 in pairs(slot0:getList()) do
-		slot12 = Season123EquipBookModel.instance.allEquipItemMap[slot9.itemId].count - slot0.curOverPartSelectIndex
+	for iter_24_0, iter_24_1 in pairs(var_24_0) do
+		local var_24_3 = Season123EquipBookModel.instance.allEquipItemMap[iter_24_1.itemId].count - arg_24_0.curOverPartSelectIndex
 
-		if slot9.itemId ~= -1 then
-			slot4 = slot9.itemId
-			slot3 = 0
+		if iter_24_1.itemId ~= var_24_2 then
+			var_24_2 = iter_24_1.itemId
+			var_24_1 = 0
 		end
 
-		if slot12 > 0 and slot3 < slot12 and not slot0:isSelectItemMaxCount() then
-			slot0.curSelectItemDict[slot9.uid] = slot9
-			slot3 = slot3 + 1
-			slot0.curSelectItemCount = slot0.curSelectItemCount + 1
+		if var_24_3 > 0 and var_24_1 < var_24_3 and not arg_24_0:isSelectItemMaxCount() then
+			arg_24_0.curSelectItemDict[iter_24_1.uid] = iter_24_1
+			var_24_1 = var_24_1 + 1
+			arg_24_0.curSelectItemCount = arg_24_0.curSelectItemCount + 1
 		end
 	end
 end
 
-function slot0.isSelectItemMaxCount(slot0)
-	return Activity123Enum.maxDecomposeCount <= slot0.curSelectItemCount
+function var_0_0.isSelectItemMaxCount(arg_25_0)
+	return arg_25_0.curSelectItemCount >= Activity123Enum.maxDecomposeCount
 end
 
-function slot0.getDecomposeItemsByItemId(slot0, slot1, slot2)
-	slot0._itemMap = Season123Model.instance:getAllItemMo(slot1) or {}
+function var_0_0.getDecomposeItemsByItemId(arg_26_0, arg_26_1, arg_26_2)
+	arg_26_0._itemMap = Season123Model.instance:getAllItemMo(arg_26_1) or {}
 
-	if GameUtil.getTabLen(slot0._itemMap) == 0 then
+	if GameUtil.getTabLen(arg_26_0._itemMap) == 0 then
 		return nil
 	end
 
-	if slot0:getCount() == 0 then
-		slot0:initDatas(slot1)
+	if arg_26_0:getCount() == 0 then
+		arg_26_0:initDatas(arg_26_1)
 	end
 
-	slot4 = {}
+	local var_26_0 = {}
+	local var_26_1 = arg_26_0:getDict()
 
-	for slot9, slot10 in pairs(slot0:getDict()) do
-		if slot10.itemId == slot2 then
-			table.insert(slot4, slot10)
+	for iter_26_0, iter_26_1 in pairs(var_26_1) do
+		if iter_26_1.itemId == arg_26_2 then
+			table.insert(var_26_0, iter_26_1)
 		end
 	end
 
-	return slot4
+	return var_26_0
 end
 
-function slot0.isDecomposeItemUsedByHero(slot0, slot1)
-	for slot5, slot6 in pairs(slot1) do
-		if slot0:getItemUidToHeroUid(slot6.uid) and slot7 ~= Activity123Enum.EmptyUid then
+function var_0_0.isDecomposeItemUsedByHero(arg_27_0, arg_27_1)
+	for iter_27_0, iter_27_1 in pairs(arg_27_1) do
+		local var_27_0 = arg_27_0:getItemUidToHeroUid(iter_27_1.uid)
+
+		if var_27_0 and var_27_0 ~= Activity123Enum.EmptyUid then
 			return true
 		end
 	end
@@ -327,13 +356,13 @@ function slot0.isDecomposeItemUsedByHero(slot0, slot1)
 	return false
 end
 
-function slot0.removeHasDecomposeItems(slot0, slot1)
-	for slot5, slot6 in ipairs(slot1) do
-		slot0.curSelectItemDict[slot6] = nil
-		slot0._itemMap[slot6] = nil
+function var_0_0.removeHasDecomposeItems(arg_28_0, arg_28_1)
+	for iter_28_0, iter_28_1 in ipairs(arg_28_1) do
+		arg_28_0.curSelectItemDict[iter_28_1] = nil
+		arg_28_0._itemMap[iter_28_1] = nil
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

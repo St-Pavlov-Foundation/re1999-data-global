@@ -1,132 +1,140 @@
-module("modules.logic.achievement.view.AchievementMainTopView", package.seeall)
+﻿module("modules.logic.achievement.view.AchievementMainTopView", package.seeall)
 
-slot0 = class("AchievementMainTopView", BaseView)
+local var_0_0 = class("AchievementMainTopView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._btnView = gohelper.findChildButtonWithAudio(slot0.viewGO, "Title/Btns/#btn_View")
-	slot0._scrollcontent = gohelper.findChildScrollRect(slot0.viewGO, "#go_container/#scroll_content")
-	slot0._scrolllist = gohelper.findChildScrollRect(slot0.viewGO, "#go_container/#scroll_list")
-	slot0._golist = gohelper.findChild(slot0.viewGO, "Title/Btns/#btn_View/#go_On")
-	slot0._gotile = gohelper.findChild(slot0.viewGO, "Title/Btns/#btn_View/#go_Off")
-	slot0._dropfilter = gohelper.findChildDropdown(slot0.viewGO, "Title/Btns/#drop_Fliter")
-	slot0._goarrowup = gohelper.findChild(slot0.viewGO, "Title/Btns/#drop_Fliter/#go_arrowup")
-	slot0._goarrowdown = gohelper.findChild(slot0.viewGO, "Title/Btns/#drop_Fliter/#go_arrowdown")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnView = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Title/Btns/#btn_View")
+	arg_1_0._scrollcontent = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_container/#scroll_content")
+	arg_1_0._scrolllist = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_container/#scroll_list")
+	arg_1_0._golist = gohelper.findChild(arg_1_0.viewGO, "Title/Btns/#btn_View/#go_On")
+	arg_1_0._gotile = gohelper.findChild(arg_1_0.viewGO, "Title/Btns/#btn_View/#go_Off")
+	arg_1_0._dropfilter = gohelper.findChildDropdown(arg_1_0.viewGO, "Title/Btns/#drop_Fliter")
+	arg_1_0._goarrowup = gohelper.findChild(arg_1_0.viewGO, "Title/Btns/#drop_Fliter/#go_arrowup")
+	arg_1_0._goarrowdown = gohelper.findChild(arg_1_0.viewGO, "Title/Btns/#drop_Fliter/#go_arrowdown")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnView:AddClickListener(slot0._btnviewOnClick, slot0)
-	slot0._dropfilter:AddOnValueChanged(slot0._onDropFilterValueChanged, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnView:AddClickListener(arg_2_0._btnviewOnClick, arg_2_0)
+	arg_2_0._dropfilter:AddOnValueChanged(arg_2_0._onDropFilterValueChanged, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnView:RemoveClickListener()
-	slot0._dropfilter:RemoveOnValueChanged()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnView:RemoveClickListener()
+	arg_3_0._dropfilter:RemoveOnValueChanged()
 end
 
-function slot0._editableInitView(slot0)
-	slot0.filterDropExtend = DropDownExtend.Get(slot0._dropfilter.gameObject)
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0.filterDropExtend = DropDownExtend.Get(arg_4_0._dropfilter.gameObject)
 
-	slot0.filterDropExtend:init(slot0.onFilterDropShow, slot0.onFilterDropHide, slot0)
-	slot0:initSearchFilterBtns()
+	arg_4_0.filterDropExtend:init(arg_4_0.onFilterDropShow, arg_4_0.onFilterDropHide, arg_4_0)
+	arg_4_0:initSearchFilterBtns()
 end
 
-function slot0.onDestroyView(slot0)
-	TaskDispatcher.cancelTask(slot0._onAchievementListItemOpenAnimPlayFinished, slot0)
+function var_0_0.onDestroyView(arg_5_0)
+	TaskDispatcher.cancelTask(arg_5_0._onAchievementListItemOpenAnimPlayFinished, arg_5_0)
 end
 
-function slot0.onOpen(slot0)
-	slot0:refreshUI()
+function var_0_0.onOpen(arg_6_0)
+	arg_6_0:refreshUI()
 end
 
-function slot0.refreshUI(slot0)
-	slot1 = AchievementMainCommonModel.instance:getCurrentViewType()
+function var_0_0.refreshUI(arg_7_0)
+	local var_7_0 = AchievementMainCommonModel.instance:getCurrentViewType()
 
-	slot0:refreshViewTypeBtns(slot1)
-	slot0:refreshScrollVisible(slot1)
-	slot0:refreshFilterDropDownArrow()
+	arg_7_0:refreshViewTypeBtns(var_7_0)
+	arg_7_0:refreshScrollVisible(var_7_0)
+	arg_7_0:refreshFilterDropDownArrow()
 end
 
-function slot0._btnviewOnClick(slot0)
-	slot2 = AchievementMainCommonModel.instance:getCurrentViewType() == AchievementEnum.ViewType.List and AchievementEnum.ViewType.Tile or AchievementEnum.ViewType.List
+function var_0_0._btnviewOnClick(arg_8_0)
+	local var_8_0 = AchievementMainCommonModel.instance:getCurrentViewType() == AchievementEnum.ViewType.List and AchievementEnum.ViewType.Tile or AchievementEnum.ViewType.List
 
-	slot0:refreshViewTypeBtns(slot2)
-	slot0:refreshScrollVisible(slot2)
+	arg_8_0:refreshViewTypeBtns(var_8_0)
+	arg_8_0:refreshScrollVisible(var_8_0)
 
-	if slot2 == AchievementEnum.ViewType.List then
+	if var_8_0 == AchievementEnum.ViewType.List then
 		AchievementMainListModel.instance:setIsCurTaskNeedPlayIdleAnim(false)
 		UIBlockMgrExtend.setNeedCircleMv(false)
 		UIBlockMgr.instance:startBlock("AchievementMainFocusView_openAnim")
-		TaskDispatcher.cancelTask(slot0._onAchievementListItemOpenAnimPlayFinished, slot0)
-		TaskDispatcher.runDelay(slot0._onAchievementListItemOpenAnimPlayFinished, slot0, 0.6)
+		TaskDispatcher.cancelTask(arg_8_0._onAchievementListItemOpenAnimPlayFinished, arg_8_0)
+		TaskDispatcher.runDelay(arg_8_0._onAchievementListItemOpenAnimPlayFinished, arg_8_0, 0.6)
 	end
 
-	AchievementMainController.instance:switchViewType(slot2)
+	AchievementMainController.instance:switchViewType(var_8_0)
 end
 
-function slot0._onAchievementListItemOpenAnimPlayFinished(slot0)
+function var_0_0._onAchievementListItemOpenAnimPlayFinished(arg_9_0)
 	AchievementMainListModel.instance:setIsCurTaskNeedPlayIdleAnim(true)
 	UIBlockMgrExtend.setNeedCircleMv(true)
 	UIBlockMgr.instance:endBlock("AchievementMainFocusView_openAnim")
 end
 
-function slot0._onClickDropFilter(slot0)
-	slot0._isPopUpFilterList = not slot0._isPopUpFilterList
+function var_0_0._onClickDropFilter(arg_10_0)
+	arg_10_0._isPopUpFilterList = not arg_10_0._isPopUpFilterList
 
-	slot0:refreshFilterDropDownArrow()
+	arg_10_0:refreshFilterDropDownArrow()
 end
 
-function slot0.onFilterDropShow(slot0)
+function var_0_0.onFilterDropShow(arg_11_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Universal_Click)
 
-	slot0._isPopUpFilterList = true
+	arg_11_0._isPopUpFilterList = true
 
-	slot0:refreshFilterDropDownArrow()
+	arg_11_0:refreshFilterDropDownArrow()
 end
 
-function slot0.onFilterDropHide(slot0)
+function var_0_0.onFilterDropHide(arg_12_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Universal_Click)
 
-	slot0._isPopUpFilterList = false
+	arg_12_0._isPopUpFilterList = false
 
-	slot0:refreshFilterDropDownArrow()
+	arg_12_0:refreshFilterDropDownArrow()
 end
 
-function slot0.refreshFilterDropDownArrow(slot0)
-	gohelper.setActive(slot0._goarrowdown, not slot0._isPopUpFilterList)
-	gohelper.setActive(slot0._goarrowup, slot0._isPopUpFilterList)
+function var_0_0.refreshFilterDropDownArrow(arg_13_0)
+	gohelper.setActive(arg_13_0._goarrowdown, not arg_13_0._isPopUpFilterList)
+	gohelper.setActive(arg_13_0._goarrowup, arg_13_0._isPopUpFilterList)
 end
 
-function slot0.refreshViewTypeBtns(slot0, slot1)
-	gohelper.setActive(slot0._golist, slot1 == AchievementEnum.ViewType.List)
-	gohelper.setActive(slot0._gotile, slot1 == AchievementEnum.ViewType.Tile)
+function var_0_0.refreshViewTypeBtns(arg_14_0, arg_14_1)
+	gohelper.setActive(arg_14_0._golist, arg_14_1 == AchievementEnum.ViewType.List)
+	gohelper.setActive(arg_14_0._gotile, arg_14_1 == AchievementEnum.ViewType.Tile)
 end
 
-function slot0.refreshScrollVisible(slot0, slot1)
-	gohelper.setActive(slot0._scrolllist.gameObject, slot1 == AchievementEnum.ViewType.List)
-	gohelper.setActive(slot0._scrollcontent.gameObject, slot1 == AchievementEnum.ViewType.Tile)
+function var_0_0.refreshScrollVisible(arg_15_0, arg_15_1)
+	gohelper.setActive(arg_15_0._scrolllist.gameObject, arg_15_1 == AchievementEnum.ViewType.List)
+	gohelper.setActive(arg_15_0._scrollcontent.gameObject, arg_15_1 == AchievementEnum.ViewType.Tile)
 end
 
-function slot0._onDropFilterValueChanged(slot0, slot1)
-	AchievementMainController.instance:switchSearchFilterType(slot0._filterTypeList and slot0._filterTypeList[slot1 + 1])
+function var_0_0._onDropFilterValueChanged(arg_16_0, arg_16_1)
+	arg_16_1 = arg_16_1 + 1
+
+	local var_16_0 = arg_16_0._filterTypeList and arg_16_0._filterTypeList[arg_16_1]
+
+	AchievementMainController.instance:switchSearchFilterType(var_16_0)
 end
 
-function slot0.initSearchFilterBtns(slot0)
-	slot0._filterTypeList = {
+function var_0_0.initSearchFilterBtns(arg_17_0)
+	arg_17_0._filterTypeList = {
 		AchievementEnum.SearchFilterType.All,
 		AchievementEnum.SearchFilterType.Locked,
 		AchievementEnum.SearchFilterType.Unlocked
 	}
-	slot1 = {}
 
-	for slot5, slot6 in ipairs(slot0._filterTypeList) do
-		table.insert(slot1, luaLang(AchievementEnum.FilterTypeName[slot6]))
+	local var_17_0 = {}
+
+	for iter_17_0, iter_17_1 in ipairs(arg_17_0._filterTypeList) do
+		local var_17_1 = AchievementEnum.FilterTypeName[iter_17_1]
+		local var_17_2 = luaLang(var_17_1)
+
+		table.insert(var_17_0, var_17_2)
 	end
 
-	slot0._dropfilter:AddOptions(slot1)
+	arg_17_0._dropfilter:AddOptions(var_17_0)
 end
 
-return slot0
+return var_0_0

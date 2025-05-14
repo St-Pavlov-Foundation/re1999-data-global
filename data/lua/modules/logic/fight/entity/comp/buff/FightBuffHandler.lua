@@ -1,21 +1,25 @@
-module("modules.logic.fight.entity.comp.buff.FightBuffHandler", package.seeall)
+﻿module("modules.logic.fight.entity.comp.buff.FightBuffHandler", package.seeall)
 
-slot0 = class("FightBuffHandler")
+local var_0_0 = class("FightBuffHandler")
 
-function slot0.ctor(slot0)
-	slot0.type = nil
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.type = nil
 end
 
-function slot0.onBuffStart(slot0, slot1, slot2)
+function var_0_0.onBuffStart(arg_2_0, arg_2_1, arg_2_2)
+	return
 end
 
-function slot0.onBuffEnd(slot0)
+function var_0_0.onBuffEnd(arg_3_0)
+	return
 end
 
-function slot0.reset(slot0)
+function var_0_0.reset(arg_4_0)
+	return
 end
 
-function slot0.dispose(slot0)
+function var_0_0.dispose(arg_5_0)
+	return
 end
 
-return slot0
+return var_0_0

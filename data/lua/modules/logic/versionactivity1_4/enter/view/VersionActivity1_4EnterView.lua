@@ -1,54 +1,56 @@
-module("modules.logic.versionactivity1_4.enter.view.VersionActivity1_4EnterView", package.seeall)
+﻿module("modules.logic.versionactivity1_4.enter.view.VersionActivity1_4EnterView", package.seeall)
 
-slot0 = class("VersionActivity1_4EnterView", VersionActivityEnterBaseView)
+local var_0_0 = class("VersionActivity1_4EnterView", VersionActivityEnterBaseView)
 
-function slot0.onInitView(slot0)
-	uv0.super.onInitView(slot0)
+function var_0_0.onInitView(arg_1_0)
+	var_0_0.super.onInitView(arg_1_0)
 
-	slot0._simagebg1 = gohelper.findChildSingleImage(slot0.viewGO, "img/#simage_bg/img/#simage_bg1")
-	slot0._simagebg2 = gohelper.findChildSingleImage(slot0.viewGO, "img/#simage_bg/img/#simage_bg2")
-	slot0._simagebg3 = gohelper.findChildSingleImage(slot0.viewGO, "img/#simage_bg/img/#simage_bg3")
-	slot0._simagebg4 = gohelper.findChildSingleImage(slot0.viewGO, "img/#simage_bg/img/#simage_bg4")
-	slot0._simagemask = gohelper.findChildSingleImage(slot0.viewGO, "img/#simage_mask")
-	slot0._txtremainday = gohelper.findChildText(slot0.viewGO, "logo/Time/#txt_remaintime")
-	slot0._txttime = gohelper.findChildText(slot0.viewGO, "logo/Time/#txt_time")
-	slot0.goTabNode = gohelper.findChild(slot0.viewGO, "logo/#go_change")
-	slot0._btnmainentrance = gohelper.findChildButtonWithAudio(slot0.viewGO, "entrance/#btn_mainentrance")
-	slot0._btnroom = gohelper.findChildButtonWithAudio(slot0.viewGO, "entrance/#btn_room")
-	slot0._btnachievement = gohelper.findChildButtonWithAudio(slot0.viewGO, "entrance/#btn_achievement")
-	slot0._btnseasonstore = gohelper.findChildButtonWithAudio(slot0.viewGO, "entrance/#btn_seasonstore")
-	slot0._txtseasonstorenum = gohelper.findChildText(slot0.viewGO, "entrance/#btn_seasonstore/normal/storeBG/#txt_num")
-	slot0._txtseasonstoretime = gohelper.findChildText(slot0.viewGO, "entrance/#btn_seasonstore/normal/#go_bg1/#txt_time")
+	arg_1_0._simagebg1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "img/#simage_bg/img/#simage_bg1")
+	arg_1_0._simagebg2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "img/#simage_bg/img/#simage_bg2")
+	arg_1_0._simagebg3 = gohelper.findChildSingleImage(arg_1_0.viewGO, "img/#simage_bg/img/#simage_bg3")
+	arg_1_0._simagebg4 = gohelper.findChildSingleImage(arg_1_0.viewGO, "img/#simage_bg/img/#simage_bg4")
+	arg_1_0._simagemask = gohelper.findChildSingleImage(arg_1_0.viewGO, "img/#simage_mask")
+	arg_1_0._txtremainday = gohelper.findChildText(arg_1_0.viewGO, "logo/Time/#txt_remaintime")
+	arg_1_0._txttime = gohelper.findChildText(arg_1_0.viewGO, "logo/Time/#txt_time")
+	arg_1_0.goTabNode = gohelper.findChild(arg_1_0.viewGO, "logo/#go_change")
+	arg_1_0._btnmainentrance = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "entrance/#btn_mainentrance")
+	arg_1_0._btnroom = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "entrance/#btn_room")
+	arg_1_0._btnachievement = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "entrance/#btn_achievement")
+	arg_1_0._btnseasonstore = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "entrance/#btn_seasonstore")
+	arg_1_0._txtseasonstorenum = gohelper.findChildText(arg_1_0.viewGO, "entrance/#btn_seasonstore/normal/storeBG/#txt_num")
+	arg_1_0._txtseasonstoretime = gohelper.findChildText(arg_1_0.viewGO, "entrance/#btn_seasonstore/normal/#go_bg1/#txt_time")
 
-	slot0:initTab()
+	arg_1_0:initTab()
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	uv0.super.addEvents(slot0)
-	slot0._btnmainentrance:AddClickListener(slot0._onClickMainentranceBtn, slot0)
-	slot0._btnroom:AddClickListener(slot0._onClickRoomBtn, slot0)
-	slot0._btnachievement:AddClickListener(slot0._onClickAchievementBtn, slot0)
-	slot0._btnseasonstore:AddClickListener(slot0._btnseasonstoreOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	var_0_0.super.addEvents(arg_2_0)
+	arg_2_0._btnmainentrance:AddClickListener(arg_2_0._onClickMainentranceBtn, arg_2_0)
+	arg_2_0._btnroom:AddClickListener(arg_2_0._onClickRoomBtn, arg_2_0)
+	arg_2_0._btnachievement:AddClickListener(arg_2_0._onClickAchievementBtn, arg_2_0)
+	arg_2_0._btnseasonstore:AddClickListener(arg_2_0._btnseasonstoreOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	uv0.super.removeEvents(slot0)
-	slot0._btnmainentrance:RemoveClickListener()
-	slot0._btnroom:RemoveClickListener()
-	slot0._btnachievement:RemoveClickListener()
-	slot0._btnseasonstore:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	var_0_0.super.removeEvents(arg_3_0)
+	arg_3_0._btnmainentrance:RemoveClickListener()
+	arg_3_0._btnroom:RemoveClickListener()
+	arg_3_0._btnachievement:RemoveClickListener()
+	arg_3_0._btnseasonstore:RemoveClickListener()
 end
 
-function slot0._btnseasonstoreOnClick(slot0)
-	slot3, slot4, slot5 = ActivityHelper.getActivityStatusAndToast(Activity104Enum.SeasonStore[Activity104Model.instance:getCurSeasonId()])
+function var_0_0._btnseasonstoreOnClick(arg_4_0)
+	local var_4_0 = Activity104Model.instance:getCurSeasonId()
+	local var_4_1 = Activity104Enum.SeasonStore[var_4_0]
+	local var_4_2, var_4_3, var_4_4 = ActivityHelper.getActivityStatusAndToast(var_4_1)
 
-	if slot3 ~= ActivityEnum.ActivityStatus.Normal then
-		if slot4 then
-			GameFacade.showToast(slot4, slot5)
+	if var_4_2 ~= ActivityEnum.ActivityStatus.Normal then
+		if var_4_3 then
+			GameFacade.showToast(var_4_3, var_4_4)
 		end
 
 		return
@@ -57,15 +59,15 @@ function slot0._btnseasonstoreOnClick(slot0)
 	Activity104Controller.instance:openSeasonStoreView()
 end
 
-function slot0._onClickMainentranceBtn(slot0)
+function var_0_0._onClickMainentranceBtn(arg_5_0)
 	GameFacade.jump(51)
 end
 
-function slot0._onClickRoomBtn(slot0)
+function var_0_0._onClickRoomBtn(arg_6_0)
 	GameFacade.jump(440001)
 end
 
-function slot0._onClickAchievementBtn(slot0)
+function var_0_0._onClickAchievementBtn(arg_7_0)
 	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Achievement) then
 		ViewMgr.instance:openView(ViewName.AchievementMainView, {
 			selectType = AchievementEnum.Type.Activity
@@ -75,324 +77,386 @@ function slot0._onClickAchievementBtn(slot0)
 	end
 end
 
-function slot0._editableInitView(slot0)
-	uv0.super._editableInitView(slot0)
-	slot0._simagebg1:LoadImage("singlebg/v1a4_enterview_singlebg/v1a4_enterview_fullbg_01.png")
-	slot0._simagebg2:LoadImage("singlebg/v1a4_enterview_singlebg/v1a4_enterview_fullbg_02.png")
-	slot0._simagebg3:LoadImage("singlebg/v1a4_enterview_singlebg/v1a4_enterview_fullbg_03.png")
-	slot0._simagebg4:LoadImage("singlebg/v1a4_enterview_singlebg/v1a4_enterview_fullbg_04.png")
-	slot0._simagemask:LoadImage("singlebg/v1a4_enterview_singlebg/v1a4_enterview_fullbgmask.png")
+function var_0_0._editableInitView(arg_8_0)
+	var_0_0.super._editableInitView(arg_8_0)
+	arg_8_0._simagebg1:LoadImage("singlebg/v1a4_enterview_singlebg/v1a4_enterview_fullbg_01.png")
+	arg_8_0._simagebg2:LoadImage("singlebg/v1a4_enterview_singlebg/v1a4_enterview_fullbg_02.png")
+	arg_8_0._simagebg3:LoadImage("singlebg/v1a4_enterview_singlebg/v1a4_enterview_fullbg_03.png")
+	arg_8_0._simagebg4:LoadImage("singlebg/v1a4_enterview_singlebg/v1a4_enterview_fullbg_04.png")
+	arg_8_0._simagemask:LoadImage("singlebg/v1a4_enterview_singlebg/v1a4_enterview_fullbgmask.png")
 end
 
-function slot0.onClickActivity1(slot0, slot1)
-	Activity133Controller.instance:openActivity133MainView(slot1)
+function var_0_0.onClickActivity1(arg_9_0, arg_9_1)
+	Activity133Controller.instance:openActivity133MainView(arg_9_1)
 end
 
-function slot0.onClickActivity2(slot0)
+function var_0_0.onClickActivity2(arg_10_0)
 	Activity130Controller.instance:enterActivity130()
 end
 
-function slot0.onClickActivity3(slot0)
+function var_0_0.onClickActivity3(arg_11_0)
 	BossRushController.instance:openMainView()
 end
 
-function slot0.onClickActivity4(slot0, slot1)
+function var_0_0.onClickActivity4(arg_12_0, arg_12_1)
 	ViewMgr.instance:openView(ViewName.VersionActivity1_4TaskView, {
-		activityId = slot1
+		activityId = arg_12_1
 	})
 end
 
-function slot0.onClickActivity5(slot0, slot1)
+function var_0_0.onClickActivity5(arg_13_0, arg_13_1)
 	ViewMgr.instance:openView(ViewName.Activity129View, {
-		actId = slot1
+		actId = arg_13_1
 	})
 end
 
-function slot0.onClickActivity6(slot0, slot1)
+function var_0_0.onClickActivity6(arg_14_0, arg_14_1)
 	ViewMgr.instance:openView(ViewName.VersionActivity1_4DungeonView, {
-		actId = slot1
+		actId = arg_14_1
 	})
 end
 
-function slot0.onClickActivity7(slot0, slot1)
+function var_0_0.onClickActivity7(arg_15_0, arg_15_1)
 	BossRushController.instance:openMainView()
 end
 
-function slot0.onClickActivity8(slot0, slot1)
+function var_0_0.onClickActivity8(arg_16_0, arg_16_1)
 	Activity104Controller.instance:openSeasonMainView()
 end
 
-function slot0.onClickActivity9(slot0, slot1)
-	Activity134Controller.instance:openActivity134MainView(slot1)
+function var_0_0.onClickActivity9(arg_17_0, arg_17_1)
+	Activity134Controller.instance:openActivity134MainView(arg_17_1)
 end
 
-function slot0.onClickActivity10(slot0)
+function var_0_0.onClickActivity10(arg_18_0)
 	Activity131Controller.instance:enterActivity131()
 end
 
-function slot0.onClickActivity11(slot0, slot1)
+function var_0_0.onClickActivity11(arg_19_0, arg_19_1)
 	ViewMgr.instance:openView(ViewName.Activity129View, {
-		actId = slot1
+		actId = arg_19_1
 	})
 end
 
-function slot0.onClickActivity12(slot0, slot1)
+function var_0_0.onClickActivity12(arg_20_0, arg_20_1)
 	ViewMgr.instance:openView(ViewName.VersionActivity1_4DungeonView, {
-		actId = slot1
+		actId = arg_20_1
 	})
 end
 
-function slot0.onOpen(slot0)
-	slot0.onOpening = true
+function var_0_0.onOpen(arg_21_0)
+	arg_21_0.onOpening = true
 
-	slot0:initViewParam()
-	slot0:initActivityNode()
-	slot0:initActivityItemList()
+	arg_21_0:initViewParam()
+	arg_21_0:initActivityNode()
+	arg_21_0:initActivityItemList()
 
-	for slot4 = 2, 1, -1 do
-		if slot0:checkTabIsOpen(slot4, true) then
-			slot0:onChangeTab(slot4)
+	for iter_21_0 = 2, 1, -1 do
+		if arg_21_0:checkTabIsOpen(iter_21_0, true) then
+			arg_21_0:onChangeTab(iter_21_0)
 
 			break
 		end
 	end
 
-	slot0:playOpenAnimation()
+	arg_21_0:playOpenAnimation()
 end
 
-function slot0.playOpenAnimation(slot0)
-	if slot0.skipOpenAnim then
-		slot0.animator:Play(slot0.tabIndex == VersionActivity1_4Enum.TabEnum.First and "open_a" or "open_b", 0, 1)
-		TaskDispatcher.runDelay(slot0.onOpenAnimationDone, slot0, 0.5)
+function var_0_0.playOpenAnimation(arg_22_0)
+	local var_22_0 = arg_22_0.tabIndex == VersionActivity1_4Enum.TabEnum.First and "open_a" or "open_b"
+
+	if arg_22_0.skipOpenAnim then
+		arg_22_0.animator:Play(var_22_0, 0, 1)
+		TaskDispatcher.runDelay(arg_22_0.onOpenAnimationDone, arg_22_0, 0.5)
 	else
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_qiutu_open)
-		slot0.animator:Play(slot1)
-		TaskDispatcher.runDelay(slot0.onOpenAnimationDone, slot0, 2)
+		arg_22_0.animator:Play(var_22_0)
+		TaskDispatcher.runDelay(arg_22_0.onOpenAnimationDone, arg_22_0, 2)
 	end
 end
 
-function slot0.refreshUI(slot0)
-	gohelper.setActive(slot0._btnroom, slot0.tabIndex == VersionActivity1_4Enum.TabEnum.First)
-	slot0:refreshRemainTime()
-	slot0:refreshCenterActUI()
-	slot0:refreshActivityUI()
-	slot0:refreshSeasonStore()
-	slot0:refreshTabRed()
+function var_0_0.refreshUI(arg_23_0)
+	gohelper.setActive(arg_23_0._btnroom, arg_23_0.tabIndex == VersionActivity1_4Enum.TabEnum.First)
+	arg_23_0:refreshRemainTime()
+	arg_23_0:refreshCenterActUI()
+	arg_23_0:refreshActivityUI()
+	arg_23_0:refreshSeasonStore()
+	arg_23_0:refreshTabRed()
 end
 
-function slot0.refreshActivityItem(slot0, slot1)
-	slot2 = slot1.index
+function var_0_0.refreshActivityItem(arg_24_0, arg_24_1)
+	local var_24_0 = arg_24_1.index
 
-	if not slot0.actIndex2TabIndex then
-		slot0.actIndex2TabIndex = {}
+	if not arg_24_0.actIndex2TabIndex then
+		arg_24_0.actIndex2TabIndex = {}
 
-		for slot6, slot7 in pairs(VersionActivity1_4Enum.TabActivityList) do
-			for slot11, slot12 in ipairs(slot7) do
-				slot0.actIndex2TabIndex[slot12] = slot6
+		for iter_24_0, iter_24_1 in pairs(VersionActivity1_4Enum.TabActivityList) do
+			for iter_24_2, iter_24_3 in ipairs(iter_24_1) do
+				arg_24_0.actIndex2TabIndex[iter_24_3] = iter_24_0
 			end
 		end
 	end
 
-	slot3 = slot0.actIndex2TabIndex[slot2] == slot0.tabIndex
+	local var_24_1 = arg_24_0.actIndex2TabIndex[var_24_0] == arg_24_0.tabIndex
 
-	gohelper.setActive(slot1.rootGo, slot3)
+	gohelper.setActive(arg_24_1.rootGo, var_24_1)
 
-	if not slot3 then
+	if not var_24_1 then
 		return
 	end
 
-	uv0.super.refreshActivityItem(slot0, slot1)
+	var_0_0.super.refreshActivityItem(arg_24_0, arg_24_1)
 end
 
-function slot0.refreshRemainTime(slot0)
-	slot2 = ActivityModel.instance:getActivityInfo()[slot0.actId]:getRealEndTimeStamp() - ServerTime.now()
+function var_0_0.refreshRemainTime(arg_25_0)
+	local var_25_0 = ActivityModel.instance:getActivityInfo()[arg_25_0.actId]:getRealEndTimeStamp() - ServerTime.now()
+	local var_25_1 = Mathf.Floor(var_25_0 / TimeUtil.OneDaySecond)
+	local var_25_2 = var_25_0 % TimeUtil.OneDaySecond
+	local var_25_3 = Mathf.Floor(var_25_2 / TimeUtil.OneHourSecond)
 
 	if LangSettings.instance:isEn() then
-		slot0._txtremainday.text = string.format(luaLang("remain"), string.format("%s%s %s%s", Mathf.Floor(slot2 / TimeUtil.OneDaySecond), luaLang("time_day"), Mathf.Floor(slot2 % TimeUtil.OneDaySecond / TimeUtil.OneHourSecond), luaLang("time_hour2")))
+		arg_25_0._txtremainday.text = string.format(luaLang("remain"), string.format("%s%s %s%s", var_25_1, luaLang("time_day"), var_25_3, luaLang("time_hour2")))
 	else
-		slot0._txtremainday.text = string.format(luaLang("remain"), string.format("%s%s%s%s", slot3, luaLang("time_day"), slot5, luaLang("time_hour2")))
+		arg_25_0._txtremainday.text = string.format(luaLang("remain"), string.format("%s%s%s%s", var_25_1, luaLang("time_day"), var_25_3, luaLang("time_hour2")))
 	end
 end
 
-function slot0.refreshEnterViewTime(slot0)
-	slot0:refreshRemainTime()
-	slot0:refreshSeasonStore()
+function var_0_0.refreshEnterViewTime(arg_26_0)
+	arg_26_0:refreshRemainTime()
+	arg_26_0:refreshSeasonStore()
 end
 
-function slot0.onRefreshActivity5(slot0, slot1)
-	gohelper.setActive(gohelper.findChild(slot1.goNormal, "#go_bg1"), ActivityHelper.getActivityStatus(slot1.actId) == ActivityEnum.ActivityStatus.Normal)
-	gohelper.setActive(gohelper.findChild(slot1.goNormal, "storeBG"), slot2 == ActivityEnum.ActivityStatus.Normal)
+function var_0_0.onRefreshActivity5(arg_27_0, arg_27_1)
+	local var_27_0 = ActivityHelper.getActivityStatus(arg_27_1.actId)
+	local var_27_1 = gohelper.findChild(arg_27_1.goNormal, "#go_bg1")
+	local var_27_2 = gohelper.findChild(arg_27_1.goNormal, "storeBG")
 
-	if slot2 == ActivityEnum.ActivityStatus.Normal then
-		gohelper.findChildTextMesh(slot1.goNormal, "#go_bg1/#txt_time").text = ActivityModel.instance:getActMO(slot1.actId):getRemainTimeStr(true)
-		gohelper.findChildTextMesh(slot1.goNormal, "storeBG/#txt_num").text = tostring(ItemModel.instance:getItemQuantity(MaterialEnum.MaterialType.Currency, Activity129Config.instance:getConstValue1(slot1.actId, Activity129Enum.ConstEnum.CostId)))
+	gohelper.setActive(var_27_1, var_27_0 == ActivityEnum.ActivityStatus.Normal)
+	gohelper.setActive(var_27_2, var_27_0 == ActivityEnum.ActivityStatus.Normal)
+
+	if var_27_0 == ActivityEnum.ActivityStatus.Normal then
+		local var_27_3 = ActivityModel.instance:getActMO(arg_27_1.actId)
+
+		gohelper.findChildTextMesh(arg_27_1.goNormal, "#go_bg1/#txt_time").text = var_27_3:getRemainTimeStr(true)
+
+		local var_27_4 = gohelper.findChildTextMesh(arg_27_1.goNormal, "storeBG/#txt_num")
+		local var_27_5 = Activity129Config.instance:getConstValue1(arg_27_1.actId, Activity129Enum.ConstEnum.CostId)
+		local var_27_6 = ItemModel.instance:getItemQuantity(MaterialEnum.MaterialType.Currency, var_27_5)
+
+		var_27_4.text = tostring(var_27_6)
 	end
 end
 
-function slot0.onRefreshActivity8(slot0, slot1)
-	slot3 = ActivityHelper.getActivityStatus(slot1.actId) == ActivityEnum.ActivityStatus.Normal
+function var_0_0.onRefreshActivity8(arg_28_0, arg_28_1)
+	local var_28_0 = ActivityHelper.getActivityStatus(arg_28_1.actId) == ActivityEnum.ActivityStatus.Normal
+	local var_28_1 = gohelper.findChild(arg_28_1.goNormal, "week")
+	local var_28_2 = gohelper.findChild(arg_28_1.goNormal, "score")
 
-	gohelper.setActive(gohelper.findChild(slot1.goNormal, "week"), slot3 and Activity104Model.instance:isEnterSpecial())
-	gohelper.setActive(gohelper.findChild(slot1.goNormal, "score"), slot3)
+	gohelper.setActive(var_28_1, var_28_0 and Activity104Model.instance:isEnterSpecial())
+	gohelper.setActive(var_28_2, var_28_0)
 
-	if slot3 and Activity104Model.instance:tryGetActivityInfo(slot1.actId, slot0.checkNeedRefreshUI, slot0) then
-		gohelper.setActive(gohelper.findChildImage(slot1.rootGo, "normal/score/stage7"), Activity104Model.instance:getAct104CurStage() == 7)
+	if var_28_0 and Activity104Model.instance:tryGetActivityInfo(arg_28_1.actId, arg_28_0.checkNeedRefreshUI, arg_28_0) then
+		local var_28_3 = Activity104Model.instance:getAct104CurStage()
+		local var_28_4 = gohelper.findChildImage(arg_28_1.rootGo, "normal/score/stage7")
 
-		for slot11 = 1, 7 do
-			UISpriteSetMgr.instance:setV1a4EnterViewSprite(gohelper.findChildImage(slot1.rootGo, "normal/score/stage" .. slot11), slot11 <= slot6 and "v1a4_enterview_scorefg" or "v1a4_enterview_scorebg", true)
+		gohelper.setActive(var_28_4, var_28_3 == 7)
+
+		for iter_28_0 = 1, 7 do
+			local var_28_5 = gohelper.findChildImage(arg_28_1.rootGo, "normal/score/stage" .. iter_28_0)
+
+			UISpriteSetMgr.instance:setV1a4EnterViewSprite(var_28_5, iter_28_0 <= var_28_3 and "v1a4_enterview_scorefg" or "v1a4_enterview_scorebg", true)
 		end
 	end
 end
 
-function slot0.onRefreshActivity11(slot0, slot1)
-	gohelper.setActive(gohelper.findChild(slot1.goNormal, "#go_bg1"), ActivityHelper.getActivityStatus(slot1.actId) == ActivityEnum.ActivityStatus.Normal)
-	gohelper.setActive(gohelper.findChild(slot1.goNormal, "storeBG"), slot2 == ActivityEnum.ActivityStatus.Normal)
+function var_0_0.onRefreshActivity11(arg_29_0, arg_29_1)
+	local var_29_0 = ActivityHelper.getActivityStatus(arg_29_1.actId)
+	local var_29_1 = gohelper.findChild(arg_29_1.goNormal, "#go_bg1")
+	local var_29_2 = gohelper.findChild(arg_29_1.goNormal, "storeBG")
 
-	if slot2 == ActivityEnum.ActivityStatus.Normal then
-		gohelper.findChildTextMesh(slot1.goNormal, "#go_bg1/#txt_time").text = ActivityModel.instance:getActMO(slot1.actId):getRemainTimeStr(true)
-		gohelper.findChildTextMesh(slot1.goNormal, "storeBG/#txt_num").text = tostring(ItemModel.instance:getItemQuantity(MaterialEnum.MaterialType.Currency, Activity129Config.instance:getConstValue1(slot1.actId, Activity129Enum.ConstEnum.CostId)))
+	gohelper.setActive(var_29_1, var_29_0 == ActivityEnum.ActivityStatus.Normal)
+	gohelper.setActive(var_29_2, var_29_0 == ActivityEnum.ActivityStatus.Normal)
+
+	if var_29_0 == ActivityEnum.ActivityStatus.Normal then
+		local var_29_3 = ActivityModel.instance:getActMO(arg_29_1.actId)
+
+		gohelper.findChildTextMesh(arg_29_1.goNormal, "#go_bg1/#txt_time").text = var_29_3:getRemainTimeStr(true)
+
+		local var_29_4 = gohelper.findChildTextMesh(arg_29_1.goNormal, "storeBG/#txt_num")
+		local var_29_5 = Activity129Config.instance:getConstValue1(arg_29_1.actId, Activity129Enum.ConstEnum.CostId)
+		local var_29_6 = ItemModel.instance:getItemQuantity(MaterialEnum.MaterialType.Currency, var_29_5)
+
+		var_29_4.text = tostring(var_29_6)
 	end
 end
 
-function slot0.refreshSeasonStore(slot0)
-	if slot0.tabIndex == VersionActivity1_4Enum.TabEnum.First then
-		gohelper.setActive(slot0._btnseasonstore, false)
+function var_0_0.refreshSeasonStore(arg_30_0)
+	if arg_30_0.tabIndex == VersionActivity1_4Enum.TabEnum.First then
+		gohelper.setActive(arg_30_0._btnseasonstore, false)
 
 		return
 	end
 
-	if ActivityHelper.getActivityStatus(Activity104Model.instance:getCurSeasonId()) == ActivityEnum.ActivityStatus.Normal then
-		gohelper.setActive(slot0._btnseasonstore, false)
+	local var_30_0 = Activity104Model.instance:getCurSeasonId()
+
+	if ActivityHelper.getActivityStatus(var_30_0) == ActivityEnum.ActivityStatus.Normal then
+		gohelper.setActive(arg_30_0._btnseasonstore, false)
 
 		return
 	end
 
-	gohelper.setActive(slot0._btnseasonstore, ActivityHelper.getActivityStatus(Activity104Enum.SeasonStore[slot1]) == ActivityEnum.ActivityStatus.Normal)
+	local var_30_1 = Activity104Enum.SeasonStore[var_30_0]
+	local var_30_2 = ActivityHelper.getActivityStatus(var_30_1)
 
-	if slot4 ~= ActivityEnum.ActivityStatus.Normal then
+	gohelper.setActive(arg_30_0._btnseasonstore, var_30_2 == ActivityEnum.ActivityStatus.Normal)
+
+	if var_30_2 ~= ActivityEnum.ActivityStatus.Normal then
 		return
 	end
 
-	slot0._txtseasonstorenum.text = GameUtil.numberDisplay(CurrencyModel.instance:getCurrency(Activity104Enum.StoreUTTU[slot1]) and slot5.quantity or 0)
-	slot0._txtseasonstoretime.text = ActivityModel.instance:getActMO(slot3) and slot7:getRemainTimeStr2ByEndTime(true) or ""
+	local var_30_3 = CurrencyModel.instance:getCurrency(Activity104Enum.StoreUTTU[var_30_0])
+	local var_30_4 = var_30_3 and var_30_3.quantity or 0
+
+	arg_30_0._txtseasonstorenum.text = GameUtil.numberDisplay(var_30_4)
+
+	local var_30_5 = ActivityModel.instance:getActMO(var_30_1)
+
+	arg_30_0._txtseasonstoretime.text = var_30_5 and var_30_5:getRemainTimeStr2ByEndTime(true) or ""
 end
 
-function slot0.getSeasonStoreActivity(slot0)
-	if ActivityHelper.getActivityStatus(Activity104Model.instance:getCurSeasonId()) == ActivityEnum.ActivityStatus.Normal then
+function var_0_0.getSeasonStoreActivity(arg_31_0)
+	local var_31_0 = Activity104Model.instance:getCurSeasonId()
+
+	if ActivityHelper.getActivityStatus(var_31_0) == ActivityEnum.ActivityStatus.Normal then
 		return false
 	end
 
-	return ActivityHelper.getActivityStatus(Activity104Enum.SeasonStore[slot1]) == ActivityEnum.ActivityStatus.Normal
+	local var_31_1 = Activity104Enum.SeasonStore[var_31_0]
+
+	return ActivityHelper.getActivityStatus(var_31_1) == ActivityEnum.ActivityStatus.Normal
 end
 
-function slot0.everyMinuteCall(slot0)
-	uv0.super.everyMinuteCall(slot0)
-	slot0:refreshEnterViewTime()
+function var_0_0.everyMinuteCall(arg_32_0)
+	var_0_0.super.everyMinuteCall(arg_32_0)
+	arg_32_0:refreshEnterViewTime()
 end
 
-function slot0.playBgm(slot0)
+function var_0_0.playBgm(arg_33_0)
+	return
 end
 
-function slot0.stopBgm(slot0)
+function var_0_0.stopBgm(arg_34_0)
+	return
 end
 
-function slot0.initTab(slot0)
-	slot0.tabList = {}
+function var_0_0.initTab(arg_35_0)
+	arg_35_0.tabList = {}
 
-	for slot4 = 1, 2 do
-		slot0.tabList[slot4] = slot0:createTab(slot4)
+	for iter_35_0 = 1, 2 do
+		arg_35_0.tabList[iter_35_0] = arg_35_0:createTab(iter_35_0)
 	end
 end
 
-function slot0.createTab(slot0, slot1)
-	slot2 = slot0:getUserDataTb_()
-	slot2.go = gohelper.findChild(slot0.goTabNode, string.format("Item%s", slot1))
-	slot2.goSelect = gohelper.findChild(slot2.go, "#btn_select")
-	slot2.btn = gohelper.findButtonWithAudio(slot2.go, AudioEnum.UI.play_ui_leimi_theft_open)
+function var_0_0.createTab(arg_36_0, arg_36_1)
+	local var_36_0 = arg_36_0:getUserDataTb_()
 
-	slot2.btn:AddClickListener(slot0.onChangeTab, slot0, slot1)
+	var_36_0.go = gohelper.findChild(arg_36_0.goTabNode, string.format("Item%s", arg_36_1))
+	var_36_0.goSelect = gohelper.findChild(var_36_0.go, "#btn_select")
+	var_36_0.btn = gohelper.findButtonWithAudio(var_36_0.go, AudioEnum.UI.play_ui_leimi_theft_open)
 
-	slot2.goRed = gohelper.findChild(slot2.go, "#go_reddot")
+	var_36_0.btn:AddClickListener(arg_36_0.onChangeTab, arg_36_0, arg_36_1)
 
-	return slot2
+	var_36_0.goRed = gohelper.findChild(var_36_0.go, "#go_reddot")
+
+	return var_36_0
 end
 
-function slot0.refreshTabRed(slot0)
-	for slot4, slot5 in ipairs(slot0.tabList) do
-		if not slot5.redDot then
-			slot5.redDot = RedDotController.instance:addRedDot(slot5.goRed, slot4 == VersionActivity1_4Enum.TabEnum.First and 1075 or 1088)
+function var_0_0.refreshTabRed(arg_37_0)
+	for iter_37_0, iter_37_1 in ipairs(arg_37_0.tabList) do
+		if not iter_37_1.redDot then
+			local var_37_0 = iter_37_0 == VersionActivity1_4Enum.TabEnum.First and 1075 or 1088
+
+			iter_37_1.redDot = RedDotController.instance:addRedDot(iter_37_1.goRed, var_37_0)
 		else
-			slot5.redDot:refreshDot()
+			iter_37_1.redDot:refreshDot()
 		end
 	end
 end
 
-function slot0.destoryTab(slot0, slot1)
-	if slot1 then
-		slot1.btn:RemoveClickListener()
+function var_0_0.destoryTab(arg_38_0, arg_38_1)
+	if arg_38_1 then
+		arg_38_1.btn:RemoveClickListener()
 	end
 end
 
-function slot0.onChangeTab(slot0, slot1)
-	if slot0.tabIndex == slot1 then
+function var_0_0.onChangeTab(arg_39_0, arg_39_1)
+	if arg_39_0.tabIndex == arg_39_1 then
 		return
 	end
 
-	if not slot0:checkTabIsOpen(slot1) then
+	if not arg_39_0:checkTabIsOpen(arg_39_1) then
 		return
 	end
 
-	slot2 = slot0.tabIndex ~= nil
-	slot0.tabIndex = slot1
+	local var_39_0 = arg_39_0.tabIndex ~= nil
 
-	gohelper.setActive(slot0._btnachievement, true)
+	arg_39_0.tabIndex = arg_39_1
 
-	for slot6, slot7 in ipairs(slot0.tabList) do
-		gohelper.setActive(slot7.goSelect, slot0.tabIndex == slot6)
+	gohelper.setActive(arg_39_0._btnachievement, true)
+
+	for iter_39_0, iter_39_1 in ipairs(arg_39_0.tabList) do
+		gohelper.setActive(iter_39_1.goSelect, arg_39_0.tabIndex == iter_39_0)
 	end
 
-	TaskDispatcher.cancelTask(slot0.onSwitchAnimEnd, slot0)
+	TaskDispatcher.cancelTask(arg_39_0.onSwitchAnimEnd, arg_39_0)
 
-	if slot2 then
-		slot0.animator:Play(slot0.tabIndex == VersionActivity1_4Enum.TabEnum.First and "switch_b" or "switch_a")
+	if var_39_0 then
+		local var_39_1 = arg_39_0.tabIndex == VersionActivity1_4Enum.TabEnum.First and "switch_b" or "switch_a"
 
-		for slot7, slot8 in ipairs(slot0.activityItemList) do
-			gohelper.setActive(slot8.rootGo, true)
+		arg_39_0.animator:Play(var_39_1)
+
+		for iter_39_2, iter_39_3 in ipairs(arg_39_0.activityItemList) do
+			gohelper.setActive(iter_39_3.rootGo, true)
 		end
 
-		gohelper.setActive(slot0._btnroom, true)
+		gohelper.setActive(arg_39_0._btnroom, true)
 
-		if slot0:getSeasonStoreActivity() then
-			gohelper.setActive(slot0._btnseasonstore, true)
+		if arg_39_0:getSeasonStoreActivity() then
+			gohelper.setActive(arg_39_0._btnseasonstore, true)
 		end
 
-		TaskDispatcher.runDelay(slot0.onSwitchAnimEnd, slot0, 0.5)
+		local var_39_2 = 0.5
+
+		TaskDispatcher.runDelay(arg_39_0.onSwitchAnimEnd, arg_39_0, var_39_2)
 	else
-		slot0:onSwitchAnimEnd()
+		arg_39_0:onSwitchAnimEnd()
 	end
 end
 
-function slot0.onSwitchAnimEnd(slot0)
-	slot0:refreshUI()
+function var_0_0.onSwitchAnimEnd(arg_40_0)
+	arg_40_0:refreshUI()
 end
 
-function slot0.checkTabIsOpen(slot0, slot1, slot2)
-	slot3 = VersionActivity1_4Enum.ActivityId.EnterView
+function var_0_0.checkTabIsOpen(arg_41_0, arg_41_1, arg_41_2)
+	local var_41_0 = VersionActivity1_4Enum.ActivityId.EnterView
 
-	if slot1 == VersionActivity1_4Enum.TabEnum.Second then
-		slot3 = VersionActivity1_4Enum.ActivityId.SecondEnter
+	if arg_41_1 == VersionActivity1_4Enum.TabEnum.Second then
+		var_41_0 = VersionActivity1_4Enum.ActivityId.SecondEnter
 	end
 
-	slot4, slot5, slot6 = ActivityHelper.getActivityStatusAndToast(slot3)
+	local var_41_1, var_41_2, var_41_3 = ActivityHelper.getActivityStatusAndToast(var_41_0)
 
-	if slot4 ~= ActivityEnum.ActivityStatus.Normal then
-		if not slot2 then
-			if slot4 == ActivityEnum.ActivityStatus.NotOpen then
-				slot7 = ActivityModel.instance:getActMO(slot3)
+	if var_41_1 ~= ActivityEnum.ActivityStatus.Normal then
+		if not arg_41_2 then
+			if var_41_1 == ActivityEnum.ActivityStatus.NotOpen then
+				local var_41_4 = ActivityModel.instance:getActMO(var_41_0)
+				local var_41_5 = var_41_4:getRealStartTimeStamp() - ServerTime.now()
+				local var_41_6 = var_41_4.config.name
+				local var_41_7 = TimeUtil.getFormatTime_overseas(var_41_5)
 
-				GameFacade.showToast(ToastEnum.V1a4_ActPreTips, slot7.config.name, TimeUtil.getFormatTime_overseas(slot7:getRealStartTimeStamp() - ServerTime.now()))
-			elseif slot5 then
-				GameFacade.showToast(slot5, slot6)
+				GameFacade.showToast(ToastEnum.V1a4_ActPreTips, var_41_6, var_41_7)
+			elseif var_41_2 then
+				GameFacade.showToast(var_41_2, var_41_3)
 			end
 		end
 
@@ -402,23 +466,23 @@ function slot0.checkTabIsOpen(slot0, slot1, slot2)
 	return true
 end
 
-function slot0.onDestroyView(slot0)
-	TaskDispatcher.cancelTask(slot0.onSwitchAnimEnd, slot0)
-	slot0._simagebg1:UnLoadImage()
-	slot0._simagebg2:UnLoadImage()
-	slot0._simagebg3:UnLoadImage()
-	slot0._simagebg4:UnLoadImage()
-	slot0._simagemask:UnLoadImage()
+function var_0_0.onDestroyView(arg_42_0)
+	TaskDispatcher.cancelTask(arg_42_0.onSwitchAnimEnd, arg_42_0)
+	arg_42_0._simagebg1:UnLoadImage()
+	arg_42_0._simagebg2:UnLoadImage()
+	arg_42_0._simagebg3:UnLoadImage()
+	arg_42_0._simagebg4:UnLoadImage()
+	arg_42_0._simagemask:UnLoadImage()
 
-	if slot0.tabList then
-		for slot4, slot5 in pairs(slot0.tabList) do
-			slot0:destoryTab(slot5)
+	if arg_42_0.tabList then
+		for iter_42_0, iter_42_1 in pairs(arg_42_0.tabList) do
+			arg_42_0:destoryTab(iter_42_1)
 		end
 
-		slot0.tabList = nil
+		arg_42_0.tabList = nil
 	end
 
-	uv0.super.onDestroyView(slot0)
+	var_0_0.super.onDestroyView(arg_42_0)
 end
 
-return slot0
+return var_0_0

@@ -1,92 +1,96 @@
-module("modules.logic.room.entity.comp.base.RoomBaseFollowerComp", package.seeall)
+﻿module("modules.logic.room.entity.comp.base.RoomBaseFollowerComp", package.seeall)
 
-slot0 = class("RoomBaseFollowerComp", LuaCompBase)
+local var_0_0 = class("RoomBaseFollowerComp", LuaCompBase)
 
-function slot0.ctor(slot0, slot1)
-	slot0.entity = slot1
-	slot0._isMoveing = false
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0.entity = arg_1_1
+	arg_1_0._isMoveing = false
 end
 
-function slot0.init(slot0, slot1)
+function var_0_0.init(arg_2_0, arg_2_1)
+	return
 end
 
-function slot0.getFollowPathData(slot0)
-	if not slot0._followPathData then
-		slot0._followPathData = RoomVehicleFollowPathData.New()
+function var_0_0.getFollowPathData(arg_3_0)
+	if not arg_3_0._followPathData then
+		arg_3_0._followPathData = RoomVehicleFollowPathData.New()
 	end
 
-	return slot0._followPathData
+	return arg_3_0._followPathData
 end
 
-function slot0.setFollowPath(slot0, slot1)
-	if slot0._followPathComp == slot1 then
+function var_0_0.setFollowPath(arg_4_0, arg_4_1)
+	if arg_4_0._followPathComp == arg_4_1 then
 		return
 	end
 
-	if slot0._followPathComp then
-		slot0._followPathComp:removeFollower(slot0)
+	if arg_4_0._followPathComp then
+		arg_4_0._followPathComp:removeFollower(arg_4_0)
 
-		slot0._followPathComp = nil
+		arg_4_0._followPathComp = nil
 	end
 
-	if slot1 then
-		slot1:addFollower(slot0)
+	if arg_4_1 then
+		arg_4_1:addFollower(arg_4_0)
 
-		slot0._followPathComp = slot1
+		arg_4_0._followPathComp = arg_4_1
 	end
 
-	slot0:stopMove()
+	arg_4_0:stopMove()
 end
 
-function slot0.clearFollowPath(slot0)
-	slot0:setFollowPath(nil)
+function var_0_0.clearFollowPath(arg_5_0)
+	arg_5_0:setFollowPath(nil)
 end
 
-function slot0.stopMove(slot0)
-	if slot0._isMoveing then
-		slot0._isMoveing = false
+function var_0_0.stopMove(arg_6_0)
+	if arg_6_0._isMoveing then
+		arg_6_0._isMoveing = false
 
-		slot0:onStopMove()
+		arg_6_0:onStopMove()
 	end
 end
 
-function slot0.moveByPathData(slot0)
-	if slot0.__willDestroy or not slot0._followPathComp or slot0._followPathComp:isWillDestory() then
+function var_0_0.moveByPathData(arg_7_0)
+	if arg_7_0.__willDestroy or not arg_7_0._followPathComp or arg_7_0._followPathComp:isWillDestory() then
 		return
 	end
 
-	if not slot0._isMoveing then
-		slot0._isMoveing = true
+	if not arg_7_0._isMoveing then
+		arg_7_0._isMoveing = true
 
-		slot0:onStartMove()
+		arg_7_0:onStartMove()
 	end
 
-	slot0:onMoveByPathData(slot0:getFollowPathData())
+	arg_7_0:onMoveByPathData(arg_7_0:getFollowPathData())
 end
 
-function slot0.addPathPos(slot0, slot1)
-	if not slot0.__willDestroy then
-		slot0:getFollowPathData():addPathPos(slot1)
+function var_0_0.addPathPos(arg_8_0, arg_8_1)
+	if not arg_8_0.__willDestroy then
+		arg_8_0:getFollowPathData():addPathPos(arg_8_1)
 	end
 end
 
-function slot0.onMoveByPathData(slot0, slot1)
+function var_0_0.onMoveByPathData(arg_9_0, arg_9_1)
+	return
 end
 
-function slot0.onStopMove(slot0)
+function var_0_0.onStopMove(arg_10_0)
+	return
 end
 
-function slot0.onStartMove(slot0)
+function var_0_0.onStartMove(arg_11_0)
+	return
 end
 
-function slot0.isWillDestory(slot0)
-	return slot0.__willDestroy
+function var_0_0.isWillDestory(arg_12_0)
+	return arg_12_0.__willDestroy
 end
 
-function slot0.beforeDestroy(slot0)
-	slot0.__willDestroy = true
+function var_0_0.beforeDestroy(arg_13_0)
+	arg_13_0.__willDestroy = true
 
-	slot0:clearFollowPath()
+	arg_13_0:clearFollowPath()
 end
 
-return slot0
+return var_0_0

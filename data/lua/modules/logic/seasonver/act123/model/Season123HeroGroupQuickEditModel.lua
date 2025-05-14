@@ -1,98 +1,116 @@
-module("modules.logic.seasonver.act123.model.Season123HeroGroupQuickEditModel", package.seeall)
+﻿module("modules.logic.seasonver.act123.model.Season123HeroGroupQuickEditModel", package.seeall)
 
-slot0 = class("Season123HeroGroupQuickEditModel", ListScrollModel)
+local var_0_0 = class("Season123HeroGroupQuickEditModel", ListScrollModel)
 
-function slot0.init(slot0, slot1, slot2, slot3, slot4)
-	slot0.activityId = slot1
-	slot0.layer = slot2
-	slot0.episodeId = slot3
-	slot0.episodeCO = DungeonConfig.instance:getEpisodeCO(slot0.episodeId)
-	slot0.stage = slot4
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4)
+	arg_1_0.activityId = arg_1_1
+	arg_1_0.layer = arg_1_2
+	arg_1_0.episodeId = arg_1_3
+	arg_1_0.episodeCO = DungeonConfig.instance:getEpisodeCO(arg_1_0.episodeId)
+	arg_1_0.stage = arg_1_4
 end
 
-function slot0.copyQuickEditCardList(slot0)
-	if Season123Model.instance:getAssistData(slot0.activityId, slot0.stage) and Season123Controller.isEpisodeFromSeason123(slot0.episodeId) and Season123HeroGroupModel.instance:isEpisodeSeason123() then
-		table.insert(tabletool.copy(CharacterBackpackCardListModel.instance:getCharacterCardList()), slot2)
+function var_0_0.copyQuickEditCardList(arg_2_0)
+	local var_2_0 = tabletool.copy(CharacterBackpackCardListModel.instance:getCharacterCardList())
+	local var_2_1 = Season123Model.instance:getAssistData(arg_2_0.activityId, arg_2_0.stage)
+
+	if var_2_1 and Season123Controller.isEpisodeFromSeason123(arg_2_0.episodeId) and Season123HeroGroupModel.instance:isEpisodeSeason123() then
+		table.insert(var_2_0, var_2_1)
 	end
 
-	slot4 = {}
-	slot0._inTeamHeroUidMap = {}
-	slot0._inTeamHeroUidList = {}
-	slot0._originalHeroUidList = {}
-	slot0._selectUid = nil
+	local var_2_2 = {}
+	local var_2_3 = {}
 
-	for slot9, slot10 in ipairs(HeroGroupModel.instance:getCurGroupMO().heroList) do
-		slot11 = HeroGroupModel.instance:isPositionOpen(slot9)
+	arg_2_0._inTeamHeroUidMap = {}
+	arg_2_0._inTeamHeroUidList = {}
+	arg_2_0._originalHeroUidList = {}
+	arg_2_0._selectUid = nil
 
-		if slot10 ~= "0" and not slot4[slot10] and slot0:checkSeasonBox(Season123HeroUtils.getHeroMO(slot0.activityId, slot10, slot0.stage)) then
-			table.insert({}, slot12)
+	local var_2_4 = HeroGroupModel.instance:getCurGroupMO()
 
-			if slot11 then
-				slot0._inTeamHeroUidMap[slot10] = 1
+	for iter_2_0, iter_2_1 in ipairs(var_2_4.heroList) do
+		local var_2_5 = HeroGroupModel.instance:isPositionOpen(iter_2_0)
+
+		if iter_2_1 ~= "0" and not var_2_3[iter_2_1] then
+			local var_2_6 = Season123HeroUtils.getHeroMO(arg_2_0.activityId, iter_2_1, arg_2_0.stage)
+
+			if arg_2_0:checkSeasonBox(var_2_6) then
+				table.insert(var_2_2, var_2_6)
+
+				if var_2_5 then
+					arg_2_0._inTeamHeroUidMap[iter_2_1] = 1
+				end
+
+				var_2_3[iter_2_1] = true
 			end
-
-			slot4[slot10] = true
 		end
 
-		if slot11 then
-			table.insert(slot0._inTeamHeroUidList, slot10)
-			table.insert(slot0._originalHeroUidList, slot10)
+		if var_2_5 then
+			table.insert(arg_2_0._inTeamHeroUidList, iter_2_1)
+			table.insert(arg_2_0._originalHeroUidList, iter_2_1)
 		end
 	end
 
-	slot6 = {}
+	local var_2_7 = {}
 
-	for slot10, slot11 in ipairs(slot1) do
-		if not slot4[slot11.uid] and slot0:checkSeasonBox(slot11) then
-			slot4[slot11.uid] = true
+	for iter_2_2, iter_2_3 in ipairs(var_2_0) do
+		if not var_2_3[iter_2_3.uid] and arg_2_0:checkSeasonBox(iter_2_3) then
+			var_2_3[iter_2_3.uid] = true
 
-			table.insert(slot3, slot11)
+			table.insert(var_2_2, iter_2_3)
 		end
 	end
 
-	if slot0.adventure then
-		tabletool.addValues(slot3, slot6)
+	if arg_2_0.adventure then
+		tabletool.addValues(var_2_2, var_2_7)
 	end
 
 	if Season123HeroGroupModel.instance:isEpisodeSeason123() then
-		slot0.sortIndexMap = {}
+		arg_2_0.sortIndexMap = {}
 
-		for slot10, slot11 in ipairs(slot3) do
-			slot0.sortIndexMap[slot11] = slot10
+		for iter_2_4, iter_2_5 in ipairs(var_2_2) do
+			arg_2_0.sortIndexMap[iter_2_5] = iter_2_4
 		end
 
-		table.sort(slot3, uv0.sortDead)
+		table.sort(var_2_2, var_0_0.sortDead)
 	end
 
-	slot0:setList(slot3)
+	arg_2_0:setList(var_2_2)
 end
 
-function slot0.sortDead(slot0, slot1)
-	if uv0.instance:getHeroIsDead(slot0) ~= uv0.instance:getHeroIsDead(slot1) then
-		return slot3
+function var_0_0.sortDead(arg_3_0, arg_3_1)
+	local var_3_0 = var_0_0.instance:getHeroIsDead(arg_3_0)
+	local var_3_1 = var_0_0.instance:getHeroIsDead(arg_3_1)
+
+	if var_3_0 ~= var_3_1 then
+		return var_3_1
 	else
-		return Season123HeroGroupEditModel.instance.sortIndexMap[slot0] < Season123HeroGroupEditModel.instance.sortIndexMap[slot1]
+		return Season123HeroGroupEditModel.instance.sortIndexMap[arg_3_0] < Season123HeroGroupEditModel.instance.sortIndexMap[arg_3_1]
 	end
 end
 
-function slot0.getHeroIsDead(slot0, slot1)
+function var_0_0.getHeroIsDead(arg_4_0, arg_4_1)
 	if Season123HeroGroupModel.instance:isEpisodeSeason123() then
-		slot2 = false
+		local var_4_0 = false
+		local var_4_1 = arg_4_0.activityId
+		local var_4_2 = arg_4_0.stage
+		local var_4_3 = arg_4_0.layer
+		local var_4_4 = Season123Model.instance:getSeasonHeroMO(var_4_1, var_4_2, var_4_3, arg_4_1.uid)
 
-		if Season123Model.instance:getSeasonHeroMO(slot0.activityId, slot0.stage, slot0.layer, slot1.uid) ~= nil then
-			slot2 = slot6.hpRate <= 0
+		if var_4_4 ~= nil then
+			var_4_0 = var_4_4.hpRate <= 0
 		end
 
-		return slot2
+		return var_4_0
 	end
 
 	return false
 end
 
-function slot0.checkSeasonBox(slot0, slot1)
-	if slot0.episodeCO then
-		if slot0.episodeCO.type == DungeonEnum.EpisodeType.Season123 then
-			return Season123Model.instance:getSeasonHeroMO(slot0.activityId, slot0.stage, slot0.layer, slot1.uid)
+function var_0_0.checkSeasonBox(arg_5_0, arg_5_1)
+	if arg_5_0.episodeCO then
+		if arg_5_0.episodeCO.type == DungeonEnum.EpisodeType.Season123 then
+			return Season123Model.instance:getSeasonHeroMO(arg_5_0.activityId, arg_5_0.stage, arg_5_0.layer, arg_5_1.uid)
 		else
 			return true
 		end
@@ -101,30 +119,31 @@ function slot0.checkSeasonBox(slot0, slot1)
 	return false
 end
 
-function slot0.keepSelect(slot0, slot1)
-	slot0._selectIndex = slot1
-	slot2 = slot0:getList()
+function var_0_0.keepSelect(arg_6_0, arg_6_1)
+	arg_6_0._selectIndex = arg_6_1
 
-	if #slot0._scrollViews > 0 then
-		for slot6, slot7 in ipairs(slot0._scrollViews) do
-			slot7:selectCell(slot1, true)
+	local var_6_0 = arg_6_0:getList()
+
+	if #arg_6_0._scrollViews > 0 then
+		for iter_6_0, iter_6_1 in ipairs(arg_6_0._scrollViews) do
+			iter_6_1:selectCell(arg_6_1, true)
 		end
 
-		if slot2[slot1] then
-			return slot2[slot1]
+		if var_6_0[arg_6_1] then
+			return var_6_0[arg_6_1]
 		end
 	end
 end
 
-function slot0.isInTeamHero(slot0, slot1)
-	return slot0._inTeamHeroUidMap and slot0._inTeamHeroUidMap[slot1]
+function var_0_0.isInTeamHero(arg_7_0, arg_7_1)
+	return arg_7_0._inTeamHeroUidMap and arg_7_0._inTeamHeroUidMap[arg_7_1]
 end
 
-function slot0.getHeroTeamPos(slot0, slot1)
-	if slot0._inTeamHeroUidList then
-		for slot5, slot6 in pairs(slot0._inTeamHeroUidList) do
-			if slot6 == slot1 then
-				return slot5
+function var_0_0.getHeroTeamPos(arg_8_0, arg_8_1)
+	if arg_8_0._inTeamHeroUidList then
+		for iter_8_0, iter_8_1 in pairs(arg_8_0._inTeamHeroUidList) do
+			if iter_8_1 == arg_8_1 then
+				return iter_8_0
 			end
 		end
 	end
@@ -132,47 +151,51 @@ function slot0.getHeroTeamPos(slot0, slot1)
 	return 0
 end
 
-function slot0.selectHero(slot0, slot1)
-	if slot0:getHeroTeamPos(slot1) ~= 0 then
-		slot0._inTeamHeroUidList[slot2] = "0"
-		slot0._inTeamHeroUidMap[slot1] = nil
+function var_0_0.selectHero(arg_9_0, arg_9_1)
+	local var_9_0 = arg_9_0:getHeroTeamPos(arg_9_1)
 
-		slot0:onModelUpdate()
+	if var_9_0 ~= 0 then
+		arg_9_0._inTeamHeroUidList[var_9_0] = "0"
+		arg_9_0._inTeamHeroUidMap[arg_9_1] = nil
 
-		slot0._selectUid = nil
+		arg_9_0:onModelUpdate()
+
+		arg_9_0._selectUid = nil
 
 		return true
 	else
-		slot3 = 0
+		local var_9_1 = 0
 
-		for slot7 = 1, #slot0._inTeamHeroUidList do
-			if slot0._inTeamHeroUidList[slot7] == 0 or slot8 == "0" then
-				slot0._inTeamHeroUidList[slot7] = slot1
-				slot0._inTeamHeroUidMap[slot1] = 1
+		for iter_9_0 = 1, #arg_9_0._inTeamHeroUidList do
+			local var_9_2 = arg_9_0._inTeamHeroUidList[iter_9_0]
 
-				slot0:onModelUpdate()
+			if var_9_2 == 0 or var_9_2 == "0" then
+				arg_9_0._inTeamHeroUidList[iter_9_0] = arg_9_1
+				arg_9_0._inTeamHeroUidMap[arg_9_1] = 1
+
+				arg_9_0:onModelUpdate()
 
 				return true
 			end
 		end
 
-		slot0._selectUid = slot1
+		arg_9_0._selectUid = arg_9_1
 	end
 
 	return false
 end
 
-function slot0.getHeroUids(slot0)
-	return slot0._inTeamHeroUidList
+function var_0_0.getHeroUids(arg_10_0)
+	return arg_10_0._inTeamHeroUidList
 end
 
-function slot0.getHeroUidByPos(slot0, slot1)
-	return slot0._inTeamHeroUidList[slot1]
+function var_0_0.getHeroUidByPos(arg_11_0, arg_11_1)
+	return arg_11_0._inTeamHeroUidList[arg_11_1]
 end
 
-function slot0.getIsDirty(slot0)
-	for slot4 = 1, #slot0._inTeamHeroUidList do
-		if slot0._inTeamHeroUidList[slot4] ~= slot0._originalHeroUidList[slot4] then
+function var_0_0.getIsDirty(arg_12_0)
+	for iter_12_0 = 1, #arg_12_0._inTeamHeroUidList do
+		if arg_12_0._inTeamHeroUidList[iter_12_0] ~= arg_12_0._originalHeroUidList[iter_12_0] then
 			return true
 		end
 	end
@@ -180,17 +203,22 @@ function slot0.getIsDirty(slot0)
 	return false
 end
 
-function slot0.cancelAllSelected(slot0)
-	if slot0._scrollViews then
-		for slot4, slot5 in ipairs(slot0._scrollViews) do
-			slot5:selectCell(slot0:getIndex(slot5:getFirstSelect()), false)
+function var_0_0.cancelAllSelected(arg_13_0)
+	if arg_13_0._scrollViews then
+		for iter_13_0, iter_13_1 in ipairs(arg_13_0._scrollViews) do
+			local var_13_0 = iter_13_1:getFirstSelect()
+			local var_13_1 = arg_13_0:getIndex(var_13_0)
+
+			iter_13_1:selectCell(var_13_1, false)
 		end
 	end
 end
 
-function slot0.isTeamFull(slot0)
-	for slot4 = 1, #slot0._inTeamHeroUidList do
-		if slot0._inTeamHeroUidList[slot4] == "0" and HeroGroupModel.instance:isPositionOpen(slot4) then
+function var_0_0.isTeamFull(arg_14_0)
+	for iter_14_0 = 1, #arg_14_0._inTeamHeroUidList do
+		local var_14_0 = HeroGroupModel.instance:isPositionOpen(iter_14_0)
+
+		if arg_14_0._inTeamHeroUidList[iter_14_0] == "0" and var_14_0 then
 			return false
 		end
 	end
@@ -198,20 +226,20 @@ function slot0.isTeamFull(slot0)
 	return true
 end
 
-function slot0.setParam(slot0, slot1)
-	slot0.adventure = slot1
+function var_0_0.setParam(arg_15_0, arg_15_1)
+	arg_15_0.adventure = arg_15_1
 end
 
-function slot0.clear(slot0)
-	slot0._inTeamHeroUidMap = nil
-	slot0._inTeamHeroUidList = nil
-	slot0._originalHeroUidList = nil
-	slot0._selectIndex = nil
-	slot0._selectUid = nil
+function var_0_0.clear(arg_16_0)
+	arg_16_0._inTeamHeroUidMap = nil
+	arg_16_0._inTeamHeroUidList = nil
+	arg_16_0._originalHeroUidList = nil
+	arg_16_0._selectIndex = nil
+	arg_16_0._selectUid = nil
 
-	uv0.super.clear(slot0)
+	var_0_0.super.clear(arg_16_0)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

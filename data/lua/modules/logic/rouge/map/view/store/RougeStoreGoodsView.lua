@@ -1,154 +1,164 @@
-module("modules.logic.rouge.map.view.store.RougeStoreGoodsView", package.seeall)
+﻿module("modules.logic.rouge.map.view.store.RougeStoreGoodsView", package.seeall)
 
-slot0 = class("RougeStoreGoodsView", BaseView)
+local var_0_0 = class("RougeStoreGoodsView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simageicon = gohelper.findChildSingleImage(slot0.viewGO, "Left/#image_icon")
-	slot0._txtcollectionname = gohelper.findChildText(slot0.viewGO, "Left/#txt_collectionname")
-	slot0._scrollcollectiondesc = gohelper.findChildScrollRect(slot0.viewGO, "Left/#scroll_collectiondesc")
-	slot0._godescContent = gohelper.findChild(slot0.viewGO, "Left/#scroll_collectiondesc/Viewport/#go_descContent")
-	slot0._goGrid = gohelper.findChild(slot0.viewGO, "Left/#go_grid")
-	slot0._goGridItem = gohelper.findChild(slot0.viewGO, "Left/#go_grid/#go_griditem")
-	slot0._gotagitem = gohelper.findChild(slot0.viewGO, "Left/tags/#go_tagitem")
-	slot0._goshapecell = gohelper.findChild(slot0.viewGO, "Left/shape/#go_shapecell")
-	slot0._goholetool = gohelper.findChild(slot0.viewGO, "Left/#go_holetool")
-	slot0._goholeitem = gohelper.findChild(slot0.viewGO, "Left/#go_holetool/#go_holeitem")
-	slot0._btnconfirm = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_confirm")
-	slot0._txtcost = gohelper.findChildText(slot0.viewGO, "#btn_confirm/ani/#txt_cost")
-	slot0._gotips = gohelper.findChild(slot0.viewGO, "Left/#go_tips")
-	slot0._gotagnameitem = gohelper.findChild(slot0.viewGO, "Left/#go_tips/#go_tagnameitem")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simageicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "Left/#image_icon")
+	arg_1_0._txtcollectionname = gohelper.findChildText(arg_1_0.viewGO, "Left/#txt_collectionname")
+	arg_1_0._scrollcollectiondesc = gohelper.findChildScrollRect(arg_1_0.viewGO, "Left/#scroll_collectiondesc")
+	arg_1_0._godescContent = gohelper.findChild(arg_1_0.viewGO, "Left/#scroll_collectiondesc/Viewport/#go_descContent")
+	arg_1_0._goGrid = gohelper.findChild(arg_1_0.viewGO, "Left/#go_grid")
+	arg_1_0._goGridItem = gohelper.findChild(arg_1_0.viewGO, "Left/#go_grid/#go_griditem")
+	arg_1_0._gotagitem = gohelper.findChild(arg_1_0.viewGO, "Left/tags/#go_tagitem")
+	arg_1_0._goshapecell = gohelper.findChild(arg_1_0.viewGO, "Left/shape/#go_shapecell")
+	arg_1_0._goholetool = gohelper.findChild(arg_1_0.viewGO, "Left/#go_holetool")
+	arg_1_0._goholeitem = gohelper.findChild(arg_1_0.viewGO, "Left/#go_holetool/#go_holeitem")
+	arg_1_0._btnconfirm = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_confirm")
+	arg_1_0._txtcost = gohelper.findChildText(arg_1_0.viewGO, "#btn_confirm/ani/#txt_cost")
+	arg_1_0._gotips = gohelper.findChild(arg_1_0.viewGO, "Left/#go_tips")
+	arg_1_0._gotagnameitem = gohelper.findChild(arg_1_0.viewGO, "Left/#go_tips/#go_tagnameitem")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnconfirm:AddClickListener(slot0._btnconfirmOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnconfirm:AddClickListener(arg_2_0._btnconfirmOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnconfirm:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnconfirm:RemoveClickListener()
 end
 
-function slot0._btnconfirmOnClick(slot0)
-	if slot0.sellOut then
+function var_0_0._btnconfirmOnClick(arg_4_0)
+	if arg_4_0.sellOut then
 		GameFacade.showToast(ToastEnum.RougeStoreSellOut)
 
 		return
 	end
 
-	if RougeModel.instance:getRougeInfo().coin < slot0.price then
+	if RougeModel.instance:getRougeInfo().coin < arg_4_0.price then
 		GameFacade.showToast(ToastEnum.RougeCoinNotEnough)
 
 		return
 	end
 
-	slot0.callbackId = RougeRpc.instance:sendRougeBuyGoodsRequest(slot0.eventId, slot0.pos, slot0.onReceiveMsg, slot0)
+	arg_4_0.callbackId = RougeRpc.instance:sendRougeBuyGoodsRequest(arg_4_0.eventId, arg_4_0.pos, arg_4_0.onReceiveMsg, arg_4_0)
 end
 
-function slot0.onReceiveMsg(slot0)
-	slot0.callbackId = nil
+function var_0_0.onReceiveMsg(arg_5_0)
+	arg_5_0.callbackId = nil
 
-	RougeMapController.instance:dispatchEvent(RougeMapEvent.onBuyGoods, slot0.pos)
-	slot0:closeThis()
+	RougeMapController.instance:dispatchEvent(RougeMapEvent.onBuyGoods, arg_5_0.pos)
+	arg_5_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
-	gohelper.setActive(slot0._goholeitem, false)
+function var_0_0._editableInitView(arg_6_0)
+	gohelper.setActive(arg_6_0._goholeitem, false)
 
-	slot0.bgClick = gohelper.findChildClickWithDefaultAudio(slot0.viewGO, "mask")
+	arg_6_0.bgClick = gohelper.findChildClickWithDefaultAudio(arg_6_0.viewGO, "mask")
 
-	slot0.bgClick:AddClickListener(slot0.closeThis, slot0)
+	arg_6_0.bgClick:AddClickListener(arg_6_0.closeThis, arg_6_0)
 
-	slot0.gridList = slot0:getUserDataTb_()
-	slot0.tagGoList = slot0:getUserDataTb_()
-	slot0.goHoleList = slot0:getUserDataTb_()
-	slot0._itemInstTab = slot0:getUserDataTb_()
-	slot0.rectDesc = slot0._scrollcollectiondesc:GetComponent(gohelper.Type_RectTransform)
-	slot0.animator = slot0.viewGO:GetComponent(gohelper.Type_Animator)
+	arg_6_0.gridList = arg_6_0:getUserDataTb_()
+	arg_6_0.tagGoList = arg_6_0:getUserDataTb_()
+	arg_6_0.goHoleList = arg_6_0:getUserDataTb_()
+	arg_6_0._itemInstTab = arg_6_0:getUserDataTb_()
+	arg_6_0.rectDesc = arg_6_0._scrollcollectiondesc:GetComponent(gohelper.Type_RectTransform)
+	arg_6_0.animator = arg_6_0.viewGO:GetComponent(gohelper.Type_Animator)
 
-	slot0:addEventCb(RougeController.instance, RougeEvent.SwitchCollectionInfoType, slot0._onSwitchCollectionInfoType, slot0)
+	arg_6_0:addEventCb(RougeController.instance, RougeEvent.SwitchCollectionInfoType, arg_6_0._onSwitchCollectionInfoType, arg_6_0)
 end
 
-function slot0.initData(slot0)
-	slot0.collectionId = slot0.viewParam.collectionId
-	slot0.price = slot0.viewParam.price
-	slot0.collectionCo = RougeCollectionConfig.instance:getCollectionCfg(slot0.collectionId)
-	slot0.pos = slot0.viewParam.pos
-	slot0.eventMo = slot0.viewParam.eventMo
-	slot0.eventId = slot0.eventMo.eventId
-	slot0.sellOut = slot0.eventMo:checkIsSellOut(slot0.pos)
+function var_0_0.initData(arg_7_0)
+	arg_7_0.collectionId = arg_7_0.viewParam.collectionId
+	arg_7_0.price = arg_7_0.viewParam.price
+	arg_7_0.collectionCo = RougeCollectionConfig.instance:getCollectionCfg(arg_7_0.collectionId)
+	arg_7_0.pos = arg_7_0.viewParam.pos
+	arg_7_0.eventMo = arg_7_0.viewParam.eventMo
+	arg_7_0.eventId = arg_7_0.eventMo.eventId
+	arg_7_0.sellOut = arg_7_0.eventMo:checkIsSellOut(arg_7_0.pos)
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0:initData()
-	slot0:refreshUI()
-	slot0.animator:Play("open", 0, 0)
+function var_0_0.onUpdateParam(arg_8_0)
+	arg_8_0:initData()
+	arg_8_0:refreshUI()
+	arg_8_0.animator:Play("open", 0, 0)
 end
 
-function slot0.onOpen(slot0)
-	slot0.animator:Play("open", 0, 0)
-	slot0:initData()
-	slot0:refreshUI()
+function var_0_0.onOpen(arg_9_0)
+	arg_9_0.animator:Play("open", 0, 0)
+	arg_9_0:initData()
+	arg_9_0:refreshUI()
 end
 
-function slot0.refreshUI(slot0)
-	slot0:refreshCollection()
-	slot0:refreshCost()
+function var_0_0.refreshUI(arg_10_0)
+	arg_10_0:refreshCollection()
+	arg_10_0:refreshCost()
 end
 
-function slot0.refreshCollection(slot0)
-	slot1 = slot0.collectionId
+function var_0_0.refreshCollection(arg_11_0)
+	local var_11_0 = arg_11_0.collectionId
 
-	slot0._simageicon:LoadImage(RougeCollectionHelper.getCollectionIconUrl(slot1))
+	arg_11_0._simageicon:LoadImage(RougeCollectionHelper.getCollectionIconUrl(var_11_0))
 
-	slot0._txtcollectionname.text = RougeCollectionConfig.instance:getCollectionName(slot1)
+	arg_11_0._txtcollectionname.text = RougeCollectionConfig.instance:getCollectionName(var_11_0)
 
-	RougeCollectionHelper.loadShapeGrid(slot1, slot0._goGrid, slot0._goGridItem, slot0.gridList, false)
-	slot0:refreshDesc()
-	slot0:refreshHole()
-	slot0:refreshTag()
+	RougeCollectionHelper.loadShapeGrid(var_11_0, arg_11_0._goGrid, arg_11_0._goGridItem, arg_11_0.gridList, false)
+	arg_11_0:refreshDesc()
+	arg_11_0:refreshHole()
+	arg_11_0:refreshTag()
 end
 
-function slot0.refreshDesc(slot0)
-	RougeCollectionDescHelper.setCollectionDescInfos2(slot0.collectionId, nil, slot0._godescContent, slot0._itemInstTab)
+function var_0_0.refreshDesc(arg_12_0)
+	RougeCollectionDescHelper.setCollectionDescInfos2(arg_12_0.collectionId, nil, arg_12_0._godescContent, arg_12_0._itemInstTab)
 end
 
-function slot0.refreshHole(slot0)
-	gohelper.setActive(slot0._goholetool, slot0.collectionCo.holeNum > 0)
+function var_0_0.refreshHole(arg_13_0)
+	local var_13_0 = arg_13_0.collectionCo.holeNum
 
-	if slot1 > 0 then
-		recthelper.setHeight(slot0.rectDesc, RougeMapEnum.StoreGoodsDescHeight.WithHole)
-		RougeMapHelper.loadGoItem(slot0._goholeitem, slot1, slot0.goHoleList)
+	gohelper.setActive(arg_13_0._goholetool, var_13_0 > 0)
+
+	if var_13_0 > 0 then
+		recthelper.setHeight(arg_13_0.rectDesc, RougeMapEnum.StoreGoodsDescHeight.WithHole)
+		RougeMapHelper.loadGoItem(arg_13_0._goholeitem, var_13_0, arg_13_0.goHoleList)
 	else
-		recthelper.setHeight(slot0.rectDesc, RougeMapEnum.StoreGoodsDescHeight.NoHole)
+		recthelper.setHeight(arg_13_0.rectDesc, RougeMapEnum.StoreGoodsDescHeight.NoHole)
 	end
 end
 
-function slot0.refreshTag(slot0)
-	RougeCollectionHelper.loadTags(slot0.collectionId, slot0._gotagitem, slot0.tagGoList)
-	RougeCollectionHelper.loadCollectionAndEnchantTagNames(slot0.collectionId, nil, slot0._gotips, slot0._gotagnameitem, RougeCollectionHelper._loadCollectionTagNameCallBack)
+function var_0_0.refreshTag(arg_14_0)
+	RougeCollectionHelper.loadTags(arg_14_0.collectionId, arg_14_0._gotagitem, arg_14_0.tagGoList)
+	RougeCollectionHelper.loadCollectionAndEnchantTagNames(arg_14_0.collectionId, nil, arg_14_0._gotips, arg_14_0._gotagnameitem, RougeCollectionHelper._loadCollectionTagNameCallBack)
 end
 
-function slot0.refreshCost(slot0)
-	slot2 = nil
-	slot0._txtcost.text = (RougeModel.instance:getRougeInfo().coin >= slot0.price or string.format("<color=#EC6363>%s</color>", slot0.price)) and slot0.price
+function var_0_0.refreshCost(arg_15_0)
+	local var_15_0 = RougeModel.instance:getRougeInfo().coin
+	local var_15_1
+
+	if var_15_0 < arg_15_0.price then
+		var_15_1 = string.format("<color=#EC6363>%s</color>", arg_15_0.price)
+	else
+		var_15_1 = arg_15_0.price
+	end
+
+	arg_15_0._txtcost.text = var_15_1
 end
 
-function slot0._onSwitchCollectionInfoType(slot0)
-	slot0:refreshDesc()
+function var_0_0._onSwitchCollectionInfoType(arg_16_0)
+	arg_16_0:refreshDesc()
 end
 
-function slot0.onClose(slot0)
-	if slot0.callbackId then
-		RougeRpc.instance:removeCallbackById(slot0.callbackId)
+function var_0_0.onClose(arg_17_0)
+	if arg_17_0.callbackId then
+		RougeRpc.instance:removeCallbackById(arg_17_0.callbackId)
 	end
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simageicon:UnLoadImage()
-	slot0.bgClick:RemoveClickListener()
+function var_0_0.onDestroyView(arg_18_0)
+	arg_18_0._simageicon:UnLoadImage()
+	arg_18_0.bgClick:RemoveClickListener()
 end
 
-return slot0
+return var_0_0

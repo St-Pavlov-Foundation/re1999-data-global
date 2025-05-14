@@ -1,34 +1,41 @@
-module("modules.logic.guide.controller.GuideJumpHandler", package.seeall)
+﻿module("modules.logic.guide.controller.GuideJumpHandler", package.seeall)
 
-slot0 = class("GuideJumpHandler")
-slot1 = {
+local var_0_0 = class("GuideJumpHandler")
+local var_0_1 = {
 	"113#OnGuideFightEndContinue",
 	"116#"
 }
 
-function slot0.ctor(slot0)
-	GuideController.instance:registerCallback(GuideEvent.OneKeyFinishGuides, slot0._onOneKeyFinishGuides, slot0)
+function var_0_0.ctor(arg_1_0)
+	GuideController.instance:registerCallback(GuideEvent.OneKeyFinishGuides, arg_1_0._onOneKeyFinishGuides, arg_1_0)
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_2_0)
+	return
 end
 
-function slot0._onOneKeyFinishGuides(slot0, slot1)
-	slot0._guideSteps = {}
+function var_0_0._onOneKeyFinishGuides(arg_3_0, arg_3_1)
+	arg_3_0._guideSteps = {}
 
-	for slot5, slot6 in ipairs(slot1) do
-		slot9 = GuideConfig.instance:getNextStepId(slot6, GuideModel.instance:getById(slot6).currStepId)
+	for iter_3_0, iter_3_1 in ipairs(arg_3_1) do
+		local var_3_0 = GuideModel.instance:getById(iter_3_1).currStepId
+		local var_3_1 = GuideConfig.instance:getNextStepId(iter_3_1, var_3_0)
 
-		while slot9 > 0 do
-			for slot15 = 1, #string.split(GuideConfig.instance:getStepCO(slot6, slot9).action, "|") do
-				slot16 = slot11[slot15]
+		while var_3_1 > 0 do
+			local var_3_2 = GuideConfig.instance:getStepCO(iter_3_1, var_3_1)
+			local var_3_3 = string.split(var_3_2.action, "|")
 
-				for slot20, slot21 in ipairs(uv0) do
-					if string.find(slot16, slot21) == 1 then
-						if GuideActionBuilder.buildAction(slot6, slot8, slot16) then
-							slot22:onStart()
-							slot22:clearWork()
-							logError("跳过指引，执行必要的收尾动作 guide_" .. slot6 .. "_" .. slot9 .. " " .. slot16)
+			for iter_3_2 = 1, #var_3_3 do
+				local var_3_4 = var_3_3[iter_3_2]
+
+				for iter_3_3, iter_3_4 in ipairs(var_0_1) do
+					if string.find(var_3_4, iter_3_4) == 1 then
+						local var_3_5 = GuideActionBuilder.buildAction(iter_3_1, var_3_0, var_3_4)
+
+						if var_3_5 then
+							var_3_5:onStart()
+							var_3_5:clearWork()
+							logError("跳过指引，执行必要的收尾动作 guide_" .. iter_3_1 .. "_" .. var_3_1 .. " " .. var_3_4)
 						end
 
 						break
@@ -36,9 +43,9 @@ function slot0._onOneKeyFinishGuides(slot0, slot1)
 				end
 			end
 
-			slot9 = GuideConfig.instance:getNextStepId(slot6, slot9)
+			var_3_1 = GuideConfig.instance:getNextStepId(iter_3_1, var_3_1)
 		end
 	end
 end
 
-return slot0
+return var_0_0

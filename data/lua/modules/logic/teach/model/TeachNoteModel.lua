@@ -1,87 +1,98 @@
-module("modules.logic.teach.model.TeachNoteModel", package.seeall)
+﻿module("modules.logic.teach.model.TeachNoteModel", package.seeall)
 
-slot0 = class("TeachNoteModel", BaseModel)
+local var_0_0 = class("TeachNoteModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0._topicId = 0
-	slot0._topicIndex = 0
-	slot0._teachNoteInfos = {}
-	slot0._isJumpEnter = false
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._topicId = 0
+	arg_1_0._topicIndex = 0
+	arg_1_0._teachNoteInfos = {}
+	arg_1_0._isJumpEnter = false
 end
 
-function slot0.reInit(slot0)
-	slot0._topicId = 0
-	slot0._topicIndex = 0
-	slot0._teachNoteInfos = {}
-	slot0._isJumpEnter = false
+function var_0_0.reInit(arg_2_0)
+	arg_2_0._topicId = 0
+	arg_2_0._topicIndex = 0
+	arg_2_0._teachNoteInfos = {}
+	arg_2_0._isJumpEnter = false
 end
 
-function slot0.setTeachNoticeTopicId(slot0, slot1, slot2)
-	slot0._topicId = slot1
-	slot0._topicIndex = slot2
+function var_0_0.setTeachNoticeTopicId(arg_3_0, arg_3_1, arg_3_2)
+	arg_3_0._topicId = arg_3_1
+	arg_3_0._topicIndex = arg_3_2
 end
 
-function slot0.getTeachNoticeTopicId(slot0)
-	return slot0._topicId, slot0._topicIndex
+function var_0_0.getTeachNoticeTopicId(arg_4_0)
+	return arg_4_0._topicId, arg_4_0._topicIndex
 end
 
-function slot0.getTopicLevelCos(slot0, slot1)
-	slot2 = {}
+function var_0_0.getTopicLevelCos(arg_5_0, arg_5_1)
+	local var_5_0 = {}
+	local var_5_1 = TeachNoteConfig.instance:getInstructionLevelCos()
 
-	for slot7, slot8 in pairs(TeachNoteConfig.instance:getInstructionLevelCos()) do
-		if slot8.topicId == slot1 then
-			table.insert(slot2, slot8)
+	for iter_5_0, iter_5_1 in pairs(var_5_1) do
+		if iter_5_1.topicId == arg_5_1 then
+			table.insert(var_5_0, iter_5_1)
 		end
 	end
 
-	table.sort(slot2, function (slot0, slot1)
-		if uv0.instance:isLevelUnlock(slot0.id) and not uv0.instance:isLevelUnlock(slot1.id) then
+	table.sort(var_5_0, function(arg_6_0, arg_6_1)
+		local var_6_0 = var_0_0.instance:isLevelUnlock(arg_6_0.id)
+		local var_6_1 = var_0_0.instance:isLevelUnlock(arg_6_1.id)
+
+		if var_6_0 and not var_6_1 then
 			return true
-		elseif not slot2 and slot3 then
+		elseif not var_6_0 and var_6_1 then
 			return false
 		end
 
-		return slot0.id < slot1.id
+		return arg_6_0.id < arg_6_1.id
 	end)
 
-	return slot2
+	return var_5_0
 end
 
-function slot0.setTeachNoteInfo(slot0, slot1)
-	slot0._teachNoteInfos = TeachNoteInfoMo.New()
+function var_0_0.setTeachNoteInfo(arg_7_0, arg_7_1)
+	arg_7_0._teachNoteInfos = TeachNoteInfoMo.New()
 
-	slot0._teachNoteInfos:init(slot1)
+	arg_7_0._teachNoteInfos:init(arg_7_1)
 end
 
-function slot0.isFinalRewardGet(slot0)
-	return slot0._teachNoteInfos.getFinalReward
+function var_0_0.isFinalRewardGet(arg_8_0)
+	return arg_8_0._teachNoteInfos.getFinalReward
 end
 
-function slot0.getNewOpenIndex(slot0)
-	slot1 = 0
+function var_0_0.getNewOpenIndex(arg_9_0)
+	local var_9_0 = 0
+	local var_9_1 = arg_9_0:getNewOpenTopics()
 
-	if #slot0:getNewOpenTopics() > 0 then
-		slot1 = slot2[#slot2]
+	if #var_9_1 > 0 then
+		var_9_0 = var_9_1[#var_9_1]
 	end
 
-	slot3 = 0
+	local var_9_2 = 0
+	local var_9_3 = arg_9_0:getNewOpenTopicLevels(var_9_0)
 
-	if #slot0:getNewOpenTopicLevels(slot1) > 0 then
-		for slot10, slot11 in ipairs(slot0:getTopicLevelCos(slot1)) do
-			if slot11.id == slot4[#slot4] then
-				slot3 = math.floor(0.5 * (slot10 - 1))
+	if #var_9_3 > 0 then
+		local var_9_4 = var_9_3[#var_9_3]
+		local var_9_5 = arg_9_0:getTopicLevelCos(var_9_0)
+
+		for iter_9_0, iter_9_1 in ipairs(var_9_5) do
+			if iter_9_1.id == var_9_4 then
+				var_9_2 = math.floor(0.5 * (iter_9_0 - 1))
 			end
 		end
 	end
 
-	return slot1, slot3
+	return var_9_0, var_9_2
 end
 
-function slot0.isEpisodeOpen(slot0, slot1)
-	for slot6, slot7 in pairs(TeachNoteConfig.instance:getInstructionLevelCos()) do
-		if slot7.episodeId == slot1 then
-			for slot11, slot12 in pairs(slot0._teachNoteInfos.openIds) do
-				if slot7.id == slot12 then
+function var_0_0.isEpisodeOpen(arg_10_0, arg_10_1)
+	local var_10_0 = TeachNoteConfig.instance:getInstructionLevelCos()
+
+	for iter_10_0, iter_10_1 in pairs(var_10_0) do
+		if iter_10_1.episodeId == arg_10_1 then
+			for iter_10_2, iter_10_3 in pairs(arg_10_0._teachNoteInfos.openIds) do
+				if iter_10_1.id == iter_10_3 then
 					return true
 				end
 			end
@@ -91,78 +102,82 @@ function slot0.isEpisodeOpen(slot0, slot1)
 	return false
 end
 
-function slot0.isTopicNew(slot0, slot1)
-	if not slot0:isTopicUnlock(slot1) then
+function var_0_0.isTopicNew(arg_11_0, arg_11_1)
+	if not arg_11_0:isTopicUnlock(arg_11_1) then
 		return false
 	end
 
-	slot2 = {}
+	local var_11_0 = {}
 
-	for slot6, slot7 in pairs(slot0._teachNoteInfos.openIds) do
-		if TeachNoteConfig.instance:getInstructionLevelCO(slot7).topicId == slot1 then
-			table.insert(slot2, slot7)
+	for iter_11_0, iter_11_1 in pairs(arg_11_0._teachNoteInfos.openIds) do
+		if TeachNoteConfig.instance:getInstructionLevelCO(iter_11_1).topicId == arg_11_1 then
+			table.insert(var_11_0, iter_11_1)
 		end
 	end
 
-	return #slot2 < 1
+	return #var_11_0 < 1
 end
 
-function slot0.getNewOpenTopics(slot0)
-	slot1 = {}
+function var_0_0.getNewOpenTopics(arg_12_0)
+	local var_12_0 = {}
+	local var_12_1 = TeachNoteConfig.instance:getInstructionTopicCos()
 
-	for slot6, slot7 in pairs(TeachNoteConfig.instance:getInstructionTopicCos()) do
-		if slot0:isTopicNew(slot7.id) then
-			table.insert(slot1, slot7.id)
+	for iter_12_0, iter_12_1 in pairs(var_12_1) do
+		if arg_12_0:isTopicNew(iter_12_1.id) then
+			table.insert(var_12_0, iter_12_1.id)
 		end
 	end
 
-	table.sort(slot1)
+	table.sort(var_12_0)
 
-	return slot1
+	return var_12_0
 end
 
-function slot0.getNewOpenTopicLevels(slot0, slot1)
-	slot3 = {}
+function var_0_0.getNewOpenTopicLevels(arg_13_0, arg_13_1)
+	local var_13_0 = arg_13_0:getNewOpenLevels()
+	local var_13_1 = {}
 
-	for slot7, slot8 in pairs(slot0:getNewOpenLevels()) do
-		if TeachNoteConfig.instance:getInstructionLevelCO(slot8).topicId == slot1 then
-			table.insert(slot3, slot8)
+	for iter_13_0, iter_13_1 in pairs(var_13_0) do
+		if TeachNoteConfig.instance:getInstructionLevelCO(iter_13_1).topicId == arg_13_1 then
+			table.insert(var_13_1, iter_13_1)
 		end
 	end
 
-	table.sort(slot3)
+	table.sort(var_13_1)
 
-	return slot3
+	return var_13_1
 end
 
-function slot0.getNewOpenLevels(slot0)
-	slot1 = {}
-	slot2 = TeachNoteConfig.instance:getInstructionLevelCos()
+function var_0_0.getNewOpenLevels(arg_14_0)
+	local var_14_0 = {}
+	local var_14_1 = TeachNoteConfig.instance:getInstructionLevelCos()
 
-	if #slot0._teachNoteInfos.openIds == 0 then
-		return slot0._teachNoteInfos.unlockIds
+	if #arg_14_0._teachNoteInfos.openIds == 0 then
+		return arg_14_0._teachNoteInfos.unlockIds
 	else
-		for slot6, slot7 in pairs(slot0._teachNoteInfos.unlockIds) do
-			slot8 = false
+		for iter_14_0, iter_14_1 in pairs(arg_14_0._teachNoteInfos.unlockIds) do
+			local var_14_2 = false
 
-			for slot12, slot13 in pairs(slot0._teachNoteInfos.openIds) do
-				if slot7 == slot13 then
-					slot8 = true
+			for iter_14_2, iter_14_3 in pairs(arg_14_0._teachNoteInfos.openIds) do
+				if iter_14_1 == iter_14_3 then
+					var_14_2 = true
 				end
 			end
 
-			if not slot8 then
-				table.insert(slot1, slot7)
+			if not var_14_2 then
+				table.insert(var_14_0, iter_14_1)
 			end
 		end
 	end
 
-	return slot1
+	return var_14_0
 end
 
-function slot0.isLevelNewUnlock(slot0, slot1)
-	for slot6, slot7 in pairs(slot0:getNewOpenLevels()) do
-		if slot7 == slot1 then
+function var_0_0.isLevelNewUnlock(arg_15_0, arg_15_1)
+	local var_15_0 = arg_15_0:getNewOpenLevels()
+
+	for iter_15_0, iter_15_1 in pairs(var_15_0) do
+		if iter_15_1 == arg_15_1 then
 			return true
 		end
 	end
@@ -170,21 +185,22 @@ function slot0.isLevelNewUnlock(slot0, slot1)
 	return false
 end
 
-function slot0._getUnlockLevelsByTopicId(slot0, slot1)
-	slot2 = {}
+function var_0_0._getUnlockLevelsByTopicId(arg_16_0, arg_16_1)
+	local var_16_0 = {}
+	local var_16_1 = arg_16_0:getTopicLevelCos(arg_16_1)
 
-	for slot7, slot8 in pairs(slot0:getTopicLevelCos(slot1)) do
-		if slot0:isLevelUnlock(slot8.id) then
-			table.insert(slot2, slot8.id)
+	for iter_16_0, iter_16_1 in pairs(var_16_1) do
+		if arg_16_0:isLevelUnlock(iter_16_1.id) then
+			table.insert(var_16_0, iter_16_1.id)
 		end
 	end
 
-	return slot2
+	return var_16_0
 end
 
-function slot0.isTopicRewardGet(slot0, slot1)
-	for slot5, slot6 in pairs(slot0._teachNoteInfos.getRewardIds) do
-		if slot6 == slot1 then
+function var_0_0.isTopicRewardGet(arg_17_0, arg_17_1)
+	for iter_17_0, iter_17_1 in pairs(arg_17_0._teachNoteInfos.getRewardIds) do
+		if iter_17_1 == arg_17_1 then
 			return true
 		end
 	end
@@ -192,9 +208,11 @@ function slot0.isTopicRewardGet(slot0, slot1)
 	return false
 end
 
-function slot0.isTopicUnlock(slot0, slot1)
-	for slot6, slot7 in pairs(TeachNoteConfig.instance:getInstructionLevelCos()) do
-		if slot7.topicId == slot1 and slot0:isLevelUnlock(slot7.id) then
+function var_0_0.isTopicUnlock(arg_18_0, arg_18_1)
+	local var_18_0 = TeachNoteConfig.instance:getInstructionLevelCos()
+
+	for iter_18_0, iter_18_1 in pairs(var_18_0) do
+		if iter_18_1.topicId == arg_18_1 and arg_18_0:isLevelUnlock(iter_18_1.id) then
 			return true
 		end
 	end
@@ -202,35 +220,39 @@ function slot0.isTopicUnlock(slot0, slot1)
 	return false
 end
 
-function slot0.isRewardCouldGet(slot0, slot1)
-	if not slot0:isTopicUnlock(slot1) then
+function var_0_0.isRewardCouldGet(arg_19_0, arg_19_1)
+	if not arg_19_0:isTopicUnlock(arg_19_1) then
 		return false
 	end
 
-	if uv0.instance:getTeachNoteTopicFinishedLevelCount(slot1) == uv0.instance:getTeachNoteTopicLevelCount(slot1) and not uv0.instance:isTopicRewardGet(slot1) then
+	local var_19_0 = var_0_0.instance:getTeachNoteTopicLevelCount(arg_19_1)
+
+	if var_0_0.instance:getTeachNoteTopicFinishedLevelCount(arg_19_1) == var_19_0 and not var_0_0.instance:isTopicRewardGet(arg_19_1) then
 		return true
 	else
 		return false
 	end
 end
 
-function slot0.hasRewardCouldGet(slot0)
-	for slot5, slot6 in pairs(TeachNoteConfig.instance:getInstructionTopicCos()) do
-		if slot0:isTopicUnlock(slot6.id) and slot0:isRewardCouldGet(slot6.id) then
+function var_0_0.hasRewardCouldGet(arg_20_0)
+	local var_20_0 = TeachNoteConfig.instance:getInstructionTopicCos()
+
+	for iter_20_0, iter_20_1 in pairs(var_20_0) do
+		if arg_20_0:isTopicUnlock(iter_20_1.id) and arg_20_0:isRewardCouldGet(iter_20_1.id) then
 			return true
 		end
 	end
 
-	if slot0:isTeachNoteFinalRewardCouldGet() then
+	if arg_20_0:isTeachNoteFinalRewardCouldGet() then
 		return true
 	end
 
 	return false
 end
 
-function slot0.isLevelUnlock(slot0, slot1)
-	for slot5, slot6 in pairs(slot0._teachNoteInfos.unlockIds) do
-		if slot6 == slot1 then
+function var_0_0.isLevelUnlock(arg_21_0, arg_21_1)
+	for iter_21_0, iter_21_1 in pairs(arg_21_0._teachNoteInfos.unlockIds) do
+		if iter_21_1 == arg_21_1 then
 			return true
 		end
 	end
@@ -238,41 +260,51 @@ function slot0.isLevelUnlock(slot0, slot1)
 	return false
 end
 
-function slot0.isTeachNoteUnlock(slot0)
-	return slot0._teachNoteInfos and slot0._teachNoteInfos.unlockIds and #slot0._teachNoteInfos.unlockIds > 0 and not slot0:isFinalRewardGet()
+function var_0_0.isTeachNoteUnlock(arg_22_0)
+	return arg_22_0._teachNoteInfos and arg_22_0._teachNoteInfos.unlockIds and #arg_22_0._teachNoteInfos.unlockIds > 0 and not arg_22_0:isFinalRewardGet()
 end
 
-function slot0.isTeachNoteLevelPass(slot0, slot1)
-	return DungeonModel.instance:hasPassLevel(TeachNoteConfig.instance:getInstructionLevelCO(slot1).episodeId)
+function var_0_0.isTeachNoteLevelPass(arg_23_0, arg_23_1)
+	local var_23_0 = TeachNoteConfig.instance:getInstructionLevelCO(arg_23_1).episodeId
+
+	return (DungeonModel.instance:hasPassLevel(var_23_0))
 end
 
-function slot0.getTeachNoteTopicUnlockLevelCount(slot0, slot1)
-	for slot7, slot8 in pairs(slot0:getTopicLevelCos(slot1)) do
-		if slot0:isLevelUnlock(slot8.id) then
-			slot2 = 0 + 1
+function var_0_0.getTeachNoteTopicUnlockLevelCount(arg_24_0, arg_24_1)
+	local var_24_0 = 0
+	local var_24_1 = arg_24_0:getTopicLevelCos(arg_24_1)
+
+	for iter_24_0, iter_24_1 in pairs(var_24_1) do
+		if arg_24_0:isLevelUnlock(iter_24_1.id) then
+			var_24_0 = var_24_0 + 1
 		end
 	end
 
-	return slot2
+	return var_24_0
 end
 
-function slot0.getTeachNoteTopicFinishedLevelCount(slot0, slot1)
-	for slot7, slot8 in pairs(slot0:getTopicLevelCos(slot1)) do
-		if slot0:isTeachNoteLevelPass(slot8.id) then
-			slot2 = 0 + 1
+function var_0_0.getTeachNoteTopicFinishedLevelCount(arg_25_0, arg_25_1)
+	local var_25_0 = 0
+	local var_25_1 = arg_25_0:getTopicLevelCos(arg_25_1)
+
+	for iter_25_0, iter_25_1 in pairs(var_25_1) do
+		if arg_25_0:isTeachNoteLevelPass(iter_25_1.id) then
+			var_25_0 = var_25_0 + 1
 		end
 	end
 
-	return slot2
+	return var_25_0
 end
 
-function slot0.getTeachNoteTopicLevelCount(slot0, slot1)
-	return #slot0:getTopicLevelCos(slot1)
+function var_0_0.getTeachNoteTopicLevelCount(arg_26_0, arg_26_1)
+	return #arg_26_0:getTopicLevelCos(arg_26_1)
 end
 
-function slot0.isTeachNoteChapter(slot0, slot1)
-	for slot6, slot7 in pairs(TeachNoteConfig.instance:getInstructionTopicCos()) do
-		if slot7.chapterId == slot1 then
+function var_0_0.isTeachNoteChapter(arg_27_0, arg_27_1)
+	local var_27_0 = TeachNoteConfig.instance:getInstructionTopicCos()
+
+	for iter_27_0, iter_27_1 in pairs(var_27_0) do
+		if iter_27_1.chapterId == arg_27_1 then
 			return true
 		end
 	end
@@ -280,9 +312,11 @@ function slot0.isTeachNoteChapter(slot0, slot1)
 	return false
 end
 
-function slot0.isTeachNoteEpisode(slot0, slot1)
-	for slot6, slot7 in pairs(TeachNoteConfig.instance:getInstructionLevelCos()) do
-		if slot7.episodeId == slot1 then
+function var_0_0.isTeachNoteEpisode(arg_28_0, arg_28_1)
+	local var_28_0 = TeachNoteConfig.instance:getInstructionLevelCos()
+
+	for iter_28_0, iter_28_1 in pairs(var_28_0) do
+		if iter_28_1.episodeId == arg_28_1 then
 			return true
 		end
 	end
@@ -290,73 +324,79 @@ function slot0.isTeachNoteEpisode(slot0, slot1)
 	return false
 end
 
-function slot0.getTeachNoteInstructionLevelCo(slot0, slot1)
-	for slot6, slot7 in pairs(TeachNoteConfig.instance:getInstructionLevelCos()) do
-		if slot7.episodeId == slot1 then
-			return slot7
+function var_0_0.getTeachNoteInstructionLevelCo(arg_29_0, arg_29_1)
+	local var_29_0 = TeachNoteConfig.instance:getInstructionLevelCos()
+
+	for iter_29_0, iter_29_1 in pairs(var_29_0) do
+		if iter_29_1.episodeId == arg_29_1 then
+			return iter_29_1
 		end
 	end
 
-	return slot2[101]
+	return var_29_0[101]
 end
 
-function slot0.getTeachNoteEpisodeTopicId(slot0, slot1)
-	for slot6, slot7 in pairs(TeachNoteConfig.instance:getInstructionLevelCos()) do
-		if slot7.episodeId == slot1 then
-			return slot7.topicId
+function var_0_0.getTeachNoteEpisodeTopicId(arg_30_0, arg_30_1)
+	local var_30_0 = TeachNoteConfig.instance:getInstructionLevelCos()
+
+	for iter_30_0, iter_30_1 in pairs(var_30_0) do
+		if iter_30_1.episodeId == arg_30_1 then
+			return iter_30_1.topicId
 		end
 	end
 
 	return 1
 end
 
-function slot0.isTeachNoteFinalRewardCouldGet(slot0)
-	for slot5, slot6 in pairs(TeachNoteConfig.instance:getInstructionTopicCos()) do
-		if not slot0:isTopicRewardGet(slot6.id) then
+function var_0_0.isTeachNoteFinalRewardCouldGet(arg_31_0)
+	local var_31_0 = TeachNoteConfig.instance:getInstructionTopicCos()
+
+	for iter_31_0, iter_31_1 in pairs(var_31_0) do
+		if not arg_31_0:isTopicRewardGet(iter_31_1.id) then
 			return false
 		end
 	end
 
-	return not slot0:isFinalRewardGet()
+	return not arg_31_0:isFinalRewardGet()
 end
 
-function slot0.isTeachNoteEnterFight(slot0)
-	return slot0._isTeachEnter
+function var_0_0.isTeachNoteEnterFight(arg_32_0)
+	return arg_32_0._isTeachEnter
 end
 
-function slot0.setTeachNoteEnterFight(slot0, slot1, slot2)
-	slot0._isTeachEnter = slot1
-	slot0._isDetailEnter = slot2
+function var_0_0.setTeachNoteEnterFight(arg_33_0, arg_33_1, arg_33_2)
+	arg_33_0._isTeachEnter = arg_33_1
+	arg_33_0._isDetailEnter = arg_33_2
 end
 
-function slot0.isFinishLevelEnterFight(slot0)
-	return slot0._isFinishedEnter
+function var_0_0.isFinishLevelEnterFight(arg_34_0)
+	return arg_34_0._isFinishedEnter
 end
 
-function slot0.isDetailEnter(slot0)
-	return slot0._isDetailEnter
+function var_0_0.isDetailEnter(arg_35_0)
+	return arg_35_0._isDetailEnter
 end
 
-function slot0.setLevelEnterFightState(slot0, slot1)
-	slot0._isFinishedEnter = slot1
+function var_0_0.setLevelEnterFightState(arg_36_0, arg_36_1)
+	arg_36_0._isFinishedEnter = arg_36_1
 end
 
-function slot0.isJumpEnter(slot0)
-	return slot0._isJumpEnter
+function var_0_0.isJumpEnter(arg_37_0)
+	return arg_37_0._isJumpEnter
 end
 
-function slot0.setJumpEnter(slot0, slot1)
-	slot0._isJumpEnter = slot1
+function var_0_0.setJumpEnter(arg_38_0, arg_38_1)
+	arg_38_0._isJumpEnter = arg_38_1
 end
 
-function slot0.setJumpEpisodeId(slot0, slot1)
-	slot0._jumpEpisodeId = slot1
+function var_0_0.setJumpEpisodeId(arg_39_0, arg_39_1)
+	arg_39_0._jumpEpisodeId = arg_39_1
 end
 
-function slot0.getJumpEpisodeId(slot0)
-	return slot0._jumpEpisodeId
+function var_0_0.getJumpEpisodeId(arg_40_0)
+	return arg_40_0._jumpEpisodeId
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

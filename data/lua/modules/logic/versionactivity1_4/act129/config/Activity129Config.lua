@@ -1,14 +1,14 @@
-module("modules.logic.versionactivity1_4.act129.config.Activity129Config", package.seeall)
+﻿module("modules.logic.versionactivity1_4.act129.config.Activity129Config", package.seeall)
 
-slot0 = class("Activity129Config", BaseConfig)
+local var_0_0 = class("Activity129Config", BaseConfig)
 
-function slot0.ctor(slot0)
-	slot0.poolDict = {}
-	slot0.constDict = {}
-	slot0.goodsDict = {}
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.poolDict = {}
+	arg_1_0.constDict = {}
+	arg_1_0.goodsDict = {}
 end
 
-function slot0.reqConfigNames(slot0)
+function var_0_0.reqConfigNames(arg_2_0)
 	return {
 		"activity129_pool",
 		"activity129_const",
@@ -16,94 +16,107 @@ function slot0.reqConfigNames(slot0)
 	}
 end
 
-function slot0.onConfigLoaded(slot0, slot1, slot2)
-	if slot0[string.format("on%sConfigLoaded", slot1)] then
-		slot4(slot0, slot1, slot2)
+function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
+	local var_3_0 = arg_3_0[string.format("on%sConfigLoaded", arg_3_1)]
+
+	if var_3_0 then
+		var_3_0(arg_3_0, arg_3_1, arg_3_2)
 	end
 end
 
-function slot0.onactivity129_poolConfigLoaded(slot0, slot1, slot2)
-	slot0.poolDict = slot2.configDict
+function var_0_0.onactivity129_poolConfigLoaded(arg_4_0, arg_4_1, arg_4_2)
+	arg_4_0.poolDict = arg_4_2.configDict
 end
 
-function slot0.onactivity129_constConfigLoaded(slot0, slot1, slot2)
-	slot0.constDict = slot2.configDict
+function var_0_0.onactivity129_constConfigLoaded(arg_5_0, arg_5_1, arg_5_2)
+	arg_5_0.constDict = arg_5_2.configDict
 end
 
-function slot0.onactivity129_goodsConfigLoaded(slot0, slot1, slot2)
-	slot0.goodsDict = slot2.configDict
+function var_0_0.onactivity129_goodsConfigLoaded(arg_6_0, arg_6_1, arg_6_2)
+	arg_6_0.goodsDict = arg_6_2.configDict
 end
 
-function slot0.getConstValue1(slot0, slot1, slot2)
-	if not (slot0.constDict[slot1] and slot3[slot2] and slot3[slot2].value1) then
-		logError(string.format("can not find constvalue! activityId:%s constId:%s", slot1, slot2))
+function var_0_0.getConstValue1(arg_7_0, arg_7_1, arg_7_2)
+	local var_7_0 = arg_7_0.constDict[arg_7_1]
+	local var_7_1 = var_7_0 and var_7_0[arg_7_2] and var_7_0[arg_7_2].value1
+
+	if not var_7_1 then
+		logError(string.format("can not find constvalue! activityId:%s constId:%s", arg_7_1, arg_7_2))
 	end
 
-	return slot4
+	return var_7_1
 end
 
-function slot0.getConstValue2(slot0, slot1, slot2)
-	if not (slot0.constDict[slot1] and slot3[slot2] and slot3[slot2].value2) then
-		logError(string.format("can not find constvalue! activityId:%s constId:%s", slot1, slot2))
+function var_0_0.getConstValue2(arg_8_0, arg_8_1, arg_8_2)
+	local var_8_0 = arg_8_0.constDict[arg_8_1]
+	local var_8_1 = var_8_0 and var_8_0[arg_8_2] and var_8_0[arg_8_2].value2
+
+	if not var_8_1 then
+		logError(string.format("can not find constvalue! activityId:%s constId:%s", arg_8_1, arg_8_2))
 	end
 
-	return slot4
+	return var_8_1
 end
 
-function slot0.getPoolConfig(slot0, slot1, slot2)
-	if not (slot0.poolDict[slot1] and slot3[slot2]) then
-		logError(string.format("can not find pool config! activityId:%s poolId:%s", slot1, slot2))
+function var_0_0.getPoolConfig(arg_9_0, arg_9_1, arg_9_2)
+	local var_9_0 = arg_9_0.poolDict[arg_9_1]
+	local var_9_1 = var_9_0 and var_9_0[arg_9_2]
+
+	if not var_9_1 then
+		logError(string.format("can not find pool config! activityId:%s poolId:%s", arg_9_1, arg_9_2))
 	end
 
-	return slot4
+	return var_9_1
 end
 
-function slot0.getPoolDict(slot0, slot1)
-	return slot0.poolDict[slot1]
+function var_0_0.getPoolDict(arg_10_0, arg_10_1)
+	return arg_10_0.poolDict[arg_10_1]
 end
 
-function slot0.getGoodsDict(slot0, slot1)
-	return slot0.goodsDict[slot1]
+function var_0_0.getGoodsDict(arg_11_0, arg_11_1)
+	return arg_11_0.goodsDict[arg_11_1]
 end
 
-function slot0.getRewardConfig(slot0, slot1, slot2, slot3, slot4)
-	if not slot0.rewardDict then
-		slot0.rewardDict = {}
+function var_0_0.getRewardConfig(arg_12_0, arg_12_1, arg_12_2, arg_12_3, arg_12_4)
+	if not arg_12_0.rewardDict then
+		arg_12_0.rewardDict = {}
 
-		for slot8, slot9 in pairs(slot0.goodsDict) do
-			slot0.rewardDict[slot8] = {}
+		for iter_12_0, iter_12_1 in pairs(arg_12_0.goodsDict) do
+			arg_12_0.rewardDict[iter_12_0] = {}
 
-			for slot13, slot14 in pairs(slot9) do
-				slot0.rewardDict[slot8][slot13] = {}
+			for iter_12_2, iter_12_3 in pairs(iter_12_1) do
+				arg_12_0.rewardDict[iter_12_0][iter_12_2] = {}
 
-				if GameUtil.splitString2(slot14.goodsId, true) then
-					for slot19, slot20 in ipairs(slot15) do
-						if not slot0.rewardDict[slot8][slot13][slot20[1]] then
-							slot0.rewardDict[slot8][slot13][slot20[1]] = {}
+				local var_12_0 = GameUtil.splitString2(iter_12_3.goodsId, true)
+
+				if var_12_0 then
+					for iter_12_4, iter_12_5 in ipairs(var_12_0) do
+						if not arg_12_0.rewardDict[iter_12_0][iter_12_2][iter_12_5[1]] then
+							arg_12_0.rewardDict[iter_12_0][iter_12_2][iter_12_5[1]] = {}
 						end
 
-						slot0.rewardDict[slot8][slot13][slot20[1]][slot20[2]] = slot20
+						arg_12_0.rewardDict[iter_12_0][iter_12_2][iter_12_5[1]][iter_12_5[2]] = iter_12_5
 					end
 				end
 			end
 		end
 	end
 
-	if not slot0.rewardDict[slot1] then
+	if not arg_12_0.rewardDict[arg_12_1] then
 		return
 	end
 
-	if not slot0.rewardDict[slot1][slot2] then
+	if not arg_12_0.rewardDict[arg_12_1][arg_12_2] then
 		return
 	end
 
-	if not slot0.rewardDict[slot1][slot2][slot3] then
+	if not arg_12_0.rewardDict[arg_12_1][arg_12_2][arg_12_3] then
 		return
 	end
 
-	return slot0.rewardDict[slot1][slot2][slot3][slot4]
+	return arg_12_0.rewardDict[arg_12_1][arg_12_2][arg_12_3][arg_12_4]
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

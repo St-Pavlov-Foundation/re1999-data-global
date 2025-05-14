@@ -1,18 +1,19 @@
-module("modules.logic.room.model.record.RoomHandBookBackModel", package.seeall)
+﻿module("modules.logic.room.model.record.RoomHandBookBackModel", package.seeall)
 
-slot0 = class("RoomHandBookBackModel", BaseModel)
+local var_0_0 = class("RoomHandBookBackModel", BaseModel)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.getSelectMo(slot0)
-	return slot0._selectMo
+function var_0_0.getSelectMo(arg_2_0)
+	return arg_2_0._selectMo
 end
 
-function slot0.setSelectMo(slot0, slot1)
-	slot0._selectMo = slot1
+function var_0_0.setSelectMo(arg_3_0, arg_3_1)
+	arg_3_0._selectMo = arg_3_1
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

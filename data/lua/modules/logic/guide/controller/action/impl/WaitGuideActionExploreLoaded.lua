@@ -1,33 +1,35 @@
-module("modules.logic.guide.controller.action.impl.WaitGuideActionExploreLoaded", package.seeall)
+﻿module("modules.logic.guide.controller.action.impl.WaitGuideActionExploreLoaded", package.seeall)
 
-slot0 = class("WaitGuideActionExploreLoaded", BaseGuideAction)
+local var_0_0 = class("WaitGuideActionExploreLoaded", BaseGuideAction)
 
-function slot0.onStart(slot0, slot1)
-	if ExploreModel.instance.isRoleInitDone and not slot0:_checkIsNoDone() then
+function var_0_0.onStart(arg_1_0, arg_1_1)
+	if ExploreModel.instance.isRoleInitDone and not arg_1_0:_checkIsNoDone() then
 		return
 	end
 
-	ExploreController.instance:registerCallback(ExploreEvent.HeroResInitDone, slot0.onHeroInitDone, slot0)
+	ExploreController.instance:registerCallback(ExploreEvent.HeroResInitDone, arg_1_0.onHeroInitDone, arg_1_0)
 end
 
-function slot0.onHeroInitDone(slot0)
-	if not slot0:_checkIsNoDone() then
+function var_0_0.onHeroInitDone(arg_2_0)
+	if not arg_2_0:_checkIsNoDone() then
 		return
 	end
 
-	ExploreController.instance:unregisterCallback(ExploreEvent.HeroResInitDone, slot0.onHeroInitDone, slot0)
+	ExploreController.instance:unregisterCallback(ExploreEvent.HeroResInitDone, arg_2_0.onHeroInitDone, arg_2_0)
 end
 
-function slot0._checkIsNoDone(slot0)
-	if not string.nilorempty(slot0.actionParam) and ExploreModel.instance:getMapId() ~= tonumber(slot0.actionParam) then
+function var_0_0._checkIsNoDone(arg_3_0)
+	local var_3_0 = ExploreModel.instance:getMapId()
+
+	if not string.nilorempty(arg_3_0.actionParam) and var_3_0 ~= tonumber(arg_3_0.actionParam) then
 		return true
 	end
 
-	slot0:onDone(true)
+	arg_3_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
-	ExploreController.instance:unregisterCallback(ExploreEvent.HeroResInitDone, slot0.onHeroInitDone, slot0)
+function var_0_0.clearWork(arg_4_0)
+	ExploreController.instance:unregisterCallback(ExploreEvent.HeroResInitDone, arg_4_0.onHeroInitDone, arg_4_0)
 end
 
-return slot0
+return var_0_0

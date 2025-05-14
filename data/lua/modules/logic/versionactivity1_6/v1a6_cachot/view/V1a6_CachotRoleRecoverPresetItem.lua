@@ -1,35 +1,35 @@
-module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotRoleRecoverPresetItem", package.seeall)
+﻿module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotRoleRecoverPresetItem", package.seeall)
 
-slot0 = class("V1a6_CachotRoleRecoverPresetItem", V1a6_CachotTeamItem)
+local var_0_0 = class("V1a6_CachotRoleRecoverPresetItem", V1a6_CachotTeamItem)
 
-function slot0.addEvents(slot0)
-	uv0.super.addEvents(slot0)
-	V1a6_CachotController.instance:registerCallback(V1a6_CachotEvent.OnClickTeamItem, slot0._onClickTeamItem, slot0)
+function var_0_0.addEvents(arg_1_0)
+	var_0_0.super.addEvents(arg_1_0)
+	V1a6_CachotController.instance:registerCallback(V1a6_CachotEvent.OnClickTeamItem, arg_1_0._onClickTeamItem, arg_1_0)
 end
 
-function slot0.removeEvents(slot0)
-	uv0.super.removeEvents(slot0)
-	V1a6_CachotController.instance:unregisterCallback(V1a6_CachotEvent.OnClickTeamItem, slot0._onClickTeamItem, slot0)
+function var_0_0.removeEvents(arg_2_0)
+	var_0_0.super.removeEvents(arg_2_0)
+	V1a6_CachotController.instance:unregisterCallback(V1a6_CachotEvent.OnClickTeamItem, arg_2_0._onClickTeamItem, arg_2_0)
 end
 
-function slot0._onClickTeamItem(slot0, slot1)
-	slot0:setSelected(slot0._mo == slot1)
+function var_0_0._onClickTeamItem(arg_3_0, arg_3_1)
+	arg_3_0:setSelected(arg_3_0._mo == arg_3_1)
 end
 
-function slot0._getEquipMO(slot0)
-	if slot0._mo then
-		slot0._equipMO = V1a6_CachotRoleRecoverPresetListModel.instance:getEquip(slot0._mo)
+function var_0_0._getEquipMO(arg_4_0)
+	if arg_4_0._mo then
+		arg_4_0._equipMO = V1a6_CachotRoleRecoverPresetListModel.instance:getEquip(arg_4_0._mo)
 	end
 end
 
-function slot0.setSelected(slot0, slot1)
-	gohelper.setActive(slot0._goselect2, slot1)
+function var_0_0.setSelected(arg_5_0, arg_5_1)
+	gohelper.setActive(arg_5_0._goselect2, arg_5_1)
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	uv0.super.onUpdateMO(slot0, slot1)
-	slot0:_updateHp()
-	slot0:setSelectEnable(true)
+function var_0_0.onUpdateMO(arg_6_0, arg_6_1)
+	var_0_0.super.onUpdateMO(arg_6_0, arg_6_1)
+	arg_6_0:_updateHp()
+	arg_6_0:setSelectEnable(true)
 end
 
-return slot0
+return var_0_0

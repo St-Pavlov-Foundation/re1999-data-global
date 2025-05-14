@@ -1,65 +1,74 @@
-module("modules.logic.rouge.view.RougeCollectionEnchantListItem", package.seeall)
+﻿module("modules.logic.rouge.view.RougeCollectionEnchantListItem", package.seeall)
 
-slot0 = class("RougeCollectionEnchantListItem", ListScrollCellExtend)
+local var_0_0 = class("RougeCollectionEnchantListItem", ListScrollCellExtend)
 
-function slot0.onInitView(slot0)
-	slot0._imagerare = gohelper.findChildImage(slot0.viewGO, "image_rare")
-	slot0._simagecollectionicon = gohelper.findChildSingleImage(slot0.viewGO, "simage_collectionicon")
-	slot0._goenchant = gohelper.findChild(slot0.viewGO, "go_enchant")
-	slot0._simageenchanticon = gohelper.findChildSingleImage(slot0.viewGO, "go_enchant/simage_enchanticon")
-	slot0._goselect = gohelper.findChild(slot0.viewGO, "go_select")
-	slot0._btnclick = gohelper.findChildButton(slot0.viewGO, "btn_click")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._imagerare = gohelper.findChildImage(arg_1_0.viewGO, "image_rare")
+	arg_1_0._simagecollectionicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "simage_collectionicon")
+	arg_1_0._goenchant = gohelper.findChild(arg_1_0.viewGO, "go_enchant")
+	arg_1_0._simageenchanticon = gohelper.findChildSingleImage(arg_1_0.viewGO, "go_enchant/simage_enchanticon")
+	arg_1_0._goselect = gohelper.findChild(arg_1_0.viewGO, "go_select")
+	arg_1_0._btnclick = gohelper.findChildButton(arg_1_0.viewGO, "btn_click")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclick:AddClickListener(slot0._btnclickOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclick:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclick:RemoveClickListener()
 end
 
-function slot0._btnclickOnClick(slot0)
-	RougeCollectionEnchantController.instance:onSelectEnchantItem(RougeCollectionUnEnchantListModel.instance:getCurSelectCollectionId(), slot0._mo.id, RougeCollectionUnEnchantListModel.instance:getCurSelectHoleIndex())
+function var_0_0._btnclickOnClick(arg_4_0)
+	local var_4_0 = RougeCollectionUnEnchantListModel.instance:getCurSelectHoleIndex()
+	local var_4_1 = RougeCollectionUnEnchantListModel.instance:getCurSelectCollectionId()
+
+	RougeCollectionEnchantController.instance:onSelectEnchantItem(var_4_1, arg_4_0._mo.id, var_4_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.CollectionEnchant)
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_5_0)
+	return
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
+function var_0_0.onUpdateMO(arg_6_0, arg_6_1)
+	arg_6_0._mo = arg_6_1
 
-	slot0:refreshUI()
+	arg_6_0:refreshUI()
 end
 
-function slot0.refreshUI(slot0)
-	if RougeCollectionConfig.instance:getCollectionCfg(slot0._mo.cfgId) then
-		slot0._simagecollectionicon:LoadImage(RougeCollectionHelper.getCollectionIconUrl(slot0._mo.cfgId))
-		UISpriteSetMgr.instance:setRougeSprite(slot0._imagerare, string.format("rouge_collection_grid_big_%s", slot1.showRare))
-		slot0:refreshCollectionUI()
+function var_0_0.refreshUI(arg_7_0)
+	local var_7_0 = RougeCollectionConfig.instance:getCollectionCfg(arg_7_0._mo.cfgId)
+
+	if var_7_0 then
+		arg_7_0._simagecollectionicon:LoadImage(RougeCollectionHelper.getCollectionIconUrl(arg_7_0._mo.cfgId))
+		UISpriteSetMgr.instance:setRougeSprite(arg_7_0._imagerare, string.format("rouge_collection_grid_big_%s", var_7_0.showRare))
+		arg_7_0:refreshCollectionUI()
 	end
 end
 
-function slot0.refreshCollectionUI(slot0)
-	gohelper.setActive(slot0._goenchant, RougeCollectionModel.instance:getCollectionByUid(slot0._mo:getEnchantTargetId()) ~= nil)
+function var_0_0.refreshCollectionUI(arg_8_0)
+	local var_8_0 = arg_8_0._mo:getEnchantTargetId()
+	local var_8_1 = RougeCollectionModel.instance:getCollectionByUid(var_8_0)
 
-	if slot2 then
-		slot0._simageenchanticon:LoadImage(RougeCollectionHelper.getCollectionIconUrl(slot2.cfgId))
+	gohelper.setActive(arg_8_0._goenchant, var_8_1 ~= nil)
+
+	if var_8_1 then
+		arg_8_0._simageenchanticon:LoadImage(RougeCollectionHelper.getCollectionIconUrl(var_8_1.cfgId))
 	end
 end
 
-function slot0.onSelect(slot0, slot1)
-	gohelper.setActive(slot0._goselect, slot1)
+function var_0_0.onSelect(arg_9_0, arg_9_1)
+	gohelper.setActive(arg_9_0._goselect, arg_9_1)
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simagecollectionicon:UnLoadImage()
-	slot0._simageenchanticon:UnLoadImage()
+function var_0_0.onDestroyView(arg_10_0)
+	arg_10_0._simagecollectionicon:UnLoadImage()
+	arg_10_0._simageenchanticon:UnLoadImage()
 end
 
-return slot0
+return var_0_0

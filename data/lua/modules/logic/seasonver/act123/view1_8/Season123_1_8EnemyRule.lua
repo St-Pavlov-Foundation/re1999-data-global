@@ -1,128 +1,149 @@
-module("modules.logic.seasonver.act123.view1_8.Season123_1_8EnemyRule", package.seeall)
+﻿module("modules.logic.seasonver.act123.view1_8.Season123_1_8EnemyRule", package.seeall)
 
-slot0 = class("Season123_1_8EnemyRule", BaseView)
+local var_0_0 = class("Season123_1_8EnemyRule", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._goadditionRule = gohelper.findChild(slot0.viewGO, "go_rule/#go_additionRule")
-	slot0._goruletemp = gohelper.findChild(slot0.viewGO, "go_rule/#go_additionRule/#go_ruletemp")
-	slot0._imagetagicon = gohelper.findChildImage(slot0.viewGO, "go_rule/#go_additionRule/#go_ruletemp/#image_tagicon")
-	slot0._gorulelist = gohelper.findChild(slot0.viewGO, "go_rule/#go_additionRule/#go_rulelist")
-	slot0._btnadditionRuleclick = gohelper.findChildButtonWithAudio(slot0.viewGO, "go_rule/#go_additionRule/#go_rulelist/#btn_additionRuleclick")
-	slot0._goruledesc = gohelper.findChild(slot0.viewGO, "go_rule/#go_ruledesc")
-	slot0._btncloserule = gohelper.findChildButtonWithAudio(slot0.viewGO, "go_rule/#go_ruledesc/#btn_closerule")
-	slot0._goruleitem = gohelper.findChild(slot0.viewGO, "go_rule/#go_ruledesc/bg/#go_ruleitem")
-	slot0._goruleDescList = gohelper.findChild(slot0.viewGO, "go_rule/#go_ruledesc/bg/#go_ruleDescList")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goadditionRule = gohelper.findChild(arg_1_0.viewGO, "go_rule/#go_additionRule")
+	arg_1_0._goruletemp = gohelper.findChild(arg_1_0.viewGO, "go_rule/#go_additionRule/#go_ruletemp")
+	arg_1_0._imagetagicon = gohelper.findChildImage(arg_1_0.viewGO, "go_rule/#go_additionRule/#go_ruletemp/#image_tagicon")
+	arg_1_0._gorulelist = gohelper.findChild(arg_1_0.viewGO, "go_rule/#go_additionRule/#go_rulelist")
+	arg_1_0._btnadditionRuleclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "go_rule/#go_additionRule/#go_rulelist/#btn_additionRuleclick")
+	arg_1_0._goruledesc = gohelper.findChild(arg_1_0.viewGO, "go_rule/#go_ruledesc")
+	arg_1_0._btncloserule = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "go_rule/#go_ruledesc/#btn_closerule")
+	arg_1_0._goruleitem = gohelper.findChild(arg_1_0.viewGO, "go_rule/#go_ruledesc/bg/#go_ruleitem")
+	arg_1_0._goruleDescList = gohelper.findChild(arg_1_0.viewGO, "go_rule/#go_ruledesc/bg/#go_ruleDescList")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnadditionRuleclick:AddClickListener(slot0._btnadditionRuleOnClick, slot0)
-	slot0._btncloserule:AddClickListener(slot0._btncloseruleOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnadditionRuleclick:AddClickListener(arg_2_0._btnadditionRuleOnClick, arg_2_0)
+	arg_2_0._btncloserule:AddClickListener(arg_2_0._btncloseruleOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnadditionRuleclick:RemoveClickListener()
-	slot0._btncloserule:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnadditionRuleclick:RemoveClickListener()
+	arg_3_0._btncloserule:RemoveClickListener()
 end
 
-function slot0._btncloseruleOnClick(slot0)
-	if slot0._ruleItemClick then
-		slot0._ruleItemClick = false
+function var_0_0._btncloseruleOnClick(arg_4_0)
+	if arg_4_0._ruleItemClick then
+		arg_4_0._ruleItemClick = false
 
 		return
 	end
 
-	gohelper.setActive(slot0._goruledesc, false)
+	gohelper.setActive(arg_4_0._goruledesc, false)
 end
 
-function slot0._btnadditionRuleOnClick(slot0)
-	slot0._ruleItemClick = slot0._goruledesc.activeSelf
+function var_0_0._btnadditionRuleOnClick(arg_5_0)
+	arg_5_0._ruleItemClick = arg_5_0._goruledesc.activeSelf
 
-	gohelper.setActive(slot0._goruledesc, true)
+	gohelper.setActive(arg_5_0._goruledesc, true)
 end
 
-function slot0._editableInitView(slot0)
-	gohelper.setActive(slot0._goruleitem, false)
-	gohelper.setActive(slot0._goruletemp, false)
-	gohelper.setActive(slot0._goruledesc, false)
+function var_0_0._editableInitView(arg_6_0)
+	gohelper.setActive(arg_6_0._goruleitem, false)
+	gohelper.setActive(arg_6_0._goruletemp, false)
+	gohelper.setActive(arg_6_0._goruledesc, false)
 
-	slot0._rulesimagelineList = slot0:getUserDataTb_()
-	slot0._childGoList = slot0:getUserDataTb_()
+	arg_6_0._rulesimagelineList = arg_6_0:getUserDataTb_()
+	arg_6_0._childGoList = arg_6_0:getUserDataTb_()
 
-	gohelper.addUIClickAudio(slot0._btnadditionRuleclick.gameObject, AudioEnum.UI.play_ui_hero_sign)
+	gohelper.addUIClickAudio(arg_6_0._btnadditionRuleclick.gameObject, AudioEnum.UI.play_ui_hero_sign)
 end
 
-function slot0.onOpen(slot0)
-	slot0:addEventCb(Season123Controller.instance, Season123Event.EnemyDetailSwitchTab, slot0.refreshUI, slot0)
-	slot0:refreshUI()
+function var_0_0.onOpen(arg_7_0)
+	arg_7_0:addEventCb(Season123Controller.instance, Season123Event.EnemyDetailSwitchTab, arg_7_0.refreshUI, arg_7_0)
+	arg_7_0:refreshUI()
 end
 
-function slot0.refreshUI(slot0)
-	if string.nilorempty(DungeonConfig.instance:getBattleAdditionRule(Season123EnemyModel.instance:getSelectBattleId())) then
-		gohelper.setActive(slot0._goadditionRule, false)
+function var_0_0.refreshUI(arg_8_0)
+	local var_8_0 = Season123EnemyModel.instance:getSelectBattleId()
+	local var_8_1 = DungeonConfig.instance:getBattleAdditionRule(var_8_0)
+
+	if string.nilorempty(var_8_1) then
+		gohelper.setActive(arg_8_0._goadditionRule, false)
 
 		return
 	end
 
-	slot0:_clear()
-	gohelper.setActive(slot0._goadditionRule, true)
+	arg_8_0:_clear()
+	gohelper.setActive(arg_8_0._goadditionRule, true)
 
-	slot7 = "#"
+	local var_8_2 = GameUtil.splitString2(var_8_1, true, "|", "#")
 
-	for slot7, slot8 in ipairs(GameUtil.splitString2(slot2, true, "|", slot7)) do
-		slot9 = slot8[1]
+	for iter_8_0, iter_8_1 in ipairs(var_8_2) do
+		local var_8_3 = iter_8_1[1]
+		local var_8_4 = iter_8_1[2]
+		local var_8_5 = lua_rule.configDict[var_8_4]
 
-		if lua_rule.configDict[slot8[2]] then
-			slot0:_addRuleItem(slot11, slot9)
-			slot0:_setRuleDescItem(slot11, slot9)
+		if var_8_5 then
+			arg_8_0:_addRuleItem(var_8_5, var_8_3)
+			arg_8_0:_setRuleDescItem(var_8_5, var_8_3)
 		end
 
-		if slot7 == #slot3 then
-			gohelper.setActive(slot0._rulesimagelineList[slot7], false)
+		if iter_8_0 == #var_8_2 then
+			gohelper.setActive(arg_8_0._rulesimagelineList[iter_8_0], false)
 		end
 	end
 end
 
-function slot0._addRuleItem(slot0, slot1, slot2)
-	slot3 = gohelper.clone(slot0._goruletemp, slot0._gorulelist, slot1.id)
+function var_0_0._addRuleItem(arg_9_0, arg_9_1, arg_9_2)
+	local var_9_0 = gohelper.clone(arg_9_0._goruletemp, arg_9_0._gorulelist, arg_9_1.id)
 
-	gohelper.setActive(slot3, true)
-	table.insert(slot0._childGoList, slot3)
-	UISpriteSetMgr.instance:setCommonSprite(gohelper.findChildImage(slot3, "#image_tagicon"), "wz_" .. slot2)
-	UISpriteSetMgr.instance:setDungeonLevelRuleSprite(gohelper.findChildImage(slot3, ""), slot1.icon)
+	gohelper.setActive(var_9_0, true)
+
+	local var_9_1 = gohelper.findChildImage(var_9_0, "#image_tagicon")
+	local var_9_2 = gohelper.findChildImage(var_9_0, "")
+
+	table.insert(arg_9_0._childGoList, var_9_0)
+	UISpriteSetMgr.instance:setCommonSprite(var_9_1, "wz_" .. arg_9_2)
+	UISpriteSetMgr.instance:setDungeonLevelRuleSprite(var_9_2, arg_9_1.icon)
 end
 
-function slot0._setRuleDescItem(slot0, slot1, slot2)
-	slot3 = {
+function var_0_0._setRuleDescItem(arg_10_0, arg_10_1, arg_10_2)
+	local var_10_0 = {
 		"#6680bd",
 		"#d05b4c",
 		"#c7b376"
 	}
-	slot4 = gohelper.clone(slot0._goruleitem, slot0._goruleDescList, slot1.id)
+	local var_10_1 = gohelper.clone(arg_10_0._goruleitem, arg_10_0._goruleDescList, arg_10_1.id)
 
-	table.insert(slot0._childGoList, slot4)
-	gohelper.setActive(slot4, true)
-	table.insert(slot0._rulesimagelineList, gohelper.findChild(slot4, "line"))
-	UISpriteSetMgr.instance:setDungeonLevelRuleSprite(gohelper.findChildImage(slot4, "icon"), slot1.icon)
-	UISpriteSetMgr.instance:setCommonSprite(gohelper.findChildImage(slot4, "tag"), "wz_" .. slot2)
+	table.insert(arg_10_0._childGoList, var_10_1)
+	gohelper.setActive(var_10_1, true)
 
-	gohelper.findChildText(slot4, "desc").text = string.format("<color=%s>[%s]</color>%s%s", slot3[slot2], luaLang("dungeon_add_rule_target_" .. slot2), string.gsub(slot1.desc, "%【(.-)%】", "<color=#6680bd>[%1]</color>"), "\n" .. HeroSkillModel.instance:getEffectTagDescFromDescRecursion(slot1.desc, slot3[1]))
+	local var_10_2 = gohelper.findChildImage(var_10_1, "icon")
+	local var_10_3 = gohelper.findChild(var_10_1, "line")
+
+	table.insert(arg_10_0._rulesimagelineList, var_10_3)
+
+	local var_10_4 = gohelper.findChildImage(var_10_1, "tag")
+	local var_10_5 = gohelper.findChildText(var_10_1, "desc")
+	local var_10_6 = string.gsub(arg_10_1.desc, "%【(.-)%】", "<color=#6680bd>[%1]</color>")
+	local var_10_7 = "\n" .. HeroSkillModel.instance:getEffectTagDescFromDescRecursion(arg_10_1.desc, var_10_0[1])
+	local var_10_8 = luaLang("dungeon_add_rule_target_" .. arg_10_2)
+	local var_10_9 = var_10_0[arg_10_2]
+
+	UISpriteSetMgr.instance:setDungeonLevelRuleSprite(var_10_2, arg_10_1.icon)
+	UISpriteSetMgr.instance:setCommonSprite(var_10_4, "wz_" .. arg_10_2)
+
+	var_10_5.text = string.format("<color=%s>[%s]</color>%s%s", var_10_9, var_10_8, var_10_6, var_10_7)
 end
 
-function slot0._clear(slot0)
-	for slot4, slot5 in ipairs(slot0._childGoList) do
-		gohelper.destroy(slot5)
+function var_0_0._clear(arg_11_0)
+	for iter_11_0, iter_11_1 in ipairs(arg_11_0._childGoList) do
+		gohelper.destroy(iter_11_1)
 	end
 
-	slot0._rulesimagelineList = slot0:getUserDataTb_()
-	slot0._childGoList = slot0:getUserDataTb_()
+	arg_11_0._rulesimagelineList = arg_11_0:getUserDataTb_()
+	arg_11_0._childGoList = arg_11_0:getUserDataTb_()
 end
 
-function slot0.onDestroyView(slot0)
-	slot0:_clear()
+function var_0_0.onDestroyView(arg_12_0)
+	arg_12_0:_clear()
 end
 
-return slot0
+return var_0_0

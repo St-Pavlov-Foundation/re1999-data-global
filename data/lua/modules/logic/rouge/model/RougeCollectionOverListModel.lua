@@ -1,49 +1,56 @@
-module("modules.logic.rouge.model.RougeCollectionOverListModel", package.seeall)
+﻿module("modules.logic.rouge.model.RougeCollectionOverListModel", package.seeall)
 
-slot0 = class("RougeCollectionOverListModel", ListScrollModel)
+local var_0_0 = class("RougeCollectionOverListModel", ListScrollModel)
 
-function slot0.onInitData(slot0)
-	slot0:onCollectionDataUpdate()
+function var_0_0.onInitData(arg_1_0)
+	arg_1_0:onCollectionDataUpdate()
 end
 
-function slot0.onCollectionDataUpdate(slot0)
-	slot1 = {}
-	slot2 = {}
+function var_0_0.onCollectionDataUpdate(arg_2_0)
+	local var_2_0 = {}
+	local var_2_1 = {}
+	local var_2_2 = RougeCollectionModel.instance:getSlotAreaCollection()
 
-	if RougeCollectionModel.instance:getSlotAreaCollection() then
-		for slot7, slot8 in ipairs(slot3) do
-			if not slot2[slot8.id] then
-				slot2[slot8.id] = true
+	if var_2_2 then
+		for iter_2_0, iter_2_1 in ipairs(var_2_2) do
+			if not var_2_1[iter_2_1.id] then
+				var_2_1[iter_2_1.id] = true
 
-				table.insert(slot1, slot8)
+				table.insert(var_2_0, iter_2_1)
 			end
 		end
 	end
 
-	table.sort(slot1, slot0.sortFunc)
-	slot0:setList(slot1)
+	table.sort(var_2_0, arg_2_0.sortFunc)
+	arg_2_0:setList(var_2_0)
 end
 
-function slot0.sortFunc(slot0, slot1)
-	slot3 = RougeCollectionConfig.instance:getCollectionCfg(slot1.cfgId)
+function var_0_0.sortFunc(arg_3_0, arg_3_1)
+	local var_3_0 = RougeCollectionConfig.instance:getCollectionCfg(arg_3_0.cfgId)
+	local var_3_1 = RougeCollectionConfig.instance:getCollectionCfg(arg_3_1.cfgId)
+	local var_3_2 = var_3_0 and var_3_0.showRare or 0
+	local var_3_3 = var_3_1 and var_3_1.showRare or 0
 
-	if (RougeCollectionConfig.instance:getCollectionCfg(slot0.cfgId) and slot2.showRare or 0) ~= (slot3 and slot3.showRare or 0) then
-		return slot5 < slot4
+	if var_3_2 ~= var_3_3 then
+		return var_3_3 < var_3_2
 	end
 
-	slot7 = RougeCollectionConfig.instance:getOriginEditorParam(slot1.cfgId, RougeEnum.CollectionEditorParamType.Shape)
+	local var_3_4 = RougeCollectionConfig.instance:getOriginEditorParam(arg_3_0.cfgId, RougeEnum.CollectionEditorParamType.Shape)
+	local var_3_5 = RougeCollectionConfig.instance:getOriginEditorParam(arg_3_1.cfgId, RougeEnum.CollectionEditorParamType.Shape)
+	local var_3_6 = var_3_4 and #var_3_4 or 0
+	local var_3_7 = var_3_5 and #var_3_5 or 0
 
-	if (RougeCollectionConfig.instance:getOriginEditorParam(slot0.cfgId, RougeEnum.CollectionEditorParamType.Shape) and #slot6 or 0) ~= (slot7 and #slot7 or 0) then
-		return slot9 < slot8
+	if var_3_6 ~= var_3_7 then
+		return var_3_7 < var_3_6
 	end
 
-	return slot0.id < slot1.id
+	return arg_3_0.id < arg_3_1.id
 end
 
-function slot0.isBagEmpty(slot0)
-	return slot0:getCount() <= 0
+function var_0_0.isBagEmpty(arg_4_0)
+	return arg_4_0:getCount() <= 0
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

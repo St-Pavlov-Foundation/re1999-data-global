@@ -1,207 +1,229 @@
-module("modules.logic.versionactivity1_3.chess.view.game.Activity1_3ChessResultView", package.seeall)
+﻿module("modules.logic.versionactivity1_3.chess.view.game.Activity1_3ChessResultView", package.seeall)
 
-slot0 = class("Activity1_3ChessResultView", BaseView)
+local var_0_0 = class("Activity1_3ChessResultView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagebg1 = gohelper.findChildSingleImage(slot0.viewGO, "#simage_bg1")
-	slot0._gosuccess = gohelper.findChild(slot0.viewGO, "#go_success")
-	slot0._gofail = gohelper.findChild(slot0.viewGO, "#go_fail")
-	slot0._txtclassnum = gohelper.findChildText(slot0.viewGO, "txtFbName/#txt_classnum")
-	slot0._txtclassname = gohelper.findChildText(slot0.viewGO, "txtFbName/#txt_classname")
-	slot0._txtclassnameen = gohelper.findChildText(slot0.viewGO, "txtFbName/#txt_classname/#txt_classnameen")
-	slot0._goMainTargetItem = gohelper.findChild(slot0.viewGO, "targets/#go_targetitem0")
-	slot0._gotargetitem = gohelper.findChild(slot0.viewGO, "targets/#go_targetitem")
-	slot0._btnquitgame = gohelper.findChildButtonWithAudio(slot0.viewGO, "btn/#btn_quitgame")
-	slot0._btnrestart = gohelper.findChildButtonWithAudio(slot0.viewGO, "btn/#btn_restart")
-	slot0._btnreturn = gohelper.findChildButtonWithAudio(slot0.viewGO, "btn/#btn_return")
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagebg1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg1")
+	arg_1_0._gosuccess = gohelper.findChild(arg_1_0.viewGO, "#go_success")
+	arg_1_0._gofail = gohelper.findChild(arg_1_0.viewGO, "#go_fail")
+	arg_1_0._txtclassnum = gohelper.findChildText(arg_1_0.viewGO, "txtFbName/#txt_classnum")
+	arg_1_0._txtclassname = gohelper.findChildText(arg_1_0.viewGO, "txtFbName/#txt_classname")
+	arg_1_0._txtclassnameen = gohelper.findChildText(arg_1_0.viewGO, "txtFbName/#txt_classname/#txt_classnameen")
+	arg_1_0._goMainTargetItem = gohelper.findChild(arg_1_0.viewGO, "targets/#go_targetitem0")
+	arg_1_0._gotargetitem = gohelper.findChild(arg_1_0.viewGO, "targets/#go_targetitem")
+	arg_1_0._btnquitgame = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btn/#btn_quitgame")
+	arg_1_0._btnrestart = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btn/#btn_restart")
+	arg_1_0._btnreturn = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btn/#btn_return")
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
-	slot0._btnquitgame:AddClickListener(slot0._btnquitgameOnClick, slot0)
-	slot0._btnrestart:AddClickListener(slot0._btnrestartOnClick, slot0)
-	slot0._btnreturn:AddClickListener(slot0._btnreturnOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+	arg_2_0._btnquitgame:AddClickListener(arg_2_0._btnquitgameOnClick, arg_2_0)
+	arg_2_0._btnrestart:AddClickListener(arg_2_0._btnrestartOnClick, arg_2_0)
+	arg_2_0._btnreturn:AddClickListener(arg_2_0._btnreturnOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnquitgame:RemoveClickListener()
-	slot0._btnrestart:RemoveClickListener()
-	slot0._btnclose:RemoveClickListener()
-	slot0._btnreturn:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnquitgame:RemoveClickListener()
+	arg_3_0._btnrestart:RemoveClickListener()
+	arg_3_0._btnclose:RemoveClickListener()
+	arg_3_0._btnreturn:RemoveClickListener()
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:_btnquitgameOnClick()
+function var_0_0._btncloseOnClick(arg_4_0)
+	arg_4_0:_btnquitgameOnClick()
 end
 
-function slot0._onEscape(slot0)
-	slot0:_btnquitgameOnClick()
+function var_0_0._onEscape(arg_5_0)
+	arg_5_0:_btnquitgameOnClick()
 end
 
-function slot0._btnquitgameOnClick(slot0)
+function var_0_0._btnquitgameOnClick(arg_6_0)
 	Va3ChessGameController.instance:dispatchEvent(Va3ChessEvent.GameResultQuit)
 
+	local var_6_0 = Va3ChessModel.instance:getEpisodeId()
+
 	if Va3ChessGameModel.instance:getResult() and not Activity1_3ChessController.instance:isEnterPassedEpisode() then
-		Activity1_3ChessController.instance:dispatchEvent(Activity1_3ChessEvent.FinishNewEpisode, Va3ChessModel.instance:getEpisodeId())
+		Activity1_3ChessController.instance:dispatchEvent(Activity1_3ChessEvent.FinishNewEpisode, var_6_0)
 	end
 
-	Activity122Rpc.instance:sendGetActInfoRequest(Va3ChessModel.instance:getActId())
-	slot0:closeThis()
+	local var_6_1 = Va3ChessModel.instance:getActId()
+
+	Activity122Rpc.instance:sendGetActInfoRequest(var_6_1)
+	arg_6_0:closeThis()
 end
 
-function slot0._btnrestartOnClick(slot0)
+function var_0_0._btnrestartOnClick(arg_7_0)
 	Activity1_3ChessController.instance:dispatchEvent(Activity1_3ChessEvent.ClickReset)
-	slot0:closeThis()
+	arg_7_0:closeThis()
 end
 
-function slot0._btnreturnOnClick(slot0)
+function var_0_0._btnreturnOnClick(arg_8_0)
 	Stat1_3Controller.instance:bristleStatStart()
 	Activity1_3ChessController.instance:dispatchEvent(Activity1_3ChessEvent.ClickRead)
-	slot0:closeThis()
+	arg_8_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._simagebg1:LoadImage(ResUrl.getCommonIcon("full/bg_beijingzhezhao"))
-	gohelper.setActive(slot0._gotargetitem, false)
-	gohelper.setActive(slot0._goMainTargetItem, false)
+function var_0_0._editableInitView(arg_9_0)
+	arg_9_0._simagebg1:LoadImage(ResUrl.getCommonIcon("full/bg_beijingzhezhao"))
+	gohelper.setActive(arg_9_0._gotargetitem, false)
+	gohelper.setActive(arg_9_0._goMainTargetItem, false)
 
-	slot0._taskItems = {}
+	arg_9_0._taskItems = {}
 
-	NavigateMgr.instance:addEscape(slot0.viewName, slot0._onEscape, slot0)
+	NavigateMgr.instance:addEscape(arg_9_0.viewName, arg_9_0._onEscape, arg_9_0)
 end
 
-function slot0._onHandleResetCompleted(slot0)
+function var_0_0._onHandleResetCompleted(arg_10_0)
 	Va3ChessGameController.instance:dispatchEvent(Va3ChessEvent.ResetGameByResultView)
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_11_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0._isWin = slot0.viewParam.result
-	slot0._episodeCfg = slot0:_getEpisodeCfg()
+function var_0_0.onOpen(arg_12_0)
+	arg_12_0._isWin = arg_12_0.viewParam.result
+	arg_12_0._episodeCfg = arg_12_0:_getEpisodeCfg()
 
-	slot0:refreshUI()
+	arg_12_0:refreshUI()
 end
 
-function slot0.refreshUI(slot0)
-	if slot0._episodeCfg then
-		slot0._txtclassname.text = slot0._episodeCfg.name
-		slot0._txtclassnum.text = slot0._episodeCfg.orderId
+function var_0_0.refreshUI(arg_13_0)
+	if arg_13_0._episodeCfg then
+		arg_13_0._txtclassname.text = arg_13_0._episodeCfg.name
+		arg_13_0._txtclassnum.text = arg_13_0._episodeCfg.orderId
 
-		if slot0._isWin then
-			slot0:refreshWin()
+		if arg_13_0._isWin then
+			arg_13_0:refreshWin()
 		else
-			slot0:refreshLose()
+			arg_13_0:refreshLose()
 		end
 	end
 end
 
-function slot0.refreshWin(slot0)
-	gohelper.setActive(slot0._gosuccess, true)
-	gohelper.setActive(slot0._gofail, false)
-	slot0:refreshTaskConditions()
-	gohelper.setActive(slot0._btnquitgame.gameObject, false)
-	gohelper.setActive(slot0._btnrestart.gameObject, false)
-	gohelper.setActive(slot0._btnreturn.gameObject, false)
+function var_0_0.refreshWin(arg_14_0)
+	gohelper.setActive(arg_14_0._gosuccess, true)
+	gohelper.setActive(arg_14_0._gofail, false)
+	arg_14_0:refreshTaskConditions()
+	gohelper.setActive(arg_14_0._btnquitgame.gameObject, false)
+	gohelper.setActive(arg_14_0._btnrestart.gameObject, false)
+	gohelper.setActive(arg_14_0._btnreturn.gameObject, false)
 end
 
-function slot0.refreshLose(slot0)
+function var_0_0.refreshLose(arg_15_0)
 	AudioMgr.instance:trigger(AudioEnum.ChessGame.ChallengeFailed)
-	gohelper.setActive(slot0._gosuccess, false)
-	gohelper.setActive(slot0._gofail, true)
-	gohelper.setActive(slot0._btnclose, false)
+	gohelper.setActive(arg_15_0._gosuccess, false)
+	gohelper.setActive(arg_15_0._gofail, true)
+	gohelper.setActive(arg_15_0._btnclose, false)
 end
 
-function slot0._getEpisodeCfg(slot0)
-	slot2 = Va3ChessModel.instance:getEpisodeId()
+function var_0_0._getEpisodeCfg(arg_16_0)
+	local var_16_0 = Va3ChessModel.instance:getActId()
+	local var_16_1 = Va3ChessModel.instance:getEpisodeId()
 
-	if Va3ChessModel.instance:getActId() ~= nil and slot2 ~= nil then
-		return Va3ChessConfig.instance:getEpisodeCo(slot1, slot2)
+	if var_16_0 ~= nil and var_16_1 ~= nil then
+		return Va3ChessConfig.instance:getEpisodeCo(var_16_0, var_16_1)
 	end
 end
 
-function slot0.refreshTaskConditions(slot0)
-	if not slot0._episodeCfg then
+function var_0_0.refreshTaskConditions(arg_17_0)
+	local var_17_0 = arg_17_0._episodeCfg
+
+	if not var_17_0 then
 		return
 	end
 
-	slot3 = string.split(slot1.starCondition, "|")
-	slot5 = #slot3
+	local var_17_1 = var_17_0.starCondition
+	local var_17_2 = string.split(var_17_1, "|")
+	local var_17_3 = string.split(var_17_0.conditionStr, "|")
+	local var_17_4 = #var_17_2
+	local var_17_5 = arg_17_0:getOrCreateTaskItem(var_17_4, true)
 
-	slot0:refreshTaskItem(slot0:getOrCreateTaskItem(slot5, true), slot3[slot5], string.split(slot1.conditionStr, "|")[slot5], true, true)
+	arg_17_0:refreshTaskItem(var_17_5, var_17_2[var_17_4], var_17_3[var_17_4], true, true)
 
-	if not string.nilorempty(slot1.extStarCondition) then
-		slot0:refreshTaskItem(slot0:getOrCreateTaskItem(slot5 + 1), slot1.extStarCondition, slot1.extConditionStr, true)
+	if not string.nilorempty(var_17_0.extStarCondition) then
+		arg_17_0:refreshTaskItem(arg_17_0:getOrCreateTaskItem(var_17_4 + 1), var_17_0.extStarCondition, var_17_0.extConditionStr, true)
 	end
 end
 
-function slot0.refreshTaskItem(slot0, slot1, slot2, slot3, slot4, slot5)
-	gohelper.setActive(slot1.go, true)
+function var_0_0.refreshTaskItem(arg_18_0, arg_18_1, arg_18_2, arg_18_3, arg_18_4, arg_18_5)
+	gohelper.setActive(arg_18_1.go, true)
 
-	slot6 = Va3ChessModel.instance:getActId()
-	slot7 = Va3ChessModel.instance:getEpisodeId()
-	slot8 = nil
-	slot9 = false
+	local var_18_0 = Va3ChessModel.instance:getActId()
+	local var_18_1 = Va3ChessModel.instance:getEpisodeId()
+	local var_18_2
+	local var_18_3 = false
+	local var_18_4 = string.split(arg_18_2, "|")
 
-	if #string.split(slot2, "|") > 1 then
-		for slot15 = 1, #slot10 do
-			if Va3ChessMapUtils.isClearConditionFinish(string.splitToNumber(slot10[slot15], "#"), slot6) then
-				slot11 = 0 + 1
+	if #var_18_4 > 1 then
+		local var_18_5 = 0
+
+		for iter_18_0 = 1, #var_18_4 do
+			local var_18_6 = string.splitToNumber(var_18_4[iter_18_0], "#")
+
+			var_18_3 = Va3ChessMapUtils.isClearConditionFinish(var_18_6, var_18_0)
+
+			if var_18_3 then
+				var_18_5 = var_18_5 + 1
 			end
 
-			slot9 = slot11 == #slot10
+			var_18_3 = var_18_5 == #var_18_4
 		end
 
-		slot8 = string.format("%s (%s/%s)", slot3, slot11, #slot10)
-	elseif not string.nilorempty(slot2) then
-		slot11 = string.splitToNumber(slot2, "#")
-		slot8 = slot3 or Va3ChessMapUtils.getClearConditionDesc(slot11, slot6)
-		slot9 = Va3ChessMapUtils.isClearConditionFinish(slot11, slot6)
+		var_18_2 = string.format("%s (%s/%s)", arg_18_3, var_18_5, #var_18_4)
+	elseif not string.nilorempty(arg_18_2) then
+		local var_18_7 = string.splitToNumber(arg_18_2, "#")
+
+		var_18_2 = arg_18_3 or Va3ChessMapUtils.getClearConditionDesc(var_18_7, var_18_0)
+		var_18_3 = Va3ChessMapUtils.isClearConditionFinish(var_18_7, var_18_0)
 	else
-		slot8 = slot3 or luaLang("chessgame_clear_normal")
-		slot9 = Va3ChessGameModel.instance:getResult() == true
+		var_18_2 = arg_18_3 or luaLang("chessgame_clear_normal")
+		var_18_3 = Va3ChessGameModel.instance:getResult() == true
 	end
 
-	slot1.txtTaskDesc.text = slot8
+	arg_18_1.txtTaskDesc.text = var_18_2
 
-	gohelper.setActive(slot1.goResult, slot4)
+	gohelper.setActive(arg_18_1.goResult, arg_18_4)
 
-	if slot4 then
-		if slot5 then
-			slot9 = true
+	if arg_18_4 then
+		if arg_18_5 then
+			var_18_3 = true
 		end
 
-		gohelper.setActive(slot1.goFinish, slot9)
-		gohelper.setActive(slot1.goUnFinish, not slot9)
+		gohelper.setActive(arg_18_1.goFinish, var_18_3)
+		gohelper.setActive(arg_18_1.goUnFinish, not var_18_3)
 	end
 end
 
-function slot0.getOrCreateTaskItem(slot0, slot1, slot2)
-	if not slot0._taskItems[slot1] then
-		slot3 = slot0:getUserDataTb_()
-		slot3.go = gohelper.cloneInPlace(slot2 and slot0._goMainTargetItem or slot0._gotargetitem, "taskitem_" .. tostring(slot1))
-		slot3.txtTaskDesc = gohelper.findChildText(slot3.go, "txt_taskdesc")
-		slot3.goFinish = gohelper.findChild(slot3.go, "result/go_finish")
-		slot3.goUnFinish = gohelper.findChild(slot3.go, "result/go_unfinish")
-		slot3.goResult = gohelper.findChild(slot3.go, "result")
-		slot0._taskItems[slot1] = slot3
+function var_0_0.getOrCreateTaskItem(arg_19_0, arg_19_1, arg_19_2)
+	local var_19_0 = arg_19_0._taskItems[arg_19_1]
+
+	if not var_19_0 then
+		var_19_0 = arg_19_0:getUserDataTb_()
+		var_19_0.go = gohelper.cloneInPlace(arg_19_2 and arg_19_0._goMainTargetItem or arg_19_0._gotargetitem, "taskitem_" .. tostring(arg_19_1))
+		var_19_0.txtTaskDesc = gohelper.findChildText(var_19_0.go, "txt_taskdesc")
+		var_19_0.goFinish = gohelper.findChild(var_19_0.go, "result/go_finish")
+		var_19_0.goUnFinish = gohelper.findChild(var_19_0.go, "result/go_unfinish")
+		var_19_0.goResult = gohelper.findChild(var_19_0.go, "result")
+		arg_19_0._taskItems[arg_19_1] = var_19_0
 	end
 
-	return slot3
+	return var_19_0
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_20_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simagebg1:UnLoadImage()
-	NavigateMgr.instance:removeEscape(slot0.viewName, slot0._onEscape, slot0)
+function var_0_0.onDestroyView(arg_21_0)
+	arg_21_0._simagebg1:UnLoadImage()
+	NavigateMgr.instance:removeEscape(arg_21_0.viewName, arg_21_0._onEscape, arg_21_0)
 end
 
-return slot0
+return var_0_0

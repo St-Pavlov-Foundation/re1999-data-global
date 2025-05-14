@@ -1,66 +1,66 @@
-module("modules.logic.story.view.StoryFrontView", package.seeall)
+﻿module("modules.logic.story.view.StoryFrontView", package.seeall)
 
-slot0 = class("StoryFrontView", BaseView)
+local var_0_0 = class("StoryFrontView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gobtns = gohelper.findChild(slot0.viewGO, "#go_btns")
-	slot0._gobtnleft = gohelper.findChild(slot0.viewGO, "#go_btns/#go_btnleft")
-	slot0._btnlog = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_btns/#go_btnleft/#btn_log")
-	slot0._btnhide = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_btns/#go_btnleft/#btn_hide")
-	slot0._gobtnright = gohelper.findChild(slot0.viewGO, "#go_btns/#go_btnright")
-	slot0._btnauto = gohelper.findChildButtonWithAudio(slot0._gobtnright, "#btn_auto")
-	slot0._txtauto = gohelper.findChildTextMesh(slot0._gobtnright, "#btn_auto/txt_Auto")
-	slot0._imageautooff = gohelper.findChildImage(slot0._gobtnright, "#btn_auto/#image_autooff")
-	slot0._imageautoon = gohelper.findChildImage(slot0._gobtnright, "#btn_auto/#image_autoon")
-	slot0._imageautotxt = gohelper.findChildImage(slot0._gobtnright, "#btn_auto/#image_autotxt")
-	slot0._btnskip = gohelper.findChildButtonWithAudio(slot0._gobtnright, "#btn_skip")
-	slot0._objskip = slot0._btnskip.gameObject
-	slot0._txtskip = gohelper.findChildTextMesh(slot0._gobtnright, "#btn_skip/txt_skip")
-	slot0._imageskip = gohelper.findChildImage(slot0._gobtnright, "#btn_skip/#image_skip")
-	slot0._imageskiptxt = gohelper.findChildImage(slot0._gobtnright, "#btn_skip/#image_skiptxt")
-	slot0._goexit = gohelper.findChild(slot0.viewGO, "#btn_exit")
-	slot0._txtexit = gohelper.findChildTextMesh(slot0.viewGO, "#btn_exit/txt_exit")
-	slot0._imageexit = gohelper.findChildImage(slot0.viewGO, "#btn_exit/#image_exit")
-	slot0._imageexittxt = gohelper.findChildImage(slot0.viewGO, "#btn_exit/#image_exittxt")
-	slot0._goshadow = gohelper.findChild(slot0.viewGO, "#go_shadow")
-	slot0._gofront = gohelper.findChild(slot0.viewGO, "#go_front")
-	slot0._goblock = gohelper.findChild(slot0.viewGO, "#go_front/#go_block")
-	slot0._gonavigate = gohelper.findChild(slot0.viewGO, "#go_navigate")
-	slot0._goepisode = gohelper.findChild(slot0.viewGO, "#go_navigate/#go_episode")
-	slot0._gochapteropen = gohelper.findChild(slot0.viewGO, "#go_navigate/#go_chapter/#go_open")
-	slot0._gochapterclose = gohelper.findChild(slot0.viewGO, "#go_navigate/#go_chapter/#go_close")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_btns")
+	arg_1_0._gobtnleft = gohelper.findChild(arg_1_0.viewGO, "#go_btns/#go_btnleft")
+	arg_1_0._btnlog = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_btns/#go_btnleft/#btn_log")
+	arg_1_0._btnhide = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_btns/#go_btnleft/#btn_hide")
+	arg_1_0._gobtnright = gohelper.findChild(arg_1_0.viewGO, "#go_btns/#go_btnright")
+	arg_1_0._btnauto = gohelper.findChildButtonWithAudio(arg_1_0._gobtnright, "#btn_auto")
+	arg_1_0._txtauto = gohelper.findChildTextMesh(arg_1_0._gobtnright, "#btn_auto/txt_Auto")
+	arg_1_0._imageautooff = gohelper.findChildImage(arg_1_0._gobtnright, "#btn_auto/#image_autooff")
+	arg_1_0._imageautoon = gohelper.findChildImage(arg_1_0._gobtnright, "#btn_auto/#image_autoon")
+	arg_1_0._imageautotxt = gohelper.findChildImage(arg_1_0._gobtnright, "#btn_auto/#image_autotxt")
+	arg_1_0._btnskip = gohelper.findChildButtonWithAudio(arg_1_0._gobtnright, "#btn_skip")
+	arg_1_0._objskip = arg_1_0._btnskip.gameObject
+	arg_1_0._txtskip = gohelper.findChildTextMesh(arg_1_0._gobtnright, "#btn_skip/txt_skip")
+	arg_1_0._imageskip = gohelper.findChildImage(arg_1_0._gobtnright, "#btn_skip/#image_skip")
+	arg_1_0._imageskiptxt = gohelper.findChildImage(arg_1_0._gobtnright, "#btn_skip/#image_skiptxt")
+	arg_1_0._goexit = gohelper.findChild(arg_1_0.viewGO, "#btn_exit")
+	arg_1_0._txtexit = gohelper.findChildTextMesh(arg_1_0.viewGO, "#btn_exit/txt_exit")
+	arg_1_0._imageexit = gohelper.findChildImage(arg_1_0.viewGO, "#btn_exit/#image_exit")
+	arg_1_0._imageexittxt = gohelper.findChildImage(arg_1_0.viewGO, "#btn_exit/#image_exittxt")
+	arg_1_0._goshadow = gohelper.findChild(arg_1_0.viewGO, "#go_shadow")
+	arg_1_0._gofront = gohelper.findChild(arg_1_0.viewGO, "#go_front")
+	arg_1_0._goblock = gohelper.findChild(arg_1_0.viewGO, "#go_front/#go_block")
+	arg_1_0._gonavigate = gohelper.findChild(arg_1_0.viewGO, "#go_navigate")
+	arg_1_0._goepisode = gohelper.findChild(arg_1_0.viewGO, "#go_navigate/#go_episode")
+	arg_1_0._gochapteropen = gohelper.findChild(arg_1_0.viewGO, "#go_navigate/#go_chapter/#go_open")
+	arg_1_0._gochapterclose = gohelper.findChild(arg_1_0.viewGO, "#go_navigate/#go_chapter/#go_close")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnlog:AddClickListener(slot0._btnlogOnClick, slot0)
-	slot0._btnhide:AddClickListener(slot0._btnhideOnClick, slot0)
-	slot0._btnauto:AddClickListener(slot0._btnautoOnClick, slot0)
-	slot0._btnskip:AddClickListener(slot0._btnskipOnClick, slot0)
-	slot0:addEventCb(PCInputController.instance, PCInputEvent.NotifyStoryDialogAuto, slot0._btnautoOnClick, slot0)
-	slot0:addEventCb(PCInputController.instance, PCInputEvent.NotifyStoryDialogSkip, slot0._btnskipOnClick, slot0)
-	slot0:addEventCb(PCInputController.instance, PCInputEvent.NotifyStoryDialogExit, slot0._onKeyExit, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnlog:AddClickListener(arg_2_0._btnlogOnClick, arg_2_0)
+	arg_2_0._btnhide:AddClickListener(arg_2_0._btnhideOnClick, arg_2_0)
+	arg_2_0._btnauto:AddClickListener(arg_2_0._btnautoOnClick, arg_2_0)
+	arg_2_0._btnskip:AddClickListener(arg_2_0._btnskipOnClick, arg_2_0)
+	arg_2_0:addEventCb(PCInputController.instance, PCInputEvent.NotifyStoryDialogAuto, arg_2_0._btnautoOnClick, arg_2_0)
+	arg_2_0:addEventCb(PCInputController.instance, PCInputEvent.NotifyStoryDialogSkip, arg_2_0._btnskipOnClick, arg_2_0)
+	arg_2_0:addEventCb(PCInputController.instance, PCInputEvent.NotifyStoryDialogExit, arg_2_0._onKeyExit, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnlog:RemoveClickListener()
-	slot0._btnhide:RemoveClickListener()
-	slot0._btnauto:RemoveClickListener()
-	slot0._btnskip:RemoveClickListener()
-	slot0:removeEventCb(PCInputController.instance, PCInputEvent.NotifyStoryDialogAuto, slot0._btnautoOnClick, slot0)
-	slot0:removeEventCb(PCInputController.instance, PCInputEvent.NotifyStoryDialogSkip, slot0._btnskipOnClick, slot0)
-	slot0:removeEventCb(PCInputController.instance, PCInputEvent.NotifyStoryDialogExit, slot0._onKeyExit, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnlog:RemoveClickListener()
+	arg_3_0._btnhide:RemoveClickListener()
+	arg_3_0._btnauto:RemoveClickListener()
+	arg_3_0._btnskip:RemoveClickListener()
+	arg_3_0:removeEventCb(PCInputController.instance, PCInputEvent.NotifyStoryDialogAuto, arg_3_0._btnautoOnClick, arg_3_0)
+	arg_3_0:removeEventCb(PCInputController.instance, PCInputEvent.NotifyStoryDialogSkip, arg_3_0._btnskipOnClick, arg_3_0)
+	arg_3_0:removeEventCb(PCInputController.instance, PCInputEvent.NotifyStoryDialogExit, arg_3_0._onKeyExit, arg_3_0)
 end
 
-function slot0._btnnextOnMidClick(slot0)
+function var_0_0._btnnextOnMidClick(arg_4_0)
 	if not StoryModel.instance:isEnableClick() then
 		return
 	end
 
-	if slot0._btnlog.gameObject.activeInHierarchy == false then
+	if arg_4_0._btnlog.gameObject.activeInHierarchy == false then
 		return
 	end
 
@@ -72,10 +72,10 @@ function slot0._btnnextOnMidClick(slot0)
 		return
 	end
 
-	slot0:_btnlogOnClick()
+	arg_4_0:_btnlogOnClick()
 end
 
-function slot0._btnlogOnClick(slot0)
+function var_0_0._btnlogOnClick(arg_5_0)
 	if ViewMgr.instance:isOpen(ViewName.MessageBoxView) then
 		return
 	end
@@ -85,17 +85,17 @@ function slot0._btnlogOnClick(slot0)
 	StoryController.instance:dispatchEvent(StoryEvent.Log)
 end
 
-function slot0._onKeyExit(slot0)
+function var_0_0._onKeyExit(arg_6_0)
 	if ViewMgr.instance:isOpen(ViewName.MessageBoxView) then
 		return
 	end
 
-	if slot0._exitBtn and slot0._goexit.activeInHierarchy then
-		slot0._exitBtn:onClickExitBtn()
+	if arg_6_0._exitBtn and arg_6_0._goexit.activeInHierarchy then
+		arg_6_0._exitBtn:onClickExitBtn()
 	end
 end
 
-function slot0._btnhideOnClick(slot0)
+function var_0_0._btnhideOnClick(arg_7_0)
 	if ViewMgr.instance:isOpen(ViewName.MessageBoxView) then
 		return
 	end
@@ -107,26 +107,26 @@ function slot0._btnhideOnClick(slot0)
 	end
 
 	StoryModel.instance:setViewHide(true)
-	slot0:setBtnVisible(false)
+	arg_7_0:setBtnVisible(false)
 	StoryController.instance:dispatchEvent(StoryEvent.Hide)
 
-	if slot0._exitBtn then
-		slot0._exitBtn:setActive(false)
+	if arg_7_0._exitBtn then
+		arg_7_0._exitBtn:setActive(false)
 	end
 end
 
-function slot0._btnautoOnClick(slot0)
+function var_0_0._btnautoOnClick(arg_8_0)
 	if ViewMgr.instance:isOpen(ViewName.MessageBoxView) then
 		return
 	end
 
-	if not slot0._stepCo then
+	if not arg_8_0._stepCo then
 		return
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_plot_common)
 
-	if slot0._stepCo.conversation.type ~= StoryEnum.ConversationType.None and slot0._stepCo.conversation.type ~= StoryEnum.ConversationType.NoInteract and slot0._stepCo.conversation.type ~= StoryEnum.ConversationType.ScreenDialog and slot0._stepCo.conversation.type ~= StoryEnum.ConversationType.IrregularShake then
+	if arg_8_0._stepCo.conversation.type ~= StoryEnum.ConversationType.None and arg_8_0._stepCo.conversation.type ~= StoryEnum.ConversationType.NoInteract and arg_8_0._stepCo.conversation.type ~= StoryEnum.ConversationType.ScreenDialog and arg_8_0._stepCo.conversation.type ~= StoryEnum.ConversationType.IrregularShake then
 		StoryModel.instance:enableClick(true)
 	end
 
@@ -134,17 +134,19 @@ function slot0._btnautoOnClick(slot0)
 		return
 	end
 
-	StoryModel.instance:setStoryAuto(not StoryModel.instance:isStoryAuto())
+	local var_8_0 = not StoryModel.instance:isStoryAuto()
+
+	StoryModel.instance:setStoryAuto(var_8_0)
 	StoryController.instance:dispatchEvent(StoryEvent.Auto)
 end
 
-function slot0._onEscapeBtnClick(slot0)
-	if slot0._objskip.activeInHierarchy and not slot0._goblock.gameObject.activeInHierarchy then
-		slot0:_btnskipOnClick()
+function var_0_0._onEscapeBtnClick(arg_9_0)
+	if arg_9_0._objskip.activeInHierarchy and not arg_9_0._goblock.gameObject.activeInHierarchy then
+		arg_9_0:_btnskipOnClick()
 	end
 end
 
-function slot0._btnskipOnClick(slot0)
+function var_0_0._btnskipOnClick(arg_10_0)
 	if ViewMgr.instance:isOpen(ViewName.MessageBoxView) then
 		return
 	end
@@ -159,63 +161,73 @@ function slot0._btnskipOnClick(slot0)
 	end
 
 	if not StoryController.instance:isReplay() then
-		slot3, slot4 = StoryModel.instance:isPrologueSkipAndGetTxt(StoryController.instance._curStoryId, StoryController.instance._curStepId)
+		local var_10_0 = StoryController.instance._curStoryId
+		local var_10_1 = StoryController.instance._curStepId
+		local var_10_2, var_10_3 = StoryModel.instance:isPrologueSkipAndGetTxt(var_10_0, var_10_1)
 
-		if slot3 then
-			GameFacade.showMessageBox(MessageBoxIdDefine.StorySkipConfirm, MsgBoxEnum.BoxType.Yes_No, function ()
-				gohelper.setActive(uv0._gobtns, false)
-				StoryController.instance:openStoryPrologueSkipView({
-					content = uv1
-				})
+		if var_10_2 then
+			GameFacade.showMessageBox(MessageBoxIdDefine.StorySkipConfirm, MsgBoxEnum.BoxType.Yes_No, function()
+				gohelper.setActive(arg_10_0._gobtns, false)
+
+				local var_11_0 = {
+					content = var_10_3
+				}
+
+				StoryController.instance:openStoryPrologueSkipView(var_11_0)
 			end, nil)
 
 			return
 		end
 	end
 
-	GameFacade.showMessageBox(StoryController.instance:getSkipMessageId(), MsgBoxEnum.BoxType.Yes_No, function ()
-		uv0:_onSkipConfirm()
+	local var_10_4 = StoryController.instance:getSkipMessageId()
+
+	GameFacade.showMessageBox(var_10_4, MsgBoxEnum.BoxType.Yes_No, function()
+		arg_10_0:_onSkipConfirm()
 	end, nil)
 end
 
-function slot0._onPrologueSkip(slot0)
-	gohelper.setActive(slot0._gobtns, true)
-	StoryModel.instance:setPrologueSkipId(StoryController.instance._curStoryId)
-	slot0:_onSkipConfirm()
+function var_0_0._onPrologueSkip(arg_13_0)
+	gohelper.setActive(arg_13_0._gobtns, true)
+
+	local var_13_0 = StoryController.instance._curStoryId
+
+	StoryModel.instance:setPrologueSkipId(var_13_0)
+	arg_13_0:_onSkipConfirm()
 end
 
-function slot0._onSkipConfirm(slot0)
-	gohelper.setActive(slot0._goepisode, false)
-	gohelper.setActive(slot0._gochapteropen, false)
+function var_0_0._onSkipConfirm(arg_14_0)
+	gohelper.setActive(arg_14_0._goepisode, false)
+	gohelper.setActive(arg_14_0._gochapteropen, false)
 	StoryController.instance:dispatchEvent(StoryEvent.Skip)
 end
 
-function slot0._btnnextOnClick(slot0)
+function var_0_0._btnnextOnClick(arg_15_0)
 	if StoryModel.instance:isPlayFinished() then
 		return
 	end
 
 	StoryModel.instance:addStepClickTime()
-	slot0:closeHideSkipTask()
+	arg_15_0:closeHideSkipTask()
 
-	if slot0._exitBtn then
-		slot0._exitBtn:onClickNext()
+	if arg_15_0._exitBtn then
+		arg_15_0._exitBtn:onClickNext()
 	end
 
 	if StoryController.instance:isVersionActivityPV() then
-		slot0:startHideSkipTask()
+		arg_15_0:startHideSkipTask()
 
-		if not slot0._objskip.activeInHierarchy then
-			gohelper.setActive(slot0._objskip, true)
+		if not arg_15_0._objskip.activeInHierarchy then
+			gohelper.setActive(arg_15_0._objskip, true)
 		end
 
 		return
 	end
 
-	slot1 = false
+	local var_15_0 = false
 
 	if StoryModel.instance:isStoryAuto() then
-		slot1 = true
+		var_15_0 = true
 
 		StoryModel.instance:setStoryAuto(false)
 		StoryModel.instance:setTextShowing(false)
@@ -228,220 +240,232 @@ function slot0._btnnextOnClick(slot0)
 	end
 
 	if StoryModel.instance:isViewHide() then
-		slot0:setBtnVisible(true)
+		arg_15_0:setBtnVisible(true)
 	end
 
-	if not slot1 then
+	if not var_15_0 then
 		StoryController.instance:dispatchEvent(StoryEvent.EnterNextStep)
 	end
 end
 
-function slot0._editableInitView(slot0)
-	slot0._btnnext = gohelper.findChildButton(slot0.viewGO, "btn_next")
-	slot0._btnnextMidClick = SLFramework.UGUI.UIMiddleClickListener.Get(slot0._btnnext.gameObject)
-	slot0._touchEventMgr = TouchEventMgrHepler.getTouchEventMgr(slot0._btnnext.gameObject)
+function var_0_0._editableInitView(arg_16_0)
+	arg_16_0._btnnext = gohelper.findChildButton(arg_16_0.viewGO, "btn_next")
+	arg_16_0._btnnextMidClick = SLFramework.UGUI.UIMiddleClickListener.Get(arg_16_0._btnnext.gameObject)
+	arg_16_0._touchEventMgr = TouchEventMgrHepler.getTouchEventMgr(arg_16_0._btnnext.gameObject)
 
-	slot0._touchEventMgr:SetIgnoreUI(true)
-	slot0._touchEventMgr:SetOnlyTouch(true)
-	slot0._touchEventMgr:SetScrollWheelCb(slot0._btnnextOnMidClick, slot0)
+	arg_16_0._touchEventMgr:SetIgnoreUI(true)
+	arg_16_0._touchEventMgr:SetOnlyTouch(true)
+	arg_16_0._touchEventMgr:SetScrollWheelCb(arg_16_0._btnnextOnMidClick, arg_16_0)
 
-	slot0._imagehide = gohelper.findChildImage(slot0.viewGO, "#go_btns/#go_btnleft/#btn_hide/icon")
+	arg_16_0._imagehide = gohelper.findChildImage(arg_16_0.viewGO, "#go_btns/#go_btnleft/#btn_hide/icon")
 
-	gohelper.setActive(slot0._imageautooff.gameObject, true)
-	gohelper.setActive(slot0._imageautoon.gameObject, false)
+	gohelper.setActive(arg_16_0._imageautooff.gameObject, true)
+	gohelper.setActive(arg_16_0._imageautoon.gameObject, false)
 
-	if not slot0._frontItem then
-		slot0._frontItem = StoryFrontItem.New()
+	if not arg_16_0._frontItem then
+		arg_16_0._frontItem = StoryFrontItem.New()
 
-		slot0._frontItem:init(slot0._gofront)
+		arg_16_0._frontItem:init(arg_16_0._gofront)
 	end
 
-	if not slot0._exitBtn then
-		slot0._exitBtn = StoryExitBtn.New(slot0._goexit, slot0.resetRightBtnPos, slot0)
+	if not arg_16_0._exitBtn then
+		arg_16_0._exitBtn = StoryExitBtn.New(arg_16_0._goexit, arg_16_0.resetRightBtnPos, arg_16_0)
 	end
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_17_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0._btnnext:AddClickListener(slot0._btnnextOnClick, slot0)
-	slot0._btnnextMidClick:AddClickListener(slot0._btnnextOnMidClick, slot0)
-	slot0:addEventCb(StoryController.instance, StoryEvent.Skip, slot0._onSkip, slot0)
-	slot0:addEventCb(StoryController.instance, StoryEvent.AutoChange, slot0._onAutoChange, slot0)
-	slot0:addEventCb(StoryController.instance, StoryEvent.ReOpenStoryView, slot0._reOpenStory, slot0)
-	slot0:addEventCb(StoryController.instance, StoryEvent.AllStepFinished, slot0._screenFadeOut, slot0)
-	slot0:addEventCb(StoryController.instance, StoryEvent.RefreshStep, slot0._onUpdateUI, slot0)
-	slot0:addEventCb(StoryController.instance, StoryEvent.SetFullText, slot0._onSetFullText, slot0)
-	slot0:addEventCb(StoryController.instance, StoryEvent.PlayFullText, slot0._onPlayFullText, slot0)
-	slot0:addEventCb(StoryController.instance, StoryEvent.PlayIrregularShakeText, slot0._onPlayIrregularShakeText, slot0)
-	slot0:addEventCb(StoryController.instance, StoryEvent.PlayFullTextOut, slot0._onPlayFullTextOut, slot0)
-	slot0:addEventCb(StoryController.instance, StoryEvent.PlayFullBlurIn, slot0._onPlayFullBlurIn, slot0)
-	slot0:addEventCb(StoryController.instance, StoryEvent.PlayFullTextLineShow, slot0._onPlayLineShow, slot0)
-	slot0:addEventCb(StoryController.instance, StoryEvent.RefreshNavigate, slot0._refreshNavigate, slot0)
-	slot0:addEventCb(StoryController.instance, StoryEvent.OnSkipClick, slot0._onPrologueSkip, slot0)
-	slot0:addEventCb(StoryController.instance, StoryEvent.HideTopBtns, slot0._onHideBtns, slot0)
-	slot0:addEventCb(StoryController.instance, StoryEvent.OnSkipClick, slot0._onPrologueSkip, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, slot0._setBtnsVisible, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, slot0._setBtnsVisible, slot0)
+function var_0_0.onOpen(arg_18_0)
+	arg_18_0._btnnext:AddClickListener(arg_18_0._btnnextOnClick, arg_18_0)
+	arg_18_0._btnnextMidClick:AddClickListener(arg_18_0._btnnextOnMidClick, arg_18_0)
+	arg_18_0:addEventCb(StoryController.instance, StoryEvent.Skip, arg_18_0._onSkip, arg_18_0)
+	arg_18_0:addEventCb(StoryController.instance, StoryEvent.AutoChange, arg_18_0._onAutoChange, arg_18_0)
+	arg_18_0:addEventCb(StoryController.instance, StoryEvent.ReOpenStoryView, arg_18_0._reOpenStory, arg_18_0)
+	arg_18_0:addEventCb(StoryController.instance, StoryEvent.AllStepFinished, arg_18_0._screenFadeOut, arg_18_0)
+	arg_18_0:addEventCb(StoryController.instance, StoryEvent.RefreshStep, arg_18_0._onUpdateUI, arg_18_0)
+	arg_18_0:addEventCb(StoryController.instance, StoryEvent.SetFullText, arg_18_0._onSetFullText, arg_18_0)
+	arg_18_0:addEventCb(StoryController.instance, StoryEvent.PlayFullText, arg_18_0._onPlayFullText, arg_18_0)
+	arg_18_0:addEventCb(StoryController.instance, StoryEvent.PlayIrregularShakeText, arg_18_0._onPlayIrregularShakeText, arg_18_0)
+	arg_18_0:addEventCb(StoryController.instance, StoryEvent.PlayFullTextOut, arg_18_0._onPlayFullTextOut, arg_18_0)
+	arg_18_0:addEventCb(StoryController.instance, StoryEvent.PlayFullBlurIn, arg_18_0._onPlayFullBlurIn, arg_18_0)
+	arg_18_0:addEventCb(StoryController.instance, StoryEvent.PlayFullTextLineShow, arg_18_0._onPlayLineShow, arg_18_0)
+	arg_18_0:addEventCb(StoryController.instance, StoryEvent.RefreshNavigate, arg_18_0._refreshNavigate, arg_18_0)
+	arg_18_0:addEventCb(StoryController.instance, StoryEvent.OnSkipClick, arg_18_0._onPrologueSkip, arg_18_0)
+	arg_18_0:addEventCb(StoryController.instance, StoryEvent.HideTopBtns, arg_18_0._onHideBtns, arg_18_0)
+	arg_18_0:addEventCb(StoryController.instance, StoryEvent.OnSkipClick, arg_18_0._onPrologueSkip, arg_18_0)
+	arg_18_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, arg_18_0._setBtnsVisible, arg_18_0)
+	arg_18_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_18_0._setBtnsVisible, arg_18_0)
 
 	if StoryModel.instance:getHideBtns() then
-		slot0:setBtnVisible(false)
+		arg_18_0:setBtnVisible(false)
 	end
 
-	slot0:_enterStory()
+	arg_18_0:_enterStory()
 
 	if StoryController.instance:isVersionActivityPV() then
-		gohelper.setActive(slot0._gobtnleft, false)
-		gohelper.setActive(slot0._objskip, false)
-		gohelper.setActive(slot0._btnauto, false)
+		gohelper.setActive(arg_18_0._gobtnleft, false)
+		gohelper.setActive(arg_18_0._objskip, false)
+		gohelper.setActive(arg_18_0._btnauto, false)
 	else
-		gohelper.setActive(slot0._gobtnleft, true)
-		gohelper.setActive(slot0._btnauto, true)
-		gohelper.setActive(slot0._objskip, OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.StorySkip) or StoryController.instance:isReplay() or isDebugBuild or StoryModel.instance:isDirectSkipStory(StoryController.instance._curStoryId))
+		gohelper.setActive(arg_18_0._gobtnleft, true)
+		gohelper.setActive(arg_18_0._btnauto, true)
+
+		local var_18_0 = OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.StorySkip) or StoryController.instance:isReplay()
+		local var_18_1 = StoryModel.instance:isDirectSkipStory(StoryController.instance._curStoryId)
+
+		var_18_0 = var_18_0 or isDebugBuild or var_18_1
+
+		gohelper.setActive(arg_18_0._objskip, var_18_0)
 	end
 
-	slot0:refreshExitBtn()
-	NavigateMgr.instance:addSpace(ViewName.StoryFrontView, slot0._btnnextOnClick, slot0)
-	NavigateMgr.instance:addEscape(ViewName.StoryFrontView, slot0._onEscapeBtnClick, slot0)
+	arg_18_0:refreshExitBtn()
+	NavigateMgr.instance:addSpace(ViewName.StoryFrontView, arg_18_0._btnnextOnClick, arg_18_0)
+	NavigateMgr.instance:addEscape(ViewName.StoryFrontView, arg_18_0._onEscapeBtnClick, arg_18_0)
 end
 
-function slot0.onClose(slot0)
-	slot0._btnnext:RemoveClickListener()
-	slot0:removeEventCb(StoryController.instance, StoryEvent.Skip, slot0._onSkip, slot0)
-	slot0:removeEventCb(StoryController.instance, StoryEvent.AutoChange, slot0._onAutoChange, slot0)
-	slot0._btnnextMidClick:RemoveClickListener()
+function var_0_0.onClose(arg_19_0)
+	arg_19_0._btnnext:RemoveClickListener()
+	arg_19_0:removeEventCb(StoryController.instance, StoryEvent.Skip, arg_19_0._onSkip, arg_19_0)
+	arg_19_0:removeEventCb(StoryController.instance, StoryEvent.AutoChange, arg_19_0._onAutoChange, arg_19_0)
+	arg_19_0._btnnextMidClick:RemoveClickListener()
 
-	if not gohelper.isNil(slot0._touchEventMgr) then
-		slot0._touchEventMgr:ClearAllCallback()
+	if not gohelper.isNil(arg_19_0._touchEventMgr) then
+		arg_19_0._touchEventMgr:ClearAllCallback()
 	end
 
-	slot0:removeEventCb(StoryController.instance, StoryEvent.ReOpenStoryView, slot0._reOpenStory, slot0)
-	slot0:removeEventCb(StoryController.instance, StoryEvent.AllStepFinished, slot0._screenFadeOut, slot0)
-	slot0:removeEventCb(StoryController.instance, StoryEvent.RefreshStep, slot0._onUpdateUI, slot0)
-	slot0:removeEventCb(StoryController.instance, StoryEvent.SetFullText, slot0._onSetFullText, slot0)
-	slot0:removeEventCb(StoryController.instance, StoryEvent.PlayFullText, slot0._onPlayFullText, slot0)
-	slot0:removeEventCb(StoryController.instance, StoryEvent.PlayIrregularShakeText, slot0._onPlayIrregularShakeText, slot0)
-	slot0:removeEventCb(StoryController.instance, StoryEvent.PlayFullTextOut, slot0._onPlayFullTextOut, slot0)
-	slot0:removeEventCb(StoryController.instance, StoryEvent.PlayFullBlurIn, slot0._onPlayFullBlurIn, slot0)
-	slot0:removeEventCb(StoryController.instance, StoryEvent.PlayFullTextLineShow, slot0._onPlayLineShow, slot0)
-	slot0:removeEventCb(StoryController.instance, StoryEvent.RefreshNavigate, slot0._refreshNavigate, slot0)
-	slot0:removeEventCb(StoryController.instance, StoryEvent.OnSkipClick, slot0._onPrologueSkip, slot0)
-	slot0:removeEventCb(StoryController.instance, StoryEvent.HideTopBtns, slot0._onHideBtns, slot0)
-	slot0:removeEventCb(StoryController.instance, StoryEvent.OnSkipClick, slot0._onPrologueSkip, slot0)
-	slot0:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, slot0._setBtnsVisible, slot0)
-	slot0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, slot0._setBtnsVisible, slot0)
+	arg_19_0:removeEventCb(StoryController.instance, StoryEvent.ReOpenStoryView, arg_19_0._reOpenStory, arg_19_0)
+	arg_19_0:removeEventCb(StoryController.instance, StoryEvent.AllStepFinished, arg_19_0._screenFadeOut, arg_19_0)
+	arg_19_0:removeEventCb(StoryController.instance, StoryEvent.RefreshStep, arg_19_0._onUpdateUI, arg_19_0)
+	arg_19_0:removeEventCb(StoryController.instance, StoryEvent.SetFullText, arg_19_0._onSetFullText, arg_19_0)
+	arg_19_0:removeEventCb(StoryController.instance, StoryEvent.PlayFullText, arg_19_0._onPlayFullText, arg_19_0)
+	arg_19_0:removeEventCb(StoryController.instance, StoryEvent.PlayIrregularShakeText, arg_19_0._onPlayIrregularShakeText, arg_19_0)
+	arg_19_0:removeEventCb(StoryController.instance, StoryEvent.PlayFullTextOut, arg_19_0._onPlayFullTextOut, arg_19_0)
+	arg_19_0:removeEventCb(StoryController.instance, StoryEvent.PlayFullBlurIn, arg_19_0._onPlayFullBlurIn, arg_19_0)
+	arg_19_0:removeEventCb(StoryController.instance, StoryEvent.PlayFullTextLineShow, arg_19_0._onPlayLineShow, arg_19_0)
+	arg_19_0:removeEventCb(StoryController.instance, StoryEvent.RefreshNavigate, arg_19_0._refreshNavigate, arg_19_0)
+	arg_19_0:removeEventCb(StoryController.instance, StoryEvent.OnSkipClick, arg_19_0._onPrologueSkip, arg_19_0)
+	arg_19_0:removeEventCb(StoryController.instance, StoryEvent.HideTopBtns, arg_19_0._onHideBtns, arg_19_0)
+	arg_19_0:removeEventCb(StoryController.instance, StoryEvent.OnSkipClick, arg_19_0._onPrologueSkip, arg_19_0)
+	arg_19_0:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, arg_19_0._setBtnsVisible, arg_19_0)
+	arg_19_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_19_0._setBtnsVisible, arg_19_0)
 end
 
-function slot0._onSkip(slot0)
-	gohelper.setActive(slot0._goepisode, false)
-	gohelper.setActive(slot0._gochapteropen, false)
+function var_0_0._onSkip(arg_20_0)
+	gohelper.setActive(arg_20_0._goepisode, false)
+	gohelper.setActive(arg_20_0._gochapteropen, false)
 end
 
-function slot0._onAutoChange(slot0)
-	slot1 = StoryModel.instance:isStoryAuto()
+function var_0_0._onAutoChange(arg_21_0)
+	local var_21_0 = StoryModel.instance:isStoryAuto()
 
-	gohelper.setActive(slot0._imageautooff.gameObject, not slot1)
-	gohelper.setActive(slot0._imageautoon.gameObject, slot1)
-	SLFramework.UGUI.GuiHelper.SetColor(slot0._imagehide, slot1 and "#333333" or "#FFFFFF")
+	gohelper.setActive(arg_21_0._imageautooff.gameObject, not var_21_0)
+	gohelper.setActive(arg_21_0._imageautoon.gameObject, var_21_0)
+
+	local var_21_1 = var_21_0 and "#333333" or "#FFFFFF"
+
+	SLFramework.UGUI.GuiHelper.SetColor(arg_21_0._imagehide, var_21_1)
 end
 
-function slot0._reOpenStory(slot0)
-	slot0._reOpen = true
+function var_0_0._reOpenStory(arg_22_0)
+	arg_22_0._reOpen = true
 
-	slot0:_enterStory()
+	arg_22_0:_enterStory()
 end
 
-function slot0._onSetFullText(slot0, slot1)
-	slot0._frontItem:showFullScreenText(false, slot1)
+function var_0_0._onSetFullText(arg_23_0, arg_23_1)
+	arg_23_0._frontItem:showFullScreenText(false, arg_23_1)
 end
 
-function slot0._onPlayFullText(slot0, slot1)
-	slot0._stepCo = slot1
+function var_0_0._onPlayFullText(arg_24_0, arg_24_1)
+	arg_24_0._stepCo = arg_24_1
 
-	if slot0._stepCo.conversation.effType == StoryEnum.ConversationEffectType.Fade then
-		slot0._frontItem:playTextFadeIn(slot0._stepCo, slot0._onFullTextShowFinished, slot0)
-	elseif slot0._stepCo.conversation.effType == StoryEnum.ConversationEffectType.WordByWord then
-		slot0._frontItem:wordByWord(slot0._stepCo, slot0._onFullTextShowFinished, slot0)
+	if arg_24_0._stepCo.conversation.effType == StoryEnum.ConversationEffectType.Fade then
+		arg_24_0._frontItem:playTextFadeIn(arg_24_0._stepCo, arg_24_0._onFullTextShowFinished, arg_24_0)
+	elseif arg_24_0._stepCo.conversation.effType == StoryEnum.ConversationEffectType.WordByWord then
+		arg_24_0._frontItem:wordByWord(arg_24_0._stepCo, arg_24_0._onFullTextShowFinished, arg_24_0)
 	end
 end
 
-function slot0._onPlayIrregularShakeText(slot0, slot1)
-	slot0._stepCo = slot1
+function var_0_0._onPlayIrregularShakeText(arg_25_0, arg_25_1)
+	arg_25_0._stepCo = arg_25_1
 
-	slot0._frontItem:playIrregularShakeText(slot0._stepCo, slot0._onFullTextShowFinished, slot0)
+	arg_25_0._frontItem:playIrregularShakeText(arg_25_0._stepCo, arg_25_0._onFullTextShowFinished, arg_25_0)
 end
 
-function slot0._onPlayFullTextOut(slot0)
-	slot0._frontItem:playFullTextFadeOut()
+function var_0_0._onPlayFullTextOut(arg_26_0)
+	arg_26_0._frontItem:playFullTextFadeOut()
 end
 
-function slot0._onPlayFullBlurIn(slot0, slot1, slot2)
-	if slot1 < 1 then
+function var_0_0._onPlayFullBlurIn(arg_27_0, arg_27_1, arg_27_2)
+	if arg_27_1 < 1 then
 		return
 	end
 
-	PostProcessingMgr.instance:setDesamplingRate(1)
-
-	slot0._blurTweenId = ZProj.TweenHelper.DOTweenFloat(0, ({
+	local var_27_0 = {
 		0.3,
 		0.6,
 		1
-	})[slot1], slot2, slot0._fadeUpdate, nil, slot0, nil, EaseType.Linear)
+	}
+
+	PostProcessingMgr.instance:setDesamplingRate(1)
+
+	arg_27_0._blurTweenId = ZProj.TweenHelper.DOTweenFloat(0, var_27_0[arg_27_1], arg_27_2, arg_27_0._fadeUpdate, nil, arg_27_0, nil, EaseType.Linear)
 end
 
-function slot0._fadeUpdate(slot0, slot1)
-	PostProcessingMgr.instance:setBlurWeight(slot1)
+function var_0_0._fadeUpdate(arg_28_0, arg_28_1)
+	PostProcessingMgr.instance:setBlurWeight(arg_28_1)
 end
 
-function slot0._onPlayLineShow(slot0, slot1, slot2)
-	slot0._stepCo = slot2
+function var_0_0._onPlayLineShow(arg_29_0, arg_29_1, arg_29_2)
+	arg_29_0._stepCo = arg_29_2
 
-	slot0._frontItem:lineShow(slot1, slot0._stepCo, slot0._onFullTextShowFinished, slot0)
+	arg_29_0._frontItem:lineShow(arg_29_1, arg_29_0._stepCo, arg_29_0._onFullTextShowFinished, arg_29_0)
 end
 
-function slot0._onFullTextShowFinished(slot0)
+function var_0_0._onFullTextShowFinished(arg_30_0)
 	StoryController.instance:dispatchEvent(StoryEvent.FullTextLineShowFinished)
 end
 
-function slot0._onUpdateUI(slot0, slot1)
-	if slot0._blurTweenId then
-		ZProj.TweenHelper.KillById(slot0._blurTweenId)
+function var_0_0._onUpdateUI(arg_31_0, arg_31_1)
+	if arg_31_0._blurTweenId then
+		ZProj.TweenHelper.KillById(arg_31_0._blurTweenId)
 
-		slot0._blurTweenId = nil
+		arg_31_0._blurTweenId = nil
 	end
 
-	slot2 = slot1.stepType == StoryEnum.StepType.Normal
-	slot3 = slot2 and "#FFFFFF" or "#292218"
-	slot4 = slot2 and "#FFFFFF" or "#333333"
+	local var_31_0 = arg_31_1.stepType == StoryEnum.StepType.Normal
+	local var_31_1 = var_31_0 and "#FFFFFF" or "#292218"
+	local var_31_2 = var_31_0 and "#FFFFFF" or "#333333"
 
-	SLFramework.UGUI.GuiHelper.SetColor(slot0._txtskip, slot3)
-	SLFramework.UGUI.GuiHelper.SetColor(slot0._imageskip, slot4)
-	SLFramework.UGUI.GuiHelper.SetColor(slot0._txtauto, slot3)
-	SLFramework.UGUI.GuiHelper.SetColor(slot0._imageautooff, slot4)
-	SLFramework.UGUI.GuiHelper.SetColor(slot0._imageautoon, slot4)
-	SLFramework.UGUI.GuiHelper.SetColor(slot0._imageskiptxt, slot3)
-	SLFramework.UGUI.GuiHelper.SetColor(slot0._imageautotxt, slot3)
-	SLFramework.UGUI.GuiHelper.SetColor(slot0._txtexit, slot3)
-	SLFramework.UGUI.GuiHelper.SetColor(slot0._imageexittxt, slot3)
-	SLFramework.UGUI.GuiHelper.SetColor(slot0._imageexit, slot4)
+	SLFramework.UGUI.GuiHelper.SetColor(arg_31_0._txtskip, var_31_1)
+	SLFramework.UGUI.GuiHelper.SetColor(arg_31_0._imageskip, var_31_2)
+	SLFramework.UGUI.GuiHelper.SetColor(arg_31_0._txtauto, var_31_1)
+	SLFramework.UGUI.GuiHelper.SetColor(arg_31_0._imageautooff, var_31_2)
+	SLFramework.UGUI.GuiHelper.SetColor(arg_31_0._imageautoon, var_31_2)
+	SLFramework.UGUI.GuiHelper.SetColor(arg_31_0._imageskiptxt, var_31_1)
+	SLFramework.UGUI.GuiHelper.SetColor(arg_31_0._imageautotxt, var_31_1)
+	SLFramework.UGUI.GuiHelper.SetColor(arg_31_0._txtexit, var_31_1)
+	SLFramework.UGUI.GuiHelper.SetColor(arg_31_0._imageexittxt, var_31_1)
+	SLFramework.UGUI.GuiHelper.SetColor(arg_31_0._imageexit, var_31_2)
 
-	slot0._stepCo = StoryStepModel.instance:getStepListById(slot1.stepId)
+	arg_31_0._stepCo = StoryStepModel.instance:getStepListById(arg_31_1.stepId)
 
-	if slot0:_isCgStep() or StoryModel.instance:getHideBtns() then
-		slot0:setBtnVisible(false)
+	if arg_31_0:_isCgStep() or StoryModel.instance:getHideBtns() then
+		arg_31_0:setBtnVisible(false)
 	else
-		slot0:setBtnVisible(true)
+		arg_31_0:setBtnVisible(true)
 	end
 
-	if not (slot0._stepCo.conversation.type == StoryEnum.ConversationType.ScreenDialog) then
-		slot0._frontItem:showFullScreenText(false, "")
+	if not (arg_31_0._stepCo.conversation.type == StoryEnum.ConversationType.ScreenDialog) then
+		arg_31_0._frontItem:showFullScreenText(false, "")
 	end
 
-	slot0:refreshExitBtn()
+	arg_31_0:refreshExitBtn()
 end
 
-function slot0._isCgStep(slot0)
+function var_0_0._isCgStep(arg_32_0)
 	if StoryController.instance._curStoryId ~= 100001 then
 		return false
 	end
@@ -454,9 +478,9 @@ function slot0._isCgStep(slot0)
 		return false
 	end
 
-	if slot0._stepCo then
-		for slot4, slot5 in pairs(slot0._stepCo.videoList) do
-			if slot5.orderType ~= StoryEnum.VideoOrderType.Destroy then
+	if arg_32_0._stepCo then
+		for iter_32_0, iter_32_1 in pairs(arg_32_0._stepCo.videoList) do
+			if iter_32_1.orderType ~= StoryEnum.VideoOrderType.Destroy then
 				return true
 			end
 		end
@@ -465,234 +489,240 @@ function slot0._isCgStep(slot0)
 	return false
 end
 
-function slot0._enterStory(slot0)
-	TaskDispatcher.cancelTask(slot0._startStory, slot0)
-	TaskDispatcher.cancelTask(slot0._viewFadeIn, slot0)
-	slot0._frontItem:cancelViewFadeOut()
-	gohelper.setActive(slot0._goblock, false)
-	slot0:_screenFadeIn()
+function var_0_0._enterStory(arg_33_0)
+	TaskDispatcher.cancelTask(arg_33_0._startStory, arg_33_0)
+	TaskDispatcher.cancelTask(arg_33_0._viewFadeIn, arg_33_0)
+	arg_33_0._frontItem:cancelViewFadeOut()
+	gohelper.setActive(arg_33_0._goblock, false)
+	arg_33_0:_screenFadeIn()
 end
 
-function slot0._screenFadeIn(slot0)
+function var_0_0._screenFadeIn(arg_34_0)
 	if GuideModel.instance:isDoingFirstGuide() and not GuideController.instance:isForbidGuides() and GameSceneMgr.instance:getCurSceneType() == SceneType.Fight then
 		StoryController.instance:startStory()
 
 		return
 	end
 
-	StoryModel.instance.skipFade = StoryModel.instance:isTypeSkip(StoryEnum.SkipType.InDarkFade, StoryController.instance._curStoryId)
+	local var_34_0 = StoryModel.instance:isTypeSkip(StoryEnum.SkipType.InDarkFade, StoryController.instance._curStoryId)
 
-	slot0._frontItem:setFullTopShow()
-	gohelper.setActive(slot0.viewGO, true)
+	StoryModel.instance.skipFade = var_34_0
 
-	if slot0._reOpen and slot1 then
-		slot0:_startStory()
+	arg_34_0._frontItem:setFullTopShow()
+	gohelper.setActive(arg_34_0.viewGO, true)
+
+	if arg_34_0._reOpen and var_34_0 then
+		arg_34_0:_startStory()
 	else
-		TaskDispatcher.runDelay(slot0._startStory, slot0, 0.5)
+		TaskDispatcher.runDelay(arg_34_0._startStory, arg_34_0, 0.5)
 	end
 end
 
-function slot0._startStory(slot0)
+function var_0_0._startStory(arg_35_0)
 	StoryController.instance:startStory()
-	TaskDispatcher.runDelay(slot0._viewFadeIn, slot0, 0.05)
+	TaskDispatcher.runDelay(arg_35_0._viewFadeIn, arg_35_0, 0.05)
 end
 
-function slot0._viewFadeIn(slot0)
+function var_0_0._viewFadeIn(arg_36_0)
 	if StoryController.instance._showBlur then
-		slot0._dofFactor = PostProcessingMgr.instance:getUnitPPValue("DofFactor")
-		slot0._unitCameraActive = CameraMgr.instance:getUnitCamera().gameObject.activeSelf
+		arg_36_0._dofFactor = PostProcessingMgr.instance:getUnitPPValue("DofFactor")
+		arg_36_0._unitCameraActive = CameraMgr.instance:getUnitCamera().gameObject.activeSelf
 
 		gohelper.setActive(PostProcessingMgr.instance._unitPPVolume.gameObject, true)
 		gohelper.setActive(CameraMgr.instance:getUnitCamera(), true)
 
-		slot0._blurTweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, 1.5, slot0._blurUpdate, slot0._blurInFinished, slot0, EaseType.Linear)
+		arg_36_0._blurTweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, 1.5, arg_36_0._blurUpdate, arg_36_0._blurInFinished, arg_36_0, EaseType.Linear)
 
 		return
 	end
 
-	slot0._frontItem:playStoryViewIn()
+	arg_36_0._frontItem:playStoryViewIn()
 end
 
-function slot0._blurUpdate(slot0, slot1)
-	PostProcessingMgr.instance:setUnitPPValue("dofFactor", slot1)
-	PostProcessingMgr.instance:setUnitPPValue("DofFactor", slot1)
+function var_0_0._blurUpdate(arg_37_0, arg_37_1)
+	PostProcessingMgr.instance:setUnitPPValue("dofFactor", arg_37_1)
+	PostProcessingMgr.instance:setUnitPPValue("DofFactor", arg_37_1)
 end
 
-function slot0._blurInFinished(slot0)
-	slot0:_blurUpdate(1)
+function var_0_0._blurInFinished(arg_38_0)
+	arg_38_0:_blurUpdate(1)
 
-	slot0._blurTweenId = nil
+	arg_38_0._blurTweenId = nil
 end
 
-function slot0._screenFadeOut(slot0, slot1)
+function var_0_0._screenFadeOut(arg_39_0, arg_39_1)
 	StoryModel.instance:enableClick(false)
-	gohelper.setActive(slot0._goblock, true)
-	gohelper.setActive(slot0._goepisode, false)
-	gohelper.setActive(slot0._gochapteropen, false)
-	slot0:setBtnVisible(false)
+	gohelper.setActive(arg_39_0._goblock, true)
+	gohelper.setActive(arg_39_0._goepisode, false)
+	gohelper.setActive(arg_39_0._gochapteropen, false)
+	arg_39_0:setBtnVisible(false)
 
-	if slot0._exitBtn then
-		slot0._exitBtn:setActive(false)
+	if arg_39_0._exitBtn then
+		arg_39_0._exitBtn:setActive(false)
 	end
 
 	if StoryController.instance._showBlur then
-		slot0._blurTweenId = ZProj.TweenHelper.DOTweenFloat(1, 0, 1.5, slot0._blurUpdate, slot0._blurOutFinished, slot0, EaseType.Linear)
+		arg_39_0._blurTweenId = ZProj.TweenHelper.DOTweenFloat(1, 0, 1.5, arg_39_0._blurUpdate, arg_39_0._blurOutFinished, arg_39_0, EaseType.Linear)
 
 		return
 	end
 
-	slot0._frontItem:playStoryViewOut(slot0._onScreenFadeOut, slot0, slot1)
+	arg_39_0._frontItem:playStoryViewOut(arg_39_0._onScreenFadeOut, arg_39_0, arg_39_1)
 end
 
-function slot0._blurOutFinished(slot0)
-	slot0:_blurUpdate(0)
-	PostProcessingMgr.instance:setUnitPPValue("dofFactor", slot0._dofFactor or 0)
-	PostProcessingMgr.instance:setUnitPPValue("DofFactor", slot0._dofFactor or 0)
-	gohelper.setActive(CameraMgr.instance:getUnitCamera().gameObject, slot0._unitCameraActive)
+function var_0_0._blurOutFinished(arg_40_0)
+	arg_40_0:_blurUpdate(0)
+	PostProcessingMgr.instance:setUnitPPValue("dofFactor", arg_40_0._dofFactor or 0)
+	PostProcessingMgr.instance:setUnitPPValue("DofFactor", arg_40_0._dofFactor or 0)
+	gohelper.setActive(CameraMgr.instance:getUnitCamera().gameObject, arg_40_0._unitCameraActive)
 	StoryController.instance:finished()
-	slot0._frontItem:enterStoryFinish()
-	slot0:_onScreenFadeOut()
+	arg_40_0._frontItem:enterStoryFinish()
+	arg_40_0:_onScreenFadeOut()
 end
 
-function slot0._onScreenFadeOut(slot0)
-	if slot0._navigateItem then
-		slot0._navigateItem:clear()
+function var_0_0._onScreenFadeOut(arg_41_0)
+	if arg_41_0._navigateItem then
+		arg_41_0._navigateItem:clear()
 	end
 end
 
-function slot0._refreshNavigate(slot0, slot1)
-	slot2 = false
-	slot3 = {}
+function var_0_0._refreshNavigate(arg_42_0, arg_42_1)
+	local var_42_0 = false
+	local var_42_1 = {}
 
-	for slot7, slot8 in pairs(slot1) do
-		if slot8.navigateType == StoryEnum.NavigateType.HideBtns then
-			slot2 = true
+	for iter_42_0, iter_42_1 in pairs(arg_42_1) do
+		if iter_42_1.navigateType == StoryEnum.NavigateType.HideBtns then
+			var_42_0 = true
 		else
-			table.insert(slot3, slot8)
+			table.insert(var_42_1, iter_42_1)
 		end
 	end
 
-	slot0:setBtnVisible(not slot2)
-	slot0:refreshExitBtn()
-	StoryModel.instance:setHideBtns(slot2)
+	arg_42_0:setBtnVisible(not var_42_0)
+	arg_42_0:refreshExitBtn()
+	StoryModel.instance:setHideBtns(var_42_0)
 
-	if #slot3 > 0 then
-		if not slot0._navigateItem then
-			slot0._navigateItem = StoryNavigateItem.New()
+	if #var_42_1 > 0 then
+		if not arg_42_0._navigateItem then
+			arg_42_0._navigateItem = StoryNavigateItem.New()
 
-			slot0._navigateItem:init(slot0._gonavigate)
-			slot0._navigateItem:show(slot3)
+			arg_42_0._navigateItem:init(arg_42_0._gonavigate)
+			arg_42_0._navigateItem:show(var_42_1)
 		else
-			slot0._navigateItem:show(slot3)
+			arg_42_0._navigateItem:show(var_42_1)
 		end
-	elseif slot0._navigateItem then
-		slot0._navigateItem:clear()
+	elseif arg_42_0._navigateItem then
+		arg_42_0._navigateItem:clear()
 	end
 end
 
-function slot0.setBtnVisible(slot0, slot1)
+function var_0_0.setBtnVisible(arg_43_0, arg_43_1)
 	if StoryModel.instance:getHideBtns() then
-		gohelper.setActive(slot0._gobtns, false)
+		gohelper.setActive(arg_43_0._gobtns, false)
 
 		return
 	end
 
-	if slot0.btnVisible == slot1 then
+	if arg_43_0.btnVisible == arg_43_1 then
 		return
 	end
 
-	slot0.btnVisible = slot1
+	arg_43_0.btnVisible = arg_43_1
 
-	gohelper.setActive(slot0._gobtns, slot1)
+	gohelper.setActive(arg_43_0._gobtns, arg_43_1)
 end
 
-function slot0._setBtnsVisible(slot0, slot1)
+function var_0_0._setBtnsVisible(arg_44_0, arg_44_1)
 	if StoryController.instance._showBlur then
 		StoryModel.instance:setUIActive(true)
 	else
-		StoryModel.instance:setUIActive(StoryModel.instance:getUIActive())
+		local var_44_0 = StoryModel.instance:getUIActive()
+
+		StoryModel.instance:setUIActive(var_44_0)
 	end
 
-	if slot1 == ViewName.StoryLogView then
-		gohelper.setActive(slot0._gobtnleft, not slot0._gobtnleft.activeInHierarchy)
-	end
-end
+	if arg_44_1 == ViewName.StoryLogView then
+		local var_44_1 = arg_44_0._gobtnleft.activeInHierarchy
 
-function slot0._onHideBtns(slot0, slot1)
-	StoryModel.instance:setHideBtns(slot1)
-	slot0:setBtnVisible(not slot1)
-
-	if slot1 and slot0._exitBtn then
-		slot0._exitBtn:setActive(false)
+		gohelper.setActive(arg_44_0._gobtnleft, not var_44_1)
 	end
 end
 
-function slot0.startHideSkipTask(slot0)
-	slot0:closeHideSkipTask()
-	TaskDispatcher.runDelay(slot0._hideSkipBtn, slot0, 3)
-end
+function var_0_0._onHideBtns(arg_45_0, arg_45_1)
+	StoryModel.instance:setHideBtns(arg_45_1)
+	arg_45_0:setBtnVisible(not arg_45_1)
 
-function slot0._hideSkipBtn(slot0)
-	gohelper.setActive(slot0._objskip, false)
-end
-
-function slot0.closeHideSkipTask(slot0)
-	TaskDispatcher.cancelTask(slot0._hideSkipBtn, slot0)
-end
-
-function slot0.refreshExitBtn(slot0)
-	if slot0._exitBtn then
-		slot0._exitBtn:refresh(slot0.btnVisible)
+	if arg_45_1 and arg_45_0._exitBtn then
+		arg_45_0._exitBtn:setActive(false)
 	end
 end
 
-function slot0.resetRightBtnPos(slot0)
-	if slot0._exitBtn and slot0._exitBtn.isActive then
-		recthelper.setAnchorX(slot0._gobtnright.transform, -260)
-		gohelper.setActive(slot0._goshadow, slot0._exitBtn.isInVideo and true or false)
+function var_0_0.startHideSkipTask(arg_46_0)
+	arg_46_0:closeHideSkipTask()
+	TaskDispatcher.runDelay(arg_46_0._hideSkipBtn, arg_46_0, 3)
+end
+
+function var_0_0._hideSkipBtn(arg_47_0)
+	gohelper.setActive(arg_47_0._objskip, false)
+end
+
+function var_0_0.closeHideSkipTask(arg_48_0)
+	TaskDispatcher.cancelTask(arg_48_0._hideSkipBtn, arg_48_0)
+end
+
+function var_0_0.refreshExitBtn(arg_49_0)
+	if arg_49_0._exitBtn then
+		arg_49_0._exitBtn:refresh(arg_49_0.btnVisible)
+	end
+end
+
+function var_0_0.resetRightBtnPos(arg_50_0)
+	if arg_50_0._exitBtn and arg_50_0._exitBtn.isActive then
+		recthelper.setAnchorX(arg_50_0._gobtnright.transform, -260)
+		gohelper.setActive(arg_50_0._goshadow, arg_50_0._exitBtn.isInVideo and true or false)
 	else
-		recthelper.setAnchorX(slot0._gobtnright.transform, -62)
-		gohelper.setActive(slot0._goshadow, false)
+		recthelper.setAnchorX(arg_50_0._gobtnright.transform, -62)
+		gohelper.setActive(arg_50_0._goshadow, false)
 	end
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_51_0)
 	if StoryController.instance._showBlur then
-		PostProcessingMgr.instance:setUnitPPValue("dofFactor", slot0._dofFactor or 0)
-		PostProcessingMgr.instance:setUnitPPValue("DofFactor", slot0._dofFactor or 0)
+		PostProcessingMgr.instance:setUnitPPValue("dofFactor", arg_51_0._dofFactor or 0)
+		PostProcessingMgr.instance:setUnitPPValue("DofFactor", arg_51_0._dofFactor or 0)
 
 		StoryController.instance._showBlur = false
 	end
 
 	StoryController.instance:dispatchEvent(StoryEvent.StoryFrontViewDestroy)
-	TaskDispatcher.cancelTask(slot0._startStory, slot0)
-	TaskDispatcher.cancelTask(slot0._viewFadeIn, slot0)
+	TaskDispatcher.cancelTask(arg_51_0._startStory, arg_51_0)
+	TaskDispatcher.cancelTask(arg_51_0._viewFadeIn, arg_51_0)
 
-	if slot0._blurTweenId then
-		ZProj.TweenHelper.KillById(slot0._blurTweenId)
+	if arg_51_0._blurTweenId then
+		ZProj.TweenHelper.KillById(arg_51_0._blurTweenId)
 
-		slot0._blurTweenId = nil
+		arg_51_0._blurTweenId = nil
 	end
 
-	slot0:closeHideSkipTask()
+	arg_51_0:closeHideSkipTask()
 
-	if slot0._frontItem then
-		slot0._frontItem:destroy()
+	if arg_51_0._frontItem then
+		arg_51_0._frontItem:destroy()
 
-		slot0._frontItem = nil
+		arg_51_0._frontItem = nil
 	end
 
-	if slot0._navigateItem then
-		slot0._navigateItem:destroy()
+	if arg_51_0._navigateItem then
+		arg_51_0._navigateItem:destroy()
 
-		slot0._navigateItem = nil
+		arg_51_0._navigateItem = nil
 	end
 
-	if slot0._exitBtn then
-		slot0._exitBtn:destroy()
+	if arg_51_0._exitBtn then
+		arg_51_0._exitBtn:destroy()
 
-		slot0._exitBtn = nil
+		arg_51_0._exitBtn = nil
 	end
 end
 
-return slot0
+return var_0_0

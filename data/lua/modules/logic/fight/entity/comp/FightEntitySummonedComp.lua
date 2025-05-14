@@ -1,37 +1,42 @@
-module("modules.logic.fight.entity.comp.FightEntitySummonedComp", package.seeall)
+﻿module("modules.logic.fight.entity.comp.FightEntitySummonedComp", package.seeall)
 
-slot0 = class("FightEntitySummonedComp", FightBaseClass)
+local var_0_0 = class("FightEntitySummonedComp", FightBaseClass)
 
-function slot0.onAwake(slot0, slot1)
-	slot0._entity = slot1
+function var_0_0.onAwake(arg_1_0, arg_1_1)
+	arg_1_0._entity = arg_1_1
 
-	slot0:com_registFightEvent(FightEvent.SummonedAdd, slot0._onSummonedAdd)
-	slot0:_refreshSummoned()
+	arg_1_0:com_registFightEvent(FightEvent.SummonedAdd, arg_1_0._onSummonedAdd)
+	arg_1_0:_refreshSummoned()
 end
 
-function slot0._refreshSummoned(slot0)
-	for slot7, slot8 in pairs(slot0._entity:getMO():getSummonedInfo():getDataDic()) do
-		slot0:_instantiateSummoned(slot8)
+function var_0_0._refreshSummoned(arg_2_0)
+	local var_2_0 = arg_2_0._entity:getMO():getSummonedInfo():getDataDic()
+
+	for iter_2_0, iter_2_1 in pairs(var_2_0) do
+		arg_2_0:_instantiateSummoned(iter_2_1)
 	end
 end
 
-function slot0._instantiateSummoned(slot0, slot1)
-	if _G["FightEntitySummonedItem" .. slot1.summonedId] then
-		slot0:newClass(_G[slot2], slot0._entity, slot1)
+function var_0_0._instantiateSummoned(arg_3_0, arg_3_1)
+	local var_3_0 = "FightEntitySummonedItem" .. arg_3_1.summonedId
+
+	if _G[var_3_0] then
+		arg_3_0:newClass(_G[var_3_0], arg_3_0._entity, arg_3_1)
 	else
-		slot0:newClass(FightEntitySummonedItem, slot0._entity, slot1)
+		arg_3_0:newClass(FightEntitySummonedItem, arg_3_0._entity, arg_3_1)
 	end
 end
 
-function slot0._onSummonedAdd(slot0, slot1, slot2)
-	if slot1 ~= slot0._entity.id then
+function var_0_0._onSummonedAdd(arg_4_0, arg_4_1, arg_4_2)
+	if arg_4_1 ~= arg_4_0._entity.id then
 		return
 	end
 
-	slot0:_instantiateSummoned(slot2)
+	arg_4_0:_instantiateSummoned(arg_4_2)
 end
 
-function slot0.releaseSelf(slot0)
+function var_0_0.releaseSelf(arg_5_0)
+	return
 end
 
-return slot0
+return var_0_0

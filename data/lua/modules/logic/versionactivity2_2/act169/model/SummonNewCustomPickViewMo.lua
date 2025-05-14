@@ -1,11 +1,11 @@
-module("modules.logic.versionactivity2_2.act169.model.SummonNewCustomPickViewMo", package.seeall)
+﻿module("modules.logic.versionactivity2_2.act169.model.SummonNewCustomPickViewMo", package.seeall)
 
-slot0 = class("SummonNewCustomPickViewMo")
+local var_0_0 = class("SummonNewCustomPickViewMo")
 
-function slot0.ctor(slot0, slot1, slot2)
-	slot0.activityId = slot1
-	slot0.heroId = slot2
-	slot0.selectId = slot2
+function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0.activityId = arg_1_1
+	arg_1_0.heroId = arg_1_2
+	arg_1_0.selectId = arg_1_2
 end
 
-return slot0
+return var_0_0

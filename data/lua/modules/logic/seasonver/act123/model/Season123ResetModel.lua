@@ -1,133 +1,155 @@
-module("modules.logic.seasonver.act123.model.Season123ResetModel", package.seeall)
+﻿module("modules.logic.seasonver.act123.model.Season123ResetModel", package.seeall)
 
-slot0 = class("Season123ResetModel", BaseModel)
-slot0.EmptySelect = -1
+local var_0_0 = class("Season123ResetModel", BaseModel)
 
-function slot0.release(slot0)
+var_0_0.EmptySelect = -1
+
+function var_0_0.release(arg_1_0)
+	return
 end
 
-function slot0.init(slot0, slot1, slot2, slot3)
-	slot0.activityId = slot1
-	slot0.stage = slot2
+function var_0_0.init(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
+	arg_2_0.activityId = arg_2_1
+	arg_2_0.stage = arg_2_2
 
-	slot0:initEpisodeList()
-	slot0:initDefaultSelected(slot3)
+	arg_2_0:initEpisodeList()
+	arg_2_0:initDefaultSelected(arg_2_3)
 end
 
-function slot0.initEpisodeList(slot0)
-	slot1 = {}
+function var_0_0.initEpisodeList(arg_3_0)
+	local var_3_0 = {}
+	local var_3_1 = Season123Config.instance:getSeasonEpisodeByStage(arg_3_0.activityId, arg_3_0.stage)
 
-	logNormal("episode list length : " .. tostring(#Season123Config.instance:getSeasonEpisodeByStage(slot0.activityId, slot0.stage)))
+	logNormal("episode list length : " .. tostring(#var_3_1))
 
-	if Season123Model.instance:getActInfo(slot0.activityId):getStageMO(slot0.stage) then
-		for slot8 = 1, #slot2 do
-			slot9 = slot2[slot8]
-			slot11 = Season123EpisodeListMO.New()
+	local var_3_2 = Season123Model.instance:getActInfo(arg_3_0.activityId):getStageMO(arg_3_0.stage)
 
-			slot11:init(slot4.episodeMap[slot9.layer], slot9)
-			table.insert(slot1, slot11)
+	if var_3_2 then
+		for iter_3_0 = 1, #var_3_1 do
+			local var_3_3 = var_3_1[iter_3_0]
+			local var_3_4 = var_3_2.episodeMap[var_3_3.layer]
+			local var_3_5 = Season123EpisodeListMO.New()
+
+			var_3_5:init(var_3_4, var_3_3)
+			table.insert(var_3_0, var_3_5)
 		end
 	end
 
-	slot0:setList(slot1)
+	arg_3_0:setList(var_3_0)
 end
 
-function slot0.isEpisodeUnlock(slot0, slot1)
-	slot2 = Season123Model.instance:getActInfo(slot0.activityId)
+function var_0_0.isEpisodeUnlock(arg_4_0, arg_4_1)
+	local var_4_0 = Season123Model.instance:getActInfo(arg_4_0.activityId)
 
-	if slot0:getById(slot1).isFinished then
+	if arg_4_0:getById(arg_4_1).isFinished then
 		return true
 	end
 
-	if slot1 <= 1 then
-		if not slot2 then
+	if arg_4_1 <= 1 then
+		if not var_4_0 then
 			return false
 		end
 
-		return slot0.stage == slot2.stage
+		return arg_4_0.stage == var_4_0.stage
 	end
 
-	if not slot0:getById(slot1 - 1) or not slot4.isFinished then
+	local var_4_1 = arg_4_0:getById(arg_4_1 - 1)
+
+	if not var_4_1 or not var_4_1.isFinished then
 		return false
 	end
 
 	return true
 end
 
-function slot0.initDefaultSelected(slot0, slot1)
-	slot0.layer = slot1
+function var_0_0.initDefaultSelected(arg_5_0, arg_5_1)
+	arg_5_0.layer = arg_5_1
 
-	slot0:updateHeroList()
+	arg_5_0:updateHeroList()
 end
 
-function slot0.getCurrentChallengeLayer(slot0)
-	if not slot0:getList() or #slot1 <= 0 then
+function var_0_0.getCurrentChallengeLayer(arg_6_0)
+	local var_6_0 = arg_6_0:getList()
+
+	if not var_6_0 or #var_6_0 <= 0 then
 		return 0
 	end
 
-	for slot5 = 1, #slot1 do
-		if not slot1[slot5].isFinished then
-			return slot5
+	for iter_6_0 = 1, #var_6_0 do
+		if not var_6_0[iter_6_0].isFinished then
+			return iter_6_0
 		end
 	end
 
-	return slot1[#slot1].cfg.layer
+	return var_6_0[#var_6_0].cfg.layer
 end
 
-function slot0.getStageCO(slot0)
-	return Season123Config.instance:getStageCo(slot0.activityId, slot0.stage)
+function var_0_0.getStageCO(arg_7_0)
+	return Season123Config.instance:getStageCo(arg_7_0.activityId, arg_7_0.stage)
 end
 
-function slot0.getSelectLayerCO(slot0)
-	if slot0.layer then
-		return Season123Config.instance:getSeasonEpisodeCo(slot0.activityId, slot0.stage, slot0.layer)
+function var_0_0.getSelectLayerCO(arg_8_0)
+	if arg_8_0.layer then
+		return Season123Config.instance:getSeasonEpisodeCo(arg_8_0.activityId, arg_8_0.stage, arg_8_0.layer)
 	end
 end
 
-function slot0.updateHeroList(slot0)
-	slot0._showHeroMOList = {}
+function var_0_0.updateHeroList(arg_9_0)
+	arg_9_0._showHeroMOList = {}
 
-	if slot0.layer == uv0.EmptySelect then
+	if arg_9_0.layer == var_0_0.EmptySelect then
 		return
 	end
 
-	if not Season123Model.instance:getActInfo(slot0.activityId) then
+	local var_9_0 = Season123Model.instance:getActInfo(arg_9_0.activityId)
+
+	if not var_9_0 then
 		return
 	end
 
-	if not slot1:getStageMO(slot0.stage) then
+	local var_9_1 = var_9_0:getStageMO(arg_9_0.stage)
+
+	if not var_9_1 then
 		return
 	end
 
-	if slot0.layer or slot0:getCurrentChallengeLayer() then
-		if not slot2.episodeMap[slot3] then
+	local var_9_2 = arg_9_0.layer or arg_9_0:getCurrentChallengeLayer()
+
+	if var_9_2 then
+		local var_9_3 = var_9_1.episodeMap[var_9_2]
+
+		if not var_9_3 then
 			return
 		end
 
-		for slot9, slot10 in ipairs(slot4.heroes) do
-			if not HeroModel.instance:getById(slot10.heroUid) then
-				slot12, slot13 = Season123Model.instance:getAssistData(slot0.activityId, slot0.stage)
+		local var_9_4 = var_9_3.heroes
 
-				if slot13 and slot13.heroUid == slot10.heroUid then
-					slot14 = Season123ShowHeroMO.New()
+		for iter_9_0, iter_9_1 in ipairs(var_9_4) do
+			local var_9_5 = HeroModel.instance:getById(iter_9_1.heroUid)
 
-					slot14:init(slot12, slot13.heroUid, slot13.heroId, slot13.skin, slot10.hpRate, true)
-					table.insert(slot0._showHeroMOList, slot14)
+			if not var_9_5 then
+				local var_9_6, var_9_7 = Season123Model.instance:getAssistData(arg_9_0.activityId, arg_9_0.stage)
+
+				if var_9_7 and var_9_7.heroUid == iter_9_1.heroUid then
+					local var_9_8 = Season123ShowHeroMO.New()
+
+					var_9_8:init(var_9_6, var_9_7.heroUid, var_9_7.heroId, var_9_7.skin, iter_9_1.hpRate, true)
+					table.insert(arg_9_0._showHeroMOList, var_9_8)
 				end
 			else
-				slot12 = Season123ShowHeroMO.New()
+				local var_9_9 = Season123ShowHeroMO.New()
 
-				slot12:init(slot11, slot11.uid, slot11.heroId, slot11.skin, slot10.hpRate, false)
-				table.insert(slot0._showHeroMOList, slot12)
+				var_9_9:init(var_9_5, var_9_5.uid, var_9_5.heroId, var_9_5.skin, iter_9_1.hpRate, false)
+				table.insert(arg_9_0._showHeroMOList, var_9_9)
 			end
 		end
 	end
 end
 
-function slot0.getHeroList(slot0)
-	return slot0._showHeroMOList
+function var_0_0.getHeroList(arg_10_0)
+	return arg_10_0._showHeroMOList
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

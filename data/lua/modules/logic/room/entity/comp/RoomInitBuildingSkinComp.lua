@@ -1,171 +1,182 @@
-module("modules.logic.room.entity.comp.RoomInitBuildingSkinComp", package.seeall)
+﻿module("modules.logic.room.entity.comp.RoomInitBuildingSkinComp", package.seeall)
 
-slot0 = class("RoomInitBuildingSkinComp", LuaCompBase)
-slot1 = 0.3
-slot2 = "RoomInitBuildingSkinComp_refreshBuilding_block"
+local var_0_0 = class("RoomInitBuildingSkinComp", LuaCompBase)
+local var_0_1 = 0.3
+local var_0_2 = "RoomInitBuildingSkinComp_refreshBuilding_block"
 
-function slot0.ctor(slot0, slot1)
-	slot0.entity = slot1
-	slot0._effectKey = RoomEnum.EffectKey.BuildingGOKey
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0.entity = arg_1_1
+	arg_1_0._effectKey = RoomEnum.EffectKey.BuildingGOKey
 end
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
-	slot0._skinId = slot0:_getRoomSkin()
-	slot0._switchTime = CommonConfig.instance:getConstNum(ConstEnum.RoomSkinSwitchTime)
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.go = arg_2_1
+	arg_2_0._skinId = arg_2_0:_getRoomSkin()
+	arg_2_0._switchTime = CommonConfig.instance:getConstNum(ConstEnum.RoomSkinSwitchTime)
 
-	if not slot0._switchTime or slot0._switchTime == 0 then
-		slot0._switchTime = uv0
-	end
-end
-
-function slot0.addEventListeners(slot0)
-	RoomSkinController.instance:registerCallback(RoomSkinEvent.SkinListViewShowChange, slot0._onSkinChange, slot0)
-	RoomSkinController.instance:registerCallback(RoomSkinEvent.ChangePreviewRoomSkin, slot0._onSkinChange, slot0)
-	RoomSkinController.instance:registerCallback(RoomSkinEvent.ChangeEquipRoomSkin, slot0._onEquipSkin, slot0)
-end
-
-function slot0.removeEventListeners(slot0)
-	RoomSkinController.instance:unregisterCallback(RoomSkinEvent.SkinListViewShowChange, slot0._onSkinChange, slot0)
-	RoomSkinController.instance:unregisterCallback(RoomSkinEvent.ChangePreviewRoomSkin, slot0._onSkinChange, slot0)
-	RoomSkinController.instance:unregisterCallback(RoomSkinEvent.ChangeEquipRoomSkin, slot0._onEquipSkin, slot0)
-end
-
-function slot0._onSkinChange(slot0)
-	if slot0.__willDestroy then
-		return
-	end
-
-	if not slot0.entity or RoomSkinListModel.instance:getSelectPartId() ~= slot0.entity.id then
-		return
-	end
-
-	if slot0._skinId ~= slot0:_getRoomSkin() then
-		TaskDispatcher.cancelTask(slot0.delayPlayChangeEff, slot0)
-
-		slot0._skinId = slot2
-
-		slot0.entity:tweenAlphaThreshold(0, 1, slot0._switchTime, slot0.onHideLastSkinFinish, slot0)
+	if not arg_2_0._switchTime or arg_2_0._switchTime == 0 then
+		arg_2_0._switchTime = var_0_1
 	end
 end
 
-function slot0.onHideLastSkinFinish(slot0)
-	if not slot0.entity or slot0.__willDestroy then
-		return
-	end
-
-	UIBlockMgr.instance:startBlock(uv0)
-
-	slot0._needPlayChangeEff = true
-
-	slot0.entity:refreshBuilding(true, 1)
+function var_0_0.addEventListeners(arg_3_0)
+	RoomSkinController.instance:registerCallback(RoomSkinEvent.SkinListViewShowChange, arg_3_0._onSkinChange, arg_3_0)
+	RoomSkinController.instance:registerCallback(RoomSkinEvent.ChangePreviewRoomSkin, arg_3_0._onSkinChange, arg_3_0)
+	RoomSkinController.instance:registerCallback(RoomSkinEvent.ChangeEquipRoomSkin, arg_3_0._onEquipSkin, arg_3_0)
 end
 
-function slot0.onEffectRebuild(slot0)
-	UIBlockMgr.instance:endBlock(uv0)
+function var_0_0.removeEventListeners(arg_4_0)
+	RoomSkinController.instance:unregisterCallback(RoomSkinEvent.SkinListViewShowChange, arg_4_0._onSkinChange, arg_4_0)
+	RoomSkinController.instance:unregisterCallback(RoomSkinEvent.ChangePreviewRoomSkin, arg_4_0._onSkinChange, arg_4_0)
+	RoomSkinController.instance:unregisterCallback(RoomSkinEvent.ChangeEquipRoomSkin, arg_4_0._onEquipSkin, arg_4_0)
+end
 
-	if slot0.__willDestroy then
+function var_0_0._onSkinChange(arg_5_0)
+	if arg_5_0.__willDestroy then
 		return
 	end
 
-	if not slot0.entity.effect:isHasEffectGOByKey(slot0._effectKey) then
+	local var_5_0 = RoomSkinListModel.instance:getSelectPartId()
+
+	if not arg_5_0.entity or var_5_0 ~= arg_5_0.entity.id then
 		return
 	end
 
-	if not slot1:isSameResByKey(slot0._effectKey, slot0._effectRes) then
-		slot0._effectRes = slot1:getEffectRes(slot0._effectKey)
-		slot0._skinId = slot0:_getRoomSkin()
-	end
+	local var_5_1 = arg_5_0:_getRoomSkin()
 
-	if slot0._needPlayChangeEff then
-		TaskDispatcher.cancelTask(slot0.delayPlayChangeEff, slot0)
-		TaskDispatcher.runDelay(slot0.delayPlayChangeEff, slot0, 0.01)
+	if arg_5_0._skinId ~= var_5_1 then
+		TaskDispatcher.cancelTask(arg_5_0.delayPlayChangeEff, arg_5_0)
+
+		arg_5_0._skinId = var_5_1
+
+		arg_5_0.entity:tweenAlphaThreshold(0, 1, arg_5_0._switchTime, arg_5_0.onHideLastSkinFinish, arg_5_0)
 	end
 end
 
-function slot0.delayPlayChangeEff(slot0)
-	if slot0.__willDestroy then
+function var_0_0.onHideLastSkinFinish(arg_6_0)
+	if not arg_6_0.entity or arg_6_0.__willDestroy then
 		return
 	end
 
-	slot0.entity:tweenAlphaThreshold(1, 0, slot0._switchTime)
+	UIBlockMgr.instance:startBlock(var_0_2)
 
-	slot0._needPlayChangeEff = false
+	arg_6_0._needPlayChangeEff = true
+
+	arg_6_0.entity:refreshBuilding(true, 1)
 end
 
-function slot0._onEquipSkin(slot0)
-	if slot0.__willDestroy then
+function var_0_0.onEffectRebuild(arg_7_0)
+	UIBlockMgr.instance:endBlock(var_0_2)
+
+	if arg_7_0.__willDestroy then
 		return
 	end
 
-	slot1 = RoomSkinListModel.instance:getSelectPartId()
+	local var_7_0 = arg_7_0.entity.effect
 
-	if not slot0.entity or slot1 ~= slot0.entity.id then
+	if not var_7_0:isHasEffectGOByKey(arg_7_0._effectKey) then
 		return
 	end
 
-	if RoomSkinModel.instance:isDefaultRoomSkin(slot1, slot0._skinId) then
+	if not var_7_0:isSameResByKey(arg_7_0._effectKey, arg_7_0._effectRes) then
+		arg_7_0._effectRes = var_7_0:getEffectRes(arg_7_0._effectKey)
+		arg_7_0._skinId = arg_7_0:_getRoomSkin()
+	end
+
+	if arg_7_0._needPlayChangeEff then
+		TaskDispatcher.cancelTask(arg_7_0.delayPlayChangeEff, arg_7_0)
+		TaskDispatcher.runDelay(arg_7_0.delayPlayChangeEff, arg_7_0, 0.01)
+	end
+end
+
+function var_0_0.delayPlayChangeEff(arg_8_0)
+	if arg_8_0.__willDestroy then
 		return
 	end
 
-	if slot0.entity.effect:isHasEffectGOByKey(RoomEnum.EffectKey.BuildingEquipSkinEffectKey) then
-		slot6 = slot4:getEffectGO(slot3)
+	arg_8_0.entity:tweenAlphaThreshold(1, 0, arg_8_0._switchTime)
 
-		gohelper.setActive(slot6, false)
-		gohelper.setActive(slot6, true)
+	arg_8_0._needPlayChangeEff = false
+end
+
+function var_0_0._onEquipSkin(arg_9_0)
+	if arg_9_0.__willDestroy then
+		return
+	end
+
+	local var_9_0 = RoomSkinListModel.instance:getSelectPartId()
+
+	if not arg_9_0.entity or var_9_0 ~= arg_9_0.entity.id then
+		return
+	end
+
+	if RoomSkinModel.instance:isDefaultRoomSkin(var_9_0, arg_9_0._skinId) then
+		return
+	end
+
+	local var_9_1 = RoomEnum.EffectKey.BuildingEquipSkinEffectKey
+	local var_9_2 = arg_9_0.entity.effect
+
+	if var_9_2:isHasEffectGOByKey(var_9_1) then
+		local var_9_3 = var_9_2:getEffectGO(var_9_1)
+
+		gohelper.setActive(var_9_3, false)
+		gohelper.setActive(var_9_3, true)
 	else
-		slot6 = 0
-		slot7 = 0
-		slot8 = 0
+		local var_9_4 = 0
+		local var_9_5 = 0
+		local var_9_6 = 0
+		local var_9_7 = RoomConfig.instance:getRoomSkinEquipEffPos(arg_9_0._skinId)
 
-		if RoomConfig.instance:getRoomSkinEquipEffPos(slot0._skinId) and #slot9 > 0 then
-			slot6 = slot9[1] or 0
-			slot7 = slot9[2] or 0
-			slot8 = slot9[3] or 0
+		if var_9_7 and #var_9_7 > 0 then
+			var_9_4 = var_9_7[1] or 0
+			var_9_5 = var_9_7[2] or 0
+			var_9_6 = var_9_7[3] or 0
 		end
 
-		slot10 = nil
+		local var_9_8
+		local var_9_9 = RoomConfig.instance:getRoomSkinEquipEffSize(arg_9_0._skinId)
 
-		if RoomConfig.instance:getRoomSkinEquipEffSize(slot0._skinId) and slot11 ~= 0 then
-			slot10 = Vector3(slot11, slot11, slot11)
+		if var_9_9 and var_9_9 ~= 0 then
+			var_9_8 = Vector3(var_9_9, var_9_9, var_9_9)
 		end
 
-		slot4:addParams({
-			[slot3] = {
+		var_9_2:addParams({
+			[var_9_1] = {
 				res = RoomScenePreloader.ResEquipRoomSkinEffect,
-				localPos = Vector3(slot6, slot7, slot8),
-				localScale = slot10
+				localPos = Vector3(var_9_4, var_9_5, var_9_6),
+				localScale = var_9_8
 			}
 		})
 	end
 
-	slot4:refreshEffect()
+	var_9_2:refreshEffect()
 end
 
-function slot0._getRoomSkin(slot0)
-	if slot0.__willDestroy then
+function var_0_0._getRoomSkin(arg_10_0)
+	if arg_10_0.__willDestroy then
 		return
 	end
 
-	return RoomSkinModel.instance:getShowSkin(slot0.entity.id)
+	return (RoomSkinModel.instance:getShowSkin(arg_10_0.entity.id))
 end
 
-function slot0.beforeDestroy(slot0)
-	UIBlockMgr.instance:endBlock(uv0)
+function var_0_0.beforeDestroy(arg_11_0)
+	UIBlockMgr.instance:endBlock(var_0_2)
 
-	slot0.__willDestroy = true
+	arg_11_0.__willDestroy = true
 
-	slot0:removeEventListeners()
+	arg_11_0:removeEventListeners()
 end
 
-function slot0.onDestroy(slot0)
-	TaskDispatcher.cancelTask(slot0.delayPlayChangeEff, slot0)
+function var_0_0.onDestroy(arg_12_0)
+	TaskDispatcher.cancelTask(arg_12_0.delayPlayChangeEff, arg_12_0)
 
-	slot0.go = nil
-	slot0._effectRes = nil
-	slot0._skinId = nil
-	slot0.entity = nil
-	slot0._needPlayChangeEff = false
+	arg_12_0.go = nil
+	arg_12_0._effectRes = nil
+	arg_12_0._skinId = nil
+	arg_12_0.entity = nil
+	arg_12_0._needPlayChangeEff = false
 end
 
-return slot0
+return var_0_0

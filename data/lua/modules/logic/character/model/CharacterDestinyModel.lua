@@ -1,120 +1,138 @@
-module("modules.logic.character.model.CharacterDestinyModel", package.seeall)
+﻿module("modules.logic.character.model.CharacterDestinyModel", package.seeall)
 
-slot0 = class("CharacterDestinyModel", BaseModel)
+local var_0_0 = class("CharacterDestinyModel", BaseModel)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_2_0)
+	return
 end
 
-function slot0.onRankUp(slot0, slot1)
+function var_0_0.onRankUp(arg_3_0, arg_3_1)
+	return
 end
 
-function slot0.getCurSlotAttrInfos(slot0, slot1, slot2, slot3)
-	slot4 = {}
-	slot5 = {}
-	slot6 = {}
-	slot7 = CharacterDestinyConfig.instance:getCurDestinySlotAddAttr(slot1, slot2, slot3)
-	slot9 = CharacterDestinyConfig.instance:getLockAttr(slot1, slot2)
-	slot10 = {}
+function var_0_0.getCurSlotAttrInfos(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
+	local var_4_0 = {}
+	local var_4_1 = {}
+	local var_4_2 = {}
+	local var_4_3 = CharacterDestinyConfig.instance:getCurDestinySlotAddAttr(arg_4_1, arg_4_2, arg_4_3)
+	local var_4_4 = CharacterDestinyConfig.instance:getNextDestinySlotCo(arg_4_1, arg_4_2, arg_4_3)
+	local var_4_5 = CharacterDestinyConfig.instance:getLockAttr(arg_4_1, arg_4_2)
+	local var_4_6 = {}
 
-	if CharacterDestinyConfig.instance:getNextDestinySlotCo(slot1, slot2, slot3) then
-		for slot15, slot16 in ipairs(GameUtil.splitString2(slot8.effect, true)) do
-			slot10[slot16[1]] = HeroConfig.instance:getHeroAttributeCO(slot16[1]).showType == 1 and slot16[2] * 0.1 or slot16[2]
+	if var_4_4 then
+		local var_4_7 = GameUtil.splitString2(var_4_4.effect, true)
+
+		for iter_4_0, iter_4_1 in ipairs(var_4_7) do
+			local var_4_8 = HeroConfig.instance:getHeroAttributeCO(iter_4_1[1]).showType == 1 and iter_4_1[2] * 0.1 or iter_4_1[2]
+
+			var_4_6[iter_4_1[1]] = var_4_8
 		end
 	end
 
-	if slot2 > 0 then
-		if slot7 then
-			for slot14, slot15 in pairs(slot7) do
-				if LuaUtil.tableContains(CharacterDestinyEnum.DestinyUpBaseAttr, slot14) then
-					table.insert(slot4, {
-						attrId = slot14,
-						curNum = slot7[slot14],
-						nextNum = slot10[slot14],
-						isSpecial = false
-					})
+	if arg_4_2 > 0 then
+		if var_4_3 then
+			for iter_4_2, iter_4_3 in pairs(var_4_3) do
+				if LuaUtil.tableContains(CharacterDestinyEnum.DestinyUpBaseAttr, iter_4_2) then
+					local var_4_9 = {
+						attrId = iter_4_2,
+						curNum = var_4_3[iter_4_2],
+						nextNum = var_4_6[iter_4_2]
+					}
+
+					var_4_9.isSpecial = false
+
+					table.insert(var_4_0, var_4_9)
 				else
-					table.insert(slot5, {
-						attrId = slot14,
-						curNum = slot7[slot14],
-						nextNum = slot10[slot14],
-						isSpecial = true
-					})
+					local var_4_10 = {
+						attrId = iter_4_2,
+						curNum = var_4_3[iter_4_2],
+						nextNum = var_4_6[iter_4_2]
+					}
+
+					var_4_10.isSpecial = true
+
+					table.insert(var_4_1, var_4_10)
 				end
 			end
 
-			table.sort(slot4, slot0.sortAttr)
-			table.sort(slot5, slot0.sortAttr)
+			table.sort(var_4_0, arg_4_0.sortAttr)
+			table.sort(var_4_1, arg_4_0.sortAttr)
 		end
 	else
-		if not slot6[1] then
-			slot6[1] = {}
+		if not var_4_2[1] then
+			var_4_2[1] = {}
 		end
 
-		for slot14, slot15 in pairs(CharacterDestinyEnum.DestinyUpBaseAttr) do
-			table.insert(slot6[1], {
-				attrId = slot15,
-				curNum = slot10[slot15]
-			})
+		for iter_4_4, iter_4_5 in pairs(CharacterDestinyEnum.DestinyUpBaseAttr) do
+			local var_4_11 = {
+				attrId = iter_4_5,
+				curNum = var_4_6[iter_4_5]
+			}
+
+			table.insert(var_4_2[1], var_4_11)
 		end
 	end
 
-	if slot9 then
-		for slot14, slot15 in pairs(slot9) do
-			for slot19, slot20 in pairs(slot15) do
-				slot21 = {
-					attrId = slot19,
-					curNum = slot20
+	if var_4_5 then
+		for iter_4_6, iter_4_7 in pairs(var_4_5) do
+			for iter_4_8, iter_4_9 in pairs(iter_4_7) do
+				local var_4_12 = {
+					attrId = iter_4_8,
+					curNum = iter_4_9
 				}
 
-				if not slot0:__isHadAttr(slot4, slot19) and not slot0:__isHadAttr(slot5, slot19) and not slot0:_isHadAttr(slot6, slot19) then
-					if not slot6[slot14] then
-						slot6[slot14] = {}
+				if not arg_4_0:__isHadAttr(var_4_0, iter_4_8) and not arg_4_0:__isHadAttr(var_4_1, iter_4_8) and not arg_4_0:_isHadAttr(var_4_2, iter_4_8) then
+					if not var_4_2[iter_4_6] then
+						var_4_2[iter_4_6] = {}
 					end
 
-					table.insert(slot6[slot14], slot21)
+					table.insert(var_4_2[iter_4_6], var_4_12)
 				end
 			end
 		end
 
-		for slot14, slot15 in pairs(slot6) do
-			table.sort(slot15, slot0.sortAttr)
+		for iter_4_10, iter_4_11 in pairs(var_4_2) do
+			table.sort(iter_4_11, arg_4_0.sortAttr)
 		end
 	end
 
-	return slot4, slot5, slot6
+	return var_4_0, var_4_1, var_4_2
 end
 
-function slot0.sortAttr(slot0, slot1)
-	if LuaUtil.tableContains(CharacterDestinyEnum.DestinyUpBaseAttr, slot0.attrId) ~= LuaUtil.tableContains(CharacterDestinyEnum.DestinyUpBaseAttr, slot1.attrId) then
-		return slot2
+function var_0_0.sortAttr(arg_5_0, arg_5_1)
+	local var_5_0 = LuaUtil.tableContains(CharacterDestinyEnum.DestinyUpBaseAttr, arg_5_0.attrId)
+
+	if var_5_0 ~= LuaUtil.tableContains(CharacterDestinyEnum.DestinyUpBaseAttr, arg_5_1.attrId) then
+		return var_5_0
 	end
 
-	return slot0.attrId < slot1.attrId
+	return arg_5_0.attrId < arg_5_1.attrId
 end
 
-function slot0._isHadAttr(slot0, slot1, slot2)
-	if slot1 then
-		for slot6, slot7 in pairs(slot1) do
-			if slot0:__isHadAttr(slot7, slot2) then
+function var_0_0._isHadAttr(arg_6_0, arg_6_1, arg_6_2)
+	if arg_6_1 then
+		for iter_6_0, iter_6_1 in pairs(arg_6_1) do
+			if arg_6_0:__isHadAttr(iter_6_1, arg_6_2) then
 				return true
 			end
 		end
 	end
 end
 
-function slot0.__isHadAttr(slot0, slot1, slot2)
-	if slot1 then
-		for slot6, slot7 in ipairs(slot1) do
-			if slot7.attrId == slot2 then
+function var_0_0.__isHadAttr(arg_7_0, arg_7_1, arg_7_2)
+	if arg_7_1 then
+		for iter_7_0, iter_7_1 in ipairs(arg_7_1) do
+			if iter_7_1.attrId == arg_7_2 then
 				return true
 			end
 		end
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

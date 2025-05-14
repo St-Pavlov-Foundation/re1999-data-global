@@ -1,45 +1,51 @@
-module("modules.logic.versionactivity2_4.pinball.view.PinballCurrencyTipView", package.seeall)
+﻿module("modules.logic.versionactivity2_4.pinball.view.PinballCurrencyTipView", package.seeall)
 
-slot0 = class("PinballCurrencyTipView", BaseView)
+local var_0_0 = class("PinballCurrencyTipView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._click = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_click")
-	slot0._rootTrans = gohelper.findChild(slot0.viewGO, "root").transform
-	slot0._txtdesc = gohelper.findChildTextMesh(slot0.viewGO, "root/#txt_dec")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._click = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_click")
+	arg_1_0._rootTrans = gohelper.findChild(arg_1_0.viewGO, "root").transform
+	arg_1_0._txtdesc = gohelper.findChildTextMesh(arg_1_0.viewGO, "root/#txt_dec")
 end
 
-function slot0.addEvents(slot0)
-	slot0._click:AddClickListener(slot0.closeThis, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._click:AddClickListener(arg_2_0.closeThis, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._click:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._click:RemoveClickListener()
 end
 
-function slot0.onOpen(slot0)
-	if slot0.viewParam.arrow == "BL" then
-		slot0._rootTrans.pivot = Vector2(1, 1)
+function var_0_0.onOpen(arg_4_0)
+	if arg_4_0.viewParam.arrow == "BL" then
+		arg_4_0._rootTrans.pivot = Vector2(1, 1)
 	else
-		slot0._rootTrans.pivot = Vector2(0, 0)
+		arg_4_0._rootTrans.pivot = Vector2(0, 0)
 	end
 
-	slot1 = recthelper.rectToRelativeAnchorPos(slot0.viewParam.pos, slot0.viewGO.transform.parent)
+	local var_4_0 = recthelper.rectToRelativeAnchorPos(arg_4_0.viewParam.pos, arg_4_0.viewGO.transform.parent)
 
-	recthelper.setAnchor(slot0._rootTrans, slot1.x, slot1.y)
+	recthelper.setAnchor(arg_4_0._rootTrans, var_4_0.x, var_4_0.y)
 
-	if slot0.viewParam.isMarbals then
-		if not lua_activity178_marbles.configDict[VersionActivity2_4Enum.ActivityId.Pinball][slot0.viewParam.type] then
+	if arg_4_0.viewParam.isMarbals then
+		local var_4_1 = arg_4_0.viewParam.type
+		local var_4_2 = lua_activity178_marbles.configDict[VersionActivity2_4Enum.ActivityId.Pinball][var_4_1]
+
+		if not var_4_2 then
 			return
 		end
 
-		slot0._txtdesc.text = slot3.desc
+		arg_4_0._txtdesc.text = var_4_2.desc
 	else
-		if not lua_activity178_resource.configDict[VersionActivity2_4Enum.ActivityId.Pinball][slot0.viewParam.type] then
+		local var_4_3 = arg_4_0.viewParam.type
+		local var_4_4 = lua_activity178_resource.configDict[VersionActivity2_4Enum.ActivityId.Pinball][var_4_3]
+
+		if not var_4_4 then
 			return
 		end
 
-		slot0._txtdesc.text = slot3.tips
+		arg_4_0._txtdesc.text = var_4_4.tips
 	end
 end
 
-return slot0
+return var_0_0

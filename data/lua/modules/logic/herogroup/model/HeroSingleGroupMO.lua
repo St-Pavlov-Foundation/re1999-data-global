@@ -1,106 +1,113 @@
-module("modules.logic.herogroup.model.HeroSingleGroupMO", package.seeall)
+﻿module("modules.logic.herogroup.model.HeroSingleGroupMO", package.seeall)
 
-slot0 = pureTable("HeroSingleGroupMO")
+local var_0_0 = pureTable("HeroSingleGroupMO")
 
-function slot0.ctor(slot0)
-	slot0.id = nil
-	slot0.heroUid = nil
-	slot0.aid = nil
-	slot0.trial = nil
-	slot0.trialTemplate = nil
-	slot0.trialPos = nil
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.id = nil
+	arg_1_0.heroUid = nil
+	arg_1_0.aid = nil
+	arg_1_0.trial = nil
+	arg_1_0.trialTemplate = nil
+	arg_1_0.trialPos = nil
 end
 
-function slot0.init(slot0, slot1, slot2)
-	slot0.id = slot1
-	slot0.heroUid = slot2 or "0"
-	slot0.trial = nil
-	slot0.trialTemplate = nil
-	slot0.trialPos = nil
+function var_0_0.init(arg_2_0, arg_2_1, arg_2_2)
+	arg_2_0.id = arg_2_1
+	arg_2_0.heroUid = arg_2_2 or "0"
+	arg_2_0.trial = nil
+	arg_2_0.trialTemplate = nil
+	arg_2_0.trialPos = nil
 end
 
-function slot0.setAid(slot0, slot1)
-	slot0.aid = slot1
+function var_0_0.setAid(arg_3_0, arg_3_1)
+	arg_3_0.aid = arg_3_1
 end
 
-function slot0.setTrial(slot0, slot1, slot2, slot3, slot4)
-	if slot0.trial and not slot4 and slot0:getTrialCO().equipId > 0 then
-		HeroGroupModel.instance:getCurGroupMO():updatePosEquips({
-			index = slot0.id - 1
+function var_0_0.setTrial(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4)
+	local var_4_0 = HeroGroupModel.instance:getCurGroupMO()
+
+	if arg_4_0.trial and not arg_4_4 and arg_4_0:getTrialCO().equipId > 0 then
+		var_4_0:updatePosEquips({
+			index = arg_4_0.id - 1
 		})
 	end
 
-	slot0.trial = slot1
-	slot0.trialTemplate = slot2 or 0
-	slot0.trialPos = slot0.trialPos or slot3
+	arg_4_0.trial = arg_4_1
+	arg_4_0.trialTemplate = arg_4_2 or 0
+	arg_4_0.trialPos = arg_4_0.trialPos or arg_4_3
 
-	if not slot1 then
-		slot0.trialPos = nil
+	if not arg_4_1 then
+		arg_4_0.trialPos = nil
 	end
 
-	if slot1 and not slot4 and slot0:getTrialCO().equipId > 0 then
-		slot5:updatePosEquips({
-			index = slot0.id - 1
+	if arg_4_1 and not arg_4_4 and arg_4_0:getTrialCO().equipId > 0 then
+		var_4_0:updatePosEquips({
+			index = arg_4_0.id - 1
 		})
 	end
 end
 
-function slot0.getHeroMO(slot0)
-	return slot0.heroUid and HeroModel.instance:getById(slot0.heroUid)
+function var_0_0.getHeroMO(arg_5_0)
+	return arg_5_0.heroUid and HeroModel.instance:getById(arg_5_0.heroUid)
 end
 
-function slot0.getHeroCO(slot0)
-	return slot0:getHeroMO() and lua_character.configDict[slot1.heroId]
+function var_0_0.getHeroCO(arg_6_0)
+	local var_6_0 = arg_6_0:getHeroMO()
+
+	return var_6_0 and lua_character.configDict[var_6_0.heroId]
 end
 
-function slot0.getMonsterCO(slot0)
-	return slot0.aid and lua_monster.configDict[slot0.aid]
+function var_0_0.getMonsterCO(arg_7_0)
+	return arg_7_0.aid and lua_monster.configDict[arg_7_0.aid]
 end
 
-function slot0.getTrialCO(slot0)
-	return slot0.trial and lua_hero_trial.configDict[slot0.trial][slot0.trialTemplate]
+function var_0_0.getTrialCO(arg_8_0)
+	return arg_8_0.trial and lua_hero_trial.configDict[arg_8_0.trial][arg_8_0.trialTemplate]
 end
 
-function slot0.setEmpty(slot0)
-	slot0.heroUid = "0"
+function var_0_0.setEmpty(arg_9_0)
+	arg_9_0.heroUid = "0"
 
-	slot0:setTrial()
+	arg_9_0:setTrial()
 end
 
-function slot0.setHeroUid(slot0, slot1)
-	slot0.heroUid = slot1
+function var_0_0.setHeroUid(arg_10_0, arg_10_1)
+	arg_10_0.heroUid = arg_10_1
 end
 
-function slot0.isEqual(slot0, slot1)
-	return not slot0:isEmpty() and slot0.heroUid == slot1
+function var_0_0.isEqual(arg_11_0, arg_11_1)
+	return not arg_11_0:isEmpty() and arg_11_0.heroUid == arg_11_1
 end
 
-function slot0.isEmpty(slot0)
-	if slot0.aid then
-		return slot0.aid == -1
+function var_0_0.isEmpty(arg_12_0)
+	if arg_12_0.aid then
+		return arg_12_0.aid == -1
 	else
-		return not slot0.heroUid or slot0.heroUid == "0"
+		return not arg_12_0.heroUid or arg_12_0.heroUid == "0"
 	end
 end
 
-function slot0.canAddHero(slot0)
-	if slot0.aid then
+function var_0_0.canAddHero(arg_13_0)
+	if arg_13_0.aid then
 		return false
 	else
-		return not slot0.heroUid or slot0.heroUid == "0"
+		return not arg_13_0.heroUid or arg_13_0.heroUid == "0"
 	end
 end
 
-function slot0.isAidConflict(slot0, slot1)
-	if not slot0.aid or slot0.aid == -1 then
+function var_0_0.isAidConflict(arg_14_0, arg_14_1)
+	if not arg_14_0.aid or arg_14_0.aid == -1 then
 		return false
 	end
 
-	if lua_monster.configDict[tonumber(slot0.aid)] and tonumber(string.sub(tostring(slot2.skinId), 1, 4)) and slot3 == tonumber(slot1) then
+	local var_14_0 = lua_monster.configDict[tonumber(arg_14_0.aid)]
+	local var_14_1 = var_14_0 and tonumber(string.sub(tostring(var_14_0.skinId), 1, 4))
+
+	if var_14_1 and var_14_1 == tonumber(arg_14_1) then
 		return true
 	end
 
 	return false
 end
 
-return slot0
+return var_0_0

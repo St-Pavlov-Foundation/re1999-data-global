@@ -1,19 +1,19 @@
-module("modules.logic.currency.model.CurrencyMO", package.seeall)
+﻿module("modules.logic.currency.model.CurrencyMO", package.seeall)
 
-slot0 = pureTable("CurrencyMO")
+local var_0_0 = pureTable("CurrencyMO")
 
-function slot0.ctor(slot0)
-	slot0.currencyId = 0
-	slot0.quantity = 0
-	slot0.lastRecoverTime = 0
-	slot0.expiredTime = 0
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.currencyId = 0
+	arg_1_0.quantity = 0
+	arg_1_0.lastRecoverTime = 0
+	arg_1_0.expiredTime = 0
 end
 
-function slot0.init(slot0, slot1)
-	slot0.currencyId = slot1.currencyId
-	slot0.quantity = slot1.quantity
-	slot0.lastRecoverTime = slot1.lastRecoverTime
-	slot0.expiredTime = slot1.expiredTime
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.currencyId = arg_2_1.currencyId
+	arg_2_0.quantity = arg_2_1.quantity
+	arg_2_0.lastRecoverTime = arg_2_1.lastRecoverTime
+	arg_2_0.expiredTime = arg_2_1.expiredTime
 end
 
-return slot0
+return var_0_0

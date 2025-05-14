@@ -1,12 +1,12 @@
-module("modules.logic.season.view1_5.Season1_5MainScene", package.seeall)
+﻿module("modules.logic.season.view1_5.Season1_5MainScene", package.seeall)
 
-slot0 = class("Season1_5MainScene", BaseView)
+local var_0_0 = class("Season1_5MainScene", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gofullscreen = gohelper.findChild(slot0.viewGO, "#go_fullscreen")
-	slot0._goarrow = gohelper.findChild(slot0.viewGO, "#go_arrow")
-	slot0._gotoptipsbg = gohelper.findChild(slot0.viewGO, "#go_main/#go_toptipsbg")
-	slot0._stageSetting = {
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gofullscreen = gohelper.findChild(arg_1_0.viewGO, "#go_fullscreen")
+	arg_1_0._goarrow = gohelper.findChild(arg_1_0.viewGO, "#go_arrow")
+	arg_1_0._gotoptipsbg = gohelper.findChild(arg_1_0.viewGO, "#go_main/#go_toptipsbg")
+	arg_1_0._stageSetting = {
 		{
 			1
 		},
@@ -26,598 +26,640 @@ function slot0.onInitView(slot0)
 			6
 		}
 	}
-	slot0._listenerViews = {
+	arg_1_0._listenerViews = {
 		[ViewName.Season1_5MarketView] = 1,
 		[ViewName.Season1_5SpecialMarketView] = 1
 	}
-	slot0.isFirst = true
-	slot0.seasonCameraLocalPos = Vector3(0, 0, -3.9)
-	slot0.seasonCameraOrthographicSize = 5
-	slot0.focusCameraOrthographicSize = 2
-	slot0.focusTime = 0.45
-	slot0.cancelFocusTime = 0.45
+	arg_1_0.isFirst = true
+	arg_1_0.seasonCameraLocalPos = Vector3(0, 0, -3.9)
+	arg_1_0.seasonCameraOrthographicSize = 5
+	arg_1_0.focusCameraOrthographicSize = 2
+	arg_1_0.focusTime = 0.45
+	arg_1_0.cancelFocusTime = 0.45
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0._camera = CameraMgr.instance:getMainCamera()
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._camera = CameraMgr.instance:getMainCamera()
 
-	slot0:_initSceneRootNode()
-	slot0:_addEvents()
+	arg_4_0:_initSceneRootNode()
+	arg_4_0:_addEvents()
 end
 
-function slot0._addEvents(slot0)
-	slot0:addEventCb(Activity104Controller.instance, Activity104Event.RefreshRetail, slot0._onRefreshRetail, slot0)
-	slot0:addEventCb(Activity104Controller.instance, Activity104Event.ChangeCameraSize, slot0._onChangeCamera, slot0)
-	slot0:addEventCb(Activity104Controller.instance, Activity104Event.SelectRetail, slot0.focusRole, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, slot0._onOpenViewFinish, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, slot0._onCloseViewFinish, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenFullViewFinish, slot0._onOpenFullViewFinish, slot0)
+function var_0_0._addEvents(arg_5_0)
+	arg_5_0:addEventCb(Activity104Controller.instance, Activity104Event.RefreshRetail, arg_5_0._onRefreshRetail, arg_5_0)
+	arg_5_0:addEventCb(Activity104Controller.instance, Activity104Event.ChangeCameraSize, arg_5_0._onChangeCamera, arg_5_0)
+	arg_5_0:addEventCb(Activity104Controller.instance, Activity104Event.SelectRetail, arg_5_0.focusRole, arg_5_0)
+	arg_5_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_5_0._onOpenViewFinish, arg_5_0)
+	arg_5_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_5_0._onCloseViewFinish, arg_5_0)
+	arg_5_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenFullViewFinish, arg_5_0._onOpenFullViewFinish, arg_5_0)
 end
 
-function slot0._removeEvents(slot0)
-	slot0:removeEventCb(Activity104Controller.instance, Activity104Event.RefreshRetail, slot0._onRefreshRetail, slot0)
-	slot0:removeEventCb(Activity104Controller.instance, Activity104Event.ChangeCameraSize, slot0._onChangeCamera, slot0)
-	slot0:removeEventCb(Activity104Controller.instance, Activity104Event.SelectRetail, slot0.focusRole, slot0)
-	slot0:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenView, slot0._onOpenViewFinish, slot0)
-	slot0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, slot0._onCloseViewFinish, slot0)
-	slot0:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenFullViewFinish, slot0._onOpenFullViewFinish, slot0)
+function var_0_0._removeEvents(arg_6_0)
+	arg_6_0:removeEventCb(Activity104Controller.instance, Activity104Event.RefreshRetail, arg_6_0._onRefreshRetail, arg_6_0)
+	arg_6_0:removeEventCb(Activity104Controller.instance, Activity104Event.ChangeCameraSize, arg_6_0._onChangeCamera, arg_6_0)
+	arg_6_0:removeEventCb(Activity104Controller.instance, Activity104Event.SelectRetail, arg_6_0.focusRole, arg_6_0)
+	arg_6_0:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_6_0._onOpenViewFinish, arg_6_0)
+	arg_6_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_6_0._onCloseViewFinish, arg_6_0)
+	arg_6_0:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenFullViewFinish, arg_6_0._onOpenFullViewFinish, arg_6_0)
 end
 
-function slot0.initCamera(slot0, slot1)
-	transformhelper.setLocalRotation(slot0._camera.transform, 0, 0, 0)
+function var_0_0.initCamera(arg_7_0, arg_7_1)
+	transformhelper.setLocalRotation(arg_7_0._camera.transform, 0, 0, 0)
 
-	if not slot0._tweenId then
-		slot0._camera.orthographicSize = slot0.seasonCameraOrthographicSize
-		slot0._camera.orthographic = true
+	if not arg_7_0._tweenId then
+		arg_7_0._camera.orthographicSize = arg_7_0.seasonCameraOrthographicSize
+		arg_7_0._camera.orthographic = true
 
-		transformhelper.setLocalPos(slot0._camera.transform, slot0.seasonCameraLocalPos.x, slot0.seasonCameraLocalPos.y, slot0.seasonCameraLocalPos.z)
+		transformhelper.setLocalPos(arg_7_0._camera.transform, arg_7_0.seasonCameraLocalPos.x, arg_7_0.seasonCameraLocalPos.y, arg_7_0.seasonCameraLocalPos.z)
 	end
 
-	if slot1 == nil then
-		slot1 = false
+	if arg_7_1 == nil then
+		arg_7_1 = false
 	end
 
-	slot0:_showScenes(slot1)
+	arg_7_0:_showScenes(arg_7_1)
 end
 
-function slot0.resetCamera(slot0)
-	slot0:doAudio(false)
+function var_0_0.resetCamera(arg_8_0)
+	arg_8_0:doAudio(false)
 end
 
-function slot0._onChangeCamera(slot0, slot1)
-	slot0:initCamera(slot1)
+function var_0_0._onChangeCamera(arg_9_0, arg_9_1)
+	arg_9_0:initCamera(arg_9_1)
 end
 
-function slot0._showScenes(slot0, slot1)
-	if not slot0._sceneGo then
+function var_0_0._showScenes(arg_10_0, arg_10_1)
+	if not arg_10_0._sceneGo then
 		return
 	end
 
-	if slot0._isShowRetail == slot1 then
+	if arg_10_0._isShowRetail == arg_10_1 then
 		return
 	end
 
-	slot0._isShowRetail = slot1
-	slot2, slot3 = nil
+	arg_10_0._isShowRetail = arg_10_1
 
-	if slot0.isFirst then
-		slot2 = "open"
+	local var_10_0
+	local var_10_1
+
+	if arg_10_0.isFirst then
+		var_10_0 = "open"
 	end
 
-	if slot0._isShowRetail then
-		slot2 = "go1"
+	if arg_10_0._isShowRetail then
+		var_10_0 = "go1"
 
-		if slot0.isFirst then
-			slot3 = 1
+		if arg_10_0.isFirst then
+			var_10_1 = 1
 		end
 
-		slot0:_enterRetail()
+		arg_10_0:_enterRetail()
 	else
-		if not slot0.isFirst then
-			slot2 = "go2"
+		if not arg_10_0.isFirst then
+			var_10_0 = "go2"
 		end
 
-		slot0:_enterMarket()
+		arg_10_0:_enterMarket()
 	end
 
-	for slot7, slot8 in pairs(slot0._listenerViews) do
-		if ViewMgr.instance:isOpen(slot7) then
-			slot3 = 1
+	for iter_10_0, iter_10_1 in pairs(arg_10_0._listenerViews) do
+		if ViewMgr.instance:isOpen(iter_10_0) then
+			var_10_1 = 1
 
 			break
 		end
 	end
 
-	if slot0._sceneAnim and slot2 then
-		if slot3 then
-			slot0._sceneAnim:Play(slot2, 0, slot3)
+	if arg_10_0._sceneAnim and var_10_0 then
+		if var_10_1 then
+			arg_10_0._sceneAnim:Play(var_10_0, 0, var_10_1)
 		else
-			slot0._sceneAnim:Play(slot2)
+			arg_10_0._sceneAnim:Play(var_10_0)
 		end
 	end
 
-	slot0:doAudio(true)
+	arg_10_0:doAudio(true)
 
-	slot0.isFirst = false
+	arg_10_0.isFirst = false
 end
 
-function slot0.showSceneAnim(slot0)
-	slot1, slot2 = nil
+function var_0_0.showSceneAnim(arg_11_0)
+	local var_11_0
+	local var_11_1
 
-	if slot0.isFirst then
-		slot1 = "open"
+	if arg_11_0.isFirst then
+		var_11_0 = "open"
 	end
 
-	if slot0._isShowRetail then
-		slot1 = "go1"
+	if arg_11_0._isShowRetail then
+		var_11_0 = "go1"
 
-		if slot0.isFirst then
-			slot2 = 1
+		if arg_11_0.isFirst then
+			var_11_1 = 1
 		end
-	elseif not slot0.isFirst then
-		slot1 = "go2"
+	elseif not arg_11_0.isFirst then
+		var_11_0 = "go2"
 	end
 
-	for slot6, slot7 in pairs(slot0._listenerViews) do
-		if ViewMgr.instance:isOpen(slot6) then
-			slot2 = 1
+	for iter_11_0, iter_11_1 in pairs(arg_11_0._listenerViews) do
+		if ViewMgr.instance:isOpen(iter_11_0) then
+			var_11_1 = 1
 
 			break
 		end
 	end
 
-	if slot0._sceneAnim and slot1 then
-		if slot2 then
-			slot0._sceneAnim:Play(slot1, 0, slot2)
+	if arg_11_0._sceneAnim and var_11_0 then
+		if var_11_1 then
+			arg_11_0._sceneAnim:Play(var_11_0, 0, var_11_1)
 		else
-			slot0._sceneAnim:Play(slot1)
+			arg_11_0._sceneAnim:Play(var_11_0)
 		end
 	end
 
-	slot0.isFirst = false
+	arg_11_0.isFirst = false
 end
 
-function slot0._enterRetail(slot0)
-	slot0:_refreshRoles()
+function var_0_0._enterRetail(arg_12_0)
+	arg_12_0:_refreshRoles()
 end
 
-function slot0._onRefreshRetail(slot0)
-	slot0:_refreshRoles(true)
+function var_0_0._onRefreshRetail(arg_13_0)
+	arg_13_0:_refreshRoles(true)
 end
 
-function slot0._refreshRoles(slot0, slot1)
-	TaskDispatcher.cancelTask(slot0._refreshRoles, slot0)
+function var_0_0._refreshRoles(arg_14_0, arg_14_1)
+	TaskDispatcher.cancelTask(arg_14_0._refreshRoles, arg_14_0)
 
-	if not slot0._isShowRetail then
-		gohelper.setActive(slot0._goroles, false)
+	if not arg_14_0._isShowRetail then
+		gohelper.setActive(arg_14_0._goroles, false)
 
 		return
 	end
 
-	gohelper.setActive(slot0._goroles, true)
+	gohelper.setActive(arg_14_0._goroles, true)
 
-	slot4 = Activity104Model.instance:getLastRetails()
+	local var_14_0 = Activity104Model.instance:getAct104Retails()
+	local var_14_1 = var_14_0 == nil or #var_14_0 == 0
+	local var_14_2 = Activity104Model.instance:getLastRetails()
 
-	if (Activity104Model.instance:getAct104Retails() == nil or #slot2 == 0) and slot4 then
-		slot0:_battleSuccessRefreshRoles(slot4)
+	if var_14_1 and var_14_2 then
+		arg_14_0:_battleSuccessRefreshRoles(var_14_2)
 
 		return
 	end
 
-	slot0:_normalRefreshRoles(slot2, slot3, slot1)
+	arg_14_0:_normalRefreshRoles(var_14_0, var_14_1, arg_14_1)
 end
 
-function slot0._battleSuccessRefreshRoles(slot0, slot1)
-	for slot5 = 1, 6 do
-		gohelper.setActive(slot0["_gorole" .. slot5], false)
+function var_0_0._battleSuccessRefreshRoles(arg_15_0, arg_15_1)
+	for iter_15_0 = 1, 6 do
+		gohelper.setActive(arg_15_0["_gorole" .. iter_15_0], false)
 	end
 
-	for slot5, slot6 in pairs(slot1) do
-		slot7 = slot6.position
+	for iter_15_1, iter_15_2 in pairs(arg_15_1) do
+		local var_15_0 = iter_15_2.position
 
-		gohelper.setActive(slot0["_gorole" .. slot7], true)
-		slot0["_aniRole" .. slot7]:Play(UIAnimationName.Idle)
+		gohelper.setActive(arg_15_0["_gorole" .. var_15_0], true)
+		arg_15_0["_aniRole" .. var_15_0]:Play(UIAnimationName.Idle)
 	end
 
-	slot0.delayRetails = slot1
+	arg_15_0.delayRetails = arg_15_1
 
-	TaskDispatcher.runDelay(slot0._onDelayRefreshRoles, slot0, 1)
+	TaskDispatcher.runDelay(arg_15_0._onDelayRefreshRoles, arg_15_0, 1)
 end
 
-function slot0._onDelayRefreshRoles(slot0)
-	for slot4, slot5 in pairs(slot0.delayRetails) do
-		slot6 = slot5.position
+function var_0_0._onDelayRefreshRoles(arg_16_0)
+	for iter_16_0, iter_16_1 in pairs(arg_16_0.delayRetails) do
+		local var_16_0 = iter_16_1.position
 
-		gohelper.setActive(slot0["_gorole" .. slot6], true)
-		slot0["_aniRole" .. slot6]:Play(UIAnimationName.Close, 0, 0)
+		gohelper.setActive(arg_16_0["_gorole" .. var_16_0], true)
+		arg_16_0["_aniRole" .. var_16_0]:Play(UIAnimationName.Close, 0, 0)
 	end
 
-	TaskDispatcher.runDelay(slot0._refreshRoles, slot0, 0.33)
+	TaskDispatcher.runDelay(arg_16_0._refreshRoles, arg_16_0, 0.33)
 end
 
-function slot0._normalRefreshRoles(slot0, slot1, slot2, slot3)
-	slot4 = {
-		[slot8] = false
-	}
+function var_0_0._normalRefreshRoles(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
+	local var_17_0 = {}
 
-	for slot8 = 1, 6 do
+	for iter_17_0 = 1, 6 do
+		var_17_0[iter_17_0] = false
 	end
 
-	for slot8, slot9 in pairs(slot1) do
-		slot10 = slot9.position
-		slot4[slot10] = nil
+	for iter_17_1, iter_17_2 in pairs(arg_17_1) do
+		local var_17_1 = iter_17_2.position
+		local var_17_2 = arg_17_0["_gorole" .. var_17_1]
+		local var_17_3 = arg_17_0["_aniRole" .. var_17_1]
 
-		gohelper.setActive(slot0["_gorole" .. slot10], true)
+		var_17_0[var_17_1] = nil
 
-		if slot0["_aniRole" .. slot10] then
-			if slot3 then
-				slot12:Play(UIAnimationName.Open, 0, 0)
+		gohelper.setActive(var_17_2, true)
+
+		if var_17_3 then
+			if arg_17_3 then
+				var_17_3:Play(UIAnimationName.Open, 0, 0)
 			else
-				slot12:Play(UIAnimationName.Idle, 0, 0)
+				var_17_3:Play(UIAnimationName.Idle, 0, 0)
 			end
 		end
 	end
 
-	for slot8, slot9 in pairs(slot4) do
-		if slot0["_gorole" .. slot8] then
-			slot11 = slot0["_aniRole" .. slot8]
+	for iter_17_3, iter_17_4 in pairs(var_17_0) do
+		local var_17_4 = arg_17_0["_gorole" .. iter_17_3]
 
-			if slot3 and slot10.activeInHierarchy then
-				if slot11 then
-					slot11:Play(UIAnimationName.Close, 0, 0)
+		if var_17_4 then
+			local var_17_5 = arg_17_0["_aniRole" .. iter_17_3]
+
+			if arg_17_3 and var_17_4.activeInHierarchy then
+				if var_17_5 then
+					var_17_5:Play(UIAnimationName.Close, 0, 0)
 				end
 			else
-				gohelper.setActive(slot10, false)
+				gohelper.setActive(var_17_4, false)
 			end
 		end
 	end
 
-	if slot2 then
-		gohelper.setActive(slot0._gospotlight, true)
+	if arg_17_2 then
+		gohelper.setActive(arg_17_0._gospotlight, true)
 
-		if slot0._animspotlight then
-			slot0._animspotlight:Play(UIAnimationName.Open, 0, 0)
+		if arg_17_0._animspotlight then
+			arg_17_0._animspotlight:Play(UIAnimationName.Open, 0, 0)
 		end
 
 		return
 	end
 
-	if slot3 and slot0._gospotlight and slot0._gospotlight.activeInHierarchy then
-		slot0._animspotlight:Play(UIAnimationName.Close, 0, 0)
+	if arg_17_3 and arg_17_0._gospotlight and arg_17_0._gospotlight.activeInHierarchy then
+		arg_17_0._animspotlight:Play(UIAnimationName.Close, 0, 0)
 
 		return
 	end
 
-	gohelper.setActive(slot0._gospotlight, false)
+	gohelper.setActive(arg_17_0._gospotlight, false)
 end
 
-function slot0._enterMarket(slot0)
-	gohelper.setActive(slot0._gospotlight, false)
-	slot0:_refreshRoles()
+function var_0_0._enterMarket(arg_18_0)
+	gohelper.setActive(arg_18_0._gospotlight, false)
+	arg_18_0:_refreshRoles()
 end
 
-function slot0._initSceneRootNode(slot0)
-	slot0._sceneRoot = UnityEngine.GameObject.New("Season1_5MainScene")
-	slot3, slot4, slot5 = transformhelper.getLocalPos(slot0._camera.transform.parent)
+function var_0_0._initSceneRootNode(arg_19_0)
+	local var_19_0 = arg_19_0._camera.transform.parent
+	local var_19_1 = CameraMgr.instance:getSceneRoot()
 
-	transformhelper.setLocalPos(slot0._sceneRoot.transform, 0, slot4, 0)
-	gohelper.addChild(CameraMgr.instance:getSceneRoot(), slot0._sceneRoot)
+	arg_19_0._sceneRoot = UnityEngine.GameObject.New("Season1_5MainScene")
+
+	local var_19_2, var_19_3, var_19_4 = transformhelper.getLocalPos(var_19_0)
+
+	transformhelper.setLocalPos(arg_19_0._sceneRoot.transform, 0, var_19_3, 0)
+	gohelper.addChild(var_19_1, arg_19_0._sceneRoot)
 end
 
-function slot0._loadScene(slot0)
-	if slot0._sceneGo then
+function var_0_0._loadScene(arg_20_0)
+	if arg_20_0._sceneGo then
 		return
 	end
 
-	slot0._sceneGo = slot0.viewContainer:getResInst(slot0.viewContainer:getSetting().otherRes.scene, slot0._sceneRoot)
-	slot0._diffuseGO = gohelper.findChild(slot0._sceneGo, "Obj-Plant/all/diffuse")
-	slot0._goroles = UnityEngine.GameObject.New("juese")
+	local var_20_0 = arg_20_0.viewContainer:getSetting()
+	local var_20_1 = var_20_0.otherRes.scene
 
-	gohelper.addChild(slot0._diffuseGO, slot0._goroles)
+	arg_20_0._sceneGo = arg_20_0.viewContainer:getResInst(var_20_1, arg_20_0._sceneRoot)
+	arg_20_0._diffuseGO = gohelper.findChild(arg_20_0._sceneGo, "Obj-Plant/all/diffuse")
+	arg_20_0._goroles = UnityEngine.GameObject.New("juese")
 
-	slot6 = 0
+	gohelper.addChild(arg_20_0._diffuseGO, arg_20_0._goroles)
+	transformhelper.setLocalPos(arg_20_0._goroles.transform, 0, 0, 0)
 
-	transformhelper.setLocalPos(slot0._goroles.transform, 0, slot6, 0)
+	for iter_20_0 = 1, 6 do
+		local var_20_2 = var_20_0.otherRes[string.format("role%s", iter_20_0)]
 
-	for slot6 = 1, 6 do
-		if slot1.otherRes[string.format("role%s", slot6)] then
-			slot8 = string.format("_gorole%s", slot6)
-			slot0[slot8] = slot0.viewContainer:getResInst(slot7, slot0._goroles)
+		if var_20_2 then
+			local var_20_3 = string.format("_gorole%s", iter_20_0)
 
-			if slot0[slot8] then
-				slot0[string.format("_aniRole%s", slot6)] = slot0[slot8]:GetComponent(typeof(UnityEngine.Animator))
+			arg_20_0[var_20_3] = arg_20_0.viewContainer:getResInst(var_20_2, arg_20_0._goroles)
+
+			if arg_20_0[var_20_3] then
+				arg_20_0[string.format("_aniRole%s", iter_20_0)] = arg_20_0[var_20_3]:GetComponent(typeof(UnityEngine.Animator))
 			end
 		end
 	end
 
-	for slot6 = 1, 6 do
-		if slot1.otherRes[string.format("section%s", slot6)] then
-			slot0[string.format("_gosection%s", slot6)] = slot0.viewContainer:getResInst(slot7, slot0._diffuseGO)
+	for iter_20_1 = 1, 6 do
+		local var_20_4 = var_20_0.otherRes[string.format("section%s", iter_20_1)]
+
+		if var_20_4 then
+			arg_20_0[string.format("_gosection%s", iter_20_1)] = arg_20_0.viewContainer:getResInst(var_20_4, arg_20_0._diffuseGO)
 		end
 	end
 
-	slot0:_loadSceneFinish()
+	arg_20_0:_loadSceneFinish()
 end
 
-function slot0._loadSceneFinish(slot0)
-	slot0._gospotlight = gohelper.findChild(slot0._sceneGo, "Obj-Plant/all/diffuse/scanlight")
+function var_0_0._loadSceneFinish(arg_21_0)
+	arg_21_0._gospotlight = gohelper.findChild(arg_21_0._sceneGo, "Obj-Plant/all/diffuse/scanlight")
 
-	if slot0._gospotlight then
-		slot0._animspotlight = slot0._gospotlight:GetComponent(typeof(UnityEngine.Animator))
+	if arg_21_0._gospotlight then
+		arg_21_0._animspotlight = arg_21_0._gospotlight:GetComponent(typeof(UnityEngine.Animator))
 	end
 
-	slot0._sceneAnim = slot0._sceneGo:GetComponent(typeof(UnityEngine.Animator))
-	slot0._goMask = gohelper.findChild(slot0._sceneGo, "root/BackGround/#mask")
+	arg_21_0._sceneAnim = arg_21_0._sceneGo:GetComponent(typeof(UnityEngine.Animator))
+	arg_21_0._goMask = gohelper.findChild(arg_21_0._sceneGo, "root/BackGround/#mask")
 
-	if slot0._goMask then
-		slot0._aniMask = slot0._goMask:GetComponent(typeof(UnityEngine.Animator))
+	if arg_21_0._goMask then
+		arg_21_0._aniMask = arg_21_0._goMask:GetComponent(typeof(UnityEngine.Animator))
 	end
 
-	gohelper.setActive(slot0._goroles, false)
-	gohelper.setActive(slot0._gospotlight, false)
-	slot0:_refreshView()
-	slot0:_initLevelupObjs()
-	MainCameraMgr.instance:addView(ViewName.Season1_5MainView, slot0.autoInitMainViewCamera, slot0.resetCamera, slot0)
+	gohelper.setActive(arg_21_0._goroles, false)
+	gohelper.setActive(arg_21_0._gospotlight, false)
+	arg_21_0:_refreshView()
+	arg_21_0:_initLevelupObjs()
+	MainCameraMgr.instance:addView(ViewName.Season1_5MainView, arg_21_0.autoInitMainViewCamera, arg_21_0.resetCamera, arg_21_0)
 end
 
-function slot0.autoInitMainViewCamera(slot0)
-	slot0:initCamera(false)
+function var_0_0.autoInitMainViewCamera(arg_22_0)
+	arg_22_0:initCamera(false)
 end
 
-function slot0._initLevelupObjs(slot0)
-	slot0._levelupObjs = {}
-	slot1 = {}
+function var_0_0._initLevelupObjs(arg_23_0)
+	arg_23_0._levelupObjs = {}
 
-	for slot5 = 1, 6 do
-		if slot0:_getGoSection(slot5) then
-			if not slot0._levelupObjs[slot5] then
-				slot0._levelupObjs[slot5] = {}
+	local var_23_0 = {}
+
+	for iter_23_0 = 1, 6 do
+		local var_23_1 = arg_23_0:_getGoSection(iter_23_0)
+
+		if var_23_1 then
+			local var_23_2 = arg_23_0._levelupObjs[iter_23_0]
+
+			if not var_23_2 then
+				var_23_2 = {}
+				arg_23_0._levelupObjs[iter_23_0] = var_23_2
 			end
 
-			if gohelper.findChild(slot6, "leveup") then
-				table.insert(slot7, slot8)
-				gohelper.setActive(slot8, false)
+			local var_23_3 = gohelper.findChild(var_23_1, "leveup")
+
+			if var_23_3 then
+				table.insert(var_23_2, var_23_3)
+				gohelper.setActive(var_23_3, false)
 			end
 		end
 	end
 
-	if slot0._waitShowLevelStage then
-		slot0:showLevelObjs(slot0._waitShowLevelStage)
+	if arg_23_0._waitShowLevelStage then
+		arg_23_0:showLevelObjs(arg_23_0._waitShowLevelStage)
 
-		slot0._waitShowLevelStage = nil
+		arg_23_0._waitShowLevelStage = nil
 	else
-		slot0:_hideLevelObjs(true)
+		arg_23_0:_hideLevelObjs(true)
 	end
 end
 
-function slot0.showLevelObjs(slot0, slot1)
-	if not slot0._levelupObjs then
-		slot0._waitShowLevelStage = slot1
+function var_0_0.showLevelObjs(arg_24_0, arg_24_1)
+	if not arg_24_0._levelupObjs then
+		arg_24_0._waitShowLevelStage = arg_24_1
 
 		return
 	end
 
-	slot0._sceneAnim:Play(UIAnimationName.Open, 0, 1)
+	arg_24_0._sceneAnim:Play(UIAnimationName.Open, 0, 1)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_leimi_map_upgrade)
-	slot0:_hideLevelObjs(true)
-	TaskDispatcher.runDelay(slot0._hideLevelObjs, slot0, 1.8)
+	arg_24_0:_hideLevelObjs(true)
+	TaskDispatcher.runDelay(arg_24_0._hideLevelObjs, arg_24_0, 1.8)
 
-	slot2 = slot0:_getStageSetting(slot1)
-	slot4 = {}
+	local var_24_0 = arg_24_0:_getStageSetting(arg_24_1)
+	local var_24_1 = arg_24_0:_getStageSetting(arg_24_1 - 1)
+	local var_24_2 = {}
 
-	if slot0:_getStageSetting(slot1 - 1) then
-		for slot8, slot9 in pairs(slot3) do
-			slot4[slot9] = true
+	if var_24_1 then
+		for iter_24_0, iter_24_1 in pairs(var_24_1) do
+			var_24_2[iter_24_1] = true
 		end
 	end
 
-	if slot2 then
-		for slot8, slot9 in pairs(slot2) do
-			if not slot4[slot9] and slot0._levelupObjs[slot9] then
-				for slot14, slot15 in pairs(slot10) do
-					gohelper.setActive(slot15, true)
+	if var_24_0 then
+		for iter_24_2, iter_24_3 in pairs(var_24_0) do
+			if not var_24_2[iter_24_3] then
+				local var_24_3 = arg_24_0._levelupObjs[iter_24_3]
+
+				if var_24_3 then
+					for iter_24_4, iter_24_5 in pairs(var_24_3) do
+						gohelper.setActive(iter_24_5, true)
+					end
 				end
 			end
 		end
 	end
 
-	if ViewMgr.instance:getContainer(ViewName.Season1_5MainView) then
-		slot5:stopUI(false)
+	local var_24_4 = ViewMgr.instance:getContainer(ViewName.Season1_5MainView)
+
+	if var_24_4 then
+		var_24_4:stopUI(false)
 	end
 end
 
-function slot0._hideLevelObjs(slot0, slot1)
-	TaskDispatcher.cancelTask(slot0._hideLevelObjs, slot0)
+function var_0_0._hideLevelObjs(arg_25_0, arg_25_1)
+	TaskDispatcher.cancelTask(arg_25_0._hideLevelObjs, arg_25_0)
 
-	if slot0._levelupObjs then
-		for slot5, slot6 in pairs(slot0._levelupObjs) do
-			for slot10, slot11 in pairs(slot6) do
-				gohelper.setActive(slot11, false)
+	if arg_25_0._levelupObjs then
+		for iter_25_0, iter_25_1 in pairs(arg_25_0._levelupObjs) do
+			for iter_25_2, iter_25_3 in pairs(iter_25_1) do
+				gohelper.setActive(iter_25_3, false)
 			end
 		end
 	end
 
-	if slot1 then
+	if arg_25_1 then
 		return
 	end
 
-	if ViewMgr.instance:getContainer(ViewName.Season1_5MainView) then
-		slot2:playUI(true)
+	local var_25_0 = ViewMgr.instance:getContainer(ViewName.Season1_5MainView)
+
+	if var_25_0 then
+		var_25_0:playUI(true)
 	end
 end
 
-function slot0._showStage(slot0)
-	slot1 = Activity104Model.instance:getAct104CurStage()
-	slot2 = slot0:_getStageSetting(slot1)
+function var_0_0._showStage(arg_26_0)
+	local var_26_0 = Activity104Model.instance:getAct104CurStage()
+	local var_26_1 = arg_26_0:_getStageSetting(var_26_0)
 
-	gohelper.setActive(slot0._gosection3part2, slot1 < 5)
+	gohelper.setActive(arg_26_0._gosection3part2, var_26_0 < 5)
 
-	for slot6 = 1, 6 do
-		slot0:_setGoSectionActive(slot6, false)
+	for iter_26_0 = 1, 6 do
+		arg_26_0:_setGoSectionActive(iter_26_0, false)
 	end
 
-	if slot2 then
-		for slot6, slot7 in pairs(slot2) do
-			slot0:_setGoSectionActive(slot7, true)
+	if var_26_1 then
+		for iter_26_1, iter_26_2 in pairs(var_26_1) do
+			arg_26_0:_setGoSectionActive(iter_26_2, true)
 		end
 	end
 end
 
-function slot0._getStageSetting(slot0, slot1)
-	return slot0._stageSetting[slot1] or slot0._stageSetting[6]
+function var_0_0._getStageSetting(arg_27_0, arg_27_1)
+	return arg_27_0._stageSetting[arg_27_1] or arg_27_0._stageSetting[6]
 end
 
-function slot0._setGoSectionActive(slot0, slot1, slot2)
-	gohelper.setActive(slot0:_getGoSection(slot1), slot2)
+function var_0_0._setGoSectionActive(arg_28_0, arg_28_1, arg_28_2)
+	gohelper.setActive(arg_28_0:_getGoSection(arg_28_1), arg_28_2)
 end
 
-function slot0._getGoSection(slot0, slot1)
-	return slot0["_gosection" .. slot1]
+function var_0_0._getGoSection(arg_29_0, arg_29_1)
+	return arg_29_0["_gosection" .. arg_29_1]
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0:_refreshView()
+function var_0_0.onUpdateParam(arg_30_0)
+	arg_30_0:_refreshView()
 end
 
-function slot0.onOpen(slot0)
-	slot0:_loadScene()
+function var_0_0.onOpen(arg_31_0)
+	arg_31_0:_loadScene()
 end
 
-function slot0._refreshView(slot0)
-	slot0:_showStage()
+function var_0_0._refreshView(arg_32_0)
+	arg_32_0:_showStage()
 end
 
-function slot0.focusRole(slot0, slot1)
-	if not slot1 then
-		slot0:cancelFocus()
+function var_0_0.focusRole(arg_33_0, arg_33_1)
+	if not arg_33_1 then
+		arg_33_0:cancelFocus()
 
 		return
 	end
 
-	slot0:killFocusTween()
+	arg_33_0:killFocusTween()
 
-	if not gohelper.findChild(slot0[string.format("_gorole%s", slot1)], "vx/quan") then
+	local var_33_0 = string.format("_gorole%s", arg_33_1)
+	local var_33_1 = gohelper.findChild(arg_33_0[var_33_0], "vx/quan")
+
+	if not var_33_1 then
 		return
 	end
 
-	slot4, slot5, slot6 = transformhelper.getPos(slot3.transform)
-	slot7 = slot0.focusTime
-	slot0._camera.orthographic = true
-	slot0._tweenId = ZProj.TweenHelper.DOLocalMove(slot0._camera.transform, slot4, slot5 - 5.8, 0, slot7, slot0.onMoveCompleted, slot0, nil, EaseType.OutCubic)
-	slot0._tweenSizeId = ZProj.TweenHelper.DOTweenFloat(slot0.seasonCameraOrthographicSize, slot0.focusCameraOrthographicSize, slot7, slot0._onSizeUpdate, nil, slot0, nil, EaseType.OutCubic)
+	local var_33_2, var_33_3, var_33_4 = transformhelper.getPos(var_33_1.transform)
+	local var_33_5 = arg_33_0.focusTime
 
-	if slot0._aniMask then
-		slot0._aniMask:Play(UIAnimationName.Close)
+	arg_33_0._camera.orthographic = true
+	arg_33_0._tweenId = ZProj.TweenHelper.DOLocalMove(arg_33_0._camera.transform, var_33_2, var_33_3 - 5.8, 0, var_33_5, arg_33_0.onMoveCompleted, arg_33_0, nil, EaseType.OutCubic)
+	arg_33_0._tweenSizeId = ZProj.TweenHelper.DOTweenFloat(arg_33_0.seasonCameraOrthographicSize, arg_33_0.focusCameraOrthographicSize, var_33_5, arg_33_0._onSizeUpdate, nil, arg_33_0, nil, EaseType.OutCubic)
+
+	if arg_33_0._aniMask then
+		arg_33_0._aniMask:Play(UIAnimationName.Close)
 	end
 end
 
-function slot0.cancelFocus(slot0)
-	slot0:killFocusTween()
+function var_0_0.cancelFocus(arg_34_0)
+	arg_34_0:killFocusTween()
 
-	slot1 = slot0.cancelFocusTime
-	slot0._camera.orthographic = true
-	slot0._tweenId = ZProj.TweenHelper.DOLocalMove(slot0._camera.transform, slot0.seasonCameraLocalPos.x, slot0.seasonCameraLocalPos.y, slot0.seasonCameraLocalPos.z, slot1, slot0._onMoveCompleted, slot0, nil, EaseType.OutCubic)
-	slot0._tweenSizeId = ZProj.TweenHelper.DOTweenFloat(slot0.focusCameraOrthographicSize, slot0.seasonCameraOrthographicSize, slot1, slot0._onSizeUpdate, nil, slot0, nil, EaseType.OutCubic)
+	local var_34_0 = arg_34_0.cancelFocusTime
 
-	if slot0._aniMask then
-		slot0._aniMask:Play(UIAnimationName.Open)
+	arg_34_0._camera.orthographic = true
+	arg_34_0._tweenId = ZProj.TweenHelper.DOLocalMove(arg_34_0._camera.transform, arg_34_0.seasonCameraLocalPos.x, arg_34_0.seasonCameraLocalPos.y, arg_34_0.seasonCameraLocalPos.z, var_34_0, arg_34_0._onMoveCompleted, arg_34_0, nil, EaseType.OutCubic)
+	arg_34_0._tweenSizeId = ZProj.TweenHelper.DOTweenFloat(arg_34_0.focusCameraOrthographicSize, arg_34_0.seasonCameraOrthographicSize, var_34_0, arg_34_0._onSizeUpdate, nil, arg_34_0, nil, EaseType.OutCubic)
+
+	if arg_34_0._aniMask then
+		arg_34_0._aniMask:Play(UIAnimationName.Open)
 	end
 end
 
-function slot0._onMoveCompleted(slot0)
-	slot0:killFocusTween()
+function var_0_0._onMoveCompleted(arg_35_0)
+	arg_35_0:killFocusTween()
 end
 
-function slot0._onSizeUpdate(slot0, slot1)
-	slot0._camera.orthographicSize = slot1
+function var_0_0._onSizeUpdate(arg_36_0, arg_36_1)
+	arg_36_0._camera.orthographicSize = arg_36_1
 end
 
-function slot0._onOpenFullViewFinish(slot0, slot1)
-	if not string.find(slot1, "Season") then
-		slot0:doAudio(false)
+function var_0_0._onOpenFullViewFinish(arg_37_0, arg_37_1)
+	if not string.find(arg_37_1, "Season") then
+		arg_37_0:doAudio(false)
 	end
 end
 
-function slot0._onOpenViewFinish(slot0, slot1)
-	if not slot0._listenerViews[slot1] then
+function var_0_0._onOpenViewFinish(arg_38_0, arg_38_1)
+	if not arg_38_0._listenerViews[arg_38_1] then
 		return
 	end
 
-	gohelper.setActive(slot0._goMask, false)
+	gohelper.setActive(arg_38_0._goMask, false)
 
-	if slot0._aniMask then
-		slot0._aniMask:Play(UIAnimationName.Close)
+	if arg_38_0._aniMask then
+		arg_38_0._aniMask:Play(UIAnimationName.Close)
 	end
 
-	slot0:showSceneAnim()
+	arg_38_0:showSceneAnim()
 end
 
-function slot0._onCloseViewFinish(slot0, slot1)
-	if not slot0._listenerViews[slot1] then
+function var_0_0._onCloseViewFinish(arg_39_0, arg_39_1)
+	if not arg_39_0._listenerViews[arg_39_1] then
 		return
 	end
 
-	gohelper.setActive(slot0._goMask, true)
+	gohelper.setActive(arg_39_0._goMask, true)
 
-	if slot0._aniMask then
-		slot0._aniMask:Play(UIAnimationName.Idle)
+	if arg_39_0._aniMask then
+		arg_39_0._aniMask:Play(UIAnimationName.Idle)
 	end
 end
 
-function slot0.onClose(slot0)
-	slot0:_removeEvents()
+function var_0_0.onClose(arg_40_0)
+	arg_40_0:_removeEvents()
 end
 
-function slot0.killFocusTween(slot0)
-	if slot0._tweenId then
-		ZProj.TweenHelper.KillById(slot0._tweenId)
+function var_0_0.killFocusTween(arg_41_0)
+	if arg_41_0._tweenId then
+		ZProj.TweenHelper.KillById(arg_41_0._tweenId)
 
-		slot0._tweenId = nil
+		arg_41_0._tweenId = nil
 	end
 
-	if slot0._tweenSizeId then
-		ZProj.TweenHelper.KillById(slot0._tweenSizeId)
+	if arg_41_0._tweenSizeId then
+		ZProj.TweenHelper.KillById(arg_41_0._tweenSizeId)
 
-		slot0._tweenSizeId = nil
+		arg_41_0._tweenSizeId = nil
 	end
 end
 
-function slot0.doAudio(slot0, slot1)
-	if slot0.isAudioPlay == slot1 then
+function var_0_0.doAudio(arg_42_0, arg_42_1)
+	if arg_42_0.isAudioPlay == arg_42_1 then
 		return
 	end
 
-	slot0.isAudioPlay = slot1
+	arg_42_0.isAudioPlay = arg_42_1
 
-	if slot1 then
+	if arg_42_1 then
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_noise_campfire)
 	else
 		AudioMgr.instance:trigger(AudioEnum.UI.stop_combatnoise_bus)
 	end
 end
 
-function slot0.onDestroyView(slot0)
-	slot0:killFocusTween()
-	TaskDispatcher.cancelTask(slot0._refreshRoles, slot0)
-	TaskDispatcher.cancelTask(slot0._hideLevelObjs, slot0)
-	TaskDispatcher.cancelTask(slot0._onDelayRefreshRoles, slot0)
-	gohelper.destroy(slot0._sceneRoot)
+function var_0_0.onDestroyView(arg_43_0)
+	arg_43_0:killFocusTween()
+	TaskDispatcher.cancelTask(arg_43_0._refreshRoles, arg_43_0)
+	TaskDispatcher.cancelTask(arg_43_0._hideLevelObjs, arg_43_0)
+	TaskDispatcher.cancelTask(arg_43_0._onDelayRefreshRoles, arg_43_0)
+	gohelper.destroy(arg_43_0._sceneRoot)
 
-	if slot0._mapLoader then
-		slot0._mapLoader:dispose()
+	if arg_43_0._mapLoader then
+		arg_43_0._mapLoader:dispose()
 
-		slot0._mapLoader = nil
+		arg_43_0._mapLoader = nil
 	end
 end
 
-return slot0
+return var_0_0

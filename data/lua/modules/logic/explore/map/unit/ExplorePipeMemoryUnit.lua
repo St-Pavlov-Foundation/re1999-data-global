@@ -1,45 +1,51 @@
-module("modules.logic.explore.map.unit.ExplorePipeMemoryUnit", package.seeall)
+﻿module("modules.logic.explore.map.unit.ExplorePipeMemoryUnit", package.seeall)
 
-slot0 = class("ExplorePipeMemoryUnit", ExplorePipeUnit)
+local var_0_0 = class("ExplorePipeMemoryUnit", ExplorePipeUnit)
 
-function slot0.onResLoaded(slot0)
-	uv0.super.onResLoaded(slot0)
+function var_0_0.onResLoaded(arg_1_0)
+	var_0_0.super.onResLoaded(arg_1_0)
 
-	if gohelper.findChild(slot0._displayGo, "#go_rotate/effect2/root") then
-		if slot0.mo:getNeedColor() == ExploreEnum.PipeColor.None then
-			gohelper.setActive(slot1, false)
+	local var_1_0 = gohelper.findChild(arg_1_0._displayGo, "#go_rotate/effect2/root")
+
+	if var_1_0 then
+		if arg_1_0.mo:getNeedColor() == ExploreEnum.PipeColor.None then
+			gohelper.setActive(var_1_0, false)
 		else
-			for slot7 = 0, slot1:GetComponentsInChildren(typeof(UnityEngine.ParticleSystem), true).Length - 1 do
-				slot8 = ExploreEnum.PipeColorDef[slot0.mo:getNeedColor()]
+			local var_1_1 = var_1_0:GetComponentsInChildren(typeof(UnityEngine.ParticleSystem), true)
 
-				ZProj.ParticleSystemHelper.SetStartColor(slot3[slot7], slot8.r, slot8.g, slot8.b, 1)
+			for iter_1_0 = 0, var_1_1.Length - 1 do
+				local var_1_2 = ExploreEnum.PipeColorDef[arg_1_0.mo:getNeedColor()]
+
+				ZProj.ParticleSystemHelper.SetStartColor(var_1_1[iter_1_0], var_1_2.r, var_1_2.g, var_1_2.b, 1)
 			end
 		end
 	end
 end
 
-function slot0.initComponents(slot0)
-	uv0.super.initComponents(slot0)
-	slot0:addComp("pipeComp", ExplorePipeComp)
+function var_0_0.initComponents(arg_2_0)
+	var_0_0.super.initComponents(arg_2_0)
+	arg_2_0:addComp("pipeComp", ExplorePipeComp)
 end
 
-function slot0.setupMO(slot0)
-	uv0.super.setupMO(slot0)
-	slot0.pipeComp:initData()
+function var_0_0.setupMO(arg_3_0)
+	var_0_0.super.setupMO(arg_3_0)
+	arg_3_0.pipeComp:initData()
 end
 
-function slot0.onStatus2Change(slot0, slot1, slot2)
-	slot0.mo:setCacheColor(slot2.color or ExploreEnum.PipeColor.None)
+function var_0_0.onStatus2Change(arg_4_0, arg_4_1, arg_4_2)
+	arg_4_0.mo:setCacheColor(arg_4_2.color or ExploreEnum.PipeColor.None)
 end
 
-function slot0.processMapIcon(slot0, slot1)
-	for slot6, slot7 in pairs(GameUtil.splitString2(slot1)) do
-		if tonumber(slot7[1]) == slot0.mo:getNeedColor() then
-			return slot7[2]
+function var_0_0.processMapIcon(arg_5_0, arg_5_1)
+	local var_5_0 = GameUtil.splitString2(arg_5_1)
+
+	for iter_5_0, iter_5_1 in pairs(var_5_0) do
+		if tonumber(iter_5_1[1]) == arg_5_0.mo:getNeedColor() then
+			return iter_5_1[2]
 		end
 	end
 
 	return nil
 end
 
-return slot0
+return var_0_0

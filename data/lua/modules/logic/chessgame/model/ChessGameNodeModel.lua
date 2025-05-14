@@ -1,45 +1,47 @@
-module("modules.logic.chessgame.model.ChessGameNodeModel", package.seeall)
+﻿module("modules.logic.chessgame.model.ChessGameNodeModel", package.seeall)
 
-slot0 = class("ChessGameNodeModel", BaseModel)
+local var_0_0 = class("ChessGameNodeModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0._nodes = {}
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._nodes = {}
 end
 
-function slot0.reInit(slot0)
-	slot0:clear()
+function var_0_0.reInit(arg_2_0)
+	arg_2_0:clear()
 end
 
-function slot0.setNodeDatas(slot0, slot1)
-	slot0._nodes = {}
+function var_0_0.setNodeDatas(arg_3_0, arg_3_1)
+	arg_3_0._nodes = {}
 
-	for slot5, slot6 in pairs(slot1) do
-		ChessGameNodeMo.New():setNode(slot6)
+	for iter_3_0, iter_3_1 in pairs(arg_3_1) do
+		local var_3_0 = ChessGameNodeMo.New()
 
-		if not slot0._nodes[slot6.x] then
-			slot0._nodes[slot6.x] = {}
+		var_3_0:setNode(iter_3_1)
+
+		if not arg_3_0._nodes[iter_3_1.x] then
+			arg_3_0._nodes[iter_3_1.x] = {}
 		end
 
-		slot0._nodes[slot6.x][slot6.y] = slot7
+		arg_3_0._nodes[iter_3_1.x][iter_3_1.y] = var_3_0
 	end
 end
 
-function slot0.getNode(slot0, slot1, slot2)
-	if not slot0._nodes[slot1] then
+function var_0_0.getNode(arg_4_0, arg_4_1, arg_4_2)
+	if not arg_4_0._nodes[arg_4_1] then
 		return
 	end
 
-	return slot0._nodes[slot1][slot2]
+	return arg_4_0._nodes[arg_4_1][arg_4_2]
 end
 
-function slot0.getAllNodes(slot0)
-	return slot0._nodes
+function var_0_0.getAllNodes(arg_5_0)
+	return arg_5_0._nodes
 end
 
-function slot0.clear(slot0)
-	slot0._nodes = {}
+function var_0_0.clear(arg_6_0)
+	arg_6_0._nodes = {}
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

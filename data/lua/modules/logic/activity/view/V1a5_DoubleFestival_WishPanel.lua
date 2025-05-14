@@ -1,87 +1,96 @@
-module("modules.logic.activity.view.V1a5_DoubleFestival_WishPanel", package.seeall)
+﻿module("modules.logic.activity.view.V1a5_DoubleFestival_WishPanel", package.seeall)
 
-slot0 = class("V1a5_DoubleFestival_WishPanel", BaseView)
+local var_0_0 = class("V1a5_DoubleFestival_WishPanel", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagePanelBG = gohelper.findChildSingleImage(slot0.viewGO, "#simage_PanelBG")
-	slot0._txtTitle = gohelper.findChildText(slot0.viewGO, "#txt_Title")
-	slot0._txtTitleEn = gohelper.findChildText(slot0.viewGO, "#txt_TitleEn")
-	slot0._txtDescr = gohelper.findChildText(slot0.viewGO, "scroll/viewport/content/#txt_Descr")
-	slot0._imageIcon = gohelper.findChildImage(slot0.viewGO, "scroll/viewport/content/#txt_Descr/#image_Icon")
-	slot0._txtDec = gohelper.findChildText(slot0.viewGO, "#txt_Dec")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagePanelBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_PanelBG")
+	arg_1_0._txtTitle = gohelper.findChildText(arg_1_0.viewGO, "#txt_Title")
+	arg_1_0._txtTitleEn = gohelper.findChildText(arg_1_0.viewGO, "#txt_TitleEn")
+	arg_1_0._txtDescr = gohelper.findChildText(arg_1_0.viewGO, "scroll/viewport/content/#txt_Descr")
+	arg_1_0._imageIcon = gohelper.findChildImage(arg_1_0.viewGO, "scroll/viewport/content/#txt_Descr/#image_Icon")
+	arg_1_0._txtDec = gohelper.findChildText(arg_1_0.viewGO, "#txt_Dec")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-slot1 = ActivityEnum.Activity.DoubleFestivalSign_1_5
-slot2 = nil
-slot3 = 294
+local var_0_1 = ActivityEnum.Activity.DoubleFestivalSign_1_5
+local var_0_2
+local var_0_3 = 294
 
-function slot0._editableInitView(slot0)
-	slot0._txtDescrTran = slot0._txtDescr.transform
-	slot0._scroll = gohelper.findChildComponent(slot0.viewGO, "scroll", gohelper.Type_ScrollRect)
-	slot0._imageIconTran = slot0._imageIcon.transform
-	slot0._scrollContentTran = slot0._scroll.content
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._txtDescrTran = arg_4_0._txtDescr.transform
+	arg_4_0._scroll = gohelper.findChildComponent(arg_4_0.viewGO, "scroll", gohelper.Type_ScrollRect)
+	arg_4_0._imageIconTran = arg_4_0._imageIcon.transform
+	arg_4_0._scrollContentTran = arg_4_0._scroll.content
 
-	slot0._simagePanelBG:LoadImage(ResUrl.getV1a5SignSingleBg("v1a5_news_bigitembg"))
+	arg_4_0._simagePanelBG:LoadImage(ResUrl.getV1a5SignSingleBg("v1a5_news_bigitembg"))
 
-	uv0 = uv0 or recthelper.getHeight(slot0._imageIconTran)
-	slot0._txtDescr.text = ""
-	slot0._txtTitle.text = ""
-	slot0._txtTitleEn.text = ""
-	slot0._txtDec.text = ""
+	var_0_2 = var_0_2 or recthelper.getHeight(arg_4_0._imageIconTran)
+	arg_4_0._txtDescr.text = ""
+	arg_4_0._txtTitle.text = ""
+	arg_4_0._txtTitleEn.text = ""
+	arg_4_0._txtDec.text = ""
 end
 
-function slot0.onOpen(slot0)
-	slot0:_refresh(slot0.viewParam.day)
+function var_0_0.onOpen(arg_5_0)
+	local var_5_0 = arg_5_0.viewParam.day
 
-	slot3 = slot0._txtDescrTran.sizeDelta.y
-	slot4 = slot3 + uv0
+	arg_5_0:_refresh(var_5_0)
 
-	if slot3 <= uv1 then
-		slot4 = 630
+	local var_5_1 = arg_5_0._txtDescrTran.sizeDelta.y
+	local var_5_2 = var_5_1 + var_0_2
+
+	if var_5_1 <= var_0_3 then
+		var_5_2 = 630
 	end
 
-	recthelper.setHeight(slot0._scrollContentTran, slot4)
+	recthelper.setHeight(arg_5_0._scrollContentTran, var_5_2)
 end
 
-function slot0._refresh(slot0, slot1)
-	GameUtil.setActive01(slot0._imageIconTran, ActivityType101Config.instance:getDoubleFestivalCOByDay(uv0, slot1) ~= nil)
+function var_0_0._refresh(arg_6_0, arg_6_1)
+	local var_6_0 = ActivityType101Config.instance:getDoubleFestivalCOByDay(var_0_1, arg_6_1)
 
-	if not slot2 then
+	GameUtil.setActive01(arg_6_0._imageIconTran, var_6_0 ~= nil)
+
+	if not var_6_0 then
 		return
 	end
 
-	UISpriteSetMgr.instance:setV1a5DfSignSprite(slot0._imageIcon, slot2.blessSpriteName)
+	UISpriteSetMgr.instance:setV1a5DfSignSprite(arg_6_0._imageIcon, var_6_0.blessSpriteName)
 
-	slot0._txtTitle.text = slot2.blessTitle
-	slot0._txtTitleEn.text = slot2.blessTitleEn
-	slot0._txtDescr.text = slot2.blessContent
-	slot0._txtDec.text = slot2.blessDesc
-	slot0._txtDescrTran.sizeDelta = Vector2(slot0._txtDescrTran.sizeDelta.x, math.max(uv1, slot0._txtDescr.preferredHeight))
+	arg_6_0._txtTitle.text = var_6_0.blessTitle
+	arg_6_0._txtTitleEn.text = var_6_0.blessTitleEn
+	arg_6_0._txtDescr.text = var_6_0.blessContent
+	arg_6_0._txtDec.text = var_6_0.blessDesc
+	arg_6_0._txtDescrTran.sizeDelta = Vector2(arg_6_0._txtDescrTran.sizeDelta.x, math.max(var_0_3, arg_6_0._txtDescr.preferredHeight))
 end
 
-function slot0.onClickModalMask(slot0)
-	slot0:closeThis()
+function var_0_0.onClickModalMask(arg_7_0)
+	arg_7_0:closeThis()
 end
 
-function slot0.onClose(slot0)
-	if slot0.viewParam.popupViewBlockKey then
-		PopupController.instance:setPause(slot1.popupViewBlockKey, false)
+function var_0_0.onClose(arg_8_0)
+	local var_8_0 = arg_8_0.viewParam
 
-		slot1.popupViewBlockKey = nil
+	if var_8_0.popupViewBlockKey then
+		PopupController.instance:setPause(var_8_0.popupViewBlockKey, false)
+
+		var_8_0.popupViewBlockKey = nil
 	end
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_9_0)
+	return
 end
 
-return slot0
+return var_0_0

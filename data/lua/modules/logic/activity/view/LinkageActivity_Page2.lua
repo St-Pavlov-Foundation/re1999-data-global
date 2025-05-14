@@ -1,100 +1,108 @@
-module("modules.logic.activity.view.LinkageActivity_Page2", package.seeall)
+﻿module("modules.logic.activity.view.LinkageActivity_Page2", package.seeall)
 
-slot0 = class("LinkageActivity_Page2", LinkageActivity_PageBase)
+local var_0_0 = class("LinkageActivity_Page2", LinkageActivity_PageBase)
 
-function slot0.ctor(slot0, ...)
-	uv0.super.ctor(slot0, ...)
+function var_0_0.ctor(arg_1_0, ...)
+	var_0_0.super.ctor(arg_1_0, ...)
 
-	slot0._rewardItemList = {}
-	slot0._videoItemList = {}
-	slot0._curVideoIndex = false
+	arg_1_0._rewardItemList = {}
+	arg_1_0._videoItemList = {}
+	arg_1_0._curVideoIndex = false
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._curVideoIndex = false
+function var_0_0.onDestroyView(arg_2_0)
+	arg_2_0._curVideoIndex = false
 
-	GameUtil.onDestroyViewMemberList(slot0, "_rewardItemList")
-	GameUtil.onDestroyViewMemberList(slot0, "_videoItemList")
-	uv0.super.onDestroyView(slot0)
+	GameUtil.onDestroyViewMemberList(arg_2_0, "_rewardItemList")
+	GameUtil.onDestroyViewMemberList(arg_2_0, "_videoItemList")
+	var_0_0.super.onDestroyView(arg_2_0)
 end
 
-function slot0.addReward(slot0, slot1, slot2, slot3)
-	slot4 = slot3.New({
-		parent = slot0,
-		baseViewContainer = slot0:baseViewContainer()
+function var_0_0.addReward(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
+	local var_3_0 = arg_3_3.New({
+		parent = arg_3_0,
+		baseViewContainer = arg_3_0:baseViewContainer()
 	})
 
-	slot4:setIndex(slot1)
-	slot4:init(slot2)
-	table.insert(slot0._rewardItemList, slot4)
+	var_3_0:setIndex(arg_3_1)
+	var_3_0:init(arg_3_2)
+	table.insert(arg_3_0._rewardItemList, var_3_0)
 
-	return slot4
+	return var_3_0
 end
 
-function slot0.addVideo(slot0, slot1, slot2, slot3)
-	slot4 = slot3.New({
-		parent = slot0,
-		baseViewContainer = slot0:baseViewContainer()
+function var_0_0.addVideo(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
+	local var_4_0 = arg_4_3.New({
+		parent = arg_4_0,
+		baseViewContainer = arg_4_0:baseViewContainer()
 	})
 
-	slot4:setIndex(slot1)
-	slot4:init(slot2)
-	table.insert(slot0._videoItemList, slot4)
+	var_4_0:setIndex(arg_4_1)
+	var_4_0:init(arg_4_2)
+	table.insert(arg_4_0._videoItemList, var_4_0)
 
-	return slot4
+	return var_4_0
 end
 
-function slot0.curVideoIndex(slot0)
-	return slot0._curVideoIndex
+function var_0_0.curVideoIndex(arg_5_0)
+	return arg_5_0._curVideoIndex
 end
 
-function slot0.getReward(slot0, slot1)
-	return slot0._rewardItemList[slot1]
+function var_0_0.getReward(arg_6_0, arg_6_1)
+	return arg_6_0._rewardItemList[arg_6_1]
 end
 
-function slot0.getVideo(slot0, slot1)
-	return slot0._videoItemList[slot1]
+function var_0_0.getVideo(arg_7_0, arg_7_1)
+	return arg_7_0._videoItemList[arg_7_1]
 end
 
-function slot0.selectedVideo(slot0, slot1)
-	if slot0._curVideoIndex == slot1 then
+function var_0_0.selectedVideo(arg_8_0, arg_8_1)
+	if arg_8_0._curVideoIndex == arg_8_1 then
 		return
 	end
 
-	slot0._curVideoIndex = slot1
+	local var_8_0 = arg_8_0._curVideoIndex == false
+	local var_8_1 = arg_8_0._curVideoIndex
 
-	slot0:onSelectedVideo(slot1, slot0._curVideoIndex, slot0._curVideoIndex == false)
+	arg_8_0._curVideoIndex = arg_8_1
+
+	arg_8_0:onSelectedVideo(arg_8_1, var_8_1, var_8_0)
 end
 
-function slot0.onUpdateMO(slot0)
-	slot0:_onUpdateMO_rewardList()
-	slot0:_onUpdateMO_videoList()
+function var_0_0.onUpdateMO(arg_9_0)
+	arg_9_0:_onUpdateMO_rewardList()
+	arg_9_0:_onUpdateMO_videoList()
 end
 
-function slot0._onUpdateMO_rewardList(slot0)
-	if slot0:getTempDataList() then
-		for slot5, slot6 in ipairs(slot0._rewardItemList) do
-			slot6:onUpdateMO(slot1[slot5])
+function var_0_0._onUpdateMO_rewardList(arg_10_0)
+	local var_10_0 = arg_10_0:getTempDataList()
+
+	if var_10_0 then
+		for iter_10_0, iter_10_1 in ipairs(arg_10_0._rewardItemList) do
+			iter_10_1:onUpdateMO(var_10_0[iter_10_0])
 		end
 	end
 end
 
-function slot0._onUpdateMO_videoList(slot0)
-	for slot4, slot5 in ipairs(slot0._videoItemList) do
-		slot5:onUpdateMO({
-			videoName = slot0:getLinkageActivityCO_res_video(slot4)
-		})
+function var_0_0._onUpdateMO_videoList(arg_11_0)
+	for iter_11_0, iter_11_1 in ipairs(arg_11_0._videoItemList) do
+		local var_11_0 = arg_11_0:getLinkageActivityCO_res_video(iter_11_0)
+		local var_11_1 = {
+			videoName = var_11_0
+		}
+
+		iter_11_1:onUpdateMO(var_11_1)
 	end
 end
 
-function slot0.onSelectedVideo(slot0, slot1, slot2, slot3)
+function var_0_0.onSelectedVideo(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
 	assert(false, "please override this function")
 end
 
-function slot0.onPostSelectedPage(slot0, slot1, slot2)
-	if slot0 == slot1 then
-		slot0:_onUpdateMO_videoList()
+function var_0_0.onPostSelectedPage(arg_13_0, arg_13_1, arg_13_2)
+	if arg_13_0 == arg_13_1 then
+		arg_13_0:_onUpdateMO_videoList()
 	end
 end
 
-return slot0
+return var_0_0

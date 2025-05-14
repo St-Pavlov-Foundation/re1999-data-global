@@ -1,52 +1,54 @@
-module("modules.logic.explore.map.whirl.comp.ExploreWhirlEffectComp", package.seeall)
+﻿module("modules.logic.explore.map.whirl.comp.ExploreWhirlEffectComp", package.seeall)
 
-slot0 = class("ExploreWhirlEffectComp", LuaCompBase)
+local var_0_0 = class("ExploreWhirlEffectComp", LuaCompBase)
 
-function slot0.ctor(slot0, slot1)
-	slot0.whirl = slot1
-	slot0._effectGo = nil
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0.whirl = arg_1_1
+	arg_1_0._effectGo = nil
 end
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.go = arg_2_1
 end
 
-function slot0.playAnim(slot0, slot1)
-	slot0:_releaseEffectGo()
+function var_0_0.playAnim(arg_3_0, arg_3_1)
+	arg_3_0:_releaseEffectGo()
 
-	if slot1 then
-		if string.nilorempty(ExploreConfig.instance:getUnitEffectConfig(slot0.whirl:getResPath(), slot1)) == false then
-			slot0._effectPath = ResUrl.getExploreEffectPath(slot2)
-			slot0._assetId = ResMgr.getAbAsset(slot0._effectPath, slot0._onResLoaded, slot0, slot0._assetId)
+	if arg_3_1 then
+		local var_3_0 = ExploreConfig.instance:getUnitEffectConfig(arg_3_0.whirl:getResPath(), arg_3_1)
+
+		if string.nilorempty(var_3_0) == false then
+			arg_3_0._effectPath = ResUrl.getExploreEffectPath(var_3_0)
+			arg_3_0._assetId = ResMgr.getAbAsset(arg_3_0._effectPath, arg_3_0._onResLoaded, arg_3_0, arg_3_0._assetId)
 		end
 	else
-		slot0._effectPath = nil
+		arg_3_0._effectPath = nil
 	end
 end
 
-function slot0._onResLoaded(slot0, slot1)
-	if not slot1.IsLoadSuccess then
+function var_0_0._onResLoaded(arg_4_0, arg_4_1)
+	if not arg_4_1.IsLoadSuccess then
 		return
 	end
 
-	if slot0._effectPath == slot1:getUrl() then
-		slot0:_releaseEffectGo()
+	if arg_4_0._effectPath == arg_4_1:getUrl() then
+		arg_4_0:_releaseEffectGo()
 
-		slot0._effectPath = slot1:getUrl()
-		slot0._effectGo = slot1:getInstance(nil, , slot0.go)
+		arg_4_0._effectPath = arg_4_1:getUrl()
+		arg_4_0._effectGo = arg_4_1:getInstance(nil, nil, arg_4_0.go)
 	end
 end
 
-function slot0._releaseEffectGo(slot0)
-	ResMgr.ReleaseObj(slot0._effectGo)
-	ResMgr.removeCallBack(slot0._assetId)
+function var_0_0._releaseEffectGo(arg_5_0)
+	ResMgr.ReleaseObj(arg_5_0._effectGo)
+	ResMgr.removeCallBack(arg_5_0._assetId)
 
-	slot0._effectGo = nil
-	slot0._effectPath = nil
+	arg_5_0._effectGo = nil
+	arg_5_0._effectPath = nil
 end
 
-function slot0.onDestroy(slot0)
-	slot0:_releaseEffectGo()
+function var_0_0.onDestroy(arg_6_0)
+	arg_6_0:_releaseEffectGo()
 end
 
-return slot0
+return var_0_0

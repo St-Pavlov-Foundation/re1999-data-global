@@ -1,23 +1,24 @@
-module("modules.logic.versionactivity1_2.yaxian.define.YaXianGameEnum", package.seeall)
+﻿module("modules.logic.versionactivity1_2.yaxian.define.YaXianGameEnum", package.seeall)
 
-slot0 = YaXianEnum
-slot0.TileBaseType = {
+local var_0_0 = YaXianEnum
+
+var_0_0.TileBaseType = {
 	Normal = 1,
 	None = 0
 }
-slot0.SelectPosStatus = {
+var_0_0.SelectPosStatus = {
 	SelectObjWaitPos = 2,
 	None = 1
 }
-slot0.TileSetting = {
+var_0_0.TileSetting = {
 	baffleOffsetX = 0.64,
 	height = 1.619276,
 	width = 2.563867,
 	baffleOffsetY = 0.44
 }
-slot0.TileSetting.halfWidth = slot0.TileSetting.width / 2
-slot0.TileSetting.halfHeight = slot0.TileSetting.height / 2
-slot0.InteractType = {
+var_0_0.TileSetting.halfWidth = var_0_0.TileSetting.width / 2
+var_0_0.TileSetting.halfHeight = var_0_0.TileSetting.height / 2
+var_0_0.InteractType = {
 	PickUpItem = 7,
 	TriggerFail = 5,
 	Enemy = 4,
@@ -27,56 +28,56 @@ slot0.InteractType = {
 	Obstacle = 2,
 	NoEffectItem = 8
 }
-slot0.MoveDirection = {
+var_0_0.MoveDirection = {
 	Top = 8,
 	Right = 6,
 	Left = 4,
 	Bottom = 2
 }
-slot0.OppositeDirection = {
-	[slot0.MoveDirection.Bottom] = slot0.MoveDirection.Top,
-	[slot0.MoveDirection.Left] = slot0.MoveDirection.Right,
-	[slot0.MoveDirection.Right] = slot0.MoveDirection.Left,
-	[slot0.MoveDirection.Top] = slot0.MoveDirection.Bottom
+var_0_0.OppositeDirection = {
+	[var_0_0.MoveDirection.Bottom] = var_0_0.MoveDirection.Top,
+	[var_0_0.MoveDirection.Left] = var_0_0.MoveDirection.Right,
+	[var_0_0.MoveDirection.Right] = var_0_0.MoveDirection.Left,
+	[var_0_0.MoveDirection.Top] = var_0_0.MoveDirection.Bottom
 }
-slot0.BaffleDirection = {
+var_0_0.BaffleDirection = {
 	Top = 8,
 	Right = 6,
 	Left = 4,
 	Bottom = 2
 }
-slot0.DirectionName = {
-	[slot0.MoveDirection.Bottom] = "down",
-	[slot0.MoveDirection.Left] = "left",
-	[slot0.MoveDirection.Right] = "right",
-	[slot0.MoveDirection.Top] = "up"
+var_0_0.DirectionName = {
+	[var_0_0.MoveDirection.Bottom] = "down",
+	[var_0_0.MoveDirection.Left] = "left",
+	[var_0_0.MoveDirection.Right] = "right",
+	[var_0_0.MoveDirection.Top] = "up"
 }
-slot0.BaffleDirectionPowerPos = {
+var_0_0.BaffleDirectionPowerPos = {
 	Top = 8,
 	Right = 6,
 	Left = 4,
 	Bottom = 2
 }
-slot0.BaffleType = {
+var_0_0.BaffleType = {
 	Second = 2,
 	First = 1
 }
-slot0.ClickRangeX = 125
-slot0.ClickRangeY = 80
-slot0.ClickYWeight = 1.2
-slot0.ChessBoardOffsetX = -7.85
-slot0.ChessBoardOffsetY = -0.2
-slot0.InteractSelectPriority = {
-	[slot0.InteractType.Player] = 1
+var_0_0.ClickRangeX = 125
+var_0_0.ClickRangeY = 80
+var_0_0.ClickYWeight = 1.2
+var_0_0.ChessBoardOffsetX = -7.85
+var_0_0.ChessBoardOffsetY = -0.2
+var_0_0.InteractSelectPriority = {
+	[var_0_0.InteractType.Player] = 1
 }
-slot0.GameStateType = {
+var_0_0.GameStateType = {
 	FinishEvent = 3,
 	Battle = 1,
 	UseItem = 2,
 	Lock = -1,
 	Normal = 0
 }
-slot0.GameStepType = {
+var_0_0.GameStepType = {
 	GameFinish = 2,
 	CallEvent = 4,
 	DeleteObject = 6,
@@ -87,21 +88,21 @@ slot0.GameStepType = {
 	UpdateObjectData = 9,
 	Move = 3
 }
-slot0.SkillId = {
+var_0_0.SkillId = {
 	InVisible = 1,
 	ThroughWall = 2
 }
-slot0.SkillType = {
+var_0_0.SkillType = {
 	InVisible = 1,
 	ThroughWall = 2
 }
-slot0.ConditionType = {
+var_0_0.ConditionType = {
 	FinishAllInteract = 3,
 	FinishInteract = 2,
 	PassEpisode = 0,
 	Round = 1
 }
-slot0.SceneResPath = {
+var_0_0.SceneResPath = {
 	GreedLineHalf = "scenes/m_s12_dfw_yaxian/prefab/tou_green.prefab",
 	LRBaffle1 = "scenes/m_s12_dfw_yaxian/prefab/picpe/m_s12_yaxian_zl_r_b_1x1.prefab",
 	FightEffect = "scenes/m_s12_dfw_yaxian/prefab/yanxian_zhandou.prefab",
@@ -124,60 +125,60 @@ slot0.SceneResPath = {
 	MonsterStatus = "scenes/m_s12_dfw_yaxian/prefab/picpe/yaxian_icon.prefab",
 	TargetItem = "scenes/m_s12_dfw_yaxian/prefab/picpe/m_s12_diban_mubiao.prefab"
 }
-slot0.InteractHeight = {
-	[10001.0] = 1,
-	[10006.0] = 1
+var_0_0.InteractHeight = {
+	[10001] = 1,
+	[10006] = 1
 }
-slot0.MinShowPriority = 0
-slot0.InteractShowPriority = {
-	[slot0.InteractType.TriggerVictory] = 1,
-	[slot0.InteractType.Enemy] = 2,
-	[slot0.InteractType.Player] = 3
+var_0_0.MinShowPriority = 0
+var_0_0.InteractShowPriority = {
+	[var_0_0.InteractType.TriggerVictory] = 1,
+	[var_0_0.InteractType.Enemy] = 2,
+	[var_0_0.InteractType.Player] = 3
 }
-slot0.IconStatus = {
+var_0_0.IconStatus = {
 	Fight = 2,
 	Assassinate = 1,
 	PlayerAssassinate = 5,
 	ThroughWall = 4,
 	InVisible = 3
 }
-slot0.DirectionIcon = {
-	[slot0.IconStatus.PlayerAssassinate] = true,
-	[slot0.IconStatus.Fight] = true
+var_0_0.DirectionIcon = {
+	[var_0_0.IconStatus.PlayerAssassinate] = true,
+	[var_0_0.IconStatus.Fight] = true
 }
-slot0.AIType = {
+var_0_0.AIType = {
 	NotLoop = 2,
 	Loop = 1
 }
-slot0.AlertType = {
+var_0_0.AlertType = {
 	SingleWay = 1,
 	FourWay = 3
 }
-slot0.ContainerOffsetZ = {
+var_0_0.ContainerOffsetZ = {
 	Interact = -2,
 	Background = -0.5,
 	TipArea = -1,
 	Path = -1.5
 }
-slot0.AlertOffsetZ = -0.01
-slot0.EffectType = {
+var_0_0.AlertOffsetZ = -0.01
+var_0_0.EffectType = {
 	Fight = 1,
 	Die = 3,
 	Assassinate = 2,
 	FightSuccess = 4,
 	PlayerAssassinateEffect = 5
 }
-slot0.DefaultEffectDuration = 0.5
-slot0.EffectDuration = {
-	[slot0.EffectType.Die] = 0.8,
-	[slot0.EffectType.FightSuccess] = 1.2
+var_0_0.DefaultEffectDuration = 0.5
+var_0_0.EffectDuration = {
+	[var_0_0.EffectType.Die] = 0.8,
+	[var_0_0.EffectType.FightSuccess] = 1.2
 }
-slot0.MoveDuration = 0.3
-slot0.SmallMoveDuration = 0.2
-slot0.IconAnimationSwitchInterval = 1
-slot0.IconAnimationDuration = 0.333
-slot0.StopAnimationDuration = 0.333
-slot0.InteractAnimationName = {
+var_0_0.MoveDuration = 0.3
+var_0_0.SmallMoveDuration = 0.2
+var_0_0.IconAnimationSwitchInterval = 1
+var_0_0.IconAnimationDuration = 0.333
+var_0_0.StopAnimationDuration = 0.333
+var_0_0.InteractAnimationName = {
 	TwoEffect = "skill_two_open",
 	TwoEffectClose = "skill_two_close",
 	CloseInVisible = "skill_ys_close",
@@ -186,44 +187,44 @@ slot0.InteractAnimationName = {
 	Die = "die",
 	CloseThroughWall = "skill_cq_close"
 }
-slot0.CloseAnimationName = {
-	[slot0.InteractAnimationName.InVisible] = slot0.InteractAnimationName.CloseInVisible,
-	[slot0.InteractAnimationName.ThroughWall] = slot0.InteractAnimationName.CloseThroughWall,
-	[slot0.InteractAnimationName.TwoEffect] = slot0.InteractAnimationName.TwoEffectClose
+var_0_0.CloseAnimationName = {
+	[var_0_0.InteractAnimationName.InVisible] = var_0_0.InteractAnimationName.CloseInVisible,
+	[var_0_0.InteractAnimationName.ThroughWall] = var_0_0.InteractAnimationName.CloseThroughWall,
+	[var_0_0.InteractAnimationName.TwoEffect] = var_0_0.InteractAnimationName.TwoEffectClose
 }
-slot0.InteractDefaultTopPosOffset = Vector3(0, 1.04, 0)
-slot0.ResultSimageName = {
+var_0_0.InteractDefaultTopPosOffset = Vector3(0, 1.04, 0)
+var_0_0.ResultSimageName = {
 	FightFail = "img_zi1",
 	RoundUseUp = "img_zi3",
 	Success = "img_zi2"
 }
-slot0.EndTxtAnchorY = {
+var_0_0.EndTxtAnchorY = {
 	HadTxt = Vector2(0.5, 0.2),
 	NoneTxt = Vector2(0.5, 0.5)
 }
-slot0.DeleteInteractReason = {
+var_0_0.DeleteInteractReason = {
 	AssassinateKill = 1,
 	FightKill = 3,
 	Win = 2
 }
-slot0.LastEpisodeId = 21
-slot0.BossInteractId = 30501
-slot0.FakeBossStartPos = {
+var_0_0.LastEpisodeId = 21
+var_0_0.BossInteractId = 30501
+var_0_0.FakeBossStartPos = {
 	posY = 3,
 	posX = 0
 }
-slot0.FakeBossDirection = slot0.MoveDirection.Right
-slot0.StepFinishDelay = 0.3
-slot0.ScenePosYRange = {
+var_0_0.FakeBossDirection = var_0_0.MoveDirection.Right
+var_0_0.StepFinishDelay = 0.3
+var_0_0.ScenePosYRange = {
 	Max = 10,
 	Min = -10
 }
-slot0.ScenePosYRangeArea = slot0.ScenePosYRange.Max - slot0.ScenePosYRange.Min
-slot0.LevelScenePosZRange = {
+var_0_0.ScenePosYRangeArea = var_0_0.ScenePosYRange.Max - var_0_0.ScenePosYRange.Min
+var_0_0.LevelScenePosZRange = {
 	Max = 0,
 	Min = -0.4
 }
-slot0.SwitchDirectionDelay = 0.15
-slot0.EffectInterval = 1
+var_0_0.SwitchDirectionDelay = 0.15
+var_0_0.EffectInterval = 1
 
-return slot0
+return var_0_0

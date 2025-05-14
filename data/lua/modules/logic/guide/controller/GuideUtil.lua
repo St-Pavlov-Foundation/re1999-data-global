@@ -1,31 +1,35 @@
-module("modules.logic.guide.controller.GuideUtil", package.seeall)
+﻿module("modules.logic.guide.controller.GuideUtil", package.seeall)
 
-slot0 = _M
-slot1 = typeof(UnityEngine.RectTransform)
-slot2 = typeof(UnityEngine.CanvasGroup)
-slot3 = nil
+local var_0_0 = _M
+local var_0_1 = typeof(UnityEngine.RectTransform)
+local var_0_2 = typeof(UnityEngine.CanvasGroup)
+local var_0_3
 
-function slot0.isGOShowInScreen(slot0)
-	if gohelper.isNil(slot0) or not slot0.activeInHierarchy then
+function var_0_0.isGOShowInScreen(arg_1_0)
+	if gohelper.isNil(arg_1_0) or not arg_1_0.activeInHierarchy then
 		return false
 	end
 
-	if slot0:GetComponent(uv0) then
-		uv1 = uv1 or ViewMgr.instance:getUIRoot().transform
+	local var_1_0 = arg_1_0:GetComponent(var_0_1)
 
-		if ZProj.UGUIHelper.Overlaps(slot1, uv1, CameraMgr.instance:getUICamera()) then
-			while slot1 do
-				slot2, slot3, slot4 = transformhelper.getLocalScale(slot1, 0, 0, 0)
+	if var_1_0 then
+		var_0_3 = var_0_3 or ViewMgr.instance:getUIRoot().transform
 
-				if slot2 == 0 or slot3 == 0 then
+		if ZProj.UGUIHelper.Overlaps(var_1_0, var_0_3, CameraMgr.instance:getUICamera()) then
+			while var_1_0 do
+				local var_1_1, var_1_2, var_1_3 = transformhelper.getLocalScale(var_1_0, 0, 0, 0)
+
+				if var_1_1 == 0 or var_1_2 == 0 then
 					return false
 				end
 
-				if slot1:GetComponent(uv2) and slot5.alpha == 0 then
+				local var_1_4 = var_1_0:GetComponent(var_0_2)
+
+				if var_1_4 and var_1_4.alpha == 0 then
 					return false
 				end
 
-				slot1 = slot1.parent
+				var_1_0 = var_1_0.parent
 			end
 
 			return true
@@ -37,12 +41,18 @@ function slot0.isGOShowInScreen(slot0)
 	end
 end
 
-function slot0.isGuideViewTarget(slot0)
-	if ViewMgr.instance:isOpen(ViewName.GuideView) and gohelper.find(GuideViewMgr.instance.viewParam and slot1.goPath) and slot0 == slot3 then
-		return true
+function var_0_0.isGuideViewTarget(arg_2_0)
+	if ViewMgr.instance:isOpen(ViewName.GuideView) then
+		local var_2_0 = GuideViewMgr.instance.viewParam
+		local var_2_1 = var_2_0 and var_2_0.goPath
+		local var_2_2 = gohelper.find(var_2_1)
+
+		if var_2_2 and arg_2_0 == var_2_2 then
+			return true
+		end
 	end
 
 	return false
 end
 
-return slot0
+return var_0_0

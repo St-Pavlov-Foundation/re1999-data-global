@@ -1,46 +1,46 @@
-module("modules.logic.fight.FightUpdateMgr", package.seeall)
+﻿module("modules.logic.fight.FightUpdateMgr", package.seeall)
 
-slot0 = class("FightUpdateMgr")
-slot1 = {}
-slot2 = 0
-slot3 = 10
+local var_0_0 = class("FightUpdateMgr")
+local var_0_1 = {}
+local var_0_2 = 0
+local var_0_3 = 10
 
-function slot0.registUpdate(slot0, slot1, slot2)
-	slot3 = FightUpdateItem.New(slot0, slot1, slot2)
+function var_0_0.registUpdate(arg_1_0, arg_1_1, arg_1_2)
+	local var_1_0 = FightUpdateItem.New(arg_1_0, arg_1_1, arg_1_2)
 
-	table.insert(uv0, slot3)
+	table.insert(var_0_1, var_1_0)
 
-	return slot3
+	return var_1_0
 end
 
-function slot0.cancelUpdate(slot0)
-	if not slot0 then
+function var_0_0.cancelUpdate(arg_2_0)
+	if not arg_2_0 then
 		return
 	end
 
-	slot0.isDone = true
+	arg_2_0.isDone = true
 end
 
-function slot0.update()
-	slot0 = Time.deltaTime
+function var_0_0.update()
+	local var_3_0 = Time.deltaTime
 
-	for slot4, slot5 in ipairs(uv0) do
-		slot5:update(slot0)
+	for iter_3_0, iter_3_1 in ipairs(var_0_1) do
+		iter_3_1:update(var_3_0)
 	end
 
-	uv1 = uv1 + slot0
+	var_0_2 = var_0_2 + var_3_0
 
-	if uv2 < uv1 then
-		uv1 = 0
+	if var_0_2 > var_0_3 then
+		var_0_2 = 0
 
-		for slot4 = #uv0, 1, -1 do
-			if uv0[slot4].isDone then
-				table.remove(uv0, slot4)
+		for iter_3_2 = #var_0_1, 1, -1 do
+			if var_0_1[iter_3_2].isDone then
+				table.remove(var_0_1, iter_3_2)
 			end
 		end
 	end
 end
 
-UpdateBeat:Add(slot0.update, slot0)
+UpdateBeat:Add(var_0_0.update, var_0_0)
 
-return slot0
+return var_0_0

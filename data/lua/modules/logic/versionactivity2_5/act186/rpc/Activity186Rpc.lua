@@ -1,158 +1,166 @@
-module("modules.logic.versionactivity2_5.act186.rpc.Activity186Rpc", package.seeall)
+﻿module("modules.logic.versionactivity2_5.act186.rpc.Activity186Rpc", package.seeall)
 
-slot0 = class("Activity186Rpc", BaseRpc)
+local var_0_0 = class("Activity186Rpc", BaseRpc)
 
-function slot0.sendGetAct186InfoRequest(slot0, slot1, slot2, slot3)
-	slot4 = Activity186Module_pb.GetAct186InfoRequest()
-	slot4.activityId = slot1
+function var_0_0.sendGetAct186InfoRequest(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	local var_1_0 = Activity186Module_pb.GetAct186InfoRequest()
 
-	slot0:sendMsg(slot4, slot2, slot3)
+	var_1_0.activityId = arg_1_1
+
+	arg_1_0:sendMsg(var_1_0, arg_1_2, arg_1_3)
 end
 
-function slot0.onReceiveGetAct186InfoReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveGetAct186InfoReply(arg_2_0, arg_2_1, arg_2_2)
+	if arg_2_1 ~= 0 then
 		return
 	end
 
-	Activity186Model.instance:setActInfo(slot2)
+	Activity186Model.instance:setActInfo(arg_2_2)
 	Activity186Controller.instance:dispatchEvent(Activity186Event.UpdateInfo)
 	Activity186Controller.instance:dispatchEvent(Activity186Event.RefreshRed)
 end
 
-function slot0.sendFinishAct186TaskRequest(slot0, slot1, slot2)
-	slot3 = Activity186Module_pb.FinishAct186TaskRequest()
-	slot3.activityId = slot1
-	slot3.taskId = slot2
+function var_0_0.sendFinishAct186TaskRequest(arg_3_0, arg_3_1, arg_3_2)
+	local var_3_0 = Activity186Module_pb.FinishAct186TaskRequest()
 
-	slot0:sendMsg(slot3)
+	var_3_0.activityId = arg_3_1
+	var_3_0.taskId = arg_3_2
+
+	arg_3_0:sendMsg(var_3_0)
 end
 
-function slot0.onReceiveFinishAct186TaskReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveFinishAct186TaskReply(arg_4_0, arg_4_1, arg_4_2)
+	if arg_4_1 ~= 0 then
 		return
 	end
 
-	Activity186Model.instance:onFinishAct186Task(slot2)
-	Activity186Controller.instance:dispatchEvent(Activity186Event.FinishTask, slot2)
+	Activity186Model.instance:onFinishAct186Task(arg_4_2)
+	Activity186Controller.instance:dispatchEvent(Activity186Event.FinishTask, arg_4_2)
 end
 
-function slot0.sendGetAct186MilestoneRewardRequest(slot0, slot1)
-	slot2 = Activity186Module_pb.GetAct186MilestoneRewardRequest()
-	slot2.activityId = slot1
+function var_0_0.sendGetAct186MilestoneRewardRequest(arg_5_0, arg_5_1)
+	local var_5_0 = Activity186Module_pb.GetAct186MilestoneRewardRequest()
 
-	slot0:sendMsg(slot2)
+	var_5_0.activityId = arg_5_1
+
+	arg_5_0:sendMsg(var_5_0)
 end
 
-function slot0.onReceiveGetAct186MilestoneRewardReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveGetAct186MilestoneRewardReply(arg_6_0, arg_6_1, arg_6_2)
+	if arg_6_1 ~= 0 then
 		return
 	end
 
-	Activity186Model.instance:onGetAct186MilestoneReward(slot2)
+	Activity186Model.instance:onGetAct186MilestoneReward(arg_6_2)
 	Activity186Controller.instance:dispatchEvent(Activity186Event.GetMilestoneReward)
 end
 
-function slot0.sendGetAct186DailyCollectionRequest(slot0, slot1)
-	slot2 = Activity186Module_pb.GetAct186DailyCollectionRequest()
-	slot2.activityId = slot1
+function var_0_0.sendGetAct186DailyCollectionRequest(arg_7_0, arg_7_1)
+	local var_7_0 = Activity186Module_pb.GetAct186DailyCollectionRequest()
 
-	slot0:sendMsg(slot2)
+	var_7_0.activityId = arg_7_1
+
+	arg_7_0:sendMsg(var_7_0)
 end
 
-function slot0.onReceiveGetAct186DailyCollectionReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveGetAct186DailyCollectionReply(arg_8_0, arg_8_1, arg_8_2)
+	if arg_8_1 ~= 0 then
 		return
 	end
 
-	Activity186Model.instance:onGetAct186DailyCollection(slot2)
+	Activity186Model.instance:onGetAct186DailyCollection(arg_8_2)
 	Activity186Controller.instance:dispatchEvent(Activity186Event.GetDailyCollection)
 end
 
-function slot0.onReceiveAct186TaskPush(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveAct186TaskPush(arg_9_0, arg_9_1, arg_9_2)
+	if arg_9_1 ~= 0 then
 		return
 	end
 
-	Activity186Model.instance:onAct186TaskPush(slot2)
+	Activity186Model.instance:onAct186TaskPush(arg_9_2)
 	Activity186Controller.instance:dispatchEvent(Activity186Event.UpdateTask)
 end
 
-function slot0.onReceiveAct186LikePush(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveAct186LikePush(arg_10_0, arg_10_1, arg_10_2)
+	if arg_10_1 ~= 0 then
 		return
 	end
 
-	Activity186Model.instance:onAct186LikePush(slot2)
+	Activity186Model.instance:onAct186LikePush(arg_10_2)
 end
 
-function slot0.sendFinishAct186ATypeGameRequest(slot0, slot1, slot2, slot3)
-	slot4 = Activity186Module_pb.FinishAct186ATypeGameRequest()
-	slot4.activityId = slot1
-	slot4.gameId = slot2
-	slot4.rewardId = slot3
+function var_0_0.sendFinishAct186ATypeGameRequest(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
+	local var_11_0 = Activity186Module_pb.FinishAct186ATypeGameRequest()
 
-	slot0:sendMsg(slot4)
+	var_11_0.activityId = arg_11_1
+	var_11_0.gameId = arg_11_2
+	var_11_0.rewardId = arg_11_3
+
+	arg_11_0:sendMsg(var_11_0)
 end
 
-function slot0.onReceiveFinishAct186ATypeGameReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveFinishAct186ATypeGameReply(arg_12_0, arg_12_1, arg_12_2)
+	if arg_12_1 ~= 0 then
 		return
 	end
 
-	Activity186Model.instance:onFinishAct186Game(slot2)
+	Activity186Model.instance:onFinishAct186Game(arg_12_2)
 	Activity186Controller.instance:dispatchEvent(Activity186Event.FinishGame)
 end
 
-function slot0.sendAct186BTypeGamePlayRequest(slot0, slot1, slot2)
-	slot3 = Activity186Module_pb.Act186BTypeGamePlayRequest()
-	slot3.activityId = slot1
-	slot3.gameId = slot2
+function var_0_0.sendAct186BTypeGamePlayRequest(arg_13_0, arg_13_1, arg_13_2)
+	local var_13_0 = Activity186Module_pb.Act186BTypeGamePlayRequest()
 
-	slot0:sendMsg(slot3)
+	var_13_0.activityId = arg_13_1
+	var_13_0.gameId = arg_13_2
+
+	arg_13_0:sendMsg(var_13_0)
 end
 
-function slot0.onReceiveAct186BTypeGamePlayReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveAct186BTypeGamePlayReply(arg_14_0, arg_14_1, arg_14_2)
+	if arg_14_1 ~= 0 then
 		return
 	end
 
-	Activity186Model.instance:onBTypeGamePlay(slot2)
+	Activity186Model.instance:onBTypeGamePlay(arg_14_2)
 	Activity186Controller.instance:dispatchEvent(Activity186Event.PlayGame)
 end
 
-function slot0.sendFinishAct186BTypeGameRequest(slot0, slot1, slot2)
-	slot3 = Activity186Module_pb.FinishAct186BTypeGameRequest()
-	slot3.activityId = slot1
-	slot3.gameId = slot2
+function var_0_0.sendFinishAct186BTypeGameRequest(arg_15_0, arg_15_1, arg_15_2)
+	local var_15_0 = Activity186Module_pb.FinishAct186BTypeGameRequest()
 
-	slot0:sendMsg(slot3)
+	var_15_0.activityId = arg_15_1
+	var_15_0.gameId = arg_15_2
+
+	arg_15_0:sendMsg(var_15_0)
 end
 
-function slot0.onReceiveFinishAct186BTypeGameReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveFinishAct186BTypeGameReply(arg_16_0, arg_16_1, arg_16_2)
+	if arg_16_1 ~= 0 then
 		return
 	end
 
-	Activity186Model.instance:onFinishAct186Game(slot2)
+	Activity186Model.instance:onFinishAct186Game(arg_16_2)
 	Activity186Controller.instance:dispatchEvent(Activity186Event.FinishGame)
 end
 
-function slot0.sendGetAct186OnceBonusRequest(slot0, slot1)
-	slot2 = Activity186Module_pb.GetAct186OnceBonusRequest()
-	slot2.activityId = slot1
+function var_0_0.sendGetAct186OnceBonusRequest(arg_17_0, arg_17_1)
+	local var_17_0 = Activity186Module_pb.GetAct186OnceBonusRequest()
 
-	slot0:sendMsg(slot2)
+	var_17_0.activityId = arg_17_1
+
+	arg_17_0:sendMsg(var_17_0)
 end
 
-function slot0.onReceiveGetAct186OnceBonusReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveGetAct186OnceBonusReply(arg_18_0, arg_18_1, arg_18_2)
+	if arg_18_1 ~= 0 then
 		return
 	end
 
-	Activity186Model.instance:onGetOnceBonusReply(slot2)
+	Activity186Model.instance:onGetOnceBonusReply(arg_18_2)
 	Activity186Controller.instance:dispatchEvent(Activity186Event.GetOnceBonus)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

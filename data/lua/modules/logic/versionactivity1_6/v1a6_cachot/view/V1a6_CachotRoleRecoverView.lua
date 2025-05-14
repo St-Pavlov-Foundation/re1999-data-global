@@ -1,144 +1,166 @@
-module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotRoleRecoverView", package.seeall)
+﻿module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotRoleRecoverView", package.seeall)
 
-slot0 = class("V1a6_CachotRoleRecoverView", BaseView)
+local var_0_0 = class("V1a6_CachotRoleRecoverView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._scrollview = gohelper.findChildScrollRect(slot0.viewGO, "#scroll_view")
-	slot0._gocontent = gohelper.findChild(slot0.viewGO, "#scroll_view/Viewport/#go_content")
-	slot0._goleft = gohelper.findChild(slot0.viewGO, "#scroll_view/Viewport/#go_content/#go_left")
-	slot0._simageselect = gohelper.findChildSingleImage(slot0.viewGO, "#scroll_view/Viewport/#go_content/#go_left/#simage_select")
-	slot0._gopresetcontent = gohelper.findChild(slot0.viewGO, "#scroll_view/Viewport/#go_content/#go_left/scroll_view/Viewport/#go_presetcontent")
-	slot0._goright = gohelper.findChild(slot0.viewGO, "#scroll_view/Viewport/#go_content/#go_right")
-	slot0._gopreparecontent = gohelper.findChild(slot0.viewGO, "#scroll_view/Viewport/#go_content/#go_right/scroll_view/Viewport/#go_preparecontent")
-	slot0._simagetitle = gohelper.findChildSingleImage(slot0.viewGO, "#simage_title")
-	slot0._gostart = gohelper.findChild(slot0.viewGO, "#go_start")
-	slot0._btnstart = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_start/#btn_start")
-	slot0._gostartlight = gohelper.findChild(slot0.viewGO, "#go_start/#btn_start/#go_startlight")
-	slot0._gotopleft = gohelper.findChild(slot0.viewGO, "#go_topleft")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._scrollview = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_view")
+	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "#scroll_view/Viewport/#go_content")
+	arg_1_0._goleft = gohelper.findChild(arg_1_0.viewGO, "#scroll_view/Viewport/#go_content/#go_left")
+	arg_1_0._simageselect = gohelper.findChildSingleImage(arg_1_0.viewGO, "#scroll_view/Viewport/#go_content/#go_left/#simage_select")
+	arg_1_0._gopresetcontent = gohelper.findChild(arg_1_0.viewGO, "#scroll_view/Viewport/#go_content/#go_left/scroll_view/Viewport/#go_presetcontent")
+	arg_1_0._goright = gohelper.findChild(arg_1_0.viewGO, "#scroll_view/Viewport/#go_content/#go_right")
+	arg_1_0._gopreparecontent = gohelper.findChild(arg_1_0.viewGO, "#scroll_view/Viewport/#go_content/#go_right/scroll_view/Viewport/#go_preparecontent")
+	arg_1_0._simagetitle = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_title")
+	arg_1_0._gostart = gohelper.findChild(arg_1_0.viewGO, "#go_start")
+	arg_1_0._btnstart = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_start/#btn_start")
+	arg_1_0._gostartlight = gohelper.findChild(arg_1_0.viewGO, "#go_start/#btn_start/#go_startlight")
+	arg_1_0._gotopleft = gohelper.findChild(arg_1_0.viewGO, "#go_topleft")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnstart:AddClickListener(slot0._btnstartOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnstart:AddClickListener(arg_2_0._btnstartOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnstart:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnstart:RemoveClickListener()
 end
 
-function slot0._btnstartOnClick(slot0)
-	if not slot0._selectedMo or not slot0._selectedMo:getHeroMO() then
+function var_0_0._btnstartOnClick(arg_4_0)
+	if not arg_4_0._selectedMo or not arg_4_0._selectedMo:getHeroMO() then
 		GameFacade.showToast(ToastEnum.V1a6CachotToast10)
 
 		return
 	end
 
-	RogueRpc.instance:sendRogueEventSelectRequest(V1a6_CachotEnum.ActivityId, slot0.viewParam.eventId, slot0._selectedMo:getHeroMO().heroId, slot0._onSelectEnd, slot0)
+	local var_4_0 = arg_4_0._selectedMo:getHeroMO()
+
+	RogueRpc.instance:sendRogueEventSelectRequest(V1a6_CachotEnum.ActivityId, arg_4_0.viewParam.eventId, var_4_0.heroId, arg_4_0._onSelectEnd, arg_4_0)
 end
 
-function slot0._onSelectEnd(slot0)
+function var_0_0._onSelectEnd(arg_5_0)
 	V1a6_CachotController.instance:openV1a6_CachotRoleRecoverResultView({
-		slot0._selectedMo
+		arg_5_0._selectedMo
 	})
 end
 
-function slot0._btncloseOnClick(slot0)
-	RogueRpc.instance:sendRogueEventEndRequest(V1a6_CachotEnum.ActivityId, slot0.viewParam.eventId, slot0.closeThis, slot0)
+function var_0_0._btncloseOnClick(arg_6_0)
+	RogueRpc.instance:sendRogueEventEndRequest(V1a6_CachotEnum.ActivityId, arg_6_0.viewParam.eventId, arg_6_0.closeThis, arg_6_0)
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_7_0)
 	V1a6_CachotRoleRecoverPresetListModel.instance:initList()
 	V1a6_CachotRoleRecoverPrepareListModel.instance:initList()
 
-	slot0._contentSizeFitter = slot0._gocontent:GetComponent(typeof(UnityEngine.UI.ContentSizeFitter))
-	slot0._horizontal = slot0._gocontent:GetComponent(typeof(UnityEngine.UI.HorizontalLayoutGroup))
-	slot0._limitedScrollRect = slot0._scrollview:GetComponent(typeof(ZProj.LimitedScrollRect))
+	arg_7_0._contentSizeFitter = arg_7_0._gocontent:GetComponent(typeof(UnityEngine.UI.ContentSizeFitter))
+	arg_7_0._horizontal = arg_7_0._gocontent:GetComponent(typeof(UnityEngine.UI.HorizontalLayoutGroup))
+	arg_7_0._limitedScrollRect = arg_7_0._scrollview:GetComponent(typeof(ZProj.LimitedScrollRect))
 
-	slot0:_initPresetItemList()
+	arg_7_0:_initPresetItemList()
 end
 
-function slot0._initPresetItemList(slot0)
-	if slot0._presetItemList then
+function var_0_0._initPresetItemList(arg_8_0)
+	if arg_8_0._presetItemList then
 		return
 	end
 
-	slot0._presetItemList = slot0:getUserDataTb_()
+	arg_8_0._presetItemList = arg_8_0:getUserDataTb_()
 
-	for slot5 = 1, V1a6_CachotEnum.HeroCountInGroup do
-		slot0._presetItemList[slot5] = MonoHelper.addNoUpdateLuaComOnceToGo(slot0:getResInst(slot0.viewContainer:getSetting().otherRes[1], slot0._gopresetcontent, "item" .. tostring(slot5)), V1a6_CachotRoleRecoverPresetItem)
+	local var_8_0 = arg_8_0.viewContainer:getSetting().otherRes[1]
+
+	for iter_8_0 = 1, V1a6_CachotEnum.HeroCountInGroup do
+		local var_8_1 = arg_8_0:getResInst(var_8_0, arg_8_0._gopresetcontent, "item" .. tostring(iter_8_0))
+		local var_8_2 = MonoHelper.addNoUpdateLuaComOnceToGo(var_8_1, V1a6_CachotRoleRecoverPresetItem)
+
+		arg_8_0._presetItemList[iter_8_0] = var_8_2
 	end
 end
 
-function slot0._initPrepareItemList(slot0)
-	if slot0._prepareItemList then
+function var_0_0._initPrepareItemList(arg_9_0)
+	if arg_9_0._prepareItemList then
 		return
 	end
 
-	slot0._prepareItemList = slot0:getUserDataTb_()
+	arg_9_0._prepareItemList = arg_9_0:getUserDataTb_()
 
-	for slot6, slot7 in ipairs(V1a6_CachotRoleRecoverPrepareListModel.instance:getList()) do
-		slot9 = MonoHelper.addNoUpdateLuaComOnceToGo(slot0:getResInst(slot0.viewContainer:getSetting().otherRes[2], slot0._gopreparecontent, "item" .. tostring(slot6)), V1a6_CachotRoleRecoverPrepareItem)
-		slot0._prepareItemList[slot6] = slot9
+	local var_9_0 = arg_9_0.viewContainer:getSetting().otherRes[2]
+	local var_9_1 = V1a6_CachotRoleRecoverPrepareListModel.instance:getList()
 
-		slot9:hideEquipNone()
-		slot9:onUpdateMO(slot7)
+	for iter_9_0, iter_9_1 in ipairs(var_9_1) do
+		local var_9_2 = arg_9_0:getResInst(var_9_0, arg_9_0._gopreparecontent, "item" .. tostring(iter_9_0))
+		local var_9_3 = MonoHelper.addNoUpdateLuaComOnceToGo(var_9_2, V1a6_CachotRoleRecoverPrepareItem)
+
+		arg_9_0._prepareItemList[iter_9_0] = var_9_3
+
+		var_9_3:hideEquipNone()
+		var_9_3:onUpdateMO(iter_9_1)
 	end
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_10_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0:_updatePresetItemList()
-	slot0:_initPrepareItemList()
+function var_0_0.onOpen(arg_11_0)
+	arg_11_0:_updatePresetItemList()
+	arg_11_0:_initPrepareItemList()
 
-	if #V1a6_CachotRoleRecoverPrepareListModel.instance:getList() <= 4 then
-		slot0._limitedScrollRect.enabled = false
-		slot0._contentSizeFitter.enabled = false
+	local var_11_0 = #V1a6_CachotRoleRecoverPrepareListModel.instance:getList()
 
-		recthelper.setWidth(slot0._goleft.transform, 800)
-		recthelper.setWidth(slot0._goright.transform, 700)
-	elseif slot2 <= 8 then
-		slot0._limitedScrollRect.enabled = false
-		slot0._gocontent.transform.anchorMin = Vector2.New(0.5, 0.5)
-		slot0._gocontent.transform.anchorMax = Vector2.New(0.5, 0.5)
+	if var_11_0 <= 4 then
+		arg_11_0._limitedScrollRect.enabled = false
+		arg_11_0._contentSizeFitter.enabled = false
 
-		recthelper.setAnchorX(slot0._gocontent.transform, -1206)
+		recthelper.setWidth(arg_11_0._goleft.transform, 800)
+		recthelper.setWidth(arg_11_0._goright.transform, 700)
+	elseif var_11_0 <= 8 then
+		arg_11_0._limitedScrollRect.enabled = false
+		arg_11_0._gocontent.transform.anchorMin = Vector2.New(0.5, 0.5)
+		arg_11_0._gocontent.transform.anchorMax = Vector2.New(0.5, 0.5)
+
+		recthelper.setAnchorX(arg_11_0._gocontent.transform, -1206)
 	else
-		recthelper.setWidth(slot0._goleft.transform, 720)
+		recthelper.setWidth(arg_11_0._goleft.transform, 720)
 
-		slot3 = slot0._horizontal.padding
-		slot3.right = 300
-		slot0._horizontal.padding = slot3
+		local var_11_1 = arg_11_0._horizontal.padding
+
+		var_11_1.right = 300
+		arg_11_0._horizontal.padding = var_11_1
 	end
 
-	slot0:addEventCb(V1a6_CachotController.instance, V1a6_CachotEvent.OnClickTeamItem, slot0._onClickTeamItem, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, slot0._onCloseView, slot0)
+	arg_11_0:addEventCb(V1a6_CachotController.instance, V1a6_CachotEvent.OnClickTeamItem, arg_11_0._onClickTeamItem, arg_11_0)
+	arg_11_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_11_0._onCloseView, arg_11_0)
 end
 
-function slot0._updatePresetItemList(slot0)
-	for slot5, slot6 in ipairs(slot0._presetItemList) do
-		slot6:onUpdateMO(V1a6_CachotRoleRecoverPresetListModel.instance:getList()[slot5])
+function var_0_0._updatePresetItemList(arg_12_0)
+	local var_12_0 = V1a6_CachotRoleRecoverPresetListModel.instance:getList()
+
+	for iter_12_0, iter_12_1 in ipairs(arg_12_0._presetItemList) do
+		local var_12_1 = var_12_0[iter_12_0]
+
+		iter_12_1:onUpdateMO(var_12_1)
 	end
 end
 
-function slot0._onCloseView(slot0, slot1)
-	if slot1 == ViewName.V1a6_CachotRoleRecoverResultView then
-		slot0:closeThis()
+function var_0_0._onCloseView(arg_13_0, arg_13_1)
+	if arg_13_1 == ViewName.V1a6_CachotRoleRecoverResultView then
+		arg_13_0:closeThis()
 	end
 end
 
-function slot0._onClickTeamItem(slot0, slot1)
-	slot0._selectedMo = slot1
+function var_0_0._onClickTeamItem(arg_14_0, arg_14_1)
+	arg_14_0._selectedMo = arg_14_1
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_15_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_16_0)
+	return
 end
 
-return slot0
+return var_0_0

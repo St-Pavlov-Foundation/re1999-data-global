@@ -1,57 +1,62 @@
-module("modules.logic.versionactivity1_3.act119.view.Activity1_3_119ViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity1_3.act119.view.Activity1_3_119ViewContainer", package.seeall)
 
-slot0 = class("Activity1_3_119ViewContainer", BaseViewContainer)
+local var_0_0 = class("Activity1_3_119ViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
-	slot0._view = Activity1_3_119View.New()
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, slot0._view)
-	table.insert(slot1, TabViewGroup.New(1, "#go_BackBtns"))
+	arg_1_0._view = Activity1_3_119View.New()
 
-	return slot1
+	table.insert(var_1_0, arg_1_0._view)
+	table.insert(var_1_0, TabViewGroup.New(1, "#go_BackBtns"))
+
+	return var_1_0
 end
 
-function slot0.buildTabViews(slot0, slot1)
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	local var_2_0 = NavigateButtonsView.New({
+		true,
+		true,
+		true
+	}, HelpEnum.HelpId.VersionActivity_1_3_119)
+
 	return {
-		NavigateButtonsView.New({
-			true,
-			true,
-			true
-		}, HelpEnum.HelpId.VersionActivity_1_3_119)
+		var_2_0
 	}
 end
 
-function slot0.onContainerInit(slot0)
+function var_0_0.onContainerInit(arg_3_0)
 	ActivityEnterMgr.instance:enterActivity(VersionActivity1_3Enum.ActivityId.Act307)
 	ActivityRpc.instance:sendActivityNewStageReadRequest({
 		VersionActivity1_3Enum.ActivityId.Act307
 	})
 end
 
-function slot0.playOpenTransition(slot0)
-	slot1 = Activity119Model.instance:getData()
-	slot3 = "normal"
+function var_0_0.playOpenTransition(arg_4_0)
+	local var_4_0 = Activity119Model.instance:getData()
+	local var_4_1 = Activity119Config.instance:getConfig(VersionActivity1_3Enum.ActivityId.Act307, var_4_0.lastSelectDay)
+	local var_4_2 = "normal"
 
-	if slot1.lastSelectModel == 2 and DungeonModel.instance:hasPassLevel(Activity119Config.instance:getConfig(VersionActivity1_3Enum.ActivityId.Act307, slot1.lastSelectDay).normalCO.id) then
-		slot3 = "hard"
+	if var_4_0.lastSelectModel == 2 and DungeonModel.instance:hasPassLevel(var_4_1.normalCO.id) then
+		var_4_2 = "hard"
 	end
 
-	uv0.super.playOpenTransition(slot0, {
-		anim = slot3
+	var_0_0.super.playOpenTransition(arg_4_0, {
+		anim = var_4_2
 	})
 end
 
-function slot0.playCloseTransition(slot0)
-	slot2 = "normalclose"
+function var_0_0.playCloseTransition(arg_5_0)
+	local var_5_0 = Activity119Model.instance:getData()
+	local var_5_1 = "normalclose"
 
-	if Activity119Model.instance:getData().lastSelectModel == 2 then
-		slot2 = "hardclose"
+	if var_5_0.lastSelectModel == 2 then
+		var_5_1 = "hardclose"
 	end
 
-	uv0.super.playCloseTransition(slot0, {
-		anim = slot2
+	var_0_0.super.playCloseTransition(arg_5_0, {
+		anim = var_5_1
 	})
 end
 
-return slot0
+return var_0_0

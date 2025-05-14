@@ -1,260 +1,292 @@
-module("modules.logic.versionactivity1_6.v1a6_cachot.model.V1a6_CachotHeroGroupMO", package.seeall)
+﻿module("modules.logic.versionactivity1_6.v1a6_cachot.model.V1a6_CachotHeroGroupMO", package.seeall)
 
-slot0 = pureTable("V1a6_CachotHeroGroupMO")
+local var_0_0 = pureTable("V1a6_CachotHeroGroupMO")
 
-function slot0.ctor(slot0)
-	slot0.id = nil
-	slot0.groupId = nil
-	slot0.name = nil
-	slot0.heroList = {}
-	slot0.aidDict = nil
-	slot0.trialDict = nil
-	slot0.clothId = nil
-	slot0.temp = false
-	slot0.isReplay = false
-	slot0.equips = {}
-	slot0.activity104Equips = {}
-	slot0.exInfos = {}
-	slot0._maxHeroCount = V1a6_CachotEnum.MaxHeroCountInGroup
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.id = nil
+	arg_1_0.groupId = nil
+	arg_1_0.name = nil
+	arg_1_0.heroList = {}
+	arg_1_0.aidDict = nil
+	arg_1_0.trialDict = nil
+	arg_1_0.clothId = nil
+	arg_1_0.temp = false
+	arg_1_0.isReplay = false
+	arg_1_0.equips = {}
+	arg_1_0.activity104Equips = {}
+	arg_1_0.exInfos = {}
+	arg_1_0._maxHeroCount = V1a6_CachotEnum.MaxHeroCountInGroup
 end
 
-function slot0.setMaxHeroCount(slot0, slot1)
-	slot0._maxHeroCount = slot1
+function var_0_0.setMaxHeroCount(arg_2_0, arg_2_1)
+	arg_2_0._maxHeroCount = arg_2_1
 end
 
-function slot0.init(slot0, slot1)
-	slot0.id = slot1.groupId
-	slot0.groupId = slot1.groupId
-	slot0.name = slot1.name
-	slot0.clothId = slot1.clothId
-	slot0.heroList = {}
-	slot2 = slot1.heroList and #slot1.heroList or 0
+function var_0_0.init(arg_3_0, arg_3_1)
+	arg_3_0.id = arg_3_1.groupId
+	arg_3_0.groupId = arg_3_1.groupId
+	arg_3_0.name = arg_3_1.name
+	arg_3_0.clothId = arg_3_1.clothId
+	arg_3_0.heroList = {}
 
-	for slot6 = 1, slot2 do
-		table.insert(slot0.heroList, slot1.heroList[slot6])
+	local var_3_0 = arg_3_1.heroList and #arg_3_1.heroList or 0
+
+	for iter_3_0 = 1, var_3_0 do
+		table.insert(arg_3_0.heroList, arg_3_1.heroList[iter_3_0])
 	end
 
-	for slot6 = slot2 + 1, slot0._maxHeroCount do
-		table.insert(slot0.heroList, "0")
+	for iter_3_1 = var_3_0 + 1, arg_3_0._maxHeroCount do
+		table.insert(arg_3_0.heroList, "0")
 	end
 
-	if slot1.equips then
-		if slot1.equips[0] then
-			slot0:updatePosEquips(slot1.equips[0])
+	if arg_3_1.equips then
+		if arg_3_1.equips[0] then
+			arg_3_0:updatePosEquips(arg_3_1.equips[0])
 		end
 
-		for slot6, slot7 in ipairs(slot1.equips) do
-			slot0:updatePosEquips(slot7)
+		for iter_3_2, iter_3_3 in ipairs(arg_3_1.equips) do
+			arg_3_0:updatePosEquips(iter_3_3)
 		end
 	end
 
-	if slot1.activity104Equips then
-		if slot1.activity104Equips[0] then
-			slot0:updateActivity104PosEquips(slot1.activity104Equips[0])
+	if arg_3_1.activity104Equips then
+		if arg_3_1.activity104Equips[0] then
+			arg_3_0:updateActivity104PosEquips(arg_3_1.activity104Equips[0])
 		end
 
-		for slot6, slot7 in ipairs(slot1.activity104Equips) do
-			slot0:updateActivity104PosEquips(slot7)
+		for iter_3_4, iter_3_5 in ipairs(arg_3_1.activity104Equips) do
+			arg_3_0:updateActivity104PosEquips(iter_3_5)
 		end
 	end
 end
 
-function slot0.initByFightGroup(slot0, slot1)
-	slot0.id = 1
-	slot0.groupId = 1
-	slot0.clothId = slot1.clothId
-	slot0.heroList = {}
-	slot0.replay_hero_data = {}
-	slot2 = {}
-	slot0.replay_equip_data = {}
-	slot0.trialDict = {}
-	slot0.exInfos = {}
-	slot4 = HeroGroupModel.instance.battleId and lua_battle.configDict[slot3]
-	slot5 = slot4 and slot4.playerMax or V1a6_CachotEnum.HeroCountInGroup
+function var_0_0.initByFightGroup(arg_4_0, arg_4_1)
+	arg_4_0.id = 1
+	arg_4_0.groupId = 1
+	arg_4_0.clothId = arg_4_1.clothId
+	arg_4_0.heroList = {}
+	arg_4_0.replay_hero_data = {}
 
-	if slot1.exInfos then
-		for slot9, slot10 in ipairs(slot1.exInfos) do
-			slot0.exInfos[slot9] = slot10
+	local var_4_0 = {}
+
+	arg_4_0.replay_equip_data = {}
+	arg_4_0.trialDict = {}
+	arg_4_0.exInfos = {}
+
+	local var_4_1 = HeroGroupModel.instance.battleId
+	local var_4_2 = var_4_1 and lua_battle.configDict[var_4_1]
+	local var_4_3 = var_4_2 and var_4_2.playerMax or V1a6_CachotEnum.HeroCountInGroup
+
+	if arg_4_1.exInfos then
+		for iter_4_0, iter_4_1 in ipairs(arg_4_1.exInfos) do
+			arg_4_0.exInfos[iter_4_0] = iter_4_1
 		end
 	end
 
-	for slot9, slot10 in ipairs(slot1.trialHeroList) do
-		slot11 = lua_hero_trial.configDict[slot10.trialId][0]
+	for iter_4_2, iter_4_3 in ipairs(arg_4_1.trialHeroList) do
+		local var_4_4 = lua_hero_trial.configDict[iter_4_3.trialId][0]
+		local var_4_5 = iter_4_3.pos
 
-		if slot10.pos < 0 then
-			slot12 = slot5 - slot12
+		if var_4_5 < 0 then
+			var_4_5 = var_4_3 - var_4_5
 		end
 
-		slot13 = tostring(slot11.heroId - 1099511627776.0)
-		slot2[slot13] = slot12
-		slot0.heroList[slot12] = slot13
+		local var_4_6 = tostring(var_4_4.heroId - 1099511627776)
 
-		if ({
-			heroUid = slot13,
-			heroId = slot11.heroId,
-			level = slot11.level,
-			skin = slot11.skin
-		}).skin == 0 then
-			slot14.skin = lua_character.configDict[slot11.heroId].skinId
+		var_4_0[var_4_6] = var_4_5
+		arg_4_0.heroList[var_4_5] = var_4_6
+
+		local var_4_7 = {
+			heroUid = var_4_6,
+			heroId = var_4_4.heroId,
+			level = var_4_4.level,
+			skin = var_4_4.skin
+		}
+
+		if var_4_7.skin == 0 then
+			var_4_7.skin = lua_character.configDict[var_4_4.heroId].skinId
 		end
 
-		slot0.replay_hero_data[slot13] = slot14
-		slot15 = slot12 - 1
-		slot0.equips[slot15] = HeroGroupEquipMO.New()
+		arg_4_0.replay_hero_data[var_4_6] = var_4_7
 
-		slot0.equips[slot15]:init({
-			index = slot15,
+		local var_4_8 = var_4_5 - 1
+
+		arg_4_0.equips[var_4_8] = HeroGroupEquipMO.New()
+
+		arg_4_0.equips[var_4_8]:init({
+			index = var_4_8,
 			equipUid = {
-				slot10.equipRecords[1].equipUid
+				iter_4_3.equipRecords[1].equipUid
 			}
 		})
 
-		slot0.replay_equip_data[slot13] = {
-			equipUid = slot10.equipRecords[1].equipUid,
-			equipId = slot10.equipRecords[1].equipId,
-			equipLv = slot10.equipRecords[1].equipLv,
-			refineLv = slot10.equipRecords[1].refineLv
+		local var_4_9 = {
+			equipUid = iter_4_3.equipRecords[1].equipUid,
+			equipId = iter_4_3.equipRecords[1].equipId,
+			equipLv = iter_4_3.equipRecords[1].equipLv,
+			refineLv = iter_4_3.equipRecords[1].refineLv
 		}
-		slot0.trialDict[slot12] = {
-			slot10.trialId,
+
+		arg_4_0.replay_equip_data[var_4_6] = var_4_9
+		arg_4_0.trialDict[var_4_5] = {
+			iter_4_3.trialId,
 			0,
-			slot12
+			var_4_5
 		}
 	end
 
-	for slot9, slot10 in ipairs(slot1.heroList) do
-		slot11 = slot10.heroUid
-		slot12 = 1
+	for iter_4_4, iter_4_5 in ipairs(arg_4_1.heroList) do
+		local var_4_10 = iter_4_5.heroUid
+		local var_4_11 = 1
 
-		while slot0.heroList[slot12] do
-			slot12 = slot12 + 1
+		while arg_4_0.heroList[var_4_11] do
+			var_4_11 = var_4_11 + 1
 		end
 
-		slot0.heroList[slot12] = slot11
-		slot2[slot11] = slot12
-		slot0.replay_hero_data[slot11] = {
-			heroUid = slot11,
-			heroId = slot10.heroId,
-			level = slot10.level,
-			skin = slot10.skin
+		arg_4_0.heroList[var_4_11] = var_4_10
+		var_4_0[var_4_10] = var_4_11
+
+		local var_4_12 = {
+			heroUid = var_4_10,
+			heroId = iter_4_5.heroId,
+			level = iter_4_5.level,
+			skin = iter_4_5.skin
 		}
+
+		arg_4_0.replay_hero_data[var_4_10] = var_4_12
 	end
 
-	for slot9, slot10 in ipairs(slot1.subHeroList) do
-		slot11 = slot10.heroUid
-		slot12 = 1
+	for iter_4_6, iter_4_7 in ipairs(arg_4_1.subHeroList) do
+		local var_4_13 = iter_4_7.heroUid
+		local var_4_14 = 1
 
-		while slot0.heroList[slot12] do
-			slot12 = slot12 + 1
+		while arg_4_0.heroList[var_4_14] do
+			var_4_14 = var_4_14 + 1
 		end
 
-		slot0.heroList[slot12] = slot11
-		slot2[slot11] = slot12
-		slot0.replay_hero_data[slot11] = {
-			heroUid = slot11,
-			heroId = slot10.heroId,
-			level = slot10.level,
-			skin = slot10.skin
+		arg_4_0.heroList[var_4_14] = var_4_13
+		var_4_0[var_4_13] = var_4_14
+
+		local var_4_15 = {
+			heroUid = var_4_13,
+			heroId = iter_4_7.heroId,
+			level = iter_4_7.level,
+			skin = iter_4_7.skin
 		}
+
+		arg_4_0.replay_hero_data[var_4_13] = var_4_15
 	end
 
-	slot0.replay_equip_data = {}
+	arg_4_0.replay_equip_data = {}
 
-	for slot9, slot10 in ipairs(slot1.equips) do
-		slot0.equips[slot2[slot10.heroUid] - 1] = HeroGroupEquipMO.New()
+	for iter_4_8, iter_4_9 in ipairs(arg_4_1.equips) do
+		local var_4_16 = var_4_0[iter_4_9.heroUid] - 1
 
-		if slot10.equipRecords[1] then
-			slot0.equips[slot11]:init({
-				index = slot11,
+		arg_4_0.equips[var_4_16] = HeroGroupEquipMO.New()
+
+		local var_4_17 = iter_4_9.equipRecords[1]
+
+		if var_4_17 then
+			arg_4_0.equips[var_4_16]:init({
+				index = var_4_16,
 				equipUid = {
-					slot12.equipUid
+					var_4_17.equipUid
 				}
 			})
 
-			slot0.replay_equip_data[slot10.heroUid] = {
-				equipUid = slot12.equipUid,
-				equipId = slot12.equipId,
-				equipLv = slot12.equipLv,
-				refineLv = slot12.refineLv
+			local var_4_18 = {
+				equipUid = var_4_17.equipUid,
+				equipId = var_4_17.equipId,
+				equipLv = var_4_17.equipLv,
+				refineLv = var_4_17.refineLv
 			}
+
+			arg_4_0.replay_equip_data[iter_4_9.heroUid] = var_4_18
 		end
 	end
 
-	slot0.replay_activity104Equip_data = {}
+	arg_4_0.replay_activity104Equip_data = {}
 
-	for slot9, slot10 in ipairs(slot1.activity104Equips) do
-		slot0.activity104Equips[slot10.heroUid == "-100000" and 4 or slot2[slot10.heroUid] - 1] = HeroGroupActivity104EquipMo.New()
+	for iter_4_10, iter_4_11 in ipairs(arg_4_1.activity104Equips) do
+		local var_4_19 = iter_4_11.heroUid == "-100000" and 4 or var_4_0[iter_4_11.heroUid] - 1
 
-		if slot10.activity104EquipRecords[1] then
-			slot13 = {}
+		arg_4_0.activity104Equips[var_4_19] = HeroGroupActivity104EquipMo.New()
 
-			for slot17, slot18 in ipairs(slot10.activity104EquipRecords) do
-				table.insert(slot13, slot18.equipUid)
+		if iter_4_11.activity104EquipRecords[1] then
+			local var_4_20 = {}
+
+			for iter_4_12, iter_4_13 in ipairs(iter_4_11.activity104EquipRecords) do
+				table.insert(var_4_20, iter_4_13.equipUid)
 			end
 
-			slot0.activity104Equips[slot11]:init({
-				index = slot11,
-				equipUid = slot13
+			arg_4_0.activity104Equips[var_4_19]:init({
+				index = var_4_19,
+				equipUid = var_4_20
 			})
 
-			slot14 = {}
+			local var_4_21 = {}
 
-			for slot18, slot19 in ipairs(slot10.activity104EquipRecords) do
-				table.insert(slot14, {
-					equipUid = slot19.equipUid,
-					equipId = slot19.equipId
-				})
+			for iter_4_14, iter_4_15 in ipairs(iter_4_11.activity104EquipRecords) do
+				local var_4_22 = {
+					equipUid = iter_4_15.equipUid,
+					equipId = iter_4_15.equipId
+				}
+
+				table.insert(var_4_21, var_4_22)
 			end
 
-			slot0.replay_activity104Equip_data[slot10.heroUid] = slot14
+			arg_4_0.replay_activity104Equip_data[iter_4_11.heroUid] = var_4_21
 		else
-			slot0.activity104Equips[slot11]:init({
-				index = slot11,
+			arg_4_0.activity104Equips[var_4_19]:init({
+				index = var_4_19,
 				equipUid = {}
 			})
 		end
 	end
 
-	slot0.isReplay = true
+	arg_4_0.isReplay = true
 end
 
-function slot0.initByLocalData(slot0, slot1)
-	slot0.id = 1
-	slot0.groupId = 1
-	slot0.name = ""
-	slot0.heroList = {}
-	slot0.aidDict = nil
-	slot0.trialDict = {}
-	slot0.clothId = slot1.clothId
-	slot0.temp = true
-	slot0.isReplay = false
-	slot0.equips = {}
-	slot0.activity104Equips = {}
-	slot4 = {}
+function var_0_0.initByLocalData(arg_5_0, arg_5_1)
+	arg_5_0.id = 1
+	arg_5_0.groupId = 1
+	arg_5_0.name = ""
+	arg_5_0.heroList = {}
+	arg_5_0.aidDict = nil
+	arg_5_0.trialDict = {}
+	arg_5_0.clothId = arg_5_1.clothId
+	arg_5_0.temp = true
+	arg_5_0.isReplay = false
+	arg_5_0.equips = {}
+	arg_5_0.activity104Equips = {}
 
-	if not string.nilorempty((HeroGroupModel.instance.battleId and lua_battle.configDict[slot2]).trialHeros) then
-		slot4 = GameUtil.splitString2(slot3.trialHeros, true)
+	local var_5_0 = HeroGroupModel.instance.battleId
+	local var_5_1 = var_5_0 and lua_battle.configDict[var_5_0]
+	local var_5_2 = {}
+
+	if not string.nilorempty(var_5_1.trialHeros) then
+		var_5_2 = GameUtil.splitString2(var_5_1.trialHeros, true)
 	end
 
-	for slot8 = 1, slot0._maxHeroCount do
-		slot0.heroList[slot8] = slot1.heroList[slot8] or "0"
-		slot0.equips[slot8 - 1] = HeroGroupEquipMO.New()
+	for iter_5_0 = 1, arg_5_0._maxHeroCount do
+		arg_5_0.heroList[iter_5_0] = arg_5_1.heroList[iter_5_0] or "0"
+		arg_5_0.equips[iter_5_0 - 1] = HeroGroupEquipMO.New()
 
-		slot0.equips[slot8 - 1]:init({
-			index = slot8 - 1,
+		arg_5_0.equips[iter_5_0 - 1]:init({
+			index = iter_5_0 - 1,
 			equipUid = {
-				slot1.equips[slot8] or "0"
+				arg_5_1.equips[iter_5_0] or "0"
 			}
 		})
-		slot0:updateActivity104PosEquips({
-			index = slot8 - 1,
-			equipUid = slot1.activity104Equips and slot1.activity104Equips[slot8] or {}
+		arg_5_0:updateActivity104PosEquips({
+			index = iter_5_0 - 1,
+			equipUid = arg_5_1.activity104Equips and arg_5_1.activity104Equips[iter_5_0] or {}
 		})
 
-		if tonumber(slot0.heroList[slot8]) < 0 then
-			for slot12, slot13 in pairs(slot4) do
-				if lua_hero_trial.configDict[slot13[1]][slot13[2] or 0].heroId - 1099511627776.0 == tonumber(slot0.heroList[slot8]) then
-					slot0.trialDict[slot8] = slot13
+		if tonumber(arg_5_0.heroList[iter_5_0]) < 0 then
+			for iter_5_1, iter_5_2 in pairs(var_5_2) do
+				if lua_hero_trial.configDict[iter_5_2[1]][iter_5_2[2] or 0].heroId - 1099511627776 == tonumber(arg_5_0.heroList[iter_5_0]) then
+					arg_5_0.trialDict[iter_5_0] = iter_5_2
 
 					break
 				end
@@ -262,356 +294,376 @@ function slot0.initByLocalData(slot0, slot1)
 		end
 	end
 
-	slot0:updateActivity104PosEquips({
-		index = slot0._maxHeroCount + 1 - 1,
-		equipUid = slot1.activity104Equips and slot1.activity104Equips[slot5] or {}
+	local var_5_3 = arg_5_0._maxHeroCount + 1
+
+	arg_5_0:updateActivity104PosEquips({
+		index = var_5_3 - 1,
+		equipUid = arg_5_1.activity104Equips and arg_5_1.activity104Equips[var_5_3] or {}
 	})
 
-	if Activity104Model.instance:isSeasonChapter() and slot1.battleId ~= slot2 then
-		for slot9, slot10 in ipairs(slot0.heroList) do
-			if tonumber(slot10) < 0 then
-				slot0.heroList[slot9] = tostring(0)
-				slot0.trialDict[slot9] = nil
+	if Activity104Model.instance:isSeasonChapter() and arg_5_1.battleId ~= var_5_0 then
+		for iter_5_3, iter_5_4 in ipairs(arg_5_0.heroList) do
+			if tonumber(iter_5_4) < 0 then
+				arg_5_0.heroList[iter_5_3] = tostring(0)
+				arg_5_0.trialDict[iter_5_3] = nil
 			end
 		end
 	end
 end
 
-function slot0.setTrials(slot0, slot1)
-	slot4 = {}
+function var_0_0.setTrials(arg_6_0, arg_6_1)
+	local var_6_0 = HeroGroupModel.instance.battleId
+	local var_6_1 = var_6_0 and lua_battle.configDict[var_6_0]
+	local var_6_2 = {}
 
-	if not string.nilorempty((HeroGroupModel.instance.battleId and lua_battle.configDict[slot2]).trialHeros) then
-		slot4 = GameUtil.splitString2(slot3.trialHeros, true)
+	if not string.nilorempty(var_6_1.trialHeros) then
+		var_6_2 = GameUtil.splitString2(var_6_1.trialHeros, true)
 	end
 
-	for slot8, slot9 in pairs(slot4) do
-		if slot9[3] then
-			slot0.trialDict[slot9[3]] = slot9
-			slot0.heroList[slot9[3]] = tostring(lua_hero_trial.configDict[slot9[1]][slot9[2] or 0].heroId - 1099511627776.0)
+	for iter_6_0, iter_6_1 in pairs(var_6_2) do
+		if iter_6_1[3] then
+			arg_6_0.trialDict[iter_6_1[3]] = iter_6_1
 
-			if not slot1 and (slot10.act104EquipId1 > 0 or slot10.act104EquipId2 > 0) then
-				slot0:updateActivity104PosEquips({
-					index = slot9[3] - 1
+			local var_6_3 = lua_hero_trial.configDict[iter_6_1[1]][iter_6_1[2] or 0]
+
+			arg_6_0.heroList[iter_6_1[3]] = tostring(var_6_3.heroId - 1099511627776)
+
+			if not arg_6_1 and (var_6_3.act104EquipId1 > 0 or var_6_3.act104EquipId2 > 0) then
+				arg_6_0:updateActivity104PosEquips({
+					index = iter_6_1[3] - 1
 				})
 			end
 		end
 	end
 
-	if not slot1 and not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Equip) and not string.nilorempty(slot3.trialEquips) then
-		slot9 = slot0._maxHeroCount
+	if not arg_6_1 and not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Equip) and not string.nilorempty(var_6_1.trialEquips) then
+		local var_6_4 = string.splitToNumber(var_6_1.trialEquips, "|")
 
-		for slot9 = 1, math.min(#string.splitToNumber(slot3.trialEquips, "|"), slot9) do
-			slot0:updatePosEquips({
-				index = slot9 - 1,
+		for iter_6_2 = 1, math.min(#var_6_4, arg_6_0._maxHeroCount) do
+			arg_6_0:updatePosEquips({
+				index = iter_6_2 - 1,
 				equipUid = {
-					tostring(-slot5[slot9])
+					tostring(-var_6_4[iter_6_2])
 				}
 			})
 		end
 	end
 
-	if not slot1 and slot3.trialMainAct104EuqipId > 0 then
-		slot0:updateActivity104PosEquips({
-			index = slot0._maxHeroCount,
+	if not arg_6_1 and var_6_1.trialMainAct104EuqipId > 0 then
+		arg_6_0:updateActivity104PosEquips({
+			index = arg_6_0._maxHeroCount,
 			equipUid = {
-				-slot3.trialMainAct104EuqipId
+				-var_6_1.trialMainAct104EuqipId
 			}
 		})
 	end
 end
 
-function slot0.saveData(slot0)
-	slot1 = HeroGroupModel.instance.battleId
-	slot2 = {
-		clothId = slot0.clothId,
+function var_0_0.saveData(arg_7_0)
+	local var_7_0 = HeroGroupModel.instance.battleId
+	local var_7_1 = {
+		clothId = arg_7_0.clothId,
 		heroList = {},
 		equips = {},
 		activity104Equips = {}
 	}
 
-	for slot6 = 1, slot0._maxHeroCount do
-		slot2.heroList[slot6] = slot0.heroList[slot6]
-		slot2.equips[slot6] = slot0.equips[slot6 - 1] and slot0.equips[slot6 - 1].equipUid[1]
-		slot2.activity104Equips[slot6] = slot0.activity104Equips[slot6 - 1] and slot0.activity104Equips[slot6 - 1].equipUid
+	for iter_7_0 = 1, arg_7_0._maxHeroCount do
+		var_7_1.heroList[iter_7_0] = arg_7_0.heroList[iter_7_0]
+		var_7_1.equips[iter_7_0] = arg_7_0.equips[iter_7_0 - 1] and arg_7_0.equips[iter_7_0 - 1].equipUid[1]
+		var_7_1.activity104Equips[iter_7_0] = arg_7_0.activity104Equips[iter_7_0 - 1] and arg_7_0.activity104Equips[iter_7_0 - 1].equipUid
 	end
 
-	slot2.activity104Equips[slot3] = slot0.activity104Equips[slot0._maxHeroCount + 1 - 1] and slot0.activity104Equips[slot3 - 1].equipUid
-	slot2.battleId = slot1
-	slot4 = nil
+	local var_7_2 = arg_7_0._maxHeroCount + 1
 
-	PlayerPrefsHelper.setString(Activity104Model.instance:isSeasonChapter() and PlayerPrefsKey.SeasonHeroGroupTrial .. tostring(PlayerModel.instance:getMyUserId()) or PlayerPrefsKey.HeroGroupTrial .. tostring(PlayerModel.instance:getMyUserId()) .. slot1, cjson.encode(slot2))
+	var_7_1.activity104Equips[var_7_2] = arg_7_0.activity104Equips[var_7_2 - 1] and arg_7_0.activity104Equips[var_7_2 - 1].equipUid
+	var_7_1.battleId = var_7_0
+
+	local var_7_3
+
+	if Activity104Model.instance:isSeasonChapter() then
+		var_7_3 = PlayerPrefsKey.SeasonHeroGroupTrial .. tostring(PlayerModel.instance:getMyUserId())
+	else
+		var_7_3 = PlayerPrefsKey.HeroGroupTrial .. tostring(PlayerModel.instance:getMyUserId()) .. var_7_0
+	end
+
+	PlayerPrefsHelper.setString(var_7_3, cjson.encode(var_7_1))
 end
 
-function slot0.setTempName(slot0, slot1)
-	slot0.name = slot1
+function var_0_0.setTempName(arg_8_0, arg_8_1)
+	arg_8_0.name = arg_8_1
 end
 
-function slot0.setTemp(slot0, slot1)
-	slot0.temp = slot1
+function var_0_0.setTemp(arg_9_0, arg_9_1)
+	arg_9_0.temp = arg_9_1
 end
 
-function slot0.replaceHeroList(slot0, slot1)
-	slot0.heroList = {}
-	slot0.aidDict = {}
-	slot0.trialDict = {}
+function var_0_0.replaceHeroList(arg_10_0, arg_10_1)
+	arg_10_0.heroList = {}
+	arg_10_0.aidDict = {}
+	arg_10_0.trialDict = {}
 
-	for slot6 = 1, slot1 and #slot1 or 0 do
-		table.insert(slot0.heroList, slot1[slot6].heroUid)
+	local var_10_0 = arg_10_1 and #arg_10_1 or 0
 
-		if slot1[slot6].aid then
-			slot0.aidDict[slot6] = slot1[slot6].aid
+	for iter_10_0 = 1, var_10_0 do
+		table.insert(arg_10_0.heroList, arg_10_1[iter_10_0].heroUid)
+
+		if arg_10_1[iter_10_0].aid then
+			arg_10_0.aidDict[iter_10_0] = arg_10_1[iter_10_0].aid
 		end
 	end
 
-	slot0:_dropAidEquip()
+	arg_10_0:_dropAidEquip()
 end
 
-function slot0._dropAidEquip(slot0)
-	if slot0.aidDict then
-		for slot4, slot5 in pairs(slot0.aidDict) do
-			if slot5 > 0 then
-				slot0:_setPosEquips(slot4 - 1, nil)
-				slot0:updateActivity104PosEquips({
-					index = slot4 - 1
+function var_0_0._dropAidEquip(arg_11_0)
+	if arg_11_0.aidDict then
+		for iter_11_0, iter_11_1 in pairs(arg_11_0.aidDict) do
+			if iter_11_1 > 0 then
+				arg_11_0:_setPosEquips(iter_11_0 - 1, nil)
+				arg_11_0:updateActivity104PosEquips({
+					index = iter_11_0 - 1
 				})
 			end
 		end
 	end
 
-	if slot0.trialDict then
-		for slot4, slot5 in pairs(slot0.trialDict) do
-			slot0:_setPosEquips(slot4 - 1, nil)
-			slot0:updateActivity104PosEquips({
-				index = slot4 - 1
+	if arg_11_0.trialDict then
+		for iter_11_2, iter_11_3 in pairs(arg_11_0.trialDict) do
+			arg_11_0:_setPosEquips(iter_11_2 - 1, nil)
+			arg_11_0:updateActivity104PosEquips({
+				index = iter_11_2 - 1
 			})
 		end
 	end
 end
 
-function slot0.replaceClothId(slot0, slot1)
-	slot0.clothId = slot1
+function var_0_0.replaceClothId(arg_12_0, arg_12_1)
+	arg_12_0.clothId = arg_12_1
 end
 
-function slot0.getHeroByIndex(slot0, slot1)
-	return slot0.heroList[slot1]
+function var_0_0.getHeroByIndex(arg_13_0, arg_13_1)
+	return arg_13_0.heroList[arg_13_1]
 end
 
-function slot0.getAllPosEquips(slot0)
-	return slot0.equips
+function var_0_0.getAllPosEquips(arg_14_0)
+	return arg_14_0.equips
 end
 
-function slot0.getPosEquips(slot0, slot1)
-	if not slot0.equips[slot1] then
-		slot0:updatePosEquips({
-			index = slot1
+function var_0_0.getPosEquips(arg_15_0, arg_15_1)
+	if not arg_15_0.equips[arg_15_1] then
+		arg_15_0:updatePosEquips({
+			index = arg_15_1
 		})
 	end
 
-	return slot0.equips[slot1]
+	return arg_15_0.equips[arg_15_1]
 end
 
-function slot0._setPosEquips(slot0, slot1, slot2)
-	if slot2 == nil then
-		HeroGroupEquipMO.New():init({
-			index = slot1
+function var_0_0._setPosEquips(arg_16_0, arg_16_1, arg_16_2)
+	if arg_16_2 == nil then
+		arg_16_2 = HeroGroupEquipMO.New()
+
+		arg_16_2:init({
+			index = arg_16_1
 		})
 	end
 
-	slot0.equips[slot1] = slot2
+	arg_16_0.equips[arg_16_1] = arg_16_2
 end
 
-function slot0.updatePosEquips(slot0, slot1)
-	for slot5 = 0, slot0._maxHeroCount - 1 do
-		if slot0.equips[slot5] and slot6.equipUid and #slot6.equipUid > 0 and slot1.equipUid and #slot1.equipUid > 0 then
-			for slot10 = 1, 1 do
-				if slot6.equipUid[slot10] == slot1.equipUid[slot10] then
-					slot6.equipUid[slot10] = "0"
+function var_0_0.updatePosEquips(arg_17_0, arg_17_1)
+	for iter_17_0 = 0, arg_17_0._maxHeroCount - 1 do
+		local var_17_0 = arg_17_0.equips[iter_17_0]
+
+		if var_17_0 and var_17_0.equipUid and #var_17_0.equipUid > 0 and arg_17_1.equipUid and #arg_17_1.equipUid > 0 then
+			for iter_17_1 = 1, 1 do
+				if var_17_0.equipUid[iter_17_1] == arg_17_1.equipUid[iter_17_1] then
+					var_17_0.equipUid[iter_17_1] = "0"
 				end
 			end
 		end
 	end
 
-	slot2 = HeroGroupEquipMO.New()
+	local var_17_1 = HeroGroupEquipMO.New()
 
-	slot2:init(slot1)
+	var_17_1:init(arg_17_1)
 
-	slot0.equips[slot1.index] = slot2
+	arg_17_0.equips[arg_17_1.index] = var_17_1
 end
 
-function slot0.getAct104PosEquips(slot0, slot1)
-	if not slot0.activity104Equips[slot1] then
-		slot0:updateActivity104PosEquips({
-			index = slot1
+function var_0_0.getAct104PosEquips(arg_18_0, arg_18_1)
+	if not arg_18_0.activity104Equips[arg_18_1] then
+		arg_18_0:updateActivity104PosEquips({
+			index = arg_18_1
 		})
 	end
 
-	return slot0.activity104Equips[slot1]
+	return arg_18_0.activity104Equips[arg_18_1]
 end
 
-function slot0.updateActivity104PosEquips(slot0, slot1)
-	slot2 = HeroGroupActivity104EquipMo.New()
+function var_0_0.updateActivity104PosEquips(arg_19_0, arg_19_1)
+	local var_19_0 = HeroGroupActivity104EquipMo.New()
 
-	slot2:init(slot1)
+	var_19_0:init(arg_19_1)
 
-	slot0.activity104Equips[slot1.index] = slot2
+	arg_19_0.activity104Equips[arg_19_1.index] = var_19_0
 end
 
-function slot0.getAllHeroEquips(slot0)
-	slot1 = {}
-	slot3 = {}
+function var_0_0.getAllHeroEquips(arg_20_0)
+	local var_20_0 = {}
+	local var_20_1 = FightModel.instance:getFightParam()
+	local var_20_2 = {}
 
-	if FightModel.instance:getFightParam() and slot2.battleId > 0 and not string.nilorempty(lua_battle.configDict[slot2.battleId].trialEquips) then
-		slot3 = string.splitToNumber(slot4.trialEquips, "|")
+	if var_20_1 and var_20_1.battleId > 0 then
+		local var_20_3 = lua_battle.configDict[var_20_1.battleId]
+
+		if not string.nilorempty(var_20_3.trialEquips) then
+			var_20_2 = string.splitToNumber(var_20_3.trialEquips, "|")
+		end
 	end
 
-	for slot7, slot8 in pairs(slot0.equips) do
-		FightEquipMO.New().heroUid = slot0.heroList[slot7 + 1] or "0"
+	for iter_20_0, iter_20_1 in pairs(arg_20_0.equips) do
+		local var_20_4 = iter_20_0 + 1
+		local var_20_5
 
-		for slot15, slot16 in ipairs(slot8.equipUid) do
-			if tonumber(slot16) > 0 then
-				slot8.equipUid[slot15] = EquipModel.instance:getEquip(slot16) and slot16 or "0"
-			elseif lua_equip_trial.configDict[-tonumber(slot16)] and tabletool.indexOf(slot3, slot17) then
-				slot8.equipUid[slot15] = slot16
+		var_20_5.heroUid, var_20_5 = arg_20_0.heroList[var_20_4] or "0", FightEquipMO.New()
+
+		for iter_20_2, iter_20_3 in ipairs(iter_20_1.equipUid) do
+			if tonumber(iter_20_3) > 0 then
+				local var_20_6 = EquipModel.instance:getEquip(iter_20_3)
+
+				iter_20_1.equipUid[iter_20_2] = var_20_6 and iter_20_3 or "0"
 			else
-				slot8.equipUid[slot15] = "0"
+				local var_20_7 = -tonumber(iter_20_3)
+
+				if lua_equip_trial.configDict[var_20_7] and tabletool.indexOf(var_20_2, var_20_7) then
+					iter_20_1.equipUid[iter_20_2] = iter_20_3
+				else
+					iter_20_1.equipUid[iter_20_2] = "0"
+				end
 			end
 		end
 
-		slot11.equipUid = slot8.equipUid
+		var_20_5.equipUid = iter_20_1.equipUid
 
-		table.insert(slot1, slot11)
+		table.insert(var_20_0, var_20_5)
 	end
 
-	return slot1
+	return var_20_0
 end
 
-function slot0.getAllHeroActivity104Equips(slot0)
-	slot1 = {}
+function var_0_0.getAllHeroActivity104Equips(arg_21_0)
+	local var_21_0 = {}
 
-	for slot5, slot6 in pairs(slot0.activity104Equips) do
-		if slot5 + 1 == 5 then
-			FightEquipMO.New().heroUid = "-100000"
+	for iter_21_0, iter_21_1 in pairs(arg_21_0.activity104Equips) do
+		local var_21_1 = iter_21_0 + 1
+		local var_21_2 = FightEquipMO.New()
+
+		if var_21_1 == 5 then
+			var_21_2.heroUid = "-100000"
 		else
-			slot8.heroUid = slot0.heroList[slot7] or "0"
+			var_21_2.heroUid = arg_21_0.heroList[var_21_1] or "0"
 		end
 
-		for slot12, slot13 in ipairs(slot6.equipUid) do
-			if tonumber(slot13) > 0 then
-				slot6.equipUid[slot12] = Activity104Model.instance:getItemIdByUid(slot13) and slot14 > 0 and slot13 or "0"
+		for iter_21_2, iter_21_3 in ipairs(iter_21_1.equipUid) do
+			if tonumber(iter_21_3) > 0 then
+				local var_21_3 = Activity104Model.instance:getItemIdByUid(iter_21_3)
+
+				iter_21_1.equipUid[iter_21_2] = var_21_3 and var_21_3 > 0 and iter_21_3 or "0"
 			end
 		end
 
-		slot8.equipUid = slot6.equipUid
+		var_21_2.equipUid = iter_21_1.equipUid
 
-		table.insert(slot1, slot8)
+		table.insert(var_21_0, var_21_2)
 	end
 
-	return slot1
+	return var_21_0
 end
 
-function slot0.getEquipUidList(slot0)
-	for slot5 = 1, slot0._maxHeroCount do
-		if slot0.equips[slot5 - 1] then
-			-- Nothing
+function var_0_0.getEquipUidList(arg_22_0)
+	local var_22_0 = {}
+
+	for iter_22_0 = 1, arg_22_0._maxHeroCount do
+		local var_22_1 = arg_22_0.equips[iter_22_0 - 1]
+
+		if var_22_1 then
+			var_22_0[iter_22_0] = var_22_1.equipUid and var_22_1.equipUid[1] or 0
 		else
-			slot1[slot5] = 0
+			var_22_0[iter_22_0] = 0
 		end
 	end
 
-	return {
-		[slot5] = slot6.equipUid and slot6.equipUid[1] or 0
-	}
+	return var_22_0
 end
 
-function slot0.initWithBattle(slot0, slot1, slot2, slot3, slot4, slot5, slot6)
-	slot0:init(slot1)
+function var_0_0.initWithBattle(arg_23_0, arg_23_1, arg_23_2, arg_23_3, arg_23_4, arg_23_5, arg_23_6)
+	arg_23_4 = math.min(arg_23_4, arg_23_3)
 
-	slot0.battleHeroGroup = true
-	slot0.aidDict = {}
-	slot0.trialDict = {}
+	arg_23_0:init(arg_23_1)
 
-	if not slot5 then
-		slot0._roleNum = slot3
-		slot0._playerMax = math.min(slot4, slot3)
+	arg_23_0.battleHeroGroup = true
+	arg_23_0.aidDict = {}
+	arg_23_0.trialDict = {}
+
+	if not arg_23_5 then
+		arg_23_0._roleNum = arg_23_3
+		arg_23_0._playerMax = arg_23_4
 	end
 
-	slot7 = slot0._maxHeroCount
-	slot8 = {}
-	slot9 = {}
+	local var_23_0 = arg_23_0._maxHeroCount
+	local var_23_1 = {}
+	local var_23_2 = {}
 
-	for slot13, slot14 in ipairs(slot6 or {}) do
-		if slot14[3] then
-			if slot14[3] < 0 then
-				slot15 = slot0._playerMax - slot15
+	arg_23_6 = arg_23_6 or {}
+
+	for iter_23_0, iter_23_1 in ipairs(arg_23_6) do
+		if iter_23_1[3] then
+			local var_23_3 = iter_23_1[3]
+
+			if var_23_3 < 0 then
+				var_23_3 = arg_23_0._playerMax - var_23_3
 			end
 
-			if slot0.heroList[slot15] then
-				slot16 = lua_hero_trial.configDict[slot14[1]][slot14[2] or 0]
+			if arg_23_0.heroList[var_23_3] then
+				local var_23_4 = lua_hero_trial.configDict[iter_23_1[1]][iter_23_1[2] or 0]
 
-				if tonumber(slot0.heroList[slot15]) > 0 then
-					table.insert(slot8, slot0.heroList[slot15])
-					table.insert(slot9, slot0:getPosEquips(slot15 - 1))
+				if tonumber(arg_23_0.heroList[var_23_3]) > 0 then
+					table.insert(var_23_1, arg_23_0.heroList[var_23_3])
+					table.insert(var_23_2, arg_23_0:getPosEquips(var_23_3 - 1))
 				end
 
-				slot0.heroList[slot15] = tostring(slot16.heroId - 1099511627776.0)
-				slot0.trialDict[slot15] = slot14
+				arg_23_0.heroList[var_23_3] = tostring(var_23_4.heroId - 1099511627776)
+				arg_23_0.trialDict[var_23_3] = iter_23_1
 			end
 		end
 	end
 
-	for slot13 = 1, slot7 do
-		for slot17 = 1, #slot2 do
-			if lua_skin.configDict[lua_monster.configDict[tonumber(slot2[slot17])] and slot18.skinId] and slot19.characterId and slot0.heroList[slot13] and HeroModel.instance:getById(slot0.heroList[slot13]) and slot21.heroId == slot20 then
-				if slot4 < slot13 or slot3 < slot13 or HeroGroupModel.instance:positionOpenCount() < slot13 then
-					slot0.heroList[slot13] = "0"
+	for iter_23_2 = 1, var_23_0 do
+		for iter_23_3 = 1, #arg_23_2 do
+			local var_23_5 = lua_monster.configDict[tonumber(arg_23_2[iter_23_3])]
+			local var_23_6 = lua_skin.configDict[var_23_5 and var_23_5.skinId]
+			local var_23_7 = var_23_6 and var_23_6.characterId
 
-					break
-				end
+			if var_23_7 then
+				local var_23_8 = arg_23_0.heroList[iter_23_2] and HeroModel.instance:getById(arg_23_0.heroList[iter_23_2])
 
-				slot0.heroList[slot13] = tostring(-slot17)
-				slot0.aidDict[slot13] = slot2[slot17]
+				if var_23_8 and var_23_8.heroId == var_23_7 then
+					if arg_23_4 < iter_23_2 or arg_23_3 < iter_23_2 or iter_23_2 > HeroGroupModel.instance:positionOpenCount() then
+						arg_23_0.heroList[iter_23_2] = "0"
 
-				slot0:updatePosEquips({
-					index = slot13 - 1
-				})
-
-				slot2[slot17] = nil
-
-				break
-			end
-		end
-	end
-
-	for slot13 = slot7, 1, -1 do
-		if slot3 < slot13 or HeroGroupModel.instance:positionOpenCount() < slot13 and not slot0.trialDict[slot13] then
-			if slot0.heroList[slot13] and tonumber(slot0.heroList[slot13]) > 0 then
-				table.insert(slot8, slot0.heroList[slot13])
-				table.insert(slot9, slot0:getPosEquips(slot13 - 1))
-			end
-
-			slot0.heroList[slot13] = "0"
-
-			if slot13 <= HeroGroupModel.instance:positionOpenCount() then
-				slot0.aidDict[slot13] = -1
-			end
-		elseif slot4 < slot13 then
-			-- Nothing
-		elseif not slot0.heroList[slot13] or tonumber(slot0.heroList[slot13]) >= 0 and not slot0.trialDict[slot13] then
-			for slot17 = 1, slot7 do
-				if slot2[slot17] then
-					if slot0.heroList[slot13] and tonumber(slot0.heroList[slot13]) > 0 then
-						table.insert(slot8, slot0.heroList[slot13])
-						table.insert(slot9, slot0:getPosEquips(slot13 - 1))
+						break
 					end
 
-					slot0.heroList[slot13] = tostring(-slot17)
-					slot0.aidDict[slot13] = slot2[slot17]
+					arg_23_0.heroList[iter_23_2] = tostring(-iter_23_3)
+					arg_23_0.aidDict[iter_23_2] = arg_23_2[iter_23_3]
 
-					slot0:updatePosEquips({
-						index = slot13 - 1
+					arg_23_0:updatePosEquips({
+						index = iter_23_2 - 1
 					})
 
-					slot2[slot17] = nil
+					arg_23_2[iter_23_3] = nil
 
 					break
 				end
@@ -619,110 +671,153 @@ function slot0.initWithBattle(slot0, slot1, slot2, slot3, slot4, slot5, slot6)
 		end
 	end
 
-	for slot13 = 1, slot7 do
-		if #slot8 <= 0 then
+	for iter_23_4 = var_23_0, 1, -1 do
+		if arg_23_3 < iter_23_4 or iter_23_4 > HeroGroupModel.instance:positionOpenCount() and not arg_23_0.trialDict[iter_23_4] then
+			if arg_23_0.heroList[iter_23_4] and tonumber(arg_23_0.heroList[iter_23_4]) > 0 then
+				table.insert(var_23_1, arg_23_0.heroList[iter_23_4])
+				table.insert(var_23_2, arg_23_0:getPosEquips(iter_23_4 - 1))
+			end
+
+			arg_23_0.heroList[iter_23_4] = "0"
+
+			if iter_23_4 <= HeroGroupModel.instance:positionOpenCount() then
+				arg_23_0.aidDict[iter_23_4] = -1
+			end
+		elseif arg_23_4 < iter_23_4 then
+			-- block empty
+		elseif not arg_23_0.heroList[iter_23_4] or tonumber(arg_23_0.heroList[iter_23_4]) >= 0 and not arg_23_0.trialDict[iter_23_4] then
+			for iter_23_5 = 1, var_23_0 do
+				if arg_23_2[iter_23_5] then
+					if arg_23_0.heroList[iter_23_4] and tonumber(arg_23_0.heroList[iter_23_4]) > 0 then
+						table.insert(var_23_1, arg_23_0.heroList[iter_23_4])
+						table.insert(var_23_2, arg_23_0:getPosEquips(iter_23_4 - 1))
+					end
+
+					arg_23_0.heroList[iter_23_4] = tostring(-iter_23_5)
+					arg_23_0.aidDict[iter_23_4] = arg_23_2[iter_23_5]
+
+					arg_23_0:updatePosEquips({
+						index = iter_23_4 - 1
+					})
+
+					arg_23_2[iter_23_5] = nil
+
+					break
+				end
+			end
+		end
+	end
+
+	for iter_23_6 = 1, var_23_0 do
+		if #var_23_1 <= 0 then
 			break
 		end
 
-		if slot13 <= slot3 and slot13 <= HeroGroupModel.instance:positionOpenCount() and (not slot0.heroList[slot13] or slot0.heroList[slot13] == "0" or slot0.heroList[slot13] == 0) then
-			slot0.heroList[slot13] = slot8[#slot8]
+		if iter_23_6 <= arg_23_3 and iter_23_6 <= HeroGroupModel.instance:positionOpenCount() and (not arg_23_0.heroList[iter_23_6] or arg_23_0.heroList[iter_23_6] == "0" or arg_23_0.heroList[iter_23_6] == 0) then
+			arg_23_0.heroList[iter_23_6] = var_23_1[#var_23_1]
 
-			slot0:_setPosEquips(slot13 - 1, slot9[#slot9])
-			table.remove(slot8, #slot8)
-			table.remove(slot9, #slot9)
+			arg_23_0:_setPosEquips(iter_23_6 - 1, var_23_2[#var_23_2])
+			table.remove(var_23_1, #var_23_1)
+			table.remove(var_23_2, #var_23_2)
 		end
 	end
 
-	slot0:_dropAidEquip()
+	arg_23_0:_dropAidEquip()
 end
 
-function slot0._getHeroListBackup(slot0)
-	slot1 = {}
+function var_0_0._getHeroListBackup(arg_24_0)
+	local var_24_0 = {}
 
-	for slot5, slot6 in ipairs(slot0.heroList) do
-		table.insert(slot1, slot6)
+	for iter_24_0, iter_24_1 in ipairs(arg_24_0.heroList) do
+		table.insert(var_24_0, iter_24_1)
 	end
 
-	return slot1
+	return var_24_0
 end
 
-function slot0.getMainList(slot0)
-	slot1 = {}
-	slot2 = 0
+function var_0_0.getMainList(arg_25_0)
+	local var_25_0 = {}
+	local var_25_1 = 0
 
-	if slot0._playerMax then
-		for slot6 = 1, slot0._playerMax do
-			slot7 = slot0.heroList[slot6] or "0"
+	if arg_25_0._playerMax then
+		for iter_25_0 = 1, arg_25_0._playerMax do
+			local var_25_2 = arg_25_0.heroList[iter_25_0] or "0"
 
-			table.insert(slot1, slot7)
+			table.insert(var_25_0, var_25_2)
 
-			if slot7 ~= "0" and slot7 ~= 0 then
-				slot2 = slot2 + 1
+			if var_25_2 ~= "0" and var_25_2 ~= 0 then
+				var_25_1 = var_25_1 + 1
 			end
 		end
 	else
-		slot4 = HeroGroupModel.instance.battleId and lua_battle.configDict[slot3]
+		local var_25_3 = HeroGroupModel.instance.battleId
+		local var_25_4 = var_25_3 and lua_battle.configDict[var_25_3]
+		local var_25_5 = var_25_4 and var_25_4.playerMax or V1a6_CachotEnum.HeroCountInGroup
 
-		for slot9 = 1, slot4 and slot4.playerMax or V1a6_CachotEnum.HeroCountInGroup do
-			slot10 = slot0.heroList[slot9] or "0"
-			slot1[slot9] = slot10
+		for iter_25_1 = 1, var_25_5 do
+			local var_25_6 = arg_25_0.heroList[iter_25_1] or "0"
 
-			if slot10 ~= "0" and slot10 ~= 0 then
-				slot2 = slot2 + 1
+			var_25_0[iter_25_1] = var_25_6
+
+			if var_25_6 ~= "0" and var_25_6 ~= 0 then
+				var_25_1 = var_25_1 + 1
 			end
 		end
 	end
 
-	return slot1, slot2
+	return var_25_0, var_25_1
 end
 
-function slot0.getSubList(slot0)
-	slot1 = {}
-	slot2 = 0
+function var_0_0.getSubList(arg_26_0)
+	local var_26_0 = {}
+	local var_26_1 = 0
 
-	if slot0._playerMax then
-		for slot6 = 1, slot0._roleNum do
-			if slot0._playerMax < slot6 then
-				slot7 = slot0.heroList[slot6] or "0"
+	if arg_26_0._playerMax then
+		for iter_26_0 = 1, arg_26_0._roleNum do
+			if iter_26_0 > arg_26_0._playerMax then
+				local var_26_2 = arg_26_0.heroList[iter_26_0] or "0"
 
-				table.insert(slot1, slot7)
+				table.insert(var_26_0, var_26_2)
 
-				if slot7 ~= "0" and slot7 ~= 0 then
-					slot2 = slot2 + 1
+				if var_26_2 ~= "0" and var_26_2 ~= 0 then
+					var_26_1 = var_26_1 + 1
 				end
 			end
 		end
 	else
-		slot4 = HeroGroupModel.instance.battleId and lua_battle.configDict[slot3]
+		local var_26_3 = HeroGroupModel.instance.battleId
+		local var_26_4 = var_26_3 and lua_battle.configDict[var_26_3]
 
-		for slot9 = (slot4 and slot4.playerMax or V1a6_CachotEnum.HeroCountInGroup) + 1, slot0._maxHeroCount do
-			slot10 = slot0.heroList[slot9] or "0"
+		for iter_26_1 = (var_26_4 and var_26_4.playerMax or V1a6_CachotEnum.HeroCountInGroup) + 1, arg_26_0._maxHeroCount do
+			local var_26_5 = arg_26_0.heroList[iter_26_1] or "0"
 
-			table.insert(slot1, slot10)
+			table.insert(var_26_0, var_26_5)
 
-			if slot10 ~= "0" and slot10 ~= 0 then
-				slot2 = slot2 + 1
+			if var_26_5 ~= "0" and var_26_5 ~= 0 then
+				var_26_1 = var_26_1 + 1
 			end
 		end
 	end
 
-	return slot1, slot2
+	return var_26_0, var_26_1
 end
 
-function slot0.isAidHero(slot0, slot1)
-	slot1 = tonumber(slot1) or 0
+function var_0_0.isAidHero(arg_27_0, arg_27_1)
+	arg_27_1 = tonumber(arg_27_1) or 0
 
-	return slot1 < 0 and slot1 >= -slot0._maxHeroCount
+	local var_27_0 = arg_27_0._maxHeroCount
+
+	return arg_27_1 < 0 and arg_27_1 >= -var_27_0
 end
 
-function slot0.clearAidHero(slot0)
-	if slot0.heroList then
-		for slot4, slot5 in ipairs(slot0.heroList) do
-			if slot0:isAidHero(slot5) then
-				slot0.heroList[slot4] = tostring(0)
+function var_0_0.clearAidHero(arg_28_0)
+	if arg_28_0.heroList then
+		for iter_28_0, iter_28_1 in ipairs(arg_28_0.heroList) do
+			if arg_28_0:isAidHero(iter_28_1) then
+				arg_28_0.heroList[iter_28_0] = tostring(0)
 			end
 		end
 	end
 end
 
-return slot0
+return var_0_0

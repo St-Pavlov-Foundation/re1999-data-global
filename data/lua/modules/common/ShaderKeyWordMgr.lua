@@ -1,73 +1,84 @@
-module("modules.common.ShaderKeyWordMgr", package.seeall)
+﻿module("modules.common.ShaderKeyWordMgr", package.seeall)
 
-slot0 = class("ShaderKeyWordMgr")
-slot0.CLIPALPHA = "_CLIPALPHA_ON"
+local var_0_0 = class("ShaderKeyWordMgr")
 
-function slot0.init()
-	if not uv0.enableKeyWordDict then
-		uv0.enableKeyWordDict = {}
-		uv0.disableList = {}
-		uv0.updateHandle = UpdateBeat:CreateListener(uv0._onFrame)
+var_0_0.CLIPALPHA = "_CLIPALPHA_ON"
 
-		UpdateBeat:AddListener(uv0.updateHandle)
+function var_0_0.init()
+	if not var_0_0.enableKeyWordDict then
+		var_0_0.enableKeyWordDict = {}
+		var_0_0.disableList = {}
+		var_0_0.updateHandle = UpdateBeat:CreateListener(var_0_0._onFrame)
+
+		UpdateBeat:AddListener(var_0_0.updateHandle)
 	end
 end
 
-function slot0._onFrame()
-	tabletool.clear(uv0.disableList)
+function var_0_0._onFrame()
+	local var_2_0 = var_0_0.enableKeyWordDict
+	local var_2_1 = var_0_0.disableList
 
-	for slot6, slot7 in pairs(uv0.enableKeyWordDict) do
-		if slot7 < Time.time then
-			table.insert(slot1, slot6)
+	tabletool.clear(var_2_1)
+
+	local var_2_2 = Time.time
+
+	for iter_2_0, iter_2_1 in pairs(var_2_0) do
+		if iter_2_1 < var_2_2 then
+			table.insert(var_2_1, iter_2_0)
 		end
 	end
 
-	for slot6, slot7 in ipairs(slot1) do
-		uv0.disableKeyWord(slot7)
+	for iter_2_2, iter_2_3 in ipairs(var_2_1) do
+		var_0_0.disableKeyWord(iter_2_3)
 	end
 end
 
-function slot0.enableKeyWordAutoDisable(slot0, slot1)
-	if (slot1 or 0) < 0 then
+function var_0_0.enableKeyWordAutoDisable(arg_3_0, arg_3_1)
+	arg_3_1 = arg_3_1 or 0
+
+	if arg_3_1 < 0 then
 		return
 	end
 
-	if not slot0 then
+	if not arg_3_0 then
 		return
 	end
 
-	uv0.init()
+	var_0_0.init()
 
-	if not uv0.enableKeyWordDict[slot0] then
-		slot2[slot0] = Time.time + slot1
+	local var_3_0 = var_0_0.enableKeyWordDict
+	local var_3_1 = Time.time + arg_3_1
 
-		UnityEngine.Shader.EnableKeyword(slot0)
-	elseif slot2[slot0] < slot3 then
-		slot2[slot0] = slot3
+	if not var_3_0[arg_3_0] then
+		var_3_0[arg_3_0] = var_3_1
+
+		UnityEngine.Shader.EnableKeyword(arg_3_0)
+	elseif var_3_1 > var_3_0[arg_3_0] then
+		var_3_0[arg_3_0] = var_3_1
 	end
 end
 
-function slot0.enableKeyWorkNotDisable(slot0)
-	UnityEngine.Shader.EnableKeyword(slot0)
+function var_0_0.enableKeyWorkNotDisable(arg_4_0)
+	UnityEngine.Shader.EnableKeyword(arg_4_0)
 
-	uv0.enableKeyWordDict[slot0] = nil
+	var_0_0.enableKeyWordDict[arg_4_0] = nil
 end
 
-function slot0.disableKeyWord(slot0)
-	if uv0.enableKeyWordDict then
-		uv0.enableKeyWordDict[slot0] = nil
+function var_0_0.disableKeyWord(arg_5_0)
+	if var_0_0.enableKeyWordDict then
+		var_0_0.enableKeyWordDict[arg_5_0] = nil
 	end
 
-	UnityEngine.Shader.DisableKeyword(slot0)
+	UnityEngine.Shader.DisableKeyword(arg_5_0)
 end
 
-function slot0.clear()
-	uv0.enableKeyWordDict = nil
-	uv0.disableList = nil
+function var_0_0.clear()
+	var_0_0.enableKeyWordDict = nil
+	var_0_0.disableList = nil
 
-	if uv0.updateHandle then
-		UpdateBeat:RemoveListener(uv0.updateHandle)
+	if var_0_0.updateHandle then
+		UpdateBeat:RemoveListener(var_0_0.updateHandle)
 	end
 end
 
-return slot0
+return var_0_0

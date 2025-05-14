@@ -1,158 +1,188 @@
-module("modules.logic.seasonver.act166.model.Season166Model", package.seeall)
+﻿module("modules.logic.seasonver.act166.model.Season166Model", package.seeall)
 
-slot0 = class("Season166Model", BaseModel)
+local var_0_0 = class("Season166Model", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0:reInit()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:reInit()
 end
 
-function slot0.reInit(slot0)
-	slot0._actInfo = {}
-	slot0._battleContext = nil
-	slot0.localPrefsDict = {}
-	slot0._fightTalentData = {}
+function var_0_0.reInit(arg_2_0)
+	arg_2_0._actInfo = {}
+	arg_2_0._battleContext = nil
+	arg_2_0.localPrefsDict = {}
+	arg_2_0._fightTalentData = {}
 end
 
-function slot0.setActInfo(slot0, slot1)
-	if not slot0._actInfo[slot1.activityId] then
-		slot0._actInfo[slot2] = Season166MO.New()
-		slot0._curSeasonId = slot2
+function var_0_0.setActInfo(arg_3_0, arg_3_1)
+	local var_3_0 = arg_3_1.activityId
+	local var_3_1 = arg_3_0._actInfo[var_3_0]
+
+	if not var_3_1 then
+		var_3_1 = Season166MO.New()
+		arg_3_0._actInfo[var_3_0] = var_3_1
+		arg_3_0._curSeasonId = var_3_0
 	end
 
-	slot3:updateInfo(slot1)
+	var_3_1:updateInfo(arg_3_1)
 end
 
-function slot0.getActInfo(slot0, slot1)
-	if not slot1 then
+function var_0_0.getActInfo(arg_4_0, arg_4_1)
+	if not arg_4_1 then
 		return nil
 	end
 
-	return slot0._actInfo[slot1]
+	return arg_4_0._actInfo[arg_4_1]
 end
 
-function slot0.getCurSeasonId(slot0)
-	return slot0._curSeasonId
+function var_0_0.getCurSeasonId(arg_5_0)
+	return arg_5_0._curSeasonId
 end
 
-function slot0.setBattleContext(slot0, slot1, slot2, slot3, slot4, slot5, slot6)
-	slot0._battleContext = Season166BattleContext.New()
+function var_0_0.setBattleContext(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4, arg_6_5, arg_6_6)
+	arg_6_0._battleContext = Season166BattleContext.New()
 
-	slot0._battleContext:init(slot1, slot2, slot3, slot4, slot5, slot6)
+	arg_6_0._battleContext:init(arg_6_1, arg_6_2, arg_6_3, arg_6_4, arg_6_5, arg_6_6)
 end
 
-function slot0.getBattleContext(slot0, slot1)
-	if not slot1 and not slot0._battleContext then
+function var_0_0.getBattleContext(arg_7_0, arg_7_1)
+	if not arg_7_1 and not arg_7_0._battleContext then
 		logError("battleContext is nil")
 	end
 
-	return slot0._battleContext
+	return arg_7_0._battleContext
 end
 
-function slot0.onReceiveAnalyInfo(slot0, slot1)
-	if slot0:getActInfo(slot1.activityId) then
-		slot2:updateAnalyInfoStage(slot1.infoId, slot1.stage)
+function var_0_0.onReceiveAnalyInfo(arg_8_0, arg_8_1)
+	local var_8_0 = arg_8_0:getActInfo(arg_8_1.activityId)
+
+	if var_8_0 then
+		var_8_0:updateAnalyInfoStage(arg_8_1.infoId, arg_8_1.stage)
 	end
 end
 
-function slot0.onReceiveInformationBonus(slot0, slot1)
-	if slot0:getActInfo(slot1.activityId) then
-		slot2:onReceiveInformationBonus(slot1.bonusIds)
+function var_0_0.onReceiveInformationBonus(arg_9_0, arg_9_1)
+	local var_9_0 = arg_9_0:getActInfo(arg_9_1.activityId)
+
+	if var_9_0 then
+		var_9_0:onReceiveInformationBonus(arg_9_1.bonusIds)
 	end
 end
 
-function slot0.onReceiveInfoBonus(slot0, slot1)
-	if slot0:getActInfo(slot1.activityId) then
-		slot2:updateInfoBonus(slot1.infoId, slot1.bonusStage)
+function var_0_0.onReceiveInfoBonus(arg_10_0, arg_10_1)
+	local var_10_0 = arg_10_0:getActInfo(arg_10_1.activityId)
+
+	if var_10_0 then
+		var_10_0:updateInfoBonus(arg_10_1.infoId, arg_10_1.bonusStage)
 	end
 end
 
-function slot0.onReceiveUpdateInfos(slot0, slot1)
-	if slot0:getActInfo(slot1.activityId) and slot2:updateInfos(slot1.updateInfos) then
+function var_0_0.onReceiveUpdateInfos(arg_11_0, arg_11_1)
+	local var_11_0 = arg_11_0:getActInfo(arg_11_1.activityId)
+
+	if var_11_0 and var_11_0:updateInfos(arg_11_1.updateInfos) then
 		Season166Controller.instance:showToast(Season166Enum.ToastType.Info)
 	end
 end
 
-function slot0.getTalentInfo(slot0, slot1, slot2)
-	if slot0:getActInfo(slot1) then
-		return slot3:getTalentMO(slot2)
+function var_0_0.getTalentInfo(arg_12_0, arg_12_1, arg_12_2)
+	local var_12_0 = arg_12_0:getActInfo(arg_12_1)
+
+	if var_12_0 then
+		return var_12_0:getTalentMO(arg_12_2)
 	end
 end
 
-function slot0.onReceiveSetTalentSkill(slot0, slot1)
-	Season166Controller.instance:dispatchEvent(Season166Event.SetTalentSkill, slot1.talentId, slot0:getActInfo(slot1.activityId):setTalentSkillIds(slot1.talentId, slot1.skillIds))
+function var_0_0.onReceiveSetTalentSkill(arg_13_0, arg_13_1)
+	local var_13_0 = arg_13_0:getActInfo(arg_13_1.activityId):setTalentSkillIds(arg_13_1.talentId, arg_13_1.skillIds)
+
+	Season166Controller.instance:dispatchEvent(Season166Event.SetTalentSkill, arg_13_1.talentId, var_13_0)
 end
 
-function slot0.onReceiveAct166TalentPush(slot0, slot1)
-	if slot0:getActInfo(slot1.activityId) then
-		slot2:updateTalentInfo(slot1.talents)
+function var_0_0.onReceiveAct166TalentPush(arg_14_0, arg_14_1)
+	local var_14_0 = arg_14_0:getActInfo(arg_14_1.activityId)
+
+	if var_14_0 then
+		var_14_0:updateTalentInfo(arg_14_1.talents)
 	end
 end
 
-function slot0.onReceiveAct166EnterBaseReply(slot0, slot1)
-	if slot0:getActInfo(slot1.activityId) then
-		slot2:setSpotBaseEnter(slot1.baseId, true)
+function var_0_0.onReceiveAct166EnterBaseReply(arg_15_0, arg_15_1)
+	local var_15_0 = arg_15_0:getActInfo(arg_15_1.activityId)
+
+	if var_15_0 then
+		var_15_0:setSpotBaseEnter(arg_15_1.baseId, true)
 	end
 end
 
-function slot0.onReceiveBattleFinishPush(slot0, slot1)
-	if slot1.activityId ~= slot0._curSeasonId then
+function var_0_0.onReceiveBattleFinishPush(arg_16_0, arg_16_1)
+	if arg_16_1.activityId ~= arg_16_0._curSeasonId then
 		logError("activityId mismatch")
 
 		return
 	end
 
-	slot0.fightResult = slot1
+	arg_16_0.fightResult = arg_16_1
 
-	if slot0:getActInfo(slot1.activityId) and slot1.isHighestScore then
-		slot2:updateMaxScore(slot1.episodeType, slot1.id, slot1.totalScore)
+	local var_16_0 = arg_16_0:getActInfo(arg_16_1.activityId)
+
+	if var_16_0 and arg_16_1.isHighestScore then
+		var_16_0:updateMaxScore(arg_16_1.episodeType, arg_16_1.id, arg_16_1.totalScore)
 	end
 end
 
-function slot0.getFightResult(slot0)
-	if not slot0.fightResult then
+function var_0_0.getFightResult(arg_17_0)
+	if not arg_17_0.fightResult then
 		logError("not receive 166BattleFinishPush")
 	end
 
-	return slot0.fightResult
+	return arg_17_0.fightResult
 end
 
-function slot0.clearFightResult(slot0)
-	slot0.fightResult = nil
+function var_0_0.clearFightResult(arg_18_0)
+	arg_18_0.fightResult = nil
 end
 
-function slot0.setPrefsTalent(slot0)
-	PlayerPrefsHelper.setNumber(uv0.getKey(), slot0)
+function var_0_0.setPrefsTalent(arg_19_0)
+	PlayerPrefsHelper.setNumber(var_0_0.getKey(), arg_19_0)
 end
 
-function slot0.getPrefsTalent()
-	if PlayerPrefsHelper.getNumber(uv0.getKey(), 0) == 0 then
+function var_0_0.getPrefsTalent()
+	local var_20_0 = PlayerPrefsHelper.getNumber(var_0_0.getKey(), 0)
+
+	if var_20_0 == 0 then
 		return
 	end
 
-	return slot0
+	return var_20_0
 end
 
-function slot0.getKey()
-	slot0 = PlayerModel.instance:getMyUserId()
+function var_0_0.getKey()
+	local var_21_0 = PlayerModel.instance:getMyUserId()
+	local var_21_1 = var_0_0.instance:getCurSeasonId() or 0
 
-	if (uv0.instance:getCurSeasonId() or 0) == 0 then
+	if var_21_1 == 0 then
 		logError("赛季id为空,请检查")
 	end
 
-	return tostring(slot0) .. PlayerPrefsKey.Season166EquipTalentId .. slot1
+	return tostring(var_21_0) .. PlayerPrefsKey.Season166EquipTalentId .. var_21_1
 end
 
-function slot0.checkHasNewUnlockInfo(slot0)
-	slot1 = slot0:getLocalUnlockState(Season166Enum.InforMainLocalSaveKey)
+function var_0_0.checkHasNewUnlockInfo(arg_22_0)
+	local var_22_0 = arg_22_0:getLocalUnlockState(Season166Enum.InforMainLocalSaveKey)
+	local var_22_1 = arg_22_0:getActInfo(arg_22_0._curSeasonId)
 
-	if not slot0:getActInfo(slot0._curSeasonId) then
+	if not var_22_1 then
 		return false
 	end
 
-	for slot7, slot8 in ipairs(Season166Config.instance:getSeasonInfos(slot0._curSeasonId)) do
-		slot9 = slot2 and slot2:getInformationMO(slot8.infoId)
+	local var_22_2 = Season166Config.instance:getSeasonInfos(arg_22_0._curSeasonId)
 
-		if slot9 and (slot9 and Season166Enum.UnlockState or Season166Enum.LockState) ~= slot1[slot8.infoId] then
+	for iter_22_0, iter_22_1 in ipairs(var_22_2) do
+		local var_22_3 = var_22_1 and var_22_1:getInformationMO(iter_22_1.infoId)
+		local var_22_4 = var_22_3 and Season166Enum.UnlockState or Season166Enum.LockState
+		local var_22_5 = var_22_0[iter_22_1.infoId]
+
+		if var_22_3 and var_22_4 ~= var_22_5 then
 			return true
 		end
 	end
@@ -160,63 +190,76 @@ function slot0.checkHasNewUnlockInfo(slot0)
 	return false
 end
 
-function slot0.getLocalUnlockState(slot0, slot1)
-	for slot8, slot9 in ipairs(Season166Controller.instance:loadDictFromStr(Season166Controller.instance:getPlayerPrefs(slot1))) do
-		slot10 = string.split(slot9, "|")
+function var_0_0.getLocalUnlockState(arg_23_0, arg_23_1)
+	local var_23_0 = Season166Controller.instance:getPlayerPrefs(arg_23_1)
+	local var_23_1 = Season166Controller.instance:loadDictFromStr(var_23_0)
+	local var_23_2 = {}
+
+	for iter_23_0, iter_23_1 in ipairs(var_23_1) do
+		local var_23_3 = string.split(iter_23_1, "|")
+
+		var_23_2[tonumber(var_23_3[1])] = tonumber(var_23_3[2])
 	end
 
-	return {
-		[tonumber(slot10[1])] = tonumber(slot10[2])
-	}
+	return var_23_2
 end
 
-function slot0.getCurUnlockTalentData(slot0, slot1)
-	slot4 = {}
+function var_0_0.getCurUnlockTalentData(arg_24_0, arg_24_1)
+	local var_24_0 = lua_activity166_talent_style.configDict[arg_24_1]
+	local var_24_1 = arg_24_0:getTalentInfo(arg_24_0._curSeasonId, arg_24_1)
+	local var_24_2 = {}
 
-	for slot8, slot9 in ipairs(lua_activity166_talent_style.configDict[slot1]) do
-		if slot9.level <= slot0:getTalentInfo(slot0._curSeasonId, slot1).level and slot9.needStar > 0 then
-			table.insert(slot4, slot9)
+	for iter_24_0, iter_24_1 in ipairs(var_24_0) do
+		if var_24_1.level >= iter_24_1.level and iter_24_1.needStar > 0 then
+			table.insert(var_24_2, iter_24_1)
 		end
 	end
 
-	slot5 = {}
+	local var_24_3 = {}
 
-	for slot9, slot10 in ipairs(slot4) do
-		for slot15, slot16 in ipairs(string.splitToNumber(slot10.skillId, "#")) do
-			table.insert(slot5, slot16)
+	for iter_24_2, iter_24_3 in ipairs(var_24_2) do
+		local var_24_4 = string.splitToNumber(iter_24_3.skillId, "#")
+
+		for iter_24_4, iter_24_5 in ipairs(var_24_4) do
+			table.insert(var_24_3, iter_24_5)
 		end
 	end
 
-	return slot4, slot5
+	return var_24_2, var_24_3
 end
 
-function slot0.getUnlockWithNotSelectTalents(slot0, slot1)
-	slot2, slot3 = slot0:getCurUnlockTalentData(slot1)
+function var_0_0.getUnlockWithNotSelectTalents(arg_25_0, arg_25_1)
+	local var_25_0, var_25_1 = arg_25_0:getCurUnlockTalentData(arg_25_1)
+	local var_25_2 = arg_25_0:getTalentInfo(arg_25_0._curSeasonId, arg_25_1).skillIds
 
-	if tabletool.len(slot0:getTalentInfo(slot0._curSeasonId, slot1).skillIds) == 0 then
-		return slot3
+	if tabletool.len(var_25_2) == 0 then
+		return var_25_1
 	end
 
-	slot6 = {}
+	local var_25_3 = {}
 
-	for slot10, slot11 in ipairs(slot3) do
-		for slot15, slot16 in ipairs(slot5) do
-			if tabletool.indexOf(slot3, slot16) and slot16 ~= slot11 then
-				table.insert(slot6, slot11)
+	for iter_25_0, iter_25_1 in ipairs(var_25_1) do
+		for iter_25_2, iter_25_3 in ipairs(var_25_2) do
+			if tabletool.indexOf(var_25_1, iter_25_3) and iter_25_3 ~= iter_25_1 then
+				table.insert(var_25_3, iter_25_1)
 			end
 		end
 	end
 
-	return slot6
+	return var_25_3
 end
 
-function slot0.getTalentLocalSaveKey(slot0, slot1)
-	return string.format("%s_%s", Season166Enum.TalentLockSaveKey, slot1)
+function var_0_0.getTalentLocalSaveKey(arg_26_0, arg_26_1)
+	return string.format("%s_%s", Season166Enum.TalentLockSaveKey, arg_26_1)
 end
 
-function slot0.checkHasNewTalent(slot0, slot1)
-	for slot8, slot9 in ipairs(slot0:getUnlockWithNotSelectTalents(slot1)) do
-		if slot0:getLocalUnlockState(slot0:getTalentLocalSaveKey(slot1))[slot9] ~= Season166Enum.UnlockState then
+function var_0_0.checkHasNewTalent(arg_27_0, arg_27_1)
+	local var_27_0 = arg_27_0:getTalentLocalSaveKey(arg_27_1)
+	local var_27_1 = arg_27_0:getLocalUnlockState(var_27_0)
+	local var_27_2 = arg_27_0:getUnlockWithNotSelectTalents(arg_27_1)
+
+	for iter_27_0, iter_27_1 in ipairs(var_27_2) do
+		if var_27_1[iter_27_1] ~= Season166Enum.UnlockState then
 			return true
 		end
 	end
@@ -224,9 +267,11 @@ function slot0.checkHasNewTalent(slot0, slot1)
 	return false
 end
 
-function slot0.checkAllHasNewTalent(slot0, slot1)
-	for slot6, slot7 in pairs(lua_activity166_talent.configDict[slot1]) do
-		if slot0:checkHasNewTalent(slot7.talentId) then
+function var_0_0.checkAllHasNewTalent(arg_28_0, arg_28_1)
+	local var_28_0 = lua_activity166_talent.configDict[arg_28_1]
+
+	for iter_28_0, iter_28_1 in pairs(var_28_0) do
+		if arg_28_0:checkHasNewTalent(iter_28_1.talentId) then
 			return true
 		end
 	end
@@ -234,81 +279,105 @@ function slot0.checkAllHasNewTalent(slot0, slot1)
 	return false
 end
 
-function slot0.checkIsBaseSpotEpisode(slot0)
-	return slot0:getBattleContext() and slot1.baseId and slot1.baseId > 0
+function var_0_0.checkIsBaseSpotEpisode(arg_29_0)
+	local var_29_0 = arg_29_0:getBattleContext()
+
+	return var_29_0 and var_29_0.baseId and var_29_0.baseId > 0
 end
 
-function slot0.checkCanShowSeasonTalent(slot0)
-	slot1 = slot0:getBattleContext()
+function var_0_0.checkCanShowSeasonTalent(arg_30_0)
+	local var_30_0 = arg_30_0:getBattleContext()
+	local var_30_1 = FightModel.instance:getFightParam()
 
-	if FightModel.instance:getFightParam() and slot2.episodeId and not Season166Controller.instance.isSeason166EpisodeType(DungeonConfig.instance:getEpisodeCO(slot2.episodeId).type) then
-		return false
+	if var_30_1 and var_30_1.episodeId then
+		local var_30_2 = DungeonConfig.instance:getEpisodeCO(var_30_1.episodeId)
+
+		if not Season166Controller.instance.isSeason166EpisodeType(var_30_2.type) then
+			return false
+		end
 	end
 
-	return slot1 and (slot1.baseId and slot1.baseId > 0 or slot1.trainId and slot1.trainId > 0)
+	local var_30_3 = var_30_0.baseId and var_30_0.baseId > 0
+	local var_30_4 = var_30_0.trainId and var_30_0.trainId > 0
+
+	return var_30_0 and (var_30_3 or var_30_4)
 end
 
-function slot0.isTrainPass(slot0, slot1, slot2)
-	if slot0:getActInfo(slot1) then
-		return slot3:isTrainPass(slot2)
+function var_0_0.isTrainPass(arg_31_0, arg_31_1, arg_31_2)
+	local var_31_0 = arg_31_0:getActInfo(arg_31_1)
+
+	if var_31_0 then
+		return var_31_0:isTrainPass(arg_31_2)
 	end
 
 	return false
 end
 
-function slot0.unpackFightReconnectData(slot0, slot1)
-	if cjson.decode(slot1) then
-		slot0:setFightTalentParam(slot2.talentId, slot2.talentSkillIds, slot2.talentLevel)
+function var_0_0.unpackFightReconnectData(arg_32_0, arg_32_1)
+	local var_32_0 = cjson.decode(arg_32_1)
+
+	if var_32_0 then
+		local var_32_1 = var_32_0.talentId
+		local var_32_2 = var_32_0.talentSkillIds
+		local var_32_3 = var_32_0.talentLevel
+
+		arg_32_0:setFightTalentParam(var_32_1, var_32_2, var_32_3)
 	end
 end
 
-function slot0.setFightTalentParam(slot0, slot1, slot2, slot3)
-	slot0._fightTalentData = {
-		talentId = slot1,
-		talentSkillIds = {},
-		talentLevel = slot3
-	}
+function var_0_0.setFightTalentParam(arg_33_0, arg_33_1, arg_33_2, arg_33_3)
+	arg_33_0._fightTalentData = {}
+	arg_33_0._fightTalentData.talentId = arg_33_1
+	arg_33_0._fightTalentData.talentSkillIds = {}
+	arg_33_0._fightTalentData.talentLevel = arg_33_3
 
-	for slot7, slot8 in ipairs(slot2) do
-		table.insert(slot0._fightTalentData.talentSkillIds, slot8)
+	for iter_33_0, iter_33_1 in ipairs(arg_33_2) do
+		table.insert(arg_33_0._fightTalentData.talentSkillIds, iter_33_1)
 	end
 end
 
-function slot0.getFightTalentParam(slot0)
-	return slot0._fightTalentData
+function var_0_0.getFightTalentParam(arg_34_0)
+	return arg_34_0._fightTalentData
 end
 
-function slot0.getLocalPrefsTab(slot0, slot1)
-	if not slot0.localPrefsDict[slot1] then
-		slot2 = {}
+function var_0_0.getLocalPrefsTab(arg_35_0, arg_35_1)
+	if not arg_35_0.localPrefsDict[arg_35_1] then
+		local var_35_0 = {}
+		local var_35_1 = Season166Controller.instance:getPlayerPrefs(arg_35_1)
+		local var_35_2 = GameUtil.splitString2(var_35_1, true)
 
-		if GameUtil.splitString2(Season166Controller.instance:getPlayerPrefs(slot1), true) then
-			for slot8, slot9 in ipairs(slot4) do
-				slot2[slot9[1]] = slot9[2]
+		if var_35_2 then
+			for iter_35_0, iter_35_1 in ipairs(var_35_2) do
+				var_35_0[iter_35_1[1]] = iter_35_1[2]
 			end
 		end
 
-		slot0.localPrefsDict[slot1] = slot2
+		arg_35_0.localPrefsDict[arg_35_1] = var_35_0
 	end
 
-	return slot0.localPrefsDict[slot1]
+	return arg_35_0.localPrefsDict[arg_35_1]
 end
 
-function slot0.setLocalPrefsTab(slot0, slot1, slot2, slot3)
-	if slot0:getLocalPrefsTab(slot1)[slot2] == slot3 then
+function var_0_0.setLocalPrefsTab(arg_36_0, arg_36_1, arg_36_2, arg_36_3)
+	local var_36_0 = arg_36_0:getLocalPrefsTab(arg_36_1)
+
+	if var_36_0[arg_36_2] == arg_36_3 then
 		return
 	end
 
-	slot4[slot2] = slot3
-	slot5 = {}
+	var_36_0[arg_36_2] = arg_36_3
 
-	for slot9, slot10 in pairs(slot4) do
-		table.insert(slot5, string.format("%s#%s", slot9, slot10))
+	local var_36_1 = {}
+
+	for iter_36_0, iter_36_1 in pairs(var_36_0) do
+		table.insert(var_36_1, string.format("%s#%s", iter_36_0, iter_36_1))
 	end
 
-	Season166Controller.instance:savePlayerPrefs(slot1, table.concat(slot5, "|"))
+	local var_36_2 = table.concat(var_36_1, "|")
+
+	Season166Controller.instance:savePlayerPrefs(arg_36_1, var_36_2)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

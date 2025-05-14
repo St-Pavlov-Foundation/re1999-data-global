@@ -1,19 +1,20 @@
-module("modules.logic.voyage.model.VoyageModel", package.seeall)
+﻿module("modules.logic.voyage.model.VoyageModel", package.seeall)
 
-slot0 = class("VoyageModel", Activity1001Model)
+local var_0_0 = class("VoyageModel", Activity1001Model)
 
-function slot0.reInit(slot0)
-	uv0.super.reInit(slot0)
+function var_0_0.reInit(arg_1_0)
+	var_0_0.super.reInit(arg_1_0)
 
-	slot1 = VoyageConfig.instance
+	local var_1_0 = VoyageConfig.instance
+	local var_1_1 = var_1_0:getActivityId()
 
-	slot0:_internal_set_config(slot1)
-	slot0:_internal_set_activity(slot1:getActivityId())
+	arg_1_0:_internal_set_config(var_1_0)
+	arg_1_0:_internal_set_activity(var_1_1)
 end
 
-function slot0.hasAnyRewardAvailable(slot0)
-	for slot4, slot5 in pairs(slot0.__id2StateDict) do
-		if slot5 == VoyageEnum.State.Available then
+function var_0_0.hasAnyRewardAvailable(arg_2_0)
+	for iter_2_0, iter_2_1 in pairs(arg_2_0.__id2StateDict) do
+		if iter_2_1 == VoyageEnum.State.Available then
 			return true
 		end
 	end
@@ -21,6 +22,6 @@ function slot0.hasAnyRewardAvailable(slot0)
 	return false
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

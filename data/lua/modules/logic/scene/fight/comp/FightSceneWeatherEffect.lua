@@ -1,129 +1,133 @@
-module("modules.logic.scene.fight.comp.FightSceneWeatherEffect", package.seeall)
+﻿module("modules.logic.scene.fight.comp.FightSceneWeatherEffect", package.seeall)
 
-slot0 = class("FightSceneWeatherEffect", BaseSceneComp)
+local var_0_0 = class("FightSceneWeatherEffect", BaseSceneComp)
 
-function slot0.onSceneStart(slot0, slot1, slot2)
-	slot0:_setLevelCO(slot2)
-	FightController.instance:registerCallback(FightEvent.SetEntityWeatherEffectVisible, slot0._setEntityWeatherEffectVisible, slot0)
-	FightController.instance:registerCallback(FightEvent.OnSpineLoaded, slot0._onSpineLoaded, slot0)
-	FightController.instance:registerCallback(FightEvent.OnRestartStageBefore, slot0._releaseAllEntityEffect, slot0)
+function var_0_0.onSceneStart(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0:_setLevelCO(arg_1_2)
+	FightController.instance:registerCallback(FightEvent.SetEntityWeatherEffectVisible, arg_1_0._setEntityWeatherEffectVisible, arg_1_0)
+	FightController.instance:registerCallback(FightEvent.OnSpineLoaded, arg_1_0._onSpineLoaded, arg_1_0)
+	FightController.instance:registerCallback(FightEvent.OnRestartStageBefore, arg_1_0._releaseAllEntityEffect, arg_1_0)
 end
 
-function slot0.onScenePrepared(slot0, slot1, slot2)
-	slot0:getCurScene().level:registerCallback(CommonSceneLevelComp.OnLevelLoaded, slot0._onLevelLoaded, slot0)
+function var_0_0.onScenePrepared(arg_2_0, arg_2_1, arg_2_2)
+	arg_2_0:getCurScene().level:registerCallback(CommonSceneLevelComp.OnLevelLoaded, arg_2_0._onLevelLoaded, arg_2_0)
 end
 
-function slot0.onSceneClose(slot0)
+function var_0_0.onSceneClose(arg_3_0)
 	UrpCustom.PPEffectMask.hasRain = false
 
-	FightController.instance:unregisterCallback(FightEvent.SetEntityWeatherEffectVisible, slot0._setEntityWeatherEffectVisible, slot0)
-	FightController.instance:unregisterCallback(FightEvent.OnSpineLoaded, slot0._onSpineLoaded, slot0)
-	FightController.instance:unregisterCallback(FightEvent.OnRestartStageBefore, slot0._releaseAllEntityEffect, slot0)
-	slot0:getCurScene().level:unregisterCallback(CommonSceneLevelComp.OnLevelLoaded, slot0._onLevelLoaded, slot0)
-	slot0:_releaseWeatherEffect()
+	FightController.instance:unregisterCallback(FightEvent.SetEntityWeatherEffectVisible, arg_3_0._setEntityWeatherEffectVisible, arg_3_0)
+	FightController.instance:unregisterCallback(FightEvent.OnSpineLoaded, arg_3_0._onSpineLoaded, arg_3_0)
+	FightController.instance:unregisterCallback(FightEvent.OnRestartStageBefore, arg_3_0._releaseAllEntityEffect, arg_3_0)
+	arg_3_0:getCurScene().level:unregisterCallback(CommonSceneLevelComp.OnLevelLoaded, arg_3_0._onLevelLoaded, arg_3_0)
+	arg_3_0:_releaseWeatherEffect()
 end
 
-function slot0._onSpineLoaded(slot0, slot1)
-	if not slot1 or not slot0._weatherEffect_url then
+function var_0_0._onSpineLoaded(arg_4_0, arg_4_1)
+	if not arg_4_1 or not arg_4_0._weatherEffect_url then
 		return
 	end
 
-	slot0:_setSpineWeatherEffect(slot1)
+	arg_4_0:_setSpineWeatherEffect(arg_4_1)
 end
 
-function slot0._onLevelLoaded(slot0, slot1)
-	slot0:_releaseWeatherEffect()
-	slot0:_setLevelCO(slot1)
-	slot0:_setAllSpineWeatherEffect()
+function var_0_0._onLevelLoaded(arg_5_0, arg_5_1)
+	arg_5_0:_releaseWeatherEffect()
+	arg_5_0:_setLevelCO(arg_5_1)
+	arg_5_0:_setAllSpineWeatherEffect()
 end
 
-function slot0._setLevelCO(slot0, slot1)
-	if lua_scene_level.configDict[slot1].weatherEffect ~= 0 then
-		if slot3 == 1 then
-			slot0._weatherEffect_url = "roleeffects/roleeffect_rain_write"
+function var_0_0._setLevelCO(arg_6_0, arg_6_1)
+	local var_6_0 = lua_scene_level.configDict[arg_6_1].weatherEffect
+
+	if var_6_0 ~= 0 then
+		if var_6_0 == 1 then
+			arg_6_0._weatherEffect_url = "roleeffects/roleeffect_rain_write"
 			UrpCustom.PPEffectMask.hasRain = true
-		elseif slot3 == 2 then
-			slot0._weatherEffect_url = "roleeffects/roleeffect_rain_black"
+		elseif var_6_0 == 2 then
+			arg_6_0._weatherEffect_url = "roleeffects/roleeffect_rain_black"
 			UrpCustom.PPEffectMask.hasRain = true
 		else
 			UrpCustom.PPEffectMask.hasRain = false
 
-			logError("错误的天气类型:", slot3)
+			logError("错误的天气类型:", var_6_0)
 		end
 	else
 		UrpCustom.PPEffectMask.hasRain = false
 	end
 end
 
-function slot0._setAllSpineWeatherEffect(slot0)
-	if not slot0._weatherEffect_url then
+function var_0_0._setAllSpineWeatherEffect(arg_7_0)
+	if not arg_7_0._weatherEffect_url then
 		return
 	end
 
-	for slot5, slot6 in ipairs(FightHelper.getAllEntitysContainUnitNpc()) do
-		if slot6.spine then
-			slot0:_setSpineWeatherEffect(slot6.spine)
+	local var_7_0 = FightHelper.getAllEntitysContainUnitNpc()
+
+	for iter_7_0, iter_7_1 in ipairs(var_7_0) do
+		if iter_7_1.spine then
+			arg_7_0:_setSpineWeatherEffect(iter_7_1.spine)
 		end
 	end
 end
 
-function slot0._setSpineWeatherEffect(slot0, slot1)
-	slot2 = slot1.unitSpawn
-	slot3 = slot2.id
+function var_0_0._setSpineWeatherEffect(arg_8_0, arg_8_1)
+	local var_8_0 = arg_8_1.unitSpawn
+	local var_8_1 = var_8_0.id
 
-	if not slot2.effect or slot1._spineGo:GetComponent(typeof(UnityEngine.Renderer)) == nil then
+	if not var_8_0.effect or arg_8_1._spineGo:GetComponent(typeof(UnityEngine.Renderer)) == nil then
 		return
 	end
 
-	if not slot0.weather_effect then
-		slot0.weather_effect = {}
-		slot0.cache_entity = {}
+	if not arg_8_0.weather_effect then
+		arg_8_0.weather_effect = {}
+		arg_8_0.cache_entity = {}
 	end
 
-	if slot0.cache_entity[slot3] then
-		slot0:_releaseOneWeatherEffect(slot0.cache_entity[slot3])
+	if arg_8_0.cache_entity[var_8_1] then
+		arg_8_0:_releaseOneWeatherEffect(arg_8_0.cache_entity[var_8_1])
 	end
 
-	slot0.cache_entity[slot3] = slot2
-	slot0.weather_effect[slot3] = slot0.weather_effect[slot3] or slot2.effect:addHangEffect(slot0._weatherEffect_url)
+	arg_8_0.cache_entity[var_8_1] = var_8_0
+	arg_8_0.weather_effect[var_8_1] = arg_8_0.weather_effect[var_8_1] or var_8_0.effect:addHangEffect(arg_8_0._weatherEffect_url)
 
-	gohelper.addChild(slot1:getSpineGO(), slot0.weather_effect[slot3].containerGO)
-	slot0.weather_effect[slot3]:setLocalPos(0, 0, 0)
-	slot0.weather_effect[slot3]:setActive(false)
-	slot0.weather_effect[slot3]:setActive(true)
+	gohelper.addChild(arg_8_1:getSpineGO(), arg_8_0.weather_effect[var_8_1].containerGO)
+	arg_8_0.weather_effect[var_8_1]:setLocalPos(0, 0, 0)
+	arg_8_0.weather_effect[var_8_1]:setActive(false)
+	arg_8_0.weather_effect[var_8_1]:setActive(true)
 end
 
-function slot0._setEntityWeatherEffectVisible(slot0, slot1, slot2)
-	if slot0.weather_effect and slot0.weather_effect[slot1.id] then
-		gohelper.setActive(slot0.weather_effect[slot1.id].containerGO, slot2 or false)
-	end
-end
-
-function slot0._releaseOneWeatherEffect(slot0, slot1)
-	if slot1 and slot1.effect then
-		slot1.effect:removeEffect(slot0.weather_effect[slot1.id])
-	end
-
-	if slot0.weather_effect and slot0.weather_effect[slot1.id] then
-		slot0.weather_effect[slot1.id] = nil
-		slot0.cache_entity[slot1.id] = nil
+function var_0_0._setEntityWeatherEffectVisible(arg_9_0, arg_9_1, arg_9_2)
+	if arg_9_0.weather_effect and arg_9_0.weather_effect[arg_9_1.id] then
+		gohelper.setActive(arg_9_0.weather_effect[arg_9_1.id].containerGO, arg_9_2 or false)
 	end
 end
 
-function slot0._releaseAllEntityEffect(slot0)
-	if slot0.weather_effect then
-		for slot4, slot5 in pairs(slot0.weather_effect) do
-			slot0:_releaseOneWeatherEffect(slot0.cache_entity[slot4])
+function var_0_0._releaseOneWeatherEffect(arg_10_0, arg_10_1)
+	if arg_10_1 and arg_10_1.effect then
+		arg_10_1.effect:removeEffect(arg_10_0.weather_effect[arg_10_1.id])
+	end
+
+	if arg_10_0.weather_effect and arg_10_0.weather_effect[arg_10_1.id] then
+		arg_10_0.weather_effect[arg_10_1.id] = nil
+		arg_10_0.cache_entity[arg_10_1.id] = nil
+	end
+end
+
+function var_0_0._releaseAllEntityEffect(arg_11_0)
+	if arg_11_0.weather_effect then
+		for iter_11_0, iter_11_1 in pairs(arg_11_0.weather_effect) do
+			arg_11_0:_releaseOneWeatherEffect(arg_11_0.cache_entity[iter_11_0])
 		end
 	end
 end
 
-function slot0._releaseWeatherEffect(slot0)
-	slot0:_releaseAllEntityEffect()
+function var_0_0._releaseWeatherEffect(arg_12_0)
+	arg_12_0:_releaseAllEntityEffect()
 
-	slot0.weather_effect = nil
-	slot0._weatherEffect_url = nil
-	slot0.cache_entity = nil
+	arg_12_0.weather_effect = nil
+	arg_12_0._weatherEffect_url = nil
+	arg_12_0.cache_entity = nil
 end
 
-return slot0
+return var_0_0

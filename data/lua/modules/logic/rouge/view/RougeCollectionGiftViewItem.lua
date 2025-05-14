@@ -1,201 +1,218 @@
-module("modules.logic.rouge.view.RougeCollectionGiftViewItem", package.seeall)
+﻿module("modules.logic.rouge.view.RougeCollectionGiftViewItem", package.seeall)
 
-slot0 = class("RougeCollectionGiftViewItem", RougeSimpleItemBase)
+local var_0_0 = class("RougeCollectionGiftViewItem", RougeSimpleItemBase)
 
-function slot0.onInitView(slot0)
-	slot0._goselect = gohelper.findChild(slot0.viewGO, "#go_select")
-	slot0._gotagitem = gohelper.findChild(slot0.viewGO, "tags/#go_tagitem")
-	slot0._gotips = gohelper.findChild(slot0.viewGO, "tags/#go_tips")
-	slot0._txttagitem = gohelper.findChildText(slot0.viewGO, "tags/#go_tips/#txt_tagitem")
-	slot0._goenchantlist = gohelper.findChild(slot0.viewGO, "#go_enchantlist")
-	slot0._gohole = gohelper.findChild(slot0.viewGO, "#go_enchantlist/#go_hole")
-	slot0._gogrid = gohelper.findChild(slot0.viewGO, "Grid/#go_grid")
-	slot0._simagecollection = gohelper.findChildSingleImage(slot0.viewGO, "#simage_collection")
-	slot0._txtname = gohelper.findChildText(slot0.viewGO, "#txt_name")
-	slot0._goskillcontainer = gohelper.findChild(slot0.viewGO, "scroll_desc/Viewport/#go_skillcontainer")
-	slot0._goskillitem = gohelper.findChild(slot0.viewGO, "scroll_desc/Viewport/#go_skillcontainer/#go_skillitem")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goselect = gohelper.findChild(arg_1_0.viewGO, "#go_select")
+	arg_1_0._gotagitem = gohelper.findChild(arg_1_0.viewGO, "tags/#go_tagitem")
+	arg_1_0._gotips = gohelper.findChild(arg_1_0.viewGO, "tags/#go_tips")
+	arg_1_0._txttagitem = gohelper.findChildText(arg_1_0.viewGO, "tags/#go_tips/#txt_tagitem")
+	arg_1_0._goenchantlist = gohelper.findChild(arg_1_0.viewGO, "#go_enchantlist")
+	arg_1_0._gohole = gohelper.findChild(arg_1_0.viewGO, "#go_enchantlist/#go_hole")
+	arg_1_0._gogrid = gohelper.findChild(arg_1_0.viewGO, "Grid/#go_grid")
+	arg_1_0._simagecollection = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_collection")
+	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "#txt_name")
+	arg_1_0._goskillcontainer = gohelper.findChild(arg_1_0.viewGO, "scroll_desc/Viewport/#go_skillcontainer")
+	arg_1_0._goskillitem = gohelper.findChild(arg_1_0.viewGO, "scroll_desc/Viewport/#go_skillcontainer/#go_skillitem")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0.ctor(slot0, slot1)
-	RougeSimpleItemBase.ctor(slot0, slot1)
+function var_0_0.ctor(arg_4_0, arg_4_1)
+	RougeSimpleItemBase.ctor(arg_4_0, arg_4_1)
 end
 
-function slot0._btnclickOnClick(slot0)
+function var_0_0._btnclickOnClick(arg_5_0)
+	return
 end
 
-function slot0.addEventListeners(slot0)
-	RougeSimpleItemBase.addEventListeners(slot0)
-	slot0._itemClick:AddClickListener(slot0._onItemClick, slot0)
+function var_0_0.addEventListeners(arg_6_0)
+	RougeSimpleItemBase.addEventListeners(arg_6_0)
+	arg_6_0._itemClick:AddClickListener(arg_6_0._onItemClick, arg_6_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	RougeSimpleItemBase.removeEventListeners(slot0)
-	GameUtil.onDestroyViewMember_ClickListener(slot0, "_itemClick")
+function var_0_0.removeEventListeners(arg_7_0)
+	RougeSimpleItemBase.removeEventListeners(arg_7_0)
+	GameUtil.onDestroyViewMember_ClickListener(arg_7_0, "_itemClick")
 end
 
-function slot0.onDestroyView(slot0)
-	RougeSimpleItemBase.onDestroyView(slot0)
-	slot0._simagecollection:UnLoadImage()
-	GameUtil.onDestroyViewMemberList(slot0, "_tagObjList")
-	GameUtil.onDestroyViewMemberList(slot0, "_tipsTagObjList")
+function var_0_0.onDestroyView(arg_8_0)
+	RougeSimpleItemBase.onDestroyView(arg_8_0)
+	arg_8_0._simagecollection:UnLoadImage()
+	GameUtil.onDestroyViewMemberList(arg_8_0, "_tagObjList")
+	GameUtil.onDestroyViewMemberList(arg_8_0, "_tipsTagObjList")
 end
 
-function slot0._onItemClick(slot0)
-	slot0:baseViewContainer():dispatchEvent(RougeEvent.RougeCollectionGiftView_OnSelectIndex, slot0:index())
+function var_0_0._onItemClick(arg_9_0)
+	arg_9_0:baseViewContainer():dispatchEvent(RougeEvent.RougeCollectionGiftView_OnSelectIndex, arg_9_0:index())
 end
 
-function slot0.setSelected(slot0, slot1)
-	gohelper.setActive(slot0._goselect, slot1)
+function var_0_0.setSelected(arg_10_0, arg_10_1)
+	gohelper.setActive(arg_10_0._goselect, arg_10_1)
 end
 
-function slot0._editableInitView(slot0)
-	RougeSimpleItemBase._editableInitView(slot0)
+function var_0_0._editableInitView(arg_11_0)
+	RougeSimpleItemBase._editableInitView(arg_11_0)
 
-	slot0._gridList = slot0:getUserDataTb_()
-	slot0._tagObjList = {}
-	slot0._tipsTagObjList = {}
+	arg_11_0._gridList = arg_11_0:getUserDataTb_()
+	arg_11_0._tagObjList = {}
+	arg_11_0._tipsTagObjList = {}
 
-	slot0:_onSetScrollParentGameObject(gohelper.findChild(slot0.viewGO, "scroll_desc"):GetComponent(gohelper.Type_LimitedScrollRect))
+	local var_11_0 = gohelper.findChild(arg_11_0.viewGO, "scroll_desc")
 
-	slot0._itemClick = gohelper.getClickWithAudio(slot0.viewGO)
-	slot0._gridLayout = gohelper.findChild(slot0.viewGO, "Grid")
-	slot0._txttagitemGo = slot0._txttagitem.gameObject
+	arg_11_0:_onSetScrollParentGameObject(var_11_0:GetComponent(gohelper.Type_LimitedScrollRect))
 
-	gohelper.setActive(slot0._gohole, false)
-	gohelper.setActive(slot0._gogrid, false)
-	gohelper.setActive(slot0._gotagitem, false)
-	gohelper.setActive(slot0._txttagitemGo, false)
-	slot0:setSelected(false)
-	slot0:_setActiveLTTips(false)
+	arg_11_0._itemClick = gohelper.getClickWithAudio(arg_11_0.viewGO)
+	arg_11_0._gridLayout = gohelper.findChild(arg_11_0.viewGO, "Grid")
+	arg_11_0._txttagitemGo = arg_11_0._txttagitem.gameObject
+
+	gohelper.setActive(arg_11_0._gohole, false)
+	gohelper.setActive(arg_11_0._gogrid, false)
+	gohelper.setActive(arg_11_0._gotagitem, false)
+	gohelper.setActive(arg_11_0._txttagitemGo, false)
+	arg_11_0:setSelected(false)
+	arg_11_0:_setActiveLTTips(false)
 end
 
-function slot0.setData(slot0, slot1)
-	if slot1.type == RougeCollectionGiftView.Type.DropGroup then
-		slot0:_onUpdateMO_DropGroup(slot1)
+function var_0_0.setData(arg_12_0, arg_12_1)
+	if arg_12_1.type == RougeCollectionGiftView.Type.DropGroup then
+		arg_12_0:_onUpdateMO_DropGroup(arg_12_1)
 	else
-		slot0:_onUpdateMO_default(slot1)
+		arg_12_0:_onUpdateMO_default(arg_12_1)
 	end
 end
 
-function slot0._onUpdateMO_default(slot0, slot1)
-	slot0:_createDescList(slot1.descList)
-	GameUtil.loadSImage(slot0._simagecollection, slot1.resUrl)
+function var_0_0._onUpdateMO_default(arg_13_0, arg_13_1)
+	arg_13_0:_createDescList(arg_13_1.descList)
+	GameUtil.loadSImage(arg_13_0._simagecollection, arg_13_1.resUrl)
 
-	slot0._txtname.text = slot1.title
+	arg_13_0._txtname.text = arg_13_1.title
 end
 
-function slot0._onUpdateMO_DropGroup(slot0, slot1)
-	slot3 = slot1.data.collectionId
+function var_0_0._onUpdateMO_DropGroup(arg_14_0, arg_14_1)
+	local var_14_0 = arg_14_1.data.collectionId
 
-	slot0:_createDescList(slot1.descList)
+	arg_14_0:_createDescList(arg_14_1.descList)
 
-	slot4 = RougeCollectionConfig.instance:getCollectionCfg(slot3)
+	local var_14_1 = RougeCollectionConfig.instance:getCollectionCfg(var_14_0)
 
-	slot0:_refreshHole(slot4.holeNum)
-	slot0:_refreshGrids(slot3)
-	slot0:_refreshTagList(slot4.tags or {})
-	GameUtil.loadSImage(slot0._simagecollection, RougeCollectionHelper.getCollectionIconUrl(slot3))
+	arg_14_0:_refreshHole(var_14_1.holeNum)
+	arg_14_0:_refreshGrids(var_14_0)
+	arg_14_0:_refreshTagList(var_14_1.tags or {})
+	GameUtil.loadSImage(arg_14_0._simagecollection, RougeCollectionHelper.getCollectionIconUrl(var_14_0))
 
-	slot0._txtname.text = RougeCollectionConfig.instance:getCollectionName(slot3)
+	arg_14_0._txtname.text = RougeCollectionConfig.instance:getCollectionName(var_14_0)
 end
 
-function slot0._refreshHole(slot0, slot1)
-	gohelper.CreateNumObjList(slot0._goenchantlist, slot0._gohole, slot1 or 0)
+function var_0_0._refreshHole(arg_15_0, arg_15_1)
+	gohelper.CreateNumObjList(arg_15_0._goenchantlist, arg_15_0._gohole, arg_15_1 or 0)
 end
 
-function slot0._refreshGrids(slot0, slot1)
-	RougeCollectionHelper.loadShapeGrid(slot1, slot0._gridLayout, slot0._gogrid, slot0._gridList)
+function var_0_0._refreshGrids(arg_16_0, arg_16_1)
+	RougeCollectionHelper.loadShapeGrid(arg_16_1, arg_16_0._gridLayout, arg_16_0._gogrid, arg_16_0._gridList)
 end
 
-function slot0._createDescList(slot0, slot1)
-	gohelper.CreateObjList(slot0, slot0._descListCallback, slot1, slot0._goskillcontainer, slot0._goskillitem)
+function var_0_0._createDescList(arg_17_0, arg_17_1)
+	gohelper.CreateObjList(arg_17_0, arg_17_0._descListCallback, arg_17_1, arg_17_0._goskillcontainer, arg_17_0._goskillitem)
 end
 
-function slot0._descListCallback(slot0, slot1, slot2, slot3)
-	gohelper.findChildText(slot1, "txt_desc").text = slot2
+function var_0_0._descListCallback(arg_18_0, arg_18_1, arg_18_2, arg_18_3)
+	gohelper.findChildText(arg_18_1, "txt_desc").text = arg_18_2
 end
 
-function slot0._refreshTagList(slot0, slot1)
-	for slot5, slot6 in ipairs(slot1) do
-		slot7 = nil
+function var_0_0._refreshTagList(arg_19_0, arg_19_1)
+	for iter_19_0, iter_19_1 in ipairs(arg_19_1) do
+		local var_19_0
 
-		if slot5 > #slot0._tagObjList then
-			table.insert(slot0._tagObjList, slot0:_create_RougeCollectionInitialCollectionTagItem(slot5))
+		if iter_19_0 > #arg_19_0._tagObjList then
+			var_19_0 = arg_19_0:_create_RougeCollectionInitialCollectionTagItem(iter_19_0)
+
+			table.insert(arg_19_0._tagObjList, var_19_0)
 		else
-			slot7 = slot0._tagObjList[slot5]
+			var_19_0 = arg_19_0._tagObjList[iter_19_0]
 		end
 
-		slot7:onUpdateMO(slot6)
-		slot7:setActive(true)
+		var_19_0:onUpdateMO(iter_19_1)
+		var_19_0:setActive(true)
 
-		slot8 = nil
+		local var_19_1
 
-		if slot5 > #slot0._tipsTagObjList then
-			table.insert(slot0._tipsTagObjList, slot0:_create_RougeCollectionInitialCollectionTipsTagItem(slot5))
+		if iter_19_0 > #arg_19_0._tipsTagObjList then
+			var_19_1 = arg_19_0:_create_RougeCollectionInitialCollectionTipsTagItem(iter_19_0)
+
+			table.insert(arg_19_0._tipsTagObjList, var_19_1)
 		else
-			slot8 = slot0._tipsTagObjList[slot5]
+			var_19_1 = arg_19_0._tipsTagObjList[iter_19_0]
 		end
 
-		slot8:onUpdateMO(slot6)
-		slot8:setActive(true)
+		var_19_1:onUpdateMO(iter_19_1)
+		var_19_1:setActive(true)
 	end
 
-	for slot6 = #slot1 + 1, math.max(#slot0._tagObjList, #slot0._tipsTagObjList) do
-		if slot0._tagObjList[slot6] then
-			slot7:setActive(false)
+	local var_19_2 = math.max(#arg_19_0._tagObjList, #arg_19_0._tipsTagObjList)
+
+	for iter_19_2 = #arg_19_1 + 1, var_19_2 do
+		local var_19_3 = arg_19_0._tagObjList[iter_19_2]
+
+		if var_19_3 then
+			var_19_3:setActive(false)
 		end
 
-		if slot0._tipsTagObjList[slot6] then
-			slot8:setActive(false)
+		local var_19_4 = arg_19_0._tipsTagObjList[iter_19_2]
+
+		if var_19_4 then
+			var_19_4:setActive(false)
 		end
 	end
 end
 
-function slot0._create_RougeCollectionInitialCollectionTagItem(slot0, slot1)
-	slot3 = RougeCollectionInitialCollectionTagItem.New({
-		parent = slot0,
-		baseViewContainer = slot0:baseViewContainer()
+function var_0_0._create_RougeCollectionInitialCollectionTagItem(arg_20_0, arg_20_1)
+	local var_20_0 = gohelper.cloneInPlace(arg_20_0._gotagitem)
+	local var_20_1 = RougeCollectionInitialCollectionTagItem.New({
+		parent = arg_20_0,
+		baseViewContainer = arg_20_0:baseViewContainer()
 	})
 
-	slot3:setIndex(slot1)
-	slot3:init(gohelper.cloneInPlace(slot0._gotagitem))
+	var_20_1:setIndex(arg_20_1)
+	var_20_1:init(var_20_0)
 
-	return slot3
+	return var_20_1
 end
 
-function slot0._create_RougeCollectionInitialCollectionTipsTagItem(slot0, slot1)
-	slot3 = RougeCollectionInitialCollectionTipsTagItem.New({
-		parent = slot0,
-		baseViewContainer = slot0:baseViewContainer()
+function var_0_0._create_RougeCollectionInitialCollectionTipsTagItem(arg_21_0, arg_21_1)
+	local var_21_0 = gohelper.cloneInPlace(arg_21_0._txttagitemGo)
+	local var_21_1 = RougeCollectionInitialCollectionTipsTagItem.New({
+		parent = arg_21_0,
+		baseViewContainer = arg_21_0:baseViewContainer()
 	})
 
-	slot3:setIndex(slot1)
-	slot3:init(gohelper.cloneInPlace(slot0._txttagitemGo))
+	var_21_1:setIndex(arg_21_1)
+	var_21_1:init(var_21_0)
 
-	return slot3
+	return var_21_1
 end
 
-function slot0.setActiveTips(slot0, slot1)
-	gohelper.setActive(slot0._gotips, slot1)
-	slot0:parent():setActiveBlock(slot1)
+function var_0_0.setActiveTips(arg_22_0, arg_22_1)
+	gohelper.setActive(arg_22_0._gotips, arg_22_1)
+	arg_22_0:parent():setActiveBlock(arg_22_1)
 end
 
-function slot0.onCloseBlock(slot0)
-	slot0:_setActiveLTTips(false)
+function var_0_0.onCloseBlock(arg_23_0)
+	arg_23_0:_setActiveLTTips(false)
 end
 
-function slot0._setActiveLTTips(slot0, slot1)
-	gohelper.setActive(slot0._gotips, slot1)
+function var_0_0._setActiveLTTips(arg_24_0, arg_24_1)
+	gohelper.setActive(arg_24_0._gotips, arg_24_1)
 end
 
-return slot0
+return var_0_0

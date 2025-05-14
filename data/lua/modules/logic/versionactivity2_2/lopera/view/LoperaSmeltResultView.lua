@@ -1,103 +1,110 @@
-module("modules.logic.versionactivity2_2.lopera.view.LoperaSmeltResultView", package.seeall)
+﻿module("modules.logic.versionactivity2_2.lopera.view.LoperaSmeltResultView", package.seeall)
 
-slot0 = class("LoperaSmeltResultView", BaseView)
-slot1 = LoperaEnum.MapCfgIdx
-slot2 = VersionActivity2_2Enum.ActivityId.Lopera
-slot3 = "<color=#21631a>%s</color>"
-slot4 = {
+local var_0_0 = class("LoperaSmeltResultView", BaseView)
+local var_0_1 = LoperaEnum.MapCfgIdx
+local var_0_2 = VersionActivity2_2Enum.ActivityId.Lopera
+local var_0_3 = "<color=#21631a>%s</color>"
+local var_0_4 = {
 	Done = 2,
 	Smelting = 1
 }
-slot5 = 2
+local var_0_5 = 2
 
-function slot0.onInitView(slot0)
-	slot0._goStage1 = gohelper.findChild(slot0.viewGO, "#go_Stage1")
-	slot0._goStage2 = gohelper.findChild(slot0.viewGO, "#go_Stage2")
-	slot0._btnClose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_Stage2/#btn_Close")
-	slot0._goItem = gohelper.findChild(slot0.viewGO, "#go_Stage2/#scroll_List/Viewport/Content/#go_Item")
-	slot0._goItemRoot = gohelper.findChild(slot0.viewGO, "#go_Stage2/#scroll_List/Viewport/Content")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goStage1 = gohelper.findChild(arg_1_0.viewGO, "#go_Stage1")
+	arg_1_0._goStage2 = gohelper.findChild(arg_1_0.viewGO, "#go_Stage2")
+	arg_1_0._btnClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_Stage2/#btn_Close")
+	arg_1_0._goItem = gohelper.findChild(arg_1_0.viewGO, "#go_Stage2/#scroll_List/Viewport/Content/#go_Item")
+	arg_1_0._goItemRoot = gohelper.findChild(arg_1_0.viewGO, "#go_Stage2/#scroll_List/Viewport/Content")
 
-	gohelper.setActive(slot0._goItem, false)
+	gohelper.setActive(arg_1_0._goItem, false)
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnClose:AddClickListener(slot0.closeThis, slot0)
-	slot0:addEventCb(LoperaController.instance, LoperaEvent.GoodItemClick, slot0._onClickItem, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnClose:AddClickListener(arg_2_0.closeThis, arg_2_0)
+	arg_2_0:addEventCb(LoperaController.instance, LoperaEvent.GoodItemClick, arg_2_0._onClickItem, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnClose:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnClose:RemoveClickListener()
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_4_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot1 = slot0.viewParam
+function var_0_0.onOpen(arg_5_0)
+	local var_5_0 = arg_5_0.viewParam
 
-	slot0:changeViewStage(uv0.Smelting)
-	TaskDispatcher.runDelay(slot0.changeViewDoneStage, slot0, uv1)
+	arg_5_0:changeViewStage(var_0_4.Smelting)
+	TaskDispatcher.runDelay(arg_5_0.changeViewDoneStage, arg_5_0, var_0_5)
 end
 
-function slot0.refreshStageView(slot0)
-	gohelper.setActive(slot0._goStage1, slot0._curStage == uv0.Smelting)
-	gohelper.setActive(slot0._goStage2, slot0._curStage == uv0.Done)
+function var_0_0.refreshStageView(arg_6_0)
+	gohelper.setActive(arg_6_0._goStage1, arg_6_0._curStage == var_0_4.Smelting)
+	gohelper.setActive(arg_6_0._goStage2, arg_6_0._curStage == var_0_4.Done)
 
-	if slot0._curStage == uv0.Done then
-		slot0:refreshProductItems()
+	if arg_6_0._curStage == var_0_4.Done then
+		arg_6_0:refreshProductItems()
 	end
 end
 
-function slot0.changeViewDoneStage(slot0)
-	slot0:changeViewStage(uv0.Done)
+function var_0_0.changeViewDoneStage(arg_7_0)
+	arg_7_0:changeViewStage(var_0_4.Done)
 end
 
-function slot0.changeViewStage(slot0, slot1)
-	slot0._curStage = slot1
+function var_0_0.changeViewStage(arg_8_0, arg_8_1)
+	arg_8_0._curStage = arg_8_1
 
-	slot0:refreshStageView()
+	arg_8_0:refreshStageView()
 end
 
-function slot0.refreshProductItems(slot0)
-	slot1 = {}
+function var_0_0.refreshProductItems(arg_9_0)
+	local var_9_0 = {}
+	local var_9_1 = Activity168Model.instance:getItemChangeDict()
 
-	if not Activity168Model.instance:getItemChangeDict() then
+	if not var_9_1 then
 		return
 	end
 
-	for slot6, slot7 in pairs(slot2) do
-		if slot7 > 0 then
-			slot1[#slot1 + 1] = {
-				id = slot6,
-				num = slot7
+	for iter_9_0, iter_9_1 in pairs(var_9_1) do
+		if iter_9_1 > 0 then
+			var_9_0[#var_9_0 + 1] = {
+				id = iter_9_0,
+				num = iter_9_1
 			}
 		end
 	end
 
-	gohelper.CreateObjList(slot0, slot0._createItem, slot1, slot0._goItemRoot, slot0._goItem, LoperaGoodsItem)
+	gohelper.CreateObjList(arg_9_0, arg_9_0._createItem, var_9_0, arg_9_0._goItemRoot, arg_9_0._goItem, LoperaGoodsItem)
 end
 
-function slot0._createItem(slot0, slot1, slot2, slot3)
-	slot1:onUpdateData(Activity168Config.instance:getGameItemCfg(uv0, slot2.id), slot2.num, slot3)
+function var_0_0._createItem(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
+	local var_10_0 = arg_10_2.id
+	local var_10_1 = Activity168Config.instance:getGameItemCfg(var_0_2, var_10_0)
+
+	arg_10_1:onUpdateData(var_10_1, arg_10_2.num, arg_10_3)
 end
 
-function slot0._onClickItem(slot0, slot1)
-	gohelper.setActive(slot0._tipsGo, true)
+function var_0_0._onClickItem(arg_11_0, arg_11_1)
+	gohelper.setActive(arg_11_0._tipsGo, true)
 
-	slot3 = slot0._tipsGo.transform
+	local var_11_0 = gohelper.findChild(arg_11_0._goItemRoot, arg_11_1)
+	local var_11_1 = arg_11_0._tipsGo.transform
 
-	slot3:SetParent(gohelper.findChild(slot0._goItemRoot, slot1).transform, true)
-	recthelper.setAnchorX(slot3, 320)
-	recthelper.setAnchorY(slot3, -30)
-	slot3:SetParent(slot0.viewGO.transform, true)
-	slot0:_refreshGoodItemTips(slot1)
+	var_11_1:SetParent(var_11_0.transform, true)
+	recthelper.setAnchorX(var_11_1, 320)
+	recthelper.setAnchorY(var_11_1, -30)
+	var_11_1:SetParent(arg_11_0.viewGO.transform, true)
+	arg_11_0:_refreshGoodItemTips(arg_11_1)
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_12_0)
+	return
 end
 
-return slot0
+return var_0_0

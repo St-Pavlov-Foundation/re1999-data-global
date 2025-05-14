@@ -1,116 +1,144 @@
-slot0 = require("framework.helper.gohelper")
+﻿local var_0_0 = require("framework.helper.gohelper")
 
 module("modules.logic.optionpackage.view.OptionPackageDownloadView", package.seeall)
 
-slot1 = class("OptionPackageDownloadView", BaseView)
+local var_0_1 = class("OptionPackageDownloadView", BaseView)
 
-function slot1.onInitView(slot0)
-	slot0._txtpercent = uv0.findChildText(slot0.viewGO, "view/progress/#txt_percent")
-	slot0._imageprogress = uv0.findChildImage(slot0.viewGO, "view/progress/loadingline/#img_progress")
-	slot0._goprogress = uv0.findChild(slot0.viewGO, "view/progress")
-	slot0._gomessgeBox = uv0.findChild(slot0.viewGO, "view/#go_messgeBox")
-	slot0._txtdesc = uv0.findChildText(slot0.viewGO, "view/#go_messgeBox/#txt_desc")
-	slot0._btnyes = uv0.findChildButtonWithAudio(slot0.viewGO, "view/#go_messgeBox/#btn_yes")
-	slot0._btnno = uv0.findChildButtonWithAudio(slot0.viewGO, "view/#go_messgeBox/#btn_no")
+function var_0_1.onInitView(arg_1_0)
+	arg_1_0._txtpercent = var_0_0.findChildText(arg_1_0.viewGO, "view/progress/#txt_percent")
+	arg_1_0._imageprogress = var_0_0.findChildImage(arg_1_0.viewGO, "view/progress/loadingline/#img_progress")
+	arg_1_0._goprogress = var_0_0.findChild(arg_1_0.viewGO, "view/progress")
+	arg_1_0._gomessgeBox = var_0_0.findChild(arg_1_0.viewGO, "view/#go_messgeBox")
+	arg_1_0._txtdesc = var_0_0.findChildText(arg_1_0.viewGO, "view/#go_messgeBox/#txt_desc")
+	arg_1_0._btnyes = var_0_0.findChildButtonWithAudio(arg_1_0.viewGO, "view/#go_messgeBox/#btn_yes")
+	arg_1_0._btnno = var_0_0.findChildButtonWithAudio(arg_1_0.viewGO, "view/#go_messgeBox/#btn_no")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot1.addEvents(slot0)
-	slot0._btnyes:AddClickListener(slot0._btnyesOnClick, slot0)
-	slot0._btnno:AddClickListener(slot0._btnnoOnClick, slot0)
+function var_0_1.addEvents(arg_2_0)
+	arg_2_0._btnyes:AddClickListener(arg_2_0._btnyesOnClick, arg_2_0)
+	arg_2_0._btnno:AddClickListener(arg_2_0._btnnoOnClick, arg_2_0)
 end
 
-function slot1.removeEvents(slot0)
-	slot0._btnyes:RemoveClickListener()
-	slot0._btnno:RemoveClickListener()
+function var_0_1.removeEvents(arg_3_0)
+	arg_3_0._btnyes:RemoveClickListener()
+	arg_3_0._btnno:RemoveClickListener()
 end
 
-function slot1._btnyesOnClick(slot0)
-	slot0:_closeInvokeCallback(true)
+function var_0_1._btnyesOnClick(arg_4_0)
+	arg_4_0:_closeInvokeCallback(true)
 end
 
-function slot1._btnnoOnClick(slot0)
-	slot0:_closeInvokeCallback(false)
+function var_0_1._btnnoOnClick(arg_5_0)
+	arg_5_0:_closeInvokeCallback(false)
 end
 
-function slot1._editableInitView(slot0)
-	slot0._goNo = slot0._btnno.gameObject
-	slot0._goYes = slot0._btnyes.gameObject
-	slot0._txtYes = uv0.findChildText(slot0._goYes, "#txt_confirm")
-	slot0._txtNo = uv0.findChildText(slot0._goNo, "#txt_cancel")
-	slot0._txtYesen = uv0.findChildText(slot0._goYes, "#txt_seitchen")
-	slot0._txtNoen = uv0.findChildText(slot0._goNo, "#txt_cancelen")
+function var_0_1._editableInitView(arg_6_0)
+	arg_6_0._goNo = arg_6_0._btnno.gameObject
+	arg_6_0._goYes = arg_6_0._btnyes.gameObject
+	arg_6_0._txtYes = var_0_0.findChildText(arg_6_0._goYes, "#txt_confirm")
+	arg_6_0._txtNo = var_0_0.findChildText(arg_6_0._goNo, "#txt_cancel")
+	arg_6_0._txtYesen = var_0_0.findChildText(arg_6_0._goYes, "#txt_seitchen")
+	arg_6_0._txtNoen = var_0_0.findChildText(arg_6_0._goNo, "#txt_cancelen")
 
-	slot0:_showMessgeBoxGo(false)
+	arg_6_0:_showMessgeBoxGo(false)
 end
 
-function slot1.onOpen(slot0)
-	slot0:addEventCb(OptionPackageController.instance, OptionPackageEvent.DownloadProgressRefresh, slot0._onDownloadProgress, slot0)
-	slot0:addEventCb(OptionPackageController.instance, OptionPackageEvent.UnZipProgressRefresh, slot0._onUnZipProgress, slot0)
-	slot0:addEventCb(OptionPackageController.instance, OptionPackageEvent.DownladErrorMsg, slot0._onDownladErrorMsg, slot0)
+function var_0_1.onOpen(arg_7_0)
+	arg_7_0:addEventCb(OptionPackageController.instance, OptionPackageEvent.DownloadProgressRefresh, arg_7_0._onDownloadProgress, arg_7_0)
+	arg_7_0:addEventCb(OptionPackageController.instance, OptionPackageEvent.UnZipProgressRefresh, arg_7_0._onUnZipProgress, arg_7_0)
+	arg_7_0:addEventCb(OptionPackageController.instance, OptionPackageEvent.DownladErrorMsg, arg_7_0._onDownladErrorMsg, arg_7_0)
 end
 
-function slot1._show(slot0, slot1, slot2)
-	slot0._imageprogress.fillAmount = slot1
-	slot0._txtpercent.text = slot2
+function var_0_1._show(arg_8_0, arg_8_1, arg_8_2)
+	arg_8_0._imageprogress.fillAmount = arg_8_1
+	arg_8_0._txtpercent.text = arg_8_2
 end
 
-function slot1._onDownloadProgress(slot0, slot1, slot2, slot3)
-	slot0._downProgressS1 = HotUpdateMgr.fixSizeStr(slot2)
-	slot0._downProgressS2 = HotUpdateMgr.fixSizeStr(slot3)
-	slot7 = nil
+function var_0_1._onDownloadProgress(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
+	local var_9_0 = arg_9_2 / arg_9_3
+	local var_9_1 = HotUpdateMgr.fixSizeStr(arg_9_2)
+	local var_9_2 = HotUpdateMgr.fixSizeStr(arg_9_3)
 
-	slot0:_show(slot2 / slot3, (UnityEngine.Application.internetReachability ~= UnityEngine.NetworkReachability.ReachableViaLocalAreaNetwork or string.format(booterLang("download_info_wifi"), slot5, slot6)) and string.format(booterLang("download_info"), slot5, slot6))
+	arg_9_0._downProgressS1 = var_9_1
+	arg_9_0._downProgressS2 = var_9_2
+
+	local var_9_3
+
+	if UnityEngine.Application.internetReachability == UnityEngine.NetworkReachability.ReachableViaLocalAreaNetwork then
+		var_9_3 = string.format(booterLang("download_info_wifi"), var_9_1, var_9_2)
+	else
+		var_9_3 = string.format(booterLang("download_info"), var_9_1, var_9_2)
+	end
+
+	arg_9_0:_show(var_9_0, var_9_3)
 end
 
-function slot1._onUnZipProgress(slot0, slot1)
-	slot2 = slot0._downProgressS1 or ""
-	slot3 = slot0._downProgressS2 or ""
-	slot4 = math.floor(100 * slot1 + 0.5)
-	slot5 = nil
-	slot0._txtpercent.text = (UnityEngine.Application.internetReachability ~= UnityEngine.NetworkReachability.ReachableViaLocalAreaNetwork or string.format(booterLang("unziping_progress_wifi"), tostring(slot4), slot2, slot3)) and string.format(booterLang("unziping_progress"), tostring(slot4), slot2, slot3)
+function var_0_1._onUnZipProgress(arg_10_0, arg_10_1)
+	local var_10_0 = arg_10_0._downProgressS1 or ""
+	local var_10_1 = arg_10_0._downProgressS2 or ""
+	local var_10_2 = math.floor(100 * arg_10_1 + 0.5)
+	local var_10_3
+
+	if UnityEngine.Application.internetReachability == UnityEngine.NetworkReachability.ReachableViaLocalAreaNetwork then
+		var_10_3 = string.format(booterLang("unziping_progress_wifi"), tostring(var_10_2), var_10_0, var_10_1)
+	else
+		var_10_3 = string.format(booterLang("unziping_progress"), tostring(var_10_2), var_10_0, var_10_1)
+	end
+
+	arg_10_0._txtpercent.text = var_10_3
 end
 
-function slot1._closeInvokeCallback(slot0, slot1)
-	slot0:_showMessgeBoxGo(false)
+function var_0_1._closeInvokeCallback(arg_11_0, arg_11_1)
+	arg_11_0:_showMessgeBoxGo(false)
 
-	slot0._errorMsgInfo = nil
+	local var_11_0 = arg_11_0._errorMsgInfo
 
-	if slot0._errorMsgInfo then
-		if slot1 == true then
-			if slot2.yesCallback then
-				slot2.yesCallback(slot2.yesCallbackObj)
+	arg_11_0._errorMsgInfo = nil
+
+	if var_11_0 then
+		if arg_11_1 == true then
+			if var_11_0.yesCallback then
+				var_11_0.yesCallback(var_11_0.yesCallbackObj)
 			end
-		elseif slot2.noCallback then
-			slot2.noCallback(slot2.noCallbackObj)
+		elseif var_11_0.noCallback then
+			var_11_0.noCallback(var_11_0.noCallbackObj)
 		end
 	end
 end
 
-function slot1._showMessgeBoxGo(slot0, slot1)
-	uv0.setActive(slot0._gomessgeBox, slot1)
-	uv0.setActive(slot0._goprogress, slot1 == false)
+function var_0_1._showMessgeBoxGo(arg_12_0, arg_12_1)
+	var_0_0.setActive(arg_12_0._gomessgeBox, arg_12_1)
+	var_0_0.setActive(arg_12_0._goprogress, arg_12_1 == false)
 end
 
-function slot1._showErrorUI(slot0)
-	slot0:_showMessgeBoxGo(slot0._errorMsgInfo ~= nil)
+function var_0_1._showErrorUI(arg_13_0)
+	arg_13_0:_showMessgeBoxGo(arg_13_0._errorMsgInfo ~= nil)
 
-	if slot0._errorMsgInfo then
-		slot0._txtdesc.text = slot0._errorMsgInfo.msg
-		slot0._txtYes.text = slot0._errorMsgInfo.yesStr or luaLang("confirm")
-		slot0._txtNo.text = slot0._errorMsgInfo.noStr or luaLang("cancel")
-		slot0._txtYesen.text = slot0._errorMsgInfo.yesStrEn or "CONFIRM"
-		slot0._txtNoen.text = slot0._errorMsgInfo.noStrEn or "CANCEL"
+	if arg_13_0._errorMsgInfo then
+		local var_13_0 = arg_13_0._errorMsgInfo.msg
+
+		arg_13_0._txtdesc.text = var_13_0
+
+		local var_13_1 = arg_13_0._errorMsgInfo.yesStr or luaLang("confirm")
+		local var_13_2 = arg_13_0._errorMsgInfo.noStr or luaLang("cancel")
+		local var_13_3 = arg_13_0._errorMsgInfo.yesStrEn or "CONFIRM"
+		local var_13_4 = arg_13_0._errorMsgInfo.noStrEn or "CANCEL"
+
+		arg_13_0._txtYes.text = var_13_1
+		arg_13_0._txtNo.text = var_13_2
+		arg_13_0._txtYesen.text = var_13_3
+		arg_13_0._txtNoen.text = var_13_4
 	end
 end
 
-function slot1._onDownladErrorMsg(slot0, slot1)
-	slot0._errorMsgInfo = slot1
+function var_0_1._onDownladErrorMsg(arg_14_0, arg_14_1)
+	arg_14_0._errorMsgInfo = arg_14_1
 
-	slot0:_showErrorUI()
+	arg_14_0:_showErrorUI()
 end
 
-return slot1
+return var_0_1

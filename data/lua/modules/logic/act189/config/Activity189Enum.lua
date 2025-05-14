@@ -1,12 +1,13 @@
-module("modules.logic.act189.config.Activity189Enum", package.seeall)
+﻿module("modules.logic.act189.config.Activity189Enum", package.seeall)
 
-slot0 = _M
-slot0.TaskTag = {
+local var_0_0 = _M
+
+var_0_0.TaskTag = {
 	jump = 1
 }
-slot0.Style = {
+var_0_0.Style = {
 	_28 = 2,
 	_35 = 1
 }
 
-return slot0
+return var_0_0

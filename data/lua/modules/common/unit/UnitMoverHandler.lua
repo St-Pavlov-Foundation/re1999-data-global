@@ -1,7 +1,7 @@
-module("modules.common.unit.UnitMoverHandler", package.seeall)
+﻿module("modules.common.unit.UnitMoverHandler", package.seeall)
 
-slot0 = class("UnitMoverHandler", LuaCompBase)
-slot1 = {
+local var_0_0 = class("UnitMoverHandler", LuaCompBase)
+local var_0_1 = {
 	UnitMoverEase,
 	UnitMoverParabola,
 	UnitMoverBezier,
@@ -10,34 +10,37 @@ slot1 = {
 	UnitMoverBezier3
 }
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
-	slot0._moverList = {}
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.go = arg_1_1
+	arg_1_0._moverList = {}
 
-	for slot5, slot6 in ipairs(uv0) do
-		if MonoHelper.getLuaComFromGo(slot0.go, slot6) then
-			table.insert(slot0._moverList, slot7)
+	for iter_1_0, iter_1_1 in ipairs(var_0_1) do
+		local var_1_0 = MonoHelper.getLuaComFromGo(arg_1_0.go, iter_1_1)
+
+		if var_1_0 then
+			table.insert(arg_1_0._moverList, var_1_0)
 		end
 	end
 end
 
-function slot0.addEventListeners(slot0)
-	for slot4, slot5 in ipairs(slot0._moverList) do
-		slot5:registerCallback(UnitMoveEvent.PosChanged, slot0._onPosChange, slot0)
+function var_0_0.addEventListeners(arg_2_0)
+	for iter_2_0, iter_2_1 in ipairs(arg_2_0._moverList) do
+		iter_2_1:registerCallback(UnitMoveEvent.PosChanged, arg_2_0._onPosChange, arg_2_0)
 	end
 end
 
-function slot0.removeEventListeners(slot0)
-	for slot4, slot5 in ipairs(slot0._moverList) do
-		slot5:unregisterCallback(UnitMoveEvent.PosChanged, slot0._onPosChange, slot0)
+function var_0_0.removeEventListeners(arg_3_0)
+	for iter_3_0, iter_3_1 in ipairs(arg_3_0._moverList) do
+		iter_3_1:unregisterCallback(UnitMoveEvent.PosChanged, arg_3_0._onPosChange, arg_3_0)
 	end
 end
 
-function slot0._onPosChange(slot0, slot1)
-	slot3, slot4, slot5 = transformhelper.getPos(CameraMgr.instance:getSceneTransform())
-	slot6, slot7, slot8 = slot1:getPos()
+function var_0_0._onPosChange(arg_4_0, arg_4_1)
+	local var_4_0 = CameraMgr.instance:getSceneTransform()
+	local var_4_1, var_4_2, var_4_3 = transformhelper.getPos(var_4_0)
+	local var_4_4, var_4_5, var_4_6 = arg_4_1:getPos()
 
-	transformhelper.setPos(slot0.go.transform, slot6 + slot3, slot7 + slot4, slot8 + slot5)
+	transformhelper.setPos(arg_4_0.go.transform, var_4_4 + var_4_1, var_4_5 + var_4_2, var_4_6 + var_4_3)
 end
 
-return slot0
+return var_0_0

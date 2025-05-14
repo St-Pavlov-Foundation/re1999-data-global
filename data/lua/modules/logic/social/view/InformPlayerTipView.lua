@@ -1,100 +1,103 @@
-module("modules.logic.social.view.InformPlayerTipView", package.seeall)
+﻿module("modules.logic.social.view.InformPlayerTipView", package.seeall)
 
-slot0 = class("InformPlayerTipView", BaseView)
+local var_0_0 = class("InformPlayerTipView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagerightbg = gohelper.findChildSingleImage(slot0.viewGO, "bg/#simage_rightbg")
-	slot0._simageleftbg = gohelper.findChildSingleImage(slot0.viewGO, "bg/#simage_leftbg")
-	slot0._txtinfotarget = gohelper.findChildText(slot0.viewGO, "inform/#txt_infotarget")
-	slot0._goinformContent = gohelper.findChild(slot0.viewGO, "scroll_inform/Viewport/#go_informContent")
-	slot0._goinformItem = gohelper.findChild(slot0.viewGO, "scroll_inform/Viewport/#go_informContent/#go_informItem")
-	slot0._inputinformReason = gohelper.findChildTextMeshInputField(slot0.viewGO, "informreason/#input_informReason")
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "btn/#btn_close")
-	slot0._btninform = gohelper.findChildButtonWithAudio(slot0.viewGO, "btn/#btn_inform")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagerightbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_rightbg")
+	arg_1_0._simageleftbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "bg/#simage_leftbg")
+	arg_1_0._txtinfotarget = gohelper.findChildText(arg_1_0.viewGO, "inform/#txt_infotarget")
+	arg_1_0._goinformContent = gohelper.findChild(arg_1_0.viewGO, "scroll_inform/Viewport/#go_informContent")
+	arg_1_0._goinformItem = gohelper.findChild(arg_1_0.viewGO, "scroll_inform/Viewport/#go_informContent/#go_informItem")
+	arg_1_0._inputinformReason = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "informreason/#input_informReason")
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btn/#btn_close")
+	arg_1_0._btninform = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btn/#btn_inform")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
-	slot0._btninform:AddClickListener(slot0._btninformOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+	arg_2_0._btninform:AddClickListener(arg_2_0._btninformOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
-	slot0._btninform:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
+	arg_3_0._btninform:RemoveClickListener()
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseOnClick(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0._btninformOnClick(slot0)
-	if slot0.informIng then
+function var_0_0._btninformOnClick(arg_5_0)
+	if arg_5_0.informIng then
 		return
 	end
 
-	if not ReportTypeListModel.instance:getSelectReportId() then
+	local var_5_0 = ReportTypeListModel.instance:getSelectReportId()
+
+	if not var_5_0 then
 		GameFacade.showToast(ToastEnum.ClickInformPlayer)
 
 		return
 	end
 
-	slot0.informIng = true
+	arg_5_0.informIng = true
 
-	ChatRpc.instance:sendReportRequest(slot0.socialPlayerMO.userId, slot1, slot0._inputinformReason:GetText())
+	ChatRpc.instance:sendReportRequest(arg_5_0.socialPlayerMO.userId, var_5_0, arg_5_0._inputinformReason:GetText())
 end
 
-function slot0._editableInitView(slot0)
-	slot0._simageleftbg:LoadImage(ResUrl.getCommonIcon("bg_1"))
-	slot0._simagerightbg:LoadImage(ResUrl.getCommonIcon("bg_2"))
-	slot0._inputinformReason:AddOnValueChanged(slot0.onReasonTextValueChanged, slot0)
+function var_0_0._editableInitView(arg_6_0)
+	arg_6_0._simageleftbg:LoadImage(ResUrl.getCommonIcon("bg_1"))
+	arg_6_0._simagerightbg:LoadImage(ResUrl.getCommonIcon("bg_2"))
+	arg_6_0._inputinformReason:AddOnValueChanged(arg_6_0.onReasonTextValueChanged, arg_6_0)
 end
 
-function slot0.onReasonTextValueChanged(slot0, slot1)
-	if CommonConfig.instance:getConstNum(ConstEnum.InformPlayerCharLen) < GameUtil.utf8len(slot1) then
+function var_0_0.onReasonTextValueChanged(arg_7_0, arg_7_1)
+	if GameUtil.utf8len(arg_7_1) > CommonConfig.instance:getConstNum(ConstEnum.InformPlayerCharLen) then
 		GameFacade.showToast(ToastEnum.InformPlayerCharLen)
-		slot0._inputinformReason:SetText(GameUtil.utf8sub(slot1, 1, CommonConfig.instance:getConstNum(ConstEnum.InformPlayerCharLen)))
+		arg_7_0._inputinformReason:SetText(GameUtil.utf8sub(arg_7_1, 1, CommonConfig.instance:getConstNum(ConstEnum.InformPlayerCharLen)))
 	end
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_8_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0.socialPlayerMO = slot0.viewParam
-	slot0._txtinfotarget.text = slot0.socialPlayerMO.name
+function var_0_0.onOpen(arg_9_0)
+	arg_9_0.socialPlayerMO = arg_9_0.viewParam
+	arg_9_0._txtinfotarget.text = arg_9_0.socialPlayerMO.name
 
-	slot0:refreshReportType()
-	slot0:addEventCb(SocialController.instance, SocialEvent.InformSuccessReply, slot0.onInformSuccess, slot0)
-	slot0:addEventCb(SocialController.instance, SocialEvent.InformFailReply, slot0.onInformFail, slot0)
+	arg_9_0:refreshReportType()
+	arg_9_0:addEventCb(SocialController.instance, SocialEvent.InformSuccessReply, arg_9_0.onInformSuccess, arg_9_0)
+	arg_9_0:addEventCb(SocialController.instance, SocialEvent.InformFailReply, arg_9_0.onInformFail, arg_9_0)
 end
 
-function slot0.refreshReportType(slot0)
+function var_0_0.refreshReportType(arg_10_0)
 	ReportTypeListModel.instance:refreshData()
 end
 
-function slot0.onInformSuccess(slot0)
+function var_0_0.onInformSuccess(arg_11_0)
 	GameFacade.showToast(ToastEnum.OnInformSuccess)
-	slot0:onInformFail()
+	arg_11_0:onInformFail()
 end
 
-function slot0.onInformFail(slot0)
-	slot0.informIng = false
+function var_0_0.onInformFail(arg_12_0)
+	arg_12_0.informIng = false
 
-	slot0:closeThis()
+	arg_12_0:closeThis()
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_13_0)
 	ReportTypeListModel.instance:clearSelectReportItem()
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simageleftbg:UnLoadImage()
-	slot0._simagerightbg:UnLoadImage()
-	slot0._inputinformReason:RemoveOnValueChanged()
+function var_0_0.onDestroyView(arg_14_0)
+	arg_14_0._simageleftbg:UnLoadImage()
+	arg_14_0._simagerightbg:UnLoadImage()
+	arg_14_0._inputinformReason:RemoveOnValueChanged()
 end
 
-return slot0
+return var_0_0

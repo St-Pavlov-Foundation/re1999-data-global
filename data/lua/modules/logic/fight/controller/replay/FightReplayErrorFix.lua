@@ -1,98 +1,98 @@
-module("modules.logic.fight.controller.replay.FightReplayErrorFix", package.seeall)
+﻿module("modules.logic.fight.controller.replay.FightReplayErrorFix", package.seeall)
 
-slot0 = class("FightReplayErrorFix")
-slot1 = 2
+local var_0_0 = class("FightReplayErrorFix")
+local var_0_1 = 2
 
-function slot0.ctor(slot0)
-	slot0._hasStartErrorCheck = false
-	slot0._lostConnect = false
-	slot0._startTime = Time.time
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._hasStartErrorCheck = false
+	arg_1_0._lostConnect = false
+	arg_1_0._startTime = Time.time
 end
 
-function slot0.addConstEvents(slot0)
-	FightController.instance:registerCallback(FightEvent.StartReplay, slot0._startReplay, slot0)
-	FightController.instance:registerCallback(FightEvent.PushEndFight, slot0._stopReplay, slot0)
-	ConnectAliveMgr.instance:registerCallback(ConnectEvent.OnLostConnect, slot0._onLostConnect, slot0)
-	ConnectAliveMgr.instance:registerCallback(ConnectEvent.OnReconnectSucc, slot0._onReconnectSucc, slot0)
-	ConnectAliveMgr.instance:registerCallback(ConnectEvent.OnServerKickedOut, slot0._onServerKickedOut, slot0)
+function var_0_0.addConstEvents(arg_2_0)
+	FightController.instance:registerCallback(FightEvent.StartReplay, arg_2_0._startReplay, arg_2_0)
+	FightController.instance:registerCallback(FightEvent.PushEndFight, arg_2_0._stopReplay, arg_2_0)
+	ConnectAliveMgr.instance:registerCallback(ConnectEvent.OnLostConnect, arg_2_0._onLostConnect, arg_2_0)
+	ConnectAliveMgr.instance:registerCallback(ConnectEvent.OnReconnectSucc, arg_2_0._onReconnectSucc, arg_2_0)
+	ConnectAliveMgr.instance:registerCallback(ConnectEvent.OnServerKickedOut, arg_2_0._onServerKickedOut, arg_2_0)
 end
 
-function slot0.reInit(slot0)
-	slot0:_stopReplay()
+function var_0_0.reInit(arg_3_0)
+	arg_3_0:_stopReplay()
 end
 
-function slot0._startReplay(slot0)
-	slot0._lostConnect = false
-	slot0._hasStartErrorCheck = true
-	slot0._startTime = Time.time
-	slot4 = 1
+function var_0_0._startReplay(arg_4_0)
+	arg_4_0._lostConnect = false
+	arg_4_0._hasStartErrorCheck = true
+	arg_4_0._startTime = Time.time
 
-	TaskDispatcher.runRepeat(slot0._onSecond, slot0, slot4)
+	TaskDispatcher.runRepeat(arg_4_0._onSecond, arg_4_0, 1)
 
-	slot0._callbackDict = {}
+	arg_4_0._callbackDict = {}
 
-	for slot4, slot5 in pairs(FightEvent) do
-		function slot6()
-			uv0._startTime = Time.time
-			slot0 = "nil"
+	for iter_4_0, iter_4_1 in pairs(FightEvent) do
+		local function var_4_0()
+			arg_4_0._startTime = Time.time
 
-			for slot4, slot5 in pairs(FightEvent) do
-				if slot5 == uv1 then
-					slot0 = slot4
+			local var_5_0 = "nil"
+
+			for iter_5_0, iter_5_1 in pairs(FightEvent) do
+				if iter_5_1 == iter_4_1 then
+					local var_5_1 = iter_5_0
 				end
 			end
 		end
 
-		slot0._callbackDict[slot5] = slot6
+		arg_4_0._callbackDict[iter_4_1] = var_4_0
 
-		FightController.instance:registerCallback(slot5, slot6, nil)
+		FightController.instance:registerCallback(iter_4_1, var_4_0, nil)
 	end
 
-	GameStateMgr.instance:registerCallback(GameStateEvent.onApplicationPause, slot0._onApplicationPause, slot0)
+	GameStateMgr.instance:registerCallback(GameStateEvent.onApplicationPause, arg_4_0._onApplicationPause, arg_4_0)
 end
 
-function slot0._onApplicationPause(slot0)
-	slot0._startTime = Time.time
+function var_0_0._onApplicationPause(arg_6_0)
+	arg_6_0._startTime = Time.time
 end
 
-function slot0._onLostConnect(slot0)
-	slot0._lostConnect = true
+function var_0_0._onLostConnect(arg_7_0)
+	arg_7_0._lostConnect = true
 end
 
-function slot0._onReconnectSucc(slot0)
-	slot0._startTime = Time.time
-	slot0._lostConnect = false
+function var_0_0._onReconnectSucc(arg_8_0)
+	arg_8_0._startTime = Time.time
+	arg_8_0._lostConnect = false
 end
 
-function slot0._onServerKickedOut(slot0)
-	slot0:_stopReplay()
+function var_0_0._onServerKickedOut(arg_9_0)
+	arg_9_0:_stopReplay()
 end
 
-function slot0._stopReplay(slot0)
-	if slot0._hasStartErrorCheck then
-		slot0._hasStartErrorCheck = false
+function var_0_0._stopReplay(arg_10_0)
+	if arg_10_0._hasStartErrorCheck then
+		arg_10_0._hasStartErrorCheck = false
 
-		TaskDispatcher.cancelTask(slot0._onSecond, slot0)
-		slot0:_clearEvtCbs()
+		TaskDispatcher.cancelTask(arg_10_0._onSecond, arg_10_0)
+		arg_10_0:_clearEvtCbs()
 	end
 
-	slot0._hasLog = nil
+	arg_10_0._hasLog = nil
 end
 
-function slot0._clearEvtCbs(slot0)
-	if slot0._callbackDict then
-		for slot4, slot5 in pairs(slot0._callbackDict) do
-			FightController.instance:unregisterCallback(slot4, slot5, nil)
+function var_0_0._clearEvtCbs(arg_11_0)
+	if arg_11_0._callbackDict then
+		for iter_11_0, iter_11_1 in pairs(arg_11_0._callbackDict) do
+			FightController.instance:unregisterCallback(iter_11_0, iter_11_1, nil)
 		end
 
-		slot0._callbackDict = nil
+		arg_11_0._callbackDict = nil
 	end
 
-	GameStateMgr.instance:unregisterCallback(GameStateEvent.onApplicationPause, slot0._onApplicationPause, slot0)
+	GameStateMgr.instance:unregisterCallback(GameStateEvent.onApplicationPause, arg_11_0._onApplicationPause, arg_11_0)
 end
 
-function slot0._onSecond(slot0)
-	if slot0._lostConnect then
+function var_0_0._onSecond(arg_12_0)
+	if arg_12_0._lostConnect then
 		return
 	end
 
@@ -100,31 +100,32 @@ function slot0._onSecond(slot0)
 		return
 	end
 
-	if uv0 < Time.time - slot0._startTime then
-		slot0:_fixErrorState()
+	if Time.time - arg_12_0._startTime > var_0_1 then
+		arg_12_0:_fixErrorState()
 	end
 end
 
-function slot0._fixErrorState(slot0)
-	slot2 = FightSystem.instance:getRoundSequence()
-	slot3 = FightSystem.instance:getClothSkillSequence()
-	slot4 = FightSystem.instance:getEndSequence()
-	slot5 = FightModel.instance:getCurStage()
+function var_0_0._fixErrorState(arg_13_0)
+	local var_13_0 = FightSystem.instance:getStartSequence()
+	local var_13_1 = FightSystem.instance:getRoundSequence()
+	local var_13_2 = FightSystem.instance:getClothSkillSequence()
+	local var_13_3 = FightSystem.instance:getEndSequence()
+	local var_13_4 = FightModel.instance:getCurStage()
 
-	if FightSystem.instance:getStartSequence():isRunning() then
-		slot0:_log("行为复现出错，起始回合卡住")
-		slot1:doneRunningWork()
-	elseif slot2:isRunning() then
-		slot0:_log("行为复现出错，回合卡住")
-		slot2:doneRunningWork()
-	elseif slot3:isRunning() then
-		slot0:_log("行为复现出错，主角技能卡住")
-		slot3:doneRunningWork()
-	elseif slot4:isRunning() then
-		slot0:_log("行为复现出错，结算卡住")
-		slot4:doneRunningWork()
-	elseif slot5 == FightEnum.Stage.Card or slot5 == FightEnum.Stage.AutoCard then
-		slot0:_log("行为复现出错，出牌阶段卡住")
+	if var_13_0:isRunning() then
+		arg_13_0:_log("行为复现出错，起始回合卡住")
+		var_13_0:doneRunningWork()
+	elseif var_13_1:isRunning() then
+		arg_13_0:_log("行为复现出错，回合卡住")
+		var_13_1:doneRunningWork()
+	elseif var_13_2:isRunning() then
+		arg_13_0:_log("行为复现出错，主角技能卡住")
+		var_13_2:doneRunningWork()
+	elseif var_13_3:isRunning() then
+		arg_13_0:_log("行为复现出错，结算卡住")
+		var_13_3:doneRunningWork()
+	elseif var_13_4 == FightEnum.Stage.Card or var_13_4 == FightEnum.Stage.AutoCard then
+		arg_13_0:_log("行为复现出错，出牌阶段卡住")
 		FightCardModel.instance:setDissolving(false)
 		FightCardModel.instance:setChanging(false)
 		FightReplayController.instance:doneCardStage()
@@ -132,17 +133,20 @@ function slot0._fixErrorState(slot0)
 	end
 end
 
-function slot0._log(slot0, slot1)
-	if not slot0._hasLog then
-		slot0._hasLog = true
-		slot4 = slot2 and slot2.battleId
+function var_0_0._log(arg_14_0, arg_14_1)
+	if not arg_14_0._hasLog then
+		arg_14_0._hasLog = true
 
-		if FightModel.instance:getFightParam() and slot2.episodeId then
-			logError(slot1 .. " episode_" .. slot3)
+		local var_14_0 = FightModel.instance:getFightParam()
+		local var_14_1 = var_14_0 and var_14_0.episodeId
+		local var_14_2 = var_14_0 and var_14_0.battleId
+
+		if var_14_1 then
+			logError(arg_14_1 .. " episode_" .. var_14_1)
 		else
-			logError(slot1 .. " battle_" .. (slot4 or "nil"))
+			logError(arg_14_1 .. " battle_" .. (var_14_2 or "nil"))
 		end
 	end
 end
 
-return slot0
+return var_0_0

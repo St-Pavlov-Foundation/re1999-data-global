@@ -1,36 +1,38 @@
-module("modules.logic.versionactivity1_6.act152.rpc.Activity152Rpc", package.seeall)
+﻿module("modules.logic.versionactivity1_6.act152.rpc.Activity152Rpc", package.seeall)
 
-slot0 = class("Activity152Rpc", BaseRpc)
+local var_0_0 = class("Activity152Rpc", BaseRpc)
 
-function slot0.sendGet152InfoRequest(slot0, slot1)
-	slot2 = Activity152Module_pb.Get152InfoRequest()
-	slot2.activityId = slot1
+function var_0_0.sendGet152InfoRequest(arg_1_0, arg_1_1)
+	local var_1_0 = Activity152Module_pb.Get152InfoRequest()
 
-	slot0:sendMsg(slot2)
+	var_1_0.activityId = arg_1_1
+
+	arg_1_0:sendMsg(var_1_0)
 end
 
-function slot0.onReceiveGet152InfoReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveGet152InfoReply(arg_2_0, arg_2_1, arg_2_2)
+	if arg_2_1 ~= 0 then
 		return
 	end
 
-	Activity152Model.instance:setActivity152Infos(slot2.presentIds)
+	Activity152Model.instance:setActivity152Infos(arg_2_2.presentIds)
 end
 
-function slot0.sendAct152AcceptPresentRequest(slot0, slot1, slot2, slot3, slot4)
-	slot5 = Activity152Module_pb.Act152AcceptPresentRequest()
-	slot5.activityId = slot1
-	slot5.presentId = slot2
+function var_0_0.sendAct152AcceptPresentRequest(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
+	local var_3_0 = Activity152Module_pb.Act152AcceptPresentRequest()
 
-	slot0:sendMsg(slot5, slot3, slot4)
+	var_3_0.activityId = arg_3_1
+	var_3_0.presentId = arg_3_2
+
+	arg_3_0:sendMsg(var_3_0, arg_3_3, arg_3_4)
 end
 
-function slot0.onReceiveAct152AcceptPresentReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveAct152AcceptPresentReply(arg_4_0, arg_4_1, arg_4_2)
+	if arg_4_1 ~= 0 then
 		return
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

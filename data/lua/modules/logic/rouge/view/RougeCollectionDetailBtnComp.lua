@@ -1,47 +1,52 @@
-module("modules.logic.rouge.view.RougeCollectionDetailBtnComp", package.seeall)
+﻿module("modules.logic.rouge.view.RougeCollectionDetailBtnComp", package.seeall)
 
-slot0 = class("RougeCollectionDetailBtnComp", BaseView)
+local var_0_0 = class("RougeCollectionDetailBtnComp", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._btndetails = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_details")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btndetails = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_details")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btndetails:AddClickListener(slot0._btndetailsOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btndetails:AddClickListener(arg_2_0._btndetailsOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btndetails:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btndetails:RemoveClickListener()
 end
 
-function slot0._btndetailsOnClick(slot0)
+function var_0_0._btndetailsOnClick(arg_4_0)
 	RougeCollectionModel.instance:switchCollectionInfoType()
 end
 
-function slot0._editableInitView(slot0)
-	slot0:addEventCb(RougeController.instance, RougeEvent.SwitchCollectionInfoType, slot0._onSwitchCollectionInfoType, slot0)
+function var_0_0._editableInitView(arg_5_0)
+	arg_5_0:addEventCb(RougeController.instance, RougeEvent.SwitchCollectionInfoType, arg_5_0._onSwitchCollectionInfoType, arg_5_0)
 end
 
-function slot0.onOpen(slot0)
-	slot0:refreshDetailBtnUI()
+function var_0_0.onOpen(arg_6_0)
+	arg_6_0:refreshDetailBtnUI()
 end
 
-function slot0.refreshDetailBtnUI(slot0)
-	gohelper.setActive(gohelper.findChild(slot0._btndetails.gameObject, "circle/select"), RougeCollectionModel.instance:getCurCollectionInfoType() == RougeEnum.CollectionInfoType.Complex)
+function var_0_0.refreshDetailBtnUI(arg_7_0)
+	local var_7_0 = RougeCollectionModel.instance:getCurCollectionInfoType()
+	local var_7_1 = gohelper.findChild(arg_7_0._btndetails.gameObject, "circle/select")
+
+	gohelper.setActive(var_7_1, var_7_0 == RougeEnum.CollectionInfoType.Complex)
 end
 
-function slot0._onSwitchCollectionInfoType(slot0)
-	slot0:refreshDetailBtnUI()
+function var_0_0._onSwitchCollectionInfoType(arg_8_0)
+	arg_8_0:refreshDetailBtnUI()
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_9_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_10_0)
+	return
 end
 
-return slot0
+return var_0_0

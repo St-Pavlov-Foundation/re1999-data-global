@@ -1,124 +1,127 @@
-module("modules.logic.characterskin.view.CharacterSkinTipView", package.seeall)
+﻿module("modules.logic.characterskin.view.CharacterSkinTipView", package.seeall)
 
-slot0 = class("CharacterSkinTipView", BaseView)
+local var_0_0 = class("CharacterSkinTipView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_bg")
-	slot0._gosmallspine = gohelper.findChild(slot0.viewGO, "smalldynamiccontainer/#go_smallspine")
-	slot0._goskincontainer = gohelper.findChild(slot0.viewGO, "characterSpine/#go_skincontainer")
-	slot0._simageskin = gohelper.findChildSingleImage(slot0.viewGO, "characterSpine/#go_skincontainer/#simage_skin")
-	slot0._simagebgmask = gohelper.findChildSingleImage(slot0.viewGO, "#simage_bgmask")
-	slot0._gogetIcon = gohelper.findChild(slot0.viewGO, "desc/#go_getIcon")
-	slot0._simagesignature = gohelper.findChildSingleImage(slot0.viewGO, "desc/#simage_signature")
-	slot0._simagesignatureicon = gohelper.findChildSingleImage(slot0.viewGO, "desc/#simage_signatureicon")
-	slot0._txtcharacterName = gohelper.findChildText(slot0.viewGO, "desc/#txt_characterName")
-	slot0._btnshowDetail = gohelper.findChildButtonWithAudio(slot0.viewGO, "desc/#txt_characterName/#btn_showDetail")
-	slot0._txtskinName = gohelper.findChildText(slot0.viewGO, "desc/#txt_skinName")
-	slot0._txtskinNameEn = gohelper.findChildText(slot0.viewGO, "desc/#txt_skinName/#txt_skinNameEn")
-	slot0._txtdesc = gohelper.findChildText(slot0.viewGO, "desc/#txt_desc")
-	slot0._simageskinSwitchBg = gohelper.findChildSingleImage(slot0.viewGO, "container/#simage_skinSwitchBg")
-	slot0._simageskinicon = gohelper.findChildSingleImage(slot0.viewGO, "container/skinSwitch/skinmask/skinicon")
-	slot0._gobtntopleft = gohelper.findChild(slot0.viewGO, "#go_btntopleft")
-	slot0._viewAnim = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
+	arg_1_0._gosmallspine = gohelper.findChild(arg_1_0.viewGO, "smalldynamiccontainer/#go_smallspine")
+	arg_1_0._goskincontainer = gohelper.findChild(arg_1_0.viewGO, "characterSpine/#go_skincontainer")
+	arg_1_0._simageskin = gohelper.findChildSingleImage(arg_1_0.viewGO, "characterSpine/#go_skincontainer/#simage_skin")
+	arg_1_0._simagebgmask = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bgmask")
+	arg_1_0._gogetIcon = gohelper.findChild(arg_1_0.viewGO, "desc/#go_getIcon")
+	arg_1_0._simagesignature = gohelper.findChildSingleImage(arg_1_0.viewGO, "desc/#simage_signature")
+	arg_1_0._simagesignatureicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "desc/#simage_signatureicon")
+	arg_1_0._txtcharacterName = gohelper.findChildText(arg_1_0.viewGO, "desc/#txt_characterName")
+	arg_1_0._btnshowDetail = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "desc/#txt_characterName/#btn_showDetail")
+	arg_1_0._txtskinName = gohelper.findChildText(arg_1_0.viewGO, "desc/#txt_skinName")
+	arg_1_0._txtskinNameEn = gohelper.findChildText(arg_1_0.viewGO, "desc/#txt_skinName/#txt_skinNameEn")
+	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "desc/#txt_desc")
+	arg_1_0._simageskinSwitchBg = gohelper.findChildSingleImage(arg_1_0.viewGO, "container/#simage_skinSwitchBg")
+	arg_1_0._simageskinicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "container/skinSwitch/skinmask/skinicon")
+	arg_1_0._gobtntopleft = gohelper.findChild(arg_1_0.viewGO, "#go_btntopleft")
+	arg_1_0._viewAnim = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnshowDetail:AddClickListener(slot0._btnshowDetailOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnshowDetail:AddClickListener(arg_2_0._btnshowDetailOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnshowDetail:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnshowDetail:RemoveClickListener()
 end
 
-function slot0._btnshowDetailOnClick(slot0)
-	CharacterController.instance:openCharacterSkinFullScreenView(slot0._skinCo)
+function var_0_0._btnshowDetailOnClick(arg_4_0)
+	CharacterController.instance:openCharacterSkinFullScreenView(arg_4_0._skinCo)
 end
 
-function slot0._editableInitView(slot0)
-	slot0._preDragAnchorPositionX = 0
-	slot0._currentSelectSkinIndex = 0
-	slot0._preSelectSkinIndex = 0
-	slot0._minAnchorPositionX = 0
-	slot0._minChangeAnchorPositionX = 10
+function var_0_0._editableInitView(arg_5_0)
+	arg_5_0._preDragAnchorPositionX = 0
+	arg_5_0._currentSelectSkinIndex = 0
+	arg_5_0._preSelectSkinIndex = 0
+	arg_5_0._minAnchorPositionX = 0
+	arg_5_0._minChangeAnchorPositionX = 10
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0:refreshView()
+function var_0_0.onUpdateParam(arg_6_0)
+	arg_6_0:refreshView()
 end
 
-function slot0.onOpen(slot0)
-	slot0._goSpine = GuiSpine.Create(slot0._gosmallspine, false)
+function var_0_0.onOpen(arg_7_0)
+	arg_7_0._goSpine = GuiSpine.Create(arg_7_0._gosmallspine, false)
 
-	slot0._simagebg:LoadImage(ResUrl.getCharacterSkinIcon("full/pifubeijing_012"))
-	slot0._simagebgmask:LoadImage(ResUrl.getCharacterSkinIcon("mask"))
-	slot0._simageskinSwitchBg:LoadImage(ResUrl.getCharacterSkinIcon("img_yulan_bg"))
-	slot0:refreshView()
+	arg_7_0._simagebg:LoadImage(ResUrl.getCharacterSkinIcon("full/pifubeijing_012"))
+	arg_7_0._simagebgmask:LoadImage(ResUrl.getCharacterSkinIcon("mask"))
+	arg_7_0._simageskinSwitchBg:LoadImage(ResUrl.getCharacterSkinIcon("img_yulan_bg"))
+	arg_7_0:refreshView()
 end
 
-function slot0.onOpenFinish(slot0)
-	slot0._viewAnim.enabled = true
+function var_0_0.onOpenFinish(arg_8_0)
+	arg_8_0._viewAnim.enabled = true
 end
 
-function slot0.refreshView(slot0)
-	slot0._skinCo = SkinConfig.instance:getSkinCo(slot0.viewParam)
-	slot0._heroCo = HeroConfig.instance:getHeroCO(slot0._skinCo.characterId)
+function var_0_0.refreshView(arg_9_0)
+	arg_9_0._skinCo = SkinConfig.instance:getSkinCo(arg_9_0.viewParam)
+	arg_9_0._heroCo = HeroConfig.instance:getHeroCO(arg_9_0._skinCo.characterId)
 
-	slot0._simagesignature:LoadImage(ResUrl.getSignature(slot0._heroCo.signature, "characterget"))
-	slot0._simagesignatureicon:LoadImage(ResUrl.getSignature("3011_2", "characterget"))
-	slot0._simageskinicon:LoadImage(ResUrl.getHeadSkinSmall(slot0.viewParam))
-	slot0._simageskin:LoadImage(ResUrl.getHeadIconImg(slot0.viewParam), slot0._loadedImage, slot0)
+	arg_9_0._simagesignature:LoadImage(ResUrl.getSignature(arg_9_0._heroCo.signature, "characterget"))
+	arg_9_0._simagesignatureicon:LoadImage(ResUrl.getSignature("3011_2", "characterget"))
+	arg_9_0._simageskinicon:LoadImage(ResUrl.getHeadSkinSmall(arg_9_0.viewParam))
+	arg_9_0._simageskin:LoadImage(ResUrl.getHeadIconImg(arg_9_0.viewParam), arg_9_0._loadedImage, arg_9_0)
 
-	slot0._txtcharacterName.text = slot0._heroCo.name
-	slot0._txtskinName.text = slot0.skinCo.characterSkin
-	slot0._txtskinNameEn.text = slot0._skinCo.characterSkinNameEng
-	slot0._txtdesc.text = slot0._skinCo.skinDescription
+	arg_9_0._txtcharacterName.text = arg_9_0._heroCo.name
+	arg_9_0._txtskinName.text = arg_9_0.skinCo.characterSkin
+	arg_9_0._txtskinNameEn.text = arg_9_0._skinCo.characterSkinNameEng
+	arg_9_0._txtdesc.text = arg_9_0._skinCo.skinDescription
 
-	slot0._goSpine:stopVoice()
-	slot0._goSpine:setResPath(ResUrl.getSpineUIPrefab(slot0._skinCo.spine), slot0._onSpineLoaded, slot0, true)
+	arg_9_0._goSpine:stopVoice()
+	arg_9_0._goSpine:setResPath(ResUrl.getSpineUIPrefab(arg_9_0._skinCo.spine), arg_9_0._onSpineLoaded, arg_9_0, true)
 
-	slot1 = SkinConfig.instance:getSkinOffset(slot0._skinCo.skinSpineOffset)
+	local var_9_0 = SkinConfig.instance:getSkinOffset(arg_9_0._skinCo.skinSpineOffset)
 
-	recthelper.setAnchor(slot0._gosmallspine.transform, tonumber(slot1[1]), tonumber(slot1[2]))
-	transformhelper.setLocalScale(slot0._gosmallspine.transform, tonumber(slot1[3]), tonumber(slot1[3]), tonumber(slot1[3]))
-	gohelper.setActive(slot0._simagesignatureicon.gameObject, slot0._heroCo.signature == "3011")
+	recthelper.setAnchor(arg_9_0._gosmallspine.transform, tonumber(var_9_0[1]), tonumber(var_9_0[2]))
+	transformhelper.setLocalScale(arg_9_0._gosmallspine.transform, tonumber(var_9_0[3]), tonumber(var_9_0[3]), tonumber(var_9_0[3]))
+	gohelper.setActive(arg_9_0._simagesignatureicon.gameObject, arg_9_0._heroCo.signature == "3011")
 end
 
-function slot0._loadedImage(slot0)
-	gohelper.onceAddComponent(slot0._simageskin.gameObject, gohelper.Type_Image):SetNativeSize()
+function var_0_0._loadedImage(arg_10_0)
+	gohelper.onceAddComponent(arg_10_0._simageskin.gameObject, gohelper.Type_Image):SetNativeSize()
 
-	if not string.nilorempty(slot0._skinCo.skinViewImgOffset) then
-		slot2 = string.splitToNumber(slot1, "#")
+	local var_10_0 = arg_10_0._skinCo.skinViewImgOffset
 
-		recthelper.setAnchor(slot0._goskincontainer.transform, tonumber(slot2[1]), tonumber(slot2[2]))
-		transformhelper.setLocalScale(slot0._goskincontainer.transform, tonumber(slot2[3]), tonumber(slot2[3]), tonumber(slot2[3]))
+	if not string.nilorempty(var_10_0) then
+		local var_10_1 = string.splitToNumber(var_10_0, "#")
+
+		recthelper.setAnchor(arg_10_0._goskincontainer.transform, tonumber(var_10_1[1]), tonumber(var_10_1[2]))
+		transformhelper.setLocalScale(arg_10_0._goskincontainer.transform, tonumber(var_10_1[3]), tonumber(var_10_1[3]), tonumber(var_10_1[3]))
 	else
-		recthelper.setAnchor(slot0._goskincontainer.transform, -150, -150)
-		transformhelper.setLocalScale(slot0._goskincontainer.transform, 0.6, 0.6, 0.6)
+		recthelper.setAnchor(arg_10_0._goskincontainer.transform, -150, -150)
+		transformhelper.setLocalScale(arg_10_0._goskincontainer.transform, 0.6, 0.6, 0.6)
 	end
 end
 
-function slot0._onSpineLoaded(slot0)
+function var_0_0._onSpineLoaded(arg_11_0)
+	return
 end
 
-function slot0.onClose(slot0)
-	slot0._simageskin:UnLoadImage()
-	slot0._simagesignature:UnLoadImage()
-	slot0._simagesignatureicon:UnLoadImage()
+function var_0_0.onClose(arg_12_0)
+	arg_12_0._simageskin:UnLoadImage()
+	arg_12_0._simagesignature:UnLoadImage()
+	arg_12_0._simagesignatureicon:UnLoadImage()
 end
 
-function slot0.onDestroyView(slot0)
-	if slot0._goSpine then
-		slot0._goSpine:stopVoice()
+function var_0_0.onDestroyView(arg_13_0)
+	if arg_13_0._goSpine then
+		arg_13_0._goSpine:stopVoice()
 
-		slot0._goSpine = nil
+		arg_13_0._goSpine = nil
 	end
 
-	slot0._simagebg:UnLoadImage()
-	slot0._simageskinSwitchBg:UnLoadImage()
+	arg_13_0._simagebg:UnLoadImage()
+	arg_13_0._simageskinSwitchBg:UnLoadImage()
 end
 
-return slot0
+return var_0_0

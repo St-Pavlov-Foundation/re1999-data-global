@@ -1,177 +1,195 @@
-module("modules.logic.store.view.recommend.GiftrecommendViewBase", package.seeall)
+﻿module("modules.logic.store.view.recommend.GiftrecommendViewBase", package.seeall)
 
-slot0 = class("GiftrecommendViewBase", StoreRecommendBaseSubView)
+local var_0_0 = class("GiftrecommendViewBase", StoreRecommendBaseSubView)
 
-function slot0.onInitView(slot0)
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "view/#simage_bg")
-	slot0._txtduration = gohelper.findChildText(slot0.viewGO, "view/txt_tips/#txt_duration")
-	slot0._txtprice1 = gohelper.findChildText(slot0.viewGO, "view/left/#txt_price1")
-	slot0._btnbuy1 = gohelper.findChildButtonWithAudio(slot0.viewGO, "view/left/#btn_buy1")
-	slot0._txtprice2 = gohelper.findChildText(slot0.viewGO, "view/middle/#txt_price2")
-	slot0._btnbuy2 = gohelper.findChildButtonWithAudio(slot0.viewGO, "view/middle/#btn_buy2")
-	slot0._txtprice3 = gohelper.findChildText(slot0.viewGO, "view/right/#txt_price3")
-	slot0._btnbuy3 = gohelper.findChildButtonWithAudio(slot0.viewGO, "view/right/#btn_buy3")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "view/#simage_bg")
+	arg_1_0._txtduration = gohelper.findChildText(arg_1_0.viewGO, "view/txt_tips/#txt_duration")
+	arg_1_0._txtprice1 = gohelper.findChildText(arg_1_0.viewGO, "view/left/#txt_price1")
+	arg_1_0._btnbuy1 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "view/left/#btn_buy1")
+	arg_1_0._txtprice2 = gohelper.findChildText(arg_1_0.viewGO, "view/middle/#txt_price2")
+	arg_1_0._btnbuy2 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "view/middle/#btn_buy2")
+	arg_1_0._txtprice3 = gohelper.findChildText(arg_1_0.viewGO, "view/right/#txt_price3")
+	arg_1_0._btnbuy3 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "view/right/#btn_buy3")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnbuy1:AddClickListener(slot0._btnbuy1OnClick, slot0)
-	slot0._btnbuy2:AddClickListener(slot0._btnbuy2OnClick, slot0)
-	slot0._btnbuy3:AddClickListener(slot0._btnbuy3OnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnbuy1:AddClickListener(arg_2_0._btnbuy1OnClick, arg_2_0)
+	arg_2_0._btnbuy2:AddClickListener(arg_2_0._btnbuy2OnClick, arg_2_0)
+	arg_2_0._btnbuy3:AddClickListener(arg_2_0._btnbuy3OnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnbuy1:RemoveClickListener()
-	slot0._btnbuy2:RemoveClickListener()
-	slot0._btnbuy3:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnbuy1:RemoveClickListener()
+	arg_3_0._btnbuy2:RemoveClickListener()
+	arg_3_0._btnbuy3:RemoveClickListener()
 end
 
-function slot0._btnbuy1OnClick(slot0)
-	if slot0._isBought1 then
+function var_0_0._btnbuy1OnClick(arg_4_0)
+	if arg_4_0._isBought1 then
 		GameFacade.showToast(ToastEnum.ActivityNoRemainBuyCount)
 
 		return
 	end
 
-	if slot0._systemJumpCode1 then
-		slot0:statClick()
+	if arg_4_0._systemJumpCode1 then
+		arg_4_0:statClick()
 
-		if StoreConfig.instance:getChargeGoodsConfig(string.splitToNumber(slot0._systemJumpCode1, "#")[2]) and slot2.type == StoreEnum.StoreChargeType.Optional then
-			module_views_preloader.OptionalChargeView(function ()
-				GameFacade.jumpByAdditionParam(uv0._systemJumpCode1)
+		local var_4_0 = string.splitToNumber(arg_4_0._systemJumpCode1, "#")[2]
+		local var_4_1 = StoreConfig.instance:getChargeGoodsConfig(var_4_0)
+
+		if var_4_1 and var_4_1.type == StoreEnum.StoreChargeType.Optional then
+			module_views_preloader.OptionalChargeView(function()
+				GameFacade.jumpByAdditionParam(arg_4_0._systemJumpCode1)
 			end)
 		else
-			GameFacade.jumpByAdditionParam(slot0._systemJumpCode1)
+			GameFacade.jumpByAdditionParam(arg_4_0._systemJumpCode1)
 		end
 	end
 end
 
-function slot0._btnbuy2OnClick(slot0)
-	if slot0._isBought2 then
+function var_0_0._btnbuy2OnClick(arg_6_0)
+	if arg_6_0._isBought2 then
 		GameFacade.showToast(ToastEnum.ActivityNoRemainBuyCount)
 
 		return
 	end
 
-	if slot0._systemJumpCode2 then
-		slot0:statClick()
-		GameFacade.jumpByAdditionParam(slot0._systemJumpCode2)
+	if arg_6_0._systemJumpCode2 then
+		arg_6_0:statClick()
+		GameFacade.jumpByAdditionParam(arg_6_0._systemJumpCode2)
 	end
 end
 
-function slot0._btnbuy3OnClick(slot0)
-	if slot0._isBought3 then
+function var_0_0._btnbuy3OnClick(arg_7_0)
+	if arg_7_0._isBought3 then
 		GameFacade.showToast(ToastEnum.ActivityNoRemainBuyCount)
 
 		return
 	end
 
-	if slot0._systemJumpCode3 then
-		slot0:statClick()
-		GameFacade.jumpByAdditionParam(slot0._systemJumpCode3)
+	if arg_7_0._systemJumpCode3 then
+		arg_7_0:statClick()
+		GameFacade.jumpByAdditionParam(arg_7_0._systemJumpCode3)
 	end
 end
 
-function slot0.statClick(slot0)
+function var_0_0.statClick(arg_8_0)
 	StatController.instance:track(StatEnum.EventName.ClickRecommendPage, {
 		[StatEnum.EventProperties.RecommendPageType] = StatEnum.RecommendType.Store,
-		[StatEnum.EventProperties.RecommendPageId] = tostring(slot0.config and slot0.config.id or ""),
-		[StatEnum.EventProperties.RecommendPageName] = slot0.config and slot0.config.name or slot0.__cname
+		[StatEnum.EventProperties.RecommendPageId] = tostring(arg_8_0.config and arg_8_0.config.id or ""),
+		[StatEnum.EventProperties.RecommendPageName] = arg_8_0.config and arg_8_0.config.name or arg_8_0.__cname
 	})
 end
 
-function slot0._getCostSymbolAndPrice(slot0, slot1)
-	if not slot1 or slot1 == "" then
+function var_0_0._getCostSymbolAndPrice(arg_9_0, arg_9_1)
+	if not arg_9_1 or arg_9_1 == "" then
 		return
 	end
 
-	if type(string.splitToNumber(slot1, "#")) ~= "table" and #slot2 < 2 then
+	local var_9_0 = string.splitToNumber(arg_9_1, "#")
+
+	if type(var_9_0) ~= "table" and #var_9_0 < 2 then
 		return
 	end
 
-	return PayModel.instance:getProductPrice(slot2[2]), ""
+	local var_9_1 = var_9_0[2]
+
+	return PayModel.instance:getProductPrice(var_9_1), ""
 end
 
-function slot0._getIsBought(slot0, slot1)
-	if not slot1 then
+function var_0_0._getIsBought(arg_10_0, arg_10_1)
+	if not arg_10_1 then
 		return false
 	end
 
-	slot3 = slot1[2]
+	local var_10_0 = arg_10_1[1]
+	local var_10_1 = arg_10_1[2]
 
-	if not slot1[1] or not slot3 then
+	if not var_10_0 or not var_10_1 then
 		return false
 	end
 
-	if StoreModel.instance:getGoodsMO(slot3) == nil or slot4:isSoldOut() then
+	local var_10_2 = StoreModel.instance:getGoodsMO(var_10_1)
+
+	if var_10_2 == nil or var_10_2:isSoldOut() then
 		return true
 	end
 
 	return false
 end
 
-function slot0._editableInitView(slot0)
-	slot0._animator = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	slot0._animatorPlayer = SLFramework.AnimatorPlayer.Get(slot0.viewGO)
+function var_0_0._editableInitView(arg_11_0)
+	arg_11_0._animator = arg_11_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	arg_11_0._animatorPlayer = SLFramework.AnimatorPlayer.Get(arg_11_0.viewGO)
 end
 
-function slot0.onOpen(slot0)
-	uv0.super.onOpen(slot0)
-	slot0:addEventCb(StoreController.instance, StoreEvent.UpdatePackageStore, slot0.refreshUI, slot0)
-	slot0:addEventCb(StoreController.instance, StoreEvent.StoreInfoChanged, slot0.refreshUI, slot0)
-	slot0:refreshUI()
+function var_0_0.onOpen(arg_12_0)
+	var_0_0.super.onOpen(arg_12_0)
+	arg_12_0:addEventCb(StoreController.instance, StoreEvent.UpdatePackageStore, arg_12_0.refreshUI, arg_12_0)
+	arg_12_0:addEventCb(StoreController.instance, StoreEvent.StoreInfoChanged, arg_12_0.refreshUI, arg_12_0)
+	arg_12_0:refreshUI()
 end
 
-function slot0.refreshUI(slot0)
-	slot0._txtprice1.text = ""
-	slot0._txtprice2.text = ""
-	slot0._txtprice3.text = ""
+function var_0_0.refreshUI(arg_13_0)
+	arg_13_0._txtprice1.text = ""
+	arg_13_0._txtprice2.text = ""
+	arg_13_0._txtprice3.text = ""
 
-	if slot0.config == nil then
+	if arg_13_0.config == nil then
 		return
 	end
 
-	if string.split(slot0.config.systemJumpCode, " ") then
-		slot0._systemJumpCode1 = slot1[1]
-		slot0._systemJumpCode2 = slot1[2]
-		slot0._systemJumpCode3 = slot1[3]
-		slot2, slot3 = slot0:_getCostSymbolAndPrice(slot1[1])
+	local var_13_0 = string.split(arg_13_0.config.systemJumpCode, " ")
 
-		if slot2 then
-			slot0._txtprice1.text = string.format("%s%s", slot2, slot3)
+	if var_13_0 then
+		arg_13_0._systemJumpCode1 = var_13_0[1]
+		arg_13_0._systemJumpCode2 = var_13_0[2]
+		arg_13_0._systemJumpCode3 = var_13_0[3]
+
+		local var_13_1, var_13_2 = arg_13_0:_getCostSymbolAndPrice(var_13_0[1])
+
+		if var_13_1 then
+			arg_13_0._txtprice1.text = string.format("%s%s", var_13_1, var_13_2)
 		end
 
-		slot4, slot5 = slot0:_getCostSymbolAndPrice(slot1[2])
+		local var_13_3, var_13_4 = arg_13_0:_getCostSymbolAndPrice(var_13_0[2])
 
-		if slot4 then
-			slot0._txtprice2.text = string.format("%s%s", slot4, slot5)
+		if var_13_3 then
+			arg_13_0._txtprice2.text = string.format("%s%s", var_13_3, var_13_4)
 		end
 
-		slot6, slot7 = slot0:_getCostSymbolAndPrice(slot1[3])
+		local var_13_5, var_13_6 = arg_13_0:_getCostSymbolAndPrice(var_13_0[3])
 
-		if slot6 then
-			slot0._txtprice3.text = string.format("%s%s", slot6, slot7)
+		if var_13_5 then
+			arg_13_0._txtprice3.text = string.format("%s%s", var_13_5, var_13_6)
 		end
 	end
 
-	if not string.nilorempty(slot0.config.relations) and type(GameUtil.splitString2(slot0.config.relations, true)) == "table" then
-		slot0._isBought1 = slot0:_getIsBought(slot2[1])
-		slot0._isBought2 = slot0:_getIsBought(slot2[2])
-		slot0._isBought3 = slot0:_getIsBought(slot2[3])
+	if not string.nilorempty(arg_13_0.config.relations) then
+		local var_13_7 = GameUtil.splitString2(arg_13_0.config.relations, true)
+
+		if type(var_13_7) == "table" then
+			arg_13_0._isBought1 = arg_13_0:_getIsBought(var_13_7[1])
+			arg_13_0._isBought2 = arg_13_0:_getIsBought(var_13_7[2])
+			arg_13_0._isBought3 = arg_13_0:_getIsBought(var_13_7[3])
+		end
 	end
 
-	slot0._txtduration.text = StoreController.instance:getRecommendStoreTime(slot0.config)
+	arg_13_0._txtduration.text = StoreController.instance:getRecommendStoreTime(arg_13_0.config)
 end
 
-function slot0.onClose(slot0)
-	slot0:removeEventCb(StoreController.instance, StoreEvent.UpdatePackageStore, slot0.refreshUI, slot0)
-	slot0:removeEventCb(StoreController.instance, StoreEvent.StoreInfoChanged, slot0.refreshUI, slot0)
+function var_0_0.onClose(arg_14_0)
+	arg_14_0:removeEventCb(StoreController.instance, StoreEvent.UpdatePackageStore, arg_14_0.refreshUI, arg_14_0)
+	arg_14_0:removeEventCb(StoreController.instance, StoreEvent.StoreInfoChanged, arg_14_0.refreshUI, arg_14_0)
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_15_0)
+	return
 end
 
-return slot0
+return var_0_0

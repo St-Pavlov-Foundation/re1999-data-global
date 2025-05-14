@@ -1,46 +1,50 @@
-module("modules.logic.versionactivity1_3.va3chess.game.event.Va3ChessStateNormal", package.seeall)
+﻿module("modules.logic.versionactivity1_3.va3chess.game.event.Va3ChessStateNormal", package.seeall)
 
-slot0 = class("Va3ChessStateNormal", Va3ChessStateBase)
+local var_0_0 = class("Va3ChessStateNormal", Va3ChessStateBase)
 
-function slot0.start(slot0)
+function var_0_0.start(arg_1_0)
 	logNormal("Va3ChessStateNormal start")
 	Va3ChessGameController.instance:resetObjStateOnNewRound()
-	Va3ChessGameController.instance:dispatchEvent(Va3ChessEvent.EventStart, slot0:getStateType())
+	Va3ChessGameController.instance:dispatchEvent(Va3ChessEvent.EventStart, arg_1_0:getStateType())
 end
 
-function slot0.onClickPos(slot0, slot1, slot2, slot3)
-	slot4, slot5 = Va3ChessGameController.instance:searchInteractByPos(slot1, slot2, Va3ChessGameController.filterSelectable)
+function var_0_0.onClickPos(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
+	local var_2_0, var_2_1 = Va3ChessGameController.instance:searchInteractByPos(arg_2_1, arg_2_2, Va3ChessGameController.filterSelectable)
+	local var_2_2 = Va3ChessGameController.instance:getClickStatus()
 
-	if Va3ChessGameController.instance:getClickStatus() == Va3ChessEnum.SelectPosStatus.None then
-		slot0:onClickInNoneStatus(slot4, slot5, slot3)
-	elseif slot6 == Va3ChessEnum.SelectPosStatus.SelectObjWaitPos then
-		slot0:onClickInSelectObjWaitPosStatus(slot1, slot2, slot4, slot5, slot3)
+	if var_2_2 == Va3ChessEnum.SelectPosStatus.None then
+		arg_2_0:onClickInNoneStatus(var_2_0, var_2_1, arg_2_3)
+	elseif var_2_2 == Va3ChessEnum.SelectPosStatus.SelectObjWaitPos then
+		arg_2_0:onClickInSelectObjWaitPosStatus(arg_2_1, arg_2_2, var_2_0, var_2_1, arg_2_3)
 	end
 end
 
-function slot0.onClickInNoneStatus(slot0, slot1, slot2, slot3)
-	if slot1 >= 1 then
-		if (slot1 > 1 and slot2[1] or slot2).objType ~= Va3ChessEnum.InteractType.Player and slot4.objType ~= Va3ChessEnum.InteractType.AssistPlayer then
+function var_0_0.onClickInNoneStatus(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
+	if arg_3_1 >= 1 then
+		local var_3_0 = arg_3_1 > 1 and arg_3_2[1] or arg_3_2
+
+		if var_3_0.objType ~= Va3ChessEnum.InteractType.Player and var_3_0.objType ~= Va3ChessEnum.InteractType.AssistPlayer then
 			GameFacade.showToast(ToastEnum.ChessCanNotSelect)
 		else
-			Va3ChessGameController.instance:setSelectObj(slot4)
+			Va3ChessGameController.instance:setSelectObj(var_3_0)
 
-			slot0._lastSelectObj = Va3ChessGameController.instance:getSelectObj()
+			arg_3_0._lastSelectObj = Va3ChessGameController.instance:getSelectObj()
 		end
 	end
 end
 
-function slot0.onClickInSelectObjWaitPosStatus(slot0, slot1, slot2, slot3, slot4, slot5)
-	slot6 = Va3ChessGameController.instance:getSelectObj()
-	slot0._lastSelectObj = slot6
+function var_0_0.onClickInSelectObjWaitPosStatus(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4, arg_4_5)
+	local var_4_0 = Va3ChessGameController.instance:getSelectObj()
 
-	if slot6 and slot6:getHandler() then
-		if slot6:getHandler():onSelectPos(slot1, slot2) then
-			slot0:onClickPos(slot1, slot2, slot5)
+	arg_4_0._lastSelectObj = var_4_0
+
+	if var_4_0 and var_4_0:getHandler() then
+		if var_4_0:getHandler():onSelectPos(arg_4_1, arg_4_2) then
+			arg_4_0:onClickPos(arg_4_1, arg_4_2, arg_4_5)
 		end
 	else
 		logError("select obj missing!")
 	end
 end
 
-return slot0
+return var_0_0

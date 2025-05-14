@@ -1,30 +1,30 @@
-module("modules.logic.fight.system.work.asfd.FightWorkWaitASFDArrivedDone", package.seeall)
+﻿module("modules.logic.fight.system.work.asfd.FightWorkWaitASFDArrivedDone", package.seeall)
 
-slot0 = class("FightWorkWaitASFDArrivedDone", BaseWork)
+local var_0_0 = class("FightWorkWaitASFDArrivedDone", BaseWork)
 
-function slot0.ctor(slot0, slot1)
-	slot0.stepMo = slot1
-	slot0._fightStepMO = slot1
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0.stepMo = arg_1_1
+	arg_1_0._fightStepMO = arg_1_1
 end
 
-function slot0.onStart(slot0)
-	TaskDispatcher.runDelay(slot0._delayDone, slot0, 5)
-	FightController.instance:registerCallback(FightEvent.ASFD_OnASFDArrivedDone, slot0.onASFDArrivedDone, slot0)
+function var_0_0.onStart(arg_2_0)
+	TaskDispatcher.runDelay(arg_2_0._delayDone, arg_2_0, 5)
+	FightController.instance:registerCallback(FightEvent.ASFD_OnASFDArrivedDone, arg_2_0.onASFDArrivedDone, arg_2_0)
 end
 
-function slot0.onASFDArrivedDone(slot0)
-	return slot0:onDone(true)
+function var_0_0.onASFDArrivedDone(arg_3_0)
+	return arg_3_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
-	TaskDispatcher.cancelTask(slot0._delayDone, slot0)
-	FightController.instance:unregisterCallback(FightEvent.ASFD_OnASFDArrivedDone, slot0.onASFDArrivedDone, slot0)
+function var_0_0.clearWork(arg_4_0)
+	TaskDispatcher.cancelTask(arg_4_0._delayDone, arg_4_0)
+	FightController.instance:unregisterCallback(FightEvent.ASFD_OnASFDArrivedDone, arg_4_0.onASFDArrivedDone, arg_4_0)
 end
 
-function slot0._delayDone(slot0)
+function var_0_0._delayDone(arg_5_0)
 	logError("奥术飞弹 wait arrived 超时了")
 
-	return slot0:onDone(true)
+	return arg_5_0:onDone(true)
 end
 
-return slot0
+return var_0_0

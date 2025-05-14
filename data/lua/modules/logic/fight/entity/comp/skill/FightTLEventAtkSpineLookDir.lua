@@ -1,64 +1,81 @@
-module("modules.logic.fight.entity.comp.skill.FightTLEventAtkSpineLookDir", package.seeall)
+﻿module("modules.logic.fight.entity.comp.skill.FightTLEventAtkSpineLookDir", package.seeall)
 
-slot0 = class("FightTLEventAtkSpineLookDir")
+local var_0_0 = class("FightTLEventAtkSpineLookDir")
 
-function slot0.handleSkillEvent(slot0, slot1, slot2, slot3)
-	slot8 = FightHelper.getEntity(slot1.fromId).spine:getLookDir()
+function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	local var_1_0 = string.nilorempty(arg_1_3[2]) and "1" or arg_1_3[2]
+	local var_1_1 = arg_1_3[3] == "1"
+	local var_1_2 = arg_1_0._getEntitys(arg_1_1, var_1_0)
+	local var_1_3 = FightHelper.getEntity(arg_1_1.fromId).spine:getLookDir()
 
-	for slot12, slot13 in ipairs(slot0._getEntitys(slot1, string.nilorempty(slot3[2]) and "1" or slot3[2])) do
-		if slot3[3] == "1" then
-			if slot13.spine then
-				slot13.spine:changeLookDir(FightHelper.getEntitySpineLookDir(slot13:getMO()))
+	for iter_1_0, iter_1_1 in ipairs(var_1_2) do
+		if var_1_1 then
+			local var_1_4 = iter_1_1:getMO()
+			local var_1_5 = FightHelper.getEntitySpineLookDir(var_1_4)
+
+			if iter_1_1.spine then
+				iter_1_1.spine:changeLookDir(var_1_5)
 			end
 		else
-			slot15 = slot13.spine:getLookDir()
+			local var_1_6 = iter_1_1.spine:getLookDir()
+			local var_1_7 = var_1_6
 
-			if slot3[1] == "1" then
-				slot15 = 1
-			elseif slot3[1] == "2" then
-				slot15 = -1
-			elseif slot3[1] == "3" then
-				slot15 = slot8
-			elseif slot3[1] == "4" then
-				slot15 = -slot8
+			if arg_1_3[1] == "1" then
+				var_1_7 = 1
+			elseif arg_1_3[1] == "2" then
+				var_1_7 = -1
+			elseif arg_1_3[1] == "3" then
+				var_1_7 = var_1_3
+			elseif arg_1_3[1] == "4" then
+				var_1_7 = -var_1_3
 			end
 
-			if slot15 ~= slot14 then
-				slot13.spine:changeLookDir(slot15)
+			if var_1_7 ~= var_1_6 then
+				iter_1_1.spine:changeLookDir(var_1_7)
 			end
 		end
 	end
 end
 
-function slot0._getEntitys(slot0, slot1)
-	slot4 = FightHelper.getEntity(slot0.toId)
+function var_0_0._getEntitys(arg_2_0, arg_2_1)
+	local var_2_0 = {}
+	local var_2_1 = FightHelper.getEntity(arg_2_0.fromId)
+	local var_2_2 = FightHelper.getEntity(arg_2_0.toId)
 
-	if slot1 == "1" then
-		table.insert({}, FightHelper.getEntity(slot0.fromId))
-	elseif slot1 == "2" then
-		slot5 = {}
+	if arg_2_1 == "1" then
+		table.insert(var_2_0, var_2_1)
+	elseif arg_2_1 == "2" then
+		local var_2_3 = {}
 
-		for slot9, slot10 in ipairs(slot0.actEffectMOs) do
-			if FightHelper.getEntity(slot10.targetId) and slot11:getSide() ~= slot3:getSide() and not slot5[slot10.targetId] then
-				table.insert(slot2, slot11)
+		for iter_2_0, iter_2_1 in ipairs(arg_2_0.actEffectMOs) do
+			local var_2_4 = FightHelper.getEntity(iter_2_1.targetId)
 
-				slot5[slot10.targetId] = true
+			if var_2_4 and var_2_4:getSide() ~= var_2_1:getSide() and not var_2_3[iter_2_1.targetId] then
+				table.insert(var_2_0, var_2_4)
+
+				var_2_3[iter_2_1.targetId] = true
 			end
 		end
-	elseif slot1 == "3" then
-		slot2 = FightHelper.getSideEntitys(slot3:getSide(), false)
-	elseif slot1 == "4" then
-		slot2 = FightHelper.getSideEntitys(slot4:getSide(), false)
-	elseif slot1 == "5" then
-		tabletool.addValues(slot2, FightHelper.getSideEntitys(FightEnum.EntitySide.MySide, false))
-		tabletool.addValues(slot2, FightHelper.getSideEntitys(FightEnum.EntitySide.EnemySide, false))
-	elseif slot1 == "6" then
-		table.insert(slot2, slot4)
+	elseif arg_2_1 == "3" then
+		var_2_0 = FightHelper.getSideEntitys(var_2_1:getSide(), false)
+	elseif arg_2_1 == "4" then
+		var_2_0 = FightHelper.getSideEntitys(var_2_2:getSide(), false)
+	elseif arg_2_1 == "5" then
+		local var_2_5 = FightHelper.getSideEntitys(FightEnum.EntitySide.MySide, false)
+		local var_2_6 = FightHelper.getSideEntitys(FightEnum.EntitySide.EnemySide, false)
+
+		tabletool.addValues(var_2_0, var_2_5)
+		tabletool.addValues(var_2_0, var_2_6)
+	elseif arg_2_1 == "6" then
+		table.insert(var_2_0, var_2_2)
 	else
-		table.insert(slot2, GameSceneMgr.instance:getCurScene().entityMgr:getUnit(SceneTag.UnitNpc, slot0.stepUid .. "_" .. slot1))
+		local var_2_7 = GameSceneMgr.instance:getCurScene().entityMgr
+		local var_2_8 = arg_2_0.stepUid .. "_" .. arg_2_1
+
+		table.insert(var_2_0, var_2_7:getUnit(SceneTag.UnitNpc, var_2_8))
 	end
 
-	return slot2
+	return var_2_0
 end
 
-return slot0
+return var_0_0

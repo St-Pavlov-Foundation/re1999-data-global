@@ -1,38 +1,42 @@
-module("modules.logic.explore.model.mo.unit.ExplorePipeEntranceMO", package.seeall)
+﻿module("modules.logic.explore.model.mo.unit.ExplorePipeEntranceMO", package.seeall)
 
-slot0 = class("ExplorePipeEntranceMO", ExplorePipeBaseMO)
+local var_0_0 = class("ExplorePipeEntranceMO", ExplorePipeBaseMO)
 
-function slot0.initTypeData(slot0)
+function var_0_0.initTypeData(arg_1_0)
+	return
 end
 
-function slot0.getBindPotId(slot0)
-	return slot0:getInteractInfoMO().statusInfo.bindInteractId or 0
+function var_0_0.getBindPotId(arg_2_0)
+	return arg_2_0:getInteractInfoMO().statusInfo.bindInteractId or 0
 end
 
-function slot0.getPipeOutDir(slot0)
-	return slot0.unitDir
+function var_0_0.getPipeOutDir(arg_3_0)
+	return arg_3_0.unitDir
 end
 
-function slot0.isOutDir(slot0, slot1)
-	return ExploreHelper.getDir(slot1 - slot0.unitDir) == 0
+function var_0_0.isOutDir(arg_4_0, arg_4_1)
+	return ExploreHelper.getDir(arg_4_1 - arg_4_0.unitDir) == 0
 end
 
-function slot0.getDirType(slot0, slot1)
-	if slot1 == 0 then
+function var_0_0.getDirType(arg_5_0, arg_5_1)
+	if arg_5_1 == 0 then
 		return ExploreEnum.PipeGoNode.Pipe1
 	end
 end
 
-function slot0.getColor(slot0)
-	if ExploreController.instance:getMap():getUnit(slot0:getBindPotId(), true) then
-		return slot2.mo:getColor()
+function var_0_0.getColor(arg_6_0)
+	local var_6_0 = arg_6_0:getBindPotId()
+	local var_6_1 = ExploreController.instance:getMap():getUnit(var_6_0, true)
+
+	if var_6_1 then
+		return var_6_1.mo:getColor()
 	end
 
 	return ExploreEnum.PipeColor.None
 end
 
-function slot0.getUnitClass(slot0)
+function var_0_0.getUnitClass(arg_7_0)
 	return ExplorePipeEntranceUnit
 end
 
-return slot0
+return var_0_0

@@ -1,75 +1,94 @@
-module("modules.logic.fight.entity.comp.skill.FightTLEventEntityRotate", package.seeall)
+﻿module("modules.logic.fight.entity.comp.skill.FightTLEventEntityRotate", package.seeall)
 
-slot0 = class("FightTLEventEntityRotate")
+local var_0_0 = class("FightTLEventEntityRotate")
 
-function slot0.handleSkillEvent(slot0, slot1, slot2, slot3)
-	slot0._attacker = FightHelper.getEntity(slot1.fromId)
+function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	arg_1_0._attacker = FightHelper.getEntity(arg_1_1.fromId)
 
-	if not slot0._attacker then
+	if not arg_1_0._attacker then
 		return
 	end
 
-	slot4 = string.splitToNumber(slot3[1], ",")
-	slot6 = slot3[3] == "1"
-	slot7 = {}
+	local var_1_0 = string.splitToNumber(arg_1_3[1], ",")
+	local var_1_1 = arg_1_3[2]
+	local var_1_2 = arg_1_3[3] == "1"
+	local var_1_3 = {}
 
-	if slot3[2] == "1" then
-		table.insert({}, FightHelper.getEntity(slot1.fromId))
-	elseif slot5 == "2" then
-		slot7 = FightHelper.getSkillTargetEntitys(slot1)
-	elseif slot5 == "3" then
-		slot7 = FightHelper.getSideEntitys(slot0._attacker:getSide(), true)
-	elseif slot5 == "4" then
-		if FightHelper.getEntity(slot1.toId) then
-			slot7 = FightHelper.getSideEntitys(slot8:getSide(), true)
+	if var_1_1 == "1" then
+		var_1_3 = {}
+
+		table.insert(var_1_3, FightHelper.getEntity(arg_1_1.fromId))
+	elseif var_1_1 == "2" then
+		var_1_3 = FightHelper.getSkillTargetEntitys(arg_1_1)
+	elseif var_1_1 == "3" then
+		var_1_3 = FightHelper.getSideEntitys(arg_1_0._attacker:getSide(), true)
+	elseif var_1_1 == "4" then
+		local var_1_4 = FightHelper.getEntity(arg_1_1.toId)
+
+		if var_1_4 then
+			var_1_3 = FightHelper.getSideEntitys(var_1_4:getSide(), true)
 		end
-	elseif slot5 == "5" then
-		tabletool.removeValue(FightHelper.getSkillTargetEntitys(slot1), FightHelper.getEntity(slot1.fromId))
+	elseif var_1_1 == "5" then
+		var_1_3 = FightHelper.getSkillTargetEntitys(arg_1_1)
+
+		local var_1_5 = FightHelper.getEntity(arg_1_1.fromId)
+
+		tabletool.removeValue(var_1_3, var_1_5)
 	end
 
-	if not string.nilorempty(slot3[4]) then
-		for slot12, slot13 in ipairs(string.split(slot3[4], "#")) do
-			if FightHelper.getEntity(slot1.stepUid .. "_" .. slot13) then
-				table.insert(slot7 or {}, slot14)
+	if not string.nilorempty(arg_1_3[4]) then
+		var_1_3 = var_1_3 or {}
+
+		local var_1_6 = string.split(arg_1_3[4], "#")
+
+		for iter_1_0, iter_1_1 in ipairs(var_1_6) do
+			local var_1_7 = FightHelper.getEntity(arg_1_1.stepUid .. "_" .. iter_1_1)
+
+			if var_1_7 then
+				table.insert(var_1_3, var_1_7)
 			end
 		end
 	end
 
-	slot8 = slot4[3]
+	local var_1_8 = var_1_0[3]
 
-	if slot3[5] == "1" then
-		slot8 = slot0._attacker:isEnemySide() and -slot4[3] or slot4[3]
+	if arg_1_3[5] == "1" then
+		var_1_8 = arg_1_0._attacker:isEnemySide() and -var_1_0[3] or var_1_0[3]
 	end
 
-	for slot12, slot13 in ipairs(slot7) do
-		if not gohelper.isNil(slot13.spine and slot13.spine:getSpineTr()) then
-			if slot6 then
-				transformhelper.setLocalRotation(slot14, slot4[1], slot4[2], slot8)
+	for iter_1_2, iter_1_3 in ipairs(var_1_3) do
+		local var_1_9 = iter_1_3.spine and iter_1_3.spine:getSpineTr()
+
+		if not gohelper.isNil(var_1_9) then
+			if var_1_2 then
+				transformhelper.setLocalRotation(var_1_9, var_1_0[1], var_1_0[2], var_1_8)
 			else
-				slot0._tweenIdList = slot0._tweenIdList or {}
+				arg_1_0._tweenIdList = arg_1_0._tweenIdList or {}
 
-				table.insert(slot0._tweenIdList, ZProj.TweenHelper.DOLocalRotate(slot14, slot4[1], slot4[2], slot8, slot2))
+				local var_1_10 = ZProj.TweenHelper.DOLocalRotate(var_1_9, var_1_0[1], var_1_0[2], var_1_8, arg_1_2)
+
+				table.insert(arg_1_0._tweenIdList, var_1_10)
 			end
 		end
 	end
 end
 
-function slot0.reset(slot0)
-	slot0:_clear()
+function var_0_0.reset(arg_2_0)
+	arg_2_0:_clear()
 end
 
-function slot0.dispose(slot0)
-	slot0:_clear()
+function var_0_0.dispose(arg_3_0)
+	arg_3_0:_clear()
 end
 
-function slot0._clear(slot0)
-	if slot0._tweenIdList then
-		for slot4, slot5 in ipairs(slot0._tweenIdList) do
-			ZProj.TweenHelper.KillById(slot5)
+function var_0_0._clear(arg_4_0)
+	if arg_4_0._tweenIdList then
+		for iter_4_0, iter_4_1 in ipairs(arg_4_0._tweenIdList) do
+			ZProj.TweenHelper.KillById(iter_4_1)
 		end
 
-		slot0._tweenIdList = nil
+		arg_4_0._tweenIdList = nil
 	end
 end
 
-return slot0
+return var_0_0

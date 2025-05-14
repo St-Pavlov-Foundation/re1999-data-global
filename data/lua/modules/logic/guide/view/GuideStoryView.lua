@@ -1,39 +1,40 @@
-module("modules.logic.guide.view.GuideStoryView", package.seeall)
+﻿module("modules.logic.guide.view.GuideStoryView", package.seeall)
 
-slot0 = class("GuideStoryView", BaseView)
+local var_0_0 = class("GuideStoryView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._storyGO = gohelper.findChild(slot0.viewGO, "story")
-	slot0._txtContent = gohelper.findChildText(slot0.viewGO, "story/go_content/txt_content")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._storyGO = gohelper.findChild(arg_1_0.viewGO, "story")
+	arg_1_0._txtContent = gohelper.findChildText(arg_1_0.viewGO, "story/go_content/txt_content")
 end
 
-function slot0.onOpen(slot0)
-	slot0:_updateUI()
-	slot0:addEventCb(GuideController.instance, GuideEvent.UpdateMaskView, slot0._updateUI, slot0)
+function var_0_0.onOpen(arg_2_0)
+	arg_2_0:_updateUI()
+	arg_2_0:addEventCb(GuideController.instance, GuideEvent.UpdateMaskView, arg_2_0._updateUI, arg_2_0)
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0:_updateUI()
-	slot0:removeEventCb(GuideController.instance, GuideEvent.UpdateMaskView, slot0._updateUI, slot0)
+function var_0_0.onUpdateParam(arg_3_0)
+	arg_3_0:_updateUI()
+	arg_3_0:removeEventCb(GuideController.instance, GuideEvent.UpdateMaskView, arg_3_0._updateUI, arg_3_0)
 end
 
-function slot0._updateUI(slot0)
-	if not slot0.viewParam then
+function var_0_0._updateUI(arg_4_0)
+	if not arg_4_0.viewParam then
 		return
 	end
 
-	gohelper.setActive(slot0._storyGO, slot0.viewParam.hasStory)
+	gohelper.setActive(arg_4_0._storyGO, arg_4_0.viewParam.hasStory)
 
-	if not slot0.viewParam.hasStory then
+	if not arg_4_0.viewParam.hasStory then
 		return
 	end
 
-	slot0._txtContent.text = LuaUtil.replaceSpace(slot0.viewParam.storyContent)
+	arg_4_0._txtContent.text = LuaUtil.replaceSpace(arg_4_0.viewParam.storyContent)
 
-	LuaUtil.updateTMPRectHeight(slot0._txtContent)
+	LuaUtil.updateTMPRectHeight(arg_4_0._txtContent)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_5_0)
+	return
 end
 
-return slot0
+return var_0_0

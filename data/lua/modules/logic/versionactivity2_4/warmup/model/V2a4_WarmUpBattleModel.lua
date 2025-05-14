@@ -1,176 +1,195 @@
-module("modules.logic.versionactivity2_4.warmup.model.V2a4_WarmUpBattleModel", package.seeall)
+﻿module("modules.logic.versionactivity2_4.warmup.model.V2a4_WarmUpBattleModel", package.seeall)
 
-slot0 = class("V2a4_WarmUpBattleModel", BaseModel)
-slot1 = string.format
-slot2 = table.insert
+local var_0_0 = class("V2a4_WarmUpBattleModel", BaseModel)
+local var_0_1 = string.format
+local var_0_2 = table.insert
 
-function slot0.onInit(slot0)
-	slot0:reInit()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:reInit()
 end
 
-function slot0.reInit(slot0)
-	slot0._levelId = 0
-	slot0._startTs = 0
-	slot0._endTs = -1
-	slot0._waveList = {}
+function var_0_0.reInit(arg_2_0)
+	arg_2_0._levelId = 0
+	arg_2_0._startTs = 0
+	arg_2_0._endTs = -1
+	arg_2_0._waveList = {}
 end
 
-function slot0.curWaveIndex(slot0)
-	return #slot0._waveList
+function var_0_0.curWaveIndex(arg_3_0)
+	return #arg_3_0._waveList
 end
 
-function slot0.curWave(slot0)
-	return slot0._waveList[slot0:curWaveIndex()]
+function var_0_0.curWave(arg_4_0)
+	local var_4_0 = arg_4_0:curWaveIndex()
+
+	return arg_4_0._waveList[var_4_0]
 end
 
-function slot0.curRound(slot0)
-	if not slot0:curWave() then
-		return nil, 
+function var_0_0.curRound(arg_5_0)
+	local var_5_0 = arg_5_0:curWave()
+
+	if not var_5_0 then
+		return nil, nil
 	end
 
-	return slot1:curRound(), slot1
+	return var_5_0:curRound(), var_5_0
 end
 
-function slot0.curRoundIndex(slot0)
-	if not slot0:curRound() then
+function var_0_0.curRoundIndex(arg_6_0)
+	local var_6_0 = arg_6_0:curRound()
+
+	if not var_6_0 then
 		return 0
 	end
 
-	return slot1:index()
+	return var_6_0:index()
 end
 
-function slot0.genWave(slot0, slot1)
-	slot3 = V2a4_WarmUpBattleWaveMO.New(slot0:curWaveIndex() + 1, slot1)
+function var_0_0.genWave(arg_7_0, arg_7_1)
+	local var_7_0 = arg_7_0:curWaveIndex() + 1
+	local var_7_1 = V2a4_WarmUpBattleWaveMO.New(var_7_0, arg_7_1)
+	local var_7_2 = arg_7_1:roundMOList()
 
-	for slot8, slot9 in ipairs(slot1:roundMOList()) do
-		slot3:genRound(slot9)
+	for iter_7_0, iter_7_1 in ipairs(var_7_2) do
+		var_7_1:genRound(iter_7_1)
 	end
 
-	uv0(slot0._waveList, slot3)
+	var_0_2(arg_7_0._waveList, var_7_1)
 
-	return slot3
+	return var_7_1
 end
 
-function slot0.clean(slot0)
-	slot0._levelId = 0
-	slot0._startTs = 0
-	slot0._endTs = 0
-	slot0._waveList = {}
+function var_0_0.clean(arg_8_0)
+	arg_8_0._levelId = 0
+	arg_8_0._startTs = 0
+	arg_8_0._endTs = 0
+	arg_8_0._waveList = {}
 end
 
-function slot0.restart(slot0, slot1)
-	slot0:clean()
+function var_0_0.restart(arg_9_0, arg_9_1)
+	arg_9_0:clean()
 
-	slot0._levelId = slot1
-	slot0._startTs = ServerTime.now()
-	slot0._endTs = slot0._startTs + V2a4_WarmUpConfig.instance:getDurationSec()
+	arg_9_0._levelId = arg_9_1
+	arg_9_0._startTs = ServerTime.now()
+	arg_9_0._endTs = arg_9_0._startTs + V2a4_WarmUpConfig.instance:getDurationSec()
 end
 
-function slot0.levelId(slot0)
-	return slot0._levelId
+function var_0_0.levelId(arg_10_0)
+	return arg_10_0._levelId
 end
 
-function slot0.isTimeout(slot0)
-	return slot0._endTs < slot0._startTs or slot0._endTs <= ServerTime.now()
+function var_0_0.isTimeout(arg_11_0)
+	return arg_11_0._startTs > arg_11_0._endTs or ServerTime.now() >= arg_11_0._endTs
 end
 
-function slot0.getRemainTime(slot0)
-	return slot0._endTs - ServerTime.now()
+function var_0_0.getRemainTime(arg_12_0)
+	return arg_12_0._endTs - ServerTime.now()
 end
 
-function slot0.isFirstWaveDone(slot0)
-	if slot0:curWaveIndex() >= 2 then
+function var_0_0.isFirstWaveDone(arg_13_0)
+	if arg_13_0:curWaveIndex() >= 2 then
 		return true
 	end
 
-	if not slot0:curWave() then
+	local var_13_0 = arg_13_0:curWave()
+
+	if not var_13_0 then
 		return false
 	end
 
-	return slot1:isFinished()
+	return var_13_0:isFinished()
 end
 
-function slot0.getResultInfo(slot0)
-	slot1 = false
-	slot2 = 0
-	slot3 = 0
-	slot4 = 0
-	slot5 = 0
-	slot6 = 0
-	slot7 = 0
-	slot8 = slot0:isFirstWaveDone()
+function var_0_0.getResultInfo(arg_14_0)
+	local var_14_0 = false
+	local var_14_1 = 0
+	local var_14_2 = 0
+	local var_14_3 = 0
+	local var_14_4 = 0
+	local var_14_5 = 0
+	local var_14_6 = 0
+	local var_14_7 = arg_14_0:isFirstWaveDone()
 
-	for slot12, slot13 in ipairs(slot0._waveList) do
-		slot15 = nil
-		slot16 = 0
+	for iter_14_0, iter_14_1 in ipairs(arg_14_0._waveList) do
+		local var_14_8 = iter_14_1:roundMOList()
+		local var_14_9
+		local var_14_10 = 0
 
-		for slot20, slot21 in ipairs(slot13:roundMOList()) do
-			if slot21:isFinished() then
-				if slot21:userAnsIsYes() then
-					slot6 = slot6 + 1
+		for iter_14_2, iter_14_3 in ipairs(var_14_8) do
+			if iter_14_3:isFinished() then
+				if iter_14_3:userAnsIsYes() then
+					var_14_5 = var_14_5 + 1
 				else
-					slot7 = slot7 + 1
+					var_14_6 = var_14_6 + 1
 				end
 
-				slot16 = slot16 + 1
+				var_14_10 = var_14_10 + 1
 
-				if slot21:isWin() then
-					slot5 = slot5 + 1
+				if iter_14_3:isWin() then
+					var_14_4 = var_14_4 + 1
 
-					if slot15 == nil then
-						slot15 = true
+					if var_14_9 == nil then
+						var_14_9 = true
 					end
 				else
-					slot15 = false
+					var_14_9 = false
 				end
 			else
-				slot15 = false
+				var_14_9 = false
 			end
 		end
 
-		if slot16 == #slot14 then
-			slot2 = slot2 + 1
+		if var_14_10 == #var_14_8 then
+			var_14_1 = var_14_1 + 1
 		end
 
-		slot3 = slot3 + slot16
+		var_14_2 = var_14_2 + var_14_10
 
-		if slot15 then
-			slot1 = true
-			slot4 = slot4 + 1
+		if var_14_9 then
+			var_14_0 = true
+			var_14_3 = var_14_3 + 1
 		end
 	end
 
-	if not slot8 then
-		slot1 = false
+	if not var_14_7 then
+		var_14_0 = false
 	end
+
+	local var_14_11 = var_14_0 and var_14_2 == var_14_4
+	local var_14_12 = var_14_2 - var_14_4
 
 	return {
-		isWin = slot1,
-		isPerfectWin = slot1 and slot3 == slot5,
-		sucHelpCnt = slot4,
-		totValidWaveCnt = slot2,
-		totValidRoundCnt = slot3,
-		totBingoRoundCnt = slot5,
-		totWrontRoundCnt = slot3 - slot5,
-		totWaveCnt = slot0:curWaveIndex(),
-		totAnsYesCnt = slot6,
-		totAnsNoCnt = slot7
+		isWin = var_14_0,
+		isPerfectWin = var_14_11,
+		sucHelpCnt = var_14_3,
+		totValidWaveCnt = var_14_1,
+		totValidRoundCnt = var_14_2,
+		totBingoRoundCnt = var_14_4,
+		totWrontRoundCnt = var_14_12,
+		totWaveCnt = arg_14_0:curWaveIndex(),
+		totAnsYesCnt = var_14_5,
+		totAnsNoCnt = var_14_6
 	}
 end
 
-function slot0.dump(slot0, slot1, slot2)
-	slot3 = string.rep("\t", slot2 or 0)
+function var_0_0.dump(arg_15_0, arg_15_1, arg_15_2)
+	arg_15_2 = arg_15_2 or 0
 
-	uv0(slot1, slot3 .. uv1("level = %s (%s)s", slot0._levelId, slot0:getRemainTime()))
-	uv0(slot1, slot3 .. "Waves = {")
+	local var_15_0 = string.rep("\t", arg_15_2)
 
-	for slot8 = #slot0._waveList, 1, -1 do
-		slot4[slot8]:dump(slot1, slot2 + 1)
+	var_0_2(arg_15_1, var_15_0 .. var_0_1("level = %s (%s)s", arg_15_0._levelId, arg_15_0:getRemainTime()))
+
+	local var_15_1 = arg_15_0._waveList
+
+	var_0_2(arg_15_1, var_15_0 .. "Waves = {")
+
+	for iter_15_0 = #var_15_1, 1, -1 do
+		var_15_1[iter_15_0]:dump(arg_15_1, arg_15_2 + 1)
 	end
 
-	uv0(slot1, slot3 .. "}")
+	var_0_2(arg_15_1, var_15_0 .. "}")
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

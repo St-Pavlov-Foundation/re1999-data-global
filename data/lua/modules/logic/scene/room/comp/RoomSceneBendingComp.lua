@@ -1,78 +1,91 @@
-module("modules.logic.scene.room.comp.RoomSceneBendingComp", package.seeall)
+﻿module("modules.logic.scene.room.comp.RoomSceneBendingComp", package.seeall)
 
-slot0 = class("RoomSceneBendingComp", BaseSceneComp)
+local var_0_0 = class("RoomSceneBendingComp", BaseSceneComp)
 
-function slot0.onInit(slot0)
-	slot0._bendingAmountId = UnityEngine.Shader.PropertyToID("_Curvature")
-	slot0._bendingAmountScaledId = UnityEngine.Shader.PropertyToID("_CurvatureScaled")
-	slot0._ambientColorId = UnityEngine.Shader.PropertyToID("_AmbientCol")
-	slot0._fogColorId = UnityEngine.Shader.PropertyToID("_FogColor")
-	slot0._bendingPositionId = UnityEngine.Shader.PropertyToID("_GameobjPosition")
-	slot0._bendingNegaPositionId = UnityEngine.Shader.PropertyToID("_NegaGameobjPosition")
-	slot0._skyMeshRenderer = nil
-	slot0._skyPropertyBlock = nil
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._bendingAmountId = UnityEngine.Shader.PropertyToID("_Curvature")
+	arg_1_0._bendingAmountScaledId = UnityEngine.Shader.PropertyToID("_CurvatureScaled")
+	arg_1_0._ambientColorId = UnityEngine.Shader.PropertyToID("_AmbientCol")
+	arg_1_0._fogColorId = UnityEngine.Shader.PropertyToID("_FogColor")
+	arg_1_0._bendingPositionId = UnityEngine.Shader.PropertyToID("_GameobjPosition")
+	arg_1_0._bendingNegaPositionId = UnityEngine.Shader.PropertyToID("_NegaGameobjPosition")
+	arg_1_0._skyMeshRenderer = nil
+	arg_1_0._skyPropertyBlock = nil
 end
 
-function slot0.init(slot0, slot1, slot2)
-	slot0._scene = slot0:getCurScene()
+function var_0_0.init(arg_2_0, arg_2_1, arg_2_2)
+	arg_2_0._scene = arg_2_0:getCurScene()
 
-	slot0:setBendingAmount(0.25)
+	local var_2_0 = 0.25
+
+	arg_2_0:setBendingAmount(var_2_0)
 end
 
-function slot0.setBendingAmount(slot0, slot1)
-	RoomHelper.setGlobalFloat(slot0._bendingAmountId, slot1)
-	RoomHelper.setGlobalFloat(slot0._bendingAmountScaledId, -slot1 * 0.08)
-	RoomBendingHelper.setBendingAmount(RoomHelper.getGlobalFloat(slot0._bendingAmountId))
+function var_0_0.setBendingAmount(arg_3_0, arg_3_1)
+	RoomHelper.setGlobalFloat(arg_3_0._bendingAmountId, arg_3_1)
+	RoomHelper.setGlobalFloat(arg_3_0._bendingAmountScaledId, -arg_3_1 * 0.08)
+
+	arg_3_1 = RoomHelper.getGlobalFloat(arg_3_0._bendingAmountId)
+
+	RoomBendingHelper.setBendingAmount(arg_3_1)
 	RoomMapController.instance:dispatchEvent(RoomEvent.BendingAmountUpdate)
 end
 
-function slot0.setAmbientColor(slot0, slot1)
-	RoomHelper.setGlobalColor(slot0._ambientColorId, slot1)
+function var_0_0.setAmbientColor(arg_4_0, arg_4_1)
+	RoomHelper.setGlobalColor(arg_4_0._ambientColorId, arg_4_1)
 end
 
-function slot0.getAmbientColor(slot0)
-	return UnityEngine.Shader.GetGlobalColor(slot0._ambientColorId)
+function var_0_0.getAmbientColor(arg_5_0)
+	return UnityEngine.Shader.GetGlobalColor(arg_5_0._ambientColorId)
 end
 
-function slot0.setFogColor(slot0, slot1)
-	RoomHelper.setGlobalColor(slot0._fogColorId, slot1)
+function var_0_0.setFogColor(arg_6_0, arg_6_1)
+	RoomHelper.setGlobalColor(arg_6_0._fogColorId, arg_6_1)
 end
 
-function slot0.getFogColor(slot0)
-	return UnityEngine.Shader.GetGlobalColor(slot0._fogColorId)
+function var_0_0.getFogColor(arg_7_0)
+	return UnityEngine.Shader.GetGlobalColor(arg_7_0._fogColorId)
 end
 
-function slot0.setSkylineOffset(slot0, slot1)
-	if not slot0._skyMeshRenderer then
-		slot0._skyMeshRenderer = slot0._scene.go.skyGO and slot2:GetComponent(typeof(UnityEngine.MeshRenderer))
+function var_0_0.setSkylineOffset(arg_8_0, arg_8_1)
+	if not arg_8_0._skyMeshRenderer then
+		local var_8_0 = arg_8_0._scene.go.skyGO
+
+		arg_8_0._skyMeshRenderer = var_8_0 and var_8_0:GetComponent(typeof(UnityEngine.MeshRenderer))
 	end
 
-	if not slot0._skyMeshRenderer then
+	if not arg_8_0._skyMeshRenderer then
 		return
 	end
 
-	if not slot0._skyPropertyBlock then
-		slot0._skyPropertyBlock = UnityEngine.MaterialPropertyBlock.New()
+	if not arg_8_0._skyPropertyBlock then
+		arg_8_0._skyPropertyBlock = UnityEngine.MaterialPropertyBlock.New()
 	end
 
-	slot0._skyPropertyBlock:SetFloat("_OffsetHorizon", slot1)
-	slot0._skyMeshRenderer:SetPropertyBlock(slot0._skyPropertyBlock)
+	arg_8_0._skyPropertyBlock:SetFloat("_OffsetHorizon", arg_8_1)
+	arg_8_0._skyMeshRenderer:SetPropertyBlock(arg_8_0._skyPropertyBlock)
 end
 
-function slot0.setBendingPosition(slot0, slot1)
-	RoomBendingHelper.setBendingPosition(slot1)
-	UnityEngine.Shader.SetGlobalVector(slot0._bendingPositionId, Vector4(slot1.x, slot1.y, slot1.z, 1))
-	UnityEngine.Shader.SetGlobalVector(slot0._bendingNegaPositionId, Vector4(-slot1.x, -slot1.z, 1, 1))
+function var_0_0.setBendingPosition(arg_9_0, arg_9_1)
+	RoomBendingHelper.setBendingPosition(arg_9_1)
+
+	local var_9_0 = Vector4(arg_9_1.x, arg_9_1.y, arg_9_1.z, 1)
+
+	UnityEngine.Shader.SetGlobalVector(arg_9_0._bendingPositionId, var_9_0)
+
+	local var_9_1 = Vector4(-arg_9_1.x, -arg_9_1.z, 1, 1)
+
+	UnityEngine.Shader.SetGlobalVector(arg_9_0._bendingNegaPositionId, var_9_1)
 end
 
-function slot0.onSceneClose(slot0)
-	slot0._skyMeshRenderer = nil
+function var_0_0.onSceneClose(arg_10_0)
+	arg_10_0._skyMeshRenderer = nil
 
-	if slot0._skyPropertyBlock then
-		slot0._skyPropertyBlock:Clear()
+	if arg_10_0._skyPropertyBlock then
+		arg_10_0._skyPropertyBlock:Clear()
 
-		slot0._skyPropertyBlock = nil
+		arg_10_0._skyPropertyBlock = nil
 	end
 end
 
-return slot0
+return var_0_0

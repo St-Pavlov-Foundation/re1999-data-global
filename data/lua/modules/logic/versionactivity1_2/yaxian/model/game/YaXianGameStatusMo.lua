@@ -1,30 +1,30 @@
-module("modules.logic.versionactivity1_2.yaxian.model.game.YaXianGameStatusMo", package.seeall)
+﻿module("modules.logic.versionactivity1_2.yaxian.model.game.YaXianGameStatusMo", package.seeall)
 
-slot0 = pureTable("YaXianGameStatusMo")
+local var_0_0 = pureTable("YaXianGameStatusMo")
 
-function slot0.NewFunc()
-	return uv0.New()
+function var_0_0.NewFunc()
+	return var_0_0.New()
 end
 
-function slot0.resetFunc(slot0)
-	slot0.status = nil
-	slot0.directionList = nil
+function var_0_0.resetFunc(arg_2_0)
+	arg_2_0.status = nil
+	arg_2_0.directionList = nil
 end
 
-function slot0.releaseFunc(slot0)
-	slot0:resetFunc()
+function var_0_0.releaseFunc(arg_3_0)
+	arg_3_0:resetFunc()
 end
 
-function slot0.addStatus(slot0, slot1, slot2)
-	slot0.status = slot1
+function var_0_0.addStatus(arg_4_0, arg_4_1, arg_4_2)
+	arg_4_0.status = arg_4_1
 
-	if slot2 then
-		slot0.directionList = slot0.directionList or {}
+	if arg_4_2 then
+		arg_4_0.directionList = arg_4_0.directionList or {}
 
-		if not tabletool.indexOf(slot0.directionList, slot2) then
-			table.insert(slot0.directionList, slot2)
+		if not tabletool.indexOf(arg_4_0.directionList, arg_4_2) then
+			table.insert(arg_4_0.directionList, arg_4_2)
 		end
 	end
 end
 
-return slot0
+return var_0_0

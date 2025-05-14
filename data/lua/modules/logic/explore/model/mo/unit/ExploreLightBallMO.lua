@@ -1,25 +1,27 @@
-module("modules.logic.explore.model.mo.unit.ExploreLightBallMO", package.seeall)
+﻿module("modules.logic.explore.model.mo.unit.ExploreLightBallMO", package.seeall)
 
-slot0 = class("ExploreLightBallMO", ExploreObstacleMO)
+local var_0_0 = class("ExploreLightBallMO", ExploreObstacleMO)
 
-function slot0.initTypeData(slot0)
-	slot0.triggerByClick = false
-	slot0.showRes = lua_explore_unit.configDict[ExploreEnum.ItemType.LightBall].asset
-	slot0.isPhotic = true
-	slot0.triggerEffects = {}
+function var_0_0.initTypeData(arg_1_0)
+	arg_1_0.triggerByClick = false
+	arg_1_0.showRes = lua_explore_unit.configDict[ExploreEnum.ItemType.LightBall].asset
+	arg_1_0.isPhotic = true
+	arg_1_0.triggerEffects = {}
 
-	table.insert(slot0.triggerEffects, {
+	local var_1_0 = {
 		ExploreEnum.TriggerEvent.ItemUnit,
 		""
-	})
+	}
+
+	table.insert(arg_1_0.triggerEffects, var_1_0)
 end
 
-function slot0.getUnitClass(slot0)
+function var_0_0.getUnitClass(arg_2_0)
 	return ExploreLightBallUnit
 end
 
-function slot0.isInteractEnabled(slot0)
+function var_0_0.isInteractEnabled(arg_3_0)
 	return true
 end
 
-return slot0
+return var_0_0

@@ -1,136 +1,141 @@
-module("modules.versionactivitybase.dungeon.model.VersionActivityDungeonBaseMo", package.seeall)
+﻿module("modules.versionactivitybase.dungeon.model.VersionActivityDungeonBaseMo", package.seeall)
 
-slot0 = pureTable("VersionActivityDungeonBaseMo")
+local var_0_0 = pureTable("VersionActivityDungeonBaseMo")
 
-function slot0.ctor(slot0)
-	slot0.actId = nil
-	slot0.chapterId = nil
-	slot0.episodeId = nil
-	slot0.mode = nil
-	slot0.activityDungeonConfig = nil
-	slot0.unlockHardModeEpisodeId = nil
-	slot0.layoutClass = nil
-	slot0.episodeItemCls = nil
-	slot0.layoutPrefabUrl = nil
-	slot0.layoutOffsetY = nil
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.actId = nil
+	arg_1_0.chapterId = nil
+	arg_1_0.episodeId = nil
+	arg_1_0.mode = nil
+	arg_1_0.activityDungeonConfig = nil
+	arg_1_0.unlockHardModeEpisodeId = nil
+	arg_1_0.layoutClass = nil
+	arg_1_0.episodeItemCls = nil
+	arg_1_0.layoutPrefabUrl = nil
+	arg_1_0.layoutOffsetY = nil
 end
 
-function slot0.init(slot0, slot1, slot2, slot3)
-	slot0.actId = slot1
-	slot0.activityDungeonConfig = ActivityConfig.instance:getActivityDungeonConfig(slot1)
-	slot0.unlockHardModeEpisodeId = slot0:getUnlockActivityHardDungeonEpisodeId()
+function var_0_0.init(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
+	arg_2_0.actId = arg_2_1
+	arg_2_0.activityDungeonConfig = ActivityConfig.instance:getActivityDungeonConfig(arg_2_1)
+	arg_2_0.unlockHardModeEpisodeId = arg_2_0:getUnlockActivityHardDungeonEpisodeId()
 
-	if not slot2 and not slot3 then
-		slot0.chapterId = slot0.activityDungeonConfig.story1ChapterId
-	elseif slot3 then
-		slot0.chapterId = DungeonConfig.instance:getEpisodeCO(slot3).chapterId
+	if not arg_2_2 and not arg_2_3 then
+		arg_2_0.chapterId = arg_2_0.activityDungeonConfig.story1ChapterId
+	elseif arg_2_3 then
+		arg_2_0.chapterId = DungeonConfig.instance:getEpisodeCO(arg_2_3).chapterId
 	else
-		slot0.chapterId = slot2
+		arg_2_0.chapterId = arg_2_2
 	end
 
-	if slot0.chapterId == slot0.activityDungeonConfig.story2ChapterId or slot0.chapterId == slot0.activityDungeonConfig.story3ChapterId then
-		slot0.chapterId = slot0.activityDungeonConfig.story1ChapterId
+	if arg_2_0.chapterId == arg_2_0.activityDungeonConfig.story2ChapterId or arg_2_0.chapterId == arg_2_0.activityDungeonConfig.story3ChapterId then
+		arg_2_0.chapterId = arg_2_0.activityDungeonConfig.story1ChapterId
 	end
 
-	slot0:updateMode()
-	slot0:updateEpisodeId(slot3)
+	arg_2_0:updateMode()
+	arg_2_0:updateEpisodeId(arg_2_3)
 end
 
-function slot0.update(slot0, slot1, slot2)
-	slot0:init(slot0.actId, slot1, slot2)
+function var_0_0.update(arg_3_0, arg_3_1, arg_3_2)
+	arg_3_0:init(arg_3_0.actId, arg_3_1, arg_3_2)
 end
 
-function slot0.getUnlockActivityHardDungeonEpisodeId(slot0)
-	return DungeonConfig.instance:getChapterEpisodeCOList(slot0.activityDungeonConfig.hardChapterId) and #slot1 > 0 and slot1[1].preEpisode
+function var_0_0.getUnlockActivityHardDungeonEpisodeId(arg_4_0)
+	local var_4_0 = DungeonConfig.instance:getChapterEpisodeCOList(arg_4_0.activityDungeonConfig.hardChapterId)
+
+	return var_4_0 and #var_4_0 > 0 and var_4_0[1].preEpisode
 end
 
-function slot0.updateMode(slot0)
-	if slot0.chapterId == slot0.activityDungeonConfig.story1ChapterId then
-		slot0.mode = VersionActivityDungeonBaseEnum.DungeonMode.Story
-	elseif slot0.chapterId == slot0.activityDungeonConfig.story2ChapterId then
-		slot0.mode = VersionActivityDungeonBaseEnum.DungeonMode.Story2
-	elseif slot0.chapterId == slot0.activityDungeonConfig.story3ChapterId then
-		slot0.mode = VersionActivityDungeonBaseEnum.DungeonMode.Story3
-	elseif slot0.chapterId == slot0.activityDungeonConfig.hardChapterId then
-		slot0.mode = VersionActivityDungeonBaseEnum.DungeonMode.Hard
+function var_0_0.updateMode(arg_5_0)
+	if arg_5_0.chapterId == arg_5_0.activityDungeonConfig.story1ChapterId then
+		arg_5_0.mode = VersionActivityDungeonBaseEnum.DungeonMode.Story
+	elseif arg_5_0.chapterId == arg_5_0.activityDungeonConfig.story2ChapterId then
+		arg_5_0.mode = VersionActivityDungeonBaseEnum.DungeonMode.Story2
+	elseif arg_5_0.chapterId == arg_5_0.activityDungeonConfig.story3ChapterId then
+		arg_5_0.mode = VersionActivityDungeonBaseEnum.DungeonMode.Story3
+	elseif arg_5_0.chapterId == arg_5_0.activityDungeonConfig.hardChapterId then
+		arg_5_0.mode = VersionActivityDungeonBaseEnum.DungeonMode.Hard
 	end
 end
 
-function slot0.updateEpisodeId(slot0, slot1)
-	if slot1 then
-		slot0.episodeId = slot1
+function var_0_0.updateEpisodeId(arg_6_0, arg_6_1)
+	if arg_6_1 then
+		arg_6_0.episodeId = arg_6_1
 
-		if DungeonConfig.instance:getEpisodeCO(slot0.episodeId).chapterId == slot0.activityDungeonConfig.story2ChapterId or slot2.chapterId == slot0.activityDungeonConfig.story3ChapterId then
-			while slot2.chapterId ~= slot0.activityDungeonConfig.story1ChapterId do
-				slot2 = DungeonConfig.instance:getEpisodeCO(slot2.preEpisode)
+		local var_6_0 = DungeonConfig.instance:getEpisodeCO(arg_6_0.episodeId)
+
+		if var_6_0.chapterId == arg_6_0.activityDungeonConfig.story2ChapterId or var_6_0.chapterId == arg_6_0.activityDungeonConfig.story3ChapterId then
+			while var_6_0.chapterId ~= arg_6_0.activityDungeonConfig.story1ChapterId do
+				var_6_0 = DungeonConfig.instance:getEpisodeCO(var_6_0.preEpisode)
 			end
 		end
 
-		slot0.episodeId = slot2.id
+		arg_6_0.episodeId = var_6_0.id
 
 		return
 	end
 
-	if DungeonModel.instance:hasPassAllChapterEpisode(slot0.chapterId) then
-		slot0.episodeId = VersionActivityDungeonBaseController.instance:getChapterLastSelectEpisode(slot0.chapterId)
+	if DungeonModel.instance:hasPassAllChapterEpisode(arg_6_0.chapterId) then
+		arg_6_0.episodeId = VersionActivityDungeonBaseController.instance:getChapterLastSelectEpisode(arg_6_0.chapterId)
 	else
-		slot3 = nil
+		local var_6_1 = DungeonConfig.instance:getChapterEpisodeCOList(arg_6_0.chapterId)
+		local var_6_2
 
-		for slot7, slot8 in ipairs(DungeonConfig.instance:getChapterEpisodeCOList(slot0.chapterId)) do
-			if slot8 and DungeonModel.instance:getEpisodeInfo(slot8.id) or nil then
-				slot0.episodeId = slot8.id
+		for iter_6_0, iter_6_1 in ipairs(var_6_1) do
+			if iter_6_1 and DungeonModel.instance:getEpisodeInfo(iter_6_1.id) or nil then
+				arg_6_0.episodeId = iter_6_1.id
 			end
 		end
 	end
 end
 
-function slot0.changeMode(slot0, slot1)
-	slot0.mode = slot1
-	slot0.chapterId = slot0.activityDungeonConfig[VersionActivityDungeonBaseEnum.DungeonMode2ChapterIdKey[slot0.mode]]
+function var_0_0.changeMode(arg_7_0, arg_7_1)
+	arg_7_0.mode = arg_7_1
+	arg_7_0.chapterId = arg_7_0.activityDungeonConfig[VersionActivityDungeonBaseEnum.DungeonMode2ChapterIdKey[arg_7_0.mode]]
 
-	slot0:updateEpisodeId()
+	arg_7_0:updateEpisodeId()
 	VersionActivityDungeonBaseController.instance:dispatchEvent(VersionActivityDungeonEvent.OnModeChange)
 end
 
-function slot0.changeEpisode(slot0, slot1)
-	slot0:updateEpisodeId(slot1)
+function var_0_0.changeEpisode(arg_8_0, arg_8_1)
+	arg_8_0:updateEpisodeId(arg_8_1)
 	VersionActivityDungeonBaseController.instance:dispatchEvent(VersionActivityDungeonEvent.OnActivityDungeonMoChange)
 end
 
-function slot0.isHardMode(slot0)
-	return slot0.mode == VersionActivityDungeonBaseEnum.DungeonMode.Hard
+function var_0_0.isHardMode(arg_9_0)
+	return arg_9_0.mode == VersionActivityDungeonBaseEnum.DungeonMode.Hard
 end
 
-function slot0.setLayoutClass(slot0, slot1)
-	slot0.layoutClass = slot1
+function var_0_0.setLayoutClass(arg_10_0, arg_10_1)
+	arg_10_0.layoutClass = arg_10_1
 end
 
-function slot0.getLayoutClass(slot0)
-	return slot0.layoutClass or VersionActivityDungeonBaseChapterLayout
+function var_0_0.getLayoutClass(arg_11_0)
+	return arg_11_0.layoutClass or VersionActivityDungeonBaseChapterLayout
 end
 
-function slot0.setMapEpisodeItemClass(slot0, slot1)
-	slot0.episodeItemCls = slot1
+function var_0_0.setMapEpisodeItemClass(arg_12_0, arg_12_1)
+	arg_12_0.episodeItemCls = arg_12_1
 end
 
-function slot0.getEpisodeItemClass(slot0)
-	return slot0.episodeItemCls or VersionActivityDungeonBaseEpisodeItem
+function var_0_0.getEpisodeItemClass(arg_13_0)
+	return arg_13_0.episodeItemCls or VersionActivityDungeonBaseEpisodeItem
 end
 
-function slot0.setLayoutPrefabUrl(slot0, slot1)
-	slot0.layoutPrefabUrl = slot1
+function var_0_0.setLayoutPrefabUrl(arg_14_0, arg_14_1)
+	arg_14_0.layoutPrefabUrl = arg_14_1
 end
 
-function slot0.getLayoutPrefabUrl(slot0)
-	return slot0.layoutPrefabUrl or "ui/viewres/dungeon/chaptermap/chaptermaplayout.prefab"
+function var_0_0.getLayoutPrefabUrl(arg_15_0)
+	return arg_15_0.layoutPrefabUrl or "ui/viewres/dungeon/chaptermap/chaptermaplayout.prefab"
 end
 
-function slot0.setLayoutOffsetY(slot0, slot1)
-	slot0.layoutOffsetY = slot1
+function var_0_0.setLayoutOffsetY(arg_16_0, arg_16_1)
+	arg_16_0.layoutOffsetY = arg_16_1
 end
 
-function slot0.getLayoutOffsetY(slot0)
-	return slot0.layoutOffsetY or 100
+function var_0_0.getLayoutOffsetY(arg_17_0)
+	return arg_17_0.layoutOffsetY or 100
 end
 
-return slot0
+return var_0_0

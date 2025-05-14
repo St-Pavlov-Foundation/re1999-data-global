@@ -1,7 +1,8 @@
-module("modules.logic.stat.defines.StatViewNameEnum", package.seeall)
+﻿module("modules.logic.stat.defines.StatViewNameEnum", package.seeall)
 
-slot0 = _M
-slot0.ChineseViewName = {
+local var_0_0 = _M
+
+var_0_0.ChineseViewName = {
 	[ViewName.TurnBackFullView] = "海外人拉人H5活动界面",
 	[ViewName.MainView] = "主界面",
 	[ViewName.MainThumbnailView] = "主界面缩略图",
@@ -122,7 +123,7 @@ slot0.ChineseViewName = {
 	[ViewName.Act183MainView] = "挑战玩法",
 	[ViewName.AutoChessMainView] = "魔精自走棋"
 }
-slot0.NeedTrackViewDict = {
+var_0_0.NeedTrackViewDict = {
 	[ViewName.TurnBackFullView] = true,
 	[ViewName.VersionActivity1_8EnterView] = true,
 	[ViewName.VersionActivity1_8DungeonMapView] = true,
@@ -225,7 +226,7 @@ slot0.NeedTrackViewDict = {
 	[ViewName.Act183MainView] = true,
 	[ViewName.AutoChessMainView] = true
 }
-slot0.NeedListenTabSwitchList = {
+var_0_0.NeedListenTabSwitchList = {
 	ViewName.VersionActivity1_8EnterView,
 	ViewName.VersionActivity1_9EnterView,
 	ViewName.VersionActivity2_0EnterView,
@@ -236,7 +237,7 @@ slot0.NeedListenTabSwitchList = {
 	ViewName.VersionActivity2_5EnterView,
 	ViewName.StoreView
 }
-slot0.TabViewContainerID = {
+var_0_0.TabViewContainerID = {
 	[ViewName.VersionActivity1_8EnterView] = 2,
 	[ViewName.VersionActivity1_9EnterView] = 2,
 	[ViewName.VersionActivity2_0EnterView] = 2,
@@ -247,7 +248,7 @@ slot0.TabViewContainerID = {
 	[ViewName.VersionActivity2_5EnterView] = 2,
 	[ViewName.StoreView] = 3
 }
-slot0.TabViewName = {
+var_0_0.TabViewName = {
 	V2a2_Season166EnterView = "赛季",
 	VersionActivity2_3DuDuGuEnterView = "笃笃骨",
 	VersionActivity2_3Act174EnterView = "和平角斗场",
@@ -293,7 +294,7 @@ slot0.TabViewName = {
 	[LanShouPaEnterView] = "蓝手帕",
 	[AergusiEnterView] = "阿尔古斯"
 }
-slot0.IgnoreViewList = {
+var_0_0.IgnoreViewList = {
 	ViewName.ToastView,
 	ViewName.ToastTopView,
 	ViewName.LoadingView,
@@ -317,8 +318,8 @@ slot0.IgnoreViewList = {
 	ViewName.StoryTyperView,
 	ViewName.StoryPrologueSkipView
 }
-slot0.MaterialTipView = ViewName.MaterialTipView
-slot0.DungeonViewName = {
+var_0_0.MaterialTipView = ViewName.MaterialTipView
+var_0_0.DungeonViewName = {
 	Story = "故事",
 	Res = "资源",
 	WeekWalkName = "人工梦游",
@@ -328,4 +329,4 @@ slot0.DungeonViewName = {
 	Break = "洞悉"
 }
 
-return slot0
+return var_0_0

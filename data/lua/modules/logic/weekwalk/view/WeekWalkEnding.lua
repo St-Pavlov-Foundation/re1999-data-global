@@ -1,181 +1,189 @@
-module("modules.logic.weekwalk.view.WeekWalkEnding", package.seeall)
+﻿module("modules.logic.weekwalk.view.WeekWalkEnding", package.seeall)
 
-slot0 = class("WeekWalkEnding", BaseView)
+local var_0_0 = class("WeekWalkEnding", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gofinish = gohelper.findChild(slot0.viewGO, "#go_finish")
-	slot0._scrollnull = gohelper.findChildScrollRect(slot0.viewGO, "#go_finish/weekwalkending/#scroll_null")
-	slot0._gostartemplate = gohelper.findChild(slot0.viewGO, "#go_finish/weekwalkending/#scroll_null/starlist/#go_star_template")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gofinish = gohelper.findChild(arg_1_0.viewGO, "#go_finish")
+	arg_1_0._scrollnull = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_finish/weekwalkending/#scroll_null")
+	arg_1_0._gostartemplate = gohelper.findChild(arg_1_0.viewGO, "#go_finish/weekwalkending/#scroll_null/starlist/#go_star_template")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0._viewAnim = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	slot0._animator = slot0._gofinish:GetComponent(typeof(UnityEngine.Animator))
-	slot0._mapId = WeekWalkModel.instance:getCurMapId()
-	slot0._animEventWrap = slot0._gofinish:GetComponent(typeof(ZProj.AnimationEventWrap))
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._viewAnim = arg_4_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	arg_4_0._animator = arg_4_0._gofinish:GetComponent(typeof(UnityEngine.Animator))
+	arg_4_0._mapId = WeekWalkModel.instance:getCurMapId()
+	arg_4_0._animEventWrap = arg_4_0._gofinish:GetComponent(typeof(ZProj.AnimationEventWrap))
 
-	slot0._animEventWrap:AddEventListener("star", slot0._startShowStars, slot0)
+	arg_4_0._animEventWrap:AddEventListener("star", arg_4_0._startShowStars, arg_4_0)
 end
 
-function slot0._startShowStars(slot0)
-	if not slot0._starList then
+function var_0_0._startShowStars(arg_5_0)
+	if not arg_5_0._starList then
 		return
 	end
 
-	slot0:_starsAppear()
+	arg_5_0:_starsAppear()
 end
 
-function slot0._starsAppear(slot0)
-	slot0._curAppearIndex = 1
+function var_0_0._starsAppear(arg_6_0)
+	arg_6_0._curAppearIndex = 1
 
-	TaskDispatcher.cancelTask(slot0._oneStarAppear, slot0)
-	TaskDispatcher.runRepeat(slot0._oneStarAppear, slot0, 0.12)
+	TaskDispatcher.cancelTask(arg_6_0._oneStarAppear, arg_6_0)
+	TaskDispatcher.runRepeat(arg_6_0._oneStarAppear, arg_6_0, 0.12)
 end
 
-function slot0._oneStarAppear(slot0)
-	gohelper.setActive(slot0._starList[slot0._curAppearIndex], true)
+function var_0_0._oneStarAppear(arg_7_0)
+	local var_7_0 = arg_7_0._starList[arg_7_0._curAppearIndex]
+
+	gohelper.setActive(var_7_0, true)
 	AudioMgr.instance:trigger(AudioEnum.WeekWalk.play_artificial_ui_challenge_success_star)
 
-	slot0._curAppearIndex = slot0._curAppearIndex + 1
+	arg_7_0._curAppearIndex = arg_7_0._curAppearIndex + 1
 
-	if slot0._curNum < slot0._curAppearIndex then
-		TaskDispatcher.cancelTask(slot0._oneStarAppear, slot0)
+	if arg_7_0._curAppearIndex > arg_7_0._curNum then
+		TaskDispatcher.cancelTask(arg_7_0._oneStarAppear, arg_7_0)
 	end
 end
 
-function slot0._addStarList(slot0)
-	slot0._starList = slot0:getUserDataTb_()
+function var_0_0._addStarList(arg_8_0)
+	arg_8_0._starList = arg_8_0:getUserDataTb_()
 
-	for slot5 = 1, slot0._maxNum do
-		slot6 = gohelper.cloneInPlace(slot0._gostartemplate)
+	local var_8_0 = arg_8_0._maxNum
 
-		gohelper.setActive(slot6, true)
+	for iter_8_0 = 1, var_8_0 do
+		local var_8_1 = gohelper.cloneInPlace(arg_8_0._gostartemplate)
 
-		slot7 = gohelper.findChild(slot6, "star")
+		gohelper.setActive(var_8_1, true)
 
-		gohelper.setActive(slot7, false)
-		table.insert(slot0._starList, slot7)
+		local var_8_2 = gohelper.findChild(var_8_1, "star")
+
+		gohelper.setActive(var_8_2, false)
+		table.insert(arg_8_0._starList, var_8_2)
 	end
 end
 
-function slot0.onOpen(slot0)
-	slot0:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnWeekwalkResetLayer, slot0._onWeekwalkResetLayer, slot0)
-	slot0:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnWeekwalkInfoUpdate, slot0._onWeekwalkInfoUpdate, slot0)
-	slot0:_showFinishAnim()
+function var_0_0.onOpen(arg_9_0)
+	arg_9_0:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnWeekwalkResetLayer, arg_9_0._onWeekwalkResetLayer, arg_9_0)
+	arg_9_0:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnWeekwalkInfoUpdate, arg_9_0._onWeekwalkInfoUpdate, arg_9_0)
+	arg_9_0:_showFinishAnim()
 end
 
-function slot0._onWeekwalkResetLayer(slot0)
-	gohelper.setActive(slot0._gofinish, false)
+function var_0_0._onWeekwalkResetLayer(arg_10_0)
+	gohelper.setActive(arg_10_0._gofinish, false)
 end
 
-function slot0._onWeekwalkInfoUpdate(slot0)
-	slot0:_showFinishAnim()
+function var_0_0._onWeekwalkInfoUpdate(arg_11_0)
+	arg_11_0:_showFinishAnim()
 end
 
-function slot0._showFinishAnim(slot0)
-	slot0._mapInfo = WeekWalkModel.instance:getCurMapInfo()
+function var_0_0._showFinishAnim(arg_12_0)
+	arg_12_0._mapInfo = WeekWalkModel.instance:getCurMapInfo()
 
-	if not slot0._mapInfo then
+	if not arg_12_0._mapInfo then
 		return
 	end
 
-	slot0._curNum, slot0._maxNum = slot0._mapInfo:getCurStarInfo()
+	arg_12_0._curNum, arg_12_0._maxNum = arg_12_0._mapInfo:getCurStarInfo()
 
-	if not WeekWalkView._canShowFinishAnim(slot0._mapId) then
-		slot0:_onShowFinishAnimDone()
+	if not WeekWalkView._canShowFinishAnim(arg_12_0._mapId) then
+		arg_12_0:_onShowFinishAnimDone()
 
 		return
 	end
 
-	slot0:_addStarList()
+	arg_12_0:_addStarList()
 
-	if slot0._mapInfo.isFinished == 1 then
-		WeekWalkModel.instance:setFinishMapId(slot0._mapId)
+	if arg_12_0._mapInfo.isFinished == 1 then
+		WeekWalkModel.instance:setFinishMapId(arg_12_0._mapId)
 	end
 
 	WeekwalkRpc.instance:sendMarkShowFinishedRequest()
 	UIBlockMgrExtend.setNeedCircleMv(false)
 	UIBlockMgr.instance:startBlock("showFinishAnim")
 	AudioMgr.instance:trigger(AudioEnum.WeekWalk.play_artificial_ui_challenge_success)
-	gohelper.setActive(slot0._gofinish, true)
+	gohelper.setActive(arg_12_0._gofinish, true)
 
-	slot0._viewAnim.enabled = true
+	arg_12_0._viewAnim.enabled = true
 
-	if slot0._curNum == slot0._maxNum then
-		slot0._animator:Play("ending2")
-		slot0._viewAnim:Play("finish_map2")
+	local var_12_0 = 2.83
 
-		slot1 = 2.83 + 2
+	if arg_12_0._curNum == arg_12_0._maxNum then
+		arg_12_0._animator:Play("ending2")
+		arg_12_0._viewAnim:Play("finish_map2")
+
+		var_12_0 = var_12_0 + 2
 	else
-		slot0._animator:Play("ending1")
-		slot0._viewAnim:Play("finish_map1")
+		arg_12_0._animator:Play("ending1")
+		arg_12_0._viewAnim:Play("finish_map1")
 	end
 
-	TaskDispatcher.runDelay(slot0._closeFinishAnim, slot0, slot1)
+	TaskDispatcher.runDelay(arg_12_0._closeFinishAnim, arg_12_0, var_12_0)
 
-	slot0._isPlayMapFinishClip = nil
+	arg_12_0._isPlayMapFinishClip = nil
 
-	TaskDispatcher.runRepeat(slot0._checkAnimClip, slot0, 0)
+	TaskDispatcher.runRepeat(arg_12_0._checkAnimClip, arg_12_0, 0)
 end
 
-function slot0._checkAnimClip(slot0)
-	if slot0._isPlayMapFinishClip then
-		TaskDispatcher.cancelTask(slot0._checkAnimClip, slot0)
+function var_0_0._checkAnimClip(arg_13_0)
+	if arg_13_0._isPlayMapFinishClip then
+		TaskDispatcher.cancelTask(arg_13_0._checkAnimClip, arg_13_0)
 
 		return
 	end
 
-	if slot0._animator:GetCurrentAnimatorStateInfo(0):IsName("open") then
-		slot0._isPlayMapFinishClip = true
+	if arg_13_0._animator:GetCurrentAnimatorStateInfo(0):IsName("open") then
+		arg_13_0._isPlayMapFinishClip = true
 
 		AudioMgr.instance:trigger(AudioEnum.WeekWalk.play_artificial_ui_mapfinish)
 	end
 end
 
-function slot0._closeFinishAnim(slot0)
-	TaskDispatcher.cancelTask(slot0._checkAnimClip, slot0)
+function var_0_0._closeFinishAnim(arg_14_0)
+	TaskDispatcher.cancelTask(arg_14_0._checkAnimClip, arg_14_0)
 	UIBlockMgrExtend.setNeedCircleMv(true)
 	UIBlockMgr.instance:endBlock("showFinishAnim")
-	gohelper.setActive(slot0._gofinish, slot0._curNum == slot0._maxNum)
+	gohelper.setActive(arg_14_0._gofinish, arg_14_0._curNum == arg_14_0._maxNum)
 	WeekWalkController.instance:dispatchEvent(WeekWalkEvent.OnShowFinishAnimDone)
-	slot0:_onShowFinishAnimDone()
+	arg_14_0:_onShowFinishAnimDone()
 end
 
-function slot0._onShowFinishAnimDone(slot0)
-	TaskDispatcher.runDelay(slot0._showIdle, slot0, 0)
+function var_0_0._onShowFinishAnimDone(arg_15_0)
+	TaskDispatcher.runDelay(arg_15_0._showIdle, arg_15_0, 0)
 
 	if WaitGuideActionOpenViewWithCondition.weekWalkFinishLayer() then
 		WeekWalkController.instance:dispatchEvent(WeekWalkEvent.GuideFinishLayer)
 	end
 end
 
-function slot0._showIdle(slot0)
-	if slot0._mapInfo.isFinish == 1 and slot0._curNum == slot0._maxNum then
-		gohelper.setActive(slot0._gofinish, true)
-		slot0._animator:Play(UIAnimationName.Idle)
+function var_0_0._showIdle(arg_16_0)
+	if arg_16_0._mapInfo.isFinish == 1 and arg_16_0._curNum == arg_16_0._maxNum then
+		gohelper.setActive(arg_16_0._gofinish, true)
+		arg_16_0._animator:Play(UIAnimationName.Idle)
 	end
 end
 
-function slot0.onClose(slot0)
-	gohelper.setActive(slot0._gofinish, false)
+function var_0_0.onClose(arg_17_0)
+	gohelper.setActive(arg_17_0._gofinish, false)
 end
 
-function slot0.onDestroyView(slot0)
-	TaskDispatcher.cancelTask(slot0._checkAnimClip, slot0)
-	TaskDispatcher.cancelTask(slot0._oneStarAppear, slot0)
-	TaskDispatcher.cancelTask(slot0._closeFinishAnim, slot0)
-	TaskDispatcher.cancelTask(slot0._showIdle, slot0)
-	slot0._animEventWrap:RemoveAllEventListener()
+function var_0_0.onDestroyView(arg_18_0)
+	TaskDispatcher.cancelTask(arg_18_0._checkAnimClip, arg_18_0)
+	TaskDispatcher.cancelTask(arg_18_0._oneStarAppear, arg_18_0)
+	TaskDispatcher.cancelTask(arg_18_0._closeFinishAnim, arg_18_0)
+	TaskDispatcher.cancelTask(arg_18_0._showIdle, arg_18_0)
+	arg_18_0._animEventWrap:RemoveAllEventListener()
 end
 
-return slot0
+return var_0_0

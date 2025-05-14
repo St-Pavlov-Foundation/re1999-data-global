@@ -1,7 +1,8 @@
-module("modules.logic.versionactivity1_8.dungeon.define.VersionActivity1_8DungeonEnum", package.seeall)
+﻿module("modules.logic.versionactivity1_8.dungeon.define.VersionActivity1_8DungeonEnum", package.seeall)
 
-slot0 = _M
-slot0.DungeonChapterId = {
+local var_0_0 = _M
+
+var_0_0.DungeonChapterId = {
 	ElementFight = 18102,
 	Story = 18101,
 	Hard = 18201,
@@ -10,25 +11,25 @@ slot0.DungeonChapterId = {
 	Story2 = 18301,
 	Story3 = 18401
 }
-slot0.EpisodeStarType = {
-	[slot0.DungeonChapterId.Story] = {
+var_0_0.EpisodeStarType = {
+	[var_0_0.DungeonChapterId.Story] = {
 		empty = "v1a8_dungeon_star_1_locked",
 		light = "v1a8_dungeon_star_1"
 	},
-	[slot0.DungeonChapterId.Story2] = {
+	[var_0_0.DungeonChapterId.Story2] = {
 		empty = "v1a8_dungeon_star_2_locked",
 		light = "v1a8_dungeon_star_2"
 	},
-	[slot0.DungeonChapterId.Story3] = {
+	[var_0_0.DungeonChapterId.Story3] = {
 		empty = "v1a8_dungeon_star_3_locked",
 		light = "v1a8_dungeon_star_3"
 	},
-	[slot0.DungeonChapterId.Hard] = {
+	[var_0_0.DungeonChapterId.Hard] = {
 		empty = "v1a8_dungeon_star_3_locked",
 		light = "v1a8_dungeon_star_3"
 	}
 }
-slot0.BlockKey = {
+var_0_0.BlockKey = {
 	MapLevelViewPlayUnlockAnim = "VersionActivity1_8_MapLevelViewPlayUnlockAnim",
 	MapViewPlayCloseAnim = "VersionActivity1_8_MapViewPlayCloseAnim",
 	MapViewPlayOpenAnim = "VersionActivity1_8_MapViewPlayOpenAnim",
@@ -37,7 +38,7 @@ slot0.BlockKey = {
 	FocusNewElement = "VersionActivity1_8_FocusNewElement",
 	GetComponentRepairReward = "VersionActivity1_8_GetComponentRepairReward"
 }
-slot0.PlayerPrefsKey = {
+var_0_0.PlayerPrefsKey = {
 	ActivityDungeonSpecialEpisodeLastUnLockMode = "ActivityDungeonSpecialEpisodeLastUnLockMode",
 	IsPlayedFactoryComponentUnlockANim = "Activity157IsPlayedFactoryComponentUnlockANim_",
 	ActivityDungeonSpecialEpisodeLastSelectMode = "ActivityDungeonSpecialEpisodeLastSelectMode",
@@ -47,24 +48,24 @@ slot0.PlayerPrefsKey = {
 	IsPlayedMissionNodeUnlocked = "Activity157IsPlayedUnlockMissionNode_",
 	IsPlayedFactoryMapSwitchUnlockAnim = "Activity157IsPlayedFactoryMapSwitchUnlockAnim"
 }
-slot0.SceneRootName = "VersionActivity1_8DungeonMapScene"
-slot0.DungeonMapCameraSize = 5
-slot0.MaxHoleNum = 5
-slot0.HoleHalfWidth = 3.5
-slot0.HoleHalfHeight = 1.75
-slot0.HoleAnimDuration = 0.33
-slot0.HoleAnimMaxZ = 3
-slot0.HoleAnimMinZ = 0
-slot0.OutSideAreaPos = {
+var_0_0.SceneRootName = "VersionActivity1_8DungeonMapScene"
+var_0_0.DungeonMapCameraSize = 5
+var_0_0.MaxHoleNum = 5
+var_0_0.HoleHalfWidth = 3.5
+var_0_0.HoleHalfHeight = 1.75
+var_0_0.HoleAnimDuration = 0.33
+var_0_0.HoleAnimMaxZ = 3
+var_0_0.HoleAnimMinZ = 0
+var_0_0.OutSideAreaPos = {
 	X = -1000,
 	Y = -1000
 }
-slot0.ElementTimeOffsetY = 0.8
-slot0.MapDir = {
+var_0_0.ElementTimeOffsetY = 0.8
+var_0_0.MapDir = {
 	Top = 3,
 	Left = 1,
 	Right = 2,
 	Bottom = 4
 }
 
-return slot0
+return var_0_0

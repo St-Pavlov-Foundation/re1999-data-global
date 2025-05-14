@@ -1,103 +1,109 @@
-module("modules.logic.gm.view.GM_ActivityWelfareView", package.seeall)
+﻿module("modules.logic.gm.view.GM_ActivityWelfareView", package.seeall)
 
-slot0 = class("GM_ActivityWelfareView", BaseView)
-slot1 = "#FFFF00"
+local var_0_0 = class("GM_ActivityWelfareView", BaseView)
+local var_0_1 = "#FFFF00"
 
-function slot0.register()
-	uv0.ActivityWelfareView_register(ActivityWelfareView)
-	uv0.ActivityWelfareCategoryItem_register(ActivityWelfareCategoryItem)
+function var_0_0.register()
+	var_0_0.ActivityWelfareView_register(ActivityWelfareView)
+	var_0_0.ActivityWelfareCategoryItem_register(ActivityWelfareCategoryItem)
 end
 
-function slot0.ActivityWelfareView_register(slot0)
-	GMMinusModel.instance:saveOriginalFunc(slot0, "_editableInitView")
-	GMMinusModel.instance:saveOriginalFunc(slot0, "addEvents")
-	GMMinusModel.instance:saveOriginalFunc(slot0, "removeEvents")
+function var_0_0.ActivityWelfareView_register(arg_2_0)
+	GMMinusModel.instance:saveOriginalFunc(arg_2_0, "_editableInitView")
+	GMMinusModel.instance:saveOriginalFunc(arg_2_0, "addEvents")
+	GMMinusModel.instance:saveOriginalFunc(arg_2_0, "removeEvents")
 
-	function slot0._editableInitView(slot0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(slot0, "_editableInitView", ...)
-		GMMinusModel.instance:addBtnGM(slot0)
+	function arg_2_0._editableInitView(arg_3_0, ...)
+		GMMinusModel.instance:callOriginalSelfFunc(arg_3_0, "_editableInitView", ...)
+		GMMinusModel.instance:addBtnGM(arg_3_0)
 	end
 
-	function slot0.addEvents(slot0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(slot0, "addEvents", ...)
-		GMMinusModel.instance:btnGM_AddClickListener(slot0)
-		GM_ActivityWelfareViewContainer.addEvents(slot0)
+	function arg_2_0.addEvents(arg_4_0, ...)
+		GMMinusModel.instance:callOriginalSelfFunc(arg_4_0, "addEvents", ...)
+		GMMinusModel.instance:btnGM_AddClickListener(arg_4_0)
+		GM_ActivityWelfareViewContainer.addEvents(arg_4_0)
 	end
 
-	function slot0.removeEvents(slot0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(slot0, "removeEvents", ...)
-		GMMinusModel.instance:btnGM_RemoveClickListener(slot0)
-		GM_ActivityWelfareViewContainer.removeEvents(slot0)
+	function arg_2_0.removeEvents(arg_5_0, ...)
+		GMMinusModel.instance:callOriginalSelfFunc(arg_5_0, "removeEvents", ...)
+		GMMinusModel.instance:btnGM_RemoveClickListener(arg_5_0)
+		GM_ActivityWelfareViewContainer.removeEvents(arg_5_0)
 	end
 
-	function slot0._gm_showAllTabIdUpdate(slot0)
+	function arg_2_0._gm_showAllTabIdUpdate(arg_6_0)
 		ActivityWelfareListModel.instance:onModelUpdate()
 	end
 end
 
-function slot0.ActivityWelfareCategoryItem_register(slot0)
-	GMMinusModel.instance:saveOriginalFunc(slot0, "_refreshItem")
-	GMMinusModel.instance:saveOriginalFunc(slot0, "refreshSelect")
+function var_0_0.ActivityWelfareCategoryItem_register(arg_7_0)
+	GMMinusModel.instance:saveOriginalFunc(arg_7_0, "_refreshItem")
+	GMMinusModel.instance:saveOriginalFunc(arg_7_0, "refreshSelect")
 
-	function slot0._refreshItem(slot0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(slot0, "_refreshItem", ...)
+	function arg_7_0._refreshItem(arg_8_0, ...)
+		GMMinusModel.instance:callOriginalSelfFunc(arg_8_0, "_refreshItem", ...)
 
-		if not uv0.s_ShowAllTabId then
+		if not var_0_0.s_ShowAllTabId then
 			return
 		end
 
-		slot3 = gohelper.getRichColorText(slot0._mo.id, uv1)
-		slot0._txtnamecn.text = slot3
-		slot0._txtunselectnamecn.text = slot3
+		local var_8_0 = arg_8_0._mo.id
+		local var_8_1 = gohelper.getRichColorText(var_8_0, var_0_1)
+
+		arg_8_0._txtnamecn.text = var_8_1
+		arg_8_0._txtunselectnamecn.text = var_8_1
 	end
 
-	function slot0.refreshSelect(slot0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(slot0, "refreshSelect", ...)
+	function arg_7_0.refreshSelect(arg_9_0, ...)
+		GMMinusModel.instance:callOriginalSelfFunc(arg_9_0, "refreshSelect", ...)
 
-		if not uv0.s_ShowAllTabId then
+		if not var_0_0.s_ShowAllTabId then
 			return
 		end
 
-		gohelper.setActive(slot0._gonewwelfare, false)
-		gohelper.setActive(slot0._goselectwelfare, false)
-		gohelper.setActive(slot0._goselect, slot0._selected)
-		gohelper.setActive(slot0._gounselect, not slot0._selected)
+		gohelper.setActive(arg_9_0._gonewwelfare, false)
+		gohelper.setActive(arg_9_0._goselectwelfare, false)
+		gohelper.setActive(arg_9_0._goselect, arg_9_0._selected)
+		gohelper.setActive(arg_9_0._gounselect, not arg_9_0._selected)
 	end
 end
 
-function slot0.onInitView(slot0)
-	slot0._btnClose = gohelper.findChildButtonWithAudio(slot0.viewGO, "btnClose")
-	slot0._item1Toggle = gohelper.findChildToggle(slot0.viewGO, "viewport/content/item1/Toggle")
+function var_0_0.onInitView(arg_10_0)
+	arg_10_0._btnClose = gohelper.findChildButtonWithAudio(arg_10_0.viewGO, "btnClose")
+	arg_10_0._item1Toggle = gohelper.findChildToggle(arg_10_0.viewGO, "viewport/content/item1/Toggle")
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnClose:AddClickListener(slot0.closeThis, slot0)
-	slot0._item1Toggle:AddOnValueChanged(slot0._onItem1ToggleValueChanged, slot0)
+function var_0_0.addEvents(arg_11_0)
+	arg_11_0._btnClose:AddClickListener(arg_11_0.closeThis, arg_11_0)
+	arg_11_0._item1Toggle:AddOnValueChanged(arg_11_0._onItem1ToggleValueChanged, arg_11_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnClose:RemoveClickListener()
-	slot0._item1Toggle:RemoveOnValueChanged()
+function var_0_0.removeEvents(arg_12_0)
+	arg_12_0._btnClose:RemoveClickListener()
+	arg_12_0._item1Toggle:RemoveOnValueChanged()
 end
 
-function slot0.onOpen(slot0)
-	slot0:_refreshItem1()
+function var_0_0.onOpen(arg_13_0)
+	arg_13_0:_refreshItem1()
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_14_0)
+	return
 end
 
-slot0.s_ShowAllTabId = false
+var_0_0.s_ShowAllTabId = false
 
-function slot0._refreshItem1(slot0)
-	slot0._item1Toggle.isOn = uv0.s_ShowAllTabId
+function var_0_0._refreshItem1(arg_15_0)
+	local var_15_0 = var_0_0.s_ShowAllTabId
+
+	arg_15_0._item1Toggle.isOn = var_15_0
 end
 
-function slot0._onItem1ToggleValueChanged(slot0)
-	slot1 = slot0._item1Toggle.isOn
-	uv0.s_ShowAllTabId = slot1
+function var_0_0._onItem1ToggleValueChanged(arg_16_0)
+	local var_16_0 = arg_16_0._item1Toggle.isOn
 
-	GMController.instance:dispatchEvent(GMEvent.ActivityWelfareView_ShowAllTabIdUpdate, slot1)
+	var_0_0.s_ShowAllTabId = var_16_0
+
+	GMController.instance:dispatchEvent(GMEvent.ActivityWelfareView_ShowAllTabIdUpdate, var_16_0)
 end
 
-return slot0
+return var_0_0

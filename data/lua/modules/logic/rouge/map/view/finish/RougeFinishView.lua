@@ -1,78 +1,82 @@
-module("modules.logic.rouge.map.view.finish.RougeFinishView", package.seeall)
+﻿module("modules.logic.rouge.map.view.finish.RougeFinishView", package.seeall)
 
-slot0 = class("RougeFinishView", BaseView)
+local var_0_0 = class("RougeFinishView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gosuccess = gohelper.findChild(slot0.viewGO, "#go_success")
-	slot0._gofailed = gohelper.findChild(slot0.viewGO, "#go_failed")
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gosuccess = gohelper.findChild(arg_1_0.viewGO, "#go_success")
+	arg_1_0._gofailed = gohelper.findChild(arg_1_0.viewGO, "#go_failed")
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
 end
 
-function slot0._btncloseOnClick(slot0)
-	if slot0.sending then
+function var_0_0._btncloseOnClick(arg_4_0)
+	if arg_4_0.sending then
 		return
 	end
 
-	if slot0.closeed then
+	if arg_4_0.closeed then
 		return
 	end
 
-	slot0:closeThis()
+	arg_4_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
-	slot0.simageSuccess = gohelper.findChildSingleImage(slot0.viewGO, "#go_success")
-	slot0.simageFail = gohelper.findChildSingleImage(slot0.viewGO, "#go_failed")
-	slot0.succAnimator = slot0._gosuccess:GetComponent(gohelper.Type_Animator)
-	slot0.failAnimator = slot0._gofailed:GetComponent(gohelper.Type_Animator)
+function var_0_0._editableInitView(arg_5_0)
+	arg_5_0.simageSuccess = gohelper.findChildSingleImage(arg_5_0.viewGO, "#go_success")
+	arg_5_0.simageFail = gohelper.findChildSingleImage(arg_5_0.viewGO, "#go_failed")
+	arg_5_0.succAnimator = arg_5_0._gosuccess:GetComponent(gohelper.Type_Animator)
+	arg_5_0.failAnimator = arg_5_0._gofailed:GetComponent(gohelper.Type_Animator)
 
-	NavigateMgr.instance:addEscape(slot0.viewName, RougeMapHelper.blockEsc)
+	NavigateMgr.instance:addEscape(arg_5_0.viewName, RougeMapHelper.blockEsc)
 end
 
-function slot0.onOpen(slot0)
-	slot0.sending = true
-	slot0.callbackId = RougeRpc.instance:sendRougeEndRequest(slot0.onReceiveMsg, slot0)
-	slot1 = slot0.viewParam == RougeMapEnum.FinishEnum.Finish
+function var_0_0.onOpen(arg_6_0)
+	arg_6_0.sending = true
+	arg_6_0.callbackId = RougeRpc.instance:sendRougeEndRequest(arg_6_0.onReceiveMsg, arg_6_0)
 
-	gohelper.setActive(slot0._gosuccess, slot1)
-	gohelper.setActive(slot0._gofailed, not slot1)
+	local var_6_0 = arg_6_0.viewParam == RougeMapEnum.FinishEnum.Finish
 
-	if slot1 then
+	gohelper.setActive(arg_6_0._gosuccess, var_6_0)
+	gohelper.setActive(arg_6_0._gofailed, not var_6_0)
+
+	if var_6_0 then
 		AudioMgr.instance:trigger(AudioEnum.UI.VictoryOpen)
-		slot0.simageSuccess:LoadImage("singlebg/rouge/team/rouge_team_successbg.png")
+		arg_6_0.simageSuccess:LoadImage("singlebg/rouge/team/rouge_team_successbg.png")
 	else
 		AudioMgr.instance:trigger(AudioEnum.UI.FailOpen)
-		slot0.simageFail:LoadImage("singlebg/rouge/team/rouge_team_failbg.png")
+		arg_6_0.simageFail:LoadImage("singlebg/rouge/team/rouge_team_failbg.png")
 	end
 end
 
-function slot0.onReceiveMsg(slot0)
-	slot0.sending = false
+function var_0_0.onReceiveMsg(arg_7_0)
+	arg_7_0.sending = false
 end
 
-function slot0.onClose(slot0)
-	slot0.closeed = true
+function var_0_0.onClose(arg_8_0)
+	arg_8_0.closeed = true
 
-	RougeRpc.instance:removeCallbackById(slot0.callbackId)
-	(slot0.viewParam == RougeMapEnum.FinishEnum.Finish and slot0.succAnimator or slot0.failAnimator):Play("close", 0, 0)
-	RougeOutsideRpc.instance:sendRougeGetNewReddotInfoRequest(RougeOutsideModel.instance:season())
+	RougeRpc.instance:removeCallbackById(arg_8_0.callbackId)
+	;(arg_8_0.viewParam == RougeMapEnum.FinishEnum.Finish and arg_8_0.succAnimator or arg_8_0.failAnimator):Play("close", 0, 0)
+
+	local var_8_0 = RougeOutsideModel.instance:season()
+
+	RougeOutsideRpc.instance:sendRougeGetNewReddotInfoRequest(var_8_0)
 end
 
-function slot0.onDestroyView(slot0)
-	slot0.simageSuccess:UnLoadImage()
-	slot0.simageFail:UnLoadImage()
+function var_0_0.onDestroyView(arg_9_0)
+	arg_9_0.simageSuccess:UnLoadImage()
+	arg_9_0.simageFail:UnLoadImage()
 end
 
-return slot0
+return var_0_0

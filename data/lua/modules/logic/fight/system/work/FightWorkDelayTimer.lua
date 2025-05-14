@@ -1,27 +1,28 @@
-module("modules.logic.fight.system.work.FightWorkDelayTimer", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkDelayTimer", package.seeall)
 
-slot0 = class("FightWorkDelayTimer", FightWorkItem)
+local var_0_0 = class("FightWorkDelayTimer", FightWorkItem)
 
-function slot0.onAwake(slot0, slot1)
-	slot0._waitSeconds = slot1 or 0.01
+function var_0_0.onAwake(arg_1_0, arg_1_1)
+	arg_1_0._waitSeconds = arg_1_1 or 0.01
 end
 
-function slot0.onStart(slot0)
-	if slot0._waitSeconds == 0 then
-		slot0:onDone(true)
+function var_0_0.onStart(arg_2_0)
+	if arg_2_0._waitSeconds == 0 then
+		arg_2_0:onDone(true)
 
 		return
 	end
 
-	slot0:cancelFightWorkSafeTimer()
-	slot0:com_registTimer(slot0._onTimeEnd, slot0._waitSeconds)
+	arg_2_0:cancelFightWorkSafeTimer()
+	arg_2_0:com_registTimer(arg_2_0._onTimeEnd, arg_2_0._waitSeconds)
 end
 
-function slot0.clearWork(slot0)
+function var_0_0.clearWork(arg_3_0)
+	return
 end
 
-function slot0._onTimeEnd(slot0)
-	slot0:onDone(true)
+function var_0_0._onTimeEnd(arg_4_0)
+	arg_4_0:onDone(true)
 end
 
-return slot0
+return var_0_0

@@ -1,290 +1,324 @@
-module("modules.logic.versionactivity2_4.pinball.view.PinballTalentView", package.seeall)
+﻿module("modules.logic.versionactivity2_4.pinball.view.PinballTalentView", package.seeall)
 
-slot0 = class("PinballTalentView", BaseView)
+local var_0_0 = class("PinballTalentView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._fullclick = gohelper.findChildClick(slot0.viewGO, "#simage_FullBG")
-	slot0._godetail = gohelper.findChild(slot0.viewGO, "#go_detail")
-	slot0._txttalentname = gohelper.findChildTextMesh(slot0.viewGO, "#go_detail/#txt_talentname")
-	slot0._txttalentdec = gohelper.findChildTextMesh(slot0.viewGO, "#go_detail/#txt_talentdec")
-	slot0._btncancel = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_detail/#btn_cancel")
-	slot0._btnlight = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_detail/#btn_light")
-	slot0._golightgrey = gohelper.findChild(slot0.viewGO, "#go_detail/#btn_light/grey")
-	slot0._gocostitem = gohelper.findChild(slot0.viewGO, "#go_detail/#go_currency/go_item")
-	slot0._gobtns = gohelper.findChild(slot0.viewGO, "#go_btn")
-	slot0._gotabitem = gohelper.findChild(slot0.viewGO, "#go_btn/#btn_building")
-	slot0._talentitem = gohelper.findChild(slot0.viewGO, "#go_talentree/#go_talenitem")
-	slot0._talentroot = gohelper.findChild(slot0.viewGO, "#go_talentree/#go_talengroup")
-	slot0._topCurrencyRoot = gohelper.findChild(slot0.viewGO, "#go_topright")
-	slot0._treeAnim = gohelper.findChildAnim(slot0.viewGO, "#go_talentree")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._fullclick = gohelper.findChildClick(arg_1_0.viewGO, "#simage_FullBG")
+	arg_1_0._godetail = gohelper.findChild(arg_1_0.viewGO, "#go_detail")
+	arg_1_0._txttalentname = gohelper.findChildTextMesh(arg_1_0.viewGO, "#go_detail/#txt_talentname")
+	arg_1_0._txttalentdec = gohelper.findChildTextMesh(arg_1_0.viewGO, "#go_detail/#txt_talentdec")
+	arg_1_0._btncancel = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_detail/#btn_cancel")
+	arg_1_0._btnlight = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_detail/#btn_light")
+	arg_1_0._golightgrey = gohelper.findChild(arg_1_0.viewGO, "#go_detail/#btn_light/grey")
+	arg_1_0._gocostitem = gohelper.findChild(arg_1_0.viewGO, "#go_detail/#go_currency/go_item")
+	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_btn")
+	arg_1_0._gotabitem = gohelper.findChild(arg_1_0.viewGO, "#go_btn/#btn_building")
+	arg_1_0._talentitem = gohelper.findChild(arg_1_0.viewGO, "#go_talentree/#go_talenitem")
+	arg_1_0._talentroot = gohelper.findChild(arg_1_0.viewGO, "#go_talentree/#go_talengroup")
+	arg_1_0._topCurrencyRoot = gohelper.findChild(arg_1_0.viewGO, "#go_topright")
+	arg_1_0._treeAnim = gohelper.findChildAnim(arg_1_0.viewGO, "#go_talentree")
 end
 
-function slot0.addEvents(slot0)
-	slot0._fullclick:AddClickListener(slot0._cancelSelect, slot0)
-	slot0._btncancel:AddClickListener(slot0._cancelSelect, slot0)
-	slot0._btnlight:AddClickListener(slot0._learnTalent, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._fullclick:AddClickListener(arg_2_0._cancelSelect, arg_2_0)
+	arg_2_0._btncancel:AddClickListener(arg_2_0._cancelSelect, arg_2_0)
+	arg_2_0._btnlight:AddClickListener(arg_2_0._learnTalent, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._fullclick:RemoveClickListener()
-	slot0._btncancel:RemoveClickListener()
-	slot0._btnlight:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._fullclick:RemoveClickListener()
+	arg_3_0._btncancel:RemoveClickListener()
+	arg_3_0._btnlight:RemoveClickListener()
 end
 
-function slot0.onOpen(slot0)
-	gohelper.setActive(slot0._talentitem, false)
-	slot0:initNodeAndLine()
-	slot0:initTab()
-	slot0:createCurrencyItem()
+function var_0_0.onOpen(arg_4_0)
+	gohelper.setActive(arg_4_0._talentitem, false)
+	arg_4_0:initNodeAndLine()
+	arg_4_0:initTab()
+	arg_4_0:createCurrencyItem()
 end
 
-function slot0.initTab(slot0)
-	slot2 = {}
-	slot3 = nil
+function var_0_0.initTab(arg_5_0)
+	local var_5_0 = PinballModel.instance:getAllTalentBuildingId()
+	local var_5_1 = {}
+	local var_5_2
 
-	for slot7, slot8 in ipairs(PinballModel.instance:getAllTalentBuildingId()) do
-		slot11 = 1
+	for iter_5_0, iter_5_1 in ipairs(var_5_0) do
+		local var_5_3 = lua_activity178_building.configDict[VersionActivity2_4Enum.ActivityId.Pinball][iter_5_1][1]
+		local var_5_4 = var_5_3.effect
+		local var_5_5 = 1
+		local var_5_6 = GameUtil.splitString2(var_5_4, true) or {}
 
-		for slot16, slot17 in pairs(GameUtil.splitString2(lua_activity178_building.configDict[VersionActivity2_4Enum.ActivityId.Pinball][slot8][1].effect, true) or {}) do
-			if slot17[1] == PinballEnum.BuildingEffectType.UnlockTalent then
-				slot11 = slot17[2]
+		for iter_5_2, iter_5_3 in pairs(var_5_6) do
+			if iter_5_3[1] == PinballEnum.BuildingEffectType.UnlockTalent then
+				var_5_5 = iter_5_3[2]
 
 				break
 			end
 		end
 
-		table.insert(slot2, {
-			co = slot9,
-			type = slot11
-		})
+		local var_5_7 = {
+			co = var_5_3,
+			type = var_5_5
+		}
 
-		if slot0.viewParam.info.baseCo == slot9 then
-			slot3 = slot13
+		table.insert(var_5_1, var_5_7)
+
+		if arg_5_0.viewParam.info.baseCo == var_5_3 then
+			var_5_2 = var_5_7
 		end
 	end
 
-	slot0._tabs = {}
+	arg_5_0._tabs = {}
+	var_5_2 = var_5_2 or var_5_1[1]
 
-	gohelper.CreateObjList(slot0, slot0._createTab, slot2, nil, slot0._gotabitem, PinballTalentTabItem)
-	slot0:_onTabClick(slot3 or slot2[1])
+	gohelper.CreateObjList(arg_5_0, arg_5_0._createTab, var_5_1, nil, arg_5_0._gotabitem, PinballTalentTabItem)
+	arg_5_0:_onTabClick(var_5_2)
 end
 
-function slot0._createTab(slot0, slot1, slot2, slot3)
-	slot0._tabs[slot3] = slot1
+function var_0_0._createTab(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
+	arg_6_0._tabs[arg_6_3] = arg_6_1
 
-	slot1:setData(slot2)
-	slot1:setClickCall(slot0._onTabClick, slot0)
+	arg_6_1:setData(arg_6_2)
+	arg_6_1:setClickCall(arg_6_0._onTabClick, arg_6_0)
 end
 
-function slot0._onTabClick(slot0, slot1)
-	if slot1 ~= slot0._selectData then
-		slot0._selectData = slot1
+function var_0_0._onTabClick(arg_7_0, arg_7_1)
+	if arg_7_1 ~= arg_7_0._selectData then
+		arg_7_0._selectData = arg_7_1
 
-		for slot5, slot6 in pairs(slot0._tabs) do
-			slot6:setSelectData(slot1)
+		for iter_7_0, iter_7_1 in pairs(arg_7_0._tabs) do
+			iter_7_1:setSelectData(arg_7_1)
 		end
 
-		slot0:initTalent()
-		slot0:_refreshLineStatu()
-		slot0:_cancelSelect()
-		slot0._treeAnim:Play("open", 0, 0)
+		arg_7_0:initTalent()
+		arg_7_0:_refreshLineStatu()
+		arg_7_0:_cancelSelect()
+		arg_7_0._treeAnim:Play("open", 0, 0)
 	end
 end
 
-function slot0.initNodeAndLine(slot0)
-	slot2 = gohelper.findChild(slot0.viewGO, "#go_talentree/#go_talengroup").transform
-	slot0._lines = {}
-	slot0._nodes = {}
+function var_0_0.initNodeAndLine(arg_8_0)
+	local var_8_0 = gohelper.findChild(arg_8_0.viewGO, "#go_talentree/frame").transform
+	local var_8_1 = gohelper.findChild(arg_8_0.viewGO, "#go_talentree/#go_talengroup").transform
 
-	for slot6 = 0, gohelper.findChild(slot0.viewGO, "#go_talentree/frame").transform.childCount - 1 do
-		if string.match(slot1:GetChild(slot6).name, "^line(.+)$") then
-			for slot14, slot15 in ipairs(string.split(slot9, "_") or {}) do
-				if not slot0._lines[slot15] then
-					slot0._lines[slot15] = slot0:getUserDataTb_()
+	arg_8_0._lines = {}
+	arg_8_0._nodes = {}
+
+	for iter_8_0 = 0, var_8_0.childCount - 1 do
+		local var_8_2 = var_8_0:GetChild(iter_8_0)
+		local var_8_3 = var_8_2.name
+		local var_8_4 = string.match(var_8_3, "^line(.+)$")
+
+		if var_8_4 then
+			local var_8_5 = string.split(var_8_4, "_") or {}
+
+			for iter_8_1, iter_8_2 in ipairs(var_8_5) do
+				if not arg_8_0._lines[iter_8_2] then
+					arg_8_0._lines[iter_8_2] = arg_8_0:getUserDataTb_()
 				end
 
-				table.insert(slot0._lines[slot15], gohelper.findChildImage(slot7.gameObject, ""))
+				local var_8_6 = gohelper.findChildImage(var_8_2.gameObject, "")
+
+				table.insert(arg_8_0._lines[iter_8_2], var_8_6)
 			end
 		end
 	end
 
-	for slot6 = 0, slot2.childCount - 1 do
-		slot7 = slot2:GetChild(slot6)
-		slot8 = slot7.name
-		slot9 = gohelper.clone(slot0._talentitem, slot7.gameObject)
+	for iter_8_3 = 0, var_8_1.childCount - 1 do
+		local var_8_7 = var_8_1:GetChild(iter_8_3)
+		local var_8_8 = var_8_7.name
+		local var_8_9 = gohelper.clone(arg_8_0._talentitem, var_8_7.gameObject)
 
-		gohelper.setActive(slot9, true)
+		gohelper.setActive(var_8_9, true)
 
-		slot0._nodes[slot8] = MonoHelper.addNoUpdateLuaComOnceToGo(slot9, PinballTalentItem)
+		local var_8_10 = MonoHelper.addNoUpdateLuaComOnceToGo(var_8_9, PinballTalentItem)
 
-		slot0:addClickCb(gohelper.getClick(slot9), slot0._selectTalent, slot0, slot8)
+		arg_8_0._nodes[var_8_8] = var_8_10
+
+		arg_8_0:addClickCb(gohelper.getClick(var_8_9), arg_8_0._selectTalent, arg_8_0, var_8_8)
 	end
 end
 
-function slot0.initTalent(slot0)
-	for slot5, slot6 in pairs(PinballConfig.instance:getTalentCoByRoot(VersionActivity2_4Enum.ActivityId.Pinball, slot0._selectData.type)) do
-		if slot0._nodes[slot6.point] then
-			slot0._nodes[slot6.point]:setData(slot6, slot0._selectData.co)
+function var_0_0.initTalent(arg_9_0)
+	local var_9_0 = PinballConfig.instance:getTalentCoByRoot(VersionActivity2_4Enum.ActivityId.Pinball, arg_9_0._selectData.type)
+
+	for iter_9_0, iter_9_1 in pairs(var_9_0) do
+		if arg_9_0._nodes[iter_9_1.point] then
+			arg_9_0._nodes[iter_9_1.point]:setData(iter_9_1, arg_9_0._selectData.co)
 		end
 	end
 
-	slot0:_refreshLineStatu()
+	arg_9_0:_refreshLineStatu()
 end
 
-function slot0._refreshLineStatu(slot0)
-	for slot4, slot5 in pairs(slot0._lines) do
-		slot6 = false
+function var_0_0._refreshLineStatu(arg_10_0)
+	for iter_10_0, iter_10_1 in pairs(arg_10_0._lines) do
+		local var_10_0 = false
 
-		if slot0._nodes[slot4] and slot0._nodes[slot4]:isActive() then
-			slot6 = true
+		if arg_10_0._nodes[iter_10_0] and arg_10_0._nodes[iter_10_0]:isActive() then
+			var_10_0 = true
 		end
 
-		for slot11, slot12 in pairs(slot5) do
-			SLFramework.UGUI.GuiHelper.SetColor(slot12, slot6 and "#914B24" or "#5F4C3F")
+		local var_10_1 = var_10_0 and "#914B24" or "#5F4C3F"
+
+		for iter_10_2, iter_10_3 in pairs(iter_10_1) do
+			SLFramework.UGUI.GuiHelper.SetColor(iter_10_3, var_10_1)
 		end
 	end
 end
 
-function slot0.createCurrencyItem(slot0)
-	for slot5, slot6 in ipairs({
+function var_0_0.createCurrencyItem(arg_11_0)
+	local var_11_0 = {
 		PinballEnum.ResType.Wood,
 		PinballEnum.ResType.Mine,
 		PinballEnum.ResType.Stone
-	}) do
-		MonoHelper.addNoUpdateLuaComOnceToGo(slot0:getResInst(slot0.viewContainer._viewSetting.otherRes.currency, slot0._topCurrencyRoot), PinballCurrencyItem):setCurrencyType(slot6)
+	}
+
+	for iter_11_0, iter_11_1 in ipairs(var_11_0) do
+		local var_11_1 = arg_11_0:getResInst(arg_11_0.viewContainer._viewSetting.otherRes.currency, arg_11_0._topCurrencyRoot)
+
+		MonoHelper.addNoUpdateLuaComOnceToGo(var_11_1, PinballCurrencyItem):setCurrencyType(iter_11_1)
 	end
 end
 
-function slot0._selectTalent(slot0, slot1)
+function var_0_0._selectTalent(arg_12_0, arg_12_1)
 	AudioMgr.instance:trigger(AudioEnum.Act178.act178_audio6)
 
-	if not slot0._godetail.activeSelf then
+	if not arg_12_0._godetail.activeSelf then
 		AudioMgr.instance:trigger(AudioEnum.Act178.act178_audio7)
 	end
 
-	gohelper.setActive(slot0._godetail, true)
-	gohelper.setActive(slot0._gobtns, false)
+	gohelper.setActive(arg_12_0._godetail, true)
+	gohelper.setActive(arg_12_0._gobtns, false)
 
-	for slot5, slot6 in pairs(slot0._nodes) do
-		slot6:setSelect(slot1 == slot5)
+	for iter_12_0, iter_12_1 in pairs(arg_12_0._nodes) do
+		iter_12_1:setSelect(arg_12_1 == iter_12_0)
 
-		if slot1 == slot5 then
-			slot7 = slot6._data
-			slot8 = slot6:isActive()
-			slot0._txttalentname.text = slot7.name
-			slot0._txttalentdec.text = slot7.desc
+		if arg_12_1 == iter_12_0 then
+			local var_12_0 = iter_12_1._data
+			local var_12_1 = iter_12_1:isActive()
+			local var_12_2 = iter_12_1:canActive()
 
-			gohelper.setActive(slot0._btncancel, not slot8)
-			gohelper.setActive(slot0._btnlight, not slot8)
-			gohelper.setActive(slot0._golightgrey, not slot8 and not slot6:canActive())
+			arg_12_0._txttalentname.text = var_12_0.name
+			arg_12_0._txttalentdec.text = var_12_0.desc
 
-			slot0._nowSelect = slot6
+			gohelper.setActive(arg_12_0._btncancel, not var_12_1)
+			gohelper.setActive(arg_12_0._btnlight, not var_12_1)
+			gohelper.setActive(arg_12_0._golightgrey, not var_12_1 and not var_12_2)
 
-			if not slot8 then
-				slot0:updateCost(slot7.cost)
+			arg_12_0._nowSelect = iter_12_1
+
+			if not var_12_1 then
+				arg_12_0:updateCost(var_12_0.cost)
 			else
-				slot0:updateCost("")
+				arg_12_0:updateCost("")
 			end
 		end
 	end
 end
 
-function slot0.updateCost(slot0, slot1)
-	slot2 = {}
+function var_0_0.updateCost(arg_13_0, arg_13_1)
+	local var_13_0 = {}
 
-	if not string.nilorempty(slot1) then
-		for slot7, slot8 in pairs(GameUtil.splitString2(slot1, true)) do
-			table.insert(slot2, {
-				resType = slot8[1],
-				value = slot8[2]
+	if not string.nilorempty(arg_13_1) then
+		local var_13_1 = GameUtil.splitString2(arg_13_1, true)
+
+		for iter_13_0, iter_13_1 in pairs(var_13_1) do
+			table.insert(var_13_0, {
+				resType = iter_13_1[1],
+				value = iter_13_1[2]
 			})
 		end
 	end
 
-	slot0._costNoEnough = nil
+	arg_13_0._costNoEnough = nil
 
-	gohelper.CreateObjList(slot0, slot0._createCostItem, slot2, nil, slot0._gocostitem)
+	gohelper.CreateObjList(arg_13_0, arg_13_0._createCostItem, var_13_0, nil, arg_13_0._gocostitem)
 end
 
-function slot0._createCostItem(slot0, slot1, slot2, slot3)
-	slot4 = gohelper.findChildTextMesh(slot1, "#txt_num")
-	slot5 = gohelper.findChildImage(slot1, "#txt_num/#image_icon")
+function var_0_0._createCostItem(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
+	local var_14_0 = gohelper.findChildTextMesh(arg_14_1, "#txt_num")
+	local var_14_1 = gohelper.findChildImage(arg_14_1, "#txt_num/#image_icon")
+	local var_14_2 = lua_activity178_resource.configDict[VersionActivity2_4Enum.ActivityId.Pinball][arg_14_2.resType]
 
-	if not lua_activity178_resource.configDict[VersionActivity2_4Enum.ActivityId.Pinball][slot2.resType] then
-		logError("资源配置不存在" .. slot2.resType)
+	if not var_14_2 then
+		logError("资源配置不存在" .. arg_14_2.resType)
 
 		return
 	end
 
-	UISpriteSetMgr.instance:setAct178Sprite(slot5, slot6.icon)
+	UISpriteSetMgr.instance:setAct178Sprite(var_14_1, var_14_2.icon)
 
-	slot7 = ""
+	local var_14_3 = ""
 
-	if PinballModel.instance:getResNum(slot2.resType) < slot2.value then
-		slot7 = "<color=#FC8A6A>"
-		slot0._costNoEnough = slot0._costNoEnough or slot6.name
+	if arg_14_2.value > PinballModel.instance:getResNum(arg_14_2.resType) then
+		var_14_3 = "<color=#FC8A6A>"
+		arg_14_0._costNoEnough = arg_14_0._costNoEnough or var_14_2.name
 	end
 
-	slot4.text = string.format("%s-%d", slot7, slot2.value)
+	var_14_0.text = string.format("%s-%d", var_14_3, arg_14_2.value)
 end
 
-function slot0._cancelSelect(slot0)
-	gohelper.setActive(slot0._godetail, false)
-	gohelper.setActive(slot0._gobtns, true)
+function var_0_0._cancelSelect(arg_15_0)
+	gohelper.setActive(arg_15_0._godetail, false)
+	gohelper.setActive(arg_15_0._gobtns, true)
 
-	for slot4, slot5 in pairs(slot0._nodes) do
-		slot5:setSelect(false)
+	for iter_15_0, iter_15_1 in pairs(arg_15_0._nodes) do
+		iter_15_1:setSelect(false)
 	end
 
-	slot0._nowSelect = nil
+	arg_15_0._nowSelect = nil
 end
 
-function slot0.onClickModalMask(slot0)
-	slot0:closeThis()
+function var_0_0.onClickModalMask(arg_16_0)
+	arg_16_0:closeThis()
 end
 
-function slot0._learnTalent(slot0)
-	if not slot0._nowSelect or not slot0._selectData then
+function var_0_0._learnTalent(arg_17_0)
+	if not arg_17_0._nowSelect or not arg_17_0._selectData then
 		return
 	end
 
-	slot2 = slot0._nowSelect._data.needLv
+	local var_17_0 = arg_17_0._selectData.co
+	local var_17_1 = arg_17_0._nowSelect._data.needLv
+	local var_17_2 = PinballModel.instance:getBuildingInfoById(var_17_0.id)
 
-	if PinballModel.instance:getBuildingInfoById(slot0._selectData.co.id) and slot3.level < slot2 then
-		GameFacade.showToast(ToastEnum.Act178TalentLvNotEnough, slot1.name, slot2)
+	if var_17_2 and var_17_1 > var_17_2.level then
+		GameFacade.showToast(ToastEnum.Act178TalentLvNotEnough, var_17_0.name, var_17_1)
 
 		return
 	end
 
-	if not slot0._nowSelect:canActive() then
+	if not arg_17_0._nowSelect:canActive() then
 		GameFacade.showToast(ToastEnum.Act178TalentCondition2)
 
 		return
 	end
 
-	if slot0._costNoEnough then
-		GameFacade.showToast(ToastEnum.DiamondBuy, slot0._costNoEnough)
+	if arg_17_0._costNoEnough then
+		GameFacade.showToast(ToastEnum.DiamondBuy, arg_17_0._costNoEnough)
 
 		return
 	end
 
-	Activity178Rpc.instance:sendAct178UnlockTalent(VersionActivity2_4Enum.ActivityId.Pinball, slot0._nowSelect._data.id, slot0._onLearnTalent, slot0)
+	Activity178Rpc.instance:sendAct178UnlockTalent(VersionActivity2_4Enum.ActivityId.Pinball, arg_17_0._nowSelect._data.id, arg_17_0._onLearnTalent, arg_17_0)
 end
 
-function slot0._onLearnTalent(slot0, slot1, slot2, slot3)
-	if slot2 ~= 0 then
+function var_0_0._onLearnTalent(arg_18_0, arg_18_1, arg_18_2, arg_18_3)
+	if arg_18_2 ~= 0 then
 		return
 	end
 
-	if not slot0._nowSelect then
+	if not arg_18_0._nowSelect then
 		return
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.Act178.act178_audio8)
-	slot0._nowSelect:setSelect(false)
-	slot0._nowSelect:onLearn()
-	slot0:_refreshLineStatu()
-	slot0:_cancelSelect()
+	arg_18_0._nowSelect:setSelect(false)
+	arg_18_0._nowSelect:onLearn()
+	arg_18_0:_refreshLineStatu()
+	arg_18_0:_cancelSelect()
 end
 
-return slot0
+return var_0_0

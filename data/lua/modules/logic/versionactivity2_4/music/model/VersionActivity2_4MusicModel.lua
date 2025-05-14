@@ -1,13 +1,15 @@
-module("modules.logic.versionactivity2_4.music.model.VersionActivity2_4MusicModel", package.seeall)
+﻿module("modules.logic.versionactivity2_4.music.model.VersionActivity2_4MusicModel", package.seeall)
 
-slot0 = class("VersionActivity2_4MusicModel", BaseModel)
+local var_0_0 = class("VersionActivity2_4MusicModel", BaseModel)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_2_0)
+	return
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

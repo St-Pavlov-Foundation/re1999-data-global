@@ -1,50 +1,50 @@
-module("modules.logic.act201.config.Activity201Config", package.seeall)
+﻿module("modules.logic.act201.config.Activity201Config", package.seeall)
 
-slot0 = class("Activity201Config", BaseConfig)
+local var_0_0 = class("Activity201Config", BaseConfig)
 
-function slot0.reqConfigNames(slot0)
+function var_0_0.reqConfigNames(arg_1_0)
 	return {
 		"turnback_sp_h5_channel",
 		"turnback_sp_h5_roletype"
 	}
 end
 
-function slot1(slot0)
-	return lua_turnback_sp_h5_roletype.configDict[slot0]
+local function var_0_1(arg_2_0)
+	return lua_turnback_sp_h5_roletype.configDict[arg_2_0]
 end
 
-function slot0.onConfigLoaded(slot0, slot1, slot2)
-	if slot1 == "turnback_sp_h5_channel" then
-		slot0:_initTurnBackH5Config(slot2)
+function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_1 == "turnback_sp_h5_channel" then
+		arg_3_0:_initTurnBackH5Config(arg_3_2)
 	end
 end
 
-function slot0._initTurnBackH5Config(slot0, slot1)
-	slot2 = {}
+function var_0_0._initTurnBackH5Config(arg_4_0, arg_4_1)
+	local var_4_0 = {}
 
-	for slot6, slot7 in ipairs(slot1.configList) do
-		if slot2[slot7.channelId] == nil then
-			slot2[slot7.channelId] = slot7.url
+	for iter_4_0, iter_4_1 in ipairs(arg_4_1.configList) do
+		if var_4_0[iter_4_1.channelId] == nil then
+			var_4_0[iter_4_1.channelId] = iter_4_1.url
 		end
 	end
 
-	slot0._channelUrlDic = slot2
+	arg_4_0._channelUrlDic = var_4_0
 end
 
-function slot0.getChannelConfig(slot0, slot1)
-	return lua_turnback_sp_h5_channel.configDict[slot1]
+function var_0_0.getChannelConfig(arg_5_0, arg_5_1)
+	return lua_turnback_sp_h5_channel.configDict[arg_5_1]
 end
 
-function slot0.getUrlByChannelId(slot0, slot1)
-	return slot0._channelUrlDic[slot1]
+function var_0_0.getUrlByChannelId(arg_6_0, arg_6_1)
+	return arg_6_0._channelUrlDic[arg_6_1]
 end
 
-function slot0.getRoleTypeStr(slot0, slot1)
-	slot2 = uv0(slot1 or 1) or uv0(1)
+function var_0_0.getRoleTypeStr(arg_7_0, arg_7_1)
+	local var_7_0 = var_0_1(arg_7_1 or 1) or var_0_1(1)
 
-	return gohelper.getRichColorText(slot2.name, slot2.nameHexColor)
+	return gohelper.getRichColorText(var_7_0.name, var_7_0.nameHexColor)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

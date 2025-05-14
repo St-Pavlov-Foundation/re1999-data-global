@@ -1,42 +1,43 @@
-module("modules.logic.teach.view.TeachNoteViewContainer", package.seeall)
+﻿module("modules.logic.teach.view.TeachNoteViewContainer", package.seeall)
 
-slot0 = class("TeachNoteViewContainer", BaseViewContainer)
+local var_0_0 = class("TeachNoteViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
-	slot2 = ListScrollParam.New()
-	slot2.scrollGOPath = "#go_reward/#scroll_rewarditem"
-	slot2.prefabType = ScrollEnum.ScrollPrefabFromRes
-	slot2.prefabUrl = slot0._viewSetting.otherRes[1]
-	slot2.cellClass = TeachNoteRewardListItem
-	slot2.scrollDir = ScrollEnum.ScrollDirV
-	slot2.lineCount = 1
-	slot2.cellWidth = 620
-	slot2.cellHeight = 81
-	slot2.cellSpaceH = 50
-	slot2.cellSpaceV = 0
-	slot2.minUpdateCountInFrame = 10
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
+	local var_1_1 = ListScrollParam.New()
 
-	table.insert(slot1, LuaListScrollView.New(TeachNoteRewardListModel.instance, slot2))
-	table.insert(slot1, TabViewGroup.New(1, "#go_btns"))
-	table.insert(slot1, TeachNoteView.New())
+	var_1_1.scrollGOPath = "#go_reward/#scroll_rewarditem"
+	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromRes
+	var_1_1.prefabUrl = arg_1_0._viewSetting.otherRes[1]
+	var_1_1.cellClass = TeachNoteRewardListItem
+	var_1_1.scrollDir = ScrollEnum.ScrollDirV
+	var_1_1.lineCount = 1
+	var_1_1.cellWidth = 620
+	var_1_1.cellHeight = 81
+	var_1_1.cellSpaceH = 50
+	var_1_1.cellSpaceV = 0
+	var_1_1.minUpdateCountInFrame = 10
 
-	return slot1
+	table.insert(var_1_0, LuaListScrollView.New(TeachNoteRewardListModel.instance, var_1_1))
+	table.insert(var_1_0, TabViewGroup.New(1, "#go_btns"))
+	table.insert(var_1_0, TeachNoteView.New())
+
+	return var_1_0
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	slot0.navigationView = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	arg_2_0.navigationView = NavigateButtonsView.New({
 		true,
 		false,
 		true
-	}, 116, slot0._closeCallback, nil, , slot0)
+	}, 116, arg_2_0._closeCallback, nil, nil, arg_2_0)
 
 	return {
-		slot0.navigationView
+		arg_2_0.navigationView
 	}
 end
 
-function slot0._closeCallback(slot0)
+function var_0_0._closeCallback(arg_3_0)
 	TeachNoteModel.instance:setJumpEpisodeId(nil)
 
 	JumpModel.instance.jumpFromFightSceneParam = nil
@@ -44,8 +45,8 @@ function slot0._closeCallback(slot0)
 	TeachNoteModel.instance:setJumpEnter(false)
 end
 
-function slot0.onContainerOpenFinish(slot0)
-	slot0.navigationView:resetOnCloseViewAudio(AudioEnum.TeachNote.play_ui_closehouse)
+function var_0_0.onContainerOpenFinish(arg_4_0)
+	arg_4_0.navigationView:resetOnCloseViewAudio(AudioEnum.TeachNote.play_ui_closehouse)
 end
 
-return slot0
+return var_0_0

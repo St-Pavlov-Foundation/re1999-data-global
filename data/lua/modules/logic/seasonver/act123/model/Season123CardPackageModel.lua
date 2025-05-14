@@ -1,131 +1,143 @@
-module("modules.logic.seasonver.act123.model.Season123CardPackageModel", package.seeall)
+﻿module("modules.logic.seasonver.act123.model.Season123CardPackageModel", package.seeall)
 
-slot0 = class("Season123CardPackageModel", ListScrollModel)
+local var_0_0 = class("Season123CardPackageModel", ListScrollModel)
 
-function slot0.onInit(slot0)
-	slot0:reInit()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:reInit()
 
-	slot0.packageMap = {}
+	arg_1_0.packageMap = {}
 end
 
-function slot0.release(slot0)
-	slot0:clear()
+function var_0_0.release(arg_2_0)
+	arg_2_0:clear()
 
-	slot0.cardItemList = {}
-	slot0.cardItemMap = {}
-	slot0.curActId = nil
+	arg_2_0.cardItemList = {}
+	arg_2_0.cardItemMap = {}
+	arg_2_0.curActId = nil
 end
 
-function slot0.reInit(slot0)
-	slot0.curActId = nil
-	slot0.packageConfigMap = {}
-	slot0.cardItemList = {}
-	slot0.cardItemMap = {}
-	slot0.packageCount = 0
-	slot0.packageMap = {}
+function var_0_0.reInit(arg_3_0)
+	arg_3_0.curActId = nil
+	arg_3_0.packageConfigMap = {}
+	arg_3_0.cardItemList = {}
+	arg_3_0.cardItemMap = {}
+	arg_3_0.packageCount = 0
+	arg_3_0.packageMap = {}
 end
 
-function slot0.initData(slot0, slot1)
-	slot0.curActId = slot1
+function var_0_0.initData(arg_4_0, arg_4_1)
+	arg_4_0.curActId = arg_4_1
 
-	slot0:initOpenPackageMO(slot1)
-	slot0:initPackageCount()
+	arg_4_0:initOpenPackageMO(arg_4_1)
+	arg_4_0:initPackageCount()
 end
 
-function slot0.getOpenPackageMO(slot0)
-	if slot0.packageCount > 0 then
-		for slot4, slot5 in pairs(slot0.packageMap) do
-			if ItemModel.instance:getItemQuantity(MaterialEnum.MaterialType.Item, slot5.id) > 0 then
-				return slot5
+function var_0_0.getOpenPackageMO(arg_5_0)
+	if arg_5_0.packageCount > 0 then
+		for iter_5_0, iter_5_1 in pairs(arg_5_0.packageMap) do
+			if ItemModel.instance:getItemQuantity(MaterialEnum.MaterialType.Item, iter_5_1.id) > 0 then
+				return iter_5_1
 			end
 		end
 	end
 end
 
-function slot0.initOpenPackageMO(slot0, slot1)
-	slot2 = ItemModel.instance:getDict()
+function var_0_0.initOpenPackageMO(arg_6_0, arg_6_1)
+	local var_6_0 = ItemModel.instance:getDict()
 
-	if GameUtil.getTabLen(slot0.packageConfigMap) == 0 then
-		slot0:initCurActCardPackageConfigMap(slot1)
+	if GameUtil.getTabLen(arg_6_0.packageConfigMap) == 0 then
+		arg_6_0:initCurActCardPackageConfigMap(arg_6_1)
 	end
 
-	for slot6, slot7 in pairs(slot0.packageConfigMap) do
-		if slot2[slot7.id] and ItemModel.instance:getItemQuantity(MaterialEnum.MaterialType.Item, slot7.id) > 0 then
-			slot0.packageMap[slot8.id] = slot8
+	for iter_6_0, iter_6_1 in pairs(arg_6_0.packageConfigMap) do
+		local var_6_1 = var_6_0[iter_6_1.id]
+		local var_6_2 = ItemModel.instance:getItemQuantity(MaterialEnum.MaterialType.Item, iter_6_1.id)
+
+		if var_6_1 and var_6_2 > 0 then
+			arg_6_0.packageMap[var_6_1.id] = var_6_1
 		end
 	end
 end
 
-function slot0.initCurActCardPackageConfigMap(slot0, slot1)
-	for slot6, slot7 in ipairs(ItemConfig.instance:getItemListBySubType(Activity123Enum.CardPackageSubType) or {}) do
-		if slot7.activityId == slot1 then
-			slot0.packageConfigMap[slot7.id] = slot7
+function var_0_0.initCurActCardPackageConfigMap(arg_7_0, arg_7_1)
+	local var_7_0 = ItemConfig.instance:getItemListBySubType(Activity123Enum.CardPackageSubType) or {}
+
+	for iter_7_0, iter_7_1 in ipairs(var_7_0) do
+		if iter_7_1.activityId == arg_7_1 then
+			arg_7_0.packageConfigMap[iter_7_1.id] = iter_7_1
 		end
 	end
 end
 
-function slot0.initPackageCount(slot0)
-	slot0.packageCount = 0
+function var_0_0.initPackageCount(arg_8_0)
+	arg_8_0.packageCount = 0
 
-	if GameUtil.getTabLen(slot0.packageMap) == 0 then
-		slot0:initOpenPackageMO(slot0.curActId)
+	if GameUtil.getTabLen(arg_8_0.packageMap) == 0 then
+		arg_8_0:initOpenPackageMO(arg_8_0.curActId)
 	end
 
-	for slot4, slot5 in pairs(slot0.packageMap) do
-		slot0.packageCount = slot0.packageCount + ItemModel.instance:getItemQuantity(MaterialEnum.MaterialType.Item, slot5.id)
+	for iter_8_0, iter_8_1 in pairs(arg_8_0.packageMap) do
+		local var_8_0 = ItemModel.instance:getItemQuantity(MaterialEnum.MaterialType.Item, iter_8_1.id)
+
+		arg_8_0.packageCount = arg_8_0.packageCount + var_8_0
 	end
 
-	return slot0.packageCount
+	return arg_8_0.packageCount
 end
 
-function slot0.setCardItemList(slot0, slot1)
-	slot0.cardItemList = {}
-	slot0.cardItemMap = {}
+function var_0_0.setCardItemList(arg_9_0, arg_9_1)
+	arg_9_0.cardItemList = {}
+	arg_9_0.cardItemMap = {}
 
-	for slot5, slot6 in ipairs(slot1) do
-		if not slot0.cardItemMap[slot6] then
-			slot7 = Season123CardPackageItemMO.New()
+	for iter_9_0, iter_9_1 in ipairs(arg_9_1) do
+		local var_9_0 = arg_9_0.cardItemMap[iter_9_1]
 
-			slot7:init(slot6)
+		if not var_9_0 then
+			var_9_0 = Season123CardPackageItemMO.New()
 
-			slot0.cardItemMap[slot6] = slot7
+			var_9_0:init(iter_9_1)
 
-			table.insert(slot0.cardItemList, slot7)
+			arg_9_0.cardItemMap[iter_9_1] = var_9_0
+
+			table.insert(arg_9_0.cardItemList, var_9_0)
 		else
-			slot7.count = slot7.count + 1
+			var_9_0.count = var_9_0.count + 1
 		end
 	end
 
-	table.sort(slot0.cardItemList, slot0.sortCardItemList)
-	slot0:setList(slot0.cardItemList)
+	table.sort(arg_9_0.cardItemList, arg_9_0.sortCardItemList)
+	arg_9_0:setList(arg_9_0.cardItemList)
 end
 
-function slot0.sortCardItemList(slot0, slot1)
-	slot3 = slot1.config
+function var_0_0.sortCardItemList(arg_10_0, arg_10_1)
+	local var_10_0 = arg_10_0.config
+	local var_10_1 = arg_10_1.config
 
-	if slot0.config ~= nil and slot3 ~= nil then
-		if slot2.rare ~= slot3.rare then
-			return slot3.rare < slot2.rare
+	if var_10_0 ~= nil and var_10_1 ~= nil then
+		if var_10_0.rare ~= var_10_1.rare then
+			return var_10_0.rare > var_10_1.rare
 		else
-			return slot3.equipId < slot2.equipId
+			return var_10_0.equipId > var_10_1.equipId
 		end
 	else
-		return slot0.itemId < slot1.itemId
+		return arg_10_0.itemId < arg_10_1.itemId
 	end
 end
 
-function slot0.getCardMaxRare(slot0)
-	for slot5, slot6 in pairs(slot0.cardItemList) do
-		if slot6.config and 0 < slot6.config.rare then
-			slot1 = slot6.config.rare
-		elseif not slot6.config then
-			logError("activity123_equip config id is not exit: " .. tostring(slot6.itemId))
+function var_0_0.getCardMaxRare(arg_11_0)
+	local var_11_0 = 0
+
+	for iter_11_0, iter_11_1 in pairs(arg_11_0.cardItemList) do
+		if iter_11_1.config and var_11_0 < iter_11_1.config.rare then
+			var_11_0 = iter_11_1.config.rare
+		elseif not iter_11_1.config then
+			logError("activity123_equip config id is not exit: " .. tostring(iter_11_1.itemId))
 		end
 	end
 
-	return slot1
+	return var_11_0
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

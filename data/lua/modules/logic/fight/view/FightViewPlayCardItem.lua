@@ -1,244 +1,252 @@
-module("modules.logic.fight.view.FightViewPlayCardItem", package.seeall)
+﻿module("modules.logic.fight.view.FightViewPlayCardItem", package.seeall)
 
-slot0 = class("FightViewPlayCardItem", LuaCompBase)
-slot1 = 0.76
+local var_0_0 = class("FightViewPlayCardItem", LuaCompBase)
+local var_0_1 = 0.76
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
-	slot0.tr = slot1.transform
-	slot0._emtpyGO = gohelper.findChild(slot1, "imgEmpty")
-	slot0._emptyNormal = gohelper.findChild(slot1, "imgEmpty/emptyNormal")
-	slot0._moveGO = gohelper.findChild(slot1, "imgMove")
-	slot0._moveAnimComp = slot0._moveGO:GetComponent(typeof(UnityEngine.Animation))
-	slot0._lockGO = gohelper.findChild(slot1, "lock")
-	slot2 = ViewMgr.instance:getContainer(ViewName.FightView)
-	slot0._innerGO = slot2:getResInst(slot2:getSetting().otherRes[1], slot0.go, "card")
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.go = arg_1_1
+	arg_1_0.tr = arg_1_1.transform
+	arg_1_0._emtpyGO = gohelper.findChild(arg_1_1, "imgEmpty")
+	arg_1_0._emptyNormal = gohelper.findChild(arg_1_1, "imgEmpty/emptyNormal")
+	arg_1_0._moveGO = gohelper.findChild(arg_1_1, "imgMove")
+	arg_1_0._moveAnimComp = arg_1_0._moveGO:GetComponent(typeof(UnityEngine.Animation))
+	arg_1_0._lockGO = gohelper.findChild(arg_1_1, "lock")
 
-	transformhelper.setLocalScale(slot0._innerGO.transform, uv0, uv0, uv0)
-	gohelper.setSiblingBefore(slot0._innerGO, slot0._lockGO)
+	local var_1_0 = ViewMgr.instance:getContainer(ViewName.FightView)
+	local var_1_1 = var_1_0:getSetting().otherRes[1]
 
-	slot0._click = SLFramework.UGUI.UIClickListener.Get(slot0.go)
-	slot0._goEffect1 = gohelper.create2d(slot0.go, "effect1")
-	slot0._goEffect2 = gohelper.create2d(slot0.go, "effect2")
-	slot0._goEffect3 = gohelper.create2d(slot0.go, "effect3")
+	arg_1_0._innerGO = var_1_0:getResInst(var_1_1, arg_1_0.go, "card")
 
-	gohelper.setSiblingBefore(slot0._goEffect1, slot0._innerGO)
-	gohelper.setSiblingAfter(slot0._goEffect2, slot0._innerGO)
-	gohelper.setSiblingAfter(slot0._goEffect3, slot0._innerGO)
-	transformhelper.setLocalScale(slot0._goEffect1.transform, uv0, uv0, uv0)
-	transformhelper.setLocalScale(slot0._goEffect2.transform, uv0, uv0, uv0)
-	transformhelper.setLocalScale(slot0._goEffect3.transform, uv0, uv0, uv0)
-	gohelper.setActive(slot0._goEffect1, false)
-	gohelper.setActive(slot0._goEffect2, false)
-	gohelper.setActive(slot0._goEffect3, false)
+	transformhelper.setLocalScale(arg_1_0._innerGO.transform, var_0_1, var_0_1, var_0_1)
+	gohelper.setSiblingBefore(arg_1_0._innerGO, arg_1_0._lockGO)
 
-	slot0._effectLoader1 = nil
-	slot0._effectLoader2 = nil
-	slot0._effectLoader3 = nil
-	slot0._conversionGO = gohelper.findChild(slot1, "conversion")
-	slot0.rankChangeRoot = gohelper.findChild(slot1, "#go_Grade")
-	slot0._seasonRoot = gohelper.findChild(slot1, "imgEmpty/SeasonRoot")
-	slot0._seasonEmpty1 = gohelper.findChild(slot1, "imgEmpty/SeasonRoot/imgEmpty1")
-	slot0._seasonEmpty2 = gohelper.findChild(slot1, "imgEmpty/SeasonRoot/imgEmpty2")
-	slot0._seasonCurActIndex = gohelper.findChild(slot1, "imgEmpty/SeasonRoot/#go_Selected")
-	slot0._seasonCurActArrow = gohelper.findChild(slot1, "imgEmpty/SeasonRoot/image_SelectedArrow")
-	slot4 = FightModel.instance:isSeason2()
+	arg_1_0._click = SLFramework.UGUI.UIClickListener.Get(arg_1_0.go)
+	arg_1_0._goEffect1 = gohelper.create2d(arg_1_0.go, "effect1")
+	arg_1_0._goEffect2 = gohelper.create2d(arg_1_0.go, "effect2")
+	arg_1_0._goEffect3 = gohelper.create2d(arg_1_0.go, "effect3")
 
-	gohelper.setActive(slot0._seasonRoot, slot4)
-	gohelper.setActive(slot0._emptyNormal, not slot4)
+	gohelper.setSiblingBefore(arg_1_0._goEffect1, arg_1_0._innerGO)
+	gohelper.setSiblingAfter(arg_1_0._goEffect2, arg_1_0._innerGO)
+	gohelper.setSiblingAfter(arg_1_0._goEffect3, arg_1_0._innerGO)
+	transformhelper.setLocalScale(arg_1_0._goEffect1.transform, var_0_1, var_0_1, var_0_1)
+	transformhelper.setLocalScale(arg_1_0._goEffect2.transform, var_0_1, var_0_1, var_0_1)
+	transformhelper.setLocalScale(arg_1_0._goEffect3.transform, var_0_1, var_0_1, var_0_1)
+	gohelper.setActive(arg_1_0._goEffect1, false)
+	gohelper.setActive(arg_1_0._goEffect2, false)
+	gohelper.setActive(arg_1_0._goEffect3, false)
 
-	slot0.goASFD = gohelper.findChild(slot1, "asfd_icon")
-	slot0.asfdAnimatorPlayer = ZProj.ProjAnimatorPlayer.Get(slot0.goASFD)
-	slot0.txtASFDEnergy = gohelper.findChildText(slot1, "asfd_icon/#txt_Num")
+	arg_1_0._effectLoader1 = nil
+	arg_1_0._effectLoader2 = nil
+	arg_1_0._effectLoader3 = nil
+	arg_1_0._conversionGO = gohelper.findChild(arg_1_1, "conversion")
+	arg_1_0.rankChangeRoot = gohelper.findChild(arg_1_1, "#go_Grade")
+	arg_1_0._seasonRoot = gohelper.findChild(arg_1_1, "imgEmpty/SeasonRoot")
+	arg_1_0._seasonEmpty1 = gohelper.findChild(arg_1_1, "imgEmpty/SeasonRoot/imgEmpty1")
+	arg_1_0._seasonEmpty2 = gohelper.findChild(arg_1_1, "imgEmpty/SeasonRoot/imgEmpty2")
+	arg_1_0._seasonCurActIndex = gohelper.findChild(arg_1_1, "imgEmpty/SeasonRoot/#go_Selected")
+	arg_1_0._seasonCurActArrow = gohelper.findChild(arg_1_1, "imgEmpty/SeasonRoot/image_SelectedArrow")
 
-	gohelper.setSiblingAfter(slot0.goASFD, slot0._innerGO)
+	local var_1_2 = FightModel.instance:isSeason2()
+
+	gohelper.setActive(arg_1_0._seasonRoot, var_1_2)
+	gohelper.setActive(arg_1_0._emptyNormal, not var_1_2)
+
+	arg_1_0.goASFD = gohelper.findChild(arg_1_1, "asfd_icon")
+	arg_1_0.asfdAnimatorPlayer = ZProj.ProjAnimatorPlayer.Get(arg_1_0.goASFD)
+	arg_1_0.txtASFDEnergy = gohelper.findChildText(arg_1_1, "asfd_icon/#txt_Num")
+
+	gohelper.setSiblingAfter(arg_1_0.goASFD, arg_1_0._innerGO)
 end
 
-function slot0.refreshSeasonArrowShow(slot0, slot1)
-	gohelper.setActive(slot0._seasonEmpty1, slot1)
-	gohelper.setActive(slot0._seasonEmpty2, not slot1)
-	gohelper.setActive(slot0._seasonCurActIndex, slot1)
-	gohelper.setActive(slot0._seasonCurActArrow, slot1)
+function var_0_0.refreshSeasonArrowShow(arg_2_0, arg_2_1)
+	gohelper.setActive(arg_2_0._seasonEmpty1, arg_2_1)
+	gohelper.setActive(arg_2_0._seasonEmpty2, not arg_2_1)
+	gohelper.setActive(arg_2_0._seasonCurActIndex, arg_2_1)
+	gohelper.setActive(arg_2_0._seasonCurActArrow, arg_2_1)
 end
 
-function slot0.addEventListeners(slot0)
-	slot0._click:AddClickListener(slot0._onClickThis, slot0)
+function var_0_0.addEventListeners(arg_3_0)
+	arg_3_0._click:AddClickListener(arg_3_0._onClickThis, arg_3_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0._click:RemoveClickListener()
-	TaskDispatcher.cancelTask(slot0._delayHideEffect, slot0)
-	TaskDispatcher.cancelTask(slot0._delayDisableMoveAnim, slot0)
+function var_0_0.removeEventListeners(arg_4_0)
+	arg_4_0._click:RemoveClickListener()
+	TaskDispatcher.cancelTask(arg_4_0._delayHideEffect, arg_4_0)
+	TaskDispatcher.cancelTask(arg_4_0._delayDisableMoveAnim, arg_4_0)
 end
 
-function slot0.onDestroy(slot0)
-	if slot0._effectLoader1 then
-		slot0._effectLoader1:dispose()
+function var_0_0.onDestroy(arg_5_0)
+	if arg_5_0._effectLoader1 then
+		arg_5_0._effectLoader1:dispose()
 
-		slot0._effectLoader1 = nil
+		arg_5_0._effectLoader1 = nil
 	end
 
-	if slot0._effectLoader2 then
-		slot0._effectLoader2:dispose()
+	if arg_5_0._effectLoader2 then
+		arg_5_0._effectLoader2:dispose()
 
-		slot0._effectLoader2 = nil
+		arg_5_0._effectLoader2 = nil
 	end
 
-	if slot0._effectLoader3 then
-		slot0._effectLoader3:dispose()
+	if arg_5_0._effectLoader3 then
+		arg_5_0._effectLoader3:dispose()
 
-		slot0._effectLoader3 = nil
+		arg_5_0._effectLoader3 = nil
 	end
 
-	slot0._tailEffectGO = nil
+	arg_5_0._tailEffectGO = nil
 end
 
-function slot0.updateItem(slot0, slot1)
-	slot0.fightBeginRoundOp = slot1
-	slot2 = slot1
-	slot4 = slot2 and (slot2:isMoveCard() or slot2:isMoveUniversal())
-	slot5 = slot2 and (slot2:isPlayCard() or slot2:isAssistBossPlayCard() or slot2:isPlayerFinisherSkill())
+function var_0_0.updateItem(arg_6_0, arg_6_1)
+	arg_6_0.fightBeginRoundOp = arg_6_1
 
-	gohelper.setActive(slot0._emtpyGO, not slot2)
-	gohelper.setActive(slot0._moveGO, slot4)
-	TaskDispatcher.cancelTask(slot0._delayDisableMoveAnim, slot0)
+	local var_6_0 = arg_6_1
+	local var_6_1 = not var_6_0
+	local var_6_2 = var_6_0 and (var_6_0:isMoveCard() or var_6_0:isMoveUniversal())
+	local var_6_3 = var_6_0 and (var_6_0:isPlayCard() or var_6_0:isAssistBossPlayCard() or var_6_0:isPlayerFinisherSkill())
 
-	if slot4 then
-		slot0._moveAnimComp.enabled = true
+	gohelper.setActive(arg_6_0._emtpyGO, var_6_1)
+	gohelper.setActive(arg_6_0._moveGO, var_6_2)
+	TaskDispatcher.cancelTask(arg_6_0._delayDisableMoveAnim, arg_6_0)
 
-		TaskDispatcher.runDelay(slot0._delayDisableMoveAnim, slot0, 1)
+	if var_6_2 then
+		arg_6_0._moveAnimComp.enabled = true
+
+		TaskDispatcher.runDelay(arg_6_0._delayDisableMoveAnim, arg_6_0, 1)
 	end
 
-	gohelper.setActive(slot0._innerGO, slot5)
+	gohelper.setActive(arg_6_0._innerGO, var_6_3)
 
-	if slot5 then
-		if not slot0._cardItem then
-			slot0._cardItem = MonoHelper.addNoUpdateLuaComOnceToGo(slot0._innerGO, FightViewCardItem, FightEnum.CardShowType.Operation)
+	if var_6_3 then
+		if not arg_6_0._cardItem then
+			arg_6_0._cardItem = MonoHelper.addNoUpdateLuaComOnceToGo(arg_6_0._innerGO, FightViewCardItem, FightEnum.CardShowType.Operation)
 		end
 
-		slot0._cardItem:updateItem(slot2.belongToEntityId, slot2.skillId)
+		arg_6_0._cardItem:updateItem(var_6_0.belongToEntityId, var_6_0.skillId)
 
-		slot7 = FightBuffHelper.simulateBuffList(FightDataHelper.entityMgr:getById(slot2.belongToEntityId), slot2)
+		local var_6_4 = FightDataHelper.entityMgr:getById(var_6_0.belongToEntityId)
+		local var_6_5 = FightBuffHelper.simulateBuffList(var_6_4, var_6_0)
 
-		FightViewHandCardItemLock.setCardLock(slot2 and slot2.belongToEntityId, slot2 and slot2.skillId, slot0._lockGO, false, slot7)
-		slot0:_setCardPreRemove(slot2, slot7)
-		slot0._cardItem:detectShowBlueStar()
-		slot0._cardItem:updateResistanceByBeginRoundOp(slot1)
+		FightViewHandCardItemLock.setCardLock(var_6_0 and var_6_0.belongToEntityId, var_6_0 and var_6_0.skillId, arg_6_0._lockGO, false, var_6_5)
+		arg_6_0:_setCardPreRemove(var_6_0, var_6_5)
+		arg_6_0._cardItem:detectShowBlueStar()
+		arg_6_0._cardItem:updateResistanceByBeginRoundOp(arg_6_1)
 
-		if slot2:isPlayerFinisherSkill() then
-			gohelper.setActive(slot0._lockGO, false)
+		if var_6_0:isPlayerFinisherSkill() then
+			gohelper.setActive(arg_6_0._lockGO, false)
 		end
 	else
-		gohelper.setActive(slot0._lockGO, false)
+		gohelper.setActive(arg_6_0._lockGO, false)
 	end
 
-	if slot0.fightBeginRoundOp then
-		if slot0.PARENTVIEW and slot0.PARENTVIEW.refreshRankUpDown then
-			slot0.PARENTVIEW:refreshRankUpDown()
+	if arg_6_0.fightBeginRoundOp then
+		if arg_6_0.PARENTVIEW and arg_6_0.PARENTVIEW.refreshRankUpDown then
+			arg_6_0.PARENTVIEW:refreshRankUpDown()
 		end
 	else
-		gohelper.setActive(slot0.rankChangeRoot, false)
+		gohelper.setActive(arg_6_0.rankChangeRoot, false)
 	end
 
-	slot0:refreshASFDEnergy()
-	slot0:refreshRedAndBlueArea()
+	arg_6_0:refreshASFDEnergy()
+	arg_6_0:refreshRedAndBlueArea()
 end
 
-function slot0.refreshRedAndBlueArea(slot0)
-	if not slot0._cardItem then
+function var_0_0.refreshRedAndBlueArea(arg_7_0)
+	if not arg_7_0._cardItem then
 		return
 	end
 
-	slot1 = slot0.fightBeginRoundOp and slot0.fightBeginRoundOp.cardColor
+	local var_7_0 = arg_7_0.fightBeginRoundOp and arg_7_0.fightBeginRoundOp.cardColor
 
-	slot0._cardItem:setActiveRed(slot1 == FightEnum.CardColor.Both or slot1 == FightEnum.CardColor.Red)
-	slot0._cardItem:setActiveBlue(slot1 == FightEnum.CardColor.Both or slot1 == FightEnum.CardColor.Blue)
+	arg_7_0._cardItem:setActiveRed(var_7_0 == FightEnum.CardColor.Both or var_7_0 == FightEnum.CardColor.Red)
+	arg_7_0._cardItem:setActiveBlue(var_7_0 == FightEnum.CardColor.Both or var_7_0 == FightEnum.CardColor.Blue)
 end
 
-function slot0.refreshASFDEnergy(slot0)
-	slot1 = slot0.fightBeginRoundOp and slot0.fightBeginRoundOp.cardInfoMO
-	slot2 = slot1 and slot1.energy
-	slot3 = slot2 and slot2 > 0
+function var_0_0.refreshASFDEnergy(arg_8_0)
+	local var_8_0 = arg_8_0.fightBeginRoundOp and arg_8_0.fightBeginRoundOp.cardInfoMO
+	local var_8_1 = var_8_0 and var_8_0.energy
+	local var_8_2 = var_8_1 and var_8_1 > 0
+	local var_8_3 = arg_8_0.goASFD.activeSelf
 
-	gohelper.setActive(slot0.goASFD, slot3)
+	gohelper.setActive(arg_8_0.goASFD, var_8_2)
 
-	if slot3 then
-		slot0.txtASFDEnergy.text = slot2
+	if var_8_2 then
+		arg_8_0.txtASFDEnergy.text = var_8_1
 
-		if slot0.goASFD.activeSelf then
-			slot0.asfdAnimatorPlayer:Play("open", slot0.resetToASFDIdle, slot0)
+		if var_8_3 then
+			arg_8_0.asfdAnimatorPlayer:Play("open", arg_8_0.resetToASFDIdle, arg_8_0)
 		end
 	end
 end
 
-function slot0.resetToASFDIdle(slot0)
-	slot0.asfdAnimatorPlayer:Play("idle")
+function var_0_0.resetToASFDIdle(arg_9_0)
+	arg_9_0.asfdAnimatorPlayer:Play("idle")
 end
 
-function slot0.playASFDCloseAnim(slot0)
-	slot0.asfdAnimatorPlayer:Play("close", slot0.hideASFD, slot0)
+function var_0_0.playASFDCloseAnim(arg_10_0)
+	arg_10_0.asfdAnimatorPlayer:Play("close", arg_10_0.hideASFD, arg_10_0)
 end
 
-function slot0.hideASFD(slot0)
-	gohelper.setActive(slot0.goASFD, false)
+function var_0_0.hideASFD(arg_11_0)
+	gohelper.setActive(arg_11_0.goASFD, false)
 end
 
-function slot0.setCopyCard(slot0)
-	slot0._isCopyCard = true
+function var_0_0.setCopyCard(arg_12_0)
+	arg_12_0._isCopyCard = true
 end
 
-function slot0.isCopyCard(slot0)
-	return slot0._isCopyCard
+function var_0_0.isCopyCard(arg_13_0)
+	return arg_13_0._isCopyCard
 end
 
-slot2 = Color.New(1, 1, 1, 0.5)
+local var_0_2 = Color.New(1, 1, 1, 0.5)
 
-function slot0._setCardPreRemove(slot0, slot1, slot2)
-	if slot1 == nil then
+function var_0_0._setCardPreRemove(arg_14_0, arg_14_1, arg_14_2)
+	if arg_14_1 == nil then
 		return
 	end
 
-	if FightViewHandCardItemLock.canUseCardSkill(slot1.belongToEntityId, slot1.skillId, slot2) then
+	if FightViewHandCardItemLock.canUseCardSkill(arg_14_1.belongToEntityId, arg_14_1.skillId, arg_14_2) then
 		return
 	end
 
-	if FightViewHandCardItemLock.canPreRemove(slot1.belongToEntityId, slot1.skillId, slot1, slot2) then
-		FightViewHandCardItemLock.setCardPreRemove(slot1.belongToEntityId, slot1.skillId, slot0._lockGO, false)
+	if FightViewHandCardItemLock.canPreRemove(arg_14_1.belongToEntityId, arg_14_1.skillId, arg_14_1, arg_14_2) then
+		FightViewHandCardItemLock.setCardPreRemove(arg_14_1.belongToEntityId, arg_14_1.skillId, arg_14_0._lockGO, false)
 	end
 end
 
-function slot0.showPlayCardEffect(slot0, slot1, slot2)
-	gohelper.setActive(slot0._emtpyGO, false)
+function var_0_0.showPlayCardEffect(arg_15_0, arg_15_1, arg_15_2)
+	gohelper.setActive(arg_15_0._emtpyGO, false)
 end
 
-function slot0._delayHideEffect(slot0)
-	gohelper.setActive(slot0._goEffect1, false)
-	gohelper.setActive(slot0._goEffect2, false)
-	gohelper.setActive(slot0._goEffect3, false)
-	gohelper.destroy(slot0._tailEffectGO)
+function var_0_0._delayHideEffect(arg_16_0)
+	gohelper.setActive(arg_16_0._goEffect1, false)
+	gohelper.setActive(arg_16_0._goEffect2, false)
+	gohelper.setActive(arg_16_0._goEffect3, false)
+	gohelper.destroy(arg_16_0._tailEffectGO)
 
-	slot0._tailEffectGO = nil
+	arg_16_0._tailEffectGO = nil
 end
 
-function slot0.hideExtMoveEffect(slot0)
-	gohelper.setActive(slot0._conversionGO, false)
+function var_0_0.hideExtMoveEffect(arg_17_0)
+	gohelper.setActive(arg_17_0._conversionGO, false)
 end
 
-function slot0.showExtMoveEffect(slot0)
-	gohelper.setActive(slot0._conversionGO, true)
+function var_0_0.showExtMoveEffect(arg_18_0)
+	gohelper.setActive(arg_18_0._conversionGO, true)
 end
 
-function slot0.showExtMoveEndEffect(slot0)
-	gohelper.setActive(slot0._conversionGO, false)
+function var_0_0.showExtMoveEndEffect(arg_19_0)
+	gohelper.setActive(arg_19_0._conversionGO, false)
 end
 
-function slot0._delayDisableMoveAnim(slot0)
-	slot0._moveAnimComp.enabled = false
+function var_0_0._delayDisableMoveAnim(arg_20_0)
+	arg_20_0._moveAnimComp.enabled = false
 end
 
-slot3 = {}
+local var_0_3 = {}
 
-function slot0._onClickThis(slot0)
+function var_0_0._onClickThis(arg_21_0)
 	if FightViewHandCard.blockOperate or FightModel.instance:isAuto() then
 		return
 	end
@@ -255,7 +263,7 @@ function slot0._onClickThis(slot0)
 		FightDataHelper.stageMgr:exitOperateState(FightStageMgr.OperateStateType.Discard)
 	end
 
-	if not FightDataHelper.stageMgr:isFree(uv0) then
+	if not FightDataHelper.stageMgr:isFree(var_0_3) then
 		return
 	end
 
@@ -264,4 +272,4 @@ function slot0._onClickThis(slot0)
 	FightAudioMgr.instance:stopAllCardAudio()
 end
 
-return slot0
+return var_0_0

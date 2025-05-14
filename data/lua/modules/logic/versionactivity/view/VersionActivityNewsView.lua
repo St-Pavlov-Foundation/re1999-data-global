@@ -1,160 +1,177 @@
-module("modules.logic.versionactivity.view.VersionActivityNewsView", package.seeall)
+﻿module("modules.logic.versionactivity.view.VersionActivityNewsView", package.seeall)
 
-slot0 = class("VersionActivityNewsView", BaseView)
+local var_0_0 = class("VersionActivityNewsView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._goclose = gohelper.findChild(slot0.viewGO, "#go_close")
-	slot0._txttitle = gohelper.findChildText(slot0.viewGO, "#txt_title")
-	slot0._goinfoitem = gohelper.findChild(slot0.viewGO, "#scroll_info/Viewport/Content/#go_infoitem")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goclose = gohelper.findChild(arg_1_0.viewGO, "#go_close")
+	arg_1_0._txttitle = gohelper.findChildText(arg_1_0.viewGO, "#txt_title")
+	arg_1_0._goinfoitem = gohelper.findChild(arg_1_0.viewGO, "#scroll_info/Viewport/Content/#go_infoitem")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-slot0.ParagraphDelimiter = "{p}"
-slot0.ImageString = "{img}"
-slot0.ImageStringLen = #slot0.ImageString
-slot0.Anchor = {
+var_0_0.ParagraphDelimiter = "{p}"
+var_0_0.ImageString = "{img}"
+var_0_0.ImageStringLen = #var_0_0.ImageString
+var_0_0.Anchor = {
 	Left = Vector2.New(0, 1),
 	Center = Vector2.New(0.5, 1),
 	Right = Vector2.New(1, 1)
 }
-slot0.Align = {
+var_0_0.Align = {
 	Right = 3,
 	Left = 1,
 	Center = 2
 }
 
-function slot0.closeViewOnClick(slot0)
-	slot0:closeThis()
+function var_0_0.closeViewOnClick(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
-	gohelper.setActive(slot0._goinfoitem, false)
+function var_0_0._editableInitView(arg_5_0)
+	gohelper.setActive(arg_5_0._goinfoitem, false)
 
-	slot0.closeViewClick = gohelper.getClick(slot0._goclose)
+	arg_5_0.closeViewClick = gohelper.getClick(arg_5_0._goclose)
 
-	slot0.closeViewClick:AddClickListener(slot0.closeViewOnClick, slot0)
+	arg_5_0.closeViewClick:AddClickListener(arg_5_0.closeViewOnClick, arg_5_0)
 
-	slot0.contentItemList = {}
+	arg_5_0.contentItemList = {}
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_6_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0.fragmentCo = lua_chapter_map_fragment.configDict[slot0.viewParam.fragmentId]
+function var_0_0.onOpen(arg_7_0)
+	local var_7_0 = arg_7_0.viewParam.fragmentId
 
-	if not slot0.fragmentCo then
-		logError("not found fragment : " .. slot1)
-		slot0:closeThis()
+	arg_7_0.fragmentCo = lua_chapter_map_fragment.configDict[var_7_0]
+
+	if not arg_7_0.fragmentCo then
+		logError("not found fragment : " .. var_7_0)
+		arg_7_0:closeThis()
 
 		return
 	end
 
-	slot0:refreshUI()
+	arg_7_0:refreshUI()
 end
 
-function slot0.refreshUI(slot0)
-	slot0._txttitle.text = slot0.fragmentCo.title
-	slot2 = 0
-	slot3, slot4 = nil
+function var_0_0.refreshUI(arg_8_0)
+	arg_8_0._txttitle.text = arg_8_0.fragmentCo.title
 
-	for slot8, slot9 in ipairs(string.split(slot0.fragmentCo.content, uv0.ParagraphDelimiter)) do
-		if not string.nilorempty(slot9) then
-			slot3 = slot0.contentItemList[slot2 + 1] or slot0:createContentItem()
+	local var_8_0 = string.split(arg_8_0.fragmentCo.content, var_0_0.ParagraphDelimiter)
+	local var_8_1 = 0
+	local var_8_2
+	local var_8_3
 
-			gohelper.setActive(slot3.go, true)
+	for iter_8_0, iter_8_1 in ipairs(var_8_0) do
+		if not string.nilorempty(iter_8_1) then
+			var_8_1 = var_8_1 + 1
+			iter_8_1 = string.trim(iter_8_1)
 
-			slot4 = string.find(string.trim(slot9), uv0.ImageString) and true or false
+			local var_8_4 = arg_8_0.contentItemList[var_8_1] or arg_8_0:createContentItem()
 
-			gohelper.setActive(slot3.goPlainText, not slot4)
-			gohelper.setActive(slot3.goImgText, slot4)
+			gohelper.setActive(var_8_4.go, true)
 
-			if slot4 then
-				slot3.txtImgText.text = string.gsub(slot9, uv0.ImageString, "")
+			local var_8_5 = string.find(iter_8_1, var_0_0.ImageString) and true or false
 
-				slot3.simageIcon:LoadImage(ResUrl.getVersionActivityIcon(slot0.fragmentCo.res))
+			gohelper.setActive(var_8_4.goPlainText, not var_8_5)
+			gohelper.setActive(var_8_4.goImgText, var_8_5)
 
-				if slot0:getImageAlign(slot9) == uv0.Align.Left then
-					slot3.iconRectTr.anchorMin = uv0.Anchor.Left
-					slot3.iconRectTr.anchorMax = uv0.Anchor.Left
+			if var_8_5 then
+				local var_8_6 = arg_8_0:getImageAlign(iter_8_1)
 
-					recthelper.setAnchor(slot3.iconRectTr, recthelper.getWidth(slot3.iconRectTr) / 2, 0)
-				elseif slot10 == uv0.Align.Center then
-					slot3.iconRectTr.anchorMin = uv0.Anchor.Center
-					slot3.iconRectTr.anchorMax = uv0.Anchor.Center
+				iter_8_1 = string.gsub(iter_8_1, var_0_0.ImageString, "")
+				var_8_4.txtImgText.text = iter_8_1
 
-					recthelper.setAnchor(slot3.iconRectTr, 0, 0)
-				elseif slot10 == uv0.Align.Right then
-					slot3.iconRectTr.anchorMin = uv0.Anchor.Right
-					slot3.iconRectTr.anchorMax = uv0.Anchor.Right
+				var_8_4.simageIcon:LoadImage(ResUrl.getVersionActivityIcon(arg_8_0.fragmentCo.res))
 
-					recthelper.setAnchor(slot3.iconRectTr, -slot11 / 2, 0)
+				local var_8_7 = recthelper.getWidth(var_8_4.iconRectTr)
+
+				if var_8_6 == var_0_0.Align.Left then
+					var_8_4.iconRectTr.anchorMin = var_0_0.Anchor.Left
+					var_8_4.iconRectTr.anchorMax = var_0_0.Anchor.Left
+
+					recthelper.setAnchor(var_8_4.iconRectTr, var_8_7 / 2, 0)
+				elseif var_8_6 == var_0_0.Align.Center then
+					var_8_4.iconRectTr.anchorMin = var_0_0.Anchor.Center
+					var_8_4.iconRectTr.anchorMax = var_0_0.Anchor.Center
+
+					recthelper.setAnchor(var_8_4.iconRectTr, 0, 0)
+				elseif var_8_6 == var_0_0.Align.Right then
+					var_8_4.iconRectTr.anchorMin = var_0_0.Anchor.Right
+					var_8_4.iconRectTr.anchorMax = var_0_0.Anchor.Right
+
+					recthelper.setAnchor(var_8_4.iconRectTr, -var_8_7 / 2, 0)
 				end
 			else
-				slot3.txtPlainText.text = slot9
+				var_8_4.txtPlainText.text = iter_8_1
 			end
 		end
 	end
 
-	for slot8 = slot2 + 1, #slot0.contentItemList do
-		gohelper.setActive(slot0.contentItemList[slot8].go, false)
+	for iter_8_2 = var_8_1 + 1, #arg_8_0.contentItemList do
+		gohelper.setActive(arg_8_0.contentItemList[iter_8_2].go, false)
 	end
 end
 
-function slot0.checkIsImageType(slot0, slot1)
-	return string.find(slot1, uv0.ImageString)
+function var_0_0.checkIsImageType(arg_9_0, arg_9_1)
+	return string.find(arg_9_1, var_0_0.ImageString)
 end
 
-function slot0.getImageAlign(slot0, slot1)
-	slot2, slot3 = string.find(slot1, uv0.ImageString)
+function var_0_0.getImageAlign(arg_10_0, arg_10_1)
+	local var_10_0, var_10_1 = string.find(arg_10_1, var_0_0.ImageString)
 
-	if not slot2 then
-		return uv0.Align.Right
+	if not var_10_0 then
+		return var_0_0.Align.Right
 	end
 
-	if slot2 ~= 1 then
-		return uv0.Align.Right
+	if var_10_0 ~= 1 then
+		return var_0_0.Align.Right
 	end
 
-	if string.nilorempty(string.sub(slot1, slot3 + 1, slot3 + 1)) then
-		return uv0.Align.Center
+	if string.nilorempty(string.sub(arg_10_1, var_10_1 + 1, var_10_1 + 1)) then
+		return var_0_0.Align.Center
 	end
 
-	return uv0.Align.Left
+	return var_0_0.Align.Left
 end
 
-function slot0.createContentItem(slot0)
-	slot1 = slot0:getUserDataTb_()
-	slot1.go = gohelper.cloneInPlace(slot0._goinfoitem)
-	slot1.goPlainText = gohelper.findChild(slot1.go, "type1")
-	slot1.txtPlainText = gohelper.findChildText(slot1.go, "type1")
-	slot1.goImgText = gohelper.findChild(slot1.go, "type2")
-	slot1.txtImgText = gohelper.findChildText(slot1.go, "type2/info")
-	slot1.simageIcon = gohelper.findChildSingleImage(slot1.go, "type2/icon")
-	slot1.iconRectTr = slot1.simageIcon.gameObject.transform
+function var_0_0.createContentItem(arg_11_0)
+	local var_11_0 = arg_11_0:getUserDataTb_()
 
-	return slot1
+	var_11_0.go = gohelper.cloneInPlace(arg_11_0._goinfoitem)
+	var_11_0.goPlainText = gohelper.findChild(var_11_0.go, "type1")
+	var_11_0.txtPlainText = gohelper.findChildText(var_11_0.go, "type1")
+	var_11_0.goImgText = gohelper.findChild(var_11_0.go, "type2")
+	var_11_0.txtImgText = gohelper.findChildText(var_11_0.go, "type2/info")
+	var_11_0.simageIcon = gohelper.findChildSingleImage(var_11_0.go, "type2/icon")
+	var_11_0.iconRectTr = var_11_0.simageIcon.gameObject.transform
+
+	return var_11_0
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_12_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
 
-	for slot4, slot5 in ipairs(slot0.contentItemList) do
-		slot5.simageIcon:UnLoadImage()
+	for iter_12_0, iter_12_1 in ipairs(arg_12_0.contentItemList) do
+		iter_12_1.simageIcon:UnLoadImage()
 	end
 end
 
-function slot0.onDestroyView(slot0)
-	slot0.closeViewClick:RemoveClickListener()
+function var_0_0.onDestroyView(arg_13_0)
+	arg_13_0.closeViewClick:RemoveClickListener()
 end
 
-return slot0
+return var_0_0

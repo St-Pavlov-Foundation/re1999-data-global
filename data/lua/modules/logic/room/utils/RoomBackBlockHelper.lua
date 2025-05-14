@@ -1,165 +1,204 @@
-module("modules.logic.room.utils.RoomBackBlockHelper", package.seeall)
+﻿module("modules.logic.room.utils.RoomBackBlockHelper", package.seeall)
 
-return {
+local var_0_0 = {
 	State = {
 		Near = 2,
 		Back = 0,
 		Map = 1
-	},
-	isCanBack = function (slot0, slot1)
-		if uv0.isHasInitBlock(slot1) then
-			return false
-		end
+	}
+}
 
-		return uv0._isCanBackBlocks(uv0._createMapDic(slot0), slot1, true)
-	end,
-	resfreshInitBlockEntityEffect = function ()
-		slot2 = RoomMapBlockModel.instance:getBackBlockModel()
-		slot3 = GameSceneMgr.instance:getCurScene()
-
-		for slot7 = 1, #RoomConfig.instance:getInitBlockList() do
-			if RoomMapBlockModel.instance:getFullBlockMOById(slot1[slot7].blockId) then
-				if RoomMapBlockModel.instance:isBackMore() then
-					slot2:remove(slot9)
-					slot9:setOpState(RoomBlockEnum.OpState.Back, false)
-				else
-					slot9:setOpState(RoomBlockEnum.OpState.Normal)
-				end
-
-				if slot3.mapmgr:getBlockEntity(slot9.id, SceneTag.RoomMapBlock) then
-					slot10:refreshBlock()
-				end
-			end
-		end
-	end,
-	sortBackBlockMOList = function (slot0, slot1)
-		if not slot1 or not slot0 or uv0.isHasInitBlock(slot1) then
-			return slot1
-		end
-
-		slot3 = {}
-
-		tabletool.addValues({}, slot1)
-
-		slot5 = uv0._createMapDic(slot0)
-
-		for slot9 = 1, #slot1 do
-			for slot13 = 1, #slot2 do
-				table.insert(slot3, slot2[slot13])
-
-				if uv0._isCanBackBlocks(slot5, slot3) then
-					table.remove(slot2, slot13)
-
-					break
-				else
-					table.remove(slot3, #slot3)
-				end
-			end
-
-			if slot9 > #slot3 then
-				break
-			end
-		end
-
-		tabletool.addValues(slot3, slot2)
-
-		for slot9 = 1, #slot3 do
-			slot1[slot9] = slot3[slot9]
-		end
-
-		return slot1
-	end,
-	isHasInitBlock = function (slot0)
-		slot1 = RoomConfig.instance
-
-		for slot5 = 1, #slot0 do
-			if slot1:getInitBlock(slot0[slot5].id) then
-				return true
-			end
-		end
-
+function var_0_0.isCanBack(arg_1_0, arg_1_1)
+	if var_0_0.isHasInitBlock(arg_1_1) then
 		return false
-	end,
-	_isCanBackBlocks = function (slot0, slot1, slot2)
-		if slot2 == true then
-			uv0._restMapDic(slot0)
-		end
+	end
 
-		uv0._setBackBlockMOList(slot0, slot1)
-		uv0._findNearCount(slot0, 0, 0)
+	local var_1_0 = var_0_0._createMapDic(arg_1_0)
 
-		return uv0._sumCountByState(slot0, uv0.State.Map) == 0
-	end,
-	_setBackBlockMOList = function (slot0, slot1)
-		slot2 = uv0.State.Back
+	return var_0_0._isCanBackBlocks(var_1_0, arg_1_1, true)
+end
 
-		for slot6 = 1, #slot1 do
-			if slot1[slot6].hexPoint and slot0[slot7.x] and slot8[slot7.y] and slot9 ~= slot2 then
-				slot8[slot7.y] = slot2
-			end
-		end
-	end,
-	_sumCountByState = function (slot0, slot1)
-		slot2 = 0
+function var_0_0.resfreshInitBlockEntityEffect()
+	local var_2_0 = RoomMapBlockModel.instance:isBackMore()
+	local var_2_1 = RoomConfig.instance:getInitBlockList()
+	local var_2_2 = RoomMapBlockModel.instance:getBackBlockModel()
+	local var_2_3 = GameSceneMgr.instance:getCurScene()
 
-		for slot6, slot7 in pairs(slot0) do
-			for slot11, slot12 in pairs(slot7) do
-				if slot12 == slot1 then
-					slot2 = slot2 + 1
-				end
-			end
-		end
+	for iter_2_0 = 1, #var_2_1 do
+		local var_2_4 = var_2_1[iter_2_0]
+		local var_2_5 = RoomMapBlockModel.instance:getFullBlockMOById(var_2_4.blockId)
 
-		return slot2
-	end,
-	_restMapDic = function (slot0)
-		slot1 = uv0.State.Map
-
-		for slot5, slot6 in pairs(slot0) do
-			for slot10, slot11 in pairs(slot6) do
-				slot6[slot10] = slot1
-			end
-		end
-	end,
-	_createMapDic = function (slot0)
-		slot1 = {}
-		slot2 = uv0.State.Map
-
-		for slot6 = 1, #slot0 do
-			if not slot1[slot0[slot6].hexPoint.x] then
-				slot1[slot7.x] = {}
+		if var_2_5 then
+			if var_2_0 then
+				var_2_2:remove(var_2_5)
+				var_2_5:setOpState(RoomBlockEnum.OpState.Back, false)
+			else
+				var_2_5:setOpState(RoomBlockEnum.OpState.Normal)
 			end
 
-			slot8[slot7.y] = slot2
-		end
+			local var_2_6 = var_2_3.mapmgr:getBlockEntity(var_2_5.id, SceneTag.RoomMapBlock)
 
-		return slot1
-	end,
-	_findNearCount = function (slot0, slot1, slot2, slot3)
-		if (slot0[slot1] and slot0[slot1][slot2]) == uv0.State.Map then
-			slot0[slot1][slot2] = uv0.State.Near
-
-			for slot8 = 1, 6 do
-				slot9, slot10 = uv0._getNearXY(slot1, slot2, slot8)
-				slot3 = uv0._findNearCount(slot0, slot9, slot10, (slot3 or 0) + 1)
+			if var_2_6 then
+				var_2_6:refreshBlock()
 			end
-		end
-
-		return slot3
-	end,
-	_getNearXY = function (slot0, slot1, slot2)
-		if slot2 == 1 then
-			return slot0 - 1, slot1 + 1
-		elseif slot2 == 2 then
-			return slot0 - 1, slot1
-		elseif slot2 == 3 then
-			return slot0, slot1 - 1
-		elseif slot2 == 4 then
-			return slot0 + 1, slot1 - 1
-		elseif slot2 == 5 then
-			return slot0 + 1, slot1
-		elseif slot2 == 6 then
-			return slot0, slot1 + 1
 		end
 	end
-}
+end
+
+function var_0_0.sortBackBlockMOList(arg_3_0, arg_3_1)
+	if not arg_3_1 or not arg_3_0 or var_0_0.isHasInitBlock(arg_3_1) then
+		return arg_3_1
+	end
+
+	local var_3_0 = {}
+	local var_3_1 = {}
+	local var_3_2 = #arg_3_1
+
+	tabletool.addValues(var_3_0, arg_3_1)
+
+	local var_3_3 = var_0_0._createMapDic(arg_3_0)
+
+	for iter_3_0 = 1, var_3_2 do
+		for iter_3_1 = 1, #var_3_0 do
+			table.insert(var_3_1, var_3_0[iter_3_1])
+
+			if var_0_0._isCanBackBlocks(var_3_3, var_3_1) then
+				table.remove(var_3_0, iter_3_1)
+
+				break
+			else
+				table.remove(var_3_1, #var_3_1)
+			end
+		end
+
+		if iter_3_0 > #var_3_1 then
+			break
+		end
+	end
+
+	tabletool.addValues(var_3_1, var_3_0)
+
+	for iter_3_2 = 1, #var_3_1 do
+		arg_3_1[iter_3_2] = var_3_1[iter_3_2]
+	end
+
+	return arg_3_1
+end
+
+function var_0_0.isHasInitBlock(arg_4_0)
+	local var_4_0 = RoomConfig.instance
+
+	for iter_4_0 = 1, #arg_4_0 do
+		if var_4_0:getInitBlock(arg_4_0[iter_4_0].id) then
+			return true
+		end
+	end
+
+	return false
+end
+
+function var_0_0._isCanBackBlocks(arg_5_0, arg_5_1, arg_5_2)
+	if arg_5_2 == true then
+		var_0_0._restMapDic(arg_5_0)
+	end
+
+	var_0_0._setBackBlockMOList(arg_5_0, arg_5_1)
+	var_0_0._findNearCount(arg_5_0, 0, 0)
+
+	return var_0_0._sumCountByState(arg_5_0, var_0_0.State.Map) == 0
+end
+
+function var_0_0._setBackBlockMOList(arg_6_0, arg_6_1)
+	local var_6_0 = var_0_0.State.Back
+
+	for iter_6_0 = 1, #arg_6_1 do
+		local var_6_1 = arg_6_1[iter_6_0].hexPoint
+		local var_6_2 = var_6_1 and arg_6_0[var_6_1.x]
+
+		if var_6_2 then
+			local var_6_3 = var_6_2[var_6_1.y]
+
+			if var_6_3 and var_6_3 ~= var_6_0 then
+				var_6_2[var_6_1.y] = var_6_0
+			end
+		end
+	end
+end
+
+function var_0_0._sumCountByState(arg_7_0, arg_7_1)
+	local var_7_0 = 0
+
+	for iter_7_0, iter_7_1 in pairs(arg_7_0) do
+		for iter_7_2, iter_7_3 in pairs(iter_7_1) do
+			if iter_7_3 == arg_7_1 then
+				var_7_0 = var_7_0 + 1
+			end
+		end
+	end
+
+	return var_7_0
+end
+
+function var_0_0._restMapDic(arg_8_0)
+	local var_8_0 = var_0_0.State.Map
+
+	for iter_8_0, iter_8_1 in pairs(arg_8_0) do
+		for iter_8_2, iter_8_3 in pairs(iter_8_1) do
+			iter_8_1[iter_8_2] = var_8_0
+		end
+	end
+end
+
+function var_0_0._createMapDic(arg_9_0)
+	local var_9_0 = {}
+	local var_9_1 = var_0_0.State.Map
+
+	for iter_9_0 = 1, #arg_9_0 do
+		local var_9_2 = arg_9_0[iter_9_0].hexPoint
+		local var_9_3 = var_9_0[var_9_2.x]
+
+		if not var_9_3 then
+			var_9_3 = {}
+			var_9_0[var_9_2.x] = var_9_3
+		end
+
+		var_9_3[var_9_2.y] = var_9_1
+	end
+
+	return var_9_0
+end
+
+function var_0_0._findNearCount(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
+	arg_10_3 = arg_10_3 or 0
+
+	if (arg_10_0[arg_10_1] and arg_10_0[arg_10_1][arg_10_2]) == var_0_0.State.Map then
+		arg_10_3 = arg_10_3 + 1
+		arg_10_0[arg_10_1][arg_10_2] = var_0_0.State.Near
+
+		for iter_10_0 = 1, 6 do
+			local var_10_0, var_10_1 = var_0_0._getNearXY(arg_10_1, arg_10_2, iter_10_0)
+
+			arg_10_3 = var_0_0._findNearCount(arg_10_0, var_10_0, var_10_1, arg_10_3)
+		end
+	end
+
+	return arg_10_3
+end
+
+function var_0_0._getNearXY(arg_11_0, arg_11_1, arg_11_2)
+	if arg_11_2 == 1 then
+		return arg_11_0 - 1, arg_11_1 + 1
+	elseif arg_11_2 == 2 then
+		return arg_11_0 - 1, arg_11_1
+	elseif arg_11_2 == 3 then
+		return arg_11_0, arg_11_1 - 1
+	elseif arg_11_2 == 4 then
+		return arg_11_0 + 1, arg_11_1 - 1
+	elseif arg_11_2 == 5 then
+		return arg_11_0 + 1, arg_11_1
+	elseif arg_11_2 == 6 then
+		return arg_11_0, arg_11_1 + 1
+	end
+end
+
+return var_0_0

@@ -1,15 +1,15 @@
-module("modules.logic.guide.controller.GuideSpecialController", package.seeall)
+﻿module("modules.logic.guide.controller.GuideSpecialController", package.seeall)
 
-slot0 = class("GuideSpecialController", BaseController)
+local var_0_0 = class("GuideSpecialController", BaseController)
 
-function slot0.onInitFinish(slot0)
-	slot0._guideJumpHandler = GuideJumpHandler.New()
+function var_0_0.onInitFinish(arg_1_0)
+	arg_1_0._guideJumpHandler = GuideJumpHandler.New()
 end
 
-function slot0.reInit(slot0)
-	slot0._guideJumpHandler:reInit()
+function var_0_0.reInit(arg_2_0)
+	arg_2_0._guideJumpHandler:reInit()
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

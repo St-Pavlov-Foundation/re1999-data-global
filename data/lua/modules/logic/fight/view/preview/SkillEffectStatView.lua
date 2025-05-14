@@ -1,82 +1,83 @@
-module("modules.logic.fight.view.preview.SkillEffectStatView", package.seeall)
+﻿module("modules.logic.fight.view.preview.SkillEffectStatView", package.seeall)
 
-slot0 = class("SkillEffectStatView", BaseView)
+local var_0_0 = class("SkillEffectStatView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._btnOpen = gohelper.findChildButtonWithAudio(slot0.viewGO, "btnOpen")
-	slot0._btnClose = gohelper.findChildButtonWithAudio(slot0.viewGO, "btnClose")
-	slot0._btnClear = gohelper.findChildButtonWithAudio(slot0.viewGO, "view/title/btnClear")
-	slot0._btnSpeed = gohelper.findChildButtonWithAudio(slot0.viewGO, "view/title/btnSpeed")
-	slot0._txtSpeed = gohelper.findChildText(slot0.viewGO, "view/title/btnSpeed/Text")
-	slot0._slider = gohelper.findChildSlider(slot0.viewGO, "view/title/slider")
-	slot0._contentViewGO = gohelper.findChild(slot0.viewGO, "view")
-	slot0._imgViewBg = slot0._contentViewGO:GetComponent(gohelper.Type_Image)
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnOpen = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btnOpen")
+	arg_1_0._btnClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btnClose")
+	arg_1_0._btnClear = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "view/title/btnClear")
+	arg_1_0._btnSpeed = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "view/title/btnSpeed")
+	arg_1_0._txtSpeed = gohelper.findChildText(arg_1_0.viewGO, "view/title/btnSpeed/Text")
+	arg_1_0._slider = gohelper.findChildSlider(arg_1_0.viewGO, "view/title/slider")
+	arg_1_0._contentViewGO = gohelper.findChild(arg_1_0.viewGO, "view")
+	arg_1_0._imgViewBg = arg_1_0._contentViewGO:GetComponent(gohelper.Type_Image)
 
-	slot0._slider:SetValue(slot0._imgViewBg.color.a)
-	gohelper.setActive(slot0._btnOpen.gameObject, true)
-	gohelper.setActive(slot0._btnClose.gameObject, false)
-	gohelper.setActive(slot0._contentViewGO.gameObject, false)
+	arg_1_0._slider:SetValue(arg_1_0._imgViewBg.color.a)
+	gohelper.setActive(arg_1_0._btnOpen.gameObject, true)
+	gohelper.setActive(arg_1_0._btnClose.gameObject, false)
+	gohelper.setActive(arg_1_0._contentViewGO.gameObject, false)
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnOpen:AddClickListener(slot0._onClickOpen, slot0)
-	slot0._btnClose:AddClickListener(slot0._onClickClose, slot0)
-	slot0._btnClear:AddClickListener(slot0._onClickClear, slot0)
-	slot0._btnSpeed:AddClickListener(slot0._onClickSpeed, slot0)
-	slot0._slider:AddOnValueChanged(slot0._onValueChanged, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.OnHideSkillEditorUIEvent, slot0._onHideSkillEditorUIEvent, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnOpen:AddClickListener(arg_2_0._onClickOpen, arg_2_0)
+	arg_2_0._btnClose:AddClickListener(arg_2_0._onClickClose, arg_2_0)
+	arg_2_0._btnClear:AddClickListener(arg_2_0._onClickClear, arg_2_0)
+	arg_2_0._btnSpeed:AddClickListener(arg_2_0._onClickSpeed, arg_2_0)
+	arg_2_0._slider:AddOnValueChanged(arg_2_0._onValueChanged, arg_2_0)
+	arg_2_0:addEventCb(FightController.instance, FightEvent.OnHideSkillEditorUIEvent, arg_2_0._onHideSkillEditorUIEvent, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnOpen:RemoveClickListener()
-	slot0._btnClose:RemoveClickListener()
-	slot0._btnClear:RemoveClickListener()
-	slot0._btnSpeed:RemoveClickListener()
-	slot0._slider:RemoveOnValueChanged()
-	TaskDispatcher.cancelTask(slot0._onFrame, slot0)
-	slot0:removeEventCb(FightController.instance, FightEvent.OnHideSkillEditorUIEvent, slot0._onHideSkillEditorUIEvent, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnOpen:RemoveClickListener()
+	arg_3_0._btnClose:RemoveClickListener()
+	arg_3_0._btnClear:RemoveClickListener()
+	arg_3_0._btnSpeed:RemoveClickListener()
+	arg_3_0._slider:RemoveOnValueChanged()
+	TaskDispatcher.cancelTask(arg_3_0._onFrame, arg_3_0)
+	arg_3_0:removeEventCb(FightController.instance, FightEvent.OnHideSkillEditorUIEvent, arg_3_0._onHideSkillEditorUIEvent, arg_3_0)
 end
 
-function slot0._onHideSkillEditorUIEvent(slot0, slot1)
-	gohelper.onceAddComponent(slot0.viewGO, typeof(UnityEngine.CanvasGroup)).alpha = slot1
+function var_0_0._onHideSkillEditorUIEvent(arg_4_0, arg_4_1)
+	gohelper.onceAddComponent(arg_4_0.viewGO, typeof(UnityEngine.CanvasGroup)).alpha = arg_4_1
 end
 
-function slot0._onClickOpen(slot0)
-	gohelper.setActive(slot0._btnOpen.gameObject, false)
-	gohelper.setActive(slot0._btnClose.gameObject, true)
-	gohelper.setActive(slot0._contentViewGO.gameObject, true)
-	TaskDispatcher.runRepeat(slot0._onFrame, slot0, 0.01)
+function var_0_0._onClickOpen(arg_5_0)
+	gohelper.setActive(arg_5_0._btnOpen.gameObject, false)
+	gohelper.setActive(arg_5_0._btnClose.gameObject, true)
+	gohelper.setActive(arg_5_0._contentViewGO.gameObject, true)
+	TaskDispatcher.runRepeat(arg_5_0._onFrame, arg_5_0, 0.01)
 end
 
-function slot0._onClickClose(slot0)
-	gohelper.setActive(slot0._btnOpen.gameObject, true)
-	gohelper.setActive(slot0._btnClose.gameObject, false)
-	gohelper.setActive(slot0._contentViewGO.gameObject, false)
-	TaskDispatcher.cancelTask(slot0._onFrame, slot0)
+function var_0_0._onClickClose(arg_6_0)
+	gohelper.setActive(arg_6_0._btnOpen.gameObject, true)
+	gohelper.setActive(arg_6_0._btnClose.gameObject, false)
+	gohelper.setActive(arg_6_0._contentViewGO.gameObject, false)
+	TaskDispatcher.cancelTask(arg_6_0._onFrame, arg_6_0)
 end
 
-function slot0._onClickSpeed(slot0)
+function var_0_0._onClickSpeed(arg_7_0)
 	if UnityEngine.Time.timeScale < 0.5 then
-		slot0._txtSpeed.text = "速度0.01"
+		arg_7_0._txtSpeed.text = "速度0.01"
 		UnityEngine.Time.timeScale = 1
 	else
 		UnityEngine.Time.timeScale = 0.01
-		slot0._txtSpeed.text = "恢复速度"
+		arg_7_0._txtSpeed.text = "恢复速度"
 	end
 end
 
-function slot0._onClickClear(slot0)
+function var_0_0._onClickClear(arg_8_0)
 	SkillEffectStatModel.instance:clearStat()
 end
 
-function slot0._onValueChanged(slot0, slot1, slot2)
-	slot3 = slot0._imgViewBg.color
-	slot3.a = slot2
-	slot0._imgViewBg.color = slot3
+function var_0_0._onValueChanged(arg_9_0, arg_9_1, arg_9_2)
+	local var_9_0 = arg_9_0._imgViewBg.color
+
+	var_9_0.a = arg_9_2
+	arg_9_0._imgViewBg.color = var_9_0
 end
 
-function slot0._onFrame(slot0)
+function var_0_0._onFrame(arg_10_0)
 	SkillEffectStatModel.instance:statistic()
 end
 
-return slot0
+return var_0_0

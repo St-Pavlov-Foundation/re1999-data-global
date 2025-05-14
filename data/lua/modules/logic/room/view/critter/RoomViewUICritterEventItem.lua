@@ -1,137 +1,155 @@
-module("modules.logic.room.view.critter.RoomViewUICritterEventItem", package.seeall)
+﻿module("modules.logic.room.view.critter.RoomViewUICritterEventItem", package.seeall)
 
-slot0 = class("RoomViewUICritterEventItem", RoomViewUIBaseItem)
+local var_0_0 = class("RoomViewUICritterEventItem", RoomViewUIBaseItem)
 
-function slot0.ctor(slot0, slot1)
-	uv0.super.ctor(slot0)
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	var_0_0.super.ctor(arg_1_0)
 
-	slot0._showCameraStateDict = {
+	arg_1_0._showCameraStateDict = {
 		[RoomEnum.CameraState.OverlookAll] = true
 	}
-	slot0.critterUid = slot1
-	slot0.critterMO = CritterModel.instance:getCritterMOByUid(slot0.critterUid)
-	slot0.eventType = CritterHelper.getEventTypeByCritterMO(slot0.critterMO)
+	arg_1_0.critterUid = arg_1_1
+	arg_1_0.critterMO = CritterModel.instance:getCritterMOByUid(arg_1_0.critterUid)
+	arg_1_0.eventType = CritterHelper.getEventTypeByCritterMO(arg_1_0.critterMO)
 
-	if not slot0.eventType then
-		slot0.eventType = CritterEnum.CritterItemEventType.SurpriseCollect
+	if not arg_1_0.eventType then
+		arg_1_0.eventType = CritterEnum.CritterItemEventType.SurpriseCollect
 	end
 end
 
-function slot0._customOnInit(slot0)
-	slot0._gobg = gohelper.findChildImage(slot0._gocontainer, "bg")
-	slot0._gocrittericon = gohelper.findChild(slot0._gocontainer, "#go_crittericon")
-	slot0._goEventBubble = gohelper.findChild(slot0._gocontainer, "#image_bubble")
-	slot0._imageEventBubble = gohelper.findChildImage(slot0._gocontainer, "#image_bubble")
-	slot0._goPropBubble = gohelper.findChild(slot0._gocontainer, "bubblebg")
-	slot0._simageProp = gohelper.findChildSingleImage(slot0._gocontainer, "#image_bubble")
+function var_0_0._customOnInit(arg_2_0)
+	arg_2_0._gobg = gohelper.findChildImage(arg_2_0._gocontainer, "bg")
+	arg_2_0._gocrittericon = gohelper.findChild(arg_2_0._gocontainer, "#go_crittericon")
+	arg_2_0._goEventBubble = gohelper.findChild(arg_2_0._gocontainer, "#image_bubble")
+	arg_2_0._imageEventBubble = gohelper.findChildImage(arg_2_0._gocontainer, "#image_bubble")
+	arg_2_0._goPropBubble = gohelper.findChild(arg_2_0._gocontainer, "bubblebg")
+	arg_2_0._simageProp = gohelper.findChildSingleImage(arg_2_0._gocontainer, "#image_bubble")
 end
 
-function slot0._customAddEventListeners(slot0)
-	RoomCharacterController.instance:registerCallback(RoomEvent.CharacterPositionChanged, slot0._characterPositionChanged, slot0)
-	slot0:setIconUI()
-	slot0:refreshUI(true)
+function var_0_0._customAddEventListeners(arg_3_0)
+	RoomCharacterController.instance:registerCallback(RoomEvent.CharacterPositionChanged, arg_3_0._characterPositionChanged, arg_3_0)
+	arg_3_0:setIconUI()
+	arg_3_0:refreshUI(true)
 end
 
-function slot0._customRemoveEventListeners(slot0)
-	RoomCharacterController.instance:unregisterCallback(RoomEvent.CharacterPositionChanged, slot0._characterPositionChanged, slot0)
+function var_0_0._customRemoveEventListeners(arg_4_0)
+	RoomCharacterController.instance:unregisterCallback(RoomEvent.CharacterPositionChanged, arg_4_0._characterPositionChanged, arg_4_0)
 end
 
-function slot0._characterPositionChanged(slot0, slot1)
-	if slot0.critterMO and slot0.critterMO.trainInfo.heroId ~= slot1 then
+function var_0_0._characterPositionChanged(arg_5_0, arg_5_1)
+	if arg_5_0.critterMO and arg_5_0.critterMO.trainInfo.heroId ~= arg_5_1 then
 		return
 	end
 
-	slot0:_refreshPosition()
+	arg_5_0:_refreshPosition()
 end
 
-function slot0._onClick(slot0, slot1, slot2)
-	if slot0.eventType == CritterEnum.CritterItemEventType.HasTrainEvent then
-		slot0:_clickTrainEvent()
+function var_0_0._onClick(arg_6_0, arg_6_1, arg_6_2)
+	if arg_6_0.eventType == CritterEnum.CritterItemEventType.HasTrainEvent then
+		arg_6_0:_clickTrainEvent()
 	end
 
-	if slot0.eventType == CritterEnum.CritterItemEventType.NoMoodWork then
-		slot0:_clickNoMoodWorking()
+	if arg_6_0.eventType == CritterEnum.CritterItemEventType.NoMoodWork then
+		arg_6_0:_clickNoMoodWorking()
 	end
 end
 
-function slot0._clickNoMoodWorking(slot0)
-	RoomMap3DClickController.instance:onBuildingEntityClick(RoomMapBuildingModel.instance:getBuildingMOById(ManufactureModel.instance:getCritterWorkingBuilding(slot0.critterUid)))
+function var_0_0._clickNoMoodWorking(arg_7_0)
+	local var_7_0 = ManufactureModel.instance:getCritterWorkingBuilding(arg_7_0.critterUid)
+
+	RoomMap3DClickController.instance:onBuildingEntityClick(RoomMapBuildingModel.instance:getBuildingMOById(var_7_0))
 end
 
-function slot0._clickTrainEvent(slot0)
+function var_0_0._clickTrainEvent(arg_8_0)
 	if ViewMgr.instance:isOpen(ViewName.RoomCritterBuildingView) then
-		RoomCritterController.instance:openTrainEventView(slot0.critterUid)
+		RoomCritterController.instance:openTrainEventView(arg_8_0.critterUid)
 	else
-		ManufactureController.instance:openCritterBuildingView(nil, RoomCritterBuildingViewContainer.SubViewTabId.Training, slot0.critterUid)
+		ManufactureController.instance:openCritterBuildingView(nil, RoomCritterBuildingViewContainer.SubViewTabId.Training, arg_8_0.critterUid)
 	end
 end
 
-slot1 = {
+local var_0_1 = {
 	[CritterEnum.CritterItemEventType.HasTrainEvent] = "critter_mapbubble1",
 	[CritterEnum.CritterItemEventType.TrainEventComplete] = "critter_mapbubble2",
 	[CritterEnum.CritterItemEventType.NoMoodWork] = "critter_mapbubble3"
 }
 
-function slot0.setIconUI(slot0)
-	if not slot0.critterIcon then
-		slot0.critterIcon = IconMgr.instance:getCommonCritterIcon(slot0._gocrittericon)
+function var_0_0.setIconUI(arg_9_0)
+	if not arg_9_0.critterIcon then
+		arg_9_0.critterIcon = IconMgr.instance:getCommonCritterIcon(arg_9_0._gocrittericon)
 	end
 
-	slot0.critterIcon:onUpdateMO(slot0.critterMO)
+	arg_9_0.critterIcon:onUpdateMO(arg_9_0.critterMO)
 
-	if slot0.eventType ~= CritterEnum.CritterItemEventType.SurpriseCollect then
-		UISpriteSetMgr.instance:setCritterSprite(slot0._imageEventBubble, uv0[slot0.eventType])
+	local var_9_0 = arg_9_0.eventType == CritterEnum.CritterItemEventType.SurpriseCollect
+
+	if var_9_0 then
+		-- block empty
+	else
+		local var_9_1 = var_0_1[arg_9_0.eventType]
+
+		UISpriteSetMgr.instance:setCritterSprite(arg_9_0._imageEventBubble, var_9_1)
 	end
 
-	gohelper.setActive(slot0._goPropBubble, slot1)
-	gohelper.setActive(slot0._goEventBubble, not slot1)
+	gohelper.setActive(arg_9_0._goPropBubble, var_9_0)
+	gohelper.setActive(arg_9_0._goEventBubble, not var_9_0)
 end
 
-function slot0.refreshUI(slot0, slot1)
-	slot0:_refreshShow(slot1)
-	slot0:_refreshPosition()
+function var_0_0.refreshUI(arg_10_0, arg_10_1)
+	arg_10_0:_refreshShow(arg_10_1)
+	arg_10_0:_refreshPosition()
 end
 
-function slot0._refreshShow(slot0, slot1)
+function var_0_0._refreshShow(arg_11_0, arg_11_1)
 	if RoomBuildingController.instance:isBuildingListShow() or RoomCharacterController.instance:isCharacterListShow() then
-		slot0:_setShow(false, slot1)
+		arg_11_0:_setShow(false, arg_11_1)
 
 		return
 	end
 
-	if RoomMapController.instance:isInRoomInitBuildingViewCamera() or not slot0._showCameraStateDict[slot0._scene.camera:getCameraState()] then
-		slot0:_setShow(false, slot1)
+	if RoomMapController.instance:isInRoomInitBuildingViewCamera() or not arg_11_0._showCameraStateDict[arg_11_0._scene.camera:getCameraState()] then
+		arg_11_0:_setShow(false, arg_11_1)
 
 		return
 	end
 
-	slot0:_setShow(true, slot1)
+	arg_11_0:_setShow(true, arg_11_1)
 end
 
-function slot0.getUI3DPos(slot0)
-	if not slot0:getEventCritterEntity() then
+function var_0_0.getUI3DPos(arg_12_0)
+	local var_12_0 = arg_12_0:getEventCritterEntity()
+
+	if not var_12_0 then
 		return Vector3.zero
 	end
 
-	if not (slot1.critterspine:getMountheadGOTrs() or slot1.goTrs) then
+	local var_12_1 = var_12_0.critterspine:getMountheadGOTrs() or var_12_0.goTrs
+
+	if not var_12_1 then
 		return Vector3.zero
 	end
 
-	slot3, slot4, slot5 = transformhelper.getPos(slot2)
+	local var_12_2, var_12_3, var_12_4 = transformhelper.getPos(var_12_1)
 
-	return Vector3(slot3, slot4, slot5)
+	return Vector3(var_12_2, var_12_3, var_12_4)
 end
 
-function slot0.getEventCritterEntity(slot0)
-	slot1 = nil
+function var_0_0.getEventCritterEntity(arg_13_0)
+	local var_13_0
 
-	return (not slot0.critterMO:isCultivating() or slot0._scene.crittermgr:getCritterEntity(slot0.critterUid, SceneTag.RoomCharacter)) and slot0._scene.buildingcrittermgr:getCritterEntity(slot0.critterUid, SceneTag.RoomCharacter)
+	if arg_13_0.critterMO:isCultivating() then
+		var_13_0 = arg_13_0._scene.crittermgr:getCritterEntity(arg_13_0.critterUid, SceneTag.RoomCharacter)
+	else
+		var_13_0 = arg_13_0._scene.buildingcrittermgr:getCritterEntity(arg_13_0.critterUid, SceneTag.RoomCharacter)
+	end
+
+	return var_13_0
 end
 
-function slot0._customOnDestory(slot0)
-	slot0._simageProp:UnLoadImage()
+function var_0_0._customOnDestory(arg_14_0)
+	arg_14_0._simageProp:UnLoadImage()
 end
 
-slot0.prefabPath = "ui/viewres/room/sceneui/roomscenecritterheadui.prefab"
+var_0_0.prefabPath = "ui/viewres/room/sceneui/roomscenecritterheadui.prefab"
 
-return slot0
+return var_0_0

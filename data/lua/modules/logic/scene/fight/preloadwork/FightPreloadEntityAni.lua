@@ -1,29 +1,29 @@
-module("modules.logic.scene.fight.preloadwork.FightPreloadEntityAni", package.seeall)
+﻿module("modules.logic.scene.fight.preloadwork.FightPreloadEntityAni", package.seeall)
 
-slot0 = class("FightPreloadEntityAni", BaseWork)
+local var_0_0 = class("FightPreloadEntityAni", BaseWork)
 
-function slot0.onStart(slot0, slot1)
+function var_0_0.onStart(arg_1_0, arg_1_1)
 	if not GameResMgr.IsFromEditorDir then
-		slot0._loader = MultiAbLoader.New()
+		arg_1_0._loader = MultiAbLoader.New()
 
-		slot0._loader:addPath(ResUrl.getEntityAnimABUrl())
-		slot0._loader:startLoad(slot0._onLoadFinish, slot0)
+		arg_1_0._loader:addPath(ResUrl.getEntityAnimABUrl())
+		arg_1_0._loader:startLoad(arg_1_0._onLoadFinish, arg_1_0)
 	else
-		slot0:onDone(true)
+		arg_1_0:onDone(true)
 	end
 end
 
-function slot0._onLoadFinish(slot0, slot1)
-	slot0.context.callback(slot0.context.callbackObj, slot1:getFirstAssetItem())
-	slot0:onDone(true)
+function var_0_0._onLoadFinish(arg_2_0, arg_2_1)
+	arg_2_0.context.callback(arg_2_0.context.callbackObj, arg_2_1:getFirstAssetItem())
+	arg_2_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
-	if slot0._loader then
-		slot0._loader:dispose()
+function var_0_0.clearWork(arg_3_0)
+	if arg_3_0._loader then
+		arg_3_0._loader:dispose()
 
-		slot0._loader = nil
+		arg_3_0._loader = nil
 	end
 end
 
-return slot0
+return var_0_0

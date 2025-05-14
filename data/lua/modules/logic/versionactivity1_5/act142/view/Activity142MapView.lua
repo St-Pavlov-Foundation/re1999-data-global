@@ -1,276 +1,312 @@
-module("modules.logic.versionactivity1_5.act142.view.Activity142MapView", package.seeall)
+﻿module("modules.logic.versionactivity1_5.act142.view.Activity142MapView", package.seeall)
 
-slot0 = class("Activity142MapView", BaseView)
-slot1 = 1
+local var_0_0 = class("Activity142MapView", BaseView)
+local var_0_1 = 1
 
-function slot0.onInitView(slot0)
-	slot0._animatorPlayer = ZProj.ProjAnimatorPlayer.Get(slot0.viewGO)
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_bg")
-	slot0._gotime = gohelper.findChild(slot0.viewGO, "#go_time")
-	slot0._txtremainTime = gohelper.findChildText(slot0.viewGO, "#go_time/#txt_remainTime")
-	slot0._gocategory = gohelper.findChild(slot0.viewGO, "#go_category")
-	slot0._gocategoryitem = gohelper.findChild(slot0.viewGO, "#go_category/#go_categoryitem")
-	slot0._gomapcontainer = gohelper.findChild(slot0.viewGO, "#go_mapcontainer")
-	slot0._gomapitem = gohelper.findChild(slot0.viewGO, "#go_mapcontainer/#go_mapitem")
-	slot0._goMapNode3 = gohelper.findChild(slot0.viewGO, "#go_mapcontainer/#go_mapnode3")
-	slot0._goMapNodeSP = gohelper.findChild(slot0.viewGO, "#go_mapcontainer/#go_mapnodesp")
-	slot0._btntask = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_task")
-	slot0._goRedDotRoot = gohelper.findChild(slot0.viewGO, "#btn_task/#go_reddotreward")
-	slot0._btncollect = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_collect")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._animatorPlayer = ZProj.ProjAnimatorPlayer.Get(arg_1_0.viewGO)
+	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
+	arg_1_0._gotime = gohelper.findChild(arg_1_0.viewGO, "#go_time")
+	arg_1_0._txtremainTime = gohelper.findChildText(arg_1_0.viewGO, "#go_time/#txt_remainTime")
+	arg_1_0._gocategory = gohelper.findChild(arg_1_0.viewGO, "#go_category")
+	arg_1_0._gocategoryitem = gohelper.findChild(arg_1_0.viewGO, "#go_category/#go_categoryitem")
+	arg_1_0._gomapcontainer = gohelper.findChild(arg_1_0.viewGO, "#go_mapcontainer")
+	arg_1_0._gomapitem = gohelper.findChild(arg_1_0.viewGO, "#go_mapcontainer/#go_mapitem")
+	arg_1_0._goMapNode3 = gohelper.findChild(arg_1_0.viewGO, "#go_mapcontainer/#go_mapnode3")
+	arg_1_0._goMapNodeSP = gohelper.findChild(arg_1_0.viewGO, "#go_mapcontainer/#go_mapnodesp")
+	arg_1_0._btntask = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_task")
+	arg_1_0._goRedDotRoot = gohelper.findChild(arg_1_0.viewGO, "#btn_task/#go_reddotreward")
+	arg_1_0._btncollect = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_collect")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btntask:AddClickListener(slot0._btntaskOnClick, slot0)
-	slot0._btncollect:AddClickListener(slot0._btncollectOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btntask:AddClickListener(arg_2_0._btntaskOnClick, arg_2_0)
+	arg_2_0._btncollect:AddClickListener(arg_2_0._btncollectOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btntask:RemoveClickListener()
-	slot0._btncollect:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btntask:RemoveClickListener()
+	arg_3_0._btncollect:RemoveClickListener()
 end
 
-function slot0._btntaskOnClick(slot0)
+function var_0_0._btntaskOnClick(arg_4_0)
 	ViewMgr.instance:openView(ViewName.Activity142TaskView)
 end
 
-function slot0._btncollectOnClick(slot0)
-	Activity142Rpc.instance:sendGetAct142CollectionsRequest(Activity142Model.instance:getActivityId(), function ()
+function var_0_0._btncollectOnClick(arg_5_0)
+	local var_5_0 = Activity142Model.instance:getActivityId()
+
+	Activity142Rpc.instance:sendGetAct142CollectionsRequest(var_5_0, function()
 		Activity142StatController.instance:statCollectionViewStart()
 		ViewMgr.instance:openView(ViewName.Activity142CollectView)
 	end)
 end
 
-function slot0._onCategoryItemClick(slot0, slot1, slot2)
-	if not slot1 or slot0._selectCategoryIndex == slot1 then
+function var_0_0._onCategoryItemClick(arg_7_0, arg_7_1, arg_7_2)
+	if not arg_7_1 or arg_7_0._selectCategoryIndex == arg_7_1 then
 		return
 	end
 
-	if not slot0:getCategoryItemByIndex(slot1) then
+	local var_7_0 = arg_7_0:getCategoryItemByIndex(arg_7_1)
+
+	if not var_7_0 then
 		return
 	end
 
-	if slot0._selectCategoryIndex and slot0:getCategoryItemByIndex(slot0._selectCategoryIndex) then
-		slot4:setIsSelected(false)
+	if arg_7_0._selectCategoryIndex then
+		local var_7_1 = arg_7_0:getCategoryItemByIndex(arg_7_0._selectCategoryIndex)
+
+		if var_7_1 then
+			var_7_1:setIsSelected(false)
+		end
 	end
 
-	slot3:setIsSelected(true)
+	var_7_0:setIsSelected(true)
 
-	slot0._selectCategoryIndex = slot1
+	arg_7_0._selectCategoryIndex = arg_7_1
 
-	if slot2 then
-		slot0:_setMapItems()
+	if arg_7_2 then
+		arg_7_0:_setMapItems()
 	else
-		slot0:playViewAnimation(Activity142Enum.MAP_VIEW_SWITCH_ANIM)
-		TaskDispatcher.runDelay(slot0._setMapItems, slot0, Activity142Enum.MAP_VIEW_SWITCH_SET_MAP_ITEM_ANIM_TIME)
+		arg_7_0:playViewAnimation(Activity142Enum.MAP_VIEW_SWITCH_ANIM)
+		TaskDispatcher.runDelay(arg_7_0._setMapItems, arg_7_0, Activity142Enum.MAP_VIEW_SWITCH_SET_MAP_ITEM_ANIM_TIME)
 	end
 end
 
-function slot0._setMapItems(slot0)
-	if not slot0._selectCategoryIndex then
+function var_0_0._setMapItems(arg_8_0)
+	if not arg_8_0._selectCategoryIndex then
 		return
 	end
 
-	if not slot0:getCategoryItemByIndex(slot0._selectCategoryIndex) then
+	local var_8_0 = arg_8_0:getCategoryItemByIndex(arg_8_0._selectCategoryIndex)
+
+	if not var_8_0 then
 		return
 	end
 
-	slot2 = slot1:getChapterId()
+	local var_8_1 = var_8_0:getChapterId()
+	local var_8_2 = Activity142Model.instance:getActivityId()
+	local var_8_3 = Activity142Config.instance:getChapterEpisodeIdList(var_8_2, var_8_1)
+	local var_8_4 = Activity142Config.instance:isSPChapter(var_8_1)
 
-	for slot9 = 1, Activity142Enum.MAX_EPISODE_SINGLE_CHAPTER do
-		slot10 = Activity142Config.instance:getChapterEpisodeIdList(Activity142Model.instance:getActivityId(), slot2)[slot9]
+	for iter_8_0 = 1, Activity142Enum.MAX_EPISODE_SINGLE_CHAPTER do
+		local var_8_5 = var_8_3[iter_8_0]
 
-		if Activity142Config.instance:isSPChapter(slot2) and Activity142Enum.MAX_EPISODE_SINGLE_SP_CHAPTER < slot9 then
-			slot10 = nil
+		if var_8_4 and iter_8_0 > Activity142Enum.MAX_EPISODE_SINGLE_SP_CHAPTER then
+			var_8_5 = nil
 		end
 
-		if slot0._mapItemList[slot9] then
-			slot12 = false
+		local var_8_6 = arg_8_0._mapItemList[iter_8_0]
 
-			slot11:setEpisodeId(slot10)
+		if var_8_6 then
+			local var_8_7 = false
 
-			if slot9 == Activity142Enum.MAX_EPISODE_SINGLE_SP_CHAPTER then
-				slot12 = slot5
+			var_8_6:setEpisodeId(var_8_5)
 
-				slot11:setParent(slot5 and slot0._goMapNodeSP or slot0._goMapNode3)
+			if iter_8_0 == Activity142Enum.MAX_EPISODE_SINGLE_SP_CHAPTER then
+				var_8_7 = var_8_4
+
+				local var_8_8 = var_8_4 and arg_8_0._goMapNodeSP or arg_8_0._goMapNode3
+
+				var_8_6:setParent(var_8_8)
 			end
 
-			slot11:setBg(slot12)
+			var_8_6:setBg(var_8_7)
 		end
 	end
 end
 
-function slot0._onMapItemClick(slot0, slot1)
-	if not slot1 then
+function var_0_0._onMapItemClick(arg_9_0, arg_9_1)
+	if not arg_9_1 then
 		return
 	end
 
-	if Activity142Model.instance:isEpisodeOpen(Activity142Model.instance:getActivityId(), slot1) then
-		slot0._tmpEnterEpisode = slot1
+	local var_9_0 = Activity142Model.instance:getActivityId()
 
-		slot0:playViewAnimation(UIAnimationName.Close)
+	if Activity142Model.instance:isEpisodeOpen(var_9_0, arg_9_1) then
+		arg_9_0._tmpEnterEpisode = arg_9_1
+
+		arg_9_0:playViewAnimation(UIAnimationName.Close)
 		AudioMgr.instance:trigger(AudioEnum.ui_activity142.CloseMapView)
-		TaskDispatcher.runDelay(slot0._enterEpisode, slot0, Activity142Enum.CLOSE_MAP_VIEW_TIME)
+		TaskDispatcher.runDelay(arg_9_0._enterEpisode, arg_9_0, Activity142Enum.CLOSE_MAP_VIEW_TIME)
 	else
-		Activity142Helper.showToastByEpisodeId(slot1)
+		Activity142Helper.showToastByEpisodeId(arg_9_1)
 	end
 end
 
-function slot0._enterEpisode(slot0)
-	if not slot0._tmpEnterEpisode then
-		slot0:closeThis()
+function var_0_0._enterEpisode(arg_10_0)
+	if not arg_10_0._tmpEnterEpisode then
+		arg_10_0:closeThis()
 
 		return
 	end
 
-	Activity142Controller.instance:enterChessGame(slot0._tmpEnterEpisode)
+	Activity142Controller.instance:enterChessGame(arg_10_0._tmpEnterEpisode)
 
-	slot0._tmpEnterEpisode = nil
+	arg_10_0._tmpEnterEpisode = nil
 end
 
-function slot0._editableInitView(slot0)
-	slot0._mapItemList = {}
+function var_0_0._editableInitView(arg_11_0)
+	arg_11_0._mapItemList = {}
 
-	for slot4 = 1, Activity142Enum.MAX_EPISODE_SINGLE_CHAPTER do
-		if gohelper.findChild(slot0.viewGO, "#go_mapcontainer/#go_mapnode" .. slot4) then
-			slot0._mapItemList[#slot0._mapItemList + 1] = MonoHelper.addNoUpdateLuaComOnceToGo(gohelper.clone(slot0._gomapitem, slot5, "mapItem" .. slot4), Activity142MapItem, {
-				clickCb = slot0._onMapItemClick,
-				clickCbObj = slot0
-			})
+	for iter_11_0 = 1, Activity142Enum.MAX_EPISODE_SINGLE_CHAPTER do
+		local var_11_0 = gohelper.findChild(arg_11_0.viewGO, "#go_mapcontainer/#go_mapnode" .. iter_11_0)
+
+		if var_11_0 then
+			local var_11_1 = gohelper.clone(arg_11_0._gomapitem, var_11_0, "mapItem" .. iter_11_0)
+			local var_11_2 = {
+				clickCb = arg_11_0._onMapItemClick,
+				clickCbObj = arg_11_0
+			}
+			local var_11_3 = MonoHelper.addNoUpdateLuaComOnceToGo(var_11_1, Activity142MapItem, var_11_2)
+
+			arg_11_0._mapItemList[#arg_11_0._mapItemList + 1] = var_11_3
 		end
 	end
 
-	slot0:_initCategoryItems()
-	gohelper.setActive(slot0._gocategoryitem, false)
-	gohelper.setActive(slot0._gomapitem, false)
-	RedDotController.instance:addRedDot(slot0._goRedDotRoot, RedDotEnum.DotNode.v1a5Activity142TaskReward)
-	gohelper.setActive(slot0._gotime, false)
+	arg_11_0:_initCategoryItems()
+	gohelper.setActive(arg_11_0._gocategoryitem, false)
+	gohelper.setActive(arg_11_0._gomapitem, false)
+	RedDotController.instance:addRedDot(arg_11_0._goRedDotRoot, RedDotEnum.DotNode.v1a5Activity142TaskReward)
+	gohelper.setActive(arg_11_0._gotime, false)
 end
 
-function slot0._initCategoryItems(slot0)
-	slot0._selectCategoryIndex = nil
-	slot0._categoryItemList = {}
+function var_0_0._initCategoryItems(arg_12_0)
+	arg_12_0._selectCategoryIndex = nil
+	arg_12_0._categoryItemList = {}
 
-	for slot7, slot8 in ipairs(Activity142Config.instance:getChapterList(Activity142Model.instance:getActivityId())) do
-		slot11 = MonoHelper.addNoUpdateLuaComOnceToGo(gohelper.clone(slot0._gocategoryitem, slot0._gocategory, "categoryItem" .. slot8), Activity142MapCategoryItem, {
-			index = slot7,
-			clickCb = slot0._onCategoryItemClick,
-			clickCbObj = slot0
-		})
+	local var_12_0 = var_0_1
+	local var_12_1 = Activity142Model.instance:getActivityId()
+	local var_12_2 = Activity142Config.instance:getChapterList(var_12_1)
 
-		slot11:setChapterId(slot8)
+	for iter_12_0, iter_12_1 in ipairs(var_12_2) do
+		local var_12_3 = gohelper.clone(arg_12_0._gocategoryitem, arg_12_0._gocategory, "categoryItem" .. iter_12_1)
+		local var_12_4 = {
+			index = iter_12_0,
+			clickCb = arg_12_0._onCategoryItemClick,
+			clickCbObj = arg_12_0
+		}
+		local var_12_5 = MonoHelper.addNoUpdateLuaComOnceToGo(var_12_3, Activity142MapCategoryItem, var_12_4)
 
-		slot0._categoryItemList[slot7] = slot11
+		var_12_5:setChapterId(iter_12_1)
 
-		if Activity142Model.instance:isChapterOpen(slot8) and uv0 < slot7 then
-			slot1 = slot7
+		arg_12_0._categoryItemList[iter_12_0] = var_12_5
+
+		if Activity142Model.instance:isChapterOpen(iter_12_1) and var_12_0 < iter_12_0 then
+			var_12_0 = iter_12_0
 		end
 	end
 
-	if slot0:getCategoryItemByIndex(slot1) then
-		slot4:onClick(true)
+	local var_12_6 = arg_12_0:getCategoryItemByIndex(var_12_0)
+
+	if var_12_6 then
+		var_12_6:onClick(true)
 	end
 end
 
-function slot0.onOpen(slot0)
-	slot0:_startRefreshRemainTime()
+function var_0_0.onOpen(arg_13_0)
+	arg_13_0:_startRefreshRemainTime()
 end
 
-function slot0.onSetVisible(slot0, slot1)
-	if not slot1 then
+function var_0_0.onSetVisible(arg_14_0, arg_14_1)
+	if not arg_14_1 then
 		return
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.ui_activity142.OpenMapView)
-	slot0:refresh(Activity142Enum.OPEN_MAP_VIEW_TIME)
+	arg_14_0:refresh(Activity142Enum.OPEN_MAP_VIEW_TIME)
 end
 
-function slot0.refresh(slot0, slot1)
-	slot0:_refreshCategoryItems()
-	slot0:_refreshMapItems(slot1)
+function var_0_0.refresh(arg_15_0, arg_15_1)
+	arg_15_0:_refreshCategoryItems()
+	arg_15_0:_refreshMapItems(arg_15_1)
 end
 
-function slot0._refreshCategoryItems(slot0)
-	for slot4, slot5 in ipairs(slot0._categoryItemList) do
-		slot5:refresh()
+function var_0_0._refreshCategoryItems(arg_16_0)
+	for iter_16_0, iter_16_1 in ipairs(arg_16_0._categoryItemList) do
+		iter_16_1:refresh()
 	end
 end
 
-function slot0._refreshMapItems(slot0, slot1)
-	for slot5, slot6 in ipairs(slot0._mapItemList) do
-		slot6:refresh(slot1)
+function var_0_0._refreshMapItems(arg_17_0, arg_17_1)
+	for iter_17_0, iter_17_1 in ipairs(arg_17_0._mapItemList) do
+		iter_17_1:refresh(arg_17_1)
 	end
 end
 
-function slot0._startRefreshRemainTime(slot0)
-	slot0:_refreshRemainTime()
-	TaskDispatcher.runRepeat(slot0._refreshRemainTime, slot0, TimeUtil.OneMinuteSecond)
+function var_0_0._startRefreshRemainTime(arg_18_0)
+	arg_18_0:_refreshRemainTime()
+	TaskDispatcher.runRepeat(arg_18_0._refreshRemainTime, arg_18_0, TimeUtil.OneMinuteSecond)
 end
 
-function slot0._refreshRemainTime(slot0)
-	if gohelper.isNil(slot0._txtremainTime) then
-		TaskDispatcher.cancelTask(slot0._refreshRemainTime, slot0)
+function var_0_0._refreshRemainTime(arg_19_0)
+	if gohelper.isNil(arg_19_0._txtremainTime) then
+		TaskDispatcher.cancelTask(arg_19_0._refreshRemainTime, arg_19_0)
 
 		return
 	end
 
-	slot0._txtremainTime.text = Activity142Model.instance:getRemainTimeStr(Activity142Model.instance:getActivityId())
+	local var_19_0 = Activity142Model.instance:getActivityId()
+	local var_19_1 = Activity142Model.instance:getRemainTimeStr(var_19_0)
+
+	arg_19_0._txtremainTime.text = var_19_1
 end
 
-function slot0.playViewAnimation(slot0, slot1, slot2, slot3)
-	if slot0._animatorPlayer then
+function var_0_0.playViewAnimation(arg_20_0, arg_20_1, arg_20_2, arg_20_3)
+	if arg_20_0._animatorPlayer then
 		Activity142Helper.setAct142UIBlock(true, Activity142Enum.PLAY_MAP_VIEW_ANIM)
-		slot0._animatorPlayer:Play(slot1, slot0.playViewAnimationFinish, slot0)
+		arg_20_0._animatorPlayer:Play(arg_20_1, arg_20_0.playViewAnimationFinish, arg_20_0)
 
-		slot0._tmpAnimCb = slot2
-		slot0._tmpAnimCbObj = slot3
-	elseif slot2 then
-		slot2(slot3)
+		arg_20_0._tmpAnimCb = arg_20_2
+		arg_20_0._tmpAnimCbObj = arg_20_3
+	elseif arg_20_2 then
+		arg_20_2(arg_20_3)
 	end
 end
 
-function slot0.playViewAnimationFinish(slot0)
-	if slot0._tmpAnimCb then
-		slot0._tmpAnimCb(slot0._tmpAnimCbObj)
+function var_0_0.playViewAnimationFinish(arg_21_0)
+	if arg_21_0._tmpAnimCb then
+		arg_21_0._tmpAnimCb(arg_21_0._tmpAnimCbObj)
 	end
 
-	slot0._tmpAnimCb = nil
-	slot0._tmpAnimCbObj = nil
+	arg_21_0._tmpAnimCb = nil
+	arg_21_0._tmpAnimCbObj = nil
 
 	Activity142Helper.setAct142UIBlock(false, Activity142Enum.PLAY_MAP_VIEW_ANIM)
 end
 
-function slot0.getCategoryItemByIndex(slot0, slot1)
-	slot2 = nil
+function var_0_0.getCategoryItemByIndex(arg_22_0, arg_22_1)
+	local var_22_0
 
-	if slot0._categoryItemList then
-		slot2 = slot0._categoryItemList[slot1]
+	if arg_22_0._categoryItemList then
+		var_22_0 = arg_22_0._categoryItemList[arg_22_1]
 	end
 
-	if not slot2 then
-		logError("Activity142MapView:getCategoryItemByIndex error, can't find category item, index:", slot1 or "nil")
+	if not var_22_0 then
+		logError("Activity142MapView:getCategoryItemByIndex error, can't find category item, index:", arg_22_1 or "nil")
 	end
 
-	return slot2
+	return var_22_0
 end
 
-function slot0.onClose(slot0)
-	TaskDispatcher.cancelTask(slot0._setMapItems, slot0)
-	TaskDispatcher.cancelTask(slot0._refreshRemainTime, slot0)
-	TaskDispatcher.cancelTask(slot0._enterEpisode, slot0)
+function var_0_0.onClose(arg_23_0)
+	TaskDispatcher.cancelTask(arg_23_0._setMapItems, arg_23_0)
+	TaskDispatcher.cancelTask(arg_23_0._refreshRemainTime, arg_23_0)
+	TaskDispatcher.cancelTask(arg_23_0._enterEpisode, arg_23_0)
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._selectCategoryIndex = nil
-	slot0._categoryItemList = {}
-	slot0._mapItemList = {}
-	slot0._tmpAnimCb = nil
-	slot0._tmpAnimCbObj = nil
+function var_0_0.onDestroyView(arg_24_0)
+	arg_24_0._selectCategoryIndex = nil
+	arg_24_0._categoryItemList = {}
+	arg_24_0._mapItemList = {}
+	arg_24_0._tmpAnimCb = nil
+	arg_24_0._tmpAnimCbObj = nil
 
 	Activity142Helper.setAct142UIBlock(false, Activity142Enum.PLAY_MAP_VIEW_ANIM)
 end
 
-return slot0
+return var_0_0

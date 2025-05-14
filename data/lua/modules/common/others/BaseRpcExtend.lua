@@ -1,54 +1,57 @@
-module("modules.common.others.BaseRpcExtend", package.seeall)
+﻿module("modules.common.others.BaseRpcExtend", package.seeall)
 
-slot0 = class("BaseRpcExtend", BaseRpc)
+local var_0_0 = class("BaseRpcExtend", BaseRpc)
 
-function slot0.onInitInternal(slot0)
-	slot0._getter = GameUtil.getUniqueTb(10000)
-	slot0._waitCallBackDict = {}
+function var_0_0.onInitInternal(arg_1_0)
+	arg_1_0._getter = GameUtil.getUniqueTb(10000)
+	arg_1_0._waitCallBackDict = {}
 
-	uv0.super.onInitInternal(slot0)
+	var_0_0.super.onInitInternal(arg_1_0)
 end
 
-function slot0.reInitInternal(slot0)
-	slot0._waitCallBackDict = {}
+function var_0_0.reInitInternal(arg_2_0)
+	arg_2_0._waitCallBackDict = {}
 
-	uv0.super.reInitInternal(slot0)
+	var_0_0.super.reInitInternal(arg_2_0)
 end
 
-function slot0.sendMsg(slot0, slot1, slot2, slot3, slot4)
-	if not slot0._waitCallBackDict[LuaSocketMgr.instance:getCmdByPbStructName(slot1.__cname)] then
-		slot0._waitCallBackDict[slot5] = {}
+function var_0_0.sendMsg(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
+	local var_3_0 = LuaSocketMgr.instance:getCmdByPbStructName(arg_3_1.__cname)
+
+	if not arg_3_0._waitCallBackDict[var_3_0] then
+		arg_3_0._waitCallBackDict[var_3_0] = {}
 	end
 
-	if slot0._waitCallBackDict[slot5][1] ~= nil then
-		uv0.super.sendMsg(slot0, slot1, nil, , slot4)
+	if arg_3_0._waitCallBackDict[var_3_0][1] ~= nil then
+		var_0_0.super.sendMsg(arg_3_0, arg_3_1, nil, nil, arg_3_4)
 	else
-		uv0.super.sendMsg(slot0, slot1, slot0.onReceiveMsgExtend, slot0, slot4)
+		var_0_0.super.sendMsg(arg_3_0, arg_3_1, arg_3_0.onReceiveMsgExtend, arg_3_0, arg_3_4)
 	end
 
-	if slot2 then
-		slot6 = LuaGeneralCallback.getPool():getObject()
-		slot6.callback = slot2
+	if arg_3_2 then
+		local var_3_1 = LuaGeneralCallback.getPool():getObject()
 
-		slot6:setCbObj(slot3)
+		var_3_1.callback = arg_3_2
 
-		slot6.id = slot0._getter()
+		var_3_1:setCbObj(arg_3_3)
 
-		table.insert(slot0._waitCallBackDict[slot5], slot6)
+		var_3_1.id = arg_3_0._getter()
 
-		return slot6.id
+		table.insert(arg_3_0._waitCallBackDict[var_3_0], var_3_1)
+
+		return var_3_1.id
 	else
-		table.insert(slot0._waitCallBackDict[slot5], false)
+		table.insert(arg_3_0._waitCallBackDict[var_3_0], false)
 	end
 end
 
-function slot0.removeCallbackByIdExtend(slot0, slot1)
-	for slot5, slot6 in pairs(slot0._waitCallBackDict) do
-		for slot10, slot11 in ipairs(slot6) do
-			if slot11 and slot11.id == slot1 then
-				slot6[slot10] = false
+function var_0_0.removeCallbackByIdExtend(arg_4_0, arg_4_1)
+	for iter_4_0, iter_4_1 in pairs(arg_4_0._waitCallBackDict) do
+		for iter_4_2, iter_4_3 in ipairs(iter_4_1) do
+			if iter_4_3 and iter_4_3.id == arg_4_1 then
+				iter_4_1[iter_4_2] = false
 
-				LuaGeneralCallback.getPool():putObject(slot11)
+				LuaGeneralCallback.getPool():putObject(iter_4_3)
 
 				return
 			end
@@ -56,21 +59,21 @@ function slot0.removeCallbackByIdExtend(slot0, slot1)
 	end
 end
 
-function slot0.onReceiveMsgExtend(slot0, slot1, slot2, slot3)
-	if not slot0._waitCallBackDict[slot1] then
+function var_0_0.onReceiveMsgExtend(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
+	if not arg_5_0._waitCallBackDict[arg_5_1] then
 		return
 	end
 
-	slot4 = table.remove(slot0._waitCallBackDict[slot1], 1)
+	local var_5_0 = table.remove(arg_5_0._waitCallBackDict[arg_5_1], 1)
 
-	if slot0._waitCallBackDict[slot1][1] ~= nil then
-		slot0:addCallback(slot1, slot0.onReceiveMsgExtend, slot0)
+	if arg_5_0._waitCallBackDict[arg_5_1][1] ~= nil then
+		arg_5_0:addCallback(arg_5_1, arg_5_0.onReceiveMsgExtend, arg_5_0)
 	end
 
-	if slot4 then
-		slot4:invoke(slot1, slot2, slot3)
-		LuaGeneralCallback.getPool():putObject(slot4)
+	if var_5_0 then
+		var_5_0:invoke(arg_5_1, arg_5_2, arg_5_3)
+		LuaGeneralCallback.getPool():putObject(var_5_0)
 	end
 end
 
-return slot0
+return var_0_0

@@ -1,65 +1,72 @@
-module("modules.logic.versionactivity1_4.act130.view.Activity130CollectItem", package.seeall)
+﻿module("modules.logic.versionactivity1_4.act130.view.Activity130CollectItem", package.seeall)
 
-slot0 = class("Activity130CollectItem", LuaCompBase)
+local var_0_0 = class("Activity130CollectItem", LuaCompBase)
 
-function slot0.init(slot0, slot1)
-	slot0._go = slot1
-	slot0._imageitembg = gohelper.findChildImage(slot0._go, "image_ItemBG")
-	slot0._imageicon = gohelper.findChildImage(slot0._go, "#image_Icon")
-	slot0._txtIndex = gohelper.findChildText(slot0._go, "#txt_Num")
-	slot0._txtDesc = gohelper.findChildText(slot0._go, "#txt_Item")
-	slot0._txtTitle = gohelper.findChildText(slot0._go, "#txt_Type")
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0._go = arg_1_1
+	arg_1_0._imageitembg = gohelper.findChildImage(arg_1_0._go, "image_ItemBG")
+	arg_1_0._imageicon = gohelper.findChildImage(arg_1_0._go, "#image_Icon")
+	arg_1_0._txtIndex = gohelper.findChildText(arg_1_0._go, "#txt_Num")
+	arg_1_0._txtDesc = gohelper.findChildText(arg_1_0._go, "#txt_Item")
+	arg_1_0._txtTitle = gohelper.findChildText(arg_1_0._go, "#txt_Type")
 
-	slot0:addEventListeners()
+	arg_1_0:addEventListeners()
 end
 
-function slot0.setItem(slot0, slot1, slot2)
-	slot0._config = slot1
-	slot0._index = slot2
+function var_0_0.setItem(arg_2_0, arg_2_1, arg_2_2)
+	arg_2_0._config = arg_2_1
+	arg_2_0._index = arg_2_2
 
-	gohelper.setActive(slot0._go, true)
-	slot0:_refreshItem()
+	gohelper.setActive(arg_2_0._go, true)
+	arg_2_0:_refreshItem()
 end
 
-function slot0._refreshItem(slot0)
-	slot0._txtIndex.text = string.format("%02d", slot0._index)
-	slot1 = Activity130Model.instance:getCurEpisodeId()
+function var_0_0._refreshItem(arg_3_0)
+	arg_3_0._txtIndex.text = string.format("%02d", arg_3_0._index)
 
-	if not Activity130Model.instance:isCollectUnlock(slot1, Activity130Model.instance:getCollects(slot1)[slot0._index]) then
-		slot0._txtDesc.text = "?????"
+	local var_3_0 = Activity130Model.instance:getCurEpisodeId()
+	local var_3_1 = Activity130Model.instance:getCollects(var_3_0)[arg_3_0._index]
 
-		UISpriteSetMgr.instance:setV1a4Role37Sprite(slot0._imageicon, "v1a4_role37_collectitemiconempty")
+	if not Activity130Model.instance:isCollectUnlock(var_3_0, var_3_1) then
+		arg_3_0._txtDesc.text = "?????"
+
+		UISpriteSetMgr.instance:setV1a4Role37Sprite(arg_3_0._imageicon, "v1a4_role37_collectitemiconempty")
 
 		return
 	end
 
-	slot0._txtDesc.text = slot0._config.operDesc
-	slot0._txtTitle.text = slot0._config.name
+	arg_3_0._txtDesc.text = arg_3_0._config.operDesc
+	arg_3_0._txtTitle.text = arg_3_0._config.name
 
-	UISpriteSetMgr.instance:setV1a4Role37Sprite(slot0._imageicon, slot0._config.shapegetImg)
+	UISpriteSetMgr.instance:setV1a4Role37Sprite(arg_3_0._imageicon, arg_3_0._config.shapegetImg)
 end
 
-function slot0.hideItem(slot0)
-	gohelper.setActive(slot0._go, false)
+function var_0_0.hideItem(arg_4_0)
+	gohelper.setActive(arg_4_0._go, false)
 end
 
-function slot0.addEventListeners(slot0)
+function var_0_0.addEventListeners(arg_5_0)
+	return
 end
 
-function slot0.removeEventListeners(slot0)
+function var_0_0.removeEventListeners(arg_6_0)
+	return
 end
 
-function slot0._btnclickOnClick(slot0)
+function var_0_0._btnclickOnClick(arg_7_0)
+	return
 end
 
-function slot0.onUpdateMO(slot0, slot1)
+function var_0_0.onUpdateMO(arg_8_0, arg_8_1)
+	return
 end
 
-function slot0.onSelect(slot0)
+function var_0_0.onSelect(arg_9_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	slot0:removeEventListeners()
+function var_0_0.onDestroyView(arg_10_0)
+	arg_10_0:removeEventListeners()
 end
 
-return slot0
+return var_0_0

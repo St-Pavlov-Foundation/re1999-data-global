@@ -1,147 +1,147 @@
-module("modules.logic.gm.notice.NoticeGmView", package.seeall)
+﻿module("modules.logic.gm.notice.NoticeGmView", package.seeall)
 
-slot0 = class("NoticeGmView", UserDataDispose)
+local var_0_0 = class("NoticeGmView", UserDataDispose)
 
-function slot0.showGmView(slot0)
-	if uv0.Instance then
+function var_0_0.showGmView(arg_1_0)
+	if var_0_0.Instance then
 		return
 	end
 
-	uv0.Instance = uv0.New()
+	var_0_0.Instance = var_0_0.New()
 
-	uv0.Instance:initView(slot0)
+	var_0_0.Instance:initView(arg_1_0)
 end
 
-function slot0.closeGmView()
-	if uv0.Instance then
-		uv0.Instance:onDestroy()
+function var_0_0.closeGmView()
+	if var_0_0.Instance then
+		var_0_0.Instance:onDestroy()
 
-		uv0.Instance = nil
+		var_0_0.Instance = nil
 	end
 end
 
-slot1 = "ui/viewres/gm/gmnotice.prefab"
+local var_0_1 = "ui/viewres/gm/gmnotice.prefab"
 
-function slot0.initView(slot0, slot1)
-	slot0:__onInit()
+function var_0_0.initView(arg_3_0, arg_3_1)
+	arg_3_0:__onInit()
 
-	slot0.viewGo = slot1
-	slot0.loader = PrefabInstantiate.Create(slot0.viewGo)
+	arg_3_0.viewGo = arg_3_1
+	arg_3_0.loader = PrefabInstantiate.Create(arg_3_0.viewGo)
 
-	slot0.loader:startLoad(uv0, slot0.onLoadCallback, slot0)
+	arg_3_0.loader:startLoad(var_0_1, arg_3_0.onLoadCallback, arg_3_0)
 end
 
-function slot0.onLoadCallback(slot0)
-	slot0.goGmNode = slot0.loader:getInstGO()
+function var_0_0.onLoadCallback(arg_4_0)
+	arg_4_0.goGmNode = arg_4_0.loader:getInstGO()
 
-	slot0:initChannelDrop()
-	slot0:initSubChannelDrop()
-	slot0:initServerTypeDrop()
+	arg_4_0:initChannelDrop()
+	arg_4_0:initSubChannelDrop()
+	arg_4_0:initServerTypeDrop()
 
-	slot0.selectSdk = slot0.SDKTypeList[1]
-	slot0.selectSubChannel = slot0.subChannelList[1]
-	slot0.serverType = slot0.serverTypeList[1]
+	arg_4_0.selectSdk = arg_4_0.SDKTypeList[1]
+	arg_4_0.selectSubChannel = arg_4_0.subChannelList[1]
+	arg_4_0.serverType = arg_4_0.serverTypeList[1]
 
-	NoticeController.instance:setSdkType(slot0.selectSdk)
-	NoticeController.instance:setSubChannelId(slot0.selectSubChannel)
-	NoticeController.instance:setServerType(slot0.serverType)
-	slot0:refreshNoticeContent()
+	NoticeController.instance:setSdkType(arg_4_0.selectSdk)
+	NoticeController.instance:setSubChannelId(arg_4_0.selectSubChannel)
+	NoticeController.instance:setServerType(arg_4_0.serverType)
+	arg_4_0:refreshNoticeContent()
 end
 
-function slot0.initChannelDrop(slot0)
-	slot0.channelDrop = gohelper.findChildDropdown(slot0.goGmNode, "channel_drop")
+function var_0_0.initChannelDrop(arg_5_0)
+	arg_5_0.channelDrop = gohelper.findChildDropdown(arg_5_0.goGmNode, "channel_drop")
 
-	slot0.channelDrop:ClearOptions()
+	arg_5_0.channelDrop:ClearOptions()
 
-	slot0.SDKNameList = {}
-	slot0.SDKTypeList = {}
+	arg_5_0.SDKNameList = {}
+	arg_5_0.SDKTypeList = {}
 
-	for slot4, slot5 in pairs(NoticeGmDefine.SDKConfig) do
-		table.insert(slot0.SDKNameList, slot5.name)
-		table.insert(slot0.SDKTypeList, slot4)
+	for iter_5_0, iter_5_1 in pairs(NoticeGmDefine.SDKConfig) do
+		table.insert(arg_5_0.SDKNameList, iter_5_1.name)
+		table.insert(arg_5_0.SDKTypeList, iter_5_0)
 	end
 
-	slot0.channelDrop:AddOptions(slot0.SDKNameList)
-	slot0.channelDrop:AddOnValueChanged(slot0.onChannelDropValueChanged, slot0)
+	arg_5_0.channelDrop:AddOptions(arg_5_0.SDKNameList)
+	arg_5_0.channelDrop:AddOnValueChanged(arg_5_0.onChannelDropValueChanged, arg_5_0)
 end
 
-function slot0.initSubChannelDrop(slot0)
-	slot0.subChannelDrop = gohelper.findChildDropdown(slot0.goGmNode, "subchannel_drop")
+function var_0_0.initSubChannelDrop(arg_6_0)
+	arg_6_0.subChannelDrop = gohelper.findChildDropdown(arg_6_0.goGmNode, "subchannel_drop")
 
-	slot0.subChannelDrop:ClearOptions()
+	arg_6_0.subChannelDrop:ClearOptions()
 
-	slot0.subChannelNameList = {}
-	slot0.subChannelList = {}
+	arg_6_0.subChannelNameList = {}
+	arg_6_0.subChannelList = {}
 
-	for slot4, slot5 in pairs(NoticeGmDefine.SubChannelType) do
-		table.insert(slot0.subChannelNameList, slot4)
-		table.insert(slot0.subChannelList, slot5)
+	for iter_6_0, iter_6_1 in pairs(NoticeGmDefine.SubChannelType) do
+		table.insert(arg_6_0.subChannelNameList, iter_6_0)
+		table.insert(arg_6_0.subChannelList, iter_6_1)
 	end
 
-	slot0.subChannelDrop:AddOptions(slot0.subChannelNameList)
-	slot0.subChannelDrop:AddOnValueChanged(slot0.onSubChannelDropValueChanged, slot0)
+	arg_6_0.subChannelDrop:AddOptions(arg_6_0.subChannelNameList)
+	arg_6_0.subChannelDrop:AddOnValueChanged(arg_6_0.onSubChannelDropValueChanged, arg_6_0)
 end
 
-function slot0.initServerTypeDrop(slot0)
-	slot0.serverTypeDrop = gohelper.findChildDropdown(slot0.goGmNode, "servertype_drop")
+function var_0_0.initServerTypeDrop(arg_7_0)
+	arg_7_0.serverTypeDrop = gohelper.findChildDropdown(arg_7_0.goGmNode, "servertype_drop")
 
-	slot0.serverTypeDrop:ClearOptions()
+	arg_7_0.serverTypeDrop:ClearOptions()
 
-	slot0.serverTypeList = {}
-	slot0.serverTypeNameList = {}
+	arg_7_0.serverTypeList = {}
+	arg_7_0.serverTypeNameList = {}
 
-	for slot4, slot5 in pairs(NoticeGmDefine.ServerTypeName) do
-		table.insert(slot0.serverTypeList, slot4)
-		table.insert(slot0.serverTypeNameList, slot5)
+	for iter_7_0, iter_7_1 in pairs(NoticeGmDefine.ServerTypeName) do
+		table.insert(arg_7_0.serverTypeList, iter_7_0)
+		table.insert(arg_7_0.serverTypeNameList, iter_7_1)
 	end
 
-	slot0.serverTypeDrop:AddOptions(slot0.serverTypeNameList)
-	slot0.serverTypeDrop:AddOnValueChanged(slot0.onServerTypeDropValueChanged, slot0)
+	arg_7_0.serverTypeDrop:AddOptions(arg_7_0.serverTypeNameList)
+	arg_7_0.serverTypeDrop:AddOnValueChanged(arg_7_0.onServerTypeDropValueChanged, arg_7_0)
 end
 
-function slot0.onChannelDropValueChanged(slot0, slot1)
-	if slot0.selectSdk == slot0.SDKTypeList[slot1 + 1] then
+function var_0_0.onChannelDropValueChanged(arg_8_0, arg_8_1)
+	if arg_8_0.selectSdk == arg_8_0.SDKTypeList[arg_8_1 + 1] then
 		return
 	end
 
-	slot0.selectSdk = slot0.SDKTypeList[slot1 + 1]
+	arg_8_0.selectSdk = arg_8_0.SDKTypeList[arg_8_1 + 1]
 
-	NoticeController.instance:setSdkType(slot0.selectSdk)
-	slot0:refreshNoticeContent()
+	NoticeController.instance:setSdkType(arg_8_0.selectSdk)
+	arg_8_0:refreshNoticeContent()
 end
 
-function slot0.onSubChannelDropValueChanged(slot0, slot1)
-	if slot0.selectSubChannel == slot0.subChannelList[slot1 + 1] then
+function var_0_0.onSubChannelDropValueChanged(arg_9_0, arg_9_1)
+	if arg_9_0.selectSubChannel == arg_9_0.subChannelList[arg_9_1 + 1] then
 		return
 	end
 
-	slot0.selectSubChannel = slot0.subChannelList[slot1 + 1]
+	arg_9_0.selectSubChannel = arg_9_0.subChannelList[arg_9_1 + 1]
 
-	NoticeController.instance:setSubChannelId(slot0.selectSubChannel)
-	slot0:refreshNoticeContent()
+	NoticeController.instance:setSubChannelId(arg_9_0.selectSubChannel)
+	arg_9_0:refreshNoticeContent()
 end
 
-function slot0.onServerTypeDropValueChanged(slot0, slot1)
-	if slot0.serverType == slot0.serverTypeList[slot1 + 1] then
+function var_0_0.onServerTypeDropValueChanged(arg_10_0, arg_10_1)
+	if arg_10_0.serverType == arg_10_0.serverTypeList[arg_10_1 + 1] then
 		return
 	end
 
-	slot0.serverType = slot0.serverTypeList[slot1 + 1]
+	arg_10_0.serverType = arg_10_0.serverTypeList[arg_10_1 + 1]
 
-	NoticeController.instance:setServerType(slot0.serverType)
-	slot0:refreshNoticeContent()
+	NoticeController.instance:setServerType(arg_10_0.serverType)
+	arg_10_0:refreshNoticeContent()
 end
 
-function slot0.refreshNoticeContent(slot0)
+function var_0_0.refreshNoticeContent(arg_11_0)
 	NoticeController.instance:startRequest()
 end
 
-function slot0.onDestroy(slot0)
-	slot0.channelDrop:RemoveOnValueChanged()
-	slot0.subChannelDrop:RemoveOnValueChanged()
-	slot0.serverTypeDrop:RemoveOnValueChanged()
-	slot0.loader:onDestroy()
-	slot0:__onDispose()
+function var_0_0.onDestroy(arg_12_0)
+	arg_12_0.channelDrop:RemoveOnValueChanged()
+	arg_12_0.subChannelDrop:RemoveOnValueChanged()
+	arg_12_0.serverTypeDrop:RemoveOnValueChanged()
+	arg_12_0.loader:onDestroy()
+	arg_12_0:__onDispose()
 end
 
-return slot0
+return var_0_0

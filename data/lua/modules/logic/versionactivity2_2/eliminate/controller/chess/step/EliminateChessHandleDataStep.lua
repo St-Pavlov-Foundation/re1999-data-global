@@ -1,23 +1,29 @@
-module("modules.logic.versionactivity2_2.eliminate.controller.chess.step.EliminateChessHandleDataStep", package.seeall)
+﻿module("modules.logic.versionactivity2_2.eliminate.controller.chess.step.EliminateChessHandleDataStep", package.seeall)
 
-slot0 = class("EliminateChessHandleDataStep", EliminateChessStepBase)
+local var_0_0 = class("EliminateChessHandleDataStep", EliminateChessStepBase)
 
-function slot0.onStart(slot0)
-	if EliminateChessController.instance:getCurTurn() == nil then
-		EliminateChessController.instance:buildSeqFlow(EliminateStepUtil.createStep(EliminateEnum.StepWorkType.ShowEvaluate))
+function var_0_0.onStart(arg_1_0)
+	local var_1_0 = EliminateChessController.instance:getCurTurn()
+
+	if var_1_0 == nil then
+		local var_1_1 = EliminateStepUtil.createStep(EliminateEnum.StepWorkType.ShowEvaluate)
+
+		EliminateChessController.instance:buildSeqFlow(var_1_1)
 
 		if EliminateChessModel.instance:getNeedResetData() ~= nil then
-			EliminateChessController.instance:buildSeqFlow(EliminateStepUtil.createStep(EliminateEnum.StepWorkType.RefreshEliminate))
+			local var_1_2 = EliminateStepUtil.createStep(EliminateEnum.StepWorkType.RefreshEliminate)
+
+			EliminateChessController.instance:buildSeqFlow(var_1_2)
 		end
 
-		slot0:onDone(true)
+		arg_1_0:onDone(true)
 
 		return
 	end
 
-	EliminateChessController.instance:handleEliminate(slot1.eliminate)
-	EliminateChessController.instance:handleDrop(slot1.tidyUp, slot1.fillChessBoard)
-	slot0:onDone(true)
+	EliminateChessController.instance:handleEliminate(var_1_0.eliminate)
+	EliminateChessController.instance:handleDrop(var_1_0.tidyUp, var_1_0.fillChessBoard)
+	arg_1_0:onDone(true)
 end
 
-return slot0
+return var_0_0

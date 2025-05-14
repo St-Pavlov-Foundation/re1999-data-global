@@ -1,33 +1,37 @@
-module("modules.logic.fight.view.FightViewCheckActivityEnd", package.seeall)
+﻿module("modules.logic.fight.view.FightViewCheckActivityEnd", package.seeall)
 
-slot0 = class("FightViewCheckActivityEnd", BaseView)
+local var_0_0 = class("FightViewCheckActivityEnd", BaseView)
 
-function slot0.onInitView(slot0)
+function var_0_0.onInitView(arg_1_0)
+	return
 end
 
-function slot0.addEvents(slot0)
-	slot0:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, slot0.checkIsActivityFight, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_2_0.checkIsActivityFight, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0:removeEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, slot0.checkIsActivityFight, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0:removeEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_3_0.checkIsActivityFight, arg_3_0)
 end
 
-function slot0.checkIsActivityFight(slot0, slot1)
-	if string.nilorempty(slot1) or slot1 == 0 then
+function var_0_0.checkIsActivityFight(arg_4_0, arg_4_1)
+	if string.nilorempty(arg_4_1) or arg_4_1 == 0 then
 		return
 	end
 
-	if not DungeonConfig.instance:getChapterCO(FightModel.instance:getFightParam().chapterId) or slot4.actId ~= slot1 then
+	local var_4_0 = FightModel.instance:getFightParam().chapterId
+	local var_4_1 = DungeonConfig.instance:getChapterCO(var_4_0)
+
+	if not var_4_1 or var_4_1.actId ~= arg_4_1 then
 		return
 	end
 
-	if ActivityHelper.getActivityStatus(slot1) ~= ActivityEnum.ActivityStatus.Normal then
-		GameFacade.showMessageBox(MessageBoxIdDefine.EndActivity, MsgBoxEnum.BoxType.Yes, uv0.yesCallback)
+	if ActivityHelper.getActivityStatus(arg_4_1) ~= ActivityEnum.ActivityStatus.Normal then
+		GameFacade.showMessageBox(MessageBoxIdDefine.EndActivity, MsgBoxEnum.BoxType.Yes, var_0_0.yesCallback)
 	end
 end
 
-function slot0.yesCallback()
+function var_0_0.yesCallback()
 	ActivityController.instance:dispatchEvent(ActivityEvent.CheckGuideOnEndActivity)
 
 	if FightDataHelper.fieldMgr:isDouQuQu() then
@@ -41,4 +45,4 @@ function slot0.yesCallback()
 	FightRpc.instance:sendEndFightRequest(true)
 end
 
-return slot0
+return var_0_0

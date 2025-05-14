@@ -1,569 +1,624 @@
-module("modules.logic.room.view.building.RoomFormulaItem", package.seeall)
+﻿module("modules.logic.room.view.building.RoomFormulaItem", package.seeall)
 
-slot0 = class("RoomFormulaItem", ListScrollCellExtend)
+local var_0_0 = class("RoomFormulaItem", ListScrollCellExtend)
 
-function slot0.onInitView(slot0)
-	slot0._gonormal = gohelper.findChild(slot0.viewGO, "#go_normal")
-	slot0._txtname = gohelper.findChildText(slot0.viewGO, "#go_normal/layout/#txt_name")
-	slot0._goitem = gohelper.findChild(slot0.viewGO, "#go_normal/materials/#go_coinitem/#go_item")
-	slot0._imagecoinRare = gohelper.findChildImage(slot0.viewGO, "#go_normal/materials/#go_coinitem/#go_item/image_coinRare")
-	slot0._simagecoinIcon = gohelper.findChildSingleImage(slot0.viewGO, "#go_normal/materials/#go_coinitem/#go_item/simage_coinIcon")
-	slot0._txtgold = gohelper.findChildText(slot0.viewGO, "#go_normal/materials/#go_coinitem/#txt_gold")
-	slot0._goempty = gohelper.findChild(slot0.viewGO, "#go_normal/materials/#go_coinitem/#go_empty")
-	slot0._txtCombineNum = gohelper.findChildText(slot0.viewGO, "#go_normal/layout/itemNum/#txt_num")
-	slot0._simageproduceitem = gohelper.findChildSingleImage(slot0.viewGO, "#go_normal/#simage_produceitem")
-	slot0._gomaterialitem = gohelper.findChild(slot0.viewGO, "#go_normal/materials/#go_materialitem")
-	slot0._golock = gohelper.findChild(slot0.viewGO, "#go_lock")
-	slot0._golockitem = gohelper.findChildText(slot0.viewGO, "#go_lock/locklayout/#go_lockitem")
-	slot0._txtlock = gohelper.findChildText(slot0.viewGO, "#go_lock/#txt_lock")
-	slot0._imagerare = gohelper.findChildImage(slot0.viewGO, "#go_normal/raremask/#image_rare")
-	slot0._btnclick = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_normal/#btn_click")
-	slot0._btncoin = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_normal/materials/#go_coinitem/#go_item/#btn_coin")
-	slot0._btnlock = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_lock/#btn_lock")
-	slot0._goNeedTag = gohelper.findChild(slot0.viewGO, "#go_normal/#go_TagNeed")
-	slot0._goOwnNum = gohelper.findChild(slot0.viewGO, "#go_normal/itemNum")
-	slot0._txtOwnNum = gohelper.findChildText(slot0.viewGO, "#go_normal/itemNum/#txt_num")
-	slot0._goNeed = gohelper.findChild(slot0.viewGO, "#go_normal/layout/#go_Need")
-	slot0._goCanCombine = gohelper.findChild(slot0.viewGO, "#go_normal/layout/#go_Mix")
-	slot0._txtCanCombine = gohelper.findChildText(slot0.viewGO, "#go_normal/layout/#go_Mix/#txt_Mix")
-	slot0._gonormalTrs = slot0._gonormal.transform
-	slot0._golockTrs = slot0._golock.transform
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gonormal = gohelper.findChild(arg_1_0.viewGO, "#go_normal")
+	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "#go_normal/layout/#txt_name")
+	arg_1_0._goitem = gohelper.findChild(arg_1_0.viewGO, "#go_normal/materials/#go_coinitem/#go_item")
+	arg_1_0._imagecoinRare = gohelper.findChildImage(arg_1_0.viewGO, "#go_normal/materials/#go_coinitem/#go_item/image_coinRare")
+	arg_1_0._simagecoinIcon = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_normal/materials/#go_coinitem/#go_item/simage_coinIcon")
+	arg_1_0._txtgold = gohelper.findChildText(arg_1_0.viewGO, "#go_normal/materials/#go_coinitem/#txt_gold")
+	arg_1_0._goempty = gohelper.findChild(arg_1_0.viewGO, "#go_normal/materials/#go_coinitem/#go_empty")
+	arg_1_0._txtCombineNum = gohelper.findChildText(arg_1_0.viewGO, "#go_normal/layout/itemNum/#txt_num")
+	arg_1_0._simageproduceitem = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_normal/#simage_produceitem")
+	arg_1_0._gomaterialitem = gohelper.findChild(arg_1_0.viewGO, "#go_normal/materials/#go_materialitem")
+	arg_1_0._golock = gohelper.findChild(arg_1_0.viewGO, "#go_lock")
+	arg_1_0._golockitem = gohelper.findChildText(arg_1_0.viewGO, "#go_lock/locklayout/#go_lockitem")
+	arg_1_0._txtlock = gohelper.findChildText(arg_1_0.viewGO, "#go_lock/#txt_lock")
+	arg_1_0._imagerare = gohelper.findChildImage(arg_1_0.viewGO, "#go_normal/raremask/#image_rare")
+	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_normal/#btn_click")
+	arg_1_0._btncoin = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_normal/materials/#go_coinitem/#go_item/#btn_coin")
+	arg_1_0._btnlock = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_lock/#btn_lock")
+	arg_1_0._goNeedTag = gohelper.findChild(arg_1_0.viewGO, "#go_normal/#go_TagNeed")
+	arg_1_0._goOwnNum = gohelper.findChild(arg_1_0.viewGO, "#go_normal/itemNum")
+	arg_1_0._txtOwnNum = gohelper.findChildText(arg_1_0.viewGO, "#go_normal/itemNum/#txt_num")
+	arg_1_0._goNeed = gohelper.findChild(arg_1_0.viewGO, "#go_normal/layout/#go_Need")
+	arg_1_0._goCanCombine = gohelper.findChild(arg_1_0.viewGO, "#go_normal/layout/#go_Mix")
+	arg_1_0._txtCanCombine = gohelper.findChildText(arg_1_0.viewGO, "#go_normal/layout/#go_Mix/#txt_Mix")
+	arg_1_0._gonormalTrs = arg_1_0._gonormal.transform
+	arg_1_0._golockTrs = arg_1_0._golock.transform
 
-	gohelper.setActive(slot0._goNeed, false)
-	gohelper.setActive(slot0._goOwnNum, false)
-	gohelper.setActive(slot0._goCanCombine, false)
+	gohelper.setActive(arg_1_0._goNeed, false)
+	gohelper.setActive(arg_1_0._goOwnNum, false)
+	gohelper.setActive(arg_1_0._goCanCombine, false)
 
-	slot0._animator = slot0.viewGO:GetComponent(RoomEnum.ComponentType.Animator)
-	slot0._lineAnimator = slot0._gonormal:GetComponent(RoomEnum.ComponentType.Animator)
+	arg_1_0._animator = arg_1_0.viewGO:GetComponent(RoomEnum.ComponentType.Animator)
+	arg_1_0._lineAnimator = arg_1_0._gonormal:GetComponent(RoomEnum.ComponentType.Animator)
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclick:AddClickListener(slot0._btnclickOnClick, slot0)
-	slot0._btncoin:AddClickListener(slot0._btncoinOnClick, slot0)
-	slot0._btnlock:AddClickListener(slot0._btnlockOnClick, slot0)
-	slot0:addEventCb(RoomMapController.instance, RoomEvent.RefreshFormulaCombineCount, slot0._onFormulaCombineCountRefresh, slot0)
-	slot0:addEventCb(RoomMapController.instance, RoomEvent.UIFormulaIdTreeLevelHideAnim, slot0._onHideAnimAnimation, slot0)
-	slot0:addEventCb(RoomMapController.instance, RoomEvent.UIFormulaIdTreeLevelShowAnim, slot0._onShowAnimAnimation, slot0)
-	slot0:addEventCb(RoomMapController.instance, RoomEvent.UIFormulaIdTreeLevelMoveAnim, slot0._onMoveAnimAnimation, slot0)
-	slot0:addEventCb(RoomMapController.instance, RoomEvent.RefreshNeedFormulaItem, slot0._refreshUI, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
+	arg_2_0._btncoin:AddClickListener(arg_2_0._btncoinOnClick, arg_2_0)
+	arg_2_0._btnlock:AddClickListener(arg_2_0._btnlockOnClick, arg_2_0)
+	arg_2_0:addEventCb(RoomMapController.instance, RoomEvent.RefreshFormulaCombineCount, arg_2_0._onFormulaCombineCountRefresh, arg_2_0)
+	arg_2_0:addEventCb(RoomMapController.instance, RoomEvent.UIFormulaIdTreeLevelHideAnim, arg_2_0._onHideAnimAnimation, arg_2_0)
+	arg_2_0:addEventCb(RoomMapController.instance, RoomEvent.UIFormulaIdTreeLevelShowAnim, arg_2_0._onShowAnimAnimation, arg_2_0)
+	arg_2_0:addEventCb(RoomMapController.instance, RoomEvent.UIFormulaIdTreeLevelMoveAnim, arg_2_0._onMoveAnimAnimation, arg_2_0)
+	arg_2_0:addEventCb(RoomMapController.instance, RoomEvent.RefreshNeedFormulaItem, arg_2_0._refreshUI, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclick:RemoveClickListener()
-	slot0._btncoin:RemoveClickListener()
-	slot0._btnlock:RemoveClickListener()
-	slot0:removeEventCb(RoomMapController.instance, RoomEvent.RefreshFormulaCombineCount, slot0._onFormulaCombineCountRefresh, slot0)
-	slot0:removeEventCb(RoomMapController.instance, RoomEvent.UIFormulaIdTreeLevelHideAnim, slot0._onHideAnimAnimation, slot0)
-	slot0:removeEventCb(RoomMapController.instance, RoomEvent.UIFormulaIdTreeLevelShowAnim, slot0._onShowAnimAnimation, slot0)
-	slot0:removeEventCb(RoomMapController.instance, RoomEvent.UIFormulaIdTreeLevelMoveAnim, slot0._onMoveAnimAnimation, slot0)
-	slot0:removeEventCb(RoomMapController.instance, RoomEvent.RefreshNeedFormulaItem, slot0._refreshUI, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclick:RemoveClickListener()
+	arg_3_0._btncoin:RemoveClickListener()
+	arg_3_0._btnlock:RemoveClickListener()
+	arg_3_0:removeEventCb(RoomMapController.instance, RoomEvent.RefreshFormulaCombineCount, arg_3_0._onFormulaCombineCountRefresh, arg_3_0)
+	arg_3_0:removeEventCb(RoomMapController.instance, RoomEvent.UIFormulaIdTreeLevelHideAnim, arg_3_0._onHideAnimAnimation, arg_3_0)
+	arg_3_0:removeEventCb(RoomMapController.instance, RoomEvent.UIFormulaIdTreeLevelShowAnim, arg_3_0._onShowAnimAnimation, arg_3_0)
+	arg_3_0:removeEventCb(RoomMapController.instance, RoomEvent.UIFormulaIdTreeLevelMoveAnim, arg_3_0._onMoveAnimAnimation, arg_3_0)
+	arg_3_0:removeEventCb(RoomMapController.instance, RoomEvent.RefreshNeedFormulaItem, arg_3_0._refreshUI, arg_3_0)
 end
 
-function slot0._btnclickOnClick(slot0)
-	if slot0._unlock then
-		RoomBuildingFormulaController.instance:setSelectFormulaStrId(slot0._mo:getId(), nil, slot0._mo:getFormulaTreeLevel())
+function var_0_0._btnclickOnClick(arg_4_0)
+	if arg_4_0._unlock then
+		local var_4_0 = arg_4_0._mo:getId()
+		local var_4_1 = arg_4_0._mo:getFormulaTreeLevel()
+
+		RoomBuildingFormulaController.instance:setSelectFormulaStrId(var_4_0, nil, var_4_1)
 		AudioMgr.instance:trigger(AudioEnum.UI.UI_transverse_tabs_click)
 	else
-		slot0:_btnlockOnClick()
+		arg_4_0:_btnlockOnClick()
 	end
 end
 
-function slot0._btncoinOnClick(slot0)
-	if not slot0._unlock then
+function var_0_0._btncoinOnClick(arg_5_0)
+	if not arg_5_0._unlock then
 		return
 	end
 
 	MaterialTipController.instance:showMaterialInfo(MaterialEnum.MaterialType.Currency, CurrencyEnum.CurrencyType.Gold, false, nil, false, {
 		type = MaterialEnum.MaterialType.Currency,
 		id = CurrencyEnum.CurrencyType.Gold,
-		quantity = slot0.costScore,
+		quantity = arg_5_0.costScore,
 		sceneType = GameSceneMgr.instance:getCurSceneType(),
 		openedViewNameList = JumpController.instance:getCurrentOpenedView()
 	})
 end
 
-function slot0._btnlockOnClick(slot0)
-	slot2, slot3, slot4, slot5 = RoomProductionHelper.isFormulaUnlock(slot0._mo:getFormulaId(), slot0._lineMO.level)
+function var_0_0._btnlockOnClick(arg_6_0)
+	local var_6_0 = arg_6_0._mo:getFormulaId()
+	local var_6_1, var_6_2, var_6_3, var_6_4 = RoomProductionHelper.isFormulaUnlock(var_6_0, arg_6_0._lineMO.level)
 
-	if slot3 then
-		GameFacade.showToast(ToastEnum.ClickRoomFormulaEpisode, slot3)
-	elseif slot4 then
-		GameFacade.showToast(ToastEnum.MaterialItemLockOnClick, slot0._lineMO.config.name, slot4)
-	elseif slot5 then
+	if var_6_2 then
+		GameFacade.showToast(ToastEnum.ClickRoomFormulaEpisode, var_6_2)
+	elseif var_6_3 then
+		GameFacade.showToast(ToastEnum.MaterialItemLockOnClick, arg_6_0._lineMO.config.name, var_6_3)
+	elseif var_6_4 then
 		GameFacade.showToast(ToastEnum.ClickRoomFormula)
 	end
 end
 
-function slot0._onFormulaCombineCountRefresh(slot0, slot1)
-	if slot1 == slot0._mo:getId() then
-		slot0:_refreshCoinCount()
-		slot0:_refreshMaterialItemCount()
+function var_0_0._onFormulaCombineCountRefresh(arg_7_0, arg_7_1)
+	if arg_7_1 == arg_7_0._mo:getId() then
+		arg_7_0:_refreshCoinCount()
+		arg_7_0:_refreshMaterialItemCount()
 	end
 end
 
-function slot0._onChangePartStart(slot0, slot1)
-	if slot1 == slot0._mo:getId() then
-		gohelper.setActive(slot0._gosynthesis, false)
-		gohelper.setActive(slot0._gosynthesis, true)
+function var_0_0._onChangePartStart(arg_8_0, arg_8_1)
+	if arg_8_1 == arg_8_0._mo:getId() then
+		gohelper.setActive(arg_8_0._gosynthesis, false)
+		gohelper.setActive(arg_8_0._gosynthesis, true)
 	end
 end
 
-function slot0._editableInitView(slot0)
-	slot0._materialItemList = {}
+function var_0_0._editableInitView(arg_9_0)
+	arg_9_0._materialItemList = {}
 
-	gohelper.setActive(slot0._gomaterialitem, false)
+	gohelper.setActive(arg_9_0._gomaterialitem, false)
 
-	slot0._maxMaterialItemCount = 3
+	arg_9_0._maxMaterialItemCount = 3
 
-	for slot4 = 1, slot0._maxMaterialItemCount do
-		slot5 = slot0:getUserDataTb_()
-		slot5.go = gohelper.cloneInPlace(slot0._gomaterialitem, "item" .. slot4)
-		slot5.goitem = gohelper.findChild(slot5.go, "go_item")
-		slot5.gopos = gohelper.findChild(slot5.go, "go_item/go_pos")
-		slot5.txtnum = gohelper.findChildText(slot5.go, "go_item/txt_num")
-		slot5.goempty = gohelper.findChild(slot5.go, "go_empty")
+	for iter_9_0 = 1, arg_9_0._maxMaterialItemCount do
+		local var_9_0 = arg_9_0:getUserDataTb_()
 
-		table.insert(slot0._materialItemList, slot5)
-		gohelper.setActive(slot5.go, true)
+		var_9_0.go = gohelper.cloneInPlace(arg_9_0._gomaterialitem, "item" .. iter_9_0)
+		var_9_0.goitem = gohelper.findChild(var_9_0.go, "go_item")
+		var_9_0.gopos = gohelper.findChild(var_9_0.go, "go_item/go_pos")
+		var_9_0.txtnum = gohelper.findChildText(var_9_0.go, "go_item/txt_num")
+		var_9_0.goempty = gohelper.findChild(var_9_0.go, "go_empty")
+
+		table.insert(arg_9_0._materialItemList, var_9_0)
+		gohelper.setActive(var_9_0.go, true)
 	end
 
-	slot4 = UnityEngine.CanvasGroup
-	slot0._canvasGroup = slot0._gonormal:GetComponent(typeof(slot4))
+	arg_9_0._canvasGroup = arg_9_0._gonormal:GetComponent(typeof(UnityEngine.CanvasGroup))
 
-	gohelper.removeUIClickAudio(slot0._btnclick.gameObject)
+	gohelper.removeUIClickAudio(arg_9_0._btnclick.gameObject)
 
-	slot0._gosynthesis = gohelper.findChild(slot0.viewGO, "#go_normal/#synthesis")
-	slot0._treeLevelItemList = {}
+	arg_9_0._gosynthesis = gohelper.findChild(arg_9_0.viewGO, "#go_normal/#synthesis")
+	arg_9_0._treeLevelItemList = {}
 
-	for slot4 = 1, RoomFormulaModel.MAX_FORMULA_TREE_LEVEL do
-		slot5 = slot0:getUserDataTb_()
-		slot5.go = gohelper.findChild(slot0.viewGO, "#go_normal/#go_BG" .. slot4)
-		slot5.goSelect = gohelper.findChild(slot5.go, "#go_Select")
-		slot5.lineT = gohelper.findChild(slot5.go, "#go_LineT")
-		slot5.lineTNo = gohelper.findChild(slot5.go, "#go_LineT/normal")
-		slot5.lineTHL = gohelper.findChild(slot5.go, "#go_LineT/highlight")
-		slot5.lineL = gohelper.findChild(slot5.go, "#go_LineL")
-		slot5.lineLNo = gohelper.findChild(slot5.go, "#go_LineL/normal")
-		slot5.lineLHL = gohelper.findChild(slot5.go, "#go_LineL/highlight")
-		slot5.lineI1 = gohelper.findChild(slot5.go, "#go_LineI1")
-		slot5.lineI1No = gohelper.findChild(slot5.go, "#go_LineI1/normal")
-		slot5.lineI1HL = gohelper.findChild(slot5.go, "#go_LineI1/highlight")
-		slot5.lineI2 = gohelper.findChild(slot5.go, "#go_LineI2")
-		slot5.lineI2No = gohelper.findChild(slot5.go, "#go_LineI2/normal")
-		slot5.lineI2HL = gohelper.findChild(slot5.go, "#go_LineI2/highlight")
+	for iter_9_1 = 1, RoomFormulaModel.MAX_FORMULA_TREE_LEVEL do
+		local var_9_1 = arg_9_0:getUserDataTb_()
 
-		table.insert(slot0._treeLevelItemList, slot5)
-	end
-end
+		var_9_1.go = gohelper.findChild(arg_9_0.viewGO, "#go_normal/#go_BG" .. iter_9_1)
+		var_9_1.goSelect = gohelper.findChild(var_9_1.go, "#go_Select")
+		var_9_1.lineT = gohelper.findChild(var_9_1.go, "#go_LineT")
+		var_9_1.lineTNo = gohelper.findChild(var_9_1.go, "#go_LineT/normal")
+		var_9_1.lineTHL = gohelper.findChild(var_9_1.go, "#go_LineT/highlight")
+		var_9_1.lineL = gohelper.findChild(var_9_1.go, "#go_LineL")
+		var_9_1.lineLNo = gohelper.findChild(var_9_1.go, "#go_LineL/normal")
+		var_9_1.lineLHL = gohelper.findChild(var_9_1.go, "#go_LineL/highlight")
+		var_9_1.lineI1 = gohelper.findChild(var_9_1.go, "#go_LineI1")
+		var_9_1.lineI1No = gohelper.findChild(var_9_1.go, "#go_LineI1/normal")
+		var_9_1.lineI1HL = gohelper.findChild(var_9_1.go, "#go_LineI1/highlight")
+		var_9_1.lineI2 = gohelper.findChild(var_9_1.go, "#go_LineI2")
+		var_9_1.lineI2No = gohelper.findChild(var_9_1.go, "#go_LineI2/normal")
+		var_9_1.lineI2HL = gohelper.findChild(var_9_1.go, "#go_LineI2/highlight")
 
-function slot0._editableAddEvents(slot0)
-	slot0:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, slot0._refreshUI, slot0)
-	slot0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, slot0._refreshUI, slot0)
-	slot0:addEventCb(RoomMapController.instance, RoomEvent.SelectFormulaIdChanged, slot0._refreshSelect, slot0)
-	slot0:addEventCb(RoomMapController.instance, RoomEvent.OnChangePartStart, slot0._onChangePartStart, slot0)
-end
-
-function slot0._editableRemoveEvents(slot0)
-	slot0:removeEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, slot0._refreshUI, slot0)
-	slot0:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, slot0._refreshUI, slot0)
-	slot0:removeEventCb(RoomMapController.instance, RoomEvent.SelectFormulaIdChanged, slot0._refreshSelect, slot0)
-	slot0:removeEventCb(RoomMapController.instance, RoomEvent.OnChangePartStart, slot0._onChangePartStart, slot0)
-end
-
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._lineMO = slot0._view.viewParam.lineMO
-	slot0._callback = slot0._view.viewParam.callback
-	slot0._callbackObj = slot0._view.viewParam.callbackObj
-	slot0._mo = slot1
-
-	slot0:_refreshUI()
-	slot0:_refreshSelect()
-	slot0:_checkAnimation()
-	gohelper.setActive(slot0._gosynthesis, false)
-end
-
-function slot0._refreshSelect(slot0, slot1)
-	if slot1 and slot0._mo:getId() == slot1 then
-		slot0:_refreshCoinCount()
-		slot0:_refreshMaterialItemCount()
-	end
-
-	if slot0._treeLevelItemList[slot0._mo:getFormulaTreeLevel()] then
-		gohelper.setActive(slot0._treeLevelItemList[slot4].goSelect, RoomFormulaListModel.instance:getSelectFormulaStrId() == slot2)
+		table.insert(arg_9_0._treeLevelItemList, var_9_1)
 	end
 end
 
-function slot0._refreshUI(slot0)
-	slot1, slot2, slot3 = nil
-	slot0._unlock, slot1, slot2, slot3 = RoomProductionHelper.isFormulaUnlock(slot0._mo:getFormulaId(), slot0._lineMO.level)
+function var_0_0._editableAddEvents(arg_10_0)
+	arg_10_0:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_10_0._refreshUI, arg_10_0)
+	arg_10_0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_10_0._refreshUI, arg_10_0)
+	arg_10_0:addEventCb(RoomMapController.instance, RoomEvent.SelectFormulaIdChanged, arg_10_0._refreshSelect, arg_10_0)
+	arg_10_0:addEventCb(RoomMapController.instance, RoomEvent.OnChangePartStart, arg_10_0._onChangePartStart, arg_10_0)
+end
 
-	if not slot0._unlock then
-		slot0:_refreshLockText(slot1, slot2, slot3)
+function var_0_0._editableRemoveEvents(arg_11_0)
+	arg_11_0:removeEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_11_0._refreshUI, arg_11_0)
+	arg_11_0:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_11_0._refreshUI, arg_11_0)
+	arg_11_0:removeEventCb(RoomMapController.instance, RoomEvent.SelectFormulaIdChanged, arg_11_0._refreshSelect, arg_11_0)
+	arg_11_0:removeEventCb(RoomMapController.instance, RoomEvent.OnChangePartStart, arg_11_0._onChangePartStart, arg_11_0)
+end
+
+function var_0_0.onUpdateMO(arg_12_0, arg_12_1)
+	arg_12_0._lineMO = arg_12_0._view.viewParam.lineMO
+	arg_12_0._callback = arg_12_0._view.viewParam.callback
+	arg_12_0._callbackObj = arg_12_0._view.viewParam.callbackObj
+	arg_12_0._mo = arg_12_1
+
+	arg_12_0:_refreshUI()
+	arg_12_0:_refreshSelect()
+	arg_12_0:_checkAnimation()
+	gohelper.setActive(arg_12_0._gosynthesis, false)
+end
+
+function var_0_0._refreshSelect(arg_13_0, arg_13_1)
+	local var_13_0 = arg_13_0._mo:getId()
+
+	if arg_13_1 and var_13_0 == arg_13_1 then
+		arg_13_0:_refreshCoinCount()
+		arg_13_0:_refreshMaterialItemCount()
 	end
 
-	slot0._canvasGroup.alpha = slot0._unlock and 1 or 0.2
+	local var_13_1 = RoomFormulaListModel.instance:getSelectFormulaStrId()
+	local var_13_2 = arg_13_0._mo:getFormulaTreeLevel()
 
-	gohelper.setActive(slot0._golock, not slot0._unlock)
-	ZProj.UGUIHelper.SetColorAlpha(slot0._simageproduceitem.gameObject:GetComponent(gohelper.Type_Image), slot0._unlock and 1 or 0.5)
-	UISpriteSetMgr.instance:setRoomSprite(slot0._imagecoinRare, "bg_wupindi_3")
-	slot0._simagecoinIcon:LoadImage(ResUrl.getCurrencyItemIcon("203"))
+	if arg_13_0._treeLevelItemList[var_13_2] then
+		gohelper.setActive(arg_13_0._treeLevelItemList[var_13_2].goSelect, var_13_1 == var_13_0)
+	end
+end
 
-	slot9 = #RoomProductionHelper.getCostMaterialItemList(slot4)
+function var_0_0._refreshUI(arg_14_0)
+	local var_14_0
+	local var_14_1
+	local var_14_2
+	local var_14_3 = arg_14_0._mo:getFormulaId()
+	local var_14_4, var_14_5, var_14_6
 
-	for slot9 = 1, math.min(slot0._maxMaterialItemCount, slot9) do
-		slot10 = slot5[slot9]
-		slot11.costItem = slot0._materialItemList[slot9].costItem or IconMgr.instance:getRoomGoodsItem(slot11.gopos, ViewMgr.instance:getContainer(ViewName.RoomFormulaView))
+	arg_14_0._unlock, var_14_4, var_14_5, var_14_6 = RoomProductionHelper.isFormulaUnlock(var_14_3, arg_14_0._lineMO.level)
 
-		slot11.costItem:canShowRareCircle(false)
-		slot11.costItem:setMOValue(slot10.type, slot10.id, slot10.quantity)
-		slot11.costItem:isEnableClick(true)
-		slot11.costItem:isShowCount(false)
-		slot11.costItem:setRecordFarmItem(true)
-		slot11.costItem:setConsume(true)
-		slot11.costItem:setJumpFinishCallback(slot0.jumpFinishCallback, slot0)
-		gohelper.setActive(slot11.goitem, true)
-		gohelper.setActive(slot11.goempty, false)
+	if not arg_14_0._unlock then
+		arg_14_0:_refreshLockText(var_14_4, var_14_5, var_14_6)
 	end
 
-	for slot9 = math.min(slot0._maxMaterialItemCount, #slot5) + 1, #slot0._materialItemList do
-		slot10 = slot0._materialItemList[slot9]
+	arg_14_0._canvasGroup.alpha = arg_14_0._unlock and 1 or 0.2
 
-		gohelper.setActive(slot10.goempty, true)
-		gohelper.setActive(slot10.goitem, false)
+	gohelper.setActive(arg_14_0._golock, not arg_14_0._unlock)
+	ZProj.UGUIHelper.SetColorAlpha(arg_14_0._simageproduceitem.gameObject:GetComponent(gohelper.Type_Image), arg_14_0._unlock and 1 or 0.5)
+	UISpriteSetMgr.instance:setRoomSprite(arg_14_0._imagecoinRare, "bg_wupindi_3")
+	arg_14_0._simagecoinIcon:LoadImage(ResUrl.getCurrencyItemIcon("203"))
+
+	local var_14_7 = RoomProductionHelper.getCostMaterialItemList(var_14_3)
+
+	for iter_14_0 = 1, math.min(arg_14_0._maxMaterialItemCount, #var_14_7) do
+		local var_14_8 = var_14_7[iter_14_0]
+		local var_14_9 = arg_14_0._materialItemList[iter_14_0]
+
+		var_14_9.costItem = var_14_9.costItem or IconMgr.instance:getRoomGoodsItem(var_14_9.gopos, ViewMgr.instance:getContainer(ViewName.RoomFormulaView))
+
+		var_14_9.costItem:canShowRareCircle(false)
+		var_14_9.costItem:setMOValue(var_14_8.type, var_14_8.id, var_14_8.quantity)
+		var_14_9.costItem:isEnableClick(true)
+		var_14_9.costItem:isShowCount(false)
+		var_14_9.costItem:setRecordFarmItem(true)
+		var_14_9.costItem:setConsume(true)
+		var_14_9.costItem:setJumpFinishCallback(arg_14_0.jumpFinishCallback, arg_14_0)
+		gohelper.setActive(var_14_9.goitem, true)
+		gohelper.setActive(var_14_9.goempty, false)
 	end
 
-	slot6 = false
-	slot7 = RoomProductionHelper.getFormulaProduceItem(slot4)
+	for iter_14_1 = math.min(arg_14_0._maxMaterialItemCount, #var_14_7) + 1, #arg_14_0._materialItemList do
+		local var_14_10 = arg_14_0._materialItemList[iter_14_1]
 
-	gohelper.setActive(slot0._simageproduceitem.gameObject, slot7)
-	gohelper.setActive(slot0._txtname.gameObject, slot7)
+		gohelper.setActive(var_14_10.goempty, true)
+		gohelper.setActive(var_14_10.goitem, false)
+	end
 
-	slot8 = 1
+	local var_14_11 = false
+	local var_14_12 = RoomProductionHelper.getFormulaProduceItem(var_14_3)
 
-	if slot7 then
-		slot9, slot10 = ItemModel.instance:getItemConfigAndIcon(slot7.type, slot7.id)
+	gohelper.setActive(arg_14_0._simageproduceitem.gameObject, var_14_12)
+	gohelper.setActive(arg_14_0._txtname.gameObject, var_14_12)
 
-		slot0._simageproduceitem:LoadImage(slot10)
+	local var_14_13 = 1
 
-		slot8 = slot9.rare
-		slot0._txtname.text = slot9.name
+	if var_14_12 then
+		local var_14_14, var_14_15 = ItemModel.instance:getItemConfigAndIcon(var_14_12.type, var_14_12.id)
 
-		if JumpModel.instance:getRecordFarmItem() and not slot0._mo:isTreeFormula() then
-			slot6 = slot12.id == slot7.id
+		arg_14_0._simageproduceitem:LoadImage(var_14_15)
+
+		var_14_13 = var_14_14.rare
+		arg_14_0._txtname.text = var_14_14.name
+
+		local var_14_16 = arg_14_0._mo:isTreeFormula()
+		local var_14_17 = JumpModel.instance:getRecordFarmItem()
+
+		if var_14_17 and not var_14_16 then
+			var_14_11 = var_14_17.id == var_14_12.id
 		end
 	end
 
-	gohelper.setActive(slot0._goNeedTag, slot6)
-	UISpriteSetMgr.instance:setRoomSprite(slot0._imagerare, "huangyuan_pz_" .. CharacterEnum.Color[slot8])
-	slot0:_refreshTreeLevel()
-	slot0:_refreshCoinCount()
-	slot0:_refreshMaterialItemCount()
+	gohelper.setActive(arg_14_0._goNeedTag, var_14_11)
+	UISpriteSetMgr.instance:setRoomSprite(arg_14_0._imagerare, "huangyuan_pz_" .. CharacterEnum.Color[var_14_13])
+	arg_14_0:_refreshTreeLevel()
+	arg_14_0:_refreshCoinCount()
+	arg_14_0:_refreshMaterialItemCount()
 end
 
-function slot0._refreshLockText(slot0, slot1, slot2, slot3)
-	if slot1 then
-		table.insert({}, string.format(luaLang("room_formula_lock_roomlevel"), slot1))
+function var_0_0._refreshLockText(arg_15_0, arg_15_1, arg_15_2, arg_15_3)
+	local var_15_0 = {}
+
+	if arg_15_1 then
+		table.insert(var_15_0, string.format(luaLang("room_formula_lock_roomlevel"), arg_15_1))
 	end
 
-	if slot2 then
-		table.insert(slot4, string.format(luaLang("room_formula_lock_productionlevel"), slot2))
+	if arg_15_2 then
+		table.insert(var_15_0, string.format(luaLang("room_formula_lock_productionlevel"), arg_15_2))
 	end
 
-	if slot3 then
-		slot7 = slot5
-		slot8 = ""
+	if arg_15_3 then
+		local var_15_1 = DungeonConfig.instance:getEpisodeCO(arg_15_3)
+		local var_15_2 = var_15_1 and DungeonConfig.instance:getChapterCO(var_15_1.chapterId)
+		local var_15_3 = var_15_1
+		local var_15_4 = ""
 
-		if DungeonConfig.instance:getEpisodeCO(slot3) and DungeonConfig.instance:getChapterCO(slot5.chapterId) and slot6.type == DungeonEnum.ChapterType.Hard then
-			slot8 = luaLang("dungeon_lock_tips_hard2")
-			slot7 = DungeonConfig.instance:getEpisodeCO(slot5.preEpisode)
+		if var_15_2 and var_15_2.type == DungeonEnum.ChapterType.Hard then
+			var_15_4 = luaLang("dungeon_lock_tips_hard2")
+			var_15_3 = DungeonConfig.instance:getEpisodeCO(var_15_1.preEpisode)
 		end
 
-		table.insert(slot4, string.format(luaLang("room_formula_lock_episode"), "<color=#FF0000>" .. slot8 .. (slot7 and DungeonController.getEpisodeName(slot7) or "") .. "</color>"))
+		table.insert(var_15_0, string.format(luaLang("room_formula_lock_episode"), "<color=#FF0000>" .. var_15_4 .. (var_15_3 and DungeonController.getEpisodeName(var_15_3) or "") .. "</color>"))
 	end
 
-	slot0._golockitem.text = #slot4 > 0 and slot4[1] or ""
+	arg_15_0._golockitem.text = #var_15_0 > 0 and var_15_0[1] or ""
 end
 
-function slot0._refreshTreeLevel(slot0)
-	slot1, slot2, slot3 = slot0:getShowLineObj()
+function var_0_0._refreshTreeLevel(arg_16_0)
+	local var_16_0, var_16_1, var_16_2 = arg_16_0:getShowLineObj()
+	local var_16_3 = arg_16_0._mo:getParentStrId()
 
-	if slot0._mo:getParentStrId() and slot1.hasData then
-		slot5 = RoomFormulaListModel.instance:isSelectedFormula(slot4)
+	if var_16_3 and var_16_0.hasData then
+		local var_16_4 = RoomFormulaListModel.instance:isSelectedFormula(var_16_3)
 
-		gohelper.setActive(slot1.normal, not slot5)
-		gohelper.setActive(slot1.highlight, slot5)
+		gohelper.setActive(var_16_0.normal, not var_16_4)
+		gohelper.setActive(var_16_0.highlight, var_16_4)
 	end
 
-	if slot2.hasData then
-		slot5 = RoomFormulaListModel.instance:isSelectedFormula(slot2.grandParentStrId)
+	if var_16_1.hasData then
+		local var_16_5 = RoomFormulaListModel.instance:isSelectedFormula(var_16_1.grandParentStrId)
 
-		gohelper.setActive(slot2.normal, not slot5)
-		gohelper.setActive(slot2.highlight, slot5)
+		gohelper.setActive(var_16_1.normal, not var_16_5)
+		gohelper.setActive(var_16_1.highlight, var_16_5)
 	end
 
-	if slot3.hasData then
-		slot5 = RoomFormulaListModel.instance:isSelectedFormula(slot3.greatGrandParentStrId)
+	if var_16_2.hasData then
+		local var_16_6 = RoomFormulaListModel.instance:isSelectedFormula(var_16_2.greatGrandParentStrId)
 
-		gohelper.setActive(slot3.normal, not slot5)
-		gohelper.setActive(slot3.highlight, slot5)
+		gohelper.setActive(var_16_2.normal, not var_16_6)
+		gohelper.setActive(var_16_2.highlight, var_16_6)
 	end
 end
 
-function slot0.getShowLineObj(slot0)
-	slot2 = {
+function var_0_0.getShowLineObj(arg_17_0)
+	local var_17_0 = {
 		hasData = false
 	}
-	slot3 = {
+	local var_17_1 = {
 		hasData = false
 	}
-	slot5 = slot0._mo:getIsLast()
-	slot6 = slot0._mo:getParentStrId()
+	local var_17_2 = {
+		hasData = false
+	}
+	local var_17_3 = arg_17_0._mo:getFormulaTreeLevel()
+	local var_17_4 = arg_17_0._mo:getIsLast()
+	local var_17_5 = arg_17_0._mo:getParentStrId()
 
-	for slot10, slot11 in ipairs(slot0._treeLevelItemList) do
-		slot12 = slot10 == slot0._mo:getFormulaTreeLevel()
+	for iter_17_0, iter_17_1 in ipairs(arg_17_0._treeLevelItemList) do
+		local var_17_6 = iter_17_0 == var_17_3
 
-		gohelper.setActive(slot11.go, slot12)
+		gohelper.setActive(iter_17_1.go, var_17_6)
 
-		if slot12 then
-			if slot11.lineT then
-				gohelper.setActive(slot11.lineT, not slot5)
+		if var_17_6 then
+			if iter_17_1.lineT then
+				gohelper.setActive(iter_17_1.lineT, not var_17_4)
 
-				if not slot5 then
-					-- Nothing
+				if not var_17_4 then
+					var_17_0.normal = iter_17_1.lineTNo
+					var_17_0.highlight = iter_17_1.lineTHL
+					var_17_0.hasData = true
 				end
 			end
 
-			if slot11.lineL then
-				gohelper.setActive(slot11.lineL, slot5)
+			if iter_17_1.lineL then
+				gohelper.setActive(iter_17_1.lineL, var_17_4)
 
-				if slot5 then
-					slot1.normal = slot11.lineLNo
-					slot1.highlight = slot11.lineLHL
-					slot1.hasData = true
+				if var_17_4 then
+					var_17_0.normal = iter_17_1.lineLNo
+					var_17_0.highlight = iter_17_1.lineLHL
+					var_17_0.hasData = true
 				end
 			end
 
-			if slot6 then
-				if slot11.lineI1 then
-					slot14 = RoomFormulaModel.instance:getFormulaIsLast(slot6)
+			if var_17_5 then
+				local var_17_7 = RoomFormulaModel.instance:getFormulaParentStrId(var_17_5)
 
-					gohelper.setActive(slot11.lineI1, not slot14)
+				if iter_17_1.lineI1 then
+					local var_17_8 = RoomFormulaModel.instance:getFormulaIsLast(var_17_5)
 
-					if not slot14 then
-						slot2.normal = slot11.lineI1No
-						slot2.highlight = slot11.lineI1HL
-						slot2.grandParentStrId = RoomFormulaModel.instance:getFormulaParentStrId(slot6)
-						slot2.hasData = true
+					gohelper.setActive(iter_17_1.lineI1, not var_17_8)
+
+					if not var_17_8 then
+						var_17_1.normal = iter_17_1.lineI1No
+						var_17_1.highlight = iter_17_1.lineI1HL
+						var_17_1.grandParentStrId = var_17_7
+						var_17_1.hasData = true
 					end
 				end
 
-				if slot11.lineI2 then
-					slot14 = RoomFormulaModel.instance:getFormulaIsLast(slot13)
+				if iter_17_1.lineI2 then
+					local var_17_9 = RoomFormulaModel.instance:getFormulaIsLast(var_17_7)
 
-					gohelper.setActive(slot11.lineI2, not slot14)
+					gohelper.setActive(iter_17_1.lineI2, not var_17_9)
 
-					if not slot14 then
-						slot3.normal = slot11.lineI2No
-						slot3.highlight = slot11.lineI2HL
-						slot3.greatGrandParentStrId = RoomFormulaModel.instance:getFormulaParentStrId(slot13)
-						slot3.hasData = true
+					if not var_17_9 then
+						var_17_2.normal = iter_17_1.lineI2No
+						var_17_2.highlight = iter_17_1.lineI2HL
+						var_17_2.greatGrandParentStrId = RoomFormulaModel.instance:getFormulaParentStrId(var_17_7)
+						var_17_2.hasData = true
 					end
 				end
 			end
 		end
 	end
 
-	return {
-		hasData = false,
-		normal = slot11.lineTNo,
-		highlight = slot11.lineTHL,
-		hasData = true
-	}, slot2, slot3
+	return var_17_0, var_17_1, var_17_2
 end
 
-function slot0._refreshCoinCount(slot0)
-	slot0.costScore = 0
-	slot2 = true
+function var_0_0._refreshCoinCount(arg_18_0)
+	arg_18_0.costScore = 0
 
-	if RoomProductionHelper.getCostCoinItemList(slot0._mo:getFormulaId())[1] then
-		slot0.costScore = (slot4.quantity or 0) * slot0._mo:getFormulaCombineCount()
-		slot2 = slot0.costScore <= ItemModel.instance:getItemQuantity(slot4.type, slot4.id)
+	local var_18_0 = arg_18_0._mo:getFormulaId()
+	local var_18_1 = true
+	local var_18_2 = RoomProductionHelper.getCostCoinItemList(var_18_0)[1]
+
+	if var_18_2 then
+		local var_18_3 = arg_18_0._mo:getFormulaCombineCount()
+
+		arg_18_0.costScore = (var_18_2.quantity or 0) * var_18_3
+		var_18_1 = ItemModel.instance:getItemQuantity(var_18_2.type, var_18_2.id) >= arg_18_0.costScore
 	end
 
-	if slot2 then
-		slot0._txtgold.text = GameUtil.numberDisplay(slot0.costScore)
+	if var_18_1 then
+		arg_18_0._txtgold.text = GameUtil.numberDisplay(arg_18_0.costScore)
 	else
-		slot0._txtgold.text = string.format("<color=#d97373>%s</color>", slot0.costScore)
+		arg_18_0._txtgold.text = string.format("<color=#d97373>%s</color>", arg_18_0.costScore)
 	end
 
-	gohelper.setActive(slot0._goitem, slot0.costScore > 0)
-	gohelper.setActive(slot0._goempty, slot0.costScore <= 0)
+	gohelper.setActive(arg_18_0._goitem, arg_18_0.costScore > 0)
+	gohelper.setActive(arg_18_0._goempty, arg_18_0.costScore <= 0)
 end
 
-function slot0._refreshMaterialItemCount(slot0)
-	slot7 = #RoomProductionHelper.getCostMaterialItemList(slot0._mo:getFormulaId())
+function var_0_0._refreshMaterialItemCount(arg_19_0)
+	local var_19_0 = arg_19_0._mo:getFormulaId()
+	local var_19_1 = arg_19_0._mo:getFormulaCombineCount()
+	local var_19_2 = RoomProductionHelper.getCostMaterialItemList(var_19_0)
 
-	for slot7 = 1, math.min(slot0._maxMaterialItemCount, slot7) do
-		slot9 = slot3[slot7]
-		slot12 = slot9.quantity * slot0._mo:getFormulaCombineCount() <= ItemModel.instance:getItemQuantity(slot9.type, slot9.id)
+	for iter_19_0 = 1, math.min(arg_19_0._maxMaterialItemCount, #var_19_2) do
+		local var_19_3 = arg_19_0._materialItemList[iter_19_0]
+		local var_19_4 = var_19_2[iter_19_0]
+		local var_19_5 = var_19_4.quantity * var_19_1
+		local var_19_6 = ItemModel.instance:getItemQuantity(var_19_4.type, var_19_4.id)
+		local var_19_7 = var_19_5 <= var_19_6
 
-		if slot0._materialItemList[slot7].costItem then
-			slot8.costItem:setMOValue(slot9.type, slot9.id, slot10)
-			slot8.costItem:setGrayscale(not slot12)
+		if var_19_3.costItem then
+			var_19_3.costItem:setMOValue(var_19_4.type, var_19_4.id, var_19_5)
+			var_19_3.costItem:setGrayscale(not var_19_7)
 		end
 
-		if slot12 then
-			slot8.txtnum.text = string.format("%s/%s", RoomProductionHelper.formatItemNum(slot11), slot10)
+		local var_19_8 = RoomProductionHelper.formatItemNum(var_19_6)
+
+		if var_19_7 then
+			var_19_3.txtnum.text = string.format("%s/%s", var_19_8, var_19_5)
 		else
-			slot8.txtnum.text = string.format("<color=#d97373>%s/%s</color>", slot13, slot10)
+			var_19_3.txtnum.text = string.format("<color=#d97373>%s/%s</color>", var_19_8, var_19_5)
 		end
 	end
 
-	slot4 = RoomProductionHelper.getFormulaProduceItem(slot1)
+	local var_19_9 = RoomProductionHelper.getFormulaProduceItem(var_19_0)
 
-	gohelper.setActive(slot0._txtCombineNum.gameObject, slot4)
+	gohelper.setActive(arg_19_0._txtCombineNum.gameObject, var_19_9)
 
-	if slot4 then
-		slot0._txtCombineNum.text = luaLang("multiple") .. slot4.quantity * slot2
+	if var_19_9 then
+		arg_19_0._txtCombineNum.text = luaLang("multiple") .. var_19_9.quantity * var_19_1
 	end
 end
 
-function slot0._refreshOwnQuantityAndTag(slot0)
-	slot2 = 0
+function var_0_0._refreshOwnQuantityAndTag(arg_20_0)
+	local var_20_0 = arg_20_0._mo:getFormulaId()
+	local var_20_1 = 0
+	local var_20_2 = RoomProductionHelper.getFormulaProduceItem(var_20_0)
 
-	if RoomProductionHelper.getFormulaProduceItem(slot0._mo:getFormulaId()) then
-		slot2 = ItemModel.instance:getItemQuantity(slot3.type, slot3.id)
+	if var_20_2 then
+		var_20_1 = ItemModel.instance:getItemQuantity(var_20_2.type, var_20_2.id)
 	end
 
-	if RoomProductionHelper.getFormulaNeedQuantity(slot0._mo:getId()) and slot5 ~= 0 then
-		slot6 = ""
+	local var_20_3 = arg_20_0._mo:getId()
+	local var_20_4 = RoomProductionHelper.getFormulaNeedQuantity(var_20_3)
 
-		if slot5 <= slot2 then
-			slot6 = string.format("%s/%s", slot2, slot5)
+	if var_20_4 and var_20_4 ~= 0 then
+		local var_20_5 = ""
 
-			gohelper.setActive(slot0._goCanCombine, false)
-			gohelper.setActive(slot0._goNeed, false)
+		if var_20_4 <= var_20_1 then
+			var_20_5 = string.format("%s/%s", var_20_1, var_20_4)
+
+			gohelper.setActive(arg_20_0._goCanCombine, false)
+			gohelper.setActive(arg_20_0._goNeed, false)
 		else
-			slot6 = string.format("<color=#d97373>%s</color>/%s", slot2, slot5)
+			var_20_5 = string.format("<color=#d97373>%s</color>/%s", var_20_1, var_20_4)
 
-			if RoomProductionHelper.getTotalCanCombineNum(slot1) ~= 0 then
-				slot0._txtCanCombine.text = formatLuaLang("room_formula_can_combine", slot8)
+			local var_20_6 = RoomProductionHelper.getTotalCanCombineNum(var_20_0)
+			local var_20_7 = var_20_6 ~= 0
+
+			if var_20_7 then
+				arg_20_0._txtCanCombine.text = formatLuaLang("room_formula_can_combine", var_20_6)
 			end
 
-			gohelper.setActive(slot0._goCanCombine, slot9)
-			gohelper.setActive(slot0._goNeed, not slot9)
+			gohelper.setActive(arg_20_0._goCanCombine, var_20_7)
+			gohelper.setActive(arg_20_0._goNeed, not var_20_7)
 		end
 
-		slot0._txtOwnNum.text = slot6
+		arg_20_0._txtOwnNum.text = var_20_5
 	else
-		slot0._txtOwnNum.text = slot2
+		arg_20_0._txtOwnNum.text = var_20_1
 
-		gohelper.setActive(slot0._goCanCombine, false)
-		gohelper.setActive(slot0._goNeed, false)
+		gohelper.setActive(arg_20_0._goCanCombine, false)
+		gohelper.setActive(arg_20_0._goNeed, false)
 	end
 end
 
-function slot0._playAnimByName(slot0, slot1)
-	slot0._lastAnimName = slot1
+function var_0_0._playAnimByName(arg_21_0, arg_21_1)
+	arg_21_0._lastAnimName = arg_21_1
 
-	slot0._animator:Play(slot1, 0, 0)
+	arg_21_0._animator:Play(arg_21_1, 0, 0)
 end
 
-function slot0._onHideAnimAnimation(slot0, slot1)
-	if slot0:_canTreeAnim(slot1) then
-		slot0:_playAnimByName(RoomProductLineEnum.AnimName.TreeHide)
+function var_0_0._onHideAnimAnimation(arg_22_0, arg_22_1)
+	if arg_22_0:_canTreeAnim(arg_22_1) then
+		arg_22_0:_playAnimByName(RoomProductLineEnum.AnimName.TreeHide)
 	end
 end
 
-function slot0._onShowAnimAnimation(slot0, slot1)
-	slot0._showLevel = slot1
+function var_0_0._onShowAnimAnimation(arg_23_0, arg_23_1)
+	arg_23_0._showLevel = arg_23_1
 end
 
-function slot0._onMoveAnimAnimation(slot0, slot1)
-	slot0._checkMove = true
+function var_0_0._onMoveAnimAnimation(arg_24_0, arg_24_1)
+	arg_24_0._checkMove = true
 end
 
-function slot0._checkAnimation(slot0)
-	slot1 = slot0._showLevel
-	slot0._showLevel = nil
+function var_0_0._checkAnimation(arg_25_0)
+	local var_25_0 = arg_25_0._showLevel
 
-	if slot0._checkMove then
-		slot0._lineAnimator:Play(RoomProductLineEnum.AnimName.TreeHide, 0, 0)
+	arg_25_0._showLevel = nil
+
+	if arg_25_0._checkMove then
+		arg_25_0._lineAnimator:Play(RoomProductLineEnum.AnimName.TreeHide, 0, 0)
 	end
 
-	if slot1 and slot0:_canTreeAnim(slot1) then
-		slot0:_playAnimByName(RoomProductLineEnum.AnimName.TreeShow, 0, 0)
+	if var_25_0 and arg_25_0:_canTreeAnim(var_25_0) then
+		arg_25_0:_playAnimByName(RoomProductLineEnum.AnimName.TreeShow, 0, 0)
 
-		slot0._checkMove = false
+		arg_25_0._checkMove = false
 	end
 
-	slot0:_checkMoveAnimation()
+	arg_25_0:_checkMoveAnimation()
 
-	if slot0._lastAnimName == RoomProductLineEnum.AnimName.TreeHide then
-		slot0:_playAnimByName(RoomProductLineEnum.AnimName.TreeIdle, 0, 0)
+	if arg_25_0._lastAnimName == RoomProductLineEnum.AnimName.TreeHide then
+		arg_25_0:_playAnimByName(RoomProductLineEnum.AnimName.TreeIdle, 0, 0)
 	end
 end
 
-function slot0._checkMoveAnimation(slot0)
-	if slot0._checkMove ~= true then
-		slot0:_tweenKill(true)
+function var_0_0._checkMoveAnimation(arg_26_0)
+	if arg_26_0._checkMove ~= true then
+		arg_26_0:_tweenKill(true)
 
 		return
 	end
 
-	slot0._checkMove = false
+	arg_26_0._checkMove = false
 
-	if RoomFormulaListModel.instance:getRankDiff(slot0._mo) and slot1 ~= 0 then
-		slot0:_tweenKill()
-		slot0:_playAnimByName(RoomProductLineEnum.AnimName.TreeIdle)
+	local var_26_0 = RoomFormulaListModel.instance:getRankDiff(arg_26_0._mo)
 
-		slot2 = RoomFormulaViewContainer.cellHeightSize * slot1
+	if var_26_0 and var_26_0 ~= 0 then
+		arg_26_0:_tweenKill()
+		arg_26_0:_playAnimByName(RoomProductLineEnum.AnimName.TreeIdle)
 
-		transformhelper.setLocalPosXY(slot0._gonormalTrs, 0, slot2)
-		transformhelper.setLocalPosXY(slot0._golockTrs, 0, slot2)
+		local var_26_1 = RoomFormulaViewContainer.cellHeightSize * var_26_0
 
-		slot0._rankDiffMoveId = ZProj.TweenHelper.DOAnchorPosY(slot0._gonormalTrs, 0, RoomProductLineEnum.AnimTime.TreeAnim)
-		slot0._golockMoveId = ZProj.TweenHelper.DOAnchorPosY(slot0._golockTrs, 0, RoomProductLineEnum.AnimTime.TreeAnim)
+		transformhelper.setLocalPosXY(arg_26_0._gonormalTrs, 0, var_26_1)
+		transformhelper.setLocalPosXY(arg_26_0._golockTrs, 0, var_26_1)
+
+		arg_26_0._rankDiffMoveId = ZProj.TweenHelper.DOAnchorPosY(arg_26_0._gonormalTrs, 0, RoomProductLineEnum.AnimTime.TreeAnim)
+		arg_26_0._golockMoveId = ZProj.TweenHelper.DOAnchorPosY(arg_26_0._golockTrs, 0, RoomProductLineEnum.AnimTime.TreeAnim)
 	else
-		slot0:_tweenKill(true)
+		arg_26_0:_tweenKill(true)
 	end
 end
 
-function slot0._tweenKill(slot0, slot1)
-	if slot0._rankDiffMoveId then
-		ZProj.TweenHelper.KillById(slot0._rankDiffMoveId)
-		ZProj.TweenHelper.KillById(slot0._golockMoveId)
+function var_0_0._tweenKill(arg_27_0, arg_27_1)
+	if arg_27_0._rankDiffMoveId then
+		ZProj.TweenHelper.KillById(arg_27_0._rankDiffMoveId)
+		ZProj.TweenHelper.KillById(arg_27_0._golockMoveId)
 
-		slot0._rankDiffMoveId = nil
-		slot0._golockMoveId = nil
+		arg_27_0._rankDiffMoveId = nil
+		arg_27_0._golockMoveId = nil
 
-		if slot1 then
-			transformhelper.setLocalPosXY(slot0._gonormalTrs, 0, 0)
-			transformhelper.setLocalPosXY(slot0._golockTrs, 0, 0)
+		if arg_27_1 then
+			transformhelper.setLocalPosXY(arg_27_0._gonormalTrs, 0, 0)
+			transformhelper.setLocalPosXY(arg_27_0._golockTrs, 0, 0)
 		end
 	end
 end
 
-function slot0._canTreeAnim(slot0, slot1)
-	if slot1 and slot0._mo:getFormulaTreeLevel() and slot1 < slot2 then
-		return true
+function var_0_0._canTreeAnim(arg_28_0, arg_28_1)
+	if arg_28_1 then
+		local var_28_0 = arg_28_0._mo:getFormulaTreeLevel()
+
+		if var_28_0 and arg_28_1 < var_28_0 then
+			return true
+		end
 	end
 
 	return false
 end
 
-function slot0.jumpFinishCallback(slot0)
+function var_0_0.jumpFinishCallback(arg_29_0)
 	RoomMapController.instance:dispatchEvent(RoomEvent.RefreshNeedFormula)
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simageproduceitem:UnLoadImage()
-	slot0._simagecoinIcon:UnLoadImage()
-	slot0:_tweenKill()
+function var_0_0.onDestroyView(arg_30_0)
+	arg_30_0._simageproduceitem:UnLoadImage()
+	arg_30_0._simagecoinIcon:UnLoadImage()
+	arg_30_0:_tweenKill()
 end
 
-return slot0
+return var_0_0

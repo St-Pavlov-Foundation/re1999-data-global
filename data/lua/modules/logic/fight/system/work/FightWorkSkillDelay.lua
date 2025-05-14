@@ -1,29 +1,31 @@
-module("modules.logic.fight.system.work.FightWorkSkillDelay", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkSkillDelay", package.seeall)
 
-slot0 = class("FightWorkSkillDelay", BaseWork)
+local var_0_0 = class("FightWorkSkillDelay", BaseWork)
 
-function slot0.ctor(slot0, slot1)
-	slot0._fightStepMO = slot1
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0._fightStepMO = arg_1_1
 end
 
-function slot0.onStart(slot0)
-	if lua_fight_skill_delay.configDict[slot0._fightStepMO.actId] then
+function var_0_0.onStart(arg_2_0)
+	local var_2_0 = lua_fight_skill_delay.configDict[arg_2_0._fightStepMO.actId]
+
+	if var_2_0 then
 		if FightReplayModel.instance:isReplay() then
-			slot0:onDone(true)
+			arg_2_0:onDone(true)
 		else
-			TaskDispatcher.runDelay(slot0._delayDone, slot0, slot1.delay / 1000 / FightModel.instance:getSpeed())
+			TaskDispatcher.runDelay(arg_2_0._delayDone, arg_2_0, var_2_0.delay / 1000 / FightModel.instance:getSpeed())
 		end
 	else
-		slot0:onDone(true)
+		arg_2_0:onDone(true)
 	end
 end
 
-function slot0._delayDone(slot0)
-	slot0:onDone(true)
+function var_0_0._delayDone(arg_3_0)
+	arg_3_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
-	TaskDispatcher.cancelTask(slot0._delayDone, slot0)
+function var_0_0.clearWork(arg_4_0)
+	TaskDispatcher.cancelTask(arg_4_0._delayDone, arg_4_0)
 end
 
-return slot0
+return var_0_0

@@ -1,8 +1,9 @@
-module("modules.logic.season.controller.Activity104EquipEvent", package.seeall)
+﻿module("modules.logic.season.controller.Activity104EquipEvent", package.seeall)
 
-slot0 = _M
-slot0.EquipUpdate = 1001
-slot0.EquipChangeCard = 1002
-slot0.EquipChangeSlot = 1003
+local var_0_0 = _M
 
-return slot0
+var_0_0.EquipUpdate = 1001
+var_0_0.EquipChangeCard = 1002
+var_0_0.EquipChangeSlot = 1003
+
+return var_0_0

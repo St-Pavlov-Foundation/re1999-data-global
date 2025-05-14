@@ -1,83 +1,94 @@
-module("modules.logic.seasonver.act123.controller.Season123EpisodeListController", package.seeall)
+﻿module("modules.logic.seasonver.act123.controller.Season123EpisodeListController", package.seeall)
 
-slot0 = class("Season123EpisodeListController", BaseController)
+local var_0_0 = class("Season123EpisodeListController", BaseController)
 
-function slot0.onOpenView(slot0, slot1, slot2)
-	Season123Controller.instance:registerCallback(Season123Event.GetActInfo, slot0.handleGetActInfo, slot0)
-	Season123Controller.instance:registerCallback(Season123Event.GetActInfoBattleFinish, slot0.handleGetActInfo, slot0)
-	Season123Controller.instance:registerCallback(Season123Event.ResetStageFinished, slot0.handleResetStageFinished, slot0)
-	Season123Controller.instance:registerCallback(Season123Event.OnResetSucc, slot0.fixCurSelectedUnlock, slot0)
-	Season123EpisodeListModel.instance:init(slot1, slot2)
+function var_0_0.onOpenView(arg_1_0, arg_1_1, arg_1_2)
+	Season123Controller.instance:registerCallback(Season123Event.GetActInfo, arg_1_0.handleGetActInfo, arg_1_0)
+	Season123Controller.instance:registerCallback(Season123Event.GetActInfoBattleFinish, arg_1_0.handleGetActInfo, arg_1_0)
+	Season123Controller.instance:registerCallback(Season123Event.ResetStageFinished, arg_1_0.handleResetStageFinished, arg_1_0)
+	Season123Controller.instance:registerCallback(Season123Event.OnResetSucc, arg_1_0.fixCurSelectedUnlock, arg_1_0)
+	Season123EpisodeListModel.instance:init(arg_1_1, arg_1_2)
 	Season123Controller.instance:checkAndHandleEffectEquip({
-		actId = slot1,
-		stage = slot2
+		actId = arg_1_1,
+		stage = arg_1_2
 	})
 	TaskRpc.instance:sendGetTaskInfoRequest({
 		TaskEnum.TaskType.Season123
 	})
 end
 
-function slot0.onCloseView(slot0)
-	Season123Controller.instance:unregisterCallback(Season123Event.GetActInfo, slot0.handleGetActInfo, slot0)
-	Season123Controller.instance:unregisterCallback(Season123Event.GetActInfoBattleFinish, slot0.handleGetActInfo, slot0)
-	Season123Controller.instance:unregisterCallback(Season123Event.ResetStageFinished, slot0.handleResetStageFinished, slot0)
-	Season123Controller.instance:unregisterCallback(Season123Event.OnResetSucc, slot0.fixCurSelectedUnlock, slot0)
+function var_0_0.onCloseView(arg_2_0)
+	Season123Controller.instance:unregisterCallback(Season123Event.GetActInfo, arg_2_0.handleGetActInfo, arg_2_0)
+	Season123Controller.instance:unregisterCallback(Season123Event.GetActInfoBattleFinish, arg_2_0.handleGetActInfo, arg_2_0)
+	Season123Controller.instance:unregisterCallback(Season123Event.ResetStageFinished, arg_2_0.handleResetStageFinished, arg_2_0)
+	Season123Controller.instance:unregisterCallback(Season123Event.OnResetSucc, arg_2_0.fixCurSelectedUnlock, arg_2_0)
 	Season123EpisodeListModel.instance:release()
 	Season123EpisodeRewardModel.instance:release()
 end
 
-function slot0.processJumpParam(slot0, slot1)
-	if slot1.jumpId == Activity123Enum.JumpId.Market then
-		slot0:setSelectLayer(slot1.jumpParam.tarLayer)
+function var_0_0.processJumpParam(arg_3_0, arg_3_1)
+	if arg_3_1.jumpId == Activity123Enum.JumpId.Market then
+		local var_3_0 = arg_3_1.jumpParam.tarLayer
 
-		if Season123EpisodeListModel.instance.activityId == Activity123Enum.SeasonID.Season1 and slot1.stage == 1 and slot2 and slot2 == 2 then
+		arg_3_0:setSelectLayer(var_3_0)
+
+		if Season123EpisodeListModel.instance.activityId == Activity123Enum.SeasonID.Season1 and arg_3_1.stage == 1 and var_3_0 and var_3_0 == 2 then
 			return
 		end
 
-		slot0:enterEpisode()
-	elseif slot1.jumpId == Activity123Enum.JumpId.MarketNoResult then
+		arg_3_0:enterEpisode()
+	elseif arg_3_1.jumpId == Activity123Enum.JumpId.MarketNoResult then
+		local var_3_1 = arg_3_1.jumpParam.tarLayer
+
 		ViewMgr.instance:openView(Season123Controller.instance:getEpisodeMarketViewName(), {
 			actId = Season123EpisodeListModel.instance.activityId,
 			stage = Season123EpisodeListModel.instance.stage,
-			layer = slot1.jumpParam.tarLayer
+			layer = var_3_1
 		})
 	end
 end
 
-function slot0.handleGetActInfo(slot0, slot1)
-	if slot1 ~= Season123EpisodeListModel.instance.activityId then
+function var_0_0.handleGetActInfo(arg_4_0, arg_4_1)
+	if arg_4_1 ~= Season123EpisodeListModel.instance.activityId then
 		return
 	end
 
 	Season123EpisodeListModel.instance:initEpisodeList()
 
-	if not slot0:fixCurSelectedUnlock() then
-		slot0:notifyView()
+	if not arg_4_0:fixCurSelectedUnlock() then
+		arg_4_0:notifyView()
 	end
 end
 
-function slot0.handlePickHeroSuccess(slot0)
-	Activity123Rpc.instance:sendGet123InfosRequest(Season123EpisodeListModel.instance.activityId, slot0.handleEnterStage, slot0)
+function var_0_0.handlePickHeroSuccess(arg_5_0)
+	local var_5_0 = Season123EpisodeListModel.instance.activityId
+
+	Activity123Rpc.instance:sendGet123InfosRequest(var_5_0, arg_5_0.handleEnterStage, arg_5_0)
 end
 
-function slot0.handleEnterStage(slot0)
-	slot0:notifyView()
+function var_0_0.handleEnterStage(arg_6_0)
+	arg_6_0:notifyView()
 end
 
-function slot0.handleResetStageFinished(slot0)
-	Activity123Rpc.instance:sendGet123InfosRequest(Season123EpisodeListModel.instance.activityId, slot0.handleGet123InfosAfterRest, slot0)
+function var_0_0.handleResetStageFinished(arg_7_0)
+	local var_7_0 = Season123EpisodeListModel.instance.activityId
+
+	Activity123Rpc.instance:sendGet123InfosRequest(var_7_0, arg_7_0.handleGet123InfosAfterRest, arg_7_0)
 	Season123Controller.instance:dispatchEvent(Season123Event.ResetCloseEpisodeList)
 	Season123ShowHeroModel.instance:clearPlayHeroDieAnim(Season123EpisodeListModel.instance.stage)
 end
 
-function slot0.handleGet123InfosAfterRest(slot0)
-	uv0.instance:setSelectLayer(1)
-	slot0:notifyView()
+function var_0_0.handleGet123InfosAfterRest(arg_8_0)
+	var_0_0.instance:setSelectLayer(1)
+	arg_8_0:notifyView()
 end
 
-function slot0.fixCurSelectedUnlock(slot0)
-	if Season123EpisodeListModel.instance:getCurrentChallengeLayer() < Season123EpisodeListModel.instance.curSelectLayer then
-		slot0:setSelectLayer(slot2)
+function var_0_0.fixCurSelectedUnlock(arg_9_0)
+	local var_9_0 = Season123EpisodeListModel.instance.curSelectLayer
+	local var_9_1 = Season123EpisodeListModel.instance:getCurrentChallengeLayer()
+
+	if var_9_1 < var_9_0 then
+		arg_9_0:setSelectLayer(var_9_1)
 
 		return true
 	end
@@ -85,58 +96,64 @@ function slot0.fixCurSelectedUnlock(slot0)
 	return false
 end
 
-function slot0.openDetails(slot0)
+function var_0_0.openDetails(arg_10_0)
 	EnemyInfoController.instance:openSeason123EnemyInfoView(Season123EpisodeListModel.instance.activityId, Season123EpisodeListModel.instance.stage, Season123EpisodeListModel.instance:getCurrentChallengeLayer())
 end
 
-function slot0.enterEpisode(slot0, slot1)
-	if not Season123EpisodeListModel.instance.curSelectLayer then
+function var_0_0.enterEpisode(arg_11_0, arg_11_1)
+	local var_11_0 = Season123EpisodeListModel.instance.curSelectLayer
+
+	if not var_11_0 then
 		return
 	end
 
-	if not Season123EpisodeListModel.instance:getById(slot2) then
+	local var_11_1 = Season123EpisodeListModel.instance:getById(var_11_0)
+
+	if not var_11_1 then
 		return
 	end
 
-	uv0.instance:setSelectLayer(slot2)
+	local var_11_2 = Season123EpisodeListModel.instance.activityId
 
-	slot5 = Season123EpisodeListModel.instance.stage
+	var_0_0.instance:setSelectLayer(var_11_0)
 
-	if Season123EpisodeListModel.instance:isEpisodeUnlock(slot2) then
-		logNormal("open layer = " .. tostring(slot2))
+	local var_11_3 = Season123EpisodeListModel.instance.stage
 
-		if slot1 and (slot2 ~= 1 or slot3.isFinished or not Season123EpisodeListModel.instance:isLoadingAnimNeedPlay(slot5)) then
+	if Season123EpisodeListModel.instance:isEpisodeUnlock(var_11_0) then
+		logNormal("open layer = " .. tostring(var_11_0))
+
+		if arg_11_1 and (var_11_0 ~= 1 or var_11_1.isFinished or not Season123EpisodeListModel.instance:isLoadingAnimNeedPlay(var_11_3)) then
 			ViewMgr.instance:openView(Season123Controller.instance:getEpisodeMarketViewName(), {
-				actId = Season123EpisodeListModel.instance.activityId,
-				stage = slot5,
-				layer = slot2
+				actId = var_11_2,
+				stage = var_11_3,
+				layer = var_11_0
 			})
 		else
-			Season123EpisodeListModel.instance:savePlayLoadingAnimRecord(slot5)
+			Season123EpisodeListModel.instance:savePlayLoadingAnimRecord(var_11_3)
 			ViewMgr.instance:openView(Season123Controller.instance:getEpisodeLoadingViewName(), {
-				actId = slot4,
-				stage = slot5,
-				layer = slot2
+				actId = var_11_2,
+				stage = var_11_3,
+				layer = var_11_0
 			})
 		end
 	else
-		logNormal(string.format("layer [%s] is lock!!!!", tostring(slot2)))
+		logNormal(string.format("layer [%s] is lock!!!!", tostring(var_11_0)))
 	end
 end
 
-function slot0.setSelectLayer(slot0, slot1)
-	Season123EpisodeListModel.instance:setSelectLayer(slot1)
-	slot0:notifyView()
+function var_0_0.setSelectLayer(arg_12_0, arg_12_1)
+	Season123EpisodeListModel.instance:setSelectLayer(arg_12_1)
+	arg_12_0:notifyView()
 end
 
-function slot0.notifyView(slot0)
+function var_0_0.notifyView(arg_13_0)
 	Season123Controller.instance:dispatchEvent(Season123Event.EpisodeViewRefresh)
 end
 
-function slot0.onReceiveEnterStage(slot0, slot1)
-	Season123EpisodeListModel.instance:cleanPlayLoadingAnimRecord(slot1)
+function var_0_0.onReceiveEnterStage(arg_14_0, arg_14_1)
+	Season123EpisodeListModel.instance:cleanPlayLoadingAnimRecord(arg_14_1)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

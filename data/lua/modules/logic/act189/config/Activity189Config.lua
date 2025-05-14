@@ -1,10 +1,10 @@
-module("modules.logic.act189.config.Activity189Config", package.seeall)
+﻿module("modules.logic.act189.config.Activity189Config", package.seeall)
 
-slot0 = string.format
-slot1 = table.insert
-slot2 = class("Activity189Config", BaseConfig)
+local var_0_0 = string.format
+local var_0_1 = table.insert
+local var_0_2 = class("Activity189Config", BaseConfig)
 
-function slot2.reqConfigNames(slot0)
+function var_0_2.reqConfigNames(arg_1_0)
 	return {
 		"activity189_const",
 		"activity189_mlstring",
@@ -13,76 +13,82 @@ function slot2.reqConfigNames(slot0)
 	}
 end
 
-function slot2.onConfigLoaded(slot0, slot1, slot2)
-	if slot1 == "activity189_task" then
-		slot0.__onlineTaskList = nil
+function var_0_2.onConfigLoaded(arg_2_0, arg_2_1, arg_2_2)
+	if arg_2_1 == "activity189_task" then
+		arg_2_0.__onlineTaskList = nil
 
-		slot0:__init_activity189_task(slot2)
+		arg_2_0:__init_activity189_task(arg_2_2)
 	end
 end
 
-function slot2.__init_activity189_task(slot0, slot1)
-	if slot0.__onlineTaskList then
-		return slot0.__onlineTaskList
+function var_0_2.__init_activity189_task(arg_3_0, arg_3_1)
+	if arg_3_0.__onlineTaskList then
+		return arg_3_0.__onlineTaskList
 	end
+
+	local var_3_0 = {}
 
 	if isDebugBuild then
-		TaskConfig.instance:initReadTaskList(uv0("[logError] 189_运营改版活动.xlsx - export_任务"), {}, Activity189Enum.TaskTag, slot1)
+		local var_3_1 = var_0_0("[logError] 189_运营改版活动.xlsx - export_任务")
+
+		TaskConfig.instance:initReadTaskList(var_3_1, var_3_0, Activity189Enum.TaskTag, arg_3_1)
 	else
-		TaskConfig.instance:initReadTaskList(nil, slot2, Activity189Enum.TaskTag, slot1)
+		TaskConfig.instance:initReadTaskList(nil, var_3_0, Activity189Enum.TaskTag, arg_3_1)
 	end
 
-	slot0.__onlineTaskList = {}
+	arg_3_0.__onlineTaskList = {}
 
-	for slot6, slot7 in ipairs(slot1.configList) do
-		if slot7.isOnline then
-			uv1(slot0.__onlineTaskList, slot7)
+	for iter_3_0, iter_3_1 in ipairs(arg_3_1.configList) do
+		if iter_3_1.isOnline then
+			var_0_1(arg_3_0.__onlineTaskList, iter_3_1)
 		end
 	end
 
-	slot0.__readTasksTagTaskCoDict = slot2
+	arg_3_0.__readTasksTagTaskCoDict = var_3_0
 end
 
-function slot2.getSettingCO(slot0, slot1)
-	return lua_activity189.configDict[slot1]
+function var_0_2.getSettingCO(arg_4_0, arg_4_1)
+	return lua_activity189.configDict[arg_4_1]
 end
 
-function slot2.getBonusList(slot0, slot1)
-	return GameUtil.splitString2(slot0:getSettingCO(slot1).bonus, true) or {}
+function var_0_2.getBonusList(arg_5_0, arg_5_1)
+	local var_5_0 = arg_5_0:getSettingCO(arg_5_1).bonus
+
+	return GameUtil.splitString2(var_5_0, true) or {}
 end
 
-function slot2.getAllTaskList(slot0, slot1)
-	slot2 = {}
+function var_0_2.getAllTaskList(arg_6_0, arg_6_1)
+	local var_6_0 = {}
 
-	for slot6, slot7 in ipairs(slot0.__onlineTaskList) do
-		if slot7.activityId == slot1 then
-			uv0(slot2, slot7)
+	for iter_6_0, iter_6_1 in ipairs(arg_6_0.__onlineTaskList) do
+		if iter_6_1.activityId == arg_6_1 then
+			var_0_1(var_6_0, iter_6_1)
 		end
 	end
 
-	return slot2
+	return var_6_0
 end
 
-function slot2.getTaskCO(slot0, slot1)
-	return lua_activity189_task.configDict[slot1]
+function var_0_2.getTaskCO(arg_7_0, arg_7_1)
+	return lua_activity189_task.configDict[arg_7_1]
 end
 
-function slot2.getTaskCO_ReadTask(slot0, slot1)
-	return slot0.__readTasksTagTaskCoDict[slot1] or {}
+function var_0_2.getTaskCO_ReadTask(arg_8_0, arg_8_1)
+	return arg_8_0.__readTasksTagTaskCoDict[arg_8_1] or {}
 end
 
-function slot2.getTaskCO_ReadTask_Tag(slot0, slot1, slot2)
-	return slot0:getTaskCO_ReadTask(slot1)[slot2]
+function var_0_2.getTaskCO_ReadTask_Tag(arg_9_0, arg_9_1, arg_9_2)
+	return arg_9_0:getTaskCO_ReadTask(arg_9_1)[arg_9_2]
 end
 
-function slot2.getTaskCO_ReadTask_Tag_TaskId(slot0, slot1, slot2, slot3)
-	return slot0:getTaskCO_ReadTask_Tag(slot1, slot2)[slot3]
+function var_0_2.getTaskCO_ReadTask_Tag_TaskId(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
+	return arg_10_0:getTaskCO_ReadTask_Tag(arg_10_1, arg_10_2)[arg_10_3]
 end
 
-function slot2.getTaskType(slot0)
+function var_0_2.getTaskType(arg_11_0)
 	return TaskEnum.TaskType.Activity189
 end
 
-slot2.instance = slot2.New()
+var_0_2.instance = var_0_2.New()
 
-return slot2
+return var_0_2

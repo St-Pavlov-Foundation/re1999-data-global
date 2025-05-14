@@ -1,78 +1,91 @@
-module("modules.logic.fight.view.FightChangeHeroSelectSkillTargetView", package.seeall)
+﻿module("modules.logic.fight.view.FightChangeHeroSelectSkillTargetView", package.seeall)
 
-slot0 = class("FightChangeHeroSelectSkillTargetView", BaseViewExtended)
+local var_0_0 = class("FightChangeHeroSelectSkillTargetView", BaseViewExtended)
 
-function slot0.onInitView(slot0)
-	slot0._block = gohelper.findChildClick(slot0.viewGO, "block")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._block = gohelper.findChildClick(arg_1_0.viewGO, "block")
 end
 
-function slot0.addEvents(slot0)
-	slot0:addClickCb(slot0._block, slot0._onBlock, slot0)
-	FightController.instance:registerCallback(FightEvent.ChangeSubHeroExSkillReply, slot0._onChangeSubHeroExSkillReply, slot0)
-	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, slot0._onCloseViewFinish, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0:addClickCb(arg_2_0._block, arg_2_0._onBlock, arg_2_0)
+	FightController.instance:registerCallback(FightEvent.ChangeSubHeroExSkillReply, arg_2_0._onChangeSubHeroExSkillReply, arg_2_0)
+	ViewMgr.instance:registerCallback(ViewEvent.OnCloseViewFinish, arg_2_0._onCloseViewFinish, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	FightController.instance:unregisterCallback(FightEvent.ChangeSubHeroExSkillReply, slot0._onChangeSubHeroExSkillReply, slot0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, slot0._onCloseViewFinish, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	FightController.instance:unregisterCallback(FightEvent.ChangeSubHeroExSkillReply, arg_3_0._onChangeSubHeroExSkillReply, arg_3_0)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_3_0._onCloseViewFinish, arg_3_0)
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_4_0)
+	return
 end
 
-function slot0._onCloseViewFinish(slot0, slot1)
-	if slot1 == ViewName.FightSkillTargetView then
-		slot0:closeThis()
+function var_0_0._onCloseViewFinish(arg_5_0, arg_5_1)
+	if arg_5_1 == ViewName.FightSkillTargetView then
+		arg_5_0:closeThis()
 	end
 end
 
-function slot0._onChangeSubHeroExSkillReply(slot0)
-	slot0:closeThis()
+function var_0_0._onChangeSubHeroExSkillReply(arg_6_0)
+	arg_6_0:closeThis()
 end
 
-function slot0._onBtnEsc(slot0)
+function var_0_0._onBtnEsc(arg_7_0)
+	return
 end
 
-function slot0._onBlock(slot0)
-	slot0._clickCounter = slot0._clickCounter + 1
+function var_0_0._onBlock(arg_8_0)
+	arg_8_0._clickCounter = arg_8_0._clickCounter + 1
 
-	if slot0._clickCounter >= 5 then
-		slot0:closeThis()
+	if arg_8_0._clickCounter >= 5 then
+		arg_8_0:closeThis()
 	end
 end
 
-function slot0.onOpen(slot0)
-	slot0._clickCounter = 0
+function var_0_0.onOpen(arg_9_0)
+	arg_9_0._clickCounter = 0
 
-	NavigateMgr.instance:addEscape(slot0.viewContainer.viewName, slot0._onBtnEsc, slot0)
+	NavigateMgr.instance:addEscape(arg_9_0.viewContainer.viewName, arg_9_0._onBtnEsc, arg_9_0)
 
-	if FightEnum.ShowLogicTargetView[slot0.viewParam.skillConfig.logicTarget] and slot1.targetLimit == FightEnum.TargetLimit.MySide then
-		if #FightDataHelper.entityMgr:getMyNormalList() + #FightDataHelper.entityMgr:getSpList(FightEnum.EntitySide.MySide) > 1 then
+	local var_9_0 = arg_9_0.viewParam.skillConfig
+	local var_9_1 = arg_9_0.viewParam.fromId
+
+	if FightEnum.ShowLogicTargetView[var_9_0.logicTarget] and var_9_0.targetLimit == FightEnum.TargetLimit.MySide then
+		local var_9_2 = FightDataHelper.entityMgr:getMyNormalList()
+		local var_9_3 = FightDataHelper.entityMgr:getSpList(FightEnum.EntitySide.MySide)
+		local var_9_4 = #var_9_2 + #var_9_3
+
+		if var_9_4 > 1 then
 			ViewMgr.instance:openView(ViewName.FightSkillTargetView, {
 				mustSelect = true,
-				fromId = slot0.viewParam.fromId,
-				skillId = slot1.id,
-				callback = slot0._onChangeHeroSkillSelected,
-				callbackObj = slot0
+				fromId = var_9_1,
+				skillId = var_9_0.id,
+				callback = arg_9_0._onChangeHeroSkillSelected,
+				callbackObj = arg_9_0
 			})
-		elseif slot5 == 1 then
-			FightRpc.instance:sendChangeSubHeroExSkillRequest((#slot3 > 0 and slot3 or slot4)[1].id)
+		elseif var_9_4 == 1 then
+			local var_9_5 = #var_9_2 > 0 and var_9_2 or var_9_3
+
+			FightRpc.instance:sendChangeSubHeroExSkillRequest(var_9_5[1].id)
 		else
-			slot0:closeThis()
+			arg_9_0:closeThis()
 		end
 	else
 		FightRpc.instance:sendChangeSubHeroExSkillRequest(FightCardModel.instance.curSelectEntityId)
 	end
 end
 
-function slot0._onChangeHeroSkillSelected(slot0, slot1)
-	FightRpc.instance:sendChangeSubHeroExSkillRequest(slot1)
+function var_0_0._onChangeHeroSkillSelected(arg_10_0, arg_10_1)
+	FightRpc.instance:sendChangeSubHeroExSkillRequest(arg_10_1)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_11_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_12_0)
+	return
 end
 
-return slot0
+return var_0_0

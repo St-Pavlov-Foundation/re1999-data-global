@@ -1,103 +1,101 @@
-module("modules.logic.versionactivity2_2.eliminate.controller.teamChess.entity.TeamChessUnitEntityBase", package.seeall)
+﻿module("modules.logic.versionactivity2_2.eliminate.controller.teamChess.entity.TeamChessUnitEntityBase", package.seeall)
 
-slot0 = class("TeamChessUnitEntityBase", LuaCompBase)
-slot1 = ZProj.TweenHelper
+local var_0_0 = class("TeamChessUnitEntityBase", LuaCompBase)
+local var_0_1 = ZProj.TweenHelper
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
-	slot0.trans = slot1.transform
-	slot0._posX = 0
-	slot0._posY = 0
-	slot0._posZ = 0
-	slot0._lastActive = nil
-	slot0._canClick = false
-	slot0._canDrag = false
-	slot0._scale = 1
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.go = arg_1_1
+	arg_1_0.trans = arg_1_1.transform
+	arg_1_0._posX = 0
+	arg_1_0._posY = 0
+	arg_1_0._posZ = 0
+	arg_1_0._lastActive = nil
+	arg_1_0._canClick = false
+	arg_1_0._canDrag = false
+	arg_1_0._scale = 1
 end
 
-function slot0.updateMo(slot0, slot1)
-	slot0._unitMo = slot1
+function var_0_0.updateMo(arg_2_0, arg_2_1)
+	arg_2_0._unitMo = arg_2_1
 
-	slot0:setScale(slot1:getScale())
-	slot0:loadAsset(slot0._unitMo:getUnitPath())
+	arg_2_0:setScale(arg_2_1:getScale())
+	arg_2_0:loadAsset(arg_2_0._unitMo:getUnitPath())
 end
 
-function slot0.loadAsset(slot0, slot1)
-	if not string.nilorempty(slot1) and not slot0._loader then
-		slot0._loader = PrefabInstantiate.Create(slot0.go)
+function var_0_0.loadAsset(arg_3_0, arg_3_1)
+	if not string.nilorempty(arg_3_1) and not arg_3_0._loader then
+		arg_3_0._loader = PrefabInstantiate.Create(arg_3_0.go)
 
-		slot0._loader:startLoad(slot1, slot0._onResLoaded, slot0)
+		arg_3_0._loader:startLoad(arg_3_1, arg_3_0._onResLoaded, arg_3_0)
 	end
 end
 
-function slot0.updatePos(slot0, slot1, slot2, slot3)
-	slot0._posZ = slot3
-	slot0._posY = slot2
-	slot0._posX = slot1
+function var_0_0.updatePos(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
+	arg_4_0._posX, arg_4_0._posY, arg_4_0._posZ = arg_4_1, arg_4_2, arg_4_3
 
-	transformhelper.setPos(slot0.trans, slot1, slot2, slot3)
+	transformhelper.setPos(arg_4_0.trans, arg_4_1, arg_4_2, arg_4_3)
 end
 
-function slot0.moveToPos(slot0, slot1, slot2, slot3)
-	uv0.DOMove(slot0.trans, slot1, slot2, slot3, EliminateTeamChessEnum.entityMoveTime, slot0._onMoveEnd, nil, , EaseType.OutQuart)
+function var_0_0.moveToPos(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
+	var_0_1.DOMove(arg_5_0.trans, arg_5_1, arg_5_2, arg_5_3, EliminateTeamChessEnum.entityMoveTime, arg_5_0._onMoveEnd, nil, nil, EaseType.OutQuart)
 end
 
-function slot0.getPosXYZ(slot0)
-	slot1, slot2, slot3 = transformhelper.getPos(slot0.trans)
+function var_0_0.getPosXYZ(arg_6_0)
+	local var_6_0, var_6_1, var_6_2 = transformhelper.getPos(arg_6_0.trans)
 
-	return slot1, slot2 + 0.4, slot3
+	return var_6_0, var_6_1 + 0.4, var_6_2
 end
 
-function slot0.getTopPosXYZ(slot0)
-	slot1, slot2, slot3 = slot0:getPosXYZ()
+function var_0_0.getTopPosXYZ(arg_7_0)
+	local var_7_0, var_7_1, var_7_2 = arg_7_0:getPosXYZ()
 
-	return slot1 - 0.1, slot2 + 0.5, slot3
+	return var_7_0 - 0.1, var_7_1 + 0.5, var_7_2
 end
 
-function slot0.setActive(slot0, slot1)
-	if slot0._lastActive == nil then
-		slot0._lastActive = slot1
+function var_0_0.setActive(arg_8_0, arg_8_1)
+	if arg_8_0._lastActive == nil then
+		arg_8_0._lastActive = arg_8_1
 	end
 
-	if slot0._lastActive ~= slot1 then
-		gohelper.setActive(slot0.go, slot1)
+	if arg_8_0._lastActive ~= arg_8_1 then
+		gohelper.setActive(arg_8_0.go, arg_8_1)
 
-		slot0._lastActive = slot1
+		arg_8_0._lastActive = arg_8_1
 	end
 end
 
-function slot0.setCanClick(slot0, slot1)
-	slot0._canClick = slot1
+function var_0_0.setCanClick(arg_9_0, arg_9_1)
+	arg_9_0._canClick = arg_9_1
 end
 
-function slot0.setCanDrag(slot0, slot1)
-	slot0._canDrag = slot1
+function var_0_0.setCanDrag(arg_10_0, arg_10_1)
+	arg_10_0._canDrag = arg_10_1
 end
 
-function slot0.setScale(slot0, slot1)
-	slot0._scale = slot1 or 1
+function var_0_0.setScale(arg_11_0, arg_11_1)
+	arg_11_0._scale = arg_11_1 or 1
 end
 
-function slot0._onResLoaded(slot0)
-	slot0._resGo = slot0._loader:getInstGO()
+function var_0_0._onResLoaded(arg_12_0)
+	arg_12_0._resGo = arg_12_0._loader:getInstGO()
 
-	transformhelper.setLocalScale(slot0._resGo.transform, slot0._scale, slot0._scale, slot0._scale)
+	transformhelper.setLocalScale(arg_12_0._resGo.transform, arg_12_0._scale, arg_12_0._scale, arg_12_0._scale)
 end
 
-function slot0.dispose(slot0)
-	slot0:onDestroy()
+function var_0_0.dispose(arg_13_0)
+	arg_13_0:onDestroy()
 end
 
-function slot0.onDestroy(slot0)
-	gohelper.destroy(slot0.go)
+function var_0_0.onDestroy(arg_14_0)
+	gohelper.destroy(arg_14_0.go)
 
-	slot0._lastActive = nil
+	arg_14_0._lastActive = nil
 
-	if slot0._loader then
-		slot0._loader:onDestroy()
+	if arg_14_0._loader then
+		arg_14_0._loader:onDestroy()
 
-		slot0._loader = nil
+		arg_14_0._loader = nil
 	end
 end
 
-return slot0
+return var_0_0

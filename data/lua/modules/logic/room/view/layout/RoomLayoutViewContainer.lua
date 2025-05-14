@@ -1,36 +1,37 @@
-module("modules.logic.room.view.layout.RoomLayoutViewContainer", package.seeall)
+﻿module("modules.logic.room.view.layout.RoomLayoutViewContainer", package.seeall)
 
-slot0 = class("RoomLayoutViewContainer", BaseViewContainer)
+local var_0_0 = class("RoomLayoutViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
-	slot2 = ListScrollParam.New()
-	slot2.scrollGOPath = "go_normalroot/#scroll_ItemList"
-	slot2.prefabType = ScrollEnum.ScrollPrefabFromRes
-	slot2.prefabUrl = RoomLayoutItem.prefabUrl
-	slot2.cellClass = RoomLayoutItem
-	slot2.scrollDir = ScrollEnum.ScrollDirH
-	slot2.lineCount = 2
-	slot2.cellWidth = 690
-	slot2.cellHeight = 400
-	slot2.cellSpaceH = 0
-	slot2.cellSpaceV = 0
-	slot2.startSpace = 0
-	slot0._scrollParam = slot2
-	slot0._luaScrollView = LuaListScrollView.New(RoomLayoutListModel.instance, slot2)
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
+	local var_1_1 = ListScrollParam.New()
 
-	table.insert(slot1, slot0._luaScrollView)
-	table.insert(slot1, RoomLayoutView.New())
+	var_1_1.scrollGOPath = "go_normalroot/#scroll_ItemList"
+	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromRes
+	var_1_1.prefabUrl = RoomLayoutItem.prefabUrl
+	var_1_1.cellClass = RoomLayoutItem
+	var_1_1.scrollDir = ScrollEnum.ScrollDirH
+	var_1_1.lineCount = 2
+	var_1_1.cellWidth = 690
+	var_1_1.cellHeight = 400
+	var_1_1.cellSpaceH = 0
+	var_1_1.cellSpaceV = 0
+	var_1_1.startSpace = 0
+	arg_1_0._scrollParam = var_1_1
+	arg_1_0._luaScrollView = LuaListScrollView.New(RoomLayoutListModel.instance, var_1_1)
+
+	table.insert(var_1_0, arg_1_0._luaScrollView)
+	table.insert(var_1_0, RoomLayoutView.New())
 
 	if not RoomController.instance:isVisitMode() then
-		table.insert(slot1, TabViewGroup.New(1, "go_navigatebtn"))
+		table.insert(var_1_0, TabViewGroup.New(1, "go_navigatebtn"))
 	end
 
-	return slot1
+	return var_1_0
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == 1 then
 		return {
 			NavigateButtonsView.New({
 				true,
@@ -41,31 +42,43 @@ function slot0.buildTabViews(slot0, slot1)
 	end
 end
 
-function slot0.getCsListScroll(slot0)
-	return slot0._luaScrollView:getCsListScroll()
+function var_0_0.getCsListScroll(arg_3_0)
+	return arg_3_0._luaScrollView:getCsListScroll()
 end
 
-function slot0.getListScrollParam(slot0)
-	return slot0._scrollParam
+function var_0_0.getListScrollParam(arg_4_0)
+	return arg_4_0._scrollParam
 end
 
-function slot0.movetoSelect(slot0)
-	if RoomLayoutListModel.instance:getSelectMO() == nil then
+function var_0_0.movetoSelect(arg_5_0)
+	local var_5_0 = RoomLayoutListModel.instance
+	local var_5_1 = var_5_0:getSelectMO()
+
+	if var_5_1 == nil then
 		return
 	end
 
-	if slot1:getIndex(slot2) == nil then
+	local var_5_2 = var_5_0:getIndex(var_5_1)
+
+	if var_5_2 == nil then
 		return
 	end
 
-	if not slot0._luaScrollView:getCsListScroll() then
+	local var_5_3 = arg_5_0._luaScrollView:getCsListScroll()
+
+	if not var_5_3 then
 		return
 	end
 
-	slot8 = recthelper.getWidth(slot4.transform)
-	slot4.HorizontalScrollPixel = Mathf.Max(0, Mathf.Max(0, Mathf.Ceil(slot3 / slot0._scrollParam.lineCount) - 1) * (slot0._scrollParam.cellWidth + slot0._scrollParam.cellSpaceH))
+	local var_5_4 = arg_5_0._scrollParam.cellWidth + arg_5_0._scrollParam.cellSpaceH
+	local var_5_5 = arg_5_0._scrollParam.lineCount
+	local var_5_6 = Mathf.Ceil(var_5_2 / var_5_5)
+	local var_5_7 = recthelper.getWidth(var_5_3.transform)
+	local var_5_8 = Mathf.Max(0, var_5_6 - 1) * var_5_4
 
-	slot4:UpdateCells(false)
+	var_5_3.HorizontalScrollPixel = Mathf.Max(0, var_5_8)
+
+	var_5_3:UpdateCells(false)
 end
 
-return slot0
+return var_0_0

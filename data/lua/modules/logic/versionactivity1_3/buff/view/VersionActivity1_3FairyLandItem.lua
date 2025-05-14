@@ -1,61 +1,70 @@
-module("modules.logic.versionactivity1_3.buff.view.VersionActivity1_3FairyLandItem", package.seeall)
+﻿module("modules.logic.versionactivity1_3.buff.view.VersionActivity1_3FairyLandItem", package.seeall)
 
-slot0 = class("VersionActivity1_3FairyLandItem", ListScrollCellExtend)
+local var_0_0 = class("VersionActivity1_3FairyLandItem", ListScrollCellExtend)
 
-function slot0.onInitView(slot0)
-	slot0._imagecard = gohelper.findChildImage(slot0.viewGO, "root/#image_card")
-	slot0._txtname = gohelper.findChildText(slot0.viewGO, "root/image_namebg/#txt_name")
-	slot0._txtdesc = gohelper.findChildText(slot0.viewGO, "root/desc/Viewport/Content/#txt_desc")
-	slot0._goselected = gohelper.findChild(slot0.viewGO, "root/#go_selected")
-	slot0._btnclick = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/#btn_click")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._imagecard = gohelper.findChildImage(arg_1_0.viewGO, "root/#image_card")
+	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "root/image_namebg/#txt_name")
+	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "root/desc/Viewport/Content/#txt_desc")
+	arg_1_0._goselected = gohelper.findChild(arg_1_0.viewGO, "root/#go_selected")
+	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_click")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclick:AddClickListener(slot0._btnclickOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclick:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclick:RemoveClickListener()
 end
 
-function slot0._btnclickOnClick(slot0)
-	slot0._landView:landItemClick(slot0)
+function var_0_0._btnclickOnClick(arg_4_0)
+	arg_4_0._landView:landItemClick(arg_4_0)
 end
 
-function slot0.ctor(slot0, slot1)
-	slot0._landView = slot1[1]
-	slot0.config = slot1[2]
+function var_0_0.ctor(arg_5_0, arg_5_1)
+	arg_5_0._landView = arg_5_1[1]
+	arg_5_0.config = arg_5_1[2]
 end
 
-function slot0._editableInitView(slot0)
-	slot1 = slot0.config.skillId
-	slot0._txtdesc.text = FightConfig.instance:getSkillEffectDesc(nil, lua_skill_effect.configDict[slot1])
-	slot0._txtname.text = lua_skill.configDict[slot1] and slot3.name
+function var_0_0._editableInitView(arg_6_0)
+	local var_6_0 = arg_6_0.config.skillId
+	local var_6_1 = lua_skill_effect.configDict[var_6_0]
 
-	UISpriteSetMgr.instance:setV1a3FairyLandCardSprite(slot0._imagecard, "v1a3_fairylandcard_" .. slot0.config.id - 2130000)
-	slot0:setSelected(false)
+	arg_6_0._txtdesc.text = FightConfig.instance:getSkillEffectDesc(nil, var_6_1)
+
+	local var_6_2 = lua_skill.configDict[var_6_0]
+
+	arg_6_0._txtname.text = var_6_2 and var_6_2.name
+
+	UISpriteSetMgr.instance:setV1a3FairyLandCardSprite(arg_6_0._imagecard, "v1a3_fairylandcard_" .. arg_6_0.config.id - 2130000)
+	arg_6_0:setSelected(false)
 end
 
-function slot0.setSelected(slot0, slot1)
-	slot0._isSelected = slot1
+function var_0_0.setSelected(arg_7_0, arg_7_1)
+	arg_7_0._isSelected = arg_7_1
 
-	gohelper.setActive(slot0._goselected, slot0._isSelected)
+	gohelper.setActive(arg_7_0._goselected, arg_7_0._isSelected)
 end
 
-function slot0._editableRemoveEvents(slot0)
+function var_0_0._editableRemoveEvents(arg_8_0)
+	return
 end
 
-function slot0.onUpdateMO(slot0, slot1)
+function var_0_0.onUpdateMO(arg_9_0, arg_9_1)
+	return
 end
 
-function slot0.onSelect(slot0, slot1)
+function var_0_0.onSelect(arg_10_0, arg_10_1)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_11_0)
+	return
 end
 
-return slot0
+return var_0_0

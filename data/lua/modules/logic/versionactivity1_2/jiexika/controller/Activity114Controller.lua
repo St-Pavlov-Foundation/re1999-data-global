@@ -1,102 +1,110 @@
-module("modules.logic.versionactivity1_2.jiexika.controller.Activity114Controller", package.seeall)
+﻿module("modules.logic.versionactivity1_2.jiexika.controller.Activity114Controller", package.seeall)
 
-slot0 = class("Activity114Controller", BaseController)
+local var_0_0 = class("Activity114Controller", BaseController)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.onInitFinish(slot0)
+function var_0_0.onInitFinish(arg_2_0)
+	return
 end
 
-function slot0.addConstEvents(slot0)
-	ActivityController.instance:registerCallback(ActivityEvent.RefreshActivityState, slot0._checkActivityInfo, slot0)
-	GameSceneMgr.instance:registerCallback(SceneEventName.EnterSceneFinish, slot0.onFightSceneEnter, slot0)
+function var_0_0.addConstEvents(arg_3_0)
+	ActivityController.instance:registerCallback(ActivityEvent.RefreshActivityState, arg_3_0._checkActivityInfo, arg_3_0)
+	GameSceneMgr.instance:registerCallback(SceneEventName.EnterSceneFinish, arg_3_0.onFightSceneEnter, arg_3_0)
 end
 
-function slot0.reInit(slot0)
-	slot0:markStoryFinish()
+function var_0_0.reInit(arg_4_0)
+	arg_4_0:markStoryFinish()
 end
 
-function slot0._checkActivityInfo(slot0, slot1)
-	slot2 = nil
+function var_0_0._checkActivityInfo(arg_5_0, arg_5_1)
+	local var_5_0
 
-	if slot1 then
-		slot2 = ActivityModel.instance:getActMO(slot1)
+	if arg_5_1 then
+		var_5_0 = ActivityModel.instance:getActMO(arg_5_1)
 	else
-		for slot6 in pairs(Activity114Config.instance:getAllActivityIds()) do
-			if ActivityModel.instance:isActOnLine(slot6) then
-				slot2 = ActivityModel.instance:getActMO(slot6)
+		for iter_5_0 in pairs(Activity114Config.instance:getAllActivityIds()) do
+			if ActivityModel.instance:isActOnLine(iter_5_0) then
+				var_5_0 = ActivityModel.instance:getActMO(iter_5_0)
 
 				break
 			end
 		end
 	end
 
-	if not slot2 then
+	if not var_5_0 then
 		return
 	end
 
-	if slot2.actType ~= ActivityEnum.ActivityTypeID.JieXiKa then
+	if var_5_0.actType ~= ActivityEnum.ActivityTypeID.JieXiKa then
 		return
 	end
 
-	if not slot2.online and slot2.id == Activity114Model.instance.id then
+	if not var_5_0.online and var_5_0.id == Activity114Model.instance.id then
 		Activity114Model.instance:setEnd()
 	end
 end
 
-function slot0.onFightSceneEnter(slot0, slot1)
-	if slot1 ~= SceneType.Fight then
+function var_0_0.onFightSceneEnter(arg_6_0, arg_6_1)
+	if arg_6_1 ~= SceneType.Fight then
 		return
 	end
 
-	if not FightModel.instance:getFightParam() or slot2.episodeId ~= Activity114Enum.episodeId then
+	local var_6_0 = FightModel.instance:getFightParam()
+
+	if not var_6_0 or var_6_0.episodeId ~= Activity114Enum.episodeId then
 		return
 	end
 
-	if Activity114Helper.getEventCoByBattleId(slot2.battleId) then
-		Activity114Model.instance:buildFlowAndSkipWork({
-			type = slot3.config.eventType,
-			eventId = slot3.config.id
-		})
+	local var_6_1 = Activity114Helper.getEventCoByBattleId(var_6_0.battleId)
+
+	if var_6_1 then
+		local var_6_2 = {
+			type = var_6_1.config.eventType,
+			eventId = var_6_1.config.id
+		}
+
+		Activity114Model.instance:buildFlowAndSkipWork(var_6_2)
 	end
 end
 
-function slot0.alertActivityEndMsgBox(slot0)
+function var_0_0.alertActivityEndMsgBox(arg_7_0)
 	if not Activity114Model.instance:isEnd() then
 		return
 	end
 
-	GameFacade.showMessageBox(MessageBoxIdDefine.EndActivity, MsgBoxEnum.BoxType.Yes, function ()
+	GameFacade.showMessageBox(MessageBoxIdDefine.EndActivity, MsgBoxEnum.BoxType.Yes, function()
 		if GameSceneMgr.instance:isFightScene() then
-			uv0:dispatchEvent(Activity114Event.OnEventProcessEnd)
+			arg_7_0:dispatchEvent(Activity114Event.OnEventProcessEnd)
 		else
 			NavigateButtonsView.homeClick()
 		end
 	end)
 end
 
-function slot0.openAct114View(slot0)
-	slot1 = nil
+function var_0_0.openAct114View(arg_9_0)
+	local var_9_0
 
-	for slot5 in pairs(Activity114Config.instance:getAllActivityIds()) do
-		if ActivityModel.instance:isActOnLine(slot5) then
-			slot1 = ActivityModel.instance:getActMO(slot5)
+	for iter_9_0 in pairs(Activity114Config.instance:getAllActivityIds()) do
+		if ActivityModel.instance:isActOnLine(iter_9_0) then
+			var_9_0 = ActivityModel.instance:getActMO(iter_9_0)
 
 			break
 		end
 	end
 
-	if not slot1 then
+	if not var_9_0 then
 		GameFacade.showToast(ToastEnum.ActivityEnd)
 
 		return
 	end
 
-	Activity114Rpc.instance:sendGet114InfosRequest(slot1.id, slot0._openAct114View, slot0)
+	Activity114Rpc.instance:sendGet114InfosRequest(var_9_0.id, arg_9_0._openAct114View, arg_9_0)
 end
 
-function slot0._openAct114View(slot0)
+function var_0_0._openAct114View(arg_10_0)
 	if Activity114Model.instance:isEnd() then
 		GameFacade.showToast(ToastEnum.ActivityEnd)
 
@@ -104,7 +112,9 @@ function slot0._openAct114View(slot0)
 	end
 
 	if Activity114Model.instance.serverData.battleEventId > 0 then
-		slot0:enterActivityFight(Activity114Config.instance:getEventCoById(Activity114Model.instance.id, Activity114Model.instance.serverData.battleEventId).config.battleId)
+		local var_10_0 = Activity114Config.instance:getEventCoById(Activity114Model.instance.id, Activity114Model.instance.serverData.battleEventId)
+
+		arg_10_0:enterActivityFight(var_10_0.config.battleId)
 
 		return
 	end
@@ -112,41 +122,42 @@ function slot0._openAct114View(slot0)
 	ViewMgr.instance:openView(ViewName.Activity114View)
 end
 
-function slot0.enterActivityFight(slot0, slot1)
-	if not slot1 or slot1 <= 0 then
-		error("battleId : " .. tostring(slot1))
+function var_0_0.enterActivityFight(arg_11_0, arg_11_1)
+	if not arg_11_1 or arg_11_1 <= 0 then
+		error("battleId : " .. tostring(arg_11_1))
 
 		return
 	end
 
 	Activity114Rpc.instance:beforeBattle(Activity114Model.instance.id)
 
-	slot2 = Activity114Enum.episodeId
+	local var_11_0 = Activity114Enum.episodeId
+	local var_11_1 = DungeonConfig.instance:getEpisodeCO(var_11_0)
 
-	DungeonFightController.instance:enterFightByBattleId(DungeonConfig.instance:getEpisodeCO(slot2).chapterId, slot2, slot1)
+	DungeonFightController.instance:enterFightByBattleId(var_11_1.chapterId, var_11_0, arg_11_1)
 end
 
-function slot0.markStoryWillFinish(slot0)
+function var_0_0.markStoryWillFinish(arg_12_0)
 	Activity114Model.instance.waitStoryFinish = true
 
-	ViewMgr.instance:registerCallback(ViewEvent.DestroyViewFinish, slot0._onCloseViewFinish, slot0)
-	StoryController.instance:registerCallback(StoryEvent.Finish, slot0.markStoryFinish, slot0)
+	ViewMgr.instance:registerCallback(ViewEvent.DestroyViewFinish, arg_12_0._onCloseViewFinish, arg_12_0)
+	StoryController.instance:registerCallback(StoryEvent.Finish, arg_12_0.markStoryFinish, arg_12_0)
 end
 
-function slot0._onCloseViewFinish(slot0, slot1)
-	if slot1 == ViewName.StoryView then
-		slot0:markStoryFinish()
+function var_0_0._onCloseViewFinish(arg_13_0, arg_13_1)
+	if arg_13_1 == ViewName.StoryView then
+		arg_13_0:markStoryFinish()
 	end
 end
 
-function slot0.markStoryFinish(slot0)
+function var_0_0.markStoryFinish(arg_14_0)
 	Activity114Model.instance.waitStoryFinish = false
 
-	ViewMgr.instance:unregisterCallback(ViewEvent.DestroyViewFinish, slot0._onCloseViewFinish, slot0)
-	StoryController.instance:unregisterCallback(StoryEvent.Finish, slot0.markStoryFinish, slot0)
-	slot0:dispatchEvent(Activity114Event.StoryFinish)
+	ViewMgr.instance:unregisterCallback(ViewEvent.DestroyViewFinish, arg_14_0._onCloseViewFinish, arg_14_0)
+	StoryController.instance:unregisterCallback(StoryEvent.Finish, arg_14_0.markStoryFinish, arg_14_0)
+	arg_14_0:dispatchEvent(Activity114Event.StoryFinish)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

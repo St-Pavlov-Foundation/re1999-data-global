@@ -1,40 +1,41 @@
-module("projbooter.hotupdate.VoiceHttpGetter", package.seeall)
+﻿module("projbooter.hotupdate.VoiceHttpGetter", package.seeall)
 
-slot0 = class("VoiceHttpGetter")
-slot1 = 5
+local var_0_0 = class("VoiceHttpGetter")
+local var_0_1 = 5
 
-function slot0.start(slot0, slot1, slot2)
-	slot0._langShortcuts, slot0._langVersions = slot0:_getLangVersions()
+function var_0_0.start(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0._langShortcuts, arg_1_0._langVersions = arg_1_0:_getLangVersions()
 
-	if #slot0._langShortcuts == 0 then
-		slot1(slot2)
+	if #arg_1_0._langShortcuts == 0 then
+		arg_1_1(arg_1_2)
 
 		return
 	end
 
-	slot0._onGetFinish = slot1
-	slot0._onGetFinishObj = slot2
+	arg_1_0._onGetFinish = arg_1_1
+	arg_1_0._onGetFinishObj = arg_1_2
 
-	slot0:_httpGet()
+	arg_1_0:_httpGet()
 end
 
-function slot0._httpGet(slot0)
-	slot1 = slot0:_getUrl()
+function var_0_0._httpGet(arg_2_0)
+	local var_2_0 = arg_2_0:_getUrl()
 
-	logNormal("OptionalUpdate url: " .. slot1)
+	logNormal("OptionalUpdate url: " .. var_2_0)
 
-	slot2 = UnityEngine.Networking.UnityWebRequest.Get(slot1)
+	local var_2_1 = UnityEngine.Networking.UnityWebRequest.Get(var_2_0)
+	local var_2_2 = SLFramework.GameUpdate.HotUpdateInfoMgr.SLInfoBase64
 
-	slot2:SetRequestHeader("x-sl-info", SLFramework.GameUpdate.HotUpdateInfoMgr.SLInfoBase64)
-	SLFramework.SLWebRequest.Instance:SendRequest(slot2, slot0._onWebResponse, slot0, uv0)
+	var_2_1:SetRequestHeader("x-sl-info", var_2_2)
+	SLFramework.SLWebRequest.Instance:SendRequest(var_2_1, arg_2_0._onWebResponse, arg_2_0, var_0_1)
 end
 
-function slot0._onWebResponse(slot0, slot1, slot2, slot3)
-	if slot1 then
-		if slot2 and slot2 ~= "" then
-			logNormal("获取语音包返回:" .. slot2)
+function var_0_0._onWebResponse(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
+	if arg_3_1 then
+		if arg_3_2 and arg_3_2 ~= "" then
+			logNormal("获取语音包返回:" .. arg_3_2)
 
-			slot0._result = cjson.decode(slot2)
+			arg_3_0._result = cjson.decode(arg_3_2)
 		else
 			logNormal("获取语音包返回空串")
 		end
@@ -42,18 +43,22 @@ function slot0._onWebResponse(slot0, slot1, slot2, slot3)
 		BootLoadingView.instance:setProgressMsg("")
 		HotUpdateMgr.instance:hideConnectTips()
 
-		slot4, slot5 = GameUrlConfig.getOptionalUpdateUrl()
+		local var_3_0, var_3_1 = GameUrlConfig.getOptionalUpdateUrl()
+		local var_3_2 = HotUpdateMgr.instance:getUseBackup() and var_3_1 or var_3_0
 
-		SDKDataTrackMgr.instance:trackDomainFailCount("scene_voice_srcrequest", HotUpdateMgr.instance:getUseBackup() and slot5 or slot4, HotUpdateMgr.instance:getFailCount())
+		SDKDataTrackMgr.instance:trackDomainFailCount("scene_voice_srcrequest", var_3_2, HotUpdateMgr.instance:getFailCount())
 		HotUpdateMgr.instance:resetFailCount()
 
-		slot0._onGetFinish = nil
-		slot0._onGetFinishObj = nil
+		local var_3_3 = arg_3_0._onGetFinish
+		local var_3_4 = arg_3_0._onGetFinishObj
+
+		arg_3_0._onGetFinish = nil
+		arg_3_0._onGetFinishObj = nil
 
 		if BootVoiceView.instance:isNeverOpen() then
-			BootVoiceView.instance:showChoose(slot0._onGetFinish, slot0._onGetFinishObj)
+			BootVoiceView.instance:showChoose(var_3_3, var_3_4)
 		else
-			slot7(slot8)
+			var_3_3(var_3_4)
 		end
 	else
 		HotUpdateMgr.instance:inverseUseBackup()
@@ -61,75 +66,100 @@ function slot0._onWebResponse(slot0, slot1, slot2, slot3)
 
 		if HotUpdateMgr.instance:isFailNeedAlert() then
 			HotUpdateMgr.instance:resetFailAlertCount()
-			BootMsgBox.instance:show({
+
+			local var_3_5 = {
 				title = booterLang("version_validate"),
-				content = booterLang("version_validate_voice_fail") .. (slot3 or "null"),
+				content = booterLang("version_validate_voice_fail") .. (arg_3_3 or "null"),
 				leftMsg = booterLang("exit"),
-				leftCb = slot0._quitGame,
-				leftCbObj = slot0,
+				leftCb = arg_3_0._quitGame,
+				leftCbObj = arg_3_0,
 				rightMsg = booterLang("retry"),
-				rightCb = slot0._httpGet,
-				rightCbObj = slot0
-			})
+				rightCb = arg_3_0._httpGet,
+				rightCbObj = arg_3_0
+			}
+
+			BootMsgBox.instance:show(var_3_5)
 			BootLoadingView.instance:setProgressMsg("")
 			HotUpdateMgr.instance:hideConnectTips()
 		else
-			slot0:_httpGet()
+			arg_3_0:_httpGet()
 			HotUpdateMgr.instance:showConnectTips()
 		end
 	end
 end
 
-function slot0._quitGame(slot0)
+function var_0_0._quitGame(arg_4_0)
 	logNormal("可选语音重试超过了 " .. HotUpdateMgr.FailAlertCount .. " 次，点击了退出按钮！")
 	ProjBooter.instance:quitGame()
 end
 
-function slot0.getHttpResult(slot0)
-	return slot0._result
+function var_0_0.getHttpResult(arg_5_0)
+	return arg_5_0._result
 end
 
-function slot0._getUrl(slot0)
-	slot1 = table.concat(slot0._langShortcuts, ",")
-	slot2 = table.concat(slot0._langVersions, ",")
-	slot3 = {}
-	slot4, slot5 = GameUrlConfig.getOptionalUpdateUrl()
-	slot6 = HotUpdateMgr.instance:getUseBackup() and slot5 or slot4
-	slot7 = SLFramework.FrameworkSettings.CurPlatform
+function var_0_0._getUrl(arg_6_0)
+	local var_6_0 = table.concat(arg_6_0._langShortcuts, ",")
+	local var_6_1 = table.concat(arg_6_0._langVersions, ",")
+	local var_6_2 = {}
+	local var_6_3, var_6_4 = GameUrlConfig.getOptionalUpdateUrl()
+	local var_6_5 = HotUpdateMgr.instance:getUseBackup() and var_6_4 or var_6_3
+	local var_6_6 = SLFramework.FrameworkSettings.CurPlatform
 
 	if SLFramework.FrameworkSettings.IsEditor then
-		slot7 = 0
+		var_6_6 = 0
 	end
 
-	table.insert(slot3, string.format("os_type=%s", slot7))
-	table.insert(slot3, string.format("lang=%s", slot1))
-	table.insert(slot3, string.format("version=%s", slot2))
-	table.insert(slot3, string.format("env_type=%s", GameChannelConfig.getServerType()))
-	table.insert(slot3, string.format("channel_id=%s", SDKMgr.instance:getChannelId()))
+	local var_6_7 = GameChannelConfig.getServerType()
 
-	return slot6 .. string.format("/resource/%d/check", SDKMgr.instance:getGameId()) .. "?" .. table.concat(slot3, "&")
+	table.insert(var_6_2, string.format("os_type=%s", var_6_6))
+	table.insert(var_6_2, string.format("lang=%s", var_6_0))
+	table.insert(var_6_2, string.format("version=%s", var_6_1))
+	table.insert(var_6_2, string.format("env_type=%s", var_6_7))
+	table.insert(var_6_2, string.format("channel_id=%s", SDKMgr.instance:getChannelId()))
+
+	local var_6_8 = SDKMgr.instance:getGameId()
+	local var_6_9 = string.format("/resource/%d/check", var_6_8)
+
+	return var_6_5 .. var_6_9 .. "?" .. table.concat(var_6_2, "&")
 end
 
-function slot0._getLangVersions(slot0)
-	slot1 = SLFramework.GameUpdate.OptionalUpdate.Instance
-	slot2 = {}
-	slot3 = {}
+function var_0_0._getLangVersions(arg_7_0)
+	local var_7_0 = SLFramework.GameUpdate.OptionalUpdate.Instance
+	local var_7_1 = {}
+	local var_7_2 = {}
+	local var_7_3 = HotUpdateVoiceMgr.instance:getSupportVoiceLangs()
 
-	for slot10 = 1, #HotUpdateVoiceMgr.instance:getSupportVoiceLangs() do
-		if slot4[slot10] ~= GameConfig:GetDefaultVoiceShortcut() and (not string.nilorempty(slot1:GetLocalVersion(slot11)) or not BootVoiceView.instance:isFirstDownloadDone() or GameConfig:GetCurVoiceShortcut() == slot11) then
-			table.insert(slot2, slot11)
+	table.insert(var_7_3, "res-HD")
 
-			if string.nilorempty(slot1.VoiceBranch) or not tonumber(slot17) then
-				slot17 = 1
+	local var_7_4 = GameConfig:GetDefaultVoiceShortcut()
+	local var_7_5 = GameConfig:GetCurVoiceShortcut()
 
-				logError("随包的语音分支错误：" .. slot1.VoiceBranch)
+	for iter_7_0 = 1, #var_7_3 do
+		local var_7_6 = var_7_3[iter_7_0]
+		local var_7_7 = var_7_6 ~= var_7_4
+		local var_7_8 = var_7_5 == var_7_6
+		local var_7_9 = var_7_0:GetLocalVersion(var_7_6)
+		local var_7_10 = not string.nilorempty(var_7_9)
+		local var_7_11 = not BootVoiceView.instance:isFirstDownloadDone()
+
+		if var_7_7 and (var_7_10 or var_7_11 or var_7_8) then
+			table.insert(var_7_1, var_7_6)
+
+			local var_7_12 = var_7_0.VoiceBranch
+
+			if string.nilorempty(var_7_12) or not tonumber(var_7_12) then
+				var_7_12 = 1
+
+				logError("随包的语音分支错误：" .. var_7_0.VoiceBranch)
 			end
 
-			table.insert(slot3, slot17 .. "." .. (string.nilorempty(slot14) and "0" or slot14))
+			local var_7_13 = var_7_12 .. "." .. (string.nilorempty(var_7_9) and "0" or var_7_9)
+
+			table.insert(var_7_2, var_7_13)
 		end
 	end
 
-	return slot2, slot3
+	return var_7_1, var_7_2
 end
 
-return slot0
+return var_0_0

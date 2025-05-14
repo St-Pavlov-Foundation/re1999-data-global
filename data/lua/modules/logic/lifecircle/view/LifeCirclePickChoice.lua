@@ -1,222 +1,238 @@
-module("modules.logic.lifecircle.view.LifeCirclePickChoice", package.seeall)
+﻿module("modules.logic.lifecircle.view.LifeCirclePickChoice", package.seeall)
 
-slot0 = class("LifeCirclePickChoice", BaseView)
+local var_0_0 = class("LifeCirclePickChoice", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simageListBG = gohelper.findChildSingleImage(slot0.viewGO, "#simage_ListBG")
-	slot0._btnconfirm = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_confirm")
-	slot0._btncancel = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_cancel")
-	slot0._scrollrule = gohelper.findChildScrollRect(slot0.viewGO, "#scroll_rule")
-	slot0._gostoreItem = gohelper.findChild(slot0.viewGO, "#scroll_rule/Viewport/#go_storeItem")
-	slot0._gonogain = gohelper.findChild(slot0.viewGO, "#scroll_rule/Viewport/#go_storeItem/#go_nogain")
-	slot0._goown = gohelper.findChild(slot0.viewGO, "#scroll_rule/Viewport/#go_storeItem/#go_own")
-	slot0._scrollrule_simple = gohelper.findChildScrollRect(slot0.viewGO, "#scroll_rule_simple")
-	slot0._gostoreItem_simple = gohelper.findChild(slot0.viewGO, "#scroll_rule_simple/Viewport/#go_storeItem_simple")
-	slot0._gosimple = gohelper.findChild(slot0.viewGO, "#scroll_rule_simple/Viewport/#go_storeItem_simple/#go_simple")
-	slot0._goLifeCirclePickChoiceItem = gohelper.findChild(slot0.viewGO, "#go_LifeCirclePickChoiceItem")
-	slot0._goexskill = gohelper.findChild(slot0.viewGO, "#go_LifeCirclePickChoiceItem/role/#go_exskill")
-	slot0._imageexskill = gohelper.findChildImage(slot0.viewGO, "#go_LifeCirclePickChoiceItem/role/#go_exskill/#image_exskill")
-	slot0._goclick = gohelper.findChild(slot0.viewGO, "#go_LifeCirclePickChoiceItem/select/#go_click")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simageListBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_ListBG")
+	arg_1_0._btnconfirm = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_confirm")
+	arg_1_0._btncancel = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_cancel")
+	arg_1_0._scrollrule = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_rule")
+	arg_1_0._gostoreItem = gohelper.findChild(arg_1_0.viewGO, "#scroll_rule/Viewport/#go_storeItem")
+	arg_1_0._gonogain = gohelper.findChild(arg_1_0.viewGO, "#scroll_rule/Viewport/#go_storeItem/#go_nogain")
+	arg_1_0._goown = gohelper.findChild(arg_1_0.viewGO, "#scroll_rule/Viewport/#go_storeItem/#go_own")
+	arg_1_0._scrollrule_simple = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_rule_simple")
+	arg_1_0._gostoreItem_simple = gohelper.findChild(arg_1_0.viewGO, "#scroll_rule_simple/Viewport/#go_storeItem_simple")
+	arg_1_0._gosimple = gohelper.findChild(arg_1_0.viewGO, "#scroll_rule_simple/Viewport/#go_storeItem_simple/#go_simple")
+	arg_1_0._goLifeCirclePickChoiceItem = gohelper.findChild(arg_1_0.viewGO, "#go_LifeCirclePickChoiceItem")
+	arg_1_0._goexskill = gohelper.findChild(arg_1_0.viewGO, "#go_LifeCirclePickChoiceItem/role/#go_exskill")
+	arg_1_0._imageexskill = gohelper.findChildImage(arg_1_0.viewGO, "#go_LifeCirclePickChoiceItem/role/#go_exskill/#image_exskill")
+	arg_1_0._goclick = gohelper.findChild(arg_1_0.viewGO, "#go_LifeCirclePickChoiceItem/select/#go_click")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnconfirm:AddClickListener(slot0._btnconfirmOnClick, slot0)
-	slot0._btncancel:AddClickListener(slot0._btncancelOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnconfirm:AddClickListener(arg_2_0._btnconfirmOnClick, arg_2_0)
+	arg_2_0._btncancel:AddClickListener(arg_2_0._btncancelOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnconfirm:RemoveClickListener()
-	slot0._btncancel:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnconfirm:RemoveClickListener()
+	arg_3_0._btncancel:RemoveClickListener()
 end
 
-slot1 = table.insert
-slot0.Style = {
+local var_0_1 = table.insert
+
+var_0_0.Style = {
 	Title = 1,
 	None = 0
 }
 
-function slot2(slot0, slot1)
-	if HeroModel.instance:getByHeroId(slot0.id) ~= nil ~= (HeroModel.instance:getByHeroId(slot1.id) ~= nil) then
-		return slot5
+local function var_0_2(arg_4_0, arg_4_1)
+	local var_4_0 = HeroModel.instance:getByHeroId(arg_4_0.id)
+	local var_4_1 = HeroModel.instance:getByHeroId(arg_4_1.id)
+	local var_4_2 = var_4_0 ~= nil
+	local var_4_3 = var_4_1 ~= nil
+
+	if var_4_2 ~= var_4_3 then
+		return var_4_3
 	end
 
-	if (slot2 and slot2.exSkillLevel or -1) ~= (slot3 and slot3.exSkillLevel or -1) then
-		if slot6 == 5 or slot7 == 5 then
-			return slot6 ~= 5
+	local var_4_4 = var_4_0 and var_4_0.exSkillLevel or -1
+	local var_4_5 = var_4_1 and var_4_1.exSkillLevel or -1
+
+	if var_4_4 ~= var_4_5 then
+		if var_4_4 == 5 or var_4_5 == 5 then
+			return var_4_4 ~= 5
 		end
 
-		return slot7 < slot6
+		return var_4_5 < var_4_4
 	end
 
-	return slot1.id < slot0.id
+	return arg_4_0.id > arg_4_1.id
 end
 
-function slot0._btncancelOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncancelOnClick(arg_5_0)
+	arg_5_0:closeThis()
 end
 
-function slot0._confirmCallback(slot0)
-	if slot0.viewParam.callback then
-		slot1(slot0)
+function var_0_0._confirmCallback(arg_6_0)
+	local var_6_0 = arg_6_0.viewParam.callback
+
+	if var_6_0 then
+		var_6_0(arg_6_0)
 	else
-		slot0:closeThis()
+		arg_6_0:closeThis()
 	end
 end
 
-function slot0._btnconfirmOnClick(slot0)
-	slot0:_confirmCallback()
+function var_0_0._btnconfirmOnClick(arg_7_0)
+	arg_7_0:_confirmCallback()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._txtTitle = gohelper.findChildText(slot0.viewGO, "Title")
-	slot0._btn_confirmTxt = gohelper.findChildText(slot0.viewGO, "#btn_confirm/Text")
-	slot0._goTitleNoGain = gohelper.findChild(slot0.viewGO, "#scroll_rule/Viewport/#go_storeItem/Title1")
-	slot0._goTitleOwn = gohelper.findChild(slot0.viewGO, "#scroll_rule/Viewport/#go_storeItem/Title2")
+function var_0_0._editableInitView(arg_8_0)
+	arg_8_0._txtTitle = gohelper.findChildText(arg_8_0.viewGO, "Title")
+	arg_8_0._btn_confirmTxt = gohelper.findChildText(arg_8_0.viewGO, "#btn_confirm/Text")
+	arg_8_0._goTitleNoGain = gohelper.findChild(arg_8_0.viewGO, "#scroll_rule/Viewport/#go_storeItem/Title1")
+	arg_8_0._goTitleOwn = gohelper.findChild(arg_8_0.viewGO, "#scroll_rule/Viewport/#go_storeItem/Title2")
 
-	gohelper.setActive(slot0._goLifeCirclePickChoiceItem, false)
+	gohelper.setActive(arg_8_0._goLifeCirclePickChoiceItem, false)
 
-	slot0._gostoreItemTrans = slot0._gostoreItem.transform
-	slot0._gostoreItem_simpleTrans = slot0._gostoreItem_simple.transform
-	slot0._scrollruleGo = slot0._scrollrule.gameObject
-	slot0._scrollrule_simpleGo = slot0._scrollrule_simple.gameObject
-	slot0._noGainItemList = {}
-	slot0._ownItemList = {}
-	slot0._noGainDataList = {}
-	slot0._ownDataList = {}
+	arg_8_0._gostoreItemTrans = arg_8_0._gostoreItem.transform
+	arg_8_0._gostoreItem_simpleTrans = arg_8_0._gostoreItem_simple.transform
+	arg_8_0._scrollruleGo = arg_8_0._scrollrule.gameObject
+	arg_8_0._scrollrule_simpleGo = arg_8_0._scrollrule_simple.gameObject
+	arg_8_0._noGainItemList = {}
+	arg_8_0._ownItemList = {}
+	arg_8_0._noGainDataList = {}
+	arg_8_0._ownDataList = {}
 end
 
-function slot0._heroIdList(slot0)
-	return slot0.viewParam.heroIdList or {}
+function var_0_0._heroIdList(arg_9_0)
+	return arg_9_0.viewParam.heroIdList or {}
 end
 
-function slot0._title(slot0)
-	return slot0.viewParam.title or ""
+function var_0_0._title(arg_10_0)
+	return arg_10_0.viewParam.title or ""
 end
 
-function slot0._confirmDesc(slot0)
-	return slot0.viewParam.confirmDesc or ""
+function var_0_0._confirmDesc(arg_11_0)
+	return arg_11_0.viewParam.confirmDesc or ""
 end
 
-function slot0.isCustomSelect(slot0)
-	return slot0.viewParam.isCustomSelect or false
+function var_0_0.isCustomSelect(arg_12_0)
+	return arg_12_0.viewParam.isCustomSelect or false
 end
 
-function slot0._isTitleStyle(slot0)
-	return slot0.viewParam.style == uv0.Style.None
+function var_0_0._isTitleStyle(arg_13_0)
+	return arg_13_0.viewParam.style == var_0_0.Style.None
 end
 
-function slot0.onUpdateParam(slot0)
-	gohelper.setActive(slot0._scrollruleGo, false)
-	gohelper.setActive(slot0._scrollrule_simpleGo, false)
+function var_0_0.onUpdateParam(arg_14_0)
+	gohelper.setActive(arg_14_0._scrollruleGo, false)
+	gohelper.setActive(arg_14_0._scrollrule_simpleGo, false)
 
-	if slot0:_isTitleStyle() then
-		gohelper.setActive(slot0._scrollruleGo, true)
-		slot0:_refreshWithTitle()
+	if arg_14_0:_isTitleStyle() then
+		gohelper.setActive(arg_14_0._scrollruleGo, true)
+		arg_14_0:_refreshWithTitle()
 	else
-		gohelper.setActive(slot0._scrollrule_simpleGo, true)
-		slot0:_refresh()
+		gohelper.setActive(arg_14_0._scrollrule_simpleGo, true)
+		arg_14_0:_refresh()
 	end
 end
 
-function slot0.onOpen(slot0)
-	slot0._txtTitle.text = slot0:_title()
-	slot0._btn_confirmTxt.text = slot0:_confirmDesc()
+function var_0_0.onOpen(arg_15_0)
+	arg_15_0._txtTitle.text = arg_15_0:_title()
+	arg_15_0._btn_confirmTxt.text = arg_15_0:_confirmDesc()
 
-	for slot4, slot5 in ipairs(slot0:_heroIdList()) do
-		slot6 = SummonCustomPickChoiceMO.New()
+	for iter_15_0, iter_15_1 in ipairs(arg_15_0:_heroIdList()) do
+		local var_15_0 = SummonCustomPickChoiceMO.New()
 
-		slot6:init(slot5)
+		var_15_0:init(iter_15_1)
 
-		if slot6:hasHero() then
-			uv0(slot0._ownDataList, slot6)
+		if var_15_0:hasHero() then
+			var_0_1(arg_15_0._ownDataList, var_15_0)
 		else
-			uv0(slot0._noGainDataList, slot6)
+			var_0_1(arg_15_0._noGainDataList, var_15_0)
 		end
 	end
 
-	table.sort(slot0._ownDataList, uv1)
-	table.sort(slot0._noGainDataList, uv1)
-	slot0:onUpdateParam()
+	table.sort(arg_15_0._ownDataList, var_0_2)
+	table.sort(arg_15_0._noGainDataList, var_0_2)
+	arg_15_0:onUpdateParam()
 end
 
-function slot0.onClose(slot0)
-	GameUtil.onDestroyViewMemberList(slot0, "_noGainItemList")
-	GameUtil.onDestroyViewMemberList(slot0, "_ownItemList")
+function var_0_0.onClose(arg_16_0)
+	GameUtil.onDestroyViewMemberList(arg_16_0, "_noGainItemList")
+	GameUtil.onDestroyViewMemberList(arg_16_0, "_ownItemList")
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_17_0)
+	return
 end
 
-function slot0._refreshWithTitle(slot0)
-	slot0:_refreshItemListAndTitle(slot0._noGainDataList, slot0._noGainItemList, slot0._gonogain, slot0._goTitleNoGain)
-	slot0:_refreshItemListAndTitle(slot0._ownDataList, slot0._ownItemList, slot0._goown, slot0._goTitleOwn)
-	ZProj.UGUIHelper.RebuildLayout(slot0._gostoreItemTrans)
+function var_0_0._refreshWithTitle(arg_18_0)
+	arg_18_0:_refreshItemListAndTitle(arg_18_0._noGainDataList, arg_18_0._noGainItemList, arg_18_0._gonogain, arg_18_0._goTitleNoGain)
+	arg_18_0:_refreshItemListAndTitle(arg_18_0._ownDataList, arg_18_0._ownItemList, arg_18_0._goown, arg_18_0._goTitleOwn)
+	ZProj.UGUIHelper.RebuildLayout(arg_18_0._gostoreItemTrans)
 end
 
-function slot0._refresh(slot0)
-	slot0:_refreshItemList(slot0._noGainDataList, slot0._noGainItemList, slot0._gosimple)
-	slot0:_refreshItemList(slot0._ownDataList, slot0._ownItemList, slot0._gosimple)
-	ZProj.UGUIHelper.RebuildLayout(slot0._gostoreItem_simpleTrans)
+function var_0_0._refresh(arg_19_0)
+	arg_19_0:_refreshItemList(arg_19_0._noGainDataList, arg_19_0._noGainItemList, arg_19_0._gosimple)
+	arg_19_0:_refreshItemList(arg_19_0._ownDataList, arg_19_0._ownItemList, arg_19_0._gosimple)
+	ZProj.UGUIHelper.RebuildLayout(arg_19_0._gostoreItem_simpleTrans)
 end
 
-function slot0._refreshItemListAndTitle(slot0, slot1, slot2, slot3, slot4)
-	slot5 = not slot1 or #slot1 == 0
+function var_0_0._refreshItemListAndTitle(arg_20_0, arg_20_1, arg_20_2, arg_20_3, arg_20_4)
+	local var_20_0 = not arg_20_1 or #arg_20_1 == 0
 
-	gohelper.setActive(slot3, not slot5)
-	gohelper.setActive(slot4, not slot5)
+	gohelper.setActive(arg_20_3, not var_20_0)
+	gohelper.setActive(arg_20_4, not var_20_0)
 
-	if slot5 then
+	if var_20_0 then
 		return
 	end
 
-	slot0:_refreshItemList(slot1, slot2, slot3)
+	arg_20_0:_refreshItemList(arg_20_1, arg_20_2, arg_20_3)
 end
 
-function slot0._refreshItemList(slot0, slot1, slot2, slot3)
-	for slot7, slot8 in ipairs(slot1) do
-		if not slot2[slot7] then
-			slot2[slot7] = slot0:_create_LifeCirclePickChoiceItem(slot7, slot3)
+function var_0_0._refreshItemList(arg_21_0, arg_21_1, arg_21_2, arg_21_3)
+	for iter_21_0, iter_21_1 in ipairs(arg_21_1) do
+		local var_21_0 = arg_21_2[iter_21_0]
+
+		if not var_21_0 then
+			var_21_0 = arg_21_0:_create_LifeCirclePickChoiceItem(iter_21_0, arg_21_3)
+			arg_21_2[iter_21_0] = var_21_0
 		end
 
-		slot9:onUpdateMO(slot8)
-		slot9:setActive(true)
+		var_21_0:onUpdateMO(iter_21_1)
+		var_21_0:setActive(true)
 	end
 
-	for slot7 = #slot1 + 1, #slot2 do
+	for iter_21_2 = #arg_21_1 + 1, #arg_21_2 do
 		item:setActive(false)
 	end
 end
 
-function slot0._create_LifeCirclePickChoiceItem(slot0, slot1, slot2)
-	slot4 = LifeCirclePickChoiceItem.New({
-		parent = slot0,
-		baseViewContainer = slot0.viewContainer
+function var_0_0._create_LifeCirclePickChoiceItem(arg_22_0, arg_22_1, arg_22_2)
+	local var_22_0 = gohelper.clone(arg_22_0._goLifeCirclePickChoiceItem, arg_22_2)
+	local var_22_1 = LifeCirclePickChoiceItem.New({
+		parent = arg_22_0,
+		baseViewContainer = arg_22_0.viewContainer
 	})
 
-	slot4:init(gohelper.clone(slot0._goLifeCirclePickChoiceItem, slot2))
-	slot4:setIndex(slot1)
+	var_22_1:init(var_22_0)
+	var_22_1:setIndex(arg_22_1)
 
-	return slot4
+	return var_22_1
 end
 
-function slot0.onItemSelected(slot0, slot1, slot2)
-	if slot0._lastSelectedItem then
-		slot0._lastSelectedItem:setSelected(false)
+function var_0_0.onItemSelected(arg_23_0, arg_23_1, arg_23_2)
+	if arg_23_0._lastSelectedItem then
+		arg_23_0._lastSelectedItem:setSelected(false)
 	end
 
-	slot0._lastSelectedItem = slot2 and slot1 or nil
+	arg_23_0._lastSelectedItem = arg_23_2 and arg_23_1 or nil
 end
 
-function slot0.selectedHeroId(slot0)
-	if not slot0._lastSelectedItem then
+function var_0_0.selectedHeroId(arg_24_0)
+	if not arg_24_0._lastSelectedItem then
 		return
 	end
 
-	return slot0._lastSelectedItem:heroId()
+	return arg_24_0._lastSelectedItem:heroId()
 end
 
-return slot0
+return var_0_0

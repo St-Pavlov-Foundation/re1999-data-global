@@ -1,152 +1,162 @@
-module("modules.logic.rouge.rpc.RougeOutsideRpc", package.seeall)
+﻿module("modules.logic.rouge.rpc.RougeOutsideRpc", package.seeall)
 
-slot0 = class("RougeOutsideRpc", BaseRpc)
+local var_0_0 = class("RougeOutsideRpc", BaseRpc)
 
-function slot0.sendGetRougeOutSideInfoRequest(slot0, slot1, slot2, slot3)
-	slot4 = RougeOutsideModule_pb.GetRougeOutsideInfoRequest()
-	slot4.season = slot1
+function var_0_0.sendGetRougeOutSideInfoRequest(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	local var_1_0 = RougeOutsideModule_pb.GetRougeOutsideInfoRequest()
 
-	slot0:sendMsg(slot4, slot2, slot3)
+	var_1_0.season = arg_1_1
+
+	arg_1_0:sendMsg(var_1_0, arg_1_2, arg_1_3)
 end
 
-function slot0.onReceiveGetRougeOutsideInfoReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveGetRougeOutsideInfoReply(arg_2_0, arg_2_1, arg_2_2)
+	if arg_2_1 ~= 0 then
 		return
 	end
 
-	RougeOutsideModel.instance:onReceiveGetRougeOutsideInfoReply(slot2)
-	RougeTalentModel.instance:setOutsideInfo(slot2.rougeInfo)
-	RougeRewardModel.instance:setReward(slot2.rougeInfo)
-	RougeDLCModel101.instance:initLimiterInfo(slot2.rougeInfo)
+	RougeOutsideModel.instance:onReceiveGetRougeOutsideInfoReply(arg_2_2)
+	RougeTalentModel.instance:setOutsideInfo(arg_2_2.rougeInfo)
+	RougeRewardModel.instance:setReward(arg_2_2.rougeInfo)
+	RougeDLCModel101.instance:initLimiterInfo(arg_2_2.rougeInfo)
 end
 
-function slot0.sendRougeActiveGeniusRequest(slot0, slot1, slot2)
-	slot3 = RougeOutsideModule_pb.RougeActiveGeniusRequest()
-	slot3.season = slot1
-	slot3.geniusId = slot2
+function var_0_0.sendRougeActiveGeniusRequest(arg_3_0, arg_3_1, arg_3_2)
+	local var_3_0 = RougeOutsideModule_pb.RougeActiveGeniusRequest()
 
-	slot0:sendMsg(slot3)
+	var_3_0.season = arg_3_1
+	var_3_0.geniusId = arg_3_2
+
+	arg_3_0:sendMsg(var_3_0)
 end
 
-function slot0.onReceiveRougeActiveGeniusReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveRougeActiveGeniusReply(arg_4_0, arg_4_1, arg_4_2)
+	if arg_4_1 ~= 0 then
 		return
 	end
 
-	RougeTalentModel.instance:updateGeniusIDs(slot2)
+	RougeTalentModel.instance:updateGeniusIDs(arg_4_2)
 end
 
-function slot0.onReceiveRougeUpdateGeniusPointPush(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveRougeUpdateGeniusPointPush(arg_5_0, arg_5_1, arg_5_2)
+	if arg_5_1 ~= 0 then
 		return
 	end
 
-	RougeTalentModel.instance:setOutsideInfo(slot2)
+	RougeTalentModel.instance:setOutsideInfo(arg_5_2)
 end
 
-function slot0.sendRougeReceivePointBonusRequest(slot0, slot1, slot2)
-	slot3 = RougeOutsideModule_pb.RougeReceivePointBonusRequest()
-	slot3.season = slot1
-	slot3.bonusId = slot2
+function var_0_0.sendRougeReceivePointBonusRequest(arg_6_0, arg_6_1, arg_6_2)
+	local var_6_0 = RougeOutsideModule_pb.RougeReceivePointBonusRequest()
 
-	slot0:sendMsg(slot3)
+	var_6_0.season = arg_6_1
+	var_6_0.bonusId = arg_6_2
+
+	arg_6_0:sendMsg(var_6_0)
 end
 
-function slot0.onReceiveRougeReceivePointBonusReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveRougeReceivePointBonusReply(arg_7_0, arg_7_1, arg_7_2)
+	if arg_7_1 ~= 0 then
 		return
 	end
 
-	if slot2.bonusId and slot2.bonusStage then
-		RougeRewardModel.instance:updateReward(slot2.bonusStage)
-		RougeController.instance:dispatchEvent(RougeEvent.OnGetRougeReward, slot2.bonusId)
+	if arg_7_2.bonusId and arg_7_2.bonusStage then
+		RougeRewardModel.instance:updateReward(arg_7_2.bonusStage)
+		RougeController.instance:dispatchEvent(RougeEvent.OnGetRougeReward, arg_7_2.bonusId)
 	else
-		RougeRewardModel.instance:setReward(slot2)
+		RougeRewardModel.instance:setReward(arg_7_2)
 	end
 end
 
-function slot0.onReceiveRougeUpdatePointPush(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveRougeUpdatePointPush(arg_8_0, arg_8_1, arg_8_2)
+	if arg_8_1 ~= 0 then
 		return
 	end
 
-	RougeRewardModel.instance:setReward(slot2)
+	RougeRewardModel.instance:setReward(arg_8_2)
 end
 
-function slot0.sendRougeGetUnlockCollectionsRequest(slot0, slot1, slot2, slot3)
-	slot4 = RougeOutsideModule_pb.RougeGetUnlockCollectionsRequest()
-	slot4.season = slot1
+function var_0_0.sendRougeGetUnlockCollectionsRequest(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
+	local var_9_0 = RougeOutsideModule_pb.RougeGetUnlockCollectionsRequest()
 
-	slot0:sendMsg(slot4, slot2, slot3)
+	var_9_0.season = arg_9_1
+
+	arg_9_0:sendMsg(var_9_0, arg_9_2, arg_9_3)
 end
 
-function slot0.onReceiveRougeGetUnlockCollectionsReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveRougeGetUnlockCollectionsReply(arg_10_0, arg_10_1, arg_10_2)
+	if arg_10_1 ~= 0 then
 		return
 	end
 
-	slot3 = slot2.season
+	local var_10_0 = arg_10_2.season
+	local var_10_1 = arg_10_2.unlockCollectionIds
 
-	RougeFavoriteModel.instance:initUnlockCollectionIds(slot2.unlockCollectionIds)
+	RougeFavoriteModel.instance:initUnlockCollectionIds(var_10_1)
 end
 
-function slot0.sendRougeGetNewReddotInfoRequest(slot0, slot1)
-	slot2 = RougeOutsideModule_pb.RougeGetNewReddotInfoRequest()
-	slot2.season = slot1
+function var_0_0.sendRougeGetNewReddotInfoRequest(arg_11_0, arg_11_1)
+	local var_11_0 = RougeOutsideModule_pb.RougeGetNewReddotInfoRequest()
 
-	slot0:sendMsg(slot2)
+	var_11_0.season = arg_11_1
+
+	arg_11_0:sendMsg(var_11_0)
 end
 
-function slot0.onReceiveRougeGetNewReddotInfoReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveRougeGetNewReddotInfoReply(arg_12_0, arg_12_1, arg_12_2)
+	if arg_12_1 ~= 0 then
 		return
 	end
 
-	slot3 = slot2.season
+	local var_12_0 = arg_12_2.season
+	local var_12_1 = arg_12_2.newReddots
 
-	RougeFavoriteModel.instance:initReddots(slot2.newReddots)
+	RougeFavoriteModel.instance:initReddots(var_12_1)
 	RougeController.instance:dispatchEvent(RougeEvent.OnUpdateFavoriteReddot)
 end
 
-function slot0.sendRougeMarkNewReddotRequest(slot0, slot1, slot2, slot3, slot4, slot5)
-	slot6 = RougeOutsideModule_pb.RougeMarkNewReddotRequest()
-	slot6.season = slot1
-	slot6.type = slot2
-	slot6.id = slot3
+function var_0_0.sendRougeMarkNewReddotRequest(arg_13_0, arg_13_1, arg_13_2, arg_13_3, arg_13_4, arg_13_5)
+	local var_13_0 = RougeOutsideModule_pb.RougeMarkNewReddotRequest()
 
-	slot0:sendMsg(slot6, slot4, slot5)
+	var_13_0.season = arg_13_1
+	var_13_0.type = arg_13_2
+	var_13_0.id = arg_13_3
 
-	if slot3 == 0 then
-		RougeFavoriteModel.instance:deleteReddotId(slot2, slot3)
+	arg_13_0:sendMsg(var_13_0, arg_13_4, arg_13_5)
+
+	if arg_13_3 == 0 then
+		RougeFavoriteModel.instance:deleteReddotId(arg_13_2, arg_13_3)
 		RougeController.instance:dispatchEvent(RougeEvent.OnUpdateFavoriteReddot)
 	end
 end
 
-function slot0.onReceiveRougeMarkNewReddotReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveRougeMarkNewReddotReply(arg_14_0, arg_14_1, arg_14_2)
+	if arg_14_1 ~= 0 then
 		return
 	end
 
-	slot3 = slot2.season
-	slot4 = slot2.type
+	local var_14_0 = arg_14_2.season
+	local var_14_1 = arg_14_2.type
+	local var_14_2 = arg_14_2.id
 
-	if slot2.id == 0 then
+	if var_14_2 == 0 then
 		return
 	end
 
-	RougeFavoriteModel.instance:deleteReddotId(slot4, slot5)
+	RougeFavoriteModel.instance:deleteReddotId(var_14_1, var_14_2)
 	RougeController.instance:dispatchEvent(RougeEvent.OnUpdateFavoriteReddot)
 end
 
-function slot0.sendRougeMarkGeniusNewStageRequest(slot0, slot1)
-	slot2 = RougeOutsideModule_pb.RougeMarkGeniusNewStageRequest()
-	slot2.season = slot1
+function var_0_0.sendRougeMarkGeniusNewStageRequest(arg_15_0, arg_15_1)
+	local var_15_0 = RougeOutsideModule_pb.RougeMarkGeniusNewStageRequest()
 
-	slot0:sendMsg(slot2)
+	var_15_0.season = arg_15_1
+
+	arg_15_0:sendMsg(var_15_0)
 end
 
-function slot0.onReceiveRougeMarkGeniusNewStageReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveRougeMarkGeniusNewStageReply(arg_16_0, arg_16_1, arg_16_2)
+	if arg_16_1 ~= 0 then
 		return
 	end
 
@@ -154,15 +164,16 @@ function slot0.onReceiveRougeMarkGeniusNewStageReply(slot0, slot1, slot2)
 	RougeController.instance:dispatchEvent(RougeEvent.OnUpdateRougeTalentTreeInfo)
 end
 
-function slot0.sendRougeMarkBonusNewStageRequest(slot0, slot1)
-	slot2 = RougeOutsideModule_pb.RougeMarkBonusNewStageRequest()
-	slot2.season = slot1
+function var_0_0.sendRougeMarkBonusNewStageRequest(arg_17_0, arg_17_1)
+	local var_17_0 = RougeOutsideModule_pb.RougeMarkBonusNewStageRequest()
 
-	slot0:sendMsg(slot2)
+	var_17_0.season = arg_17_1
+
+	arg_17_0:sendMsg(var_17_0)
 end
 
-function slot0.onReceiveRougeMarkBonusNewStageReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveRougeMarkBonusNewStageReply(arg_18_0, arg_18_1, arg_18_2)
+	if arg_18_1 ~= 0 then
 		return
 	end
 
@@ -170,115 +181,130 @@ function slot0.onReceiveRougeMarkBonusNewStageReply(slot0, slot1, slot2)
 	RougeController.instance:dispatchEvent(RougeEvent.OnUpdateRougeRewardInfo)
 end
 
-function slot0.onReceiveRougeReddotUpdatePush(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveRougeReddotUpdatePush(arg_19_0, arg_19_1, arg_19_2)
+	if arg_19_1 ~= 0 then
 		return
 	end
 
-	slot3 = slot2.season
-	slot4 = slot2.newReddots
+	local var_19_0 = arg_19_2.season
+	local var_19_1 = arg_19_2.newReddots
 end
 
-function slot0.sendRougeUnlockStoryRequest(slot0, slot1, slot2)
-	slot3 = RougeOutsideModule_pb.RougeUnlockStoryRequest()
-	slot3.season = slot1
-	slot3.storyId = slot2
+function var_0_0.sendRougeUnlockStoryRequest(arg_20_0, arg_20_1, arg_20_2)
+	local var_20_0 = RougeOutsideModule_pb.RougeUnlockStoryRequest()
 
-	slot0:sendMsg(slot3)
+	var_20_0.season = arg_20_1
+	var_20_0.storyId = arg_20_2
+
+	arg_20_0:sendMsg(var_20_0)
 end
 
-function slot0.onReceiveRougeUnlockStoryReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveRougeUnlockStoryReply(arg_21_0, arg_21_1, arg_21_2)
+	if arg_21_1 ~= 0 then
 		return
 	end
 
-	slot3 = slot2.season
-	slot4 = slot2.storyId
+	local var_21_0 = arg_21_2.season
+	local var_21_1 = arg_21_2.storyId
 end
 
-function slot0.sendRougeLimiterSettingSaveRequest(slot0, slot1, slot2)
-	RougeOutsideModule_pb.RougeLimiterSettingSaveRequest().season = slot1
+function var_0_0.sendRougeLimiterSettingSaveRequest(arg_22_0, arg_22_1, arg_22_2)
+	local var_22_0 = RougeOutsideModule_pb.RougeLimiterSettingSaveRequest()
 
-	if slot2 then
-		for slot8, slot9 in ipairs(slot2:getLimitIds()) do
-			slot3.clientNO.limitIds:append(slot9)
+	var_22_0.season = arg_22_1
+
+	if arg_22_2 then
+		local var_22_1 = arg_22_2:getLimitIds()
+
+		for iter_22_0, iter_22_1 in ipairs(var_22_1) do
+			var_22_0.clientNO.limitIds:append(iter_22_1)
 		end
 
-		for slot9, slot10 in ipairs(slot2:getLimitBuffIds()) do
-			slot3.clientNO.limitBuffIds:append(slot10)
+		local var_22_2 = arg_22_2:getLimitBuffIds()
+
+		for iter_22_2, iter_22_3 in ipairs(var_22_2) do
+			var_22_0.clientNO.limitBuffIds:append(iter_22_3)
 		end
 	end
 
-	slot0:sendMsg(slot3)
+	arg_22_0:sendMsg(var_22_0)
 end
 
-function slot0.onReceiveRougeLimiterSettingSaveReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveRougeLimiterSettingSaveReply(arg_23_0, arg_23_1, arg_23_2)
+	if arg_23_1 ~= 0 then
 		return
 	end
 
-	slot3 = slot2.season
+	local var_23_0 = arg_23_2.season
+	local var_23_1 = arg_23_2.clientNO
 
-	RougeDLCModel101.instance:onGetLimiterClientMo(slot2.clientNO)
+	RougeDLCModel101.instance:onGetLimiterClientMo(var_23_1)
 end
 
-function slot0.sendRougeDLCSettingSaveRequest(slot0, slot1, slot2)
-	RougeOutsideModule_pb.RougeDLCSettingSaveRequest().season = slot1
+function var_0_0.sendRougeDLCSettingSaveRequest(arg_24_0, arg_24_1, arg_24_2)
+	local var_24_0 = RougeOutsideModule_pb.RougeDLCSettingSaveRequest()
 
-	for slot7, slot8 in ipairs(slot2 or {}) do
-		slot3.dlcVersionIds:append(slot8)
+	var_24_0.season = arg_24_1
+
+	for iter_24_0, iter_24_1 in ipairs(arg_24_2 or {}) do
+		var_24_0.dlcVersionIds:append(iter_24_1)
 	end
 
-	slot0:sendMsg(slot3)
+	arg_24_0:sendMsg(var_24_0)
 end
 
-function slot0.onReceiveRougeDLCSettingSaveReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveRougeDLCSettingSaveReply(arg_25_0, arg_25_1, arg_25_2)
+	if arg_25_1 ~= 0 then
 		return
 	end
 
-	slot3 = slot2.season
+	local var_25_0 = arg_25_2.season
+	local var_25_1 = arg_25_2.dlcVersionIds
 
-	RougeOutsideModel.instance:getRougeGameRecord():_updateVersionIds(slot2.dlcVersionIds)
+	RougeOutsideModel.instance:getRougeGameRecord():_updateVersionIds(var_25_1)
 	RougeDLCController.instance:dispatchEvent(RougeEvent.OnGetVersionInfo)
 end
 
-function slot0.sendRougeLimiterUnlockBuffRequest(slot0, slot1, slot2)
-	slot3 = RougeOutsideModule_pb.RougeLimiterUnlockBuffRequest()
-	slot3.season = slot1
-	slot3.limitBuffId = slot2
+function var_0_0.sendRougeLimiterUnlockBuffRequest(arg_26_0, arg_26_1, arg_26_2)
+	local var_26_0 = RougeOutsideModule_pb.RougeLimiterUnlockBuffRequest()
 
-	slot0:sendMsg(slot3)
+	var_26_0.season = arg_26_1
+	var_26_0.limitBuffId = arg_26_2
+
+	arg_26_0:sendMsg(var_26_0)
 end
 
-function slot0.onReceiveRougeLimiterUnlockBuffReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveRougeLimiterUnlockBuffReply(arg_27_0, arg_27_1, arg_27_2)
+	if arg_27_1 ~= 0 then
 		return
 	end
 
-	slot3 = slot2.season
+	local var_27_0 = arg_27_2.season
+	local var_27_1 = arg_27_2.limitBuffId
 
-	RougeDLCController101.instance:onGetUnlockLimiterBuffInfo(slot2.limitBuffId)
+	RougeDLCController101.instance:onGetUnlockLimiterBuffInfo(var_27_1)
 end
 
-function slot0.sendRougeLimiterSpeedUpBuffCdRequest(slot0, slot1, slot2)
-	slot3 = RougeOutsideModule_pb.RougeLimiterSpeedUpBuffCdRequest()
-	slot3.season = slot1
-	slot3.limitBuffId = slot2
+function var_0_0.sendRougeLimiterSpeedUpBuffCdRequest(arg_28_0, arg_28_1, arg_28_2)
+	local var_28_0 = RougeOutsideModule_pb.RougeLimiterSpeedUpBuffCdRequest()
 
-	slot0:sendMsg(slot3)
+	var_28_0.season = arg_28_1
+	var_28_0.limitBuffId = arg_28_2
+
+	arg_28_0:sendMsg(var_28_0)
 end
 
-function slot0.onReceiveRougeLimiterSpeedUpBuffCdReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveRougeLimiterSpeedUpBuffCdReply(arg_29_0, arg_29_1, arg_29_2)
+	if arg_29_1 ~= 0 then
 		return
 	end
 
-	slot3 = slot2.season
+	local var_29_0 = arg_29_2.season
+	local var_29_1 = arg_29_2.limitBuffId
 
-	RougeDLCController101.instance:onGetSpeedupLimiterBuffInfo(slot2.limitBuffId)
+	RougeDLCController101.instance:onGetSpeedupLimiterBuffInfo(var_29_1)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

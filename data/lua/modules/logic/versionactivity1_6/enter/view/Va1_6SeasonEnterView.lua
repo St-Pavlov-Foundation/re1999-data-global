@@ -1,161 +1,185 @@
-module("modules.logic.versionactivity1_6.enter.view.Va1_6SeasonEnterView", package.seeall)
+﻿module("modules.logic.versionactivity1_6.enter.view.Va1_6SeasonEnterView", package.seeall)
 
-slot0 = class("Va1_6SeasonEnterView", VersionActivityEnterBaseSubView)
+local var_0_0 = class("Va1_6SeasonEnterView", VersionActivityEnterBaseSubView)
 
-function slot0.onInitView(slot0)
-	slot0._goStore = gohelper.findChild(slot0.viewGO, "Right/Store")
-	slot0._btnstore = gohelper.findChildButtonWithAudio(slot0.viewGO, "Right/Store/#btn_Store")
-	slot0._txtNum = gohelper.findChildTextMesh(slot0.viewGO, "Right/Store/#btn_Store/#txt_Num")
-	slot0._txtstoretime = gohelper.findChildTextMesh(slot0.viewGO, "Right/Store/#go_taglimit/#txt_limit")
-	slot0._txttime = gohelper.findChildTextMesh(slot0.viewGO, "Right/LimitTime/#txt_LimitTime")
-	slot0._btnEnterNormal = gohelper.findChildButtonWithAudio(slot0.viewGO, "Right/#btn_Normal")
-	slot0._btnEnterClose = gohelper.findChildButtonWithAudio(slot0.viewGO, "Right/#btn_Close")
-	slot0._btnEnterUnOpen = gohelper.findChildButtonWithAudio(slot0.viewGO, "Right/#btn_UnOpen")
-	slot0._txtunlocktips = gohelper.findChildTextMesh(slot0.viewGO, "Right/#btn_UnOpen/#txt_Tips")
-	slot0._txtdesc = gohelper.findChildTextMesh(slot0.viewGO, "Right/txtDescr")
-	slot0._goreddot = gohelper.findChild(slot0.viewGO, "Right/#btn_Normal/#image_reddot")
-	slot0._gorewardcontent = gohelper.findChild(slot0.viewGO, "Right/scroll_Reward/Viewport/#go_rewards")
-	slot0.rewardItems = {}
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goStore = gohelper.findChild(arg_1_0.viewGO, "Right/Store")
+	arg_1_0._btnstore = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/Store/#btn_Store")
+	arg_1_0._txtNum = gohelper.findChildTextMesh(arg_1_0.viewGO, "Right/Store/#btn_Store/#txt_Num")
+	arg_1_0._txtstoretime = gohelper.findChildTextMesh(arg_1_0.viewGO, "Right/Store/#go_taglimit/#txt_limit")
+	arg_1_0._txttime = gohelper.findChildTextMesh(arg_1_0.viewGO, "Right/LimitTime/#txt_LimitTime")
+	arg_1_0._btnEnterNormal = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#btn_Normal")
+	arg_1_0._btnEnterClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#btn_Close")
+	arg_1_0._btnEnterUnOpen = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#btn_UnOpen")
+	arg_1_0._txtunlocktips = gohelper.findChildTextMesh(arg_1_0.viewGO, "Right/#btn_UnOpen/#txt_Tips")
+	arg_1_0._txtdesc = gohelper.findChildTextMesh(arg_1_0.viewGO, "Right/txtDescr")
+	arg_1_0._goreddot = gohelper.findChild(arg_1_0.viewGO, "Right/#btn_Normal/#image_reddot")
+	arg_1_0._gorewardcontent = gohelper.findChild(arg_1_0.viewGO, "Right/scroll_Reward/Viewport/#go_rewards")
+	arg_1_0.rewardItems = {}
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnstore:AddClickListener(slot0._onClickStoreBtn, slot0)
-	slot0._btnEnterNormal:AddClickListener(slot0._onClickMainActivity, slot0)
-	slot0._btnEnterClose:AddClickListener(slot0._onClickMainActivity, slot0)
-	slot0._btnEnterUnOpen:AddClickListener(slot0._onClickMainActivity, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnstore:AddClickListener(arg_2_0._onClickStoreBtn, arg_2_0)
+	arg_2_0._btnEnterNormal:AddClickListener(arg_2_0._onClickMainActivity, arg_2_0)
+	arg_2_0._btnEnterClose:AddClickListener(arg_2_0._onClickMainActivity, arg_2_0)
+	arg_2_0._btnEnterUnOpen:AddClickListener(arg_2_0._onClickMainActivity, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnstore:RemoveClickListener()
-	slot0._btnEnterNormal:RemoveClickListener()
-	slot0._btnEnterClose:RemoveClickListener()
-	slot0._btnEnterUnOpen:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnstore:RemoveClickListener()
+	arg_3_0._btnEnterNormal:RemoveClickListener()
+	arg_3_0._btnEnterClose:RemoveClickListener()
+	arg_3_0._btnEnterUnOpen:RemoveClickListener()
 end
 
-function slot0._editableInitView(slot0)
-	slot0.actId = Activity104Model.instance:getCurSeasonId()
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0.actId = Activity104Model.instance:getCurSeasonId()
 
-	RedDotController.instance:addRedDot(slot0._goreddot, ActivityConfig.instance:getActivityCo(slot0.actId).redDotId)
-	slot0:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, slot0.refreshUI, slot0)
-	slot0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, slot0.refreshCurrency, slot0)
+	local var_4_0 = ActivityConfig.instance:getActivityCo(arg_4_0.actId)
+
+	RedDotController.instance:addRedDot(arg_4_0._goreddot, var_4_0.redDotId)
+	arg_4_0:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_4_0.refreshUI, arg_4_0)
+	arg_4_0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_4_0.refreshCurrency, arg_4_0)
 end
 
-function slot0.onOpen(slot0)
-	uv0.super.onOpen(slot0)
-	slot0:refreshUI()
-	slot0:refreshRemainTime()
+function var_0_0.onOpen(arg_5_0)
+	var_0_0.super.onOpen(arg_5_0)
+	arg_5_0:refreshUI()
+	arg_5_0:refreshRemainTime()
 end
 
-function slot0.onClose(slot0)
-	uv0.super.onClose(slot0)
+function var_0_0.onClose(arg_6_0)
+	var_0_0.super.onClose(arg_6_0)
 end
 
-function slot0._onRefreshRedDot(slot0)
+function var_0_0._onRefreshRedDot(arg_7_0)
+	return
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_8_0)
+	return
 end
 
-function slot0.refreshEnterBtn(slot0)
-	slot1, slot2, slot3 = ActivityHelper.getActivityStatusAndToast(slot0.actId)
+function var_0_0.refreshEnterBtn(arg_9_0)
+	local var_9_0, var_9_1, var_9_2 = ActivityHelper.getActivityStatusAndToast(arg_9_0.actId)
 
-	gohelper.setActive(slot0._btnEnterNormal, slot1 == ActivityEnum.ActivityStatus.Normal)
-	gohelper.setActive(slot0._btnEnterClose, slot1 ~= ActivityEnum.ActivityStatus.Normal and slot1 ~= ActivityEnum.ActivityStatus.NotUnlock)
-	gohelper.setActive(slot0._btnEnterUnOpen, slot1 == ActivityEnum.ActivityStatus.NotUnlock)
+	gohelper.setActive(arg_9_0._btnEnterNormal, var_9_0 == ActivityEnum.ActivityStatus.Normal)
+	gohelper.setActive(arg_9_0._btnEnterClose, var_9_0 ~= ActivityEnum.ActivityStatus.Normal and var_9_0 ~= ActivityEnum.ActivityStatus.NotUnlock)
+	gohelper.setActive(arg_9_0._btnEnterUnOpen, var_9_0 == ActivityEnum.ActivityStatus.NotUnlock)
 
-	if slot1 == ActivityEnum.ActivityStatus.NotUnlock then
-		slot0._txtunlocktips.text = ToastController.instance:getToastMsgWithTableParam(slot2, slot3)
+	if var_9_0 == ActivityEnum.ActivityStatus.NotUnlock then
+		arg_9_0._txtunlocktips.text = ToastController.instance:getToastMsgWithTableParam(var_9_1, var_9_2)
 	end
 
-	gohelper.setActive(slot0._goStore, ActivityHelper.getActivityStatus(VersionActivity1_6Enum.ActivityId.SeasonStore) == ActivityEnum.ActivityStatus.Normal)
+	local var_9_3 = ActivityHelper.getActivityStatus(VersionActivity1_6Enum.ActivityId.SeasonStore)
+
+	gohelper.setActive(arg_9_0._goStore, var_9_3 == ActivityEnum.ActivityStatus.Normal)
 end
 
-function slot0.refreshCurrency(slot0)
-	slot0._txtNum.text = GameUtil.numberDisplay(CurrencyModel.instance:getCurrency(Activity104Enum.StoreUTTU[slot0.actId]) and slot2.quantity or 0)
+function var_0_0.refreshCurrency(arg_10_0)
+	local var_10_0 = Activity104Enum.StoreUTTU[arg_10_0.actId]
+	local var_10_1 = CurrencyModel.instance:getCurrency(var_10_0)
+	local var_10_2 = var_10_1 and var_10_1.quantity or 0
+
+	arg_10_0._txtNum.text = GameUtil.numberDisplay(var_10_2)
 end
 
-function slot0.refreshUI(slot0)
-	slot1 = ActivityConfig.instance:getActivityCo(slot0.actId)
-	slot0._txtdesc.text = slot1.actDesc
-	slot2 = GameUtil.splitString2(slot1.activityBonus, true) or {}
-	slot6 = #slot0.rewardItems
+function var_0_0.refreshUI(arg_11_0)
+	local var_11_0 = ActivityConfig.instance:getActivityCo(arg_11_0.actId)
 
-	for slot6 = 1, math.max(#slot2, slot6) do
-		slot8 = slot2[slot6]
+	arg_11_0._txtdesc.text = var_11_0.actDesc
 
-		if not slot0.rewardItems[slot6] then
-			slot0.rewardItems[slot6] = IconMgr.instance:getCommonItemIcon(slot0._gorewardcontent)
+	local var_11_1 = GameUtil.splitString2(var_11_0.activityBonus, true) or {}
+
+	for iter_11_0 = 1, math.max(#var_11_1, #arg_11_0.rewardItems) do
+		local var_11_2 = arg_11_0.rewardItems[iter_11_0]
+		local var_11_3 = var_11_1[iter_11_0]
+
+		if not var_11_2 then
+			var_11_2 = IconMgr.instance:getCommonItemIcon(arg_11_0._gorewardcontent)
+			arg_11_0.rewardItems[iter_11_0] = var_11_2
 		end
 
-		if slot8 then
-			gohelper.setActive(slot7.go, true)
-			slot7:setMOValue(slot8[1], slot8[2], slot8[3] or 1, nil, true)
-			slot7:hideEquipLvAndCount()
-			slot7:isShowCount(false)
+		if var_11_3 then
+			gohelper.setActive(var_11_2.go, true)
+			var_11_2:setMOValue(var_11_3[1], var_11_3[2], var_11_3[3] or 1, nil, true)
+			var_11_2:hideEquipLvAndCount()
+			var_11_2:isShowCount(false)
 		else
-			gohelper.setActive(slot7.go, false)
+			gohelper.setActive(var_11_2.go, false)
 		end
 	end
 
-	slot0:refreshEnterBtn()
-	slot0:refreshCurrency()
+	arg_11_0:refreshEnterBtn()
+	arg_11_0:refreshCurrency()
 end
 
-function slot0.onDestroyView(slot0)
-	if slot0.rewardItems then
-		for slot4, slot5 in pairs(slot0.rewardItems) do
-			slot5:onDestroy()
+function var_0_0.onDestroyView(arg_12_0)
+	if arg_12_0.rewardItems then
+		for iter_12_0, iter_12_1 in pairs(arg_12_0.rewardItems) do
+			iter_12_1:onDestroy()
 		end
 
-		slot0.rewardItems = nil
+		arg_12_0.rewardItems = nil
 	end
 end
 
-function slot0.everySecondCall(slot0)
-	slot0:refreshRemainTime()
+function var_0_0.everySecondCall(arg_13_0)
+	arg_13_0:refreshRemainTime()
 end
 
-function slot0._onClickMainActivity(slot0)
+function var_0_0._onClickMainActivity(arg_14_0)
 	Activity104Controller.instance:openSeasonMainView()
 end
 
-function slot0._onClickStoreBtn(slot0)
+function var_0_0._onClickStoreBtn(arg_15_0)
 	Activity104Controller.instance:openSeasonStoreView()
 end
 
-function slot0.refreshRemainTime(slot0)
-	slot0:refreshMainTime()
-	slot0:refreshStoreTime()
+function var_0_0.refreshRemainTime(arg_16_0)
+	arg_16_0:refreshMainTime()
+	arg_16_0:refreshStoreTime()
 end
 
-function slot0.refreshMainTime(slot0)
-	if not ActivityModel.instance:getActMO(slot0.actId) then
-		slot0._txttime.text = ""
+function var_0_0.refreshMainTime(arg_17_0)
+	local var_17_0 = ActivityModel.instance:getActMO(arg_17_0.actId)
+
+	if not var_17_0 then
+		arg_17_0._txttime.text = ""
 
 		return
 	end
 
-	if slot1:getRealEndTimeStamp() - ServerTime.now() > 0 then
-		slot0._txttime.text = TimeUtil.SecondToActivityTimeFormat(slot2)
+	local var_17_1 = var_17_0:getRealEndTimeStamp() - ServerTime.now()
+
+	if var_17_1 > 0 then
+		local var_17_2 = TimeUtil.SecondToActivityTimeFormat(var_17_1)
+
+		arg_17_0._txttime.text = var_17_2
 	else
-		slot0._txttime.text = luaLang("ended")
+		arg_17_0._txttime.text = luaLang("ended")
 	end
 end
 
-function slot0.refreshStoreTime(slot0)
-	if not ActivityModel.instance:getActMO(Activity104Enum.SeasonStore[slot0.actId]) then
+function var_0_0.refreshStoreTime(arg_18_0)
+	local var_18_0 = Activity104Enum.SeasonStore[arg_18_0.actId]
+	local var_18_1 = ActivityModel.instance:getActMO(var_18_0)
+
+	if not var_18_1 then
 		return
 	end
 
-	if ActivityHelper.getActivityStatusAndToast(slot1) ~= ActivityEnum.ActivityStatus.Normal and slot3 ~= ActivityEnum.ActivityStatus.NotUnlock then
-		slot0._txtstoretime.text = luaLang("turnback_end")
+	local var_18_2 = ActivityHelper.getActivityStatusAndToast(var_18_0)
+
+	if var_18_2 ~= ActivityEnum.ActivityStatus.Normal and var_18_2 ~= ActivityEnum.ActivityStatus.NotUnlock then
+		arg_18_0._txtstoretime.text = luaLang("turnback_end")
 	else
-		slot0._txtstoretime.text = slot2:getRemainTimeStr2ByEndTime(true)
+		arg_18_0._txtstoretime.text = var_18_1:getRemainTimeStr2ByEndTime(true)
 	end
 end
 
-return slot0
+return var_0_0

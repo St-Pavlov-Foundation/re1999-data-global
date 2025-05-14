@@ -1,454 +1,517 @@
-module("modules.logic.rouge.map.controller.RougeMapHelper", package.seeall)
+﻿module("modules.logic.rouge.map.controller.RougeMapHelper", package.seeall)
 
-slot0 = class("RougeMapHelper")
+local var_0_0 = class("RougeMapHelper")
 
-function slot0.blockEsc()
+function var_0_0.blockEsc()
+	return
 end
 
-slot0.StandardRate = 1.7777777777777777
+var_0_0.StandardRate = 1.7777777777777777
 
-function slot0.getMiddleLayerCameraSize()
-	slot3 = RougeMapModel.instance:getMapSize()
+function var_0_0.getMiddleLayerCameraSize()
+	local var_2_0 = UnityEngine.Screen.width / UnityEngine.Screen.height
+	local var_2_1 = RougeMapModel.instance:getMapSize()
 
-	if uv0.StandardRate <= UnityEngine.Screen.width / UnityEngine.Screen.height then
-		return slot3.y / 2
+	if var_2_0 >= var_0_0.StandardRate then
+		return var_2_1.y / 2
 	end
 
-	return slot3.y * uv0.StandardRate / slot2 / 2
+	return var_2_1.y * var_0_0.StandardRate / var_2_0 / 2
 end
 
-function slot0.getNormalLayerCameraSize()
-	slot4 = RougeMapModel.instance:getMapSize().y / 2
+function var_0_0.getNormalLayerCameraSize()
+	local var_3_0 = UnityEngine.Screen.width
+	local var_3_1 = UnityEngine.Screen.height
+	local var_3_2 = var_3_0 / var_3_1
+	local var_3_3 = RougeMapModel.instance:getMapSize().y / 2
 
-	if uv0.StandardRate <= UnityEngine.Screen.width / UnityEngine.Screen.height then
-		return slot4
+	if var_3_2 >= var_0_0.StandardRate then
+		return var_3_3
 	end
 
-	return slot4 * slot1 * uv0.StandardRate / slot0
+	return var_3_3 * (var_3_1 * var_0_0.StandardRate / var_3_0)
 end
 
-function slot0.getUIRoot()
-	if uv0.StandardRate <= UnityEngine.Screen.width / UnityEngine.Screen.height then
+function var_0_0.getUIRoot()
+	if UnityEngine.Screen.width / UnityEngine.Screen.height >= var_0_0.StandardRate then
 		return ViewMgr.instance:getUIRoot()
 	end
 
 	return ViewMgr.instance:getUILayer(UILayerName.PopUpTop)
 end
 
-function slot0.getScenePos(slot0, slot1, slot2)
-	slot1.z = slot2
-	slot3 = slot0:ScreenToWorldPoint(slot1)
-	slot3.x = uv0.retain2decimals(slot3.x)
-	slot3.y = uv0.retain2decimals(slot3.y)
-	slot3.z = uv0.retain2decimals(slot3.z)
+function var_0_0.getScenePos(arg_5_0, arg_5_1, arg_5_2)
+	arg_5_1.z = arg_5_2
 
-	return slot3
+	local var_5_0 = arg_5_0:ScreenToWorldPoint(arg_5_1)
+
+	var_5_0.x = var_0_0.retain2decimals(var_5_0.x)
+	var_5_0.y = var_0_0.retain2decimals(var_5_0.y)
+	var_5_0.z = var_0_0.retain2decimals(var_5_0.z)
+
+	return var_5_0
 end
 
-function slot0.retain2decimals(slot0)
-	return slot0 - slot0 % 0.01
+function var_0_0.retain2decimals(arg_6_0)
+	return arg_6_0 - arg_6_0 % 0.01
 end
 
-function slot0.getEpisodePosX(slot0)
-	return RougeMapEnum.MapStartOffsetX + (slot0 - 1) * RougeMapModel.instance:getMapEpisodeIntervalX()
+function var_0_0.getEpisodePosX(arg_7_0)
+	local var_7_0 = (arg_7_0 - 1) * RougeMapModel.instance:getMapEpisodeIntervalX()
+
+	return RougeMapEnum.MapStartOffsetX + var_7_0
 end
 
-function slot0.getNodeLocalPos(slot0, slot1)
-	return uv0.randomX(), -(RougeMapEnum.NodeLocalPosY[slot1][slot0] + RougeMapEnum.NodeGlobalOffsetY) * RougeMapModel.instance:getMapSize().y, 0
+function var_0_0.getNodeLocalPos(arg_8_0, arg_8_1)
+	local var_8_0 = var_0_0.randomX()
+	local var_8_1 = RougeMapEnum.NodeLocalPosY[arg_8_1][arg_8_0] + RougeMapEnum.NodeGlobalOffsetY
+	local var_8_2 = RougeMapModel.instance:getMapSize().y
+
+	return var_8_0, -var_8_1 * var_8_2, 0
 end
 
-function slot0.randomX()
-	return math.random(100, (RougeMapEnum.NodeLocalPosXRange * 2 + 1) * 100) * 0.01 - (RougeMapEnum.NodeLocalPosXRange + 1)
+function var_0_0.randomX()
+	local var_9_0 = (RougeMapEnum.NodeLocalPosXRange * 2 + 1) * 100
+
+	return math.random(100, var_9_0) * 0.01 - (RougeMapEnum.NodeLocalPosXRange + 1)
 end
 
-function slot0.getNodeContainerPos(slot0, slot1, slot2, slot3)
-	return uv0.getEpisodePosX(slot0) + slot1, slot2, slot3
+function var_0_0.getNodeContainerPos(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
+	return var_0_0.getEpisodePosX(arg_10_0) + arg_10_1, arg_10_2, arg_10_3
 end
 
-function slot0.getWorldPos(slot0, slot1, slot2)
-	slot3 = SLFramework.UGUI.RectTrHelper.ScreenPosToWorldPos(slot0, slot1, slot2)
+function var_0_0.getWorldPos(arg_11_0, arg_11_1, arg_11_2)
+	local var_11_0 = SLFramework.UGUI.RectTrHelper.ScreenPosToWorldPos(arg_11_0, arg_11_1, arg_11_2)
 
-	return slot3.x, slot3.y, slot3.z
+	return var_11_0.x, var_11_0.y, var_11_0.z
 end
 
-function slot0.getOffsetZ(slot0)
-	if math.abs(slot0) > 100 then
+function var_0_0.getOffsetZ(arg_12_0)
+	if math.abs(arg_12_0) > 100 then
 		logWarn("abs Y > 100")
 	end
 
-	return (slot0 - 100) * 0.001
+	arg_12_0 = arg_12_0 - 100
+
+	return arg_12_0 * 0.001
 end
 
-slot0.MapType2Cls = {
+var_0_0.MapType2Cls = {
 	[RougeMapEnum.MapType.Edit] = RougeMiddleLayerEditMap,
 	[RougeMapEnum.MapType.Normal] = RougeLayerMap,
 	[RougeMapEnum.MapType.Middle] = RougeMiddleLayerMap,
 	[RougeMapEnum.MapType.PathSelect] = RougePathSelectMap
 }
 
-function slot0.createMapComp(slot0)
-	if not uv0.MapType2Cls[slot0] then
-		logError("not found map cls .. " .. tostring(slot0))
+function var_0_0.createMapComp(arg_13_0)
+	local var_13_0 = var_0_0.MapType2Cls[arg_13_0]
 
-		slot1 = uv0.MapType2Cls[RougeMapEnum.MapType.Normal]
+	if not var_13_0 then
+		logError("not found map cls .. " .. tostring(arg_13_0))
+
+		var_13_0 = var_0_0.MapType2Cls[RougeMapEnum.MapType.Normal]
 	end
 
-	return slot1.New()
+	return (var_13_0.New())
 end
 
-function slot0.getScenePath(slot0)
-	return string.format(RougeMapEnum.ScenePrefabFormat, slot0)
+function var_0_0.getScenePath(arg_14_0)
+	return string.format(RougeMapEnum.ScenePrefabFormat, arg_14_0)
 end
 
-function slot0.addMapOtherRes(slot0, slot1)
-	if slot0 == RougeMapEnum.MapType.Edit then
-		slot1:addPath(RougeMapEnum.RedNodeResPath)
-		slot1:addPath(RougeMapEnum.GreenNodeResPath)
-		slot1:addPath(RougeMapEnum.LineResPath)
-		slot1:addPath(RougeMapEnum.MiddleLayerLeavePath)
-	elseif slot0 == RougeMapEnum.MapType.Normal then
-		slot1:addPath(RougeMapEnum.LinePrefabRes)
+function var_0_0.addMapOtherRes(arg_15_0, arg_15_1)
+	if arg_15_0 == RougeMapEnum.MapType.Edit then
+		arg_15_1:addPath(RougeMapEnum.RedNodeResPath)
+		arg_15_1:addPath(RougeMapEnum.GreenNodeResPath)
+		arg_15_1:addPath(RougeMapEnum.LineResPath)
+		arg_15_1:addPath(RougeMapEnum.MiddleLayerLeavePath)
+	elseif arg_15_0 == RougeMapEnum.MapType.Normal then
+		arg_15_1:addPath(RougeMapEnum.LinePrefabRes)
 
-		for slot5, slot6 in pairs(RougeMapEnum.LineIconRes) do
-			slot1:addPath(slot6)
+		for iter_15_0, iter_15_1 in pairs(RougeMapEnum.LineIconRes) do
+			arg_15_1:addPath(iter_15_1)
 		end
 
-		for slot5, slot6 in pairs(RougeMapEnum.IconPath) do
-			slot1:addPath(uv0.getScenePath(slot6))
+		for iter_15_2, iter_15_3 in pairs(RougeMapEnum.IconPath) do
+			arg_15_1:addPath(var_0_0.getScenePath(iter_15_3))
 		end
 
-		for slot5, slot6 in pairs(RougeMapEnum.NodeBgPath) do
-			for slot10, slot11 in pairs(slot6) do
-				slot1:addPath(uv0.getScenePath(slot11))
+		for iter_15_4, iter_15_5 in pairs(RougeMapEnum.NodeBgPath) do
+			for iter_15_6, iter_15_7 in pairs(iter_15_5) do
+				arg_15_1:addPath(var_0_0.getScenePath(iter_15_7))
 			end
 		end
 
-		slot1:addPath(uv0.getScenePath(RougeMapEnum.StartNodeBgPath))
-	elseif slot0 == RougeMapEnum.MapType.Middle then
-		slot1:addPath(RougeMapEnum.MiddleLayerLeavePath)
-		slot1:addPath(RougeMapEnum.PieceBossEffect)
-		slot1:addPath(uv0.getPieceResPath(RougeMapEnum.ActorPiecePath, RougeMapModel.instance:getMiddleLayerCo().dayOrNight))
+		arg_15_1:addPath(var_0_0.getScenePath(RougeMapEnum.StartNodeBgPath))
+	elseif arg_15_0 == RougeMapEnum.MapType.Middle then
+		arg_15_1:addPath(RougeMapEnum.MiddleLayerLeavePath)
+		arg_15_1:addPath(RougeMapEnum.PieceBossEffect)
 
-		for slot9, slot10 in ipairs(RougeMapModel.instance:getPieceList()) do
-			if not string.nilorempty(slot10:getPieceCo().pieceRes) then
-				slot1:addPath(uv0.getPieceResPath(slot12, slot3))
+		local var_15_0 = RougeMapModel.instance:getMiddleLayerCo().dayOrNight
+		local var_15_1 = var_0_0.getPieceResPath(RougeMapEnum.ActorPiecePath, var_15_0)
+
+		arg_15_1:addPath(var_15_1)
+
+		local var_15_2 = RougeMapModel.instance:getPieceList()
+
+		for iter_15_8, iter_15_9 in ipairs(var_15_2) do
+			local var_15_3 = iter_15_9:getPieceCo().pieceRes
+
+			if not string.nilorempty(var_15_3) then
+				local var_15_4 = var_0_0.getPieceResPath(var_15_3, var_15_0)
+
+				arg_15_1:addPath(var_15_4)
 			end
 		end
 
-		for slot9, slot10 in pairs(RougeMapEnum.PieceIconRes) do
-			slot1:addPath(slot10)
+		for iter_15_10, iter_15_11 in pairs(RougeMapEnum.PieceIconRes) do
+			arg_15_1:addPath(iter_15_11)
 		end
 
-		for slot9, slot10 in pairs(RougeMapEnum.PieceIconBgRes) do
-			slot1:addPath(slot10)
+		for iter_15_12, iter_15_13 in pairs(RougeMapEnum.PieceIconBgRes) do
+			arg_15_1:addPath(iter_15_13)
 		end
-	elseif slot0 == RougeMapEnum.MapType.PathSelect then
-		-- Nothing
+	elseif arg_15_0 == RougeMapEnum.MapType.PathSelect then
+		-- block empty
 	end
 end
 
-function slot0.getMapResPath(slot0)
-	if slot0 == RougeMapEnum.MapType.Edit then
-		return RougeMapConfig.instance:getMiddleMapResPath(RougeMapEditModel.instance.middleLayerId)
-	elseif slot0 == RougeMapEnum.MapType.Middle then
-		return RougeMapConfig.instance:getMiddleMapResPath(RougeMapModel.instance:getMiddleLayerId())
-	elseif slot0 == RougeMapEnum.MapType.Normal then
+function var_0_0.getMapResPath(arg_16_0)
+	if arg_16_0 == RougeMapEnum.MapType.Edit then
+		local var_16_0 = RougeMapEditModel.instance.middleLayerId
+
+		return RougeMapConfig.instance:getMiddleMapResPath(var_16_0)
+	elseif arg_16_0 == RougeMapEnum.MapType.Middle then
+		local var_16_1 = RougeMapModel.instance:getMiddleLayerId()
+
+		return RougeMapConfig.instance:getMiddleMapResPath(var_16_1)
+	elseif arg_16_0 == RougeMapEnum.MapType.Normal then
 		return RougeMapModel.instance:getLayerCo().mapRes
-	elseif slot0 == RougeMapEnum.MapType.PathSelect then
+	elseif arg_16_0 == RougeMapEnum.MapType.PathSelect then
 		return RougeMapModel.instance:getPathSelectCo().mapRes
 	end
 end
 
-function slot0.getPieceResPath(slot0, slot1)
-	return string.format("scenes/v1a9_m_s16_dilao_room/scene_prefab/chess/%s_%s.prefab", slot0, RougeMapEnum.DayOrNightSuffix[slot1])
+function var_0_0.getPieceResPath(arg_17_0, arg_17_1)
+	local var_17_0 = RougeMapEnum.DayOrNightSuffix[arg_17_1]
+
+	return string.format("scenes/v1a9_m_s16_dilao_room/scene_prefab/chess/%s_%s.prefab", arg_17_0, var_17_0)
 end
 
-function slot0.formatLineParam(slot0, slot1, slot2, slot3)
-	if slot0 == RougeMapEnum.MiddleLayerPointType.Pieces or slot0 == RougeMapEnum.MiddleLayerPointType.Leave then
-		return slot0, slot1, slot2, slot3
+function var_0_0.formatLineParam(arg_18_0, arg_18_1, arg_18_2, arg_18_3)
+	if arg_18_0 == RougeMapEnum.MiddleLayerPointType.Pieces or arg_18_0 == RougeMapEnum.MiddleLayerPointType.Leave then
+		return arg_18_0, arg_18_1, arg_18_2, arg_18_3
 	end
 
-	return slot2, slot3, slot0, slot1
+	return arg_18_2, arg_18_3, arg_18_0, arg_18_1
 end
 
-function slot0.backToMainScene()
+function var_0_0.backToMainScene()
 	RougeMapModel.instance:clearInteractive()
 	RougePopController.instance:clearAllPopView()
 	ViewMgr.instance:closeAllPopupViews(nil, true)
 	DungeonModel.instance:changeCategory(DungeonEnum.ChapterType.Normal)
 	MainController.instance:enterMainScene(true, false)
-	SceneHelper.instance:waitSceneDone(SceneType.Main, uv0._onEnterMainSceneDone)
+	SceneHelper.instance:waitSceneDone(SceneType.Main, var_0_0._onEnterMainSceneDone)
 end
 
-function slot0._onEnterMainSceneDone()
+function var_0_0._onEnterMainSceneDone()
 	GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, ViewName.RougeMainView)
 
-	slot0 = FlowSequence.New()
+	local var_20_0 = FlowSequence.New()
 
-	slot0:addWork(OpenViewWork.New({
+	var_20_0:addWork(OpenViewWork.New({
 		openFunction = DungeonController.openDungeonView,
 		openFunctionObj = DungeonController.instance,
 		waitOpenViewName = ViewName.DungeonView
 	}))
-	slot0:addWork(OpenViewWork.New({
+	var_20_0:addWork(OpenViewWork.New({
 		openFunction = RougeController.openRougeMainView,
 		openFunctionObj = RougeController.instance,
 		waitOpenViewName = ViewName.RougeMainView
 	}))
-	slot0:start()
+	var_20_0:start()
 end
 
-function slot0.getEpisodeIndex(slot0)
-	return slot0 + 1
+function var_0_0.getEpisodeIndex(arg_21_0)
+	return arg_21_0 + 1
 end
 
-function slot0.loadItem(slot0, slot1, slot2, slot3)
-	for slot7, slot8 in ipairs(slot2) do
-		if not slot3[slot7] then
-			slot9 = slot1.New()
+function var_0_0.loadItem(arg_22_0, arg_22_1, arg_22_2, arg_22_3)
+	for iter_22_0, iter_22_1 in ipairs(arg_22_2) do
+		local var_22_0 = arg_22_3[iter_22_0]
 
-			slot9:init(gohelper.cloneInPlace(slot0))
-			table.insert(slot3, slot9)
+		if not var_22_0 then
+			var_22_0 = arg_22_1.New()
+
+			local var_22_1 = gohelper.cloneInPlace(arg_22_0)
+
+			var_22_0:init(var_22_1)
+			table.insert(arg_22_3, var_22_0)
 		end
 
-		slot9:show()
-		slot9:update(slot7, slot8)
+		var_22_0:show()
+		var_22_0:update(iter_22_0, iter_22_1)
 	end
 
-	for slot7 = #slot2 + 1, #slot3 do
-		slot3[slot7]:hide()
+	for iter_22_2 = #arg_22_2 + 1, #arg_22_3 do
+		arg_22_3[iter_22_2]:hide()
 	end
 end
 
-function slot0.loadItemWithCustomUpdateFunc(slot0, slot1, slot2, slot3, slot4, slot5)
-	for slot9, slot10 in ipairs(slot2) do
-		if not slot3[slot9] then
-			slot11 = slot1.New()
+function var_0_0.loadItemWithCustomUpdateFunc(arg_23_0, arg_23_1, arg_23_2, arg_23_3, arg_23_4, arg_23_5)
+	for iter_23_0, iter_23_1 in ipairs(arg_23_2) do
+		local var_23_0 = arg_23_3[iter_23_0]
 
-			slot11:init(gohelper.cloneInPlace(slot0))
-			table.insert(slot3, slot11)
+		if not var_23_0 then
+			var_23_0 = arg_23_1.New()
+
+			local var_23_1 = gohelper.cloneInPlace(arg_23_0)
+
+			var_23_0:init(var_23_1)
+			table.insert(arg_23_3, var_23_0)
 		end
 
-		slot11:show()
-		slot4(slot5, slot11, slot9, slot10)
+		var_23_0:show()
+		arg_23_4(arg_23_5, var_23_0, iter_23_0, iter_23_1)
 	end
 
-	for slot9 = #slot2 + 1, #slot3 do
-		slot3[slot9]:hide()
+	for iter_23_2 = #arg_23_2 + 1, #arg_23_3 do
+		arg_23_3[iter_23_2]:hide()
 	end
 end
 
-function slot0.loadGoItem(slot0, slot1, slot2)
-	for slot6 = 1, slot1 do
-		slot7 = nil
+function var_0_0.loadGoItem(arg_24_0, arg_24_1, arg_24_2)
+	for iter_24_0 = 1, arg_24_1 do
+		local var_24_0
 
-		if slot2 then
-			if not slot2[slot6] then
-				table.insert(slot2, gohelper.cloneInPlace(slot0))
+		if arg_24_2 then
+			var_24_0 = arg_24_2[iter_24_0]
+
+			if not var_24_0 then
+				var_24_0 = gohelper.cloneInPlace(arg_24_0)
+
+				table.insert(arg_24_2, var_24_0)
 			end
 		else
-			slot7 = gohelper.cloneInPlace(slot0)
+			var_24_0 = gohelper.cloneInPlace(arg_24_0)
 		end
 
-		gohelper.setActive(slot7, true)
+		gohelper.setActive(var_24_0, true)
 	end
 
-	if slot2 then
-		for slot6 = slot1 + 1, #slot2 do
-			gohelper.setActive(slot2[slot6], false)
+	if arg_24_2 then
+		for iter_24_1 = arg_24_1 + 1, #arg_24_2 do
+			gohelper.setActive(arg_24_2[iter_24_1], false)
 		end
 	end
 end
 
-function slot0.destroyItemList(slot0)
-	for slot4, slot5 in pairs(slot0) do
-		slot5:destroy()
+function var_0_0.destroyItemList(arg_25_0)
+	for iter_25_0, iter_25_1 in pairs(arg_25_0) do
+		iter_25_1:destroy()
 	end
 end
 
-function slot0.getLineType(slot0, slot1)
-	if RougeMapEnum.StatusLineMap[slot0][slot1] == RougeMapEnum.LineType.None then
-		logError(string.format("Impossible situation .. curStatus : %s   ---   preStatus : %s", slot0, slot1))
+function var_0_0.getLineType(arg_26_0, arg_26_1)
+	local var_26_0 = RougeMapEnum.StatusLineMap[arg_26_0][arg_26_1]
+
+	if var_26_0 == RougeMapEnum.LineType.None then
+		logError(string.format("Impossible situation .. curStatus : %s   ---   preStatus : %s", arg_26_0, arg_26_1))
 
 		return RougeMapEnum.LineType.CantArrive
 	end
 
-	return slot2
+	return var_26_0
 end
 
-function slot0.getMiddleLayerPathListLen(slot0, slot1, slot2)
-	slot3 = slot0.pathPointPos
+function var_0_0.getMiddleLayerPathListLen(arg_27_0, arg_27_1, arg_27_2)
+	local var_27_0 = arg_27_0.pathPointPos
+	local var_27_1 = 0
 
-	for slot8 = 2, #slot1 do
-		slot11 = Vector2.Distance(slot3[slot1[slot8 - 1]], slot3[slot1[slot8]])
-		slot4 = 0 + slot11
+	for iter_27_0 = 2, #arg_27_1 do
+		local var_27_2 = var_27_0[arg_27_1[iter_27_0 - 1]]
+		local var_27_3 = var_27_0[arg_27_1[iter_27_0]]
+		local var_27_4 = Vector2.Distance(var_27_2, var_27_3)
 
-		table.insert(slot2, slot11)
+		var_27_1 = var_27_1 + var_27_4
+
+		table.insert(arg_27_2, var_27_4)
 	end
 
-	for slot8, slot9 in ipairs(slot2) do
-		slot2[slot8] = slot9 / slot4 + (slot2[slot8 - 1] or 0)
+	for iter_27_1, iter_27_2 in ipairs(arg_27_2) do
+		arg_27_2[iter_27_1] = iter_27_2 / var_27_1 + (arg_27_2[iter_27_1 - 1] or 0)
 	end
 
-	slot2[#slot2] = 1
+	arg_27_2[#arg_27_2] = 1
 
-	return slot4
+	return var_27_1
 end
 
-function slot0.getAngle(slot0, slot1, slot2, slot3)
-	slot6 = slot2 - slot0 > 0 and 1 or -1
-	slot7 = slot3 - slot1 > 0 and 1 or -1
+function var_0_0.getAngle(arg_28_0, arg_28_1, arg_28_2, arg_28_3)
+	local var_28_0 = arg_28_2 - arg_28_0
+	local var_28_1 = arg_28_3 - arg_28_1
+	local var_28_2 = var_28_0 > 0 and 1 or -1
+	local var_28_3 = var_28_1 > 0 and 1 or -1
 
-	if slot4 == 0 then
-		if slot5 == 0 then
+	if var_28_0 == 0 then
+		if var_28_1 == 0 then
 			return 0
 		else
-			return slot7 > 0 and 90 or 270
+			return var_28_3 > 0 and 90 or 270
 		end
 	end
 
-	if slot5 == 0 then
-		if slot4 == 0 then
+	if var_28_1 == 0 then
+		if var_28_0 == 0 then
 			return 0
 		else
-			return slot6 > 0 and 0 or 180
+			return var_28_2 > 0 and 0 or 180
 		end
 	end
 
-	if slot6 > 0 then
-		if slot7 > 0 then
-			return math.atan(math.abs(slot5) / math.abs(slot4)) * 180 / math.pi
+	local var_28_4 = math.abs(var_28_1) / math.abs(var_28_0)
+	local var_28_5 = math.atan(var_28_4) * 180 / math.pi
+
+	if var_28_2 > 0 then
+		if var_28_3 > 0 then
+			return var_28_5
 		else
-			return 360 - slot9
+			return 360 - var_28_5
 		end
 	else
-		return 180 - slot7 * slot9
+		return 180 - var_28_3 * var_28_5
 	end
 end
 
-function slot0.getPieceDir(slot0)
-	if slot0 >= 0 and slot0 <= 90 then
+function var_0_0.getPieceDir(arg_29_0)
+	if arg_29_0 >= 0 and arg_29_0 <= 90 then
 		return RougeMapEnum.PieceDir.Top
-	elseif slot0 >= 90 and slot0 <= 180 then
+	elseif arg_29_0 >= 90 and arg_29_0 <= 180 then
 		return RougeMapEnum.PieceDir.Left
-	elseif slot0 >= 180 and slot0 <= 270 then
+	elseif arg_29_0 >= 180 and arg_29_0 <= 270 then
 		return RougeMapEnum.PieceDir.Bottom
-	elseif slot0 >= 270 and slot0 <= 360 then
+	elseif arg_29_0 >= 270 and arg_29_0 <= 360 then
 		return RougeMapEnum.PieceDir.Right
 	end
 
 	return RougeMapEnum.PieceDir.Bottom
 end
 
-function slot0.getActorDir(slot0, slot1)
-	if slot1 >= 0 and slot1 <= 22.5 then
+function var_0_0.getActorDir(arg_30_0, arg_30_1)
+	if arg_30_1 >= 0 and arg_30_1 <= 22.5 then
 		return RougeMapEnum.ActorDir.RightTop
-	elseif slot1 >= 22.5 and slot1 <= 67.5 then
+	elseif arg_30_1 >= 22.5 and arg_30_1 <= 67.5 then
 		return RougeMapEnum.ActorDir.Top
-	elseif slot1 >= 67.5 and slot1 <= 112.5 then
+	elseif arg_30_1 >= 67.5 and arg_30_1 <= 112.5 then
 		return RougeMapEnum.ActorDir.LeftTop
-	elseif slot1 >= 112.5 and slot1 <= 157.5 then
+	elseif arg_30_1 >= 112.5 and arg_30_1 <= 157.5 then
 		return RougeMapEnum.ActorDir.Left
-	elseif slot1 >= 157.5 and slot1 <= 202.5 then
+	elseif arg_30_1 >= 157.5 and arg_30_1 <= 202.5 then
 		return RougeMapEnum.ActorDir.LeftBottom
-	elseif slot1 >= 202.5 and slot1 <= 247.5 then
+	elseif arg_30_1 >= 202.5 and arg_30_1 <= 247.5 then
 		return RougeMapEnum.ActorDir.Bottom
-	elseif slot1 >= 247.5 and slot1 <= 292.5 then
+	elseif arg_30_1 >= 247.5 and arg_30_1 <= 292.5 then
 		return RougeMapEnum.ActorDir.RightBottom
-	elseif slot1 >= 292.5 and slot1 <= 337.5 then
+	elseif arg_30_1 >= 292.5 and arg_30_1 <= 337.5 then
 		return RougeMapEnum.ActorDir.Right
-	elseif slot1 >= 337.5 and slot1 <= 360 then
+	elseif arg_30_1 >= 337.5 and arg_30_1 <= 360 then
 		return RougeMapEnum.ActorDir.RightTop
 	end
 
 	return RougeMapEnum.ActorDir.Bottom
 end
 
-function slot0.isEntrustPiece(slot0)
-	return slot0 == RougeMapEnum.PieceEntrustType.Normal or slot0 == RougeMapEnum.PieceEntrustType.Hard
+function var_0_0.isEntrustPiece(arg_31_0)
+	return arg_31_0 == RougeMapEnum.PieceEntrustType.Normal or arg_31_0 == RougeMapEnum.PieceEntrustType.Hard
 end
 
-function slot0.isRestPiece(slot0)
-	return slot0 == RougeMapEnum.PieceEntrustType.Rest
+function var_0_0.isRestPiece(arg_32_0)
+	return arg_32_0 == RougeMapEnum.PieceEntrustType.Rest
 end
 
-function slot0.isFightEvent(slot0)
-	if not slot0 then
+function var_0_0.isFightEvent(arg_33_0)
+	if not arg_33_0 then
 		return false
 	end
 
-	return slot0 == RougeMapEnum.EventType.NormalFight or slot0 == RougeMapEnum.EventType.HardFight or slot0 == RougeMapEnum.EventType.EliteFight or slot0 == RougeMapEnum.EventType.BossFight
+	return arg_33_0 == RougeMapEnum.EventType.NormalFight or arg_33_0 == RougeMapEnum.EventType.HardFight or arg_33_0 == RougeMapEnum.EventType.EliteFight or arg_33_0 == RougeMapEnum.EventType.BossFight
 end
 
-function slot0.isChoiceEvent(slot0)
-	if not slot0 then
+function var_0_0.isChoiceEvent(arg_34_0)
+	if not arg_34_0 then
 		return false
 	end
 
-	return slot0 == RougeMapEnum.EventType.Reward or slot0 == RougeMapEnum.EventType.Choice or slot0 == RougeMapEnum.EventType.Rest
+	return arg_34_0 == RougeMapEnum.EventType.Reward or arg_34_0 == RougeMapEnum.EventType.Choice or arg_34_0 == RougeMapEnum.EventType.Rest
 end
 
-function slot0.isStoreEvent(slot0)
-	if not slot0 then
+function var_0_0.isStoreEvent(arg_35_0)
+	if not arg_35_0 then
 		return false
 	end
 
-	return slot0 == RougeMapEnum.EventType.Store
+	return arg_35_0 == RougeMapEnum.EventType.Store
 end
 
-function slot0.getPos(slot0)
-	slot1 = string.splitToNumber(slot0, "#")
+function var_0_0.getPos(arg_36_0)
+	local var_36_0 = string.splitToNumber(arg_36_0, "#")
 
-	return slot1[1], slot1[2]
+	return var_36_0[1], var_36_0[2]
 end
 
-function slot0.filterUnActivePieceChoice(slot0)
-	for slot4 = #slot0, 1, -1 do
-		slot6 = lua_rouge_piece_select.configDict[slot0[slot4]]
+function var_0_0.filterUnActivePieceChoice(arg_37_0)
+	for iter_37_0 = #arg_37_0, 1, -1 do
+		local var_37_0 = arg_37_0[iter_37_0]
+		local var_37_1 = lua_rouge_piece_select.configDict[var_37_0]
 
-		if not RougeMapUnlockHelper.checkIsUnlock(slot6.activeType, slot6.activeParam) then
-			table.remove(slot0, slot4)
+		if not RougeMapUnlockHelper.checkIsUnlock(var_37_1.activeType, var_37_1.activeParam) then
+			table.remove(arg_37_0, iter_37_0)
 		end
 	end
 end
 
-function slot0.getChangeMapEnum(slot0, slot1)
-	if slot0 == RougeMapEnum.MapType.Normal and slot1 == RougeMapEnum.MapType.Middle then
+function var_0_0.getChangeMapEnum(arg_38_0, arg_38_1)
+	if arg_38_0 == RougeMapEnum.MapType.Normal and arg_38_1 == RougeMapEnum.MapType.Middle then
 		return RougeMapEnum.ChangeMapEnum.NormalToMiddle
-	elseif slot0 == RougeMapEnum.MapType.Middle and slot1 == RougeMapEnum.MapType.PathSelect then
+	elseif arg_38_0 == RougeMapEnum.MapType.Middle and arg_38_1 == RougeMapEnum.MapType.PathSelect then
 		return RougeMapEnum.ChangeMapEnum.MiddleToPathSelect
-	elseif slot0 == RougeMapEnum.MapType.PathSelect and slot1 == RougeMapEnum.MapType.Normal then
+	elseif arg_38_0 == RougeMapEnum.MapType.PathSelect and arg_38_1 == RougeMapEnum.MapType.Normal then
 		return RougeMapEnum.ChangeMapEnum.PathSelectToNormal
 	end
 end
 
-function slot0.getLifeChangeStatus(slot0, slot1)
-	if slot0 == slot1 then
+function var_0_0.getLifeChangeStatus(arg_39_0, arg_39_1)
+	if arg_39_0 == arg_39_1 then
 		return RougeMapEnum.LifeChangeStatus.Idle
 	end
 
-	if slot0 < slot1 then
+	if arg_39_0 < arg_39_1 then
 		return RougeMapEnum.LifeChangeStatus.Add
 	end
 
 	return RougeMapEnum.LifeChangeStatus.Reduce
 end
 
-function slot0.checkNeedFilterUnique(slot0)
-	return slot0 == RougeMapEnum.InteractType.LossAndCopy or slot0 == RougeMapEnum.InteractType.LossNotUniqueCollection or slot0 == RougeMapEnum.InteractType.StorageCollection
+function var_0_0.checkNeedFilterUnique(arg_40_0)
+	return arg_40_0 == RougeMapEnum.InteractType.LossAndCopy or arg_40_0 == RougeMapEnum.InteractType.LossNotUniqueCollection or arg_40_0 == RougeMapEnum.InteractType.StorageCollection
 end
 
-function slot0.getEndId()
-	slot1 = RougeMapModel.instance:getCurPieceMo() and slot0.selectId
+function var_0_0.getEndId()
+	local var_41_0 = RougeMapModel.instance:getCurPieceMo()
+	local var_41_1 = var_41_0 and var_41_0.selectId
+	local var_41_2 = var_41_1 and lua_rouge_piece_select.configDict[var_41_1]
 
-	if not (slot1 and lua_rouge_piece_select.configDict[slot1]) then
+	if not var_41_2 then
 		return
 	end
 
-	return string.splitToNumber(slot2.triggerParam, "#") and slot3[2]
+	local var_41_3 = string.splitToNumber(var_41_2.triggerParam, "#")
+
+	return var_41_3 and var_41_3[2]
 end
 
-slot0.CommonIgnoreViewDict = {
+var_0_0.CommonIgnoreViewDict = {
 	[ViewName.RougeMapView] = true,
 	[ViewName.RougeMapTipView] = true,
 	[ViewName.ToastView] = true,
@@ -457,11 +520,13 @@ slot0.CommonIgnoreViewDict = {
 	[ViewName.GuideView] = true
 }
 
-function slot0.checkMapViewOnTop(slot0)
-	for slot5, slot6 in ipairs(ViewMgr.instance:getOpenViewNameList()) do
-		if not uv0.CommonIgnoreViewDict[slot6] then
-			if slot0 then
-				logNormal("cur top view : " .. tostring(slot6))
+function var_0_0.checkMapViewOnTop(arg_42_0)
+	local var_42_0 = ViewMgr.instance:getOpenViewNameList()
+
+	for iter_42_0, iter_42_1 in ipairs(var_42_0) do
+		if not var_0_0.CommonIgnoreViewDict[iter_42_1] then
+			if arg_42_0 then
+				logNormal("cur top view : " .. tostring(iter_42_1))
 			end
 
 			return false
@@ -471,7 +536,7 @@ function slot0.checkMapViewOnTop(slot0)
 	return true
 end
 
-function slot0.clearMapData()
+function var_0_0.clearMapData()
 	RougeMapController.instance:clear()
 	RougeMapModel.instance:clear()
 	RougeMapTipPopController.instance:clear()
@@ -479,4 +544,4 @@ function slot0.clearMapData()
 	RougePopController.instance:clearAllPopView()
 end
 
-return slot0
+return var_0_0

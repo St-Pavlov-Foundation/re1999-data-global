@@ -1,98 +1,115 @@
-module("modules.logic.versionactivity1_5.act142.view.game.Activity142GameScene", package.seeall)
+﻿module("modules.logic.versionactivity1_5.act142.view.game.Activity142GameScene", package.seeall)
 
-slot0 = class("Activity142GameScene", Va3ChessGameScene)
+local var_0_0 = class("Activity142GameScene", Va3ChessGameScene)
 
-function slot0._editableInitView(slot0)
-	slot0._baffleItems = {}
-	slot0._baffleItemPools = {}
+function var_0_0._editableInitView(arg_1_0)
+	arg_1_0._baffleItems = {}
+	arg_1_0._baffleItemPools = {}
 
-	uv0.super._editableInitView(slot0)
+	var_0_0.super._editableInitView(arg_1_0)
 end
 
-function slot0.addEvents(slot0)
-	uv0.super.addEvents(slot0)
-	slot0:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.TileTriggerUpdate, slot0._onTileTriggerUpdate, slot0)
-	slot0:addEventCb(Activity142Controller.instance, Activity142Event.Back2CheckPoint, slot0._onMapChange, slot0)
-	slot0:addEventCb(Activity142Controller.instance, Activity142Event.PlaySwitchPlayerEff, slot0.playSwitchPlayerEff, slot0)
-	slot0:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.EnterNextMap, slot0._onMapChange, slot0)
+function var_0_0.addEvents(arg_2_0)
+	var_0_0.super.addEvents(arg_2_0)
+	arg_2_0:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.TileTriggerUpdate, arg_2_0._onTileTriggerUpdate, arg_2_0)
+	arg_2_0:addEventCb(Activity142Controller.instance, Activity142Event.Back2CheckPoint, arg_2_0._onMapChange, arg_2_0)
+	arg_2_0:addEventCb(Activity142Controller.instance, Activity142Event.PlaySwitchPlayerEff, arg_2_0.playSwitchPlayerEff, arg_2_0)
+	arg_2_0:addEventCb(Va3ChessGameController.instance, Va3ChessEvent.EnterNextMap, arg_2_0._onMapChange, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	uv0.super.removeEvents(slot0)
-	slot0:removeEventCb(Va3ChessGameController.instance, Va3ChessEvent.TileTriggerUpdate, slot0._onTileTriggerUpdate, slot0)
-	slot0:removeEventCb(Activity142Controller.instance, Activity142Event.Back2CheckPoint, slot0._onMapChange, slot0)
-	slot0:removeEventCb(Activity142Controller.instance, Activity142Event.PlaySwitchPlayerEff, slot0.playSwitchPlayerEff, slot0)
-	slot0:removeEventCb(Va3ChessGameController.instance, Va3ChessEvent.EnterNextMap, slot0._onMapChange, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	var_0_0.super.removeEvents(arg_3_0)
+	arg_3_0:removeEventCb(Va3ChessGameController.instance, Va3ChessEvent.TileTriggerUpdate, arg_3_0._onTileTriggerUpdate, arg_3_0)
+	arg_3_0:removeEventCb(Activity142Controller.instance, Activity142Event.Back2CheckPoint, arg_3_0._onMapChange, arg_3_0)
+	arg_3_0:removeEventCb(Activity142Controller.instance, Activity142Event.PlaySwitchPlayerEff, arg_3_0.playSwitchPlayerEff, arg_3_0)
+	arg_3_0:removeEventCb(Va3ChessGameController.instance, Va3ChessEvent.EnterNextMap, arg_3_0._onMapChange, arg_3_0)
 end
 
-function slot0._onTileTriggerUpdate(slot0, slot1, slot2, slot3)
-	if not Va3ChessGameModel.instance:getTileMO(slot1, slot2) or not slot4:isHasTrigger(slot3) then
+function var_0_0._onTileTriggerUpdate(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
+	local var_4_0 = Va3ChessGameModel.instance:getTileMO(arg_4_1, arg_4_2)
+
+	if not var_4_0 or not var_4_0:isHasTrigger(arg_4_3) then
 		return
 	end
 
-	if slot3 == Va3ChessEnum.TileTrigger.Broken then
-		slot0:updateBrokenTile(slot0:getBaseTile(slot1, slot2), slot4, true)
+	local var_4_1 = arg_4_0:getBaseTile(arg_4_1, arg_4_2)
+
+	if arg_4_3 == Va3ChessEnum.TileTrigger.Broken then
+		arg_4_0:updateBrokenTile(var_4_1, var_4_0, true)
 	end
 end
 
-function slot0._onMapChange(slot0)
-	slot0:resetTiles()
-	slot0:resetBaffle()
+function var_0_0._onMapChange(arg_5_0)
+	arg_5_0:resetTiles()
+	arg_5_0:resetBaffle()
 	Va3ChessGameController.instance:setSelectObj(nil)
 	Va3ChessGameController.instance:autoSelectPlayer(true)
 end
 
-function slot0.onResetMapView(slot0)
-	slot0:resetBaffle()
-	uv0.super.onResetMapView(slot0)
+function var_0_0.onResetMapView(arg_6_0)
+	arg_6_0:resetBaffle()
+	var_0_0.super.onResetMapView(arg_6_0)
 end
 
-function slot0.onResetGame(slot0)
-	slot0:resetBaffle()
-	uv0.super.onResetGame(slot0)
+function var_0_0.onResetGame(arg_7_0)
+	arg_7_0:resetBaffle()
+	var_0_0.super.onResetGame(arg_7_0)
 end
 
-function slot0.onLoadRes(slot0)
-	for slot5, slot6 in ipairs(slot0:_getGroundItemUrlList()) do
-		slot0._loader:addPath(slot6)
+function var_0_0.onLoadRes(arg_8_0)
+	local var_8_0 = arg_8_0:_getGroundItemUrlList()
+
+	for iter_8_0, iter_8_1 in ipairs(var_8_0) do
+		arg_8_0._loader:addPath(iter_8_1)
 	end
 
-	slot0._loader:addPath(Activity142Enum.BrokenGroundItemPath)
-	slot0._loader:addPath(Activity142Enum.SwitchPlayerEffPath)
+	arg_8_0._loader:addPath(Activity142Enum.BrokenGroundItemPath)
+	arg_8_0._loader:addPath(Activity142Enum.SwitchPlayerEffPath)
 end
 
-function slot0._getGroundItemUrlList(slot0)
-	if not Activity142Config.instance:getGroundItemUrlList(Va3ChessGameModel.instance:getActId(), Va3ChessGameModel.instance:getMapId()) or #slot3 < 0 then
-		slot3 = {
+function var_0_0._getGroundItemUrlList(arg_9_0)
+	local var_9_0 = Va3ChessGameModel.instance:getMapId()
+	local var_9_1 = Va3ChessGameModel.instance:getActId()
+	local var_9_2 = Activity142Config.instance:getGroundItemUrlList(var_9_1, var_9_0)
+
+	if not var_9_2 or #var_9_2 < 0 then
+		var_9_2 = {
 			Va3ChessEnum.SceneResPath.GroundItem
 		}
 	end
 
-	return slot3
+	return var_9_2
 end
 
-function slot0.getGroundItemUrl(slot0, slot1, slot2)
-	slot3 = nil
-	slot4 = slot0:_getGroundItemUrlList()
+function var_0_0.getGroundItemUrl(arg_10_0, arg_10_1, arg_10_2)
+	local var_10_0
+	local var_10_1 = arg_10_0:_getGroundItemUrlList()
 
-	if slot1 and slot2 and Va3ChessGameModel.instance:getTileMO(slot1, slot2) and slot5:isHasTrigger(Va3ChessEnum.TileTrigger.Broken) then
-		slot3 = Activity142Enum.BrokenGroundItemPath
+	if arg_10_1 and arg_10_2 then
+		local var_10_2 = Va3ChessGameModel.instance:getTileMO(arg_10_1, arg_10_2)
+
+		if var_10_2 and var_10_2:isHasTrigger(Va3ChessEnum.TileTrigger.Broken) then
+			var_10_0 = Activity142Enum.BrokenGroundItemPath
+		end
 	end
 
-	if string.nilorempty(slot3) then
-		slot3 = slot4[math.random(1, #slot4)]
+	if string.nilorempty(var_10_0) then
+		var_10_0 = var_10_1[math.random(1, #var_10_1)]
 	end
 
-	return slot3
+	return var_10_0
 end
 
-function slot0.onTileItemCreate(slot0, slot1, slot2, slot3)
-	slot3.animator = slot3.go:GetComponent(Va3ChessEnum.ComponentType.Animator)
+function var_0_0.onTileItemCreate(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
+	arg_11_3.animator = arg_11_3.go:GetComponent(Va3ChessEnum.ComponentType.Animator)
 
-	slot0:updateBrokenTile(slot3, Va3ChessGameModel.instance:getTileMO(slot1, slot2))
+	local var_11_0 = Va3ChessGameModel.instance:getTileMO(arg_11_1, arg_11_2)
+
+	arg_11_0:updateBrokenTile(arg_11_3, var_11_0)
 end
 
-slot2 = {
+local var_0_1 = "CtoD"
+local var_0_2 = {
 	{
 		idle = "xianjing_b",
 		tween = "xianjing_b"
@@ -103,155 +120,187 @@ slot2 = {
 	},
 	{
 		idle = "xianjing_d",
-		tween = "CtoD"
+		tween = var_0_1
 	}
 }
 
-function slot0.updateBrokenTile(slot0, slot1, slot2, slot3)
-	if not slot1 or not slot2 or not slot2:isHasTrigger(Va3ChessEnum.TileTrigger.Broken) then
+function var_0_0.updateBrokenTile(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
+	local var_12_0 = Va3ChessEnum.TileTrigger.Broken
+
+	if not arg_12_1 or not arg_12_2 or not arg_12_2:isHasTrigger(var_12_0) then
 		return
 	end
 
-	if not uv0[slot2:getTriggerBrokenStatus()] then
+	local var_12_1 = arg_12_2:getTriggerBrokenStatus()
+	local var_12_2 = var_0_2[var_12_1]
+
+	if not var_12_2 then
 		return
 	end
 
-	slot7 = nil
+	local var_12_3
 
-	if (not slot3 or slot6.tween) and slot6.idle and slot1.animator then
-		slot1.animator:Play(slot7, 0, 0)
+	if arg_12_3 then
+		var_12_3 = var_12_2.tween
+	else
+		var_12_3 = var_12_2.idle
+	end
 
-		if slot7 == uv1 then
+	if var_12_3 and arg_12_1.animator then
+		arg_12_1.animator:Play(var_12_3, 0, 0)
+
+		if var_12_3 == var_0_1 then
 			AudioMgr.instance:trigger(AudioEnum.chess_activity142.TileBroken)
 		end
 	end
 end
 
-function slot0.onloadResCompleted(slot0, slot1)
-	slot0:createAllBaffleObj()
+function var_0_0.onloadResCompleted(arg_13_0, arg_13_1)
+	arg_13_0:createAllBaffleObj()
 end
 
-function slot0.createAllBaffleObj(slot0)
-	for slot4, slot5 in pairs(slot0._baseTiles) do
-		for slot9, slot10 in pairs(slot5) do
-			if Va3ChessGameModel.instance:getTileMO(slot4 - 1, slot9 - 1):getBaffleDataList() and #slot12 >= 0 then
-				slot0:createBaffleItem(slot4 - 1, slot9 - 1, slot12)
+function var_0_0.createAllBaffleObj(arg_14_0)
+	for iter_14_0, iter_14_1 in pairs(arg_14_0._baseTiles) do
+		for iter_14_2, iter_14_3 in pairs(iter_14_1) do
+			local var_14_0 = Va3ChessGameModel.instance:getTileMO(iter_14_0 - 1, iter_14_2 - 1):getBaffleDataList()
+
+			if var_14_0 and #var_14_0 >= 0 then
+				arg_14_0:createBaffleItem(iter_14_0 - 1, iter_14_2 - 1, var_14_0)
 			end
 		end
 	end
 end
 
-function slot0.createBaffleItem(slot0, slot1, slot2, slot3)
-	if not slot3 or #slot3 <= 0 then
+function var_0_0.createBaffleItem(arg_15_0, arg_15_1, arg_15_2, arg_15_3)
+	if not arg_15_3 or #arg_15_3 <= 0 then
 		return
 	end
 
-	for slot7, slot8 in ipairs(slot3) do
-		slot9 = nil
+	for iter_15_0, iter_15_1 in ipairs(arg_15_3) do
+		local var_15_0
+		local var_15_1 = Activity142Helper.getBaffleResPath(iter_15_1)
 
-		if Activity142Helper.getBaffleResPath(slot8) and (slot0._baffleItemPools[slot10] and #slot11 or 0) > 0 then
-			slot9 = slot11[slot12]
-			slot11[slot12] = nil
+		if var_15_1 then
+			local var_15_2 = arg_15_0._baffleItemPools[var_15_1]
+			local var_15_3 = var_15_2 and #var_15_2 or 0
+
+			if var_15_3 > 0 then
+				var_15_0 = var_15_2[var_15_3]
+				var_15_2[var_15_3] = nil
+			end
 		end
 
-		if not slot9 then
-			Activity142BaffleObject.New(slot0._sceneContainer.transform):init()
+		if not var_15_0 then
+			var_15_0 = Activity142BaffleObject.New(arg_15_0._sceneContainer.transform)
+
+			var_15_0:init()
 		end
 
-		slot8.x = slot1
-		slot8.y = slot2
+		iter_15_1.x = arg_15_1
+		iter_15_1.y = arg_15_2
 
-		slot9:updatePos(slot8)
-		table.insert(slot0._baffleItems, slot9)
+		var_15_0:updatePos(iter_15_1)
+		table.insert(arg_15_0._baffleItems, var_15_0)
 	end
 end
 
-function slot0.resetBaffle(slot0)
-	slot0:recycleAllBaffleItem()
-	slot0:createAllBaffleObj()
+function var_0_0.resetBaffle(arg_16_0)
+	arg_16_0:recycleAllBaffleItem()
+	arg_16_0:createAllBaffleObj()
 end
 
-function slot0.recycleAllBaffleItem(slot0)
-	slot1 = nil
+function var_0_0.recycleAllBaffleItem(arg_17_0)
+	local var_17_0
 
-	for slot5 = 1, #slot0._baffleItems do
-		slot1 = slot0._baffleItems[slot5]
+	for iter_17_0 = 1, #arg_17_0._baffleItems do
+		local var_17_1 = arg_17_0._baffleItems[iter_17_0]
 
-		slot1:recycle()
+		var_17_1:recycle()
 
-		if slot1:getBaffleResPath() then
-			if not slot0._baffleItemPools[slot6] then
-				slot0._baffleItemPools[slot6] = {}
+		local var_17_2 = var_17_1:getBaffleResPath()
+
+		if var_17_2 then
+			local var_17_3 = arg_17_0._baffleItemPools[var_17_2]
+
+			if not var_17_3 then
+				var_17_3 = {}
+				arg_17_0._baffleItemPools[var_17_2] = var_17_3
 			end
 
-			table.insert(slot7, slot1)
+			table.insert(var_17_3, var_17_1)
 		else
-			slot1:dispose()
+			var_17_1:dispose()
 		end
 
-		slot0._baffleItems[slot5] = nil
+		arg_17_0._baffleItems[iter_17_0] = nil
 	end
 end
 
-function slot0.playSwitchPlayerEff(slot0, slot1, slot2)
-	if gohelper.isNil(slot0:getSwitchEffGO()) or not slot1 or not slot2 then
+function var_0_0.playSwitchPlayerEff(arg_18_0, arg_18_1, arg_18_2)
+	local var_18_0 = arg_18_0:getSwitchEffGO()
+
+	if gohelper.isNil(var_18_0) or not arg_18_1 or not arg_18_2 then
 		return
 	end
 
 	Activity142Helper.setAct142UIBlock(true, Activity142Enum.SWITCH_PLAYER)
 
-	slot4, slot5, slot6 = Va3ChessGameController.instance:calcTilePosInScene(slot1, slot2)
+	local var_18_1, var_18_2, var_18_3 = Va3ChessGameController.instance:calcTilePosInScene(arg_18_1, arg_18_2)
 
-	transformhelper.setLocalPos(slot3.transform, slot4, slot5, slot6)
-	gohelper.setActive(slot3, false)
-	gohelper.setActive(slot3, true)
+	transformhelper.setLocalPos(var_18_0.transform, var_18_1, var_18_2, var_18_3)
+	gohelper.setActive(var_18_0, false)
+	gohelper.setActive(var_18_0, true)
 	AudioMgr.instance:trigger(AudioEnum.chess_activity142.SwitchPlayer)
-	TaskDispatcher.cancelTask(slot0.switchPlayerFinish, slot0)
-	TaskDispatcher.runDelay(slot0.switchPlayerFinish, slot0, Activity142Enum.PLAYER_SWITCH_TIME)
+	TaskDispatcher.cancelTask(arg_18_0.switchPlayerFinish, arg_18_0)
+	TaskDispatcher.runDelay(arg_18_0.switchPlayerFinish, arg_18_0, Activity142Enum.PLAYER_SWITCH_TIME)
 end
 
-function slot0.getSwitchEffGO(slot0)
-	if not slot0._switchEffGO and slot0._loader:getAssetItem(Activity142Enum.SwitchPlayerEffPath) then
-		slot0._switchEffGO = gohelper.clone(slot1:GetResource(), slot0._sceneContainer, "switchEff")
+function var_0_0.getSwitchEffGO(arg_19_0)
+	if not arg_19_0._switchEffGO then
+		local var_19_0 = arg_19_0._loader:getAssetItem(Activity142Enum.SwitchPlayerEffPath)
 
-		gohelper.setActive(slot0._switchEffGO, false)
-	end
+		if var_19_0 then
+			arg_19_0._switchEffGO = gohelper.clone(var_19_0:GetResource(), arg_19_0._sceneContainer, "switchEff")
 
-	return slot0._switchEffGO
-end
-
-function slot0.switchPlayerFinish(slot0)
-	Activity142Helper.setAct142UIBlock(false, Activity142Enum.SWITCH_PLAYER)
-end
-
-function slot0.onDestroyView(slot0)
-	TaskDispatcher.cancelTask(slot0.switchPlayerFinish, slot0)
-	slot0:switchPlayerFinish()
-
-	if slot0._switchEffGO then
-		gohelper.destroy(slot0._switchEffGO)
-
-		slot0._switchEffGO = nil
-	end
-
-	slot0:removeEvents()
-	slot0:disposeBaffle()
-	uv0.super.onDestroyView(slot0)
-end
-
-function slot0.disposeBaffle(slot0)
-	for slot4, slot5 in ipairs(slot0._baffleItems) do
-		slot5:dispose()
-	end
-
-	for slot4, slot5 in pairs(slot0._baffleItemPools) do
-		for slot9, slot10 in ipairs(slot5) do
-			slot10:dispose()
+			gohelper.setActive(arg_19_0._switchEffGO, false)
 		end
 	end
 
-	slot0._baffleItems = {}
-	slot0._baffleItemPools = {}
+	return arg_19_0._switchEffGO
 end
 
-return slot0
+function var_0_0.switchPlayerFinish(arg_20_0)
+	Activity142Helper.setAct142UIBlock(false, Activity142Enum.SWITCH_PLAYER)
+end
+
+function var_0_0.onDestroyView(arg_21_0)
+	TaskDispatcher.cancelTask(arg_21_0.switchPlayerFinish, arg_21_0)
+	arg_21_0:switchPlayerFinish()
+
+	if arg_21_0._switchEffGO then
+		gohelper.destroy(arg_21_0._switchEffGO)
+
+		arg_21_0._switchEffGO = nil
+	end
+
+	arg_21_0:removeEvents()
+	arg_21_0:disposeBaffle()
+	var_0_0.super.onDestroyView(arg_21_0)
+end
+
+function var_0_0.disposeBaffle(arg_22_0)
+	for iter_22_0, iter_22_1 in ipairs(arg_22_0._baffleItems) do
+		iter_22_1:dispose()
+	end
+
+	for iter_22_2, iter_22_3 in pairs(arg_22_0._baffleItemPools) do
+		for iter_22_4, iter_22_5 in ipairs(iter_22_3) do
+			iter_22_5:dispose()
+		end
+	end
+
+	arg_22_0._baffleItems = {}
+	arg_22_0._baffleItemPools = {}
+end
+
+return var_0_0

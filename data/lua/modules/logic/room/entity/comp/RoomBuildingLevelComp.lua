@@ -1,78 +1,90 @@
-module("modules.logic.room.entity.comp.RoomBuildingLevelComp", package.seeall)
+﻿module("modules.logic.room.entity.comp.RoomBuildingLevelComp", package.seeall)
 
-slot0 = class("RoomBuildingLevelComp", LuaCompBase)
+local var_0_0 = class("RoomBuildingLevelComp", LuaCompBase)
 
-function slot0.ctor(slot0, slot1)
-	slot0.entity = slot1
-	slot0._effectKey = RoomEnum.EffectKey.BuildingGOKey
-	slot0._levelPathDict = {}
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0.entity = arg_1_1
+	arg_1_0._effectKey = RoomEnum.EffectKey.BuildingGOKey
+	arg_1_0._levelPathDict = {}
 end
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
-	slot0._level = slot0:_getLevel()
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.go = arg_2_1
+	arg_2_0._level = arg_2_0:_getLevel()
 end
 
-function slot0.addEventListeners(slot0)
-	RoomMapController.instance:registerCallback(RoomEvent.BuildingLevelUpPush, slot0._onBuildingLevelUpPush, slot0)
+function var_0_0.addEventListeners(arg_3_0)
+	RoomMapController.instance:registerCallback(RoomEvent.BuildingLevelUpPush, arg_3_0._onBuildingLevelUpPush, arg_3_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	RoomMapController.instance:unregisterCallback(RoomEvent.BuildingLevelUpPush, slot0._onBuildingLevelUpPush, slot0)
+function var_0_0.removeEventListeners(arg_4_0)
+	RoomMapController.instance:unregisterCallback(RoomEvent.BuildingLevelUpPush, arg_4_0._onBuildingLevelUpPush, arg_4_0)
 end
 
-function slot0.beforeDestroy(slot0)
-	slot0:removeEventListeners()
+function var_0_0.beforeDestroy(arg_5_0)
+	arg_5_0:removeEventListeners()
 end
 
-function slot0._onBuildingLevelUpPush(slot0)
-	slot0:refreshLevel()
+function var_0_0._onBuildingLevelUpPush(arg_6_0)
+	arg_6_0:refreshLevel()
 end
 
-function slot0.refreshLevel(slot0)
-	if slot0._level ~= slot0:_getLevel() then
-		slot0._level = slot1
+function var_0_0.refreshLevel(arg_7_0)
+	local var_7_0 = arg_7_0:_getLevel()
 
-		slot0.entity:refreshBuilding()
-		slot0:_updateLevel()
+	if arg_7_0._level ~= var_7_0 then
+		arg_7_0._level = var_7_0
+
+		arg_7_0.entity:refreshBuilding()
+		arg_7_0:_updateLevel()
 	end
 end
 
-function slot0._updateLevel(slot0)
-	if not slot0:getMO() then
+function var_0_0._updateLevel(arg_8_0)
+	local var_8_0 = arg_8_0:getMO()
+
+	if not var_8_0 then
 		return
 	end
 
-	if not slot0.entity.effect:isHasEffectGOByKey(slot0._effectKey) then
+	local var_8_1 = arg_8_0.entity.effect
+
+	if not var_8_1:isHasEffectGOByKey(arg_8_0._effectKey) then
 		return
 	end
 
-	for slot7, slot8 in pairs(RoomConfig.instance:getLevelGroupLevelDict(slot1.buildingId)) do
-		if not slot0._levelPathDict[slot7] then
-			slot0._levelPathDict[slot7] = string.format(RoomEnum.EffectPath.BuildingLevelPath, slot7)
+	local var_8_2 = RoomConfig.instance:getLevelGroupLevelDict(var_8_0.buildingId)
+
+	for iter_8_0, iter_8_1 in pairs(var_8_2) do
+		if not arg_8_0._levelPathDict[iter_8_0] then
+			arg_8_0._levelPathDict[iter_8_0] = string.format(RoomEnum.EffectPath.BuildingLevelPath, iter_8_0)
 		end
 
-		if slot2:getGameObjectByPath(slot0._effectKey, slot0._levelPathDict[slot7]) then
-			gohelper.setActive(slot9, slot7 <= slot0._level)
+		local var_8_3 = var_8_1:getGameObjectByPath(arg_8_0._effectKey, arg_8_0._levelPathDict[iter_8_0])
+
+		if var_8_3 then
+			gohelper.setActive(var_8_3, iter_8_0 <= arg_8_0._level)
 		end
 	end
 end
 
-function slot0._getLevel(slot0)
-	return slot0:getMO().level or 0
+function var_0_0._getLevel(arg_9_0)
+	return arg_9_0:getMO().level or 0
 end
 
-function slot0.getMO(slot0)
-	return slot0.entity:getMO()
+function var_0_0.getMO(arg_10_0)
+	return arg_10_0.entity:getMO()
 end
 
-function slot0.onEffectRebuild(slot0)
-	if slot0.entity.effect:isHasEffectGOByKey(slot0._effectKey) and not slot1:isSameResByKey(slot0._effectKey, slot0._effectRes) then
-		slot0._effectRes = slot1:getEffectRes(slot0._effectKey)
-		slot0._level = slot0:_getLevel()
+function var_0_0.onEffectRebuild(arg_11_0)
+	local var_11_0 = arg_11_0.entity.effect
 
-		slot0:_updateLevel()
+	if var_11_0:isHasEffectGOByKey(arg_11_0._effectKey) and not var_11_0:isSameResByKey(arg_11_0._effectKey, arg_11_0._effectRes) then
+		arg_11_0._effectRes = var_11_0:getEffectRes(arg_11_0._effectKey)
+		arg_11_0._level = arg_11_0:_getLevel()
+
+		arg_11_0:_updateLevel()
 	end
 end
 
-return slot0
+return var_0_0

@@ -1,252 +1,267 @@
-module("modules.logic.versionactivity2_4.warmup.model.V2a4_WarmUpBattleRoundMO", package.seeall)
+﻿module("modules.logic.versionactivity2_4.warmup.model.V2a4_WarmUpBattleRoundMO", package.seeall)
 
-slot0 = string.format
-slot1 = table.insert
-slot2 = class("V2a4_WarmUpBattleRoundMO")
+local var_0_0 = string.format
+local var_0_1 = table.insert
+local var_0_2 = class("V2a4_WarmUpBattleRoundMO")
 
-function slot2.ctor(slot0, slot1, slot2, slot3)
-	slot0._index = slot2
-	slot0._waveMO = slot1
-	slot0._gachaMO = slot3
-	slot0._isFinished = false
-	slot0._isWin = false
-	slot0._state = V2a4_WarmUpEnum.RoundState.None
-	slot0._userAnsIsYes = nil
+function var_0_2.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	arg_1_0._index = arg_1_2
+	arg_1_0._waveMO = arg_1_1
+	arg_1_0._gachaMO = arg_1_3
+	arg_1_0._isFinished = false
+	arg_1_0._isWin = false
+	arg_1_0._state = V2a4_WarmUpEnum.RoundState.None
+	arg_1_0._userAnsIsYes = nil
 end
 
-function slot2.index(slot0)
-	return slot0._index
+function var_0_2.index(arg_2_0)
+	return arg_2_0._index
 end
 
-function slot2.isWin(slot0)
-	return slot0._isWin
+function var_0_2.isWin(arg_3_0)
+	return arg_3_0._isWin
 end
 
-function slot2.isFinished(slot0)
-	return slot0._isFinished
+function var_0_2.isFinished(arg_4_0)
+	return arg_4_0._isFinished
 end
 
-function slot2.userAnsIsYes(slot0)
-	return slot0._userAnsIsYes
+function var_0_2.userAnsIsYes(arg_5_0)
+	return arg_5_0._userAnsIsYes
 end
 
-function slot2.cfgId(slot0)
-	return slot0._gachaMO:cfgId()
+function var_0_2.cfgId(arg_6_0)
+	return arg_6_0._gachaMO:cfgId()
 end
 
-function slot2.type(slot0)
-	return slot0._gachaMO:type()
+function var_0_2.type(arg_7_0)
+	return arg_7_0._gachaMO:type()
 end
 
-function slot2.isText(slot0)
-	return slot0:type() == V2a4_WarmUpEnum.AskType.Text
+function var_0_2.isText(arg_8_0)
+	return arg_8_0:type() == V2a4_WarmUpEnum.AskType.Text
 end
 
-function slot2.isPhoto(slot0)
-	return slot0:type() == V2a4_WarmUpEnum.AskType.Photo
+function var_0_2.isPhoto(arg_9_0)
+	return arg_9_0:type() == V2a4_WarmUpEnum.AskType.Photo
 end
 
-function slot2.resUrl(slot0)
-	return ResUrl.getV2a4WarmUpSingleBg(slot0._gachaMO:imgName())
+function var_0_2.resUrl(arg_10_0)
+	local var_10_0 = arg_10_0._gachaMO:imgName()
+
+	return ResUrl.getV2a4WarmUpSingleBg(var_10_0)
 end
 
-function slot2.answer(slot0, slot1)
-	if slot0._isFinished then
+function var_0_2.answer(arg_11_0, arg_11_1)
+	if arg_11_0._isFinished then
 		return
 	end
 
-	slot0._isFinished = true
-	slot0._userAnsIsYes = slot1
-	slot0._isWin = slot0._gachaMO:ansIsYes() == slot1
+	arg_11_0._isFinished = true
+	arg_11_0._userAnsIsYes = arg_11_1
+	arg_11_0._isWin = arg_11_0._gachaMO:ansIsYes() == arg_11_1
 end
 
-function slot2.isPreTalk(slot0)
-	return slot0._state == V2a4_WarmUpEnum.RoundState.PreTalk
+function var_0_2.isPreTalk(arg_12_0)
+	return arg_12_0._state == V2a4_WarmUpEnum.RoundState.PreTalk
 end
 
-function slot2.isAsk(slot0)
-	return slot0._state == V2a4_WarmUpEnum.RoundState.Ask
+function var_0_2.isAsk(arg_13_0)
+	return arg_13_0._state == V2a4_WarmUpEnum.RoundState.Ask
 end
 
-function slot2.isWaitAns(slot0)
-	return slot0._state == V2a4_WarmUpEnum.RoundState.WaitAns
+function var_0_2.isWaitAns(arg_14_0)
+	return arg_14_0._state == V2a4_WarmUpEnum.RoundState.WaitAns
 end
 
-function slot2.isAnsed(slot0)
-	return slot0._state == V2a4_WarmUpEnum.RoundState.Ansed
+function var_0_2.isAnsed(arg_15_0)
+	return arg_15_0._state == V2a4_WarmUpEnum.RoundState.Ansed
 end
 
-function slot2.isReplyResult(slot0)
-	return slot0._state == V2a4_WarmUpEnum.RoundState.ReplyResult
+function var_0_2.isReplyResult(arg_16_0)
+	return arg_16_0._state == V2a4_WarmUpEnum.RoundState.ReplyResult
 end
 
-function slot2.isLastRound(slot0)
-	return slot0._waveMO:isLastRound()
+function var_0_2.isLastRound(arg_17_0)
+	return arg_17_0._waveMO:isLastRound()
 end
 
-function slot2.isFirstRound(slot0)
-	return slot0._waveMO:isFirstRound()
+function var_0_2.isFirstRound(arg_18_0)
+	return arg_18_0._waveMO:isFirstRound()
 end
 
-function slot2.isFirstWave(slot0)
-	return slot0._waveMO:isFirstWave()
+function var_0_2.isFirstWave(arg_19_0)
+	return arg_19_0._waveMO:isFirstWave()
 end
 
-function slot2.isNeedPreface(slot0)
-	return slot0:isFirstWave() and not V2a4_WarmUpController.instance:getIsShownPreface()
+function var_0_2.isNeedPreface(arg_20_0)
+	return arg_20_0:isFirstWave() and not V2a4_WarmUpController.instance:getIsShownPreface()
 end
 
-function slot2.isNeedPassTalkAllYes(slot0)
-	return slot0:isLastRound() and slot0._waveMO:isAllAskYes()
+function var_0_2.isNeedPassTalkAllYes(arg_21_0)
+	return arg_21_0:isLastRound() and arg_21_0._waveMO:isAllAskYes()
 end
 
-function slot2._moveState(slot0)
-	slot0._tmp_dialogStep = 0
+function var_0_2._moveState(arg_22_0)
+	local var_22_0 = arg_22_0._state + 1
 
-	if slot0._state + 1 == V2a4_WarmUpEnum.RoundState.__End then
-		slot0._tmp_dialogCOList = {}
+	arg_22_0._tmp_dialogStep = 0
+
+	if var_22_0 == V2a4_WarmUpEnum.RoundState.__End then
+		arg_22_0._tmp_dialogCOList = {}
 
 		return false
 	end
 
-	if slot0:isWaitAns() then
-		slot0._state = slot0._isFinished and slot1 or slot0._state
+	if arg_22_0:isWaitAns() then
+		arg_22_0._state = arg_22_0._isFinished and var_22_0 or arg_22_0._state
 	else
-		slot0._state = slot1
+		arg_22_0._state = var_22_0
 	end
 
-	slot2 = nil
+	local var_22_1
 
 	if isDebugBuild then
-		slot3 = {}
+		local var_22_2 = {}
 
-		function slot2(slot0, slot1)
-			if not slot0 then
-				uv0(uv1, uv2("error state = %s, dialog type = %s", uv3.s_state(uv4._state), slot1))
-				uv4:dump(uv1, 1)
-				logError(table.concat(uv1, "\n"))
+		function var_22_1(arg_23_0, arg_23_1)
+			if not arg_23_0 then
+				var_0_1(var_22_2, var_0_0("error state = %s, dialog type = %s", var_0_2.s_state(arg_22_0._state), arg_23_1))
+				arg_22_0:dump(var_22_2, 1)
+				logError(table.concat(var_22_2, "\n"))
 			end
 		end
 	end
 
-	if slot0:isPreTalk() then
-		if slot0:isFirstRound() then
-			if slot0:isNeedPreface() then
-				slot0._tmp_dialogCOList = slot0._gachaMO:getDialogCOList_prefaceAndPreTalk()
+	if arg_22_0:isPreTalk() then
+		if arg_22_0:isFirstRound() then
+			if arg_22_0:isNeedPreface() then
+				arg_22_0._tmp_dialogCOList = arg_22_0._gachaMO:getDialogCOList_prefaceAndPreTalk()
 
 				V2a4_WarmUpController.instance:setIsShownPreface(true)
 			else
-				slot0._tmp_dialogCOList = slot0._gachaMO:getDialogCOList_preTalk()
+				arg_22_0._tmp_dialogCOList = arg_22_0._gachaMO:getDialogCOList_preTalk()
 			end
 		else
-			return slot0:_moveState()
+			return arg_22_0:_moveState()
 		end
-	elseif slot0:isAsk() then
-		slot0._tmp_dialogCOList = slot0._gachaMO:getDialogCOList_yesorno()
-	elseif slot0:isWaitAns() then
-		slot4 = V2a4_WarmUpConfig.instance:getRandomDialogCO(V2a4_WarmUpEnum.DialogType.Wait)
+	elseif arg_22_0:isAsk() then
+		arg_22_0._tmp_dialogCOList = arg_22_0._gachaMO:getDialogCOList_yesorno()
+	elseif arg_22_0:isWaitAns() then
+		local var_22_3 = V2a4_WarmUpEnum.DialogType.Wait
+		local var_22_4 = V2a4_WarmUpConfig.instance:getRandomDialogCO(var_22_3)
 
 		if isDebugBuild then
-			slot2(slot4 ~= nil, slot3)
+			var_22_1(var_22_4 ~= nil, var_22_3)
 		end
 
-		slot0._tmp_dialogCOList = slot0._gachaMO:getDialogCOList(slot4.id)
-	elseif slot0:isAnsed() then
-		slot4 = V2a4_WarmUpConfig.instance:getRandomDialogCO(slot0:userAnsIsYes() and V2a4_WarmUpEnum.DialogType.AnsTrue or V2a4_WarmUpEnum.DialogType.AnsFalse)
+		arg_22_0._tmp_dialogCOList = arg_22_0._gachaMO:getDialogCOList(var_22_4.id)
+	elseif arg_22_0:isAnsed() then
+		local var_22_5 = arg_22_0:userAnsIsYes() and V2a4_WarmUpEnum.DialogType.AnsTrue or V2a4_WarmUpEnum.DialogType.AnsFalse
+		local var_22_6 = V2a4_WarmUpConfig.instance:getRandomDialogCO(var_22_5)
 
 		if isDebugBuild then
-			slot2(slot4 ~= nil, slot3)
+			var_22_1(var_22_6 ~= nil, var_22_5)
 		end
 
-		slot0._tmp_dialogCOList = slot0._gachaMO:getDialogCOList(slot4.id)
-	elseif slot0:isReplyResult() then
-		if slot0:isWin() then
-			if slot0:isLastRound() then
-				slot0._tmp_dialogCOList = slot0:isNeedPassTalkAllYes() and slot0._gachaMO:getDialogCOList_passTalkAllYes() or slot0._gachaMO:getDialogCOList_passTalk()
+		arg_22_0._tmp_dialogCOList = arg_22_0._gachaMO:getDialogCOList(var_22_6.id)
+	elseif arg_22_0:isReplyResult() then
+		if arg_22_0:isWin() then
+			if arg_22_0:isLastRound() then
+				arg_22_0._tmp_dialogCOList = arg_22_0:isNeedPassTalkAllYes() and arg_22_0._gachaMO:getDialogCOList_passTalkAllYes() or arg_22_0._gachaMO:getDialogCOList_passTalk()
 			else
-				if not V2a4_WarmUpConfig.instance:getRandomDialogCO(V2a4_WarmUpEnum.DialogType.ReplyAnsRight) then
-					slot0._tmp_dialogStep = 0
-					slot0._tmp_dialogCOList = {}
+				local var_22_7 = V2a4_WarmUpEnum.DialogType.ReplyAnsRight
+				local var_22_8 = V2a4_WarmUpConfig.instance:getRandomDialogCO(var_22_7)
+
+				if not var_22_8 then
+					arg_22_0._tmp_dialogStep = 0
+					arg_22_0._tmp_dialogCOList = {}
 
 					return true
 				end
 
-				slot0._tmp_dialogCOList = slot0._gachaMO:getDialogCOList(slot4.id)
+				arg_22_0._tmp_dialogCOList = arg_22_0._gachaMO:getDialogCOList(var_22_8.id)
 			end
 		else
-			slot0._tmp_dialogCOList = slot0._gachaMO:getDialogCOList_failTalk()
+			arg_22_0._tmp_dialogCOList = arg_22_0._gachaMO:getDialogCOList_failTalk()
 		end
 	end
 
-	slot0._tmp_dialogStep = 1
+	arg_22_0._tmp_dialogStep = 1
 
 	return true
 end
 
-function slot2.moveStep(slot0)
-	slot1 = slot0._tmp_dialogCOList or {}
-	slot2 = slot0._tmp_dialogStep or 0
-	slot3 = nil
+function var_0_2.moveStep(arg_24_0)
+	local var_24_0 = arg_24_0._tmp_dialogCOList or {}
+	local var_24_1 = arg_24_0._tmp_dialogStep or 0
+	local var_24_2
 
 	if isDebugBuild then
-		slot4 = {}
+		local var_24_3 = {}
 
-		function slot3(slot0)
-			if not slot0 then
-				uv0(uv1, uv2("error step: %s", uv3._tmp_dialogStep))
-				uv3:dump(uv1, 1)
-				logError(table.concat(uv1, "\n"))
+		function var_24_2(arg_25_0)
+			if not arg_25_0 then
+				var_0_1(var_24_3, var_0_0("error step: %s", arg_24_0._tmp_dialogStep))
+				arg_24_0:dump(var_24_3, 1)
+				logError(table.concat(var_24_3, "\n"))
 			end
 		end
 	end
 
-	if slot2 < #slot1 then
-		slot0._tmp_dialogStep = slot2 + 1
+	if var_24_1 < #var_24_0 then
+		local var_24_4 = var_24_1 + 1
+
+		arg_24_0._tmp_dialogStep = var_24_4
 
 		if isDebugBuild then
-			slot3(slot1[slot2] ~= nil)
+			var_24_2(var_24_0[var_24_4] ~= nil)
 		end
 
-		return true, slot1[slot2]
+		return true, var_24_0[var_24_4]
 	end
 
-	return slot0:_moveState(), slot0._tmp_dialogCOList[1]
+	return arg_24_0:_moveState(), arg_24_0._tmp_dialogCOList[1]
 end
 
-function slot2.isLastStep(slot0)
-	return (slot0._tmp_dialogStep or 0) == #(slot0._tmp_dialogCOList or {})
+function var_0_2.isLastStep(arg_26_0)
+	local var_26_0 = arg_26_0._tmp_dialogCOList or {}
+
+	return (arg_26_0._tmp_dialogStep or 0) == #var_26_0
 end
 
-function slot2.s_state(slot0)
-	for slot4, slot5 in pairs(V2a4_WarmUpEnum.RoundState) do
-		if slot5 == slot0 then
-			return slot4
+function var_0_2.s_state(arg_27_0)
+	for iter_27_0, iter_27_1 in pairs(V2a4_WarmUpEnum.RoundState) do
+		if iter_27_1 == arg_27_0 then
+			return iter_27_0
 		end
 	end
 
 	return "[V2a4_WarmUpBattleRoundMO.s_state] error!!"
 end
 
-function slot2.dump(slot0, slot1, slot2)
-	slot3 = string.rep("\t", slot2 or 0)
+function var_0_2.dump(arg_28_0, arg_28_1, arg_28_2)
+	arg_28_2 = arg_28_2 or 0
 
-	uv0(slot1, slot3 .. uv1("index = %s", slot0._index))
-	uv0(slot1, slot3 .. uv1("wave = %s", slot0._waveMO:index()))
-	uv0(slot1, slot3 .. uv1("isFinished = %s", slot0._isFinished))
-	uv0(slot1, slot3 .. uv1("isWin = %s", slot0._isWin))
-	uv0(slot1, slot3 .. uv1("state = %s", uv2.s_state(slot0._state)))
-	uv0(slot1, slot3 .. uv1("_step = %s", slot0._tmp_dialogStep or 0))
+	local var_28_0 = string.rep("\t", arg_28_2)
 
-	slot4 = {}
+	var_0_1(arg_28_1, var_28_0 .. var_0_0("index = %s", arg_28_0._index))
+	var_0_1(arg_28_1, var_28_0 .. var_0_0("wave = %s", arg_28_0._waveMO:index()))
+	var_0_1(arg_28_1, var_28_0 .. var_0_0("isFinished = %s", arg_28_0._isFinished))
+	var_0_1(arg_28_1, var_28_0 .. var_0_0("isWin = %s", arg_28_0._isWin))
+	var_0_1(arg_28_1, var_28_0 .. var_0_0("state = %s", var_0_2.s_state(arg_28_0._state)))
+	var_0_1(arg_28_1, var_28_0 .. var_0_0("_step = %s", arg_28_0._tmp_dialogStep or 0))
 
-	for slot8, slot9 in ipairs(slot0._tmp_dialogCOList or {}) do
-		uv0(slot4, slot9.id)
+	local var_28_1 = {}
+
+	for iter_28_0, iter_28_1 in ipairs(arg_28_0._tmp_dialogCOList or {}) do
+		var_0_1(var_28_1, iter_28_1.id)
 	end
 
-	uv0(slot1, slot3 .. uv1("_stepList = %s", table.concat(slot4, ",")))
-	uv0(slot1, slot3 .. "GachaRound = {")
-	slot0._gachaMO:dump(slot1, slot2 + 1)
-	uv0(slot1, slot3 .. "}")
+	var_0_1(arg_28_1, var_28_0 .. var_0_0("_stepList = %s", table.concat(var_28_1, ",")))
+	var_0_1(arg_28_1, var_28_0 .. "GachaRound = {")
+	arg_28_0._gachaMO:dump(arg_28_1, arg_28_2 + 1)
+	var_0_1(arg_28_1, var_28_0 .. "}")
 end
 
-return slot2
+return var_0_2

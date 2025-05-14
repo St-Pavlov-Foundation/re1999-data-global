@@ -1,30 +1,33 @@
-module("modules.logic.gm.view.GMToolViewContainer", package.seeall)
+﻿module("modules.logic.gm.view.GMToolViewContainer", package.seeall)
 
-slot0 = class("GMToolViewContainer", BaseViewContainer)
+local var_0_0 = class("GMToolViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = ListScrollParam.New()
-	slot1.scrollGOPath = "addItem/scroll"
-	slot1.prefabType = ScrollEnum.ScrollPrefabFromView
-	slot1.prefabUrl = "addItem/scroll/item"
-	slot1.cellClass = GMAddItem
-	slot1.scrollDir = ScrollEnum.ScrollDirV
-	slot1.lineCount = 1
-	slot1.cellWidth = 794
-	slot1.cellHeight = 100
-	slot1.cellSpaceH = 0
-	slot1.cellSpaceV = 0
-	slot2 = ListScrollParam.New()
-	slot2.scrollGOPath = "gmcommand/img/scroll"
-	slot2.prefabType = ScrollEnum.ScrollPrefabFromView
-	slot2.prefabUrl = "gmcommand/img/scroll/item"
-	slot2.cellClass = GMCommandItem
-	slot2.scrollDir = ScrollEnum.ScrollDirV
-	slot2.lineCount = 1
-	slot2.cellWidth = 950
-	slot2.cellHeight = 100
-	slot2.cellSpaceH = 0
-	slot2.cellSpaceV = 5
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = ListScrollParam.New()
+
+	var_1_0.scrollGOPath = "addItem/scroll"
+	var_1_0.prefabType = ScrollEnum.ScrollPrefabFromView
+	var_1_0.prefabUrl = "addItem/scroll/item"
+	var_1_0.cellClass = GMAddItem
+	var_1_0.scrollDir = ScrollEnum.ScrollDirV
+	var_1_0.lineCount = 1
+	var_1_0.cellWidth = 794
+	var_1_0.cellHeight = 100
+	var_1_0.cellSpaceH = 0
+	var_1_0.cellSpaceV = 0
+
+	local var_1_1 = ListScrollParam.New()
+
+	var_1_1.scrollGOPath = "gmcommand/img/scroll"
+	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromView
+	var_1_1.prefabUrl = "gmcommand/img/scroll/item"
+	var_1_1.cellClass = GMCommandItem
+	var_1_1.scrollDir = ScrollEnum.ScrollDirV
+	var_1_1.lineCount = 1
+	var_1_1.cellWidth = 950
+	var_1_1.cellHeight = 100
+	var_1_1.cellSpaceH = 0
+	var_1_1.cellSpaceV = 5
 
 	return {
 		GMToolView.New(),
@@ -34,8 +37,8 @@ function slot0.buildViews(slot0)
 		GMToolFightView.New(),
 		GMAudioTool.New(),
 		GMRougeTool.New(),
-		LuaListScrollView.New(GMAddItemModel.instance, slot1),
-		LuaListScrollView.New(GMCommandModel.instance, slot2),
+		LuaListScrollView.New(GMAddItemModel.instance, var_1_0),
+		LuaListScrollView.New(GMCommandModel.instance, var_1_1),
 		GMSubViewOldView.New(),
 		GMSubViewCommon.New(),
 		GMSubViewNewFightView.New(),
@@ -52,30 +55,33 @@ function slot0.buildViews(slot0)
 	}
 end
 
-function slot0.onContainerClickModalMask(slot0)
-	ViewMgr.instance:closeView(slot0.viewName)
+function var_0_0.onContainerClickModalMask(arg_2_0)
+	ViewMgr.instance:closeView(arg_2_0.viewName)
 end
 
-function slot0.addSubViewToggle(slot0, slot1)
-	slot0.toggleList = slot0.toggleList or slot0:getUserDataTb_()
+function var_0_0.addSubViewToggle(arg_3_0, arg_3_1)
+	arg_3_0.toggleList = arg_3_0.toggleList or arg_3_0:getUserDataTb_()
 
-	table.insert(slot0.toggleList, slot1)
+	table.insert(arg_3_0.toggleList, arg_3_1)
 end
 
-function slot0.selectToggle(slot0, slot1)
-	if slot0.toggleList then
-		for slot5, slot6 in ipairs(slot0.toggleList) do
-			if slot6 == slot1 then
-				PlayerPrefsHelper.setNumber("GMLastSelectIndexKey", slot5)
+function var_0_0.selectToggle(arg_4_0, arg_4_1)
+	if arg_4_0.toggleList then
+		for iter_4_0, iter_4_1 in ipairs(arg_4_0.toggleList) do
+			if iter_4_1 == arg_4_1 then
+				PlayerPrefsHelper.setNumber("GMLastSelectIndexKey", iter_4_0)
 			end
 		end
 	end
 end
 
-function slot0.onContainerOpenFinish(slot0)
-	if slot0.toggleList and slot0.toggleList[PlayerPrefsHelper.getNumber("GMLastSelectIndexKey", 1)] then
-		slot2.isOn = true
+function var_0_0.onContainerOpenFinish(arg_5_0)
+	local var_5_0 = PlayerPrefsHelper.getNumber("GMLastSelectIndexKey", 1)
+	local var_5_1 = arg_5_0.toggleList and arg_5_0.toggleList[var_5_0]
+
+	if var_5_1 then
+		var_5_1.isOn = true
 	end
 end
 
-return slot0
+return var_0_0

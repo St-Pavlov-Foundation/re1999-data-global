@@ -1,26 +1,26 @@
-module("modules.logic.bgmswitch.model.BGMSwitchInfoMo", package.seeall)
+﻿module("modules.logic.bgmswitch.model.BGMSwitchInfoMo", package.seeall)
 
-slot0 = pureTable("BGMSwitchInfoMo")
+local var_0_0 = pureTable("BGMSwitchInfoMo")
 
-function slot0.ctor(slot0)
-	slot0.bgmId = 0
-	slot0.unlock = 0
-	slot0.favorite = false
-	slot0.isRead = false
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.bgmId = 0
+	arg_1_0.unlock = 0
+	arg_1_0.favorite = false
+	arg_1_0.isRead = false
 end
 
-function slot0.init(slot0, slot1)
-	slot0.bgmId = slot1.bgmId
-	slot0.unlock = slot1.unlock
-	slot0.favorite = slot1.favorite
-	slot0.isRead = slot1.isRead
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.bgmId = arg_2_1.bgmId
+	arg_2_0.unlock = arg_2_1.unlock
+	arg_2_0.favorite = arg_2_1.favorite
+	arg_2_0.isRead = arg_2_1.isRead
 end
 
-function slot0.reset(slot0, slot1)
-	slot0.bgmId = slot1.bgmId
-	slot0.unlock = slot1.unlock
-	slot0.favorite = slot1.favorite
-	slot0.isRead = slot1.isRead
+function var_0_0.reset(arg_3_0, arg_3_1)
+	arg_3_0.bgmId = arg_3_1.bgmId
+	arg_3_0.unlock = arg_3_1.unlock
+	arg_3_0.favorite = arg_3_1.favorite
+	arg_3_0.isRead = arg_3_1.isRead
 end
 
-return slot0
+return var_0_0

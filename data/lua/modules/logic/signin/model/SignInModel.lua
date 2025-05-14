@@ -1,82 +1,85 @@
-module("modules.logic.signin.model.SignInModel", package.seeall)
+﻿module("modules.logic.signin.model.SignInModel", package.seeall)
 
-slot0 = class("SignInModel", BaseModel)
+local var_0_0 = class("SignInModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0:reInit()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:reInit()
 end
 
-function slot0.reInit(slot0)
-	slot0._totalSignDays = 0
-	slot0._targetdate = {
+function var_0_0.reInit(arg_2_0)
+	arg_2_0._totalSignDays = 0
+	arg_2_0._targetdate = {
 		2021,
 		1,
 		1
 	}
-	slot0._newShowDetail = true
-	slot0._newSwitch = false
-	slot0._isAutoSignGetReward = true
-	slot0._showBirthday = false
-	slot0._signInfo = {}
-	slot0._historySignInfos = {}
-	slot0._heroBirthdayInfos = {}
+	arg_2_0._newShowDetail = true
+	arg_2_0._newSwitch = false
+	arg_2_0._isAutoSignGetReward = true
+	arg_2_0._showBirthday = false
+	arg_2_0._signInfo = {}
+	arg_2_0._historySignInfos = {}
+	arg_2_0._heroBirthdayInfos = {}
 end
 
-function slot0.setHeroBirthdayInfos(slot0, slot1)
-	for slot5, slot6 in ipairs(slot1) do
-		if not slot0._heroBirthdayInfos[slot6.heroId] then
-			slot7 = SignInHeroBirthdayInfoMo.New()
+function var_0_0.setHeroBirthdayInfos(arg_3_0, arg_3_1)
+	for iter_3_0, iter_3_1 in ipairs(arg_3_1) do
+		if not arg_3_0._heroBirthdayInfos[iter_3_1.heroId] then
+			local var_3_0 = SignInHeroBirthdayInfoMo.New()
 
-			slot7:init(slot6)
+			var_3_0:init(iter_3_1)
 
-			slot0._heroBirthdayInfos[slot6.heroId] = slot7
+			arg_3_0._heroBirthdayInfos[iter_3_1.heroId] = var_3_0
 		else
-			slot0._heroBirthdayInfos[slot6.heroId]:reset(slot6)
+			arg_3_0._heroBirthdayInfos[iter_3_1.heroId]:reset(iter_3_1)
 		end
 	end
 end
 
-function slot0.addSignInBirthdayCount(slot0, slot1)
-	if not slot0._heroBirthdayInfos[slot1] then
-		slot0._heroBirthdayInfos[slot1] = SignInHeroBirthdayInfoMo.New()
+function var_0_0.addSignInBirthdayCount(arg_4_0, arg_4_1)
+	if not arg_4_0._heroBirthdayInfos[arg_4_1] then
+		local var_4_0 = SignInHeroBirthdayInfoMo.New()
+
+		arg_4_0._heroBirthdayInfos[arg_4_1] = var_4_0
 	end
 
-	slot0._heroBirthdayInfos[slot1]:addBirthdayCount()
+	arg_4_0._heroBirthdayInfos[arg_4_1]:addBirthdayCount()
 end
 
-function slot0.getHeroBirthdayCount(slot0, slot1)
-	if slot0._heroBirthdayInfos[slot1] then
-		return slot0._heroBirthdayInfos[slot1].birthdayCount
+function var_0_0.getHeroBirthdayCount(arg_5_0, arg_5_1)
+	if arg_5_0._heroBirthdayInfos[arg_5_1] then
+		return arg_5_0._heroBirthdayInfos[arg_5_1].birthdayCount
 	end
 
 	return 0
 end
 
-function slot0.setShowBirthday(slot0, slot1)
-	slot0._showBirthday = slot1
+function var_0_0.setShowBirthday(arg_6_0, arg_6_1)
+	arg_6_0._showBirthday = arg_6_1
 end
 
-function slot0.isShowBirthday(slot0)
-	return slot0._showBirthday
+function var_0_0.isShowBirthday(arg_7_0)
+	return arg_7_0._showBirthday
 end
 
-function slot0.setHeroBirthdayGet(slot0, slot1)
-	slot0._signInfo:addBirthdayHero(slot1)
+function var_0_0.setHeroBirthdayGet(arg_8_0, arg_8_1)
+	arg_8_0._signInfo:addBirthdayHero(arg_8_1)
 end
 
-function slot0.isHeroBirthdayGet(slot0, slot1)
-	slot2 = false
+function var_0_0.isHeroBirthdayGet(arg_9_0, arg_9_1)
+	local var_9_0 = false
+	local var_9_1 = RoomConfig.instance:getHeroSpecialBlockId(arg_9_1)
 
-	if RoomConfig.instance:getHeroSpecialBlockId(slot1) then
-		slot2 = RoomModel.instance:isHasBlockById(slot3)
+	if var_9_1 then
+		var_9_0 = RoomModel.instance:isHasBlockById(var_9_1)
 	end
 
-	if slot2 then
+	if var_9_0 then
 		return true
 	end
 
-	for slot7, slot8 in pairs(slot0._signInfo.birthdayHeroIds) do
-		if slot8 == slot1 then
+	for iter_9_0, iter_9_1 in pairs(arg_9_0._signInfo.birthdayHeroIds) do
+		if iter_9_1 == arg_9_1 then
 			return true
 		end
 	end
@@ -84,110 +87,137 @@ function slot0.isHeroBirthdayGet(slot0, slot1)
 	return false
 end
 
-function slot0.getCurDayBirthdayHeros(slot0)
-	slot1 = slot0:getCurDate()
-	slot2 = {}
+function var_0_0.getCurDayBirthdayHeros(arg_10_0)
+	local var_10_0 = arg_10_0:getCurDate()
+	local var_10_1 = {}
+	local var_10_2 = arg_10_0:getDayAllBirthdayHeros(var_10_0.month, var_10_0.day)
 
-	for slot7, slot8 in pairs(slot0:getDayAllBirthdayHeros(slot1.month, slot1.day)) do
-		if HeroConfig.instance:getHeroCO(slot8).roleBirthday ~= "" then
-			if string.splitToNumber(slot9.roleBirthday, "/")[1] == slot1.month and slot10[2] == slot1.day then
-				if slot0:isHeroBirthdayGet(slot8) then
-					if slot0:getHeroBirthdayCount(slot8) <= #string.split(slot9.birthdayBonus, ";") then
-						table.insert(slot2, slot8)
+	for iter_10_0, iter_10_1 in pairs(var_10_2) do
+		local var_10_3 = HeroConfig.instance:getHeroCO(iter_10_1)
+
+		if var_10_3.roleBirthday ~= "" then
+			local var_10_4 = string.splitToNumber(var_10_3.roleBirthday, "/")
+			local var_10_5 = #string.split(var_10_3.birthdayBonus, ";")
+
+			if var_10_4[1] == var_10_0.month and var_10_4[2] == var_10_0.day then
+				local var_10_6 = arg_10_0:getHeroBirthdayCount(iter_10_1)
+
+				if arg_10_0:isHeroBirthdayGet(iter_10_1) then
+					if var_10_6 <= var_10_5 then
+						table.insert(var_10_1, iter_10_1)
 					end
-				elseif slot12 < slot11 then
-					table.insert(slot2, slot8)
+				elseif var_10_6 < var_10_5 then
+					table.insert(var_10_1, iter_10_1)
 				end
 			end
 		end
 	end
 
-	table.sort(slot2)
+	table.sort(var_10_1)
 
-	return slot2
+	return var_10_1
 end
 
-function slot0.getNoSignBirthdayHeros(slot0, slot1, slot2)
-	slot3 = {}
+function var_0_0.getNoSignBirthdayHeros(arg_11_0, arg_11_1, arg_11_2)
+	local var_11_0 = {}
+	local var_11_1 = arg_11_0:getDayAllBirthdayHeros(arg_11_1, arg_11_2)
 
-	for slot8, slot9 in ipairs(slot0:getDayAllBirthdayHeros(slot1, slot2)) do
-		if HeroConfig.instance:getHeroCO(slot9).roleBirthday ~= "" then
-			if string.splitToNumber(slot10.roleBirthday, "/")[1] == slot1 and slot11[2] == slot2 and slot0:getHeroBirthdayCount(slot9) < #string.split(slot10.birthdayBonus, ";") then
-				table.insert(slot3, tonumber(slot10.id))
+	for iter_11_0, iter_11_1 in ipairs(var_11_1) do
+		local var_11_2 = HeroConfig.instance:getHeroCO(iter_11_1)
+
+		if var_11_2.roleBirthday ~= "" then
+			local var_11_3 = string.splitToNumber(var_11_2.roleBirthday, "/")
+			local var_11_4 = #string.split(var_11_2.birthdayBonus, ";")
+			local var_11_5 = arg_11_0:getHeroBirthdayCount(iter_11_1)
+
+			if var_11_3[1] == arg_11_1 and var_11_3[2] == arg_11_2 and var_11_5 < var_11_4 then
+				table.insert(var_11_0, tonumber(var_11_2.id))
 			end
 		end
 	end
 
-	table.sort(slot3)
+	table.sort(var_11_0)
 
-	return slot3
+	return var_11_0
 end
 
-function slot0.getDayAllBirthdayHeros(slot0, slot1, slot2)
-	slot3 = {}
+function var_0_0.getDayAllBirthdayHeros(arg_12_0, arg_12_1, arg_12_2)
+	local var_12_0 = {}
+	local var_12_1 = lua_character.configDict
 
-	for slot8, slot9 in pairs(lua_character.configDict) do
-		if slot9.roleBirthday ~= "" and slot9.isOnline == "1" and string.splitToNumber(slot9.roleBirthday, "/")[1] == slot1 and slot10[2] == slot2 then
-			table.insert(slot3, tonumber(slot9.id))
+	for iter_12_0, iter_12_1 in pairs(var_12_1) do
+		if iter_12_1.roleBirthday ~= "" and iter_12_1.isOnline == "1" then
+			local var_12_2 = string.splitToNumber(iter_12_1.roleBirthday, "/")
+
+			if var_12_2[1] == arg_12_1 and var_12_2[2] == arg_12_2 then
+				table.insert(var_12_0, tonumber(iter_12_1.id))
+			end
 		end
 	end
 
-	table.sort(slot3)
+	table.sort(var_12_0)
 
-	return slot3
+	return var_12_0
 end
 
-function slot0.getSignBirthdayHeros(slot0, slot1, slot2, slot3)
-	slot4 = {}
-	slot5 = {}
-	slot0._curDate = slot0:getCurDate()
-	slot5 = slot0:getDayAllBirthdayHeros(slot2, slot3)
-	slot6 = false
+function var_0_0.getSignBirthdayHeros(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
+	local var_13_0 = {}
+	local var_13_1 = {}
 
-	if slot2 < slot0._curDate.month or slot2 == slot0._curDate.month and slot3 < slot0._curDate.day then
-		slot6 = true
+	arg_13_0._curDate = arg_13_0:getCurDate()
+
+	local var_13_2 = arg_13_0:getDayAllBirthdayHeros(arg_13_2, arg_13_3)
+	local var_13_3 = false
+
+	if arg_13_2 < arg_13_0._curDate.month or arg_13_2 == arg_13_0._curDate.month and arg_13_3 < arg_13_0._curDate.day then
+		var_13_3 = true
 	end
 
-	for slot10, slot11 in pairs(slot5) do
-		if HeroConfig.instance:getHeroCO(slot11).roleBirthday ~= "" then
-			slot14 = #string.split(slot12.birthdayBonus, ";")
+	for iter_13_0, iter_13_1 in pairs(var_13_2) do
+		local var_13_4 = HeroConfig.instance:getHeroCO(iter_13_1)
 
-			if string.splitToNumber(slot12.roleBirthday, "/")[1] == slot2 and slot13[2] == slot3 then
-				if slot0._curDate.year ~= slot1 then
-					if slot0._curDate.month == slot2 then
-						slot15 = slot0:getHeroBirthdayCount(slot11) - 1
+		if var_13_4.roleBirthday ~= "" then
+			local var_13_5 = string.splitToNumber(var_13_4.roleBirthday, "/")
+			local var_13_6 = #string.split(var_13_4.birthdayBonus, ";")
+
+			if var_13_5[1] == arg_13_2 and var_13_5[2] == arg_13_3 then
+				local var_13_7 = arg_13_0:getHeroBirthdayCount(iter_13_1)
+
+				if arg_13_0._curDate.year ~= arg_13_1 then
+					if arg_13_0._curDate.month == arg_13_2 then
+						var_13_7 = var_13_7 - 1
 					end
-				elseif not slot0:isHeroBirthdayGet(slot11) and not slot6 then
-					slot15 = slot15 + 1
+				elseif not arg_13_0:isHeroBirthdayGet(iter_13_1) and not var_13_3 then
+					var_13_7 = var_13_7 + 1
 				end
 
-				if slot15 > 0 and slot15 <= slot14 then
-					table.insert(slot4, slot11)
+				if var_13_7 > 0 and var_13_7 <= var_13_6 then
+					table.insert(var_13_0, iter_13_1)
 				end
 			end
 		end
 	end
 
-	table.sort(slot4)
+	table.sort(var_13_0)
 
-	return slot4
+	return var_13_0
 end
 
-function slot0.setSignInInfo(slot0, slot1)
-	slot0._signInfo = SignInInfoMo.New()
+function var_0_0.setSignInInfo(arg_14_0, arg_14_1)
+	arg_14_0._signInfo = SignInInfoMo.New()
 
-	slot0._signInfo:init(slot1)
+	arg_14_0._signInfo:init(arg_14_1)
 
-	slot0._totalSignDays = slot0._signInfo.addupSignInDay
+	arg_14_0._totalSignDays = arg_14_0._signInfo.addupSignInDay
 end
 
-function slot0.setSignDayRewardGet(slot0, slot1)
-	slot0._signInfo:addSignInfo(slot1)
+function var_0_0.setSignDayRewardGet(arg_15_0, arg_15_1)
+	arg_15_0._signInfo:addSignInfo(arg_15_1)
 
-	slot0._totalSignDays = #slot0._signInfo:getSignDays()
+	arg_15_0._totalSignDays = #arg_15_0._signInfo:getSignDays()
 end
 
-function slot0.checkDailyAllowanceIsOpen(slot0)
+function var_0_0.checkDailyAllowanceIsOpen(arg_16_0)
 	if not ActivityModel.instance:isActOnLine(ActivityEnum.Activity.DailyAllowance) then
 		return false
 	end
@@ -195,9 +225,12 @@ function slot0.checkDailyAllowanceIsOpen(slot0)
 	return true
 end
 
-function slot0.checkIsFirstGoldDay(slot0)
-	if slot0:checkDailyAllowanceIsOpen() then
-		if TimeUtil.secondsToDDHHMMSS(ServerTime.now() - ActivityModel.instance:getActMO(ActivityEnum.Activity.DailyAllowance):getRealStartTimeStamp()) + 1 == 1 then
+function var_0_0.checkIsFirstGoldDay(arg_17_0)
+	if arg_17_0:checkDailyAllowanceIsOpen() then
+		local var_17_0 = ActivityModel.instance:getActMO(ActivityEnum.Activity.DailyAllowance)
+		local var_17_1 = ServerTime.now() - var_17_0:getRealStartTimeStamp()
+
+		if TimeUtil.secondsToDDHHMMSS(var_17_1) + 1 == 1 then
 			return true
 		end
 
@@ -205,107 +238,126 @@ function slot0.checkIsFirstGoldDay(slot0)
 	end
 end
 
-function slot0.getDailyAllowanceBonus(slot0)
-	if slot0:checkDailyAllowanceIsOpen() then
-		return SignInConfig.instance:getGoldReward(math.floor(slot0:getGoldOpenDay()))
+function var_0_0.getDailyAllowanceBonus(arg_18_0)
+	if arg_18_0:checkDailyAllowanceIsOpen() then
+		local var_18_0 = math.floor(arg_18_0:getGoldOpenDay())
+
+		return SignInConfig.instance:getGoldReward(var_18_0)
 	end
 end
 
-function slot0.getTargetDailyAllowanceBonus(slot0, slot1)
-	if slot0:checkDailyAllowanceIsOpen() then
-		return SignInConfig.instance:getGoldReward(math.floor(slot0:getGoldOpenDay(TimeUtil.timeToTimeStamp(slot1[1], slot1[2], slot1[3], TimeDispatcher.DailyRefreshTime, 1, 1))))
+function var_0_0.getTargetDailyAllowanceBonus(arg_19_0, arg_19_1)
+	if arg_19_0:checkDailyAllowanceIsOpen() then
+		local var_19_0 = TimeUtil.timeToTimeStamp(arg_19_1[1], arg_19_1[2], arg_19_1[3], TimeDispatcher.DailyRefreshTime, 1, 1)
+		local var_19_1 = math.floor(arg_19_0:getGoldOpenDay(var_19_0))
+
+		return SignInConfig.instance:getGoldReward(var_19_1)
 	end
 end
 
-function slot0.getGoldOpenDay(slot0, slot1)
-	slot3 = os.date("*t", ServerTime.timeInLocal(ActivityModel.instance:getActStartTime(ActivityEnum.Activity.DailyAllowance) / 1000))
-	slot3.hour = 5
-	slot3.min = 0
-	slot3.sec = 0
-	slot5 = ServerTime.now() - (os.time(slot3) - ServerTime.clientToServerOffset())
+function var_0_0.getGoldOpenDay(arg_20_0, arg_20_1)
+	local var_20_0 = ActivityModel.instance:getActStartTime(ActivityEnum.Activity.DailyAllowance) / 1000
+	local var_20_1 = os.date("*t", ServerTime.timeInLocal(var_20_0))
 
-	if slot1 then
-		slot5 = slot1 - slot4
+	var_20_1.hour = 5
+	var_20_1.min = 0
+	var_20_1.sec = 0
+
+	local var_20_2 = os.time(var_20_1) - ServerTime.clientToServerOffset()
+	local var_20_3 = ServerTime.now() - var_20_2
+
+	if arg_20_1 then
+		var_20_3 = arg_20_1 - var_20_2
 	end
 
-	return slot5 / 86400 + 1
+	return var_20_3 / 86400 + 1
 end
 
-function slot0.checkIsGoldDayAndPass(slot0, slot1, slot2, slot3)
-	if slot0:checkIsGoldDay(slot1, slot2, slot3) then
-		slot4 = slot1[3]
+function var_0_0.checkIsGoldDayAndPass(arg_21_0, arg_21_1, arg_21_2, arg_21_3)
+	if arg_21_0:checkIsGoldDay(arg_21_1, arg_21_2, arg_21_3) then
+		local var_21_0 = arg_21_1[3]
 
-		if slot2 then
-			slot4 = slot3
+		if arg_21_2 then
+			var_21_0 = arg_21_3
 		end
 
-		slot10 = os.date("*t", ServerTime.timeInLocal(tonumber(PlayerModel.instance:getPlayinfo().registerTime) / 1000) - TimeDispatcher.DailyRefreshTime * 3600)
+		local var_21_1 = {
+			hour = 0,
+			min = 0,
+			sec = 0,
+			year = arg_21_1[1],
+			month = arg_21_1[2],
+			day = var_21_0
+		}
+		local var_21_2 = os.time(var_21_1) - ServerTime.clientToServerOffset() - ServerTime.getDstOffset()
+		local var_21_3 = ServerTime.now() - TimeDispatcher.DailyRefreshTime * 3600
+		local var_21_4 = ServerTime.timeInLocal(tonumber(PlayerModel.instance:getPlayinfo().registerTime) / 1000)
+		local var_21_5 = os.date("*t", var_21_4 - TimeDispatcher.DailyRefreshTime * 3600)
+		local var_21_6 = {
+			hour = 0,
+			min = 0,
+			sec = 0,
+			year = var_21_5.year,
+			month = var_21_5.month,
+			day = var_21_5.day
+		}
 
-		return os.time({
-			hour = 0,
-			min = 0,
-			sec = 0,
-			year = slot1[1],
-			month = slot1[2],
-			day = slot4
-		}) - ServerTime.clientToServerOffset() - ServerTime.getDstOffset() >= os.time({
-			hour = 0,
-			min = 0,
-			sec = 0,
-			year = slot10.year,
-			month = slot10.month,
-			day = slot10.day
-		}) - ServerTime.clientToServerOffset() - ServerTime.getDstOffset() and slot7 <= ServerTime.now() - TimeDispatcher.DailyRefreshTime * 3600
+		return var_21_2 >= os.time(var_21_6) - ServerTime.clientToServerOffset() - ServerTime.getDstOffset() and var_21_2 <= var_21_3
 	end
 
 	return false
 end
 
-function slot0.checkIsGoldDay(slot0, slot1, slot2, slot3)
-	if slot0:checkDailyAllowanceIsOpen() then
-		slot4 = slot1[3]
+function var_0_0.checkIsGoldDay(arg_22_0, arg_22_1, arg_22_2, arg_22_3)
+	if arg_22_0:checkDailyAllowanceIsOpen() then
+		local var_22_0 = arg_22_1[3]
 
-		if slot2 then
-			slot4 = slot3
+		if arg_22_2 then
+			var_22_0 = arg_22_3
 		end
 
-		slot7 = os.time({
+		local var_22_1 = {
 			hour = 12,
 			min = 0,
 			sec = 0,
-			year = slot1[1],
-			month = slot1[2],
-			day = slot4
-		}) - ServerTime.clientToServerOffset() - ServerTime.getDstOffset()
-		slot8 = ActivityModel.instance:getActMO(ActivityEnum.Activity.DailyAllowance)
-		slot9 = slot8:getRealStartTimeStamp() - TimeDispatcher.DailyRefreshTime * 3600
-		slot12 = lua_activity143_bonus.configDict and slot11[ActivityEnum.Activity.DailyAllowance]
+			year = arg_22_1[1],
+			month = arg_22_1[2],
+			day = var_22_0
+		}
+		local var_22_2 = os.time(var_22_1) - ServerTime.clientToServerOffset() - ServerTime.getDstOffset()
+		local var_22_3 = ActivityModel.instance:getActMO(ActivityEnum.Activity.DailyAllowance)
+		local var_22_4 = var_22_3:getRealStartTimeStamp() - TimeDispatcher.DailyRefreshTime * 3600
+		local var_22_5 = var_22_3:getRealEndTimeStamp() - TimeDispatcher.DailyRefreshTime * 3600
+		local var_22_6 = lua_activity143_bonus.configDict
+		local var_22_7 = var_22_6 and var_22_6[ActivityEnum.Activity.DailyAllowance]
+		local var_22_8 = var_22_4 + (var_22_7 and #var_22_7 or 0) * TimeUtil.OneDaySecond
+		local var_22_9 = math.min(var_22_5, var_22_8)
 
-		return slot9 < slot7 and slot7 < math.min(slot8:getRealEndTimeStamp() - TimeDispatcher.DailyRefreshTime * 3600, slot9 + (slot12 and #slot12 or 0) * TimeUtil.OneDaySecond)
+		return var_22_4 < var_22_2 and var_22_2 < var_22_9
 	end
 
 	return false
 end
 
-function slot0.setSignTotalRewardGet(slot0, slot1)
-	slot0._signInfo:addSignTotalIds(slot1)
+function var_0_0.setSignTotalRewardGet(arg_23_0, arg_23_1)
+	arg_23_0._signInfo:addSignTotalIds(arg_23_1)
 end
 
-function slot0.getTotalSignDays(slot0)
-	return slot0._totalSignDays
+function var_0_0.getTotalSignDays(arg_24_0)
+	return arg_24_0._totalSignDays
 end
 
-function slot0.getAllSignDays(slot0)
-	return slot0._signInfo.hasSignInDays
+function var_0_0.getAllSignDays(arg_25_0)
+	return arg_25_0._signInfo.hasSignInDays
 end
 
-function slot0.getAllSignTotals(slot0)
-	return slot0._signInfo.hasGetAddupBonus
+function var_0_0.getAllSignTotals(arg_26_0)
+	return arg_26_0._signInfo.hasGetAddupBonus
 end
 
-function slot0.isSignDayRewardGet(slot0, slot1)
-	for slot5, slot6 in pairs(slot0._signInfo.hasSignInDays) do
-		if slot6 == slot1 then
+function var_0_0.isSignDayRewardGet(arg_27_0, arg_27_1)
+	for iter_27_0, iter_27_1 in pairs(arg_27_0._signInfo.hasSignInDays) do
+		if iter_27_1 == arg_27_1 then
 			return true
 		end
 	end
@@ -313,15 +365,15 @@ function slot0.isSignDayRewardGet(slot0, slot1)
 	return false
 end
 
-function slot0.clearSignInDays(slot0)
-	slot0._signInfo:clearSignInDays()
+function var_0_0.clearSignInDays(arg_28_0)
+	arg_28_0._signInfo:clearSignInDays()
 
-	slot0._getBirthHeros = {}
+	arg_28_0._getBirthHeros = {}
 end
 
-function slot0.isSignTotalRewardGet(slot0, slot1)
-	for slot5, slot6 in pairs(slot0._signInfo.hasGetAddupBonus) do
-		if slot6 == slot1 then
+function var_0_0.isSignTotalRewardGet(arg_29_0, arg_29_1)
+	for iter_29_0, iter_29_1 in pairs(arg_29_0._signInfo.hasGetAddupBonus) do
+		if iter_29_1 == arg_29_1 then
 			return true
 		end
 	end
@@ -329,73 +381,73 @@ function slot0.isSignTotalRewardGet(slot0, slot1)
 	return false
 end
 
-function slot0.isSignSeverDataGet(slot0)
-	return slot0:isSignDayRewardGet(slot0:getCurDate().day)
+function var_0_0.isSignSeverDataGet(arg_30_0)
+	local var_30_0 = arg_30_0:getCurDate()
+
+	return arg_30_0:isSignDayRewardGet(var_30_0.day)
 end
 
-function slot0.getValidMonthCard(slot0, slot1, slot2, slot3)
-	slot8 = 0
-	slot9 = 0
-	slot4 = TimeUtil.timeToTimeStamp(slot1, slot2, slot3, slot8, slot9, 0)
+function var_0_0.getValidMonthCard(arg_31_0, arg_31_1, arg_31_2, arg_31_3)
+	local var_31_0 = TimeUtil.timeToTimeStamp(arg_31_1, arg_31_2, arg_31_3, 0, 0, 0)
 
-	for slot8, slot9 in pairs(slot0._signInfo.monthCardHistory) do
-		if TimeUtil.isSameDay(slot4, slot9.startTime - TimeDispatcher.DailyRefreshTime * 3600) or TimeUtil.isSameDay(slot4, slot9.endTime - TimeDispatcher.DailyRefreshTime * 3600 - 1) then
-			return slot9.id
+	for iter_31_0, iter_31_1 in pairs(arg_31_0._signInfo.monthCardHistory) do
+		if TimeUtil.isSameDay(var_31_0, iter_31_1.startTime - TimeDispatcher.DailyRefreshTime * 3600) or TimeUtil.isSameDay(var_31_0, iter_31_1.endTime - TimeDispatcher.DailyRefreshTime * 3600 - 1) then
+			return iter_31_1.id
 		end
 
-		if slot4 >= slot9.startTime - TimeDispatcher.DailyRefreshTime * 3600 and slot4 <= slot9.endTime - TimeDispatcher.DailyRefreshTime * 3600 - 1 then
-			return slot9.id
+		if var_31_0 >= iter_31_1.startTime - TimeDispatcher.DailyRefreshTime * 3600 and var_31_0 <= iter_31_1.endTime - TimeDispatcher.DailyRefreshTime * 3600 - 1 then
+			return iter_31_1.id
 		end
 	end
 
 	return nil
 end
 
-function slot0.getCurDate(slot0)
+function var_0_0.getCurDate(arg_32_0)
 	return os.date("!*t", ServerTime.now() + ServerTime.serverUtcOffset() - TimeDispatcher.DailyRefreshTime * 3600)
 end
 
-function slot0.isAutoSign(slot0)
-	return slot0._isAutoSignGetReward
+function var_0_0.isAutoSign(arg_33_0)
+	return arg_33_0._isAutoSignGetReward
 end
 
-function slot0.setAutoSign(slot0, slot1)
-	slot0._isAutoSignGetReward = slot1
+function var_0_0.setAutoSign(arg_34_0, arg_34_1)
+	arg_34_0._isAutoSignGetReward = arg_34_1
 end
 
-function slot0.isNewShowDetail(slot0)
-	return slot0._newShowDetail
+function var_0_0.isNewShowDetail(arg_35_0)
+	return arg_35_0._newShowDetail
 end
 
-function slot0.setNewShowDetail(slot0, slot1)
-	slot0._newShowDetail = slot1
+function var_0_0.setNewShowDetail(arg_36_0, arg_36_1)
+	arg_36_0._newShowDetail = arg_36_1
 end
 
-function slot0.isNewSwitch(slot0)
-	return slot0._newSwitch
+function var_0_0.isNewSwitch(arg_37_0)
+	return arg_37_0._newSwitch
 end
 
-function slot0.setNewSwitch(slot0, slot1)
-	slot0._newSwitch = slot1
+function var_0_0.setNewSwitch(arg_38_0, arg_38_1)
+	arg_38_0._newSwitch = arg_38_1
 end
 
-function slot0.setSignInHistory(slot0, slot1)
-	slot0._historySignInfos[slot1.month] = SignInHistoryInfoMo.New()
+function var_0_0.setSignInHistory(arg_39_0, arg_39_1)
+	arg_39_0._historySignInfos[arg_39_1.month] = SignInHistoryInfoMo.New()
 
-	slot0._historySignInfos[slot1.month]:init(slot1)
+	arg_39_0._historySignInfos[arg_39_1.month]:init(arg_39_1)
 end
 
-function slot0.getHistorySignInDays(slot0, slot1)
-	return slot0._historySignInfos[slot1].hasSignInDays
+function var_0_0.getHistorySignInDays(arg_40_0, arg_40_1)
+	return arg_40_0._historySignInfos[arg_40_1].hasSignInDays
 end
 
-function slot0.isHistoryDaySigned(slot0, slot1, slot2)
-	if not slot0._historySignInfos[slot1] then
+function var_0_0.isHistoryDaySigned(arg_41_0, arg_41_1, arg_41_2)
+	if not arg_41_0._historySignInfos[arg_41_1] then
 		return false
 	end
 
-	for slot6, slot7 in pairs(slot0._historySignInfos[slot1].hasSignInDays) do
-		if tonumber(slot7) == tonumber(slot2) then
+	for iter_41_0, iter_41_1 in pairs(arg_41_0._historySignInfos[arg_41_1].hasSignInDays) do
+		if tonumber(iter_41_1) == tonumber(arg_41_2) then
 			return true
 		end
 	end
@@ -403,107 +455,128 @@ function slot0.isHistoryDaySigned(slot0, slot1, slot2)
 	return false
 end
 
-function slot0.getSignTargetDate(slot0)
-	return slot0._targetdate
+function var_0_0.getSignTargetDate(arg_42_0)
+	return arg_42_0._targetdate
 end
 
-function slot0.setTargetDate(slot0, slot1, slot2, slot3)
-	slot0._targetdate = {
-		slot1,
-		slot2,
-		slot3
+function var_0_0.setTargetDate(arg_43_0, arg_43_1, arg_43_2, arg_43_3)
+	arg_43_0._targetdate = {
+		arg_43_1,
+		arg_43_2,
+		arg_43_3
 	}
 end
 
-function slot0.getAdvanceHero(slot0)
-	slot1 = slot0:getCurDate()
+function var_0_0.getAdvanceHero(arg_44_0)
+	local var_44_0 = arg_44_0:getCurDate()
 
-	for slot5 = 1, 3 do
-		slot6 = os.date("!*t", ServerTime.now() + ServerTime.serverUtcOffset() + 86400 * slot5 - TimeDispatcher.DailyRefreshTime * 3600)
+	for iter_44_0 = 1, 3 do
+		local var_44_1 = os.date("!*t", ServerTime.now() + ServerTime.serverUtcOffset() + 86400 * iter_44_0 - TimeDispatcher.DailyRefreshTime * 3600)
+		local var_44_2 = arg_44_0:getNoSignBirthdayHeros(var_44_1.month, var_44_1.day)
 
-		if #slot0:getNoSignBirthdayHeros(slot6.month, slot6.day) > 0 then
-			for slot12, slot13 in pairs(slot7) do
-				if HeroConfig.instance:getHeroCO(slot7[1]).rare < HeroConfig.instance:getHeroCO(slot13).rare then
-					slot8 = slot13
+		if #var_44_2 > 0 then
+			local var_44_3 = var_44_2[1]
+
+			for iter_44_1, iter_44_2 in pairs(var_44_2) do
+				local var_44_4 = HeroConfig.instance:getHeroCO(var_44_3)
+				local var_44_5 = HeroConfig.instance:getHeroCO(iter_44_2)
+
+				if var_44_4.rare < var_44_5.rare then
+					var_44_3 = iter_44_2
 				end
 			end
 
-			return slot8, slot5
+			return var_44_3, iter_44_0
 		end
 	end
 
 	return 0
 end
 
-function slot0.getShowMonthItemCo(slot0)
-	slot4 = {}
+function var_0_0.getShowMonthItemCo(arg_45_0)
+	local var_45_0 = tonumber(PlayerModel.instance:getPlayinfo().registerTime)
+	local var_45_1 = os.date("!*t", var_45_0 / 1000 + ServerTime.serverUtcOffset() - TimeDispatcher.DailyRefreshTime * 3600)
+	local var_45_2 = arg_45_0:getCurDate()
+	local var_45_3 = {}
 
-	if os.date("!*t", tonumber(PlayerModel.instance:getPlayinfo().registerTime) / 1000 + ServerTime.serverUtcOffset() - TimeDispatcher.DailyRefreshTime * 3600).year == slot0:getCurDate().year then
-		for slot8 = slot2.month, slot3.month do
-			table.insert(slot4, {
-				year = slot2.year,
-				month = slot8
-			})
+	if var_45_1.year == var_45_2.year then
+		for iter_45_0 = var_45_1.month, var_45_2.month do
+			local var_45_4 = {
+				year = var_45_1.year,
+				month = iter_45_0
+			}
+
+			table.insert(var_45_3, var_45_4)
 		end
 	else
-		if slot3.year - slot2.year > 1 then
-			for slot8 = slot3.month, 12 do
-				table.insert(slot4, {
-					year = slot3.year - 1,
-					month = slot8
-				})
+		if var_45_2.year - var_45_1.year > 1 then
+			for iter_45_1 = var_45_2.month, 12 do
+				local var_45_5 = {
+					year = var_45_2.year - 1,
+					month = iter_45_1
+				}
+
+				table.insert(var_45_3, var_45_5)
 			end
 		else
-			for slot9 = slot2.month < slot3.month and slot3.month or slot2.month, 12 do
-				table.insert(slot4, {
-					year = slot3.year - 1,
-					month = slot9
-				})
+			for iter_45_2 = var_45_1.month < var_45_2.month and var_45_2.month or var_45_1.month, 12 do
+				local var_45_6 = {
+					year = var_45_2.year - 1,
+					month = iter_45_2
+				}
+
+				table.insert(var_45_3, var_45_6)
 			end
 		end
 
-		for slot8 = 1, slot3.month do
-			table.insert(slot4, {
-				year = slot3.year,
-				month = slot8
-			})
+		for iter_45_3 = 1, var_45_2.month do
+			local var_45_7 = {
+				year = var_45_2.year,
+				month = iter_45_3
+			}
+
+			table.insert(var_45_3, var_45_7)
 		end
 	end
 
-	return slot4
+	return var_45_3
 end
 
-function slot0.checkFestivalDecorationUnlock()
-	if ActivityModel.instance:isActOnLine(ActivityController.instance:Vxax_ActId("Calendar_Decoration", ActivityEnum.Activity.V2a2_Calendar_Decoration)) == nil or slot1 == false then
+function var_0_0.checkFestivalDecorationUnlock()
+	local var_46_0 = ActivityController.instance:Vxax_ActId("Calendar_Decoration", ActivityEnum.Activity.V2a2_Calendar_Decoration)
+	local var_46_1 = ActivityModel.instance:isActOnLine(var_46_0)
+
+	if var_46_1 == nil or var_46_1 == false then
 		return false
 	end
 
-	slot3 = ActivityModel.instance:getActEndTime(slot0)
-	slot4 = ServerTime.now() * 1000
+	local var_46_2 = ActivityModel.instance:getActStartTime(var_46_0)
+	local var_46_3 = ActivityModel.instance:getActEndTime(var_46_0)
+	local var_46_4 = ServerTime.now() * 1000
 
-	return ActivityModel.instance:getActStartTime(slot0) ~= nil and slot3 ~= nil and slot2 <= slot4 and slot4 < slot3
+	return var_46_2 ~= nil and var_46_3 ~= nil and var_46_2 <= var_46_4 and var_46_4 < var_46_3
 end
 
-function slot0.onReceiveSignInTotalRewardReply(slot0, slot1)
-	slot0:setRewardMark(slot1.mark)
+function var_0_0.onReceiveSignInTotalRewardReply(arg_47_0, arg_47_1)
+	arg_47_0:setRewardMark(arg_47_1.mark)
 end
 
-function slot0.isClaimedAccumulateReward(slot0, slot1)
-	return slot0._signInfo:isClaimedAccumulateReward(slot1)
+function var_0_0.isClaimedAccumulateReward(arg_48_0, arg_48_1)
+	return arg_48_0._signInfo:isClaimedAccumulateReward(arg_48_1)
 end
 
-function slot0.isClaimableAccumulateReward(slot0, slot1)
-	return slot0._signInfo:isClaimableAccumulateReward(slot1)
+function var_0_0.isClaimableAccumulateReward(arg_49_0, arg_49_1)
+	return arg_49_0._signInfo:isClaimableAccumulateReward(arg_49_1)
 end
 
-function slot0.onReceiveSignInTotalRewardAllReply(slot0, slot1)
-	slot0:setRewardMark(slot1.mark)
+function var_0_0.onReceiveSignInTotalRewardAllReply(arg_50_0, arg_50_1)
+	arg_50_0:setRewardMark(arg_50_1.mark)
 end
 
-function slot0.setRewardMark(slot0, slot1)
-	slot0._signInfo:setRewardMark(slot1 or 0)
+function var_0_0.setRewardMark(arg_51_0, arg_51_1)
+	arg_51_0._signInfo:setRewardMark(arg_51_1 or 0)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

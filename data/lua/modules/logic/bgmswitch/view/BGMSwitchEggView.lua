@@ -1,177 +1,184 @@
-module("modules.logic.bgmswitch.view.BGMSwitchEggView", package.seeall)
+﻿module("modules.logic.bgmswitch.view.BGMSwitchEggView", package.seeall)
 
-slot0 = class("BGMSwitchEggView", BaseView)
+local var_0_0 = class("BGMSwitchEggView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gointerface = gohelper.findChild(slot0.viewGO, "#go_mechine/#go_interference")
-	slot0._btnbeatmechine = gohelper.findChildButton(slot0.viewGO, "#go_mechine/#btn_beatmechine")
-	slot0._slidercontrol = gohelper.findChildSlider(slot0.viewGO, "#go_mechine/#slider_control")
-	slot0._txtNum1 = gohelper.findChildText(slot0.viewGO, "#go_mechine/#slider_control/Fill Area/#txt_Num1")
-	slot0._txtNum2 = gohelper.findChildText(slot0.viewGO, "#go_mechine/#slider_control/Fill Area/#txt_Num2")
-	slot0._txtNum3 = gohelper.findChildText(slot0.viewGO, "#go_mechine/#slider_control/Fill Area/#txt_Num3")
-	slot0._txtNum4 = gohelper.findChildText(slot0.viewGO, "#go_mechine/#slider_control/Fill Area/#txt_Num4")
-	slot0._txtNum5 = gohelper.findChildText(slot0.viewGO, "#go_mechine/#slider_control/Fill Area/#txt_Num5")
-	slot0._txtNum6 = gohelper.findChildText(slot0.viewGO, "#go_mechine/#slider_control/Fill Area/#txt_Num6")
-	slot0._txtNum7 = gohelper.findChildText(slot0.viewGO, "#go_mechine/#slider_control/Fill Area/#txt_Num7")
-	slot0._goppt = gohelper.findChild(slot0.viewGO, "#go_mechine/#go_ppt")
-	slot0._controlHandleAni = gohelper.findChild(slot0._slidercontrol.gameObject, "Handle"):GetComponent(typeof(UnityEngine.Animator))
-	slot0._pptAni = slot0._goppt:GetComponent(typeof(UnityEngine.Animator))
-	slot4 = UnityEngine.Animator
-	slot0._viewAni = slot0.viewGO:GetComponent(typeof(slot4))
-	slot0._simagepptpic1 = gohelper.findChildSingleImage(slot0._goppt, "#simage_pic1")
-	slot0._simagepptpic2 = gohelper.findChildSingleImage(slot0._goppt, "#simage_pic2")
-	slot0._imagepptpic1 = gohelper.findChildImage(slot0._goppt, "#simage_pic1")
-	slot0._imagepptpic2 = gohelper.findChildImage(slot0._goppt, "#simage_pic2")
-	slot0._egg2Items = {}
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gointerface = gohelper.findChild(arg_1_0.viewGO, "#go_mechine/#go_interference")
+	arg_1_0._btnbeatmechine = gohelper.findChildButton(arg_1_0.viewGO, "#go_mechine/#btn_beatmechine")
+	arg_1_0._slidercontrol = gohelper.findChildSlider(arg_1_0.viewGO, "#go_mechine/#slider_control")
+	arg_1_0._txtNum1 = gohelper.findChildText(arg_1_0.viewGO, "#go_mechine/#slider_control/Fill Area/#txt_Num1")
+	arg_1_0._txtNum2 = gohelper.findChildText(arg_1_0.viewGO, "#go_mechine/#slider_control/Fill Area/#txt_Num2")
+	arg_1_0._txtNum3 = gohelper.findChildText(arg_1_0.viewGO, "#go_mechine/#slider_control/Fill Area/#txt_Num3")
+	arg_1_0._txtNum4 = gohelper.findChildText(arg_1_0.viewGO, "#go_mechine/#slider_control/Fill Area/#txt_Num4")
+	arg_1_0._txtNum5 = gohelper.findChildText(arg_1_0.viewGO, "#go_mechine/#slider_control/Fill Area/#txt_Num5")
+	arg_1_0._txtNum6 = gohelper.findChildText(arg_1_0.viewGO, "#go_mechine/#slider_control/Fill Area/#txt_Num6")
+	arg_1_0._txtNum7 = gohelper.findChildText(arg_1_0.viewGO, "#go_mechine/#slider_control/Fill Area/#txt_Num7")
+	arg_1_0._goppt = gohelper.findChild(arg_1_0.viewGO, "#go_mechine/#go_ppt")
+	arg_1_0._controlHandleAni = gohelper.findChild(arg_1_0._slidercontrol.gameObject, "Handle"):GetComponent(typeof(UnityEngine.Animator))
+	arg_1_0._pptAni = arg_1_0._goppt:GetComponent(typeof(UnityEngine.Animator))
+	arg_1_0._viewAni = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	arg_1_0._simagepptpic1 = gohelper.findChildSingleImage(arg_1_0._goppt, "#simage_pic1")
+	arg_1_0._simagepptpic2 = gohelper.findChildSingleImage(arg_1_0._goppt, "#simage_pic2")
+	arg_1_0._imagepptpic1 = gohelper.findChildImage(arg_1_0._goppt, "#simage_pic1")
+	arg_1_0._imagepptpic2 = gohelper.findChildImage(arg_1_0._goppt, "#simage_pic2")
+	arg_1_0._egg2Items = {}
 
-	for slot4 = 1, 4 do
-		if not slot0._egg2Items[slot4] then
-			slot0._egg2Items[slot4] = {}
+	for iter_1_0 = 1, 4 do
+		if not arg_1_0._egg2Items[iter_1_0] then
+			arg_1_0._egg2Items[iter_1_0] = {}
 		end
 
-		slot0._egg2Items[slot4].go = gohelper.findChild(slot0.viewGO, "#go_mechine/#btn_control/btn0" .. tostring(slot4))
-		slot0._egg2Items[slot4].btn = gohelper.findChildButton(slot0.viewGO, "#go_mechine/#btn_control/btn0" .. tostring(slot4))
+		arg_1_0._egg2Items[iter_1_0].go = gohelper.findChild(arg_1_0.viewGO, "#go_mechine/#btn_control/btn0" .. tostring(iter_1_0))
+		arg_1_0._egg2Items[iter_1_0].btn = gohelper.findChildButton(arg_1_0.viewGO, "#go_mechine/#btn_control/btn0" .. tostring(iter_1_0))
 
-		slot0._egg2Items[slot4].btn:AddClickListener(slot0._egg2itemBtnOnclick, slot0, slot4)
+		arg_1_0._egg2Items[iter_1_0].btn:AddClickListener(arg_1_0._egg2itemBtnOnclick, arg_1_0, iter_1_0)
 
-		slot0._egg2Items[slot4].goup = gohelper.findChild(slot0._egg2Items[slot4].go, "up")
-		slot0._egg2Items[slot4].godown = gohelper.findChild(slot0._egg2Items[slot4].go, "down")
+		arg_1_0._egg2Items[iter_1_0].goup = gohelper.findChild(arg_1_0._egg2Items[iter_1_0].go, "up")
+		arg_1_0._egg2Items[iter_1_0].godown = gohelper.findChild(arg_1_0._egg2Items[iter_1_0].go, "down")
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnbeatmechine:AddClickListener(slot0._btnbeatmechineOnClick, slot0)
-	slot0:addEventCb(BGMSwitchController.instance, BGMSwitchEvent.SelectPlayGear, slot0._onSelectPlayGear, slot0)
-	slot0:addEventCb(BGMSwitchController.instance, BGMSwitchEvent.RandomFinished, slot0._refreshBottomEggBtns, slot0)
-	slot0:addEventCb(BGMSwitchController.instance, BGMSwitchEvent.ItemSelected, slot0._onBgmItemSelected, slot0)
-	slot0:addEventCb(BGMSwitchController.instance, BGMSwitchEvent.BgmSwitched, slot0._onBgmSwitched, slot0)
-	slot0:addEventCb(BGMSwitchController.instance, BGMSwitchEvent.BgmFavorite, slot0._onBgmSwitched, slot0)
-	slot0:addEventCb(BGMSwitchController.instance, BGMSwitchEvent.PlayShakingAni, slot0._playShakingAniByGuide, slot0)
-	slot0:addEventCb(BGMSwitchController.instance, BGMSwitchEvent.SlideValueUpdate, slot0._sliderValueUpdate, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnbeatmechine:AddClickListener(arg_2_0._btnbeatmechineOnClick, arg_2_0)
+	arg_2_0:addEventCb(BGMSwitchController.instance, BGMSwitchEvent.SelectPlayGear, arg_2_0._onSelectPlayGear, arg_2_0)
+	arg_2_0:addEventCb(BGMSwitchController.instance, BGMSwitchEvent.RandomFinished, arg_2_0._refreshBottomEggBtns, arg_2_0)
+	arg_2_0:addEventCb(BGMSwitchController.instance, BGMSwitchEvent.ItemSelected, arg_2_0._onBgmItemSelected, arg_2_0)
+	arg_2_0:addEventCb(BGMSwitchController.instance, BGMSwitchEvent.BgmSwitched, arg_2_0._onBgmSwitched, arg_2_0)
+	arg_2_0:addEventCb(BGMSwitchController.instance, BGMSwitchEvent.BgmFavorite, arg_2_0._onBgmSwitched, arg_2_0)
+	arg_2_0:addEventCb(BGMSwitchController.instance, BGMSwitchEvent.PlayShakingAni, arg_2_0._playShakingAniByGuide, arg_2_0)
+	arg_2_0:addEventCb(BGMSwitchController.instance, BGMSwitchEvent.SlideValueUpdate, arg_2_0._sliderValueUpdate, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnbeatmechine:RemoveClickListener()
-	slot0:removeEventCb(BGMSwitchController.instance, BGMSwitchEvent.SelectPlayGear, slot0._onSelectPlayGear, slot0)
-	slot0:removeEventCb(BGMSwitchController.instance, BGMSwitchEvent.RandomFinished, slot0._refreshBottomEggBtns, slot0)
-	slot0:removeEventCb(BGMSwitchController.instance, BGMSwitchEvent.ItemSelected, slot0._onBgmItemSelected, slot0)
-	slot0:removeEventCb(BGMSwitchController.instance, BGMSwitchEvent.BgmSwitched, slot0._onBgmSwitched, slot0)
-	slot0:removeEventCb(BGMSwitchController.instance, BGMSwitchEvent.BgmFavorite, slot0._onBgmSwitched, slot0)
-	slot0:removeEventCb(BGMSwitchController.instance, BGMSwitchEvent.PlayShakingAni, slot0._playShakingAniByGuide, slot0)
-	slot0:removeEventCb(BGMSwitchController.instance, BGMSwitchEvent.SlideValueUpdate, slot0._sliderValueUpdate, slot0)
-	TaskDispatcher.cancelTask(slot0._refreshBottomEggBtns, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnbeatmechine:RemoveClickListener()
+	arg_3_0:removeEventCb(BGMSwitchController.instance, BGMSwitchEvent.SelectPlayGear, arg_3_0._onSelectPlayGear, arg_3_0)
+	arg_3_0:removeEventCb(BGMSwitchController.instance, BGMSwitchEvent.RandomFinished, arg_3_0._refreshBottomEggBtns, arg_3_0)
+	arg_3_0:removeEventCb(BGMSwitchController.instance, BGMSwitchEvent.ItemSelected, arg_3_0._onBgmItemSelected, arg_3_0)
+	arg_3_0:removeEventCb(BGMSwitchController.instance, BGMSwitchEvent.BgmSwitched, arg_3_0._onBgmSwitched, arg_3_0)
+	arg_3_0:removeEventCb(BGMSwitchController.instance, BGMSwitchEvent.BgmFavorite, arg_3_0._onBgmSwitched, arg_3_0)
+	arg_3_0:removeEventCb(BGMSwitchController.instance, BGMSwitchEvent.PlayShakingAni, arg_3_0._playShakingAniByGuide, arg_3_0)
+	arg_3_0:removeEventCb(BGMSwitchController.instance, BGMSwitchEvent.SlideValueUpdate, arg_3_0._sliderValueUpdate, arg_3_0)
+	TaskDispatcher.cancelTask(arg_3_0._refreshBottomEggBtns, arg_3_0)
 end
 
-function slot0._onSliderValueChanged(slot0, slot1)
-	slot0.selectIndex = slot1
+function var_0_0._onSliderValueChanged(arg_4_0, arg_4_1)
+	arg_4_0.selectIndex = arg_4_1
 end
 
-function slot0.onOpen(slot0)
-	gohelper.setActive(slot0._gointerface, false)
-	slot0:checkTrigger()
+function var_0_0.onOpen(arg_5_0)
+	gohelper.setActive(arg_5_0._gointerface, false)
+	arg_5_0:checkTrigger()
 
 	if not BGMSwitchModel.instance:getEggHideState() then
-		slot0:_startCheckEasterEgg()
+		arg_5_0:_startCheckEasterEgg()
 	end
 
 	BGMSwitchModel.instance:setEggHideState(false)
-	slot0:_updateEggBtnsAndShowPpt()
+	arg_5_0:_updateEggBtnsAndShowPpt()
 end
 
-function slot0._onBgmSwitched(slot0)
-	slot0:_onBgmItemSelected(BGMSwitchModel.instance:getCurBgm())
+function var_0_0._onBgmSwitched(arg_6_0)
+	arg_6_0:_onBgmItemSelected(BGMSwitchModel.instance:getCurBgm())
 end
 
-function slot0._sliderValueUpdate(slot0)
+function var_0_0._sliderValueUpdate(arg_7_0)
 	if not BGMSwitchModel.instance:getEggIsTrigger() then
 		return
 	end
 
-	slot0:_checkAndShowPpt()
+	arg_7_0:_checkAndShowPpt()
 end
 
-function slot0._onSelectPlayGear(slot0)
-	slot0:checkTrigger()
-	slot0:_hideEasterEggType1()
-	slot0:_updateEggBtnsAndShowPpt()
+function var_0_0._onSelectPlayGear(arg_8_0)
+	arg_8_0:checkTrigger()
+	arg_8_0:_hideEasterEggType1()
+	arg_8_0:_updateEggBtnsAndShowPpt()
 end
 
-function slot0.checkTrigger(slot0)
+function var_0_0.checkTrigger(arg_9_0)
 	if BGMSwitchModel.instance:getEggIsTrigger() then
-		for slot4 = 1, 4 do
-			BGMSwitchModel.instance:setEggType2State(slot4, false)
+		for iter_9_0 = 1, 4 do
+			BGMSwitchModel.instance:setEggType2State(iter_9_0, false)
 		end
 
 		BGMSwitchModel.instance:setEggIsTrigger(false)
 		BGMSwitchModel.instance:setPPtEffectEgg2Id(nil)
-		slot0._controlHandleAni:Play("flashing", 0, 1)
+		arg_9_0._controlHandleAni:Play("flashing", 0, 1)
 	end
 end
 
-function slot0._updateEggBtnsAndShowPpt(slot0)
+function var_0_0._updateEggBtnsAndShowPpt(arg_10_0)
 	if BGMSwitchModel.instance:getMechineGear() == BGMSwitchEnum.Gear.OFF then
-		slot0._controlHandleAni:Play("flashing", 0, 1)
+		arg_10_0._controlHandleAni:Play("flashing", 0, 1)
 	else
-		slot0:_startCheckEasterEgg()
+		arg_10_0:_startCheckEasterEgg()
 	end
 
-	slot0:_checkAndShowPpt()
-	slot0:_refreshBottomEggBtns()
+	arg_10_0:_checkAndShowPpt()
+	arg_10_0:_refreshBottomEggBtns()
 end
 
-function slot0._onBgmItemSelected(slot0, slot1)
+function var_0_0._onBgmItemSelected(arg_11_0, arg_11_1)
 	if BGMSwitchModel.instance:getMechineGear() ~= BGMSwitchEnum.Gear.On1 then
 		return
 	end
 
-	if BGMSwitchModel.instance:isValidBgmId(BGMSwitchModel.instance:getCurBgm()) then
-		TaskDispatcher.runDelay(slot0._refreshBottomEggBtns, slot0, 0.67)
+	local var_11_0 = BGMSwitchModel.instance:getCurBgm()
+
+	if BGMSwitchModel.instance:isValidBgmId(var_11_0) then
+		TaskDispatcher.runDelay(arg_11_0._refreshBottomEggBtns, arg_11_0, 0.67)
 	else
-		slot0:_refreshBottomEggBtns()
+		arg_11_0:_refreshBottomEggBtns()
 	end
 end
 
-function slot0._egg2itemBtnOnclick(slot0, slot1)
-	if BGMSwitchModel.instance:getEggIsTrigger() and slot0:_isHaveEggShowConfig(BGMSwitchModel.instance:getPPtEffectEgg2Id()) then
+function var_0_0._egg2itemBtnOnclick(arg_12_0, arg_12_1)
+	if BGMSwitchModel.instance:getEggIsTrigger() and arg_12_0:_isHaveEggShowConfig(BGMSwitchModel.instance:getPPtEffectEgg2Id()) then
 		GameFacade.showToast(ToastEnum.KeepStableNoEggControl)
 
 		return
 	end
 
 	if BGMSwitchModel.instance:getMechineGear() ~= BGMSwitchEnum.Gear.OFF then
-		slot0._controlHandleAni:Play("flashing", 0, 0)
+		arg_12_0._controlHandleAni:Play("flashing", 0, 0)
 	end
 
-	BGMSwitchModel.instance:setEggType2State(slot1, not BGMSwitchModel.instance:getEggType2SateByIndex(slot1))
-	slot0:_refreshBottomEggBtns()
-	slot0:_startCheckEasterEggType2()
+	local var_12_0 = BGMSwitchModel.instance:getEggType2SateByIndex(arg_12_1)
+
+	BGMSwitchModel.instance:setEggType2State(arg_12_1, not var_12_0)
+	arg_12_0:_refreshBottomEggBtns()
+	arg_12_0:_startCheckEasterEggType2()
 	BGMSwitchAudioTrigger.play_ui_replay_buttonegg()
 end
 
-function slot0._btnbeatmechineOnClick(slot0)
+function var_0_0._btnbeatmechineOnClick(arg_13_0)
 	BGMSwitchAudioTrigger.play_ui_replay_flap()
 
-	if not slot0._beatTime then
-		slot0._beatTime = 0
+	if not arg_13_0._beatTime then
+		arg_13_0._beatTime = 0
 	end
 
-	slot0._beatTime = slot0._beatTime + 1
+	arg_13_0._beatTime = arg_13_0._beatTime + 1
 
-	slot0._viewAni:Play("shaking", 0, 0)
+	arg_13_0._viewAni:Play("shaking", 0, 0)
 
-	if tonumber(BGMSwitchConfig.instance:getBgmEasterEggCo(slot0._eggType1Id).param2) <= slot0._beatTime then
-		if not slot0._triggerEggType1Id or slot0._triggerEggType1Id == 0 then
+	local var_13_0 = BGMSwitchConfig.instance:getBgmEasterEggCo(arg_13_0._eggType1Id)
+
+	if arg_13_0._beatTime >= tonumber(var_13_0.param2) then
+		if not arg_13_0._triggerEggType1Id or arg_13_0._triggerEggType1Id == 0 then
 			if GuideModel.instance:isGuideRunning(BGMSwitchEnum.BGMGuideId) then
 				return
 			end
 
-			slot0._beatTime = 0
+			arg_13_0._beatTime = 0
 
-			if BGMSwitchModel.instance:getMechineGear() == BGMSwitchEnum.Gear.OFF then
+			local var_13_1 = BGMSwitchModel.instance:getMechineGear()
+
+			if var_13_1 == BGMSwitchEnum.Gear.OFF then
 				GameFacade.showToast(ToastEnum.MachineNoRun)
 			end
 
-			if slot3 == BGMSwitchEnum.Gear.On1 or BGMSwitchModel.instance:getEggIsTrigger() then
+			if var_13_1 == BGMSwitchEnum.Gear.On1 or BGMSwitchModel.instance:getEggIsTrigger() then
 				GameFacade.showToast(ToastEnum.MachineIsOkNoBeat)
 			end
 
@@ -179,85 +186,98 @@ function slot0._btnbeatmechineOnClick(slot0)
 				GameFacade.showToast(ToastEnum.MachineNotShowView)
 			end
 		else
-			slot0:_hideEasterEggType1()
+			arg_13_0:_hideEasterEggType1()
 		end
 	end
 end
 
-function slot0._startCheckEasterEgg(slot0)
-	for slot6, slot7 in pairs(BGMSwitchConfig.instance:getBgmEasterEggCos()) do
-		if slot7.type == BGMSwitchEnum.EasterEggType.Beat then
-			slot0._eggType1Id = slot7.id
+function var_0_0._startCheckEasterEgg(arg_14_0)
+	local var_14_0 = BGMSwitchModel.instance:getMechineGear()
+	local var_14_1 = BGMSwitchConfig.instance:getBgmEasterEggCos()
 
-			if BGMSwitchModel.instance:getMechineGear() ~= BGMSwitchEnum.Gear.OFF and BGMSwitchModel.instance:getPPtEffectEgg2Id() == nil then
-				slot0:_startCheckEasterEggType1(slot7.id)
+	for iter_14_0, iter_14_1 in pairs(var_14_1) do
+		if iter_14_1.type == BGMSwitchEnum.EasterEggType.Beat then
+			arg_14_0._eggType1Id = iter_14_1.id
+
+			if var_14_0 ~= BGMSwitchEnum.Gear.OFF and BGMSwitchModel.instance:getPPtEffectEgg2Id() == nil then
+				arg_14_0:_startCheckEasterEggType1(iter_14_1.id)
 			end
-		elseif slot7.type == BGMSwitchEnum.EasterEggType.Ppt and slot1 ~= BGMSwitchEnum.Gear.OFF and slot0._triggerEggType1Id == nil then
-			slot0:_startCheckEasterEggType2(slot7.id)
+		elseif iter_14_1.type == BGMSwitchEnum.EasterEggType.Ppt and var_14_0 ~= BGMSwitchEnum.Gear.OFF and arg_14_0._triggerEggType1Id == nil then
+			arg_14_0:_startCheckEasterEggType2(iter_14_1.id)
 		end
 	end
 end
 
-function slot0._startCheckEasterEggType1(slot0, slot1)
-	slot2 = BGMSwitchConfig.instance:getBgmEasterEggCo(slot1)
-	slot3 = math.random(1, 1000)
+function var_0_0._startCheckEasterEggType1(arg_15_0, arg_15_1)
+	local var_15_0 = BGMSwitchConfig.instance:getBgmEasterEggCo(arg_15_1)
+	local var_15_1 = math.random(1, 1000)
 
-	if slot0._lasttriggerEggType1Id then
-		slot0._lasttriggerEggType1Id = nil
+	if arg_15_0._lasttriggerEggType1Id then
+		arg_15_0._lasttriggerEggType1Id = nil
 
 		return
 	end
 
-	if slot3 < tonumber(slot2.param1) and slot0:needCheckRandomNum() then
-		slot0._triggerEggType1Id = slot1
-		slot0._lasttriggerEggType1Id = slot1
+	if var_15_1 < tonumber(var_15_0.param1) and arg_15_0:needCheckRandomNum() then
+		arg_15_0._triggerEggType1Id = arg_15_1
+		arg_15_0._lasttriggerEggType1Id = arg_15_1
 
-		slot0:_showEasterEggType1()
+		arg_15_0:_showEasterEggType1()
 	end
 end
 
-function slot0.needCheckRandomNum(slot0)
-	return slot0._lasttriggerEggType1Id == nil
+function var_0_0.needCheckRandomNum(arg_16_0)
+	return arg_16_0._lasttriggerEggType1Id == nil
 end
 
-function slot0._showEasterEggType1(slot0)
-	slot0._beatTime = 0
+function var_0_0._showEasterEggType1(arg_17_0)
+	arg_17_0._beatTime = 0
 
-	gohelper.setActive(slot0._gointerface, true)
+	gohelper.setActive(arg_17_0._gointerface, true)
 
 	if GuideModel.instance:isGuideRunning(BGMSwitchEnum.BGMGuideId) then
 		return
 	end
 
-	TaskDispatcher.runDelay(slot0._hideEasterEggType1, slot0, Mathf.Floor(tonumber(BGMSwitchConfig.instance:getBgmEasterEggCo(slot0._eggType1Id).param3) / 1000))
+	local var_17_0 = BGMSwitchConfig.instance:getBgmEasterEggCo(arg_17_0._eggType1Id)
+	local var_17_1 = Mathf.Floor(tonumber(var_17_0.param3) / 1000)
+
+	TaskDispatcher.runDelay(arg_17_0._hideEasterEggType1, arg_17_0, var_17_1)
 end
 
-function slot0._hideEasterEggType1(slot0)
-	TaskDispatcher.cancelTask(slot0._hideEasterEggType1, slot0)
-	gohelper.setActive(slot0._gointerface, false)
+function var_0_0._hideEasterEggType1(arg_18_0)
+	TaskDispatcher.cancelTask(arg_18_0._hideEasterEggType1, arg_18_0)
+	gohelper.setActive(arg_18_0._gointerface, false)
 
-	slot0._triggerEggType1Id = nil
-	slot0._beatTime = 0
+	arg_18_0._triggerEggType1Id = nil
+	arg_18_0._beatTime = 0
 end
 
-function slot0._startCheckEasterEggType2(slot0, slot1)
-	gohelper.setActive(slot0._goppt, false)
+function var_0_0._startCheckEasterEggType2(arg_19_0, arg_19_1)
+	gohelper.setActive(arg_19_0._goppt, false)
 
-	for slot7 = 2, 4 do
-		slot3 = (BGMSwitchModel.instance:getEggType2Sates()[1] and "2" or "1") .. (slot2[slot7] and "#2" or "#1")
+	local var_19_0 = BGMSwitchModel.instance:getEggType2Sates()
+	local var_19_1 = var_19_0[1] and "2" or "1"
+
+	for iter_19_0 = 2, 4 do
+		local var_19_2 = var_19_0[iter_19_0] and "#2" or "#1"
+
+		var_19_1 = var_19_1 .. var_19_2
 	end
 
-	if slot1 then
-		if BGMSwitchConfig.instance:getBgmEasterEggCo(slot1).param1 == slot3 then
-			slot0:_startEgg2Effect(slot1)
+	if arg_19_1 then
+		if BGMSwitchConfig.instance:getBgmEasterEggCo(arg_19_1).param1 == var_19_1 then
+			arg_19_0:_startEgg2Effect(arg_19_1)
 		end
 
 		return
 	end
 
-	for slot8, slot9 in pairs(BGMSwitchConfig.instance:getBgmEasterEggCosByType(BGMSwitchEnum.EasterEggType.Ppt)) do
-		if slot9.param1 == slot3 then
-			slot0:_startEgg2Effect(slot9.id)
+	local var_19_3 = BGMSwitchConfig.instance:getBgmEasterEggCosByType(BGMSwitchEnum.EasterEggType.Ppt)
+
+	for iter_19_1, iter_19_2 in pairs(var_19_3) do
+		if iter_19_2.param1 == var_19_1 then
+			arg_19_0:_startEgg2Effect(iter_19_2.id)
 
 			return
 		end
@@ -266,99 +286,111 @@ function slot0._startCheckEasterEggType2(slot0, slot1)
 	BGMSwitchModel.instance:setPPtEffectEgg2Id(nil)
 end
 
-function slot0._startEgg2Effect(slot0, slot1)
-	if slot0:_isHaveEggShowConfig(slot1) then
-		BGMSwitchModel.instance:setPPtEffectEgg2Id(slot1)
+function var_0_0._startEgg2Effect(arg_20_0, arg_20_1)
+	local var_20_0 = BGMSwitchModel.instance:getMechineGear()
 
-		if BGMSwitchModel.instance:getMechineGear() ~= BGMSwitchEnum.Gear.OFF then
-			slot0._controlHandleAni:Play("marquee", 0, 0)
+	if arg_20_0:_isHaveEggShowConfig(arg_20_1) then
+		BGMSwitchModel.instance:setPPtEffectEgg2Id(arg_20_1)
+
+		if var_20_0 ~= BGMSwitchEnum.Gear.OFF then
+			arg_20_0._controlHandleAni:Play("marquee", 0, 0)
 		end
 
 		BGMSwitchController.instance:dispatchEvent(BGMSwitchEvent.ToggleEggForGuide)
 	else
 		BGMSwitchModel.instance:setPPtEffectEgg2Id(nil)
 
-		if slot2 ~= BGMSwitchEnum.Gear.OFF then
-			slot0._controlHandleAni:Play("loop", 0, 0)
+		if var_20_0 ~= BGMSwitchEnum.Gear.OFF then
+			arg_20_0._controlHandleAni:Play("loop", 0, 0)
 		end
 	end
 end
 
-function slot0._isHaveEggShowConfig(slot0, slot1, slot2)
-	if BGMSwitchConfig.instance:getBgmEasterEggCo(slot1) then
-		slot4 = string.split(slot3.param2, "|")
+function var_0_0._isHaveEggShowConfig(arg_21_0, arg_21_1, arg_21_2)
+	local var_21_0 = BGMSwitchConfig.instance:getBgmEasterEggCo(arg_21_1)
 
-		if slot2 then
-			return slot4[slot2] and slot4[slot2] ~= ""
+	if var_21_0 then
+		local var_21_1 = string.split(var_21_0.param2, "|")
+
+		if arg_21_2 then
+			return var_21_1[arg_21_2] and var_21_1[arg_21_2] ~= ""
 		end
 
-		return slot3.param2 ~= "" and slot3.param3 ~= ""
+		return var_21_0.param2 ~= "" and var_21_0.param3 ~= ""
 	end
 
 	return false
 end
 
-function slot0._checkAndShowPpt(slot0)
-	TaskDispatcher.cancelTask(slot0._pptUpdate, slot0)
+function var_0_0._checkAndShowPpt(arg_22_0)
+	TaskDispatcher.cancelTask(arg_22_0._pptUpdate, arg_22_0)
 
-	slot0._pptRepeatCount = 0
+	local var_22_0 = BGMSwitchModel.instance:getPPtEffectEgg2Id()
 
-	if not BGMSwitchModel.instance:getPPtEffectEgg2Id() or not BGMSwitchModel.instance:machineGearIsInSnowflakeScene() then
-		gohelper.setActive(slot0._goppt, false)
+	arg_22_0._pptRepeatCount = 0
+
+	if not var_22_0 or not BGMSwitchModel.instance:machineGearIsInSnowflakeScene() then
+		gohelper.setActive(arg_22_0._goppt, false)
 
 		return
 	end
 
 	BGMSwitchModel.instance:setEggIsTrigger(true)
 
-	if not slot0:_isHaveEggShowConfig(slot1, BGMSwitchModel.instance:getAudioCurShowType()) then
-		gohelper.setActive(slot0._goppt, false)
+	if not arg_22_0:_isHaveEggShowConfig(var_22_0, BGMSwitchModel.instance:getAudioCurShowType()) then
+		gohelper.setActive(arg_22_0._goppt, false)
 
 		return
 	end
 
-	slot2 = BGMSwitchConfig.instance:getBgmEasterEggCo(BGMSwitchModel.instance:getPPtEffectEgg2Id())
-	slot4 = string.split(string.split(slot2.param2, "|")[BGMSwitchModel.instance:getAudioCurShowType()], "#")
+	local var_22_1 = BGMSwitchConfig.instance:getBgmEasterEggCo(BGMSwitchModel.instance:getPPtEffectEgg2Id())
+	local var_22_2 = BGMSwitchModel.instance:getAudioCurShowType()
+	local var_22_3 = string.split(string.split(var_22_1.param2, "|")[var_22_2], "#")
 
-	slot0._simagepptpic1:LoadImage(ResUrl.getBgmEggIcon(slot4[1]))
-	slot0._simagepptpic2:LoadImage(ResUrl.getBgmEggIcon(slot4[1]))
-	TaskDispatcher.runRepeat(slot0._pptUpdate, slot0, tonumber(slot2.param3) / 1000)
-	gohelper.setActive(slot0._goppt, true)
+	arg_22_0._simagepptpic1:LoadImage(ResUrl.getBgmEggIcon(var_22_3[1]))
+	arg_22_0._simagepptpic2:LoadImage(ResUrl.getBgmEggIcon(var_22_3[1]))
+	TaskDispatcher.runRepeat(arg_22_0._pptUpdate, arg_22_0, tonumber(var_22_1.param3) / 1000)
+	gohelper.setActive(arg_22_0._goppt, true)
 end
 
-function slot0._pptUpdate(slot0)
-	slot0._pptAni:Play("swicth", 0, 0)
+function var_0_0._pptUpdate(arg_23_0)
+	arg_23_0._pptAni:Play("swicth", 0, 0)
 
-	slot0._pptRepeatCount = slot0._pptRepeatCount + 1
-	slot3 = string.split(string.split(BGMSwitchConfig.instance:getBgmEasterEggCo(BGMSwitchModel.instance:getPPtEffectEgg2Id()).param2, "|")[BGMSwitchModel.instance:getAudioCurShowType()], "#")
-	slot0._imagepptpic1.sprite = slot0._imagepptpic2.sprite
+	arg_23_0._pptRepeatCount = arg_23_0._pptRepeatCount + 1
 
-	slot0._simagepptpic2:LoadImage(ResUrl.getBgmEggIcon(slot3[slot0._pptRepeatCount % #slot3 + 1]))
+	local var_23_0 = BGMSwitchConfig.instance:getBgmEasterEggCo(BGMSwitchModel.instance:getPPtEffectEgg2Id())
+	local var_23_1 = BGMSwitchModel.instance:getAudioCurShowType()
+	local var_23_2 = string.split(string.split(var_23_0.param2, "|")[var_23_1], "#")
+	local var_23_3 = var_23_2[arg_23_0._pptRepeatCount % #var_23_2 + 1]
+
+	arg_23_0._imagepptpic1.sprite = arg_23_0._imagepptpic2.sprite
+
+	arg_23_0._simagepptpic2:LoadImage(ResUrl.getBgmEggIcon(var_23_3))
 end
 
-function slot0._refreshBottomEggBtns(slot0)
-	slot1 = BGMSwitchModel.instance:getEggType2Sates()
+function var_0_0._refreshBottomEggBtns(arg_24_0)
+	local var_24_0 = BGMSwitchModel.instance:getEggType2Sates()
 
-	for slot5 = 1, 4 do
-		gohelper.setActive(slot0._egg2Items[slot5].goup, not slot1[slot5])
-		gohelper.setActive(slot0._egg2Items[slot5].godown, slot1[slot5])
+	for iter_24_0 = 1, 4 do
+		gohelper.setActive(arg_24_0._egg2Items[iter_24_0].goup, not var_24_0[iter_24_0])
+		gohelper.setActive(arg_24_0._egg2Items[iter_24_0].godown, var_24_0[iter_24_0])
 	end
 end
 
-function slot0._playShakingAniByGuide(slot0)
-	slot0._viewAni:Play("shaking", 0, 0)
+function var_0_0._playShakingAniByGuide(arg_25_0)
+	arg_25_0._viewAni:Play("shaking", 0, 0)
 end
 
-function slot0.onDestroyView(slot0)
-	TaskDispatcher.cancelTask(slot0._pptUpdate, slot0)
+function var_0_0.onDestroyView(arg_26_0)
+	TaskDispatcher.cancelTask(arg_26_0._pptUpdate, arg_26_0)
 
-	if slot0._egg2Items then
-		for slot4, slot5 in pairs(slot0._egg2Items) do
-			slot5.btn:RemoveClickListener()
+	if arg_26_0._egg2Items then
+		for iter_26_0, iter_26_1 in pairs(arg_26_0._egg2Items) do
+			iter_26_1.btn:RemoveClickListener()
 		end
 
-		slot0._egg2Items = nil
+		arg_26_0._egg2Items = nil
 	end
 end
 
-return slot0
+return var_0_0

@@ -1,65 +1,67 @@
-module("modules.logic.fight.view.FightPlayerOperateMgr", package.seeall)
+﻿module("modules.logic.fight.view.FightPlayerOperateMgr", package.seeall)
 
-slot0 = class("FightPlayerOperateMgr", BaseView)
+local var_0_0 = class("FightPlayerOperateMgr", BaseView)
 
-function slot0.onInitView(slot0)
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+function var_0_0.onInitView(arg_1_0)
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.OnRoundSequenceFinish, slot0._onRoundSequenceFinish, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.OnClothSkillRoundSequenceFinish, slot0._onClothSkillRoundSequenceFinish, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.OnStartSequenceFinish, slot0._onStartSequenceFinish, slot0, LuaEventSystem.Low)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0:addEventCb(FightController.instance, FightEvent.OnRoundSequenceFinish, arg_2_0._onRoundSequenceFinish, arg_2_0)
+	arg_2_0:addEventCb(FightController.instance, FightEvent.OnClothSkillRoundSequenceFinish, arg_2_0._onClothSkillRoundSequenceFinish, arg_2_0)
+	arg_2_0:addEventCb(FightController.instance, FightEvent.OnStartSequenceFinish, arg_2_0._onStartSequenceFinish, arg_2_0, LuaEventSystem.Low)
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._onRoundSequenceFinish(slot0)
-	slot0:checkNeedPlayerOperate()
+function var_0_0._onRoundSequenceFinish(arg_4_0)
+	arg_4_0:checkNeedPlayerOperate()
 end
 
-function slot0._onClothSkillRoundSequenceFinish(slot0)
-	slot0:checkNeedPlayerOperate()
+function var_0_0._onClothSkillRoundSequenceFinish(arg_5_0)
+	arg_5_0:checkNeedPlayerOperate()
 end
 
-function slot0._onStartSequenceFinish(slot0)
-	slot0:checkNeedPlayerOperate()
+function var_0_0._onStartSequenceFinish(arg_6_0)
+	arg_6_0:checkNeedPlayerOperate()
 end
 
-function slot0.checkNeedPlayerOperate(slot0)
+function var_0_0.checkNeedPlayerOperate(arg_7_0)
 	if FightDataHelper.fieldMgr:isDouQuQu() then
 		return
 	end
 
-	if slot0:_checkChangeHeroNeedUseSkill() then
+	if arg_7_0:_checkChangeHeroNeedUseSkill() then
 		return
 	end
 
-	if slot0:_checkBindContract() then
+	if arg_7_0:_checkBindContract() then
 		return
 	end
 
-	slot0:_checkHeroUpgrade()
+	arg_7_0:_checkHeroUpgrade()
 
 	if not FightModel.instance:isFinish() then
 		FightViewPartVisible.set(true, true, true, false, false)
 	end
 end
 
-function slot0.sortEntity(slot0, slot1)
-	slot3 = slot1:getMO()
+function var_0_0.sortEntity(arg_8_0, arg_8_1)
+	local var_8_0 = arg_8_0:getMO()
+	local var_8_1 = arg_8_1:getMO()
 
-	if slot0:getMO() and slot3 then
-		return slot2.position < slot3.position
+	if var_8_0 and var_8_1 then
+		return var_8_0.position < var_8_1.position
 	end
 
 	return false
 end
 
-function slot0._checkHeroUpgrade(slot0)
+function var_0_0._checkHeroUpgrade(arg_9_0)
 	if SkillEditorMgr and SkillEditorMgr.instance.inEditMode then
 		return
 	end
@@ -84,60 +86,71 @@ function slot0._checkHeroUpgrade(slot0)
 		return
 	end
 
-	if #uv0.detectUpgrade() > 0 then
-		for slot5 = #slot1, 1, -1 do
-			if lua_hero_upgrade.configDict[slot1[slot5].id].type == 1 then
-				FightRpc.instance:sendUseClothSkillRequest(slot6.id, slot6.entityId, slot6.optionIds[1], FightEnum.ClothSkillType.HeroUpgrade)
-				table.remove(slot1, slot5)
+	local var_9_0 = var_0_0.detectUpgrade()
+
+	if #var_9_0 > 0 then
+		for iter_9_0 = #var_9_0, 1, -1 do
+			local var_9_1 = var_9_0[iter_9_0]
+
+			if lua_hero_upgrade.configDict[var_9_1.id].type == 1 then
+				FightRpc.instance:sendUseClothSkillRequest(var_9_1.id, var_9_1.entityId, var_9_1.optionIds[1], FightEnum.ClothSkillType.HeroUpgrade)
+				table.remove(var_9_0, iter_9_0)
 			end
 		end
 
-		if #slot1 > 0 then
-			slot0._upgradeDatas = slot1
+		if #var_9_0 > 0 then
+			arg_9_0._upgradeDatas = var_9_0
 
-			ViewMgr.instance:openView(ViewName.FightSkillStrengthenView, slot1)
+			ViewMgr.instance:openView(ViewName.FightSkillStrengthenView, var_9_0)
 		end
 	end
 end
 
-function slot0.detectUpgrade()
+function var_0_0.detectUpgrade()
 	if FightModel.instance:isFinish() then
 		return {}
 	end
 
-	slot0 = {}
-	slot1 = FightHelper.getSideEntitys(FightEnum.EntitySide.MySide)
+	local var_10_0 = {}
+	local var_10_1 = FightHelper.getSideEntitys(FightEnum.EntitySide.MySide)
 
-	table.sort(slot1, uv0.sortEntity)
+	table.sort(var_10_1, var_0_0.sortEntity)
 
-	for slot5, slot6 in ipairs(slot1) do
-		if slot6:getMO() and slot7.canUpgradeIds and tabletool.len(slot7.canUpgradeIds) > 0 then
-			for slot11, slot12 in pairs(slot7.canUpgradeIds) do
-				if lua_hero_upgrade.configDict[slot12] then
-					slot14 = {}
+	for iter_10_0, iter_10_1 in ipairs(var_10_1) do
+		local var_10_2 = iter_10_1:getMO()
 
-					for slot19, slot20 in ipairs(string.splitToNumber(slot13.options, "#")) do
-						if not slot7.upgradedOptions[slot20] then
-							table.insert(slot14, slot20)
+		if var_10_2 and var_10_2.canUpgradeIds and tabletool.len(var_10_2.canUpgradeIds) > 0 then
+			for iter_10_2, iter_10_3 in pairs(var_10_2.canUpgradeIds) do
+				local var_10_3 = lua_hero_upgrade.configDict[iter_10_3]
+
+				if var_10_3 then
+					local var_10_4 = {}
+					local var_10_5 = string.splitToNumber(var_10_3.options, "#")
+
+					for iter_10_4, iter_10_5 in ipairs(var_10_5) do
+						if not var_10_2.upgradedOptions[iter_10_5] then
+							table.insert(var_10_4, iter_10_5)
 						end
 					end
 
-					if #slot14 > 0 then
-						table.insert(slot0, {
-							id = slot12,
-							entityId = slot7.id,
-							optionIds = slot14
-						})
+					if #var_10_4 > 0 then
+						local var_10_6 = {
+							id = iter_10_3,
+							entityId = var_10_2.id,
+							optionIds = var_10_4
+						}
+
+						table.insert(var_10_0, var_10_6)
 					end
 				end
 			end
 		end
 	end
 
-	return slot0
+	return var_10_0
 end
 
-function slot0._checkChangeHeroNeedUseSkill(slot0)
+function var_0_0._checkChangeHeroNeedUseSkill(arg_11_0)
 	if SkillEditorMgr and SkillEditorMgr.instance.inEditMode then
 		return
 	end
@@ -166,31 +179,42 @@ function slot0._checkChangeHeroNeedUseSkill(slot0)
 		return
 	end
 
-	if not FightModel.instance:getCurRoundMO() then
+	local var_11_0 = FightModel.instance:getCurRoundMO()
+
+	if not var_11_0 then
 		return
 	end
 
-	if not FightDataHelper.entityMgr:getById(slot1.lastChangeHeroUid) then
+	local var_11_1 = FightDataHelper.entityMgr:getById(var_11_0.lastChangeHeroUid)
+
+	if not var_11_1 then
 		return
 	end
 
-	if not lua_skill.configDict[slot2.exSkill] then
+	local var_11_2 = lua_skill.configDict[var_11_1.exSkill]
+
+	if not var_11_2 then
 		return
 	end
 
-	if FightEnum.ShowLogicTargetView[slot3.logicTarget] and slot3.targetLimit == FightEnum.TargetLimit.MySide and #FightDataHelper.entityMgr:getMyNormalList() + #FightDataHelper.entityMgr:getSpList(FightEnum.EntitySide.MySide) == 0 then
-		return
+	if FightEnum.ShowLogicTargetView[var_11_2.logicTarget] and var_11_2.targetLimit == FightEnum.TargetLimit.MySide then
+		local var_11_3 = FightDataHelper.entityMgr:getMyNormalList()
+		local var_11_4 = FightDataHelper.entityMgr:getSpList(FightEnum.EntitySide.MySide)
+
+		if #var_11_3 + #var_11_4 == 0 then
+			return
+		end
 	end
 
 	ViewMgr.instance:openView(ViewName.FightChangeHeroSelectSkillTargetView, {
-		skillConfig = slot3,
-		fromId = slot2.id
+		skillConfig = var_11_2,
+		fromId = var_11_1.id
 	})
 
 	return true
 end
 
-function slot0._checkBindContract(slot0)
+function var_0_0._checkBindContract(arg_12_0)
 	if SkillEditorMgr and SkillEditorMgr.instance.inEditMode then
 		return
 	end
@@ -221,15 +245,19 @@ function slot0._checkBindContract(slot0)
 		return
 	end
 
-	if string.nilorempty(FightModel.instance.notifyEntityId) then
+	local var_12_0 = FightModel.instance.notifyEntityId
+
+	if string.nilorempty(var_12_0) then
 		return
 	end
 
-	if not FightHelper.getEntity(slot1) then
+	if not FightHelper.getEntity(var_12_0) then
 		return
 	end
 
-	if not FightModel.instance.canContractList or #slot3 < 1 then
+	local var_12_1 = FightModel.instance.canContractList
+
+	if not var_12_1 or #var_12_1 < 1 then
 		return
 	end
 
@@ -239,4 +267,4 @@ function slot0._checkBindContract(slot0)
 	return true
 end
 
-return slot0
+return var_0_0

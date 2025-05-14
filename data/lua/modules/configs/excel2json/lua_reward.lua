@@ -1,6 +1,7 @@
-module("modules.configs.excel2json.lua_reward", package.seeall)
+﻿module("modules.configs.excel2json.lua_reward", package.seeall)
 
-slot1 = {
+local var_0_0 = {}
+local var_0_1 = {
 	reward_id = 1,
 	rewardGroup1 = 4,
 	dailyDrop = 2,
@@ -11,13 +12,13 @@ slot1 = {
 	rewardGroup5 = 8,
 	rewardGroup6 = 9
 }
-slot2 = {
+local var_0_2 = {
 	"reward_id"
 }
-slot3 = {}
+local var_0_3 = {}
 
-return {
-	onLoad = function (slot0)
-		uv0.configList, uv0.configDict = JsonToLuaParser.parse(slot0, uv1, uv2, uv3)
-	end
-}
+function var_0_0.onLoad(arg_1_0)
+	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+end
+
+return var_0_0

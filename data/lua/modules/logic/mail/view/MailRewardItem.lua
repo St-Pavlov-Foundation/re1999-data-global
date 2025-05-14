@@ -1,103 +1,106 @@
-module("modules.logic.mail.view.MailRewardItem", package.seeall)
+﻿module("modules.logic.mail.view.MailRewardItem", package.seeall)
 
-slot0 = class("MailRewardItem")
+local var_0_0 = class("MailRewardItem")
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
-	slot0._commonitemcontainer = gohelper.findChild(slot1, "commonitemcontainer")
-	slot0._canvasGroup = slot1:GetComponent(typeof(UnityEngine.CanvasGroup))
-	slot0._txtcount = gohelper.findChildText(slot1, "countbg/count")
-	slot0._bg = gohelper.findChild(slot1, "countbg")
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.go = arg_1_1
+	arg_1_0._commonitemcontainer = gohelper.findChild(arg_1_1, "commonitemcontainer")
+	arg_1_0._canvasGroup = arg_1_1:GetComponent(typeof(UnityEngine.CanvasGroup))
+	arg_1_0._txtcount = gohelper.findChildText(arg_1_1, "countbg/count")
+	arg_1_0._bg = gohelper.findChild(arg_1_1, "countbg")
 end
 
-function slot0.addEventListeners(slot0)
+function var_0_0.addEventListeners(arg_2_0)
+	return
 end
 
-function slot0.removeEventListeners(slot0)
+function var_0_0.removeEventListeners(arg_3_0)
+	return
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
-	slot0.itemType = tonumber(slot0._mo[1])
-	slot0.itemId = tonumber(slot0._mo[2])
-	slot2 = tonumber(slot0._mo[3])
+function var_0_0.onUpdateMO(arg_4_0, arg_4_1)
+	arg_4_0._mo = arg_4_1
+	arg_4_0.itemType = tonumber(arg_4_0._mo[1])
+	arg_4_0.itemId = tonumber(arg_4_0._mo[2])
 
-	if slot0.itemType == MaterialEnum.MaterialType.EquipCard or slot0.itemType == MaterialEnum.MaterialType.Season123EquipCard then
-		recthelper.setWidth(slot0.go.transform, 80.69)
+	local var_4_0 = tonumber(arg_4_0._mo[3])
 
-		if slot0._commonitem then
-			gohelper.setActive(slot0._commonitem.go, false)
+	if arg_4_0.itemType == MaterialEnum.MaterialType.EquipCard or arg_4_0.itemType == MaterialEnum.MaterialType.Season123EquipCard then
+		recthelper.setWidth(arg_4_0.go.transform, 80.69)
+
+		if arg_4_0._commonitem then
+			gohelper.setActive(arg_4_0._commonitem.go, false)
 		end
 
-		gohelper.setActive(slot0._bg.gameObject, false)
+		gohelper.setActive(arg_4_0._bg.gameObject, false)
 
-		if not slot0._equipCardItem then
-			slot0._equipItemGo = gohelper.create2d(slot0.go, "EquipCard")
+		if not arg_4_0._equipCardItem then
+			arg_4_0._equipItemGo = gohelper.create2d(arg_4_0.go, "EquipCard")
 
-			transformhelper.setLocalScale(slot0._equipItemGo.transform, 0.265, 0.265, 0.265)
+			transformhelper.setLocalScale(arg_4_0._equipItemGo.transform, 0.265, 0.265, 0.265)
 
-			slot0._equipCardItem = Season123CelebrityCardItem.New()
+			arg_4_0._equipCardItem = Season123CelebrityCardItem.New()
 
-			slot0._equipCardItem:init(slot0._equipItemGo, slot0.itemId, {
+			arg_4_0._equipCardItem:init(arg_4_0._equipItemGo, arg_4_0.itemId, {
 				noClick = true
 			})
 		else
-			gohelper.setActive(slot0._equipItemGo, true)
-			slot0._equipCardItem:reset(nil, , slot0.itemId)
+			gohelper.setActive(arg_4_0._equipItemGo, true)
+			arg_4_0._equipCardItem:reset(nil, nil, arg_4_0.itemId)
 		end
 	else
-		recthelper.setWidth(slot0.go.transform, 115)
+		recthelper.setWidth(arg_4_0.go.transform, 115)
 
-		if not slot0._commonitem then
-			slot0._commonitem = IconMgr.instance:getCommonPropItemIcon(slot0._commonitemcontainer)
+		if not arg_4_0._commonitem then
+			arg_4_0._commonitem = IconMgr.instance:getCommonPropItemIcon(arg_4_0._commonitemcontainer)
 		end
 
-		gohelper.setActive(slot0._equipItemGo, false)
-		gohelper.setActive(slot0._commonitem.go, true)
-		gohelper.setActive(slot0._bg.gameObject, true)
-		slot0._commonitem:setMOValue(slot0.itemType, slot0.itemId, slot2, nil, true)
-		slot0._commonitem:hideEffect()
+		gohelper.setActive(arg_4_0._equipItemGo, false)
+		gohelper.setActive(arg_4_0._commonitem.go, true)
+		gohelper.setActive(arg_4_0._bg.gameObject, true)
+		arg_4_0._commonitem:setMOValue(arg_4_0.itemType, arg_4_0.itemId, var_4_0, nil, true)
+		arg_4_0._commonitem:hideEffect()
 
-		if slot0._commonitem:isEquipIcon() then
-			slot0._commonitem:ShowEquipCount(slot0._bg, slot0._txtcount)
-			slot0._commonitem:setHideLvAndBreakFlag(true)
-			slot0._commonitem:hideEquipLvAndBreak(true)
+		if arg_4_0._commonitem:isEquipIcon() then
+			arg_4_0._commonitem:ShowEquipCount(arg_4_0._bg, arg_4_0._txtcount)
+			arg_4_0._commonitem:setHideLvAndBreakFlag(true)
+			arg_4_0._commonitem:hideEquipLvAndBreak(true)
 		else
-			slot0._commonitem:isShowCount(false)
+			arg_4_0._commonitem:isShowCount(false)
 
-			slot0._txtcount.text = tostring(slot2)
+			arg_4_0._txtcount.text = tostring(var_4_0)
 
-			slot0._commonitem:showStackableNum2(slot0._bg, slot0._txtcount)
+			arg_4_0._commonitem:showStackableNum2(arg_4_0._bg, arg_4_0._txtcount)
 		end
 	end
 
-	slot0._canvasGroup.alpha = slot0._mo.state == MailEnum.ReadStatus.Read and 0.5 or 1
+	arg_4_0._canvasGroup.alpha = arg_4_0._mo.state == MailEnum.ReadStatus.Read and 0.5 or 1
 
-	if slot0.itemType == MaterialEnum.MaterialType.Item and lua_item.configDict[slot0.itemId].subType == ItemEnum.SubType.Portrait then
-		slot0._commonitem:setFrameMaskable(true)
+	if arg_4_0.itemType == MaterialEnum.MaterialType.Item and lua_item.configDict[arg_4_0.itemId].subType == ItemEnum.SubType.Portrait then
+		arg_4_0._commonitem:setFrameMaskable(true)
 	end
 end
 
-function slot0.onDestroy(slot0)
-	if slot0._commonitem then
-		slot0._commonitem:onDestroy()
+function var_0_0.onDestroy(arg_5_0)
+	if arg_5_0._commonitem then
+		arg_5_0._commonitem:onDestroy()
 	end
 
-	if slot0._equipCardItem then
-		slot0._equipCardItem:destroy()
+	if arg_5_0._equipCardItem then
+		arg_5_0._equipCardItem:destroy()
 	end
 
-	gohelper.destroy(slot0._equipItemGo)
+	gohelper.destroy(arg_5_0._equipItemGo)
 
-	slot0._mo = nil
-	slot0._commonitem = nil
-	slot0._equipCardItem = nil
-	slot0._equipItemGo = nil
-	slot0.go = nil
-	slot0._commonitemcontainer = nil
-	slot0._canvasGroup = nil
-	slot0._txtcount = nil
-	slot0._bg = nil
+	arg_5_0._mo = nil
+	arg_5_0._commonitem = nil
+	arg_5_0._equipCardItem = nil
+	arg_5_0._equipItemGo = nil
+	arg_5_0.go = nil
+	arg_5_0._commonitemcontainer = nil
+	arg_5_0._canvasGroup = nil
+	arg_5_0._txtcount = nil
+	arg_5_0._bg = nil
 end
 
-return slot0
+return var_0_0

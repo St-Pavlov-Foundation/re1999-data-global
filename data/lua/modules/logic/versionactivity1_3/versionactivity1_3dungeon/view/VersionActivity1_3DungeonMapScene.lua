@@ -1,40 +1,44 @@
-module("modules.logic.versionactivity1_3.versionactivity1_3dungeon.view.VersionActivity1_3DungeonMapScene", package.seeall)
+﻿module("modules.logic.versionactivity1_3.versionactivity1_3dungeon.view.VersionActivity1_3DungeonMapScene", package.seeall)
 
-slot0 = class("VersionActivity1_3DungeonMapScene", VersionActivity1_3DungeonBaseMapScene)
+local var_0_0 = class("VersionActivity1_3DungeonMapScene", VersionActivity1_3DungeonBaseMapScene)
 
-function slot0.getInteractiveItem(slot0)
-	return slot0.viewContainer.mapView:openMapInteractiveItem()
+function var_0_0.getInteractiveItem(arg_1_0)
+	return arg_1_0.viewContainer.mapView:openMapInteractiveItem()
 end
 
-function slot0.createInteractiveItem(slot0)
-	uv0.super.getInteractiveItem(slot0)
+function var_0_0.createInteractiveItem(arg_2_0)
+	var_0_0.super.getInteractiveItem(arg_2_0)
 end
 
-function slot0.showInteractiveItem(slot0)
-	return slot0.viewContainer.mapView:showInteractiveItem() or uv0.super.showInteractiveItem(slot0)
+function var_0_0.showInteractiveItem(arg_3_0)
+	return arg_3_0.viewContainer.mapView:showInteractiveItem() or var_0_0.super.showInteractiveItem(arg_3_0)
 end
 
-function slot0._isSameMap(slot0, slot1, slot2)
-	return slot1 == slot2 and slot1 ~= VersionActivity1_3DungeonEnum.DailyEpisodeId
+function var_0_0._isSameMap(arg_4_0, arg_4_1, arg_4_2)
+	return arg_4_1 == arg_4_2 and arg_4_1 ~= VersionActivity1_3DungeonEnum.DailyEpisodeId
 end
 
-function slot0.getMapTime(slot0)
-	slot1 = slot0.activityDungeonMo.episodeId
+function var_0_0.getMapTime(arg_5_0)
+	local var_5_0 = arg_5_0.activityDungeonMo.episodeId
+	local var_5_1 = arg_5_0._lastEpisodeId
 
-	if not slot0._lastEpisodeId or slot1 == slot2 then
+	if not var_5_1 or var_5_0 == var_5_1 then
 		return
 	end
 
-	if VersionActivity1_3DungeonController.instance:isDayTime(slot2) == VersionActivity1_3DungeonController.instance:isDayTime(slot1) then
+	local var_5_2 = VersionActivity1_3DungeonController.instance:isDayTime(var_5_1)
+	local var_5_3 = VersionActivity1_3DungeonController.instance:isDayTime(var_5_0)
+
+	if var_5_2 == var_5_3 then
 		return
 	end
 
-	return slot4 and "sun" or "moon"
+	return var_5_3 and "sun" or "moon"
 end
 
-function slot0.onOpen(slot0)
-	uv0.super.onOpen(slot0)
-	MainCameraMgr.instance:addView(ViewName.VersionActivity1_3DungeonMapView, slot0._initCamera, nil, slot0)
+function var_0_0.onOpen(arg_6_0)
+	var_0_0.super.onOpen(arg_6_0)
+	MainCameraMgr.instance:addView(ViewName.VersionActivity1_3DungeonMapView, arg_6_0._initCamera, nil, arg_6_0)
 end
 
-return slot0
+return var_0_0

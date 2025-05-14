@@ -1,16 +1,16 @@
-module("modules.logic.handbook.model.HandbookCGTripleMO", package.seeall)
+﻿module("modules.logic.handbook.model.HandbookCGTripleMO", package.seeall)
 
-slot0 = pureTable("HandbookCGTripleMO")
+local var_0_0 = pureTable("HandbookCGTripleMO")
 
-function slot0.init(slot0, slot1)
-	if slot1.isTitle then
-		slot0.storyChapterId = slot1.storyChapterId
-		slot0.isTitle = true
+function var_0_0.init(arg_1_0, arg_1_1)
+	if arg_1_1.isTitle then
+		arg_1_0.storyChapterId = arg_1_1.storyChapterId
+		arg_1_0.isTitle = true
 	else
-		slot0.cgList = slot1.cgList
-		slot0.cgType = slot1.cgType
-		slot0.isTitle = false
+		arg_1_0.cgList = arg_1_1.cgList
+		arg_1_0.cgType = arg_1_1.cgType
+		arg_1_0.isTitle = false
 	end
 end
 
-return slot0
+return var_0_0

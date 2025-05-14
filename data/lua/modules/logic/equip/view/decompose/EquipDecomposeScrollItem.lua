@@ -1,40 +1,42 @@
-module("modules.logic.equip.view.decompose.EquipDecomposeScrollItem", package.seeall)
+﻿module("modules.logic.equip.view.decompose.EquipDecomposeScrollItem", package.seeall)
 
-slot0 = class("EquipDecomposeScrollItem", ListScrollCellExtend)
+local var_0_0 = class("EquipDecomposeScrollItem", ListScrollCellExtend)
 
-function slot0.onInitView(slot0)
-	slot0._goequip = gohelper.findChild(slot0.viewGO, "#go_commonequipicon")
-	slot0._goselect = gohelper.findChild(slot0.viewGO, "#go_selected")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goequip = gohelper.findChild(arg_1_0.viewGO, "#go_commonequipicon")
+	arg_1_0._goselect = gohelper.findChild(arg_1_0.viewGO, "#go_selected")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0.animator = slot0.viewGO:GetComponent(gohelper.Type_Animator)
-	slot0.goAni = gohelper.findChild(slot0.viewGO, "vx_compose")
-	slot0.click = gohelper.getClickWithDefaultAudio(slot0.viewGO)
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0.animator = arg_4_0.viewGO:GetComponent(gohelper.Type_Animator)
+	arg_4_0.goAni = gohelper.findChild(arg_4_0.viewGO, "vx_compose")
+	arg_4_0.click = gohelper.getClickWithDefaultAudio(arg_4_0.viewGO)
 
-	slot0.click:AddClickListener(slot0.onClick, slot0)
+	arg_4_0.click:AddClickListener(arg_4_0.onClick, arg_4_0)
 
-	slot0.commonEquipIcon = IconMgr.instance:getCommonEquipIcon(slot0._goequip, 1)
+	arg_4_0.commonEquipIcon = IconMgr.instance:getCommonEquipIcon(arg_4_0._goequip, 1)
 
-	slot0:addEventCb(EquipController.instance, EquipEvent.OnEquipDecomposeSelectEquipChange, slot0.updateSelected, slot0)
-	slot0:addEventCb(EquipController.instance, EquipEvent.OnEquipBeforeDecompose, slot0.beforeDecompose, slot0)
+	arg_4_0:addEventCb(EquipController.instance, EquipEvent.OnEquipDecomposeSelectEquipChange, arg_4_0.updateSelected, arg_4_0)
+	arg_4_0:addEventCb(EquipController.instance, EquipEvent.OnEquipBeforeDecompose, arg_4_0.beforeDecompose, arg_4_0)
 end
 
-function slot0.onClick(slot0)
-	if slot0.equipMo.isLock then
+function var_0_0.onClick(arg_5_0)
+	if arg_5_0.equipMo.isLock then
 		GameFacade.showToast(ToastEnum.EquipChooseLock)
 		ViewMgr.instance:openView(ViewName.EquipInfoTipsView, {
-			equipMo = slot0.equipMo
+			equipMo = arg_5_0.equipMo
 		})
 
 		return
@@ -42,38 +44,38 @@ function slot0.onClick(slot0)
 
 	ViewMgr.instance:closeView(ViewName.EquipInfoTipsView)
 
-	if EquipDecomposeListModel.instance:isSelect(slot0.equipUid) then
-		EquipDecomposeListModel.instance:desSelectEquipMo(slot0.equipMo)
+	if EquipDecomposeListModel.instance:isSelect(arg_5_0.equipUid) then
+		EquipDecomposeListModel.instance:desSelectEquipMo(arg_5_0.equipMo)
 	else
-		EquipDecomposeListModel.instance:selectEquipMo(slot0.equipMo)
+		EquipDecomposeListModel.instance:selectEquipMo(arg_5_0.equipMo)
 	end
 end
 
-function slot0.updateSelected(slot0)
-	gohelper.setActive(slot0._goselect, EquipDecomposeListModel.instance:isSelect(slot0.equipMo.id))
+function var_0_0.updateSelected(arg_6_0)
+	gohelper.setActive(arg_6_0._goselect, EquipDecomposeListModel.instance:isSelect(arg_6_0.equipMo.id))
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0.equipMo = slot1
-	slot0.equipUid = slot0.equipMo.id
+function var_0_0.onUpdateMO(arg_7_0, arg_7_1)
+	arg_7_0.equipMo = arg_7_1
+	arg_7_0.equipUid = arg_7_0.equipMo.id
 
-	slot0.commonEquipIcon:setEquipMO(slot1)
-	slot0:updateSelected()
-	gohelper.setActive(slot0.goAni, false)
+	arg_7_0.commonEquipIcon:setEquipMO(arg_7_1)
+	arg_7_0:updateSelected()
+	gohelper.setActive(arg_7_0.goAni, false)
 end
 
-function slot0.beforeDecompose(slot0)
-	if EquipDecomposeListModel.instance:isSelect(slot0.equipUid) then
-		gohelper.setActive(slot0.goAni, true)
+function var_0_0.beforeDecompose(arg_8_0)
+	if EquipDecomposeListModel.instance:isSelect(arg_8_0.equipUid) then
+		gohelper.setActive(arg_8_0.goAni, true)
 	end
 end
 
-function slot0.getAnimator(slot0)
-	return slot0.animator
+function var_0_0.getAnimator(arg_9_0)
+	return arg_9_0.animator
 end
 
-function slot0.onDestroyView(slot0)
-	slot0.click:RemoveClickListener()
+function var_0_0.onDestroyView(arg_10_0)
+	arg_10_0.click:RemoveClickListener()
 end
 
-return slot0
+return var_0_0

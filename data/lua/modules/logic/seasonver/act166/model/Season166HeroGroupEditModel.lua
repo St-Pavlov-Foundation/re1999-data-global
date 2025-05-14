@@ -1,126 +1,156 @@
-module("modules.logic.seasonver.act166.model.Season166HeroGroupEditModel", package.seeall)
+﻿module("modules.logic.seasonver.act166.model.Season166HeroGroupEditModel", package.seeall)
 
-slot0 = class("Season166HeroGroupEditModel", ListScrollModel)
+local var_0_0 = class("Season166HeroGroupEditModel", ListScrollModel)
 
-function slot0.init(slot0, slot1, slot2)
-	slot0.activityId = slot1
-	slot0.episodeId = slot2
-	slot0.episodeCO = DungeonConfig.instance:getEpisodeCO(slot0.episodeId)
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0.activityId = arg_1_1
+	arg_1_0.episodeId = arg_1_2
+	arg_1_0.episodeCO = DungeonConfig.instance:getEpisodeCO(arg_1_0.episodeId)
 end
 
-function slot0.copyCharacterCardList(slot0, slot1)
-	slot2 = nil
-	slot2 = (not HeroGroupTrialModel.instance:isOnlyUseTrial() or {}) and tabletool.copy(CharacterBackpackCardListModel.instance:getCharacterCardList())
-	slot4 = {}
-	slot0._inTeamHeroUids = {}
-	slot5 = 1
-	slot6 = 1
-	slot8 = Season166HeroSingleGroupModel.instance.assistMO
+function var_0_0.copyCharacterCardList(arg_2_0, arg_2_1)
+	local var_2_0
 
-	for slot12, slot13 in ipairs(Season166HeroSingleGroupModel.instance:getList()) do
-		if slot13.trial or not slot13.aid and tonumber(slot13.heroUid) > 0 and not slot4[slot13.heroUid] then
-			if slot13.trial then
-				table.insert({}, HeroGroupTrialModel.instance:getById(slot13.heroUid))
-			elseif slot8 and slot13.heroUid == slot8.heroUid then
-				table.insert(slot3, slot8:getHeroMO())
+	if HeroGroupTrialModel.instance:isOnlyUseTrial() then
+		var_2_0 = {}
+	else
+		var_2_0 = tabletool.copy(CharacterBackpackCardListModel.instance:getCharacterCardList())
+	end
+
+	local var_2_1 = {}
+	local var_2_2 = {}
+
+	arg_2_0._inTeamHeroUids = {}
+
+	local var_2_3 = 1
+	local var_2_4 = 1
+	local var_2_5 = Season166HeroSingleGroupModel.instance:getList()
+	local var_2_6 = Season166HeroSingleGroupModel.instance.assistMO
+
+	for iter_2_0, iter_2_1 in ipairs(var_2_5) do
+		if iter_2_1.trial or not iter_2_1.aid and tonumber(iter_2_1.heroUid) > 0 and not var_2_2[iter_2_1.heroUid] then
+			if iter_2_1.trial then
+				table.insert(var_2_1, HeroGroupTrialModel.instance:getById(iter_2_1.heroUid))
+			elseif var_2_6 and iter_2_1.heroUid == var_2_6.heroUid then
+				table.insert(var_2_1, var_2_6:getHeroMO())
 			else
-				table.insert(slot3, HeroModel.instance:getById(slot13.heroUid))
+				table.insert(var_2_1, HeroModel.instance:getById(iter_2_1.heroUid))
 			end
 
-			if slot0.specialHero == slot13.heroUid then
-				slot0._inTeamHeroUids[slot13.heroUid] = 2
-				slot5 = slot6
+			if arg_2_0.specialHero == iter_2_1.heroUid then
+				arg_2_0._inTeamHeroUids[iter_2_1.heroUid] = 2
+				var_2_3 = var_2_4
 			else
-				slot0._inTeamHeroUids[slot13.heroUid] = 1
-				slot6 = slot6 + 1
+				arg_2_0._inTeamHeroUids[iter_2_1.heroUid] = 1
+				var_2_4 = var_2_4 + 1
 			end
 
-			slot4[slot13.heroUid] = true
+			var_2_2[iter_2_1.heroUid] = true
 		end
 	end
 
-	for slot13, slot14 in ipairs(HeroGroupTrialModel.instance:getFilterList()) do
-		if not slot4[slot14.uid] then
-			table.insert(slot3, slot14)
+	local var_2_7 = HeroGroupTrialModel.instance:getFilterList()
+
+	for iter_2_2, iter_2_3 in ipairs(var_2_7) do
+		if not var_2_2[iter_2_3.uid] then
+			table.insert(var_2_1, iter_2_3)
 		end
 	end
 
-	slot10 = #slot3
+	local var_2_8 = #var_2_1
 
-	for slot14, slot15 in ipairs(slot2) do
-		if not slot4[slot15.uid] then
-			slot4[slot15.uid] = true
+	for iter_2_4, iter_2_5 in ipairs(var_2_0) do
+		if not var_2_2[iter_2_5.uid] then
+			var_2_2[iter_2_5.uid] = true
 
-			table.insert(slot3, slot15)
+			table.insert(var_2_1, iter_2_5)
 		end
 	end
 
 	if Season166HeroGroupModel.instance:isSeason166Episode() then
-		slot0.sortIndexMap = {}
+		arg_2_0.sortIndexMap = {}
 
-		for slot14, slot15 in ipairs(slot3) do
-			slot0.sortIndexMap[slot15] = slot14
+		for iter_2_6, iter_2_7 in ipairs(var_2_1) do
+			arg_2_0.sortIndexMap[iter_2_7] = iter_2_6
 		end
 
-		table.sort(slot3, uv0.indexMapSortFunc)
+		table.sort(var_2_1, var_0_0.indexMapSortFunc)
 	end
 
-	slot0:setList(slot3)
+	arg_2_0:setList(var_2_1)
 
-	if slot1 and #slot3 > 0 and slot5 > 0 and #slot0._scrollViews > 0 then
-		for slot14, slot15 in ipairs(slot0._scrollViews) do
-			slot15:selectCell(slot5, true)
+	if arg_2_1 and #var_2_1 > 0 and var_2_3 > 0 and #arg_2_0._scrollViews > 0 then
+		for iter_2_8, iter_2_9 in ipairs(arg_2_0._scrollViews) do
+			iter_2_9:selectCell(var_2_3, true)
 		end
 
-		if slot3[slot5] then
-			return slot3[slot5]
-		end
-	end
-end
-
-function slot0.indexMapSortFunc(slot0, slot1)
-	return uv0.instance.sortIndexMap[slot0] < uv0.instance.sortIndexMap[slot1]
-end
-
-function slot0.cancelAllSelected(slot0)
-	if slot0._scrollViews then
-		for slot4, slot5 in ipairs(slot0._scrollViews) do
-			slot5:selectCell(slot0:getIndex(slot5:getFirstSelect()), false)
+		if var_2_1[var_2_3] then
+			return var_2_1[var_2_3]
 		end
 	end
 end
 
-function slot0.isInTeamHero(slot0, slot1)
-	return slot0._inTeamHeroUids and slot0._inTeamHeroUids[slot1]
+function var_0_0.indexMapSortFunc(arg_3_0, arg_3_1)
+	return var_0_0.instance.sortIndexMap[arg_3_0] < var_0_0.instance.sortIndexMap[arg_3_1]
 end
 
-function slot0.getEquipMOByHeroUid(slot0, slot1)
-	if not Season166HeroGroupModel.instance:getCurGroupMO() then
+function var_0_0.cancelAllSelected(arg_4_0)
+	if arg_4_0._scrollViews then
+		for iter_4_0, iter_4_1 in ipairs(arg_4_0._scrollViews) do
+			local var_4_0 = iter_4_1:getFirstSelect()
+			local var_4_1 = arg_4_0:getIndex(var_4_0)
+
+			iter_4_1:selectCell(var_4_1, false)
+		end
+	end
+end
+
+function var_0_0.isInTeamHero(arg_5_0, arg_5_1)
+	return arg_5_0._inTeamHeroUids and arg_5_0._inTeamHeroUids[arg_5_1]
+end
+
+function var_0_0.getEquipMOByHeroUid(arg_6_0, arg_6_1)
+	local var_6_0 = Season166HeroGroupModel.instance:getCurGroupMO()
+
+	if not var_6_0 then
 		return
 	end
 
-	if tabletool.indexOf(slot2.heroList, slot1) and slot2:getPosEquips(slot3 - 1) and slot4.equipUid and #slot4.equipUid > 0 and slot4.equipUid[1] and slot5 ~= Season166Enum.EmptyUid then
-		return EquipModel.instance:getEquip(slot5)
+	local var_6_1 = tabletool.indexOf(var_6_0.heroList, arg_6_1)
+
+	if var_6_1 then
+		local var_6_2 = var_6_0:getPosEquips(var_6_1 - 1)
+
+		if var_6_2 and var_6_2.equipUid and #var_6_2.equipUid > 0 then
+			local var_6_3 = var_6_2.equipUid[1]
+
+			if var_6_3 and var_6_3 ~= Season166Enum.EmptyUid then
+				return EquipModel.instance:getEquip(var_6_3)
+			end
+		end
 	end
 end
 
-function slot0.getAssistHeroList(slot0)
-	slot1 = {}
+function var_0_0.getAssistHeroList(arg_7_0)
+	local var_7_0 = {}
+	local var_7_1 = Season166HeroSingleGroupModel.instance.assistMO
 
-	if Season166HeroSingleGroupModel.instance.assistMO and Season166HeroGroupModel.instance:isSeason166Episode(slot0.episodeId) then
-		table.insert(slot1, slot2:getHeroMO())
+	if var_7_1 and Season166HeroGroupModel.instance:isSeason166Episode(arg_7_0.episodeId) then
+		table.insert(var_7_0, var_7_1:getHeroMO())
 	end
 
-	return slot1
+	return var_7_0
 end
 
-function slot0.isRepeatHero(slot0, slot1, slot2)
-	if not slot0._inTeamHeroUids then
+function var_0_0.isRepeatHero(arg_8_0, arg_8_1, arg_8_2)
+	if not arg_8_0._inTeamHeroUids then
 		return false
 	end
 
-	for slot6 in pairs(slot0._inTeamHeroUids) do
-		if slot0:getById(slot6) and slot7.heroId == slot1 and slot2 ~= slot7.uid then
+	for iter_8_0 in pairs(arg_8_0._inTeamHeroUids) do
+		local var_8_0 = arg_8_0:getById(iter_8_0)
+
+		if var_8_0 and var_8_0.heroId == arg_8_1 and arg_8_2 ~= var_8_0.uid then
 			return true
 		end
 	end
@@ -128,24 +158,26 @@ function slot0.isRepeatHero(slot0, slot1, slot2)
 	return false
 end
 
-function slot0.isTrialLimit(slot0)
-	if not slot0._inTeamHeroUids then
+function var_0_0.isTrialLimit(arg_9_0)
+	if not arg_9_0._inTeamHeroUids then
 		return false
 	end
 
-	for slot5 in pairs(slot0._inTeamHeroUids) do
-		if slot0:getById(slot5):isTrial() then
-			slot1 = 0 + 1
+	local var_9_0 = 0
+
+	for iter_9_0 in pairs(arg_9_0._inTeamHeroUids) do
+		if arg_9_0:getById(iter_9_0):isTrial() then
+			var_9_0 = var_9_0 + 1
 		end
 	end
 
-	return HeroGroupTrialModel.instance:getLimitNum() <= slot1
+	return var_9_0 >= HeroGroupTrialModel.instance:getLimitNum()
 end
 
-function slot0.setParam(slot0, slot1)
-	slot0.specialHero = slot1
+function var_0_0.setParam(arg_10_0, arg_10_1)
+	arg_10_0.specialHero = arg_10_1
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

@@ -1,52 +1,54 @@
-module("modules.logic.weekwalk.view.WeekWalkQuestionView", package.seeall)
+﻿module("modules.logic.weekwalk.view.WeekWalkQuestionView", package.seeall)
 
-slot0 = class("WeekWalkQuestionView", BaseView)
+local var_0_0 = class("WeekWalkQuestionView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gofullscreen = gohelper.findChild(slot0.viewGO, "#go_fullscreen")
-	slot0._txtquestion = gohelper.findChildText(slot0.viewGO, "anim/#txt_question")
-	slot0._gooptions = gohelper.findChild(slot0.viewGO, "anim/#go_options")
-	slot0._gooptionitem = gohelper.findChild(slot0.viewGO, "anim/#go_options/#go_optionitem")
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_bg")
-	slot0._simageline = gohelper.findChildSingleImage(slot0.viewGO, "anim/#simage_line")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gofullscreen = gohelper.findChild(arg_1_0.viewGO, "#go_fullscreen")
+	arg_1_0._txtquestion = gohelper.findChildText(arg_1_0.viewGO, "anim/#txt_question")
+	arg_1_0._gooptions = gohelper.findChild(arg_1_0.viewGO, "anim/#go_options")
+	arg_1_0._gooptionitem = gohelper.findChild(arg_1_0.viewGO, "anim/#go_options/#go_optionitem")
+	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
+	arg_1_0._simageline = gohelper.findChildSingleImage(arg_1_0.viewGO, "anim/#simage_line")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0._optionBtnList = slot0:getUserDataTb_()
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._optionBtnList = arg_4_0:getUserDataTb_()
 
-	slot0._simagebg:LoadImage(ResUrl.getWeekWalkBg("full/bg_huan.png"))
-	slot0._simageline:LoadImage(ResUrl.getWeekWalkBg("bg_xian.png"))
-	slot0:_checkShowQuestion()
+	arg_4_0._simagebg:LoadImage(ResUrl.getWeekWalkBg("full/bg_huan.png"))
+	arg_4_0._simageline:LoadImage(ResUrl.getWeekWalkBg("bg_xian.png"))
+	arg_4_0:_checkShowQuestion()
 end
 
-function slot0._checkShowQuestion(slot0)
-	if not slot0:_showNextQuestion() then
-		if slot0._answerAll then
+function var_0_0._checkShowQuestion(arg_5_0)
+	if not arg_5_0:_showNextQuestion() then
+		if arg_5_0._answerAll then
 			return
 		end
 
-		slot0._answerAll = true
+		arg_5_0._answerAll = true
 
 		WeekWalkController.instance:openWeekWalkView()
 	end
 end
 
-function slot0._showNextQuestion(slot0)
-	slot0.questionIds, slot0.selects = WeekWalkModel.instance:getInfo():getQuestionInfo()
+function var_0_0._showNextQuestion(arg_6_0)
+	arg_6_0.questionIds, arg_6_0.selects = WeekWalkModel.instance:getInfo():getQuestionInfo()
 
-	for slot5, slot6 in ipairs(slot0.questionIds) do
-		if not slot0.selects[slot5] then
-			slot0:_showQuestion(slot6)
+	for iter_6_0, iter_6_1 in ipairs(arg_6_0.questionIds) do
+		if not arg_6_0.selects[iter_6_0] then
+			arg_6_0:_showQuestion(iter_6_1)
 
 			return true
 		end
@@ -55,101 +57,107 @@ function slot0._showNextQuestion(slot0)
 	return false
 end
 
-function slot0._showQuestion(slot0, slot1)
-	slot2 = WeekWalkConfig.instance:getQuestionConfig(slot1)
-	slot0._txtquestion.text = slot2.text
+function var_0_0._showQuestion(arg_7_0, arg_7_1)
+	local var_7_0 = WeekWalkConfig.instance:getQuestionConfig(arg_7_1)
 
-	slot0:_addAllOptions(slot2)
+	arg_7_0._txtquestion.text = var_7_0.text
+
+	arg_7_0:_addAllOptions(var_7_0)
 end
 
-function slot0._addAllOptions(slot0, slot1)
-	for slot5, slot6 in pairs(slot0._optionBtnList) do
-		gohelper.setActive(slot6[1], false)
+function var_0_0._addAllOptions(arg_8_0, arg_8_1)
+	for iter_8_0, iter_8_1 in pairs(arg_8_0._optionBtnList) do
+		gohelper.setActive(iter_8_1[1], false)
 	end
 
-	for slot5 = 1, 3 do
-		slot0:_addOption(slot5, slot1["select" .. slot5])
+	for iter_8_2 = 1, 3 do
+		arg_8_0:_addOption(iter_8_2, arg_8_1["select" .. iter_8_2])
 	end
 end
 
-function slot0._addOption(slot0, slot1, slot2)
-	slot3 = slot0._optionBtnList[slot1] and slot0._optionBtnList[slot1][1] or gohelper.cloneInPlace(slot0._gooptionitem)
+function var_0_0._addOption(arg_9_0, arg_9_1, arg_9_2)
+	local var_9_0 = arg_9_0._optionBtnList[arg_9_1] and arg_9_0._optionBtnList[arg_9_1][1] or gohelper.cloneInPlace(arg_9_0._gooptionitem)
 
-	gohelper.setActive(slot3, true)
+	gohelper.setActive(var_9_0, true)
 
-	gohelper.findChildText(slot3, "txt_optionitem").text = slot2
+	gohelper.findChildText(var_9_0, "txt_optionitem").text = arg_9_2
 
-	gohelper.findChildButtonWithAudio(slot3, "btn_optionitem", AudioEnum.WeekWalk.play_artificial_ui_answerchoose):AddClickListener(slot0._onOptionClick, slot0, {
-		slot1,
-		slot2
+	local var_9_1 = gohelper.findChildButtonWithAudio(var_9_0, "btn_optionitem", AudioEnum.WeekWalk.play_artificial_ui_answerchoose)
+
+	var_9_1:AddClickListener(arg_9_0._onOptionClick, arg_9_0, {
+		arg_9_1,
+		arg_9_2
 	})
 
-	if not slot0._optionBtnList[slot1] then
-		slot0._optionBtnList[slot1] = {
-			slot3,
-			slot5
+	if not arg_9_0._optionBtnList[arg_9_1] then
+		arg_9_0._optionBtnList[arg_9_1] = {
+			var_9_0,
+			var_9_1
 		}
 	end
 end
 
-function slot0._onOptionClick(slot0, slot1)
-	WeekwalkRpc.instance:sendWeekwalkQuestionSelectRequest(slot1[1])
+function var_0_0._onOptionClick(arg_10_0, arg_10_1)
+	local var_10_0 = arg_10_1[1]
+
+	WeekwalkRpc.instance:sendWeekwalkQuestionSelectRequest(var_10_0)
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_11_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnQuestionReply, slot0._OnQuestionReply, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, slot0._onOpenViewFinish, slot0)
-	slot0:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnGetInfo, slot0._OnGetInfo, slot0)
+function var_0_0.onOpen(arg_12_0)
+	arg_12_0:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnQuestionReply, arg_12_0._OnQuestionReply, arg_12_0)
+	arg_12_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, arg_12_0._onOpenViewFinish, arg_12_0)
+	arg_12_0:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnGetInfo, arg_12_0._OnGetInfo, arg_12_0)
 end
 
-function slot0._OnGetInfo(slot0)
-	slot0:_checkExpire()
+function var_0_0._OnGetInfo(arg_13_0)
+	arg_13_0:_checkExpire()
 end
 
-function slot0._checkExpire(slot0)
+function var_0_0._checkExpire(arg_14_0)
 	if WeekWalkModel.instance:infoNeedUpdate() then
 		UIBlockMgr.instance:startBlock("WeekWalkQuestionView _checkExpire")
-		TaskDispatcher.runDelay(slot0._exitView, slot0, 0.5)
+		TaskDispatcher.runDelay(arg_14_0._exitView, arg_14_0, 0.5)
 	end
 end
 
-function slot0._exitView(slot0)
+function var_0_0._exitView(arg_15_0)
 	UIBlockMgr.instance:endBlock("WeekWalkQuestionView _checkExpire")
-	GameFacade.showMessageBox(MessageBoxIdDefine.WeekWalkExpire, MsgBoxEnum.BoxType.Yes, function ()
+	GameFacade.showMessageBox(MessageBoxIdDefine.WeekWalkExpire, MsgBoxEnum.BoxType.Yes, function()
 		ViewMgr.instance:closeAllPopupViews({
 			ViewName.DungeonView
 		})
-	end, nil, )
+	end, nil, nil)
 end
 
-function slot0._onOpenViewFinish(slot0, slot1)
-	if slot1 == ViewName.WeekWalkView then
-		slot0:closeThis()
+function var_0_0._onOpenViewFinish(arg_17_0, arg_17_1)
+	if arg_17_1 == ViewName.WeekWalkView then
+		arg_17_0:closeThis()
 	end
 end
 
-function slot0._OnQuestionReply(slot0)
-	slot0:_checkShowQuestion()
+function var_0_0._OnQuestionReply(arg_18_0)
+	arg_18_0:_checkShowQuestion()
 end
 
-function slot0.onClose(slot0)
-	for slot4, slot5 in pairs(slot0._optionBtnList) do
-		slot5[2]:RemoveClickListener()
+function var_0_0.onClose(arg_19_0)
+	for iter_19_0, iter_19_1 in pairs(arg_19_0._optionBtnList) do
+		iter_19_1[2]:RemoveClickListener()
 	end
 
-	if slot0._bgmId then
-		slot0._bgmId = nil
+	if arg_19_0._bgmId then
+		arg_19_0._bgmId = nil
 	end
 
-	TaskDispatcher.cancelTask(slot0._exitView, slot0)
+	TaskDispatcher.cancelTask(arg_19_0._exitView, arg_19_0)
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simagebg:UnLoadImage()
-	slot0._simageline:UnLoadImage()
+function var_0_0.onDestroyView(arg_20_0)
+	arg_20_0._simagebg:UnLoadImage()
+	arg_20_0._simageline:UnLoadImage()
 end
 
-return slot0
+return var_0_0

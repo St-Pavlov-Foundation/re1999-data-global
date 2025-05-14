@@ -1,479 +1,491 @@
-module("modules.ugui.icon.common.CommonEquipIcon", package.seeall)
+﻿module("modules.ugui.icon.common.CommonEquipIcon", package.seeall)
 
-slot0 = class("CommonEquipIcon", ListScrollCellExtend)
+local var_0_0 = class("CommonEquipIcon", ListScrollCellExtend)
 
-function slot0.onInitView(slot0)
-	slot0._imageBg = gohelper.findChildImage(slot0.viewGO, "bg")
-	slot0._imagerare = gohelper.findChildImage(slot0.viewGO, "#image_rare")
-	slot0._imagerare2 = gohelper.findChildImage(slot0.viewGO, "#image_rare2")
-	slot0._simageicon = gohelper.findChildSingleImage(slot0.viewGO, "mask/#simage_icon")
-	slot0._iconImage = slot0._simageicon:GetComponent(gohelper.Type_Image)
-	slot0._golock = gohelper.findChild(slot0.viewGO, "#go_lock")
-	slot0._simageheroicon = gohelper.findChildSingleImage(slot0.viewGO, "#go_inteam/#image_heroicon")
-	slot0._countbg = gohelper.findChild(slot0.viewGO, "layout/#go_num/countbg")
-	slot0._txtnum = gohelper.findChildText(slot0.viewGO, "layout/#go_num/#txt_num")
-	slot0._gointeam = gohelper.findChild(slot0.viewGO, "#go_inteam")
-	slot0._goselected = gohelper.findChild(slot0.viewGO, "#go_selected")
-	slot0._golevel = gohelper.findChild(slot0.viewGO, "layout/#go_level")
-	slot0._txtlevel = gohelper.findChildText(slot0.viewGO, "layout/#go_level/#txt_level")
-	slot0._txtlevelEn = gohelper.findChildText(slot0.viewGO, "layout/#go_level/#txt_level/lv")
-	slot0._gonum = gohelper.findChild(slot0.viewGO, "layout/#go_num")
-	slot0.goclickarea = gohelper.findChild(slot0.viewGO, "#go_clickarea")
-	slot0.gotrial = gohelper.findChild(slot0.viewGO, "#go_trial")
-	slot0._gorefinecontainer = gohelper.findChild(slot0.viewGO, "#go_refinecontainer")
-	slot0._txtrefinelv = gohelper.findChildText(slot0.viewGO, "#go_refinecontainer/#txt_refinelv")
-	slot0._goAddition = gohelper.findChild(slot0.viewGO, "turnback")
-	slot0._gorecommend = gohelper.findChild(slot0.viewGO, "#go_recommend")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._imageBg = gohelper.findChildImage(arg_1_0.viewGO, "bg")
+	arg_1_0._imagerare = gohelper.findChildImage(arg_1_0.viewGO, "#image_rare")
+	arg_1_0._imagerare2 = gohelper.findChildImage(arg_1_0.viewGO, "#image_rare2")
+	arg_1_0._simageicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "mask/#simage_icon")
+	arg_1_0._iconImage = arg_1_0._simageicon:GetComponent(gohelper.Type_Image)
+	arg_1_0._golock = gohelper.findChild(arg_1_0.viewGO, "#go_lock")
+	arg_1_0._simageheroicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_inteam/#image_heroicon")
+	arg_1_0._countbg = gohelper.findChild(arg_1_0.viewGO, "layout/#go_num/countbg")
+	arg_1_0._txtnum = gohelper.findChildText(arg_1_0.viewGO, "layout/#go_num/#txt_num")
+	arg_1_0._gointeam = gohelper.findChild(arg_1_0.viewGO, "#go_inteam")
+	arg_1_0._goselected = gohelper.findChild(arg_1_0.viewGO, "#go_selected")
+	arg_1_0._golevel = gohelper.findChild(arg_1_0.viewGO, "layout/#go_level")
+	arg_1_0._txtlevel = gohelper.findChildText(arg_1_0.viewGO, "layout/#go_level/#txt_level")
+	arg_1_0._txtlevelEn = gohelper.findChildText(arg_1_0.viewGO, "layout/#go_level/#txt_level/lv")
+	arg_1_0._gonum = gohelper.findChild(arg_1_0.viewGO, "layout/#go_num")
+	arg_1_0.goclickarea = gohelper.findChild(arg_1_0.viewGO, "#go_clickarea")
+	arg_1_0.gotrial = gohelper.findChild(arg_1_0.viewGO, "#go_trial")
+	arg_1_0._gorefinecontainer = gohelper.findChild(arg_1_0.viewGO, "#go_refinecontainer")
+	arg_1_0._txtrefinelv = gohelper.findChildText(arg_1_0.viewGO, "#go_refinecontainer/#txt_refinelv")
+	arg_1_0._goAddition = gohelper.findChild(arg_1_0.viewGO, "turnback")
+	arg_1_0._gorecommend = gohelper.findChild(arg_1_0.viewGO, "#go_recommend")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	gohelper.setActive(slot0._imagerare.gameObject, false)
-	gohelper.setActive(slot0._imagerare2.gameObject, false)
+function var_0_0._editableInitView(arg_4_0)
+	gohelper.setActive(arg_4_0._imagerare.gameObject, false)
+	gohelper.setActive(arg_4_0._imagerare2.gameObject, false)
 
-	slot0._showQuality = true
-	slot0._effectGos = {}
-	slot0._effectLoader = MultiAbLoader.New()
+	arg_4_0._showQuality = true
+	arg_4_0._effectGos = {}
+	arg_4_0._effectLoader = MultiAbLoader.New()
 
-	slot0._effectLoader:setPathList({
+	arg_4_0._effectLoader:setPathList({
 		ResUrl.getCommonitemEffect("itemeffect")
 	})
-	slot0._effectLoader:startLoad(slot0.LoadEffect, slot0)
+	arg_4_0._effectLoader:startLoad(arg_4_0.LoadEffect, arg_4_0)
 
-	slot0._showLockIcon = true
-	slot0._cantJump = false
-	slot0._hideShowBreakAndLv = false
-	slot0._showCount = true
+	arg_4_0._showLockIcon = true
+	arg_4_0._cantJump = false
+	arg_4_0._hideShowBreakAndLv = false
+	arg_4_0._showCount = true
 
-	transformhelper.setLocalPosXY(slot0.viewGO.transform, 0, 0)
+	transformhelper.setLocalPosXY(arg_4_0.viewGO.transform, 0, 0)
 
-	slot0._animator = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	slot0._isShowSelectedUI = false
-	slot0._isCarrerIconAndRefineVisible = true
+	arg_4_0._animator = arg_4_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	arg_4_0._isShowSelectedUI = false
+	arg_4_0._isCarrerIconAndRefineVisible = true
 
-	gohelper.setActive(slot0._gorefinecontainer, false)
-	slot0:hideHeroIcon()
+	gohelper.setActive(arg_4_0._gorefinecontainer, false)
+	arg_4_0:hideHeroIcon()
 
-	slot0._itemType = MaterialEnum.MaterialType.Equip
+	arg_4_0._itemType = MaterialEnum.MaterialType.Equip
 
-	slot0._gorecommend:SetActive(false)
+	arg_4_0._gorecommend:SetActive(false)
 end
 
-function slot0._editableAddEvents(slot0)
+function var_0_0._editableAddEvents(arg_5_0)
+	return
 end
 
-function slot0._editableRemoveEvents(slot0)
-	if slot0._click then
-		slot0._click:RemoveClickListener()
+function var_0_0._editableRemoveEvents(arg_6_0)
+	if arg_6_0._click then
+		arg_6_0._click:RemoveClickListener()
 	end
 
-	slot0.cus_callback = nil
-	slot0.cus_callback_param = nil
+	arg_6_0.cus_callback = nil
+	arg_6_0.cus_callback_param = nil
 end
 
-slot1 = 4
-slot2 = 5
+local var_0_1 = 4
+local var_0_2 = 5
 
-function slot0.LoadEffect(slot0)
-	if gohelper.isNil(slot0._imagerare) then
-		if slot0._effectLoader then
-			slot0._effectLoader:dispose()
+function var_0_0.LoadEffect(arg_7_0)
+	if gohelper.isNil(arg_7_0._imagerare) then
+		if arg_7_0._effectLoader then
+			arg_7_0._effectLoader:dispose()
 
-			slot0._effectLoader = nil
+			arg_7_0._effectLoader = nil
 		end
 
 		return
 	end
 
-	slot0:isShowQuality(slot0._showQuality)
+	local var_7_0 = arg_7_0._effectLoader:getFirstAssetItem():GetResource()
 
-	slot5 = "itemEffect"
-	slot0._effect = gohelper.clone(slot0._effectLoader:getFirstAssetItem():GetResource(), slot0._imagerare.gameObject, slot5)
+	arg_7_0:isShowQuality(arg_7_0._showQuality)
 
-	for slot5 = uv0, uv1 do
-		slot0._effectGos[slot5] = gohelper.findChild(slot0._effect, "effect" .. tostring(slot5))
+	arg_7_0._effect = gohelper.clone(var_7_0, arg_7_0._imagerare.gameObject, "itemEffect")
+
+	for iter_7_0 = var_0_1, var_0_2 do
+		local var_7_1 = gohelper.findChild(arg_7_0._effect, "effect" .. tostring(iter_7_0))
+
+		arg_7_0._effectGos[iter_7_0] = var_7_1
 	end
 
-	if slot0._config then
-		for slot5 = uv0, uv1 do
-			gohelper.setActive(slot0._effectGos[slot5], slot5 == tonumber(slot0._config.rare) and EquipModel.canShowVfx(slot0._config))
-			gohelper.setActive(gohelper.findChild(slot0._effectGos[slot5], "mask"), false)
+	if arg_7_0._config then
+		for iter_7_1 = var_0_1, var_0_2 do
+			gohelper.setActive(arg_7_0._effectGos[iter_7_1], iter_7_1 == tonumber(arg_7_0._config.rare) and EquipModel.canShowVfx(arg_7_0._config))
+			gohelper.setActive(gohelper.findChild(arg_7_0._effectGos[iter_7_1], "mask"), false)
 		end
 	end
 end
 
-function slot0._onClick(slot0)
-	if slot0.cus_callback then
-		slot0.cus_callback(slot0.cus_callback_param)
+function var_0_0._onClick(arg_8_0)
+	if arg_8_0.cus_callback then
+		arg_8_0.cus_callback(arg_8_0.cus_callback_param)
 
 		return
 	end
 
-	MaterialTipController.instance:showMaterialInfo(slot0._itemType, slot0._itemId, false, nil, slot0._cantJump)
+	MaterialTipController.instance:showMaterialInfo(arg_8_0._itemType, arg_8_0._itemId, false, nil, arg_8_0._cantJump)
 end
 
-function slot0.customClick(slot0, slot1, slot2)
-	slot0.cus_callback = slot1
-	slot0.cus_callback_param = slot2
+function var_0_0.customClick(arg_9_0, arg_9_1, arg_9_2)
+	arg_9_0.cus_callback = arg_9_1
+	arg_9_0.cus_callback_param = arg_9_2
 
-	slot0:addClick()
+	arg_9_0:addClick()
 end
 
-function slot0.setCantJump(slot0, slot1)
-	slot0._cantJump = slot1
+function var_0_0.setCantJump(arg_10_0, arg_10_1)
+	arg_10_0._cantJump = arg_10_1
 end
 
-function slot0.addClick(slot0)
-	slot0._click = gohelper.getClickWithAudio(slot0.viewGO)
+function var_0_0.addClick(arg_11_0)
+	arg_11_0._click = gohelper.getClickWithAudio(arg_11_0.viewGO)
 
-	slot0._click:AddClickListener(slot0._onClick, slot0)
+	arg_11_0._click:AddClickListener(arg_11_0._onClick, arg_11_0)
 end
 
-function slot0.setScale(slot0, slot1)
-	transformhelper.setLocalScale(slot0.viewGO.transform, slot1, slot1, slot1)
+function var_0_0.setScale(arg_12_0, arg_12_1)
+	transformhelper.setLocalScale(arg_12_0.viewGO.transform, arg_12_1, arg_12_1, arg_12_1)
 end
 
-function slot0.setLevelScaleAndColor(slot0, slot1, slot2)
-	transformhelper.setLocalScale(slot0._golevel.transform, slot1, slot1, slot1)
-	SLFramework.UGUI.GuiHelper.SetColor(gohelper.findChildText(slot0.viewGO, "layout/#go_level/#txt_level"), slot2)
-	SLFramework.UGUI.GuiHelper.SetColor(gohelper.findChildText(slot0.viewGO, "layout/#go_level/#txt_level/lv"), slot2)
-	SLFramework.UGUI.GuiHelper.SetColor(gohelper.findChildText(slot0.viewGO, "layout/#go_num/#txt_num"), slot2)
+function var_0_0.setLevelScaleAndColor(arg_13_0, arg_13_1, arg_13_2)
+	transformhelper.setLocalScale(arg_13_0._golevel.transform, arg_13_1, arg_13_1, arg_13_1)
+	SLFramework.UGUI.GuiHelper.SetColor(gohelper.findChildText(arg_13_0.viewGO, "layout/#go_level/#txt_level"), arg_13_2)
+	SLFramework.UGUI.GuiHelper.SetColor(gohelper.findChildText(arg_13_0.viewGO, "layout/#go_level/#txt_level/lv"), arg_13_2)
+	SLFramework.UGUI.GuiHelper.SetColor(gohelper.findChildText(arg_13_0.viewGO, "layout/#go_num/#txt_num"), arg_13_2)
 end
 
-function slot0.hideLockIcon(slot0)
-	slot0._showLockIcon = false
+function var_0_0.hideLockIcon(arg_14_0)
+	arg_14_0._showLockIcon = false
 end
 
-function slot0.hideLv(slot0, slot1)
-	slot0._hideLv = slot1
+function var_0_0.hideLv(arg_15_0, arg_15_1)
+	arg_15_0._hideLv = arg_15_1
 
-	slot0._golevel:SetActive(not slot1)
+	arg_15_0._golevel:SetActive(not arg_15_1)
 end
 
-function slot0.hideLvAndBreak(slot0, slot1)
-	slot0:hideLv(slot1)
+function var_0_0.hideLvAndBreak(arg_16_0, arg_16_1)
+	arg_16_0:hideLv(arg_16_1)
 end
 
-function slot0.setHideLvAndBreakFlag(slot0, slot1)
-	slot0._hideShowBreakAndLv = slot1
+function var_0_0.setHideLvAndBreakFlag(arg_17_0, arg_17_1)
+	arg_17_0._hideShowBreakAndLv = arg_17_1
 end
 
-function slot0.playEquipAnim(slot0, slot1)
-	slot0._animator:Play(slot1)
+function var_0_0.playEquipAnim(arg_18_0, arg_18_1)
+	arg_18_0._animator:Play(arg_18_1)
 end
 
-function slot0._initEquipByMo(slot0, slot1)
-	slot0._mo = slot1
-	slot0._config = slot0._mo.config
-	slot0._isLock = slot0._mo.isLock
-	slot0._count = slot0._mo.count
-	slot0._level = slot0._mo.level
-	slot0._breakLv = slot0._mo.breakLv
-	slot0._refineLv = slot0._mo.refineLv
-	slot0._itemId = slot0._config.id
-	slot0._equipTeamPosInfo = EquipChooseListModel.instance:equipInTeam(slot0._mo.uid)
+function var_0_0._initEquipByMo(arg_19_0, arg_19_1)
+	arg_19_0._mo = arg_19_1
+	arg_19_0._config = arg_19_0._mo.config
+	arg_19_0._isLock = arg_19_0._mo.isLock
+	arg_19_0._count = arg_19_0._mo.count
+	arg_19_0._level = arg_19_0._mo.level
+	arg_19_0._breakLv = arg_19_0._mo.breakLv
+	arg_19_0._refineLv = arg_19_0._mo.refineLv
+	arg_19_0._itemId = arg_19_0._config.id
+	arg_19_0._equipTeamPosInfo = EquipChooseListModel.instance:equipInTeam(arg_19_0._mo.uid)
 end
 
-function slot0._initEquipByConfig(slot0, slot1, slot2)
-	slot0._mo = nil
-	slot0._config = slot1
-	slot0._itemId = slot1.id
-	slot0._isLock = false
-	slot0._count = slot2
-	slot0._level = 1
-	slot0._breakLv = 1
-	slot0._refineLv = 1
+function var_0_0._initEquipByConfig(arg_20_0, arg_20_1, arg_20_2)
+	arg_20_0._mo = nil
+	arg_20_0._config = arg_20_1
+	arg_20_0._itemId = arg_20_1.id
+	arg_20_0._isLock = false
+	arg_20_0._count = arg_20_2
+	arg_20_0._level = 1
+	arg_20_0._breakLv = 1
+	arg_20_0._refineLv = 1
 end
 
-function slot0.setMOValue(slot0, slot1, slot2, slot3, slot4)
-	if EquipModel.instance:getEquip(slot4) then
-		slot0:_initEquipByMo(slot5)
+function var_0_0.setMOValue(arg_21_0, arg_21_1, arg_21_2, arg_21_3, arg_21_4)
+	local var_21_0 = EquipModel.instance:getEquip(arg_21_4)
+
+	if var_21_0 then
+		arg_21_0:_initEquipByMo(var_21_0)
 	else
-		slot0:_initEquipByConfig(EquipConfig.instance:getEquipCo(tonumber(slot2)), slot3)
+		arg_21_0:_initEquipByConfig(EquipConfig.instance:getEquipCo(tonumber(arg_21_2)), arg_21_3)
 	end
 
-	slot0:initEquipType()
-	slot0:refreshUI()
+	arg_21_0:initEquipType()
+	arg_21_0:refreshUI()
 end
 
-function slot0.setEquipMO(slot0, slot1)
-	slot0:_initEquipByMo(slot1)
-	slot0:initEquipType()
-	slot0:refreshUI()
+function var_0_0.setEquipMO(arg_22_0, arg_22_1)
+	arg_22_0:_initEquipByMo(arg_22_1)
+	arg_22_0:initEquipType()
+	arg_22_0:refreshUI()
 end
 
-function slot0.initEquipType(slot0)
-	slot0.isExpEquip = EquipHelper.isExpEquip(slot0._config)
-	slot0.isSpRefineEquip = EquipHelper.isSpRefineEquip(slot0._config)
-	slot0.isRefineUniversalEquip = EquipHelper.isRefineUniversalMaterials(slot0._config.id)
-	slot0.isNormalEquip = not slot0.isExpEquip and not slot0.isSpRefineEquip and not slot0.isRefineUniversalEquip
+function var_0_0.initEquipType(arg_23_0)
+	arg_23_0.isExpEquip = EquipHelper.isExpEquip(arg_23_0._config)
+	arg_23_0.isSpRefineEquip = EquipHelper.isSpRefineEquip(arg_23_0._config)
+	arg_23_0.isRefineUniversalEquip = EquipHelper.isRefineUniversalMaterials(arg_23_0._config.id)
+	arg_23_0.isNormalEquip = not arg_23_0.isExpEquip and not arg_23_0.isSpRefineEquip and not arg_23_0.isRefineUniversalEquip
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0:setEquipMO(slot1)
+function var_0_0.onUpdateMO(arg_24_0, arg_24_1)
+	arg_24_0:setEquipMO(arg_24_1)
 end
 
-function slot0.isUniversalMeterial(slot0)
-	return slot0._config.id == 1000
+function var_0_0.isUniversalMeterial(arg_25_0)
+	return arg_25_0._config.id == 1000
 end
 
-function slot0.setBalanceLv(slot0, slot1)
-	if not slot1 or not slot0._mo or tonumber(slot0._mo.uid) < 0 or slot1 <= slot0._level then
+function var_0_0.setBalanceLv(arg_26_0, arg_26_1)
+	if not arg_26_1 or not arg_26_0._mo or tonumber(arg_26_0._mo.uid) < 0 or arg_26_1 <= arg_26_0._level then
 		return
 	end
 
-	slot0._txtlevel.text = "<color=#bfdaff>" .. slot1
+	arg_26_0._txtlevel.text = "<color=#bfdaff>" .. arg_26_1
 
-	SLFramework.UGUI.GuiHelper.SetColor(slot0._txtlevelEn, "#bfdaff")
+	SLFramework.UGUI.GuiHelper.SetColor(arg_26_0._txtlevelEn, "#bfdaff")
 end
 
-function slot0.refreshUI(slot0)
-	if not slot0._config then
+function var_0_0.refreshUI(arg_27_0)
+	if not arg_27_0._config then
 		return
 	end
 
-	UISpriteSetMgr.instance:setCommonSprite(slot0._imagerare, "equipbar" .. EquipConfig.instance:getRareColor(slot0._config.rare), nil, slot0.bgAlpha)
-	UISpriteSetMgr.instance:setCommonSprite(slot0._imagerare2, "bgequip" .. tostring(ItemEnum.Color[slot0._config.rare]), nil, slot0.bgAlpha)
+	UISpriteSetMgr.instance:setCommonSprite(arg_27_0._imagerare, "equipbar" .. EquipConfig.instance:getRareColor(arg_27_0._config.rare), nil, arg_27_0.bgAlpha)
+	UISpriteSetMgr.instance:setCommonSprite(arg_27_0._imagerare2, "bgequip" .. tostring(ItemEnum.Color[arg_27_0._config.rare]), nil, arg_27_0.bgAlpha)
 
-	if slot0._effectGos and tabletool.len(slot0._effectGos) > 0 then
-		for slot4 = uv0, uv1 do
-			gohelper.setActive(slot0._effectGos[slot4], slot4 == tonumber(slot0._config.rare) and EquipModel.canShowVfx(slot0._config))
-			gohelper.setActive(gohelper.findChild(slot0._effectGos[slot4], "mask"), false)
+	if arg_27_0._effectGos and tabletool.len(arg_27_0._effectGos) > 0 then
+		for iter_27_0 = var_0_1, var_0_2 do
+			gohelper.setActive(arg_27_0._effectGos[iter_27_0], iter_27_0 == tonumber(arg_27_0._config.rare) and EquipModel.canShowVfx(arg_27_0._config))
+			gohelper.setActive(gohelper.findChild(arg_27_0._effectGos[iter_27_0], "mask"), false)
 		end
 	end
 
-	slot0._txtnum.text = GameUtil.numberDisplay(slot0._count)
-	slot0._txtlevel.text = slot0._level
+	arg_27_0._txtnum.text = GameUtil.numberDisplay(arg_27_0._count)
+	arg_27_0._txtlevel.text = arg_27_0._level
 
-	SLFramework.UGUI.GuiHelper.SetColor(slot0._txtlevelEn, "#E8E7E7")
-	gohelper.setActive(slot0.gotrial, slot0._mo and slot0._mo.equipType == EquipEnum.ClientEquipType.TrialEquip)
-	gohelper.setActive(slot0._gorefinecontainer, slot0._mo and slot0.isNormalEquip)
+	SLFramework.UGUI.GuiHelper.SetColor(arg_27_0._txtlevelEn, "#E8E7E7")
+	gohelper.setActive(arg_27_0.gotrial, arg_27_0._mo and arg_27_0._mo.equipType == EquipEnum.ClientEquipType.TrialEquip)
+	gohelper.setActive(arg_27_0._gorefinecontainer, arg_27_0._mo and arg_27_0.isNormalEquip)
 
-	if slot0.isNormalEquip then
-		if EquipConfig.instance:getEquipRefineLvMax() <= slot0._refineLv then
-			slot0._txtrefinelv.text = string.format("<color=#e87826>%s</color>", slot0._refineLv)
+	if arg_27_0.isNormalEquip then
+		if arg_27_0._refineLv >= EquipConfig.instance:getEquipRefineLvMax() then
+			arg_27_0._txtrefinelv.text = string.format("<color=#e87826>%s</color>", arg_27_0._refineLv)
 		else
-			slot0._txtrefinelv.text = string.format("<color=#E8E7E7>%s</color>", slot0._refineLv)
+			arg_27_0._txtrefinelv.text = string.format("<color=#E8E7E7>%s</color>", arg_27_0._refineLv)
 		end
 	end
 
-	slot0:_loadIconImage()
-	slot0:hideLvAndBreak(EquipHelper.isRefineUniversalMaterials(slot0._config.id) or slot0.isExpEquip or EquipHelper.isSpRefineEquip(slot0._config) or slot0._hideShowBreakAndLv)
-	slot0:isShowCount(not EquipHelper.isRefineUniversalMaterials(slot0._config.id) and slot0.isExpEquip and slot0._showCount)
+	arg_27_0:_loadIconImage()
+	arg_27_0:hideLvAndBreak(EquipHelper.isRefineUniversalMaterials(arg_27_0._config.id) or arg_27_0.isExpEquip or EquipHelper.isSpRefineEquip(arg_27_0._config) or arg_27_0._hideShowBreakAndLv)
+	arg_27_0:isShowCount(not EquipHelper.isRefineUniversalMaterials(arg_27_0._config.id) and arg_27_0.isExpEquip and arg_27_0._showCount)
 
-	if not slot0._iconImage.sprite then
-		slot0:_setIconAlpha(0)
+	if not arg_27_0._iconImage.sprite then
+		arg_27_0:_setIconAlpha(0)
 	end
 
-	slot0._golock:SetActive(slot0._isLock and slot0._showLockIcon)
+	arg_27_0._golock:SetActive(arg_27_0._isLock and arg_27_0._showLockIcon)
 end
 
-function slot0.checkRecommend(slot0)
-	slot0._gorecommend:SetActive(slot0._mo and slot0._mo.recommondIndex and slot0._mo.recommondIndex > 0)
+function var_0_0.checkRecommend(arg_28_0)
+	local var_28_0 = arg_28_0._mo and arg_28_0._mo.recommondIndex and arg_28_0._mo.recommondIndex > 0
+
+	arg_28_0._gorecommend:SetActive(var_28_0)
 end
 
-function slot0._loadIconImage(slot0)
-	if slot0._overrideIconLoadFunc then
-		slot0._overrideIconLoadFunc(slot0._overrideIconLoadFuncObj)
+function var_0_0._loadIconImage(arg_29_0)
+	if arg_29_0._overrideIconLoadFunc then
+		arg_29_0._overrideIconLoadFunc(arg_29_0._overrideIconLoadFuncObj)
 
 		return
 	end
 
-	slot0:_defaultLoadIconFunc()
+	arg_29_0:_defaultLoadIconFunc()
 end
 
-function slot0._defaultLoadIconFunc(slot0)
-	slot0._simageicon:LoadImage(ResUrl.getEquipIcon(slot0._config.icon), slot0._loadImageFinish, slot0)
+function var_0_0._defaultLoadIconFunc(arg_30_0)
+	arg_30_0._simageicon:LoadImage(ResUrl.getEquipIcon(arg_30_0._config.icon), arg_30_0._loadImageFinish, arg_30_0)
 end
 
-function slot0.setItemIconScale(slot0, slot1)
-	transformhelper.setLocalScale(slot0._simageicon.transform, slot1, slot1, slot1)
+function var_0_0.setItemIconScale(arg_31_0, arg_31_1)
+	transformhelper.setLocalScale(arg_31_0._simageicon.transform, arg_31_1, arg_31_1, arg_31_1)
 end
 
-function slot0.setItemOffset(slot0, slot1, slot2)
-	recthelper.setAnchor(slot0._simageicon.transform, slot1 or -1.5, slot2 or 53)
+function var_0_0.setItemOffset(arg_32_0, arg_32_1, arg_32_2)
+	recthelper.setAnchor(arg_32_0._simageicon.transform, arg_32_1 or -1.5, arg_32_2 or 53)
 end
 
-function slot0._overrideLoadIconFunc(slot0, slot1, slot2)
-	slot0._overrideIconLoadFunc = slot1
-	slot0._overrideIconLoadFuncObj = slot2
+function var_0_0._overrideLoadIconFunc(arg_33_0, arg_33_1, arg_33_2)
+	arg_33_0._overrideIconLoadFunc = arg_33_1
+	arg_33_0._overrideIconLoadFuncObj = arg_33_2
 end
 
-function slot0._loadImageFinish(slot0)
-	slot0:_setIconAlpha(slot0.iconAlpha or 1)
+function var_0_0._loadImageFinish(arg_34_0)
+	arg_34_0:_setIconAlpha(arg_34_0.iconAlpha or 1)
 end
 
-function slot0.setAlpha(slot0, slot1, slot2)
-	slot0.iconAlpha = slot1
-	slot0.bgAlpha = slot2
+function var_0_0.setAlpha(arg_35_0, arg_35_1, arg_35_2)
+	arg_35_0.iconAlpha = arg_35_1
+	arg_35_0.bgAlpha = arg_35_2
 
-	slot0:_setIconAlpha(slot0.iconAlpha)
-	slot0:refreshUI()
+	arg_35_0:_setIconAlpha(arg_35_0.iconAlpha)
+	arg_35_0:refreshUI()
 end
 
-function slot0._setIconAlpha(slot0, slot1)
-	slot2 = slot0._iconImage.color
-	slot2.a = slot1
-	slot0._iconImage.color = slot2
+function var_0_0._setIconAlpha(arg_36_0, arg_36_1)
+	local var_36_0 = arg_36_0._iconImage.color
+
+	var_36_0.a = arg_36_1
+	arg_36_0._iconImage.color = var_36_0
 end
 
-function slot0.showLevel(slot0)
-	gohelper.setActive(slot0._gonum, false)
+function var_0_0.showLevel(arg_37_0)
+	gohelper.setActive(arg_37_0._gonum, false)
 
-	slot0._txtlevel.text = slot0._level
+	arg_37_0._txtlevel.text = arg_37_0._level
 end
 
-function slot0.refreshLock(slot0, slot1)
-	slot0._isLock = slot1
+function var_0_0.refreshLock(arg_38_0, arg_38_1)
+	arg_38_0._isLock = arg_38_1
 
-	slot0._golock:SetActive(slot0._isLock and slot0._showLockIcon)
+	arg_38_0._golock:SetActive(arg_38_0._isLock and arg_38_0._showLockIcon)
 end
 
-function slot0.showEquipCount(slot0, slot1, slot2)
-	slot2 = slot2 or slot0._txtlevel
+function var_0_0.showEquipCount(arg_39_0, arg_39_1, arg_39_2)
+	arg_39_1 = arg_39_1 or arg_39_0._golevel
+	arg_39_2 = arg_39_2 or arg_39_0._txtlevel
 
-	gohelper.setActive(slot0._golevel, false)
-	gohelper.setActive(slot0._gonum, false)
+	gohelper.setActive(arg_39_0._golevel, false)
+	gohelper.setActive(arg_39_0._gonum, false)
 
-	if slot0.isExpEquip then
-		slot2.text = GameUtil.numberDisplay(slot0._count)
+	if arg_39_0.isExpEquip then
+		arg_39_2.text = GameUtil.numberDisplay(arg_39_0._count)
 
-		gohelper.setActive(slot1 or slot0._golevel, slot2.text ~= nil)
+		gohelper.setActive(arg_39_1, arg_39_2.text ~= nil)
 	else
-		slot0._txtlevel.text = slot0._level
+		arg_39_0._txtlevel.text = arg_39_0._level
 
-		gohelper.setActive(slot1, false)
-		gohelper.setActive(slot0._golevel, true)
+		gohelper.setActive(arg_39_1, false)
+		gohelper.setActive(arg_39_0._golevel, true)
 	end
 end
 
-function slot0.isShowAddition(slot0, slot1)
-	gohelper.setActive(slot0._goAddition, slot1)
+function var_0_0.isShowAddition(arg_40_0, arg_40_1)
+	gohelper.setActive(arg_40_0._goAddition, arg_40_1)
 end
 
-function slot0.isShowCount(slot0, slot1)
-	gohelper.setActive(slot0._gonum, slot1)
+function var_0_0.isShowCount(arg_41_0, arg_41_1)
+	gohelper.setActive(arg_41_0._gonum, arg_41_1)
 end
 
-function slot0.setShowCountFlag(slot0, slot1)
-	slot0._showCount = slot1
+function var_0_0.setShowCountFlag(arg_42_0, arg_42_1)
+	arg_42_0._showCount = arg_42_1
 end
 
-function slot0.hideExpEquipState(slot0)
-	gohelper.setActive(slot0._gorefinecontainer, not slot0.isExpEquip)
-	gohelper.setActive(slot0._gonum, false)
-	gohelper.setActive(slot0._golevel, not slot0.isExpEquip)
+function var_0_0.hideExpEquipState(arg_43_0)
+	gohelper.setActive(arg_43_0._gorefinecontainer, not arg_43_0.isExpEquip)
+	gohelper.setActive(arg_43_0._gonum, false)
+	gohelper.setActive(arg_43_0._golevel, not arg_43_0.isExpEquip)
 end
 
-function slot0.showEquipRefineContainer(slot0, slot1)
-	gohelper.setActive(slot0._gorefinecontainer, slot1)
+function var_0_0.showEquipRefineContainer(arg_44_0, arg_44_1)
+	gohelper.setActive(arg_44_0._gorefinecontainer, arg_44_1)
 end
 
-function slot0.setCountFontSize(slot0, slot1)
-	if not slot0._scale then
-		slot0._scale = slot1 / slot0._txtnum.fontSize
+function var_0_0.setCountFontSize(arg_45_0, arg_45_1)
+	if not arg_45_0._scale then
+		arg_45_0._scale = arg_45_1 / arg_45_0._txtnum.fontSize
 	end
 
-	transformhelper.setLocalScale(slot0._countbg.transform, 1, slot0._scale, 1)
+	transformhelper.setLocalScale(arg_45_0._countbg.transform, 1, arg_45_0._scale, 1)
 
-	slot0._txtnum.fontSize = slot1
+	arg_45_0._txtnum.fontSize = arg_45_1
 
-	transformhelper.setLocalScale(slot0._txtlevel.transform, slot0._scale, slot0._scale, slot0._scale)
-	transformhelper.setLocalPosXY(slot0._txtlevel.transform, 30, 0)
+	transformhelper.setLocalScale(arg_45_0._txtlevel.transform, arg_45_0._scale, arg_45_0._scale, arg_45_0._scale)
+	transformhelper.setLocalPosXY(arg_45_0._txtlevel.transform, 30, 0)
 end
 
-function slot0.setLevelPos(slot0, slot1, slot2)
-	transformhelper.setLocalPosXY(slot0._txtlevel.transform, slot1, slot2)
+function var_0_0.setLevelPos(arg_46_0, arg_46_1, arg_46_2)
+	transformhelper.setLocalPosXY(arg_46_0._txtlevel.transform, arg_46_1, arg_46_2)
 end
 
-function slot0.setLevelFontColor(slot0, slot1)
-	SLFramework.UGUI.GuiHelper.SetColor(slot0._txtlevel, slot1)
+function var_0_0.setLevelFontColor(arg_47_0, arg_47_1)
+	SLFramework.UGUI.GuiHelper.SetColor(arg_47_0._txtlevel, arg_47_1)
 end
 
-function slot0.setCarrerIconAndRefineVisible(slot0, slot1)
-	if slot0._isCarrerIconAndRefineVisible == slot1 then
+function var_0_0.setCarrerIconAndRefineVisible(arg_48_0, arg_48_1)
+	if arg_48_0._isCarrerIconAndRefineVisible == arg_48_1 then
 		return
 	end
 
-	slot0._isCarrerIconAndRefineVisible = slot1
+	arg_48_0._isCarrerIconAndRefineVisible = arg_48_1
 end
 
-function slot0.onSelect(slot0, slot1)
-	gohelper.setActive(slot0._goselected, slot0._isShowSelectedUI and slot1)
+function var_0_0.onSelect(arg_49_0, arg_49_1)
+	gohelper.setActive(arg_49_0._goselected, arg_49_0._isShowSelectedUI and arg_49_1)
 end
 
-function slot0.setSelectUIVisible(slot0, slot1)
-	slot0._isShowSelectedUI = slot1
+function var_0_0.setSelectUIVisible(arg_50_0, arg_50_1)
+	arg_50_0._isShowSelectedUI = arg_50_1
 end
 
-function slot0.isShowRefineLv(slot0, slot1)
-	gohelper.setActive(slot0._txtrefinelv.gameObject, slot1)
+function var_0_0.isShowRefineLv(arg_51_0, arg_51_1)
+	gohelper.setActive(arg_51_0._txtrefinelv.gameObject, arg_51_1)
 end
 
-function slot0.setRefineLvFontSize(slot0, slot1)
-	slot0._txtrefinelv.fontSize = slot1
+function var_0_0.setRefineLvFontSize(arg_52_0, arg_52_1)
+	arg_52_0._txtrefinelv.fontSize = arg_52_1
 end
 
-function slot0.showHeroIcon(slot0, slot1)
-	slot0._simageheroicon:LoadImage(ResUrl.getHeadIconSmall(slot1.headIcon))
-	gohelper.setActive(slot0._gointeam, true)
-	slot0:refreshLock(false)
+function var_0_0.showHeroIcon(arg_53_0, arg_53_1)
+	arg_53_0._simageheroicon:LoadImage(ResUrl.getHeadIconSmall(arg_53_1.headIcon))
+	gohelper.setActive(arg_53_0._gointeam, true)
+	arg_53_0:refreshLock(false)
 end
 
-function slot0.hideHeroIcon(slot0)
-	gohelper.setActive(slot0._gointeam, false)
+function var_0_0.hideHeroIcon(arg_54_0)
+	gohelper.setActive(arg_54_0._gointeam, false)
 end
 
-function slot0.setItemColor(slot0, slot1)
-	SLFramework.UGUI.GuiHelper.SetColor(slot0._imageBg, slot1 or "#FFFFFF")
-	SLFramework.UGUI.GuiHelper.SetColor(slot0._iconImage, slot1 or "#FFFFFF")
-	SLFramework.UGUI.GuiHelper.SetColor(slot0._imagerare, slot1 or "#FFFFFF")
-	SLFramework.UGUI.GuiHelper.SetColor(slot0._imagerare2, slot1 or "#FFFFFF")
-	SLFramework.UGUI.GuiHelper.SetColor(slot0._countbg:GetComponent(gohelper.Type_Image), slot1 or "#FFFFFF")
-	SLFramework.UGUI.GuiHelper.SetColor(slot0._txtnum, slot1 or "#FFFFFF")
-	SLFramework.UGUI.GuiHelper.SetColor(slot0._txtlevel, slot1 or "#E8E7E7")
-	SLFramework.UGUI.GuiHelper.SetColor(gohelper.findChildText(slot0.viewGO, "layout/#go_level/#txt_level/lv"), slot1 or "#E8E7E7")
+function var_0_0.setItemColor(arg_55_0, arg_55_1)
+	SLFramework.UGUI.GuiHelper.SetColor(arg_55_0._imageBg, arg_55_1 or "#FFFFFF")
+	SLFramework.UGUI.GuiHelper.SetColor(arg_55_0._iconImage, arg_55_1 or "#FFFFFF")
+	SLFramework.UGUI.GuiHelper.SetColor(arg_55_0._imagerare, arg_55_1 or "#FFFFFF")
+	SLFramework.UGUI.GuiHelper.SetColor(arg_55_0._imagerare2, arg_55_1 or "#FFFFFF")
+	SLFramework.UGUI.GuiHelper.SetColor(arg_55_0._countbg:GetComponent(gohelper.Type_Image), arg_55_1 or "#FFFFFF")
+	SLFramework.UGUI.GuiHelper.SetColor(arg_55_0._txtnum, arg_55_1 or "#FFFFFF")
+	SLFramework.UGUI.GuiHelper.SetColor(arg_55_0._txtlevel, arg_55_1 or "#E8E7E7")
+	SLFramework.UGUI.GuiHelper.SetColor(gohelper.findChildText(arg_55_0.viewGO, "layout/#go_level/#txt_level/lv"), arg_55_1 or "#E8E7E7")
 end
 
-function slot0.setGetMask(slot0, slot1)
-	SLFramework.UGUI.GuiHelper.SetColor(slot0._iconImage, slot1 and "#666666" or "#FFFFFF")
-	SLFramework.UGUI.GuiHelper.SetColor(slot0._imagerare, slot1 and "#666666" or "#FFFFFF")
-	SLFramework.UGUI.GuiHelper.SetColor(slot0._imagerare2, slot1 and "#666666" or "#FFFFFF")
-	SLFramework.UGUI.GuiHelper.SetColor(slot0._txtlevel, slot1 and "#525252" or "#E8E7E7")
-	SLFramework.UGUI.GuiHelper.SetColor(gohelper.findChildText(slot0.viewGO, "layout/#go_level/#txt_level/lv"), slot1 and "#525252" or "#E8E7E7")
-	ZProj.UGUIHelper.SetColorAlpha(slot0._txtrefinelv, slot1 and 0.4 or 1)
+function var_0_0.setGetMask(arg_56_0, arg_56_1)
+	SLFramework.UGUI.GuiHelper.SetColor(arg_56_0._iconImage, arg_56_1 and "#666666" or "#FFFFFF")
+	SLFramework.UGUI.GuiHelper.SetColor(arg_56_0._imagerare, arg_56_1 and "#666666" or "#FFFFFF")
+	SLFramework.UGUI.GuiHelper.SetColor(arg_56_0._imagerare2, arg_56_1 and "#666666" or "#FFFFFF")
+	SLFramework.UGUI.GuiHelper.SetColor(arg_56_0._txtlevel, arg_56_1 and "#525252" or "#E8E7E7")
+	SLFramework.UGUI.GuiHelper.SetColor(gohelper.findChildText(arg_56_0.viewGO, "layout/#go_level/#txt_level/lv"), arg_56_1 and "#525252" or "#E8E7E7")
+	ZProj.UGUIHelper.SetColorAlpha(arg_56_0._txtrefinelv, arg_56_1 and 0.4 or 1)
 end
 
-function slot0.isShowQuality(slot0, slot1)
-	slot0._showQuality = slot1
+function var_0_0.isShowQuality(arg_57_0, arg_57_1)
+	arg_57_0._showQuality = arg_57_1
 
-	gohelper.setActive(slot0._imageBg, slot1)
-	gohelper.setActive(slot0._imagerare, slot1)
-	gohelper.setActive(slot0._imagerare2, slot1)
+	gohelper.setActive(arg_57_0._imageBg, arg_57_1)
+	gohelper.setActive(arg_57_0._imagerare, arg_57_1)
+	gohelper.setActive(arg_57_0._imagerare2, arg_57_1)
 end
 
-function slot0.onDestroyView(slot0)
-	if slot0._effectLoader then
-		slot0._effectLoader:dispose()
+function var_0_0.onDestroyView(arg_58_0)
+	if arg_58_0._effectLoader then
+		arg_58_0._effectLoader:dispose()
 
-		slot0._effectLoader = nil
+		arg_58_0._effectLoader = nil
 	end
 
-	slot0._simageheroicon:UnLoadImage()
-	slot0._simageicon:UnLoadImage()
+	arg_58_0._simageheroicon:UnLoadImage()
+	arg_58_0._simageicon:UnLoadImage()
 end
 
-function slot0.isExpiredItem(slot0)
+function var_0_0.isExpiredItem(arg_59_0)
 	return false
 end
 
-return slot0
+return var_0_0

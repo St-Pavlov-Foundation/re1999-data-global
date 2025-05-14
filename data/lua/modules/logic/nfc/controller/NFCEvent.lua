@@ -1,5 +1,6 @@
-module("modules.logic.nfc.controller.NFCEvent", package.seeall)
+﻿module("modules.logic.nfc.controller.NFCEvent", package.seeall)
 
-slot1 = GameUtil.getUniqueTb()
+local var_0_0 = _M
+local var_0_1 = GameUtil.getUniqueTb()
 
-return _M
+return var_0_0

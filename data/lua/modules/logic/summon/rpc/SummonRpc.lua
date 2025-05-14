@@ -1,109 +1,119 @@
-module("modules.logic.summon.rpc.SummonRpc", package.seeall)
+﻿module("modules.logic.summon.rpc.SummonRpc", package.seeall)
 
-slot0 = class("SummonRpc", BaseRpc)
+local var_0_0 = class("SummonRpc", BaseRpc)
 
-function slot0.sendSummonRequest(slot0, slot1, slot2, slot3, slot4, slot5, slot6)
-	SummonModule_pb.SummonRequest().poolId = slot1
-	slot7.guideId = slot3 or 0
-	slot7.stepId = slot4 or 0
-	slot7.count = slot2
+function var_0_0.sendSummonRequest(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4, arg_1_5, arg_1_6)
+	local var_1_0 = SummonModule_pb.SummonRequest()
 
-	slot0:sendMsg(slot7, slot5, slot6)
+	var_1_0.poolId = arg_1_1
+	var_1_0.guideId = arg_1_3 or 0
+	var_1_0.stepId = arg_1_4 or 0
+	var_1_0.count = arg_1_2
+
+	arg_1_0:sendMsg(var_1_0, arg_1_5, arg_1_6)
 
 	SummonController.instance.isWaitingSummonResult = true
 
-	SummonController.instance:dispatchEvent(SummonEvent.onSummonPoolHistorySummonRequest, slot1)
+	SummonController.instance:dispatchEvent(SummonEvent.onSummonPoolHistorySummonRequest, arg_1_1)
 end
 
-function slot0.onReceiveSummonReply(slot0, slot1, slot2)
+function var_0_0.onReceiveSummonReply(arg_2_0, arg_2_1, arg_2_2)
 	SummonController.instance.isWaitingSummonResult = false
 
-	if slot1 ~= 0 then
+	if arg_2_1 ~= 0 then
 		SummonController.instance:dispatchEvent(SummonEvent.onSummonFailed)
-		slot0:sendGetSummonInfoRequest()
+		arg_2_0:sendGetSummonInfoRequest()
 
 		return
 	end
 
-	slot3 = slot2.summonResult
+	local var_2_0 = arg_2_2.summonResult
 
-	SDKChannelEventModel.instance:addTotalSummonCount(#slot3)
-	SDKChannelEventModel.instance:onSummonResult(slot3)
-	SummonController.instance:summonSuccess(slot3)
+	SDKChannelEventModel.instance:addTotalSummonCount(#var_2_0)
+	SDKChannelEventModel.instance:onSummonResult(var_2_0)
+	SummonController.instance:summonSuccess(var_2_0)
 end
 
-function slot0.sendGetSummonInfoRequest(slot0, slot1, slot2)
-	return slot0:sendMsg(SummonModule_pb.GetSummonInfoRequest(), slot1, slot2)
+function var_0_0.sendGetSummonInfoRequest(arg_3_0, arg_3_1, arg_3_2)
+	local var_3_0 = SummonModule_pb.GetSummonInfoRequest()
+
+	return arg_3_0:sendMsg(var_3_0, arg_3_1, arg_3_2)
 end
 
-function slot0.onReceiveGetSummonInfoReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveGetSummonInfoReply(arg_4_0, arg_4_1, arg_4_2)
+	if arg_4_1 ~= 0 then
 		return
 	end
 
-	SummonController.instance:updateSummonInfo(slot2)
-	SDKChannelEventModel.instance:updateTotalSummonCount(slot2.totalSummonCount)
+	SummonController.instance:updateSummonInfo(arg_4_2)
+	SDKChannelEventModel.instance:updateTotalSummonCount(arg_4_2.totalSummonCount)
 end
 
-function slot0.sendSummonQueryTokenRequest(slot0)
-	slot0:sendMsg(SummonModule_pb.SummonQueryTokenRequest())
+function var_0_0.sendSummonQueryTokenRequest(arg_5_0)
+	local var_5_0 = SummonModule_pb.SummonQueryTokenRequest()
+
+	arg_5_0:sendMsg(var_5_0)
 end
 
-function slot0.onReceiveSummonQueryTokenReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveSummonQueryTokenReply(arg_6_0, arg_6_1, arg_6_2)
+	if arg_6_1 ~= 0 then
 		return
 	end
 
-	SummonPoolHistoryController.instance:updateSummonQueryToken(slot2)
+	SummonPoolHistoryController.instance:updateSummonQueryToken(arg_6_2)
 end
 
-function slot0.sendOpenLuckyBagRequest(slot0, slot1, slot2, slot3, slot4)
-	slot5 = SummonModule_pb.OpenLuckyBagRequest()
-	slot5.luckyBagId = slot1
-	slot5.heroId = slot2
+function var_0_0.sendOpenLuckyBagRequest(arg_7_0, arg_7_1, arg_7_2, arg_7_3, arg_7_4)
+	local var_7_0 = SummonModule_pb.OpenLuckyBagRequest()
 
-	return slot0:sendMsg(slot5, slot3, slot4)
+	var_7_0.luckyBagId = arg_7_1
+	var_7_0.heroId = arg_7_2
+
+	return arg_7_0:sendMsg(var_7_0, arg_7_3, arg_7_4)
 end
 
-function slot0.onReceiveOpenLuckyBagReply(slot0, slot1, slot2)
-	if slot1 == 0 then
+function var_0_0.onReceiveOpenLuckyBagReply(arg_8_0, arg_8_1, arg_8_2)
+	if arg_8_1 == 0 then
 		SummonController.instance:dispatchEvent(SummonEvent.onLuckyBagOpened)
-		slot0:sendGetSummonInfoRequest()
+		arg_8_0:sendGetSummonInfoRequest()
 	end
 end
 
-function slot0.sendChooseDoubleUpHeroRequest(slot0, slot1, slot2, slot3, slot4)
-	SummonModule_pb.ChooseMultiUpHeroRequest().poolId = slot1
+function var_0_0.sendChooseDoubleUpHeroRequest(arg_9_0, arg_9_1, arg_9_2, arg_9_3, arg_9_4)
+	local var_9_0 = SummonModule_pb.ChooseMultiUpHeroRequest()
 
-	for slot9, slot10 in ipairs(slot2) do
-		slot5.heroIds:append(slot10)
+	var_9_0.poolId = arg_9_1
+
+	for iter_9_0, iter_9_1 in ipairs(arg_9_2) do
+		var_9_0.heroIds:append(iter_9_1)
 	end
 
-	return slot0:sendMsg(slot5, slot3, slot4)
+	return arg_9_0:sendMsg(var_9_0, arg_9_3, arg_9_4)
 end
 
-function slot0.onReceiveChooseMultiUpHeroReply(slot0, slot1, slot2)
-	if slot1 == 0 then
+function var_0_0.onReceiveChooseMultiUpHeroReply(arg_10_0, arg_10_1, arg_10_2)
+	if arg_10_1 == 0 then
 		SummonController.instance:dispatchEvent(SummonEvent.onCustomPicked)
-		slot0:sendGetSummonInfoRequest()
+		arg_10_0:sendGetSummonInfoRequest()
 	end
 end
 
-function slot0.sendChooseEnhancedPoolHeroRequest(slot0, slot1, slot2, slot3, slot4)
-	slot5 = SummonModule_pb.ChooseEnhancedPoolHeroRequest()
-	slot5.poolId = slot1
-	slot5.heroId = slot2
+function var_0_0.sendChooseEnhancedPoolHeroRequest(arg_11_0, arg_11_1, arg_11_2, arg_11_3, arg_11_4)
+	local var_11_0 = SummonModule_pb.ChooseEnhancedPoolHeroRequest()
 
-	return slot0:sendMsg(slot5, slot3, slot4)
+	var_11_0.poolId = arg_11_1
+	var_11_0.heroId = arg_11_2
+
+	return arg_11_0:sendMsg(var_11_0, arg_11_3, arg_11_4)
 end
 
-function slot0.onReceiveChooseEnhancedPoolHeroReply(slot0, slot1, slot2)
-	if slot1 == 0 then
+function var_0_0.onReceiveChooseEnhancedPoolHeroReply(arg_12_0, arg_12_1, arg_12_2)
+	if arg_12_1 == 0 then
 		SummonController.instance:dispatchEvent(SummonEvent.onCustomPicked)
-		slot0:sendGetSummonInfoRequest()
+		arg_12_0:sendGetSummonInfoRequest()
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

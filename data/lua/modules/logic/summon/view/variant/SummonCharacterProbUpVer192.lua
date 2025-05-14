@@ -1,82 +1,87 @@
-module("modules.logic.summon.view.variant.SummonCharacterProbUpVer192", package.seeall)
+﻿module("modules.logic.summon.view.variant.SummonCharacterProbUpVer192", package.seeall)
 
-slot0 = class("SummonCharacterProbUpVer192", SummonMainCharacterProbUp)
-slot0.preloadList = {
+local var_0_0 = class("SummonCharacterProbUpVer192", SummonMainCharacterProbUp)
+
+var_0_0.preloadList = {
 	"singlebg/summon/heroversion_1_9/lucy/v1a9_lucy_fullbg.png",
 	"singlebg/summon/heroversion_1_9/lucy/v1a9_lucy_decbg1.png",
 	"singlebg/summon/heroversion_1_9/lucy/v1a9_lucy_rolebg.png",
 	"singlebg/summon/heroversion_1_9/lucy/v1a9_lucy_decbg2.png"
 }
 
-function slot0._editableInitView(slot0)
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "#go_ui/current/#simage_bg")
-	slot0._simagebottom = gohelper.findChildSingleImage(slot0.viewGO, "#go_ui/current/node1/#simage_bottom")
-	slot0._simagead1 = gohelper.findChildSingleImage(slot0.viewGO, "#go_ui/current/node1/#simage_ad1")
-	slot0._simagefront = gohelper.findChildSingleImage(slot0.viewGO, "#go_ui/current/node1/#simage_front")
-	slot0._simagemask1 = gohelper.findChildSingleImage(slot0.viewGO, "#go_ui/current/node1/#simage_mask1")
-	slot0._simagemask2 = gohelper.findChildSingleImage(slot0.viewGO, "#go_ui/current/node1/#simage_mask2")
-	slot0._txtticket = gohelper.findChildText(slot0.viewGO, "#go_ui/#go_shop/#txt_num")
-	slot0._btnshop = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_ui/#go_shop/#btn_shop")
+function var_0_0._editableInitView(arg_1_0)
+	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_ui/current/#simage_bg")
+	arg_1_0._simagebottom = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_ui/current/node1/#simage_bottom")
+	arg_1_0._simagead1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_ui/current/node1/#simage_ad1")
+	arg_1_0._simagefront = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_ui/current/node1/#simage_front")
+	arg_1_0._simagemask1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_ui/current/node1/#simage_mask1")
+	arg_1_0._simagemask2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_ui/current/node1/#simage_mask2")
+	arg_1_0._txtticket = gohelper.findChildText(arg_1_0.viewGO, "#go_ui/#go_shop/#txt_num")
+	arg_1_0._btnshop = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_ui/#go_shop/#btn_shop")
 
-	if slot0._btnshop then
-		slot0._btnshop:AddClickListener(slot0._btnshopOnClick, slot0)
+	if arg_1_0._btnshop then
+		arg_1_0._btnshop:AddClickListener(arg_1_0._btnshopOnClick, arg_1_0)
 	end
 
-	slot0._charaterItemCount = 1
+	arg_1_0._charaterItemCount = 1
 
-	uv0.super._editableInitView(slot0)
+	var_0_0.super._editableInitView(arg_1_0)
 end
 
-function slot0.refreshSingleImage(slot0)
-	slot0._simageline:LoadImage(ResUrl.getSummonHeroIcon("title_img_deco"))
+function var_0_0.refreshSingleImage(arg_2_0)
+	arg_2_0._simageline:LoadImage(ResUrl.getSummonHeroIcon("title_img_deco"))
 end
 
-function slot0.unloadSingleImage(slot0)
-	slot0._simagebg:UnLoadImage()
-	slot0._simagebottom:UnLoadImage()
-	slot0._simagead1:UnLoadImage()
-	slot0._simagefront:UnLoadImage()
-	slot0._simagemask1:UnLoadImage()
-	slot0._simagemask2:UnLoadImage()
-	slot0._simageline:UnLoadImage()
-	slot0._simagecurrency1:UnLoadImage()
-	slot0._simagecurrency10:UnLoadImage()
+function var_0_0.unloadSingleImage(arg_3_0)
+	arg_3_0._simagebg:UnLoadImage()
+	arg_3_0._simagebottom:UnLoadImage()
+	arg_3_0._simagead1:UnLoadImage()
+	arg_3_0._simagefront:UnLoadImage()
+	arg_3_0._simagemask1:UnLoadImage()
+	arg_3_0._simagemask2:UnLoadImage()
+	arg_3_0._simageline:UnLoadImage()
+	arg_3_0._simagecurrency1:UnLoadImage()
+	arg_3_0._simagecurrency10:UnLoadImage()
 end
 
-function slot0.onDestroyView(slot0)
-	if slot0._btnshop then
-		slot0._btnshop:RemoveClickListener()
+function var_0_0.onDestroyView(arg_4_0)
+	if arg_4_0._btnshop then
+		arg_4_0._btnshop:RemoveClickListener()
 	end
 
-	uv0.super.onDestroyView(slot0)
+	var_0_0.super.onDestroyView(arg_4_0)
 end
 
-function slot0.onItemChanged(slot0)
-	uv0.super.onItemChanged(slot0)
-	slot0:refreshTicket()
+function var_0_0.onItemChanged(arg_5_0)
+	var_0_0.super.onItemChanged(arg_5_0)
+	arg_5_0:refreshTicket()
 end
 
-function slot0._refreshView(slot0)
-	uv0.super._refreshView(slot0)
-	slot0:refreshTicket()
+function var_0_0._refreshView(arg_6_0)
+	var_0_0.super._refreshView(arg_6_0)
+	arg_6_0:refreshTicket()
 end
 
-function slot0.refreshTicket(slot0)
-	if not SummonMainModel.instance:getCurPool() then
+function var_0_0.refreshTicket(arg_7_0)
+	local var_7_0 = SummonMainModel.instance:getCurPool()
+
+	if not var_7_0 then
 		return
 	end
 
-	slot2 = 0
+	local var_7_1 = 0
 
-	if slot1.ticketId ~= 0 then
-		slot2 = ItemModel.instance:getItemQuantity(MaterialEnum.MaterialType.Item, slot1.ticketId)
+	if var_7_0.ticketId ~= 0 then
+		var_7_1 = ItemModel.instance:getItemQuantity(MaterialEnum.MaterialType.Item, var_7_0.ticketId)
 	end
 
-	slot0._txtticket.text = tostring(slot2)
+	arg_7_0._txtticket.text = tostring(var_7_1)
 end
 
-function slot0._btnshopOnClick(slot0)
-	StoreController.instance:checkAndOpenStoreView(StoreEnum.StoreId.Summon)
+function var_0_0._btnshopOnClick(arg_8_0)
+	local var_8_0 = StoreEnum.StoreId.Summon
+
+	StoreController.instance:checkAndOpenStoreView(var_8_0)
 end
 
-return slot0
+return var_0_0

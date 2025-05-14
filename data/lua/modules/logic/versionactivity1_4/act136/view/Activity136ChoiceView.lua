@@ -1,73 +1,75 @@
-module("modules.logic.versionactivity1_4.act136.view.Activity136ChoiceView", package.seeall)
+﻿module("modules.logic.versionactivity1_4.act136.view.Activity136ChoiceView", package.seeall)
 
-slot0 = class("Activity136ChoiceView", BaseView)
+local var_0_0 = class("Activity136ChoiceView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagebg1 = gohelper.findChildSingleImage(slot0.viewGO, "root/bg/#simage_bg1")
-	slot0._simagebg2 = gohelper.findChildSingleImage(slot0.viewGO, "root/bg/#simage_bg2")
-	slot0._scrollitem = gohelper.findChildScrollRect(slot0.viewGO, "root/#scroll_item")
-	slot0._btnok = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/#btn_ok")
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/#btn_close")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagebg1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/bg/#simage_bg1")
+	arg_1_0._simagebg2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/bg/#simage_bg2")
+	arg_1_0._scrollitem = gohelper.findChildScrollRect(arg_1_0.viewGO, "root/#scroll_item")
+	arg_1_0._btnok = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_ok")
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_close")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnok:AddClickListener(slot0._btnokOnClick, slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
-	slot0:addEventCb(Activity136Controller.instance, Activity136Event.SelectCharacter, slot0._onSelectCharacter, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnok:AddClickListener(arg_2_0._btnokOnClick, arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+	arg_2_0:addEventCb(Activity136Controller.instance, Activity136Event.SelectCharacter, arg_2_0._onSelectCharacter, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnok:RemoveClickListener()
-	slot0._btnclose:RemoveClickListener()
-	slot0:removeEventCb(Activity136Controller.instance, Activity136Event.SelectCharacter, slot0._onSelectCharacter, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnok:RemoveClickListener()
+	arg_3_0._btnclose:RemoveClickListener()
+	arg_3_0:removeEventCb(Activity136Controller.instance, Activity136Event.SelectCharacter, arg_3_0._onSelectCharacter, arg_3_0)
 end
 
-function slot0._btnokOnClick(slot0)
-	Activity136Controller.instance:receiveCharacter(slot0._selectCharacterId)
+function var_0_0._btnokOnClick(arg_4_0)
+	Activity136Controller.instance:receiveCharacter(arg_4_0._selectCharacterId)
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseOnClick(arg_5_0)
+	arg_5_0:closeThis()
 end
 
-function slot0._onSelectCharacter(slot0, slot1)
-	slot0._selectCharacterId = slot1
+function var_0_0._onSelectCharacter(arg_6_0, arg_6_1)
+	arg_6_0._selectCharacterId = arg_6_1
 
-	slot0:refreshReceiveBtn()
+	arg_6_0:refreshReceiveBtn()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._selectCharacterId = nil
+function var_0_0._editableInitView(arg_7_0)
+	arg_7_0._selectCharacterId = nil
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_8_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0:refreshReceiveBtn()
+function var_0_0.onOpen(arg_9_0)
+	arg_9_0:refreshReceiveBtn()
 	Activity136ChoiceViewListModel.instance:setSelfSelectedCharacterList()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_role_culture_open)
 end
 
-function slot0.refreshReceiveBtn(slot0)
-	slot1 = true
+function var_0_0.refreshReceiveBtn(arg_10_0)
+	local var_10_0 = true
 
 	if not Activity136Model.instance:hasReceivedCharacter() then
-		slot1 = not slot0._selectCharacterId
+		var_10_0 = not arg_10_0._selectCharacterId
 	end
 
-	ZProj.UGUIHelper.SetGrayscale(slot0._btnok.gameObject, slot1)
+	ZProj.UGUIHelper.SetGrayscale(arg_10_0._btnok.gameObject, var_10_0)
 end
 
-function slot0.onClose(slot0)
-	slot0._selectCharacterId = nil
+function var_0_0.onClose(arg_11_0)
+	arg_11_0._selectCharacterId = nil
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_12_0)
+	return
 end
 
-return slot0
+return var_0_0

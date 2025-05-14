@@ -1,137 +1,140 @@
-module("modules.logic.room.model.debug.RoomDebugPackageListModel", package.seeall)
+﻿module("modules.logic.room.model.debug.RoomDebugPackageListModel", package.seeall)
 
-slot0 = class("RoomDebugPackageListModel", ListScrollModel)
+local var_0_0 = class("RoomDebugPackageListModel", ListScrollModel)
 
-function slot0.onInit(slot0)
-	slot0:_clearData()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:_clearData()
 end
 
-function slot0.reInit(slot0)
-	slot0:_clearData()
+function var_0_0.reInit(arg_2_0)
+	arg_2_0:_clearData()
 end
 
-function slot0.clear(slot0)
-	uv0.super.clear(slot0)
-	slot0:_clearData()
+function var_0_0.clear(arg_3_0)
+	var_0_0.super.clear(arg_3_0)
+	arg_3_0:_clearData()
 end
 
-function slot0._clearData(slot0)
-	slot0._selectBlockId = nil
-	slot0._filterPackageId = 0
-	slot0._filterMainRes = nil
+function var_0_0._clearData(arg_4_0)
+	arg_4_0._selectBlockId = nil
+	arg_4_0._filterPackageId = 0
+	arg_4_0._filterMainRes = nil
 end
 
-function slot0.setDebugPackageList(slot0)
-	slot1 = {}
+function var_0_0.setDebugPackageList(arg_5_0)
+	local var_5_0 = {}
+	local var_5_1 = RoomDebugController.instance:getTempPackageConfig()
 
-	if RoomDebugController.instance:getTempPackageConfig() then
-		for slot6, slot7 in ipairs(slot2) do
-			for slot11, slot12 in ipairs(slot7.infos) do
-				if slot0._filterPackageId > 0 and slot0:isFilterPackageId(slot12.packageId) and slot0:isFilterMainRes(slot12.mainRes) then
-					slot13 = RoomDebugPackageMO.New()
+	if var_5_1 then
+		for iter_5_0, iter_5_1 in ipairs(var_5_1) do
+			for iter_5_2, iter_5_3 in ipairs(iter_5_1.infos) do
+				if arg_5_0._filterPackageId > 0 and arg_5_0:isFilterPackageId(iter_5_3.packageId) and arg_5_0:isFilterMainRes(iter_5_3.mainRes) then
+					local var_5_2 = RoomDebugPackageMO.New()
 
-					slot13:init({
-						id = slot12.blockId,
-						packageId = slot12.packageId,
-						packageOrder = slot12.packageOrder,
-						defineId = slot12.defineId,
-						mainRes = slot12.mainRes
+					var_5_2:init({
+						id = iter_5_3.blockId,
+						packageId = iter_5_3.packageId,
+						packageOrder = iter_5_3.packageOrder,
+						defineId = iter_5_3.defineId,
+						mainRes = iter_5_3.mainRes
 					})
-					table.insert(slot1, slot13)
+					table.insert(var_5_0, var_5_2)
 				end
 			end
 		end
 	end
 
-	table.sort(slot1, slot0._sortFunction)
-	slot0:setList(slot1)
-	slot0:_refreshSelect()
+	table.sort(var_5_0, arg_5_0._sortFunction)
+	arg_5_0:setList(var_5_0)
+	arg_5_0:_refreshSelect()
 end
 
-function slot0.getCountByMainRes(slot0, slot1)
-	slot2 = 0
+function var_0_0.getCountByMainRes(arg_6_0, arg_6_1)
+	local var_6_0 = 0
+	local var_6_1 = RoomDebugController.instance:getTempPackageConfig()
 
-	if RoomDebugController.instance:getTempPackageConfig() then
-		for slot7, slot8 in ipairs(slot3) do
-			for slot12, slot13 in ipairs(slot8.infos) do
-				if slot0._filterPackageId > 0 and slot0:isFilterPackageId(slot13.packageId) and (slot1 == slot13.mainRes or (not slot1 or slot1 < 0) and (not slot13.mainRes or slot13.mainRes < 0)) then
-					slot2 = slot2 + 1
+	if var_6_1 then
+		for iter_6_0, iter_6_1 in ipairs(var_6_1) do
+			for iter_6_2, iter_6_3 in ipairs(iter_6_1.infos) do
+				if arg_6_0._filterPackageId > 0 and arg_6_0:isFilterPackageId(iter_6_3.packageId) and (arg_6_1 == iter_6_3.mainRes or (not arg_6_1 or arg_6_1 < 0) and (not iter_6_3.mainRes or iter_6_3.mainRes < 0)) then
+					var_6_0 = var_6_0 + 1
 				end
 			end
 		end
 	end
 
-	return slot2
+	return var_6_0
 end
 
-function slot0._sortFunction(slot0, slot1)
-	if slot0.packageOrder ~= slot1.packageOrder then
-		return slot0.packageOrder < slot1.packageOrder
+function var_0_0._sortFunction(arg_7_0, arg_7_1)
+	if arg_7_0.packageOrder ~= arg_7_1.packageOrder then
+		return arg_7_0.packageOrder < arg_7_1.packageOrder
 	end
 
-	return slot0.id < slot1.id
+	return arg_7_0.id < arg_7_1.id
 end
 
-function slot0.setFilterPackageId(slot0, slot1)
-	slot0._filterPackageId = slot1
+function var_0_0.setFilterPackageId(arg_8_0, arg_8_1)
+	arg_8_0._filterPackageId = arg_8_1
 end
 
-function slot0.isFilterPackageId(slot0, slot1)
-	return slot0._filterPackageId == slot1
+function var_0_0.isFilterPackageId(arg_9_0, arg_9_1)
+	return arg_9_0._filterPackageId == arg_9_1
 end
 
-function slot0.getFilterPackageId(slot0)
-	return slot0._filterPackageId
+function var_0_0.getFilterPackageId(arg_10_0)
+	return arg_10_0._filterPackageId
 end
 
-function slot0.setFilterMainRes(slot0, slot1)
-	slot0._filterMainRes = slot1
+function var_0_0.setFilterMainRes(arg_11_0, arg_11_1)
+	arg_11_0._filterMainRes = arg_11_1
 end
 
-function slot0.isFilterMainRes(slot0, slot1)
-	return slot0._filterMainRes == slot1 or not slot0._filterMainRes and (not slot1 or slot1 == -1)
+function var_0_0.isFilterMainRes(arg_12_0, arg_12_1)
+	return arg_12_0._filterMainRes == arg_12_1 or not arg_12_0._filterMainRes and (not arg_12_1 or arg_12_1 == -1)
 end
 
-function slot0.getFilterMainRes(slot0)
-	return slot0._filterMainRes
+function var_0_0.getFilterMainRes(arg_13_0)
+	return arg_13_0._filterMainRes
 end
 
-function slot0.clearSelect(slot0)
-	for slot4, slot5 in ipairs(slot0._scrollViews) do
-		slot5:setSelect(nil)
+function var_0_0.clearSelect(arg_14_0)
+	for iter_14_0, iter_14_1 in ipairs(arg_14_0._scrollViews) do
+		iter_14_1:setSelect(nil)
 	end
 
-	slot0._selectBlockId = nil
+	arg_14_0._selectBlockId = nil
 end
 
-function slot0._refreshSelect(slot0)
-	slot1 = nil
+function var_0_0._refreshSelect(arg_15_0)
+	local var_15_0
+	local var_15_1 = arg_15_0:getList()
 
-	for slot6, slot7 in ipairs(slot0:getList()) do
-		if slot7.id == slot0._selectBlockId then
-			slot1 = slot7
+	for iter_15_0, iter_15_1 in ipairs(var_15_1) do
+		if iter_15_1.id == arg_15_0._selectBlockId then
+			var_15_0 = iter_15_1
 		end
 	end
 
-	for slot6, slot7 in ipairs(slot0._scrollViews) do
-		slot7:setSelect(slot1)
+	for iter_15_2, iter_15_3 in ipairs(arg_15_0._scrollViews) do
+		iter_15_3:setSelect(var_15_0)
 	end
 end
 
-function slot0.setSelect(slot0, slot1)
-	slot0._selectBlockId = slot1
+function var_0_0.setSelect(arg_16_0, arg_16_1)
+	arg_16_0._selectBlockId = arg_16_1
 
-	slot0:_refreshSelect()
+	arg_16_0:_refreshSelect()
 end
 
-function slot0.getSelect(slot0)
-	return slot0._selectBlockId
+function var_0_0.getSelect(arg_17_0)
+	return arg_17_0._selectBlockId
 end
 
-function slot0.initDebugPackage(slot0)
-	slot0:setDebugPackageList()
+function var_0_0.initDebugPackage(arg_18_0)
+	arg_18_0:setDebugPackageList()
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

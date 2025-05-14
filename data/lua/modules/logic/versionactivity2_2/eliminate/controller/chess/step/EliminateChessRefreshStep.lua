@@ -1,20 +1,22 @@
-module("modules.logic.versionactivity2_2.eliminate.controller.chess.step.EliminateChessRefreshStep", package.seeall)
+﻿module("modules.logic.versionactivity2_2.eliminate.controller.chess.step.EliminateChessRefreshStep", package.seeall)
 
-slot0 = class("EliminateChessRefreshStep", EliminateChessStepBase)
+local var_0_0 = class("EliminateChessRefreshStep", EliminateChessStepBase)
 
-function slot0.onStart(slot0)
-	if EliminateChessModel.instance:getNeedResetData() == nil then
-		slot0:onDone(true)
+function var_0_0.onStart(arg_1_0)
+	local var_1_0 = EliminateChessModel.instance:getNeedResetData()
+
+	if var_1_0 == nil then
+		arg_1_0:onDone(true)
 
 		return
 	end
 
-	EliminateChessController.instance:handleEliminateChessInfo(slot1.info)
-	EliminateChessController.instance:handleMatch3Tips(slot1.match3tips)
+	EliminateChessController.instance:handleEliminateChessInfo(var_1_0.info)
+	EliminateChessController.instance:handleMatch3Tips(var_1_0.match3tips)
 	EliminateChessItemController.instance:refreshChess()
 	EliminateChessController.instance:dispatchEvent(EliminateChessEvent.RefreshInitChessShow, false)
 	EliminateChessModel.instance:setNeedResetData(nil)
-	TaskDispatcher.runDelay(slot0._onDone, slot0, EliminateEnum.AniTime.InitDrop)
+	TaskDispatcher.runDelay(arg_1_0._onDone, arg_1_0, EliminateEnum.AniTime.InitDrop)
 end
 
-return slot0
+return var_0_0

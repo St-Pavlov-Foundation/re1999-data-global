@@ -1,11 +1,12 @@
-slot0 = pureTable("Activity104SelfChoiceMo")
+﻿local var_0_0 = pureTable("Activity104SelfChoiceMo")
 
-function slot0.ctor(slot0)
+function var_0_0.ctor(arg_1_0)
+	return
 end
 
-function slot0.init(slot0, slot1)
-	slot0.id = slot1.equipId
-	slot0.cfg = slot1
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.id = arg_2_1.equipId
+	arg_2_0.cfg = arg_2_1
 end
 
-return slot0
+return var_0_0

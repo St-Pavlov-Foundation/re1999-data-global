@@ -1,140 +1,161 @@
-module("modules.logic.reddot.model.RedDotModel", package.seeall)
+﻿module("modules.logic.reddot.model.RedDotModel", package.seeall)
 
-slot0 = class("RedDotModel", BaseModel)
+local var_0_0 = class("RedDotModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0._dotInfos = {}
-	slot0._dotTree = {}
-	slot0._latestExpireTime = 0
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._dotInfos = {}
+	arg_1_0._dotTree = {}
+	arg_1_0._latestExpireTime = 0
 end
 
-function slot0.reInit(slot0)
-	slot0._dotInfos = {}
-	slot0._dotTree = {}
+function var_0_0.reInit(arg_2_0)
+	arg_2_0._dotInfos = {}
+	arg_2_0._dotTree = {}
 end
 
-function slot0._setDotTree(slot0)
-	for slot5, slot6 in pairs(RedDotConfig.instance:getRedDotsCO()) do
-		for slot11, slot12 in pairs(string.splitToNumber(slot6.parent, "#")) do
-			if not slot0._dotTree[slot12] then
-				slot0._dotTree[slot12] = {}
+function var_0_0._setDotTree(arg_3_0)
+	local var_3_0 = RedDotConfig.instance:getRedDotsCO()
+
+	for iter_3_0, iter_3_1 in pairs(var_3_0) do
+		local var_3_1 = string.splitToNumber(iter_3_1.parent, "#")
+
+		for iter_3_2, iter_3_3 in pairs(var_3_1) do
+			if not arg_3_0._dotTree[iter_3_3] then
+				arg_3_0._dotTree[iter_3_3] = {}
 			end
 
-			if not tabletool.indexOf(slot0._dotTree[slot12], slot6.id) then
-				table.insert(slot0._dotTree[slot12], slot6.id)
+			if not tabletool.indexOf(arg_3_0._dotTree[iter_3_3], iter_3_1.id) then
+				table.insert(arg_3_0._dotTree[iter_3_3], iter_3_1.id)
 			end
 		end
 	end
 end
 
-function slot0.setRedDotInfo(slot0, slot1)
-	slot0:_setDotTree()
-	table.insert(slot1, SocialMessageModel.instance:getMessageUnreadRedDotGroup())
+function var_0_0.setRedDotInfo(arg_4_0, arg_4_1)
+	arg_4_0:_setDotTree()
 
-	slot0._latestExpireTime = 0
+	local var_4_0 = SocialMessageModel.instance:getMessageUnreadRedDotGroup()
 
-	for slot6, slot7 in ipairs(slot1) do
-		slot8 = RedDotGroupMo.New()
+	table.insert(arg_4_1, var_4_0)
 
-		slot8:init(slot7)
+	arg_4_0._latestExpireTime = 0
 
-		slot0._dotInfos[tonumber(slot7.defineId)] = slot8
+	for iter_4_0, iter_4_1 in ipairs(arg_4_1) do
+		local var_4_1 = RedDotGroupMo.New()
+
+		var_4_1:init(iter_4_1)
+
+		arg_4_0._dotInfos[tonumber(iter_4_1.defineId)] = var_4_1
 	end
 
-	slot0:_recountLastestExpireTime()
+	arg_4_0:_recountLastestExpireTime()
 end
 
-function slot0.updateRedDotInfo(slot0, slot1)
-	for slot5, slot6 in ipairs(slot1) do
-		if not slot0._dotInfos[tonumber(slot6.defineId)] then
-			slot7 = RedDotGroupMo.New()
+function var_0_0.updateRedDotInfo(arg_5_0, arg_5_1)
+	for iter_5_0, iter_5_1 in ipairs(arg_5_1) do
+		if not arg_5_0._dotInfos[tonumber(iter_5_1.defineId)] then
+			local var_5_0 = RedDotGroupMo.New()
 
-			slot7:init(slot6)
+			var_5_0:init(iter_5_1)
 
-			slot0._dotInfos[tonumber(slot6.defineId)] = slot7
+			arg_5_0._dotInfos[tonumber(iter_5_1.defineId)] = var_5_0
 		else
-			slot0._dotInfos[tonumber(slot6.defineId)]:_resetDotInfo(slot6)
+			arg_5_0._dotInfos[tonumber(iter_5_1.defineId)]:_resetDotInfo(iter_5_1)
 		end
 	end
 
-	slot0:_recountLastestExpireTime()
+	arg_5_0:_recountLastestExpireTime()
 end
 
-function slot0._recountLastestExpireTime(slot0)
-	slot0._latestExpireTime = 0
+function var_0_0._recountLastestExpireTime(arg_6_0)
+	arg_6_0._latestExpireTime = 0
 
-	for slot4, slot5 in pairs(slot0._dotInfos) do
-		for slot9, slot10 in pairs(slot5.infos) do
-			if slot10.time > 0 and ServerTime.now() < slot10.time then
-				if slot0._latestExpireTime > 0 then
-					slot0._latestExpireTime = slot10.time < slot0._latestExpireTime and slot10.time or slot0._latestExpireTime
+	for iter_6_0, iter_6_1 in pairs(arg_6_0._dotInfos) do
+		for iter_6_2, iter_6_3 in pairs(iter_6_1.infos) do
+			if iter_6_3.time > 0 and iter_6_3.time > ServerTime.now() then
+				if arg_6_0._latestExpireTime > 0 then
+					arg_6_0._latestExpireTime = arg_6_0._latestExpireTime > iter_6_3.time and iter_6_3.time or arg_6_0._latestExpireTime
 				else
-					slot0._latestExpireTime = slot10.time
+					arg_6_0._latestExpireTime = iter_6_3.time
 				end
 			end
 		end
 	end
 end
 
-function slot0.getLatestExpireTime(slot0)
-	return slot0._latestExpireTime
+function var_0_0.getLatestExpireTime(arg_7_0)
+	return arg_7_0._latestExpireTime
 end
 
-function slot0.getRedDotInfo(slot0, slot1)
-	return slot0._dotInfos[slot1]
+function var_0_0.getRedDotInfo(arg_8_0, arg_8_1)
+	return arg_8_0._dotInfos[arg_8_1]
 end
 
-function slot0._getAssociateRedDots(slot0, slot1)
-	table.insert({}, slot1)
+function var_0_0._getAssociateRedDots(arg_9_0, arg_9_1)
+	local var_9_0 = {}
 
-	if #slot0:getDotParents(slot1) > 0 then
-		function (slot0)
-			for slot5, slot6 in pairs(uv0:getDotParents(slot0)) do
-				table.insert(uv1, slot6)
-				uv2(slot6)
-			end
-		end(slot1)
+	table.insert(var_9_0, arg_9_1)
+
+	local function var_9_1(arg_10_0)
+		local var_10_0 = arg_9_0:getDotParents(arg_10_0)
+
+		for iter_10_0, iter_10_1 in pairs(var_10_0) do
+			table.insert(var_9_0, iter_10_1)
+			var_9_1(iter_10_1)
+		end
 	end
 
-	return slot2
+	if #arg_9_0:getDotParents(arg_9_1) > 0 then
+		var_9_1(arg_9_1)
+	end
+
+	return var_9_0
 end
 
-function slot0.getDotParents(slot0, slot1)
-	if not RedDotConfig.instance:getRedDotCO(slot1) or slot2.parent == "" then
+function var_0_0.getDotParents(arg_11_0, arg_11_1)
+	local var_11_0 = RedDotConfig.instance:getRedDotCO(arg_11_1)
+
+	if not var_11_0 or var_11_0.parent == "" then
 		return {}
 	end
 
-	return string.splitToNumber(slot2.parent, "#")
+	return (string.splitToNumber(var_11_0.parent, "#"))
 end
 
-function slot0.getDotChilds(slot0, slot1)
-	function (slot0)
-		if not uv0._dotTree[slot0] or #uv0._dotTree[slot0] == 0 then
-			if not tabletool.indexOf(uv1, slot0) then
-				table.insert(uv1, slot0)
+function var_0_0.getDotChilds(arg_12_0, arg_12_1)
+	local var_12_0 = {}
+
+	local function var_12_1(arg_13_0)
+		if not arg_12_0._dotTree[arg_13_0] or #arg_12_0._dotTree[arg_13_0] == 0 then
+			if not tabletool.indexOf(var_12_0, arg_13_0) then
+				table.insert(var_12_0, arg_13_0)
 			end
 		else
-			for slot4, slot5 in pairs(uv0._dotTree[slot0]) do
-				if not uv0._dotTree[slot5] or #uv0._dotTree[slot5] == 0 then
-					if not tabletool.indexOf(uv1, slot5) then
-						table.insert(uv1, slot5)
+			for iter_13_0, iter_13_1 in pairs(arg_12_0._dotTree[arg_13_0]) do
+				if not arg_12_0._dotTree[iter_13_1] or #arg_12_0._dotTree[iter_13_1] == 0 then
+					if not tabletool.indexOf(var_12_0, iter_13_1) then
+						table.insert(var_12_0, iter_13_1)
 					end
 				else
-					uv2(slot5)
+					var_12_1(iter_13_1)
 				end
 			end
 		end
-	end(slot1)
+	end
 
-	return {}
+	var_12_1(arg_12_1)
+
+	return var_12_0
 end
 
-function slot0.isDotShow(slot0, slot1, slot2)
-	if not slot0._dotInfos[slot1] then
-		for slot7, slot8 in pairs(slot0:getDotChilds(slot1)) do
-			if slot0._dotInfos[slot8] then
-				for slot12, slot13 in pairs(slot0._dotInfos[slot8].infos) do
-					if slot13.value > 0 then
+function var_0_0.isDotShow(arg_14_0, arg_14_1, arg_14_2)
+	if not arg_14_0._dotInfos[arg_14_1] then
+		local var_14_0 = arg_14_0:getDotChilds(arg_14_1)
+
+		for iter_14_0, iter_14_1 in pairs(var_14_0) do
+			if arg_14_0._dotInfos[iter_14_1] then
+				for iter_14_2, iter_14_3 in pairs(arg_14_0._dotInfos[iter_14_1].infos) do
+					if iter_14_3.value > 0 then
 						return true
 					end
 				end
@@ -142,45 +163,45 @@ function slot0.isDotShow(slot0, slot1, slot2)
 		end
 
 		return false
-	elseif slot0._dotInfos[slot1].infos[slot2] then
-		for slot6, slot7 in pairs(slot0._dotInfos[slot1].infos) do
-			if slot7.uid == slot2 then
-				return slot7.value > 0
+	elseif arg_14_0._dotInfos[arg_14_1].infos[arg_14_2] then
+		for iter_14_4, iter_14_5 in pairs(arg_14_0._dotInfos[arg_14_1].infos) do
+			if iter_14_5.uid == arg_14_2 then
+				return iter_14_5.value > 0
 			end
 		end
 
 		return false
 	else
-		if not slot0._dotInfos[slot1].infos[slot2] then
+		if not arg_14_0._dotInfos[arg_14_1].infos[arg_14_2] then
 			return false
 		end
 
-		return slot0._dotInfos[slot1].infos[slot2].value > 0
+		return arg_14_0._dotInfos[arg_14_1].infos[arg_14_2].value > 0
 	end
 
 	return false
 end
 
-function slot0.getDotInfo(slot0, slot1, slot2)
-	if slot0._dotInfos[slot1] then
-		if slot0._dotInfos[slot1][slot2] then
-			return slot0._dotInfos[slot1][slot2]
+function var_0_0.getDotInfo(arg_15_0, arg_15_1, arg_15_2)
+	if arg_15_0._dotInfos[arg_15_1] then
+		if arg_15_0._dotInfos[arg_15_1][arg_15_2] then
+			return arg_15_0._dotInfos[arg_15_1][arg_15_2]
 		else
-			return slot0._dotInfos[slot1]
+			return arg_15_0._dotInfos[arg_15_1]
 		end
 	end
 
 	return nil
 end
 
-function slot0.getDotInfoCount(slot0, slot1, slot2)
-	if not slot2 or not slot0._dotInfos[slot1] or not slot0._dotInfos[slot1].infos[slot2] then
+function var_0_0.getDotInfoCount(arg_16_0, arg_16_1, arg_16_2)
+	if not arg_16_2 or not arg_16_0._dotInfos[arg_16_1] or not arg_16_0._dotInfos[arg_16_1].infos[arg_16_2] then
 		return 0
 	end
 
-	return slot0._dotInfos[slot1].infos[slot2].value
+	return arg_16_0._dotInfos[arg_16_1].infos[arg_16_2].value
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

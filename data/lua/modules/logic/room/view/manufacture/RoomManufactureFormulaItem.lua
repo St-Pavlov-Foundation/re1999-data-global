@@ -1,216 +1,251 @@
-module("modules.logic.room.view.manufacture.RoomManufactureFormulaItem", package.seeall)
+﻿module("modules.logic.room.view.manufacture.RoomManufactureFormulaItem", package.seeall)
 
-slot0 = class("RoomManufactureFormulaItem", ListScrollCellExtend)
+local var_0_0 = class("RoomManufactureFormulaItem", ListScrollCellExtend)
 
-function slot0.onInitView(slot0)
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+function var_0_0.onInitView(arg_1_0)
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnneedMatClick:AddClickListener(slot0.onClick, slot0)
-	slot0._btnnoMatClick:AddClickListener(slot0.onClick, slot0)
-	slot0:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, slot0._onItemChanged, slot0)
-	slot0:addEventCb(ManufactureController.instance, ManufactureEvent.ManufactureInfoUpdate, slot0._onItemChanged, slot0)
-	slot0:addEventCb(ManufactureController.instance, ManufactureEvent.ManufactureBuildingInfoChange, slot0._onItemChanged, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnneedMatClick:AddClickListener(arg_2_0.onClick, arg_2_0)
+	arg_2_0._btnnoMatClick:AddClickListener(arg_2_0.onClick, arg_2_0)
+	arg_2_0:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_2_0._onItemChanged, arg_2_0)
+	arg_2_0:addEventCb(ManufactureController.instance, ManufactureEvent.ManufactureInfoUpdate, arg_2_0._onItemChanged, arg_2_0)
+	arg_2_0:addEventCb(ManufactureController.instance, ManufactureEvent.ManufactureBuildingInfoChange, arg_2_0._onItemChanged, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnneedMatClick:RemoveClickListener()
-	slot0._btnnoMatClick:RemoveClickListener()
-	slot0:removeEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, slot0._onItemChanged, slot0)
-	slot0:removeEventCb(ManufactureController.instance, ManufactureEvent.ManufactureInfoUpdate, slot0._onItemChanged, slot0)
-	slot0:removeEventCb(ManufactureController.instance, ManufactureEvent.ManufactureBuildingInfoChange, slot0._onItemChanged, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnneedMatClick:RemoveClickListener()
+	arg_3_0._btnnoMatClick:RemoveClickListener()
+	arg_3_0:removeEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_3_0._onItemChanged, arg_3_0)
+	arg_3_0:removeEventCb(ManufactureController.instance, ManufactureEvent.ManufactureInfoUpdate, arg_3_0._onItemChanged, arg_3_0)
+	arg_3_0:removeEventCb(ManufactureController.instance, ManufactureEvent.ManufactureBuildingInfoChange, arg_3_0._onItemChanged, arg_3_0)
 end
 
-function slot0.onClick(slot0)
-	ManufactureController.instance:clickFormulaItem(slot0.id)
+function var_0_0.onClick(arg_4_0)
+	ManufactureController.instance:clickFormulaItem(arg_4_0.id)
 end
 
-function slot0.onMatClick(slot0, slot1)
-	MaterialTipController.instance:showMaterialInfo(slot1.type, slot1.id)
+function var_0_0.onMatClick(arg_5_0, arg_5_1)
+	local var_5_0 = arg_5_1.type
+	local var_5_1 = arg_5_1.id
+
+	MaterialTipController.instance:showMaterialInfo(var_5_0, var_5_1)
 end
 
-function slot0._onItemChanged(slot0)
-	slot0:refreshItem()
-	slot0:refreshMats()
+function var_0_0._onItemChanged(arg_6_0)
+	arg_6_0:refreshItem()
+	arg_6_0:refreshMats()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._goneedMat = gohelper.findChild(slot0.viewGO, "#go_needMat")
-	slot0._btnneedMatClick = gohelper.findChildClickWithDefaultAudio(slot0.viewGO, "#go_needMat/#btn_productClick")
-	slot0._imgneedMatRareBg = gohelper.findChildImage(slot0.viewGO, "#go_needMat/content/head/#image_quality")
-	slot0._goneedMatItem = gohelper.findChild(slot0.viewGO, "#go_needMat/content/head/#go_item")
-	slot0._txtneedMatproductionName = gohelper.findChildText(slot0.viewGO, "#go_needMat/content/#txt_productionName")
-	slot0._golayoutmat = gohelper.findChild(slot0.viewGO, "#go_needMat/content/layout_mat")
-	slot0._gomatItem = gohelper.findChild(slot0.viewGO, "#go_needMat/content/layout_mat/#go_matItem")
-	slot0._txtneedMattime = gohelper.findChildText(slot0.viewGO, "#go_needMat/content/time/#txt_time")
-	slot0._txtneedMatnum = gohelper.findChildText(slot0.viewGO, "#go_needMat/num/#txt_num")
-	slot0._goneedtraced = gohelper.findChild(slot0.viewGO, "#go_needMat/#go_traced")
-	slot0._txtneed = gohelper.findChildText(slot0.viewGO, "#go_needMat/#txt_need")
-	slot0._gonoMat = gohelper.findChild(slot0.viewGO, "#go_noMat")
-	slot0._btnnoMatClick = gohelper.findChildClickWithDefaultAudio(slot0.viewGO, "#go_noMat/#btn_productClick")
-	slot0._imgnoMatRareBg = gohelper.findChildImage(slot0.viewGO, "#go_noMat/content/head/#image_quality")
-	slot0._gonoMatitem = gohelper.findChild(slot0.viewGO, "#go_noMat/content/head/#go_item")
-	slot0._txtnoMatproductionName = gohelper.findChildText(slot0.viewGO, "#go_noMat/content/#txt_productionName")
-	slot0._txtnoMattime = gohelper.findChildText(slot0.viewGO, "#go_noMat/content/time/#txt_time")
-	slot0._txtnoMatnum = gohelper.findChildText(slot0.viewGO, "#go_noMat/num/#txt_num")
-	slot0._gonomattraced = gohelper.findChild(slot0.viewGO, "#go_noMat/#go_traced")
-	slot0._txtnomatneed = gohelper.findChildText(slot0.viewGO, "#go_noMat/#txt_need")
-	slot0.matItemList = {}
+function var_0_0._editableInitView(arg_7_0)
+	arg_7_0._goneedMat = gohelper.findChild(arg_7_0.viewGO, "#go_needMat")
+	arg_7_0._btnneedMatClick = gohelper.findChildClickWithDefaultAudio(arg_7_0.viewGO, "#go_needMat/#btn_productClick")
+	arg_7_0._imgneedMatRareBg = gohelper.findChildImage(arg_7_0.viewGO, "#go_needMat/content/head/#image_quality")
+	arg_7_0._goneedMatItem = gohelper.findChild(arg_7_0.viewGO, "#go_needMat/content/head/#go_item")
+	arg_7_0._txtneedMatproductionName = gohelper.findChildText(arg_7_0.viewGO, "#go_needMat/content/#txt_productionName")
+	arg_7_0._golayoutmat = gohelper.findChild(arg_7_0.viewGO, "#go_needMat/content/layout_mat")
+	arg_7_0._gomatItem = gohelper.findChild(arg_7_0.viewGO, "#go_needMat/content/layout_mat/#go_matItem")
+	arg_7_0._txtneedMattime = gohelper.findChildText(arg_7_0.viewGO, "#go_needMat/content/time/#txt_time")
+	arg_7_0._txtneedMatnum = gohelper.findChildText(arg_7_0.viewGO, "#go_needMat/num/#txt_num")
+	arg_7_0._goneedtraced = gohelper.findChild(arg_7_0.viewGO, "#go_needMat/#go_traced")
+	arg_7_0._txtneed = gohelper.findChildText(arg_7_0.viewGO, "#go_needMat/#txt_need")
+	arg_7_0._gonoMat = gohelper.findChild(arg_7_0.viewGO, "#go_noMat")
+	arg_7_0._btnnoMatClick = gohelper.findChildClickWithDefaultAudio(arg_7_0.viewGO, "#go_noMat/#btn_productClick")
+	arg_7_0._imgnoMatRareBg = gohelper.findChildImage(arg_7_0.viewGO, "#go_noMat/content/head/#image_quality")
+	arg_7_0._gonoMatitem = gohelper.findChild(arg_7_0.viewGO, "#go_noMat/content/head/#go_item")
+	arg_7_0._txtnoMatproductionName = gohelper.findChildText(arg_7_0.viewGO, "#go_noMat/content/#txt_productionName")
+	arg_7_0._txtnoMattime = gohelper.findChildText(arg_7_0.viewGO, "#go_noMat/content/time/#txt_time")
+	arg_7_0._txtnoMatnum = gohelper.findChildText(arg_7_0.viewGO, "#go_noMat/num/#txt_num")
+	arg_7_0._gonomattraced = gohelper.findChild(arg_7_0.viewGO, "#go_noMat/#go_traced")
+	arg_7_0._txtnomatneed = gohelper.findChildText(arg_7_0.viewGO, "#go_noMat/#txt_need")
+	arg_7_0.matItemList = {}
 
-	gohelper.setActive(slot0._gomatItem, false)
+	gohelper.setActive(arg_7_0._gomatItem, false)
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0.id = slot1.id
-	slot0.buildingUid = slot1.buildingUid
+function var_0_0.onUpdateMO(arg_8_0, arg_8_1)
+	arg_8_0.id = arg_8_1.id
+	arg_8_0.buildingUid = arg_8_1.buildingUid
 
-	slot0:refreshItem()
-	slot0:refreshMats()
-	slot0:refreshTime()
+	arg_8_0:refreshItem()
+	arg_8_0:refreshMats()
+	arg_8_0:refreshTime()
 end
 
-function slot0.refreshItem(slot0)
-	if not ManufactureConfig.instance:getItemId(slot0.id) then
+function var_0_0.refreshItem(arg_9_0)
+	local var_9_0 = ManufactureConfig.instance:getItemId(arg_9_0.id)
+
+	if not var_9_0 then
 		return
 	end
 
-	if not slot0._itemIcon then
-		slot0._itemIcon = IconMgr.instance:getCommonItemIcon(slot0._goneedMatItem)
+	if not arg_9_0._itemIcon then
+		arg_9_0._itemIcon = IconMgr.instance:getCommonItemIcon(arg_9_0._goneedMatItem)
 
-		slot0._itemIcon:isShowQuality(false)
+		arg_9_0._itemIcon:isShowQuality(false)
 	end
 
-	slot0._itemIcon:setMOValue(MaterialEnum.MaterialType.Item, slot1, nil, , , {
-		specificIcon = ManufactureConfig.instance:getBatchIconPath(slot0.id)
+	local var_9_1 = ManufactureConfig.instance:getBatchIconPath(arg_9_0.id)
+
+	arg_9_0._itemIcon:setMOValue(MaterialEnum.MaterialType.Item, var_9_0, nil, nil, nil, {
+		specificIcon = var_9_1
 	})
 
-	slot4 = RoomManufactureEnum.RareImageMap[slot0._itemIcon:getRare()]
+	local var_9_2 = arg_9_0._itemIcon:getRare()
+	local var_9_3 = RoomManufactureEnum.RareImageMap[var_9_2]
 
-	UISpriteSetMgr.instance:setCritterSprite(slot0._imgneedMatRareBg, slot4)
-	UISpriteSetMgr.instance:setCritterSprite(slot0._imgnoMatRareBg, slot4)
-	slot0:refreshItemName()
-	slot0:refreshItemNum()
+	UISpriteSetMgr.instance:setCritterSprite(arg_9_0._imgneedMatRareBg, var_9_3)
+	UISpriteSetMgr.instance:setCritterSprite(arg_9_0._imgnoMatRareBg, var_9_3)
+	arg_9_0:refreshItemName()
+	arg_9_0:refreshItemNum()
 
-	slot5, slot6 = ManufactureModel.instance:getLackMatCount(slot0.id)
+	local var_9_4, var_9_5 = ManufactureModel.instance:getLackMatCount(arg_9_0.id)
+	local var_9_6 = var_9_4 and var_9_4 ~= 0
 
-	if slot5 and slot5 ~= 0 then
-		if slot0._txtneed then
-			slot0._txtneed.text = GameUtil.getSubPlaceholderLuaLangOneParam(slot6 and luaLang("room_manufacture_traced_count") or luaLang("room_manufacture_formula_need_count"), slot5)
+	if var_9_6 then
+		local var_9_7 = var_9_5 and luaLang("room_manufacture_traced_count") or luaLang("room_manufacture_formula_need_count")
+		local var_9_8 = GameUtil.getSubPlaceholderLuaLangOneParam(var_9_7, var_9_4)
+
+		if arg_9_0._txtneed then
+			arg_9_0._txtneed.text = var_9_8
 		end
 
-		if slot0._txtnomatneed then
-			slot0._txtnomatneed.text = slot9
+		if arg_9_0._txtnomatneed then
+			arg_9_0._txtnomatneed.text = var_9_8
 		end
 	end
 
-	gohelper.setActive(slot0._txtneed, slot7)
-	gohelper.setActive(slot0._txtnomatneed, slot7)
+	gohelper.setActive(arg_9_0._txtneed, var_9_6)
+	gohelper.setActive(arg_9_0._txtnomatneed, var_9_6)
 
-	slot8 = RoomTradeModel.instance:isTracedGoods(slot0.id)
+	local var_9_9 = RoomTradeModel.instance:isTracedGoods(arg_9_0.id)
 
-	gohelper.setActive(slot0._goneedtraced, slot8)
-	gohelper.setActive(slot0._gonomattraced, slot8)
+	gohelper.setActive(arg_9_0._goneedtraced, var_9_9)
+	gohelper.setActive(arg_9_0._gonomattraced, var_9_9)
 end
 
-function slot0.refreshItemName(slot0)
-	slot1 = ManufactureConfig.instance:getManufactureItemName(slot0.id)
-	slot0._txtneedMatproductionName.text = slot1
-	slot0._txtnoMatproductionName.text = slot1
+function var_0_0.refreshItemName(arg_10_0)
+	local var_10_0 = ManufactureConfig.instance:getManufactureItemName(arg_10_0.id)
+
+	arg_10_0._txtneedMatproductionName.text = var_10_0
+	arg_10_0._txtnoMatproductionName.text = var_10_0
 end
 
-function slot0.refreshItemNum(slot0)
-	slot2 = formatLuaLang("materialtipview_itemquantity", ManufactureModel.instance:getManufactureItemCount(slot0.id))
-	slot0._txtneedMatnum.text = slot2
-	slot0._txtnoMatnum.text = slot2
+function var_0_0.refreshItemNum(arg_11_0)
+	local var_11_0 = ManufactureModel.instance:getManufactureItemCount(arg_11_0.id)
+	local var_11_1 = formatLuaLang("materialtipview_itemquantity", var_11_0)
+
+	arg_11_0._txtneedMatnum.text = var_11_1
+	arg_11_0._txtnoMatnum.text = var_11_1
 end
 
-function slot0.refreshMats(slot0)
-	slot5 = RoomMapBuildingModel.instance:getBuildingMOById(slot0.buildingUid) and slot4.config.buildingType
+function var_0_0.refreshMats(arg_12_0)
+	local var_12_0 = ManufactureConfig.instance:getNeedMatItemList(arg_12_0.id)
+	local var_12_1 = var_12_0 and #var_12_0 or 0
+	local var_12_2 = var_12_1 > 0
+	local var_12_3 = RoomMapBuildingModel.instance:getBuildingMOById(arg_12_0.buildingUid)
+	local var_12_4 = var_12_3 and var_12_3.config.buildingType
 
-	if (ManufactureConfig.instance:getNeedMatItemList(slot0.id) and #slot1 or 0) > 0 then
-		for slot9, slot10 in ipairs(slot1) do
-			slot12 = slot10.quantity
-			slot13 = slot0:getMatItem(slot9)
-			slot15, slot16 = ItemModel.instance:getItemConfigAndIcon(MaterialEnum.MaterialType.Item, ManufactureConfig.instance:getItemId(slot10.id))
+	if var_12_2 then
+		for iter_12_0, iter_12_1 in ipairs(var_12_0) do
+			local var_12_5 = iter_12_1.id
+			local var_12_6 = iter_12_1.quantity
+			local var_12_7 = arg_12_0:getMatItem(iter_12_0)
+			local var_12_8 = ManufactureConfig.instance:getItemId(var_12_5)
+			local var_12_9, var_12_10 = ItemModel.instance:getItemConfigAndIcon(MaterialEnum.MaterialType.Item, var_12_8)
 
-			if not string.nilorempty(slot16) then
-				slot13.icon:LoadImage(slot16)
+			if not string.nilorempty(var_12_10) then
+				var_12_7.icon:LoadImage(var_12_10)
 			end
 
-			slot13.txtunitNum.text = slot12
-			slot17 = false
-			slot18 = false
-			slot19, slot20 = ManufactureModel.instance:getManufactureItemCount(slot11, true, true)
+			var_12_7.txtunitNum.text = var_12_6
 
-			if ManufactureModel.instance:hasPathLinkedToThisBuildingType(slot11, slot5) then
-				slot17 = slot20 and slot20 > 0
-				slot18 = slot12 <= slot19 + ManufactureModel.instance:getManufactureItemCountInSlotQueue(slot11, true, true)
+			local var_12_11 = false
+			local var_12_12 = false
+			local var_12_13, var_12_14 = ManufactureModel.instance:getManufactureItemCount(var_12_5, true, true)
+
+			if ManufactureModel.instance:hasPathLinkedToThisBuildingType(var_12_5, var_12_4) then
+				var_12_11 = var_12_14 and var_12_14 > 0
+				var_12_12 = var_12_6 <= var_12_13 + ManufactureModel.instance:getManufactureItemCountInSlotQueue(var_12_5, true, true)
 			else
-				slot18 = slot12 <= slot19
+				var_12_12 = var_12_6 <= var_12_13
 			end
 
-			slot22 = ""
-			slot13.txthasNum.text = (not slot17 or GameUtil.getSubPlaceholderLuaLangTwoParam(slot18 and luaLang("room_manufacture_item_mat_count") or luaLang("room_manufacture_item_mat_count_not_enough"), slot19, slot20)) and (slot18 and slot19 or string.format("<color=#BE4343>%s</color>", slot19))
+			local var_12_15 = ""
 
-			slot13.btnClick:RemoveClickListener()
-			slot13.btnClick:AddClickListener(slot0.onMatClick, slot0, {
+			if var_12_11 then
+				local var_12_16 = var_12_12 and luaLang("room_manufacture_item_mat_count") or luaLang("room_manufacture_item_mat_count_not_enough")
+
+				var_12_15 = GameUtil.getSubPlaceholderLuaLangTwoParam(var_12_16, var_12_13, var_12_14)
+			else
+				var_12_15 = var_12_12 and var_12_13 or string.format("<color=#BE4343>%s</color>", var_12_13)
+			end
+
+			var_12_7.txthasNum.text = var_12_15
+
+			var_12_7.btnClick:RemoveClickListener()
+			var_12_7.btnClick:AddClickListener(arg_12_0.onMatClick, arg_12_0, {
 				type = MaterialEnum.MaterialType.Item,
-				id = slot14
+				id = var_12_8
 			})
-			gohelper.setActive(slot13.go, true)
+			gohelper.setActive(var_12_7.go, true)
 		end
 
-		for slot9 = slot2 + 1, #slot0.matItemList do
-			gohelper.setActive(slot0.matItemList[slot9].go, false)
+		for iter_12_2 = var_12_1 + 1, #arg_12_0.matItemList do
+			gohelper.setActive(arg_12_0.matItemList[iter_12_2].go, false)
 		end
 	end
 
-	gohelper.setActive(slot0._goneedMat, slot3)
-	gohelper.setActive(slot0._gonoMat, not slot3)
+	gohelper.setActive(arg_12_0._goneedMat, var_12_2)
+	gohelper.setActive(arg_12_0._gonoMat, not var_12_2)
 
-	if slot0._itemIcon then
-		slot0._itemIcon.tr:SetParent(slot3 and slot0._goneedMatItem.transform or slot0._gonoMatitem.transform)
-		recthelper.setAnchor(slot0._itemIcon.tr, 0, 0)
-	end
-end
-
-function slot0.getMatItem(slot0, slot1)
-	if not slot0.matItemList[slot1] then
-		slot2 = slot0:getUserDataTb_()
-		slot2.go = gohelper.clone(slot0._gomatItem, slot0._golayoutmat, slot1)
-		slot2.icon = gohelper.findChildSingleImage(slot2.go, "#simage_productionIcon")
-		slot2.txtunitNum = gohelper.findChildText(slot2.go, "#simage_productionIcon/#txt_unitNum")
-		slot2.txthasNum = gohelper.findChildText(slot2.go, "#txt_hasNum")
-		slot2.goline = gohelper.findChild(slot2.go, "#go_line")
-		slot2.btnClick = gohelper.findChildClickWithAudio(slot2.go, "#btn_click", AudioEnum.UI.Store_Good_Click)
-
-		table.insert(slot0.matItemList, slot2)
-	end
-
-	return slot2
-end
-
-function slot0.refreshTime(slot0)
-	slot2 = ManufactureController.instance:getFormatTime(ManufactureConfig.instance:getNeedTime(slot0.id))
-	slot0._txtneedMattime.text = slot2
-	slot0._txtnoMattime.text = slot2
-end
-
-function slot0.onDestroyView(slot0)
-	for slot4, slot5 in ipairs(slot0.matItemList) do
-		if slot5.icon then
-			slot5.icon:UnLoadImage()
-
-			slot5.icon = nil
-		end
-
-		if slot5.btnClick then
-			slot5.btnClick:RemoveClickListener()
-		end
+	if arg_12_0._itemIcon then
+		arg_12_0._itemIcon.tr:SetParent(var_12_2 and arg_12_0._goneedMatItem.transform or arg_12_0._gonoMatitem.transform)
+		recthelper.setAnchor(arg_12_0._itemIcon.tr, 0, 0)
 	end
 end
 
-return slot0
+function var_0_0.getMatItem(arg_13_0, arg_13_1)
+	local var_13_0 = arg_13_0.matItemList[arg_13_1]
+
+	if not var_13_0 then
+		var_13_0 = arg_13_0:getUserDataTb_()
+		var_13_0.go = gohelper.clone(arg_13_0._gomatItem, arg_13_0._golayoutmat, arg_13_1)
+		var_13_0.icon = gohelper.findChildSingleImage(var_13_0.go, "#simage_productionIcon")
+		var_13_0.txtunitNum = gohelper.findChildText(var_13_0.go, "#simage_productionIcon/#txt_unitNum")
+		var_13_0.txthasNum = gohelper.findChildText(var_13_0.go, "#txt_hasNum")
+		var_13_0.goline = gohelper.findChild(var_13_0.go, "#go_line")
+		var_13_0.btnClick = gohelper.findChildClickWithAudio(var_13_0.go, "#btn_click", AudioEnum.UI.Store_Good_Click)
+
+		table.insert(arg_13_0.matItemList, var_13_0)
+	end
+
+	return var_13_0
+end
+
+function var_0_0.refreshTime(arg_14_0)
+	local var_14_0 = ManufactureConfig.instance:getNeedTime(arg_14_0.id)
+	local var_14_1 = ManufactureController.instance:getFormatTime(var_14_0)
+
+	arg_14_0._txtneedMattime.text = var_14_1
+	arg_14_0._txtnoMattime.text = var_14_1
+end
+
+function var_0_0.onDestroyView(arg_15_0)
+	for iter_15_0, iter_15_1 in ipairs(arg_15_0.matItemList) do
+		if iter_15_1.icon then
+			iter_15_1.icon:UnLoadImage()
+
+			iter_15_1.icon = nil
+		end
+
+		if iter_15_1.btnClick then
+			iter_15_1.btnClick:RemoveClickListener()
+		end
+	end
+end
+
+return var_0_0

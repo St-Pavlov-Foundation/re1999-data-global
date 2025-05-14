@@ -1,30 +1,31 @@
-module("modules.logic.reactivity.view.ReactivityRuleViewContainer", package.seeall)
+﻿module("modules.logic.reactivity.view.ReactivityRuleViewContainer", package.seeall)
 
-slot0 = class("ReactivityRuleViewContainer", BaseViewContainer)
+local var_0_0 = class("ReactivityRuleViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
-	slot2 = ListScrollParam.New()
-	slot2.scrollGOPath = "object/#scroll_rule"
-	slot2.prefabType = ScrollEnum.ScrollPrefabFromView
-	slot2.prefabUrl = "object/#scroll_rule/Viewport/Content/#ruleitem"
-	slot2.cellClass = ReactivityRuleItem
-	slot2.scrollDir = ScrollEnum.ScrollDirV
-	slot2.lineCount = 3
-	slot2.cellWidth = 490
-	slot2.cellHeight = 172
-	slot2.cellSpaceH = 0
-	slot2.cellSpaceV = 0
-	slot2.startSpace = 10
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
+	local var_1_1 = ListScrollParam.New()
 
-	table.insert(slot1, LuaListScrollView.New(ReactivityRuleModel.instance, slot2))
-	table.insert(slot1, ReactivityRuleView.New())
+	var_1_1.scrollGOPath = "object/#scroll_rule"
+	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromView
+	var_1_1.prefabUrl = "object/#scroll_rule/Viewport/Content/#ruleitem"
+	var_1_1.cellClass = ReactivityRuleItem
+	var_1_1.scrollDir = ScrollEnum.ScrollDirV
+	var_1_1.lineCount = 3
+	var_1_1.cellWidth = 490
+	var_1_1.cellHeight = 172
+	var_1_1.cellSpaceH = 0
+	var_1_1.cellSpaceV = 0
+	var_1_1.startSpace = 10
 
-	return slot1
+	table.insert(var_1_0, LuaListScrollView.New(ReactivityRuleModel.instance, var_1_1))
+	table.insert(var_1_0, ReactivityRuleView.New())
+
+	return var_1_0
 end
 
-function slot0.onContainerClickModalMask(slot0)
-	slot0:closeThis()
+function var_0_0.onContainerClickModalMask(arg_2_0)
+	arg_2_0:closeThis()
 end
 
-return slot0
+return var_0_0

@@ -1,21 +1,21 @@
-slot0 = pureTable("Activity104ItemMo")
+﻿local var_0_0 = pureTable("Activity104ItemMo")
 
-function slot0.ctor(slot0)
-	slot0.uid = 0
-	slot0.itemId = 0
-	slot0.quantity = 0
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.uid = 0
+	arg_1_0.itemId = 0
+	arg_1_0.quantity = 0
 end
 
-function slot0.init(slot0, slot1)
-	slot0.uid = slot1.uid
-	slot0.itemId = slot1.itemId
-	slot0.quantity = slot1.quantity
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.uid = arg_2_1.uid
+	arg_2_0.itemId = arg_2_1.itemId
+	arg_2_0.quantity = arg_2_1.quantity
 end
 
-function slot0.reset(slot0, slot1)
-	slot0.uid = slot1.uid
-	slot0.itemId = slot1.itemId
-	slot0.quantity = slot1.quantity
+function var_0_0.reset(arg_3_0, arg_3_1)
+	arg_3_0.uid = arg_3_1.uid
+	arg_3_0.itemId = arg_3_1.itemId
+	arg_3_0.quantity = arg_3_1.quantity
 end
 
-return slot0
+return var_0_0

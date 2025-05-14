@@ -1,7 +1,8 @@
-module("modules.logic.popup.define.PopupEnum", package.seeall)
+﻿module("modules.logic.popup.define.PopupEnum", package.seeall)
 
-slot0 = _M
-slot0.PriorityType = {
+local var_0_0 = _M
+
+var_0_0.PriorityType = {
 	GainSkinView = 400,
 	RoomBlockPackageGetView = 701,
 	DungeonFragmentInfoView = 200,
@@ -16,27 +17,27 @@ slot0.PriorityType = {
 	CommonPropView = 300,
 	AdventureCompleteView = 100
 }
-slot0.CacheType = {
+var_0_0.CacheType = {
 	Fight = 1,
 	Summon = 3,
 	Guide = 2
 }
-slot0.CheckCacheHandler = {
-	[slot0.CacheType.Fight] = PopupHelper.checkInFight,
-	[slot0.CacheType.Guide] = PopupHelper.checkInGuide,
-	[slot0.CacheType.Summon] = PopupHelper.checkInSummonDrawing
+var_0_0.CheckCacheHandler = {
+	[var_0_0.CacheType.Fight] = PopupHelper.checkInFight,
+	[var_0_0.CacheType.Guide] = PopupHelper.checkInGuide,
+	[var_0_0.CacheType.Summon] = PopupHelper.checkInSummonDrawing
 }
-slot0.CheckCacheGetApproach = {
+var_0_0.CheckCacheGetApproach = {
 	[MaterialEnum.GetApproach.Charge] = {
-		slot0.CacheType.Fight,
-		slot0.CacheType.Guide,
-		slot0.CacheType.Summon
+		var_0_0.CacheType.Fight,
+		var_0_0.CacheType.Guide,
+		var_0_0.CacheType.Summon
 	},
 	[MaterialEnum.GetApproach.MonthCard] = {
-		slot0.CacheType.Fight,
-		slot0.CacheType.Guide,
-		slot0.CacheType.Summon
+		var_0_0.CacheType.Fight,
+		var_0_0.CacheType.Guide,
+		var_0_0.CacheType.Summon
 	}
 }
 
-return slot0
+return var_0_0

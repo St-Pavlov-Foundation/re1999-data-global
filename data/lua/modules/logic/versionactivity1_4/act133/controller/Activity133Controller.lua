@@ -1,47 +1,50 @@
-module("modules.logic.versionactivity1_4.act133.controller.Activity133Controller", package.seeall)
+﻿module("modules.logic.versionactivity1_4.act133.controller.Activity133Controller", package.seeall)
 
-slot0 = class("Activity133Controller", BaseController)
+local var_0_0 = class("Activity133Controller", BaseController)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.onInitFinish(slot0)
+function var_0_0.onInitFinish(arg_2_0)
+	return
 end
 
-function slot0.addConstEvents(slot0)
-	TaskController.instance:registerCallback(TaskEvent.UpdateTaskList, slot0._onUpdateTaskList, slot0)
-	TaskController.instance:registerCallback(TaskEvent.OnDeleteTask, slot0._onDeleteTaskList, slot0)
+function var_0_0.addConstEvents(arg_3_0)
+	TaskController.instance:registerCallback(TaskEvent.UpdateTaskList, arg_3_0._onUpdateTaskList, arg_3_0)
+	TaskController.instance:registerCallback(TaskEvent.OnDeleteTask, arg_3_0._onDeleteTaskList, arg_3_0)
 end
 
-function slot0._onUpdateTaskList(slot0, slot1)
-	if Activity133Model.instance:setTasksInfo(slot1.taskInfo) then
-		uv0.instance:dispatchEvent(Activity133Event.OnTaskUpdate)
+function var_0_0._onUpdateTaskList(arg_4_0, arg_4_1)
+	if Activity133Model.instance:setTasksInfo(arg_4_1.taskInfo) then
+		var_0_0.instance:dispatchEvent(Activity133Event.OnTaskUpdate)
 	end
 end
 
-function slot0._onDeleteTaskList(slot0, slot1)
-	if Activity133Model.instance:deleteInfo(slot1.taskIds) then
-		uv0.instance:dispatchEvent(Activity133Event.OnTaskUpdate)
+function var_0_0._onDeleteTaskList(arg_5_0, arg_5_1)
+	if Activity133Model.instance:deleteInfo(arg_5_1.taskIds) then
+		var_0_0.instance:dispatchEvent(Activity133Event.OnTaskUpdate)
 	end
 end
 
-function slot0.openActivity133MainView(slot0, slot1)
-	Activity133Rpc.instance:sendGet133InfosRequest(slot1, function ()
+function var_0_0.openActivity133MainView(arg_6_0, arg_6_1)
+	Activity133Rpc.instance:sendGet133InfosRequest(arg_6_1, function()
 		ViewMgr.instance:openView(ViewName.Activity133View, {
-			actId = uv0
+			actId = arg_6_1
 		})
 	end)
 end
 
-function slot0.openActivity133TaskView(slot0, slot1)
+function var_0_0.openActivity133TaskView(arg_8_0, arg_8_1)
 	ViewMgr.instance:openView(ViewName.Activity133TaskView, {
-		actId = slot1
+		actId = arg_8_1
 	})
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_9_0)
+	return
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

@@ -1,14 +1,14 @@
-module("modules.logic.character.model.HeroExAttributeMO", package.seeall)
+﻿module("modules.logic.character.model.HeroExAttributeMO", package.seeall)
 
-slot0 = pureTable("HeroExAttributeMO")
+local var_0_0 = pureTable("HeroExAttributeMO")
 
-function slot0.init(slot0, slot1)
-	slot0.cri = slot1.cri
-	slot0.recri = slot1.recri
-	slot0.criDmg = slot1.criDmg
-	slot0.criDef = slot1.criDef
-	slot0.addDmg = slot1.addDmg
-	slot0.dropDmg = slot1.dropDmg
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.cri = arg_1_1.cri
+	arg_1_0.recri = arg_1_1.recri
+	arg_1_0.criDmg = arg_1_1.criDmg
+	arg_1_0.criDef = arg_1_1.criDef
+	arg_1_0.addDmg = arg_1_1.addDmg
+	arg_1_0.dropDmg = arg_1_1.dropDmg
 end
 
-return slot0
+return var_0_0

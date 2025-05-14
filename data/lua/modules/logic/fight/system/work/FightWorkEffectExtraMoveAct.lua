@@ -1,11 +1,11 @@
-module("modules.logic.fight.system.work.FightWorkEffectExtraMoveAct", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkEffectExtraMoveAct", package.seeall)
 
-slot0 = class("FightWorkEffectExtraMoveAct", FightEffectBase)
+local var_0_0 = class("FightWorkEffectExtraMoveAct", FightEffectBase)
 
-function slot0.onStart(slot0)
-	FightCardModel.instance:getCardMO():setExtraMoveAct(slot0._actEffectMO.effectNum)
+function var_0_0.onStart(arg_1_0)
+	FightCardModel.instance:getCardMO():setExtraMoveAct(arg_1_0._actEffectMO.effectNum)
 	FightController.instance:dispatchEvent(FightEvent.OnEffectExtraMoveAct)
-	slot0:onDone(true)
+	arg_1_0:onDone(true)
 end
 
-return slot0
+return var_0_0

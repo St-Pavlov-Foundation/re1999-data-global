@@ -1,18 +1,22 @@
-module("modules.logic.chessgame.game.step.ChessStepShowToast", package.seeall)
+﻿module("modules.logic.chessgame.game.step.ChessStepShowToast", package.seeall)
 
-slot0 = class("ChessStepShowToast", BaseWork)
+local var_0_0 = class("ChessStepShowToast", BaseWork)
 
-function slot0.init(slot0, slot1)
-	slot0.originData = slot1
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.originData = arg_1_1
 end
 
-function slot0.onStart(slot0)
-	slot0:showToast()
-	slot0:onDone(true)
+function var_0_0.onStart(arg_2_0)
+	arg_2_0:showToast()
+	arg_2_0:onDone(true)
 end
 
-function slot0.showToast(slot0)
-	ChessGameController.instance:dispatchEvent(ChessGameEvent.GameToastUpdate, ChessConfig.instance:getTipsCo(ChessModel.instance:getActId(), slot0.originData.notifyId))
+function var_0_0.showToast(arg_3_0)
+	local var_3_0 = arg_3_0.originData.notifyId
+	local var_3_1 = ChessModel.instance:getActId()
+	local var_3_2 = ChessConfig.instance:getTipsCo(var_3_1, var_3_0)
+
+	ChessGameController.instance:dispatchEvent(ChessGameEvent.GameToastUpdate, var_3_2)
 end
 
-return slot0
+return var_0_0

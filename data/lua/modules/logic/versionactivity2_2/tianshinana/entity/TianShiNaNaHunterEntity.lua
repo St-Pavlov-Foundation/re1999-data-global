@@ -1,36 +1,38 @@
-module("modules.logic.versionactivity2_2.tianshinana.entity.TianShiNaNaHunterEntity", package.seeall)
+﻿module("modules.logic.versionactivity2_2.tianshinana.entity.TianShiNaNaHunterEntity", package.seeall)
 
-slot0 = class("TianShiNaNaHunterEntity", TianShiNaNaUnitEntityBase)
+local var_0_0 = class("TianShiNaNaHunterEntity", TianShiNaNaUnitEntityBase)
 
-function slot0.updateMo(slot0, slot1)
-	slot0._range = string.splitToNumber(slot1.co.specialData, "#") and slot2[1] or 0
+function var_0_0.updateMo(arg_1_0, arg_1_1)
+	local var_1_0 = string.splitToNumber(arg_1_1.co.specialData, "#")
 
-	uv0.super.updateMo(slot0, slot1)
+	arg_1_0._range = var_1_0 and var_1_0[1] or 0
+
+	var_0_0.super.updateMo(arg_1_0, arg_1_1)
 end
 
-function slot0.onResLoaded(slot0)
-	slot1 = gohelper.findChild(slot0._resGo, "vx_warn")
+function var_0_0.onResLoaded(arg_2_0)
+	local var_2_0 = gohelper.findChild(arg_2_0._resGo, "vx_warn")
 
-	gohelper.setActive(slot1, true)
+	gohelper.setActive(var_2_0, true)
 
-	if slot1 then
-		slot0._rootAnim = slot1:GetComponent(typeof(UnityEngine.Animator))
+	if var_2_0 then
+		arg_2_0._rootAnim = var_2_0:GetComponent(typeof(UnityEngine.Animator))
 	end
 
-	slot0:checkActive()
+	arg_2_0:checkActive()
 end
 
-function slot0.addEventListeners(slot0)
-	TianShiNaNaController.instance:registerCallback(TianShiNaNaEvent.CubePointUpdate, slot0.checkActive, slot0)
+function var_0_0.addEventListeners(arg_3_0)
+	TianShiNaNaController.instance:registerCallback(TianShiNaNaEvent.CubePointUpdate, arg_3_0.checkActive, arg_3_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	TianShiNaNaController.instance:unregisterCallback(TianShiNaNaEvent.CubePointUpdate, slot0.checkActive, slot0)
+function var_0_0.removeEventListeners(arg_4_0)
+	TianShiNaNaController.instance:unregisterCallback(TianShiNaNaEvent.CubePointUpdate, arg_4_0.checkActive, arg_4_0)
 end
 
-function slot0.willActive(slot0)
-	for slot4, slot5 in pairs(TianShiNaNaModel.instance.curPointList) do
-		if TianShiNaNaHelper.getMinDis(slot5.x, slot5.y, slot0._unitMo.x, slot0._unitMo.y) <= slot0._range then
+function var_0_0.willActive(arg_5_0)
+	for iter_5_0, iter_5_1 in pairs(TianShiNaNaModel.instance.curPointList) do
+		if TianShiNaNaHelper.getMinDis(iter_5_1.x, iter_5_1.y, arg_5_0._unitMo.x, arg_5_0._unitMo.y) <= arg_5_0._range then
 			return true
 		end
 	end
@@ -38,23 +40,25 @@ function slot0.willActive(slot0)
 	return false
 end
 
-function slot0.checkActive(slot0)
-	if not slot0._rootAnim then
+function var_0_0.checkActive(arg_6_0)
+	if not arg_6_0._rootAnim then
 		return
 	end
 
-	if (slot0._unitMo.isActive or slot0:willActive()) == slot0._isActive then
+	local var_6_0 = arg_6_0._unitMo.isActive or arg_6_0:willActive()
+
+	if var_6_0 == arg_6_0._isActive then
 		return
 	end
 
-	slot0._isActive = slot1
+	arg_6_0._isActive = var_6_0
 
-	if slot1 then
+	if var_6_0 then
 		AudioMgr.instance:trigger(AudioEnum.VersionActivity2_2TianShiNaNa.play_ui_youyu_warn)
-		slot0._rootAnim:Play("warn_red", 0, 0)
+		arg_6_0._rootAnim:Play("warn_red", 0, 0)
 	else
-		slot0._rootAnim:Play("warn_open", 0, 0)
+		arg_6_0._rootAnim:Play("warn_open", 0, 0)
 	end
 end
 
-return slot0
+return var_0_0

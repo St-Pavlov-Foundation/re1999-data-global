@@ -1,45 +1,52 @@
-module("modules.logic.achievement.controller.AchievementLevelController", package.seeall)
+﻿module("modules.logic.achievement.controller.AchievementLevelController", package.seeall)
 
-slot0 = class("AchievementLevelController", BaseController)
+local var_0_0 = class("AchievementLevelController", BaseController)
 
-function slot0.onOpenView(slot0, slot1, slot2)
-	AchievementLevelModel.instance:initData(slot1, slot2)
-	uv0.instance:cleanAchievementIsNew(slot1)
+function var_0_0.onOpenView(arg_1_0, arg_1_1, arg_1_2)
+	AchievementLevelModel.instance:initData(arg_1_1, arg_1_2)
+	var_0_0.instance:cleanAchievementIsNew(arg_1_1)
 end
 
-function slot0.onCloseView(slot0)
+function var_0_0.onCloseView(arg_2_0)
+	return
 end
 
-function slot0.selectTask(slot0, slot1)
-	AchievementLevelModel.instance:setSelectTask(slot1)
-	slot0:dispatchEvent(AchievementEvent.LevelViewUpdated)
+function var_0_0.selectTask(arg_3_0, arg_3_1)
+	AchievementLevelModel.instance:setSelectTask(arg_3_1)
+	arg_3_0:dispatchEvent(AchievementEvent.LevelViewUpdated)
 end
 
-function slot0.scrollTask(slot0, slot1)
-	if AchievementLevelModel.instance:scrollTask(slot1) then
-		slot0:cleanAchievementIsNew(AchievementLevelModel.instance:getAchievement())
-		slot0:dispatchEvent(AchievementEvent.LevelViewUpdated)
+function var_0_0.scrollTask(arg_4_0, arg_4_1)
+	if AchievementLevelModel.instance:scrollTask(arg_4_1) then
+		local var_4_0 = AchievementLevelModel.instance:getAchievement()
+
+		arg_4_0:cleanAchievementIsNew(var_4_0)
+		arg_4_0:dispatchEvent(AchievementEvent.LevelViewUpdated)
 	end
 end
 
-function slot0.cleanAchievementIsNew(slot0, slot1)
-	if AchievementModel.instance:getAchievementTaskCoList(slot1) then
-		slot3 = {}
+function var_0_0.cleanAchievementIsNew(arg_5_0, arg_5_1)
+	local var_5_0 = AchievementModel.instance:getAchievementTaskCoList(arg_5_1)
 
-		for slot7, slot8 in ipairs(slot2) do
-			if AchievementModel.instance:getById(slot8.id) and slot9.isNew then
-				table.insert(slot3, slot8.id)
+	if var_5_0 then
+		local var_5_1 = {}
+
+		for iter_5_0, iter_5_1 in ipairs(var_5_0) do
+			local var_5_2 = AchievementModel.instance:getById(iter_5_1.id)
+
+			if var_5_2 and var_5_2.isNew then
+				table.insert(var_5_1, iter_5_1.id)
 			end
 		end
 
-		if #slot3 > 0 then
-			AchievementRpc.instance:sendReadNewAchievementRequest(slot3)
+		if #var_5_1 > 0 then
+			AchievementRpc.instance:sendReadNewAchievementRequest(var_5_1)
 		end
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-LuaEventSystem.addEventMechanism(slot0.instance)
+LuaEventSystem.addEventMechanism(var_0_0.instance)
 
-return slot0
+return var_0_0

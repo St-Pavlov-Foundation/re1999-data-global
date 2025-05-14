@@ -1,9 +1,10 @@
-slot0 = class("Season123Config", BaseConfig)
+﻿local var_0_0 = class("Season123Config", BaseConfig)
 
-function slot0.ctor(slot0)
+function var_0_0.ctor(arg_1_0)
+	return
 end
 
-function slot0.reqConfigNames(slot0)
+function var_0_0.reqConfigNames(arg_2_0)
 	return {
 		"activity123_const",
 		"activity123_stage",
@@ -18,461 +19,508 @@ function slot0.reqConfigNames(slot0)
 	}
 end
 
-function slot0.onConfigLoaded(slot0, slot1, slot2)
-	if slot1 == "activity123_const" then
-		slot0._constConfig = slot2
-	elseif slot1 == "activity123_stage" then
-		slot0._stageConfig = slot2
-		slot0._actId2StageList = {}
-	elseif slot1 == "activity123_episode" then
-		slot0._episodeConfig = slot2
-	elseif slot1 == "activity123_equip" then
-		slot0._equipConfig = slot2
+function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_1 == "activity123_const" then
+		arg_3_0._constConfig = arg_3_2
+	elseif arg_3_1 == "activity123_stage" then
+		arg_3_0._stageConfig = arg_3_2
+		arg_3_0._actId2StageList = {}
+	elseif arg_3_1 == "activity123_episode" then
+		arg_3_0._episodeConfig = arg_3_2
+	elseif arg_3_1 == "activity123_equip" then
+		arg_3_0._equipConfig = arg_3_2
 
-		slot0:preprocessEquip()
-	elseif slot1 == "activity123_equip_attr" then
-		slot0._equipAttrConfig = slot2
-	elseif slot1 == "activity123_equip_tag" then
-		slot0._equipTagConfig = slot2
-	elseif slot1 == "activity123_story" then
-		slot0._storyConfig = slot2
-	elseif slot1 == "task_activity123" then
-		slot0._taskConfig = slot2
-	elseif slot1 == "activity123_retail" then
-		slot0._retailConfig = slot2
-	elseif slot1 == "activity123_trial" then
-		slot0._trialConfig = slot2
+		arg_3_0:preprocessEquip()
+	elseif arg_3_1 == "activity123_equip_attr" then
+		arg_3_0._equipAttrConfig = arg_3_2
+	elseif arg_3_1 == "activity123_equip_tag" then
+		arg_3_0._equipTagConfig = arg_3_2
+	elseif arg_3_1 == "activity123_story" then
+		arg_3_0._storyConfig = arg_3_2
+	elseif arg_3_1 == "task_activity123" then
+		arg_3_0._taskConfig = arg_3_2
+	elseif arg_3_1 == "activity123_retail" then
+		arg_3_0._retailConfig = arg_3_2
+	elseif arg_3_1 == "activity123_trial" then
+		arg_3_0._trialConfig = arg_3_2
 	end
 end
 
-function slot0.preprocessEquip(slot0)
-	slot0._equipIsOptionalDict = {}
+function var_0_0.preprocessEquip(arg_4_0)
+	arg_4_0._equipIsOptionalDict = {}
 
-	for slot4, slot5 in pairs(slot0._equipConfig.configList) do
-		if slot5.isOptional == 1 then
-			slot0._equipIsOptionalDict[slot5.equipId] = true
+	for iter_4_0, iter_4_1 in pairs(arg_4_0._equipConfig.configList) do
+		if iter_4_1.isOptional == 1 then
+			arg_4_0._equipIsOptionalDict[iter_4_1.equipId] = true
 		end
 	end
 end
 
-function slot0.getStageCos(slot0, slot1)
-	if not slot0._actId2StageList[slot1] then
-		slot0._actId2StageList[slot1] = {}
+function var_0_0.getStageCos(arg_5_0, arg_5_1)
+	local var_5_0 = arg_5_0._actId2StageList[arg_5_1]
 
-		if slot0._stageConfig.configDict[slot1] then
-			for slot7, slot8 in pairs(slot3) do
-				table.insert(slot2, slot8)
+	if not var_5_0 then
+		var_5_0 = {}
+		arg_5_0._actId2StageList[arg_5_1] = var_5_0
+
+		local var_5_1 = arg_5_0._stageConfig.configDict[arg_5_1]
+
+		if var_5_1 then
+			for iter_5_0, iter_5_1 in pairs(var_5_1) do
+				table.insert(var_5_0, iter_5_1)
 			end
 
-			table.sort(slot2, function (slot0, slot1)
-				return slot0.stage < slot1.stage
+			table.sort(var_5_0, function(arg_6_0, arg_6_1)
+				return arg_6_0.stage < arg_6_1.stage
 			end)
 		end
 	end
 
-	return slot2
+	return var_5_0
 end
 
-function slot0.getStageCo(slot0, slot1, slot2)
-	return slot0._stageConfig.configDict[slot1] and slot0._stageConfig.configDict[slot1][slot2]
+function var_0_0.getStageCo(arg_7_0, arg_7_1, arg_7_2)
+	return arg_7_0._stageConfig.configDict[arg_7_1] and arg_7_0._stageConfig.configDict[arg_7_1][arg_7_2]
 end
 
-function slot0.getSeasonEpisodeStageCos(slot0, slot1, slot2)
-	return slot0._episodeConfig.configDict[slot1] and slot0._episodeConfig.configDict[slot1][slot2]
+function var_0_0.getSeasonEpisodeStageCos(arg_8_0, arg_8_1, arg_8_2)
+	return arg_8_0._episodeConfig.configDict[arg_8_1] and arg_8_0._episodeConfig.configDict[arg_8_1][arg_8_2]
 end
 
-function slot0.getSeasonEpisodeCo(slot0, slot1, slot2, slot3)
-	if slot0._episodeConfig.configDict[slot1] and slot0._episodeConfig.configDict[slot1][slot2] then
-		return slot0._episodeConfig.configDict[slot1][slot2][slot3]
+function var_0_0.getSeasonEpisodeCo(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
+	if arg_9_0._episodeConfig.configDict[arg_9_1] and arg_9_0._episodeConfig.configDict[arg_9_1][arg_9_2] then
+		return arg_9_0._episodeConfig.configDict[arg_9_1][arg_9_2][arg_9_3]
 	end
 end
 
-function slot0.getAllSeasonEpisodeCO(slot0, slot1)
-	if not slot0._allEpisodeCOList or not slot0._allEpisodeCOList[slot1] then
-		slot0._allEpisodeCOList = slot0._allEpisodeCOList or {}
-		slot2 = {}
+function var_0_0.getAllSeasonEpisodeCO(arg_10_0, arg_10_1)
+	if not arg_10_0._allEpisodeCOList or not arg_10_0._allEpisodeCOList[arg_10_1] then
+		arg_10_0._allEpisodeCOList = arg_10_0._allEpisodeCOList or {}
 
-		if slot0._episodeConfig.configDict[slot1] then
-			for slot6, slot7 in pairs(slot0._episodeConfig.configDict[slot1]) do
-				for slot11, slot12 in pairs(slot7) do
-					table.insert(slot2, slot12)
+		local var_10_0 = {}
+
+		if arg_10_0._episodeConfig.configDict[arg_10_1] then
+			for iter_10_0, iter_10_1 in pairs(arg_10_0._episodeConfig.configDict[arg_10_1]) do
+				for iter_10_2, iter_10_3 in pairs(iter_10_1) do
+					table.insert(var_10_0, iter_10_3)
 				end
 			end
 
-			table.sort(slot2, function (slot0, slot1)
-				if slot0.stage ~= slot1.stage then
-					return slot0.stage < slot1.stage
+			table.sort(var_10_0, function(arg_11_0, arg_11_1)
+				if arg_11_0.stage ~= arg_11_1.stage then
+					return arg_11_0.stage < arg_11_1.stage
 				else
-					return slot0.layer < slot1.layer
+					return arg_11_0.layer < arg_11_1.layer
 				end
 			end)
 		end
 
-		slot0._allEpisodeCOList[slot1] = slot2
+		arg_10_0._allEpisodeCOList[arg_10_1] = var_10_0
 	end
 
-	return slot0._allEpisodeCOList[slot1]
+	return arg_10_0._allEpisodeCOList[arg_10_1]
 end
 
-function slot0.getSeasonEpisodeByStage(slot0, slot1, slot2)
-	slot3 = {}
+function var_0_0.getSeasonEpisodeByStage(arg_12_0, arg_12_1, arg_12_2)
+	local var_12_0 = {}
+	local var_12_1 = arg_12_0:getSeasonEpisodeStageCos(arg_12_1, arg_12_2)
 
-	if slot0:getSeasonEpisodeStageCos(slot1, slot2) then
-		for slot8, slot9 in pairs(slot4) do
-			if slot2 == slot9.stage then
-				table.insert(slot3, slot9)
+	if var_12_1 then
+		for iter_12_0, iter_12_1 in pairs(var_12_1) do
+			if arg_12_2 == iter_12_1.stage then
+				table.insert(var_12_0, iter_12_1)
 			end
 		end
 
-		table.sort(slot3, function (slot0, slot1)
-			return slot0.layer < slot1.layer
+		table.sort(var_12_0, function(arg_13_0, arg_13_1)
+			return arg_13_0.layer < arg_13_1.layer
 		end)
 	else
-		logNormal(string.format("cfgList is nil, actId = %s, stage = %s", slot1, slot2))
+		logNormal(string.format("cfgList is nil, actId = %s, stage = %s", arg_12_1, arg_12_2))
 	end
 
-	return slot3
+	return var_12_0
 end
 
-function slot0.getSeasonConstCo(slot0, slot1)
-	return slot0._constConfig.configDict[slot1]
+function var_0_0.getSeasonConstCo(arg_14_0, arg_14_1)
+	return arg_14_0._constConfig.configDict[arg_14_1]
 end
 
-function slot0.getSeasonEquipCos(slot0)
-	return slot0._equipConfig.configDict
+function var_0_0.getSeasonEquipCos(arg_15_0)
+	return arg_15_0._equipConfig.configDict
 end
 
-function slot0.getSeasonEquipCo(slot0, slot1)
-	return slot0._equipConfig.configDict[slot1]
+function var_0_0.getSeasonEquipCo(arg_16_0, arg_16_1)
+	return arg_16_0._equipConfig.configDict[arg_16_1]
 end
 
-function slot0.getSeasonOptionalEquipCos(slot0)
-	slot1 = {}
+function var_0_0.getSeasonOptionalEquipCos(arg_17_0)
+	local var_17_0 = {}
 
-	for slot5, slot6 in pairs(slot0._equipConfig.configDict) do
-		if slot6.isOptional == 1 then
-			table.insert(slot1, slot6)
+	for iter_17_0, iter_17_1 in pairs(arg_17_0._equipConfig.configDict) do
+		if iter_17_1.isOptional == 1 then
+			table.insert(var_17_0, iter_17_1)
 		end
 	end
 
-	return slot1
+	return var_17_0
 end
 
-function slot0.getSeasonTagList(slot0)
-	return slot0._equipTagConfig.configList
+function var_0_0.getSeasonTagList(arg_18_0)
+	return arg_18_0._equipTagConfig.configList
 end
 
-function slot0.getSeasonTagDesc(slot0, slot1)
-	return slot0._equipTagConfig.configDict[slot1]
+function var_0_0.getSeasonTagDesc(arg_19_0, arg_19_1)
+	return arg_19_0._equipTagConfig.configDict[arg_19_1]
 end
 
-function slot0.getEquipIsOptional(slot0, slot1)
-	return slot0._equipIsOptionalDict[slot1]
+function var_0_0.getEquipIsOptional(arg_20_0, arg_20_1)
+	return arg_20_0._equipIsOptionalDict[arg_20_1]
 end
 
-function slot0.getEquipCoByCondition(slot0, slot1)
-	slot2 = {}
+function var_0_0.getEquipCoByCondition(arg_21_0, arg_21_1)
+	local var_21_0 = {}
 
-	for slot6, slot7 in ipairs(slot0._equipConfig.configList) do
-		if slot1(slot7) then
-			table.insert(slot2, slot7)
+	for iter_21_0, iter_21_1 in ipairs(arg_21_0._equipConfig.configList) do
+		if arg_21_1(iter_21_1) then
+			table.insert(var_21_0, iter_21_1)
 		end
 	end
 
-	return slot2
+	return var_21_0
 end
 
-function slot0.getSeasonEquipAttrCo(slot0, slot1)
-	return slot0._equipAttrConfig.configDict[slot1]
+function var_0_0.getSeasonEquipAttrCo(arg_22_0, arg_22_1)
+	return arg_22_0._equipAttrConfig.configDict[arg_22_1]
 end
 
-function slot0.getConfigByEpisodeId(slot0, slot1)
-	slot0:_initEpisodeId2Config()
+function var_0_0.getConfigByEpisodeId(arg_23_0, arg_23_1)
+	arg_23_0:_initEpisodeId2Config()
 
-	return slot0._episodeId2Config and slot0._episodeId2Config[slot1]
+	return arg_23_0._episodeId2Config and arg_23_0._episodeId2Config[arg_23_1]
 end
 
-function slot0.getRetailCOByEpisodeId(slot0, slot1)
-	slot0:_initEpisodeId2RetailCO()
+function var_0_0.getRetailCOByEpisodeId(arg_24_0, arg_24_1)
+	arg_24_0:_initEpisodeId2RetailCO()
 
-	return slot0._episodeId2RetailCO and slot0._episodeId2RetailCO[slot1]
+	return arg_24_0._episodeId2RetailCO and arg_24_0._episodeId2RetailCO[arg_24_1]
 end
 
-function slot0.getTrailCOByEpisodeId(slot0, slot1)
-	slot0:_initEpisodeId2TrailCO()
+function var_0_0.getTrailCOByEpisodeId(arg_25_0, arg_25_1)
+	arg_25_0:_initEpisodeId2TrailCO()
 
-	return slot0._episodeId2TrailCO and slot0._episodeId2TrailCO[slot1]
+	return arg_25_0._episodeId2TrailCO and arg_25_0._episodeId2TrailCO[arg_25_1]
 end
 
-function slot0._initEpisodeId2Config(slot0)
-	if slot0._episodeId2Config then
+function var_0_0._initEpisodeId2Config(arg_26_0)
+	if arg_26_0._episodeId2Config then
 		return
 	end
 
-	slot0._episodeId2Config = {}
+	arg_26_0._episodeId2Config = {}
 
-	for slot4, slot5 in pairs(slot0._episodeConfig.configDict) do
-		for slot9, slot10 in pairs(slot5) do
-			for slot14, slot15 in pairs(slot10) do
-				slot0._episodeId2Config[slot15.episodeId] = slot15
+	for iter_26_0, iter_26_1 in pairs(arg_26_0._episodeConfig.configDict) do
+		for iter_26_2, iter_26_3 in pairs(iter_26_1) do
+			for iter_26_4, iter_26_5 in pairs(iter_26_3) do
+				arg_26_0._episodeId2Config[iter_26_5.episodeId] = iter_26_5
 			end
 		end
 	end
 end
 
-function slot0._initEpisodeId2RetailCO(slot0)
-	if slot0._episodeId2RetailCO then
+function var_0_0._initEpisodeId2RetailCO(arg_27_0)
+	if arg_27_0._episodeId2RetailCO then
 		return
 	end
 
-	slot0._episodeId2RetailCO = {}
+	arg_27_0._episodeId2RetailCO = {}
 
-	for slot4, slot5 in pairs(slot0._retailConfig.configDict) do
-		for slot9, slot10 in pairs(slot5) do
-			slot0._episodeId2RetailCO[slot10.episodeId] = slot10
+	for iter_27_0, iter_27_1 in pairs(arg_27_0._retailConfig.configDict) do
+		for iter_27_2, iter_27_3 in pairs(iter_27_1) do
+			arg_27_0._episodeId2RetailCO[iter_27_3.episodeId] = iter_27_3
 		end
 	end
 end
 
-function slot0._initEpisodeId2TrailCO(slot0)
-	if slot0._episodeId2TrailCO then
+function var_0_0._initEpisodeId2TrailCO(arg_28_0)
+	if arg_28_0._episodeId2TrailCO then
 		return
 	end
 
-	slot0._episodeId2TrailCO = {}
+	arg_28_0._episodeId2TrailCO = {}
 
-	for slot4, slot5 in pairs(slot0._trialConfig.configDict) do
-		for slot9, slot10 in pairs(slot5) do
-			slot0._episodeId2TrailCO[slot10.episodeId] = slot10
+	for iter_28_0, iter_28_1 in pairs(arg_28_0._trialConfig.configDict) do
+		for iter_28_2, iter_28_3 in pairs(iter_28_1) do
+			arg_28_0._episodeId2TrailCO[iter_28_3.episodeId] = iter_28_3
 		end
 	end
 end
 
-function slot0.getEquipItemCoin(slot0, slot1, slot2)
-	return slot0:getSeasonConstNum(slot1, slot2)
+function var_0_0.getEquipItemCoin(arg_29_0, arg_29_1, arg_29_2)
+	return arg_29_0:getSeasonConstNum(arg_29_1, arg_29_2)
 end
 
-function slot0.getSeasonConstNum(slot0, slot1, slot2)
-	if not slot0._constConfig.configDict[slot1] or not slot0._constConfig.configDict[slot1][slot2] then
+function var_0_0.getSeasonConstNum(arg_30_0, arg_30_1, arg_30_2)
+	if not arg_30_0._constConfig.configDict[arg_30_1] or not arg_30_0._constConfig.configDict[arg_30_1][arg_30_2] then
 		return nil
 	end
 
-	return slot0._constConfig.configDict[slot1][slot2].value1
+	return arg_30_0._constConfig.configDict[arg_30_1][arg_30_2].value1
 end
 
-function slot0.getSeasonConstStr(slot0, slot1, slot2)
-	if not slot0._constConfig.configDict[slot1] or not slot0._constConfig.configDict[slot1][slot2] then
+function var_0_0.getSeasonConstStr(arg_31_0, arg_31_1, arg_31_2)
+	if not arg_31_0._constConfig.configDict[arg_31_1] or not arg_31_0._constConfig.configDict[arg_31_1][arg_31_2] then
 		return nil
 	end
 
-	return slot0._constConfig.configDict[slot1][slot2].value2
+	return arg_31_0._constConfig.configDict[arg_31_1][arg_31_2].value2
 end
 
-function slot0.getAllStoryCo(slot0, slot1)
-	return slot0._storyConfig.configDict[slot1]
+function var_0_0.getAllStoryCo(arg_32_0, arg_32_1)
+	return arg_32_0._storyConfig.configDict[arg_32_1]
 end
 
-function slot0.getStoryConfig(slot0, slot1, slot2)
-	return slot0._storyConfig.configDict[slot1][slot2]
+function var_0_0.getStoryConfig(arg_33_0, arg_33_1, arg_33_2)
+	return arg_33_0._storyConfig.configDict[arg_33_1][arg_33_2]
 end
 
-function slot0.getSeason123TaskCo(slot0, slot1)
-	return slot0._taskConfig.configDict[slot1]
+function var_0_0.getSeason123TaskCo(arg_34_0, arg_34_1)
+	return arg_34_0._taskConfig.configDict[arg_34_1]
 end
 
-function slot0.getSeason123AllTaskList(slot0)
-	return slot0._taskConfig.configList
+function var_0_0.getSeason123AllTaskList(arg_35_0)
+	return arg_35_0._taskConfig.configList
 end
 
-function slot0.getRetailCO(slot0, slot1, slot2)
-	if slot0._retailConfig.configDict[slot1] then
-		return slot0._retailConfig.configDict[slot1][slot2]
+function var_0_0.getRetailCO(arg_36_0, arg_36_1, arg_36_2)
+	if arg_36_0._retailConfig.configDict[arg_36_1] then
+		return arg_36_0._retailConfig.configDict[arg_36_1][arg_36_2]
 	end
 end
 
-function slot0.getRecommendCareers(slot0, slot1, slot2)
-	if slot0:getStageCo(slot1, slot2) and not string.nilorempty(slot3.recommend) then
-		return string.split(slot3.recommend, "#")
+function var_0_0.getRecommendCareers(arg_37_0, arg_37_1, arg_37_2)
+	local var_37_0 = arg_37_0:getStageCo(arg_37_1, arg_37_2)
+
+	if var_37_0 and not string.nilorempty(var_37_0.recommend) then
+		return string.split(var_37_0.recommend, "#")
 	end
 end
 
-function slot0.getRecommendTagCoList(slot0, slot1, slot2)
-	slot4 = {}
+function var_0_0.getRecommendTagCoList(arg_38_0, arg_38_1, arg_38_2)
+	local var_38_0 = arg_38_0:getStageCo(arg_38_1, arg_38_2)
+	local var_38_1 = {}
 
-	if slot0:getStageCo(slot1, slot2) and not string.nilorempty(slot3.recommendSchool) then
-		slot6 = slot0:getSeasonTagDesc(slot1)
+	if var_38_0 and not string.nilorempty(var_38_0.recommendSchool) then
+		local var_38_2 = string.splitToNumber(var_38_0.recommendSchool, "#")
+		local var_38_3 = arg_38_0:getSeasonTagDesc(arg_38_1)
 
-		for slot10, slot11 in ipairs(string.splitToNumber(slot3.recommendSchool, "#")) do
-			if slot6[slot11] then
-				table.insert(slot4, slot6[slot11])
+		for iter_38_0, iter_38_1 in ipairs(var_38_2) do
+			if var_38_3[iter_38_1] then
+				table.insert(var_38_1, var_38_3[iter_38_1])
 			end
 		end
 	end
 
-	return slot4
+	return var_38_1
 end
 
-function slot0.filterRule(slot0, slot1, slot2)
-	slot3 = {}
+function var_0_0.filterRule(arg_39_0, arg_39_1, arg_39_2)
+	local var_39_0 = {}
 
-	if slot1 then
-		if not Season123Model.instance:getCurSeasonId() then
+	if arg_39_1 then
+		local var_39_1 = Season123Model.instance:getCurSeasonId()
+
+		if not var_39_1 then
 			return
 		end
 
-		for slot8, slot9 in pairs(slot1) do
-			if not slot0:isExistInRuleTips(slot4, slot2, slot9[2]) then
-				table.insert(slot3, slot9)
+		for iter_39_0, iter_39_1 in pairs(arg_39_1) do
+			if not arg_39_0:isExistInRuleTips(var_39_1, arg_39_2, iter_39_1[2]) then
+				table.insert(var_39_0, iter_39_1)
 			end
 		end
 	end
 
-	return slot3
+	return var_39_0
 end
 
-function slot0.isExistInRuleTips(slot0, slot1, slot2, slot3)
-	if not slot0.ruleDict then
-		slot0.ruleDict = {}
+function var_0_0.isExistInRuleTips(arg_40_0, arg_40_1, arg_40_2, arg_40_3)
+	if not arg_40_0.ruleDict then
+		arg_40_0.ruleDict = {}
 	end
 
-	slot0.ruleDict[slot1] = slot0.ruleDict[slot1] or {}
+	arg_40_0.ruleDict[arg_40_1] = arg_40_0.ruleDict[arg_40_1] or {}
 
-	if not slot0.ruleDict[slot1][slot2] then
-		slot0.ruleDict[slot1][slot2] = slot0:getRuleTips(slot1, slot2)
+	if not arg_40_0.ruleDict[arg_40_1][arg_40_2] then
+		local var_40_0 = arg_40_0:getRuleTips(arg_40_1, arg_40_2)
+
+		arg_40_0.ruleDict[arg_40_1][arg_40_2] = var_40_0
 	end
 
-	return slot0.ruleDict[slot1][slot2][slot3] ~= nil
+	return arg_40_0.ruleDict[arg_40_1][arg_40_2][arg_40_3] ~= nil
 end
 
-function slot0.getRuleTips(slot0, slot1, slot2)
-	slot4 = slot0:getStageCos(slot1)[slot2]
-	slot5 = {}
+function var_0_0.getRuleTips(arg_41_0, arg_41_1, arg_41_2)
+	local var_41_0 = arg_41_0:getStageCos(arg_41_1)[arg_41_2]
+	local var_41_1 = {}
 
-	if slot2 then
-		if not slot4 then
-			slot0.emptyTips = slot0.emptyTips or {}
+	if arg_41_2 then
+		if not var_41_0 then
+			arg_41_0.emptyTips = arg_41_0.emptyTips or {}
 
-			return slot0.emptyTips
+			return arg_41_0.emptyTips
 		end
 
-		slot5 = string.splitToNumber(slot4.stageCondition, "#")
+		var_41_1 = string.splitToNumber(var_41_0.stageCondition, "#")
 	else
-		slot5 = string.splitToNumber(slot0:getSeasonConstStr(slot1, Activity123Enum.Const.HideRule), "#")
+		local var_41_2 = arg_41_0:getSeasonConstStr(arg_41_1, Activity123Enum.Const.HideRule)
+
+		var_41_1 = string.splitToNumber(var_41_2, "#")
 	end
 
-	for slot10, slot11 in ipairs(slot5) do
-		-- Nothing
+	local var_41_3 = {}
+
+	for iter_41_0, iter_41_1 in ipairs(var_41_1) do
+		var_41_3[iter_41_1] = true
 	end
 
-	return {
-		[slot11] = true
-	}
+	return var_41_3
 end
 
-function slot0.getTrialCO(slot0, slot1, slot2)
-	if slot0._trialConfig.configDict[slot1] then
-		return slot3[slot2]
+function var_0_0.getTrialCO(arg_42_0, arg_42_1, arg_42_2)
+	local var_42_0 = arg_42_0._trialConfig.configDict[arg_42_1]
+
+	if var_42_0 then
+		return var_42_0[arg_42_2]
 	end
 
 	return nil
 end
 
-function slot0.getTaskListenerParamCache(slot0, slot1)
-	slot0.taskListenerParamCache = slot0.taskListenerParamCache or {}
+function var_0_0.getTaskListenerParamCache(arg_43_0, arg_43_1)
+	arg_43_0.taskListenerParamCache = arg_43_0.taskListenerParamCache or {}
 
-	if not slot0.taskListenerParamCache[slot1] then
-		slot0.taskListenerParamCache[slot1] = string.split(slot1.listenerParam, "#")
+	local var_43_0 = arg_43_0.taskListenerParamCache[arg_43_1]
+
+	if not var_43_0 then
+		var_43_0 = string.split(arg_43_1.listenerParam, "#")
+		arg_43_0.taskListenerParamCache[arg_43_1] = var_43_0
 	end
 
-	return slot2
+	return var_43_0
 end
 
-function slot0.getRewardTaskCount(slot0, slot1, slot2)
-	slot0:checkInitRewardTaskCount()
+function var_0_0.getRewardTaskCount(arg_44_0, arg_44_1, arg_44_2)
+	arg_44_0:checkInitRewardTaskCount()
 
-	if slot0._taskCountDict[slot1] then
-		return slot0._taskCountDict[slot1][slot2] or 0
+	if arg_44_0._taskCountDict[arg_44_1] then
+		return arg_44_0._taskCountDict[arg_44_1][arg_44_2] or 0
 	end
 
 	return 0
 end
 
-function slot0.checkInitRewardTaskCount(slot0)
-	if not slot0._taskCountDict then
-		slot0._taskCountDict = {}
+function var_0_0.checkInitRewardTaskCount(arg_45_0)
+	if not arg_45_0._taskCountDict then
+		arg_45_0._taskCountDict = {}
 
-		for slot5, slot6 in ipairs(slot0:getSeason123AllTaskList()) do
-			if slot6.isRewardView == 1 then
-				slot0._taskCountDict[slot6.seasonId] = slot0._taskCountDict[slot6.seasonId] or {}
+		local var_45_0 = arg_45_0:getSeason123AllTaskList()
 
-				if #slot0:getTaskListenerParamCache(slot6) > 0 then
-					slot0._taskCountDict[slot6.seasonId][slot8] = (slot0._taskCountDict[slot6.seasonId][tonumber(slot7[1])] or 0) + 1
+		for iter_45_0, iter_45_1 in ipairs(var_45_0) do
+			if iter_45_1.isRewardView == 1 then
+				arg_45_0._taskCountDict[iter_45_1.seasonId] = arg_45_0._taskCountDict[iter_45_1.seasonId] or {}
+
+				local var_45_1 = arg_45_0:getTaskListenerParamCache(iter_45_1)
+
+				if #var_45_1 > 0 then
+					local var_45_2 = tonumber(var_45_1[1])
+					local var_45_3 = (arg_45_0._taskCountDict[iter_45_1.seasonId][var_45_2] or 0) + 1
+
+					arg_45_0._taskCountDict[iter_45_1.seasonId][var_45_2] = var_45_3
 				end
 			end
 		end
 	end
 end
 
-function slot0.getCardLimitPosDict(slot0, slot1)
-	if not slot0:getSeasonEquipCo(slot1) or string.nilorempty(slot2.indexLimit) then
+function var_0_0.getCardLimitPosDict(arg_46_0, arg_46_1)
+	local var_46_0 = arg_46_0:getSeasonEquipCo(arg_46_1)
+
+	if not var_46_0 or string.nilorempty(var_46_0.indexLimit) then
 		return nil
 	else
-		slot0._indexLimitDict = slot0._indexLimitDict or {}
-		slot0._indexLimitStrDict = slot0._indexLimitStrDict or {}
-		slot4 = slot0._indexLimitStrDict[slot1]
+		arg_46_0._indexLimitDict = arg_46_0._indexLimitDict or {}
+		arg_46_0._indexLimitStrDict = arg_46_0._indexLimitStrDict or {}
 
-		if not slot0._indexLimitDict[slot1] then
-			slot4 = ""
+		local var_46_1 = arg_46_0._indexLimitDict[arg_46_1]
+		local var_46_2 = arg_46_0._indexLimitStrDict[arg_46_1]
 
-			for slot9, slot10 in ipairs(string.splitToNumber(slot2.indexLimit, "#")) do
-				slot4 = not string.nilorempty(slot4) and slot4 .. "," .. tostring(slot10) or tostring(slot10)
+		if not var_46_1 then
+			var_46_1 = {}
+
+			local var_46_3 = string.splitToNumber(var_46_0.indexLimit, "#")
+
+			var_46_2 = ""
+
+			for iter_46_0, iter_46_1 in ipairs(var_46_3) do
+				var_46_1[iter_46_1] = true
+
+				if not string.nilorempty(var_46_2) then
+					var_46_2 = var_46_2 .. "," .. tostring(iter_46_1)
+				else
+					var_46_2 = tostring(iter_46_1)
+				end
 			end
 
-			slot0._indexLimitDict[slot1] = {
-				[slot10] = true
-			}
-			slot0._indexLimitStrDict[slot1] = slot4
+			arg_46_0._indexLimitDict[arg_46_1] = var_46_1
+			arg_46_0._indexLimitStrDict[arg_46_1] = var_46_2
 		end
 
-		return slot3, slot4
+		return var_46_1, var_46_2
 	end
 end
 
-function slot0.isLastStage(slot0, slot1, slot2)
-	return slot2 == tabletool.len(slot0._stageConfig.configDict[slot1])
+function var_0_0.isLastStage(arg_47_0, arg_47_1, arg_47_2)
+	return arg_47_2 == tabletool.len(arg_47_0._stageConfig.configDict[arg_47_1])
 end
 
-function slot0.getCardSpecialEffectCache(slot0, slot1)
-	slot0.cardEffectCache = slot0.cardEffectCache or {}
+function var_0_0.getCardSpecialEffectCache(arg_48_0, arg_48_1)
+	arg_48_0.cardEffectCache = arg_48_0.cardEffectCache or {}
 
-	if not slot0.cardEffectCache[slot1] then
-		slot2 = {}
-		slot5 = {}
+	local var_48_0 = arg_48_0.cardEffectCache[arg_48_1]
 
-		for slot9, slot10 in ipairs(GameUtil.splitString2(slot0:getSeasonEquipCo(slot1).specialEffect, true) or {}) do
-			slot11 = slot10[1]
+	if not var_48_0 then
+		var_48_0 = {}
 
-			for slot15 = 2, #slot10 do
-				table.insert(slot5, slot10[slot15])
+		local var_48_1 = arg_48_0:getSeasonEquipCo(arg_48_1)
+		local var_48_2 = GameUtil.splitString2(var_48_1.specialEffect, true) or {}
+		local var_48_3 = {}
+
+		for iter_48_0, iter_48_1 in ipairs(var_48_2) do
+			local var_48_4 = iter_48_1[1]
+
+			for iter_48_2 = 2, #iter_48_1 do
+				table.insert(var_48_3, iter_48_1[iter_48_2])
 			end
 
-			slot2[slot11] = slot5
+			var_48_0[var_48_4] = var_48_3
 		end
 
-		slot0.cardEffectCache[slot1] = slot2
+		arg_48_0.cardEffectCache[arg_48_1] = var_48_0
 	end
 
-	return slot2
+	return var_48_0
 end
 
-function slot0.getCardSpecialEffectMap(slot0, slot1)
-	slot3 = {}
+function var_0_0.getCardSpecialEffectMap(arg_49_0, arg_49_1)
+	local var_49_0 = arg_49_0:getSeasonEquipCo(arg_49_1)
+	local var_49_1 = {}
 
-	if slot0:getSeasonEquipCo(slot1) then
-		return slot0:getCardSpecialEffectCache(slot2.equipId) or {}
+	if var_49_0 then
+		return arg_49_0:getCardSpecialEffectCache(var_49_0.equipId) or {}
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

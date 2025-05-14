@@ -1,147 +1,160 @@
-module("modules.logic.seasonver.act123.view2_3.Season123_2_3DecomposeItem", package.seeall)
+﻿module("modules.logic.seasonver.act123.view2_3.Season123_2_3DecomposeItem", package.seeall)
 
-slot0 = class("Season123_2_3DecomposeItem", ListScrollCellExtend)
+local var_0_0 = class("Season123_2_3DecomposeItem", ListScrollCellExtend)
 
-function slot0.init(slot0, slot1)
-	uv0.super.init(slot0, slot1)
+function var_0_0.init(arg_1_0, arg_1_1)
+	var_0_0.super.init(arg_1_0, arg_1_1)
 
-	slot0._gopos = gohelper.findChild(slot0.viewGO, "go_pos")
-	slot0._goselect = gohelper.findChild(slot0.viewGO, "go_select")
-	slot0._simageroleicon = gohelper.findChildSingleImage(slot0.viewGO, "image_roleicon")
-	slot0._gorolebg = gohelper.findChild(slot0.viewGO, "bg")
-	slot0._imageroleicon = gohelper.findChildImage(slot0.viewGO, "image_roleicon")
-	slot0._animator = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	slot0._goDecomposeEffect = gohelper.findChild(slot0.viewGO, "vx_compose")
+	arg_1_0._gopos = gohelper.findChild(arg_1_0.viewGO, "go_pos")
+	arg_1_0._goselect = gohelper.findChild(arg_1_0.viewGO, "go_select")
+	arg_1_0._simageroleicon = gohelper.findChildSingleImage(arg_1_0.viewGO, "image_roleicon")
+	arg_1_0._gorolebg = gohelper.findChild(arg_1_0.viewGO, "bg")
+	arg_1_0._imageroleicon = gohelper.findChildImage(arg_1_0.viewGO, "image_roleicon")
+	arg_1_0._animator = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	arg_1_0._goDecomposeEffect = gohelper.findChild(arg_1_0.viewGO, "vx_compose")
 end
 
-function slot0.addEventListeners(slot0)
-	slot0:addEventCb(Season123EquipBookController.instance, Season123Event.OnRefleshDecomposeItemUI, slot0.refreshUI, slot0)
-	slot0:addEventCb(Season123EquipBookController.instance, Season123Event.OnItemChange, slot0.refreshUI, slot0)
-	slot0:addEventCb(Season123EquipBookController.instance, Season123Event.OnBatchDecomposeEffectPlay, slot0.showDecomposeEffect, slot0)
-	slot0:addEventCb(Season123EquipBookController.instance, Season123Event.CloseBatchDecomposeEffect, slot0.hideDecomposeEffect, slot0)
+function var_0_0.addEventListeners(arg_2_0)
+	arg_2_0:addEventCb(Season123EquipBookController.instance, Season123Event.OnRefleshDecomposeItemUI, arg_2_0.refreshUI, arg_2_0)
+	arg_2_0:addEventCb(Season123EquipBookController.instance, Season123Event.OnItemChange, arg_2_0.refreshUI, arg_2_0)
+	arg_2_0:addEventCb(Season123EquipBookController.instance, Season123Event.OnBatchDecomposeEffectPlay, arg_2_0.showDecomposeEffect, arg_2_0)
+	arg_2_0:addEventCb(Season123EquipBookController.instance, Season123Event.CloseBatchDecomposeEffect, arg_2_0.hideDecomposeEffect, arg_2_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0:removeEventCb(Season123EquipBookController.instance, Season123Event.OnRefleshDecomposeItemUI, slot0.refreshUI, slot0)
-	slot0:removeEventCb(Season123EquipBookController.instance, Season123Event.OnItemChange, slot0.refreshUI, slot0)
-	slot0:removeEventCb(Season123EquipBookController.instance, Season123Event.OnBatchDecomposeEffectPlay, slot0.showDecomposeEffect, slot0)
-	slot0:removeEventCb(Season123EquipBookController.instance, Season123Event.CloseBatchDecomposeEffect, slot0.hideDecomposeEffect, slot0)
+function var_0_0.removeEventListeners(arg_3_0)
+	arg_3_0:removeEventCb(Season123EquipBookController.instance, Season123Event.OnRefleshDecomposeItemUI, arg_3_0.refreshUI, arg_3_0)
+	arg_3_0:removeEventCb(Season123EquipBookController.instance, Season123Event.OnItemChange, arg_3_0.refreshUI, arg_3_0)
+	arg_3_0:removeEventCb(Season123EquipBookController.instance, Season123Event.OnBatchDecomposeEffectPlay, arg_3_0.showDecomposeEffect, arg_3_0)
+	arg_3_0:removeEventCb(Season123EquipBookController.instance, Season123Event.CloseBatchDecomposeEffect, arg_3_0.hideDecomposeEffect, arg_3_0)
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
-	slot0._cfg = Season123Config.instance:getSeasonEquipCo(slot0._mo.itemId)
+function var_0_0.onUpdateMO(arg_4_0, arg_4_1)
+	arg_4_0._mo = arg_4_1
+	arg_4_0._cfg = Season123Config.instance:getSeasonEquipCo(arg_4_0._mo.itemId)
 
-	if slot0._cfg then
-		slot0:refreshUI()
+	if arg_4_0._cfg then
+		arg_4_0:refreshUI()
 	end
 
-	slot0:checkPlayAnim()
+	arg_4_0:checkPlayAnim()
 end
 
-slot0.AnimRowCount = 4
-slot0.OpenAnimTime = 0.06
-slot0.OpenAnimStartTime = 0.05
+var_0_0.AnimRowCount = 4
+var_0_0.OpenAnimTime = 0.06
+var_0_0.OpenAnimStartTime = 0.05
 
-function slot0.refreshUI(slot0)
-	slot0:checkCreateIcon()
-	slot0.icon:updateData(slot0._mo.itemId)
-	slot0.icon:setIndexLimitShowState(true)
-	gohelper.setActive(slot0._goselect, Season123DecomposeModel.instance:isSelectedItem(slot0._mo.uid))
-	slot0:refreshEquipedHero(Season123DecomposeModel.instance:getItemUidToHeroUid(slot0._mo.uid))
+function var_0_0.refreshUI(arg_5_0)
+	arg_5_0:checkCreateIcon()
+	arg_5_0.icon:updateData(arg_5_0._mo.itemId)
+	arg_5_0.icon:setIndexLimitShowState(true)
+	gohelper.setActive(arg_5_0._goselect, Season123DecomposeModel.instance:isSelectedItem(arg_5_0._mo.uid))
+
+	local var_5_0 = Season123DecomposeModel.instance:getItemUidToHeroUid(arg_5_0._mo.uid)
+
+	arg_5_0:refreshEquipedHero(var_5_0)
 end
 
-function slot0.refreshEquipedHero(slot0, slot1)
-	if not slot1 or slot1 == Activity123Enum.EmptyUid then
-		gohelper.setActive(slot0._simageroleicon, false)
-		gohelper.setActive(slot0._gorolebg, false)
+function var_0_0.refreshEquipedHero(arg_6_0, arg_6_1)
+	if not arg_6_1 or arg_6_1 == Activity123Enum.EmptyUid then
+		gohelper.setActive(arg_6_0._simageroleicon, false)
+		gohelper.setActive(arg_6_0._gorolebg, false)
 
 		return
 	end
 
-	slot2 = nil
+	local var_6_0
 
-	if slot1 == Activity123Enum.MainRoleHeroUid then
-		slot2 = Activity123Enum.MainRoleHeadIconID
+	if arg_6_1 == Activity123Enum.MainRoleHeroUid then
+		var_6_0 = Activity123Enum.MainRoleHeadIconID
 	else
-		if not HeroModel.instance:getById(slot1) then
-			gohelper.setActive(slot0._simageroleicon, false)
-			gohelper.setActive(slot0._gorolebg, false)
+		local var_6_1 = HeroModel.instance:getById(arg_6_1)
+
+		if not var_6_1 then
+			gohelper.setActive(arg_6_0._simageroleicon, false)
+			gohelper.setActive(arg_6_0._gorolebg, false)
 
 			return
 		end
 
-		slot2 = slot3.skin
+		var_6_0 = var_6_1.skin
 	end
 
-	gohelper.setActive(slot0._simageroleicon, true)
-	gohelper.setActive(slot0._gorolebg, true)
-	slot0._simageroleicon:LoadImage(ResUrl.getHeadIconSmall(slot2))
+	gohelper.setActive(arg_6_0._simageroleicon, true)
+	gohelper.setActive(arg_6_0._gorolebg, true)
+	arg_6_0._simageroleicon:LoadImage(ResUrl.getHeadIconSmall(var_6_0))
 end
 
-function slot0.checkPlayAnim(slot0)
-	TaskDispatcher.cancelTask(slot0.onDelayPlayOpen, slot0)
-	Season123DecomposeModel.instance:setItemCellCount(slot0._view.viewContainer:getLineCount())
+function var_0_0.checkPlayAnim(arg_7_0)
+	TaskDispatcher.cancelTask(arg_7_0.onDelayPlayOpen, arg_7_0)
 
-	if Season123DecomposeModel.instance:getDelayPlayTime(slot0._mo) == -1 then
-		slot0._animator:Play("idle", 0, 0)
+	local var_7_0 = arg_7_0._view.viewContainer:getLineCount()
 
-		slot0._animator.speed = 1
+	Season123DecomposeModel.instance:setItemCellCount(var_7_0)
+
+	local var_7_1 = Season123DecomposeModel.instance:getDelayPlayTime(arg_7_0._mo)
+
+	if var_7_1 == -1 then
+		arg_7_0._animator:Play("idle", 0, 0)
+
+		arg_7_0._animator.speed = 1
 	else
-		slot0._animator:Play("open", 0, 0)
+		arg_7_0._animator:Play("open", 0, 0)
 
-		slot0._animator.speed = 0
+		arg_7_0._animator.speed = 0
 
-		TaskDispatcher.runDelay(slot0.onDelayPlayOpen, slot0, slot2)
+		TaskDispatcher.runDelay(arg_7_0.onDelayPlayOpen, arg_7_0, var_7_1)
 	end
 end
 
-function slot0.onDelayPlayOpen(slot0)
-	TaskDispatcher.cancelTask(slot0.onDelayPlayOpen, slot0)
-	slot0._animator:Play("open", 0, 0)
+function var_0_0.onDelayPlayOpen(arg_8_0)
+	TaskDispatcher.cancelTask(arg_8_0.onDelayPlayOpen, arg_8_0)
+	arg_8_0._animator:Play("open", 0, 0)
 
-	slot0._animator.speed = 1
+	arg_8_0._animator.speed = 1
 end
 
-function slot0.checkCreateIcon(slot0)
-	if not slot0.icon then
-		slot0.icon = MonoHelper.addNoUpdateLuaComOnceToGo(slot0._view:getResInst(slot0._view.viewContainer:getSetting().otherRes[2], slot0._gopos, "icon"), Season123_2_3CelebrityCardEquip)
+function var_0_0.checkCreateIcon(arg_9_0)
+	if not arg_9_0.icon then
+		local var_9_0 = arg_9_0._view.viewContainer:getSetting().otherRes[2]
+		local var_9_1 = arg_9_0._view:getResInst(var_9_0, arg_9_0._gopos, "icon")
 
-		slot0.icon:setClickCall(slot0.onClickSelf, slot0)
+		arg_9_0.icon = MonoHelper.addNoUpdateLuaComOnceToGo(var_9_1, Season123_2_3CelebrityCardEquip)
+
+		arg_9_0.icon:setClickCall(arg_9_0.onClickSelf, arg_9_0)
 	end
 end
 
-function slot0.onClickSelf(slot0)
-	if not Season123DecomposeModel.instance.curSelectItemDict[slot0._mo.uid] and Season123DecomposeModel.instance:isSelectItemMaxCount() then
+function var_0_0.onClickSelf(arg_10_0)
+	if not Season123DecomposeModel.instance.curSelectItemDict[arg_10_0._mo.uid] and Season123DecomposeModel.instance:isSelectItemMaxCount() then
 		GameFacade.showToast(ToastEnum.OverMaxCount)
 
 		return
 	end
 
-	Season123DecomposeModel.instance:setCurSelectItemUid(slot0._mo.uid)
-	slot0:refreshUI()
+	Season123DecomposeModel.instance:setCurSelectItemUid(arg_10_0._mo.uid)
+	arg_10_0:refreshUI()
 	Season123EquipBookController.instance:dispatchEvent(Season123Event.OnDecomposeItemSelect)
 end
 
-function slot0.showDecomposeEffect(slot0)
-	if Season123DecomposeModel.instance.curSelectItemDict[slot0._mo.uid] then
-		gohelper.setActive(slot0._goDecomposeEffect, false)
-		gohelper.setActive(slot0._goDecomposeEffect, true)
+function var_0_0.showDecomposeEffect(arg_11_0)
+	if Season123DecomposeModel.instance.curSelectItemDict[arg_11_0._mo.uid] then
+		gohelper.setActive(arg_11_0._goDecomposeEffect, false)
+		gohelper.setActive(arg_11_0._goDecomposeEffect, true)
 	else
-		slot0:hideDecomposeEffect()
+		arg_11_0:hideDecomposeEffect()
 	end
 end
 
-function slot0.hideDecomposeEffect(slot0)
-	gohelper.setActive(slot0._goDecomposeEffect, false)
+function var_0_0.hideDecomposeEffect(arg_12_0)
+	gohelper.setActive(arg_12_0._goDecomposeEffect, false)
 end
 
-function slot0.onDestroyView(slot0)
-	if slot0.icon then
-		slot0.icon:disposeUI()
+function var_0_0.onDestroyView(arg_13_0)
+	if arg_13_0.icon then
+		arg_13_0.icon:disposeUI()
 	end
 
-	TaskDispatcher.cancelTask(slot0.onDelayPlayOpen, slot0)
+	TaskDispatcher.cancelTask(arg_13_0.onDelayPlayOpen, arg_13_0)
 end
 
-return slot0
+return var_0_0

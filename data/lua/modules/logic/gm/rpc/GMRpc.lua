@@ -1,71 +1,73 @@
-module("modules.logic.gm.rpc.GMRpc", package.seeall)
+﻿module("modules.logic.gm.rpc.GMRpc", package.seeall)
 
-slot0 = class("GMRpc", BaseRpc)
+local var_0_0 = class("GMRpc", BaseRpc)
 
-function slot0.sendGMRequest(slot0, slot1, slot2, slot3)
-	slot4 = GMModule_pb.GMRequest()
+function var_0_0.sendGMRequest(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	local var_1_0 = GMModule_pb.GMRequest()
 
-	logNormal("sendGMRequest: " .. slot1)
+	logNormal("sendGMRequest: " .. arg_1_1)
 
-	slot4.commandText = slot1
-	slot0.callback = slot2
-	slot0.callbackObj = slot3
+	var_1_0.commandText = arg_1_1
+	arg_1_0.callback = arg_1_2
+	arg_1_0.callbackObj = arg_1_3
 
-	slot0:sendMsg(slot4)
+	arg_1_0:sendMsg(var_1_0)
 end
 
-function slot0.onReceiveGMReply(slot0, slot1, slot2)
-	if slot0.callback then
-		if slot0.callbackObj then
-			slot0.callback(slot0.callbackObj)
+function var_0_0.onReceiveGMReply(arg_2_0, arg_2_1, arg_2_2)
+	if arg_2_0.callback then
+		if arg_2_0.callbackObj then
+			arg_2_0.callback(arg_2_0.callbackObj)
 		else
-			slot0.callback()
+			arg_2_0.callback()
 		end
 
-		slot0.callback = nil
-		slot0.callbackObj = nil
+		arg_2_0.callback = nil
+		arg_2_0.callbackObj = nil
 	end
 
 	if isDebugBuild then
-		if slot2.result == 1 then
+		if arg_2_2.result == 1 then
 			ToastController.instance:showToastWithString("GM 执行失败")
-		elseif slot2.result == 2 then
+		elseif arg_2_2.result == 2 then
 			ToastController.instance:showToastWithString("GM 命令不存在")
 		end
 	end
 end
 
-function slot0.sendGpuCpuLogRequest(slot0, slot1, slot2)
-	slot3 = GMModule_pb.GpuCpuLogRequest()
-	slot3.cpu = slot1
-	slot3.gpu = slot2
+function var_0_0.sendGpuCpuLogRequest(arg_3_0, arg_3_1, arg_3_2)
+	local var_3_0 = GMModule_pb.GpuCpuLogRequest()
 
-	slot0:sendMsg(slot3)
+	var_3_0.cpu = arg_3_1
+	var_3_0.gpu = arg_3_2
+
+	arg_3_0:sendMsg(var_3_0)
 end
 
-function slot0.onReceiveGpuCpuLogReply(slot0, slot1, slot2)
+function var_0_0.onReceiveGpuCpuLogReply(arg_4_0, arg_4_1, arg_4_2)
+	return
 end
 
-function slot0.onReceiveTestGMTextReply(slot0, slot1, slot2)
-	GMBattleModel.instance:setBattleParam(slot2.text)
+function var_0_0.onReceiveTestGMTextReply(arg_5_0, arg_5_1, arg_5_2)
+	GMBattleModel.instance:setBattleParam(arg_5_2.text)
 end
 
-function slot0.onReceiveGMSummonResultPush(slot0, slot1, slot2)
-	GMSummonModel.instance:setInfo(slot2)
+function var_0_0.onReceiveGMSummonResultPush(arg_6_0, arg_6_1, arg_6_2)
+	GMSummonModel.instance:setInfo(arg_6_2)
 
 	if not ViewMgr.instance:isOpen(ViewName.GMSummonView) then
 		ViewMgr.instance:openView(ViewName.GMSummonView)
 	end
 end
 
-function slot0.onReceiveFightTipsMessagePush(slot0, slot1, slot2)
+function var_0_0.onReceiveFightTipsMessagePush(arg_7_0, arg_7_1, arg_7_2)
 	if not SLFramework.FrameworkSettings.IsEditor then
 		return
 	end
 
-	logError("FightTipsMessagePush: " .. slot2.msg)
+	logError("FightTipsMessagePush: " .. arg_7_2.msg)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

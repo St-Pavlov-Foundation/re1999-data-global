@@ -1,154 +1,173 @@
-module("modules.logic.rouge.view.RougePageProgress", package.seeall)
+﻿module("modules.logic.rouge.view.RougePageProgress", package.seeall)
 
-slot0 = class("RougePageProgress", LuaCompBase)
+local var_0_0 = class("RougePageProgress", LuaCompBase)
 
-function slot0.ctor(slot0)
-	slot0._highLightRange = {
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._highLightRange = {
 		false,
 		false
 	}
-	slot0._totalPage = 0
+	arg_1_0._totalPage = 0
 end
 
-function slot0.init(slot0, slot1)
-	slot0._itemList = slot0:getUserDataTb_()
-	slot0._goLayout = gohelper.findChild(slot1, "Root/#go_Layout")
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0._itemList = arg_2_0:getUserDataTb_()
+	arg_2_0._goLayout = gohelper.findChild(arg_2_1, "Root/#go_Layout")
 
-	for slot7 = 0, slot0._goLayout.transform.childCount - 1 do
-		slot9 = RougePageProgressItem.New(slot0)
+	local var_2_0 = arg_2_0._goLayout.transform
+	local var_2_1 = var_2_0.childCount
 
-		slot9:init(slot2:GetChild(slot7))
-		slot9:setHighLight(false)
+	for iter_2_0 = 0, var_2_1 - 1 do
+		local var_2_2 = var_2_0:GetChild(iter_2_0)
+		local var_2_3 = RougePageProgressItem.New(arg_2_0)
 
-		if slot7 == slot3 - 1 then
-			slot9:setLineActiveByState(nil)
+		var_2_3:init(var_2_2)
+		var_2_3:setHighLight(false)
+
+		if iter_2_0 == var_2_1 - 1 then
+			var_2_3:setLineActiveByState(nil)
 		else
-			slot9:setLineActiveByState(RougePageProgressItem.LineStateEnum.Done)
+			var_2_3:setLineActiveByState(RougePageProgressItem.LineStateEnum.Done)
 		end
 
-		table.insert(slot0._itemList, slot9)
+		table.insert(arg_2_0._itemList, var_2_3)
 	end
 
-	slot0._totalPage = slot3
+	arg_2_0._totalPage = var_2_1
 end
 
-function slot0.setHighLightRange(slot0, slot1, slot2)
-	slot4 = slot0._highLightRange[2]
+function var_0_0.setHighLightRange(arg_3_0, arg_3_1, arg_3_2)
+	arg_3_2 = arg_3_2 or 1
 
-	if slot0._highLightRange[1] == (slot2 or 1) and slot4 == slot1 then
+	local var_3_0 = arg_3_0._highLightRange[1]
+	local var_3_1 = arg_3_0._highLightRange[2]
+
+	if var_3_0 == arg_3_2 and var_3_1 == arg_3_1 then
 		return
 	end
 
-	for slot10 = slot4 and math.max(slot4, slot2) or slot2, slot3 and math.min(slot3, slot1) or slot1 do
-		slot0._itemList[slot10]:setHighLight(true)
+	local var_3_2 = var_3_1 and math.max(var_3_1, arg_3_2) or arg_3_2
+	local var_3_3 = var_3_0 and math.min(var_3_0, arg_3_1) or arg_3_1
+
+	for iter_3_0 = var_3_2, var_3_3 do
+		arg_3_0._itemList[iter_3_0]:setHighLight(true)
 	end
 
-	if slot3 then
-		for slot10 = slot3, slot5 - 1 do
-			slot0._itemList[slot10]:setHighLight(false)
+	if var_3_0 then
+		for iter_3_1 = var_3_0, var_3_2 - 1 do
+			arg_3_0._itemList[iter_3_1]:setHighLight(false)
 		end
 	end
 
-	if slot4 then
-		for slot10 = slot6 + 1, slot4 do
-			slot0._itemList[slot10]:setHighLight(false)
+	if var_3_1 then
+		for iter_3_2 = var_3_3 + 1, var_3_1 do
+			arg_3_0._itemList[iter_3_2]:setHighLight(false)
 		end
 	end
 
-	slot0._highLightRange[1] = slot2
-	slot0._highLightRange[2] = slot1
+	arg_3_0._highLightRange[1] = arg_3_2
+	arg_3_0._highLightRange[2] = arg_3_1
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_4_0)
+	return
 end
 
-function slot0.initData(slot0, slot1, slot2)
-	slot3 = slot1 or 0
+function var_0_0.initData(arg_5_0, arg_5_1, arg_5_2)
+	local var_5_0 = arg_5_1 or 0
 
-	assert(slot3 <= slot0:capacity(), "[RougePageProgress] initData: totalPage=" .. tostring(slot3) .. " maxPage=" .. tostring(slot0:capacity()))
+	assert(var_5_0 <= arg_5_0:capacity(), "[RougePageProgress] initData: totalPage=" .. tostring(var_5_0) .. " maxPage=" .. tostring(arg_5_0:capacity()))
 
-	for slot7, slot8 in ipairs(slot0._itemList) do
-		slot9 = slot7 <= slot3
+	for iter_5_0, iter_5_1 in ipairs(arg_5_0._itemList) do
+		local var_5_1 = iter_5_0 <= var_5_0
 
-		if slot2 then
-			slot10 = RougePageProgressItem.LineStateEnum.Done
+		if arg_5_2 then
+			local var_5_2 = RougePageProgressItem.LineStateEnum.Done
 
-			if slot7 == slot2 then
-				slot10 = RougePageProgressItem.LineStateEnum.Edit
+			if iter_5_0 == arg_5_2 then
+				var_5_2 = RougePageProgressItem.LineStateEnum.Edit
 			end
 
-			if slot2 < slot7 then
-				slot10 = RougePageProgressItem.LineStateEnum.Locked
+			if arg_5_2 < iter_5_0 then
+				var_5_2 = RougePageProgressItem.LineStateEnum.Locked
 			end
 
-			if slot7 == slot1 then
-				slot10 = (slot2 ~= slot1 or RougePageProgressItem.LineStateEnum.Done) and (slot2 + 1 ~= slot1 or RougePageProgressItem.LineStateEnum.Edit) and RougePageProgressItem.LineStateEnum.Locked
+			if iter_5_0 == arg_5_1 then
+				if arg_5_2 == arg_5_1 then
+					var_5_2 = RougePageProgressItem.LineStateEnum.Done
+				elseif arg_5_2 + 1 == arg_5_1 then
+					var_5_2 = RougePageProgressItem.LineStateEnum.Edit
+				else
+					var_5_2 = RougePageProgressItem.LineStateEnum.Locked
+				end
 			end
 
-			if slot9 then
-				slot8:setLineActiveByState(slot10)
+			if var_5_1 then
+				iter_5_1:setLineActiveByState(var_5_2)
 			end
 		end
 
-		slot8:setActive(slot9)
+		iter_5_1:setActive(var_5_1)
 	end
 
-	slot0._totalPage = slot3
+	arg_5_0._totalPage = var_5_0
 end
 
-function slot0.capacity(slot0)
-	return slot0._itemList and #slot0._itemList or 0
+function var_0_0.capacity(arg_6_0)
+	return arg_6_0._itemList and #arg_6_0._itemList or 0
 end
 
-function slot0.count(slot0)
-	return slot0._totalPage
+function var_0_0.count(arg_7_0)
+	return arg_7_0._totalPage
 end
 
-function slot0.highLightRange(slot0)
-	return slot0._highLightRange[1], slot0._highLightRange[2]
+function var_0_0.highLightRange(arg_8_0)
+	return arg_8_0._highLightRange[1], arg_8_0._highLightRange[2]
 end
 
-function slot0._getCurStartProgress(slot0)
-	slot1 = slot0:_getStartProgressCount()
+function var_0_0._getCurStartProgress(arg_9_0)
+	local var_9_0 = arg_9_0:_getStartProgressCount()
 
 	if ViewMgr.instance:isOpen(ViewName.RougeInitTeamView) then
-		return slot1
+		return var_9_0
 	end
 
-	slot1 = slot1 - 1
+	local var_9_1 = var_9_0 - 1
 
 	if ViewMgr.instance:isOpen(ViewName.RougeFactionView) then
-		return slot1
+		return var_9_1
 	end
 
-	slot1 = slot1 - 1
+	local var_9_2 = var_9_1 - 1
 
 	if RougeModel.instance:isCanSelectRewards() then
 		if ViewMgr.instance:isOpen(ViewName.RougeCollectionGiftView) then
-			return slot1
+			return var_9_2
 		end
 
-		slot1 = slot1 - 1
+		var_9_2 = var_9_2 - 1
 	end
 
 	if ViewMgr.instance:isOpen(ViewName.RougeDifficultyView) then
-		return slot1
+		return var_9_2
 	end
 
-	return slot1 - 1
+	return var_9_2 - 1
 end
 
-function slot0._getStartProgressCount(slot0)
+function var_0_0._getStartProgressCount(arg_10_0)
+	local var_10_0 = 3
+
 	if RougeModel.instance:isCanSelectRewards() then
-		slot1 = 3 + 1
+		var_10_0 = var_10_0 + 1
 	end
 
-	return slot1
+	return var_10_0
 end
 
-function slot0.setData(slot0)
-	slot0:initData(slot0:_getStartProgressCount(), slot0:_getCurStartProgress())
-	slot0:setHighLightRange(slot0:_getCurStartProgress())
+function var_0_0.setData(arg_11_0)
+	arg_11_0:initData(arg_11_0:_getStartProgressCount(), arg_11_0:_getCurStartProgress())
+	arg_11_0:setHighLightRange(arg_11_0:_getCurStartProgress())
 end
 
-return slot0
+return var_0_0

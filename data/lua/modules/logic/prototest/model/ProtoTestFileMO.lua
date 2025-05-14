@@ -1,11 +1,11 @@
-module("modules.logic.prototest.model.ProtoTestFileMO", package.seeall)
+﻿module("modules.logic.prototest.model.ProtoTestFileMO", package.seeall)
 
-slot0 = pureTable("ProtoTestFileMO")
+local var_0_0 = pureTable("ProtoTestFileMO")
 
-function slot0.ctor(slot0)
-	slot0.id = nil
-	slot0.fileName = nil
-	slot0.filePath = nil
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.id = nil
+	arg_1_0.fileName = nil
+	arg_1_0.filePath = nil
 end
 
-return slot0
+return var_0_0

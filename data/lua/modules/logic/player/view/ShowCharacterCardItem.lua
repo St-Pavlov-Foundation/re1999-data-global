@@ -1,101 +1,106 @@
-module("modules.logic.player.view.ShowCharacterCardItem", package.seeall)
+﻿module("modules.logic.player.view.ShowCharacterCardItem", package.seeall)
 
-slot0 = class("ShowCharacterCardItem", ListScrollCell)
+local var_0_0 = class("ShowCharacterCardItem", ListScrollCell)
 
-function slot0.init(slot0, slot1)
-	slot0._heroGOParent = gohelper.findChild(slot1, "hero")
-	slot0._heroItem = IconMgr.instance:getCommonHeroItem(slot0._heroGOParent)
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0._heroGOParent = gohelper.findChild(arg_1_1, "hero")
+	arg_1_0._heroItem = IconMgr.instance:getCommonHeroItem(arg_1_0._heroGOParent)
 
-	slot0._heroItem:addClickListener(slot0._onItemClick, slot0)
+	arg_1_0._heroItem:addClickListener(arg_1_0._onItemClick, arg_1_0)
 
-	slot0._mask = gohelper.findChild(slot0._gocharactercarditem, "nummask")
-	slot0._masknum = gohelper.findChildText(slot0._gocharactercarditem, "nummask/num")
-	slot0._shownum = 0
+	arg_1_0._mask = gohelper.findChild(arg_1_0._gocharactercarditem, "nummask")
+	arg_1_0._masknum = gohelper.findChildText(arg_1_0._gocharactercarditem, "nummask/num")
+	arg_1_0._shownum = 0
 
-	slot0:_initObj()
+	arg_1_0:_initObj()
 end
 
-function slot0._initObj(slot0)
-	slot0._animator = slot0._heroItem.go:GetComponent(typeof(UnityEngine.Animator))
+function var_0_0._initObj(arg_2_0)
+	arg_2_0._animator = arg_2_0._heroItem.go:GetComponent(typeof(UnityEngine.Animator))
 end
 
-function slot0.addEventListeners(slot0)
+function var_0_0.addEventListeners(arg_3_0)
+	return
 end
 
-function slot0.removeEventListeners(slot0)
+function var_0_0.removeEventListeners(arg_4_0)
+	return
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
+function var_0_0.onUpdateMO(arg_5_0, arg_5_1)
+	arg_5_0._mo = arg_5_1
 
-	slot0._heroItem:onUpdateMO(slot1)
-	slot0._heroItem:setNewShow(false)
-	slot0:_initShowHeroList()
+	arg_5_0._heroItem:onUpdateMO(arg_5_1)
+	arg_5_0._heroItem:setNewShow(false)
+	arg_5_0:_initShowHeroList()
 end
 
-function slot0._initShowHeroList(slot0)
-	slot2 = 0
+function var_0_0._initShowHeroList(arg_6_0)
+	local var_6_0 = PlayerModel.instance:getShowHeros()
+	local var_6_1 = 0
+	local var_6_2 = arg_6_0:_clecknum(var_6_0)
 
-	slot0:_initnum(slot0:_clecknum(PlayerModel.instance:getShowHeros()))
+	arg_6_0:_initnum(var_6_2)
 end
 
-function slot0._onItemClick(slot0)
-	slot1 = PlayerModel.instance:getShowHeros()
+function var_0_0._onItemClick(arg_7_0)
+	local var_7_0 = PlayerModel.instance:getShowHeros()
 
-	if slot0._shownum ~= 0 then
+	if arg_7_0._shownum ~= 0 then
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_hero_card_gone)
-		slot0._heroItem:setChoose(nil)
-		PlayerModel.instance:setShowHero(slot0._shownum, 0)
+		arg_7_0._heroItem:setChoose(nil)
+		PlayerModel.instance:setShowHero(arg_7_0._shownum, 0)
 
-		slot0._shownum = 0
+		arg_7_0._shownum = 0
 	else
-		slot0:_addHeroShow(slot1)
+		arg_7_0:_addHeroShow(var_7_0)
 
-		if slot0._shownum ~= 0 then
+		if arg_7_0._shownum ~= 0 then
 			AudioMgr.instance:trigger(AudioEnum.UI.play_ui_hero_card_gone)
 		end
 
-		PlayerModel.instance:setShowHero(slot0._shownum, slot0._mo.heroId)
+		PlayerModel.instance:setShowHero(arg_7_0._shownum, arg_7_0._mo.heroId)
 	end
 end
 
-function slot0._addHeroShow(slot0, slot1)
-	for slot5 = 1, #slot1 do
-		if slot1[slot5] == 0 then
-			slot0:_initnum(slot5)
+function var_0_0._addHeroShow(arg_8_0, arg_8_1)
+	for iter_8_0 = 1, #arg_8_1 do
+		if arg_8_1[iter_8_0] == 0 then
+			arg_8_0:_initnum(iter_8_0)
 
 			return
 		end
 	end
 end
 
-function slot0._clecknum(slot0, slot1)
-	slot2 = 0
+function var_0_0._clecknum(arg_9_0, arg_9_1)
+	local var_9_0 = 0
 
-	for slot6 = 1, #slot1 do
-		if slot1[slot6] ~= 0 and slot0._mo.heroId == slot1[slot6].heroId then
-			slot2 = slot6
+	for iter_9_0 = 1, #arg_9_1 do
+		if arg_9_1[iter_9_0] ~= 0 and arg_9_0._mo.heroId == arg_9_1[iter_9_0].heroId then
+			var_9_0 = iter_9_0
 		end
 	end
 
-	return slot2
+	return var_9_0
 end
 
-function slot0._initnum(slot0, slot1)
-	if slot1 == 0 then
-		slot0._heroItem:setChoose(nil)
+function var_0_0._initnum(arg_10_0, arg_10_1)
+	if arg_10_1 == 0 then
+		arg_10_0._heroItem:setChoose(nil)
 	else
-		slot0._heroItem:setChoose(slot1)
+		arg_10_0._heroItem:setChoose(arg_10_1)
 	end
 
-	slot0._shownum = slot1
+	arg_10_0._shownum = arg_10_1
 end
 
-function slot0.getAnimator(slot0)
-	return slot0._animator
+function var_0_0.getAnimator(arg_11_0)
+	return arg_11_0._animator
 end
 
-function slot0.onDestroy(slot0)
+function var_0_0.onDestroy(arg_12_0)
+	return
 end
 
-return slot0
+return var_0_0

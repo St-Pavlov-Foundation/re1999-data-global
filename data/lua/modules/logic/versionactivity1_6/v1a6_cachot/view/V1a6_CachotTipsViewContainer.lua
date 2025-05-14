@@ -1,15 +1,15 @@
-module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotTipsViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotTipsViewContainer", package.seeall)
 
-slot0 = class("V1a6_CachotTipsViewContainer", BaseViewContainer)
+local var_0_0 = class("V1a6_CachotTipsViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		V1a6_CachotTipsView.New()
 	}
 end
 
-function slot0.playOpenTransition(slot0)
-	slot0:onPlayOpenTransitionFinish()
+function var_0_0.playOpenTransition(arg_2_0)
+	arg_2_0:onPlayOpenTransitionFinish()
 end
 
-return slot0
+return var_0_0

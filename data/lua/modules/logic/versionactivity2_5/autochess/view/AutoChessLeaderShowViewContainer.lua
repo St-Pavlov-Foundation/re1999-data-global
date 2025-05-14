@@ -1,13 +1,13 @@
-module("modules.logic.versionactivity2_5.autochess.view.AutoChessLeaderShowViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity2_5.autochess.view.AutoChessLeaderShowViewContainer", package.seeall)
 
-slot0 = class("AutoChessLeaderShowViewContainer", BaseViewContainer)
+local var_0_0 = class("AutoChessLeaderShowViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, AutoChessLeaderShowView.New())
+	table.insert(var_1_0, AutoChessLeaderShowView.New())
 
-	return slot1
+	return var_1_0
 end
 
-return slot0
+return var_0_0

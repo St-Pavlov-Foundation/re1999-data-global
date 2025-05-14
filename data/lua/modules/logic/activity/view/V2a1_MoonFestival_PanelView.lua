@@ -1,168 +1,177 @@
-module("modules.logic.activity.view.V2a1_MoonFestival_PanelView", package.seeall)
+﻿module("modules.logic.activity.view.V2a1_MoonFestival_PanelView", package.seeall)
 
-slot0 = class("V2a1_MoonFestival_PanelView", Activity101SignViewBase)
+local var_0_0 = class("V2a1_MoonFestival_PanelView", Activity101SignViewBase)
 
-function slot0.onInitView(slot0)
-	slot0._simagePanelBG = gohelper.findChildSingleImage(slot0.viewGO, "Root/#simage_PanelBG")
-	slot0._simageTitle = gohelper.findChildSingleImage(slot0.viewGO, "Root/#simage_Title")
-	slot0._txtLimitTime = gohelper.findChildText(slot0.viewGO, "Root/image_LimitTimeBG/#txt_LimitTime")
-	slot0._txtDec = gohelper.findChildText(slot0.viewGO, "Root/image_DecBG/scroll_desc/Viewport/Content/#txt_Dec")
-	slot0._goNormalBG = gohelper.findChild(slot0.viewGO, "Root/Task/#go_NormalBG")
-	slot0._txtdec = gohelper.findChildText(slot0.viewGO, "Root/Task/#go_NormalBG/scroll_desc/Viewport/Content/#txt_dec")
-	slot0._txtnum = gohelper.findChildText(slot0.viewGO, "Root/Task/#go_NormalBG/#txt_num")
-	slot0._simagereward = gohelper.findChildSingleImage(slot0.viewGO, "Root/Task/#go_NormalBG/#simage_reward")
-	slot0._gocanget = gohelper.findChild(slot0.viewGO, "Root/Task/#go_canget")
-	slot0._goFinishedBG = gohelper.findChild(slot0.viewGO, "Root/Task/#go_FinishedBG")
-	slot0._scrollItemList = gohelper.findChildScrollRect(slot0.viewGO, "Root/#scroll_ItemList")
-	slot0._btnemptyTop = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_emptyTop")
-	slot0._btnemptyBottom = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_emptyBottom")
-	slot0._btnemptyLeft = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_emptyLeft")
-	slot0._btnemptyRight = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_emptyRight")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagePanelBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "Root/#simage_PanelBG")
+	arg_1_0._simageTitle = gohelper.findChildSingleImage(arg_1_0.viewGO, "Root/#simage_Title")
+	arg_1_0._txtLimitTime = gohelper.findChildText(arg_1_0.viewGO, "Root/image_LimitTimeBG/#txt_LimitTime")
+	arg_1_0._txtDec = gohelper.findChildText(arg_1_0.viewGO, "Root/image_DecBG/scroll_desc/Viewport/Content/#txt_Dec")
+	arg_1_0._goNormalBG = gohelper.findChild(arg_1_0.viewGO, "Root/Task/#go_NormalBG")
+	arg_1_0._txtdec = gohelper.findChildText(arg_1_0.viewGO, "Root/Task/#go_NormalBG/scroll_desc/Viewport/Content/#txt_dec")
+	arg_1_0._txtnum = gohelper.findChildText(arg_1_0.viewGO, "Root/Task/#go_NormalBG/#txt_num")
+	arg_1_0._simagereward = gohelper.findChildSingleImage(arg_1_0.viewGO, "Root/Task/#go_NormalBG/#simage_reward")
+	arg_1_0._gocanget = gohelper.findChild(arg_1_0.viewGO, "Root/Task/#go_canget")
+	arg_1_0._goFinishedBG = gohelper.findChild(arg_1_0.viewGO, "Root/Task/#go_FinishedBG")
+	arg_1_0._scrollItemList = gohelper.findChildScrollRect(arg_1_0.viewGO, "Root/#scroll_ItemList")
+	arg_1_0._btnemptyTop = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_emptyTop")
+	arg_1_0._btnemptyBottom = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_emptyBottom")
+	arg_1_0._btnemptyLeft = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_emptyLeft")
+	arg_1_0._btnemptyRight = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_emptyRight")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	Activity101SignViewBase.addEvents(slot0)
-	slot0._btnemptyTop:AddClickListener(slot0._btnemptyTopOnClick, slot0)
-	slot0._btnemptyBottom:AddClickListener(slot0._btnemptyBottomOnClick, slot0)
-	slot0._btnemptyLeft:AddClickListener(slot0._btnemptyLeftOnClick, slot0)
-	slot0._btnemptyRight:AddClickListener(slot0._btnemptyRightOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	Activity101SignViewBase.addEvents(arg_2_0)
+	arg_2_0._btnemptyTop:AddClickListener(arg_2_0._btnemptyTopOnClick, arg_2_0)
+	arg_2_0._btnemptyBottom:AddClickListener(arg_2_0._btnemptyBottomOnClick, arg_2_0)
+	arg_2_0._btnemptyLeft:AddClickListener(arg_2_0._btnemptyLeftOnClick, arg_2_0)
+	arg_2_0._btnemptyRight:AddClickListener(arg_2_0._btnemptyRightOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	Activity101SignViewBase.removeEvents(slot0)
-	slot0._btnemptyTop:RemoveClickListener()
-	slot0._btnemptyBottom:RemoveClickListener()
-	slot0._btnemptyLeft:RemoveClickListener()
-	slot0._btnemptyRight:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	Activity101SignViewBase.removeEvents(arg_3_0)
+	arg_3_0._btnemptyTop:RemoveClickListener()
+	arg_3_0._btnemptyBottom:RemoveClickListener()
+	arg_3_0._btnemptyLeft:RemoveClickListener()
+	arg_3_0._btnemptyRight:RemoveClickListener()
 end
 
-function slot0._btnCloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btnCloseOnClick(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0._btnemptyTopOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btnemptyTopOnClick(arg_5_0)
+	arg_5_0:closeThis()
 end
 
-function slot0._btnemptyBottomOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btnemptyBottomOnClick(arg_6_0)
+	arg_6_0:closeThis()
 end
 
-function slot0._btnemptyLeftOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btnemptyLeftOnClick(arg_7_0)
+	arg_7_0:closeThis()
 end
 
-function slot0._btnemptyRightOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btnemptyRightOnClick(arg_8_0)
+	arg_8_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._txtLimitTime.text = ""
+function var_0_0._editableInitView(arg_9_0)
+	arg_9_0._txtLimitTime.text = ""
 
-	slot0:internal_set_openMode(Activity101SignViewBase.eOpenMode.PaiLian)
-	slot0:_setActive_canget(false)
-	slot0:_setActive_goFinishedBG(false)
+	arg_9_0:internal_set_openMode(Activity101SignViewBase.eOpenMode.PaiLian)
+	arg_9_0:_setActive_canget(false)
+	arg_9_0:_setActive_goFinishedBG(false)
 
-	slot0._itemClick = gohelper.getClickWithAudio(slot0._goNormalBG)
+	arg_9_0._itemClick = gohelper.getClickWithAudio(arg_9_0._goNormalBG)
 
-	slot0._itemClick:AddClickListener(slot0._onItemClick, slot0)
+	arg_9_0._itemClick:AddClickListener(arg_9_0._onItemClick, arg_9_0)
 end
 
-function slot0.onOpen(slot0)
-	slot0:internal_set_actId(slot0.viewParam.actId)
-	slot0:internal_onOpen()
-	slot0:_clearTimeTick()
-	TaskDispatcher.runRepeat(slot0._refreshTimeTick, slot0, 1)
+function var_0_0.onOpen(arg_10_0)
+	arg_10_0:internal_set_actId(arg_10_0.viewParam.actId)
+	arg_10_0:internal_onOpen()
+	arg_10_0:_clearTimeTick()
+	TaskDispatcher.runRepeat(arg_10_0._refreshTimeTick, arg_10_0, 1)
 end
 
-function slot0.onClose(slot0)
-	GameUtil.onDestroyViewMember_ClickListener(slot0, "_itemClick")
-	slot0:_clearTimeTick()
+function var_0_0.onClose(arg_11_0)
+	GameUtil.onDestroyViewMember_ClickListener(arg_11_0, "_itemClick")
+	arg_11_0:_clearTimeTick()
 end
 
-function slot0.onDestroyView(slot0)
-	Activity101SignViewBase._internal_onDestroy(slot0)
-	slot0:_clearTimeTick()
-	slot0._simagereward:UnLoadImage()
-	slot0._simageTitle:UnLoadImage()
+function var_0_0.onDestroyView(arg_12_0)
+	Activity101SignViewBase._internal_onDestroy(arg_12_0)
+	arg_12_0:_clearTimeTick()
+	arg_12_0._simagereward:UnLoadImage()
+	arg_12_0._simageTitle:UnLoadImage()
 end
 
-function slot0._clearTimeTick(slot0)
-	TaskDispatcher.cancelTask(slot0._refreshTimeTick, slot0)
+function var_0_0._clearTimeTick(arg_13_0)
+	TaskDispatcher.cancelTask(arg_13_0._refreshTimeTick, arg_13_0)
 end
 
-function slot0.onRefresh(slot0)
-	slot0:_refreshList()
-	slot0:_refreshTimeTick()
-	slot0:_refreshLeftTop()
-	slot0:_refreshRightTop()
+function var_0_0.onRefresh(arg_14_0)
+	arg_14_0:_refreshList()
+	arg_14_0:_refreshTimeTick()
+	arg_14_0:_refreshLeftTop()
+	arg_14_0:_refreshRightTop()
 end
 
-function slot0._refreshTimeTick(slot0)
-	slot0._txtLimitTime.text = slot0:getRemainTimeStr()
+function var_0_0._refreshTimeTick(arg_15_0)
+	arg_15_0._txtLimitTime.text = arg_15_0:getRemainTimeStr()
 end
 
-function slot0._refreshLeftTop(slot0)
-	if not slot0.viewContainer:getCurrentDayCO() then
-		slot0._txtDec.text = ""
+function var_0_0._refreshLeftTop(arg_16_0)
+	local var_16_0 = arg_16_0.viewContainer:getCurrentDayCO()
+
+	if not var_16_0 then
+		arg_16_0._txtDec.text = ""
 
 		return
 	end
 
-	slot0._txtDec.text = slot1.desc
+	arg_16_0._txtDec.text = var_16_0.desc
 end
 
-function slot0._refreshRightTop(slot0)
-	if not slot0.viewContainer:getCurrentTaskCO() then
-		slot0._txtdec.text = ""
+function var_0_0._refreshRightTop(arg_17_0)
+	local var_17_0 = arg_17_0.viewContainer:getCurrentTaskCO()
 
-		slot0._simagereward:UnLoadImage()
+	if not var_17_0 then
+		arg_17_0._txtdec.text = ""
 
-		slot0._txtnum.text = ""
+		arg_17_0._simagereward:UnLoadImage()
+
+		arg_17_0._txtnum.text = ""
 
 		return
 	end
 
-	slot3 = GameUtil.splitString2(slot1.bonus, true)[1]
-	slot6, slot7 = ItemModel.instance:getItemConfigAndIcon(slot3[1], slot3[2])
+	local var_17_1 = GameUtil.splitString2(var_17_0.bonus, true)[1]
+	local var_17_2 = var_17_1[1]
+	local var_17_3 = var_17_1[2]
+	local var_17_4, var_17_5 = ItemModel.instance:getItemConfigAndIcon(var_17_2, var_17_3)
+	local var_17_6 = arg_17_0.viewContainer:isNone(var_17_0.id)
+	local var_17_7 = arg_17_0.viewContainer:isFinishedTask(var_17_0.id)
+	local var_17_8 = arg_17_0.viewContainer:isRewardable(var_17_0.id)
 
-	slot0:_setActive_canget(slot0.viewContainer:isRewardable(slot1.id))
-	slot0:_setActive_goFinishedBG(slot0.viewContainer:isFinishedTask(slot1.id))
+	arg_17_0:_setActive_canget(var_17_8)
+	arg_17_0:_setActive_goFinishedBG(var_17_7)
 
-	slot0._txtdec.text = slot1.taskDesc
+	arg_17_0._txtdec.text = var_17_0.taskDesc
 
-	GameUtil.loadSImage(slot0._simagereward, slot7)
+	GameUtil.loadSImage(arg_17_0._simagereward, var_17_5)
 
-	slot0._txtnum.text = slot0.viewContainer:isNone(slot1.id) and gohelper.getRichColorText("0/1", "#ff9673") or "1/1"
-	slot0._bonusItem = slot3
+	arg_17_0._txtnum.text = var_17_6 and gohelper.getRichColorText("0/1", "#ff9673") or "1/1"
+	arg_17_0._bonusItem = var_17_1
 end
 
-function slot0._onItemClick(slot0)
-	if not slot0.viewContainer:sendGet101SpBonusRequest(slot0._onReceiveGet101SpBonusReplySucc, slot0) and slot0._bonusItem then
-		MaterialTipController.instance:showMaterialInfo(slot0._bonusItem[1], slot0._bonusItem[2])
+function var_0_0._onItemClick(arg_18_0)
+	if not arg_18_0.viewContainer:sendGet101SpBonusRequest(arg_18_0._onReceiveGet101SpBonusReplySucc, arg_18_0) and arg_18_0._bonusItem then
+		MaterialTipController.instance:showMaterialInfo(arg_18_0._bonusItem[1], arg_18_0._bonusItem[2])
 	end
 end
 
-function slot0._setActive_canget(slot0, slot1)
-	gohelper.setActive(slot0._gocanget, slot1)
+function var_0_0._setActive_canget(arg_19_0, arg_19_1)
+	gohelper.setActive(arg_19_0._gocanget, arg_19_1)
 end
 
-function slot0._setActive_goFinishedBG(slot0, slot1)
-	gohelper.setActive(slot0._goFinishedBG, slot1)
+function var_0_0._setActive_goFinishedBG(arg_20_0, arg_20_1)
+	gohelper.setActive(arg_20_0._goFinishedBG, arg_20_1)
 end
 
-function slot0._onReceiveGet101SpBonusReplySucc(slot0)
-	slot0:_refreshRightTop()
+function var_0_0._onReceiveGet101SpBonusReplySucc(arg_21_0)
+	arg_21_0:_refreshRightTop()
 
-	if not ActivityType101Model.instance:isType101SpRewardCouldGetAnyOne(slot0:actId()) then
+	if not ActivityType101Model.instance:isType101SpRewardCouldGetAnyOne(arg_21_0:actId()) then
 		RedDotRpc.instance:sendGetRedDotInfosRequest({
 			RedDotEnum.DotNode.ActivityNoviceTab
 		})
 	end
 end
 
-return slot0
+return var_0_0

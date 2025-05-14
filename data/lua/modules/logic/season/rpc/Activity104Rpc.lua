@@ -1,242 +1,257 @@
-module("modules.logic.season.rpc.Activity104Rpc", package.seeall)
+﻿module("modules.logic.season.rpc.Activity104Rpc", package.seeall)
 
-slot0 = class("Activity104Rpc", BaseRpc)
+local var_0_0 = class("Activity104Rpc", BaseRpc)
 
-function slot0.sendGet104InfosRequest(slot0, slot1, slot2, slot3)
-	slot4 = Activity104Module_pb.Get104InfosRequest()
-	slot4.activityId = slot1
+function var_0_0.sendGet104InfosRequest(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	local var_1_0 = Activity104Module_pb.Get104InfosRequest()
 
-	return slot0:sendMsg(slot4, slot2, slot3)
+	var_1_0.activityId = arg_1_1
+
+	return arg_1_0:sendMsg(var_1_0, arg_1_2, arg_1_3)
 end
 
-function slot0.onReceiveGet104InfosReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveGet104InfosReply(arg_2_0, arg_2_1, arg_2_2)
+	if arg_2_1 ~= 0 then
 		return
 	end
 
-	Activity104Model.instance:setActivity104Info(slot2)
-	Activity104EquipController.instance:checkHeroGroupCardExist(slot2.activityId)
+	Activity104Model.instance:setActivity104Info(arg_2_2)
+	Activity104EquipController.instance:checkHeroGroupCardExist(arg_2_2.activityId)
 	Activity104Controller.instance:dispatchEvent(Activity104Event.GetAct104Info)
 end
 
-function slot0.sendBeforeStartAct104BattleRequest(slot0, slot1, slot2, slot3, slot4, slot5)
-	slot6 = Activity104Module_pb.BeforeStartAct104BattleRequest()
-	slot6.activityId = slot1
-	slot6.episodeId = slot3
-	slot6.layer = slot2
+function var_0_0.sendBeforeStartAct104BattleRequest(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4, arg_3_5)
+	local var_3_0 = Activity104Module_pb.BeforeStartAct104BattleRequest()
 
-	return slot0:sendMsg(slot6, slot4, slot5)
+	var_3_0.activityId = arg_3_1
+	var_3_0.episodeId = arg_3_3
+	var_3_0.layer = arg_3_2
+
+	return arg_3_0:sendMsg(var_3_0, arg_3_4, arg_3_5)
 end
 
-function slot0.onReceiveBeforeStartAct104BattleReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveBeforeStartAct104BattleReply(arg_4_0, arg_4_1, arg_4_2)
+	if arg_4_1 ~= 0 then
 		return
 	end
 
-	Activity104Controller.instance:dispatchEvent(Activity104Event.StartAct104BattleReply, slot2)
+	Activity104Controller.instance:dispatchEvent(Activity104Event.StartAct104BattleReply, arg_4_2)
 end
 
-function slot0.sendStartAct104BattleRequest(slot0, slot1, slot2, slot3, slot4, slot5, slot6)
-	slot7 = Activity104Module_pb.StartAct104BattleRequest()
+function var_0_0.sendStartAct104BattleRequest(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4, arg_5_5, arg_5_6)
+	local var_5_0 = Activity104Module_pb.StartAct104BattleRequest()
 
-	slot0:setStartDungeonReq(slot7.startDungeonRequest, slot1)
+	arg_5_0:setStartDungeonReq(var_5_0.startDungeonRequest, arg_5_1)
 
-	slot7.activityId = slot2
-	slot7.episodeId = slot4
-	slot7.layer = slot3 or 0
+	var_5_0.activityId = arg_5_2
+	var_5_0.episodeId = arg_5_4
+	var_5_0.layer = arg_5_3 or 0
 
-	return slot0:sendMsg(slot7, slot5, slot6)
+	return arg_5_0:sendMsg(var_5_0, arg_5_5, arg_5_6)
 end
 
-function slot0.setStartDungeonReq(slot0, slot1, slot2)
-	if not slot2.endAdventure then
-		DungeonModel.instance:SetSendChapterEpisodeId(slot2.chapterId, slot2.episodeId)
+function var_0_0.setStartDungeonReq(arg_6_0, arg_6_1, arg_6_2)
+	if not arg_6_2.endAdventure then
+		DungeonModel.instance:SetSendChapterEpisodeId(arg_6_2.chapterId, arg_6_2.episodeId)
 	end
 
-	slot1.chapterId = slot2.chapterId
-	slot1.episodeId = slot2.episodeId
+	arg_6_1.chapterId = arg_6_2.chapterId
+	arg_6_1.episodeId = arg_6_2.episodeId
 
-	if slot2.isRestart then
-		slot1.isRestart = slot2.isRestart
+	if arg_6_2.isRestart then
+		arg_6_1.isRestart = arg_6_2.isRestart
 	end
 
-	if slot2.fightParam then
+	local var_6_0 = arg_6_2.fightParam
+
+	if var_6_0 then
 		if HeroGroupBalanceHelper.getIsBalanceMode() then
-			slot1.isBalance = true
+			arg_6_1.isBalance = true
 		end
 
-		slot3:setReqFightGroup(slot1)
+		var_6_0:setReqFightGroup(arg_6_1)
 
-		if slot3:getCurEpisodeConfig() and not Activity104Model.instance:isSeasonEpisodeType(slot4.type) then
-			for slot8 = #slot1.fightGroup.activity104Equips, 1, -1 do
-				table.remove(slot1.fightGroup.activity104Equips, slot8)
+		local var_6_1 = var_6_0:getCurEpisodeConfig()
+
+		if var_6_1 and not Activity104Model.instance:isSeasonEpisodeType(var_6_1.type) then
+			for iter_6_0 = #arg_6_1.fightGroup.activity104Equips, 1, -1 do
+				table.remove(arg_6_1.fightGroup.activity104Equips, iter_6_0)
 			end
 		end
 	end
 
-	slot1.multiplication = slot2.multiplication or 1
+	arg_6_1.multiplication = arg_6_2.multiplication or 1
 
-	if slot2.useRecord == true then
-		slot1.useRecord = slot2.useRecord
+	if arg_6_2.useRecord == true then
+		arg_6_1.useRecord = arg_6_2.useRecord
 	end
 
-	VersionActivityDungeonBaseController.instance:resetIsFirstPassEpisode(slot2.episodeId)
+	VersionActivityDungeonBaseController.instance:resetIsFirstPassEpisode(arg_6_2.episodeId)
 end
 
-function slot0.onReceiveStartAct104BattleReply(slot0, slot1, slot2)
-	DungeonRpc.instance:onReceiveStartDungeonReply(slot1, slot2.startDungeonReply)
+function var_0_0.onReceiveStartAct104BattleReply(arg_7_0, arg_7_1, arg_7_2)
+	DungeonRpc.instance:onReceiveStartDungeonReply(arg_7_1, arg_7_2.startDungeonReply)
 end
 
-function slot0.onReceiveAct104BattleFinishPush(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveAct104BattleFinishPush(arg_8_0, arg_8_1, arg_8_2)
+	if arg_8_1 ~= 0 then
 		return
 	end
 
-	Activity104Model.instance:updateActivity104Info(slot2)
+	Activity104Model.instance:updateActivity104Info(arg_8_2)
 	Activity104Controller.instance:dispatchEvent(Activity104Event.GetAct104BattleFinish)
 end
 
-function slot0.onReceiveActivity104ItemChangePush(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveActivity104ItemChangePush(arg_9_0, arg_9_1, arg_9_2)
+	if arg_9_1 ~= 0 then
 		return
 	end
 
-	Activity104Model.instance:updateItemChange(slot2)
+	Activity104Model.instance:updateItemChange(arg_9_2)
 	Activity104Controller.instance:dispatchEvent(Activity104Event.GetAct104ItemChange)
 end
 
-function slot0.sendRefreshRetailRequest(slot0, slot1, slot2, slot3)
-	slot4 = Activity104Module_pb.RefreshRetailRequest()
-	slot4.activityId = slot1
+function var_0_0.sendRefreshRetailRequest(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
+	local var_10_0 = Activity104Module_pb.RefreshRetailRequest()
 
-	return slot0:sendMsg(slot4, slot2, slot3)
+	var_10_0.activityId = arg_10_1
+
+	return arg_10_0:sendMsg(var_10_0, arg_10_2, arg_10_3)
 end
 
-function slot0.onReceiveRefreshRetailReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveRefreshRetailReply(arg_11_0, arg_11_1, arg_11_2)
+	if arg_11_1 ~= 0 then
 		return
 	end
 
-	Activity104Model.instance:replaceAct104Retails(slot2)
+	Activity104Model.instance:replaceAct104Retails(arg_11_2)
 	Activity104Controller.instance:dispatchEvent(Activity104Event.RefreshRetail)
 end
 
-function slot0.sendOptionalActivity104EquipRequest(slot0, slot1, slot2, slot3, slot4, slot5)
-	slot6 = Activity104Module_pb.OptionalActivity104EquipRequest()
-	slot6.activityId = slot1
-	slot6.optionalEquipUid = slot2
-	slot6.equipId = slot3
+function var_0_0.sendOptionalActivity104EquipRequest(arg_12_0, arg_12_1, arg_12_2, arg_12_3, arg_12_4, arg_12_5)
+	local var_12_0 = Activity104Module_pb.OptionalActivity104EquipRequest()
 
-	return slot0:sendMsg(slot6, slot4, slot5)
+	var_12_0.activityId = arg_12_1
+	var_12_0.optionalEquipUid = arg_12_2
+	var_12_0.equipId = arg_12_3
+
+	return arg_12_0:sendMsg(var_12_0, arg_12_4, arg_12_5)
 end
 
-function slot0.onReceiveOptionalActivity104EquipReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveOptionalActivity104EquipReply(arg_13_0, arg_13_1, arg_13_2)
+	if arg_13_1 ~= 0 then
 		return
 	end
 
 	Activity104Controller.instance:dispatchEvent(Activity104Event.OptionalEquip)
 end
 
-function slot0.sendChangeFightGroupRequest(slot0, slot1, slot2, slot3, slot4)
-	slot5 = Activity104Module_pb.ChangeFightGroupRequest()
-	slot5.activityId = slot1
-	slot5.heroGroupSnapshotSubId = slot2
+function var_0_0.sendChangeFightGroupRequest(arg_14_0, arg_14_1, arg_14_2, arg_14_3, arg_14_4)
+	local var_14_0 = Activity104Module_pb.ChangeFightGroupRequest()
 
-	return slot0:sendMsg(slot5, slot3, slot4)
+	var_14_0.activityId = arg_14_1
+	var_14_0.heroGroupSnapshotSubId = arg_14_2
+
+	return arg_14_0:sendMsg(var_14_0, arg_14_3, arg_14_4)
 end
 
-function slot0.onReceiveChangeFightGroupReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveChangeFightGroupReply(arg_15_0, arg_15_1, arg_15_2)
+	if arg_15_1 ~= 0 then
 		return
 	end
 
-	Activity104Model.instance:setSeasonCurSnapshotSubId(slot2.activityId, slot2.heroGroupSnapshotSubId)
+	Activity104Model.instance:setSeasonCurSnapshotSubId(arg_15_2.activityId, arg_15_2.heroGroupSnapshotSubId)
 	Activity104Controller.instance:dispatchEvent(Activity104Event.SwitchSnapshotSubId)
 end
 
-function slot0.sendComposeActivity104EquipRequest(slot0, slot1, slot2)
-	Activity104Module_pb.ComposeActivity104EquipRequest().activityId = slot1
+function var_0_0.sendComposeActivity104EquipRequest(arg_16_0, arg_16_1, arg_16_2)
+	local var_16_0 = Activity104Module_pb.ComposeActivity104EquipRequest()
 
-	for slot7, slot8 in ipairs(slot2) do
-		slot3.equipIdUids:append(slot8)
+	var_16_0.activityId = arg_16_1
+
+	for iter_16_0, iter_16_1 in ipairs(arg_16_2) do
+		var_16_0.equipIdUids:append(iter_16_1)
 	end
 
-	return slot0:sendMsg(slot3)
+	return arg_16_0:sendMsg(var_16_0)
 end
 
-function slot0.onReceiveComposeActivity104EquipReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveComposeActivity104EquipReply(arg_17_0, arg_17_1, arg_17_2)
+	if arg_17_1 ~= 0 then
 		return
 	end
 
-	Activity104EquipController.instance:checkHeroGroupCardExist(slot2.activityId)
-	Activity104EquipComposeController.instance:dispatchEvent(Activity104Event.OnComposeSuccess, slot2.activityId)
+	Activity104EquipController.instance:checkHeroGroupCardExist(arg_17_2.activityId)
+	Activity104EquipComposeController.instance:dispatchEvent(Activity104Event.OnComposeSuccess, arg_17_2.activityId)
 end
 
-function slot0.sendGetUnlockActivity104EquipIdsRequest(slot0, slot1)
-	slot2 = Activity104Module_pb.GetUnlockActivity104EquipIdsRequest()
-	slot2.activityId = slot1
+function var_0_0.sendGetUnlockActivity104EquipIdsRequest(arg_18_0, arg_18_1)
+	local var_18_0 = Activity104Module_pb.GetUnlockActivity104EquipIdsRequest()
 
-	slot0:sendMsg(slot2)
+	var_18_0.activityId = arg_18_1
+
+	arg_18_0:sendMsg(var_18_0)
 end
 
-function slot0.onReceiveGetUnlockActivity104EquipIdsReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveGetUnlockActivity104EquipIdsReply(arg_19_0, arg_19_1, arg_19_2)
+	if arg_19_1 ~= 0 then
 		return
 	end
 
-	Activity104Model.instance:onReceiveGetUnlockActivity104EquipIdsReply(slot2)
+	Activity104Model.instance:onReceiveGetUnlockActivity104EquipIdsReply(arg_19_2)
 end
 
-function slot0.sendMarkActivity104StoryRequest(slot0, slot1)
-	slot2 = Activity104Module_pb.MarkActivity104StoryRequest()
-	slot2.activityId = slot1
+function var_0_0.sendMarkActivity104StoryRequest(arg_20_0, arg_20_1)
+	local var_20_0 = Activity104Module_pb.MarkActivity104StoryRequest()
 
-	Activity104Model.instance:markActivityStory(slot1)
+	var_20_0.activityId = arg_20_1
 
-	return slot0:sendMsg(slot2)
+	Activity104Model.instance:markActivityStory(arg_20_1)
+
+	return arg_20_0:sendMsg(var_20_0)
 end
 
-function slot0.onReceiveMarkActivity104StoryReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveMarkActivity104StoryReply(arg_21_0, arg_21_1, arg_21_2)
+	if arg_21_1 ~= 0 then
 		return
 	end
 
-	Activity104Model.instance:markActivityStory(slot2.activityId)
+	Activity104Model.instance:markActivityStory(arg_21_2.activityId)
 end
 
-function slot0.sendMarkEpisodeAfterStoryRequest(slot0, slot1, slot2)
-	slot3 = Activity104Module_pb.MarkEpisodeAfterStoryRequest()
-	slot3.activityId = slot1
-	slot3.layer = slot2
+function var_0_0.sendMarkEpisodeAfterStoryRequest(arg_22_0, arg_22_1, arg_22_2)
+	local var_22_0 = Activity104Module_pb.MarkEpisodeAfterStoryRequest()
 
-	return slot0:sendMsg(slot3)
+	var_22_0.activityId = arg_22_1
+	var_22_0.layer = arg_22_2
+
+	return arg_22_0:sendMsg(var_22_0)
 end
 
-function slot0.onReceiveMarkEpisodeAfterStoryReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveMarkEpisodeAfterStoryReply(arg_23_0, arg_23_1, arg_23_2)
+	if arg_23_1 ~= 0 then
 		return
 	end
 
-	Activity104Model.instance:markEpisodeAfterStory(slot2.activityId, slot2.layer)
+	Activity104Model.instance:markEpisodeAfterStory(arg_23_2.activityId, arg_23_2.layer)
 end
 
-function slot0.sendMarkPopSummaryRequest(slot0, slot1)
-	slot2 = Activity104Module_pb.MarkPopSummaryRequest()
-	slot2.activityId = slot1
+function var_0_0.sendMarkPopSummaryRequest(arg_24_0, arg_24_1)
+	local var_24_0 = Activity104Module_pb.MarkPopSummaryRequest()
 
-	return slot0:sendMsg(slot2)
+	var_24_0.activityId = arg_24_1
+
+	return arg_24_0:sendMsg(var_24_0)
 end
 
-function slot0.onReceiveMarkPopSummaryReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveMarkPopSummaryReply(arg_25_0, arg_25_1, arg_25_2)
+	if arg_25_1 ~= 0 then
 		return
 	end
 
-	Activity104Model.instance:MarkPopSummary(slot2.activityId)
+	Activity104Model.instance:MarkPopSummary(arg_25_2.activityId)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

@@ -1,10 +1,10 @@
-module("modules.common.others.FrameworkExtend", package.seeall)
+﻿module("modules.common.others.FrameworkExtend", package.seeall)
 
-slot0 = class("FrameworkExtend", LuaCompBase)
+local var_0_0 = class("FrameworkExtend", LuaCompBase)
 
-function slot0.init()
+function var_0_0.init()
 	UILayerName.PopUpSecond = "POPUP_SECOND"
 	UILayerName.PopUpBlur = "POPUPBlur"
 end
 
-return slot0
+return var_0_0

@@ -1,104 +1,111 @@
-module("modules.logic.playercard.view.comp.PlayerCardLayout", package.seeall)
+﻿module("modules.logic.playercard.view.comp.PlayerCardLayout", package.seeall)
 
-slot0 = class("PlayerCardLayout", LuaCompBase)
+local var_0_0 = class("PlayerCardLayout", LuaCompBase)
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.go = arg_1_1
 end
 
-function slot0.addEventListeners(slot0)
+function var_0_0.addEventListeners(arg_2_0)
+	return
 end
 
-function slot0.removeEventListeners(slot0)
+function var_0_0.removeEventListeners(arg_3_0)
+	return
 end
 
-function slot0.setLayoutList(slot0, slot1)
-	slot0._layoutList = slot1
+function var_0_0.setLayoutList(arg_4_0, arg_4_1)
+	arg_4_0._layoutList = arg_4_1
 end
 
-function slot0.setData(slot0, slot1)
-	if slot0._layoutList then
-		for slot5, slot6 in ipairs(slot0._layoutList) do
-			slot6:setLayoutIndex(slot1[slot6:getLayoutKey()] or slot7)
+function var_0_0.setData(arg_5_0, arg_5_1)
+	if arg_5_0._layoutList then
+		for iter_5_0, iter_5_1 in ipairs(arg_5_0._layoutList) do
+			local var_5_0 = iter_5_1:getLayoutKey()
+			local var_5_1 = arg_5_1[var_5_0] or var_5_0
+
+			iter_5_1:setLayoutIndex(var_5_1)
 		end
 
-		table.sort(slot0._layoutList, SortUtil.keyLower("index"))
-		slot0:refreshLayout()
+		table.sort(arg_5_0._layoutList, SortUtil.keyLower("index"))
+		arg_5_0:refreshLayout()
 	end
 end
 
-function slot0.refreshLayout(slot0)
-	if not slot0._layoutList then
+function var_0_0.refreshLayout(arg_6_0)
+	if not arg_6_0._layoutList then
 		return
 	end
 
-	table.sort(slot0._layoutList, SortUtil.keyLower("index"))
+	table.sort(arg_6_0._layoutList, SortUtil.keyLower("index"))
 
-	slot1 = -197
+	local var_6_0 = -197
 
-	for slot5, slot6 in ipairs(slot0._layoutList) do
-		recthelper.setAnchorY(slot6:getLayoutGO().transform, slot1)
+	for iter_6_0, iter_6_1 in ipairs(arg_6_0._layoutList) do
+		local var_6_1 = iter_6_1:getLayoutGO()
 
-		slot1 = slot1 - slot6:getHeight() - 5
+		recthelper.setAnchorY(var_6_1.transform, var_6_0)
+
+		var_6_0 = var_6_0 - iter_6_1:getHeight() - 5
 	end
 end
 
-function slot0.setEditMode(slot0, slot1)
-	if slot0._layoutList then
-		for slot5, slot6 in ipairs(slot0._layoutList) do
-			slot6:setEditMode(slot1)
-		end
-	end
-end
-
-function slot0.startUpdate(slot0, slot1)
-	if slot0._inUpdate then
-		return
-	end
-
-	slot0.dragItem = slot1
-	slot0._inUpdate = true
-
-	LateUpdateBeat:Add(slot0._lateUpdate, slot0)
-
-	if slot0._layoutList then
-		for slot5, slot6 in ipairs(slot0._layoutList) do
-			slot6:onStartDrag()
+function var_0_0.setEditMode(arg_7_0, arg_7_1)
+	if arg_7_0._layoutList then
+		for iter_7_0, iter_7_1 in ipairs(arg_7_0._layoutList) do
+			iter_7_1:setEditMode(arg_7_1)
 		end
 	end
 end
 
-function slot0.closeUpdate(slot0)
-	if not slot0._inUpdate then
+function var_0_0.startUpdate(arg_8_0, arg_8_1)
+	if arg_8_0._inUpdate then
 		return
 	end
 
-	slot0.dragItem = nil
-	slot0._inUpdate = false
+	arg_8_0.dragItem = arg_8_1
+	arg_8_0._inUpdate = true
 
-	LateUpdateBeat:Remove(slot0._lateUpdate, slot0)
+	LateUpdateBeat:Add(arg_8_0._lateUpdate, arg_8_0)
 
-	if slot0._layoutList then
-		for slot4, slot5 in ipairs(slot0._layoutList) do
-			slot5:onEndDrag()
+	if arg_8_0._layoutList then
+		for iter_8_0, iter_8_1 in ipairs(arg_8_0._layoutList) do
+			iter_8_1:onStartDrag()
 		end
 	end
 end
 
-function slot0._lateUpdate(slot0)
-	slot0:caleLayout()
-end
-
-function slot0.caleLayout(slot0)
-	if not slot0.dragItem then
+function var_0_0.closeUpdate(arg_9_0)
+	if not arg_9_0._inUpdate then
 		return
 	end
 
-	if slot0._layoutList then
-		for slot4, slot5 in ipairs(slot0._layoutList) do
-			if not slot5.inDrag and slot0.dragItem:isInArea(slot5:getCenterScreenPosY()) then
-				slot0.dragItem:exchangeIndex(slot5)
-				slot0:refreshLayout()
+	arg_9_0.dragItem = nil
+	arg_9_0._inUpdate = false
+
+	LateUpdateBeat:Remove(arg_9_0._lateUpdate, arg_9_0)
+
+	if arg_9_0._layoutList then
+		for iter_9_0, iter_9_1 in ipairs(arg_9_0._layoutList) do
+			iter_9_1:onEndDrag()
+		end
+	end
+end
+
+function var_0_0._lateUpdate(arg_10_0)
+	arg_10_0:caleLayout()
+end
+
+function var_0_0.caleLayout(arg_11_0)
+	if not arg_11_0.dragItem then
+		return
+	end
+
+	if arg_11_0._layoutList then
+		for iter_11_0, iter_11_1 in ipairs(arg_11_0._layoutList) do
+			if not iter_11_1.inDrag and arg_11_0.dragItem:isInArea(iter_11_1:getCenterScreenPosY()) then
+				arg_11_0.dragItem:exchangeIndex(iter_11_1)
+				arg_11_0:refreshLayout()
 
 				break
 			end
@@ -106,20 +113,20 @@ function slot0.caleLayout(slot0)
 	end
 end
 
-function slot0.getLayoutData(slot0)
-	slot1 = {}
+function var_0_0.getLayoutData(arg_12_0)
+	local var_12_0 = {}
 
-	if slot0._layoutList then
-		for slot5, slot6 in ipairs(slot0._layoutList) do
-			table.insert(slot1, string.format("%s_%s", slot6:getLayoutKey(), slot5))
+	if arg_12_0._layoutList then
+		for iter_12_0, iter_12_1 in ipairs(arg_12_0._layoutList) do
+			table.insert(var_12_0, string.format("%s_%s", iter_12_1:getLayoutKey(), iter_12_0))
 		end
 	end
 
-	return table.concat(slot1, "&")
+	return table.concat(var_12_0, "&")
 end
 
-function slot0.onDestroy(slot0)
-	slot0:closeUpdate()
+function var_0_0.onDestroy(arg_13_0)
+	arg_13_0:closeUpdate()
 end
 
-return slot0
+return var_0_0

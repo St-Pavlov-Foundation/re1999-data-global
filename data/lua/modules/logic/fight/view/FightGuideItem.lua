@@ -1,55 +1,61 @@
-module("modules.logic.fight.view.FightGuideItem", package.seeall)
+﻿module("modules.logic.fight.view.FightGuideItem", package.seeall)
 
-slot0 = class("FightGuideItem", LuaCompBase)
+local var_0_0 = class("FightGuideItem", LuaCompBase)
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
-	slot0._simagebg = gohelper.findChildSingleImage(slot1, "#simage_icon")
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot1, "#btn_close")
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.go = arg_1_1
+	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_1, "#simage_icon")
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_1, "#btn_close")
 
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
+	arg_1_0._btnclose:AddClickListener(arg_1_0._btncloseOnClick, arg_1_0)
 
-	slot0._customGODict = slot0:getUserDataTb_()
+	arg_1_0._customGODict = arg_1_0:getUserDataTb_()
 
-	for slot8 = 1, gohelper.findChild(slot1, "#go_customList").transform.childCount do
-		if tonumber(slot3:GetChild(slot8 - 1).name) then
-			slot0._customGODict[slot10] = slot9.gameObject
+	local var_1_0 = gohelper.findChild(arg_1_1, "#go_customList").transform
+	local var_1_1 = var_1_0.childCount
+
+	for iter_1_0 = 1, var_1_1 do
+		local var_1_2 = var_1_0:GetChild(iter_1_0 - 1)
+		local var_1_3 = tonumber(var_1_2.name)
+
+		if var_1_3 then
+			arg_1_0._customGODict[var_1_3] = var_1_2.gameObject
 		end
 	end
 end
 
-function slot0._btncloseOnClick(slot0)
+function var_0_0._btncloseOnClick(arg_2_0)
 	ViewMgr.instance:closeView(ViewName.FightGuideView)
 end
 
-function slot0.updateItem(slot0, slot1)
-	slot0._index = slot1.index
-	slot0._maxIndex = slot1.maxIndex
-	slot0._id = slot1.id
+function var_0_0.updateItem(arg_3_0, arg_3_1)
+	arg_3_0._index = arg_3_1.index
+	arg_3_0._maxIndex = arg_3_1.maxIndex
+	arg_3_0._id = arg_3_1.id
 
-	transformhelper.setLocalPos(slot0.go.transform, slot1.pos, 0, 0)
-	slot0._simagebg:LoadImage(ResUrl.getFightGuideIcon(slot0._id))
-	gohelper.setActive(slot0._customGODict[slot0._id], true)
-	gohelper.setActive(slot0._btnclose.gameObject, slot0._maxIndex == slot0._index)
+	transformhelper.setLocalPos(arg_3_0.go.transform, arg_3_1.pos, 0, 0)
+	arg_3_0._simagebg:LoadImage(ResUrl.getFightGuideIcon(arg_3_0._id))
+	gohelper.setActive(arg_3_0._customGODict[arg_3_0._id], true)
+	gohelper.setActive(arg_3_0._btnclose.gameObject, arg_3_0._maxIndex == arg_3_0._index)
 end
 
-function slot0.setSelect(slot0, slot1)
-	if slot0._index == slot1 then
-		gohelper.setActive(slot0.go, true)
-		TaskDispatcher.cancelTask(slot0._hideGO, slot0)
-	elseif slot0.go.activeInHierarchy then
-		TaskDispatcher.runDelay(slot0._hideGO, slot0, 0.25)
+function var_0_0.setSelect(arg_4_0, arg_4_1)
+	if arg_4_0._index == arg_4_1 then
+		gohelper.setActive(arg_4_0.go, true)
+		TaskDispatcher.cancelTask(arg_4_0._hideGO, arg_4_0)
+	elseif arg_4_0.go.activeInHierarchy then
+		TaskDispatcher.runDelay(arg_4_0._hideGO, arg_4_0, 0.25)
 	end
 end
 
-function slot0._hideGO(slot0)
-	gohelper.setActive(slot0.go, false)
+function var_0_0._hideGO(arg_5_0)
+	gohelper.setActive(arg_5_0.go, false)
 end
 
-function slot0.onDestroy(slot0)
-	slot0._btnclose:RemoveClickListener()
-	TaskDispatcher.cancelTask(slot0._hideGO, slot0)
-	slot0._simagebg:UnLoadImage()
+function var_0_0.onDestroy(arg_6_0)
+	arg_6_0._btnclose:RemoveClickListener()
+	TaskDispatcher.cancelTask(arg_6_0._hideGO, arg_6_0)
+	arg_6_0._simagebg:UnLoadImage()
 end
 
-return slot0
+return var_0_0

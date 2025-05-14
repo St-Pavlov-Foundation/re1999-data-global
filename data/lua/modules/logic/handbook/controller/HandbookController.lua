@@ -1,120 +1,132 @@
-module("modules.logic.handbook.controller.HandbookController", package.seeall)
+﻿module("modules.logic.handbook.controller.HandbookController", package.seeall)
 
-slot0 = class("HandbookController", BaseController)
-slot0.EventName = {
+local var_0_0 = class("HandbookController", BaseController)
+
+var_0_0.EventName = {
 	PlayCharacterSwitchCloseAnim = 3,
 	PlayCharacterSwitchOpenAnim = 2,
 	OnShowSubCharacterView = 1
 }
-slot0.OpenViewNameEnum = {
+var_0_0.OpenViewNameEnum = {
 	HandbookCharacterView = 1,
 	HandbookStoryView = 3,
 	HandbookEquipView = 2
 }
 
-function slot0.onInit(slot0)
-	slot0._openViewName = 0
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._openViewName = 0
 end
 
-function slot0.reInit(slot0)
-	slot0._openViewName = 0
+function var_0_0.reInit(arg_2_0)
+	arg_2_0._openViewName = 0
 end
 
-function slot0.addConstEvents(slot0)
+function var_0_0.addConstEvents(arg_3_0)
+	return
 end
 
-function slot0.jumpView(slot0, slot1)
-	slot0:openView()
+function var_0_0.jumpView(arg_4_0, arg_4_1)
+	local var_4_0 = {}
 
-	if #slot1 <= 1 then
-		return {}
+	arg_4_0:openView()
+
+	if #arg_4_1 <= 1 then
+		return var_4_0
 	end
 
-	if tonumber(slot1[2]) == JumpEnum.HandbookType.Character then
-		slot0:openCharacterView()
-		table.insert(slot2, ViewName.HandBookCharacterSwitchView)
-	elseif slot3 == JumpEnum.HandbookType.Equip then
-		slot0:openEquipView()
-		table.insert(slot2, HandbookEquipView)
-	elseif slot3 == JumpEnum.HandbookType.Story then
-		slot0:openStoryView()
-		table.insert(slot2, HandbookStoryView)
-	elseif slot3 == JumpEnum.HandbookType.CG then
-		slot0:openCGView()
-		table.insert(slot2, HandbookCGView)
+	local var_4_1 = tonumber(arg_4_1[2])
+
+	if var_4_1 == JumpEnum.HandbookType.Character then
+		arg_4_0:openCharacterView()
+		table.insert(var_4_0, ViewName.HandBookCharacterSwitchView)
+	elseif var_4_1 == JumpEnum.HandbookType.Equip then
+		arg_4_0:openEquipView()
+		table.insert(var_4_0, HandbookEquipView)
+	elseif var_4_1 == JumpEnum.HandbookType.Story then
+		arg_4_0:openStoryView()
+		table.insert(var_4_0, HandbookStoryView)
+	elseif var_4_1 == JumpEnum.HandbookType.CG then
+		arg_4_0:openCGView()
+		table.insert(var_4_0, HandbookCGView)
 	end
 
-	return slot2
+	return var_4_0
 end
 
-function slot0.openView(slot0, slot1)
-	slot0:markNotFirstHandbook()
-	ViewMgr.instance:openView(ViewName.HandbookView, slot1)
+function var_0_0.openView(arg_5_0, arg_5_1)
+	arg_5_0:markNotFirstHandbook()
+	ViewMgr.instance:openView(ViewName.HandbookView, arg_5_1)
 end
 
-function slot0.openCharacterView(slot0, slot1)
-	slot0._openViewParam = slot1
-	slot0._openViewName = uv0.OpenViewNameEnum.HandbookCharacterView
+function var_0_0.openCharacterView(arg_6_0, arg_6_1)
+	arg_6_0._openViewParam = arg_6_1
+	arg_6_0._openViewName = var_0_0.OpenViewNameEnum.HandbookCharacterView
 
-	HandbookRpc.instance:sendGetHandbookInfoRequest(slot0._getHandbookInfoReply, slot0)
+	HandbookRpc.instance:sendGetHandbookInfoRequest(arg_6_0._getHandbookInfoReply, arg_6_0)
 end
 
-function slot0.openEquipView(slot0, slot1)
-	slot0._openViewParam = slot1
-	slot0._openViewName = uv0.OpenViewNameEnum.HandbookEquipView
+function var_0_0.openEquipView(arg_7_0, arg_7_1)
+	arg_7_0._openViewParam = arg_7_1
+	arg_7_0._openViewName = var_0_0.OpenViewNameEnum.HandbookEquipView
 
-	HandbookRpc.instance:sendGetHandbookInfoRequest(slot0._getHandbookInfoReply, slot0)
+	HandbookRpc.instance:sendGetHandbookInfoRequest(arg_7_0._getHandbookInfoReply, arg_7_0)
 end
 
-function slot0.openStoryView(slot0, slot1)
-	slot0._openViewParam = slot1
-	slot0._openViewName = uv0.OpenViewNameEnum.HandbookStoryView
+function var_0_0.openStoryView(arg_8_0, arg_8_1)
+	arg_8_0._openViewParam = arg_8_1
+	arg_8_0._openViewName = var_0_0.OpenViewNameEnum.HandbookStoryView
 
-	HandbookRpc.instance:sendGetHandbookInfoRequest(slot0._getHandbookInfoReply, slot0)
+	HandbookRpc.instance:sendGetHandbookInfoRequest(arg_8_0._getHandbookInfoReply, arg_8_0)
 end
 
-function slot0._getHandbookInfoReply(slot0)
-	if not slot0.viewNameDict then
-		slot0.viewNameDict = {
-			[uv0.OpenViewNameEnum.HandbookCharacterView] = ViewName.HandBookCharacterSwitchView,
-			[uv0.OpenViewNameEnum.HandbookEquipView] = ViewName.HandbookEquipView,
-			[uv0.OpenViewNameEnum.HandbookStoryView] = ViewName.HandbookStoryView
+function var_0_0._getHandbookInfoReply(arg_9_0)
+	if not arg_9_0.viewNameDict then
+		arg_9_0.viewNameDict = {
+			[var_0_0.OpenViewNameEnum.HandbookCharacterView] = ViewName.HandBookCharacterSwitchView,
+			[var_0_0.OpenViewNameEnum.HandbookEquipView] = ViewName.HandbookEquipView,
+			[var_0_0.OpenViewNameEnum.HandbookStoryView] = ViewName.HandbookStoryView
 		}
 	end
 
-	ViewMgr.instance:openView(slot0.viewNameDict[slot0._openViewName], slot0._openViewParam)
+	ViewMgr.instance:openView(arg_9_0.viewNameDict[arg_9_0._openViewName], arg_9_0._openViewParam)
 
-	slot0._openViewParam = nil
+	arg_9_0._openViewParam = nil
 end
 
-function slot0.openCGView(slot0, slot1)
-	ViewMgr.instance:openView(ViewName.HandbookCGView, slot1)
+function var_0_0.openCGView(arg_10_0, arg_10_1)
+	ViewMgr.instance:openView(ViewName.HandbookCGView, arg_10_1)
 end
 
-function slot0.openCGDetailView(slot0, slot1)
-	ViewMgr.instance:openView(ViewName.HandbookCGDetailView, slot1)
+function var_0_0.openCGDetailView(arg_11_0, arg_11_1)
+	ViewMgr.instance:openView(ViewName.HandbookCGDetailView, arg_11_1)
 end
 
-function slot0.markNotFirstHandbook(slot0)
-	PlayerPrefsHelper.setNumber(PlayerPrefsKey.FirstHandbook .. tostring(PlayerModel.instance:getMyUserId()), 1)
+function var_0_0.markNotFirstHandbook(arg_12_0)
+	local var_12_0 = PlayerModel.instance:getMyUserId()
+	local var_12_1 = PlayerPrefsKey.FirstHandbook .. tostring(var_12_0)
+
+	PlayerPrefsHelper.setNumber(var_12_1, 1)
 end
 
-function slot0.isFirstHandbook(slot0)
-	return PlayerPrefsHelper.getNumber(PlayerPrefsKey.FirstHandbook .. tostring(PlayerModel.instance:getMyUserId()), 0) <= 0
+function var_0_0.isFirstHandbook(arg_13_0)
+	local var_13_0 = PlayerModel.instance:getMyUserId()
+	local var_13_1 = PlayerPrefsKey.FirstHandbook .. tostring(var_13_0)
+
+	return PlayerPrefsHelper.getNumber(var_13_1, 0) <= 0
 end
 
-function slot0.openHandbookWeekWalkMapView(slot0, slot1)
-	slot0._openViewParam = slot1
+function var_0_0.openHandbookWeekWalkMapView(arg_14_0, arg_14_1)
+	arg_14_0._openViewParam = arg_14_1
 
-	WeekwalkRpc.instance:sendGetWeekwalkEndRequest(slot0._getWeekWalkEndReply, slot0)
+	WeekwalkRpc.instance:sendGetWeekwalkEndRequest(arg_14_0._getWeekWalkEndReply, arg_14_0)
 end
 
-function slot0._getWeekWalkEndReply(slot0)
-	ViewMgr.instance:openView(ViewName.HandbookWeekWalkMapView, slot0._openViewParam)
+function var_0_0._getWeekWalkEndReply(arg_15_0)
+	ViewMgr.instance:openView(ViewName.HandbookWeekWalkMapView, arg_15_0._openViewParam)
 
-	slot0._openViewParam = nil
+	arg_15_0._openViewParam = nil
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

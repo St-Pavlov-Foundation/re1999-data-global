@@ -1,102 +1,111 @@
-module("modules.logic.meilanni.model.MeilanniModel", package.seeall)
+﻿module("modules.logic.meilanni.model.MeilanniModel", package.seeall)
 
-slot0 = class("MeilanniModel", BaseModel)
+local var_0_0 = class("MeilanniModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0:_clear()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:_clear()
 end
 
-function slot0.reInit(slot0)
-	slot0:_clear()
+function var_0_0.reInit(arg_2_0)
+	arg_2_0:_clear()
 end
 
-function slot0._clear(slot0)
-	slot0._mapInfoList = {}
-	slot0._curMapId = nil
+function var_0_0._clear(arg_3_0)
+	arg_3_0._mapInfoList = {}
+	arg_3_0._curMapId = nil
 end
 
-function slot0.setCurMapId(slot0, slot1)
-	slot0._curMapId = slot1
+function var_0_0.setCurMapId(arg_4_0, arg_4_1)
+	arg_4_0._curMapId = arg_4_1
 end
 
-function slot0.getCurMapId(slot0)
-	return slot0._curMapId
+function var_0_0.getCurMapId(arg_5_0)
+	return arg_5_0._curMapId
 end
 
-function slot0.setBattleElementId(slot0, slot1)
-	slot0._battleElementId = slot1
+function var_0_0.setBattleElementId(arg_6_0, arg_6_1)
+	arg_6_0._battleElementId = arg_6_1
 end
 
-function slot0.getBattleElementId(slot0)
-	return slot0._battleElementId
+function var_0_0.getBattleElementId(arg_7_0)
+	return arg_7_0._battleElementId
 end
 
-function slot0.updateMapList(slot0, slot1)
-	for slot5, slot6 in ipairs(slot1) do
-		slot0:updateMapInfo(slot6)
+function var_0_0.updateMapList(arg_8_0, arg_8_1)
+	for iter_8_0, iter_8_1 in ipairs(arg_8_1) do
+		arg_8_0:updateMapInfo(iter_8_1)
 	end
 end
 
-function slot0.updateMapInfo(slot0, slot1)
-	slot2 = slot0._mapInfoList[slot1.mapId] or MeilanniMapInfoMO.New()
+function var_0_0.updateMapInfo(arg_9_0, arg_9_1)
+	local var_9_0 = arg_9_0._mapInfoList[arg_9_1.mapId] or MeilanniMapInfoMO.New()
 
-	slot2:init(slot1)
+	var_9_0:init(arg_9_1)
 
-	slot0._mapInfoList[slot1.mapId] = slot2
+	arg_9_0._mapInfoList[arg_9_1.mapId] = var_9_0
 end
 
-function slot0.updateMapExcludeRules(slot0, slot1)
-	if slot0._mapInfoList[slot1.mapId] then
-		slot2:updateExcludeRules(slot1)
+function var_0_0.updateMapExcludeRules(arg_10_0, arg_10_1)
+	local var_10_0 = arg_10_0._mapInfoList[arg_10_1.mapId]
+
+	if var_10_0 then
+		var_10_0:updateExcludeRules(arg_10_1)
 	end
 end
 
-function slot0.getMapInfo(slot0, slot1)
-	return slot0._mapInfoList[slot1]
+function var_0_0.getMapInfo(arg_11_0, arg_11_1)
+	return arg_11_0._mapInfoList[arg_11_1]
 end
 
-function slot0.getMapHighestScore(slot0, slot1)
-	return slot0._mapInfoList[slot1] and slot2.highestScore or 0
+function var_0_0.getMapHighestScore(arg_12_0, arg_12_1)
+	local var_12_0 = arg_12_0._mapInfoList[arg_12_1]
+
+	return var_12_0 and var_12_0.highestScore or 0
 end
 
-function slot0.updateEpisodeInfo(slot0, slot1)
-	if slot0:getMapInfo(slot1.mapId) then
-		slot3:updateEpisodeInfo(slot1)
+function var_0_0.updateEpisodeInfo(arg_13_0, arg_13_1)
+	local var_13_0 = arg_13_1.mapId
+	local var_13_1 = arg_13_0:getMapInfo(var_13_0)
+
+	if var_13_1 then
+		var_13_1:updateEpisodeInfo(arg_13_1)
 	end
 end
 
-function slot0.getEventInfo(slot0, slot1, slot2)
-	return slot0:getMapInfo(slot1) and slot3:getEventInfo(slot2)
+function var_0_0.getEventInfo(arg_14_0, arg_14_1, arg_14_2)
+	local var_14_0 = arg_14_0:getMapInfo(arg_14_1)
+
+	return var_14_0 and var_14_0:getEventInfo(arg_14_2)
 end
 
-function slot0.getMapIdByBattleId(slot0, slot1)
-	for slot5, slot6 in pairs(slot0._mapInfoList) do
-		if slot6:getEpisodeByBattleId(slot1) then
-			return slot6.mapId
+function var_0_0.getMapIdByBattleId(arg_15_0, arg_15_1)
+	for iter_15_0, iter_15_1 in pairs(arg_15_0._mapInfoList) do
+		if iter_15_1:getEpisodeByBattleId(arg_15_1) then
+			return iter_15_1.mapId
 		end
 	end
 end
 
-function slot0.setDialogItemFadeIndex(slot0, slot1)
-	slot0._dialogItemFadeIndex = slot1
+function var_0_0.setDialogItemFadeIndex(arg_16_0, arg_16_1)
+	arg_16_0._dialogItemFadeIndex = arg_16_1
 end
 
-function slot0.getDialogItemFadeIndex(slot0)
-	if slot0._dialogItemFadeIndex and slot0._dialogItemFadeIndex >= 0 then
-		slot0._dialogItemFadeIndex = slot0._dialogItemFadeIndex + 1
+function var_0_0.getDialogItemFadeIndex(arg_17_0)
+	if arg_17_0._dialogItemFadeIndex and arg_17_0._dialogItemFadeIndex >= 0 then
+		arg_17_0._dialogItemFadeIndex = arg_17_0._dialogItemFadeIndex + 1
 	end
 
-	return slot0._dialogItemFadeIndex
+	return arg_17_0._dialogItemFadeIndex
 end
 
-function slot0.setStatResult(slot0, slot1)
-	slot0.statResult = slot1
+function var_0_0.setStatResult(arg_18_0, arg_18_1)
+	arg_18_0.statResult = arg_18_1
 end
 
-function slot0.getStatResult(slot0)
-	return slot0.statResult
+function var_0_0.getStatResult(arg_19_0)
+	return arg_19_0.statResult
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

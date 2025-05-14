@@ -1,41 +1,47 @@
-module("modules.logic.player.controller.PlayerController", package.seeall)
+﻿module("modules.logic.player.controller.PlayerController", package.seeall)
 
-slot0 = class("PlayerController", BaseController)
+local var_0_0 = class("PlayerController", BaseController)
 
-function slot0.enterSelectScene(slot0)
+function var_0_0.enterSelectScene(arg_1_0)
 	ViewMgr.instance:openView(ViewName.PlayerView)
 end
 
-function slot0.openPlayerView(slot0, slot1, slot2, slot3)
-	ViewMgr.instance:openView(ViewName.PlayerView, {
-		playerInfo = slot1,
-		playerSelf = slot2,
-		heroCover = slot3
-	})
+function var_0_0.openPlayerView(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
+	local var_2_0 = {
+		playerInfo = arg_2_1,
+		playerSelf = arg_2_2,
+		heroCover = arg_2_3
+	}
+
+	ViewMgr.instance:openView(ViewName.PlayerView, var_2_0)
 end
 
-function slot0.openSelfPlayerView(slot0)
-	slot0:openPlayerView(PlayerModel.instance:getPlayinfo(), true)
+function var_0_0.openSelfPlayerView(arg_3_0)
+	local var_3_0 = PlayerModel.instance:getPlayinfo()
+
+	arg_3_0:openPlayerView(var_3_0, true)
 end
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_4_0)
+	return
 end
 
-function slot0.onInitFinish(slot0)
+function var_0_0.onInitFinish(arg_5_0)
+	return
 end
 
-function slot0.addConstEvents(slot0)
-	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, slot0._OnDailyRefresh, slot0)
+function var_0_0.addConstEvents(arg_6_0)
+	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, arg_6_0._OnDailyRefresh, arg_6_0)
 end
 
-function slot0._OnDailyRefresh(slot0)
+function var_0_0._OnDailyRefresh(arg_7_0)
 	PlayerModel.instance:checkCanRenameReset()
 	PlayerRpc.instance:sendMarkMainThumbnailRequest()
-	PlayerRpc.instance:sendGetPlayerInfoRequest(slot0._onDailyRefreshGetPlayerInfo, slot0)
+	PlayerRpc.instance:sendGetPlayerInfoRequest(arg_7_0._onDailyRefreshGetPlayerInfo, arg_7_0)
 	logNormal("每日五点刷新， 发送获取player信息的请求， PlayerRpc")
 end
 
-function slot0.updateAssistRewardCount(slot0)
+function var_0_0.updateAssistRewardCount(arg_8_0)
 	if not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Friend) then
 		return
 	end
@@ -43,7 +49,7 @@ function slot0.updateAssistRewardCount(slot0)
 	PlayerRpc.instance:sendGetAssistBonusRequest()
 end
 
-function slot0.getAssistReward(slot0)
+function var_0_0.getAssistReward(arg_9_0)
 	if not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Friend) then
 		return
 	end
@@ -57,13 +63,14 @@ function slot0.getAssistReward(slot0)
 	PlayerRpc.instance:sendReceiveAssistBonusRequest()
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_10_0)
+	return
 end
 
-function slot0._onDailyRefreshGetPlayerInfo(slot0)
-	slot0:dispatchEvent(PlayerEvent.OnDailyRefresh)
+function var_0_0._onDailyRefreshGetPlayerInfo(arg_11_0)
+	arg_11_0:dispatchEvent(PlayerEvent.OnDailyRefresh)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

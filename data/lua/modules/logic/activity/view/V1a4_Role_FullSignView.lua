@@ -1,76 +1,79 @@
-module("modules.logic.activity.view.V1a4_Role_FullSignView", package.seeall)
+﻿module("modules.logic.activity.view.V1a4_Role_FullSignView", package.seeall)
 
-slot0 = class("V1a4_Role_FullSignView", Activity101SignViewBase)
+local var_0_0 = class("V1a4_Role_FullSignView", Activity101SignViewBase)
 
-function slot0.onInitView(slot0)
-	slot0._simageFullBG = gohelper.findChildSingleImage(slot0.viewGO, "#simage_FullBG")
-	slot0._simageTitle = gohelper.findChildSingleImage(slot0.viewGO, "Root/#simage_Title")
-	slot0._txtLimitTime = gohelper.findChildText(slot0.viewGO, "Root/LimitTime/image_LimitTimeBG/#txt_LimitTime")
-	slot0._scrollItemList = gohelper.findChildScrollRect(slot0.viewGO, "Root/#scroll_ItemList")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simageFullBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_FullBG")
+	arg_1_0._simageTitle = gohelper.findChildSingleImage(arg_1_0.viewGO, "Root/#simage_Title")
+	arg_1_0._txtLimitTime = gohelper.findChildText(arg_1_0.viewGO, "Root/LimitTime/image_LimitTimeBG/#txt_LimitTime")
+	arg_1_0._scrollItemList = gohelper.findChildScrollRect(arg_1_0.viewGO, "Root/#scroll_ItemList")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	Activity101SignViewBase.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	Activity101SignViewBase.addEvents(arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	Activity101SignViewBase.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	Activity101SignViewBase.removeEvents(arg_3_0)
 end
 
-function slot0.onOpen(slot0)
-	slot0._txtLimitTime.text = ""
+function var_0_0.onOpen(arg_4_0)
+	arg_4_0._txtLimitTime.text = ""
 
-	slot0:internal_set_openMode(Activity101SignViewBase.eOpenMode.MainActivityCenterView)
-	slot0:internal_onOpen()
-	TaskDispatcher.runRepeat(slot0._refreshTimeTick, slot0, 1)
+	arg_4_0:internal_set_openMode(Activity101SignViewBase.eOpenMode.MainActivityCenterView)
+	arg_4_0:internal_onOpen()
+	TaskDispatcher.runRepeat(arg_4_0._refreshTimeTick, arg_4_0, 1)
 end
 
-function slot0._updateScrollViewPos(slot0)
-	if slot0._isFirstUpdateScrollPos then
+function var_0_0._updateScrollViewPos(arg_5_0)
+	if arg_5_0._isFirstUpdateScrollPos then
 		return
 	end
 
-	slot0._isFirstUpdateScrollPos = true
+	arg_5_0._isFirstUpdateScrollPos = true
 
-	slot0:updateRewardCouldGetHorizontalScrollPixel(function (slot0)
-		if slot0 <= 4 then
-			return slot0 - 4
+	arg_5_0:updateRewardCouldGetHorizontalScrollPixel(function(arg_6_0)
+		if arg_6_0 <= 4 then
+			return arg_6_0 - 4
 		else
-			return uv0:getTempDataList() and #slot1 or slot0
+			local var_6_0 = arg_5_0:getTempDataList()
+
+			return var_6_0 and #var_6_0 or arg_6_0
 		end
 	end)
 end
 
-function slot0.onClose(slot0)
-	slot0._isFirstUpdateScrollPos = nil
+function var_0_0.onClose(arg_7_0)
+	arg_7_0._isFirstUpdateScrollPos = nil
 
-	TaskDispatcher.cancelTask(slot0._refreshTimeTick, slot0)
+	TaskDispatcher.cancelTask(arg_7_0._refreshTimeTick, arg_7_0)
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simageTitle:UnLoadImage()
-	slot0._simageFullBG:UnLoadImage()
-	TaskDispatcher.cancelTask(slot0._refreshTimeTick, slot0)
+function var_0_0.onDestroyView(arg_8_0)
+	arg_8_0._simageTitle:UnLoadImage()
+	arg_8_0._simageFullBG:UnLoadImage()
+	TaskDispatcher.cancelTask(arg_8_0._refreshTimeTick, arg_8_0)
 end
 
-function slot0.onRefresh(slot0)
-	slot0:_refreshList()
-	slot0:_updateScrollViewPos()
-	slot0:_refreshTimeTick()
+function var_0_0.onRefresh(arg_9_0)
+	arg_9_0:_refreshList()
+	arg_9_0:_updateScrollViewPos()
+	arg_9_0:_refreshTimeTick()
 end
 
-function slot0._refreshTimeTick(slot0)
-	slot0._txtLimitTime.text = slot0:getRemainTimeStr()
+function var_0_0._refreshTimeTick(arg_10_0)
+	arg_10_0._txtLimitTime.text = arg_10_0:getRemainTimeStr()
 end
 
-function slot0._setPinStartIndex(slot0, slot1)
-	slot2, slot3 = slot0:getRewardCouldGetIndex()
+function var_0_0._setPinStartIndex(arg_11_0, arg_11_1)
+	local var_11_0, var_11_1 = arg_11_0:getRewardCouldGetIndex()
+	local var_11_2 = var_11_1 <= 4 and 1 or 3
 
-	slot0.viewContainer:getScrollModel():setStartPinIndex(slot3 <= 4 and 1 or 3)
+	arg_11_0.viewContainer:getScrollModel():setStartPinIndex(var_11_2)
 end
 
-return slot0
+return var_0_0

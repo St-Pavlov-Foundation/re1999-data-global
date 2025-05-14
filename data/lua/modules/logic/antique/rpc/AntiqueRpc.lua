@@ -1,33 +1,35 @@
-module("modules.logic.antique.rpc.AntiqueRpc", package.seeall)
+﻿module("modules.logic.antique.rpc.AntiqueRpc", package.seeall)
 
-slot0 = class("AntiqueRpc", BaseRpc)
+local var_0_0 = class("AntiqueRpc", BaseRpc)
 
-function slot0.sendGetAntiqueInfoRequest(slot0, slot1, slot2)
-	return slot0:sendMsg(AntiqueModule_pb.GetAntiqueInfoRequest(), slot1, slot2)
+function var_0_0.sendGetAntiqueInfoRequest(arg_1_0, arg_1_1, arg_1_2)
+	local var_1_0 = AntiqueModule_pb.GetAntiqueInfoRequest()
+
+	return arg_1_0:sendMsg(var_1_0, arg_1_1, arg_1_2)
 end
 
-function slot0.onReceiveGetAntiqueInfoReply(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveGetAntiqueInfoReply(arg_2_0, arg_2_1, arg_2_2)
+	if arg_2_1 ~= 0 then
 		return
 	end
 
-	AntiqueModel.instance:setAntiqueInfo(slot2.antiques)
+	AntiqueModel.instance:setAntiqueInfo(arg_2_2.antiques)
 end
 
-function slot0.onReceiveAntiqueUpdatePush(slot0, slot1, slot2)
-	if slot1 ~= 0 then
+function var_0_0.onReceiveAntiqueUpdatePush(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_1 ~= 0 then
 		return
 	end
 
-	for slot6, slot7 in ipairs(slot2.antiques) do
-		if not AntiqueModel.instance:getAntique(slot7.antiqueId) then
+	for iter_3_0, iter_3_1 in ipairs(arg_3_2.antiques) do
+		if not AntiqueModel.instance:getAntique(iter_3_1.antiqueId) then
 			GameFacade.showToast(ToastEnum.AntiqueNewGet)
 		end
 	end
 
-	AntiqueModel.instance:updateAntiqueInfo(slot2.antiques)
+	AntiqueModel.instance:updateAntiqueInfo(arg_3_2.antiques)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

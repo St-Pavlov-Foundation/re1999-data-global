@@ -1,49 +1,54 @@
-module("modules.logic.versionactivity1_9.fairyland.view.FairyLandCompleteView", package.seeall)
+﻿module("modules.logic.versionactivity1_9.fairyland.view.FairyLandCompleteView", package.seeall)
 
-slot0 = class("FairyLandCompleteView", BaseView)
+local var_0_0 = class("FairyLandCompleteView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0.btnClose = gohelper.findChildButtonWithAudio(slot0.viewGO, "btnClose")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0.btnClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btnClose")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0:addClickCb(slot0.btnClose, slot0.onClickClose, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0:addClickCb(arg_2_0.btnClose, arg_2_0.onClickClose, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0.onClickClose(slot0)
-	if slot0.canClose then
-		slot0:closeThis()
+function var_0_0.onClickClose(arg_4_0)
+	if arg_4_0.canClose then
+		arg_4_0:closeThis()
 	end
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_5_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_gudu_decrypt_succeed)
-	TaskDispatcher.runDelay(slot0.setCanClose, slot0, 2)
+	TaskDispatcher.runDelay(arg_5_0.setCanClose, arg_5_0, 2)
 
-	slot1 = slot0.viewParam or {}
-	slot0.callback = slot1.callback
-	slot0.callbackObj = slot1.callbackObj
+	local var_5_0 = arg_5_0.viewParam or {}
+	local var_5_1 = var_5_0.shapeType or 1
 
-	gohelper.setActive(gohelper.findChild(slot0.viewGO, "#go_Complete/#go_Shape" .. tostring(slot1.shapeType or 1)), true)
+	arg_5_0.callback = var_5_0.callback
+	arg_5_0.callbackObj = var_5_0.callbackObj
+
+	local var_5_2 = gohelper.findChild(arg_5_0.viewGO, "#go_Complete/#go_Shape" .. tostring(var_5_1))
+
+	gohelper.setActive(var_5_2, true)
 end
 
-function slot0.setCanClose(slot0)
-	slot0.canClose = true
+function var_0_0.setCanClose(arg_6_0)
+	arg_6_0.canClose = true
 end
 
-function slot0.onClose(slot0)
-	TaskDispatcher.cancelTask(slot0.setCanClose, slot0)
+function var_0_0.onClose(arg_7_0)
+	TaskDispatcher.cancelTask(arg_7_0.setCanClose, arg_7_0)
 
-	if slot0.callback then
-		slot0.callback(slot0.callbackObj)
+	if arg_7_0.callback then
+		arg_7_0.callback(arg_7_0.callbackObj)
 	end
 end
 
-return slot0
+return var_0_0

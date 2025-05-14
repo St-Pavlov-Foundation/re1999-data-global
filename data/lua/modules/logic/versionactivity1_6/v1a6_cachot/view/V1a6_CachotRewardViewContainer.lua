@@ -1,8 +1,8 @@
-module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotRewardViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotRewardViewContainer", package.seeall)
 
-slot0 = class("V1a6_CachotRewardViewContainer", BaseViewContainer)
+local var_0_0 = class("V1a6_CachotRewardViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		V1a6_CachotRewardView.New(),
 		V1a6_CachotCurrencyView.New(),
@@ -10,4 +10,4 @@ function slot0.buildViews(slot0)
 	}
 end
 
-return slot0
+return var_0_0

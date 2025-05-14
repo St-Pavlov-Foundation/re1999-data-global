@@ -1,65 +1,72 @@
-module("modules.logic.login.controller.work.LoginParseMonsterConfigWork", package.seeall)
+﻿module("modules.logic.login.controller.work.LoginParseMonsterConfigWork", package.seeall)
 
-slot0 = class("LoginParseMonsterConfigWork", BaseWork)
+local var_0_0 = class("LoginParseMonsterConfigWork", BaseWork)
 
-function slot0.ctor(slot0, slot1, slot2)
-	slot0._skillMonsterIdDict = slot1
-	slot0._skillCurrCardLvDict = slot2
+function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0._skillMonsterIdDict = arg_1_1
+	arg_1_0._skillCurrCardLvDict = arg_1_2
 end
 
-function slot0._timeOut(slot0)
+function var_0_0._timeOut(arg_2_0)
 	logError("解析战斗Monster配置出错了")
 
-	return slot0:onDone(false)
+	return arg_2_0:onDone(false)
 end
 
-function slot0.onStart(slot0)
-	TaskDispatcher.runDelay(slot0._timeOut, slot0, 10)
+function var_0_0.onStart(arg_3_0)
+	TaskDispatcher.runDelay(arg_3_0._timeOut, arg_3_0, 10)
 
-	slot0.curIndex = 0
+	arg_3_0.curIndex = 0
 
-	TaskDispatcher.runRepeat(slot0.parseMonsterCo, slot0, 0.0001)
+	TaskDispatcher.runRepeat(arg_3_0.parseMonsterCo, arg_3_0, 0.0001)
 end
 
-slot0.Interval = 160
+var_0_0.Interval = 160
 
-function slot0.parseMonsterCo(slot0)
-	for slot5 = 1, uv0.Interval do
-		slot0.curIndex = slot0.curIndex + 1
+function var_0_0.parseMonsterCo(arg_4_0)
+	local var_4_0 = lua_monster.configList
 
-		if not lua_monster.configList[slot0.curIndex] then
-			TaskDispatcher.cancelTask(slot0.parseMonsterCo, slot0)
+	for iter_4_0 = 1, var_0_0.Interval do
+		arg_4_0.curIndex = arg_4_0.curIndex + 1
 
-			return slot0:onDone(true)
+		local var_4_1 = var_4_0[arg_4_0.curIndex]
+
+		if not var_4_1 then
+			TaskDispatcher.cancelTask(arg_4_0.parseMonsterCo, arg_4_0)
+
+			return arg_4_0:onDone(true)
 		end
 
-		slot7 = slot6.id
+		local var_4_2 = var_4_1.id
+		local var_4_3 = FightStrUtil.instance:getSplitString2Cache(var_4_1.activeSkill, true, "|", "#")
 
-		if FightStrUtil.instance:getSplitString2Cache(slot6.activeSkill, true, "|", "#") then
-			for slot12, slot13 in ipairs(slot8) do
-				slot14 = 1
+		if var_4_3 then
+			for iter_4_1, iter_4_2 in ipairs(var_4_3) do
+				local var_4_4 = 1
 
-				for slot18, slot19 in ipairs(slot13) do
-					if lua_skill.configDict[slot19] then
-						slot0._skillMonsterIdDict[slot19] = slot7
-						slot0._skillCurrCardLvDict[slot19] = slot14
-						slot14 = slot14 + 1
+				for iter_4_3, iter_4_4 in ipairs(iter_4_2) do
+					if lua_skill.configDict[iter_4_4] then
+						arg_4_0._skillMonsterIdDict[iter_4_4] = var_4_2
+						arg_4_0._skillCurrCardLvDict[iter_4_4] = var_4_4
+						var_4_4 = var_4_4 + 1
 					end
 				end
 			end
 		end
 
-		if slot6.uniqueSkill and #slot9 > 0 then
-			for slot13, slot14 in ipairs(slot9) do
-				slot0._skillMonsterIdDict[slot14] = slot7
+		local var_4_5 = var_4_1.uniqueSkill
+
+		if var_4_5 and #var_4_5 > 0 then
+			for iter_4_5, iter_4_6 in ipairs(var_4_5) do
+				arg_4_0._skillMonsterIdDict[iter_4_6] = var_4_2
 			end
 		end
 	end
 end
 
-function slot0.clearWork(slot0)
-	TaskDispatcher.cancelTask(slot0._timeOut, slot0)
-	TaskDispatcher.cancelTask(slot0.parseMonsterCo, slot0)
+function var_0_0.clearWork(arg_5_0)
+	TaskDispatcher.cancelTask(arg_5_0._timeOut, arg_5_0)
+	TaskDispatcher.cancelTask(arg_5_0.parseMonsterCo, arg_5_0)
 end
 
-return slot0
+return var_0_0

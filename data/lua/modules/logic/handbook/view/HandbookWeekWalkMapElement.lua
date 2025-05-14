@@ -1,162 +1,176 @@
-module("modules.logic.handbook.view.HandbookWeekWalkMapElement", package.seeall)
+﻿module("modules.logic.handbook.view.HandbookWeekWalkMapElement", package.seeall)
 
-slot0 = class("HandbookWeekWalkMapElement", LuaCompBase)
+local var_0_0 = class("HandbookWeekWalkMapElement", LuaCompBase)
 
-function slot0.ctor(slot0, slot1)
-	slot0.parentView = slot1.parentView
-	slot0.diffuseGo = slot1.diffuseGo
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0.parentView = arg_1_1.parentView
+	arg_1_0.diffuseGo = arg_1_1.diffuseGo
 end
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
-	slot0.transform = slot1.transform
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.go = arg_2_1
+	arg_2_0.transform = arg_2_1.transform
 end
 
-function slot0.updateInfo(slot0, slot1)
-	slot0.elementId = slot1
+function var_0_0.updateInfo(arg_3_0, arg_3_1)
+	arg_3_0.elementId = arg_3_1
 
-	slot0:updateConfig(WeekWalkConfig.instance:getElementConfig(slot1))
+	arg_3_0:updateConfig(WeekWalkConfig.instance:getElementConfig(arg_3_1))
 end
 
-function slot0.updateConfig(slot0, slot1)
-	slot0.config = slot1
+function var_0_0.updateConfig(arg_4_0, arg_4_1)
+	arg_4_0.config = arg_4_1
 end
 
-function slot0.dispose(slot0)
-	gohelper.setActive(slot0._itemGo, false)
-	gohelper.destroy(slot0.go)
+function var_0_0.dispose(arg_5_0)
+	gohelper.setActive(arg_5_0._itemGo, false)
+	gohelper.destroy(arg_5_0.go)
 end
 
-function slot0.fadeOut(slot0)
-	slot0._tweenId = ZProj.TweenHelper.DOTweenFloat(1, 0, 1.8, slot0._frameUpdate, slot0._fadeOutFinish, slot0)
+function var_0_0.fadeOut(arg_6_0)
+	arg_6_0._tweenId = ZProj.TweenHelper.DOTweenFloat(1, 0, 1.8, arg_6_0._frameUpdate, arg_6_0._fadeOutFinish, arg_6_0)
 end
 
-function slot0.fadeIn(slot0)
-	slot0._tweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, 1.8, slot0._frameUpdate, slot0._fadeInFinish, slot0)
+function var_0_0.fadeIn(arg_7_0)
+	arg_7_0._tweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, 1.8, arg_7_0._frameUpdate, arg_7_0._fadeInFinish, arg_7_0)
 end
 
-function slot0._fadeInFinish(slot0)
-	slot0:_frameUpdate(1)
+function var_0_0._fadeInFinish(arg_8_0)
+	arg_8_0:_frameUpdate(1)
 end
 
-function slot0._fadeOutFinish(slot0)
-	slot0:dispose()
+function var_0_0._fadeOutFinish(arg_9_0)
+	arg_9_0:dispose()
 end
 
-function slot0._frameUpdate(slot0, slot1)
-	if not slot0._color then
+function var_0_0._frameUpdate(arg_10_0, arg_10_1)
+	if not arg_10_0._color then
 		return
 	end
 
-	slot0._color.a = slot1
+	arg_10_0._color.a = arg_10_1
 
-	for slot5, slot6 in ipairs(slot0._mats) do
-		slot6:SetColor("_MainCol", slot0._color)
+	for iter_10_0, iter_10_1 in ipairs(arg_10_0._mats) do
+		iter_10_1:SetColor("_MainCol", arg_10_0._color)
 	end
 end
 
-function slot0.getResName(slot0)
-	return slot0._config.res
+function var_0_0.getResName(arg_11_0)
+	return arg_11_0._config.res
 end
 
-function slot0.refresh(slot0)
-	if string.nilorempty(slot0:getResName()) then
+function var_0_0.refresh(arg_12_0)
+	local var_12_0 = arg_12_0:getResName()
+
+	if string.nilorempty(var_12_0) then
 		return
 	end
 
-	if not gohelper.findChild(slot0.diffuseGo, slot1) then
-		logError(tostring(slot0.elementId) .. " no resGo:" .. tostring(slot1))
+	local var_12_1 = gohelper.findChild(arg_12_0.diffuseGo, var_12_0)
+
+	if not var_12_1 then
+		logError(tostring(arg_12_0.elementId) .. " no resGo:" .. tostring(var_12_0))
 	end
 
-	slot0.resItemGo = gohelper.clone(slot2, slot0.go, slot1)
+	arg_12_0.resItemGo = gohelper.clone(var_12_1, arg_12_0.go, var_12_0)
 
-	slot0:_loadEffectRes()
+	arg_12_0:_loadEffectRes()
 
-	slot0._mats = {}
+	arg_12_0._mats = {}
 
-	for slot7 = 0, slot0._itemGo:GetComponentsInChildren(typeof(UnityEngine.Renderer)).Length - 1 do
-		table.insert(slot0._mats, slot3[slot7].material)
+	local var_12_2 = arg_12_0._itemGo:GetComponentsInChildren(typeof(UnityEngine.Renderer))
 
-		if not slot0._color then
-			slot0._color = slot8:GetColor("_MainCol")
+	for iter_12_0 = 0, var_12_2.Length - 1 do
+		local var_12_3 = var_12_2[iter_12_0].material
+
+		table.insert(arg_12_0._mats, var_12_3)
+
+		if not arg_12_0._color then
+			arg_12_0._color = var_12_3:GetColor("_MainCol")
 		end
 	end
 
-	slot0:fadeIn()
+	arg_12_0:fadeIn()
 end
 
-function slot0._loadEffectRes(slot0)
-	if slot0._resLoader then
+function var_0_0._loadEffectRes(arg_13_0)
+	if arg_13_0._resLoader then
 		return
 	end
 
-	if not string.nilorempty(slot0._config.disappearEffect) then
-		slot0._disappearEffectPath = string.format("scenes/m_s09_rgmy/prefab/%s.prefab", slot0._config.disappearEffect)
+	if not string.nilorempty(arg_13_0._config.disappearEffect) then
+		arg_13_0._disappearEffectPath = string.format("scenes/m_s09_rgmy/prefab/%s.prefab", arg_13_0._config.disappearEffect)
 	end
 
-	if string.nilorempty(slot0._config.effect) and not slot0._disappearEffectPath then
+	if string.nilorempty(arg_13_0._config.effect) and not arg_13_0._disappearEffectPath then
 		return
 	end
 
-	slot0._resLoader = MultiAbLoader.New()
+	arg_13_0._resLoader = MultiAbLoader.New()
 
-	if not string.nilorempty(slot0._config.effect) then
-		slot0._resLoader:addPath(slot0._config.effect)
+	if not string.nilorempty(arg_13_0._config.effect) then
+		arg_13_0._resLoader:addPath(arg_13_0._config.effect)
 	end
 
-	if slot0._disappearEffectPath then
-		slot0._resLoader:addPath(slot0._disappearEffectPath)
+	if arg_13_0._disappearEffectPath then
+		arg_13_0._resLoader:addPath(arg_13_0._disappearEffectPath)
 	end
 
-	slot0._resLoader:startLoad(slot0._onResLoaded, slot0)
+	arg_13_0._resLoader:startLoad(arg_13_0._onResLoaded, arg_13_0)
 end
 
-function slot0._onResLoaded(slot0, slot1)
-	if not string.nilorempty(slot0._config.effect) then
-		slot0._offsetX = string.splitToNumber(slot0._config.tipOffsetPos, "#")[1] or 0
-		slot0._offsetY = slot2[2] or 0
-		slot0._wenhaoGo = gohelper.clone(slot0._resLoader:getAssetItem(slot0._config.effect):GetResource(slot0._config.effect), slot0._go)
-		slot5, slot6 = transformhelper.getLocalPos(slot0.resItemGo.transform)
+function var_0_0._onResLoaded(arg_14_0, arg_14_1)
+	if not string.nilorempty(arg_14_0._config.effect) then
+		local var_14_0 = string.splitToNumber(arg_14_0._config.tipOffsetPos, "#")
 
-		transformhelper.setLocalPos(slot0._wenhaoGo.transform, slot5 + slot0._offsetX, slot6 + slot0._offsetY, -2)
+		arg_14_0._offsetX = var_14_0[1] or 0
+		arg_14_0._offsetY = var_14_0[2] or 0
+
+		local var_14_1 = arg_14_0._resLoader:getAssetItem(arg_14_0._config.effect):GetResource(arg_14_0._config.effect)
+
+		arg_14_0._wenhaoGo = gohelper.clone(var_14_1, arg_14_0._go)
+
+		local var_14_2, var_14_3 = transformhelper.getLocalPos(arg_14_0.resItemGo.transform)
+
+		transformhelper.setLocalPos(arg_14_0._wenhaoGo.transform, var_14_2 + arg_14_0._offsetX, var_14_3 + arg_14_0._offsetY, -2)
 	end
 end
 
-function slot0.setWenHaoVisible(slot0, slot1)
-	if not slot0._wenhaoGo then
+function var_0_0.setWenHaoVisible(arg_15_0, arg_15_1)
+	if not arg_15_0._wenhaoGo then
 		return
 	end
 
-	if not slot0._wenhaoAnimator then
-		slot0._wenhaoAnimator = slot0._wenhaoGo:GetComponent(typeof(UnityEngine.Animator))
+	if not arg_15_0._wenhaoAnimator then
+		arg_15_0._wenhaoAnimator = arg_15_0._wenhaoGo:GetComponent(typeof(UnityEngine.Animator))
 	end
 
-	if slot1 then
-		slot0._wenhaoAnimator:Play("wenhao_a_001_in")
+	if arg_15_1 then
+		arg_15_0._wenhaoAnimator:Play("wenhao_a_001_in")
 	else
-		slot0._wenhaoAnimator:Play("wenhao_a_001_out")
+		arg_15_0._wenhaoAnimator:Play("wenhao_a_001_out")
 	end
 end
 
-function slot0.hasEffect(slot0)
-	return slot0._wenhaoGo
+function var_0_0.hasEffect(arg_16_0)
+	return arg_16_0._wenhaoGo
 end
 
-function slot0.onDestroy(slot0)
-	if slot0._resLoader then
-		slot0._resLoader:dispose()
+function var_0_0.onDestroy(arg_17_0)
+	if arg_17_0._resLoader then
+		arg_17_0._resLoader:dispose()
 
-		slot0._resLoader = nil
+		arg_17_0._resLoader = nil
 	end
 
-	if slot0._tweenId then
-		ZProj.TweenHelper.KillById(slot0._tweenId)
+	if arg_17_0._tweenId then
+		ZProj.TweenHelper.KillById(arg_17_0._tweenId)
 
-		slot0._tweenId = nil
+		arg_17_0._tweenId = nil
 	end
 
-	slot0._mats = nil
-	slot0._color = nil
+	arg_17_0._mats = nil
+	arg_17_0._color = nil
 end
 
-return slot0
+return var_0_0

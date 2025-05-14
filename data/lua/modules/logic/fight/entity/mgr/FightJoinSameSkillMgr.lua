@@ -1,19 +1,23 @@
-module("modules.logic.fight.entity.mgr.FightJoinSameSkillMgr", package.seeall)
+﻿module("modules.logic.fight.entity.mgr.FightJoinSameSkillMgr", package.seeall)
 
-slot0 = class("FightJoinSameSkillMgr")
+local var_0_0 = class("FightJoinSameSkillMgr")
 
-function slot0.ctor(slot0)
+function var_0_0.ctor(arg_1_0)
+	return
 end
 
-function slot0.init(slot0)
+function var_0_0.init(arg_2_0)
+	return
 end
 
-function slot0.dispose(slot0)
+function var_0_0.dispose(arg_3_0)
+	return
 end
 
-function slot0.checkJoinNextSkill(slot0, slot1)
+function var_0_0.checkJoinNextSkill(arg_4_0, arg_4_1)
+	return
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

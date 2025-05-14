@@ -1,13 +1,13 @@
-module("modules.logic.fight.system.work.FightWorkDeadlyPoisonCritContainer", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkDeadlyPoisonCritContainer", package.seeall)
 
-slot0 = class("FightWorkDeadlyPoisonCritContainer", FightWorkDeadlyPoisonContainer)
+local var_0_0 = class("FightWorkDeadlyPoisonCritContainer", FightWorkDeadlyPoisonContainer)
 
-function slot0.getEffectType(slot0)
+function var_0_0.getEffectType(arg_1_0)
 	return FightEnum.EffectType.DEADLYPOISONORIGINCRIT
 end
 
-function slot0.getFloatType(slot0)
+function var_0_0.getFloatType(arg_2_0)
 	return FightEnum.FloatType.crit_damage_origin
 end
 
-return slot0
+return var_0_0

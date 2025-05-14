@@ -1,128 +1,139 @@
-module("modules.logic.versionactivity1_7.v1a7_warmup.view.VersionActivity1_7WarmUpView", package.seeall)
+﻿module("modules.logic.versionactivity1_7.v1a7_warmup.view.VersionActivity1_7WarmUpView", package.seeall)
 
-slot0 = class("VersionActivity1_7WarmUpView", BaseView)
+local var_0_0 = class("VersionActivity1_7WarmUpView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gomap = gohelper.findChild(slot0.viewGO, "#go_map")
-	slot0._simageTitle = gohelper.findChildSingleImage(slot0.viewGO, "Right/#simage_Title")
-	slot0._txtLimitTime = gohelper.findChildText(slot0.viewGO, "Right/LimitTime/#txt_LimitTime")
-	slot0._goradiotaskitem = gohelper.findChild(slot0.viewGO, "Right/TaskTab/#scroll_TaskTabList/Viewport/Content/#go_radiotaskitem")
-	slot0._txtTaskTitle = gohelper.findChildText(slot0.viewGO, "Right/TaskPanel/#go_Title/#txt_TaskTitle")
-	slot0._txtTaskFMChannelNum = gohelper.findChildText(slot0.viewGO, "Right/TaskPanel/Title/#txt_TaskFMChannelNum")
-	slot0._scrollTaskDesc = gohelper.findChildScrollRect(slot0.viewGO, "Right/TaskPanel/#scroll_TaskDesc")
-	slot0._goTaskDescViewPort = gohelper.findChild(slot0.viewGO, "Right/TaskPanel/#scroll_TaskDesc/Viewport")
-	slot0._rectmask2D = slot0._goTaskDescViewPort:GetComponent(typeof(UnityEngine.UI.RectMask2D))
-	slot0._txtTaskContent = gohelper.findChildText(slot0.viewGO, "Right/TaskPanel/#scroll_TaskDesc/Viewport/#txt_TaskContent")
-	slot0._scrollReward = gohelper.findChildScrollRect(slot0.viewGO, "Right/RawardPanel/#scroll_Reward")
-	slot0._goWrongChannel = gohelper.findChild(slot0.viewGO, "Right/TaskPanel/#go_WrongChannel")
-	slot0._gorewarditem = gohelper.findChild(slot0.viewGO, "Right/RawardPanel/#scroll_Reward/Viewport/Content/#go_rewarditem")
-	slot0._btngetreward = gohelper.findChildButtonWithAudio(slot0.viewGO, "Right/RawardPanel/#btn_getreward")
-	slot0._isPlayingEpisodeDesc = false
-	slot0._bottom = 324
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gomap = gohelper.findChild(arg_1_0.viewGO, "#go_map")
+	arg_1_0._simageTitle = gohelper.findChildSingleImage(arg_1_0.viewGO, "Right/#simage_Title")
+	arg_1_0._txtLimitTime = gohelper.findChildText(arg_1_0.viewGO, "Right/LimitTime/#txt_LimitTime")
+	arg_1_0._goradiotaskitem = gohelper.findChild(arg_1_0.viewGO, "Right/TaskTab/#scroll_TaskTabList/Viewport/Content/#go_radiotaskitem")
+	arg_1_0._txtTaskTitle = gohelper.findChildText(arg_1_0.viewGO, "Right/TaskPanel/#go_Title/#txt_TaskTitle")
+	arg_1_0._txtTaskFMChannelNum = gohelper.findChildText(arg_1_0.viewGO, "Right/TaskPanel/Title/#txt_TaskFMChannelNum")
+	arg_1_0._scrollTaskDesc = gohelper.findChildScrollRect(arg_1_0.viewGO, "Right/TaskPanel/#scroll_TaskDesc")
+	arg_1_0._goTaskDescViewPort = gohelper.findChild(arg_1_0.viewGO, "Right/TaskPanel/#scroll_TaskDesc/Viewport")
+	arg_1_0._rectmask2D = arg_1_0._goTaskDescViewPort:GetComponent(typeof(UnityEngine.UI.RectMask2D))
+	arg_1_0._txtTaskContent = gohelper.findChildText(arg_1_0.viewGO, "Right/TaskPanel/#scroll_TaskDesc/Viewport/#txt_TaskContent")
+	arg_1_0._scrollReward = gohelper.findChildScrollRect(arg_1_0.viewGO, "Right/RawardPanel/#scroll_Reward")
+	arg_1_0._goWrongChannel = gohelper.findChild(arg_1_0.viewGO, "Right/TaskPanel/#go_WrongChannel")
+	arg_1_0._gorewarditem = gohelper.findChild(arg_1_0.viewGO, "Right/RawardPanel/#scroll_Reward/Viewport/Content/#go_rewarditem")
+	arg_1_0._btngetreward = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/RawardPanel/#btn_getreward")
+	arg_1_0._isPlayingEpisodeDesc = false
+	arg_1_0._bottom = 324
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0:addEventCb(Activity125Controller.instance, Activity125Event.DataUpdate, slot0.refreshUI, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, slot0._onRewardRefresh, slot0)
-	slot0:addEventCb(TimeDispatcher.instance, TimeDispatcher.OnDailyRefresh, slot0._onDailyRefresh, slot0)
-	slot0._btngetreward:AddClickListener(slot0._btngetrewardOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0:addEventCb(Activity125Controller.instance, Activity125Event.DataUpdate, arg_2_0.refreshUI, arg_2_0)
+	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_2_0._onRewardRefresh, arg_2_0)
+	arg_2_0:addEventCb(TimeDispatcher.instance, TimeDispatcher.OnDailyRefresh, arg_2_0._onDailyRefresh, arg_2_0)
+	arg_2_0._btngetreward:AddClickListener(arg_2_0._btngetrewardOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0:removeEventCb(Activity125Controller.instance, Activity125Event.DataUpdate, slot0.refreshUI, slot0)
-	slot0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, slot0._onRewardRefresh, slot0)
-	slot0:removeEventCb(TimeDispatcher.instance, TimeDispatcher.OnDailyRefresh, slot0._onDailyRefresh, slot0)
-	slot0._btngetreward:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0:removeEventCb(Activity125Controller.instance, Activity125Event.DataUpdate, arg_3_0.refreshUI, arg_3_0)
+	arg_3_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_3_0._onRewardRefresh, arg_3_0)
+	arg_3_0:removeEventCb(TimeDispatcher.instance, TimeDispatcher.OnDailyRefresh, arg_3_0._onDailyRefresh, arg_3_0)
+	arg_3_0._btngetreward:RemoveClickListener()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._episodeItemTab = {}
-	slot0._rewardItemTab = slot0:getUserDataTb_()
-	slot0._goTaskScroll = gohelper.findChild(slot0.viewGO, "Right/TaskTab/#scroll_TaskTabList")
-	slot0._goTaskContent = gohelper.findChild(slot0.viewGO, "Right/TaskTab/#scroll_TaskTabList/Viewport/Content")
-	slot0._scrollCanvasGroup = gohelper.onceAddComponent(slot0._scrollTaskDesc.gameObject, typeof(UnityEngine.CanvasGroup))
-	slot0._episodeCanGetInfoDict = {}
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._episodeItemTab = {}
+	arg_4_0._rewardItemTab = arg_4_0:getUserDataTb_()
+	arg_4_0._goTaskScroll = gohelper.findChild(arg_4_0.viewGO, "Right/TaskTab/#scroll_TaskTabList")
+	arg_4_0._goTaskContent = gohelper.findChild(arg_4_0.viewGO, "Right/TaskTab/#scroll_TaskTabList/Viewport/Content")
+	arg_4_0._scrollCanvasGroup = gohelper.onceAddComponent(arg_4_0._scrollTaskDesc.gameObject, typeof(UnityEngine.CanvasGroup))
+	arg_4_0._episodeCanGetInfoDict = {}
 end
 
-function slot0._btngetrewardOnClick(slot0)
-	slot1 = slot0:getCurSelectedEpisode()
+function var_0_0._btngetrewardOnClick(arg_5_0)
+	local var_5_0 = arg_5_0:getCurSelectedEpisode()
+	local var_5_1 = Activity125Model.instance:isEpisodeFinished(arg_5_0._actId, var_5_0)
+	local var_5_2 = Activity125Model.instance:checkLocalIsPlay(arg_5_0._actId, var_5_0)
 
-	if not (not Activity125Model.instance:isEpisodeFinished(slot0._actId, slot1) and Activity125Model.instance:checkLocalIsPlay(slot0._actId, slot1)) then
+	if not (not var_5_1 and var_5_2) then
 		return
 	end
 
-	slot0.viewContainer:setIsPlayingDesc(true)
-	Activity125Rpc.instance:sendFinishAct125EpisodeRequest(slot0._actId, slot1, Activity125Config.instance:getEpisodeConfig(slot0._actId, slot1).targetFrequency)
+	arg_5_0.viewContainer:setIsPlayingDesc(true)
+
+	local var_5_3 = Activity125Config.instance:getEpisodeConfig(arg_5_0._actId, var_5_0)
+
+	Activity125Rpc.instance:sendFinishAct125EpisodeRequest(arg_5_0._actId, var_5_0, var_5_3.targetFrequency)
 end
 
-function slot0.onOpen(slot0)
-	gohelper.addChild(slot0.viewParam.parent, slot0.viewGO)
+function var_0_0.onOpen(arg_6_0)
+	local var_6_0 = arg_6_0.viewParam.parent
 
-	slot0._actId = ActivityEnum.Activity.Activity1_7WarmUp
+	gohelper.addChild(var_6_0, arg_6_0.viewGO)
 
-	Activity125Controller.instance:getAct125InfoFromServer(slot0._actId)
+	arg_6_0._actId = ActivityEnum.Activity.Activity1_7WarmUp
+
+	Activity125Controller.instance:getAct125InfoFromServer(arg_6_0._actId)
 end
 
-function slot0.refreshUI(slot0)
-	slot0:_refreshData()
-	slot0:_showDeadline()
-	slot0:_initEpisodeList()
-	slot0:_initRewards()
-	slot0:_initView()
-	slot0:_checkPlayDesc()
+function var_0_0.refreshUI(arg_7_0)
+	arg_7_0:_refreshData()
+	arg_7_0:_showDeadline()
+	arg_7_0:_initEpisodeList()
+	arg_7_0:_initRewards()
+	arg_7_0:_initView()
+	arg_7_0:_checkPlayDesc()
 end
 
-function slot0._initView(slot0)
-	slot3 = Activity125Model.instance:checkIsOldEpisode(slot0._actId, slot0:getCurSelectedEpisode())
-	slot4 = not Activity125Model.instance:isEpisodeFinished(slot0._actId, slot0:getCurSelectedEpisode()) and Activity125Model.instance:checkLocalIsPlay(slot0._actId, slot0:getCurSelectedEpisode())
+function var_0_0._initView(arg_8_0)
+	local var_8_0 = Activity125Model.instance:isEpisodeFinished(arg_8_0._actId, arg_8_0:getCurSelectedEpisode())
+	local var_8_1 = Activity125Model.instance:checkLocalIsPlay(arg_8_0._actId, arg_8_0:getCurSelectedEpisode())
+	local var_8_2 = Activity125Model.instance:checkIsOldEpisode(arg_8_0._actId, arg_8_0:getCurSelectedEpisode())
+	local var_8_3 = not var_8_0 and var_8_1
 
-	for slot8, slot9 in pairs(slot0._rewardItemTab) do
-		gohelper.setActive(slot9.gocanget, slot4)
-		gohelper.setActive(slot9.goreceive, slot1 and not slot0.viewContainer:isPlayingDesc())
+	for iter_8_0, iter_8_1 in pairs(arg_8_0._rewardItemTab) do
+		gohelper.setActive(iter_8_1.gocanget, var_8_3)
+		gohelper.setActive(iter_8_1.goreceive, var_8_0 and not arg_8_0.viewContainer:isPlayingDesc())
 	end
 
-	gohelper.setActive(slot0._btngetreward.gameObject, slot4)
+	gohelper.setActive(arg_8_0._btngetreward.gameObject, var_8_3)
 
-	if slot1 or slot2 or slot3 then
-		slot0._rectmask2D.padding = Vector4(0, 0, 0, 0)
+	if var_8_0 or var_8_1 or var_8_2 then
+		arg_8_0._rectmask2D.padding = Vector4(0, 0, 0, 0)
 
-		gohelper.setActive(slot0._goWrongChannel, false)
+		gohelper.setActive(arg_8_0._goWrongChannel, false)
 	else
-		slot0._rectmask2D.padding = Vector4(0, slot0._bottom, 0, 0)
+		arg_8_0._rectmask2D.padding = Vector4(0, arg_8_0._bottom, 0, 0)
 
-		gohelper.setActive(slot0._goWrongChannel, true)
+		gohelper.setActive(arg_8_0._goWrongChannel, true)
 	end
 end
 
-function slot0.getCurSelectedEpisode(slot0)
-	return Activity125Model.instance:getSelectEpisodeId(slot0._actId)
+function var_0_0.getCurSelectedEpisode(arg_9_0)
+	return Activity125Model.instance:getSelectEpisodeId(arg_9_0._actId)
 end
 
-function slot0._refreshData(slot0)
-	slot2 = Activity125Config.instance:getEpisodeConfig(slot0._actId, slot0:getCurSelectedEpisode())
-	slot0._txtTaskContent.text = slot2.text
-	slot0._descHeight = slot0._txtTaskContent.preferredHeight
-	slot0._txtTaskTitle.text = slot2.name
+function var_0_0._refreshData(arg_10_0)
+	local var_10_0 = arg_10_0:getCurSelectedEpisode()
+	local var_10_1 = Activity125Config.instance:getEpisodeConfig(arg_10_0._actId, var_10_0)
 
-	recthelper.setAnchorY(slot0._txtTaskContent.transform, 0)
-	gohelper.setActive(slot0._goWrongChannel, true)
+	arg_10_0._txtTaskContent.text = var_10_1.text
+	arg_10_0._descHeight = arg_10_0._txtTaskContent.preferredHeight
+	arg_10_0._txtTaskTitle.text = var_10_1.name
+
+	recthelper.setAnchorY(arg_10_0._txtTaskContent.transform, 0)
+	gohelper.setActive(arg_10_0._goWrongChannel, true)
 end
 
-function slot0._showDeadline(slot0)
-	slot0:_onRefreshDeadline()
-	TaskDispatcher.cancelTask(slot0._onRefreshDeadline, slot0)
-	TaskDispatcher.runRepeat(slot0._onRefreshDeadline, slot0, 60)
+function var_0_0._showDeadline(arg_11_0)
+	arg_11_0:_onRefreshDeadline()
+	TaskDispatcher.cancelTask(arg_11_0._onRefreshDeadline, arg_11_0)
+	TaskDispatcher.runRepeat(arg_11_0._onRefreshDeadline, arg_11_0, 60)
 end
 
-function slot0._onRefreshDeadline(slot0)
-	slot0._txtLimitTime.text = ActivityHelper.getActivityRemainTimeStr(slot0._actId)
+function var_0_0._onRefreshDeadline(arg_12_0)
+	arg_12_0._txtLimitTime.text = ActivityHelper.getActivityRemainTimeStr(arg_12_0._actId)
 end
 
-slot0.AnimSwitchMode = {
+var_0_0.AnimSwitchMode = {
 	UnFinish2Finish = 3,
 	Finish = 1,
 	Finish2UnFinish = 4,
@@ -130,222 +141,248 @@ slot0.AnimSwitchMode = {
 	None = 0
 }
 
-function slot0._initEpisodeList(slot0)
-	slot2 = slot0:getCurSelectedEpisode()
+function var_0_0._initEpisodeList(arg_13_0)
+	local var_13_0 = Activity125Config.instance:getEpisodeCount(arg_13_0._actId)
+	local var_13_1 = arg_13_0:getCurSelectedEpisode()
 
-	for slot6 = 1, Activity125Config.instance:getEpisodeCount(slot0._actId) do
-		if not slot0._episodeItemTab[slot6] then
-			slot7 = slot0:getUserDataTb_()
-			slot7.episodeItemGo = gohelper.cloneInPlace(slot0._goradiotaskitem, "taskItem" .. slot6)
-			slot8 = slot7.episodeItemGo
-			slot7.txtDateUnSelected = gohelper.findChildText(slot8, "txt_DateUnSelected")
-			slot7.goDateSelected = gohelper.findChild(slot8, "image_Selected")
-			slot7.txtDateSelected = gohelper.findChildText(slot8, "image_Selected/txt_DateSelected")
-			slot7.finishEffectGo = gohelper.findChild(slot8, "image_Selected/Wave_effect2")
-			slot7.imagewave = gohelper.findChildImage(slot8, "image_Selected/image_wave")
-			slot7.goDateLocked = gohelper.findChild(slot8, "image_Locked")
-			slot7.goRed = gohelper.findChild(slot8, "#go_reddot")
-			slot7.click = gohelper.findChildButton(slot8, "btn_click")
+	for iter_13_0 = 1, var_13_0 do
+		local var_13_2 = arg_13_0._episodeItemTab[iter_13_0]
 
-			slot7.click:AddClickListener(slot0._taskItemOnClick, slot0, slot6)
+		if not var_13_2 then
+			var_13_2 = arg_13_0:getUserDataTb_()
+			var_13_2.episodeItemGo = gohelper.cloneInPlace(arg_13_0._goradiotaskitem, "taskItem" .. iter_13_0)
 
-			slot0._episodeItemTab[slot6] = slot7
+			local var_13_3 = var_13_2.episodeItemGo
+
+			var_13_2.txtDateUnSelected = gohelper.findChildText(var_13_3, "txt_DateUnSelected")
+			var_13_2.goDateSelected = gohelper.findChild(var_13_3, "image_Selected")
+			var_13_2.txtDateSelected = gohelper.findChildText(var_13_3, "image_Selected/txt_DateSelected")
+			var_13_2.finishEffectGo = gohelper.findChild(var_13_3, "image_Selected/Wave_effect2")
+			var_13_2.imagewave = gohelper.findChildImage(var_13_3, "image_Selected/image_wave")
+			var_13_2.goDateLocked = gohelper.findChild(var_13_3, "image_Locked")
+			var_13_2.goRed = gohelper.findChild(var_13_3, "#go_reddot")
+			var_13_2.click = gohelper.findChildButton(var_13_3, "btn_click")
+
+			var_13_2.click:AddClickListener(arg_13_0._taskItemOnClick, arg_13_0, iter_13_0)
+
+			arg_13_0._episodeItemTab[iter_13_0] = var_13_2
 		end
 
-		slot7.txtDateUnSelected.text = string.format("Day.%s", slot6)
-		slot7.txtDateSelected.text = string.format("Day.%s", slot6)
+		var_13_2.txtDateUnSelected.text = string.format("Day.%s", iter_13_0)
+		var_13_2.txtDateSelected.text = string.format("Day.%s", iter_13_0)
 
-		gohelper.setActive(slot7.episodeItemGo, true)
+		gohelper.setActive(var_13_2.episodeItemGo, true)
 
-		slot8 = slot6 == slot2
+		local var_13_4 = iter_13_0 == var_13_1
 
-		gohelper.setActive(slot7.goDateSelected, slot8)
-		gohelper.setActive(slot7.txtDateUnSelected.gameObject, not slot8)
-		gohelper.setActive(slot7.goDateLocked, not Activity125Model.instance:isEpisodeReallyOpen(slot0._actId, slot6))
-		gohelper.setActive(slot7.goRed, Activity125Model.instance:isEpisodeReallyOpen(slot0._actId, slot6) and Activity125Model.instance:isHasEpisodeCanReceiveReward(slot0._actId, slot6))
+		gohelper.setActive(var_13_2.goDateSelected, var_13_4)
+		gohelper.setActive(var_13_2.txtDateUnSelected.gameObject, not var_13_4)
+
+		local var_13_5 = not Activity125Model.instance:isEpisodeReallyOpen(arg_13_0._actId, iter_13_0)
+
+		gohelper.setActive(var_13_2.goDateLocked, var_13_5)
+		gohelper.setActive(var_13_2.goRed, Activity125Model.instance:isEpisodeReallyOpen(arg_13_0._actId, iter_13_0) and Activity125Model.instance:isHasEpisodeCanReceiveReward(arg_13_0._actId, iter_13_0))
 	end
 
-	ZProj.UGUIHelper.RebuildLayout(slot0._goTaskContent.transform)
+	ZProj.UGUIHelper.RebuildLayout(arg_13_0._goTaskContent.transform)
 
-	if slot2 == slot0._selectId then
+	if var_13_1 == arg_13_0._selectId then
 		return
 	end
 
-	slot0._selectId = slot2
+	arg_13_0._selectId = var_13_1
 
-	recthelper.setAnchorX(slot0._goTaskContent.transform, -math.min((slot2 - 1) * 166, math.max(recthelper.getWidth(slot0._goTaskContent.transform) - recthelper.getWidth(slot0._goTaskScroll.transform), 0)))
+	local var_13_6 = math.max(recthelper.getWidth(arg_13_0._goTaskContent.transform) - recthelper.getWidth(arg_13_0._goTaskScroll.transform), 0)
+	local var_13_7 = (var_13_1 - 1) * 166
+
+	recthelper.setAnchorX(arg_13_0._goTaskContent.transform, -math.min(var_13_7, var_13_6))
 end
 
-function slot0._taskItemOnClick(slot0, slot1)
-	if slot0.viewContainer:isPlayingDesc() then
+function var_0_0._taskItemOnClick(arg_14_0, arg_14_1)
+	if arg_14_0.viewContainer:isPlayingDesc() then
 		return
 	end
 
-	slot2 = slot0:getCurSelectedEpisode()
-	slot3, slot4 = Activity125Model.instance:isEpisodeDayOpen(slot0._actId, slot1)
+	local var_14_0 = arg_14_0:getCurSelectedEpisode()
+	local var_14_1, var_14_2 = Activity125Model.instance:isEpisodeDayOpen(arg_14_0._actId, arg_14_1)
 
-	if not slot3 then
-		GameFacade.showToast(ToastEnum.V1A7WarmupDayLock, slot4)
+	if not var_14_1 then
+		GameFacade.showToast(ToastEnum.V1A7WarmupDayLock, var_14_2)
 
 		return
 	end
 
-	if not Activity125Model.instance:isEpisodeUnLock(slot0._actId, slot1) then
+	if not Activity125Model.instance:isEpisodeUnLock(arg_14_0._actId, arg_14_1) then
 		GameFacade.showToast(ToastEnum.V1A7WarmupPreEpisodeLock)
 
 		return
 	end
 
-	if slot2 ~= slot1 then
-		Activity125Model.instance:setSelectEpisodeId(slot0._actId, slot1)
+	if var_14_0 ~= arg_14_1 then
+		Activity125Model.instance:setSelectEpisodeId(arg_14_0._actId, arg_14_1)
 		Activity125Controller.instance:dispatchEvent(Activity125Event.DataUpdate)
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
 end
 
-function slot0._initRewards(slot0)
-	slot0._rewardCount = #string.split(Activity125Config.instance:getEpisodeConfig(slot0._actId, slot0:getCurSelectedEpisode()).bonus, "|")
+function var_0_0._initRewards(arg_15_0)
+	local var_15_0 = Activity125Config.instance:getEpisodeConfig(arg_15_0._actId, arg_15_0:getCurSelectedEpisode()).bonus
+	local var_15_1 = string.split(var_15_0, "|")
 
-	for slot7 = 1, slot0._rewardCount do
-		if not slot0._rewardItemTab[slot7] then
-			slot8 = {
-				go = gohelper.cloneInPlace(slot0._gorewarditem, "rewarditem" .. slot7)
+	arg_15_0._rewardCount = #var_15_1
+
+	for iter_15_0 = 1, arg_15_0._rewardCount do
+		if not arg_15_0._rewardItemTab[iter_15_0] then
+			local var_15_2 = {
+				go = gohelper.cloneInPlace(arg_15_0._gorewarditem, "rewarditem" .. iter_15_0)
 			}
-			slot8.icon = IconMgr.instance:getCommonPropItemIcon(gohelper.findChild(slot8.go, "go_icon"))
-			slot8.goreceive = gohelper.findChild(slot8.go, "go_receive")
-			slot8.gocanget = gohelper.findChild(slot8.go, "go_canget")
-			slot8.hasgetAnim = gohelper.findChild(slot8.go, "go_receive/go_hasget"):GetComponent(typeof(UnityEngine.Animator))
+			local var_15_3 = gohelper.findChild(var_15_2.go, "go_icon")
 
-			table.insert(slot0._rewardItemTab, slot8)
+			var_15_2.icon = IconMgr.instance:getCommonPropItemIcon(var_15_3)
+			var_15_2.goreceive = gohelper.findChild(var_15_2.go, "go_receive")
+			var_15_2.gocanget = gohelper.findChild(var_15_2.go, "go_canget")
+			var_15_2.hasgetAnim = gohelper.findChild(var_15_2.go, "go_receive/go_hasget"):GetComponent(typeof(UnityEngine.Animator))
+
+			table.insert(arg_15_0._rewardItemTab, var_15_2)
 		end
 
-		gohelper.setActive(slot0._rewardItemTab[slot7].go, true)
+		gohelper.setActive(arg_15_0._rewardItemTab[iter_15_0].go, true)
 
-		slot9 = string.splitToNumber(slot3[slot7], "#")
+		local var_15_4 = string.splitToNumber(var_15_1[iter_15_0], "#")
 
-		slot0._rewardItemTab[slot7].icon:setMOValue(slot9[1], slot9[2], slot9[3])
-		slot0._rewardItemTab[slot7].icon:setCountFontSize(42)
-		slot0._rewardItemTab[slot7].icon:setScale(0.5)
+		arg_15_0._rewardItemTab[iter_15_0].icon:setMOValue(var_15_4[1], var_15_4[2], var_15_4[3])
+		arg_15_0._rewardItemTab[iter_15_0].icon:setCountFontSize(42)
+		arg_15_0._rewardItemTab[iter_15_0].icon:setScale(0.5)
 	end
 
-	for slot7 = slot0._rewardCount + 1, #slot0._rewardItemTab do
-		gohelper.setActive(slot0._rewardItemTab[slot7].go, false)
+	for iter_15_1 = arg_15_0._rewardCount + 1, #arg_15_0._rewardItemTab do
+		gohelper.setActive(arg_15_0._rewardItemTab[iter_15_1].go, false)
 	end
 end
 
-function slot0._onRewardRefresh(slot0, slot1)
-	if slot1 == ViewName.CommonPropView then
-		for slot5, slot6 in pairs(slot0._rewardItemTab) do
-			gohelper.setActive(slot6.gocanget, false)
+function var_0_0._onRewardRefresh(arg_16_0, arg_16_1)
+	if arg_16_1 == ViewName.CommonPropView then
+		for iter_16_0, iter_16_1 in pairs(arg_16_0._rewardItemTab) do
+			gohelper.setActive(iter_16_1.gocanget, false)
 		end
 
-		slot0:_onGetRewardAnim(uv0.AnimSwitchMode.UnFinish2Finish)
+		arg_16_0:_onGetRewardAnim(var_0_0.AnimSwitchMode.UnFinish2Finish)
 	end
 end
 
-function slot0._onGetRewardAnim(slot0, slot1)
-	slot0.viewContainer:setIsPlayingDesc(false)
+function var_0_0._onGetRewardAnim(arg_17_0, arg_17_1)
+	arg_17_0.viewContainer:setIsPlayingDesc(false)
 
-	for slot6 = 1, slot0._rewardCount do
-		gohelper.setActive(slot0._rewardItemTab[slot6].goreceive, true)
-		slot0._rewardItemTab[slot6].hasgetAnim:Play(slot1 == uv0.AnimSwitchMode.UnFinish2Finish and "go_hasget_in" or "go_hasget_idle", 0, 0)
+	local var_17_0 = arg_17_1 == var_0_0.AnimSwitchMode.UnFinish2Finish and "go_hasget_in" or "go_hasget_idle"
+
+	for iter_17_0 = 1, arg_17_0._rewardCount do
+		gohelper.setActive(arg_17_0._rewardItemTab[iter_17_0].goreceive, true)
+		arg_17_0._rewardItemTab[iter_17_0].hasgetAnim:Play(var_17_0, 0, 0)
 	end
 end
 
-function slot0._onDailyRefresh(slot0)
-	if slot0._actId then
-		Activity125Controller.instance:getAct125InfoFromServer(slot0._actId)
+function var_0_0._onDailyRefresh(arg_18_0)
+	if arg_18_0._actId then
+		Activity125Controller.instance:getAct125InfoFromServer(arg_18_0._actId)
 	end
 end
 
-function slot0._checkPlayDesc(slot0)
-	if Activity125Model.instance:checkIsOldEpisode(slot0._actId, slot0:getCurSelectedEpisode()) and not Activity125Model.instance:isEpisodeFinished(slot0._actId, slot0:getCurSelectedEpisode()) and not Activity125Model.instance:checkLocalIsPlay(slot0._actId, slot0:getCurSelectedEpisode()) then
-		slot0:playDesc()
+function var_0_0._checkPlayDesc(arg_19_0)
+	local var_19_0 = Activity125Model.instance:isEpisodeFinished(arg_19_0._actId, arg_19_0:getCurSelectedEpisode())
+	local var_19_1 = Activity125Model.instance:checkLocalIsPlay(arg_19_0._actId, arg_19_0:getCurSelectedEpisode())
+
+	if Activity125Model.instance:checkIsOldEpisode(arg_19_0._actId, arg_19_0:getCurSelectedEpisode()) and not var_19_0 and not var_19_1 then
+		arg_19_0:playDesc()
 	end
 end
 
-function slot0.playDesc(slot0)
-	if slot0.viewContainer:isPlayingDesc() then
+function var_0_0.playDesc(arg_20_0)
+	if arg_20_0.viewContainer:isPlayingDesc() then
 		return
 	end
 
-	slot0.viewContainer:setIsPlayingDesc(true)
+	local var_20_0 = Activity125Config.instance:getEpisodeConfig(arg_20_0._actId, arg_20_0:getCurSelectedEpisode())
 
-	slot0.desctime = Activity125Config.instance:getEpisodeConfig(slot0._actId, slot0:getCurSelectedEpisode()).time or 5
+	arg_20_0.viewContainer:setIsPlayingDesc(true)
 
-	slot0:_playEpisodeDesc(slot0.desctime, slot0._onPlayEpisodeDescFinished, slot0)
+	arg_20_0.desctime = var_20_0.time or 5
 
-	slot0._scrollCanvasGroup.blocksRaycasts = false
+	arg_20_0:_playEpisodeDesc(arg_20_0.desctime, arg_20_0._onPlayEpisodeDescFinished, arg_20_0)
+
+	arg_20_0._scrollCanvasGroup.blocksRaycasts = false
 
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_wulu_atticletter_write_loop)
 end
 
-function slot0._playEpisodeDesc(slot0, slot1, slot2, slot3)
-	if slot0._tweenId then
-		ZProj.TweenHelper.KillById(slot0._tweenId)
+function var_0_0._playEpisodeDesc(arg_21_0, arg_21_1, arg_21_2, arg_21_3)
+	if arg_21_0._tweenId then
+		ZProj.TweenHelper.KillById(arg_21_0._tweenId)
 
-		slot0._tweenId = nil
+		arg_21_0._tweenId = nil
 	end
 
-	slot0._tweenId = ZProj.TweenHelper.DOTweenFloat(1, 0, slot1, slot0.everyFrame, slot2, slot3, nil)
+	arg_21_0._tweenId = ZProj.TweenHelper.DOTweenFloat(1, 0, arg_21_1, arg_21_0.everyFrame, arg_21_2, arg_21_3, nil)
 
-	gohelper.setActive(slot0._goWrongChannel, false)
+	gohelper.setActive(arg_21_0._goWrongChannel, false)
 end
 
-function slot0.everyFrame(slot0, slot1)
-	slot0._rectmask2D.padding = Vector4(0, Mathf.Lerp(0, slot0._bottom, slot1), 0, 0)
+function var_0_0.everyFrame(arg_22_0, arg_22_1)
+	arg_22_0._rectmask2D.padding = Vector4(0, Mathf.Lerp(0, arg_22_0._bottom, arg_22_1), 0, 0)
 end
 
-function slot0._onPlayEpisodeDescFinished(slot0)
-	slot0._scrollCanvasGroup.blocksRaycasts = true
+function var_0_0._onPlayEpisodeDescFinished(arg_23_0)
+	arg_23_0._scrollCanvasGroup.blocksRaycasts = true
 
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_wulu_atticletter_write_stop)
-	slot0.viewContainer:setIsPlayingDesc(false)
-	slot0:_checkIsPlayingButNoCompeleteDesc()
+	arg_23_0.viewContainer:setIsPlayingDesc(false)
+	arg_23_0:_checkIsPlayingButNoCompeleteDesc()
 
-	if Activity125Model.instance:isEpisodeFinished(slot0._actId, slot0:getCurSelectedEpisode()) then
+	if Activity125Model.instance:isEpisodeFinished(arg_23_0._actId, arg_23_0:getCurSelectedEpisode()) then
 		return
 	end
 
-	Activity125Model.instance:setLocalIsPlay(slot0._actId, slot0:getCurSelectedEpisode())
-	slot0:refreshUI()
+	Activity125Model.instance:setLocalIsPlay(arg_23_0._actId, arg_23_0:getCurSelectedEpisode())
+	arg_23_0:refreshUI()
 	Activity125Controller.instance:dispatchEvent(Activity125Event.EpisodeUnlock)
 end
 
-function slot0._checkIsPlayingButNoCompeleteDesc(slot0)
-	if slot0._descHeight - slot0._bottom > 0 then
-		slot3 = slot1 * slot0.desctime / slot0._bottom
+function var_0_0._checkIsPlayingButNoCompeleteDesc(arg_24_0)
+	local var_24_0 = arg_24_0._descHeight - arg_24_0._bottom
 
-		if slot0._movetweenId then
-			ZProj.TweenHelper.KillById(slot0._movetweenId)
+	if var_24_0 > 0 then
+		local var_24_1 = var_24_0 * (arg_24_0.desctime / arg_24_0._bottom)
 
-			slot0._movetweenId = nil
+		if arg_24_0._movetweenId then
+			ZProj.TweenHelper.KillById(arg_24_0._movetweenId)
+
+			arg_24_0._movetweenId = nil
 		end
 
-		slot0._movetweenId = ZProj.TweenHelper.DOLocalMoveY(slot0._txtTaskContent.transform, slot1, slot3)
+		arg_24_0._movetweenId = ZProj.TweenHelper.DOLocalMoveY(arg_24_0._txtTaskContent.transform, var_24_0, var_24_1)
 	end
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_25_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	TaskDispatcher.cancelTask(slot0._onRefreshDeadline, slot0)
+function var_0_0.onDestroyView(arg_26_0)
+	TaskDispatcher.cancelTask(arg_26_0._onRefreshDeadline, arg_26_0)
 
-	if slot0._tweenId then
-		ZProj.TweenHelper.KillById(slot0._tweenId)
+	if arg_26_0._tweenId then
+		ZProj.TweenHelper.KillById(arg_26_0._tweenId)
 
-		slot0._tweenId = nil
+		arg_26_0._tweenId = nil
 	end
 
-	if slot0._episodeItemTab then
-		for slot4, slot5 in pairs(slot0._episodeItemTab) do
-			slot5.click:RemoveClickListener()
+	if arg_26_0._episodeItemTab then
+		for iter_26_0, iter_26_1 in pairs(arg_26_0._episodeItemTab) do
+			iter_26_1.click:RemoveClickListener()
 		end
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_wulu_atticletter_write_stop)
 end
 
-return slot0
+return var_0_0

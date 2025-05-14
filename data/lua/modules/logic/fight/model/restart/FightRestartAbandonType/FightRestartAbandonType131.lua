@@ -1,22 +1,24 @@
-module("modules.logic.fight.model.restart.FightRestartAbandonType.FightRestartAbandonType131", package.seeall)
+﻿module("modules.logic.fight.model.restart.FightRestartAbandonType.FightRestartAbandonType131", package.seeall)
 
-slot0 = class("FightRestartAbandonType131", FightRestartAbandonType1)
+local var_0_0 = class("FightRestartAbandonType131", FightRestartAbandonType1)
 
-function slot0.ctor(slot0, slot1, slot2, slot3, slot4)
-	slot0:__onInit()
+function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4)
+	arg_1_0:__onInit()
 
-	slot0._fight_work = slot1
-	slot0._fightParam = slot2
-	slot0._episode_config = slot3
-	slot0._chapter_config = slot4
+	arg_1_0._fight_work = arg_1_1
+	arg_1_0._fightParam = arg_1_2
+	arg_1_0._episode_config = arg_1_3
+	arg_1_0._chapter_config = arg_1_4
 end
 
-function slot0.canRestart(slot0)
-	if not ActivityModel.instance:getActivityInfo()[VersionActivity1_3Enum.ActivityId.Dungeon]:isOnline() or not slot1:isOpen() or slot1:isExpired() then
+function var_0_0.canRestart(arg_2_0)
+	local var_2_0 = ActivityModel.instance:getActivityInfo()[VersionActivity1_3Enum.ActivityId.Dungeon]
+
+	if not var_2_0:isOnline() or not var_2_0:isOpen() or var_2_0:isExpired() then
 		return false
 	end
 
-	return uv0.super.canRestart(slot0)
+	return var_0_0.super.canRestart(arg_2_0)
 end
 
-return slot0
+return var_0_0

@@ -1,67 +1,71 @@
-module("modules.logic.seasonver.act123.controller.Season123EquipHeroController", package.seeall)
+﻿module("modules.logic.seasonver.act123.controller.Season123EquipHeroController", package.seeall)
 
-slot0 = class("Season123EquipHeroController", BaseController)
+local var_0_0 = class("Season123EquipHeroController", BaseController)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.onInitFinish(slot0)
+function var_0_0.onInitFinish(arg_2_0)
+	return
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_3_0)
+	return
 end
 
-slot0.Toast_Save_Succ = 2855
+var_0_0.Toast_Save_Succ = 2855
 
-function slot0.onOpenView(slot0, slot1, slot2, slot3, slot4, slot5)
-	slot0._isOpening = true
-	slot0._callback = slot4
-	slot0._callbackObj = slot5
+function var_0_0.onOpenView(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4, arg_4_5)
+	arg_4_0._isOpening = true
+	arg_4_0._callback = arg_4_4
+	arg_4_0._callbackObj = arg_4_5
 
-	Season123Controller.instance:registerCallback(Season123Event.OnEquipItemChange, slot0.handleItemChanged, slot0)
-	Season123Controller.instance:registerCallback(Season123Event.OnPlayerPrefNewUpdate, slot0.handlePlayerPrefNewUpdate, slot0)
-	HeroGroupController.instance:registerCallback(HeroGroupEvent.OnSnapshotSaveSucc, slot0.handleSnapshotSaveSucc, slot0)
+	Season123Controller.instance:registerCallback(Season123Event.OnEquipItemChange, arg_4_0.handleItemChanged, arg_4_0)
+	Season123Controller.instance:registerCallback(Season123Event.OnPlayerPrefNewUpdate, arg_4_0.handlePlayerPrefNewUpdate, arg_4_0)
+	HeroGroupController.instance:registerCallback(HeroGroupEvent.OnSnapshotSaveSucc, arg_4_0.handleSnapshotSaveSucc, arg_4_0)
 
-	slot7 = nil
+	local var_4_0 = HeroGroupModel.instance:getCurGroupMO()
+	local var_4_1
 
-	if HeroGroupModel.instance:getCurGroupMO() and slot6.activity104Equips and slot6.activity104Equips[Activity123Enum.MainCharPos] then
-		slot7 = tabletool.copy(slot6.activity104Equips[Activity123Enum.MainCharPos].equipUid)
+	if var_4_0 and var_4_0.activity104Equips and var_4_0.activity104Equips[Activity123Enum.MainCharPos] then
+		var_4_1 = tabletool.copy(var_4_0.activity104Equips[Activity123Enum.MainCharPos].equipUid)
 	end
 
-	Season123EquipHeroItemListModel.instance:initDatas(slot1, slot2, slot3, slot7)
+	Season123EquipHeroItemListModel.instance:initDatas(arg_4_1, arg_4_2, arg_4_3, var_4_1)
 end
 
-function slot0.onCloseView(slot0)
-	slot0._isOpening = false
+function var_0_0.onCloseView(arg_5_0)
+	arg_5_0._isOpening = false
 
-	Season123Controller.instance:unregisterCallback(Season123Event.OnEquipItemChange, slot0.handleItemChanged, slot0)
-	Season123Controller.instance:unregisterCallback(Season123Event.OnPlayerPrefNewUpdate, slot0.handlePlayerPrefNewUpdate, slot0)
-	Season123Controller.instance:unregisterCallback(Season123Event.OnSnapshotSaveSucc, slot0.handleSnapshotSaveSucc, slot0)
+	Season123Controller.instance:unregisterCallback(Season123Event.OnEquipItemChange, arg_5_0.handleItemChanged, arg_5_0)
+	Season123Controller.instance:unregisterCallback(Season123Event.OnPlayerPrefNewUpdate, arg_5_0.handlePlayerPrefNewUpdate, arg_5_0)
+	Season123Controller.instance:unregisterCallback(Season123Event.OnSnapshotSaveSucc, arg_5_0.handleSnapshotSaveSucc, arg_5_0)
 	Season123EquipHeroItemListModel.instance:flushRecord()
 	Season123Controller.instance:dispatchEvent(Season123Event.OnPlayerPrefNewUpdate)
 	Season123EquipHeroItemListModel.instance:clear()
 end
 
-function slot0.handleSnapshotSaveSucc(slot0, slot1)
-	if not slot0._isOpening then
+function var_0_0.handleSnapshotSaveSucc(arg_6_0, arg_6_1)
+	if not arg_6_0._isOpening then
 		return
 	end
 
-	if slot1 == ModuleEnum.HeroGroupSnapshotType.Season123 then
-		if slot0._callback then
-			if slot0._callbackObj then
-				slot0._callback(slot0._callbackObj, slot1)
+	if arg_6_1 == ModuleEnum.HeroGroupSnapshotType.Season123 then
+		if arg_6_0._callback then
+			if arg_6_0._callbackObj then
+				arg_6_0._callback(arg_6_0._callbackObj, arg_6_1)
 			else
-				slot0._callback(slot1)
+				arg_6_0._callback(arg_6_1)
 			end
 		end
 
-		slot0:notifyUpdateView()
+		arg_6_0:notifyUpdateView()
 	end
 end
 
-function slot0.handleItemChanged(slot0)
-	if not slot0._isOpening then
+function var_0_0.handleItemChanged(arg_7_0)
+	if not arg_7_0._isOpening then
 		return
 	end
 
@@ -70,51 +74,52 @@ function slot0.handleItemChanged(slot0)
 	Season123EquipHeroItemListModel.instance:initPlayerPrefs()
 	Season123EquipHeroItemListModel.instance:initPosData()
 	Season123EquipHeroItemListModel.instance:initList()
-	slot0:notifyUpdateView()
+	arg_7_0:notifyUpdateView()
 end
 
-function slot0.equipItemOnlyShow(slot0, slot1)
-	slot3 = Season123EquipHeroItemListModel.instance.curEquipMap[Season123EquipHeroItemListModel.instance.curSelectSlot]
-	slot4 = nil
+function var_0_0.equipItemOnlyShow(arg_8_0, arg_8_1)
+	local var_8_0 = Season123EquipHeroItemListModel.instance.curSelectSlot
+	local var_8_1 = Season123EquipHeroItemListModel.instance.curEquipMap[var_8_0]
+	local var_8_2
 
-	for slot8, slot9 in pairs(Season123EquipHeroItemListModel.instance.curEquipMap) do
-		if slot2 ~= slot8 and slot1 == slot9 then
-			Season123EquipHeroItemListModel.instance:unloadShowSlot(slot8)
+	for iter_8_0, iter_8_1 in pairs(Season123EquipHeroItemListModel.instance.curEquipMap) do
+		if var_8_0 ~= iter_8_0 and arg_8_1 == iter_8_1 then
+			Season123EquipHeroItemListModel.instance:unloadShowSlot(iter_8_0)
 
-			slot4 = slot8
+			var_8_2 = iter_8_0
 		end
 	end
 
-	Season123EquipHeroItemListModel.instance:equipShowItem(slot1)
+	Season123EquipHeroItemListModel.instance:equipShowItem(arg_8_1)
 	Season123EquipHeroItemListModel.instance:onModelUpdate()
-	slot0:dispatchEvent(Season123EquipEvent.EquipChangeCard, {
-		isNew = slot3 == Season123EquipHeroItemListModel.EmptyUid,
-		unloadSlot = slot4
+	arg_8_0:dispatchEvent(Season123EquipEvent.EquipChangeCard, {
+		isNew = var_8_1 == Season123EquipHeroItemListModel.EmptyUid,
+		unloadSlot = var_8_2
 	})
 end
 
-function slot0.unloadItem(slot0, slot1)
-	Season123EquipHeroItemListModel.instance:unloadItem(slot1)
-	slot0:notifyUpdateView()
+function var_0_0.unloadItem(arg_9_0, arg_9_1)
+	Season123EquipHeroItemListModel.instance:unloadItem(arg_9_1)
+	arg_9_0:notifyUpdateView()
 end
 
-function slot0.setSlot(slot0, slot1)
-	Season123EquipHeroItemListModel.instance:changeSelectSlot(slot1)
+function var_0_0.setSlot(arg_10_0, arg_10_1)
+	Season123EquipHeroItemListModel.instance:changeSelectSlot(arg_10_1)
 	Season123EquipHeroItemListModel.instance:onModelUpdate()
-	slot0:dispatchEvent(Season123EquipEvent.EquipChangeSlot)
+	arg_10_0:dispatchEvent(Season123EquipEvent.EquipChangeSlot)
 end
 
-function slot0.resumeShowSlot(slot0)
+function var_0_0.resumeShowSlot(arg_11_0)
 	Season123EquipHeroItemListModel.instance:resumeSlotData()
-	slot0:notifyUpdateView()
+	arg_11_0:notifyUpdateView()
 end
 
-function slot0.checkCanSaveSlot(slot0)
+function var_0_0.checkCanSaveSlot(arg_12_0)
 	if not Season123EquipHeroItemListModel.instance.activityId then
 		return
 	end
 
-	if slot0:checkSlotUnlock() then
+	if arg_12_0:checkSlotUnlock() then
 		GameFacade.showToast(SeasonEquipItem.Toast_Slot_Lock)
 
 		return
@@ -123,28 +128,35 @@ function slot0.checkCanSaveSlot(slot0)
 	return true
 end
 
-function slot0.saveShowSlot(slot0)
-	for slot5 = 1, Season123EquipHeroItemListModel.instance:getEquipMaxCount(Season123EquipHeroItemListModel.instance.curPos) do
-		Season123EquipHeroItemListModel.instance:flushSlot(slot5)
+function var_0_0.saveShowSlot(arg_13_0)
+	local var_13_0 = Season123EquipHeroItemListModel.instance:getEquipMaxCount(Season123EquipHeroItemListModel.instance.curPos)
+
+	for iter_13_0 = 1, var_13_0 do
+		Season123EquipHeroItemListModel.instance:flushSlot(iter_13_0)
 	end
 
-	slot2 = Season123EquipHeroItemListModel.instance:getEquipedCards()
+	local var_13_1 = Season123EquipHeroItemListModel.instance:getEquipedCards()
+	local var_13_2 = HeroGroupModel.instance:getCurGroupMO()
 
-	if HeroGroupModel.instance:getCurGroupMO() and slot3.activity104Equips and slot3.activity104Equips[Activity123Enum.MainCharPos] then
-		for slot7, slot8 in ipairs(slot2) do
-			slot3.activity104Equips[Activity123Enum.MainCharPos].equipUid[slot7] = slot2[slot7] or Activity123Enum.EmptyUid
+	if var_13_2 and var_13_2.activity104Equips and var_13_2.activity104Equips[Activity123Enum.MainCharPos] then
+		for iter_13_1, iter_13_2 in ipairs(var_13_1) do
+			local var_13_3 = var_13_1[iter_13_1] or Activity123Enum.EmptyUid
+
+			var_13_2.activity104Equips[Activity123Enum.MainCharPos].equipUid[iter_13_1] = var_13_3
 		end
 
 		HeroGroupModel.instance:saveCurGroupData()
 	end
 end
 
-function slot0.checkSlotUnlock(slot0)
-	if Season123EquipHeroItemListModel.instance.curPos ~= Season123EquipHeroItemListModel.MainCharPos then
+function var_0_0.checkSlotUnlock(arg_14_0)
+	local var_14_0 = Season123EquipHeroItemListModel.instance.curPos
+
+	if var_14_0 ~= Season123EquipHeroItemListModel.MainCharPos then
 		return Season123EquipHeroItemListModel.instance:getShowUnlockSlotCount() <= 0
 	else
-		for slot5 = Season123EquipHeroItemListModel.HeroMaxPos, 1, -1 do
-			if Season123Model.instance:isSeasonStagePosUnlock(Season123EquipHeroItemListModel.instance.activityId, Season123EquipHeroItemListModel.instance.stage, slot5, slot1) then
+		for iter_14_0 = Season123EquipHeroItemListModel.HeroMaxPos, 1, -1 do
+			if Season123Model.instance:isSeasonStagePosUnlock(Season123EquipHeroItemListModel.instance.activityId, Season123EquipHeroItemListModel.instance.stage, iter_14_0, var_14_0) then
 				return false
 			end
 		end
@@ -153,32 +165,32 @@ function slot0.checkSlotUnlock(slot0)
 	end
 end
 
-function slot0.handlePlayerPrefNewUpdate(slot0)
+function var_0_0.handlePlayerPrefNewUpdate(arg_15_0)
 	if Season123EquipHeroItemListModel.instance.recordNew then
 		Season123EquipHeroItemListModel.instance.recordNew:initLocalSave()
 	end
 
-	slot0:notifyUpdateView()
+	arg_15_0:notifyUpdateView()
 end
 
-function slot0.notifyUpdateView(slot0)
+function var_0_0.notifyUpdateView(arg_16_0)
 	Season123EquipHeroItemListModel.instance:onModelUpdate()
-	slot0:dispatchEvent(Season123EquipEvent.EquipUpdate)
+	arg_16_0:dispatchEvent(Season123EquipEvent.EquipUpdate)
 end
 
-function slot0.setSelectTag(slot0, slot1)
+function var_0_0.setSelectTag(arg_17_0, arg_17_1)
 	if Season123EquipHeroItemListModel.instance.tagModel then
-		Season123EquipHeroItemListModel.instance.tagModel:selectTagIndex(slot1)
+		Season123EquipHeroItemListModel.instance.tagModel:selectTagIndex(arg_17_1)
 		Season123EquipHeroItemListModel.instance:initList()
 	end
 end
 
-function slot0.getFilterModel(slot0)
+function var_0_0.getFilterModel(arg_18_0)
 	return Season123EquipHeroItemListModel.instance.tagModel
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-LuaEventSystem.addEventMechanism(slot0.instance)
+LuaEventSystem.addEventMechanism(var_0_0.instance)
 
-return slot0
+return var_0_0

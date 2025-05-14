@@ -1,28 +1,32 @@
-module("modules.logic.season.controller.Activity104HeroGroupController", package.seeall)
+﻿module("modules.logic.season.controller.Activity104HeroGroupController", package.seeall)
 
-slot0 = class("Activity104HeroGroupController", BaseController)
+local var_0_0 = class("Activity104HeroGroupController", BaseController)
 
-function slot0.addConstEvents(slot0)
-	LoginController.instance:registerCallback(LoginEvent.OnGetInfoFinish, slot0._onGetInfoFinish, slot0)
+function var_0_0.addConstEvents(arg_1_0)
+	LoginController.instance:registerCallback(LoginEvent.OnGetInfoFinish, arg_1_0._onGetInfoFinish, arg_1_0)
 end
 
-function slot0.reInit(slot0)
-	FightController.instance:unregisterCallback(FightEvent.RespGetFightRecordGroupReply, slot0._onGetFightRecordGroupReply, slot0)
+function var_0_0.reInit(arg_2_0)
+	FightController.instance:unregisterCallback(FightEvent.RespGetFightRecordGroupReply, arg_2_0._onGetFightRecordGroupReply, arg_2_0)
 end
 
-function slot0._onGetInfoFinish(slot0)
+function var_0_0._onGetInfoFinish(arg_3_0)
 	HeroGroupModel.instance:setParam()
 end
 
-function slot0.openGroupFightView(slot0, slot1, slot2)
+function var_0_0.openGroupFightView(arg_4_0, arg_4_1, arg_4_2)
 	HeroGroupModel.instance:setReplayParam(nil)
-	HeroGroupModel.instance:setParam(slot1, slot2)
+	HeroGroupModel.instance:setParam(arg_4_1, arg_4_2)
 
-	slot6 = PlayerPrefsHelper.getString(FightModel.getPrefsKeyFightPassModel(), "")
+	local var_4_0 = OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.FightReplay)
+	local var_4_1 = DungeonModel.instance:getEpisodeInfo(arg_4_2)
+	local var_4_2 = var_4_1 and var_4_1.star == DungeonEnum.StarType.Advanced and var_4_1.hasRecord
+	local var_4_3 = PlayerPrefsHelper.getString(FightModel.getPrefsKeyFightPassModel(), "")
+	local var_4_4 = Activity104Model.instance:isEpisodeAdvance(HeroGroupModel.instance.episodeId)
 
-	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.FightReplay) and (DungeonModel.instance:getEpisodeInfo(slot2) and slot4.star == DungeonEnum.StarType.Advanced and slot4.hasRecord) and not string.nilorempty(slot6) and not Activity104Model.instance:isEpisodeAdvance(HeroGroupModel.instance.episodeId) and cjson.decode(slot6)[tostring(slot2)] then
-		FightController.instance:registerCallback(FightEvent.RespGetFightRecordGroupReply, slot0._onGetFightRecordGroupReply, slot0)
-		FightRpc.instance:sendGetFightRecordGroupRequest(slot2)
+	if var_4_0 and var_4_2 and not string.nilorempty(var_4_3) and not var_4_4 and cjson.decode(var_4_3)[tostring(arg_4_2)] then
+		FightController.instance:registerCallback(FightEvent.RespGetFightRecordGroupReply, arg_4_0._onGetFightRecordGroupReply, arg_4_0)
+		FightRpc.instance:sendGetFightRecordGroupRequest(arg_4_2)
 
 		return
 	end
@@ -30,12 +34,12 @@ function slot0.openGroupFightView(slot0, slot1, slot2)
 	Activity104Controller.instance:openSeasonHeroGroupFightView()
 end
 
-function slot0._onGetFightRecordGroupReply(slot0, slot1)
-	FightController.instance:unregisterCallback(FightEvent.RespGetFightRecordGroupReply, slot0._onGetFightRecordGroupReply, slot0)
-	HeroGroupModel.instance:setReplayParam(slot1)
+function var_0_0._onGetFightRecordGroupReply(arg_5_0, arg_5_1)
+	FightController.instance:unregisterCallback(FightEvent.RespGetFightRecordGroupReply, arg_5_0._onGetFightRecordGroupReply, arg_5_0)
+	HeroGroupModel.instance:setReplayParam(arg_5_1)
 	Activity104Controller.instance:openSeasonHeroGroupFightView()
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

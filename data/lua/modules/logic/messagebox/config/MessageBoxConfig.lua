@@ -1,35 +1,37 @@
-module("modules.logic.messagebox.config.MessageBoxConfig", package.seeall)
+﻿module("modules.logic.messagebox.config.MessageBoxConfig", package.seeall)
 
-slot0 = class("MessageBoxConfig", BaseConfig)
+local var_0_0 = class("MessageBoxConfig", BaseConfig)
 
-function slot0.ctor(slot0)
-	slot0._messageBoxConfig = nil
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._messageBoxConfig = nil
 end
 
-function slot0.reqConfigNames(slot0)
+function var_0_0.reqConfigNames(arg_2_0)
 	return {
 		"messagebox"
 	}
 end
 
-function slot0.onConfigLoaded(slot0, slot1, slot2)
-	if slot1 == "messagebox" then
-		slot0._messageBoxConfig = slot2
+function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_1 == "messagebox" then
+		arg_3_0._messageBoxConfig = arg_3_2
 	end
 end
 
-function slot0.getMessageBoxCO(slot0, slot1)
-	return slot0._messageBoxConfig.configDict[slot1]
+function var_0_0.getMessageBoxCO(arg_4_0, arg_4_1)
+	return arg_4_0._messageBoxConfig.configDict[arg_4_1]
 end
 
-function slot0.getMessage(slot0, slot1)
-	if not slot0:getMessageBoxCO(slot1) then
-		logError("找不到弹窗配置, id: " .. tostring(slot1))
+function var_0_0.getMessage(arg_5_0, arg_5_1)
+	local var_5_0 = arg_5_0:getMessageBoxCO(arg_5_1)
+
+	if not var_5_0 then
+		logError("找不到弹窗配置, id: " .. tostring(arg_5_1))
 	end
 
-	return slot2 and slot2.content or ""
+	return var_5_0 and var_5_0.content or ""
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

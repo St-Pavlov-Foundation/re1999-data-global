@@ -1,168 +1,176 @@
-module("modules.logic.scene.summon.comp.SummonSceneSelector", package.seeall)
+﻿module("modules.logic.scene.summon.comp.SummonSceneSelector", package.seeall)
 
-slot0 = class("SummonSceneSelector", BaseSceneComp)
+local var_0_0 = class("SummonSceneSelector", BaseSceneComp)
 
-function slot0.onSceneStart(slot0, slot1, slot2)
-	slot0._curSelectType = nil
-	slot0._curSelectGo = nil
+function var_0_0.onSceneStart(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0._curSelectType = nil
+	arg_1_0._curSelectGo = nil
 
 	logNormal("SummonSceneSelector:onSceneStart")
-	SummonController.instance:registerCallback(SummonEvent.onSummonTabSet, slot0._handleSelectScene, slot0)
-	GameGlobalMgr.instance:registerCallback(GameStateEvent.OnScreenResize, slot0._onSceneResize, slot0)
-	slot0:_handleSelectScene()
+	SummonController.instance:registerCallback(SummonEvent.onSummonTabSet, arg_1_0._handleSelectScene, arg_1_0)
+	GameGlobalMgr.instance:registerCallback(GameStateEvent.OnScreenResize, arg_1_0._onSceneResize, arg_1_0)
+	arg_1_0:_handleSelectScene()
 end
 
-function slot0.onScenePrepared(slot0, slot1, slot2)
-	slot0:_handleSelectScene()
-	slot0:_refreshSelectScene()
+function var_0_0.onScenePrepared(arg_2_0, arg_2_1, arg_2_2)
+	arg_2_0:_handleSelectScene()
+	arg_2_0:_refreshSelectScene()
 end
 
-function slot0._onSceneResize(slot0)
-	if slot0._curSelectType == SummonEnum.ResultType.Equip then
-		slot0._sceneObj.cameraAnim:switchToEquip()
+function var_0_0._onSceneResize(arg_3_0)
+	if arg_3_0._curSelectType == SummonEnum.ResultType.Equip then
+		arg_3_0._sceneObj.cameraAnim:switchToEquip()
 	else
-		slot0._sceneObj.cameraAnim:switchToChar()
+		arg_3_0._sceneObj.cameraAnim:switchToChar()
 	end
 end
 
-function slot0._handleSelectScene(slot0)
-	if not SummonController.instance:getLastPoolId() then
+function var_0_0._handleSelectScene(arg_4_0)
+	local var_4_0 = SummonController.instance:getLastPoolId()
+
+	if not var_4_0 then
 		logNormal("LastPoolId is empty, Maybe call from guide.")
 	end
 
-	if SummonMainModel.getResultTypeById(slot1) ~= slot0._curSelectType then
-		slot0._curSelectType = slot2
+	local var_4_1 = SummonMainModel.getResultTypeById(var_4_0)
 
-		slot0:_refreshSelectScene()
+	if var_4_1 ~= arg_4_0._curSelectType then
+		arg_4_0._curSelectType = var_4_1
+
+		arg_4_0:_refreshSelectScene()
 	end
 end
 
-function slot0._refreshSelectScene(slot0)
-	slot1, slot2 = nil
+function var_0_0._refreshSelectScene(arg_5_0)
+	local var_5_0
+	local var_5_1
 
-	if slot0._curSelectType == SummonEnum.ResultType.Equip then
-		slot1 = slot0._goSceneEquip
-		slot2 = slot0._goSceneChar
+	if arg_5_0._curSelectType == SummonEnum.ResultType.Equip then
+		var_5_0 = arg_5_0._goSceneEquip
+		var_5_1 = arg_5_0._goSceneChar
 
-		slot0._sceneObj.cameraAnim:switchToEquip()
+		arg_5_0._sceneObj.cameraAnim:switchToEquip()
 	else
-		slot1 = slot0._goSceneChar
-		slot2 = slot0._goSceneEquip
+		var_5_0 = arg_5_0._goSceneChar
+		var_5_1 = arg_5_0._goSceneEquip
 
-		slot0._sceneObj.cameraAnim:switchToChar()
+		arg_5_0._sceneObj.cameraAnim:switchToChar()
 	end
 
-	slot0._sceneObj.bgm:Play(slot0._curSelectType)
+	arg_5_0._sceneObj.bgm:Play(arg_5_0._curSelectType)
 
-	slot0._curSelectGo = slot1
+	arg_5_0._curSelectGo = var_5_0
 
 	SummonController.instance:resetAnimScale()
 
-	slot4 = slot0._sceneObj:getSceneContainerGO().transform
+	local var_5_2 = arg_5_0:getNoSelectedRootGo().transform
+	local var_5_3 = arg_5_0._sceneObj:getSceneContainerGO().transform
 
-	if not gohelper.isNil(slot2) then
-		slot2.transform:SetParent(slot0:getNoSelectedRootGo().transform, false)
+	if not gohelper.isNil(var_5_1) then
+		var_5_1.transform:SetParent(var_5_2, false)
 	end
 
-	if not gohelper.isNil(slot1) then
-		slot1.transform:SetParent(slot4, false)
+	if not gohelper.isNil(var_5_0) then
+		var_5_0.transform:SetParent(var_5_3, false)
 	end
 end
 
-function slot0.initEquipSceneGo(slot0, slot1)
-	slot0._assetItemEquip = slot1
+function var_0_0.initEquipSceneGo(arg_6_0, arg_6_1)
+	arg_6_0._assetItemEquip = arg_6_1
 
-	slot0._assetItemEquip:Retain()
+	arg_6_0._assetItemEquip:Retain()
 end
 
-function slot0.initCharSceneGo(slot0, slot1)
-	slot0._assetItemChar = slot1
+function var_0_0.initCharSceneGo(arg_7_0, arg_7_1)
+	arg_7_0._assetItemChar = arg_7_1
 
-	slot0._assetItemChar:Retain()
+	arg_7_0._assetItemChar:Retain()
 end
 
-function slot0.isSceneGOInited(slot0, slot1)
-	if slot1 then
-		return not gohelper.isNil(slot0._goSceneChar)
+function var_0_0.isSceneGOInited(arg_8_0, arg_8_1)
+	if arg_8_1 then
+		return not gohelper.isNil(arg_8_0._goSceneChar)
 	else
-		return not gohelper.isNil(slot0._goSceneEquip)
+		return not gohelper.isNil(arg_8_0._goSceneEquip)
 	end
 end
 
-function slot0.initSceneGO(slot0, slot1)
-	slot2 = false
+function var_0_0.initSceneGO(arg_9_0, arg_9_1)
+	local var_9_0 = false
 
-	if slot1 then
-		if gohelper.isNil(slot0._goSceneChar) and slot0._assetItemChar then
-			slot0._goSceneChar = gohelper.clone(slot0._assetItemChar:GetResource(), slot0:getNoSelectedRootGo(), "char_scene_go")
-			slot2 = true
+	if arg_9_1 then
+		if gohelper.isNil(arg_9_0._goSceneChar) and arg_9_0._assetItemChar then
+			arg_9_0._goSceneChar = gohelper.clone(arg_9_0._assetItemChar:GetResource(), arg_9_0:getNoSelectedRootGo(), "char_scene_go")
+			var_9_0 = true
 		end
-	elseif gohelper.isNil(slot0._goSceneEquip) and slot0._assetItemEquip then
-		slot0._goSceneEquip = gohelper.clone(slot0._assetItemEquip:GetResource(), slot0:getNoSelectedRootGo(), "equip_scene_go")
-		slot2 = true
+	elseif gohelper.isNil(arg_9_0._goSceneEquip) and arg_9_0._assetItemEquip then
+		arg_9_0._goSceneEquip = gohelper.clone(arg_9_0._assetItemEquip:GetResource(), arg_9_0:getNoSelectedRootGo(), "equip_scene_go")
+		var_9_0 = true
 	end
 
-	if slot2 then
-		slot0:_refreshSelectScene()
-		slot0:dispatchEvent(SummonSceneEvent.OnSceneGOInited, slot1)
+	if var_9_0 then
+		arg_9_0:_refreshSelectScene()
+		arg_9_0:dispatchEvent(SummonSceneEvent.OnSceneGOInited, arg_9_1)
 
-		if not gohelper.isNil(slot0._goSceneChar) and not gohelper.isNil(slot0._goSceneEquip) then
-			slot0:dispatchEvent(SummonSceneEvent.OnSceneAllGOInited)
+		if not gohelper.isNil(arg_9_0._goSceneChar) and not gohelper.isNil(arg_9_0._goSceneEquip) then
+			arg_9_0:dispatchEvent(SummonSceneEvent.OnSceneAllGOInited)
 		end
 	end
 end
 
-function slot0.getNoSelectedRootGo(slot0)
-	if not slot0._goSelectorRoot then
-		slot0._goSelectorRoot = gohelper.create3d(slot0._sceneObj:getSceneContainerGO(), "SceneSelector")
+function var_0_0.getNoSelectedRootGo(arg_10_0)
+	if not arg_10_0._goSelectorRoot then
+		local var_10_0 = arg_10_0._sceneObj:getSceneContainerGO()
 
-		gohelper.setActive(slot0._goSelectorRoot, false)
+		arg_10_0._goSelectorRoot = gohelper.create3d(var_10_0, "SceneSelector")
+
+		gohelper.setActive(arg_10_0._goSelectorRoot, false)
 	end
 
-	return slot0._goSelectorRoot
+	return arg_10_0._goSelectorRoot
 end
 
-function slot0.getEquipSceneGo(slot0)
-	return slot0._goSceneEquip
+function var_0_0.getEquipSceneGo(arg_11_0)
+	return arg_11_0._goSceneEquip
 end
 
-function slot0.getCharSceneGo(slot0)
-	return slot0._goSceneChar
+function var_0_0.getCharSceneGo(arg_12_0)
+	return arg_12_0._goSceneChar
 end
 
-function slot0.getCurSceneGo(slot0)
-	return slot0._curSelectGo
+function var_0_0.getCurSceneGo(arg_13_0)
+	return arg_13_0._curSelectGo
 end
 
-function slot0.onSceneClose(slot0)
-	slot0:onSceneHide()
-	gohelper.setActive(slot0._goSelectorRoot, true)
-	gohelper.destroy(slot0._goSceneEquip)
-	gohelper.destroy(slot0._goSceneChar)
-	gohelper.destroy(slot0._goSelectorRoot)
+function var_0_0.onSceneClose(arg_14_0)
+	arg_14_0:onSceneHide()
+	gohelper.setActive(arg_14_0._goSelectorRoot, true)
+	gohelper.destroy(arg_14_0._goSceneEquip)
+	gohelper.destroy(arg_14_0._goSceneChar)
+	gohelper.destroy(arg_14_0._goSelectorRoot)
 
-	slot0._goSceneEquip = nil
-	slot0._goSelectorRoot = nil
-	slot0._goSceneChar = nil
-	slot0._curSelectGo = nil
+	arg_14_0._goSceneEquip = nil
+	arg_14_0._goSelectorRoot = nil
+	arg_14_0._goSceneChar = nil
+	arg_14_0._curSelectGo = nil
 
-	if slot0._assetItemEquip then
-		slot0._assetItemEquip:Release()
+	if arg_14_0._assetItemEquip then
+		arg_14_0._assetItemEquip:Release()
 
-		slot0._assetItemEquip = nil
+		arg_14_0._assetItemEquip = nil
 	end
 
-	if slot0._assetItemChar then
-		slot0._assetItemChar:Release()
+	if arg_14_0._assetItemChar then
+		arg_14_0._assetItemChar:Release()
 
-		slot0._assetItemChar = nil
+		arg_14_0._assetItemChar = nil
 	end
 end
 
-function slot0.onSceneHide(slot0)
+function var_0_0.onSceneHide(arg_15_0)
 	logNormal("onSceneHide")
-	SummonController.instance:unregisterCallback(SummonEvent.onSummonTabSet, slot0._handleSelectScene, slot0)
-	GameGlobalMgr.instance:unregisterCallback(GameStateEvent.OnScreenResize, slot0._onSceneResize, slot0)
+	SummonController.instance:unregisterCallback(SummonEvent.onSummonTabSet, arg_15_0._handleSelectScene, arg_15_0)
+	GameGlobalMgr.instance:unregisterCallback(GameStateEvent.OnScreenResize, arg_15_0._onSceneResize, arg_15_0)
 end
 
-return slot0
+return var_0_0

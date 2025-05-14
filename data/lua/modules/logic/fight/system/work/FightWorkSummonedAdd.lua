@@ -1,31 +1,35 @@
-module("modules.logic.fight.system.work.FightWorkSummonedAdd", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkSummonedAdd", package.seeall)
 
-slot0 = class("FightWorkSummonedAdd", FightEffectBase)
+local var_0_0 = class("FightWorkSummonedAdd", FightEffectBase)
 
-function slot0.onStart(slot0)
-	slot0._targetId = slot0._actEffectMO.targetId
+function var_0_0.onStart(arg_1_0)
+	arg_1_0._targetId = arg_1_0._actEffectMO.targetId
 
-	if FightDataHelper.entityMgr:getById(slot0._targetId) and slot0._actEffectMO.summoned then
-		slot3 = slot1:getSummonedInfo():getData(slot0._actEffectMO.summoned.uid)
+	local var_1_0 = FightDataHelper.entityMgr:getById(arg_1_0._targetId)
 
-		if FightConfig.instance:getSummonedConfig(slot3.summonedId, slot3.level) then
-			slot0:com_registTimer(slot0._delayDone, slot4.enterTime / 1000 / FightModel.instance:getSpeed())
-			FightController.instance:dispatchEvent(FightEvent.SummonedAdd, slot0._targetId, slot3)
+	if var_1_0 and arg_1_0._actEffectMO.summoned then
+		local var_1_1 = var_1_0:getSummonedInfo():getData(arg_1_0._actEffectMO.summoned.uid)
+		local var_1_2 = FightConfig.instance:getSummonedConfig(var_1_1.summonedId, var_1_1.level)
+
+		if var_1_2 then
+			arg_1_0:com_registTimer(arg_1_0._delayDone, var_1_2.enterTime / 1000 / FightModel.instance:getSpeed())
+			FightController.instance:dispatchEvent(FightEvent.SummonedAdd, arg_1_0._targetId, var_1_1)
 
 			return
 		end
 
-		logError("挂件表找不到id:" .. slot3.summonedId .. "  等级:" .. slot3.level)
+		logError("挂件表找不到id:" .. var_1_1.summonedId .. "  等级:" .. var_1_1.level)
 	end
 
-	slot0:_delayDone()
+	arg_1_0:_delayDone()
 end
 
-function slot0._delayDone(slot0)
-	slot0:onDone(true)
+function var_0_0._delayDone(arg_2_0)
+	arg_2_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
+function var_0_0.clearWork(arg_3_0)
+	return
 end
 
-return slot0
+return var_0_0

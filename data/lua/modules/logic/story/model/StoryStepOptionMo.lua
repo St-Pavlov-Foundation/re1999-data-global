@@ -1,12 +1,12 @@
-module("modules.logic.story.model.StoryStepOptionMo", package.seeall)
+﻿module("modules.logic.story.model.StoryStepOptionMo", package.seeall)
 
-slot0 = pureTable("StoryStepOptionMo")
+local var_0_0 = pureTable("StoryStepOptionMo")
 
-function slot0.ctor(slot0)
-	slot0.condition = false
-	slot0.conditionType = 0
-	slot0.conditionValue = ""
-	slot0.conditionValue2 = {
+function var_0_0.ctor(arg_1_0)
+	arg_1_0.condition = false
+	arg_1_0.conditionType = 0
+	arg_1_0.conditionValue = ""
+	arg_1_0.conditionValue2 = {
 		"",
 		"",
 		"",
@@ -16,7 +16,7 @@ function slot0.ctor(slot0)
 		"",
 		""
 	}
-	slot0.branchTxts = {
+	arg_1_0.branchTxts = {
 		"",
 		"",
 		"",
@@ -26,26 +26,26 @@ function slot0.ctor(slot0)
 		"",
 		""
 	}
-	slot0.type = 0
-	slot0.feedbackType = 0
-	slot0.feedbackValue = 0
-	slot0.back = false
-	slot0.id = 0
-	slot0.followId = 0
+	arg_1_0.type = 0
+	arg_1_0.feedbackType = 0
+	arg_1_0.feedbackValue = 0
+	arg_1_0.back = false
+	arg_1_0.id = 0
+	arg_1_0.followId = 0
 end
 
-function slot0.init(slot0, slot1)
-	slot0.condition = slot1[1]
-	slot0.conditionType = slot1[2]
-	slot0.conditionValue = slot1[3]
-	slot0.conditionValue2 = slot1[4]
-	slot0.branchTxts = slot1[5]
-	slot0.type = slot1[6]
-	slot0.feedbackType = slot1[7]
-	slot0.feedbackValue = slot1[8]
-	slot0.back = slot1[9]
-	slot0.id = slot1[10]
-	slot0.followId = slot1[11]
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.condition = arg_2_1[1]
+	arg_2_0.conditionType = arg_2_1[2]
+	arg_2_0.conditionValue = arg_2_1[3]
+	arg_2_0.conditionValue2 = arg_2_1[4]
+	arg_2_0.branchTxts = arg_2_1[5]
+	arg_2_0.type = arg_2_1[6]
+	arg_2_0.feedbackType = arg_2_1[7]
+	arg_2_0.feedbackValue = arg_2_1[8]
+	arg_2_0.back = arg_2_1[9]
+	arg_2_0.id = arg_2_1[10]
+	arg_2_0.followId = arg_2_1[11]
 end
 
-return slot0
+return var_0_0

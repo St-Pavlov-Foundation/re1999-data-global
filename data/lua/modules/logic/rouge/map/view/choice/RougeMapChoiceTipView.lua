@@ -1,179 +1,208 @@
-module("modules.logic.rouge.map.view.choice.RougeMapChoiceTipView", package.seeall)
+﻿module("modules.logic.rouge.map.view.choice.RougeMapChoiceTipView", package.seeall)
 
-slot0 = class("RougeMapChoiceTipView", BaseView)
+local var_0_0 = class("RougeMapChoiceTipView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gochoicetips = gohelper.findChild(slot0.viewGO, "#go_choicetips")
-	slot0._gocollectiontips = gohelper.findChild(slot0.viewGO, "#go_collectiontips")
-	slot0._goclosetip = gohelper.findChild(slot0.viewGO, "#go_choicetips/#go_closetip")
-	slot0._txttitle = gohelper.findChildText(slot0.viewGO, "#go_choicetips/Scroll View/Viewport/Content/title/#txt_title")
-	slot0._gocollectionitem = gohelper.findChild(slot0.viewGO, "#go_choicetips/Scroll View/Viewport/Content/#go_collectionitem")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gochoicetips = gohelper.findChild(arg_1_0.viewGO, "#go_choicetips")
+	arg_1_0._gocollectiontips = gohelper.findChild(arg_1_0.viewGO, "#go_collectiontips")
+	arg_1_0._goclosetip = gohelper.findChild(arg_1_0.viewGO, "#go_choicetips/#go_closetip")
+	arg_1_0._txttitle = gohelper.findChildText(arg_1_0.viewGO, "#go_choicetips/Scroll View/Viewport/Content/title/#txt_title")
+	arg_1_0._gocollectionitem = gohelper.findChild(arg_1_0.viewGO, "#go_choicetips/Scroll View/Viewport/Content/#go_collectionitem")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	gohelper.setActive(slot0._gochoicetips, false)
-	gohelper.setActive(slot0._gocollectionitem, false)
+function var_0_0._editableInitView(arg_4_0)
+	gohelper.setActive(arg_4_0._gochoicetips, false)
+	gohelper.setActive(arg_4_0._gocollectionitem, false)
 
-	slot0.rectViewPort = gohelper.findChild(slot0.viewGO, "#go_choicetips/Scroll View/Viewport"):GetComponent(gohelper.Type_RectTransform)
-	slot0.rectCollectionTip = slot0._gocollectiontips:GetComponent(gohelper.Type_RectTransform)
-	slot0.rectTrContent = gohelper.findChild(slot0.viewGO, "#go_choicetips/Scroll View/Viewport/Content"):GetComponent(gohelper.Type_RectTransform)
-	slot0.click = gohelper.getClickWithDefaultAudio(slot0._goclosetip)
+	arg_4_0.rectViewPort = gohelper.findChild(arg_4_0.viewGO, "#go_choicetips/Scroll View/Viewport"):GetComponent(gohelper.Type_RectTransform)
+	arg_4_0.rectCollectionTip = arg_4_0._gocollectiontips:GetComponent(gohelper.Type_RectTransform)
+	arg_4_0.rectTrContent = gohelper.findChild(arg_4_0.viewGO, "#go_choicetips/Scroll View/Viewport/Content"):GetComponent(gohelper.Type_RectTransform)
+	arg_4_0.click = gohelper.getClickWithDefaultAudio(arg_4_0._goclosetip)
 
-	slot0.click:AddClickListener(slot0.onClickThis, slot0)
+	arg_4_0.click:AddClickListener(arg_4_0.onClickThis, arg_4_0)
 
-	slot0.collectionItemList = {}
+	arg_4_0.collectionItemList = {}
 
-	slot0:addEventCb(RougeMapController.instance, RougeMapEvent.onClickChoiceDetail, slot0.onClickChoiceDetail, slot0)
-	slot0:addEventCb(RougeMapController.instance, RougeMapEvent.onClickPieceStoreDetail, slot0.onClickPieceStoreDetail, slot0)
+	arg_4_0:addEventCb(RougeMapController.instance, RougeMapEvent.onClickChoiceDetail, arg_4_0.onClickChoiceDetail, arg_4_0)
+	arg_4_0:addEventCb(RougeMapController.instance, RougeMapEvent.onClickPieceStoreDetail, arg_4_0.onClickPieceStoreDetail, arg_4_0)
 end
 
-function slot0.onClickThis(slot0)
-	slot0:hideTip()
+function var_0_0.onClickThis(arg_5_0)
+	arg_5_0:hideTip()
 end
 
-function slot0.onClickChoiceDetail(slot0, slot1)
-	slot0.collectionIdList = slot1
+function var_0_0.onClickChoiceDetail(arg_6_0, arg_6_1)
+	arg_6_0.collectionIdList = arg_6_1
 
-	slot0:showTip()
+	arg_6_0:showTip()
 end
 
-function slot0.onClickPieceStoreDetail(slot0, slot1)
-	slot0.collectionIdList = slot1
+function var_0_0.onClickPieceStoreDetail(arg_7_0, arg_7_1)
+	arg_7_0.collectionIdList = arg_7_1
 
-	slot0:showTip()
+	arg_7_0:showTip()
 end
 
-function slot0.showTip(slot0)
-	gohelper.setActive(slot0._gochoicetips, true)
-	slot0:refreshUI()
+function var_0_0.showTip(arg_8_0)
+	gohelper.setActive(arg_8_0._gochoicetips, true)
+	arg_8_0:refreshUI()
 end
 
-function slot0.hideTip(slot0)
-	gohelper.setActive(slot0._gochoicetips, false)
+function var_0_0.hideTip(arg_9_0)
+	gohelper.setActive(arg_9_0._gochoicetips, false)
 end
 
-function slot0.refreshUI(slot0)
-	slot0._txttitle.text = luaLang("rouge_may_get_collections")
+function var_0_0.refreshUI(arg_10_0)
+	arg_10_0._txttitle.text = luaLang("rouge_may_get_collections")
 
-	slot0:refreshCollectionList()
+	arg_10_0:refreshCollectionList()
 end
 
-function slot0.refreshCollectionList(slot0)
-	for slot5, slot6 in ipairs(slot0.collectionIdList) do
-		slot7 = slot0:getCollectionItem(slot5)
+function var_0_0.refreshCollectionList(arg_11_0)
+	local var_11_0 = arg_11_0:_getOrCreateExtraParams()
 
-		gohelper.setActive(slot7.go, true)
-		RougeCollectionDescHelper.setCollectionDescInfos3(slot6, nil, slot7.txtDesc, nil, slot0:_getOrCreateExtraParams())
+	for iter_11_0, iter_11_1 in ipairs(arg_11_0.collectionIdList) do
+		local var_11_1 = arg_11_0:getCollectionItem(iter_11_0)
 
-		slot7.txtName.text = RougeCollectionConfig.instance:getCollectionName(slot6)
+		gohelper.setActive(var_11_1.go, true)
+		RougeCollectionDescHelper.setCollectionDescInfos3(iter_11_1, nil, var_11_1.txtDesc, nil, var_11_0)
 
-		slot7.sImageCollection:LoadImage(RougeCollectionHelper.getCollectionIconUrl(slot6))
-		slot0:refreshHole(slot7, RougeCollectionConfig.instance:getCollectionCfg(slot6).holeNum)
+		var_11_1.txtName.text = RougeCollectionConfig.instance:getCollectionName(iter_11_1)
+
+		var_11_1.sImageCollection:LoadImage(RougeCollectionHelper.getCollectionIconUrl(iter_11_1))
+
+		local var_11_2 = RougeCollectionConfig.instance:getCollectionCfg(iter_11_1)
+
+		arg_11_0:refreshHole(var_11_1, var_11_2.holeNum)
 	end
 
-	for slot5 = #slot0.collectionIdList + 1, #slot0.collectionItemList do
-		gohelper.setActive(slot0.collectionItemList[slot5].go, false)
+	for iter_11_2 = #arg_11_0.collectionIdList + 1, #arg_11_0.collectionItemList do
+		local var_11_3 = arg_11_0.collectionItemList[iter_11_2]
+
+		gohelper.setActive(var_11_3.go, false)
 	end
 
-	ZProj.UGUIHelper.RebuildLayout(slot0.rectTrContent)
-	recthelper.setHeight(slot0.rectViewPort, math.min(recthelper.getHeight(slot0.rectTrContent), RougeMapEnum.MaxTipHeight))
+	ZProj.UGUIHelper.RebuildLayout(arg_11_0.rectTrContent)
+
+	local var_11_4 = recthelper.getHeight(arg_11_0.rectTrContent)
+	local var_11_5 = math.min(var_11_4, RougeMapEnum.MaxTipHeight)
+
+	recthelper.setHeight(arg_11_0.rectViewPort, var_11_5)
 end
 
-function slot0._getOrCreateExtraParams(slot0)
-	if not slot0._extraParams then
-		slot0._extraParams = {
+function var_0_0._getOrCreateExtraParams(arg_12_0)
+	if not arg_12_0._extraParams then
+		arg_12_0._extraParams = {
 			isAllActive = true,
-			showDescToListFunc = slot0._ShowDescToListFunc
+			showDescToListFunc = arg_12_0._ShowDescToListFunc
 		}
 	end
 
-	return slot0._extraParams
+	return arg_12_0._extraParams
 end
 
-slot1 = "#352E24"
+local var_0_1 = "#352E24"
 
-function slot0._ShowDescToListFunc(slot0, slot1, slot2, slot3)
-	slot4 = {}
-	slot5 = slot3 and slot3.isAllActive
+function var_0_0._ShowDescToListFunc(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
+	local var_13_0 = {}
+	local var_13_1 = arg_13_3 and arg_13_3.isAllActive
 
-	for slot9, slot10 in ipairs(slot0) do
-		if slot1[slot10] then
-			for slot15, slot16 in ipairs(slot11) do
-				slot17 = slot5 or slot16.isActive
+	for iter_13_0, iter_13_1 in ipairs(arg_13_0) do
+		local var_13_2 = arg_13_1[iter_13_1]
 
-				table.insert(slot4, RougeCollectionDescHelper._decorateCollectionEffectStr(slot16.content, slot17, uv0))
-				table.insert(slot4, RougeCollectionDescHelper._decorateCollectionEffectStr(slot16.condition, slot17, uv0))
+		if var_13_2 then
+			for iter_13_2, iter_13_3 in ipairs(var_13_2) do
+				local var_13_3 = var_13_1 or iter_13_3.isActive
+				local var_13_4 = RougeCollectionDescHelper._decorateCollectionEffectStr(iter_13_3.content, var_13_3, var_0_1)
+				local var_13_5 = RougeCollectionDescHelper._decorateCollectionEffectStr(iter_13_3.condition, var_13_3, var_0_1)
+
+				table.insert(var_13_0, var_13_4)
+				table.insert(var_13_0, var_13_5)
 			end
 		end
 	end
 
-	slot2.text = table.concat(slot4, "\n")
+	arg_13_2.text = table.concat(var_13_0, "\n")
 end
 
-function slot0.getCollectionItem(slot0, slot1)
-	if slot0.collectionItemList[slot1] then
-		return slot2
+function var_0_0.getCollectionItem(arg_14_0, arg_14_1)
+	local var_14_0 = arg_14_0.collectionItemList[arg_14_1]
+
+	if var_14_0 then
+		return var_14_0
 	end
 
-	slot2 = slot0:getUserDataTb_()
-	slot2.go = gohelper.cloneInPlace(slot0._gocollectionitem)
-	slot2.txtDesc = gohelper.findChildText(slot2.go, "#txt_desc")
-	slot2.sImageCollection = gohelper.findChildSingleImage(slot2.go, "other/#simage_collection")
-	slot2.txtName = gohelper.findChildText(slot2.go, "other/layout_name/#txt_name")
-	slot2.goEnchant = gohelper.findChild(slot2.go, "other/layout/#go_enchant")
-	slot2.goEnchantList = slot0:getUserDataTb_()
-	slot2.click = gohelper.findChildClickWithDefaultAudio(slot2.go, "#btn_detail")
+	local var_14_1 = arg_14_0:getUserDataTb_()
 
-	slot2.click:AddClickListener(slot0.onClickCollection, slot0, slot1)
-	table.insert(slot2.goEnchantList, slot2.goEnchant)
-	table.insert(slot0.collectionItemList, slot2)
+	var_14_1.go = gohelper.cloneInPlace(arg_14_0._gocollectionitem)
+	var_14_1.txtDesc = gohelper.findChildText(var_14_1.go, "#txt_desc")
+	var_14_1.sImageCollection = gohelper.findChildSingleImage(var_14_1.go, "other/#simage_collection")
+	var_14_1.txtName = gohelper.findChildText(var_14_1.go, "other/layout_name/#txt_name")
+	var_14_1.goEnchant = gohelper.findChild(var_14_1.go, "other/layout/#go_enchant")
+	var_14_1.goEnchantList = arg_14_0:getUserDataTb_()
+	var_14_1.click = gohelper.findChildClickWithDefaultAudio(var_14_1.go, "#btn_detail")
 
-	return slot2
+	var_14_1.click:AddClickListener(arg_14_0.onClickCollection, arg_14_0, arg_14_1)
+	table.insert(var_14_1.goEnchantList, var_14_1.goEnchant)
+	table.insert(arg_14_0.collectionItemList, var_14_1)
+
+	return var_14_1
 end
 
-function slot0.refreshHole(slot0, slot1, slot2)
-	for slot6 = 1, slot2 do
-		if not slot1.goEnchantList[slot6] then
-			table.insert(slot1.goEnchantList, gohelper.cloneInPlace(slot1.goEnchant))
+function var_0_0.refreshHole(arg_15_0, arg_15_1, arg_15_2)
+	for iter_15_0 = 1, arg_15_2 do
+		local var_15_0 = arg_15_1.goEnchantList[iter_15_0]
+
+		if not var_15_0 then
+			var_15_0 = gohelper.cloneInPlace(arg_15_1.goEnchant)
+
+			table.insert(arg_15_1.goEnchantList, var_15_0)
 		end
 
-		gohelper.setActive(slot7, true)
+		gohelper.setActive(var_15_0, true)
 	end
 
-	for slot6 = slot2 + 1, #slot1.goEnchantList do
-		gohelper.setActive(slot1.goEnchantList[slot6], false)
+	for iter_15_1 = arg_15_2 + 1, #arg_15_1.goEnchantList do
+		gohelper.setActive(arg_15_1.goEnchantList[iter_15_1], false)
 	end
 end
 
-function slot0.onClickCollection(slot0, slot1)
-	RougeController.instance:openRougeCollectionTipView({
+function var_0_0.onClickCollection(arg_16_0, arg_16_1)
+	local var_16_0 = arg_16_0.collectionIdList[arg_16_1]
+	local var_16_1 = recthelper.uiPosToScreenPos(arg_16_0.rectCollectionTip)
+	local var_16_2 = {
 		interactable = false,
-		collectionCfgId = slot0.collectionIdList[slot1],
-		viewPosition = recthelper.uiPosToScreenPos(slot0.rectCollectionTip),
+		collectionCfgId = var_16_0,
+		viewPosition = var_16_1,
 		source = RougeEnum.OpenCollectionTipSource.ChoiceView
-	})
+	}
+
+	RougeController.instance:openRougeCollectionTipView(var_16_2)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_17_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	for slot4, slot5 in ipairs(slot0.collectionItemList) do
-		slot5.sImageCollection:UnLoadImage()
-		slot5.click:RemoveClickListener()
+function var_0_0.onDestroyView(arg_18_0)
+	for iter_18_0, iter_18_1 in ipairs(arg_18_0.collectionItemList) do
+		iter_18_1.sImageCollection:UnLoadImage()
+		iter_18_1.click:RemoveClickListener()
 	end
 
-	slot0.click:RemoveClickListener()
+	arg_18_0.click:RemoveClickListener()
 end
 
-return slot0
+return var_0_0

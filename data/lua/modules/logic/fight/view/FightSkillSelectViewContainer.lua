@@ -1,34 +1,36 @@
-module("modules.logic.fight.view.FightSkillSelectViewContainer", package.seeall)
+﻿module("modules.logic.fight.view.FightSkillSelectViewContainer", package.seeall)
 
-slot0 = class("FightSkillSelectViewContainer", BaseViewContainer)
+local var_0_0 = class("FightSkillSelectViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		FightSkillSelectView.New(),
 		FightSkillSelectOutline.New()
 	}
 end
 
-function slot0.openFightFocusView(slot0, slot1)
-	if DungeonConfig.instance:getEpisodeCO(DungeonModel.instance.curSendEpisodeId) and slot2.type == DungeonEnum.EpisodeType.Cachot then
-		slot3 = V1a6_CachotHeroGroupController.instance
+function var_0_0.openFightFocusView(arg_2_0, arg_2_1)
+	local var_2_0 = DungeonConfig.instance:getEpisodeCO(DungeonModel.instance.curSendEpisodeId)
+
+	if var_2_0 and var_2_0.type == DungeonEnum.EpisodeType.Cachot then
+		local var_2_1 = V1a6_CachotHeroGroupController.instance
 
 		ViewMgr.instance:openView(ViewName.FightFocusView, {
 			group = V1a6_CachotHeroGroupModel.instance:getCurGroupMO(),
 			setEquipInfo = {
-				slot3.getFightFocusEquipInfo,
-				slot3
+				var_2_1.getFightFocusEquipInfo,
+				var_2_1
 			},
-			entityId = slot1
+			entityId = arg_2_1
 		})
 
 		return
 	end
 
-	if slot2 and slot2.type == DungeonEnum.EpisodeType.Rouge then
+	if var_2_0 and var_2_0.type == DungeonEnum.EpisodeType.Rouge then
 		ViewMgr.instance:openView(ViewName.FightFocusView, {
 			group = RougeHeroGroupModel.instance:getCurGroupMO(),
-			entityId = slot1,
+			entityId = arg_2_1,
 			balanceHelper = RougeHeroGroupBalanceHelper
 		})
 
@@ -36,8 +38,8 @@ function slot0.openFightFocusView(slot0, slot1)
 	end
 
 	ViewMgr.instance:openView(ViewName.FightFocusView, {
-		entityId = slot1
+		entityId = arg_2_1
 	})
 end
 
-return slot0
+return var_0_0

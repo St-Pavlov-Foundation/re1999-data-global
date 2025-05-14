@@ -1,101 +1,108 @@
-module("modules.logic.rouge.map.view.piecechoice.RougeMapPieceOptionItem", package.seeall)
+﻿module("modules.logic.rouge.map.view.piecechoice.RougeMapPieceOptionItem", package.seeall)
 
-slot0 = class("RougeMapPieceOptionItem", UserDataDispose)
+local var_0_0 = class("RougeMapPieceOptionItem", UserDataDispose)
 
-function slot0.init(slot0, slot1)
-	slot0:__onInit()
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0:__onInit()
 
-	slot0.go = slot1
-	slot0.tr = slot1:GetComponent(gohelper.Type_RectTransform)
+	arg_1_0.go = arg_1_1
+	arg_1_0.tr = arg_1_1:GetComponent(gohelper.Type_RectTransform)
 
-	slot0:_editableInitView()
+	arg_1_0:_editableInitView()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._refreshClick = gohelper.findChildClickWithDefaultAudio(slot0.go, "#go_refresh")
-	slot0._exitClick = gohelper.findChildClickWithDefaultAudio(slot0.go, "#go_exit")
+function var_0_0._editableInitView(arg_2_0)
+	arg_2_0._refreshClick = gohelper.findChildClickWithDefaultAudio(arg_2_0.go, "#go_refresh")
+	arg_2_0._exitClick = gohelper.findChildClickWithDefaultAudio(arg_2_0.go, "#go_exit")
 
-	slot0._refreshClick:AddClickListener(slot0.onClickRefreshBtn, slot0)
-	slot0._exitClick:AddClickListener(slot0.onClickExitBtn, slot0)
+	arg_2_0._refreshClick:AddClickListener(arg_2_0.onClickRefreshBtn, arg_2_0)
+	arg_2_0._exitClick:AddClickListener(arg_2_0.onClickExitBtn, arg_2_0)
 
-	slot0.goNormal = gohelper.findChild(slot0.go, "#go_refresh/normal")
-	slot0.goLock = gohelper.findChild(slot0.go, "#go_refresh/locked")
-	slot0.txtNormalTime = gohelper.findChildText(slot0.go, "#go_refresh/normal/txt_refresh/#txt_times")
-	slot0.txtLockTime = gohelper.findChildText(slot0.go, "#go_refresh/locked/txt_refresh/#txt_times")
-	slot0.goRefresh = slot0._refreshClick.gameObject
+	arg_2_0.goNormal = gohelper.findChild(arg_2_0.go, "#go_refresh/normal")
+	arg_2_0.goLock = gohelper.findChild(arg_2_0.go, "#go_refresh/locked")
+	arg_2_0.txtNormalTime = gohelper.findChildText(arg_2_0.go, "#go_refresh/normal/txt_refresh/#txt_times")
+	arg_2_0.txtLockTime = gohelper.findChildText(arg_2_0.go, "#go_refresh/locked/txt_refresh/#txt_times")
+	arg_2_0.goRefresh = arg_2_0._refreshClick.gameObject
 
-	slot0:setRefreshActive()
+	arg_2_0:setRefreshActive()
 end
 
-function slot0.setRefreshActive(slot0)
-	gohelper.setActive(slot0.goRefresh, RougeMapEffectHelper.checkHadEffect(RougeMapEnum.EffectType.UnlockRestRefresh))
+function var_0_0.setRefreshActive(arg_3_0)
+	local var_3_0 = RougeMapEffectHelper.checkHadEffect(RougeMapEnum.EffectType.UnlockRestRefresh)
+
+	gohelper.setActive(arg_3_0.goRefresh, var_3_0)
 end
 
-function slot0.onClickRefreshBtn(slot0)
+function var_0_0.onClickRefreshBtn(arg_4_0)
 	if not RougeMapEffectHelper.checkHadEffect(RougeMapEnum.EffectType.UnlockRestRefresh) then
 		return
 	end
 
-	if slot0.isLock then
+	if arg_4_0.isLock then
 		return
 	end
 
-	slot0:clearCallback()
+	arg_4_0:clearCallback()
 
-	slot0.callbackId = RougeRpc.instance:sendRougeRepairShopRandomRequest(slot0.onReceiveMsg, slot0)
+	arg_4_0.callbackId = RougeRpc.instance:sendRougeRepairShopRandomRequest(arg_4_0.onReceiveMsg, arg_4_0)
 end
 
-function slot0.onReceiveMsg(slot0)
-	slot0.callbackId = nil
+function var_0_0.onReceiveMsg(arg_5_0)
+	arg_5_0.callbackId = nil
 
 	RougeMapController.instance:dispatchEvent(RougeMapEvent.onRefreshPieceChoiceEvent)
 end
 
-function slot0.onClickExitBtn(slot0)
+function var_0_0.onClickExitBtn(arg_6_0)
 	RougeMapController.instance:dispatchEvent(RougeMapEvent.onChoiceViewStatusChange, RougeMapEnum.PieceChoiceViewStatus.Choice)
 end
 
-function slot0.update(slot0, slot1, slot2)
-	slot0.pieceMo = slot2
+function var_0_0.update(arg_7_0, arg_7_1, arg_7_2)
+	arg_7_0.pieceMo = arg_7_2
 
-	recthelper.setAnchor(slot0.tr, slot1.x, slot1.y)
-	slot0:refreshExchangeUI()
+	recthelper.setAnchor(arg_7_0.tr, arg_7_1.x, arg_7_1.y)
+	arg_7_0:refreshExchangeUI()
 end
 
-function slot0.refreshExchangeUI(slot0)
-	slot0.isLock = RougeMapConfig.instance:getRestStoreRefreshCount() <= (slot0.pieceMo.triggerStr and slot0.pieceMo.triggerStr.repairRandomNum or 0)
+function var_0_0.refreshExchangeUI(arg_8_0)
+	local var_8_0 = arg_8_0.pieceMo.triggerStr and arg_8_0.pieceMo.triggerStr.repairRandomNum or 0
+	local var_8_1 = RougeMapConfig.instance:getRestStoreRefreshCount()
 
-	gohelper.setActive(slot0.goNormal, not slot0.isLock)
-	gohelper.setActive(slot0.goLock, slot0.isLock)
+	arg_8_0.isLock = var_8_1 <= var_8_0
 
-	if slot0.isLock then
-		slot0.txtLockTime.text = string.format("(<color=#d97373>0</color>/%s)", slot2)
+	gohelper.setActive(arg_8_0.goNormal, not arg_8_0.isLock)
+	gohelper.setActive(arg_8_0.goLock, arg_8_0.isLock)
+
+	if arg_8_0.isLock then
+		arg_8_0.txtLockTime.text = string.format("(<color=#d97373>0</color>/%s)", var_8_1)
 	else
-		slot0.txtNormalTime.text = string.format("(%s/%s)", slot2 - slot1, slot2)
+		local var_8_2 = var_8_1 - var_8_0
+
+		arg_8_0.txtNormalTime.text = string.format("(%s/%s)", var_8_2, var_8_1)
 	end
 end
 
-function slot0.show(slot0)
-	gohelper.setActive(slot0.go, true)
+function var_0_0.show(arg_9_0)
+	gohelper.setActive(arg_9_0.go, true)
 end
 
-function slot0.hide(slot0)
-	gohelper.setActive(slot0.go, false)
+function var_0_0.hide(arg_10_0)
+	gohelper.setActive(arg_10_0.go, false)
 end
 
-function slot0.clearCallback(slot0)
-	if slot0.callbackId then
-		RougeRpc.instance:removeCallbackById(slot0.callbackId)
+function var_0_0.clearCallback(arg_11_0)
+	if arg_11_0.callbackId then
+		RougeRpc.instance:removeCallbackById(arg_11_0.callbackId)
 
-		slot0.callbackId = nil
+		arg_11_0.callbackId = nil
 	end
 end
 
-function slot0.destroy(slot0)
-	slot0:clearCallback()
-	slot0._refreshClick:RemoveClickListener()
-	slot0._exitClick:RemoveClickListener()
-	slot0:__onDispose()
+function var_0_0.destroy(arg_12_0)
+	arg_12_0:clearCallback()
+	arg_12_0._refreshClick:RemoveClickListener()
+	arg_12_0._exitClick:RemoveClickListener()
+	arg_12_0:__onDispose()
 end
 
-return slot0
+return var_0_0

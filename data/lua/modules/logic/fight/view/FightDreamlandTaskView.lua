@@ -1,79 +1,88 @@
-module("modules.logic.fight.view.FightDreamlandTaskView", package.seeall)
+﻿module("modules.logic.fight.view.FightDreamlandTaskView", package.seeall)
 
-slot0 = class("FightDreamlandTaskView", BaseView)
+local var_0_0 = class("FightDreamlandTaskView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._goTask = gohelper.findChild(slot0.viewGO, "root/topLeftContent/#go_tasktips")
-	slot0._txtTask = gohelper.findChildText(slot0.viewGO, "root/topLeftContent/#go_tasktips/taskitembg/#txt_task")
-	slot0._ani = SLFramework.AnimatorPlayer.Get(slot0._goTask)
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goTask = gohelper.findChild(arg_1_0.viewGO, "root/topLeftContent/#go_tasktips")
+	arg_1_0._txtTask = gohelper.findChildText(arg_1_0.viewGO, "root/topLeftContent/#go_tasktips/taskitembg/#txt_task")
+	arg_1_0._ani = SLFramework.AnimatorPlayer.Get(arg_1_0._goTask)
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.OnIndicatorChange, slot0._refreshDes, slot0)
-	slot0:addEventCb(FightController.instance, FightEvent.OnCameraFocusChanged, slot0._onCameraFocusChanged, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0:addEventCb(FightController.instance, FightEvent.OnIndicatorChange, arg_2_0._refreshDes, arg_2_0)
+	arg_2_0:addEventCb(FightController.instance, FightEvent.OnCameraFocusChanged, arg_2_0._onCameraFocusChanged, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_4_0)
+	return
 end
 
-function slot0.onRefreshViewParam(slot0)
+function var_0_0.onRefreshViewParam(arg_5_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0._taskConfig = Activity126Config.instance:getDramlandTask(FightModel.instance:getFightParam() and slot1.battleId)
+function var_0_0.onOpen(arg_6_0)
+	local var_6_0 = FightModel.instance:getFightParam()
 
-	slot0:_refreshDes()
+	arg_6_0._taskConfig = Activity126Config.instance:getDramlandTask(var_6_0 and var_6_0.battleId)
+
+	arg_6_0:_refreshDes()
 end
 
-function slot0._refreshDes(slot0)
-	gohelper.setActive(slot0._goTask, slot0._taskConfig)
+function var_0_0._refreshDes(arg_7_0)
+	gohelper.setActive(arg_7_0._goTask, arg_7_0._taskConfig)
 
-	if slot0._taskConfig then
-		slot1 = FightDataHelper.fieldMgr:getIndicatorNum(slot0._taskConfig.indicator)
-		slot2 = slot0._taskConfig.num
-		slot0._txtTask.text = slot0._taskConfig.desc .. string.format(" <color=#cc7f56>(%d/%d)</color>", slot1, slot2)
+	if arg_7_0._taskConfig then
+		local var_7_0 = FightDataHelper.fieldMgr:getIndicatorNum(arg_7_0._taskConfig.indicator)
+		local var_7_1 = arg_7_0._taskConfig.num
+		local var_7_2 = string.format(" <color=#cc7f56>(%d/%d)</color>", var_7_0, var_7_1)
 
-		if slot2 <= slot1 then
-			if slot0._finish then
-				gohelper.setActive(slot0._goTask, false)
+		arg_7_0._txtTask.text = arg_7_0._taskConfig.desc .. var_7_2
+
+		if var_7_1 <= var_7_0 then
+			if arg_7_0._finish then
+				gohelper.setActive(arg_7_0._goTask, false)
 
 				return
 			end
 
-			slot0._ani:Play("finish", slot0._finishDone, slot0)
+			arg_7_0._ani:Play("finish", arg_7_0._finishDone, arg_7_0)
 
-			slot0._finish = true
+			arg_7_0._finish = true
 		else
-			slot0._ani:Play("idle", nil, )
+			arg_7_0._ani:Play("idle", nil, nil)
 
-			slot0._finish = false
+			arg_7_0._finish = false
 		end
 	end
 end
 
-function slot0._finishDone(slot0)
-	gohelper.setActive(slot0._goTask, false)
+function var_0_0._finishDone(arg_8_0)
+	gohelper.setActive(arg_8_0._goTask, false)
 end
 
-function slot0._onCameraFocusChanged(slot0, slot1)
-	if slot1 then
-		gohelper.setActive(slot0._goTask, slot0._taskConfig)
+function var_0_0._onCameraFocusChanged(arg_9_0, arg_9_1)
+	if arg_9_1 then
+		gohelper.setActive(arg_9_0._goTask, arg_9_0._taskConfig)
 	else
-		slot0:_refreshDes()
+		arg_9_0:_refreshDes()
 	end
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_10_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_11_0)
+	return
 end
 
-return slot0
+return var_0_0

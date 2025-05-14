@@ -1,112 +1,119 @@
-module("modules.logic.versionactivity1_2.trade.view.ActivityTradeBargainRewardItem", package.seeall)
+﻿module("modules.logic.versionactivity1_2.trade.view.ActivityTradeBargainRewardItem", package.seeall)
 
-slot0 = class("ActivityTradeBargainRewardItem", UserDataDispose)
+local var_0_0 = class("ActivityTradeBargainRewardItem", UserDataDispose)
 
-function slot0.ctor(slot0, slot1, slot2)
-	slot0:__onInit()
+function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0:__onInit()
 
-	slot0.go = slot1
-	slot0.anim = slot1:GetComponent(typeof(UnityEngine.Animator))
-	slot0.btnNotEnough = gohelper.findChildButtonWithAudio(slot0.go, "btn_unable")
-	slot0.btnGet = gohelper.findChildButtonWithAudio(slot0.go, "btn_get")
-	slot0.goHasReceive = gohelper.findChild(slot0.go, "go_hasreceive")
-	slot0.goScroll = gohelper.findChild(slot0.go, "scroll_reward")
-	slot0.scroll = slot0.goScroll:GetComponent(typeof(ZProj.LimitedScrollRect))
-	slot0.scroll.parentGameObject = slot2
-	slot0.goIconContainer = gohelper.findChild(slot0.go, "scroll_reward/Viewport/Content")
-	slot0.txtDesc = gohelper.findChildText(slot0.go, "txt_desc")
-	slot0.goMask = gohelper.findChild(slot0.go, "go_blackmask")
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.go, "bg")
-	slot0.rewardIcons = {}
+	arg_1_0.go = arg_1_1
+	arg_1_0.anim = arg_1_1:GetComponent(typeof(UnityEngine.Animator))
+	arg_1_0.btnNotEnough = gohelper.findChildButtonWithAudio(arg_1_0.go, "btn_unable")
+	arg_1_0.btnGet = gohelper.findChildButtonWithAudio(arg_1_0.go, "btn_get")
+	arg_1_0.goHasReceive = gohelper.findChild(arg_1_0.go, "go_hasreceive")
+	arg_1_0.goScroll = gohelper.findChild(arg_1_0.go, "scroll_reward")
+	arg_1_0.scroll = arg_1_0.goScroll:GetComponent(typeof(ZProj.LimitedScrollRect))
+	arg_1_0.scroll.parentGameObject = arg_1_2
+	arg_1_0.goIconContainer = gohelper.findChild(arg_1_0.go, "scroll_reward/Viewport/Content")
+	arg_1_0.txtDesc = gohelper.findChildText(arg_1_0.go, "txt_desc")
+	arg_1_0.goMask = gohelper.findChild(arg_1_0.go, "go_blackmask")
+	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.go, "bg")
+	arg_1_0.rewardIcons = {}
 
-	slot0:addClickCb(slot0.btnGet, slot0.onClickGetReward, slot0)
-	slot0._simagebg:LoadImage(ResUrl.getVersionTradeBargainBg("img_changguidi"))
+	arg_1_0:addClickCb(arg_1_0.btnGet, arg_1_0.onClickGetReward, arg_1_0)
+	arg_1_0._simagebg:LoadImage(ResUrl.getVersionTradeBargainBg("img_changguidi"))
 
-	slot0._simageclickbg = gohelper.findChildSingleImage(slot0.go, "click/bg")
+	arg_1_0._simageclickbg = gohelper.findChildSingleImage(arg_1_0.go, "click/bg")
 
-	slot0._simageclickbg:LoadImage(ResUrl.getVersionActivity1_2TaskImage("renwu_diehei"))
+	arg_1_0._simageclickbg:LoadImage(ResUrl.getVersionActivity1_2TaskImage("renwu_diehei"))
 end
 
-function slot0.setData(slot0, slot1)
-	slot0.data = slot1
+function var_0_0.setData(arg_2_0, arg_2_1)
+	arg_2_0.data = arg_2_1
 
-	if not slot1 then
-		gohelper.setActive(slot0.go, false)
+	if not arg_2_1 then
+		gohelper.setActive(arg_2_0.go, false)
 
 		return
 	end
 
-	gohelper.setActive(slot0.go, true)
-	slot0.anim:Play(UIAnimationName.Idle)
-	gohelper.setActive(slot0.btnNotEnough.gameObject, slot1:getStatus() == Activity117Enum.Status.NotEnough)
-	gohelper.setActive(slot0.btnGet.gameObject, slot2 == Activity117Enum.Status.CanGet)
-	gohelper.setActive(slot0.goHasReceive, slot2 == Activity117Enum.Status.AlreadyGot)
-	gohelper.setActive(slot0.goMask, slot2 == Activity117Enum.Status.AlreadyGot)
+	gohelper.setActive(arg_2_0.go, true)
+	arg_2_0.anim:Play(UIAnimationName.Idle)
 
-	slot0.txtDesc.text = formatLuaLang("versionactivity_1_2_117desc_1", slot1.needScore)
+	local var_2_0 = arg_2_1:getStatus()
 
-	slot0:refreshRewardIcons(slot1)
+	gohelper.setActive(arg_2_0.btnNotEnough.gameObject, var_2_0 == Activity117Enum.Status.NotEnough)
+	gohelper.setActive(arg_2_0.btnGet.gameObject, var_2_0 == Activity117Enum.Status.CanGet)
+	gohelper.setActive(arg_2_0.goHasReceive, var_2_0 == Activity117Enum.Status.AlreadyGot)
+	gohelper.setActive(arg_2_0.goMask, var_2_0 == Activity117Enum.Status.AlreadyGot)
+
+	arg_2_0.txtDesc.text = formatLuaLang("versionactivity_1_2_117desc_1", arg_2_1.needScore)
+
+	arg_2_0:refreshRewardIcons(arg_2_1)
 end
 
-function slot0.refreshRewardIcons(slot0, slot1)
-	slot6 = #slot0.rewardIcons
+function var_0_0.refreshRewardIcons(arg_3_0, arg_3_1)
+	local var_3_0 = arg_3_1.rewardItems
 
-	for slot6 = 1, math.max(#slot1.rewardItems, slot6) do
-		slot0:refreshRewardIcon(slot0:getOrCreateRewardIcon(slot6), slot2[slot6])
+	for iter_3_0 = 1, math.max(#var_3_0, #arg_3_0.rewardIcons) do
+		local var_3_1 = arg_3_0:getOrCreateRewardIcon(iter_3_0)
+
+		arg_3_0:refreshRewardIcon(var_3_1, var_3_0[iter_3_0])
 	end
 end
 
-function slot0.refreshRewardIcon(slot0, slot1, slot2)
-	if not slot2 then
-		gohelper.setActive(slot1.go, false)
+function var_0_0.refreshRewardIcon(arg_4_0, arg_4_1, arg_4_2)
+	if not arg_4_2 then
+		gohelper.setActive(arg_4_1.go, false)
 
 		return
 	end
 
-	gohelper.setActive(slot1.go, true)
-	slot1.comp:setMOValue(slot2[1], slot2[2], slot2[3], nil, true)
-	slot1.comp:setScale(0.59)
-	slot1.comp:setCountFontSize(45)
+	gohelper.setActive(arg_4_1.go, true)
+	arg_4_1.comp:setMOValue(arg_4_2[1], arg_4_2[2], arg_4_2[3], nil, true)
+	arg_4_1.comp:setScale(0.59)
+	arg_4_1.comp:setCountFontSize(45)
 end
 
-function slot0.getOrCreateRewardIcon(slot0, slot1)
-	if not slot0.rewardIcons[slot1] then
-		slot2 = slot0:getUserDataTb_()
-		slot2.comp = IconMgr.instance:getCommonItemIcon(slot0.goIconContainer)
-		slot2.go = slot2.comp.gameObject
-		slot0.rewardIcons[slot1] = slot2
+function var_0_0.getOrCreateRewardIcon(arg_5_0, arg_5_1)
+	local var_5_0 = arg_5_0.rewardIcons[arg_5_1]
+
+	if not var_5_0 then
+		var_5_0 = arg_5_0:getUserDataTb_()
+		var_5_0.comp = IconMgr.instance:getCommonItemIcon(arg_5_0.goIconContainer)
+		var_5_0.go = var_5_0.comp.gameObject
+		arg_5_0.rewardIcons[arg_5_1] = var_5_0
 	end
 
-	return slot2
+	return var_5_0
 end
 
-function slot0.onClickGetReward(slot0)
-	if not slot0.data then
+function var_0_0.onClickGetReward(arg_6_0)
+	if not arg_6_0.data then
 		return
 	end
 
 	UIBlockMgr.instance:startBlock("BargainReward")
-	slot0:onFinish()
-	TaskDispatcher.runDelay(slot0._sendGetBonus, slot0, 0.6)
+	arg_6_0:onFinish()
+	TaskDispatcher.runDelay(arg_6_0._sendGetBonus, arg_6_0, 0.6)
 end
 
-function slot0.onFinish(slot0)
-	slot0.anim:Play(UIAnimationName.Finish)
+function var_0_0.onFinish(arg_7_0)
+	arg_7_0.anim:Play(UIAnimationName.Finish)
 end
 
-function slot0._sendGetBonus(slot0)
+function var_0_0._sendGetBonus(arg_8_0)
 	UIBlockMgr.instance:endBlock("BargainReward")
-	Activity117Rpc.instance:sendAct117GetBonusRequest(slot0.data.actId, {
-		slot0.data.id
+	Activity117Rpc.instance:sendAct117GetBonusRequest(arg_8_0.data.actId, {
+		arg_8_0.data.id
 	})
 end
 
-function slot0.destory(slot0)
+function var_0_0.destory(arg_9_0)
 	UIBlockMgr.instance:endBlock("BargainReward")
-	TaskDispatcher.cancelTask(slot0._sendGetBonus, slot0)
-	slot0._simagebg:UnLoadImage()
-	slot0._simageclickbg:UnLoadImage()
-	slot0:__onDispose()
+	TaskDispatcher.cancelTask(arg_9_0._sendGetBonus, arg_9_0)
+	arg_9_0._simagebg:UnLoadImage()
+	arg_9_0._simageclickbg:UnLoadImage()
+	arg_9_0:__onDispose()
 end
 
-return slot0
+return var_0_0

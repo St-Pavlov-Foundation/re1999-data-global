@@ -1,90 +1,104 @@
-module("modules.logic.seasonver.act123.utils.Season123HeroUtils", package.seeall)
+﻿module("modules.logic.seasonver.act123.utils.Season123HeroUtils", package.seeall)
 
-slot0 = class("Season123HeroUtils")
+local var_0_0 = class("Season123HeroUtils")
 
-function slot0.createHeroMOByAssistMO(slot0, slot1)
-	slot2 = HeroConfig.instance:getHeroCO(slot0.heroId)
-	HeroDef_pb.HeroInfo().uid = slot0.heroUid
-	slot5 = slot0.rank
-	slot6 = slot0.balanceLevel
-	slot7 = false
+function var_0_0.createHeroMOByAssistMO(arg_1_0, arg_1_1)
+	local var_1_0 = HeroConfig.instance:getHeroCO(arg_1_0.heroId)
+	local var_1_1 = HeroDef_pb.HeroInfo()
 
-	if slot1 and slot6 ~= slot0.level then
-		slot4 = slot6
-		slot8, slot5 = HeroConfig.instance:getShowLevel(slot6)
-		slot7 = true
+	var_1_1.uid = arg_1_0.heroUid
+
+	local var_1_2 = arg_1_0.level
+	local var_1_3 = arg_1_0.rank
+	local var_1_4 = arg_1_0.balanceLevel
+	local var_1_5 = false
+
+	if arg_1_1 and var_1_4 ~= var_1_2 then
+		var_1_2 = var_1_4
+
+		local var_1_6, var_1_7 = HeroConfig.instance:getShowLevel(var_1_4)
+
+		var_1_3 = var_1_7
+		var_1_5 = true
 	end
 
-	slot3.level = slot4
-	slot3.heroId = slot0.heroId
-	slot3.skin = slot0.skin
-	slot3.defaultEquipUid = "0"
-	slot3.rank = slot5
-	slot3.talent = slot0.talent
-	slot3.exSkillLevel = slot0.exSkillLevel
+	var_1_1.level = var_1_2
+	var_1_1.heroId = arg_1_0.heroId
+	var_1_1.skin = arg_1_0.skin
+	var_1_1.defaultEquipUid = "0"
+	var_1_1.rank = var_1_3
+	var_1_1.talent = arg_1_0.talent
+	var_1_1.exSkillLevel = arg_1_0.exSkillLevel
 
-	if slot0.passiveSkillLevel then
-		for slot11 = 1, #slot0.passiveSkillLevel do
-			table.insert(slot3.passiveSkillLevel, slot0.passiveSkillLevel[slot11])
+	if arg_1_0.passiveSkillLevel then
+		for iter_1_0 = 1, #arg_1_0.passiveSkillLevel do
+			table.insert(var_1_1.passiveSkillLevel, arg_1_0.passiveSkillLevel[iter_1_0])
 		end
 	else
-		for slot12 = 1, SkillConfig.instance:getHeroExSkillLevelByLevel(slot0.heroId, slot4) do
-			table.insert(slot3.passiveSkillLevel, slot12)
+		local var_1_8 = SkillConfig.instance:getHeroExSkillLevelByLevel(arg_1_0.heroId, var_1_2)
+
+		for iter_1_1 = 1, var_1_8 do
+			table.insert(var_1_1.passiveSkillLevel, iter_1_1)
 		end
 	end
 
-	slot8 = SkillConfig.instance:getBaseAttr(slot0.heroId, slot4)
-	slot3.baseAttr.attack = slot8.atk
-	slot3.baseAttr.defense = slot8.def
-	slot3.baseAttr.hp = slot8.hp
-	slot3.baseAttr.mdefense = slot8.mdef
-	slot3.baseAttr.technic = slot8.technic
-	slot3.exAttr.addDmg = slot8.add_dmg
-	slot3.exAttr.cri = slot8.cri
-	slot3.exAttr.criDef = slot8.cri_def
-	slot3.exAttr.dropDmg = slot8.drop_dmg
-	slot3.exAttr.recri = slot8.recri
-	slot3.exAttr.criDmg = slot8.cri_dmg
-	slot9 = HeroMo.New()
+	local var_1_9 = SkillConfig.instance:getBaseAttr(arg_1_0.heroId, var_1_2)
 
-	slot9:init(slot3, slot2)
+	var_1_1.baseAttr.attack = var_1_9.atk
+	var_1_1.baseAttr.defense = var_1_9.def
+	var_1_1.baseAttr.hp = var_1_9.hp
+	var_1_1.baseAttr.mdefense = var_1_9.mdef
+	var_1_1.baseAttr.technic = var_1_9.technic
+	var_1_1.exAttr.addDmg = var_1_9.add_dmg
+	var_1_1.exAttr.cri = var_1_9.cri
+	var_1_1.exAttr.criDef = var_1_9.cri_def
+	var_1_1.exAttr.dropDmg = var_1_9.drop_dmg
+	var_1_1.exAttr.recri = var_1_9.recri
+	var_1_1.exAttr.criDmg = var_1_9.cri_dmg
 
-	slot9.talentCubeInfos = slot0.talentCubeInfos
+	local var_1_10 = HeroMo.New()
 
-	slot9:setIsBelongOtherPlayer(true)
-	slot9:setIsBalance(slot7)
-	slot9:setOtherPlayerIsOpenTalent(slot0.isOpenTalent)
-	slot9:setOtherPlayerTalentStyle(slot0.style)
+	var_1_10:init(var_1_1, var_1_0)
 
-	slot9.destinyStoneMo = HeroDestinyStoneMO.New(slot0.heroId)
+	var_1_10.talentCubeInfos = arg_1_0.talentCubeInfos
 
-	slot9.destinyStoneMo:refreshMo(slot0.destinyRank, slot0.destinyLevel, slot0.destinyStone, slot0.destinyStoneUnlock)
+	var_1_10:setIsBelongOtherPlayer(true)
+	var_1_10:setIsBalance(var_1_5)
+	var_1_10:setOtherPlayerIsOpenTalent(arg_1_0.isOpenTalent)
+	var_1_10:setOtherPlayerTalentStyle(arg_1_0.style)
 
-	return slot9
+	var_1_10.destinyStoneMo = HeroDestinyStoneMO.New(arg_1_0.heroId)
+
+	var_1_10.destinyStoneMo:refreshMo(arg_1_0.destinyRank, arg_1_0.destinyLevel, arg_1_0.destinyStone, arg_1_0.destinyStoneUnlock)
+
+	return var_1_10
 end
 
-function slot0.createSeasonPickAssistMO(slot0)
-	if not slot0 then
+function var_0_0.createSeasonPickAssistMO(arg_2_0)
+	if not arg_2_0 then
 		return
 	end
 
-	slot2 = Season123PickAssistMO.New()
+	local var_2_0 = arg_2_0:getHeroInfo()
+	local var_2_1 = Season123PickAssistMO.New()
 
-	slot2:init(slot0:getHeroInfo())
+	var_2_1:init(var_2_0)
 
-	return slot2
+	return var_2_1
 end
 
-function slot0.getHeroMO(slot0, slot1, slot2)
-	if not HeroModel.instance:getById(slot1) and slot2 ~= nil then
-		slot4, slot5 = Season123Model.instance:getAssistData(slot0, slot2)
+function var_0_0.getHeroMO(arg_3_0, arg_3_1, arg_3_2)
+	local var_3_0 = HeroModel.instance:getById(arg_3_1)
 
-		if slot5 and slot5.heroUid == slot1 then
-			return slot4
+	if not var_3_0 and arg_3_2 ~= nil then
+		local var_3_1, var_3_2 = Season123Model.instance:getAssistData(arg_3_0, arg_3_2)
+
+		if var_3_2 and var_3_2.heroUid == arg_3_1 then
+			return var_3_1
 		end
 	else
-		return slot3
+		return var_3_0
 	end
 end
 
-return slot0
+return var_0_0

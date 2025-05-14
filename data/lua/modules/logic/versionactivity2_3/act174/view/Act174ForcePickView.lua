@@ -1,230 +1,285 @@
-module("modules.logic.versionactivity2_3.act174.view.Act174ForcePickView", package.seeall)
+﻿module("modules.logic.versionactivity2_3.act174.view.Act174ForcePickView", package.seeall)
 
-slot0 = class("Act174ForcePickView", BaseView)
+local var_0_0 = class("Act174ForcePickView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._goBuff = gohelper.findChild(slot0.viewGO, "#go_Buff")
-	slot0._goBuild = gohelper.findChild(slot0.viewGO, "#go_Build")
-	slot0._gotopleft = gohelper.findChild(slot0.viewGO, "#go_topleft")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goBuff = gohelper.findChild(arg_1_0.viewGO, "#go_Buff")
+	arg_1_0._goBuild = gohelper.findChild(arg_1_0.viewGO, "#go_Build")
+	arg_1_0._gotopleft = gohelper.findChild(arg_1_0.viewGO, "#go_topleft")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._onEscBtnClick(slot0)
-	if slot0.gameInfo.gameCount == 0 then
-		slot0:closeThis()
+function var_0_0._onEscBtnClick(arg_4_0)
+	if arg_4_0.gameInfo.gameCount == 0 then
+		arg_4_0:closeThis()
 	end
 end
 
-function slot0._editableInitView(slot0)
-	slot0._goTitle = gohelper.findChild(slot0.viewGO, "#go_Buff/simage_title/txt_title")
-	slot0._goTitleEndless = gohelper.findChild(slot0.viewGO, "#go_Buff/simage_title/txt_title_endless")
+function var_0_0._editableInitView(arg_5_0)
+	arg_5_0._goTitle = gohelper.findChild(arg_5_0.viewGO, "#go_Buff/simage_title/txt_title")
+	arg_5_0._goTitleEndless = gohelper.findChild(arg_5_0.viewGO, "#go_Buff/simage_title/txt_title_endless")
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0:onOpen()
+function var_0_0.onUpdateParam(arg_6_0)
+	arg_6_0:onOpen()
 end
 
-function slot0.onOpen(slot0)
-	slot0:addEventCb(Activity174Controller.instance, Activity174Event.SeasonChange, slot0.closeThis, slot0)
-	NavigateMgr.instance:addEscape(slot0.viewName, slot0._onEscBtnClick, slot0)
+function var_0_0.onOpen(arg_7_0)
+	arg_7_0:addEventCb(Activity174Controller.instance, Activity174Event.SeasonChange, arg_7_0.closeThis, arg_7_0)
+	NavigateMgr.instance:addEscape(arg_7_0.viewName, arg_7_0._onEscBtnClick, arg_7_0)
 
-	slot0.actId = Activity174Model.instance:getCurActId()
-	slot0.bagConfig = lua_activity174_bag
-	slot0.gameInfo = Activity174Model.instance:getActInfo():getGameInfo()
+	arg_7_0.actId = Activity174Model.instance:getCurActId()
+	arg_7_0.bagConfig = lua_activity174_bag
+	arg_7_0.gameInfo = Activity174Model.instance:getActInfo():getGameInfo()
 
-	gohelper.setActive(slot0._gotopleft, slot0.gameInfo.gameCount == 0)
+	gohelper.setActive(arg_7_0._gotopleft, arg_7_0.gameInfo.gameCount == 0)
 
-	slot1, slot2 = Activity174Config.instance:getMaxRound(slot0.actId, slot0.gameInfo.gameCount)
+	local var_7_0, var_7_1 = Activity174Config.instance:getMaxRound(arg_7_0.actId, arg_7_0.gameInfo.gameCount)
 
-	gohelper.setActive(slot0._goTitle, not slot2)
-	gohelper.setActive(slot0._goTitleEndless, slot2)
-	slot0:freshPickBagItem()
+	gohelper.setActive(arg_7_0._goTitle, not var_7_1)
+	gohelper.setActive(arg_7_0._goTitleEndless, var_7_1)
+	arg_7_0:freshPickBagItem()
 end
 
-function slot0.onClose(slot0)
-	TaskDispatcher.cancelTask(slot0.nextStep, slot0)
+function var_0_0.onClose(arg_8_0)
+	TaskDispatcher.cancelTask(arg_8_0.nextStep, arg_8_0)
 end
 
-function slot0.onDestroyView(slot0)
-	slot0:clearIconList()
+function var_0_0.onDestroyView(arg_9_0)
+	arg_9_0:clearIconList()
 end
 
-function slot0.clearIconList(slot0)
-	if slot0.buffIconList then
-		for slot4, slot5 in ipairs(slot0.buffIconList) do
-			slot5:UnLoadImage()
+function var_0_0.clearIconList(arg_10_0)
+	if arg_10_0.buffIconList then
+		for iter_10_0, iter_10_1 in ipairs(arg_10_0.buffIconList) do
+			iter_10_1:UnLoadImage()
 		end
 	end
 
-	if slot0.heroIconList then
-		for slot4, slot5 in ipairs(slot0.heroIconList) do
-			slot5:UnLoadImage()
+	if arg_10_0.heroIconList then
+		for iter_10_2, iter_10_3 in ipairs(arg_10_0.heroIconList) do
+			iter_10_3:UnLoadImage()
 		end
 	end
 
-	if slot0.collectionIconList then
-		for slot4, slot5 in ipairs(slot0.collectionIconList) do
-			slot5:UnLoadImage()
+	if arg_10_0.collectionIconList then
+		for iter_10_4, iter_10_5 in ipairs(arg_10_0.collectionIconList) do
+			iter_10_5:UnLoadImage()
 		end
 	end
 end
 
-function slot0.freshPickBagItem(slot0)
-	if slot0.viewParam then
-		slot0.forceBagInfo = slot0.viewParam
+function var_0_0.freshPickBagItem(arg_11_0)
+	if arg_11_0.viewParam then
+		arg_11_0.forceBagInfo = arg_11_0.viewParam
 
-		slot0:clearIconList()
+		arg_11_0:clearIconList()
 
-		slot0.bagType = slot0.bagConfig.configDict[slot0.forceBagInfo[1].bagInfo.bagId].type
+		local var_11_0 = arg_11_0.forceBagInfo[1].bagInfo.bagId
 
-		if slot0.bagType == Activity174Enum.BagType.Enhance then
-			slot0:initBuffSelectItem()
+		arg_11_0.bagType = arg_11_0.bagConfig.configDict[var_11_0].type
+
+		if arg_11_0.bagType == Activity174Enum.BagType.Enhance then
+			arg_11_0:initBuffSelectItem()
 		else
-			slot0:initBuildSelectItem()
+			arg_11_0:initBuildSelectItem()
 		end
 
-		gohelper.setActive(slot0._goBuff, slot0.bagType == Activity174Enum.BagType.Enhance)
-		gohelper.setActive(slot0._goBuild, slot0.bagType ~= Activity174Enum.BagType.Enhance)
-		Activity174Controller.instance:dispatchEvent(slot0.bagType == Activity174Enum.BagType.Enhance and Activity174Event.ChooseBuffPackage or slot0.bagType == Activity174Enum.BagType.StartRare and Activity174Event.ChooseRolePackage or nil)
+		gohelper.setActive(arg_11_0._goBuff, arg_11_0.bagType == Activity174Enum.BagType.Enhance)
+		gohelper.setActive(arg_11_0._goBuild, arg_11_0.bagType ~= Activity174Enum.BagType.Enhance)
+		Activity174Controller.instance:dispatchEvent(arg_11_0.bagType == Activity174Enum.BagType.Enhance and Activity174Event.ChooseBuffPackage or arg_11_0.bagType == Activity174Enum.BagType.StartRare and Activity174Event.ChooseRolePackage or nil)
 	else
 		logError("please open with forceBagInfo")
 	end
 end
 
-function slot0.initBuffSelectItem(slot0)
-	slot0.bagAnimList = slot0:getUserDataTb_()
-	slot0.buffIconList = slot0:getUserDataTb_()
+function var_0_0.initBuffSelectItem(arg_12_0)
+	arg_12_0.bagAnimList = arg_12_0:getUserDataTb_()
+	arg_12_0.buffIconList = arg_12_0:getUserDataTb_()
 
-	gohelper.CreateObjList(slot0, slot0._onInitBuffItem, slot0.forceBagInfo, gohelper.findChild(slot0.viewGO, "#go_Buff/scroll_view/Viewport/Content"), gohelper.findChild(slot0.viewGO, "#go_Buff/scroll_view/Viewport/Content/SelectItem"))
+	local var_12_0 = gohelper.findChild(arg_12_0.viewGO, "#go_Buff/scroll_view/Viewport/Content")
+	local var_12_1 = gohelper.findChild(arg_12_0.viewGO, "#go_Buff/scroll_view/Viewport/Content/SelectItem")
+
+	gohelper.CreateObjList(arg_12_0, arg_12_0._onInitBuffItem, arg_12_0.forceBagInfo, var_12_0, var_12_1)
 end
 
-function slot0._onInitBuffItem(slot0, slot1, slot2, slot3)
-	slot4 = gohelper.findChildSingleImage(slot1, "simage_bufficon")
-	slot6 = gohelper.findChildText(slot1, "scroll_desc/Viewport/go_desccontent/txt_desc")
-	slot8 = lua_activity174_enhance.configDict[slot2.bagInfo.enhanceId[1]]
+function var_0_0._onInitBuffItem(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
+	local var_13_0 = gohelper.findChildSingleImage(arg_13_1, "simage_bufficon")
+	local var_13_1 = gohelper.findChildText(arg_13_1, "txt_name")
+	local var_13_2 = gohelper.findChildText(arg_13_1, "scroll_desc/Viewport/go_desccontent/txt_desc")
+	local var_13_3 = arg_13_2.bagInfo
+	local var_13_4 = lua_activity174_enhance.configDict[var_13_3.enhanceId[1]]
 
-	slot4:LoadImage(ResUrl.getAct174BuffIcon(slot8.icon))
+	var_13_0:LoadImage(ResUrl.getAct174BuffIcon(var_13_4.icon))
 
-	gohelper.findChildText(slot1, "txt_name").text = slot8.title
-	slot6.text = SkillHelper.buildDesc(slot8.desc)
+	var_13_1.text = var_13_4.title
+	var_13_2.text = SkillHelper.buildDesc(var_13_4.desc)
 
-	SkillHelper.addHyperLinkClick(slot6)
-	slot0:addClickCb(gohelper.findChildButtonWithAudio(slot1, "btn_select"), slot0.clickBag, slot0, slot3)
+	SkillHelper.addHyperLinkClick(var_13_2)
 
-	slot0.buffIconList[slot3] = slot4
-	slot0.bagAnimList[slot3] = slot1:GetComponent(gohelper.Type_Animator)
+	local var_13_5 = gohelper.findChildButtonWithAudio(arg_13_1, "btn_select")
+
+	arg_13_0:addClickCb(var_13_5, arg_13_0.clickBag, arg_13_0, arg_13_3)
+
+	arg_13_0.buffIconList[arg_13_3] = var_13_0
+	arg_13_0.bagAnimList[arg_13_3] = arg_13_1:GetComponent(gohelper.Type_Animator)
 end
 
-function slot0.initBuildSelectItem(slot0)
-	slot0.heroIconList = slot0:getUserDataTb_()
-	slot0.collectionIconList = slot0:getUserDataTb_()
-	slot0.bagAnimList = slot0:getUserDataTb_()
+function var_0_0.initBuildSelectItem(arg_14_0)
+	arg_14_0.heroIconList = arg_14_0:getUserDataTb_()
+	arg_14_0.collectionIconList = arg_14_0:getUserDataTb_()
+	arg_14_0.bagAnimList = arg_14_0:getUserDataTb_()
 
-	gohelper.CreateObjList(slot0, slot0._onInitBuildItem, slot0.forceBagInfo, gohelper.findChild(slot0.viewGO, "#go_Build/scroll_view/Viewport/Content"), gohelper.findChild(slot0.viewGO, "#go_Build/scroll_view/Viewport/Content/SelectItem"))
+	local var_14_0 = gohelper.findChild(arg_14_0.viewGO, "#go_Build/scroll_view/Viewport/Content")
+	local var_14_1 = gohelper.findChild(arg_14_0.viewGO, "#go_Build/scroll_view/Viewport/Content/SelectItem")
+
+	gohelper.CreateObjList(arg_14_0, arg_14_0._onInitBuildItem, arg_14_0.forceBagInfo, var_14_0, var_14_1)
 end
 
-function slot0._onInitBuildItem(slot0, slot1, slot2, slot3)
-	gohelper.findChildText(slot1, "name/txt_name").text = string.split(Activity174Config.instance:getTurnCo(slot0.actId, Activity174Model.instance:getActInfo():getGameInfo().gameCount).name, "#")[slot3] or ""
+function var_0_0._onInitBuildItem(arg_15_0, arg_15_1, arg_15_2, arg_15_3)
+	local var_15_0 = Activity174Model.instance:getActInfo():getGameInfo()
+	local var_15_1 = Activity174Config.instance:getTurnCo(arg_15_0.actId, var_15_0.gameCount)
+	local var_15_2 = string.split(var_15_1.name, "#")
 
-	slot0:addClickCb(gohelper.findChildButtonWithAudio(slot1, "btn_select"), slot0.clickBag, slot0, slot3)
+	gohelper.findChildText(arg_15_1, "name/txt_name").text = var_15_2[arg_15_3] or ""
 
-	slot10 = gohelper.findChild(slot1, "collection/collectionitem")
+	local var_15_3 = gohelper.findChildButtonWithAudio(arg_15_1, "btn_select")
 
-	for slot15, slot16 in ipairs(slot2.bagInfo.heroId) do
-		slot17 = gohelper.cloneInPlace(gohelper.findChild(slot1, "role/roleitem"))
-		slot18 = Activity174Config.instance:getRoleCo(slot16)
-		slot20 = gohelper.findChildSingleImage(slot17, "heroicon")
+	arg_15_0:addClickCb(var_15_3, arg_15_0.clickBag, arg_15_0, arg_15_3)
 
-		UISpriteSetMgr.instance:setCommonSprite(gohelper.findChildImage(slot17, "rare"), "bgequip" .. tostring(CharacterEnum.Color[slot18.rare]))
-		UISpriteSetMgr.instance:setCommonSprite(gohelper.findChildImage(slot17, "career"), "lssx_" .. slot18.career)
-		slot20:LoadImage(ResUrl.getHeadIconSmall(slot18.skinId))
+	local var_15_4 = gohelper.findChild(arg_15_1, "role/roleitem")
+	local var_15_5 = gohelper.findChild(arg_15_1, "collection/collectionitem")
+	local var_15_6 = arg_15_2.bagInfo
 
-		gohelper.findChildText(slot17, "name").text = slot18.name
+	for iter_15_0, iter_15_1 in ipairs(var_15_6.heroId) do
+		local var_15_7 = gohelper.cloneInPlace(var_15_4)
+		local var_15_8 = Activity174Config.instance:getRoleCo(iter_15_1)
+		local var_15_9 = gohelper.findChildImage(var_15_7, "rare")
+		local var_15_10 = gohelper.findChildSingleImage(var_15_7, "heroicon")
+		local var_15_11 = gohelper.findChildButtonWithAudio(var_15_7, "heroicon")
+		local var_15_12 = gohelper.findChildImage(var_15_7, "career")
+		local var_15_13 = gohelper.findChildText(var_15_7, "name")
 
-		slot0:addClickCb(gohelper.findChildButtonWithAudio(slot17, "heroicon"), slot0.clickRole, slot0, {
-			x = slot3,
-			y = slot15
+		UISpriteSetMgr.instance:setCommonSprite(var_15_9, "bgequip" .. tostring(CharacterEnum.Color[var_15_8.rare]))
+		UISpriteSetMgr.instance:setCommonSprite(var_15_12, "lssx_" .. var_15_8.career)
+		var_15_10:LoadImage(ResUrl.getHeadIconSmall(var_15_8.skinId))
+
+		var_15_13.text = var_15_8.name
+
+		arg_15_0:addClickCb(var_15_11, arg_15_0.clickRole, arg_15_0, {
+			x = arg_15_3,
+			y = iter_15_0
 		})
 
-		slot0.heroIconList[#slot0.heroIconList + 1] = slot20
+		arg_15_0.heroIconList[#arg_15_0.heroIconList + 1] = var_15_10
 	end
 
-	for slot15, slot16 in ipairs(slot11.itemId) do
-		slot17 = gohelper.cloneInPlace(slot10)
-		slot18 = Activity174Config.instance:getCollectionCo(slot16)
-		slot20 = gohelper.findChildSingleImage(slot17, "collectionicon")
+	for iter_15_2, iter_15_3 in ipairs(var_15_6.itemId) do
+		local var_15_14 = gohelper.cloneInPlace(var_15_5)
+		local var_15_15 = Activity174Config.instance:getCollectionCo(iter_15_3)
+		local var_15_16 = gohelper.findChildImage(var_15_14, "rare")
+		local var_15_17 = gohelper.findChildSingleImage(var_15_14, "collectionicon")
+		local var_15_18 = gohelper.findChildButtonWithAudio(var_15_14, "collectionicon")
 
-		slot20:LoadImage(ResUrl.getRougeSingleBgCollection(slot18.icon))
-		UISpriteSetMgr.instance:setAct174Sprite(gohelper.findChildImage(slot17, "rare"), "act174_propitembg_" .. slot18.rare)
-		slot0:addClickCb(gohelper.findChildButtonWithAudio(slot17, "collectionicon"), slot0.clickCollection, slot0, {
-			x = slot3,
-			y = slot15
+		var_15_17:LoadImage(ResUrl.getRougeSingleBgCollection(var_15_15.icon))
+		UISpriteSetMgr.instance:setAct174Sprite(var_15_16, "act174_propitembg_" .. var_15_15.rare)
+		arg_15_0:addClickCb(var_15_18, arg_15_0.clickCollection, arg_15_0, {
+			x = arg_15_3,
+			y = iter_15_2
 		})
 
-		slot0.collectionIconList[#slot0.collectionIconList + 1] = slot20
+		arg_15_0.collectionIconList[#arg_15_0.collectionIconList + 1] = var_15_17
 	end
 
-	gohelper.setActive(slot9, false)
-	gohelper.setActive(slot10, false)
+	gohelper.setActive(var_15_4, false)
+	gohelper.setActive(var_15_5, false)
 
-	slot0.bagAnimList[slot3] = slot1:GetComponent(gohelper.Type_Animator)
+	arg_15_0.bagAnimList[arg_15_3] = arg_15_1:GetComponent(gohelper.Type_Animator)
 end
 
-function slot0.clickBag(slot0, slot1)
-	Activity174Rpc.instance:sendSelectAct174ForceBagRequest(slot0.actId, slot0.forceBagInfo[slot1].index, slot0.forcePickReply, slot0)
+function var_0_0.clickBag(arg_16_0, arg_16_1)
+	local var_16_0 = arg_16_0.forceBagInfo[arg_16_1]
 
-	slot0.selectIndex = slot1
+	Activity174Rpc.instance:sendSelectAct174ForceBagRequest(arg_16_0.actId, var_16_0.index, arg_16_0.forcePickReply, arg_16_0)
+
+	arg_16_0.selectIndex = arg_16_1
 end
 
-function slot0.forcePickReply(slot0, slot1, slot2)
-	if slot2 == 0 then
-		if slot0.selectIndex and slot0.bagAnimList[slot3] then
-			slot0.bagAnimList[slot3]:Play(UIAnimationName.Close)
+function var_0_0.forcePickReply(arg_17_0, arg_17_1, arg_17_2)
+	if arg_17_2 == 0 then
+		local var_17_0 = arg_17_0.selectIndex
+
+		if var_17_0 and arg_17_0.bagAnimList[var_17_0] then
+			arg_17_0.bagAnimList[var_17_0]:Play(UIAnimationName.Close)
 			AudioMgr.instance:trigger(AudioEnum.Act174.play_ui_shuori_qiyuan_reset)
 		end
 
-		TaskDispatcher.runDelay(slot0.nextStep, slot0, 0.67)
+		TaskDispatcher.runDelay(arg_17_0.nextStep, arg_17_0, 0.67)
 
-		slot0.selectIndex = nil
+		arg_17_0.selectIndex = nil
 	end
 end
 
-function slot0.clickRole(slot0, slot1)
-	if slot0.forceBagInfo[slot1.x] and slot0.forceBagInfo[slot1.x].bagInfo and Activity174Config.instance:getRoleCo(slot2.heroId[slot1.y]) then
-		Activity174Controller.instance:openItemTipView({
-			type = Activity174Enum.ItemTipType.Character,
-			co = slot4,
-			showMask = true
-		})
+function var_0_0.clickRole(arg_18_0, arg_18_1)
+	local var_18_0 = arg_18_0.forceBagInfo[arg_18_1.x] and arg_18_0.forceBagInfo[arg_18_1.x].bagInfo
+
+	if var_18_0 then
+		local var_18_1 = var_18_0.heroId[arg_18_1.y]
+		local var_18_2 = Activity174Config.instance:getRoleCo(var_18_1)
+
+		if var_18_2 then
+			local var_18_3 = {
+				type = Activity174Enum.ItemTipType.Character,
+				co = var_18_2
+			}
+
+			var_18_3.showMask = true
+
+			Activity174Controller.instance:openItemTipView(var_18_3)
+		end
 	end
 end
 
-function slot0.clickCollection(slot0, slot1)
-	if slot0.forceBagInfo[slot1.x] and slot0.forceBagInfo[slot1.x].bagInfo and Activity174Config.instance:getCollectionCo(slot2.itemId[slot1.y]) then
-		Activity174Controller.instance:openItemTipView({
-			type = Activity174Enum.ItemTipType.Collection,
-			co = slot4,
-			showMask = true
-		})
+function var_0_0.clickCollection(arg_19_0, arg_19_1)
+	local var_19_0 = arg_19_0.forceBagInfo[arg_19_1.x] and arg_19_0.forceBagInfo[arg_19_1.x].bagInfo
+
+	if var_19_0 then
+		local var_19_1 = var_19_0.itemId[arg_19_1.y]
+		local var_19_2 = Activity174Config.instance:getCollectionCo(var_19_1)
+
+		if var_19_2 then
+			local var_19_3 = {
+				type = Activity174Enum.ItemTipType.Collection,
+				co = var_19_2
+			}
+
+			var_19_3.showMask = true
+
+			Activity174Controller.instance:openItemTipView(var_19_3)
+		end
 	end
 end
 
-function slot0.nextStep(slot0)
-	if Activity174Model.instance:getActInfo():getGameInfo().state == Activity174Enum.GameState.ForceSelect then
-		Activity174Controller.instance:openForcePickView(slot1:getForceBagsInfo())
+function var_0_0.nextStep(arg_20_0)
+	local var_20_0 = Activity174Model.instance:getActInfo():getGameInfo()
+
+	if var_20_0.state == Activity174Enum.GameState.ForceSelect then
+		Activity174Controller.instance:openForcePickView(var_20_0:getForceBagsInfo())
 	else
 		Activity174Controller.instance:openGameView()
-		slot0:closeThis()
+		arg_20_0:closeThis()
 	end
 end
 
-return slot0
+return var_0_0

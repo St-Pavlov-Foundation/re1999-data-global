@@ -1,93 +1,93 @@
-module("modules.logic.story.view.StoryVideoItem", package.seeall)
+﻿module("modules.logic.story.view.StoryVideoItem", package.seeall)
 
-slot0 = class("StoryVideoItem")
+local var_0_0 = class("StoryVideoItem")
 
-function slot0.init(slot0, slot1, slot2, slot3, slot4, slot5, slot6)
-	slot0.viewGO = slot1
-	slot0._videoName = slot2
-	slot0._videoCo = slot3
-	slot0._videoGo = nil
-	slot0._loop = slot3.loop
-	slot0._startCallBack = slot4
-	slot0._startCallBackObj = slot5
-	slot0._playList = slot6
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4, arg_1_5, arg_1_6)
+	arg_1_0.viewGO = arg_1_1
+	arg_1_0._videoName = arg_1_2
+	arg_1_0._videoCo = arg_1_3
+	arg_1_0._videoGo = nil
+	arg_1_0._loop = arg_1_3.loop
+	arg_1_0._startCallBack = arg_1_4
+	arg_1_0._startCallBackObj = arg_1_5
+	arg_1_0._playList = arg_1_6
 
-	slot0:_build()
+	arg_1_0:_build()
 end
 
-function slot0.pause(slot0, slot1)
-	if slot1 then
-		slot0._playList:setPauseState(true)
+function var_0_0.pause(arg_2_0, arg_2_1)
+	if arg_2_1 then
+		arg_2_0._playList:setPauseState(true)
 	else
-		slot0._playList:setPauseState(false)
-		slot0._playList:setParent(slot0.viewGO)
+		arg_2_0._playList:setPauseState(false)
+		arg_2_0._playList:setParent(arg_2_0.viewGO)
 	end
 end
 
-function slot0.reset(slot0, slot1, slot2)
-	slot0.viewGO = slot1
-	slot0._videoCo = slot2
-	slot0._loop = slot2.loop
+function var_0_0.reset(arg_3_0, arg_3_1, arg_3_2)
+	arg_3_0.viewGO = arg_3_1
+	arg_3_0._videoCo = arg_3_2
+	arg_3_0._loop = arg_3_2.loop
 
-	TaskDispatcher.cancelTask(slot0._playVideo, slot0)
+	TaskDispatcher.cancelTask(arg_3_0._playVideo, arg_3_0)
 
-	if slot0._videoCo.delayTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()] < 0.1 then
-		slot0:_playVideo()
+	if arg_3_0._videoCo.delayTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()] < 0.1 then
+		arg_3_0:_playVideo()
 
 		return
 	end
 
-	TaskDispatcher.runDelay(slot0._playVideo, slot0, slot0._videoCo.delayTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()])
+	TaskDispatcher.runDelay(arg_3_0._playVideo, arg_3_0, arg_3_0._videoCo.delayTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()])
 end
 
-function slot0._build(slot0)
-	slot0._videoName = string.split(slot0._videoName, ".")[1]
+function var_0_0._build(arg_4_0)
+	arg_4_0._videoName = string.split(arg_4_0._videoName, ".")[1]
 
-	TaskDispatcher.cancelTask(slot0._playVideo, slot0)
+	TaskDispatcher.cancelTask(arg_4_0._playVideo, arg_4_0)
 
-	if slot0._videoCo.delayTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()] < 0.1 then
-		slot0:_playVideo()
+	if arg_4_0._videoCo.delayTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()] < 0.1 then
+		arg_4_0:_playVideo()
 
 		return
 	end
 
-	TaskDispatcher.runDelay(slot0._playVideo, slot0, slot0._videoCo.delayTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()])
+	TaskDispatcher.runDelay(arg_4_0._playVideo, arg_4_0, arg_4_0._videoCo.delayTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()])
 end
 
-function slot0._playVideo(slot0)
-	StoryModel.instance:setSpecialVideoPlaying(slot0._videoName)
+function var_0_0._playVideo(arg_5_0)
+	StoryModel.instance:setSpecialVideoPlaying(arg_5_0._videoName)
 
-	if slot0._playList then
-		slot0._playList:buildAndStart(slot0._videoName, slot0._loop, slot0._startCallBack, slot0._startCallBackObj, slot0)
-		slot0._playList:setParent(slot0.viewGO)
+	if arg_5_0._playList then
+		arg_5_0._playList:buildAndStart(arg_5_0._videoName, arg_5_0._loop, arg_5_0._startCallBack, arg_5_0._startCallBackObj, arg_5_0)
+		arg_5_0._playList:setParent(arg_5_0.viewGO)
 	end
 end
 
-function slot0.destroyVideo(slot0, slot1)
-	slot0._videoCo = slot1
+function var_0_0.destroyVideo(arg_6_0, arg_6_1)
+	arg_6_0._videoCo = arg_6_1
 
-	TaskDispatcher.cancelTask(slot0._playVideo, slot0)
-	TaskDispatcher.cancelTask(slot0._realDestroy, slot0)
+	TaskDispatcher.cancelTask(arg_6_0._playVideo, arg_6_0)
+	TaskDispatcher.cancelTask(arg_6_0._realDestroy, arg_6_0)
 
-	if slot0._videoCo.delayTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()] < 0.1 then
-		slot0:_realDestroy()
+	if arg_6_0._videoCo.delayTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()] < 0.1 then
+		arg_6_0:_realDestroy()
 
 		return
 	end
 
-	TaskDispatcher.runDelay(slot0._realDestroy, slot0, slot0._videoCo.delayTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()])
+	TaskDispatcher.runDelay(arg_6_0._realDestroy, arg_6_0, arg_6_0._videoCo.delayTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()])
 end
 
-function slot0._realDestroy(slot0)
-	slot0:onDestroy()
+function var_0_0._realDestroy(arg_7_0)
+	arg_7_0:onDestroy()
 end
 
-function slot0.onDestroy(slot0)
-	TaskDispatcher.cancelTask(slot0._realDestroy, slot0)
-	TaskDispatcher.cancelTask(slot0._playVideo, slot0)
-	StoryModel.instance:setSpecialVideoEnd(slot0._videoName)
-	slot0._playList:stop(slot0._videoName)
-	gohelper.destroy(slot0._videoGo)
+function var_0_0.onDestroy(arg_8_0)
+	TaskDispatcher.cancelTask(arg_8_0._realDestroy, arg_8_0)
+	TaskDispatcher.cancelTask(arg_8_0._playVideo, arg_8_0)
+	StoryModel.instance:setSpecialVideoEnd(arg_8_0._videoName)
+	arg_8_0._playList:stop(arg_8_0._videoName)
+	gohelper.destroy(arg_8_0._videoGo)
 end
 
-return slot0
+return var_0_0

@@ -1,426 +1,490 @@
-module("modules.logic.versionactivity1_6.dungeon.view.skill.VersionActivity1_6SkillLvUpView", package.seeall)
+﻿module("modules.logic.versionactivity1_6.dungeon.view.skill.VersionActivity1_6SkillLvUpView", package.seeall)
 
-slot0 = class("VersionActivity1_6SkillLvUpView", BaseView)
-slot1 = 570
-slot2 = "v1a6_talent_paint_line_%s_%s"
+local var_0_0 = class("VersionActivity1_6SkillLvUpView", BaseView)
+local var_0_1 = 570
+local var_0_2 = "v1a6_talent_paint_line_%s_%s"
 
-function slot0.onInitView(slot0)
-	slot0._btnLvUp = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_skillDetailTipView/#btn_LvUp")
-	slot0._btnLvDown = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_skillDetailTipView/#btn_LvDown")
-	slot0._btnLvUpDisable = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_skillDetailTipView/#btn_LvUpDisable")
-	slot0._btnLvDownDisable = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_skillDetailTipView/#btn_LvDownDisable")
-	slot0._textLvUpCost = gohelper.findChildText(slot0.viewGO, "#go_skillDetailTipView/#btn_LvUp/#txt_Num")
-	slot0._textLvDownCost = gohelper.findChildText(slot0.viewGO, "#go_skillDetailTipView/#btn_LvDown/#txt_Num")
-	slot0._iamgeBtnLvUp = gohelper.findChildImage(slot0.viewGO, "#go_skillDetailTipView/#btn_LvUp/#txt_Num/#simage_Prop")
-	slot0._imageBtnLvDown = gohelper.findChildImage(slot0.viewGO, "#go_skillDetailTipView/#btn_LvDown/#txt_Num/#simage_Prop")
-	slot0._txtTitle = gohelper.findChildText(slot0.viewGO, "Left/Title/txt_Title")
-	slot0._txtTitleEn = gohelper.findChildText(slot0.viewGO, "Left/Title/txt_TitleEn")
-	slot0._imageIcon = gohelper.findChildImage(slot0.viewGO, "Left/#image_Icon")
-	slot0._imageIconGold = gohelper.findChildImage(slot0.viewGO, "Left/#image_Icon_gold")
-	slot0._imageIconSliver = gohelper.findChildImage(slot0.viewGO, "Left/#image_Icon_sliver")
-	slot0._txtDesc = gohelper.findChildText(slot0.viewGO, "Left/#txt_Descr")
-	slot0._btnSkillPointProp = gohelper.findChildButtonWithAudio(slot0.viewGO, "SkillPoint/#btn_Info/Click")
-	slot0._btnSkillPointTips = gohelper.findChildButtonWithAudio(slot0.viewGO, "SkillPoint/#btn_Info")
-	slot0._btnTipsClose = gohelper.findChildButtonWithAudio(slot0.viewGO, "SkillPoint/#btn_Info/image_TipsBG/#btn_Tips_Close")
-	slot0._goSkilPointTips = gohelper.findChild(slot0.viewGO, "SkillPoint/#btn_Info/image_TipsBG")
-	slot0._txtSkillPointNum = gohelper.findChildText(slot0.viewGO, "SkillPoint/#btn_Info/image_TipsBG/txt_Tips_Num")
-	slot0._txtRemainSkillPointNum = gohelper.findChildText(slot0.viewGO, "SkillPoint/txt_Skill_Num")
-	slot0._imageSkillPoint = gohelper.findChildImage(slot0.viewGO, "SkillPoint/#simage_Prop")
-	slot0._goSkillIconEffect = gohelper.findChild(slot0.viewGO, "Left/eff")
-	slot0._goSkillPointEffect = gohelper.findChild(slot0.viewGO, "SkillPoint/eff")
-	slot0._goSkilPointAttrContent = gohelper.findChild(slot0.viewGO, "#go_skillDetailTipView/skillDetailTipScroll/Viewport/#go_Content")
-	slot0._goSkilPointAttrItem = gohelper.findChild(slot0.viewGO, "#go_skillDetailTipView/skillDetailTipScroll/Viewport/#go_Content/#go_descripteList")
-	slot0._goBuffContainer = gohelper.findChild(slot0.viewGO, "#go_buffContainer")
-	slot0._buffBg = gohelper.findChild(slot0.viewGO, "#go_buffContainer/buff_bg")
-	slot0._buffBgClick = gohelper.getClick(slot0._buffBg)
-	slot0._goBuffItem = gohelper.findChild(slot0.viewGO, "#go_buffContainer/#go_buffitem")
-	slot0._txtBuffName = gohelper.findChildText(slot0.viewGO, "#go_buffContainer/#go_buffitem/title/txt_name")
-	slot0._goBuffTag = gohelper.findChild(slot0.viewGO, "#go_buffContainer/#go_buffitem/title/txt_name/go_tag")
-	slot0._txtBuffTagName = gohelper.findChildText(slot0.viewGO, "#go_buffContainer/#go_buffitem/title/txt_name/go_tag/bg/txt_tagname")
-	slot0._txtBuffDesc = gohelper.findChildText(slot0.viewGO, "#go_buffContainer/#go_buffitem/txt_desc")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnLvUp = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_skillDetailTipView/#btn_LvUp")
+	arg_1_0._btnLvDown = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_skillDetailTipView/#btn_LvDown")
+	arg_1_0._btnLvUpDisable = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_skillDetailTipView/#btn_LvUpDisable")
+	arg_1_0._btnLvDownDisable = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_skillDetailTipView/#btn_LvDownDisable")
+	arg_1_0._textLvUpCost = gohelper.findChildText(arg_1_0.viewGO, "#go_skillDetailTipView/#btn_LvUp/#txt_Num")
+	arg_1_0._textLvDownCost = gohelper.findChildText(arg_1_0.viewGO, "#go_skillDetailTipView/#btn_LvDown/#txt_Num")
+	arg_1_0._iamgeBtnLvUp = gohelper.findChildImage(arg_1_0.viewGO, "#go_skillDetailTipView/#btn_LvUp/#txt_Num/#simage_Prop")
+	arg_1_0._imageBtnLvDown = gohelper.findChildImage(arg_1_0.viewGO, "#go_skillDetailTipView/#btn_LvDown/#txt_Num/#simage_Prop")
+	arg_1_0._txtTitle = gohelper.findChildText(arg_1_0.viewGO, "Left/Title/txt_Title")
+	arg_1_0._txtTitleEn = gohelper.findChildText(arg_1_0.viewGO, "Left/Title/txt_TitleEn")
+	arg_1_0._imageIcon = gohelper.findChildImage(arg_1_0.viewGO, "Left/#image_Icon")
+	arg_1_0._imageIconGold = gohelper.findChildImage(arg_1_0.viewGO, "Left/#image_Icon_gold")
+	arg_1_0._imageIconSliver = gohelper.findChildImage(arg_1_0.viewGO, "Left/#image_Icon_sliver")
+	arg_1_0._txtDesc = gohelper.findChildText(arg_1_0.viewGO, "Left/#txt_Descr")
+	arg_1_0._btnSkillPointProp = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "SkillPoint/#btn_Info/Click")
+	arg_1_0._btnSkillPointTips = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "SkillPoint/#btn_Info")
+	arg_1_0._btnTipsClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "SkillPoint/#btn_Info/image_TipsBG/#btn_Tips_Close")
+	arg_1_0._goSkilPointTips = gohelper.findChild(arg_1_0.viewGO, "SkillPoint/#btn_Info/image_TipsBG")
+	arg_1_0._txtSkillPointNum = gohelper.findChildText(arg_1_0.viewGO, "SkillPoint/#btn_Info/image_TipsBG/txt_Tips_Num")
+	arg_1_0._txtRemainSkillPointNum = gohelper.findChildText(arg_1_0.viewGO, "SkillPoint/txt_Skill_Num")
+	arg_1_0._imageSkillPoint = gohelper.findChildImage(arg_1_0.viewGO, "SkillPoint/#simage_Prop")
+	arg_1_0._goSkillIconEffect = gohelper.findChild(arg_1_0.viewGO, "Left/eff")
+	arg_1_0._goSkillPointEffect = gohelper.findChild(arg_1_0.viewGO, "SkillPoint/eff")
+	arg_1_0._goSkilPointAttrContent = gohelper.findChild(arg_1_0.viewGO, "#go_skillDetailTipView/skillDetailTipScroll/Viewport/#go_Content")
+	arg_1_0._goSkilPointAttrItem = gohelper.findChild(arg_1_0.viewGO, "#go_skillDetailTipView/skillDetailTipScroll/Viewport/#go_Content/#go_descripteList")
+	arg_1_0._goBuffContainer = gohelper.findChild(arg_1_0.viewGO, "#go_buffContainer")
+	arg_1_0._buffBg = gohelper.findChild(arg_1_0.viewGO, "#go_buffContainer/buff_bg")
+	arg_1_0._buffBgClick = gohelper.getClick(arg_1_0._buffBg)
+	arg_1_0._goBuffItem = gohelper.findChild(arg_1_0.viewGO, "#go_buffContainer/#go_buffitem")
+	arg_1_0._txtBuffName = gohelper.findChildText(arg_1_0.viewGO, "#go_buffContainer/#go_buffitem/title/txt_name")
+	arg_1_0._goBuffTag = gohelper.findChild(arg_1_0.viewGO, "#go_buffContainer/#go_buffitem/title/txt_name/go_tag")
+	arg_1_0._txtBuffTagName = gohelper.findChildText(arg_1_0.viewGO, "#go_buffContainer/#go_buffitem/title/txt_name/go_tag/bg/txt_tagname")
+	arg_1_0._txtBuffDesc = gohelper.findChildText(arg_1_0.viewGO, "#go_buffContainer/#go_buffitem/txt_desc")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnLvUp:AddClickListener(slot0._btnLvUpOnClick, slot0)
-	slot0._btnLvUpDisable:AddClickListener(slot0._btnLvUpOnClick, slot0)
-	slot0._btnLvDown:AddClickListener(slot0._btnLvDownOnClick, slot0)
-	slot0._btnLvDownDisable:AddClickListener(slot0._btnLvDownOnClick, slot0)
-	slot0._btnSkillPointProp:AddClickListener(slot0._btnSkillPointOnClick, slot0)
-	slot0._btnSkillPointTips:AddClickListener(slot0._btnSkillPointTipsOnClick, slot0)
-	slot0._btnTipsClose:AddClickListener(slot0._btnSkillPointTipsCloseOnClick, slot0)
-	slot0._buffBgClick:AddClickDownListener(slot0.hideBuffContainer, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnLvUp:AddClickListener(arg_2_0._btnLvUpOnClick, arg_2_0)
+	arg_2_0._btnLvUpDisable:AddClickListener(arg_2_0._btnLvUpOnClick, arg_2_0)
+	arg_2_0._btnLvDown:AddClickListener(arg_2_0._btnLvDownOnClick, arg_2_0)
+	arg_2_0._btnLvDownDisable:AddClickListener(arg_2_0._btnLvDownOnClick, arg_2_0)
+	arg_2_0._btnSkillPointProp:AddClickListener(arg_2_0._btnSkillPointOnClick, arg_2_0)
+	arg_2_0._btnSkillPointTips:AddClickListener(arg_2_0._btnSkillPointTipsOnClick, arg_2_0)
+	arg_2_0._btnTipsClose:AddClickListener(arg_2_0._btnSkillPointTipsCloseOnClick, arg_2_0)
+	arg_2_0._buffBgClick:AddClickDownListener(arg_2_0.hideBuffContainer, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnLvUp:RemoveClickListener()
-	slot0._btnLvDown:RemoveClickListener()
-	slot0._btnLvUpDisable:RemoveClickListener()
-	slot0._btnLvDownDisable:RemoveClickListener()
-	slot0._btnSkillPointTips:RemoveClickListener()
-	slot0._btnSkillPointProp:RemoveClickListener()
-	slot0._btnTipsClose:RemoveClickListener()
-	slot0._buffBgClick:RemoveClickDownListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnLvUp:RemoveClickListener()
+	arg_3_0._btnLvDown:RemoveClickListener()
+	arg_3_0._btnLvUpDisable:RemoveClickListener()
+	arg_3_0._btnLvDownDisable:RemoveClickListener()
+	arg_3_0._btnSkillPointTips:RemoveClickListener()
+	arg_3_0._btnSkillPointProp:RemoveClickListener()
+	arg_3_0._btnTipsClose:RemoveClickListener()
+	arg_3_0._buffBgClick:RemoveClickDownListener()
 end
 
-function slot0._editableInitView(slot0)
-	slot0.skillAttrItemDict = {}
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0.skillAttrItemDict = {}
 
-	gohelper.setActive(slot0._goSkilPointAttrItem, false)
-	gohelper.setActive(slot0._goBuffContainer, false)
+	gohelper.setActive(arg_4_0._goSkilPointAttrItem, false)
+	gohelper.setActive(arg_4_0._goBuffContainer, false)
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_5_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0:addEventCb(VersionActivity1_6DungeonController.instance, Act148Event.SkillLvDown, slot0._onLvChange, slot0)
-	slot0:addEventCb(VersionActivity1_6DungeonController.instance, Act148Event.SkillLvUp, slot0._onLvChange, slot0)
-	slot0:addEventCb(VersionActivity1_6DungeonController.instance, VersionActivity1_6DungeonEvent.SkillPointReturnBack, slot0._skillPointReturnBack, slot0)
-	slot0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, slot0._onCurrencyChange, slot0)
-	slot0:addEventCb(JumpController.instance, JumpEvent.BeforeJump, slot0.closeThis, slot0)
+function var_0_0.onOpen(arg_6_0)
+	arg_6_0:addEventCb(VersionActivity1_6DungeonController.instance, Act148Event.SkillLvDown, arg_6_0._onLvChange, arg_6_0)
+	arg_6_0:addEventCb(VersionActivity1_6DungeonController.instance, Act148Event.SkillLvUp, arg_6_0._onLvChange, arg_6_0)
+	arg_6_0:addEventCb(VersionActivity1_6DungeonController.instance, VersionActivity1_6DungeonEvent.SkillPointReturnBack, arg_6_0._skillPointReturnBack, arg_6_0)
+	arg_6_0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_6_0._onCurrencyChange, arg_6_0)
+	arg_6_0:addEventCb(JumpController.instance, JumpEvent.BeforeJump, arg_6_0.closeThis, arg_6_0)
 
-	slot0._skillType = slot0.viewParam and slot0.viewParam.skillType
-	slot0._skillMo = VersionActivity1_6DungeonSkillModel.instance:getAct148SkillMo(slot0._skillType)
-	slot0._curLv = slot0._skillMo:getLevel()
+	arg_6_0._skillType = arg_6_0.viewParam and arg_6_0.viewParam.skillType
+	arg_6_0._skillMo = VersionActivity1_6DungeonSkillModel.instance:getAct148SkillMo(arg_6_0._skillType)
+	arg_6_0._curLv = arg_6_0._skillMo:getLevel()
 
-	gohelper.setActive(slot0._goSkilPointTips, false)
+	gohelper.setActive(arg_6_0._goSkilPointTips, false)
 end
 
-function slot0.onOpenFinish(slot0)
-	slot0:initCenterSkillNodes()
-	slot0:refreshCenterSkillNodes()
-	slot0:_refreshSkillPointNum()
-	slot0:refreshSkillInfo()
-	slot0:refreshSkillIcon()
-	slot0:initSkillAttrItems()
-	slot0:refreshSkillAttrs()
-	slot0:refreshBtnCost()
-	slot0:_refreshSkillPointIcon()
-	slot0:_refreshBtnVisible()
+function var_0_0.onOpenFinish(arg_7_0)
+	arg_7_0:initCenterSkillNodes()
+	arg_7_0:refreshCenterSkillNodes()
+	arg_7_0:_refreshSkillPointNum()
+	arg_7_0:refreshSkillInfo()
+	arg_7_0:refreshSkillIcon()
+	arg_7_0:initSkillAttrItems()
+	arg_7_0:refreshSkillAttrs()
+	arg_7_0:refreshBtnCost()
+	arg_7_0:_refreshSkillPointIcon()
+	arg_7_0:_refreshBtnVisible()
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_8_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_9_0)
+	return
 end
 
-function slot0._onLvChange(slot0, slot1)
-	slot0._skillMo = VersionActivity1_6DungeonSkillModel.instance:getAct148SkillMo(slot0._skillType)
-	slot2 = slot1 < slot0._curLv
+function var_0_0._onLvChange(arg_10_0, arg_10_1)
+	arg_10_0._skillMo = VersionActivity1_6DungeonSkillModel.instance:getAct148SkillMo(arg_10_0._skillType)
 
-	AudioMgr.instance:trigger(slot2 and AudioEnum.UI.Act1_6DungeonSkillViewLvDown or AudioEnum.UI.Act1_6DungeonSkillViewLvUp)
+	local var_10_0 = arg_10_1 < arg_10_0._curLv
 
-	slot0._curLv = slot1
+	AudioMgr.instance:trigger(var_10_0 and AudioEnum.UI.Act1_6DungeonSkillViewLvDown or AudioEnum.UI.Act1_6DungeonSkillViewLvUp)
 
-	slot0:doSkillLvChangeView(slot1)
-	slot0:refreshSkillAttrs(slot2)
-	slot0:refreshCenterSkillNodes()
-	slot0:_refreshSkillNodeEffect(slot2)
-	slot0:_refreshSkillPointNum()
-	slot0:refreshBtnCost()
-	slot0:refreshSkillIcon()
-	slot0:_refreshBtnVisible()
+	arg_10_0._curLv = arg_10_1
+
+	arg_10_0:doSkillLvChangeView(arg_10_1)
+	arg_10_0:refreshSkillAttrs(var_10_0)
+	arg_10_0:refreshCenterSkillNodes()
+	arg_10_0:_refreshSkillNodeEffect(var_10_0)
+	arg_10_0:_refreshSkillPointNum()
+	arg_10_0:refreshBtnCost()
+	arg_10_0:refreshSkillIcon()
+	arg_10_0:_refreshBtnVisible()
 end
 
-function slot0.initCenterSkillNodes(slot0)
-	slot0._skillLvPoints = slot0:getUserDataTb_()
+function var_0_0.initCenterSkillNodes(arg_11_0)
+	arg_11_0._skillLvPoints = arg_11_0:getUserDataTb_()
 
-	for slot5 = 1, VersionActivity1_6DungeonEnum.skillTypeNum do
-		gohelper.setActive(gohelper.findChild(slot0.viewGO, "#go_Paint" .. slot5), slot5 == slot0._skillType)
+	local var_11_0 = VersionActivity1_6DungeonEnum.skillTypeNum
+
+	for iter_11_0 = 1, var_11_0 do
+		local var_11_1 = gohelper.findChild(arg_11_0.viewGO, "#go_Paint" .. iter_11_0)
+
+		gohelper.setActive(var_11_1, iter_11_0 == arg_11_0._skillType)
 	end
 
-	slot2 = gohelper.findChild(slot0.viewGO, "#go_Paint" .. slot0._skillType)
-	slot0._imageSkillNodeLine = gohelper.findChildImage(slot2, "image_PaintLineFG")
-	slot0._animatorSkillNodeLine = slot0._imageSkillNodeLine:GetComponent(typeof(UnityEngine.Animator))
+	local var_11_2 = gohelper.findChild(arg_11_0.viewGO, "#go_Paint" .. arg_11_0._skillType)
 
-	for slot8 = 1, VersionActivity1_6DungeonEnum.skillPointMaxNum do
-		slot10 = gohelper.clone(gohelper.findChild(slot2, "#go_Lv"), gohelper.findChild(slot2, "#go_Lv" .. slot8), "node")
+	arg_11_0._imageSkillNodeLine = gohelper.findChildImage(var_11_2, "image_PaintLineFG")
+	arg_11_0._animatorSkillNodeLine = arg_11_0._imageSkillNodeLine:GetComponent(typeof(UnityEngine.Animator))
 
-		gohelper.setActive(slot10, true)
+	local var_11_3 = VersionActivity1_6DungeonEnum.skillPointMaxNum
+	local var_11_4 = gohelper.findChild(var_11_2, "#go_Lv")
 
-		slot0._skillLvPoints[slot8] = slot0:getUserDataTb_()
-		slot0._skillLvPoints[slot8].normalPointDark = gohelper.findChild(slot10, "#go_Point1-1")
-		slot0._skillLvPoints[slot8].normalPoint = gohelper.findChild(slot10, "#go_Point1-2")
-		slot0._skillLvPoints[slot8].keyPointDark = gohelper.findChild(slot10, "#go_Point2-1")
-		slot0._skillLvPoints[slot8].keyPoint = gohelper.findChild(slot10, "#go_Point2-2")
-		slot0._skillLvPoints[slot8].effect = gohelper.findChild(slot10, "eff")
+	for iter_11_1 = 1, var_11_3 do
+		local var_11_5 = gohelper.findChild(var_11_2, "#go_Lv" .. iter_11_1)
+		local var_11_6 = gohelper.clone(var_11_4, var_11_5, "node")
+
+		gohelper.setActive(var_11_6, true)
+
+		arg_11_0._skillLvPoints[iter_11_1] = arg_11_0:getUserDataTb_()
+		arg_11_0._skillLvPoints[iter_11_1].normalPointDark = gohelper.findChild(var_11_6, "#go_Point1-1")
+		arg_11_0._skillLvPoints[iter_11_1].normalPoint = gohelper.findChild(var_11_6, "#go_Point1-2")
+		arg_11_0._skillLvPoints[iter_11_1].keyPointDark = gohelper.findChild(var_11_6, "#go_Point2-1")
+		arg_11_0._skillLvPoints[iter_11_1].keyPoint = gohelper.findChild(var_11_6, "#go_Point2-2")
+		arg_11_0._skillLvPoints[iter_11_1].effect = gohelper.findChild(var_11_6, "eff")
 	end
 end
 
-function slot0.refreshCenterSkillNodes(slot0)
-	for slot6 = 1, VersionActivity1_6DungeonEnum.skillPointMaxNum do
-		slot8 = slot0._curLv < slot6
-		slot9 = slot0._curLv < slot6
-		slot10 = slot6 <= slot0._curLv
-		slot11 = slot6 <= slot0._curLv
+function var_0_0.refreshCenterSkillNodes(arg_12_0)
+	local var_12_0 = VersionActivity1_6DungeonEnum.SkillKeyPointIdxs
+	local var_12_1 = VersionActivity1_6DungeonEnum.skillPointMaxNum
 
-		if VersionActivity1_6DungeonEnum.SkillKeyPointIdxs[slot6] then
-			slot8 = false
-			slot10 = false
+	for iter_12_0 = 1, var_12_1 do
+		local var_12_2 = var_12_0[iter_12_0]
+		local var_12_3 = iter_12_0 > arg_12_0._curLv
+		local var_12_4 = iter_12_0 > arg_12_0._curLv
+		local var_12_5 = iter_12_0 <= arg_12_0._curLv
+		local var_12_6 = iter_12_0 <= arg_12_0._curLv
+
+		if var_12_2 then
+			var_12_3 = false
+			var_12_5 = false
 		else
-			slot11 = false
-			slot9 = false
+			var_12_6 = false
+			var_12_4 = false
 		end
 
-		gohelper.setActive(slot0._skillLvPoints[slot6].normalPoint, slot10)
-		gohelper.setActive(slot0._skillLvPoints[slot6].normalPointDark, slot8)
-		gohelper.setActive(slot0._skillLvPoints[slot6].keyPoint, slot11)
-		gohelper.setActive(slot0._skillLvPoints[slot6].keyPointDark, slot9)
+		gohelper.setActive(arg_12_0._skillLvPoints[iter_12_0].normalPoint, var_12_5)
+		gohelper.setActive(arg_12_0._skillLvPoints[iter_12_0].normalPointDark, var_12_3)
+		gohelper.setActive(arg_12_0._skillLvPoints[iter_12_0].keyPoint, var_12_6)
+		gohelper.setActive(arg_12_0._skillLvPoints[iter_12_0].keyPointDark, var_12_4)
 	end
 
-	gohelper.setActive(slot0._imageSkillNodeLine.gameObject, slot0._curLv > 1)
+	gohelper.setActive(arg_12_0._imageSkillNodeLine.gameObject, arg_12_0._curLv > 1)
 
-	if slot0._curLv > 1 then
-		UISpriteSetMgr.instance:setV1a6DungeonSkillSprite(slot0._imageSkillNodeLine, string.format(uv0, slot0._skillType, slot0._curLv - 1))
+	if arg_12_0._curLv > 1 then
+		local var_12_7 = string.format(var_0_2, arg_12_0._skillType, arg_12_0._curLv - 1)
 
-		if slot0._animatorSkillNodeLine then
-			slot0._animatorSkillNodeLine:Play(UIAnimationName.Open, 0, 0)
-		end
-	end
-end
+		UISpriteSetMgr.instance:setV1a6DungeonSkillSprite(arg_12_0._imageSkillNodeLine, var_12_7)
 
-function slot0._refreshSkillNodeEffect(slot0, slot1)
-	if slot1 then
-		gohelper.setActive(slot0._goSkillPointEffect, false)
-		gohelper.setActive(slot0._goSkillPointEffect, true)
-	end
-
-	gohelper.setActive(slot0._goSkillIconEffect, false)
-	gohelper.setActive(slot0._goSkillIconEffect, true)
-
-	slot2 = VersionActivity1_6DungeonEnum.SkillKeyPointIdxs
-
-	for slot7 = 1, VersionActivity1_6DungeonEnum.skillPointMaxNum do
-		if not slot1 then
-			gohelper.setActive(slot0._skillLvPoints[slot7].effect, slot0._curLv == slot7)
+		if arg_12_0._animatorSkillNodeLine then
+			arg_12_0._animatorSkillNodeLine:Play(UIAnimationName.Open, 0, 0)
 		end
 	end
 end
 
-slot3 = "#E4C599"
+function var_0_0._refreshSkillNodeEffect(arg_13_0, arg_13_1)
+	if arg_13_1 then
+		gohelper.setActive(arg_13_0._goSkillPointEffect, false)
+		gohelper.setActive(arg_13_0._goSkillPointEffect, true)
+	end
 
-function slot0._refreshSkillPointNum(slot0)
-	slot1 = Activity148Config.instance:getAct148ConstValue(VersionActivity1_6Enum.ActivityId.DungeonSkillTree, VersionActivity1_6DungeonEnum.DungeonConstId.MaxSkillPointNum)
+	gohelper.setActive(arg_13_0._goSkillIconEffect, false)
+	gohelper.setActive(arg_13_0._goSkillIconEffect, true)
+
+	local var_13_0 = VersionActivity1_6DungeonEnum.SkillKeyPointIdxs
+	local var_13_1 = VersionActivity1_6DungeonEnum.skillPointMaxNum
+
+	for iter_13_0 = 1, var_13_1 do
+		if not arg_13_1 then
+			gohelper.setActive(arg_13_0._skillLvPoints[iter_13_0].effect, arg_13_0._curLv == iter_13_0)
+		end
+	end
+end
+
+local var_0_3 = "#E4C599"
+
+function var_0_0._refreshSkillPointNum(arg_14_0)
+	local var_14_0 = Activity148Config.instance:getAct148ConstValue(VersionActivity1_6Enum.ActivityId.DungeonSkillTree, VersionActivity1_6DungeonEnum.DungeonConstId.MaxSkillPointNum)
+	local var_14_1 = CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.V1a6DungeonSkill)
+	local var_14_2 = var_14_1 and var_14_1.quantity or 0
 
 	if LangSettings.instance:isEn() then
-		slot0._txtRemainSkillPointNum.text = " " .. (CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.V1a6DungeonSkill) and slot2.quantity or 0)
+		arg_14_0._txtRemainSkillPointNum.text = " " .. var_14_2
 	else
-		slot0._txtRemainSkillPointNum.text = slot3
+		arg_14_0._txtRemainSkillPointNum.text = var_14_2
 	end
 
-	SLFramework.UGUI.GuiHelper.SetColor(slot0._txtRemainSkillPointNum, uv0)
+	SLFramework.UGUI.GuiHelper.SetColor(arg_14_0._txtRemainSkillPointNum, var_0_3)
 
-	slot0._txtSkillPointNum.text = string.format("<color=#EB5F34>%s</color>/%s", VersionActivity1_6DungeonSkillModel.instance:getTotalGotSkillPointNum() or 0, slot1)
+	local var_14_3 = VersionActivity1_6DungeonSkillModel.instance:getTotalGotSkillPointNum()
+	local var_14_4 = string.format("<color=#EB5F34>%s</color>/%s", var_14_3 or 0, var_14_0)
+
+	arg_14_0._txtSkillPointNum.text = var_14_4
 end
 
-function slot0.refreshSkillInfo(slot0)
-	slot1 = slot0._skillMo and slot0._skillMo:getLevel() or 0
-	slot2 = Activity148Config.instance:getAct148CfgByTypeLv(slot0._skillType, slot1)
-	slot3 = Activity148Config.instance:getAct148SkillTypeCfg(slot0._skillType)
+function var_0_0.refreshSkillInfo(arg_15_0)
+	local var_15_0 = arg_15_0._skillMo and arg_15_0._skillMo:getLevel() or 0
+	local var_15_1 = Activity148Config.instance:getAct148CfgByTypeLv(arg_15_0._skillType, var_15_0)
+	local var_15_2 = Activity148Config.instance:getAct148SkillTypeCfg(arg_15_0._skillType)
 
-	if slot1 == 0 then
-		slot2 = Activity148Config.instance:getAct148CfgByTypeLv(slot0._skillType, 1)
+	if var_15_0 == 0 then
+		local var_15_3 = Activity148Config.instance:getAct148CfgByTypeLv(arg_15_0._skillType, 1)
 	end
 
-	slot0._txtTitle.text = slot3.skillName
-	slot0._txtTitleEn.text = slot3.skillNameEn
-	slot0._txtDesc.text = slot3.skillInfoDesc
+	arg_15_0._txtTitle.text = var_15_2.skillName
+	arg_15_0._txtTitleEn.text = var_15_2.skillNameEn
+	arg_15_0._txtDesc.text = var_15_2.skillInfoDesc
 end
 
-function slot0.refreshSkillIcon(slot0)
-	slot1 = slot0._skillMo and slot0._skillMo:getLevel() or 0
-	slot3 = Activity148Config.instance:getAct148SkillTypeCfg(slot0._skillType)
-	slot4 = nil
-	slot4 = (slot1 ~= 0 or Activity148Config.instance:getAct148ConstValue(VersionActivity1_6Enum.ActivityId.DungeonSkillTree, VersionActivity1_6DungeonEnum.SkillOriginIcon[slot0._skillType])) and Activity148Config.instance:getAct148CfgByTypeLv(slot0._skillType, slot1).skillSmallIcon
+function var_0_0.refreshSkillIcon(arg_16_0)
+	local var_16_0 = arg_16_0._skillMo and arg_16_0._skillMo:getLevel() or 0
+	local var_16_1 = Activity148Config.instance:getAct148CfgByTypeLv(arg_16_0._skillType, var_16_0)
+	local var_16_2 = Activity148Config.instance:getAct148SkillTypeCfg(arg_16_0._skillType)
+	local var_16_3
 
-	UISpriteSetMgr.instance:setV1a6DungeonSkillSprite(slot0._imageIcon, slot4)
-	UISpriteSetMgr.instance:setV1a6DungeonSkillSprite(slot0._imageIconGold, slot4)
-	UISpriteSetMgr.instance:setV1a6DungeonSkillSprite(slot0._imageIconSliver, slot4)
-
-	slot8 = tonumber(Activity148Config.instance:getAct148ConstValue(VersionActivity1_6Enum.ActivityId.DungeonSkillTree, VersionActivity1_6DungeonEnum.DungeonConstId.SilverEffectSkillLv)) <= slot1
-
-	if tonumber(Activity148Config.instance:getAct148ConstValue(VersionActivity1_6Enum.ActivityId.DungeonSkillTree, VersionActivity1_6DungeonEnum.DungeonConstId.GoldEffectSkillLv)) <= slot1 then
-		gohelper.setActive(slot0._imageIconSliver.gameObject, false)
-		gohelper.setActive(slot0._imageIconGold.gameObject, true)
-	elseif slot8 then
-		gohelper.setActive(slot0._imageIconSliver.gameObject, true)
-		gohelper.setActive(slot0._imageIconGold.gameObject, false)
+	if var_16_0 == 0 then
+		var_16_3 = Activity148Config.instance:getAct148ConstValue(VersionActivity1_6Enum.ActivityId.DungeonSkillTree, VersionActivity1_6DungeonEnum.SkillOriginIcon[arg_16_0._skillType])
 	else
-		gohelper.setActive(slot0._imageIconSliver.gameObject, false)
-		gohelper.setActive(slot0._imageIconGold.gameObject, false)
+		var_16_3 = var_16_1.skillSmallIcon
+	end
+
+	UISpriteSetMgr.instance:setV1a6DungeonSkillSprite(arg_16_0._imageIcon, var_16_3)
+
+	local var_16_4 = Activity148Config.instance:getAct148ConstValue(VersionActivity1_6Enum.ActivityId.DungeonSkillTree, VersionActivity1_6DungeonEnum.DungeonConstId.SilverEffectSkillLv)
+	local var_16_5 = Activity148Config.instance:getAct148ConstValue(VersionActivity1_6Enum.ActivityId.DungeonSkillTree, VersionActivity1_6DungeonEnum.DungeonConstId.GoldEffectSkillLv)
+
+	UISpriteSetMgr.instance:setV1a6DungeonSkillSprite(arg_16_0._imageIconGold, var_16_3)
+	UISpriteSetMgr.instance:setV1a6DungeonSkillSprite(arg_16_0._imageIconSliver, var_16_3)
+
+	local var_16_6 = var_16_0 >= tonumber(var_16_5)
+	local var_16_7 = var_16_0 >= tonumber(var_16_4)
+
+	if var_16_6 then
+		gohelper.setActive(arg_16_0._imageIconSliver.gameObject, false)
+		gohelper.setActive(arg_16_0._imageIconGold.gameObject, true)
+	elseif var_16_7 then
+		gohelper.setActive(arg_16_0._imageIconSliver.gameObject, true)
+		gohelper.setActive(arg_16_0._imageIconGold.gameObject, false)
+	else
+		gohelper.setActive(arg_16_0._imageIconSliver.gameObject, false)
+		gohelper.setActive(arg_16_0._imageIconGold.gameObject, false)
 	end
 end
 
-function slot0.initSkillAttrItems(slot0)
-	for slot5, slot6 in pairs(Activity148Config.instance:getAct148CfgDictByType(slot0._skillType)) do
-		slot7 = gohelper.cloneInPlace(slot0._goSkilPointAttrItem, "item" .. slot5)
+function var_0_0.initSkillAttrItems(arg_17_0)
+	local var_17_0 = Activity148Config.instance:getAct148CfgDictByType(arg_17_0._skillType)
 
-		gohelper.setActive(slot7, true)
+	for iter_17_0, iter_17_1 in pairs(var_17_0) do
+		local var_17_1 = gohelper.cloneInPlace(arg_17_0._goSkilPointAttrItem, "item" .. iter_17_0)
 
-		slot0.skillAttrItemDict[slot6.id] = slot0:createSkillAttrItem(slot7, slot6)
+		gohelper.setActive(var_17_1, true)
+
+		local var_17_2 = arg_17_0:createSkillAttrItem(var_17_1, iter_17_1)
+
+		arg_17_0.skillAttrItemDict[iter_17_1.id] = var_17_2
 	end
 end
 
-function slot0.createSkillAttrItem(slot0, slot1, slot2)
-	slot3 = VersionActivity1_6SkillDescItem.New()
+function var_0_0.createSkillAttrItem(arg_18_0, arg_18_1, arg_18_2)
+	local var_18_0 = VersionActivity1_6SkillDescItem.New()
 
-	slot3:init(slot1, slot2, slot0)
-	slot3:refreshInfo()
+	var_18_0:init(arg_18_1, arg_18_2, arg_18_0)
+	var_18_0:refreshInfo()
 
-	return slot3
+	return var_18_0
 end
 
-function slot0.refreshSkillAttrs(slot0, slot1)
-	for slot6, slot7 in pairs(Activity148Config.instance:getAct148CfgDictByType(slot0._skillType)) do
-		slot8 = slot0.skillAttrItemDict[slot7.id]
-		slot8.canvasGroup.alpha = slot0._curLv < slot8.lv and 0.5 or 1
-		slot8.txtlvcanvasGroup.alpha = slot0._curLv < slot8.lv and 0.5 or 1
+function var_0_0.refreshSkillAttrs(arg_19_0, arg_19_1)
+	local var_19_0 = Activity148Config.instance:getAct148CfgDictByType(arg_19_0._skillType)
 
-		gohelper.setActive(slot8.goCurLvFlag, slot0._curLv == slot8.lv - 1)
+	for iter_19_0, iter_19_1 in pairs(var_19_0) do
+		local var_19_1 = arg_19_0.skillAttrItemDict[iter_19_1.id]
+
+		var_19_1.canvasGroup.alpha = arg_19_0._curLv < var_19_1.lv and 0.5 or 1
+		var_19_1.txtlvcanvasGroup.alpha = arg_19_0._curLv < var_19_1.lv and 0.5 or 1
+
+		gohelper.setActive(var_19_1.goCurLvFlag, arg_19_0._curLv == var_19_1.lv - 1)
 	end
 
-	slot3 = 3
+	local var_19_2 = 3
+	local var_19_3 = 5
 
-	if slot1 and slot0._curLv < 5 or not slot1 and slot0._curLv > 3 then
-		slot5 = 0
-		slot6 = 0
+	if arg_19_1 and var_19_3 > arg_19_0._curLv or not arg_19_1 and arg_19_0._curLv > 3 then
+		local var_19_4 = 0
+		local var_19_5 = 0
 
-		for slot10 = 1, VersionActivity1_6DungeonEnum.skillMaxLv do
-			slot13 = slot0.skillAttrItemDict[slot2[slot10].id].height
+		for iter_19_2 = 1, VersionActivity1_6DungeonEnum.skillMaxLv do
+			local var_19_6 = var_19_0[iter_19_2]
+			local var_19_7 = arg_19_0.skillAttrItemDict[var_19_6.id].height
 
-			if slot10 == slot0._curLv then
-				slot6 = slot5
+			if iter_19_2 == arg_19_0._curLv then
+				var_19_5 = var_19_4
 			end
 
-			slot5 = slot5 + slot13
+			var_19_4 = var_19_4 + var_19_7
 		end
 
-		recthelper.setAnchorY(slot0._goSkilPointAttrContent.transform, slot6)
+		recthelper.setAnchorY(arg_19_0._goSkilPointAttrContent.transform, var_19_5)
 	end
 end
 
-function slot0.doSkillLvChangeView(slot0, slot1)
-	for slot5, slot6 in pairs(slot0.skillAttrItemDict) do
-		gohelper.setActive(slot6.vx, slot1 == slot6.lv)
+function var_0_0.doSkillLvChangeView(arg_20_0, arg_20_1)
+	for iter_20_0, iter_20_1 in pairs(arg_20_0.skillAttrItemDict) do
+		gohelper.setActive(iter_20_1.vx, arg_20_1 == iter_20_1.lv)
 	end
 end
 
-function slot0.refreshBtnCost(slot0)
-	slot1 = slot0._curLv
-	slot2 = slot1 - 1
-	slot3 = slot1 + 1
-	slot5 = ""
+function var_0_0.refreshBtnCost(arg_21_0)
+	local var_21_0 = arg_21_0._curLv
+	local var_21_1 = var_21_0 - 1
+	local var_21_2 = var_21_0 + 1
+	local var_21_3 = Activity148Config.instance:getAct148CfgByTypeLv(arg_21_0._skillType, var_21_0)
+	local var_21_4 = ""
 
-	if Activity148Config.instance:getAct148CfgByTypeLv(slot0._skillType, slot1) then
-		slot5 = "+" .. string.splitToNumber(slot4.cost, "#")[3]
+	if var_21_3 then
+		local var_21_5 = var_21_3.cost
+		local var_21_6 = string.splitToNumber(var_21_5, "#")[3]
+
+		var_21_4 = "+" .. var_21_6
 	end
 
-	slot0._textLvDownCost.text = slot5
-	slot6 = ""
+	arg_21_0._textLvDownCost.text = var_21_4
 
-	if Activity148Config.instance:getAct148CfgByTypeLv(slot0._skillType, slot3) then
-		slot6 = "-" .. string.splitToNumber(slot7.cost, "#")[3]
+	local var_21_7 = ""
+	local var_21_8 = Activity148Config.instance:getAct148CfgByTypeLv(arg_21_0._skillType, var_21_2)
+
+	if var_21_8 then
+		local var_21_9 = var_21_8.cost
+		local var_21_10 = string.splitToNumber(var_21_9, "#")[3]
+
+		var_21_7 = "-" .. var_21_10
 	end
 
-	slot0._textLvUpCost.text = slot6
+	arg_21_0._textLvUpCost.text = var_21_7
 end
 
-function slot0._refreshBtnVisible(slot0)
-	slot1 = slot0._curLv
-	slot5 = Activity148Config.instance:getAct148CfgByTypeLv(slot0._skillType, slot1 + 1) ~= nil
-	slot6 = slot1 - 1 >= 0
+function var_0_0._refreshBtnVisible(arg_22_0)
+	local var_22_0 = arg_22_0._curLv
+	local var_22_1 = var_22_0 + 1
+	local var_22_2 = var_22_0 - 1
+	local var_22_3 = Activity148Config.instance:getAct148CfgByTypeLv(arg_22_0._skillType, var_22_1) ~= nil
+	local var_22_4 = var_22_2 >= 0
 
-	gohelper.setActive(slot0._btnLvUp, slot5)
-	gohelper.setActive(slot0._btnLvUpDisable, not slot5)
-	gohelper.setActive(slot0._btnLvDown, slot6)
-	gohelper.setActive(slot0._btnLvDownDisable, not slot6)
+	gohelper.setActive(arg_22_0._btnLvUp, var_22_3)
+	gohelper.setActive(arg_22_0._btnLvUpDisable, not var_22_3)
+	gohelper.setActive(arg_22_0._btnLvDown, var_22_4)
+	gohelper.setActive(arg_22_0._btnLvDownDisable, not var_22_4)
 end
 
-function slot0._refreshSkillPointIcon(slot0)
-	slot2 = string.format("%s_1", CurrencyConfig.instance:getCurrencyCo(CurrencyEnum.CurrencyType.V1a6DungeonSkill) and slot1.icon)
+function var_0_0._refreshSkillPointIcon(arg_23_0)
+	local var_23_0 = CurrencyConfig.instance:getCurrencyCo(CurrencyEnum.CurrencyType.V1a6DungeonSkill)
+	local var_23_1 = string.format("%s_1", var_23_0 and var_23_0.icon)
 
-	UISpriteSetMgr.instance:setCurrencyItemSprite(slot0._imageSkillPoint, slot2)
-	UISpriteSetMgr.instance:setCurrencyItemSprite(slot0._iamgeBtnLvUp, slot2)
-	UISpriteSetMgr.instance:setCurrencyItemSprite(slot0._imageBtnLvDown, slot2)
+	UISpriteSetMgr.instance:setCurrencyItemSprite(arg_23_0._imageSkillPoint, var_23_1)
+	UISpriteSetMgr.instance:setCurrencyItemSprite(arg_23_0._iamgeBtnLvUp, var_23_1)
+	UISpriteSetMgr.instance:setCurrencyItemSprite(arg_23_0._imageBtnLvDown, var_23_1)
 end
 
-function slot0.showBuffContainer(slot0, slot1, slot2, slot3)
-	gohelper.setActive(slot0._goBuffContainer, true)
+function var_0_0.showBuffContainer(arg_24_0, arg_24_1, arg_24_2, arg_24_3)
+	gohelper.setActive(arg_24_0._goBuffContainer, true)
 
-	slot0.buffItemWidth = GameUtil.getTextWidthByLine(slot0._txtBuffDesc, slot2, 24)
-	slot0.buffItemWidth = slot0.buffItemWidth + 70
+	arg_24_0.buffItemWidth = GameUtil.getTextWidthByLine(arg_24_0._txtBuffDesc, arg_24_2, 24)
+	arg_24_0.buffItemWidth = arg_24_0.buffItemWidth + 70
 
-	if uv0 < slot0.buffItemWidth then
-		slot0.buffItemWidth = uv0
+	if arg_24_0.buffItemWidth > var_0_1 then
+		arg_24_0.buffItemWidth = var_0_1
 	end
 
-	slot0._txtBuffName.text = slot1
-	slot0._txtBuffDesc.text = slot2
-	slot4 = FightConfig.instance:getBuffTag(slot1)
+	arg_24_0._txtBuffName.text = arg_24_1
+	arg_24_0._txtBuffDesc.text = arg_24_2
 
-	gohelper.setActive(slot0._goBuffTag, not string.nilorempty(slot4))
+	local var_24_0 = FightConfig.instance:getBuffTag(arg_24_1)
 
-	slot0._txtBuffTagName.text = slot4
-	slot5 = recthelper.screenPosToAnchorPos(slot3, slot0.viewGO.transform)
+	gohelper.setActive(arg_24_0._goBuffTag, not string.nilorempty(var_24_0))
 
-	recthelper.setAnchor(slot0._goBuffItem.transform, slot5.x - 20, slot5.y)
+	arg_24_0._txtBuffTagName.text = var_24_0
+
+	local var_24_1 = recthelper.screenPosToAnchorPos(arg_24_3, arg_24_0.viewGO.transform)
+
+	recthelper.setAnchor(arg_24_0._goBuffItem.transform, var_24_1.x - 20, var_24_1.y)
 end
 
-function slot0.hideBuffContainer(slot0)
-	gohelper.setActive(slot0._goBuffContainer, false)
+function var_0_0.hideBuffContainer(arg_25_0)
+	gohelper.setActive(arg_25_0._goBuffContainer, false)
 end
 
-function slot0._btnLvUpOnClick(slot0)
-	if not Activity148Config.instance:getAct148CfgByTypeLv(slot0._skillType, slot0._curLv + 1) then
+function var_0_0._btnLvUpOnClick(arg_26_0)
+	local var_26_0 = arg_26_0._curLv + 1
+	local var_26_1 = Activity148Config.instance:getAct148CfgByTypeLv(arg_26_0._skillType, var_26_0)
+
+	if not var_26_1 then
 		GameFacade.showToast(ToastEnum.Act1_6DungeonToast60201)
 	else
-		slot5 = string.splitToNumber(slot3.cost, "#")
+		local var_26_2 = var_26_1.cost
+		local var_26_3 = string.splitToNumber(var_26_2, "#")
+		local var_26_4 = var_26_3[2]
 
-		if CurrencyModel.instance:getCurrency(slot5[2]).quantity < slot5[3] then
+		if var_26_3[3] > CurrencyModel.instance:getCurrency(var_26_4).quantity then
 			GameFacade.showToast(ToastEnum.Act1_6DungeonToast60203)
 
 			return
 		end
 
-		VersionActivity1_6DungeonRpc.instance:sendAct148UpLevelRequest(slot0._skillType)
+		VersionActivity1_6DungeonRpc.instance:sendAct148UpLevelRequest(arg_26_0._skillType)
 	end
 end
 
-function slot0._btnLvDownOnClick(slot0)
-	if slot0._curLv - 1 < 0 then
+function var_0_0._btnLvDownOnClick(arg_27_0)
+	if arg_27_0._curLv - 1 < 0 then
 		GameFacade.showToast(ToastEnum.Act1_6DungeonToast60202)
 	else
-		VersionActivity1_6DungeonRpc.instance:sendAct148DownLevelRequest(slot0._skillType)
+		VersionActivity1_6DungeonRpc.instance:sendAct148DownLevelRequest(arg_27_0._skillType)
 	end
 end
 
-function slot0._btnSkillPointOnClick(slot0)
+function var_0_0._btnSkillPointOnClick(arg_28_0)
 	MaterialTipController.instance:showMaterialInfo(MaterialEnum.MaterialType.Currency, CurrencyEnum.CurrencyType.V1a6DungeonSkill, false, nil, false)
 end
 
-function slot0._btnSkillPointTipsOnClick(slot0)
-	slot0:refreshSkillPointTips(true)
+function var_0_0._btnSkillPointTipsOnClick(arg_29_0)
+	arg_29_0:refreshSkillPointTips(true)
 end
 
-function slot0._btnSkillPointTipsCloseOnClick(slot0)
-	slot0:refreshSkillPointTips(false)
+function var_0_0._btnSkillPointTipsCloseOnClick(arg_30_0)
+	arg_30_0:refreshSkillPointTips(false)
 end
 
-function slot0.refreshSkillPointTips(slot0, slot1)
-	gohelper.setActive(slot0._goSkilPointTips, slot1)
+function var_0_0.refreshSkillPointTips(arg_31_0, arg_31_1)
+	gohelper.setActive(arg_31_0._goSkilPointTips, arg_31_1)
 end
 
-function slot0._skillPointReturnBack(slot0)
-	slot0:_refreshSkillPointNum()
+function var_0_0._skillPointReturnBack(arg_32_0)
+	arg_32_0:_refreshSkillPointNum()
 end
 
-function slot0._onCurrencyChange(slot0)
-	slot0:_refreshSkillPointNum()
+function var_0_0._onCurrencyChange(arg_33_0)
+	arg_33_0:_refreshSkillPointNum()
 end
 
-return slot0
+return var_0_0

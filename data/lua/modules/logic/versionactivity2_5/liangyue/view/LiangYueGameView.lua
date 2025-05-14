@@ -1,999 +1,1186 @@
-module("modules.logic.versionactivity2_5.liangyue.view.LiangYueGameView", package.seeall)
+﻿module("modules.logic.versionactivity2_5.liangyue.view.LiangYueGameView", package.seeall)
 
-slot0 = class("LiangYueGameView", BaseView)
+local var_0_0 = class("LiangYueGameView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simageFullBG = gohelper.findChildSingleImage(slot0.viewGO, "#simage_FullBG")
-	slot0._simagePanelBG = gohelper.findChildSingleImage(slot0.viewGO, "#simage_PanelBG")
-	slot0._simagePanelPaper = gohelper.findChildSingleImage(slot0.viewGO, "Left/#simage_PanelPaper")
-	slot0._txtDescr = gohelper.findChildText(slot0.viewGO, "Left/Top/#txt_Descr")
-	slot0._txtTarget = gohelper.findChildText(slot0.viewGO, "Left/Game/Target/#txt_Target")
-	slot0._goTick = gohelper.findChild(slot0.viewGO, "Left/Game/Target/#go_Tick")
-	slot0._goGridBg = gohelper.findChild(slot0.viewGO, "Left/Game/Grid/image_Grid")
-	slot0._gomeshContainer = gohelper.findChild(slot0.viewGO, "Left/Game/Grid/#go_Grid/#go_meshContainer")
-	slot0._txtattribute = gohelper.findChildText(slot0.viewGO, "Left/Game/Grid/#go_Grid/#go_meshContainer/image/#txt_attribute")
-	slot0._goillustrationContainer = gohelper.findChild(slot0.viewGO, "Left/Game/Grid/#go_Grid/#go_illustrationContainer")
-	slot0._godragItem = gohelper.findChild(slot0.viewGO, "Left/Game/Grid/#go_Grid/#go_illustrationContainer/#go_dragItem")
-	slot0._goPiecesList = gohelper.findChild(slot0.viewGO, "Right/#go_PiecesList")
-	slot0._scrollPieces = gohelper.findChildScrollRect(slot0.viewGO, "Right/#go_PiecesList/#scroll_Pieces")
-	slot0._goillstrationItem = gohelper.findChild(slot0.viewGO, "Right/#go_PiecesList/#scroll_Pieces/Viewport/Content/#go_illstrationItem")
-	slot0._imagePiece = gohelper.findChildImage(slot0.viewGO, "Right/#go_PiecesList/#scroll_Pieces/Viewport/Content/#go_illstrationItem/#image_Piece")
-	slot0._goLine = gohelper.findChild(slot0.viewGO, "Right/#go_PiecesList/#scroll_Pieces/Viewport/Content/#go_illstrationItem/#go_Line")
-	slot0._scrollText = gohelper.findChildScrollRect(slot0.viewGO, "Right/#scroll_Text")
-	slot0._goItem = gohelper.findChild(slot0.viewGO, "Right/#scroll_Text/Viewport/Content/#go_Item")
-	slot0._goCompleted = gohelper.findChild(slot0.viewGO, "Right/#go_Completed")
-	slot0._golefttop = gohelper.findChild(slot0.viewGO, "#go_lefttop")
-	slot0._btnfinished = gohelper.findChildButtonWithAudio(slot0.viewGO, "Right/#btn_Finished")
-	slot0._btnreset = gohelper.findChildButtonWithAudio(slot0.viewGO, "Right/#btn_Reset")
-	slot0._txtTitle = gohelper.findChildTextMesh(slot0.viewGO, "Right/#txt_Title")
-	slot0._goContent = gohelper.findChild(slot0.viewGO, "Right/#go_PiecesList/#scroll_Pieces/Viewport/Content")
-	slot0._goScrollIllustration = gohelper.findChild(slot0.viewGO, "Right/#go_PiecesList/#scroll_Pieces")
-	slot0._goScrollText = gohelper.findChild(slot0.viewGO, "Right/#scroll_Text")
-	slot0._goImageBg = gohelper.findChild(slot0.viewGO, "Left/Game/Grid/image_Grid")
-	slot0._clickMeshContainer = gohelper.findChildClick(slot0.viewGO, "Left/Game/Grid/#go_Grid/#go_meshContainer")
-	slot0._txtYear = gohelper.findChildText(slot0.viewGO, "Left/Top/txt_1999")
-	slot0._txtMonth = gohelper.findChildText(slot0.viewGO, "Left/Top/txt_Month")
-	slot0._txtDay = gohelper.findChildText(slot0.viewGO, "Left/Top/txt_Day")
-	slot0._txtStory = gohelper.findChildTextMesh(slot0._goItem, "")
-	slot0._goVxEnable = gohelper.findChild(slot0.viewGO, "Left/Game/vx_enough")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simageFullBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_FullBG")
+	arg_1_0._simagePanelBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_PanelBG")
+	arg_1_0._simagePanelPaper = gohelper.findChildSingleImage(arg_1_0.viewGO, "Left/#simage_PanelPaper")
+	arg_1_0._txtDescr = gohelper.findChildText(arg_1_0.viewGO, "Left/Top/#txt_Descr")
+	arg_1_0._txtTarget = gohelper.findChildText(arg_1_0.viewGO, "Left/Game/Target/#txt_Target")
+	arg_1_0._goTick = gohelper.findChild(arg_1_0.viewGO, "Left/Game/Target/#go_Tick")
+	arg_1_0._goGridBg = gohelper.findChild(arg_1_0.viewGO, "Left/Game/Grid/image_Grid")
+	arg_1_0._gomeshContainer = gohelper.findChild(arg_1_0.viewGO, "Left/Game/Grid/#go_Grid/#go_meshContainer")
+	arg_1_0._txtattribute = gohelper.findChildText(arg_1_0.viewGO, "Left/Game/Grid/#go_Grid/#go_meshContainer/image/#txt_attribute")
+	arg_1_0._goillustrationContainer = gohelper.findChild(arg_1_0.viewGO, "Left/Game/Grid/#go_Grid/#go_illustrationContainer")
+	arg_1_0._godragItem = gohelper.findChild(arg_1_0.viewGO, "Left/Game/Grid/#go_Grid/#go_illustrationContainer/#go_dragItem")
+	arg_1_0._goPiecesList = gohelper.findChild(arg_1_0.viewGO, "Right/#go_PiecesList")
+	arg_1_0._scrollPieces = gohelper.findChildScrollRect(arg_1_0.viewGO, "Right/#go_PiecesList/#scroll_Pieces")
+	arg_1_0._goillstrationItem = gohelper.findChild(arg_1_0.viewGO, "Right/#go_PiecesList/#scroll_Pieces/Viewport/Content/#go_illstrationItem")
+	arg_1_0._imagePiece = gohelper.findChildImage(arg_1_0.viewGO, "Right/#go_PiecesList/#scroll_Pieces/Viewport/Content/#go_illstrationItem/#image_Piece")
+	arg_1_0._goLine = gohelper.findChild(arg_1_0.viewGO, "Right/#go_PiecesList/#scroll_Pieces/Viewport/Content/#go_illstrationItem/#go_Line")
+	arg_1_0._scrollText = gohelper.findChildScrollRect(arg_1_0.viewGO, "Right/#scroll_Text")
+	arg_1_0._goItem = gohelper.findChild(arg_1_0.viewGO, "Right/#scroll_Text/Viewport/Content/#go_Item")
+	arg_1_0._goCompleted = gohelper.findChild(arg_1_0.viewGO, "Right/#go_Completed")
+	arg_1_0._golefttop = gohelper.findChild(arg_1_0.viewGO, "#go_lefttop")
+	arg_1_0._btnfinished = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#btn_Finished")
+	arg_1_0._btnreset = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "Right/#btn_Reset")
+	arg_1_0._txtTitle = gohelper.findChildTextMesh(arg_1_0.viewGO, "Right/#txt_Title")
+	arg_1_0._goContent = gohelper.findChild(arg_1_0.viewGO, "Right/#go_PiecesList/#scroll_Pieces/Viewport/Content")
+	arg_1_0._goScrollIllustration = gohelper.findChild(arg_1_0.viewGO, "Right/#go_PiecesList/#scroll_Pieces")
+	arg_1_0._goScrollText = gohelper.findChild(arg_1_0.viewGO, "Right/#scroll_Text")
+	arg_1_0._goImageBg = gohelper.findChild(arg_1_0.viewGO, "Left/Game/Grid/image_Grid")
+	arg_1_0._clickMeshContainer = gohelper.findChildClick(arg_1_0.viewGO, "Left/Game/Grid/#go_Grid/#go_meshContainer")
+	arg_1_0._txtYear = gohelper.findChildText(arg_1_0.viewGO, "Left/Top/txt_1999")
+	arg_1_0._txtMonth = gohelper.findChildText(arg_1_0.viewGO, "Left/Top/txt_Month")
+	arg_1_0._txtDay = gohelper.findChildText(arg_1_0.viewGO, "Left/Top/txt_Day")
+	arg_1_0._txtStory = gohelper.findChildTextMesh(arg_1_0._goItem, "")
+	arg_1_0._goVxEnable = gohelper.findChild(arg_1_0.viewGO, "Left/Game/vx_enough")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._clickMeshContainer:AddClickListener(slot0._onMeshContainerClick, slot0)
-	slot0._btnfinished:AddClickListener(slot0.onClickFinished, slot0)
-	slot0._btnreset:AddClickListener(slot0.onBtnResetClick, slot0)
-	slot0:addEventCb(LiangYueController.instance, LiangYueEvent.OnFinishEpisode, slot0.onEpisodeFinish, slot0)
-	slot0:addEventCb(LiangYueController.instance, LiangYueEvent.OnReceiveEpisodeInfo, slot0._refreshView, slot0)
-	slot0._illustrationDragListener:AddDragBeginListener(slot0._onItemBeginDrag, slot0)
-	slot0._illustrationDragListener:AddDragListener(slot0._onItemDrag, slot0)
-	slot0._illustrationDragListener:AddDragEndListener(slot0._onItemEndDrag, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._clickMeshContainer:AddClickListener(arg_2_0._onMeshContainerClick, arg_2_0)
+	arg_2_0._btnfinished:AddClickListener(arg_2_0.onClickFinished, arg_2_0)
+	arg_2_0._btnreset:AddClickListener(arg_2_0.onBtnResetClick, arg_2_0)
+	arg_2_0:addEventCb(LiangYueController.instance, LiangYueEvent.OnFinishEpisode, arg_2_0.onEpisodeFinish, arg_2_0)
+	arg_2_0:addEventCb(LiangYueController.instance, LiangYueEvent.OnReceiveEpisodeInfo, arg_2_0._refreshView, arg_2_0)
+	arg_2_0._illustrationDragListener:AddDragBeginListener(arg_2_0._onItemBeginDrag, arg_2_0)
+	arg_2_0._illustrationDragListener:AddDragListener(arg_2_0._onItemDrag, arg_2_0)
+	arg_2_0._illustrationDragListener:AddDragEndListener(arg_2_0._onItemEndDrag, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._clickMeshContainer:RemoveClickListener()
-	slot0._btnfinished:RemoveClickListener()
-	slot0._btnreset:RemoveClickListener()
-	slot0:removeEventCb(LiangYueController.instance, LiangYueEvent.OnFinishEpisode, slot0.onEpisodeFinish, slot0)
-	slot0:removeEventCb(LiangYueController.instance, LiangYueEvent.OnReceiveEpisodeInfo, slot0._refreshView, slot0)
-	slot0._illustrationDragListener:RemoveDragBeginListener()
-	slot0._illustrationDragListener:RemoveDragListener()
-	slot0._illustrationDragListener:RemoveDragEndListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._clickMeshContainer:RemoveClickListener()
+	arg_3_0._btnfinished:RemoveClickListener()
+	arg_3_0._btnreset:RemoveClickListener()
+	arg_3_0:removeEventCb(LiangYueController.instance, LiangYueEvent.OnFinishEpisode, arg_3_0.onEpisodeFinish, arg_3_0)
+	arg_3_0:removeEventCb(LiangYueController.instance, LiangYueEvent.OnReceiveEpisodeInfo, arg_3_0._refreshView, arg_3_0)
+	arg_3_0._illustrationDragListener:RemoveDragBeginListener()
+	arg_3_0._illustrationDragListener:RemoveDragListener()
+	arg_3_0._illustrationDragListener:RemoveDragEndListener()
 end
 
-function slot0.onClickFinished(slot0)
-	if slot0._isDrag then
+function var_0_0.onClickFinished(arg_4_0)
+	if arg_4_0._isDrag then
 		return
 	end
 
-	slot1 = slot0._meshSize[1]
-	slot2 = {}
+	local var_4_0 = arg_4_0._meshSize[1]
+	local var_4_1 = {}
 
-	for slot6, slot7 in pairs(slot0._illustrationIndexDic) do
-		if not slot0:_isStaticIllustration(slot6) then
-			table.insert(slot2, string.format("%s#%s#%s", (slot6 - 1) % slot1 + 1, math.floor((slot6 - 1) / slot1) + 1, slot7))
+	for iter_4_0, iter_4_1 in pairs(arg_4_0._illustrationIndexDic) do
+		if not arg_4_0:_isStaticIllustration(iter_4_0) then
+			local var_4_2 = (iter_4_0 - 1) % var_4_0 + 1
+			local var_4_3 = math.floor((iter_4_0 - 1) / var_4_0) + 1
+			local var_4_4 = string.format("%s#%s#%s", var_4_2, var_4_3, iter_4_1)
+
+			table.insert(var_4_1, var_4_4)
 		end
 	end
 
-	slot3 = table.concat(slot2, "|")
+	local var_4_5 = table.concat(var_4_1, "|")
 
-	logNormal("Result: " .. slot3)
-	LiangYueController.instance:finishEpisode(slot0._actId, slot0._episodeId, slot3)
+	logNormal("Result: " .. var_4_5)
+	LiangYueController.instance:finishEpisode(arg_4_0._actId, arg_4_0._episodeId, var_4_5)
 end
 
-function slot0.onEpisodeFinish(slot0, slot1, slot2)
-	if slot0._actId ~= slot1 or slot0._episodeId ~= slot2 then
+function var_0_0.onEpisodeFinish(arg_5_0, arg_5_1, arg_5_2)
+	if arg_5_0._actId ~= arg_5_1 or arg_5_0._episodeId ~= arg_5_2 then
 		return
 	end
 
-	if LiangYueModel.instance:isEpisodeFinish(slot1, slot2) then
-		slot0:statData(LiangYueEnum.StatGameState.Finish)
+	local var_5_0 = LiangYueModel.instance:isEpisodeFinish(arg_5_1, arg_5_2)
+
+	if var_5_0 then
+		arg_5_0:statData(LiangYueEnum.StatGameState.Finish)
 	end
 
-	slot0._animator:Play("finish", 0, 0)
+	arg_5_0._animator:Play("finish", 0, 0)
 
-	slot0._isFinish = slot3
+	arg_5_0._isFinish = var_5_0
 
-	slot0:_lockScreen(true)
+	arg_5_0:_lockScreen(true)
 	AudioMgr.instance:trigger(AudioEnum.LiangYueAudio.play_ui_wulu_aizila_forward_paper)
-	TaskDispatcher.runDelay(slot0.delayFinishAnim, slot0, LiangYueEnum.FinishAnimDelayTime)
-	TaskDispatcher.runDelay(slot0.delayFinishAnimEnd, slot0, LiangYueEnum.FinishAnimDelayTimeEnd)
+	TaskDispatcher.runDelay(arg_5_0.delayFinishAnim, arg_5_0, LiangYueEnum.FinishAnimDelayTime)
+	TaskDispatcher.runDelay(arg_5_0.delayFinishAnimEnd, arg_5_0, LiangYueEnum.FinishAnimDelayTimeEnd)
 end
 
-function slot0.delayFinishAnim(slot0)
-	TaskDispatcher.cancelTask(slot0.delayFinishAnim, slot0)
+function var_0_0.delayFinishAnim(arg_6_0)
+	TaskDispatcher.cancelTask(arg_6_0.delayFinishAnim, arg_6_0)
 
-	for slot4, slot5 in pairs(slot0._usedDragItemDic) do
-		slot5:setAttributeState(false)
+	for iter_6_0, iter_6_1 in pairs(arg_6_0._usedDragItemDic) do
+		iter_6_1:setAttributeState(false)
 	end
 
-	slot0:_refreshCompleteState()
+	arg_6_0:_refreshCompleteState()
 end
 
-function slot0.delayFinishAnimEnd(slot0)
-	TaskDispatcher.cancelTask(slot0.delayFinishAnimEnd, slot0)
-	slot0:_lockScreen(false)
-	slot0:_refreshFinishBtnState()
+function var_0_0.delayFinishAnimEnd(arg_7_0)
+	TaskDispatcher.cancelTask(arg_7_0.delayFinishAnimEnd, arg_7_0)
+	arg_7_0:_lockScreen(false)
+	arg_7_0:_refreshFinishBtnState()
 	AudioMgr.instance:trigger(AudioEnum.LiangYueAudio.play_ui_tangren_pen2)
 end
 
-function slot0.onBtnResetClick(slot0)
-	if slot0._isDrag then
+function var_0_0.onBtnResetClick(arg_8_0)
+	if arg_8_0._isDrag then
 		return
 	end
 
-	GameFacade.showMessageBox(MessageBoxIdDefine.LiangYueResetTip, MsgBoxEnum.BoxType.Yes_No, slot0.resetGame, nil, , slot0)
+	GameFacade.showMessageBox(MessageBoxIdDefine.LiangYueResetTip, MsgBoxEnum.BoxType.Yes_No, arg_8_0.resetGame, nil, nil, arg_8_0)
 end
 
-function slot0.resetGame(slot0)
-	if next(slot0._illustrationUseDic) == nil then
+function var_0_0.resetGame(arg_9_0)
+	if next(arg_9_0._illustrationUseDic) == nil then
 		return
 	end
 
-	slot0:_beforeAttributeChanged()
-	slot0:statData(LiangYueEnum.StatGameState.Restart)
+	arg_9_0:_beforeAttributeChanged()
+	arg_9_0:statData(LiangYueEnum.StatGameState.Restart)
 
-	slot0._resetTime = ServerTime.now()
-	slot0._enterTime = ServerTime.now()
-	slot1 = slot0._meshSize[1]
+	arg_9_0._resetTime = ServerTime.now()
+	arg_9_0._enterTime = ServerTime.now()
 
-	for slot5, slot6 in pairs(slot0._illustrationIndexDic) do
-		if not slot0:_isStaticIllustration(slot5) then
-			slot0:_ClearMesh((slot5 - 1) % slot1 + 1, math.floor((slot5 - 1) / slot1) + 1, slot6)
+	local var_9_0 = arg_9_0._meshSize[1]
+
+	for iter_9_0, iter_9_1 in pairs(arg_9_0._illustrationIndexDic) do
+		if not arg_9_0:_isStaticIllustration(iter_9_0) then
+			local var_9_1 = (iter_9_0 - 1) % var_9_0 + 1
+			local var_9_2 = math.floor((iter_9_0 - 1) / var_9_0) + 1
+
+			arg_9_0:_ClearMesh(var_9_1, var_9_2, iter_9_1)
 		end
 	end
 
-	slot0:_afterAttributeChanged()
+	arg_9_0:_afterAttributeChanged()
 end
 
-function slot0._beforeAttributeChanged(slot0)
-	slot0._tempParam = tabletool.copy(slot0._paramDic)
+function var_0_0._beforeAttributeChanged(arg_10_0)
+	arg_10_0._tempParam = tabletool.copy(arg_10_0._paramDic)
 
-	TaskDispatcher.cancelTask(slot0._resetAttributeState, slot0)
+	TaskDispatcher.cancelTask(arg_10_0._resetAttributeState, arg_10_0)
 end
 
-function slot0._afterAttributeChanged(slot0)
-	for slot4, slot5 in ipairs(slot0._attributeAnimList) do
-		slot8 = nil
+function var_0_0._afterAttributeChanged(arg_11_0)
+	for iter_11_0, iter_11_1 in ipairs(arg_11_0._attributeAnimList) do
+		local var_11_0 = arg_11_0._tempParam[iter_11_0] or 0
+		local var_11_1 = arg_11_0._paramDic[iter_11_0] or 0
+		local var_11_2
 
-		if (slot0._tempParam[slot4] or 0) < (slot0._paramDic[slot4] or 0) then
-			slot8 = LiangYueEnum.AttributeAnim.Up
-		elseif slot7 < slot6 then
-			slot8 = LiangYueEnum.AttributeAnim.Down
+		if var_11_0 < var_11_1 then
+			var_11_2 = LiangYueEnum.AttributeAnim.Up
+		elseif var_11_1 < var_11_0 then
+			var_11_2 = LiangYueEnum.AttributeAnim.Down
 
-			if slot0._targetDescItemList[slot4] == nil then
+			local var_11_3 = arg_11_0._targetDescItemList[iter_11_0]
+
+			if var_11_3 == nil then
 				logError("动画组件和实际lua脚本组件数量不对应")
 			else
-				slot9:setTxtColor(LiangYueEnum.AttributeDownColor)
+				var_11_3:setTxtColor(LiangYueEnum.AttributeDownColor)
 			end
 		else
-			slot8 = LiangYueEnum.AttributeAnim.Empty
+			var_11_2 = LiangYueEnum.AttributeAnim.Empty
 		end
 
-		slot5.enabled = true
+		iter_11_1.enabled = true
 
-		slot5:Play(slot8, 0, 0)
+		iter_11_1:Play(var_11_2, 0, 0)
 	end
 
-	TaskDispatcher.runDelay(slot0._resetAttributeState, slot0, LiangYueEnum.AttributeAnimRevertTime)
+	TaskDispatcher.runDelay(arg_11_0._resetAttributeState, arg_11_0, LiangYueEnum.AttributeAnimRevertTime)
 
-	slot0._tempParam = nil
+	arg_11_0._tempParam = nil
 end
 
-function slot0._resetAttributeState(slot0)
-	TaskDispatcher.cancelTask(slot0._resetAttributeState, slot0)
+function var_0_0._resetAttributeState(arg_12_0)
+	TaskDispatcher.cancelTask(arg_12_0._resetAttributeState, arg_12_0)
 
-	for slot4, slot5 in ipairs(slot0._attributeAnimList) do
-		if slot5.gameObject.activeSelf == true then
-			slot5:Play(LiangYueEnum.AttributeAnim.Empty, 0, 0)
-			slot0._targetDescItemList[slot4]:setTxtColor((slot0._targetParamDic[slot4] or 0) <= (slot0._paramDic[slot4] or 0) and LiangYueEnum.AttributeColor[slot4] or LiangYueEnum.AttributeNotEnoughColor)
+	for iter_12_0, iter_12_1 in ipairs(arg_12_0._attributeAnimList) do
+		if iter_12_1.gameObject.activeSelf == true then
+			local var_12_0 = arg_12_0._paramDic[iter_12_0] or 0
+			local var_12_1 = arg_12_0._targetParamDic[iter_12_0] or 0
+			local var_12_2 = arg_12_0._targetDescItemList[iter_12_0]
+			local var_12_3 = var_12_1 <= var_12_0 and LiangYueEnum.AttributeColor[iter_12_0] or LiangYueEnum.AttributeNotEnoughColor
+
+			iter_12_1:Play(LiangYueEnum.AttributeAnim.Empty, 0, 0)
+			var_12_2:setTxtColor(var_12_3)
 		end
 	end
 end
 
-function slot0._onMeshContainerClick(slot0, slot1, slot2, slot3, slot4)
-	if slot0._isFinish or slot0._isDrag then
-		return nil, , 
+function var_0_0._onMeshContainerClick(arg_13_0, arg_13_1, arg_13_2, arg_13_3, arg_13_4)
+	if arg_13_0._isFinish or arg_13_0._isDrag then
+		return nil, nil, nil
 	end
 
-	slot5 = recthelper.screenPosToAnchorPos(slot2, slot0._gomeshContainer.transform)
-	slot6, slot7 = slot0:_getMeshPosByIndex(slot5.x, slot5.y)
+	local var_13_0 = recthelper.screenPosToAnchorPos(arg_13_2, arg_13_0._gomeshContainer.transform)
+	local var_13_1, var_13_2 = arg_13_0:_getMeshPosByIndex(var_13_0.x, var_13_0.y)
 
-	if not slot0._meshData[slot7] or not slot0._meshData[slot7][slot6] then
-		return nil, , 
+	if not arg_13_0._meshData[var_13_2] or not arg_13_0._meshData[var_13_2][var_13_1] then
+		return nil, nil, nil
 	end
 
-	if slot0:_isStaticIllustration(slot0._meshData[slot7][slot6]) then
+	local var_13_3 = arg_13_0._meshData[var_13_2][var_13_1]
+
+	if arg_13_0:_isStaticIllustration(var_13_3) then
 		ToastController.instance:showToast(ToastEnum.Act184PuzzleCanNotMove)
 
-		return nil, , 
+		return nil, nil, nil
 	end
 
-	if not slot4 then
+	if not arg_13_4 then
 		AudioMgr.instance:trigger(AudioEnum.LiangYueAudio.play_ui_tangren_delete)
 	end
 
-	slot9 = slot0._illustrationPosDic[slot8]
-	slot10 = slot0._illustrationIndexDic[slot8]
+	local var_13_4 = arg_13_0._illustrationPosDic[var_13_3]
+	local var_13_5 = arg_13_0._illustrationIndexDic[var_13_3]
 
-	slot0:_beforeAttributeChanged()
-	slot0:_ClearMesh(slot9[1], slot9[2], slot10)
-	slot0:_afterAttributeChanged()
+	arg_13_0:_beforeAttributeChanged()
+	arg_13_0:_ClearMesh(var_13_4[1], var_13_4[2], var_13_5)
+	arg_13_0:_afterAttributeChanged()
 
-	return slot10, slot9[1], slot9[2]
+	return var_13_5, var_13_4[1], var_13_4[2]
 end
 
-function slot0._editableInitView(slot0)
-	slot0._illustrationDragListener = SLFramework.UGUI.UIDragListener.Get(slot0._gomeshContainer)
+function var_0_0._editableInitView(arg_14_0)
+	arg_14_0._illustrationDragListener = SLFramework.UGUI.UIDragListener.Get(arg_14_0._gomeshContainer)
 
-	gohelper.setActive(slot0._godragItem, false)
-	gohelper.setActive(slot0._goillstrationItem, false)
-	slot0:_initAttributeComp()
+	gohelper.setActive(arg_14_0._godragItem, false)
+	gohelper.setActive(arg_14_0._goillstrationItem, false)
+	arg_14_0:_initAttributeComp()
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_15_0)
+	return
 end
 
-function slot0._initAttributeComp(slot0)
-	slot0._targetDescItemList = {}
-	slot0._goTarget = gohelper.findChild(slot0.viewGO, "Left/Game/TargetIcon")
-	slot0._attributeAnimList = {}
+function var_0_0._initAttributeComp(arg_16_0)
+	arg_16_0._targetDescItemList = {}
 
-	for slot6 = 1, slot0._goTarget.transform.childCount do
-		slot7 = slot1.transform:GetChild(slot6 - 1)
-		slot8 = LiangYueAttributeDescItem.New()
+	local var_16_0 = gohelper.findChild(arg_16_0.viewGO, "Left/Game/TargetIcon")
 
-		slot8:init(slot7.gameObject)
-		table.insert(slot0._targetDescItemList, slot8)
-		table.insert(slot0._attributeAnimList, gohelper.findChildAnim(slot7.gameObject, ""))
+	arg_16_0._goTarget = var_16_0
+	arg_16_0._attributeAnimList = {}
+
+	local var_16_1 = arg_16_0._goTarget.transform.childCount
+
+	for iter_16_0 = 1, var_16_1 do
+		local var_16_2 = var_16_0.transform:GetChild(iter_16_0 - 1)
+		local var_16_3 = LiangYueAttributeDescItem.New()
+
+		var_16_3:init(var_16_2.gameObject)
+		table.insert(arg_16_0._targetDescItemList, var_16_3)
+
+		local var_16_4 = gohelper.findChildAnim(var_16_2.gameObject, "")
+
+		table.insert(arg_16_0._attributeAnimList, var_16_4)
 	end
 
-	slot0._animator = gohelper.findChildAnim(slot0.viewGO, "")
+	arg_16_0._animator = gohelper.findChildAnim(arg_16_0.viewGO, "")
 end
 
-function slot0._initGameData(slot0)
-	slot0._actId = slot0.viewParam.actId
-	slot0._episodeId = slot0.viewParam.episodeId
-	slot0._episodeGameId = slot0.viewParam.episodeGameId
-	slot0._enterTime = ServerTime.now()
-	slot0._resetTime = ServerTime.now()
-	slot0._meshItemList = {}
-	slot0._dyeingMeshItemList = {}
-	slot0._dyeingMeshItemCount = 0
-	slot0._meshData = {}
-	slot0._illustrationIndexDic = {}
-	slot0._illustrationIndexList = {}
-	slot0._illustrationCountDic = {}
-	slot0._illustrationUseDic = {}
-	slot0._illustrationScrollItemList = {}
-	slot0._unusedDragItemList = {}
-	slot0._usedDragItemDic = {}
-	slot0._illustrationPosDic = {}
-	slot0._staticIllustrationDic = {}
-	slot0._paramDic = {}
-	slot0._targetParamDic = {}
+function var_0_0._initGameData(arg_17_0)
+	arg_17_0._actId = arg_17_0.viewParam.actId
+	arg_17_0._episodeId = arg_17_0.viewParam.episodeId
+	arg_17_0._episodeGameId = arg_17_0.viewParam.episodeGameId
+	arg_17_0._enterTime = ServerTime.now()
+	arg_17_0._resetTime = ServerTime.now()
+	arg_17_0._meshItemList = {}
+	arg_17_0._dyeingMeshItemList = {}
+	arg_17_0._dyeingMeshItemCount = 0
+	arg_17_0._meshData = {}
+	arg_17_0._illustrationIndexDic = {}
+	arg_17_0._illustrationIndexList = {}
+	arg_17_0._illustrationCountDic = {}
+	arg_17_0._illustrationUseDic = {}
+	arg_17_0._illustrationScrollItemList = {}
+	arg_17_0._unusedDragItemList = {}
+	arg_17_0._usedDragItemDic = {}
+	arg_17_0._illustrationPosDic = {}
+	arg_17_0._staticIllustrationDic = {}
+	arg_17_0._paramDic = {}
+	arg_17_0._targetParamDic = {}
 end
 
-function slot0.onOpen(slot0)
-	slot0._animator:Play("open", 0, 0)
+function var_0_0.onOpen(arg_18_0)
+	arg_18_0._animator:Play("open", 0, 0)
 	AudioMgr.instance:trigger(AudioEnum.LiangYueAudio.play_ui_wulu_aizila_forward_paper)
-	slot0:_initGameData()
-	slot0:_refreshView()
+	arg_18_0:_initGameData()
+	arg_18_0:_refreshView()
 end
 
-function slot0._refreshView(slot0)
-	if LiangYueConfig.instance:getEpisodePuzzleConfigByActAndId(slot0._actId, slot0._episodeGameId) == nil then
+function var_0_0._refreshView(arg_19_0)
+	local var_19_0 = LiangYueConfig.instance:getEpisodePuzzleConfigByActAndId(arg_19_0._actId, arg_19_0._episodeGameId)
+
+	if var_19_0 == nil then
 		return
 	end
 
-	slot0._episodeConfig = slot1
-	slot2 = LiangYueModel.instance:isEpisodeFinish(slot0._actId, slot0._episodeId)
-	slot0._isEnable = slot2
-	slot0._isFinish = slot2
+	arg_19_0._episodeConfig = var_19_0
 
-	if not slot2 then
-		slot0:_refreshIllustration(slot1)
+	local var_19_1 = LiangYueModel.instance:isEpisodeFinish(arg_19_0._actId, arg_19_0._episodeId)
+
+	arg_19_0._isEnable = var_19_1
+	arg_19_0._isFinish = var_19_1
+
+	if not var_19_1 then
+		arg_19_0:_refreshIllustration(var_19_0)
 	end
 
-	slot0:_refreshTargetParam(slot1)
-	slot0:_resetMeshContent(slot1)
-	slot0:_refreshTitle(slot1)
-	slot0:_refreshFinishBtnState()
-	slot0:_refreshCompleteState()
+	arg_19_0:_refreshTargetParam(var_19_0)
+	arg_19_0:_resetMeshContent(var_19_0)
+	arg_19_0:_refreshTitle(var_19_0)
+	arg_19_0:_refreshFinishBtnState()
+	arg_19_0:_refreshCompleteState()
 end
 
-function slot0._resetMeshContent(slot0, slot1)
-	slot0._meshSize = string.splitToNumber(slot1.size, "#")
+function var_0_0._resetMeshContent(arg_20_0, arg_20_1)
+	arg_20_0._meshSize = string.splitToNumber(arg_20_1.size, "#")
 
-	slot0:_rebuildMesh()
-	slot0:_refreshMeshData()
+	arg_20_0:_rebuildMesh()
+	arg_20_0:_refreshMeshData()
 end
 
-function slot0._refreshTitle(slot0, slot1)
-	slot0._txtDescr.text = slot1.titleTxt
-	slot3 = TimeUtil.timestampToTable(TimeUtil.stringToTimestamp(slot1.date))
-	slot0._txtYear.text = slot3.year
-	slot0._txtMonth.text = string.upper(LiangYueEnum.MonthEn[slot3.month])
-	slot0._txtDay.text = slot3.day
-	slot0._txtStory.text = slot1.txt
+function var_0_0._refreshTitle(arg_21_0, arg_21_1)
+	arg_21_0._txtDescr.text = arg_21_1.titleTxt
+
+	local var_21_0 = TimeUtil.stringToTimestamp(arg_21_1.date)
+	local var_21_1 = TimeUtil.timestampToTable(var_21_0)
+
+	arg_21_0._txtYear.text = var_21_1.year
+	arg_21_0._txtMonth.text = string.upper(LiangYueEnum.MonthEn[var_21_1.month])
+	arg_21_0._txtDay.text = var_21_1.day
+	arg_21_0._txtStory.text = arg_21_1.txt
 end
 
-function slot0._refreshTargetParam(slot0, slot1)
-	tabletool.clear(slot0._targetParamDic)
+function var_0_0._refreshTargetParam(arg_22_0, arg_22_1)
+	tabletool.clear(arg_22_0._targetParamDic)
 
-	if #string.split(slot1.target, "|") <= 0 then
+	local var_22_0 = arg_22_1.target
+	local var_22_1 = string.split(var_22_0, "|")
+
+	if #var_22_1 <= 0 then
 		logError("no target param")
 
 		return
 	end
 
-	for slot7, slot8 in ipairs(slot3) do
-		if not slot0._targetParamDic[string.splitToNumber(slot8, "#")[1]] then
-			slot0._targetParamDic[slot9[1]] = slot9[2]
+	for iter_22_0, iter_22_1 in ipairs(var_22_1) do
+		local var_22_2 = string.splitToNumber(iter_22_1, "#")
+
+		if not arg_22_0._targetParamDic[var_22_2[1]] then
+			arg_22_0._targetParamDic[var_22_2[1]] = var_22_2[2]
 		end
 	end
 
-	for slot7, slot8 in ipairs(slot0._targetDescItemList) do
-		slot8:setActive(slot0._targetParamDic[slot7] ~= nil)
+	for iter_22_2, iter_22_3 in ipairs(arg_22_0._targetDescItemList) do
+		iter_22_3:setActive(arg_22_0._targetParamDic[iter_22_2] ~= nil)
 	end
 
-	slot0:_updateAttributeInfo()
+	arg_22_0:_updateAttributeInfo()
 end
 
-function slot0._refreshIllustration(slot0, slot1)
-	slot0:_refreshIllustrationData(slot1)
-	slot0:_refreshIllustrationContent()
+function var_0_0._refreshIllustration(arg_23_0, arg_23_1)
+	arg_23_0:_refreshIllustrationData(arg_23_1)
+	arg_23_0:_refreshIllustrationContent()
 end
 
-function slot0._refreshIllustrationData(slot0, slot1)
-	tabletool.clear(slot0._illustrationCountDic)
-	tabletool.clear(slot0._illustrationUseDic)
+function var_0_0._refreshIllustrationData(arg_24_0, arg_24_1)
+	tabletool.clear(arg_24_0._illustrationCountDic)
+	tabletool.clear(arg_24_0._illustrationUseDic)
 
-	if string.nilorempty(slot1.illustrationCount) then
+	local var_24_0 = arg_24_1.illustrationCount
+
+	if string.nilorempty(var_24_0) then
 		logError("episode puzzle count data is nil")
 
 		return
 	end
 
-	for slot7, slot8 in ipairs(string.split(slot2, "|")) do
-		slot9 = string.splitToNumber(slot8, "#")
-		slot0._illustrationCountDic[slot9[1]] = slot9[2]
+	local var_24_1 = string.split(var_24_0, "|")
+
+	for iter_24_0, iter_24_1 in ipairs(var_24_1) do
+		local var_24_2 = string.splitToNumber(iter_24_1, "#")
+
+		arg_24_0._illustrationCountDic[var_24_2[1]] = var_24_2[2]
 	end
 end
 
-function slot0._refreshIllustrationContent(slot0)
-	slot1 = 0
-	slot2 = #slot0._illustrationScrollItemList
+function var_0_0._refreshIllustrationContent(arg_25_0)
+	local var_25_0 = 0
+	local var_25_1 = #arg_25_0._illustrationScrollItemList
 
-	for slot6, slot7 in pairs(slot0._illustrationCountDic) do
-		slot8 = nil
-		slot9 = LiangYueConfig.instance:getIllustrationConfigById(slot0._actId, slot6)
-		slot10 = LiangYueConfig.instance:getIllustrationShape(slot0._actId, slot6)
-		slot11 = #slot10 / #slot10[1]
+	for iter_25_0, iter_25_1 in pairs(arg_25_0._illustrationCountDic) do
+		var_25_0 = var_25_0 + 1
 
-		if ((slot2 >= slot1 + 1 or slot0:_createIllustrationItem(slot6, slot1)) and slot0._illustrationScrollItemList[slot1]) == nil then
-			logError("have no item index :" .. slot1)
+		local var_25_2
+
+		if var_25_1 < var_25_0 then
+			var_25_2 = arg_25_0:_createIllustrationItem(iter_25_0, var_25_0)
 		else
-			slot8:setActive(true)
-			slot8:setInfo(slot6, slot1, slot7, slot9.imageId, slot11, slot0._actId)
+			var_25_2 = arg_25_0._illustrationScrollItemList[var_25_0]
+		end
+
+		local var_25_3 = LiangYueConfig.instance:getIllustrationConfigById(arg_25_0._actId, iter_25_0)
+		local var_25_4 = LiangYueConfig.instance:getIllustrationShape(arg_25_0._actId, iter_25_0)
+		local var_25_5 = #var_25_4 / #var_25_4[1]
+
+		if var_25_2 == nil then
+			logError("have no item index :" .. var_25_0)
+		else
+			var_25_2:setActive(true)
+			var_25_2:setInfo(iter_25_0, var_25_0, iter_25_1, var_25_3.imageId, var_25_5, arg_25_0._actId)
 		end
 	end
 
-	if slot1 < slot2 then
-		for slot6 = slot1 + 1, slot2 do
-			slot0._illustrationScrollItemList[slot6]:setActive(false)
+	if var_25_0 < var_25_1 then
+		for iter_25_2 = var_25_0 + 1, var_25_1 do
+			arg_25_0._illustrationScrollItemList[iter_25_2]:setActive(false)
 		end
 	end
 end
 
-function slot0._refreshMeshData(slot0)
-	slot0._meshData = {}
+function var_0_0._refreshMeshData(arg_26_0)
+	arg_26_0._meshData = {}
 
-	if LiangYueConfig.instance:getEpisodeStaticIllustrationDic(slot0._actId, slot0._episodeGameId) ~= nil then
-		for slot5, slot6 in pairs(slot1) do
-			for slot10, slot11 in pairs(slot6) do
-				if slot0._meshData[slot5] and slot0._meshData[slot5][slot10] then
-					logError("固定格子位置重复 位置: x:" .. slot5 .. "y:" .. slot10)
+	local var_26_0 = LiangYueConfig.instance:getEpisodeStaticIllustrationDic(arg_26_0._actId, arg_26_0._episodeGameId)
+
+	if var_26_0 ~= nil then
+		for iter_26_0, iter_26_1 in pairs(var_26_0) do
+			for iter_26_2, iter_26_3 in pairs(iter_26_1) do
+				if arg_26_0._meshData[iter_26_0] and arg_26_0._meshData[iter_26_0][iter_26_2] then
+					logError("固定格子位置重复 位置: x:" .. iter_26_0 .. "y:" .. iter_26_2)
 				else
-					slot0:_fillMesh(slot5, slot10, slot11, true)
+					arg_26_0:_fillMesh(iter_26_0, iter_26_2, iter_26_3, true)
 				end
 			end
 		end
 	end
 
-	if string.nilorempty(LiangYueModel.instance:getEpisodeInfoMo(slot0._actId, slot0._episodeId).puzzle) then
+	local var_26_1 = LiangYueModel.instance:getEpisodeInfoMo(arg_26_0._actId, arg_26_0._episodeId)
+
+	if string.nilorempty(var_26_1.puzzle) then
 		return
 	end
 
-	for slot7, slot8 in ipairs(string.split(slot2.puzzle, "|")) do
-		if string.splitToNumber(slot8, "#") ~= nil then
-			slot0:_fillMesh(slot9[1], slot9[2], slot9[3])
+	local var_26_2 = string.split(var_26_1.puzzle, "|")
+
+	for iter_26_4, iter_26_5 in ipairs(var_26_2) do
+		local var_26_3 = string.splitToNumber(iter_26_5, "#")
+
+		if var_26_3 ~= nil then
+			arg_26_0:_fillMesh(var_26_3[1], var_26_3[2], var_26_3[3])
 		else
-			logError("玩家插画数据错误： 数据格式：" .. slot2.puzzle)
+			logError("玩家插画数据错误： 数据格式：" .. var_26_1.puzzle)
 		end
 	end
 end
 
-function slot0._refreshCompleteState(slot0)
-	slot2 = slot0._isFinish
+function var_0_0._refreshCompleteState(arg_27_0)
+	local var_27_0 = LiangYueConfig.instance:getEpisodePuzzleConfigByActAndId(arg_27_0._actId, arg_27_0._episodeGameId)
+	local var_27_1 = arg_27_0._isFinish
 
-	gohelper.setActive(slot0._goPiecesList, not slot2)
-	gohelper.setActive(slot0._goScrollText, slot2)
-	gohelper.setActive(slot0._goCompleted, slot2)
-	gohelper.setActive(slot0._btnreset, not slot2)
-	gohelper.setActive(slot0._goGridBg.gameObject, not slot2)
+	gohelper.setActive(arg_27_0._goPiecesList, not var_27_1)
+	gohelper.setActive(arg_27_0._goScrollText, var_27_1)
+	gohelper.setActive(arg_27_0._goCompleted, var_27_1)
+	gohelper.setActive(arg_27_0._btnreset, not var_27_1)
+	gohelper.setActive(arg_27_0._goGridBg.gameObject, not var_27_1)
 
-	slot0._txtTarget.text = slot0._isFinish and luaLang("act184_target_complete") or luaLang("act184_target_not_complete")
-	slot0._txtTitle.text = slot0._isFinish and LiangYueConfig.instance:getEpisodePuzzleConfigByActAndId(slot0._actId, slot0._episodeGameId).titile or luaLang("act184_puzzle_title")
+	local var_27_2 = arg_27_0._isFinish and luaLang("act184_target_complete") or luaLang("act184_target_not_complete")
+
+	arg_27_0._txtTarget.text = var_27_2
+
+	local var_27_3 = arg_27_0._isFinish and var_27_0.titile or luaLang("act184_puzzle_title")
+
+	arg_27_0._txtTitle.text = var_27_3
 end
 
-function slot0._refreshFinishBtnState(slot0)
-	slot1 = slot0._isEnable and not slot0._isFinish
+function var_0_0._refreshFinishBtnState(arg_28_0)
+	local var_28_0 = arg_28_0._isEnable and not arg_28_0._isFinish
 
-	gohelper.setActive(slot0._btnfinished, slot1)
-	gohelper.setActive(slot0._goVxEnable, slot1)
-	gohelper.setActive(slot0._goTick, slot0._isFinish)
+	gohelper.setActive(arg_28_0._btnfinished, var_28_0)
+	gohelper.setActive(arg_28_0._goVxEnable, var_28_0)
+	gohelper.setActive(arg_28_0._goTick, arg_28_0._isFinish)
 
-	if slot1 then
+	if var_28_0 then
 		AudioMgr.instance:trigger(AudioEnum.LiangYueAudio.play_ui_tangren_pen1)
 	end
 end
 
-function slot0._fillMesh(slot0, slot1, slot2, slot3, slot4, slot5)
-	slot6 = slot0._meshData
-	slot7 = 0
-	slot8 = 0
-	slot9 = false
-	slot10 = LiangYueConfig.instance:getIllustrationShape(slot0._actId, slot3)
-	slot12 = #slot10[1]
-	slot13 = (slot2 - 1) * slot0._meshSize[1] + slot1
+function var_0_0._fillMesh(arg_29_0, arg_29_1, arg_29_2, arg_29_3, arg_29_4, arg_29_5)
+	local var_29_0 = arg_29_0._meshData
+	local var_29_1 = 0
+	local var_29_2 = 0
+	local var_29_3 = false
+	local var_29_4 = LiangYueConfig.instance:getIllustrationShape(arg_29_0._actId, arg_29_3)
+	local var_29_5 = #var_29_4
+	local var_29_6 = #var_29_4[1]
+	local var_29_7 = (arg_29_2 - 1) * arg_29_0._meshSize[1] + arg_29_1
 
-	for slot17 = 1, #slot10 do
-		for slot22 = 1, slot12 do
-			slot23 = slot10[slot17][slot22] == 1
+	for iter_29_0 = 1, var_29_5 do
+		local var_29_8 = var_29_4[iter_29_0]
 
-			if not slot9 and slot23 then
-				slot7 = slot22 - 1
-				slot8 = slot17 - 1
-				slot9 = true
+		for iter_29_1 = 1, var_29_6 do
+			local var_29_9 = var_29_8[iter_29_1] == 1
+
+			if not var_29_3 and var_29_9 then
+				var_29_1 = iter_29_1 - 1
+				var_29_2 = iter_29_0 - 1
+				var_29_3 = true
 			end
 
-			if slot9 and slot23 then
-				slot25 = slot1 - slot7 + slot22 - 1
+			if var_29_3 and var_29_9 then
+				local var_29_10 = arg_29_2 - var_29_2 + iter_29_0 - 1
+				local var_29_11 = arg_29_1 - var_29_1 + iter_29_1 - 1
 
-				if not slot6[slot2 - slot8 + slot17 - 1] then
-					slot6[slot24] = {}
+				if not var_29_0[var_29_10] then
+					var_29_0[var_29_10] = {}
 				end
 
-				if slot6[slot24][slot25] then
-					logError("meshFill failed posX: " .. slot25 .. " Y " .. slot24)
+				if var_29_0[var_29_10][var_29_11] then
+					logError("meshFill failed posX: " .. var_29_11 .. " Y " .. var_29_10)
 				else
-					slot6[slot24][slot25] = slot13
+					var_29_0[var_29_10][var_29_11] = var_29_7
 				end
 			end
 		end
 	end
 
-	slot14 = slot1 - slot7
-	slot17 = ((slot14 - 1) * slot0._meshWidth + (slot14 - 1 + slot12) * slot0._meshWidth) * 0.5 - slot0._meshMaxX
-	slot19 = slot0._meshSize[2] - (slot2 - slot8) + 1
-	slot23 = (slot19 * slot0._meshHeight + (slot19 - slot11) * slot0._meshHeight) * 0.5 - slot0._meshMaxY
-	slot0._illustrationIndexDic[slot13] = slot3
+	local var_29_12 = arg_29_1 - var_29_1
+	local var_29_13 = ((var_29_12 - 1) * arg_29_0._meshWidth + (var_29_12 - 1 + var_29_6) * arg_29_0._meshWidth) * 0.5 - arg_29_0._meshMaxX
+	local var_29_14 = arg_29_2 - var_29_2
+	local var_29_15 = arg_29_0._meshSize[2] - var_29_14 + 1
+	local var_29_16 = (var_29_15 * arg_29_0._meshHeight + (var_29_15 - var_29_5) * arg_29_0._meshHeight) * 0.5 - arg_29_0._meshMaxY
 
-	table.insert(slot0._illustrationIndexList, slot13)
+	arg_29_5 = arg_29_5 or arg_29_0:_getDragItem(arg_29_3, arg_29_4, arg_29_0._isFinish)
+	arg_29_0._illustrationIndexDic[var_29_7] = arg_29_3
 
-	slot0._illustrationPosDic[slot13] = {
-		slot1,
-		slot2
+	table.insert(arg_29_0._illustrationIndexList, var_29_7)
+
+	arg_29_0._illustrationPosDic[var_29_7] = {
+		arg_29_1,
+		arg_29_2
 	}
-	slot0._usedDragItemDic[slot13] = slot5 or slot0:_getDragItem(slot3, slot4, slot0._isFinish)
+	arg_29_0._usedDragItemDic[var_29_7] = arg_29_5
 
-	if slot4 then
-		slot0._staticIllustrationDic[slot13] = slot3
-	elseif not slot0._illustrationUseDic[slot3] then
-		slot0._illustrationUseDic[slot3] = 1
+	if arg_29_4 then
+		arg_29_0._staticIllustrationDic[var_29_7] = arg_29_3
+	elseif not arg_29_0._illustrationUseDic[arg_29_3] then
+		arg_29_0._illustrationUseDic[arg_29_3] = 1
 	else
-		slot0._illustrationUseDic[slot3] = slot0._illustrationUseDic[slot3] + 1
+		arg_29_0._illustrationUseDic[arg_29_3] = arg_29_0._illustrationUseDic[arg_29_3] + 1
 	end
 
-	slot0:_refreshIllustrationIndex()
-	slot0:_refreshIllustrationCount()
+	arg_29_0:_refreshIllustrationIndex()
+	arg_29_0:_refreshIllustrationCount()
 
-	if slot4 or slot0._isFinish == true then
-		recthelper.setAnchor(slot5.go.transform, slot17, slot23)
+	if arg_29_4 or arg_29_0._isFinish == true then
+		recthelper.setAnchor(arg_29_5.go.transform, var_29_13, var_29_16)
 	else
-		slot0._tweenItem = slot5
+		arg_29_0._tweenItem = arg_29_5
 
-		slot5:setAttributeInfo(slot0._actId, slot5.id)
+		arg_29_5:setAttributeInfo(arg_29_0._actId, arg_29_5.id)
 
-		slot0._tweenPos = ZProj.TweenHelper.DOAnchorPos(slot5.go.transform, slot17, slot23, LiangYueEnum.TweenDuration, slot0._onTweenEnd, slot0)
+		arg_29_0._tweenPos = ZProj.TweenHelper.DOAnchorPos(arg_29_5.go.transform, var_29_13, var_29_16, LiangYueEnum.TweenDuration, arg_29_0._onTweenEnd, arg_29_0)
 	end
 
-	logNormal(string.format("fill illustration: pos x:%s y:%s index : x: %s y: %s", slot17, slot23, slot1, slot2))
+	logNormal(string.format("fill illustration: pos x:%s y:%s index : x: %s y: %s", var_29_13, var_29_16, arg_29_1, arg_29_2))
 end
 
-function slot0._onTweenEnd(slot0)
-	if slot0._tweenItem ~= nil then
-		slot1:setItemPosY()
+function var_0_0._onTweenEnd(arg_30_0)
+	local var_30_0 = arg_30_0._tweenItem
+
+	if var_30_0 ~= nil then
+		var_30_0:setItemPosY()
 	end
 
-	slot0._tweenItem = nil
-	slot0._tweenPos = nil
+	arg_30_0._tweenItem = nil
+	arg_30_0._tweenPos = nil
 end
 
-function slot0._ClearMesh(slot0, slot1, slot2, slot3)
-	slot4 = slot0._meshData
-	slot5 = 0
-	slot6 = 0
-	slot7 = false
-	slot8 = LiangYueConfig.instance:getIllustrationShape(slot0._actId, slot3)
-	slot10 = #slot8[1]
+function var_0_0._ClearMesh(arg_31_0, arg_31_1, arg_31_2, arg_31_3)
+	local var_31_0 = arg_31_0._meshData
+	local var_31_1 = 0
+	local var_31_2 = 0
+	local var_31_3 = false
+	local var_31_4 = LiangYueConfig.instance:getIllustrationShape(arg_31_0._actId, arg_31_3)
+	local var_31_5 = #var_31_4
+	local var_31_6 = #var_31_4[1]
 
-	for slot14 = 1, #slot8 do
-		for slot19 = 1, slot10 do
-			slot20 = slot8[slot14][slot19] == 1
+	for iter_31_0 = 1, var_31_5 do
+		local var_31_7 = var_31_4[iter_31_0]
 
-			if not slot7 and slot20 then
-				slot5 = slot19 - 1
-				slot6 = slot14 - 1
-				slot7 = true
+		for iter_31_1 = 1, var_31_6 do
+			local var_31_8 = var_31_7[iter_31_1] == 1
+
+			if not var_31_3 and var_31_8 then
+				var_31_1 = iter_31_1 - 1
+				var_31_2 = iter_31_0 - 1
+				var_31_3 = true
 			end
 
-			if slot7 and slot20 then
-				slot22 = slot1 - slot5 + slot19 - 1
+			if var_31_3 and var_31_8 then
+				local var_31_9 = arg_31_2 - var_31_2 + iter_31_0 - 1
+				local var_31_10 = arg_31_1 - var_31_1 + iter_31_1 - 1
 
-				if not slot4[slot2 - slot6 + slot14 - 1] or not slot4[slot21][slot22] then
-					logError("clear mesh failed posX: " .. slot22 .. " Y " .. slot21)
+				if not var_31_0[var_31_9] or not var_31_0[var_31_9][var_31_10] then
+					logError("clear mesh failed posX: " .. var_31_10 .. " Y " .. var_31_9)
 				else
-					slot4[slot21][slot22] = nil
-					slot23 = (slot21 - 1) * slot0._meshSize[1] + slot22
+					var_31_0[var_31_9][var_31_10] = nil
+
+					local var_31_11 = (var_31_9 - 1) * arg_31_0._meshSize[1] + var_31_10
 				end
 			end
 		end
 	end
 
-	slot11 = (slot2 - 1) * slot0._meshSize[1] + slot1
-	slot0._illustrationIndexDic[slot11] = nil
+	local var_31_12 = (arg_31_2 - 1) * arg_31_0._meshSize[1] + arg_31_1
 
-	tabletool.removeValue(slot0._illustrationIndexList, slot11)
+	arg_31_0._illustrationIndexDic[var_31_12] = nil
 
-	slot12 = slot0._usedDragItemDic[slot11]
-	slot0._usedDragItemDic[slot11] = nil
-	slot0._illustrationPosDic[slot11] = nil
+	tabletool.removeValue(arg_31_0._illustrationIndexList, var_31_12)
 
-	if not slot0._illustrationUseDic[slot3] then
+	local var_31_13 = arg_31_0._usedDragItemDic[var_31_12]
+
+	arg_31_0._usedDragItemDic[var_31_12] = nil
+	arg_31_0._illustrationPosDic[var_31_12] = nil
+
+	if not arg_31_0._illustrationUseDic[arg_31_3] then
 		logError("not such illustration use")
-	elseif slot0._illustrationUseDic[slot3] - 1 <= 0 then
-		slot0._illustrationUseDic[slot3] = nil
 	else
-		slot0._illustrationUseDic[slot3] = slot13
+		local var_31_14 = arg_31_0._illustrationUseDic[arg_31_3] - 1
+
+		if var_31_14 <= 0 then
+			arg_31_0._illustrationUseDic[arg_31_3] = nil
+		else
+			arg_31_0._illustrationUseDic[arg_31_3] = var_31_14
+		end
 	end
 
-	slot0:_recycleDragItem(slot12)
-	slot0:_refreshIllustrationIndex()
-	slot0:_refreshIllustrationCount()
+	arg_31_0:_recycleDragItem(var_31_13)
+	arg_31_0:_refreshIllustrationIndex()
+	arg_31_0:_refreshIllustrationCount()
 end
 
-function slot0._refreshIllustrationCount(slot0)
-	for slot4, slot5 in pairs(slot0._illustrationScrollItemList) do
-		if slot0._illustrationCountDic[slot5.id] and slot0._illustrationCountDic[slot5.id] ~= 0 then
-			slot7 = slot0._illustrationCountDic[slot5.id] - (slot0._illustrationUseDic[slot5.id] or 0)
+function var_0_0._refreshIllustrationCount(arg_32_0)
+	for iter_32_0, iter_32_1 in pairs(arg_32_0._illustrationScrollItemList) do
+		if arg_32_0._illustrationCountDic[iter_32_1.id] and arg_32_0._illustrationCountDic[iter_32_1.id] ~= 0 then
+			local var_32_0 = arg_32_0._illustrationUseDic[iter_32_1.id] or 0
+			local var_32_1 = arg_32_0._illustrationCountDic[iter_32_1.id] - var_32_0
 
-			slot5:setCount(slot7)
-			slot5:setEnoughState(slot7 > 0)
+			iter_32_1:setCount(var_32_1)
+			iter_32_1:setEnoughState(var_32_1 > 0)
 		end
 	end
 end
 
-function slot0._getMeshPosByIndex(slot0, slot1, slot2)
-	slot3 = 1
-	slot5 = slot0._meshSize[2]
-	slot6 = Mathf.Clamp(math.floor((slot1 + slot0._meshMaxX) / slot0._meshWidth) + 1, slot3, slot0._meshSize[1])
-	slot7 = Mathf.Clamp(slot5 - math.floor((slot2 + slot0._meshMaxY) / slot0._meshHeight), slot3, slot5)
+function var_0_0._getMeshPosByIndex(arg_33_0, arg_33_1, arg_33_2)
+	local var_33_0 = 1
+	local var_33_1 = arg_33_0._meshSize[1]
+	local var_33_2 = arg_33_0._meshSize[2]
+	local var_33_3 = Mathf.Clamp(math.floor((arg_33_1 + arg_33_0._meshMaxX) / arg_33_0._meshWidth) + 1, var_33_0, var_33_1)
+	local var_33_4 = Mathf.Clamp(var_33_2 - math.floor((arg_33_2 + arg_33_0._meshMaxY) / arg_33_0._meshHeight), var_33_0, var_33_2)
 
-	logNormal("button click mesh x:" .. slot6 .. "mesh y:" .. slot7)
+	logNormal("button click mesh x:" .. var_33_3 .. "mesh y:" .. var_33_4)
 
-	return slot6, slot7
+	return var_33_3, var_33_4
 end
 
-function slot0._refreshIllustrationIndex(slot0)
-	table.sort(slot0._illustrationIndexList)
-	tabletool.clear(slot0._paramDic)
+function var_0_0._refreshIllustrationIndex(arg_34_0)
+	table.sort(arg_34_0._illustrationIndexList)
+	tabletool.clear(arg_34_0._paramDic)
 
-	slot1 = 0
+	local var_34_0 = 0
 
-	for slot5, slot6 in ipairs(slot0._illustrationIndexList) do
-		if slot0._usedDragItemDic[slot6] == nil then
-			logError("item is null index:" .. slot6)
+	for iter_34_0, iter_34_1 in ipairs(arg_34_0._illustrationIndexList) do
+		local var_34_1 = arg_34_0._usedDragItemDic[iter_34_1]
+
+		if var_34_1 == nil then
+			logError("item is null index:" .. iter_34_1)
 		else
-			slot7:setIndex(slot5)
-			slot0:_calculateAttribute(LiangYueConfig.instance:getIllustrationConfigById(slot0._actId, slot0._illustrationIndexDic[slot6]).attribute, slot0._paramDic)
+			var_34_1:setIndex(iter_34_0)
 
-			if not slot0._staticIllustrationDic[slot5] then
-				slot1 = slot1 + 1
+			local var_34_2 = arg_34_0._illustrationIndexDic[iter_34_1]
+			local var_34_3 = LiangYueConfig.instance:getIllustrationConfigById(arg_34_0._actId, var_34_2).attribute
+
+			arg_34_0:_calculateAttribute(var_34_3, arg_34_0._paramDic)
+
+			if not arg_34_0._staticIllustrationDic[iter_34_0] then
+				var_34_0 = var_34_0 + 1
 			end
 		end
 	end
 
-	if not slot0._isFinish then
-		LiangYueController.instance:dispatchEvent(LiangYueEvent.OnDragIllustration, slot1)
-		logNormal("OnDragIllustration Count: " .. tostring(slot1))
+	if not arg_34_0._isFinish then
+		LiangYueController.instance:dispatchEvent(LiangYueEvent.OnDragIllustration, var_34_0)
+		logNormal("OnDragIllustration Count: " .. tostring(var_34_0))
 	end
 
-	slot0:_updateAttributeInfo()
+	arg_34_0:_updateAttributeInfo()
 end
 
-function slot0._updateAttributeInfo(slot0)
-	for slot6, slot7 in pairs(slot0._targetParamDic) do
-		if not (slot7 <= (slot0._paramDic[slot6] or 0)) then
-			slot2 = 0 + 1
+function var_0_0._updateAttributeInfo(arg_35_0)
+	local var_35_0 = arg_35_0._paramDic
+	local var_35_1 = 0
+
+	for iter_35_0, iter_35_1 in pairs(arg_35_0._targetParamDic) do
+		local var_35_2 = var_35_0[iter_35_0] or 0
+		local var_35_3 = iter_35_1 <= var_35_2
+
+		if not var_35_3 then
+			var_35_1 = var_35_1 + 1
 		end
 
-		slot0._targetDescItemList[slot6]:setTargetInfo(slot8, slot7, slot9 and LiangYueEnum.AttributeColor[slot6] or LiangYueEnum.AttributeNotEnoughColor)
+		local var_35_4 = arg_35_0._targetDescItemList[iter_35_0]
+		local var_35_5 = var_35_3 and LiangYueEnum.AttributeColor[iter_35_0] or LiangYueEnum.AttributeNotEnoughColor
+
+		var_35_4:setTargetInfo(var_35_2, iter_35_1, var_35_5)
 	end
 
-	slot0._isEnable = slot2 <= 0
+	arg_35_0._isEnable = var_35_1 <= 0
 
-	if not slot0._isFinish and slot0._isEnable then
-		LiangYueController.instance:dispatchEvent(LiangYueEvent.OnAttributeMeetConditions, slot0._episodeId)
-		logNormal("OnAttributeMeetConditions  episodeId:" .. tostring(slot0._episodeId))
+	if not arg_35_0._isFinish and arg_35_0._isEnable then
+		LiangYueController.instance:dispatchEvent(LiangYueEvent.OnAttributeMeetConditions, arg_35_0._episodeId)
+		logNormal("OnAttributeMeetConditions  episodeId:" .. tostring(arg_35_0._episodeId))
 	end
 
-	slot0:_refreshFinishBtnState()
+	arg_35_0:_refreshFinishBtnState()
 end
 
-function slot0._calculateAttribute(slot0, slot1, slot2)
-	for slot7, slot8 in ipairs(string.split(slot1, "|")) do
-		slot9 = string.splitToNumber(slot8, "#")
-		slot11 = slot9[2]
-		slot12 = slot9[3]
+function var_0_0._calculateAttribute(arg_36_0, arg_36_1, arg_36_2)
+	local var_36_0 = string.split(arg_36_1, "|")
 
-		if slot2[slot9[1]] == nil then
-			slot2[slot10] = 0
+	for iter_36_0, iter_36_1 in ipairs(var_36_0) do
+		local var_36_1 = string.splitToNumber(iter_36_1, "#")
+		local var_36_2 = var_36_1[1]
+		local var_36_3 = var_36_1[2]
+		local var_36_4 = var_36_1[3]
+
+		if arg_36_2[var_36_2] == nil then
+			arg_36_2[var_36_2] = 0
 		end
 
-		if slot11 == LiangYueEnum.CalculateType.Add then
-			slot13 = slot2[slot10] + slot12
-		elseif slot11 == LiangYueEnum.CalculateType.Minus then
-			slot13 = slot13 - slot12
-		elseif slot11 == LiangYueEnum.CalculateType.Multiply then
-			slot13 = slot13 * slot12
-		elseif slot11 == LiangYueEnum.CalculateType.Divide then
-			slot13 = slot13 / slot12
+		local var_36_5 = arg_36_2[var_36_2]
+
+		if var_36_3 == LiangYueEnum.CalculateType.Add then
+			var_36_5 = var_36_5 + var_36_4
+		elseif var_36_3 == LiangYueEnum.CalculateType.Minus then
+			var_36_5 = var_36_5 - var_36_4
+		elseif var_36_3 == LiangYueEnum.CalculateType.Multiply then
+			var_36_5 = var_36_5 * var_36_4
+		elseif var_36_3 == LiangYueEnum.CalculateType.Divide then
+			var_36_5 = var_36_5 / var_36_4
 		end
 
-		slot2[slot10] = math.floor(slot13)
+		arg_36_2[var_36_2] = math.floor(var_36_5)
 	end
 end
 
-function slot0._onItemBeginDrag(slot0, slot1, slot2, slot3)
-	if slot0._isFinish then
+function var_0_0._onItemBeginDrag(arg_37_0, arg_37_1, arg_37_2, arg_37_3)
+	if arg_37_0._isFinish then
 		return
 	end
 
-	slot4 = nil
-	slot5 = recthelper.screenPosToAnchorPos(slot2.position, slot0._goillustrationContainer.transform)
-	slot6, slot7 = nil
+	local var_37_0
+	local var_37_1 = recthelper.screenPosToAnchorPos(arg_37_2.position, arg_37_0._goillustrationContainer.transform)
+	local var_37_2
+	local var_37_3
+	local var_37_4 = arg_37_3 == nil
 
-	if slot3 == nil then
-		slot9, slot6, slot7 = slot0:_onMeshContainerClick(slot1, slot2.position, nil, true)
+	if var_37_4 then
+		local var_37_5, var_37_6
 
-		if slot9 == nil then
+		arg_37_3, var_37_5, var_37_6 = arg_37_0:_onMeshContainerClick(arg_37_1, arg_37_2.position, nil, true)
+
+		if arg_37_3 == nil then
 			return
 		end
 
-		slot0._previousPosX = slot6
-		slot0._previousPosY = slot7
+		arg_37_0._previousPosX = var_37_5
+		arg_37_0._previousPosY = var_37_6
 	end
 
-	if slot0:_CheckDragItemCount(slot3) then
+	if arg_37_0:_CheckDragItemCount(arg_37_3) then
 		GameFacade.showToast(ToastEnum.Act184PuzzleNotEnough)
 
 		return
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.LiangYueAudio.play_ui_tangren_anzhu)
-	slot0:_setScrollItemAlpha(slot3, slot8 and LiangYueEnum.NormalAlpha or LiangYueEnum.DragAlpha)
 
-	slot4 = slot0:_getDragItem(slot3)
+	local var_37_7 = var_37_4 and LiangYueEnum.NormalAlpha or LiangYueEnum.DragAlpha
+
+	arg_37_0:_setScrollItemAlpha(arg_37_3, var_37_7)
+
+	local var_37_8 = arg_37_0:_getDragItem(arg_37_3)
 
 	logNormal("Start Drag")
-	gohelper.setAsLastSibling(slot4.go)
+	gohelper.setAsLastSibling(var_37_8.go)
 
-	slot0._currentDragItem = slot4
-	slot0._isDrag = true
-	slot0._dragShapeId = slot3
+	arg_37_0._currentDragItem = var_37_8
+	arg_37_0._isDrag = true
+	arg_37_0._dragShapeId = arg_37_3
 
-	recthelper.setAnchor(slot4.rectTran, slot5.x, slot5.y)
+	recthelper.setAnchor(var_37_8.rectTran, var_37_1.x, var_37_1.y)
 
-	slot0._previousDragPos = slot5
+	arg_37_0._previousDragPos = var_37_1
 
-	slot0:_onSelectShape(slot3)
-	slot0:_resetMeshItemEnableState()
+	arg_37_0:_onSelectShape(arg_37_3)
+	arg_37_0:_resetMeshItemEnableState()
 end
 
-function slot0._onSelectShape(slot0, slot1)
-	slot2 = LiangYueConfig.instance:getIllustrationShape(slot0._actId, slot1)
-	slot3 = #slot2
-	slot4 = #slot2[1]
-	slot5 = slot3 * slot0._meshHeight
-	slot6 = slot4 * slot0._meshWidth
-	slot0._dragItemMaxX = slot6 * 0.5
-	slot0._dragItemMinX = -slot0._dragItemMaxX
-	slot0._dragItemMaxY = slot5 * 0.5
-	slot0._dragItemMinY = -slot0._dragItemMaxY
-	slot0._dragItemHeight = slot5
-	slot0._dragItemWidth = slot6
-	slot0._currentDragCheckList = slot2
-	slot0._dragItemSize = {
-		slot4,
-		slot3
+function var_0_0._onSelectShape(arg_38_0, arg_38_1)
+	local var_38_0 = LiangYueConfig.instance:getIllustrationShape(arg_38_0._actId, arg_38_1)
+	local var_38_1 = #var_38_0
+	local var_38_2 = #var_38_0[1]
+	local var_38_3 = var_38_1 * arg_38_0._meshHeight
+	local var_38_4 = var_38_2 * arg_38_0._meshWidth
+
+	arg_38_0._dragItemMaxX = var_38_4 * 0.5
+	arg_38_0._dragItemMinX = -arg_38_0._dragItemMaxX
+	arg_38_0._dragItemMaxY = var_38_3 * 0.5
+	arg_38_0._dragItemMinY = -arg_38_0._dragItemMaxY
+	arg_38_0._dragItemHeight = var_38_3
+	arg_38_0._dragItemWidth = var_38_4
+	arg_38_0._currentDragCheckList = var_38_0
+	arg_38_0._dragItemSize = {
+		var_38_2,
+		var_38_1
 	}
-	slot0._needCheckMeshCount = LiangYueConfig.instance:getIllustrationShapeCount(slot0._actId, slot1)
+	arg_38_0._needCheckMeshCount = LiangYueConfig.instance:getIllustrationShapeCount(arg_38_0._actId, arg_38_1)
 end
 
-function slot0._setScrollItemAlpha(slot0, slot1, slot2)
-	for slot6, slot7 in ipairs(slot0._illustrationScrollItemList) do
-		if slot7.id == slot1 then
-			slot7:setAlpha(slot2)
+function var_0_0._setScrollItemAlpha(arg_39_0, arg_39_1, arg_39_2)
+	for iter_39_0, iter_39_1 in ipairs(arg_39_0._illustrationScrollItemList) do
+		if iter_39_1.id == arg_39_1 then
+			iter_39_1:setAlpha(arg_39_2)
 
 			return
 		end
 	end
 end
 
-function slot0._CheckDragItemCount(slot0, slot1)
-	if not slot0._illustrationCountDic[slot1] or slot2 == 0 then
+function var_0_0._CheckDragItemCount(arg_40_0, arg_40_1)
+	local var_40_0 = arg_40_0._illustrationCountDic[arg_40_1]
+
+	if not var_40_0 or var_40_0 == 0 then
 		return false
 	end
 
-	return slot2 <= (slot0._illustrationUseDic[slot1] or 0)
+	return var_40_0 <= (arg_40_0._illustrationUseDic[arg_40_1] or 0)
 end
 
-function slot0._updateItemPos(slot0, slot1)
-	slot2 = slot0._currentDragItem.rectTran
-	slot3 = recthelper.screenPosToAnchorPos(slot1.position, slot0._gomeshContainer.transform)
-	slot6, slot7 = recthelper.getAnchor(slot2)
-	slot8 = slot6 + slot3.x - slot0._previousDragPos.x
-	slot9 = slot7 + slot3.y - slot0._previousDragPos.y
+function var_0_0._updateItemPos(arg_41_0, arg_41_1)
+	local var_41_0 = arg_41_0._currentDragItem.rectTran
+	local var_41_1 = recthelper.screenPosToAnchorPos(arg_41_1.position, arg_41_0._gomeshContainer.transform)
+	local var_41_2 = var_41_1.x - arg_41_0._previousDragPos.x
+	local var_41_3 = var_41_1.y - arg_41_0._previousDragPos.y
+	local var_41_4, var_41_5 = recthelper.getAnchor(var_41_0)
+	local var_41_6 = var_41_4 + var_41_2
+	local var_41_7 = var_41_5 + var_41_3
 
-	recthelper.setAnchor(slot2, slot8, slot9)
+	recthelper.setAnchor(var_41_0, var_41_6, var_41_7)
 
-	slot0._previousDragPos = slot3
+	arg_41_0._previousDragPos = var_41_1
 
-	return slot8, slot9
+	return var_41_6, var_41_7
 end
 
-function slot0._onItemDrag(slot0, slot1, slot2)
-	if slot0._currentDragItem == nil then
+function var_0_0._onItemDrag(arg_42_0, arg_42_1, arg_42_2)
+	if arg_42_0._currentDragItem == nil then
 		return
 	end
 
-	slot0:_resetMeshItemEnableState()
-	slot0:_onItemMove(slot2)
+	arg_42_0:_resetMeshItemEnableState()
+	arg_42_0:_onItemMove(arg_42_2)
 end
 
-function slot0._onItemMove(slot0, slot1)
-	slot2, slot3 = slot0:_updateItemPos(slot1)
-	slot4 = slot0._dragItemMinX + slot2
-	slot6 = slot0._dragItemMinY + slot3
-	slot7 = slot0._dragItemMaxY + slot3
-	slot9 = slot0._meshHeight * 0.5
-	slot11 = slot0._meshMaxY
+function var_0_0._onItemMove(arg_43_0, arg_43_1)
+	local var_43_0, var_43_1 = arg_43_0:_updateItemPos(arg_43_1)
+	local var_43_2 = arg_43_0._dragItemMinX + var_43_0
+	local var_43_3 = arg_43_0._dragItemMaxX + var_43_0
+	local var_43_4 = arg_43_0._dragItemMinY + var_43_1
+	local var_43_5 = arg_43_0._dragItemMaxY + var_43_1
+	local var_43_6 = arg_43_0._meshWidth * 0.5
+	local var_43_7 = arg_43_0._meshHeight * 0.5
+	local var_43_8 = arg_43_0._meshMaxX
+	local var_43_9 = arg_43_0._meshMaxY
 
-	if slot0._dragItemMaxX + slot2 < -slot0._meshMaxX + slot0._meshWidth * 0.5 or slot4 > slot10 - slot8 or slot7 < -slot11 + slot9 or slot6 > slot11 - slot9 then
-		return false, nil, 
+	if var_43_3 < -var_43_8 + var_43_6 or var_43_2 > var_43_8 - var_43_6 or var_43_5 < -var_43_9 + var_43_7 or var_43_4 > var_43_9 - var_43_7 then
+		return false, nil, nil
 	end
 
-	slot16 = 1
-	slot19, slot20, slot21, slot22 = slot0:_calculateOverlapMeshBoundary(math.max(slot4, -slot10) - slot2 + slot0._dragItemMaxX, math.min(slot5, slot10) - slot2 + slot0._dragItemMaxX, math.max(slot6, -slot11) - slot3 + slot0._dragItemMaxY, math.min(slot7, slot11) - slot3 + slot0._dragItemMaxY, slot0._meshWidth, slot0._meshHeight, slot0._dragItemSize[1], slot0._dragItemSize[2])
-	slot23 = slot0._meshSize[1]
-	slot24 = slot0._meshSize[2]
-	slot25 = 0
-	slot26 = 0
-	slot27, slot28 = nil
-	slot29 = false
+	local var_43_10 = math.max(var_43_2, -var_43_8) - var_43_0 + arg_43_0._dragItemMaxX
+	local var_43_11 = math.min(var_43_3, var_43_8) - var_43_0 + arg_43_0._dragItemMaxX
+	local var_43_12 = math.max(var_43_4, -var_43_9) - var_43_1 + arg_43_0._dragItemMaxY
+	local var_43_13 = math.min(var_43_5, var_43_9) - var_43_1 + arg_43_0._dragItemMaxY
+	local var_43_14 = 1
+	local var_43_15 = arg_43_0._dragItemSize[1]
+	local var_43_16 = arg_43_0._dragItemSize[2]
+	local var_43_17, var_43_18, var_43_19, var_43_20 = arg_43_0:_calculateOverlapMeshBoundary(var_43_10, var_43_11, var_43_12, var_43_13, arg_43_0._meshWidth, arg_43_0._meshHeight, var_43_15, var_43_16)
+	local var_43_21 = arg_43_0._meshSize[1]
+	local var_43_22 = arg_43_0._meshSize[2]
+	local var_43_23 = 0
+	local var_43_24 = 0
+	local var_43_25
+	local var_43_26
+	local var_43_27 = false
 
-	for slot33 = slot21, slot22 do
-		for slot37 = slot19, slot20 do
-			if slot0._currentDragCheckList[slot33] and slot0._currentDragCheckList[slot33][slot37] == 1 and slot0._meshItemList[slot23 * (slot24 - Mathf.Clamp(math.floor(((slot18 - slot33 + 1) * slot0._meshHeight + slot0._dragItemMinY + slot3 + slot0._meshMaxY) / slot0._meshWidth + 0.5), slot16, slot24) + 1 - 1) + Mathf.Clamp(math.floor(((slot37 - 1) * slot0._meshWidth + slot0._dragItemMinX + slot8 + slot2 + slot0._meshMaxX) / slot0._meshWidth) + 1, slot16, slot23)] then
-				if not slot29 then
-					slot27 = slot40
-					slot28 = slot41
-					slot29 = true
-				end
+	for iter_43_0 = var_43_19, var_43_20 do
+		for iter_43_1 = var_43_17, var_43_18 do
+			if arg_43_0._currentDragCheckList[iter_43_0] and arg_43_0._currentDragCheckList[iter_43_0][iter_43_1] == 1 then
+				local var_43_28 = (iter_43_1 - 1) * arg_43_0._meshWidth + arg_43_0._dragItemMinX + var_43_6 + var_43_0 + arg_43_0._meshMaxX
+				local var_43_29 = (var_43_16 - iter_43_0 + 1) * arg_43_0._meshHeight + arg_43_0._dragItemMinY + var_43_1 + arg_43_0._meshMaxY
+				local var_43_30 = math.floor(var_43_28 / arg_43_0._meshWidth) + 1
+				local var_43_31 = Mathf.Clamp(var_43_30, var_43_14, var_43_21)
+				local var_43_32 = math.floor(var_43_29 / arg_43_0._meshWidth + 0.5)
+				local var_43_33 = var_43_22 - Mathf.Clamp(var_43_32, var_43_14, var_43_22) + 1
+				local var_43_34 = var_43_21 * (var_43_33 - 1) + var_43_31
+				local var_43_35 = arg_43_0._meshItemList[var_43_34]
 
-				table.insert(slot0._dyeingMeshItemList, slot43)
+				if var_43_35 then
+					if not var_43_27 then
+						var_43_25 = var_43_31
+						var_43_26 = var_43_33
+						var_43_27 = true
+					end
 
-				slot25 = slot25 + 1
+					local var_43_36 = arg_43_0._meshData[var_43_33] and arg_43_0._meshData[var_43_33][var_43_31] ~= nil
 
-				if not (slot0._meshData[slot41] and slot0._meshData[slot41][slot40] ~= nil) then
-					slot26 = slot26 + 1
+					table.insert(arg_43_0._dyeingMeshItemList, var_43_35)
+
+					var_43_23 = var_43_23 + 1
+
+					if not var_43_36 then
+						var_43_24 = var_43_24 + 1
+					end
 				end
 			end
 		end
 	end
 
-	slot31 = slot0._needCheckMeshCount <= slot26 and LiangYueEnum.MeshItemColor.Enable or LiangYueEnum.MeshItemColor.Disable
+	local var_43_37 = var_43_24 >= arg_43_0._needCheckMeshCount
+	local var_43_38 = var_43_37 and LiangYueEnum.MeshItemColor.Enable or LiangYueEnum.MeshItemColor.Disable
 
-	if slot25 > 0 then
-		for slot35, slot36 in ipairs(slot0._dyeingMeshItemList) do
-			slot36:setActive(true)
-			slot36:setBgColor(slot31)
+	if var_43_23 > 0 then
+		for iter_43_2, iter_43_3 in ipairs(arg_43_0._dyeingMeshItemList) do
+			iter_43_3:setActive(true)
+			iter_43_3:setBgColor(var_43_38)
 		end
 	end
 
-	slot0._dyeingMeshItemCount = slot25
+	arg_43_0._dyeingMeshItemCount = var_43_23
 
-	if not slot30 then
-		return true, nil, 
+	if not var_43_37 then
+		return true, nil, nil
 	end
 
-	return true, slot27, slot28
+	return true, var_43_25, var_43_26
 end
 
-function slot0._calculateOverlapMeshBoundary(slot0, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8)
-	slot9 = 1
+function var_0_0._calculateOverlapMeshBoundary(arg_44_0, arg_44_1, arg_44_2, arg_44_3, arg_44_4, arg_44_5, arg_44_6, arg_44_7, arg_44_8)
+	local var_44_0 = 1
+	local var_44_1 = arg_44_1 / arg_44_5
+	local var_44_2 = arg_44_2 / arg_44_5
+	local var_44_3 = arg_44_3 / arg_44_6
+	local var_44_4 = arg_44_4 / arg_44_6
+	local var_44_5 = Mathf.Clamp(math.floor(var_44_1 + 0.5) + 1, var_44_0, arg_44_7)
+	local var_44_6 = Mathf.Clamp(math.floor(var_44_2 + 0.5), var_44_0, arg_44_7)
+	local var_44_7 = arg_44_8 - Mathf.Clamp(math.floor(var_44_4 + 0.5), var_44_0, arg_44_8) + 1
+	local var_44_8 = arg_44_8 - Mathf.Clamp(math.floor(var_44_3 + 0.5) + 1, var_44_0, arg_44_8) + 1
 
-	return Mathf.Clamp(math.floor(slot1 / slot5 + 0.5) + 1, slot9, slot7), Mathf.Clamp(math.floor(slot2 / slot5 + 0.5), slot9, slot7), slot8 - Mathf.Clamp(math.floor(slot4 / slot6 + 0.5), slot9, slot8) + 1, slot8 - Mathf.Clamp(math.floor(slot3 / slot6 + 0.5) + 1, slot9, slot8) + 1
+	return var_44_5, var_44_6, var_44_7, var_44_8
 end
 
-function slot0._resetMeshItemEnableState(slot0)
-	if slot0._dyeingMeshItemCount > 0 then
-		for slot4, slot5 in ipairs(slot0._dyeingMeshItemList) do
-			slot5:setActive(false)
+function var_0_0._resetMeshItemEnableState(arg_45_0)
+	if arg_45_0._dyeingMeshItemCount > 0 then
+		for iter_45_0, iter_45_1 in ipairs(arg_45_0._dyeingMeshItemList) do
+			iter_45_1:setActive(false)
 		end
 
-		tabletool.clear(slot0._dyeingMeshItemList)
+		tabletool.clear(arg_45_0._dyeingMeshItemList)
 
-		slot0._dyeingMeshItemCount = 0
+		arg_45_0._dyeingMeshItemCount = 0
 	end
 end
 
-function slot0._onItemEndDrag(slot0, slot1, slot2)
-	if slot0._currentDragItem == nil then
+function var_0_0._onItemEndDrag(arg_46_0, arg_46_1, arg_46_2)
+	if arg_46_0._currentDragItem == nil then
 		return
 	end
 
 	logNormal("End Drag")
 
-	slot0._isDrag = false
-	slot3, slot4, slot5 = slot0:_onItemMove(slot2)
-	slot4 = slot4 or slot0._previousPosX
-	slot5 = slot5 or slot0._previousPosY
+	arg_46_0._isDrag = false
 
-	slot0:_setScrollItemAlpha(slot0._dragShapeId, LiangYueEnum.NormalAlpha)
-	slot0:_beforeAttributeChanged()
+	local var_46_0, var_46_1, var_46_2 = arg_46_0:_onItemMove(arg_46_2)
 
-	if slot3 and slot4 and slot5 then
+	var_46_1 = var_46_1 or arg_46_0._previousPosX
+	var_46_2 = var_46_2 or arg_46_0._previousPosY
+
+	arg_46_0:_setScrollItemAlpha(arg_46_0._dragShapeId, LiangYueEnum.NormalAlpha)
+	arg_46_0:_beforeAttributeChanged()
+
+	if var_46_0 and var_46_1 and var_46_2 then
 		logNormal("放置插画")
-		slot0:_fillMesh(slot4, slot5, slot0._dragShapeId, false, slot0._currentDragItem)
+		arg_46_0:_fillMesh(var_46_1, var_46_2, arg_46_0._dragShapeId, false, arg_46_0._currentDragItem)
 		AudioMgr.instance:trigger(AudioEnum.LiangYueAudio.play_ui_tangren_fangru)
 	else
 		logNormal("回收插画")
-		slot0:_recycleDragItem(slot0._currentDragItem)
+		arg_46_0:_recycleDragItem(arg_46_0._currentDragItem)
 	end
 
-	slot0:_afterAttributeChanged()
+	arg_46_0:_afterAttributeChanged()
 
-	slot0._dragShapeId = nil
-	slot0._previousPosX = nil
-	slot0._previousPosX = nil
-	slot0._currentDragItem = nil
+	arg_46_0._dragShapeId = nil
+	arg_46_0._previousPosX = nil
+	arg_46_0._previousPosX = nil
+	arg_46_0._currentDragItem = nil
 
-	slot0:_resetMeshItemEnableState()
+	arg_46_0:_resetMeshItemEnableState()
 end
 
-function slot0._rebuildMesh(slot0)
-	slot3 = slot0._meshSize[1]
-	slot4 = slot0._meshSize[2]
-	slot0._meshWidth = recthelper.getWidth(slot0._goImageBg.transform) / slot3
-	slot0._meshHeight = recthelper.getHeight(slot0._goImageBg.transform) / slot4
-	slot5 = slot0._meshWidth * slot3
-	slot6 = slot0._meshHeight * slot4
-	slot7 = (slot5 + slot0._meshWidth) * 0.5
-	slot8 = (slot6 + slot0._meshHeight) * 0.5
+function var_0_0._rebuildMesh(arg_47_0)
+	local var_47_0 = recthelper.getWidth(arg_47_0._goImageBg.transform)
+	local var_47_1 = recthelper.getHeight(arg_47_0._goImageBg.transform)
+	local var_47_2 = arg_47_0._meshSize[1]
+	local var_47_3 = arg_47_0._meshSize[2]
 
-	recthelper.setSize(slot0._gomeshContainer.transform, slot5, slot6)
-	recthelper.setSize(slot0._goillustrationContainer.transform, slot5, slot6)
-	recthelper.setAnchor(slot0._gomeshContainer.transform, 0, 0)
-	recthelper.setAnchor(slot0._goillustrationContainer.transform, 0, 0)
+	arg_47_0._meshWidth = var_47_0 / var_47_2
+	arg_47_0._meshHeight = var_47_1 / var_47_3
 
-	slot0._meshMaxX = slot5 * 0.5
-	slot0._meshMinX = -slot0._meshMaxX
-	slot0._meshMaxY = slot6 * 0.5
-	slot0._meshMinY = -slot0._meshMaxY
-	slot9 = slot3 * slot4
-	slot10 = #slot0._meshItemList
+	local var_47_4 = arg_47_0._meshWidth * var_47_2
+	local var_47_5 = arg_47_0._meshHeight * var_47_3
+	local var_47_6 = (var_47_4 + arg_47_0._meshWidth) * 0.5
+	local var_47_7 = (var_47_5 + arg_47_0._meshHeight) * 0.5
 
-	for slot14 = 1, slot4 do
-		for slot18 = 1, slot3 do
-			slot20 = nil
-			slot20 = (slot10 >= (slot14 - 1) * slot3 + slot18 or slot0:_createMeshItem(slot19)) and slot0._meshItemList[slot19]
+	recthelper.setSize(arg_47_0._gomeshContainer.transform, var_47_4, var_47_5)
+	recthelper.setSize(arg_47_0._goillustrationContainer.transform, var_47_4, var_47_5)
+	recthelper.setAnchor(arg_47_0._gomeshContainer.transform, 0, 0)
+	recthelper.setAnchor(arg_47_0._goillustrationContainer.transform, 0, 0)
 
-			slot20:setPos(slot18 * slot0._meshWidth - slot7, slot6 - (slot14 - 1) * slot0._meshHeight - slot8)
-			slot20:setActive(false)
+	arg_47_0._meshMaxX = var_47_4 * 0.5
+	arg_47_0._meshMinX = -arg_47_0._meshMaxX
+	arg_47_0._meshMaxY = var_47_5 * 0.5
+	arg_47_0._meshMinY = -arg_47_0._meshMaxY
+
+	local var_47_8 = var_47_2 * var_47_3
+	local var_47_9 = #arg_47_0._meshItemList
+
+	for iter_47_0 = 1, var_47_3 do
+		for iter_47_1 = 1, var_47_2 do
+			local var_47_10 = (iter_47_0 - 1) * var_47_2 + iter_47_1
+			local var_47_11
+
+			if var_47_9 < var_47_10 then
+				var_47_11 = arg_47_0:_createMeshItem(var_47_10)
+			else
+				var_47_11 = arg_47_0._meshItemList[var_47_10]
+			end
+
+			local var_47_12 = iter_47_1 * arg_47_0._meshWidth - var_47_6
+			local var_47_13 = var_47_5 - (iter_47_0 - 1) * arg_47_0._meshHeight - var_47_7
+
+			var_47_11:setPos(var_47_12, var_47_13)
+			var_47_11:setActive(false)
 		end
 	end
 
-	if slot9 < slot10 then
-		for slot14 = slot9 + 1, slot10 do
-			slot0._meshItemList[slot14]:setActive(false)
+	if var_47_8 < var_47_9 then
+		for iter_47_2 = var_47_8 + 1, var_47_9 do
+			arg_47_0._meshItemList[iter_47_2]:setActive(false)
 		end
 	end
 end
 
-function slot0._createIllustrationItem(slot0, slot1, slot2)
-	slot5 = MonoHelper.addNoUpdateLuaComOnceToGo(gohelper.clone(slot0._goillstrationItem, slot0._goContent, string.format("item_%s_%s", slot1, slot2)), LiangYueScrollItem)
+function var_0_0._createIllustrationItem(arg_48_0, arg_48_1, arg_48_2)
+	local var_48_0 = string.format("item_%s_%s", arg_48_1, arg_48_2)
+	local var_48_1 = gohelper.clone(arg_48_0._goillstrationItem, arg_48_0._goContent, var_48_0)
+	local var_48_2 = MonoHelper.addNoUpdateLuaComOnceToGo(var_48_1, LiangYueScrollItem)
 
-	slot5:setParentView(slot0)
-	table.insert(slot0._illustrationScrollItemList, slot5)
+	var_48_2:setParentView(arg_48_0)
+	table.insert(arg_48_0._illustrationScrollItemList, var_48_2)
 
-	return slot5
+	return var_48_2
 end
 
-function slot0._createMeshItem(slot0, slot1)
-	slot2 = slot0:getResInst(slot0.viewContainer._viewSetting.otherRes[1], slot0._gomeshContainer, "meshItem" .. slot1)
+function var_0_0._createMeshItem(arg_49_0, arg_49_1)
+	local var_49_0 = arg_49_0:getResInst(arg_49_0.viewContainer._viewSetting.otherRes[1], arg_49_0._gomeshContainer, "meshItem" .. arg_49_1)
 
-	recthelper.setSize(slot2.transform, slot0._meshHeight, slot0._meshHeight)
+	recthelper.setSize(var_49_0.transform, arg_49_0._meshHeight, arg_49_0._meshHeight)
 
-	slot3 = MonoHelper.addNoUpdateLuaComOnceToGo(slot2, LiangYueMeshItem)
+	local var_49_1 = MonoHelper.addNoUpdateLuaComOnceToGo(var_49_0, LiangYueMeshItem)
 
-	table.insert(slot0._meshItemList, slot3)
+	table.insert(arg_49_0._meshItemList, var_49_1)
 
-	return slot3
+	return var_49_1
 end
 
-function slot0._getDragItem(slot0, slot1, slot2, slot3)
-	slot4 = nil
+function var_0_0._getDragItem(arg_50_0, arg_50_1, arg_50_2, arg_50_3)
+	local var_50_0
+	local var_50_1 = #arg_50_0._unusedDragItemList
 
-	if #slot0._unusedDragItemList <= 0 then
-		slot4 = MonoHelper.addNoUpdateLuaComOnceToGo(gohelper.clone(slot0._godragItem, slot0._goillustrationContainer), LiangYueDragItem)
+	if var_50_1 <= 0 then
+		local var_50_2 = gohelper.clone(arg_50_0._godragItem, arg_50_0._goillustrationContainer)
+
+		var_50_0 = MonoHelper.addNoUpdateLuaComOnceToGo(var_50_2, LiangYueDragItem)
 	else
-		slot4 = slot0._unusedDragItemList[slot5]
-		slot0._unusedDragItemList[slot5] = nil
+		var_50_0 = arg_50_0._unusedDragItemList[var_50_1]
+		arg_50_0._unusedDragItemList[var_50_1] = nil
 	end
 
-	slot4:setActive(true)
-	slot4:setInfo(slot1, LiangYueConfig.instance:getIllustrationConfigById(slot0._actId, slot1), slot2, slot3)
+	local var_50_3 = LiangYueConfig.instance:getIllustrationConfigById(arg_50_0._actId, arg_50_1)
 
-	return slot4
+	var_50_0:setActive(true)
+	var_50_0:setInfo(arg_50_1, var_50_3, arg_50_2, arg_50_3)
+
+	return var_50_0
 end
 
-function slot0._recycleDragItem(slot0, slot1)
-	if slot1 ~= nil then
-		slot1:setActive(false)
-		table.insert(slot0._unusedDragItemList, slot1)
+function var_0_0._recycleDragItem(arg_51_0, arg_51_1)
+	if arg_51_1 ~= nil then
+		arg_51_1:setActive(false)
+		table.insert(arg_51_0._unusedDragItemList, arg_51_1)
 	end
 end
 
-function slot0._isStaticIllustration(slot0, slot1)
-	if slot0._staticIllustrationDic[slot1] then
+function var_0_0._isStaticIllustration(arg_52_0, arg_52_1)
+	if arg_52_0._staticIllustrationDic[arg_52_1] then
 		return true
 	end
 
 	return false
 end
 
-function slot0.statData(slot0, slot1)
-	slot2 = {}
+function var_0_0.statData(arg_53_0, arg_53_1)
+	local var_53_0 = {}
 
-	for slot6, slot7 in pairs(slot0._illustrationIndexList) do
-		if not slot0:_isStaticIllustration(slot7) then
-			table.insert(slot2, slot0._illustrationIndexDic[slot7])
+	for iter_53_0, iter_53_1 in pairs(arg_53_0._illustrationIndexList) do
+		local var_53_1 = arg_53_0._illustrationIndexDic[iter_53_1]
+
+		if not arg_53_0:_isStaticIllustration(iter_53_1) then
+			table.insert(var_53_0, var_53_1)
 		end
 	end
 
-	slot3 = nil
+	local var_53_2
 
-	LiangYueController.instance:statExitData((slot1 ~= LiangYueEnum.StatGameState.Restart or slot0._resetTime) and slot0._enterTime, slot0._episodeGameId, slot1, slot2)
+	if arg_53_1 == LiangYueEnum.StatGameState.Restart then
+		var_53_2 = arg_53_0._resetTime
+	else
+		var_53_2 = arg_53_0._enterTime
+	end
+
+	LiangYueController.instance:statExitData(var_53_2, arg_53_0._episodeGameId, arg_53_1, var_53_0)
 end
 
-function slot0._lockScreen(slot0, slot1)
-	if slot1 then
+function var_0_0._lockScreen(arg_54_0, arg_54_1)
+	if arg_54_1 then
 		UIBlockMgrExtend.setNeedCircleMv(false)
 		UIBlockMgr.instance:startBlock("LiangYueGameLock")
 	else
@@ -1002,21 +1189,22 @@ function slot0._lockScreen(slot0, slot1)
 	end
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_55_0)
 	LiangYueModel.instance:setCurActId(nil)
 	LiangYueModel.instance:setCurEpisodeId(nil)
-	TaskDispatcher.cancelTask(slot0.delayFinishAnim, slot0)
-	TaskDispatcher.cancelTask(slot0.delayFinishAnimEnd, slot0)
-	TaskDispatcher.cancelTask(slot0._resetAttributeState, slot0)
+	TaskDispatcher.cancelTask(arg_55_0.delayFinishAnim, arg_55_0)
+	TaskDispatcher.cancelTask(arg_55_0.delayFinishAnimEnd, arg_55_0)
+	TaskDispatcher.cancelTask(arg_55_0._resetAttributeState, arg_55_0)
 
-	if slot0._tweenPos then
-		ZProj.TweenHelper.KillById(slot0._tweenPos)
+	if arg_55_0._tweenPos then
+		ZProj.TweenHelper.KillById(arg_55_0._tweenPos)
 
-		slot0._tweenPos = nil
+		arg_55_0._tweenPos = nil
 	end
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_56_0)
+	return
 end
 
-return slot0
+return var_0_0

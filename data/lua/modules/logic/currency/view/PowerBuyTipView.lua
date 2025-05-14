@@ -1,91 +1,97 @@
-module("modules.logic.currency.view.PowerBuyTipView", package.seeall)
+﻿module("modules.logic.currency.view.PowerBuyTipView", package.seeall)
 
-slot0 = class("PowerBuyTipView", BaseView)
+local var_0_0 = class("PowerBuyTipView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._btntouchClose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_touchClose")
-	slot0._simagetipbg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_tipbg")
-	slot0._txtbuytip = gohelper.findChildText(slot0.viewGO, "centerTip/#txt_buytip")
-	slot0._txtremaincount = gohelper.findChildText(slot0.viewGO, "centerTip/#txt_remaincount")
-	slot0._toggletip = gohelper.findChildToggle(slot0.viewGO, "centerTip/#toggle_tip")
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close")
-	slot0._btnbuy = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_buy")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btntouchClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_touchClose")
+	arg_1_0._simagetipbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_tipbg")
+	arg_1_0._txtbuytip = gohelper.findChildText(arg_1_0.viewGO, "centerTip/#txt_buytip")
+	arg_1_0._txtremaincount = gohelper.findChildText(arg_1_0.viewGO, "centerTip/#txt_remaincount")
+	arg_1_0._toggletip = gohelper.findChildToggle(arg_1_0.viewGO, "centerTip/#toggle_tip")
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
+	arg_1_0._btnbuy = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_buy")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btntouchClose:AddClickListener(slot0._btntouchCloseOnClick, slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
-	slot0._btnbuy:AddClickListener(slot0._btnbuyOnClick, slot0)
-	slot0._toggletip:AddOnValueChanged(slot0._toggleTipOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btntouchClose:AddClickListener(arg_2_0._btntouchCloseOnClick, arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+	arg_2_0._btnbuy:AddClickListener(arg_2_0._btnbuyOnClick, arg_2_0)
+	arg_2_0._toggletip:AddOnValueChanged(arg_2_0._toggleTipOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btntouchClose:RemoveClickListener()
-	slot0._btnclose:RemoveClickListener()
-	slot0._btnbuy:RemoveClickListener()
-	slot0._toggletip:RemoveOnValueChanged()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btntouchClose:RemoveClickListener()
+	arg_3_0._btnclose:RemoveClickListener()
+	arg_3_0._btnbuy:RemoveClickListener()
+	arg_3_0._toggletip:RemoveOnValueChanged()
 end
 
-function slot0._btntouchCloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btntouchCloseOnClick(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseOnClick(arg_5_0)
+	arg_5_0:closeThis()
 end
 
-function slot0._btnbuyOnClick(slot0)
-	if slot0._buyDiamondStep > 0 then
-		if slot0._buyDiamondStep == 1 then
-			if slot0:_checkExchangeFreeDiamond(slot0.deltaDiamond) then
-				slot0:closeThis()
+function var_0_0._btnbuyOnClick(arg_6_0)
+	if arg_6_0._buyDiamondStep > 0 then
+		if arg_6_0._buyDiamondStep == 1 then
+			if arg_6_0:_checkExchangeFreeDiamond(arg_6_0.deltaDiamond) then
+				arg_6_0:closeThis()
 			end
 		else
 			StoreController.instance:checkAndOpenStoreView(StoreEnum.ChargeStoreTabId)
 			ViewMgr.instance:closeView(ViewName.PowerView)
-			slot0:closeThis()
+			arg_6_0:closeThis()
 		end
 	else
-		CurrencyController.instance:dispatchEvent(CurrencyEvent.PowerBuyTipToggleOn, slot0._toggletip.isOn)
+		local var_6_0 = arg_6_0._toggletip.isOn
 
-		slot0.addPowerSuccess = true
+		CurrencyController.instance:dispatchEvent(CurrencyEvent.PowerBuyTipToggleOn, var_6_0)
 
-		if slot0.buyinfo.isPowerPotion then
-			ItemRpc.instance:sendUsePowerItemRequest(slot0.buyinfo.uid)
-		elseif slot0:_checkFreeDiamondEnough(slot0._costParam[3]) then
+		arg_6_0.addPowerSuccess = true
+
+		if arg_6_0.buyinfo.isPowerPotion then
+			ItemRpc.instance:sendUsePowerItemRequest(arg_6_0.buyinfo.uid)
+		elseif arg_6_0:_checkFreeDiamondEnough(arg_6_0._costParam[3]) then
 			CurrencyRpc.instance:sendBuyPowerRequest()
 		else
-			slot0.addPowerSuccess = false
+			arg_6_0.addPowerSuccess = false
 		end
 
-		if slot0.addPowerSuccess then
+		if arg_6_0.addPowerSuccess then
 			CurrencyController.instance:dispatchEvent(CurrencyEvent.PowerBuySuccess)
-			slot0:closeThis()
+			arg_6_0:closeThis()
 		end
 	end
 end
 
-function slot0._ExchangeFreeDiamondCallBack(slot0, slot1, slot2, slot3)
-	if slot2 == 0 then
+function var_0_0._ExchangeFreeDiamondCallBack(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
+	if arg_7_2 == 0 then
 		CurrencyRpc.instance:sendBuyPowerRequest()
 		CurrencyController.instance:dispatchEvent(CurrencyEvent.PowerBuySuccess)
 	end
 end
 
-function slot0._checkExchangeFreeDiamond(slot0, slot1)
-	if CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.Diamond) then
-		if slot1 <= slot2.quantity then
-			CurrencyRpc.instance:sendExchangeDiamondRequest(slot1, CurrencyEnum.PayDiamondExchangeSource.Power, slot0._ExchangeFreeDiamondCallBack, slot0)
+function var_0_0._checkExchangeFreeDiamond(arg_8_0, arg_8_1)
+	local var_8_0 = CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.Diamond)
+
+	if var_8_0 then
+		if arg_8_1 <= var_8_0.quantity then
+			CurrencyRpc.instance:sendExchangeDiamondRequest(arg_8_1, CurrencyEnum.PayDiamondExchangeSource.Power, arg_8_0._ExchangeFreeDiamondCallBack, arg_8_0)
 
 			return true
 		else
-			slot3 = slot1 - slot2.quantity
-			slot0._buyDiamondStep = 2
-			slot0._txtbuytip.text = MessageBoxConfig.instance:getMessage(MessageBoxIdDefine.PayDiamondNotEnough)
+			local var_8_1 = arg_8_1 - var_8_0.quantity
+			local var_8_2 = MessageBoxConfig.instance:getMessage(MessageBoxIdDefine.PayDiamondNotEnough)
+
+			arg_8_0._buyDiamondStep = 2
+			arg_8_0._txtbuytip.text = var_8_2
 
 			return false
 		end
@@ -96,17 +102,19 @@ function slot0._checkExchangeFreeDiamond(slot0, slot1)
 	end
 end
 
-function slot0._checkFreeDiamondEnough(slot0, slot1)
-	if CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.FreeDiamondCoupon) then
-		if slot1 <= slot2.quantity then
+function var_0_0._checkFreeDiamondEnough(arg_9_0, arg_9_1)
+	local var_9_0 = CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.FreeDiamondCoupon)
+
+	if var_9_0 then
+		if arg_9_1 <= var_9_0.quantity then
 			return true
 		else
-			slot0.deltaDiamond = slot1 - slot2.quantity
-			slot0._txtbuytip.text = string.format(luaLang("powerbuy_tip_2"), slot0.deltaDiamond)
+			arg_9_0.deltaDiamond = arg_9_1 - var_9_0.quantity
+			arg_9_0._txtbuytip.text = string.format(luaLang("powerbuy_tip_2"), arg_9_0.deltaDiamond)
 
-			gohelper.setActive(slot0._txtremaincount.gameObject, false)
+			gohelper.setActive(arg_9_0._txtremaincount.gameObject, false)
 
-			slot0._buyDiamondStep = 1
+			arg_9_0._buyDiamondStep = 1
 
 			return false
 		end
@@ -117,79 +125,93 @@ function slot0._checkFreeDiamondEnough(slot0, slot1)
 	end
 end
 
-function slot0._toggleTipOnClick(slot0)
+function var_0_0._toggleTipOnClick(arg_10_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
 end
 
-function slot0._editableInitView(slot0)
-	slot0._toggletip.isOn = false
+function var_0_0._editableInitView(arg_11_0)
+	arg_11_0._toggletip.isOn = false
 
-	slot0._simagetipbg:LoadImage(ResUrl.getMessageIcon("bg_tanchuang"))
+	arg_11_0._simagetipbg:LoadImage(ResUrl.getMessageIcon("bg_tanchuang"))
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_12_0)
+	return
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_13_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
 
-	slot0.buyinfo = slot0.viewParam
-	slot1 = slot0.buyinfo.isPowerPotion
+	arg_13_0.buyinfo = arg_13_0.viewParam
 
-	gohelper.setActive(slot0._txtremaincount.gameObject, not slot1)
-	gohelper.setActive(slot0._toggletip.gameObject, slot1)
-	slot0:refreshCenterTip()
+	local var_13_0 = arg_13_0.buyinfo.isPowerPotion
 
-	slot0.addPowerSuccess = false
-	slot0._buyDiamondStep = 0
+	gohelper.setActive(arg_13_0._txtremaincount.gameObject, not var_13_0)
+	gohelper.setActive(arg_13_0._toggletip.gameObject, var_13_0)
+	arg_13_0:refreshCenterTip()
 
-	NavigateMgr.instance:addEscape(slot0.viewName, slot0._btncloseOnClick, slot0)
+	arg_13_0.addPowerSuccess = false
+	arg_13_0._buyDiamondStep = 0
+
+	NavigateMgr.instance:addEscape(arg_13_0.viewName, arg_13_0._btncloseOnClick, arg_13_0)
 end
 
-function slot0.refreshCenterTip(slot0)
-	if not slot0.buyinfo.isPowerPotion then
-		slot0._powerMaxBuyCount = CommonConfig.instance:getConstNum(ConstEnum.PowerMaxBuyCountId)
-		slot0._costParamList = GameUtil.splitString2(CommonConfig.instance:getConstStr(ConstEnum.PowerBuyCostId), true)
-		slot0._costParam = slot0._costParamList[slot0._powerMaxBuyCount - CurrencyModel.instance.powerCanBuyCount + 1]
+function var_0_0.refreshCenterTip(arg_14_0)
+	if not arg_14_0.buyinfo.isPowerPotion then
+		local var_14_0 = CommonConfig.instance:getConstStr(ConstEnum.PowerBuyCostId)
 
-		if slot0._costParam == nil then
-			slot0._costParam = slot0._costParamList[#slot0._costParamList]
+		arg_14_0._powerMaxBuyCount = CommonConfig.instance:getConstNum(ConstEnum.PowerMaxBuyCountId)
+		arg_14_0._costParamList = GameUtil.splitString2(var_14_0, true)
+		arg_14_0._costParam = arg_14_0._costParamList[arg_14_0._powerMaxBuyCount - CurrencyModel.instance.powerCanBuyCount + 1]
+
+		if arg_14_0._costParam == nil then
+			arg_14_0._costParam = arg_14_0._costParamList[#arg_14_0._costParamList]
 		end
+
+		local var_14_1 = PlayerModel.instance:getPlayinfo().level
+		local var_14_2 = PlayerConfig.instance:getPlayerLevelCO(var_14_1).addBuyRecoverPower
+		local var_14_3 = ItemModel.instance:getItemConfig(arg_14_0._costParam[1], arg_14_0._costParam[2])
+		local var_14_4 = {
+			arg_14_0._costParam[3],
+			var_14_3.name,
+			var_14_2
+		}
+		local var_14_5 = GameUtil.getSubPlaceholderLuaLang(luaLang("powerbuy_tip"), var_14_4)
 
 		if LangSettings.instance:isEn() then
-			slot0._txtbuytip.text = string.format("%s(%s)", GameUtil.getSubPlaceholderLuaLang(luaLang("powerbuy_tip"), {
-				slot0._costParam[3],
-				ItemModel.instance:getItemConfig(slot0._costParam[1], slot0._costParam[2]).name,
-				PlayerConfig.instance:getPlayerLevelCO(PlayerModel.instance:getPlayinfo().level).addBuyRecoverPower
-			}), string.format(luaLang("powerbuy_remaincount"), CurrencyModel.instance.powerCanBuyCount))
+			arg_14_0._txtbuytip.text = string.format("%s(%s)", var_14_5, string.format(luaLang("powerbuy_remaincount"), CurrencyModel.instance.powerCanBuyCount))
 		else
-			slot0._txtbuytip.text = string.format("%s（%s）", slot6, string.format(luaLang("powerbuy_remaincount"), CurrencyModel.instance.powerCanBuyCount))
+			arg_14_0._txtbuytip.text = string.format("%s（%s）", var_14_5, string.format(luaLang("powerbuy_remaincount"), CurrencyModel.instance.powerCanBuyCount))
 		end
 
-		slot0._txtremaincount.text = luaLang("powerbuy_tip_3")
-	elseif slot0.buyinfo.type == MaterialEnum.PowerType.Small then
-		slot0._txtbuytip.text = GameUtil.getSubPlaceholderLuaLang(luaLang("powerbuy_tip"), {
+		arg_14_0._txtremaincount.text = luaLang("powerbuy_tip_3")
+	elseif arg_14_0.buyinfo.type == MaterialEnum.PowerType.Small then
+		local var_14_6 = {
 			"",
 			luaLang("power_item1_name"),
 			60
-		})
-	elseif slot0.buyinfo.type == MaterialEnum.PowerType.Big then
-		slot0._txtbuytip.text = GameUtil.getSubPlaceholderLuaLang(luaLang("powerbuy_tip"), {
+		}
+
+		arg_14_0._txtbuytip.text = GameUtil.getSubPlaceholderLuaLang(luaLang("powerbuy_tip"), var_14_6)
+	elseif arg_14_0.buyinfo.type == MaterialEnum.PowerType.Big then
+		local var_14_7 = {
 			"",
 			luaLang("power_item2_name"),
 			120
-		})
+		}
+
+		arg_14_0._txtbuytip.text = GameUtil.getSubPlaceholderLuaLang(luaLang("powerbuy_tip"), var_14_7)
 	end
 end
 
-function slot0.onClose(slot0)
-	if slot0.addPowerSuccess then
+function var_0_0.onClose(arg_15_0)
+	if arg_15_0.addPowerSuccess then
 		return
 	end
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simagetipbg:UnLoadImage()
+function var_0_0.onDestroyView(arg_16_0)
+	arg_16_0._simagetipbg:UnLoadImage()
 end
 
-return slot0
+return var_0_0

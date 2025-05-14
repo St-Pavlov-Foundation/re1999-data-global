@@ -1,20 +1,20 @@
-module("modules.logic.guide.controller.trigger.GuideTriggerRoomConfirmBuilding", package.seeall)
+﻿module("modules.logic.guide.controller.trigger.GuideTriggerRoomConfirmBuilding", package.seeall)
 
-slot0 = class("GuideTriggerRoomConfirmBuilding", BaseGuideTrigger)
+local var_0_0 = class("GuideTriggerRoomConfirmBuilding", BaseGuideTrigger)
 
-function slot0.ctor(slot0, slot1)
-	uv0.super.ctor(slot0, slot1)
-	RoomBuildingController.instance:registerCallback(RoomEvent.ConfirmBuilding, slot0._onConfirmBuilding, slot0)
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	var_0_0.super.ctor(arg_1_0, arg_1_1)
+	RoomBuildingController.instance:registerCallback(RoomEvent.ConfirmBuilding, arg_1_0._onConfirmBuilding, arg_1_0)
 end
 
-function slot0.assertGuideSatisfy(slot0, slot1, slot2)
-	return slot1 == tonumber(slot2)
+function var_0_0.assertGuideSatisfy(arg_2_0, arg_2_1, arg_2_2)
+	return arg_2_1 == tonumber(arg_2_2)
 end
 
-function slot0._onConfirmBuilding(slot0, slot1)
+function var_0_0._onConfirmBuilding(arg_3_0, arg_3_1)
 	if GameSceneMgr.instance:getCurSceneType() == SceneType.Room then
-		slot0:checkStartGuide(slot1)
+		arg_3_0:checkStartGuide(arg_3_1)
 	end
 end
 
-return slot0
+return var_0_0

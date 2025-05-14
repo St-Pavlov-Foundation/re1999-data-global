@@ -1,56 +1,60 @@
-module("modules.logic.room.view.topright.RoomViewTopRightLayoutShareItem", package.seeall)
+﻿module("modules.logic.room.view.topright.RoomViewTopRightLayoutShareItem", package.seeall)
 
-slot0 = class("RoomViewTopRightLayoutShareItem", RoomViewTopRightBaseItem)
+local var_0_0 = class("RoomViewTopRightLayoutShareItem", RoomViewTopRightBaseItem)
 
-function slot0.ctor(slot0, slot1)
-	uv0.super.ctor(slot0, slot1)
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	var_0_0.super.ctor(arg_1_0, arg_1_1)
 
-	slot0._ismap = slot0._param.ismap
+	arg_1_0._ismap = arg_1_0._param.ismap
 end
 
-function slot0._customOnInit(slot0)
-	slot0._resourceItem.simageicon = gohelper.findChildImage(slot0._resourceItem.go, "icon")
+function var_0_0._customOnInit(arg_2_0)
+	arg_2_0._resourceItem.simageicon = gohelper.findChildImage(arg_2_0._resourceItem.go, "icon")
 
-	UISpriteSetMgr.instance:setRoomSprite(slot0._resourceItem.simageicon, "room_layout_icon_redu")
+	UISpriteSetMgr.instance:setRoomSprite(arg_2_0._resourceItem.simageicon, "room_layout_icon_redu")
 end
 
-function slot0._onClick(slot0)
+function var_0_0._onClick(arg_3_0)
 	if RoomController.instance:isVisitMode() then
 		return
 	end
 
 	ViewMgr.instance:openView(ViewName.RoomTipsView, {
 		type = RoomTipsView.ViewType.PlanShare,
-		shareCount = slot0:_getQuantity()
+		shareCount = arg_3_0:_getQuantity()
 	})
 end
 
-function slot0.addEventListeners(slot0)
+function var_0_0.addEventListeners(arg_4_0)
+	return
 end
 
-function slot0.removeEventListeners(slot0)
+function var_0_0.removeEventListeners(arg_5_0)
+	return
 end
 
-function slot0._refreshUI(slot0)
-	slot1 = true
+function var_0_0._refreshUI(arg_6_0)
+	local var_6_0 = true
 
-	if slot0._ismap and not RoomController.instance:isVisitShareMode() then
-		slot1 = false
+	if arg_6_0._ismap and not RoomController.instance:isVisitShareMode() then
+		var_6_0 = false
 	end
 
-	if slot1 then
-		slot0._resourceItem.txtquantity.text = slot0:_getQuantity()
+	if var_6_0 then
+		arg_6_0._resourceItem.txtquantity.text = arg_6_0:_getQuantity()
 	end
 
-	slot0:_setShow(slot1)
+	arg_6_0:_setShow(var_6_0)
 end
 
-function slot0._getQuantity(slot0)
-	if slot0._ismap then
-		return RoomModel.instance:getInfoByMode(RoomModel.instance:getGameMode()) and slot1.useCount or 0
+function var_0_0._getQuantity(arg_7_0)
+	if arg_7_0._ismap then
+		local var_7_0 = RoomModel.instance:getInfoByMode(RoomModel.instance:getGameMode())
+
+		return var_7_0 and var_7_0.useCount or 0
 	end
 
 	return RoomLayoutModel.instance:getUseCount()
 end
 
-return slot0
+return var_0_0

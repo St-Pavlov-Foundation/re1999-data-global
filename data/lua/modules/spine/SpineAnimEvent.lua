@@ -1,7 +1,8 @@
-module("modules.spine.SpineAnimEvent", package.seeall)
+﻿module("modules.spine.SpineAnimEvent", package.seeall)
 
-slot0 = _M
-slot0.ActionStart = "Start"
-slot0.ActionComplete = "Complete"
+local var_0_0 = _M
 
-return slot0
+var_0_0.ActionStart = "Start"
+var_0_0.ActionComplete = "Complete"
+
+return var_0_0

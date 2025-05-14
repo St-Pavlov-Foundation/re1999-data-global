@@ -1,18 +1,22 @@
-module("projbooter.hotupdate.HotUpdateVoiceMgr", package.seeall)
+﻿module("projbooter.hotupdate.HotUpdateVoiceMgr", package.seeall)
 
-slot0 = class("HotUpdateVoiceMgr")
-slot0.EnableEditorDebug = false
-slot1 = 50001
-slot0.IsGuoFu = false
-slot0.LangEn = "en"
-slot0.LangZh = "zh"
-slot0.LangSortOrderDefault = {
+local var_0_0 = class("HotUpdateVoiceMgr")
+
+var_0_0.EnableEditorDebug = false
+
+local var_0_1 = 50001
+
+var_0_0.IsGuoFu = false
+var_0_0.LangEn = "en"
+var_0_0.LangZh = "zh"
+var_0_0.HD = "res-HD"
+var_0_0.LangSortOrderDefault = {
 	jp = 3,
 	kr = 4,
 	zh = 2,
 	en = 1
 }
-slot0.LangSortOrderDict = {
+var_0_0.LangSortOrderDict = {
 	en = {
 		jp = 2,
 		kr = 4,
@@ -38,235 +42,293 @@ slot0.LangSortOrderDict = {
 		en = 2
 	}
 }
-slot0.ForceSelect = {
-	[slot0.LangEn] = true,
-	[slot0.LangZh] = true
+var_0_0.ForceSelect = {
+	[var_0_0.LangEn] = true,
+	[var_0_0.LangZh] = true
 }
 
-function slot0.init(slot0)
-	slot0._optionalUpdateInst = SLFramework.GameUpdate.OptionalUpdate.Instance
+function var_0_0.init(arg_1_0)
+	arg_1_0._optionalUpdateInst = SLFramework.GameUpdate.OptionalUpdate.Instance
 
-	slot0._optionalUpdateInst:Init()
+	arg_1_0._optionalUpdateInst:Init()
 
-	slot0._httpGetter = VoiceHttpGetter.New()
-	slot0._downloader = VoiceDownloader.New()
-	uv0.IsGuoFu = tonumber(SDKMgr.instance:getGameId()) == uv1
+	arg_1_0._httpGetter = VoiceHttpGetter.New()
+	arg_1_0._downloader = VoiceDownloader.New()
+	var_0_0.IsGuoFu = tonumber(SDKMgr.instance:getGameId()) == var_0_1
 
-	if not uv0.IsGuoFu then
-		uv0.ForceSelect = {}
+	if not var_0_0.IsGuoFu then
+		var_0_0.ForceSelect = {}
+	end
+
+	if BootNativeUtil.isWindows() then
+		var_0_0.ForceSelect[var_0_0.HD] = true
 	end
 end
 
-slot2, slot3 = nil
-slot4 = {}
+local var_0_2
+local var_0_3
+local var_0_4 = {}
 
-function slot0.getSupportVoiceLangs(slot0)
-	slot3 = {}
-	uv0 = GameConfig:GetDefaultVoiceShortcut()
-	uv1 = uv2.LangSortOrderDict[GameConfig:GetDefaultLangShortcut()] or uv2.LangSortOrderDefault
+function var_0_0.getSupportVoiceLangs(arg_2_0)
+	local var_2_0 = GameConfig:GetSupportedVoiceShortcuts()
+	local var_2_1 = var_2_0.Length
+	local var_2_2 = {}
+	local var_2_3 = GameConfig:GetDefaultLangShortcut()
 
-	for slot8 = 0, GameConfig:GetSupportedVoiceShortcuts().Length - 1 do
-		slot9 = slot1[slot8]
+	var_0_2 = GameConfig:GetDefaultVoiceShortcut()
+	var_0_3 = var_0_0.LangSortOrderDict[var_2_3] or var_0_0.LangSortOrderDefault
 
-		table.insert(slot3, slot9)
+	for iter_2_0 = 0, var_2_1 - 1 do
+		local var_2_4 = var_2_0[iter_2_0]
 
-		uv3[slot9] = slot8 + 1
+		table.insert(var_2_2, var_2_4)
+
+		var_0_4[var_2_4] = iter_2_0 + 1
 	end
 
-	table.sort(slot3, uv2._sortLang)
+	table.sort(var_2_2, var_0_0._sortLang)
 
-	slot1 = nil
+	local var_2_5
 
-	return slot3
+	return var_2_2
 end
 
-function slot0._sortLang(slot0, slot1)
-	if slot0 == uv0 then
+function var_0_0._sortLang(arg_3_0, arg_3_1)
+	if arg_3_0 == var_0_2 then
 		return true
-	elseif slot1 == uv0 then
+	elseif arg_3_1 == var_0_2 then
 		return false
 	else
-		if (uv1[slot0] or 999) ~= (uv1[slot1] or 999) then
-			return slot2 < slot3
+		local var_3_0 = var_0_3[arg_3_0] or 999
+		local var_3_1 = var_0_3[arg_3_1] or 999
+
+		if var_3_0 ~= var_3_1 then
+			return var_3_0 < var_3_1
 		end
 
-		return uv2[slot0] < uv2[slot1]
+		return var_0_4[arg_3_0] < var_0_4[arg_3_1]
 	end
 end
 
-function slot0.showDownload(slot0, slot1, slot2)
+function var_0_0.showDownload(arg_4_0, arg_4_1, arg_4_2)
 	if VersionValidator.instance:isInReviewing() then
-		slot1(slot2)
-	elseif GameResMgr.IsFromEditorDir and not uv0.EnableEditorDebug then
-		slot1(slot2)
+		arg_4_1(arg_4_2)
+	elseif GameResMgr.IsFromEditorDir and not var_0_0.EnableEditorDebug then
+		arg_4_1(arg_4_2)
 	else
-		slot0._httpGetter:start(slot1, slot2)
+		arg_4_0._httpGetter:start(arg_4_1, arg_4_2)
 	end
 end
 
-function slot0.startDownload(slot0, slot1, slot2)
+function var_0_0.startDownload(arg_5_0, arg_5_1, arg_5_2)
 	if VersionValidator.instance:isInReviewing() then
-		slot1(slot2)
-	elseif GameResMgr.IsFromEditorDir and not uv0.EnableEditorDebug then
-		slot1(slot2)
+		arg_5_1(arg_5_2)
+	elseif GameResMgr.IsFromEditorDir and not var_0_0.EnableEditorDebug then
+		arg_5_1(arg_5_2)
 	elseif BootNativeUtil.isIOS() and HotUpdateMgr.instance:hasHotUpdate() then
 		logNormal("热更新紧接着语音更新，延迟开始")
-		Timer.New(function ()
+		Timer.New(function()
 			logNormal("语音更新开始")
-			uv0._downloader:start(uv1, uv2)
+			arg_5_0._downloader:start(arg_5_1, arg_5_2)
 		end, 1.5):Start()
 	else
-		slot0._downloader:start(slot1, slot2)
+		arg_5_0._downloader:start(arg_5_1, arg_5_2)
 	end
 end
 
-function slot0.getHttpResult(slot0)
-	return slot0._httpGetter:getHttpResult()
+function var_0_0.getHttpResult(arg_7_0)
+	return arg_7_0._httpGetter:getHttpResult()
 end
 
-function slot0.getLangSize(slot0, slot1)
-	if not slot0:getHttpResult() then
+function var_0_0.getLangSize(arg_8_0, arg_8_1)
+	local var_8_0 = arg_8_0:getHttpResult()
+
+	if not var_8_0 then
 		return 0
 	end
 
-	if not slot2[slot1] or not slot3.res then
+	local var_8_1 = var_8_0[arg_8_1]
+
+	if not var_8_1 or not var_8_1.res then
 		return 0
 	end
 
-	for slot8, slot9 in ipairs(slot3.res) do
-		slot4 = 0 + slot9.length
+	local var_8_2 = 0
+
+	for iter_8_0, iter_8_1 in ipairs(var_8_1.res) do
+		var_8_2 = var_8_2 + iter_8_1.length
 	end
 
-	return slot4
+	return var_8_2
 end
 
-function slot0.getTotalSize(slot0)
-	if not slot0:getHttpResult() then
+function var_0_0.getTotalSize(arg_9_0)
+	local var_9_0 = arg_9_0:getHttpResult()
+
+	if not var_9_0 then
 		return 0
 	end
 
-	slot3 = 0
+	local var_9_1 = BootVoiceView.instance:isFirstDownloadDone()
+	local var_9_2 = 0
+	local var_9_3 = BootVoiceView.instance:getDownloadChoices()
 
-	for slot8, slot9 in pairs(slot1) do
-		slot10 = false
+	for iter_9_0, iter_9_1 in pairs(var_9_0) do
+		local var_9_4 = false
 
-		if slot9.res and ((not BootVoiceView.instance:isFirstDownloadDone() or not string.nilorempty(slot0._optionalUpdateInst:GetLocalVersion(slot8))) and tabletool.indexOf(BootVoiceView.instance:getDownloadChoices(), slot8)) then
-			for slot14, slot15 in ipairs(slot9.res) do
-				slot3 = slot3 + slot15.length
+		if var_9_1 then
+			local var_9_5 = arg_9_0._optionalUpdateInst:GetLocalVersion(iter_9_0)
+
+			var_9_4 = not string.nilorempty(var_9_5)
+		else
+			var_9_4 = tabletool.indexOf(var_9_3, iter_9_0)
+		end
+
+		if iter_9_1.res and var_9_4 then
+			for iter_9_2, iter_9_3 in ipairs(iter_9_1.res) do
+				var_9_2 = var_9_2 + iter_9_3.length
 			end
 		end
 	end
 
-	return slot3
+	return var_9_2
 end
 
-function slot0.getNeedDownloadSize(slot0)
-	if not slot0:getHttpResult() then
+function var_0_0.getNeedDownloadSize(arg_10_0)
+	local var_10_0 = arg_10_0:getHttpResult()
+
+	if not var_10_0 then
 		return 0
 	end
 
-	slot2 = slot0:getTotalSize()
+	local var_10_1 = arg_10_0:getTotalSize()
 
-	for slot6, slot7 in pairs(slot1) do
-		if slot0:getDownloadList(slot6) then
-			slot9 = {}
-			slot10 = {}
-			slot11 = {}
-			slot12 = {}
+	for iter_10_0, iter_10_1 in pairs(var_10_0) do
+		local var_10_2 = arg_10_0:getDownloadList(iter_10_0)
 
-			for slot16, slot17 in ipairs(slot8) do
-				table.insert(slot9, slot17.name)
-				table.insert(slot10, slot17.hash)
-				table.insert(slot11, slot17.order)
-				table.insert(slot12, slot17.length)
+		if var_10_2 then
+			local var_10_3 = {}
+			local var_10_4 = {}
+			local var_10_5 = {}
+			local var_10_6 = {}
+
+			for iter_10_2, iter_10_3 in ipairs(var_10_2) do
+				table.insert(var_10_3, iter_10_3.name)
+				table.insert(var_10_4, iter_10_3.hash)
+				table.insert(var_10_5, iter_10_3.order)
+				table.insert(var_10_6, iter_10_3.length)
 			end
 
-			slot0._optionalUpdateInst:InitBreakPointInfo(slot9, slot10, slot11, slot12)
+			arg_10_0._optionalUpdateInst:InitBreakPointInfo(var_10_3, var_10_4, var_10_5, var_10_6)
 
-			slot2 = slot2 - tonumber(slot0._optionalUpdateInst:GetRecvSize())
+			local var_10_7 = arg_10_0._optionalUpdateInst:GetRecvSize()
+
+			var_10_1 = var_10_1 - tonumber(var_10_7)
 		end
 	end
 
-	return slot2
+	return var_10_1
 end
 
-function slot0.getDownloadUrl(slot0, slot1)
-	if not slot0:getHttpResult() then
+function var_0_0.getDownloadUrl(arg_11_0, arg_11_1)
+	local var_11_0 = arg_11_0:getHttpResult()
+
+	if not var_11_0 then
 		return
 	end
 
-	if slot2[slot1] then
-		return slot3.download_url, slot3.download_url_bak
+	local var_11_1 = var_11_0[arg_11_1]
+
+	if var_11_1 then
+		return var_11_1.download_url, var_11_1.download_url_bak
 	end
 end
 
-function slot0.getDownloadList(slot0, slot1)
-	if not slot0:getHttpResult() then
+function var_0_0.getDownloadList(arg_12_0, arg_12_1)
+	local var_12_0 = arg_12_0:getHttpResult()
+
+	if not var_12_0 then
 		return
 	end
 
-	if #slot2[slot1].res > 0 then
-		slot4 = {}
+	local var_12_1 = var_12_0[arg_12_1]
 
-		for slot8, slot9 in ipairs(slot3.res) do
-			table.insert(slot4, {
-				latest_ver = slot3.latest_ver,
-				name = slot9.name,
-				hash = slot9.hash,
-				order = slot9.order,
-				length = slot9.length
-			})
+	if #var_12_1.res > 0 then
+		local var_12_2 = {}
+
+		for iter_12_0, iter_12_1 in ipairs(var_12_1.res) do
+			local var_12_3 = {
+				latest_ver = var_12_1.latest_ver,
+				name = iter_12_1.name,
+				hash = iter_12_1.hash,
+				order = iter_12_1.order,
+				length = iter_12_1.length
+			}
+
+			table.insert(var_12_2, var_12_3)
 		end
 
-		table.sort(slot4, uv0._sortByOrder)
+		table.sort(var_12_2, var_0_0._sortByOrder)
 
-		return slot4
+		return var_12_2
 	end
 end
 
-function slot0.stop(slot0)
-	slot0._downloader:cancelDownload()
+function var_0_0.stop(arg_13_0)
+	arg_13_0._downloader:cancelDownload()
 end
 
-function slot0.getAllLangDownloadList(slot0)
-	slot1 = BootVoiceView.instance:isFirstDownloadDone()
-	slot2 = BootVoiceView.instance:getDownloadChoices()
+function var_0_0.getAllLangDownloadList(arg_14_0)
+	local var_14_0 = BootVoiceView.instance:isFirstDownloadDone()
+	local var_14_1 = BootVoiceView.instance:getDownloadChoices()
+	local var_14_2 = arg_14_0:getHttpResult()
 
-	if not slot0:getHttpResult() then
+	if not var_14_2 then
 		return {}
 	end
 
-	slot4 = {}
+	local var_14_3 = {}
+	local var_14_4 = GameConfig:GetCurVoiceShortcut()
 
-	for slot9, slot10 in pairs(slot3) do
-		slot11 = false
+	for iter_14_0, iter_14_1 in pairs(var_14_2) do
+		local var_14_5 = false
 
-		if #slot10.res > 0 and (slot1 and (not string.nilorempty(slot0._optionalUpdateInst:GetLocalVersion(slot9)) or GameConfig:GetCurVoiceShortcut() == slot9) or tabletool.indexOf(slot2, slot9)) then
-			slot12 = {}
+		if var_14_0 then
+			local var_14_6 = arg_14_0._optionalUpdateInst:GetLocalVersion(iter_14_0)
 
-			for slot16, slot17 in ipairs(slot10.res) do
-				table.insert(slot12, {
-					latest_ver = slot10.latest_ver,
-					name = slot17.name,
-					hash = slot17.hash,
-					order = slot17.order,
-					length = slot17.length
-				})
+			var_14_5 = not string.nilorempty(var_14_6) or var_14_4 == iter_14_0
+		else
+			var_14_5 = tabletool.indexOf(var_14_1, iter_14_0)
+		end
+
+		if #iter_14_1.res > 0 and var_14_5 then
+			local var_14_7 = {}
+
+			for iter_14_2, iter_14_3 in ipairs(iter_14_1.res) do
+				local var_14_8 = {
+					latest_ver = iter_14_1.latest_ver,
+					name = iter_14_3.name,
+					hash = iter_14_3.hash,
+					order = iter_14_3.order,
+					length = iter_14_3.length
+				}
+
+				table.insert(var_14_7, var_14_8)
 			end
 
-			table.sort(slot12, uv0._sortByOrder)
+			table.sort(var_14_7, var_0_0._sortByOrder)
 
-			slot4[slot9] = slot12
+			var_14_3[iter_14_0] = var_14_7
 		end
 	end
 
-	return slot4
+	return var_14_3
 end
 
-function slot0._sortByOrder(slot0, slot1)
-	return slot0.order < slot1.order
+function var_0_0._sortByOrder(arg_15_0, arg_15_1)
+	return arg_15_0.order < arg_15_1.order
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

@@ -1,70 +1,80 @@
-module("modules.logic.login.work.HttpStartGameWork", package.seeall)
+﻿module("modules.logic.login.work.HttpStartGameWork", package.seeall)
 
-slot0 = class("HttpStartGameWork", BaseWork)
-slot1 = 5
-slot2, slot3, slot4 = nil
+local var_0_0 = class("HttpStartGameWork", BaseWork)
+local var_0_1 = 5
+local var_0_2
+local var_0_3
+local var_0_4
 
-function slot0.onStart(slot0, slot1)
-	if uv0 and Time.time - uv0 < uv1 then
-		TaskDispatcher.runDelay(slot0._delayRespondInCd, slot0, 0.1)
+function var_0_0.onStart(arg_1_0, arg_1_1)
+	if var_0_2 and Time.time - var_0_2 < var_0_1 then
+		TaskDispatcher.runDelay(arg_1_0._delayRespondInCd, arg_1_0, 0.1)
 	else
-		uv0 = Time.time
-		slot3 = {}
+		var_0_2 = Time.time
 
-		table.insert(slot3, string.format("sessionId=%s", LoginModel.instance.sessionId))
-		table.insert(slot3, string.format("zoneId=%s", slot0.context.lastServerMO.id))
+		local var_1_0 = LoginController.instance:get_startGameUrl(arg_1_0.context.useBackupUrl)
+		local var_1_1 = {}
 
-		slot2 = LoginController.instance:get_startGameUrl(slot0.context.useBackupUrl) .. "?" .. table.concat(slot3, "&")
-		slot0._url = slot2
-		slot0._httpStartGameRequestId = SLFramework.SLWebRequest.Instance:Get(slot2, slot0._onHttpStartGameResponse, slot0)
+		table.insert(var_1_1, string.format("sessionId=%s", LoginModel.instance.sessionId))
+		table.insert(var_1_1, string.format("zoneId=%s", arg_1_0.context.lastServerMO.id))
 
-		logNormal(slot2)
+		local var_1_2 = var_1_0 .. "?" .. table.concat(var_1_1, "&")
+
+		arg_1_0._url = var_1_2
+		arg_1_0._httpStartGameRequestId = SLFramework.SLWebRequest.Instance:Get(var_1_2, arg_1_0._onHttpStartGameResponse, arg_1_0)
+
+		logNormal(var_1_2)
 	end
 end
 
-function slot0._delayRespondInCd(slot0)
-	slot0:_onHttpStartGameResponse(uv0, uv1)
+function var_0_0._delayRespondInCd(arg_2_0)
+	arg_2_0:_onHttpStartGameResponse(var_0_3, var_0_4)
 end
 
-function slot0._onHttpStartGameResponse(slot0, slot1, slot2)
-	uv0 = slot1
-	uv1 = slot2
-	slot0._httpStartGameRequestId = nil
-	slot3 = slot0._url
+function var_0_0._onHttpStartGameResponse(arg_3_0, arg_3_1, arg_3_2)
+	var_0_3 = arg_3_1
+	var_0_4 = arg_3_2
+	arg_3_0._httpStartGameRequestId = nil
 
-	logNormal("http start game response: " .. (slot2 or "nil"))
+	local var_3_0 = arg_3_0._url
 
-	if slot1 and slot2 and slot2 ~= "" then
-		if cjson.decode(slot2) and slot4.resultCode and slot4.resultCode == 0 then
-			if slot4.state == 1 then
-				LoginModel.instance.serverIp = slot4.ip
-				LoginModel.instance.serverPort = slot4.port
+	logNormal("http start game response: " .. (arg_3_2 or "nil"))
 
-				if not string.nilorempty(slot4.bakIp) then
-					LoginModel.instance.serverBakIp = slot4.bakIp
-					LoginModel.instance.serverBakPort = slot4.bakPort
+	if arg_3_1 and arg_3_2 and arg_3_2 ~= "" then
+		local var_3_1 = cjson.decode(arg_3_2)
+
+		if var_3_1 and var_3_1.resultCode and var_3_1.resultCode == 0 then
+			if var_3_1.state == 1 then
+				LoginModel.instance.serverIp = var_3_1.ip
+				LoginModel.instance.serverPort = var_3_1.port
+
+				if not string.nilorempty(var_3_1.bakIp) then
+					LoginModel.instance.serverBakIp = var_3_1.bakIp
+					LoginModel.instance.serverBakPort = var_3_1.bakPort
 				end
 
-				LoginModel.instance.serverName = slot0.context.lastServerMO.name
-				LoginModel.instance.serverId = slot0.context.lastServerMO.id
+				LoginModel.instance.serverName = arg_3_0.context.lastServerMO.name
+				LoginModel.instance.serverId = arg_3_0.context.lastServerMO.id
 
 				logNormal("<color=#00FF00>http 登录成功</color>")
-				slot0:onDone(true)
+				arg_3_0:onDone(true)
 
 				if not LoginModel.instance.serverIp or not LoginModel.instance.serverPort then
-					logError(string.format("HttpStartGameWork response error serverIp:%s, serverPort:%s msg:%s url:%s", slot4.ip, slot4.port, slot2, slot3))
+					logError(string.format("HttpStartGameWork response error serverIp:%s, serverPort:%s msg:%s url:%s", var_3_1.ip, var_3_1.port, arg_3_2, var_3_0))
 				end
 			else
-				if slot4.state == 0 then
-					slot0.context.dontReconnect = true
-					slot6 = false
+				if var_3_1.state == 0 then
+					arg_3_0.context.dontReconnect = true
 
-					if (not (GameChannelConfig.isLongCheng() or GameChannelConfig.isEfun()) or false) and SDKMgr.instance:isShowStopServiceBaffle() then
+					local var_3_2 = GameChannelConfig.isLongCheng() or GameChannelConfig.isEfun()
+					local var_3_3 = false
+
+					if (not var_3_2 or false) and SDKMgr.instance:isShowStopServiceBaffle() then
 						SDKMgr.instance:stopService()
-					elseif string.nilorempty(slot4.tips) then
+					elseif string.nilorempty(var_3_1.tips) then
 						GameFacade.showMessageBox(MessageBoxIdDefine.ServerNotConnect, MsgBoxEnum.BoxType.Yes)
 					else
-						MessageBoxController.instance:showMsgBoxByStr(slot4.tips, MsgBoxEnum.BoxType.Yes)
+						MessageBoxController.instance:showMsgBoxByStr(var_3_1.tips, MsgBoxEnum.BoxType.Yes)
 					end
 
 					logWarn("服务器未开启")
@@ -72,30 +82,30 @@ function slot0._onHttpStartGameResponse(slot0, slot1, slot2)
 					logWarn("服务器爆满")
 				end
 
-				slot0:onDone(false)
+				arg_3_0:onDone(false)
 			end
 		else
-			slot0.context.resultCode = slot4 and slot4.resultCode
+			arg_3_0.context.resultCode = var_3_1 and var_3_1.resultCode
 
-			logNormal(string.format("http start game 出错了 resultCode = %d", slot4.resultCode or "nil"))
-			slot0:onDone(false)
+			logNormal(string.format("http start game 出错了 resultCode = %d", var_3_1.resultCode or "nil"))
+			arg_3_0:onDone(false)
 		end
 	else
 		logNormal("http start game 失败")
-		slot0:onDone(false)
+		arg_3_0:onDone(false)
 	end
 end
 
-function slot0.clearWork(slot0)
-	slot0._url = nil
+function var_0_0.clearWork(arg_4_0)
+	arg_4_0._url = nil
 
-	TaskDispatcher.cancelTask(slot0._delayRespondInCd, slot0)
+	TaskDispatcher.cancelTask(arg_4_0._delayRespondInCd, arg_4_0)
 
-	if slot0._httpStartGameRequestId then
-		SLFramework.SLWebRequest.Instance:Stop(slot0._httpStartGameRequestId)
+	if arg_4_0._httpStartGameRequestId then
+		SLFramework.SLWebRequest.Instance:Stop(arg_4_0._httpStartGameRequestId)
 
-		slot0._httpStartGameRequestId = nil
+		arg_4_0._httpStartGameRequestId = nil
 	end
 end
 
-return slot0
+return var_0_0

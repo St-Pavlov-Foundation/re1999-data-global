@@ -1,97 +1,103 @@
-module("modules.logic.fight.model.FightViewTechniqueModel", package.seeall)
+﻿module("modules.logic.fight.model.FightViewTechniqueModel", package.seeall)
 
-slot0 = class("FightViewTechniqueModel", ListScrollModel)
+local var_0_0 = class("FightViewTechniqueModel", ListScrollModel)
 
-function slot0.onInit(slot0)
-	slot0._all = nil
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._all = nil
 end
 
-function slot0.reInit(slot0)
-	slot0._all = nil
+function var_0_0.reInit(arg_2_0)
+	arg_2_0._all = nil
 end
 
-function slot0.initFromSimpleProperty(slot0)
-	if slot0._all then
+function var_0_0.initFromSimpleProperty(arg_3_0)
+	if arg_3_0._all then
 		return
 	end
 
-	slot0._all = BaseModel.New()
+	arg_3_0._all = BaseModel.New()
 
-	if not FightStrUtil.instance:getSplitString2Cache(PlayerModel.instance:getSimpleProperty(PlayerEnum.SimpleProperty.FightTechnique) or "", true, "|", "#") then
+	local var_3_0 = PlayerModel.instance:getSimpleProperty(PlayerEnum.SimpleProperty.FightTechnique)
+	local var_3_1 = FightStrUtil.instance:getSplitString2Cache(var_3_0 or "", true, "|", "#")
+
+	if not var_3_1 then
 		return
 	end
 
-	slot3 = {}
+	local var_3_2 = {}
 
-	for slot7, slot8 in ipairs(slot2) do
-		for slot12, slot13 in ipairs(slot8) do
-			if lua_fight_technique.configDict[slot13] then
-				slot0._all:addAtLast({
-					id = slot13
-				})
+	for iter_3_0, iter_3_1 in ipairs(var_3_1) do
+		for iter_3_2, iter_3_3 in ipairs(iter_3_1) do
+			if lua_fight_technique.configDict[iter_3_3] then
+				local var_3_3 = {
+					id = iter_3_3
+				}
 
-				if slot7 == 2 then
-					table.insert(slot3, slot15)
+				arg_3_0._all:addAtLast(var_3_3)
+
+				if iter_3_0 == 2 then
+					table.insert(var_3_2, var_3_3)
 				end
 			end
 		end
 	end
 
-	slot0:addList(slot3)
+	arg_3_0:addList(var_3_2)
 end
 
-function slot0.addUnread(slot0, slot1)
-	if slot0._all:getById(slot1) then
+function var_0_0.addUnread(arg_4_0, arg_4_1)
+	if arg_4_0._all:getById(arg_4_1) then
 		return
 	end
 
-	slot2 = {
-		id = slot1
+	local var_4_0 = {
+		id = arg_4_1
 	}
 
-	slot0._all:addAtLast(slot2)
-	slot0:addAtLast(slot2)
+	arg_4_0._all:addAtLast(var_4_0)
+	arg_4_0:addAtLast(var_4_0)
 
-	return slot2
+	return var_4_0
 end
 
-function slot0.markRead(slot0, slot1)
-	if not slot0._all:getById(slot1) or not slot0:getById(slot1) then
+function var_0_0.markRead(arg_5_0, arg_5_1)
+	if not arg_5_0._all:getById(arg_5_1) or not arg_5_0:getById(arg_5_1) then
 		return
 	end
 
-	slot2 = slot0:getById(slot1)
+	local var_5_0 = arg_5_0:getById(arg_5_1)
 
-	slot0:remove(slot2)
+	arg_5_0:remove(var_5_0)
 
-	return slot2
+	return var_5_0
 end
 
-function slot0.getPropertyStr(slot0)
-	slot1 = {}
-	slot2 = {}
+function var_0_0.getPropertyStr(arg_6_0)
+	local var_6_0 = {}
+	local var_6_1 = {}
+	local var_6_2 = arg_6_0._all:getList()
 
-	for slot7, slot8 in ipairs(slot0._all:getList()) do
-		if slot0:getById(slot8.id) then
-			table.insert(slot2, slot8.id)
+	for iter_6_0, iter_6_1 in ipairs(var_6_2) do
+		if arg_6_0:getById(iter_6_1.id) then
+			table.insert(var_6_1, iter_6_1.id)
 		else
-			table.insert(slot1, slot8.id)
+			table.insert(var_6_0, iter_6_1.id)
 		end
 	end
 
-	return string.format("%s|%s", table.concat(slot1, "#"), table.concat(slot2, "#"))
+	return string.format("%s|%s", table.concat(var_6_0, "#"), table.concat(var_6_1, "#"))
 end
 
-function slot0.getAll(slot0)
-	if slot0._all then
-		return slot0._all:getList()
+function var_0_0.getAll(arg_7_0)
+	if arg_7_0._all then
+		return arg_7_0._all:getList()
 	end
 end
 
-function slot0.isUnlock(slot0, slot1)
-	if slot0._all then
-		for slot5, slot6 in ipairs(slot0._all:getList()) do
-			if slot6.id == slot1 then
+function var_0_0.isUnlock(arg_8_0, arg_8_1)
+	if arg_8_0._all then
+		for iter_8_0, iter_8_1 in ipairs(arg_8_0._all:getList()) do
+			if iter_8_1.id == arg_8_1 then
 				return true
 			end
 		end
@@ -100,12 +106,14 @@ function slot0.isUnlock(slot0, slot1)
 	return nil
 end
 
-function slot0.readTechnique(slot0, slot1)
-	if slot1 and slot0:markRead(slot1) then
-		PlayerRpc.instance:sendSetSimplePropertyRequest(PlayerEnum.SimpleProperty.FightTechnique, slot0:getPropertyStr())
+function var_0_0.readTechnique(arg_9_0, arg_9_1)
+	if arg_9_1 and arg_9_0:markRead(arg_9_1) then
+		local var_9_0 = arg_9_0:getPropertyStr()
+
+		PlayerRpc.instance:sendSetSimplePropertyRequest(PlayerEnum.SimpleProperty.FightTechnique, var_9_0)
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

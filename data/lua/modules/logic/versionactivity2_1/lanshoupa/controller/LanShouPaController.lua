@@ -1,77 +1,83 @@
-module("modules.logic.versionactivity2_1.lanshoupa.controller.LanShouPaController", package.seeall)
+﻿module("modules.logic.versionactivity2_1.lanshoupa.controller.LanShouPaController", package.seeall)
 
-slot0 = class("LanShouPaController", BaseController)
+local var_0_0 = class("LanShouPaController", BaseController)
 
-function slot0.onInit(slot0)
-	slot0:reInit()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:reInit()
 end
 
-function slot0.onInitFinish(slot0)
+function var_0_0.onInitFinish(arg_2_0)
+	return
 end
 
-function slot0.addConstEvents(slot0)
-	ChessGameController.instance:registerCallback(ChessGameEvent.OnVictory, slot0._onVictory, slot0)
-	ChessGameController.instance:registerCallback(ChessGameEvent.OnFail, slot0._onFail, slot0)
+function var_0_0.addConstEvents(arg_3_0)
+	ChessGameController.instance:registerCallback(ChessGameEvent.OnVictory, arg_3_0._onVictory, arg_3_0)
+	ChessGameController.instance:registerCallback(ChessGameEvent.OnFail, arg_3_0._onFail, arg_3_0)
 end
 
-function slot0.reInit(slot0)
-	slot0._waitActId = nil
-	slot0._waitEpisodeId = nil
+function var_0_0.reInit(arg_4_0)
+	arg_4_0._waitActId = nil
+	arg_4_0._waitEpisodeId = nil
 end
 
-function slot0.openStoryView(slot0, slot1)
-	if Activity164Model.instance:isEpisodeClear(slot1) then
+function var_0_0.openStoryView(arg_5_0, arg_5_1)
+	if Activity164Model.instance:isEpisodeClear(arg_5_1) then
 		ViewMgr.instance:openView(ViewName.LanShouPaStoryView, {
 			actId = VersionActivity2_1Enum.ActivityId.LanShouPa,
-			episodeId = slot1
+			episodeId = arg_5_1
 		})
 	end
 end
 
-slot0.ENTER_CHESS_GAME_BLOCK_KEY = "LanShouPaController.ENTER_CHESS_GAME_BLOCK_KEY"
+var_0_0.ENTER_CHESS_GAME_BLOCK_KEY = "LanShouPaController.ENTER_CHESS_GAME_BLOCK_KEY"
 
-function slot0.enterChessGame(slot0, slot1, slot2, slot3)
-	UIBlockMgr.instance:startBlock(uv0.ENTER_CHESS_GAME_BLOCK_KEY)
+function var_0_0.enterChessGame(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
+	UIBlockMgr.instance:startBlock(var_0_0.ENTER_CHESS_GAME_BLOCK_KEY)
 
-	slot0._waitActId = slot1
-	slot0._waitEpisodeId = slot2
+	arg_6_0._waitActId = arg_6_1
+	arg_6_0._waitEpisodeId = arg_6_2
 
-	Activity164Model.instance:setCurEpisodeId(slot2)
-	TaskDispatcher.cancelTask(slot0._onEnterChessGame, slot0, slot3)
-	TaskDispatcher.runDelay(slot0._onEnterChessGame, slot0, slot3 or 0.1)
+	Activity164Model.instance:setCurEpisodeId(arg_6_2)
+	TaskDispatcher.cancelTask(arg_6_0._onEnterChessGame, arg_6_0, arg_6_3)
+	TaskDispatcher.runDelay(arg_6_0._onEnterChessGame, arg_6_0, arg_6_3 or 0.1)
 end
 
-function slot0._onEnterChessGame(slot0)
-	UIBlockMgr.instance:endBlock(uv0.ENTER_CHESS_GAME_BLOCK_KEY)
+function var_0_0._onEnterChessGame(arg_7_0)
+	UIBlockMgr.instance:endBlock(var_0_0.ENTER_CHESS_GAME_BLOCK_KEY)
 
-	if slot0._waitActId and slot0._waitEpisodeId then
-		Activity164Rpc.instance:sendActStartEpisodeRequest(slot0._waitActId, slot0._waitEpisodeId, slot0._onOpenGame, slot0)
+	if arg_7_0._waitActId and arg_7_0._waitEpisodeId then
+		Activity164Rpc.instance:sendActStartEpisodeRequest(arg_7_0._waitActId, arg_7_0._waitEpisodeId, arg_7_0._onOpenGame, arg_7_0)
 	end
 end
 
-function slot0.resetStartGame(slot0)
-	slot1 = ChessModel.instance:getEpisodeId()
+function var_0_0.resetStartGame(arg_8_0)
+	local var_8_0 = ChessModel.instance:getEpisodeId()
+	local var_8_1 = ChessModel.instance:getActId()
 
-	if ChessModel.instance:getActId() and slot1 then
+	if var_8_1 and var_8_0 then
 		ChessGameController.instance:dispatchEvent(ChessGameEvent.GameLoadingMapStateUpdate, ChessGameEvent.LoadingMapState.Start, true)
-		Activity164Rpc.instance:sendActReStartEpisodeRequest(slot2, slot1, slot0._onRestartCallback, slot0)
+		Activity164Rpc.instance:sendActReStartEpisodeRequest(var_8_1, var_8_0, arg_8_0._onRestartCallback, arg_8_0)
 	end
 end
 
-slot0.RETURN_POINT_GAME_BLOCK_KEY = "LanShouPaController.RETURN_POINT_GAME_BLOCK_KEY"
+var_0_0.RETURN_POINT_GAME_BLOCK_KEY = "LanShouPaController.RETURN_POINT_GAME_BLOCK_KEY"
 
-function slot0.returnPointGame(slot0, slot1)
-	UIBlockMgr.instance:startBlock(uv0.RETURN_POINT_GAME_BLOCK_KEY)
+function var_0_0.returnPointGame(arg_9_0, arg_9_1)
+	UIBlockMgr.instance:startBlock(var_0_0.RETURN_POINT_GAME_BLOCK_KEY)
 
-	slot0._isLastCheckPoint = slot1 == ChessGameEnum.RollBack.CheckPoint
+	local var_9_0 = ChessModel.instance:getActId()
 
-	if ChessModel.instance:getActId() then
-		Activity164Rpc.instance:sendActRollBackRequest(slot2, ChessModel.instance:getEpisodeId(), slot1, slot0._onReurnPiontGame, slot0)
+	arg_9_0._isLastCheckPoint = arg_9_1 == ChessGameEnum.RollBack.CheckPoint
+
+	local var_9_1 = ChessModel.instance:getEpisodeId()
+
+	if var_9_0 then
+		Activity164Rpc.instance:sendActRollBackRequest(var_9_0, var_9_1, arg_9_1, arg_9_0._onReurnPiontGame, arg_9_0)
 	end
 end
 
-function slot0._onRestartCallback(slot0, slot1, slot2, slot3)
-	if slot2 == 0 then
+function var_0_0._onRestartCallback(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
+	if arg_10_2 == 0 then
 		ChessController.onOpenGameStoryPlayOver()
 		ChessGameController.instance:dispatchEvent(ChessGameEvent.GameReset)
 	else
@@ -79,65 +85,70 @@ function slot0._onRestartCallback(slot0, slot1, slot2, slot3)
 	end
 end
 
-function slot0._onReurnPiontGame(slot0, slot1, slot2, slot3)
-	UIBlockMgr.instance:endBlock(uv0.RETURN_POINT_GAME_BLOCK_KEY)
+function var_0_0._onReurnPiontGame(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
+	UIBlockMgr.instance:endBlock(var_0_0.RETURN_POINT_GAME_BLOCK_KEY)
 
-	if slot2 ~= 0 then
+	if arg_11_2 ~= 0 then
 		ChessGameController.instance:dispatchEvent(ChessGameEvent.GameLoadingMapStateUpdate, ChessGameEvent.LoadingMapState.Finish)
 	else
-		if slot3.dead then
+		if arg_11_3.dead then
 			return
 		end
 
-		if slot0._isLastCheckPoint then
+		if arg_11_0._isLastCheckPoint then
 			ChessGameController.instance:dispatchEvent(ChessGameEvent.GameLoadingMapStateUpdate, ChessGameEvent.LoadingMapState.Start, true)
-			TaskDispatcher.runDelay(slot0._eventReurnPiontGame, slot0, LanShouPaEnum.AnimatorTime.SwithSceneOpen)
+			TaskDispatcher.runDelay(arg_11_0._eventReurnPiontGame, arg_11_0, LanShouPaEnum.AnimatorTime.SwithSceneOpen)
 			ViewMgr.instance:closeView(ViewName.LanShouPaGameResultView)
 			ChessStatController.instance:startStat()
 		else
-			slot0:_eventReurnPiontGame()
+			arg_11_0:_eventReurnPiontGame()
 		end
 	end
 end
 
-function slot0._eventReurnPiontGame(slot0)
+function var_0_0._eventReurnPiontGame(arg_12_0)
 	ChessGameController.instance:dispatchEvent(ChessGameEvent.GamePointReturn)
 end
 
-function slot0._onOpenGame(slot0, slot1, slot2, slot3)
-	if slot2 == 0 then
-		if slot3.scene and slot3.scene.dead then
-			Activity164Rpc.instance:sendActAbortRequest(slot3.activityId, slot3.episodeId, function ()
-				Activity164Rpc.instance:sendActStartEpisodeRequest(uv0.activityId, uv0.episodeId, uv1._onOpenGame, uv1)
-			end, slot0)
+function var_0_0._onOpenGame(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
+	if arg_13_2 == 0 then
+		if arg_13_3.scene and arg_13_3.scene.dead then
+			local function var_13_0()
+				Activity164Rpc.instance:sendActStartEpisodeRequest(arg_13_3.activityId, arg_13_3.episodeId, arg_13_0._onOpenGame, arg_13_0)
+			end
+
+			Activity164Rpc.instance:sendActAbortRequest(arg_13_3.activityId, arg_13_3.episodeId, var_13_0, arg_13_0)
 
 			return
 		end
 
-		ChessController.instance:initMapData(slot3.activityId, slot3.episodeId, slot3.scene)
+		ChessController.instance:initMapData(arg_13_3.activityId, arg_13_3.episodeId, arg_13_3.scene)
 		ChessGameController.instance:setViewName(ViewName.LanShouPaGameView)
-		ChessController.instance:openGameView(slot1, slot2)
+		ChessController.instance:openGameView(arg_13_1, arg_13_2)
 	end
 end
 
-function slot0.openActivity164GameView(slot0, slot1)
-	ChessGameController.instance:enterGame(Activity164Config.instance:getEpisodeCo(VersionActivity2_1Enum.ActivityId.LanShouPa, slot1.episodeId).mapIds, ViewName.LanShouPaGameView)
+function var_0_0.openActivity164GameView(arg_15_0, arg_15_1)
+	local var_15_0 = arg_15_1.episodeId
+	local var_15_1 = Activity164Config.instance:getEpisodeCo(VersionActivity2_1Enum.ActivityId.LanShouPa, var_15_0).mapIds
+
+	ChessGameController.instance:enterGame(var_15_1, ViewName.LanShouPaGameView)
 end
 
-function slot0.openTaskView(slot0)
+function var_0_0.openTaskView(arg_16_0)
 	ViewMgr.instance:openView(ViewName.LanShouPaTaskView)
 end
 
-function slot0._onVictory(slot0)
+function var_0_0._onVictory(arg_17_0)
 	ViewMgr.instance:openView(ViewName.LanShouPaGameResultView, true)
 end
 
-function slot0._onFail(slot0)
+function var_0_0._onFail(arg_18_0)
 	ViewMgr.instance:openView(ViewName.LanShouPaGameResultView, false)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-LuaEventSystem.addEventMechanism(slot0.instance)
+LuaEventSystem.addEventMechanism(var_0_0.instance)
 
-return slot0
+return var_0_0

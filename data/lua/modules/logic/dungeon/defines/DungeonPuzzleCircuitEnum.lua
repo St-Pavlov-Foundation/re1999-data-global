@@ -1,16 +1,17 @@
-module("modules.logic.dungeon.defines.DungeonPuzzleCircuitEnum", package.seeall)
+﻿module("modules.logic.dungeon.defines.DungeonPuzzleCircuitEnum", package.seeall)
 
-slot0 = _M
-slot0.hintCount = 3
-slot0.pipeEntryClearCount = 2
-slot0.pipeEntryClearDecimal = 10
-slot0.dir = {
+local var_0_0 = _M
+
+var_0_0.hintCount = 3
+var_0_0.pipeEntryClearCount = 2
+var_0_0.pipeEntryClearDecimal = 10
+var_0_0.dir = {
 	down = 2,
 	up = 8,
 	left = 4,
 	right = 6
 }
-slot0.type = {
+var_0_0.type = {
 	t_shape = 7,
 	corner = 6,
 	capacitance = 3,
@@ -19,43 +20,43 @@ slot0.type = {
 	straight = 5,
 	power2 = 2
 }
-slot0.status = {
+var_0_0.status = {
 	correct = 2,
 	error = 3,
 	normal = 1
 }
-slot0.res = {
-	[slot0.type.power1] = {
+var_0_0.res = {
+	[var_0_0.type.power1] = {
 		"bg_zhogndian_1"
 	},
-	[slot0.type.power2] = {
+	[var_0_0.type.power2] = {
 		"bg_zhogndian"
 	},
-	[slot0.type.capacitance] = {
+	[var_0_0.type.capacitance] = {
 		"bg_dianyuan_1",
 		"bg_dianyuan"
 	},
-	[slot0.type.wrong] = {
+	[var_0_0.type.wrong] = {
 		"bg_yichangqu"
 	},
-	[slot0.type.straight] = {
+	[var_0_0.type.straight] = {
 		"bg_dianlu_1",
 		"bg_dianlu_1_ovr",
 		"bg_dianlu_1_dis"
 	},
-	[slot0.type.corner] = {
+	[var_0_0.type.corner] = {
 		"bg_dianlu",
 		"bg_dianlu_ovr",
 		"bg_dianlu_dis"
 	},
-	[slot0.type.t_shape] = {
+	[var_0_0.type.t_shape] = {
 		"bg_dianlu_2",
 		"bg_dianlu_2_ovr",
 		"bg_dianlu_2_dis"
 	}
 }
-slot0.rotate = {
-	[slot0.type.straight] = {
+var_0_0.rotate = {
+	[var_0_0.type.straight] = {
 		[28] = {
 			0
 		},
@@ -63,7 +64,7 @@ slot0.rotate = {
 			90
 		}
 	},
-	[slot0.type.corner] = {
+	[var_0_0.type.corner] = {
 		[24] = {
 			0
 		},
@@ -77,7 +78,7 @@ slot0.rotate = {
 			270
 		}
 	},
-	[slot0.type.t_shape] = {
+	[var_0_0.type.t_shape] = {
 		[246] = {
 			0
 		},
@@ -93,4 +94,4 @@ slot0.rotate = {
 	}
 }
 
-return slot0
+return var_0_0

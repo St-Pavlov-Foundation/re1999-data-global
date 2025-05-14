@@ -1,110 +1,118 @@
-module("modules.logic.dialogue.view.DialogueChessView", package.seeall)
+﻿module("modules.logic.dialogue.view.DialogueChessView", package.seeall)
 
-slot0 = class("DialogueChessView", BaseView)
+local var_0_0 = class("DialogueChessView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gochesscontainer = gohelper.findChild(slot0.viewGO, "#go_chesscontainer")
-	slot0._gochessitem = gohelper.findChild(slot0.viewGO, "#go_chesscontainer/#go_chessitem")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gochesscontainer = gohelper.findChild(arg_1_0.viewGO, "#go_chesscontainer")
+	arg_1_0._gochessitem = gohelper.findChild(arg_1_0.viewGO, "#go_chesscontainer/#go_chessitem")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	gohelper.setActive(slot0._gochessitem, false)
+function var_0_0._editableInitView(arg_4_0)
+	gohelper.setActive(arg_4_0._gochessitem, false)
 
-	slot0.chessItemList = {}
+	arg_4_0.chessItemList = {}
 
-	slot0:addEventCb(DialogueController.instance, DialogueEvent.BeforePlayStep, slot0.onBeforePlayStep, slot0)
+	arg_4_0:addEventCb(DialogueController.instance, DialogueEvent.BeforePlayStep, arg_4_0.onBeforePlayStep, arg_4_0)
 end
 
-function slot0.onOpenFinish(slot0)
-	slot0.openFinishDone = true
+function var_0_0.onOpenFinish(arg_5_0)
+	arg_5_0.openFinishDone = true
 
-	slot0:onBeforePlayStep(slot0.tempStepCo)
+	arg_5_0:onBeforePlayStep(arg_5_0.tempStepCo)
 
-	slot0.tempStepCo = nil
+	arg_5_0.tempStepCo = nil
 end
 
-function slot0.initChessItem(slot0)
-	if slot0.dialogueId then
+function var_0_0.initChessItem(arg_6_0)
+	if arg_6_0.dialogueId then
 		return
 	end
 
-	slot0.dialogueId = slot0.viewContainer.viewParam.dialogueId
+	arg_6_0.dialogueId = arg_6_0.viewContainer.viewParam.dialogueId
 
-	if not DialogueConfig.instance:getChessCoList(slot0.dialogueId) then
+	local var_6_0 = DialogueConfig.instance:getChessCoList(arg_6_0.dialogueId)
+
+	if not var_6_0 then
 		return
 	end
 
-	for slot5, slot6 in ipairs(slot1) do
-		slot0:createChessItem(slot6)
+	for iter_6_0, iter_6_1 in ipairs(var_6_0) do
+		arg_6_0:createChessItem(iter_6_1)
 	end
 end
 
-function slot0.onBeforePlayStep(slot0, slot1)
-	slot0:initChessItem()
+function var_0_0.onBeforePlayStep(arg_7_0, arg_7_1)
+	arg_7_0:initChessItem()
 
-	if not slot0.openFinishDone then
-		slot0.tempStepCo = slot1
+	if not arg_7_0.openFinishDone then
+		arg_7_0.tempStepCo = arg_7_1
 
 		return
 	end
 
-	for slot6, slot7 in ipairs(slot0.chessItemList) do
-		slot8 = slot7.chessCo.id == slot1.chessId
+	local var_7_0 = arg_7_1.chessId
 
-		gohelper.setActive(slot7.goTalking, slot8)
-		gohelper.setActive(slot7.goFootShadow, slot8)
+	for iter_7_0, iter_7_1 in ipairs(arg_7_0.chessItemList) do
+		local var_7_1 = iter_7_1.chessCo.id == var_7_0
 
-		if slot8 then
-			slot7.animator:Play("jump", 0, 0)
+		gohelper.setActive(iter_7_1.goTalking, var_7_1)
+		gohelper.setActive(iter_7_1.goFootShadow, var_7_1)
+
+		if var_7_1 then
+			iter_7_1.animator:Play("jump", 0, 0)
 		end
 	end
 end
 
-function slot0.createChessItem(slot0, slot1)
-	slot2 = slot0:getUserDataTb_()
-	slot2.go = gohelper.cloneInPlace(slot0._gochessitem, slot1.id)
+function var_0_0.createChessItem(arg_8_0, arg_8_1)
+	local var_8_0 = arg_8_0:getUserDataTb_()
 
-	gohelper.setActive(slot2.go, true)
+	var_8_0.go = gohelper.cloneInPlace(arg_8_0._gochessitem, arg_8_1.id)
 
-	slot2.animator = slot2.go:GetComponent(gohelper.Type_Animator)
-	slot2.imageChess = gohelper.findChildSingleImage(slot2.go, "#chess")
+	gohelper.setActive(var_8_0.go, true)
 
-	slot2.imageChess:LoadImage(ResUrl.getChessDialogueSingleBg(slot1.res))
+	var_8_0.animator = var_8_0.go:GetComponent(gohelper.Type_Animator)
+	var_8_0.imageChess = gohelper.findChildSingleImage(var_8_0.go, "#chess")
 
-	slot2.goTalking = gohelper.findChild(slot2.go, "#go_talking")
-	slot2.goFootShadow = gohelper.findChild(slot2.go, "light2")
+	var_8_0.imageChess:LoadImage(ResUrl.getChessDialogueSingleBg(arg_8_1.res))
 
-	gohelper.setActive(slot2.goTalking, false)
-	gohelper.setActive(slot2.goFootShadow, false)
+	var_8_0.goTalking = gohelper.findChild(var_8_0.go, "#go_talking")
+	var_8_0.goFootShadow = gohelper.findChild(var_8_0.go, "light2")
 
-	slot2.chessCo = slot1
+	gohelper.setActive(var_8_0.goTalking, false)
+	gohelper.setActive(var_8_0.goFootShadow, false)
 
-	table.insert(slot0.chessItemList, slot2)
+	var_8_0.chessCo = arg_8_1
 
-	slot3 = string.splitToNumber(slot1.pos, "#")
+	table.insert(arg_8_0.chessItemList, var_8_0)
 
-	recthelper.setAnchor(slot2.go.transform, slot3[1], slot3[2])
+	local var_8_1 = string.splitToNumber(arg_8_1.pos, "#")
 
-	return slot2
+	recthelper.setAnchor(var_8_0.go.transform, var_8_1[1], var_8_1[2])
+
+	return var_8_0
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_9_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	for slot4, slot5 in ipairs(slot0.chessItemList) do
-		slot5.imageChess:UnLoadImage()
+function var_0_0.onDestroyView(arg_10_0)
+	for iter_10_0, iter_10_1 in ipairs(arg_10_0.chessItemList) do
+		iter_10_1.imageChess:UnLoadImage()
 	end
 end
 
-return slot0
+return var_0_0

@@ -1,38 +1,44 @@
-module("modules.logic.guide.controller.action.impl.WaitGuideActionGetCritter", package.seeall)
+﻿module("modules.logic.guide.controller.action.impl.WaitGuideActionGetCritter", package.seeall)
 
-slot0 = class("WaitGuideActionGetCritter", BaseGuideAction)
+local var_0_0 = class("WaitGuideActionGetCritter", BaseGuideAction)
 
-function slot0.onStart(slot0, slot1)
-	uv0.super.onStart(slot0, slot1)
-	CritterController.instance:registerCallback(CritterEvent.CritterGuideReply, slot0._onCritterGuideReply, slot0)
-	CritterRpc.instance:sendGainGuideCritterRequest(slot0.guideId, slot0.stepId)
+function var_0_0.onStart(arg_1_0, arg_1_1)
+	var_0_0.super.onStart(arg_1_0, arg_1_1)
+	CritterController.instance:registerCallback(CritterEvent.CritterGuideReply, arg_1_0._onCritterGuideReply, arg_1_0)
+	CritterRpc.instance:sendGainGuideCritterRequest(arg_1_0.guideId, arg_1_0.stepId)
 
-	slot0.noOpenView = tonumber(slot0.actionParam) == 1
+	arg_1_0.noOpenView = tonumber(arg_1_0.actionParam) == 1
 end
 
-function slot0._check(slot0)
-	slot0:onDone(true)
+function var_0_0._check(arg_2_0)
+	arg_2_0:onDone(true)
 end
 
-function slot0._onCritterGuideReply(slot0, slot1)
-	if not slot0.noOpenView then
-		for slot6 = 1, #slot1.uids do
-			if CritterModel.instance:getCritterMOByUid(slot2[slot6]) then
-				ViewMgr.instance:openView(ViewName.RoomGetCritterView, {
+function var_0_0._onCritterGuideReply(arg_3_0, arg_3_1)
+	if not arg_3_0.noOpenView then
+		local var_3_0 = arg_3_1.uids
+
+		for iter_3_0 = 1, #var_3_0 do
+			local var_3_1 = CritterModel.instance:getCritterMOByUid(var_3_0[iter_3_0])
+
+			if var_3_1 then
+				local var_3_2 = {
 					mode = RoomSummonEnum.SummonType.Summon,
-					critterMo = slot7
-				})
+					critterMo = var_3_1
+				}
+
+				ViewMgr.instance:openView(ViewName.RoomGetCritterView, var_3_2)
 
 				break
 			end
 		end
 	end
 
-	slot0:_check()
+	arg_3_0:_check()
 end
 
-function slot0.clearWork(slot0)
-	CritterController.instance:unregisterCallback(CritterEvent.CritterGuideReply, slot0._onCritterGuideReply, slot0)
+function var_0_0.clearWork(arg_4_0)
+	CritterController.instance:unregisterCallback(CritterEvent.CritterGuideReply, arg_4_0._onCritterGuideReply, arg_4_0)
 end
 
-return slot0
+return var_0_0

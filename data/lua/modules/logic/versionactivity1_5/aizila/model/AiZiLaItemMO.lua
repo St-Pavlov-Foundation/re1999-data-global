@@ -1,35 +1,35 @@
-module("modules.logic.versionactivity1_5.aizila.model.AiZiLaItemMO", package.seeall)
+﻿module("modules.logic.versionactivity1_5.aizila.model.AiZiLaItemMO", package.seeall)
 
-slot0 = pureTable("AiZiLaItemMO")
+local var_0_0 = pureTable("AiZiLaItemMO")
 
-function slot0.init(slot0, slot1, slot2, slot3)
-	slot0.id = slot1
-	slot0.uid = slot1
-	slot0.itemId = slot2 or 0
-	slot0.quantity = slot3 or 0
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	arg_1_0.id = arg_1_1
+	arg_1_0.uid = arg_1_1
+	arg_1_0.itemId = arg_1_2 or 0
+	arg_1_0.quantity = arg_1_3 or 0
 end
 
-function slot0.getConfig(slot0)
-	if not slot0._config then
-		slot0._config = AiZiLaConfig.instance:getItemCo(slot0.itemId)
+function var_0_0.getConfig(arg_2_0)
+	if not arg_2_0._config then
+		arg_2_0._config = AiZiLaConfig.instance:getItemCo(arg_2_0.itemId)
 	end
 
-	return slot0._config
+	return arg_2_0._config
 end
 
-function slot0.updateInfo(slot0, slot1)
-	slot0.itemId = slot1.itemId
-	slot0.quantity = slot1.quantity
+function var_0_0.updateInfo(arg_3_0, arg_3_1)
+	arg_3_0.itemId = arg_3_1.itemId
+	arg_3_0.quantity = arg_3_1.quantity
 end
 
-function slot0.addInfo(slot0, slot1)
-	if slot0.itemId == slot1.itemId then
-		slot0.quantity = slot0.quantity + slot1.quantity
+function var_0_0.addInfo(arg_4_0, arg_4_1)
+	if arg_4_0.itemId == arg_4_1.itemId then
+		arg_4_0.quantity = arg_4_0.quantity + arg_4_1.quantity
 	end
 end
 
-function slot0.getQuantity(slot0)
-	return slot0.quantity
+function var_0_0.getQuantity(arg_5_0)
+	return arg_5_0.quantity
 end
 
-return slot0
+return var_0_0

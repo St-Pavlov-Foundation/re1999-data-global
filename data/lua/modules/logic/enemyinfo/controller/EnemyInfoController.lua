@@ -1,60 +1,60 @@
-module("modules.logic.enemyinfo.controller.EnemyInfoController", package.seeall)
+﻿module("modules.logic.enemyinfo.controller.EnemyInfoController", package.seeall)
 
-slot0 = class("EnemyInfoController")
+local var_0_0 = class("EnemyInfoController")
 
-function slot0.openRougeEnemyInfoView(slot0, slot1, slot2)
+function var_0_0.openRougeEnemyInfoView(arg_1_0, arg_1_1, arg_1_2)
 	ViewMgr.instance:openView(ViewName.BaseEnemyInfoView, {
-		battleId = slot1,
-		hpFixRate = slot2,
+		battleId = arg_1_1,
+		hpFixRate = arg_1_2,
 		tabEnum = EnemyInfoEnum.TabEnum.Rouge
 	})
 end
 
-function slot0.openEnemyInfoViewByBattleId(slot0, slot1)
+function var_0_0.openEnemyInfoViewByBattleId(arg_2_0, arg_2_1)
 	ViewMgr.instance:openView(ViewName.BaseEnemyInfoView, {
-		battleId = slot1,
+		battleId = arg_2_1,
 		tabEnum = EnemyInfoEnum.TabEnum.Normal
 	})
 end
 
-function slot0.openWeekWalkEnemyInfoView(slot0, slot1, slot2)
+function var_0_0.openWeekWalkEnemyInfoView(arg_3_0, arg_3_1, arg_3_2)
 	ViewMgr.instance:openView(ViewName.BaseEnemyInfoView, {
-		mapId = slot1,
-		selectBattleId = slot2,
+		mapId = arg_3_1,
+		selectBattleId = arg_3_2,
 		tabEnum = EnemyInfoEnum.TabEnum.WeekWalk
 	})
 end
 
-function slot0.openSeason123EnemyInfoView(slot0, slot1, slot2, slot3)
+function var_0_0.openSeason123EnemyInfoView(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
 	ViewMgr.instance:openView(ViewName.BaseEnemyInfoView, {
 		showLeftTab = true,
-		activityId = slot1,
-		stage = slot2,
-		layer = slot3,
+		activityId = arg_4_1,
+		stage = arg_4_2,
+		layer = arg_4_3,
 		tabEnum = EnemyInfoEnum.TabEnum.Season123
 	})
 end
 
-function slot0.openSeason123EnemyInfoViewWithNoTab(slot0, slot1, slot2)
+function var_0_0.openSeason123EnemyInfoViewWithNoTab(arg_5_0, arg_5_1, arg_5_2)
 	ViewMgr.instance:openView(ViewName.BaseEnemyInfoView, {
 		showLeftTab = false,
-		activityId = slot1,
-		battleId = slot2,
+		activityId = arg_5_1,
+		battleId = arg_5_2,
 		tabEnum = EnemyInfoEnum.TabEnum.Season123
 	})
 end
 
-function slot0.openBossRushEnemyInfoView(slot0, slot1, slot2, slot3)
+function var_0_0.openBossRushEnemyInfoView(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
 	ViewMgr.instance:openView(ViewName.BaseEnemyInfoView, {
-		activityId = slot1,
-		stage = slot2,
-		layer = slot3,
+		activityId = arg_6_1,
+		stage = arg_6_2,
+		layer = arg_6_3,
 		tabEnum = EnemyInfoEnum.TabEnum.BossRush
 	})
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-LuaEventSystem.addEventMechanism(slot0.instance)
+LuaEventSystem.addEventMechanism(var_0_0.instance)
 
-return slot0
+return var_0_0

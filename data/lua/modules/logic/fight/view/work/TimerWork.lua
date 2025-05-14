@@ -1,21 +1,21 @@
-module("modules.logic.fight.view.work.TimerWork", package.seeall)
+﻿module("modules.logic.fight.view.work.TimerWork", package.seeall)
 
-slot0 = class("TimerWork", BaseWork)
+local var_0_0 = class("TimerWork", BaseWork)
 
-function slot0.ctor(slot0, slot1)
-	slot0._time = slot1
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0._time = arg_1_1
 end
 
-function slot0.onStart(slot0)
-	TaskDispatcher.runDelay(slot0._onTimeout, slot0, slot0._time)
+function var_0_0.onStart(arg_2_0)
+	TaskDispatcher.runDelay(arg_2_0._onTimeout, arg_2_0, arg_2_0._time)
 end
 
-function slot0._onTimeout(slot0)
-	slot0:onDone(true)
+function var_0_0._onTimeout(arg_3_0)
+	arg_3_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
-	TaskDispatcher.cancelTask(slot0._onTimeout, slot0)
+function var_0_0.clearWork(arg_4_0)
+	TaskDispatcher.cancelTask(arg_4_0._onTimeout, arg_4_0)
 end
 
-return slot0
+return var_0_0

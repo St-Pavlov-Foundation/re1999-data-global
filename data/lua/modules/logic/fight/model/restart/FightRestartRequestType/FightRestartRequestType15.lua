@@ -1,34 +1,37 @@
-module("modules.logic.fight.model.restart.FightRestartRequestType.FightRestartRequestType15", package.seeall)
+﻿module("modules.logic.fight.model.restart.FightRestartRequestType.FightRestartRequestType15", package.seeall)
 
-slot0 = class("FightRestartRequestType15", FightRestartRequestType1)
+local var_0_0 = class("FightRestartRequestType15", FightRestartRequestType1)
 
-function slot0.requestFight(slot0)
-	slot3 = Activity104Model.instance:getCurSeasonId()
-	slot4 = Activity104Model.instance:getBattleFinishLayer()
+function var_0_0.requestFight(arg_1_0)
+	local var_1_0 = DungeonModel.instance.curSendEpisodeId
+	local var_1_1 = DungeonConfig.instance:getEpisodeCO(var_1_0)
+	local var_1_2 = Activity104Model.instance:getCurSeasonId()
+	local var_1_3 = Activity104Model.instance:getBattleFinishLayer()
 
-	if DungeonConfig.instance:getEpisodeCO(DungeonModel.instance.curSendEpisodeId).type == DungeonEnum.EpisodeType.SeasonRetail then
-		slot4 = 0
+	if var_1_1.type == DungeonEnum.EpisodeType.SeasonRetail then
+		var_1_3 = 0
 	end
 
-	slot5 = FightModel.instance:getFightParam()
-
-	Activity104Rpc.instance:sendStartAct104BattleRequest({
+	local var_1_4 = FightModel.instance:getFightParam()
+	local var_1_5 = {
 		isRestart = true,
-		chapterId = slot5.chapterId,
-		episodeId = slot1,
-		fightParam = slot5,
-		multiplication = slot5.multiplication
-	}, slot3, slot4, slot1, slot0.enterFightAgainRpcCallback, slot0)
+		chapterId = var_1_4.chapterId,
+		episodeId = var_1_0,
+		fightParam = var_1_4,
+		multiplication = var_1_4.multiplication
+	}
+
+	Activity104Rpc.instance:sendStartAct104BattleRequest(var_1_5, var_1_2, var_1_3, var_1_0, arg_1_0.enterFightAgainRpcCallback, arg_1_0)
 end
 
-function slot0.enterFightAgainRpcCallback(slot0, slot1, slot2, slot3)
-	if slot2 ~= 0 then
+function var_0_0.enterFightAgainRpcCallback(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
+	if arg_2_2 ~= 0 then
 		FightSystem.instance:restartFightFail()
 
 		return
 	end
 
-	slot0._fight_work:onDone(true)
+	arg_2_0._fight_work:onDone(true)
 end
 
-return slot0
+return var_0_0

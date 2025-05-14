@@ -1,8 +1,8 @@
-module("modules.logic.investigate.config.InvestigateConfig", package.seeall)
+﻿module("modules.logic.investigate.config.InvestigateConfig", package.seeall)
 
-slot0 = class("InvestigateConfig", BaseConfig)
+local var_0_0 = class("InvestigateConfig", BaseConfig)
 
-function slot0.reqConfigNames(slot0)
+function var_0_0.reqConfigNames(arg_1_0)
 	return {
 		"investigate_info",
 		"investigate_clue",
@@ -10,71 +10,71 @@ function slot0.reqConfigNames(slot0)
 	}
 end
 
-function slot0.onConfigLoaded(slot0, slot1, slot2)
-	if slot1 == "investigate_info" then
-		slot0:_initInvestigateInfo()
-	elseif slot1 == "investigate_clue" then
-		slot0:_initInvestigateClue()
+function var_0_0.onConfigLoaded(arg_2_0, arg_2_1, arg_2_2)
+	if arg_2_1 == "investigate_info" then
+		arg_2_0:_initInvestigateInfo()
+	elseif arg_2_1 == "investigate_clue" then
+		arg_2_0:_initInvestigateClue()
 	end
 end
 
-function slot0._initInvestigateClue(slot0)
-	slot0._investigateAllClueInfos = {}
-	slot0._investigateRelatedClueInfos = {}
-	slot0._investigateMapElementInfos = {}
+function var_0_0._initInvestigateClue(arg_3_0)
+	arg_3_0._investigateAllClueInfos = {}
+	arg_3_0._investigateRelatedClueInfos = {}
+	arg_3_0._investigateMapElementInfos = {}
 
-	for slot4, slot5 in ipairs(lua_investigate_clue.configList) do
-		slot0._investigateAllClueInfos[slot5.infoID] = slot0._investigateAllClueInfos[slot5.infoID] or {}
+	for iter_3_0, iter_3_1 in ipairs(lua_investigate_clue.configList) do
+		arg_3_0._investigateAllClueInfos[iter_3_1.infoID] = arg_3_0._investigateAllClueInfos[iter_3_1.infoID] or {}
 
-		table.insert(slot0._investigateAllClueInfos[slot5.infoID], slot5)
+		table.insert(arg_3_0._investigateAllClueInfos[iter_3_1.infoID], iter_3_1)
 
-		slot0._investigateRelatedClueInfos[slot5.infoID] = slot0._investigateRelatedClueInfos[slot5.infoID] or {}
+		arg_3_0._investigateRelatedClueInfos[iter_3_1.infoID] = arg_3_0._investigateRelatedClueInfos[iter_3_1.infoID] or {}
 
-		table.insert(slot0._investigateRelatedClueInfos[slot5.infoID], slot5)
+		table.insert(arg_3_0._investigateRelatedClueInfos[iter_3_1.infoID], iter_3_1)
 
-		if slot5.mapElement > 0 then
-			slot0._investigateMapElementInfos[slot5.mapElement] = slot5
+		if iter_3_1.mapElement > 0 then
+			arg_3_0._investigateMapElementInfos[iter_3_1.mapElement] = iter_3_1
 		end
 	end
 end
 
-function slot0.getInvestigateClueInfoByElement(slot0, slot1)
-	return slot0._investigateMapElementInfos[slot1]
+function var_0_0.getInvestigateClueInfoByElement(arg_4_0, arg_4_1)
+	return arg_4_0._investigateMapElementInfos[arg_4_1]
 end
 
-function slot0.getInvestigateAllClueInfos(slot0, slot1)
-	return slot0._investigateAllClueInfos[slot1]
+function var_0_0.getInvestigateAllClueInfos(arg_5_0, arg_5_1)
+	return arg_5_0._investigateAllClueInfos[arg_5_1]
 end
 
-function slot0.getInvestigateRelatedClueInfos(slot0, slot1)
-	return slot0._investigateRelatedClueInfos[slot1]
+function var_0_0.getInvestigateRelatedClueInfos(arg_6_0, arg_6_1)
+	return arg_6_0._investigateRelatedClueInfos[arg_6_1]
 end
 
-function slot0._initInvestigateInfo(slot0)
-	slot0._roleEntranceInfos = {}
-	slot0._roleGroupInfos = {}
+function var_0_0._initInvestigateInfo(arg_7_0)
+	arg_7_0._roleEntranceInfos = {}
+	arg_7_0._roleGroupInfos = {}
 
-	for slot4, slot5 in ipairs(lua_investigate_info.configList) do
-		if not slot0._roleEntranceInfos[slot5.entrance] then
-			slot0._roleEntranceInfos[slot5.entrance] = slot5
+	for iter_7_0, iter_7_1 in ipairs(lua_investigate_info.configList) do
+		if not arg_7_0._roleEntranceInfos[iter_7_1.entrance] then
+			arg_7_0._roleEntranceInfos[iter_7_1.entrance] = iter_7_1
 		end
 
-		slot6 = slot0._roleGroupInfos[slot5.group] or {}
+		local var_7_0 = arg_7_0._roleGroupInfos[iter_7_1.group] or {}
 
-		table.insert(slot6, slot5)
+		table.insert(var_7_0, iter_7_1)
 
-		slot0._roleGroupInfos[slot5.group] = slot6
+		arg_7_0._roleGroupInfos[iter_7_1.group] = var_7_0
 	end
 end
 
-function slot0.getRoleEntranceInfos(slot0)
-	return slot0._roleEntranceInfos
+function var_0_0.getRoleEntranceInfos(arg_8_0)
+	return arg_8_0._roleEntranceInfos
 end
 
-function slot0.getRoleGroupInfoList(slot0, slot1)
-	return slot0._roleGroupInfos[slot1]
+function var_0_0.getRoleGroupInfoList(arg_9_0, arg_9_1)
+	return arg_9_0._roleGroupInfos[arg_9_1]
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

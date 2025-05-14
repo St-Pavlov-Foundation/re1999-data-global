@@ -1,9 +1,10 @@
-module("modules.logic.room.controller.RoomSkinEvent", package.seeall)
+﻿module("modules.logic.room.controller.RoomSkinEvent", package.seeall)
 
-slot0 = _M
-slot0.SkinListViewShowChange = 1
-slot0.ChangePreviewRoomSkin = 2
-slot0.ChangeEquipRoomSkin = 3
-slot0.RoomSkinMarkUpdate = 4
+local var_0_0 = _M
 
-return slot0
+var_0_0.SkinListViewShowChange = 1
+var_0_0.ChangePreviewRoomSkin = 2
+var_0_0.ChangeEquipRoomSkin = 3
+var_0_0.RoomSkinMarkUpdate = 4
+
+return var_0_0

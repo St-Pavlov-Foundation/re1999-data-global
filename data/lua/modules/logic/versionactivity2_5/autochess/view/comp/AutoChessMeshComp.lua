@@ -1,60 +1,64 @@
-module("modules.logic.versionactivity2_5.autochess.view.comp.AutoChessMeshComp", package.seeall)
+﻿module("modules.logic.versionactivity2_5.autochess.view.comp.AutoChessMeshComp", package.seeall)
 
-slot0 = class("AutoChessMeshComp", LuaCompBase)
+local var_0_0 = class("AutoChessMeshComp", LuaCompBase)
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
-	slot0.uiMesh = gohelper.findChildUIMesh(slot1, "")
-	slot0.simageRole = gohelper.findChildSingleImage(slot1, "role")
-	slot0.imageRole = gohelper.findChildImage(slot1, "role")
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.go = arg_1_1
+	arg_1_0.uiMesh = gohelper.findChildUIMesh(arg_1_1, "")
+	arg_1_0.simageRole = gohelper.findChildSingleImage(arg_1_1, "role")
+	arg_1_0.imageRole = gohelper.findChildImage(arg_1_1, "role")
 end
 
-function slot0.setData(slot0, slot1, slot2, slot3)
-	slot0.simageRole:LoadImage(ResUrl.getAutoChessIcon(slot1), slot0.loadImageCallback, slot0)
+function var_0_0.setData(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
+	arg_2_0.simageRole:LoadImage(ResUrl.getAutoChessIcon(arg_2_1), arg_2_0.loadImageCallback, arg_2_0)
 
-	slot0.materialUrl = AutoChessHelper.getMaterialUrl(slot2, slot3)
-	slot0.meshUrl = AutoChessHelper.getMeshUrl(slot1)
+	arg_2_0.materialUrl = AutoChessHelper.getMaterialUrl(arg_2_2, arg_2_3)
+	arg_2_0.meshUrl = AutoChessHelper.getMeshUrl(arg_2_1)
 
-	slot0:loadMesh()
+	arg_2_0:loadMesh()
 end
 
-function slot0.loadImageCallback(slot0)
-	if slot0.imageRole then
-		slot0.imageRole:SetNativeSize()
+function var_0_0.loadImageCallback(arg_3_0)
+	if arg_3_0.imageRole then
+		arg_3_0.imageRole:SetNativeSize()
 	end
 end
 
-function slot0.loadMesh(slot0)
-	if slot0.loader then
-		slot0.loader:dispose()
+function var_0_0.loadMesh(arg_4_0)
+	if arg_4_0.loader then
+		arg_4_0.loader:dispose()
 
-		slot0.loader = nil
+		arg_4_0.loader = nil
 	end
 
-	slot0.loader = MultiAbLoader.New()
+	arg_4_0.loader = MultiAbLoader.New()
 
-	slot0.loader:addPath(slot0.materialUrl)
-	slot0.loader:addPath(slot0.meshUrl)
-	slot0.loader:startLoad(slot0.loadResFinish, slot0)
+	arg_4_0.loader:addPath(arg_4_0.materialUrl)
+	arg_4_0.loader:addPath(arg_4_0.meshUrl)
+	arg_4_0.loader:startLoad(arg_4_0.loadResFinish, arg_4_0)
 end
 
-function slot0.loadResFinish(slot0)
-	slot0.uiMesh.mesh = slot0.loader:getAssetItem(slot0.meshUrl):GetResource(slot0.meshUrl)
+function var_0_0.loadResFinish(arg_5_0)
+	local var_5_0 = arg_5_0.loader:getAssetItem(arg_5_0.meshUrl):GetResource(arg_5_0.meshUrl)
 
-	slot0.uiMesh:SetVerticesDirty()
+	arg_5_0.uiMesh.mesh = var_5_0
 
-	slot0.uiMesh.material = slot0.loader:getAssetItem(slot0.materialUrl):GetResource(slot0.materialUrl)
+	arg_5_0.uiMesh:SetVerticesDirty()
 
-	slot0.uiMesh:SetMaterialDirty()
-	gohelper.setActive(slot0.uiMesh, true)
+	local var_5_1 = arg_5_0.loader:getAssetItem(arg_5_0.materialUrl):GetResource(arg_5_0.materialUrl)
+
+	arg_5_0.uiMesh.material = var_5_1
+
+	arg_5_0.uiMesh:SetMaterialDirty()
+	gohelper.setActive(arg_5_0.uiMesh, true)
 end
 
-function slot0.onDestroy(slot0)
-	if slot0.loader then
-		slot0.loader:dispose()
+function var_0_0.onDestroy(arg_6_0)
+	if arg_6_0.loader then
+		arg_6_0.loader:dispose()
 
-		slot0.loader = nil
+		arg_6_0.loader = nil
 	end
 end
 
-return slot0
+return var_0_0

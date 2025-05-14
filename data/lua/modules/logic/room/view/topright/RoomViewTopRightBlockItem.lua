@@ -1,24 +1,24 @@
-module("modules.logic.room.view.topright.RoomViewTopRightBlockItem", package.seeall)
+﻿module("modules.logic.room.view.topright.RoomViewTopRightBlockItem", package.seeall)
 
-slot0 = class("RoomViewTopRightBlockItem", RoomViewTopRightBaseItem)
+local var_0_0 = class("RoomViewTopRightBlockItem", RoomViewTopRightBaseItem)
 
-function slot0.ctor(slot0, slot1)
-	uv0.super.ctor(slot0, slot1)
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	var_0_0.super.ctor(arg_1_0, arg_1_1)
 end
 
-function slot0._customOnInit(slot0)
-	slot0._resourceItem.imageicon = gohelper.findChildImage(slot0._resourceItem.go, "icon")
+function var_0_0._customOnInit(arg_2_0)
+	arg_2_0._resourceItem.imageicon = gohelper.findChildImage(arg_2_0._resourceItem.go, "icon")
 
-	UISpriteSetMgr.instance:setRoomSprite(slot0._resourceItem.imageicon, "icon_zongkuai_light")
-	recthelper.setSize(slot0._resourceItem.imageicon.transform, 68, 52)
-	slot0:_setShow(true)
+	UISpriteSetMgr.instance:setRoomSprite(arg_2_0._resourceItem.imageicon, "icon_zongkuai_light")
+	recthelper.setSize(arg_2_0._resourceItem.imageicon.transform, 68, 52)
+	arg_2_0:_setShow(true)
 end
 
-function slot0._imageLoaded(slot0)
-	slot0._resourceItem.imageicon:SetNativeSize()
+function var_0_0._imageLoaded(arg_3_0)
+	arg_3_0._resourceItem.imageicon:SetNativeSize()
 end
 
-function slot0._onClick(slot0)
+function var_0_0._onClick(arg_4_0)
 	if RoomController.instance:isVisitMode() then
 		return
 	end
@@ -28,22 +28,23 @@ function slot0._onClick(slot0)
 	})
 end
 
-function slot0.addEventListeners(slot0)
-	slot0:addEventCb(RoomMapController.instance, RoomEvent.ClientTryBackBlock, slot0._refreshUI, slot0)
-	slot0:addEventCb(RoomMapController.instance, RoomEvent.ClientCancelBackBlock, slot0._refreshUI, slot0)
-	slot0:addEventCb(RoomMapController.instance, RoomEvent.ConfirmBackBlock, slot0._refreshUI, slot0)
-	slot0:addEventCb(RoomBuildingController.instance, RoomEvent.BuildingListShowChanged, slot0._refreshUI, slot0)
-	slot0:addEventCb(RoomMapController.instance, RoomEvent.UpdateInventoryCount, slot0._refreshUI, slot0)
-	slot0:addEventCb(RoomMapController.instance, RoomEvent.ConfirmSelectBlockPackage, slot0._refreshUI, slot0)
-	slot0:addEventCb(ManufactureController.instance, ManufactureEvent.TradeLevelChange, slot0._refreshUI, slot0)
-	slot0:addEventCb(RoomMapController.instance, RoomEvent.ClientPlaceBlock, slot0._refreshAddNumUI, slot0)
-	slot0:addEventCb(RoomMapController.instance, RoomEvent.ClientCancelBlock, slot0._refreshAddNumUI, slot0)
+function var_0_0.addEventListeners(arg_5_0)
+	arg_5_0:addEventCb(RoomMapController.instance, RoomEvent.ClientTryBackBlock, arg_5_0._refreshUI, arg_5_0)
+	arg_5_0:addEventCb(RoomMapController.instance, RoomEvent.ClientCancelBackBlock, arg_5_0._refreshUI, arg_5_0)
+	arg_5_0:addEventCb(RoomMapController.instance, RoomEvent.ConfirmBackBlock, arg_5_0._refreshUI, arg_5_0)
+	arg_5_0:addEventCb(RoomBuildingController.instance, RoomEvent.BuildingListShowChanged, arg_5_0._refreshUI, arg_5_0)
+	arg_5_0:addEventCb(RoomMapController.instance, RoomEvent.UpdateInventoryCount, arg_5_0._refreshUI, arg_5_0)
+	arg_5_0:addEventCb(RoomMapController.instance, RoomEvent.ConfirmSelectBlockPackage, arg_5_0._refreshUI, arg_5_0)
+	arg_5_0:addEventCb(ManufactureController.instance, ManufactureEvent.TradeLevelChange, arg_5_0._refreshUI, arg_5_0)
+	arg_5_0:addEventCb(RoomMapController.instance, RoomEvent.ClientPlaceBlock, arg_5_0._refreshAddNumUI, arg_5_0)
+	arg_5_0:addEventCb(RoomMapController.instance, RoomEvent.ClientCancelBlock, arg_5_0._refreshAddNumUI, arg_5_0)
 end
 
-function slot0.removeEventListeners(slot0)
+function var_0_0.removeEventListeners(arg_6_0)
+	return
 end
 
-function slot0._getPlaceBlockNum(slot0)
+function var_0_0._getPlaceBlockNum(arg_7_0)
 	if RoomController.instance:isEditMode() and RoomMapBlockModel.instance:getTempBlockMO() then
 		return 1
 	end
@@ -51,25 +52,32 @@ function slot0._getPlaceBlockNum(slot0)
 	return 0
 end
 
-function slot0._refreshAddNumUI(slot0)
-	if slot0:_getPlaceBlockNum() > 0 then
-		slot0._resourceItem.txtaddNum.text = "+" .. slot1
+function var_0_0._refreshAddNumUI(arg_8_0)
+	local var_8_0 = arg_8_0:_getPlaceBlockNum()
+
+	if var_8_0 > 0 then
+		arg_8_0._resourceItem.txtaddNum.text = "+" .. var_8_0
 	end
 
-	gohelper.setActive(slot0._resourceItem.txtaddNum, slot1 > 0)
+	gohelper.setActive(arg_8_0._resourceItem.txtaddNum, var_8_0 > 0)
 end
 
-function slot0._refreshUI(slot0)
+function var_0_0._refreshUI(arg_9_0)
+	local var_9_0 = RoomMapBlockModel.instance:getConfirmBlockCount()
+
 	if RoomController.instance:isVisitMode() then
-		slot0._resourceItem.txtquantity.text = RoomMapBlockModel.instance:getConfirmBlockCount()
+		arg_9_0._resourceItem.txtquantity.text = var_9_0
 	else
-		slot0._resourceItem.txtquantity.text = string.format("%s/%s", slot1, RoomMapBlockModel.instance:getMaxBlockCount())
+		local var_9_1 = RoomMapBlockModel.instance:getMaxBlockCount()
+
+		arg_9_0._resourceItem.txtquantity.text = string.format("%s/%s", var_9_0, var_9_1)
 	end
 
-	slot0:_refreshAddNumUI()
+	arg_9_0:_refreshAddNumUI()
 end
 
-function slot0._customOnDestory(slot0)
+function var_0_0._customOnDestory(arg_10_0)
+	return
 end
 
-return slot0
+return var_0_0

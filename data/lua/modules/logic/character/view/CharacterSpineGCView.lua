@@ -1,60 +1,62 @@
-module("modules.logic.character.view.CharacterSpineGCView", package.seeall)
+﻿module("modules.logic.character.view.CharacterSpineGCView", package.seeall)
 
-slot0 = class("CharacterSpineGCView", BaseView)
-slot1 = 5
+local var_0_0 = class("CharacterSpineGCView", BaseView)
+local var_0_1 = 5
 
-function slot0.onInitView(slot0)
-	slot0._skinList = {}
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._skinList = {}
 end
 
-function slot0.addEvents(slot0)
-	slot0:addEventCb(CharacterController.instance, CharacterEvent.OnSwitchSpine, slot0._recordSkin, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0:addEventCb(CharacterController.instance, CharacterEvent.OnSwitchSpine, arg_2_0._recordSkin, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0:removeEventCb(CharacterController.instance, CharacterEvent.OnSwitchSpine, slot0._recordSkin, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0:removeEventCb(CharacterController.instance, CharacterEvent.OnSwitchSpine, arg_3_0._recordSkin, arg_3_0)
 end
 
-function slot0.onOpenFinish(slot0)
-	slot0:_recordSkin()
+function var_0_0.onOpenFinish(arg_4_0)
+	arg_4_0:_recordSkin()
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0:_recordSkin()
+function var_0_0.onUpdateParam(arg_5_0)
+	arg_5_0:_recordSkin()
 end
 
-function slot0.onClose(slot0)
-	slot0._skinList = {}
+function var_0_0.onClose(arg_6_0)
+	arg_6_0._skinList = {}
 
-	TaskDispatcher.cancelTask(slot0._delayGC, slot0)
-	TaskDispatcher.cancelTask(slot0._clearUnusedBanks, slot0)
+	TaskDispatcher.cancelTask(arg_6_0._delayGC, arg_6_0)
+	TaskDispatcher.cancelTask(arg_6_0._clearUnusedBanks, arg_6_0)
 end
 
-function slot0._recordSkin(slot0)
-	if slot0.viewContainer.viewParam and slot1.heroId then
-		table.insert(slot0._skinList, slot1.skin)
+function var_0_0._recordSkin(arg_7_0)
+	local var_7_0 = arg_7_0.viewContainer.viewParam
 
-		if uv0 < #slot0._skinList then
-			if #slot0._skinList < uv0 * 2 then
-				TaskDispatcher.cancelTask(slot0._delayGC, slot0)
+	if var_7_0 and var_7_0.heroId then
+		table.insert(arg_7_0._skinList, var_7_0.skin)
+
+		if #arg_7_0._skinList > var_0_1 then
+			if #arg_7_0._skinList < var_0_1 * 2 then
+				TaskDispatcher.cancelTask(arg_7_0._delayGC, arg_7_0)
 			end
 
-			TaskDispatcher.runDelay(slot0._delayGC, slot0, 1)
+			TaskDispatcher.runDelay(arg_7_0._delayGC, arg_7_0, 1)
 		end
 
-		TaskDispatcher.cancelTask(slot0._clearUnusedBanks, slot0)
-		TaskDispatcher.runDelay(slot0._clearUnusedBanks, slot0, 0.1)
+		TaskDispatcher.cancelTask(arg_7_0._clearUnusedBanks, arg_7_0)
+		TaskDispatcher.runDelay(arg_7_0._clearUnusedBanks, arg_7_0, 0.1)
 	end
 end
 
-function slot0._clearUnusedBanks(slot0)
+function var_0_0._clearUnusedBanks(arg_8_0)
 	AudioMgr.instance:clearUnusedBanks()
 end
 
-function slot0._delayGC(slot0)
-	GameGCMgr.instance:dispatchEvent(GameGCEvent.FullGC, slot0)
+function var_0_0._delayGC(arg_9_0)
+	GameGCMgr.instance:dispatchEvent(GameGCEvent.FullGC, arg_9_0)
 
-	slot0._skinList = {}
+	arg_9_0._skinList = {}
 end
 
-return slot0
+return var_0_0

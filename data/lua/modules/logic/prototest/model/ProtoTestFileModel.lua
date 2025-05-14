@@ -1,27 +1,32 @@
-module("modules.logic.prototest.model.ProtoTestFileModel", package.seeall)
+﻿module("modules.logic.prototest.model.ProtoTestFileModel", package.seeall)
 
-slot0 = class("ProtoTestFileModel", ListScrollModel)
+local var_0_0 = class("ProtoTestFileModel", ListScrollModel)
 
-function slot0.refreshFileList(slot0)
+function var_0_0.refreshFileList(arg_1_0)
 	SLFramework.FileHelper.EnsureDir(ProtoFileHelper.DirPath)
 
-	slot2 = slot0:getList()
+	local var_1_0 = SLFramework.FileHelper.GetDirFilePaths(ProtoFileHelper.DirPath)
+	local var_1_1 = arg_1_0:getList()
 
-	for slot6 = 1, SLFramework.FileHelper.GetDirFilePaths(ProtoFileHelper.DirPath).Length do
-		slot8 = SLFramework.FileHelper.GetFileName(slot1[slot6 - 1], false)
+	for iter_1_0 = 1, var_1_0.Length do
+		local var_1_2 = var_1_0[iter_1_0 - 1]
+		local var_1_3 = SLFramework.FileHelper.GetFileName(var_1_2, false)
+		local var_1_4 = var_1_1[iter_1_0]
 
-		if not slot2[slot6] then
-			table.insert(slot2, ProtoTestFileMO.New())
+		if not var_1_4 then
+			var_1_4 = ProtoTestFileMO.New()
+
+			table.insert(var_1_1, var_1_4)
 		end
 
-		slot9.id = slot6
-		slot9.filePath = slot7
-		slot9.fileName = slot8
+		var_1_4.id = iter_1_0
+		var_1_4.filePath = var_1_2
+		var_1_4.fileName = var_1_3
 	end
 
-	slot0:setList(slot2)
+	arg_1_0:setList(var_1_1)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

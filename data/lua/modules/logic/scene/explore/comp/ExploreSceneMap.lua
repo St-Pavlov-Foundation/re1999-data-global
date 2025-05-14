@@ -1,69 +1,65 @@
-module("modules.logic.scene.explore.comp.ExploreSceneMap", package.seeall)
+﻿module("modules.logic.scene.explore.comp.ExploreSceneMap", package.seeall)
 
-slot0 = class("ExploreSceneMap", BaseSceneComp)
+local var_0_0 = class("ExploreSceneMap", BaseSceneComp)
 
-function slot0.onInit(slot0)
-	slot0._scene = slot0:getCurScene()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._scene = arg_1_0:getCurScene()
 end
 
-function slot0.init(slot0, slot1, slot2)
+function var_0_0.init(arg_2_0, arg_2_1, arg_2_2)
+	return
 end
 
-function slot0.onSceneStart(slot0, slot1, slot2)
-	slot0._scene.level:registerCallback(CommonSceneLevelComp.OnLevelLoaded, slot0._onLevelLoaded, slot0)
+function var_0_0.onSceneStart(arg_3_0, arg_3_1, arg_3_2)
+	arg_3_0._scene.level:registerCallback(CommonSceneLevelComp.OnLevelLoaded, arg_3_0._onLevelLoaded, arg_3_0)
 end
 
-function slot0._onLevelLoaded(slot0, slot1, slot2)
-	slot6 = slot0.initMapDone
-	slot7 = slot0
+function var_0_0._onLevelLoaded(arg_4_0, arg_4_1, arg_4_2)
+	ExploreController.instance:registerCallback(ExploreEvent.InitMapDone, arg_4_0.initMapDone, arg_4_0)
 
-	ExploreController.instance:registerCallback(ExploreEvent.InitMapDone, slot6, slot7)
+	arg_4_0._comps = {}
 
-	slot0._comps = {}
+	for iter_4_0, iter_4_1 in pairs(ExploreEnum.MapCompType) do
+		local var_4_0 = "ExploreMap"
 
-	for slot6, slot7 in pairs(ExploreEnum.MapCompType) do
-		if slot6 ~= "Map" then
-			slot8 = "ExploreMap" .. slot6
+		if iter_4_0 ~= "Map" then
+			var_4_0 = var_4_0 .. iter_4_0
 		end
 
-		slot0._comps[slot7] = _G[slot8].New()
+		arg_4_0._comps[iter_4_1] = _G[var_4_0].New()
 
-		ExploreController.instance:registerMapComp(slot7, slot0._comps[slot7])
+		ExploreController.instance:registerMapComp(iter_4_1, arg_4_0._comps[iter_4_1])
 	end
 
-	for slot6, slot7 in pairs(slot0._comps) do
-		if slot7.loadMap then
-			slot7:loadMap()
+	for iter_4_2, iter_4_3 in pairs(arg_4_0._comps) do
+		if iter_4_3.loadMap then
+			iter_4_3:loadMap()
 		end
 	end
 end
 
-function slot0.initMapDone(slot0)
-	ExploreController.instance:unregisterCallback(ExploreEvent.InitMapDone, slot0.initMapDone, slot0)
-	slot0:dispatchEvent(ExploreEvent.InitMapDone)
+function var_0_0.initMapDone(arg_5_0)
+	ExploreController.instance:unregisterCallback(ExploreEvent.InitMapDone, arg_5_0.initMapDone, arg_5_0)
+	arg_5_0:dispatchEvent(ExploreEvent.InitMapDone)
 end
 
-function slot0.onSceneClose(slot0, slot1, slot2)
-	slot0._scene.level:unregisterCallback(CommonSceneLevelComp.OnLevelLoaded, slot0._onLevelLoaded, slot0)
+function var_0_0.onSceneClose(arg_6_0, arg_6_1, arg_6_2)
+	arg_6_0._scene.level:unregisterCallback(CommonSceneLevelComp.OnLevelLoaded, arg_6_0._onLevelLoaded, arg_6_0)
+	ExploreController.instance:unregisterCallback(ExploreEvent.InitMapDone, arg_6_0.initMapDone, arg_6_0)
 
-	slot6 = slot0.initMapDone
-	slot7 = slot0
-
-	ExploreController.instance:unregisterCallback(ExploreEvent.InitMapDone, slot6, slot7)
-
-	for slot6, slot7 in pairs(slot0._comps) do
-		if slot7.unloadMap then
-			slot7:unloadMap()
+	for iter_6_0, iter_6_1 in pairs(arg_6_0._comps) do
+		if iter_6_1.unloadMap then
+			iter_6_1:unloadMap()
 		end
 	end
 
 	ExploreStepController.instance:clear()
 
-	for slot6 in pairs(slot0._comps) do
-		ExploreController.instance:unRegisterMapComp(slot6)
+	for iter_6_2 in pairs(arg_6_0._comps) do
+		ExploreController.instance:unRegisterMapComp(iter_6_2)
 	end
 
-	slot0._comps = {}
+	arg_6_0._comps = {}
 end
 
-return slot0
+return var_0_0

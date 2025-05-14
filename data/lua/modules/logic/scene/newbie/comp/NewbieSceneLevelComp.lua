@@ -1,100 +1,103 @@
-module("modules.logic.scene.newbie.comp.NewbieSceneLevelComp", package.seeall)
+﻿module("modules.logic.scene.newbie.comp.NewbieSceneLevelComp", package.seeall)
 
-slot0 = class("NewbieSceneLevelComp", BaseSceneComp)
+local var_0_0 = class("NewbieSceneLevelComp", BaseSceneComp)
 
-function slot0.onInit(slot0)
-	slot0._scene = slot0:getCurScene()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._scene = arg_1_0:getCurScene()
 end
 
-function slot0.onSceneStart(slot0, slot1, slot2)
-	slot0.animSuccess = false
-	slot0.switchSuccess = false
+function var_0_0.onSceneStart(arg_2_0, arg_2_1, arg_2_2)
+	arg_2_0.animSuccess = false
+	arg_2_0.switchSuccess = false
 
-	slot0:_loadMainScene(slot2, function ()
-		uv0._scene:onPrepared()
+	arg_2_0:_loadMainScene(arg_2_2, function()
+		arg_2_0._scene:onPrepared()
 	end)
 end
 
-function slot0._loadMainScene(slot0, slot1, slot2, slot3)
-	slot0._callback = slot2
-	slot0._callbackTarget = slot3
+function var_0_0._loadMainScene(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
+	arg_4_0._callback = arg_4_2
+	arg_4_0._callbackTarget = arg_4_3
 
-	if slot0._resPath then
-		slot0:doCallback()
+	if arg_4_0._resPath then
+		arg_4_0:doCallback()
 
 		return
 	end
 
-	slot0._levelId = slot1
-	slot0._resPath = ResUrl.getSceneLevelUrl(slot0._levelId)
+	arg_4_0._levelId = arg_4_1
+	arg_4_0._resPath = ResUrl.getSceneLevelUrl(arg_4_0._levelId)
 
-	loadAbAsset(slot0._resPath, false, slot0._onLoadCallback, slot0)
+	loadAbAsset(arg_4_0._resPath, false, arg_4_0._onLoadCallback, arg_4_0)
 end
 
-function slot0._onLoadCallback(slot0, slot1)
-	if slot1.IsLoadSuccess then
-		slot0._assetItem = slot1
+function var_0_0._onLoadCallback(arg_5_0, arg_5_1)
+	if arg_5_1.IsLoadSuccess then
+		arg_5_0._assetItem = arg_5_1
 
-		slot0._assetItem:Retain()
+		arg_5_0._assetItem:Retain()
 
-		slot0._instGO = gohelper.clone(slot0._assetItem:GetResource(slot0._resPath), GameSceneMgr.instance:getScene(SceneType.Main):getSceneContainerGO())
+		local var_5_0 = GameSceneMgr.instance:getScene(SceneType.Main):getSceneContainerGO()
 
-		WeatherController.instance:initSceneGo(slot0._instGO, slot0._onSwitchResLoaded, slot0)
-		slot0._scene.yearAnimation:initAnimationCurve(slot0._onAnimationCurveLoaded, slot0)
-		slot0:dispatchEvent(CommonSceneLevelComp.OnLevelLoaded, slot0._levelId)
+		arg_5_0._instGO = gohelper.clone(arg_5_0._assetItem:GetResource(arg_5_0._resPath), var_5_0)
+
+		WeatherController.instance:initSceneGo(arg_5_0._instGO, arg_5_0._onSwitchResLoaded, arg_5_0)
+		arg_5_0._scene.yearAnimation:initAnimationCurve(arg_5_0._onAnimationCurveLoaded, arg_5_0)
+		arg_5_0:dispatchEvent(CommonSceneLevelComp.OnLevelLoaded, arg_5_0._levelId)
 	end
 end
 
-function slot0._onAnimationCurveLoaded(slot0)
-	slot0.animSuccess = true
+function var_0_0._onAnimationCurveLoaded(arg_6_0)
+	arg_6_0.animSuccess = true
 
-	slot0:_check()
+	arg_6_0:_check()
 end
 
-function slot0._onSwitchResLoaded(slot0)
-	slot0.switchSuccess = true
+function var_0_0._onSwitchResLoaded(arg_7_0)
+	arg_7_0.switchSuccess = true
 
-	slot0:_check()
+	arg_7_0:_check()
 end
 
-function slot0._check(slot0)
-	if slot0.animSuccess and slot0.switchSuccess then
-		slot0:doCallback()
+function var_0_0._check(arg_8_0)
+	if arg_8_0.animSuccess and arg_8_0.switchSuccess then
+		arg_8_0:doCallback()
 	end
 end
 
-function slot0.doCallback(slot0)
-	if slot0._callback then
-		slot0._callback(slot0._callbackTarget)
+function var_0_0.doCallback(arg_9_0)
+	if arg_9_0._callback then
+		arg_9_0._callback(arg_9_0._callbackTarget)
 
-		slot0._callback = nil
-		slot0._callbackTarget = nil
+		arg_9_0._callback = nil
+		arg_9_0._callbackTarget = nil
 	end
 end
 
-function slot0.onSceneClose(slot0)
-	if slot0._assetItem then
-		if slot0._instGO then
-			gohelper.destroy(slot0._instGO)
+function var_0_0.onSceneClose(arg_10_0)
+	if arg_10_0._assetItem then
+		if arg_10_0._instGO then
+			gohelper.destroy(arg_10_0._instGO)
 		end
 
-		slot0._assetItem:Release()
+		arg_10_0._assetItem:Release()
 
-		slot0._assetItem = nil
+		arg_10_0._assetItem = nil
 	end
 
-	slot0._resPath = nil
-	slot0.animSuccess = false
-	slot0.switchSuccess = false
+	arg_10_0._resPath = nil
+	arg_10_0.animSuccess = false
+	arg_10_0.switchSuccess = false
 
 	WeatherController.instance:onSceneClose()
 end
 
-function slot0._onLevelLoaded(slot0, slot1)
+function var_0_0._onLevelLoaded(arg_11_0, arg_11_1)
+	return
 end
 
-function slot0.getSceneGo(slot0)
-	return slot0._instGO
+function var_0_0.getSceneGo(arg_12_0)
+	return arg_12_0._instGO
 end
 
-return slot0
+return var_0_0

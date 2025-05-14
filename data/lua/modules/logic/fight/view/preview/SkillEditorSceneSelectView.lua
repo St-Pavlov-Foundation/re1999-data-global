@@ -1,59 +1,64 @@
-module("modules.logic.fight.view.preview.SkillEditorSceneSelectView", package.seeall)
+﻿module("modules.logic.fight.view.preview.SkillEditorSceneSelectView", package.seeall)
 
-slot0 = class("SkillEditorSceneSelectView", BaseView)
+local var_0_0 = class("SkillEditorSceneSelectView", BaseView)
 
-function slot0.ctor(slot0)
+function var_0_0.ctor(arg_1_0)
+	return
 end
 
-function slot0.onInitView(slot0)
-	slot0._btnSelectScene = SLFramework.UGUI.UIClickListener.GetWithPath(slot0.viewGO, "scene/Grid/imgScene")
-	slot0._sceneViewGO = gohelper.findChild(slot0.viewGO, "selectScene")
+function var_0_0.onInitView(arg_2_0)
+	arg_2_0._btnSelectScene = SLFramework.UGUI.UIClickListener.GetWithPath(arg_2_0.viewGO, "scene/Grid/imgScene")
+	arg_2_0._sceneViewGO = gohelper.findChild(arg_2_0.viewGO, "selectScene")
 
-	gohelper.setActive(slot0._itemGOPrefab, false)
+	gohelper.setActive(arg_2_0._itemGOPrefab, false)
 
-	slot0._inp = gohelper.findChildTextMeshInputField(slot0.viewGO, "selectScene/inp")
-	slot0._btnClose = SLFramework.UGUI.ButtonWrap.GetWithPath(slot0.viewGO, "selectScene/btnClose")
+	arg_2_0._inp = gohelper.findChildTextMeshInputField(arg_2_0.viewGO, "selectScene/inp")
+	arg_2_0._btnClose = SLFramework.UGUI.ButtonWrap.GetWithPath(arg_2_0.viewGO, "selectScene/btnClose")
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnSelectScene:AddClickListener(slot0._showThis, slot0)
-	slot0._btnClose:AddClickListener(slot0._hideThis, slot0)
-	slot0._inp:AddOnValueChanged(slot0._onInpValueChanged, slot0)
-	SLFramework.UGUI.UIClickListener.Get(slot0._sceneViewGO):AddClickListener(slot0._hideThis, slot0)
+function var_0_0.addEvents(arg_3_0)
+	arg_3_0._btnSelectScene:AddClickListener(arg_3_0._showThis, arg_3_0)
+	arg_3_0._btnClose:AddClickListener(arg_3_0._hideThis, arg_3_0)
+	arg_3_0._inp:AddOnValueChanged(arg_3_0._onInpValueChanged, arg_3_0)
+	SLFramework.UGUI.UIClickListener.Get(arg_3_0._sceneViewGO):AddClickListener(arg_3_0._hideThis, arg_3_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnSelectScene:RemoveClickListener()
-	slot0._btnClose:RemoveClickListener()
-	slot0._inp:RemoveOnValueChanged()
-	SLFramework.UGUI.UIClickListener.Get(slot0._sceneViewGO):RemoveClickListener()
+function var_0_0.removeEvents(arg_4_0)
+	arg_4_0._btnSelectScene:RemoveClickListener()
+	arg_4_0._btnClose:RemoveClickListener()
+	arg_4_0._inp:RemoveOnValueChanged()
+	SLFramework.UGUI.UIClickListener.Get(arg_4_0._sceneViewGO):RemoveClickListener()
 end
 
-function slot0._showThis(slot0)
-	gohelper.setActive(slot0._sceneViewGO, true)
-	slot0:_updateItems()
-	slot0:_updateItemSelect()
+function var_0_0._showThis(arg_5_0)
+	gohelper.setActive(arg_5_0._sceneViewGO, true)
+	arg_5_0:_updateItems()
+	arg_5_0:_updateItemSelect()
 end
 
-function slot0._hideThis(slot0)
-	gohelper.setActive(slot0._sceneViewGO, false)
+function var_0_0._hideThis(arg_6_0)
+	gohelper.setActive(arg_6_0._sceneViewGO, false)
 end
 
-function slot0._onInpValueChanged(slot0, slot1)
-	slot0:_updateItems()
-	slot0:_updateItemSelect()
+function var_0_0._onInpValueChanged(arg_7_0, arg_7_1)
+	arg_7_0:_updateItems()
+	arg_7_0:_updateItemSelect()
 end
 
-function slot0._updateItems(slot0)
-	SkillEditorSceneSelectModel.instance:setSelect(slot0._inp:GetText())
+function var_0_0._updateItems(arg_8_0)
+	SkillEditorSceneSelectModel.instance:setSelect(arg_8_0._inp:GetText())
 end
 
-function slot0._updateItemSelect(slot0, slot1)
-	for slot6, slot7 in ipairs(SkillEditorSceneSelectModel.instance:getList()) do
-		if slot7.co.id == (slot1 or GameSceneMgr.instance:getScene(SceneType.Fight).level:getCurLevelId()) then
-			SkillEditorSceneSelectModel.instance:selectCell(slot6, true)
+function var_0_0._updateItemSelect(arg_9_0, arg_9_1)
+	arg_9_1 = arg_9_1 or GameSceneMgr.instance:getScene(SceneType.Fight).level:getCurLevelId()
+
+	local var_9_0 = SkillEditorSceneSelectModel.instance:getList()
+
+	for iter_9_0, iter_9_1 in ipairs(var_9_0) do
+		if iter_9_1.co.id == arg_9_1 then
+			SkillEditorSceneSelectModel.instance:selectCell(iter_9_0, true)
 		end
 	end
 end
 
-return slot0
+return var_0_0

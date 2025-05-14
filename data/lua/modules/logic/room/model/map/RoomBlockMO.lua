@@ -1,179 +1,212 @@
-module("modules.logic.room.model.map.RoomBlockMO", package.seeall)
+﻿module("modules.logic.room.model.map.RoomBlockMO", package.seeall)
 
-slot0 = pureTable("RoomBlockMO")
+local var_0_0 = pureTable("RoomBlockMO")
 
-function slot0.init(slot0, slot1)
-	slot0.id = slot1.blockId
-	slot0.blockId = slot1.blockId
-	slot0.defineId = slot1.defineId
-	slot0.packageId = slot1.packageId
-	slot0.packageOrder = slot1.packageOrder
-	slot0.mainRes = slot1.mainRes
-	slot0.rotate = slot1.rotate or 0
-	slot0.blockState = slot1.blockState or RoomBlockEnum.BlockState.Inventory
-	slot0.ownType = slot1.ownType or RoomBlockEnum.OwnType.Package
-	slot0.useState = slot1.useState or RoomBlockEnum.UseState.Normal
-	slot0.blockCleanType = slot1.blockCleanType or 0
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.id = arg_1_1.blockId
+	arg_1_0.blockId = arg_1_1.blockId
+	arg_1_0.defineId = arg_1_1.defineId
+	arg_1_0.packageId = arg_1_1.packageId
+	arg_1_0.packageOrder = arg_1_1.packageOrder
+	arg_1_0.mainRes = arg_1_1.mainRes
+	arg_1_0.rotate = arg_1_1.rotate or 0
+	arg_1_0.blockState = arg_1_1.blockState or RoomBlockEnum.BlockState.Inventory
+	arg_1_0.ownType = arg_1_1.ownType or RoomBlockEnum.OwnType.Package
+	arg_1_0.useState = arg_1_1.useState or RoomBlockEnum.UseState.Normal
+	arg_1_0.blockCleanType = arg_1_1.blockCleanType or 0
 
-	if slot0:isInMap() then
-		slot0.hexPoint = HexPoint(slot1.x or 0, slot1.y or 0)
+	if arg_1_0:isInMap() then
+		arg_1_0.hexPoint = HexPoint(arg_1_1.x or 0, arg_1_1.y or 0)
 	end
 
-	if slot0.blockState == RoomBlockEnum.BlockState.Water then
-		slot0.distanceStyle = slot1.distanceStyle
+	if arg_1_0.blockState == RoomBlockEnum.BlockState.Water then
+		arg_1_0.distanceStyle = arg_1_1.distanceStyle
 	end
 
-	slot0._riverTypeDict = nil
-	slot0.replaceDefineId = nil
-	slot0.replaceRotate = nil
+	arg_1_0._riverTypeDict = nil
+	arg_1_0.replaceDefineId = nil
+	arg_1_0.replaceRotate = nil
 
-	slot0:setWaterType(slot1.waterType or -1)
-	slot0:setTempWaterType()
+	arg_1_0:setWaterType(arg_1_1.waterType or -1)
+	arg_1_0:setTempWaterType()
 
-	slot0._defineWaterType = slot1.defineWaterType
-	slot0._resourceListDic = {}
-	slot0._isHasLightDic = {}
+	arg_1_0._defineWaterType = arg_1_1.defineWaterType
+	arg_1_0._resourceListDic = {}
+	arg_1_0._isHasLightDic = {}
 end
 
-function slot0.getMainRes(slot0)
-	return slot0.mainRes
+function var_0_0.getMainRes(arg_2_0)
+	return arg_2_0.mainRes
 end
 
-function slot0.getBlockDefineCfg(slot0, slot1)
-	slot2 = slot0:getDefineId(slot1)
+function var_0_0.getBlockDefineCfg(arg_3_0, arg_3_1)
+	local var_3_0 = arg_3_0:getDefineId(arg_3_1)
 
-	if not slot0._blockDefineCfg or slot0._blockDefineCfg.defineId ~= slot2 then
-		slot0._blockDefineCfg = RoomConfig.instance:getBlockDefineConfig(slot2)
+	if not arg_3_0._blockDefineCfg or arg_3_0._blockDefineCfg.defineId ~= var_3_0 then
+		arg_3_0._blockDefineCfg = RoomConfig.instance:getBlockDefineConfig(var_3_0)
 	end
 
-	return slot0._blockDefineCfg
+	return arg_3_0._blockDefineCfg
 end
 
-function slot0.getDefineBlockType(slot0, slot1)
-	return slot0:getBlockDefineCfg(slot1) and slot2.blockType or 0
+function var_0_0.getDefineBlockType(arg_4_0, arg_4_1)
+	local var_4_0 = arg_4_0:getBlockDefineCfg(arg_4_1)
+
+	return var_4_0 and var_4_0.blockType or 0
 end
 
-function slot0.getDefineId(slot0, slot1)
-	return slot1 and slot0.defineId or slot0.replaceDefineId or slot0.defineId
+function var_0_0.getDefineId(arg_5_0, arg_5_1)
+	return arg_5_1 and arg_5_0.defineId or arg_5_0.replaceDefineId or arg_5_0.defineId
 end
 
-function slot0.getRotate(slot0, slot1)
-	return slot1 and slot0.rotate or slot0.replaceDefineId and slot0.replaceRotate or slot0.rotate
+function var_0_0.getRotate(arg_6_0, arg_6_1)
+	return arg_6_1 and arg_6_0.rotate or arg_6_0.replaceDefineId and arg_6_0.replaceRotate or arg_6_0.rotate
 end
 
-function slot0.getDefineWaterType(slot0, slot1, slot2)
-	if not slot1 and not slot2 and slot0:isInMapBlock() and slot0:getTempWaterType() and slot3 ~= -1 then
-		return slot3
+function var_0_0.getDefineWaterType(arg_7_0, arg_7_1, arg_7_2)
+	if not arg_7_1 and not arg_7_2 and arg_7_0:isInMapBlock() then
+		local var_7_0 = arg_7_0:getTempWaterType()
+
+		if var_7_0 and var_7_0 ~= -1 then
+			return var_7_0
+		end
 	end
 
-	return slot0:getOriginalWaterType(slot2)
+	return (arg_7_0:getOriginalWaterType(arg_7_2))
 end
 
-function slot0.getTempWaterType(slot0)
-	return slot0.tempWaterType
+function var_0_0.getTempWaterType(arg_8_0)
+	return arg_8_0.tempWaterType
 end
 
-function slot0.getWaterType(slot0)
-	return slot0.waterType
+function var_0_0.getWaterType(arg_9_0)
+	return arg_9_0.waterType
 end
 
-function slot0.getOriginalWaterType(slot0, slot1)
-	if not slot1 and slot0:isInMapBlock() and slot0:getWaterType() and slot2 ~= -1 then
-		return slot2
+function var_0_0.getOriginalWaterType(arg_10_0, arg_10_1)
+	if not arg_10_1 and arg_10_0:isInMapBlock() then
+		local var_10_0 = arg_10_0:getWaterType()
+
+		if var_10_0 and var_10_0 ~= -1 then
+			return var_10_0
+		end
 	end
 
-	return slot0._defineWaterType or slot0:getBlockDefineCfg(slot1) and slot3.waterType or 0
+	local var_10_1 = arg_10_0._defineWaterType
+
+	if not var_10_1 then
+		local var_10_2 = arg_10_0:getBlockDefineCfg(arg_10_1)
+
+		var_10_1 = var_10_2 and var_10_2.waterType or 0
+	end
+
+	return var_10_1
 end
 
-function slot0.getDefineWaterAreaType(slot0, slot1)
-	return slot0:getBlockDefineCfg(slot1) and slot2.waterAreaType or 0
+function var_0_0.getDefineWaterAreaType(arg_11_0, arg_11_1)
+	local var_11_0 = arg_11_0:getBlockDefineCfg(arg_11_1)
+
+	return var_11_0 and var_11_0.waterAreaType or 0
 end
 
-function slot0.isFullWater(slot0, slot1)
-	if slot0:getRiverCount(slot1) < 1 and slot0:getResourceCenter(slot1) ~= RoomResourceEnum.ResourceId.River then
+function var_0_0.isFullWater(arg_12_0, arg_12_1)
+	local var_12_0 = arg_12_0:getRiverCount(arg_12_1)
+
+	if var_12_0 < 1 and arg_12_0:getResourceCenter(arg_12_1) ~= RoomResourceEnum.ResourceId.River then
 		return false
 	end
 
-	if slot2 >= 6 then
+	if var_12_0 >= 6 then
 		return true
 	end
 
-	return slot0:isHalfLakeWater(slot1)
+	return arg_12_0:isHalfLakeWater(arg_12_1)
 end
 
-function slot0.isHalfLakeWater(slot0, slot1)
-	return slot0:getDefineWaterAreaType(slot1) == 1
+function var_0_0.isHalfLakeWater(arg_13_0, arg_13_1)
+	return arg_13_0:getDefineWaterAreaType(arg_13_1) == 1
 end
 
-function slot0.getResourceList(slot0, slot1)
-	if not slot0:getBlockDefineCfg(slot1) then
-		slot0._isHasLightDic[-1000] = false
+function var_0_0.getResourceList(arg_14_0, arg_14_1)
+	local var_14_0 = arg_14_0:getBlockDefineCfg(arg_14_1)
+
+	if not var_14_0 then
+		local var_14_1 = -1000
+
+		arg_14_0._isHasLightDic[var_14_1] = false
 
 		return RoomResourceEnum.Block.NoneList
 	end
 
-	if not slot0._resourceListDic[slot0._blockDefineCfg.defineId] then
-		slot3 = {}
+	if not arg_14_0._resourceListDic[arg_14_0._blockDefineCfg.defineId] then
+		local var_14_2 = {}
+		local var_14_3 = false
 
-		for slot8 = 1, 6 do
-			table.insert(slot3, slot2.resourceIds[slot8 + 1])
+		for iter_14_0 = 1, 6 do
+			local var_14_4 = var_14_0.resourceIds[iter_14_0 + 1]
 
-			if not false and RoomConfig.instance:isLightByResourceId(slot9) then
-				slot4 = true
+			table.insert(var_14_2, var_14_4)
+
+			if not var_14_3 and RoomConfig.instance:isLightByResourceId(var_14_4) then
+				var_14_3 = true
 			end
 		end
 
-		slot0._isHasLightDic[slot0._blockDefineCfg.defineId] = slot4
-		slot0._resourceListDic[slot0._blockDefineCfg.defineId] = slot3
+		arg_14_0._isHasLightDic[arg_14_0._blockDefineCfg.defineId] = var_14_3
+		arg_14_0._resourceListDic[arg_14_0._blockDefineCfg.defineId] = var_14_2
 	end
 
-	if slot0:getUseState() == RoomBlockEnum.UseState.TransportPath then
-		if slot2.resIdCountDict[RoomResourceEnum.ResourceId.River] then
+	if arg_14_0:getUseState() == RoomBlockEnum.UseState.TransportPath then
+		if var_14_0.resIdCountDict[RoomResourceEnum.ResourceId.River] then
 			return RoomResourceEnum.Block.RiverList
 		end
 
 		return RoomResourceEnum.Block.NoneList
 	end
 
-	return slot0._resourceListDic[slot0._blockDefineCfg.defineId]
+	return arg_14_0._resourceListDic[arg_14_0._blockDefineCfg.defineId]
 end
 
-function slot0.isHasLight(slot0, slot1)
-	if slot0._isHasLightDic[slot0:getDefineId(slot1)] == nil then
-		slot0:getResourceList(slot1)
+function var_0_0.isHasLight(arg_15_0, arg_15_1)
+	local var_15_0 = arg_15_0._isHasLightDic[arg_15_0:getDefineId(arg_15_1)]
 
-		return slot0._isHasLightDic[slot0:getDefineId(slot1)]
+	if var_15_0 == nil then
+		arg_15_0:getResourceList(arg_15_1)
+
+		return arg_15_0._isHasLightDic[arg_15_0:getDefineId(arg_15_1)]
 	end
 
-	return slot2
+	return var_15_0
 end
 
-function slot0.getResourceCenter(slot0, slot1)
-	if not slot0:getBlockDefineCfg(slot1) then
+function var_0_0.getResourceCenter(arg_16_0, arg_16_1)
+	local var_16_0 = arg_16_0:getBlockDefineCfg(arg_16_1)
+
+	if not var_16_0 then
 		return RoomResourceEnum.ResourceId.None
 	end
 
-	if slot0:getUseState() == RoomBlockEnum.UseState.TransportPath then
-		if slot2.resIdCountDict[RoomResourceEnum.ResourceId.River] then
+	if arg_16_0:getUseState() == RoomBlockEnum.UseState.TransportPath then
+		if var_16_0.resIdCountDict[RoomResourceEnum.ResourceId.River] then
 			return RoomResourceEnum.ResourceId.River
 		end
 
 		return RoomResourceEnum.ResourceId.None
 	end
 
-	return slot2.resourceIds[1]
+	return var_16_0.resourceIds[1]
 end
 
-function slot0.isInMap(slot0)
-	return slot0.blockState == RoomBlockEnum.BlockState.Map or slot0.blockState == RoomBlockEnum.BlockState.Water or slot0.blockState == RoomBlockEnum.BlockState.Temp
+function var_0_0.isInMap(arg_17_0)
+	return arg_17_0.blockState == RoomBlockEnum.BlockState.Map or arg_17_0.blockState == RoomBlockEnum.BlockState.Water or arg_17_0.blockState == RoomBlockEnum.BlockState.Temp
 end
 
-function slot0.isInMapBlock(slot0)
-	return slot0.blockState == RoomBlockEnum.BlockState.Map or slot0.blockState == RoomBlockEnum.BlockState.Temp
+function var_0_0.isInMapBlock(arg_18_0)
+	return arg_18_0.blockState == RoomBlockEnum.BlockState.Map or arg_18_0.blockState == RoomBlockEnum.BlockState.Temp
 end
 
-function slot0.canPlace(slot0)
-	if slot0.blockState ~= RoomBlockEnum.BlockState.Water then
+function var_0_0.canPlace(arg_19_0)
+	if arg_19_0.blockState ~= RoomBlockEnum.BlockState.Water then
 		return false
 	end
 
@@ -181,8 +214,12 @@ function slot0.canPlace(slot0)
 		return true
 	end
 
-	for slot5, slot6 in ipairs(slot0.hexPoint:getNeighbors()) do
-		if RoomMapBlockModel.instance:getBlockMO(slot6.x, slot6.y) and slot7.blockState == RoomBlockEnum.BlockState.Map then
+	local var_19_0 = arg_19_0.hexPoint:getNeighbors()
+
+	for iter_19_0, iter_19_1 in ipairs(var_19_0) do
+		local var_19_1 = RoomMapBlockModel.instance:getBlockMO(iter_19_1.x, iter_19_1.y)
+
+		if var_19_1 and var_19_1.blockState == RoomBlockEnum.BlockState.Map then
 			return true
 		end
 	end
@@ -190,148 +227,170 @@ function slot0.canPlace(slot0)
 	return false
 end
 
-function slot0.resetOpState(slot0)
-	slot0._opState = RoomBlockEnum.OpState.Normal
+function var_0_0.resetOpState(arg_20_0)
+	arg_20_0._opState = RoomBlockEnum.OpState.Normal
 end
 
-function slot0.getOpState(slot0)
-	return slot0._opState or RoomBlockEnum.OpState.Normal
+function var_0_0.getOpState(arg_21_0)
+	return arg_21_0._opState or RoomBlockEnum.OpState.Normal
 end
 
-function slot0.getOpStateParam(slot0)
-	return slot0._opStateParamDic and slot0._opStateParamDic[slot0._opState]
+function var_0_0.getOpStateParam(arg_22_0)
+	return arg_22_0._opStateParamDic and arg_22_0._opStateParamDic[arg_22_0._opState]
 end
 
-function slot0.setOpState(slot0, slot1, slot2)
-	slot0._opState = slot1
-	slot0._opStateParamDic = slot0._opStateParamDic or {}
-	slot0._opStateParamDic[slot1] = slot2
+function var_0_0.setOpState(arg_23_0, arg_23_1, arg_23_2)
+	arg_23_0._opState = arg_23_1
+	arg_23_0._opStateParamDic = arg_23_0._opStateParamDic or {}
+	arg_23_0._opStateParamDic[arg_23_1] = arg_23_2
 end
 
-function slot0.setUseState(slot0, slot1)
-	slot0.useState = slot1
+function var_0_0.setUseState(arg_24_0, arg_24_1)
+	arg_24_0.useState = arg_24_1
 end
 
-function slot0.getUseState(slot0)
-	return slot0.useState or RoomBlockEnum.UseState.Normal
+function var_0_0.getUseState(arg_25_0)
+	return arg_25_0.useState or RoomBlockEnum.UseState.Normal
 end
 
-function slot0.setCleanType(slot0, slot1)
-	slot0.blockCleanType = slot1 or RoomBlockEnum.CleanType.Normal
+function var_0_0.setCleanType(arg_26_0, arg_26_1)
+	arg_26_0.blockCleanType = arg_26_1 or RoomBlockEnum.CleanType.Normal
 end
 
-function slot0.getCleanType(slot0)
-	return slot0.blockCleanType or RoomBlockEnum.CleanType.Normal
+function var_0_0.getCleanType(arg_27_0)
+	return arg_27_0.blockCleanType or RoomBlockEnum.CleanType.Normal
 end
 
-function slot0.setWaterType(slot0, slot1)
-	slot0.waterType = slot1
+function var_0_0.setWaterType(arg_28_0, arg_28_1)
+	arg_28_0.waterType = arg_28_1
 end
 
-function slot0.setTempWaterType(slot0, slot1)
-	slot0.tempWaterType = slot1
+function var_0_0.setTempWaterType(arg_29_0, arg_29_1)
+	arg_29_0.tempWaterType = arg_29_1
 end
 
-function slot0.isWaterGradient(slot0)
-	slot1 = true
-	slot3 = slot0:getTempWaterType()
+function var_0_0.isWaterGradient(arg_30_0)
+	local var_30_0 = true
+	local var_30_1 = arg_30_0:getWaterType()
+	local var_30_2 = arg_30_0:getTempWaterType()
 
-	if slot0:getWaterType() and slot2 ~= -1 or slot3 and slot3 ~= -1 then
-		slot1 = false
+	if var_30_1 and var_30_1 ~= -1 or var_30_2 and var_30_2 ~= -1 then
+		var_30_0 = false
 	end
 
-	return slot1
+	return var_30_0
 end
 
-function slot0.getResourceId(slot0, slot1, slot2, slot3)
-	if slot0.blockState == RoomBlockEnum.BlockState.Water then
+function var_0_0.getResourceId(arg_31_0, arg_31_1, arg_31_2, arg_31_3)
+	if arg_31_0.blockState == RoomBlockEnum.BlockState.Water then
 		return RoomResourceEnum.ResourceId.Empty
 	end
 
-	if slot0.blockState == RoomBlockEnum.BlockState.Fake then
+	if arg_31_0.blockState == RoomBlockEnum.BlockState.Fake then
 		return RoomResourceEnum.ResourceId.None
 	end
 
-	slot4 = RoomResourceEnum.ResourceId.None
+	local var_31_0 = RoomResourceEnum.ResourceId.None
 
-	return (slot1 ~= 0 or slot0:getResourceCenter()) and slot0:getResourceList()[slot2 and slot1 or RoomRotateHelper.rotateDirection(slot1, -slot0:getRotate())]
+	if arg_31_1 == 0 then
+		var_31_0 = arg_31_0:getResourceCenter()
+	else
+		arg_31_1 = arg_31_2 and arg_31_1 or RoomRotateHelper.rotateDirection(arg_31_1, -arg_31_0:getRotate())
+		var_31_0 = arg_31_0:getResourceList()[arg_31_1]
+	end
+
+	return var_31_0
 end
 
-function slot0.getResourceTypeRiver(slot0, slot1, slot2)
-	if slot0.blockState == RoomBlockEnum.BlockState.Water or slot0.blockState == RoomBlockEnum.BlockState.Fake then
+function var_0_0.getResourceTypeRiver(arg_32_0, arg_32_1, arg_32_2)
+	if arg_32_0.blockState == RoomBlockEnum.BlockState.Water or arg_32_0.blockState == RoomBlockEnum.BlockState.Fake then
 		return nil
 	end
 
-	if slot1 == 0 then
+	if arg_32_1 == 0 then
 		return nil
 	end
 
-	if not slot0._riverTypeDict then
-		slot0:refreshRiver()
+	if not arg_32_0._riverTypeDict then
+		arg_32_0:refreshRiver()
 	end
 
-	if slot2 then
-		slot1 = RoomRotateHelper.rotateDirection(slot1, slot0:getRotate()) or slot1
-	end
+	arg_32_1 = arg_32_2 and RoomRotateHelper.rotateDirection(arg_32_1, arg_32_0:getRotate()) or arg_32_1
 
-	return slot0._riverTypeDict[slot1], slot0._neighborBlockTypeDict and slot0._neighborBlockTypeDict[slot1], slot0._neighborBlockBTypeDict and slot0._neighborBlockBTypeDict[slot1]
+	local var_32_0 = arg_32_0._riverTypeDict[arg_32_1]
+	local var_32_1 = arg_32_0._neighborBlockTypeDict and arg_32_0._neighborBlockTypeDict[arg_32_1]
+	local var_32_2 = arg_32_0._neighborBlockBTypeDict and arg_32_0._neighborBlockBTypeDict[arg_32_1]
+
+	return var_32_0, var_32_1, var_32_2
 end
 
-function slot0.refreshRiver(slot0)
-	if slot0:getRiverCount() < 1 then
+function var_0_0.refreshRiver(arg_33_0)
+	if arg_33_0:getRiverCount() < 1 then
 		return
 	end
 
-	slot3 = slot0.replaceDefineId or slot0.defineId
+	local var_33_0 = arg_33_0:isFullWater()
+	local var_33_1 = arg_33_0.replaceDefineId or arg_33_0.defineId
 
-	if not slot0:isFullWater() and slot0._lastRefreshRiverDefineId == slot3 then
+	if not var_33_0 and arg_33_0._lastRefreshRiverDefineId == var_33_1 then
 		return
 	end
 
-	slot0._lastRefreshRiverDefineId = slot3
-	slot0._riverTypeDict, slot0._neighborBlockTypeDict, slot0._neighborBlockBTypeDict = RoomRiverHelper.getRiverTypeDictByMO(slot0)
+	arg_33_0._lastRefreshRiverDefineId = var_33_1
+	arg_33_0._riverTypeDict, arg_33_0._neighborBlockTypeDict, arg_33_0._neighborBlockBTypeDict = RoomRiverHelper.getRiverTypeDictByMO(arg_33_0)
 end
 
-function slot0.hasRiver(slot0, slot1)
-	return slot0:getResourceCenter(slot1) == RoomResourceEnum.ResourceId.River or slot0:getRiverCount(slot1) > 0
+function var_0_0.hasRiver(arg_34_0, arg_34_1)
+	return arg_34_0:getResourceCenter(arg_34_1) == RoomResourceEnum.ResourceId.River or arg_34_0:getRiverCount(arg_34_1) > 0
 end
 
-function slot0.getRiverCount(slot0, slot1)
-	for slot7, slot8 in ipairs(slot0:getResourceList(slot1)) do
-		if slot8 == RoomResourceEnum.ResourceId.River then
-			slot3 = 0 + 1
+function var_0_0.getRiverCount(arg_35_0, arg_35_1)
+	local var_35_0 = arg_35_0:getResourceList(arg_35_1)
+	local var_35_1 = 0
+
+	for iter_35_0, iter_35_1 in ipairs(var_35_0) do
+		if iter_35_1 == RoomResourceEnum.ResourceId.River then
+			var_35_1 = var_35_1 + 1
 		end
 	end
 
-	return slot3
+	return var_35_1
 end
 
-function slot0.getNeighborBlockLinkResourceId(slot0, slot1, slot2)
-	if not slot1 or slot1 == 0 or slot1 > 6 then
+function var_0_0.getNeighborBlockLinkResourceId(arg_36_0, arg_36_1, arg_36_2)
+	if not arg_36_1 or arg_36_1 == 0 or arg_36_1 > 6 then
 		return nil
 	end
 
-	if slot0:isInMap() then
-		if slot2 then
-			slot1 = RoomRotateHelper.rotateDirection(slot1, slot0:getRotate())
+	if arg_36_0:isInMap() then
+		if arg_36_2 then
+			arg_36_1 = RoomRotateHelper.rotateDirection(arg_36_1, arg_36_0:getRotate())
 		end
 
-		slot3 = slot0.hexPoint:getNeighbor(slot1)
+		local var_36_0 = arg_36_0.hexPoint:getNeighbor(arg_36_1)
+		local var_36_1 = RoomMapBlockModel.instance:getBlockMO(var_36_0.x, var_36_0.y)
 
-		if RoomMapBlockModel.instance:getBlockMO(slot3.x, slot3.y) then
-			return slot4:getResourceId(RoomRotateHelper.rotateDirection((slot1 - 1 + 3) % 6 + 1, slot4:getRotate()), true, true), slot4
+		if var_36_1 then
+			local var_36_2 = (arg_36_1 - 1 + 3) % 6 + 1
+			local var_36_3 = RoomRotateHelper.rotateDirection(var_36_2, var_36_1:getRotate())
+
+			return var_36_1:getResourceId(var_36_3, true, true), var_36_1
 		end
 	end
 
 	return nil
 end
 
-function slot0.hasNeighborSameBlockType(slot0)
-	if slot0:isInMap() then
-		for slot6 = 1, 6 do
-			slot7 = HexPoint.directions[slot6]
+function var_0_0.hasNeighborSameBlockType(arg_37_0)
+	if arg_37_0:isInMap() then
+		local var_37_0 = RoomMapBlockModel.instance
+		local var_37_1 = arg_37_0:getDefineBlockType()
 
-			if RoomMapBlockModel.instance:getBlockMO(slot0.hexPoint.x + slot7.x, slot0.hexPoint.y + slot7.y) and slot0:getDefineBlockType() == slot8:getDefineBlockType() then
+		for iter_37_0 = 1, 6 do
+			local var_37_2 = HexPoint.directions[iter_37_0]
+			local var_37_3 = var_37_0:getBlockMO(arg_37_0.hexPoint.x + var_37_2.x, arg_37_0.hexPoint.y + var_37_2.y)
+
+			if var_37_3 and var_37_1 == var_37_3:getDefineBlockType() then
 				return true
 			end
 		end
@@ -340,4 +399,4 @@ function slot0.hasNeighborSameBlockType(slot0)
 	return false
 end
 
-return slot0
+return var_0_0

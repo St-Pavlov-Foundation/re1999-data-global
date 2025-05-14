@@ -1,43 +1,48 @@
-module("modules.logic.scene.fight.preloadwork.FightPreloadCardInitWork", package.seeall)
+﻿module("modules.logic.scene.fight.preloadwork.FightPreloadCardInitWork", package.seeall)
 
-slot0 = class("FightPreloadCardInitWork", BaseWork)
+local var_0_0 = class("FightPreloadCardInitWork", BaseWork)
 
-function slot0.onStart(slot0, slot1)
+function var_0_0.onStart(arg_1_0, arg_1_1)
 	if ViewMgr.instance:isOpenFinish(ViewName.FightView) then
-		slot0:_updateCards()
+		arg_1_0:_updateCards()
 	else
-		ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, slot0._onOpenViewFinish, slot0)
+		ViewMgr.instance:registerCallback(ViewEvent.OnOpenViewFinish, arg_1_0._onOpenViewFinish, arg_1_0)
 	end
 end
 
-function slot0._onOpenViewFinish(slot0, slot1)
-	if slot1 == ViewName.FightView then
-		ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, slot0._onOpenViewFinish, slot0)
-		slot0:_updateCards()
+function var_0_0._onOpenViewFinish(arg_2_0, arg_2_1)
+	if arg_2_1 == ViewName.FightView then
+		ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, arg_2_0._onOpenViewFinish, arg_2_0)
+		arg_2_0:_updateCards()
 	end
 end
 
-function slot0._updateCards(slot0)
-	FightController.instance:dispatchEvent(FightEvent.UpdateHandCards, FightCardModel.instance:getHandCards())
+function var_0_0._updateCards(arg_3_0)
+	local var_3_0 = FightCardModel.instance:getHandCards()
 
-	slot3 = gohelper.findChild(ViewMgr.instance:getContainer(ViewName.FightView).viewGO, "root/handcards/handcards")
+	FightController.instance:dispatchEvent(FightEvent.UpdateHandCards, var_3_0)
 
-	gohelper.setActive(slot3, true)
+	local var_3_1 = ViewMgr.instance:getContainer(ViewName.FightView)
+	local var_3_2 = gohelper.findChild(var_3_1.viewGO, "root/handcards/handcards")
 
-	if gohelper.onceAddComponent(slot3, gohelper.Type_CanvasGroup) then
-		slot4.alpha = 0
+	gohelper.setActive(var_3_2, true)
+
+	local var_3_3 = gohelper.onceAddComponent(var_3_2, gohelper.Type_CanvasGroup)
+
+	if var_3_3 then
+		var_3_3.alpha = 0
 	end
 
-	TaskDispatcher.runDelay(slot0._delayDone, slot0, 0.01)
+	TaskDispatcher.runDelay(arg_3_0._delayDone, arg_3_0, 0.01)
 end
 
-function slot0._delayDone(slot0)
-	slot0:onDone(true)
+function var_0_0._delayDone(arg_4_0)
+	arg_4_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
-	TaskDispatcher.cancelTask(slot0._delayDone, slot0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, slot0._onOpenViewFinish, slot0)
+function var_0_0.clearWork(arg_5_0)
+	TaskDispatcher.cancelTask(arg_5_0._delayDone, arg_5_0)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenViewFinish, arg_5_0._onOpenViewFinish, arg_5_0)
 end
 
-return slot0
+return var_0_0

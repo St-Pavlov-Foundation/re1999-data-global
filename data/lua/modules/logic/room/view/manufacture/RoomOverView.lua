@@ -1,138 +1,145 @@
-module("modules.logic.room.view.manufacture.RoomOverView", package.seeall)
+﻿module("modules.logic.room.view.manufacture.RoomOverView", package.seeall)
 
-slot0 = class("RoomOverView", BaseView)
-slot1 = 0.05
+local var_0_0 = class("RoomOverView", BaseView)
+local var_0_1 = 0.05
 
-function slot0.onInitView(slot0)
-	slot0._btnmanufacture = gohelper.findChildClickWithDefaultAudio(slot0.viewGO, "topTab/#btn_manufacture")
-	slot0._gomannuselect = gohelper.findChild(slot0.viewGO, "topTab/#btn_manufacture/select")
-	slot0._gomannuunselect = gohelper.findChild(slot0.viewGO, "topTab/#btn_manufacture/unselect")
-	slot0._gomannuReddot = gohelper.findChild(slot0.viewGO, "topTab/#btn_manufacture/#go_reddot")
-	slot0._btntransport = gohelper.findChildClickWithDefaultAudio(slot0.viewGO, "topTab/#btn_transport")
-	slot0._gotransportselect = gohelper.findChild(slot0.viewGO, "topTab/#btn_transport/select")
-	slot0._gotransportunselect = gohelper.findChild(slot0.viewGO, "topTab/#btn_transport/unselect")
-	slot0._gotransportReddot = gohelper.findChild(slot0.viewGO, "topTab/#btn_transport/#go_reddot")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnmanufacture = gohelper.findChildClickWithDefaultAudio(arg_1_0.viewGO, "topTab/#btn_manufacture")
+	arg_1_0._gomannuselect = gohelper.findChild(arg_1_0.viewGO, "topTab/#btn_manufacture/select")
+	arg_1_0._gomannuunselect = gohelper.findChild(arg_1_0.viewGO, "topTab/#btn_manufacture/unselect")
+	arg_1_0._gomannuReddot = gohelper.findChild(arg_1_0.viewGO, "topTab/#btn_manufacture/#go_reddot")
+	arg_1_0._btntransport = gohelper.findChildClickWithDefaultAudio(arg_1_0.viewGO, "topTab/#btn_transport")
+	arg_1_0._gotransportselect = gohelper.findChild(arg_1_0.viewGO, "topTab/#btn_transport/select")
+	arg_1_0._gotransportunselect = gohelper.findChild(arg_1_0.viewGO, "topTab/#btn_transport/unselect")
+	arg_1_0._gotransportReddot = gohelper.findChild(arg_1_0.viewGO, "topTab/#btn_transport/#go_reddot")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnmanufacture:AddClickListener(slot0._btnmanufactureOnClick, slot0)
-	slot0._btntransport:AddClickListener(slot0._btntransportOnClick, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, slot0._onViewChange, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, slot0._onViewChange, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnmanufacture:AddClickListener(arg_2_0._btnmanufactureOnClick, arg_2_0)
+	arg_2_0._btntransport:AddClickListener(arg_2_0._btntransportOnClick, arg_2_0)
+	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_2_0._onViewChange, arg_2_0)
+	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_2_0._onViewChange, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnmanufacture:RemoveClickListener()
-	slot0._btntransport:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnmanufacture:RemoveClickListener()
+	arg_3_0._btntransport:RemoveClickListener()
 end
 
-function slot0._btnmanufactureOnClick(slot0)
-	slot0:_btnTabClick(RoomOverViewContainer.SubViewTabId.Manufacture)
+function var_0_0._btnmanufactureOnClick(arg_4_0)
+	arg_4_0:_btnTabClick(RoomOverViewContainer.SubViewTabId.Manufacture)
 end
 
-function slot0._btntransportOnClick(slot0)
-	slot0:_btnTabClick(RoomOverViewContainer.SubViewTabId.Transport)
+function var_0_0._btntransportOnClick(arg_5_0)
+	arg_5_0:_btnTabClick(RoomOverViewContainer.SubViewTabId.Transport)
 end
 
-function slot0._btnTabClick(slot0, slot1)
-	if not slot0.viewContainer:checkTabId(slot1) then
-		logError(string.format("RoomOverView._btnTabOnClick error, no subview, tabId:%s", slot1))
+function var_0_0._btnTabClick(arg_6_0, arg_6_1)
+	if not arg_6_0.viewContainer:checkTabId(arg_6_1) then
+		logError(string.format("RoomOverView._btnTabOnClick error, no subview, tabId:%s", arg_6_1))
 
 		return
 	end
 
-	if slot0._curSelectTab == slot1 then
+	if arg_6_0._curSelectTab == arg_6_1 then
 		return
 	end
 
-	slot0.viewContainer:switchTab(slot1)
+	arg_6_0.viewContainer:switchTab(arg_6_1)
 
-	slot0._curSelectTab = slot1
+	arg_6_0._curSelectTab = arg_6_1
 
-	slot0:refreshTab()
+	arg_6_0:refreshTab()
 end
 
-function slot0._onViewChange(slot0, slot1)
-	if slot1 ~= ViewName.RoomManufactureAddPopView and slot1 ~= ViewName.RoomCritterListView and slot1 ~= ViewName.RoomManufactureBuildingDetailView then
+function var_0_0._onViewChange(arg_7_0, arg_7_1)
+	if arg_7_1 ~= ViewName.RoomManufactureAddPopView and arg_7_1 ~= ViewName.RoomCritterListView and arg_7_1 ~= ViewName.RoomManufactureBuildingDetailView then
 		return
 	end
 
-	if slot0._willClose then
+	if arg_7_0._willClose then
 		return
 	end
 
-	TaskDispatcher.cancelTask(slot0._delayCheckLeft, slot0)
-	TaskDispatcher.runDelay(slot0._delayCheckLeft, slot0, uv0)
+	TaskDispatcher.cancelTask(arg_7_0._delayCheckLeft, arg_7_0)
+	TaskDispatcher.runDelay(arg_7_0._delayCheckLeft, arg_7_0, var_0_1)
 end
 
-function slot0._delayCheckLeft(slot0)
-	slot1 = false
+function var_0_0._delayCheckLeft(arg_8_0)
+	local var_8_0 = false
+	local var_8_1 = ViewMgr.instance:isOpen(ViewName.RoomManufactureAddPopView)
+	local var_8_2 = ViewMgr.instance:isOpen(ViewName.RoomCritterListView) or ViewMgr.instance:isOpen(ViewName.RoomManufactureBuildingDetailView)
 
-	if ViewMgr.instance:isOpen(ViewName.RoomManufactureAddPopView) or (ViewMgr.instance:isOpen(ViewName.RoomCritterListView) or ViewMgr.instance:isOpen(ViewName.RoomManufactureBuildingDetailView)) then
-		slot1 = true
+	if var_8_1 or var_8_2 then
+		var_8_0 = true
 	end
 
-	if slot1 ~= slot0._isLeft then
-		slot0:playAnim(slot1 and "left" or "right")
+	if var_8_0 ~= arg_8_0._isLeft then
+		arg_8_0:playAnim(var_8_0 and "left" or "right")
 
-		slot0._isLeft = slot1
+		arg_8_0._isLeft = var_8_0
 	end
 end
 
-function slot0._editableInitView(slot0)
-	slot0._tabSelectedGoDict = {}
-	slot1 = slot0:getUserDataTb_()
-	slot1.goSelected = slot0._gomannuselect
-	slot1.goUnSelected = slot0._gomannuunselect
-	slot0._tabSelectedGoDict[RoomOverViewContainer.SubViewTabId.Manufacture] = slot1
-	slot2 = slot0:getUserDataTb_()
-	slot2.goSelected = slot0._gotransportselect
-	slot2.goUnSelected = slot0._gotransportunselect
-	slot0._tabSelectedGoDict[RoomOverViewContainer.SubViewTabId.Transport] = slot2
-	slot0._animator = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	slot0._isLeft = false
+function var_0_0._editableInitView(arg_9_0)
+	arg_9_0._tabSelectedGoDict = {}
+
+	local var_9_0 = arg_9_0:getUserDataTb_()
+
+	var_9_0.goSelected = arg_9_0._gomannuselect
+	var_9_0.goUnSelected = arg_9_0._gomannuunselect
+	arg_9_0._tabSelectedGoDict[RoomOverViewContainer.SubViewTabId.Manufacture] = var_9_0
+
+	local var_9_1 = arg_9_0:getUserDataTb_()
+
+	var_9_1.goSelected = arg_9_0._gotransportselect
+	var_9_1.goUnSelected = arg_9_0._gotransportunselect
+	arg_9_0._tabSelectedGoDict[RoomOverViewContainer.SubViewTabId.Transport] = var_9_1
+	arg_9_0._animator = arg_9_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	arg_9_0._isLeft = false
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_10_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0._willClose = false
-	slot0._curSelectTab = slot0.viewContainer:getDefaultSelectedTab()
+function var_0_0.onOpen(arg_11_0)
+	arg_11_0._willClose = false
+	arg_11_0._curSelectTab = arg_11_0.viewContainer:getDefaultSelectedTab()
 
-	slot0:refreshTab()
+	arg_11_0:refreshTab()
 	AudioMgr.instance:trigger(AudioEnum.Room.play_ui_home_state_lower)
-	RedDotController.instance:addRedDot(slot0._gomannuReddot, RedDotEnum.DotNode.ManufactureOverview)
+	RedDotController.instance:addRedDot(arg_11_0._gomannuReddot, RedDotEnum.DotNode.ManufactureOverview)
 end
 
-function slot0.refreshTab(slot0)
-	for slot4, slot5 in pairs(slot0._tabSelectedGoDict) do
-		slot6 = slot4 == slot0._curSelectTab
+function var_0_0.refreshTab(arg_12_0)
+	for iter_12_0, iter_12_1 in pairs(arg_12_0._tabSelectedGoDict) do
+		local var_12_0 = iter_12_0 == arg_12_0._curSelectTab
 
-		gohelper.setActive(slot5.goSelected, slot6)
-		gohelper.setActive(slot5.goUnSelected, not slot6)
+		gohelper.setActive(iter_12_1.goSelected, var_12_0)
+		gohelper.setActive(iter_12_1.goUnSelected, not var_12_0)
 	end
 end
 
-function slot0.playAnim(slot0, slot1)
-	slot0._animator.enabled = true
+function var_0_0.playAnim(arg_13_0, arg_13_1)
+	arg_13_0._animator.enabled = true
 
-	slot0._animator:Play(slot1, 0, 0)
+	arg_13_0._animator:Play(arg_13_1, 0, 0)
 end
 
-function slot0.onClose(slot0)
-	slot0._willClose = true
+function var_0_0.onClose(arg_14_0)
+	arg_14_0._willClose = true
 
-	TaskDispatcher.cancelTask(slot0._delayCheckLeft, slot0)
+	TaskDispatcher.cancelTask(arg_14_0._delayCheckLeft, arg_14_0)
 	AudioMgr.instance:trigger(AudioEnum.Room.play_ui_home_state_normal)
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._isLeft = false
+function var_0_0.onDestroyView(arg_15_0)
+	arg_15_0._isLeft = false
 end
 
-return slot0
+return var_0_0

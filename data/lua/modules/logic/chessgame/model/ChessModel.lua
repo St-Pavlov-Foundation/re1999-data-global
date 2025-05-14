@@ -1,63 +1,71 @@
-module("modules.logic.chessgame.model.ChessModel", package.seeall)
+﻿module("modules.logic.chessgame.model.ChessModel", package.seeall)
 
-slot0 = class("ChessModel", BaseModel)
+local var_0_0 = class("ChessModel", BaseModel)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.reInit(slot0)
+function var_0_0.reInit(arg_2_0)
+	return
 end
 
-function slot0.setEpisodeId(slot0, slot1)
-	slot0._currentEpisodeId = slot1
+function var_0_0.setEpisodeId(arg_3_0, arg_3_1)
+	arg_3_0._currentEpisodeId = arg_3_1
 
-	if not slot1 then
-		slot0._currentMapId = nil
+	if not arg_3_1 then
+		arg_3_0._currentMapId = nil
 
 		return
 	end
 
-	if ChessConfig.instance:getEpisodeCo(slot0._activityId, slot1) then
-		if slot2.mapIds then
-			slot0._currentMapId = slot2.mapIds
-		elseif slot2.mapIds then
-			slot0._currentMapId = tonumber(string.split(slot2.mapIds, "#")[1])
+	local var_3_0 = ChessConfig.instance:getEpisodeCo(arg_3_0._activityId, arg_3_1)
+
+	if var_3_0 then
+		if var_3_0.mapIds then
+			arg_3_0._currentMapId = var_3_0.mapIds
+		elseif var_3_0.mapIds then
+			local var_3_1 = string.split(var_3_0.mapIds, "#")
+
+			arg_3_0._currentMapId = tonumber(var_3_1[1])
 		end
 	else
-		slot0._currentMapId = nil
+		arg_3_0._currentMapId = nil
 	end
 end
 
-function slot0.setActId(slot0, slot1)
-	slot0._activityId = slot1
+function var_0_0.setActId(arg_4_0, arg_4_1)
+	arg_4_0._activityId = arg_4_1
 end
 
-function slot0.getActId(slot0)
-	return slot0._activityId
+function var_0_0.getActId(arg_5_0)
+	return arg_5_0._activityId
 end
 
-function slot0.getEpisodeId(slot0)
-	return slot0._currentEpisodeId
+function var_0_0.getEpisodeId(arg_6_0)
+	return arg_6_0._currentEpisodeId
 end
 
-function slot0.getCurrMapId(slot0)
-	return slot0._currentMapId
+function var_0_0.getCurrMapId(arg_7_0)
+	return arg_7_0._currentMapId
 end
 
-function slot0.setNowMapIndex(slot0, slot1)
-	slot0._currMapIndex = slot1
+function var_0_0.setNowMapIndex(arg_8_0, arg_8_1)
+	arg_8_0._currMapIndex = arg_8_1
 end
 
-function slot0.getNowMapIndex(slot0)
-	return slot0._currMapIndex
+function var_0_0.getNowMapIndex(arg_9_0)
+	return arg_9_0._currMapIndex
 end
 
-function slot0.getEpisodeData(slot0, slot1)
-	if slot0:_getModelIns(slot0._activityId) then
-		return slot2:getEpisodeData(slot1)
+function var_0_0.getEpisodeData(arg_10_0, arg_10_1)
+	local var_10_0 = arg_10_0:_getModelIns(arg_10_0._activityId)
+
+	if var_10_0 then
+		return var_10_0:getEpisodeData(arg_10_1)
 	end
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

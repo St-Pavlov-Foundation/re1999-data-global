@@ -1,55 +1,55 @@
-module("modules.logic.activity.view.LinkageActivity_FullView_Page1", package.seeall)
+﻿module("modules.logic.activity.view.LinkageActivity_FullView_Page1", package.seeall)
 
-slot0 = class("LinkageActivity_FullView_Page1", LinkageActivity_Page1)
+local var_0_0 = class("LinkageActivity_FullView_Page1", LinkageActivity_Page1)
 
-function slot0.onInitView(slot0)
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "view/#simage_bg")
-	slot0._simagesignature1 = gohelper.findChildSingleImage(slot0.viewGO, "view/left/role1/#simage_signature1")
-	slot0._simagesignature2 = gohelper.findChildSingleImage(slot0.viewGO, "view/left/role2/#simage_signature2")
-	slot0._txtdurationTime = gohelper.findChildText(slot0.viewGO, "view/right/time/#txt_durationTime")
-	slot0._btnbuy = gohelper.findChildButtonWithAudio(slot0.viewGO, "view/right/#btn_buy")
-	slot0._btnChange = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_Change")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "view/#simage_bg")
+	arg_1_0._simagesignature1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "view/left/role1/#simage_signature1")
+	arg_1_0._simagesignature2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "view/left/role2/#simage_signature2")
+	arg_1_0._txtdurationTime = gohelper.findChildText(arg_1_0.viewGO, "view/right/time/#txt_durationTime")
+	arg_1_0._btnbuy = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "view/right/#btn_buy")
+	arg_1_0._btnChange = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_Change")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnbuy:AddClickListener(slot0._btnbuyOnClick, slot0)
-	slot0._btnChange:AddClickListener(slot0._btnChangeOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnbuy:AddClickListener(arg_2_0._btnbuyOnClick, arg_2_0)
+	arg_2_0._btnChange:AddClickListener(arg_2_0._btnChangeOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnbuy:RemoveClickListener()
-	slot0._btnChange:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnbuy:RemoveClickListener()
+	arg_3_0._btnChange:RemoveClickListener()
 end
 
-function slot0.ctor(slot0, ...)
-	uv0.super.ctor(slot0, ...)
+function var_0_0.ctor(arg_4_0, ...)
+	var_0_0.super.ctor(arg_4_0, ...)
 end
 
-function slot0._editableInitView(slot0)
-	uv0.super._editableInitView(slot0)
+function var_0_0._editableInitView(arg_5_0)
+	var_0_0.super._editableInitView(arg_5_0)
 
-	slot0._txtdurationTime.text = ""
+	arg_5_0._txtdurationTime.text = ""
 
-	slot0:setActive(false)
+	arg_5_0:setActive(false)
 end
 
-function slot0._btnbuyOnClick(slot0)
-	slot0:jump()
+function var_0_0._btnbuyOnClick(arg_6_0)
+	arg_6_0:jump()
 end
 
-function slot0._btnChangeOnClick(slot0)
+function var_0_0._btnChangeOnClick(arg_7_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_activity_switch_20220009)
-	slot0:selectedPage(2)
+	arg_7_0:selectedPage(2)
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	uv0.super.onUpdateMO(slot0, slot1)
+function var_0_0.onUpdateMO(arg_8_0, arg_8_1)
+	var_0_0.super.onUpdateMO(arg_8_0, arg_8_1)
 
-	slot0._txtdurationTime.text = slot0:getDurationTimeStr()
+	arg_8_0._txtdurationTime.text = arg_8_0:getDurationTimeStr()
 end
 
-return slot0
+return var_0_0

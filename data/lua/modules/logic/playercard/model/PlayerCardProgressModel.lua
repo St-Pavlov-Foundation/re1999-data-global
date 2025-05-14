@@ -1,70 +1,74 @@
-module("modules.logic.playercard.model.PlayerCardProgressModel", package.seeall)
+﻿module("modules.logic.playercard.model.PlayerCardProgressModel", package.seeall)
 
-slot0 = class("PlayerCardProgressModel", ListScrollModel)
+local var_0_0 = class("PlayerCardProgressModel", ListScrollModel)
 
-function slot0.refreshList(slot0)
-	if #slot0._scrollViews == 0 then
+function var_0_0.refreshList(arg_1_0)
+	if #arg_1_0._scrollViews == 0 then
 		return
 	end
 
-	slot1 = {}
+	local var_1_0 = {}
 
-	for slot5, slot6 in ipairs(PlayerCardConfig.instance:getCardProgressList()) do
-		table.insert(slot1, {
-			index = slot5,
-			config = slot6,
-			info = slot0.cardInfo
-		})
+	for iter_1_0, iter_1_1 in ipairs(PlayerCardConfig.instance:getCardProgressList()) do
+		local var_1_1 = {
+			index = iter_1_0,
+			config = iter_1_1,
+			info = arg_1_0.cardInfo
+		}
+
+		table.insert(var_1_0, var_1_1)
 	end
 
-	table.sort(slot1, SortUtil.tableKeyLower({
+	table.sort(var_1_0, SortUtil.tableKeyLower({
 		"index"
 	}))
-	slot0:setList(slot1)
+	arg_1_0:setList(var_1_0)
 end
 
-function slot0.initSelectData(slot0, slot1)
-	slot0.cardInfo = slot1
+function var_0_0.initSelectData(arg_2_0, arg_2_1)
+	arg_2_0.cardInfo = arg_2_1
 
-	slot0:initSelectList()
+	arg_2_0:initSelectList()
 
-	slot0._lastSelectList = nil
+	arg_2_0._lastSelectList = nil
 
-	if not slot0._lastSelectList then
-		slot0._lastSelectList = tabletool.copy(slot0.selectList)
+	if not arg_2_0._lastSelectList then
+		arg_2_0._lastSelectList = tabletool.copy(arg_2_0.selectList)
 	end
 
-	slot0:setEmptyPosList()
+	arg_2_0:setEmptyPosList()
 end
 
-function slot0.initSelectList(slot0)
-	slot0.selectList = {}
-	slot0._lastSelectList = nil
+function var_0_0.initSelectList(arg_3_0)
+	arg_3_0.selectList = {}
+	arg_3_0._lastSelectList = nil
 
-	if slot0.cardInfo:getProgressSetting() then
-		for slot5, slot6 in ipairs(slot1) do
-			table.insert(slot0.selectList, slot6)
+	local var_3_0 = arg_3_0.cardInfo:getProgressSetting()
+
+	if var_3_0 then
+		for iter_3_0, iter_3_1 in ipairs(var_3_0) do
+			table.insert(arg_3_0.selectList, iter_3_1)
 		end
 	end
 end
 
-function slot0.clickItem(slot0, slot1)
-	if not slot1 then
+function var_0_0.clickItem(arg_4_0, arg_4_1)
+	if not arg_4_1 then
 		return
 	end
 
-	if slot0:checkhasMO(slot1) then
-		slot0:removeSelect(slot1)
+	if arg_4_0:checkhasMO(arg_4_1) then
+		arg_4_0:removeSelect(arg_4_1)
 	else
-		slot0:addSelect(slot1)
+		arg_4_0:addSelect(arg_4_1)
 	end
 
-	PlayerCardController.instance:dispatchEvent(PlayerCardEvent.RefreshProgressView, slot0.selectList)
+	PlayerCardController.instance:dispatchEvent(PlayerCardEvent.RefreshProgressView, arg_4_0.selectList)
 end
 
-function slot0.checkhasMO(slot0, slot1)
-	for slot5, slot6 in ipairs(slot0.selectList) do
-		if slot6[2] == slot1 then
+function var_0_0.checkhasMO(arg_5_0, arg_5_1)
+	for iter_5_0, iter_5_1 in ipairs(arg_5_0.selectList) do
+		if iter_5_1[2] == arg_5_1 then
 			return true
 		end
 	end
@@ -72,44 +76,44 @@ function slot0.checkhasMO(slot0, slot1)
 	return false
 end
 
-function slot0.addSelect(slot0, slot1)
-	if PlayerCardEnum.MaxProgressCardNum <= #slot0.selectList then
+function var_0_0.addSelect(arg_6_0, arg_6_1)
+	if #arg_6_0.selectList >= PlayerCardEnum.MaxProgressCardNum then
 		GameFacade.showToast(ToastEnum.PlayerCardMaxSelect)
 
 		return
 	end
 
-	slot0:addSelectMo(slot1)
-	slot0:setEmptyPosList()
-	slot0:refreshList()
+	arg_6_0:addSelectMo(arg_6_1)
+	arg_6_0:setEmptyPosList()
+	arg_6_0:refreshList()
 	PlayerCardController.instance:dispatchEvent(PlayerCardEvent.SelectNumChange)
 end
 
-function slot0.removeSelect(slot0, slot1)
-	slot0:removeSelectMo(slot1)
-	slot0:setEmptyPosList()
-	slot0:refreshList()
+function var_0_0.removeSelect(arg_7_0, arg_7_1)
+	arg_7_0:removeSelectMo(arg_7_1)
+	arg_7_0:setEmptyPosList()
+	arg_7_0:refreshList()
 	PlayerCardController.instance:dispatchEvent(PlayerCardEvent.SelectNumChange)
 end
 
-function slot0.getSelectIndex(slot0, slot1)
-	for slot5, slot6 in ipairs(slot0.selectList) do
-		if slot6[2] == slot1 then
-			return slot6[1]
+function var_0_0.getSelectIndex(arg_8_0, arg_8_1)
+	for iter_8_0, iter_8_1 in ipairs(arg_8_0.selectList) do
+		if iter_8_1[2] == arg_8_1 then
+			return iter_8_1[1]
 		end
 	end
 end
 
-function slot0.getemptypos(slot0)
-	for slot4, slot5 in ipairs(slot0.emptyPosList) do
-		if slot5 then
-			return slot4
+function var_0_0.getemptypos(arg_9_0)
+	for iter_9_0, iter_9_1 in ipairs(arg_9_0.emptyPosList) do
+		if iter_9_1 then
+			return iter_9_0
 		end
 	end
 end
 
-function slot0.setEmptyPosList(slot0)
-	slot0.emptyPosList = {
+function var_0_0.setEmptyPosList(arg_10_0)
+	arg_10_0.emptyPosList = {
 		true,
 		true,
 		true,
@@ -117,40 +121,45 @@ function slot0.setEmptyPosList(slot0)
 		true
 	}
 
-	for slot4 = 1, 5 do
-		for slot8, slot9 in ipairs(slot0.selectList) do
-			if slot9[1] == slot4 then
-				slot0.emptyPosList[slot4] = false
+	for iter_10_0 = 1, 5 do
+		for iter_10_1, iter_10_2 in ipairs(arg_10_0.selectList) do
+			if iter_10_2[1] == iter_10_0 then
+				arg_10_0.emptyPosList[iter_10_0] = false
 			end
 		end
 	end
 end
 
-function slot0.getEmptyPosList(slot0)
-	return slot0.emptyPosList
+function var_0_0.getEmptyPosList(arg_11_0)
+	return arg_11_0.emptyPosList
 end
 
-function slot0.addSelectMo(slot0, slot1)
-	table.insert(slot0.selectList, {
-		slot0:getemptypos(),
-		slot1
-	})
+function var_0_0.addSelectMo(arg_12_0, arg_12_1)
+	local var_12_0 = arg_12_0:getemptypos()
+	local var_12_1 = {
+		var_12_0,
+		arg_12_1
+	}
+
+	table.insert(arg_12_0.selectList, var_12_1)
 end
 
-function slot0.removeSelectMo(slot0, slot1)
-	for slot5, slot6 in ipairs(slot0.selectList) do
-		if slot6[2] == slot1 then
-			table.remove(slot0.selectList, slot5)
+function var_0_0.removeSelectMo(arg_13_0, arg_13_1)
+	for iter_13_0, iter_13_1 in ipairs(arg_13_0.selectList) do
+		if iter_13_1[2] == arg_13_1 then
+			table.remove(arg_13_0.selectList, iter_13_0)
 		end
 	end
 end
 
-function slot0.checkDiff(slot0)
-	if #slot0._lastSelectList ~= #slot0.selectList then
+function var_0_0.checkDiff(arg_14_0)
+	if #arg_14_0._lastSelectList ~= #arg_14_0.selectList then
 		return true
 	else
-		for slot5 = 1, #slot0.selectList do
-			if slot0._lastSelectList[slot5][2] ~= slot0.selectList[slot5][2] then
+		local var_14_0 = #arg_14_0.selectList
+
+		for iter_14_0 = 1, var_14_0 do
+			if arg_14_0._lastSelectList[iter_14_0][2] ~= arg_14_0.selectList[iter_14_0][2] then
 				return true
 			end
 		end
@@ -159,33 +168,37 @@ function slot0.checkDiff(slot0)
 	return false
 end
 
-function slot0.reselectData(slot0)
-	slot0:initSelectList()
-	slot0:refreshList()
-	slot0:setEmptyPosList()
-	PlayerCardController.instance:dispatchEvent(PlayerCardEvent.RefreshProgressView, slot0.selectList)
+function var_0_0.reselectData(arg_15_0)
+	arg_15_0:initSelectList()
+	arg_15_0:refreshList()
+	arg_15_0:setEmptyPosList()
+	PlayerCardController.instance:dispatchEvent(PlayerCardEvent.RefreshProgressView, arg_15_0.selectList)
 end
 
-function slot0.confirmData(slot0)
-	if not slot0.selectList or not slot0.cardInfo then
+function var_0_0.confirmData(arg_16_0)
+	if not arg_16_0.selectList or not arg_16_0.cardInfo then
 		return
 	end
 
-	slot1 = {}
+	local var_16_0 = {}
 
-	for slot5, slot6 in ipairs(slot0.selectList) do
-		table.insert(slot1, table.concat(slot6, "#"))
+	for iter_16_0, iter_16_1 in ipairs(arg_16_0.selectList) do
+		local var_16_1 = table.concat(iter_16_1, "#")
+
+		table.insert(var_16_0, var_16_1)
 	end
 
-	PlayerCardRpc.instance:sendSetPlayerCardProgressSettingRequest(table.concat(slot1, "|"))
+	local var_16_2 = table.concat(var_16_0, "|")
 
-	slot0._lastSelectList = slot0.selectList
+	PlayerCardRpc.instance:sendSetPlayerCardProgressSettingRequest(var_16_2)
+
+	arg_16_0._lastSelectList = arg_16_0.selectList
 end
 
-function slot0.getSelectNum(slot0)
-	return #slot0.selectList
+function var_0_0.getSelectNum(arg_17_0)
+	return #arg_17_0.selectList
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

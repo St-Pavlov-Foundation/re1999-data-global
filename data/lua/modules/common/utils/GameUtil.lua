@@ -1,291 +1,296 @@
-module("modules.common.utils.GameUtil", package.seeall)
+﻿module("modules.common.utils.GameUtil", package.seeall)
 
-slot0 = {
-	getBriefName = function (slot0, slot1, slot2)
-		if LuaUtil.isEmptyStr(slot0) then
+local var_0_0 = {
+	getBriefName = function(arg_1_0, arg_1_1, arg_1_2)
+		if LuaUtil.isEmptyStr(arg_1_0) then
 			return ""
 		end
 
-		if LuaUtil.getStrLen(slot0) <= slot1 then
-			return slot0
+		if arg_1_1 >= LuaUtil.getStrLen(arg_1_0) then
+			return arg_1_0
 		end
 
-		if LuaUtil.getUCharArr(slot0) == nil or #slot4 <= 0 then
+		local var_1_0 = LuaUtil.getUCharArr(arg_1_0)
+
+		if var_1_0 == nil or #var_1_0 <= 0 then
 			return LuaUtil.emptyStr
 		end
 
-		slot2 = slot2 or "..."
-		slot5 = LuaUtil.emptyStr
+		arg_1_2 = arg_1_2 or "..."
 
-		for slot10 = 1, #slot4 do
-			if string.byte(slot4[slot10]) > 0 and slot11 <= 127 then
-				slot6 = 0 + 1
-			elseif slot11 >= 192 and slot11 <= 239 then
-				slot6 = slot6 + 2
+		local var_1_1 = LuaUtil.emptyStr
+		local var_1_2 = 0
+
+		for iter_1_0 = 1, #var_1_0 do
+			local var_1_3 = string.byte(var_1_0[iter_1_0])
+
+			if var_1_3 > 0 and var_1_3 <= 127 then
+				var_1_2 = var_1_2 + 1
+			elseif var_1_3 >= 192 and var_1_3 <= 239 then
+				var_1_2 = var_1_2 + 2
 			end
 
-			if slot1 >= slot6 then
-				slot5 = slot5 .. slot4[slot10]
+			if var_1_2 <= arg_1_1 then
+				var_1_1 = var_1_1 .. var_1_0[iter_1_0]
 			end
 		end
 
-		return slot5 .. slot2
+		return var_1_1 .. arg_1_2
 	end,
-	getUCharArrWithoutRichTxt = function (slot0)
-		slot2 = LuaUtil.getUCharArr(string.gsub(slot0, "(<[^>]+>)", function (slot0)
-			table.insert(uv0, slot0)
+	getUCharArrWithoutRichTxt = function(arg_2_0)
+		local var_2_0 = {}
+
+		arg_2_0 = string.gsub(arg_2_0, "(<[^>]+>)", function(arg_3_0)
+			table.insert(var_2_0, arg_3_0)
 
 			return "▩"
-		end)) or {}
+		end)
 
-		for slot6 = #slot2, 1, -1 do
-			if slot2[slot6] == "▩" then
-				if slot2[slot6 + 1] then
-					slot2[slot6 + 1] = (table.remove({}) or "") .. slot2[slot6 + 1]
+		local var_2_1 = LuaUtil.getUCharArr(arg_2_0) or {}
 
-					table.remove(slot2, slot6)
+		for iter_2_0 = #var_2_1, 1, -1 do
+			if var_2_1[iter_2_0] == "▩" then
+				local var_2_2 = table.remove(var_2_0) or ""
+
+				if var_2_1[iter_2_0 + 1] then
+					var_2_1[iter_2_0 + 1] = var_2_2 .. var_2_1[iter_2_0 + 1]
+
+					table.remove(var_2_1, iter_2_0)
 				else
-					slot2[slot6] = slot7
+					var_2_1[iter_2_0] = var_2_2
 				end
 			end
 		end
 
-		return slot2
-	end,
-	removeJsonNull = function (slot0)
-		for slot4, slot5 in pairs(slot0) do
-			if slot5 == cjson.null then
-				slot0[slot4] = nil
-			elseif type(slot5) == "table" then
-				uv0.removeJsonNull(slot5)
-			end
-		end
-	end,
-	getBriefNameByWidth = function (slot0, slot1, slot2, slot3)
-		if LuaUtil.isEmptyStr(slot0) then
-			return ""
-		end
-
-		if LuaUtil.getStrLen(slot0) <= 0 then
-			return slot0
-		end
-
-		if SLFramework.UGUI.GuiHelper.GetPreferredWidth(slot1, slot0) < slot1.transform.sizeDelta.x - (slot2 or 15) then
-			return slot0
-		end
-
-		slot3 = slot3 or "..."
-
-		for slot10 = slot4 - 1, 1, -1 do
-			if SLFramework.UGUI.GuiHelper.GetPreferredWidth(slot1, uv0.getBriefName(slot0, slot10, "")) < slot5 then
-				return slot11 .. slot3
-			end
-		end
-
-		return slot0 .. slot3
-	end,
-	trimInput = function (slot0)
-		return string.gsub(string.gsub(slot0, "　", ""), "[ \t\n\r]+", "")
-	end,
-	trimInput1 = function (slot0)
-		return string.gsub(string.gsub(slot0, "　", ""), "[ \t\r]+", "")
-	end,
-	filterSpecChars = function (slot0)
-		slot1 = {}
-		slot2 = 1
-
-		while true do
-			if slot2 > #slot0 then
-				break
-			end
-
-			if not string.byte(slot0, slot2) then
-				break
-			end
-
-			if slot3 < 192 then
-				if slot3 >= 48 and slot3 <= 57 or slot3 >= 65 and slot3 <= 90 or slot3 >= 97 and slot3 <= 122 then
-					table.insert(slot1, string.char(slot3))
-				end
-
-				slot2 = slot2 + 1
-			elseif slot3 < 224 then
-				slot2 = slot2 + 2
-			elseif slot3 < 240 then
-				if slot3 >= 228 and slot3 <= 233 then
-					slot5 = string.byte(slot0, slot2 + 2)
-
-					if string.byte(slot0, slot2 + 1) and slot5 then
-						slot6 = 128
-						slot7 = 191
-						slot8 = 128
-						slot9 = 191
-
-						if slot3 == 228 then
-							slot6 = 184
-						elseif slot3 == 233 then
-							slot9 = slot4 ~= 190 and 191 or 165
-							slot7 = 190
-						end
-
-						if slot6 <= slot4 and slot4 <= slot7 and slot8 <= slot5 and slot5 <= slot9 then
-							table.insert(slot1, string.char(slot3, slot4, slot5))
-						end
-					end
-				end
-
-				slot2 = slot2 + 3
-			elseif slot3 < 248 then
-				slot2 = slot2 + 4
-			elseif slot3 < 252 then
-				slot2 = slot2 + 5
-			elseif slot3 < 254 then
-				slot2 = slot2 + 6
-			end
-		end
-
-		return table.concat(slot1)
-	end,
-	containsPunctuation = function (slot0)
-		if LuaUtil.isEmptyStr(slot0) then
-			return false
-		end
-
-		slot2 = 1
-
-		for slot6 = 1, #slot0 do
-			if string.byte(slot0, slot2) then
-				if slot7 >= 48 and slot7 <= 57 or slot7 >= 65 and slot7 <= 90 or slot7 >= 97 and slot7 <= 122 then
-					slot2 = slot2 + 1
-				elseif slot7 >= 228 and slot7 <= 233 then
-					slot2 = slot2 + 3
-				else
-					return true
-				end
-			end
-		end
-
-		return false
-	end,
-	test = function ()
-		slot0 = "233不顺利的！"
-
-		logNormal("a length = " .. LuaUtil.getStrLen(slot0) .. " a ch = " .. LuaUtil.getChineseLen(slot0))
-		logNormal("LuaUtil.getBriefName = " .. uv0.getBriefName(slot0, 6, ".prefab"))
-
-		slot1 = "地饭 大发      大\ndd哈哈\t哈哈"
-
-		logNormal("trimInput = " .. uv0.trimInput(slot1))
-		logNormal("trimInput1 = " .. uv0.trimInput1(slot1))
-
-		slot1 = "地饭大 发大\ndd哈哈\t哈哈"
-
-		logNormal("trimInput1 = " .. uv0.trimInput1(slot1))
-		logNormal("GameUtil.containsPunctuation = " .. tostring(uv0.containsPunctuation(slot1)))
-	end,
-	parseColor = function (slot0)
-		return SLFramework.UGUI.GuiHelper.ParseColor(slot0)
-	end,
-	colorToHex = function (slot0)
-		return SLFramework.UGUI.GuiHelper.ColorToHex(slot0)
-	end,
-	splitString2 = function (slot0, slot1, slot2, slot3)
-		if uv0.needLogInFightSceneUseStringFunc() then
-			logError("战斗中不要用`GameUtil.splitString2`, 用`FightStrUtil.getSplitString2Cache`代替")
-		end
-
-		if string.nilorempty(slot0) then
-			return
-		end
-
-		for slot8, slot9 in ipairs(string.split(slot0, slot2 or "|")) do
-			if slot1 then
-				slot4[slot8] = string.splitToNumber(slot9, slot3 or "#")
-			else
-				slot4[slot8] = string.split(slot9, slot3)
-			end
-		end
-
-		return slot4
-	end,
-	RichTextTags = {
-		"<b>",
-		"</b>",
-		"<i>",
-		"</i>",
-		"<size=.->",
-		"</size>",
-		"<color=.->",
-		"</color>",
-		"<material=.->",
-		"</material>",
-		"<quad.->",
-		"</quad>",
-		"<align=.->"
-	},
-	filterRichText = function (slot0)
-		for slot5, slot6 in ipairs(uv0.RichTextTags) do
-			slot1 = string.gsub(slot0, slot6, "")
-		end
-
-		return slot1
-	end,
-	numberDisplay = function (slot0)
-		if tonumber(slot0) <= 99999 then
-			return slot1
-		elseif slot1 <= 99999999 and slot1 > 99999 then
-			return math.floor(slot1 / 1000) .. "K"
-		else
-			return math.floor(slot1 / 1000000) .. "M"
-		end
-	end,
-	getRomanNums = function (slot0)
-		return uv0[slot0]
-	end,
-	getNum2Chinese = function (slot0)
-		if not LangSettings.instance:isZh() then
-			return slot0
-		end
-
-		if slot0 < 10 then
-			return uv0[slot0] or slot0
-		else
-			slot1 = uv0
-			slot2 = uv1
-			slot5 = {}
-
-			for slot10 = 1, string.len(tostring(slot0)) do
-				slot12 = slot4 - slot10 + 1
-
-				if tonumber(string.sub(slot3, slot10, slot10)) > 0 and false == true then
-					slot5[#slot5 + 1] = uv0[0]
-					slot6 = false
-				end
-
-				if slot12 % 4 == 2 and slot11 == 1 then
-					if slot12 < slot4 then
-						slot5[#slot5 + 1] = slot1[slot11]
-					end
-
-					slot5[#slot5 + 1] = slot2[slot12 - 1] or ""
-				elseif slot11 > 0 then
-					slot5[#slot5 + 1] = slot1[slot11]
-					slot5[#slot5 + 1] = slot2[slot12 - 1] or ""
-				elseif slot11 == 0 then
-					if slot12 % 4 == 1 then
-						slot5[#slot5 + 1] = slot2[slot12 - 1] or ""
-					else
-						slot6 = true
-					end
-				end
-			end
-
-			return table.concat(slot5, "")
-		end
-	end,
-	englishOrderNumber = {}
+		return var_2_1
+	end
 }
-slot1 = {
+
+function var_0_0.removeJsonNull(arg_4_0)
+	for iter_4_0, iter_4_1 in pairs(arg_4_0) do
+		if iter_4_1 == cjson.null then
+			arg_4_0[iter_4_0] = nil
+		elseif type(iter_4_1) == "table" then
+			var_0_0.removeJsonNull(iter_4_1)
+		end
+	end
+end
+
+function var_0_0.getBriefNameByWidth(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
+	if LuaUtil.isEmptyStr(arg_5_0) then
+		return ""
+	end
+
+	local var_5_0 = LuaUtil.getStrLen(arg_5_0)
+
+	if var_5_0 <= 0 then
+		return arg_5_0
+	end
+
+	local var_5_1 = arg_5_1.transform.sizeDelta.x - (arg_5_2 or 15)
+
+	if var_5_1 > SLFramework.UGUI.GuiHelper.GetPreferredWidth(arg_5_1, arg_5_0) then
+		return arg_5_0
+	end
+
+	arg_5_3 = arg_5_3 or "..."
+
+	for iter_5_0 = var_5_0 - 1, 1, -1 do
+		local var_5_2 = var_0_0.getBriefName(arg_5_0, iter_5_0, "")
+
+		if var_5_1 > SLFramework.UGUI.GuiHelper.GetPreferredWidth(arg_5_1, var_5_2) then
+			return var_5_2 .. arg_5_3
+		end
+	end
+
+	return arg_5_0 .. arg_5_3
+end
+
+function var_0_0.trimInput(arg_6_0)
+	arg_6_0 = string.gsub(arg_6_0, "　", "")
+
+	return string.gsub(arg_6_0, "[ \t\n\r]+", "")
+end
+
+function var_0_0.trimInput1(arg_7_0)
+	arg_7_0 = string.gsub(arg_7_0, "　", "")
+
+	return string.gsub(arg_7_0, "[ \t\r]+", "")
+end
+
+function var_0_0.filterSpecChars(arg_8_0)
+	local var_8_0 = {}
+	local var_8_1 = 1
+
+	while true do
+		if var_8_1 > #arg_8_0 then
+			break
+		end
+
+		local var_8_2 = string.byte(arg_8_0, var_8_1)
+
+		if not var_8_2 then
+			break
+		end
+
+		if var_8_2 < 192 then
+			if var_8_2 >= 48 and var_8_2 <= 57 or var_8_2 >= 65 and var_8_2 <= 90 or var_8_2 >= 97 and var_8_2 <= 122 then
+				table.insert(var_8_0, string.char(var_8_2))
+			end
+
+			var_8_1 = var_8_1 + 1
+		elseif var_8_2 < 224 then
+			var_8_1 = var_8_1 + 2
+		elseif var_8_2 < 240 then
+			if var_8_2 >= 228 and var_8_2 <= 233 then
+				local var_8_3 = string.byte(arg_8_0, var_8_1 + 1)
+				local var_8_4 = string.byte(arg_8_0, var_8_1 + 2)
+
+				if var_8_3 and var_8_4 then
+					local var_8_5 = 128
+					local var_8_6 = 191
+					local var_8_7 = 128
+					local var_8_8 = 191
+
+					if var_8_2 == 228 then
+						var_8_5 = 184
+					elseif var_8_2 == 233 then
+						var_8_6, var_8_8 = 190, var_8_3 ~= 190 and 191 or 165
+					end
+
+					if var_8_5 <= var_8_3 and var_8_3 <= var_8_6 and var_8_7 <= var_8_4 and var_8_4 <= var_8_8 then
+						table.insert(var_8_0, string.char(var_8_2, var_8_3, var_8_4))
+					end
+				end
+			end
+
+			var_8_1 = var_8_1 + 3
+		elseif var_8_2 < 248 then
+			var_8_1 = var_8_1 + 4
+		elseif var_8_2 < 252 then
+			var_8_1 = var_8_1 + 5
+		elseif var_8_2 < 254 then
+			var_8_1 = var_8_1 + 6
+		end
+	end
+
+	return table.concat(var_8_0)
+end
+
+function var_0_0.containsPunctuation(arg_9_0)
+	if LuaUtil.isEmptyStr(arg_9_0) then
+		return false
+	end
+
+	local var_9_0 = #arg_9_0
+	local var_9_1 = 1
+
+	for iter_9_0 = 1, var_9_0 do
+		local var_9_2 = string.byte(arg_9_0, var_9_1)
+
+		if var_9_2 then
+			if var_9_2 >= 48 and var_9_2 <= 57 or var_9_2 >= 65 and var_9_2 <= 90 or var_9_2 >= 97 and var_9_2 <= 122 then
+				var_9_1 = var_9_1 + 1
+			elseif var_9_2 >= 228 and var_9_2 <= 233 then
+				var_9_1 = var_9_1 + 3
+			else
+				return true
+			end
+		end
+	end
+
+	return false
+end
+
+function var_0_0.test()
+	local var_10_0 = "233不顺利的！"
+
+	logNormal("a length = " .. LuaUtil.getStrLen(var_10_0) .. " a ch = " .. LuaUtil.getChineseLen(var_10_0))
+	logNormal("LuaUtil.getBriefName = " .. var_0_0.getBriefName(var_10_0, 6, ".prefab"))
+
+	local var_10_1 = "地饭 大发      大\ndd哈哈\t哈哈\b"
+
+	logNormal("trimInput = " .. var_0_0.trimInput(var_10_1))
+	logNormal("trimInput1 = " .. var_0_0.trimInput1(var_10_1))
+
+	local var_10_2 = "地饭大 发大\ndd哈哈\t哈哈\b"
+
+	logNormal("trimInput1 = " .. var_0_0.trimInput1(var_10_2))
+	logNormal("GameUtil.containsPunctuation = " .. tostring(var_0_0.containsPunctuation(var_10_2)))
+end
+
+function var_0_0.parseColor(arg_11_0)
+	return SLFramework.UGUI.GuiHelper.ParseColor(arg_11_0)
+end
+
+function var_0_0.colorToHex(arg_12_0)
+	return SLFramework.UGUI.GuiHelper.ColorToHex(arg_12_0)
+end
+
+function var_0_0.splitString2(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
+	if var_0_0.needLogInFightSceneUseStringFunc() then
+		logError("战斗中不要用`GameUtil.splitString2`, 用`FightStrUtil.getSplitString2Cache`代替")
+	end
+
+	if string.nilorempty(arg_13_0) then
+		return
+	end
+
+	arg_13_2 = arg_13_2 or "|"
+	arg_13_3 = arg_13_3 or "#"
+
+	local var_13_0 = string.split(arg_13_0, arg_13_2)
+
+	for iter_13_0, iter_13_1 in ipairs(var_13_0) do
+		if arg_13_1 then
+			var_13_0[iter_13_0] = string.splitToNumber(iter_13_1, arg_13_3)
+		else
+			var_13_0[iter_13_0] = string.split(iter_13_1, arg_13_3)
+		end
+	end
+
+	return var_13_0
+end
+
+var_0_0.RichTextTags = {
+	"<b>",
+	"</b>",
+	"<i>",
+	"</i>",
+	"<size=.->",
+	"</size>",
+	"<color=.->",
+	"</color>",
+	"<material=.->",
+	"</material>",
+	"<quad.->",
+	"</quad>",
+	"<align=.->"
+}
+
+function var_0_0.filterRichText(arg_14_0)
+	local var_14_0 = arg_14_0
+
+	for iter_14_0, iter_14_1 in ipairs(var_0_0.RichTextTags) do
+		var_14_0 = string.gsub(var_14_0, iter_14_1, "")
+	end
+
+	return var_14_0
+end
+
+function var_0_0.numberDisplay(arg_15_0)
+	local var_15_0 = tonumber(arg_15_0)
+
+	if var_15_0 <= 99999 then
+		return var_15_0
+	elseif var_15_0 <= 99999999 and var_15_0 > 99999 then
+		return math.floor(var_15_0 / 1000) .. "K"
+	else
+		return math.floor(var_15_0 / 1000000) .. "M"
+	end
+end
+
+local var_0_1 = {
 	"I",
 	"II",
 	"III",
@@ -307,7 +312,12 @@ slot1 = {
 	"XIX",
 	"XX"
 }
-slot2 = {
+
+function var_0_0.getRomanNums(arg_16_0)
+	return var_0_1[arg_16_0]
+end
+
+local var_0_2 = {
 	[0] = "零",
 	"一",
 	"二",
@@ -319,7 +329,7 @@ slot2 = {
 	"八",
 	"九"
 }
-slot3 = {
+local var_0_3 = {
 	"十",
 	"百",
 	"千",
@@ -333,22 +343,70 @@ slot3 = {
 	"千",
 	"兆"
 }
-slot0.englishOrderNumber[1] = "FIRST"
-slot0.englishOrderNumber[2] = "SECOND"
-slot0.englishOrderNumber[3] = "THIRD"
-slot0.englishOrderNumber[4] = "FOURTH"
-slot0.englishOrderNumber[5] = "FIFTH"
-slot0.englishOrderNumber[6] = "SIXTH"
-slot0.englishOrderNumber[7] = "SEVENTH"
-slot0.englishOrderNumber[8] = "EIGHTH"
-slot0.englishOrderNumber[9] = "NINTH"
-slot0.englishOrderNumber[10] = "TENTH"
 
-function slot0.getEnglishOrderNumber(slot0)
-	return uv0.englishOrderNumber[slot0] or string.format("%dth", slot0)
+function var_0_0.getNum2Chinese(arg_17_0)
+	if not LangSettings.instance:isZh() then
+		return arg_17_0
+	end
+
+	if arg_17_0 < 10 then
+		return var_0_2[arg_17_0] or arg_17_0
+	else
+		local var_17_0 = var_0_2
+		local var_17_1 = var_0_3
+		local var_17_2 = tostring(arg_17_0)
+		local var_17_3 = string.len(var_17_2)
+		local var_17_4 = {}
+		local var_17_5 = false
+
+		for iter_17_0 = 1, var_17_3 do
+			local var_17_6 = tonumber(string.sub(var_17_2, iter_17_0, iter_17_0))
+			local var_17_7 = var_17_3 - iter_17_0 + 1
+
+			if var_17_6 > 0 and var_17_5 == true then
+				var_17_4[#var_17_4 + 1] = var_0_2[0]
+				var_17_5 = false
+			end
+
+			if var_17_7 % 4 == 2 and var_17_6 == 1 then
+				if var_17_7 < var_17_3 then
+					var_17_4[#var_17_4 + 1] = var_17_0[var_17_6]
+				end
+
+				var_17_4[#var_17_4 + 1] = var_17_1[var_17_7 - 1] or ""
+			elseif var_17_6 > 0 then
+				var_17_4[#var_17_4 + 1] = var_17_0[var_17_6]
+				var_17_4[#var_17_4 + 1] = var_17_1[var_17_7 - 1] or ""
+			elseif var_17_6 == 0 then
+				if var_17_7 % 4 == 1 then
+					var_17_4[#var_17_4 + 1] = var_17_1[var_17_7 - 1] or ""
+				else
+					var_17_5 = true
+				end
+			end
+		end
+
+		return table.concat(var_17_4, "")
+	end
 end
 
-slot4 = {
+var_0_0.englishOrderNumber = {}
+var_0_0.englishOrderNumber[1] = "FIRST"
+var_0_0.englishOrderNumber[2] = "SECOND"
+var_0_0.englishOrderNumber[3] = "THIRD"
+var_0_0.englishOrderNumber[4] = "FOURTH"
+var_0_0.englishOrderNumber[5] = "FIFTH"
+var_0_0.englishOrderNumber[6] = "SIXTH"
+var_0_0.englishOrderNumber[7] = "SEVENTH"
+var_0_0.englishOrderNumber[8] = "EIGHTH"
+var_0_0.englishOrderNumber[9] = "NINTH"
+var_0_0.englishOrderNumber[10] = "TENTH"
+
+function var_0_0.getEnglishOrderNumber(arg_18_0)
+	return var_0_0.englishOrderNumber[arg_18_0] or string.format("%dth", arg_18_0)
+end
+
+local var_0_4 = {
 	"ONE",
 	"TWO",
 	"THREE",
@@ -371,82 +429,90 @@ slot4 = {
 	"TWENTY"
 }
 
-function slot0.getEnglishNumber(slot0)
-	return uv0[slot0]
+function var_0_0.getEnglishNumber(arg_19_0)
+	return var_0_4[arg_19_0]
 end
 
-function slot0.charsize(slot0)
-	if not slot0 then
+function var_0_0.charsize(arg_20_0)
+	if not arg_20_0 then
 		return 0
-	elseif slot0 >= 252 then
+	elseif arg_20_0 >= 252 then
 		return 6
-	elseif slot0 >= 248 and slot0 < 252 then
+	elseif arg_20_0 >= 248 and arg_20_0 < 252 then
 		return 5
-	elseif slot0 >= 240 and slot0 < 248 then
+	elseif arg_20_0 >= 240 and arg_20_0 < 248 then
 		return 4
-	elseif slot0 >= 224 and slot0 < 240 then
+	elseif arg_20_0 >= 224 and arg_20_0 < 240 then
 		return 3
-	elseif slot0 >= 192 and slot0 < 224 then
+	elseif arg_20_0 >= 192 and arg_20_0 < 224 then
 		return 2
-	elseif slot0 < 192 then
+	elseif arg_20_0 < 192 then
 		return 1
 	end
 end
 
-function slot0.utf8len(slot0)
-	if string.nilorempty(slot0) then
+function var_0_0.utf8len(arg_21_0)
+	if string.nilorempty(arg_21_0) then
 		return 0
 	end
 
-	slot1 = 0
-	slot2 = 0
-	slot3 = 0
-	slot4 = 1
+	local var_21_0 = 0
+	local var_21_1 = 0
+	local var_21_2 = 0
+	local var_21_3 = 1
 
-	while slot4 <= #slot0 do
-		slot6 = uv0.charsize(string.byte(slot0, slot4))
-		slot4 = slot4 + slot6
-		slot1 = slot1 + 1
+	while var_21_3 <= #arg_21_0 do
+		local var_21_4 = string.byte(arg_21_0, var_21_3)
+		local var_21_5 = var_0_0.charsize(var_21_4)
 
-		if slot6 == 1 then
-			slot2 = slot2 + 1
-		elseif slot6 >= 2 then
-			slot3 = slot3 + 1
+		var_21_3 = var_21_3 + var_21_5
+		var_21_0 = var_21_0 + 1
+
+		if var_21_5 == 1 then
+			var_21_1 = var_21_1 + 1
+		elseif var_21_5 >= 2 then
+			var_21_2 = var_21_2 + 1
 		end
 	end
 
-	return slot1, slot2, slot3
+	return var_21_0, var_21_1, var_21_2
 end
 
-function slot0.utf8sub(slot0, slot1, slot2)
-	slot3 = 1
+function var_0_0.utf8sub(arg_22_0, arg_22_1, arg_22_2)
+	local var_22_0 = 1
 
-	while slot1 > 1 do
-		slot3 = slot3 + uv0.charsize(string.byte(slot0, slot3))
-		slot1 = slot1 - 1
+	while arg_22_1 > 1 do
+		local var_22_1 = string.byte(arg_22_0, var_22_0)
+
+		var_22_0 = var_22_0 + var_0_0.charsize(var_22_1)
+		arg_22_1 = arg_22_1 - 1
 	end
 
-	slot4 = slot3
+	local var_22_2 = var_22_0
 
-	while slot2 > 0 and slot4 <= #slot0 do
-		slot4 = slot4 + uv0.charsize(string.byte(slot0, slot4))
-		slot2 = slot2 - 1
+	while arg_22_2 > 0 and var_22_2 <= #arg_22_0 do
+		local var_22_3 = string.byte(arg_22_0, var_22_2)
+
+		var_22_2 = var_22_2 + var_0_0.charsize(var_22_3)
+		arg_22_2 = arg_22_2 - 1
 	end
 
-	return string.sub(slot0, slot3, slot4 - 1)
+	return string.sub(arg_22_0, var_22_0, var_22_2 - 1)
 end
 
-function slot0.utf8isnum(slot0)
-	if string.nilorempty(slot0) then
+function var_0_0.utf8isnum(arg_23_0)
+	if string.nilorempty(arg_23_0) then
 		return false
 	end
 
-	for slot4 = 1, string.len(slot0) do
-		if not string.byte(slot0, slot4) then
+	for iter_23_0 = 1, string.len(arg_23_0) do
+		local var_23_0 = string.byte(arg_23_0, iter_23_0)
+
+		if not var_23_0 then
 			return false
 		end
 
-		if slot5 < 48 or slot5 > 57 then
+		if var_23_0 < 48 or var_23_0 > 57 then
 			return false
 		end
 	end
@@ -454,323 +520,385 @@ function slot0.utf8isnum(slot0)
 	return true
 end
 
-function slot0.getPreferredWidth(slot0, slot1)
-	return SLFramework.UGUI.GuiHelper.GetPreferredWidth(slot0, slot1)
+function var_0_0.getPreferredWidth(arg_24_0, arg_24_1)
+	return SLFramework.UGUI.GuiHelper.GetPreferredWidth(arg_24_0, arg_24_1)
 end
 
-function slot0.getPreferredHeight(slot0, slot1)
-	return SLFramework.UGUI.GuiHelper.GetPreferredHeight(slot0, slot1)
+function var_0_0.getPreferredHeight(arg_25_0, arg_25_1)
+	return SLFramework.UGUI.GuiHelper.GetPreferredHeight(arg_25_0, arg_25_1)
 end
 
-function slot0.getTextHeightByLine(slot0, slot1, slot2, slot3)
-	slot4 = SLFramework.UGUI.GuiHelper.GetPreferredHeight(slot0, " ")
-	slot5 = SLFramework.UGUI.GuiHelper.GetPreferredHeight(slot0, slot1)
+function var_0_0.getTextHeightByLine(arg_26_0, arg_26_1, arg_26_2, arg_26_3)
+	local var_26_0 = SLFramework.UGUI.GuiHelper.GetPreferredHeight(arg_26_0, " ")
+	local var_26_1 = SLFramework.UGUI.GuiHelper.GetPreferredHeight(arg_26_0, arg_26_1)
+	local var_26_2 = arg_26_3 or 0
 
-	return slot4 > 0 and slot5 / slot4 * slot2 + (slot5 / slot4 - 1) * (slot3 or 0) or 0
+	return var_26_0 > 0 and var_26_1 / var_26_0 * arg_26_2 + (var_26_1 / var_26_0 - 1) * var_26_2 or 0
 end
 
-function slot0.getTextWidthByLine(slot0, slot1, slot2)
-	return SLFramework.UGUI.GuiHelper.GetPreferredWidth(slot0, "啊") > 0 and SLFramework.UGUI.GuiHelper.GetPreferredWidth(slot0, slot1) / slot3 * slot2 or 0
+function var_0_0.getTextWidthByLine(arg_27_0, arg_27_1, arg_27_2)
+	local var_27_0 = SLFramework.UGUI.GuiHelper.GetPreferredWidth(arg_27_0, "啊")
+	local var_27_1 = SLFramework.UGUI.GuiHelper.GetPreferredWidth(arg_27_0, arg_27_1)
+
+	return var_27_0 > 0 and var_27_1 / var_27_0 * arg_27_2 or 0
 end
 
-function slot0.getSubPlaceholderLuaLang(slot0, slot1)
-	if slot1 and #slot1 > 0 then
-		slot0 = string.gsub(slot0, "▩([0-9]+)%%([sd])", function (slot0, slot1)
-			if not uv0[tonumber(slot0)] then
+function var_0_0.getSubPlaceholderLuaLang(arg_28_0, arg_28_1)
+	if arg_28_1 and #arg_28_1 > 0 then
+		arg_28_0 = string.gsub(arg_28_0, "▩([0-9]+)%%([sd])", function(arg_29_0, arg_29_1)
+			arg_29_0 = tonumber(arg_29_0)
+
+			if not arg_28_1[arg_29_0] then
 				if isDebugBuild then
-					logError(table.concat({
+					local var_29_0 = {
 						"[getSubPlaceholderLuaLang] =========== begin",
-						"text: " .. uv1,
-						"index: " .. slot0,
-						"format: " .. slot1,
+						"text: " .. arg_28_0,
+						"index: " .. arg_29_0,
+						"format: " .. arg_29_1,
 						"fillParams[index]: 不存在",
 						"[getSubPlaceholderLuaLang] =========== end"
-					}, "\n"))
+					}
+
+					logError(table.concat(var_29_0, "\n"))
 				end
 
 				return ""
 			end
 
-			if type(uv0[slot0]) == "number" and slot1 == "d" then
-				return string.format("%d", uv0[slot0])
+			if type(arg_28_1[arg_29_0]) == "number" and arg_29_1 == "d" then
+				return string.format("%d", arg_28_1[arg_29_0])
 			end
 
-			if isDebugBuild and string.find(uv0[slot0], "%%", 1, true) then
-				logError(table.concat({
-					[1.0] = "[getSubPlaceholderLuaLang] =========== begin",
-					[6.0] = "[getSubPlaceholderLuaLang] =========== end",
-					[2] = "text: " .. uv1,
-					[3] = "index: " .. slot0,
-					[4] = "format: " .. slot1,
-					[5] = "fillParams[index]:" .. uv0[slot0]
-				}, "\n"))
+			if isDebugBuild and string.find(arg_28_1[arg_29_0], "%%", 1, true) then
+				local var_29_1 = {
+					[1] = "[getSubPlaceholderLuaLang] =========== begin",
+					[6] = "[getSubPlaceholderLuaLang] =========== end",
+					[2] = "text: " .. arg_28_0,
+					[3] = "index: " .. arg_29_0,
+					[4] = "format: " .. arg_29_1,
+					[5] = "fillParams[index]:" .. arg_28_1[arg_29_0]
+				}
+
+				logError(table.concat(var_29_1, "\n"))
 			end
 
-			return uv0[slot0]
+			return arg_28_1[arg_29_0]
 		end)
 	end
 
-	return slot0
+	return arg_28_0
 end
 
-function slot0.getSubPlaceholderLuaLangOneParam(slot0, slot1)
-	return string.gsub(slot0, "▩1%%s", slot1)
+function var_0_0.getSubPlaceholderLuaLangOneParam(arg_30_0, arg_30_1)
+	arg_30_0 = string.gsub(arg_30_0, "▩1%%s", arg_30_1)
+
+	return arg_30_0
 end
 
-function slot0.getSubPlaceholderLuaLangTwoParam(slot0, slot1, slot2)
-	return string.gsub(string.gsub(slot0, "▩1%%s", slot1), "▩2%%s", slot2)
+function var_0_0.getSubPlaceholderLuaLangTwoParam(arg_31_0, arg_31_1, arg_31_2)
+	arg_31_0 = string.gsub(arg_31_0, "▩1%%s", arg_31_1)
+	arg_31_0 = string.gsub(arg_31_0, "▩2%%s", arg_31_2)
+
+	return arg_31_0
 end
 
-function slot0.getSubPlaceholderLuaLangThreeParam(slot0, slot1, slot2, slot3)
-	return string.gsub(string.gsub(string.gsub(slot0, "▩1%%s", slot1), "▩2%%s", slot2), "▩3%%s", slot3)
+function var_0_0.getSubPlaceholderLuaLangThreeParam(arg_32_0, arg_32_1, arg_32_2, arg_32_3)
+	arg_32_0 = string.gsub(arg_32_0, "▩1%%s", arg_32_1)
+	arg_32_0 = string.gsub(arg_32_0, "▩2%%s", arg_32_2)
+	arg_32_0 = string.gsub(arg_32_0, "▩3%%s", arg_32_3)
+
+	return arg_32_0
 end
 
-function slot0.getMarkIndexList(slot0)
-	slot1 = "<em>"
-	slot2 = "</em>"
+function var_0_0.getMarkIndexList(arg_33_0)
+	local var_33_0 = "<em>"
+	local var_33_1 = "</em>"
 
-	if string.nilorempty(string.gsub(string.gsub(string.gsub(string.gsub(string.gsub(slot0, slot1, "▩1"), slot2, "▩2"), "<[^<>][^<>]->", ""), "▩1", slot1), "▩2", slot2)) or string.nilorempty(slot1) or string.nilorempty(slot2) then
-		return {}
+	arg_33_0 = string.gsub(arg_33_0, var_33_0, "▩1")
+	arg_33_0 = string.gsub(arg_33_0, var_33_1, "▩2")
+	arg_33_0 = string.gsub(arg_33_0, "<[^<>][^<>]->", "")
+	arg_33_0 = string.gsub(arg_33_0, "▩1", var_33_0)
+	arg_33_0 = string.gsub(arg_33_0, "▩2", var_33_1)
+
+	local var_33_2 = {}
+
+	if string.nilorempty(arg_33_0) or string.nilorempty(var_33_0) or string.nilorempty(var_33_1) then
+		return var_33_2
 	end
 
-	slot4 = {}
-	slot6 = 1
+	local var_33_3 = {}
+	local var_33_4 = string.split(arg_33_0, var_33_0)
+	local var_33_5 = 1
 
-	for slot10, slot11 in ipairs(string.split(slot0, slot1)) do
-		if slot10 == #slot5 then
+	for iter_33_0, iter_33_1 in ipairs(var_33_4) do
+		if iter_33_0 == #var_33_4 then
 			break
 		end
 
-		table.insert(slot4, slot6 + uv0.utf8len(slot11) + (slot10 == 1 and 0 or 1) * uv0.utf8len(slot1))
+		var_33_5 = var_33_5 + var_0_0.utf8len(iter_33_1) + (iter_33_0 == 1 and 0 or 1) * var_0_0.utf8len(var_33_0)
+
+		table.insert(var_33_3, var_33_5)
 	end
 
-	slot7 = {}
-	slot9 = 1
+	local var_33_6 = {}
+	local var_33_7 = string.split(arg_33_0, var_33_1)
+	local var_33_8 = 1
 
-	for slot13, slot14 in ipairs(string.split(slot0, slot2)) do
-		if slot13 == #slot8 then
+	for iter_33_2, iter_33_3 in ipairs(var_33_7) do
+		if iter_33_2 == #var_33_7 then
 			break
 		end
 
-		table.insert(slot7, slot9 + uv0.utf8len(slot14) + (slot13 == 1 and 0 or 1) * uv0.utf8len(slot2))
+		var_33_8 = var_33_8 + var_0_0.utf8len(iter_33_3) + (iter_33_2 == 1 and 0 or 1) * var_0_0.utf8len(var_33_1)
+
+		table.insert(var_33_6, var_33_8)
 	end
 
-	slot10 = false
-	slot11 = 0
-	slot12 = 0
+	local var_33_9 = false
+	local var_33_10 = 0
+	local var_33_11 = 0
 
-	while slot11 <= uv0.utf8len(slot0) do
-		if LuaUtil.tableContains(slot4, slot11) then
-			slot10 = true
-			slot11 = slot11 + uv0.utf8len(slot1)
-			slot12 = slot12 + uv0.utf8len(slot1)
-		elseif LuaUtil.tableContains(slot7, slot11) then
-			slot10 = false
-			slot11 = slot11 + uv0.utf8len(slot2)
-			slot12 = slot12 + uv0.utf8len(slot2)
+	while var_33_10 <= var_0_0.utf8len(arg_33_0) do
+		if LuaUtil.tableContains(var_33_3, var_33_10) then
+			var_33_9 = true
+			var_33_10 = var_33_10 + var_0_0.utf8len(var_33_0)
+			var_33_11 = var_33_11 + var_0_0.utf8len(var_33_0)
+		elseif LuaUtil.tableContains(var_33_6, var_33_10) then
+			var_33_9 = false
+			var_33_10 = var_33_10 + var_0_0.utf8len(var_33_1)
+			var_33_11 = var_33_11 + var_0_0.utf8len(var_33_1)
 		else
-			if slot10 then
-				table.insert(slot3, slot11 - slot12 - 1)
+			if var_33_9 then
+				table.insert(var_33_2, var_33_10 - var_33_11 - 1)
 			end
 
-			slot11 = slot11 + 1
+			var_33_10 = var_33_10 + 1
 		end
 	end
 
-	return slot3
+	return var_33_2
 end
 
-function slot0.getMarkText(slot0)
-	if string.nilorempty(slot0) then
+function var_0_0.getMarkText(arg_34_0)
+	if string.nilorempty(arg_34_0) then
 		return ""
 	end
 
-	return string.gsub(string.gsub(slot0, "<em>", ""), "</em>", "")
+	arg_34_0 = string.gsub(arg_34_0, "<em>", "")
+	arg_34_0 = string.gsub(arg_34_0, "</em>", "")
+
+	return arg_34_0
 end
 
-function slot0.getTimeFromString(slot0)
-	if string.nilorempty(slot0) then
-		return 9999999999.0
+function var_0_0.getTimeFromString(arg_35_0)
+	if string.nilorempty(arg_35_0) then
+		return 9999999999
 	end
 
-	slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8 = string.find(slot0, "(%d-)%-(%d-)%-(%d-)%s-(%d-):(%d-):(%d+)")
+	local var_35_0, var_35_1, var_35_2, var_35_3, var_35_4, var_35_5, var_35_6, var_35_7 = string.find(arg_35_0, "(%d-)%-(%d-)%-(%d-)%s-(%d-):(%d-):(%d+)")
 
 	return os.time({
-		year = tonumber(slot3),
-		month = tonumber(slot4),
-		day = tonumber(slot5),
-		hour = tonumber(slot6),
-		min = tonumber(slot7),
-		sec = tonumber(slot8)
+		year = tonumber(var_35_2),
+		month = tonumber(var_35_3),
+		day = tonumber(var_35_4),
+		hour = tonumber(var_35_5),
+		min = tonumber(var_35_6),
+		sec = tonumber(var_35_7)
 	})
 end
 
-function slot0.getTabLen(slot0)
-	slot1 = 0
+function var_0_0.getTabLen(arg_36_0)
+	local var_36_0 = 0
 
-	if slot0 then
-		for slot5, slot6 in pairs(slot0) do
-			if slot0[slot5] ~= nil then
-				slot1 = slot1 + 1
+	if arg_36_0 then
+		for iter_36_0, iter_36_1 in pairs(arg_36_0) do
+			if arg_36_0[iter_36_0] ~= nil then
+				var_36_0 = var_36_0 + 1
 			end
 		end
 	end
 
-	return slot1
+	return var_36_0
 end
 
-function slot0.getAdapterScale()
-	slot0 = Time.time
+function var_0_0.getAdapterScale()
+	local var_37_0 = Time.time
 
-	if uv0._adapterScale and uv0._scaleCalcTime and slot0 - uv0._scaleCalcTime < 0.01 then
-		return uv0._adapterScale
+	if var_0_0._adapterScale and var_0_0._scaleCalcTime and var_37_0 - var_0_0._scaleCalcTime < 0.01 then
+		return var_0_0._adapterScale
 	end
 
-	uv0._scaleCalcTime = slot0
-	slot1 = UnityEngine.Screen.width
-	slot2 = UnityEngine.Screen.height
+	var_0_0._scaleCalcTime = var_37_0
+
+	local var_37_1 = UnityEngine.Screen.width
+	local var_37_2 = UnityEngine.Screen.height
 
 	if BootNativeUtil.isWindows() then
-		slot1, slot2 = SettingsModel.instance:getCurrentScreenSize()
+		var_37_1, var_37_2 = SettingsModel.instance:getCurrentScreenSize()
 	end
 
-	if 1.7777777777777777 - slot1 / slot2 > 0.01 then
-		uv0._adapterScale = slot4 / slot3
+	local var_37_3 = var_37_1 / var_37_2
+	local var_37_4 = 1.7777777777777777
+
+	if var_37_4 - var_37_3 > 0.01 then
+		local var_37_5 = var_37_4 / var_37_3
+
+		var_0_0._adapterScale = var_37_5
 	else
-		uv0._adapterScale = 1
+		var_0_0._adapterScale = 1
 	end
 
-	return uv0._adapterScale
+	return var_0_0._adapterScale
 end
 
-function slot0.fillZeroInLeft(slot0, slot1)
-	slot2 = tostring(slot0)
+function var_0_0.fillZeroInLeft(arg_38_0, arg_38_1)
+	local var_38_0 = tostring(arg_38_0)
 
-	return string.rep("0", slot1 - #slot2) .. slot2
+	return string.rep("0", arg_38_1 - #var_38_0) .. var_38_0
 end
 
-function slot0.randomTable(slot0)
-	for slot5 = 1, #slot0 do
-		slot6 = math.random(slot5, slot1)
-		slot0[slot6] = slot0[slot5]
-		slot0[slot5] = slot0[slot6]
+function var_0_0.randomTable(arg_39_0)
+	local var_39_0 = #arg_39_0
+
+	for iter_39_0 = 1, var_39_0 do
+		local var_39_1 = math.random(iter_39_0, var_39_0)
+
+		arg_39_0[iter_39_0], arg_39_0[var_39_1] = arg_39_0[var_39_1], arg_39_0[iter_39_0]
 	end
 
-	return slot0
+	return arg_39_0
 end
 
-function slot0.artTextNumReplace(slot0)
-	if string.nilorempty(slot0) then
-		return slot0
+function var_0_0.artTextNumReplace(arg_40_0)
+	if string.nilorempty(arg_40_0) then
+		return arg_40_0
 	end
 
-	slot2 = string.len(slot0)
-	slot3 = {}
+	local var_40_0 = arg_40_0
+	local var_40_1 = string.len(var_40_0)
+	local var_40_2 = {}
 
-	while slot1 > 0 do
-		table.insert(slot3, 1, slot1 % 10)
+	while var_40_0 > 0 do
+		local var_40_3 = var_40_0 % 10
 
-		slot1 = math.floor(slot1 / 10)
+		table.insert(var_40_2, 1, var_40_3)
+
+		var_40_0 = math.floor(var_40_0 / 10)
 	end
 
-	for slot8 = 1, slot2 do
-		slot4 = "" .. string.format("<sprite=%s>", slot3[slot8])
+	local var_40_4 = ""
+
+	for iter_40_0 = 1, var_40_1 do
+		var_40_4 = var_40_4 .. string.format("<sprite=%s>", var_40_2[iter_40_0])
 	end
 
-	return slot4
+	return var_40_4
 end
 
-function slot0.tabletool_fastRemoveValueByValue(slot0, slot1)
-	for slot5, slot6 in ipairs(slot0) do
-		if slot6 == slot1 then
-			return uv0.tabletool_fastRemoveValueByPos(slot0, slot5)
+function var_0_0.tabletool_fastRemoveValueByValue(arg_41_0, arg_41_1)
+	for iter_41_0, iter_41_1 in ipairs(arg_41_0) do
+		if iter_41_1 == arg_41_1 then
+			return var_0_0.tabletool_fastRemoveValueByPos(arg_41_0, iter_41_0)
 		end
 	end
 end
 
-function slot0.tabletool_fastRemoveValueByPos(slot0, slot1)
-	slot0[slot1] = slot0[#slot0]
+function var_0_0.tabletool_fastRemoveValueByPos(arg_42_0, arg_42_1)
+	local var_42_0 = arg_42_0[arg_42_1]
 
-	table.remove(slot0)
+	arg_42_0[arg_42_1] = arg_42_0[#arg_42_0]
 
-	return slot0, slot0[slot1]
+	table.remove(arg_42_0)
+
+	return arg_42_0, var_42_0
 end
 
-function slot0.tabletool_dictIsEmpty(slot0)
-	if not slot0 then
+function var_0_0.tabletool_dictIsEmpty(arg_43_0)
+	if not arg_43_0 then
 		return true
 	end
 
-	for slot4, slot5 in pairs(slot0) do
+	for iter_43_0, iter_43_1 in pairs(arg_43_0) do
 		return false
 	end
 
 	return true
 end
 
-function slot0.checkPointInRectangle(slot0, slot1, slot2, slot3, slot4)
-	slot10 = Vector2.Dot(slot3 - slot2, slot0 - slot2)
+function var_0_0.checkPointInRectangle(arg_44_0, arg_44_1, arg_44_2, arg_44_3, arg_44_4)
+	local var_44_0 = arg_44_2 - arg_44_1
+	local var_44_1 = arg_44_0 - arg_44_1
+	local var_44_2 = arg_44_3 - arg_44_2
+	local var_44_3 = arg_44_0 - arg_44_2
+	local var_44_4 = Vector2.Dot(var_44_0, var_44_1)
+	local var_44_5 = Vector2.Dot(var_44_2, var_44_3)
 
-	return Vector2.Dot(slot2 - slot1, slot0 - slot1) >= 0 and slot9 <= Vector2.Dot(slot5, slot5) and slot10 >= 0 and slot10 <= Vector2.Dot(slot7, slot7)
+	return var_44_4 >= 0 and var_44_4 <= Vector2.Dot(var_44_0, var_44_0) and var_44_5 >= 0 and var_44_5 <= Vector2.Dot(var_44_2, var_44_2)
 end
 
-function slot0.noMoreThanOneDecimalPlace(slot0)
-	return math.fmod(slot0, 1) > 0 and string.format("%.1f", slot0) or string.format("%d", slot0)
+function var_0_0.noMoreThanOneDecimalPlace(arg_45_0)
+	return math.fmod(arg_45_0, 1) > 0 and string.format("%.1f", arg_45_0) or string.format("%d", arg_45_0)
 end
 
-function slot0.isMobilePlayerAndNotEmulator()
+function var_0_0.isMobilePlayerAndNotEmulator()
 	return BootNativeUtil.isMobilePlayer() and not SDKMgr.instance:isEmulator()
 end
 
-function slot0.openDeepLink(slot0, slot1)
-	if string.nilorempty(slot1) or string.nilorempty(slot0) then
+function var_0_0.openDeepLink(arg_47_0, arg_47_1)
+	if string.nilorempty(arg_47_1) or string.nilorempty(arg_47_0) then
 		return
 	end
 
 	if SLFramework.FrameworkSettings.IsEditor or BootNativeUtil.isWindows() then
-		UnityEngine.Application.OpenURL(slot0)
+		UnityEngine.Application.OpenURL(arg_47_0)
 
 		return true
 	end
 
-	slot3 = cjson.encode({
-		deepLink = slot1,
-		url = slot0
-	})
+	local var_47_0 = {
+		deepLink = arg_47_1,
+		url = arg_47_0
+	}
+	local var_47_1 = cjson.encode(var_47_0)
 
-	logNormal("openDeepLink:" .. tostring(slot3))
-	ZProj.SDKManager.Instance:CallVoidFuncWithParams("openDeepLink", slot3)
+	logNormal("openDeepLink:" .. tostring(var_47_1))
+	ZProj.SDKManager.Instance:CallVoidFuncWithParams("openDeepLink", var_47_1)
 
 	return true
 end
 
-function slot0.openURL(slot0)
-	if string.nilorempty(slot0) then
+function var_0_0.openURL(arg_48_0)
+	if string.nilorempty(arg_48_0) then
 		return
 	end
 
 	if not BootNativeUtil.isIOS() then
-		UnityEngine.Application.OpenURL(slot0)
+		UnityEngine.Application.OpenURL(arg_48_0)
 
 		return true
 	end
 
-	slot2 = cjson.encode({
+	local var_48_0 = {
 		deepLink = deepLinkUrl,
-		url = slot0
-	})
+		url = arg_48_0
+	}
+	local var_48_1 = cjson.encode(var_48_0)
 
-	logNormal("openDeepLink:" .. tostring(slot2))
-	ZProj.SDKManager.Instance:CallVoidFuncWithParams("openDeepLink", slot2)
+	logNormal("openDeepLink:" .. tostring(var_48_1))
+	ZProj.SDKManager.Instance:CallVoidFuncWithParams("openDeepLink", var_48_1)
 
 	return true
 end
 
-function slot0.getMotionDuration(slot0, slot1)
-	if slot0 then
-		for slot6 = 0, slot0.runtimeAnimatorController.animationClips.Length - 1 do
-			if slot2[slot6].name == slot1 then
-				return slot7.length
+function var_0_0.getMotionDuration(arg_49_0, arg_49_1)
+	if arg_49_0 then
+		local var_49_0 = arg_49_0.runtimeAnimatorController.animationClips
+
+		for iter_49_0 = 0, var_49_0.Length - 1 do
+			local var_49_1 = var_49_0[iter_49_0]
+
+			if var_49_1.name == arg_49_1 then
+				return var_49_1.length
 			end
 		end
 	end
@@ -778,396 +906,452 @@ function slot0.getMotionDuration(slot0, slot1)
 	return 0
 end
 
-function slot0.onDestroyViewMemberList(slot0, slot1)
-	if slot0[slot1] then
-		for slot6, slot7 in ipairs(slot0[slot1]) do
-			slot7:onDestroyView()
+function var_0_0.onDestroyViewMemberList(arg_50_0, arg_50_1)
+	if arg_50_0[arg_50_1] then
+		local var_50_0 = arg_50_0[arg_50_1]
+
+		for iter_50_0, iter_50_1 in ipairs(var_50_0) do
+			iter_50_1:onDestroyView()
 		end
 
-		slot0[slot1] = nil
+		arg_50_0[arg_50_1] = nil
 	end
 end
 
-function slot0.onDestroyViewMember(slot0, slot1)
-	if slot0[slot1] then
-		slot0[slot1]:onDestroyView()
+function var_0_0.onDestroyViewMember(arg_51_0, arg_51_1)
+	if arg_51_0[arg_51_1] then
+		arg_51_0[arg_51_1]:onDestroyView()
 
-		slot0[slot1] = nil
+		arg_51_0[arg_51_1] = nil
 	end
 end
 
-slot5 = ZProj.TweenHelper
+local var_0_5 = ZProj.TweenHelper
 
-function slot0.onDestroyViewMember_TweenId(slot0, slot1)
-	if slot0[slot1] then
-		uv0.KillById(slot0[slot1])
+function var_0_0.onDestroyViewMember_TweenId(arg_52_0, arg_52_1)
+	if arg_52_0[arg_52_1] then
+		local var_52_0 = arg_52_0[arg_52_1]
 
-		slot0[slot1] = nil
+		var_0_5.KillById(var_52_0)
+
+		arg_52_0[arg_52_1] = nil
 	end
 end
 
-function slot0.onDestroyViewMemberList_SImage(slot0, slot1)
-	if slot0[slot1] then
-		for slot6, slot7 in ipairs(slot0[slot1]) do
-			slot7:UnLoadImage()
+function var_0_0.onDestroyViewMemberList_SImage(arg_53_0, arg_53_1)
+	if arg_53_0[arg_53_1] then
+		local var_53_0 = arg_53_0[arg_53_1]
+
+		for iter_53_0, iter_53_1 in ipairs(var_53_0) do
+			iter_53_1:UnLoadImage()
 		end
 
-		slot0[slot1] = nil
+		arg_53_0[arg_53_1] = nil
 	end
 end
 
-function slot0.onDestroyViewMember_SImage(slot0, slot1)
-	if slot0[slot1] then
-		slot0[slot1]:UnLoadImage()
+function var_0_0.onDestroyViewMember_SImage(arg_54_0, arg_54_1)
+	if arg_54_0[arg_54_1] then
+		arg_54_0[arg_54_1]:UnLoadImage()
 
-		slot0[slot1] = nil
+		arg_54_0[arg_54_1] = nil
 	end
 end
 
-function slot0.onDestroyViewMember_ClickListener(slot0, slot1)
-	if slot0[slot1] then
-		slot0[slot1]:RemoveClickListener()
+function var_0_0.onDestroyViewMember_ClickListener(arg_55_0, arg_55_1)
+	if arg_55_0[arg_55_1] then
+		arg_55_0[arg_55_1]:RemoveClickListener()
 
-		slot0[slot1] = nil
+		arg_55_0[arg_55_1] = nil
 	end
 end
 
-function slot0.onDestroyViewMember_ClickDownListener(slot0, slot1)
-	if slot0[slot1] then
-		slot0[slot1]:RemoveClickDownListener()
+function var_0_0.onDestroyViewMember_ClickDownListener(arg_56_0, arg_56_1)
+	if arg_56_0[arg_56_1] then
+		arg_56_0[arg_56_1]:RemoveClickDownListener()
 
-		slot0[slot1] = nil
+		arg_56_0[arg_56_1] = nil
 	end
 end
 
-function slot0.setActive01(slot0, slot1)
-	if slot1 then
-		transformhelper.setLocalScale(slot0, 1, 1, 1)
+function var_0_0.setActive01(arg_57_0, arg_57_1)
+	if arg_57_1 then
+		transformhelper.setLocalScale(arg_57_0, 1, 1, 1)
 	else
-		transformhelper.setLocalScale(slot0, 0, 0, 0)
+		transformhelper.setLocalScale(arg_57_0, 0, 0, 0)
 	end
 end
 
-function slot0.clamp(slot0, slot1, slot2)
-	return math.min(slot2, math.max(slot0, slot1))
+function var_0_0.clamp(arg_58_0, arg_58_1, arg_58_2)
+	return math.min(arg_58_2, math.max(arg_58_0, arg_58_1))
 end
 
-function slot0.saturate(slot0)
-	return uv0.clamp(slot0, 0, 1)
+function var_0_0.saturate(arg_59_0)
+	return var_0_0.clamp(arg_59_0, 0, 1)
 end
 
-function slot0.remap(slot0, slot1, slot2, slot3, slot4)
-	return slot3 + (uv0.clamp(slot0, slot1, slot2) - slot1) * (slot4 - slot3) / (slot2 - slot1)
+function var_0_0.remap(arg_60_0, arg_60_1, arg_60_2, arg_60_3, arg_60_4)
+	arg_60_0 = var_0_0.clamp(arg_60_0, arg_60_1, arg_60_2)
+
+	return arg_60_3 + (arg_60_0 - arg_60_1) * (arg_60_4 - arg_60_3) / (arg_60_2 - arg_60_1)
 end
 
-function slot0.remap01(slot0, slot1, slot2)
-	return uv0.remap(slot0, slot1, slot2, 0, 1)
+function var_0_0.remap01(arg_61_0, arg_61_1, arg_61_2)
+	return var_0_0.remap(arg_61_0, arg_61_1, arg_61_2, 0, 1)
 end
 
-function slot0.setFirstStrSize(slot0, slot1)
-	if string.nilorempty(slot0) then
+function var_0_0.setFirstStrSize(arg_62_0, arg_62_1)
+	if string.nilorempty(arg_62_0) then
 		return
 	end
 
-	slot2 = uv0.utf8sub(slot0, 1, 1)
-	slot3 = ""
+	local var_62_0 = var_0_0.utf8sub(arg_62_0, 1, 1)
+	local var_62_1 = ""
+	local var_62_2 = var_0_0.utf8len(arg_62_0)
 
-	if uv0.utf8len(slot0) >= 2 then
-		slot3 = uv0.utf8sub(slot0, 2, slot4 - 1)
+	if var_62_2 >= 2 then
+		var_62_1 = var_0_0.utf8sub(arg_62_0, 2, var_62_2 - 1)
 	end
 
-	return string.format("<size=%s>%s</size>%s", slot1, slot2, slot3)
+	return string.format("<size=%s>%s</size>%s", arg_62_1, var_62_0, var_62_1)
 end
 
-function slot0.playerPrefsGetNumberByUserId(slot0, slot1)
-	if not PlayerModel.instance:getMyUserId() or slot2 == 0 then
-		return slot1
+function var_0_0.playerPrefsGetNumberByUserId(arg_63_0, arg_63_1)
+	local var_63_0 = PlayerModel.instance:getMyUserId()
+
+	if not var_63_0 or var_63_0 == 0 then
+		return arg_63_1
 	end
 
-	return PlayerPrefsHelper.getNumber(slot0 .. "#" .. tostring(slot2), slot1)
+	local var_63_1 = arg_63_0 .. "#" .. tostring(var_63_0)
+
+	return PlayerPrefsHelper.getNumber(var_63_1, arg_63_1)
 end
 
-function slot0.playerPrefsSetNumberByUserId(slot0, slot1)
-	if not PlayerModel.instance:getMyUserId() or slot2 == 0 then
+function var_0_0.playerPrefsSetNumberByUserId(arg_64_0, arg_64_1)
+	local var_64_0 = PlayerModel.instance:getMyUserId()
+
+	if not var_64_0 or var_64_0 == 0 then
 		return
 	end
 
-	PlayerPrefsHelper.setNumber(slot0 .. "#" .. tostring(slot2), slot1)
+	local var_64_1 = arg_64_0 .. "#" .. tostring(var_64_0)
+
+	PlayerPrefsHelper.setNumber(var_64_1, arg_64_1)
 end
 
-function slot0.playerPrefsGetStringByUserId(slot0, slot1)
-	if not PlayerModel.instance:getMyUserId() or slot2 == 0 then
-		return slot1
+function var_0_0.playerPrefsGetStringByUserId(arg_65_0, arg_65_1)
+	local var_65_0 = PlayerModel.instance:getMyUserId()
+
+	if not var_65_0 or var_65_0 == 0 then
+		return arg_65_1
 	end
 
-	return PlayerPrefsHelper.getString(slot0 .. "#" .. tostring(slot2), slot1)
+	local var_65_1 = arg_65_0 .. "#" .. tostring(var_65_0)
+
+	return PlayerPrefsHelper.getString(var_65_1, arg_65_1)
 end
 
-function slot0.playerPrefsSetStringByUserId(slot0, slot1)
-	if not PlayerModel.instance:getMyUserId() or slot2 == 0 then
+function var_0_0.playerPrefsSetStringByUserId(arg_66_0, arg_66_1)
+	local var_66_0 = PlayerModel.instance:getMyUserId()
+
+	if not var_66_0 or var_66_0 == 0 then
 		return
 	end
 
-	PlayerPrefsHelper.setString(slot0 .. "#" .. tostring(slot2), slot1)
+	local var_66_1 = arg_66_0 .. "#" .. tostring(var_66_0)
+
+	PlayerPrefsHelper.setString(var_66_1, arg_66_1)
 end
 
-slot6 = {
-	__call = function (slot0)
-		slot0.count = slot0.count + 1
+local var_0_6 = {
+	__call = function(arg_67_0)
+		local var_67_0 = arg_67_0.count
 
-		return slot0.count
+		arg_67_0.count = arg_67_0.count + 1
+
+		return var_67_0
 	end
 }
 
-function slot0.getUniqueTb(slot0)
-	slot1 = {
-		count = slot0 or 1
+function var_0_0.getUniqueTb(arg_68_0)
+	local var_68_0 = {
+		count = arg_68_0 or 1
 	}
 
-	setmetatable(slot1, uv0)
+	setmetatable(var_68_0, var_0_6)
 
-	return slot1
+	return var_68_0
 end
 
-slot7 = slot0.getUniqueTb()
+local var_0_7 = var_0_0.getUniqueTb()
 
-function slot0.getEventId()
-	return uv0()
+function var_0_0.getEventId()
+	return var_0_7()
 end
 
-function slot0.setDefaultValue(slot0, slot1)
-	setmetatable(slot0, {
-		__index = function ()
-			return uv0
+function var_0_0.setDefaultValue(arg_70_0, arg_70_1)
+	setmetatable(arg_70_0, {
+		__index = function()
+			return arg_70_1
 		end
 	})
 end
 
-function slot0.rpcInfosToList(slot0, slot1)
-	slot2 = {}
+function var_0_0.rpcInfosToList(arg_72_0, arg_72_1)
+	local var_72_0 = {}
 
-	for slot6, slot7 in ipairs(slot0) do
-		slot8 = slot1.New()
+	for iter_72_0, iter_72_1 in ipairs(arg_72_0) do
+		local var_72_1 = arg_72_1.New()
 
-		slot8:init(slot7)
-		table.insert(slot2, slot8)
+		var_72_1:init(iter_72_1)
+		table.insert(var_72_0, var_72_1)
 	end
 
-	return slot2
+	return var_72_0
 end
 
-function slot0.rpcInfosToMap(slot0, slot1, slot2)
-	for slot7, slot8 in ipairs(slot0) do
-		slot1.New():init(slot8)
+function var_0_0.rpcInfosToMap(arg_73_0, arg_73_1, arg_73_2)
+	local var_73_0 = {}
+
+	arg_73_2 = arg_73_2 or "id"
+
+	for iter_73_0, iter_73_1 in ipairs(arg_73_0) do
+		local var_73_1 = arg_73_1.New()
+
+		var_73_1:init(iter_73_1)
+
+		var_73_0[var_73_1[arg_73_2]] = var_73_1
 	end
 
-	return {
-		[slot9[slot2 or "id"]] = slot9
-	}
+	return var_73_0
 end
 
-function slot0.rpcInfosToListAndMap(slot0, slot1, slot2)
-	slot4 = {}
+function var_0_0.rpcInfosToListAndMap(arg_74_0, arg_74_1, arg_74_2)
+	local var_74_0 = {}
 
-	for slot8, slot9 in ipairs(slot0) do
-		slot10 = slot1.New()
+	arg_74_2 = arg_74_2 or "id"
 
-		slot10:init(slot9)
-		table.insert(slot4, slot10)
+	local var_74_1 = {}
+
+	for iter_74_0, iter_74_1 in ipairs(arg_74_0) do
+		local var_74_2 = arg_74_1.New()
+
+		var_74_2:init(iter_74_1)
+		table.insert(var_74_1, var_74_2)
+
+		var_74_0[var_74_2[arg_74_2]] = var_74_2
 	end
 
-	return slot4, {
-		[slot10[slot2 or "id"]] = slot10
-	}
+	return var_74_1, var_74_0
 end
 
-function slot0.setActiveUIBlock(slot0, slot1, slot2)
-	UIBlockMgrExtend.setNeedCircleMv(slot2 ~= false and true or false)
+function var_0_0.setActiveUIBlock(arg_75_0, arg_75_1, arg_75_2)
+	arg_75_2 = arg_75_2 ~= false and true or false
 
-	if slot1 then
-		UIBlockMgr.instance:startBlock(slot0)
+	UIBlockMgrExtend.setNeedCircleMv(arg_75_2)
+
+	if arg_75_1 then
+		UIBlockMgr.instance:startBlock(arg_75_0)
 	else
-		UIBlockMgr.instance:endBlock(slot0)
+		UIBlockMgr.instance:endBlock(arg_75_0)
 	end
 end
 
-function slot0.loadSImage(slot0, slot1, slot2, slot3)
-	if string.nilorempty(slot1) then
-		slot0:UnLoadImage()
+function var_0_0.loadSImage(arg_76_0, arg_76_1, arg_76_2, arg_76_3)
+	if string.nilorempty(arg_76_1) then
+		arg_76_0:UnLoadImage()
 	else
-		slot0:LoadImage(slot1, slot2, slot3)
+		arg_76_0:LoadImage(arg_76_1, arg_76_2, arg_76_3)
 	end
 end
 
-function slot0.logTab(slot0, slot1)
-	if not slot0 or type(slot0) ~= "table" then
-		return tostring(slot0)
+function var_0_0.logTab(arg_77_0, arg_77_1)
+	if not arg_77_0 or type(arg_77_0) ~= "table" then
+		return tostring(arg_77_0)
 	end
 
-	if (slot1 or 0) > 100 then
+	arg_77_1 = arg_77_1 or 0
+
+	if arg_77_1 > 100 then
 		logError("stack overflow ...")
 
-		return tostring(slot0)
+		return tostring(arg_77_0)
 	end
 
-	slot3 = string.rep("\t", slot1)
+	local var_77_0 = {}
+	local var_77_1 = string.rep("\t", arg_77_1)
 
-	table.insert({}, string.format(" {"))
+	table.insert(var_77_0, string.format(" {"))
 
-	for slot8, slot9 in pairs(slot0) do
-		if type(slot9) == "table" then
-			table.insert(slot2, string.format("%s %s = %s,", string.rep("\t", slot1 + 1), slot8, uv0.logTab(slot9, slot1 + 1)))
+	local var_77_2 = string.rep("\t", arg_77_1 + 1)
+
+	for iter_77_0, iter_77_1 in pairs(arg_77_0) do
+		if type(iter_77_1) == "table" then
+			table.insert(var_77_0, string.format("%s %s = %s,", var_77_2, iter_77_0, var_0_0.logTab(iter_77_1, arg_77_1 + 1)))
 		else
-			table.insert(slot2, string.format("%s %s = %s,", slot4, slot8, slot9))
+			table.insert(var_77_0, string.format("%s %s = %s,", var_77_2, iter_77_0, iter_77_1))
 		end
 	end
 
-	table.insert(slot2, string.format("%s }", slot3))
+	table.insert(var_77_0, string.format("%s }", var_77_1))
 
-	return table.concat(slot2, "\n")
+	return table.concat(var_77_0, "\n")
 end
 
-function slot0.getViewSize()
-	slot1 = ViewMgr.instance:getUILayer("HUD").transform
+function var_0_0.getViewSize()
+	local var_78_0 = ViewMgr.instance:getUILayer("HUD").transform
 
-	return recthelper.getWidth(slot1), recthelper.getHeight(slot1)
+	return recthelper.getWidth(var_78_0), recthelper.getHeight(var_78_0)
 end
 
-function slot0.checkClickPositionInRight(slot0)
-	slot3, slot4 = recthelper.screenPosToAnchorPos2(slot0, ViewMgr.instance:getUILayer("HUD"):GetComponent(gohelper.Type_RectTransform))
+function var_0_0.checkClickPositionInRight(arg_79_0)
+	local var_79_0 = ViewMgr.instance:getUILayer("HUD"):GetComponent(gohelper.Type_RectTransform)
+	local var_79_1, var_79_2 = recthelper.screenPosToAnchorPos2(arg_79_0, var_79_0)
 
-	return slot3 >= 0
+	return var_79_1 >= 0
 end
 
-function slot0.needLogInFightSceneUseStringFunc()
+function var_0_0.needLogInFightSceneUseStringFunc()
 	return false and GameSceneMgr.instance:isFightScene()
 end
 
-function slot0.needLogInOtherSceneUseFightStrUtilFunc()
+function var_0_0.needLogInOtherSceneUseFightStrUtilFunc()
 	return false
 end
 
-slot0.enumId = 0
+var_0_0.enumId = 0
 
-function slot0.getEnumId()
-	uv0.enumId = uv0.enumId + 1
+function var_0_0.getEnumId()
+	var_0_0.enumId = var_0_0.enumId + 1
 
-	return uv0.enumId
+	return var_0_0.enumId
 end
 
-slot0.instanceId = 0
+var_0_0.instanceId = 0
 
-function slot0.getInstanceId()
-	uv0.instanceId = uv0.instanceId + 1
+function var_0_0.getInstanceId()
+	var_0_0.instanceId = var_0_0.instanceId + 1
 
-	return uv0.instanceId
+	return var_0_0.instanceId
 end
 
-slot0.msgId = 0
+var_0_0.msgId = 0
 
-function slot0.getMsgId()
-	uv0.msgId = uv0.msgId + 1
+function var_0_0.getMsgId()
+	var_0_0.msgId = var_0_0.msgId + 1
 
-	return uv0.msgId
+	return var_0_0.msgId
 end
 
-function slot0.endsWith(slot0, slot1)
-	if string.nilorempty(slot0) or string.nilorempty(slot1) then
+function var_0_0.endsWith(arg_85_0, arg_85_1)
+	if string.nilorempty(arg_85_0) or string.nilorempty(arg_85_1) then
 		return false
 	end
 
-	return string.sub(slot0, -string.len(slot1)) == slot1
+	return string.sub(arg_85_0, -string.len(arg_85_1)) == arg_85_1
 end
 
-function slot0.isBaseOf(slot0, slot1)
-	if type(slot0) ~= type(slot1) then
+function var_0_0.isBaseOf(arg_86_0, arg_86_1)
+	if type(arg_86_0) ~= type(arg_86_1) then
 		return false
 	end
 
-	if type(slot0) ~= "table" or type(slot1) ~= "table" then
+	if type(arg_86_0) ~= "table" or type(arg_86_1) ~= "table" then
 		return false
 	end
 
-	slot2 = slot1
+	local var_86_0 = arg_86_1
 
-	while slot2 ~= nil do
-		if slot2 == slot0 then
+	while var_86_0 ~= nil do
+		if var_86_0 == arg_86_0 then
 			return true
 		end
 
-		slot2 = slot2.super
+		var_86_0 = var_86_0.super
 	end
 
 	return false
 end
 
-function slot0.getRandomPosInCircle(slot0, slot1, slot2)
-	slot5 = math.sqrt(LuaTween.linear(math.random(1, 1000) / 1000, 0, slot2 * slot2, 1))
-	slot6 = LuaTween.linear(math.random(1, 1000) / 1000, 0, 2 * math.pi, 1)
+function var_0_0.getRandomPosInCircle(arg_87_0, arg_87_1, arg_87_2)
+	local var_87_0 = arg_87_2 * arg_87_2
+	local var_87_1 = math.random(1, 1000) / 1000
+	local var_87_2 = math.sqrt(LuaTween.linear(var_87_1, 0, var_87_0, 1))
+	local var_87_3 = math.random(1, 1000) / 1000
+	local var_87_4 = LuaTween.linear(var_87_3, 0, 2 * math.pi, 1)
+	local var_87_5 = var_87_2 * math.cos(var_87_4)
+	local var_87_6 = var_87_2 * math.sin(var_87_4)
 
-	return slot5 * math.cos(slot6) + slot0, slot5 * math.sin(slot6) + slot1
+	return var_87_5 + arg_87_0, var_87_6 + arg_87_1
 end
 
-function slot0.doClearMember(slot0, slot1)
-	if slot0[slot1] then
-		slot0[slot1]:doClear()
+function var_0_0.doClearMember(arg_88_0, arg_88_1)
+	if arg_88_0[arg_88_1] then
+		arg_88_0[arg_88_1]:doClear()
 
-		slot0[slot1] = nil
+		arg_88_0[arg_88_1] = nil
 	end
 end
 
-slot9 = require("protobuf.descriptor").FieldDescriptor
+local var_0_8 = require("protobuf.descriptor").FieldDescriptor
 
-function slot0.copyPbData(slot0, slot1)
-	if not slot0 then
+function var_0_0.copyPbData(arg_89_0, arg_89_1)
+	if not arg_89_0 then
 		return
 	end
 
-	if next(slot0._fields) then
-		slot3 = {}
+	local var_89_0 = arg_89_0._fields
 
-		for slot7, slot8 in pairs(slot2) do
-			slot9 = slot7.name
+	if next(var_89_0) then
+		local var_89_1 = {}
 
-			if slot7.label == uv0.LABEL_REPEATED then
-				if #slot8 ~= 0 then
-					slot10 = {}
+		for iter_89_0, iter_89_1 in pairs(var_89_0) do
+			local var_89_2 = iter_89_0.name
 
-					for slot14, slot15 in ipairs(slot8) do
-						if slot7.cpp_type == uv0.CPPTYPE_MESSAGE and slot1 then
-							slot10[#slot10 + 1] = uv1.copyPbData(slot15, slot1)
-						elseif slot7.cpp_type == uv0.CPPTYPE_INT64 or slot7.cpp_type == uv0.CPPTYPE_UINT64 then
-							slot10[#slot10 + 1] = tonumber(slot15)
+			if iter_89_0.label == var_0_8.LABEL_REPEATED then
+				if #iter_89_1 ~= 0 then
+					local var_89_3 = {}
+
+					for iter_89_2, iter_89_3 in ipairs(iter_89_1) do
+						if iter_89_0.cpp_type == var_0_8.CPPTYPE_MESSAGE and arg_89_1 then
+							var_89_3[#var_89_3 + 1] = var_0_0.copyPbData(iter_89_3, arg_89_1)
+						elseif iter_89_0.cpp_type == var_0_8.CPPTYPE_INT64 or iter_89_0.cpp_type == var_0_8.CPPTYPE_UINT64 then
+							var_89_3[#var_89_3 + 1] = tonumber(iter_89_3)
 						else
-							slot10[#slot10 + 1] = slot15
+							var_89_3[#var_89_3 + 1] = iter_89_3
 						end
 					end
 
-					slot3[slot9] = slot10
+					var_89_1[var_89_2] = var_89_3
 				end
-			elseif slot7.cpp_type == uv0.CPPTYPE_MESSAGE and slot1 then
-				slot3[slot9] = uv1.copyPbData(slot8, true)
-			elseif slot7.cpp_type == uv0.CPPTYPE_INT64 or slot7.cpp_type == uv0.CPPTYPE_UINT64 then
-				slot3[slot9] = tonumber(slot8)
+			elseif iter_89_0.cpp_type == var_0_8.CPPTYPE_MESSAGE and arg_89_1 then
+				var_89_1[var_89_2] = var_0_0.copyPbData(iter_89_1, true)
+			elseif iter_89_0.cpp_type == var_0_8.CPPTYPE_INT64 or iter_89_0.cpp_type == var_0_8.CPPTYPE_UINT64 then
+				var_89_1[var_89_2] = tonumber(iter_89_1)
 			else
-				slot3[slot9] = slot8
+				var_89_1[var_89_2] = iter_89_1
 			end
 		end
 
-		return slot3
+		return var_89_1
 	end
 end
 
-function slot0.convertToPercentStr(slot0)
-	return tostring(math.floor((slot0 or 0) / 10)) .. "%"
+function var_0_0.convertToPercentStr(arg_90_0)
+	arg_90_0 = arg_90_0 or 0
+
+	return tostring(math.floor(arg_90_0 / 10)) .. "%"
 end
 
-function slot0.calcByDeltaRate1000(slot0, slot1)
-	return (slot0 or 0) * (1000 + (slot1 or 0)) / 1000
+function var_0_0.calcByDeltaRate1000(arg_91_0, arg_91_1)
+	arg_91_0 = arg_91_0 or 0
+
+	return arg_91_0 * (1000 + (arg_91_1 or 0)) / 1000
 end
 
-function slot0.calcByDeltaRate1000AsInt(slot0, slot1)
-	return math.floor(uv0.calcByDeltaRate1000(slot0, slot1))
+function var_0_0.calcByDeltaRate1000AsInt(arg_92_0, arg_92_1)
+	return math.floor(var_0_0.calcByDeltaRate1000(arg_92_0, arg_92_1))
 end
 
-return slot0
+return var_0_0

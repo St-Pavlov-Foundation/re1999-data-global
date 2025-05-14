@@ -1,196 +1,215 @@
-module("modules.logic.rouge.view.RougeCollectionChessInteractComp", package.seeall)
+﻿module("modules.logic.rouge.view.RougeCollectionChessInteractComp", package.seeall)
 
-slot0 = class("RougeCollectionChessInteractComp", BaseView)
+local var_0_0 = class("RougeCollectionChessInteractComp", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gobtns = gohelper.findChild(slot0.viewGO, "#go_left/#go_btns")
-	slot0._gochessContainer = gohelper.findChild(slot0.viewGO, "chessboard/#go_chessContainer")
-	slot0._gomeshContainer = gohelper.findChild(slot0.viewGO, "chessboard/#go_meshContainer")
-	slot0._gomeshItem = gohelper.findChild(slot0.viewGO, "chessboard/#go_meshContainer/#go_meshItem")
-	slot0._godragContainer = gohelper.findChild(slot0.viewGO, "chessboard/#go_dragContainer")
-	slot0._gocellModel = gohelper.findChild(slot0.viewGO, "chessboard/#go_cellModel")
-	slot0._gochessitem = gohelper.findChild(slot0.viewGO, "chessboard/#go_dragContainer/#go_chessitem")
-	slot0._goraychessitem = gohelper.findChild(slot0.viewGO, "chessboard/#go_raychessitem")
-	slot0._goblock = gohelper.findChild(slot0.viewGO, "#go_block")
-	slot0._scrollbag = gohelper.findChildScrollRect(slot0.viewGO, "#scroll_bag")
-	slot0._goContent = gohelper.findChild(slot0.viewGO, "#scroll_bag/Viewport/#go_Content")
-	slot0._gocollectionItem = gohelper.findChild(slot0.viewGO, "#scroll_bag/Viewport/#go_Content/#go_collectionItem")
-	slot0._gotip = gohelper.findChild(slot0.viewGO, "#go_tip")
-	slot0._gosingleTipsContent = gohelper.findChild(slot0.viewGO, "#go_tip/attributetip/#go_singleTipsContent")
-	slot0._gosingleAttributeItem = gohelper.findChild(slot0.viewGO, "#go_tip/attributetip/#go_singleTipsContent/#go_singleAttributeItem")
-	slot0._godragarea = gohelper.findChild(slot0.viewGO, "chessboard/#go_dragarea")
-	slot0._btnslotclosetips = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_slotclosetips")
-	slot0._btnbagclosetips = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_bagclosetips")
-	slot0._goleft = gohelper.findChild(slot0.viewGO, "#go_left")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_left/#go_btns")
+	arg_1_0._gochessContainer = gohelper.findChild(arg_1_0.viewGO, "chessboard/#go_chessContainer")
+	arg_1_0._gomeshContainer = gohelper.findChild(arg_1_0.viewGO, "chessboard/#go_meshContainer")
+	arg_1_0._gomeshItem = gohelper.findChild(arg_1_0.viewGO, "chessboard/#go_meshContainer/#go_meshItem")
+	arg_1_0._godragContainer = gohelper.findChild(arg_1_0.viewGO, "chessboard/#go_dragContainer")
+	arg_1_0._gocellModel = gohelper.findChild(arg_1_0.viewGO, "chessboard/#go_cellModel")
+	arg_1_0._gochessitem = gohelper.findChild(arg_1_0.viewGO, "chessboard/#go_dragContainer/#go_chessitem")
+	arg_1_0._goraychessitem = gohelper.findChild(arg_1_0.viewGO, "chessboard/#go_raychessitem")
+	arg_1_0._goblock = gohelper.findChild(arg_1_0.viewGO, "#go_block")
+	arg_1_0._scrollbag = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_bag")
+	arg_1_0._goContent = gohelper.findChild(arg_1_0.viewGO, "#scroll_bag/Viewport/#go_Content")
+	arg_1_0._gocollectionItem = gohelper.findChild(arg_1_0.viewGO, "#scroll_bag/Viewport/#go_Content/#go_collectionItem")
+	arg_1_0._gotip = gohelper.findChild(arg_1_0.viewGO, "#go_tip")
+	arg_1_0._gosingleTipsContent = gohelper.findChild(arg_1_0.viewGO, "#go_tip/attributetip/#go_singleTipsContent")
+	arg_1_0._gosingleAttributeItem = gohelper.findChild(arg_1_0.viewGO, "#go_tip/attributetip/#go_singleTipsContent/#go_singleAttributeItem")
+	arg_1_0._godragarea = gohelper.findChild(arg_1_0.viewGO, "chessboard/#go_dragarea")
+	arg_1_0._btnslotclosetips = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_slotclosetips")
+	arg_1_0._btnbagclosetips = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_bagclosetips")
+	arg_1_0._goleft = gohelper.findChild(arg_1_0.viewGO, "#go_left")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._click = gohelper.getClick(slot0._godragarea)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._click = gohelper.getClick(arg_2_0._godragarea)
 
-	slot0._click:AddClickListener(slot0._onClick, slot0)
+	arg_2_0._click:AddClickListener(arg_2_0._onClick, arg_2_0)
 
-	slot0._drag = SLFramework.UGUI.UIDragListener.Get(slot0._godragarea)
+	arg_2_0._drag = SLFramework.UGUI.UIDragListener.Get(arg_2_0._godragarea)
 
-	slot0._drag:AddDragBeginListener(slot0._onDragBegin, slot0)
-	slot0._drag:AddDragListener(slot0._onDrag, slot0)
-	slot0._drag:AddDragEndListener(slot0._onDragEnd, slot0)
-	slot0._btnslotclosetips:AddClickListener(slot0._closeCollectionTipView, slot0)
-	slot0._btnbagclosetips:AddClickListener(slot0._closeCollectionTipView, slot0)
+	arg_2_0._drag:AddDragBeginListener(arg_2_0._onDragBegin, arg_2_0)
+	arg_2_0._drag:AddDragListener(arg_2_0._onDrag, arg_2_0)
+	arg_2_0._drag:AddDragEndListener(arg_2_0._onDragEnd, arg_2_0)
+	arg_2_0._btnslotclosetips:AddClickListener(arg_2_0._closeCollectionTipView, arg_2_0)
+	arg_2_0._btnbagclosetips:AddClickListener(arg_2_0._closeCollectionTipView, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._click:RemoveClickListener()
-	slot0._drag:RemoveDragBeginListener()
-	slot0._drag:RemoveDragEndListener()
-	slot0._drag:RemoveDragListener()
-	slot0._btnslotclosetips:RemoveClickListener()
-	slot0._btnbagclosetips:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._click:RemoveClickListener()
+	arg_3_0._drag:RemoveDragBeginListener()
+	arg_3_0._drag:RemoveDragEndListener()
+	arg_3_0._drag:RemoveDragListener()
+	arg_3_0._btnslotclosetips:RemoveClickListener()
+	arg_3_0._btnbagclosetips:RemoveClickListener()
 end
 
-function slot0._closeCollectionTipView(slot0)
+function var_0_0._closeCollectionTipView(arg_4_0)
 	RougeCollectionChessController.instance:deselectCollection()
 	ViewMgr.instance:closeView(ViewName.RougeCollectionTipView)
 end
 
-function slot0._onClick(slot0)
-	if slot0._isDraging then
+function var_0_0._onClick(arg_5_0)
+	if arg_5_0._isDraging then
 		return
 	end
 
-	if not slot0:getPlaceCollectionMO(GamepadController.instance:getMousePosition()) then
-		slot0:onClickEmptyArea()
+	local var_5_0 = GamepadController.instance:getMousePosition()
+	local var_5_1 = arg_5_0:getPlaceCollectionMO(var_5_0)
+
+	if not var_5_1 then
+		arg_5_0:onClickEmptyArea()
 
 		return
 	end
 
-	slot0:onClickPlaceCollection(slot2)
+	arg_5_0:onClickPlaceCollection(var_5_1)
 end
 
-function slot0.onClickEmptyArea(slot0)
+function var_0_0.onClickEmptyArea(arg_6_0)
 	RougeCollectionChessController.instance:deselectCollection()
 	ViewMgr.instance:closeView(ViewName.RougeCollectionTipView)
 end
 
-function slot0.onClickPlaceCollection(slot0, slot1)
-	if not RougeCollectionBagListModel.instance:isCollectionSelect(slot1.id) then
+function var_0_0.onClickPlaceCollection(arg_7_0, arg_7_1)
+	local var_7_0 = arg_7_1.id
+
+	if not RougeCollectionBagListModel.instance:isCollectionSelect(var_7_0) then
 		AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
-		slot0:try2OpenCollectionTipView(slot1)
-		RougeCollectionChessController.instance:selectCollection(slot2)
+		arg_7_0:try2OpenCollectionTipView(arg_7_1)
+		RougeCollectionChessController.instance:selectCollection(var_7_0)
 
 		return
 	end
 
-	if slot0._tmpCollection.id ~= slot2 then
-		slot0._tmpCollection:copyOtherMO(slot1)
+	if arg_7_0._tmpCollection.id ~= var_7_0 then
+		arg_7_0._tmpCollection:copyOtherMO(arg_7_1)
 	end
 
-	slot0:rotateCollection()
+	arg_7_0:rotateCollection()
 end
 
-function slot0.try2OpenCollectionTipView(slot0, slot1)
-	if not slot1 or slot1.id <= 0 then
+function var_0_0.try2OpenCollectionTipView(arg_8_0, arg_8_1)
+	if not arg_8_1 or arg_8_1.id <= 0 then
 		return
 	end
 
-	slot2 = slot1.id
-	slot0._attrCallBackId = RougeCollectionChessController.instance:try2OpenCollectionTipView(slot2, {
+	local var_8_0 = arg_8_1.id
+	local var_8_1 = RougeCollectionModel.instance:getCollectionPlaceArea(var_8_0)
+	local var_8_2 = {
 		useCloseBtn = false,
-		collectionId = slot2,
+		collectionId = var_8_0,
 		viewPosition = RougeEnum.CollectionTipPos.Slot,
-		source = RougeCollectionModel.instance:getCollectionPlaceArea(slot2)
-	})
+		source = var_8_1
+	}
+
+	arg_8_0._attrCallBackId = RougeCollectionChessController.instance:try2OpenCollectionTipView(var_8_0, var_8_2)
 end
 
-function slot0._onDragBegin(slot0, slot1, slot2)
+function var_0_0._onDragBegin(arg_9_0, arg_9_1, arg_9_2)
 	if not RougeCollectionHelper.isCanDragCollection() then
 		return
 	end
 
-	if not slot0:getPlaceCollectionMO(slot2.position) then
+	local var_9_0 = arg_9_0:getPlaceCollectionMO(arg_9_2.position)
+
+	if not var_9_0 then
 		return
 	end
 
-	RougeCollectionChessController.instance:dispatchEvent(RougeEvent.OnBeginDragCollection, slot4, slot2)
+	RougeCollectionChessController.instance:dispatchEvent(RougeEvent.OnBeginDragCollection, var_9_0, arg_9_2)
 end
 
-function slot0.getPlaceCollectionMO(slot0, slot1)
-	slot3, slot4 = RougeCollectionHelper.anchorPos2SlotPos(recthelper.screenPosToAnchorPos(slot1, slot0._godragContainer.transform))
-	slot5 = nil
+function var_0_0.getPlaceCollectionMO(arg_10_0, arg_10_1)
+	local var_10_0 = recthelper.screenPosToAnchorPos(arg_10_1, arg_10_0._godragContainer.transform)
+	local var_10_1, var_10_2 = RougeCollectionHelper.anchorPos2SlotPos(var_10_0)
+	local var_10_3
 
-	if slot0:checkIsClickSuspendCollection(slot3, slot4) then
-		slot5 = slot0._suspendCollection.id
+	if arg_10_0:checkIsClickSuspendCollection(var_10_1, var_10_2) then
+		var_10_3 = arg_10_0._suspendCollection.id
 	end
 
-	if not slot5 or slot5 <= 0 then
-		if slot0._suspendCollection and RougeCollectionModel.instance:getSlotFilledCollectionId(slot3, slot4) == slot0._suspendCollection.id then
+	if not var_10_3 or var_10_3 <= 0 then
+		var_10_3 = RougeCollectionModel.instance:getSlotFilledCollectionId(var_10_1, var_10_2)
+
+		if arg_10_0._suspendCollection and var_10_3 == arg_10_0._suspendCollection.id then
 			return
 		end
 	end
 
-	return RougeCollectionModel.instance:getCollectionByUid(slot5)
+	return (RougeCollectionModel.instance:getCollectionByUid(var_10_3))
 end
 
-function slot0.checkIsClickSuspendCollection(slot0, slot1, slot2)
-	if slot0._suspendCollection then
-		slot3 = slot0._suspendCollection:getLeftTopPos()
-		slot7 = slot2 - slot3.y + 1
-		slot8 = RougeCollectionConfig.instance:getShapeMatrix(slot0._suspendCollection.cfgId, slot0._suspendCollection:getRotation()) and slot5[slot7] and slot5[slot7][slot1 - slot3.x + 1]
+function var_0_0.checkIsClickSuspendCollection(arg_11_0, arg_11_1, arg_11_2)
+	if arg_11_0._suspendCollection then
+		local var_11_0 = arg_11_0._suspendCollection:getLeftTopPos()
+		local var_11_1 = arg_11_0._suspendCollection:getRotation()
+		local var_11_2 = RougeCollectionConfig.instance:getShapeMatrix(arg_11_0._suspendCollection.cfgId, var_11_1)
+		local var_11_3 = arg_11_1 - var_11_0.x + 1
+		local var_11_4 = arg_11_2 - var_11_0.y + 1
+		local var_11_5 = var_11_2 and var_11_2[var_11_4] and var_11_2[var_11_4][var_11_3]
 
-		return slot8 and slot8 > 0
+		return var_11_5 and var_11_5 > 0
 	end
 end
 
-function slot0.rotateCollection(slot0)
-	if not slot0._tmpCollection then
+function var_0_0.rotateCollection(arg_12_0)
+	if not arg_12_0._tmpCollection then
 		return
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.UI.RotateCollection)
 
-	if RougeCollectionHelper.isCollectionShapeAsSquare(slot0._tmpCollection.cfgId) then
+	if RougeCollectionHelper.isCollectionShapeAsSquare(arg_12_0._tmpCollection.cfgId) then
 		return
 	end
 
-	slot0._tmpCollection:updateRotation(Mathf.Clamp((slot0._tmpCollection:getRotation() + 1) % 4, 0, 4))
-	RougeCollectionChessController.instance:dispatchEvent(RougeEvent.RotateSlotCollection, slot0._tmpCollection)
-	RougeCollectionChessController.instance:dispatchEvent(RougeEvent.Start2CheckAndPlace, slot0._tmpCollection)
+	local var_12_0 = arg_12_0._tmpCollection:getRotation()
+	local var_12_1 = Mathf.Clamp((var_12_0 + 1) % 4, 0, 4)
+
+	arg_12_0._tmpCollection:updateRotation(var_12_1)
+	RougeCollectionChessController.instance:dispatchEvent(RougeEvent.RotateSlotCollection, arg_12_0._tmpCollection)
+	RougeCollectionChessController.instance:dispatchEvent(RougeEvent.Start2CheckAndPlace, arg_12_0._tmpCollection)
 end
 
-function slot0._onDrag(slot0, slot1, slot2)
-	RougeCollectionChessController.instance:dispatchEvent(RougeEvent.OnDragCollection, slot2)
+function var_0_0._onDrag(arg_13_0, arg_13_1, arg_13_2)
+	RougeCollectionChessController.instance:dispatchEvent(RougeEvent.OnDragCollection, arg_13_2)
 end
 
-function slot0._onDragEnd(slot0, slot1, slot2)
-	RougeCollectionChessController.instance:dispatchEvent(RougeEvent.OnEndDragCollection, slot2)
+function var_0_0._onDragEnd(arg_14_0, arg_14_1, arg_14_2)
+	RougeCollectionChessController.instance:dispatchEvent(RougeEvent.OnEndDragCollection, arg_14_2)
 end
 
-function slot0._editableInitView(slot0)
-	slot0:addEventCb(RougeCollectionChessController.instance, RougeEvent.OnBeginDragCollection, slot0._beginDragCollectionCallBack, slot0)
-	slot0:addEventCb(RougeCollectionChessController.instance, RougeEvent.OnDragCollection, slot0._dragCollectionCallBack, slot0)
-	slot0:addEventCb(RougeCollectionChessController.instance, RougeEvent.OnEndDragCollection, slot0._endDragCollectionCallBack, slot0)
-	slot0:addEventCb(RougeCollectionChessController.instance, RougeEvent.DeleteSlotCollection, slot0._deleteSlotCollection, slot0)
-	slot0:addEventCb(RougeCollectionChessController.instance, RougeEvent.NullSpace2PlaceCollection, slot0.onNullSpace2PlaceCollection, slot0)
-	slot0:addEventCb(RougeCollectionChessController.instance, RougeEvent.ClearTmpCollection, slot0._clearTmpCollection, slot0)
-	slot0:addEventCb(RougeCollectionChessController.instance, RougeEvent.Failed2PlaceSlotCollection, slot0._failed2PlaceSlotCollection, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, slot0._onOpenViewCallBack, slot0)
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, slot0._onCloseViewCallBack, slot0)
+function var_0_0._editableInitView(arg_15_0)
+	arg_15_0:addEventCb(RougeCollectionChessController.instance, RougeEvent.OnBeginDragCollection, arg_15_0._beginDragCollectionCallBack, arg_15_0)
+	arg_15_0:addEventCb(RougeCollectionChessController.instance, RougeEvent.OnDragCollection, arg_15_0._dragCollectionCallBack, arg_15_0)
+	arg_15_0:addEventCb(RougeCollectionChessController.instance, RougeEvent.OnEndDragCollection, arg_15_0._endDragCollectionCallBack, arg_15_0)
+	arg_15_0:addEventCb(RougeCollectionChessController.instance, RougeEvent.DeleteSlotCollection, arg_15_0._deleteSlotCollection, arg_15_0)
+	arg_15_0:addEventCb(RougeCollectionChessController.instance, RougeEvent.NullSpace2PlaceCollection, arg_15_0.onNullSpace2PlaceCollection, arg_15_0)
+	arg_15_0:addEventCb(RougeCollectionChessController.instance, RougeEvent.ClearTmpCollection, arg_15_0._clearTmpCollection, arg_15_0)
+	arg_15_0:addEventCb(RougeCollectionChessController.instance, RougeEvent.Failed2PlaceSlotCollection, arg_15_0._failed2PlaceSlotCollection, arg_15_0)
+	arg_15_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_15_0._onOpenViewCallBack, arg_15_0)
+	arg_15_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_15_0._onCloseViewCallBack, arg_15_0)
 
-	slot0._leftTopPos = Vector2.zero
-	slot0._isDraging = false
-	slot0._goleftCanvasGroup = gohelper.onceAddComponent(slot0._goleft, gohelper.Type_CanvasGroup)
+	arg_15_0._leftTopPos = Vector2.zero
+	arg_15_0._isDraging = false
+	arg_15_0._goleftCanvasGroup = gohelper.onceAddComponent(arg_15_0._goleft, gohelper.Type_CanvasGroup)
 end
 
-function slot0.onOpen(slot0)
-	slot0._poolView = slot0.viewContainer:getRougePoolComp()
-	slot0._tmpCollection = RougeCollectionSlotMO.New()
+function var_0_0.onOpen(arg_16_0)
+	arg_16_0._poolView = arg_16_0.viewContainer:getRougePoolComp()
+	arg_16_0._tmpCollection = RougeCollectionSlotMO.New()
 end
 
-function slot0._beginDragCollectionCallBack(slot0, slot1, slot2)
-	if not slot1 or slot1.id <= 0 then
+function var_0_0._beginDragCollectionCallBack(arg_17_0, arg_17_1, arg_17_2)
+	if not arg_17_1 or not (arg_17_1.id > 0) then
 		return
 	end
 
@@ -198,178 +217,192 @@ function slot0._beginDragCollectionCallBack(slot0, slot1, slot2)
 		return
 	end
 
-	slot0._isDraging = true
-	slot0._pointerId = slot2.pointerId
-	slot0._suspendCollection = nil
+	arg_17_0._isDraging = true
+	arg_17_0._pointerId = arg_17_2.pointerId
+	arg_17_0._suspendCollection = nil
 
-	gohelper.setActive(slot0._godragContainer, true)
+	gohelper.setActive(arg_17_0._godragContainer, true)
 
-	if slot0._tmpCollection.id ~= slot1.id then
-		slot0._tmpCollection:copyOtherMO(slot1)
+	if arg_17_0._tmpCollection.id ~= arg_17_1.id then
+		arg_17_0._tmpCollection:copyOtherMO(arg_17_1)
 	end
 
-	if RougeCollectionModel.instance:isCollectionPlaceInBag(slot1.id) then
+	if RougeCollectionModel.instance:isCollectionPlaceInBag(arg_17_1.id) then
 		RougeCollectionChessController.instance:closeCollectionTipView()
 	else
 		if ViewMgr.instance:isOpen(ViewName.RougeCollectionTipView) then
-			slot0:try2OpenCollectionTipView(slot1)
+			arg_17_0:try2OpenCollectionTipView(arg_17_1)
 		end
 
 		RougeCollectionChessController.instance:dispatchEvent(RougeEvent.SetCollectionTipViewInteractable, false)
 	end
 
-	RougeCollectionChessController.instance:selectCollection(slot1.id)
-	slot0:updateDragCollection(slot2)
+	RougeCollectionChessController.instance:selectCollection(arg_17_1.id)
+	arg_17_0:updateDragCollection(arg_17_2)
 	AudioMgr.instance:trigger(AudioEnum.UI.DragCollection)
 end
 
-function slot0._dragCollectionCallBack(slot0, slot1)
-	if not slot0:checkIsResponeDragEvent(slot1) then
+function var_0_0._dragCollectionCallBack(arg_18_0, arg_18_1)
+	if not arg_18_0:checkIsResponeDragEvent(arg_18_1) then
 		return
 	end
 
-	slot0:updateDragCollection(slot1)
+	arg_18_0:updateDragCollection(arg_18_1)
 end
 
-function slot0._endDragCollectionCallBack(slot0, slot1)
-	if not slot0:checkIsResponeDragEvent(slot1) then
+function var_0_0._endDragCollectionCallBack(arg_19_0, arg_19_1)
+	if not arg_19_0:checkIsResponeDragEvent(arg_19_1) then
 		return
 	end
 
-	slot0:updateDragCollection(slot1)
-	slot0:onAfterEndDragCollection()
+	arg_19_0:updateDragCollection(arg_19_1)
+	arg_19_0:onAfterEndDragCollection()
 	RougeCollectionChessController.instance:dispatchEvent(RougeEvent.SetCollectionTipViewInteractable, true)
 end
 
-function slot0.updateDragCollection(slot0, slot1)
-	if not slot0._isDraging or not slot0._tmpCollection then
+function var_0_0.updateDragCollection(arg_20_0, arg_20_1)
+	if not arg_20_0._isDraging or not arg_20_0._tmpCollection then
 		return
 	end
 
-	slot2 = slot0._tmpCollection
-	slot3 = recthelper.screenPosToAnchorPos(slot1.position, slot0._godragContainer.transform)
-	slot6, slot7 = RougeCollectionHelper.getCollectionDragPos(slot2.cfgId, slot2:getRotation())
+	local var_20_0 = arg_20_0._tmpCollection
+	local var_20_1 = recthelper.screenPosToAnchorPos(arg_20_1.position, arg_20_0._godragContainer.transform)
+	local var_20_2 = var_20_0.cfgId
+	local var_20_3 = var_20_0:getRotation()
+	local var_20_4, var_20_5 = RougeCollectionHelper.getCollectionDragPos(var_20_2, var_20_3)
 
-	if slot6 and slot7 then
-		slot8 = RougeCollectionHelper.getSlotCellSize()
-		slot11, slot12 = RougeCollectionHelper.anchorPos2SlotPos(slot3)
-		slot0._leftTopPos.x = slot11 - slot6 + 1
-		slot0._leftTopPos.y = slot12 - slot7 + 1
+	if var_20_4 and var_20_5 then
+		local var_20_6 = RougeCollectionHelper.getSlotCellSize()
+		local var_20_7 = var_20_1.x - var_20_6.x * (var_20_4 - 0.5)
+		local var_20_8 = var_20_1.y + var_20_6.y * (var_20_5 - 0.5)
+		local var_20_9, var_20_10 = RougeCollectionHelper.anchorPos2SlotPos(var_20_1)
 
-		slot2:updateLeftTopPos(slot0._leftTopPos)
+		arg_20_0._leftTopPos.x = var_20_9 - var_20_4 + 1
+		arg_20_0._leftTopPos.y = var_20_10 - var_20_5 + 1
 
-		slot0._curDragItem = slot0:_getOrCreateTmpCollection()
+		var_20_0:updateLeftTopPos(arg_20_0._leftTopPos)
 
-		slot0._curDragItem:onUpdateMO(slot2)
-		slot0._curDragItem:setCollectionPosition(slot3.x - slot8.x * (slot6 - 0.5), slot3.y + slot8.y * (slot7 - 0.5))
-		slot0._curDragItem:setShapeCellsVisible(true)
-		slot0._curDragItem:setSelectFrameVisible(true)
-		slot0._curDragItem:setHoleToolVisible(false)
-		RougeCollectionChessController.instance:dispatchEvent(RougeEvent.UpdateSlotCellState, slot2)
+		arg_20_0._curDragItem = arg_20_0:_getOrCreateTmpCollection()
+
+		arg_20_0._curDragItem:onUpdateMO(var_20_0)
+		arg_20_0._curDragItem:setCollectionPosition(var_20_7, var_20_8)
+		arg_20_0._curDragItem:setShapeCellsVisible(true)
+		arg_20_0._curDragItem:setSelectFrameVisible(true)
+		arg_20_0._curDragItem:setHoleToolVisible(false)
+		RougeCollectionChessController.instance:dispatchEvent(RougeEvent.UpdateSlotCellState, var_20_0)
 	end
 end
 
-function slot0.checkIsResponeDragEvent(slot0, slot1)
-	return slot1 and slot1.pointerId == slot0._pointerId and slot0._isDraging
+function var_0_0.checkIsResponeDragEvent(arg_21_0, arg_21_1)
+	return arg_21_1 and arg_21_1.pointerId == arg_21_0._pointerId and arg_21_0._isDraging
 end
 
-function slot0.onAfterEndDragCollection(slot0)
-	if not slot0._curDragItem or not slot0._tmpCollection then
+function var_0_0.onAfterEndDragCollection(arg_22_0)
+	if not arg_22_0._curDragItem or not arg_22_0._tmpCollection then
 		return
 	end
 
-	slot0._isDraging = false
+	arg_22_0._isDraging = false
 
-	gohelper.setActive(slot0._godragContainer, slot0._isDraging)
-	RougeCollectionChessController.instance:dispatchEvent(RougeEvent.Start2CheckAndPlace, slot0._tmpCollection, recthelper.rectToRelativeAnchorPos(slot0._curDragItem:getCollectionTransform().position, slot0._godragContainer.transform))
-	slot0:_recycleDragCollection()
+	gohelper.setActive(arg_22_0._godragContainer, arg_22_0._isDraging)
+
+	local var_22_0 = arg_22_0._curDragItem:getCollectionTransform()
+	local var_22_1 = recthelper.rectToRelativeAnchorPos(var_22_0.position, arg_22_0._godragContainer.transform)
+
+	RougeCollectionChessController.instance:dispatchEvent(RougeEvent.Start2CheckAndPlace, arg_22_0._tmpCollection, var_22_1)
+	arg_22_0:_recycleDragCollection()
 end
 
-function slot0.onNullSpace2PlaceCollection(slot0, slot1)
-	slot0._suspendCollection = slot1
+function var_0_0.onNullSpace2PlaceCollection(arg_23_0, arg_23_1)
+	arg_23_0._suspendCollection = arg_23_1
 end
 
-function slot0._getOrCreateTmpCollection(slot0)
-	if not slot0._curDragItem then
-		slot0._curDragItem = slot0._poolView:getCollectionItem(RougeCollectionDragItem.__cname)
+function var_0_0._getOrCreateTmpCollection(arg_24_0)
+	if not arg_24_0._curDragItem then
+		arg_24_0._curDragItem = arg_24_0._poolView:getCollectionItem(RougeCollectionDragItem.__cname)
 
-		slot0._curDragItem:setParent(slot0._godragContainer.transform, false)
+		arg_24_0._curDragItem:setParent(arg_24_0._godragContainer.transform, false)
 	end
 
-	return slot0._curDragItem
+	return arg_24_0._curDragItem
 end
 
-function slot0._recycleDragCollection(slot0)
-	if slot0._curDragItem then
-		slot0._poolView:recycleCollectionItem(RougeCollectionDragItem.__cname, slot0._curDragItem)
+function var_0_0._recycleDragCollection(arg_25_0)
+	if arg_25_0._curDragItem then
+		arg_25_0._poolView:recycleCollectionItem(RougeCollectionDragItem.__cname, arg_25_0._curDragItem)
 
-		slot0._curDragItem = nil
-	end
-end
-
-function slot0._recycleSuspendCollection(slot0)
-	if slot0._suspendCollection then
-		RougeCollectionChessController.instance:dispatchEvent(RougeEvent.Failed2PlaceSlotCollection, slot0._suspendCollection.id)
-
-		slot0._suspendCollection = nil
+		arg_25_0._curDragItem = nil
 	end
 end
 
-function slot0._clearTmpCollection(slot0)
-	slot0._isDraging = false
+function var_0_0._recycleSuspendCollection(arg_26_0)
+	if arg_26_0._suspendCollection then
+		RougeCollectionChessController.instance:dispatchEvent(RougeEvent.Failed2PlaceSlotCollection, arg_26_0._suspendCollection.id)
 
-	slot0:_recycleDragCollection()
-	slot0:_recycleSuspendCollection()
+		arg_26_0._suspendCollection = nil
+	end
+end
+
+function var_0_0._clearTmpCollection(arg_27_0)
+	arg_27_0._isDraging = false
+
+	arg_27_0:_recycleDragCollection()
+	arg_27_0:_recycleSuspendCollection()
 	RougeCollectionChessController.instance:deselectCollection()
 end
 
-function slot0._deleteSlotCollection(slot0, slot1)
-	if slot0._tmpCollection and slot0._tmpCollection.id == slot1 then
-		slot0._tmpCollection:reset()
+function var_0_0._deleteSlotCollection(arg_28_0, arg_28_1)
+	if arg_28_0._tmpCollection and arg_28_0._tmpCollection.id == arg_28_1 then
+		arg_28_0._tmpCollection:reset()
 	end
 end
 
-function slot0._failed2PlaceSlotCollection(slot0, slot1, slot2)
-	slot0:_deleteSlotCollection(slot1)
+function var_0_0._failed2PlaceSlotCollection(arg_29_0, arg_29_1, arg_29_2)
+	arg_29_0:_deleteSlotCollection(arg_29_1)
 end
 
-function slot0._onOpenViewCallBack(slot0, slot1, slot2)
-	if slot1 == ViewName.RougeCollectionTipView then
-		slot0:_setLeftInteractable(false)
-		gohelper.setActive(slot0._btnslotclosetips.gameObject, slot2 and slot2.source == RougeEnum.OpenCollectionTipSource.SlotArea)
-		gohelper.setActive(slot0._btnbagclosetips.gameObject, slot2 and slot2.source == RougeEnum.OpenCollectionTipSource.BagArea)
+function var_0_0._onOpenViewCallBack(arg_30_0, arg_30_1, arg_30_2)
+	if arg_30_1 == ViewName.RougeCollectionTipView then
+		arg_30_0:_setLeftInteractable(false)
+
+		local var_30_0 = arg_30_2 and arg_30_2.source == RougeEnum.OpenCollectionTipSource.SlotArea
+		local var_30_1 = arg_30_2 and arg_30_2.source == RougeEnum.OpenCollectionTipSource.BagArea
+
+		gohelper.setActive(arg_30_0._btnslotclosetips.gameObject, var_30_0)
+		gohelper.setActive(arg_30_0._btnbagclosetips.gameObject, var_30_1)
 	end
 end
 
-function slot0._onCloseViewCallBack(slot0, slot1)
-	if slot1 == ViewName.RougeCollectionTipView then
-		slot0:_setLeftInteractable(true)
-		gohelper.setActive(slot0._btnslotclosetips.gameObject, false)
-		gohelper.setActive(slot0._btnbagclosetips.gameObject, false)
+function var_0_0._onCloseViewCallBack(arg_31_0, arg_31_1)
+	if arg_31_1 == ViewName.RougeCollectionTipView then
+		arg_31_0:_setLeftInteractable(true)
+		gohelper.setActive(arg_31_0._btnslotclosetips.gameObject, false)
+		gohelper.setActive(arg_31_0._btnbagclosetips.gameObject, false)
 	end
 end
 
-function slot0._setLeftInteractable(slot0, slot1)
-	slot0._goleftCanvasGroup.blocksRaycasts = slot1
+function var_0_0._setLeftInteractable(arg_32_0, arg_32_1)
+	arg_32_0._goleftCanvasGroup.blocksRaycasts = arg_32_1
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_33_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._poolView = nil
+function var_0_0.onDestroyView(arg_34_0)
+	arg_34_0._poolView = nil
 
-	if slot0._curDragItem then
-		slot0._curDragItem:destroy()
+	if arg_34_0._curDragItem then
+		arg_34_0._curDragItem:destroy()
 
-		slot0._curDragItem = nil
+		arg_34_0._curDragItem = nil
 	end
 
-	if slot0._attrCallBackId then
-		RougeRpc.instance:removeCallbackById(slot0._attrCallBackId)
+	if arg_34_0._attrCallBackId then
+		RougeRpc.instance:removeCallbackById(arg_34_0._attrCallBackId)
 
-		slot0._attrCallBackId = nil
+		arg_34_0._attrCallBackId = nil
 	end
 end
 
-return slot0
+return var_0_0

@@ -1,92 +1,92 @@
-module("modules.logic.room.view.layout.RoomLayoutVisitPlan", package.seeall)
+﻿module("modules.logic.room.view.layout.RoomLayoutVisitPlan", package.seeall)
 
-slot0 = class("RoomLayoutVisitPlan", BaseView)
+local var_0_0 = class("RoomLayoutVisitPlan", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._goplayinfo = gohelper.findChild(slot0.viewGO, "#go_playinfo")
-	slot0._txtplanname = gohelper.findChildText(slot0.viewGO, "#go_playinfo/#txt_planname")
-	slot0._btnplaninfo = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_playinfo/#txt_planname/#btn_planinfo")
-	slot0._txtplayername = gohelper.findChildText(slot0.viewGO, "#go_playinfo/#txt_playername")
-	slot0._txtplayerId = gohelper.findChildText(slot0.viewGO, "#go_playinfo/#txt_playerId")
-	slot0._goplayericon = gohelper.findChild(slot0.viewGO, "#go_playinfo/#go_playericon")
-	slot0._goshareinfo = gohelper.findChild(slot0.viewGO, "#go_shareinfo")
-	slot0._txtsharecode = gohelper.findChildText(slot0.viewGO, "#go_shareinfo/go_sharecode/#txt_sharecode")
-	slot0._btncopysharecode = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_shareinfo/go_sharecode/#btn_copysharecode")
-	slot0._goplaninfo = gohelper.findChild(slot0.viewGO, "#go_shareinfo/#go_planinfo")
-	slot0._txtplaninfodesc = gohelper.findChildText(slot0.viewGO, "#go_shareinfo/#go_planinfo/#txt_planinfodesc")
-	slot0._gocomparing = gohelper.findChild(slot0.viewGO, "#go_shareinfo/#go_comparing")
-	slot0._btncomparing = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_shareinfo/#go_comparing/txt_comparing/#btn_comparing")
-	slot0._gocompare = gohelper.findChild(slot0.viewGO, "#go_shareinfo/#go_compare")
-	slot0._btncompare = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_shareinfo/#go_compare/txt_compare/#btn_compare")
-	slot0._btncopy = gohelper.findChildButtonWithAudio(slot0.viewGO, "layout/#btn_copy")
-	slot0._gocopylock = gohelper.findChild(slot0.viewGO, "layout/#btn_copy/#go_copylock")
-	slot0._gocopyunlock = gohelper.findChild(slot0.viewGO, "layout/#btn_copy/#go_copyunlock")
-	slot0._btnshare = gohelper.findChildButtonWithAudio(slot0.viewGO, "layout/#btn_share")
-	slot0._btnmoremask = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_moremask")
-	slot0._goinformexpand = gohelper.findChild(slot0.viewGO, "#go_informexpand")
-	slot0._btninform = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_informexpand/#btn_inform")
-	slot0._btnmore = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_more")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goplayinfo = gohelper.findChild(arg_1_0.viewGO, "#go_playinfo")
+	arg_1_0._txtplanname = gohelper.findChildText(arg_1_0.viewGO, "#go_playinfo/#txt_planname")
+	arg_1_0._btnplaninfo = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_playinfo/#txt_planname/#btn_planinfo")
+	arg_1_0._txtplayername = gohelper.findChildText(arg_1_0.viewGO, "#go_playinfo/#txt_playername")
+	arg_1_0._txtplayerId = gohelper.findChildText(arg_1_0.viewGO, "#go_playinfo/#txt_playerId")
+	arg_1_0._goplayericon = gohelper.findChild(arg_1_0.viewGO, "#go_playinfo/#go_playericon")
+	arg_1_0._goshareinfo = gohelper.findChild(arg_1_0.viewGO, "#go_shareinfo")
+	arg_1_0._txtsharecode = gohelper.findChildText(arg_1_0.viewGO, "#go_shareinfo/go_sharecode/#txt_sharecode")
+	arg_1_0._btncopysharecode = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_shareinfo/go_sharecode/#btn_copysharecode")
+	arg_1_0._goplaninfo = gohelper.findChild(arg_1_0.viewGO, "#go_shareinfo/#go_planinfo")
+	arg_1_0._txtplaninfodesc = gohelper.findChildText(arg_1_0.viewGO, "#go_shareinfo/#go_planinfo/#txt_planinfodesc")
+	arg_1_0._gocomparing = gohelper.findChild(arg_1_0.viewGO, "#go_shareinfo/#go_comparing")
+	arg_1_0._btncomparing = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_shareinfo/#go_comparing/txt_comparing/#btn_comparing")
+	arg_1_0._gocompare = gohelper.findChild(arg_1_0.viewGO, "#go_shareinfo/#go_compare")
+	arg_1_0._btncompare = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_shareinfo/#go_compare/txt_compare/#btn_compare")
+	arg_1_0._btncopy = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "layout/#btn_copy")
+	arg_1_0._gocopylock = gohelper.findChild(arg_1_0.viewGO, "layout/#btn_copy/#go_copylock")
+	arg_1_0._gocopyunlock = gohelper.findChild(arg_1_0.viewGO, "layout/#btn_copy/#go_copyunlock")
+	arg_1_0._btnshare = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "layout/#btn_share")
+	arg_1_0._btnmoremask = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_moremask")
+	arg_1_0._goinformexpand = gohelper.findChild(arg_1_0.viewGO, "#go_informexpand")
+	arg_1_0._btninform = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_informexpand/#btn_inform")
+	arg_1_0._btnmore = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_more")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnplaninfo:AddClickListener(slot0._btnplaninfoOnClick, slot0)
-	slot0._btncopysharecode:AddClickListener(slot0._btncopysharecodeOnClick, slot0)
-	slot0._btncomparing:AddClickListener(slot0._btncomparingOnClick, slot0)
-	slot0._btncompare:AddClickListener(slot0._btncompareOnClick, slot0)
-	slot0._btncopy:AddClickListener(slot0._btncopyOnClick, slot0)
-	slot0._btnshare:AddClickListener(slot0._btnshareOnClick, slot0)
-	slot0._btnmoremask:AddClickListener(slot0._btnmoremaskOnClick, slot0)
-	slot0._btninform:AddClickListener(slot0._btninformOnClick, slot0)
-	slot0._btnmore:AddClickListener(slot0._btnmoreOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnplaninfo:AddClickListener(arg_2_0._btnplaninfoOnClick, arg_2_0)
+	arg_2_0._btncopysharecode:AddClickListener(arg_2_0._btncopysharecodeOnClick, arg_2_0)
+	arg_2_0._btncomparing:AddClickListener(arg_2_0._btncomparingOnClick, arg_2_0)
+	arg_2_0._btncompare:AddClickListener(arg_2_0._btncompareOnClick, arg_2_0)
+	arg_2_0._btncopy:AddClickListener(arg_2_0._btncopyOnClick, arg_2_0)
+	arg_2_0._btnshare:AddClickListener(arg_2_0._btnshareOnClick, arg_2_0)
+	arg_2_0._btnmoremask:AddClickListener(arg_2_0._btnmoremaskOnClick, arg_2_0)
+	arg_2_0._btninform:AddClickListener(arg_2_0._btninformOnClick, arg_2_0)
+	arg_2_0._btnmore:AddClickListener(arg_2_0._btnmoreOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnplaninfo:RemoveClickListener()
-	slot0._btncopysharecode:RemoveClickListener()
-	slot0._btncomparing:RemoveClickListener()
-	slot0._btncompare:RemoveClickListener()
-	slot0._btncopy:RemoveClickListener()
-	slot0._btnshare:RemoveClickListener()
-	slot0._btnmoremask:RemoveClickListener()
-	slot0._btninform:RemoveClickListener()
-	slot0._btnmore:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnplaninfo:RemoveClickListener()
+	arg_3_0._btncopysharecode:RemoveClickListener()
+	arg_3_0._btncomparing:RemoveClickListener()
+	arg_3_0._btncompare:RemoveClickListener()
+	arg_3_0._btncopy:RemoveClickListener()
+	arg_3_0._btnshare:RemoveClickListener()
+	arg_3_0._btnmoremask:RemoveClickListener()
+	arg_3_0._btninform:RemoveClickListener()
+	arg_3_0._btnmore:RemoveClickListener()
 end
 
-function slot0._btncomparingOnClick(slot0)
-	slot0:_compareRoom(false)
+function var_0_0._btncomparingOnClick(arg_4_0)
+	arg_4_0:_compareRoom(false)
 end
 
-function slot0._btnmoremaskOnClick(slot0)
-	slot0:_showExpand(false)
+function var_0_0._btnmoremaskOnClick(arg_5_0)
+	arg_5_0:_showExpand(false)
 end
 
-function slot0._btnmoreOnClick(slot0)
-	slot0:_showExpand(slot0._isShowExpand ~= true)
+function var_0_0._btnmoreOnClick(arg_6_0)
+	arg_6_0:_showExpand(arg_6_0._isShowExpand ~= true)
 end
 
-function slot0._btncompareOnClick(slot0)
-	slot0:_compareRoom(true)
+function var_0_0._btncompareOnClick(arg_7_0)
+	arg_7_0:_compareRoom(true)
 end
 
-function slot0._btninformOnClick(slot0)
-	RoomInformController.instance:openShareTipView(slot0._playerMO, slot0._shareCode)
-	slot0:_showExpand(false)
+function var_0_0._btninformOnClick(arg_8_0)
+	RoomInformController.instance:openShareTipView(arg_8_0._playerMO, arg_8_0._shareCode)
+	arg_8_0:_showExpand(false)
 end
 
-function slot0._btnplaninfoOnClick(slot0)
-	RoomLayoutController.instance:openCopyTips(slot0._planInfo)
+function var_0_0._btnplaninfoOnClick(arg_9_0)
+	RoomLayoutController.instance:openCopyTips(arg_9_0._planInfo)
 end
 
-function slot0._btncopysharecodeOnClick(slot0)
-	RoomLayoutController.instance:copyShareCodeTxt(slot0._shareCode)
+function var_0_0._btncopysharecodeOnClick(arg_10_0)
+	RoomLayoutController.instance:copyShareCodeTxt(arg_10_0._shareCode)
 end
 
-function slot0._btncopyOnClick(slot0)
-	if not slot0._isShare then
+function var_0_0._btncopyOnClick(arg_11_0)
+	if not arg_11_0._isShare then
 		GameFacade.showToast(RoomEnum.Toast.LayoutPlanNotCanCopy)
 
 		return
@@ -99,210 +99,232 @@ function slot0._btncopyOnClick(slot0)
 			return
 		end
 
-		RoomLayoutController.instance:openCopyView(slot0._playerMO.name)
+		RoomLayoutController.instance:openCopyView(arg_11_0._playerMO.name)
 	else
 		GameFacade.showToast(RoomEnum.Toast.LayoutPlanShareCodeNotOpen)
 	end
 end
 
-function slot0._btnshareOnClick(slot0)
-	if slot0._playerMO:isMyFriend() then
-		SocialModel.instance:setSelectFriend(slot0._playerMO.userId)
-		SocialController.instance:openSocialView({
+function var_0_0._btnshareOnClick(arg_12_0)
+	if arg_12_0._playerMO:isMyFriend() then
+		local var_12_0 = {
 			preSendInfo = {
-				recipientId = slot0._playerMO.userId,
+				recipientId = arg_12_0._playerMO.userId,
 				msgType = ChatEnum.MsgType.RoomSeekShare,
 				content = luaLang("room_chat_seek_share_content")
 			}
-		})
+		}
+
+		SocialModel.instance:setSelectFriend(arg_12_0._playerMO.userId)
+		SocialController.instance:openSocialView(var_12_0)
 	else
-		GameFacade.showMessageBox(MessageBoxIdDefine.RoomLayoutPlanApplyFriend, MsgBoxEnum.BoxType.Yes_No, slot0._sendAddFriend, nil, , slot0, nil, , slot0._playerMO.name)
+		GameFacade.showMessageBox(MessageBoxIdDefine.RoomLayoutPlanApplyFriend, MsgBoxEnum.BoxType.Yes_No, arg_12_0._sendAddFriend, nil, nil, arg_12_0, nil, nil, arg_12_0._playerMO.name)
 	end
 end
 
-function slot0._sendAddFriend(slot0)
-	SocialController.instance:AddFriend(slot0._playerMO.userId)
+function var_0_0._sendAddFriend(arg_13_0)
+	SocialController.instance:AddFriend(arg_13_0._playerMO.userId)
 end
 
-function slot0._editableInitView(slot0)
-	slot0._playericon = IconMgr.instance:getCommonPlayerIcon(slot0._goplayericon)
+function var_0_0._editableInitView(arg_14_0)
+	arg_14_0._playericon = IconMgr.instance:getCommonPlayerIcon(arg_14_0._goplayericon)
 
-	slot0._playericon:setEnableClick(false)
-	slot0._playericon:setShowLevel(false)
-	slot0:_showExpand(false)
+	arg_14_0._playericon:setEnableClick(false)
+	arg_14_0._playericon:setShowLevel(false)
+	arg_14_0:_showExpand(false)
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_15_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0:_refreshPlayerUI()
+function var_0_0.onOpen(arg_16_0)
+	arg_16_0:_refreshPlayerUI()
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_17_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_18_0)
+	return
 end
 
-function slot0._refreshData(slot0)
-	slot0._isShare = RoomController.instance:isVisitShareMode()
-	slot0._curInfo = RoomModel.instance:getInfoByMode(RoomModel.instance:getGameMode())
+function var_0_0._refreshData(arg_19_0)
+	arg_19_0._isShare = RoomController.instance:isVisitShareMode()
+	arg_19_0._curInfo = RoomModel.instance:getInfoByMode(RoomModel.instance:getGameMode())
 
-	if not slot0._curInfo then
+	if not arg_19_0._curInfo then
 		return
 	end
 
-	slot0._planInfo = RoomLayoutHelper.createInfoByObInfo(slot0._curInfo)
-	slot0._shareCode = nil
-	slot0._planName = nil
-	slot0._isCompareInfo = false
+	arg_19_0._planInfo = RoomLayoutHelper.createInfoByObInfo(arg_19_0._curInfo)
+	arg_19_0._shareCode = nil
+	arg_19_0._planName = nil
+	arg_19_0._isCompareInfo = false
 
-	if not slot0._playerMO then
-		slot0._playerMO = SocialPlayerMO.New()
+	if not arg_19_0._playerMO then
+		arg_19_0._playerMO = SocialPlayerMO.New()
 	end
 
-	if slot0._isShare then
-		slot1 = slot0._curInfo
+	if arg_19_0._isShare then
+		local var_19_0 = arg_19_0._curInfo
+		local var_19_1 = arg_19_0:_createPlayerInfo(var_19_0.shareUserId, var_19_0.nickName, var_19_0.levle, var_19_0.portrait, var_19_0.time)
 
-		slot0._playerMO:init(slot0:_createPlayerInfo(slot1.shareUserId, slot1.nickName, slot1.levle, slot1.portrait, slot1.time))
+		arg_19_0._playerMO:init(var_19_1)
 
-		slot0._shareCode = slot1.shareCode
-		slot0._planName = slot1.roomPlanName
+		arg_19_0._shareCode = var_19_0.shareCode
+		arg_19_0._planName = var_19_0.roomPlanName
 
-		if RoomLayoutHelper.checkVisitParamCoppare(RoomModel.instance:getVisitParam()) then
-			slot0._isCompareInfo = true
+		local var_19_2 = RoomModel.instance:getVisitParam()
+
+		if RoomLayoutHelper.checkVisitParamCoppare(var_19_2) then
+			arg_19_0._isCompareInfo = true
 		end
 
-		if string.nilorempty(slot0._planName) then
-			slot0._planName = formatLuaLang("room_layoutplan_default_name", "")
+		if string.nilorempty(arg_19_0._planName) then
+			arg_19_0._planName = formatLuaLang("room_layoutplan_default_name", "")
 		end
 	else
-		slot0._playerMO:init(SocialModel.instance:getPlayerMO(slot0._curInfo.targetUid) or slot0:_createPlayerInfo(slot0._curInfo.targetUid))
-		slot0:_checkPlayerInfo(slot0._playerMO)
+		local var_19_3 = SocialModel.instance:getPlayerMO(arg_19_0._curInfo.targetUid) or arg_19_0:_createPlayerInfo(arg_19_0._curInfo.targetUid)
 
-		slot0._planName = formatLuaLang("room_layoutplan_look_details", slot0._playerMO.name or "")
+		arg_19_0._playerMO:init(var_19_3)
+		arg_19_0:_checkPlayerInfo(arg_19_0._playerMO)
+
+		arg_19_0._planName = formatLuaLang("room_layoutplan_look_details", arg_19_0._playerMO.name or "")
 	end
 end
 
-function slot0._createPlayerInfo(slot0, slot1, slot2, slot3, slot4, slot5)
-	slot6 = {
-		userId = slot1 or 0,
-		name = slot2,
-		portrait = slot4 or 0,
-		level = slot3 or 1,
-		time = slot5 or 0
+function var_0_0._createPlayerInfo(arg_20_0, arg_20_1, arg_20_2, arg_20_3, arg_20_4, arg_20_5)
+	local var_20_0 = {
+		userId = arg_20_1 or 0,
+		name = arg_20_2,
+		portrait = arg_20_4 or 0,
+		level = arg_20_3 or 1,
+		time = arg_20_5 or 0
 	}
 
-	slot0:_checkPlayerInfo(slot6)
+	arg_20_0:_checkPlayerInfo(var_20_0)
 
-	return slot6
+	return var_20_0
 end
 
-function slot0._checkPlayerInfo(slot0, slot1)
-	if string.nilorempty(slot1.name) then
-		slot1.name = string.format("#%s", slot1.userId)
+function var_0_0._checkPlayerInfo(arg_21_0, arg_21_1)
+	if string.nilorempty(arg_21_1.name) then
+		arg_21_1.name = string.format("#%s", arg_21_1.userId)
 	end
 end
 
-function slot0._refreshPlayerUI(slot0)
-	slot0:_refreshData()
+function var_0_0._refreshPlayerUI(arg_22_0)
+	arg_22_0:_refreshData()
 
-	if not slot0._curInfo then
+	if not arg_22_0._curInfo then
 		return
 	end
 
-	gohelper.setActive(slot0._goshareinfo, slot0._isShare)
-	gohelper.setActive(slot0._btnshare, not slot0._isShare)
-	slot0._playericon:onUpdateMO(slot0._playerMO)
-	slot0._playericon:setShowLevel(false)
+	gohelper.setActive(arg_22_0._goshareinfo, arg_22_0._isShare)
+	gohelper.setActive(arg_22_0._btnshare, not arg_22_0._isShare)
+	arg_22_0._playericon:onUpdateMO(arg_22_0._playerMO)
+	arg_22_0._playericon:setShowLevel(false)
 
-	slot0._txtplayername.text = slot0._playerMO.name
-	slot0._txtplayerId.text = string.format("ID:%s", slot0._playerMO.userId)
-	slot0._txtplanname.text = slot0._planName
+	arg_22_0._txtplayername.text = arg_22_0._playerMO.name
+	arg_22_0._txtplayerId.text = string.format("ID:%s", arg_22_0._playerMO.userId)
+	arg_22_0._txtplanname.text = arg_22_0._planName
 
-	if slot0._isShare then
-		slot0._txtsharecode.text = slot0._shareCode
-		slot0._txtplaninfodesc.text = luaLang("room_layoutplan_share_notlack_desc")
-		slot1 = slot0:_isHasAllBlockAndBuiling(slot0._planInfo)
+	if arg_22_0._isShare then
+		arg_22_0._txtsharecode.text = arg_22_0._shareCode
+		arg_22_0._txtplaninfodesc.text = luaLang("room_layoutplan_share_notlack_desc")
 
-		gohelper.setActive(slot0._goplaninfo, slot1)
-		gohelper.setActive(slot0._gocomparing, not slot1 and slot0._isCompareInfo)
-		gohelper.setActive(slot0._gocompare, not slot1 and not slot0._isCompareInfo)
+		local var_22_0 = arg_22_0:_isHasAllBlockAndBuiling(arg_22_0._planInfo)
+
+		gohelper.setActive(arg_22_0._goplaninfo, var_22_0)
+		gohelper.setActive(arg_22_0._gocomparing, not var_22_0 and arg_22_0._isCompareInfo)
+		gohelper.setActive(arg_22_0._gocompare, not var_22_0 and not arg_22_0._isCompareInfo)
 	end
 
-	slot0:_refreshLayoutPlan()
+	arg_22_0:_refreshLayoutPlan()
 end
 
-function slot0._isHasAllBlockAndBuiling(slot0, slot1)
-	slot2, slot3, slot4, slot5 = RoomLayoutHelper.comparePlanInfo(slot1)
+function var_0_0._isHasAllBlockAndBuiling(arg_23_0, arg_23_1)
+	local var_23_0, var_23_1, var_23_2, var_23_3 = RoomLayoutHelper.comparePlanInfo(arg_23_1)
 
-	if slot2 > 0 or slot3 > 0 or slot4 > 0 then
+	if var_23_0 > 0 or var_23_1 > 0 or var_23_2 > 0 then
 		return false
 	end
 
 	return true
 end
 
-function slot0._getDesStr(slot0, slot1)
-	slot2, slot3, slot4, slot5 = RoomLayoutHelper.comparePlanInfo(slot1)
+function var_0_0._getDesStr(arg_24_0, arg_24_1)
+	local var_24_0, var_24_1, var_24_2, var_24_3 = RoomLayoutHelper.comparePlanInfo(arg_24_1)
 
-	if slot2 > 0 or slot3 > 0 or slot4 > 0 then
-		slot6 = {}
+	if var_24_0 > 0 or var_24_1 > 0 or var_24_2 > 0 then
+		local var_24_4 = {}
 
-		slot0:_addCollStrList("room_layoutplan_blockpackage_lack", slot2, slot6)
-		slot0:_addCollStrList("room_layoutplan_birthdayblock_lack", slot3, slot6)
-		slot0:_addCollStrList("room_layoutplan_building_lack", slot4, slot6)
+		arg_24_0:_addCollStrList("room_layoutplan_blockpackage_lack", var_24_0, var_24_4)
+		arg_24_0:_addCollStrList("room_layoutplan_birthdayblock_lack", var_24_1, var_24_4)
+		arg_24_0:_addCollStrList("room_layoutplan_building_lack", var_24_2, var_24_4)
 
-		return string.format("<color=#AB1313>%s</color>", formatLuaLang("room_layoutplan_share_lack_desc", RoomLayoutHelper.connStrList(slot6, luaLang("room_levelup_init_and1"), luaLang("room_levelup_init_and2"))))
+		local var_24_5 = luaLang("room_levelup_init_and1")
+		local var_24_6 = luaLang("room_levelup_init_and2")
+		local var_24_7 = RoomLayoutHelper.connStrList(var_24_4, var_24_5, var_24_6)
+
+		return string.format("<color=#AB1313>%s</color>", formatLuaLang("room_layoutplan_share_lack_desc", var_24_7))
 	end
 
 	return luaLang("room_layoutplan_share_notlack_desc")
 end
 
-function slot0._addCollStrList(slot0, slot1, slot2, slot3)
-	if slot2 > 0 then
-		table.insert(slot3, formatLuaLang(slot1, slot2))
+function var_0_0._addCollStrList(arg_25_0, arg_25_1, arg_25_2, arg_25_3)
+	if arg_25_2 > 0 then
+		table.insert(arg_25_3, formatLuaLang(arg_25_1, arg_25_2))
 	end
 end
 
-function slot0._refreshLayoutPlan(slot0)
-	slot2 = slot0._isShare and RoomLayoutController.instance:isOpen()
+function var_0_0._refreshLayoutPlan(arg_26_0)
+	local var_26_0 = RoomLayoutController.instance:isOpen()
+	local var_26_1 = arg_26_0._isShare and var_26_0
 
-	gohelper.setActive(slot0._gocopyunlock, slot2)
-	gohelper.setActive(slot0._gocopylock, not slot2)
+	gohelper.setActive(arg_26_0._gocopyunlock, var_26_1)
+	gohelper.setActive(arg_26_0._gocopylock, not var_26_1)
 end
 
-function slot0._showExpand(slot0, slot1)
-	slot0._isShowExpand = slot1
+function var_0_0._showExpand(arg_27_0, arg_27_1)
+	arg_27_0._isShowExpand = arg_27_1
 
-	gohelper.setActive(slot0._goinformexpand, slot1)
-	gohelper.setActive(slot0._btnmoremask, slot1)
+	gohelper.setActive(arg_27_0._goinformexpand, arg_27_1)
+	gohelper.setActive(arg_27_0._btnmoremask, arg_27_1)
 end
 
-function slot0._compareRoom(slot0, slot1)
-	slot0._isCompareInfo = slot1
+function var_0_0._compareRoom(arg_28_0, arg_28_1)
+	arg_28_0._isCompareInfo = arg_28_1
 
-	if GameSceneMgr.instance:getCurScene() and slot2.camera then
-		slot3 = RoomEnum.CameraState.Overlook
+	local var_28_0 = GameSceneMgr.instance:getCurScene()
 
-		slot2.camera:switchCameraState(slot3, {
+	if var_28_0 and var_28_0.camera then
+		local var_28_1 = RoomEnum.CameraState.Overlook
+		local var_28_2 = {
 			focusY = 0,
 			focusX = 0,
 			rotate = 0,
-			zoom = slot2.camera:getZoomInitValue(slot3)
-		}, nil, slot0._onSwitchCameraDone, slot0)
+			zoom = var_28_0.camera:getZoomInitValue(var_28_1)
+		}
+
+		var_28_0.camera:switchCameraState(var_28_1, var_28_2, nil, arg_28_0._onSwitchCameraDone, arg_28_0)
 	else
-		slot0:_onSwitchCameraDone()
+		arg_28_0:_onSwitchCameraDone()
 	end
 end
 
-function slot0._onSwitchCameraDone(slot0)
-	RoomController.instance:enterRoom(RoomEnum.GameMode.VisitShare, nil, slot0._curInfo, {
-		userId = slot0._playerMO.userId,
-		shareCode = slot0._shareCode,
-		isCompareInfo = slot0._isCompareInfo
-	}, nil, , true)
+function var_0_0._onSwitchCameraDone(arg_29_0)
+	local var_29_0 = {
+		userId = arg_29_0._playerMO.userId,
+		shareCode = arg_29_0._shareCode,
+		isCompareInfo = arg_29_0._isCompareInfo
+	}
+	local var_29_1 = arg_29_0._curInfo
+
+	RoomController.instance:enterRoom(RoomEnum.GameMode.VisitShare, nil, var_29_1, var_29_0, nil, nil, true)
 end
 
-return slot0
+return var_0_0

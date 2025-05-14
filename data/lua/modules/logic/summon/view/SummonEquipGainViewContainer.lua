@@ -1,12 +1,12 @@
-module("modules.logic.summon.view.SummonEquipGainViewContainer", package.seeall)
+﻿module("modules.logic.summon.view.SummonEquipGainViewContainer", package.seeall)
 
-slot0 = class("SummonEquipGainViewContainer", BaseViewContainer)
+local var_0_0 = class("SummonEquipGainViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		EquipGetView.New(),
 		SummonEquipGainView.New()
 	}
 end
 
-return slot0
+return var_0_0

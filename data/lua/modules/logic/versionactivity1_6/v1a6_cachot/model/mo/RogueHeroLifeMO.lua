@@ -1,11 +1,11 @@
-module("modules.logic.versionactivity1_6.v1a6_cachot.model.mo.RogueHeroLifeMO", package.seeall)
+﻿module("modules.logic.versionactivity1_6.v1a6_cachot.model.mo.RogueHeroLifeMO", package.seeall)
 
-slot0 = pureTable("RogueHeroLifeMO")
+local var_0_0 = pureTable("RogueHeroLifeMO")
 
-function slot0.init(slot0, slot1)
-	slot0.heroId = slot1.heroId
-	slot0.life = slot1.life
-	slot0.lifePercent = slot1.life / 10
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.heroId = arg_1_1.heroId
+	arg_1_0.life = arg_1_1.life
+	arg_1_0.lifePercent = arg_1_1.life / 10
 end
 
-return slot0
+return var_0_0

@@ -1,32 +1,32 @@
-module("modules.logic.room.view.RoomViewCameraState", package.seeall)
+﻿module("modules.logic.room.view.RoomViewCameraState", package.seeall)
 
-slot0 = class("RoomViewCameraState", BaseView)
+local var_0_0 = class("RoomViewCameraState", BaseView)
 
-function slot0.onInitView(slot0)
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+function var_0_0.onInitView(arg_1_0)
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btncamera:AddClickListener(slot0._btncameraOnClick, slot0)
-	slot0._btncameramask:AddClickListener(slot0._btncameramaskOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btncamera:AddClickListener(arg_2_0._btncameraOnClick, arg_2_0)
+	arg_2_0._btncameramask:AddClickListener(arg_2_0._btncameramaskOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btncamera:RemoveClickListener()
-	slot0._btncameramask:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btncamera:RemoveClickListener()
+	arg_3_0._btncameramask:RemoveClickListener()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._btncamera = gohelper.findChildButtonWithAudio(slot0.viewGO, "go_normalroot/btn_camera")
-	slot0._btncameramask = gohelper.findChildButtonWithAudio(slot0.viewGO, "go_normalroot/btn_cameramask")
-	slot0._gocameraexpand = gohelper.findChild(slot0.viewGO, "go_normalroot/#go_cameraexpand")
-	slot0._gocameritem = gohelper.findChild(slot0.viewGO, "go_normalroot/#go_cameraexpand/go_cameritem")
-	slot0._txtcamera = gohelper.findChildText(slot0.viewGO, "go_normalroot/btn_camera/txt_camera")
-	slot0._imageicon = gohelper.findChildImage(slot0.viewGO, "go_normalroot/btn_camera/image_icon")
-	slot0._scene = GameSceneMgr.instance:getCurScene()
-	slot0._cameraStateDataList = {
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._btncamera = gohelper.findChildButtonWithAudio(arg_4_0.viewGO, "go_normalroot/btn_camera")
+	arg_4_0._btncameramask = gohelper.findChildButtonWithAudio(arg_4_0.viewGO, "go_normalroot/btn_cameramask")
+	arg_4_0._gocameraexpand = gohelper.findChild(arg_4_0.viewGO, "go_normalroot/#go_cameraexpand")
+	arg_4_0._gocameritem = gohelper.findChild(arg_4_0.viewGO, "go_normalroot/#go_cameraexpand/go_cameritem")
+	arg_4_0._txtcamera = gohelper.findChildText(arg_4_0.viewGO, "go_normalroot/btn_camera/txt_camera")
+	arg_4_0._imageicon = gohelper.findChildImage(arg_4_0.viewGO, "go_normalroot/btn_camera/image_icon")
+	arg_4_0._scene = GameSceneMgr.instance:getCurScene()
+	arg_4_0._cameraStateDataList = {
 		{
 			landKey = "roomstandbyview_highview_all",
 			icon = "zuoce_ziyuan_quanlanshijiao",
@@ -43,122 +43,132 @@ function slot0._editableInitView(slot0)
 			cameraState = RoomEnum.CameraState.Normal
 		}
 	}
-	slot0._cameraTbList = {}
+	arg_4_0._cameraTbList = {}
 
-	for slot4, slot5 in ipairs(slot0._cameraStateDataList) do
-		table.insert(slot0._cameraTbList, slot0:_createCameraTb(gohelper.cloneInPlace(slot0._gocameritem), slot5))
+	for iter_4_0, iter_4_1 in ipairs(arg_4_0._cameraStateDataList) do
+		local var_4_0 = gohelper.cloneInPlace(arg_4_0._gocameritem)
+		local var_4_1 = arg_4_0:_createCameraTb(var_4_0, iter_4_1)
+
+		table.insert(arg_4_0._cameraTbList, var_4_1)
 	end
 
-	gohelper.setActive(slot0._gocameritem, false)
-	gohelper.setActive(slot0._gocameraexpand, false)
+	gohelper.setActive(arg_4_0._gocameritem, false)
+	gohelper.setActive(arg_4_0._gocameraexpand, false)
 end
 
-function slot0._createCameraTb(slot0, slot1, slot2)
-	slot3 = slot0:getUserDataTb_()
-	slot3.go = slot1
-	slot3.stateData = slot2
-	slot3.goselect = gohelper.findChild(slot1, "go_select")
-	slot3.btn = gohelper.findButtonWithAudio(slot1)
-	slot3.txtcamera = gohelper.findChildText(slot1, "txt_camera")
-	slot3.imageicon = gohelper.findChildImage(slot1, "image_icon")
+function var_0_0._createCameraTb(arg_5_0, arg_5_1, arg_5_2)
+	local var_5_0 = arg_5_0:getUserDataTb_()
 
-	function slot3.dispose(slot0)
-		slot0.btn:RemoveClickListener()
+	var_5_0.go = arg_5_1
+	var_5_0.stateData = arg_5_2
+	var_5_0.goselect = gohelper.findChild(arg_5_1, "go_select")
+	var_5_0.btn = gohelper.findButtonWithAudio(arg_5_1)
+	var_5_0.txtcamera = gohelper.findChildText(arg_5_1, "txt_camera")
+	var_5_0.imageicon = gohelper.findChildImage(arg_5_1, "image_icon")
+
+	function var_5_0.dispose(arg_6_0)
+		arg_6_0.btn:RemoveClickListener()
 	end
 
-	slot3.btn:AddClickListener(slot0._onCameraTbOnClick, slot0, slot3)
-	UISpriteSetMgr.instance:setRoomSprite(slot3.imageicon, slot2.icon)
+	var_5_0.btn:AddClickListener(arg_5_0._onCameraTbOnClick, arg_5_0, var_5_0)
+	UISpriteSetMgr.instance:setRoomSprite(var_5_0.imageicon, arg_5_2.icon)
 
-	slot3.txtcamera.text = luaLang(slot2.landKey)
+	var_5_0.txtcamera.text = luaLang(arg_5_2.landKey)
 
-	return slot3
+	return var_5_0
 end
 
-function slot0._btncameraOnClick(slot0)
-	slot0:_showExpand(slot0._isShowExpand ~= true)
+function var_0_0._btncameraOnClick(arg_7_0)
+	arg_7_0:_showExpand(arg_7_0._isShowExpand ~= true)
 end
 
-function slot0._btncameramaskOnClick(slot0)
-	slot0:_showExpand(false)
+function var_0_0._btncameramaskOnClick(arg_8_0)
+	arg_8_0:_showExpand(false)
 end
 
-function slot0._onCameraTbOnClick(slot0, slot1)
-	if slot0._scene.camera:getCameraState() ~= slot1.stateData.cameraState then
-		slot0._scene.camera:switchCameraState(slot1.stateData.cameraState, {}, nil, slot0._finishSwitchCameraState, slot0)
+function var_0_0._onCameraTbOnClick(arg_9_0, arg_9_1)
+	if arg_9_0._scene.camera:getCameraState() ~= arg_9_1.stateData.cameraState then
+		arg_9_0._scene.camera:switchCameraState(arg_9_1.stateData.cameraState, {}, nil, arg_9_0._finishSwitchCameraState, arg_9_0)
 	end
 
-	slot0:_showExpand(false)
+	arg_9_0:_showExpand(false)
 end
 
-function slot0._finishSwitchCameraState(slot0)
-	if slot0._scene and slot0._scene.audio then
-		slot0._scene.audio:changeRTPCValue()
-	end
-end
-
-function slot0._refreshSelect(slot0)
-	for slot5, slot6 in ipairs(slot0._cameraTbList) do
-		gohelper.setActive(slot6.goselect, slot0._scene.camera:getCameraState() == slot6.stateData.cameraState)
+function var_0_0._finishSwitchCameraState(arg_10_0)
+	if arg_10_0._scene and arg_10_0._scene.audio then
+		arg_10_0._scene.audio:changeRTPCValue()
 	end
 end
 
-function slot0._showExpand(slot0, slot1)
-	slot0._isShowExpand = slot1
+function var_0_0._refreshSelect(arg_11_0)
+	local var_11_0 = arg_11_0._scene.camera:getCameraState()
 
-	gohelper.setActive(slot0._gocameraexpand, slot1)
-	gohelper.setActive(slot0._btncameramask, slot1)
+	for iter_11_0, iter_11_1 in ipairs(arg_11_0._cameraTbList) do
+		gohelper.setActive(iter_11_1.goselect, var_11_0 == iter_11_1.stateData.cameraState)
+	end
 end
 
-function slot0._btntrackingOnClick(slot0)
-	slot1 = slot0._scene.camera:getCameraFocus()
+function var_0_0._showExpand(arg_12_0, arg_12_1)
+	arg_12_0._isShowExpand = arg_12_1
 
-	if slot0._scene.camera:getCameraState() == RoomEnum.CameraState.Overlook and math.abs(slot1.x) < 0.1 and math.abs(slot1.y) < 0.1 then
+	gohelper.setActive(arg_12_0._gocameraexpand, arg_12_1)
+	gohelper.setActive(arg_12_0._btncameramask, arg_12_1)
+end
+
+function var_0_0._btntrackingOnClick(arg_13_0)
+	local var_13_0 = arg_13_0._scene.camera:getCameraFocus()
+
+	if arg_13_0._scene.camera:getCameraState() == RoomEnum.CameraState.Overlook and math.abs(var_13_0.x) < 0.1 and math.abs(var_13_0.y) < 0.1 then
 		GameFacade.showToast(ToastEnum.ClickRoomTracking)
 
 		return
 	end
 
-	slot0._scene.camera:switchCameraState(RoomEnum.CameraState.Overlook, {
+	arg_13_0._scene.camera:switchCameraState(RoomEnum.CameraState.Overlook, {
 		focusX = 0,
 		focusY = 0
 	})
 end
 
-function slot0._cameraStateUpdate(slot0)
-	if slot0:_getStateData(slot0._scene.camera:getCameraState()) then
-		slot0._txtcamera.text = luaLang(slot2.landKey)
+function var_0_0._cameraStateUpdate(arg_14_0)
+	local var_14_0 = arg_14_0._scene.camera:getCameraState()
+	local var_14_1 = arg_14_0:_getStateData(var_14_0)
 
-		UISpriteSetMgr.instance:setRoomSprite(slot0._imageicon, slot2.icon)
-		slot0:_refreshSelect()
+	if var_14_1 then
+		arg_14_0._txtcamera.text = luaLang(var_14_1.landKey)
+
+		UISpriteSetMgr.instance:setRoomSprite(arg_14_0._imageicon, var_14_1.icon)
+		arg_14_0:_refreshSelect()
 	else
-		slot0:_showExpand(false)
+		arg_14_0:_showExpand(false)
 	end
 end
 
-function slot0._getStateData(slot0, slot1)
-	for slot5, slot6 in ipairs(slot0._cameraStateDataList) do
-		if slot6.cameraState == slot1 then
-			return slot6
+function var_0_0._getStateData(arg_15_0, arg_15_1)
+	for iter_15_0, iter_15_1 in ipairs(arg_15_0._cameraStateDataList) do
+		if iter_15_1.cameraState == arg_15_1 then
+			return iter_15_1
 		end
 	end
 end
 
-function slot0.onOpen(slot0)
-	slot0:addEventCb(RoomMapController.instance, RoomEvent.CameraStateUpdate, slot0._cameraStateUpdate, slot0)
-	slot0:_cameraStateUpdate()
+function var_0_0.onOpen(arg_16_0)
+	arg_16_0:addEventCb(RoomMapController.instance, RoomEvent.CameraStateUpdate, arg_16_0._cameraStateUpdate, arg_16_0)
+	arg_16_0:_cameraStateUpdate()
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_17_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	if slot0._cameraTbList then
-		for slot4, slot5 in ipairs(slot0._cameraTbList) do
-			slot5:dispose()
+function var_0_0.onDestroyView(arg_18_0)
+	if arg_18_0._cameraTbList then
+		for iter_18_0, iter_18_1 in ipairs(arg_18_0._cameraTbList) do
+			iter_18_1:dispose()
 		end
 
-		slot0._cameraTbList = nil
+		arg_18_0._cameraTbList = nil
 	end
 end
 
-return slot0
+return var_0_0

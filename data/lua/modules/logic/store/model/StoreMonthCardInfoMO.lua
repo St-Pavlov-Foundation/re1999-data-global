@@ -1,30 +1,32 @@
-module("modules.logic.store.model.StoreMonthCardInfoMO", package.seeall)
+﻿module("modules.logic.store.model.StoreMonthCardInfoMO", package.seeall)
 
-slot0 = pureTable("StoreMonthCardInfoMO")
+local var_0_0 = pureTable("StoreMonthCardInfoMO")
 
-function slot0.init(slot0, slot1)
-	slot0:update(slot1)
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0:update(arg_1_1)
 end
 
-function slot0.update(slot0, slot1)
-	slot0.id = slot1.id
-	slot0.expiredTime = slot1.expireTime
-	slot0.hasGetBonus = slot1.hasGetBonus
-	slot0.config = StoreConfig.instance:getChargeGoodsConfig(slot0.id)
+function var_0_0.update(arg_2_0, arg_2_1)
+	arg_2_0.id = arg_2_1.id
+	arg_2_0.expiredTime = arg_2_1.expireTime
+	arg_2_0.hasGetBonus = arg_2_1.hasGetBonus
+	arg_2_0.config = StoreConfig.instance:getChargeGoodsConfig(arg_2_0.id)
 end
 
-function slot0.getRemainDay(slot0)
-	if slot0.expiredTime - ServerTime.now() < 0 then
+function var_0_0.getRemainDay(arg_3_0)
+	local var_3_0 = arg_3_0.expiredTime - ServerTime.now()
+
+	if var_3_0 < 0 then
 		return StoreEnum.MonthCardStatus.NotPurchase
-	elseif slot1 < TimeUtil.OneDaySecond then
+	elseif var_3_0 < TimeUtil.OneDaySecond then
 		return StoreEnum.MonthCardStatus.NotEnoughOneDay
 	else
-		return math.floor(slot1 / TimeUtil.OneDaySecond)
+		return math.floor(var_3_0 / TimeUtil.OneDaySecond)
 	end
 end
 
-function slot0.hasExpired(slot0)
-	return slot0.expiredTime < ServerTime.now()
+function var_0_0.hasExpired(arg_4_0)
+	return arg_4_0.expiredTime < ServerTime.now()
 end
 
-return slot0
+return var_0_0

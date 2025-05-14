@@ -1,44 +1,44 @@
-module("modules.logic.store.view.NormalStoreGoodsViewContainer", package.seeall)
+﻿module("modules.logic.store.view.NormalStoreGoodsViewContainer", package.seeall)
 
-slot0 = class("NormalStoreGoodsViewContainer", BaseViewContainer)
+local var_0_0 = class("NormalStoreGoodsViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, TabViewGroup.New(1, "#go_topright"))
-	table.insert(slot1, NormalStoreGoodsView.New())
+	table.insert(var_1_0, TabViewGroup.New(1, "#go_topright"))
+	table.insert(var_1_0, NormalStoreGoodsView.New())
 
-	return slot1
+	return var_1_0
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	slot0._currencyView = CurrencyView.New({})
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	arg_2_0._currencyView = CurrencyView.New({})
 
 	return {
-		slot0._currencyView
+		arg_2_0._currencyView
 	}
 end
 
-function slot0.setCurrencyType(slot0, slot1)
-	slot2 = {
-		slot1
+function var_0_0.setCurrencyType(arg_3_0, arg_3_1)
+	local var_3_0 = {
+		arg_3_1
 	}
 
-	if CurrencyEnum.CurrencyType.FreeDiamondCoupon == slot1 then
-		slot2 = {
+	if CurrencyEnum.CurrencyType.FreeDiamondCoupon == arg_3_1 then
+		var_3_0 = {
 			CurrencyEnum.CurrencyType.Diamond,
 			CurrencyEnum.CurrencyType.FreeDiamondCoupon
 		}
 	end
 
-	if slot0._currencyView then
-		slot0._currencyView:setCurrencyType(slot2)
+	if arg_3_0._currencyView then
+		arg_3_0._currencyView:setCurrencyType(var_3_0)
 	end
 end
 
-function slot0.onContainerClickModalMask(slot0)
+function var_0_0.onContainerClickModalMask(arg_4_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Mail_switch)
-	slot0:closeThis()
+	arg_4_0:closeThis()
 end
 
-return slot0
+return var_0_0

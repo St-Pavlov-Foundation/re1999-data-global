@@ -1,225 +1,245 @@
-module("modules.logic.room.entity.comp.RoomCharacterInteractionComp", package.seeall)
+﻿module("modules.logic.room.entity.comp.RoomCharacterInteractionComp", package.seeall)
 
-slot0 = class("RoomCharacterInteractionComp", LuaCompBase)
+local var_0_0 = class("RoomCharacterInteractionComp", LuaCompBase)
 
-function slot0.ctor(slot0, slot1)
-	slot0._faithFill = 0
-	slot0.entity = slot1
-	slot0._effectKeyResDict = {
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0._faithFill = 0
+	arg_1_0.entity = arg_1_1
+	arg_1_0._effectKeyResDict = {
 		[RoomEnum.EffectKey.CharacterFaithMaxKey] = RoomScenePreloader.ResCharacterFaithMax,
 		[RoomEnum.EffectKey.CharacterFaithFullKey] = RoomScenePreloader.ResCharacterFaithFull,
 		[RoomEnum.EffectKey.CharacterFaithNormalKey] = RoomScenePreloader.ResCharacterFaithNormal,
 		[RoomEnum.EffectKey.CharacterChatKey] = RoomScenePreloader.ResCharacterChat
 	}
-	slot0._showCameraStateDict = {
+	arg_1_0._showCameraStateDict = {
 		[RoomEnum.CameraState.Normal] = true,
 		[RoomEnum.CameraState.Overlook] = true
 	}
-	slot0._offsetX = 0
-	slot0._offsetY = 0
-	slot0._offsetZ = 0
-	slot0._effectKeyInxDict = {}
-	slot2 = 0
+	arg_1_0._offsetX = 0
+	arg_1_0._offsetY = 0
+	arg_1_0._offsetZ = 0
+	arg_1_0._effectKeyInxDict = {}
 
-	for slot6, slot7 in pairs(slot0._effectKeyResDict) do
-		slot0._effectKeyInxDict[slot6] = slot2
-		slot2 = slot2 + 1
+	local var_1_0 = 0
+
+	for iter_1_0, iter_1_1 in pairs(arg_1_0._effectKeyResDict) do
+		arg_1_0._effectKeyInxDict[iter_1_0] = var_1_0
+		var_1_0 = var_1_0 + 1
 	end
 end
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
-	slot0._goTrs = slot1.transform
-	slot0._scene = GameSceneMgr.instance:getCurScene()
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.go = arg_2_1
+	arg_2_0._goTrs = arg_2_1.transform
+	arg_2_0._scene = GameSceneMgr.instance:getCurScene()
 
-	slot0:_refreshShowIcom()
+	arg_2_0:_refreshShowIcom()
 end
 
-function slot0.getMO(slot0)
-	return slot0.entity:getMO()
+function var_0_0.getMO(arg_3_0)
+	return arg_3_0.entity:getMO()
 end
 
-function slot0.addEventListeners(slot0)
-	RoomCharacterController.instance:registerCallback(RoomEvent.UpdateCharacterMove, slot0._characterPositionChanged, slot0)
-	RoomCharacterController.instance:registerCallback(RoomEvent.UpdateCharacterInteractionUI, slot0.startCheckEventTask, slot0)
-	RoomCharacterController.instance:registerCallback(RoomEvent.RefreshFaithShow, slot0.startCheckEventTask, slot0)
-	RoomCharacterController.instance:registerCallback(RoomEvent.CharacterCanConfirm, slot0.startCheckEventTask, slot0)
-	RoomCharacterController.instance:registerCallback(RoomEvent.RefreshSpineShow, slot0.startCheckEventTask, slot0)
-	CharacterController.instance:registerCallback(CharacterEvent.HeroUpdatePush, slot0.startCheckEventTask, slot0)
-	RoomMapController.instance:registerCallback(RoomEvent.CameraStateUpdate, slot0.startCheckEventTask, slot0)
+function var_0_0.addEventListeners(arg_4_0)
+	RoomCharacterController.instance:registerCallback(RoomEvent.UpdateCharacterMove, arg_4_0._characterPositionChanged, arg_4_0)
+	RoomCharacterController.instance:registerCallback(RoomEvent.UpdateCharacterInteractionUI, arg_4_0.startCheckEventTask, arg_4_0)
+	RoomCharacterController.instance:registerCallback(RoomEvent.RefreshFaithShow, arg_4_0.startCheckEventTask, arg_4_0)
+	RoomCharacterController.instance:registerCallback(RoomEvent.CharacterCanConfirm, arg_4_0.startCheckEventTask, arg_4_0)
+	RoomCharacterController.instance:registerCallback(RoomEvent.RefreshSpineShow, arg_4_0.startCheckEventTask, arg_4_0)
+	CharacterController.instance:registerCallback(CharacterEvent.HeroUpdatePush, arg_4_0.startCheckEventTask, arg_4_0)
+	RoomMapController.instance:registerCallback(RoomEvent.CameraStateUpdate, arg_4_0.startCheckEventTask, arg_4_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	RoomCharacterController.instance:unregisterCallback(RoomEvent.UpdateCharacterMove, slot0._characterPositionChanged, slot0)
-	RoomCharacterController.instance:unregisterCallback(RoomEvent.UpdateCharacterInteractionUI, slot0.startCheckEventTask, slot0)
-	RoomCharacterController.instance:unregisterCallback(RoomEvent.RefreshFaithShow, slot0.startCheckEventTask, slot0)
-	RoomCharacterController.instance:unregisterCallback(RoomEvent.CharacterCanConfirm, slot0.startCheckEventTask, slot0)
-	RoomCharacterController.instance:unregisterCallback(RoomEvent.RefreshSpineShow, slot0.startCheckEventTask, slot0)
-	CharacterController.instance:unregisterCallback(CharacterEvent.HeroUpdatePush, slot0.startCheckEventTask, slot0)
-	RoomMapController.instance:unregisterCallback(RoomEvent.CameraStateUpdate, slot0.startCheckEventTask, slot0)
+function var_0_0.removeEventListeners(arg_5_0)
+	RoomCharacterController.instance:unregisterCallback(RoomEvent.UpdateCharacterMove, arg_5_0._characterPositionChanged, arg_5_0)
+	RoomCharacterController.instance:unregisterCallback(RoomEvent.UpdateCharacterInteractionUI, arg_5_0.startCheckEventTask, arg_5_0)
+	RoomCharacterController.instance:unregisterCallback(RoomEvent.RefreshFaithShow, arg_5_0.startCheckEventTask, arg_5_0)
+	RoomCharacterController.instance:unregisterCallback(RoomEvent.CharacterCanConfirm, arg_5_0.startCheckEventTask, arg_5_0)
+	RoomCharacterController.instance:unregisterCallback(RoomEvent.RefreshSpineShow, arg_5_0.startCheckEventTask, arg_5_0)
+	CharacterController.instance:unregisterCallback(CharacterEvent.HeroUpdatePush, arg_5_0.startCheckEventTask, arg_5_0)
+	RoomMapController.instance:unregisterCallback(RoomEvent.CameraStateUpdate, arg_5_0.startCheckEventTask, arg_5_0)
 
-	slot0._isHasCheckEventTask = false
+	arg_5_0._isHasCheckEventTask = false
 
-	TaskDispatcher.cancelTask(slot0._onRunCheckEventTask, slot0)
+	TaskDispatcher.cancelTask(arg_5_0._onRunCheckEventTask, arg_5_0)
 end
 
-function slot0._characterPositionChanged(slot0)
-	if slot0._lastCameraState ~= slot0._scene.camera:getCameraState() then
-		slot0._lastCameraState = slot1
+function var_0_0._characterPositionChanged(arg_6_0)
+	local var_6_0 = arg_6_0._scene.camera:getCameraState()
 
-		slot0:startCheckEventTask()
+	if arg_6_0._lastCameraState ~= var_6_0 then
+		arg_6_0._lastCameraState = var_6_0
+
+		arg_6_0:startCheckEventTask()
 	end
 
-	slot0:_updateParticlePosOffset()
+	arg_6_0:_updateParticlePosOffset()
 end
 
-function slot0.startCheckEventTask(slot0)
-	if not slot0._isHasCheckEventTask then
-		slot0._isHasCheckEventTask = true
+function var_0_0.startCheckEventTask(arg_7_0)
+	if not arg_7_0._isHasCheckEventTask then
+		arg_7_0._isHasCheckEventTask = true
 
-		TaskDispatcher.runDelay(slot0._onRunCheckEventTask, slot0, 0.1)
+		TaskDispatcher.runDelay(arg_7_0._onRunCheckEventTask, arg_7_0, 0.1)
 	end
 end
 
-function slot0._onRunCheckEventTask(slot0)
-	slot0._isHasCheckEventTask = false
+function var_0_0._onRunCheckEventTask(arg_8_0)
+	arg_8_0._isHasCheckEventTask = false
 
-	slot0:_refreshShowIcom()
+	arg_8_0:_refreshShowIcom()
 end
 
-function slot0._refreshShowIcom(slot0)
-	slot0:_showByKey(slot0:_getShowEffectKey())
-	slot0:_upateFaithFill()
+function var_0_0._refreshShowIcom(arg_9_0)
+	local var_9_0 = arg_9_0:_getShowEffectKey()
+
+	arg_9_0:_showByKey(var_9_0)
+	arg_9_0:_upateFaithFill()
 end
 
-function slot0._getShowEffectKey(slot0)
+function var_0_0._getShowEffectKey(arg_10_0)
 	if not RoomController.instance:isObMode() then
 		return nil
 	end
 
-	if not slot0._showCameraStateDict[slot0._scene.camera:getCameraState()] or RoomMapController.instance:isInRoomInitBuildingViewCamera() then
+	local var_10_0 = arg_10_0._scene.camera:getCameraState()
+
+	if not arg_10_0._showCameraStateDict[var_10_0] or RoomMapController.instance:isInRoomInitBuildingViewCamera() then
 		return nil
 	end
 
-	if not slot0:getMO() or slot2:isTrainSourceState() then
+	local var_10_1 = arg_10_0:getMO()
+
+	if not var_10_1 or var_10_1:isTrainSourceState() then
 		return
 	end
 
-	if RoomCharacterModel.instance:getTempCharacterMO() and slot3.id == slot2.id then
-		if RoomCharacterController.instance:isCharacterFaithFull(slot2.heroId) then
+	local var_10_2 = RoomCharacterModel.instance:getTempCharacterMO()
+
+	if var_10_2 and var_10_2.id == var_10_1.id then
+		if RoomCharacterController.instance:isCharacterFaithFull(var_10_1.heroId) then
 			return RoomEnum.EffectKey.CharacterFaithMaxKey
 		end
 
 		return
 	end
 
-	if slot2:getCurrentInteractionId() then
+	if var_10_1:getCurrentInteractionId() then
 		if not RoomCharacterController.instance:getPlayingInteractionParam() then
 			return RoomEnum.EffectKey.CharacterChatKey
 		end
 	else
-		if RoomCharacterController.instance:isCharacterFaithFull(slot2.heroId) then
-			if RoomCharacterModel.instance:isShowFaithFull(slot2.heroId) then
+		if RoomCharacterController.instance:isCharacterFaithFull(var_10_1.heroId) then
+			if RoomCharacterModel.instance:isShowFaithFull(var_10_1.heroId) then
 				return RoomEnum.EffectKey.CharacterFaithMaxKey
 			end
 
 			return nil
 		end
 
-		if RoomCharacterHelper.getCharacterFaithFill(slot2) >= 1 then
+		local var_10_3 = RoomCharacterHelper.getCharacterFaithFill(var_10_1)
+
+		if var_10_3 >= 1 then
 			return RoomEnum.EffectKey.CharacterFaithFullKey
-		elseif slot5 > 0 then
-			slot0._faithFill = slot5
+		elseif var_10_3 > 0 then
+			arg_10_0._faithFill = var_10_3
 
 			return RoomEnum.EffectKey.CharacterFaithNormalKey
 		end
 	end
 end
 
-function slot0._showByKey(slot0, slot1)
-	slot0._curShowKey = slot1
-	slot2 = slot0.entity.effect
+function var_0_0._showByKey(arg_11_0, arg_11_1)
+	arg_11_0._curShowKey = arg_11_1
 
-	for slot6, slot7 in pairs(slot0._effectKeyResDict) do
-		slot2:setActiveByKey(slot6, slot1 == slot6)
+	local var_11_0 = arg_11_0.entity.effect
+
+	for iter_11_0, iter_11_1 in pairs(arg_11_0._effectKeyResDict) do
+		var_11_0:setActiveByKey(iter_11_0, arg_11_1 == iter_11_0)
 	end
 
-	if slot0._effectKeyResDict[slot1] and not slot2:isHasEffectGOByKey(slot1) then
-		slot2:addParams({
-			[slot1] = {
-				res = slot0._effectKeyResDict[slot1]
+	if arg_11_0._effectKeyResDict[arg_11_1] and not var_11_0:isHasEffectGOByKey(arg_11_1) then
+		var_11_0:addParams({
+			[arg_11_1] = {
+				res = arg_11_0._effectKeyResDict[arg_11_1]
 			}
 		})
-		slot2:refreshEffect()
+		var_11_0:refreshEffect()
 	end
 end
 
-function slot0._upateFaithFill(slot0)
-	if slot0._isLastFaithFill == slot0._faithFill then
+function var_0_0._upateFaithFill(arg_12_0)
+	if arg_12_0._isLastFaithFill == arg_12_0._faithFill then
 		return
 	end
 
-	if slot0.entity.effect:isHasEffectGOByKey(RoomEnum.EffectKey.CharacterFaithNormalKey) then
-		slot0._isLastFaithFill = slot0._faithFill
-		slot3 = slot0._scene.mapmgr:getPropertyBlock()
+	local var_12_0 = arg_12_0.entity.effect
 
-		slot3:Clear()
-		slot3:SetVector("_UVOffset", Vector4.New(0, Mathf.Lerp(-0.53, -0.7, slot0._faithFill), 0, 0))
+	if var_12_0:isHasEffectGOByKey(RoomEnum.EffectKey.CharacterFaithNormalKey) then
+		arg_12_0._isLastFaithFill = arg_12_0._faithFill
 
-		slot8 = Vector4.New
-		slot9 = 0
+		local var_12_1 = var_12_0:getComponentsByPath(RoomEnum.EffectKey.CharacterFaithNormalKey, RoomEnum.ComponentName.Renderer, "mesh/faith_process")
+		local var_12_2 = arg_12_0._scene.mapmgr:getPropertyBlock()
 
-		slot3:SetVector("_ParticlePosOffset", slot8(slot9, slot0._offsetY, 0, 0))
+		var_12_2:Clear()
 
-		for slot8, slot9 in ipairs(slot1:getComponentsByPath(RoomEnum.EffectKey.CharacterFaithNormalKey, RoomEnum.ComponentName.Renderer, "mesh/faith_process")) do
-			slot9:SetPropertyBlock(slot3)
+		local var_12_3 = Mathf.Lerp(-0.53, -0.7, arg_12_0._faithFill)
+
+		var_12_2:SetVector("_UVOffset", Vector4.New(0, var_12_3, 0, 0))
+		var_12_2:SetVector("_ParticlePosOffset", Vector4.New(0, arg_12_0._offsetY, 0, 0))
+
+		for iter_12_0, iter_12_1 in ipairs(var_12_1) do
+			iter_12_1:SetPropertyBlock(var_12_2)
 		end
 
-		transformhelper.setLocalPos(slot1:getEffectGOTrs(RoomEnum.EffectKey.CharacterFaithNormalKey), slot0._offsetX, 0, slot0._offsetZ)
+		transformhelper.setLocalPos(var_12_0:getEffectGOTrs(RoomEnum.EffectKey.CharacterFaithNormalKey), arg_12_0._offsetX, 0, arg_12_0._offsetZ)
 	end
 end
 
-function slot0._updateParticlePosOffset(slot0)
-	if not slot0._effectKeyResDict[slot0._curShowKey] or not slot0.entity.effect:isHasEffectGOByKey(slot0._curShowKey) then
+function var_0_0._updateParticlePosOffset(arg_13_0)
+	local var_13_0 = arg_13_0.entity.effect
+
+	if not arg_13_0._effectKeyResDict[arg_13_0._curShowKey] or not var_13_0:isHasEffectGOByKey(arg_13_0._curShowKey) then
 		return
 	end
 
-	if not slot0.entity.characterspine:getMountheadGOTrs() then
+	local var_13_1 = arg_13_0.entity.characterspine:getMountheadGOTrs()
+
+	if not var_13_1 then
 		return
 	end
 
-	slot3, slot4, slot5 = transformhelper.getPos(slot2)
-	slot6, slot7, slot8 = transformhelper.getPos(slot0.entity.containerGOTrs)
-	slot10 = slot4 - slot7 + 0.08
-	slot11 = slot5 - slot8
+	local var_13_2, var_13_3, var_13_4 = transformhelper.getPos(var_13_1)
+	local var_13_5, var_13_6, var_13_7 = transformhelper.getPos(arg_13_0.entity.containerGOTrs)
+	local var_13_8 = var_13_2 - var_13_5
+	local var_13_9 = var_13_3 - var_13_6 + 0.08
+	local var_13_10 = var_13_4 - var_13_7
+	local var_13_11 = 0.001
 
-	if 0.001 < math.abs(slot3 - slot6 - slot0._offsetX) or slot12 < math.abs(slot10 - slot0._offsetY) or slot12 < math.abs(slot11 - slot0._offsetZ) or slot0._lastInx ~= slot0._effectKeyInxDict[slot0._curShowKey] then
-		slot0._offsetX = slot9
-		slot0._offsetY = slot10
-		slot0._offsetZ = slot11
-		slot0._lastInx = slot0._effectKeyInxDict[slot0._curShowKey]
+	if var_13_11 < math.abs(var_13_8 - arg_13_0._offsetX) or var_13_11 < math.abs(var_13_9 - arg_13_0._offsetY) or var_13_11 < math.abs(var_13_10 - arg_13_0._offsetZ) or arg_13_0._lastInx ~= arg_13_0._effectKeyInxDict[arg_13_0._curShowKey] then
+		arg_13_0._offsetX = var_13_8
+		arg_13_0._offsetY = var_13_9
+		arg_13_0._offsetZ = var_13_10
+		arg_13_0._lastInx = arg_13_0._effectKeyInxDict[arg_13_0._curShowKey]
 
-		transformhelper.setLocalPos(slot1:getEffectGOTrs(slot0._curShowKey), slot0._offsetX, 0, slot0._offsetZ)
+		transformhelper.setLocalPos(var_13_0:getEffectGOTrs(arg_13_0._curShowKey), arg_13_0._offsetX, 0, arg_13_0._offsetZ)
 
-		slot14 = slot0._scene.mapmgr:getPropertyBlock()
+		local var_13_12 = var_13_0:getComponentsByPath(arg_13_0._curShowKey, RoomEnum.ComponentName.Renderer, "mesh")
+		local var_13_13 = arg_13_0._scene.mapmgr:getPropertyBlock()
 
-		slot14:Clear()
+		var_13_13:Clear()
+		var_13_13:SetVector("_ParticlePosOffset", Vector4.New(0, arg_13_0._offsetY, 0, 0))
 
-		slot18 = Vector4.New
-		slot19 = 0
-
-		slot14:SetVector("_ParticlePosOffset", slot18(slot19, slot0._offsetY, 0, 0))
-
-		for slot18, slot19 in ipairs(slot1:getComponentsByPath(slot0._curShowKey, RoomEnum.ComponentName.Renderer, "mesh")) do
-			slot19:SetPropertyBlock(slot14)
+		for iter_13_0, iter_13_1 in ipairs(var_13_12) do
+			iter_13_1:SetPropertyBlock(var_13_13)
 		end
 
-		if slot0._curShowKey == RoomEnum.EffectKey.CharacterFaithNormalKey then
-			slot0._isLastFaithFill = -1
+		if arg_13_0._curShowKey == RoomEnum.EffectKey.CharacterFaithNormalKey then
+			arg_13_0._isLastFaithFill = -1
 
-			slot0:_upateFaithFill()
+			arg_13_0:_upateFaithFill()
 		end
 	end
 end
 
-return slot0
+return var_0_0

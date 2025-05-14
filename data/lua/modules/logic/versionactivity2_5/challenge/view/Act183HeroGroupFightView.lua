@@ -1,120 +1,128 @@
-module("modules.logic.versionactivity2_5.challenge.view.Act183HeroGroupFightView", package.seeall)
+﻿module("modules.logic.versionactivity2_5.challenge.view.Act183HeroGroupFightView", package.seeall)
 
-slot0 = class("Act183HeroGroupFightView", HeroGroupFightView)
+local var_0_0 = class("Act183HeroGroupFightView", HeroGroupFightView)
 
-function slot0.onInitView(slot0)
-	uv0.super.onInitView(slot0)
+function var_0_0.onInitView(arg_1_0)
+	var_0_0.super.onInitView(arg_1_0)
 
-	slot0._gochallenge = gohelper.findChild(slot0.viewGO, "#go_container/#scroll_info/infocontain/#go_challege")
-	slot0._gobaserulecontainer = gohelper.findChild(slot0.viewGO, "#go_container/#scroll_info/infocontain/#go_challege/basictxt")
-	slot0._gobaserules = gohelper.findChild(slot0.viewGO, "#go_container/#scroll_info/infocontain/#go_challege/basictxt/Iconlist")
-	slot0._gobaseruleItem = gohelper.findChild(slot0.viewGO, "#go_container/#scroll_info/infocontain/#go_challege/basictxt/Iconlist/#go_item")
-	slot0._goescapecontainer = gohelper.findChild(slot0.viewGO, "#go_container/#scroll_info/infocontain/#go_challege/escapetxt")
-	slot0._goescaperules = gohelper.findChild(slot0.viewGO, "#go_container/#scroll_info/infocontain/#go_challege/escapetxt/Iconlist")
-	slot0._goescaperuleitem = gohelper.findChild(slot0.viewGO, "#go_container/#scroll_info/infocontain/#go_challege/escapetxt/Iconlist/#go_item")
-	slot0._btnchallengetip = gohelper.findChildButton(slot0.viewGO, "#go_container/#scroll_info/infocontain/#go_challege/title/#btn_info")
-	slot0._gochallengetips = gohelper.findChild(slot0.viewGO, "#go_container/#go_challengetips")
-	slot0._btnclosechallengetips = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_container/#go_challengetips/#btn_closechallengetips")
-	slot0._gochallengetipscontent = gohelper.findChild(slot0.viewGO, "#go_container/#go_challengetips/#scroll_challengetips/Viewport/Content")
-	slot0._gochallengetiptitle = gohelper.findChild(slot0.viewGO, "#go_container/#go_challengetips/#scroll_challengetips/Viewport/Content/#go_tipitem/title")
-	slot0._gochallengetipitem = gohelper.findChild(slot0.viewGO, "#go_container/#go_challengetips/#scroll_challengetips/Viewport/Content/#go_tipitem")
-	slot0._gochallengedescitem = gohelper.findChild(slot0.viewGO, "#go_container/#go_challengetips/#scroll_challengetips/Viewport/Content/#go_tipitem/#txt_desc")
+	arg_1_0._gochallenge = gohelper.findChild(arg_1_0.viewGO, "#go_container/#scroll_info/infocontain/#go_challege")
+	arg_1_0._gobaserulecontainer = gohelper.findChild(arg_1_0.viewGO, "#go_container/#scroll_info/infocontain/#go_challege/basictxt")
+	arg_1_0._gobaserules = gohelper.findChild(arg_1_0.viewGO, "#go_container/#scroll_info/infocontain/#go_challege/basictxt/Iconlist")
+	arg_1_0._gobaseruleItem = gohelper.findChild(arg_1_0.viewGO, "#go_container/#scroll_info/infocontain/#go_challege/basictxt/Iconlist/#go_item")
+	arg_1_0._goescapecontainer = gohelper.findChild(arg_1_0.viewGO, "#go_container/#scroll_info/infocontain/#go_challege/escapetxt")
+	arg_1_0._goescaperules = gohelper.findChild(arg_1_0.viewGO, "#go_container/#scroll_info/infocontain/#go_challege/escapetxt/Iconlist")
+	arg_1_0._goescaperuleitem = gohelper.findChild(arg_1_0.viewGO, "#go_container/#scroll_info/infocontain/#go_challege/escapetxt/Iconlist/#go_item")
+	arg_1_0._btnchallengetip = gohelper.findChildButton(arg_1_0.viewGO, "#go_container/#scroll_info/infocontain/#go_challege/title/#btn_info")
+	arg_1_0._gochallengetips = gohelper.findChild(arg_1_0.viewGO, "#go_container/#go_challengetips")
+	arg_1_0._btnclosechallengetips = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_container/#go_challengetips/#btn_closechallengetips")
+	arg_1_0._gochallengetipscontent = gohelper.findChild(arg_1_0.viewGO, "#go_container/#go_challengetips/#scroll_challengetips/Viewport/Content")
+	arg_1_0._gochallengetiptitle = gohelper.findChild(arg_1_0.viewGO, "#go_container/#go_challengetips/#scroll_challengetips/Viewport/Content/#go_tipitem/title")
+	arg_1_0._gochallengetipitem = gohelper.findChild(arg_1_0.viewGO, "#go_container/#go_challengetips/#scroll_challengetips/Viewport/Content/#go_tipitem")
+	arg_1_0._gochallengedescitem = gohelper.findChild(arg_1_0.viewGO, "#go_container/#go_challengetips/#scroll_challengetips/Viewport/Content/#go_tipitem/#txt_desc")
 end
 
-function slot0.addEvents(slot0)
-	uv0.super.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	var_0_0.super.addEvents(arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	uv0.super.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	var_0_0.super.removeEvents(arg_3_0)
 end
 
-function slot0._btnclothOnClock(slot0)
-	if Act183Helper.isOnlyCanUseLimitPlayerCloth(slot0._episodeId) then
+function var_0_0._btnclothOnClock(arg_4_0)
+	if Act183Helper.isOnlyCanUseLimitPlayerCloth(arg_4_0._episodeId) then
 		GameFacade.showToast(ToastEnum.Act183OnlyOnePlayerCloth)
 
 		return
 	end
 
-	uv0.super._btnclothOnClock(slot0)
+	var_0_0.super._btnclothOnClock(arg_4_0)
 end
 
-function slot0._editableInitView(slot0)
-	slot0._activityId = Act183Model.instance:getActivityId()
-	slot0._episodeId = HeroGroupModel.instance.episodeId
+function var_0_0._editableInitView(arg_5_0)
+	arg_5_0._activityId = Act183Model.instance:getActivityId()
+	arg_5_0._episodeId = HeroGroupModel.instance.episodeId
 
-	slot0:checkAct183HeroList()
-	uv0.super._editableInitView(slot0)
+	arg_5_0:checkAct183HeroList()
+	var_0_0.super._editableInitView(arg_5_0)
 end
 
-function slot0._checkEquipClothSkill(slot0)
-	if slot0:setLimitPlayerCloth() then
+function var_0_0._checkEquipClothSkill(arg_6_0)
+	if arg_6_0:setLimitPlayerCloth() then
 		return
 	end
 
-	uv0.super._checkEquipClothSkill(slot0)
+	var_0_0.super._checkEquipClothSkill(arg_6_0)
 end
 
-function slot0.setLimitPlayerCloth(slot0)
-	if Act183Helper.isOnlyCanUseLimitPlayerCloth(slot0._episodeId) then
-		HeroGroupModel.instance:replaceCloth(PlayerClothModel.instance:hasCloth(Act183Helper.getLimitUsePlayerCloth()) and slot2 or 0)
+function var_0_0.setLimitPlayerCloth(arg_7_0)
+	local var_7_0 = Act183Helper.isOnlyCanUseLimitPlayerCloth(arg_7_0._episodeId)
+
+	if var_7_0 then
+		local var_7_1 = Act183Helper.getLimitUsePlayerCloth()
+		local var_7_2 = PlayerClothModel.instance:hasCloth(var_7_1)
+
+		HeroGroupModel.instance:replaceCloth(var_7_2 and var_7_1 or 0)
 		HeroGroupModel.instance:saveCurGroupData()
 		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnModifyHeroGroup)
 	end
 
-	return slot1
+	return var_7_0
 end
 
-function slot0._refreshBtns(slot0, slot1)
-	uv0.super._refreshBtns(slot0, slot1)
-	gohelper.setActive(slot0._dropherogroup, false)
-	TaskDispatcher.cancelTask(slot0._checkDropArrow, slot0)
+function var_0_0._refreshBtns(arg_8_0, arg_8_1)
+	var_0_0.super._refreshBtns(arg_8_0, arg_8_1)
+	gohelper.setActive(arg_8_0._dropherogroup, false)
+	TaskDispatcher.cancelTask(arg_8_0._checkDropArrow, arg_8_0)
 end
 
-function slot0.checkAct183HeroList(slot0)
-	slot3 = lua_battle.configDict[DungeonConfig.instance:getEpisodeCO(slot0._episodeId).battleId] and slot2.roleNum or ModuleEnum.MaxHeroCountInGroup
-	slot5 = Act183Config.instance:getEpisodeCo(slot0._episodeId) and slot4.groupId
-	slot6 = Act183Model.instance:getGroupEpisodeMo(slot5)
-	slot7 = HeroGroupModel.instance:getCurGroupMO()
+function var_0_0.checkAct183HeroList(arg_9_0)
+	local var_9_0 = DungeonConfig.instance:getEpisodeCO(arg_9_0._episodeId)
+	local var_9_1 = lua_battle.configDict[var_9_0.battleId]
+	local var_9_2 = var_9_1 and var_9_1.roleNum or ModuleEnum.MaxHeroCountInGroup
+	local var_9_3 = Act183Config.instance:getEpisodeCo(arg_9_0._episodeId)
+	local var_9_4 = var_9_3 and var_9_3.groupId
+	local var_9_5 = Act183Model.instance:getGroupEpisodeMo(var_9_4)
+	local var_9_6 = HeroGroupModel.instance:getCurGroupMO()
 
-	slot7:checkAct183HeroList(slot3, slot6)
-	HeroSingleGroupModel.instance:setMaxHeroCount(slot3)
-	HeroSingleGroupModel.instance:setSingleGroup(slot7, true)
+	var_9_6:checkAct183HeroList(var_9_2, var_9_5)
+	HeroSingleGroupModel.instance:setMaxHeroCount(var_9_2)
+	HeroSingleGroupModel.instance:setSingleGroup(var_9_6, true)
 
-	slot0._groupEpisodeMo = slot6
-	slot0._episodeMo = Act183Model.instance:getEpisodeMo(slot5, slot0._episodeId)
+	arg_9_0._groupEpisodeMo = var_9_5
+	arg_9_0._episodeMo = Act183Model.instance:getEpisodeMo(var_9_4, arg_9_0._episodeId)
 end
 
-function slot0.openHeroGroupEditView(slot0)
-	slot0._param = slot0._param or {}
-	slot0._param.activityId = Act183Model.instance:getActivityId()
-	slot0._param.episodeId = HeroGroupModel.instance.episodeId
+function var_0_0.openHeroGroupEditView(arg_10_0)
+	arg_10_0._param = arg_10_0._param or {}
+	arg_10_0._param.activityId = Act183Model.instance:getActivityId()
+	arg_10_0._param.episodeId = HeroGroupModel.instance.episodeId
 
-	ViewMgr.instance:openView(ViewName.Act183HeroGroupEditView, slot0._param)
+	ViewMgr.instance:openView(ViewName.Act183HeroGroupEditView, arg_10_0._param)
 end
 
-function slot0._refreshReplay(slot0)
-	gohelper.setActive(slot0._goReplayBtn, false)
-	gohelper.setActive(slot0._gomemorytimes, false)
+function var_0_0._refreshReplay(arg_11_0)
+	gohelper.setActive(arg_11_0._goReplayBtn, false)
+	gohelper.setActive(arg_11_0._gomemorytimes, false)
 end
 
-function slot0.onOpen(slot0)
-	uv0.super.onOpen(slot0)
+function var_0_0.onOpen(arg_12_0)
+	var_0_0.super.onOpen(arg_12_0)
 
-	slot1 = Act183Model.instance:getUnlockSupportHeros()
+	local var_12_0 = Act183Model.instance:getUnlockSupportHeros()
 
-	if Act183Helper.isEpisodeCanUseSupportHero(slot0._episodeId) and slot1 then
-		for slot6, slot7 in ipairs(slot1) do
-			HeroGroupTrialModel.instance:addAtLast(slot7)
+	if Act183Helper.isEpisodeCanUseSupportHero(arg_12_0._episodeId) and var_12_0 then
+		for iter_12_0, iter_12_1 in ipairs(var_12_0) do
+			HeroGroupTrialModel.instance:addAtLast(iter_12_1)
 		end
 	end
 end
 
-function slot0.onClose(slot0)
-	uv0.super.onClose(slot0)
+function var_0_0.onClose(arg_13_0)
+	var_0_0.super.onClose(arg_13_0)
 	HeroSingleGroupModel.instance:setMaxHeroCount()
 
 	HeroGroupTrialModel.instance.curBattleId = nil
 end
 
-return slot0
+return var_0_0

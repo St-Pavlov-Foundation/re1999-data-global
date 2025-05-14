@@ -1,363 +1,386 @@
-module("modules.logic.versionactivity2_5.feilinshiduo.view.FeiLinShiDuoSceneView", package.seeall)
+﻿module("modules.logic.versionactivity2_5.feilinshiduo.view.FeiLinShiDuoSceneView", package.seeall)
 
-slot0 = class("FeiLinShiDuoSceneView", BaseView)
+local var_0_0 = class("FeiLinShiDuoSceneView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._goscene = gohelper.findChild(slot0.viewGO, "bg/#go_scene")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goscene = gohelper.findChild(arg_1_0.viewGO, "bg/#go_scene")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	GameGlobalMgr.instance:registerCallback(GameStateEvent.OnScreenResize, slot0.refreshSceneBorder, slot0)
-	FeiLinShiDuoGameController.instance:registerCallback(FeiLinShiDuoEvent.resetGame, slot0.resetData, slot0)
+function var_0_0.addEvents(arg_2_0)
+	GameGlobalMgr.instance:registerCallback(GameStateEvent.OnScreenResize, arg_2_0.refreshSceneBorder, arg_2_0)
+	FeiLinShiDuoGameController.instance:registerCallback(FeiLinShiDuoEvent.resetGame, arg_2_0.resetData, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	GameGlobalMgr.instance:unregisterCallback(GameStateEvent.OnScreenResize, slot0.refreshSceneBorder, slot0)
-	FeiLinShiDuoGameController.instance:unregisterCallback(FeiLinShiDuoEvent.resetGame, slot0.resetData, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	GameGlobalMgr.instance:unregisterCallback(GameStateEvent.OnScreenResize, arg_3_0.refreshSceneBorder, arg_3_0)
+	FeiLinShiDuoGameController.instance:unregisterCallback(FeiLinShiDuoEvent.resetGame, arg_3_0.resetData, arg_3_0)
 end
 
-function slot0._editableInitView(slot0)
-	slot0.elementGOMap = slot0:getUserDataTb_()
-	slot0.boxCompMap = slot0:getUserDataTb_()
-	slot0.boxCompList = slot0:getUserDataTb_()
-	slot0.optionCompMap = slot0:getUserDataTb_()
-	slot0.jumpAnimMap = slot0:getUserDataTb_()
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0.elementGOMap = arg_4_0:getUserDataTb_()
+	arg_4_0.boxCompMap = arg_4_0:getUserDataTb_()
+	arg_4_0.boxCompList = arg_4_0:getUserDataTb_()
+	arg_4_0.optionCompMap = arg_4_0:getUserDataTb_()
+	arg_4_0.jumpAnimMap = arg_4_0:getUserDataTb_()
 end
 
-function slot0.onOpen(slot0)
-	slot0:initMapConfig()
-	slot0:initScene()
-	slot0:initMapElement()
-	TaskDispatcher.runRepeat(slot0.onTick, slot0, 0)
+function var_0_0.onOpen(arg_5_0)
+	arg_5_0:initMapConfig()
+	arg_5_0:initScene()
+	arg_5_0:initMapElement()
+	TaskDispatcher.runRepeat(arg_5_0.onTick, arg_5_0, 0)
 end
 
-function slot0.initMapConfig(slot0)
-	FeiLinShiDuoGameModel.instance:setGameConfig(slot0.viewParam.gameConfig)
-	FeiLinShiDuoGameModel.instance:initConfigData(slot0.viewParam.mapId or FeiLinShiDuoEnum.TestMapId)
+function var_0_0.initMapConfig(arg_6_0)
+	local var_6_0 = arg_6_0.viewParam.mapId or FeiLinShiDuoEnum.TestMapId
+	local var_6_1 = arg_6_0.viewParam.gameConfig
+
+	FeiLinShiDuoGameModel.instance:setGameConfig(var_6_1)
+	FeiLinShiDuoGameModel.instance:initConfigData(var_6_0)
 end
 
-function slot0.initScene(slot0)
-	slot0.mapConfigData = FeiLinShiDuoGameModel.instance:getMapConfigData()
-	slot0.sceneGO = slot0:getResInst(slot0.viewContainer:getSetting().otherRes[1], slot0._goscene)
-	slot0.playerGO = gohelper.create2d(gohelper.findChild(slot0.sceneGO, "Player"), "PlayerGO")
+function var_0_0.initScene(arg_7_0)
+	arg_7_0.mapConfigData = FeiLinShiDuoGameModel.instance:getMapConfigData()
+	arg_7_0.sceneGO = arg_7_0:getResInst(arg_7_0.viewContainer:getSetting().otherRes[1], arg_7_0._goscene)
 
-	transformhelper.setLocalScale(slot0.playerGO.transform, FeiLinShiDuoEnum.PlayerScale, FeiLinShiDuoEnum.PlayerScale, FeiLinShiDuoEnum.PlayerScale)
+	local var_7_0 = gohelper.findChild(arg_7_0.sceneGO, "Player")
 
-	slot0.playerGOComp = MonoHelper.addLuaComOnceToGo(slot0.playerGO, FeiLinShiDuoPlayerComp)
-	slot0.playerAnimComp = MonoHelper.addLuaComOnceToGo(slot0.playerGO, FeiLinShiDuoPlayerAnimComp)
+	arg_7_0.playerGO = gohelper.create2d(var_7_0, "PlayerGO")
 
-	slot0.playerGOComp:setScene(slot0.sceneGO, slot0)
+	transformhelper.setLocalScale(arg_7_0.playerGO.transform, FeiLinShiDuoEnum.PlayerScale, FeiLinShiDuoEnum.PlayerScale, FeiLinShiDuoEnum.PlayerScale)
 
-	slot0.sceneScale = slot0.mapConfigData.gameConfig.sceneScale or FeiLinShiDuoEnum.SceneDefaultScale
+	arg_7_0.playerGOComp = MonoHelper.addLuaComOnceToGo(arg_7_0.playerGO, FeiLinShiDuoPlayerComp)
+	arg_7_0.playerAnimComp = MonoHelper.addLuaComOnceToGo(arg_7_0.playerGO, FeiLinShiDuoPlayerAnimComp)
 
-	transformhelper.setLocalScale(slot0._goscene.transform, slot0.sceneScale, slot0.sceneScale, slot0.sceneScale)
+	arg_7_0.playerGOComp:setScene(arg_7_0.sceneGO, arg_7_0)
 
-	slot0.screenWidth = gohelper.getUIScreenWidth()
-	slot0.screenHeight = UnityEngine.Screen.height
+	arg_7_0.sceneScale = arg_7_0.mapConfigData.gameConfig.sceneScale or FeiLinShiDuoEnum.SceneDefaultScale
+
+	transformhelper.setLocalScale(arg_7_0._goscene.transform, arg_7_0.sceneScale, arg_7_0.sceneScale, arg_7_0.sceneScale)
+
+	arg_7_0.screenWidth = gohelper.getUIScreenWidth()
+	arg_7_0.screenHeight = UnityEngine.Screen.height
 end
 
-function slot0.initMapElement(slot0)
-	slot0:createMapElement()
-	slot0:initSceneBorder()
-	slot0:initSceneAndPlayerPos()
+function var_0_0.initMapElement(arg_8_0)
+	arg_8_0:createMapElement()
+	arg_8_0:initSceneBorder()
+	arg_8_0:initSceneAndPlayerPos()
 end
 
-function slot0.resetData(slot0)
-	TaskDispatcher.cancelTask(slot0.onTick, slot0)
-	slot0:destroyAllElement()
-	slot0:initMapConfig()
-	slot0:initMapElement()
-	TaskDispatcher.runRepeat(slot0.onTick, slot0, 0)
+function var_0_0.resetData(arg_9_0)
+	TaskDispatcher.cancelTask(arg_9_0.onTick, arg_9_0)
+	arg_9_0:destroyAllElement()
+	arg_9_0:initMapConfig()
+	arg_9_0:initMapElement()
+	TaskDispatcher.runRepeat(arg_9_0.onTick, arg_9_0, 0)
 end
 
-function slot0.updateCamera(slot0)
+function var_0_0.updateCamera(arg_10_0)
+	return
 end
 
-function slot0.onTick(slot0)
+function var_0_0.onTick(arg_11_0)
 	if FeiLinShiDuoGameModel.instance:getIsPlayerInColorChanging() then
 		return
 	end
 
-	slot0.playerGOComp:onTick()
+	arg_11_0.playerGOComp:onTick()
 
-	for slot4, slot5 in pairs(slot0.boxCompMap) do
-		slot5:onTick()
+	for iter_11_0, iter_11_1 in pairs(arg_11_0.boxCompMap) do
+		iter_11_1:onTick()
 	end
 
-	for slot4, slot5 in pairs(slot0.optionCompMap) do
-		slot5:onTick()
+	for iter_11_2, iter_11_3 in pairs(arg_11_0.optionCompMap) do
+		iter_11_3:onTick()
 	end
 end
 
-function slot0.createMapElement(slot0)
-	slot1 = FeiLinShiDuoGameModel.instance:getBlindnessModeState()
+function var_0_0.createMapElement(arg_12_0)
+	local var_12_0 = FeiLinShiDuoGameModel.instance:getBlindnessModeState()
+	local var_12_1 = FeiLinShiDuoGameModel.instance:getElementList()
 
-	for slot6, slot7 in pairs(FeiLinShiDuoGameModel.instance:getElementList()) do
-		slot8 = UnityEngine.GameObject.New(FeiLinShiDuoEnum.ParentName[slot7.type] .. "_" .. slot7.id)
-		slot9 = gohelper.onceAddComponent(slot8, gohelper.Type_RectTransform)
+	for iter_12_0, iter_12_1 in pairs(var_12_1) do
+		local var_12_2 = UnityEngine.GameObject.New(FeiLinShiDuoEnum.ParentName[iter_12_1.type] .. "_" .. iter_12_1.id)
+		local var_12_3 = gohelper.onceAddComponent(var_12_2, gohelper.Type_RectTransform)
 
-		transformhelper.setLocalScale(slot9, 1, 1, 1)
-		slot8.transform:SetParent(gohelper.findChild(slot0.sceneGO, FeiLinShiDuoEnum.GroupName[slot7.type]).transform)
+		transformhelper.setLocalScale(var_12_3, 1, 1, 1)
 
-		slot15 = 1
+		local var_12_4 = gohelper.findChild(arg_12_0.sceneGO, FeiLinShiDuoEnum.GroupName[iter_12_1.type])
 
-		transformhelper.setLocalScale(slot8.transform, 1, 1, slot15)
+		var_12_2.transform:SetParent(var_12_4.transform)
+		transformhelper.setLocalScale(var_12_2.transform, 1, 1, 1)
+		recthelper.setAnchor(var_12_3, iter_12_1.pos[1], iter_12_1.pos[2])
 
-		slot14 = slot7.pos[2]
+		var_12_3.pivot = Vector2(0, 0)
+		arg_12_0.elementGOMap[iter_12_1.id] = {}
+		arg_12_0.elementGOMap[iter_12_1.id].elementGO = var_12_2
+		arg_12_0.elementGOMap[iter_12_1.id].subGOList = {}
 
-		recthelper.setAnchor(slot9, slot7.pos[1], slot14)
+		for iter_12_2, iter_12_3 in ipairs(iter_12_1.subGOPosList) do
+			local var_12_5 = arg_12_0:getResInst(arg_12_0.viewContainer:getSetting().otherRes[FeiLinShiDuoEnum.ItemName[iter_12_1.type]], var_12_2)
 
-		slot9.pivot = Vector2(0, 0)
-		slot0.elementGOMap[slot7.id] = {
-			elementGO = slot8,
-			subGOList = {}
-		}
+			var_12_5.transform:SetParent(var_12_2.transform, false)
+			recthelper.setAnchor(var_12_5.transform, tonumber(iter_12_3[1]), tonumber(iter_12_3[2]))
 
-		for slot14, slot15 in ipairs(slot7.subGOPosList) do
-			slot16 = slot0:getResInst(slot0.viewContainer:getSetting().otherRes[FeiLinShiDuoEnum.ItemName[slot7.type]], slot8)
+			local var_12_6 = gohelper.findChild(var_12_5, "scale").transform
 
-			slot16.transform:SetParent(slot8.transform, false)
-			recthelper.setAnchor(slot16.transform, tonumber(slot15[1]), tonumber(slot15[2]))
+			transformhelper.setLocalScale(var_12_6, iter_12_1.scale[1], iter_12_1.scale[2], 1)
 
-			slot21 = slot7.scale[2]
+			for iter_12_4 = 0, 4 do
+				local var_12_7 = gohelper.findChild(var_12_5, "scale/type" .. iter_12_4)
 
-			transformhelper.setLocalScale(gohelper.findChild(slot16, "scale").transform, slot7.scale[1], slot21, 1)
-
-			for slot21 = 0, 4 do
-				if gohelper.findChild(slot16, "scale/type" .. slot21) then
-					if slot7.color == FeiLinShiDuoEnum.ColorType.Red then
-						gohelper.setActive(slot22, slot21 == FeiLinShiDuoEnum.ColorType.Red and not slot1 or slot21 == FeiLinShiDuoEnum.ColorType.Yellow and slot1)
+				if var_12_7 then
+					if iter_12_1.color == FeiLinShiDuoEnum.ColorType.Red then
+						gohelper.setActive(var_12_7, iter_12_4 == FeiLinShiDuoEnum.ColorType.Red and not var_12_0 or iter_12_4 == FeiLinShiDuoEnum.ColorType.Yellow and var_12_0)
 					else
-						gohelper.setActive(slot22, slot7.color == slot21)
+						gohelper.setActive(var_12_7, iter_12_1.color == iter_12_4)
 					end
 				end
 			end
 
-			table.insert(slot0.elementGOMap[slot7.id].subGOList, slot16)
+			table.insert(arg_12_0.elementGOMap[iter_12_1.id].subGOList, var_12_5)
 		end
 
-		if slot7.type == FeiLinShiDuoEnum.ObjectType.Box then
-			slot11 = MonoHelper.addLuaComOnceToGo(slot8, FeiLinShiDuoBoxComp)
+		if iter_12_1.type == FeiLinShiDuoEnum.ObjectType.Box then
+			local var_12_8 = MonoHelper.addLuaComOnceToGo(var_12_2, FeiLinShiDuoBoxComp)
 
-			slot11:initData(slot7, slot0)
+			var_12_8:initData(iter_12_1, arg_12_0)
 
-			slot0.boxCompMap[slot7.id] = slot11
+			arg_12_0.boxCompMap[iter_12_1.id] = var_12_8
 
-			table.insert(slot0.boxCompList, slot7)
+			table.insert(arg_12_0.boxCompList, iter_12_1)
 		end
 
-		if slot7.type == FeiLinShiDuoEnum.ObjectType.Option then
-			slot11 = MonoHelper.addLuaComOnceToGo(slot8, FeiLinShiDuoOptionComp)
+		if iter_12_1.type == FeiLinShiDuoEnum.ObjectType.Option then
+			local var_12_9 = MonoHelper.addLuaComOnceToGo(var_12_2, FeiLinShiDuoOptionComp)
 
-			slot11:initData(slot7, slot0)
+			var_12_9:initData(iter_12_1, arg_12_0)
 
-			slot0.optionCompMap[slot7.id] = slot11
+			arg_12_0.optionCompMap[iter_12_1.id] = var_12_9
 		end
 
-		if slot7.type == FeiLinShiDuoEnum.ObjectType.Jump then
-			if not slot0.jumpAnimMap[slot7.id] then
-				slot0.jumpAnimMap[slot7.id] = {}
+		if iter_12_1.type == FeiLinShiDuoEnum.ObjectType.Jump then
+			if not arg_12_0.jumpAnimMap[iter_12_1.id] then
+				arg_12_0.jumpAnimMap[iter_12_1.id] = {}
 			end
 
-			for slot14, slot15 in pairs(slot0.elementGOMap[slot7.id].subGOList) do
-				for slot19 = 0, 4 do
-					slot0.jumpAnimMap[slot7.id][slot19] = gohelper.findChild(slot15, "scale/type" .. slot19):GetComponent(gohelper.Type_Animator)
+			for iter_12_5, iter_12_6 in pairs(arg_12_0.elementGOMap[iter_12_1.id].subGOList) do
+				for iter_12_7 = 0, 4 do
+					local var_12_10 = gohelper.findChild(iter_12_6, "scale/type" .. iter_12_7):GetComponent(gohelper.Type_Animator)
+
+					arg_12_0.jumpAnimMap[iter_12_1.id][iter_12_7] = var_12_10
 				end
 			end
 		end
 	end
 end
 
-function slot0.initSceneBorder(slot0)
-	slot0.leftBorderX = 0
-	slot0.rightBorderX = 0
-	slot0.topBorderY = 0
-	slot0.bottomBorderY = 0
-	slot3 = slot1[FeiLinShiDuoEnum.ObjectType.ColorPlane] or {}
+function var_0_0.initSceneBorder(arg_13_0)
+	arg_13_0.leftBorderX = 0
+	arg_13_0.rightBorderX = 0
+	arg_13_0.topBorderY = 0
+	arg_13_0.bottomBorderY = 0
 
-	for slot8, slot9 in pairs(FeiLinShiDuoGameModel.instance:getElementMap()[FeiLinShiDuoEnum.ObjectType.Wall] or {}) do
-		table.insert({}, slot9)
+	local var_13_0 = FeiLinShiDuoGameModel.instance:getElementMap()
+	local var_13_1 = var_13_0[FeiLinShiDuoEnum.ObjectType.Wall] or {}
+	local var_13_2 = var_13_0[FeiLinShiDuoEnum.ObjectType.ColorPlane] or {}
+	local var_13_3 = {}
+
+	for iter_13_0, iter_13_1 in pairs(var_13_1) do
+		table.insert(var_13_3, iter_13_1)
 	end
 
-	for slot8, slot9 in pairs(slot3) do
-		table.insert(slot4, slot9)
+	for iter_13_2, iter_13_3 in pairs(var_13_2) do
+		table.insert(var_13_3, iter_13_3)
 	end
 
-	for slot8, slot9 in pairs(slot4) do
-		for slot13, slot14 in ipairs(slot9.subGOPosList) do
-			slot15 = slot9.pos[1] + tonumber(slot14[1])
-			slot16 = slot9.pos[2] + tonumber(slot14[2])
+	for iter_13_4, iter_13_5 in pairs(var_13_3) do
+		for iter_13_6, iter_13_7 in ipairs(iter_13_5.subGOPosList) do
+			local var_13_4 = iter_13_5.pos[1] + tonumber(iter_13_7[1])
+			local var_13_5 = iter_13_5.pos[2] + tonumber(iter_13_7[2])
 
-			if slot0.leftBorderX == 0 and slot0.rightBorderX == 0 and slot0.topBorderY == 0 and slot0.bottomBorderY == 0 then
-				slot0.leftBorderX = slot15
-				slot0.rightBorderX = slot15
-				slot0.topBorderY = slot16
-				slot0.bottomBorderY = slot16
+			if arg_13_0.leftBorderX == 0 and arg_13_0.rightBorderX == 0 and arg_13_0.topBorderY == 0 and arg_13_0.bottomBorderY == 0 then
+				arg_13_0.leftBorderX = var_13_4
+				arg_13_0.rightBorderX = var_13_4
+				arg_13_0.topBorderY = var_13_5
+				arg_13_0.bottomBorderY = var_13_5
 			end
 
-			if slot15 <= slot0.leftBorderX then
-				slot0.leftBorderX = slot15
+			if var_13_4 <= arg_13_0.leftBorderX then
+				arg_13_0.leftBorderX = var_13_4
 			end
 
-			if slot0.rightBorderX <= slot15 then
-				slot0.rightBorderX = slot15
+			if var_13_4 >= arg_13_0.rightBorderX then
+				arg_13_0.rightBorderX = var_13_4
 			end
 
-			if slot0.topBorderY <= slot16 then
-				slot0.topBorderY = slot16
+			if var_13_5 >= arg_13_0.topBorderY then
+				arg_13_0.topBorderY = var_13_5
 			end
 
-			if slot16 <= slot0.bottomBorderY then
-				slot0.bottomBorderY = slot16
+			if var_13_5 <= arg_13_0.bottomBorderY then
+				arg_13_0.bottomBorderY = var_13_5
 			end
 		end
 	end
 
-	slot0.rightBorderX = slot0.rightBorderX + FeiLinShiDuoEnum.SlotWidth
-	slot0.topBorderY = slot0.topBorderY + FeiLinShiDuoEnum.SlotWidth
+	arg_13_0.rightBorderX = arg_13_0.rightBorderX + FeiLinShiDuoEnum.SlotWidth
+	arg_13_0.topBorderY = arg_13_0.topBorderY + FeiLinShiDuoEnum.SlotWidth
 
-	slot0:refreshSceneBorder()
+	arg_13_0:refreshSceneBorder()
 end
 
-function slot0.refreshSceneBorder(slot0)
-	slot0.screenWidth = gohelper.getUIScreenWidth()
-	slot0.halfScreenWidth = slot0.screenWidth / 2
-	slot0.halfScreenHeight = 540
-	slot0.sceneLeftPosX = -(slot0.halfScreenWidth + slot0.leftBorderX * slot0.sceneScale) / slot0.sceneScale
-	slot0.sceneRightPosX = (slot0.halfScreenWidth - slot0.rightBorderX * slot0.sceneScale) / slot0.sceneScale
-	slot0.sceneTopPosY = (slot0.halfScreenHeight - slot0.topBorderY * slot0.sceneScale) / slot0.sceneScale
-	slot0.sceneBottomPosY = -(slot0.halfScreenHeight + slot0.bottomBorderY * slot0.sceneScale) / slot0.sceneScale
-	slot0.itemLeftBorderX = slot0.leftBorderX
-	slot0.itemRightBorderX = slot0.rightBorderX
+function var_0_0.refreshSceneBorder(arg_14_0)
+	arg_14_0.screenWidth = gohelper.getUIScreenWidth()
+	arg_14_0.halfScreenWidth = arg_14_0.screenWidth / 2
+	arg_14_0.halfScreenHeight = 540
+	arg_14_0.sceneLeftPosX = -(arg_14_0.halfScreenWidth + arg_14_0.leftBorderX * arg_14_0.sceneScale) / arg_14_0.sceneScale
+	arg_14_0.sceneRightPosX = (arg_14_0.halfScreenWidth - arg_14_0.rightBorderX * arg_14_0.sceneScale) / arg_14_0.sceneScale
+	arg_14_0.sceneTopPosY = (arg_14_0.halfScreenHeight - arg_14_0.topBorderY * arg_14_0.sceneScale) / arg_14_0.sceneScale
+	arg_14_0.sceneBottomPosY = -(arg_14_0.halfScreenHeight + arg_14_0.bottomBorderY * arg_14_0.sceneScale) / arg_14_0.sceneScale
+	arg_14_0.itemLeftBorderX = arg_14_0.leftBorderX
+	arg_14_0.itemRightBorderX = arg_14_0.rightBorderX
 end
 
-function slot0.fixSceneBorder(slot0, slot1, slot2)
-	if Mathf.Abs(slot0.itemLeftBorderX - slot0.itemRightBorderX) * slot0.sceneScale <= slot0.screenWidth then
-		return -(slot0.itemLeftBorderX + Mathf.Abs(slot0.itemLeftBorderX - slot0.itemRightBorderX) / 2), Mathf.Min(slot2, slot0.sceneBottomPosY)
+function var_0_0.fixSceneBorder(arg_15_0, arg_15_1, arg_15_2)
+	if Mathf.Abs(arg_15_0.itemLeftBorderX - arg_15_0.itemRightBorderX) * arg_15_0.sceneScale <= arg_15_0.screenWidth then
+		local var_15_0 = Mathf.Abs(arg_15_0.itemLeftBorderX - arg_15_0.itemRightBorderX)
+
+		return -(arg_15_0.itemLeftBorderX + var_15_0 / 2), Mathf.Min(arg_15_2, arg_15_0.sceneBottomPosY)
 	end
 
-	return Mathf.Clamp(slot1, slot0.sceneRightPosX, slot0.sceneLeftPosX), Mathf.Min(slot2, slot0.sceneBottomPosY)
+	return Mathf.Clamp(arg_15_1, arg_15_0.sceneRightPosX, arg_15_0.sceneLeftPosX), Mathf.Min(arg_15_2, arg_15_0.sceneBottomPosY)
 end
 
-function slot0.initSceneAndPlayerPos(slot0)
-	slot1 = {}
+function var_0_0.initSceneAndPlayerPos(arg_16_0)
+	local var_16_0 = {}
+	local var_16_1 = FeiLinShiDuoGameModel.instance:getElementMap()
 
-	for slot6, slot7 in pairs(FeiLinShiDuoGameModel.instance:getElementMap()[FeiLinShiDuoEnum.ObjectType.Start]) do
-		slot1 = slot7.pos
+	for iter_16_0, iter_16_1 in pairs(var_16_1[FeiLinShiDuoEnum.ObjectType.Start]) do
+		var_16_0 = iter_16_1.pos
 	end
 
-	slot3, slot4 = slot0:fixSceneBorder(-slot1[1], -slot1[2])
+	local var_16_2, var_16_3 = arg_16_0:fixSceneBorder(-var_16_0[1], -var_16_0[2])
 
-	transformhelper.setLocalPosXY(slot0.sceneGO.transform, slot3, slot4)
-	transformhelper.setLocalPosXY(slot0.playerGO.transform, slot1[1] + FeiLinShiDuoEnum.HalfSlotWidth, slot1[2])
+	transformhelper.setLocalPosXY(arg_16_0.sceneGO.transform, var_16_2, var_16_3)
+	transformhelper.setLocalPosXY(arg_16_0.playerGO.transform, var_16_0[1] + FeiLinShiDuoEnum.HalfSlotWidth, var_16_0[2])
 end
 
-function slot0.changeSceneColor(slot0)
-	for slot6, slot7 in pairs(FeiLinShiDuoGameModel.instance:getInterElementMap()) do
-		gohelper.setActive(slot0.elementGOMap[slot7.id].elementGO, FeiLinShiDuoGameModel.instance:getElementShowStateMap()[slot7.id])
+function var_0_0.changeSceneColor(arg_17_0)
+	local var_17_0 = FeiLinShiDuoGameModel.instance:getInterElementMap()
+	local var_17_1 = FeiLinShiDuoGameModel.instance:getElementShowStateMap()
+
+	for iter_17_0, iter_17_1 in pairs(var_17_0) do
+		gohelper.setActive(arg_17_0.elementGOMap[iter_17_1.id].elementGO, var_17_1[iter_17_1.id])
 	end
 
-	for slot6, slot7 in pairs(slot0.boxCompMap) do
-		if slot7:getShowState() and not slot7:checkBoxInPlane() then
-			slot7:checkBoxFall(true)
+	for iter_17_2, iter_17_3 in pairs(arg_17_0.boxCompMap) do
+		if iter_17_3:getShowState() and not iter_17_3:checkBoxInPlane() then
+			iter_17_3:checkBoxFall(true)
 		end
 	end
 
-	if slot0.playerGOComp then
-		slot0.playerGOComp:checkPlayerFall(true)
-		slot0.playerGOComp:checkClimbStairs()
+	if arg_17_0.playerGOComp then
+		arg_17_0.playerGOComp:checkPlayerFall(true)
+		arg_17_0.playerGOComp:checkClimbStairs()
 	end
 end
 
-function slot0.refreshBlindnessMode(slot0)
-	slot1 = FeiLinShiDuoGameModel.instance:getBlindnessModeState()
+function var_0_0.refreshBlindnessMode(arg_18_0)
+	local var_18_0 = FeiLinShiDuoGameModel.instance:getBlindnessModeState()
+	local var_18_1 = FeiLinShiDuoGameModel.instance:getInterElementMap()
 
-	for slot6, slot7 in pairs(FeiLinShiDuoGameModel.instance:getInterElementMap()) do
-		for slot11, slot12 in pairs(slot0.elementGOMap[slot7.id].subGOList) do
-			if slot7.color == FeiLinShiDuoEnum.ColorType.Red then
-				slot14 = gohelper.findChild(slot12, "scale/type" .. 4)
+	for iter_18_0, iter_18_1 in pairs(var_18_1) do
+		for iter_18_2, iter_18_3 in pairs(arg_18_0.elementGOMap[iter_18_1.id].subGOList) do
+			if iter_18_1.color == FeiLinShiDuoEnum.ColorType.Red then
+				local var_18_2 = gohelper.findChild(iter_18_3, "scale/type" .. 1)
+				local var_18_3 = gohelper.findChild(iter_18_3, "scale/type" .. 4)
 
-				if gohelper.findChild(slot12, "scale/type" .. 1) then
-					gohelper.setActive(slot13, not slot1)
+				if var_18_2 then
+					gohelper.setActive(var_18_2, not var_18_0)
 				end
 
-				if slot14 then
-					gohelper.setActive(slot14, slot1)
+				if var_18_3 then
+					gohelper.setActive(var_18_3, var_18_0)
 				end
 			end
 		end
 	end
 end
 
-function slot0.getSceneGO(slot0)
-	return slot0.sceneGO
+function var_0_0.getSceneGO(arg_19_0)
+	return arg_19_0.sceneGO
 end
 
-function slot0.getBoxComp(slot0, slot1)
-	return slot0.boxCompMap[slot1]
+function var_0_0.getBoxComp(arg_20_0, arg_20_1)
+	return arg_20_0.boxCompMap[arg_20_1]
 end
 
-function slot0.getAllBoxComp(slot0)
-	return slot0.boxCompMap
+function var_0_0.getAllBoxComp(arg_21_0)
+	return arg_21_0.boxCompMap
 end
 
-function slot0.getAllBoxCompList(slot0)
-	return slot0.boxCompList
+function var_0_0.getAllBoxCompList(arg_22_0)
+	return arg_22_0.boxCompList
 end
 
-function slot0.getPlayerAnimComp(slot0)
-	return slot0.playerAnimComp
+function var_0_0.getPlayerAnimComp(arg_23_0)
+	return arg_23_0.playerAnimComp
 end
 
-function slot0.getPlayerGO(slot0)
-	return slot0.playerGO
+function var_0_0.getPlayerGO(arg_24_0)
+	return arg_24_0.playerGO
 end
 
-function slot0.getPlayerComp(slot0)
-	return slot0.playerGOComp
+function var_0_0.getPlayerComp(arg_25_0)
+	return arg_25_0.playerGOComp
 end
 
-function slot0.getElementGOMap(slot0)
-	return slot0.elementGOMap
+function var_0_0.getElementGOMap(arg_26_0)
+	return arg_26_0.elementGOMap
 end
 
-function slot0.getGameUIView(slot0)
-	return slot0.viewContainer:getGameView()
+function var_0_0.getGameUIView(arg_27_0)
+	return arg_27_0.viewContainer:getGameView()
 end
 
-function slot0.getJumpAnim(slot0, slot1)
-	return slot0.jumpAnimMap[slot1.id] and slot0.jumpAnimMap[slot1.id][slot1.color]
+function var_0_0.getJumpAnim(arg_28_0, arg_28_1)
+	return arg_28_0.jumpAnimMap[arg_28_1.id] and arg_28_0.jumpAnimMap[arg_28_1.id][arg_28_1.color]
 end
 
-function slot0.getCurGuideCheckData(slot0)
-	for slot4, slot5 in ipairs(FeiLinShiDuoEnum.GuideDataList) do
-		if slot0.viewParam.mapId == slot5.mapId and not GuideModel.instance:isGuideFinish(slot5.guideId) then
-			return slot5
+function var_0_0.getCurGuideCheckData(arg_29_0)
+	for iter_29_0, iter_29_1 in ipairs(FeiLinShiDuoEnum.GuideDataList) do
+		if arg_29_0.viewParam.mapId == iter_29_1.mapId and not GuideModel.instance:isGuideFinish(iter_29_1.guideId) then
+			return iter_29_1
 		end
 	end
 end
 
-function slot0.onClose(slot0)
-	TaskDispatcher.cancelTask(slot0.onTick, slot0)
+function var_0_0.onClose(arg_30_0)
+	TaskDispatcher.cancelTask(arg_30_0.onTick, arg_30_0)
 end
 
-function slot0.destroyAllElement(slot0)
-	for slot5, slot6 in pairs(FeiLinShiDuoGameModel.instance:getElementList()) do
-		gohelper.destroy(slot0.elementGOMap[slot6.id].elementGO)
+function var_0_0.destroyAllElement(arg_31_0)
+	local var_31_0 = FeiLinShiDuoGameModel.instance:getElementList()
+
+	for iter_31_0, iter_31_1 in pairs(var_31_0) do
+		gohelper.destroy(arg_31_0.elementGOMap[iter_31_1.id].elementGO)
 	end
 
-	slot0.elementGOMap = slot0:getUserDataTb_()
-	slot0.boxCompMap = slot0:getUserDataTb_()
-	slot0.boxCompList = slot0:getUserDataTb_()
-	slot0.optionCompMap = slot0:getUserDataTb_()
-	slot0.jumpAnimMap = slot0:getUserDataTb_()
+	arg_31_0.elementGOMap = arg_31_0:getUserDataTb_()
+	arg_31_0.boxCompMap = arg_31_0:getUserDataTb_()
+	arg_31_0.boxCompList = arg_31_0:getUserDataTb_()
+	arg_31_0.optionCompMap = arg_31_0:getUserDataTb_()
+	arg_31_0.jumpAnimMap = arg_31_0:getUserDataTb_()
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_32_0)
+	return
 end
 
-return slot0
+return var_0_0

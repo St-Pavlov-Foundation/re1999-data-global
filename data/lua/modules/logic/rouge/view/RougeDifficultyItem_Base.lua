@@ -1,52 +1,55 @@
-module("modules.logic.rouge.view.RougeDifficultyItem_Base", package.seeall)
+﻿module("modules.logic.rouge.view.RougeDifficultyItem_Base", package.seeall)
 
-slot0 = class("RougeDifficultyItem_Base", RougeItemNodeBase)
+local var_0_0 = class("RougeDifficultyItem_Base", RougeItemNodeBase)
 
-function slot0._editableInitView(slot0)
-	slot0._itemClick = gohelper.getClickWithAudio(slot0.viewGO)
-	slot0._goNumList = slot0:getUserDataTb_()
-	slot0._txtNumList = slot0:getUserDataTb_()
+function var_0_0._editableInitView(arg_1_0)
+	arg_1_0._itemClick = gohelper.getClickWithAudio(arg_1_0.viewGO)
+	arg_1_0._goNumList = arg_1_0:getUserDataTb_()
+	arg_1_0._txtNumList = arg_1_0:getUserDataTb_()
 
-	slot0:_fillUserDataTb("_txtnum", slot0._goNumList, slot0._txtNumList)
+	arg_1_0:_fillUserDataTb("_txtnum", arg_1_0._goNumList, arg_1_0._txtNumList)
 
-	slot0._goBgList = slot0:getUserDataTb_()
+	arg_1_0._goBgList = arg_1_0:getUserDataTb_()
 
-	slot0:_fillUserDataTb("_goBg", slot0._goBgList)
+	arg_1_0:_fillUserDataTb("_goBg", arg_1_0._goBgList)
 end
 
-function slot0.addEventListeners(slot0)
-	RougeItemNodeBase.addEventListeners(slot0)
-	slot0._itemClick:AddClickListener(slot0._onItemClick, slot0)
+function var_0_0.addEventListeners(arg_2_0)
+	RougeItemNodeBase.addEventListeners(arg_2_0)
+	arg_2_0._itemClick:AddClickListener(arg_2_0._onItemClick, arg_2_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	RougeItemNodeBase.removeEventListeners(slot0)
-	GameUtil.onDestroyViewMember_ClickListener(slot0, "_itemClick")
+function var_0_0.removeEventListeners(arg_3_0)
+	RougeItemNodeBase.removeEventListeners(arg_3_0)
+	GameUtil.onDestroyViewMember_ClickListener(arg_3_0, "_itemClick")
 end
 
-function slot0._onItemClick(slot0)
-	slot0:dispatchEvent(RougeEvent.RougeDifficultyView_OnSelectIndex, slot0:index())
+function var_0_0._onItemClick(arg_4_0)
+	arg_4_0:dispatchEvent(RougeEvent.RougeDifficultyView_OnSelectIndex, arg_4_0:index())
 end
 
-function slot0.setData(slot0, slot1)
-	slot0._mo = slot1
-	slot4 = RougeConfig1.instance:getRougeDifficultyViewStyleIndex(slot1.difficultyCO.difficulty)
+function var_0_0.setData(arg_5_0, arg_5_1)
+	arg_5_0._mo = arg_5_1
 
-	for slot8, slot9 in ipairs(slot0._goNumList) do
-		gohelper.setActive(slot9, false)
+	local var_5_0 = arg_5_1.difficultyCO
+	local var_5_1 = var_5_0.difficulty
+	local var_5_2 = RougeConfig1.instance:getRougeDifficultyViewStyleIndex(var_5_1)
+
+	for iter_5_0, iter_5_1 in ipairs(arg_5_0._goNumList) do
+		gohelper.setActive(iter_5_1, false)
 	end
 
-	gohelper.setActive(slot0._goNumList[slot4], true)
+	gohelper.setActive(arg_5_0._goNumList[var_5_2], true)
 
-	for slot8, slot9 in ipairs(slot0._goBgList) do
-		gohelper.setActive(slot9, false)
+	for iter_5_2, iter_5_3 in ipairs(arg_5_0._goBgList) do
+		gohelper.setActive(iter_5_3, false)
 	end
 
-	gohelper.setActive(slot0._goBgList[slot4], true)
+	gohelper.setActive(arg_5_0._goBgList[var_5_2], true)
 
-	slot0._txtNumList[slot4].text = slot3
-	slot0._txtname.text = slot2.title
-	slot0._txten.text = slot2.title_en
+	arg_5_0._txtNumList[var_5_2].text = var_5_1
+	arg_5_0._txtname.text = var_5_0.title
+	arg_5_0._txten.text = var_5_0.title_en
 end
 
-return slot0
+return var_0_0

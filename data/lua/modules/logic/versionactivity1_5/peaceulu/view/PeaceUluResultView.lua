@@ -1,43 +1,43 @@
-module("modules.logic.versionactivity1_5.peaceulu.view.PeaceUluResultView", package.seeall)
+﻿module("modules.logic.versionactivity1_5.peaceulu.view.PeaceUluResultView", package.seeall)
 
-slot0 = class("PeaceUluResultView", BaseView)
+local var_0_0 = class("PeaceUluResultView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gosuccess = gohelper.findChild(slot0.viewGO, "#go_success")
-	slot0._gofail = gohelper.findChild(slot0.viewGO, "#go_fail")
-	slot0._txttips = gohelper.findChildText(slot0.viewGO, "tips/#txt_tips")
-	slot0._btnquitgame = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_quitgame")
-	slot0._btnrestart = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_restart")
-	slot0._canvasGroupRestart = slot0._btnrestart.gameObject:GetComponent(typeof(UnityEngine.CanvasGroup))
-	slot0._canvasGroupQuitegame = slot0._btnquitgame.gameObject:GetComponent(typeof(UnityEngine.CanvasGroup))
-	slot0._gorestarticon = gohelper.findChild(slot0.viewGO, "#btn_restart/icon")
-	slot0._txtnum = gohelper.findChildText(slot0.viewGO, "#btn_restart/icon/#txt_Num")
-	slot0._animator = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gosuccess = gohelper.findChild(arg_1_0.viewGO, "#go_success")
+	arg_1_0._gofail = gohelper.findChild(arg_1_0.viewGO, "#go_fail")
+	arg_1_0._txttips = gohelper.findChildText(arg_1_0.viewGO, "tips/#txt_tips")
+	arg_1_0._btnquitgame = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_quitgame")
+	arg_1_0._btnrestart = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_restart")
+	arg_1_0._canvasGroupRestart = arg_1_0._btnrestart.gameObject:GetComponent(typeof(UnityEngine.CanvasGroup))
+	arg_1_0._canvasGroupQuitegame = arg_1_0._btnquitgame.gameObject:GetComponent(typeof(UnityEngine.CanvasGroup))
+	arg_1_0._gorestarticon = gohelper.findChild(arg_1_0.viewGO, "#btn_restart/icon")
+	arg_1_0._txtnum = gohelper.findChildText(arg_1_0.viewGO, "#btn_restart/icon/#txt_Num")
+	arg_1_0._animator = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0:addEventCb(PeaceUluController.instance, PeaceUluEvent.reInitResultView, slot0._reInitUI, slot0)
-	slot0._btnquitgame:AddClickListener(slot0._btnexitOnClick, slot0)
-	slot0._btnrestart:AddClickListener(slot0._btncontinueOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0:addEventCb(PeaceUluController.instance, PeaceUluEvent.reInitResultView, arg_2_0._reInitUI, arg_2_0)
+	arg_2_0._btnquitgame:AddClickListener(arg_2_0._btnexitOnClick, arg_2_0)
+	arg_2_0._btnrestart:AddClickListener(arg_2_0._btncontinueOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0:removeEventCb(PeaceUluController.instance, PeaceUluEvent.reInitResultView, slot0._reInitUI, slot0)
-	slot0._btnquitgame:RemoveClickListener()
-	slot0._btnrestart:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0:removeEventCb(PeaceUluController.instance, PeaceUluEvent.reInitResultView, arg_3_0._reInitUI, arg_3_0)
+	arg_3_0._btnquitgame:RemoveClickListener()
+	arg_3_0._btnrestart:RemoveClickListener()
 end
 
-function slot0._btnexitOnClick(slot0)
-	slot0._animator:Play("close", 0, 0)
-	slot0._animator:Update(0)
+function var_0_0._btnexitOnClick(arg_4_0)
+	arg_4_0._animator:Play("close", 0, 0)
+	arg_4_0._animator:Update(0)
 	PeaceUluController.instance:dispatchEvent(PeaceUluEvent.onSwitchTab, PeaceUluEnum.TabIndex.Main)
 end
 
-function slot0._btncontinueOnClick(slot0)
+function var_0_0._btncontinueOnClick(arg_5_0)
 	if not PeaceUluModel.instance:checkCanPlay() then
 		return
 	end
@@ -45,29 +45,31 @@ function slot0._btncontinueOnClick(slot0)
 	PeaceUluController.instance:dispatchEvent(PeaceUluEvent.onSwitchTab, PeaceUluEnum.TabIndex.Game)
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_6_0)
+	return
 end
 
-function slot0._reInitUI(slot0)
-	gohelper.setActive(slot0._gosuccess, false)
-	gohelper.setActive(slot0._gofail, false)
+function var_0_0._reInitUI(arg_7_0)
+	gohelper.setActive(arg_7_0._gosuccess, false)
+	gohelper.setActive(arg_7_0._gofail, false)
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_8_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0:refreshUI()
+function var_0_0.onOpen(arg_9_0)
+	arg_9_0:refreshUI()
 
-	if slot0._cannotPlay then
-		slot0._animator:Play("open1", 0, 0)
-		slot0._animator:Update(0)
+	if arg_9_0._cannotPlay then
+		arg_9_0._animator:Play("open1", 0, 0)
+		arg_9_0._animator:Update(0)
 	else
-		slot0._animator:Play("open", 0, 0)
-		slot0._animator:Update(0)
+		arg_9_0._animator:Play("open", 0, 0)
+		arg_9_0._animator:Update(0)
 	end
 
-	slot0.viewContainer:getNavigateButtonView():setParam({
+	arg_9_0.viewContainer:getNavigateButtonView():setParam({
 		true,
 		true,
 		false
@@ -75,43 +77,50 @@ function slot0.onOpen(slot0)
 	PeaceUluRpc.instance:sendAct145ClearGameRecordRequest(VersionActivity1_5Enum.ActivityId.PeaceUlu)
 end
 
-function slot0._killTween(slot0)
+function var_0_0._killTween(arg_10_0)
+	return
 end
 
-function slot0.refreshUI(slot0)
-	slot2 = nil
+function var_0_0.refreshUI(arg_11_0)
+	local var_11_0 = PeaceUluModel.instance:getGameRes()
+	local var_11_1
 
-	if PeaceUluModel.instance:getGameRes() == PeaceUluEnum.GameResult.Win then
-		slot2 = true
+	if var_11_0 == PeaceUluEnum.GameResult.Win then
+		var_11_1 = true
 
 		PeaceUluController.instance:dispatchEvent(PeaceUluEvent.playVoice, PeaceUluEnum.VoiceType.Win)
 		AudioMgr.instance:trigger(AudioEnum.ui_settleaccounts.play_ui_settleaccounts_win)
-	elseif slot1 == PeaceUluEnum.GameResult.Fail then
-		slot2 = false
+	elseif var_11_0 == PeaceUluEnum.GameResult.Fail then
+		var_11_1 = false
 
 		PeaceUluController.instance:dispatchEvent(PeaceUluEvent.playVoice, PeaceUluEnum.VoiceType.Fail)
 		AudioMgr.instance:trigger(AudioEnum.ui_settleaccounts.ui_settleaccounts_lose)
 	end
 
-	if slot2 then
-		slot0._txttips.text = luaLang("p_v1a5_peaceulu_resultview_txt_tips1")
+	if var_11_1 then
+		arg_11_0._txttips.text = luaLang("p_v1a5_peaceulu_resultview_txt_tips1")
 	else
-		slot0._txttips.text = luaLang("p_v1a5_peaceulu_resultview_txt_tips2")
+		arg_11_0._txttips.text = luaLang("p_v1a5_peaceulu_resultview_txt_tips2")
 	end
 
-	gohelper.setActive(slot0._gosuccess, slot2)
-	gohelper.setActive(slot0._gofail, not slot2)
+	gohelper.setActive(arg_11_0._gosuccess, var_11_1)
+	gohelper.setActive(arg_11_0._gofail, not var_11_1)
 
-	slot0._cannotPlay = PeaceUluModel.instance:getGameHaveTimes() == 0 and true or false
-	slot0._txtnum.text = string.format("<color=#DB8542>%s</color>", slot4) .. "/" .. PeaceUluConfig.instance:getGameTimes()
+	local var_11_2 = PeaceUluConfig.instance:getGameTimes()
+	local var_11_3 = PeaceUluModel.instance:getGameHaveTimes()
+
+	arg_11_0._cannotPlay = var_11_3 == 0 and true or false
+	arg_11_0._txtnum.text = string.format("<color=#DB8542>%s</color>", var_11_3) .. "/" .. var_11_2
 
 	PeaceUluController.instance:dispatchEvent(PeaceUluEvent.onOpenResultView)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_12_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_13_0)
+	return
 end
 
-return slot0
+return var_0_0

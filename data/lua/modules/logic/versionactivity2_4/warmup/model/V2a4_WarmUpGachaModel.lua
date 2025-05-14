@@ -1,81 +1,99 @@
-module("modules.logic.versionactivity2_4.warmup.model.V2a4_WarmUpGachaModel", package.seeall)
+﻿module("modules.logic.versionactivity2_4.warmup.model.V2a4_WarmUpGachaModel", package.seeall)
 
-slot0 = class("V2a4_WarmUpGachaModel", BaseModel)
-slot1 = table.insert
+local var_0_0 = class("V2a4_WarmUpGachaModel", BaseModel)
+local var_0_1 = table.insert
 
-function slot0.onInit(slot0)
-	slot0:reInit()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:reInit()
 end
 
-function slot0.reInit(slot0)
-	slot0._waveList = {}
-	slot0._s_RandomList = {}
+function var_0_0.reInit(arg_2_0)
+	arg_2_0._waveList = {}
+	arg_2_0._s_RandomList = {}
 end
 
-function slot0.clean(slot0)
-	slot0._waveList = {}
+function var_0_0.clean(arg_3_0)
+	arg_3_0._waveList = {}
 end
 
-function slot0.curWaveIndex(slot0)
-	return #slot0._waveList
+function var_0_0.curWaveIndex(arg_4_0)
+	return #arg_4_0._waveList
 end
 
-function slot0.curWave(slot0)
-	return slot0._waveList[slot0:curWaveIndex()]
+function var_0_0.curWave(arg_5_0)
+	local var_5_0 = arg_5_0:curWaveIndex()
+
+	return arg_5_0._waveList[var_5_0]
 end
 
-function slot0.curRound(slot0)
-	if not slot0:curWave() then
+function var_0_0.curRound(arg_6_0)
+	local var_6_0 = arg_6_0:curWave()
+
+	if not var_6_0 then
 		return nil
 	end
 
-	return slot1:curRound()
+	return var_6_0:curRound()
 end
 
-function slot0.curRoundIndex(slot0)
-	if not slot0:curRound() then
+function var_0_0.curRoundIndex(arg_7_0)
+	local var_7_0 = arg_7_0:curRound()
+
+	if not var_7_0 then
 		return 0
 	end
 
-	return slot1:index()
+	return var_7_0:index()
 end
 
-function slot0.s_RdList(slot0, slot1)
-	if slot0._s_RandomList[slot1] then
-		return slot2
+function var_0_0.s_RdList(arg_8_0, arg_8_1)
+	local var_8_0 = arg_8_0._s_RandomList[arg_8_1]
+
+	if var_8_0 then
+		return var_8_0
 	end
 
-	slot3 = V2a4_WarmUpController.instance:config()
+	local var_8_1 = V2a4_WarmUpController.instance:config()
+	local var_8_2 = var_8_1:getTextItemListCO(arg_8_1)
+	local var_8_3 = var_8_1:getPhotoItemListCO(arg_8_1)
+	local var_8_4 = {
+		[V2a4_WarmUpEnum.AskType.Text] = var_8_2,
+		[V2a4_WarmUpEnum.AskType.Photo] = var_8_3
+	}
 
-	assert(#{
-		[V2a4_WarmUpEnum.AskType.Text] = slot3:getTextItemListCO(slot1),
-		[V2a4_WarmUpEnum.AskType.Photo] = slot3:getPhotoItemListCO(slot1)
-	} == 2)
+	assert(#var_8_4 == 2)
 
-	slot0._s_RandomList[slot1] = slot2
+	arg_8_0._s_RandomList[arg_8_1] = var_8_4
 
-	return slot2
+	return var_8_4
 end
 
-function slot0.restart(slot0, slot1)
-	slot0:clean()
-	SimpleRandomModel.instance:clean(slot0:s_RdList(slot1))
+function var_0_0.restart(arg_9_0, arg_9_1)
+	arg_9_0:clean()
+
+	local var_9_0 = arg_9_0:s_RdList(arg_9_1)
+
+	SimpleRandomModel.instance:clean(var_9_0)
 end
 
-function slot0.genWave(slot0, slot1)
-	slot3 = slot0:s_RdList(slot1)
-	slot4, slot5 = SimpleRandomModel.instance:getListIdxAndItemIdx(slot3)
-	slot10 = V2a4_WarmUpGachaWaveMO.New(slot0:curWaveIndex() + 1, slot4)
+function var_0_0.genWave(arg_10_0, arg_10_1)
+	local var_10_0 = V2a4_WarmUpController.instance:config()
+	local var_10_1 = arg_10_0:s_RdList(arg_10_1)
+	local var_10_2, var_10_3 = SimpleRandomModel.instance:getListIdxAndItemIdx(var_10_1)
+	local var_10_4 = var_10_0:getLevelCO(arg_10_1).askCount
+	local var_10_5 = arg_10_0:curWaveIndex() + 1
+	local var_10_6 = var_10_1[var_10_2]
+	local var_10_7 = V2a4_WarmUpGachaWaveMO.New(var_10_5, var_10_2)
 
-	for slot14 = 1, V2a4_WarmUpController.instance:config():getLevelCO(slot1).askCount do
-		slot10:genRound(slot3[slot4][slot5])
+	for iter_10_0 = 1, var_10_4 do
+		var_10_7:genRound(var_10_6[var_10_3])
 	end
 
-	uv0(slot0._waveList, slot10)
+	var_0_1(arg_10_0._waveList, var_10_7)
 
-	return slot10
+	return var_10_7
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

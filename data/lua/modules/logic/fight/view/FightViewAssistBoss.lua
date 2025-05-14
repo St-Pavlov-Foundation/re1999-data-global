@@ -1,23 +1,25 @@
-module("modules.logic.fight.view.FightViewAssistBoss", package.seeall)
+﻿module("modules.logic.fight.view.FightViewAssistBoss", package.seeall)
 
-slot0 = class("FightViewAssistBoss", BaseView)
+local var_0_0 = class("FightViewAssistBoss", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0.goAssistBossContainer = gohelper.findChild(slot0.viewGO, "root/assistboss")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0.goAssistBossContainer = gohelper.findChild(arg_1_0.viewGO, "root/assistboss")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0.assistBossId2Behaviour = {
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0.assistBossId2Behaviour = {
 		FightAssistBoss1,
 		FightAssistBoss2,
 		FightAssistBoss3,
@@ -26,70 +28,75 @@ function slot0._editableInitView(slot0)
 	}
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0:onOpen()
+function var_0_0.onUpdateParam(arg_5_0)
+	arg_5_0:onOpen()
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_6_0)
 	if not FightDataHelper.fieldMgr:isPaTa() then
 		return
 	end
 
-	gohelper.setActive(slot0.goAssistBossContainer, true)
-	slot0:createAssistBossBehaviour()
-	slot0:createAssistBossScore()
+	gohelper.setActive(arg_6_0.goAssistBossContainer, true)
+	arg_6_0:createAssistBossBehaviour()
+	arg_6_0:createAssistBossScore()
 end
 
-function slot0.createAssistBossBehaviour(slot0)
-	if not FightDataHelper.entityMgr:getAssistBoss() then
+function var_0_0.createAssistBossBehaviour(arg_7_0)
+	local var_7_0 = FightDataHelper.entityMgr:getAssistBoss()
+
+	if not var_7_0 then
 		return
 	end
 
-	if slot0.bossBehaviour then
-		slot0.bossBehaviour:refreshUI()
+	if arg_7_0.bossBehaviour then
+		arg_7_0.bossBehaviour:refreshUI()
 
 		return
 	end
 
-	if not slot0.assistBossId2Behaviour[slot1.modelId] then
-		logError(string.format("boss id : %s, 没有对应的处理逻辑", slot2))
+	local var_7_1 = var_7_0.modelId
+	local var_7_2 = arg_7_0.assistBossId2Behaviour[var_7_1]
 
-		slot3 = FightAssistBoss0
+	if not var_7_2 then
+		logError(string.format("boss id : %s, 没有对应的处理逻辑", var_7_1))
+
+		var_7_2 = FightAssistBoss0
 	end
 
-	slot0.bossBehaviour = slot3.New()
+	arg_7_0.bossBehaviour = var_7_2.New()
 
-	slot0.bossBehaviour:init(slot0.goAssistBossContainer)
+	arg_7_0.bossBehaviour:init(arg_7_0.goAssistBossContainer)
 end
 
-function slot0.createAssistBossScore(slot0)
+function var_0_0.createAssistBossScore(arg_8_0)
 	if not FightDataHelper.fieldMgr:isTowerLimited() then
 		return
 	end
 
-	if slot0.scoreComp then
-		slot0.scoreComp:refreshScore()
+	if arg_8_0.scoreComp then
+		arg_8_0.scoreComp:refreshScore()
 
 		return
 	end
 
-	slot0.scoreComp = FightAssistBossScoreView.New()
+	arg_8_0.scoreComp = FightAssistBossScoreView.New()
 
-	slot0.scoreComp:init(slot0.goAssistBossContainer)
+	arg_8_0.scoreComp:init(arg_8_0.goAssistBossContainer)
 end
 
-function slot0.onDestroyView(slot0)
-	if slot0.bossBehaviour then
-		slot0.bossBehaviour:destroy()
+function var_0_0.onDestroyView(arg_9_0)
+	if arg_9_0.bossBehaviour then
+		arg_9_0.bossBehaviour:destroy()
 
-		slot0.bossBehaviour = nil
+		arg_9_0.bossBehaviour = nil
 	end
 
-	if slot0.scoreComp then
-		slot0.scoreComp:destroy()
+	if arg_9_0.scoreComp then
+		arg_9_0.scoreComp:destroy()
 
-		slot0.scoreComp = nil
+		arg_9_0.scoreComp = nil
 	end
 end
 
-return slot0
+return var_0_0

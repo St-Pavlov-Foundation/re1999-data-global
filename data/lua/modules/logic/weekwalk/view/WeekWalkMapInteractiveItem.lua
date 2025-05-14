@@ -1,455 +1,511 @@
-module("modules.logic.weekwalk.view.WeekWalkMapInteractiveItem", package.seeall)
+﻿module("modules.logic.weekwalk.view.WeekWalkMapInteractiveItem", package.seeall)
 
-slot0 = class("WeekWalkMapInteractiveItem", LuaCompBase)
+local var_0_0 = class("WeekWalkMapInteractiveItem", LuaCompBase)
 
-function slot0.onInitView(slot0)
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close")
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "rotate/bg/#simage_bg")
-	slot0._txtinfo = gohelper.findChildText(slot0.viewGO, "rotate/bg/#txt_info")
-	slot0._gomask = gohelper.findChild(slot0.viewGO, "rotate/bg/#go_mask")
-	slot0._goscroll = gohelper.findChild(slot0.viewGO, "rotate/bg/#go_mask/Scroll View/Viewport/#go_scroll")
-	slot0._gochatarea = gohelper.findChild(slot0.viewGO, "rotate/bg/#go_chatarea")
-	slot0._gochatitem = gohelper.findChild(slot0.viewGO, "rotate/bg/#go_chatarea/#go_chatitem")
-	slot0._goimportanttips = gohelper.findChild(slot0.viewGO, "rotate/bg/#go_importanttips")
-	slot0._txttipsinfo = gohelper.findChildText(slot0.viewGO, "rotate/bg/#go_importanttips/bg/#txt_tipsinfo")
-	slot0._goop1 = gohelper.findChild(slot0.viewGO, "rotate/#go_op1")
-	slot0._gorewards = gohelper.findChild(slot0.viewGO, "rotate/#go_op1/#go_rewards")
-	slot0._gonormal = gohelper.findChild(slot0.viewGO, "rotate/#go_op1/#go_normal")
-	slot0._gonorewards = gohelper.findChild(slot0.viewGO, "rotate/#go_op1/#go_normal/#go_norewards")
-	slot0._gohasrewards = gohelper.findChild(slot0.viewGO, "rotate/#go_op1/#go_normal/#go_hasrewards")
-	slot0._goboss = gohelper.findChild(slot0.viewGO, "rotate/#go_op1/#go_boss")
-	slot0._gobossnorewards = gohelper.findChild(slot0.viewGO, "rotate/#go_op1/#go_boss/#go_bossnorewards")
-	slot0._gobosshasrewards = gohelper.findChild(slot0.viewGO, "rotate/#go_op1/#go_boss/#go_bosshasrewards")
-	slot0._btndoit = gohelper.findChildButtonWithAudio(slot0.viewGO, "rotate/#go_op1/#btn_doit")
-	slot0._goop2 = gohelper.findChild(slot0.viewGO, "rotate/#go_op2")
-	slot0._gounfinishtask = gohelper.findChild(slot0.viewGO, "rotate/#go_op2/#go_unfinishtask")
-	slot0._txtunfinishtask = gohelper.findChildText(slot0.viewGO, "rotate/#go_op2/#go_unfinishtask/#txt_unfinishtask")
-	slot0._btnunfinishtask = gohelper.findChildButtonWithAudio(slot0.viewGO, "rotate/#go_op2/#go_unfinishtask/#btn_unfinishtask")
-	slot0._gofinishtask = gohelper.findChild(slot0.viewGO, "rotate/#go_op2/#go_finishtask")
-	slot0._txtfinishtask = gohelper.findChildText(slot0.viewGO, "rotate/#go_op2/#go_finishtask/#txt_finishtask")
-	slot0._btnfinishtask = gohelper.findChildButtonWithAudio(slot0.viewGO, "rotate/#go_op2/#go_finishtask/#btn_finishtask")
-	slot0._goop3 = gohelper.findChild(slot0.viewGO, "rotate/#go_op3")
-	slot0._gofinishFight = gohelper.findChild(slot0.viewGO, "rotate/#go_op3/#go_finishFight")
-	slot0._txtwin = gohelper.findChildText(slot0.viewGO, "rotate/#go_op3/#go_finishFight/bg/#txt_win")
-	slot0._btnwin = gohelper.findChildButtonWithAudio(slot0.viewGO, "rotate/#go_op3/#go_finishFight/bg/#btn_win")
-	slot0._gounfinishedFight = gohelper.findChild(slot0.viewGO, "rotate/#go_op3/#go_unfinishedFight")
-	slot0._txtfight = gohelper.findChildText(slot0.viewGO, "rotate/#go_op3/#go_unfinishedFight/bg/#txt_fight")
-	slot0._btnfight = gohelper.findChildButtonWithAudio(slot0.viewGO, "rotate/#go_op3/#go_unfinishedFight/bg/#btn_fight")
-	slot0._goop4 = gohelper.findChild(slot0.viewGO, "rotate/#go_op4")
-	slot0._gonext = gohelper.findChild(slot0.viewGO, "rotate/#go_op4/#go_next")
-	slot0._btnnext = gohelper.findChildButtonWithAudio(slot0.viewGO, "rotate/#go_op4/#go_next/#btn_next")
-	slot0._gooptions = gohelper.findChild(slot0.viewGO, "rotate/#go_op4/#go_options")
-	slot0._gotalkitem = gohelper.findChild(slot0.viewGO, "rotate/#go_op4/#go_options/#go_talkitem")
-	slot0._gofinishtalk = gohelper.findChild(slot0.viewGO, "rotate/#go_op4/#go_finishtalk")
-	slot0._btnfinishtalk = gohelper.findChildButtonWithAudio(slot0.viewGO, "rotate/#go_op4/#go_finishtalk/#btn_finishtalk")
-	slot0._goop5 = gohelper.findChild(slot0.viewGO, "rotate/#go_op5")
-	slot0._gosubmit = gohelper.findChild(slot0.viewGO, "rotate/#go_op5/#go_submit")
-	slot0._btnsubmit = gohelper.findChildButtonWithAudio(slot0.viewGO, "rotate/#go_op5/#go_submit/#btn_submit")
-	slot0._inputanswer = gohelper.findChildInputField(slot0.viewGO, "rotate/#go_op5/#input_answer")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
+	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "rotate/bg/#simage_bg")
+	arg_1_0._txtinfo = gohelper.findChildText(arg_1_0.viewGO, "rotate/bg/#txt_info")
+	arg_1_0._gomask = gohelper.findChild(arg_1_0.viewGO, "rotate/bg/#go_mask")
+	arg_1_0._goscroll = gohelper.findChild(arg_1_0.viewGO, "rotate/bg/#go_mask/Scroll View/Viewport/#go_scroll")
+	arg_1_0._gochatarea = gohelper.findChild(arg_1_0.viewGO, "rotate/bg/#go_chatarea")
+	arg_1_0._gochatitem = gohelper.findChild(arg_1_0.viewGO, "rotate/bg/#go_chatarea/#go_chatitem")
+	arg_1_0._goimportanttips = gohelper.findChild(arg_1_0.viewGO, "rotate/bg/#go_importanttips")
+	arg_1_0._txttipsinfo = gohelper.findChildText(arg_1_0.viewGO, "rotate/bg/#go_importanttips/bg/#txt_tipsinfo")
+	arg_1_0._goop1 = gohelper.findChild(arg_1_0.viewGO, "rotate/#go_op1")
+	arg_1_0._gorewards = gohelper.findChild(arg_1_0.viewGO, "rotate/#go_op1/#go_rewards")
+	arg_1_0._gonormal = gohelper.findChild(arg_1_0.viewGO, "rotate/#go_op1/#go_normal")
+	arg_1_0._gonorewards = gohelper.findChild(arg_1_0.viewGO, "rotate/#go_op1/#go_normal/#go_norewards")
+	arg_1_0._gohasrewards = gohelper.findChild(arg_1_0.viewGO, "rotate/#go_op1/#go_normal/#go_hasrewards")
+	arg_1_0._goboss = gohelper.findChild(arg_1_0.viewGO, "rotate/#go_op1/#go_boss")
+	arg_1_0._gobossnorewards = gohelper.findChild(arg_1_0.viewGO, "rotate/#go_op1/#go_boss/#go_bossnorewards")
+	arg_1_0._gobosshasrewards = gohelper.findChild(arg_1_0.viewGO, "rotate/#go_op1/#go_boss/#go_bosshasrewards")
+	arg_1_0._btndoit = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "rotate/#go_op1/#btn_doit")
+	arg_1_0._goop2 = gohelper.findChild(arg_1_0.viewGO, "rotate/#go_op2")
+	arg_1_0._gounfinishtask = gohelper.findChild(arg_1_0.viewGO, "rotate/#go_op2/#go_unfinishtask")
+	arg_1_0._txtunfinishtask = gohelper.findChildText(arg_1_0.viewGO, "rotate/#go_op2/#go_unfinishtask/#txt_unfinishtask")
+	arg_1_0._btnunfinishtask = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "rotate/#go_op2/#go_unfinishtask/#btn_unfinishtask")
+	arg_1_0._gofinishtask = gohelper.findChild(arg_1_0.viewGO, "rotate/#go_op2/#go_finishtask")
+	arg_1_0._txtfinishtask = gohelper.findChildText(arg_1_0.viewGO, "rotate/#go_op2/#go_finishtask/#txt_finishtask")
+	arg_1_0._btnfinishtask = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "rotate/#go_op2/#go_finishtask/#btn_finishtask")
+	arg_1_0._goop3 = gohelper.findChild(arg_1_0.viewGO, "rotate/#go_op3")
+	arg_1_0._gofinishFight = gohelper.findChild(arg_1_0.viewGO, "rotate/#go_op3/#go_finishFight")
+	arg_1_0._txtwin = gohelper.findChildText(arg_1_0.viewGO, "rotate/#go_op3/#go_finishFight/bg/#txt_win")
+	arg_1_0._btnwin = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "rotate/#go_op3/#go_finishFight/bg/#btn_win")
+	arg_1_0._gounfinishedFight = gohelper.findChild(arg_1_0.viewGO, "rotate/#go_op3/#go_unfinishedFight")
+	arg_1_0._txtfight = gohelper.findChildText(arg_1_0.viewGO, "rotate/#go_op3/#go_unfinishedFight/bg/#txt_fight")
+	arg_1_0._btnfight = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "rotate/#go_op3/#go_unfinishedFight/bg/#btn_fight")
+	arg_1_0._goop4 = gohelper.findChild(arg_1_0.viewGO, "rotate/#go_op4")
+	arg_1_0._gonext = gohelper.findChild(arg_1_0.viewGO, "rotate/#go_op4/#go_next")
+	arg_1_0._btnnext = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "rotate/#go_op4/#go_next/#btn_next")
+	arg_1_0._gooptions = gohelper.findChild(arg_1_0.viewGO, "rotate/#go_op4/#go_options")
+	arg_1_0._gotalkitem = gohelper.findChild(arg_1_0.viewGO, "rotate/#go_op4/#go_options/#go_talkitem")
+	arg_1_0._gofinishtalk = gohelper.findChild(arg_1_0.viewGO, "rotate/#go_op4/#go_finishtalk")
+	arg_1_0._btnfinishtalk = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "rotate/#go_op4/#go_finishtalk/#btn_finishtalk")
+	arg_1_0._goop5 = gohelper.findChild(arg_1_0.viewGO, "rotate/#go_op5")
+	arg_1_0._gosubmit = gohelper.findChild(arg_1_0.viewGO, "rotate/#go_op5/#go_submit")
+	arg_1_0._btnsubmit = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "rotate/#go_op5/#go_submit/#btn_submit")
+	arg_1_0._inputanswer = gohelper.findChildInputField(arg_1_0.viewGO, "rotate/#go_op5/#input_answer")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
-	slot0._btndoit:AddClickListener(slot0._btndoitOnClick, slot0)
-	slot0._btnunfinishtask:AddClickListener(slot0._btnunfinishtaskOnClick, slot0)
-	slot0._btnfinishtask:AddClickListener(slot0._btnfinishtaskOnClick, slot0)
-	slot0._btnwin:AddClickListener(slot0._btnwinOnClick, slot0)
-	slot0._btnfight:AddClickListener(slot0._btnfightOnClick, slot0)
-	slot0._btnnext:AddClickListener(slot0._btnnextOnClick, slot0)
-	slot0._btnfinishtalk:AddClickListener(slot0._btnfinishtalkOnClick, slot0)
-	slot0._btnsubmit:AddClickListener(slot0._btnsubmitOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+	arg_2_0._btndoit:AddClickListener(arg_2_0._btndoitOnClick, arg_2_0)
+	arg_2_0._btnunfinishtask:AddClickListener(arg_2_0._btnunfinishtaskOnClick, arg_2_0)
+	arg_2_0._btnfinishtask:AddClickListener(arg_2_0._btnfinishtaskOnClick, arg_2_0)
+	arg_2_0._btnwin:AddClickListener(arg_2_0._btnwinOnClick, arg_2_0)
+	arg_2_0._btnfight:AddClickListener(arg_2_0._btnfightOnClick, arg_2_0)
+	arg_2_0._btnnext:AddClickListener(arg_2_0._btnnextOnClick, arg_2_0)
+	arg_2_0._btnfinishtalk:AddClickListener(arg_2_0._btnfinishtalkOnClick, arg_2_0)
+	arg_2_0._btnsubmit:AddClickListener(arg_2_0._btnsubmitOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
-	slot0._btndoit:RemoveClickListener()
-	slot0._btnunfinishtask:RemoveClickListener()
-	slot0._btnfinishtask:RemoveClickListener()
-	slot0._btnwin:RemoveClickListener()
-	slot0._btnfight:RemoveClickListener()
-	slot0._btnnext:RemoveClickListener()
-	slot0._btnfinishtalk:RemoveClickListener()
-	slot0._btnsubmit:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
+	arg_3_0._btndoit:RemoveClickListener()
+	arg_3_0._btnunfinishtask:RemoveClickListener()
+	arg_3_0._btnfinishtask:RemoveClickListener()
+	arg_3_0._btnwin:RemoveClickListener()
+	arg_3_0._btnfight:RemoveClickListener()
+	arg_3_0._btnnext:RemoveClickListener()
+	arg_3_0._btnfinishtalk:RemoveClickListener()
+	arg_3_0._btnsubmit:RemoveClickListener()
 end
 
-function slot0._btnsubmitOnClick(slot0)
-	slot0._inputanswer = gohelper.findChildTextMeshInputField(slot0.viewGO, "rotate/#go_op5/#input_answer")
+function var_0_0._btnsubmitOnClick(arg_4_0)
+	arg_4_0._inputanswer = gohelper.findChildTextMeshInputField(arg_4_0.viewGO, "rotate/#go_op5/#input_answer")
 
-	if slot0._inputanswer:GetText() == slot0._config.param then
-		slot0:_onHide()
-		DungeonRpc.instance:sendMapElementRequest(slot0._config.id)
+	if arg_4_0._inputanswer:GetText() == arg_4_0._config.param then
+		arg_4_0:_onHide()
+		DungeonRpc.instance:sendMapElementRequest(arg_4_0._config.id)
 	else
-		slot0._inputanswer:SetText("")
+		arg_4_0._inputanswer:SetText("")
 		GameFacade.showToast(ToastEnum.DungeonMapInteractive)
 	end
 
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_continuemesh)
 end
 
-function slot0._btncloseOnClick(slot0)
-	if slot0._playScrollAnim then
+function var_0_0._btncloseOnClick(arg_5_0)
+	if arg_5_0._playScrollAnim then
 		return
 	end
 
-	slot0:_onHide()
+	arg_5_0:_onHide()
 end
 
-function slot0._btnfinishtalkOnClick(slot0)
-	slot0:_onHide()
+function var_0_0._btnfinishtalkOnClick(arg_6_0)
+	arg_6_0:_onHide()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_continuemesh)
 
-	if slot0._config.skipFinish == 1 then
+	if arg_6_0._config.skipFinish == 1 then
 		return
 	end
 
-	slot0:_sendFinishDialog()
+	arg_6_0:_sendFinishDialog()
 end
 
-function slot0._sendFinishDialog(slot0)
-	if slot0._elementInfo:getType() == WeekWalkEnum.ElementType.Dialog then
-		WeekwalkRpc.instance:sendWeekwalkDialogRequest(slot0._config.id, tonumber(slot0._option_param) or 0)
+function var_0_0._sendFinishDialog(arg_7_0)
+	if arg_7_0._elementInfo:getType() == WeekWalkEnum.ElementType.Dialog then
+		WeekwalkRpc.instance:sendWeekwalkDialogRequest(arg_7_0._config.id, tonumber(arg_7_0._option_param) or 0)
 	end
 end
 
-function slot0._btndoitOnClick(slot0)
-	slot0:_onHide()
+function var_0_0._btndoitOnClick(arg_8_0)
+	arg_8_0:_onHide()
 
-	slot1 = slot0._elementInfo.elementId
+	local var_8_0 = arg_8_0._elementInfo.elementId
 
-	WeekWalkModel.instance:setBattleElementId(slot1)
-	WeekwalkRpc.instance:sendBeforeStartWeekwalkBattleRequest(slot1)
+	WeekWalkModel.instance:setBattleElementId(var_8_0)
+	WeekwalkRpc.instance:sendBeforeStartWeekwalkBattleRequest(var_8_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_continuemesh)
 end
 
-function slot0._btnfightOnClick(slot0)
-	slot0:_onHide()
+function var_0_0._btnfightOnClick(arg_9_0)
+	arg_9_0:_onHide()
 
-	slot1 = tonumber(slot0._config.param)
-	DungeonModel.instance.curLookEpisodeId = slot1
+	local var_9_0 = tonumber(arg_9_0._config.param)
 
-	DungeonFightController.instance:enterFight(DungeonConfig.instance:getEpisodeCO(slot1).chapterId, slot1)
+	DungeonModel.instance.curLookEpisodeId = var_9_0
+
+	local var_9_1 = DungeonConfig.instance:getEpisodeCO(var_9_0)
+
+	DungeonFightController.instance:enterFight(var_9_1.chapterId, var_9_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_continuemesh)
 end
 
-function slot0._btnunfinishtaskOnClick(slot0)
-	slot0:_onHide()
+function var_0_0._btnunfinishtaskOnClick(arg_10_0)
+	arg_10_0:_onHide()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_continuemesh)
 end
 
-function slot0._btnfinishtaskOnClick(slot0)
-	slot0:_onHide()
-	WeekwalkRpc.instance:sendWeekwalkGeneralRequest(slot0._elementInfo.elementId)
+function var_0_0._btnfinishtaskOnClick(arg_11_0)
+	arg_11_0:_onHide()
+
+	local var_11_0 = arg_11_0._elementInfo.elementId
+
+	WeekwalkRpc.instance:sendWeekwalkGeneralRequest(var_11_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_continuemesh)
 end
 
-function slot0._btnnextOnClick(slot0)
-	if slot0._playScrollAnim then
+function var_0_0._btnnextOnClick(arg_12_0)
+	if arg_12_0._playScrollAnim then
 		return
 	end
 
-	slot0:_playNextSectionOrDialog()
+	arg_12_0:_playNextSectionOrDialog()
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_continuemesh)
 end
 
-function slot0._btntalkitemOnClick(slot0)
+function var_0_0._btntalkitemOnClick(arg_13_0)
+	return
 end
 
-function slot0._editableInitView(slot0)
-	slot0._nextAnimator = slot0._gonext:GetComponent(typeof(UnityEngine.Animator))
-	slot0._imgMask = slot0._gomask:GetComponent(gohelper.Type_Image)
+function var_0_0._editableInitView(arg_14_0)
+	arg_14_0._nextAnimator = arg_14_0._gonext:GetComponent(typeof(UnityEngine.Animator))
+	arg_14_0._imgMask = arg_14_0._gomask:GetComponent(gohelper.Type_Image)
 end
 
-function slot0._playAnim(slot0, slot1, slot2)
-	slot1:GetComponent(typeof(UnityEngine.Animator)):Play(slot2)
+function var_0_0._playAnim(arg_15_0, arg_15_1, arg_15_2)
+	arg_15_1:GetComponent(typeof(UnityEngine.Animator)):Play(arg_15_2)
 end
 
-function slot0._onShow(slot0)
-	if slot0._show then
+function var_0_0._onShow(arg_16_0)
+	if arg_16_0._show then
 		return
 	end
 
-	slot0._mapElement:setWenHaoVisible(false)
+	arg_16_0._mapElement:setWenHaoVisible(false)
 
-	slot0._show = true
+	arg_16_0._show = true
 
-	gohelper.setActive(slot0.viewGO, true)
-	slot0:_playAnim(slot0._gonext, "dungeonmap_interactive_in")
-	TaskDispatcher.cancelTask(slot0._showCloseBtn, slot0)
-	TaskDispatcher.runDelay(slot0._showCloseBtn, slot0, 0)
+	gohelper.setActive(arg_16_0.viewGO, true)
+	arg_16_0:_playAnim(arg_16_0._gonext, "dungeonmap_interactive_in")
+	TaskDispatcher.cancelTask(arg_16_0._showCloseBtn, arg_16_0)
+	TaskDispatcher.runDelay(arg_16_0._showCloseBtn, arg_16_0, 0)
 	WeekWalkController.instance:dispatchEvent(WeekWalkEvent.OnSetEpisodeListVisible, false)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_warnopen)
 end
 
-function slot0._showCloseBtn(slot0)
-	gohelper.setActive(slot0._btnclose.gameObject, true)
+function var_0_0._showCloseBtn(arg_17_0)
+	gohelper.setActive(arg_17_0._btnclose.gameObject, true)
 end
 
-function slot0._onOutAnimationFinished(slot0)
-	gohelper.setActive(slot0.viewGO, false)
+function var_0_0._onOutAnimationFinished(arg_18_0)
+	gohelper.setActive(arg_18_0.viewGO, false)
 	UIBlockMgr.instance:endBlock("dungeonmap_interactive_out")
-	gohelper.destroy(slot0.viewGO)
+	gohelper.destroy(arg_18_0.viewGO)
 end
 
-function slot0._onHide(slot0)
-	if not slot0._show then
+function var_0_0._onHide(arg_19_0)
+	if not arg_19_0._show then
 		return
 	end
 
-	slot0:_clearScroll()
-	slot0._mapElement:setWenHaoVisible(true)
+	arg_19_0:_clearScroll()
+	arg_19_0._mapElement:setWenHaoVisible(true)
 
-	slot0._show = false
+	arg_19_0._show = false
 
-	gohelper.setActive(slot0._btnclose.gameObject, false)
+	gohelper.setActive(arg_19_0._btnclose.gameObject, false)
 	UIBlockMgr.instance:startBlock("dungeonmap_interactive_out")
-	slot0:_playAnim(slot0._gonext, "dungeonmap_interactive_btn_out")
-
-	slot4 = "dungeonmap_interactive_btn_out"
-
-	slot0:_playAnim(slot0._gofinishtalk, slot4)
+	arg_19_0:_playAnim(arg_19_0._gonext, "dungeonmap_interactive_btn_out")
+	arg_19_0:_playAnim(arg_19_0._gofinishtalk, "dungeonmap_interactive_btn_out")
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_continuedisappear)
 
-	for slot4, slot5 in pairs(slot0._optionBtnList) do
-		slot0:_playAnim(slot5[1], "dungeonmap_interactive_btn_out")
+	for iter_19_0, iter_19_1 in pairs(arg_19_0._optionBtnList) do
+		arg_19_0:_playAnim(iter_19_1[1], "dungeonmap_interactive_btn_out")
 	end
 
-	TaskDispatcher.runDelay(slot0._onOutAnimationFinished, slot0, 0.23)
+	TaskDispatcher.runDelay(arg_19_0._onOutAnimationFinished, arg_19_0, 0.23)
 	WeekWalkController.instance:dispatchEvent(WeekWalkEvent.OnSetEpisodeListVisible, true)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_warnclose)
 end
 
-function slot0.init(slot0, slot1)
-	slot0.viewGO = slot1
-	slot0._optionBtnList = slot0:getUserDataTb_()
-	slot0._dialogItemList = slot0:getUserDataTb_()
-	slot0._dialogItemCacheList = slot0:getUserDataTb_()
+function var_0_0.init(arg_20_0, arg_20_1)
+	arg_20_0.viewGO = arg_20_1
+	arg_20_0._optionBtnList = arg_20_0:getUserDataTb_()
+	arg_20_0._dialogItemList = arg_20_0:getUserDataTb_()
+	arg_20_0._dialogItemCacheList = arg_20_0:getUserDataTb_()
 
-	slot0:onInitView()
-	slot0:addEvents()
-	slot0:_editableAddEvents()
+	arg_20_0:onInitView()
+	arg_20_0:addEvents()
+	arg_20_0:_editableAddEvents()
 end
 
-function slot0._editableAddEvents(slot0)
+function var_0_0._editableAddEvents(arg_21_0)
+	return
 end
 
-function slot0._OnClickElement(slot0, slot1)
-	slot0._mapElement = slot1
+function var_0_0._OnClickElement(arg_22_0, arg_22_1)
+	arg_22_0._mapElement = arg_22_1
 
-	if slot0._show then
-		slot0:_onHide()
+	if arg_22_0._show then
+		arg_22_0:_onHide()
 
 		return
 	end
 
-	slot0:_onShow()
+	arg_22_0:_onShow()
 
-	slot0._config = slot0._mapElement._config
-	slot0._elementGo = slot0._mapElement._go
-	slot0._elementInfo = slot0._mapElement._info
-	slot0._elementX, slot0._elementY, slot0._elementZ = transformhelper.getPos(slot0._elementGo.transform)
+	arg_22_0._config = arg_22_0._mapElement._config
+	arg_22_0._elementGo = arg_22_0._mapElement._go
+	arg_22_0._elementInfo = arg_22_0._mapElement._info
+	arg_22_0._elementX, arg_22_0._elementY, arg_22_0._elementZ = transformhelper.getPos(arg_22_0._elementGo.transform)
 
-	if not string.nilorempty(slot0._config.offsetPos or "2#3") then
-		slot0._elementAddX = slot0._elementX + (string.splitToNumber(slot2, "#")[1] or 0)
-		slot0._elementAddY = slot0._elementY + (slot3[2] or 0)
+	local var_22_0 = arg_22_0._config.offsetPos or "2#3"
+
+	if not string.nilorempty(var_22_0) then
+		local var_22_1 = string.splitToNumber(var_22_0, "#")
+
+		arg_22_0._elementAddX = arg_22_0._elementX + (var_22_1[1] or 0)
+		arg_22_0._elementAddY = arg_22_0._elementY + (var_22_1[2] or 0)
 	end
 
-	slot0.viewGO.transform.position = Vector3(slot0._elementAddX, slot0._elementAddY, slot0._elementZ)
-	slot3 = not string.nilorempty(slot0._config.flagText)
+	arg_22_0.viewGO.transform.position = Vector3(arg_22_0._elementAddX, arg_22_0._elementAddY, arg_22_0._elementZ)
 
-	gohelper.setActive(slot0._goimportanttips, slot3)
+	local var_22_2 = not string.nilorempty(arg_22_0._config.flagText)
 
-	if slot3 then
-		slot0._txttipsinfo.text = slot0._config.flagText
+	gohelper.setActive(arg_22_0._goimportanttips, var_22_2)
+
+	if var_22_2 then
+		arg_22_0._txttipsinfo.text = arg_22_0._config.flagText
 	end
 
-	gohelper.setActive(slot0._txtinfo.gameObject, false)
-	gohelper.setActive(slot0._gochatarea, slot0._elementInfo:getType() == WeekWalkEnum.ElementType.Dialog)
+	local var_22_3 = arg_22_0._elementInfo:getType()
+	local var_22_4 = var_22_3 == WeekWalkEnum.ElementType.Dialog
 
-	if slot4 == WeekWalkEnum.ElementType.General then
-		slot0:_directlyComplete()
-	elseif slot4 == WeekWalkEnum.ElementType.Battle then
-		if tonumber(slot0._elementInfo:getPrevParam()) then
-			gohelper.setActive(slot0._gochatarea, true)
-			slot0:_playStory(slot6)
+	gohelper.setActive(arg_22_0._txtinfo.gameObject, false)
+	gohelper.setActive(arg_22_0._gochatarea, var_22_4)
+
+	if var_22_3 == WeekWalkEnum.ElementType.General then
+		arg_22_0:_directlyComplete()
+	elseif var_22_3 == WeekWalkEnum.ElementType.Battle then
+		local var_22_5 = tonumber(arg_22_0._elementInfo:getPrevParam())
+
+		if var_22_5 then
+			gohelper.setActive(arg_22_0._gochatarea, true)
+			arg_22_0:_playStory(var_22_5)
 		end
 
-		slot0:_showTypeGo(slot4)
-	elseif slot4 == DungeonEnum.ElementType.Task then
-		slot0:_showTask()
-	elseif slot5 then
-		slot0:_showTypeGo(slot4)
-		slot0:_playStory()
-	elseif slot4 == DungeonEnum.ElementType.Question then
-		slot0:_playQuestion()
+		arg_22_0:_showTypeGo(var_22_3)
+	elseif var_22_3 == DungeonEnum.ElementType.Task then
+		arg_22_0:_showTask()
+	elseif var_22_4 then
+		arg_22_0:_showTypeGo(var_22_3)
+		arg_22_0:_playStory()
+	elseif var_22_3 == DungeonEnum.ElementType.Question then
+		arg_22_0:_playQuestion()
 	else
 		logError("element type undefined!")
 	end
 
-	slot0._simagebg:LoadImage(ResUrl.getWeekWalkBg("tc3.png"))
+	arg_22_0._simagebg:LoadImage(ResUrl.getWeekWalkBg("tc3.png"))
 end
 
-function slot0._showTypeGo(slot0, slot1)
-	for slot5 = 1, WeekWalkEnum.ElementType.MaxCount do
-		gohelper.setActive(slot0["_goop" .. slot5], slot5 == slot1)
+function var_0_0._showTypeGo(arg_23_0, arg_23_1)
+	for iter_23_0 = 1, WeekWalkEnum.ElementType.MaxCount do
+		gohelper.setActive(arg_23_0["_goop" .. iter_23_0], iter_23_0 == arg_23_1)
 	end
 
-	if slot1 == WeekWalkEnum.ElementType.Battle then
-		slot2 = slot0._config.isBoss > 0
+	if arg_23_1 == WeekWalkEnum.ElementType.Battle then
+		local var_23_0 = arg_23_0._config.isBoss > 0
 
-		gohelper.setActive(slot0._gonormal, not slot2)
-		gohelper.setActive(slot0._goboss, slot2)
-		slot0:_showRewards(slot2)
+		gohelper.setActive(arg_23_0._gonormal, not var_23_0)
+		gohelper.setActive(arg_23_0._goboss, var_23_0)
+		arg_23_0:_showRewards(var_23_0)
 	end
 end
 
-function slot0._showRewards(slot0, slot1)
-	if not ((string.splitToNumber(slot0._config.bonusGroup, "#")[2] or 0) > 0) then
-		gohelper.setActive(not slot1 and slot0._gonorewards or slot0._gobossnorewards, true)
+function var_0_0._showRewards(arg_24_0, arg_24_1)
+	local var_24_0 = string.splitToNumber(arg_24_0._config.bonusGroup, "#")[2] or 0
+
+	if not (var_24_0 > 0) then
+		gohelper.setActive(not arg_24_1 and arg_24_0._gonorewards or arg_24_0._gobossnorewards, true)
 
 		return
 	end
 
-	gohelper.setActive(not slot1 and slot0._gohasrewards or slot0._gobosshasrewards, true)
+	gohelper.setActive(not arg_24_1 and arg_24_0._gohasrewards or arg_24_0._gobosshasrewards, true)
 
-	if not GameUtil.splitString2(WeekWalkConfig.instance:getBonus(slot3, WeekWalkModel.instance:getLevel()), true, "|", "#") then
+	local var_24_1 = WeekWalkModel.instance:getLevel()
+	local var_24_2 = WeekWalkConfig.instance:getBonus(var_24_0, var_24_1)
+	local var_24_3 = GameUtil.splitString2(var_24_2, true, "|", "#")
+
+	if not var_24_3 then
 		return
 	end
 
-	for slot11, slot12 in ipairs(slot7) do
-		slot13 = IconMgr.instance:getCommonItemIcon(slot0._gorewards)
+	for iter_24_0, iter_24_1 in ipairs(var_24_3) do
+		local var_24_4 = IconMgr.instance:getCommonItemIcon(arg_24_0._gorewards)
 
-		slot13:setMOValue(slot12[1], slot12[2], slot12[3])
-		slot13:setScale(0.39)
-		slot13:customOnClickCallback(slot0._openRewardView, slot7)
+		var_24_4:setMOValue(iter_24_1[1], iter_24_1[2], iter_24_1[3])
+		var_24_4:setScale(0.39)
+		var_24_4:customOnClickCallback(arg_24_0._openRewardView, var_24_3)
 	end
 end
 
-function slot0._playQuestion(slot0)
-	slot0._txtinfo.text = slot0._config.desc
+function var_0_0._playQuestion(arg_25_0)
+	arg_25_0._txtinfo.text = arg_25_0._config.desc
 end
 
-function slot0._showTask(slot0)
-	slot0._txtinfo.text = slot0._config.desc
-	slot2 = string.splitToNumber(slot0._config.param, "#")
-	slot0._finishTask = slot2[3] <= ItemModel.instance:getItemQuantity(slot2[1], slot2[2])
+function var_0_0._showTask(arg_26_0)
+	arg_26_0._txtinfo.text = arg_26_0._config.desc
 
-	gohelper.setActive(slot0._gofinishtask, slot0._finishTask)
-	gohelper.setActive(slot0._gounfinishtask, not slot0._finishTask)
+	local var_26_0 = arg_26_0._config.param
+	local var_26_1 = string.splitToNumber(var_26_0, "#")
+	local var_26_2 = var_26_1[3]
+	local var_26_3 = ItemModel.instance:getItemConfig(var_26_1[1], var_26_1[2])
+	local var_26_4 = ItemModel.instance:getItemQuantity(var_26_1[1], var_26_1[2])
 
-	if slot0._finishTask then
-		slot0._txtfinishtask.text = string.format("%s%s<color=#00ff00>%s</color>/%s", luaLang("dungeon_map_submit"), ItemModel.instance:getItemConfig(slot2[1], slot2[2]).name, slot5, slot3)
+	arg_26_0._finishTask = var_26_2 <= var_26_4
+
+	gohelper.setActive(arg_26_0._gofinishtask, arg_26_0._finishTask)
+	gohelper.setActive(arg_26_0._gounfinishtask, not arg_26_0._finishTask)
+
+	if arg_26_0._finishTask then
+		arg_26_0._txtfinishtask.text = string.format("%s%s<color=#00ff00>%s</color>/%s", luaLang("dungeon_map_submit"), var_26_3.name, var_26_4, var_26_2)
 	else
-		slot0._txtunfinishtask.text = string.format("%s%s<color=#ff0000>%s</color>/%s", luaLang("dungeon_map_submit"), slot4.name, slot5, slot3)
+		arg_26_0._txtunfinishtask.text = string.format("%s%s<color=#ff0000>%s</color>/%s", luaLang("dungeon_map_submit"), var_26_3.name, var_26_4, var_26_2)
 	end
 end
 
-function slot0._directlyComplete(slot0)
-	slot0._txtinfo.text = slot0._config.desc
+function var_0_0._directlyComplete(arg_27_0)
+	arg_27_0._txtinfo.text = arg_27_0._config.desc
 end
 
-function slot0._playNextSectionOrDialog(slot0)
-	slot0:_clearDialog()
+function var_0_0._playNextSectionOrDialog(arg_28_0)
+	arg_28_0:_clearDialog()
 
-	if slot0._dialogIndex <= #slot0._sectionList then
-		slot0:_playNextDialog()
+	if #arg_28_0._sectionList >= arg_28_0._dialogIndex then
+		arg_28_0:_playNextDialog()
 
 		return
 	end
 
-	if table.remove(slot0._sectionStack) then
-		slot0:_playSection(slot1[1], slot1[2])
+	local var_28_0 = table.remove(arg_28_0._sectionStack)
+
+	if var_28_0 then
+		arg_28_0:_playSection(var_28_0[1], var_28_0[2])
 	else
-		slot0:_refreshDialogBtnState()
+		arg_28_0:_refreshDialogBtnState()
 	end
 end
 
-function slot0._playStory(slot0, slot1)
-	slot0:_clearDialog()
+function var_0_0._playStory(arg_29_0, arg_29_1)
+	arg_29_0:_clearDialog()
 
-	slot0._sectionStack = {}
-	slot0._optionId = 0
-	slot0._mainSectionId = "0"
-	slot0._sectionId = slot0._mainSectionId
-	slot0._dialogIndex = nil
-	slot0._historyList = {}
-	slot0._dialogId = slot1 or tonumber(slot0._elementInfo:getParam())
+	arg_29_0._sectionStack = {}
+	arg_29_0._optionId = 0
+	arg_29_0._mainSectionId = "0"
+	arg_29_0._sectionId = arg_29_0._mainSectionId
+	arg_29_0._dialogIndex = nil
+	arg_29_0._historyList = {}
+	arg_29_0._dialogId = arg_29_1 or tonumber(arg_29_0._elementInfo:getParam())
 
-	slot0:_initHistoryItem()
+	arg_29_0:_initHistoryItem()
 
-	slot0._historyList.id = slot0._dialogId
+	arg_29_0._historyList.id = arg_29_0._dialogId
 
-	slot0:_playSection(slot0._sectionId, slot0._dialogIndex)
+	arg_29_0:_playSection(arg_29_0._sectionId, arg_29_0._dialogIndex)
 end
 
-function slot0._initHistoryItem(slot0)
-	if #slot0._elementInfo.historylist == 0 then
+function var_0_0._initHistoryItem(arg_30_0)
+	local var_30_0 = arg_30_0._elementInfo.historylist
+
+	if #var_30_0 == 0 then
 		return
 	end
 
-	for slot5, slot6 in ipairs(slot1) do
-		slot7 = string.split(slot6, "#")
-		slot0._historyList[slot7[1]] = tonumber(slot7[2])
+	for iter_30_0, iter_30_1 in ipairs(var_30_0) do
+		local var_30_1 = string.split(iter_30_1, "#")
+
+		arg_30_0._historyList[var_30_1[1]] = tonumber(var_30_1[2])
 	end
 
-	if not slot0._historyList.id or slot2 ~= slot0._dialogId then
-		slot0._historyList = {}
+	local var_30_2 = arg_30_0._historyList.id
+
+	if not var_30_2 or var_30_2 ~= arg_30_0._dialogId then
+		arg_30_0._historyList = {}
 
 		return
 	end
 
-	slot0._option_param = slot0._historyList.option
-	slot3 = slot0._mainSectionId
+	arg_30_0._option_param = arg_30_0._historyList.option
 
-	slot0:_addSectionHistory(slot3, slot0._historyList[slot3])
+	local var_30_3 = arg_30_0._mainSectionId
+	local var_30_4 = arg_30_0._historyList[var_30_3]
 
-	if not slot0._dialogIndex then
-		slot0._dialogIndex = slot4
-		slot0._sectionId = slot3
+	arg_30_0:_addSectionHistory(var_30_3, var_30_4)
+
+	if not arg_30_0._dialogIndex then
+		arg_30_0._dialogIndex = var_30_4
+		arg_30_0._sectionId = var_30_3
 	end
 end
 
-function slot0._addSectionHistory(slot0, slot1, slot2)
-	slot3 = WeekWalkConfig.instance:getDialog(slot0._dialogId, slot1)
-	slot4 = nil
-	slot4 = slot1 == slot0._mainSectionId and slot2 > #slot3 or slot2 >= #slot3
+function var_0_0._addSectionHistory(arg_31_0, arg_31_1, arg_31_2)
+	local var_31_0 = WeekWalkConfig.instance:getDialog(arg_31_0._dialogId, arg_31_1)
+	local var_31_1
 
-	for slot8, slot9 in ipairs(slot3) do
-		if slot8 < slot2 or slot4 then
-			if slot9.type == "dialog" then
-				table.insert(slot0._dialogItemList, slot0:_addDialogItem("dialog", slot9.content, slot9.speaker))
+	if arg_31_1 == arg_31_0._mainSectionId then
+		var_31_1 = arg_31_2 > #var_31_0
+	else
+		var_31_1 = arg_31_2 >= #var_31_0
+	end
+
+	for iter_31_0, iter_31_1 in ipairs(var_31_0) do
+		if iter_31_0 < arg_31_2 or var_31_1 then
+			if iter_31_1.type == "dialog" then
+				local var_31_2 = arg_31_0:_addDialogItem("dialog", iter_31_1.content, iter_31_1.speaker)
+
+				table.insert(arg_31_0._dialogItemList, var_31_2)
 			end
 
-			if slot9.type == "options" then
-				slot10 = string.split(slot9.content, "#")
-				slot12 = {}
-				slot13 = {}
+			if iter_31_1.type == "options" then
+				local var_31_3 = string.split(iter_31_1.content, "#")
+				local var_31_4 = string.split(iter_31_1.param, "#")
+				local var_31_5 = {}
+				local var_31_6 = {}
 
-				for slot17, slot18 in ipairs(string.split(slot9.param, "#")) do
-					if WeekWalkConfig.instance:getDialog(slot0._dialogId, slot18) and slot19.type == "random" then
-						for slot23, slot24 in ipairs(slot19) do
-							slot25 = string.split(slot24.option_param, "#")
+				for iter_31_2, iter_31_3 in ipairs(var_31_4) do
+					local var_31_7 = WeekWalkConfig.instance:getDialog(arg_31_0._dialogId, iter_31_3)
 
-							table.insert(slot12, slot10[slot17])
-							table.insert(slot13, slot25[2])
-							table.insert(slot12, slot10[slot17])
-							table.insert(slot13, slot25[3])
+					if var_31_7 and var_31_7.type == "random" then
+						for iter_31_4, iter_31_5 in ipairs(var_31_7) do
+							local var_31_8 = string.split(iter_31_5.option_param, "#")
+							local var_31_9 = var_31_8[2]
+							local var_31_10 = var_31_8[3]
+
+							table.insert(var_31_5, var_31_3[iter_31_2])
+							table.insert(var_31_6, var_31_9)
+							table.insert(var_31_5, var_31_3[iter_31_2])
+							table.insert(var_31_6, var_31_10)
 						end
-					elseif slot19 then
-						table.insert(slot12, slot10[slot17])
-						table.insert(slot13, slot18)
+					elseif var_31_7 then
+						table.insert(var_31_5, var_31_3[iter_31_2])
+						table.insert(var_31_6, iter_31_3)
 					else
-						table.insert(slot0._dialogItemList, slot0:_addDialogItem("option", string.format("<indent=4.7em><color=#c95318>\"%s\"</color>", slot10[slot17])))
+						local var_31_11 = string.format("<indent=4.7em><color=#c95318>\"%s\"</color>", var_31_3[iter_31_2])
+						local var_31_12 = arg_31_0:_addDialogItem("option", var_31_11)
+
+						table.insert(arg_31_0._dialogItemList, var_31_12)
 					end
 				end
 
-				for slot17, slot18 in ipairs(slot13) do
-					if slot0._historyList[slot18] then
-						table.insert(slot0._dialogItemList, slot0:_addDialogItem("option", string.format("<indent=4.7em><color=#C66030>\"%s\"</color>", slot12[slot17])))
-						slot0:_addSectionHistory(slot18, slot19)
+				for iter_31_6, iter_31_7 in ipairs(var_31_6) do
+					local var_31_13 = arg_31_0._historyList[iter_31_7]
+
+					if var_31_13 then
+						local var_31_14 = string.format("<indent=4.7em><color=#C66030>\"%s\"</color>", var_31_5[iter_31_6])
+						local var_31_15 = arg_31_0:_addDialogItem("option", var_31_14)
+
+						table.insert(arg_31_0._dialogItemList, var_31_15)
+						arg_31_0:_addSectionHistory(iter_31_7, var_31_13)
 					end
 				end
 			end
@@ -458,355 +514,397 @@ function slot0._addSectionHistory(slot0, slot1, slot2)
 		end
 	end
 
-	if not slot4 then
-		if not slot0._dialogIndex then
-			slot0._dialogIndex = slot2
-			slot0._sectionId = slot1
+	if not var_31_1 then
+		if not arg_31_0._dialogIndex then
+			arg_31_0._dialogIndex = arg_31_2
+			arg_31_0._sectionId = arg_31_1
 
 			return
 		end
 
-		table.insert(slot0._sectionStack, 1, {
-			slot1,
-			slot2
+		table.insert(arg_31_0._sectionStack, 1, {
+			arg_31_1,
+			arg_31_2
 		})
 	end
 end
 
-function slot0._playSection(slot0, slot1, slot2)
-	slot0:_setSectionData(slot1, slot2)
-	slot0:_playNextDialog()
+function var_0_0._playSection(arg_32_0, arg_32_1, arg_32_2)
+	arg_32_0:_setSectionData(arg_32_1, arg_32_2)
+	arg_32_0:_playNextDialog()
 end
 
-function slot0._setSectionData(slot0, slot1, slot2)
-	slot0._sectionList = WeekWalkConfig.instance:getDialog(slot0._dialogId, slot1)
+function var_0_0._setSectionData(arg_33_0, arg_33_1, arg_33_2)
+	arg_33_0._sectionList = WeekWalkConfig.instance:getDialog(arg_33_0._dialogId, arg_33_1)
 
-	if slot0._sectionList and not string.nilorempty(slot0._sectionList.option_param) then
-		slot0._option_param = slot0._sectionList.option_param
+	if arg_33_0._sectionList and not string.nilorempty(arg_33_0._sectionList.option_param) then
+		arg_33_0._option_param = arg_33_0._sectionList.option_param
 	end
 
-	if not string.nilorempty(slot0._option_param) then
-		slot0._historyList.option = slot0._option_param
+	if not string.nilorempty(arg_33_0._option_param) then
+		arg_33_0._historyList.option = arg_33_0._option_param
 	end
 
-	slot0._dialogIndex = slot2 or 1
-	slot0._sectionId = slot1
+	arg_33_0._dialogIndex = arg_33_2 or 1
+	arg_33_0._sectionId = arg_33_1
 end
 
-function slot0._playNextDialog(slot0)
-	if slot0._sectionList[slot0._dialogIndex] and slot1.type == "dialog" then
-		slot0:_showDialog("dialog", slot1.content, slot1.speaker)
-	elseif slot1 and slot1.type == "options" then
-		slot0:_showOptionByConfig(slot1)
+function var_0_0._playNextDialog(arg_34_0)
+	local var_34_0 = arg_34_0._sectionList[arg_34_0._dialogIndex]
+
+	if var_34_0 and var_34_0.type == "dialog" then
+		arg_34_0:_showDialog("dialog", var_34_0.content, var_34_0.speaker)
+	elseif var_34_0 and var_34_0.type == "options" then
+		arg_34_0:_showOptionByConfig(var_34_0)
 
 		return
 	end
 
-	slot0._dialogIndex = slot0._dialogIndex + 1
+	arg_34_0._dialogIndex = arg_34_0._dialogIndex + 1
 
-	if #slot0._sectionStack > 0 and #slot0._sectionList < slot0._dialogIndex then
-		slot2 = table.remove(slot0._sectionStack)
+	if #arg_34_0._sectionStack > 0 and #arg_34_0._sectionList < arg_34_0._dialogIndex then
+		local var_34_1 = table.remove(arg_34_0._sectionStack)
 
-		slot0:_setSectionData(slot2[1], slot2[2])
+		arg_34_0:_setSectionData(var_34_1[1], var_34_1[2])
 	end
 
-	slot0:_showOptionByConfig(slot0._sectionList[slot0._dialogIndex])
+	local var_34_2 = arg_34_0._sectionList[arg_34_0._dialogIndex]
 
-	if slot0._dissolveInfo then
-		gohelper.setActive(slot0._curBtnGo, false)
+	arg_34_0:_showOptionByConfig(var_34_2)
+
+	if arg_34_0._dissolveInfo then
+		gohelper.setActive(arg_34_0._curBtnGo, false)
 	end
 end
 
-function slot0._showOptionByConfig(slot0, slot1)
-	slot2 = false
+function var_0_0._showOptionByConfig(arg_35_0, arg_35_1)
+	local var_35_0 = false
 
-	if slot1 and slot1.type == "options" then
-		slot0._dialogIndex = slot0._dialogIndex + 1
-		slot3 = string.split(slot1.content, "#")
-		slot4 = string.split(slot1.param, "#")
+	if arg_35_1 and arg_35_1.type == "options" then
+		arg_35_0._dialogIndex = arg_35_0._dialogIndex + 1
 
-		for slot8, slot9 in pairs(slot0._optionBtnList) do
-			gohelper.setActive(slot9[1], false)
+		local var_35_1 = string.split(arg_35_1.content, "#")
+		local var_35_2 = string.split(arg_35_1.param, "#")
+
+		for iter_35_0, iter_35_1 in pairs(arg_35_0._optionBtnList) do
+			gohelper.setActive(iter_35_1[1], false)
 		end
 
-		for slot8, slot9 in ipairs(slot3) do
-			slot0:_addDialogOption(slot8, slot4[slot8], slot9)
+		for iter_35_2, iter_35_3 in ipairs(var_35_1) do
+			arg_35_0:_addDialogOption(iter_35_2, var_35_2[iter_35_2], iter_35_3)
 		end
 
-		slot2 = true
+		var_35_0 = true
 	end
 
-	slot0:_refreshDialogBtnState(slot2)
+	arg_35_0:_refreshDialogBtnState(var_35_0)
 end
 
-function slot0._refreshDialogBtnState(slot0, slot1)
-	gohelper.setActive(slot0._gooptions, slot1)
+function var_0_0._refreshDialogBtnState(arg_36_0, arg_36_1)
+	gohelper.setActive(arg_36_0._gooptions, arg_36_1)
 
-	if slot1 then
-		slot0._nextAnimator:Play("dungeonmap_interactive_btn_out")
+	if arg_36_1 then
+		arg_36_0._nextAnimator:Play("dungeonmap_interactive_btn_out")
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_continuedisappear)
-		gohelper.setActive(slot0._gofinishtalk.gameObject, false)
+		gohelper.setActive(arg_36_0._gofinishtalk.gameObject, false)
 
-		slot0._curBtnGo = slot0._gooptions
+		arg_36_0._curBtnGo = arg_36_0._gooptions
 
 		return
 	end
 
-	if #slot0._sectionStack > 0 or slot0._dialogIndex <= #slot0._sectionList then
-		slot0._curBtnGo = slot0._gonext
+	local var_36_0 = #arg_36_0._sectionStack > 0 or #arg_36_0._sectionList >= arg_36_0._dialogIndex
 
-		gohelper.setActive(slot0._gonext.gameObject, slot2)
-		slot0._nextAnimator:Play("dungeonmap_interactive_btn_in1")
+	if var_36_0 then
+		arg_36_0._curBtnGo = arg_36_0._gonext
+
+		gohelper.setActive(arg_36_0._gonext.gameObject, var_36_0)
+		arg_36_0._nextAnimator:Play("dungeonmap_interactive_btn_in1")
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_continueappear)
 	else
-		slot0._nextAnimator:Play("dungeonmap_interactive_btn_out")
+		arg_36_0._nextAnimator:Play("dungeonmap_interactive_btn_out")
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_continuedisappear)
 
-		slot0._curBtnGo = slot0._gofinishtalk
+		arg_36_0._curBtnGo = arg_36_0._gofinishtalk
 	end
 
-	slot3 = not slot2
+	local var_36_1 = not var_36_0
 
-	gohelper.setActive(slot0._gofinishtalk.gameObject, slot3)
+	gohelper.setActive(arg_36_0._gofinishtalk.gameObject, var_36_1)
 
-	if slot3 then
-		if not slot0._elementInfo:getNextType() then
+	if var_36_1 then
+		local var_36_2 = arg_36_0._elementInfo:getNextType()
+
+		if not var_36_2 then
 			return
 		end
 
-		slot0:_sendFinishDialog()
-		slot0:_showTypeGo(slot4)
+		arg_36_0:_sendFinishDialog()
+		arg_36_0:_showTypeGo(var_36_2)
 	end
 end
 
-function slot0._addDialogOption(slot0, slot1, slot2, slot3)
-	slot4 = slot0._optionBtnList[slot1] and slot0._optionBtnList[slot1][1] or gohelper.cloneInPlace(slot0._gotalkitem)
-	slot0._maxOptionIndex = slot1
+function var_0_0._addDialogOption(arg_37_0, arg_37_1, arg_37_2, arg_37_3)
+	local var_37_0 = arg_37_0._optionBtnList[arg_37_1] and arg_37_0._optionBtnList[arg_37_1][1] or gohelper.cloneInPlace(arg_37_0._gotalkitem)
 
-	gohelper.setActive(slot4, false)
+	arg_37_0._maxOptionIndex = arg_37_1
 
-	gohelper.findChildText(slot4, "txt_talkitem").text = slot3
+	gohelper.setActive(var_37_0, false)
 
-	gohelper.findChildButtonWithAudio(slot4, "btn_talkitem"):AddClickListener(slot0._onOptionClick, slot0, {
-		slot2,
-		slot3,
-		slot1
+	gohelper.findChildText(var_37_0, "txt_talkitem").text = arg_37_3
+
+	local var_37_1 = gohelper.findChildButtonWithAudio(var_37_0, "btn_talkitem")
+
+	var_37_1:AddClickListener(arg_37_0._onOptionClick, arg_37_0, {
+		arg_37_2,
+		arg_37_3,
+		arg_37_1
 	})
 
-	if not slot0._optionBtnList[slot1] then
-		slot0._optionBtnList[slot1] = {
-			slot4,
-			slot6
+	if not arg_37_0._optionBtnList[arg_37_1] then
+		arg_37_0._optionBtnList[arg_37_1] = {
+			var_37_0,
+			var_37_1
 		}
 	end
 end
 
-function slot0._onOptionClick(slot0, slot1)
-	if slot0._playScrollAnim then
+function var_0_0._onOptionClick(arg_38_0, arg_38_1)
+	if arg_38_0._playScrollAnim then
 		return
 	end
 
-	slot0:_clearDialog()
-	slot0:_showDialog("option", string.format("<indent=4.7em><color=#C66030>\"%s\"</color>", slot1[2]))
+	local var_38_0 = arg_38_1[1]
+	local var_38_1 = string.format("<indent=4.7em><color=#C66030>\"%s\"</color>", arg_38_1[2])
 
-	slot0._showOption = true
-	slot0._optionId = slot1[3]
+	arg_38_0:_clearDialog()
+	arg_38_0:_showDialog("option", var_38_1)
 
-	slot0:_checkOption(slot1[1])
+	arg_38_0._showOption = true
+	arg_38_0._optionId = arg_38_1[3]
+
+	arg_38_0:_checkOption(var_38_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_continuemesh)
 end
 
-function slot0._checkOption(slot0, slot1)
-	if not WeekWalkConfig.instance:getDialog(slot0._dialogId, slot1) then
-		slot0:_playNextSectionOrDialog()
+function var_0_0._checkOption(arg_39_0, arg_39_1)
+	local var_39_0 = WeekWalkConfig.instance:getDialog(arg_39_0._dialogId, arg_39_1)
+
+	if not var_39_0 then
+		arg_39_0:_playNextSectionOrDialog()
 
 		return
 	end
 
-	if slot0._dialogIndex <= #slot0._sectionList then
-		table.insert(slot0._sectionStack, {
-			slot0._sectionId,
-			slot0._dialogIndex
+	if #arg_39_0._sectionList >= arg_39_0._dialogIndex then
+		table.insert(arg_39_0._sectionStack, {
+			arg_39_0._sectionId,
+			arg_39_0._dialogIndex
 		})
 	end
 
-	if slot2.type == "random" then
-		for slot6, slot7 in ipairs(slot2) do
-			slot8 = string.split(slot7.option_param, "#")
-			slot13 = nil
+	if var_39_0.type == "random" then
+		for iter_39_0, iter_39_1 in ipairs(var_39_0) do
+			local var_39_1 = string.split(iter_39_1.option_param, "#")
+			local var_39_2 = tonumber(var_39_1[1])
+			local var_39_3 = var_39_1[2]
+			local var_39_4 = var_39_1[3]
+			local var_39_5 = math.random(100)
+			local var_39_6
 
-			slot0:_playSection(math.random(100) <= tonumber(slot8[1]) and slot8[2] or slot8[3])
+			if var_39_5 <= var_39_2 then
+				var_39_6 = var_39_3
+			else
+				var_39_6 = var_39_4
+			end
+
+			arg_39_0:_playSection(var_39_6)
 
 			break
 		end
 	else
-		slot0:_playSection(slot1)
+		arg_39_0:_playSection(arg_39_1)
 	end
 end
 
-function slot0._showDialog(slot0, slot1, slot2, slot3)
-	if slot0._elementInfo:getType() == WeekWalkEnum.ElementType.Dialog then
-		slot0._historyList[slot0._sectionId] = slot0._dialogIndex
-		slot4 = {}
+function var_0_0._showDialog(arg_40_0, arg_40_1, arg_40_2, arg_40_3)
+	if arg_40_0._elementInfo:getType() == WeekWalkEnum.ElementType.Dialog then
+		arg_40_0._historyList[arg_40_0._sectionId] = arg_40_0._dialogIndex
 
-		for slot8, slot9 in pairs(slot0._historyList) do
-			table.insert(slot4, string.format("%s#%s", slot8, slot9))
+		local var_40_0 = {}
+
+		for iter_40_0, iter_40_1 in pairs(arg_40_0._historyList) do
+			table.insert(var_40_0, string.format("%s#%s", iter_40_0, iter_40_1))
 		end
 
-		WeekwalkRpc.instance:sendWeekwalkDialogHistoryRequest(slot0._config.id, slot4)
-		slot0._elementInfo:updateHistoryList(slot4)
+		WeekwalkRpc.instance:sendWeekwalkDialogHistoryRequest(arg_40_0._config.id, var_40_0)
+		arg_40_0._elementInfo:updateHistoryList(var_40_0)
 	end
 
-	slot4 = slot0:_addDialogItem(slot1, slot2, slot3)
+	local var_40_1 = arg_40_0:_addDialogItem(arg_40_1, arg_40_2, arg_40_3)
 
-	if slot0._showOption and slot0._addDialog then
-		-- Nothing
+	if arg_40_0._showOption and arg_40_0._addDialog then
+		-- block empty
 	end
 
-	slot0._showOption = false
+	arg_40_0._showOption = false
 
-	table.insert(slot0._dialogItemList, slot4)
+	table.insert(arg_40_0._dialogItemList, var_40_1)
 
-	slot0._addDialog = true
+	arg_40_0._addDialog = true
 end
 
-function slot0._addDialogItem(slot0, slot1, slot2, slot3)
-	slot4 = table.remove(slot0._dialogItemCacheList) or gohelper.cloneInPlace(slot0._gochatitem)
+function var_0_0._addDialogItem(arg_41_0, arg_41_1, arg_41_2, arg_41_3)
+	local var_41_0 = table.remove(arg_41_0._dialogItemCacheList) or gohelper.cloneInPlace(arg_41_0._gochatitem)
 
-	transformhelper.setLocalPos(slot4.transform, 0, 0, 200)
-	gohelper.setActive(slot4, true)
-	gohelper.setAsLastSibling(slot4)
+	transformhelper.setLocalPos(var_41_0.transform, 0, 0, 200)
+	gohelper.setActive(var_41_0, true)
+	gohelper.setAsLastSibling(var_41_0)
 
-	gohelper.findChildText(slot4, "name").text = not string.nilorempty(slot3) and slot3 .. ":" or ""
+	gohelper.findChildText(var_41_0, "name").text = not string.nilorempty(arg_41_3) and arg_41_3 .. ":" or ""
 
-	gohelper.setActive(gohelper.findChild(slot4, "usericon"), not slot3)
+	local var_41_1 = gohelper.findChild(var_41_0, "usericon")
 
-	slot7 = gohelper.findChildText(slot4, "info")
-	slot7.text = string.nilorempty(slot3) and slot2 or "<indent=4.7em>" .. slot2
+	gohelper.setActive(var_41_1, not arg_41_3)
 
-	SLFramework.UGUI.GuiHelper.SetColor(slot7, string.nilorempty(slot3) and "#9E967B" or "#D0CFCF")
+	local var_41_2 = gohelper.findChildText(var_41_0, "info")
 
-	return slot4
+	var_41_2.text = string.nilorempty(arg_41_3) and arg_41_2 or "<indent=4.7em>" .. arg_41_2
+
+	SLFramework.UGUI.GuiHelper.SetColor(var_41_2, string.nilorempty(arg_41_3) and "#9E967B" or "#D0CFCF")
+
+	return var_41_0
 end
 
-function slot0._clearDialog(slot0)
-	slot0._playScrollAnim = true
+function var_0_0._clearDialog(arg_42_0)
+	arg_42_0._playScrollAnim = true
 
-	gohelper.setActive(slot0._gomask, false)
-	TaskDispatcher.runDelay(slot0._delayScroll, slot0, 0)
+	gohelper.setActive(arg_42_0._gomask, false)
+	TaskDispatcher.runDelay(arg_42_0._delayScroll, arg_42_0, 0)
 end
 
-function slot0._delayScroll(slot0)
-	gohelper.setActive(slot0._gomask, true)
+function var_0_0._delayScroll(arg_43_0)
+	gohelper.setActive(arg_43_0._gomask, true)
 
-	slot0._imgMask.enabled = true
-	slot1 = slot0._curScrollGo or slot0._goscroll
+	arg_43_0._imgMask.enabled = true
 
-	for slot5, slot6 in ipairs(slot0._dialogItemList) do
-		gohelper.addChild(slot1, slot6)
+	local var_43_0 = arg_43_0._curScrollGo or arg_43_0._goscroll
 
-		slot6.transform.position = slot6.transform.position
-		slot8, slot9, slot10 = transformhelper.getLocalPos(slot6.transform)
+	for iter_43_0, iter_43_1 in ipairs(arg_43_0._dialogItemList) do
+		local var_43_1 = iter_43_1.transform.position
 
-		transformhelper.setLocalPos(slot6.transform, slot8, slot9, 0)
+		gohelper.addChild(var_43_0, iter_43_1)
+
+		iter_43_1.transform.position = var_43_1
+
+		local var_43_2, var_43_3, var_43_4 = transformhelper.getLocalPos(iter_43_1.transform)
+
+		transformhelper.setLocalPos(iter_43_1.transform, var_43_2, var_43_3, 0)
 	end
 
-	slot0._dialogItemList = slot0:getUserDataTb_()
+	arg_43_0._dialogItemList = arg_43_0:getUserDataTb_()
 
-	gohelper.setActive(slot1, true)
+	gohelper.setActive(var_43_0, true)
 
-	slot0._curScrollGo = slot1
+	arg_43_0._curScrollGo = var_43_0
 
-	if slot1 then
-		if slot0._dissolveInfo then
-			slot3 = slot0._dissolveInfo[3]
-			slot0._dissolveInfo[2].text = ""
+	if var_43_0 then
+		if arg_43_0._dissolveInfo then
+			local var_43_5 = arg_43_0._dissolveInfo[2]
+			local var_43_6 = arg_43_0._dissolveInfo[3]
+
+			var_43_5.text = ""
 		end
 
-		slot0:_scrollEnd(slot1)
+		arg_43_0:_scrollEnd(var_43_0)
 	end
 end
 
-function slot0._scrollEnd(slot0, slot1)
-	if slot1 ~= slot0._curScrollGo then
-		gohelper.destroy(slot1)
+function var_0_0._scrollEnd(arg_44_0, arg_44_1)
+	if arg_44_1 ~= arg_44_0._curScrollGo then
+		gohelper.destroy(arg_44_1)
 	else
-		if slot0._dissolveInfo then
-			TaskDispatcher.runDelay(slot0._onDissolveStart, slot0, 0.3)
+		if arg_44_0._dissolveInfo then
+			TaskDispatcher.runDelay(arg_44_0._onDissolveStart, arg_44_0, 0.3)
 
 			return
 		end
 
-		slot0:_onDissolveFinish()
+		arg_44_0:_onDissolveFinish()
 	end
 end
 
-function slot0._onDissolveStart(slot0)
-	slot0._dissolveInfo[2].text = slot0._dissolveInfo[3]
-	slot0._imgMask.enabled = false
+function var_0_0._onDissolveStart(arg_45_0)
+	local var_45_0 = arg_45_0._dissolveInfo[1]
 
-	slot0._dissolveInfo[1]:GetComponent(typeof(UnityEngine.Animation)):Play("dungeonmap_chatarea")
-	TaskDispatcher.runDelay(slot0._onDissolveFinish, slot0, 1.3)
+	arg_45_0._dissolveInfo[2].text = arg_45_0._dissolveInfo[3]
+	arg_45_0._imgMask.enabled = false
+
+	var_45_0:GetComponent(typeof(UnityEngine.Animation)):Play("dungeonmap_chatarea")
+	TaskDispatcher.runDelay(arg_45_0._onDissolveFinish, arg_45_0, 1.3)
 end
 
-function slot0._onDissolveFinish(slot0)
-	gohelper.setActive(slot0._curBtnGo, true)
+function var_0_0._onDissolveFinish(arg_46_0)
+	gohelper.setActive(arg_46_0._curBtnGo, true)
 
-	slot0._dissolveInfo = nil
-	slot0._playScrollAnim = false
+	arg_46_0._dissolveInfo = nil
+	arg_46_0._playScrollAnim = false
 
-	if slot0._curBtnGo == slot0._gooptions then
-		for slot4 = 1, slot0._maxOptionIndex do
-			if (slot4 - 1) * 0.03 > 0 then
-				gohelper.setActive(slot0._optionBtnList[slot4][1], false)
-				TaskDispatcher.runDelay(function ()
-					if not gohelper.isNil(uv0) then
-						gohelper.setActive(uv0, true)
+	if arg_46_0._curBtnGo == arg_46_0._gooptions then
+		for iter_46_0 = 1, arg_46_0._maxOptionIndex do
+			local var_46_0 = (iter_46_0 - 1) * 0.03
+			local var_46_1 = arg_46_0._optionBtnList[iter_46_0][1]
+
+			if var_46_0 > 0 then
+				gohelper.setActive(var_46_1, false)
+				TaskDispatcher.runDelay(function()
+					if not gohelper.isNil(var_46_1) then
+						gohelper.setActive(var_46_1, true)
 					end
-				end, nil, slot5)
+				end, nil, var_46_0)
 			else
-				gohelper.setActive(slot6, true)
+				gohelper.setActive(var_46_1, true)
 			end
 		end
 	end
 end
 
-function slot0._clearScroll(slot0)
-	slot0._showOption = false
-	slot0._dissolveInfo = nil
-	slot0._playScrollAnim = false
+function var_0_0._clearScroll(arg_48_0)
+	arg_48_0._showOption = false
+	arg_48_0._dissolveInfo = nil
+	arg_48_0._playScrollAnim = false
 
-	TaskDispatcher.cancelTask(slot0._delayScroll, slot0)
+	TaskDispatcher.cancelTask(arg_48_0._delayScroll, arg_48_0)
 
-	if slot0._oldScrollGo then
-		gohelper.destroy(slot0._oldScrollGo)
+	if arg_48_0._oldScrollGo then
+		gohelper.destroy(arg_48_0._oldScrollGo)
 
-		slot0._oldScrollGo = nil
+		arg_48_0._oldScrollGo = nil
 	end
 
-	if slot0._curScrollGo then
-		gohelper.destroy(slot0._curScrollGo)
+	if arg_48_0._curScrollGo then
+		gohelper.destroy(arg_48_0._curScrollGo)
 
-		slot0._curScrollGo = nil
+		arg_48_0._curScrollGo = nil
 	end
 
-	slot0._dialogItemList = slot0:getUserDataTb_()
+	arg_48_0._dialogItemList = arg_48_0:getUserDataTb_()
 end
 
-function slot0._editableRemoveEvents(slot0)
-	for slot4, slot5 in pairs(slot0._optionBtnList) do
-		slot5[2]:RemoveClickListener()
+function var_0_0._editableRemoveEvents(arg_49_0)
+	for iter_49_0, iter_49_1 in pairs(arg_49_0._optionBtnList) do
+		iter_49_1[2]:RemoveClickListener()
 	end
 end
 
-function slot0.onDestroy(slot0)
-	TaskDispatcher.cancelTask(slot0._showCloseBtn, slot0)
-	TaskDispatcher.cancelTask(slot0._delayScroll, slot0)
-	TaskDispatcher.cancelTask(slot0._onDissolveStart, slot0)
-	TaskDispatcher.cancelTask(slot0._onDissolveFinish, slot0)
-	slot0:removeEvents()
-	slot0:_editableRemoveEvents()
-	slot0._simagebg:UnLoadImage()
+function var_0_0.onDestroy(arg_50_0)
+	TaskDispatcher.cancelTask(arg_50_0._showCloseBtn, arg_50_0)
+	TaskDispatcher.cancelTask(arg_50_0._delayScroll, arg_50_0)
+	TaskDispatcher.cancelTask(arg_50_0._onDissolveStart, arg_50_0)
+	TaskDispatcher.cancelTask(arg_50_0._onDissolveFinish, arg_50_0)
+	arg_50_0:removeEvents()
+	arg_50_0:_editableRemoveEvents()
+	arg_50_0._simagebg:UnLoadImage()
 end
 
-return slot0
+return var_0_0

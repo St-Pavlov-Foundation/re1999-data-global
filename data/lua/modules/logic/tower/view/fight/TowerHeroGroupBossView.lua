@@ -1,219 +1,253 @@
-module("modules.logic.tower.view.fight.TowerHeroGroupBossView", package.seeall)
+﻿module("modules.logic.tower.view.fight.TowerHeroGroupBossView", package.seeall)
 
-slot0 = class("TowerHeroGroupBossView", BaseView)
+local var_0_0 = class("TowerHeroGroupBossView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0.goAssistBoss = gohelper.findChild(slot0.viewGO, "herogroupcontain/assistBoss")
-	slot0.goBossRoot = gohelper.findChild(slot0.goAssistBoss, "boss/root")
-	slot0.imgCareer = gohelper.findChildImage(slot0.goBossRoot, "career")
-	slot0.goLev = gohelper.findChild(slot0.goBossRoot, "image_Lv")
-	slot0.txtLev = gohelper.findChildTextMesh(slot0.goBossRoot, "lev")
-	slot0.txtName = gohelper.findChildTextMesh(slot0.goBossRoot, "name")
-	slot0.simageBoss = gohelper.findChildSingleImage(slot0.goBossRoot, "icon")
-	slot0._btnClick = gohelper.findChildButtonWithAudio(slot0.goAssistBoss, "boss/click")
-	slot0.goAdd = gohelper.findChild(slot0.goAssistBoss, "boss/goAdd")
-	slot0.goEmpty = gohelper.findChild(slot0.goAssistBoss, "boss/#go_Empty")
-	slot0._btnAttr = gohelper.findChildButtonWithAudio(slot0.goAssistBoss, "boss/AttrBuff")
-	slot0.btnReset = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_container/#go_replayready/Reset")
-	slot0._goreplayready = gohelper.findChild(slot0.viewGO, "#go_container/#go_replayready")
-	slot0._dropherogroup = gohelper.findChildDropdown(slot0.viewGO, "#go_container/btnContain/horizontal/#drop_herogroup")
-	slot0.goArrow = gohelper.findChild(slot0.goBossRoot, "#go_Arrow")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0.goAssistBoss = gohelper.findChild(arg_1_0.viewGO, "herogroupcontain/assistBoss")
+	arg_1_0.goBossRoot = gohelper.findChild(arg_1_0.goAssistBoss, "boss/root")
+	arg_1_0.imgCareer = gohelper.findChildImage(arg_1_0.goBossRoot, "career")
+	arg_1_0.goLev = gohelper.findChild(arg_1_0.goBossRoot, "image_Lv")
+	arg_1_0.txtLev = gohelper.findChildTextMesh(arg_1_0.goBossRoot, "lev")
+	arg_1_0.txtName = gohelper.findChildTextMesh(arg_1_0.goBossRoot, "name")
+	arg_1_0.simageBoss = gohelper.findChildSingleImage(arg_1_0.goBossRoot, "icon")
+	arg_1_0._btnClick = gohelper.findChildButtonWithAudio(arg_1_0.goAssistBoss, "boss/click")
+	arg_1_0.goAdd = gohelper.findChild(arg_1_0.goAssistBoss, "boss/goAdd")
+	arg_1_0.goEmpty = gohelper.findChild(arg_1_0.goAssistBoss, "boss/#go_Empty")
+	arg_1_0._btnAttr = gohelper.findChildButtonWithAudio(arg_1_0.goAssistBoss, "boss/AttrBuff")
+	arg_1_0.btnReset = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_container/#go_replayready/Reset")
+	arg_1_0._goreplayready = gohelper.findChild(arg_1_0.viewGO, "#go_container/#go_replayready")
+	arg_1_0._dropherogroup = gohelper.findChildDropdown(arg_1_0.viewGO, "#go_container/btnContain/horizontal/#drop_herogroup")
+	arg_1_0.goArrow = gohelper.findChild(arg_1_0.goBossRoot, "#go_Arrow")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnClick:AddClickListener(slot0._btnClickOnClick, slot0)
-	slot0._btnAttr:AddClickListener(slot0._btnAttrOnClick, slot0)
-	slot0.btnReset:AddClickListener(slot0._btnResetOnClick, slot0)
-	slot0:addEventCb(HeroGroupController.instance, HeroGroupEvent.SelectHeroGroup, slot0._checkRestrictBoss, slot0)
-	slot0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyHeroGroup, slot0.refreshUI, slot0)
-	slot0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnSnapshotSaveSucc, slot0.refreshUI, slot0)
-	slot0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyGroupSelectIndex, slot0._checkRestrictBoss, slot0)
-	slot0:addEventCb(TowerController.instance, TowerEvent.OnTowerResetSubEpisode, slot0.onResetSubEpisode, slot0)
-	slot0:addEventCb(TowerController.instance, TowerEvent.ResetTalent, slot0._onResetTalent, slot0)
-	slot0:addEventCb(TowerController.instance, TowerEvent.ActiveTalent, slot0._onActiveTalent, slot0)
-	slot0:addEventCb(TowerController.instance, TowerEvent.TowerUpdate, slot0._onTowerUpdate, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnClick:AddClickListener(arg_2_0._btnClickOnClick, arg_2_0)
+	arg_2_0._btnAttr:AddClickListener(arg_2_0._btnAttrOnClick, arg_2_0)
+	arg_2_0.btnReset:AddClickListener(arg_2_0._btnResetOnClick, arg_2_0)
+	arg_2_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.SelectHeroGroup, arg_2_0._checkRestrictBoss, arg_2_0)
+	arg_2_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyHeroGroup, arg_2_0.refreshUI, arg_2_0)
+	arg_2_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnSnapshotSaveSucc, arg_2_0.refreshUI, arg_2_0)
+	arg_2_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyGroupSelectIndex, arg_2_0._checkRestrictBoss, arg_2_0)
+	arg_2_0:addEventCb(TowerController.instance, TowerEvent.OnTowerResetSubEpisode, arg_2_0.onResetSubEpisode, arg_2_0)
+	arg_2_0:addEventCb(TowerController.instance, TowerEvent.ResetTalent, arg_2_0._onResetTalent, arg_2_0)
+	arg_2_0:addEventCb(TowerController.instance, TowerEvent.ActiveTalent, arg_2_0._onActiveTalent, arg_2_0)
+	arg_2_0:addEventCb(TowerController.instance, TowerEvent.TowerUpdate, arg_2_0._onTowerUpdate, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnClick:RemoveClickListener()
-	slot0._btnAttr:RemoveClickListener()
-	slot0.btnReset:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnClick:RemoveClickListener()
+	arg_3_0._btnAttr:RemoveClickListener()
+	arg_3_0.btnReset:RemoveClickListener()
 end
 
-function slot0._onTowerUpdate(slot0)
-	slot1 = TowerModel.instance:getRecordFightParam()
+function var_0_0._onTowerUpdate(arg_4_0)
+	local var_4_0 = TowerModel.instance:getRecordFightParam()
 
-	TowerController.instance:checkTowerIsEnd(slot1.towerType, slot1.towerId)
+	TowerController.instance:checkTowerIsEnd(var_4_0.towerType, var_4_0.towerId)
 end
 
-function slot0._btnResetOnClick(slot0)
-	if TowerModel.instance:getRecordFightParam().isHeroGroupLock then
-		if slot1.towerType == TowerEnum.TowerType.Limited then
-			GameFacade.showMessageBox(MessageBoxIdDefine.TowerResetSubEpisode, MsgBoxEnum.BoxType.Yes_No, slot0.sendTowerResetSubEpisodeRequest, nil, , slot0, nil, , TowerModel.instance:getTowerInfoById(slot1.towerType, slot1.towerId):getLayerScore(slot1.layerId))
+function var_0_0._btnResetOnClick(arg_5_0)
+	local var_5_0 = TowerModel.instance:getRecordFightParam()
+
+	if var_5_0.isHeroGroupLock then
+		if var_5_0.towerType == TowerEnum.TowerType.Limited then
+			local var_5_1 = TowerModel.instance:getTowerInfoById(var_5_0.towerType, var_5_0.towerId):getLayerScore(var_5_0.layerId)
+
+			GameFacade.showMessageBox(MessageBoxIdDefine.TowerResetSubEpisode, MsgBoxEnum.BoxType.Yes_No, arg_5_0.sendTowerResetSubEpisodeRequest, nil, nil, arg_5_0, nil, nil, var_5_1)
 		else
-			GameFacade.showMessageBox(MessageBoxIdDefine.TowerResetPermanentEpisode, MsgBoxEnum.BoxType.Yes_No, slot0.sendTowerResetSubEpisodeRequest, nil, , slot0)
+			GameFacade.showMessageBox(MessageBoxIdDefine.TowerResetPermanentEpisode, MsgBoxEnum.BoxType.Yes_No, arg_5_0.sendTowerResetSubEpisodeRequest, nil, nil, arg_5_0)
 		end
 	end
 end
 
-function slot0.sendTowerResetSubEpisodeRequest(slot0)
-	if TowerModel.instance:getRecordFightParam().towerType == TowerEnum.TowerType.Limited then
-		TowerRpc.instance:sendTowerResetSubEpisodeRequest(slot1.towerType, slot1.towerId, slot1.layerId, 0)
+function var_0_0.sendTowerResetSubEpisodeRequest(arg_6_0)
+	local var_6_0 = TowerModel.instance:getRecordFightParam()
+
+	if var_6_0.towerType == TowerEnum.TowerType.Limited then
+		TowerRpc.instance:sendTowerResetSubEpisodeRequest(var_6_0.towerType, var_6_0.towerId, var_6_0.layerId, 0)
 	else
-		TowerRpc.instance:sendTowerResetSubEpisodeRequest(slot1.towerType, slot1.towerId, slot1.layerId, slot1.episodeId)
+		TowerRpc.instance:sendTowerResetSubEpisodeRequest(var_6_0.towerType, var_6_0.towerId, var_6_0.layerId, var_6_0.episodeId)
 	end
 end
 
-function slot0._btnAttrOnClick(slot0)
-	if not slot0.bossId or slot0.bossId == 0 then
+function var_0_0._btnAttrOnClick(arg_7_0)
+	if not arg_7_0.bossId or arg_7_0.bossId == 0 then
 		return
 	end
 
 	ViewMgr.instance:openView(ViewName.TowerBossHeroGroupAttributeTipsView, {
-		bossId = slot0.bossId
+		bossId = arg_7_0.bossId
 	})
 end
 
-function slot0._btnClickOnClick(slot0)
+function var_0_0._btnClickOnClick(arg_8_0)
 	if not TowerController.instance:isBossTowerOpen() then
-		GameFacade.showToast(ToastEnum.TowerBossLockTips, TowerConfig.instance:getTowerConstConfig(TowerEnum.ConstId.BossTowerOpen))
+		local var_8_0 = TowerConfig.instance:getTowerConstConfig(TowerEnum.ConstId.BossTowerOpen)
+
+		GameFacade.showToast(ToastEnum.TowerBossLockTips, var_8_0)
 
 		return
 	end
 
-	if TowerModel.instance:getRecordFightParam().isHeroGroupLock or slot2.towerType == TowerEnum.TowerType.Boss then
-		if slot0.bossId and slot0.bossId > 0 then
+	local var_8_1 = TowerModel.instance:getRecordFightParam()
+
+	if var_8_1.isHeroGroupLock or var_8_1.towerType == TowerEnum.TowerType.Boss then
+		if arg_8_0.bossId and arg_8_0.bossId > 0 then
 			ViewMgr.instance:openView(ViewName.TowerAssistBossDetailView, {
 				isFromHeroGroup = true,
-				bossId = slot0.bossId
+				bossId = arg_8_0.bossId
 			})
 		else
 			GameFacade.showToast(ToastEnum.TowerHeroGroupCantEdit)
 		end
 	else
-		TowerController.instance:openAssistBossView(slot0.bossId, true, slot2.towerType, slot2.towerId)
+		TowerController.instance:openAssistBossView(arg_8_0.bossId, true, var_8_1.towerType, var_8_1.towerId)
 	end
 end
 
-function slot0._onResetTalent(slot0, slot1)
-	slot0:refreshTalent()
+function var_0_0._onResetTalent(arg_9_0, arg_9_1)
+	arg_9_0:refreshTalent()
 end
 
-function slot0._onActiveTalent(slot0, slot1)
-	slot0:refreshTalent()
+function var_0_0._onActiveTalent(arg_10_0, arg_10_1)
+	arg_10_0:refreshTalent()
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_11_0)
+	return
 end
 
-function slot0.onResetSubEpisode(slot0)
+function var_0_0.onResetSubEpisode(arg_12_0)
 	TowerModel.instance:refreshHeroGroupInfo()
-	slot0:refreshUI()
+	arg_12_0:refreshUI()
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_13_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0:refreshUI()
-	slot0:_checkRestrictBoss()
+function var_0_0.onOpen(arg_14_0)
+	arg_14_0:refreshUI()
+	arg_14_0:_checkRestrictBoss()
 end
 
-function slot0.refreshUI(slot0)
-	slot2 = HeroGroupModel.instance:getCurGroupMO():getAssistBossId()
+function var_0_0.refreshUI(arg_15_0)
+	local var_15_0 = HeroGroupModel.instance:getCurGroupMO()
+	local var_15_1 = var_15_0:getAssistBossId()
+	local var_15_2 = TowerModel.instance:getRecordFightParam()
 
-	gohelper.setActive(slot0._dropherogroup, not TowerModel.instance:getRecordFightParam().isHeroGroupLock and slot3.towerType ~= TowerEnum.TowerType.Boss)
-	gohelper.setActive(slot0._goreplayready, slot3.isHeroGroupLock)
+	gohelper.setActive(arg_15_0._dropherogroup, not var_15_2.isHeroGroupLock and var_15_2.towerType ~= TowerEnum.TowerType.Boss)
+	gohelper.setActive(arg_15_0._goreplayready, var_15_2.isHeroGroupLock)
 
 	if TowerController.instance:isBossTowerOpen() then
-		if slot3.towerType == TowerEnum.TowerType.Boss then
-			slot1:setAssistBossId(not TowerAssistBossModel.instance:getById(TowerConfig.instance:getBossTowerConfig(slot3.towerId).bossId) and 0 or slot6.bossId)
+		if var_15_2.towerType == TowerEnum.TowerType.Boss then
+			local var_15_3 = TowerConfig.instance:getBossTowerConfig(var_15_2.towerId)
 
-			slot2 = slot6.bossId
+			var_15_1 = not TowerAssistBossModel.instance:getById(var_15_3.bossId) and 0 or var_15_3.bossId
+
+			var_15_0:setAssistBossId(var_15_1)
+
+			var_15_1 = var_15_3.bossId
 		end
 	else
-		slot1:setAssistBossId(0)
+		var_15_1 = 0
+
+		var_15_0:setAssistBossId(var_15_1)
 	end
 
-	slot0.bossId = slot2
+	arg_15_0.bossId = var_15_1
 
-	slot0:refreshBoss()
+	arg_15_0:refreshBoss()
 end
 
-function slot0.refreshBoss(slot0)
-	gohelper.setActive(slot0.goEmpty, TowerConfig.instance:getAssistBossConfig(slot0.bossId) == nil)
-	gohelper.setActive(slot0._btnAttr, slot1 ~= nil)
-	gohelper.setActive(slot0.goBossRoot, slot1 ~= nil)
+function var_0_0.refreshBoss(arg_16_0)
+	local var_16_0 = TowerConfig.instance:getAssistBossConfig(arg_16_0.bossId)
 
-	if slot1 then
-		slot0.txtName.text = slot1.name
+	gohelper.setActive(arg_16_0.goEmpty, var_16_0 == nil)
+	gohelper.setActive(arg_16_0._btnAttr, var_16_0 ~= nil)
+	gohelper.setActive(arg_16_0.goBossRoot, var_16_0 ~= nil)
 
-		UISpriteSetMgr.instance:setCommonSprite(slot0.imgCareer, string.format("lssx_%s", slot1.career))
+	if var_16_0 then
+		arg_16_0.txtName.text = var_16_0.name
 
-		if not TowerAssistBossModel.instance:getById(slot0.bossId) then
+		UISpriteSetMgr.instance:setCommonSprite(arg_16_0.imgCareer, string.format("lssx_%s", var_16_0.career))
+
+		local var_16_1 = TowerAssistBossModel.instance:getById(arg_16_0.bossId)
+
+		if not var_16_1 then
 			HeroGroupModel.instance:getCurGroupMO():setAssistBossId(0)
-			gohelper.setActive(slot0.goLev, false)
+			gohelper.setActive(arg_16_0.goLev, false)
 
-			slot0.txtLev.text = ""
+			arg_16_0.txtLev.text = ""
 		else
-			gohelper.setActive(slot0.goLev, true)
+			gohelper.setActive(arg_16_0.goLev, true)
 
-			slot0.txtLev.text = tostring(slot2.level)
+			arg_16_0.txtLev.text = tostring(var_16_1.level)
 		end
 
-		slot0.simageBoss:LoadImage(slot1.bossPic)
+		arg_16_0.simageBoss:LoadImage(var_16_0.bossPic)
 	end
 
-	gohelper.setActive(slot0.goAdd, TowerController.instance:isBossTowerOpen() and slot1 == nil and not (TowerModel.instance:getRecordFightParam().towerType == TowerEnum.TowerType.Boss) and not slot3.isHeroGroupLock)
-	slot0:refreshTalent()
+	local var_16_2 = TowerController.instance:isBossTowerOpen()
+	local var_16_3 = TowerModel.instance:getRecordFightParam()
+	local var_16_4 = var_16_3.towerType == TowerEnum.TowerType.Boss
+	local var_16_5 = var_16_2 and var_16_0 == nil and not var_16_4 and not var_16_3.isHeroGroupLock
+
+	gohelper.setActive(arg_16_0.goAdd, var_16_5)
+	arg_16_0:refreshTalent()
 end
 
-function slot0.refreshTalent(slot0)
-	if TowerConfig.instance:getAssistBossConfig(slot0.bossId) then
-		gohelper.setActive(slot0.goArrow, TowerAssistBossModel.instance:getById(slot0.bossId) and slot2:hasTalentCanActive() or false)
+function var_0_0.refreshTalent(arg_17_0)
+	if TowerConfig.instance:getAssistBossConfig(arg_17_0.bossId) then
+		local var_17_0 = TowerAssistBossModel.instance:getById(arg_17_0.bossId)
+
+		gohelper.setActive(arg_17_0.goArrow, var_17_0 and var_17_0:hasTalentCanActive() or false)
 	else
-		gohelper.setActive(slot0.goArrow, false)
+		gohelper.setActive(arg_17_0.goArrow, false)
 	end
 end
 
-function slot0._checkRestrictBoss(slot0)
-	if TowerModel.instance:getRecordFightParam().isHeroGroupLock then
+function var_0_0._checkRestrictBoss(arg_18_0)
+	local var_18_0 = TowerModel.instance:getRecordFightParam()
+
+	if var_18_0.isHeroGroupLock then
 		return
 	end
 
-	if TowerModel.instance:isBossLocked(slot0.bossId) then
+	if TowerModel.instance:isBossLocked(arg_18_0.bossId) then
 		return
 	end
 
-	if TowerModel.instance:isBossBan(slot0.bossId) or TowerModel.instance:isLimitTowerBossBan(slot1.towerType, slot1.towerId, slot0.bossId) then
+	if TowerModel.instance:isBossBan(arg_18_0.bossId) or TowerModel.instance:isLimitTowerBossBan(var_18_0.towerType, var_18_0.towerId, arg_18_0.bossId) then
 		UIBlockMgr.instance:startBlock("removeTowerBoss")
-		TaskDispatcher.runDelay(slot0._removeTowerBoss, slot0, 1.5)
+		TaskDispatcher.runDelay(arg_18_0._removeTowerBoss, arg_18_0, 1.5)
 	end
 end
 
-function slot0._removeTowerBoss(slot0)
+function var_0_0._removeTowerBoss(arg_19_0)
 	UIBlockMgr.instance:endBlock("removeTowerBoss")
 
-	slot1 = TowerModel.instance:getRecordFightParam()
+	local var_19_0 = TowerModel.instance:getRecordFightParam()
 
-	if TowerModel.instance:isBossBan(slot0.bossId) or TowerModel.instance:isLimitTowerBossBan(slot1.towerType, slot1.towerId, slot0.bossId) then
-		slot0.bossId = 0
+	if TowerModel.instance:isBossBan(arg_19_0.bossId) or TowerModel.instance:isLimitTowerBossBan(var_19_0.towerType, var_19_0.towerId, arg_19_0.bossId) then
+		arg_19_0.bossId = 0
 
-		HeroGroupModel.instance:getCurGroupMO():setAssistBossId(slot0.bossId)
-		slot0:refreshBoss()
+		HeroGroupModel.instance:getCurGroupMO():setAssistBossId(arg_19_0.bossId)
+		arg_19_0:refreshBoss()
 	end
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_20_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_21_0)
 	UIBlockMgr.instance:endBlock("removeTowerBoss")
-	TaskDispatcher.cancelTask(slot0._removeTowerBoss, slot0)
+	TaskDispatcher.cancelTask(arg_21_0._removeTowerBoss, arg_21_0)
 end
 
-return slot0
+return var_0_0

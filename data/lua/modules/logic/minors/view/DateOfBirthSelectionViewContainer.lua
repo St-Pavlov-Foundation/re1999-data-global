@@ -1,26 +1,28 @@
-module("modules.logic.minors.view.DateOfBirthSelectionViewContainer", package.seeall)
+﻿module("modules.logic.minors.view.DateOfBirthSelectionViewContainer", package.seeall)
 
-slot0 = class("DateOfBirthSelectionViewContainer", BaseViewContainer)
+local var_0_0 = class("DateOfBirthSelectionViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = ListScrollParam.New()
-	slot1.cellClass = DateOfBirthSelectionViewItem
-	slot1.scrollGOPath = "#scroll_list"
-	slot1.prefabType = ScrollEnum.ScrollPrefabFromView
-	slot1.prefabUrl = "#scroll_list/content/item"
-	slot1.scrollDir = ScrollEnum.ScrollDirH
-	slot1.lineCount = 1
-	slot1.cellWidth = 440
-	slot1.cellHeight = 112
-	slot1.cellSpaceH = 58
-	slot1.cellSpaceV = 0
-	slot1.startSpace = 0
-	slot1.endSpace = 0
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = ListScrollParam.New()
+	local var_1_1 = DateOfBirthSelectionViewListModel.instance
+
+	var_1_0.cellClass = DateOfBirthSelectionViewItem
+	var_1_0.scrollGOPath = "#scroll_list"
+	var_1_0.prefabType = ScrollEnum.ScrollPrefabFromView
+	var_1_0.prefabUrl = "#scroll_list/content/item"
+	var_1_0.scrollDir = ScrollEnum.ScrollDirH
+	var_1_0.lineCount = 1
+	var_1_0.cellWidth = 440
+	var_1_0.cellHeight = 112
+	var_1_0.cellSpaceH = 58
+	var_1_0.cellSpaceV = 0
+	var_1_0.startSpace = 0
+	var_1_0.endSpace = 0
 
 	return {
 		DateOfBirthSelectionView.New(),
-		LuaListScrollView.New(DateOfBirthSelectionViewListModel.instance, slot1)
+		(LuaListScrollView.New(var_1_1, var_1_0))
 	}
 end
 
-return slot0
+return var_0_0

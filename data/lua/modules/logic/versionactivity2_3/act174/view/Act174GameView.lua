@@ -1,106 +1,106 @@
-module("modules.logic.versionactivity2_3.act174.view.Act174GameView", package.seeall)
+﻿module("modules.logic.versionactivity2_3.act174.view.Act174GameView", package.seeall)
 
-slot0 = class("Act174GameView", BaseView)
+local var_0_0 = class("Act174GameView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._goShop = gohelper.findChild(slot0.viewGO, "#go_Shop")
-	slot0._goEditTeam = gohelper.findChild(slot0.viewGO, "#go_EditTeam")
-	slot0._goLeftBtn = gohelper.findChild(slot0.viewGO, "BtnGroup/#go_LeftBtn")
-	slot0._goUnlockTeamTip = gohelper.findChild(slot0.viewGO, "BtnGroup/#go_LeftBtn/go_tips")
-	slot0._btnEditTeam = gohelper.findChildButton(slot0.viewGO, "BtnGroup/#go_LeftBtn/#btn_EditTeam")
-	slot0._btnShop = gohelper.findChildButton(slot0.viewGO, "BtnGroup/#go_LeftBtn/#btn_Shop")
-	slot0._btnBuff = gohelper.findChildButtonWithAudio(slot0.viewGO, "BtnGroup/#btn_Buff")
-	slot0._btnMatch = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_Match")
-	slot0._goCoin1 = gohelper.findChild(slot0.viewGO, "go_topright/#go_Coin1")
-	slot0._txtCoinCnt1 = gohelper.findChildText(slot0.viewGO, "go_topright/#go_Coin1/#txt_CoinCnt1")
-	slot0._goEndlessDetail = gohelper.findChild(slot0.viewGO, "go_topright/btn_detail")
-	slot0._btnEndlessDetail = gohelper.findChildClickWithDefaultAudio(slot0.viewGO, "go_topright/btn_detail/clickarea")
-	slot0._goCoin2 = gohelper.findChild(slot0.viewGO, "go_topright/#go_Coin2")
-	slot0._txtCoinCnt2 = gohelper.findChildText(slot0.viewGO, "go_topright/#go_Coin2/#txt_CoinCnt2")
-	slot0._goEndlessMultiple = gohelper.findChild(slot0.viewGO, "go_topright/go_tips")
-	slot0._txtEndlessMultiple = gohelper.findChildText(slot0.viewGO, "go_topright/go_tips/txt_tips")
-	slot0._btnCloseEndlessTips = gohelper.findChildClickWithDefaultAudio(slot0.viewGO, "go_topright/go_tips/#btn_closetip")
-	slot0._txtRound = gohelper.findChildText(slot0.viewGO, "go_top/tips/#txt_Round")
-	slot0._goHp = gohelper.findChild(slot0.viewGO, "go_top/#go_Hp")
-	slot0._imageHpPercent = gohelper.findChildImage(slot0.viewGO, "go_top/#go_Hp/bg/#image_HpPercent")
-	slot0._gotopleft = gohelper.findChild(slot0.viewGO, "#go_topleft")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._goShop = gohelper.findChild(arg_1_0.viewGO, "#go_Shop")
+	arg_1_0._goEditTeam = gohelper.findChild(arg_1_0.viewGO, "#go_EditTeam")
+	arg_1_0._goLeftBtn = gohelper.findChild(arg_1_0.viewGO, "BtnGroup/#go_LeftBtn")
+	arg_1_0._goUnlockTeamTip = gohelper.findChild(arg_1_0.viewGO, "BtnGroup/#go_LeftBtn/go_tips")
+	arg_1_0._btnEditTeam = gohelper.findChildButton(arg_1_0.viewGO, "BtnGroup/#go_LeftBtn/#btn_EditTeam")
+	arg_1_0._btnShop = gohelper.findChildButton(arg_1_0.viewGO, "BtnGroup/#go_LeftBtn/#btn_Shop")
+	arg_1_0._btnBuff = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "BtnGroup/#btn_Buff")
+	arg_1_0._btnMatch = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_Match")
+	arg_1_0._goCoin1 = gohelper.findChild(arg_1_0.viewGO, "go_topright/#go_Coin1")
+	arg_1_0._txtCoinCnt1 = gohelper.findChildText(arg_1_0.viewGO, "go_topright/#go_Coin1/#txt_CoinCnt1")
+	arg_1_0._goEndlessDetail = gohelper.findChild(arg_1_0.viewGO, "go_topright/btn_detail")
+	arg_1_0._btnEndlessDetail = gohelper.findChildClickWithDefaultAudio(arg_1_0.viewGO, "go_topright/btn_detail/clickarea")
+	arg_1_0._goCoin2 = gohelper.findChild(arg_1_0.viewGO, "go_topright/#go_Coin2")
+	arg_1_0._txtCoinCnt2 = gohelper.findChildText(arg_1_0.viewGO, "go_topright/#go_Coin2/#txt_CoinCnt2")
+	arg_1_0._goEndlessMultiple = gohelper.findChild(arg_1_0.viewGO, "go_topright/go_tips")
+	arg_1_0._txtEndlessMultiple = gohelper.findChildText(arg_1_0.viewGO, "go_topright/go_tips/txt_tips")
+	arg_1_0._btnCloseEndlessTips = gohelper.findChildClickWithDefaultAudio(arg_1_0.viewGO, "go_topright/go_tips/#btn_closetip")
+	arg_1_0._txtRound = gohelper.findChildText(arg_1_0.viewGO, "go_top/tips/#txt_Round")
+	arg_1_0._goHp = gohelper.findChild(arg_1_0.viewGO, "go_top/#go_Hp")
+	arg_1_0._imageHpPercent = gohelper.findChildImage(arg_1_0.viewGO, "go_top/#go_Hp/bg/#image_HpPercent")
+	arg_1_0._gotopleft = gohelper.findChild(arg_1_0.viewGO, "#go_topleft")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnEditTeam:AddClickListener(slot0._btnEditTeamOnClick, slot0)
-	slot0._btnShop:AddClickListener(slot0._btnShopOnClick, slot0)
-	slot0._btnBuff:AddClickListener(slot0._btnBuffOnClick, slot0)
-	slot0._btnMatch:AddClickListener(slot0._btnMatchOnClick, slot0)
-	slot0._btnEndlessDetail:AddClickListener(slot0._onOpenEndlessTips, slot0)
-	slot0._btnCloseEndlessTips:AddClickListener(slot0._onCloseEndlessTips, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnEditTeam:AddClickListener(arg_2_0._btnEditTeamOnClick, arg_2_0)
+	arg_2_0._btnShop:AddClickListener(arg_2_0._btnShopOnClick, arg_2_0)
+	arg_2_0._btnBuff:AddClickListener(arg_2_0._btnBuffOnClick, arg_2_0)
+	arg_2_0._btnMatch:AddClickListener(arg_2_0._btnMatchOnClick, arg_2_0)
+	arg_2_0._btnEndlessDetail:AddClickListener(arg_2_0._onOpenEndlessTips, arg_2_0)
+	arg_2_0._btnCloseEndlessTips:AddClickListener(arg_2_0._onCloseEndlessTips, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnEditTeam:RemoveClickListener()
-	slot0._btnShop:RemoveClickListener()
-	slot0._btnBuff:RemoveClickListener()
-	slot0._btnMatch:RemoveClickListener()
-	slot0._btnEndlessDetail:RemoveClickListener()
-	slot0._btnCloseEndlessTips:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnEditTeam:RemoveClickListener()
+	arg_3_0._btnShop:RemoveClickListener()
+	arg_3_0._btnBuff:RemoveClickListener()
+	arg_3_0._btnMatch:RemoveClickListener()
+	arg_3_0._btnEndlessDetail:RemoveClickListener()
+	arg_3_0._btnCloseEndlessTips:RemoveClickListener()
 end
 
-function slot0._btnBuffOnClick(slot0)
+function var_0_0._btnBuffOnClick(arg_4_0)
 	Activity174Controller.instance:openBuffTipView(false, Vector2.New(-600, -698), true)
 end
 
-function slot0._btnMatchOnClick(slot0)
-	if Activity174Controller.instance:checkTeamDataWrong(slot0.actId) then
+function var_0_0._btnMatchOnClick(arg_5_0)
+	if Activity174Controller.instance:checkTeamDataWrong(arg_5_0.actId) then
 		GameFacade.showToast(ToastEnum.Act174TeamGroupEmpty)
 
 		return
 	end
 
-	Activity174Controller.instance:syncLocalTeam2Server(slot0.actId)
+	Activity174Controller.instance:syncLocalTeam2Server(arg_5_0.actId)
 	ViewMgr.instance:openView(ViewName.Act174MatchView)
 end
 
-function slot0._btnEditTeamOnClick(slot0, slot1)
-	slot0:closeUnlockTeamTip(true)
+function var_0_0._btnEditTeamOnClick(arg_6_0, arg_6_1)
+	arg_6_0:closeUnlockTeamTip(true)
 
-	if not slot1 and slot0._goEditTeam.activeInHierarchy then
+	if not arg_6_1 and arg_6_0._goEditTeam.activeInHierarchy then
 		return
 	end
 
-	slot0.anim:Play("switch_editteam", 0, 0)
-	gohelper.setActive(slot0._goEditTeam, true)
-	gohelper.setActive(slot0._goShop, false)
-	gohelper.setActive(slot0._goBtnEditTeamS, true)
-	gohelper.setActive(slot0._goBtnEditTeamU, false)
-	gohelper.setActive(slot0._goBtnShopS, false)
-	gohelper.setActive(slot0._goBtnShopU, true)
-	gohelper.setActive(slot0._btnMatch, true)
+	arg_6_0.anim:Play("switch_editteam", 0, 0)
+	gohelper.setActive(arg_6_0._goEditTeam, true)
+	gohelper.setActive(arg_6_0._goShop, false)
+	gohelper.setActive(arg_6_0._goBtnEditTeamS, true)
+	gohelper.setActive(arg_6_0._goBtnEditTeamU, false)
+	gohelper.setActive(arg_6_0._goBtnShopS, false)
+	gohelper.setActive(arg_6_0._goBtnShopU, true)
+	gohelper.setActive(arg_6_0._btnMatch, true)
 
-	if not slot1 then
+	if not arg_6_1 then
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_mln_unlock)
 	end
 
 	Activity174Controller.instance:dispatchEvent(Activity174Event.SwitchShopTeam)
 end
 
-function slot0._btnShopOnClick(slot0, slot1)
-	if not slot1 and slot0._goShop.activeInHierarchy then
+function var_0_0._btnShopOnClick(arg_7_0, arg_7_1)
+	if not arg_7_1 and arg_7_0._goShop.activeInHierarchy then
 		return
 	end
 
-	slot0.anim:Play("switch_shop", 0, 0)
-	gohelper.setActive(slot0._goEditTeam, false)
-	gohelper.setActive(slot0._goShop, true)
-	gohelper.setActive(slot0._goBtnEditTeamS, false)
-	gohelper.setActive(slot0._goBtnEditTeamU, true)
-	gohelper.setActive(slot0._goBtnShopS, true)
-	gohelper.setActive(slot0._goBtnShopU, false)
-	gohelper.setActive(slot0._btnMatch, false)
+	arg_7_0.anim:Play("switch_shop", 0, 0)
+	gohelper.setActive(arg_7_0._goEditTeam, false)
+	gohelper.setActive(arg_7_0._goShop, true)
+	gohelper.setActive(arg_7_0._goBtnEditTeamS, false)
+	gohelper.setActive(arg_7_0._goBtnEditTeamU, true)
+	gohelper.setActive(arg_7_0._goBtnShopS, true)
+	gohelper.setActive(arg_7_0._goBtnShopU, false)
+	gohelper.setActive(arg_7_0._btnMatch, false)
 
-	if not slot1 then
+	if not arg_7_1 then
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_mln_unlock)
 	end
 
@@ -111,189 +111,215 @@ function slot0._btnShopOnClick(slot0, slot1)
 	end
 end
 
-function slot0._onOpenEndlessTips(slot0)
-	gohelper.setActive(slot0._goEndlessMultiple, true)
+function var_0_0._onOpenEndlessTips(arg_8_0)
+	gohelper.setActive(arg_8_0._goEndlessMultiple, true)
 end
 
-function slot0._onCloseEndlessTips(slot0)
-	gohelper.setActive(slot0._goEndlessMultiple, false)
+function var_0_0._onCloseEndlessTips(arg_9_0)
+	gohelper.setActive(arg_9_0._goEndlessMultiple, false)
 end
 
-function slot0._editableInitView(slot0)
-	slot0._goBtnEditTeamS = gohelper.findChild(slot0.viewGO, "BtnGroup/#go_LeftBtn/#btn_EditTeam/select")
-	slot0._goBtnEditTeamU = gohelper.findChild(slot0.viewGO, "BtnGroup/#go_LeftBtn/#btn_EditTeam/unselect")
-	slot0._goBtnShopS = gohelper.findChild(slot0.viewGO, "BtnGroup/#go_LeftBtn/#btn_Shop/select")
-	slot0._goBtnShopU = gohelper.findChild(slot0.viewGO, "BtnGroup/#go_LeftBtn/#btn_Shop/unselect")
-	slot0.anim = slot0.viewGO:GetComponent(gohelper.Type_Animator)
-	slot0.goCoinAdd = gohelper.findChild(slot0._goCoin1, "#add")
-	slot0.goCoinSubtract = gohelper.findChild(slot0._goCoin1, "#subtract")
-	slot0.goHpAdd = gohelper.findChild(slot0._goHp, "bg/#recover_hp")
-	slot0.goHpSubtract = gohelper.findChild(slot0._goHp, "bg/#lose_hp")
-	slot0.maxHp = tonumber(lua_activity174_const.configDict[Activity174Enum.ConstKey.InitHealth].value)
+function var_0_0._editableInitView(arg_10_0)
+	arg_10_0._goBtnEditTeamS = gohelper.findChild(arg_10_0.viewGO, "BtnGroup/#go_LeftBtn/#btn_EditTeam/select")
+	arg_10_0._goBtnEditTeamU = gohelper.findChild(arg_10_0.viewGO, "BtnGroup/#go_LeftBtn/#btn_EditTeam/unselect")
+	arg_10_0._goBtnShopS = gohelper.findChild(arg_10_0.viewGO, "BtnGroup/#go_LeftBtn/#btn_Shop/select")
+	arg_10_0._goBtnShopU = gohelper.findChild(arg_10_0.viewGO, "BtnGroup/#go_LeftBtn/#btn_Shop/unselect")
+	arg_10_0.anim = arg_10_0.viewGO:GetComponent(gohelper.Type_Animator)
+	arg_10_0.goCoinAdd = gohelper.findChild(arg_10_0._goCoin1, "#add")
+	arg_10_0.goCoinSubtract = gohelper.findChild(arg_10_0._goCoin1, "#subtract")
+	arg_10_0.goHpAdd = gohelper.findChild(arg_10_0._goHp, "bg/#recover_hp")
+	arg_10_0.goHpSubtract = gohelper.findChild(arg_10_0._goHp, "bg/#lose_hp")
+	arg_10_0.maxHp = tonumber(lua_activity174_const.configDict[Activity174Enum.ConstKey.InitHealth].value)
 
-	slot0:_btnShopOnClick(true)
+	arg_10_0:_btnShopOnClick(true)
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_11_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0.actId = Activity174Model.instance:getCurActId()
-	slot0.actInfo = Activity174Model.instance:getActInfo()
+function var_0_0.onOpen(arg_12_0)
+	arg_12_0.actId = Activity174Model.instance:getCurActId()
+	arg_12_0.actInfo = Activity174Model.instance:getActInfo()
 
-	slot0:refreshUI()
-	slot0:addEventCb(Activity174Controller.instance, Activity174Event.UpdateGameInfo, slot0.refreshUI, slot0)
-	slot0:addEventCb(Activity174Controller.instance, Activity174Event.FreshShopReply, slot0.refreshUI, slot0)
-	slot0:addEventCb(Activity174Controller.instance, Activity174Event.BuyInShopReply, slot0.refreshUI, slot0)
-	slot0:addEventCb(Activity174Controller.instance, Activity174Event.SeasonChange, slot0.closeThis, slot0)
+	arg_12_0:refreshUI()
+	arg_12_0:addEventCb(Activity174Controller.instance, Activity174Event.UpdateGameInfo, arg_12_0.refreshUI, arg_12_0)
+	arg_12_0:addEventCb(Activity174Controller.instance, Activity174Event.FreshShopReply, arg_12_0.refreshUI, arg_12_0)
+	arg_12_0:addEventCb(Activity174Controller.instance, Activity174Event.BuyInShopReply, arg_12_0.refreshUI, arg_12_0)
+	arg_12_0:addEventCb(Activity174Controller.instance, Activity174Event.SeasonChange, arg_12_0.closeThis, arg_12_0)
 end
 
-function slot0.checkUnlockTeamTipShow(slot0)
-	slot1 = false
-	slot2 = slot0.actInfo and slot0.actInfo:getGameInfo()
+function var_0_0.checkUnlockTeamTipShow(arg_13_0)
+	local var_13_0 = false
+	local var_13_1 = arg_13_0.actInfo and arg_13_0.actInfo:getGameInfo()
+	local var_13_2 = var_13_1 and var_13_1.gameCount
 
-	if slot2 and slot2.gameCount then
-		slot1 = Activity174Model.instance:getIsShowUnlockNewTeamTip(slot3)
+	if var_13_2 then
+		var_13_0 = Activity174Model.instance:getIsShowUnlockNewTeamTip(var_13_2)
 	end
 
-	gohelper.setActive(slot0._goUnlockTeamTip, slot1)
+	gohelper.setActive(arg_13_0._goUnlockTeamTip, var_13_0)
 
-	if slot1 then
-		Activity174Model.instance:setHasShowUnlockNewTeamTip(slot3)
-		TaskDispatcher.runDelay(slot0.closeUnlockTeamTip, slot0, 3)
-	end
-end
-
-function slot0.closeUnlockTeamTip(slot0, slot1)
-	gohelper.setActive(slot0._goUnlockTeamTip, false)
-
-	if slot1 then
-		TaskDispatcher.cancelTask(slot0.closeUnlockTeamTip, slot0)
+	if var_13_0 then
+		Activity174Model.instance:setHasShowUnlockNewTeamTip(var_13_2)
+		TaskDispatcher.runDelay(arg_13_0.closeUnlockTeamTip, arg_13_0, 3)
 	end
 end
 
-function slot0.onClose(slot0)
-	slot0:closeUnlockTeamTip(true)
+function var_0_0.closeUnlockTeamTip(arg_14_0, arg_14_1)
+	gohelper.setActive(arg_14_0._goUnlockTeamTip, false)
+
+	if arg_14_1 then
+		TaskDispatcher.cancelTask(arg_14_0.closeUnlockTeamTip, arg_14_0)
+	end
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onClose(arg_15_0)
+	arg_15_0:closeUnlockTeamTip(true)
 end
 
-function slot0.refreshUI(slot0)
-	slot1 = slot0.actInfo:getGameInfo()
-	slot0._txtCoinCnt1.text = slot1.coin
-	slot0._txtCoinCnt2.text = slot1.score
-	slot3, slot4 = Activity174Config.instance:getMaxRound(slot0.actId, slot1.gameCount)
-	slot0._txtRound.text = string.format("%s/%s", slot1.gameCount, slot3)
-	slot0._imageHpPercent.fillAmount = slot1.hp / slot0.maxHp
+function var_0_0.onDestroyView(arg_16_0)
+	return
+end
 
-	if slot4 or slot2 == 1 then
-		if slot4 then
-			slot0._txtEndlessMultiple.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("act174_endless_multiple"), slot1:getBetScore(), string.format("%s%s", luaLang("multiple"), Activity174Config.instance:getTurnCo(slot0.actId, slot2).point / 1000))
+function var_0_0.refreshUI(arg_17_0)
+	local var_17_0 = arg_17_0.actInfo:getGameInfo()
 
-			gohelper.setActive(slot0._goCoin1, false)
-			gohelper.setActive(slot0._goHp, false)
+	arg_17_0._txtCoinCnt1.text = var_17_0.coin
+	arg_17_0._txtCoinCnt2.text = var_17_0.score
+
+	local var_17_1 = var_17_0.gameCount
+	local var_17_2, var_17_3 = Activity174Config.instance:getMaxRound(arg_17_0.actId, var_17_1)
+
+	arg_17_0._txtRound.text = string.format("%s/%s", var_17_0.gameCount, var_17_2)
+	arg_17_0._imageHpPercent.fillAmount = var_17_0.hp / arg_17_0.maxHp
+
+	if var_17_3 or var_17_1 == 1 then
+		if var_17_3 then
+			local var_17_4 = var_17_0:getBetScore()
+			local var_17_5 = Activity174Config.instance:getTurnCo(arg_17_0.actId, var_17_1)
+			local var_17_6 = string.format("%s%s", luaLang("multiple"), var_17_5.point / 1000)
+
+			arg_17_0._txtEndlessMultiple.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("act174_endless_multiple"), var_17_4, var_17_6)
+
+			gohelper.setActive(arg_17_0._goCoin1, false)
+			gohelper.setActive(arg_17_0._goHp, false)
 		end
 
-		gohelper.setActive(slot0._goLeftBtn, false)
-		slot0:_btnEditTeamOnClick(true)
+		gohelper.setActive(arg_17_0._goLeftBtn, false)
+		arg_17_0:_btnEditTeamOnClick(true)
 	end
 
-	slot0:_onCloseEndlessTips()
-	gohelper.setActive(slot0._goEndlessDetail, slot4)
-	slot0:checkUnlockTeamTipShow()
-	gohelper.setActive(slot0._btnBuff, #slot1:getWarehouseInfo().enhanceId ~= 0)
-	slot0:checkTriggerEffect()
+	arg_17_0:_onCloseEndlessTips()
+	gohelper.setActive(arg_17_0._goEndlessDetail, var_17_3)
+	arg_17_0:checkUnlockTeamTipShow()
+
+	local var_17_7 = var_17_0:getWarehouseInfo()
+
+	gohelper.setActive(arg_17_0._btnBuff, #var_17_7.enhanceId ~= 0)
+	arg_17_0:checkTriggerEffect()
 end
 
-function slot0.checkTriggerEffect(slot0)
-	slot1 = 0
-	slot2 = 0
+function var_0_0.checkTriggerEffect(arg_18_0)
+	local var_18_0 = 0
+	local var_18_1 = 0
+	local var_18_2 = arg_18_0.actInfo:getTriggerList()
 
-	for slot7, slot8 in ipairs(slot0.actInfo:getTriggerList()) do
-		for slot12, slot13 in ipairs(slot8.effectId) do
-			slot14 = lua_activity174_effect.configDict[slot13]
+	for iter_18_0, iter_18_1 in ipairs(var_18_2) do
+		for iter_18_2, iter_18_3 in ipairs(iter_18_1.effectId) do
+			local var_18_3 = lua_activity174_effect.configDict[iter_18_3]
+			local var_18_4 = string.splitToNumber(var_18_3.typeParam, "#")
 
-			if slot14.type == Activity174Enum.EffectType.AddHp then
-				slot1 = slot1 + string.splitToNumber(slot14.typeParam, "#")[1]
-			elseif slot14.type == Activity174Enum.EffectType.Rebirth then
-				slot1 = slot1 + 1
-				slot2 = slot2 - slot15[2]
-			elseif slot14.type == Activity174Enum.EffectType.DirectAddCoin then
-				slot2 = slot2 + slot15[1]
-			elseif slot14.type == Activity174Enum.EffectType.DelayAddCoin then
-				slot2 = slot2 + slot15[2]
-			elseif slot14.type == Activity174Enum.EffectType.BuyAddCoin then
-				slot2 = slot2 + slot15[3]
-			elseif slot14.type == Activity174Enum.EffectType.ReduceHpAddCoin then
-				slot2 = slot2 + slot15[1]
-			elseif slot14.type == Activity174Enum.EffectType.MaybeAddCoin and tonumber(slot8.param) then
-				slot2 = slot2 + slot16
+			if var_18_3.type == Activity174Enum.EffectType.AddHp then
+				var_18_0 = var_18_0 + var_18_4[1]
+			elseif var_18_3.type == Activity174Enum.EffectType.Rebirth then
+				var_18_0 = var_18_0 + 1
+				var_18_1 = var_18_1 - var_18_4[2]
+			elseif var_18_3.type == Activity174Enum.EffectType.DirectAddCoin then
+				var_18_1 = var_18_1 + var_18_4[1]
+			elseif var_18_3.type == Activity174Enum.EffectType.DelayAddCoin then
+				var_18_1 = var_18_1 + var_18_4[2]
+			elseif var_18_3.type == Activity174Enum.EffectType.BuyAddCoin then
+				var_18_1 = var_18_1 + var_18_4[3]
+			elseif var_18_3.type == Activity174Enum.EffectType.ReduceHpAddCoin then
+				var_18_1 = var_18_1 + var_18_4[1]
+			elseif var_18_3.type == Activity174Enum.EffectType.MaybeAddCoin then
+				local var_18_5 = tonumber(iter_18_1.param)
+
+				if var_18_5 then
+					var_18_1 = var_18_1 + var_18_5
+				end
 			end
 		end
 	end
 
-	slot0.actInfo:cleanTriggerEffect()
+	arg_18_0.actInfo:cleanTriggerEffect()
 
-	if slot1 ~= 0 then
-		slot0:playHpAnim(slot1)
+	if var_18_0 ~= 0 then
+		arg_18_0:playHpAnim(var_18_0)
 	end
 
-	if slot2 ~= 0 then
-		slot0:playCoinAnim(slot2)
+	if var_18_1 ~= 0 then
+		arg_18_0:playCoinAnim(var_18_1)
 	end
 end
 
-function slot0.playHpAnim(slot0, slot1)
-	slot3 = slot0._imageHpPercent.fillAmount
-	slot4 = nil
+function var_0_0.playHpAnim(arg_19_0, arg_19_1)
+	local var_19_0 = arg_19_0.actInfo:getGameInfo()
+	local var_19_1 = arg_19_0._imageHpPercent.fillAmount
+	local var_19_2
 
-	if slot1 > 0 then
-		slot4 = (slot0.actInfo:getGameInfo().hp - slot1) / slot0.maxHp
-	elseif (slot2.hp + slot1) / slot0.maxHp > 1 then
-		return
+	if arg_19_1 > 0 then
+		var_19_2 = (var_19_0.hp - arg_19_1) / arg_19_0.maxHp
+	else
+		var_19_2 = (var_19_0.hp + arg_19_1) / arg_19_0.maxHp
+
+		if var_19_2 > 1 then
+			return
+		end
 	end
 
-	slot0._imageHpPercent.fillAmount = slot4
+	arg_19_0._imageHpPercent.fillAmount = var_19_2
 
-	if slot1 > 0 then
-		gohelper.setActive(slot0.goHpAdd, true)
+	if arg_19_1 > 0 then
+		gohelper.setActive(arg_19_0.goHpAdd, true)
 		AudioMgr.instance:trigger(AudioEnum.Act174.play_ui_home_door_effect_move)
 	else
-		gohelper.setActive(slot0.goHpSubtract, true)
+		gohelper.setActive(arg_19_0.goHpSubtract, true)
 		AudioMgr.instance:trigger(AudioEnum.Act174.play_ui_home_door_effect_put)
 	end
 
-	ZProj.TweenHelper.DOFillAmount(slot0._imageHpPercent, slot3, 1, slot0.hpAnimEnd, slot0)
+	ZProj.TweenHelper.DOFillAmount(arg_19_0._imageHpPercent, var_19_1, 1, arg_19_0.hpAnimEnd, arg_19_0)
 end
 
-function slot0.hpAnimEnd(slot0)
-	gohelper.setActive(slot0.goHpAdd, false)
-	gohelper.setActive(slot0.goHpSubtract, false)
+function var_0_0.hpAnimEnd(arg_20_0)
+	gohelper.setActive(arg_20_0.goHpAdd, false)
+	gohelper.setActive(arg_20_0.goHpSubtract, false)
 end
 
-function slot0.playCoinAnim(slot0, slot1)
-	slot3 = slot0.actInfo:getGameInfo().coin
-	slot4 = slot1 > 0 and slot2.coin - slot1 or slot2.coin + slot1
+function var_0_0.playCoinAnim(arg_21_0, arg_21_1)
+	local var_21_0 = arg_21_0.actInfo:getGameInfo()
+	local var_21_1 = var_21_0.coin
+	local var_21_2 = arg_21_1 > 0 and var_21_0.coin - arg_21_1 or var_21_0.coin + arg_21_1
 
-	if slot1 > 0 then
-		gohelper.setActive(slot0.goCoinAdd, true)
+	if arg_21_1 > 0 then
+		gohelper.setActive(arg_21_0.goCoinAdd, true)
 		AudioMgr.instance:trigger(AudioEnum.Act174.play_artificial_buff_curses_up)
 	else
-		gohelper.setActive(slot0.goCoinSubtract, true)
+		gohelper.setActive(arg_21_0.goCoinSubtract, true)
 		AudioMgr.instance:trigger(AudioEnum.Act174.play_ui_shuori_qiyuan_down)
 	end
 
-	ZProj.TweenHelper.DOTweenFloat(slot4, slot3, 1, slot0.coinAnimFrame, slot0.coinAnimEnd, slot0)
+	ZProj.TweenHelper.DOTweenFloat(var_21_2, var_21_1, 1, arg_21_0.coinAnimFrame, arg_21_0.coinAnimEnd, arg_21_0)
 end
 
-function slot0.coinAnimFrame(slot0, slot1, slot2)
-	slot0._txtCoinCnt1.text = math.floor(slot1)
+function var_0_0.coinAnimFrame(arg_22_0, arg_22_1, arg_22_2)
+	arg_22_0._txtCoinCnt1.text = math.floor(arg_22_1)
 end
 
-function slot0.coinAnimEnd(slot0)
-	gohelper.setActive(slot0.goCoinAdd, false)
-	gohelper.setActive(slot0.goCoinSubtract, false)
+function var_0_0.coinAnimEnd(arg_23_0)
+	gohelper.setActive(arg_23_0.goCoinAdd, false)
+	gohelper.setActive(arg_23_0.goCoinSubtract, false)
 end
 
-return slot0
+return var_0_0

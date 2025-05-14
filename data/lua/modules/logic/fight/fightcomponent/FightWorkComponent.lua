@@ -1,59 +1,59 @@
-module("modules.logic.fight.fightcomponent.FightWorkComponent", package.seeall)
+﻿module("modules.logic.fight.fightcomponent.FightWorkComponent", package.seeall)
 
-slot0 = class("FightWorkComponent", FightBaseClass)
+local var_0_0 = class("FightWorkComponent", FightBaseClass)
 
-function slot0.onConstructor(slot0)
-	slot0.workList = {}
+function var_0_0.onConstructor(arg_1_0)
+	arg_1_0.workList = {}
 end
 
-function slot0.registWork(slot0, slot1, ...)
-	slot2 = slot0:newClass(slot1, ...)
+function var_0_0.registWork(arg_2_0, arg_2_1, ...)
+	local var_2_0 = arg_2_0:newClass(arg_2_1, ...)
 
-	table.insert(slot0.workList, slot2)
+	table.insert(arg_2_0.workList, var_2_0)
 
-	return slot2
+	return var_2_0
 end
 
-function slot0.playWork(slot0, slot1, ...)
-	slot2 = slot0:newClass(slot1, ...)
+function var_0_0.playWork(arg_3_0, arg_3_1, ...)
+	local var_3_0 = arg_3_0:newClass(arg_3_1, ...)
 
-	table.insert(slot0.workList, slot2)
+	table.insert(arg_3_0.workList, var_3_0)
 
-	return slot2:start()
+	return var_3_0:start()
 end
 
-function slot0.addWork(slot0, slot1)
-	table.insert(slot0.workList, slot1)
+function var_0_0.addWork(arg_4_0, arg_4_1)
+	table.insert(arg_4_0.workList, arg_4_1)
 
-	return slot1
+	return arg_4_1
 end
 
-function slot0.getWorkList(slot0)
-	return slot0.workList
+function var_0_0.getWorkList(arg_5_0)
+	return arg_5_0.workList
 end
 
-function slot0.getAliveWorkList(slot0)
-	slot1 = {}
+function var_0_0.getAliveWorkList(arg_6_0)
+	local var_6_0 = {}
 
-	for slot5, slot6 in ipairs(slot0.workList) do
-		if not slot6.WORKFINISHED then
-			table.insert(slot1, slot6)
+	for iter_6_0, iter_6_1 in ipairs(arg_6_0.workList) do
+		if not iter_6_1.WORKFINISHED then
+			table.insert(var_6_0, iter_6_1)
 		end
 	end
 
-	return slot1
+	return var_6_0
 end
 
-function slot0.disposeAllWork(slot0)
-	slot0:disposeClassList(slot0.workList)
+function var_0_0.disposeAllWork(arg_7_0)
+	arg_7_0:disposeClassList(arg_7_0.workList)
 
-	slot0.workList = {}
+	arg_7_0.workList = {}
 end
 
-function slot0.onDestructor(slot0)
-	slot0:disposeClassList(slot0.workList)
+function var_0_0.onDestructor(arg_8_0)
+	arg_8_0:disposeClassList(arg_8_0.workList)
 
-	slot0.workList = nil
+	arg_8_0.workList = nil
 end
 
-return slot0
+return var_0_0

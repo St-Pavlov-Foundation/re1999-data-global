@@ -1,195 +1,209 @@
-module("modules.logic.fight.model.mo.FightRoundMO", package.seeall)
+﻿module("modules.logic.fight.model.mo.FightRoundMO", package.seeall)
 
-slot0 = pureTable("FightRoundMO")
+local var_0_0 = pureTable("FightRoundMO")
 
-function slot0.ctor(slot0)
-	slot0._aiUseCardMODict = {}
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._aiUseCardMODict = {}
 end
 
-function slot0.init(slot0, slot1)
-	slot0.fightStepMOs = FightHelper.buildInfoMOs(FightHelper.processRoundStep(slot1.fightStep), FightStepMO)
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.fightStepMOs = FightHelper.buildInfoMOs(FightHelper.processRoundStep(arg_2_1.fightStep), FightStepMO)
 
-	if slot1:HasField("actPoint") then
-		slot0.actPoint = slot1.actPoint
+	if arg_2_1:HasField("actPoint") then
+		arg_2_0.actPoint = arg_2_1.actPoint
 	end
 
-	if slot1:HasField("isFinish") then
-		slot0.isFinish = slot1.isFinish
+	if arg_2_1:HasField("isFinish") then
+		arg_2_0.isFinish = arg_2_1.isFinish
 	end
 
-	if slot1:HasField("moveNum") then
-		slot0.moveNum = slot1.moveNum
+	if arg_2_1:HasField("moveNum") then
+		arg_2_0.moveNum = arg_2_1.moveNum
 	end
 
-	slot0._exPointMODict = slot0:_buildExPointDict(slot1.exPointInfo, FightExPointInfoMO)
-	slot0._lastAIUseCardMODict = slot0._aiUseCardMODict
-	slot0._lastAIUseCardMOList = slot0._aiUseCardMOList
-	slot0._aiUseCardMODict, slot0._aiUseCardMOList = slot0:_buildAIUseCardInfo(slot1.aiUseCards, FightCardInfoMO)
+	arg_2_0._exPointMODict = arg_2_0:_buildExPointDict(arg_2_1.exPointInfo, FightExPointInfoMO)
+	arg_2_0._lastAIUseCardMODict = arg_2_0._aiUseCardMODict
+	arg_2_0._lastAIUseCardMOList = arg_2_0._aiUseCardMOList
+	arg_2_0._aiUseCardMODict, arg_2_0._aiUseCardMOList = arg_2_0:_buildAIUseCardInfo(arg_2_1.aiUseCards, FightCardInfoMO)
 
-	if slot1:HasField("power") then
-		slot0.power = slot1.power
+	if arg_2_1:HasField("power") then
+		arg_2_0.power = arg_2_1.power
 	end
 
-	slot0.beforeCards1 = FightHelper.buildInfoMOs(slot1.beforeCards1, FightCardInfoMO)
-	slot0.teamACards1 = FightHelper.buildInfoMOs(slot1.teamACards1, FightCardInfoMO)
-	slot0.beforeCards2 = FightHelper.buildInfoMOs(slot1.beforeCards2, FightCardInfoMO)
-	slot0.teamACards2 = FightHelper.buildInfoMOs(slot1.teamACards2, FightCardInfoMO)
-	slot0.nextRoundBeginStepMOs = FightHelper.buildInfoMOs(FightHelper.processRoundStep(slot1.nextRoundBeginStep), FightStepMO)
-	slot0.lastChangeHeroUid = slot1.lastChangeHeroUid
+	arg_2_0.beforeCards1 = FightHelper.buildInfoMOs(arg_2_1.beforeCards1, FightCardInfoMO)
+	arg_2_0.teamACards1 = FightHelper.buildInfoMOs(arg_2_1.teamACards1, FightCardInfoMO)
+	arg_2_0.beforeCards2 = FightHelper.buildInfoMOs(arg_2_1.beforeCards2, FightCardInfoMO)
+	arg_2_0.teamACards2 = FightHelper.buildInfoMOs(arg_2_1.teamACards2, FightCardInfoMO)
+	arg_2_0.nextRoundBeginStepMOs = FightHelper.buildInfoMOs(FightHelper.processRoundStep(arg_2_1.nextRoundBeginStep), FightStepMO)
+	arg_2_0.lastChangeHeroUid = arg_2_1.lastChangeHeroUid
 
-	slot0:_calcMultiHpChange()
-	slot0:_removeSceneEntityEffect()
-	slot0:_markStepIndex()
+	arg_2_0:_calcMultiHpChange()
+	arg_2_0:_removeSceneEntityEffect()
+	arg_2_0:_markStepIndex()
 end
 
-function slot0.updateClothSkillRound(slot0, slot1)
-	slot0.fightStepMOs = FightHelper.buildInfoMOs(FightHelper.processRoundStep(slot1.fightStep), FightStepMO)
-	slot0._exPointMODict = slot0:_buildExPointDict(slot1.exPointInfo, FightExPointInfoMO)
+function var_0_0.updateClothSkillRound(arg_3_0, arg_3_1)
+	arg_3_0.fightStepMOs = FightHelper.buildInfoMOs(FightHelper.processRoundStep(arg_3_1.fightStep), FightStepMO)
+	arg_3_0._exPointMODict = arg_3_0:_buildExPointDict(arg_3_1.exPointInfo, FightExPointInfoMO)
 
-	if slot1:HasField("actPoint") then
-		slot0.actPoint = slot1.actPoint
+	if arg_3_1:HasField("actPoint") then
+		arg_3_0.actPoint = arg_3_1.actPoint
 	end
 
-	if slot1:HasField("isFinish") then
-		slot0.isFinish = slot1.isFinish
+	if arg_3_1:HasField("isFinish") then
+		arg_3_0.isFinish = arg_3_1.isFinish
 	end
 
-	if slot1:HasField("moveNum") then
-		slot0.moveeNum = slot1.moveNum
+	if arg_3_1:HasField("moveNum") then
+		arg_3_0.moveeNum = arg_3_1.moveNum
 	end
 
-	if slot1:HasField("power") then
-		slot0.power = slot1.power
+	if arg_3_1:HasField("power") then
+		arg_3_0.power = arg_3_1.power
 	end
 
-	slot0.beforeCards1 = FightHelper.buildInfoMOs(slot1.beforeCards1, FightCardInfoMO)
-	slot0.teamACards1 = FightHelper.buildInfoMOs(slot1.teamACards1, FightCardInfoMO)
-	slot0.beforeCards2 = FightHelper.buildInfoMOs(slot1.beforeCards2, FightCardInfoMO)
-	slot0.teamACards2 = FightHelper.buildInfoMOs(slot1.teamACards2, FightCardInfoMO)
+	arg_3_0.beforeCards1 = FightHelper.buildInfoMOs(arg_3_1.beforeCards1, FightCardInfoMO)
+	arg_3_0.teamACards1 = FightHelper.buildInfoMOs(arg_3_1.teamACards1, FightCardInfoMO)
+	arg_3_0.beforeCards2 = FightHelper.buildInfoMOs(arg_3_1.beforeCards2, FightCardInfoMO)
+	arg_3_0.teamACards2 = FightHelper.buildInfoMOs(arg_3_1.teamACards2, FightCardInfoMO)
 
-	slot0:_markStepIndex()
+	arg_3_0:_markStepIndex()
 end
 
-function slot0._markStepIndex(slot0)
-	if slot0.fightStepMOs then
-		for slot4, slot5 in ipairs(slot0.fightStepMOs) do
-			slot5.custom_stepIndex = slot4
+function var_0_0._markStepIndex(arg_4_0)
+	if arg_4_0.fightStepMOs then
+		for iter_4_0, iter_4_1 in ipairs(arg_4_0.fightStepMOs) do
+			iter_4_1.custom_stepIndex = iter_4_0
 		end
 	end
 end
 
-function slot0.clone(slot0)
-	slot1 = uv0.New()
-	slot1.fightStepMOs = slot0.fightStepMOs
-	slot1.actPoint = slot0.actPoint
-	slot1.isFinish = slot0.isFinish
-	slot1.moveNum = slot0.moveNum
-	slot1._exPointMODict = slot0._exPointMODict
-	slot1._aiUseCardMODict = slot0._aiUseCardMODict
-	slot1.power = slot0.power
-	slot1.beforeCards1 = slot0.beforeCards1
-	slot1.teamACards1 = slot0.teamACards1
-	slot1.beforeCards2 = slot0.beforeCards2
-	slot1.teamACards2 = slot0.teamACards2
-	slot1.nextRoundBeginStepMOs = slot0.nextRoundBeginStepMOs
+function var_0_0.clone(arg_5_0)
+	local var_5_0 = var_0_0.New()
 
-	return slot1
+	var_5_0.fightStepMOs = arg_5_0.fightStepMOs
+	var_5_0.actPoint = arg_5_0.actPoint
+	var_5_0.isFinish = arg_5_0.isFinish
+	var_5_0.moveNum = arg_5_0.moveNum
+	var_5_0._exPointMODict = arg_5_0._exPointMODict
+	var_5_0._aiUseCardMODict = arg_5_0._aiUseCardMODict
+	var_5_0.power = arg_5_0.power
+	var_5_0.beforeCards1 = arg_5_0.beforeCards1
+	var_5_0.teamACards1 = arg_5_0.teamACards1
+	var_5_0.beforeCards2 = arg_5_0.beforeCards2
+	var_5_0.teamACards2 = arg_5_0.teamACards2
+	var_5_0.nextRoundBeginStepMOs = arg_5_0.nextRoundBeginStepMOs
+
+	return var_5_0
 end
 
-function slot0.onBeginRound(slot0)
+function var_0_0.onBeginRound(arg_6_0)
+	return
 end
 
-function slot0._buildExPointDict(slot0, slot1, slot2)
-	for slot7, slot8 in ipairs(slot1) do
-		slot9 = slot2.New()
+function var_0_0._buildExPointDict(arg_7_0, arg_7_1, arg_7_2)
+	local var_7_0 = {}
 
-		slot9:init(slot8)
+	for iter_7_0, iter_7_1 in ipairs(arg_7_1) do
+		local var_7_1 = arg_7_2.New()
 
-		if slot9.id or slot9.uid then
-			-- Nothing
+		var_7_1:init(iter_7_1)
+
+		local var_7_2 = var_7_1.id or var_7_1.uid
+
+		if var_7_2 then
+			var_7_0[var_7_2] = var_7_1
 		end
 	end
 
-	return {
-		[slot10] = slot9
-	}
+	return var_7_0
 end
 
-function slot0._buildAIUseCardInfo(slot0, slot1, slot2)
-	slot3 = {}
-	slot4 = {}
+function var_0_0._buildAIUseCardInfo(arg_8_0, arg_8_1, arg_8_2)
+	local var_8_0 = {}
+	local var_8_1 = {}
 
-	for slot8, slot9 in ipairs(slot1) do
-		slot10 = slot2.New()
+	for iter_8_0, iter_8_1 in ipairs(arg_8_1) do
+		local var_8_2 = arg_8_2.New()
 
-		slot10:init(slot9)
+		var_8_2:init(iter_8_1)
 
-		slot10.custom_enemyCardIndex = slot8
+		var_8_2.custom_enemyCardIndex = iter_8_0
 
-		if slot10.id or slot10.uid then
-			if not slot4[slot11] then
-				slot4[slot11] = {}
+		local var_8_3 = var_8_2.id or var_8_2.uid
+
+		if var_8_3 then
+			local var_8_4 = var_8_1[var_8_3]
+
+			if not var_8_4 then
+				var_8_4 = {}
+				var_8_1[var_8_3] = var_8_4
 			end
 
-			table.insert(slot12, slot10)
-			table.insert(slot3, slot10)
+			table.insert(var_8_4, var_8_2)
+			table.insert(var_8_0, var_8_2)
 		end
 	end
 
-	return slot4, slot3
+	return var_8_1, var_8_0
 end
 
-function slot0._calcMultiHpChange(slot0)
-	for slot4 = #slot0.fightStepMOs, 1, -1 do
-		slot6 = nil
-		slot7 = 1
+function var_0_0._calcMultiHpChange(arg_9_0)
+	for iter_9_0 = #arg_9_0.fightStepMOs, 1, -1 do
+		local var_9_0 = arg_9_0.fightStepMOs[iter_9_0]
+		local var_9_1
+		local var_9_2 = 1
 
-		for slot11, slot12 in ipairs(slot0.fightStepMOs[slot4].actEffectMOs) do
-			if slot12.effectType == FightEnum.EffectType.MULTIHPCHANGE then
-				slot6 = slot12
-				slot7 = slot11
+		for iter_9_1, iter_9_2 in ipairs(var_9_0.actEffectMOs) do
+			if iter_9_2.effectType == FightEnum.EffectType.MULTIHPCHANGE then
+				var_9_1 = iter_9_2
+				var_9_2 = iter_9_1
 
 				break
 			end
 		end
 
-		if slot6 then
-			slot8 = {}
+		if var_9_1 then
+			local var_9_3 = {}
 
-			for slot12 = #slot5.actEffectMOs, slot7 + 1, -1 do
-				if slot5.actEffectMOs[slot12].targetId == slot6.targetId then
-					table.insert(slot8, 1, table.remove(slot5.actEffectMOs, slot12))
+			for iter_9_3 = #var_9_0.actEffectMOs, var_9_2 + 1, -1 do
+				if var_9_0.actEffectMOs[iter_9_3].targetId == var_9_1.targetId then
+					local var_9_4 = table.remove(var_9_0.actEffectMOs, iter_9_3)
+
+					table.insert(var_9_3, 1, var_9_4)
 				end
 			end
 
-			if #slot8 > 0 then
-				slot9 = FightStepMO.New()
-
-				slot9:init({
+			if #var_9_3 > 0 then
+				local var_9_5 = FightStepMO.New()
+				local var_9_6 = {
 					actType = FightEnum.ActType.EFFECT,
-					fromId = slot5.fromId,
-					toId = slot5.toId,
-					actId = slot5.actId,
+					fromId = var_9_0.fromId,
+					toId = var_9_0.toId,
+					actId = var_9_0.actId,
 					actEffect = {}
-				})
+				}
 
-				slot9.actEffectMOs = slot8
-				slot9.stepUid = slot5.stepUid + 1
-				slot11 = slot4 + 1
-				slot15 = slot9
+				var_9_5:init(var_9_6)
 
-				table.insert(slot0.fightStepMOs, slot11, slot15)
+				var_9_5.actEffectMOs = var_9_3
+				var_9_5.stepUid = var_9_0.stepUid + 1
 
-				for slot15 = slot11 + 1, #slot0.fightStepMOs do
-					slot16 = slot0.fightStepMOs[slot15]
-					slot16.stepUid = slot16.stepUid + 1
+				local var_9_7 = iter_9_0 + 1
+
+				table.insert(arg_9_0.fightStepMOs, var_9_7, var_9_5)
+
+				for iter_9_4 = var_9_7 + 1, #arg_9_0.fightStepMOs do
+					local var_9_8 = arg_9_0.fightStepMOs[iter_9_4]
+
+					var_9_8.stepUid = var_9_8.stepUid + 1
 				end
 			end
 		end
 	end
 end
 
-slot1 = {
+local var_0_1 = {
 	[FightEnum.EffectType.DAMAGE] = true,
 	[FightEnum.EffectType.CRIT] = true,
 	[FightEnum.EffectType.BEATBACK] = true,
@@ -199,40 +213,46 @@ slot1 = {
 	[FightEnum.EffectType.BLOODLUST] = true
 }
 
-function slot0._removeSceneEntityEffect(slot0)
-	for slot4 = #slot0.fightStepMOs, 1, -1 do
-		if slot0.fightStepMOs[slot4].actType == FightEnum.ActType.EFFECT then
-			for slot10 = #slot5.actEffectMOs, 1, -1 do
-				if uv0[slot6[slot10].effectType] and (slot11.targetId == FightEntityScene.MySideId or slot11.targetId == FightEntityScene.EnemySideId) then
-					table.remove(slot6, slot10)
+function var_0_0._removeSceneEntityEffect(arg_10_0)
+	for iter_10_0 = #arg_10_0.fightStepMOs, 1, -1 do
+		local var_10_0 = arg_10_0.fightStepMOs[iter_10_0]
+
+		if var_10_0.actType == FightEnum.ActType.EFFECT then
+			local var_10_1 = var_10_0.actEffectMOs
+
+			for iter_10_1 = #var_10_1, 1, -1 do
+				local var_10_2 = var_10_1[iter_10_1]
+
+				if var_0_1[var_10_2.effectType] and (var_10_2.targetId == FightEntityScene.MySideId or var_10_2.targetId == FightEntityScene.EnemySideId) then
+					table.remove(var_10_1, iter_10_1)
 				end
 			end
 		end
 	end
 end
 
-function slot0.getEntityAIUseCardMOs(slot0, slot1)
-	return slot0._aiUseCardMODict[slot1] or {}
+function var_0_0.getEntityAIUseCardMOs(arg_11_0, arg_11_1)
+	return arg_11_0._aiUseCardMODict[arg_11_1] or {}
 end
 
-function slot0.getEnemyActPoint(slot0)
-	return slot0._aiUseCardMOList and #slot0._aiUseCardMOList
+function var_0_0.getEnemyActPoint(arg_12_0)
+	return arg_12_0._aiUseCardMOList and #arg_12_0._aiUseCardMOList
 end
 
-function slot0.getAIUseCardMOList(slot0)
-	return slot0._aiUseCardMOList
+function var_0_0.getAIUseCardMOList(arg_13_0)
+	return arg_13_0._aiUseCardMOList
 end
 
-function slot0.getEntityLastAIUseCard(slot0, slot1)
-	if slot0._lastAIUseCardMODict then
-		return slot0._lastAIUseCardMODict[slot1]
+function var_0_0.getEntityLastAIUseCard(arg_14_0, arg_14_1)
+	if arg_14_0._lastAIUseCardMODict then
+		return arg_14_0._lastAIUseCardMODict[arg_14_1]
 	end
 
 	return {}
 end
 
-function slot0.getAILastUseCard(slot0)
-	return slot0._lastAIUseCardMOList
+function var_0_0.getAILastUseCard(arg_15_0)
+	return arg_15_0._lastAIUseCardMOList
 end
 
-return slot0
+return var_0_0

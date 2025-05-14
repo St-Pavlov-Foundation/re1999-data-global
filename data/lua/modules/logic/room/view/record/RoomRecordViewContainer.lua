@@ -1,108 +1,118 @@
-module("modules.logic.room.view.record.RoomRecordViewContainer", package.seeall)
+﻿module("modules.logic.room.view.record.RoomRecordViewContainer", package.seeall)
 
-slot0 = class("RoomRecordViewContainer", BaseViewContainer)
+local var_0_0 = class("RoomRecordViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, RoomRecordView.New())
-	table.insert(slot1, TabViewGroup.New(1, "#go_topleft"))
-	table.insert(slot1, TabViewGroup.New(2, "root/view"))
+	table.insert(var_1_0, RoomRecordView.New())
+	table.insert(var_1_0, TabViewGroup.New(1, "#go_topleft"))
+	table.insert(var_1_0, TabViewGroup.New(2, "root/view"))
 
-	return slot1
+	return var_1_0
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
-		slot0.navigateView = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == 1 then
+		arg_2_0.navigateView = NavigateButtonsView.New({
 			true,
 			false,
 			false
 		})
 
 		return {
-			slot0.navigateView
+			arg_2_0.navigateView
 		}
-	elseif slot1 == 2 then
-		slot2 = ListScrollParam.New()
-		slot2.scrollGOPath = "left/#scroll_view"
-		slot2.prefabType = ScrollEnum.ScrollPrefabFromView
-		slot2.prefabUrl = "left/#scroll_view/Viewport/Content/item"
-		slot2.cellClass = RoomCritterHandBookItem
-		slot2.scrollDir = ScrollEnum.ScrollDirV
-		slot2.cellWidth = 240
-		slot2.cellHeight = 300
-		slot2.startSpace = 10
-		slot2.cellSpaceH = 10
-		slot2.lineCount = 3
-		slot3 = ListScrollParam.New()
-		slot3.scrollGOPath = "left/#scroll_view"
-		slot3.prefabType = ScrollEnum.ScrollPrefabFromView
-		slot3.prefabUrl = "bg/#scroll_view/Viewport/Content/item"
-		slot3.cellClass = RoomCritterHandBookBackItem
-		slot3.scrollDir = ScrollEnum.ScrollDirV
-		slot3.cellWidth = 100
-		slot3.cellHeight = 100
-		slot3.cellSpaceV = 20
-		slot3.cellSpaceH = 20
-		slot3.lineCount = 4
-		slot0._taskView = RoomTradeTaskView.New()
-		slot0._handbookScrollView = LuaListScrollView.New(RoomHandBookListModel.instance, slot2)
-		slot0._handbookbackScrollView = LuaListScrollView.New(RoomHandBookBackListModel.instance, slot3)
-		slot0._handbookView = RoomCritterHandBookView.New()
-		slot0._logview = RoomLogView.New()
-		slot0._handbookbackView = RoomCritterHandBookBackView.New()
+	elseif arg_2_1 == 2 then
+		local var_2_0 = ListScrollParam.New()
+
+		var_2_0.scrollGOPath = "left/#scroll_view"
+		var_2_0.prefabType = ScrollEnum.ScrollPrefabFromView
+		var_2_0.prefabUrl = "left/#scroll_view/Viewport/Content/item"
+		var_2_0.cellClass = RoomCritterHandBookItem
+		var_2_0.scrollDir = ScrollEnum.ScrollDirV
+		var_2_0.cellWidth = 240
+		var_2_0.cellHeight = 300
+		var_2_0.startSpace = 10
+		var_2_0.cellSpaceH = 10
+		var_2_0.lineCount = 3
+
+		local var_2_1 = ListScrollParam.New()
+
+		var_2_1.scrollGOPath = "left/#scroll_view"
+		var_2_1.prefabType = ScrollEnum.ScrollPrefabFromView
+		var_2_1.prefabUrl = "bg/#scroll_view/Viewport/Content/item"
+		var_2_1.cellClass = RoomCritterHandBookBackItem
+		var_2_1.scrollDir = ScrollEnum.ScrollDirV
+		var_2_1.cellWidth = 100
+		var_2_1.cellHeight = 100
+		var_2_1.cellSpaceV = 20
+		var_2_1.cellSpaceH = 20
+		var_2_1.lineCount = 4
+		arg_2_0._taskView = RoomTradeTaskView.New()
+		arg_2_0._handbookScrollView = LuaListScrollView.New(RoomHandBookListModel.instance, var_2_0)
+		arg_2_0._handbookbackScrollView = LuaListScrollView.New(RoomHandBookBackListModel.instance, var_2_1)
+		arg_2_0._handbookView = RoomCritterHandBookView.New()
+		arg_2_0._logview = RoomLogView.New()
+		arg_2_0._handbookbackView = RoomCritterHandBookBackView.New()
 
 		return {
 			MultiView.New({
-				slot0._taskView
+				arg_2_0._taskView
 			}),
 			MultiView.New({
-				slot0._logview
+				arg_2_0._logview
 			}),
 			MultiView.New({
-				slot0._handbookView,
-				slot0._handbookScrollView
+				arg_2_0._handbookView,
+				arg_2_0._handbookScrollView
 			}),
 			MultiView.New({
-				slot0._handbookbackView,
-				slot0._handbookbackScrollView
+				arg_2_0._handbookbackView,
+				arg_2_0._handbookbackScrollView
 			})
 		}
 	end
 end
 
-function slot0.getTabView(slot0, slot1)
-	if slot1 == RoomRecordEnum.View.Task then
-		return slot0._taskView
-	elseif slot1 == RoomRecordEnum.View.Log then
-		return slot0._logview
-	elseif slot1 == RoomRecordEnum.View.HandBook then
-		return slot0._handbookView
+function var_0_0.getTabView(arg_3_0, arg_3_1)
+	if arg_3_1 == RoomRecordEnum.View.Task then
+		return arg_3_0._taskView
+	elseif arg_3_1 == RoomRecordEnum.View.Log then
+		return arg_3_0._logview
+	elseif arg_3_1 == RoomRecordEnum.View.HandBook then
+		return arg_3_0._handbookView
 	end
 end
 
-function slot0.selectTabView(slot0, slot1)
-	slot0:dispatchEvent(ViewEvent.ToSwitchTab, 2, slot1)
+function var_0_0.selectTabView(arg_4_0, arg_4_1)
+	arg_4_0:dispatchEvent(ViewEvent.ToSwitchTab, 2, arg_4_1)
 end
 
-function slot0.getHandBookScrollView(slot0)
-	return slot0._handbookScrollView
+function var_0_0.getHandBookScrollView(arg_5_0)
+	return arg_5_0._handbookScrollView
 end
 
-function slot0.playOpenTransition(slot0)
-	if slot0.viewParam then
-		slot0:selectTabView(slot0.viewParam)
+function var_0_0.playOpenTransition(arg_6_0)
+	local var_6_0 = SLFramework.AnimatorPlayer.Get(arg_6_0.viewGO)
 
-		if slot0.viewParam == RoomRecordEnum.View.Log then
-			SLFramework.AnimatorPlayer.Get(slot0.viewGO):Play("to2", slot0.afterOpenAnim, slot0)
-		elseif slot0.viewParam == RoomRecordEnum.View.HandBook then
-			slot1:Play("to3", slot0.afterOpenAnim, slot0)
+	if arg_6_0.viewParam then
+		arg_6_0:selectTabView(arg_6_0.viewParam)
+
+		if arg_6_0.viewParam == RoomRecordEnum.View.Log then
+			local var_6_1 = "to2"
+
+			var_6_0:Play(var_6_1, arg_6_0.afterOpenAnim, arg_6_0)
+		elseif arg_6_0.viewParam == RoomRecordEnum.View.HandBook then
+			local var_6_2 = "to3"
+
+			var_6_0:Play(var_6_2, arg_6_0.afterOpenAnim, arg_6_0)
 		end
 	end
 end
 
-function slot0.afterOpenAnim(slot0)
+function var_0_0.afterOpenAnim(arg_7_0)
+	return
 end
 
-return slot0
+return var_0_0

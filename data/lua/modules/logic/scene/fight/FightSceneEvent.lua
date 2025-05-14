@@ -1,8 +1,9 @@
-module("modules.logic.scene.fight.FightSceneEvent", package.seeall)
+﻿module("modules.logic.scene.fight.FightSceneEvent", package.seeall)
 
-slot0 = _M
-slot0.OnAllEntityLoaded = 101
-slot0.OnPreloadFinish = 102
-slot0.OnPrepareFinish = 103
+local var_0_0 = _M
 
-return slot0
+var_0_0.OnAllEntityLoaded = 101
+var_0_0.OnPreloadFinish = 102
+var_0_0.OnPrepareFinish = 103
+
+return var_0_0

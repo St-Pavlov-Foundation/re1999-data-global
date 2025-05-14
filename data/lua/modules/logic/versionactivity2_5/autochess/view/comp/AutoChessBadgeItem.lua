@@ -1,7 +1,8 @@
-module("modules.logic.versionactivity2_5.autochess.view.comp.AutoChessBadgeItem", package.seeall)
+﻿module("modules.logic.versionactivity2_5.autochess.view.comp.AutoChessBadgeItem", package.seeall)
 
-slot0 = class("AutoChessBadgeItem", LuaCompBase)
-slot0.ShowType = {
+local var_0_0 = class("AutoChessBadgeItem", LuaCompBase)
+
+var_0_0.ShowType = {
 	PvpSettleView = 5,
 	MainView = 2,
 	CourseView = 3,
@@ -9,152 +10,169 @@ slot0.ShowType = {
 	RankUpView = 4
 }
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
-	slot0.goEmpty = gohelper.findChild(slot1, "root/#go_Empty")
-	slot0.goUnlock = gohelper.findChild(slot1, "root/#go_Unlock")
-	slot0.simageBadgeU = gohelper.findChildSingleImage(slot1, "root/#go_Unlock/#simage_BadgeU")
-	slot0.goProgress = gohelper.findChild(slot1, "root/#go_Unlock/#go_Progress")
-	slot0.imageProgress = gohelper.findChildImage(slot1, "root/#go_Unlock/#go_Progress/#image_Progress")
-	slot0.txtProgress = gohelper.findChildText(slot1, "root/#go_Unlock/#go_Progress/#txt_Progress")
-	slot0.goLock = gohelper.findChild(slot1, "root/#go_Lock")
-	slot0.simageBadgeL = gohelper.findChildSingleImage(slot1, "root/#go_Lock/#simage_BadgeL")
-	slot0.txtUnlock = gohelper.findChildText(slot1, "root/#go_Lock/#txt_Unlock")
-	slot0.txtName = gohelper.findChildText(slot1, "root/Name/#txt_Name")
-	slot0.goReward = gohelper.findChild(slot1, "#go_Reward")
-	slot0.goRewardItem = gohelper.findChild(slot1, "#go_Reward/Content/#go_RewardItem")
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.go = arg_1_1
+	arg_1_0.goEmpty = gohelper.findChild(arg_1_1, "root/#go_Empty")
+	arg_1_0.goUnlock = gohelper.findChild(arg_1_1, "root/#go_Unlock")
+	arg_1_0.simageBadgeU = gohelper.findChildSingleImage(arg_1_1, "root/#go_Unlock/#simage_BadgeU")
+	arg_1_0.goProgress = gohelper.findChild(arg_1_1, "root/#go_Unlock/#go_Progress")
+	arg_1_0.imageProgress = gohelper.findChildImage(arg_1_1, "root/#go_Unlock/#go_Progress/#image_Progress")
+	arg_1_0.txtProgress = gohelper.findChildText(arg_1_1, "root/#go_Unlock/#go_Progress/#txt_Progress")
+	arg_1_0.goLock = gohelper.findChild(arg_1_1, "root/#go_Lock")
+	arg_1_0.simageBadgeL = gohelper.findChildSingleImage(arg_1_1, "root/#go_Lock/#simage_BadgeL")
+	arg_1_0.txtUnlock = gohelper.findChildText(arg_1_1, "root/#go_Lock/#txt_Unlock")
+	arg_1_0.txtName = gohelper.findChildText(arg_1_1, "root/Name/#txt_Name")
+	arg_1_0.goReward = gohelper.findChild(arg_1_1, "#go_Reward")
+	arg_1_0.goRewardItem = gohelper.findChild(arg_1_1, "#go_Reward/Content/#go_RewardItem")
 end
 
-function slot0.onDestroy(slot0)
-	if slot0.tweenId then
-		ZProj.TweenHelper.KillById(slot0.tweenId)
+function var_0_0.onDestroy(arg_2_0)
+	if arg_2_0.tweenId then
+		ZProj.TweenHelper.KillById(arg_2_0.tweenId)
 	end
 
-	slot0.simageBadgeL:UnLoadImage()
-	slot0.simageBadgeU:UnLoadImage()
+	arg_2_0.simageBadgeL:UnLoadImage()
+	arg_2_0.simageBadgeU:UnLoadImage()
 end
 
-function slot0.setData(slot0, slot1, slot2, slot3)
-	slot0.actId = Activity182Model.instance:getCurActId()
-	slot0.curScore = slot2
-	slot0.rankId = slot1
-	slot0.showType = slot3
-	slot0.config = lua_auto_chess_rank.configDict[slot0.actId][slot1]
+function var_0_0.setData(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
+	arg_3_0.actId = Activity182Model.instance:getCurActId()
+	arg_3_0.curScore = arg_3_2
+	arg_3_0.rankId = arg_3_1
+	arg_3_0.showType = arg_3_3
+	arg_3_0.config = lua_auto_chess_rank.configDict[arg_3_0.actId][arg_3_1]
 
-	if not slot0.config then
-		slot0.txtName.text = luaLang("autochess_badgeitem_noget")
+	if not arg_3_0.config then
+		arg_3_0.txtName.text = luaLang("autochess_badgeitem_noget")
 
-		gohelper.setActive(slot0.goUnlock, false)
-		gohelper.setActive(slot0.goLock, false)
-		gohelper.setActive(slot0.goReward, false)
+		gohelper.setActive(arg_3_0.goUnlock, false)
+		gohelper.setActive(arg_3_0.goLock, false)
+		gohelper.setActive(arg_3_0.goReward, false)
 
 		return
 	end
 
-	slot0.needScore = lua_auto_chess_rank.configDict[slot0.actId][slot0.rankId - 1] and slot4.score or 0
+	local var_3_0 = lua_auto_chess_rank.configDict[arg_3_0.actId][arg_3_0.rankId - 1]
 
-	if slot3 == uv0.ShowType.BadgeView then
-		slot0:showReward()
-	elseif slot3 == uv0.ShowType.MainView then
-		slot0:showProgress()
-		slot0:addClick()
-	elseif slot3 == uv0.ShowType.PvpSettleView then
-		slot0:showProgress()
+	arg_3_0.needScore = var_3_0 and var_3_0.score or 0
+
+	if arg_3_3 == var_0_0.ShowType.BadgeView then
+		arg_3_0:showReward()
+	elseif arg_3_3 == var_0_0.ShowType.MainView then
+		arg_3_0:showProgress()
+		arg_3_0:addClick()
+	elseif arg_3_3 == var_0_0.ShowType.PvpSettleView then
+		arg_3_0:showProgress()
 	end
 
-	slot0:refreshNormal()
+	arg_3_0:refreshNormal()
 end
 
-function slot0.addClick(slot0)
-	slot0.btnClick = gohelper.findButtonWithAudio(slot0.go)
+function var_0_0.addClick(arg_4_0)
+	arg_4_0.btnClick = gohelper.findButtonWithAudio(arg_4_0.go)
 
-	slot0:addClickCb(slot0.btnClick, slot0.onClick, slot0)
+	arg_4_0:addClickCb(arg_4_0.btnClick, arg_4_0.onClick, arg_4_0)
 end
 
-function slot0.refreshNormal(slot0)
-	slot0.unlock = slot0.needScore <= slot0.curScore
+function var_0_0.refreshNormal(arg_5_0)
+	arg_5_0.unlock = arg_5_0.needScore <= arg_5_0.curScore
 
-	if slot0.unlock then
-		slot0.simageBadgeU:LoadImage(ResUrl.getAutoChessIcon(slot0.config.icon, "badgeicon"))
+	if arg_5_0.unlock then
+		arg_5_0.simageBadgeU:LoadImage(ResUrl.getAutoChessIcon(arg_5_0.config.icon, "badgeicon"))
 	else
-		slot0.simageBadgeL:LoadImage(ResUrl.getAutoChessIcon(slot0.config.icon, "badgeicon"))
+		arg_5_0.simageBadgeL:LoadImage(ResUrl.getAutoChessIcon(arg_5_0.config.icon, "badgeicon"))
 
-		slot0.txtUnlock.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("autochess_badgeitem_unlock"), slot0.curScore, slot0.needScore)
+		local var_5_0 = luaLang("autochess_badgeitem_unlock")
+
+		arg_5_0.txtUnlock.text = GameUtil.getSubPlaceholderLuaLangTwoParam(var_5_0, arg_5_0.curScore, arg_5_0.needScore)
 	end
 
-	slot0.txtName.text = slot0.config.name
+	arg_5_0.txtName.text = arg_5_0.config.name
 
-	gohelper.setActive(slot0.goUnlock, slot0.unlock)
-	gohelper.setActive(slot0.goLock, not slot0.unlock)
+	gohelper.setActive(arg_5_0.goUnlock, arg_5_0.unlock)
+	gohelper.setActive(arg_5_0.goLock, not arg_5_0.unlock)
 end
 
-function slot0.showProgress(slot0)
-	slot0.imageProgress.fillAmount = slot0.correctFillAmount(slot0.curScore / slot0.config.score)
-	slot0.txtProgress.text = string.format("%d/%d", slot0.curScore, slot0.config.score)
+function var_0_0.showProgress(arg_6_0)
+	arg_6_0.imageProgress.fillAmount = arg_6_0.correctFillAmount(arg_6_0.curScore / arg_6_0.config.score)
+	arg_6_0.txtProgress.text = string.format("%d/%d", arg_6_0.curScore, arg_6_0.config.score)
 
-	gohelper.setActive(slot0.goProgress, true)
+	gohelper.setActive(arg_6_0.goProgress, true)
 end
 
-function slot0.showReward(slot0)
-	if #DungeonConfig.instance:getRewardItems(slot0.config.reward) ~= 0 then
-		for slot6, slot7 in ipairs(slot1) do
-			gohelper.setActive(gohelper.findChild(gohelper.cloneInPlace(slot0.goRewardItem, slot6), "go_receive"), slot0.rankId <= Activity182Model.instance:getActMo().historyInfo.maxRank)
+function var_0_0.showReward(arg_7_0)
+	local var_7_0 = DungeonConfig.instance:getRewardItems(arg_7_0.config.reward)
 
-			slot10 = IconMgr.instance:getCommonItemIcon(slot8)
+	if #var_7_0 ~= 0 then
+		local var_7_1 = Activity182Model.instance:getActMo()
 
-			gohelper.setAsFirstSibling(slot10.go)
-			slot10:setMOValue(slot7[1], slot7[2], slot7[3], nil, true)
-			slot10:setCountFontSize(32)
-			recthelper.setAnchorY(slot10:getCountBg().transform, 50)
+		for iter_7_0, iter_7_1 in ipairs(var_7_0) do
+			local var_7_2 = gohelper.cloneInPlace(arg_7_0.goRewardItem, iter_7_0)
+			local var_7_3 = gohelper.findChild(var_7_2, "go_receive")
+
+			gohelper.setActive(var_7_3, arg_7_0.rankId <= var_7_1.historyInfo.maxRank)
+
+			local var_7_4 = IconMgr.instance:getCommonItemIcon(var_7_2)
+
+			gohelper.setAsFirstSibling(var_7_4.go)
+			var_7_4:setMOValue(iter_7_1[1], iter_7_1[2], iter_7_1[3], nil, true)
+			var_7_4:setCountFontSize(32)
+
+			local var_7_5 = var_7_4:getCountBg()
+
+			recthelper.setAnchorY(var_7_5.transform, 50)
 		end
 
-		gohelper.setActive(slot0.goReward, true)
-		gohelper.setActive(slot0.goRewardItem, false)
+		gohelper.setActive(arg_7_0.goReward, true)
+		gohelper.setActive(arg_7_0.goRewardItem, false)
 	else
-		gohelper.setActive(slot0.goReward, false)
+		gohelper.setActive(arg_7_0.goReward, false)
 	end
 end
 
-function slot0.onClick(slot0)
+function var_0_0.onClick(arg_8_0)
 	ViewMgr.instance:openView(ViewName.AutoChessBadgeView)
 end
 
-function slot0.playProgressAnim(slot0, slot1)
-	if slot1 == 0 then
+function var_0_0.playProgressAnim(arg_9_0, arg_9_1)
+	if arg_9_1 == 0 then
 		return
 	end
 
-	slot0.changeScore = slot1
-	slot0.tweenId = ZProj.TweenHelper.DOTweenFloat(slot0.curScore - slot1, slot0.curScore, 1, slot0.frameCallback, slot0.finishCallback, slot0, nil, EaseType.Linear)
+	arg_9_0.changeScore = arg_9_1
+
+	local var_9_0 = arg_9_0.curScore - arg_9_1
+
+	arg_9_0.tweenId = ZProj.TweenHelper.DOTweenFloat(var_9_0, arg_9_0.curScore, 1, arg_9_0.frameCallback, arg_9_0.finishCallback, arg_9_0, nil, EaseType.Linear)
 end
 
-function slot0.frameCallback(slot0, slot1)
-	if slot0.showType == uv0.ShowType.PvpSettleView then
-		if slot0.changeScore > 0 then
-			slot0.txtProgress.text = string.format("%d/%d<color=#44A847>(+%d)</color>", slot1, slot0.config.score, slot0.changeScore)
+function var_0_0.frameCallback(arg_10_0, arg_10_1)
+	if arg_10_0.showType == var_0_0.ShowType.PvpSettleView then
+		if arg_10_0.changeScore > 0 then
+			arg_10_0.txtProgress.text = string.format("%d/%d<color=#44A847>(+%d)</color>", arg_10_1, arg_10_0.config.score, arg_10_0.changeScore)
 		else
-			slot0.txtProgress.text = string.format("%d/%d<color=#E76C6C>(%d)</color>", slot1, slot0.config.score, slot0.changeScore)
+			arg_10_0.txtProgress.text = string.format("%d/%d<color=#E76C6C>(%d)</color>", arg_10_1, arg_10_0.config.score, arg_10_0.changeScore)
 		end
 	else
-		slot0.txtProgress.text = string.format("%d/%d", slot1, slot0.config.score)
+		arg_10_0.txtProgress.text = string.format("%d/%d", arg_10_1, arg_10_0.config.score)
 	end
 
-	slot0.imageProgress.fillAmount = slot0.correctFillAmount(slot1 / slot0.config.score)
+	arg_10_0.imageProgress.fillAmount = arg_10_0.correctFillAmount(arg_10_1 / arg_10_0.config.score)
 end
 
-function slot0.finishCallback(slot0)
-	slot0.changeScore = nil
-	slot0.tweenId = nil
+function var_0_0.finishCallback(arg_11_0)
+	arg_11_0.changeScore = nil
+	arg_11_0.tweenId = nil
 end
 
-function slot0.correctFillAmount(slot0)
-	if slot0 < 0.5 then
-		slot0 = 0.12 + slot0 / 0.5 * 0.38
-	elseif slot0 > 0.5 then
-		slot0 = 0.5 + (slot0 - 0.5) / 0.5 * 0.38
+function var_0_0.correctFillAmount(arg_12_0)
+	if arg_12_0 < 0.5 then
+		arg_12_0 = 0.12 + arg_12_0 / 0.5 * 0.38
+	elseif arg_12_0 > 0.5 then
+		arg_12_0 = 0.5 + (arg_12_0 - 0.5) / 0.5 * 0.38
 	end
 
-	return slot0
+	return arg_12_0
 end
 
-return slot0
+return var_0_0

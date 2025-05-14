@@ -1,68 +1,78 @@
-module("modules.logic.summon.view.SummonMainPreloadView", package.seeall)
+﻿module("modules.logic.summon.view.SummonMainPreloadView", package.seeall)
 
-slot0 = class("SummonMainPreloadView", TabViewGroup)
+local var_0_0 = class("SummonMainPreloadView", TabViewGroup)
 
-function slot0.preloadTab(slot0, slot1)
-	slot0._tabIdPreloadList = slot1
-	slot0._tabAbPreloaders = {}
+function var_0_0.preloadTab(arg_1_0, arg_1_1)
+	arg_1_0._tabIdPreloadList = arg_1_1
+	arg_1_0._tabAbPreloaders = {}
 end
 
-function slot0.onOpen(slot0)
-	if not slot0._tabIdPreloadList then
+function var_0_0.onOpen(arg_2_0)
+	if not arg_2_0._tabIdPreloadList then
 		return
 	end
 
-	slot0:addPreloadTab(slot0._tabIdPreloadList[1])
-	uv0.super.onOpen(slot0)
+	arg_2_0:addPreloadTab(arg_2_0._tabIdPreloadList[1])
+	var_0_0.super.onOpen(arg_2_0)
 end
 
-function slot0.checkPreload(slot0)
-	for slot4, slot5 in ipairs(slot0._tabIdPreloadList) do
-		slot0:addPreloadTab(slot5)
+function var_0_0.checkPreload(arg_3_0)
+	for iter_3_0, iter_3_1 in ipairs(arg_3_0._tabIdPreloadList) do
+		arg_3_0:addPreloadTab(iter_3_1)
 	end
 end
 
-function slot0.addPreloadTab(slot0, slot1)
-	if not slot0._tabAbLoaders[slot1] and not slot0._tabAbPreloaders[slot1] then
-		slot0._tabAbPreloaders[slot1] = MultiAbLoader.New()
+function var_0_0.addPreloadTab(arg_4_0, arg_4_1)
+	if not arg_4_0._tabAbLoaders[arg_4_1] and not arg_4_0._tabAbPreloaders[arg_4_1] then
+		local var_4_0 = MultiAbLoader.New()
 
-		if slot0.viewContainer:getSetting().tabRes and slot3[slot0._tabContainerId] and slot3[slot0._tabContainerId][slot1] then
-			slot2:setPathList(slot4)
-			slot2:startLoad(slot0._onItemPreloaded, slot0)
+		arg_4_0._tabAbPreloaders[arg_4_1] = var_4_0
+
+		local var_4_1 = arg_4_0.viewContainer:getSetting().tabRes
+		local var_4_2 = var_4_1 and var_4_1[arg_4_0._tabContainerId] and var_4_1[arg_4_0._tabContainerId][arg_4_1]
+
+		if var_4_2 then
+			var_4_0:setPathList(var_4_2)
+			var_4_0:startLoad(arg_4_0._onItemPreloaded, arg_4_0)
 		else
-			logError(string.format("SummonMainPreloadView no res: tabContainerId_%d, tabId_%d", slot0._tabContainerId, slot1))
+			logError(string.format("SummonMainPreloadView no res: tabContainerId_%d, tabId_%d", arg_4_0._tabContainerId, arg_4_1))
 		end
 	end
 end
 
-function slot0.onDestroyView(slot0)
-	for slot4, slot5 in pairs(slot0._tabAbPreloaders) do
-		if slot0._tabAbLoaders[slot4] ~= slot5 then
-			slot5:dispose()
+function var_0_0.onDestroyView(arg_5_0)
+	for iter_5_0, iter_5_1 in pairs(arg_5_0._tabAbPreloaders) do
+		if arg_5_0._tabAbLoaders[iter_5_0] ~= iter_5_1 then
+			iter_5_1:dispose()
 		end
 	end
 
-	slot0._tabAbPreloaders = nil
+	arg_5_0._tabAbPreloaders = nil
 
-	uv0.super.onDestroyView(slot0)
+	var_0_0.super.onDestroyView(arg_5_0)
 end
 
-function slot0._openTabView(slot0, slot1)
-	if not slot0._tabAbLoaders[slot1] and slot0._tabAbPreloaders[slot1] and not slot2.isLoading then
-		slot0:_closeTabView()
+function var_0_0._openTabView(arg_6_0, arg_6_1)
+	if not arg_6_0._tabAbLoaders[arg_6_1] then
+		local var_6_0 = arg_6_0._tabAbPreloaders[arg_6_1]
 
-		slot0._curTabId = slot1
-		slot0._tabAbLoaders[slot0._curTabId] = slot2
+		if var_6_0 and not var_6_0.isLoading then
+			arg_6_0:_closeTabView()
 
-		slot0:_finishCallback(slot2)
+			arg_6_0._curTabId = arg_6_1
+			arg_6_0._tabAbLoaders[arg_6_0._curTabId] = var_6_0
 
-		return
+			arg_6_0:_finishCallback(var_6_0)
+
+			return
+		end
 	end
 
-	uv0.super._openTabView(slot0, slot1)
+	var_0_0.super._openTabView(arg_6_0, arg_6_1)
 end
 
-function slot0._onItemPreloaded(slot0, slot1)
+function var_0_0._onItemPreloaded(arg_7_0, arg_7_1)
+	return
 end
 
-return slot0
+return var_0_0

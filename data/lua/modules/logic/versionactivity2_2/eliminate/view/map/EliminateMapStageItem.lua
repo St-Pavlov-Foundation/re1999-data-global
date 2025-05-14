@@ -1,170 +1,200 @@
-module("modules.logic.versionactivity2_2.eliminate.view.map.EliminateMapStageItem", package.seeall)
+﻿module("modules.logic.versionactivity2_2.eliminate.view.map.EliminateMapStageItem", package.seeall)
 
-slot0 = class("EliminateMapStageItem", ListScrollCellExtend)
+local var_0_0 = class("EliminateMapStageItem", ListScrollCellExtend)
 
-function slot0.onInitView(slot0)
-	slot0._imagepoint = gohelper.findChildImage(slot0.viewGO, "#image_point")
-	slot0._imagepointfinished = gohelper.findChildImage(slot0.viewGO, "#image_pointfinished")
-	slot0._gostage = gohelper.findChild(slot0.viewGO, "unlock/#go_stage")
-	slot0._gostagefinish = gohelper.findChild(slot0.viewGO, "unlock/#go_stage/#go_stagefinish")
-	slot0._goGame = gohelper.findChild(slot0.viewGO, "unlock/#go_stage/#go_Game")
-	slot0._goStageLine = gohelper.findChild(slot0.viewGO, "unlock/#go_stage/#go_StageLine")
-	slot0._goStageLineFinished = gohelper.findChild(slot0.viewGO, "unlock/#go_stage/#go_StageLineFinished")
-	slot0._imageline = gohelper.findChildImage(slot0.viewGO, "unlock/#go_stage/#image_line")
-	slot0._imageangle = gohelper.findChildImage(slot0.viewGO, "unlock/#go_stage/#image_angle")
-	slot0._imagelinefinish = gohelper.findChildImage(slot0.viewGO, "unlock/#go_stage/#image_linefinish")
-	slot0._imageanglefinish = gohelper.findChildImage(slot0.viewGO, "unlock/#go_stage/#image_anglefinish")
-	slot0._txtstagename = gohelper.findChildText(slot0.viewGO, "unlock/#go_stage/info/#txt_stagename")
-	slot0._txtstageNum = gohelper.findChildText(slot0.viewGO, "unlock/#go_stage/info/#txt_stagename/#txt_stageNum")
-	slot0._gostar = gohelper.findChild(slot0.viewGO, "unlock/#go_stage/info/#txt_stagename/#go_star")
-	slot0._gostar1 = gohelper.findChild(slot0.viewGO, "unlock/#go_stage/info/#txt_stagename/#go_star/#go_star1")
-	slot0._imageStar1 = gohelper.findChildImage(slot0.viewGO, "unlock/#go_stage/info/#txt_stagename/#go_star/#go_star1/has/#image_Star1")
-	slot0._gostar2 = gohelper.findChild(slot0.viewGO, "unlock/#go_stage/info/#txt_stagename/#go_star/#go_star2")
-	slot0._imageStar2 = gohelper.findChildImage(slot0.viewGO, "unlock/#go_stage/info/#txt_stagename/#go_star/#go_star2/has/#image_Star2")
-	slot0._btnreview = gohelper.findChildButtonWithAudio(slot0.viewGO, "unlock/#go_stage/info/#txt_stagename/#btn_review")
-	slot0._btnclick = gohelper.findChildButtonWithAudio(slot0.viewGO, "unlock/#btn_click")
-	slot0._imagechess = gohelper.findChildImage(slot0.viewGO, "unlock/#image_chess")
-	slot0._imageSign = gohelper.findChildImage(slot0.viewGO, "#image_Sign")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._imagepoint = gohelper.findChildImage(arg_1_0.viewGO, "#image_point")
+	arg_1_0._imagepointfinished = gohelper.findChildImage(arg_1_0.viewGO, "#image_pointfinished")
+	arg_1_0._gostage = gohelper.findChild(arg_1_0.viewGO, "unlock/#go_stage")
+	arg_1_0._gostagefinish = gohelper.findChild(arg_1_0.viewGO, "unlock/#go_stage/#go_stagefinish")
+	arg_1_0._goGame = gohelper.findChild(arg_1_0.viewGO, "unlock/#go_stage/#go_Game")
+	arg_1_0._goStageLine = gohelper.findChild(arg_1_0.viewGO, "unlock/#go_stage/#go_StageLine")
+	arg_1_0._goStageLineFinished = gohelper.findChild(arg_1_0.viewGO, "unlock/#go_stage/#go_StageLineFinished")
+	arg_1_0._imageline = gohelper.findChildImage(arg_1_0.viewGO, "unlock/#go_stage/#image_line")
+	arg_1_0._imageangle = gohelper.findChildImage(arg_1_0.viewGO, "unlock/#go_stage/#image_angle")
+	arg_1_0._imagelinefinish = gohelper.findChildImage(arg_1_0.viewGO, "unlock/#go_stage/#image_linefinish")
+	arg_1_0._imageanglefinish = gohelper.findChildImage(arg_1_0.viewGO, "unlock/#go_stage/#image_anglefinish")
+	arg_1_0._txtstagename = gohelper.findChildText(arg_1_0.viewGO, "unlock/#go_stage/info/#txt_stagename")
+	arg_1_0._txtstageNum = gohelper.findChildText(arg_1_0.viewGO, "unlock/#go_stage/info/#txt_stagename/#txt_stageNum")
+	arg_1_0._gostar = gohelper.findChild(arg_1_0.viewGO, "unlock/#go_stage/info/#txt_stagename/#go_star")
+	arg_1_0._gostar1 = gohelper.findChild(arg_1_0.viewGO, "unlock/#go_stage/info/#txt_stagename/#go_star/#go_star1")
+	arg_1_0._imageStar1 = gohelper.findChildImage(arg_1_0.viewGO, "unlock/#go_stage/info/#txt_stagename/#go_star/#go_star1/has/#image_Star1")
+	arg_1_0._gostar2 = gohelper.findChild(arg_1_0.viewGO, "unlock/#go_stage/info/#txt_stagename/#go_star/#go_star2")
+	arg_1_0._imageStar2 = gohelper.findChildImage(arg_1_0.viewGO, "unlock/#go_stage/info/#txt_stagename/#go_star/#go_star2/has/#image_Star2")
+	arg_1_0._btnreview = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "unlock/#go_stage/info/#txt_stagename/#btn_review")
+	arg_1_0._btnclick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "unlock/#btn_click")
+	arg_1_0._imagechess = gohelper.findChildImage(arg_1_0.viewGO, "unlock/#image_chess")
+	arg_1_0._imageSign = gohelper.findChildImage(arg_1_0.viewGO, "#image_Sign")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnreview:AddClickListener(slot0._btnreviewOnClick, slot0)
-	slot0._btnclick:AddClickListener(slot0._btnclickOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnreview:AddClickListener(arg_2_0._btnreviewOnClick, arg_2_0)
+	arg_2_0._btnclick:AddClickListener(arg_2_0._btnclickOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnreview:RemoveClickListener()
-	slot0._btnclick:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnreview:RemoveClickListener()
+	arg_3_0._btnclick:RemoveClickListener()
 end
 
-function slot0._btnreviewOnClick(slot0)
-	if slot0._config.dialogueId > 0 then
-		DialogueController.instance:enterDialogue(slot1)
+function var_0_0._btnreviewOnClick(arg_4_0)
+	local var_4_0 = arg_4_0._config.dialogueId
+
+	if var_4_0 > 0 then
+		DialogueController.instance:enterDialogue(var_4_0)
 	end
 end
 
-function slot0._btnclickOnClick(slot0)
-	slot0:_onClickEnterEpisode()
+function var_0_0._btnclickOnClick(arg_5_0)
+	arg_5_0:_onClickEnterEpisode()
 end
 
-function slot0._onClickEnterEpisode(slot0)
-	EliminateMapController.instance:dispatchEvent(EliminateMapEvent.ClickEpisode, slot0._config)
+function var_0_0._onClickEnterEpisode(arg_6_0)
+	EliminateMapController.instance:dispatchEvent(EliminateMapEvent.ClickEpisode, arg_6_0._config)
 end
 
-function slot0._editableInitView(slot0)
-	slot0._gostarNo1 = gohelper.findChild(slot0.viewGO, "unlock/#go_stage/info/#txt_stagename/#go_star/#go_star1/no")
-	slot0._gostarNo2 = gohelper.findChild(slot0.viewGO, "unlock/#go_stage/info/#txt_stagename/#go_star/#go_star2/no")
-	slot0._animator = slot0.viewGO:GetComponent("Animator")
-	slot0._goUnlock = gohelper.findChild(slot0.viewGO, "unlock")
-	slot0._chessAnimator = gohelper.findChild(slot0.viewGO, "unlock/#image_chess/ani"):GetComponent("Animator")
+function var_0_0._editableInitView(arg_7_0)
+	arg_7_0._gostarNo1 = gohelper.findChild(arg_7_0.viewGO, "unlock/#go_stage/info/#txt_stagename/#go_star/#go_star1/no")
+	arg_7_0._gostarNo2 = gohelper.findChild(arg_7_0.viewGO, "unlock/#go_stage/info/#txt_stagename/#go_star/#go_star2/no")
+	arg_7_0._animator = arg_7_0.viewGO:GetComponent("Animator")
+	arg_7_0._goUnlock = gohelper.findChild(arg_7_0.viewGO, "unlock")
+	arg_7_0._chessAnimator = gohelper.findChild(arg_7_0.viewGO, "unlock/#image_chess/ani"):GetComponent("Animator")
 
-	gohelper.setActive(slot0._imageSign, false)
-	gohelper.setActive(slot0._imagepointfinished, false)
-	gohelper.setActive(slot0._imagechess, false)
-	gohelper.setActive(slot0._imagepoint, true)
-	gohelper.setActive(slot0._goGame, false)
+	gohelper.setActive(arg_7_0._imageSign, false)
+	gohelper.setActive(arg_7_0._imagepointfinished, false)
+	gohelper.setActive(arg_7_0._imagechess, false)
+	gohelper.setActive(arg_7_0._imagepoint, true)
+	gohelper.setActive(arg_7_0._goGame, false)
 end
 
-function slot0.playAnim(slot0, slot1)
-	slot0._animator:Play(slot1, 0, 0)
+function var_0_0.playAnim(arg_8_0, arg_8_1)
+	arg_8_0._animator:Play(arg_8_1, 0, 0)
 end
 
-function slot0.playChessAnim(slot0, slot1)
-	slot0._chessAnimator:Play(slot1, 0, 0)
+function var_0_0.playChessAnim(arg_9_0, arg_9_1)
+	arg_9_0._chessAnimator:Play(arg_9_1, 0, 0)
 end
 
-function slot0._editableAddEvents(slot0)
+function var_0_0._editableAddEvents(arg_10_0)
+	return
 end
 
-function slot0._editableRemoveEvents(slot0)
+function var_0_0._editableRemoveEvents(arg_11_0)
+	return
 end
 
-function slot0.isBoss(slot0)
-	return slot0._isBoss
+function var_0_0.isBoss(arg_12_0)
+	return arg_12_0._isBoss
 end
 
-function slot0.getChapterId(slot0)
-	return slot0._config.chapterId
+function var_0_0.getChapterId(arg_13_0)
+	return arg_13_0._config.chapterId
 end
 
-function slot0.setIndex(slot0, slot1)
-	slot0._index = slot1
+function var_0_0.setIndex(arg_14_0, arg_14_1)
+	arg_14_0._index = arg_14_1
 end
 
-function slot0.onUpdateMO(slot0, slot1, slot2)
-	slot0._episodeMo = slot1
-	slot3 = slot0._episodeMo.star ~= 0
-	slot0._config = slot0._episodeMo.config
-	slot0._isBoss = slot0._config.levelPosition == EliminateLevelEnum.levelType.boss
-	slot0._isShowMainInfo = slot3 or slot1 == slot2
+function var_0_0.onUpdateMO(arg_15_0, arg_15_1, arg_15_2)
+	arg_15_0._episodeMo = arg_15_1
 
-	slot0:showMainInfo(slot0._isShowMainInfo)
-	gohelper.setActive(slot0._btnreview, slot3 and slot0._config.dialogueId > 0)
+	local var_15_0 = arg_15_0._episodeMo.star ~= 0
 
-	slot4 = nil
-	slot4 = slot0._isBoss and (slot3 and EliminateMapEnum.BossPassedColor or EliminateMapEnum.BossUnPassedColor) or slot3 and EliminateMapEnum.NormalPassedColor or EliminateMapEnum.NormalUnPassedColor
-	slot5 = nil
-	slot0._txtstagename.color = slot0._isBoss and (slot3 and EliminateMapEnum.TxtBossPassedColor or EliminateMapEnum.TxtBossUnPassedColor) or slot3 and EliminateMapEnum.TxtNormalPassedColor or EliminateMapEnum.TxtNormalUnPassedColor
-	slot0._imagepoint.color = not slot0._isShowMainInfo and EliminateMapEnum.TxtNormalUnPassedColor or slot4
-	slot0._imagepointfinished.color = slot4
-	slot0._imageline.color = slot4
-	slot0._imageangle.color = slot4
-	slot0._txtstagename.text = slot0._config.name
-	slot0._txtstageNum.text = string.format("STAGE <color=#FFC67C>%s-%s</color>", slot0._config.chapterId, slot0._index)
+	arg_15_0._config = arg_15_0._episodeMo.config
+	arg_15_0._isBoss = arg_15_0._config.levelPosition == EliminateLevelEnum.levelType.boss
+	arg_15_0._isShowMainInfo = var_15_0 or arg_15_1 == arg_15_2
 
-	gohelper.setActive(slot0._goStageLine, not slot3)
-	gohelper.setActive(slot0._gostagefinish, slot3)
-	gohelper.setActive(slot0._goStageLineFinished, slot3)
-	gohelper.setActive(slot0._imageline, not slot3)
-	gohelper.setActive(slot0._imageangle, not slot3)
-	gohelper.setActive(slot0._imagelinefinish, slot3)
-	gohelper.setActive(slot0._imageanglefinish, slot3)
-	slot0:_showStars()
+	arg_15_0:showMainInfo(arg_15_0._isShowMainInfo)
+	gohelper.setActive(arg_15_0._btnreview, var_15_0 and arg_15_0._config.dialogueId > 0)
+
+	local var_15_1
+
+	if arg_15_0._isBoss then
+		var_15_1 = var_15_0 and EliminateMapEnum.BossPassedColor or EliminateMapEnum.BossUnPassedColor
+	else
+		var_15_1 = var_15_0 and EliminateMapEnum.NormalPassedColor or EliminateMapEnum.NormalUnPassedColor
+	end
+
+	local var_15_2
+
+	if arg_15_0._isBoss then
+		var_15_2 = var_15_0 and EliminateMapEnum.TxtBossPassedColor or EliminateMapEnum.TxtBossUnPassedColor
+	else
+		var_15_2 = var_15_0 and EliminateMapEnum.TxtNormalPassedColor or EliminateMapEnum.TxtNormalUnPassedColor
+	end
+
+	arg_15_0._txtstagename.color = var_15_2
+	arg_15_0._imagepoint.color = not arg_15_0._isShowMainInfo and EliminateMapEnum.TxtNormalUnPassedColor or var_15_1
+	arg_15_0._imagepointfinished.color = var_15_1
+	arg_15_0._imageline.color = var_15_1
+	arg_15_0._imageangle.color = var_15_1
+	arg_15_0._txtstagename.text = arg_15_0._config.name
+	arg_15_0._txtstageNum.text = string.format("STAGE <color=#FFC67C>%s-%s</color>", arg_15_0._config.chapterId, arg_15_0._index)
+
+	gohelper.setActive(arg_15_0._goStageLine, not var_15_0)
+	gohelper.setActive(arg_15_0._gostagefinish, var_15_0)
+	gohelper.setActive(arg_15_0._goStageLineFinished, var_15_0)
+	gohelper.setActive(arg_15_0._imageline, not var_15_0)
+	gohelper.setActive(arg_15_0._imageangle, not var_15_0)
+	gohelper.setActive(arg_15_0._imagelinefinish, var_15_0)
+	gohelper.setActive(arg_15_0._imageanglefinish, var_15_0)
+	arg_15_0:_showStars()
 end
 
-function slot0.showMainInfo(slot0, slot1)
-	gohelper.setActive(slot0._goUnlock, slot1)
+function var_0_0.showMainInfo(arg_16_0, arg_16_1)
+	gohelper.setActive(arg_16_0._goUnlock, arg_16_1)
 end
 
-function slot0.showChess(slot0, slot1)
-	gohelper.setActive(slot0._imagechess, slot1)
-	gohelper.setActive(slot0._imagepointfinished, slot1)
-	gohelper.setActive(slot0._imageSign, slot1)
-	gohelper.setActive(slot0._goGame, slot1)
+function var_0_0.showChess(arg_17_0, arg_17_1)
+	gohelper.setActive(arg_17_0._imagechess, arg_17_1)
+	gohelper.setActive(arg_17_0._imagepointfinished, arg_17_1)
+	gohelper.setActive(arg_17_0._imageSign, arg_17_1)
+	gohelper.setActive(arg_17_0._goGame, arg_17_1)
 end
 
-function slot0.showPointFinish(slot0, slot1)
-	gohelper.setActive(slot0._imagepointfinished, slot1)
-	gohelper.setActive(slot0._goGame, slot1)
+function var_0_0.showPointFinish(arg_18_0, arg_18_1)
+	gohelper.setActive(arg_18_0._imagepointfinished, arg_18_1)
+	gohelper.setActive(arg_18_0._goGame, arg_18_1)
 end
 
-function slot0.showSign(slot0, slot1)
-	gohelper.setActive(slot0._imageSign, slot1)
+function var_0_0.showSign(arg_19_0, arg_19_1)
+	gohelper.setActive(arg_19_0._imageSign, arg_19_1)
 end
 
-function slot0._showStars(slot0)
-	for slot8 = 1, 2 do
-		slot10 = slot8 <= (not string.nilorempty(lua_war_chess_episode.configDict[slot0._config.warChessId].extraWinCondition) and 2 or 1)
+function var_0_0._showStars(arg_20_0)
+	local var_20_0 = arg_20_0._config.warChessId
+	local var_20_1 = lua_war_chess_episode.configDict[var_20_0]
+	local var_20_2 = not string.nilorempty(var_20_1.extraWinCondition) and 2 or 1
 
-		gohelper.setActive(slot0["_gostar" .. slot8], slot10)
+	for iter_20_0 = 1, 2 do
+		local var_20_3 = arg_20_0["_gostar" .. iter_20_0]
+		local var_20_4 = iter_20_0 <= var_20_2
 
-		if slot10 then
-			slot12 = slot8 <= slot0._episodeMo.star
+		gohelper.setActive(var_20_3, var_20_4)
 
-			gohelper.setActive(slot0["_imageStar" .. slot8], slot12)
-			gohelper.setActive(slot0["_gostarNo" .. slot8], not slot12)
+		if var_20_4 then
+			local var_20_5 = arg_20_0["_imageStar" .. iter_20_0]
+			local var_20_6 = iter_20_0 <= arg_20_0._episodeMo.star
+
+			gohelper.setActive(var_20_5, var_20_6)
+
+			local var_20_7 = arg_20_0["_gostarNo" .. iter_20_0]
+
+			gohelper.setActive(var_20_7, not var_20_6)
 		end
 	end
 end
 
-function slot0.onSelect(slot0, slot1)
+function var_0_0.onSelect(arg_21_0, arg_21_1)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_22_0)
+	return
 end
 
-return slot0
+return var_0_0

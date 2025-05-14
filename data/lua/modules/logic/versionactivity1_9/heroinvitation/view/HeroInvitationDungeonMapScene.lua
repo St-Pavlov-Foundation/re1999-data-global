@@ -1,52 +1,64 @@
-module("modules.logic.versionactivity1_9.heroinvitation.view.HeroInvitationDungeonMapScene", package.seeall)
+﻿module("modules.logic.versionactivity1_9.heroinvitation.view.HeroInvitationDungeonMapScene", package.seeall)
 
-slot0 = class("HeroInvitationDungeonMapScene", DungeonMapScene)
+local var_0_0 = class("HeroInvitationDungeonMapScene", DungeonMapScene)
 
-function slot0.onInitView(slot0)
-	slot0._gofullscreen = gohelper.findChild(slot0.viewGO, "#go_fullscreen")
-	slot0._goarrow = gohelper.findChild(slot0.viewGO, "#go_arrow")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gofullscreen = gohelper.findChild(arg_1_0.viewGO, "#go_fullscreen")
+	arg_1_0._goarrow = gohelper.findChild(arg_1_0.viewGO, "#go_arrow")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0._setInitPos(slot0, slot1)
-	if not slot0._mapCfg then
+function var_0_0._setInitPos(arg_2_0, arg_2_1)
+	if not arg_2_0._mapCfg then
 		return
 	end
 
-	if slot0.viewContainer.mapSceneElements._inRemoveElement then
+	local var_2_0 = arg_2_0.viewContainer.mapSceneElements
+
+	if var_2_0._inRemoveElement then
 		return
 	end
 
-	if not slot2._inRemoveElementId and DungeonConfig.instance:getMapElements(slot0._mapCfg.id) then
-		for slot8, slot9 in ipairs(slot4) do
-			if HeroInvitationModel.instance:getInvitationStateByElementId(slot9.id) ~= HeroInvitationEnum.InvitationState.TimeLocked and slot10 ~= HeroInvitationEnum.InvitationState.ElementLocked and DungeonMapModel.instance:getElementById(slot9.id) then
-				slot3 = slot9.id
+	local var_2_1 = var_2_0._inRemoveElementId
 
-				break
+	if not var_2_1 then
+		local var_2_2 = DungeonConfig.instance:getMapElements(arg_2_0._mapCfg.id)
+
+		if var_2_2 then
+			for iter_2_0, iter_2_1 in ipairs(var_2_2) do
+				local var_2_3 = HeroInvitationModel.instance:getInvitationStateByElementId(iter_2_1.id)
+
+				if var_2_3 ~= HeroInvitationEnum.InvitationState.TimeLocked and var_2_3 ~= HeroInvitationEnum.InvitationState.ElementLocked and DungeonMapModel.instance:getElementById(iter_2_1.id) then
+					var_2_1 = iter_2_1.id
+
+					break
+				end
 			end
 		end
 	end
 
-	if slot3 then
+	if var_2_1 then
 		DungeonMapModel.instance.directFocusElement = true
 
-		slot0:_focusElementById(slot3)
+		arg_2_0:_focusElementById(var_2_1)
 
 		DungeonMapModel.instance.directFocusElement = false
 	else
-		slot4 = string.splitToNumber(slot0._mapCfg.initPos, "#")
+		local var_2_4 = string.splitToNumber(arg_2_0._mapCfg.initPos, "#")
 
-		slot0:setScenePosSafety(Vector3(slot4[1], slot4[2], 0), slot1)
+		arg_2_0:setScenePosSafety(Vector3(var_2_4[1], var_2_4[2], 0), arg_2_1)
 	end
 end
 
-function slot0._onOpenView(slot0, slot1)
+function var_0_0._onOpenView(arg_3_0, arg_3_1)
+	return
 end
 
-function slot0._onCloseView(slot0, slot1)
+function var_0_0._onCloseView(arg_4_0, arg_4_1)
+	return
 end
 
-return slot0
+return var_0_0

@@ -1,121 +1,131 @@
-module("modules.logic.critter.view.CritterMoodItem", package.seeall)
+﻿module("modules.logic.critter.view.CritterMoodItem", package.seeall)
 
-slot0 = class("CritterMoodItem", LuaCompBase)
+local var_0_0 = class("CritterMoodItem", LuaCompBase)
 
-function slot0.init(slot0, slot1)
-	slot0.go = slot1
-	slot0._gohasMood = gohelper.findChild(slot0.go, "#go_hasMood")
-	slot0._imagemood = gohelper.findChildImage(slot0.go, "#go_hasMood/#simage_mood")
-	slot0._imagemoodvalue = gohelper.findChildImage(slot0.go, "#go_hasMood/#simage_progress")
-	slot0._txtMoodValue = gohelper.findChildText(slot0.go, "#go_hasMood/#txt_mood")
-	slot0._gonoMood = gohelper.findChild(slot0.go, "#go_noMood")
-	slot0._txtmoodRestore = gohelper.findChildText(slot0.go, "#txt_moodRestore")
-	slot0._animator = slot0.go:GetComponent(typeof(UnityEngine.Animator))
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.go = arg_1_1
+	arg_1_0._gohasMood = gohelper.findChild(arg_1_0.go, "#go_hasMood")
+	arg_1_0._imagemood = gohelper.findChildImage(arg_1_0.go, "#go_hasMood/#simage_mood")
+	arg_1_0._imagemoodvalue = gohelper.findChildImage(arg_1_0.go, "#go_hasMood/#simage_progress")
+	arg_1_0._txtMoodValue = gohelper.findChildText(arg_1_0.go, "#go_hasMood/#txt_mood")
+	arg_1_0._gonoMood = gohelper.findChild(arg_1_0.go, "#go_noMood")
+	arg_1_0._txtmoodRestore = gohelper.findChildText(arg_1_0.go, "#txt_moodRestore")
+	arg_1_0._animator = arg_1_0.go:GetComponent(typeof(UnityEngine.Animator))
 
-	if slot0._txtmoodRestore then
-		gohelper.setActive(slot0._txtmoodRestore, false)
+	if arg_1_0._txtmoodRestore then
+		gohelper.setActive(arg_1_0._txtmoodRestore, false)
 
-		slot0._txtmoodRestore.text = ""
+		arg_1_0._txtmoodRestore.text = ""
 	end
 end
 
-function slot0.addEventListeners(slot0)
-	slot0:addEventCb(CritterController.instance, CritterEvent.CritterFeedFood, slot0._onFeedFood, slot0)
-	slot0:addEventCb(CritterController.instance, CritterEvent.CritterInfoPushUpdate, slot0._onMoodChange, slot0)
-	slot0:addEventCb(CritterController.instance, CritterEvent.CritterUpdateAttrPreview, slot0._onAttrPreviewUpdate, slot0)
+function var_0_0.addEventListeners(arg_2_0)
+	arg_2_0:addEventCb(CritterController.instance, CritterEvent.CritterFeedFood, arg_2_0._onFeedFood, arg_2_0)
+	arg_2_0:addEventCb(CritterController.instance, CritterEvent.CritterInfoPushUpdate, arg_2_0._onMoodChange, arg_2_0)
+	arg_2_0:addEventCb(CritterController.instance, CritterEvent.CritterUpdateAttrPreview, arg_2_0._onAttrPreviewUpdate, arg_2_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0:removeEventCb(CritterController.instance, CritterEvent.CritterFeedFood, slot0._onFeedFood, slot0)
-	slot0:removeEventCb(CritterController.instance, CritterEvent.CritterInfoPushUpdate, slot0._onMoodChange, slot0)
-	slot0:removeEventCb(CritterController.instance, CritterEvent.CritterUpdateAttrPreview, slot0._onAttrPreviewUpdate, slot0)
+function var_0_0.removeEventListeners(arg_3_0)
+	arg_3_0:removeEventCb(CritterController.instance, CritterEvent.CritterFeedFood, arg_3_0._onFeedFood, arg_3_0)
+	arg_3_0:removeEventCb(CritterController.instance, CritterEvent.CritterInfoPushUpdate, arg_3_0._onMoodChange, arg_3_0)
+	arg_3_0:removeEventCb(CritterController.instance, CritterEvent.CritterUpdateAttrPreview, arg_3_0._onAttrPreviewUpdate, arg_3_0)
 end
 
-function slot0._onFeedFood(slot0, slot1, slot2)
-	if not slot0.critterUid or slot1 and not slot1[slot0.critterUid] then
+function var_0_0._onFeedFood(arg_4_0, arg_4_1, arg_4_2)
+	if not arg_4_0.critterUid or arg_4_1 and not arg_4_1[arg_4_0.critterUid] then
 		return
 	end
 
-	if slot0._animator then
-		slot0._animator:Play(slot2 and "love" or "like", 0, 0)
+	if arg_4_0._animator then
+		arg_4_0._animator:Play(arg_4_2 and "love" or "like", 0, 0)
 	end
 
-	slot0:refreshMood()
+	arg_4_0:refreshMood()
 end
 
-function slot0._onMoodChange(slot0, slot1)
-	if not slot0.critterUid or slot1 and not slot1[slot0.critterUid] then
+function var_0_0._onMoodChange(arg_5_0, arg_5_1)
+	if not arg_5_0.critterUid or arg_5_1 and not arg_5_1[arg_5_0.critterUid] then
 		return
 	end
 
-	slot0:refreshMood()
+	arg_5_0:refreshMood()
 end
 
-function slot0._onAttrPreviewUpdate(slot0, slot1)
-	slot0:_onMoodChange(slot1)
+function var_0_0._onAttrPreviewUpdate(arg_6_0, arg_6_1)
+	arg_6_0:_onMoodChange(arg_6_1)
 end
 
-function slot0.setCritterUid(slot0, slot1)
-	slot0.critterUid = slot1
+function var_0_0.setCritterUid(arg_7_0, arg_7_1)
+	arg_7_0.critterUid = arg_7_1
 
-	slot0:refreshMood()
+	arg_7_0:refreshMood()
 end
 
-function slot0.setShowMoodRestore(slot0, slot1)
-	slot0._isNOShowRestore = slot1 == false
+function var_0_0.setShowMoodRestore(arg_8_0, arg_8_1)
+	arg_8_0._isNOShowRestore = arg_8_1 == false
 
-	gohelper.setActive(slot0._txtmoodRestore, slot1 ~= false)
+	gohelper.setActive(arg_8_0._txtmoodRestore, arg_8_1 ~= false)
 end
 
-function slot0.refreshMood(slot0)
-	if not slot0.critterUid then
+function var_0_0.refreshMood(arg_9_0)
+	if not arg_9_0.critterUid then
 		logError("CritterMoodItem:refreshMood error,critterUid is nil")
 
 		return
 	end
 
-	slot1 = 0
+	local var_9_0 = 0
+	local var_9_1 = CritterModel.instance:getCritterMOByUid(arg_9_0.critterUid)
 
-	if CritterModel.instance:getCritterMOByUid(slot0.critterUid) then
-		slot1 = slot2:getMoodValue()
+	if var_9_1 then
+		var_9_0 = var_9_1:getMoodValue()
 	end
 
-	slot3 = slot1 ~= 0
+	local var_9_2 = var_9_0 ~= 0
 
-	gohelper.setActive(slot0._gohasMood, slot3)
-	gohelper.setActive(slot0._gonoMood, not slot3)
+	gohelper.setActive(arg_9_0._gohasMood, var_9_2)
+	gohelper.setActive(arg_9_0._gonoMood, not var_9_2)
 
-	if slot3 then
-		slot5 = tonumber(ManufactureConfig.instance:getManufactureConst(RoomManufactureEnum.ConstId.CritterMaxMood)) or 0
-		slot8 = "critter_manufacture_heart1"
+	if var_9_2 then
+		local var_9_3 = ManufactureConfig.instance:getManufactureConst(RoomManufactureEnum.ConstId.CritterMaxMood)
+		local var_9_4 = tonumber(var_9_3) or 0
+		local var_9_5 = CritterConfig.instance:getCritterConstStr(CritterEnum.ConstId.LowMood) or 0
+		local var_9_6 = var_9_0 <= tonumber(var_9_5)
+		local var_9_7 = "critter_manufacture_heart1"
 
-		if slot1 <= tonumber(CritterConfig.instance:getCritterConstStr(CritterEnum.ConstId.LowMood) or 0) then
-			slot8 = "critter_manufacture_heart2"
+		if var_9_6 then
+			var_9_7 = "critter_manufacture_heart2"
 		end
 
-		UISpriteSetMgr.instance:setCritterSprite(slot0._imagemood, slot8)
-		SLFramework.UGUI.GuiHelper.SetColor(slot0._imagemoodvalue, slot7 and "#B76D79" or "#FDB467")
+		UISpriteSetMgr.instance:setCritterSprite(arg_9_0._imagemood, var_9_7)
+		SLFramework.UGUI.GuiHelper.SetColor(arg_9_0._imagemoodvalue, var_9_6 and "#B76D79" or "#FDB467")
 
-		slot0._txtMoodValue.text = slot1
-		slot9 = 0
+		arg_9_0._txtMoodValue.text = var_9_0
 
-		if slot1 and slot5 and slot5 ~= 0 then
-			slot9 = Mathf.Clamp(slot1 / slot5, 0, 1)
+		local var_9_8 = 0
+
+		if var_9_0 and var_9_4 and var_9_4 ~= 0 then
+			var_9_8 = Mathf.Clamp(var_9_0 / var_9_4, 0, 1)
 		end
 
-		slot0._imagemoodvalue.fillAmount = slot9
+		arg_9_0._imagemoodvalue.fillAmount = var_9_8
 	end
 
-	if slot0._isNOShowRestore ~= true and slot0._txtmoodRestore then
-		slot4 = CritterHelper.getPreViewAttrValue(CritterEnum.AttributeType.MoodRestore, slot0.critterUid)
-		slot0._txtmoodRestore.text = "+" .. CritterHelper.formatAttrValue(CritterEnum.AttributeType.MoodRestore, slot4)
+	if arg_9_0._isNOShowRestore ~= true and arg_9_0._txtmoodRestore then
+		local var_9_9 = CritterHelper.getPreViewAttrValue(CritterEnum.AttributeType.MoodRestore, arg_9_0.critterUid)
 
-		gohelper.setActive(slot0._txtmoodRestore, slot4 > 0)
-		SLFramework.UGUI.GuiHelper.SetColor(slot0._txtmoodRestore, CritterHelper.getPatienceChangeValue(RoomBuildingEnum.BuildingType.Rest) < slot4 and "#D9A06F" or "#D4C399")
+		arg_9_0._txtmoodRestore.text = "+" .. CritterHelper.formatAttrValue(CritterEnum.AttributeType.MoodRestore, var_9_9)
+
+		gohelper.setActive(arg_9_0._txtmoodRestore, var_9_9 > 0)
+
+		local var_9_10 = CritterHelper.getPatienceChangeValue(RoomBuildingEnum.BuildingType.Rest)
+
+		SLFramework.UGUI.GuiHelper.SetColor(arg_9_0._txtmoodRestore, var_9_10 < var_9_9 and "#D9A06F" or "#D4C399")
 	end
 end
 
-function slot0.onDestroy(slot0)
+function var_0_0.onDestroy(arg_10_0)
+	return
 end
 
-return slot0
+return var_0_0

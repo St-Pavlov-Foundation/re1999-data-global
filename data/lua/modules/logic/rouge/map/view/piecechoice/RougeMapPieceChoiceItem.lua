@@ -1,25 +1,25 @@
-module("modules.logic.rouge.map.view.piecechoice.RougeMapPieceChoiceItem", package.seeall)
+﻿module("modules.logic.rouge.map.view.piecechoice.RougeMapPieceChoiceItem", package.seeall)
 
-slot0 = class("RougeMapPieceChoiceItem", RougeMapChoiceBaseItem)
+local var_0_0 = class("RougeMapPieceChoiceItem", RougeMapChoiceBaseItem)
 
-function slot0._editableInitView(slot0)
-	uv0.super._editableInitView(slot0)
+function var_0_0._editableInitView(arg_1_0)
+	var_0_0.super._editableInitView(arg_1_0)
 
-	slot0._btnlockdetail2 = gohelper.findChildButtonWithAudio(slot0.go, "#go_locked/#btn_lockdetail2")
-	slot0._simagelockcollection = gohelper.findChildSingleImage(slot0.go, "#go_locked/#btn_lockdetail2/#simage_collection")
-	slot0._btnnormaldetail2 = gohelper.findChildButtonWithAudio(slot0.go, "#go_normal/#btn_normaldetail2")
-	slot0._simagenormalcollection = gohelper.findChildSingleImage(slot0.go, "#go_normal/#btn_normaldetail2/#simage_collection")
-	slot0._btnselectdetail2 = gohelper.findChildButtonWithAudio(slot0.go, "#go_select/#btn_selectdetail2")
-	slot0._simageselectcollection = gohelper.findChildSingleImage(slot0.go, "#go_select/#btn_selectdetail2/#simage_collection")
+	arg_1_0._btnlockdetail2 = gohelper.findChildButtonWithAudio(arg_1_0.go, "#go_locked/#btn_lockdetail2")
+	arg_1_0._simagelockcollection = gohelper.findChildSingleImage(arg_1_0.go, "#go_locked/#btn_lockdetail2/#simage_collection")
+	arg_1_0._btnnormaldetail2 = gohelper.findChildButtonWithAudio(arg_1_0.go, "#go_normal/#btn_normaldetail2")
+	arg_1_0._simagenormalcollection = gohelper.findChildSingleImage(arg_1_0.go, "#go_normal/#btn_normaldetail2/#simage_collection")
+	arg_1_0._btnselectdetail2 = gohelper.findChildButtonWithAudio(arg_1_0.go, "#go_select/#btn_selectdetail2")
+	arg_1_0._simageselectcollection = gohelper.findChildSingleImage(arg_1_0.go, "#go_select/#btn_selectdetail2/#simage_collection")
 
-	slot0._btnlockdetail2:AddClickListener(slot0.onClickCollection, slot0)
-	slot0._btnnormaldetail2:AddClickListener(slot0.onClickCollection, slot0)
-	slot0._btnselectdetail2:AddClickListener(slot0.onClickCollection, slot0)
-	slot0:addEventCb(RougeMapController.instance, RougeMapEvent.onChoiceItemStatusChange, slot0.onStatusChange, slot0)
+	arg_1_0._btnlockdetail2:AddClickListener(arg_1_0.onClickCollection, arg_1_0)
+	arg_1_0._btnnormaldetail2:AddClickListener(arg_1_0.onClickCollection, arg_1_0)
+	arg_1_0._btnselectdetail2:AddClickListener(arg_1_0.onClickCollection, arg_1_0)
+	arg_1_0:addEventCb(RougeMapController.instance, RougeMapEvent.onChoiceItemStatusChange, arg_1_0.onStatusChange, arg_1_0)
 end
 
-function slot0.onClickCollection(slot0)
-	if not slot0:hadCollection() then
+function var_0_0.onClickCollection(arg_2_0)
+	if not arg_2_0:hadCollection() then
 		return
 	end
 
@@ -31,14 +31,14 @@ function slot0.onClickCollection(slot0)
 		return
 	end
 
-	slot0.collectionIdList = slot0.collectionIdList or {
-		slot0.collectionId
+	arg_2_0.collectionIdList = arg_2_0.collectionIdList or {
+		arg_2_0.collectionId
 	}
 
-	RougeMapController.instance:dispatchEvent(RougeMapEvent.onClickPieceStoreDetail, slot0.collectionIdList)
+	RougeMapController.instance:dispatchEvent(RougeMapEvent.onClickPieceStoreDetail, arg_2_0.collectionIdList)
 end
 
-function slot0.onClickSelf(slot0)
+function var_0_0.onClickSelf(arg_3_0)
 	if RougeMapModel.instance:isInteractiving() then
 		return
 	end
@@ -47,224 +47,240 @@ function slot0.onClickSelf(slot0)
 		return
 	end
 
-	if slot0:canShowLockUI() then
+	if arg_3_0:canShowLockUI() then
 		return
 	end
 
-	if slot0.viewEnum == RougeMapEnum.PieceChoiceViewStatus.Store then
-		slot0:handleStoreChoice()
+	if arg_3_0.viewEnum == RougeMapEnum.PieceChoiceViewStatus.Store then
+		arg_3_0:handleStoreChoice()
 
 		return
 	end
 
-	slot0:handleNormalChoice()
+	arg_3_0:handleNormalChoice()
 end
 
-function slot0.handleNormalChoice(slot0)
-	if slot0.status == RougeMapEnum.ChoiceStatus.Select then
-		if slot0.choiceId == 0 then
+function var_0_0.handleNormalChoice(arg_4_0)
+	if arg_4_0.status == RougeMapEnum.ChoiceStatus.Select then
+		if arg_4_0.choiceId == 0 then
 			RougeMapController.instance:dispatchEvent(RougeMapEvent.onExitPieceChoiceEvent)
 		else
-			slot0.animator:Play("select", 0, 0)
-			TaskDispatcher.cancelTask(slot0.onNormalChoiceSelectAnimDone, slot0)
-			TaskDispatcher.runDelay(slot0.onNormalChoiceSelectAnimDone, slot0, RougeMapEnum.ChoiceSelectAnimDuration)
+			arg_4_0.animator:Play("select", 0, 0)
+			TaskDispatcher.cancelTask(arg_4_0.onNormalChoiceSelectAnimDone, arg_4_0)
+			TaskDispatcher.runDelay(arg_4_0.onNormalChoiceSelectAnimDone, arg_4_0, RougeMapEnum.ChoiceSelectAnimDuration)
 			UIBlockMgr.instance:startBlock(RougeMapEnum.WaitChoiceItemAnimBlock)
 		end
 	else
-		RougeMapController.instance:dispatchEvent(RougeMapEvent.onChoiceItemStatusChange, slot0.dataId)
+		RougeMapController.instance:dispatchEvent(RougeMapEvent.onChoiceItemStatusChange, arg_4_0.dataId)
 	end
 end
 
-function slot0.onNormalChoiceSelectAnimDone(slot0)
+function var_0_0.onNormalChoiceSelectAnimDone(arg_5_0)
 	UIBlockMgr.instance:endBlock(RougeMapEnum.WaitChoiceItemAnimBlock)
 
-	if lua_rouge_piece_select.configDict[slot0.choiceId].triggerType == RougeMapEnum.PieceTriggerType.Shop and slot0.pieceMo.triggerStr and slot0.pieceMo.triggerStr.repairShopCollections then
-		RougeMapController.instance:dispatchEvent(RougeMapEvent.onSelectPieceChoice, slot0.pieceMo, slot0.choiceId)
+	local var_5_0 = lua_rouge_piece_select.configDict[arg_5_0.choiceId].triggerType
+
+	if var_5_0 == RougeMapEnum.PieceTriggerType.Shop and arg_5_0.pieceMo.triggerStr and arg_5_0.pieceMo.triggerStr.repairShopCollections then
+		RougeMapController.instance:dispatchEvent(RougeMapEvent.onSelectPieceChoice, arg_5_0.pieceMo, arg_5_0.choiceId)
 
 		return
-	elseif slot2 == RougeMapEnum.PieceTriggerType.EndFight and slot0.pieceMo.selectId and slot0.pieceMo.selectId ~= 0 then
-		RougeMapController.instance:dispatchEvent(RougeMapEvent.onSelectPieceChoice, slot0.pieceMo, slot0.choiceId)
+	elseif var_5_0 == RougeMapEnum.PieceTriggerType.EndFight and arg_5_0.pieceMo.selectId and arg_5_0.pieceMo.selectId ~= 0 then
+		RougeMapController.instance:dispatchEvent(RougeMapEvent.onSelectPieceChoice, arg_5_0.pieceMo, arg_5_0.choiceId)
 
 		return
 	end
 
-	slot0:clearCallback()
+	arg_5_0:clearCallback()
 
-	slot0.callbackId = RougeRpc.instance:sendRougePieceTalkSelectRequest(slot0.choiceId, slot0.onReceiveMsg, slot0)
+	arg_5_0.callbackId = RougeRpc.instance:sendRougePieceTalkSelectRequest(arg_5_0.choiceId, arg_5_0.onReceiveMsg, arg_5_0)
 end
 
-function slot0.onReceiveMsg(slot0)
-	RougeMapController.instance:dispatchEvent(RougeMapEvent.onSelectPieceChoice, slot0.pieceMo, slot0.choiceId)
+function var_0_0.onReceiveMsg(arg_6_0)
+	RougeMapController.instance:dispatchEvent(RougeMapEvent.onSelectPieceChoice, arg_6_0.pieceMo, arg_6_0.choiceId)
 end
 
-function slot0.handleStoreChoice(slot0)
-	if slot0.status == RougeMapEnum.ChoiceStatus.Select then
-		slot0.animator:Play("select", 0, 0)
-		TaskDispatcher.cancelTask(slot0.onStoreSelectAnimDone, slot0)
-		TaskDispatcher.runDelay(slot0.onStoreSelectAnimDone, slot0, RougeMapEnum.ChoiceSelectAnimDuration)
+function var_0_0.handleStoreChoice(arg_7_0)
+	if arg_7_0.status == RougeMapEnum.ChoiceStatus.Select then
+		arg_7_0.animator:Play("select", 0, 0)
+		TaskDispatcher.cancelTask(arg_7_0.onStoreSelectAnimDone, arg_7_0)
+		TaskDispatcher.runDelay(arg_7_0.onStoreSelectAnimDone, arg_7_0, RougeMapEnum.ChoiceSelectAnimDuration)
 		UIBlockMgr.instance:startBlock(RougeMapEnum.WaitChoiceItemAnimBlock)
 	else
-		RougeMapController.instance:dispatchEvent(RougeMapEvent.onChoiceItemStatusChange, slot0.dataId)
+		RougeMapController.instance:dispatchEvent(RougeMapEvent.onChoiceItemStatusChange, arg_7_0.dataId)
 	end
 end
 
-function slot0.onStoreSelectAnimDone(slot0)
+function var_0_0.onStoreSelectAnimDone(arg_8_0)
 	UIBlockMgr.instance:endBlock(RougeMapEnum.WaitChoiceItemAnimBlock)
-	slot0:clearCallback()
+	arg_8_0:clearCallback()
 
-	slot0.callbackId = RougeRpc.instance:sendRougeRepairShopBuyRequest(slot0.collectionId, slot0.onReceiveBuyMsg, slot0)
+	arg_8_0.callbackId = RougeRpc.instance:sendRougeRepairShopBuyRequest(arg_8_0.collectionId, arg_8_0.onReceiveBuyMsg, arg_8_0)
 end
 
-function slot0.onReceiveBuyMsg(slot0)
+function var_0_0.onReceiveBuyMsg(arg_9_0)
 	RougeMapController.instance:dispatchEvent(RougeMapEvent.onRefreshChoiceStore)
 end
 
-function slot0.onStatusChange(slot0, slot1)
-	if slot0.status == RougeMapEnum.ChoiceStatus.Lock or slot0.status == RougeMapEnum.ChoiceStatus.Bought then
+function var_0_0.onStatusChange(arg_10_0, arg_10_1)
+	if arg_10_0.status == RougeMapEnum.ChoiceStatus.Lock or arg_10_0.status == RougeMapEnum.ChoiceStatus.Bought then
 		return
 	end
 
-	slot2 = nil
+	local var_10_0
 
-	if ((not slot1 or (slot1 ~= slot0.dataId or RougeMapEnum.ChoiceStatus.Select) and RougeMapEnum.ChoiceStatus.UnSelect) and RougeMapEnum.ChoiceStatus.Normal) == slot0.status then
-		return
-	end
-
-	slot0.status = slot2
-
-	slot0:refreshUI()
-end
-
-function slot0.update(slot0, slot1, slot2, slot3)
-	uv0.super.update(slot0, slot2)
-
-	slot0.viewEnum = RougeMapEnum.PieceChoiceViewStatus.Choice
-	slot0.choiceId = slot1
-	slot0.dataId = slot1
-	slot0.pieceMo = slot3
-	slot0.collectionIdList = nil
-
-	if slot0.choiceId == 0 then
-		slot0.desc = lua_rouge_piece_talk.configDict[slot0.pieceMo.talkId].exitDesc
-		slot0.title = ""
-		slot0.collectionId = nil
+	if arg_10_1 then
+		if arg_10_1 == arg_10_0.dataId then
+			var_10_0 = RougeMapEnum.ChoiceStatus.Select
+		else
+			var_10_0 = RougeMapEnum.ChoiceStatus.UnSelect
+		end
 	else
-		slot0.choiceCo = lua_rouge_piece_select.configDict[slot1]
-		slot0.desc = slot0.choiceCo.content
-		slot0.title = slot0.choiceCo.title
-		slot0.collectionId = slot0.choiceCo.display
+		var_10_0 = RougeMapEnum.ChoiceStatus.Normal
 	end
 
-	slot0.status = RougeMapPieceTriggerHelper.getChoiceStatus(slot3, slot1)
-	slot0.tip = RougeMapPieceTriggerHelper.getTip(slot0.pieceMo, slot0.choiceId, slot0.status)
+	if var_10_0 == arg_10_0.status then
+		return
+	end
 
-	slot0:refreshUI()
-	slot0:playUnlockAnim()
+	arg_10_0.status = var_10_0
+
+	arg_10_0:refreshUI()
 end
 
-function slot0.updateStoreGoods(slot0, slot1, slot2, slot3, slot4)
-	uv0.super.update(slot0, slot3)
+function var_0_0.update(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
+	var_0_0.super.update(arg_11_0, arg_11_2)
 
-	slot0.collectionIdList = nil
-	slot0.viewEnum = RougeMapEnum.PieceChoiceViewStatus.Store
-	slot0.collectionId = slot1
-	slot0.dataId = slot1
-	slot0.consumeCo = slot2
-	slot0.pieceMo = slot4
-	slot0.consumeUnlockType = slot2.unlockType
-	slot0.consumeUnlockParam = slot2.unlockParam
-	slot0.boughtCollectionList = slot4.triggerStr.curBoughtRepairShopCollections
+	arg_11_0.viewEnum = RougeMapEnum.PieceChoiceViewStatus.Choice
+	arg_11_0.choiceId = arg_11_1
+	arg_11_0.dataId = arg_11_1
+	arg_11_0.pieceMo = arg_11_3
+	arg_11_0.collectionIdList = nil
 
-	slot0:initGoodsStatus()
+	if arg_11_0.choiceId == 0 then
+		local var_11_0 = arg_11_0.pieceMo.talkId
 
-	slot0.title = ""
-	slot0.desc = slot0.consumeCo.desc
-	slot0.tip = slot0:getGoodsTip()
+		arg_11_0.desc = lua_rouge_piece_talk.configDict[var_11_0].exitDesc
+		arg_11_0.title = ""
+		arg_11_0.collectionId = nil
+	else
+		arg_11_0.choiceCo = lua_rouge_piece_select.configDict[arg_11_1]
+		arg_11_0.desc = arg_11_0.choiceCo.content
+		arg_11_0.title = arg_11_0.choiceCo.title
+		arg_11_0.collectionId = arg_11_0.choiceCo.display
+	end
 
-	slot0:refreshUI()
+	arg_11_0.status = RougeMapPieceTriggerHelper.getChoiceStatus(arg_11_3, arg_11_1)
+	arg_11_0.tip = RougeMapPieceTriggerHelper.getTip(arg_11_0.pieceMo, arg_11_0.choiceId, arg_11_0.status)
+
+	arg_11_0:refreshUI()
+	arg_11_0:playUnlockAnim()
 end
 
-function slot0.initGoodsStatus(slot0)
-	if tabletool.indexOf(slot0.boughtCollectionList, slot0.collectionId) then
-		slot0.status = RougeMapEnum.ChoiceStatus.Bought
+function var_0_0.updateStoreGoods(arg_12_0, arg_12_1, arg_12_2, arg_12_3, arg_12_4)
+	var_0_0.super.update(arg_12_0, arg_12_3)
+
+	arg_12_0.collectionIdList = nil
+	arg_12_0.viewEnum = RougeMapEnum.PieceChoiceViewStatus.Store
+	arg_12_0.collectionId = arg_12_1
+	arg_12_0.dataId = arg_12_1
+	arg_12_0.consumeCo = arg_12_2
+	arg_12_0.pieceMo = arg_12_4
+	arg_12_0.consumeUnlockType = arg_12_2.unlockType
+	arg_12_0.consumeUnlockParam = arg_12_2.unlockParam
+	arg_12_0.boughtCollectionList = arg_12_4.triggerStr.curBoughtRepairShopCollections
+
+	arg_12_0:initGoodsStatus()
+
+	arg_12_0.title = ""
+	arg_12_0.desc = arg_12_0.consumeCo.desc
+	arg_12_0.tip = arg_12_0:getGoodsTip()
+
+	arg_12_0:refreshUI()
+end
+
+function var_0_0.initGoodsStatus(arg_13_0)
+	if tabletool.indexOf(arg_13_0.boughtCollectionList, arg_13_0.collectionId) then
+		arg_13_0.status = RougeMapEnum.ChoiceStatus.Bought
 
 		return
 	end
 
-	slot0.status = RougeMapUnlockHelper.checkIsUnlock(slot0.consumeUnlockType, slot0.consumeUnlockParam) and RougeMapEnum.ChoiceStatus.Normal or RougeMapEnum.ChoiceStatus.Lock
+	arg_13_0.status = RougeMapUnlockHelper.checkIsUnlock(arg_13_0.consumeUnlockType, arg_13_0.consumeUnlockParam) and RougeMapEnum.ChoiceStatus.Normal or RougeMapEnum.ChoiceStatus.Lock
 end
 
-function slot0.getGoodsTip(slot0)
-	if slot0.status == RougeMapEnum.ChoiceStatus.Bought then
+function var_0_0.getGoodsTip(arg_14_0)
+	if arg_14_0.status == RougeMapEnum.ChoiceStatus.Bought then
 		return ""
 	end
 
-	if slot0.status == RougeMapEnum.ChoiceStatus.Lock then
-		return RougeMapUnlockHelper.getLockTips(slot0.consumeUnlockType, slot0.consumeUnlockParam)
+	if arg_14_0.status == RougeMapEnum.ChoiceStatus.Lock then
+		return RougeMapUnlockHelper.getLockTips(arg_14_0.consumeUnlockType, arg_14_0.consumeUnlockParam)
 	end
 
 	return ""
 end
 
-function slot0.canShowLockUI(slot0)
-	return slot0.status == RougeMapEnum.ChoiceStatus.Lock or slot0.status == RougeMapEnum.ChoiceStatus.Bought
+function var_0_0.canShowLockUI(arg_15_0)
+	return arg_15_0.status == RougeMapEnum.ChoiceStatus.Lock or arg_15_0.status == RougeMapEnum.ChoiceStatus.Bought
 end
 
-function slot0.refreshLockUI(slot0)
-	uv0.super.refreshLockUI(slot0)
-	slot0:refreshCollection(slot0._golockdetail2, slot0._simagelockcollection)
+function var_0_0.refreshLockUI(arg_16_0)
+	var_0_0.super.refreshLockUI(arg_16_0)
+	arg_16_0:refreshCollection(arg_16_0._golockdetail2, arg_16_0._simagelockcollection)
 end
 
-function slot0.refreshNormalUI(slot0)
-	uv0.super.refreshNormalUI(slot0)
-	slot0:refreshCollection(slot0._gonormaldetail2, slot0._simagenormalcollection)
+function var_0_0.refreshNormalUI(arg_17_0)
+	var_0_0.super.refreshNormalUI(arg_17_0)
+	arg_17_0:refreshCollection(arg_17_0._gonormaldetail2, arg_17_0._simagenormalcollection)
 end
 
-function slot0.refreshSelectUI(slot0)
-	uv0.super.refreshSelectUI(slot0)
-	slot0:refreshCollection(slot0._goselectdetail2, slot0._simageselectcollection)
+function var_0_0.refreshSelectUI(arg_18_0)
+	var_0_0.super.refreshSelectUI(arg_18_0)
+	arg_18_0:refreshCollection(arg_18_0._goselectdetail2, arg_18_0._simageselectcollection)
 end
 
-function slot0.refreshCollection(slot0, slot1, slot2)
-	slot3 = slot0:hadCollection()
+function var_0_0.refreshCollection(arg_19_0, arg_19_1, arg_19_2)
+	local var_19_0 = arg_19_0:hadCollection()
 
-	gohelper.setActive(slot1, slot3)
+	gohelper.setActive(arg_19_1, var_19_0)
 
-	if slot3 then
-		slot2:LoadImage(RougeCollectionHelper.getCollectionIconUrl(slot0.collectionId))
+	if var_19_0 then
+		arg_19_2:LoadImage(RougeCollectionHelper.getCollectionIconUrl(arg_19_0.collectionId))
 	end
 end
 
-function slot0.hadCollection(slot0)
-	return slot0.collectionId and slot0.collectionId ~= 0
+function var_0_0.hadCollection(arg_20_0)
+	return arg_20_0.collectionId and arg_20_0.collectionId ~= 0
 end
 
-function slot0.playUnlockAnim(slot0)
-	if not slot0.choiceCo then
+function var_0_0.playUnlockAnim(arg_21_0)
+	if not arg_21_0.choiceCo then
 		return
 	end
 
-	if slot0.choiceCo.activeType == 0 then
+	local var_21_0 = arg_21_0.choiceCo.activeType
+
+	if var_21_0 == 0 then
 		return
 	end
 
-	if RougeMapController.instance:checkPieceChoicePlayedUnlockAnim(slot0.choiceId) then
+	if RougeMapController.instance:checkPieceChoicePlayedUnlockAnim(arg_21_0.choiceId) then
 		return
 	end
 
-	if RougeMapUnlockHelper.checkIsUnlock(slot1, slot0.choiceCo.activeParam) then
-		slot0.animator:Play("unlock", 0, 0)
-		RougeMapController.instance:playedPieceChoiceEvent(slot0.choiceId)
+	if RougeMapUnlockHelper.checkIsUnlock(var_21_0, arg_21_0.choiceCo.activeParam) then
+		arg_21_0.animator:Play("unlock", 0, 0)
+		RougeMapController.instance:playedPieceChoiceEvent(arg_21_0.choiceId)
 	end
 end
 
-function slot0.destroy(slot0)
-	slot0._btnlockdetail2:RemoveClickListener()
-	slot0._btnnormaldetail2:RemoveClickListener()
-	slot0._btnselectdetail2:RemoveClickListener()
-	slot0._simagenormalcollection:UnLoadImage()
-	slot0._simageselectcollection:UnLoadImage()
-	uv0.super.destroy(slot0)
+function var_0_0.destroy(arg_22_0)
+	arg_22_0._btnlockdetail2:RemoveClickListener()
+	arg_22_0._btnnormaldetail2:RemoveClickListener()
+	arg_22_0._btnselectdetail2:RemoveClickListener()
+	arg_22_0._simagenormalcollection:UnLoadImage()
+	arg_22_0._simageselectcollection:UnLoadImage()
+	var_0_0.super.destroy(arg_22_0)
 end
 
-return slot0
+return var_0_0

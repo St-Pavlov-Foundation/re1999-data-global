@@ -1,83 +1,88 @@
-module("modules.logic.versionactivity1_4.act129.model.Activity129PoolMo", package.seeall)
+﻿module("modules.logic.versionactivity1_4.act129.model.Activity129PoolMo", package.seeall)
 
-slot0 = class("Activity129PoolMo")
+local var_0_0 = class("Activity129PoolMo")
 
-function slot0.ctor(slot0, slot1)
-	slot0.activityId = slot1.activityId
-	slot0.poolId = slot1.poolId
-	slot0.poolType = slot1.type
-	slot0.count = 0
-	slot0.rewardDict = {}
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0.activityId = arg_1_1.activityId
+	arg_1_0.poolId = arg_1_1.poolId
+	arg_1_0.poolType = arg_1_1.type
+	arg_1_0.count = 0
+	arg_1_0.rewardDict = {}
 end
 
-function slot0.init(slot0, slot1)
-	slot0.count = slot1.count
-	slot0.rewardDict = {}
+function var_0_0.init(arg_2_0, arg_2_1)
+	arg_2_0.count = arg_2_1.count
+	arg_2_0.rewardDict = {}
 
-	for slot5 = 1, #slot1.rewards do
-		slot6 = slot1.rewards[slot5]
-		slot7 = slot0:getRewardItem(slot6.rare, slot6.rewardType, slot6.rewardId)
-		slot7.num = slot7.num + slot6.num
-	end
-end
+	for iter_2_0 = 1, #arg_2_1.rewards do
+		local var_2_0 = arg_2_1.rewards[iter_2_0]
+		local var_2_1 = arg_2_0:getRewardItem(var_2_0.rare, var_2_0.rewardType, var_2_0.rewardId)
 
-function slot0.onLotterySuccess(slot0, slot1)
-	slot0.count = slot0.count + slot1.num
-
-	for slot5 = 1, #slot1.rewards do
-		slot6 = slot1.rewards[slot5]
-		slot7 = slot0:getRewardItem(slot6.rare, slot6.rewardType, slot6.rewardId)
-		slot7.num = slot7.num + slot6.num
+		var_2_1.num = var_2_1.num + var_2_0.num
 	end
 end
 
-function slot0.getRewardItem(slot0, slot1, slot2, slot3)
-	if not slot0.rewardDict[slot1] then
-		slot0.rewardDict[slot1] = {}
+function var_0_0.onLotterySuccess(arg_3_0, arg_3_1)
+	arg_3_0.count = arg_3_0.count + arg_3_1.num
+
+	for iter_3_0 = 1, #arg_3_1.rewards do
+		local var_3_0 = arg_3_1.rewards[iter_3_0]
+		local var_3_1 = arg_3_0:getRewardItem(var_3_0.rare, var_3_0.rewardType, var_3_0.rewardId)
+
+		var_3_1.num = var_3_1.num + var_3_0.num
+	end
+end
+
+function var_0_0.getRewardItem(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
+	if not arg_4_0.rewardDict[arg_4_1] then
+		arg_4_0.rewardDict[arg_4_1] = {}
 	end
 
-	if not slot0.rewardDict[slot1][slot2] then
-		slot0.rewardDict[slot1][slot2] = {}
+	if not arg_4_0.rewardDict[arg_4_1][arg_4_2] then
+		arg_4_0.rewardDict[arg_4_1][arg_4_2] = {}
 	end
 
-	if not slot0.rewardDict[slot1][slot2][slot3] then
-		slot0.rewardDict[slot1][slot2][slot3] = {
+	if not arg_4_0.rewardDict[arg_4_1][arg_4_2][arg_4_3] then
+		arg_4_0.rewardDict[arg_4_1][arg_4_2][arg_4_3] = {
 			num = 0,
-			rare = slot1,
-			rewardType = slot2,
-			rewardId = slot3
+			rare = arg_4_1,
+			rewardType = arg_4_2,
+			rewardId = arg_4_3
 		}
 	end
 
-	return slot0.rewardDict[slot1][slot2][slot3]
+	return arg_4_0.rewardDict[arg_4_1][arg_4_2][arg_4_3]
 end
 
-function slot0.getGoodsGetNum(slot0, slot1, slot2, slot3)
-	return slot0:getRewardItem(slot1, slot2, slot3).num
+function var_0_0.getGoodsGetNum(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
+	return arg_5_0:getRewardItem(arg_5_1, arg_5_2, arg_5_3).num
 end
 
-function slot0.checkPoolIsEmpty(slot0)
-	slot1, slot2 = slot0:getPoolDrawCount()
+function var_0_0.checkPoolIsEmpty(arg_6_0)
+	local var_6_0, var_6_1 = arg_6_0:getPoolDrawCount()
 
-	return slot2 ~= 0 and slot2 <= slot1
+	return var_6_1 ~= 0 and var_6_1 <= var_6_0
 end
 
-function slot0.getPoolDrawCount(slot0)
-	slot1 = 0
-	slot2 = 0
+function var_0_0.getPoolDrawCount(arg_7_0)
+	local var_7_0 = 0
+	local var_7_1 = 0
+	local var_7_2 = Activity129Config.instance:getGoodsDict(arg_7_0.poolId)
 
-	for slot7, slot8 in pairs(Activity129Config.instance:getGoodsDict(slot0.poolId)) do
-		if GameUtil.splitString2(slot8.goodsId, true) then
-			for slot13, slot14 in ipairs(slot9) do
-				if slot14[4] > 0 then
-					slot1 = slot1 + slot14[4]
-					slot2 = slot2 + slot0:getGoodsGetNum(slot7, slot14[1], slot14[2])
+	for iter_7_0, iter_7_1 in pairs(var_7_2) do
+		local var_7_3 = GameUtil.splitString2(iter_7_1.goodsId, true)
+
+		if var_7_3 then
+			for iter_7_2, iter_7_3 in ipairs(var_7_3) do
+				if iter_7_3[4] > 0 then
+					var_7_0 = var_7_0 + iter_7_3[4]
+					var_7_1 = var_7_1 + arg_7_0:getGoodsGetNum(iter_7_0, iter_7_3[1], iter_7_3[2])
 				end
 			end
 		end
 	end
 
-	return slot2, slot1
+	return var_7_1, var_7_0
 end
 
-return slot0
+return var_0_0

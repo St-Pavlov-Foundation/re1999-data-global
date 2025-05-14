@@ -1,25 +1,25 @@
-module("modules.logic.versionactivity2_2.enter.view.subview.V2a2_RoomCritterEnterView", package.seeall)
+﻿module("modules.logic.versionactivity2_2.enter.view.subview.V2a2_RoomCritterEnterView", package.seeall)
 
-slot0 = class("V2a2_RoomCritterEnterView", VersionActivityEnterBaseSubView)
+local var_0_0 = class("V2a2_RoomCritterEnterView", VersionActivityEnterBaseSubView)
 
-function slot0.onInitView(slot0)
-	slot0._btnstart = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_start")
-	slot0._imagereddot = gohelper.findChildImage(slot0.viewGO, "#btn_start/#image_reddot")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnstart = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_start")
+	arg_1_0._imagereddot = gohelper.findChildImage(arg_1_0.viewGO, "#btn_start/#image_reddot")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnstart:AddClickListener(slot0._btnstartOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnstart:AddClickListener(arg_2_0._btnstartOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnstart:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnstart:RemoveClickListener()
 end
 
-function slot0._btnstartOnClick(slot0)
+function var_0_0._btnstartOnClick(arg_4_0)
 	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Room) then
 		RoomController.instance:enterRoom(RoomEnum.GameMode.Ob)
 	else
@@ -27,14 +27,14 @@ function slot0._btnstartOnClick(slot0)
 	end
 end
 
-function slot0._editableInitView(slot0)
-	slot0._txtdesc = gohelper.findChildText(slot0.viewGO, "Right/txt_dec")
-	slot0.actId = VersionActivity2_2Enum.ActivityId.RoomCritter
-	slot0.actCo = ActivityConfig.instance:getActivityCo(slot0.actId)
+function var_0_0._editableInitView(arg_5_0)
+	arg_5_0._txtdesc = gohelper.findChildText(arg_5_0.viewGO, "Right/txt_dec")
+	arg_5_0.actId = VersionActivity2_2Enum.ActivityId.RoomCritter
+	arg_5_0.actCo = ActivityConfig.instance:getActivityCo(arg_5_0.actId)
 
-	if slot0.actCo and slot0._txtdesc then
-		slot0._txtdesc.text = slot0.actCo.actDesc
+	if arg_5_0.actCo and arg_5_0._txtdesc then
+		arg_5_0._txtdesc.text = arg_5_0.actCo.actDesc
 	end
 end
 
-return slot0
+return var_0_0

@@ -1,37 +1,39 @@
-module("modules.logic.fight.system.work.trigger.FightWorkTriggerDelay", package.seeall)
+﻿module("modules.logic.fight.system.work.trigger.FightWorkTriggerDelay", package.seeall)
 
-slot0 = class("FightWorkTriggerDelay", BaseWork)
+local var_0_0 = class("FightWorkTriggerDelay", BaseWork)
 
-function slot0.ctor(slot0, slot1, slot2)
-	slot0._fightStepMO = slot1
-	slot0._actEffectMO = slot2
+function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0._fightStepMO = arg_1_1
+	arg_1_0._actEffectMO = arg_1_2
 end
 
-function slot0.onStart(slot0)
-	slot0._config = lua_trigger_action.configDict[slot0._actEffectMO.effectNum]
+function var_0_0.onStart(arg_2_0)
+	arg_2_0._config = lua_trigger_action.configDict[arg_2_0._actEffectMO.effectNum]
 
-	if slot0._config then
-		slot0._startTime = ServerTime.now()
-		slot0._delayTime = slot0._config.param1 / 1000
+	if arg_2_0._config then
+		arg_2_0._startTime = ServerTime.now()
+		arg_2_0._delayTime = arg_2_0._config.param1 / 1000
 
-		FightController.instance:registerCallback(FightEvent.OnUpdateSpeed, slot0._onUpdateSpeed, slot0)
-		TaskDispatcher.runDelay(slot0._delay, slot0, slot0._delayTime / FightModel.instance:getSpeed())
+		FightController.instance:registerCallback(FightEvent.OnUpdateSpeed, arg_2_0._onUpdateSpeed, arg_2_0)
+		TaskDispatcher.runDelay(arg_2_0._delay, arg_2_0, arg_2_0._delayTime / FightModel.instance:getSpeed())
 	else
-		slot0:onDone(true)
+		arg_2_0:onDone(true)
 	end
 end
 
-function slot0._onUpdateSpeed(slot0)
-	TaskDispatcher.runDelay(slot0._delay, slot0, (slot0._delayTime - (ServerTime.now() - slot0._startTime)) / FightModel.instance:getSpeed())
+function var_0_0._onUpdateSpeed(arg_3_0)
+	local var_3_0 = ServerTime.now() - arg_3_0._startTime
+
+	TaskDispatcher.runDelay(arg_3_0._delay, arg_3_0, (arg_3_0._delayTime - var_3_0) / FightModel.instance:getSpeed())
 end
 
-function slot0._delay(slot0)
-	slot0:onDone(true)
+function var_0_0._delay(arg_4_0)
+	arg_4_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
-	FightController.instance:unregisterCallback(FightEvent.OnUpdateSpeed, slot0._onUpdateSpeed, slot0)
-	TaskDispatcher.cancelTask(slot0._delay, slot0)
+function var_0_0.clearWork(arg_5_0)
+	FightController.instance:unregisterCallback(FightEvent.OnUpdateSpeed, arg_5_0._onUpdateSpeed, arg_5_0)
+	TaskDispatcher.cancelTask(arg_5_0._delay, arg_5_0)
 end
 
-return slot0
+return var_0_0

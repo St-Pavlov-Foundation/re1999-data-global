@@ -1,24 +1,25 @@
-module("modules.logic.gm.view.GMPostProcessViewContainer", package.seeall)
+﻿module("modules.logic.gm.view.GMPostProcessViewContainer", package.seeall)
 
-slot0 = class("GMPostProcessViewContainer", BaseViewContainer)
+local var_0_0 = class("GMPostProcessViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
-	slot2 = MixScrollParam.New()
-	slot2.scrollGOPath = "scroll"
-	slot2.prefabType = ScrollEnum.ScrollPrefabFromView
-	slot2.prefabUrl = "scroll/item"
-	slot2.cellClass = GMPostProcessItem
-	slot2.scrollDir = ScrollEnum.ScrollDirV
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
+	local var_1_1 = MixScrollParam.New()
 
-	table.insert(slot1, LuaMixScrollView.New(GMPostProcessModel.instance, slot2))
-	table.insert(slot1, GMPostProcessView.New())
+	var_1_1.scrollGOPath = "scroll"
+	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromView
+	var_1_1.prefabUrl = "scroll/item"
+	var_1_1.cellClass = GMPostProcessItem
+	var_1_1.scrollDir = ScrollEnum.ScrollDirV
 
-	return slot1
+	table.insert(var_1_0, LuaMixScrollView.New(GMPostProcessModel.instance, var_1_1))
+	table.insert(var_1_0, GMPostProcessView.New())
+
+	return var_1_0
 end
 
-function slot0.onContainerClickModalMask(slot0)
-	slot0:closeThis()
+function var_0_0.onContainerClickModalMask(arg_2_0)
+	arg_2_0:closeThis()
 end
 
-return slot0
+return var_0_0

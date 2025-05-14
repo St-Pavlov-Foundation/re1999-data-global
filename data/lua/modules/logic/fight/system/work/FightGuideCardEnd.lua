@@ -1,16 +1,17 @@
-module("modules.logic.fight.system.work.FightGuideCardEnd", package.seeall)
+﻿module("modules.logic.fight.system.work.FightGuideCardEnd", package.seeall)
 
-slot0 = class("FightGuideCardEnd", BaseWork)
+local var_0_0 = class("FightGuideCardEnd", BaseWork)
 
-function slot0.ctor(slot0)
+function var_0_0.ctor(arg_1_0)
+	return
 end
 
-function slot0.onStart(slot0, slot1)
-	FightController.instance:GuideFlowPauseAndContinue("OnGuideCardEndPause", FightEvent.OnGuideCardEndPause, FightEvent.OnGuideCardEndContinue, slot0._done, slot0)
+function var_0_0.onStart(arg_2_0, arg_2_1)
+	FightController.instance:GuideFlowPauseAndContinue("OnGuideCardEndPause", FightEvent.OnGuideCardEndPause, FightEvent.OnGuideCardEndContinue, arg_2_0._done, arg_2_0)
 end
 
-function slot0._done(slot0)
-	slot0:onDone(true)
+function var_0_0._done(arg_3_0)
+	arg_3_0:onDone(true)
 end
 
-return slot0
+return var_0_0

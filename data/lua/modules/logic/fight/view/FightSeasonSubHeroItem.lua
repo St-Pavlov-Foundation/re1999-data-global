@@ -1,120 +1,123 @@
-module("modules.logic.fight.view.FightSeasonSubHeroItem", package.seeall)
+﻿module("modules.logic.fight.view.FightSeasonSubHeroItem", package.seeall)
 
-slot0 = class("FightSeasonSubHeroItem", FightBaseView)
+local var_0_0 = class("FightSeasonSubHeroItem", FightBaseView)
 
-function slot0.onInitView(slot0)
-	slot0._headIcon = gohelper.findChildSingleImage(slot0.viewGO, "#simage_Head")
-	slot0._hpSlider = gohelper.findChildImage(slot0.viewGO, "infoPart/HP/#image_HPFG")
-	slot0._pointRoot = gohelper.findChild(slot0.viewGO, "infoPart/Point")
-	slot0._pointItem = gohelper.findChild(slot0.viewGO, "infoPart/Point/pointItem")
-	slot0._btn = gohelper.findChildClickWithDefaultAudio(slot0.viewGO, "btn")
-	slot0._aniPlayer = SLFramework.AnimatorPlayer.Get(slot0.viewGO)
-	slot0._ani = gohelper.onceAddComponent(slot0.viewGO, typeof(UnityEngine.Animator))
-	slot0._fillImage = gohelper.findChildImage(slot0.viewGO, "#image_ItemBGFilled")
-	slot1 = UnityEngine.Object.Instantiate(slot0._fillImage.material)
-	slot0._fillImage.material = slot1
-	slot0._fillMat = slot1
-	slot0._hpRoot = gohelper.findChild(slot0.viewGO, "infoPart")
-	slot0._effectHeal = gohelper.findChild(slot0.viewGO, "infoPart/eff_heal")
-	slot0._infoPart = gohelper.findChild(slot0.viewGO, "infoPart")
-	slot0._point2Root = gohelper.findChild(slot0.viewGO, "infoPart/Point2")
-	slot0._point2Item = gohelper.findChild(slot0.viewGO, "infoPart/Point2/pointItem")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._headIcon = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_Head")
+	arg_1_0._hpSlider = gohelper.findChildImage(arg_1_0.viewGO, "infoPart/HP/#image_HPFG")
+	arg_1_0._pointRoot = gohelper.findChild(arg_1_0.viewGO, "infoPart/Point")
+	arg_1_0._pointItem = gohelper.findChild(arg_1_0.viewGO, "infoPart/Point/pointItem")
+	arg_1_0._btn = gohelper.findChildClickWithDefaultAudio(arg_1_0.viewGO, "btn")
+	arg_1_0._aniPlayer = SLFramework.AnimatorPlayer.Get(arg_1_0.viewGO)
+	arg_1_0._ani = gohelper.onceAddComponent(arg_1_0.viewGO, typeof(UnityEngine.Animator))
+	arg_1_0._fillImage = gohelper.findChildImage(arg_1_0.viewGO, "#image_ItemBGFilled")
+
+	local var_1_0 = UnityEngine.Object.Instantiate(arg_1_0._fillImage.material)
+
+	arg_1_0._fillImage.material = var_1_0
+	arg_1_0._fillMat = var_1_0
+	arg_1_0._hpRoot = gohelper.findChild(arg_1_0.viewGO, "infoPart")
+	arg_1_0._effectHeal = gohelper.findChild(arg_1_0.viewGO, "infoPart/eff_heal")
+	arg_1_0._infoPart = gohelper.findChild(arg_1_0.viewGO, "infoPart")
+	arg_1_0._point2Root = gohelper.findChild(arg_1_0.viewGO, "infoPart/Point2")
+	arg_1_0._point2Item = gohelper.findChild(arg_1_0.viewGO, "infoPart/Point2/pointItem")
 end
 
-function slot0.addEvents(slot0)
-	slot0:com_registClick(slot0._btn, slot0._onBtnClick)
-	slot0:com_registFightEvent(FightEvent.OnExPointChange, slot0._onExPointChange)
-	slot0:com_registFightEvent(FightEvent.UpdateExPoint, slot0._onUpdateExPoint)
-	slot0:com_registFightEvent(FightEvent.ReplaceEntityMO, slot0._onReplaceEntityMO)
-	slot0:com_registFightEvent(FightEvent.BeforeChangeSubHero, slot0._onBeforeChangeSubHero)
-	slot0:com_registFightEvent(FightEvent.ChangeSubEntityHp, slot0._onChangeSubEntityHp)
-	slot0:com_registFightEvent(FightEvent.EntitySync, slot0._onEntitySync)
-	slot0:com_registFightEvent(FightEvent.ChangeEntitySubCd, slot0._onChangeEntitySubCd)
-	slot0:com_registFightEvent(FightEvent.StageChanged, slot0._onStageChanged)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0:com_registClick(arg_2_0._btn, arg_2_0._onBtnClick)
+	arg_2_0:com_registFightEvent(FightEvent.OnExPointChange, arg_2_0._onExPointChange)
+	arg_2_0:com_registFightEvent(FightEvent.UpdateExPoint, arg_2_0._onUpdateExPoint)
+	arg_2_0:com_registFightEvent(FightEvent.ReplaceEntityMO, arg_2_0._onReplaceEntityMO)
+	arg_2_0:com_registFightEvent(FightEvent.BeforeChangeSubHero, arg_2_0._onBeforeChangeSubHero)
+	arg_2_0:com_registFightEvent(FightEvent.ChangeSubEntityHp, arg_2_0._onChangeSubEntityHp)
+	arg_2_0:com_registFightEvent(FightEvent.EntitySync, arg_2_0._onEntitySync)
+	arg_2_0:com_registFightEvent(FightEvent.ChangeEntitySubCd, arg_2_0._onChangeEntitySubCd)
+	arg_2_0:com_registFightEvent(FightEvent.StageChanged, arg_2_0._onStageChanged)
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0._onExPointChange(slot0, slot1, slot2, slot3)
-	if slot1 == slot0._entityId then
-		slot0._hideInfoTimer = slot0:com_registSingleTimer(slot0._hideInfoTimer, slot0._delayHideInfo, 0.6)
+function var_0_0._onExPointChange(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
+	if arg_4_1 == arg_4_0._entityId then
+		arg_4_0._hideInfoTimer = arg_4_0:com_registSingleTimer(arg_4_0._hideInfoTimer, arg_4_0._delayHideInfo, 0.6)
 
-		slot0:_refreshExpoint(true, slot2, slot3)
+		arg_4_0:_refreshExpoint(true, arg_4_2, arg_4_3)
 
-		if slot0:_canUse() then
-			slot0:playAni("max_in", true)
+		if arg_4_0:_canUse() then
+			arg_4_0:playAni("max_in", true)
 			AudioMgr.instance:trigger(410000105)
 		else
-			slot0:refreshAni()
+			arg_4_0:refreshAni()
 		end
 
-		if slot3 == 5 then
+		if arg_4_3 == 5 then
 			FightController.instance:dispatchEvent(FightEvent.GuideSubEntityExpoint5)
 		end
 	end
 end
 
-function slot0._delayHideInfo(slot0)
-	slot1 = slot0:_canUse()
+function var_0_0._delayHideInfo(arg_5_0)
+	local var_5_0 = arg_5_0:_canUse()
 
-	gohelper.setActive(slot0._effectHeal, false)
+	gohelper.setActive(arg_5_0._effectHeal, false)
 end
 
-function slot0._onUpdateExPoint(slot0, slot1, slot2, slot3)
-	slot0:_onExPointChange(slot1, slot2, slot3)
+function var_0_0._onUpdateExPoint(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
+	arg_6_0:_onExPointChange(arg_6_1, arg_6_2, arg_6_3)
 end
 
-function slot0._onReplaceEntityMO(slot0, slot1)
-	if slot1.id == slot0._entityId then
-		slot0:refreshData(slot0._entityId)
+function var_0_0._onReplaceEntityMO(arg_7_0, arg_7_1)
+	if arg_7_1.id == arg_7_0._entityId then
+		arg_7_0:refreshData(arg_7_0._entityId)
 	end
 end
 
-function slot0._onBeforeChangeSubHero(slot0, slot1, slot2)
-	if slot2 == slot0._entityId then
-		if slot1 == "0" then
-			slot0.PARENT_VIEW:onOpen()
+function var_0_0._onBeforeChangeSubHero(arg_8_0, arg_8_1, arg_8_2)
+	if arg_8_2 == arg_8_0._entityId then
+		if arg_8_1 == "0" then
+			arg_8_0.PARENT_VIEW:onOpen()
 		else
-			slot0:refreshData(slot1)
+			arg_8_0:refreshData(arg_8_1)
 		end
 	end
 end
 
-function slot0._onChangeSubEntityHp(slot0, slot1, slot2)
-	if slot1 == slot0._entityId then
-		slot0:_refreshHp(true)
+function var_0_0._onChangeSubEntityHp(arg_9_0, arg_9_1, arg_9_2)
+	if arg_9_1 == arg_9_0._entityId then
+		arg_9_0:_refreshHp(true)
 
-		if slot2 > 0 then
-			slot0._hideInfoTimer = slot0:com_registSingleTimer(slot0._hideInfoTimer, slot0._delayHideInfo, 0.6)
+		if arg_9_2 > 0 then
+			arg_9_0._hideInfoTimer = arg_9_0:com_registSingleTimer(arg_9_0._hideInfoTimer, arg_9_0._delayHideInfo, 0.6)
 
-			gohelper.setActive(slot0._effectHeal, true)
+			gohelper.setActive(arg_9_0._effectHeal, true)
 		end
 	end
 end
 
-function slot0.onOpen(slot0)
-	gohelper.setActive(slot0._effectHeal, false)
+function var_0_0.onOpen(arg_10_0)
+	gohelper.setActive(arg_10_0._effectHeal, false)
 end
 
-function slot0._canUse(slot0)
-	slot1 = FightDataHelper.entityMgr:getById(slot0._entityId)
+function var_0_0._canUse(arg_11_0)
+	local var_11_0 = FightDataHelper.entityMgr:getById(arg_11_0._entityId)
 
-	if slot1:getUniqueSkillPoint() <= slot1:getExPoint() then
+	if var_11_0:getExPoint() >= var_11_0:getUniqueSkillPoint() then
 		return true
 	end
 end
 
-function slot0._onBtnClick(slot0)
+function var_0_0._onBtnClick(arg_12_0)
 	if not FightDataHelper.stageMgr:isFree() then
 		return
 	end
 
-	if not slot0:_canUse() then
+	if not arg_12_0:_canUse() then
 		return
 	end
 
-	if FightDataHelper.entityMgr:getById(slot0._entityId).subCd ~= 0 then
+	if FightDataHelper.entityMgr:getById(arg_12_0._entityId).subCd ~= 0 then
 		GameFacade.showToast(ToastEnum.CanNotUseSeasonChangeHeroCd)
 
 		return
@@ -122,191 +125,200 @@ function slot0._onBtnClick(slot0)
 
 	if not FightDataHelper.stageMgr:isEmptyOperateState() then
 		if FightDataHelper.stageMgr:getCurOperateState() == FightStageMgr.OperateStateType.SeasonChangeHero then
-			if slot0.PARENT_VIEW:selecting(slot0) then
+			if arg_12_0.PARENT_VIEW:selecting(arg_12_0) then
 				return
 			end
 
-			slot0:selectItem()
+			arg_12_0:selectItem()
 		end
 
 		return
 	end
 
-	slot0.PARENT_VIEW:_enterOperate()
-	slot0:selectItem()
+	arg_12_0.PARENT_VIEW:_enterOperate()
+	arg_12_0:selectItem()
 end
 
-function slot0.selectItem(slot0)
+function var_0_0.selectItem(arg_13_0)
 	AudioMgr.instance:trigger(410000106)
-	slot0.PARENT_VIEW:selectItem(slot0)
+	arg_13_0.PARENT_VIEW:selectItem(arg_13_0)
 end
 
-function slot0._onChangeEntitySubCd(slot0, slot1)
-	if slot1 == slot0._entityId then
-		slot0:refreshAni()
+function var_0_0._onChangeEntitySubCd(arg_14_0, arg_14_1)
+	if arg_14_1 == arg_14_0._entityId then
+		arg_14_0:refreshAni()
 	end
 end
 
-function slot0._onEntitySync(slot0, slot1)
-	if slot1 == slot0._entityId and FightDataHelper.entityMgr:getById(slot0._entityId).subCd ~= 0 then
-		slot0:playAni("cd_in", true)
+function var_0_0._onEntitySync(arg_15_0, arg_15_1)
+	if arg_15_1 == arg_15_0._entityId and FightDataHelper.entityMgr:getById(arg_15_0._entityId).subCd ~= 0 then
+		arg_15_0:playAni("cd_in", true)
 	end
 end
 
-function slot0._onStageChanged(slot0, slot1)
-	slot0:refreshAni()
+function var_0_0._onStageChanged(arg_16_0, arg_16_1)
+	arg_16_0:refreshAni()
 end
 
-function slot0.refreshAni(slot0)
-	if not slot0.viewGO.activeInHierarchy then
+function var_0_0.refreshAni(arg_17_0)
+	if not arg_17_0.viewGO.activeInHierarchy then
 		return
 	end
 
-	if FightDataHelper.entityMgr:getById(slot0._entityId).subCd ~= 0 then
-		slot0:playAni("cd_idle", nil, true)
-	elseif slot0:_canUse() then
-		slot0:playAni("max_idle", nil, true)
+	if FightDataHelper.entityMgr:getById(arg_17_0._entityId).subCd ~= 0 then
+		arg_17_0:playAni("cd_idle", nil, true)
+	elseif arg_17_0:_canUse() then
+		arg_17_0:playAni("max_idle", nil, true)
 	else
-		slot0:playAni("normal_idle", nil, true)
+		arg_17_0:playAni("normal_idle", nil, true)
 	end
 end
 
-function slot0.playAni(slot0, slot1, slot2, slot3)
-	if not slot0.viewGO.activeInHierarchy then
+function var_0_0.playAni(arg_18_0, arg_18_1, arg_18_2, arg_18_3)
+	if not arg_18_0.viewGO.activeInHierarchy then
 		return
 	end
 
-	if slot1 == "select_in" then
-		slot0._aniPlayer:Play(slot1, nil, )
-	elseif slot2 then
-		slot0._aniPlayer:Play(slot1, slot0.refreshAni, slot0)
-	elseif slot3 then
-		slot0._ani.enabled = true
+	if arg_18_1 == "select_in" then
+		arg_18_0._aniPlayer:Play(arg_18_1, nil, nil)
+	elseif arg_18_2 then
+		arg_18_0._aniPlayer:Play(arg_18_1, arg_18_0.refreshAni, arg_18_0)
+	elseif arg_18_3 then
+		arg_18_0._ani.enabled = true
 
-		slot0._ani:Play(slot1)
+		arg_18_0._ani:Play(arg_18_1)
 	else
-		slot0._aniPlayer:Play(slot1, nil, )
+		arg_18_0._aniPlayer:Play(arg_18_1, nil, nil)
 	end
 end
 
-function slot0.refreshData(slot0, slot1)
-	slot0._entityId = slot1
+function var_0_0.refreshData(arg_19_0, arg_19_1)
+	arg_19_0._entityId = arg_19_1
 
-	slot0._headIcon:LoadImage(ResUrl.roomHeadIcon(SkinConfig.instance:getSkinCo(FightDataHelper.entityMgr:getById(slot0._entityId).skin).headIcon))
-	slot0:_refreshExpoint()
-	slot0:_refreshHp()
-	slot0:refreshAni()
+	local var_19_0 = FightDataHelper.entityMgr:getById(arg_19_0._entityId)
+	local var_19_1 = SkinConfig.instance:getSkinCo(var_19_0.skin)
 
-	slot4 = slot0:_canUse()
+	arg_19_0._headIcon:LoadImage(ResUrl.roomHeadIcon(var_19_1.headIcon))
+	arg_19_0:_refreshExpoint()
+	arg_19_0:_refreshHp()
+	arg_19_0:refreshAni()
+
+	local var_19_2 = arg_19_0:_canUse()
 end
 
-function slot0._buildDataListByNum(slot0, slot1)
-	slot2 = {}
+function var_0_0._buildDataListByNum(arg_20_0, arg_20_1)
+	local var_20_0 = {}
 
-	for slot6 = 1, slot1 do
-		table.insert(slot2, slot6)
+	for iter_20_0 = 1, arg_20_1 do
+		table.insert(var_20_0, iter_20_0)
 	end
 
-	return slot2
+	return var_20_0
 end
 
-function slot0._refreshExpoint(slot0, slot1, slot2, slot3)
-	slot4 = FightDataHelper.entityMgr:getById(slot0._entityId)
-	slot0._expointObj = {}
-	slot0._expointMax = slot4:getMaxExPoint()
-	slot0._curExpoint = slot4:getExPoint()
+function var_0_0._refreshExpoint(arg_21_0, arg_21_1, arg_21_2, arg_21_3)
+	local var_21_0 = FightDataHelper.entityMgr:getById(arg_21_0._entityId)
 
-	gohelper.setActive(slot0._point2Root, false)
+	arg_21_0._expointObj = {}
+	arg_21_0._expointMax = var_21_0:getMaxExPoint()
+	arg_21_0._curExpoint = var_21_0:getExPoint()
 
-	if slot0._expointMax <= 6 then
-		gohelper.CreateObjList(slot0, slot0._onPointItemShow, slot0:_buildDataListByNum(math.min(slot0._expointMax, 6)), slot0._pointRoot, slot0._pointItem)
-	elseif slot0._expointMax <= 12 then
-		gohelper.setActive(slot0._point2Root, true)
-		gohelper.CreateObjList(slot0, slot0._onPointItemShow, slot0:_buildDataListByNum(6), slot0._pointRoot, slot0._pointItem)
-		gohelper.CreateObjList(slot0, slot0._onPoint2ItemShow, slot0:_buildDataListByNum(slot0._expointMax - 6), slot0._point2Root, slot0._point2Item)
+	gohelper.setActive(arg_21_0._point2Root, false)
+
+	if arg_21_0._expointMax <= 6 then
+		gohelper.CreateObjList(arg_21_0, arg_21_0._onPointItemShow, arg_21_0:_buildDataListByNum(math.min(arg_21_0._expointMax, 6)), arg_21_0._pointRoot, arg_21_0._pointItem)
+	elseif arg_21_0._expointMax <= 12 then
+		gohelper.setActive(arg_21_0._point2Root, true)
+		gohelper.CreateObjList(arg_21_0, arg_21_0._onPointItemShow, arg_21_0:_buildDataListByNum(6), arg_21_0._pointRoot, arg_21_0._pointItem)
+		gohelper.CreateObjList(arg_21_0, arg_21_0._onPoint2ItemShow, arg_21_0:_buildDataListByNum(arg_21_0._expointMax - 6), arg_21_0._point2Root, arg_21_0._point2Item)
 	else
-		gohelper.CreateObjList(slot0, slot0._onPointItemShow, slot0:_buildDataListByNum(slot0._expointMax), slot0._pointRoot, slot0._pointItem)
+		gohelper.CreateObjList(arg_21_0, arg_21_0._onPointItemShow, arg_21_0:_buildDataListByNum(arg_21_0._expointMax), arg_21_0._pointRoot, arg_21_0._pointItem)
 	end
 
-	for slot8, slot9 in ipairs(slot0._expointObj) do
-		gohelper.setActive(slot9.light, slot8 <= slot0._curExpoint)
+	for iter_21_0, iter_21_1 in ipairs(arg_21_0._expointObj) do
+		gohelper.setActive(iter_21_1.light, iter_21_0 <= arg_21_0._curExpoint)
 	end
 
-	slot5 = slot4:getUniqueSkillPoint()
+	local var_21_1 = var_21_0:getUniqueSkillPoint()
 
-	if slot1 and slot2 and slot3 then
-		slot0:_releaseTween()
+	if arg_21_1 and arg_21_2 and arg_21_3 then
+		arg_21_0:_releaseTween()
 
-		slot0._tweenId = ZProj.TweenHelper.DOTweenFloat(slot2 / slot5, slot3 / slot5, 0.3 / FightModel.instance:getUISpeed(), slot0._expointTweenCallback, nil, slot0)
+		arg_21_0._tweenId = ZProj.TweenHelper.DOTweenFloat(arg_21_2 / var_21_1, arg_21_3 / var_21_1, 0.3 / FightModel.instance:getUISpeed(), arg_21_0._expointTweenCallback, nil, arg_21_0)
 
-		if slot2 < slot3 then
-			for slot9 = slot2 + 1, slot3 do
-				if slot0._expointObj[slot9] and slot0.viewGO.activeInHierarchy then
-					slot0._expointObj[slot9].ani:Play("in", nil, )
+		if arg_21_2 < arg_21_3 then
+			for iter_21_2 = arg_21_2 + 1, arg_21_3 do
+				if arg_21_0._expointObj[iter_21_2] and arg_21_0.viewGO.activeInHierarchy then
+					arg_21_0._expointObj[iter_21_2].ani:Play("in", nil, nil)
 				end
 			end
 		end
 	else
-		slot0._fillMat:SetFloat("_LerpOffset", slot0._curExpoint / slot5)
+		arg_21_0._fillMat:SetFloat("_LerpOffset", arg_21_0._curExpoint / var_21_1)
 	end
 end
 
-function slot0._expointTweenCallback(slot0, slot1)
-	slot0._fillMat:SetFloat("_LerpOffset", slot1)
+function var_0_0._expointTweenCallback(arg_22_0, arg_22_1)
+	arg_22_0._fillMat:SetFloat("_LerpOffset", arg_22_1)
 end
 
-function slot0._releaseTween(slot0)
-	if slot0._tweenId then
-		ZProj.TweenHelper.KillById(slot0._tweenId)
+function var_0_0._releaseTween(arg_23_0)
+	if arg_23_0._tweenId then
+		ZProj.TweenHelper.KillById(arg_23_0._tweenId)
 
-		slot0._tweenId = nil
+		arg_23_0._tweenId = nil
 	end
 end
 
-function slot0._onPointItemShow(slot0, slot1, slot2, slot3)
-	if not slot0._expointObj[slot3] then
-		slot0._expointObj[slot3] = slot0:newUserDataTable()
-		slot0._expointObj[slot3].light = gohelper.findChild(slot1, "#go_FG")
-		slot0._expointObj[slot3].mask = gohelper.findChild(slot1, "#go_Mask")
-		slot0._expointObj[slot3].ani = SLFramework.AnimatorPlayer.Get(slot1)
+function var_0_0._onPointItemShow(arg_24_0, arg_24_1, arg_24_2, arg_24_3)
+	if not arg_24_0._expointObj[arg_24_3] then
+		arg_24_0._expointObj[arg_24_3] = arg_24_0:newUserDataTable()
+		arg_24_0._expointObj[arg_24_3].light = gohelper.findChild(arg_24_1, "#go_FG")
+		arg_24_0._expointObj[arg_24_3].mask = gohelper.findChild(arg_24_1, "#go_Mask")
+		arg_24_0._expointObj[arg_24_3].ani = SLFramework.AnimatorPlayer.Get(arg_24_1)
 	end
 end
 
-function slot0._onPoint2ItemShow(slot0, slot1, slot2, slot3)
-	if not slot0._expointObj[slot3 + 6] then
-		slot0._expointObj[slot3] = slot0:newUserDataTable()
-		slot0._expointObj[slot3].light = gohelper.findChild(slot1, "#go_FG")
-		slot0._expointObj[slot3].mask = gohelper.findChild(slot1, "#go_Mask")
-		slot0._expointObj[slot3].ani = SLFramework.AnimatorPlayer.Get(slot1)
+function var_0_0._onPoint2ItemShow(arg_25_0, arg_25_1, arg_25_2, arg_25_3)
+	arg_25_3 = arg_25_3 + 6
+
+	if not arg_25_0._expointObj[arg_25_3] then
+		arg_25_0._expointObj[arg_25_3] = arg_25_0:newUserDataTable()
+		arg_25_0._expointObj[arg_25_3].light = gohelper.findChild(arg_25_1, "#go_FG")
+		arg_25_0._expointObj[arg_25_3].mask = gohelper.findChild(arg_25_1, "#go_Mask")
+		arg_25_0._expointObj[arg_25_3].ani = SLFramework.AnimatorPlayer.Get(arg_25_1)
 	end
 end
 
-function slot0._refreshHp(slot0, slot1)
-	slot2 = FightDataHelper.entityMgr:getById(slot0._entityId)
+function var_0_0._refreshHp(arg_26_0, arg_26_1)
+	local var_26_0 = FightDataHelper.entityMgr:getById(arg_26_0._entityId)
+	local var_26_1 = var_26_0.attrMO.hp
+	local var_26_2 = var_26_0.currentHp
 
-	if slot1 then
-		slot0:_releaseHpTween()
+	if arg_26_1 then
+		arg_26_0:_releaseHpTween()
 
-		slot0._hpTween = ZProj.TweenHelper.DOFillAmount(slot0._hpSlider, slot2.currentHp / slot2.attrMO.hp, 0.3)
+		arg_26_0._hpTween = ZProj.TweenHelper.DOFillAmount(arg_26_0._hpSlider, var_26_2 / var_26_1, 0.3)
 	else
-		slot0._hpSlider.fillAmount = slot4 / slot3
+		arg_26_0._hpSlider.fillAmount = var_26_2 / var_26_1
 	end
 end
 
-function slot0._releaseHpTween(slot0)
-	if slot0._hpTween then
-		ZProj.TweenHelper.KillById(slot0._hpTween)
+function var_0_0._releaseHpTween(arg_27_0)
+	if arg_27_0._hpTween then
+		ZProj.TweenHelper.KillById(arg_27_0._hpTween)
 
-		slot0._hpTween = nil
+		arg_27_0._hpTween = nil
 	end
 end
 
-function slot0.onClose(slot0)
-	slot0:_releaseTween()
-	slot0:_releaseHpTween()
+function var_0_0.onClose(arg_28_0)
+	arg_28_0:_releaseTween()
+	arg_28_0:_releaseHpTween()
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_29_0)
+	return
 end
 
-return slot0
+return var_0_0

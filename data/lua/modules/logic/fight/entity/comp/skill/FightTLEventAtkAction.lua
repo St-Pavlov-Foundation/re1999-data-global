@@ -1,76 +1,78 @@
-module("modules.logic.fight.entity.comp.skill.FightTLEventAtkAction", package.seeall)
+﻿module("modules.logic.fight.entity.comp.skill.FightTLEventAtkAction", package.seeall)
 
-slot0 = class("FightTLEventAtkAction")
+local var_0_0 = class("FightTLEventAtkAction")
 
-function slot0.handleSkillEvent(slot0, slot1, slot2, slot3)
-	slot0._attacker = FightHelper.getEntity(slot1.fromId)
-	slot0._action = slot3[1]
-	slot0._loop = slot3[2] == "1" and true or false
-	slot0._monsterEvolution = slot3[3] == "1"
-	slot0._detectCanPlay = slot3[4] == "1"
+function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	arg_1_0._attacker = FightHelper.getEntity(arg_1_1.fromId)
+	arg_1_0._action = arg_1_3[1]
+	arg_1_0._loop = arg_1_3[2] == "1" and true or false
+	arg_1_0._monsterEvolution = arg_1_3[3] == "1"
+	arg_1_0._detectCanPlay = arg_1_3[4] == "1"
 
-	if slot0._timeline_item._spine_delay_time then
-		TaskDispatcher.runDelay(slot0._playAct, slot0, slot0._timeline_item._spine_delay_time)
+	if arg_1_0._timeline_item._spine_delay_time then
+		TaskDispatcher.runDelay(arg_1_0._playAct, arg_1_0, arg_1_0._timeline_item._spine_delay_time)
 	else
-		slot0:_playAct()
+		arg_1_0:_playAct()
 	end
 end
 
-function slot0._playAct(slot0)
-	if not string.nilorempty(slot0._action) and slot0._attacker and slot0._attacker.spine then
-		if slot0._detectCanPlay then
-			if not slot0._attacker.spine:tryPlay(slot0._action, slot0._loop, true) then
+function var_0_0._playAct(arg_2_0)
+	if not string.nilorempty(arg_2_0._action) and arg_2_0._attacker and arg_2_0._attacker.spine then
+		if arg_2_0._detectCanPlay then
+			if not arg_2_0._attacker.spine:tryPlay(arg_2_0._action, arg_2_0._loop, true) then
 				return
 			end
 		else
-			slot0._attacker.spine:play(slot0._action, slot0._loop, true)
+			arg_2_0._attacker.spine:play(arg_2_0._action, arg_2_0._loop, true)
 		end
 
-		if slot0._timeline_item._spine_start_time then
-			slot0._attacker.spine._skeletonAnim:Jump2Time(slot0._timeline_item._spine_start_time)
+		if arg_2_0._timeline_item._spine_start_time then
+			arg_2_0._attacker.spine._skeletonAnim:Jump2Time(arg_2_0._timeline_item._spine_start_time)
 		end
 
-		if slot0._monsterEvolution then
-			slot1 = slot0._attacker:getMO()
+		if arg_2_0._monsterEvolution then
+			local var_2_0 = arg_2_0._attacker:getMO()
+			local var_2_1 = arg_2_0._attacker.beforeMonsterChangeSkin or var_2_0.skin
 
-			if slot1 and lua_fight_boss_evolution_client.configDict[slot0._attacker.beforeMonsterChangeSkin or slot1.skin] then
-				slot0._attacker.spine.lockAct = true
+			if var_2_0 and lua_fight_boss_evolution_client.configDict[var_2_1] then
+				arg_2_0._attacker.spine.lockAct = true
 			end
 		end
 	end
 end
 
-function slot0.handleSkillEventEnd(slot0)
-	slot0:_onActionFinish()
+function var_0_0.handleSkillEventEnd(arg_3_0)
+	arg_3_0:_onActionFinish()
 end
 
-function slot0._onActionFinish(slot0)
-	slot0._actionFinish = true
+function var_0_0._onActionFinish(arg_4_0)
+	arg_4_0._actionFinish = true
 
-	if slot0._attacker.spine:getAnimState() == slot0._action then
-		slot1 = slot0._attacker:getDefaultAnim()
+	if arg_4_0._attacker.spine:getAnimState() == arg_4_0._action then
+		local var_4_0 = arg_4_0._attacker:getDefaultAnim()
+		local var_4_1 = arg_4_0._attacker.spine:getSkeletonAnim()
 
-		if slot0._attacker.spine:getSkeletonAnim() and slot2:HasAnimation(slot1) then
-			slot0._attacker.spine:play(slot1, true, false)
+		if var_4_1 and var_4_1:HasAnimation(var_4_0) then
+			arg_4_0._attacker.spine:play(var_4_0, true, false)
 		end
 	end
 
-	slot0._attacker = nil
+	arg_4_0._attacker = nil
 end
 
-function slot0.reset(slot0)
-	if not slot0._actionFinish then
-		slot0:_onActionFinish()
+function var_0_0.reset(arg_5_0)
+	if not arg_5_0._actionFinish then
+		arg_5_0:_onActionFinish()
 	end
 
-	slot0._actionFinish = nil
-	slot0._attacker = nil
+	arg_5_0._actionFinish = nil
+	arg_5_0._attacker = nil
 
-	TaskDispatcher.cancelTask(slot0._playAct, slot0)
+	TaskDispatcher.cancelTask(arg_5_0._playAct, arg_5_0)
 end
 
-function slot0.dispose(slot0)
-	slot0._attacker = nil
+function var_0_0.dispose(arg_6_0)
+	arg_6_0._attacker = nil
 end
 
-return slot0
+return var_0_0

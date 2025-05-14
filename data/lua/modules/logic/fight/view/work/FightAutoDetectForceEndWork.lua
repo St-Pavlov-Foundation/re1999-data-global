@@ -1,26 +1,27 @@
-module("modules.logic.fight.view.work.FightAutoDetectForceEndWork", package.seeall)
+﻿module("modules.logic.fight.view.work.FightAutoDetectForceEndWork", package.seeall)
 
-slot0 = class("FightAutoDetectForceEndWork", BaseWork)
+local var_0_0 = class("FightAutoDetectForceEndWork", BaseWork)
 
-function slot0.ctor(slot0)
+function var_0_0.ctor(arg_1_0)
+	return
 end
 
-function slot0.onStart(slot0)
-	TaskDispatcher.runDelay(slot0._delayDone, slot0, 1)
+function var_0_0.onStart(arg_2_0)
+	TaskDispatcher.runDelay(arg_2_0._delayDone, arg_2_0, 1)
 
 	if not FightCardModel.instance:isCardOpEnd() then
 		FightController.instance:dispatchEvent(FightEvent.ForceEndAutoCardFlow)
 	end
 
-	slot0:onDone(true)
+	arg_2_0:onDone(true)
 end
 
-function slot0._delayDone(slot0)
-	slot0:onDone(true)
+function var_0_0._delayDone(arg_3_0)
+	arg_3_0:onDone(true)
 end
 
-function slot0.clearWork(slot0)
-	TaskDispatcher.cancelTask(slot0._delayDone, slot0)
+function var_0_0.clearWork(arg_4_0)
+	TaskDispatcher.cancelTask(arg_4_0._delayDone, arg_4_0)
 end
 
-return slot0
+return var_0_0

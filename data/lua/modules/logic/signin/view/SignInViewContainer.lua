@@ -1,49 +1,50 @@
-module("modules.logic.signin.view.SignInViewContainer", package.seeall)
+﻿module("modules.logic.signin.view.SignInViewContainer", package.seeall)
 
-slot0 = class("SignInViewContainer", BaseViewContainer)
+local var_0_0 = class("SignInViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
-	slot2 = ListScrollParam.New()
-	slot2.scrollGOPath = "rightContent/monthdetail/scroll_item"
-	slot2.prefabType = ScrollEnum.ScrollPrefabFromRes
-	slot2.prefabUrl = slot0._viewSetting.otherRes[1]
-	slot2.cellClass = SignInListItem
-	slot2.scrollDir = ScrollEnum.ScrollDirV
-	slot2.lineCount = 7
-	slot2.cellWidth = 110
-	slot2.cellHeight = 144
-	slot2.cellSpaceH = 8.3
-	slot2.cellSpaceV = 0
-	slot2.startSpace = 0
-	slot2.endSpace = 0
-	slot2.minUpdateCountInFrame = 100
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
+	local var_1_1 = ListScrollParam.New()
 
-	table.insert(slot1, LuaListScrollView.New(SignInListModel.instance, slot2))
-	table.insert(slot1, TabViewGroup.New(1, "#go_btns"))
-	table.insert(slot1, SignInView.New())
+	var_1_1.scrollGOPath = "rightContent/monthdetail/scroll_item"
+	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromRes
+	var_1_1.prefabUrl = arg_1_0._viewSetting.otherRes[1]
+	var_1_1.cellClass = SignInListItem
+	var_1_1.scrollDir = ScrollEnum.ScrollDirV
+	var_1_1.lineCount = 7
+	var_1_1.cellWidth = 110
+	var_1_1.cellHeight = 144
+	var_1_1.cellSpaceH = 8.3
+	var_1_1.cellSpaceV = 0
+	var_1_1.startSpace = 0
+	var_1_1.endSpace = 0
+	var_1_1.minUpdateCountInFrame = 100
 
-	return slot1
+	table.insert(var_1_0, LuaListScrollView.New(SignInListModel.instance, var_1_1))
+	table.insert(var_1_0, TabViewGroup.New(1, "#go_btns"))
+	table.insert(var_1_0, SignInView.New())
+
+	return var_1_0
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
-		slot2 = NavigateButtonsView.New({
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == 1 then
+		local var_2_0 = NavigateButtonsView.New({
 			false,
 			false,
 			false
 		})
 
-		slot2:setOverrideClose(slot0.overrideOnCloseClick, slot0)
+		var_2_0:setOverrideClose(arg_2_0.overrideOnCloseClick, arg_2_0)
 
 		return {
-			slot2
+			var_2_0
 		}
 	end
 end
 
-function slot0.overrideOnCloseClick(slot0)
+function var_0_0.overrideOnCloseClick(arg_3_0)
 	SignInController.instance:dispatchEvent(SignInEvent.CloseSignInView)
 end
 
-return slot0
+return var_0_0

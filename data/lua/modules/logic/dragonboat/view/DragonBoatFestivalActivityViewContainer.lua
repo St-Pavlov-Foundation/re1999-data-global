@@ -1,11 +1,11 @@
-module("modules.logic.dragonboat.view.DragonBoatFestivalActivityViewContainer", package.seeall)
+﻿module("modules.logic.dragonboat.view.DragonBoatFestivalActivityViewContainer", package.seeall)
 
-slot0 = class("DragonBoatFestivalActivityViewContainer", BaseViewContainer)
+local var_0_0 = class("DragonBoatFestivalActivityViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		DragonBoatFestivalActivityView.New()
 	}
 end
 
-return slot0
+return var_0_0

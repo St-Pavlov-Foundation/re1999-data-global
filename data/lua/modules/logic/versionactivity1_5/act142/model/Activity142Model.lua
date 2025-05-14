@@ -1,223 +1,254 @@
-module("modules.logic.versionactivity1_5.act142.model.Activity142Model", package.seeall)
+﻿module("modules.logic.versionactivity1_5.act142.model.Activity142Model", package.seeall)
 
-slot0 = class("Activity142Model", BaseModel)
-slot1 = 1
+local var_0_0 = class("Activity142Model", BaseModel)
+local var_0_1 = 1
 
-function slot0.onInit(slot0)
-	slot0:clear()
+function var_0_0.onInit(arg_1_0)
+	arg_1_0:clear()
 end
 
-function slot0.reInit(slot0)
-	slot0:clear()
+function var_0_0.reInit(arg_2_0)
+	arg_2_0:clear()
 end
 
-function slot0.clear(slot0)
-	uv0.super.clear(slot0)
+function var_0_0.clear(arg_3_0)
+	var_0_0.super.clear(arg_3_0)
 
-	slot0._activityId = nil
-	slot0._curEpisodeId = nil
-	slot0._episodeInfoData = {}
-	slot0._hasCollectionDict = {}
+	arg_3_0._activityId = nil
+	arg_3_0._curEpisodeId = nil
+	arg_3_0._episodeInfoData = {}
+	arg_3_0._hasCollectionDict = {}
 
-	slot0:clearCacheData()
+	arg_3_0:clearCacheData()
 end
 
-function slot0.onReceiveGetAct142InfoReply(slot0, slot1)
-	slot0._activityId = slot1.activityId
-	slot0._episodeInfoData = {}
+function var_0_0.onReceiveGetAct142InfoReply(arg_4_0, arg_4_1)
+	arg_4_0._activityId = arg_4_1.activityId
+	arg_4_0._episodeInfoData = {}
 
-	for slot5, slot6 in ipairs(slot1.episodes) do
-		slot7 = slot6.id
-		slot0._episodeInfoData[slot7] = {
-			id = slot6.id,
-			star = slot6.star,
-			totalCount = slot6.totalCount
-		}
+	for iter_4_0, iter_4_1 in ipairs(arg_4_1.episodes) do
+		local var_4_0 = iter_4_1.id
+
+		arg_4_0._episodeInfoData[var_4_0] = {}
+		arg_4_0._episodeInfoData[var_4_0].id = iter_4_1.id
+		arg_4_0._episodeInfoData[var_4_0].star = iter_4_1.star
+		arg_4_0._episodeInfoData[var_4_0].totalCount = iter_4_1.totalCount
 	end
 end
 
-function slot0.getRemainTimeStr(slot0, slot1)
-	slot2 = ""
+function var_0_0.getRemainTimeStr(arg_5_0, arg_5_1)
+	local var_5_0 = ""
+	local var_5_1 = ActivityModel.instance:getActMO(arg_5_1)
 
-	return (not ActivityModel.instance:getActMO(slot1) or string.format(luaLang("remain"), slot3:getRemainTimeStr3())) and string.format(luaLang("activity_warmup_remain_time"), "0")
-end
+	if var_5_1 then
+		local var_5_2 = var_5_1:getRemainTimeStr3()
 
-function slot0.getActivityId(slot0)
-	return slot0._activityId or VersionActivity1_5Enum.ActivityId.Activity142
-end
-
-function slot0.setCurEpisodeId(slot0, slot1)
-	slot0._curEpisodeId = slot1
-end
-
-function slot0.getCurEpisodeId(slot0)
-	return slot0._curEpisodeId or uv0
-end
-
-function slot0.getEpisodeData(slot0, slot1)
-	slot2 = nil
-
-	if slot0._episodeInfoData then
-		slot2 = slot0._episodeInfoData[slot1]
+		var_5_0 = string.format(luaLang("remain"), var_5_2)
+	else
+		var_5_0 = string.format(luaLang("activity_warmup_remain_time"), "0")
 	end
 
-	return slot2
+	return var_5_0
 end
 
-function slot0.isEpisodeClear(slot0, slot1)
-	slot2 = false
+function var_0_0.getActivityId(arg_6_0)
+	return arg_6_0._activityId or VersionActivity1_5Enum.ActivityId.Activity142
+end
 
-	if slot0:getEpisodeData(slot1) then
-		slot2 = slot3.star > 0
+function var_0_0.setCurEpisodeId(arg_7_0, arg_7_1)
+	arg_7_0._curEpisodeId = arg_7_1
+end
+
+function var_0_0.getCurEpisodeId(arg_8_0)
+	return arg_8_0._curEpisodeId or var_0_1
+end
+
+function var_0_0.getEpisodeData(arg_9_0, arg_9_1)
+	local var_9_0
+
+	if arg_9_0._episodeInfoData then
+		var_9_0 = arg_9_0._episodeInfoData[arg_9_1]
 	end
 
-	return slot2
+	return var_9_0
 end
 
-function slot0.isOpenDay(slot0, slot1, slot2)
-	slot3 = false
-	slot5 = Activity142Config.instance:getEpisodeOpenDay(slot1, slot2)
+function var_0_0.isEpisodeClear(arg_10_0, arg_10_1)
+	local var_10_0 = false
+	local var_10_1 = arg_10_0:getEpisodeData(arg_10_1)
 
-	if ActivityModel.instance:getActMO(slot1) and slot5 and slot4:getRealStartTimeStamp() + (slot5 - 1) * TimeUtil.OneDaySecond < ServerTime.now() then
-		slot3 = true
+	if var_10_1 then
+		var_10_0 = var_10_1.star > 0
 	end
 
-	return slot3
+	return var_10_0
 end
 
-function slot0.isPreEpisodeClear(slot0, slot1, slot2)
-	slot3 = false
+function var_0_0.isOpenDay(arg_11_0, arg_11_1, arg_11_2)
+	local var_11_0 = false
+	local var_11_1 = ActivityModel.instance:getActMO(arg_11_1)
+	local var_11_2 = Activity142Config.instance:getEpisodeOpenDay(arg_11_1, arg_11_2)
 
-	return Activity142Config.instance:getEpisodePreEpisode(slot1, slot2) == 0 and true or slot0:isEpisodeClear(slot4)
+	if var_11_1 and var_11_2 and var_11_1:getRealStartTimeStamp() + (var_11_2 - 1) * TimeUtil.OneDaySecond < ServerTime.now() then
+		var_11_0 = true
+	end
+
+	return var_11_0
 end
 
-function slot0.isEpisodeOpen(slot0, slot1, slot2)
-	return slot0:isPreEpisodeClear(slot1, slot2) and slot0:isOpenDay(slot1, slot2)
+function var_0_0.isPreEpisodeClear(arg_12_0, arg_12_1, arg_12_2)
+	local var_12_0 = false
+	local var_12_1 = Activity142Config.instance:getEpisodePreEpisode(arg_12_1, arg_12_2)
+
+	return var_12_1 == 0 and true or arg_12_0:isEpisodeClear(var_12_1)
 end
 
-function slot0.onReceiveAct142StartEpisodeReply(slot0, slot1)
-	slot0:increaseCount(slot1.map.id)
+function var_0_0.isEpisodeOpen(arg_13_0, arg_13_1, arg_13_2)
+	local var_13_0 = arg_13_0:isOpenDay(arg_13_1, arg_13_2)
+
+	return arg_13_0:isPreEpisodeClear(arg_13_1, arg_13_2) and var_13_0
 end
 
-function slot0.increaseCount(slot0, slot1)
-	if slot0._episodeInfoData and slot0._episodeInfoData[slot1] then
-		slot2.totalCount = slot2.totalCount + 1
+function var_0_0.onReceiveAct142StartEpisodeReply(arg_14_0, arg_14_1)
+	arg_14_0:increaseCount(arg_14_1.map.id)
+end
+
+function var_0_0.increaseCount(arg_15_0, arg_15_1)
+	local var_15_0 = arg_15_0._episodeInfoData and arg_15_0._episodeInfoData[arg_15_1]
+
+	if var_15_0 then
+		var_15_0.totalCount = var_15_0.totalCount + 1
 	end
 end
 
-function slot0.setHasCollection(slot0, slot1)
-	if not slot0._hasCollectionDict then
-		slot0._hasCollectionDict = {}
+function var_0_0.setHasCollection(arg_16_0, arg_16_1)
+	if not arg_16_0._hasCollectionDict then
+		arg_16_0._hasCollectionDict = {}
 	end
 
-	slot0._hasCollectionDict[slot1] = true
+	arg_16_0._hasCollectionDict[arg_16_1] = true
 end
 
-function slot0.getHadCollectionCount(slot0)
-	for slot7, slot8 in ipairs(Activity142Config.instance:getCollectionList(slot0:getActivityId())) do
-		if slot0:isHasCollection(slot8) then
-			slot1 = 0 + 1
+function var_0_0.getHadCollectionCount(arg_17_0)
+	local var_17_0 = 0
+	local var_17_1 = arg_17_0:getActivityId()
+	local var_17_2 = Activity142Config.instance:getCollectionList(var_17_1)
+
+	for iter_17_0, iter_17_1 in ipairs(var_17_2) do
+		if arg_17_0:isHasCollection(iter_17_1) then
+			var_17_0 = var_17_0 + 1
 		end
 	end
 
-	return slot1
+	return var_17_0
 end
 
-function slot0.getHadCollectionIdList(slot0)
-	slot1 = {}
+function var_0_0.getHadCollectionIdList(arg_18_0)
+	local var_18_0 = {}
+	local var_18_1 = arg_18_0:getActivityId()
+	local var_18_2 = Activity142Config.instance:getCollectionList(var_18_1)
 
-	for slot7, slot8 in ipairs(Activity142Config.instance:getCollectionList(slot0:getActivityId())) do
-		if slot0:isHasCollection(slot8) then
-			slot1[#slot1 + 1] = slot8
+	for iter_18_0, iter_18_1 in ipairs(var_18_2) do
+		if arg_18_0:isHasCollection(iter_18_1) then
+			var_18_0[#var_18_0 + 1] = iter_18_1
 		end
 	end
 
-	return slot1
+	return var_18_0
 end
 
-function slot0.isHasCollection(slot0, slot1)
-	slot2 = false
+function var_0_0.isHasCollection(arg_19_0, arg_19_1)
+	local var_19_0 = false
 
-	if slot0._hasCollectionDict and slot0._hasCollectionDict[slot1] then
-		slot2 = true
+	if arg_19_0._hasCollectionDict and arg_19_0._hasCollectionDict[arg_19_1] then
+		var_19_0 = true
 	end
 
-	return slot2
+	return var_19_0
 end
 
-function slot0.getPlayerCacheData(slot0)
-	if not PlayerModel.instance:getMyUserId() or slot1 == 0 then
+function var_0_0.getPlayerCacheData(arg_20_0)
+	local var_20_0 = PlayerModel.instance:getMyUserId()
+
+	if not var_20_0 or var_20_0 == 0 then
 		return
 	end
 
-	if not slot0.cacheData then
-		if not string.nilorempty(PlayerPrefsHelper.getString(PlayerPrefsKey.Version1_5_Act142ChessKey, "")) then
-			slot0.cacheData = cjson.decode(slot3)
-			slot0.playerCacheData = slot0.cacheData[tostring(slot1)]
+	local var_20_1 = tostring(var_20_0)
+
+	if not arg_20_0.cacheData then
+		local var_20_2 = PlayerPrefsHelper.getString(PlayerPrefsKey.Version1_5_Act142ChessKey, "")
+
+		if not string.nilorempty(var_20_2) then
+			arg_20_0.cacheData = cjson.decode(var_20_2)
+			arg_20_0.playerCacheData = arg_20_0.cacheData[var_20_1]
 		end
 
-		if not slot0.cacheData then
-			slot4 = {}
-		end
-
-		slot0.cacheData = slot4
+		arg_20_0.cacheData = arg_20_0.cacheData or {}
 	end
 
-	if not slot0.playerCacheData then
-		slot0.playerCacheData = {}
-		slot0.cacheData[slot2] = slot0.playerCacheData
+	if not arg_20_0.playerCacheData then
+		arg_20_0.playerCacheData = {}
+		arg_20_0.cacheData[var_20_1] = arg_20_0.playerCacheData
 
-		slot0:saveCacheData()
+		arg_20_0:saveCacheData()
 	end
 
-	return slot0.playerCacheData
+	return arg_20_0.playerCacheData
 end
 
-function slot0.saveCacheData(slot0)
-	if not slot0.cacheData then
+function var_0_0.saveCacheData(arg_21_0)
+	if not arg_21_0.cacheData then
 		return
 	end
 
-	PlayerPrefsHelper.setString(PlayerPrefsKey.Version1_5_Act142ChessKey, cjson.encode(slot0.cacheData))
+	PlayerPrefsHelper.setString(PlayerPrefsKey.Version1_5_Act142ChessKey, cjson.encode(arg_21_0.cacheData))
 end
 
-function slot0.clearCacheData(slot0)
-	slot0.cacheData = nil
-	slot0.playerCacheData = nil
+function var_0_0.clearCacheData(arg_22_0)
+	arg_22_0.cacheData = nil
+	arg_22_0.playerCacheData = nil
 end
 
-function slot0.getStarCount(slot0)
-	slot3 = Va3ChessModel.instance:getEpisodeId()
+function var_0_0.getStarCount(arg_23_0)
+	local var_23_0 = 0
+	local var_23_1 = Va3ChessGameModel.instance:getActId()
+	local var_23_2 = Va3ChessModel.instance:getEpisodeId()
 
-	if not Va3ChessGameModel.instance:getActId() or not slot3 then
-		return 0
+	if not var_23_1 or not var_23_2 then
+		return var_23_0
 	end
 
-	if not Va3ChessConfig.instance:getEpisodeCo(slot2, slot3) then
-		return slot1
+	local var_23_3 = Va3ChessConfig.instance:getEpisodeCo(var_23_1, var_23_2)
+
+	if not var_23_3 then
+		return var_23_0
 	end
 
-	if Activity142Helper.checkConditionIsFinish(slot4.mainConfition, slot2) then
-		slot1 = slot1 + 1
+	if Activity142Helper.checkConditionIsFinish(var_23_3.mainConfition, var_23_1) then
+		var_23_0 = var_23_0 + 1
 	end
 
-	if Activity142Helper.checkConditionIsFinish(slot4.extStarCondition, slot2) then
-		slot1 = slot1 + 1
+	if Activity142Helper.checkConditionIsFinish(var_23_3.extStarCondition, var_23_1) then
+		var_23_0 = var_23_0 + 1
 	end
 
-	return slot1
+	return var_23_0
 end
 
-function slot0.isChapterOpen(slot0, slot1)
-	slot2 = false
+function var_0_0.isChapterOpen(arg_24_0, arg_24_1)
+	local var_24_0 = false
+	local var_24_1 = arg_24_0:getActivityId()
+	local var_24_2 = Activity142Config.instance:getChapterEpisodeIdList(var_24_1, arg_24_1)
+	local var_24_3 = var_24_2 and var_24_2[1]
 
-	if Activity142Config.instance:getChapterEpisodeIdList(slot0:getActivityId(), slot1) and slot4[1] then
-		slot2 = slot0:isEpisodeOpen(slot3, slot5)
+	if var_24_3 then
+		var_24_0 = arg_24_0:isEpisodeOpen(var_24_1, var_24_3)
 	end
 
-	return slot2
+	return var_24_0
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

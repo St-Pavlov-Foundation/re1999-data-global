@@ -1,59 +1,63 @@
-module("modules.logic.versionactivity2_4.act181.config.Activity181Config", package.seeall)
+﻿module("modules.logic.versionactivity2_4.act181.config.Activity181Config", package.seeall)
 
-slot0 = class("Activity181Config", BaseConfig)
+local var_0_0 = class("Activity181Config", BaseConfig)
 
-function slot0.reqConfigNames(slot0)
+function var_0_0.reqConfigNames(arg_1_0)
 	return {
 		"activity181_box",
 		"activity181_boxlist"
 	}
 end
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_2_0)
+	return
 end
 
-function slot0.onConfigLoaded(slot0, slot1, slot2)
-	if slot1 == "activity181_box" then
-		slot0.activity181Config = slot2
-	elseif slot1 == "activity181_boxlist" then
-		slot0.activity181BonusConfig = slot2
+function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
+	if arg_3_1 == "activity181_box" then
+		arg_3_0.activity181Config = arg_3_2
+	elseif arg_3_1 == "activity181_boxlist" then
+		arg_3_0.activity181BonusConfig = arg_3_2
 
-		slot0:initBoxListConfig()
+		arg_3_0:initBoxListConfig()
 	end
 end
 
-function slot0.getBoxConfig(slot0, slot1)
-	if not slot0.activity181Config then
+function var_0_0.getBoxConfig(arg_4_0, arg_4_1)
+	if not arg_4_0.activity181Config then
 		return nil
 	end
 
-	return slot0.activity181Config.configDict[slot1]
+	return arg_4_0.activity181Config.configDict[arg_4_1]
 end
 
-function slot0.initBoxListConfig(slot0)
-	slot0._activityBoxListDic = {}
+function var_0_0.initBoxListConfig(arg_5_0)
+	arg_5_0._activityBoxListDic = {}
 
-	for slot4, slot5 in ipairs(slot0.activity181BonusConfig.configList) do
-		if not slot0._activityBoxListDic[slot5.activityId] then
-			slot0._activityBoxListDic[slot5.activityId] = {}
+	for iter_5_0, iter_5_1 in ipairs(arg_5_0.activity181BonusConfig.configList) do
+		local var_5_0 = arg_5_0._activityBoxListDic[iter_5_1.activityId]
+
+		if not var_5_0 then
+			var_5_0 = {}
+			arg_5_0._activityBoxListDic[iter_5_1.activityId] = var_5_0
 		end
 
-		table.insert(slot6, slot5.id)
+		table.insert(var_5_0, iter_5_1.id)
 	end
 end
 
-function slot0.getBoxListConfig(slot0, slot1, slot2)
-	if slot0.activity181BonusConfig.configDict[slot1] then
-		return slot0.activity181BonusConfig.configDict[slot1][slot2]
+function var_0_0.getBoxListConfig(arg_6_0, arg_6_1, arg_6_2)
+	if arg_6_0.activity181BonusConfig.configDict[arg_6_1] then
+		return arg_6_0.activity181BonusConfig.configDict[arg_6_1][arg_6_2]
 	end
 
 	return nil
 end
 
-function slot0.getBoxListByActivityId(slot0, slot1)
-	return slot0._activityBoxListDic[slot1]
+function var_0_0.getBoxListByActivityId(arg_7_0, arg_7_1)
+	return arg_7_0._activityBoxListDic[arg_7_1]
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

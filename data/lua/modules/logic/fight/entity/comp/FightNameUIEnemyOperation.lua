@@ -1,99 +1,99 @@
-module("modules.logic.fight.entity.comp.FightNameUIEnemyOperation", package.seeall)
+﻿module("modules.logic.fight.entity.comp.FightNameUIEnemyOperation", package.seeall)
 
-slot0 = class("FightNameUIEnemyOperation", FightBaseView)
+local var_0_0 = class("FightNameUIEnemyOperation", FightBaseView)
 
-function slot0.init(slot0, slot1, slot2, slot3)
-	slot0._opContainerCanvasGroup = gohelper.onceAddComponent(slot2, typeof(UnityEngine.CanvasGroup))
-	slot0._opItemGO = slot3
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	arg_1_0._opContainerCanvasGroup = gohelper.onceAddComponent(arg_1_2, typeof(UnityEngine.CanvasGroup))
+	arg_1_0._opItemGO = arg_1_3
 
-	gohelper.setActive(slot0._opItemGO, false)
+	gohelper.setActive(arg_1_0._opItemGO, false)
 
-	slot0._itemList = slot0:com_registViewItemList(slot0._opItemGO, FightNameUIOperationItem, slot2)
+	arg_1_0._itemList = arg_1_0:com_registViewItemList(arg_1_0._opItemGO, FightNameUIOperationItem, arg_1_2)
 
-	slot0._itemList:setFuncNames("refreshItemData")
+	arg_1_0._itemList:setFuncNames("refreshItemData")
 
-	slot0.entity = slot1
-	slot0._entityMO = slot0.entity:getMO()
-	slot0.playCardInfoList = {}
+	arg_1_0.entity = arg_1_1
+	arg_1_0._entityMO = arg_1_0.entity:getMO()
+	arg_1_0.playCardInfoList = {}
 
-	slot0:setPlayCardInfo()
-	slot0:com_registMsg(FightMsgId.Act174MonsterAiCard, slot0._onAct174MonsterAiCard)
-	slot0:com_registFightEvent(FightEvent.OnInvokeSkill, slot0._onInvokeSkill)
-	slot0:com_registFightEvent(FightEvent.OnSkillPlayStart, slot0._onSkillPlayStart)
-	slot0:com_registFightEvent(FightEvent.OnBuffUpdate, slot0._onBuffUpdate)
-	slot0:com_registFightEvent(FightEvent.GMHideFightView, slot0._checkGMHideUI)
-	slot0:com_registFightEvent(FightEvent.InvalidEnemyUsedCard, slot0._onInvalidEnemyUsedCard)
+	arg_1_0:setPlayCardInfo()
+	arg_1_0:com_registMsg(FightMsgId.Act174MonsterAiCard, arg_1_0._onAct174MonsterAiCard)
+	arg_1_0:com_registFightEvent(FightEvent.OnInvokeSkill, arg_1_0._onInvokeSkill)
+	arg_1_0:com_registFightEvent(FightEvent.OnSkillPlayStart, arg_1_0._onSkillPlayStart)
+	arg_1_0:com_registFightEvent(FightEvent.OnBuffUpdate, arg_1_0._onBuffUpdate)
+	arg_1_0:com_registFightEvent(FightEvent.GMHideFightView, arg_1_0._checkGMHideUI)
+	arg_1_0:com_registFightEvent(FightEvent.InvalidEnemyUsedCard, arg_1_0._onInvalidEnemyUsedCard)
 end
 
-function slot0._onAct174MonsterAiCard(slot0)
-	slot0:setPlayCardInfo()
+function var_0_0._onAct174MonsterAiCard(arg_2_0)
+	arg_2_0:setPlayCardInfo()
 end
 
-function slot0.setPlayCardInfo(slot0)
-	FightDataHelper.coverData(FightDataHelper.playCardMgr.enemyAct174PlayCard, slot0.playCardInfoList)
+function var_0_0.setPlayCardInfo(arg_3_0)
+	FightDataHelper.coverData(FightDataHelper.playCardMgr.enemyAct174PlayCard, arg_3_0.playCardInfoList)
 
-	for slot4 = #slot0.playCardInfoList, 1, -1 do
-		if slot0.playCardInfoList[slot4].uid ~= slot0._entityMO.uid then
-			table.remove(slot0.playCardInfoList, slot4)
+	for iter_3_0 = #arg_3_0.playCardInfoList, 1, -1 do
+		if arg_3_0.playCardInfoList[iter_3_0].uid ~= arg_3_0._entityMO.uid then
+			table.remove(arg_3_0.playCardInfoList, iter_3_0)
 		end
 	end
 
-	slot0._itemList:setDataList(slot0.playCardInfoList)
+	arg_3_0._itemList:setDataList(arg_3_0.playCardInfoList)
 end
 
-function slot0._checkGMHideUI(slot0)
-	gohelper.setActive(slot0._opContainerCanvasGroup.gameObject, GMFightShowState.enemyOp)
+function var_0_0._checkGMHideUI(arg_4_0)
+	gohelper.setActive(arg_4_0._opContainerCanvasGroup.gameObject, GMFightShowState.enemyOp)
 end
 
-function slot0._onSkillPlayStart(slot0, slot1, slot2, slot3)
-	if slot1.id ~= slot0.entity.id then
+function var_0_0._onSkillPlayStart(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
+	if arg_5_1.id ~= arg_5_0.entity.id then
 		return
 	end
 
-	slot0:_checkPlaySkill(slot3)
+	arg_5_0:_checkPlaySkill(arg_5_3)
 end
 
-function slot0._checkPlaySkill(slot0, slot1)
-	for slot5, slot6 in ipairs(slot0._itemList) do
-		if slot6._cardData.index == slot1.cardIndex then
-			slot6.animator:Play("fightname_op_play", nil, )
-			slot0._itemList:removeIndexDelayRecycle(slot5, 0.67)
+function var_0_0._checkPlaySkill(arg_6_0, arg_6_1)
+	for iter_6_0, iter_6_1 in ipairs(arg_6_0._itemList) do
+		if iter_6_1._cardData.index == arg_6_1.cardIndex then
+			iter_6_1.animator:Play("fightname_op_play", nil, nil)
+			arg_6_0._itemList:removeIndexDelayRecycle(iter_6_0, 0.67)
 
 			break
 		end
 	end
 end
 
-function slot0._onInvokeSkill(slot0, slot1)
-	if slot1.fromId ~= slot0.entity.id then
+function var_0_0._onInvokeSkill(arg_7_0, arg_7_1)
+	if arg_7_1.fromId ~= arg_7_0.entity.id then
 		return
 	end
 
-	slot0:_checkPlaySkill(slot1)
+	arg_7_0:_checkPlaySkill(arg_7_1)
 end
 
-function slot0._onBuffUpdate(slot0, slot1, slot2, slot3)
-	if slot1 ~= slot0.entity.id then
+function var_0_0._onBuffUpdate(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
+	if arg_8_1 ~= arg_8_0.entity.id then
 		return
 	end
 
-	if slot2 == FightEnum.EffectType.BUFFADD or slot2 == FightEnum.EffectType.BUFFDEL then
-		slot0:_checkPlayForbid()
+	if arg_8_2 == FightEnum.EffectType.BUFFADD or arg_8_2 == FightEnum.EffectType.BUFFDEL then
+		arg_8_0:_checkPlayForbid()
 	end
 end
 
-function slot0._checkPlayForbid(slot0)
-	for slot4, slot5 in ipairs(slot0._itemList) do
-		slot5:_refreshAni()
+function var_0_0._checkPlayForbid(arg_9_0)
+	for iter_9_0, iter_9_1 in ipairs(arg_9_0._itemList) do
+		iter_9_1:_refreshAni()
 	end
 end
 
-function slot0._onInvalidEnemyUsedCard(slot0, slot1)
-	if slot0._itemList then
-		for slot5, slot6 in ipairs(slot0._itemList) do
-			if slot6._cardData.index == slot1 then
-				slot6.animator:Play("fightname_forbid_imprison", nil, )
-				slot0._itemList:removeIndexDelayRecycle(slot5, 0.4)
+function var_0_0._onInvalidEnemyUsedCard(arg_10_0, arg_10_1)
+	if arg_10_0._itemList then
+		for iter_10_0, iter_10_1 in ipairs(arg_10_0._itemList) do
+			if iter_10_1._cardData.index == arg_10_1 then
+				iter_10_1.animator:Play("fightname_forbid_imprison", nil, nil)
+				arg_10_0._itemList:removeIndexDelayRecycle(iter_10_0, 0.4)
 
 				break
 			end
@@ -101,8 +101,8 @@ function slot0._onInvalidEnemyUsedCard(slot0, slot1)
 	end
 end
 
-function slot0.getOpItemList(slot0)
-	return slot0._itemList or {}
+function var_0_0.getOpItemList(arg_11_0)
+	return arg_11_0._itemList or {}
 end
 
-return slot0
+return var_0_0

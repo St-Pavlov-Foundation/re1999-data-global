@@ -1,16 +1,16 @@
-module("modules.logic.character.view.CharacterTipViewContainer", package.seeall)
+﻿module("modules.logic.character.view.CharacterTipViewContainer", package.seeall)
 
-slot0 = class("CharacterTipViewContainer", BaseViewContainer)
+local var_0_0 = class("CharacterTipViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
+function var_0_0.buildViews(arg_1_0)
 	return {
 		CharacterTipView.New()
 	}
 end
 
-function slot0.onContainerClickModalMask(slot0)
+function var_0_0.onContainerClickModalMask(arg_2_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Mail_switch)
-	slot0:closeThis()
+	arg_2_0:closeThis()
 end
 
-return slot0
+return var_0_0

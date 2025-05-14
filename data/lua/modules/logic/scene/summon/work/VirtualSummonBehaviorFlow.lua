@@ -1,38 +1,38 @@
-module("modules.logic.scene.summon.work.VirtualSummonBehaviorFlow", package.seeall)
+﻿module("modules.logic.scene.summon.work.VirtualSummonBehaviorFlow", package.seeall)
 
-slot0 = class("VirtualSummonBehaviorFlow", FlowParallel)
+local var_0_0 = class("VirtualSummonBehaviorFlow", FlowParallel)
 
-function slot0.ctor(slot0, ...)
-	uv0.super.ctor(slot0, ...)
-	slot0:addWork(VirtualSummonBehaviorFlow_Work1.New())
+function var_0_0.ctor(arg_1_0, ...)
+	var_0_0.super.ctor(arg_1_0, ...)
+	arg_1_0:addWork(VirtualSummonBehaviorFlow_Work1.New())
 end
 
-function slot0.start(slot0, slot1, slot2)
-	assert(slot1 and #slot1 > 0)
+function var_0_0.start(arg_2_0, arg_2_1, arg_2_2)
+	assert(arg_2_1 and #arg_2_1 > 0)
 
-	slot0._heroIdList = slot1
-	slot0._backToMainSceneCallBack = slot2
+	arg_2_0._heroIdList = arg_2_1
+	arg_2_0._backToMainSceneCallBack = arg_2_2
 
-	uv0.super.start(slot0)
+	var_0_0.super.start(arg_2_0)
 end
 
-function slot0.heroIdList(slot0)
-	return slot0._heroIdList
+function var_0_0.heroIdList(arg_3_0)
+	return arg_3_0._heroIdList
 end
 
-function slot0.backToMainSceneCallBack(slot0)
-	return slot0._backToMainSceneCallBack
+function var_0_0.backToMainSceneCallBack(arg_4_0)
+	return arg_4_0._backToMainSceneCallBack
 end
 
-function slot0.onDestroyView(slot0)
-	slot0:destroy()
+function var_0_0.onDestroyView(arg_5_0)
+	arg_5_0:destroy()
 end
 
-function slot0.addWork(slot0, slot1)
-	uv0.super.addWork(slot0, slot1)
-	slot1:setRootInternal(slot0)
+function var_0_0.addWork(arg_6_0, arg_6_1)
+	var_0_0.super.addWork(arg_6_0, arg_6_1)
+	arg_6_1:setRootInternal(arg_6_0)
 
-	return slot1
+	return arg_6_1
 end
 
-return slot0
+return var_0_0

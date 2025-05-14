@@ -1,25 +1,25 @@
-module("modules.logic.versionactivity2_5.challenge.view.Act183DungeonHardMainGroupItem", package.seeall)
+﻿module("modules.logic.versionactivity2_5.challenge.view.Act183DungeonHardMainGroupItem", package.seeall)
 
-slot0 = class("Act183DungeonHardMainGroupItem", Act183DungeonBaseGroupItem)
+local var_0_0 = class("Act183DungeonHardMainGroupItem", Act183DungeonBaseGroupItem)
 
-function slot0.init(slot0, slot1)
-	uv0.super.init(slot0, slot1)
+function var_0_0.init(arg_1_0, arg_1_1)
+	var_0_0.super.init(arg_1_0, arg_1_1)
 
-	slot0._animUnlock = gohelper.onceAddComponent(slot0._golock, gohelper.Type_Animator)
+	arg_1_0._animUnlock = gohelper.onceAddComponent(arg_1_0._golock, gohelper.Type_Animator)
 
-	slot0:addEventCb(Act183Controller.instance, Act183Event.OnInitDungeonDone, slot0._onInitDungeonDone, slot0)
+	arg_1_0:addEventCb(Act183Controller.instance, Act183Event.OnInitDungeonDone, arg_1_0._onInitDungeonDone, arg_1_0)
 end
 
-function slot0._onInitDungeonDone(slot0)
-	slot0:_checkPlayNewUnlockAnim()
+function var_0_0._onInitDungeonDone(arg_2_0)
+	arg_2_0:_checkPlayNewUnlockAnim()
 end
 
-function slot0._checkPlayNewUnlockAnim(slot0)
+function var_0_0._checkPlayNewUnlockAnim(arg_3_0)
 	if Act183Model.instance:isHardMainGroupNewUnlock() then
-		gohelper.setActive(slot0._golock, true)
-		slot0._animUnlock:Play("unlock", 0, 0)
+		gohelper.setActive(arg_3_0._golock, true)
+		arg_3_0._animUnlock:Play("unlock", 0, 0)
 		AudioMgr.instance:trigger(AudioEnum.UI.Act183_HardMainUnlock)
 	end
 end
 
-return slot0
+return var_0_0

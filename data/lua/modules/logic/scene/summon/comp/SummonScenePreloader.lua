@@ -1,62 +1,68 @@
-module("modules.logic.scene.summon.comp.SummonScenePreloader", package.seeall)
+﻿module("modules.logic.scene.summon.comp.SummonScenePreloader", package.seeall)
 
-slot0 = class("SummonScenePreloader", BaseSceneComp)
+local var_0_0 = class("SummonScenePreloader", BaseSceneComp)
 
-function slot0.onSceneStart(slot0, slot1, slot2)
-	slot0._isImageLoad = false
-	slot0._assetItemDict = {}
+function var_0_0.onSceneStart(arg_1_0, arg_1_1, arg_1_2)
+	arg_1_0._isImageLoad = false
+	arg_1_0._assetItemDict = {}
 
-	slot0:_startLoadImage()
+	arg_1_0:_startLoadImage()
 end
 
-function slot0._startLoadImage(slot0)
-	if #SummonMainController.instance:pickAllUIPreloadRes() > 0 then
-		slot0._uiLoader = SequenceAbLoader.New()
+function var_0_0._startLoadImage(arg_2_0)
+	local var_2_0 = SummonMainController.instance:pickAllUIPreloadRes()
 
-		slot0._uiLoader:setPathList(slot1)
-		slot0._uiLoader:setConcurrentCount(5)
-		slot0._uiLoader:startLoad(slot0._onUIPreloadFinish, slot0)
+	if #var_2_0 > 0 then
+		arg_2_0._uiLoader = SequenceAbLoader.New()
+
+		arg_2_0._uiLoader:setPathList(var_2_0)
+		arg_2_0._uiLoader:setConcurrentCount(5)
+		arg_2_0._uiLoader:startLoad(arg_2_0._onUIPreloadFinish, arg_2_0)
 	end
 end
 
-function slot0._onUIPreloadFinish(slot0)
-	for slot5, slot6 in pairs(slot0._uiLoader:getAssetItemDict()) do
-		slot6:Retain()
+function var_0_0._onUIPreloadFinish(arg_3_0)
+	local var_3_0 = arg_3_0._uiLoader:getAssetItemDict()
 
-		slot0._assetItemDict[slot5] = slot6
+	for iter_3_0, iter_3_1 in pairs(var_3_0) do
+		iter_3_1:Retain()
+
+		arg_3_0._assetItemDict[iter_3_0] = iter_3_1
 	end
 
-	if slot0._uiLoader then
-		slot0._uiLoader:dispose()
+	if arg_3_0._uiLoader then
+		arg_3_0._uiLoader:dispose()
 
-		slot0._uiLoader = nil
+		arg_3_0._uiLoader = nil
 	end
 
-	slot0._isImageLoad = true
+	arg_3_0._isImageLoad = true
 end
 
-function slot0.getAssetItem(slot0, slot1)
-	if slot0._assetItemDict[slot1] then
-		return slot2
+function var_0_0.getAssetItem(arg_4_0, arg_4_1)
+	local var_4_0 = arg_4_0._assetItemDict[arg_4_1]
+
+	if var_4_0 then
+		return var_4_0
 	end
 end
 
-function slot0.onSceneClose(slot0)
-	if slot0._uiLoader then
-		slot0._uiLoader:dispose()
+function var_0_0.onSceneClose(arg_5_0)
+	if arg_5_0._uiLoader then
+		arg_5_0._uiLoader:dispose()
 
-		slot0._uiLoader = nil
+		arg_5_0._uiLoader = nil
 	end
 
-	for slot4, slot5 in pairs(slot0._assetItemDict) do
-		slot5:Release()
+	for iter_5_0, iter_5_1 in pairs(arg_5_0._assetItemDict) do
+		iter_5_1:Release()
 	end
 
-	slot0._assetItemDict = {}
+	arg_5_0._assetItemDict = {}
 end
 
-function slot0.onSceneHide(slot0)
-	slot0:onSceneClose()
+function var_0_0.onSceneHide(arg_6_0)
+	arg_6_0:onSceneClose()
 end
 
-return slot0
+return var_0_0

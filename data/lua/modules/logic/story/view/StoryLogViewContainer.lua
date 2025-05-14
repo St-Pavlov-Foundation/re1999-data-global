@@ -1,20 +1,21 @@
-module("modules.logic.story.view.StoryLogViewContainer", package.seeall)
+﻿module("modules.logic.story.view.StoryLogViewContainer", package.seeall)
 
-slot0 = class("StoryLogViewContainer", BaseViewContainer)
+local var_0_0 = class("StoryLogViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
-	slot2 = MixScrollParam.New()
-	slot2.scrollGOPath = "#scroll_log"
-	slot2.prefabType = ScrollEnum.ScrollPrefabFromRes
-	slot2.prefabUrl = slot0._viewSetting.otherRes[1]
-	slot2.cellClass = StoryLogItem
-	slot2.scrollDir = ScrollEnum.ScrollDirV
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
+	local var_1_1 = MixScrollParam.New()
 
-	table.insert(slot1, LuaMixScrollView.New(StoryLogListModel.instance, slot2))
-	table.insert(slot1, StoryLogView.New())
+	var_1_1.scrollGOPath = "#scroll_log"
+	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromRes
+	var_1_1.prefabUrl = arg_1_0._viewSetting.otherRes[1]
+	var_1_1.cellClass = StoryLogItem
+	var_1_1.scrollDir = ScrollEnum.ScrollDirV
 
-	return slot1
+	table.insert(var_1_0, LuaMixScrollView.New(StoryLogListModel.instance, var_1_1))
+	table.insert(var_1_0, StoryLogView.New())
+
+	return var_1_0
 end
 
-return slot0
+return var_0_0

@@ -1,78 +1,81 @@
-module("modules.logic.gm.view.GMRougeTool", package.seeall)
+﻿module("modules.logic.gm.view.GMRougeTool", package.seeall)
 
-slot0 = class("GMRougeTool", BaseView)
+local var_0_0 = class("GMRougeTool", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0.btnRougeMapEditor = gohelper.findChildButtonWithAudio(slot0.viewGO, "viewport/content/rouMap/btnRougeMapEditor")
-	slot0.btnEnterTestMap = gohelper.findChildButtonWithAudio(slot0.viewGO, "viewport/content/rouMap/btnEnterTestMap")
-	slot0.showAreaToggle = gohelper.findChildToggle(slot0.viewGO, "viewport/content/rouMap1/showNodeClickAreaToggle")
-	slot0.btnEditPathSelectMap = gohelper.findChildButtonWithAudio(slot0.viewGO, "viewport/content/rouMap1/btnEditPathSelectMap")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0.btnRougeMapEditor = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/rouMap/btnRougeMapEditor")
+	arg_1_0.btnEnterTestMap = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/rouMap/btnEnterTestMap")
+	arg_1_0.showAreaToggle = gohelper.findChildToggle(arg_1_0.viewGO, "viewport/content/rouMap1/showNodeClickAreaToggle")
+	arg_1_0.btnEditPathSelectMap = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/rouMap1/btnEditPathSelectMap")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0._editableInitView(slot0)
-	slot0.showAreaToggle.isOn = RougeEditorController.instance:getIsShowing()
+function var_0_0._editableInitView(arg_2_0)
+	arg_2_0.showAreaToggle.isOn = RougeEditorController.instance:getIsShowing()
 end
 
-function slot0.addEvents(slot0)
-	slot0.btnRougeMapEditor:AddClickListener(slot0.onClickRougeMapEditor, slot0)
-	slot0.btnEnterTestMap:AddClickListener(slot0.onClickEnterTestMap, slot0)
-	slot0.showAreaToggle:AddOnValueChanged(slot0.onToggleValueChanged, slot0)
+function var_0_0.addEvents(arg_3_0)
+	arg_3_0.btnRougeMapEditor:AddClickListener(arg_3_0.onClickRougeMapEditor, arg_3_0)
+	arg_3_0.btnEnterTestMap:AddClickListener(arg_3_0.onClickEnterTestMap, arg_3_0)
+	arg_3_0.showAreaToggle:AddOnValueChanged(arg_3_0.onToggleValueChanged, arg_3_0)
 
-	if slot0.btnEditPathSelectMap then
-		slot0.btnEditPathSelectMap:AddClickListener(slot0.onClickRougeSelectMapEditor, slot0)
+	if arg_3_0.btnEditPathSelectMap then
+		arg_3_0.btnEditPathSelectMap:AddClickListener(arg_3_0.onClickRougeSelectMapEditor, arg_3_0)
 	end
 end
 
-function slot0.removeEvents(slot0)
-	slot0.btnRougeMapEditor:RemoveClickListener()
-	slot0.btnEnterTestMap:RemoveClickListener()
-	slot0.showAreaToggle:RemoveOnValueChanged()
+function var_0_0.removeEvents(arg_4_0)
+	arg_4_0.btnRougeMapEditor:RemoveClickListener()
+	arg_4_0.btnEnterTestMap:RemoveClickListener()
+	arg_4_0.showAreaToggle:RemoveOnValueChanged()
 
-	if slot0.btnEditPathSelectMap then
-		slot0.btnEditPathSelectMap:RemoveClickListener()
+	if arg_4_0.btnEditPathSelectMap then
+		arg_4_0.btnEditPathSelectMap:RemoveClickListener()
 	end
 end
 
-function slot0.onClickRougeMapEditor(slot0)
+function var_0_0.onClickRougeMapEditor(arg_5_0)
 	RougeEditorController.instance:enterRougeMapEditor()
-	slot0:closeThis()
+	arg_5_0:closeThis()
 end
 
-function slot0.onClickEnterTestMap(slot0)
+function var_0_0.onClickEnterTestMap(arg_6_0)
 	RougeMapModel.instance.inited = false
 
-	GMRpc.instance:sendGMRequest("rougeMapInitTest 1", slot0.onReceiveRpc, slot0)
+	GMRpc.instance:sendGMRequest("rougeMapInitTest 1", arg_6_0.onReceiveRpc, arg_6_0)
 end
 
-function slot0.onReceiveRpc(slot0)
+function var_0_0.onReceiveRpc(arg_7_0)
 	RougeEditorController.instance:enterRougeTestMap()
-	slot0:closeThis()
+	arg_7_0:closeThis()
 end
 
-function slot0.onToggleValueChanged(slot0)
-	if slot0.showAreaToggle.isOn then
+function var_0_0.onToggleValueChanged(arg_8_0)
+	if arg_8_0.showAreaToggle.isOn then
 		RougeEditorController.instance:showNodeClickArea()
 	else
 		RougeEditorController.instance:hideNodeClickArea()
 	end
 end
 
-function slot0.onClickRougeSelectMapEditor(slot0)
+function var_0_0.onClickRougeSelectMapEditor(arg_9_0)
 	RougeEditorController.instance:enterPathSelectMapEditorView()
-	slot0:closeThis()
+	arg_9_0:closeThis()
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_10_0)
+	return
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_11_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_12_0)
+	return
 end
 
-return slot0
+return var_0_0

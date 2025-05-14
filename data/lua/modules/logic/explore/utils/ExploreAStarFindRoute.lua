@@ -1,7 +1,7 @@
-module("modules.logic.explore.utils.ExploreAStarFindRoute", package.seeall)
+﻿module("modules.logic.explore.utils.ExploreAStarFindRoute", package.seeall)
 
-slot0 = class("ExploreAStarFindRoute")
-slot1 = {
+local var_0_0 = class("ExploreAStarFindRoute")
+local var_0_1 = {
 	{
 		-1,
 		0
@@ -19,169 +19,187 @@ slot1 = {
 		0
 	}
 }
-slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9, slot10, slot11, slot12, slot13 = nil
+local var_0_2
+local var_0_3
+local var_0_4
+local var_0_5
+local var_0_6
+local var_0_7
+local var_0_8
+local var_0_9
+local var_0_10
+local var_0_11
+local var_0_12
+local var_0_13
 
-function slot14(slot0)
-	return string.format("%d_%d", slot0.x, slot0.y)
+local function var_0_14(arg_1_0)
+	return string.format("%d_%d", arg_1_0.x, arg_1_0.y)
 end
 
-function slot15(slot0, slot1)
-	slot2 = {
-		x = slot0,
-		y = slot1,
-		last = nil,
-		g = 0,
-		h = 0,
-		f = 0,
-		key = uv0(slot2),
-		fromDir = nil
+local function var_0_15(arg_2_0, arg_2_1)
+	local var_2_0 = {
+		x = arg_2_0,
+		y = arg_2_1
 	}
 
-	return slot2
+	var_2_0.last = nil
+	var_2_0.g = 0
+	var_2_0.h = 0
+	var_2_0.f = 0
+	var_2_0.key = var_0_14(var_2_0)
+	var_2_0.fromDir = nil
+
+	return var_2_0
 end
 
-function slot16(slot0, slot1)
-	return math.abs(slot1.x - slot0.x) + math.abs(slot1.y - slot0.y)
+local function var_0_16(arg_3_0, arg_3_1)
+	return math.abs(arg_3_1.x - arg_3_0.x) + math.abs(arg_3_1.y - arg_3_0.y)
 end
 
-function slot17(slot0, slot1)
-	return slot0.x == slot1.x and slot0.y == slot1.y
+local function var_0_17(arg_4_0, arg_4_1)
+	return arg_4_0.x == arg_4_1.x and arg_4_0.y == arg_4_1.y
 end
 
-function slot18(slot0, slot1)
-	return slot1[slot0.key]
+local function var_0_18(arg_5_0, arg_5_1)
+	return arg_5_1[arg_5_0.key]
 end
 
-function slot19(slot0)
-	return slot0.g + 1
+local function var_0_19(arg_6_0)
+	return arg_6_0.g + 1
 end
 
-function slot20(slot0, slot1)
-	return uv0(slot0, slot1)
+local function var_0_20(arg_7_0, arg_7_1)
+	return var_0_16(arg_7_0, arg_7_1)
 end
 
-function slot21(slot0)
-	return slot0.g + slot0.h
+local function var_0_21(arg_8_0)
+	return arg_8_0.g + arg_8_0.h
 end
 
-function slot22(slot0, slot1, slot2)
-	assert(slot0.x <= slot1 and slot0.y <= slot2, string.format("point error, (%d, %d) limit(%d, %d)", slot0.x, slot0.y, slot1, slot2))
+local function var_0_22(arg_9_0, arg_9_1, arg_9_2)
+	assert(arg_9_1 >= arg_9_0.x and arg_9_2 >= arg_9_0.y, string.format("point error, (%d, %d) limit(%d, %d)", arg_9_0.x, arg_9_0.y, arg_9_1, arg_9_2))
 end
 
-function slot23(slot0, slot1, slot2)
-	for slot6, slot7 in pairs(slot0 or {}) do
-		uv0(slot7, slot1, slot2)
+local function var_0_23(arg_10_0, arg_10_1, arg_10_2)
+	for iter_10_0, iter_10_1 in pairs(arg_10_0 or {}) do
+		var_0_22(iter_10_1, arg_10_1, arg_10_2)
 	end
 end
 
-function slot24(slot0, slot1)
-	if slot0.f == slot1.f and slot0.last == slot1.last then
-		if uv0 then
-			if ExploreHelper.isPosEqual(slot0, uv0) then
+local function var_0_24(arg_11_0, arg_11_1)
+	if arg_11_0.f == arg_11_1.f and arg_11_0.last == arg_11_1.last then
+		if var_0_6 then
+			if ExploreHelper.isPosEqual(arg_11_0, var_0_6) then
 				return true
-			elseif ExploreHelper.isPosEqual(slot1, uv0) then
+			elseif ExploreHelper.isPosEqual(arg_11_1, var_0_6) then
 				return false
 			end
 		end
 
-		return (slot0.last and slot0.fromDir == slot0.last.fromDir and -1 or 1) < (slot1.last and slot1.fromDir == slot1.last.fromDir and -1 or 1)
+		return (arg_11_0.last and arg_11_0.fromDir == arg_11_0.last.fromDir and -1 or 1) < (arg_11_1.last and arg_11_1.fromDir == arg_11_1.last.fromDir and -1 or 1)
 	end
 
-	return slot0.f < slot1.f
+	return arg_11_0.f < arg_11_1.f
 end
 
-function slot0.ctor(slot0)
+function var_0_0.ctor(arg_12_0)
+	return
 end
 
-function slot0.startFindPath(slot0, slot1, slot2, slot3, slot4)
-	uv0 = slot1
-	uv1 = uv2(slot2.x, slot2.y)
-	uv3 = uv2(slot3.x, slot3.y)
-	uv4 = slot4
-	uv5 = uv2(slot2.x, slot2.y)
-	uv6 = {}
-	uv7 = {}
-	uv8 = {}
-	uv9 = {}
-	uv6[uv1.key] = uv1
+function var_0_0.startFindPath(arg_13_0, arg_13_1, arg_13_2, arg_13_3, arg_13_4)
+	var_0_8 = arg_13_1
+	var_0_2 = var_0_15(arg_13_2.x, arg_13_2.y)
+	var_0_3 = var_0_15(arg_13_3.x, arg_13_3.y)
+	var_0_6 = arg_13_4
+	var_0_5 = var_0_15(arg_13_2.x, arg_13_2.y)
+	var_0_10 = {}
+	var_0_9 = {}
+	var_0_11 = {}
+	var_0_12 = {}
+	var_0_10[var_0_2.key] = var_0_2
 
-	table.insert(uv7, uv1)
+	table.insert(var_0_9, var_0_2)
 
-	uv10 = slot0:findPath() or {}
+	var_0_13 = arg_13_0:findPath() or {}
 
-	return uv10, uv5
+	return var_0_13, var_0_5
 end
 
-function slot0.getNextPoints(slot0, slot1)
-	slot2 = {}
+function var_0_0.getNextPoints(arg_14_0, arg_14_1)
+	local var_14_0 = {}
 
-	for slot6 = 1, #uv0 do
-		slot7 = uv0[slot6]
-		slot8 = uv1(slot1.x + slot7[1], slot1.y + slot7[2])
-		slot8.fromDir = slot7
-		slot8.last = slot1
+	for iter_14_0 = 1, #var_0_1 do
+		local var_14_1 = var_0_1[iter_14_0]
+		local var_14_2 = var_0_15(arg_14_1.x + var_14_1[1], arg_14_1.y + var_14_1[2])
 
-		if uv2(slot8, uv3) then
-			slot8.g = uv4(slot1)
-			slot8.h = uv5(slot1, uv6)
-			slot8.f = uv7(slot8)
+		var_14_2.fromDir = var_14_1
+		var_14_2.last = arg_14_1
 
-			table.insert(slot2, slot8)
+		if var_0_18(var_14_2, var_0_8) then
+			var_14_2.g = var_0_19(arg_14_1)
+			var_14_2.h = var_0_20(arg_14_1, var_0_3)
+			var_14_2.f = var_0_21(var_14_2)
+
+			table.insert(var_14_0, var_14_2)
 		end
 	end
 
-	return slot2
+	return var_14_0
 end
 
-function slot0.findPath(slot0)
-	while #uv0 > 0 do
-		uv1 = uv0[1]
+function var_0_0.findPath(arg_15_0)
+	while #var_0_9 > 0 do
+		var_0_4 = var_0_9[1]
 
-		if slot0:getDistance(uv1, uv2) < slot0:getDistance(uv3, uv2) then
-			uv3 = uv4(uv1.x, uv1.y)
+		if arg_15_0:getDistance(var_0_4, var_0_3) < arg_15_0:getDistance(var_0_5, var_0_3) then
+			var_0_5 = var_0_15(var_0_4.x, var_0_4.y)
 		end
 
-		table.remove(uv0, 1)
+		table.remove(var_0_9, 1)
 
-		uv5[uv1.key] = nil
+		var_0_10[var_0_4.key] = nil
 
-		if uv6(uv1, uv2) then
-			return slot0:makePath(uv1)
+		if var_0_17(var_0_4, var_0_3) then
+			return arg_15_0:makePath(var_0_4)
 		else
-			uv7[uv1.key] = uv1
+			var_0_12[var_0_4.key] = var_0_4
 
-			for slot5 = 1, #slot0:getNextPoints(uv1) do
-				if uv5[slot1[slot5].key] == nil and uv7[slot6.key] == nil and uv8(slot6, uv9) then
-					uv5[slot6.key] = slot6
+			local var_15_0 = arg_15_0:getNextPoints(var_0_4)
 
-					table.insert(uv0, slot6)
+			for iter_15_0 = 1, #var_15_0 do
+				local var_15_1 = var_15_0[iter_15_0]
+
+				if var_0_10[var_15_1.key] == nil and var_0_12[var_15_1.key] == nil and var_0_18(var_15_1, var_0_8) then
+					var_0_10[var_15_1.key] = var_15_1
+
+					table.insert(var_0_9, var_15_1)
 				end
 			end
 
-			table.sort(uv0, uv10)
+			table.sort(var_0_9, var_0_24)
 		end
 	end
 
 	return nil
 end
 
-function slot0.makePath(slot0, slot1)
-	slot2 = {}
-	slot3 = slot1
+function var_0_0.makePath(arg_16_0, arg_16_1)
+	local var_16_0 = {}
+	local var_16_1 = arg_16_1
 
-	while slot3.last ~= nil do
-		table.insert(slot2, slot3)
+	while var_16_1.last ~= nil do
+		table.insert(var_16_0, var_16_1)
 
-		slot3 = slot3.last
+		var_16_1 = var_16_1.last
 	end
 
-	slot4 = slot3
+	local var_16_2 = var_16_1
 
-	return slot2
+	return var_16_0
 end
 
-function slot0.getDistance(slot0, slot1, slot2)
-	return math.abs(slot1.x - slot2.x) + math.abs(slot1.y - slot2.y)
+function var_0_0.getDistance(arg_17_0, arg_17_1, arg_17_2)
+	return math.abs(arg_17_1.x - arg_17_2.x) + math.abs(arg_17_1.y - arg_17_2.y)
 end
 
-return slot0
+return var_0_0

@@ -1,6 +1,7 @@
-module("modules.versionactivitybase.enterview.define.VersionActivityEnterViewEvent", package.seeall)
+﻿module("modules.versionactivitybase.enterview.define.VersionActivityEnterViewEvent", package.seeall)
 
-slot0 = _M
-slot0.SelectActId = 1
+local var_0_0 = _M
 
-return slot0
+var_0_0.SelectActId = 1
+
+return var_0_0

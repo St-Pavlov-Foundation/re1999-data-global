@@ -1,67 +1,69 @@
-module("modules.logic.mainsceneswitch.view.MainSceneStoreShowView", package.seeall)
+﻿module("modules.logic.mainsceneswitch.view.MainSceneStoreShowView", package.seeall)
 
-slot0 = class("MainSceneStoreShowView", BaseView)
+local var_0_0 = class("MainSceneStoreShowView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "left/#btn_close")
-	slot0._goweatherRoot = gohelper.findChild(slot0.viewGO, "left/#go_weatherRoot")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "left/#btn_close")
+	arg_1_0._goweatherRoot = gohelper.findChild(arg_1_0.viewGO, "left/#go_weatherRoot")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnclose:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnclose:RemoveClickListener()
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseOnClick(arg_4_0)
+	arg_4_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
-	gohelper.setActive(slot0._goweatherRoot, false)
+function var_0_0._editableInitView(arg_5_0)
+	gohelper.setActive(arg_5_0._goweatherRoot, false)
 
-	slot0._rawImage = gohelper.onceAddComponent(gohelper.findChild(slot0.viewGO, "RawImage"), gohelper.Type_RawImage)
+	arg_5_0._rawImage = gohelper.onceAddComponent(gohelper.findChild(arg_5_0.viewGO, "RawImage"), gohelper.Type_RawImage)
 
-	gohelper.setActive(slot0._rawImage, false)
+	gohelper.setActive(arg_5_0._rawImage, false)
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_6_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0._sceneId = slot0.viewParam.sceneId
+function var_0_0.onOpen(arg_7_0)
+	arg_7_0._sceneId = arg_7_0.viewParam.sceneId
 
-	MainSceneSwitchCameraController.instance:showScene(slot0._sceneId, slot0._showSceneFinished, slot0)
+	MainSceneSwitchCameraController.instance:showScene(arg_7_0._sceneId, arg_7_0._showSceneFinished, arg_7_0)
 end
 
-function slot0._showSceneFinished(slot0, slot1)
-	if not slot0._rawImage then
+function var_0_0._showSceneFinished(arg_8_0, arg_8_1)
+	if not arg_8_0._rawImage then
 		return
 	end
 
-	gohelper.setActive(slot0._rawImage, true)
-	MainSceneSwitchInfoDisplayView.adjustRt(slot0._rawImage, slot1)
+	gohelper.setActive(arg_8_0._rawImage, true)
+	MainSceneSwitchInfoDisplayView.adjustRt(arg_8_0._rawImage, arg_8_1)
 
-	slot0._weatherSwitchControlComp = slot0._weatherSwitchControlComp or MonoHelper.addNoUpdateLuaComOnceToGo(slot0._goweatherRoot, WeatherSwitchControlComp)
+	arg_8_0._weatherSwitchControlComp = arg_8_0._weatherSwitchControlComp or MonoHelper.addNoUpdateLuaComOnceToGo(arg_8_0._goweatherRoot, WeatherSwitchControlComp)
 
-	slot0._weatherSwitchControlComp:updateScene(slot0._sceneId, MainSceneSwitchCameraDisplayController.instance)
+	arg_8_0._weatherSwitchControlComp:updateScene(arg_8_0._sceneId, MainSceneSwitchCameraDisplayController.instance)
 end
 
-function slot0.onClose(slot0)
-	if slot0.viewParam.callback then
-		slot0.viewParam.callback(slot0.viewParam.callbackObj, slot0.viewParam)
+function var_0_0.onClose(arg_9_0)
+	if arg_9_0.viewParam.callback then
+		arg_9_0.viewParam.callback(arg_9_0.viewParam.callbackObj, arg_9_0.viewParam)
 
-		slot0.viewParam.callback = nil
+		arg_9_0.viewParam.callback = nil
 	end
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_10_0)
+	return
 end
 
-return slot0
+return var_0_0

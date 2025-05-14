@@ -1,12 +1,13 @@
-module("modules.logic.gm.controller.define.PerformanceRecordEvent", package.seeall)
+﻿module("modules.logic.gm.controller.define.PerformanceRecordEvent", package.seeall)
 
-slot1 = 1
+local var_0_0 = _M
+local var_0_1 = 1
 
-function (slot0)
-	assert(uv0[slot0] == nil, "[PerformanceRecordEvent] error redefined PerformanceRecordEvent." .. slot0)
+;(function(arg_1_0)
+	assert(var_0_0[arg_1_0] == nil, "[PerformanceRecordEvent] error redefined PerformanceRecordEvent." .. arg_1_0)
 
-	uv0[slot0] = uv1
-	uv1 = uv1 + 1
-end("onRecordDone")
+	var_0_0[arg_1_0] = var_0_1
+	var_0_1 = var_0_1 + 1
+end)("onRecordDone")
 
-return _M
+return var_0_0

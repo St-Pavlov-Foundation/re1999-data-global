@@ -1,55 +1,58 @@
-module("modules.logic.prototest.view.ProtoTestViewContainer", package.seeall)
+﻿module("modules.logic.prototest.view.ProtoTestViewContainer", package.seeall)
 
-slot0 = class("ProtoTestViewContainer", BaseViewContainer)
+local var_0_0 = class("ProtoTestViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
-	slot2 = MixScrollParam.New()
-	slot2.scrollGOPath = "Panel_testcase/protolist"
-	slot2.prefabType = ScrollEnum.ScrollPrefabFromView
-	slot2.prefabUrl = "Panel_testcase/protolist/Viewport/item"
-	slot2.cellClass = ProtoTestCaseItem
-	slot2.scrollDir = ScrollEnum.ScrollDirV
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
+	local var_1_1 = MixScrollParam.New()
 
-	table.insert(slot1, LuaMixScrollView.New(ProtoTestCaseModel.instance, slot2))
+	var_1_1.scrollGOPath = "Panel_testcase/protolist"
+	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromView
+	var_1_1.prefabUrl = "Panel_testcase/protolist/Viewport/item"
+	var_1_1.cellClass = ProtoTestCaseItem
+	var_1_1.scrollDir = ScrollEnum.ScrollDirV
 
-	slot3 = ListScrollParam.New()
-	slot3.scrollGOPath = "Panel_storage/testcaserepo"
-	slot3.prefabType = ScrollEnum.ScrollPrefabFromView
-	slot3.prefabUrl = "Panel_storage/testcaserepo/Viewport/repo"
-	slot3.cellClass = ProtoTestFileItem
-	slot3.scrollDir = ScrollEnum.ScrollDirV
-	slot3.lineCount = 1
-	slot3.cellWidth = 520
-	slot3.cellHeight = 85
-	slot3.cellSpaceH = 0
-	slot3.cellSpaceV = 0
+	table.insert(var_1_0, LuaMixScrollView.New(ProtoTestCaseModel.instance, var_1_1))
 
-	table.insert(slot1, LuaListScrollView.New(ProtoTestFileModel.instance, slot3))
+	local var_1_2 = ListScrollParam.New()
 
-	slot4 = ListScrollParam.New()
-	slot4.scrollGOPath = "Panel_testcase/Panel_new/bg/scroll"
-	slot4.prefabType = ScrollEnum.ScrollPrefabFromView
-	slot4.prefabUrl = "Panel_testcase/Panel_new/bg/scroll/Viewport/item"
-	slot4.cellClass = ProtoReqListItem
-	slot4.scrollDir = ScrollEnum.ScrollDirV
-	slot4.lineCount = 1
-	slot4.cellWidth = 350
-	slot4.cellHeight = 60
-	slot4.cellSpaceH = 0
-	slot4.cellSpaceV = 0
+	var_1_2.scrollGOPath = "Panel_storage/testcaserepo"
+	var_1_2.prefabType = ScrollEnum.ScrollPrefabFromView
+	var_1_2.prefabUrl = "Panel_storage/testcaserepo/Viewport/repo"
+	var_1_2.cellClass = ProtoTestFileItem
+	var_1_2.scrollDir = ScrollEnum.ScrollDirV
+	var_1_2.lineCount = 1
+	var_1_2.cellWidth = 520
+	var_1_2.cellHeight = 85
+	var_1_2.cellSpaceH = 0
+	var_1_2.cellSpaceV = 0
 
-	table.insert(slot1, LuaListScrollView.New(ProtoReqListModel.instance, slot4))
-	table.insert(slot1, ProtoTestView.New())
-	table.insert(slot1, ProtoTestCaseView.New())
-	table.insert(slot1, ProtoTestFileView.New())
-	table.insert(slot1, ProtoTestReqView.New())
+	table.insert(var_1_0, LuaListScrollView.New(ProtoTestFileModel.instance, var_1_2))
 
-	return slot1
+	local var_1_3 = ListScrollParam.New()
+
+	var_1_3.scrollGOPath = "Panel_testcase/Panel_new/bg/scroll"
+	var_1_3.prefabType = ScrollEnum.ScrollPrefabFromView
+	var_1_3.prefabUrl = "Panel_testcase/Panel_new/bg/scroll/Viewport/item"
+	var_1_3.cellClass = ProtoReqListItem
+	var_1_3.scrollDir = ScrollEnum.ScrollDirV
+	var_1_3.lineCount = 1
+	var_1_3.cellWidth = 350
+	var_1_3.cellHeight = 60
+	var_1_3.cellSpaceH = 0
+	var_1_3.cellSpaceV = 0
+
+	table.insert(var_1_0, LuaListScrollView.New(ProtoReqListModel.instance, var_1_3))
+	table.insert(var_1_0, ProtoTestView.New())
+	table.insert(var_1_0, ProtoTestCaseView.New())
+	table.insert(var_1_0, ProtoTestFileView.New())
+	table.insert(var_1_0, ProtoTestReqView.New())
+
+	return var_1_0
 end
 
-function slot0.onContainerClickModalMask(slot0)
-	ViewMgr.instance:closeView(slot0.viewName)
+function var_0_0.onContainerClickModalMask(arg_2_0)
+	ViewMgr.instance:closeView(arg_2_0.viewName)
 end
 
-return slot0
+return var_0_0

@@ -1,6 +1,7 @@
-module("modules.configs.excel2json.lua_activity114_test", package.seeall)
+﻿module("modules.configs.excel2json.lua_activity114_test", package.seeall)
 
-slot1 = {
+local var_0_0 = {}
+local var_0_1 = {
 	score = 8,
 	topic = 4,
 	result = 9,
@@ -11,19 +12,19 @@ slot1 = {
 	activityId = 1,
 	choice3 = 7
 }
-slot2 = {
+local var_0_2 = {
 	"activityId",
 	"id"
 }
-slot3 = {
+local var_0_3 = {
 	topic = 1,
 	choice2 = 3,
 	choice3 = 4,
 	choice1 = 2
 }
 
-return {
-	onLoad = function (slot0)
-		uv0.configList, uv0.configDict = JsonToLuaParser.parse(slot0, uv1, uv2, uv3)
-	end
-}
+function var_0_0.onLoad(arg_1_0)
+	var_0_0.configList, var_0_0.configDict = JsonToLuaParser.parse(arg_1_0, var_0_1, var_0_2, var_0_3)
+end
+
+return var_0_0

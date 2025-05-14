@@ -1,32 +1,41 @@
-module("modules.logic.versionactivity2_2.eliminate.controller.chess.step.EliminateChessDebugStep", package.seeall)
+﻿module("modules.logic.versionactivity2_2.eliminate.controller.chess.step.EliminateChessDebugStep", package.seeall)
 
-slot0 = class("EliminateChessDebugStep", EliminateChessStepBase)
+local var_0_0 = class("EliminateChessDebugStep", EliminateChessStepBase)
 
-function slot0.onStart(slot0)
-	slot2 = EliminateChessModel.instance:getChessMoList()
-	slot3 = "\n"
+function var_0_0.onStart(arg_1_0)
+	local var_1_0 = EliminateChessItemController.instance:getChess()
+	local var_1_1 = EliminateChessModel.instance:getChessMoList()
+	local var_1_2 = "\n"
 
-	for slot7, slot8 in ipairs(EliminateChessItemController.instance:getChess()) do
-		for slot12, slot13 in ipairs(slot8) do
-			slot3 = slot13._data and slot3 .. " " .. tostring(slot13._data.id) or slot3 .. " " .. tostring(slot13._data.id) .. " " .. "-1"
+	for iter_1_0, iter_1_1 in ipairs(var_1_0) do
+		for iter_1_2, iter_1_3 in ipairs(iter_1_1) do
+			if iter_1_3._data then
+				var_1_2 = var_1_2 .. " " .. tostring(iter_1_3._data.id)
+			else
+				var_1_2 = var_1_2 .. " " .. "-1"
+			end
 		end
 
-		slot3 = slot3 .. "\n"
+		var_1_2 = var_1_2 .. "\n"
 	end
 
-	slot4 = "\n"
+	local var_1_3 = "\n"
 
-	for slot8, slot9 in ipairs(slot2) do
-		for slot13, slot14 in ipairs(slot9) do
-			slot4 = slot14 and slot4 .. " " .. tostring(slot14.id) or slot4 .. " " .. tostring(slot14.id) .. " " .. "-1"
+	for iter_1_4, iter_1_5 in ipairs(var_1_1) do
+		for iter_1_6, iter_1_7 in ipairs(iter_1_5) do
+			if iter_1_7 then
+				var_1_3 = var_1_3 .. " " .. tostring(iter_1_7.id)
+			else
+				var_1_3 = var_1_3 .. " " .. "-1"
+			end
 		end
 
-		slot4 = slot4 .. "\n"
+		var_1_3 = var_1_3 .. "\n"
 	end
 
-	logNormal("chessStr = " .. slot3)
-	logNormal("chessMOStr = " .. slot4)
-	slot0:onDone(true)
+	logNormal("chessStr = " .. var_1_2)
+	logNormal("chessMOStr = " .. var_1_3)
+	arg_1_0:onDone(true)
 end
 
-return slot0
+return var_0_0

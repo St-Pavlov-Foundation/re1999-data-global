@@ -1,165 +1,174 @@
-module("modules.logic.room.view.RoomViewUIInitItem", package.seeall)
+﻿module("modules.logic.room.view.RoomViewUIInitItem", package.seeall)
 
-slot0 = class("RoomViewUIInitItem", RoomViewUIBaseItem)
+local var_0_0 = class("RoomViewUIInitItem", RoomViewUIBaseItem)
 
-function slot0.ctor(slot0)
-	uv0.super.ctor(slot0)
+function var_0_0.ctor(arg_1_0)
+	var_0_0.super.ctor(arg_1_0)
 end
 
-function slot0._customOnInit(slot0)
-	slot0._txtbuildingname = gohelper.findChildText(slot0._gocontainer, "bottom/txt_buildingName")
-	slot0._goskinreddot = gohelper.findChild(slot0._gocontainer, "bottom/#go_reddot")
-	slot0._gobubbleContent = gohelper.findChild(slot0._gocontainer, "#go_bubbleContent")
-	slot0._goawarn = gohelper.findChild(slot0._gocontainer, "state/#go_warn")
-	slot0._gostop = gohelper.findChild(slot0._gocontainer, "state/#go_stop")
-	slot0._goadd = gohelper.findChild(slot0._gocontainer, "state/#go_add")
-	slot0._txtcount = gohelper.findChildText(slot0._gocontainer, "count/txt_count")
-	slot0._gotxtcount = gohelper.findChild(slot0._gocontainer, "count")
-	slot0._txtper = gohelper.findChildText(slot0._gocontainer, "count/txt_count/txt")
-	slot0._simagegathericon = gohelper.findChildSingleImage(slot0._gocontainer, "simage_gathericon")
-	slot0._simagebuildingicon = gohelper.findChildSingleImage(slot0._gocontainer, "simage_buildingicon")
-	slot0._goqipaobg = gohelper.findChild(slot0._gocontainer, "qipao")
-	slot0._goroomgifticon = gohelper.findChild(slot0._gocontainer, "simage_actroomicon")
-	slot0._goreddot = gohelper.findChild(slot0._gocontainer, "count/txt_count/go_reddot")
-	slot0._goupgrade = gohelper.findChild(slot0._gocontainer, "#go_upgrade")
-	slot0._gobg = gohelper.findChild(slot0._gocontainer, "count/bg")
-	slot0._gobg1 = gohelper.findChild(slot0._gocontainer, "count/bg1")
-	slot0._customReddotGO = gohelper.findChild(slot0._gocontainer, "count/txt_count/go_reddot/type1")
-	slot0._bgGO = gohelper.findChild(slot0._gocontainer, "count/bg")
+function var_0_0._customOnInit(arg_2_0)
+	arg_2_0._txtbuildingname = gohelper.findChildText(arg_2_0._gocontainer, "bottom/txt_buildingName")
+	arg_2_0._goskinreddot = gohelper.findChild(arg_2_0._gocontainer, "bottom/#go_reddot")
+	arg_2_0._gobubbleContent = gohelper.findChild(arg_2_0._gocontainer, "#go_bubbleContent")
+	arg_2_0._goawarn = gohelper.findChild(arg_2_0._gocontainer, "state/#go_warn")
+	arg_2_0._gostop = gohelper.findChild(arg_2_0._gocontainer, "state/#go_stop")
+	arg_2_0._goadd = gohelper.findChild(arg_2_0._gocontainer, "state/#go_add")
+	arg_2_0._txtcount = gohelper.findChildText(arg_2_0._gocontainer, "count/txt_count")
+	arg_2_0._gotxtcount = gohelper.findChild(arg_2_0._gocontainer, "count")
+	arg_2_0._txtper = gohelper.findChildText(arg_2_0._gocontainer, "count/txt_count/txt")
+	arg_2_0._simagegathericon = gohelper.findChildSingleImage(arg_2_0._gocontainer, "simage_gathericon")
+	arg_2_0._simagebuildingicon = gohelper.findChildSingleImage(arg_2_0._gocontainer, "simage_buildingicon")
+	arg_2_0._goqipaobg = gohelper.findChild(arg_2_0._gocontainer, "qipao")
+	arg_2_0._goroomgifticon = gohelper.findChild(arg_2_0._gocontainer, "simage_actroomicon")
+	arg_2_0._goreddot = gohelper.findChild(arg_2_0._gocontainer, "count/txt_count/go_reddot")
+	arg_2_0._goupgrade = gohelper.findChild(arg_2_0._gocontainer, "#go_upgrade")
+	arg_2_0._gobg = gohelper.findChild(arg_2_0._gocontainer, "count/bg")
+	arg_2_0._gobg1 = gohelper.findChild(arg_2_0._gocontainer, "count/bg1")
+	arg_2_0._customReddotGO = gohelper.findChild(arg_2_0._gocontainer, "count/txt_count/go_reddot/type1")
+	arg_2_0._bgGO = gohelper.findChild(arg_2_0._gocontainer, "count/bg")
 
-	gohelper.setActive(slot0._customReddotGO, false)
-	gohelper.setActive(slot0._bgGO, false)
+	gohelper.setActive(arg_2_0._customReddotGO, false)
+	gohelper.setActive(arg_2_0._bgGO, false)
 
-	slot0._gobubbleitem = gohelper.findChild(slot0._gocontainer, "bubbleContent/#go_bubbleitem")
+	arg_2_0._gobubbleitem = gohelper.findChild(arg_2_0._gocontainer, "bubbleContent/#go_bubbleitem")
 
-	gohelper.setActive(slot0._gobubbleitem, false)
+	gohelper.setActive(arg_2_0._gobubbleitem, false)
 
-	if RoomInitBuildingEnum.InitBuildingSkinReddot[RoomInitBuildingEnum.InitBuildingId.Hall] then
-		RedDotController.instance:addRedDot(slot0._goskinreddot, slot1)
+	local var_2_0 = RoomInitBuildingEnum.InitBuildingSkinReddot[RoomInitBuildingEnum.InitBuildingId.Hall]
+
+	if var_2_0 then
+		RedDotController.instance:addRedDot(arg_2_0._goskinreddot, var_2_0)
 	end
 end
 
-function slot0._customAddEventListeners(slot0)
-	RedDotController.instance:registerCallback(RedDotEvent.UpdateRelateDotInfo, slot0._refreshRelateDot, slot0)
-	RoomMapController.instance:registerCallback(RoomEvent.UpdateRoomLevel, slot0._refreshUpgradeUI, slot0)
-	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, slot0._onDailyRefresh, slot0)
-	ActivityController.instance:registerCallback(ActivityEvent.RefreshActivityState, slot0._checkActivityInfo, slot0)
-	RoomGiftController.instance:registerCallback(RoomGiftEvent.UpdateActInfo, slot0._refreshBubble, slot0)
-	RoomGiftController.instance:registerCallback(RoomGiftEvent.GetBonus, slot0._refreshBubble, slot0)
-	slot0:refreshUI()
-	slot0:_refreshShow(true)
+function var_0_0._customAddEventListeners(arg_3_0)
+	RedDotController.instance:registerCallback(RedDotEvent.UpdateRelateDotInfo, arg_3_0._refreshRelateDot, arg_3_0)
+	RoomMapController.instance:registerCallback(RoomEvent.UpdateRoomLevel, arg_3_0._refreshUpgradeUI, arg_3_0)
+	TimeDispatcher.instance:registerCallback(TimeDispatcher.OnDailyRefresh, arg_3_0._onDailyRefresh, arg_3_0)
+	ActivityController.instance:registerCallback(ActivityEvent.RefreshActivityState, arg_3_0._checkActivityInfo, arg_3_0)
+	RoomGiftController.instance:registerCallback(RoomGiftEvent.UpdateActInfo, arg_3_0._refreshBubble, arg_3_0)
+	RoomGiftController.instance:registerCallback(RoomGiftEvent.GetBonus, arg_3_0._refreshBubble, arg_3_0)
+	arg_3_0:refreshUI()
+	arg_3_0:_refreshShow(true)
 end
 
-function slot0._customRemoveEventListeners(slot0)
-	RedDotController.instance:unregisterCallback(RedDotEvent.UpdateRelateDotInfo, slot0._refreshRelateDot, slot0)
-	RoomMapController.instance:unregisterCallback(RoomEvent.UpdateRoomLevel, slot0._refreshUpgradeUI, slot0)
-	TimeDispatcher.instance:unregisterCallback(TimeDispatcher.OnDailyRefresh, slot0._onDailyRefresh, slot0)
-	ActivityController.instance:unregisterCallback(ActivityEvent.RefreshActivityState, slot0._checkActivityInfo, slot0)
-	RoomGiftController.instance:unregisterCallback(RoomGiftEvent.UpdateActInfo, slot0._refreshBubble, slot0)
-	RoomGiftController.instance:unregisterCallback(RoomGiftEvent.GetBonus, slot0._refreshBubble, slot0)
+function var_0_0._customRemoveEventListeners(arg_4_0)
+	RedDotController.instance:unregisterCallback(RedDotEvent.UpdateRelateDotInfo, arg_4_0._refreshRelateDot, arg_4_0)
+	RoomMapController.instance:unregisterCallback(RoomEvent.UpdateRoomLevel, arg_4_0._refreshUpgradeUI, arg_4_0)
+	TimeDispatcher.instance:unregisterCallback(TimeDispatcher.OnDailyRefresh, arg_4_0._onDailyRefresh, arg_4_0)
+	ActivityController.instance:unregisterCallback(ActivityEvent.RefreshActivityState, arg_4_0._checkActivityInfo, arg_4_0)
+	RoomGiftController.instance:unregisterCallback(RoomGiftEvent.UpdateActInfo, arg_4_0._refreshBubble, arg_4_0)
+	RoomGiftController.instance:unregisterCallback(RoomGiftEvent.GetBonus, arg_4_0._refreshBubble, arg_4_0)
 end
 
-function slot0._refreshRelateDot(slot0, slot1)
-	for slot5, slot6 in pairs(slot1) do
-		if slot5 == RedDotEnum.DotNode.RoomInitBuildingLevel then
-			slot0:_refreshUpgradeUI()
+function var_0_0._refreshRelateDot(arg_5_0, arg_5_1)
+	for iter_5_0, iter_5_1 in pairs(arg_5_1) do
+		if iter_5_0 == RedDotEnum.DotNode.RoomInitBuildingLevel then
+			arg_5_0:_refreshUpgradeUI()
 
 			break
 		end
 	end
 end
 
-function slot0._onDailyRefresh(slot0)
+function var_0_0._onDailyRefresh(arg_6_0)
 	RoomGiftController.instance:getAct159Info()
 end
 
-function slot0._checkActivityInfo(slot0, slot1)
-	slot2 = true
+function var_0_0._checkActivityInfo(arg_7_0, arg_7_1)
+	local var_7_0 = true
 
-	if slot1 and slot1 ~= 0 then
-		slot2 = slot1 == RoomGiftModel.instance:getActId()
+	if arg_7_1 and arg_7_1 ~= 0 then
+		var_7_0 = arg_7_1 == RoomGiftModel.instance:getActId()
 	end
 
-	if slot2 then
+	if var_7_0 then
 		RoomGiftController.instance:getAct159Info()
 	end
 end
 
-function slot0.refreshUI(slot0)
-	gohelper.setActive(slot0._goawarn, false)
-	gohelper.setActive(slot0._gostop, false)
-	gohelper.setActive(slot0._gobg, false)
-	gohelper.setActive(slot0._gobg1, false)
-	gohelper.setActive(slot0._simagegathericon.gameObject, false)
+function var_0_0.refreshUI(arg_8_0)
+	gohelper.setActive(arg_8_0._goawarn, false)
+	gohelper.setActive(arg_8_0._gostop, false)
+	gohelper.setActive(arg_8_0._gobg, false)
+	gohelper.setActive(arg_8_0._gobg1, false)
+	gohelper.setActive(arg_8_0._simagegathericon.gameObject, false)
 
-	slot0._txtcount.text = ""
-	slot0._txtper.text = ""
+	arg_8_0._txtcount.text = ""
+	arg_8_0._txtper.text = ""
 
-	slot0._simagebuildingicon:LoadImage(ResUrl.getRoomImage("productline/icon_1"))
+	arg_8_0._simagebuildingicon:LoadImage(ResUrl.getRoomImage("productline/icon_1"))
 
-	slot0._txtbuildingname.text = luaLang("room_initbuilding_title")
+	arg_8_0._txtbuildingname.text = luaLang("room_initbuilding_title")
 
-	slot0:_refreshPosition()
-	slot0:_refreshUpgradeUI()
-	slot0:_refreshBubble()
+	arg_8_0:_refreshPosition()
+	arg_8_0:_refreshUpgradeUI()
+	arg_8_0:_refreshBubble()
 end
 
-function slot0._refreshUpgradeUI(slot0)
-	slot1, slot2 = RoomInitBuildingHelper.canLevelUp()
+function var_0_0._refreshUpgradeUI(arg_9_0)
+	local var_9_0, var_9_1 = RoomInitBuildingHelper.canLevelUp()
 
-	gohelper.setActive(slot0._goupgrade, slot1)
+	gohelper.setActive(arg_9_0._goupgrade, var_9_0)
 end
 
-function slot0._refreshShow(slot0, slot1)
+function var_0_0._refreshShow(arg_10_0, arg_10_1)
 	if RoomBuildingController.instance:isBuildingListShow() or RoomCharacterController.instance:isCharacterListShow() then
-		slot0:_setShow(false, slot1)
+		arg_10_0:_setShow(false, arg_10_1)
 
 		return
 	end
 
-	if slot0._scene.camera:getCameraState() ~= RoomEnum.CameraState.Overlook and slot2 ~= RoomEnum.CameraState.OverlookAll then
-		slot0:_setShow(false, slot1)
+	local var_10_0 = arg_10_0._scene.camera:getCameraState()
+
+	if var_10_0 ~= RoomEnum.CameraState.Overlook and var_10_0 ~= RoomEnum.CameraState.OverlookAll then
+		arg_10_0:_setShow(false, arg_10_1)
 
 		return
 	end
 
 	if RoomMapController.instance:isInRoomInitBuildingViewCamera() then
-		slot0:_setShow(false, slot1)
+		arg_10_0:_setShow(false, arg_10_1)
 
 		return
 	end
 
-	slot0:_setShow(true, slot1)
+	arg_10_0:_setShow(true, arg_10_1)
 end
 
-function slot0.getUI3DPos(slot0)
-	slot2 = 0
-	slot3 = 0
+function var_0_0.getUI3DPos(arg_11_0)
+	local var_11_0 = arg_11_0._scene.buildingmgr:getInitBuildingGO()
+	local var_11_1 = 0
+	local var_11_2 = 0
 
-	if not gohelper.isNil(slot0._scene.buildingmgr:getInitBuildingGO()) then
-		slot4 = RoomBuildingHelper.getCenterPosition(slot1)
-		slot2 = slot4.x
-		slot3 = slot4.z
+	if not gohelper.isNil(var_11_0) then
+		local var_11_3 = RoomBuildingHelper.getCenterPosition(var_11_0)
+
+		var_11_1 = var_11_3.x
+
+		local var_11_4 = var_11_3.z
 	end
 
-	return RoomBendingHelper.worldToBendingSimple(Vector3(slot2, 0.5, slot2))
+	local var_11_5 = Vector3(var_11_1, 0.5, var_11_1)
+
+	return (RoomBendingHelper.worldToBendingSimple(var_11_5))
 end
 
-function slot0._onGuideTouchUIPart(slot0, slot1)
-	if tonumber(slot1) == slot0._partId then
-		slot0:_onClick()
+function var_0_0._onGuideTouchUIPart(arg_12_0, arg_12_1)
+	if tonumber(arg_12_1) == arg_12_0._partId then
+		arg_12_0:_onClick()
 	end
 end
 
-function slot0._refreshBubble(slot0)
-	slot1 = RoomGiftModel.instance:isCanGetBonus()
+function var_0_0._refreshBubble(arg_13_0)
+	local var_13_0 = RoomGiftModel.instance:isCanGetBonus()
 
-	gohelper.setActive(slot0._goroomgifticon, slot1)
-	gohelper.setActive(slot0._simagebuildingicon.gameObject, not slot1)
-	gohelper.setActive(slot0._goqipaobg, not slot1)
+	gohelper.setActive(arg_13_0._goroomgifticon, var_13_0)
+	gohelper.setActive(arg_13_0._simagebuildingicon.gameObject, not var_13_0)
+	gohelper.setActive(arg_13_0._goqipaobg, not var_13_0)
 end
 
-function slot0._onClick(slot0, slot1, slot2)
+function var_0_0._onClick(arg_14_0, arg_14_1, arg_14_2)
 	if RoomGiftModel.instance:isCanGetBonus() then
 		RoomGiftController.instance:getAct159Bonus()
 	else
@@ -169,18 +178,18 @@ function slot0._onClick(slot0, slot1, slot2)
 	AudioMgr.instance:trigger(AudioEnum.Room.play_ui_home_yield_click)
 end
 
-function slot0._customOnDestory(slot0)
-	if slot0._simagegathericon then
-		slot0._simagegathericon:UnLoadImage()
+function var_0_0._customOnDestory(arg_15_0)
+	if arg_15_0._simagegathericon then
+		arg_15_0._simagegathericon:UnLoadImage()
 
-		slot0._simagegathericon = nil
+		arg_15_0._simagegathericon = nil
 	end
 
-	if slot0._simagebuildingicon then
-		slot0._simagebuildingicon:UnLoadImage()
+	if arg_15_0._simagebuildingicon then
+		arg_15_0._simagebuildingicon:UnLoadImage()
 
-		slot0._simagebuildingicon = nil
+		arg_15_0._simagebuildingicon = nil
 	end
 end
 
-return slot0
+return var_0_0

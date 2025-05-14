@@ -1,19 +1,19 @@
-module("modules.logic.gm.model.GMFightSimulateLeftModel", package.seeall)
+﻿module("modules.logic.gm.model.GMFightSimulateLeftModel", package.seeall)
 
-slot0 = class("GMFightSimulateLeftModel", ListScrollModel)
+local var_0_0 = class("GMFightSimulateLeftModel", ListScrollModel)
 
-function slot0.onOpen(slot0)
-	slot1 = {}
+function var_0_0.onOpen(arg_1_0)
+	local var_1_0 = {}
 
-	for slot5, slot6 in ipairs(lua_chapter.configList) do
-		if slot6.type == DungeonEnum.ChapterType.Simulate then
-			table.insert(slot1, slot6)
+	for iter_1_0, iter_1_1 in ipairs(lua_chapter.configList) do
+		if iter_1_1.type == DungeonEnum.ChapterType.Simulate then
+			table.insert(var_1_0, iter_1_1)
 		end
 	end
 
-	slot0:setList(slot1)
+	arg_1_0:setList(var_1_0)
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

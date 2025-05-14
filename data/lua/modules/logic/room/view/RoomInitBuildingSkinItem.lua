@@ -1,93 +1,104 @@
-module("modules.logic.room.view.RoomInitBuildingSkinItem", package.seeall)
+﻿module("modules.logic.room.view.RoomInitBuildingSkinItem", package.seeall)
 
-slot0 = class("RoomInitBuildingSkinItem", ListScrollCellExtend)
+local var_0_0 = class("RoomInitBuildingSkinItem", ListScrollCellExtend)
 
-function slot0.onInitView(slot0)
-	slot0._imagequalitybg = gohelper.findChildImage(slot0.viewGO, "#image_qualitybg")
-	slot0._imagebuilding = gohelper.findChildImage(slot0.viewGO, "#image_building")
-	slot0._txtskinname = gohelper.findChildText(slot0.viewGO, "#txt_skinname")
-	slot0._goequiped = gohelper.findChild(slot0.viewGO, "#go_equiped")
-	slot0._goselected = gohelper.findChild(slot0.viewGO, "#go_selected")
-	slot0._golocked = gohelper.findChild(slot0.viewGO, "#go_locked")
-	slot0._goreddot = gohelper.findChild(slot0.viewGO, "#go_reddot")
-	slot0._bgClick = gohelper.findChildClickWithDefaultAudio(slot0.viewGO, "bg")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._imagequalitybg = gohelper.findChildImage(arg_1_0.viewGO, "#image_qualitybg")
+	arg_1_0._imagebuilding = gohelper.findChildImage(arg_1_0.viewGO, "#image_building")
+	arg_1_0._txtskinname = gohelper.findChildText(arg_1_0.viewGO, "#txt_skinname")
+	arg_1_0._goequiped = gohelper.findChild(arg_1_0.viewGO, "#go_equiped")
+	arg_1_0._goselected = gohelper.findChild(arg_1_0.viewGO, "#go_selected")
+	arg_1_0._golocked = gohelper.findChild(arg_1_0.viewGO, "#go_locked")
+	arg_1_0._goreddot = gohelper.findChild(arg_1_0.viewGO, "#go_reddot")
+	arg_1_0._bgClick = gohelper.findChildClickWithDefaultAudio(arg_1_0.viewGO, "bg")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._bgClick:AddClickListener(slot0.onClickBg, slot0)
-	slot0:addEventCb(RoomSkinController.instance, RoomSkinEvent.ChangeEquipRoomSkin, slot0.onChangeEquipSkin, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._bgClick:AddClickListener(arg_2_0.onClickBg, arg_2_0)
+	arg_2_0:addEventCb(RoomSkinController.instance, RoomSkinEvent.ChangeEquipRoomSkin, arg_2_0.onChangeEquipSkin, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._bgClick:RemoveClickListener()
-	slot0:removeEventCb(RoomSkinController.instance, RoomSkinEvent.ChangeEquipRoomSkin, slot0.onChangeEquipSkin, slot0)
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._bgClick:RemoveClickListener()
+	arg_3_0:removeEventCb(RoomSkinController.instance, RoomSkinEvent.ChangeEquipRoomSkin, arg_3_0.onChangeEquipSkin, arg_3_0)
 end
 
-function slot0.onClickBg(slot0)
-	if not slot0.id then
+function var_0_0.onClickBg(arg_4_0)
+	if not arg_4_0.id then
 		return
 	end
 
-	RoomSkinController.instance:selectPreviewRoomSkin(slot0.id)
+	RoomSkinController.instance:selectPreviewRoomSkin(arg_4_0.id)
 end
 
-function slot0.onChangeEquipSkin(slot0)
-	slot0:refreshState()
+function var_0_0.onChangeEquipSkin(arg_5_0)
+	arg_5_0:refreshState()
 end
 
-function slot0._editableInitView(slot0)
+function var_0_0._editableInitView(arg_6_0)
+	return
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	if not slot1 then
+function var_0_0.onUpdateMO(arg_7_0, arg_7_1)
+	if not arg_7_1 then
 		return
 	end
 
-	slot0.id = slot1.id
+	arg_7_0.id = arg_7_1.id
 
-	slot0:refresh()
-	RedDotController.instance:addRedDot(slot0._goreddot, RedDotEnum.DotNode.RoomNewSkinItem, slot0.id)
+	arg_7_0:refresh()
+	RedDotController.instance:addRedDot(arg_7_0._goreddot, RedDotEnum.DotNode.RoomNewSkinItem, arg_7_0.id)
 end
 
-function slot0.refresh(slot0)
-	slot0:refreshInfo()
-	slot0:refreshState()
+function var_0_0.refresh(arg_8_0)
+	arg_8_0:refreshInfo()
+	arg_8_0:refreshState()
 end
 
-function slot0.refreshInfo(slot0)
-	if not slot0.id then
+function var_0_0.refreshInfo(arg_9_0)
+	if not arg_9_0.id then
 		return
 	end
 
-	slot0._txtskinname.text = RoomConfig.instance:getRoomSkinName(slot0.id)
+	local var_9_0 = RoomConfig.instance:getRoomSkinName(arg_9_0.id)
 
-	if not string.nilorempty(RoomConfig.instance:getRoomSkinIcon(slot0.id)) then
-		UISpriteSetMgr.instance:setRoomSprite(slot0._imagebuilding, slot2)
+	arg_9_0._txtskinname.text = var_9_0
+
+	local var_9_1 = RoomConfig.instance:getRoomSkinIcon(arg_9_0.id)
+
+	if not string.nilorempty(var_9_1) then
+		UISpriteSetMgr.instance:setRoomSprite(arg_9_0._imagebuilding, var_9_1)
 	end
 
-	if not string.nilorempty(RoomConfig.instance:getRoomSkinRare(slot0.id)) then
-		UISpriteSetMgr.instance:setRoomSprite(slot0._imagequalitybg, "room_qualityframe_" .. slot3)
+	local var_9_2 = RoomConfig.instance:getRoomSkinRare(arg_9_0.id)
+
+	if not string.nilorempty(var_9_2) then
+		UISpriteSetMgr.instance:setRoomSprite(arg_9_0._imagequalitybg, "room_qualityframe_" .. var_9_2)
 	end
 end
 
-function slot0.refreshState(slot0)
-	if RoomSkinModel.instance:isUnlockRoomSkin(slot0.id) then
-		gohelper.setActive(slot0._goequiped, RoomSkinModel.instance:isEquipRoomSkin(slot0.id))
+function var_0_0.refreshState(arg_10_0)
+	local var_10_0 = RoomSkinModel.instance:isUnlockRoomSkin(arg_10_0.id)
+
+	if var_10_0 then
+		local var_10_1 = RoomSkinModel.instance:isEquipRoomSkin(arg_10_0.id)
+
+		gohelper.setActive(arg_10_0._goequiped, var_10_1)
 	end
 
-	gohelper.setActive(slot0._golocked, not slot1)
+	gohelper.setActive(arg_10_0._golocked, not var_10_0)
 end
 
-function slot0.onSelect(slot0, slot1)
-	gohelper.setActive(slot0._goselected, slot1)
+function var_0_0.onSelect(arg_11_0, arg_11_1)
+	gohelper.setActive(arg_11_0._goselected, arg_11_1)
 end
 
-function slot0.onDestroy(slot0)
-	slot0.id = nil
+function var_0_0.onDestroy(arg_12_0)
+	arg_12_0.id = nil
 end
 
-return slot0
+return var_0_0

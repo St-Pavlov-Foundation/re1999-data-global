@@ -1,43 +1,50 @@
-module("modules.logic.battlepass.view.BpLevelupTipView", package.seeall)
+﻿module("modules.logic.battlepass.view.BpLevelupTipView", package.seeall)
 
-slot0 = class("BpLevelupTipView", BaseView)
+local var_0_0 = class("BpLevelupTipView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._animationEvent = gohelper.findChild(slot0.viewGO, "root"):GetComponent(typeof(ZProj.AnimationEventWrap))
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "root/#simage_bg")
-	slot0._txtlv = gohelper.findChildText(slot0.viewGO, "root/main/icon/#txt_lv")
-	slot0._btnClose = gohelper.findChildButtonWithAudio(slot0.viewGO, "root/#btn_close")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._animationEvent = gohelper.findChild(arg_1_0.viewGO, "root"):GetComponent(typeof(ZProj.AnimationEventWrap))
+	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/#simage_bg")
+	arg_1_0._txtlv = gohelper.findChildText(arg_1_0.viewGO, "root/main/icon/#txt_lv")
+	arg_1_0._btnClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_close")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnClose:AddClickListener(slot0.onCloseClick, slot0)
-	slot0._animationEvent:AddEventListener("levelup", slot0.onLevelUp, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnClose:AddClickListener(arg_2_0.onCloseClick, arg_2_0)
+	arg_2_0._animationEvent:AddEventListener("levelup", arg_2_0.onLevelUp, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnClose:RemoveClickListener()
-	slot0._animationEvent:RemoveEventListener("levelup")
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnClose:RemoveClickListener()
+	arg_3_0._animationEvent:RemoveEventListener("levelup")
 end
 
-function slot0._editableInitView(slot0)
-	slot0._simagebg:LoadImage(ResUrl.getBpBg("full/img_shengji_bg"))
+function var_0_0._editableInitView(arg_4_0)
+	arg_4_0._simagebg:LoadImage(ResUrl.getBpBg("full/img_shengji_bg"))
 
-	slot0._txtlv.text = math.floor((BpModel.instance.preStatus and BpModel.instance.preStatus.score or BpModel.instance.score) / BpConfig.instance:getLevelScore(BpModel.instance.id))
-	slot0._openTime = ServerTime.now()
+	local var_4_0 = BpConfig.instance:getLevelScore(BpModel.instance.id)
+	local var_4_1 = BpModel.instance.preStatus and BpModel.instance.preStatus.score or BpModel.instance.score
 
-	TaskDispatcher.runDelay(slot0.onCloseClick, slot0, BpEnum.LevelUpTotalTime)
+	arg_4_0._txtlv.text = math.floor(var_4_1 / var_4_0)
+	arg_4_0._openTime = ServerTime.now()
+
+	TaskDispatcher.runDelay(arg_4_0.onCloseClick, arg_4_0, BpEnum.LevelUpTotalTime)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_permit_decibel_upgrade)
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_5_0)
+	return
 end
 
-function slot0.onLevelUp(slot0)
-	slot0._txtlv.text = math.floor(BpModel.instance.score / BpConfig.instance:getLevelScore(BpModel.instance.id))
+function var_0_0.onLevelUp(arg_6_0)
+	local var_6_0 = BpConfig.instance:getLevelScore(BpModel.instance.id)
+	local var_6_1 = math.floor(BpModel.instance.score / var_6_0)
+
+	arg_6_0._txtlv.text = var_6_1
 
 	if not BpModel.instance.preStatus then
 		return
@@ -45,33 +52,34 @@ function slot0.onLevelUp(slot0)
 
 	StatController.instance:track(StatEnum.EventName.BPUp, {
 		[StatEnum.EventProperties.BP_Type] = StatEnum.BpType[BpModel.instance.payStatus],
-		[StatEnum.EventProperties.BeforeLevel] = math.floor(BpModel.instance.preStatus.score / slot1),
-		[StatEnum.EventProperties.AfterLevel] = slot2,
+		[StatEnum.EventProperties.BeforeLevel] = math.floor(BpModel.instance.preStatus.score / var_6_0),
+		[StatEnum.EventProperties.AfterLevel] = var_6_1,
 		[StatEnum.EventProperties.BP_ID] = tostring(BpModel.instance.id)
 	})
 end
 
-function slot0.onCloseClick(slot0)
-	if not slot0._openTime or ServerTime.now() - slot0._openTime < BpEnum.LevelUpMinTime then
+function var_0_0.onCloseClick(arg_7_0)
+	if not arg_7_0._openTime or ServerTime.now() - arg_7_0._openTime < BpEnum.LevelUpMinTime then
 		return
 	end
 
-	slot0:closeThis()
+	arg_7_0:closeThis()
 end
 
-function slot0.onOpen(slot0)
+function var_0_0.onOpen(arg_8_0)
+	return
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_9_0)
 	if not BpModel.instance:isInFlow() then
 		BpController.instance:dispatchEvent(BpEvent.ShowUnlockBonusAnim)
 	end
 
-	TaskDispatcher.cancelTask(slot0.onCloseClick, slot0)
+	TaskDispatcher.cancelTask(arg_9_0.onCloseClick, arg_9_0)
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simagebg:UnLoadImage()
+function var_0_0.onDestroyView(arg_10_0)
+	arg_10_0._simagebg:UnLoadImage()
 end
 
-return slot0
+return var_0_0

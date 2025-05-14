@@ -1,59 +1,61 @@
-module("modules.logic.versionactivity2_4.dungeon.model.VersionActivity2_4SudokuModel", package.seeall)
+﻿module("modules.logic.versionactivity2_4.dungeon.model.VersionActivity2_4SudokuModel", package.seeall)
 
-slot0 = class("VersionActivity2_4SudokuModel", BaseModel)
-slot1 = "modules.configs.sudoku.lua_sudoku_%s"
-slot2 = "lua_sudoku_%s"
+local var_0_0 = class("VersionActivity2_4SudokuModel", BaseModel)
+local var_0_1 = "modules.configs.sudoku.lua_sudoku_%s"
+local var_0_2 = "lua_sudoku_%s"
 
-function slot0.onInit(slot0)
-	slot0._operateCmdList = {}
+function var_0_0.onInit(arg_1_0)
+	arg_1_0._operateCmdList = {}
 end
 
-function slot0.reInit(slot0)
-	slot0:init()
+function var_0_0.reInit(arg_2_0)
+	arg_2_0:init()
 end
 
-function slot0.init(slot0)
-	slot0._curSelectItemIdx = 0
+function var_0_0.init(arg_3_0)
+	arg_3_0._curSelectItemIdx = 0
 end
 
-function slot0.selectItem(slot0, slot1)
-	slot0._curSelectItemIdx = slot1
+function var_0_0.selectItem(arg_4_0, arg_4_1)
+	arg_4_0._curSelectItemIdx = arg_4_1
 end
 
-function slot0.getSelectedItem(slot0)
-	return slot0._curSelectItemIdx
+function var_0_0.getSelectedItem(arg_5_0)
+	return arg_5_0._curSelectItemIdx
 end
 
-function slot0.selectKeyboardItem(slot0, slot1)
-	slot0._curSelectKeyboardIdx = slot1
+function var_0_0.selectKeyboardItem(arg_6_0, arg_6_1)
+	arg_6_0._curSelectKeyboardIdx = arg_6_1
 end
 
-function slot0.getSelectedKeyboardItem(slot0)
-	return slot0._curSelectKeyboardIdx
+function var_0_0.getSelectedKeyboardItem(arg_7_0)
+	return arg_7_0._curSelectKeyboardIdx
 end
 
-function slot0.pushCmd(slot0, slot1)
-	slot0._operateCmdList[#slot0._operateCmdList + 1] = slot1
+function var_0_0.pushCmd(arg_8_0, arg_8_1)
+	arg_8_0._operateCmdList[#arg_8_0._operateCmdList + 1] = arg_8_1
 end
 
-function slot0.popCmd(slot0)
-	if #slot0._operateCmdList == 0 then
+function var_0_0.popCmd(arg_9_0)
+	if #arg_9_0._operateCmdList == 0 then
 		return nil
 	end
 
-	slot0._operateCmdList[#slot0._operateCmdList] = nil
+	local var_9_0 = arg_9_0._operateCmdList[#arg_9_0._operateCmdList]
 
-	return slot0._operateCmdList[#slot0._operateCmdList]
+	arg_9_0._operateCmdList[#arg_9_0._operateCmdList] = nil
+
+	return var_9_0
 end
 
-function slot0.clearCmd(slot0)
-	slot0._operateCmdList = {}
+function var_0_0.clearCmd(arg_10_0)
+	arg_10_0._operateCmdList = {}
 end
 
-function slot0.getSudokuCfg(slot0, slot1)
-	return addGlobalModule(string.format(uv0, slot1), string.format("lua_chessgame_group_", slot1))
+function var_0_0.getSudokuCfg(arg_11_0, arg_11_1)
+	return (addGlobalModule(string.format(var_0_1, arg_11_1), string.format("lua_chessgame_group_", arg_11_1)))
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

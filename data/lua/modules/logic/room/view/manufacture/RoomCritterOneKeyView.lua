@@ -1,179 +1,192 @@
-module("modules.logic.room.view.manufacture.RoomCritterOneKeyView", package.seeall)
+﻿module("modules.logic.room.view.manufacture.RoomCritterOneKeyView", package.seeall)
 
-slot0 = class("RoomCritterOneKeyView", BaseView)
+local var_0_0 = class("RoomCritterOneKeyView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._gotitlebefore = gohelper.findChild(slot0.viewGO, "title/#go_titlebefore")
-	slot0._gotitleafter = gohelper.findChild(slot0.viewGO, "title/#go_titleafter")
-	slot0._btnclose = gohelper.findChildClickWithAudio(slot0.viewGO, "#btn_close")
-	slot0._godragarea = gohelper.findChild(slot0.viewGO, "#go_dragArea")
-	slot0._goLayout = gohelper.findChild(slot0.viewGO, "#go_content/#go_Layout")
-	slot0._gocarditem = gohelper.findChild(slot0.viewGO, "#go_content/#go_Layout/#go_carditem")
-	slot0._gocomplete = gohelper.findChild(slot0.viewGO, "#go_complete")
-	slot0._gotopleft = gohelper.findChild(slot0.viewGO, "#go_topleft")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gotitlebefore = gohelper.findChild(arg_1_0.viewGO, "title/#go_titlebefore")
+	arg_1_0._gotitleafter = gohelper.findChild(arg_1_0.viewGO, "title/#go_titleafter")
+	arg_1_0._btnclose = gohelper.findChildClickWithAudio(arg_1_0.viewGO, "#btn_close")
+	arg_1_0._godragarea = gohelper.findChild(arg_1_0.viewGO, "#go_dragArea")
+	arg_1_0._goLayout = gohelper.findChild(arg_1_0.viewGO, "#go_content/#go_Layout")
+	arg_1_0._gocarditem = gohelper.findChild(arg_1_0.viewGO, "#go_content/#go_Layout/#go_carditem")
+	arg_1_0._gocomplete = gohelper.findChild(arg_1_0.viewGO, "#go_complete")
+	arg_1_0._gotopleft = gohelper.findChild(arg_1_0.viewGO, "#go_topleft")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._drag:AddDragBeginListener(slot0._onBeginDrag, slot0)
-	slot0._drag:AddDragEndListener(slot0._onEndDrag, slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._drag:AddDragBeginListener(arg_2_0._onBeginDrag, arg_2_0)
+	arg_2_0._drag:AddDragEndListener(arg_2_0._onEndDrag, arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._drag:RemoveDragBeginListener()
-	slot0._drag:RemoveDragEndListener()
-	slot0._btnclose:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._drag:RemoveDragBeginListener()
+	arg_3_0._drag:RemoveDragEndListener()
+	arg_3_0._btnclose:RemoveClickListener()
 end
 
-function slot0._onBeginDrag(slot0, slot1, slot2)
-	slot0._isDrag = true
+function var_0_0._onBeginDrag(arg_4_0, arg_4_1, arg_4_2)
+	arg_4_0._isDrag = true
 end
 
-function slot0._onEndDrag(slot0, slot1, slot2)
-	slot0._isDrag = false
+function var_0_0._onEndDrag(arg_5_0, arg_5_1, arg_5_2)
+	arg_5_0._isDrag = false
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseOnClick(arg_6_0)
+	arg_6_0:closeThis()
 end
 
-function slot0._onCardItemDrag(slot0, slot1, slot2)
-	slot0:_onBeginDrag()
-	slot0:_onCardItemHover(slot1)
+function var_0_0._onCardItemDrag(arg_7_0, arg_7_1, arg_7_2)
+	arg_7_0:_onBeginDrag()
+	arg_7_0:_onCardItemHover(arg_7_1)
 end
 
-function slot0._onCardItemHover(slot0, slot1)
-	if not slot0._isDrag then
+function var_0_0._onCardItemHover(arg_8_0, arg_8_1)
+	if not arg_8_0._isDrag then
 		return
 	end
 
-	slot0:_callCritter(slot1)
+	arg_8_0:_callCritter(arg_8_1)
 end
 
-function slot0._callCritter(slot0, slot1)
-	if not slot0._waitCallCritterDict or not slot0._waitCallCritterDict[slot1] then
+function var_0_0._callCritter(arg_9_0, arg_9_1)
+	if not arg_9_0._waitCallCritterDict or not arg_9_0._waitCallCritterDict[arg_9_1] then
 		return
 	end
 
-	if slot0._cardItemDict[slot1] then
-		slot2.animator:Play("card", 0, 0)
+	local var_9_0 = arg_9_0._cardItemDict[arg_9_1]
+
+	if var_9_0 then
+		var_9_0.animator:Play("card", 0, 0)
 		AudioMgr.instance:trigger(AudioEnum.Room.play_ui_home_mj_fenpai)
 	end
 
-	slot0._waitCallCritterDict[slot1] = nil
+	arg_9_0._waitCallCritterDict[arg_9_1] = nil
 
-	slot0:checkComplete()
+	arg_9_0:checkComplete()
 end
 
-function slot0._editableInitView(slot0)
-	slot0:clearVar()
+function var_0_0._editableInitView(arg_10_0)
+	arg_10_0:clearVar()
 
-	slot0._drag = SLFramework.UGUI.UIDragListener.Get(slot0._godragarea)
-	slot0._goclosebtn = slot0._btnclose.gameObject
+	arg_10_0._drag = SLFramework.UGUI.UIDragListener.Get(arg_10_0._godragarea)
+	arg_10_0._goclosebtn = arg_10_0._btnclose.gameObject
 end
 
-function slot0.onUpdateParam(slot0)
-	if not slot0.viewParam then
+function var_0_0.onUpdateParam(arg_11_0)
+	if not arg_11_0.viewParam then
 		return
 	end
 
-	slot0.type = slot0.viewParam.type
-	slot0.infoList = slot0.viewParam.infoList or {}
+	arg_11_0.type = arg_11_0.viewParam.type
+	arg_11_0.infoList = arg_11_0.viewParam.infoList or {}
 
-	for slot4, slot5 in ipairs(slot0.infoList) do
-		for slot9, slot10 in ipairs(slot5.critterUids) do
-			slot0._waitCallCritterDict[slot10] = true
+	for iter_11_0, iter_11_1 in ipairs(arg_11_0.infoList) do
+		for iter_11_2, iter_11_3 in ipairs(iter_11_1.critterUids) do
+			arg_11_0._waitCallCritterDict[iter_11_3] = true
 		end
 	end
 end
 
-function slot0.onOpen(slot0)
-	slot0:onUpdateParam()
-	slot0:initCritterCardItem()
-	slot0:checkComplete()
+function var_0_0.onOpen(arg_12_0)
+	arg_12_0:onUpdateParam()
+	arg_12_0:initCritterCardItem()
+	arg_12_0:checkComplete()
 end
 
-function slot0.initCritterCardItem(slot0)
-	slot1 = {}
+function var_0_0.initCritterCardItem(arg_13_0)
+	local var_13_0 = {}
 
-	for slot5, slot6 in pairs(slot0._waitCallCritterDict) do
-		slot1[#slot1 + 1] = slot5
+	for iter_13_0, iter_13_1 in pairs(arg_13_0._waitCallCritterDict) do
+		var_13_0[#var_13_0 + 1] = iter_13_0
 	end
 
-	gohelper.CreateObjList(slot0, slot0.onSetCritterCardItem, slot1, slot0._goLayout, slot0._gocarditem)
+	gohelper.CreateObjList(arg_13_0, arg_13_0.onSetCritterCardItem, var_13_0, arg_13_0._goLayout, arg_13_0._gocarditem)
 end
 
-function slot0.onSetCritterCardItem(slot0, slot1, slot2, slot3)
-	slot4 = slot0:getUserDataTb_()
-	slot4.go = slot1
-	slot4.critterUid = slot2
-	slot4.animator = slot4.go:GetComponent(gohelper.Type_Animator)
-	slot4.imagecardfrontbg = gohelper.findChildImage(slot1, "#simage_cardfrontbg")
-	slot4.simagecritter = gohelper.findChildSingleImage(slot1, "#simage_cardfrontbg/#simage_critter")
-	slot4.simagecardback = gohelper.findChildSingleImage(slot1, "#simage_cardback")
+function var_0_0.onSetCritterCardItem(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
+	local var_14_0 = arg_14_0:getUserDataTb_()
 
-	slot4.animator:Play("idle", 0, 0)
+	var_14_0.go = arg_14_1
+	var_14_0.critterUid = arg_14_2
+	var_14_0.animator = var_14_0.go:GetComponent(gohelper.Type_Animator)
+	var_14_0.imagecardfrontbg = gohelper.findChildImage(arg_14_1, "#simage_cardfrontbg")
+	var_14_0.simagecritter = gohelper.findChildSingleImage(arg_14_1, "#simage_cardfrontbg/#simage_critter")
+	var_14_0.simagecardback = gohelper.findChildSingleImage(arg_14_1, "#simage_cardback")
 
-	if CritterModel.instance:getCritterMOByUid(slot4.critterUid) then
-		slot6 = slot5:getDefineId()
+	var_14_0.animator:Play("idle", 0, 0)
 
-		slot4.simagecritter:LoadImage(ResUrl.getCritterLargeIcon(slot6))
-		UISpriteSetMgr.instance:setCritterSprite(slot4.imagecardfrontbg, CritterConfig.instance:getBaseCard(CritterConfig.instance:getCritterCatalogue(slot6)))
+	local var_14_1 = CritterModel.instance:getCritterMOByUid(var_14_0.critterUid)
+
+	if var_14_1 then
+		local var_14_2 = var_14_1:getDefineId()
+		local var_14_3 = ResUrl.getCritterLargeIcon(var_14_2)
+
+		var_14_0.simagecritter:LoadImage(var_14_3)
+
+		local var_14_4 = CritterConfig.instance:getCritterCatalogue(var_14_2)
+		local var_14_5 = CritterConfig.instance:getBaseCard(var_14_4)
+
+		UISpriteSetMgr.instance:setCritterSprite(var_14_0.imagecardfrontbg, var_14_5)
 	else
-		logError(string.format("RoomCritterOneKeyView:onSetCritterCardItem no critterMO, critterUid:%s", slot2))
+		logError(string.format("RoomCritterOneKeyView:onSetCritterCardItem no critterMO, critterUid:%s", arg_14_2))
 	end
 
-	slot4.click = SLFramework.UGUI.UIClickListener.Get(slot4.go)
-	slot4.drag = SLFramework.UGUI.UIDragListener.Get(slot4.go)
-	slot4.press = SLFramework.UGUI.UILongPressListener.Get(slot4.go)
+	var_14_0.click = SLFramework.UGUI.UIClickListener.Get(var_14_0.go)
+	var_14_0.drag = SLFramework.UGUI.UIDragListener.Get(var_14_0.go)
+	var_14_0.press = SLFramework.UGUI.UILongPressListener.Get(var_14_0.go)
 
-	slot4.click:AddClickListener(slot0._callCritter, slot0, slot2)
-	slot4.drag:AddDragBeginListener(slot0._onCardItemDrag, slot0, slot2)
-	slot4.drag:AddDragEndListener(slot0._onEndDrag, slot0)
-	slot4.press:AddHoverListener(slot0._onCardItemHover, slot0, slot2)
+	var_14_0.click:AddClickListener(arg_14_0._callCritter, arg_14_0, arg_14_2)
+	var_14_0.drag:AddDragBeginListener(arg_14_0._onCardItemDrag, arg_14_0, arg_14_2)
+	var_14_0.drag:AddDragEndListener(arg_14_0._onEndDrag, arg_14_0)
+	var_14_0.press:AddHoverListener(arg_14_0._onCardItemHover, arg_14_0, arg_14_2)
 
-	slot0._cardItemDict[slot2] = slot4
+	arg_14_0._cardItemDict[arg_14_2] = var_14_0
 end
 
-function slot0.checkComplete(slot0)
-	if not next(slot0._waitCallCritterDict) then
-		RoomRpc.instance:sendRouseCrittersRequest(slot0.type, slot0.infoList)
+function var_0_0.checkComplete(arg_15_0)
+	local var_15_0 = not next(arg_15_0._waitCallCritterDict)
+
+	if var_15_0 then
+		RoomRpc.instance:sendRouseCrittersRequest(arg_15_0.type, arg_15_0.infoList)
 	end
 
-	gohelper.setActive(slot0._gotitlebefore, not slot1)
-	gohelper.setActive(slot0._godragarea, not slot1)
-	gohelper.setActive(slot0._gotitleafter, slot1)
-	gohelper.setActive(slot0._goclosebtn, slot1)
-	gohelper.setActive(slot0._gocomplete, slot1)
+	gohelper.setActive(arg_15_0._gotitlebefore, not var_15_0)
+	gohelper.setActive(arg_15_0._godragarea, not var_15_0)
+	gohelper.setActive(arg_15_0._gotitleafter, var_15_0)
+	gohelper.setActive(arg_15_0._goclosebtn, var_15_0)
+	gohelper.setActive(arg_15_0._gocomplete, var_15_0)
 end
 
-function slot0.clearVar(slot0)
-	slot0._waitCallCritterDict = {}
+function var_0_0.clearVar(arg_16_0)
+	arg_16_0._waitCallCritterDict = {}
 
-	if slot0._cardItemDict then
-		for slot4, slot5 in pairs(slot0._cardItemDict) do
-			slot5.simagecritter:UnLoadImage()
-			slot5.simagecardback:UnLoadImage()
-			slot5.click:RemoveClickListener()
-			slot5.drag:RemoveDragBeginListener()
-			slot5.drag:RemoveDragEndListener()
-			slot5.press:RemoveHoverListener()
+	if arg_16_0._cardItemDict then
+		for iter_16_0, iter_16_1 in pairs(arg_16_0._cardItemDict) do
+			iter_16_1.simagecritter:UnLoadImage()
+			iter_16_1.simagecardback:UnLoadImage()
+			iter_16_1.click:RemoveClickListener()
+			iter_16_1.drag:RemoveDragBeginListener()
+			iter_16_1.drag:RemoveDragEndListener()
+			iter_16_1.press:RemoveHoverListener()
 		end
 	end
 
-	slot0._cardItemDict = {}
-	slot0._isDrag = false
+	arg_16_0._cardItemDict = {}
+	arg_16_0._isDrag = false
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_17_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	slot0:clearVar()
+function var_0_0.onDestroyView(arg_18_0)
+	arg_18_0:clearVar()
 end
 
-return slot0
+return var_0_0

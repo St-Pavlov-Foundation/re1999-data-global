@@ -1,19 +1,20 @@
-module("modules.logic.versionactivity2_4.wuerlixi.define.WuErLiXiEnum", package.seeall)
+﻿module("modules.logic.versionactivity2_4.wuerlixi.define.WuErLiXiEnum", package.seeall)
 
-slot0 = _M
-slot0.EpisodeStatus = {
+local var_0_0 = _M
+
+var_0_0.EpisodeStatus = {
 	BeforeStory = 0,
 	MapGame = 1,
 	Finished = 3,
 	AfterStory = 2
 }
-slot0.Dir = {
+var_0_0.Dir = {
 	Down = 2,
 	Up = 0,
 	Right = 1,
 	Left = 3
 }
-slot0.UnitType = {
+var_0_0.UnitType = {
 	Reflection = 5,
 	KeyStart = 2,
 	Obstacle = 4,
@@ -23,20 +24,20 @@ slot0.UnitType = {
 	SignalEnd = 3,
 	Key = 8
 }
-slot0.UnitTypeToName = {}
+var_0_0.UnitTypeToName = {}
 
-for slot4, slot5 in pairs(slot0.UnitType) do
-	slot0.UnitTypeToName[slot5] = slot4
+for iter_0_0, iter_0_1 in pairs(var_0_0.UnitType) do
+	var_0_0.UnitTypeToName[iter_0_1] = iter_0_0
 end
 
-slot0.NodeType = {
+var_0_0.NodeType = {
 	Placeable = 1,
 	UnPlaceable = 2
 }
-slot0.RayType = {
+var_0_0.RayType = {
 	SwitchSignal = 2,
 	NormalSignal = 1
 }
-slot0.GameMapNodeWidth = 84
+var_0_0.GameMapNodeWidth = 84
 
-return slot0
+return var_0_0

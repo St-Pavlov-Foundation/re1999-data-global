@@ -1,32 +1,35 @@
-module("modules.logic.room.utils.pathfinding.RoomCharacterAStarFinder", package.seeall)
+﻿module("modules.logic.room.utils.pathfinding.RoomCharacterAStarFinder", package.seeall)
 
-slot0 = class("RoomCharacterAStarFinder", BaseAStarFinder)
+local var_0_0 = class("RoomCharacterAStarFinder", BaseAStarFinder)
 
-function slot0.ctor(slot0, slot1, slot2)
-	uv0.super.ctor(slot0)
+function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2)
+	var_0_0.super.ctor(arg_1_0)
 
-	slot0.canMoveDict = slot1
-	slot0.canMoveMaskDict = slot2
+	arg_1_0.canMoveDict = arg_1_1
+	arg_1_0.canMoveMaskDict = arg_1_2
 end
 
-function slot0.getConnectPointsAndCost(slot0, slot1)
-	slot3 = {}
+function var_0_0.getConnectPointsAndCost(arg_2_0, arg_2_1)
+	local var_2_0 = arg_2_1:getConnects()
+	local var_2_1 = {}
 
-	for slot7 = 1, #slot1:getConnects() do
-		table.insert(slot3, 1)
+	for iter_2_0 = 1, #var_2_0 do
+		table.insert(var_2_1, 1)
 	end
 
-	return slot2, slot3
+	return var_2_0, var_2_1
 end
 
-function slot0.heuristic(slot0, slot1, slot2)
-	return RoomAStarHelper.heuristic(slot1, slot2)
+function var_0_0.heuristic(arg_3_0, arg_3_1, arg_3_2)
+	return RoomAStarHelper.heuristic(arg_3_1, arg_3_2)
 end
 
-function slot0.isWalkable(slot0, slot1)
-	slot2 = slot0.canMoveDict[slot1.x] and slot0.canMoveDict[slot1.x][slot1.y] and slot0.canMoveDict[slot1.x][slot1.y][slot1.direction]
+function var_0_0.isWalkable(arg_4_0, arg_4_1)
+	local var_4_0 = arg_4_0.canMoveDict[arg_4_1.x] and arg_4_0.canMoveDict[arg_4_1.x][arg_4_1.y] and arg_4_0.canMoveDict[arg_4_1.x][arg_4_1.y][arg_4_1.direction]
 
-	return slot2 and slot0.canMoveMaskDict[slot2]
+	var_4_0 = var_4_0 and arg_4_0.canMoveMaskDict[var_4_0]
+
+	return var_4_0
 end
 
-return slot0
+return var_0_0

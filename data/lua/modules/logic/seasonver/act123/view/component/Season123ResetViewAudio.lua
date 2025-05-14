@@ -1,143 +1,146 @@
-module("modules.logic.seasonver.act123.view.component.Season123ResetViewAudio", package.seeall)
+﻿module("modules.logic.seasonver.act123.view.component.Season123ResetViewAudio", package.seeall)
 
-slot0 = class("Season123ResetViewAudio", LuaCompBase)
+local var_0_0 = class("Season123ResetViewAudio", LuaCompBase)
 
-function slot0.ctor(slot0, slot1)
-	slot0.scroll = slot1
+function var_0_0.ctor(arg_1_0, arg_1_1)
+	arg_1_0.scroll = arg_1_1
 
-	if slot0.scroll.content then
-		slot0._contentWidth = recthelper.getWidth(slot0.scroll.content)
+	if arg_1_0.scroll.content then
+		arg_1_0._contentWidth = recthelper.getWidth(arg_1_0.scroll.content)
 	else
-		slot0._contentWidth = recthelper.getWidth(slot0.scroll.transform)
+		arg_1_0._contentWidth = recthelper.getWidth(arg_1_0.scroll.transform)
 	end
 
-	slot0._intervalSampleOffset = 0.1
-	slot0._intervalSampleStop = 0.1
-	slot0._startPlayOffset = 0.81
-	slot0._startPlayOffsetDraging = 0.08
-	slot0._stopPlayOffset = 0.8
-	slot0._stopPlayOffsetDraging = 0.075
-	slot0._defaultSfxRepeatTime = 6
-	slot0._speedUpTweenTime = 2
-	slot0._pixelOffsetMoveFactor = 0.03
-	slot0._normalizeOffsetMoveFactor = 280
-	slot0._speedFactor = 0.7
-	slot0._scrollSfxDuration = slot0._defaultSfxRepeatTime
-	slot0._isDraging = true
-	slot0._isDisposed = false
+	arg_1_0._intervalSampleOffset = 0.1
+	arg_1_0._intervalSampleStop = 0.1
+	arg_1_0._startPlayOffset = 0.81
+	arg_1_0._startPlayOffsetDraging = 0.08
+	arg_1_0._stopPlayOffset = 0.8
+	arg_1_0._stopPlayOffsetDraging = 0.075
+	arg_1_0._defaultSfxRepeatTime = 6
+	arg_1_0._speedUpTweenTime = 2
+	arg_1_0._pixelOffsetMoveFactor = 0.03
+	arg_1_0._normalizeOffsetMoveFactor = 280
+	arg_1_0._speedFactor = 0.7
+	arg_1_0._scrollSfxDuration = arg_1_0._defaultSfxRepeatTime
+	arg_1_0._isDraging = true
+	arg_1_0._isDisposed = false
 end
 
-function slot0.onDragBegin(slot0)
-	slot0._isDraging = true
+function var_0_0.onDragBegin(arg_2_0)
+	arg_2_0._isDraging = true
 
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_checkpoint_chain_end)
-	slot0:_resetPlayingStatus()
+	arg_2_0:_resetPlayingStatus()
 end
 
-function slot0.onDragEnd(slot0)
-	slot0:onUpdate()
+function var_0_0.onDragEnd(arg_3_0)
+	arg_3_0:onUpdate()
 
-	slot0._isDraging = false
+	arg_3_0._isDraging = false
 end
 
-function slot0.onClickDown(slot0)
+function var_0_0.onClickDown(arg_4_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_checkpoint_chain_start)
 end
 
-function slot0.onUpdate(slot0)
-	if slot0.scroll and not slot0._isDisposed then
-		slot1 = nil
-		slot1 = recthelper.getAnchorX(slot0.scroll.content) * slot0._pixelOffsetMoveFactor
+function var_0_0.onUpdate(arg_5_0)
+	if arg_5_0.scroll and not arg_5_0._isDisposed then
+		local var_5_0
+		local var_5_1 = recthelper.getAnchorX(arg_5_0.scroll.content) * arg_5_0._pixelOffsetMoveFactor
 
-		slot0:_onValueChangeForStartOrStop(slot1)
-		slot0:_onValueChangeCheckReplay(slot1)
-		slot0:_onValueChangeSampleOffset(slot1)
+		arg_5_0:_onValueChangeForStartOrStop(var_5_1)
+		arg_5_0:_onValueChangeCheckReplay(var_5_1)
+		arg_5_0:_onValueChangeSampleOffset(var_5_1)
 	end
 end
 
-function slot0._onValueChangeSampleOffset(slot0, slot1)
-	if slot0._scrollAudioTime and slot0._scrollSampleOffset then
-		if slot0._intervalSampleOffset <= Time.realtimeSinceStartup - slot0._scrollAudioTime then
-			slot0:_onUpdateRTPCSpeed(slot1)
+function var_0_0._onValueChangeSampleOffset(arg_6_0, arg_6_1)
+	if arg_6_0._scrollAudioTime and arg_6_0._scrollSampleOffset then
+		if Time.realtimeSinceStartup - arg_6_0._scrollAudioTime >= arg_6_0._intervalSampleOffset then
+			arg_6_0:_onUpdateRTPCSpeed(arg_6_1)
 
-			slot0._scrollAudioTime = Time.realtimeSinceStartup
-			slot0._scrollSampleOffset = slot1
+			arg_6_0._scrollAudioTime = Time.realtimeSinceStartup
+			arg_6_0._scrollSampleOffset = arg_6_1
 		end
 	else
-		slot0._scrollAudioTime = Time.realtimeSinceStartup
-		slot0._scrollSampleOffset = slot1
+		arg_6_0._scrollAudioTime = Time.realtimeSinceStartup
+		arg_6_0._scrollSampleOffset = arg_6_1
 	end
 end
 
-function slot0._onUpdateRTPCSpeed(slot0, slot1)
-	slot2 = math.abs(slot1 - slot0._scrollSampleOffset)
-	slot0._scrollSfxDuration = (slot0._scrollSfxDuration + slot0._defaultSfxRepeatTime + (slot2 - 0.5) * slot0._speedUpTweenTime) * 0.5
+function var_0_0._onUpdateRTPCSpeed(arg_7_0, arg_7_1)
+	local var_7_0 = math.abs(arg_7_1 - arg_7_0._scrollSampleOffset)
 
-	if slot0._lastRtpcValue == slot2 * slot0._speedFactor then
+	arg_7_0._scrollSfxDuration = (arg_7_0._scrollSfxDuration + arg_7_0._defaultSfxRepeatTime + (var_7_0 - 0.5) * arg_7_0._speedUpTweenTime) * 0.5
+
+	local var_7_1 = var_7_0 * arg_7_0._speedFactor
+
+	if arg_7_0._lastRtpcValue == var_7_1 then
 		return
 	end
 
-	slot0._lastRtpcValue = slot3
+	arg_7_0._lastRtpcValue = var_7_1
 
-	AudioMgr.instance:setRTPCValue(AudioEnum.UI.RTPC_ui_checkpoint_movespeed, slot0._lastRtpcValue)
+	AudioMgr.instance:setRTPCValue(AudioEnum.UI.RTPC_ui_checkpoint_movespeed, arg_7_0._lastRtpcValue)
 end
 
-function slot0._onValueChangeForStartOrStop(slot0, slot1)
-	if slot0._scrollingPlayX and slot0._scrollAudioStopTime then
-		if slot0._intervalSampleStop < Time.realtimeSinceStartup - slot0._scrollAudioStopTime then
-			slot3 = math.abs(slot1 - slot0._scrollingPlayX)
-			slot4 = slot0._startPlayOffset
-			slot5 = slot0._stopPlayOffset
+function var_0_0._onValueChangeForStartOrStop(arg_8_0, arg_8_1)
+	if arg_8_0._scrollingPlayX and arg_8_0._scrollAudioStopTime then
+		if Time.realtimeSinceStartup - arg_8_0._scrollAudioStopTime > arg_8_0._intervalSampleStop then
+			local var_8_0 = math.abs(arg_8_1 - arg_8_0._scrollingPlayX)
+			local var_8_1 = arg_8_0._startPlayOffset
+			local var_8_2 = arg_8_0._stopPlayOffset
 
-			if slot0._isDraging then
-				slot4 = slot0._startPlayOffsetDraging
-				slot5 = slot0._stopPlayOffsetDraging
+			if arg_8_0._isDraging then
+				var_8_1 = arg_8_0._startPlayOffsetDraging
+				var_8_2 = arg_8_0._stopPlayOffsetDraging
 			end
 
-			if slot4 <= slot3 and not slot0._isScrollPlaying then
+			if var_8_1 <= var_8_0 and not arg_8_0._isScrollPlaying then
 				AudioMgr.instance:trigger(AudioEnum.UI.UI_checkpoint_chain_end)
 				AudioMgr.instance:trigger(AudioEnum.UI.UI_checkpoint_chain)
-				slot0:_onUpdateRTPCSpeed(slot1)
+				arg_8_0:_onUpdateRTPCSpeed(arg_8_1)
 
-				slot0._scrollPlayingStartTime = Time.realtimeSinceStartup
-				slot0._isScrollPlaying = true
-				slot0._isFirstTimeDragPlay = false
+				arg_8_0._scrollPlayingStartTime = Time.realtimeSinceStartup
+				arg_8_0._isScrollPlaying = true
+				arg_8_0._isFirstTimeDragPlay = false
 			end
 
-			if slot3 < slot5 and slot0._isScrollPlaying then
+			if var_8_0 < var_8_2 and arg_8_0._isScrollPlaying then
 				AudioMgr.instance:trigger(AudioEnum.UI.UI_checkpoint_chain_end)
-				slot0:_resetPlayingStatus(slot1)
+				arg_8_0:_resetPlayingStatus(arg_8_1)
 			end
 
-			slot0._scrollingPlayX = slot1
-			slot0._scrollAudioStopTime = Time.realtimeSinceStartup
+			arg_8_0._scrollingPlayX = arg_8_1
+			arg_8_0._scrollAudioStopTime = Time.realtimeSinceStartup
 		end
 	else
-		slot0._scrollAudioStopTime = Time.realtimeSinceStartup
-		slot0._scrollingPlayX = slot1
+		arg_8_0._scrollAudioStopTime = Time.realtimeSinceStartup
+		arg_8_0._scrollingPlayX = arg_8_1
 	end
 end
 
-function slot0._onValueChangeCheckReplay(slot0, slot1)
-	if slot0._isScrollPlaying and slot0._scrollPlayingStartTime and slot0._scrollSampleOffset and slot0._scrollSfxDuration <= Time.realtimeSinceStartup - slot0._scrollPlayingStartTime then
-		slot0:_resetPlayingStatus(slot1)
+function var_0_0._onValueChangeCheckReplay(arg_9_0, arg_9_1)
+	if arg_9_0._isScrollPlaying and arg_9_0._scrollPlayingStartTime and arg_9_0._scrollSampleOffset and Time.realtimeSinceStartup - arg_9_0._scrollPlayingStartTime >= arg_9_0._scrollSfxDuration then
+		arg_9_0:_resetPlayingStatus(arg_9_1)
 	end
 end
 
-function slot0._resetPlayingStatus(slot0, slot1)
-	slot0._isScrollPlaying = false
-	slot0._scrollingPlayX = slot1
+function var_0_0._resetPlayingStatus(arg_10_0, arg_10_1)
+	arg_10_0._isScrollPlaying = false
+	arg_10_0._scrollingPlayX = arg_10_1
 end
 
-function slot0.dispose(slot0)
+function var_0_0.dispose(arg_11_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_checkpoint_chain_end)
 
-	slot0._isDisposed = true
-	slot0.scroll = nil
+	arg_11_0._isDisposed = true
+	arg_11_0.scroll = nil
 end
 
-function slot0.onDestroy(slot0)
-	slot0.scroll = nil
+function var_0_0.onDestroy(arg_12_0)
+	arg_12_0.scroll = nil
 end
 
-return slot0
+return var_0_0

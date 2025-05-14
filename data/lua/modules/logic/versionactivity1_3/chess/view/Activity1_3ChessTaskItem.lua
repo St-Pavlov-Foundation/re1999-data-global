@@ -1,143 +1,152 @@
-module("modules.logic.versionactivity1_3.chess.view.Activity1_3ChessTaskItem", package.seeall)
+﻿module("modules.logic.versionactivity1_3.chess.view.Activity1_3ChessTaskItem", package.seeall)
 
-slot0 = class("Activity1_3ChessTaskItem", ListScrollCellExtend)
+local var_0_0 = class("Activity1_3ChessTaskItem", ListScrollCellExtend)
 
-function slot0.onInitView(slot0)
-	slot0._gonormal = gohelper.findChild(slot0.viewGO, "#go_normal")
-	slot0._simagenormalbg = gohelper.findChildSingleImage(slot0.viewGO, "#go_normal/#simage_normalbg")
-	slot0._txtnum = gohelper.findChildText(slot0.viewGO, "#go_normal/progress/#txt_num")
-	slot0._txttotal = gohelper.findChildText(slot0.viewGO, "#go_normal/progress/#txt_num/#txt_total")
-	slot0._txttaskdes = gohelper.findChildText(slot0.viewGO, "#go_normal/#txt_taskdes")
-	slot0._gorewards = gohelper.findChild(slot0.viewGO, "#go_normal/#scroll_rewards/Viewport/Content")
-	slot0.scrollReward = gohelper.findChild(slot0.viewGO, "#go_normal/#scroll_rewards"):GetComponent(typeof(ZProj.LimitedScrollRect))
-	slot0._btnnotfinishbg = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_normal/#btn_notfinishbg")
-	slot0._btnfinishbg = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_normal/#btn_finishbg")
-	slot0._goallfinish = gohelper.findChild(slot0.viewGO, "#go_normal/#go_allfinish")
-	slot0._gogetall = gohelper.findChild(slot0.viewGO, "#go_getall")
-	slot0._simagegetallbg = gohelper.findChildSingleImage(slot0.viewGO, "#go_getall/#simage_getallbg")
-	slot0._btngetall = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_getall/#btn_getall")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gonormal = gohelper.findChild(arg_1_0.viewGO, "#go_normal")
+	arg_1_0._simagenormalbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_normal/#simage_normalbg")
+	arg_1_0._txtnum = gohelper.findChildText(arg_1_0.viewGO, "#go_normal/progress/#txt_num")
+	arg_1_0._txttotal = gohelper.findChildText(arg_1_0.viewGO, "#go_normal/progress/#txt_num/#txt_total")
+	arg_1_0._txttaskdes = gohelper.findChildText(arg_1_0.viewGO, "#go_normal/#txt_taskdes")
+	arg_1_0._gorewards = gohelper.findChild(arg_1_0.viewGO, "#go_normal/#scroll_rewards/Viewport/Content")
+	arg_1_0.scrollReward = gohelper.findChild(arg_1_0.viewGO, "#go_normal/#scroll_rewards"):GetComponent(typeof(ZProj.LimitedScrollRect))
+	arg_1_0._btnnotfinishbg = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_normal/#btn_notfinishbg")
+	arg_1_0._btnfinishbg = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_normal/#btn_finishbg")
+	arg_1_0._goallfinish = gohelper.findChild(arg_1_0.viewGO, "#go_normal/#go_allfinish")
+	arg_1_0._gogetall = gohelper.findChild(arg_1_0.viewGO, "#go_getall")
+	arg_1_0._simagegetallbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_getall/#simage_getallbg")
+	arg_1_0._btngetall = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_getall/#btn_getall")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	Activity1_3ChessController.instance:registerCallback(Activity1_3ChessEvent.OneClickClaimReward, slot0._onOneClickClaimReward, slot0)
-	slot0._btnnotfinishbg:AddClickListener(slot0._btnnotfinishbgOnClick, slot0)
-	slot0._btnfinishbg:AddClickListener(slot0._btnfinishbgOnClick, slot0)
-	slot0._btngetall:AddClickListener(slot0._btngetallOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	Activity1_3ChessController.instance:registerCallback(Activity1_3ChessEvent.OneClickClaimReward, arg_2_0._onOneClickClaimReward, arg_2_0)
+	arg_2_0._btnnotfinishbg:AddClickListener(arg_2_0._btnnotfinishbgOnClick, arg_2_0)
+	arg_2_0._btnfinishbg:AddClickListener(arg_2_0._btnfinishbgOnClick, arg_2_0)
+	arg_2_0._btngetall:AddClickListener(arg_2_0._btngetallOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	Activity1_3ChessController.instance:unregisterCallback(Activity1_3ChessEvent.OneClickClaimReward, slot0._onOneClickClaimReward, slot0)
-	slot0._btnnotfinishbg:RemoveClickListener()
-	slot0._btnfinishbg:RemoveClickListener()
-	slot0._btngetall:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	Activity1_3ChessController.instance:unregisterCallback(Activity1_3ChessEvent.OneClickClaimReward, arg_3_0._onOneClickClaimReward, arg_3_0)
+	arg_3_0._btnnotfinishbg:RemoveClickListener()
+	arg_3_0._btnfinishbg:RemoveClickListener()
+	arg_3_0._btngetall:RemoveClickListener()
 end
 
-function slot0._btnnotfinishbgOnClick(slot0)
-	if not slot0._taskMO then
+function var_0_0._btnnotfinishbgOnClick(arg_4_0)
+	if not arg_4_0._taskMO then
 		return
 	end
 
-	if Activity1_3ChessController.instance:isEpisodeOpen(slot0._taskMO.config.episodeId) then
-		Activity1_3ChessController.instance:dispatchEvent(Activity1_3ChessEvent.ClickEpisode, slot1)
+	local var_4_0 = arg_4_0._taskMO.config.episodeId
+
+	if Activity1_3ChessController.instance:isEpisodeOpen(var_4_0) then
+		Activity1_3ChessController.instance:dispatchEvent(Activity1_3ChessEvent.ClickEpisode, var_4_0)
 	else
-		Activity1_3ChessController.instance:showToastByEpsodeId(slot1)
+		Activity1_3ChessController.instance:showToastByEpsodeId(var_4_0)
 	end
 end
 
-function slot0._btnfinishbgOnClick(slot0)
-	Activity1_3ChessController.instance:delayRequestGetReward(0.2, slot0._taskMO)
-	slot0:_onOneClickClaimReward()
+function var_0_0._btnfinishbgOnClick(arg_5_0)
+	Activity1_3ChessController.instance:delayRequestGetReward(0.2, arg_5_0._taskMO)
+	arg_5_0:_onOneClickClaimReward()
 end
 
-function slot0._btngetallOnClick(slot0)
-	Activity1_3ChessController.instance:delayRequestGetReward(0.2, slot0._taskMO)
+function var_0_0._btngetallOnClick(arg_6_0)
+	Activity1_3ChessController.instance:delayRequestGetReward(0.2, arg_6_0._taskMO)
 	Activity1_3ChessController.instance:dispatchAllTaskItemGotReward()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._animator = slot0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+function var_0_0._editableInitView(arg_7_0)
+	arg_7_0._animator = arg_7_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
 end
 
-function slot0._onOneClickClaimReward(slot0)
-	if slot0._taskMO:haveRewardToGet() then
-		slot0._playFinishAnin = true
+function var_0_0._onOneClickClaimReward(arg_8_0)
+	if arg_8_0._taskMO:haveRewardToGet() then
+		arg_8_0._playFinishAnin = true
 
-		slot0._animator:Play("finish", 0, 0)
+		arg_8_0._animator:Play("finish", 0, 0)
 	end
 end
 
-function slot0.getAnimator(slot0)
-	return slot0._animator
+function var_0_0.getAnimator(arg_9_0)
+	return arg_9_0._animator
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._taskMO = slot1
-	slot0.scrollReward.parentGameObject = slot0._view._csListScroll.gameObject
+function var_0_0.onUpdateMO(arg_10_0, arg_10_1)
+	arg_10_0._taskMO = arg_10_1
+	arg_10_0.scrollReward.parentGameObject = arg_10_0._view._csListScroll.gameObject
 
-	slot0:_refreshUI()
+	arg_10_0:_refreshUI()
 end
 
-function slot0.onSelect(slot0, slot1)
+function var_0_0.onSelect(arg_11_0, arg_11_1)
+	return
 end
 
-slot1 = -100
+local var_0_1 = -100
 
-function slot0._refreshUI(slot0)
-	if not slot0._taskMO then
+function var_0_0._refreshUI(arg_12_0)
+	local var_12_0 = arg_12_0._taskMO
+
+	if not var_12_0 then
 		return
 	end
 
-	slot2 = slot1.id ~= uv0
+	local var_12_1 = var_12_0.id ~= var_0_1
 
-	gohelper.setActive(slot0._gogetall, not slot2)
-	gohelper.setActive(slot0._gonormal, slot2)
+	gohelper.setActive(arg_12_0._gogetall, not var_12_1)
+	gohelper.setActive(arg_12_0._gonormal, var_12_1)
 
-	if slot2 then
-		if slot0._playFinishAnin then
-			slot0._playFinishAnin = false
+	if var_12_1 then
+		if arg_12_0._playFinishAnin then
+			arg_12_0._playFinishAnin = false
 
-			slot0._animator:Play("idle", 0, 1)
+			arg_12_0._animator:Play("idle", 0, 1)
 		end
 
-		gohelper.setActive(slot0._goallfinish, false)
-		gohelper.setActive(slot0._btnnotfinishbg, false)
-		gohelper.setActive(slot0._btnfinishbg, false)
+		gohelper.setActive(arg_12_0._goallfinish, false)
+		gohelper.setActive(arg_12_0._btnnotfinishbg, false)
+		gohelper.setActive(arg_12_0._btnfinishbg, false)
 
-		if slot1:isFinished() then
-			gohelper.setActive(slot0._btnfinishbg, true)
-		elseif slot1:alreadyGotReward() then
-			gohelper.setActive(slot0._goallfinish, true)
+		if var_12_0:isFinished() then
+			gohelper.setActive(arg_12_0._btnfinishbg, true)
+		elseif var_12_0:alreadyGotReward() then
+			gohelper.setActive(arg_12_0._goallfinish, true)
 		else
-			gohelper.setActive(slot0._btnnotfinishbg, true)
+			gohelper.setActive(arg_12_0._btnnotfinishbg, true)
 		end
 
-		slot3 = slot1.config and slot1.config.offestProgress or 0
-		slot0._txtnum.text = math.max(slot1:getProgress() + slot3, 0)
-		slot0._txttotal.text = math.max(slot1:getMaxProgress() + slot3, 0)
-		slot0._txttaskdes.text = slot1.config and slot1.config.desc or ""
-		slot4 = ItemModel.instance:getItemDataListByConfigStr(slot1.config.bonus)
-		slot0.item_list = slot4
+		local var_12_2 = var_12_0.config and var_12_0.config.offestProgress or 0
 
-		IconMgr.instance:getCommonPropItemIconList(slot0, slot0._onItemShow, slot4, slot0._gorewards)
+		arg_12_0._txtnum.text = math.max(var_12_0:getProgress() + var_12_2, 0)
+		arg_12_0._txttotal.text = math.max(var_12_0:getMaxProgress() + var_12_2, 0)
+		arg_12_0._txttaskdes.text = var_12_0.config and var_12_0.config.desc or ""
+
+		local var_12_3 = ItemModel.instance:getItemDataListByConfigStr(var_12_0.config.bonus)
+
+		arg_12_0.item_list = var_12_3
+
+		IconMgr.instance:getCommonPropItemIconList(arg_12_0, arg_12_0._onItemShow, var_12_3, arg_12_0._gorewards)
 	end
 end
 
-function slot0._onItemShow(slot0, slot1, slot2, slot3)
-	slot1:onUpdateMO(slot2)
-	slot1:setConsume(true)
-	slot1:showStackableNum2()
-	slot1:isShowEffect(true)
-	slot1:setAutoPlay(true)
-	slot1:setCountFontSize(48)
+function var_0_0._onItemShow(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
+	arg_13_1:onUpdateMO(arg_13_2)
+	arg_13_1:setConsume(true)
+	arg_13_1:showStackableNum2()
+	arg_13_1:isShowEffect(true)
+	arg_13_1:setAutoPlay(true)
+	arg_13_1:setCountFontSize(48)
 end
 
-function slot0.onDestroyView(slot0)
+function var_0_0.onDestroyView(arg_14_0)
+	return
 end
 
-slot0.prefabPath = "ui/viewres/versionactivity_1_3/v1a3_role2/v1a3_role2_taskitem.prefab"
+var_0_0.prefabPath = "ui/viewres/versionactivity_1_3/v1a3_role2/v1a3_role2_taskitem.prefab"
 
-return slot0
+return var_0_0

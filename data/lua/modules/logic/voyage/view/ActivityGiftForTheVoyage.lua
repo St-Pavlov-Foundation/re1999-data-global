@@ -1,113 +1,120 @@
-module("modules.logic.voyage.view.ActivityGiftForTheVoyage", package.seeall)
+﻿module("modules.logic.voyage.view.ActivityGiftForTheVoyage", package.seeall)
 
-slot0 = class("ActivityGiftForTheVoyage", BaseView)
+local var_0_0 = class("ActivityGiftForTheVoyage", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._txttitle = gohelper.findChildText(slot0.viewGO, "title/scroll/view/#txt_title")
-	slot0._gotaskitem = gohelper.findChild(slot0.viewGO, "scroll_task/Viewport/content/#go_taskitem")
-	slot0._goRewards = gohelper.findChild(slot0.viewGO, "scroll_task/Viewport/content/#go_taskitem/scroll_Rewards/Viewport/#go_Rewards")
-	slot0._btnjump = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_jump")
-	slot0._gomail = gohelper.findChild(slot0.viewGO, "#btn_jump/#go_mail")
-	slot0._godungeon = gohelper.findChild(slot0.viewGO, "#btn_jump/#go_dungeon")
-	slot0._gored = gohelper.findChild(slot0.viewGO, "#btn_jump/#go_red")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._txttitle = gohelper.findChildText(arg_1_0.viewGO, "title/scroll/view/#txt_title")
+	arg_1_0._gotaskitem = gohelper.findChild(arg_1_0.viewGO, "scroll_task/Viewport/content/#go_taskitem")
+	arg_1_0._goRewards = gohelper.findChild(arg_1_0.viewGO, "scroll_task/Viewport/content/#go_taskitem/scroll_Rewards/Viewport/#go_Rewards")
+	arg_1_0._btnjump = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_jump")
+	arg_1_0._gomail = gohelper.findChild(arg_1_0.viewGO, "#btn_jump/#go_mail")
+	arg_1_0._godungeon = gohelper.findChild(arg_1_0.viewGO, "#btn_jump/#go_dungeon")
+	arg_1_0._gored = gohelper.findChild(arg_1_0.viewGO, "#btn_jump/#go_red")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnjump:AddClickListener(slot0._btnjumpOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnjump:AddClickListener(arg_2_0._btnjumpOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnjump:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnjump:RemoveClickListener()
 end
 
-function slot0._btnjumpOnClick(slot0)
+function var_0_0._btnjumpOnClick(arg_4_0)
 	ViewMgr.instance:closeView(ViewName.ActivityBeginnerView)
 	VoyageController.instance:jump()
 end
 
-function slot0._editableInitView(slot0)
-	gohelper.setActive(slot0._gomail, false)
-	gohelper.setActive(slot0._godungeon, false)
+function var_0_0._editableInitView(arg_5_0)
+	gohelper.setActive(arg_5_0._gomail, false)
+	gohelper.setActive(arg_5_0._godungeon, false)
 
-	slot0._txttitle.text = VoyageConfig.instance:getTitle()
+	arg_5_0._txttitle.text = VoyageConfig.instance:getTitle()
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0:_refresh()
+function var_0_0.onUpdateParam(arg_6_0)
+	arg_6_0:_refresh()
 end
 
-function slot0.onOpen(slot0)
-	gohelper.addChild(slot0.viewParam.parent, slot0.viewGO)
-	slot0:_refresh()
-	VoyageController.instance:registerCallback(VoyageEvent.OnReceiveAct1001UpdatePush, slot0._refresh, slot0)
-	VoyageController.instance:registerCallback(VoyageEvent.OnReceiveAct1001GetInfoReply, slot0._refresh, slot0)
+function var_0_0.onOpen(arg_7_0)
+	local var_7_0 = arg_7_0.viewParam.parent
+
+	gohelper.addChild(var_7_0, arg_7_0.viewGO)
+	arg_7_0:_refresh()
+	VoyageController.instance:registerCallback(VoyageEvent.OnReceiveAct1001UpdatePush, arg_7_0._refresh, arg_7_0)
+	VoyageController.instance:registerCallback(VoyageEvent.OnReceiveAct1001GetInfoReply, arg_7_0._refresh, arg_7_0)
 	Activity1001Rpc.instance:sendAct1001GetInfoRequest(VoyageConfig.instance:getActivityId())
-	RedDotController.instance:addRedDot(slot0._gored, -11235, nil, slot0._addRedDotOverrideFunc, slot0)
+	RedDotController.instance:addRedDot(arg_7_0._gored, -11235, nil, arg_7_0._addRedDotOverrideFunc, arg_7_0)
 end
 
-function slot0.onClose(slot0)
-	VoyageController.instance:unregisterCallback(VoyageEvent.OnReceiveAct1001GetInfoReply, slot0._refresh, slot0)
-	VoyageController.instance:unregisterCallback(VoyageEvent.OnReceiveAct1001UpdatePush, slot0._refresh, slot0)
+function var_0_0.onClose(arg_8_0)
+	VoyageController.instance:unregisterCallback(VoyageEvent.OnReceiveAct1001GetInfoReply, arg_8_0._refresh, arg_8_0)
+	VoyageController.instance:unregisterCallback(VoyageEvent.OnReceiveAct1001UpdatePush, arg_8_0._refresh, arg_8_0)
 end
 
-function slot0.onDestroyView(slot0)
-	GameUtil.onDestroyViewMemberList(slot0, "_itemList")
+function var_0_0.onDestroyView(arg_9_0)
+	GameUtil.onDestroyViewMemberList(arg_9_0, "_itemList")
 end
 
-function slot0._createItemList(slot0)
-	if slot0._itemList then
+function var_0_0._createItemList(arg_10_0)
+	if arg_10_0._itemList then
 		return
 	end
 
-	slot0._itemList = {}
+	arg_10_0._itemList = {}
 
-	gohelper.setActive(slot0._gotaskitem, true)
+	local var_10_0 = VoyageConfig.instance:getTaskList()
 
-	for slot5, slot6 in ipairs(VoyageConfig.instance:getTaskList()) do
-		slot7 = slot0:_createItem(ActivityGiftForTheVoyageItem)
-		slot7._index = slot5
-		slot7._view = slot0
+	gohelper.setActive(arg_10_0._gotaskitem, true)
 
-		slot7:onUpdateMO(slot6)
-		slot7:setActiveLine(slot5 ~= #slot1)
-		table.insert(slot0._itemList, slot7)
+	for iter_10_0, iter_10_1 in ipairs(var_10_0) do
+		local var_10_1 = arg_10_0:_createItem(ActivityGiftForTheVoyageItem)
+
+		var_10_1._index = iter_10_0
+		var_10_1._view = arg_10_0
+
+		var_10_1:onUpdateMO(iter_10_1)
+		var_10_1:setActiveLine(iter_10_0 ~= #var_10_0)
+		table.insert(arg_10_0._itemList, var_10_1)
 	end
 
-	gohelper.setActive(slot0._gotaskitem, false)
+	gohelper.setActive(arg_10_0._gotaskitem, false)
 end
 
-function slot0._refresh(slot0)
-	slot0:_createOrRefreshList()
-	slot0:_refreshJumpBtn()
+function var_0_0._refresh(arg_11_0)
+	arg_11_0:_createOrRefreshList()
+	arg_11_0:_refreshJumpBtn()
 end
 
-function slot0._createItem(slot0, slot1)
-	return MonoHelper.addNoUpdateLuaComOnceToGo(gohelper.cloneInPlace(slot0._gotaskitem, slot1.__name), slot1)
+function var_0_0._createItem(arg_12_0, arg_12_1)
+	local var_12_0 = gohelper.cloneInPlace(arg_12_0._gotaskitem, arg_12_1.__name)
+
+	return MonoHelper.addNoUpdateLuaComOnceToGo(var_12_0, arg_12_1)
 end
 
-function slot0._createOrRefreshList(slot0)
-	slot0:_createItemList()
+function var_0_0._createOrRefreshList(arg_13_0)
+	arg_13_0:_createItemList()
 
-	for slot4, slot5 in pairs(slot0._itemList) do
-		slot5:onRefresh()
+	for iter_13_0, iter_13_1 in pairs(arg_13_0._itemList) do
+		iter_13_1:onRefresh()
 	end
 end
 
-function slot0._refreshJumpBtn(slot0)
-	slot1 = VoyageModel.instance:hasAnyRewardAvailable()
+function var_0_0._refreshJumpBtn(arg_14_0)
+	local var_14_0 = VoyageModel.instance:hasAnyRewardAvailable()
 
-	gohelper.setActive(slot0._gomail, slot1)
-	gohelper.setActive(slot0._godungeon, not slot1)
+	gohelper.setActive(arg_14_0._gomail, var_14_0)
+	gohelper.setActive(arg_14_0._godungeon, not var_14_0)
 end
 
-function slot0._addRedDotOverrideFunc(slot0, slot1)
-	slot1.show = VoyageModel.instance:hasAnyRewardAvailable()
+function var_0_0._addRedDotOverrideFunc(arg_15_0, arg_15_1)
+	arg_15_1.show = VoyageModel.instance:hasAnyRewardAvailable()
 
-	slot1:showRedDot(RedDotEnum.Style.Normal)
+	arg_15_1:showRedDot(RedDotEnum.Style.Normal)
 end
 
-return slot0
+return var_0_0

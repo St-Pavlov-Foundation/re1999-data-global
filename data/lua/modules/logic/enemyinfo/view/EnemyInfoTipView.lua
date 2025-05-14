@@ -1,66 +1,69 @@
-module("modules.logic.enemyinfo.view.EnemyInfoTipView", package.seeall)
+﻿module("modules.logic.enemyinfo.view.EnemyInfoTipView", package.seeall)
 
-slot0 = class("EnemyInfoTipView", BaseViewExtended)
+local var_0_0 = class("EnemyInfoTipView", BaseViewExtended)
 
-function slot0.onInitView(slot0)
-	slot0._gotipconatiner = gohelper.findChild(slot0.viewGO, "#go_tip_container")
-	slot0._goruletip = gohelper.findChild(slot0.viewGO, "#go_tip_container/#go_ruletip")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._gotipconatiner = gohelper.findChild(arg_1_0.viewGO, "#go_tip_container")
+	arg_1_0._goruletip = gohelper.findChild(arg_1_0.viewGO, "#go_tip_container/#go_ruletip")
 
-	gohelper.setActive(slot0._goruletip, false)
+	gohelper.setActive(arg_1_0._goruletip, false)
 
-	slot0._gobufftip = gohelper.findChild(slot0.viewGO, "#go_tip_container/#go_bufftip")
+	arg_1_0._gobufftip = gohelper.findChild(arg_1_0.viewGO, "#go_tip_container/#go_bufftip")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0.onClickCloseTip(slot0)
-	slot0.showTip = nil
+function var_0_0.onClickCloseTip(arg_4_0)
+	arg_4_0.showTip = nil
 
-	slot0:hideAllTip()
+	arg_4_0:hideAllTip()
 	EnemyInfoController.instance:dispatchEvent(EnemyInfoEvent.HideTip)
 end
 
-function slot0._editableInitView(slot0)
-	slot0.closeTipClick = gohelper.findChildClickWithDefaultAudio(slot0._gotipconatiner, "#go_tipclose")
+function var_0_0._editableInitView(arg_5_0)
+	arg_5_0.closeTipClick = gohelper.findChildClickWithDefaultAudio(arg_5_0._gotipconatiner, "#go_tipclose")
 
-	slot0.closeTipClick:AddClickListener(slot0.onClickCloseTip, slot0)
-	slot0:addEventCb(EnemyInfoController.instance, EnemyInfoEvent.ShowTip, slot0.onShowTip, slot0)
+	arg_5_0.closeTipClick:AddClickListener(arg_5_0.onClickCloseTip, arg_5_0)
+	arg_5_0:addEventCb(EnemyInfoController.instance, EnemyInfoEvent.ShowTip, arg_5_0.onShowTip, arg_5_0)
 end
 
-function slot0.onShowTip(slot0, slot1)
-	gohelper.setActive(slot0._gotipconatiner, true)
+function var_0_0.onShowTip(arg_6_0, arg_6_1)
+	gohelper.setActive(arg_6_0._gotipconatiner, true)
 
-	if slot0.showTip == slot1 then
+	if arg_6_0.showTip == arg_6_1 then
 		return
 	end
 
-	slot0.showTip = slot1
+	arg_6_0.showTip = arg_6_1
 
-	gohelper.setActive(slot0._gobufftip, slot0.showTip == EnemyInfoEnum.Tip.BuffTip)
+	gohelper.setActive(arg_6_0._gobufftip, arg_6_0.showTip == EnemyInfoEnum.Tip.BuffTip)
 end
 
-function slot0.hideAllTip(slot0)
-	gohelper.setActive(slot0._gotipconatiner, false)
-	gohelper.setActive(slot0._gobufftip, false)
+function var_0_0.hideAllTip(arg_7_0)
+	gohelper.setActive(arg_7_0._gotipconatiner, false)
+	gohelper.setActive(arg_7_0._gobufftip, false)
 end
 
-function slot0.onOpen(slot0)
-	slot0:hideAllTip()
+function var_0_0.onOpen(arg_8_0)
+	arg_8_0:hideAllTip()
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_9_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	slot0.closeTipClick:RemoveClickListener()
+function var_0_0.onDestroyView(arg_10_0)
+	arg_10_0.closeTipClick:RemoveClickListener()
 end
 
-return slot0
+return var_0_0

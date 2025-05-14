@@ -1,55 +1,65 @@
-module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotCollectionEnchantViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity1_6.v1a6_cachot.view.V1a6_CachotCollectionEnchantViewContainer", package.seeall)
 
-slot0 = class("V1a6_CachotCollectionEnchantViewContainer", BaseViewContainer)
+local var_0_0 = class("V1a6_CachotCollectionEnchantViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = ListScrollParam.New()
-	slot1.scrollGOPath = "left/#scroll_view"
-	slot1.prefabType = ScrollEnum.ScrollPrefabFromView
-	slot1.prefabUrl = "left/#scroll_view/Viewport/Content/#go_collectionbagitem"
-	slot1.cellClass = V1a6_CachotEnchantBagItem
-	slot1.scrollDir = ScrollEnum.ScrollDirV
-	slot1.lineCount = 2
-	slot1.cellWidth = 238
-	slot1.cellHeight = 245
-	slot1.cellSpaceH = 0
-	slot1.cellSpaceV = -8.3
-	slot1.startSpace = 0
-	slot1.endSpace = 0
-	slot2 = ListScrollParam.New()
-	slot2.scrollGOPath = "right/#scroll_view"
-	slot2.prefabType = ScrollEnum.ScrollPrefabFromView
-	slot2.prefabUrl = "right/#scroll_view/Viewport/Content/#go_collectionenchantitem"
-	slot2.cellClass = V1a6_CachotCollectionEnchantItem
-	slot2.scrollDir = ScrollEnum.ScrollDirV
-	slot2.lineCount = 1
-	slot2.cellWidth = 615
-	slot2.cellHeight = 235
-	slot2.cellSpaceH = 0
-	slot2.cellSpaceV = 0.35
-	slot2.startSpace = 0
-	slot2.endSpace = 0
-	slot0._collectionScrollView = LuaListScrollView.New(V1a6_CachotEnchantBagListModel.instance, slot1)
-	slot0._enchantScrollView = LuaListScrollView.New(V1a6_CachotCollectionEnchantListModel.instance, slot2)
-	slot0._collectionScrollView.onUpdateFinish = slot0.scrollFocusOnSelectCell
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = ListScrollParam.New()
+
+	var_1_0.scrollGOPath = "left/#scroll_view"
+	var_1_0.prefabType = ScrollEnum.ScrollPrefabFromView
+	var_1_0.prefabUrl = "left/#scroll_view/Viewport/Content/#go_collectionbagitem"
+	var_1_0.cellClass = V1a6_CachotEnchantBagItem
+	var_1_0.scrollDir = ScrollEnum.ScrollDirV
+	var_1_0.lineCount = 2
+	var_1_0.cellWidth = 238
+	var_1_0.cellHeight = 245
+	var_1_0.cellSpaceH = 0
+	var_1_0.cellSpaceV = -8.3
+	var_1_0.startSpace = 0
+	var_1_0.endSpace = 0
+
+	local var_1_1 = ListScrollParam.New()
+
+	var_1_1.scrollGOPath = "right/#scroll_view"
+	var_1_1.prefabType = ScrollEnum.ScrollPrefabFromView
+	var_1_1.prefabUrl = "right/#scroll_view/Viewport/Content/#go_collectionenchantitem"
+	var_1_1.cellClass = V1a6_CachotCollectionEnchantItem
+	var_1_1.scrollDir = ScrollEnum.ScrollDirV
+	var_1_1.lineCount = 1
+	var_1_1.cellWidth = 615
+	var_1_1.cellHeight = 235
+	var_1_1.cellSpaceH = 0
+	var_1_1.cellSpaceV = 0.35
+	var_1_1.startSpace = 0
+	var_1_1.endSpace = 0
+	arg_1_0._collectionScrollView = LuaListScrollView.New(V1a6_CachotEnchantBagListModel.instance, var_1_0)
+	arg_1_0._enchantScrollView = LuaListScrollView.New(V1a6_CachotCollectionEnchantListModel.instance, var_1_1)
+	arg_1_0._collectionScrollView.onUpdateFinish = arg_1_0.scrollFocusOnSelectCell
 
 	return {
 		V1a6_CachotCollectionEnchantView.New(),
-		slot0._collectionScrollView,
-		slot0._enchantScrollView
+		arg_1_0._collectionScrollView,
+		arg_1_0._enchantScrollView
 	}
 end
 
-function slot0.scrollFocusOnSelectCell(slot0)
-	if not slot0:getFirstSelect() then
+function var_0_0.scrollFocusOnSelectCell(arg_2_0)
+	local var_2_0 = arg_2_0:getFirstSelect()
+
+	if not var_2_0 then
 		return
 	end
 
-	slot4 = slot0._param.cellHeight + slot0._param.cellSpaceV
+	local var_2_1 = arg_2_0._model:getIndex(var_2_0)
+	local var_2_2 = math.ceil(var_2_1 / arg_2_0._param.lineCount) - 1
+	local var_2_3 = arg_2_0._param.cellHeight + arg_2_0._param.cellSpaceV
+	local var_2_4 = var_2_2 * var_2_3 + arg_2_0._param.startSpace
+	local var_2_5 = arg_2_0._csListScroll.VerticalScrollPixel
+	local var_2_6 = var_2_4 + var_2_3 - var_2_5
 
-	if recthelper.getHeight(slot0._csListScroll.transform) < (math.ceil(slot0._model:getIndex(slot1) / slot0._param.lineCount) - 1) * slot4 + slot0._param.startSpace + slot4 - slot0._csListScroll.VerticalScrollPixel or slot7 < slot4 then
-		slot0._csListScroll.VerticalScrollPixel = slot5
+	if var_2_6 > recthelper.getHeight(arg_2_0._csListScroll.transform) or var_2_6 < var_2_3 then
+		arg_2_0._csListScroll.VerticalScrollPixel = var_2_4
 	end
 end
 
-return slot0
+return var_0_0

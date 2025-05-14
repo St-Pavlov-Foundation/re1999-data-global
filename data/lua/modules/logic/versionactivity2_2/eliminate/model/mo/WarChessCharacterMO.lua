@@ -1,118 +1,125 @@
-module("modules.logic.versionactivity2_2.eliminate.model.mo.WarChessCharacterMO", package.seeall)
+﻿module("modules.logic.versionactivity2_2.eliminate.model.mo.WarChessCharacterMO", package.seeall)
 
-slot0 = class("WarChessCharacterMO")
+local var_0_0 = class("WarChessCharacterMO")
 
-function slot0.init(slot0, slot1)
-	slot0.id = slot1.id
-	slot0.slotIds = {}
-	slot0.diamonds = {}
-	slot0.addDiamonds = {}
-	slot0.removeDiamonds = {}
-	slot0.powerMax = slot1.powerMax
-	slot0.hpInjury = 0
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.id = arg_1_1.id
+	arg_1_0.slotIds = {}
+	arg_1_0.diamonds = {}
+	arg_1_0.addDiamonds = {}
+	arg_1_0.removeDiamonds = {}
+	arg_1_0.powerMax = arg_1_1.powerMax
+	arg_1_0.hpInjury = 0
 
-	slot0:updateInfo(slot1)
-	slot0:updateSlotInfo(slot1.slotBox)
+	arg_1_0:updateInfo(arg_1_1)
+	arg_1_0:updateSlotInfo(arg_1_1.slotBox)
 end
 
-function slot0.updateInfo(slot0, slot1)
-	slot0.hp = slot1.hp
-	slot0.power = slot1.power
-	slot0.forecastBehavior = tabletool.copy(slot1.forecastBehavior)
+function var_0_0.updateInfo(arg_2_0, arg_2_1)
+	arg_2_0.hp = arg_2_1.hp
+	arg_2_0.power = arg_2_1.power
+	arg_2_0.forecastBehavior = tabletool.copy(arg_2_1.forecastBehavior)
 
-	slot0:updateDiamondBox(slot1.diamondBox)
+	arg_2_0:updateDiamondBox(arg_2_1.diamondBox)
 end
 
-function slot0.updateSlotInfo(slot0, slot1)
-	if slot1 then
-		slot0.slotIds = tabletool.copy(slot1.pieceId)
+function var_0_0.updateSlotInfo(arg_3_0, arg_3_1)
+	if arg_3_1 then
+		arg_3_0.slotIds = tabletool.copy(arg_3_1.pieceId)
 	end
 end
 
-function slot0.updateDiamondBox(slot0, slot1)
-	if slot1 and slot1.diamond then
-		tabletool.clear(slot0.diamonds)
+function var_0_0.updateDiamondBox(arg_4_0, arg_4_1)
+	if arg_4_1 and arg_4_1.diamond then
+		tabletool.clear(arg_4_0.diamonds)
 
-		for slot5, slot6 in ipairs(slot1.diamond) do
-			slot0.diamonds[slot6.type] = slot6.count
+		for iter_4_0, iter_4_1 in ipairs(arg_4_1.diamond) do
+			local var_4_0 = iter_4_1.type
+			local var_4_1 = iter_4_1.count
+
+			arg_4_0.diamonds[var_4_0] = var_4_1
 		end
 	end
 end
 
-function slot0.updateHp(slot0, slot1)
-	if slot1 < 0 then
-		slot0.hpInjury = slot0.hpInjury + math.abs(slot1)
+function var_0_0.updateHp(arg_5_0, arg_5_1)
+	if arg_5_1 < 0 then
+		arg_5_0.hpInjury = arg_5_0.hpInjury + math.abs(arg_5_1)
 	end
 
-	slot0.hp = slot0.hp + slot1
+	arg_5_0.hp = arg_5_0.hp + arg_5_1
 
-	if slot0.hp < 0 then
-		slot0.hp = 0
+	if arg_5_0.hp < 0 then
+		arg_5_0.hp = 0
 	end
 end
 
-function slot0.updatePower(slot0, slot1)
-	slot0.power = slot0.power + slot1
+function var_0_0.updatePower(arg_6_0, arg_6_1)
+	arg_6_0.power = arg_6_0.power + arg_6_1
 end
 
-function slot0.updateForecastBehavior(slot0, slot1)
-	slot0.forecastBehavior = tabletool.copy(slot1)
+function var_0_0.updateForecastBehavior(arg_7_0, arg_7_1)
+	arg_7_0.forecastBehavior = tabletool.copy(arg_7_1)
 end
 
-function slot0.updateDiamondInfo(slot0, slot1, slot2)
-	if slot0.diamonds[slot1] == nil then
-		slot0.diamonds[slot1] = slot2
+function var_0_0.updateDiamondInfo(arg_8_0, arg_8_1, arg_8_2)
+	if arg_8_0.diamonds[arg_8_1] == nil then
+		arg_8_0.diamonds[arg_8_1] = arg_8_2
 	else
-		slot0.diamonds[slot1] = slot0.diamonds[slot1] + slot2
+		arg_8_0.diamonds[arg_8_1] = arg_8_0.diamonds[arg_8_1] + arg_8_2
 	end
 
-	if slot2 > 0 then
-		slot0.addDiamonds[slot1] = (slot0.addDiamonds[slot1] or 0) + slot2
+	if arg_8_2 > 0 then
+		local var_8_0 = arg_8_0.addDiamonds[arg_8_1] or 0
+
+		arg_8_0.addDiamonds[arg_8_1] = var_8_0 + arg_8_2
 	else
-		slot0.removeDiamonds[slot1] = (slot0.removeDiamonds[slot1] or 0) + math.abs(slot2)
+		local var_8_1 = arg_8_0.removeDiamonds[arg_8_1] or 0
+
+		arg_8_0.removeDiamonds[arg_8_1] = var_8_1 + math.abs(arg_8_2)
 	end
 end
 
-function slot0.diamondsIsEnough(slot0, slot1, slot2)
-	if not slot0.diamonds or not slot0.diamonds[slot1] then
+function var_0_0.diamondsIsEnough(arg_9_0, arg_9_1, arg_9_2)
+	if not arg_9_0.diamonds or not arg_9_0.diamonds[arg_9_1] then
 		return false
 	end
 
-	return slot2 <= slot0.diamonds[slot1]
+	return arg_9_2 <= arg_9_0.diamonds[arg_9_1]
 end
 
-function slot0.diffData(slot0, slot1)
-	slot2 = true
+function var_0_0.diffData(arg_10_0, arg_10_1)
+	local var_10_0 = true
 
-	if slot0.id ~= slot1.id then
-		slot2 = false
+	if arg_10_0.id ~= arg_10_1.id then
+		var_10_0 = false
 	end
 
-	if slot0.power ~= slot1.power then
-		slot2 = false
+	if arg_10_0.power ~= arg_10_1.power then
+		var_10_0 = false
 	end
 
-	if slot0.hp ~= slot1.hp then
-		slot2 = false
+	if arg_10_0.hp ~= arg_10_1.hp then
+		var_10_0 = false
 	end
 
-	if slot0.diamonds and slot1.diamonds then
-		for slot6, slot7 in pairs(slot0.diamonds) do
-			if slot7 ~= slot1.diamonds[slot6] then
-				slot2 = false
+	if arg_10_0.diamonds and arg_10_1.diamonds then
+		for iter_10_0, iter_10_1 in pairs(arg_10_0.diamonds) do
+			if iter_10_1 ~= arg_10_1.diamonds[iter_10_0] then
+				var_10_0 = false
 			end
 		end
 	end
 
-	if slot0.slotIds and slot1.slotIds then
-		for slot6, slot7 in ipairs(slot0.slotIds) do
-			if slot7 ~= slot1.slotIds[slot6] then
-				slot2 = false
+	if arg_10_0.slotIds and arg_10_1.slotIds then
+		for iter_10_2, iter_10_3 in ipairs(arg_10_0.slotIds) do
+			if iter_10_3 ~= arg_10_1.slotIds[iter_10_2] then
+				var_10_0 = false
 			end
 		end
 	end
 
-	return slot2
+	return var_10_0
 end
 
-return slot0
+return var_0_0

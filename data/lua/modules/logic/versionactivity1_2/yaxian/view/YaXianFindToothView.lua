@@ -1,69 +1,77 @@
-module("modules.logic.versionactivity1_2.yaxian.view.YaXianFindToothView", package.seeall)
+﻿module("modules.logic.versionactivity1_2.yaxian.view.YaXianFindToothView", package.seeall)
 
-slot0 = class("YaXianFindToothView", BaseView)
+local var_0_0 = class("YaXianFindToothView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "#simage_bg")
-	slot0._txtname = gohelper.findChildText(slot0.viewGO, "main/#txt_name")
-	slot0._txtunlockskill = gohelper.findChildText(slot0.viewGO, "main/unlockbg/#txt_unlockskill")
-	slot0._txtup = gohelper.findChildText(slot0.viewGO, "main/#txt_up/")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_bg")
+	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "main/#txt_name")
+	arg_1_0._txtunlockskill = gohelper.findChildText(arg_1_0.viewGO, "main/unlockbg/#txt_unlockskill")
+	arg_1_0._txtup = gohelper.findChildText(arg_1_0.viewGO, "main/#txt_up/")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
+function var_0_0.addEvents(arg_2_0)
+	return
 end
 
-function slot0.removeEvents(slot0)
+function var_0_0.removeEvents(arg_3_0)
+	return
 end
 
-function slot0.onFullClick(slot0)
+function var_0_0.onFullClick(arg_4_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
-	slot0:closeThis()
+	arg_4_0:closeThis()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._simagebg:LoadImage(ResUrl.getYaXianImage("img_huode_bg_2"))
+function var_0_0._editableInitView(arg_5_0)
+	arg_5_0._simagebg:LoadImage(ResUrl.getYaXianImage("img_huode_bg_2"))
 
-	slot0.fullClick = gohelper.getClick(slot0._simagebg.gameObject)
+	arg_5_0.fullClick = gohelper.getClick(arg_5_0._simagebg.gameObject)
 
-	slot0.fullClick:AddClickListener(slot0.onFullClick, slot0)
+	arg_5_0.fullClick:AddClickListener(arg_5_0.onFullClick, arg_5_0)
 
-	slot0.toothIcon = gohelper.findChildSingleImage(slot0.viewGO, "main/iconbg/icon")
-	slot0.goUnlockSkill = gohelper.findChild(slot0.viewGO, "main/unlockbg")
+	arg_5_0.toothIcon = gohelper.findChildSingleImage(arg_5_0.viewGO, "main/iconbg/icon")
+	arg_5_0.goUnlockSkill = gohelper.findChild(arg_5_0.viewGO, "main/unlockbg")
 end
 
-function slot0.onUpdateParam(slot0)
-	slot0:onOpen()
+function var_0_0.onUpdateParam(arg_6_0)
+	arg_6_0:onOpen()
 end
 
-function slot0.onOpen(slot0)
-	slot0.toothId = slot0.viewParam.toothId
-	slot0.toothConfig = YaXianConfig.instance:getToothConfig(slot0.toothId)
+function var_0_0.onOpen(arg_7_0)
+	arg_7_0.toothId = arg_7_0.viewParam.toothId
+	arg_7_0.toothConfig = YaXianConfig.instance:getToothConfig(arg_7_0.toothId)
 
-	slot0.toothIcon:LoadImage(ResUrl.getYaXianImage(slot0.toothConfig.icon))
+	arg_7_0.toothIcon:LoadImage(ResUrl.getYaXianImage(arg_7_0.toothConfig.icon))
 
-	slot0._txtname.text = slot0.toothConfig.name
-	slot1 = YaXianConfig.instance:getToothUnlockSkill(slot0.toothId)
+	arg_7_0._txtname.text = arg_7_0.toothConfig.name
 
-	gohelper.setActive(slot0.goUnlockSkill, slot1)
+	local var_7_0 = YaXianConfig.instance:getToothUnlockSkill(arg_7_0.toothId)
 
-	if slot1 then
-		slot0._txtunlockskill.text = luaLang("versionactivity_1_2_yaxian_unlock_skill_" .. slot1)
+	gohelper.setActive(arg_7_0.goUnlockSkill, var_7_0)
+
+	if var_7_0 then
+		arg_7_0._txtunlockskill.text = luaLang("versionactivity_1_2_yaxian_unlock_skill_" .. var_7_0)
 	end
 
-	slot0._txtup.text = string.format(luaLang("versionactivity_1_2_yaxian_up_to_level"), HeroConfig.instance:getCommonLevelDisplay(lua_hero_trial.configDict[YaXianEnum.HeroTrialId][YaXianConfig.instance:getToothUnlockHeroTemplate(slot0.toothId)] and slot3.level or 0))
+	local var_7_1 = YaXianConfig.instance:getToothUnlockHeroTemplate(arg_7_0.toothId)
+	local var_7_2 = lua_hero_trial.configDict[YaXianEnum.HeroTrialId][var_7_1]
+	local var_7_3 = HeroConfig.instance:getCommonLevelDisplay(var_7_2 and var_7_2.level or 0)
+
+	arg_7_0._txtup.text = string.format(luaLang("versionactivity_1_2_yaxian_up_to_level"), var_7_3)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_8_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._simagebg:UnLoadImage()
-	slot0.toothIcon:UnLoadImage()
-	slot0.fullClick:RemoveClickListener()
+function var_0_0.onDestroyView(arg_9_0)
+	arg_9_0._simagebg:UnLoadImage()
+	arg_9_0.toothIcon:UnLoadImage()
+	arg_9_0.fullClick:RemoveClickListener()
 end
 
-return slot0
+return var_0_0

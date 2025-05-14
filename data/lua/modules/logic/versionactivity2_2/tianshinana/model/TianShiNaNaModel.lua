@@ -1,253 +1,272 @@
-module("modules.logic.versionactivity2_2.tianshinana.model.TianShiNaNaModel", package.seeall)
+﻿module("modules.logic.versionactivity2_2.tianshinana.model.TianShiNaNaModel", package.seeall)
 
-slot0 = class("TianShiNaNaModel", BaseModel)
+local var_0_0 = class("TianShiNaNaModel", BaseModel)
 
-function slot0.onInit(slot0)
-	slot0.nowMapId = nil
-	slot0._curState = TianShiNaNaEnum.CurState.None
-	slot0.unitMos = {}
-	slot0.nowScenePos = nil
-	slot0.currEpisodeId = 0
-	slot0._episodeStars = {}
-	slot0.sceneLevelLoadFinish = false
-	slot0.waitStartFlow = false
-	slot0.waitClickJump = false
-	slot0.statMo = nil
-	slot0.curSelectIndex = 1
+function var_0_0.onInit(arg_1_0)
+	arg_1_0.nowMapId = nil
+	arg_1_0._curState = TianShiNaNaEnum.CurState.None
+	arg_1_0.unitMos = {}
+	arg_1_0.nowScenePos = nil
+	arg_1_0.currEpisodeId = 0
+	arg_1_0._episodeStars = {}
+	arg_1_0.sceneLevelLoadFinish = false
+	arg_1_0.waitStartFlow = false
+	arg_1_0.waitClickJump = false
+	arg_1_0.statMo = nil
+	arg_1_0.curSelectIndex = 1
 end
 
-function slot0.reInit(slot0)
-	slot0:onInit()
+function var_0_0.reInit(arg_2_0)
+	arg_2_0:onInit()
 end
 
-function slot0.initInfo(slot0, slot1)
-	slot2 = {
-		[slot7.episodeId] = slot7.star
-	}
+function var_0_0.initInfo(arg_3_0, arg_3_1)
+	local var_3_0 = {}
 
-	for slot6, slot7 in ipairs(slot1) do
-		if slot7.passChessGame then
-			-- Nothing
+	for iter_3_0, iter_3_1 in ipairs(arg_3_1) do
+		if iter_3_1.passChessGame then
+			var_3_0[iter_3_1.episodeId] = iter_3_1.star
 		end
 	end
 
-	for slot7 = 1, #TianShiNaNaConfig.instance:getEpisodeCoList(VersionActivity2_2Enum.ActivityId.TianShiNaNa) do
-		if slot3[slot7].episodeType == 1 then
-			slot8 = true
+	local var_3_1 = TianShiNaNaConfig.instance:getEpisodeCoList(VersionActivity2_2Enum.ActivityId.TianShiNaNa)
 
-			if slot3[slot7].storyBefore > 0 then
-				slot8 = StoryModel.instance:isStoryFinished(slot3[slot7].storyBefore)
+	for iter_3_2 = 1, #var_3_1 do
+		if var_3_1[iter_3_2].episodeType == 1 then
+			local var_3_2 = true
+
+			if var_3_1[iter_3_2].storyBefore > 0 then
+				var_3_2 = StoryModel.instance:isStoryFinished(var_3_1[iter_3_2].storyBefore)
 			end
 
-			slot0._episodeStars[slot7] = slot8 and 1 or 0
+			arg_3_0._episodeStars[iter_3_2] = var_3_2 and 1 or 0
 		else
-			slot0._episodeStars[slot7] = slot2[slot3[slot7].id] or 0
+			arg_3_0._episodeStars[iter_3_2] = var_3_0[var_3_1[iter_3_2].id] or 0
 		end
 	end
 end
 
-function slot0.markEpisodeFinish(slot0, slot1, slot2)
-	slot0.currEpisodeId = 0
+function var_0_0.markEpisodeFinish(arg_4_0, arg_4_1, arg_4_2)
+	arg_4_0.currEpisodeId = 0
 
-	if slot0._episodeStars[slot1] ~= slot2 then
-		slot0._episodeStars[slot1] = slot2
+	if arg_4_0._episodeStars[arg_4_1] ~= arg_4_2 then
+		local var_4_0 = arg_4_0._episodeStars[arg_4_1]
 
-		TianShiNaNaController.instance:dispatchEvent(TianShiNaNaEvent.EpisodeStarChange, slot1, slot0._episodeStars[slot1], slot2)
+		arg_4_0._episodeStars[arg_4_1] = arg_4_2
+
+		TianShiNaNaController.instance:dispatchEvent(TianShiNaNaEvent.EpisodeStarChange, arg_4_1, var_4_0, arg_4_2)
 	end
 
 	TianShiNaNaController.instance:dispatchEvent(TianShiNaNaEvent.EpisodeFinish)
 end
 
-function slot0.getEpisodeStar(slot0, slot1)
-	return slot0._episodeStars[slot1] or 0
+function var_0_0.getEpisodeStar(arg_5_0, arg_5_1)
+	return arg_5_0._episodeStars[arg_5_1] or 0
 end
 
-function slot0.getUnLockMaxIndex(slot0)
-	slot1 = 0
+function var_0_0.getUnLockMaxIndex(arg_6_0)
+	local var_6_0 = 0
 
-	while slot0:getEpisodeStar(slot1 + 1) > 0 do
-		slot1 = slot1 + 1
+	while arg_6_0:getEpisodeStar(var_6_0 + 1) > 0 do
+		var_6_0 = var_6_0 + 1
 	end
 
-	return slot1
+	return var_6_0
 end
 
-function slot0.initDatas(slot0, slot1, slot2)
-	slot0.statMo = TianShiNaNaStatMo.New()
-	slot0._curState = TianShiNaNaEnum.CurState.None
-	slot0.episodeCo = lua_activity167_episode.configDict[VersionActivity2_2Enum.ActivityId.TianShiNaNa][slot1]
-	slot0.nowMapId = slot0.episodeCo.mapId
-	slot0.unitMos = {}
-	slot0.mapCo = TianShiNaNaConfig.instance:getMapCo(slot0.episodeCo.mapId)
-	slot0.heroMo = nil
-	slot0.nowRound = slot2.currentRound
-	slot0.stepCount = slot2.stepCount
+function var_0_0.initDatas(arg_7_0, arg_7_1, arg_7_2)
+	arg_7_0.statMo = TianShiNaNaStatMo.New()
+	arg_7_0._curState = TianShiNaNaEnum.CurState.None
+	arg_7_0.episodeCo = lua_activity167_episode.configDict[VersionActivity2_2Enum.ActivityId.TianShiNaNa][arg_7_1]
+	arg_7_0.nowMapId = arg_7_0.episodeCo.mapId
 
-	for slot7, slot8 in ipairs(slot2.interact) do
-		if slot3:getUnitCo(slot8.id) then
-			slot11 = TianShiNaNaMapUnitMo.New()
+	local var_7_0 = TianShiNaNaConfig.instance:getMapCo(arg_7_0.episodeCo.mapId)
 
-			slot11:init(slot10)
-			slot11:updatePos(slot8.x, slot8.y, slot8.direction)
-			slot11:setActive(slot8.active)
+	arg_7_0.unitMos = {}
+	arg_7_0.mapCo = var_7_0
+	arg_7_0.heroMo = nil
+	arg_7_0.nowRound = arg_7_2.currentRound
+	arg_7_0.stepCount = arg_7_2.stepCount
 
-			slot0.unitMos[slot10.id] = slot11
+	for iter_7_0, iter_7_1 in ipairs(arg_7_2.interact) do
+		local var_7_1 = iter_7_1.id
+		local var_7_2 = var_7_0:getUnitCo(var_7_1)
 
-			if slot10.unitType == TianShiNaNaEnum.UnitType.Player then
-				slot0.heroMo = slot11
+		if var_7_2 then
+			local var_7_3 = TianShiNaNaMapUnitMo.New()
+
+			var_7_3:init(var_7_2)
+			var_7_3:updatePos(iter_7_1.x, iter_7_1.y, iter_7_1.direction)
+			var_7_3:setActive(iter_7_1.active)
+
+			arg_7_0.unitMos[var_7_2.id] = var_7_3
+
+			if var_7_2.unitType == TianShiNaNaEnum.UnitType.Player then
+				arg_7_0.heroMo = var_7_3
 			end
 		else
-			logError(string.format("天使娜娜地图 %d 元件 %d 不存在", slot0.nowMapId, slot9))
+			logError(string.format("天使娜娜地图 %d 元件 %d 不存在", arg_7_0.nowMapId, var_7_1))
 		end
 	end
 
-	slot0.remainCubeList = string.splitToNumber(slot0.episodeCo.cubeList, "#")
-	slot0.totalRound = #slot0.remainCubeList
+	arg_7_0.remainCubeList = string.splitToNumber(arg_7_0.episodeCo.cubeList, "#")
+	arg_7_0.totalRound = #arg_7_0.remainCubeList
 
-	if not slot0.heroMo then
-		logError(string.format("天使娜娜地图 %d 角色元件不存在", slot0.nowMapId))
+	if not arg_7_0.heroMo then
+		logError(string.format("天使娜娜地图 %d 角色元件不存在", arg_7_0.nowMapId))
 	end
 
-	slot0.curOperList = {}
-	slot0.curPointList = {}
-	slot0.waitClickJump = false
+	arg_7_0.curOperList = {}
+	arg_7_0.curPointList = {}
+	arg_7_0.waitClickJump = false
 end
 
-function slot0.sendStat(slot0, slot1)
-	if slot0.statMo then
-		slot0.statMo:sendStatData(slot1)
+function var_0_0.sendStat(arg_8_0, arg_8_1)
+	if arg_8_0.statMo then
+		arg_8_0.statMo:sendStatData(arg_8_1)
 
-		slot0.statMo = nil
+		arg_8_0.statMo = nil
 	end
 end
 
-function slot0.isWaitClick(slot0)
-	return slot0._curState == TianShiNaNaEnum.CurState.DoStep and slot0.waitClickJump
+function var_0_0.isWaitClick(arg_9_0)
+	return arg_9_0._curState == TianShiNaNaEnum.CurState.DoStep and arg_9_0.waitClickJump
 end
 
-function slot0.resetScene(slot0, slot1, slot2)
-	if slot0.statMo then
-		if slot2 then
-			slot0.statMo:sendStatData("重置")
-			slot0.statMo:reset()
+function var_0_0.resetScene(arg_10_0, arg_10_1, arg_10_2)
+	if arg_10_0.statMo then
+		if arg_10_2 then
+			arg_10_0.statMo:sendStatData("重置")
+			arg_10_0.statMo:reset()
 		else
-			slot0.statMo:addBackNum()
+			arg_10_0.statMo:addBackNum()
 		end
 	else
-		slot0.statMo = TianShiNaNaStatMo.New()
+		arg_10_0.statMo = TianShiNaNaStatMo.New()
 	end
 
 	TianShiNaNaController.instance:clearFlow()
 
-	slot0.waitClickJump = false
-	slot0.nowRound = slot1.currentRound
-	slot0.stepCount = slot1.stepCount
-	slot3 = {
-		[slot7] = true
-	}
+	arg_10_0.waitClickJump = false
+	arg_10_0.nowRound = arg_10_1.currentRound
+	arg_10_0.stepCount = arg_10_1.stepCount
 
-	for slot7 in pairs(slot0.unitMos) do
-		-- Nothing
+	local var_10_0 = {}
+
+	for iter_10_0 in pairs(arg_10_0.unitMos) do
+		var_10_0[iter_10_0] = true
 	end
 
-	slot4 = slot0.mapCo
+	local var_10_1 = arg_10_0.mapCo
 
-	for slot8, slot9 in ipairs(slot1.interact) do
-		if slot3[slot9.id] then
-			slot3[slot10] = nil
+	for iter_10_1, iter_10_2 in ipairs(arg_10_1.interact) do
+		local var_10_2 = iter_10_2.id
+
+		if var_10_0[var_10_2] then
+			var_10_0[var_10_2] = nil
 		end
 
-		if slot0.unitMos[slot10] then
-			slot11:updatePos(slot9.x, slot9.y, slot9.direction)
-			slot11:setActive(slot9.active)
+		local var_10_3 = arg_10_0.unitMos[var_10_2]
 
-			if TianShiNaNaEntityMgr.instance:getEntity(slot10) then
-				slot12:updatePosAndDir()
-			end
-		elseif slot4:getUnitCo(slot10) then
-			slot11 = TianShiNaNaMapUnitMo.New()
+		if var_10_3 then
+			var_10_3:updatePos(iter_10_2.x, iter_10_2.y, iter_10_2.direction)
+			var_10_3:setActive(iter_10_2.active)
 
-			slot11:init(slot12)
-			slot11:updatePos(slot9.x, slot9.y, slot9.direction)
+			local var_10_4 = TianShiNaNaEntityMgr.instance:getEntity(var_10_2)
 
-			slot0.unitMos[slot12.id] = slot11
-
-			if slot12.unitType == TianShiNaNaEnum.UnitType.Player then
-				slot0.heroMo = slot11
+			if var_10_4 then
+				var_10_4:updatePosAndDir()
 			end
 		else
-			logError(string.format("天使娜娜地图 %d 元件 %d 不存在", slot0.nowMapId, slot10))
+			local var_10_5 = var_10_1:getUnitCo(var_10_2)
+
+			if var_10_5 then
+				local var_10_6 = TianShiNaNaMapUnitMo.New()
+
+				var_10_6:init(var_10_5)
+				var_10_6:updatePos(iter_10_2.x, iter_10_2.y, iter_10_2.direction)
+
+				arg_10_0.unitMos[var_10_5.id] = var_10_6
+
+				if var_10_5.unitType == TianShiNaNaEnum.UnitType.Player then
+					arg_10_0.heroMo = var_10_6
+				end
+			else
+				logError(string.format("天使娜娜地图 %d 元件 %d 不存在", arg_10_0.nowMapId, var_10_2))
+			end
 		end
 	end
 
-	for slot8 in pairs(slot3) do
-		slot0:removeUnit(slot8)
+	for iter_10_3 in pairs(var_10_0) do
+		arg_10_0:removeUnit(iter_10_3)
 	end
 
-	slot0.curOperList = slot1.operations
-	slot0.curPointList = {}
+	arg_10_0.curOperList = arg_10_1.operations
+	arg_10_0.curPointList = {}
 
 	TianShiNaNaController.instance:dispatchEvent(TianShiNaNaEvent.CubePointUpdate)
 end
 
-function slot0.removeUnit(slot0, slot1)
-	if slot0.unitMos[slot1] then
-		TianShiNaNaEntityMgr.instance:removeEntity(slot1)
+function var_0_0.removeUnit(arg_11_0, arg_11_1)
+	if arg_11_0.unitMos[arg_11_1] then
+		TianShiNaNaEntityMgr.instance:removeEntity(arg_11_1)
 
-		slot0.unitMos[slot1] = nil
+		arg_11_0.unitMos[arg_11_1] = nil
 	end
 end
 
-function slot0.getNextCubeType(slot0)
-	if not slot0.remainCubeList then
+function var_0_0.getNextCubeType(arg_12_0)
+	if not arg_12_0.remainCubeList then
 		return
 	end
 
-	return slot0.remainCubeList[slot0.nowRound + 1]
+	return arg_12_0.remainCubeList[arg_12_0.nowRound + 1]
 end
 
-function slot0.setState(slot0, slot1)
-	if slot1 ~= slot0._curState then
-		TianShiNaNaController.instance:dispatchEvent(TianShiNaNaEvent.StatuChange, slot0._curState, slot1)
+function var_0_0.setState(arg_13_0, arg_13_1)
+	if arg_13_1 ~= arg_13_0._curState then
+		TianShiNaNaController.instance:dispatchEvent(TianShiNaNaEvent.StatuChange, arg_13_0._curState, arg_13_1)
 
-		slot0._curState = slot1
+		arg_13_0._curState = arg_13_1
 	end
 end
 
-function slot0.getState(slot0)
-	return slot0._curState
+function var_0_0.getState(arg_14_0)
+	return arg_14_0._curState
 end
 
-function slot0.getHeroMo(slot0)
-	return slot0.heroMo
+function var_0_0.getHeroMo(arg_15_0)
+	return arg_15_0.heroMo
 end
 
-function slot0.isNodeCanPlace(slot0, slot1, slot2, slot3)
-	if not slot0.nowMapId then
+function var_0_0.isNodeCanPlace(arg_16_0, arg_16_1, arg_16_2, arg_16_3)
+	if not arg_16_0.nowMapId then
 		return false
 	end
 
-	for slot7, slot8 in pairs(slot0.unitMos) do
-		if slot8:isPosEqual(slot1, slot2) and not slot8:canWalk() then
+	for iter_16_0, iter_16_1 in pairs(arg_16_0.unitMos) do
+		if iter_16_1:isPosEqual(arg_16_1, arg_16_2) and not iter_16_1:canWalk() then
 			return false
 		end
 	end
 
-	if not slot0.mapCo:getNodeCo(slot1, slot2) or slot3 and slot4 and slot4.nodeType == TianShiNaNaEnum.NodeType.Swamp then
+	local var_16_0 = arg_16_0.mapCo:getNodeCo(arg_16_1, arg_16_2)
+
+	if not var_16_0 or arg_16_3 and var_16_0 and var_16_0.nodeType == TianShiNaNaEnum.NodeType.Swamp then
 		return false
 	end
 
-	if not slot4.walkable then
+	if not var_16_0.walkable then
 		return false
 	end
 
-	if slot4:isCollapse() then
+	if var_16_0:isCollapse() then
 		return false
 	end
 
 	return true
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

@@ -1,188 +1,213 @@
-module("modules.logic.fight.view.preview.SkillEditorActionSelectView", package.seeall)
+﻿module("modules.logic.fight.view.preview.SkillEditorActionSelectView", package.seeall)
 
-slot0 = class("SkillEditorActionSelectView", BaseView)
+local var_0_0 = class("SkillEditorActionSelectView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._itemGOs = slot0:getUserDataTb_()
-	slot0._actionViewGO = gohelper.findChild(slot0.viewGO, "selectAction")
-	slot0._btnActionPreviewL = gohelper.findChildButtonWithAudio(slot0.viewGO, "scene/Grid/btnActionPreview")
-	slot0._itemGOParent = gohelper.findChild(slot0.viewGO, "selectAction/scroll/content")
-	slot0._itemGOPrefab = gohelper.findChild(slot0.viewGO, "selectAction/scroll/item")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._itemGOs = arg_1_0:getUserDataTb_()
+	arg_1_0._actionViewGO = gohelper.findChild(arg_1_0.viewGO, "selectAction")
+	arg_1_0._btnActionPreviewL = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "scene/Grid/btnActionPreview")
+	arg_1_0._itemGOParent = gohelper.findChild(arg_1_0.viewGO, "selectAction/scroll/content")
+	arg_1_0._itemGOPrefab = gohelper.findChild(arg_1_0.viewGO, "selectAction/scroll/item")
 
-	gohelper.setActive(slot0._itemGOPrefab, false)
+	gohelper.setActive(arg_1_0._itemGOPrefab, false)
 
-	slot0._btnClose = SLFramework.UGUI.ButtonWrap.GetWithPath(slot0.viewGO, "selectAction/btnClose")
-	slot0._btnMulti = gohelper.findChildButtonWithAudio(slot0.viewGO, "selectAction/btnMulti")
-	slot0._txtMulti = gohelper.findChildText(slot0.viewGO, "selectAction/btnMulti/image/txtMulti")
-	slot0._toggleLoop = gohelper.findChildToggle(slot0.viewGO, "selectAction/toggleLoop")
-	slot0._toggleMulti = gohelper.findChildToggle(slot0.viewGO, "selectAction/toggleMulti")
-	slot0._multiImgTr = gohelper.findChild(slot0.viewGO, "selectAction/btnMulti/image").transform
-	slot0._toggleLoop.isOn = false
-	slot0._toggleMulti.isOn = false
+	arg_1_0._btnClose = SLFramework.UGUI.ButtonWrap.GetWithPath(arg_1_0.viewGO, "selectAction/btnClose")
+	arg_1_0._btnMulti = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "selectAction/btnMulti")
+	arg_1_0._txtMulti = gohelper.findChildText(arg_1_0.viewGO, "selectAction/btnMulti/image/txtMulti")
+	arg_1_0._toggleLoop = gohelper.findChildToggle(arg_1_0.viewGO, "selectAction/toggleLoop")
+	arg_1_0._toggleMulti = gohelper.findChildToggle(arg_1_0.viewGO, "selectAction/toggleMulti")
+	arg_1_0._multiImgTr = gohelper.findChild(arg_1_0.viewGO, "selectAction/btnMulti/image").transform
+	arg_1_0._toggleLoop.isOn = false
+	arg_1_0._toggleMulti.isOn = false
 
-	gohelper.setActive(slot0._btnMulti.gameObject, false)
+	gohelper.setActive(arg_1_0._btnMulti.gameObject, false)
 
-	slot0._multiList = {}
+	arg_1_0._multiList = {}
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnActionPreviewL:AddClickListener(slot0._showThis, slot0)
-	slot0._btnClose:AddClickListener(slot0._hideThis, slot0)
-	slot0._btnMulti:AddClickListener(slot0._onClickMulti, slot0)
-	slot0._toggleMulti:AddOnValueChanged(slot0._onToggleMultiChange, slot0)
-	SLFramework.UGUI.UIClickListener.Get(slot0._actionViewGO):AddClickListener(slot0._hideThis, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnActionPreviewL:AddClickListener(arg_2_0._showThis, arg_2_0)
+	arg_2_0._btnClose:AddClickListener(arg_2_0._hideThis, arg_2_0)
+	arg_2_0._btnMulti:AddClickListener(arg_2_0._onClickMulti, arg_2_0)
+	arg_2_0._toggleMulti:AddOnValueChanged(arg_2_0._onToggleMultiChange, arg_2_0)
+	SLFramework.UGUI.UIClickListener.Get(arg_2_0._actionViewGO):AddClickListener(arg_2_0._hideThis, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnActionPreviewL:RemoveClickListener()
-	slot0._btnClose:RemoveClickListener()
-	slot0._btnMulti:RemoveClickListener()
-	slot0._toggleMulti:RemoveOnValueChanged()
-	SLFramework.UGUI.UIClickListener.Get(slot0._actionViewGO):RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnActionPreviewL:RemoveClickListener()
+	arg_3_0._btnClose:RemoveClickListener()
+	arg_3_0._btnMulti:RemoveClickListener()
+	arg_3_0._toggleMulti:RemoveOnValueChanged()
+	SLFramework.UGUI.UIClickListener.Get(arg_3_0._actionViewGO):RemoveClickListener()
 end
 
-function slot0._showThis(slot0, slot1)
+function var_0_0._showThis(arg_4_0, arg_4_1)
+	local var_4_0 = GameSceneMgr.instance:getCurScene()
+
 	if SkillEditorMgr.instance.cur_select_entity_id then
-		slot0._attacker = GameSceneMgr.instance:getCurScene().entityMgr:getEntity(SkillEditorMgr.instance.cur_select_entity_id)
+		arg_4_0._attacker = var_4_0.entityMgr:getEntity(SkillEditorMgr.instance.cur_select_entity_id)
 	else
-		slot0._attacker = slot2.entityMgr:getEntityByPosId(SceneTag.UnitPlayer, SkillEditorView.selectPosId[FightEnum.EntitySide.MySide])
+		arg_4_0._attacker = var_4_0.entityMgr:getEntityByPosId(SceneTag.UnitPlayer, SkillEditorView.selectPosId[FightEnum.EntitySide.MySide])
 	end
 
-	if not slot0._attacker then
+	if not arg_4_0._attacker then
 		logError("所选对象错误，请从新选择对象")
 
 		return
 	end
 
-	slot0._skinId = slot0._attacker:getMO().skin
+	arg_4_0._skinId = arg_4_0._attacker:getMO().skin
 
-	gohelper.setActive(slot0._actionViewGO, true)
-	slot0:_updateItems()
+	gohelper.setActive(arg_4_0._actionViewGO, true)
+	arg_4_0:_updateItems()
 end
 
-function slot0._hideThis(slot0)
+function var_0_0._hideThis(arg_5_0)
 	FightController.instance:dispatchEvent(FightEvent.OnEditorPlaySpineAniEnd)
-	gohelper.setActive(slot0._actionViewGO, false)
+	gohelper.setActive(arg_5_0._actionViewGO, false)
 end
 
-function slot0._updateItems(slot0)
-	for slot5, slot6 in ipairs(slot0:_getActionNameList()) do
-		if not slot0._itemGOs[slot5] then
-			slot7 = gohelper.clone(slot0._itemGOPrefab, slot0._itemGOParent, "item" .. slot5)
+function var_0_0._updateItems(arg_6_0)
+	local var_6_0 = arg_6_0:_getActionNameList()
 
-			slot0:addClickCb(SLFramework.UGUI.UIClickListener.Get(slot7), slot0._onClickItem, slot0, slot5)
-			table.insert(slot0._itemGOs, slot7)
+	for iter_6_0, iter_6_1 in ipairs(var_6_0) do
+		local var_6_1 = arg_6_0._itemGOs[iter_6_0]
+
+		if not var_6_1 then
+			var_6_1 = gohelper.clone(arg_6_0._itemGOPrefab, arg_6_0._itemGOParent, "item" .. iter_6_0)
+
+			arg_6_0:addClickCb(SLFramework.UGUI.UIClickListener.Get(var_6_1), arg_6_0._onClickItem, arg_6_0, iter_6_0)
+			table.insert(arg_6_0._itemGOs, var_6_1)
 		end
 
-		gohelper.setActive(slot7, true)
+		gohelper.setActive(var_6_1, true)
 
-		gohelper.findChildText(slot7, "Text").text = slot6 .. (slot0._attacker.spine:hasAnimation(slot6) and "" or "(缺)")
+		local var_6_2 = gohelper.findChildText(var_6_1, "Text")
+		local var_6_3 = arg_6_0._attacker.spine:hasAnimation(iter_6_1)
+
+		var_6_2.text = iter_6_1 .. (var_6_3 and "" or "(缺)")
 	end
 
-	for slot5 = #slot1 + 1, #slot0._itemGOs do
-		gohelper.setActive(slot0._itemGOs[slot5], false)
+	for iter_6_2 = #var_6_0 + 1, #arg_6_0._itemGOs do
+		gohelper.setActive(arg_6_0._itemGOs[iter_6_2], false)
 	end
 
-	recthelper.setHeight(slot0._itemGOParent.transform, (#slot1 / 6 + 1) * 100)
+	local var_6_4 = (#var_6_0 / 6 + 1) * 100
+
+	recthelper.setHeight(arg_6_0._itemGOParent.transform, var_6_4)
 end
 
-function slot0._onClickMulti(slot0)
-	if #slot0._multiList > 0 then
-		slot0._multiIndex = 1
+function var_0_0._onClickMulti(arg_7_0)
+	if #arg_7_0._multiList > 0 then
+		arg_7_0._multiIndex = 1
 
-		slot0:_playMultiAction()
+		arg_7_0:_playMultiAction()
 	else
 		GameFacade.showToast(ToastEnum.IconId, "未选择动作")
 	end
 end
 
-function slot0._onToggleMultiChange(slot0, slot1)
-	gohelper.setActive(slot0._btnMulti.gameObject, slot0._toggleMulti.isOn)
+function var_0_0._onToggleMultiChange(arg_8_0, arg_8_1)
+	gohelper.setActive(arg_8_0._btnMulti.gameObject, arg_8_0._toggleMulti.isOn)
 
-	if not slot1 then
-		tabletool.clear(slot0._multiList)
+	if not arg_8_1 then
+		tabletool.clear(arg_8_0._multiList)
 
-		slot0._txtMulti.text = ""
+		arg_8_0._txtMulti.text = ""
 
-		recthelper.setWidth(slot0._multiImgTr, 0)
+		recthelper.setWidth(arg_8_0._multiImgTr, 0)
 	end
 end
 
-function slot0._playMultiAction(slot0)
-	if slot0._multiList[slot0._multiIndex] then
-		slot0._attacker.spine:removeAnimEventCallback(slot0._onMultiAnimEvent, slot0)
-		slot0._attacker.spine:addAnimEventCallback(slot0._onMultiAnimEvent, slot0)
-		slot0._attacker.spine.super.play(slot0._attacker.spine, slot1, false, true)
-		FightController.instance:dispatchEvent(FightEvent.OnEditorPlaySpineAniStart, slot0._attacker)
+function var_0_0._playMultiAction(arg_9_0)
+	local var_9_0 = arg_9_0._multiList[arg_9_0._multiIndex]
+
+	if var_9_0 then
+		arg_9_0._attacker.spine:removeAnimEventCallback(arg_9_0._onMultiAnimEvent, arg_9_0)
+		arg_9_0._attacker.spine:addAnimEventCallback(arg_9_0._onMultiAnimEvent, arg_9_0)
+		arg_9_0._attacker.spine.super.play(arg_9_0._attacker.spine, var_9_0, false, true)
+		FightController.instance:dispatchEvent(FightEvent.OnEditorPlaySpineAniStart, arg_9_0._attacker)
 	else
 		FightController.instance:dispatchEvent(FightEvent.OnEditorPlaySpineAniEnd)
-		slot0._attacker.spine:removeAnimEventCallback(slot0._onAnimEvent, slot0)
-		slot0._attacker:resetAnimState()
+		arg_9_0._attacker.spine:removeAnimEventCallback(arg_9_0._onAnimEvent, arg_9_0)
+		arg_9_0._attacker:resetAnimState()
 	end
 
-	slot2 = ""
+	local var_9_1 = ""
 
-	for slot6, slot7 in ipairs(slot0._multiList) do
-		slot8 = slot6 == #slot0._multiList and "" or "->"
-		slot2 = (slot6 ~= slot0._multiIndex or string.format("%s<color=red>%s</color>%s", slot2, slot7, slot8)) and string.format("%s%s%s", string.format("%s<color=red>%s</color>%s", slot2, slot7, slot8), slot7, slot8)
-	end
+	for iter_9_0, iter_9_1 in ipairs(arg_9_0._multiList) do
+		local var_9_2 = iter_9_0 == #arg_9_0._multiList and "" or "->"
 
-	slot0._txtMulti.text = slot2
-end
-
-function slot0._onMultiAnimEvent(slot0, slot1, slot2, slot3)
-	if slot2 == SpineAnimEvent.ActionComplete then
-		slot0._multiIndex = slot0._multiIndex + 1
-
-		slot0:_playMultiAction()
-	end
-end
-
-function slot0._onClickItem(slot0, slot1)
-	if slot0._toggleMulti.isOn then
-		table.insert(slot0._multiList, slot0:_getActionNameList()[slot1])
-
-		slot0._txtMulti.text = table.concat(slot0._multiList, "->")
-
-		recthelper.setWidth(slot0._multiImgTr, slot0._txtMulti.preferredWidth)
-	elseif slot0._toggleLoop.isOn then
-		slot0._attacker.spine:play(slot3, true, true)
-	else
-		slot0._attacker.spine:removeAnimEventCallback(slot0._onAnimEvent, slot0)
-		TaskDispatcher.cancelTask(slot0._delayResetAnim, slot0)
-
-		if FightConfig.instance:getSkinSpineActionDict(slot0._skinId) and slot4[slot3] and slot5.effectRemoveTime > 0 then
-			TaskDispatcher.runDelay(slot0._delayResetAnim, slot0, slot5.effectRemoveTime / FightModel.instance:getSpeed())
+		if iter_9_0 == arg_9_0._multiIndex then
+			var_9_1 = string.format("%s<color=red>%s</color>%s", var_9_1, iter_9_1, var_9_2)
 		else
-			slot0._ani_need_transition, slot0._transition_ani = FightHelper.needPlayTransitionAni(slot0._attacker, slot3)
+			var_9_1 = string.format("%s%s%s", var_9_1, iter_9_1, var_9_2)
+		end
+	end
 
-			slot0._attacker.spine:addAnimEventCallback(slot0._onAnimEvent, slot0)
+	arg_9_0._txtMulti.text = var_9_1
+end
+
+function var_0_0._onMultiAnimEvent(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
+	if arg_10_2 == SpineAnimEvent.ActionComplete then
+		arg_10_0._multiIndex = arg_10_0._multiIndex + 1
+
+		arg_10_0:_playMultiAction()
+	end
+end
+
+function var_0_0._onClickItem(arg_11_0, arg_11_1)
+	local var_11_0 = arg_11_0:_getActionNameList()[arg_11_1]
+
+	if arg_11_0._toggleMulti.isOn then
+		table.insert(arg_11_0._multiList, var_11_0)
+
+		arg_11_0._txtMulti.text = table.concat(arg_11_0._multiList, "->")
+
+		recthelper.setWidth(arg_11_0._multiImgTr, arg_11_0._txtMulti.preferredWidth)
+	elseif arg_11_0._toggleLoop.isOn then
+		arg_11_0._attacker.spine:play(var_11_0, true, true)
+	else
+		arg_11_0._attacker.spine:removeAnimEventCallback(arg_11_0._onAnimEvent, arg_11_0)
+		TaskDispatcher.cancelTask(arg_11_0._delayResetAnim, arg_11_0)
+
+		local var_11_1 = FightConfig.instance:getSkinSpineActionDict(arg_11_0._skinId)
+		local var_11_2 = var_11_1 and var_11_1[var_11_0]
+
+		if var_11_2 and var_11_2.effectRemoveTime > 0 then
+			local var_11_3 = var_11_2.effectRemoveTime / FightModel.instance:getSpeed()
+
+			TaskDispatcher.runDelay(arg_11_0._delayResetAnim, arg_11_0, var_11_3)
+		else
+			arg_11_0._ani_need_transition, arg_11_0._transition_ani = FightHelper.needPlayTransitionAni(arg_11_0._attacker, var_11_0)
+
+			arg_11_0._attacker.spine:addAnimEventCallback(arg_11_0._onAnimEvent, arg_11_0)
 		end
 
-		slot0._attacker.spine:play(slot3, false, true)
-		FightController.instance:dispatchEvent(FightEvent.OnEditorPlaySpineAniStart, slot0._attacker)
+		arg_11_0._attacker.spine:play(var_11_0, false, true)
+		FightController.instance:dispatchEvent(FightEvent.OnEditorPlaySpineAniStart, arg_11_0._attacker)
 	end
 end
 
-function slot0._delayResetAnim(slot0)
+function var_0_0._delayResetAnim(arg_12_0)
 	FightController.instance:dispatchEvent(FightEvent.OnEditorPlaySpineAniEnd)
-	slot0._attacker.spine:removeAnimEventCallback(slot0._onAnimEvent, slot0)
-	slot0._attacker:resetAnimState()
+	arg_12_0._attacker.spine:removeAnimEventCallback(arg_12_0._onAnimEvent, arg_12_0)
+	arg_12_0._attacker:resetAnimState()
 end
 
-function slot0._onAnimEvent(slot0, slot1, slot2, slot3)
-	if slot2 == SpineAnimEvent.ActionComplete then
-		if slot0._ani_need_transition and slot0._transition_ani == slot1 then
+function var_0_0._onAnimEvent(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
+	if arg_13_2 == SpineAnimEvent.ActionComplete then
+		if arg_13_0._ani_need_transition and arg_13_0._transition_ani == arg_13_1 then
 			return
 		end
 
 		FightController.instance:dispatchEvent(FightEvent.OnEditorPlaySpineAniEnd)
-		slot0._attacker.spine:removeAnimEventCallback(slot0._onAnimEvent, slot0)
-		slot0._attacker:resetAnimState()
+		arg_13_0._attacker.spine:removeAnimEventCallback(arg_13_0._onAnimEvent, arg_13_0)
+		arg_13_0._attacker:resetAnimState()
 	end
 end
 
-slot1 = {
+local var_0_1 = {
 	"die",
 	"hit",
 	"idle",
@@ -190,20 +215,22 @@ slot1 = {
 	"freeze"
 }
 
-function slot0._getActionNameList(slot0)
-	for slot5, slot6 in pairs(SpineAnimState) do
-		if type(slot6) == "string" and slot0._attacker.spine:hasAnimation(slot6) then
-			table.insert({}, slot6)
+function var_0_0._getActionNameList(arg_14_0)
+	local var_14_0 = {}
+
+	for iter_14_0, iter_14_1 in pairs(SpineAnimState) do
+		if type(iter_14_1) == "string" and arg_14_0._attacker.spine:hasAnimation(iter_14_1) then
+			table.insert(var_14_0, iter_14_1)
 		end
 	end
 
-	for slot5, slot6 in ipairs(uv0) do
-		if not tabletool.indexOf(slot1, slot6) then
-			table.insert(slot1, slot6)
+	for iter_14_2, iter_14_3 in ipairs(var_0_1) do
+		if not tabletool.indexOf(var_14_0, iter_14_3) then
+			table.insert(var_14_0, iter_14_3)
 		end
 	end
 
-	return slot1
+	return var_14_0
 end
 
-return slot0
+return var_0_0

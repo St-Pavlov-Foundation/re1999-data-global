@@ -1,235 +1,250 @@
-module("modules.logic.room.view.critter.train.RoomCritterExchangeView", package.seeall)
+﻿module("modules.logic.room.view.critter.train.RoomCritterExchangeView", package.seeall)
 
-slot0 = class("RoomCritterExchangeView", BaseView)
+local var_0_0 = class("RoomCritterExchangeView", BaseView)
 
-function slot0.onInitView(slot0)
-	slot0._simagerightbg = gohelper.findChildSingleImage(slot0.viewGO, "decorate/#simage_rightbg")
-	slot0._simageleftbg = gohelper.findChildSingleImage(slot0.viewGO, "decorate/#simage_leftbg")
-	slot0._txtleftproductname = gohelper.findChildText(slot0.viewGO, "left/#txt_leftproductname")
-	slot0._simageleftproduct = gohelper.findChildSingleImage(slot0.viewGO, "left/#simage_leftproduct")
-	slot0._txtrightproductname = gohelper.findChildText(slot0.viewGO, "right/#txt_rightproductname")
-	slot0._simagerightproduct = gohelper.findChildSingleImage(slot0.viewGO, "right/#simage_rightproduct")
-	slot0._gobuy = gohelper.findChild(slot0.viewGO, "#go_buy")
-	slot0._txtcount = gohelper.findChildText(slot0.viewGO, "#go_buy/#txt_count")
-	slot0._inputvalue = gohelper.findChildTextMeshInputField(slot0.viewGO, "#go_buy/valuebg/#input_value")
-	slot0._btnmin = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_buy/#btn_min")
-	slot0._btnsub = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_buy/#btn_sub")
-	slot0._btnadd = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_buy/#btn_add")
-	slot0._btnmax = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_buy/#btn_max")
-	slot0._btnbuy = gohelper.findChildButtonWithAudio(slot0.viewGO, "#go_buy/#btn_buy")
-	slot0._gobuylimit = gohelper.findChild(slot0.viewGO, "#go_buy/#go_buylimit")
-	slot0._gocost = gohelper.findChild(slot0.viewGO, "#go_buy/cost")
-	slot0._simagecosticon = gohelper.findChildSingleImage(slot0.viewGO, "#go_buy/cost/#simage_costicon")
-	slot0._txtoriginalCost = gohelper.findChildText(slot0.viewGO, "#go_buy/cost/#txt_originalCost")
-	slot0._txtoriginalCost2 = gohelper.findChildText(slot0.viewGO, "#go_buy/cost/#txt_originalCost2")
-	slot0._gorighttop = gohelper.findChild(slot0.viewGO, "#go_righttop")
-	slot0._btnclose = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_close")
+function var_0_0.onInitView(arg_1_0)
+	arg_1_0._simagerightbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "decorate/#simage_rightbg")
+	arg_1_0._simageleftbg = gohelper.findChildSingleImage(arg_1_0.viewGO, "decorate/#simage_leftbg")
+	arg_1_0._txtleftproductname = gohelper.findChildText(arg_1_0.viewGO, "left/#txt_leftproductname")
+	arg_1_0._simageleftproduct = gohelper.findChildSingleImage(arg_1_0.viewGO, "left/#simage_leftproduct")
+	arg_1_0._txtrightproductname = gohelper.findChildText(arg_1_0.viewGO, "right/#txt_rightproductname")
+	arg_1_0._simagerightproduct = gohelper.findChildSingleImage(arg_1_0.viewGO, "right/#simage_rightproduct")
+	arg_1_0._gobuy = gohelper.findChild(arg_1_0.viewGO, "#go_buy")
+	arg_1_0._txtcount = gohelper.findChildText(arg_1_0.viewGO, "#go_buy/#txt_count")
+	arg_1_0._inputvalue = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "#go_buy/valuebg/#input_value")
+	arg_1_0._btnmin = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_buy/#btn_min")
+	arg_1_0._btnsub = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_buy/#btn_sub")
+	arg_1_0._btnadd = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_buy/#btn_add")
+	arg_1_0._btnmax = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_buy/#btn_max")
+	arg_1_0._btnbuy = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_buy/#btn_buy")
+	arg_1_0._gobuylimit = gohelper.findChild(arg_1_0.viewGO, "#go_buy/#go_buylimit")
+	arg_1_0._gocost = gohelper.findChild(arg_1_0.viewGO, "#go_buy/cost")
+	arg_1_0._simagecosticon = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_buy/cost/#simage_costicon")
+	arg_1_0._txtoriginalCost = gohelper.findChildText(arg_1_0.viewGO, "#go_buy/cost/#txt_originalCost")
+	arg_1_0._txtoriginalCost2 = gohelper.findChildText(arg_1_0.viewGO, "#go_buy/cost/#txt_originalCost2")
+	arg_1_0._gorighttop = gohelper.findChild(arg_1_0.viewGO, "#go_righttop")
+	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_close")
 
-	if slot0._editableInitView then
-		slot0:_editableInitView()
+	if arg_1_0._editableInitView then
+		arg_1_0:_editableInitView()
 	end
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnmin:AddClickListener(slot0._btnminOnClick, slot0)
-	slot0._btnsub:AddClickListener(slot0._btnsubOnClick, slot0)
-	slot0._btnadd:AddClickListener(slot0._btnaddOnClick, slot0)
-	slot0._btnmax:AddClickListener(slot0._btnmaxOnClick, slot0)
-	slot0._btnbuy:AddClickListener(slot0._btnbuyOnClick, slot0)
-	slot0._btnclose:AddClickListener(slot0._btncloseOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnmin:AddClickListener(arg_2_0._btnminOnClick, arg_2_0)
+	arg_2_0._btnsub:AddClickListener(arg_2_0._btnsubOnClick, arg_2_0)
+	arg_2_0._btnadd:AddClickListener(arg_2_0._btnaddOnClick, arg_2_0)
+	arg_2_0._btnmax:AddClickListener(arg_2_0._btnmaxOnClick, arg_2_0)
+	arg_2_0._btnbuy:AddClickListener(arg_2_0._btnbuyOnClick, arg_2_0)
+	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnmin:RemoveClickListener()
-	slot0._btnsub:RemoveClickListener()
-	slot0._btnadd:RemoveClickListener()
-	slot0._btnmax:RemoveClickListener()
-	slot0._btnbuy:RemoveClickListener()
-	slot0._btnclose:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnmin:RemoveClickListener()
+	arg_3_0._btnsub:RemoveClickListener()
+	arg_3_0._btnadd:RemoveClickListener()
+	arg_3_0._btnmax:RemoveClickListener()
+	arg_3_0._btnbuy:RemoveClickListener()
+	arg_3_0._btnclose:RemoveClickListener()
 end
 
-slot1 = 99
+local var_0_1 = 99
 
-function slot0._btnminOnClick(slot0)
-	slot0._buyCount = 1
+function var_0_0._btnminOnClick(arg_4_0)
+	arg_4_0._buyCount = 1
 
-	slot0:_refreshUI()
+	arg_4_0:_refreshUI()
 end
 
-function slot0._btnsubOnClick(slot0)
-	if slot0._buyCount < 1 then
+function var_0_0._btnsubOnClick(arg_5_0)
+	if arg_5_0._buyCount < 1 then
 		return
 	end
 
-	slot0._buyCount = slot0._buyCount - 1
+	arg_5_0._buyCount = arg_5_0._buyCount - 1
 
-	slot0:_refreshUI()
+	arg_5_0:_refreshUI()
 end
 
-function slot0._btnaddOnClick(slot0)
-	if slot0._maxBuyCount <= slot0._buyCount then
+function var_0_0._btnaddOnClick(arg_6_0)
+	if arg_6_0._buyCount >= arg_6_0._maxBuyCount then
 		return
 	end
 
-	slot0._buyCount = slot0._buyCount + 1
+	arg_6_0._buyCount = arg_6_0._buyCount + 1
 
-	slot0:_refreshUI()
+	arg_6_0:_refreshUI()
 end
 
-function slot0._btnmaxOnClick(slot0)
-	slot0._buyCount = slot0._maxBuyCount
+function var_0_0._btnmaxOnClick(arg_7_0)
+	arg_7_0._buyCount = arg_7_0._maxBuyCount
 
-	slot0:_refreshUI()
+	arg_7_0:_refreshUI()
 end
 
-function slot0._btnbuyOnClick(slot0)
-	slot2 = string.splitToNumber(RoomTrainCritterModel.instance:getProductGood(slot0.viewParam[2]).config.cost, "#")
+function var_0_0._btnbuyOnClick(arg_8_0)
+	local var_8_0 = RoomTrainCritterModel.instance:getProductGood(arg_8_0.viewParam[2])
+	local var_8_1 = string.splitToNumber(var_8_0.config.cost, "#")
+	local var_8_2 = ItemModel.instance:getItemConfig(var_8_1[1], var_8_1[2])
 
-	if slot0:getOwnCount() < slot0._buyCount then
-		GameFacade.showToast(ToastEnum.RoomCritterTrainNotEnoughCurrency, ItemModel.instance:getItemConfig(slot2[1], slot2[2]).name)
+	if arg_8_0:getOwnCount() < arg_8_0._buyCount then
+		GameFacade.showToast(ToastEnum.RoomCritterTrainNotEnoughCurrency, var_8_2.name)
 
 		return
 	end
 
-	StoreController.instance:buyGoods(slot1, slot0._buyCount, slot0._buyCallback, slot0)
-	slot0:closeThis()
+	StoreController.instance:buyGoods(var_8_0, arg_8_0._buyCount, arg_8_0._buyCallback, arg_8_0)
+	arg_8_0:closeThis()
 end
 
-function slot0._btncloseOnClick(slot0)
-	slot0:closeThis()
+function var_0_0._btncloseOnClick(arg_9_0)
+	arg_9_0:closeThis()
 end
 
-function slot0.onClickModalMask(slot0)
-	slot0:closeThis()
+function var_0_0.onClickModalMask(arg_10_0)
+	arg_10_0:closeThis()
 end
 
-function slot0._onInputCountValueChanged(slot0)
-	slot0._buyCount = slot0._maxBuyCount < tonumber(slot0._inputvalue:GetText()) and slot0._maxBuyCount or tonumber(slot0._inputvalue:GetText())
+function var_0_0._onInputCountValueChanged(arg_11_0)
+	arg_11_0._buyCount = tonumber(arg_11_0._inputvalue:GetText()) > arg_11_0._maxBuyCount and arg_11_0._maxBuyCount or tonumber(arg_11_0._inputvalue:GetText())
 
-	slot0:_refreshUI()
+	arg_11_0:_refreshUI()
 end
 
-function slot0._onInputCountEndEdit(slot0)
-	slot0._buyCount = slot0._maxBuyCount < tonumber(slot0._inputvalue:GetText()) and slot0._maxBuyCount or tonumber(slot0._inputvalue:GetText())
+function var_0_0._onInputCountEndEdit(arg_12_0)
+	arg_12_0._buyCount = tonumber(arg_12_0._inputvalue:GetText()) > arg_12_0._maxBuyCount and arg_12_0._maxBuyCount or tonumber(arg_12_0._inputvalue:GetText())
 
-	slot0:_refreshUI()
+	arg_12_0:_refreshUI()
 end
 
-function slot0._editableInitView(slot0)
-	slot0._colorDefault = Color.New(0.9058824, 0.8941177, 0.8941177, 1)
-	slot0._inputText = slot0._inputvalue.inputField.textComponent
-	slot0._buyCount = 1
+function var_0_0._editableInitView(arg_13_0)
+	arg_13_0._colorDefault = Color.New(0.9058824, 0.8941177, 0.8941177, 1)
+	arg_13_0._inputText = arg_13_0._inputvalue.inputField.textComponent
+	arg_13_0._buyCount = 1
 end
 
-function slot0._refreshUI(slot0)
-	slot0._inputvalue:SetText(slot0._buyCount)
+function var_0_0._refreshUI(arg_14_0)
+	arg_14_0._inputvalue:SetText(arg_14_0._buyCount)
 
-	if not RoomTrainCritterModel.instance:getProductGood(slot0.viewParam[2]) then
+	local var_14_0 = RoomTrainCritterModel.instance:getProductGood(arg_14_0.viewParam[2])
+
+	if not var_14_0 then
 		logError("不存在可兑换的商品！请检查配置")
 
 		return
 	end
 
-	slot3 = string.splitToNumber(slot1.config.cost, "#")
-	slot4 = slot0:getOwnCount()
+	local var_14_1 = var_14_0.config.maxBuyCount - var_14_0.buyCount
+	local var_14_2 = string.splitToNumber(var_14_0.config.cost, "#")
+	local var_14_3 = arg_14_0:getOwnCount()
+	local var_14_4 = StoreConfig.instance:getRemain(var_14_0.config, var_14_1, var_14_0.offlineTime)
 
-	if string.nilorempty(StoreConfig.instance:getRemain(slot1.config, slot1.config.maxBuyCount - slot1.buyCount, slot1.offlineTime)) then
-		gohelper.setActive(slot0._txtcount.gameObject, false)
+	if string.nilorempty(var_14_4) then
+		gohelper.setActive(arg_14_0._txtcount.gameObject, false)
 
-		slot0._maxBuyCount = uv0 < slot4 and uv0 or slot4
+		arg_14_0._maxBuyCount = var_14_3 > var_0_1 and var_0_1 or var_14_3
 	else
-		gohelper.setActive(slot0._txtcount.gameObject, true)
+		gohelper.setActive(arg_14_0._txtcount.gameObject, true)
 
-		slot0._txtcount.text = slot5 .. "/" .. slot1.config.maxBuyCount
-		slot0._maxBuyCount = slot2
+		arg_14_0._txtcount.text = var_14_4 .. "/" .. var_14_0.config.maxBuyCount
+		arg_14_0._maxBuyCount = var_14_1
 	end
 
-	if slot4 == 0 then
-		slot0._maxBuyCount = 1
+	if var_14_3 == 0 then
+		arg_14_0._maxBuyCount = 1
 	end
 
-	gohelper.setActive(slot0._gobuylimit, slot0._buyCount <= 0)
-	gohelper.setActive(slot0._btnbuy.gameObject, slot0._buyCount > 0)
-	gohelper.setActive(slot0._gocost, slot0._buyCount > 0)
+	gohelper.setActive(arg_14_0._gobuylimit, arg_14_0._buyCount <= 0)
+	gohelper.setActive(arg_14_0._btnbuy.gameObject, arg_14_0._buyCount > 0)
+	gohelper.setActive(arg_14_0._gocost, arg_14_0._buyCount > 0)
 
-	if slot0._buyCount > 0 then
-		if string.nilorempty(slot1.config.cost) then
-			gohelper.setActive(slot0._txtoriginalCost.gameObject, false)
+	if arg_14_0._buyCount > 0 then
+		if string.nilorempty(var_14_0.config.cost) then
+			gohelper.setActive(arg_14_0._txtoriginalCost.gameObject, false)
 		else
-			gohelper.setActive(slot0._txtoriginalCost.gameObject, true)
+			gohelper.setActive(arg_14_0._txtoriginalCost.gameObject, true)
 
-			slot0._txtoriginalCost.text = slot0._buyCount * slot3[3]
+			arg_14_0._txtoriginalCost.text = arg_14_0._buyCount * var_14_2[3]
 		end
 
-		if slot1.config.originalCost > 0 then
-			gohelper.setActive(slot0._txtoriginalCost2.gameObject, true)
+		if var_14_0.config.originalCost > 0 then
+			gohelper.setActive(arg_14_0._txtoriginalCost2.gameObject, true)
 
-			slot0._txtoriginalCost2.text = slot0._buyCount * slot1.config.originalCost
+			arg_14_0._txtoriginalCost2.text = arg_14_0._buyCount * var_14_0.config.originalCost
 		else
-			gohelper.setActive(slot0._txtoriginalCost2.gameObject, false)
+			gohelper.setActive(arg_14_0._txtoriginalCost2.gameObject, false)
 		end
 	end
 
-	slot0._inputText.color = slot0._buyCount <= slot4 and slot0._colorDefault or Color.red
+	local var_14_5 = var_14_3 >= arg_14_0._buyCount and arg_14_0._colorDefault or Color.red
+
+	arg_14_0._inputText.color = var_14_5
 end
 
-function slot0.getOwnCount(slot0)
-	slot2 = string.splitToNumber(RoomTrainCritterModel.instance:getProductGood(slot0.viewParam[2]).config.cost, "#")
+function var_0_0.getOwnCount(arg_15_0)
+	local var_15_0 = RoomTrainCritterModel.instance:getProductGood(arg_15_0.viewParam[2])
+	local var_15_1 = string.splitToNumber(var_15_0.config.cost, "#")
+	local var_15_2 = ItemModel.instance:getItemQuantity(var_15_1[1], var_15_1[2])
 
-	return math.floor(ItemModel.instance:getItemQuantity(slot2[1], slot2[2]) / slot2[3])
+	return math.floor(var_15_2 / var_15_1[3])
 end
 
-function slot0.onUpdateParam(slot0)
+function var_0_0.onUpdateParam(arg_16_0)
+	return
 end
 
-function slot0.onOpen(slot0)
-	slot0:_initIcon()
-	slot0:_refreshUI()
-	slot0._inputvalue:AddOnValueChanged(slot0._onInputCountValueChanged, slot0)
-	slot0._inputvalue:AddOnEndEdit(slot0._onInputCountEndEdit, slot0)
+function var_0_0.onOpen(arg_17_0)
+	arg_17_0:_initIcon()
+	arg_17_0:_refreshUI()
+	arg_17_0._inputvalue:AddOnValueChanged(arg_17_0._onInputCountValueChanged, arg_17_0)
+	arg_17_0._inputvalue:AddOnEndEdit(arg_17_0._onInputCountEndEdit, arg_17_0)
 end
 
-function slot0._initIcon(slot0)
-	if not RoomTrainCritterModel.instance:getProductGood(slot0.viewParam[2]) then
+function var_0_0._initIcon(arg_18_0)
+	local var_18_0 = RoomTrainCritterModel.instance:getProductGood(arg_18_0.viewParam[2])
+
+	if not var_18_0 then
 		logError("不存在可兑换的商品！请检查配置")
 
 		return
 	end
 
-	slot2 = string.splitToNumber(slot1.config.product, "#")
-	slot3, slot4 = ItemModel.instance:getItemConfigAndIcon(slot2[1], slot2[2], true)
+	local var_18_1 = string.splitToNumber(var_18_0.config.product, "#")
+	local var_18_2, var_18_3 = ItemModel.instance:getItemConfigAndIcon(var_18_1[1], var_18_1[2], true)
 
-	gohelper.setActive(slot0._simagerightproduct.gameObject, true)
-	slot0._simagerightproduct:LoadImage(slot4)
+	gohelper.setActive(arg_18_0._simagerightproduct.gameObject, true)
+	arg_18_0._simagerightproduct:LoadImage(var_18_3)
 
-	slot0._txtrightproductname.text = string.format("%s%s%s", slot3.name, luaLang("multiple"), slot2[3])
-	slot5 = string.splitToNumber(slot1.config.cost, "#")
-	slot6, slot7 = ItemModel.instance:getItemConfigAndIcon(slot5[1], slot5[2], true)
+	arg_18_0._txtrightproductname.text = string.format("%s%s%s", var_18_2.name, luaLang("multiple"), var_18_1[3])
 
-	gohelper.setActive(slot0._simageleftproduct.gameObject, true)
-	slot0._simageleftproduct:LoadImage(slot7)
+	local var_18_4 = string.splitToNumber(var_18_0.config.cost, "#")
+	local var_18_5, var_18_6 = ItemModel.instance:getItemConfigAndIcon(var_18_4[1], var_18_4[2], true)
 
-	slot0._txtleftproductname.text = string.format("%s%s%s", slot6.name, luaLang("multiple"), slot5[3])
+	gohelper.setActive(arg_18_0._simageleftproduct.gameObject, true)
+	arg_18_0._simageleftproduct:LoadImage(var_18_6)
 
-	slot0._simagecosticon:LoadImage(slot7)
+	arg_18_0._txtleftproductname.text = string.format("%s%s%s", var_18_5.name, luaLang("multiple"), var_18_4[3])
 
-	slot8 = {}
+	arg_18_0._simagecosticon:LoadImage(var_18_6)
 
-	table.insert(slot8, slot2[2])
-	table.insert(slot8, slot5[2])
-	slot0.viewContainer:setCurrencyType(slot8)
+	local var_18_7 = {}
+
+	table.insert(var_18_7, var_18_1[2])
+	table.insert(var_18_7, var_18_4[2])
+	arg_18_0.viewContainer:setCurrencyType(var_18_7)
 end
 
-function slot0.onClose(slot0)
+function var_0_0.onClose(arg_19_0)
+	return
 end
 
-function slot0.onDestroyView(slot0)
-	slot0._inputvalue:RemoveOnValueChanged()
-	slot0._inputvalue:RemoveOnEndEdit()
-	slot0._simageleftbg:UnLoadImage()
-	slot0._simagerightbg:UnLoadImage()
-	slot0._simageleftproduct:UnLoadImage()
-	slot0._simagerightproduct:UnLoadImage()
+function var_0_0.onDestroyView(arg_20_0)
+	arg_20_0._inputvalue:RemoveOnValueChanged()
+	arg_20_0._inputvalue:RemoveOnEndEdit()
+	arg_20_0._simageleftbg:UnLoadImage()
+	arg_20_0._simagerightbg:UnLoadImage()
+	arg_20_0._simageleftproduct:UnLoadImage()
+	arg_20_0._simagerightproduct:UnLoadImage()
 end
 
-return slot0
+return var_0_0

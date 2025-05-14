@@ -1,12 +1,13 @@
-module("modules.logic.fight.system.work.FightWorkZXQRemoveCardContainer", package.seeall)
+﻿module("modules.logic.fight.system.work.FightWorkZXQRemoveCardContainer", package.seeall)
 
-slot0 = class("FightWorkZXQRemoveCardContainer", FightStepEffectFlow)
+local var_0_0 = class("FightWorkZXQRemoveCardContainer", FightStepEffectFlow)
 
-function slot0.onStart(slot0)
-	slot0:playAdjacentSequenceEffect(nil, true)
+function var_0_0.onStart(arg_1_0)
+	arg_1_0:playAdjacentSequenceEffect(nil, true)
 end
 
-function slot0.clearWork(slot0)
+function var_0_0.clearWork(arg_2_0)
+	return
 end
 
-return slot0
+return var_0_0

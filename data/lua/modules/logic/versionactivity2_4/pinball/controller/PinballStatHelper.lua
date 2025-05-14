@@ -1,64 +1,67 @@
-module("modules.logic.versionactivity2_4.pinball.controller.PinballStatHelper", package.seeall)
+﻿module("modules.logic.versionactivity2_4.pinball.controller.PinballStatHelper", package.seeall)
 
-slot0 = class("PinballStatHelper")
+local var_0_0 = class("PinballStatHelper")
 
-function slot0.ctor(slot0)
-	slot0._gameBeginDt = 0
-	slot0._cityBeginDt = 0
-	slot0._useBallList = {}
+function var_0_0.ctor(arg_1_0)
+	arg_1_0._gameBeginDt = 0
+	arg_1_0._cityBeginDt = 0
+	arg_1_0._useBallList = {}
 end
 
-function slot0.resetGameDt(slot0)
-	slot0._gameBeginDt = UnityEngine.Time.realtimeSinceStartup
+function var_0_0.resetGameDt(arg_2_0)
+	arg_2_0._gameBeginDt = UnityEngine.Time.realtimeSinceStartup
 end
 
-function slot0.resetCityDt(slot0)
-	slot0._cityBeginDt = UnityEngine.Time.realtimeSinceStartup
+function var_0_0.resetCityDt(arg_3_0)
+	arg_3_0._cityBeginDt = UnityEngine.Time.realtimeSinceStartup
 end
 
-function slot0.setCurUseBallList(slot0, slot1)
-	slot0._useBallList = slot1
+function var_0_0.setCurUseBallList(arg_4_0, arg_4_1)
+	arg_4_0._useBallList = arg_4_1
 end
 
-function slot0.sendGameFinish(slot0)
-	if not lua_activity178_episode.configDict[VersionActivity2_4Enum.ActivityId.Pinball][PinballModel.instance.leftEpisodeId] then
+function var_0_0.sendGameFinish(arg_5_0)
+	local var_5_0 = PinballModel.instance.leftEpisodeId
+	local var_5_1 = lua_activity178_episode.configDict[VersionActivity2_4Enum.ActivityId.Pinball][var_5_0]
+
+	if not var_5_1 then
 		return
 	end
 
-	slot3 = {}
+	local var_5_2 = {}
 
-	for slot7, slot8 in pairs(PinballModel.instance.gameAddResDict) do
-		table.insert(slot3, {
-			id = slot7,
-			num = slot8
+	for iter_5_0, iter_5_1 in pairs(PinballModel.instance.gameAddResDict) do
+		table.insert(var_5_2, {
+			id = iter_5_0,
+			num = iter_5_1
 		})
 	end
 
 	StatController.instance:track(StatEnum.EventName.act178_game_finish, {
-		[StatEnum.EventProperties.EpisodeId_Num] = slot2.id,
-		[StatEnum.EventProperties.EpisodeType_Num] = slot2.type,
-		[StatEnum.EventProperties.UseTime] = UnityEngine.Time.realtimeSinceStartup - slot0._gameBeginDt,
-		[StatEnum.EventProperties.Act178BallList] = slot0._useBallList,
-		[StatEnum.EventProperties.Act178RewardInfo] = slot3,
-		[StatEnum.EventProperties.Act178CityObj] = slot0:_getCityInfo()
+		[StatEnum.EventProperties.EpisodeId_Num] = var_5_1.id,
+		[StatEnum.EventProperties.EpisodeType_Num] = var_5_1.type,
+		[StatEnum.EventProperties.UseTime] = UnityEngine.Time.realtimeSinceStartup - arg_5_0._gameBeginDt,
+		[StatEnum.EventProperties.Act178BallList] = arg_5_0._useBallList,
+		[StatEnum.EventProperties.Act178RewardInfo] = var_5_2,
+		[StatEnum.EventProperties.Act178CityObj] = arg_5_0:_getCityInfo()
 	})
 end
 
-function slot0.sendExitCity(slot0)
+function var_0_0.sendExitCity(arg_6_0)
 	StatController.instance:track(StatEnum.EventName.act178_interface_exit, {
-		[StatEnum.EventProperties.UseTime] = UnityEngine.Time.realtimeSinceStartup - slot0._cityBeginDt,
-		[StatEnum.EventProperties.Act178CityObj] = slot0:_getCityInfo()
+		[StatEnum.EventProperties.UseTime] = UnityEngine.Time.realtimeSinceStartup - arg_6_0._cityBeginDt,
+		[StatEnum.EventProperties.Act178CityObj] = arg_6_0:_getCityInfo()
 	})
 end
 
-function slot0.sendResetCity(slot0)
+function var_0_0.sendResetCity(arg_7_0)
 	StatController.instance:track(StatEnum.EventName.act178_reset, {
-		[StatEnum.EventProperties.Act178CityObj] = slot0:_getCityInfo()
+		[StatEnum.EventProperties.Act178CityObj] = arg_7_0:_getCityInfo()
 	})
 end
 
-function slot0._getCityInfo(slot0)
-	slot1 = {
+function var_0_0._getCityInfo(arg_8_0)
+	local var_8_0 = {
 		wood = PinballModel.instance:getResNum(PinballEnum.ResType.Wood),
 		mine = PinballModel.instance:getResNum(PinballEnum.ResType.Mine),
 		stone = PinballModel.instance:getResNum(PinballEnum.ResType.Stone),
@@ -70,19 +73,19 @@ function slot0._getCityInfo(slot0)
 		building_list = {}
 	}
 
-	for slot5, slot6 in pairs(PinballModel.instance._buildingInfo) do
-		table.insert(slot1.building_list, string.format("%d_%d", slot6.baseCo.id, slot6.level))
+	for iter_8_0, iter_8_1 in pairs(PinballModel.instance._buildingInfo) do
+		table.insert(var_8_0.building_list, string.format("%d_%d", iter_8_1.baseCo.id, iter_8_1.level))
 	end
 
-	slot1.talent_list = {}
+	var_8_0.talent_list = {}
 
-	for slot5, slot6 in pairs(PinballModel.instance._unlockTalents) do
-		table.insert(slot1.talent_list, slot6.co.id)
+	for iter_8_2, iter_8_3 in pairs(PinballModel.instance._unlockTalents) do
+		table.insert(var_8_0.talent_list, iter_8_3.co.id)
 	end
 
-	return slot1
+	return var_8_0
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

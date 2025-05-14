@@ -1,82 +1,91 @@
-module("modules.logic.story.model.StoryLogListModel", package.seeall)
+﻿module("modules.logic.story.model.StoryLogListModel", package.seeall)
 
-slot0 = class("StoryLogListModel", MixScrollModel)
+local var_0_0 = class("StoryLogListModel", MixScrollModel)
 
-function slot0.ctor(slot0)
-	uv0.super.ctor(slot0)
+function var_0_0.ctor(arg_1_0)
+	var_0_0.super.ctor(arg_1_0)
 
-	slot0._infos = nil
+	arg_1_0._infos = nil
 end
 
-function slot0.setLogList(slot0, slot1)
-	slot0._infos = slot1
-	slot2 = {}
+function var_0_0.setLogList(arg_2_0, arg_2_1)
+	arg_2_0._infos = arg_2_1
 
-	for slot6, slot7 in ipairs(slot1) do
-		slot8 = StoryLogMo.New()
+	local var_2_0 = {}
 
-		slot8:init(slot7)
-		table.insert(slot2, slot8)
+	for iter_2_0, iter_2_1 in ipairs(arg_2_1) do
+		local var_2_1 = StoryLogMo.New()
+
+		var_2_1:init(iter_2_1)
+		table.insert(var_2_0, var_2_1)
 	end
 
-	slot0:setList(slot2)
+	arg_2_0:setList(var_2_0)
 end
 
-function slot0.getInfoList(slot0, slot1)
-	if not slot0._infos or #slot0._infos <= 0 then
-		return {}
+function var_0_0.getInfoList(arg_3_0, arg_3_1)
+	local var_3_0 = {}
+
+	if not arg_3_0._infos or #arg_3_0._infos <= 0 then
+		return var_3_0
 	end
 
-	slot4 = 0
-	slot5 = 0
+	local var_3_1 = gohelper.findChildText(arg_3_1, "Viewport/logcontent/storylogitem/go_normal/txt_content")
+	local var_3_2 = 0
+	local var_3_3 = 0
 
-	for slot9, slot10 in ipairs(slot0._infos) do
-		slot11 = 0
+	for iter_3_0, iter_3_1 in ipairs(arg_3_0._infos) do
+		local var_3_4 = 0
 
-		if type(slot10) == "number" then
-			slot11 = GameUtil.getTextHeightByLine(gohelper.findChildText(slot1, "Viewport/logcontent/storylogitem/go_normal/txt_content"), GameUtil.filterRichText(StoryStepModel.instance:getStepListById(slot10).conversation.diaTexts[GameLanguageMgr.instance:getLanguageTypeStoryIndex()]), 42.35294, 13.96) + 80 - 42.35294 + 31.41
+		if type(iter_3_1) == "number" then
+			local var_3_5 = StoryStepModel.instance:getStepListById(iter_3_1).conversation
+			local var_3_6 = GameUtil.filterRichText(var_3_5.diaTexts[GameLanguageMgr.instance:getLanguageTypeStoryIndex()])
 
-			if type(slot5) == "number" and slot5 > 0 then
-				if StoryStepModel.instance:getStepListById(slot5).conversation.type == slot12.type and slot14.heroNames[GameLanguageMgr.instance:getLanguageTypeStoryIndex()] == slot12.heroNames[GameLanguageMgr.instance:getLanguageTypeStoryIndex()] then
-					slot4 = 1
-					slot2[slot9 - 1].lineLength = math.max(slot2[slot9 - 1].lineLength - 20, 0)
+			var_3_4 = GameUtil.getTextHeightByLine(var_3_1, var_3_6, 42.35294, 13.96) + 80 - 42.35294 + 31.41
+
+			if type(var_3_3) == "number" and var_3_3 > 0 then
+				local var_3_7 = StoryStepModel.instance:getStepListById(var_3_3).conversation
+
+				if var_3_7.type == var_3_5.type and var_3_7.heroNames[GameLanguageMgr.instance:getLanguageTypeStoryIndex()] == var_3_5.heroNames[GameLanguageMgr.instance:getLanguageTypeStoryIndex()] then
+					var_3_2 = 1
+					var_3_0[iter_3_0 - 1].lineLength = math.max(var_3_0[iter_3_0 - 1].lineLength - 20, 0)
 				else
-					slot4 = 0
+					var_3_2 = 0
 				end
 			else
-				slot4 = 0
+				var_3_2 = 0
 			end
-		elseif type(slot10) == "table" then
-			slot11 = 55 * #StoryModel.instance:getStoryBranchOpts(slot10.stepId) + 25
-			slot4 = 0
+		elseif type(iter_3_1) == "table" then
+			var_3_4 = 55 * #StoryModel.instance:getStoryBranchOpts(iter_3_1.stepId) + 25
+			var_3_2 = 0
 		end
 
-		table.insert(slot2, SLFramework.UGUI.MixCellInfo.New(slot4, slot11, nil))
+		table.insert(var_3_0, SLFramework.UGUI.MixCellInfo.New(var_3_2, var_3_4, nil))
 
-		slot5 = slot10
+		var_3_3 = iter_3_1
 	end
 
-	return slot2
+	return var_3_0
 end
 
-function slot0.clearData(slot0)
-	slot0._infos = nil
+function var_0_0.clearData(arg_4_0)
+	arg_4_0._infos = nil
 end
 
-function slot0.setPlayingLogAudio(slot0, slot1)
-	slot0._playingId = slot1
+function var_0_0.setPlayingLogAudio(arg_5_0, arg_5_1)
+	arg_5_0._playingId = arg_5_1
 end
 
-function slot0.setPlayingLogAudioFinished(slot0, slot1)
-	if slot0._playingId == slot1 then
-		slot0._playingId = 0
+function var_0_0.setPlayingLogAudioFinished(arg_6_0, arg_6_1)
+	if arg_6_0._playingId == arg_6_1 then
+		arg_6_0._playingId = 0
 	end
 end
 
-function slot0.getPlayingLogAudioId(slot0)
-	return slot0._playingId
+function var_0_0.getPlayingLogAudioId(arg_7_0)
+	return arg_7_0._playingId
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

@@ -1,281 +1,317 @@
-module("modules.logic.fight.entity.comp.skill.FightTLEventMove", package.seeall)
+﻿module("modules.logic.fight.entity.comp.skill.FightTLEventMove", package.seeall)
 
-slot0 = class("FightTLEventMove")
+local var_0_0 = class("FightTLEventMove")
 
-function slot0.handleSkillEvent(slot0, slot1, slot2, slot3)
-	slot2 = slot2 * FightModel.instance:getSpeed()
-	slot0._paramsArr = slot3
-	slot4 = slot3[1]
-	slot5 = tonumber(slot3[2]) or 0
-	slot6 = tonumber(slot3[3]) or 0
-	slot7 = GameUtil.splitString2(slot3[4], true, "#", ",")
-	slot8 = slot3[5]
+function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	arg_1_2 = arg_1_2 * FightModel.instance:getSpeed()
+	arg_1_0._paramsArr = arg_1_3
 
-	if slot3[6] == "1" then
-		slot2 = 0
+	local var_1_0 = arg_1_3[1]
+	local var_1_1 = tonumber(arg_1_3[2]) or 0
+	local var_1_2 = tonumber(arg_1_3[3]) or 0
+	local var_1_3 = GameUtil.splitString2(arg_1_3[4], true, "#", ",")
+	local var_1_4 = arg_1_3[5]
+
+	if arg_1_3[6] == "1" then
+		arg_1_2 = 0
 	end
 
-	if #uv0._getMoveEntitys(slot1, slot4) > 0 then
-		slot11 = false
+	local var_1_5 = var_0_0._getMoveEntitys(arg_1_1, var_1_0)
 
-		if slot4 == "2" or slot4 == "4" then
-			for slot15, slot16 in ipairs(slot10) do
-				if slot16:getMO() and FightConfig.instance:getSkinCO(slot17.skin) and slot18.canHide == 1 then
-					slot11 = true
+	if #var_1_5 > 0 then
+		local var_1_6 = false
+
+		if var_1_0 == "2" or var_1_0 == "4" then
+			for iter_1_0, iter_1_1 in ipairs(var_1_5) do
+				local var_1_7 = iter_1_1:getMO()
+
+				if var_1_7 then
+					local var_1_8 = FightConfig.instance:getSkinCO(var_1_7.skin)
+
+					if var_1_8 and var_1_8.canHide == 1 then
+						var_1_6 = true
+					end
 				end
 			end
 		end
 
-		if slot11 then
-			slot0._combinative_entitys = {}
-			slot0._combinative_pos_offsets = {}
-			slot14 = slot10[1]
-			slot15 = slot14
+		if var_1_6 then
+			arg_1_0._combinative_entitys = {}
+			arg_1_0._combinative_pos_offsets = {}
 
-			for slot15, slot16 in ipairs(FightHelper.getSideEntitys(slot14.getSide(slot15))) do
-				if slot16:getMO() then
-					if FightConfig.instance:getSkinCO(slot17.skin) and slot18.mainBody == 1 then
-						slot0._follow_entity = slot16
+			for iter_1_2, iter_1_3 in ipairs(FightHelper.getSideEntitys(var_1_5[1]:getSide())) do
+				local var_1_9 = iter_1_3:getMO()
+
+				if var_1_9 then
+					local var_1_10 = FightConfig.instance:getSkinCO(var_1_9.skin)
+
+					if var_1_10 and var_1_10.mainBody == 1 then
+						arg_1_0._follow_entity = iter_1_3
 					else
-						table.insert(slot0._combinative_entitys, slot16)
+						table.insert(arg_1_0._combinative_entitys, iter_1_3)
 					end
 				end
 			end
 
-			if not slot0._follow_entity then
-				slot0._follow_entity = FightHelper.getEntity(slot1.toId)
+			if not arg_1_0._follow_entity then
+				arg_1_0._follow_entity = FightHelper.getEntity(arg_1_1.toId)
 
-				tabletool.removeValue(slot0._combinative_entitys, slot0._follow_entity)
+				tabletool.removeValue(arg_1_0._combinative_entitys, arg_1_0._follow_entity)
 			end
 
-			slot12, slot13, slot14 = FightHelper.getEntityStandPos(slot0._follow_entity:getMO())
+			local var_1_11, var_1_12, var_1_13 = FightHelper.getEntityStandPos(arg_1_0._follow_entity:getMO())
+			local var_1_14 = Vector3.New(var_1_11, var_1_12, var_1_13)
 
-			for slot19, slot20 in ipairs(slot0._combinative_entitys) do
-				slot21, slot22, slot23 = FightHelper.getEntityStandPos(slot20:getMO())
+			for iter_1_4, iter_1_5 in ipairs(arg_1_0._combinative_entitys) do
+				local var_1_15, var_1_16, var_1_17 = FightHelper.getEntityStandPos(iter_1_5:getMO())
+				local var_1_18 = Vector3.New(var_1_15, var_1_16, var_1_17)
 
-				table.insert(slot0._combinative_pos_offsets, Vector3.New(slot21, slot22, slot23) - Vector3.New(slot12, slot13, slot14))
+				table.insert(arg_1_0._combinative_pos_offsets, var_1_18 - var_1_14)
 			end
 
-			slot10 = {
-				slot0._follow_entity
+			var_1_5 = {
+				arg_1_0._follow_entity
 			}
 
-			TaskDispatcher.runRepeat(slot0._setCombinativeEntitysPos, slot0, 0.0001)
+			TaskDispatcher.runRepeat(arg_1_0._setCombinativeEntitysPos, arg_1_0, 0.0001)
 		end
 	end
 
-	if #slot10 > 1 then
-		table.sort(slot10, function (slot0, slot1)
-			if slot0:getSide() ~= slot1:getSide() then
-				return slot0:isMySide()
+	if #var_1_5 > 1 then
+		table.sort(var_1_5, function(arg_2_0, arg_2_1)
+			if arg_2_0:getSide() ~= arg_2_1:getSide() then
+				return arg_2_0:isMySide()
 			end
 
-			slot3 = slot1:getMO()
+			local var_2_0 = arg_2_0:getMO()
+			local var_2_1 = arg_2_1:getMO()
 
-			if slot0:getMO() and slot3 and slot2.position ~= slot3.position then
-				return slot2.position < slot3.position
+			if var_2_0 and var_2_1 and var_2_0.position ~= var_2_1.position then
+				return var_2_0.position < var_2_1.position
 			end
 
-			return tonumber(slot1.id) < tonumber(slot0.id)
+			return tonumber(arg_2_0.id) > tonumber(arg_2_1.id)
 		end)
 	end
 
-	slot11 = nil
+	local var_1_19
 
-	if not string.nilorempty(slot0._paramsArr[8]) and #slot10 == 1 then
-		slot12 = slot10[1]
+	if not string.nilorempty(arg_1_0._paramsArr[8]) and #var_1_5 == 1 then
+		local var_1_20 = var_1_5[1]
+		local var_1_21 = FightStrUtil.instance:getSplitCache(arg_1_0._paramsArr[8], "|")
 
-		if #FightStrUtil.instance:getSplitCache(slot0._paramsArr[8], "|") > 1 then
-			slot14 = false
+		if #var_1_21 > 1 then
+			local var_1_22 = false
 
-			for slot18 = 2, #slot13 do
-				slot19 = FightStrUtil.instance:getSplitCache(slot13[slot18], "_")
+			for iter_1_6 = 2, #var_1_21 do
+				local var_1_23 = FightStrUtil.instance:getSplitCache(var_1_21[iter_1_6], "_")
+				local var_1_24 = var_1_20:getMO()
 
-				if slot12:getMO() and slot20.skin == tonumber(slot19[1]) then
-					slot11 = FightStrUtil.instance:getSplitToNumberCache(slot19[2], ",")
-					slot14 = true
-
-					break
-				end
-			end
-
-			if not slot14 then
-				slot11 = FightStrUtil.instance:getSplitToNumberCache(slot13[1], ",")
-			end
-		else
-			slot11 = FightStrUtil.instance:getSplitToNumberCache(slot0._paramsArr[8], ",")
-		end
-	end
-
-	for slot15, slot16 in ipairs(slot10) do
-		if not gohelper.isNil(slot16.go) then
-			slot17, slot18, slot19 = transformhelper.getPos(slot16.go.transform)
-			slot20, slot21, slot22 = slot0:_getEndPosXYZ(slot1, slot16, slot7, slot4, slot5, slot15)
-
-			if slot11 then
-				slot20 = slot11[1] and (slot16:isMySide() and slot11[1] or -slot11[1]) or 0
-				slot21 = slot11[2] or 0
-				slot22 = slot11[3] or 0
-			end
-
-			uv0._setupEntityMove(slot16, slot17, slot18, slot19, slot20, slot21, slot22, slot2, slot6, slot8)
-		end
-	end
-end
-
-function slot0._getEndPosXYZ(slot0, slot1, slot2, slot3, slot4, slot5, slot6)
-	slot7 = FightHelper.getEntity(slot1.fromId)
-	slot8 = FightHelper.getEntity(slot1.toId)
-	slot9 = slot3[1]
-
-	if slot4 == "3" or slot4 == "4" then
-		slot9 = slot3[slot2:getMO().position]
-	elseif slot4 == "2" then
-		slot9 = slot3[slot6]
-	end
-
-	slot10 = slot9 and slot9[1] or 0
-	slot11 = slot9 and slot9[2] or 0
-	slot12 = slot9 and slot9[3] or 0
-	slot13 = 0
-	slot14 = 0
-	slot15 = 0
-
-	if slot5 == 3 then
-		if slot2:getMO() then
-			slot13, slot14, slot15 = FightHelper.getEntityStandPos(slot16)
-		else
-			slot15 = 0
-			slot14 = 0
-			slot13 = 0
-		end
-	elseif slot5 == 1 or slot5 == 2 then
-		if slot5 == 1 and slot7 or slot8 then
-			slot13, slot14, slot15 = FightHelper.getProcessEntityStancePos(slot16:getMO())
-			slot13 = slot16:isMySide() and slot13 - slot10 or slot13 + slot10
-			slot14 = slot14 + slot11
-			slot15 = slot15 + slot12
-		else
-			logNormal("targetEntity not exist: " .. (slot5 == 1 and slot1.fromId or slot1.toId))
-		end
-	elseif slot5 == 0 then
-		slot13 = tonumber(slot4) and slot2:isMySide() and slot13 - slot10 or slot13 + slot10
-		slot14 = slot11
-		slot15 = slot12
-	elseif slot5 == 4 then
-		slot13 = slot10
-		slot14 = slot11
-		slot15 = slot12
-	elseif slot5 == 5 then
-		slot16 = nil
-
-		if #FightStrUtil.instance:getSplitCache(slot0._paramsArr[7], "|") > 1 then
-			slot18 = false
-
-			for slot22 = 2, #slot17 do
-				slot23 = FightStrUtil.instance:getSplitCache(slot17[slot22], "_")
-
-				if slot2:getMO() and slot24.skin == tonumber(slot23[1]) then
-					slot16 = FightStrUtil.instance:getSplitToNumberCache(slot23[2], ",")
-					slot18 = true
+				if var_1_24 and var_1_24.skin == tonumber(var_1_23[1]) then
+					var_1_19 = FightStrUtil.instance:getSplitToNumberCache(var_1_23[2], ",")
+					var_1_22 = true
 
 					break
 				end
 			end
 
-			if not slot18 then
-				slot16 = FightStrUtil.instance:getSplitToNumberCache(slot17[1], ",")
+			if not var_1_22 then
+				var_1_19 = FightStrUtil.instance:getSplitToNumberCache(var_1_21[1], ",")
 			end
 		else
-			slot16 = FightStrUtil.instance:getSplitToNumberCache(slot0._paramsArr[7], ",")
+			var_1_19 = FightStrUtil.instance:getSplitToNumberCache(arg_1_0._paramsArr[8], ",")
 		end
-
-		slot18, slot19, slot20 = transformhelper.getPos(slot2.go.transform)
-		slot13 = slot18 + (slot16[1] and (slot2:isMySide() and slot16[1] or -slot16[1]) or 0)
-		slot14 = slot19 + (slot16[2] or 0)
-		slot15 = slot20 + (slot16[3] or 0)
 	end
 
-	return slot13, slot14, slot15
+	for iter_1_7, iter_1_8 in ipairs(var_1_5) do
+		if not gohelper.isNil(iter_1_8.go) then
+			local var_1_25, var_1_26, var_1_27 = transformhelper.getPos(iter_1_8.go.transform)
+			local var_1_28, var_1_29, var_1_30 = arg_1_0:_getEndPosXYZ(arg_1_1, iter_1_8, var_1_3, var_1_0, var_1_1, iter_1_7)
+
+			if var_1_19 then
+				var_1_28 = var_1_19[1] and (iter_1_8:isMySide() and var_1_19[1] or -var_1_19[1]) or 0
+				var_1_29 = var_1_19[2] or 0
+				var_1_30 = var_1_19[3] or 0
+			end
+
+			var_0_0._setupEntityMove(iter_1_8, var_1_25, var_1_26, var_1_27, var_1_28, var_1_29, var_1_30, arg_1_2, var_1_2, var_1_4)
+		end
+	end
 end
 
-function slot0._getMoveEntitys(slot0, slot1)
-	slot4 = FightHelper.getEntity(slot0.toId)
+function var_0_0._getEndPosXYZ(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4, arg_3_5, arg_3_6)
+	local var_3_0 = FightHelper.getEntity(arg_3_1.fromId)
+	local var_3_1 = FightHelper.getEntity(arg_3_1.toId)
+	local var_3_2 = arg_3_3[1]
 
-	if slot1 == "1" then
-		table.insert({}, FightHelper.getEntity(slot0.fromId))
-	elseif slot1 == "2" then
-		slot5 = {}
+	if arg_3_4 == "3" or arg_3_4 == "4" then
+		var_3_2 = arg_3_3[arg_3_2:getMO().position]
+	elseif arg_3_4 == "2" then
+		var_3_2 = arg_3_3[arg_3_6]
+	end
 
-		for slot9, slot10 in ipairs(slot0.actEffectMOs) do
-			if not FightHelper.getEntity(slot10.targetId) and slot10.effectType ~= FightEnum.EffectType.INDICATORCHANGE then
-				-- Nothing
+	local var_3_3 = var_3_2 and var_3_2[1] or 0
+	local var_3_4 = var_3_2 and var_3_2[2] or 0
+	local var_3_5 = var_3_2 and var_3_2[3] or 0
+	local var_3_6 = 0
+	local var_3_7 = 0
+	local var_3_8 = 0
+
+	if arg_3_5 == 3 then
+		local var_3_9 = arg_3_2:getMO()
+
+		if var_3_9 then
+			var_3_6, var_3_7, var_3_8 = FightHelper.getEntityStandPos(var_3_9)
+		else
+			var_3_6, var_3_7, var_3_8 = 0, 0, 0
+		end
+	elseif arg_3_5 == 1 or arg_3_5 == 2 then
+		local var_3_10 = arg_3_5 == 1 and var_3_0 or var_3_1
+
+		if var_3_10 then
+			var_3_6, var_3_7, var_3_8 = FightHelper.getProcessEntityStancePos(var_3_10:getMO())
+			var_3_6 = var_3_10:isMySide() and var_3_6 - var_3_3 or var_3_6 + var_3_3
+			var_3_7 = var_3_7 + var_3_4
+			var_3_8 = var_3_8 + var_3_5
+		else
+			logNormal("targetEntity not exist: " .. (arg_3_5 == 1 and arg_3_1.fromId or arg_3_1.toId))
+		end
+	elseif arg_3_5 == 0 then
+		var_3_6 = tonumber(arg_3_4) and arg_3_2:isMySide() and var_3_6 - var_3_3 or var_3_6 + var_3_3
+		var_3_7 = var_3_4
+		var_3_8 = var_3_5
+	elseif arg_3_5 == 4 then
+		var_3_6 = var_3_3
+		var_3_7 = var_3_4
+		var_3_8 = var_3_5
+	elseif arg_3_5 == 5 then
+		local var_3_11
+		local var_3_12 = FightStrUtil.instance:getSplitCache(arg_3_0._paramsArr[7], "|")
+
+		if #var_3_12 > 1 then
+			local var_3_13 = false
+
+			for iter_3_0 = 2, #var_3_12 do
+				local var_3_14 = FightStrUtil.instance:getSplitCache(var_3_12[iter_3_0], "_")
+				local var_3_15 = arg_3_2:getMO()
+
+				if var_3_15 and var_3_15.skin == tonumber(var_3_14[1]) then
+					var_3_11 = FightStrUtil.instance:getSplitToNumberCache(var_3_14[2], ",")
+					var_3_13 = true
+
+					break
+				end
 			end
 
-			slot12 = false
+			if not var_3_13 then
+				var_3_11 = FightStrUtil.instance:getSplitToNumberCache(var_3_12[1], ",")
+			end
+		else
+			var_3_11 = FightStrUtil.instance:getSplitToNumberCache(arg_3_0._paramsArr[7], ",")
+		end
 
-			if slot11 and (slot11.id == FightEntityScene.MySideId or slot11.id == FightEntityScene.EnemySideId) then
-				slot12 = true
+		local var_3_16, var_3_17, var_3_18 = transformhelper.getPos(arg_3_2.go.transform)
+		local var_3_19 = arg_3_2:isMySide()
+
+		var_3_6 = var_3_16 + (var_3_11[1] and (var_3_19 and var_3_11[1] or -var_3_11[1]) or 0)
+		var_3_7 = var_3_17 + (var_3_11[2] or 0)
+		var_3_8 = var_3_18 + (var_3_11[3] or 0)
+	end
+
+	return var_3_6, var_3_7, var_3_8
+end
+
+function var_0_0._getMoveEntitys(arg_4_0, arg_4_1)
+	local var_4_0 = {}
+	local var_4_1 = FightHelper.getEntity(arg_4_0.fromId)
+	local var_4_2 = FightHelper.getEntity(arg_4_0.toId)
+
+	if arg_4_1 == "1" then
+		table.insert(var_4_0, var_4_1)
+	elseif arg_4_1 == "2" then
+		local var_4_3 = {}
+
+		for iter_4_0, iter_4_1 in ipairs(arg_4_0.actEffectMOs) do
+			local var_4_4 = FightHelper.getEntity(iter_4_1.targetId)
+
+			if not var_4_4 and iter_4_1.effectType ~= FightEnum.EffectType.INDICATORCHANGE then
+				-- block empty
 			end
 
-			if not slot12 and slot11 and slot11:getSide() ~= slot3:getSide() and not slot5[slot10.targetId] then
-				table.insert(slot2, slot11)
+			local var_4_5 = false
 
-				slot5[slot10.targetId] = true
+			if var_4_4 and (var_4_4.id == FightEntityScene.MySideId or var_4_4.id == FightEntityScene.EnemySideId) then
+				var_4_5 = true
+			end
+
+			if not var_4_5 and var_4_4 and var_4_4:getSide() ~= var_4_1:getSide() and not var_4_3[iter_4_1.targetId] then
+				table.insert(var_4_0, var_4_4)
+
+				var_4_3[iter_4_1.targetId] = true
 			end
 		end
-	elseif slot1 == "3" then
-		slot2 = FightHelper.getSideEntitys(slot3:getSide(), false)
-	elseif slot1 == "4" then
-		if slot4 then
-			slot2 = FightHelper.getSideEntitys(slot4:getSide(), false)
+	elseif arg_4_1 == "3" then
+		var_4_0 = FightHelper.getSideEntitys(var_4_1:getSide(), false)
+	elseif arg_4_1 == "4" then
+		if var_4_2 then
+			var_4_0 = FightHelper.getSideEntitys(var_4_2:getSide(), false)
 		end
-	elseif slot1 == "5" then
-		tabletool.addValues(slot2, FightHelper.getSideEntitys(FightEnum.EntitySide.MySide, false))
-		tabletool.addValues(slot2, FightHelper.getSideEntitys(FightEnum.EntitySide.EnemySide, false))
-	elseif slot1 == "6" then
-		if slot4 then
-			table.insert(slot2, slot4)
+	elseif arg_4_1 == "5" then
+		local var_4_6 = FightHelper.getSideEntitys(FightEnum.EntitySide.MySide, false)
+		local var_4_7 = FightHelper.getSideEntitys(FightEnum.EntitySide.EnemySide, false)
+
+		tabletool.addValues(var_4_0, var_4_6)
+		tabletool.addValues(var_4_0, var_4_7)
+	elseif arg_4_1 == "6" then
+		if var_4_2 then
+			table.insert(var_4_0, var_4_2)
 		end
 	else
-		table.insert(slot2, GameSceneMgr.instance:getCurScene().entityMgr:getUnit(SceneTag.UnitNpc, slot0.stepUid .. "_" .. slot1))
+		local var_4_8 = GameSceneMgr.instance:getCurScene().entityMgr
+		local var_4_9 = arg_4_0.stepUid .. "_" .. arg_4_1
+
+		table.insert(var_4_0, var_4_8:getUnit(SceneTag.UnitNpc, var_4_9))
 	end
 
-	return slot2
+	return var_4_0
 end
 
-function slot0._setupEntityMove(slot0, slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8, slot9)
-	if slot8 > 0 then
-		slot0.parabolaMover:simpleMove(slot1, slot2, slot3, slot4, slot5, slot6, slot7, slot8)
+function var_0_0._setupEntityMove(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4, arg_5_5, arg_5_6, arg_5_7, arg_5_8, arg_5_9)
+	if arg_5_8 > 0 then
+		arg_5_0.parabolaMover:simpleMove(arg_5_1, arg_5_2, arg_5_3, arg_5_4, arg_5_5, arg_5_6, arg_5_7, arg_5_8)
 	else
-		if slot9 and slot0.mover.setEaseType then
-			slot0.mover:setEaseType(EaseType.Str2Type(slot9))
+		if arg_5_9 and arg_5_0.mover.setEaseType then
+			arg_5_0.mover:setEaseType(EaseType.Str2Type(arg_5_9))
 		end
 
-		slot0.mover:simpleMove(slot1, slot2, slot3, slot4, slot5, slot6, slot7)
+		arg_5_0.mover:simpleMove(arg_5_1, arg_5_2, arg_5_3, arg_5_4, arg_5_5, arg_5_6, arg_5_7)
 	end
 end
 
-function slot0._setCombinativeEntitysPos(slot0)
-	if slot0._combinative_entitys then
-		slot1 = nil
+function var_0_0._setCombinativeEntitysPos(arg_6_0)
+	if arg_6_0._combinative_entitys then
+		local var_6_0
 
-		for slot5, slot6 in ipairs(slot0._combinative_entitys) do
-			if FightHelper.getEntity(slot6.id) then
-				if not gohelper.isNil(slot7.go) and not gohelper.isNil(slot0._follow_entity.go) then
-					slot7.go.transform.position = slot0._follow_entity.go.transform.position + slot0._combinative_pos_offsets[slot5] * slot7:getScale()
+		for iter_6_0, iter_6_1 in ipairs(arg_6_0._combinative_entitys) do
+			local var_6_1 = FightHelper.getEntity(iter_6_1.id)
+
+			if var_6_1 then
+				local var_6_2 = var_6_1:getScale()
+
+				if not gohelper.isNil(var_6_1.go) and not gohelper.isNil(arg_6_0._follow_entity.go) then
+					var_6_1.go.transform.position = arg_6_0._follow_entity.go.transform.position + arg_6_0._combinative_pos_offsets[iter_6_0] * var_6_2
 				end
 			end
 		end
 	end
 end
 
-function slot0.handleSkillEventEnd(slot0)
-	TaskDispatcher.cancelTask(slot0._setCombinativeEntitysPos, slot0)
+function var_0_0.handleSkillEventEnd(arg_7_0)
+	TaskDispatcher.cancelTask(arg_7_0._setCombinativeEntitysPos, arg_7_0)
 end
 
-function slot0.reset(slot0)
-	slot0._combinative_entitys = nil
+function var_0_0.reset(arg_8_0)
+	arg_8_0._combinative_entitys = nil
 end
 
-return slot0
+return var_0_0

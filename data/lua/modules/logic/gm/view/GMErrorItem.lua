@@ -1,37 +1,37 @@
-module("modules.logic.gm.view.GMErrorItem", package.seeall)
+﻿module("modules.logic.gm.view.GMErrorItem", package.seeall)
 
-slot0 = class("GMErrorItem", ListScrollCell)
+local var_0_0 = class("GMErrorItem", ListScrollCell)
 
-function slot0.init(slot0, slot1)
-	slot0._go = slot1
-	slot0._text = gohelper.findChildText(slot1, "text")
-	slot0._click = gohelper.getClickWithAudio(slot1)
-	slot0._selectGO = gohelper.findChild(slot1, "select")
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0._go = arg_1_1
+	arg_1_0._text = gohelper.findChildText(arg_1_1, "text")
+	arg_1_0._click = gohelper.getClickWithAudio(arg_1_1)
+	arg_1_0._selectGO = gohelper.findChild(arg_1_1, "select")
 end
 
-function slot0.addEventListeners(slot0)
-	slot0._click:AddClickListener(slot0._onClickThis, slot0)
+function var_0_0.addEventListeners(arg_2_0)
+	arg_2_0._click:AddClickListener(arg_2_0._onClickThis, arg_2_0)
 end
 
-function slot0.removeEventListeners(slot0)
-	slot0._click:RemoveClickListener()
+function var_0_0.removeEventListeners(arg_3_0)
+	arg_3_0._click:RemoveClickListener()
 end
 
-function slot0.onUpdateMO(slot0, slot1)
-	slot0._mo = slot1
-	slot0._text.text = string.format("%s %s", os.date("%H:%M:%S", slot1.time), slot1.msg)
+function var_0_0.onUpdateMO(arg_4_0, arg_4_1)
+	arg_4_0._mo = arg_4_1
+	arg_4_0._text.text = string.format("%s %s", os.date("%H:%M:%S", arg_4_1.time), arg_4_1.msg)
 end
 
-function slot0.onSelect(slot0, slot1)
-	gohelper.setActive(slot0._selectGO, slot1)
+function var_0_0.onSelect(arg_5_0, arg_5_1)
+	gohelper.setActive(arg_5_0._selectGO, arg_5_1)
 
-	if slot1 then
-		GMController.instance:dispatchEvent(GMEvent.GMLogView_Select, slot0._mo)
+	if arg_5_1 then
+		GMController.instance:dispatchEvent(GMEvent.GMLogView_Select, arg_5_0._mo)
 	end
 end
 
-function slot0._onClickThis(slot0)
-	slot0._view:setSelect(slot0._mo)
+function var_0_0._onClickThis(arg_6_0)
+	arg_6_0._view:setSelect(arg_6_0._mo)
 end
 
-return slot0
+return var_0_0

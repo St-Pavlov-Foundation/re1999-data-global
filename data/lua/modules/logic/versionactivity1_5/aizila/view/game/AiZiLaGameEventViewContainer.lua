@@ -1,18 +1,19 @@
-module("modules.logic.versionactivity1_5.aizila.view.game.AiZiLaGameEventViewContainer", package.seeall)
+﻿module("modules.logic.versionactivity1_5.aizila.view.game.AiZiLaGameEventViewContainer", package.seeall)
 
-slot0 = class("AiZiLaGameEventViewContainer", BaseViewContainer)
+local var_0_0 = class("AiZiLaGameEventViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
-	slot0._gameEventview = AiZiLaGameEventView.New()
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, slot0._gameEventview)
+	arg_1_0._gameEventview = AiZiLaGameEventView.New()
 
-	return slot1
+	table.insert(var_1_0, arg_1_0._gameEventview)
+
+	return var_1_0
 end
 
-function slot0.playViewAnimator(slot0, slot1)
-	slot0._gameEventview:playViewAnimator(slot1)
+function var_0_0.playViewAnimator(arg_2_0, arg_2_1)
+	arg_2_0._gameEventview:playViewAnimator(arg_2_1)
 end
 
-return slot0
+return var_0_0

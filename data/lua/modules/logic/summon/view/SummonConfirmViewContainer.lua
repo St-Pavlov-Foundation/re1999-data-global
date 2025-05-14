@@ -1,40 +1,43 @@
-module("modules.logic.summon.view.SummonConfirmViewContainer", package.seeall)
+﻿module("modules.logic.summon.view.SummonConfirmViewContainer", package.seeall)
 
-slot0 = class("SummonConfirmViewContainer", BaseViewContainer)
+local var_0_0 = class("SummonConfirmViewContainer", BaseViewContainer)
 
-function slot0.buildViews(slot0)
-	slot1 = {}
+function var_0_0.buildViews(arg_1_0)
+	local var_1_0 = {}
 
-	table.insert(slot1, TabViewGroup.New(1, "#go_topright"))
-	table.insert(slot1, SummonConfirmView.New())
+	table.insert(var_1_0, TabViewGroup.New(1, "#go_topright"))
+	table.insert(var_1_0, SummonConfirmView.New())
 
-	return slot1
+	return var_1_0
 end
 
-function slot0.buildTabViews(slot0, slot1)
-	if slot1 == 1 then
-		if SummonMainModel.instance:getCurPool() then
-			slot3 = {}
+function var_0_0.buildTabViews(arg_2_0, arg_2_1)
+	if arg_2_1 == 1 then
+		local var_2_0 = SummonMainModel.instance:getCurPool()
 
-			SummonMainModel.addCurrencyByCostStr(slot3, slot2.cost1, {})
-			table.insert(slot3, CurrencyEnum.CurrencyType.FreeDiamondCoupon)
+		if var_2_0 then
+			local var_2_1 = {}
+			local var_2_2 = {}
 
-			slot0._currencyView = CurrencyView.New(slot3, nil, , , true)
+			SummonMainModel.addCurrencyByCostStr(var_2_1, var_2_0.cost1, var_2_2)
+			table.insert(var_2_1, CurrencyEnum.CurrencyType.FreeDiamondCoupon)
+
+			arg_2_0._currencyView = CurrencyView.New(var_2_1, nil, nil, nil, true)
 		else
-			slot0._currencyView = CurrencyView.New({
+			arg_2_0._currencyView = CurrencyView.New({
 				{
 					id = 140001,
 					isIcon = true,
 					type = MaterialEnum.MaterialType.Item
 				},
 				CurrencyEnum.CurrencyType.FreeDiamondCoupon
-			}, nil, , , true)
+			}, nil, nil, nil, true)
 		end
 
 		return {
-			slot0._currencyView
+			arg_2_0._currencyView
 		}
 	end
 end
 
-return slot0
+return var_0_0

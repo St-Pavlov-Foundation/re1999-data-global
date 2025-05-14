@@ -1,231 +1,235 @@
-module("modules.logic.equip.model.EquipInfoBaseListModel", package.seeall)
+﻿module("modules.logic.equip.model.EquipInfoBaseListModel", package.seeall)
 
-slot0 = class("EquipInfoBaseListModel", ListScrollModel)
-slot0.SortBy = {
+local var_0_0 = class("EquipInfoBaseListModel", ListScrollModel)
+
+var_0_0.SortBy = {
 	Rare = 2,
 	Level = 1
 }
-slot0.levelAscend = false
-slot0.rareAscend = false
+var_0_0.levelAscend = false
+var_0_0.rareAscend = false
 
-function slot0.onInit(slot0)
-	slot0.equipMoList = {}
-	slot0.levelAscend = false
-	slot0.rareAscend = false
-	slot0.isChangeSort = false
-	slot0.sortBy = uv0.SortBy.Level
+function var_0_0.onInit(arg_1_0)
+	arg_1_0.equipMoList = {}
+	arg_1_0.levelAscend = false
+	arg_1_0.rareAscend = false
+	arg_1_0.isChangeSort = false
+	arg_1_0.sortBy = var_0_0.SortBy.Level
 end
 
-function slot0.onOpen(slot0, slot1)
-	slot0.heroMo = slot1.heroMo
+function var_0_0.onOpen(arg_2_0, arg_2_1)
+	arg_2_0.heroMo = arg_2_1.heroMo
 
-	slot0:initEquipList()
+	arg_2_0:initEquipList()
 end
 
-function slot0.initEquipList(slot0, slot1)
-	slot0.equipMoList = {}
-	slot0.recommendEquip = slot0.heroMo and slot0.heroMo:getRecommendEquip() or {}
+function var_0_0.initEquipList(arg_3_0, arg_3_1)
+	arg_3_0.equipMoList = {}
+	arg_3_0.recommendEquip = arg_3_0.heroMo and arg_3_0.heroMo:getRecommendEquip() or {}
 
-	for slot7, slot8 in ipairs(EquipModel.instance:getEquips()) do
-		if EquipHelper.isNormalEquip(slot8.config) then
-			if slot1:isFiltering() then
-				if slot1:checkIsIncludeTag(slot8.config) then
-					slot8.recommondIndex = LuaUtil.tableNotEmpty(slot0.recommendEquip) and tabletool.indexOf(slot0.recommendEquip, slot8.equipId) or -1
+	local var_3_0 = LuaUtil.tableNotEmpty(arg_3_0.recommendEquip)
+	local var_3_1 = arg_3_1:isFiltering()
 
-					table.insert(slot0.equipMoList, slot8)
+	for iter_3_0, iter_3_1 in ipairs(EquipModel.instance:getEquips()) do
+		if EquipHelper.isNormalEquip(iter_3_1.config) then
+			if var_3_1 then
+				if arg_3_1:checkIsIncludeTag(iter_3_1.config) then
+					iter_3_1.recommondIndex = var_3_0 and tabletool.indexOf(arg_3_0.recommendEquip, iter_3_1.equipId) or -1
+
+					table.insert(arg_3_0.equipMoList, iter_3_1)
 				end
 			else
-				slot8.recommondIndex = slot2 and tabletool.indexOf(slot0.recommendEquip, slot8.equipId) or -1
+				iter_3_1.recommondIndex = var_3_0 and tabletool.indexOf(arg_3_0.recommendEquip, iter_3_1.equipId) or -1
 
-				table.insert(slot0.equipMoList, slot8)
+				table.insert(arg_3_0.equipMoList, iter_3_1)
 			end
 		end
 	end
 
-	slot0:resortEquip()
+	arg_3_0:resortEquip()
 end
 
-function slot0.refreshEquipList(slot0)
-	slot0:setList(slot0.equipMoList)
+function var_0_0.refreshEquipList(arg_4_0)
+	arg_4_0:setList(arg_4_0.equipMoList)
 end
 
-function slot0.isEmpty(slot0)
-	if slot0.equipMoList then
-		return #slot0.equipMoList == 0
+function var_0_0.isEmpty(arg_5_0)
+	if arg_5_0.equipMoList then
+		return #arg_5_0.equipMoList == 0
 	else
 		return true
 	end
 end
 
-function slot0.resortEquip(slot0)
-	uv0.levelAscend = slot0.levelAscend
-	uv0.rareAscend = slot0.rareAscend
-	uv0.isChangeSort = slot0.isChangeSort
+function var_0_0.resortEquip(arg_6_0)
+	var_0_0.levelAscend = arg_6_0.levelAscend
+	var_0_0.rareAscend = arg_6_0.rareAscend
+	var_0_0.isChangeSort = arg_6_0.isChangeSort
 
-	if slot0.sortBy == uv0.SortBy.Level then
-		table.sort(slot0.equipMoList, slot0._sortByLevel)
-	elseif slot0.sortBy == uv0.SortBy.Rare then
-		table.sort(slot0.equipMoList, slot0._sortByRare)
+	if arg_6_0.sortBy == var_0_0.SortBy.Level then
+		table.sort(arg_6_0.equipMoList, arg_6_0._sortByLevel)
+	elseif arg_6_0.sortBy == var_0_0.SortBy.Rare then
+		table.sort(arg_6_0.equipMoList, arg_6_0._sortByRare)
 	else
-		logError("not found sotBy : " .. tostring(slot0.sortBy))
-		table.sort(slot0.equipMoList, slot0._sortByLevel)
+		logError("not found sotBy : " .. tostring(arg_6_0.sortBy))
+		table.sort(arg_6_0.equipMoList, arg_6_0._sortByLevel)
 	end
 end
 
-function slot0._changeSortByLevel(slot0)
-	if slot0.sortBy == uv0.SortBy.Level then
-		slot0.levelAscend = not slot0.levelAscend
+function var_0_0._changeSortByLevel(arg_7_0)
+	if arg_7_0.sortBy == var_0_0.SortBy.Level then
+		arg_7_0.levelAscend = not arg_7_0.levelAscend
 	else
-		slot0.sortBy = uv0.SortBy.Level
-		slot0.levelAscend = false
+		arg_7_0.sortBy = var_0_0.SortBy.Level
+		arg_7_0.levelAscend = false
 	end
 
-	slot0.isChangeSort = true
+	arg_7_0.isChangeSort = true
 end
 
-function slot0._changeSortByRare(slot0)
-	if slot0.sortBy == uv0.SortBy.Rare then
-		slot0.rareAscend = not slot0.rareAscend
+function var_0_0._changeSortByRare(arg_8_0)
+	if arg_8_0.sortBy == var_0_0.SortBy.Rare then
+		arg_8_0.rareAscend = not arg_8_0.rareAscend
 	else
-		slot0.sortBy = uv0.SortBy.Rare
-		slot0.rareAscend = false
+		arg_8_0.sortBy = var_0_0.SortBy.Rare
+		arg_8_0.rareAscend = false
 	end
 
-	slot0.isChangeSort = true
+	arg_8_0.isChangeSort = true
 end
 
-function slot0.changeSortByLevel(slot0)
-	slot0:_changeSortByLevel()
-	slot0:resortEquip()
-	slot0:refreshEquipList()
+function var_0_0.changeSortByLevel(arg_9_0)
+	arg_9_0:_changeSortByLevel()
+	arg_9_0:resortEquip()
+	arg_9_0:refreshEquipList()
 end
 
-function slot0.changeSortByRare(slot0)
-	slot0:_changeSortByRare()
-	slot0:resortEquip()
-	slot0:refreshEquipList()
+function var_0_0.changeSortByRare(arg_10_0)
+	arg_10_0:_changeSortByRare()
+	arg_10_0:resortEquip()
+	arg_10_0:refreshEquipList()
 end
 
-function slot0.isSortByLevel(slot0)
-	return slot0.sortBy == uv0.SortBy.Level
+function var_0_0.isSortByLevel(arg_11_0)
+	return arg_11_0.sortBy == var_0_0.SortBy.Level
 end
 
-function slot0.isSortByRare(slot0)
-	return slot0.sortBy == uv0.SortBy.Rare
+function var_0_0.isSortByRare(arg_12_0)
+	return arg_12_0.sortBy == var_0_0.SortBy.Rare
 end
 
-function slot0.getSortState(slot0)
-	return slot0.levelAscend and 1 or -1, slot0.rareAscend and 1 or -1
+function var_0_0.getSortState(arg_13_0)
+	return arg_13_0.levelAscend and 1 or -1, arg_13_0.rareAscend and 1 or -1
 end
 
-function slot0._sortByLevel(slot0, slot1)
-	slot2, slot3 = EquipHelper.typeSort(slot0.config, slot1.config)
+function var_0_0._sortByLevel(arg_14_0, arg_14_1)
+	local var_14_0, var_14_1 = EquipHelper.typeSort(arg_14_0.config, arg_14_1.config)
 
-	if slot3 then
-		return slot2
+	if var_14_1 then
+		return var_14_0
 	end
 
-	if slot0.equipType == EquipEnum.ClientEquipType.TrialEquip ~= (slot1.equipType == EquipEnum.ClientEquipType.TrialEquip) then
-		return slot0.equipType == EquipEnum.ClientEquipType.TrialEquip
+	if arg_14_0.equipType == EquipEnum.ClientEquipType.TrialEquip ~= (arg_14_1.equipType == EquipEnum.ClientEquipType.TrialEquip) then
+		return arg_14_0.equipType == EquipEnum.ClientEquipType.TrialEquip
 	end
 
-	if slot0.recommondIndex ~= slot1.recommondIndex then
-		if slot0.recommondIndex < 0 or slot1.recommondIndex < 0 then
-			return slot0.recommondIndex > 0
+	if arg_14_0.recommondIndex ~= arg_14_1.recommondIndex then
+		if arg_14_0.recommondIndex < 0 or arg_14_1.recommondIndex < 0 then
+			return arg_14_0.recommondIndex > 0
 		end
 
-		if not uv0.isChangeSort then
-			return slot0.recommondIndex < slot1.recommondIndex
+		if not var_0_0.isChangeSort then
+			return arg_14_0.recommondIndex < arg_14_1.recommondIndex
 		end
 	end
 
-	if slot0.level ~= slot1.level then
-		if uv0.levelAscend then
-			return slot0.level < slot1.level
+	if arg_14_0.level ~= arg_14_1.level then
+		if var_0_0.levelAscend then
+			return arg_14_0.level < arg_14_1.level
 		else
-			return slot1.level < slot0.level
+			return arg_14_0.level > arg_14_1.level
 		end
 	end
 
-	if slot0.config.rare ~= slot1.config.rare then
-		if uv0.rareAscend then
-			return slot0.config.rare < slot1.config.rare
+	if arg_14_0.config.rare ~= arg_14_1.config.rare then
+		if var_0_0.rareAscend then
+			return arg_14_0.config.rare < arg_14_1.config.rare
 		else
-			return slot1.config.rare < slot0.config.rare
+			return arg_14_0.config.rare > arg_14_1.config.rare
 		end
 	end
 
-	if slot0.equipId ~= slot1.equipId then
-		return slot1.equipId < slot0.equipId
+	if arg_14_0.equipId ~= arg_14_1.equipId then
+		return arg_14_0.equipId > arg_14_1.equipId
 	end
 
-	return slot0.id < slot1.id
+	return arg_14_0.id < arg_14_1.id
 end
 
-function slot0._sortByRare(slot0, slot1)
-	slot2, slot3 = EquipHelper.typeSort(slot0.config, slot1.config)
+function var_0_0._sortByRare(arg_15_0, arg_15_1)
+	local var_15_0, var_15_1 = EquipHelper.typeSort(arg_15_0.config, arg_15_1.config)
 
-	if slot3 then
-		return slot2
+	if var_15_1 then
+		return var_15_0
 	end
 
-	if slot0.equipType == EquipEnum.ClientEquipType.TrialEquip ~= (slot1.equipType == EquipEnum.ClientEquipType.TrialEquip) then
-		return slot0.equipType == EquipEnum.ClientEquipType.TrialEquip
+	if arg_15_0.equipType == EquipEnum.ClientEquipType.TrialEquip ~= (arg_15_1.equipType == EquipEnum.ClientEquipType.TrialEquip) then
+		return arg_15_0.equipType == EquipEnum.ClientEquipType.TrialEquip
 	end
 
-	if slot0.recommondIndex ~= slot1.recommondIndex and (slot0.recommondIndex < 0 or slot1.recommondIndex < 0) then
-		return slot0.recommondIndex > 0
+	if arg_15_0.recommondIndex ~= arg_15_1.recommondIndex and (arg_15_0.recommondIndex < 0 or arg_15_1.recommondIndex < 0) then
+		return arg_15_0.recommondIndex > 0
 	end
 
-	if slot0.config.rare ~= slot1.config.rare then
-		if uv0.rareAscend then
-			return slot0.config.rare < slot1.config.rare
+	if arg_15_0.config.rare ~= arg_15_1.config.rare then
+		if var_0_0.rareAscend then
+			return arg_15_0.config.rare < arg_15_1.config.rare
 		else
-			return slot1.config.rare < slot0.config.rare
+			return arg_15_0.config.rare > arg_15_1.config.rare
 		end
 	end
 
-	if slot0.level ~= slot1.level then
-		if uv0.levelAscend then
-			return slot0.level < slot1.level
+	if arg_15_0.level ~= arg_15_1.level then
+		if var_0_0.levelAscend then
+			return arg_15_0.level < arg_15_1.level
 		else
-			return slot1.level < slot0.level
+			return arg_15_0.level > arg_15_1.level
 		end
 	end
 
-	if slot0.equipId ~= slot1.equipId then
-		return slot1.equipId < slot0.equipId
+	if arg_15_0.equipId ~= arg_15_1.equipId then
+		return arg_15_0.equipId > arg_15_1.equipId
 	end
 
-	return slot0.id < slot1.id
+	return arg_15_0.id < arg_15_1.id
 end
 
-function slot0.setCurrentSelectEquipMo(slot0, slot1)
-	slot0.currentSelectEquipMo = slot1
+function var_0_0.setCurrentSelectEquipMo(arg_16_0, arg_16_1)
+	arg_16_0.currentSelectEquipMo = arg_16_1
 end
 
-function slot0.getCurrentSelectEquipMo(slot0)
-	return slot0.currentSelectEquipMo
+function var_0_0.getCurrentSelectEquipMo(arg_17_0)
+	return arg_17_0.currentSelectEquipMo
 end
 
-function slot0.isSelectedEquip(slot0, slot1)
-	return slot0.currentSelectEquipMo and slot0.currentSelectEquipMo.uid == slot1
+function var_0_0.isSelectedEquip(arg_18_0, arg_18_1)
+	return arg_18_0.currentSelectEquipMo and arg_18_0.currentSelectEquipMo.uid == arg_18_1
 end
 
-function slot0.clear(slot0)
-	slot0:onInit()
+function var_0_0.clear(arg_19_0)
+	arg_19_0:onInit()
 
-	slot0.selectedEquipMo = nil
+	arg_19_0.selectedEquipMo = nil
 end
 
-function slot0.clearRecommend(slot0)
+function var_0_0.clearRecommend(arg_20_0)
 	if not EquipModel.instance:getEquips() then
 		return
 	end
 
-	for slot4, slot5 in ipairs(EquipModel.instance:getEquips()) do
-		slot5:clearRecommend()
+	for iter_20_0, iter_20_1 in ipairs(EquipModel.instance:getEquips()) do
+		iter_20_1:clearRecommend()
 	end
 end
 
-return slot0
+return var_0_0

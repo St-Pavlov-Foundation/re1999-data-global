@@ -1,85 +1,88 @@
-module("modules.logic.versionactivity2_5.goldenmilletpresent.view.V2a5_GoldenMilletPresentReceiveView", package.seeall)
+﻿module("modules.logic.versionactivity2_5.goldenmilletpresent.view.V2a5_GoldenMilletPresentReceiveView", package.seeall)
 
-slot0 = class("V2a5_GoldenMilletPresentReceiveView", BaseViewExtended)
+local var_0_0 = class("V2a5_GoldenMilletPresentReceiveView", BaseViewExtended)
 
-function slot0.onInitView(slot0)
-	gohelper.setActive(slot0.viewGO, true)
+function var_0_0.onInitView(arg_1_0)
+	gohelper.setActive(arg_1_0.viewGO, true)
 
-	slot0._txtReceiveRemainTime = gohelper.findChildText(slot0.viewGO, "image_TimeBG/#txt_remainTime")
-	slot0._btnClaim = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_Claim")
-	slot0._goNormal = gohelper.findChild(slot0.viewGO, "#btn_Claim/#go_Normal")
-	slot0._goHasReceived = gohelper.findChild(slot0.viewGO, "#btn_Claim/#go_Received")
-	slot0._btnCloseReceive = gohelper.findChildButtonWithAudio(slot0.viewGO, "#btn_Close")
-	slot0._btnBgClose = gohelper.findChildButtonWithAudio(slot0.viewGO, "close")
+	arg_1_0._txtReceiveRemainTime = gohelper.findChildText(arg_1_0.viewGO, "image_TimeBG/#txt_remainTime")
+	arg_1_0._btnClaim = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_Claim")
+	arg_1_0._goNormal = gohelper.findChild(arg_1_0.viewGO, "#btn_Claim/#go_Normal")
+	arg_1_0._goHasReceived = gohelper.findChild(arg_1_0.viewGO, "#btn_Claim/#go_Received")
+	arg_1_0._btnCloseReceive = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_Close")
+	arg_1_0._btnBgClose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "close")
 end
 
-function slot0.addEvents(slot0)
-	slot0._btnClaim:AddClickListener(slot0._btnClaimOnClick, slot0)
+function var_0_0.addEvents(arg_2_0)
+	arg_2_0._btnClaim:AddClickListener(arg_2_0._btnClaimOnClick, arg_2_0)
 
-	if slot0._btnCloseReceive then
-		slot0._btnCloseReceive:AddClickListener(slot0._btnCloseReceiveOnClick, slot0)
+	if arg_2_0._btnCloseReceive then
+		arg_2_0._btnCloseReceive:AddClickListener(arg_2_0._btnCloseReceiveOnClick, arg_2_0)
 	end
 
-	if slot0._btnBgClose then
-		slot0._btnBgClose:AddClickListener(slot0._btnCloseReceiveOnClick, slot0)
+	if arg_2_0._btnBgClose then
+		arg_2_0._btnBgClose:AddClickListener(arg_2_0._btnCloseReceiveOnClick, arg_2_0)
 	end
 
-	slot0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, slot0.afterReceive, slot0)
+	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_2_0.afterReceive, arg_2_0)
 end
 
-function slot0.removeEvents(slot0)
-	slot0._btnClaim:RemoveClickListener()
+function var_0_0.removeEvents(arg_3_0)
+	arg_3_0._btnClaim:RemoveClickListener()
 
-	if slot0._btnCloseReceive then
-		slot0._btnCloseReceive:RemoveClickListener()
+	if arg_3_0._btnCloseReceive then
+		arg_3_0._btnCloseReceive:RemoveClickListener()
 	end
 
-	if slot0._btnBgClose then
-		slot0._btnBgClose:RemoveClickListener()
+	if arg_3_0._btnBgClose then
+		arg_3_0._btnBgClose:RemoveClickListener()
 	end
 
-	slot0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, slot0.afterReceive, slot0)
+	arg_3_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_3_0.afterReceive, arg_3_0)
 end
 
-function slot0._btnClaimOnClick(slot0)
-	GoldenMilletPresentController.instance:receiveGoldenMilletPresent(slot0.afterReceive, slot0)
+function var_0_0._btnClaimOnClick(arg_4_0)
+	GoldenMilletPresentController.instance:receiveGoldenMilletPresent(arg_4_0.afterReceive, arg_4_0)
 	AudioMgr.instance:trigger(AudioEnum.GoldenMillet.stop_ui_tangren_songpifu_loop)
 end
 
-function slot0._btnCloseReceiveOnClick(slot0)
-	slot0.viewContainer:openGoldMilletPresentDisplayView()
+function var_0_0._btnCloseReceiveOnClick(arg_5_0)
+	arg_5_0.viewContainer:openGoldMilletPresentDisplayView()
 	AudioMgr.instance:trigger(AudioEnum.GoldenMillet.stop_ui_tangren_songpifu_loop)
 end
 
-function slot0.onOpen(slot0)
-	slot0:refreshRemainTime()
-	TaskDispatcher.cancelTask(slot0.refreshRemainTime, slot0)
-	TaskDispatcher.runRepeat(slot0.refreshRemainTime, slot0, TimeUtil.OneMinuteSecond)
-	slot0:refreshReceiveStatus()
+function var_0_0.onOpen(arg_6_0)
+	arg_6_0:refreshRemainTime()
+	TaskDispatcher.cancelTask(arg_6_0.refreshRemainTime, arg_6_0)
+	TaskDispatcher.runRepeat(arg_6_0.refreshRemainTime, arg_6_0, TimeUtil.OneMinuteSecond)
+	arg_6_0:refreshReceiveStatus()
 	AudioMgr.instance:trigger(AudioEnum.UI.GoldenMilletReceiveViewOpen)
 	AudioMgr.instance:trigger(AudioEnum.GoldenMillet.play_ui_tangren_songpifu_loop)
 end
 
-function slot0.refreshReceiveStatus(slot0)
-	slot1 = GoldenMilletPresentModel.instance:haveReceivedSkin()
+function var_0_0.refreshReceiveStatus(arg_7_0)
+	local var_7_0 = GoldenMilletPresentModel.instance:haveReceivedSkin()
 
-	gohelper.setActive(slot0._goNormal, not slot1)
-	gohelper.setActive(slot0._goHasReceived, slot1)
+	gohelper.setActive(arg_7_0._goNormal, not var_7_0)
+	gohelper.setActive(arg_7_0._goHasReceived, var_7_0)
 end
 
-function slot0.afterReceive(slot0, slot1)
-	if slot1 == ViewName.CharacterSkinGainView then
-		slot0.viewContainer:openGoldMilletPresentDisplayView()
+function var_0_0.afterReceive(arg_8_0, arg_8_1)
+	if arg_8_1 == ViewName.CharacterSkinGainView then
+		arg_8_0.viewContainer:openGoldMilletPresentDisplayView()
 	end
 end
 
-function slot0.refreshRemainTime(slot0)
-	slot0._txtReceiveRemainTime.text = string.format(luaLang("remain"), ActivityModel.instance:getActMO(GoldenMilletPresentModel.instance:getGoldenMilletPresentActId()):getRemainTimeStr3(false, true))
+function var_0_0.refreshRemainTime(arg_9_0)
+	local var_9_0 = GoldenMilletPresentModel.instance:getGoldenMilletPresentActId()
+	local var_9_1 = ActivityModel.instance:getActMO(var_9_0):getRemainTimeStr3(false, true)
+
+	arg_9_0._txtReceiveRemainTime.text = string.format(luaLang("remain"), var_9_1)
 end
 
-function slot0.onClose(slot0)
-	TaskDispatcher.cancelTask(slot0.refreshRemainTime, slot0)
+function var_0_0.onClose(arg_10_0)
+	TaskDispatcher.cancelTask(arg_10_0.refreshRemainTime, arg_10_0)
 	AudioMgr.instance:trigger(AudioEnum.GoldenMillet.stop_ui_tangren_songpifu_loop)
 end
 
-return slot0
+return var_0_0

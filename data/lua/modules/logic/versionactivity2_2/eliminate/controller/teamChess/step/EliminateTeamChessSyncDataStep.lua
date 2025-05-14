@@ -1,22 +1,23 @@
-module("modules.logic.versionactivity2_2.eliminate.controller.teamChess.step.EliminateTeamChessSyncDataStep", package.seeall)
+﻿module("modules.logic.versionactivity2_2.eliminate.controller.teamChess.step.EliminateTeamChessSyncDataStep", package.seeall)
 
-slot0 = class("EliminateTeamChessSyncDataStep", EliminateTeamChessStepBase)
+local var_0_0 = class("EliminateTeamChessSyncDataStep", EliminateTeamChessStepBase)
 
-function slot0.onStart(slot0)
-	slot1 = false
-	slot2 = EliminateTeamChessModel.instance:getCurTeamChessWar()
+function var_0_0.onStart(arg_1_0)
+	local var_1_0 = false
+	local var_1_1 = EliminateTeamChessModel.instance:getCurTeamChessWar()
+	local var_1_2 = EliminateTeamChessModel.instance:getServerTeamChessWar()
 
-	if EliminateTeamChessModel.instance:getServerTeamChessWar() and slot2 then
-		slot1 = slot2:updateCondition(slot3.winCondition, slot3.extraWinCondition)
+	if var_1_2 and var_1_1 then
+		var_1_0 = var_1_1:updateCondition(var_1_2.winCondition, var_1_2.extraWinCondition)
 
-		slot2:updateForecastBehavior(slot3.enemyCharacter.forecastBehavior)
+		var_1_1:updateForecastBehavior(var_1_2.enemyCharacter.forecastBehavior)
 	end
 
-	if slot1 then
+	if var_1_0 then
 		EliminateLevelController.instance:dispatchEvent(EliminateChessEvent.LevelConditionChange)
 	end
 
-	slot0:onDone(true)
+	arg_1_0:onDone(true)
 end
 
-return slot0
+return var_0_0

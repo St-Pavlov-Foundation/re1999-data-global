@@ -1,58 +1,65 @@
-module("modules.logic.summon.view.variant.SummonCharacterProbUpVer156", package.seeall)
+﻿module("modules.logic.summon.view.variant.SummonCharacterProbUpVer156", package.seeall)
 
-slot0 = class("SummonCharacterProbUpVer156", SummonMainCharacterProbUp)
-slot0.preloadList = {
+local var_0_0 = class("SummonCharacterProbUpVer156", SummonMainCharacterProbUp)
+
+var_0_0.preloadList = {
 	"singlebg/summon/heroversion_1_3/rabbit/full/v1a3_rabbit_bg.png"
 }
 
-function slot0._editableInitView(slot0)
-	slot0._simagebg = gohelper.findChildSingleImage(slot0.viewGO, "#go_ui/current/#simage_bg")
-	slot0._simagedog = gohelper.findChildSingleImage(slot0.viewGO, "#go_ui/current/#simage_dog")
-	slot0._simageround = gohelper.findChildSingleImage(slot0.viewGO, "#go_ui/current/5role/#simage_round")
-	slot0._simagerole1 = gohelper.findChildSingleImage(slot0.viewGO, "#go_ui/current/5role/#simage_role1")
-	slot0._simagerole2 = gohelper.findChildSingleImage(slot0.viewGO, "#go_ui/current/5role/#simage_role2")
-	slot0._simagecircle = gohelper.findChildSingleImage(slot0.viewGO, "#go_ui/current/5role/#simage_circle")
-	slot0._g = gohelper.findChildSingleImage(slot0.viewGO, "#go_ui/current/tip/bg")
-	slot0._rrow = gohelper.findChildSingleImage(slot0.viewGO, "#go_ui/current/tip/arrow/arrow")
-	slot0._charaterItemCount = 1
+function var_0_0._editableInitView(arg_1_0)
+	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_ui/current/#simage_bg")
+	arg_1_0._simagedog = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_ui/current/#simage_dog")
+	arg_1_0._simageround = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_ui/current/5role/#simage_round")
+	arg_1_0._simagerole1 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_ui/current/5role/#simage_role1")
+	arg_1_0._simagerole2 = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_ui/current/5role/#simage_role2")
+	arg_1_0._simagecircle = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_ui/current/5role/#simage_circle")
+	arg_1_0._g = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_ui/current/tip/bg")
+	arg_1_0._rrow = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_ui/current/tip/arrow/arrow")
+	arg_1_0._charaterItemCount = 1
 
-	uv0.super._editableInitView(slot0)
+	var_0_0.super._editableInitView(arg_1_0)
 end
 
-function slot0.refreshSingleImage(slot0)
-	slot0._simageline:LoadImage(ResUrl.getSummonHeroIcon("title_img_deco"))
+function var_0_0.refreshSingleImage(arg_2_0)
+	arg_2_0._simageline:LoadImage(ResUrl.getSummonHeroIcon("title_img_deco"))
 end
 
-function slot0.unloadSingleImage(slot0)
-	slot0._simagebg:UnLoadImage()
-	slot0._simagedog:UnLoadImage()
-	slot0._simageround:UnLoadImage()
-	slot0._simagerole1:UnLoadImage()
-	slot0._simagerole2:UnLoadImage()
-	slot0._simagecircle:UnLoadImage()
-	slot0._g:UnLoadImage()
-	slot0._rrow:UnLoadImage()
-	slot0._simageline:UnLoadImage()
-	slot0._simagecurrency1:UnLoadImage()
-	slot0._simagecurrency10:UnLoadImage()
+function var_0_0.unloadSingleImage(arg_3_0)
+	arg_3_0._simagebg:UnLoadImage()
+	arg_3_0._simagedog:UnLoadImage()
+	arg_3_0._simageround:UnLoadImage()
+	arg_3_0._simagerole1:UnLoadImage()
+	arg_3_0._simagerole2:UnLoadImage()
+	arg_3_0._simagecircle:UnLoadImage()
+	arg_3_0._g:UnLoadImage()
+	arg_3_0._rrow:UnLoadImage()
+	arg_3_0._simageline:UnLoadImage()
+	arg_3_0._simagecurrency1:UnLoadImage()
+	arg_3_0._simagecurrency10:UnLoadImage()
 end
 
-function slot0._refreshOpenTime(slot0)
-	slot0._txtdeadline.text = ""
+function var_0_0._refreshOpenTime(arg_4_0)
+	arg_4_0._txtdeadline.text = ""
 
-	if not SummonMainModel.instance:getCurPool() then
+	local var_4_0 = SummonMainModel.instance:getCurPool()
+
+	if not var_4_0 then
 		return
 	end
 
-	if not SummonMainModel.instance:getPoolServerMO(slot1.id) then
+	local var_4_1 = SummonMainModel.instance:getPoolServerMO(var_4_0.id)
+
+	if not var_4_1 then
 		return
 	end
 
-	slot3, slot4 = slot2:onOffTimestamp()
+	local var_4_2, var_4_3 = var_4_1:onOffTimestamp()
 
-	if slot3 < slot4 and slot4 > 0 then
-		slot0._txtdeadline.text = formatLuaLang("summonmainequipprobup_deadline", SummonModel.formatRemainTime(slot4 - ServerTime.now()))
+	if var_4_2 < var_4_3 and var_4_3 > 0 then
+		local var_4_4 = var_4_3 - ServerTime.now()
+
+		arg_4_0._txtdeadline.text = formatLuaLang("summonmainequipprobup_deadline", SummonModel.formatRemainTime(var_4_4))
 	end
 end
 
-return slot0
+return var_0_0

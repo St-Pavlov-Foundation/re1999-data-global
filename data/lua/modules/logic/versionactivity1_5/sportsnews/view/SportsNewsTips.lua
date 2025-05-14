@@ -1,10 +1,14 @@
-module("modules.logic.versionactivity1_5.sportsnews.view.SportsNewsTips", package.seeall)
+﻿module("modules.logic.versionactivity1_5.sportsnews.view.SportsNewsTips", package.seeall)
 
-slot0 = class("SportsNewsTips", ActivityWarmUpTips)
+local var_0_0 = class("SportsNewsTips", ActivityWarmUpTips)
 
-function slot0.onOpen(slot0)
-	uv0.super.onOpen(slot0)
-	SportsNewsModel.instance:onReadEnd(slot0.viewParam.actId, slot0.viewParam.orderId)
+function var_0_0.onOpen(arg_1_0)
+	var_0_0.super.onOpen(arg_1_0)
+
+	local var_1_0 = arg_1_0.viewParam.orderId
+	local var_1_1 = arg_1_0.viewParam.actId
+
+	SportsNewsModel.instance:onReadEnd(var_1_1, var_1_0)
 end
 
-return slot0
+return var_0_0

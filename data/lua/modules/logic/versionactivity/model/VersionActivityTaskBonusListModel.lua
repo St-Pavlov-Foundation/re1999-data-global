@@ -1,41 +1,45 @@
-module("modules.logic.versionactivity.model.VersionActivityTaskBonusListModel", package.seeall)
+﻿module("modules.logic.versionactivity.model.VersionActivityTaskBonusListModel", package.seeall)
 
-slot0 = class("VersionActivityTaskBonusListModel", ListScrollModel)
+local var_0_0 = class("VersionActivityTaskBonusListModel", ListScrollModel)
 
-function slot0.onInit(slot0)
+function var_0_0.onInit(arg_1_0)
+	return
 end
 
-function slot0.reInit(slot0)
-	slot0.taskActivityMo = nil
+function var_0_0.reInit(arg_2_0)
+	arg_2_0.taskActivityMo = nil
 end
 
-function slot0.initTaskBonusList(slot0)
+function var_0_0.initTaskBonusList(arg_3_0)
+	return
 end
 
-function slot0.refreshList(slot0)
-	slot0:setList(TaskConfig.instance:getTaskActivityBonusConfig(TaskEnum.TaskType.ActivityDungeon))
+function var_0_0.refreshList(arg_4_0)
+	arg_4_0:setList(TaskConfig.instance:getTaskActivityBonusConfig(TaskEnum.TaskType.ActivityDungeon))
 end
 
-function slot0.getTaskActivityMo(slot0)
-	if not slot0.taskActivityMo then
-		slot0.taskActivityMo = TaskModel.instance:getTaskActivityMO(TaskEnum.TaskType.ActivityDungeon)
+function var_0_0.getTaskActivityMo(arg_5_0)
+	if not arg_5_0.taskActivityMo then
+		arg_5_0.taskActivityMo = TaskModel.instance:getTaskActivityMO(TaskEnum.TaskType.ActivityDungeon)
 	end
 
-	return slot0.taskActivityMo
+	return arg_5_0.taskActivityMo
 end
 
-function slot0.recordPrefixActivityPointCount(slot0)
-	slot0.prefixActivityPointCount = slot0:getTaskActivityMo().value
+function var_0_0.recordPrefixActivityPointCount(arg_6_0)
+	arg_6_0.prefixActivityPointCount = arg_6_0:getTaskActivityMo().value
 end
 
-function slot0.checkActivityPointCountHasChange(slot0)
-	return slot0.prefixActivityPointCount ~= slot0:getTaskActivityMo().value
+function var_0_0.checkActivityPointCountHasChange(arg_7_0)
+	return arg_7_0.prefixActivityPointCount ~= arg_7_0:getTaskActivityMo().value
 end
 
-function slot0.checkNeedPlayEffect(slot0, slot1, slot2)
-	return slot0.prefixActivityPointCount < TaskConfig.instance:getTaskBonusValue(TaskEnum.TaskType.ActivityDungeon, slot1, slot2) and slot3 <= slot0:getTaskActivityMo().value
+function var_0_0.checkNeedPlayEffect(arg_8_0, arg_8_1, arg_8_2)
+	local var_8_0 = TaskConfig.instance:getTaskBonusValue(TaskEnum.TaskType.ActivityDungeon, arg_8_1, arg_8_2)
+
+	return var_8_0 > arg_8_0.prefixActivityPointCount and var_8_0 <= arg_8_0:getTaskActivityMo().value
 end
 
-slot0.instance = slot0.New()
+var_0_0.instance = var_0_0.New()
 
-return slot0
+return var_0_0

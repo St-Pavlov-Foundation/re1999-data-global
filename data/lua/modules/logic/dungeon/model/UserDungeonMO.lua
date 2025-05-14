@@ -1,27 +1,30 @@
-module("modules.logic.dungeon.model.UserDungeonMO", package.seeall)
+﻿module("modules.logic.dungeon.model.UserDungeonMO", package.seeall)
 
-slot0 = pureTable("UserDungeonMO")
+local var_0_0 = pureTable("UserDungeonMO")
 
-function slot0.init(slot0, slot1)
-	slot0.chapterId = slot1.chapterId
-	slot0.episodeId = slot1.episodeId
-	slot0.star = slot1.star
-	slot0.challengeCount = slot1.challengeCount
-	slot0.hasRecord = slot1.hasRecord
-	slot0.todayPassNum = slot1.todayPassNum
-	slot0.todayTotalNum = slot1.todayTotalNum
+function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.chapterId = arg_1_1.chapterId
+	arg_1_0.episodeId = arg_1_1.episodeId
+	arg_1_0.star = arg_1_1.star
+	arg_1_0.challengeCount = arg_1_1.challengeCount
+	arg_1_0.hasRecord = arg_1_1.hasRecord
+	arg_1_0.todayPassNum = arg_1_1.todayPassNum
+	arg_1_0.todayTotalNum = arg_1_1.todayTotalNum
 end
 
-function slot0.initFromManual(slot0, slot1, slot2, slot3, slot4)
-	slot0.chapterId = slot1
-	slot0.episodeId = slot2
-	slot0.star = slot3
-	slot0.challengeCount = slot4
-	slot0._manual = true
-	slot0.isNew = true
-	slot0.hasRecord = false
-	slot0.todayPassNum = 0
-	slot0.todayTotalNum = DungeonConfig.instance:getEpisodeCO(slot2).dayNum
+function var_0_0.initFromManual(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4)
+	arg_2_0.chapterId = arg_2_1
+	arg_2_0.episodeId = arg_2_2
+	arg_2_0.star = arg_2_3
+	arg_2_0.challengeCount = arg_2_4
+	arg_2_0._manual = true
+	arg_2_0.isNew = true
+	arg_2_0.hasRecord = false
+
+	local var_2_0 = DungeonConfig.instance:getEpisodeCO(arg_2_2)
+
+	arg_2_0.todayPassNum = 0
+	arg_2_0.todayTotalNum = var_2_0.dayNum
 end
 
-return slot0
+return var_0_0
