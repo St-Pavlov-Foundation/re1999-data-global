@@ -8,12 +8,14 @@ on:
 jobs:
   commit:
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
 
     steps:
       - name: Checkout the repository
         uses: actions/checkout@v4
         with:
-            path: re1999-data
+          path: re1999-data
 
       - name: Checkout the depack repository
         uses: actions/checkout@v4
@@ -26,12 +28,12 @@ jobs:
       - name: Set up python 3.11
         uses: actions/setup-python@v4
         with:
-            python-version: '3.11'
-            
+          python-version: '3.11'
+
       - name: Checkout the ljd-v2 repository
         uses: actions/checkout@v4
         with:
-          repository: aergoio/luajit-decompiler-v2
+          repository: milkory/luajit-decompiler-v2
           path: luajit-decompiler-v2
           submodules: true
 
@@ -39,14 +41,14 @@ jobs:
         run: |
           cd luajit-decompiler-v2
           make
-          sed 's#./tools/luajit-decompiler-v2/luajit-decompiler-v2.exe#../luajit-decompiler-v2/decompiler#g' ../re1999-depack/conf.ini
+          sed -i 's#./tools/luajit-decompiler-v2/luajit-decompiler-v2.exe#../luajit-decompiler-v2/decompile#g' ../re1999-depack/conf.ini
 
       - name: Generate unpacked data
         id: bin
         run: |
           cd re1999-depack
           pip install -r requirements.txt
-          python -u main.py --work-dir ../re1999-data/data update
+          python -u main.py --threads 2 --work-dir ../re1999-data/data update
           echo "version=`python main.py --work-dir ../re1999-data/data resversion`" >> "$GITHUB_OUTPUT"
 
       - name: Commit and push changes to the target repository
