@@ -1,0 +1,23 @@
+[
+  {
+    "skinId": 310401,
+    "addExPointEffect": "v2a3_ddg/ddg_innate_03",
+    "addExPointHang": "mountroot",
+    "posionEffect": "v2a3_ddg/ddg_innate_02",
+    "posionHang": "mountbody"
+  },
+  {
+    "skinId": 310402,
+    "addExPointEffect": "v2a3_ddg/ddg_innate_03",
+    "addExPointHang": "mountroot",
+    "posionEffect": "v2a3_ddg/ddg_innate_02",
+    "posionHang": "mountbody"
+  },
+  {
+    "skinId": 310403,
+    "addExPointEffect": "v2a6_ddg/ddg_innate_03",
+    "addExPointHang": "mountroot",
+    "posionEffect": "v2a6_ddg/ddg_innate_02",
+    "posionHang": "mountbody"
+  }
+]

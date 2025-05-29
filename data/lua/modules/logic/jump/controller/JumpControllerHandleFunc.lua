@@ -651,7 +651,7 @@ function var_0_0.jumpToActivityView(arg_33_0, arg_33_1)
 		table.insert(arg_33_0.waitOpenViewNames, ViewName.ActivityBeginnerView)
 		ActivityModel.instance:setTargetActivityCategoryId(var_33_1)
 		ActivityController.instance:openActivityBeginnerView()
-	elseif var_33_1 == ActivityEnum.Activity.VersionActivity1_3Radio or var_33_1 == ActivityEnum.Activity.Activity1_9WarmUp or var_33_1 == ActivityEnum.Activity.V2a0_WarmUp or var_33_1 == ActivityEnum.Activity.V2a1_WarmUp or var_33_1 == ActivityEnum.Activity.V2a2_WarmUp or var_33_1 == ActivityEnum.Activity.V2a3_WarmUp or var_33_1 == ActivityEnum.Activity.V2a4_WarmUp or var_33_1 == ActivityEnum.Activity.V2a5_WarmUp then
+	elseif var_33_1 == ActivityEnum.Activity.VersionActivity1_3Radio or var_33_1 == ActivityEnum.Activity.Activity1_9WarmUp or var_33_1 == ActivityEnum.Activity.V2a0_WarmUp or var_33_1 == ActivityEnum.Activity.V2a1_WarmUp or var_33_1 == ActivityEnum.Activity.V2a2_WarmUp or var_33_1 == ActivityEnum.Activity.V2a3_WarmUp or var_33_1 == ActivityEnum.Activity.V2a4_WarmUp or var_33_1 == ActivityEnum.Activity.V2a5_WarmUp or var_33_1 == ActivityEnum.Activity.V2a6_WarmUp then
 		if ActivityHelper.getActivityStatus(var_33_1, true) ~= ActivityEnum.ActivityStatus.Normal then
 			return JumpEnum.JumpResult.Fail
 		end
@@ -1523,16 +1523,40 @@ function var_0_0.jumpToInvestigateOpinionTabView(arg_128_0, arg_128_1)
 	return JumpEnum.JumpResult.Success
 end
 
-function var_0_0.jumpToTowerView(arg_129_0, arg_129_1)
-	local var_129_0 = string.splitToNumber(arg_129_1, "#")
-	local var_129_1 = var_129_0[2]
-	local var_129_2 = var_129_0[3]
-	local var_129_3 = {
-		towerType = var_129_1,
-		towerId = var_129_2
+function var_0_0.jumpToDiceHeroLevelView(arg_129_0, arg_129_1)
+	local var_129_0 = string.splitToNumber(arg_129_1, "#")[2]
+
+	if not DiceHeroModel.instance.unlockChapterIds[var_129_0] then
+		GameFacade.showToast(ToastEnum.DiceHeroLockChapter)
+
+		return JumpEnum.JumpResult.Fail
+	end
+
+	local var_129_1 = DiceHeroConfig.instance:getLevelCo(var_129_0, 1)
+
+	if not var_129_1 then
+		return JumpEnum.JumpResult.Fail
+	end
+
+	table.insert(arg_129_0.waitOpenViewNames, ViewName.DiceHeroLevelView)
+	ViewMgr.instance:openView(ViewName.DiceHeroLevelView, {
+		chapterId = var_129_0,
+		isInfinite = var_129_1.mode == 2
+	})
+
+	return JumpEnum.JumpResult.Success
+end
+
+function var_0_0.jumpToTowerView(arg_130_0, arg_130_1)
+	local var_130_0 = string.splitToNumber(arg_130_1, "#")
+	local var_130_1 = var_130_0[2]
+	local var_130_2 = var_130_0[3]
+	local var_130_3 = {
+		towerType = var_130_1,
+		towerId = var_130_2
 	}
 
-	TowerController.instance:jumpView(var_129_3)
+	TowerController.instance:jumpView(var_130_3)
 
 	return JumpEnum.JumpResult.Success
 end
@@ -1583,7 +1607,8 @@ var_0_0.JumpViewToHandleFunc = {
 	[JumpEnum.JumpView.RougeRewardView] = var_0_0.jumpToRougeRewardView,
 	[JumpEnum.JumpView.PermanentMainView] = var_0_0.jumpToPermanentMainView,
 	[JumpEnum.JumpView.InvestigateView] = var_0_0.jumpToInvestigateView,
-	[JumpEnum.JumpView.InvestigateOpinionTabView] = var_0_0.jumpToInvestigateOpinionTabView
+	[JumpEnum.JumpView.InvestigateOpinionTabView] = var_0_0.jumpToInvestigateOpinionTabView,
+	[JumpEnum.JumpView.DiceHero] = var_0_0.jumpToDiceHeroLevelView
 }
 var_0_0.JumpActViewToHandleFunc = {
 	[JumpEnum.ActIdEnum.V2a4_WuErLiXi] = var_0_0.V2a4_WuErLiXi,

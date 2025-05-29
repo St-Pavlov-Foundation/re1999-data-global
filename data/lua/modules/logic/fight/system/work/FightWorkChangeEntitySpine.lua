@@ -18,6 +18,7 @@ end
 function var_0_0._onLoaded(arg_3_0)
 	if arg_3_0._entity then
 		arg_3_0._entity:initHangPointDict()
+		FightRenderOrderMgr.instance:_resetRenderOrder(arg_3_0._entity.id)
 
 		local var_3_0 = arg_3_0._entity.effect:getHangEffect()
 

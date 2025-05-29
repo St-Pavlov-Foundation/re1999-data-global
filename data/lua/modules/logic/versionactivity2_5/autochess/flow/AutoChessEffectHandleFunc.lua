@@ -73,18 +73,20 @@ function var_0_0._handleChessMove(arg_6_0)
 	local var_6_0 = arg_6_0.mgr:getEntity(arg_6_0.effect.targetId)
 
 	if var_6_0 then
+		local var_6_1
+
 		if arg_6_0.context == AutoChessEnum.ContextType.EndBuy or arg_6_0.context == AutoChessEnum.ContextType.Fight then
-			fightData = arg_6_0.chessMo.lastSvrFight
+			var_6_1 = arg_6_0.chessMo.lastSvrFight
 		else
-			fightData = arg_6_0.chessMo.svrFight
+			var_6_1 = arg_6_0.chessMo.svrFight
 		end
 
-		local var_6_1 = arg_6_0.chessMo:getChessPosition(var_6_0.warZone, tonumber(arg_6_0.effect.fromId) + 1, fightData)
-		local var_6_2 = arg_6_0.chessMo:getChessPosition(var_6_0.warZone, tonumber(arg_6_0.effect.effectNum) + 1, fightData)
+		local var_6_2 = arg_6_0.chessMo:getChessPosition(var_6_0.warZone, tonumber(arg_6_0.effect.fromId) + 1, var_6_1)
+		local var_6_3 = arg_6_0.chessMo:getChessPosition(var_6_0.warZone, tonumber(arg_6_0.effect.effectNum) + 1, var_6_1)
 
-		if var_6_1 and var_6_2 then
-			var_6_2.chess = var_6_1.chess
-			var_6_1.chess = AutoChessHelper.buildEmptyChess()
+		if var_6_2 and var_6_3 then
+			var_6_3.chess = var_6_2.chess
+			var_6_2.chess = AutoChessHelper.buildEmptyChess()
 		end
 
 		var_6_0:move(arg_6_0.effect.effectNum)

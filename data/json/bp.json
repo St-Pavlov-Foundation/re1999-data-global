@@ -313,5 +313,26 @@
     "weekLimitTimes": 0,
     "expUpShow": false,
     "isSp": false
+  },
+  {
+    "bpId": 16,
+    "chargeId1": 710001,
+    "chargeId2": 710002,
+    "chargeId1to2": 710003,
+    "payStatus1Bonus": "1#481010#1",
+    "payStatus2Bonus": "2#2#400|1#171603#1|10#21#3|1#120013#5",
+    "name": "",
+    "payStatus2AddLevel": 10,
+    "expLevelUp": 1000,
+    "bpSkinDesc": "language_10071709",
+    "bpSkinNametxt": "language_10072292",
+    "bpSkinEnNametxt": "Red and<br> White",
+    "bpviewicon": "",
+    "bpviewpos": "",
+    "showBonus": "",
+    "showBonusDate": "2025-06-19 00:00:00",
+    "weekLimitTimes": 0,
+    "expUpShow": false,
+    "isSp": false
   }
 ]

@@ -7,6 +7,7 @@ var_0_0.LeftContent = {
 	TowerBossPassCount = 7,
 	Act148SSSCount = 4,
 	RoomCollection = 3,
+	WeekwalkVer2PlatinumCup = 8,
 	TowerLayer = 6,
 	WeekWalkDeep = 2,
 	RougeDifficulty = 1

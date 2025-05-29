@@ -1693,5 +1693,55 @@
     "id": 3251830,
     "eventName": "play_ui_checkpoint_noise_admin_hall",
     "bankName": "activtiy_tangren_combataudio_noise"
+  },
+  {
+    "id": 3260001,
+    "eventName": "play_activitymusic_theme_2_6",
+    "bankName": "activity2_6_music"
+  },
+  {
+    "id": 3260002,
+    "eventName": "play_activitymusic_sadness_1_7",
+    "bankName": "activity1_7_music"
+  },
+  {
+    "id": 3260003,
+    "eventName": "play_activitymusic_argentinedream_2_6",
+    "bankName": "activity2_6_music"
+  },
+  {
+    "id": 3260011,
+    "eventName": "play_battle_wenming_2_6_normalfight",
+    "bankName": "activtiy_wenming_combataudio"
+  },
+  {
+    "id": 3260012,
+    "eventName": "play_battle_wenming_2_6_bossfight",
+    "bankName": "activtiy_wenming_combataudio"
+  },
+  {
+    "id": 3260021,
+    "eventName": "play_ui_checkpoint_noise_responsive",
+    "bankName": "activtiy_wenming_combataudio_noise"
+  },
+  {
+    "id": 3260022,
+    "eventName": "play_ui_checkpoint_noise_prison",
+    "bankName": "activtiy_wenming_combataudio_noise"
+  },
+  {
+    "id": 3260023,
+    "eventName": "play_ui_checkpoint_noise_gallery",
+    "bankName": "activtiy_wenming_combataudio_noise"
+  },
+  {
+    "id": 3260024,
+    "eventName": "play_ui_checkpoint_noise_prison_hall",
+    "bankName": "activtiy_wenming_combataudio_noise"
+  },
+  {
+    "id": 3260025,
+    "eventName": "play_ui_checkpoint_noise_prison_out",
+    "bankName": "activtiy_wenming_combataudio_noise"
   }
 ]

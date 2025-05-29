@@ -14,6 +14,7 @@ local var_0_1 = {
 	subType = 4,
 	tag1 = 13,
 	storeld = 2,
+	showskinId = 20,
 	buylmg = 10,
 	offTag = 16,
 	rare = 6,

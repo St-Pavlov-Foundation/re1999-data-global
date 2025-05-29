@@ -279,9 +279,7 @@ function var_0_0._onWorkDone(arg_7_0)
 		gohelper.onceAddComponent(arg_7_0.context.playCardContainer, typeof(UnityEngine.CanvasGroup)).alpha = 1
 	end
 
-	if arg_7_0._playCardCount > 0 then
-		FightViewPartVisible.set(false, false, false, false, true)
-	end
+	FightViewPartVisible.set(false, false, false, false, true)
 
 	for iter_7_0, iter_7_1 in ipairs(arg_7_0._handCardItemGOs) do
 		recthelper.setAnchorY(iter_7_1.transform, 0)

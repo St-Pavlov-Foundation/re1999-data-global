@@ -51,7 +51,9 @@ function var_0_0._getTargetDLCs(arg_4_0, arg_4_1, arg_4_2)
 		tabletool.removeValue(var_4_0, arg_4_1)
 	end
 
-	table.sort(var_4_0)
+	table.sort(var_4_0, function(arg_5_0, arg_5_1)
+		return arg_5_0 < arg_5_1
+	end)
 
 	return var_4_0
 end

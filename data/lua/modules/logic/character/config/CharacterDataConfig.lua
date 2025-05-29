@@ -251,14 +251,14 @@ function var_0_0.calculateMonsterHpNewFunc(arg_17_0, arg_17_1)
 			return
 		end
 
-		local var_17_4 = lua_monster_job.configDict[var_17_1[var_17_2.job]]
+		local var_17_4 = lua_monster_job.configDict[var_17_2.job]
 
 		if not var_17_4 then
 			return
 		end
 
-		local var_17_5 = var_17_2.life * (var_17_4.life_base * var_17_3.base + var_17_4.life_equip_base * var_17_3.equip_base) * var_17_1.life
-		local var_17_6 = math.floor(var_17_5 / 100000000)
+		local var_17_5 = var_17_2.life / 10000 * (var_17_4.life_base * var_17_3.base + var_17_4.life_equip_base * var_17_3.equip_base) / 10000 * var_17_1.life / 10000
+		local var_17_6 = math.floor(var_17_5)
 
 		if var_17_1.multiHp > 1 then
 			var_17_6 = var_17_6 / var_17_1.multiHp

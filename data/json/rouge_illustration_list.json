@@ -504,6 +504,54 @@
     "dlc": 0
   },
   {
+    "season": 1,
+    "id": 43,
+    "order": 1,
+    "name": "language_10071859",
+    "nameEn": "A Frantic Noble",
+    "desc": "language_10071994",
+    "image": "singlebg/rouge/illustration/rouge_illustration_item_64.png",
+    "fullImage": "singlebg/rouge/episode/rouge_episode_cg_64.png",
+    "eventId": "106151|1061511",
+    "dlc": 0
+  },
+  {
+    "season": 1,
+    "id": 44,
+    "order": 1,
+    "name": "language_10071862",
+    "nameEn": "Rioting Troops",
+    "desc": "language_10071995",
+    "image": "singlebg/rouge/illustration/rouge_illustration_item_65.png",
+    "fullImage": "singlebg/rouge/episode/rouge_episode_cg_65.png",
+    "eventId": "106152|1061521",
+    "dlc": 0
+  },
+  {
+    "season": 1,
+    "id": 45,
+    "order": 1,
+    "name": "language_10071865",
+    "nameEn": "Empty Studio",
+    "desc": "language_10071996",
+    "image": "singlebg/rouge/illustration/rouge_illustration_item_57.png",
+    "fullImage": "singlebg/rouge/episode/rouge_episode_cg_57.png",
+    "eventId": "106153",
+    "dlc": 0
+  },
+  {
+    "season": 1,
+    "id": 46,
+    "order": 1,
+    "name": "language_10071867",
+    "nameEn": "At the Source of Fate",
+    "desc": "language_10071997",
+    "image": "singlebg/rouge/illustration/rouge_illustration_item_63.png",
+    "fullImage": "singlebg/rouge/episode/rouge_episode_cg_63.png",
+    "eventId": "106154|1061541|1061542",
+    "dlc": 0
+  },
+  {
     "season": 2,
     "id": 10101,
     "order": 9999,
@@ -633,6 +681,66 @@
     "image": "singlebg/rouge/illustration/rouge_illustration_item_56.png",
     "fullImage": "singlebg/rouge/episode/rouge_episode_cg_56.png",
     "eventId": "306103",
+    "dlc": 1
+  },
+  {
+    "season": 4,
+    "id": 10301,
+    "order": 7999,
+    "name": "language_10071869",
+    "nameEn": "Old Portraits",
+    "desc": "language_10071998",
+    "image": "singlebg/rouge/illustration/rouge_illustration_item_58.png",
+    "fullImage": "singlebg/rouge/episode/rouge_episode_cg_58.png",
+    "eventId": "410101",
+    "dlc": 1
+  },
+  {
+    "season": 4,
+    "id": 10302,
+    "order": 7998,
+    "name": "language_10034508",
+    "nameEn": "Outdoor Theater",
+    "desc": "language_10071999",
+    "image": "singlebg/rouge/illustration/rouge_illustration_item_59.png",
+    "fullImage": "singlebg/rouge/episode/rouge_episode_cg_59.png",
+    "eventId": "410102|4101021|410106|410107|410108|410109|410110|410111|410112|410113|410114|410115|410116|410117|410118|410119|410120|410121|410122|410123|410124|410125|410126|410127|410128|410129|410130|410131|410132|410133|410134|410135|410136|410137|410138|410139|410140|410141|410142|410143|410144|410145",
+    "dlc": 1
+  },
+  {
+    "season": 4,
+    "id": 10303,
+    "order": 7997,
+    "name": "language_10071872",
+    "nameEn": "A Portrait of Success",
+    "desc": "language_10072000",
+    "image": "singlebg/rouge/illustration/rouge_illustration_item_60.png",
+    "fullImage": "singlebg/rouge/episode/rouge_episode_cg_60.png",
+    "eventId": "410103",
+    "dlc": 1
+  },
+  {
+    "season": 4,
+    "id": 10304,
+    "order": 7996,
+    "name": "language_10071874",
+    "nameEn": "Madam Thèbes",
+    "desc": "language_10072001",
+    "image": "singlebg/rouge/illustration/rouge_illustration_item_61.png",
+    "fullImage": "singlebg/rouge/episode/rouge_episode_cg_61.png",
+    "eventId": "410104",
+    "dlc": 1
+  },
+  {
+    "season": 4,
+    "id": 10305,
+    "order": 7995,
+    "name": "language_10071876",
+    "nameEn": "Rest Site?",
+    "desc": "language_10072002",
+    "image": "singlebg/rouge/illustration/rouge_illustration_item_62.png",
+    "fullImage": "singlebg/rouge/episode/rouge_episode_cg_62.png",
+    "eventId": "410105",
     "dlc": 1
   }
 ]

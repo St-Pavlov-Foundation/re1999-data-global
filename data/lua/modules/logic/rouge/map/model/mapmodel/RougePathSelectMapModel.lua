@@ -11,6 +11,7 @@ function var_0_0.initMap(arg_1_0, arg_1_1)
 	arg_1_0:initPieceInfo(arg_1_1.pieceInfo)
 	arg_1_0:initNextLayerList()
 	arg_1_0:initPathSelectCo()
+	arg_1_0:initLayerChoiceInfo(arg_1_1.layerChoiceInfo)
 end
 
 function var_0_0.initPieceInfo(arg_2_0, arg_2_1)
@@ -51,7 +52,7 @@ function var_0_0.initPathSelectCo(arg_3_0)
 end
 
 function var_0_0.updateMapInfo(arg_4_0, arg_4_1)
-	return
+	arg_4_0:initLayerChoiceInfo(arg_4_1.layerChoiceInfo)
 end
 
 function var_0_0.updateSimpleMapInfo(arg_5_0, arg_5_1)
@@ -106,13 +107,25 @@ function var_0_0.getNextLayerList(arg_10_0)
 	return arg_10_0.nextLayerList
 end
 
-function var_0_0.clear(arg_11_0)
-	arg_11_0.layerId = nil
-	arg_11_0.layerCo = nil
-	arg_11_0.middleLayerId = nil
-	arg_11_0.middleCo = nil
-	arg_11_0.pieceDict = nil
-	arg_11_0.pieceList = nil
+function var_0_0.initLayerChoiceInfo(arg_11_0, arg_11_1)
+	arg_11_0._layerChoiceInfoMap = {}
+
+	if arg_11_1 then
+		arg_11_0._layerChoiceInfoMap = GameUtil.rpcInfosToMap(arg_11_1, RougeLayerChoiceInfoMO, "layerId")
+	end
+end
+
+function var_0_0.getLayerChoiceInfo(arg_12_0, arg_12_1)
+	return arg_12_0._layerChoiceInfoMap and arg_12_0._layerChoiceInfoMap[arg_12_1]
+end
+
+function var_0_0.clear(arg_13_0)
+	arg_13_0.layerId = nil
+	arg_13_0.layerCo = nil
+	arg_13_0.middleLayerId = nil
+	arg_13_0.middleCo = nil
+	arg_13_0.pieceDict = nil
+	arg_13_0.pieceList = nil
 end
 
 return var_0_0

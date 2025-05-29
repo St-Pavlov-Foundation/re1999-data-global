@@ -49,15 +49,16 @@ local var_0_0 = {
 		local var_2_1 = LuaUtil.getUCharArr(arg_2_0) or {}
 
 		for iter_2_0 = #var_2_1, 1, -1 do
-			if var_2_1[iter_2_0] == "▩" then
+			if string.find(var_2_1[iter_2_0], "▩") then
 				local var_2_2 = table.remove(var_2_0) or ""
+				local var_2_3 = string.gsub(var_2_1[iter_2_0], "▩", var_2_2)
 
 				if var_2_1[iter_2_0 + 1] then
-					var_2_1[iter_2_0 + 1] = var_2_2 .. var_2_1[iter_2_0 + 1]
+					var_2_1[iter_2_0 + 1] = var_2_3 .. var_2_1[iter_2_0 + 1]
 
 					table.remove(var_2_1, iter_2_0)
 				else
-					var_2_1[iter_2_0] = var_2_2
+					var_2_1[iter_2_0] = var_2_3
 				end
 			end
 		end

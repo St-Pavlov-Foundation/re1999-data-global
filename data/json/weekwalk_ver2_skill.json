@@ -1,0 +1,58 @@
+[
+  {
+    "id": 2001,
+    "name": "language_10070717",
+    "icon": "1001",
+    "desc": "language_10070589",
+    "rules": "1#9260017"
+  },
+  {
+    "id": 2002,
+    "name": "language_10070718",
+    "icon": "1005",
+    "desc": "language_10070590",
+    "rules": "1#9260018"
+  },
+  {
+    "id": 2003,
+    "name": "language_10070719",
+    "icon": "1007",
+    "desc": "language_10070591",
+    "rules": "1#9260019"
+  },
+  {
+    "id": 2004,
+    "name": "language_10070720",
+    "icon": "1008",
+    "desc": "language_10070592",
+    "rules": "1#9260020"
+  },
+  {
+    "id": 2005,
+    "name": "language_10070721",
+    "icon": "1006",
+    "desc": "language_10070593",
+    "rules": "1#9260021"
+  },
+  {
+    "id": 2006,
+    "name": "language_10070722",
+    "icon": "1002",
+    "desc": "language_10070594",
+    "rules": "1#9260022"
+  },
+  {
+    "id": 2009,
+    "name": "language_10070723",
+    "icon": "1003",
+    "desc": "language_10070597",
+    "rules": "1#9260032"
+  },
+  {
+    "id": 2010,
+    "name": "language_10070724",
+    "icon": "1004",
+    "desc": "language_10070598",
+    "rules": "1#9260033"
+  }
+]

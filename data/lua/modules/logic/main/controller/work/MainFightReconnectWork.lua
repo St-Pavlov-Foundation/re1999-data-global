@@ -70,6 +70,10 @@ function var_0_0._onConfirm(arg_6_0)
 		WeekWalkModel.instance:setCurMapId(var_6_0.layerId)
 		WeekWalkModel.instance:setBattleElementId(var_6_0.elementId)
 		FightController.instance:setFightParamByEpisodeBattleId(var_6_1, FightModel.instance:getBattleId())
+	elseif var_6_2.type == DungeonEnum.EpisodeType.WeekWalk_2 then
+		WeekWalk_2Model.instance:setCurMapId(var_6_0.layerId)
+		WeekWalk_2Model.instance:setBattleElementId(var_6_0.elementId)
+		FightController.instance:setFightParamByEpisodeBattleId(var_6_1, FightModel.instance:getBattleId())
 	elseif var_6_2.type == DungeonEnum.EpisodeType.Meilanni then
 		FightController.instance:setFightParamByEpisodeBattleId(var_6_1, FightModel.instance:getBattleId())
 

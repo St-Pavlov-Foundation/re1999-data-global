@@ -170,11 +170,23 @@ end
 
 function var_0_0._btnclickOnClick(arg_9_0, arg_9_1)
 	if arg_9_1.dialogIdList then
-		ViewMgr.instance:openView(ViewName.DungeonFragmentInfoView, {
-			isFromHandbook = true,
-			fragmentId = arg_9_1.fragmentId,
-			dialogIdList = arg_9_1.dialogIdList
-		})
+		local var_9_0 = arg_9_1.fragmentId
+
+		if lua_chapter_map_fragment.configDict[var_9_0].type == DungeonEnum.FragmentType.AvgStory then
+			local var_9_1 = DungeonConfig.instance:getMapElementByFragmentId(var_9_0)
+			local var_9_2 = tonumber(var_9_1.param)
+
+			StoryController.instance:playStory(var_9_2)
+		else
+			local var_9_3 = {
+				fragmentId = var_9_0,
+				dialogIdList = arg_9_1.dialogIdList
+			}
+
+			var_9_3.isFromHandbook = true
+
+			ViewMgr.instance:openView(ViewName.DungeonFragmentInfoView, var_9_3)
+		end
 	else
 		GameFacade.showToast(ToastEnum.HandBook2)
 	end

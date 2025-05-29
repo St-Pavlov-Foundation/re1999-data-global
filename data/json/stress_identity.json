@@ -3758,5 +3758,15 @@
     "param": "924103001",
     "isNoShow": 1,
     "desc": "language_10063535"
+  },
+  {
+    "id": 9260210,
+    "name": "language_10063956",
+    "identity": "custom",
+    "typeParam": "",
+    "effect": "addSkill",
+    "param": "924103001",
+    "isNoShow": 1,
+    "desc": "language_10063535"
   }
 ]

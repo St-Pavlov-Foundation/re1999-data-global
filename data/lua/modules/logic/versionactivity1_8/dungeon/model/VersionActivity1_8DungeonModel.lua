@@ -41,14 +41,24 @@ end
 
 function var_0_0.getElementCoList(arg_10_0, arg_10_1)
 	local var_10_0 = {}
-	local var_10_1 = DungeonMapModel.instance:getAllElements()
+	local var_10_1 = Activity157Model.instance:getActId()
+	local var_10_2 = tonumber(Activity157Config.instance:getAct157Const(var_10_1, Activity157Enum.ConstId.UnlockEntranceElement))
+	local var_10_3 = Activity157Model.instance:getIsFirstComponentRepair()
+	local var_10_4 = DungeonMapModel.instance:getAllElements()
 
-	for iter_10_0, iter_10_1 in pairs(var_10_1) do
-		local var_10_2 = DungeonConfig.instance:getChapterMapElement(iter_10_1)
-		local var_10_3 = lua_chapter_map.configDict[var_10_2.mapId]
+	for iter_10_0, iter_10_1 in pairs(var_10_4) do
+		local var_10_5 = DungeonConfig.instance:getChapterMapElement(iter_10_1)
+		local var_10_6 = lua_chapter_map.configDict[var_10_5.mapId]
 
-		if var_10_3 and var_10_3.chapterId == VersionActivity1_8DungeonEnum.DungeonChapterId.Story and arg_10_1 == var_10_2.mapId then
-			table.insert(var_10_0, var_10_2)
+		if var_10_6 and var_10_6.chapterId == VersionActivity1_8DungeonEnum.DungeonChapterId.Story and arg_10_1 == var_10_5.mapId then
+			local var_10_7 = Activity157Config.instance:getMissionIdByElementId(var_10_1, iter_10_1)
+			local var_10_8 = Activity157Config.instance:getMissionGroup(var_10_1, var_10_7)
+			local var_10_9 = Activity157Model.instance:isFinishMission(var_10_8, var_10_7)
+			local var_10_10 = Activity157Config.instance:isSideMissionGroup(var_10_1, var_10_8)
+
+			if not var_10_7 or iter_10_1 == var_10_2 or var_10_9 or var_10_10 and var_10_3 then
+				table.insert(var_10_0, var_10_5)
+			end
 		end
 	end
 

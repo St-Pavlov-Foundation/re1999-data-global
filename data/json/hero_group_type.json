@@ -70,5 +70,11 @@
     "name": "language_10000064",
     "chapterIds": "1401#1402#1403",
     "saveGroup": 1
+  },
+  {
+    "id": 12,
+    "name": "language_10069593",
+    "chapterIds": "26001",
+    "saveGroup": 0
   }
 ]

@@ -1,0 +1,18 @@
+[
+  {
+    "timeId": 1,
+    "issueId": 1,
+    "optionalSkills": "2001#2002#2004#2006#2003#2005",
+    "ruleIcon": "shen_guize_18",
+    "ruleFront": "1#9260102",
+    "ruleRear": "1#9260103"
+  },
+  {
+    "timeId": 2,
+    "issueId": 2,
+    "optionalSkills": "2001#2002#2009#2005#2010#2003",
+    "ruleIcon": "shen_guize_18",
+    "ruleFront": "1#9260104",
+    "ruleRear": "1#9260105"
+  }
+]

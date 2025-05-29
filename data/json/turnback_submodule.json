@@ -88,5 +88,15 @@
     "showInPopup": 0,
     "jumpId": "",
     "reddotId": 0
+  },
+  {
+    "id": 110,
+    "turnbackId": 2,
+    "name": "language_10070603",
+    "nameEn": "language_10070604",
+    "actDesc": "",
+    "showInPopup": 0,
+    "jumpId": "",
+    "reddotId": 0
   }
 ]

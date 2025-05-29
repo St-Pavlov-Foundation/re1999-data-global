@@ -120,6 +120,8 @@ function var_0_0._showSpCollectionDescInfo(arg_7_0, arg_7_1)
 
 	UISpriteSetMgr.instance:setRougeSprite(var_7_2, var_7_4)
 	SkillHelper.addHyperLinkClick(var_7_0)
+	RougeCollectionDescHelper.addFixTmpBreakLine(var_7_0)
+	LuaUtil.updateTMPRectHeight_LayoutElement(var_7_0)
 
 	local var_7_5 = arg_7_1.isConditionVisible
 

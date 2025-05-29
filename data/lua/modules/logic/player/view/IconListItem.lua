@@ -16,11 +16,13 @@ end
 function var_0_0.addEvents(arg_2_0)
 	arg_2_0._portraitclick:AddClickListener(arg_2_0._selectPortrait, arg_2_0)
 	arg_2_0:addEventCb(PlayerController.instance, PlayerEvent.SelectPortrait, arg_2_0._onSelectPortrait, arg_2_0)
+	arg_2_0:addEventCb(PlayerController.instance, PlayerEvent.SetPortrait, arg_2_0._onSetPortrait, arg_2_0)
 end
 
 function var_0_0.removeEvents(arg_3_0)
 	arg_3_0._portraitclick:RemoveClickListener()
 	arg_3_0:removeEventCb(PlayerController.instance, PlayerEvent.SelectPortrait, arg_3_0._onSelectPortrait, arg_3_0)
+	arg_3_0:removeEventCb(PlayerController.instance, PlayerEvent.SetPortrait, arg_3_0._onSetPortrait, arg_3_0)
 end
 
 function var_0_0._editableInitView(arg_4_0)
@@ -33,31 +35,54 @@ function var_0_0._editableRemoveEvents(arg_5_0)
 end
 
 function var_0_0._selectPortrait(arg_6_0)
-	IconTipModel.instance:setSelectIcon(arg_6_0._mo.id)
+	IconTipModel.instance:setSelectIcon(arg_6_0._usePortrait)
 end
 
 function var_0_0._onSelectPortrait(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_0._mo.id == arg_7_1
+	local var_7_0 = arg_7_0._usePortrait == arg_7_1 or arg_7_0._mo.effectPortraitDic[arg_7_1]
 
 	gohelper.setActive(arg_7_0._gochoosing, var_7_0)
 end
 
-function var_0_0.onUpdateMO(arg_8_0, arg_8_1)
-	arg_8_0._mo = arg_8_1
-
-	if not arg_8_0._liveHeadIcon then
-		arg_8_0._liveHeadIcon = IconMgr.instance:getCommonLiveHeadIcon(arg_8_0._simageheadIcon)
+function var_0_0._onSetPortrait(arg_8_0, arg_8_1)
+	if arg_8_0._mo.effectPortraitDic and arg_8_0._mo.effectPortraitDic[arg_8_1] then
+		arg_8_0:_refreshUI()
 	end
-
-	arg_8_0._liveHeadIcon:setLiveHead(arg_8_1.id)
-
-	local var_8_0 = IconTipModel.instance:getSelectIcon()
-
-	gohelper.setActive(arg_8_0._gochoosing, arg_8_1.id == var_8_0)
 end
 
-function var_0_0.onDestroyView(arg_9_0)
-	arg_9_0._simageheadIcon:UnLoadImage()
+function var_0_0.onUpdateMO(arg_9_0, arg_9_1)
+	arg_9_0._mo = arg_9_1
+
+	arg_9_0:_refreshUI()
+end
+
+function var_0_0._refreshUI(arg_10_0)
+	local var_10_0 = arg_10_0._mo
+
+	if not arg_10_0._liveHeadIcon then
+		arg_10_0._liveHeadIcon = IconMgr.instance:getCommonLiveHeadIcon(arg_10_0._simageheadIcon)
+	end
+
+	local var_10_1 = PlayerModel.instance:getPlayinfo().portrait
+	local var_10_2
+
+	if var_10_0.effectPortraitDic and var_10_0.effectPortraitDic[var_10_1] then
+		var_10_2 = var_10_1
+	else
+		var_10_2 = var_10_0.id
+	end
+
+	arg_10_0._usePortrait = var_10_2
+
+	arg_10_0._liveHeadIcon:setLiveHead(var_10_2)
+
+	local var_10_3 = IconTipModel.instance:getSelectIcon()
+
+	gohelper.setActive(arg_10_0._gochoosing, var_10_2 == var_10_3)
+end
+
+function var_0_0.onDestroyView(arg_11_0)
+	arg_11_0._simageheadIcon:UnLoadImage()
 end
 
 return var_0_0

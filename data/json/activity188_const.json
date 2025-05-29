@@ -1,0 +1,62 @@
+[
+  {
+    "activityId": 12605,
+    "id": 1,
+    "value": 2,
+    "value2": ""
+  },
+  {
+    "activityId": 12605,
+    "id": 2,
+    "value": 0,
+    "value2": "0.5"
+  },
+  {
+    "activityId": 12605,
+    "id": 3,
+    "value": 0,
+    "value2": "0.7"
+  },
+  {
+    "activityId": 12605,
+    "id": 4,
+    "value": 0,
+    "value2": "2"
+  },
+  {
+    "activityId": 12605,
+    "id": 5,
+    "value": 0,
+    "value2": "2"
+  },
+  {
+    "activityId": 12605,
+    "id": 6,
+    "value": 0,
+    "value2": "2"
+  },
+  {
+    "activityId": 12605,
+    "id": 7,
+    "value": 0,
+    "value2": "2"
+  },
+  {
+    "activityId": 12605,
+    "id": 8,
+    "value": 0,
+    "value2": "4"
+  },
+  {
+    "activityId": 12605,
+    "id": 9,
+    "value": 0,
+    "value2": "4"
+  },
+  {
+    "activityId": 12605,
+    "id": 10,
+    "value": 0,
+    "value2": "0.5"
+  }
+]

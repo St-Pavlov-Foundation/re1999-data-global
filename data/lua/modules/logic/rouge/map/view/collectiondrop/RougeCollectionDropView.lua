@@ -66,6 +66,8 @@ end
 
 function var_0_0._btnrefreshOnClick(arg_8_0)
 	if not arg_8_0.canClickRefresh then
+		GameFacade.showToast(ToastEnum.RougeNotRefreshCollection)
+
 		return
 	end
 

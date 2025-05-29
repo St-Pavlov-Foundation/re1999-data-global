@@ -100,6 +100,8 @@ function var_0_0.reduceSoldCount(arg_16_0, arg_16_1)
 end
 
 function var_0_0.setSoldCount(arg_17_0, arg_17_1)
+	arg_17_1 = arg_17_1 or 0
+
 	local var_17_0 = arg_17_0:getMaxCount()
 
 	arg_17_0.soldCount = GameUtil.clamp(arg_17_1, 0, var_17_0)

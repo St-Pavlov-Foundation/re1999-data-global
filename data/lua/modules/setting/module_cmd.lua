@@ -1807,6 +1807,34 @@
 		"Act187AcceptRewardRequest",
 		"Act187AcceptRewardReply"
 	},
+	[6020] = {
+		"Activity188",
+		"GetAct188InfoRequest",
+		"GetAct188InfoReply"
+	},
+	[-23233] = {
+		"Activity188",
+		"Act188EnterEpisodeRequest",
+		"Act188EnterEpisodeReply"
+	},
+	[28505] = {
+		"Activity188",
+		"Act188StoryRequest",
+		"Act188StoryReply"
+	},
+	[-13291] = {
+		"Activity188",
+		"Act188EpisodePush"
+	},
+	[-30066] = {
+		"Activity188",
+		"Act188ReverseCardRequest",
+		"Act188ReverseCardReply"
+	},
+	[-7800] = {
+		"Activity188",
+		"Act188StepPush"
+	},
 	[18246] = {
 		"Activity189",
 		"GetAct189InfoRequest",
@@ -2230,6 +2258,55 @@
 		"Dialog",
 		"RecordDialogInfoRequest",
 		"RecordDialogInfoReplay"
+	},
+	[-32593] = {
+		"DiceHero",
+		"DiceHeroGetInfoRequest",
+		"DiceHeroGetInfoReply"
+	},
+	[-20618] = {
+		"DiceHero",
+		"DiceHeroEnterStoryRequest",
+		"DiceHeroEnterStoryReply"
+	},
+	[-11236] = {
+		"DiceHero",
+		"DiceHeroGetRewardRequest",
+		"DiceHeroGetRewardReply"
+	},
+	[7481] = {
+		"DiceHero",
+		"DiceHeroEnterFightRequest",
+		"DiceHeroEnterFightReply"
+	},
+	[-30111] = {
+		"DiceHero",
+		"DiceHeroResetDiceRequest",
+		"DiceHeroResetDiceReply"
+	},
+	[21466] = {
+		"DiceHero",
+		"DiceHeroConfirmDiceRequest",
+		"DiceHeroConfirmDiceReply"
+	},
+	[-1341] = {
+		"DiceHero",
+		"DiceHeroUseSkillRequest",
+		"DiceHeroUseSkillReply"
+	},
+	[-24426] = {
+		"DiceHero",
+		"DiceHeroEndRoundRequest",
+		"DiceHeroEndRoundReply"
+	},
+	[-28885] = {
+		"DiceHero",
+		"DiceGiveUpRequest",
+		"DiceGiveUpReply"
+	},
+	[-27668] = {
+		"DiceHero",
+		"DiceFightSettlePush"
 	},
 	[-30467] = {
 		"Dispatch",
@@ -2697,6 +2774,10 @@
 	[3036] = {
 		"GM",
 		"FightTipsMessagePush"
+	},
+	[28434] = {
+		"GM",
+		"ServerErrorInfoPush"
 	},
 	[18894] = {
 		"Guide",
@@ -3799,6 +3880,10 @@
 		"Room",
 		"RestBuildingInfoPush"
 	},
+	[22400] = {
+		"Room",
+		"RoadInfoPush"
+	},
 	[-23690] = {
 		"Room",
 		"GetOrderInfoRequest",
@@ -4012,6 +4097,16 @@
 		"Rouge",
 		"RougeUnlockSkillRequest",
 		"RougeUnlockSkillReply"
+	},
+	[7450] = {
+		"Rouge",
+		"RougeRefreshMapRuleRequest",
+		"RougeRefreshMapRuleReply"
+	},
+	[30052] = {
+		"Rouge",
+		"RougeRefreshMonsterRuleRequest",
+		"RougeRefreshMonsterRuleReply"
 	},
 	[6650] = {
 		"Rouge",
@@ -4598,6 +4693,63 @@
 		"Weekwalk",
 		"ChangeWeekwalkHeroGroupSelectRequest",
 		"ChangeWeekwalkHeroGroupSelectReply"
+	},
+	[279] = {
+		"WeekwalkVer2",
+		"WeekwalkVer2GetInfoRequest",
+		"WeekwalkVer2GetInfoReply"
+	},
+	[-7053] = {
+		"WeekwalkVer2",
+		"WeekwalkVer2HeroRecommendRequest",
+		"WeekwalkVer2HeroRecommendReply"
+	},
+	[-7189] = {
+		"WeekwalkVer2",
+		"WeekwalkVer2ResetLayerRequest",
+		"WeekwalkVer2ResetLayerReply"
+	},
+	[-29076] = {
+		"WeekwalkVer2",
+		"WeekwalkVer2ChangeHeroGroupSelectRequest",
+		"WeekwalkVer2ChangeHeroGroupSelectReply"
+	},
+	[-13845] = {
+		"WeekwalkVer2",
+		"WeekwalkVer2ChooseSkillRequest",
+		"WeekwalkVer2ChooseSkillReply"
+	},
+	[29864] = {
+		"WeekwalkVer2",
+		"WeekwalkVer2GetSettleInfoRequest",
+		"WeekwalkVer2GetSettleInfoReply"
+	},
+	[-24210] = {
+		"WeekwalkVer2",
+		"WeekwalkVer2MarkPreSettleRequest",
+		"WeekwalkVer2MarkPreSettleReply"
+	},
+	[29213] = {
+		"WeekwalkVer2",
+		"WeekwalkVer2MarkPopRuleRequest",
+		"WeekwalkVer2MarkPopRuleReply"
+	},
+	[-17919] = {
+		"WeekwalkVer2",
+		"WeekwalkVer2MarkShowFinishedRequest",
+		"WeekwalkVer2MarkShowFinishedReply"
+	},
+	[-22854] = {
+		"WeekwalkVer2",
+		"WeekwalkVer2InfoUpdatePush"
+	},
+	[19339] = {
+		"WeekwalkVer2",
+		"WeekwalkVer2SettleInfoUpdatePush"
+	},
+	[12174] = {
+		"WeekwalkVer2",
+		"WeekwalkVer2FightSettlePush"
 	},
 	[4958] = {
 		"XF",

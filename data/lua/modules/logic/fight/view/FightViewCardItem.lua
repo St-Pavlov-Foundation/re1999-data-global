@@ -126,6 +126,7 @@ function var_0_0.init(arg_2_0, arg_2_1)
 	arg_2_0:resetRedAndBlue()
 
 	arg_2_0._heatRoot = gohelper.findChild(arg_2_1, "#go_heat")
+	arg_2_0.alfLoadStatus = var_0_0.AlfLoadStatus.None
 end
 
 function var_0_0.resetPreDelete(arg_3_0)
@@ -642,7 +643,7 @@ function var_0_0.changeToTempCard(arg_34_0)
 	gohelper.setActive(arg_34_0._predisplay, true)
 end
 
-function var_0_0.dissolveCard(arg_35_0, arg_35_1)
+function var_0_0.dissolveCard(arg_35_0, arg_35_1, arg_35_2)
 	if not arg_35_0.go.activeInHierarchy then
 		return
 	end
@@ -664,7 +665,9 @@ function var_0_0.dissolveCard(arg_35_0, arg_35_1)
 
 	local var_35_1 = arg_35_0:getUserDataTb_()
 
-	table.insert(var_35_1, arg_35_0.go)
+	arg_35_2 = arg_35_2 or arg_35_0.go
+
+	table.insert(var_35_1, arg_35_2)
 
 	var_35_0.dissolveSkillItemGOs = var_35_1
 
@@ -1025,6 +1028,7 @@ function var_0_0.onDestroy(arg_63_0)
 	end
 
 	arg_63_0._tag:UnLoadImage()
+	arg_63_0:clearAlfEffect()
 end
 
 function var_0_0._hideAllEffect(arg_64_0)
@@ -1035,6 +1039,92 @@ end
 
 function var_0_0.IsUniqueSkill(arg_65_0)
 	return FightCardModel.instance:getSkillLv(arg_65_0.entityId, arg_65_0.skillId) >= FightEnum.UniqueSkillCardLv
+end
+
+var_0_0.AlfLoadStatus = {
+	Loaded = 3,
+	Loading = 2,
+	None = 1
+}
+
+function var_0_0.tryPlayAlfEffect(arg_66_0)
+	if not arg_66_0._cardInfoMO then
+		return
+	end
+
+	if not FightHeroALFComp.ALFSkillDict[arg_66_0._cardInfoMO.custom_fromSkillId] then
+		return
+	end
+
+	arg_66_0.showAlfEffectIng = true
+
+	FightController.instance:dispatchEvent(FightEvent.ALF_AddCardEffectAppear, arg_66_0)
+
+	if arg_66_0.alfLoadStatus == var_0_0.AlfLoadStatus.Loaded then
+		arg_66_0:_tryPlayAlfEffect()
+	elseif arg_66_0.alfLoadStatus == var_0_0.AlfLoadStatus.Loading then
+		-- block empty
+	else
+		arg_66_0.alfLoadStatus = var_0_0.AlfLoadStatus.Loading
+		arg_66_0.alfLoader = PrefabInstantiate.Create(arg_66_0.tr.parent.gameObject)
+
+		arg_66_0.alfLoader:startLoad(FightHeroALFComp.CardAddEffect, arg_66_0.onLoadedAlfEffect, arg_66_0)
+	end
+end
+
+function var_0_0.onLoadedAlfEffect(arg_67_0)
+	arg_67_0.goAlfAddCardEffect = arg_67_0.alfLoader:getInstGO()
+	arg_67_0.goAlfAddCardAnimatorPlayer = ZProj.ProjAnimatorPlayer.Get(arg_67_0.goAlfAddCardEffect)
+	arg_67_0.alfLoadStatus = var_0_0.AlfLoadStatus.Loaded
+
+	arg_67_0:_tryPlayAlfEffect()
+end
+
+function var_0_0._tryPlayAlfEffect(arg_68_0)
+	if not arg_68_0.goAlfAddCardAnimatorPlayer then
+		return
+	end
+
+	gohelper.setActive(arg_68_0.go, false)
+	gohelper.setActive(arg_68_0.goAlfAddCardEffect, true)
+	arg_68_0.goAlfAddCardAnimatorPlayer:Play("open", arg_68_0.playAlfCloseAnim, arg_68_0)
+end
+
+function var_0_0.playAlfCloseAnim(arg_69_0)
+	arg_69_0.goAlfAddCardAnimatorPlayer:Play("close", arg_69_0.playAlfCloseAnimDone, arg_69_0)
+	TaskDispatcher.runDelay(arg_69_0.showCardGo, arg_69_0, 0.2 / FightModel.instance:getUISpeed())
+end
+
+function var_0_0.showCardGo(arg_70_0)
+	gohelper.setActive(arg_70_0.go, true)
+	arg_70_0:playCardAni(ViewAnim.FightCardAppear, "fightcard_apper")
+end
+
+function var_0_0.playAlfCloseAnimDone(arg_71_0)
+	gohelper.setActive(arg_71_0.goAlfAddCardEffect, false)
+
+	arg_71_0.showAlfEffectIng = false
+
+	FightController.instance:dispatchEvent(FightEvent.ALF_AddCardEffectEnd, arg_71_0)
+end
+
+function var_0_0.clearAlfEffect(arg_72_0)
+	if arg_72_0.alfLoader then
+		arg_72_0.alfLoader:dispose()
+
+		arg_72_0.alfLoader = nil
+	end
+
+	arg_72_0.alfLoadStatus = var_0_0.AlfLoadStatus.None
+	arg_72_0.goAlfAddCardEffect = nil
+
+	if arg_72_0.goAlfAddCardAnimatorPlayer then
+		arg_72_0.goAlfAddCardAnimatorPlayer:Stop()
+
+		arg_72_0.goAlfAddCardAnimatorPlayer = nil
+	end
+
+	TaskDispatcher.cancelTask(arg_72_0.showCardGo, arg_72_0)
 end
 
 return var_0_0

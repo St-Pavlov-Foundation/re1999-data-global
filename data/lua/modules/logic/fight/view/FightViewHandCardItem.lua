@@ -1372,7 +1372,7 @@ function var_0_0.dissolveCard(arg_69_0)
 	end
 
 	arg_69_0:setASFDActive(false)
-	arg_69_0._cardItem:dissolveCard(transformhelper.getLocalScale(arg_69_0._subViewInst._handCardContainer.transform))
+	arg_69_0._cardItem:dissolveCard(transformhelper.getLocalScale(arg_69_0._subViewInst._handCardContainer.transform), arg_69_0.go)
 end
 
 function var_0_0.moveSelfPos(arg_70_0, arg_70_1, arg_70_2)

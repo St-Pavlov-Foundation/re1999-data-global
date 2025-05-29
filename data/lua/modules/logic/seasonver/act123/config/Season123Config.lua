@@ -276,248 +276,256 @@ function var_0_0.getSeasonConstStr(arg_31_0, arg_31_1, arg_31_2)
 	return arg_31_0._constConfig.configDict[arg_31_1][arg_31_2].value2
 end
 
-function var_0_0.getAllStoryCo(arg_32_0, arg_32_1)
-	return arg_32_0._storyConfig.configDict[arg_32_1]
+function var_0_0.getSeasonConstLangStr(arg_32_0, arg_32_1, arg_32_2)
+	if not arg_32_0._constConfig.configDict[arg_32_1] or not arg_32_0._constConfig.configDict[arg_32_1][arg_32_2] then
+		return nil
+	end
+
+	return arg_32_0._constConfig.configDict[arg_32_1][arg_32_2].value3
 end
 
-function var_0_0.getStoryConfig(arg_33_0, arg_33_1, arg_33_2)
-	return arg_33_0._storyConfig.configDict[arg_33_1][arg_33_2]
+function var_0_0.getAllStoryCo(arg_33_0, arg_33_1)
+	return arg_33_0._storyConfig.configDict[arg_33_1]
 end
 
-function var_0_0.getSeason123TaskCo(arg_34_0, arg_34_1)
-	return arg_34_0._taskConfig.configDict[arg_34_1]
+function var_0_0.getStoryConfig(arg_34_0, arg_34_1, arg_34_2)
+	return arg_34_0._storyConfig.configDict[arg_34_1][arg_34_2]
 end
 
-function var_0_0.getSeason123AllTaskList(arg_35_0)
-	return arg_35_0._taskConfig.configList
+function var_0_0.getSeason123TaskCo(arg_35_0, arg_35_1)
+	return arg_35_0._taskConfig.configDict[arg_35_1]
 end
 
-function var_0_0.getRetailCO(arg_36_0, arg_36_1, arg_36_2)
-	if arg_36_0._retailConfig.configDict[arg_36_1] then
-		return arg_36_0._retailConfig.configDict[arg_36_1][arg_36_2]
+function var_0_0.getSeason123AllTaskList(arg_36_0)
+	return arg_36_0._taskConfig.configList
+end
+
+function var_0_0.getRetailCO(arg_37_0, arg_37_1, arg_37_2)
+	if arg_37_0._retailConfig.configDict[arg_37_1] then
+		return arg_37_0._retailConfig.configDict[arg_37_1][arg_37_2]
 	end
 end
 
-function var_0_0.getRecommendCareers(arg_37_0, arg_37_1, arg_37_2)
-	local var_37_0 = arg_37_0:getStageCo(arg_37_1, arg_37_2)
-
-	if var_37_0 and not string.nilorempty(var_37_0.recommend) then
-		return string.split(var_37_0.recommend, "#")
-	end
-end
-
-function var_0_0.getRecommendTagCoList(arg_38_0, arg_38_1, arg_38_2)
+function var_0_0.getRecommendCareers(arg_38_0, arg_38_1, arg_38_2)
 	local var_38_0 = arg_38_0:getStageCo(arg_38_1, arg_38_2)
-	local var_38_1 = {}
 
-	if var_38_0 and not string.nilorempty(var_38_0.recommendSchool) then
-		local var_38_2 = string.splitToNumber(var_38_0.recommendSchool, "#")
-		local var_38_3 = arg_38_0:getSeasonTagDesc(arg_38_1)
+	if var_38_0 and not string.nilorempty(var_38_0.recommend) then
+		return string.split(var_38_0.recommend, "#")
+	end
+end
 
-		for iter_38_0, iter_38_1 in ipairs(var_38_2) do
-			if var_38_3[iter_38_1] then
-				table.insert(var_38_1, var_38_3[iter_38_1])
+function var_0_0.getRecommendTagCoList(arg_39_0, arg_39_1, arg_39_2)
+	local var_39_0 = arg_39_0:getStageCo(arg_39_1, arg_39_2)
+	local var_39_1 = {}
+
+	if var_39_0 and not string.nilorempty(var_39_0.recommendSchool) then
+		local var_39_2 = string.splitToNumber(var_39_0.recommendSchool, "#")
+		local var_39_3 = arg_39_0:getSeasonTagDesc(arg_39_1)
+
+		for iter_39_0, iter_39_1 in ipairs(var_39_2) do
+			if var_39_3[iter_39_1] then
+				table.insert(var_39_1, var_39_3[iter_39_1])
 			end
 		end
 	end
 
-	return var_38_1
+	return var_39_1
 end
 
-function var_0_0.filterRule(arg_39_0, arg_39_1, arg_39_2)
-	local var_39_0 = {}
+function var_0_0.filterRule(arg_40_0, arg_40_1, arg_40_2)
+	local var_40_0 = {}
 
-	if arg_39_1 then
-		local var_39_1 = Season123Model.instance:getCurSeasonId()
+	if arg_40_1 then
+		local var_40_1 = Season123Model.instance:getCurSeasonId()
 
-		if not var_39_1 then
+		if not var_40_1 then
 			return
 		end
 
-		for iter_39_0, iter_39_1 in pairs(arg_39_1) do
-			if not arg_39_0:isExistInRuleTips(var_39_1, arg_39_2, iter_39_1[2]) then
-				table.insert(var_39_0, iter_39_1)
+		for iter_40_0, iter_40_1 in pairs(arg_40_1) do
+			if not arg_40_0:isExistInRuleTips(var_40_1, arg_40_2, iter_40_1[2]) then
+				table.insert(var_40_0, iter_40_1)
 			end
 		end
 	end
 
-	return var_39_0
+	return var_40_0
 end
 
-function var_0_0.isExistInRuleTips(arg_40_0, arg_40_1, arg_40_2, arg_40_3)
-	if not arg_40_0.ruleDict then
-		arg_40_0.ruleDict = {}
+function var_0_0.isExistInRuleTips(arg_41_0, arg_41_1, arg_41_2, arg_41_3)
+	if not arg_41_0.ruleDict then
+		arg_41_0.ruleDict = {}
 	end
 
-	arg_40_0.ruleDict[arg_40_1] = arg_40_0.ruleDict[arg_40_1] or {}
+	arg_41_0.ruleDict[arg_41_1] = arg_41_0.ruleDict[arg_41_1] or {}
 
-	if not arg_40_0.ruleDict[arg_40_1][arg_40_2] then
-		local var_40_0 = arg_40_0:getRuleTips(arg_40_1, arg_40_2)
+	if not arg_41_0.ruleDict[arg_41_1][arg_41_2] then
+		local var_41_0 = arg_41_0:getRuleTips(arg_41_1, arg_41_2)
 
-		arg_40_0.ruleDict[arg_40_1][arg_40_2] = var_40_0
+		arg_41_0.ruleDict[arg_41_1][arg_41_2] = var_41_0
 	end
 
-	return arg_40_0.ruleDict[arg_40_1][arg_40_2][arg_40_3] ~= nil
+	return arg_41_0.ruleDict[arg_41_1][arg_41_2][arg_41_3] ~= nil
 end
 
-function var_0_0.getRuleTips(arg_41_0, arg_41_1, arg_41_2)
-	local var_41_0 = arg_41_0:getStageCos(arg_41_1)[arg_41_2]
-	local var_41_1 = {}
+function var_0_0.getRuleTips(arg_42_0, arg_42_1, arg_42_2)
+	local var_42_0 = arg_42_0:getStageCos(arg_42_1)[arg_42_2]
+	local var_42_1 = {}
 
-	if arg_41_2 then
-		if not var_41_0 then
-			arg_41_0.emptyTips = arg_41_0.emptyTips or {}
+	if arg_42_2 then
+		if not var_42_0 then
+			arg_42_0.emptyTips = arg_42_0.emptyTips or {}
 
-			return arg_41_0.emptyTips
+			return arg_42_0.emptyTips
 		end
 
-		var_41_1 = string.splitToNumber(var_41_0.stageCondition, "#")
+		var_42_1 = string.splitToNumber(var_42_0.stageCondition, "#")
 	else
-		local var_41_2 = arg_41_0:getSeasonConstStr(arg_41_1, Activity123Enum.Const.HideRule)
+		local var_42_2 = arg_42_0:getSeasonConstStr(arg_42_1, Activity123Enum.Const.HideRule)
 
-		var_41_1 = string.splitToNumber(var_41_2, "#")
+		var_42_1 = string.splitToNumber(var_42_2, "#")
 	end
 
-	local var_41_3 = {}
+	local var_42_3 = {}
 
-	for iter_41_0, iter_41_1 in ipairs(var_41_1) do
-		var_41_3[iter_41_1] = true
+	for iter_42_0, iter_42_1 in ipairs(var_42_1) do
+		var_42_3[iter_42_1] = true
 	end
 
-	return var_41_3
+	return var_42_3
 end
 
-function var_0_0.getTrialCO(arg_42_0, arg_42_1, arg_42_2)
-	local var_42_0 = arg_42_0._trialConfig.configDict[arg_42_1]
+function var_0_0.getTrialCO(arg_43_0, arg_43_1, arg_43_2)
+	local var_43_0 = arg_43_0._trialConfig.configDict[arg_43_1]
 
-	if var_42_0 then
-		return var_42_0[arg_42_2]
+	if var_43_0 then
+		return var_43_0[arg_43_2]
 	end
 
 	return nil
 end
 
-function var_0_0.getTaskListenerParamCache(arg_43_0, arg_43_1)
-	arg_43_0.taskListenerParamCache = arg_43_0.taskListenerParamCache or {}
+function var_0_0.getTaskListenerParamCache(arg_44_0, arg_44_1)
+	arg_44_0.taskListenerParamCache = arg_44_0.taskListenerParamCache or {}
 
-	local var_43_0 = arg_43_0.taskListenerParamCache[arg_43_1]
+	local var_44_0 = arg_44_0.taskListenerParamCache[arg_44_1]
 
-	if not var_43_0 then
-		var_43_0 = string.split(arg_43_1.listenerParam, "#")
-		arg_43_0.taskListenerParamCache[arg_43_1] = var_43_0
+	if not var_44_0 then
+		var_44_0 = string.split(arg_44_1.listenerParam, "#")
+		arg_44_0.taskListenerParamCache[arg_44_1] = var_44_0
 	end
 
-	return var_43_0
+	return var_44_0
 end
 
-function var_0_0.getRewardTaskCount(arg_44_0, arg_44_1, arg_44_2)
-	arg_44_0:checkInitRewardTaskCount()
+function var_0_0.getRewardTaskCount(arg_45_0, arg_45_1, arg_45_2)
+	arg_45_0:checkInitRewardTaskCount()
 
-	if arg_44_0._taskCountDict[arg_44_1] then
-		return arg_44_0._taskCountDict[arg_44_1][arg_44_2] or 0
+	if arg_45_0._taskCountDict[arg_45_1] then
+		return arg_45_0._taskCountDict[arg_45_1][arg_45_2] or 0
 	end
 
 	return 0
 end
 
-function var_0_0.checkInitRewardTaskCount(arg_45_0)
-	if not arg_45_0._taskCountDict then
-		arg_45_0._taskCountDict = {}
+function var_0_0.checkInitRewardTaskCount(arg_46_0)
+	if not arg_46_0._taskCountDict then
+		arg_46_0._taskCountDict = {}
 
-		local var_45_0 = arg_45_0:getSeason123AllTaskList()
+		local var_46_0 = arg_46_0:getSeason123AllTaskList()
 
-		for iter_45_0, iter_45_1 in ipairs(var_45_0) do
-			if iter_45_1.isRewardView == 1 then
-				arg_45_0._taskCountDict[iter_45_1.seasonId] = arg_45_0._taskCountDict[iter_45_1.seasonId] or {}
+		for iter_46_0, iter_46_1 in ipairs(var_46_0) do
+			if iter_46_1.isRewardView == 1 then
+				arg_46_0._taskCountDict[iter_46_1.seasonId] = arg_46_0._taskCountDict[iter_46_1.seasonId] or {}
 
-				local var_45_1 = arg_45_0:getTaskListenerParamCache(iter_45_1)
+				local var_46_1 = arg_46_0:getTaskListenerParamCache(iter_46_1)
 
-				if #var_45_1 > 0 then
-					local var_45_2 = tonumber(var_45_1[1])
-					local var_45_3 = (arg_45_0._taskCountDict[iter_45_1.seasonId][var_45_2] or 0) + 1
+				if #var_46_1 > 0 then
+					local var_46_2 = tonumber(var_46_1[1])
+					local var_46_3 = (arg_46_0._taskCountDict[iter_46_1.seasonId][var_46_2] or 0) + 1
 
-					arg_45_0._taskCountDict[iter_45_1.seasonId][var_45_2] = var_45_3
+					arg_46_0._taskCountDict[iter_46_1.seasonId][var_46_2] = var_46_3
 				end
 			end
 		end
 	end
 end
 
-function var_0_0.getCardLimitPosDict(arg_46_0, arg_46_1)
-	local var_46_0 = arg_46_0:getSeasonEquipCo(arg_46_1)
+function var_0_0.getCardLimitPosDict(arg_47_0, arg_47_1)
+	local var_47_0 = arg_47_0:getSeasonEquipCo(arg_47_1)
 
-	if not var_46_0 or string.nilorempty(var_46_0.indexLimit) then
+	if not var_47_0 or string.nilorempty(var_47_0.indexLimit) then
 		return nil
 	else
-		arg_46_0._indexLimitDict = arg_46_0._indexLimitDict or {}
-		arg_46_0._indexLimitStrDict = arg_46_0._indexLimitStrDict or {}
+		arg_47_0._indexLimitDict = arg_47_0._indexLimitDict or {}
+		arg_47_0._indexLimitStrDict = arg_47_0._indexLimitStrDict or {}
 
-		local var_46_1 = arg_46_0._indexLimitDict[arg_46_1]
-		local var_46_2 = arg_46_0._indexLimitStrDict[arg_46_1]
+		local var_47_1 = arg_47_0._indexLimitDict[arg_47_1]
+		local var_47_2 = arg_47_0._indexLimitStrDict[arg_47_1]
 
-		if not var_46_1 then
-			var_46_1 = {}
+		if not var_47_1 then
+			var_47_1 = {}
 
-			local var_46_3 = string.splitToNumber(var_46_0.indexLimit, "#")
+			local var_47_3 = string.splitToNumber(var_47_0.indexLimit, "#")
 
-			var_46_2 = ""
+			var_47_2 = ""
 
-			for iter_46_0, iter_46_1 in ipairs(var_46_3) do
-				var_46_1[iter_46_1] = true
+			for iter_47_0, iter_47_1 in ipairs(var_47_3) do
+				var_47_1[iter_47_1] = true
 
-				if not string.nilorempty(var_46_2) then
-					var_46_2 = var_46_2 .. "," .. tostring(iter_46_1)
+				if not string.nilorempty(var_47_2) then
+					var_47_2 = var_47_2 .. "," .. tostring(iter_47_1)
 				else
-					var_46_2 = tostring(iter_46_1)
+					var_47_2 = tostring(iter_47_1)
 				end
 			end
 
-			arg_46_0._indexLimitDict[arg_46_1] = var_46_1
-			arg_46_0._indexLimitStrDict[arg_46_1] = var_46_2
+			arg_47_0._indexLimitDict[arg_47_1] = var_47_1
+			arg_47_0._indexLimitStrDict[arg_47_1] = var_47_2
 		end
 
-		return var_46_1, var_46_2
+		return var_47_1, var_47_2
 	end
 end
 
-function var_0_0.isLastStage(arg_47_0, arg_47_1, arg_47_2)
-	return arg_47_2 == tabletool.len(arg_47_0._stageConfig.configDict[arg_47_1])
+function var_0_0.isLastStage(arg_48_0, arg_48_1, arg_48_2)
+	return arg_48_2 == tabletool.len(arg_48_0._stageConfig.configDict[arg_48_1])
 end
 
-function var_0_0.getCardSpecialEffectCache(arg_48_0, arg_48_1)
-	arg_48_0.cardEffectCache = arg_48_0.cardEffectCache or {}
+function var_0_0.getCardSpecialEffectCache(arg_49_0, arg_49_1)
+	arg_49_0.cardEffectCache = arg_49_0.cardEffectCache or {}
 
-	local var_48_0 = arg_48_0.cardEffectCache[arg_48_1]
+	local var_49_0 = arg_49_0.cardEffectCache[arg_49_1]
 
-	if not var_48_0 then
-		var_48_0 = {}
+	if not var_49_0 then
+		var_49_0 = {}
 
-		local var_48_1 = arg_48_0:getSeasonEquipCo(arg_48_1)
-		local var_48_2 = GameUtil.splitString2(var_48_1.specialEffect, true) or {}
-		local var_48_3 = {}
+		local var_49_1 = arg_49_0:getSeasonEquipCo(arg_49_1)
+		local var_49_2 = GameUtil.splitString2(var_49_1.specialEffect, true) or {}
+		local var_49_3 = {}
 
-		for iter_48_0, iter_48_1 in ipairs(var_48_2) do
-			local var_48_4 = iter_48_1[1]
+		for iter_49_0, iter_49_1 in ipairs(var_49_2) do
+			local var_49_4 = iter_49_1[1]
 
-			for iter_48_2 = 2, #iter_48_1 do
-				table.insert(var_48_3, iter_48_1[iter_48_2])
+			for iter_49_2 = 2, #iter_49_1 do
+				table.insert(var_49_3, iter_49_1[iter_49_2])
 			end
 
-			var_48_0[var_48_4] = var_48_3
+			var_49_0[var_49_4] = var_49_3
 		end
 
-		arg_48_0.cardEffectCache[arg_48_1] = var_48_0
+		arg_49_0.cardEffectCache[arg_49_1] = var_49_0
 	end
 
-	return var_48_0
+	return var_49_0
 end
 
-function var_0_0.getCardSpecialEffectMap(arg_49_0, arg_49_1)
-	local var_49_0 = arg_49_0:getSeasonEquipCo(arg_49_1)
-	local var_49_1 = {}
+function var_0_0.getCardSpecialEffectMap(arg_50_0, arg_50_1)
+	local var_50_0 = arg_50_0:getSeasonEquipCo(arg_50_1)
+	local var_50_1 = {}
 
-	if var_49_0 then
-		return arg_49_0:getCardSpecialEffectCache(var_49_0.equipId) or {}
+	if var_50_0 then
+		return arg_50_0:getCardSpecialEffectCache(var_50_0.equipId) or {}
 	end
 end
 

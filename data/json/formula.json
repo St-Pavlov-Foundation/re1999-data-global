@@ -910,5 +910,43 @@
     "rare": 5,
     "useDesc": "language_10022658",
     "desc": "language_10022644"
+  },
+  {
+    "id": 3001093,
+    "type": 2,
+    "showType": 301,
+    "name": "language_10072220",
+    "costMaterial": "1#110902#3|1#110702#1",
+    "costScore": "2#3#300",
+    "costTime": 0,
+    "produce": "1#110903#1",
+    "costReserve": 0,
+    "order": 110301,
+    "needRoomLevel": 0,
+    "needProductionLevel": 2,
+    "needEpisodeId": 0,
+    "icon": "icon_shensuixiaxiang",
+    "rare": 3,
+    "useDesc": "language_10022658",
+    "desc": "language_10022644"
+  },
+  {
+    "id": 3001094,
+    "type": 2,
+    "showType": 301,
+    "name": "language_10072221",
+    "costMaterial": "1#110903#3|1#110603#2",
+    "costScore": "2#3#500",
+    "costTime": 0,
+    "produce": "1#110904#1",
+    "costReserve": 0,
+    "order": 110401,
+    "needRoomLevel": 0,
+    "needProductionLevel": 4,
+    "needEpisodeId": 20407,
+    "icon": "icon_shensuixiaxiang",
+    "rare": 4,
+    "useDesc": "language_10022658",
+    "desc": "language_10022644"
   }
 ]

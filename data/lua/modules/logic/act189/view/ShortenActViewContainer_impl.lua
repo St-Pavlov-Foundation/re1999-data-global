@@ -45,16 +45,11 @@ function var_0_0.onContainerInit(arg_3_0)
 	arg_3_0.__taskAnimRemoveItem:setMoveInterval(0)
 end
 
-function var_0_0.onContainerClose(arg_4_0)
-	var_0_0.super.onContainerClose(arg_4_0)
-	UIBlockMgrExtend.setNeedCircleMv(true)
+function var_0_0.removeByIndex(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
+	arg_4_0.__taskAnimRemoveItem:removeByIndex(arg_4_1, arg_4_2, arg_4_3)
 end
 
-function var_0_0.removeByIndex(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	arg_5_0.__taskAnimRemoveItem:removeByIndex(arg_5_1, arg_5_2, arg_5_3)
-end
-
-function var_0_0.actId(arg_6_0)
+function var_0_0.actId(arg_5_0)
 	return ShortenActConfig.instance:getActivityId()
 end
 

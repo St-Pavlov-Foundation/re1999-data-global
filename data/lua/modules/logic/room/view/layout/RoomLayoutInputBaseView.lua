@@ -58,7 +58,9 @@ function var_0_0._onInputNameEndEdit(arg_7_0)
 end
 
 function var_0_0._onInputNameValueChange(arg_8_0)
-	arg_8_0:_checkLimit()
+	if not BootNativeUtil.isIOS() then
+		arg_8_0:_checkLimit()
+	end
 end
 
 function var_0_0._checkLimit(arg_9_0)

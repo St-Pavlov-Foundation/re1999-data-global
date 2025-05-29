@@ -595,7 +595,10 @@
 		mainRes = "ui/viewres/fight/fightquittipview.prefab",
 		layer = "POPUP",
 		viewType = ViewType.Modal,
-		anim = ViewAnim.Default
+		anim = ViewAnim.Default,
+		otherRes = {
+			weekwalkheart_star = "ui/viewres/weekwalk/weekwalkheart/weekwalkheart_star.prefab"
+		}
 	},
 	ToastView = {
 		destroy = 0,
@@ -860,7 +863,10 @@
 		mainRes = "ui/viewres/fight/fightsuccview.prefab",
 		layer = "POPUP_TOP",
 		viewType = ViewType.Modal,
-		anim = ViewAnim.Default
+		anim = ViewAnim.Default,
+		otherRes = {
+			weekwalkheart_star = "ui/viewres/weekwalk/weekwalkheart/weekwalkheart_star.prefab"
+		}
 	},
 	FightFailTipsView = {
 		destroy = 0,
@@ -910,6 +916,14 @@
 		container = "FightCardDeckViewContainer",
 		bgBlur = 1,
 		mainRes = "ui/viewres/fight/fightcarddeckview.prefab",
+		layer = "POPUP_TOP",
+		viewType = ViewType.Normal,
+		anim = ViewAnim.Default
+	},
+	FightWeekWalkEnemyTipsView = {
+		destroy = 0,
+		container = "FightWeekWalkEnemyTipsViewContainer",
+		mainRes = "ui/viewres/fight/fightweekwalkenemytipsview.prefab",
 		layer = "POPUP_TOP",
 		viewType = ViewType.Normal,
 		anim = ViewAnim.Default
@@ -1892,6 +1906,117 @@
 			}
 		}
 	},
+	WeekWalk_2HeartLayerView = {
+		destroy = 0,
+		container = "WeekWalk_2HeartLayerViewContainer",
+		mainRes = "ui/viewres/weekwalk/weekwalkheart/weekwalkheartlayerview.prefab",
+		layer = "POPUP_TOP",
+		viewType = ViewType.Full,
+		anim = ViewAnim.Internal,
+		tabRes = {
+			{
+				{
+					NavigateButtonsView.prefabPath
+				}
+			}
+		},
+		otherRes = {
+			"ui/viewres/weekwalk/weekwalkheart/weekwalkheartlayerpage.prefab",
+			"ui/viewres/weekwalk/weekwalkheart/weekwalkheartlayerpageitem.prefab",
+			weekwalkheart_star = "ui/viewres/weekwalk/weekwalkheart/weekwalkheart_star.prefab"
+		}
+	},
+	WeekWalk_2HeartView = {
+		destroy = 0,
+		container = "WeekWalk_2HeartViewContainer",
+		mainRes = "ui/viewres/weekwalk/weekwalkheart/weekwalkheartview.prefab",
+		layer = "POPUP_TOP",
+		viewType = ViewType.Full,
+		tabRes = {
+			{
+				{
+					NavigateButtonsView.prefabPath
+				}
+			}
+		},
+		otherRes = {
+			weekwalkheart_star = "ui/viewres/weekwalk/weekwalkheart/weekwalkheart_star.prefab"
+		}
+	},
+	WeekWalk_2HeartBuffView = {
+		destroy = 0,
+		container = "WeekWalk_2HeartBuffViewContainer",
+		bgBlur = 1,
+		mainRes = "ui/viewres/weekwalk/weekwalkheart/weekwalkheart_buffview.prefab",
+		blurFactor = 0.5,
+		layer = "POPUP_TOP",
+		viewType = ViewType.Modal,
+		otherRes = {
+			[1] = "ui/viewres/weekwalk/weekwalkheart/weekwalkheart_buffitem.prefab"
+		}
+	},
+	WeekWalk_2HeartResultView = {
+		destroy = 0,
+		container = "WeekWalk_2HeartResultViewContainer",
+		mainRes = "ui/viewres/weekwalk/weekwalkheart/weekwalkheart_resultview.prefab",
+		layer = "POPUP_TOP",
+		viewType = ViewType.Full,
+		otherRes = {
+			weekwalkheart_star = "ui/viewres/weekwalk/weekwalkheart/weekwalkheart_star.prefab"
+		}
+	},
+	WeekWalk_2ResetView = {
+		bgBlur = 1,
+		container = "WeekWalk_2ResetViewContainer",
+		mainRes = "ui/viewres/weekwalk/weekwalkheart/weekwalkheart_resetview.prefab",
+		destroy = 0,
+		blurFactor = 0.3,
+		layer = "POPUP_TOP",
+		viewType = ViewType.Normal,
+		anim = ViewAnim.Internal,
+		otherRes = {
+			[1] = "ui/viewres/weekwalk/weekwalkheart/weekwalkheart_resetbattleitem.prefab",
+			weekwalkheart_star = "ui/viewres/weekwalk/weekwalkheart/weekwalkheart_star.prefab"
+		},
+		tabRes = {
+			{
+				{
+					NavigateButtonsView.prefabPath
+				}
+			}
+		}
+	},
+	WeekWalk_2LayerRewardView = {
+		bgBlur = 1,
+		container = "WeekWalk_2LayerRewardViewContainer",
+		mainRes = "ui/viewres/weekwalk/weekwalkheart/weekwalkheart_layerrewardview.prefab",
+		destroy = 0,
+		blurFactor = 0.3,
+		layer = "POPUP_TOP",
+		viewType = ViewType.Normal,
+		anim = ViewAnim.Default,
+		otherRes = {
+			[1] = "ui/viewres/weekwalk/weekwalkheart/weekwalkheart_layerrewarditem.prefab",
+			weekwalkheart_star = "ui/viewres/weekwalk/weekwalkheart/weekwalkheart_star.prefab"
+		}
+	},
+	WeekWalk_2RuleView = {
+		destroy = 0,
+		container = "WeekWalk_2RuleViewContainer",
+		bgBlur = 1,
+		mainRes = "ui/viewres/weekwalk/weekwalkheart/weekwalkheart_ruleview.prefab",
+		layer = "POPUP_TOP",
+		viewType = ViewType.Normal,
+		anim = ViewAnim.Default
+	},
+	WeekWalk_2DeepLayerNoticeView = {
+		destroy = 0,
+		container = "WeekWalk_2DeepLayerNoticeViewContainer",
+		mainRes = "ui/viewres/weekwalk/weekwalkheart/weekwalkheart_deeplayernoticeview.prefab",
+		layer = "POPUP_TOP",
+		viewType = ViewType.Modal,
+		anim = ViewAnim.Default
+	},
 	MeilanniView = {
 		destroy = 0,
 		container = "MeilanniViewContainer",
@@ -2006,7 +2131,8 @@
 			"ui/viewres/dungeon/reappear/reappearitem.prefab",
 			RoleStoryTank.prefabPath,
 			mini_item = "ui/viewres/dungeon/dungeonchapterminiitem.prefab",
-			section_item = "ui/viewres/dungeon/dungeonsectionitem.prefab"
+			section_item = "ui/viewres/dungeon/dungeonsectionitem.prefab",
+			weekwalkheart_star = "ui/viewres/weekwalk/weekwalkheart/weekwalkheart_star.prefab"
 		},
 		tabRes = {
 			{
@@ -2023,6 +2149,9 @@
 				},
 				{
 					"ui/viewres/dungeon/reappear/reappearview.prefab"
+				},
+				{
+					DungeonEnum.dungeonweekwalk_2viewPath
 				}
 			}
 		},
@@ -3483,6 +3612,9 @@ var_0_0.V1a6_HeroGroupFightView = tabletool.copy(var_0_0.HeroGroupFightView)
 var_0_0.V1a6_HeroGroupFightView.container = "V1a6_HeroGroupFightViewContainer"
 var_0_0.HeroGroupFightWeekwalkView = tabletool.copy(var_0_0.HeroGroupFightView)
 var_0_0.HeroGroupFightWeekwalkView.container = "HeroGroupFightWeekwalkViewContainer"
+var_0_0.HeroGroupFightWeekwalk_2View = tabletool.copy(var_0_0.HeroGroupFightView)
+var_0_0.HeroGroupFightWeekwalk_2View.otherRes.weekwalkheart_star = "ui/viewres/weekwalk/weekwalkheart/weekwalkheart_star.prefab"
+var_0_0.HeroGroupFightWeekwalk_2View.container = "HeroGroupFightWeekwalk_2ViewContainer"
 var_0_0.HeroGroupBalanceTipView = {
 	destroy = 0,
 	container = "HeroGroupBalanceTipViewContainer",
@@ -3577,6 +3709,30 @@ var_0_0.BaseEnemyInfoView = {
 	},
 	otherRes = {
 		FightEntityResistanceComp.FightResistancePath
+	}
+}
+var_0_0.WeekWalk_2EnemyInfoView = {
+	bgBlur = 1,
+	container = "BaseEnemyInfoViewContainer",
+	destroy = 0,
+	mainRes = "ui/viewres/enemyinfo/baseenemyinfoview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Modal,
+	anim = ViewAnim.Default,
+	tabRes = {
+		{
+			{
+				NavigateButtonsView.prefabPath
+			}
+		}
+	},
+	customAnimBg = {
+		"bg_container/#simage_bg",
+		"bg_container/#simage_rightbg"
+	},
+	otherRes = {
+		FightEntityResistanceComp.FightResistancePath,
+		weekwalkheart_star = "ui/viewres/weekwalk/weekwalkheart/weekwalkheart_star.prefab"
 	}
 }
 var_0_0.FightAttributeTipView = {
@@ -10214,6 +10370,14 @@ var_0_0.TurnbackNewShowRewardView = {
 	viewType = ViewType.Normal,
 	anim = ViewAnim.Default
 }
+var_0_0.TurnbackReviewView = {
+	destroy = 0,
+	container = "TurnbackReviewViewContainer",
+	mainRes = "ui/viewres/turnback/new/turnbackstoryreview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Normal,
+	anim = ViewAnim.Default
+}
 var_0_0.AchievementEntryView = {
 	destroy = 0,
 	container = "AchievementEntryViewContainer",
@@ -12263,7 +12427,7 @@ var_0_0.ReactivityStoreView = {
 	destroy = 0,
 	container = "ReactivityStoreViewContainer",
 	bgBlur = 1,
-	mainRes = "ui/viewres/versionactivity_1_6/dungeon/versionactivity_1_6_storeview.prefab",
+	mainRes = "ui/viewres/versionactivity_1_8/v1a8_dungeon/v1a8_storeview.prefab",
 	layer = "POPUP_TOP",
 	viewType = ViewType.Normal,
 	tabRes = {
@@ -12302,7 +12466,7 @@ var_0_0.ReactivityRuleView = {
 var_0_0.ReactivityTaskView = {
 	bgBlur = 3,
 	container = "ReactivityTaskViewContainer",
-	mainRes = "ui/viewres/versionactivity_1_6/versionactivity_1_6_taskview.prefab",
+	mainRes = "ui/viewres/versionactivity_1_8/v1a8_dungeon/v1a8_taskview.prefab",
 	destroy = 0,
 	blurFactor = 0.64,
 	layer = "POPUP_TOP",
@@ -12315,7 +12479,7 @@ var_0_0.ReactivityTaskView = {
 		}
 	},
 	otherRes = {
-		"ui/viewres/versionactivity_1_6/versionactivity_1_6_taskitem.prefab"
+		"ui/viewres/versionactivity_1_8/v1a8_dungeon/v1a8_taskitem.prefab"
 	}
 }
 var_0_0.LimitedRoleView = {
@@ -13626,6 +13790,30 @@ var_0_0.RougeCollectionDropView = {
 		}
 	}
 }
+var_0_0.RougeBossCollectionDropView = {
+	bgBlur = 0,
+	container = "RougeBossCollectionDropViewContainer",
+	destroy = 0,
+	mainRes = "ui/viewres/rouge/dlc/103/rougebosscollectionselectview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Normal,
+	anim = ViewAnim.Default,
+	otherRes = {
+		RougeEnum.ResPath.CommonCollectionItem
+	},
+	tabRes = {
+		{
+			{
+				NavigateButtonsView.prefabPath
+			}
+		},
+		{
+			{
+				RougeEnum.ResPath.CollectionDetailBtnItem
+			}
+		}
+	}
+}
 var_0_0.RougeStoreView = {
 	destroy = 0,
 	container = "RougeMapStoreViewContainer",
@@ -14432,6 +14620,21 @@ var_0_0.RougeDLCSelectView = {
 		}
 	}
 }
+var_0_0.RougeDLCTipsView = {
+	destroy = 0,
+	container = "RougeDLCTipsViewContainer",
+	bgBlur = 1,
+	mainRes = "ui/viewres/rouge/dlc/rougedlctipsview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Modal,
+	tabRes = {
+		{
+			{
+				NavigateButtonsView.prefabPath
+			}
+		}
+	}
+}
 var_0_0.DecalogPresentView = {
 	destroy = 0,
 	container = "DecalogPresentViewContainer",
@@ -15202,6 +15405,20 @@ var_0_0.Permanent1_5EnterView = {
 	destroy = 0,
 	container = "Permanent1_5EnterViewContainer",
 	mainRes = "ui/viewres/dungeon/reappear/a5_reappear_mainactivity_enterview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Full,
+	tabRes = {
+		{
+			{
+				NavigateButtonsView.prefabPath
+			}
+		}
+	}
+}
+var_0_0.Permanent1_6EnterView = {
+	destroy = 0,
+	container = "Permanent1_6EnterViewContainer",
+	mainRes = "ui/viewres/dungeon/reappear/a6_reappear_mainactivity_enterview.prefab",
 	layer = "POPUP_TOP",
 	viewType = ViewType.Full,
 	tabRes = {
@@ -17169,7 +17386,7 @@ var_0_0.Season166MainView = {
 }
 var_0_0.Season166BaseSpotView = {
 	destroy = 0,
-	container = "Season166_2_4BaseSpotViewContainer",
+	container = "Season166_2_6BaseSpotViewContainer",
 	mainRes = "ui/viewres/seasonver/act166/season166basespotview.prefab",
 	layer = "POPUP_TOP",
 	viewType = ViewType.Normal,
@@ -17188,7 +17405,7 @@ var_0_0.Season166BaseSpotView = {
 }
 var_0_0.Season166TrainView = {
 	destroy = 0,
-	container = "Season166_2_4TrainViewContainer",
+	container = "Season166_2_6TrainViewContainer",
 	mainRes = "ui/viewres/seasonver/act166/season166trainview.prefab",
 	layer = "POPUP_TOP",
 	viewType = ViewType.Normal,
@@ -17223,7 +17440,7 @@ var_0_0.Season166TeachView = {
 }
 var_0_0.Season166HeroGroupFightView = {
 	bgBlur = 4,
-	container = "Season166_2_4HeroGroupFightViewContainer",
+	container = "Season166_2_6HeroGroupFightViewContainer",
 	destroy = 0,
 	mainRes = "ui/viewres/seasonver/act166/season166herogroupview.prefab",
 	layer = "POPUP_TOP",
@@ -17278,7 +17495,7 @@ var_0_0.Season166HeroGroupTargetView = {
 }
 var_0_0.Season166InformationMainView = {
 	destroy = 0,
-	container = "Season166_2_4InformationMainViewContainer",
+	container = "Season166_2_6InformationMainViewContainer",
 	bgBlur = 0,
 	mainRes = "ui/viewres/seasonver/act166/season_infoanalyze_reportview.prefab",
 	layer = "POPUP_TOP",
@@ -17293,7 +17510,7 @@ var_0_0.Season166InformationMainView = {
 }
 var_0_0.Season166InformationAnalyView = {
 	destroy = 0,
-	container = "Season166_2_4InformationAnalyViewContainer",
+	container = "Season166_2_6InformationAnalyViewContainer",
 	bgBlur = 0,
 	mainRes = "ui/viewres/seasonver/act166/season_infoanalyze_reportdetailview.prefab",
 	layer = "POPUP_TOP",
@@ -17339,7 +17556,7 @@ var_0_0.Season166TalentView = {
 }
 var_0_0.Season166TalentSelectView = {
 	destroy = 0,
-	container = "Season166_2_4TalentSelectViewContainer",
+	container = "Season166_2_6TalentSelectViewContainer",
 	mainRes = "ui/viewres/seasonver/act166/season166talentselectview.prefab",
 	layer = "POPUP_TOP",
 	viewType = ViewType.Full,
@@ -19821,6 +20038,228 @@ var_0_0.V2a5_WarmUp = {
 	container = "V2a5_WarmUpContainer",
 	bgBlur = 0,
 	mainRes = "ui/viewres/v2a5_warmup/v2a5_warmup.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Normal,
+	anim = ViewAnim.Default
+}
+var_0_0.VersionActivity2_6EnterView = {
+	destroy = 0,
+	container = "VersionActivity2_6EnterViewContainer",
+	mainRes = "ui/viewres/versionactivity_2_6/v2a6_enter/v2a6_enterview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Full,
+	tabRes = {
+		{
+			{
+				NavigateButtonsView.prefabPath
+			}
+		},
+		{
+			{
+				"ui/viewres/versionactivity_2_4/v2a4_reprint/v2a4_v1a8reprint_enterview.prefab"
+			},
+			{
+				"ui/viewres/versionactivity_2_6/v2a6_enter/v2a6_dungeonenterview.prefab"
+			},
+			{
+				"ui/viewres/versionactivity_2_6/dicehero/v2a6_dicehero_enterview.prefab"
+			},
+			{
+				"ui/viewres/versionactivity_2_6/v2a6_xugouji/v2a6_xugouji_enterview.prefab"
+			},
+			{
+				"ui/viewres/versionactivity_2_6/v2a6_rouge/v2a6_rouge_enterview.prefab"
+			},
+			{
+				"ui/viewres/versionactivity_1_4/v1a4_bossrush/v1a6_bossrush_enterview.prefab"
+			},
+			{
+				"ui/viewres/dungeon/rolestory/rolestoryenterview.prefab"
+			},
+			{
+				"ui/viewres/versionactivity_2_6/v2a6_season/v2a6_season_enterview.prefab"
+			},
+			{
+				"ui/viewres/activity/show/activityweekwalkdeepshowview.prefab"
+			},
+			{
+				"ui/viewres/tower/towermainentryview.prefab"
+			},
+			{
+				"ui/viewres/activity/show/activiyweekwalkheartshowview.prefab"
+			}
+		}
+	}
+}
+var_0_0.VersionActivity2_6StoreView = {
+	destroy = 0,
+	container = "VersionActivity2_6StoreViewContainer",
+	bgBlur = 1,
+	mainRes = "ui/viewres/versionactivity_2_6/v2a6_dungeon/v2a6_storeview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Normal,
+	tabRes = {
+		{
+			{
+				NavigateButtonsView.prefabPath
+			}
+		},
+		{
+			{
+				CurrencyView.prefabPath
+			}
+		}
+	}
+}
+var_0_0.VersionActivity2_6TaskView = {
+	destroy = 0,
+	container = "VersionActivity2_6TaskViewContainer",
+	mainRes = "ui/viewres/versionactivity_2_6/v2a6_dungeon/v2a6_taskview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Normal,
+	tabRes = {
+		{
+			{
+				NavigateButtonsView.prefabPath
+			}
+		}
+	},
+	otherRes = {
+		"ui/viewres/versionactivity_2_6/v2a6_dungeon/v2a6_taskitem.prefab"
+	}
+}
+
+DiceHeroViewDefine.init(var_0_0)
+
+var_0_0.XugoujiLevelView = {
+	destroy = 0,
+	container = "XugoujiLevelViewContainer",
+	mainRes = "ui/viewres/versionactivity_2_6/v2a6_xugouji/v2a6_xugouji_levelview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Full,
+	otherRes = {
+		[1] = "ui/viewres/versionactivity_2_6/v2a6_xugouji/v2a6_xugouji_levelitem.prefab"
+	},
+	tabRes = {
+		{
+			{
+				NavigateButtonsView.prefabPath
+			}
+		}
+	}
+}
+var_0_0.XugoujiTaskView = {
+	bgBlur = 0,
+	container = "XugoujiTaskViewContainer",
+	destroy = 0,
+	mainRes = "ui/viewres/versionactivity_2_6/v2a6_xugouji/v2a6_xugouji_taskview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Modal,
+	anim = ViewAnim.Default,
+	otherRes = {
+		[1] = "ui/viewres/versionactivity_2_6/v2a6_xugouji/v2a6_xugouji_taskitem.prefab"
+	},
+	tabRes = {
+		{
+			{
+				NavigateButtonsView.prefabPath
+			}
+		}
+	}
+}
+var_0_0.XugoujiGameView = {
+	destroy = 0,
+	container = "XugoujiGameViewContainer",
+	mainRes = "ui/viewres/versionactivity_2_6/v2a6_xugouji/v2a6_xugouji_gameview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Full,
+	tabRes = {
+		{
+			{
+				NavigateButtonsView.prefabPath
+			}
+		}
+	}
+}
+var_0_0.XugoujiGameResultView = {
+	destroy = 0,
+	container = "XugoujiGameResultViewContainer",
+	bgBlur = 3,
+	mainRes = "ui/viewres/versionactivity_2_6/v2a6_xugouji/v2a6_xugouji_resultview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Modal,
+	anim = ViewAnim.Default
+}
+var_0_0.XugoujiCardInfoView = {
+	destroy = 0,
+	container = "XugoujiCardInfoViewContainer",
+	mainRes = "ui/viewres/versionactivity_2_6/v2a6_xugouji/v2a6_xugouji_skilltips.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Modal,
+	tabRes = {
+		{
+			{
+				NavigateButtonsView.prefabPath
+			}
+		}
+	}
+}
+var_0_0.ShortenAct_FullView = {
+	destroy = 0,
+	container = "ShortenAct_FullViewContainer",
+	bgBlur = 0,
+	mainRes = "ui/viewres/activity/shortenact_fullview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Normal,
+	anim = ViewAnim.Default,
+	otherRes = {
+		[1] = "ui/viewres/activity/shortenact_taskitem.prefab"
+	}
+}
+var_0_0.ShortenAct_PanelView = {
+	destroy = 0,
+	container = "ShortenAct_PanelViewContainer",
+	bgBlur = 1,
+	mainRes = "ui/viewres/activity/shortenact_panelview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Normal,
+	anim = ViewAnim.Default,
+	otherRes = {
+		[1] = "ui/viewres/activity/shortenact_taskitem.prefab"
+	}
+}
+var_0_0.V2a6_WeekwalkHeart_FullView = {
+	destroy = 0,
+	container = "V2a6_WeekwalkHeart_FullViewContainer",
+	bgBlur = 0,
+	mainRes = "ui/viewres/activity/v2a6_weekwalkheart_fullview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Normal,
+	anim = ViewAnim.Default
+}
+var_0_0.V2a6_WeekwalkHeart_PanelView = {
+	destroy = 0,
+	container = "V2a6_WeekwalkHeart_PanelViewContainer",
+	bgBlur = 1,
+	mainRes = "ui/viewres/activity/v2a6_weekwalkheart_panelview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Normal,
+	anim = ViewAnim.Default
+}
+var_0_0.ActivityInsightShowView_2_6 = {
+	destroy = 0,
+	container = "ActivityInsightShowView_2_6Container",
+	bgBlur = 0,
+	mainRes = "ui/viewres/versionactivity_2_6/v2a6_newinsight/v2a6_activityinsightshowview.prefab",
+	layer = "POPUP_TOP",
+	viewType = ViewType.Normal,
+	anim = ViewAnim.Default
+}
+var_0_0.V2a6_WarmUp = {
+	destroy = 0,
+	container = "V2a6_WarmUpContainer",
+	bgBlur = 0,
+	mainRes = "ui/viewres/v2a6_warmup/v2a6_warmup.prefab",
 	layer = "POPUP_TOP",
 	viewType = ViewType.Normal,
 	anim = ViewAnim.Default

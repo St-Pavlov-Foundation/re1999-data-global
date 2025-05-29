@@ -44,14 +44,24 @@ function var_0_0.loadUnmatchRes(arg_2_0, arg_2_1, arg_2_2)
 	arg_2_0.eventDispatcher:AddListener(arg_2_0.eventDispatcher.MassHotUpdate_Progress, arg_2_0.onDownloadProgress, arg_2_0)
 	arg_2_0.eventDispatcher:AddListener(arg_2_0.eventDispatcher.MassHotUpdate_NotEnoughDiskSpace, arg_2_0._onDiskSpaceNotEnough, arg_2_0)
 
+	arg_2_0._fixResEntrance = UnityEngine.PlayerPrefs.GetFloat(PlayerPrefsKey.Manual_FixRes) == 1 and "主动修复" or "自动修复"
+
+	local var_2_6 = {
+		count = 0,
+		status = "start",
+		entrance = arg_2_0._fixResEntrance
+	}
+
+	SDKDataTrackMgr.instance:trackResourceFixup(var_2_6)
+
 	arg_2_0._lastRecvSize = 0
 	arg_2_0._allSize = 0
 
 	SLFramework.ResChecker.Instance:LoadUnmatchRes()
 
-	local var_2_6 = SLFramework.GameUpdate.MassHotUpdate.Instance:GetAllSize()
+	local var_2_7 = SLFramework.GameUpdate.MassHotUpdate.Instance:GetAllSize()
 
-	arg_2_0._allSize = tonumber(tostring(var_2_6))
+	arg_2_0._allSize = tonumber(tostring(var_2_7))
 	arg_2_0._lastFailedFileCount = 0
 end
 
@@ -129,11 +139,17 @@ function var_0_0.onDownloadFinish(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4)
 			arg_4_0._useBackupCount = 0
 		end
 
-		if SDKMgr.instance:isIgnoreFileMissing() then
-			if var_4_4 == true then
-				arg_4_0:_skip()
-			else
-				arg_4_0:retryFailedFiles()
+		if BootNativeUtil.getPackageName() ~= "com.shenlan.m.reverse1999.nearme.gamecenter" then
+			if SDKMgr.instance:isIgnoreFileMissing() then
+				if var_4_4 == true then
+					arg_4_0._lastFailedFileCount = arg_4_1
+
+					arg_4_0:_skip()
+				else
+					arg_4_0:retryFailedFiles()
+				end
+
+				return
 			end
 
 			return
@@ -216,7 +232,16 @@ function var_0_0.doCallBack(arg_9_0, arg_9_1)
 
 	if arg_9_1 ~= true then
 		ResCheckMgr.instance:markLastCheckAppVersion()
+		UnityEngine.PlayerPrefs.DeleteKey(PlayerPrefsKey.Manual_FixRes)
 	end
+
+	local var_9_0 = {
+		status = arg_9_1 and "fail" or "success",
+		count = arg_9_0._lastFailedFileCount,
+		entrance = arg_9_0._fixResEntrance
+	}
+
+	SDKDataTrackMgr.instance:trackResourceFixup(var_9_0)
 
 	if arg_9_0.cb then
 		arg_9_0.cb(arg_9_0.cbObj)

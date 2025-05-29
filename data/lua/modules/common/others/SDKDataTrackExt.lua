@@ -18,6 +18,8 @@ function var_0_0.activateExtend()
 	var_0_0.EventName.voice_pack_delete = "voice_pack_delete"
 	var_0_0.EventName.resources_downloading = "resources_downloading"
 	var_0_0.EventName.main_hero_interaction = "main_hero_interaction"
+	var_0_0.EventName.resource_fixup = "resource_fixup"
+	var_0_0.EventName.click_activity_jump_button = "click_activity_jump_button"
 	var_0_0.EventProperties.current_language = "current_language"
 	var_0_0.EventProperties.entrance = "entrance"
 	var_0_0.EventProperties.current_voice_pack_list = "current_voice_pack_list"
@@ -31,6 +33,8 @@ function var_0_0.activateExtend()
 	var_0_0.EventProperties.main_hero_interaction_skin_id = "skinid"
 	var_0_0.EventProperties.main_hero_interaction_area_id = "area_id"
 	var_0_0.EventProperties.main_hero_interaction_voice_id = "voiceid"
+	var_0_0.EventProperties.resource_fixup_status = "status"
+	var_0_0.EventProperties.resource_fixup_count = "resource_count"
 	var_0_0.PropertyTypes[var_0_0.EventProperties.current_language] = "string"
 	var_0_0.PropertyTypes[var_0_0.EventProperties.entrance] = "string"
 	var_0_0.PropertyTypes[var_0_0.EventProperties.current_voice_pack_list] = "list"
@@ -44,6 +48,8 @@ function var_0_0.activateExtend()
 	var_0_0.PropertyTypes[var_0_0.EventProperties.main_hero_interaction_skin_id] = "number"
 	var_0_0.PropertyTypes[var_0_0.EventProperties.main_hero_interaction_area_id] = "number"
 	var_0_0.PropertyTypes[var_0_0.EventProperties.main_hero_interaction_voice_id] = "string"
+	var_0_0.PropertyTypes[var_0_0.EventProperties.resource_fixup_status] = "string"
+	var_0_0.PropertyTypes[var_0_0.EventProperties.resource_fixup_count] = "number"
 end
 
 function var_0_0.trackVoicePackDownloadConfirm(arg_3_0, arg_3_1)
@@ -108,6 +114,18 @@ function var_0_0.trackMainHeroInteraction(arg_9_0, arg_9_1)
 		[var_0_0.EventProperties.main_hero_interaction_area_id] = arg_9_1.main_hero_interaction_area_id or -1,
 		[var_0_0.EventProperties.main_hero_interaction_voice_id] = arg_9_1.main_hero_interaction_voice_id or ""
 	})
+end
+
+function var_0_0.trackResourceFixup(arg_10_0, arg_10_1)
+	var_0_0.instance:track(var_0_0.EventName.resource_fixup, {
+		[var_0_0.EventProperties.resource_fixup_status] = arg_10_1.status or "",
+		[var_0_0.EventProperties.resource_fixup_count] = arg_10_1.count or 0,
+		[var_0_0.EventProperties.entrance] = arg_10_1.entrance or ""
+	})
+end
+
+function var_0_0.trackClickActivityJumpButton(arg_11_0)
+	StatController.instance:track(var_0_0.EventName.click_activity_jump_button, {})
 end
 
 return var_0_0

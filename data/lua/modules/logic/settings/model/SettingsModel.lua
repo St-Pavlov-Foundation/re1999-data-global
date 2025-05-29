@@ -2,21 +2,18 @@
 
 local var_0_0 = class("SettingsModel", BaseModel)
 
-function var_0_0.extractByRegion(arg_1_0, arg_1_1)
-	if string.nilorempty(arg_1_1) then
-		return arg_1_1
+function var_0_0.setVideoEnabled(arg_1_0, arg_1_1)
+	arg_1_0._isVideoEnabled = arg_1_1 and 1 or 0
+
+	PlayerPrefsHelper.setNumber(PlayerPrefsKey.SettingsVideoEnabled, arg_1_0._isVideoEnabled)
+end
+
+function var_0_0.getVideoEnabled(arg_2_0)
+	if arg_2_0._isVideoEnabled == nil then
+		arg_2_0._isVideoEnabled = PlayerPrefsHelper.getNumber(PlayerPrefsKey.SettingsVideoEnabled, 1)
 	end
 
-	local var_1_0 = GameUtil.splitString2(arg_1_1, false)
-	local var_1_1 = arg_1_0:getRegionShortcut()
-
-	for iter_1_0, iter_1_1 in ipairs(var_1_0) do
-		if iter_1_1[1] == var_1_1 then
-			return iter_1_1[2]
-		end
-	end
-
-	return arg_1_1
+	return arg_2_0._isVideoEnabled == 1
 end
 
 var_0_0.ResolutionRatioWidthList = {
@@ -39,669 +36,684 @@ var_0_0.FrameRate = {
 	144
 }
 
-function var_0_0.onInit(arg_2_0)
-	arg_2_0._curCategoryId = 1
-	arg_2_0._categoryList = {}
-	arg_2_0.showHelper = arg_2_0.showHelper or SettingsShowHelper.New()
+function var_0_0.onInit(arg_3_0)
+	arg_3_0._curCategoryId = 1
+	arg_3_0._categoryList = {}
+	arg_3_0.showHelper = arg_3_0.showHelper or SettingsShowHelper.New()
 
-	local var_2_0 = 80
-	local var_2_1 = 100
+	local var_3_0 = 80
+	local var_3_1 = 100
 
 	if PlayerPrefsHelper.getNumber(PlayerPrefsKey.FirstBootForBetaTest, 0) == 1 or not BootNativeUtil.isStandalonePlayer() or SLFramework.FrameworkSettings.IsEditor then
-		arg_2_0._musicValue = PlayerPrefsHelper.getNumber(PlayerPrefsKey.SettingsMusicValue, var_2_0)
-		arg_2_0._voiceValue = PlayerPrefsHelper.getNumber(PlayerPrefsKey.SettingsVoiceValue, var_2_0)
-		arg_2_0._effectValue = PlayerPrefsHelper.getNumber(PlayerPrefsKey.SettingsEffectValue, var_2_0)
-		arg_2_0._globalAudioVolume = PlayerPrefsHelper.getNumber(PlayerPrefsKey.SettingsGlobalAudioVolume, var_2_1)
+		arg_3_0._musicValue = PlayerPrefsHelper.getNumber(PlayerPrefsKey.SettingsMusicValue, var_3_0)
+		arg_3_0._voiceValue = PlayerPrefsHelper.getNumber(PlayerPrefsKey.SettingsVoiceValue, var_3_0)
+		arg_3_0._effectValue = PlayerPrefsHelper.getNumber(PlayerPrefsKey.SettingsEffectValue, var_3_0)
+		arg_3_0._globalAudioVolume = PlayerPrefsHelper.getNumber(PlayerPrefsKey.SettingsGlobalAudioVolume, var_3_1)
 	else
-		arg_2_0._musicValue = var_2_0
-		arg_2_0._voiceValue = var_2_0
-		arg_2_0._effectValue = var_2_0
-		arg_2_0._globalAudioVolume = var_2_1
-		arg_2_0._pushStates = {}
+		arg_3_0._musicValue = var_3_0
+		arg_3_0._voiceValue = var_3_0
+		arg_3_0._effectValue = var_3_0
+		arg_3_0._globalAudioVolume = var_3_1
+		arg_3_0._pushStates = {}
 
 		PlayerPrefsHelper.setNumber(PlayerPrefsKey.FirstBootForBetaTest, 1)
 	end
 
-	arg_2_0._musicValue = math.ceil(arg_2_0._musicValue)
-	arg_2_0._voiceValue = math.ceil(arg_2_0._voiceValue)
-	arg_2_0._effectValue = math.ceil(arg_2_0._effectValue)
-	arg_2_0._energyMode = PlayerPrefsHelper.getNumber(PlayerPrefsKey.SettingsEnergyMode, 0)
+	arg_3_0._musicValue = math.ceil(arg_3_0._musicValue)
+	arg_3_0._voiceValue = math.ceil(arg_3_0._voiceValue)
+	arg_3_0._effectValue = math.ceil(arg_3_0._effectValue)
+	arg_3_0._energyMode = PlayerPrefsHelper.getNumber(PlayerPrefsKey.SettingsEnergyMode, 0)
 
-	local var_2_2 = BootNativeUtil.isAndroid() and 0 or 1
+	local var_3_2 = BootNativeUtil.isAndroid() and 0 or 1
 
-	arg_2_0._screenshotSwitch = PlayerPrefsHelper.getNumber(PlayerPrefsKey.SettingsScreenshotSwitch, var_2_2)
+	arg_3_0._screenshotSwitch = PlayerPrefsHelper.getNumber(PlayerPrefsKey.SettingsScreenshotSwitch, var_3_2)
 
 	if BootNativeUtil.isAndroid() and SDKMgr.instance:checkReadExternalStoragePermissions() then
-		arg_2_0._screenshotSwitch = 0
+		arg_3_0._screenshotSwitch = 0
 	end
 
-	arg_2_0._minRate = 1.3333333333333333
-	arg_2_0._maxRate = 2.4
+	arg_3_0._minRate = 1.3333333333333333
+	arg_3_0._maxRate = 2.4
 
 	if SLFramework.FrameworkSettings.IsEditor then
-		arg_2_0._screenWidth, arg_2_0._screenHeight = UnityEngine.Screen.width, UnityEngine.Screen.height
+		arg_3_0._screenWidth, arg_3_0._screenHeight = UnityEngine.Screen.width, UnityEngine.Screen.height
 	elseif BootNativeUtil.isWindows() then
-		arg_2_0:initRateAndSystemSize()
-		arg_2_0:initWindowsResolution()
-		arg_2_0:initResolutionRationDataList()
+		arg_3_0:initRateAndSystemSize()
+		arg_3_0:initWindowsResolution()
+		arg_3_0:initResolutionRationDataList()
 	else
-		arg_2_0._screenWidth, arg_2_0._screenHeight = UnityEngine.Screen.width, UnityEngine.Screen.height
+		arg_3_0._screenWidth, arg_3_0._screenHeight = UnityEngine.Screen.width, UnityEngine.Screen.height
 	end
 
-	arg_2_0.limitedRoleMO = SettingsLimitedRoleMO.New()
+	arg_3_0.limitedRoleMO = SettingsLimitedRoleMO.New()
 end
 
-function var_0_0.reInit(arg_3_0)
-	arg_3_0.limitedRoleMO:reInit()
+function var_0_0.reInit(arg_4_0)
+	arg_4_0.limitedRoleMO:reInit()
 end
 
-function var_0_0.initRateAndSystemSize(arg_4_0)
-	arg_4_0._systemScreenWidth, arg_4_0._systemScreenHeight = BootNativeUtil.getDisplayResolution()
-	arg_4_0._curRate = arg_4_0._systemScreenWidth / arg_4_0._systemScreenHeight
+function var_0_0.initRateAndSystemSize(arg_5_0)
+	arg_5_0._systemScreenWidth, arg_5_0._systemScreenHeight = BootNativeUtil.getDisplayResolution()
+	arg_5_0._curRate = arg_5_0._systemScreenWidth / arg_5_0._systemScreenHeight
 
-	if arg_4_0._curRate < arg_4_0._minRate then
-		arg_4_0._systemScreenHeight = arg_4_0._systemScreenWidth / arg_4_0._minRate
-		arg_4_0._curRate = arg_4_0._minRate
+	if arg_5_0._curRate < arg_5_0._minRate then
+		arg_5_0._systemScreenHeight = arg_5_0._systemScreenWidth / arg_5_0._minRate
+		arg_5_0._curRate = arg_5_0._minRate
 	end
 
-	if arg_4_0._curRate > arg_4_0._maxRate then
-		arg_4_0._systemScreenWidth = arg_4_0._systemScreenHeight * arg_4_0._maxRate
-		arg_4_0._curRate = arg_4_0._maxRate
+	if arg_5_0._curRate > arg_5_0._maxRate then
+		arg_5_0._systemScreenWidth = arg_5_0._systemScreenHeight * arg_5_0._maxRate
+		arg_5_0._curRate = arg_5_0._maxRate
 	end
 end
 
-function var_0_0.initResolutionRationDataList(arg_5_0)
-	arg_5_0._resolutionRatioDataList = {}
+function var_0_0.initResolutionRationDataList(arg_6_0)
+	arg_6_0._resolutionRatioDataList = {}
 
 	if SLFramework.FrameworkSettings.IsEditor then
-		arg_5_0:_appendResolutionData(UnityEngine.Screen.width, UnityEngine.Screen.height, false)
+		arg_6_0:_appendResolutionData(UnityEngine.Screen.width, UnityEngine.Screen.height, false)
 
 		return
 	end
 
-	local var_5_0 = UnityEngine.Screen.currentResolution.width
+	local var_6_0 = UnityEngine.Screen.currentResolution.width
 
-	if arg_5_0._resolutionRatioDataList and #arg_5_0._resolutionRatioDataList >= 1 and arg_5_0._resolutionRatioDataList[1] == var_5_0 then
+	if arg_6_0._resolutionRatioDataList and #arg_6_0._resolutionRatioDataList >= 1 and arg_6_0._resolutionRatioDataList[1] == var_6_0 then
 		return
 	end
 
-	local var_5_1 = math.floor(var_5_0 / arg_5_0._curRate)
+	local var_6_1 = math.floor(var_6_0 / arg_6_0._curRate)
 
-	arg_5_0:_appendResolutionData(var_5_0, var_5_1, true)
+	arg_6_0:_appendResolutionData(var_6_0, var_6_1, true)
 
-	for iter_5_0, iter_5_1 in ipairs(var_0_0.ResolutionRatioWidthList) do
-		if iter_5_1 <= arg_5_0._systemScreenWidth and iter_5_1 <= var_5_0 then
-			local var_5_2 = math.floor(iter_5_1 / arg_5_0._curRate)
+	for iter_6_0, iter_6_1 in ipairs(var_0_0.ResolutionRatioWidthList) do
+		if iter_6_1 <= arg_6_0._systemScreenWidth and iter_6_1 <= var_6_0 then
+			local var_6_2 = math.floor(iter_6_1 / arg_6_0._curRate)
 
-			arg_5_0:_appendResolutionData(iter_5_1, var_5_2, false)
+			arg_6_0:_appendResolutionData(iter_6_1, var_6_2, false)
 		end
 	end
 
-	local var_5_3, var_5_4 = arg_5_0:getCurrentDropDownIndex()
+	local var_6_3, var_6_4 = arg_6_0:getCurrentDropDownIndex()
 
-	if var_5_4 then
-		local var_5_5, var_5_6, var_5_7 = arg_5_0:getCurrentResolutionWHAndIsFull()
+	if var_6_4 then
+		local var_6_5, var_6_6, var_6_7 = arg_6_0:getCurrentResolutionWHAndIsFull()
 
-		arg_5_0:_appendResolutionData(var_5_5, var_5_6, var_5_7)
+		arg_6_0:_appendResolutionData(var_6_5, var_6_6, var_6_7)
 	end
 end
 
-function var_0_0.initWindowsResolution(arg_6_0)
+function var_0_0.initWindowsResolution(arg_7_0)
 	if SLFramework.FrameworkSettings.IsEditor then
-		arg_6_0._screenWidth, arg_6_0._screenHeight = UnityEngine.Screen.width, UnityEngine.Screen.height
+		arg_7_0._screenWidth, arg_7_0._screenHeight = UnityEngine.Screen.width, UnityEngine.Screen.height
 
-		arg_6_0:_setIsFullScreen(false)
+		arg_7_0:_setIsFullScreen(false)
 
-		arg_6_0._resolutionRatio = arg_6_0:_resolutionStr(arg_6_0._screenWidth, arg_6_0._screenHeight)
+		arg_7_0._resolutionRatio = arg_7_0:_resolutionStr(arg_7_0._screenWidth, arg_7_0._screenHeight)
 	else
-		arg_6_0._resolutionRatio = PlayerPrefsHelper.getString(PlayerPrefsKey.ResolutionRatio, nil)
+		arg_7_0._resolutionRatio = PlayerPrefsHelper.getString(PlayerPrefsKey.ResolutionRatio, nil)
 
-		local var_6_0 = PlayerPrefsHelper.getNumber(PlayerPrefsKey.FullScreenKey, ModuleEnum.FullScreenState.On)
+		local var_7_0 = PlayerPrefsHelper.getNumber(PlayerPrefsKey.FullScreenKey, ModuleEnum.FullScreenState.On)
 
-		arg_6_0:_setIsFullScreen(var_6_0 == ModuleEnum.FullScreenState.On)
+		arg_7_0:_setIsFullScreen(var_7_0 == ModuleEnum.FullScreenState.On)
 
-		if arg_6_0:isFullScreen() then
-			local var_6_1 = UnityEngine.Screen.currentResolution
+		if arg_7_0:isFullScreen() then
+			local var_7_1 = UnityEngine.Screen.currentResolution
 
-			arg_6_0._screenWidth = var_6_1.width
-			arg_6_0._screenHeight = var_6_1.height
+			arg_7_0._screenWidth = var_7_1.width
+			arg_7_0._screenHeight = var_7_1.height
 		else
-			local var_6_2 = not string.nilorempty(arg_6_0._resolutionRatio) and arg_6_0._resolutionRatio ~= "nil"
-			local var_6_3 = var_6_2 and string.splitToNumber(arg_6_0._resolutionRatio, "*") or {
+			local var_7_2 = not string.nilorempty(arg_7_0._resolutionRatio) and arg_7_0._resolutionRatio ~= "nil"
+			local var_7_3 = var_7_2 and string.splitToNumber(arg_7_0._resolutionRatio, "*") or {
 				1920,
 				1080
 			}
-			local var_6_4 = UnityEngine.Screen.width
+			local var_7_4 = UnityEngine.Screen.width
 
-			if var_6_2 and var_6_4 <= var_6_3[1] then
-				arg_6_0._screenWidth = var_6_3[1]
-				arg_6_0._screenHeight = var_6_3[2]
+			if var_7_2 and var_7_4 <= var_7_3[1] then
+				arg_7_0._screenWidth = var_7_3[1]
+				arg_7_0._screenHeight = var_7_3[2]
 			else
-				local var_6_5 = math.floor(var_6_4 / arg_6_0._curRate)
+				local var_7_5 = math.floor(var_7_4 / arg_7_0._curRate)
 
-				arg_6_0._screenWidth = var_6_4
-				arg_6_0._screenHeight = var_6_5
-				arg_6_0._resolutionRatio = arg_6_0:_resolutionStr(var_6_4, var_6_5)
+				arg_7_0._screenWidth = var_7_4
+				arg_7_0._screenHeight = var_7_5
+				arg_7_0._resolutionRatio = arg_7_0:_resolutionStr(var_7_4, var_7_5)
 			end
 		end
 	end
 
-	arg_6_0:setResolutionRatio()
+	arg_7_0:setResolutionRatio()
 end
 
-function var_0_0.getCurCategoryId(arg_7_0)
-	return arg_7_0._curCategoryId
+function var_0_0.getCurCategoryId(arg_8_0)
+	return arg_8_0._curCategoryId
 end
 
-function var_0_0.setCurCategoryId(arg_8_0, arg_8_1)
-	arg_8_0._curCategoryId = arg_8_1
+function var_0_0.setCurCategoryId(arg_9_0, arg_9_1)
+	arg_9_0._curCategoryId = arg_9_1
 end
 
-function var_0_0.setSettingsCategoryList(arg_9_0, arg_9_1)
-	arg_9_0._categoryList = arg_9_1
+function var_0_0.setSettingsCategoryList(arg_10_0, arg_10_1)
+	arg_10_0._categoryList = arg_10_1
 end
 
-function var_0_0.getSettingsCategoryList(arg_10_0)
-	arg_10_0._categoryList = {}
+function var_0_0.getSettingsCategoryList(arg_11_0)
+	arg_11_0._categoryList = {}
 
-	for iter_10_0, iter_10_1 in ipairs(SettingsEnum.CategoryList) do
-		if arg_10_0:canShowCategory(iter_10_1) then
-			table.insert(arg_10_0._categoryList, iter_10_1)
+	for iter_11_0, iter_11_1 in ipairs(SettingsEnum.CategoryList) do
+		if arg_11_0:canShowCategory(iter_11_1) then
+			table.insert(arg_11_0._categoryList, iter_11_1)
 		end
 	end
 
-	return arg_10_0._categoryList
+	return arg_11_0._categoryList
 end
 
-function var_0_0.canShowCategory(arg_11_0, arg_11_1)
-	if arg_11_1.name == "settings_push" and BootNativeUtil.isWindows() then
+function var_0_0.canShowCategory(arg_12_0, arg_12_1)
+	if arg_12_1.name == "settings_push" and BootNativeUtil.isWindows() then
 		return false
 	end
 
-	local var_11_0 = #arg_11_1.openIds == 0 and arg_11_1.showIds == nil or false
+	local var_12_0 = #arg_12_1.openIds == 0 and arg_12_1.showIds == nil or false
 
-	for iter_11_0, iter_11_1 in pairs(arg_11_1.openIds) do
-		if OpenModel.instance:isFuncBtnShow(iter_11_1) then
-			var_11_0 = true
+	for iter_12_0, iter_12_1 in pairs(arg_12_1.openIds) do
+		if OpenModel.instance:isFuncBtnShow(iter_12_1) then
+			var_12_0 = true
 
 			break
 		end
 	end
 
-	if not var_11_0 and arg_11_1.showIds then
-		for iter_11_2, iter_11_3 in pairs(arg_11_1.showIds) do
-			if arg_11_0.showHelper:canShow(iter_11_3) then
-				var_11_0 = true
+	if not var_12_0 and arg_12_1.showIds then
+		for iter_12_2, iter_12_3 in pairs(arg_12_1.showIds) do
+			if arg_12_0.showHelper:canShow(iter_12_3) then
+				var_12_0 = true
 
 				break
 			end
 		end
 	end
 
-	if arg_11_1.hideOnGamepadModle and GamepadController.instance:isOpen() then
-		var_11_0 = false
+	if arg_12_1.hideOnGamepadModle and GamepadController.instance:isOpen() then
+		var_12_0 = false
 	end
 
-	return var_11_0
+	return var_12_0
 end
 
 function var_0_0.isBilibili()
-	local var_12_0 = SDKMgr.instance:getChannelId()
+	local var_13_0 = SDKMgr.instance:getChannelId()
 
-	var_12_0 = var_12_0 and tostring(var_12_0)
+	var_13_0 = var_13_0 and tostring(var_13_0)
 
-	return not string.nilorempty(var_12_0) and var_12_0 == "101"
+	return not string.nilorempty(var_13_0) and var_13_0 == "101"
 end
 
-function var_0_0.getScreenshotSwitch(arg_13_0)
-	return arg_13_0._screenshotSwitch > 0
+function var_0_0.getScreenshotSwitch(arg_14_0)
+	return arg_14_0._screenshotSwitch > 0
 end
 
-function var_0_0.setScreenshotSwitch(arg_14_0, arg_14_1)
-	arg_14_0._screenshotSwitch = arg_14_1 and 1 or 0
+function var_0_0.setScreenshotSwitch(arg_15_0, arg_15_1)
+	arg_15_0._screenshotSwitch = arg_15_1 and 1 or 0
 
-	PlayerPrefsHelper.setNumber(PlayerPrefsKey.SettingsScreenshotSwitch, arg_14_0._screenshotSwitch)
+	PlayerPrefsHelper.setNumber(PlayerPrefsKey.SettingsScreenshotSwitch, arg_15_0._screenshotSwitch)
 end
 
-function var_0_0.changeEnergyMode(arg_15_0)
-	if arg_15_0._energyMode == 1 then
-		arg_15_0._energyMode = 0
+function var_0_0.changeEnergyMode(arg_16_0)
+	if arg_16_0._energyMode == 1 then
+		arg_16_0._energyMode = 0
 
-		GameGlobalMgr.instance:getScreenState():setLocalQuality(arg_15_0:getModelGraphicsQuality())
-		GameGlobalMgr.instance:getScreenState():setTargetFrameRate(arg_15_0._frameRate)
+		GameGlobalMgr.instance:getScreenState():setLocalQuality(arg_16_0:getModelGraphicsQuality())
+		GameGlobalMgr.instance:getScreenState():setTargetFrameRate(arg_16_0._frameRate)
 	else
-		arg_15_0._energyMode = 1
+		arg_16_0._energyMode = 1
 
 		GameGlobalMgr.instance:getScreenState():setLocalQuality(ModuleEnum.Performance.Low)
 		GameGlobalMgr.instance:getScreenState():setTargetFrameRate(ModuleEnum.TargetFrameRate.Low)
 	end
 
-	PlayerPrefsHelper.setNumber(PlayerPrefsKey.SettingsEnergyMode, arg_15_0._energyMode)
+	PlayerPrefsHelper.setNumber(PlayerPrefsKey.SettingsEnergyMode, arg_16_0._energyMode)
 end
 
-function var_0_0.getEnergyMode(arg_16_0)
-	return arg_16_0._energyMode
+function var_0_0.getEnergyMode(arg_17_0)
+	return arg_17_0._energyMode
 end
 
-function var_0_0.getMusicValue(arg_17_0)
-	return arg_17_0._musicValue
+function var_0_0.getMusicValue(arg_18_0)
+	return arg_18_0._musicValue
 end
 
-function var_0_0.setMusicValue(arg_18_0, arg_18_1)
-	arg_18_0._musicValue = arg_18_1
+function var_0_0.setMusicValue(arg_19_0, arg_19_1)
+	arg_19_0._musicValue = arg_19_1
 
-	AudioMgr.instance:setRTPCValue(AudioEnum.Volume.Music_Volume, arg_18_1)
-	PlayerPrefsHelper.setNumber(PlayerPrefsKey.SettingsMusicValue, arg_18_0._musicValue)
+	AudioMgr.instance:setRTPCValue(AudioEnum.Volume.Music_Volume, arg_19_1)
+	PlayerPrefsHelper.setNumber(PlayerPrefsKey.SettingsMusicValue, arg_19_0._musicValue)
 end
 
-function var_0_0.getVoiceValue(arg_19_0)
-	return arg_19_0._voiceValue
+function var_0_0.getVoiceValue(arg_20_0)
+	return arg_20_0._voiceValue
 end
 
-function var_0_0.setVoiceValue(arg_20_0, arg_20_1)
-	arg_20_0._voiceValue = arg_20_1
+function var_0_0.setVoiceValue(arg_21_0, arg_21_1)
+	arg_21_0._voiceValue = arg_21_1
 
-	AudioMgr.instance:setRTPCValue(AudioEnum.Volume.Voc_Volume, arg_20_1)
-	PlayerPrefsHelper.setNumber(PlayerPrefsKey.SettingsVoiceValue, arg_20_0._voiceValue)
+	AudioMgr.instance:setRTPCValue(AudioEnum.Volume.Voc_Volume, arg_21_1)
+	PlayerPrefsHelper.setNumber(PlayerPrefsKey.SettingsVoiceValue, arg_21_0._voiceValue)
 
-	if arg_20_0._voiceValue > 0 then
+	if arg_21_0._voiceValue > 0 then
 		AudioMgr.instance:setState(AudioMgr.instance:getIdFromString("Voc_Volume_M"), AudioMgr.instance:getIdFromString("no"))
 	else
 		AudioMgr.instance:setState(AudioMgr.instance:getIdFromString("Voc_Volume_M"), AudioMgr.instance:getIdFromString("yes"))
 	end
 end
 
-function var_0_0.getEffectValue(arg_21_0)
-	return arg_21_0._effectValue
+function var_0_0.getEffectValue(arg_22_0)
+	return arg_22_0._effectValue
 end
 
-function var_0_0.setEffectValue(arg_22_0, arg_22_1)
-	arg_22_0._effectValue = arg_22_1
+function var_0_0.setEffectValue(arg_23_0, arg_23_1)
+	arg_23_0._effectValue = arg_23_1
 
-	AudioMgr.instance:setRTPCValue(AudioEnum.Volume.SFX_Volume, arg_22_1)
-	PlayerPrefsHelper.setNumber(PlayerPrefsKey.SettingsEffectValue, arg_22_0._effectValue)
+	AudioMgr.instance:setRTPCValue(AudioEnum.Volume.SFX_Volume, arg_23_1)
+	PlayerPrefsHelper.setNumber(PlayerPrefsKey.SettingsEffectValue, arg_23_0._effectValue)
 end
 
-function var_0_0.getGlobalAudioVolume(arg_23_0)
-	return arg_23_0._globalAudioVolume
+function var_0_0.getGlobalAudioVolume(arg_24_0)
+	return arg_24_0._globalAudioVolume
 end
 
-function var_0_0.setGlobalAudioVolume(arg_24_0, arg_24_1)
-	arg_24_0._globalAudioVolume = arg_24_1
+function var_0_0.setGlobalAudioVolume(arg_25_0, arg_25_1)
+	arg_25_0._globalAudioVolume = arg_25_1
 
-	AudioMgr.instance:setRTPCValue(AudioEnum.Volume.Global_Volume, arg_24_1)
-	PlayerPrefsHelper.setNumber(PlayerPrefsKey.SettingsGlobalAudioVolume, arg_24_0._globalAudioVolume)
+	AudioMgr.instance:setRTPCValue(AudioEnum.Volume.Global_Volume, arg_25_1)
+	PlayerPrefsHelper.setNumber(PlayerPrefsKey.SettingsGlobalAudioVolume, arg_25_0._globalAudioVolume)
 end
 
-function var_0_0.getRealGraphicsQuality(arg_25_0)
+function var_0_0.getRealGraphicsQuality(arg_26_0)
 	return GameGlobalMgr.instance:getScreenState():getLocalQuality()
 end
 
-function var_0_0.getModelGraphicsQuality(arg_26_0)
-	if not arg_26_0._graphicsQuality then
-		arg_26_0._graphicsQuality = PlayerPrefsHelper.getNumber(PlayerPrefsKey.SettingsGraphicsQuality, arg_26_0:getRecommendQuality())
+function var_0_0.getModelGraphicsQuality(arg_27_0)
+	if not arg_27_0._graphicsQuality then
+		arg_27_0._graphicsQuality = PlayerPrefsHelper.getNumber(PlayerPrefsKey.SettingsGraphicsQuality, arg_27_0:getRecommendQuality())
 	end
 
-	return arg_26_0._graphicsQuality
+	return arg_27_0._graphicsQuality
 end
 
-function var_0_0.setGraphicsQuality(arg_27_0, arg_27_1)
-	arg_27_0._graphicsQuality = arg_27_1
+function var_0_0.setGraphicsQuality(arg_28_0, arg_28_1)
+	arg_28_0._graphicsQuality = arg_28_1
 
-	PlayerPrefsHelper.setNumber(PlayerPrefsKey.SettingsGraphicsQuality, arg_27_0._graphicsQuality)
-	GameGlobalMgr.instance:getScreenState():setLocalQuality(arg_27_1)
+	PlayerPrefsHelper.setNumber(PlayerPrefsKey.SettingsGraphicsQuality, arg_28_0._graphicsQuality)
+	GameGlobalMgr.instance:getScreenState():setLocalQuality(arg_28_1)
 end
 
-function var_0_0.getRecommendQuality(arg_28_0)
+function var_0_0.getRecommendQuality(arg_29_0)
 	return HardwareUtil.getPerformanceGrade()
 end
 
-function var_0_0.getRealTargetFrameRate(arg_29_0)
+function var_0_0.getRealTargetFrameRate(arg_30_0)
 	return GameGlobalMgr.instance:getScreenState():getTargetFrameRate()
 end
 
-function var_0_0.getModelTargetFrameRate(arg_30_0)
-	if not arg_30_0._frameRate then
-		arg_30_0._frameRate = GameGlobalMgr.instance:getScreenState():getTargetFrameRate()
+function var_0_0.getModelTargetFrameRate(arg_31_0)
+	if not arg_31_0._frameRate then
+		arg_31_0._frameRate = GameGlobalMgr.instance:getScreenState():getTargetFrameRate()
 	end
 
-	return arg_30_0._frameRate
+	return arg_31_0._frameRate
 end
 
-function var_0_0.setTargetFrameRate(arg_31_0, arg_31_1)
-	arg_31_0._frameRate = arg_31_1
+function var_0_0.setTargetFrameRate(arg_32_0, arg_32_1)
+	arg_32_0._frameRate = arg_32_1
 
-	GameGlobalMgr.instance:getScreenState():setTargetFrameRate(arg_31_1)
+	GameGlobalMgr.instance:getScreenState():setTargetFrameRate(arg_32_1)
 end
 
-function var_0_0.getVSyncCount(arg_32_0)
+function var_0_0.getVSyncCount(arg_33_0)
 	return GameGlobalMgr.instance:getScreenState():getVSyncCount()
 end
 
-function var_0_0.setVSyncCount(arg_33_0, arg_33_1)
-	GameGlobalMgr.instance:getScreenState():setVSyncCount(arg_33_1)
+function var_0_0.setVSyncCount(arg_34_0, arg_34_1)
+	GameGlobalMgr.instance:getScreenState():setVSyncCount(arg_34_1)
 end
 
-function var_0_0._setIsFullScreen(arg_34_0, arg_34_1)
-	arg_34_0._isFullScreen = arg_34_1 and ModuleEnum.FullScreenState.On or ModuleEnum.FullScreenState.Off
+function var_0_0._setIsFullScreen(arg_35_0, arg_35_1)
+	arg_35_0._isFullScreen = arg_35_1 and ModuleEnum.FullScreenState.On or ModuleEnum.FullScreenState.Off
 end
 
-function var_0_0._setScreenWidthAndHeight(arg_35_0, arg_35_1)
+function var_0_0._setScreenWidthAndHeight(arg_36_0, arg_36_1)
 	if not BootNativeUtil.isWindows() then
 		return false
 	end
 
-	local var_35_0 = string.splitToNumber(arg_35_1, "*")
+	local var_36_0 = string.splitToNumber(arg_36_1, "*")
 
-	if var_35_0[1] > arg_35_0._systemScreenWidth or var_35_0[2] > arg_35_0._systemScreenHeight then
+	if var_36_0[1] > arg_36_0._systemScreenWidth or var_36_0[2] > arg_36_0._systemScreenHeight then
 		GameFacade.showToast(ToastEnum.SetScreenWidthAndHeightFail)
 
 		return false
 	end
 
-	arg_35_0._screenWidth = var_35_0[1]
-	arg_35_0._screenHeight = var_35_0[2]
+	arg_36_0._screenWidth = var_36_0[1]
+	arg_36_0._screenHeight = var_36_0[2]
 
-	arg_35_0:_setIsFullScreen(false)
+	arg_36_0:_setIsFullScreen(false)
 
-	arg_35_0._resolutionRatio = arg_35_1
+	arg_36_0._resolutionRatio = arg_36_1
 
-	arg_35_0:setResolutionRatio()
+	arg_36_0:setResolutionRatio()
 
 	return true
 end
 
-function var_0_0.getResolutionRatio(arg_36_0)
-	return arg_36_0._resolutionRatio
+function var_0_0.getResolutionRatio(arg_37_0)
+	return arg_37_0._resolutionRatio
 end
 
-function var_0_0.setResolutionRatio(arg_37_0)
-	PlayerPrefsHelper.setString(PlayerPrefsKey.ResolutionRatio, arg_37_0._resolutionRatio)
-	PlayerPrefsHelper.setNumber(PlayerPrefsKey.FullScreenKey, arg_37_0._isFullScreen)
-	ZProj.GameHelper.SetResolutionRatio(arg_37_0._screenWidth, arg_37_0._screenHeight, arg_37_0:isFullScreen())
-	GameGlobalMgr.instance:dispatchEvent(GameStateEvent.OnScreenResize, arg_37_0._screenWidth, arg_37_0._screenHeight)
+function var_0_0.setResolutionRatio(arg_38_0)
+	PlayerPrefsHelper.setString(PlayerPrefsKey.ResolutionRatio, arg_38_0._resolutionRatio)
+	PlayerPrefsHelper.setNumber(PlayerPrefsKey.FullScreenKey, arg_38_0._isFullScreen)
+	ZProj.GameHelper.SetResolutionRatio(arg_38_0._screenWidth, arg_38_0._screenHeight, arg_38_0:isFullScreen())
+	GameGlobalMgr.instance:dispatchEvent(GameStateEvent.OnScreenResize, arg_38_0._screenWidth, arg_38_0._screenHeight)
 end
 
-function var_0_0.getCurrentScreenResolutionRatio(arg_38_0)
-	return arg_38_0._screenWidth / arg_38_0._screenHeight
+function var_0_0.getCurrentScreenResolutionRatio(arg_39_0)
+	return arg_39_0._screenWidth / arg_39_0._screenHeight
 end
 
-function var_0_0.getCurrentScreenSize(arg_39_0)
-	return arg_39_0._screenWidth, arg_39_0._screenHeight
+function var_0_0.getCurrentScreenSize(arg_40_0)
+	return arg_40_0._screenWidth, arg_40_0._screenHeight
 end
 
-function var_0_0.isFullScreen(arg_40_0)
-	return arg_40_0._isFullScreen == ModuleEnum.FullScreenState.On
+function var_0_0.isFullScreen(arg_41_0)
+	return arg_41_0._isFullScreen == ModuleEnum.FullScreenState.On
 end
 
-function var_0_0.setFullChange(arg_41_0, arg_41_1)
-	arg_41_0._isFullScreen = arg_41_1
+function var_0_0.setFullChange(arg_42_0, arg_42_1)
+	arg_42_0._isFullScreen = arg_42_1
 
-	PlayerPrefsHelper.setNumber(PlayerPrefsKey.FullScreenKey, arg_41_1)
+	PlayerPrefsHelper.setNumber(PlayerPrefsKey.FullScreenKey, arg_42_1)
 
-	if arg_41_0:isFullScreen() then
-		ZProj.GameHelper.SetResolutionRatio(arg_41_0._systemScreenWidth, arg_41_0._systemScreenHeight, true)
+	if arg_42_0:isFullScreen() then
+		ZProj.GameHelper.SetResolutionRatio(arg_42_0._systemScreenWidth, arg_42_0._systemScreenHeight, true)
 	else
-		ZProj.GameHelper.SetResolutionRatio(arg_41_0._screenWidth, arg_41_0._screenHeight, false)
+		ZProj.GameHelper.SetResolutionRatio(arg_42_0._screenWidth, arg_42_0._screenHeight, false)
 	end
 end
 
-function var_0_0.getRegion(arg_42_0)
-	return GameConfig:GetCurRegionType()
+function var_0_0.getScreenSizeMinRate(arg_43_0)
+	return arg_43_0._minRate
 end
 
-function var_0_0.getRegionShortcut(arg_43_0)
-	return RegionEnum.shortcutTab[GameConfig:GetCurRegionType()] or "en"
+function var_0_0.getScreenSizeMaxRate(arg_44_0)
+	return arg_44_0._maxRate
 end
 
-function var_0_0.isZhRegion(arg_44_0)
-	return arg_44_0:getRegion() == RegionEnum.zh
-end
-
-function var_0_0.isJpRegion(arg_45_0)
-	return arg_45_0:getRegion() == RegionEnum.jp
-end
-
-function var_0_0.isEnRegion(arg_46_0)
-	return arg_46_0:getRegion() == RegionEnum.en
-end
-
-function var_0_0.isTwRegion(arg_47_0)
-	return arg_47_0:getRegion() == RegionEnum.tw
-end
-
-function var_0_0.isKrRegion(arg_48_0)
-	return arg_48_0:getRegion() == RegionEnum.ko
-end
-
-function var_0_0.setVideoCompatible(arg_49_0, arg_49_1)
-	arg_49_0._isVideoCompatible = arg_49_1 and 1 or 0
-
-	PlayerPrefsHelper.setNumber(PlayerPrefsKey.SettingsVideoCompatible, arg_49_0._isVideoCompatible)
-end
-
-function var_0_0.getVideoCompatible(arg_50_0)
-	if arg_50_0._isVideoCompatible == nil then
-		arg_50_0._isVideoCompatible = PlayerPrefsHelper.getNumber(PlayerPrefsKey.SettingsVideoCompatible, 0)
-	end
-
-	return arg_50_0._isVideoCompatible == 1
-end
-
-function var_0_0.setVideoEnabled(arg_51_0, arg_51_1)
-	arg_51_0._isVideoEnabled = arg_51_1 and 1 or 0
-
-	PlayerPrefsHelper.setNumber(PlayerPrefsKey.SettingsVideoEnabled, arg_51_0._isVideoEnabled)
-end
-
-function var_0_0.getVideoEnabled(arg_52_0)
-	if arg_52_0._isVideoEnabled == nil then
-		arg_52_0._isVideoEnabled = PlayerPrefsHelper.getNumber(PlayerPrefsKey.SettingsVideoEnabled, 1)
-	end
-
-	return arg_52_0._isVideoEnabled == 1
-end
-
-function var_0_0.getScreenSizeMinRate(arg_53_0)
-	return arg_53_0._minRate
-end
-
-function var_0_0.getScreenSizeMaxRate(arg_54_0)
-	return arg_54_0._maxRate
-end
-
-function var_0_0.checkInitRecordVideo(arg_55_0)
-	if arg_55_0._isRecordVideo ~= nil then
+function var_0_0.checkInitRecordVideo(arg_45_0)
+	if arg_45_0._isRecordVideo ~= nil then
 		return
 	end
 
 	if not OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.SettingsRecordVideo) then
-		arg_55_0._isRecordVideo = 0
+		arg_45_0._isRecordVideo = 0
 
 		return
 	end
 
-	arg_55_0._isRecordVideo = PlayerPrefsHelper.getNumber(PlayerPrefsKey.SettingsRecordVideo, 0)
+	arg_45_0._isRecordVideo = PlayerPrefsHelper.getNumber(PlayerPrefsKey.SettingsRecordVideo, 0)
 end
 
-function var_0_0.setRecordVideo(arg_56_0, arg_56_1)
-	arg_56_0:checkInitRecordVideo()
+function var_0_0.setRecordVideo(arg_46_0, arg_46_1)
+	arg_46_0:checkInitRecordVideo()
 
-	arg_56_0._isRecordVideo = arg_56_1 and 1 or 0
+	arg_46_0._isRecordVideo = arg_46_1 and 1 or 0
 
-	PlayerPrefsHelper.setNumber(PlayerPrefsKey.SettingsRecordVideo, arg_56_0._isRecordVideo)
+	PlayerPrefsHelper.setNumber(PlayerPrefsKey.SettingsRecordVideo, arg_46_0._isRecordVideo)
 end
 
-function var_0_0.getRecordVideo(arg_57_0)
-	arg_57_0:checkInitRecordVideo()
+function var_0_0.getRecordVideo(arg_47_0)
+	arg_47_0:checkInitRecordVideo()
 
-	return arg_57_0._isRecordVideo == 1
+	return arg_47_0._isRecordVideo == 1
 end
 
-function var_0_0.setVideoHDMode(arg_58_0, arg_58_1)
-	arg_58_0._isVideoHDMode = arg_58_1 and 1 or 0
+function var_0_0.setVideoCompatible(arg_48_0, arg_48_1)
+	arg_48_0._isVideoCompatible = arg_48_1 and 1 or 0
 
-	PlayerPrefsHelper.setNumber(PlayerPrefsKey.SettingsVideoHDMode, arg_58_0._isVideoHDMode)
+	PlayerPrefsHelper.setNumber(PlayerPrefsKey.SettingsVideoCompatible, arg_48_0._isVideoCompatible)
 end
 
-function var_0_0.getVideoHDMode(arg_59_0)
+function var_0_0.getVideoCompatible(arg_49_0)
+	if arg_49_0._isVideoCompatible == nil then
+		arg_49_0._isVideoCompatible = PlayerPrefsHelper.getNumber(PlayerPrefsKey.SettingsVideoCompatible, 0)
+	end
+
+	return arg_49_0._isVideoCompatible == 1
+end
+
+function var_0_0.setVideoHDMode(arg_50_0, arg_50_1)
+	arg_50_0._isVideoHDMode = arg_50_1 and 1 or 0
+
+	PlayerPrefsHelper.setNumber(PlayerPrefsKey.SettingsVideoHDMode, arg_50_0._isVideoHDMode)
+end
+
+function var_0_0.getVideoHDMode(arg_51_0)
 	if not PlayerPrefsHelper.hasKey(PlayerPrefsKey.SettingsVideoHDMode) and BootNativeUtil.isWindows() then
-		arg_59_0:setVideoHDMode(true)
+		arg_51_0:setVideoHDMode(true)
 	end
 
-	local var_59_0 = SettingsVoicePackageModel.instance:getPackInfo("res-HD")
+	local var_51_0 = SettingsVoicePackageModel.instance:getPackInfo("res-HD")
 
-	if var_59_0 == nil or var_59_0:needDownload() then
-		arg_59_0:setVideoHDMode(false)
+	if var_51_0 == nil or var_51_0:needDownload() then
+		arg_51_0:setVideoHDMode(false)
 	end
 
-	if arg_59_0._isVideoHDMode == nil then
-		arg_59_0._isVideoHDMode = PlayerPrefsHelper.getNumber(PlayerPrefsKey.SettingsVideoHDMode, 0)
+	if arg_51_0._isVideoHDMode == nil then
+		arg_51_0._isVideoHDMode = PlayerPrefsHelper.getNumber(PlayerPrefsKey.SettingsVideoHDMode, 0)
 	end
 
-	return arg_59_0._isVideoHDMode == 1
+	return arg_51_0._isVideoHDMode == 1
 end
 
-function var_0_0.setPushState(arg_60_0, arg_60_1)
-	arg_60_0._pushStates = {}
+function var_0_0.setPushState(arg_52_0, arg_52_1)
+	arg_52_0._pushStates = {}
 
-	for iter_60_0, iter_60_1 in ipairs(arg_60_1) do
-		arg_60_0._pushStates[iter_60_1.type] = {}
-		arg_60_0._pushStates[iter_60_1.type].type = iter_60_1.type
-		arg_60_0._pushStates[iter_60_1.type].param = iter_60_1.param
+	for iter_52_0, iter_52_1 in ipairs(arg_52_1) do
+		arg_52_0._pushStates[iter_52_1.type] = {}
+		arg_52_0._pushStates[iter_52_1.type].type = iter_52_1.type
+		arg_52_0._pushStates[iter_52_1.type].param = iter_52_1.param
 	end
 end
 
-function var_0_0.updatePushState(arg_61_0, arg_61_1, arg_61_2)
-	if not arg_61_0._pushStates[arg_61_1] then
-		arg_61_0._pushStates[arg_61_1] = {}
-		arg_61_0._pushStates[arg_61_1].type = arg_61_1
+function var_0_0.updatePushState(arg_53_0, arg_53_1, arg_53_2)
+	if not arg_53_0._pushStates[arg_53_1] then
+		arg_53_0._pushStates[arg_53_1] = {}
+		arg_53_0._pushStates[arg_53_1].type = arg_53_1
 	end
 
-	arg_61_0._pushStates[arg_61_1].param = arg_61_2
+	arg_53_0._pushStates[arg_53_1].param = arg_53_2
 end
 
-function var_0_0.isPushTypeOn(arg_62_0, arg_62_1)
-	local var_62_0 = SDKMgr.instance:isNotificationEnable()
-	local var_62_1 = arg_62_0._pushStates[arg_62_1] and arg_62_0._pushStates[arg_62_1].param == "1"
+function var_0_0.isPushTypeOn(arg_54_0, arg_54_1)
+	local var_54_0 = SDKMgr.instance:isNotificationEnable()
+	local var_54_1 = arg_54_0._pushStates[arg_54_1] and arg_54_0._pushStates[arg_54_1].param == "1"
 
-	return var_62_0 and var_62_1
+	return var_54_0 and var_54_1
 end
 
-function var_0_0.isTypeOn(arg_63_0, arg_63_1)
-	return arg_63_0._pushStates[arg_63_1] and arg_63_0._pushStates[arg_63_1].param == "1"
+function var_0_0.isTypeOn(arg_55_0, arg_55_1)
+	return arg_55_0._pushStates[arg_55_1] and arg_55_0._pushStates[arg_55_1].param == "1"
 end
 
-function var_0_0._resolutionStr(arg_64_0, arg_64_1, arg_64_2)
-	return string.format("%s * %s", arg_64_1, arg_64_2)
+function var_0_0._resolutionStr(arg_56_0, arg_56_1, arg_56_2)
+	return string.format("%s * %s", arg_56_1, arg_56_2)
 end
 
-function var_0_0.getResolutionRatioStrList(arg_65_0)
-	arg_65_0:initResolutionRationDataList()
+function var_0_0.getResolutionRatioStrList(arg_57_0)
+	arg_57_0:initResolutionRationDataList()
 
-	local var_65_0 = {}
+	local var_57_0 = {}
 
-	for iter_65_0, iter_65_1 in ipairs(arg_65_0._resolutionRatioDataList) do
-		local var_65_1 = arg_65_0:_resolutionStr(iter_65_1.width, iter_65_1.height)
+	for iter_57_0, iter_57_1 in ipairs(arg_57_0._resolutionRatioDataList) do
+		local var_57_1 = arg_57_0:_resolutionStr(iter_57_1.width, iter_57_1.height)
 
-		if iter_65_1.isFullscreen then
-			var_65_1 = luaLang("settings_fullscreen")
+		if iter_57_1.isFullscreen then
+			var_57_1 = luaLang("settings_fullscreen")
 		end
 
-		table.insert(var_65_0, var_65_1)
+		table.insert(var_57_0, var_57_1)
 	end
 
-	return var_65_0
+	return var_57_0
 end
 
-function var_0_0._appendResolutionData(arg_66_0, arg_66_1, arg_66_2, arg_66_3)
-	table.insert(arg_66_0._resolutionRatioDataList, {
-		width = arg_66_1,
-		height = arg_66_2,
-		isFullscreen = arg_66_3
+function var_0_0._appendResolutionData(arg_58_0, arg_58_1, arg_58_2, arg_58_3)
+	table.insert(arg_58_0._resolutionRatioDataList, {
+		width = arg_58_1,
+		height = arg_58_2,
+		isFullscreen = arg_58_3
 	})
 end
 
-function var_0_0.setScreenResolutionByIndex(arg_67_0, arg_67_1)
+function var_0_0.setScreenResolutionByIndex(arg_59_0, arg_59_1)
 	if not BootNativeUtil.isWindows() then
 		return false
 	end
 
-	if not arg_67_0._resolutionRatioDataList then
+	if not arg_59_0._resolutionRatioDataList then
 		return false
 	end
 
-	local var_67_0 = arg_67_0._resolutionRatioDataList[arg_67_1]
+	local var_59_0 = arg_59_0._resolutionRatioDataList[arg_59_1]
 
-	if not var_67_0 then
-		GameFacade.showToastString("error index:" .. arg_67_1)
+	if not var_59_0 then
+		GameFacade.showToastString("error index:" .. arg_59_1)
 
 		return false
 	end
 
-	arg_67_0._screenWidth = var_67_0.width
-	arg_67_0._screenHeight = var_67_0.height
+	arg_59_0._screenWidth = var_59_0.width
+	arg_59_0._screenHeight = var_59_0.height
 
-	arg_67_0:_setIsFullScreen(var_67_0.isFullscreen)
+	arg_59_0:_setIsFullScreen(var_59_0.isFullscreen)
 
-	arg_67_0._resolutionRatio = arg_67_0:_resolutionStr(arg_67_0._screenWidth, arg_67_0._screenHeight)
+	arg_59_0._resolutionRatio = arg_59_0:_resolutionStr(arg_59_0._screenWidth, arg_59_0._screenHeight)
 
-	arg_67_0:setResolutionRatio()
+	arg_59_0:setResolutionRatio()
 
 	return true
 end
 
-function var_0_0.getCurrentResolutionWHAndIsFull(arg_68_0)
-	if not arg_68_0._resolutionRatio then
-		arg_68_0:initWindowsResolution()
+function var_0_0.getCurrentResolutionWHAndIsFull(arg_60_0)
+	if not arg_60_0._resolutionRatio then
+		arg_60_0:initWindowsResolution()
 	end
 
-	local var_68_0 = string.splitToNumber(arg_68_0._resolutionRatio, "*")
+	local var_60_0 = string.splitToNumber(arg_60_0._resolutionRatio, "*")
 
-	if not var_68_0 then
+	if not var_60_0 then
 		return 0, 0, false
 	end
 
-	local var_68_1 = arg_68_0:isFullScreen()
+	local var_60_1 = arg_60_0:isFullScreen()
 
-	return var_68_0[1], var_68_0[2], var_68_1
+	return var_60_0[1], var_60_0[2], var_60_1
 end
 
-function var_0_0.getCurrentDropDownIndex(arg_69_0)
-	local var_69_0, var_69_1, var_69_2 = arg_69_0:getCurrentResolutionWHAndIsFull()
+function var_0_0.getCurrentDropDownIndex(arg_61_0)
+	local var_61_0, var_61_1, var_61_2 = arg_61_0:getCurrentResolutionWHAndIsFull()
 
-	if var_69_2 then
+	if var_61_2 then
 		return 0
 	end
 
-	for iter_69_0, iter_69_1 in ipairs(arg_69_0._resolutionRatioDataList or {}) do
-		if not iter_69_1.isFullscreen and var_69_0 == iter_69_1.width and var_69_1 == iter_69_1.height then
-			return iter_69_0 - 1
+	for iter_61_0, iter_61_1 in ipairs(arg_61_0._resolutionRatioDataList or {}) do
+		if not iter_61_1.isFullscreen and var_61_0 == iter_61_1.width and var_61_1 == iter_61_1.height then
+			return iter_61_0 - 1
 		end
 	end
 
 	return 0, true
 end
 
-function var_0_0.getCurrentFrameRateIndex(arg_70_0)
-	local var_70_0 = arg_70_0:getModelTargetFrameRate()
+function var_0_0.getCurrentFrameRateIndex(arg_62_0)
+	local var_62_0 = arg_62_0:getModelTargetFrameRate()
 
-	for iter_70_0, iter_70_1 in ipairs(var_0_0.FrameRate) do
-		if var_70_0 == iter_70_1 then
-			return iter_70_0
+	for iter_62_0, iter_62_1 in ipairs(var_0_0.FrameRate) do
+		if var_62_0 == iter_62_1 then
+			return iter_62_0
 		end
 	end
 
 	return 1
 end
 
-function var_0_0.setModelTargetFrameRate(arg_71_0, arg_71_1)
-	local var_71_0 = var_0_0.FrameRate[arg_71_1 + 1]
+function var_0_0.setModelTargetFrameRate(arg_63_0, arg_63_1)
+	local var_63_0 = var_0_0.FrameRate[arg_63_1 + 1]
 
-	if var_71_0 then
-		logNormal("设置帧率: ", var_71_0)
-		arg_71_0:setTargetFrameRate(var_71_0)
+	if var_63_0 then
+		logNormal("设置帧率: ", var_63_0)
+		arg_63_0:setTargetFrameRate(var_63_0)
 	end
+end
+
+function var_0_0.isNatives(arg_64_0)
+	return not arg_64_0:isOverseas()
+end
+
+function var_0_0.isOverseas(arg_65_0)
+	return true
+end
+
+function var_0_0.getRegion(arg_66_0)
+	if arg_66_0:isNatives() then
+		return RegionEnum.zh
+	else
+		return GameConfig:GetCurRegionType()
+	end
+end
+
+function var_0_0.isZhRegion(arg_67_0)
+	return arg_67_0:getRegion() == RegionEnum.zh
+end
+
+function var_0_0.isJpRegion(arg_68_0)
+	return arg_68_0:getRegion() == RegionEnum.jp
+end
+
+function var_0_0.isEnRegion(arg_69_0)
+	return arg_69_0:getRegion() == RegionEnum.en
+end
+
+function var_0_0.isTwRegion(arg_70_0)
+	return arg_70_0:getRegion() == RegionEnum.tw
+end
+
+function var_0_0.isKrRegion(arg_71_0)
+	return arg_71_0:getRegion() == RegionEnum.ko
+end
+
+function var_0_0.getRegionShortcut(arg_72_0)
+	return RegionEnum.shortcutTab[arg_72_0:getRegion()] or "en"
+end
+
+function var_0_0.extractByRegion(arg_73_0, arg_73_1)
+	if string.nilorempty(arg_73_1) then
+		return arg_73_1
+	end
+
+	local var_73_0 = GameUtil.splitString2(arg_73_1, false)
+	local var_73_1 = arg_73_0:getRegionShortcut()
+
+	for iter_73_0, iter_73_1 in ipairs(var_73_0) do
+		if iter_73_1[1] == var_73_1 then
+			return iter_73_1[2]
+		end
+	end
+
+	return arg_73_1
 end
 
 var_0_0.instance = var_0_0.New()

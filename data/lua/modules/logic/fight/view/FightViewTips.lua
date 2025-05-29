@@ -15,6 +15,9 @@ function var_0_0.onInitView(arg_1_0)
 	arg_1_0._skillTipsGO = arg_1_0._txtskilldesc.gameObject
 	arg_1_0._goattrbg = gohelper.findChild(arg_1_0.viewGO, "root/tips/#go_skilltip/#go_attrbg")
 	arg_1_0._gobuffinfocontainer = gohelper.findChild(arg_1_0.viewGO, "root/#go_buffinfocontainer")
+
+	gohelper.setActive(arg_1_0._gobuffinfocontainer, false)
+
 	arg_1_0._gobuffinfowrapper = gohelper.findChild(arg_1_0.viewGO, "root/#go_buffinfocontainer/buff")
 	arg_1_0._gobuffitem = gohelper.findChild(arg_1_0.viewGO, "root/#go_buffinfocontainer/buff/#scroll_buff/viewport/content/#go_buffitem")
 	arg_1_0._scrollbuff = gohelper.findChildScrollRect(arg_1_0.viewGO, "root/#go_buffinfocontainer/buff/#scroll_buff")
@@ -290,8 +293,7 @@ function var_0_0._buildLinkTag(arg_18_0, arg_18_1)
 end
 
 function var_0_0._updateBuffs(arg_19_0, arg_19_1)
-	gohelper.setActive(arg_19_0._gobuffinfocontainer, true)
-	FightBuffTipsView.updateBuffDesc(arg_19_1, arg_19_0._buffItemList, arg_19_0._gobuffitem, arg_19_0, arg_19_0.getCommonBuffTipScrollAnchor)
+	gohelper.setActive(arg_19_0._gobuffinfocontainer, false)
 end
 
 function var_0_0._hideTips(arg_20_0)

@@ -4530,6 +4530,686 @@
     "bankName": "activity_tangren2_5_sfx_fuyong"
   },
   {
+    "id": 26500001,
+    "eventName": "play_chap9_wusihuaiya_street_loop",
+    "bankName": "prologuechapter_9_part01"
+  },
+  {
+    "id": 26500002,
+    "eventName": "play_chap9_cafe_loop",
+    "bankName": "prologuechapter_9_part01"
+  },
+  {
+    "id": 26500003,
+    "eventName": "play_chap9_dishcloth_fling",
+    "bankName": "prologuechapter_9_part01"
+  },
+  {
+    "id": 26500004,
+    "eventName": "play_chap9_steps_snow",
+    "bankName": "prologuechapter_9_part01"
+  },
+  {
+    "id": 26500005,
+    "eventName": "play_chap9_cafe_search",
+    "bankName": "prologuechapter_9_part01"
+  },
+  {
+    "id": 26500006,
+    "eventName": "play_chap9_fleeing_double",
+    "bankName": "prologuechapter_9_part01"
+  },
+  {
+    "id": 26500007,
+    "eventName": "play_chap9_help_paixue",
+    "bankName": "prologuechapter_9_part01"
+  },
+  {
+    "id": 26500008,
+    "eventName": "play_chap9_newspaper_drop",
+    "bankName": "prologuechapter_9_part01"
+  },
+  {
+    "id": 26500009,
+    "eventName": "play_chap9_cup_table",
+    "bankName": "prologuechapter_9_part01"
+  },
+  {
+    "id": 26500010,
+    "eventName": "play_chap9_wuerdesteps_snow_loop",
+    "bankName": "prologuechapter_9_part01"
+  },
+  {
+    "id": 26500011,
+    "eventName": "play_chap9_xugoujisteps_snow_loop",
+    "bankName": "prologuechapter_9_part01"
+  },
+  {
+    "id": 26500012,
+    "eventName": "play_chap9_wire_crawl",
+    "bankName": "prologuechapter_9_part01"
+  },
+  {
+    "id": 26500013,
+    "eventName": "play_chap9_jaguar_protests",
+    "bankName": "prologuechapter_9_part01"
+  },
+  {
+    "id": 26500014,
+    "eventName": "play_chap9_jaguar_whisper",
+    "bankName": "prologuechapter_9_part01"
+  },
+  {
+    "id": 26500015,
+    "eventName": "play_chap9_three_stopit",
+    "bankName": "prologuechapter_9_part01"
+  },
+  {
+    "id": 26500016,
+    "eventName": "play_chap9_universe_loop",
+    "bankName": "prologuechapter_9_part01"
+  },
+  {
+    "id": 26500017,
+    "eventName": "play_chap9_menghe_enter",
+    "bankName": "prologuechapter_9_part01"
+  },
+  {
+    "id": 26500018,
+    "eventName": "play_chap9_notepaper_unfold",
+    "bankName": "prologuechapter_9_part01"
+  },
+  {
+    "id": 26500019,
+    "eventName": "play_chap9_duoren_leave",
+    "bankName": "prologuechapter_9_part01"
+  },
+  {
+    "id": 26500020,
+    "eventName": "play_chap9_duoren_near",
+    "bankName": "prologuechapter_9_part01"
+  },
+  {
+    "id": 26500021,
+    "eventName": "play_chap9_jail_talk_loop",
+    "bankName": "prologuechapter_9_part01"
+  },
+  {
+    "id": 26500022,
+    "eventName": "play_chap9_jail_loop",
+    "bankName": "prologuechapter_9_part01"
+  },
+  {
+    "id": 26500023,
+    "eventName": "play_chap9_prisoner_tango_loop",
+    "bankName": "prologuechapter_9_part01"
+  },
+  {
+    "id": 26500024,
+    "eventName": "play_chap9_guzhang_loop",
+    "bankName": "prologuechapter_9_part04"
+  },
+  {
+    "id": 26500025,
+    "eventName": "play_chap9_jail_clap_lonely",
+    "bankName": "prologuechapter_9_part02"
+  },
+  {
+    "id": 26500026,
+    "eventName": "play_chap9_prisoner_laugh",
+    "bankName": "prologuechapter_9_part02"
+  },
+  {
+    "id": 26500027,
+    "eventName": "play_chap9_crowd_disperse",
+    "bankName": "prologuechapter_9_part02"
+  },
+  {
+    "id": 26500028,
+    "eventName": "play_chap9_prisoner_steps",
+    "bankName": "prologuechapter_9_part02"
+  },
+  {
+    "id": 26500029,
+    "eventName": "play_chap9_prisoner_steps_loop",
+    "bankName": "prologuechapter_9_part02"
+  },
+  {
+    "id": 26500030,
+    "eventName": "play_chap9_gaozhi_drag",
+    "bankName": "prologuechapter_9_part02"
+  },
+  {
+    "id": 26500031,
+    "eventName": "play_chap9_epilepsy_fell",
+    "bankName": "prologuechapter_9_part02"
+  },
+  {
+    "id": 26500032,
+    "eventName": "play_chap9_bench_hopon",
+    "bankName": "prologuechapter_9_part02"
+  },
+  {
+    "id": 26500033,
+    "eventName": "play_chap9_gunshot_muffler",
+    "bankName": "prologuechapter_9_part02"
+  },
+  {
+    "id": 26500034,
+    "eventName": "play_chap9_crowd_surging_loop",
+    "bankName": "prologuechapter_9_part02"
+  },
+  {
+    "id": 26500035,
+    "eventName": "play_chap9_alaifu_steps_loop",
+    "bankName": "prologuechapter_9_part02"
+  },
+  {
+    "id": 26500036,
+    "eventName": "play_chap9_chains_crash",
+    "bankName": "prologuechapter_9_part02"
+  },
+  {
+    "id": 26500037,
+    "eventName": "play_chap9_banister_depend",
+    "bankName": "prologuechapter_9_part02"
+  },
+  {
+    "id": 26500038,
+    "eventName": "play_chap9_biro_loop",
+    "bankName": "prologuechapter_9_part02"
+  },
+  {
+    "id": 26500039,
+    "eventName": "play_chap9_lady_qingsang",
+    "bankName": "prologuechapter_9_part02"
+  },
+  {
+    "id": 26500040,
+    "eventName": "play_chap9_lotterybox_put",
+    "bankName": "prologuechapter_9_part02"
+  },
+  {
+    "id": 26500041,
+    "eventName": "play_chap9_lotterybox_shaking_loop",
+    "bankName": "prologuechapter_9_part02"
+  },
+  {
+    "id": 26500042,
+    "eventName": "play_chap9_lotterybox_remove",
+    "bankName": "prologuechapter_9_part02"
+  },
+  {
+    "id": 26500043,
+    "eventName": "play_chap9_taishou_chains",
+    "bankName": "prologuechapter_9_part02"
+  },
+  {
+    "id": 26500044,
+    "eventName": "play_chap9_dice_revolve_loop",
+    "bankName": "prologuechapter_9_part02"
+  },
+  {
+    "id": 26500045,
+    "eventName": "play_chap9_cuvette_breaks",
+    "bankName": "prologuechapter_9_part03"
+  },
+  {
+    "id": 26500046,
+    "eventName": "play_chap9_ecg_alarm",
+    "bankName": "prologuechapter_9_part03"
+  },
+  {
+    "id": 26500047,
+    "eventName": "play_chap9_surgery_collating",
+    "bankName": "prologuechapter_9_part03"
+  },
+  {
+    "id": 26500048,
+    "eventName": "play_chap9_surgery_pour",
+    "bankName": "prologuechapter_9_part03"
+  },
+  {
+    "id": 26500049,
+    "eventName": "play_chap9_mysticism_ready",
+    "bankName": "prologuechapter_9_part03"
+  },
+  {
+    "id": 26500050,
+    "eventName": "play_chap9_jaguarsteps_indoor_loop",
+    "bankName": "prologuechapter_9_part03"
+  },
+  {
+    "id": 26500051,
+    "eventName": "play_chap9_reverb_steps",
+    "bankName": "prologuechapter_9_part03"
+  },
+  {
+    "id": 26500052,
+    "eventName": "play_chap9_notebook_remove",
+    "bankName": "prologuechapter_9_part03"
+  },
+  {
+    "id": 26500053,
+    "eventName": "play_chap9_notepaper_crop",
+    "bankName": "prologuechapter_9_part03"
+  },
+  {
+    "id": 26500054,
+    "eventName": "play_chap9_drum_transition",
+    "bankName": "prologuechapter_9_part03"
+  },
+  {
+    "id": 26500055,
+    "eventName": "play_chap9_hand_hold",
+    "bankName": "prologuechapter_9_part03"
+  },
+  {
+    "id": 26500056,
+    "eventName": "play_chap9_ghost_converge",
+    "bankName": "prologuechapter_9_part03"
+  },
+  {
+    "id": 26500057,
+    "eventName": "play_chap9_steps_vacant_loop",
+    "bankName": "prologuechapter_9_part03"
+  },
+  {
+    "id": 26500058,
+    "eventName": "play_chap9_jail_crash",
+    "bankName": "prologuechapter_9_part03"
+  },
+  {
+    "id": 26500059,
+    "eventName": "play_chap9_bullet_push",
+    "bankName": "prologuechapter_9_part03"
+  },
+  {
+    "id": 26500060,
+    "eventName": "play_chap9_prisoner_stagger",
+    "bankName": "prologuechapter_9_part03"
+  },
+  {
+    "id": 26500061,
+    "eventName": "play_chap9_prisoner_fell",
+    "bankName": "prologuechapter_9_part03"
+  },
+  {
+    "id": 26500062,
+    "eventName": "play_chap9_prisoner_rise",
+    "bankName": "prologuechapter_9_part03"
+  },
+  {
+    "id": 26500063,
+    "eventName": "play_chap9_boat_shore_loop",
+    "bankName": "prologuechapter_9_part03"
+  },
+  {
+    "id": 26500064,
+    "eventName": "play_chap9_jail_collapse",
+    "bankName": "prologuechapter_9_part03"
+  },
+  {
+    "id": 26500065,
+    "eventName": "play_chap9_burn_stone_loop",
+    "bankName": "prologuechapter_9_part03"
+  },
+  {
+    "id": 26500066,
+    "eventName": "play_chap9_prisoner_fugitives",
+    "bankName": "prologuechapter_9_part03"
+  },
+  {
+    "id": 26500067,
+    "eventName": "play_chap9_jaguar_pounce",
+    "bankName": "prologuechapter_9_part03"
+  },
+  {
+    "id": 26500068,
+    "eventName": "play_activitystorysfx_wenming_jizou_crash",
+    "bankName": "activitystory_wenming2_6_xugouji_sfx"
+  },
+  {
+    "id": 26500069,
+    "eventName": "play_activitystorysfx_wenming_pencil_break",
+    "bankName": "activitystory_wenming2_6_xugouji_sfx"
+  },
+  {
+    "id": 26500070,
+    "eventName": "play_activitystorysfx_wenming_tobacco_lit",
+    "bankName": "activitystory_wenming2_6_xugouji_sfx"
+  },
+  {
+    "id": 26500071,
+    "eventName": "play_activitystorysfx_wenming_finger_knock",
+    "bankName": "activitystory_wenming2_6_xugouji_sfx"
+  },
+  {
+    "id": 26500072,
+    "eventName": "play_activitystorysfx_wenming_whisper_loop",
+    "bankName": "activitystory_wenming2_6_xugouji_sfx"
+  },
+  {
+    "id": 26500073,
+    "eventName": "play_activitystorysfx_wenming_cattle_walk_loop",
+    "bankName": "activitystory_wenming2_6_xugouji_sfx"
+  },
+  {
+    "id": 26500074,
+    "eventName": "play_activitystorysfx_wenming_flint_knocking",
+    "bankName": "activitystory_wenming2_6_xugouji_sfx"
+  },
+  {
+    "id": 26500075,
+    "eventName": "play_activitystorysfx_wenming_flames_boils_loop",
+    "bankName": "activitystory_wenming2_6_xugouji_sfx"
+  },
+  {
+    "id": 26500076,
+    "eventName": "play_activitystorysfx_wenming_belly_hungry",
+    "bankName": "activitystory_wenming2_6_xugouji_sfx"
+  },
+  {
+    "id": 26500077,
+    "eventName": "play_activitystorysfx_wenming_cuisine_wash",
+    "bankName": "activitystory_wenming2_6_xugouji_sfx"
+  },
+  {
+    "id": 26500078,
+    "eventName": "play_activitystorysfx_wenming_cuisine_cut",
+    "bankName": "activitystory_wenming2_6_xugouji_sfx"
+  },
+  {
+    "id": 26500079,
+    "eventName": "play_activitystorysfx_wenming_meat_xiaguo",
+    "bankName": "activitystory_wenming2_6_xugouji_sfx"
+  },
+  {
+    "id": 26500080,
+    "eventName": "play_activitystorysfx_wenming_sleep_loop",
+    "bankName": "activitystory_wenming2_6_xugouji_sfx"
+  },
+  {
+    "id": 26500081,
+    "eventName": "play_activitystorysfx_wenming_pace_loop",
+    "bankName": "activitystory_wenming2_6_xugouji_sfx"
+  },
+  {
+    "id": 26500082,
+    "eventName": "play_activitystorysfx_wenming_banister_catch",
+    "bankName": "activitystory_wenming2_6_xugouji_sfx"
+  },
+  {
+    "id": 26500083,
+    "eventName": "play_activitystorysfx_wenming_gaozhi_collating",
+    "bankName": "activitystory_wenming2_6_xugouji_sfx"
+  },
+  {
+    "id": 26500084,
+    "eventName": "play_activitystorysfx_wenming_heartbeat_slow",
+    "bankName": "activitystory_wenming2_6_xugouji_sfx"
+  },
+  {
+    "id": 26500085,
+    "eventName": "play_activitystorysfx_wenming_heartbeat_fast",
+    "bankName": "activitystory_wenming2_6_xugouji_sfx"
+  },
+  {
+    "id": 26500086,
+    "eventName": "play_activitystorysfx_wenming_moving_loop",
+    "bankName": "activitystory_wenming2_6_xugouji_sfx"
+  },
+  {
+    "id": 26500087,
+    "eventName": "play_activitystorysfx_wenming_wagon_move_loop",
+    "bankName": "activitystory_wenming2_6_xugouji_sfx"
+  },
+  {
+    "id": 26500088,
+    "eventName": "play_activitystorysfx_wenming_woman_gasp_loop",
+    "bankName": "activitystory_wenming2_6_yishi_beidi_sfx"
+  },
+  {
+    "id": 26500089,
+    "eventName": "play_activitystorysfx_wenming_towers_collapse",
+    "bankName": "activitystory_wenming2_6_yishi_beidi_sfx"
+  },
+  {
+    "id": 26500090,
+    "eventName": "play_activitystorysfx_wenming_signs_guandeng",
+    "bankName": "activitystory_wenming2_6_yishi_beidi_sfx"
+  },
+  {
+    "id": 26500091,
+    "eventName": "play_activitystorysfx_wenming_door_split",
+    "bankName": "activitystory_wenming2_6_yishi_beidi_sfx"
+  },
+  {
+    "id": 26500092,
+    "eventName": "play_activitystorysfx_wenming_gas_spark",
+    "bankName": "activitystory_wenming2_6_yishi_beidi_sfx"
+  },
+  {
+    "id": 26500093,
+    "eventName": "play_activitystorysfx_wenming_stews_loop",
+    "bankName": "activitystory_wenming2_6_yishi_beidi_sfx"
+  },
+  {
+    "id": 26500094,
+    "eventName": "play_activitystorysfx_wenming_dish_feign",
+    "bankName": "activitystory_wenming2_6_yishi_beidi_sfx"
+  },
+  {
+    "id": 26500095,
+    "eventName": "play_activitystorysfx_wenming_epilepsy_dispose",
+    "bankName": "activitystory_wenming2_6_yishi_beidi_sfx"
+  },
+  {
+    "id": 26500096,
+    "eventName": "play_activitystorysfx_wenming_smoke",
+    "bankName": "activitystory_wenming2_6_yishi_beidi_sfx"
+  },
+  {
+    "id": 26500097,
+    "eventName": "play_activitystorysfx_wenming_show_loop",
+    "bankName": "activitystory_wenming2_6_yishi_beidi_sfx"
+  },
+  {
+    "id": 26500098,
+    "eventName": "play_activitystorysfx_wenming_show_oldtv_loop",
+    "bankName": "activitystory_wenming2_6_yishi_beidi_sfx"
+  },
+  {
+    "id": 26500099,
+    "eventName": "play_activitystorysfx_wenming_show_oldtv_gun",
+    "bankName": "activitystory_wenming2_6_yishi_beidi_sfx"
+  },
+  {
+    "id": 26500100,
+    "eventName": "play_activitystorysfx_wenming_movie_loop",
+    "bankName": "activitystory_wenming2_6_yishi_beidi_sfx"
+  },
+  {
+    "id": 26500101,
+    "eventName": "play_activitystorysfx_wenming_shutter",
+    "bankName": "activitystory_wenming2_6_yishi_beidi_sfx"
+  },
+  {
+    "id": 26500102,
+    "eventName": "play_activitystorysfx_wenming_insect_base",
+    "bankName": "activitystory_wenming2_6_yishi_beidi_sfx"
+  },
+  {
+    "id": 26500103,
+    "eventName": "play_activitystorysfx_wenming_film_cut",
+    "bankName": "activitystory_wenming2_6_yishi_beidi_sfx"
+  },
+  {
+    "id": 26500104,
+    "eventName": "play_activitystorysfx_wenming_film_clip",
+    "bankName": "activitystory_wenming2_6_yishi_beidi_sfx"
+  },
+  {
+    "id": 26500105,
+    "eventName": "play_activitystorysfx_wenming_handcart",
+    "bankName": "activitystory_wenming2_6_yishi_beidi_sfx"
+  },
+  {
+    "id": 26500106,
+    "eventName": "play_activitystorysfx_wenming_carton_shaking",
+    "bankName": "activitystory_wenming2_6_yishi_beidi_sfx"
+  },
+  {
+    "id": 26500107,
+    "eventName": "play_activitystorysfx_wenming_glass_beat",
+    "bankName": "activitystory_wenming2_6_yishi_beidi_sfx"
+  },
+  {
+    "id": 26500108,
+    "eventName": "play_activitystorysfx_wenming_carton_open",
+    "bankName": "activitystory_wenming2_6_yishi_beidi_sfx"
+  },
+  {
+    "id": 26500109,
+    "eventName": "play_activitystorysfx_wenming_woman_scream",
+    "bankName": "activitystory_wenming2_6_yishi_beidi_sfx"
+  },
+  {
+    "id": 26500110,
+    "eventName": "play_activitystorysfx_wenming_cartoon_loop",
+    "bankName": "activitystory_wenming2_6_yishi_beidi_sfx"
+  },
+  {
+    "id": 26500111,
+    "eventName": "play_chap9_snowflakes_transition",
+    "bankName": "prologuechapter_9_part04"
+  },
+  {
+    "id": 26500112,
+    "eventName": "play_chap9_surgery_morph_loop",
+    "bankName": "prologuechapter_9_part04"
+  },
+  {
+    "id": 26500113,
+    "eventName": "play_chap9_confetti_loop",
+    "bankName": "prologuechapter_9_part04"
+  },
+  {
+    "id": 26500114,
+    "eventName": "play_chap9_glass_breaks",
+    "bankName": "prologuechapter_9_part04"
+  },
+  {
+    "id": 26500115,
+    "eventName": "play_chap9_mosaic_transition",
+    "bankName": "prologuechapter_9_part04"
+  },
+  {
+    "id": 26500116,
+    "eventName": "play_chap9_stickers_full",
+    "bankName": "prologuechapter_9_part04"
+  },
+  {
+    "id": 26500117,
+    "eventName": "play_chap9_kit_drop",
+    "bankName": "prologuechapter_9_part04"
+  },
+  {
+    "id": 26500118,
+    "eventName": "play_chap9_words_world_loop",
+    "bankName": "prologuechapter_9_part04"
+  },
+  {
+    "id": 26500119,
+    "eventName": "play_chap9_dice_pollution",
+    "bankName": "prologuechapter_9_part04"
+  },
+  {
+    "id": 26500120,
+    "eventName": "play_chap9_dice_catch",
+    "bankName": "prologuechapter_9_part04"
+  },
+  {
+    "id": 26500121,
+    "eventName": "play_chap9_dice_landing",
+    "bankName": "prologuechapter_9_part04"
+  },
+  {
+    "id": 26500122,
+    "eventName": "play_chap9_heihong_luanxian",
+    "bankName": "prologuechapter_9_part04"
+  },
+  {
+    "id": 26500123,
+    "eventName": "play_chap9_dice_huaxian",
+    "bankName": "prologuechapter_9_part04"
+  },
+  {
+    "id": 26500124,
+    "eventName": "play_chap9_bottle_snatch",
+    "bankName": "prologuechapter_9_part04"
+  },
+  {
+    "id": 26500125,
+    "eventName": "play_chap9_snowfield_fall",
+    "bankName": "prologuechapter_9_part04"
+  },
+  {
+    "id": 26500126,
+    "eventName": "play_chap9_prisoner_steps_common_loop",
+    "bankName": "prologuechapter_9_part04"
+  },
+  {
+    "id": 26500127,
+    "eventName": "play_chap9_prisoner_anxiety",
+    "bankName": "prologuechapter_9_part04"
+  },
+  {
+    "id": 26500128,
+    "eventName": "play_chap9_shake",
+    "bankName": "prologuechapter_9_fuyong"
+  },
+  {
+    "id": 26500129,
+    "eventName": "play_chap9_thought_current",
+    "bankName": "prologuechapter_9_fuyong"
+  },
+  {
+    "id": 26500130,
+    "eventName": "play_chap9_violent_letter",
+    "bankName": "prologuechapter_9_fuyong"
+  },
+  {
+    "id": 26500131,
+    "eventName": "play_chap9_yishi_huilong",
+    "bankName": "prologuechapter_9_fuyong"
+  },
+  {
+    "id": 26500132,
+    "eventName": "play_chap9_closeup_lightning",
+    "bankName": "prologuechapter_9_fuyong"
+  },
+  {
+    "id": 26500133,
+    "eventName": "play_chap9_mysticism_daoguang",
+    "bankName": "prologuechapter_9_fuyong"
+  },
+  {
+    "id": 26500134,
+    "eventName": "play_chap9_mysticism_bullet",
+    "bankName": "prologuechapter_9_fuyong"
+  },
+  {
+    "id": 26500135,
+    "eventName": "play_chap9_film_play_loop",
+    "bankName": "prologuechapter_9_fuyong"
+  },
+  {
+    "id": 26500136,
+    "eventName": "play_chap9_crystal_vision_loop",
+    "bankName": "prologuechapter_9_fuyong"
+  },
+  {
     "id": 530053,
     "eventName": "play_activitymusic_thememusic_full_2_0",
     "bankName": "activity2_0_music"
@@ -4663,6 +5343,26 @@
     "id": 25530004,
     "eventName": "play_activitymusic_qiangliang_2_5",
     "bankName": "activity2_5_music"
+  },
+  {
+    "id": 26530001,
+    "eventName": "play_activitymusic_theme_2_6",
+    "bankName": "activity2_6_music"
+  },
+  {
+    "id": 26530002,
+    "eventName": "play_activitymusic_fictionalheart_2_6",
+    "bankName": "activity2_6_music"
+  },
+  {
+    "id": 26530003,
+    "eventName": "play_activitymusic_argentinedream_2_6",
+    "bankName": "activity2_6_music"
+  },
+  {
+    "id": 26530004,
+    "eventName": "play_activitymusic_tango_interlude_2_6",
+    "bankName": "activity2_6_music"
   },
   {
     "id": 520105,
@@ -4903,5 +5603,50 @@
     "id": 25520011,
     "eventName": "play_tangren2_5_cutscene_mutation",
     "bankName": "tangren2_5_cutscene_sfx_vo"
+  },
+  {
+    "id": 26520001,
+    "eventName": "play_ui_checkpoint_2_6wenming_open",
+    "bankName": "ui_checkpoint_2_6wenming_open"
+  },
+  {
+    "id": 26520002,
+    "eventName": "play_plotpvsfx_suoxiao_touzi_chap9",
+    "bankName": "prologuechapter_9_cutscene"
+  },
+  {
+    "id": 26520003,
+    "eventName": "play_plotpvsfx_xugouji_sishu_chap9",
+    "bankName": "prologuechapter_9_cutscene"
+  },
+  {
+    "id": 26520004,
+    "eventName": "play_plotpvsfx_fictional_revival_chap9",
+    "bankName": "prologuechapter_9_cutscene"
+  },
+  {
+    "id": 26520005,
+    "eventName": "play_plotpvsfx_prison_fire_chap9",
+    "bankName": "prologuechapter_9_cutscene"
+  },
+  {
+    "id": 26520006,
+    "eventName": "play_wenming2_6_pv_sfx_vo_music",
+    "bankName": "wenming2_6_cutscene_sfx_vo"
+  },
+  {
+    "id": 26520007,
+    "eventName": "play_chap9_freedom_chorus_1",
+    "bankName": "prologuechapter_9_part05"
+  },
+  {
+    "id": 26520008,
+    "eventName": "play_chap9_freedom_chorus_2",
+    "bankName": "prologuechapter_9_part05"
+  },
+  {
+    "id": 26520009,
+    "eventName": "play_chap9_freedom_chorus_3",
+    "bankName": "prologuechapter_9_part05"
   }
 ]

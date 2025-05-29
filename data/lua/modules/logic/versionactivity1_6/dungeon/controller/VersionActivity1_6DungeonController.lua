@@ -238,7 +238,7 @@ function var_0_0.openDungeonBossView(arg_23_0, arg_23_1)
 end
 
 function var_0_0._onReceiveAct149InfoReply(arg_24_0)
-	VersionActivity1_6DungeonRpc.instance:sendAct149GainDailyBonusRequest(arg_24_0._afterDailyBonusOpenDungeonBossView, arg_24_0)
+	arg_24_0:_afterDailyBonusOpenDungeonBossView()
 end
 
 function var_0_0._afterDailyBonusOpenDungeonBossView(arg_25_0)

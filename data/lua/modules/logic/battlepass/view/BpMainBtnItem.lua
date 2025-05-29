@@ -1,46 +1,32 @@
 ﻿module("modules.logic.battlepass.view.BpMainBtnItem", package.seeall)
 
-local var_0_0 = class("BpMainBtnItem", LuaCompBase)
+local var_0_0 = class("BpMainBtnItem", ActCenterItemBase)
 
 function var_0_0.init(arg_1_0, arg_1_1)
-	arg_1_0:__onInit()
+	var_0_0.super.init(arg_1_0, gohelper.cloneInPlace(arg_1_1))
+end
 
-	arg_1_0.go = gohelper.cloneInPlace(arg_1_1)
+function var_0_0.onInit(arg_2_0, arg_2_1)
+	arg_2_0._btnitem = gohelper.getClickWithAudio(arg_2_0._imgGo, AudioEnum2_6.BP.MainBtn)
 
-	gohelper.setActive(arg_1_0.go, true)
+	local var_2_0 = BpConfig.instance:getBpCO(BpModel.instance.id)
 
-	arg_1_0._imgGo = gohelper.findChild(arg_1_0.go, "bg")
-	arg_1_0._imgitem = gohelper.findChildImage(arg_1_0._imgGo, "")
-	arg_1_0._imgitem = gohelper.findChildImage(arg_1_0.go, "bg")
-	arg_1_0._btnitem = gohelper.getClickWithAudio(arg_1_0._imgGo, AudioEnum.UI.play_ui_role_pieces_open)
+	arg_2_0._goexpup = gohelper.findChild(arg_2_0.go, "#go_expup")
 
-	arg_1_0:_initReddotitem(arg_1_0.go)
+	gohelper.setActive(arg_2_0._goexpup, BpModel.instance:isShowExpUp())
 
-	local var_1_0 = BpConfig.instance:getBpCO(BpModel.instance.id)
+	if var_2_0 and var_2_0.isSp then
+		local var_2_1 = gohelper.findChild(arg_2_0.go, "link")
 
-	arg_1_0._goexpup = gohelper.findChild(arg_1_0.go, "#go_expup")
-
-	gohelper.setActive(arg_1_0._goexpup, BpModel.instance:isShowExpUp())
-
-	if var_1_0 and var_1_0.isSp then
-		local var_1_1 = gohelper.findChild(arg_1_0.go, "link")
-
-		gohelper.setActive(var_1_1, true)
+		gohelper.setActive(var_2_1, true)
 	end
 
-	arg_1_0:addEvent()
-	arg_1_0:_refreshItem()
+	gohelper.setActive(gohelper.findChild(arg_2_0.go, "bg_tarot"), true)
+	arg_2_0:_initReddotitem()
+	arg_2_0:_refreshItem()
 end
 
-function var_0_0.addEvent(arg_2_0)
-	arg_2_0._btnitem:AddClickListener(arg_2_0._onItemClick, arg_2_0)
-end
-
-function var_0_0.removeEvent(arg_3_0)
-	arg_3_0._btnitem:RemoveClickListener()
-end
-
-function var_0_0._onItemClick(arg_4_0)
+function var_0_0.onClick(arg_3_0)
 	if not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.BP) then
 		GameFacade.showToast(OpenModel.instance:getFuncUnlockDesc(OpenEnum.UnlockFunc.BP))
 
@@ -50,70 +36,65 @@ function var_0_0._onItemClick(arg_4_0)
 	BpController.instance:openBattlePassView()
 end
 
-function var_0_0._refreshItem(arg_5_0)
-	local var_5_0 = ActivityModel.showActivityEffect()
-	local var_5_1 = ActivityConfig.instance:getMainActAtmosphereConfig()
-	local var_5_2 = var_5_0 and var_5_1.mainViewActBtnPrefix .. "icon_3" or "icon_3"
+function var_0_0._refreshItem(arg_4_0)
+	local var_4_0 = ActivityModel.showActivityEffect()
+	local var_4_1 = ActivityConfig.instance:getMainActAtmosphereConfig()
+	local var_4_2 = var_4_0 and var_4_1.mainViewActBtnPrefix .. "icon_3" or "icon_3"
 
-	UISpriteSetMgr.instance:setMainSprite(arg_5_0._imgitem, var_5_2, true)
+	UISpriteSetMgr.instance:setMainSprite(arg_4_0._imgitem, var_4_2, true)
 
-	if not var_5_0 then
-		local var_5_3 = ActivityConfig.instance:getMainActAtmosphereConfig()
+	if not var_4_0 then
+		local var_4_3 = ActivityConfig.instance:getMainActAtmosphereConfig()
 
-		if var_5_3 then
-			for iter_5_0, iter_5_1 in ipairs(var_5_3.mainViewActBtn) do
-				local var_5_4 = gohelper.findChild(arg_5_0.go, iter_5_1)
+		if var_4_3 then
+			for iter_4_0, iter_4_1 in ipairs(var_4_3.mainViewActBtn) do
+				local var_4_4 = gohelper.findChild(arg_4_0.go, iter_4_1)
 
-				if var_5_4 then
-					gohelper.setActive(var_5_4, var_5_0)
+				if var_4_4 then
+					gohelper.setActive(var_4_4, var_4_0)
 				end
 			end
 		end
 	end
 
-	arg_5_0._redDot:refreshDot()
+	arg_4_0._redDot:refreshDot()
 end
 
-function var_0_0.destroy(arg_6_0)
-	arg_6_0:removeEvent()
-	gohelper.destroy(arg_6_0.go)
-	arg_6_0:__onDispose()
+function var_0_0.isShowRedDot(arg_5_0)
+	return arg_5_0._redDot.show
 end
 
-function var_0_0.isShowRedDot(arg_7_0)
-	return arg_7_0._redDot.show
-end
+function var_0_0._initReddotitem(arg_6_0)
+	local var_6_0 = arg_6_0.go
+	local var_6_1 = gohelper.findChild(var_6_0, "go_activityreddot")
 
-function var_0_0._initReddotitem(arg_8_0, arg_8_1)
-	local var_8_0 = gohelper.findChild(arg_8_1, "go_activityreddot")
-
-	arg_8_0._redDot = RedDotController.instance:addRedDot(var_8_0, RedDotEnum.DotNode.BattlePass)
+	arg_6_0._redDot = RedDotController.instance:addRedDot(var_6_1, RedDotEnum.DotNode.BattlePass)
 
 	do return end
 
-	local var_8_1 = gohelper.findChild(arg_8_1, "go_activityreddot/#go_special_reds")
-	local var_8_2 = var_8_1.transform
-	local var_8_3 = var_8_2.childCount
+	local var_6_2 = gohelper.findChild(var_6_0, "go_activityreddot/#go_special_reds")
+	local var_6_3 = var_6_2.transform
+	local var_6_4 = var_6_3.childCount
 
-	for iter_8_0 = 1, var_8_3 do
-		local var_8_4 = var_8_2:GetChild(iter_8_0 - 1)
+	for iter_6_0 = 1, var_6_4 do
+		local var_6_5 = var_6_3:GetChild(iter_6_0 - 1)
 
-		gohelper.setActive(var_8_4.gameObject, false)
+		gohelper.setActive(var_6_5.gameObject, false)
 	end
 
-	local var_8_5 = gohelper.findChild(var_8_1, "#go_bp_red")
+	local var_6_6 = gohelper.findChild(var_6_2, "#go_bp_red")
 
-	arg_8_0._redDot = RedDotController.instance:addRedDotTag(var_8_5, RedDotEnum.DotNode.BattlePass, false, arg_8_0._onRefreshDot, arg_8_0)
-	arg_8_0._btnitem2 = gohelper.getClickWithAudio(var_8_5, AudioEnum2_6.BP.MainBtn)
+	arg_6_0._redDot = RedDotController.instance:addRedDotTag(var_6_6, RedDotEnum.DotNode.BattlePass, false, arg_6_0._onRefreshDot, arg_6_0)
+	arg_6_0._btnitem2 = gohelper.getClickWithAudio(var_6_6, AudioEnum2_6.BP.MainBtn)
 end
 
-function var_0_0._onRefreshDot(arg_9_0, arg_9_1)
-	local var_9_0 = RedDotModel.instance:isDotShow(arg_9_1.dotId, 0)
+function var_0_0._onRefreshDot(arg_7_0, arg_7_1)
+	local var_7_0 = RedDotModel.instance:isDotShow(arg_7_1.dotId, 0)
 
-	arg_9_1.show = var_9_0
+	arg_7_1.show = var_7_0
 
-	gohelper.setActive(arg_9_1.go, var_9_0)
-	gohelper.setActive(arg_9_0._imgGo, not var_9_0)
+	gohelper.setActive(arg_7_1.go, var_7_0)
+	gohelper.setActive(arg_7_0._imgGo, not var_7_0)
 end
 
 return var_0_0

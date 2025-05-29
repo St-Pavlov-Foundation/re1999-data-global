@@ -23,6 +23,9 @@ end
 function var_0_0.resCheck(arg_2_0)
 	setNeedLoadModule("modules.reschecker.MassHotUpdateMgr", "MassHotUpdateMgr")
 	setNeedLoadModule("modules.reschecker.ResCheckMgr", "ResCheckMgr")
+	setNeedLoadModule("modules.common.others.SDKDataTrackExt", "SDKDataTrackExt")
+	setNeedLoadModule("modules.logic.defines.PlayerPrefsKey", "PlayerPrefsKey")
+	SDKDataTrackExt.activateExtend()
 	ResCheckMgr.instance:startCheck(arg_2_0.onResCheckFinish, arg_2_0)
 end
 
@@ -84,7 +87,7 @@ function var_0_0.initFramework(arg_10_0)
 end
 
 function var_0_0.initModuleLogic(arg_11_0)
-	GameBranchMgr.instance:init(2, 5)
+	GameBranchMgr.instance:init()
 
 	local var_11_0 = addGlobalModule("modules.setting.module_mvc", "module_mvc")
 

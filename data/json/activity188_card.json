@@ -1,0 +1,110 @@
+[
+  {
+    "activityId": 12605,
+    "cardId": 100,
+    "type": 0,
+    "skillId": 100,
+    "name": "language_10071665",
+    "desc": "language_10072548",
+    "resource": "v2a6_xugouji_skillcard01"
+  },
+  {
+    "activityId": 12605,
+    "cardId": 101,
+    "type": 0,
+    "skillId": 101,
+    "name": "language_10071665",
+    "desc": "language_10072549",
+    "resource": "v2a6_xugouji_skillcard02"
+  },
+  {
+    "activityId": 12605,
+    "cardId": 102,
+    "type": 0,
+    "skillId": 102,
+    "name": "language_10071665",
+    "desc": "language_10072550",
+    "resource": "v2a6_xugouji_skillcard03"
+  },
+  {
+    "activityId": 12605,
+    "cardId": 103,
+    "type": 0,
+    "skillId": 103,
+    "name": "language_10071665",
+    "desc": "language_10072551",
+    "resource": "v2a6_xugouji_skillcard04"
+  },
+  {
+    "activityId": 12605,
+    "cardId": 104,
+    "type": 1,
+    "skillId": 104,
+    "name": "language_10071666",
+    "desc": "language_10072552",
+    "resource": "v2a6_xugouji_skillcard05"
+  },
+  {
+    "activityId": 12605,
+    "cardId": 105,
+    "type": 1,
+    "skillId": 105,
+    "name": "language_10071666",
+    "desc": "language_10072553",
+    "resource": "v2a6_xugouji_skillcard06"
+  },
+  {
+    "activityId": 12605,
+    "cardId": 106,
+    "type": 1,
+    "skillId": 106,
+    "name": "language_10071666",
+    "desc": "language_10072554",
+    "resource": "v2a6_xugouji_skillcard07"
+  },
+  {
+    "activityId": 12605,
+    "cardId": 107,
+    "type": 1,
+    "skillId": 107,
+    "name": "language_10071666",
+    "desc": "language_10072555",
+    "resource": "v2a6_xugouji_skillcard08"
+  },
+  {
+    "activityId": 12605,
+    "cardId": 108,
+    "type": 2,
+    "skillId": 108,
+    "name": "language_10071667",
+    "desc": "language_10072556",
+    "resource": "v2a6_xugouji_skillcard09"
+  },
+  {
+    "activityId": 12605,
+    "cardId": 109,
+    "type": 2,
+    "skillId": 109,
+    "name": "language_10071667",
+    "desc": "language_10072557",
+    "resource": "v2a6_xugouji_skillcard10"
+  },
+  {
+    "activityId": 12605,
+    "cardId": 110,
+    "type": 2,
+    "skillId": 110,
+    "name": "language_10071667",
+    "desc": "language_10072558",
+    "resource": "v2a6_xugouji_skillcard11"
+  },
+  {
+    "activityId": 12605,
+    "cardId": 111,
+    "type": 2,
+    "skillId": 111,
+    "name": "language_10071667",
+    "desc": "language_10072559",
+    "resource": "v2a6_xugouji_skillcard12"
+  }
+]

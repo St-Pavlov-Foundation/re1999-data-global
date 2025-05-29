@@ -9,6 +9,7 @@ function var_0_0.initMap(arg_1_0, arg_1_1)
 	arg_1_0.curNodeId = arg_1_1.curNode
 
 	arg_1_0:initNodeInfo(arg_1_1.nodeInfo)
+	arg_1_0:initLayerChoiceInfo(arg_1_1.layerChoiceInfo)
 end
 
 function var_0_0.updateMapInfo(arg_2_0, arg_2_1)
@@ -16,6 +17,7 @@ function var_0_0.updateMapInfo(arg_2_0, arg_2_1)
 	arg_2_0.curNodeId = arg_2_1.curNode
 
 	arg_2_0:updateNodeInfo(arg_2_1.nodeInfo)
+	arg_2_0:updateLayerChoiceInfo(arg_2_1.layerChoiceInfo)
 end
 
 function var_0_0.updateSimpleMapInfo(arg_3_0, arg_3_1)
@@ -197,13 +199,33 @@ function var_0_0.isHoleNode(arg_15_0, arg_15_1)
 	return arg_15_0._holeNodeMap and arg_15_0._holeNodeMap[arg_15_1] ~= nil
 end
 
-function var_0_0.clear(arg_16_0)
-	arg_16_0.episodeList = nil
-	arg_16_0.nodeDict = nil
-	arg_16_0.layerId = nil
-	arg_16_0.layerCo = nil
-	arg_16_0.curEpisodeId = nil
-	arg_16_0.curNodeId = nil
+function var_0_0.initLayerChoiceInfo(arg_16_0, arg_16_1)
+	arg_16_0.layerChoiceInfo = RougeLayerChoiceInfoMO.New()
+
+	arg_16_0.layerChoiceInfo:init(arg_16_1)
+end
+
+function var_0_0.updateLayerChoiceInfo(arg_17_0, arg_17_1)
+	if not arg_17_0.layerChoiceInfo then
+		arg_17_0.layerChoiceInfo = RougeLayerChoiceInfoMO.New()
+	end
+
+	arg_17_0.layerChoiceInfo:init(arg_17_1)
+end
+
+function var_0_0.getLayerChoiceInfo(arg_18_0, arg_18_1)
+	if arg_18_0.layerId == arg_18_1 then
+		return arg_18_0.layerChoiceInfo
+	end
+end
+
+function var_0_0.clear(arg_19_0)
+	arg_19_0.episodeList = nil
+	arg_19_0.nodeDict = nil
+	arg_19_0.layerId = nil
+	arg_19_0.layerCo = nil
+	arg_19_0.curEpisodeId = nil
+	arg_19_0.curNodeId = nil
 end
 
 return var_0_0

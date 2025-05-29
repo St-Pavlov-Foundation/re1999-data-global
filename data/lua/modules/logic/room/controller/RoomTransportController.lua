@@ -205,6 +205,10 @@ function var_0_0.isTransportWorkingById(arg_14_0, arg_14_1)
 end
 
 function var_0_0.batchCritterReply(arg_15_0, arg_15_1)
+	if not arg_15_1 then
+		return
+	end
+
 	for iter_15_0, iter_15_1 in ipairs(arg_15_1) do
 		local var_15_0 = RoomTransportHelper.serverRoadInfo2Info(iter_15_1)
 

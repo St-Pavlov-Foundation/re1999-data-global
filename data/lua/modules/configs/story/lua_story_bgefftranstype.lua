@@ -205,5 +205,32 @@
 		"",
 		0,
 		""
+	},
+	{
+		23,
+		"万花筒进1.4s",
+		"",
+		"v2a6_kaleidoscope.prefab",
+		"",
+		0,
+		""
+	},
+	{
+		24,
+		"万花筒退1.5s",
+		"",
+		"v2a6_kaleidoscope_latter.prefab",
+		"",
+		0,
+		""
+	},
+	{
+		25,
+		"翻页转场",
+		"",
+		"storybg_turn_page.prefab",
+		"",
+		0,
+		""
 	}
 }

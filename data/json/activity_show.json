@@ -58,7 +58,16 @@
     "id": 1,
     "actDesc": "language_10000132",
     "taskDesc": "",
-    "showBonus": "2#2#600#1|2#22#1#0|2#3#1#0",
+    "showBonus": "2#22#1#0|2#3#1#0",
+    "jumpId": 3801,
+    "centerId": 2
+  },
+  {
+    "activityId": 10015,
+    "id": 1,
+    "actDesc": "language_10070617",
+    "taskDesc": "",
+    "showBonus": "2#22#1#0|2#3#1#0",
     "jumpId": 3801,
     "centerId": 2
   }

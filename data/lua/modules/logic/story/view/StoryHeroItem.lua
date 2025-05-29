@@ -444,22 +444,31 @@ function var_0_0._waitHeroSpineLoaded(arg_21_0)
 	arg_21_0:_grayUpdate(0)
 	TaskDispatcher.cancelTask(arg_21_0._waitHeroSpineLoaded, arg_21_0)
 
-	if not string.match(arg_21_0._heroSpineGo.name, "305301_yaxian") or arg_21_0._heroSpine._curBodyName ~= "b_idle2" then
+	local var_21_3 = arg_21_0._heroCo.anims[GameLanguageMgr.instance:getVoiceTypeStoryIndex()]
+	local var_21_4 = not string.match(arg_21_0._heroSpineGo.name, "305301_yaxian") or arg_21_0._heroSpine._curBodyName ~= "b_idle2"
+	local var_21_5 = "flag_skipvoicestop|"
+
+	if string.find(var_21_3, var_21_5) then
+		var_21_4 = false
+		var_21_3 = string.gsub(var_21_3, var_21_5, "")
+	end
+
+	if var_21_4 then
 		arg_21_0._heroSpine:stopVoice()
 	end
 
-	local var_21_3 = {
-		motion = arg_21_0._heroCo.anims[GameLanguageMgr.instance:getVoiceTypeStoryIndex()],
+	local var_21_6 = {
+		motion = var_21_3,
 		face = arg_21_0._heroCo.expressions[GameLanguageMgr.instance:getVoiceTypeStoryIndex()],
 		mouth = arg_21_0._heroCo.mouses[GameLanguageMgr.instance:getVoiceTypeStoryIndex()],
 		storyAudioId = arg_21_0._conAudioId,
 		storyHeroIndex = arg_21_0._heroCo.heroIndex
 	}
-	local var_21_4 = arg_21_0._heroSpine:getSpineVoice()
+	local var_21_7 = arg_21_0._heroSpine:getSpineVoice()
 
-	var_21_4:setDiffFaceBiYan(true)
-	var_21_4:setInStory()
-	arg_21_0._heroSpine:playVoice(var_21_3)
+	var_21_7:setDiffFaceBiYan(true)
+	var_21_7:setInStory()
+	arg_21_0._heroSpine:playVoice(var_21_6)
 
 	if arg_21_0._heroCo.effs[GameLanguageMgr.instance:getLanguageTypeStoryIndex()] ~= "" then
 		arg_21_0:_playHeroEffect()

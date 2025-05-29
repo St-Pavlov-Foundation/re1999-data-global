@@ -1,0 +1,46 @@
+[
+  {
+    "id": 41,
+    "map": "scenes/m_s09_rgmy/scene_prefab/m_s09_rgmy_d_p.prefab",
+    "mapId": 41,
+    "buffId": 0,
+    "typeName": "language_10070614",
+    "name": "language_10020493",
+    "icon": "stage_1",
+    "battleName": "language_10072142",
+    "name_en": "Lucidscape Stage Ⅰ"
+  },
+  {
+    "id": 42,
+    "map": "scenes/m_s09_rgmy/scene_prefab/m_s09_rgmy_d_p.prefab",
+    "mapId": 42,
+    "buffId": 0,
+    "typeName": "language_10070614",
+    "name": "language_10020496",
+    "icon": "stage_2",
+    "battleName": "language_10072143",
+    "name_en": "Lucidscape Stage Ⅱ"
+  },
+  {
+    "id": 43,
+    "map": "scenes/m_s09_rgmy/scene_prefab/m_s09_rgmy_d_p.prefab",
+    "mapId": 43,
+    "buffId": 0,
+    "typeName": "language_10070614",
+    "name": "language_10020499",
+    "icon": "stage_3",
+    "battleName": "language_10072144",
+    "name_en": "Lucidscape Stage Ⅲ"
+  },
+  {
+    "id": 44,
+    "map": "scenes/m_s09_rgmy/scene_prefab/m_s09_rgmy_d_p.prefab",
+    "mapId": 44,
+    "buffId": 0,
+    "typeName": "language_10070614",
+    "name": "language_10020502",
+    "icon": "stage_4",
+    "battleName": "language_10072145",
+    "name_en": "Lucidscape Stage Ⅳ"
+  }
+]

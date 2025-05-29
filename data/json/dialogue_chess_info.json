@@ -490,5 +490,53 @@
     "id": 3,
     "res": "dialogue_role19_right",
     "pos": "420#0"
+  },
+  {
+    "dialogueId": 38,
+    "id": 1,
+    "res": "dialogue_role26_left",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 38,
+    "id": 2,
+    "res": "dialogue_role27_right",
+    "pos": "165#0"
+  },
+  {
+    "dialogueId": 39,
+    "id": 1,
+    "res": "dialogue_role26_left",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 39,
+    "id": 2,
+    "res": "dialogue_role27_right",
+    "pos": "165#0"
+  },
+  {
+    "dialogueId": 40,
+    "id": 1,
+    "res": "dialogue_role30_left",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 40,
+    "id": 2,
+    "res": "dialogue_role26_right",
+    "pos": "165#0"
+  },
+  {
+    "dialogueId": 41,
+    "id": 1,
+    "res": "dialogue_role29_left",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 41,
+    "id": 2,
+    "res": "dialogue_sangtuosi",
+    "pos": "165#0"
   }
 ]

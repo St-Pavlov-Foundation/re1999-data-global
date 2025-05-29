@@ -234,7 +234,7 @@ function var_0_0.onOpen(arg_21_0)
 	arg_21_0._layerList = arg_21_0.viewParam[3]
 	arg_21_0._itemList = arg_21_0:getUserDataTb_()
 
-	arg_21_0:_addItems()
+	arg_21_0:_initItems()
 
 	if WeekWalkLayerView.isShallowPage(arg_21_0._pageIndex) then
 		if arg_21_0._pageIndex <= 1 then
@@ -254,91 +254,105 @@ function var_0_0.onOpen(arg_21_0)
 	arg_21_0:_setEdgFadeStrengthen()
 end
 
-function var_0_0._addItems(arg_22_0)
-	gohelper.setActive(arg_22_0._gopos3, false)
-	gohelper.setActive(arg_22_0._gopos5, false)
+function var_0_0.updateLayerList(arg_22_0, arg_22_1)
+	arg_22_0._layerList = arg_22_1
 
-	local var_22_0 = #arg_22_0._layerList == 6
-	local var_22_1 = var_22_0 and arg_22_0._gopos3 or arg_22_0._gopos5
+	arg_22_0:_initItems()
+end
 
-	gohelper.setActive(var_22_1, true)
+function var_0_0._initItems(arg_23_0)
+	gohelper.setActive(arg_23_0._gopos3, false)
+	gohelper.setActive(arg_23_0._gopos5, false)
 
-	local var_22_2 = var_22_1.transform
+	local var_23_0 = #arg_23_0._layerList ~= WeekWalkEnum.ShallowLayerMaxNum
+	local var_23_1 = arg_23_0._gopos5
+	local var_23_2 = #arg_23_0._layerList == WeekWalkEnum.NewDeepLayerMaxNum
 
-	for iter_22_0, iter_22_1 in ipairs(arg_22_0._layerList) do
-		local var_22_3 = var_22_2:GetChild(iter_22_0 - 1).gameObject
+	gohelper.setActive(var_23_1, true)
 
-		arg_22_0:_addItem(var_22_3, iter_22_1)
+	local var_23_3 = var_23_1.transform
+
+	for iter_23_0, iter_23_1 in ipairs(arg_23_0._layerList) do
+		local var_23_4 = var_23_3:GetChild(iter_23_0 - 1).gameObject
+
+		arg_23_0:_addItem(var_23_4, iter_23_1, iter_23_0)
 	end
 
-	if var_22_0 then
-		recthelper.setWidth(arg_22_0._gocontent.transform, 3400)
+	if var_23_0 then
+		if var_23_2 then
+			recthelper.setWidth(arg_23_0._gocontent.transform, 3932)
+		else
+			recthelper.setWidth(arg_23_0._gocontent.transform, 3400)
+		end
 	end
 end
 
-function var_0_0._addItem(arg_23_0, arg_23_1, arg_23_2)
-	local var_23_0 = arg_23_0._layerView.viewContainer:getSetting().otherRes[2]
-	local var_23_1 = arg_23_0._layerView.viewContainer:getResInst(var_23_0, arg_23_1)
-
-	var_23_1.name = "weekwalklayerpageitem" .. arg_23_2.layer
-
-	local var_23_2 = MonoHelper.addLuaComOnceToGo(var_23_1, WeekWalkLayerPageItem, {
-		arg_23_2,
-		arg_23_0._pageIndex,
-		arg_23_0
-	})
-
-	var_23_2._relativeAnchorPos = recthelper.rectToRelativeAnchorPos(var_23_1.transform.position, arg_23_0._gocontent.transform)
-
-	table.insert(arg_23_0._itemList, var_23_2)
-end
-
-function var_0_0._setEdgFadeStrengthen(arg_24_0, arg_24_1, arg_24_2)
-	if arg_24_0._scrollview.horizontalNormalizedPosition < 0.01 then
-		arg_24_0._scrollview.horizontalNormalizedPosition = 0
-	end
-
-	local var_24_0 = Mathf.Clamp(Mathf.Abs(arg_24_0._scrollview.horizontalNormalizedPosition * 8), 0, 1)
-
-	WeekWalkController.instance:dispatchEvent(WeekWalkEvent.OnScrollPage, var_24_0, arg_24_0._pageIndex)
-	arg_24_0:_changeRightBtnVisible()
-	arg_24_0:_onScrollValueChanged(arg_24_1, arg_24_2)
-end
-
-function var_0_0._changeRightBtnVisible(arg_25_0)
-	if not WeekWalkLayerView.isShallowPage(arg_25_0._pageIndex) or not arg_25_0._visible or not arg_25_0._scrollview then
+function var_0_0._addItem(arg_24_0, arg_24_1, arg_24_2, arg_24_3)
+	if arg_24_0._itemList[arg_24_3] then
 		return
 	end
 
-	local var_25_0 = arg_25_0._scrollview.horizontalNormalizedPosition
+	local var_24_0 = arg_24_0._layerView.viewContainer:getSetting().otherRes[2]
+	local var_24_1 = arg_24_0._layerView.viewContainer:getResInst(var_24_0, arg_24_1)
 
-	if var_25_0 >= 0.95 then
-		arg_25_0._showRightBtn = true
+	var_24_1.name = "weekwalklayerpageitem" .. arg_24_2.layer
 
-		WeekWalkController.instance:dispatchEvent(WeekWalkEvent.OnChangeRightBtnVisible, arg_25_0._showRightBtn)
-	elseif var_25_0 <= 0.5 and arg_25_0._showRightBtn then
-		arg_25_0._showRightBtn = false
+	local var_24_2 = MonoHelper.addLuaComOnceToGo(var_24_1, WeekWalkLayerPageItem, {
+		arg_24_2,
+		arg_24_0._pageIndex,
+		arg_24_0
+	})
 
-		WeekWalkController.instance:dispatchEvent(WeekWalkEvent.OnChangeRightBtnVisible, arg_25_0._showRightBtn)
+	var_24_2._relativeAnchorPos = recthelper.rectToRelativeAnchorPos(var_24_1.transform.position, arg_24_0._gocontent.transform)
+	arg_24_0._itemList[arg_24_3] = var_24_2
+end
+
+function var_0_0._setEdgFadeStrengthen(arg_25_0, arg_25_1, arg_25_2)
+	if arg_25_0._scrollview.horizontalNormalizedPosition < 0.01 then
+		arg_25_0._scrollview.horizontalNormalizedPosition = 0
+	end
+
+	local var_25_0 = Mathf.Clamp(Mathf.Abs(arg_25_0._scrollview.horizontalNormalizedPosition * 8), 0, 1)
+
+	WeekWalkController.instance:dispatchEvent(WeekWalkEvent.OnScrollPage, var_25_0, arg_25_0._pageIndex)
+	arg_25_0:_changeRightBtnVisible()
+	arg_25_0:_onScrollValueChanged(arg_25_1, arg_25_2)
+end
+
+function var_0_0._changeRightBtnVisible(arg_26_0)
+	if not WeekWalkLayerView.isShallowPage(arg_26_0._pageIndex) or not arg_26_0._visible or not arg_26_0._scrollview then
+		return
+	end
+
+	local var_26_0 = arg_26_0._scrollview.horizontalNormalizedPosition
+
+	if var_26_0 >= 0.95 then
+		arg_26_0._showRightBtn = true
+
+		WeekWalkController.instance:dispatchEvent(WeekWalkEvent.OnChangeRightBtnVisible, arg_26_0._showRightBtn)
+	elseif var_26_0 <= 0.5 and arg_26_0._showRightBtn then
+		arg_26_0._showRightBtn = false
+
+		WeekWalkController.instance:dispatchEvent(WeekWalkEvent.OnChangeRightBtnVisible, arg_26_0._showRightBtn)
 	end
 end
 
-function var_0_0.onClose(arg_26_0)
-	TaskDispatcher.cancelTask(arg_26_0._hideBlock, arg_26_0)
-	arg_26_0._animatorPlayer:Stop()
+function var_0_0.onClose(arg_27_0)
+	TaskDispatcher.cancelTask(arg_27_0._hideBlock, arg_27_0)
+	arg_27_0._animatorPlayer:Stop()
 
-	if arg_26_0._drag then
-		arg_26_0:removeScrollDragListener(arg_26_0._drag)
+	if arg_27_0._drag then
+		arg_27_0:removeScrollDragListener(arg_27_0._drag)
 	end
 
-	for iter_26_0, iter_26_1 in ipairs(arg_26_0._itemList) do
-		iter_26_1:onDestroy()
+	for iter_27_0, iter_27_1 in ipairs(arg_27_0._itemList) do
+		iter_27_1:onDestroy()
 	end
 end
 
-function var_0_0.onDestroyView(arg_27_0)
-	arg_27_0._simagebgimg:UnLoadImage()
-	arg_27_0._simageline:UnLoadImage()
+function var_0_0.onDestroyView(arg_28_0)
+	arg_28_0._simagebgimg:UnLoadImage()
+	arg_28_0._simageline:UnLoadImage()
 end
 
 return var_0_0

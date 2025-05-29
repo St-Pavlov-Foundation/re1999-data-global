@@ -161,6 +161,7 @@ end
 
 function var_0_0.clickCompositeItemCallBack(arg_12_0, arg_12_1)
 	local var_12_0 = {
+		interactable = false,
 		collectionCfgId = arg_12_1,
 		viewPosition = RougeEnum.CollectionTipPos.HandBook
 	}

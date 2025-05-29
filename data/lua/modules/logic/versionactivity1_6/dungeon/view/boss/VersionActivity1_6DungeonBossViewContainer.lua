@@ -16,10 +16,8 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 	arg_2_0.navigateView = NavigateButtonsView.New({
 		true,
 		true,
-		true
+		false
 	})
-
-	arg_2_0.navigateView:setHelpId(HelpEnum.HelpId.Dungeon1_6BossHelp)
 
 	return {
 		arg_2_0.navigateView

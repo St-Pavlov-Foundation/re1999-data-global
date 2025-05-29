@@ -28,7 +28,8 @@ local var_0_1 = {
 	[TurnbackEnum.ActivityId.NewSignIn] = ViewName.TurnbackNewSignInView,
 	[TurnbackEnum.ActivityId.NewTaskView] = ViewName.TurnbackNewTaskView,
 	[TurnbackEnum.ActivityId.NewBenfitView] = ViewName.TurnbackNewBenfitView,
-	[TurnbackEnum.ActivityId.NewProgressView] = ViewName.TurnbackNewProgressView
+	[TurnbackEnum.ActivityId.NewProgressView] = ViewName.TurnbackNewProgressView,
+	[TurnbackEnum.ActivityId.ReviewView] = ViewName.TurnbackReviewView
 }
 
 function var_0_0._editableInitView(arg_4_0)

@@ -1,0 +1,128 @@
+[
+  {
+    "id": 1,
+    "icon": 690110,
+    "bufflist": "",
+    "hp": 40
+  },
+  {
+    "id": 6,
+    "icon": 690110,
+    "bufflist": "3",
+    "hp": 40
+  },
+  {
+    "id": 2,
+    "icon": 690110,
+    "bufflist": "",
+    "hp": 40
+  },
+  {
+    "id": 3,
+    "icon": 690110,
+    "bufflist": "16",
+    "hp": 40
+  },
+  {
+    "id": 4,
+    "icon": 690110,
+    "bufflist": "",
+    "hp": 40
+  },
+  {
+    "id": 5,
+    "icon": 690110,
+    "bufflist": "",
+    "hp": 40
+  },
+  {
+    "id": 7,
+    "icon": 620226,
+    "bufflist": "17",
+    "hp": 20
+  },
+  {
+    "id": 8,
+    "icon": 630210,
+    "bufflist": "",
+    "hp": 12
+  },
+  {
+    "id": 9,
+    "icon": 690126,
+    "bufflist": "18",
+    "hp": 82
+  },
+  {
+    "id": 10,
+    "icon": 680401,
+    "bufflist": "",
+    "hp": 16
+  },
+  {
+    "id": 11,
+    "icon": 680402,
+    "bufflist": "",
+    "hp": 18
+  },
+  {
+    "id": 12,
+    "icon": 680403,
+    "bufflist": "",
+    "hp": 20
+  },
+  {
+    "id": 13,
+    "icon": 690110,
+    "bufflist": "5",
+    "hp": 100
+  },
+  {
+    "id": 14,
+    "icon": 610205,
+    "bufflist": "21",
+    "hp": 21
+  },
+  {
+    "id": 15,
+    "icon": 610209,
+    "bufflist": "",
+    "hp": 19
+  },
+  {
+    "id": 16,
+    "icon": 610209,
+    "bufflist": "",
+    "hp": 19
+  },
+  {
+    "id": 17,
+    "icon": 610213,
+    "bufflist": "",
+    "hp": 60
+  },
+  {
+    "id": 18,
+    "icon": 690115,
+    "bufflist": "",
+    "hp": 26
+  },
+  {
+    "id": 19,
+    "icon": 690114,
+    "bufflist": "",
+    "hp": 26
+  },
+  {
+    "id": 20,
+    "icon": 630112,
+    "bufflist": "",
+    "hp": 70
+  },
+  {
+    "id": 21,
+    "icon": 670306,
+    "bufflist": "27",
+    "hp": 300
+  }
+]

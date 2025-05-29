@@ -42,33 +42,33 @@
     "order": 5,
     "multi": 2.0,
     "firstPassScore": 2000,
-    "effectCondition": "1_1"
+    "effectCondition": ""
   },
   {
     "id": 6,
     "activityId": 11609,
     "episodeId": 1650106,
-    "order": 5,
+    "order": 6,
     "multi": 2.0,
     "firstPassScore": 2000,
-    "effectCondition": "2_2"
+    "effectCondition": ""
   },
   {
     "id": 7,
     "activityId": 11609,
     "episodeId": 1650107,
-    "order": 5,
+    "order": 7,
     "multi": 2.0,
     "firstPassScore": 2000,
-    "effectCondition": "3_3"
+    "effectCondition": ""
   },
   {
     "id": 8,
     "activityId": 11609,
     "episodeId": 1650108,
-    "order": 5,
+    "order": 8,
     "multi": 2.0,
     "firstPassScore": 2000,
-    "effectCondition": "4_4"
+    "effectCondition": ""
   }
 ]

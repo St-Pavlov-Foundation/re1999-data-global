@@ -8,5 +8,6 @@ var_0_0.GetSignSuccess = 2
 var_0_0.PayFinished = 11
 var_0_0.PayFailed = 12
 var_0_0.PayInfoChanged = 13
+var_0_0.UpdateProductDetails = 21
 
 return var_0_0

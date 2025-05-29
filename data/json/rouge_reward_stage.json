@@ -152,7 +152,19 @@
     "name": "language_10043450",
     "lockName": "language_10043450",
     "jump": "",
-    "openTime": "2025-6-1 05:00:00",
+    "openTime": "2025-5-29 05:00:00",
     "pointLimit": 208
+  },
+  {
+    "season": 1,
+    "stage": 14,
+    "preStage": 13,
+    "bigRewardId": 9,
+    "icon": "rouge_reward_reward7",
+    "name": "language_10043450",
+    "lockName": "language_10043450",
+    "jump": "",
+    "openTime": "2025-6-1 05:00:00",
+    "pointLimit": 224
   }
 ]

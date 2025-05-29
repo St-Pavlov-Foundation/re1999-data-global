@@ -76,11 +76,15 @@ end
 
 function var_0_0._onBeforeChangeSubHero(arg_8_0, arg_8_1, arg_8_2)
 	if arg_8_2 == arg_8_0._entityId then
-		if arg_8_1 == "0" then
+		local var_8_0 = FightDataHelper.entityMgr:getById(arg_8_1)
+
+		if var_8_0 and var_8_0:isStatusDead() then
 			arg_8_0.PARENT_VIEW:onOpen()
-		else
-			arg_8_0:refreshData(arg_8_1)
+
+			return
 		end
+
+		arg_8_0:refreshData(arg_8_1)
 	end
 end
 

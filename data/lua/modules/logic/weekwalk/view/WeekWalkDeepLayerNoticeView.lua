@@ -39,6 +39,8 @@ function var_0_0._btncloseOnClick(arg_4_0)
 end
 
 function var_0_0._btnstartOnClick(arg_5_0)
+	arg_5_0._clickStart = true
+
 	arg_5_0:openWeekWalkView()
 end
 
@@ -75,7 +77,7 @@ function var_0_0.onUpdateParam(arg_11_0)
 	return
 end
 
-function var_0_0._getRewardList(arg_12_0)
+function var_0_0._getRewardList()
 	local var_12_0 = {}
 
 	for iter_12_0, iter_12_1 in ipairs(lua_task_weekwalk.configList) do
@@ -111,7 +113,7 @@ function var_0_0._getRewardList(arg_12_0)
 end
 
 function var_0_0._showRewardList(arg_13_0)
-	local var_13_0 = arg_13_0:_getRewardList()
+	local var_13_0 = var_0_0._getRewardList()
 
 	for iter_13_0, iter_13_1 in ipairs(var_13_0) do
 		local var_13_1 = gohelper.cloneInPlace(arg_13_0._gorewarditem)
@@ -218,10 +220,16 @@ function var_0_0.onClose(arg_16_0)
 	AudioMgr.instance:trigger(AudioEnum.WeekWalk.play_ui_artificial_settlement_close)
 end
 
-function var_0_0.onDestroyView(arg_17_0)
-	arg_17_0._simagebg1:UnLoadImage()
-	arg_17_0._simagemask:UnLoadImage()
-	arg_17_0._simagebg2:UnLoadImage()
+function var_0_0.onCloseFinish(arg_17_0)
+	if not arg_17_0._clickStart then
+		WeekWalk_2Controller.instance:checkOpenWeekWalk_2DeepLayerNoticeView()
+	end
+end
+
+function var_0_0.onDestroyView(arg_18_0)
+	arg_18_0._simagebg1:UnLoadImage()
+	arg_18_0._simagemask:UnLoadImage()
+	arg_18_0._simagebg2:UnLoadImage()
 end
 
 return var_0_0

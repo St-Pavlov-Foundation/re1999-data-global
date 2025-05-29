@@ -69,17 +69,26 @@ function var_0_0.lastGameEndTimestamp(arg_11_0)
 end
 
 function var_0_0.isSelectDLC(arg_12_0, arg_12_1)
-	return arg_12_0.versionIds and arg_12_0.versionIds[arg_12_1] ~= nil
+	return arg_12_0.versionIdMap and arg_12_0.versionIdMap[arg_12_1] ~= nil
 end
 
 function var_0_0._updateVersionIds(arg_13_0, arg_13_1)
-	arg_13_0.versionIds = arg_13_0:_listToMap(arg_13_1)
+	arg_13_0.versionIds = {}
+	arg_13_0.versionIdMap = {}
+
+	if arg_13_1 then
+		for iter_13_0, iter_13_1 in ipairs(arg_13_1) do
+			table.insert(arg_13_0.versionIds, iter_13_1)
+
+			arg_13_0.versionIdMap[iter_13_1] = iter_13_1
+		end
+	end
 end
 
 function var_0_0.getVersionIds(arg_14_0)
 	local var_14_0 = {}
 
-	for iter_14_0, iter_14_1 in pairs(arg_14_0.versionIds) do
+	for iter_14_0, iter_14_1 in ipairs(arg_14_0.versionIds) do
 		table.insert(var_14_0, iter_14_1)
 	end
 

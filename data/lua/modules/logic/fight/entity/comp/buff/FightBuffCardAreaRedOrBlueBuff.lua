@@ -72,33 +72,36 @@ function var_0_0.onResLoaded(arg_6_0, arg_6_1)
 	arg_6_0.loaded = true
 
 	local var_6_0 = arg_6_0.entity:getSide()
+	local var_6_1 = "LY_Spine_" .. (var_6_0 == FightEnum.EntitySide.MySide and "R" or "L")
 
-	arg_6_0.spine1 = arg_6_0.sceneEntityMgr:buildTempSpine(arg_6_0.spine1Res, arg_6_0.entity.id .. "_1", var_6_0, UnityLayer.EffectMask, FightEntityLyTemp)
-	arg_6_0.spine2 = arg_6_0.sceneEntityMgr:buildTempSpine(arg_6_0.spine2Res, arg_6_0.entity.id .. "_2", var_6_0, UnityLayer.EffectMask, FightEntityLyTemp)
+	arg_6_0.spine1 = arg_6_0.sceneEntityMgr:buildTempSpine(arg_6_0.spine1Res, arg_6_0.entity.id .. "_1", var_6_0, UnityLayer.EffectMask, FightEntityLyTemp, var_6_1 .. "_1")
+	arg_6_0.spine2 = arg_6_0.sceneEntityMgr:buildTempSpine(arg_6_0.spine2Res, arg_6_0.entity.id .. "_2", var_6_0, UnityLayer.EffectMask, FightEntityLyTemp, var_6_1 .. "_2")
 
+	arg_6_0.spine1.spine:changeLookDir(SpineLookDir.Left)
+	arg_6_0.spine2.spine:changeLookDir(SpineLookDir.Left)
 	arg_6_0:hideEntity()
 
 	arg_6_0.spine1Effect = arg_6_0.spine1.effect:addHangEffect(arg_6_0.spine1EffectRes, ModuleEnum.SpineHangPointRoot)
 	arg_6_0.spine2Effect = arg_6_0.spine2.effect:addHangEffect(arg_6_0.spine2EffectRes, ModuleEnum.SpineHangPointRoot)
 	arg_6_0.effectWrap = arg_6_0.entity.effect:addGlobalEffect(arg_6_0.buffRes)
 
-	local var_6_1 = FightRenderOrderMgr.LYEffect * FightEnum.OrderRegion
+	local var_6_2 = FightRenderOrderMgr.LYEffect * FightEnum.OrderRegion
 
-	arg_6_0.spine1Effect:setRenderOrder(var_6_1)
-	arg_6_0.spine2Effect:setRenderOrder(var_6_1)
-	arg_6_0.effectWrap:setRenderOrder(var_6_1)
+	arg_6_0.spine1Effect:setRenderOrder(var_6_2)
+	arg_6_0.spine2Effect:setRenderOrder(var_6_2)
+	arg_6_0.effectWrap:setRenderOrder(var_6_2)
 
-	local var_6_2 = arg_6_0.spine1Effect.effectGO and gohelper.findChild(arg_6_0.spine1Effect.effectGO, "root")
+	local var_6_3 = arg_6_0.spine1Effect.effectGO and gohelper.findChild(arg_6_0.spine1Effect.effectGO, "root")
 
-	arg_6_0.spine1EffectAnimator = var_6_2 and ZProj.ProjAnimatorPlayer.Get(var_6_2)
+	arg_6_0.spine1EffectAnimator = var_6_3 and ZProj.ProjAnimatorPlayer.Get(var_6_3)
 
-	local var_6_3 = arg_6_0.spine2Effect.effectGO and gohelper.findChild(arg_6_0.spine2Effect.effectGO, "root")
+	local var_6_4 = arg_6_0.spine2Effect.effectGO and gohelper.findChild(arg_6_0.spine2Effect.effectGO, "root")
 
-	arg_6_0.spine2EffectAnimator = var_6_3 and ZProj.ProjAnimatorPlayer.Get(var_6_3)
+	arg_6_0.spine2EffectAnimator = var_6_4 and ZProj.ProjAnimatorPlayer.Get(var_6_4)
 
-	local var_6_4 = arg_6_0.effectWrap.effectGO and gohelper.findChild(arg_6_0.effectWrap.effectGO, "root")
+	local var_6_5 = arg_6_0.effectWrap.effectGO and gohelper.findChild(arg_6_0.effectWrap.effectGO, "root")
 
-	arg_6_0.effectAnimator = var_6_4 and ZProj.ProjAnimatorPlayer.Get(var_6_4)
+	arg_6_0.effectAnimator = var_6_5 and ZProj.ProjAnimatorPlayer.Get(var_6_5)
 
 	arg_6_0.effectWrap:setWorldPos(arg_6_0:getEffectPos(var_6_0))
 	arg_6_0:addEffect(arg_6_0.spine1, arg_6_0.spine1Effect, var_6_0)

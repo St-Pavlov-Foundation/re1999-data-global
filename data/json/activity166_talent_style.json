@@ -142,5 +142,77 @@
     "skillId": "342430050#342430060",
     "skillId2": "",
     "slot": 3
+  },
+  {
+    "talentId": 2601,
+    "level": 1,
+    "needStar": 0,
+    "skillId": "342610010#342610020",
+    "skillId2": "",
+    "slot": 1
+  },
+  {
+    "talentId": 2601,
+    "level": 2,
+    "needStar": 1,
+    "skillId": "342610030#342610040",
+    "skillId2": "",
+    "slot": 2
+  },
+  {
+    "talentId": 2601,
+    "level": 3,
+    "needStar": 2,
+    "skillId": "342610050#342610060",
+    "skillId2": "",
+    "slot": 3
+  },
+  {
+    "talentId": 2602,
+    "level": 1,
+    "needStar": 0,
+    "skillId": "342620010#342620020",
+    "skillId2": "",
+    "slot": 1
+  },
+  {
+    "talentId": 2602,
+    "level": 2,
+    "needStar": 1,
+    "skillId": "342620030#342620040",
+    "skillId2": "",
+    "slot": 2
+  },
+  {
+    "talentId": 2602,
+    "level": 3,
+    "needStar": 2,
+    "skillId": "342620050#342620060",
+    "skillId2": "",
+    "slot": 3
+  },
+  {
+    "talentId": 2603,
+    "level": 1,
+    "needStar": 0,
+    "skillId": "342630010#342630020",
+    "skillId2": "",
+    "slot": 1
+  },
+  {
+    "talentId": 2603,
+    "level": 2,
+    "needStar": 1,
+    "skillId": "342630030#342630040",
+    "skillId2": "",
+    "slot": 2
+  },
+  {
+    "talentId": 2603,
+    "level": 3,
+    "needStar": 2,
+    "skillId": "342630050#342630060",
+    "skillId2": "",
+    "slot": 3
   }
 ]

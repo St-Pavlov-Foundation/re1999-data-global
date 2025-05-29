@@ -48,5 +48,30 @@
     "activityId": 12400,
     "analyCount": 5,
     "bonus": "1#171402#1"
+  },
+  {
+    "activityId": 12618,
+    "analyCount": 1,
+    "bonus": "1#510010#2"
+  },
+  {
+    "activityId": 12618,
+    "analyCount": 2,
+    "bonus": "1#171601#1"
+  },
+  {
+    "activityId": 12618,
+    "analyCount": 3,
+    "bonus": "5#305803#1"
+  },
+  {
+    "activityId": 12618,
+    "analyCount": 4,
+    "bonus": "1#481010#1"
+  },
+  {
+    "activityId": 12618,
+    "analyCount": 5,
+    "bonus": "1#171602#1"
   }
 ]

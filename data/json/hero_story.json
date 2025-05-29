@@ -481,5 +481,28 @@
     "cgScale": "1",
     "mainviewName": "language_10068190",
     "permanentUnlock": "2#24#1"
+  },
+  {
+    "id": 22,
+    "chapterId": 1922,
+    "unlock": "2#24#0",
+    "bonus": "1#180003#1|1#110103#1|1#120011#3|2#3#5000|2#5#10000",
+    "heroName": "language_10017928",
+    "photo": "304502",
+    "cgBg": "304501",
+    "order": 22,
+    "name": "language_10070254",
+    "nameEn": "T</size>he  <color=#D2CDBC><size=30>Last</size></color> Film<size=140>",
+    "episodeId": 0,
+    "main_pic": "rolestory_img_22",
+    "monster_pic": "",
+    "challengeBonus": "",
+    "activityId": 12615,
+    "activity_pic": "",
+    "cgUnlockEpisodeId": 192207,
+    "cgPos": "305#129",
+    "cgScale": "1",
+    "mainviewName": "language_10071478",
+    "permanentUnlock": "2#24#1"
   }
 ]

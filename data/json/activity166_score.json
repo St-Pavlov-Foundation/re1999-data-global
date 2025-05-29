@@ -46,5 +46,29 @@
     "level": 4,
     "needScore": 1000000,
     "star": 3
+  },
+  {
+    "activityId": 12618,
+    "level": 1,
+    "needScore": 150000,
+    "star": 1
+  },
+  {
+    "activityId": 12618,
+    "level": 2,
+    "needScore": 350000,
+    "star": 2
+  },
+  {
+    "activityId": 12618,
+    "level": 3,
+    "needScore": 600000,
+    "star": 3
+  },
+  {
+    "activityId": 12618,
+    "level": 4,
+    "needScore": 1000000,
+    "star": 3
   }
 ]

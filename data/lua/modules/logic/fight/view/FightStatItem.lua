@@ -53,6 +53,10 @@ function var_0_0.onUpdateMO(arg_4_0, arg_4_1)
 	arg_4_0._mo = arg_4_1
 	arg_4_0.entityMO = arg_4_1.entityMO or FightDataHelper.entityMgr:getById(arg_4_1.entityId)
 
+	if arg_4_1.entityId == FightASFDDataMgr.EmitterId then
+		arg_4_0.entityMO = FightDataHelper.ASFDDataMgr:getEmitterEmitterMo()
+	end
+
 	local var_4_0 = ViewMgr.instance:isOpen(ViewName.Act174FightResultView)
 	local var_4_1 = arg_4_0._mo.fromOtherFight
 	local var_4_2 = lua_character.configDict[arg_4_0.entityMO.modelId]

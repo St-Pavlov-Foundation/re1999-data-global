@@ -25,30 +25,38 @@ function var_0_0.openWeekWalkEnemyInfoView(arg_3_0, arg_3_1, arg_3_2)
 	})
 end
 
-function var_0_0.openSeason123EnemyInfoView(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
+function var_0_0.openWeekWalk_2EnemyInfoView(arg_4_0, arg_4_1, arg_4_2)
+	ViewMgr.instance:openView(ViewName.WeekWalk_2EnemyInfoView, {
+		mapId = arg_4_1,
+		selectBattleId = arg_4_2,
+		tabEnum = EnemyInfoEnum.TabEnum.WeekWalk_2
+	})
+end
+
+function var_0_0.openSeason123EnemyInfoView(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
 	ViewMgr.instance:openView(ViewName.BaseEnemyInfoView, {
 		showLeftTab = true,
-		activityId = arg_4_1,
-		stage = arg_4_2,
-		layer = arg_4_3,
+		activityId = arg_5_1,
+		stage = arg_5_2,
+		layer = arg_5_3,
 		tabEnum = EnemyInfoEnum.TabEnum.Season123
 	})
 end
 
-function var_0_0.openSeason123EnemyInfoViewWithNoTab(arg_5_0, arg_5_1, arg_5_2)
+function var_0_0.openSeason123EnemyInfoViewWithNoTab(arg_6_0, arg_6_1, arg_6_2)
 	ViewMgr.instance:openView(ViewName.BaseEnemyInfoView, {
 		showLeftTab = false,
-		activityId = arg_5_1,
-		battleId = arg_5_2,
+		activityId = arg_6_1,
+		battleId = arg_6_2,
 		tabEnum = EnemyInfoEnum.TabEnum.Season123
 	})
 end
 
-function var_0_0.openBossRushEnemyInfoView(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
+function var_0_0.openBossRushEnemyInfoView(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
 	ViewMgr.instance:openView(ViewName.BaseEnemyInfoView, {
-		activityId = arg_6_1,
-		stage = arg_6_2,
-		layer = arg_6_3,
+		activityId = arg_7_1,
+		stage = arg_7_2,
+		layer = arg_7_3,
 		tabEnum = EnemyInfoEnum.TabEnum.BossRush
 	})
 end

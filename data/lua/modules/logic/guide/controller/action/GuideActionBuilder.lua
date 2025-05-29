@@ -103,6 +103,7 @@ function var_0_0.ctor(arg_1_0)
 	arg_1_0._ActionType2Impl[317] = WaitGuideActionFightEndPause_sp
 	arg_1_0._ActionType2Impl[318] = WaitGuideActionPauseGeneral
 	arg_1_0._ActionType2Impl[319] = WaitGuideActionFightGetSpecificCard
+	arg_1_0._ActionType2Impl[320] = WaitGuideActionAnyEventWithCondition
 	arg_1_0._ActionType2Impl[401] = WaitGuideActionSpecialEvent
 	arg_1_0._ActionType2Impl[402] = GuideActionPreloadFirstFight
 	arg_1_0._ActionType2Impl[998] = GuideActionAppendStep

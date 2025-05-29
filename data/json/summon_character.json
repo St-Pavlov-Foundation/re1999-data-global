@@ -423,7 +423,7 @@
     "id": 221112,
     "heroId": 3102,
     "skinId": 0,
-    "location": 1
+    "location": 2
   },
   {
     "id": 231111,
@@ -470,6 +470,18 @@
   {
     "id": 251211,
     "heroId": 3111,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 261111,
+    "heroId": 3114,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 261211,
+    "heroId": 3113,
     "skinId": 0,
     "location": 1
   },

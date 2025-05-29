@@ -20,7 +20,6 @@ function var_0_0.removeEvents(arg_3_0)
 end
 
 function var_0_0._editableInitView(arg_4_0)
-	var_0_0.super._editableInitView(arg_4_0)
 	arg_4_0:addEventCb(RougeController.instance, RougeEvent.SwitchCollectionInfoType, arg_4_0._onSwitchCollectionInfoType, arg_4_0)
 end
 

@@ -106,5 +106,59 @@
     "baseId": 3,
     "level": 3,
     "firstBonus": "2#2402#1"
+  },
+  {
+    "activityId": 12618,
+    "baseId": 1,
+    "level": 1,
+    "firstBonus": "2#2602#2"
+  },
+  {
+    "activityId": 12618,
+    "baseId": 1,
+    "level": 2,
+    "firstBonus": "2#2602#1"
+  },
+  {
+    "activityId": 12618,
+    "baseId": 1,
+    "level": 3,
+    "firstBonus": "2#2602#1"
+  },
+  {
+    "activityId": 12618,
+    "baseId": 2,
+    "level": 1,
+    "firstBonus": "2#2602#2"
+  },
+  {
+    "activityId": 12618,
+    "baseId": 2,
+    "level": 2,
+    "firstBonus": "2#2602#1"
+  },
+  {
+    "activityId": 12618,
+    "baseId": 2,
+    "level": 3,
+    "firstBonus": "2#2602#1"
+  },
+  {
+    "activityId": 12618,
+    "baseId": 3,
+    "level": 1,
+    "firstBonus": "2#2602#2"
+  },
+  {
+    "activityId": 12618,
+    "baseId": 3,
+    "level": 2,
+    "firstBonus": "2#2602#1"
+  },
+  {
+    "activityId": 12618,
+    "baseId": 3,
+    "level": 3,
+    "firstBonus": "2#2602#1"
   }
 ]

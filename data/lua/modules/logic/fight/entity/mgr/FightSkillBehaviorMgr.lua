@@ -87,36 +87,48 @@ function var_0_0._doSkillBehaviorEffect(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_
 	local var_4_3 = arg_4_3.audioId
 	local var_4_4 = FightDataHelper.entityMgr:getById(arg_4_1.fromId)
 
-	if arg_4_3.id == 60052 and var_4_4 then
-		local var_4_5 = lua_fight_sp_effect_kkny_bear_damage_hit.configDict[var_4_4.skin]
+	if var_4_4 then
+		local var_4_5 = lua_fight_replace_skill_behavior_effect.configDict[var_4_4.skin]
+
+		var_4_5 = var_4_5 and var_4_5[arg_4_3.id]
 
 		if var_4_5 then
-			var_4_1 = var_4_5.path
-			var_4_2 = var_4_5.hangPoint
-			var_4_3 = var_4_5.audio
+			var_4_1 = string.nilorempty(var_4_5.effect) and var_4_1 or var_4_5.effect
+			var_4_2 = string.nilorempty(var_4_5.effectHangPoint) and var_4_2 or var_4_5.effectHangPoint
+			var_4_3 = var_4_5.audioId == 0 and var_4_3 or var_4_5.audioId
+		end
+	end
+
+	if arg_4_3.id == 60052 and var_4_4 then
+		local var_4_6 = lua_fight_sp_effect_kkny_bear_damage_hit.configDict[var_4_4.skin]
+
+		if var_4_6 then
+			var_4_1 = var_4_6.path
+			var_4_2 = var_4_6.hangPoint
+			var_4_3 = var_4_6.audio
 		end
 	end
 
 	if not string.nilorempty(var_4_1) and var_4_0 and var_4_0.effect then
-		local var_4_6
+		local var_4_7
 
 		if not string.nilorempty(var_4_2) then
-			var_4_6 = var_4_0.effect:addHangEffect(var_4_1, var_4_2)
+			var_4_7 = var_4_0.effect:addHangEffect(var_4_1, var_4_2)
 
-			var_4_6:setLocalPos(0, 0, 0)
+			var_4_7:setLocalPos(0, 0, 0)
 		else
-			var_4_6 = var_4_0.effect:addGlobalEffect(var_4_1)
+			var_4_7 = var_4_0.effect:addGlobalEffect(var_4_1)
 
-			var_4_6:setWorldPos(FightHelper.getProcessEntitySpinePos(var_4_0))
+			var_4_7:setWorldPos(FightHelper.getProcessEntitySpinePos(var_4_0))
 		end
 
-		FightRenderOrderMgr.instance:onAddEffectWrap(var_4_0.id, var_4_6)
+		FightRenderOrderMgr.instance:onAddEffectWrap(var_4_0.id, var_4_7)
 
 		arg_4_0._effectCache = arg_4_0._effectCache or {}
 
 		table.insert(arg_4_0._effectCache, {
 			var_4_0.id,
-			var_4_6,
+			var_4_7,
 			Time.time
 		})
 		TaskDispatcher.runRepeat(arg_4_0._removeEffects, arg_4_0, 0.5)
@@ -127,30 +139,30 @@ function var_0_0._doSkillBehaviorEffect(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_
 	end
 
 	if arg_4_3.dec_Type > 0 then
-		local var_4_7 = arg_4_2.targetId
+		local var_4_8 = arg_4_2.targetId
 
 		if arg_4_2.effectType == FightEnum.EffectType.CARDLEVELCHANGE then
-			var_4_7 = arg_4_2.entityMO and arg_4_2.entityMO.uid or arg_4_1.fromId
+			var_4_8 = arg_4_2.entityMO and arg_4_2.entityMO.uid or arg_4_1.fromId
 		end
 
-		FightFloatMgr.instance:float(var_4_7, FightEnum.FloatType.buff, arg_4_3.dec, arg_4_3.dec_Type)
+		FightFloatMgr.instance:float(var_4_8, FightEnum.FloatType.buff, arg_4_3.dec, arg_4_3.dec_Type)
 	end
 
 	if arg_4_4 then
-		local var_4_8 = arg_4_3.type
+		local var_4_9 = arg_4_3.type
 
-		if (var_4_8 == FightEnum.Behavior_AddExPoint or var_4_8 == FightEnum.Behavior_DelExPoint) and arg_4_2.effectType == FightEnum.EffectType.EXPOINTCHANGE then
-			local var_4_9 = FightWork2Work.New(FightWorkExPointChange, arg_4_1, arg_4_2)
-
-			var_4_9:onStart()
-			table.insert(arg_4_0._specialWorkList, var_4_9)
-		elseif FightEnum.BuffEffectType[arg_4_2.effectType] then
-			FightSkillBuffMgr.instance:playSkillBuff(arg_4_1, arg_4_2)
-		elseif var_4_8 == FightEnum.Behavior_LostLife and arg_4_2.effectType == FightEnum.EffectType.DAMAGE and not arg_4_2:isDone() then
-			local var_4_10 = FightWork2Work.New(FightWorkEffectDamage, arg_4_1, arg_4_2)
+		if (var_4_9 == FightEnum.Behavior_AddExPoint or var_4_9 == FightEnum.Behavior_DelExPoint) and arg_4_2.effectType == FightEnum.EffectType.EXPOINTCHANGE then
+			local var_4_10 = FightWork2Work.New(FightWorkExPointChange, arg_4_1, arg_4_2)
 
 			var_4_10:onStart()
 			table.insert(arg_4_0._specialWorkList, var_4_10)
+		elseif FightEnum.BuffEffectType[arg_4_2.effectType] then
+			FightSkillBuffMgr.instance:playSkillBuff(arg_4_1, arg_4_2)
+		elseif var_4_9 == FightEnum.Behavior_LostLife and arg_4_2.effectType == FightEnum.EffectType.DAMAGE and not arg_4_2:isDone() then
+			local var_4_11 = FightWork2Work.New(FightWorkEffectDamage, arg_4_1, arg_4_2)
+
+			var_4_11:onStart()
+			table.insert(arg_4_0._specialWorkList, var_4_11)
 		end
 	end
 end

@@ -1,0 +1,386 @@
+[
+  {
+    "id": 1000,
+    "rare": 1,
+    "addCollection": "",
+    "desc": "language_10071847",
+    "unlockType": 1,
+    "unlockParam": "8180604"
+  },
+  {
+    "id": 1001,
+    "rare": 1,
+    "addCollection": "8180101",
+    "desc": "language_10071848",
+    "unlockType": 0,
+    "unlockParam": ""
+  },
+  {
+    "id": 1002,
+    "rare": 1,
+    "addCollection": "8180102",
+    "desc": "language_10071849",
+    "unlockType": 0,
+    "unlockParam": ""
+  },
+  {
+    "id": 1003,
+    "rare": 1,
+    "addCollection": "8180103",
+    "desc": "language_10071850",
+    "unlockType": 0,
+    "unlockParam": ""
+  },
+  {
+    "id": 1004,
+    "rare": 1,
+    "addCollection": "8180104",
+    "desc": "language_10071851",
+    "unlockType": 0,
+    "unlockParam": ""
+  },
+  {
+    "id": 1005,
+    "rare": 1,
+    "addCollection": "8180105",
+    "desc": "language_10071852",
+    "unlockType": 0,
+    "unlockParam": ""
+  },
+  {
+    "id": 1006,
+    "rare": 1,
+    "addCollection": "8180106",
+    "desc": "language_10071853",
+    "unlockType": 0,
+    "unlockParam": ""
+  },
+  {
+    "id": 1007,
+    "rare": 1,
+    "addCollection": "8180107",
+    "desc": "language_10071854",
+    "unlockType": 0,
+    "unlockParam": ""
+  },
+  {
+    "id": 1008,
+    "rare": 1,
+    "addCollection": "8180109",
+    "desc": "language_10071855",
+    "unlockType": 0,
+    "unlockParam": ""
+  },
+  {
+    "id": 1009,
+    "rare": 1,
+    "addCollection": "8180110",
+    "desc": "language_10071856",
+    "unlockType": 0,
+    "unlockParam": ""
+  },
+  {
+    "id": 1010,
+    "rare": 1,
+    "addCollection": "8180111",
+    "desc": "language_10071857",
+    "unlockType": 0,
+    "unlockParam": ""
+  },
+  {
+    "id": 1011,
+    "rare": 1,
+    "addCollection": "8180112",
+    "desc": "language_10071858",
+    "unlockType": 0,
+    "unlockParam": ""
+  },
+  {
+    "id": 2001,
+    "rare": 2,
+    "addCollection": "8180101",
+    "desc": "language_10071848",
+    "unlockType": 0,
+    "unlockParam": ""
+  },
+  {
+    "id": 2002,
+    "rare": 2,
+    "addCollection": "8180102",
+    "desc": "language_10071849",
+    "unlockType": 0,
+    "unlockParam": ""
+  },
+  {
+    "id": 2003,
+    "rare": 2,
+    "addCollection": "8180103",
+    "desc": "language_10071850",
+    "unlockType": 0,
+    "unlockParam": ""
+  },
+  {
+    "id": 2004,
+    "rare": 2,
+    "addCollection": "8180104",
+    "desc": "language_10071851",
+    "unlockType": 0,
+    "unlockParam": ""
+  },
+  {
+    "id": 2005,
+    "rare": 2,
+    "addCollection": "8180105",
+    "desc": "language_10071852",
+    "unlockType": 0,
+    "unlockParam": ""
+  },
+  {
+    "id": 2006,
+    "rare": 2,
+    "addCollection": "8180106",
+    "desc": "language_10071853",
+    "unlockType": 0,
+    "unlockParam": ""
+  },
+  {
+    "id": 2007,
+    "rare": 2,
+    "addCollection": "8180107",
+    "desc": "language_10071854",
+    "unlockType": 0,
+    "unlockParam": ""
+  },
+  {
+    "id": 2008,
+    "rare": 2,
+    "addCollection": "8180109",
+    "desc": "language_10071855",
+    "unlockType": 0,
+    "unlockParam": ""
+  },
+  {
+    "id": 2009,
+    "rare": 2,
+    "addCollection": "8180110",
+    "desc": "language_10071856",
+    "unlockType": 0,
+    "unlockParam": ""
+  },
+  {
+    "id": 2010,
+    "rare": 2,
+    "addCollection": "8180111",
+    "desc": "language_10071857",
+    "unlockType": 0,
+    "unlockParam": ""
+  },
+  {
+    "id": 2011,
+    "rare": 2,
+    "addCollection": "8180112",
+    "desc": "language_10071858",
+    "unlockType": 0,
+    "unlockParam": ""
+  },
+  {
+    "id": 3001,
+    "rare": 3,
+    "addCollection": "8180101",
+    "desc": "language_10071848",
+    "unlockType": 0,
+    "unlockParam": ""
+  },
+  {
+    "id": 3002,
+    "rare": 3,
+    "addCollection": "8180102",
+    "desc": "language_10071849",
+    "unlockType": 0,
+    "unlockParam": ""
+  },
+  {
+    "id": 3003,
+    "rare": 3,
+    "addCollection": "8180103",
+    "desc": "language_10071850",
+    "unlockType": 0,
+    "unlockParam": ""
+  },
+  {
+    "id": 3004,
+    "rare": 3,
+    "addCollection": "8180104",
+    "desc": "language_10071851",
+    "unlockType": 0,
+    "unlockParam": ""
+  },
+  {
+    "id": 3005,
+    "rare": 3,
+    "addCollection": "8180105",
+    "desc": "language_10071852",
+    "unlockType": 0,
+    "unlockParam": ""
+  },
+  {
+    "id": 3006,
+    "rare": 3,
+    "addCollection": "8180106",
+    "desc": "language_10071853",
+    "unlockType": 0,
+    "unlockParam": ""
+  },
+  {
+    "id": 3007,
+    "rare": 3,
+    "addCollection": "8180107",
+    "desc": "language_10071854",
+    "unlockType": 0,
+    "unlockParam": ""
+  },
+  {
+    "id": 3008,
+    "rare": 3,
+    "addCollection": "8180109",
+    "desc": "language_10071855",
+    "unlockType": 0,
+    "unlockParam": ""
+  },
+  {
+    "id": 3009,
+    "rare": 3,
+    "addCollection": "8180110",
+    "desc": "language_10071856",
+    "unlockType": 0,
+    "unlockParam": ""
+  },
+  {
+    "id": 3010,
+    "rare": 3,
+    "addCollection": "8180111",
+    "desc": "language_10071857",
+    "unlockType": 0,
+    "unlockParam": ""
+  },
+  {
+    "id": 3011,
+    "rare": 3,
+    "addCollection": "8180112",
+    "desc": "language_10071858",
+    "unlockType": 0,
+    "unlockParam": ""
+  },
+  {
+    "id": 4001,
+    "rare": 4,
+    "addCollection": "8180101",
+    "desc": "language_10071848",
+    "unlockType": 0,
+    "unlockParam": ""
+  },
+  {
+    "id": 4002,
+    "rare": 4,
+    "addCollection": "8180102",
+    "desc": "language_10071849",
+    "unlockType": 0,
+    "unlockParam": ""
+  },
+  {
+    "id": 4003,
+    "rare": 4,
+    "addCollection": "8180103",
+    "desc": "language_10071850",
+    "unlockType": 0,
+    "unlockParam": ""
+  },
+  {
+    "id": 4004,
+    "rare": 4,
+    "addCollection": "8180104",
+    "desc": "language_10071851",
+    "unlockType": 0,
+    "unlockParam": ""
+  },
+  {
+    "id": 4005,
+    "rare": 4,
+    "addCollection": "8180105",
+    "desc": "language_10071852",
+    "unlockType": 0,
+    "unlockParam": ""
+  },
+  {
+    "id": 4006,
+    "rare": 4,
+    "addCollection": "8180106",
+    "desc": "language_10071853",
+    "unlockType": 0,
+    "unlockParam": ""
+  },
+  {
+    "id": 4007,
+    "rare": 4,
+    "addCollection": "8180107",
+    "desc": "language_10071854",
+    "unlockType": 0,
+    "unlockParam": ""
+  },
+  {
+    "id": 4008,
+    "rare": 4,
+    "addCollection": "8180109",
+    "desc": "language_10071855",
+    "unlockType": 0,
+    "unlockParam": ""
+  },
+  {
+    "id": 4009,
+    "rare": 4,
+    "addCollection": "8180110",
+    "desc": "language_10071856",
+    "unlockType": 0,
+    "unlockParam": ""
+  },
+  {
+    "id": 4010,
+    "rare": 4,
+    "addCollection": "8180111",
+    "desc": "language_10071857",
+    "unlockType": 0,
+    "unlockParam": ""
+  },
+  {
+    "id": 4011,
+    "rare": 4,
+    "addCollection": "8180112",
+    "desc": "language_10071858",
+    "unlockType": 0,
+    "unlockParam": ""
+  },
+  {
+    "id": 4012,
+    "rare": 2,
+    "addCollection": "",
+    "desc": "language_10071847",
+    "unlockType": 1,
+    "unlockParam": "8180604"
+  },
+  {
+    "id": 4013,
+    "rare": 3,
+    "addCollection": "",
+    "desc": "language_10071847",
+    "unlockType": 1,
+    "unlockParam": "8180604"
+  },
+  {
+    "id": 4014,
+    "rare": 4,
+    "addCollection": "",
+    "desc": "language_10071847",
+    "unlockType": 1,
+    "unlockParam": "8180604"
+  }
+]

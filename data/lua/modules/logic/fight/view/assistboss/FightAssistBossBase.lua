@@ -227,6 +227,10 @@ function var_0_0.playAssistBossCard(arg_18_0)
 end
 
 function var_0_0.canUseSkill(arg_19_0)
+	if FightViewHandCard.blockOperate then
+		return
+	end
+
 	if not FightDataHelper.paTaMgr:canUseSkill() then
 		return
 	end

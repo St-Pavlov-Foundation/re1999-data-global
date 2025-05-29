@@ -269,14 +269,7 @@ function var_0_0.onUpdateMO(arg_19_0, arg_19_1)
 end
 
 function var_0_0.setAdventureBuff(arg_20_0, arg_20_1)
-	gohelper.setActive(arg_20_0._gobuff, arg_20_1 and arg_20_1 > 0)
-
-	if arg_20_1 and arg_20_1 > 0 then
-		local var_20_0 = lua_adventure_buff.configDict[arg_20_1]
-
-		UISpriteSetMgr.instance:setCommonSprite(arg_20_0._imagebuff, "bgbuffdi" .. tostring(var_20_0.rare))
-		arg_20_0._simagebufftuan:LoadImage(ResUrl.getAdventureTarotSmallIcon(tostring(var_20_0.icon)))
-	end
+	return
 end
 
 function var_0_0.setHeroGroupType(arg_21_0)

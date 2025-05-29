@@ -4849,5 +4849,536 @@
     "name": "",
     "avatar": "",
     "chessId": 0
+  },
+  {
+    "groupId": 38,
+    "id": 38001,
+    "type": 1,
+    "content": "language_10070160",
+    "name": "language_10005348",
+    "avatar": "302301",
+    "chessId": 1
+  },
+  {
+    "groupId": 38,
+    "id": 38002,
+    "type": 2,
+    "content": "language_10070161",
+    "name": "language_10070162",
+    "avatar": "311401",
+    "chessId": 2
+  },
+  {
+    "groupId": 38,
+    "id": 38003,
+    "type": 1,
+    "content": "language_10070163",
+    "name": "language_10005348",
+    "avatar": "302301",
+    "chessId": 1
+  },
+  {
+    "groupId": 38,
+    "id": 38004,
+    "type": 2,
+    "content": "language_10070164",
+    "name": "language_10070162",
+    "avatar": "311401",
+    "chessId": 2
+  },
+  {
+    "groupId": 38,
+    "id": 38005,
+    "type": 2,
+    "content": "language_10070165",
+    "name": "language_10070162",
+    "avatar": "311401",
+    "chessId": 2
+  },
+  {
+    "groupId": 38,
+    "id": 38006,
+    "type": 1,
+    "content": "language_10070166",
+    "name": "language_10005348",
+    "avatar": "302301",
+    "chessId": 1
+  },
+  {
+    "groupId": 38,
+    "id": 38007,
+    "type": 2,
+    "content": "language_10070167",
+    "name": "language_10070162",
+    "avatar": "311401",
+    "chessId": 2
+  },
+  {
+    "groupId": 38,
+    "id": 38008,
+    "type": 1,
+    "content": "language_10070168",
+    "name": "language_10005348",
+    "avatar": "302301",
+    "chessId": 1
+  },
+  {
+    "groupId": 38,
+    "id": 38009,
+    "type": 1,
+    "content": "language_10070169",
+    "name": "language_10005348",
+    "avatar": "302301",
+    "chessId": 1
+  },
+  {
+    "groupId": 38,
+    "id": 38010,
+    "type": 2,
+    "content": "language_10070170",
+    "name": "language_10070162",
+    "avatar": "311401",
+    "chessId": 2
+  },
+  {
+    "groupId": 38,
+    "id": 38011,
+    "type": 1,
+    "content": "language_10070171",
+    "name": "language_10005348",
+    "avatar": "302301",
+    "chessId": 1
+  },
+  {
+    "groupId": 38,
+    "id": 38012,
+    "type": 3,
+    "content": "language_10002598",
+    "name": "",
+    "avatar": "",
+    "chessId": 0
+  },
+  {
+    "groupId": 39,
+    "id": 39001,
+    "type": 1,
+    "content": "language_10070172",
+    "name": "language_10005348",
+    "avatar": "302301",
+    "chessId": 1
+  },
+  {
+    "groupId": 39,
+    "id": 39002,
+    "type": 1,
+    "content": "language_10070173",
+    "name": "language_10005348",
+    "avatar": "302301",
+    "chessId": 1
+  },
+  {
+    "groupId": 39,
+    "id": 39003,
+    "type": 2,
+    "content": "language_10070174",
+    "name": "language_10070162",
+    "avatar": "311401",
+    "chessId": 2
+  },
+  {
+    "groupId": 39,
+    "id": 39004,
+    "type": 2,
+    "content": "language_10070175",
+    "name": "language_10070162",
+    "avatar": "311401",
+    "chessId": 2
+  },
+  {
+    "groupId": 39,
+    "id": 39005,
+    "type": 1,
+    "content": "language_10070176",
+    "name": "language_10005348",
+    "avatar": "302301",
+    "chessId": 1
+  },
+  {
+    "groupId": 39,
+    "id": 39006,
+    "type": 2,
+    "content": "language_10070177",
+    "name": "language_10070162",
+    "avatar": "311401",
+    "chessId": 2
+  },
+  {
+    "groupId": 39,
+    "id": 39007,
+    "type": 2,
+    "content": "language_10070178",
+    "name": "language_10070162",
+    "avatar": "311401",
+    "chessId": 2
+  },
+  {
+    "groupId": 39,
+    "id": 39008,
+    "type": 1,
+    "content": "language_10070179",
+    "name": "language_10005348",
+    "avatar": "302301",
+    "chessId": 1
+  },
+  {
+    "groupId": 39,
+    "id": 39009,
+    "type": 2,
+    "content": "language_10070180",
+    "name": "language_10070162",
+    "avatar": "311401",
+    "chessId": 2
+  },
+  {
+    "groupId": 39,
+    "id": 39010,
+    "type": 1,
+    "content": "language_10070181",
+    "name": "language_10005348",
+    "avatar": "302301",
+    "chessId": 1
+  },
+  {
+    "groupId": 39,
+    "id": 39011,
+    "type": 1,
+    "content": "language_10070182",
+    "name": "language_10005348",
+    "avatar": "302301",
+    "chessId": 1
+  },
+  {
+    "groupId": 39,
+    "id": 39012,
+    "type": 2,
+    "content": "language_10070183",
+    "name": "language_10070162",
+    "avatar": "311401",
+    "chessId": 2
+  },
+  {
+    "groupId": 39,
+    "id": 39013,
+    "type": 3,
+    "content": "language_10002598",
+    "name": "",
+    "avatar": "",
+    "chessId": 0
+  },
+  {
+    "groupId": 40,
+    "id": 40001,
+    "type": 1,
+    "content": "language_10070184",
+    "name": "language_10000321",
+    "avatar": "300101",
+    "chessId": 1
+  },
+  {
+    "groupId": 40,
+    "id": 40002,
+    "type": 2,
+    "content": "language_10070185",
+    "name": "language_10005348",
+    "avatar": "302301",
+    "chessId": 2
+  },
+  {
+    "groupId": 40,
+    "id": 40003,
+    "type": 1,
+    "content": "language_10070186",
+    "name": "language_10000321",
+    "avatar": "300101",
+    "chessId": 1
+  },
+  {
+    "groupId": 40,
+    "id": 40004,
+    "type": 2,
+    "content": "language_10070187",
+    "name": "language_10005348",
+    "avatar": "302301",
+    "chessId": 2
+  },
+  {
+    "groupId": 40,
+    "id": 40005,
+    "type": 1,
+    "content": "language_10070188",
+    "name": "language_10000321",
+    "avatar": "300101",
+    "chessId": 1
+  },
+  {
+    "groupId": 40,
+    "id": 40006,
+    "type": 2,
+    "content": "language_10070189",
+    "name": "language_10005348",
+    "avatar": "302301",
+    "chessId": 2
+  },
+  {
+    "groupId": 40,
+    "id": 40007,
+    "type": 2,
+    "content": "language_10070190",
+    "name": "language_10005348",
+    "avatar": "302301",
+    "chessId": 2
+  },
+  {
+    "groupId": 40,
+    "id": 40008,
+    "type": 2,
+    "content": "language_10070191",
+    "name": "language_10005348",
+    "avatar": "302301",
+    "chessId": 2
+  },
+  {
+    "groupId": 40,
+    "id": 40009,
+    "type": 1,
+    "content": "language_10070192",
+    "name": "language_10000321",
+    "avatar": "300101",
+    "chessId": 1
+  },
+  {
+    "groupId": 40,
+    "id": 40010,
+    "type": 1,
+    "content": "language_10070193",
+    "name": "language_10000321",
+    "avatar": "300101",
+    "chessId": 1
+  },
+  {
+    "groupId": 40,
+    "id": 40011,
+    "type": 2,
+    "content": "language_10070194",
+    "name": "language_10005348",
+    "avatar": "302301",
+    "chessId": 2
+  },
+  {
+    "groupId": 40,
+    "id": 40012,
+    "type": 2,
+    "content": "language_10070195",
+    "name": "language_10005348",
+    "avatar": "302301",
+    "chessId": 2
+  },
+  {
+    "groupId": 40,
+    "id": 40013,
+    "type": 2,
+    "content": "language_10070196",
+    "name": "language_10005348",
+    "avatar": "302301",
+    "chessId": 2
+  },
+  {
+    "groupId": 40,
+    "id": 40014,
+    "type": 2,
+    "content": "language_10070197",
+    "name": "language_10005348",
+    "avatar": "302301",
+    "chessId": 2
+  },
+  {
+    "groupId": 40,
+    "id": 40015,
+    "type": 1,
+    "content": "language_10070198",
+    "name": "language_10000321",
+    "avatar": "300101",
+    "chessId": 1
+  },
+  {
+    "groupId": 40,
+    "id": 40016,
+    "type": 1,
+    "content": "language_10070199",
+    "name": "language_10000321",
+    "avatar": "300101",
+    "chessId": 1
+  },
+  {
+    "groupId": 40,
+    "id": 40017,
+    "type": 2,
+    "content": "language_10070200",
+    "name": "language_10005348",
+    "avatar": "302301",
+    "chessId": 2
+  },
+  {
+    "groupId": 40,
+    "id": 40018,
+    "type": 3,
+    "content": "language_10002598",
+    "name": "",
+    "avatar": "",
+    "chessId": 0
+  },
+  {
+    "groupId": 41,
+    "id": 41001,
+    "type": 2,
+    "content": "language_10070201",
+    "name": "language_10070202",
+    "avatar": "517801",
+    "chessId": 2
+  },
+  {
+    "groupId": 41,
+    "id": 41002,
+    "type": 1,
+    "content": "language_10070203",
+    "name": "language_10070204",
+    "avatar": "518301",
+    "chessId": 1
+  },
+  {
+    "groupId": 41,
+    "id": 41003,
+    "type": 2,
+    "content": "language_10070205",
+    "name": "language_10070202",
+    "avatar": "517801",
+    "chessId": 2
+  },
+  {
+    "groupId": 41,
+    "id": 41004,
+    "type": 1,
+    "content": "language_10070206",
+    "name": "language_10070204",
+    "avatar": "518301",
+    "chessId": 1
+  },
+  {
+    "groupId": 41,
+    "id": 41005,
+    "type": 2,
+    "content": "language_10070207",
+    "name": "language_10070202",
+    "avatar": "517801",
+    "chessId": 2
+  },
+  {
+    "groupId": 41,
+    "id": 41006,
+    "type": 1,
+    "content": "language_10070208",
+    "name": "language_10070204",
+    "avatar": "518301",
+    "chessId": 1
+  },
+  {
+    "groupId": 41,
+    "id": 41007,
+    "type": 2,
+    "content": "language_10070209",
+    "name": "language_10070202",
+    "avatar": "517801",
+    "chessId": 2
+  },
+  {
+    "groupId": 41,
+    "id": 41008,
+    "type": 1,
+    "content": "language_10070210",
+    "name": "language_10070204",
+    "avatar": "518301",
+    "chessId": 1
+  },
+  {
+    "groupId": 41,
+    "id": 41009,
+    "type": 2,
+    "content": "language_10070211",
+    "name": "language_10070202",
+    "avatar": "517801",
+    "chessId": 2
+  },
+  {
+    "groupId": 41,
+    "id": 41010,
+    "type": 1,
+    "content": "language_10070212",
+    "name": "language_10070204",
+    "avatar": "518301",
+    "chessId": 1
+  },
+  {
+    "groupId": 41,
+    "id": 41011,
+    "type": 2,
+    "content": "language_10070213",
+    "name": "language_10070202",
+    "avatar": "517801",
+    "chessId": 2
+  },
+  {
+    "groupId": 41,
+    "id": 41012,
+    "type": 1,
+    "content": "language_10070214",
+    "name": "language_10070204",
+    "avatar": "518301",
+    "chessId": 1
+  },
+  {
+    "groupId": 41,
+    "id": 41013,
+    "type": 2,
+    "content": "language_10070215",
+    "name": "language_10070202",
+    "avatar": "517801",
+    "chessId": 2
+  },
+  {
+    "groupId": 41,
+    "id": 41014,
+    "type": 2,
+    "content": "language_10070216",
+    "name": "language_10070202",
+    "avatar": "517801",
+    "chessId": 2
+  },
+  {
+    "groupId": 41,
+    "id": 41015,
+    "type": 1,
+    "content": "language_10070217",
+    "name": "language_10070204",
+    "avatar": "518301",
+    "chessId": 1
+  },
+  {
+    "groupId": 41,
+    "id": 41016,
+    "type": 3,
+    "content": "language_10002598",
+    "name": "",
+    "avatar": "",
+    "chessId": 0
   }
 ]

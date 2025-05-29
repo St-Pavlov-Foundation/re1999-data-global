@@ -70,6 +70,16 @@
     "bossEffect": 0
   },
   {
+    "id": 1540101,
+    "version": "",
+    "entrustType": 1,
+    "pieceRes": "",
+    "title": "language_10043166",
+    "desc": "language_10043166",
+    "talkId": 1540101,
+    "bossEffect": 0
+  },
+  {
     "id": 1110201,
     "version": "",
     "entrustType": 2,
@@ -457,6 +467,16 @@
     "title": "language_10064621",
     "desc": "language_10064621",
     "talkId": 1510503,
+    "bossEffect": 1
+  },
+  {
+    "id": 1510504,
+    "version": "",
+    "entrustType": 5,
+    "pieceRes": "",
+    "title": "language_10071985",
+    "desc": "language_10071985",
+    "talkId": 1510504,
     "bossEffect": 1
   },
   {

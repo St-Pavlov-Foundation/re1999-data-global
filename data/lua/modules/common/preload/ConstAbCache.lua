@@ -11,6 +11,9 @@ function var_0_0.ctor(arg_1_0)
 		ExploreScenePPVolume.ExploreHighProfilePath,
 		ExploreScenePPVolume.ExploreMiddleProfilePath,
 		ExploreScenePPVolume.ExploreLowProfilePath,
+		RoomResourceEnum.PPVolume.High,
+		RoomResourceEnum.PPVolume.Middle,
+		RoomResourceEnum.PPVolume.Low,
 		PostProcessingMgr.CaptureResPath
 	}
 	arg_1_0._pathResTab = {}

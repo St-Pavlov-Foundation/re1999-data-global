@@ -224,10 +224,10 @@ function var_0_0._changeMap(arg_22_0, arg_22_1, arg_22_2)
 	arg_22_0._showSceneChangeAnimState = var_0_1.None
 
 	if arg_22_0._mapCfg then
-		local var_22_0 = DungeonEnum.MapIdGroup[arg_22_0._mapCfg.id]
-		local var_22_1 = DungeonEnum.MapIdGroup[arg_22_1.id]
+		local var_22_0 = arg_22_0._mapCfg.mapIdGroup
+		local var_22_1 = arg_22_1.mapIdGroup
 
-		if ToughBattleModel.instance:getIsJumpActElement() or var_22_0 and var_22_1 and var_22_1 ~= var_22_0 then
+		if ToughBattleModel.instance:getIsJumpActElement() or var_22_0 and var_22_0 > 0 and var_22_1 and var_22_1 ~= var_22_0 then
 			arg_22_0._showSceneChangeAnimState = var_0_1.NoStart
 		end
 	end

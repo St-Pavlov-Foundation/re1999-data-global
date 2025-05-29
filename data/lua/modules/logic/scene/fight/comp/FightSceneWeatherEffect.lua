@@ -7,6 +7,7 @@ function var_0_0.onSceneStart(arg_1_0, arg_1_1, arg_1_2)
 	FightController.instance:registerCallback(FightEvent.SetEntityWeatherEffectVisible, arg_1_0._setEntityWeatherEffectVisible, arg_1_0)
 	FightController.instance:registerCallback(FightEvent.OnSpineLoaded, arg_1_0._onSpineLoaded, arg_1_0)
 	FightController.instance:registerCallback(FightEvent.OnRestartStageBefore, arg_1_0._releaseAllEntityEffect, arg_1_0)
+	FightController.instance:registerCallback(FightEvent.SetEntityAlpha, arg_1_0._onSetEntityAlpha, arg_1_0)
 end
 
 function var_0_0.onScenePrepared(arg_2_0, arg_2_1, arg_2_2)
@@ -19,6 +20,7 @@ function var_0_0.onSceneClose(arg_3_0)
 	FightController.instance:unregisterCallback(FightEvent.SetEntityWeatherEffectVisible, arg_3_0._setEntityWeatherEffectVisible, arg_3_0)
 	FightController.instance:unregisterCallback(FightEvent.OnSpineLoaded, arg_3_0._onSpineLoaded, arg_3_0)
 	FightController.instance:unregisterCallback(FightEvent.OnRestartStageBefore, arg_3_0._releaseAllEntityEffect, arg_3_0)
+	FightController.instance:unregisterCallback(FightEvent.SetEntityAlpha, arg_3_0._onSetEntityAlpha, arg_3_0)
 	arg_3_0:getCurScene().level:unregisterCallback(CommonSceneLevelComp.OnLevelLoaded, arg_3_0._onLevelLoaded, arg_3_0)
 	arg_3_0:_releaseWeatherEffect()
 end
@@ -73,6 +75,11 @@ end
 
 function var_0_0._setSpineWeatherEffect(arg_8_0, arg_8_1)
 	local var_8_0 = arg_8_1.unitSpawn
+
+	if var_8_0.ingoreRainEffect then
+		return
+	end
+
 	local var_8_1 = var_8_0.id
 
 	if not var_8_0.effect or arg_8_1._spineGo:GetComponent(typeof(UnityEngine.Renderer)) == nil then
@@ -97,37 +104,45 @@ function var_0_0._setSpineWeatherEffect(arg_8_0, arg_8_1)
 	arg_8_0.weather_effect[var_8_1]:setActive(true)
 end
 
-function var_0_0._setEntityWeatherEffectVisible(arg_9_0, arg_9_1, arg_9_2)
-	if arg_9_0.weather_effect and arg_9_0.weather_effect[arg_9_1.id] then
-		gohelper.setActive(arg_9_0.weather_effect[arg_9_1.id].containerGO, arg_9_2 or false)
+function var_0_0._onSetEntityAlpha(arg_9_0, arg_9_1, arg_9_2)
+	local var_9_0 = FightHelper.getEntity(arg_9_1)
+
+	if var_9_0 then
+		arg_9_0:_setEntityWeatherEffectVisible(var_9_0, arg_9_2)
 	end
 end
 
-function var_0_0._releaseOneWeatherEffect(arg_10_0, arg_10_1)
-	if arg_10_1 and arg_10_1.effect then
-		arg_10_1.effect:removeEffect(arg_10_0.weather_effect[arg_10_1.id])
-	end
-
+function var_0_0._setEntityWeatherEffectVisible(arg_10_0, arg_10_1, arg_10_2)
 	if arg_10_0.weather_effect and arg_10_0.weather_effect[arg_10_1.id] then
-		arg_10_0.weather_effect[arg_10_1.id] = nil
-		arg_10_0.cache_entity[arg_10_1.id] = nil
+		gohelper.setActive(arg_10_0.weather_effect[arg_10_1.id].containerGO, arg_10_2 or false)
 	end
 end
 
-function var_0_0._releaseAllEntityEffect(arg_11_0)
-	if arg_11_0.weather_effect then
-		for iter_11_0, iter_11_1 in pairs(arg_11_0.weather_effect) do
-			arg_11_0:_releaseOneWeatherEffect(arg_11_0.cache_entity[iter_11_0])
+function var_0_0._releaseOneWeatherEffect(arg_11_0, arg_11_1)
+	if arg_11_1 and arg_11_1.effect then
+		arg_11_1.effect:removeEffect(arg_11_0.weather_effect[arg_11_1.id])
+	end
+
+	if arg_11_0.weather_effect and arg_11_0.weather_effect[arg_11_1.id] then
+		arg_11_0.weather_effect[arg_11_1.id] = nil
+		arg_11_0.cache_entity[arg_11_1.id] = nil
+	end
+end
+
+function var_0_0._releaseAllEntityEffect(arg_12_0)
+	if arg_12_0.weather_effect then
+		for iter_12_0, iter_12_1 in pairs(arg_12_0.weather_effect) do
+			arg_12_0:_releaseOneWeatherEffect(arg_12_0.cache_entity[iter_12_0])
 		end
 	end
 end
 
-function var_0_0._releaseWeatherEffect(arg_12_0)
-	arg_12_0:_releaseAllEntityEffect()
+function var_0_0._releaseWeatherEffect(arg_13_0)
+	arg_13_0:_releaseAllEntityEffect()
 
-	arg_12_0.weather_effect = nil
-	arg_12_0._weatherEffect_url = nil
-	arg_12_0.cache_entity = nil
+	arg_13_0.weather_effect = nil
+	arg_13_0._weatherEffect_url = nil
+	arg_13_0.cache_entity = nil
 end
 
 return var_0_0

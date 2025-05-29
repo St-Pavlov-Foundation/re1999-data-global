@@ -3,7 +3,8 @@
 local var_0_0 = FightDataClass("FightCustomData")
 
 var_0_0.CustomDataType = {
-	Act183 = 1
+	Act183 = 1,
+	WeekwalkVer2 = 2
 }
 
 function var_0_0.onConstructor(arg_1_0, arg_1_1)

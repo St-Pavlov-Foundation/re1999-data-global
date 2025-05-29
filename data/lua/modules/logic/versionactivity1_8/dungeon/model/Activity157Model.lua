@@ -540,16 +540,23 @@ function var_0_0.getMissionStatus(arg_39_0, arg_39_1, arg_39_2)
 		return Activity157Enum.MissionStatus.Finish
 	end
 
+	local var_39_2 = Activity157Config.instance:isSideMission(var_39_0, arg_39_2)
+	local var_39_3 = arg_39_0:getIsSideMissionUnlocked()
+
+	if var_39_2 and not var_39_3 then
+		return Activity157Enum.MissionStatus.Locked
+	end
+
 	if not DungeonMapModel.instance:getElementById(var_39_1) then
 		return Activity157Enum.MissionStatus.Locked
 	end
 
 	if DungeonConfig.instance:isDispatchElement(var_39_1) then
-		local var_39_2 = DispatchModel.instance:getDispatchStatus(var_39_1)
+		local var_39_4 = DispatchModel.instance:getDispatchStatus(var_39_1)
 
-		if var_39_2 == DispatchEnum.DispatchStatus.Finished then
+		if var_39_4 == DispatchEnum.DispatchStatus.Finished then
 			return Activity157Enum.MissionStatus.DispatchFinish
-		elseif var_39_2 == DispatchEnum.DispatchStatus.Dispatching then
+		elseif var_39_4 == DispatchEnum.DispatchStatus.Dispatching then
 			return Activity157Enum.MissionStatus.Dispatching
 		end
 	end
@@ -601,16 +608,17 @@ function var_0_0.getMissionUnlockToastId(arg_41_0, arg_41_1, arg_41_2)
 	end
 
 	local var_41_7, var_41_8 = string.match(var_41_2, "(EpisodeFinish=)(%d+)")
-	local var_41_9 = var_41_8 and DungeonModel.instance:hasPassLevelAndStory(var_41_8)
+	local var_41_9 = tonumber(var_41_8)
+	local var_41_10 = var_41_9 and DungeonModel.instance:hasPassLevelAndStory(var_41_9)
 
-	if var_41_8 and not var_41_9 then
+	if var_41_9 and not var_41_10 then
 		return ToastEnum.V1a8Activity157MissionLockedByStory
 	end
 
-	local var_41_10, var_41_11 = string.match(var_41_2, "(Act157ComponentUnlock=)(%d+)")
-	local var_41_12 = var_41_11 and arg_41_0:isRepairComponent(var_41_11)
+	local var_41_11, var_41_12 = string.match(var_41_2, "(Act157ComponentUnlock=)(%d+)")
+	local var_41_13 = var_41_12 and arg_41_0:isRepairComponent(var_41_12)
 
-	if var_41_11 and not var_41_12 then
+	if var_41_12 and not var_41_13 then
 		return ToastEnum.V1a8Activity157NotRepairComponent
 	end
 

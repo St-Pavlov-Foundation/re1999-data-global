@@ -263,16 +263,16 @@ function var_0_0.getDeadById(arg_24_0, arg_24_1)
 end
 
 function var_0_0.addDeadUid(arg_25_0, arg_25_1)
-	arg_25_0._deadUids = arg_25_0._deadUids or {}
-	arg_25_0._deadUids[arg_25_1] = true
+	arg_25_0.deadUids = arg_25_0.deadUids or {}
+	arg_25_0.deadUids[arg_25_1] = true
 end
 
 function var_0_0.isDeadUid(arg_26_0, arg_26_1)
-	return arg_26_0._deadUids and arg_26_0._deadUids[arg_26_1]
+	return arg_26_0.deadUids and arg_26_0.deadUids[arg_26_1]
 end
 
 function var_0_0.clearDeadUids(arg_27_0)
-	arg_27_0._deadUids = {}
+	arg_27_0.deadUids = {}
 end
 
 function var_0_0.sortSubEntityList(arg_28_0, arg_28_1)

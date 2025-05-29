@@ -1511,4 +1511,8 @@ function var_0_0.getV2a5LiangYueImg(arg_350_0)
 	return (string.format("singlebg_lang/txt_v2a5_liangyue_singlebg/%s.png", tostring(arg_350_0)))
 end
 
+function var_0_0.getShortenActSingleBg(arg_351_0)
+	return string.format("singlebg/shortenact_singlebg/%s.png", arg_351_0)
+end
+
 return var_0_0

@@ -52,36 +52,21 @@ function var_0_0.getCollectionLevelUpCo(arg_6_0, arg_6_1)
 	return arg_6_0._levelConfigTab and arg_6_0._levelConfigTab.configDict[arg_6_1]
 end
 
-function var_0_0.getCollectionLevelUpConditions(arg_7_0, arg_7_1)
-	return {
-		{
-			index = 1,
-			id = 8110021,
-			content = "测试1"
-		},
-		{
-			index = 2,
-			id = 8110021,
-			content = "测试2"
-		}
-	}
+function var_0_0.getAllCollectionTrammelCo(arg_7_0)
+	return arg_7_0._trammelConfigTab and arg_7_0._trammelConfigTab.configList
 end
 
-function var_0_0.getAllCollectionTrammelCo(arg_8_0)
-	return arg_8_0._trammelConfigTab and arg_8_0._trammelConfigTab.configList
-end
+function var_0_0.getCollectionOwnerCo(arg_8_0, arg_8_1)
+	local var_8_0 = RougeCollectionConfig.instance:getCollectionCfg(arg_8_1)
 
-function var_0_0.getCollectionOwnerCo(arg_9_0, arg_9_1)
-	local var_9_0 = RougeCollectionConfig.instance:getCollectionCfg(arg_9_1)
-
-	if not var_9_0 then
+	if not var_8_0 then
 		return
 	end
 
-	local var_9_1 = var_9_0.ownerId
+	local var_8_1 = var_8_0.ownerId
 
-	if var_9_1 and var_9_1 ~= 0 then
-		return (HeroConfig.instance:getHeroCO(var_9_1))
+	if var_8_1 and var_8_1 ~= 0 then
+		return (HeroConfig.instance:getHeroCO(var_8_1))
 	end
 end
 

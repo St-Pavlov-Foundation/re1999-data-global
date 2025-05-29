@@ -118,6 +118,12 @@ function var_0_0._onReceiveMaterialChangePush(arg_6_0, arg_6_1, arg_6_2, arg_6_3
 			return
 		end
 
+		if ViewMgr.instance:isOpen(ViewName.WeekWalk_2LayerRewardView) then
+			WeekWalk_2TaskListModel.instance:setTaskRewardList(arg_6_2)
+
+			return
+		end
+
 		TaskController.instance:getRewardByLine(var_6_0, ViewName.CommonPropView, arg_6_2)
 
 		if #arg_6_4 > 0 then

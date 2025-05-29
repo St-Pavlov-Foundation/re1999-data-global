@@ -6,6 +6,7 @@ function var_0_0.onInitView(arg_1_0)
 	arg_1_0._imageroundBg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#image_roundBg")
 	arg_1_0._txtroundText = gohelper.findChildText(arg_1_0.viewGO, "#image_roundBg/roundBg/#txt_roundText")
 	arg_1_0._imagefightStartBg = gohelper.findChildImage(arg_1_0.viewGO, "#image_fightStartBg")
+	arg_1_0._goalList = gohelper.findChild(arg_1_0.viewGO, "#image_roundBg/goalList")
 	arg_1_0._goCondition = gohelper.findChild(arg_1_0.viewGO, "#image_roundBg/goalList/#go_goal")
 	arg_1_0._txtCondition = gohelper.findChildText(arg_1_0.viewGO, "#image_roundBg/goalList/#go_goal/#txt_condition1")
 	arg_1_0._goPlatCondition = gohelper.findChild(arg_1_0.viewGO, "#image_roundBg/goalList/#go_platinum")
@@ -90,6 +91,14 @@ function var_0_0.onOpen(arg_5_0)
 	end
 
 	gohelper.onceAddComponent(arg_5_0.viewGO, typeof(ZProj.EffectTimeScale)):SetTimeScale(FightModel.instance:getUISpeed())
+
+	local var_5_9 = true
+
+	if FightDataHelper.fieldMgr.customData[FightCustomData.CustomDataType.WeekwalkVer2] then
+		var_5_9 = false
+	end
+
+	gohelper.setActive(arg_5_0._goalList, var_5_9)
 end
 
 function var_0_0._setConditionText(arg_6_0, arg_6_1, arg_6_2, arg_6_3)

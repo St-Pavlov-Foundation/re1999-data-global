@@ -198,10 +198,14 @@ function var_0_0.getEpisodeContainerItem(arg_14_0, arg_14_1)
 
 	if arg_14_1 > 1 then
 		local var_14_3 = arg_14_0._episodeContainerItemList[arg_14_1 - 1]
-		local var_14_4 = recthelper.getAnchorX(var_14_3.containerTr) or 0
+
+		if not recthelper.getAnchorX(var_14_3.containerTr) then
+			local var_14_4 = 0
+		end
+
 		local var_14_5 = var_14_3.episodeItem
 
-		recthelper.setAnchorX(var_14_1.containerTr, var_14_4 + var_14_5:getMaxWidth() + arg_14_0._constDungeonNormalDeltaX)
+		recthelper.setAnchorX(var_14_1.containerTr, var_14_5.scrollContentPosX + var_14_5:getMaxWidth() + arg_14_0._constDungeonNormalDeltaX)
 	else
 		recthelper.setAnchorX(var_14_1.containerTr, arg_14_0._constDungeonNormalPosX)
 	end

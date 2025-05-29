@@ -4,55 +4,63 @@ local var_0_0 = class("FightWorkQueueComponent", FightBaseClass)
 
 function var_0_0.onConstructor(arg_1_0)
 	arg_1_0.workQueue = {}
+	arg_1_0.callback = nil
+	arg_1_0.callbackHandle = nil
 end
 
-function var_0_0.addWork(arg_2_0, arg_2_1, arg_2_2)
-	table.insert(arg_2_0.workQueue, {
-		work = arg_2_1,
-		context = arg_2_2
-	})
+function var_0_0.registFinishCallback(arg_2_0, arg_2_1, arg_2_2)
+	arg_2_0.callback = arg_2_1
+	arg_2_0.callbackHandle = arg_2_2
+end
 
-	if #arg_2_0.workQueue == 1 then
-		arg_2_1:registFinishCallback(arg_2_0._onQueueWorkFinish, arg_2_0)
+function var_0_0.clearFinishCallback(arg_3_0)
+	arg_3_0.callback = nil
+	arg_3_0.callbackHandle = nil
+end
 
-		return arg_2_1:start(arg_2_2)
+function var_0_0.addWork(arg_4_0, arg_4_1, arg_4_2)
+	arg_4_0:addWorkList({
+		arg_4_1
+	}, arg_4_2)
+end
+
+function var_0_0.addWorkList(arg_5_0, arg_5_1, arg_5_2)
+	local var_5_0 = false
+
+	if #arg_5_0.workQueue == 0 then
+		var_5_0 = true
 	end
-end
 
-function var_0_0.registWork(arg_3_0, arg_3_1, ...)
-	local var_3_0 = arg_3_0:newClass(arg_3_1, ...)
-
-	arg_3_0:addWork(var_3_0)
-
-	return var_3_0
-end
-
-function var_0_0.registWorkWithContext(arg_4_0, arg_4_1, arg_4_2, ...)
-	local var_4_0 = arg_4_0:newClass(arg_4_1, ...)
-
-	arg_4_0:addWork(var_4_0, arg_4_2)
-
-	return var_4_0
-end
-
-function var_0_0._onQueueWorkFinish(arg_5_0)
-	local var_5_0 = arg_5_0.workQueue
+	for iter_5_0, iter_5_1 in ipairs(arg_5_1) do
+		iter_5_1:registFinishCallback(arg_5_0._onWorkFinish, arg_5_0)
+		table.insert(arg_5_0.workQueue, {
+			work = iter_5_1,
+			context = arg_5_2
+		})
+	end
 
 	if var_5_0 then
-		table.remove(var_5_0, 1)
-
-		local var_5_1 = var_5_0[1]
-
-		if var_5_1 then
-			return var_5_1.work:start(var_5_1.context)
-		end
+		arg_5_0:_onWorkFinish()
 	end
 end
 
-function var_0_0.onDestructor(arg_6_0)
-	for iter_6_0 = #arg_6_0.workQueue, 1, -1 do
-		arg_6_0.workQueue[iter_6_0]:disposeSelf()
+function var_0_0._onWorkFinish(arg_6_0)
+	local var_6_0 = arg_6_0.workQueue
+	local var_6_1 = table.remove(var_6_0, 1)
+
+	if var_6_1 then
+		return var_6_1.work:start(var_6_1.context)
+	elseif arg_6_0.callback then
+		arg_6_0.callback(arg_6_0.callbackHandle)
 	end
+end
+
+function var_0_0.onDestructor(arg_7_0)
+	for iter_7_0 = #arg_7_0.workQueue, 1, -1 do
+		arg_7_0.workQueue[iter_7_0].work:disposeSelf()
+	end
+
+	arg_7_0:clearFinishCallback()
 end
 
 return var_0_0

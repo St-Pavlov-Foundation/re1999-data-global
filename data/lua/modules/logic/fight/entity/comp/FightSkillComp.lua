@@ -55,11 +55,9 @@ var_0_0.FrameEventHandlerCls = {
 	FightTLEventLYSpecialSpinePlayAniName,
 	FightTLEventInvokeSummon,
 	FightTLEventInvokeLookBack,
-	[1000] = FightTLEventChangeHero,
-	[1001] = FightTLEventObjFly,
-	[1002] = FightTLEventEntityQuit,
-	[1003] = FightTLEventEntityEnter,
-	[1004] = FightTLEventSubEntityEnter
+	FightTLEventSetFightViewPartVisible,
+	FightTLEventALFCardEffect,
+	[1001] = FightTLEventObjFly
 }
 
 function var_0_0.ctor(arg_1_0, arg_1_1)

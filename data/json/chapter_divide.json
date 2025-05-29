@@ -24,7 +24,8 @@
     "resPage": "singlebg/dungeon/pic_section_2.png",
     "resPageClosed": "singlebg/dungeon/pic_section_2_1.png",
     "chapterId": [
-      108
+      108,
+      109
     ]
   }
 ]

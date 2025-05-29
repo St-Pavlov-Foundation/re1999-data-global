@@ -39,8 +39,11 @@ end
 
 function var_0_0._btnfixOnClick(arg_6_0)
 	if arg_6_0._toggletip.isOn then
+		PlayerPrefsHelper.setNumber(PlayerPrefsKey.Manual_FixRes, 1)
 		SLFramework.FileHelper.DeleteFile(SLFramework.ResChecker.OutVersionPath)
 		GameFacade.showMessageBox(MessageBoxIdDefine.FixFinished, MsgBoxEnum.BoxType.Yes, function()
+			PlayerPrefsHelper.save()
+
 			if BootNativeUtil.isAndroid() then
 				if SDKMgr.restartGame ~= nil then
 					SDKMgr.instance:restartGame()

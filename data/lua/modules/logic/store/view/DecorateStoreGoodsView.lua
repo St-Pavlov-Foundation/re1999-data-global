@@ -335,7 +335,7 @@ function var_0_0._refreshCost(arg_16_0)
 
 	var_16_4 = var_16_4 == 0 and 100 or var_16_4
 
-	local var_16_5 = string.split(arg_16_0._goodConfig.cost, "#")
+	local var_16_5 = string.splitToNumber(arg_16_0._goodConfig.cost, "#")
 
 	if string.nilorempty(arg_16_0._mo.config.cost2) then
 		gohelper.setActive(arg_16_0._gocost, false)
@@ -344,6 +344,12 @@ function var_0_0._refreshCost(arg_16_0)
 		local var_16_6, var_16_7 = ItemModel.instance:getItemConfigAndIcon(var_16_5[1], var_16_5[2])
 
 		UISpriteSetMgr.instance:setCurrencyItemSprite(arg_16_0._imageiconsingle, var_16_6.icon .. "_1", true)
+
+		if ItemModel.instance:getItemQuantity(var_16_5[1], var_16_5[2]) >= var_16_5[3] then
+			SLFramework.UGUI.GuiHelper.SetColor(arg_16_0._txtcurpricesingle, "#393939")
+		else
+			SLFramework.UGUI.GuiHelper.SetColor(arg_16_0._txtcurpricesingle, "#bf2e11")
+		end
 
 		arg_16_0._txtcurpricesingle.text = 0.01 * var_16_4 * var_16_5[3]
 
@@ -362,6 +368,14 @@ function var_0_0._refreshCost(arg_16_0)
 
 		arg_16_0._txtcurpriceunselect1.text = 0.01 * var_16_4 * var_16_5[3]
 		arg_16_0._txtcurpriceselect1.text = 0.01 * var_16_4 * var_16_5[3]
+
+		if ItemModel.instance:getItemQuantity(var_16_5[1], var_16_5[2]) >= var_16_5[3] then
+			SLFramework.UGUI.GuiHelper.SetColor(arg_16_0._txtcurpriceunselect1, "#393939")
+			SLFramework.UGUI.GuiHelper.SetColor(arg_16_0._txtcurpriceselect1, "#ffffff")
+		else
+			SLFramework.UGUI.GuiHelper.SetColor(arg_16_0._txtcurpriceunselect1, "#bf2e11")
+			SLFramework.UGUI.GuiHelper.SetColor(arg_16_0._txtcurpriceselect1, "#bf2e11")
+		end
 
 		if var_16_1.originalCost1 > 0 then
 			gohelper.setActive(arg_16_0._txtoriginalpriceselect1.gameObject, true)
@@ -386,11 +400,19 @@ function var_0_0._refreshCost(arg_16_0)
 			return
 		end
 
-		local var_16_10 = string.split(arg_16_0._goodConfig.cost2, "#")
+		local var_16_10 = string.splitToNumber(arg_16_0._goodConfig.cost2, "#")
 		local var_16_11, var_16_12 = ItemModel.instance:getItemConfigAndIcon(var_16_10[1], var_16_10[2])
 
 		arg_16_0._txtcurpriceunselect2.text = 0.01 * var_16_4 * var_16_10[3]
 		arg_16_0._txtcurpriceselect2.text = 0.01 * var_16_4 * var_16_10[3]
+
+		if ItemModel.instance:getItemQuantity(var_16_10[1], var_16_10[2]) >= var_16_10[3] then
+			SLFramework.UGUI.GuiHelper.SetColor(arg_16_0._txtcurpriceunselect2, "#393939")
+			SLFramework.UGUI.GuiHelper.SetColor(arg_16_0._txtcurpriceselect2, "#ffffff")
+		else
+			SLFramework.UGUI.GuiHelper.SetColor(arg_16_0._txtcurpriceunselect2, "#bf2e11")
+			SLFramework.UGUI.GuiHelper.SetColor(arg_16_0._txtcurpriceselect2, "#bf2e11")
+		end
 
 		if var_16_1.originalCost2 > 0 then
 			gohelper.setActive(arg_16_0._txtoriginalpriceselect2.gameObject, true)

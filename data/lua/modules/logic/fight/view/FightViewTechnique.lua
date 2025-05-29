@@ -93,11 +93,15 @@ function var_0_0.onStartAllocateCardEnergy(arg_6_0)
 end
 
 function var_0_0.AddUseCard(arg_7_0, arg_7_1)
-	local var_7_0 = FightPlayCardModel.instance:getUsedCards()[arg_7_1]
+	local var_7_0 = FightPlayCardModel.instance:getUsedCards()
 
-	if var_7_0 and FightHelper.isASFDSkill(var_7_0.skillId) then
-		for iter_7_0, iter_7_1 in ipairs(var_0_6) do
-			arg_7_0:_checkAdd(iter_7_1)
+	for iter_7_0, iter_7_1 in ipairs(arg_7_1) do
+		local var_7_1 = var_7_0[iter_7_1]
+
+		if var_7_1 and FightHelper.isASFDSkill(var_7_1.skillId) then
+			for iter_7_2, iter_7_3 in ipairs(var_0_6) do
+				arg_7_0:_checkAdd(iter_7_3)
+			end
 		end
 	end
 end

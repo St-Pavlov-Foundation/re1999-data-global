@@ -11,7 +11,17 @@ function var_0_0.ctor(arg_1_0)
 end
 
 function var_0_0.init(arg_2_0, arg_2_1, arg_2_2)
-	ActivityHelper.activateClass("AudioEnum%d_%d", 1, 5)
+	AudioEnum1_5.activate()
+	AudioEnum1_6.activate()
+	AudioEnum1_7.activate()
+	AudioEnum1_8.activate()
+	AudioEnum1_9.activate()
+	AudioEnum2_0.activate()
+	AudioEnum2_1.activate()
+	AudioEnum2_2.activate()
+	AudioEnum2_3.activate()
+	AudioEnum2_4.activate()
+	AudioEnum2_5.activate()
 
 	arg_2_0._onInited = arg_2_1
 	arg_2_0._onInitedObj = arg_2_2

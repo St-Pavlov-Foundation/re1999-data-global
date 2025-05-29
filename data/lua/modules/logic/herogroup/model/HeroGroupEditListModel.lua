@@ -67,7 +67,8 @@ function var_0_0.copyCharacterCardList(arg_3_0, arg_3_1)
 
 	local var_3_7 = #var_3_1
 	local var_3_8 = arg_3_0.isTowerBattle
-	local var_3_9 = {}
+	local var_3_9 = arg_3_0.isWeekWalk_2
+	local var_3_10 = {}
 
 	for iter_3_6, iter_3_7 in ipairs(var_3_0) do
 		if not var_3_2[iter_3_7.uid] then
@@ -75,13 +76,19 @@ function var_0_0.copyCharacterCardList(arg_3_0, arg_3_1)
 
 			if arg_3_0.adventure then
 				if WeekWalkModel.instance:getCurMapHeroCd(iter_3_7.heroId) > 0 then
-					table.insert(var_3_9, iter_3_7)
+					table.insert(var_3_10, iter_3_7)
+				else
+					table.insert(var_3_1, iter_3_7)
+				end
+			elseif var_3_9 then
+				if WeekWalk_2Model.instance:getCurMapHeroCd(iter_3_7.heroId) > 0 then
+					table.insert(var_3_10, iter_3_7)
 				else
 					table.insert(var_3_1, iter_3_7)
 				end
 			elseif var_3_8 then
 				if TowerModel.instance:isHeroBan(iter_3_7.heroId) then
-					table.insert(var_3_9, iter_3_7)
+					table.insert(var_3_10, iter_3_7)
 				else
 					table.insert(var_3_1, iter_3_7)
 				end
@@ -96,8 +103,8 @@ function var_0_0.copyCharacterCardList(arg_3_0, arg_3_1)
 		end
 	end
 
-	if arg_3_0.adventure or var_3_8 then
-		tabletool.addValues(var_3_1, var_3_9)
+	if arg_3_0.adventure or var_3_8 or var_3_9 then
+		tabletool.addValues(var_3_1, var_3_10)
 	end
 
 	arg_3_0:setList(var_3_1)
@@ -160,10 +167,12 @@ function var_0_0.isInTeamHero(arg_7_0, arg_7_1)
 	return arg_7_0._inTeamHeroUids and arg_7_0._inTeamHeroUids[arg_7_1]
 end
 
-function var_0_0.setParam(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
+function var_0_0.setParam(arg_8_0, arg_8_1, arg_8_2, arg_8_3, arg_8_4)
 	arg_8_0.specialHero = arg_8_1
 	arg_8_0.adventure = arg_8_2
 	arg_8_0.isTowerBattle = arg_8_3
+	arg_8_0._groupType = arg_8_4
+	arg_8_0.isWeekWalk_2 = arg_8_4 == HeroGroupEnum.GroupType.WeekWalk_2
 end
 
 var_0_0.instance = var_0_0.New()

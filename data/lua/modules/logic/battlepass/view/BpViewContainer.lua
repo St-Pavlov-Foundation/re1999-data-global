@@ -45,7 +45,7 @@ function var_0_0.playOpenTransition(arg_3_0)
 
 	local var_3_2 = not arg_3_0.viewParam or arg_3_0.viewParam.isPlayDayFirstAnim
 
-	if TimeUtil.getDayFirstLoginRed("BpViewOpenAnim") then
+	if BpModel.instance.payStatus == BpEnum.PayStatus.NotPay and TimeUtil.getWeekFirstLoginRed("BpViewOpenAnim") and TimeUtil.getDayFirstLoginRed("BpViewOpenAnim") then
 		if var_3_2 then
 			AudioMgr.instance:trigger(AudioEnum2_6.BP.BpDayFirstAnim)
 			UIBlockMgrExtend.setNeedCircleMv(false)
@@ -53,7 +53,7 @@ function var_0_0.playOpenTransition(arg_3_0)
 			var_3_0 = "tarotopen1"
 			var_3_1 = 3
 
-			TimeUtil.setDayFirstLoginRed("BpViewOpenAnim")
+			TimeUtil.setWeekFirstLoginRed("BpViewOpenAnim")
 		else
 			ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, arg_3_0._checkPlayDayAnim, arg_3_0)
 		end

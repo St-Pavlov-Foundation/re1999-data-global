@@ -142,6 +142,11 @@ function var_0_0.showChapterStart(arg_9_0, arg_9_1)
 
 	arg_9_0._txtchapterName.text = arg_9_1.navigateTxts[GameLanguageMgr.instance:getLanguageTypeStoryIndex()]
 	arg_9_0._txtchapterNameEn.text = arg_9_1.navigateTxts[LanguageEnum.LanguageStoryType.EN]
+
+	if LangSettings.instance:isJp() and arg_9_0._txtchapterNameEn.text == "Aleph" then
+		arg_9_0._txtchapterNameEn.text = ""
+	end
+
 	arg_9_0._txtchapterNum.text = arg_9_1.navigateChapterEn
 
 	if arg_9_0._chapterOpenVideoPlayer then

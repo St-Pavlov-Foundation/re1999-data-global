@@ -460,5 +460,187 @@
     "chapterId": 1001,
     "itemId1": "2#2201#1#0",
     "itemId2": "10#30#3#0"
+  },
+  {
+    "id": 67,
+    "activityId": 12604,
+    "chapterId": 101,
+    "itemId1": "2#2601#1#0",
+    "itemId2": "10#30#3#0"
+  },
+  {
+    "id": 68,
+    "activityId": 12604,
+    "chapterId": 102,
+    "itemId1": "2#2601#1#0",
+    "itemId2": "10#30#3#0"
+  },
+  {
+    "id": 69,
+    "activityId": 12604,
+    "chapterId": 103,
+    "itemId1": "2#2601#1#0",
+    "itemId2": "10#30#3#0"
+  },
+  {
+    "id": 70,
+    "activityId": 12604,
+    "chapterId": 104,
+    "itemId1": "2#2601#1#0",
+    "itemId2": "10#30#3#0"
+  },
+  {
+    "id": 71,
+    "activityId": 12604,
+    "chapterId": 105,
+    "itemId1": "2#2601#1#0",
+    "itemId2": "10#30#3#0"
+  },
+  {
+    "id": 72,
+    "activityId": 12604,
+    "chapterId": 106,
+    "itemId1": "2#2601#1#0",
+    "itemId2": "10#30#3#0"
+  },
+  {
+    "id": 73,
+    "activityId": 12604,
+    "chapterId": 107,
+    "itemId1": "2#2601#1#0",
+    "itemId2": "10#30#3#0"
+  },
+  {
+    "id": 74,
+    "activityId": 12604,
+    "chapterId": 108,
+    "itemId1": "2#2601#1#0",
+    "itemId2": "10#30#3#0"
+  },
+  {
+    "id": 75,
+    "activityId": 12604,
+    "chapterId": 109,
+    "itemId1": "2#2601#1#0",
+    "itemId2": "10#30#3#0"
+  },
+  {
+    "id": 76,
+    "activityId": 12604,
+    "chapterId": 201,
+    "itemId1": "2#2601#1#0",
+    "itemId2": "10#30#3#0"
+  },
+  {
+    "id": 77,
+    "activityId": 12604,
+    "chapterId": 202,
+    "itemId1": "2#2601#1#0",
+    "itemId2": "10#30#3#0"
+  },
+  {
+    "id": 78,
+    "activityId": 12604,
+    "chapterId": 203,
+    "itemId1": "2#2601#1#0",
+    "itemId2": "10#30#3#0"
+  },
+  {
+    "id": 79,
+    "activityId": 12604,
+    "chapterId": 204,
+    "itemId1": "2#2601#1#0",
+    "itemId2": "10#30#3#0"
+  },
+  {
+    "id": 80,
+    "activityId": 12604,
+    "chapterId": 205,
+    "itemId1": "2#2601#1#0",
+    "itemId2": "10#30#3#0"
+  },
+  {
+    "id": 81,
+    "activityId": 12604,
+    "chapterId": 206,
+    "itemId1": "2#2601#1#0",
+    "itemId2": "10#30#3#0"
+  },
+  {
+    "id": 82,
+    "activityId": 12604,
+    "chapterId": 207,
+    "itemId1": "2#2601#1#0",
+    "itemId2": "10#30#3#0"
+  },
+  {
+    "id": 83,
+    "activityId": 12604,
+    "chapterId": 208,
+    "itemId1": "2#2601#1#0",
+    "itemId2": "10#30#3#0"
+  },
+  {
+    "id": 84,
+    "activityId": 12604,
+    "chapterId": 209,
+    "itemId1": "2#2601#1#0",
+    "itemId2": "10#30#3#0"
+  },
+  {
+    "id": 85,
+    "activityId": 12604,
+    "chapterId": 401,
+    "itemId1": "2#2601#1#0",
+    "itemId2": "10#30#3#0"
+  },
+  {
+    "id": 86,
+    "activityId": 12604,
+    "chapterId": 501,
+    "itemId1": "2#2601#1#0",
+    "itemId2": "10#30#3#0"
+  },
+  {
+    "id": 87,
+    "activityId": 12604,
+    "chapterId": 601,
+    "itemId1": "2#2601#1#0",
+    "itemId2": "10#30#3#0"
+  },
+  {
+    "id": 88,
+    "activityId": 12604,
+    "chapterId": 701,
+    "itemId1": "2#2601#1#0",
+    "itemId2": "10#30#3#0"
+  },
+  {
+    "id": 89,
+    "activityId": 12604,
+    "chapterId": 702,
+    "itemId1": "2#2601#1#0",
+    "itemId2": "10#30#3#0"
+  },
+  {
+    "id": 90,
+    "activityId": 12604,
+    "chapterId": 703,
+    "itemId1": "2#2601#1#0",
+    "itemId2": "10#30#3#0"
+  },
+  {
+    "id": 91,
+    "activityId": 12604,
+    "chapterId": 704,
+    "itemId1": "2#2601#1#0",
+    "itemId2": "10#30#3#0"
+  },
+  {
+    "id": 92,
+    "activityId": 12604,
+    "chapterId": 1001,
+    "itemId1": "2#2601#1#0",
+    "itemId2": "10#30#3#0"
   }
 ]

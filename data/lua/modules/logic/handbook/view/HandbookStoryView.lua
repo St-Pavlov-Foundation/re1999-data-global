@@ -7,6 +7,8 @@ function var_0_0.onInitView(arg_1_0)
 	arg_1_0._goline = gohelper.findChild(arg_1_0.viewGO, "#scroll_storylist/viewport/content/linelayout/#go_line")
 	arg_1_0._btnswitch = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_switch")
 	arg_1_0._gochapteritem = gohelper.findChild(arg_1_0.viewGO, "#scroll_chapterlist/viewport/content/#go_chapteritem")
+	arg_1_0._scrollchapterlist = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_chapterlist")
+	arg_1_0._transcontentchapterlist = gohelper.findChild(arg_1_0.viewGO, "#scroll_chapterlist/viewport/content").transform
 	arg_1_0._scrollstorylist = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_storylist")
 	arg_1_0._anim = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
 
@@ -54,204 +56,230 @@ function var_0_0.onOpen(arg_6_0)
 	arg_6_0._playLineAnim = true
 
 	arg_6_0:_refreshUI()
+
+	if arg_6_0.viewParam then
+		arg_6_0._selectChapter = arg_6_0.viewParam
+
+		arg_6_0:_openselectItem()
+		arg_6_0:_focusItem()
+	end
 end
 
-function var_0_0._getStoryItemPrefab(arg_7_0)
-	local var_7_0 = ViewMgr.instance:getContainer(ViewName.HandbookStoryView)
-	local var_7_1 = var_7_0:getSetting().otherRes[1]
+function var_0_0._openselectItem(arg_7_0)
+	local var_7_0 = arg_7_0._chapterItemList[arg_7_0._selectChapter]
 
-	return (var_7_0._abLoader:getAssetItem(var_7_1):GetResource())
+	arg_7_0:_btnclickOnClick(var_7_0)
 end
 
-function var_0_0.onOpenFinish(arg_8_0)
-	arg_8_0._anim.enabled = true
+function var_0_0._focusItem(arg_8_0)
+	local var_8_0 = recthelper.getHeight(arg_8_0._scrollchapterlist.transform)
+	local var_8_1 = 150
+	local var_8_2 = 120
+	local var_8_3 = (#arg_8_0._chapterItemList - 1) * var_8_2 + var_8_1 - var_8_0
+
+	if var_8_3 >= (arg_8_0._selectChapter - 1) * var_8_2 then
+		recthelper.setAnchorY(arg_8_0._transcontentchapterlist, (arg_8_0._selectChapter - 1) * var_8_2)
+	else
+		recthelper.setAnchorY(arg_8_0._transcontentchapterlist, var_8_3)
+	end
 end
 
-function var_0_0._onOpenViewFinish(arg_9_0, arg_9_1)
-	if arg_9_1 == ViewName.HandbookCGView then
+function var_0_0._getStoryItemPrefab(arg_9_0)
+	local var_9_0 = ViewMgr.instance:getContainer(ViewName.HandbookStoryView)
+	local var_9_1 = var_9_0:getSetting().otherRes[1]
+
+	return (var_9_0._abLoader:getAssetItem(var_9_1):GetResource())
+end
+
+function var_0_0.onOpenFinish(arg_10_0)
+	arg_10_0._anim.enabled = true
+end
+
+function var_0_0._onOpenViewFinish(arg_11_0, arg_11_1)
+	if arg_11_1 == ViewName.HandbookCGView then
 		ViewMgr.instance:closeView(ViewName.HandbookStoryView, true)
 	end
 end
 
-function var_0_0._refreshLine(arg_10_0, arg_10_1)
-	local var_10_0 = 170 + arg_10_1 * 480 - 58 * (arg_10_1 - 1)
-	local var_10_1 = recthelper.getWidth(arg_10_0._goline.transform)
-	local var_10_2 = math.ceil(var_10_0 / var_10_1)
+function var_0_0._refreshLine(arg_12_0, arg_12_1)
+	local var_12_0 = 170 + arg_12_1 * 480 - 58 * (arg_12_1 - 1)
+	local var_12_1 = recthelper.getWidth(arg_12_0._goline.transform)
+	local var_12_2 = math.ceil(var_12_0 / var_12_1)
 
-	for iter_10_0 = 1, var_10_2 do
-		local var_10_3 = arg_10_0._lineSingleImageList[iter_10_0]
+	for iter_12_0 = 1, var_12_2 do
+		local var_12_3 = arg_12_0._lineSingleImageList[iter_12_0]
 
-		if not var_10_3 then
-			local var_10_4 = gohelper.cloneInPlace(arg_10_0._goline, "item" .. iter_10_0)
-			local var_10_5 = var_10_4:GetComponent(typeof(UnityEngine.Animation))
+		if not var_12_3 then
+			local var_12_4 = gohelper.cloneInPlace(arg_12_0._goline, "item" .. iter_12_0)
+			local var_12_5 = var_12_4:GetComponent(typeof(UnityEngine.Animation))
 
-			var_10_3 = gohelper.getSingleImage(var_10_4)
+			var_12_3 = gohelper.getSingleImage(var_12_4)
 
-			var_10_3:LoadImage(ResUrl.getHandbookBg("bg_timeline"))
-			table.insert(arg_10_0._lineSingleImageList, var_10_3)
-			table.insert(arg_10_0._lineAnimList, var_10_5)
+			var_12_3:LoadImage(ResUrl.getHandbookBg("bg_timeline"))
+			table.insert(arg_12_0._lineSingleImageList, var_12_3)
+			table.insert(arg_12_0._lineAnimList, var_12_5)
 		end
 
-		gohelper.setActive(var_10_3.gameObject, true)
+		gohelper.setActive(var_12_3.gameObject, true)
 
-		if arg_10_0._playLineAnim then
-			arg_10_0._lineAnimList[iter_10_0]:Play()
+		if arg_12_0._playLineAnim then
+			arg_12_0._lineAnimList[iter_12_0]:Play()
 
-			arg_10_0._playLineAnim = false
+			arg_12_0._playLineAnim = false
 		end
 	end
 
-	for iter_10_1 = var_10_2 + 1, #arg_10_0._lineSingleImageList do
-		local var_10_6 = arg_10_0._lineSingleImageList[iter_10_1]
+	for iter_12_1 = var_12_2 + 1, #arg_12_0._lineSingleImageList do
+		local var_12_6 = arg_12_0._lineSingleImageList[iter_12_1]
 
-		gohelper.setActive(var_10_6.gameObject, false)
-		arg_10_0._lineAnimList[iter_10_1]:Stop()
+		gohelper.setActive(var_12_6.gameObject, false)
+		arg_12_0._lineAnimList[iter_12_1]:Stop()
 	end
 end
 
-function var_0_0._refreshUI(arg_11_0)
-	local var_11_0 = {}
-	local var_11_1 = HandbookConfig.instance:getStoryChapterList()
+function var_0_0._refreshUI(arg_13_0)
+	local var_13_0 = {}
+	local var_13_1 = HandbookConfig.instance:getStoryChapterList()
 
-	for iter_11_0, iter_11_1 in pairs(var_11_1) do
-		if HandbookModel.instance:getStoryGroupUnlockCount(iter_11_1.id) > 0 then
-			table.insert(var_11_0, iter_11_1.id)
+	for iter_13_0, iter_13_1 in pairs(var_13_1) do
+		if HandbookModel.instance:getStoryGroupUnlockCount(iter_13_1.id) > 0 then
+			table.insert(var_13_0, iter_13_1.id)
 		end
 	end
 
-	for iter_11_2 = 1, #var_11_0 do
-		local var_11_2 = var_11_0[iter_11_2]
-		local var_11_3 = arg_11_0._chapterItemList[iter_11_2]
+	for iter_13_2 = 1, #var_13_0 do
+		local var_13_2 = var_13_0[iter_13_2]
+		local var_13_3 = arg_13_0._chapterItemList[iter_13_2]
 
-		if not var_11_3 then
-			var_11_3 = arg_11_0:getUserDataTb_()
-			var_11_3.go = gohelper.cloneInPlace(arg_11_0._gochapteritem, "item" .. iter_11_2)
-			var_11_3.gobeselected = gohelper.findChild(var_11_3.go, "beselected")
-			var_11_3.gounselected = gohelper.findChild(var_11_3.go, "unselected")
-			var_11_3.chapternamecn1 = gohelper.findChildText(var_11_3.go, "beselected/chapternamecn")
-			var_11_3.chapternameen1 = gohelper.findChildText(var_11_3.go, "beselected/chapternameen")
-			var_11_3.chapternamecn2 = gohelper.findChildText(var_11_3.go, "unselected/chapternamecn")
-			var_11_3.chapternameen2 = gohelper.findChildText(var_11_3.go, "unselected/chapternameen")
-			var_11_3.btnclick = gohelper.findChildButtonWithAudio(var_11_3.go, "btnclick", AudioEnum.UI.Play_UI_Universal_Click)
+		if not var_13_3 then
+			var_13_3 = arg_13_0:getUserDataTb_()
+			var_13_3.go = gohelper.cloneInPlace(arg_13_0._gochapteritem, "item" .. iter_13_2)
+			var_13_3.gobeselected = gohelper.findChild(var_13_3.go, "beselected")
+			var_13_3.gounselected = gohelper.findChild(var_13_3.go, "unselected")
+			var_13_3.chapternamecn1 = gohelper.findChildText(var_13_3.go, "beselected/chapternamecn")
+			var_13_3.chapternameen1 = gohelper.findChildText(var_13_3.go, "beselected/chapternameen")
+			var_13_3.chapternamecn2 = gohelper.findChildText(var_13_3.go, "unselected/chapternamecn")
+			var_13_3.chapternameen2 = gohelper.findChildText(var_13_3.go, "unselected/chapternameen")
+			var_13_3.btnclick = gohelper.findChildButtonWithAudio(var_13_3.go, "btnclick", AudioEnum.UI.Play_UI_Universal_Click)
 
-			var_11_3.btnclick:AddClickListener(arg_11_0._btnclickOnClick, arg_11_0, var_11_3)
-			table.insert(arg_11_0._chapterItemList, var_11_3)
+			var_13_3.btnclick:AddClickListener(arg_13_0._btnclickOnClick, arg_13_0, var_13_3)
+			table.insert(arg_13_0._chapterItemList, var_13_3)
 		end
 
-		var_11_3.storyChapterId = var_11_2
+		var_13_3.storyChapterId = var_13_2
 
-		local var_11_4 = HandbookConfig.instance:getStoryChapterConfig(var_11_2)
+		local var_13_4 = HandbookConfig.instance:getStoryChapterConfig(var_13_2)
 
-		var_11_3.chapternamecn1.text = var_11_4.name
-		var_11_3.chapternamecn2.text = var_11_4.name
-		var_11_3.chapternameen1.text = var_11_4.nameEn
-		var_11_3.chapternameen2.text = var_11_4.nameEn
+		var_13_3.chapternamecn1.text = var_13_4.name
+		var_13_3.chapternamecn2.text = var_13_4.name
+		var_13_3.chapternameen1.text = var_13_4.nameEn
+		var_13_3.chapternameen2.text = var_13_4.nameEn
 
-		gohelper.setActive(var_11_3.go, true)
+		gohelper.setActive(var_13_3.go, true)
 	end
 
-	for iter_11_3 = #var_11_0 + 1, #arg_11_0._chapterItemList do
-		local var_11_5 = arg_11_0._chapterItemList[iter_11_3]
+	for iter_13_3 = #var_13_0 + 1, #arg_13_0._chapterItemList do
+		local var_13_5 = arg_13_0._chapterItemList[iter_13_3]
 
-		gohelper.setActive(var_11_5.go, false)
+		gohelper.setActive(var_13_5.go, false)
 	end
 
-	if #arg_11_0._chapterItemList > 0 then
-		arg_11_0:_btnclickOnClick(arg_11_0._chapterItemList[1])
+	if #arg_13_0._chapterItemList > 0 then
+		arg_13_0:_btnclickOnClick(arg_13_0._chapterItemList[1])
 	else
 		HandbookStoryListModel.instance:clearStoryList()
 	end
 end
 
-function var_0_0._btnclickOnClick(arg_12_0, arg_12_1)
-	local var_12_0 = arg_12_1.storyChapterId
-	local var_12_1 = HandbookConfig.instance:getStoryGroupList()
+function var_0_0._btnclickOnClick(arg_14_0, arg_14_1)
+	local var_14_0 = arg_14_1.storyChapterId
+	local var_14_1 = HandbookConfig.instance:getStoryGroupList()
 
-	HandbookStoryListModel.instance:setStoryList(var_12_1, var_12_0)
+	HandbookStoryListModel.instance:setStoryList(var_14_1, var_14_0)
 
-	for iter_12_0, iter_12_1 in ipairs(arg_12_0._chapterItemList) do
-		gohelper.setActive(iter_12_1.gobeselected, var_12_0 == iter_12_1.storyChapterId)
-		gohelper.setActive(iter_12_1.gounselected, var_12_0 ~= iter_12_1.storyChapterId)
+	for iter_14_0, iter_14_1 in ipairs(arg_14_0._chapterItemList) do
+		gohelper.setActive(iter_14_1.gobeselected, var_14_0 == iter_14_1.storyChapterId)
+		gohelper.setActive(iter_14_1.gounselected, var_14_0 ~= iter_14_1.storyChapterId)
 	end
 
-	local var_12_2 = HandbookModel.instance:getStoryGroupUnlockCount(var_12_0)
+	local var_14_2 = HandbookModel.instance:getStoryGroupUnlockCount(var_14_0)
 
-	arg_12_0:_refreshLine(var_12_2)
+	arg_14_0:_refreshLine(var_14_2)
 
-	arg_12_0._scrollstorylist.horizontalNormalizedPosition = 0
+	arg_14_0._scrollstorylist.horizontalNormalizedPosition = 0
 
-	arg_12_0:_cloneStoryItem()
+	arg_14_0:_cloneStoryItem()
 end
 
-function var_0_0._cloneStoryItem(arg_13_0)
-	arg_13_0:_stopStoryItemEnterAnim()
+function var_0_0._cloneStoryItem(arg_15_0)
+	arg_15_0:_stopStoryItemEnterAnim()
 
-	local var_13_0 = HandbookStoryListModel.instance:getStoryList()
+	local var_15_0 = HandbookStoryListModel.instance:getStoryList()
 
-	arg_13_0.storyItemMoList = var_13_0
+	arg_15_0.storyItemMoList = var_15_0
 
-	for iter_13_0, iter_13_1 in ipairs(var_13_0) do
-		local var_13_1 = arg_13_0._storyItemList[iter_13_0]
+	for iter_15_0, iter_15_1 in ipairs(var_15_0) do
+		local var_15_1 = arg_15_0._storyItemList[iter_15_0]
 
-		if not var_13_1 then
-			var_13_1 = {
-				go = gohelper.clone(arg_13_0.itemPrefab, arg_13_0._goStoryListContent, "item" .. iter_13_0)
+		if not var_15_1 then
+			var_15_1 = {
+				go = gohelper.clone(arg_15_0.itemPrefab, arg_15_0._goStoryListContent, "item" .. iter_15_0)
 			}
-			var_13_1.anim = var_13_1.go:GetComponent(typeof(UnityEngine.Animator))
-			var_13_1.item = MonoHelper.addNoUpdateLuaComOnceToGo(var_13_1.go, HandbookStoryItem, arg_13_0)
-			var_13_1.anim.enabled = false
+			var_15_1.anim = var_15_1.go:GetComponent(typeof(UnityEngine.Animator))
+			var_15_1.item = MonoHelper.addNoUpdateLuaComOnceToGo(var_15_1.go, HandbookStoryItem, arg_15_0)
+			var_15_1.anim.enabled = false
 
-			table.insert(arg_13_0._storyItemList, var_13_1)
+			table.insert(arg_15_0._storyItemList, var_15_1)
 		end
 
-		gohelper.setActive(var_13_1.go, false)
-		var_13_1.item:onInitView(var_13_1.go)
-		var_13_1.item:onUpdateMO(iter_13_1)
+		gohelper.setActive(var_15_1.go, false)
+		var_15_1.item:onInitView(var_15_1.go)
+		var_15_1.item:onUpdateMO(iter_15_1)
 	end
 
-	arg_13_0.playedAnimIndex = 0
+	arg_15_0.playedAnimIndex = 0
 
-	arg_13_0:_showStoryItemEnterAnim()
+	arg_15_0:_showStoryItemEnterAnim()
 end
 
-function var_0_0._stopStoryItemEnterAnim(arg_14_0)
-	TaskDispatcher.cancelTask(arg_14_0._showStoryItemEnterAnim, arg_14_0)
+function var_0_0._stopStoryItemEnterAnim(arg_16_0)
+	TaskDispatcher.cancelTask(arg_16_0._showStoryItemEnterAnim, arg_16_0)
 
-	for iter_14_0, iter_14_1 in ipairs(arg_14_0._storyItemList) do
-		iter_14_1.anim.enabled = false
+	for iter_16_0, iter_16_1 in ipairs(arg_16_0._storyItemList) do
+		iter_16_1.anim.enabled = false
 
-		gohelper.setActive(iter_14_1.go, false)
+		gohelper.setActive(iter_16_1.go, false)
 	end
 end
 
-function var_0_0._showStoryItemEnterAnim(arg_15_0)
-	if arg_15_0.playedAnimIndex >= #arg_15_0.storyItemMoList then
+function var_0_0._showStoryItemEnterAnim(arg_17_0)
+	if arg_17_0.playedAnimIndex >= #arg_17_0.storyItemMoList then
 		return
 	end
 
-	arg_15_0.playedAnimIndex = arg_15_0.playedAnimIndex + 1
+	arg_17_0.playedAnimIndex = arg_17_0.playedAnimIndex + 1
 
-	gohelper.setActive(arg_15_0._storyItemList[arg_15_0.playedAnimIndex].go, true)
+	gohelper.setActive(arg_17_0._storyItemList[arg_17_0.playedAnimIndex].go, true)
 
-	arg_15_0._storyItemList[arg_15_0.playedAnimIndex].anim.enabled = true
+	arg_17_0._storyItemList[arg_17_0.playedAnimIndex].anim.enabled = true
 
-	TaskDispatcher.runDelay(arg_15_0._showStoryItemEnterAnim, arg_15_0, 0.03)
+	TaskDispatcher.runDelay(arg_17_0._showStoryItemEnterAnim, arg_17_0, 0.03)
 end
 
-function var_0_0.onClose(arg_16_0)
-	TaskDispatcher.cancelTask(arg_16_0._showStoryItemEnterAnim, arg_16_0)
+function var_0_0.onClose(arg_18_0)
+	TaskDispatcher.cancelTask(arg_18_0._showStoryItemEnterAnim, arg_18_0)
 end
 
-function var_0_0.onDestroyView(arg_17_0)
-	for iter_17_0, iter_17_1 in ipairs(arg_17_0._lineSingleImageList) do
-		iter_17_1:UnLoadImage()
+function var_0_0.onDestroyView(arg_19_0)
+	for iter_19_0, iter_19_1 in ipairs(arg_19_0._lineSingleImageList) do
+		iter_19_1:UnLoadImage()
 	end
 
-	for iter_17_2, iter_17_3 in ipairs(arg_17_0._chapterItemList) do
-		iter_17_3.btnclick:RemoveClickListener()
+	for iter_19_2, iter_19_3 in ipairs(arg_19_0._chapterItemList) do
+		iter_19_3.btnclick:RemoveClickListener()
 	end
 
-	arg_17_0._simagebg:UnLoadImage()
+	arg_19_0._simagebg:UnLoadImage()
 end
 
 return var_0_0

@@ -38,6 +38,7 @@ function var_0_0.initHandleDict(arg_5_0)
 	arg_5_0.tabEnum2HandleFunc = {
 		[EnemyInfoEnum.TabEnum.Normal] = arg_5_0.refreshNormal,
 		[EnemyInfoEnum.TabEnum.WeekWalk] = arg_5_0.refreshWeekWalk,
+		[EnemyInfoEnum.TabEnum.WeekWalk_2] = arg_5_0.refreshWeekWalk_2,
 		[EnemyInfoEnum.TabEnum.Season123] = arg_5_0.refreshSeason,
 		[EnemyInfoEnum.TabEnum.BossRush] = arg_5_0.refreshBossRush
 	}
@@ -64,68 +65,75 @@ function var_0_0.refreshWeekWalk(arg_8_0)
 	arg_8_0.tabView:onOpen()
 end
 
-function var_0_0.refreshSeason(arg_9_0)
-	local var_9_0 = arg_9_0.enemyInfoMo
+function var_0_0.refreshWeekWalk_2(arg_9_0)
+	arg_9_0.tabView = arg_9_0:createTabView(EnemyInfoWeekWalk_2TabView)
 
-	if arg_9_0.viewParam.showLeftTab then
-		var_9_0:setShowLeftTab(true)
-
-		arg_9_0.tabView = arg_9_0:createTabView(EnemyInfoSeason123TabView)
-
-		arg_9_0.tabView:onOpen()
-	else
-		var_9_0:setShowLeftTab(false)
-		var_9_0:updateBattleId(arg_9_0.viewParam.battleId)
-	end
+	arg_9_0.tabView:onOpen()
 end
 
-function var_0_0.refreshBossRush(arg_10_0)
+function var_0_0.refreshSeason(arg_10_0)
 	local var_10_0 = arg_10_0.enemyInfoMo
 
-	var_10_0:setShowLeftTab(false)
+	if arg_10_0.viewParam.showLeftTab then
+		var_10_0:setShowLeftTab(true)
 
-	local var_10_1 = arg_10_0.viewParam.activityId
-	local var_10_2 = arg_10_0.viewParam.stage
-	local var_10_3 = arg_10_0.viewParam.layer
-	local var_10_4 = lua_activity128_episode.configDict[var_10_1][var_10_2][var_10_3]
-	local var_10_5 = DungeonConfig.instance:getEpisodeCO(var_10_4.episodeId)
+		arg_10_0.tabView = arg_10_0:createTabView(EnemyInfoSeason123TabView)
 
-	var_10_0:updateBattleId(var_10_5.battleId)
-end
-
-function var_0_0.createTabView(arg_11_0, arg_11_1)
-	local var_11_0 = arg_11_1.New()
-
-	var_11_0:__onInit()
-
-	var_11_0.viewGO = arg_11_0.viewGO
-	var_11_0.viewContainer = arg_11_0.viewContainer
-	var_11_0.viewName = arg_11_0.viewName
-
-	var_11_0:onInitView()
-	var_11_0:addEvents()
-
-	var_11_0.layoutMo = arg_11_0.layoutMo
-	var_11_0.enemyInfoMo = arg_11_0.enemyInfoMo
-	var_11_0.viewParam = arg_11_0.viewParam
-
-	return var_11_0
-end
-
-function var_0_0.onClose(arg_12_0)
-	if arg_12_0.tabView then
-		arg_12_0.tabView:onClose()
+		arg_10_0.tabView:onOpen()
+	else
+		var_10_0:setShowLeftTab(false)
+		var_10_0:updateBattleId(arg_10_0.viewParam.battleId)
 	end
 end
 
-function var_0_0.onDestroyView(arg_13_0)
+function var_0_0.refreshBossRush(arg_11_0)
+	local var_11_0 = arg_11_0.enemyInfoMo
+
+	var_11_0:setShowLeftTab(false)
+
+	local var_11_1 = arg_11_0.viewParam.activityId
+	local var_11_2 = arg_11_0.viewParam.stage
+	local var_11_3 = arg_11_0.viewParam.layer
+	local var_11_4 = lua_activity128_episode.configDict[var_11_1][var_11_2][var_11_3]
+	local var_11_5 = DungeonConfig.instance:getEpisodeCO(var_11_4.episodeId)
+
+	var_11_0:updateBattleId(var_11_5.battleId)
+end
+
+function var_0_0.createTabView(arg_12_0, arg_12_1)
+	local var_12_0 = arg_12_1.New()
+
+	var_12_0:__onInit()
+
+	var_12_0.viewGO = arg_12_0.viewGO
+	var_12_0.viewContainer = arg_12_0.viewContainer
+	var_12_0.tabParentView = arg_12_0
+	var_12_0.viewName = arg_12_0.viewName
+
+	var_12_0:onInitView()
+	var_12_0:addEvents()
+
+	var_12_0.layoutMo = arg_12_0.layoutMo
+	var_12_0.enemyInfoMo = arg_12_0.enemyInfoMo
+	var_12_0.viewParam = arg_12_0.viewParam
+
+	return var_12_0
+end
+
+function var_0_0.onClose(arg_13_0)
 	if arg_13_0.tabView then
-		arg_13_0.tabView:removeEvents()
-		arg_13_0.tabView:onDestroyView()
-		arg_13_0.tabView:__onDispose()
+		arg_13_0.tabView:onClose()
+	end
+end
+
+function var_0_0.onDestroyView(arg_14_0)
+	if arg_14_0.tabView then
+		arg_14_0.tabView:removeEvents()
+		arg_14_0.tabView:onDestroyView()
+		arg_14_0.tabView:__onDispose()
 	end
 
-	arg_13_0.simageRightBg:UnLoadImage()
+	arg_14_0.simageRightBg:UnLoadImage()
 end
 
 return var_0_0

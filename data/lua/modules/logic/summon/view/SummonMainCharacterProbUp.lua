@@ -53,312 +53,297 @@ for iter_0_0 = 1, var_0_0.SIMAGE_COUNT do
 	table.insert(var_0_0.preloadList, ResUrl.getSummonHeroIcon("role" .. iter_0_0))
 end
 
-function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._characteritems = {}
-	arg_4_0._pageitems = {}
-	arg_4_0._animRoot = arg_4_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+function var_0_0.initCharacterItemCount(arg_4_0)
+	local var_4_0 = SummonMainModel.instance:getCurId()
+	local var_4_1 = SummonConfig.instance:getSummonPool(var_4_0)
+	local var_4_2 = ""
 
-	arg_4_0:refreshSingleImage()
+	if var_4_1 then
+		var_4_2 = var_4_1.customClz
+	end
 
-	arg_4_0._charaterItemCount = arg_4_0._charaterItemCount or var_0_0.DETAIL_COUNT
+	arg_4_0._characterItemCount = SummonCharacterProbUpPreloadConfig.getCharacterItemCountByName(var_4_2)
+end
 
-	for iter_4_0 = 1, arg_4_0._charaterItemCount do
-		local var_4_0 = arg_4_0:getUserDataTb_()
+function var_0_0._editableInitView(arg_5_0)
+	arg_5_0._characteritems = {}
+	arg_5_0._pageitems = {}
+	arg_5_0._animRoot = arg_5_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
 
-		var_4_0.go = gohelper.findChild(arg_4_0.viewGO, "#go_ui/current/right/#go_characteritem" .. iter_4_0)
-		var_4_0.imagecareer = gohelper.findChildImage(var_4_0.go, "image_career")
-		var_4_0.txtnamecn = gohelper.findChildText(var_4_0.go, "txt_namecn")
-		var_4_0.btndetail = gohelper.findChildButtonWithAudio(var_4_0.go, "btn_detail", AudioEnum.UI.play_ui_action_explore)
-		var_4_0.rares = {}
+	arg_5_0:refreshSingleImage()
+	arg_5_0:initCharacterItemCount()
 
-		for iter_4_1 = 1, 6 do
-			local var_4_1 = gohelper.findChild(var_4_0.go, "rare/go_rare" .. iter_4_1)
+	for iter_5_0 = 1, arg_5_0._characterItemCount do
+		local var_5_0 = arg_5_0:getUserDataTb_()
 
-			table.insert(var_4_0.rares, var_4_1)
+		var_5_0.go = gohelper.findChild(arg_5_0.viewGO, "#go_ui/current/right/#go_characteritem" .. iter_5_0)
+		var_5_0.imagecareer = gohelper.findChildImage(var_5_0.go, "image_career")
+		var_5_0.txtnamecn = gohelper.findChildText(var_5_0.go, "txt_namecn")
+		var_5_0.btndetail = gohelper.findChildButtonWithAudio(var_5_0.go, "btn_detail", AudioEnum.UI.play_ui_action_explore)
+		var_5_0.rares = {}
+
+		for iter_5_1 = 1, 6 do
+			local var_5_1 = gohelper.findChild(var_5_0.go, "rare/go_rare" .. iter_5_1)
+
+			table.insert(var_5_0.rares, var_5_1)
 		end
 
-		table.insert(arg_4_0._characteritems, var_4_0)
-		var_4_0.btndetail:AddClickListener(var_0_0._onClickDetailByIndex, arg_4_0, iter_4_0)
+		table.insert(arg_5_0._characteritems, var_5_0)
+		var_5_0.btndetail:AddClickListener(var_0_0._onClickDetailByIndex, arg_5_0, iter_5_0)
 	end
 
-	local var_4_2 = gohelper.findChildText(arg_4_0.viewGO, "#go_ui/summonbtns/summon1/text")
-	local var_4_3 = gohelper.findChildText(arg_4_0.viewGO, "#go_ui/summonbtns/summon10/text")
+	arg_5_0._goShop = gohelper.findChild(arg_5_0.viewGO, "#go_ui/#go_shop")
+	arg_5_0._txtticket = gohelper.findChildText(arg_5_0.viewGO, "#go_ui/#go_shop/#txt_num")
+	arg_5_0._btnshop = gohelper.findChildButtonWithAudio(arg_5_0.viewGO, "#go_ui/#go_shop/#btn_shop")
+
+	if arg_5_0._btnshop then
+		arg_5_0._btnshop:AddClickListener(arg_5_0._btnshopOnClick, arg_5_0)
+	end
+
+	local var_5_2 = gohelper.findChildText(arg_5_0.viewGO, "#go_ui/summonbtns/summon1/text")
+	local var_5_3 = gohelper.findChildText(arg_5_0.viewGO, "#go_ui/summonbtns/summon10/text")
 
 	if GameConfig:GetCurLangType() == LangSettings.en then
-		var_4_2.text = string.format(luaLang("p_summon_once"), luaLang("multiple"))
-		var_4_3.text = string.format(luaLang("p_summon_tentimes"), luaLang("multiple"))
+		var_5_2.text = string.format(luaLang("p_summon_once"), luaLang("multiple"))
+		var_5_3.text = string.format(luaLang("p_summon_tentimes"), luaLang("multiple"))
 	else
-		var_4_2.text = luaLang("p_summon_once")
-		var_4_3.text = luaLang("p_summon_tentimes")
+		var_5_2.text = luaLang("p_summon_once")
+		var_5_3.text = luaLang("p_summon_tentimes")
 	end
 end
 
-function var_0_0.onDestroyView(arg_5_0)
-	if arg_5_0._compFreeButton then
-		arg_5_0._compFreeButton:dispose()
+function var_0_0.onDestroyView(arg_6_0)
+	if arg_6_0._compFreeButton then
+		arg_6_0._compFreeButton:dispose()
 
-		arg_5_0._compFreeButton = nil
+		arg_6_0._compFreeButton = nil
 	end
 
-	for iter_5_0 = 1, #arg_5_0._characteritems do
-		arg_5_0._characteritems[iter_5_0].btndetail:RemoveClickListener()
+	for iter_6_0 = 1, #arg_6_0._characteritems do
+		arg_6_0._characteritems[iter_6_0].btndetail:RemoveClickListener()
 	end
 
-	arg_5_0:unloadSingleImage()
+	arg_6_0:unloadSingleImage()
+
+	if arg_6_0._btnshop then
+		arg_6_0._btnshop:RemoveClickListener()
+	end
 end
 
-function var_0_0.refreshSingleImage(arg_6_0)
-	arg_6_0._simagebg:LoadImage(ResUrl.getSummonHeroIcon("full/bg111"))
-	arg_6_0._simagefrontbg:LoadImage(ResUrl.getSummonHeroIcon("bg_role_3"))
-	arg_6_0._simageline:LoadImage(ResUrl.getSummonHeroIcon("title_img_deco"))
-
-	for iter_6_0 = 1, var_0_0.SIMAGE_COUNT do
-		arg_6_0["_simagead" .. iter_6_0]:LoadImage(ResUrl.getSummonHeroIcon("role" .. iter_6_0), arg_6_0._adLoaded, arg_6_0)
-	end
-
-	arg_6_0._simagesignature1:LoadImage(ResUrl.getSignature("3009"))
+function var_0_0.refreshSingleImage(arg_7_0)
+	arg_7_0._simageline:LoadImage(ResUrl.getSummonHeroIcon("title_img_deco"))
 end
 
-function var_0_0.unloadSingleImage(arg_7_0)
-	for iter_7_0 = 1, var_0_0.SIMAGE_COUNT do
-		arg_7_0["_simagead" .. iter_7_0]:UnLoadImage()
-	end
-
-	arg_7_0._simagebg:UnLoadImage()
-	arg_7_0._simagefrontbg:UnLoadImage()
-	arg_7_0._simageline:UnLoadImage()
-	arg_7_0._simagesignature1:UnLoadImage()
-	arg_7_0._simagecurrency1:UnLoadImage()
-	arg_7_0._simagecurrency10:UnLoadImage()
+function var_0_0.unloadSingleImage(arg_8_0)
+	arg_8_0._simageline:UnLoadImage()
 end
 
-function var_0_0.onUpdateParam(arg_8_0)
+function var_0_0.onUpdateParam(arg_9_0)
 	return
 end
 
-function var_0_0.onOpen(arg_9_0)
-	arg_9_0:addEventCb(SummonController.instance, SummonEvent.onSummonFailed, arg_9_0.onSummonFailed, arg_9_0)
-	arg_9_0:addEventCb(SummonController.instance, SummonEvent.onSummonReply, arg_9_0.onSummonReply, arg_9_0)
-	arg_9_0:addEventCb(SummonController.instance, SummonEvent.onViewCanPlayEnterAnim, arg_9_0.playerEnterAnimFromScene, arg_9_0)
-	arg_9_0:addEventCb(SummonController.instance, SummonEvent.onRemainTimeCountdown, arg_9_0._refreshOpenTime, arg_9_0)
-	arg_9_0:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_9_0.onItemChanged, arg_9_0)
-	arg_9_0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_9_0.onItemChanged, arg_9_0)
-	arg_9_0:addEventCb(SummonController.instance, SummonEvent.onSummonInfoGot, arg_9_0._refreshView, arg_9_0)
-	arg_9_0:playEnterAnim()
-	arg_9_0:_refreshView()
+function var_0_0.onOpen(arg_10_0)
+	arg_10_0:addEventCb(SummonController.instance, SummonEvent.onSummonFailed, arg_10_0.onSummonFailed, arg_10_0)
+	arg_10_0:addEventCb(SummonController.instance, SummonEvent.onSummonReply, arg_10_0.onSummonReply, arg_10_0)
+	arg_10_0:addEventCb(SummonController.instance, SummonEvent.onViewCanPlayEnterAnim, arg_10_0.playerEnterAnimFromScene, arg_10_0)
+	arg_10_0:addEventCb(SummonController.instance, SummonEvent.onRemainTimeCountdown, arg_10_0._refreshOpenTime, arg_10_0)
+	arg_10_0:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_10_0.onItemChanged, arg_10_0)
+	arg_10_0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_10_0.onItemChanged, arg_10_0)
+	arg_10_0:addEventCb(SummonController.instance, SummonEvent.onSummonInfoGot, arg_10_0._refreshView, arg_10_0)
+	arg_10_0:playEnterAnim()
+	arg_10_0:_refreshView()
 end
 
-function var_0_0.playEnterAnim(arg_10_0)
-	if arg_10_0._animRoot then
+function var_0_0.playEnterAnim(arg_11_0)
+	if arg_11_0._animRoot then
 		if SummonMainModel.instance:getFirstTimeSwitch() then
 			SummonMainModel.instance:setFirstTimeSwitch(false)
-			arg_10_0._animRoot:Play(SummonEnum.SummonCharAnimationEnter, 0, 0)
+			arg_11_0._animRoot:Play(SummonEnum.SummonCharAnimationEnter, 0, 0)
 		else
-			arg_10_0._animRoot:Play(SummonEnum.SummonCharAnimationSwitch, 0, 0)
+			arg_11_0._animRoot:Play(SummonEnum.SummonCharAnimationSwitch, 0, 0)
 		end
 	end
 end
 
-function var_0_0.playerEnterAnimFromScene(arg_11_0)
-	arg_11_0._animRoot:Play(SummonEnum.SummonCharAnimationEnter, 0, 0)
+function var_0_0.playerEnterAnimFromScene(arg_12_0)
+	arg_12_0._animRoot:Play(SummonEnum.SummonCharAnimationEnter, 0, 0)
 end
 
-function var_0_0.onClose(arg_12_0)
-	arg_12_0:removeEventCb(SummonController.instance, SummonEvent.onSummonFailed, arg_12_0.onSummonFailed, arg_12_0)
-	arg_12_0:removeEventCb(SummonController.instance, SummonEvent.onSummonReply, arg_12_0.onSummonReply, arg_12_0)
-	arg_12_0:removeEventCb(SummonController.instance, SummonEvent.onViewCanPlayEnterAnim, arg_12_0.playerEnterAnimFromScene, arg_12_0)
-	arg_12_0:removeEventCb(SummonController.instance, SummonEvent.onRemainTimeCountdown, arg_12_0._refreshOpenTime, arg_12_0)
-	arg_12_0:removeEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_12_0.onItemChanged, arg_12_0)
-	arg_12_0:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_12_0.onItemChanged, arg_12_0)
-	arg_12_0:removeEventCb(SummonController.instance, SummonEvent.onSummonInfoGot, arg_12_0._refreshView, arg_12_0)
+function var_0_0.onClose(arg_13_0)
+	arg_13_0:removeEventCb(SummonController.instance, SummonEvent.onSummonFailed, arg_13_0.onSummonFailed, arg_13_0)
+	arg_13_0:removeEventCb(SummonController.instance, SummonEvent.onSummonReply, arg_13_0.onSummonReply, arg_13_0)
+	arg_13_0:removeEventCb(SummonController.instance, SummonEvent.onViewCanPlayEnterAnim, arg_13_0.playerEnterAnimFromScene, arg_13_0)
+	arg_13_0:removeEventCb(SummonController.instance, SummonEvent.onRemainTimeCountdown, arg_13_0._refreshOpenTime, arg_13_0)
+	arg_13_0:removeEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_13_0.onItemChanged, arg_13_0)
+	arg_13_0:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_13_0.onItemChanged, arg_13_0)
+	arg_13_0:removeEventCb(SummonController.instance, SummonEvent.onSummonInfoGot, arg_13_0._refreshView, arg_13_0)
 end
 
-function var_0_0._btnsummon1OnClick(arg_13_0)
+function var_0_0._btnsummon1OnClick(arg_14_0)
 	if SummonController.instance:isInSummonGuide() then
 		return
 	end
 
-	local var_13_0 = SummonMainModel.instance:getCurPool()
-
-	if not var_13_0 then
-		return
-	end
-
-	local var_13_1, var_13_2, var_13_3 = SummonMainModel.getCostByConfig(var_13_0.cost1)
-	local var_13_4 = {
-		type = var_13_1,
-		id = var_13_2,
-		quantity = var_13_3,
-		callback = arg_13_0._summon1Confirm,
-		callbackObj = arg_13_0
-	}
-
-	var_13_4.notEnough = false
-
-	local var_13_5 = var_13_3 <= ItemModel.instance:getItemQuantity(var_13_1, var_13_2)
-	local var_13_6 = SummonMainModel.instance.everyCostCount
-	local var_13_7 = SummonMainModel.instance:getOwnCostCurrencyNum()
-
-	if not var_13_5 and var_13_7 < var_13_6 then
-		var_13_4.notEnough = true
-	end
-
-	if var_13_5 then
-		var_13_4.needTransform = false
-
-		arg_13_0:_summon1Confirm()
-
-		return
-	else
-		var_13_4.needTransform = true
-		var_13_4.cost_type = SummonMainModel.instance.costCurrencyType
-		var_13_4.cost_id = SummonMainModel.instance.costCurrencyId
-		var_13_4.cost_quantity = var_13_6
-		var_13_4.miss_quantity = 1
-	end
-
-	ViewMgr.instance:openView(ViewName.SummonConfirmView, var_13_4)
-end
-
-function var_0_0._summon1Confirm(arg_14_0)
 	local var_14_0 = SummonMainModel.instance:getCurPool()
 
 	if not var_14_0 then
 		return
 	end
 
-	SummonMainController.instance:sendStartSummon(var_14_0.id, 1, false, true)
+	local var_14_1, var_14_2, var_14_3 = SummonMainModel.getCostByConfig(var_14_0.cost1)
+	local var_14_4 = {
+		type = var_14_1,
+		id = var_14_2,
+		quantity = var_14_3,
+		callback = arg_14_0._summon1Confirm,
+		callbackObj = arg_14_0
+	}
+
+	var_14_4.notEnough = false
+
+	local var_14_5 = var_14_3 <= ItemModel.instance:getItemQuantity(var_14_1, var_14_2)
+	local var_14_6 = SummonMainModel.instance.everyCostCount
+	local var_14_7 = SummonMainModel.instance:getOwnCostCurrencyNum()
+
+	if not var_14_5 and var_14_7 < var_14_6 then
+		var_14_4.notEnough = true
+	end
+
+	if var_14_5 then
+		var_14_4.needTransform = false
+
+		arg_14_0:_summon1Confirm()
+
+		return
+	else
+		var_14_4.needTransform = true
+		var_14_4.cost_type = SummonMainModel.instance.costCurrencyType
+		var_14_4.cost_id = SummonMainModel.instance.costCurrencyId
+		var_14_4.cost_quantity = var_14_6
+		var_14_4.miss_quantity = 1
+	end
+
+	ViewMgr.instance:openView(ViewName.SummonConfirmView, var_14_4)
 end
 
-function var_0_0._btnsummon10OnClick(arg_15_0)
+function var_0_0._summon1Confirm(arg_15_0)
 	local var_15_0 = SummonMainModel.instance:getCurPool()
 
 	if not var_15_0 then
 		return
 	end
 
-	local var_15_1, var_15_2, var_15_3 = SummonMainModel.getCostByConfig(var_15_0.cost10)
-	local var_15_4 = {
-		type = var_15_1,
-		id = var_15_2,
-		quantity = var_15_3,
-		callback = arg_15_0._summon10Confirm,
-		callbackObj = arg_15_0
-	}
-
-	var_15_4.notEnough = false
-
-	local var_15_5 = ItemModel.instance:getItemQuantity(var_15_1, var_15_2)
-	local var_15_6 = var_15_3 <= var_15_5
-	local var_15_7 = SummonMainModel.instance.everyCostCount
-	local var_15_8 = SummonMainModel.instance:getOwnCostCurrencyNum()
-	local var_15_9 = 10 - var_15_5
-	local var_15_10 = var_15_7 * var_15_9
-
-	if not var_15_6 and var_15_8 < var_15_10 then
-		var_15_4.notEnough = true
-	end
-
-	if var_15_6 then
-		var_15_4.needTransform = false
-
-		arg_15_0:_summon10Confirm()
-
-		return
-	else
-		var_15_4.needTransform = true
-		var_15_4.cost_type = SummonMainModel.instance.costCurrencyType
-		var_15_4.cost_id = SummonMainModel.instance.costCurrencyId
-		var_15_4.cost_quantity = var_15_10
-		var_15_4.miss_quantity = var_15_9
-	end
-
-	ViewMgr.instance:openView(ViewName.SummonConfirmView, var_15_4)
+	SummonMainController.instance:sendStartSummon(var_15_0.id, 1, false, true)
 end
 
-function var_0_0._summon10Confirm(arg_16_0)
+function var_0_0._btnsummon10OnClick(arg_16_0)
 	local var_16_0 = SummonMainModel.instance:getCurPool()
 
 	if not var_16_0 then
 		return
 	end
 
-	SummonMainController.instance:sendStartSummon(var_16_0.id, 10, false, true)
+	local var_16_1, var_16_2, var_16_3 = SummonMainModel.getCostByConfig(var_16_0.cost10)
+	local var_16_4 = {
+		type = var_16_1,
+		id = var_16_2,
+		quantity = var_16_3,
+		callback = arg_16_0._summon10Confirm,
+		callbackObj = arg_16_0
+	}
+
+	var_16_4.notEnough = false
+
+	local var_16_5 = ItemModel.instance:getItemQuantity(var_16_1, var_16_2)
+	local var_16_6 = var_16_3 <= var_16_5
+	local var_16_7 = SummonMainModel.instance.everyCostCount
+	local var_16_8 = SummonMainModel.instance:getOwnCostCurrencyNum()
+	local var_16_9 = 10 - var_16_5
+	local var_16_10 = var_16_7 * var_16_9
+
+	if not var_16_6 and var_16_8 < var_16_10 then
+		var_16_4.notEnough = true
+	end
+
+	if var_16_6 then
+		var_16_4.needTransform = false
+
+		arg_16_0:_summon10Confirm()
+
+		return
+	else
+		var_16_4.needTransform = true
+		var_16_4.cost_type = SummonMainModel.instance.costCurrencyType
+		var_16_4.cost_id = SummonMainModel.instance.costCurrencyId
+		var_16_4.cost_quantity = var_16_10
+		var_16_4.miss_quantity = var_16_9
+	end
+
+	ViewMgr.instance:openView(ViewName.SummonConfirmView, var_16_4)
 end
 
-function var_0_0._onClickDetailByIndex(arg_17_0, arg_17_1)
-	if not arg_17_0._characteritems then
+function var_0_0._summon10Confirm(arg_17_0)
+	local var_17_0 = SummonMainModel.instance:getCurPool()
+
+	if not var_17_0 then
 		return
 	end
 
-	local var_17_0 = arg_17_0._characteritems[arg_17_1]
+	SummonMainController.instance:sendStartSummon(var_17_0.id, 10, false, true)
+end
 
-	if var_17_0 then
+function var_0_0._onClickDetailByIndex(arg_18_0, arg_18_1)
+	if not arg_18_0._characteritems then
+		return
+	end
+
+	local var_18_0 = arg_18_0._characteritems[arg_18_1]
+
+	if var_18_0 then
 		ViewMgr.instance:openView(ViewName.SummonHeroDetailView, {
-			id = var_17_0.characterDetailId
+			id = var_18_0.characterDetailId
 		})
 	end
 end
 
-function var_0_0._refreshView(arg_18_0)
-	arg_18_0.summonSuccess = false
+function var_0_0._refreshView(arg_19_0)
+	arg_19_0.summonSuccess = false
 
-	local var_18_0 = SummonMainModel.instance:getList()
+	local var_19_0 = SummonMainModel.instance:getList()
 
-	if not var_18_0 or #var_18_0 <= 0 then
-		gohelper.setActive(arg_18_0._goui, false)
+	if not var_19_0 or #var_19_0 <= 0 then
+		gohelper.setActive(arg_19_0._goui, false)
 
 		return
 	end
 
-	arg_18_0:_refreshPoolUI()
+	arg_19_0:_refreshPoolUI()
+	arg_19_0:_refreshTicket()
 end
 
-function var_0_0._refreshPoolUI(arg_19_0)
-	local var_19_0 = SummonMainModel.instance:getCurPool()
+function var_0_0._refreshPoolUI(arg_20_0)
+	local var_20_0 = SummonMainModel.instance:getCurPool()
 
-	if not var_19_0 then
+	if not var_20_0 then
 		return
 	end
 
-	arg_19_0:_refreshCost()
-	arg_19_0:showCharacter(var_19_0)
-	arg_19_0:refreshFreeSummonButton(var_19_0)
-	arg_19_0:_refreshOpenTime()
-	arg_19_0:_refreshPreferentialInfo()
+	arg_20_0:_refreshCost()
+	arg_20_0:showCharacter(var_20_0)
+	arg_20_0:refreshFreeSummonButton(var_20_0)
+	arg_20_0:_refreshOpenTime()
+	arg_20_0:_refreshPreferentialInfo()
 end
 
-function var_0_0.refreshFreeSummonButton(arg_20_0, arg_20_1)
-	arg_20_0._compFreeButton = arg_20_0._compFreeButton or SummonFreeSingleGacha.New(arg_20_0._btnsummon1.gameObject, arg_20_1.id)
+function var_0_0.refreshFreeSummonButton(arg_21_0, arg_21_1)
+	arg_21_0._compFreeButton = arg_21_0._compFreeButton or SummonFreeSingleGacha.New(arg_21_0._btnsummon1.gameObject, arg_21_1.id)
 
-	arg_20_0._compFreeButton:refreshUI()
+	arg_21_0._compFreeButton:refreshUI()
 end
 
-function var_0_0._refreshOpenTime(arg_21_0)
-	arg_21_0._txtdeadline.text = ""
+function var_0_0._refreshOpenTime(arg_22_0)
+	arg_22_0._txtdeadline.text = ""
 
-	local var_21_0 = SummonMainModel.instance:getCurPool()
-
-	if not var_21_0 then
-		return
-	end
-
-	local var_21_1 = SummonMainModel.instance:getPoolServerMO(var_21_0.id)
-
-	if not var_21_1 then
-		return
-	end
-
-	local var_21_2, var_21_3 = var_21_1:onOffTimestamp()
-
-	if var_21_2 < var_21_3 and var_21_3 > 0 then
-		local var_21_4 = var_21_3 - ServerTime.now()
-
-		arg_21_0._txtdeadline.text = formatLuaLang("summonmainequipprobup_deadline", SummonModel.formatRemainTime(var_21_4))
-	end
-end
-
-function var_0_0._refreshPreferentialInfo(arg_22_0)
 	local var_22_0 = SummonMainModel.instance:getCurPool()
 
 	if not var_22_0 then
@@ -366,107 +351,158 @@ function var_0_0._refreshPreferentialInfo(arg_22_0)
 	end
 
 	local var_22_1 = SummonMainModel.instance:getPoolServerMO(var_22_0.id)
-	local var_22_2 = var_22_1.canGetGuaranteeSRCount
 
-	if arg_22_0._gopreferential then
-		gohelper.setActive(arg_22_0._gopreferential, var_22_2 > 0)
+	if not var_22_1 then
+		return
+	end
 
-		if arg_22_0._txtpreferential and var_22_2 > 0 then
-			local var_22_3 = var_22_1.guaranteeSRCountDown
+	local var_22_2, var_22_3 = var_22_1:onOffTimestamp()
 
-			arg_22_0._txtpreferential.text = var_22_3
+	if var_22_2 < var_22_3 and var_22_3 > 0 then
+		local var_22_4 = var_22_3 - ServerTime.now()
+
+		arg_22_0._txtdeadline.text = formatLuaLang("summonmainequipprobup_deadline", SummonModel.formatRemainTime(var_22_4))
+	end
+end
+
+function var_0_0._refreshPreferentialInfo(arg_23_0)
+	local var_23_0 = SummonMainModel.instance:getCurPool()
+
+	if not var_23_0 then
+		return
+	end
+
+	local var_23_1 = SummonMainModel.instance:getPoolServerMO(var_23_0.id)
+	local var_23_2 = var_23_1.canGetGuaranteeSRCount
+
+	if arg_23_0._gopreferential then
+		gohelper.setActive(arg_23_0._gopreferential, var_23_2 > 0)
+
+		if arg_23_0._txtpreferential and var_23_2 > 0 then
+			local var_23_3 = var_23_1.guaranteeSRCountDown
+
+			arg_23_0._txtpreferential.text = var_23_3
 		end
 	end
 end
 
-function var_0_0._adLoaded(arg_23_0)
-	for iter_23_0 = 1, var_0_0.SIMAGE_COUNT do
-		arg_23_0["_simagead" .. iter_23_0]:GetComponent(typeof(UnityEngine.UI.Image)):SetNativeSize()
+function var_0_0._adLoaded(arg_24_0)
+	for iter_24_0 = 1, var_0_0.SIMAGE_COUNT do
+		arg_24_0["_simagead" .. iter_24_0]:GetComponent(typeof(UnityEngine.UI.Image)):SetNativeSize()
 	end
 end
 
-function var_0_0.showCharacter(arg_24_0, arg_24_1)
-	local var_24_0
+function var_0_0.showCharacter(arg_25_0, arg_25_1)
+	local var_25_0
 
-	if not string.nilorempty(arg_24_1.characterDetail) then
-		var_24_0 = string.split(arg_24_1.characterDetail, "#")
+	if not string.nilorempty(arg_25_1.characterDetail) then
+		var_25_0 = string.split(arg_25_1.characterDetail, "#")
 	end
 
-	local var_24_1 = {}
+	local var_25_1 = {}
 
-	if var_24_0 ~= nil then
-		for iter_24_0 = 1, #var_24_0 do
-			local var_24_2 = tonumber(var_24_0[iter_24_0])
-			local var_24_3 = SummonConfig.instance:getCharacterDetailConfig(var_24_2)
-			local var_24_4 = var_24_3.location
-			local var_24_5 = arg_24_0._characteritems[var_24_4]
+	if var_25_0 ~= nil then
+		for iter_25_0 = 1, #var_25_0 do
+			local var_25_2 = tonumber(var_25_0[iter_25_0])
+			local var_25_3 = SummonConfig.instance:getCharacterDetailConfig(var_25_2)
+			local var_25_4 = var_25_3.location
+			local var_25_5 = arg_25_0._characteritems[var_25_4]
 
-			if var_24_5 then
-				local var_24_6 = var_24_3.heroId
-				local var_24_7 = HeroConfig.instance:getHeroCO(var_24_6)
+			if var_25_5 then
+				local var_25_6 = var_25_3.heroId
+				local var_25_7 = HeroConfig.instance:getHeroCO(var_25_6)
 
-				UISpriteSetMgr.instance:setCommonSprite(var_24_5.imagecareer, "lssx_" .. tostring(var_24_7.career))
+				UISpriteSetMgr.instance:setCommonSprite(var_25_5.imagecareer, "lssx_" .. tostring(var_25_7.career))
 
-				var_24_5.txtnamecn.text = var_24_7.name
+				var_25_5.txtnamecn.text = var_25_7.name
 
-				for iter_24_1 = 1, 6 do
-					gohelper.setActive(var_24_5.rares[iter_24_1], iter_24_1 <= CharacterEnum.Star[var_24_7.rare])
+				for iter_25_1 = 1, 6 do
+					gohelper.setActive(var_25_5.rares[iter_25_1], iter_25_1 <= CharacterEnum.Star[var_25_7.rare])
 				end
 
-				var_24_5.characterDetailId = var_24_2
+				var_25_5.characterDetailId = var_25_2
 
-				gohelper.setActive(var_24_5.go, true)
+				gohelper.setActive(var_25_5.go, true)
 
-				var_24_1[var_24_4] = true
+				var_25_1[var_25_4] = true
 			end
 		end
 	end
 
-	for iter_24_2 = 1, #arg_24_0._characteritems do
-		gohelper.setActive(arg_24_0._characteritems[iter_24_2].go, var_24_1[iter_24_2])
+	for iter_25_2 = 1, #arg_25_0._characteritems do
+		gohelper.setActive(arg_25_0._characteritems[iter_25_2].go, var_25_1[iter_25_2])
 	end
 end
 
-function var_0_0._refreshCost(arg_25_0)
-	local var_25_0 = SummonMainModel.instance:getCurPool()
+function var_0_0._refreshCost(arg_26_0)
+	local var_26_0 = SummonMainModel.instance:getCurPool()
 
-	if var_25_0 then
-		arg_25_0:_refreshSingleCost(var_25_0.cost1, arg_25_0._simagecurrency1, "_txtcurrency1")
-		arg_25_0:_refreshSingleCost(var_25_0.cost10, arg_25_0._simagecurrency10, "_txtcurrency10")
+	if var_26_0 then
+		arg_26_0:_refreshSingleCost(var_26_0.cost1, arg_26_0._simagecurrency1, "_txtcurrency1")
+		arg_26_0:_refreshSingleCost(var_26_0.cost10, arg_26_0._simagecurrency10, "_txtcurrency10")
 	end
 end
 
-function var_0_0._refreshSingleCost(arg_26_0, arg_26_1, arg_26_2, arg_26_3)
-	local var_26_0, var_26_1, var_26_2 = SummonMainModel.getCostByConfig(arg_26_1)
-	local var_26_3 = SummonMainModel.getSummonItemIcon(var_26_0, var_26_1)
+function var_0_0._refreshSingleCost(arg_27_0, arg_27_1, arg_27_2, arg_27_3)
+	local var_27_0, var_27_1, var_27_2 = SummonMainModel.getCostByConfig(arg_27_1)
+	local var_27_3 = SummonMainModel.getSummonItemIcon(var_27_0, var_27_1)
 
-	arg_26_2:LoadImage(var_26_3)
+	arg_27_2:LoadImage(var_27_3)
 
-	local var_26_4
+	local var_27_4
 
-	var_26_4 = var_26_2 <= ItemModel.instance:getItemQuantity(var_26_0, var_26_1)
-	arg_26_0[arg_26_3 .. "1"].text = luaLang("multiple") .. var_26_2
-	arg_26_0[arg_26_3 .. "2"].text = ""
+	var_27_4 = var_27_2 <= ItemModel.instance:getItemQuantity(var_27_0, var_27_1)
+	arg_27_0[arg_27_3 .. "1"].text = luaLang("multiple") .. var_27_2
+	arg_27_0[arg_27_3 .. "2"].text = ""
 end
 
-function var_0_0.onSummonFailed(arg_27_0)
-	arg_27_0.summonSuccess = false
+function var_0_0.onSummonFailed(arg_28_0)
+	arg_28_0.summonSuccess = false
 
-	arg_27_0:_refreshCost()
+	arg_28_0:_refreshCost()
 end
 
-function var_0_0.onSummonReply(arg_28_0)
-	arg_28_0.summonSuccess = true
+function var_0_0.onSummonReply(arg_29_0)
+	arg_29_0.summonSuccess = true
 
-	arg_28_0:_refreshPreferentialInfo()
+	arg_29_0:_refreshPreferentialInfo()
 end
 
-function var_0_0.onItemChanged(arg_29_0)
-	if SummonController.instance.isWaitingSummonResult or arg_29_0.summonSuccess then
+function var_0_0.onItemChanged(arg_30_0)
+	if SummonController.instance.isWaitingSummonResult or arg_30_0.summonSuccess then
 		return
 	end
 
-	arg_29_0:_refreshCost()
+	arg_30_0:_refreshCost()
+	arg_30_0:_refreshTicket()
+end
+
+function var_0_0._refreshTicket(arg_31_0)
+	if arg_31_0._txtticket == nil then
+		return
+	end
+
+	local var_31_0 = SummonMainModel.instance:getCurPool()
+
+	if not var_31_0 then
+		return
+	end
+
+	local var_31_1 = 0
+
+	if var_31_0.ticketId ~= 0 then
+		local var_31_2 = ItemModel.instance:getItemQuantity(MaterialEnum.MaterialType.Item, var_31_0.ticketId)
+
+		arg_31_0._txtticket.text = tostring(var_31_2)
+	end
+
+	gohelper.setActive(arg_31_0._goShop, var_31_0.ticketId ~= 0)
+end
+
+function var_0_0._btnshopOnClick(arg_32_0)
+	local var_32_0 = StoreEnum.StoreId.LimitStore
+
+	StoreController.instance:checkAndOpenStoreView(var_32_0)
 end
 
 return var_0_0

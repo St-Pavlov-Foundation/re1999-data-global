@@ -112,8 +112,16 @@ function var_0_0._processBonus(arg_5_0, arg_5_1, arg_5_2)
 	for iter_5_0, iter_5_1 in pairs(var_5_0) do
 		if iter_5_1[1] == MaterialEnum.MaterialType.HeroSkin then
 			arg_5_0._skinDict[arg_5_1] = iter_5_1[2]
-		elseif iter_5_1[1] == MaterialEnum.MaterialType.Item and lua_item.configDict[iter_5_1[2]].subType == ItemEnum.SubType.Portrait then
-			arg_5_0._headDict[arg_5_1] = iter_5_1[2]
+		elseif iter_5_1[1] == MaterialEnum.MaterialType.Item then
+			local var_5_1 = lua_item.configDict[iter_5_1[2]]
+
+			if not var_5_1 then
+				logError("道具配置不存在" .. tostring(iter_5_1[2]))
+			end
+
+			if var_5_1 and var_5_1.subType == ItemEnum.SubType.Portrait then
+				arg_5_0._headDict[arg_5_1] = iter_5_1[2]
+			end
 		end
 
 		if iter_5_1[5] == 1 then

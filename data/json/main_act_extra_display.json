@@ -47,5 +47,12 @@
     "icon": "singlebg_lang/txt_v2a5_autochess_singlebg/main/v2a5_autochess_main_enter.png",
     "sortId": 3,
     "show": 1
+  },
+  {
+    "id": 9,
+    "name": "language_10070614",
+    "icon": "singlebg/activity/weekwalkheart_img_01.png",
+    "sortId": 3,
+    "show": 1
   }
 ]

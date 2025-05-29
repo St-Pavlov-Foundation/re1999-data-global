@@ -34,5 +34,17 @@
     "effect": "v2a3_ddg/ddg_innate_03",
     "audioId": 431040153,
     "once": false
+  },
+  {
+    "id": 7,
+    "effect": "v2a6_ddg/ddg_innate_02",
+    "audioId": 431040352,
+    "once": false
+  },
+  {
+    "id": 8,
+    "effect": "v2a6_ddg/ddg_innate_03",
+    "audioId": 431040353,
+    "once": false
   }
 ]

@@ -65,7 +65,6 @@ function var_0_0._btnhandbookOnClick(arg_7_0)
 end
 
 function var_0_0._editableInitView(arg_8_0)
-	var_0_0.super._editableInitView(arg_8_0)
 	arg_8_0:initAllContainerPosition()
 	arg_8_0:checkAndSetHandBookIconVisible()
 end

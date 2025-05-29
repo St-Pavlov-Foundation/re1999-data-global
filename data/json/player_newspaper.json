@@ -47,5 +47,12 @@
     "name": "language_10062526",
     "nameEn": "Isle of Echoes Visits",
     "displayPriority": 7
+  },
+  {
+    "id": 8,
+    "type": 1,
+    "name": "language_10070524",
+    "nameEn": "Lucidscape",
+    "displayPriority": 8
   }
 ]

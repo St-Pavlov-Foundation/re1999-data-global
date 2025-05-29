@@ -78,6 +78,8 @@ function var_0_0.initViewContent(arg_2_0)
 	arg_2_0._act178EpisodeId = arg_2_0:addInputText("L8", nil, "关卡ID")
 
 	arg_2_0:addButton("L8", "直接进入弹珠游戏", arg_2_0._enterAct178Game, arg_2_0)
+	arg_2_0:addLabel("L9", "2.6 活动")
+	arg_2_0:addButton("L9", "虚构集卡牌ID开关", arg_2_0._setXugoujiDebugMode, arg_2_0)
 	arg_2_0:initActivityDrop()
 
 	arg_2_0._inited = true
@@ -288,9 +290,17 @@ function var_0_0._douQuQuTestForceIndexRound(arg_21_0)
 	arg_21_0:closeThis()
 end
 
-function var_0_0.copyConfig(arg_22_0)
-	local var_22_0 = {}
-	local var_22_1 = {
+function var_0_0._setXugoujiDebugMode(arg_22_0)
+	local var_22_0 = XugoujiController.instance:isDebugMode()
+
+	XugoujiController.instance:setDebugMode(not var_22_0)
+	PlayerPrefsHelper.setNumber("XugoujiDebugMode", var_22_0 and 0 or 1)
+	XugoujiController.instance:dispatchEvent(XugoujiEvent.TurnChanged)
+end
+
+function var_0_0.copyConfig(arg_23_0)
+	local var_23_0 = {}
+	local var_23_1 = {
 		logoName = 9,
 		name = 3,
 		banner = 13,
@@ -319,11 +329,11 @@ function var_0_0.copyConfig(arg_22_0)
 		nameEn = 4
 	}
 
-	for iter_22_0, iter_22_1 in pairs(var_22_1) do
-		var_22_0[iter_22_0] = arg_22_0[iter_22_0]
+	for iter_23_0, iter_23_1 in pairs(var_23_1) do
+		var_23_0[iter_23_0] = arg_23_0[iter_23_0]
 	end
 
-	return var_22_0
+	return var_23_0
 end
 
 return var_0_0

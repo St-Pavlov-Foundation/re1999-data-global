@@ -269,7 +269,7 @@ function var_0_0.isHeroGroupLock(arg_22_0, arg_22_1, arg_22_2)
 			for iter_22_0, iter_22_1 in pairs(var_22_0) do
 				if iter_22_1.episodeId == arg_22_2 then
 					if iter_22_1.status == 1 then
-						return true, iter_22_1.heroIds, iter_22_1.assistBossId
+						return true, iter_22_1
 					else
 						return false
 					end
@@ -283,7 +283,7 @@ function var_0_0.isHeroGroupLock(arg_22_0, arg_22_1, arg_22_2)
 	if var_22_0 then
 		for iter_22_2, iter_22_3 in pairs(var_22_0) do
 			if iter_22_3.status == 1 then
-				return true, iter_22_3.heroIds, iter_22_3.assistBossId
+				return true, iter_22_3
 			end
 		end
 	end

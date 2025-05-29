@@ -46,5 +46,9 @@ var_0_0.SevenDaySec = 604800
 var_0_0.orthographicSize = 5
 var_0_0.FirstDeepLayer = 11
 var_0_0.OneDeepLayerFirstBattle = 1
+var_0_0.LastShallowLayer = 10
+var_0_0.NewDeepLayerMaxNum = 7
+var_0_0.ShallowLayerMaxNum = 10
+var_0_0.HardDeepLayerId = 17
 
 return var_0_0

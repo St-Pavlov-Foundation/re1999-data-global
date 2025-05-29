@@ -95,9 +95,18 @@ function var_0_0._showFightProgress(arg_11_0)
 
 		gohelper.setActive(arg_11_0._progressRoot, true)
 
-		local var_11_0 = FightDataHelper.fieldMgr.param[FightParamData.ParamKey.ProgressId] == 1 and "ui/viewres/fight/commonalityslider1.prefab" or "ui/viewres/fight/commonalityslider.prefab"
+		local var_11_0 = FightDataHelper.fieldMgr.param[FightParamData.ParamKey.ProgressId]
+		local var_11_1 = "ui/viewres/fight/commonalityslider.prefab"
+		local var_11_2 = FightCommonalitySlider
 
-		arg_11_0._progressView = arg_11_0:com_openSubView(FightCommonalitySlider, var_11_0, arg_11_0._progressRoot)
+		if var_11_0 == 1 then
+			var_11_1 = "ui/viewres/fight/commonalityslider1.prefab"
+		elseif var_11_0 == 2 then
+			var_11_1 = "ui/viewres/fight/commonalityslider2.prefab"
+			var_11_2 = FightCommonalitySlider2
+		end
+
+		arg_11_0._progressView = arg_11_0:com_openSubView(var_11_2, var_11_1, arg_11_0._progressRoot, arg_11_0._goRoot)
 	end
 end
 

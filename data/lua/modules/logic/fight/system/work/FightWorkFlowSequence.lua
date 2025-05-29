@@ -16,7 +16,7 @@ end
 function var_0_0.registWorkAtIndex(arg_3_0, arg_3_1, arg_3_2, ...)
 	local var_3_0 = arg_3_0:newClass(arg_3_2, ...)
 
-	table.insert(arg_3_0._workList, arg_3_1, var_3_0)
+	arg_3_0:addWorkAtIndex(arg_3_1, var_3_0)
 
 	return var_3_0
 end
@@ -34,6 +34,7 @@ function var_0_0.addWorkAtIndex(arg_5_0, arg_5_1, arg_5_2)
 		return
 	end
 
+	arg_5_2:registFinishCallback(arg_5_0.onWorkItemDone, arg_5_0, arg_5_2)
 	table.insert(arg_5_0._workList, arg_5_1, arg_5_2)
 end
 
@@ -68,7 +69,6 @@ function var_0_0._playNext(arg_9_0)
 				while arg_9_0._playStartCount ~= 0 do
 					local var_9_1 = arg_9_0._workList[arg_9_0._startIndex]
 
-					var_9_1:registFinishCallback(arg_9_0.onWorkItemDone, arg_9_0, var_9_1)
 					xpcall(var_9_1.start, __G__TRACKBACK__, var_9_1, arg_9_0.context)
 
 					arg_9_0._playStartCount = arg_9_0._playStartCount - 1

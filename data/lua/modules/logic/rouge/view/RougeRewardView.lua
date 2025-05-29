@@ -350,26 +350,28 @@ function var_0_0._initRewardSign(arg_21_0)
 end
 
 function var_0_0._initBigRewardNode(arg_22_0)
-	for iter_22_0 = 1, 5 do
+	for iter_22_0 = 1, 6 do
 		local var_22_0 = arg_22_0:getUserDataTb_()
 
 		var_22_0.go = gohelper.findChild(arg_22_0.viewGO, "Right/RewardNode/#go_Reward" .. iter_22_0)
 		var_22_0.bg = gohelper.findChildSingleImage(var_22_0.go, "bg")
 
-		if iter_22_0 == RougeEnum.BigRewardType.Multi then
+		if iter_22_0 == RougeEnum.BigRewardType.Double or iter_22_0 == RougeEnum.BigRewardType.Triple then
+			local var_22_1 = iter_22_0 == RougeEnum.BigRewardType.Double and 2 or 3
+
 			var_22_0.nodeList = {}
 
-			for iter_22_1 = 1, 2 do
-				local var_22_1 = {
+			for iter_22_1 = 1, var_22_1 do
+				local var_22_2 = {
 					go = gohelper.findChild(var_22_0.go, "reward" .. iter_22_1)
 				}
 
-				var_22_1.simge = gohelper.findChildSingleImage(var_22_1.go, "img_reward")
-				var_22_1.img = gohelper.findChildImage(var_22_1.go, "img_reward")
-				var_22_1.txt = gohelper.findChildText(var_22_1.go, "txt_reward")
-				var_22_1.defultposx, var_22_1.defultposy = recthelper.getAnchor(var_22_1.txt.transform)
+				var_22_2.simge = gohelper.findChildSingleImage(var_22_2.go, "img_reward")
+				var_22_2.img = gohelper.findChildImage(var_22_2.go, "img_reward")
+				var_22_2.txt = gohelper.findChildText(var_22_2.go, "txt_reward")
+				var_22_2.defultposx, var_22_2.defultposy = recthelper.getAnchor(var_22_2.txt.transform)
 
-				table.insert(var_22_0.nodeList, var_22_1)
+				table.insert(var_22_0.nodeList, var_22_2)
 			end
 		else
 			var_22_0.name = gohelper.findChildText(var_22_0.go, "name")
@@ -452,7 +454,7 @@ function var_0_0.refreshBigReward(arg_25_0)
 
 	var_25_3.bg:LoadImage(ResUrl.getRougeIcon(var_25_2), var_25_4, arg_25_0)
 
-	if var_25_1 == RougeEnum.BigRewardType.Multi then
+	if var_25_1 == RougeEnum.BigRewardType.Double or var_25_1 == RougeEnum.BigRewardType.Triple then
 		local var_25_5 = string.split(var_25_0.value, "|")
 		local var_25_6 = string.split(var_25_0.rewardName, "|")
 		local var_25_7
@@ -489,7 +491,7 @@ function var_0_0.refreshBigReward(arg_25_0)
 			if var_25_12 == MaterialEnum.MaterialType.Equip then
 				local var_25_16 = false
 
-				if var_25_8[iter_25_4].icon then
+				if not string.nilorempty(var_25_8[iter_25_4].icon) then
 					var_25_16 = true
 				end
 

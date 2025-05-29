@@ -442,6 +442,8 @@ function var_0_0._getProfilerAciton(arg_18_0, arg_18_1)
 		arg_18_0._cmdActionDict.GetTextureMemory = arg_18_0.recordTextureMemory
 		arg_18_0._cmdActionDict.WaitSceond = nil
 		arg_18_0._cmdActionDict.GetLuaMemory = arg_18_0.recordLuaMemory
+		arg_18_0._cmdActionDict.LogMonoMemory = arg_18_0.logMonoMemory
+		arg_18_0._cmdActionDict.LogMonoGCInfo = arg_18_0.logMonoGCInfo
 		arg_18_0._cmdActionDict.LogLuaMemory = arg_18_0.logLuaMemory
 		arg_18_0._cmdActionDict.LogRenderData = arg_18_0.logRenderDataAction
 		arg_18_0._cmdActionDict.LogTextureMemory = arg_18_0.logTextureMemory
@@ -454,6 +456,7 @@ function var_0_0._getStopProfilerAciton(arg_19_0, arg_19_1)
 	if arg_19_0._stopActionDict == nil then
 		arg_19_0._stopActionDict = {}
 		arg_19_0._stopActionDict.GetRenderData = arg_19_0.stopLogRenderDataAction
+		arg_19_0._stopActionDict.LogMonoGCInfo = arg_19_0.stopLogMonoGCInfoAction
 	end
 
 	return arg_19_0._stopActionDict[arg_19_1]
@@ -554,100 +557,141 @@ end
 function var_0_0.logLuaMemory(arg_27_0)
 	local var_27_0 = arg_27_0:getLuaMemory()
 
-	BenchmarkApi.AndroidLog(string.format("luaMemory:%.2f MB", var_27_0))
+	BenchmarkApi.AndroidLog(string.format("LuaMemory:%.2f MB", var_27_0))
 end
 
-function var_0_0.logRenderDataAction(arg_28_0)
+function var_0_0.logMonoMemory(arg_28_0)
+	local var_28_0 = ZProj.ProfilerHelper.GetGCAllocated()
+
+	BenchmarkApi.AndroidLog(string.format("MonoMemory:%.2f MB", Bitwise[">>"](var_28_0, 10) / 1024))
+end
+
+function var_0_0.logMonoGCInfo(arg_29_0)
+	local var_29_0 = ZProj.ProfilerHelper.GetGCCount()
+
+	if not arg_29_0._gcCount then
+		arg_29_0._gcCount = var_29_0
+	end
+
+	if var_29_0 > arg_29_0._gcCount then
+		BenchmarkApi.AndroidLog(string.format("GCCount:%d", var_29_0 - arg_29_0._gcCount))
+
+		arg_29_0._gcCount = var_29_0
+	end
+end
+
+function var_0_0.logUnuseMemory(arg_30_0)
+	local var_30_0 = ZProj.ProfilerHelper.GetGCAllocated()
+
+	BenchmarkApi.AndroidLog(string.format("Unuse Memory:%f MB", var_30_0))
+end
+
+function var_0_0.logTotalMemory(arg_31_0)
+	local var_31_0 = ZProj.ProfilerHelper.GetTotalAllocatedMemory()
+	local var_31_1 = ZProj.ProfilerHelper.GetTotalReservedMemory()
+
+	BenchmarkApi.AndroidLog(string.format("Total:%.2f / %.2f MB", var_31_0, var_31_1))
+end
+
+function var_0_0.logRenderDataAction(arg_32_0)
 	if SLFramework.NativeUtil.IsAndroidX8664() then
 		logWarn("X86_64 not support Catch Render Data For the [ShadowHook] is not supported On X86")
 
 		return
 	end
 
-	if not arg_28_0._benchMarkInited then
-		arg_28_0._benchMarkInited = BenchmarkApi.init()
+	if not arg_32_0._benchMarkInited then
+		arg_32_0._benchMarkInited = BenchmarkApi.init()
 	end
 
-	if not arg_28_0._benchMarkInlineHooked then
-		BenchmarkApi.hook()
-
-		arg_28_0._benchMarkInlineHooked = true
-	end
-
-	if arg_28_0._catchedFrameData then
-		arg_28_0._catchedFrameData = false
-
-		local var_28_0 = BenchmarkApi.pop_draw_num()
-		local var_28_1 = arg_28_0:getReadableNum(var_28_0)
-		local var_28_2 = BenchmarkApi.pop_num_vertices()
-		local var_28_3 = arg_28_0:getReadableNum(var_28_2)
-		local var_28_4 = BenchmarkApi.pop_num_triangles()
-		local var_28_5 = arg_28_0:getReadableNum(var_28_4)
-
-		BenchmarkApi.AndroidLog(string.format("drawCall:%s|vertCount:%s|triCount:%s", var_28_1, var_28_3, var_28_5))
-	end
-
-	if not arg_28_0._catchedFrameData then
-		BenchmarkApi.clearInfo()
-		BenchmarkApi.CatchSingleFrameData()
-
-		arg_28_0._catchedFrameData = true
-	end
-end
-
-function var_0_0.logTextureMemory(arg_29_0)
-	local var_29_0 = arg_29_0:getTextureMemory()
-
-	BenchmarkApi.AndroidLog(string.format("textrueMemory:%.0f MB", var_29_0))
-end
-
-function var_0_0.stopLogRenderDataAction(arg_30_0)
-	if not arg_30_0._benchMarkInited then
+	if not arg_32_0._benchMarkInited then
 		return
 	end
 
-	if arg_30_0._benchMarkInlineHooked then
+	if not arg_32_0._benchMarkInlineHooked then
+		BenchmarkApi.hook()
+
+		arg_32_0._benchMarkInlineHooked = true
+	end
+
+	if arg_32_0._catchedFrameData then
+		arg_32_0._catchedFrameData = false
+
+		local var_32_0 = BenchmarkApi.pop_draw_num()
+		local var_32_1 = arg_32_0:getReadableNum(var_32_0)
+		local var_32_2 = BenchmarkApi.pop_num_vertices()
+		local var_32_3 = arg_32_0:getReadableNum(var_32_2)
+		local var_32_4 = BenchmarkApi.pop_num_triangles()
+		local var_32_5 = arg_32_0:getReadableNum(var_32_4)
+
+		BenchmarkApi.AndroidLog(string.format("DrawCall:%s|VertCount:%s|TriCount:%s", var_32_1, var_32_3, var_32_5))
+	end
+
+	if not arg_32_0._catchedFrameData then
+		BenchmarkApi.clearInfo()
+		BenchmarkApi.CatchSingleFrameData()
+
+		arg_32_0._catchedFrameData = true
+	end
+end
+
+function var_0_0.logTextureMemory(arg_33_0)
+	local var_33_0 = arg_33_0:getTextureMemory()
+
+	BenchmarkApi.AndroidLog(string.format("TextrueMemory:%.0f MB", var_33_0))
+end
+
+function var_0_0.stopLogRenderDataAction(arg_34_0)
+	if not arg_34_0._benchMarkInited then
+		return
+	end
+
+	if arg_34_0._benchMarkInlineHooked then
 		BenchmarkApi.clearInfo()
 		BenchmarkApi.unhook()
 	end
 
-	arg_30_0._catchedFrameData = false
+	arg_34_0._catchedFrameData = false
 end
 
-function var_0_0.getReadableNum(arg_31_0, arg_31_1)
-	if arg_31_1 < 1000 then
-		return arg_31_1
-	elseif arg_31_1 < 1000000 then
-		arg_31_1 = arg_31_1 / 1000
+function var_0_0.stopLogMonoGCInfoAction(arg_35_0)
+	arg_35_0._gcCount = nil
+end
 
-		return string.format("%.1f", arg_31_1) .. "k"
+function var_0_0.getReadableNum(arg_36_0, arg_36_1)
+	if arg_36_1 < 1000 then
+		return arg_36_1
+	elseif arg_36_1 < 1000000 then
+		arg_36_1 = arg_36_1 / 1000
+
+		return string.format("%.1f", arg_36_1) .. "k"
 	else
-		arg_31_1 = arg_31_1 / 1000000
+		arg_36_1 = arg_36_1 / 1000000
 
-		return string.format("%.1f", arg_31_1) .. "m"
+		return string.format("%.1f", arg_36_1) .. "m"
 	end
 end
 
-function var_0_0.onFlowDone(arg_32_0)
-	local var_32_0 = {}
+function var_0_0.onFlowDone(arg_37_0)
+	local var_37_0 = {}
 
-	for iter_32_0, iter_32_1 in ipairs(arg_32_0._record) do
-		local var_32_1 = arg_32_0._recordDataCmdList[iter_32_0]
+	for iter_37_0, iter_37_1 in ipairs(arg_37_0._record) do
+		local var_37_1 = arg_37_0._recordDataCmdList[iter_37_0]
 
-		var_32_0[iter_32_0 .. var_32_1.cmd] = iter_32_1
+		var_37_0[iter_37_0 .. var_37_1.cmd] = iter_37_1
 	end
 
-	local var_32_2 = JsonUtil.encode(var_32_0)
-	local var_32_3 = System.IO.Path.Combine(UnityEngine.Application.persistentDataPath, "profiler")
-	local var_32_4 = "profilerResult.json"
-	local var_32_5 = System.IO.Path.Combine(var_32_3, var_32_4)
-	local var_32_6 = io.open(var_32_5, "w")
+	local var_37_2 = JsonUtil.encode(var_37_0)
+	local var_37_3 = System.IO.Path.Combine(UnityEngine.Application.persistentDataPath, "profiler")
+	local var_37_4 = "profilerResult.json"
+	local var_37_5 = System.IO.Path.Combine(var_37_3, var_37_4)
+	local var_37_6 = io.open(var_37_5, "w")
 
-	var_32_6:write(tostring(var_32_2))
-	var_32_6:close()
-	BenchmarkApi.AndroidLog(var_32_2)
+	var_37_6:write(tostring(var_37_2))
+	var_37_6:close()
+	BenchmarkApi.AndroidLog(var_37_2)
 
-	arg_32_0.flow = nil
+	arg_37_0.flow = nil
 end
 
 var_0_0.instance = var_0_0.New()

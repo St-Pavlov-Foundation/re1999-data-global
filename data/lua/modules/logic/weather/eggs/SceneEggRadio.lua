@@ -8,6 +8,7 @@ function var_0_0._onInit(arg_1_0)
 
 	if arg_1_0._isMainScene then
 		CharacterController.instance:registerCallback(CharacterEvent.ChangeMainHero, arg_1_0._onChangeMainHero, arg_1_0)
+		CharacterController.instance:registerCallback(CharacterEvent.RandomMainHero, arg_1_0._onRandomMainHero, arg_1_0)
 	end
 
 	arg_1_0:_onChangeMainHero()
@@ -25,9 +26,20 @@ function var_0_0._onChangeMainHero(arg_2_0)
 	arg_2_0:setGoListVisible(arg_2_0._heroId ~= var_2_0)
 end
 
-function var_0_0._onSceneClose(arg_3_0)
-	if arg_3_0._isMainScene then
-		CharacterController.instance:unregisterCallback(CharacterEvent.ChangeMainHero, arg_3_0._onChangeMainHero, arg_3_0)
+function var_0_0._onRandomMainHero(arg_3_0, arg_3_1)
+	if not arg_3_0._isMainScene then
+		arg_3_0:setGoListVisible(true)
+
+		return
+	end
+
+	arg_3_0:setGoListVisible(arg_3_0._heroId ~= arg_3_1)
+end
+
+function var_0_0._onSceneClose(arg_4_0)
+	if arg_4_0._isMainScene then
+		CharacterController.instance:unregisterCallback(CharacterEvent.ChangeMainHero, arg_4_0._onChangeMainHero, arg_4_0)
+		CharacterController.instance:unregisterCallback(CharacterEvent.RandomMainHero, arg_4_0._onRandomMainHero, arg_4_0)
 	end
 end
 

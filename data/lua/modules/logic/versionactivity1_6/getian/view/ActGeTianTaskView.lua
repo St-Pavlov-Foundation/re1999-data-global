@@ -5,6 +5,7 @@ local var_0_0 = class("ActGeTianTaskView", BaseView)
 function var_0_0.onInitView(arg_1_0)
 	arg_1_0._simageFullBG = gohelper.findChildSingleImage(arg_1_0.viewGO, "#simage_FullBG")
 	arg_1_0._simagelangtxt = gohelper.findChildSingleImage(arg_1_0.viewGO, "Left/#simage_langtxt")
+	arg_1_0._gotime = gohelper.findChild(arg_1_0.viewGO, "Left/LimitTime")
 	arg_1_0._txtLimitTime = gohelper.findChildText(arg_1_0.viewGO, "Left/LimitTime/image_LimitTimeBG/#txt_LimitTime")
 	arg_1_0._scrollTaskList = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_TaskList")
 	arg_1_0._goBackBtns = gohelper.findChild(arg_1_0.viewGO, "#go_lefttop")
@@ -23,7 +24,7 @@ function var_0_0.removeEvents(arg_3_0)
 end
 
 function var_0_0._editableInitView(arg_4_0)
-	return
+	gohelper.setActive(arg_4_0._gotime, false)
 end
 
 function var_0_0.onUpdateParam(arg_5_0)

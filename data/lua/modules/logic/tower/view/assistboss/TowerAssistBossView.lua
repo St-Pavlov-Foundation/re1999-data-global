@@ -67,6 +67,12 @@ function var_0_0.refreshView(arg_10_0)
 	local var_10_2 = #arg_10_0.items
 	local var_10_3 = math.max(var_10_1, var_10_2)
 
+	if var_10_1 <= 3 then
+		arg_10_0.content.transform.pivot = Vector2(0.5, 1)
+	else
+		arg_10_0.content.transform.pivot = Vector2(0, 1)
+	end
+
 	for iter_10_0 = 1, var_10_3 do
 		local var_10_4 = arg_10_0.items[iter_10_0]
 

@@ -66,6 +66,6 @@ var_0_0.SkillKeyPointIdxs = {
 	nil,
 	true
 }
-var_0_0.bossMaxOrder = 5
+var_0_0.bossMaxOrder = 8
 
 return var_0_0

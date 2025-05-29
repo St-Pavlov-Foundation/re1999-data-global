@@ -1,0 +1,20 @@
+[
+  {
+    "resName": "buff/asfd_alf_fx_1",
+    "residualRes": "buff/asfd_alf_jp1",
+    "pullOutRes": "buff/asfd_alf_jp1_hit",
+    "audioId": 410000128
+  },
+  {
+    "resName": "buff/asfd_alf_fx_2",
+    "residualRes": "buff/asfd_alf_jp2",
+    "pullOutRes": "buff/asfd_alf_jp2_hit",
+    "audioId": 410000128
+  },
+  {
+    "resName": "buff/asfd_alf_fx_3",
+    "residualRes": "buff/asfd_alf_jp3",
+    "pullOutRes": "buff/asfd_alf_jp3_hit",
+    "audioId": 410000128
+  }
+]

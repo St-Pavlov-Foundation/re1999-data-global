@@ -3,11 +3,12 @@
 local var_0_0 = {}
 local var_0_1 = {
 	areaAudio = 8,
-	effectAudio = 7,
+	mapIdGroup = 10,
 	unlockCondition = 3,
 	chapterId = 2,
 	mapState = 9,
 	initPos = 6,
+	effectAudio = 7,
 	desc = 5,
 	res = 4,
 	id = 1

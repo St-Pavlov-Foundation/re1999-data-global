@@ -54,11 +54,12 @@ function var_0_0.onStart(arg_1_0)
 			if var_1_10.CUSTOMADDUSECARD then
 				gohelper.onceAddComponent(iter_1_5.go, gohelper.Type_CanvasGroup).alpha = 0
 
-				if not FightHelper.isASFDSkill(var_1_10.skillId) then
+				if arg_1_0:checkCanPlayAppearEffect(var_1_10) then
 					iter_1_5:playAppearEffect()
 				end
 
 				iter_1_5:playCardAni(ViewAnim.FightCardAppear, "fightcard_apper")
+				iter_1_5:tryPlayAlfEffect()
 
 				local var_1_11 = FlowSequence.New()
 
@@ -84,23 +85,35 @@ function var_0_0.onStart(arg_1_0)
 	arg_1_0._flow:start()
 end
 
-function var_0_0._clearSign(arg_2_0)
-	local var_2_0 = FightPlayCardModel.instance:getUsedCards()
+function var_0_0.checkCanPlayAppearEffect(arg_2_0, arg_2_1)
+	if FightHelper.isASFDSkill(arg_2_1.skillId) then
+		return false
+	end
 
-	for iter_2_0, iter_2_1 in ipairs(var_2_0) do
-		iter_2_1.CUSTOMADDUSECARD = nil
+	if arg_2_1.custom_fromSkillId and FightHeroALFComp.ALFSkillDict[arg_2_1.custom_fromSkillId] then
+		return false
+	end
+
+	return true
+end
+
+function var_0_0._clearSign(arg_3_0)
+	local var_3_0 = FightPlayCardModel.instance:getUsedCards()
+
+	for iter_3_0, iter_3_1 in ipairs(var_3_0) do
+		iter_3_1.CUSTOMADDUSECARD = nil
 	end
 end
 
-function var_0_0._delayDone(arg_3_0)
+function var_0_0._delayDone(arg_4_0)
 	return
 end
 
-function var_0_0.clearWork(arg_4_0)
-	if arg_4_0._flow then
-		arg_4_0._flow:stop()
+function var_0_0.clearWork(arg_5_0)
+	if arg_5_0._flow then
+		arg_5_0._flow:stop()
 
-		arg_4_0._flow = nil
+		arg_5_0._flow = nil
 	end
 end
 

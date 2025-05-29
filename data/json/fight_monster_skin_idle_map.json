@@ -1,0 +1,17 @@
+[
+  {
+    "skinId": 640401,
+    "idleAnimName": "idle",
+    "hitAnimName": "hit"
+  },
+  {
+    "skinId": 6404011,
+    "idleAnimName": "idle2",
+    "hitAnimName": "hit2"
+  },
+  {
+    "skinId": 6404012,
+    "idleAnimName": "idle3",
+    "hitAnimName": "hit3"
+  }
+]

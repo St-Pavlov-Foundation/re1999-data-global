@@ -8,6 +8,7 @@ function var_0_0.ctor(arg_1_0)
 	arg_1_0.custom_playedCard = nil
 	arg_1_0.custom_handCardIndex = nil
 	arg_1_0.custom_color = FightEnum.CardColor.None
+	arg_1_0.custom_fromSkillId = 0
 end
 
 function var_0_0.init(arg_2_0, arg_2_1)

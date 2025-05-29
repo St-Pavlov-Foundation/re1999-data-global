@@ -423,6 +423,10 @@ function var_0_0.openDungeonChapterView(arg_29_0, arg_29_1, arg_29_2)
 		WeekWalkController.instance:openWeekWalkView(arg_29_1, arg_29_2)
 
 		return ViewName.WeekWalkView
+	elseif var_29_0.type == DungeonEnum.ChapterType.WeekWalk_2 then
+		WeekWalk_2Controller.instance:openWeekWalk_2HeartView(arg_29_1, arg_29_2)
+
+		return ViewName.WeekWalk_2HeartView
 	elseif var_29_0.type == DungeonEnum.ChapterType.Season or var_29_0.type == DungeonEnum.ChapterType.SeasonRetail or var_29_0.type == DungeonEnum.ChapterType.SeasonSpecial then
 		Activity104Controller.instance:openSeasonMainView()
 
@@ -824,7 +828,7 @@ function var_0_0.showDungeonView(arg_48_0)
 end
 
 function var_0_0._showLevelView(arg_49_0, arg_49_1)
-	return arg_49_1 ~= DungeonEnum.ChapterType.WeekWalk and arg_49_1 ~= DungeonEnum.ChapterType.Season
+	return arg_49_1 ~= DungeonEnum.ChapterType.WeekWalk and arg_49_1 ~= DungeonEnum.ChapterType.Season and arg_49_1 ~= DungeonEnum.ChapterType.WeekWalk_2
 end
 
 function var_0_0.onReceiveEndDungeonReply(arg_50_0, arg_50_1, arg_50_2)

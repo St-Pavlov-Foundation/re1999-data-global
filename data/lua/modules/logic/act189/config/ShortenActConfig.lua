@@ -27,10 +27,13 @@ function var_0_2.__init_activity189_shortenact(arg_3_0, arg_3_1)
 	end
 
 	local var_3_2 = GameBranchMgr.instance:VHyphenA()
+	local var_3_3 = arg_3_1.configList or {}
 
-	for iter_3_0, iter_3_1 in ipairs(arg_3_1.configList) do
-		if iter_3_1.version == var_3_2 then
-			arg_3_0._setting = iter_3_1
+	for iter_3_0 = #var_3_3, 1, -1 do
+		local var_3_4 = var_3_3[iter_3_0]
+
+		if var_3_4.version == var_3_2 then
+			arg_3_0._setting = var_3_4
 
 			return
 		end

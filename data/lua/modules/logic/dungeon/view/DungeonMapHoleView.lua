@@ -183,6 +183,8 @@ function var_0_0.loadSceneFinish(arg_13_0, arg_13_1)
 		return
 	end
 
+	gohelper.setLayer(var_13_1, UnityLayer.Scene, true)
+
 	arg_13_0.sceneWorldPosX, arg_13_0.sceneWorldPosY = transformhelper.getLocalPos(arg_13_0.sceneTrans)
 
 	local var_13_2 = arg_13_0.mapCfg.initPos

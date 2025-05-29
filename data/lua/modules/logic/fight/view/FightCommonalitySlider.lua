@@ -55,6 +55,22 @@ function var_0_0._refreshData(arg_5_0)
 	ZProj.TweenHelper.DOFillAmount(arg_5_0._slider, var_5_5, 0.2 / FightModel.instance:getUISpeed())
 
 	arg_5_0._lastMax = var_5_4
+
+	if FightDataHelper.fieldMgr.param[FightParamData.ParamKey.ProgressId] == 2 then
+		local var_5_6 = FightDataHelper.entityMgr:getEnemyVertin()
+
+		if var_5_6 then
+			local var_5_7 = var_5_6.buffDic
+
+			for iter_5_0, iter_5_1 in pairs(var_5_7) do
+				if iter_5_1.buffId == 9260101 then
+					arg_5_0._sliderText.text = iter_5_1.duration
+
+					break
+				end
+			end
+		end
+	end
 end
 
 function var_0_0.onClose(arg_6_0)

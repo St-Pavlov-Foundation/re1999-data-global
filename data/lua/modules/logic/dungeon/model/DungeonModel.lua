@@ -634,6 +634,7 @@ local var_0_1 = {
 	[DungeonEnum.EpisodeType.Equip] = true,
 	[DungeonEnum.EpisodeType.SpecialEquip] = true,
 	[DungeonEnum.EpisodeType.WeekWalk] = true,
+	[DungeonEnum.EpisodeType.WeekWalk_2] = true,
 	[DungeonEnum.EpisodeType.Season] = true,
 	[DungeonEnum.EpisodeType.SeasonRetail] = true,
 	[DungeonEnum.EpisodeType.SeasonSpecial] = true,
@@ -858,7 +859,9 @@ function var_0_0.chapterListIsBreakType(arg_47_0, arg_47_1)
 end
 
 function var_0_0.chapterListIsWeekWalkType(arg_48_0, arg_48_1)
-	return (arg_48_1 or arg_48_0.curChapterType) == DungeonEnum.ChapterType.WeekWalk
+	local var_48_0 = arg_48_1 or arg_48_0.curChapterType
+
+	return var_48_0 == DungeonEnum.ChapterType.WeekWalk or var_48_0 == DungeonEnum.ChapterType.WeekWalk_2
 end
 
 function var_0_0.chapterListIsSeasonType(arg_49_0, arg_49_1)

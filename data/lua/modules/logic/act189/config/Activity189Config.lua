@@ -73,19 +73,23 @@ function var_0_2.getTaskCO(arg_7_0, arg_7_1)
 	return lua_activity189_task.configDict[arg_7_1]
 end
 
-function var_0_2.getTaskCO_ReadTask(arg_8_0, arg_8_1)
-	return arg_8_0.__readTasksTagTaskCoDict[arg_8_1] or {}
+function var_0_2.getConstCoById(arg_8_0, arg_8_1)
+	return lua_activity189_const.configDict[arg_8_1]
 end
 
-function var_0_2.getTaskCO_ReadTask_Tag(arg_9_0, arg_9_1, arg_9_2)
-	return arg_9_0:getTaskCO_ReadTask(arg_9_1)[arg_9_2]
+function var_0_2.getTaskCO_ReadTask(arg_9_0, arg_9_1)
+	return arg_9_0.__readTasksTagTaskCoDict[arg_9_1] or {}
 end
 
-function var_0_2.getTaskCO_ReadTask_Tag_TaskId(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
-	return arg_10_0:getTaskCO_ReadTask_Tag(arg_10_1, arg_10_2)[arg_10_3]
+function var_0_2.getTaskCO_ReadTask_Tag(arg_10_0, arg_10_1, arg_10_2)
+	return arg_10_0:getTaskCO_ReadTask(arg_10_1)[arg_10_2]
 end
 
-function var_0_2.getTaskType(arg_11_0)
+function var_0_2.getTaskCO_ReadTask_Tag_TaskId(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
+	return arg_11_0:getTaskCO_ReadTask_Tag(arg_11_1, arg_11_2)[arg_11_3]
+end
+
+function var_0_2.getTaskType(arg_12_0)
 	return TaskEnum.TaskType.Activity189
 end
 

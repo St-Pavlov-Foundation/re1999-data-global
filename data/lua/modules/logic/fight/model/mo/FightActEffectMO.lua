@@ -64,6 +64,7 @@ function var_0_0.init(arg_5_0, arg_5_1, arg_5_2)
 	arg_5_0.playerFinisherInfo = arg_5_1.playerFinisherInfo
 	arg_5_0.powerInfo = arg_5_1.powerInfo
 	arg_5_0.cardHeatValue = arg_5_1.cardHeatValue
+	arg_5_0.fightTasks = arg_5_1.fightTasks
 end
 
 function var_0_0._buildBuff(arg_6_0, arg_6_1)

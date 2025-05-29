@@ -10,7 +10,7 @@ end
 function var_0_0.registWork(arg_2_0, arg_2_1, ...)
 	local var_2_0 = arg_2_0:newClass(arg_2_1, ...)
 
-	table.insert(arg_2_0._workList, var_2_0)
+	arg_2_0:addWork(var_2_0)
 
 	return var_2_0
 end
@@ -20,6 +20,7 @@ function var_0_0.addWork(arg_3_0, arg_3_1)
 		return
 	end
 
+	arg_3_1:registFinishCallback(arg_3_0.onWorkItemDone, arg_3_0, arg_3_1)
 	table.insert(arg_3_0._workList, arg_3_1)
 end
 
@@ -37,7 +38,6 @@ function var_0_0.onStart(arg_5_0)
 			if iter_5_1.WORKFINISHED or iter_5_1.IS_DISPOSED then
 				arg_5_0._finishCount = arg_5_0._finishCount + 1
 			elseif not iter_5_1.STARTED then
-				iter_5_1:registFinishCallback(arg_5_0.onWorkItemDone, arg_5_0, iter_5_1)
 				iter_5_1:start(arg_5_0.context)
 			end
 		end

@@ -2,7 +2,7 @@
 
 local var_0_0 = class("StorePlayerCardView", NewPlayerCardView)
 
-function var_0_0.onOpen(arg_1_0, arg_1_1)
+function var_0_0.onOpen(arg_1_0, arg_1_1, arg_1_2)
 	arg_1_0._achievementCls = arg_1_0._achievementCls or MonoHelper.addNoUpdateLuaComOnceToGo(arg_1_0.viewGO, PlayerCardAchievement)
 	arg_1_0._achievementCls.viewParam = arg_1_0.viewParam
 	arg_1_0._achievementCls.viewContainer = arg_1_0.viewContainer
@@ -16,7 +16,7 @@ function var_0_0.onOpen(arg_1_0, arg_1_1)
 
 	arg_1_0._loader = arg_1_0._loader or MultiAbLoader.New()
 	arg_1_0._socialitemPath = "ui/viewres/social/socialfrienditem.prefab"
-	arg_1_0._skinId = arg_1_1
+	arg_1_0._skinId = arg_1_2
 
 	if not arg_1_0._socialitem then
 		arg_1_0._loader:addPath(arg_1_0._socialitemPath)
@@ -27,10 +27,10 @@ function var_0_0.onOpen(arg_1_0, arg_1_1)
 
 	arg_1_0.viewAnim = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
 
-	arg_1_0:_onOpen(arg_1_1)
+	arg_1_0:_onOpen(arg_1_1, arg_1_2)
 end
 
-function var_0_0._onOpen(arg_2_0, arg_2_1)
+function var_0_0._onOpen(arg_2_0, arg_2_1, arg_2_2)
 	arg_2_0._animator.enabled = true
 
 	if arg_2_0.viewParam and arg_2_0.viewParam.userId then
@@ -39,7 +39,7 @@ function var_0_0._onOpen(arg_2_0, arg_2_1)
 
 	arg_2_0.playercardinfo = PlayerCardModel.instance:getCardInfo(arg_2_0.userId)
 
-	local var_2_0 = arg_2_1 or arg_2_0.playercardinfo:getThemeId()
+	local var_2_0 = arg_2_2 or arg_2_0.playercardinfo:getThemeId()
 
 	if var_2_0 == 0 or string.nilorempty(var_2_0) then
 		var_2_0 = nil
@@ -47,11 +47,17 @@ function var_0_0._onOpen(arg_2_0, arg_2_1)
 
 	arg_2_0.themeId = var_2_0
 
-	arg_2_0:_creatBgEffect()
-
 	local var_2_1, var_2_2, var_2_3, var_2_4 = arg_2_0.playercardinfo:getMainHero()
 
-	arg_2_0:_updateHero(var_2_1, var_2_2)
+	if arg_2_1 and arg_2_1 > 0 then
+		var_2_2 = arg_2_1
+	end
+
+	arg_2_0:_creatBgEffect()
+
+	local var_2_5 = SkinConfig.instance:getSkinCo(var_2_2).characterId
+
+	arg_2_0:_updateHero(var_2_5, var_2_2)
 	arg_2_0:_refreshProgress()
 	arg_2_0:_refreshBaseInfo()
 	arg_2_0:_initCritter()

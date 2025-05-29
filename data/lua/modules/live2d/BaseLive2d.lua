@@ -266,150 +266,140 @@ function var_0_0.showEverNodes(arg_28_0, arg_28_1)
 	end
 end
 
-function var_0_0._showFaceEffect(arg_29_0, arg_29_1)
-	if arg_29_0._faceEffectComp then
-		arg_29_0._faceEffectComp:showFaceEffect(arg_29_1)
+function var_0_0.hasEverNodes(arg_29_0)
+	return arg_29_0._roleEffectComp and arg_29_0._roleEffectComp.isShowEverEffect and arg_29_0._roleEffectComp:isShowEverEffect()
+end
+
+function var_0_0._showFaceEffect(arg_30_0, arg_30_1)
+	if arg_30_0._faceEffectComp then
+		arg_30_0._faceEffectComp:showFaceEffect(arg_30_1)
 	end
 end
 
-function var_0_0.play(arg_30_0, arg_30_1, arg_30_2)
-	arg_30_0._curBodyName = arg_30_1
-
-	arg_30_0:setBodyAnimation(arg_30_1, arg_30_2, 0.5)
-end
-
-function var_0_0.playStory(arg_31_0, arg_31_1, arg_31_2)
+function var_0_0.play(arg_31_0, arg_31_1, arg_31_2)
 	arg_31_0._curBodyName = arg_31_1
-	arg_31_0._curFaceName = arg_31_2
 
-	if arg_31_1 ~= StoryAnimName.B_IDLE or arg_31_0:hasAnimation(arg_31_1) then
-		arg_31_0:setBodyAnimation(arg_31_1, true, 0.5)
-	end
-
-	if arg_31_2 ~= StoryAnimName.E_ZhengChang or arg_31_0:hasAnimation(arg_31_2) then
-		arg_31_0:setFaceAnimation(arg_31_2, true, 0.5)
-	end
+	arg_31_0:setBodyAnimation(arg_31_1, arg_31_2, 0.5)
 end
 
-function var_0_0.setBodyAnimation(arg_32_0, arg_32_1, arg_32_2, arg_32_3)
+function var_0_0.playStory(arg_32_0, arg_32_1, arg_32_2)
 	arg_32_0._curBodyName = arg_32_1
+	arg_32_0._curFaceName = arg_32_2
 
-	arg_32_0:_setBodyAnimation(var_0_0.BodyTrackIndex, arg_32_1, arg_32_2, arg_32_3)
-	arg_32_0:_showBodyEffect(arg_32_1)
+	if arg_32_1 ~= StoryAnimName.B_IDLE or arg_32_0:hasAnimation(arg_32_1) then
+		arg_32_0:setBodyAnimation(arg_32_1, true, 0.5)
+	end
+
+	if arg_32_2 ~= StoryAnimName.E_ZhengChang or arg_32_0:hasAnimation(arg_32_2) then
+		arg_32_0:setFaceAnimation(arg_32_2, true, 0.5)
+	end
 end
 
-function var_0_0.getCurBody(arg_33_0)
-	return arg_33_0._curBodyName
+function var_0_0.setBodyAnimation(arg_33_0, arg_33_1, arg_33_2, arg_33_3)
+	arg_33_0._curBodyName = arg_33_1
+
+	arg_33_0:_setBodyAnimation(var_0_0.BodyTrackIndex, arg_33_1, arg_33_2, arg_33_3)
+	arg_33_0:_showBodyEffect(arg_33_1)
 end
 
-function var_0_0.setFaceAnimation(arg_34_0, arg_34_1, arg_34_2, arg_34_3)
-	arg_34_0._curFaceName = arg_34_1
+function var_0_0.getCurBody(arg_34_0)
+	return arg_34_0._curBodyName
+end
 
-	if gohelper.isNil(arg_34_0._cubismController) then
+function var_0_0.setFaceAnimation(arg_35_0, arg_35_1, arg_35_2, arg_35_3)
+	arg_35_0._curFaceName = arg_35_1
+
+	if gohelper.isNil(arg_35_0._cubismController) then
 		return
 	end
 
-	arg_34_0._cubismController:PlayExpression(arg_34_1)
-	arg_34_0:_showFaceEffect(arg_34_1)
+	arg_35_0._cubismController:PlayExpression(arg_35_1)
+	arg_35_0:_showFaceEffect(arg_35_1)
 end
 
-function var_0_0.getCurFace(arg_35_0)
-	return arg_35_0._curFaceName
+function var_0_0.getCurFace(arg_36_0)
+	return arg_36_0._curFaceName
 end
 
-function var_0_0.getCurMouth(arg_36_0)
-	return arg_36_0._curMouthName
+function var_0_0.getCurMouth(arg_37_0)
+	return arg_37_0._curMouthName
 end
 
-function var_0_0.setSortingOrder(arg_37_0, arg_37_1)
-	if gohelper.isNil(arg_37_0._cubismController) then
-		return
-	end
-
-	arg_37_0._cubismController.SortingOrder = arg_37_1
-end
-
-function var_0_0.setAlpha(arg_38_0, arg_38_1)
+function var_0_0.setSortingOrder(arg_38_0, arg_38_1)
 	if gohelper.isNil(arg_38_0._cubismController) then
 		return
 	end
 
-	arg_38_0._cubismController:SetAlpha(arg_38_1)
+	arg_38_0._cubismController.SortingOrder = arg_38_1
 end
 
-function var_0_0.setSceneTexture(arg_39_0, arg_39_1)
+function var_0_0.setAlpha(arg_39_0, arg_39_1)
 	if gohelper.isNil(arg_39_0._cubismController) then
 		return
 	end
 
-	arg_39_0._cubismController:SetSceneTexture(arg_39_1)
+	arg_39_0._cubismController:SetAlpha(arg_39_1)
 end
 
-function var_0_0.setUIMaskKeyword(arg_40_0, arg_40_1)
+function var_0_0.setSceneTexture(arg_40_0, arg_40_1)
 	if gohelper.isNil(arg_40_0._cubismController) then
 		return
 	end
 
-	arg_40_0._cubismController:SetUIMaskKeyword(arg_40_1)
+	arg_40_0._cubismController:SetSceneTexture(arg_40_1)
 end
 
-function var_0_0.enableSceneAlpha(arg_41_0)
+function var_0_0.setUIMaskKeyword(arg_41_0, arg_41_1)
 	if gohelper.isNil(arg_41_0._cubismController) then
 		return
 	end
 
-	arg_41_0._cubismController:SetSceneAlphaKeyword(true)
+	arg_41_0._cubismController:SetUIMaskKeyword(arg_41_1)
 end
 
-function var_0_0.disableSceneAlpha(arg_42_0)
+function var_0_0.enableSceneAlpha(arg_42_0)
 	if gohelper.isNil(arg_42_0._cubismController) then
 		return
 	end
 
-	arg_42_0._cubismController:SetSceneAlphaKeyword(false)
+	arg_42_0._cubismController:SetSceneAlphaKeyword(true)
 end
 
-function var_0_0.SetDark(arg_43_0)
+function var_0_0.disableSceneAlpha(arg_43_0)
 	if gohelper.isNil(arg_43_0._cubismController) then
 		return
 	end
 
-	arg_43_0._cubismController:SetColorFactor(0.6)
+	arg_43_0._cubismController:SetSceneAlphaKeyword(false)
 end
 
-function var_0_0.SetBright(arg_44_0)
+function var_0_0.SetDark(arg_44_0)
 	if gohelper.isNil(arg_44_0._cubismController) then
 		return
 	end
 
-	arg_44_0._cubismController:SetColorFactor(1)
+	arg_44_0._cubismController:SetColorFactor(0.6)
 end
 
-function var_0_0.setMouthAnimation(arg_45_0, arg_45_1, arg_45_2, arg_45_3)
-	arg_45_0._curMouthName = arg_45_1
-
-	arg_45_0:SetAnimation(var_0_0.MouthTrackIndex, arg_45_1, arg_45_2, arg_45_3)
-end
-
-function var_0_0.setTransition(arg_46_0, arg_46_1, arg_46_2, arg_46_3)
-	arg_46_0:SetAnimation(var_0_0.TransitionTrackIndex, arg_46_1, arg_46_2, arg_46_3)
-end
-
-function var_0_0.SetAnimation(arg_47_0, arg_47_1, arg_47_2, arg_47_3, arg_47_4)
-	if gohelper.isNil(arg_47_0._cubismController) then
+function var_0_0.SetBright(arg_45_0)
+	if gohelper.isNil(arg_45_0._cubismController) then
 		return
 	end
 
-	if arg_47_0:hasAnimation(arg_47_2) == false then
-		return
-	end
-
-	if arg_47_1 <= var_0_0.MouthTrackIndex then
-		arg_47_0._cubismController:PlayAnimation(arg_47_2, arg_47_3, 1, arg_47_1)
-	end
+	arg_45_0._cubismController:SetColorFactor(1)
 end
 
-function var_0_0._setBodyAnimation(arg_48_0, arg_48_1, arg_48_2, arg_48_3, arg_48_4)
+function var_0_0.setMouthAnimation(arg_46_0, arg_46_1, arg_46_2, arg_46_3)
+	arg_46_0._curMouthName = arg_46_1
+
+	arg_46_0:SetAnimation(var_0_0.MouthTrackIndex, arg_46_1, arg_46_2, arg_46_3)
+end
+
+function var_0_0.setTransition(arg_47_0, arg_47_1, arg_47_2, arg_47_3)
+	arg_47_0:SetAnimation(var_0_0.TransitionTrackIndex, arg_47_1, arg_47_2, arg_47_3)
+end
+
+function var_0_0.SetAnimation(arg_48_0, arg_48_1, arg_48_2, arg_48_3, arg_48_4)
 	if gohelper.isNil(arg_48_0._cubismController) then
 		return
 	end
@@ -419,108 +409,122 @@ function var_0_0._setBodyAnimation(arg_48_0, arg_48_1, arg_48_2, arg_48_3, arg_4
 	end
 
 	if arg_48_1 <= var_0_0.MouthTrackIndex then
-		arg_48_0._cubismController:PlayAnimation(arg_48_2, arg_48_3, arg_48_4 == 0 and 0 or 1, arg_48_1)
+		arg_48_0._cubismController:PlayAnimation(arg_48_2, arg_48_3, 1, arg_48_1)
 	end
 end
 
-function var_0_0.hasAnimation(arg_49_0, arg_49_1)
-	return not gohelper.isNil(arg_49_0._cubismController) and arg_49_0._cubismController:HasAnimation(arg_49_1)
-end
-
-function var_0_0.hasExpression(arg_50_0, arg_50_1)
-	return not gohelper.isNil(arg_50_0._cubismController) and arg_50_0._cubismController:HasExpression(arg_50_1)
-end
-
-function var_0_0.setParameterStoreEnabled(arg_51_0, arg_51_1)
-	return not gohelper.isNil(arg_51_0._cubismController) and arg_51_0._cubismController:SetParameterStoreEnabled(arg_51_1)
-end
-
-function var_0_0.stopMouthAnimation(arg_52_0)
-	if gohelper.isNil(arg_52_0._cubismController) then
+function var_0_0._setBodyAnimation(arg_49_0, arg_49_1, arg_49_2, arg_49_3, arg_49_4)
+	if gohelper.isNil(arg_49_0._cubismController) then
 		return
 	end
 
-	arg_52_0._cubismController:StopAnimation(var_0_0.MouthTrackIndex)
+	if arg_49_0:hasAnimation(arg_49_2) == false then
+		return
+	end
+
+	if arg_49_1 <= var_0_0.MouthTrackIndex then
+		arg_49_0._cubismController:PlayAnimation(arg_49_2, arg_49_3, arg_49_4 == 0 and 0 or 1, arg_49_1)
+	end
 end
 
-function var_0_0.stopTransition(arg_53_0)
+function var_0_0.hasAnimation(arg_50_0, arg_50_1)
+	return not gohelper.isNil(arg_50_0._cubismController) and arg_50_0._cubismController:HasAnimation(arg_50_1)
+end
+
+function var_0_0.hasExpression(arg_51_0, arg_51_1)
+	return not gohelper.isNil(arg_51_0._cubismController) and arg_51_0._cubismController:HasExpression(arg_51_1)
+end
+
+function var_0_0.setParameterStoreEnabled(arg_52_0, arg_52_1)
+	return not gohelper.isNil(arg_52_0._cubismController) and arg_52_0._cubismController:SetParameterStoreEnabled(arg_52_1)
+end
+
+function var_0_0.stopMouthAnimation(arg_53_0)
 	if gohelper.isNil(arg_53_0._cubismController) then
 		return
 	end
 
-	arg_53_0._cubismController:StopAnimation(var_0_0.TransitionTrackIndex)
+	arg_53_0._cubismController:StopAnimation(var_0_0.MouthTrackIndex)
 end
 
-function var_0_0.setActionEventCb(arg_54_0, arg_54_1, arg_54_2)
-	if arg_54_0._isStory then
-		arg_54_0._actionCb = arg_54_1
-		arg_54_0._actionCbObj = arg_54_2
-	end
-end
-
-function var_0_0.changeLookDir(arg_55_0, arg_55_1)
-	if arg_55_1 == arg_55_0._lookDir then
+function var_0_0.stopTransition(arg_54_0)
+	if gohelper.isNil(arg_54_0._cubismController) then
 		return
 	end
 
-	arg_55_0._lookDir = arg_55_1
-
-	arg_55_0:_changeLookDir()
+	arg_54_0._cubismController:StopAnimation(var_0_0.TransitionTrackIndex)
 end
 
-function var_0_0._changeLookDir(arg_56_0)
+function var_0_0.setActionEventCb(arg_55_0, arg_55_1, arg_55_2)
+	if arg_55_0._isStory then
+		arg_55_0._actionCb = arg_55_1
+		arg_55_0._actionCbObj = arg_55_2
+	end
+end
+
+function var_0_0.changeLookDir(arg_56_0, arg_56_1)
+	if arg_56_1 == arg_56_0._lookDir then
+		return
+	end
+
+	arg_56_0._lookDir = arg_56_1
+
+	arg_56_0:_changeLookDir()
+end
+
+function var_0_0._changeLookDir(arg_57_0)
 	return
 end
 
-function var_0_0.getLookDir(arg_57_0)
-	return arg_57_0._lookDir
+function var_0_0.getLookDir(arg_58_0)
+	return arg_58_0._lookDir
 end
 
-function var_0_0.getMouthController(arg_58_0)
-	return arg_58_0._cubismMouthController
+function var_0_0.getMouthController(arg_59_0)
+	return arg_59_0._cubismMouthController
 end
 
-function var_0_0.onDestroy(arg_59_0)
-	if arg_59_0._resLoader then
-		arg_59_0._resLoader:onDestroy()
+function var_0_0.onDestroy(arg_60_0)
+	if arg_60_0._resLoader then
+		arg_60_0._resLoader:onDestroy()
 
-		arg_59_0._resLoader = nil
+		arg_60_0._resLoader = nil
 	end
 
-	if arg_59_0._live2dVoice then
-		arg_59_0._live2dVoice:onDestroy()
+	if arg_60_0._live2dVoice then
+		arg_60_0._live2dVoice:onDestroy()
 
-		arg_59_0._live2dVoice = nil
+		arg_60_0._live2dVoice = nil
 	end
 
-	if arg_59_0._roleEffectComp then
-		arg_59_0._roleEffectComp:onDestroy()
+	if arg_60_0._roleEffectComp then
+		arg_60_0._roleEffectComp:onDestroy()
 
-		arg_59_0._roleEffectComp = nil
+		arg_60_0._roleEffectComp = nil
 	end
 
-	if arg_59_0._roleFaceComp then
-		arg_59_0._roleFaceComp:onDestroy()
+	if arg_60_0._roleFaceComp then
+		arg_60_0._roleFaceComp:onDestroy()
 
-		arg_59_0._roleFaceComp = nil
+		arg_60_0._roleFaceComp = nil
 	end
 
-	arg_59_0._gameObj = nil
-	arg_59_0._resPath = nil
-	arg_59_0._cubismController = nil
-	arg_59_0._cubismMouthController = nil
+	arg_60_0._gameObj = nil
+	arg_60_0._resPath = nil
+	arg_60_0._cubismController = nil
+	arg_60_0._cubismMouthController = nil
 
-	if arg_59_0._spineGo then
-		Live2dMaskController.instance:removeLive2dGo(arg_59_0._spineGo)
+	if arg_60_0._spineGo then
+		Live2dMaskController.instance:removeLive2dGo(arg_60_0._spineGo)
 
-		arg_59_0._spineGo = nil
+		arg_60_0._spineGo = nil
 	end
 
-	arg_59_0._renderer = nil
-	arg_59_0._actionCb = nil
-	arg_59_0._actionCbObj = nil
-	arg_59_0._resLoadedCb = nil
-	arg_59_0._resLoadedCbObj = nil
+	arg_60_0._renderer = nil
+	arg_60_0._actionCb = nil
+	arg_60_0._actionCbObj = nil
+	arg_60_0._resLoadedCb = nil
+	arg_60_0._resLoadedCbObj = nil
 end
 
 return var_0_0

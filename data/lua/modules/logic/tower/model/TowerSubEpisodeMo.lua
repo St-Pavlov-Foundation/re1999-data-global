@@ -5,8 +5,26 @@ local var_0_0 = pureTable("TowerSubEpisodeMo")
 function var_0_0.updateInfo(arg_1_0, arg_1_1)
 	arg_1_0.episodeId = arg_1_1.episodeId
 	arg_1_0.status = arg_1_1.status
-	arg_1_0.heroIds = arg_1_1.heroIds
+	arg_1_0.heros = arg_1_1.heros
 	arg_1_0.assistBossId = arg_1_1.assistBossId
+	arg_1_0.heroIds = {}
+	arg_1_0.equipUids = {}
+
+	if arg_1_0.heros then
+		for iter_1_0 = 1, #arg_1_0.heros do
+			local var_1_0 = arg_1_0.heros[iter_1_0]
+
+			arg_1_0.heroIds[iter_1_0] = var_1_0 and var_1_0.heroId or 0
+
+			if var_1_0 and var_1_0.equipUid and #var_1_0.equipUid > 0 then
+				arg_1_0.equipUids[iter_1_0] = {}
+
+				for iter_1_1 = 1, #var_1_0.equipUid do
+					table.insert(arg_1_0.equipUids[iter_1_0], var_1_0.equipUid[iter_1_1])
+				end
+			end
+		end
+	end
 end
 
 function var_0_0.getHeros(arg_2_0, arg_2_1)

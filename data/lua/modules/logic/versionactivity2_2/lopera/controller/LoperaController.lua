@@ -188,7 +188,7 @@ function var_0_0._onGameResultPush(arg_26_0, arg_26_1)
 		end
 	end
 
-	arg_26_0:fillStatInfo(var_26_0, var_26_3, arg_26_0._moveTime, arg_26_0._finishEventNum, var_26_1, var_26_2, var_26_5, var_26_6)
+	arg_26_0:fillStatInfo(arg_26_0._curEnterEpisode)
 	arg_26_0:sendStat()
 end
 

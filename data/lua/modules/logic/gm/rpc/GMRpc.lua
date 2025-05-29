@@ -68,6 +68,14 @@ function var_0_0.onReceiveFightTipsMessagePush(arg_7_0, arg_7_1, arg_7_2)
 	logError("FightTipsMessagePush: " .. arg_7_2.msg)
 end
 
+function var_0_0.onReceiveServerErrorInfoPush(arg_8_0, arg_8_1, arg_8_2)
+	if not SLFramework.FrameworkSettings.IsEditor then
+		return
+	end
+
+	logError("服务器报错了: " .. arg_8_2.msg)
+end
+
 var_0_0.instance = var_0_0.New()
 
 return var_0_0

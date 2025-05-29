@@ -316,6 +316,8 @@ function var_0_0._refreshDesc(arg_15_0, arg_15_1)
 
 		arg_15_0._txtfirst.text = var_15_8
 
+		arg_15_0._txtfirst:ForceMeshUpdate(true, true)
+		arg_15_0._txtfirst:GetRenderedValues()
 		arg_15_0._txtcontent:SetText(var_15_10, var_15_11)
 	end
 
@@ -435,37 +437,14 @@ function var_0_0._getFormatStr(arg_20_0, arg_20_1)
 
 	local var_20_0, var_20_1 = arg_20_0.SwitchLangTab()
 	local var_20_2 = "\n" .. string.rep(" ", var_20_0)
+	local var_20_3 = arg_20_1
+	local var_20_4 = string.gsub(var_20_3, "<.->", "")
+	local var_20_5 = string.trim(var_20_4)
+	local var_20_6 = utf8.next(var_20_5, 1)
+	local var_20_7 = var_20_5:sub(1, var_20_6 - 1)
+	local var_20_8 = string.gsub(arg_20_1, var_20_7, "", 1)
 
-	arg_20_1 = string.gsub(arg_20_1, "\n", var_20_2)
-
-	local var_20_3 = string.match(arg_20_1, "^<.->.-<.->")
-
-	if not string.nilorempty(var_20_3) then
-		local var_20_4, var_20_5, var_20_6, var_20_7, var_20_8 = string.find(var_20_3, "(<.->)(.-)(<.->)")
-		local var_20_9 = string.nilorempty(var_20_7) and "" or GameUtil.utf8sub(var_20_7, 1, 1)
-		local var_20_10 = string.format("%s%s%s", var_20_6, var_20_9, var_20_8)
-		local var_20_11 = ""
-
-		if GameUtil.utf8len(var_20_7) >= 2 then
-			var_20_11 = string.format("%s%s%s", var_20_6, GameUtil.utf8sub(var_20_7, 2, GameUtil.utf8len(var_20_7) - 1), var_20_8)
-		end
-
-		arg_20_1 = string.gsub(arg_20_1, "^<.->.-<.->", "")
-
-		local var_20_12 = var_20_11 .. arg_20_1
-		local var_20_13 = string.format("<size=28><space=2.82em></size> %s", var_20_12)
-
-		return var_20_10, var_20_13
-	else
-		local var_20_14 = GameUtil.utf8sub(arg_20_1, 1, 1)
-		local var_20_15 = ""
-
-		if GameUtil.utf8len(arg_20_1) >= 2 then
-			var_20_15 = string.format("<size=28><space=%fem></size> %s", var_20_1, GameUtil.utf8sub(arg_20_1, 2, GameUtil.utf8len(arg_20_1) - 1))
-		end
-
-		return var_20_14, var_20_15
-	end
+	return var_20_7, string.format("<size=28><space=%fem></size> %s", var_20_1, var_20_8)
 end
 
 function var_0_0.SwitchLangTab(arg_21_0)

@@ -1,6 +1,6 @@
 ﻿module("modules.logic.fight.flow.FightViewHandCardSequenceFlow", package.seeall)
 
-local var_0_0 = class("FlowSequence", FlowSequence)
+local var_0_0 = class("FightViewHandCardSequenceFlow", FlowSequence)
 
 function var_0_0.ctor(arg_1_0, ...)
 	var_0_0.super.ctor(arg_1_0, ...)

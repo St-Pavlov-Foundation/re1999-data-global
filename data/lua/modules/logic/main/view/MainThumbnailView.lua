@@ -89,6 +89,8 @@ function var_0_0._editableInitView(arg_8_0)
 
 	arg_8_0._animator = arg_8_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
 	arg_8_0._cameraAnimator = CameraMgr.instance:getCameraRootAnimator()
+	arg_8_0._simagelogoGo = gohelper.findChild(arg_8_0.viewGO, "#simage_logo")
+	arg_8_0._simageactbgGo = gohelper.findChild(arg_8_0.viewGO, "#simage_actbg")
 
 	arg_8_0:RefreshSignature()
 	gohelper.addUIClickAudio(arg_8_0._btndetail.gameObject, AudioEnum.UI.Play_UI_Magazines)
@@ -156,7 +158,12 @@ function var_0_0._checkActivityImgVisible(arg_14_0)
 		end
 	end
 
+	local var_14_4 = var_14_0 and var_14_1.isShowLogo or false
+	local var_14_5 = var_14_0 and var_14_1.mainThumbnailViewActBg or false
+
 	gohelper.setActive(arg_14_0._simageleftbg, var_14_2)
+	gohelper.setActive(arg_14_0._simagelogoGo, var_14_4)
+	gohelper.setActive(arg_14_0._simageactbgGo, var_14_5)
 end
 
 function var_0_0.refreshRedDot(arg_15_0)

@@ -363,137 +363,149 @@ function var_0_0.getDayFirstLoginRed(arg_27_0)
 	return PlayerPrefsHelper.getString(PlayerModel.instance:getPlayinfo().userId .. "_" .. PlayerPrefsKey.FirstLoginTodayRed .. "_" .. arg_27_0) ~= var_27_0
 end
 
-function var_0_0.getTodayWeedDay(arg_28_0)
-	if arg_28_0.wday == 1 then
+function var_0_0.setWeekFirstLoginRed(arg_28_0)
+	local var_28_0 = math.floor(ServerTime.getWeekEndTimeStamp(true) / 3600)
+
+	PlayerPrefsHelper.setNumber(PlayerModel.instance:getPlayinfo().userId .. "_" .. PlayerPrefsKey.FirstLoginWeekRed .. "_" .. arg_28_0, var_28_0)
+end
+
+function var_0_0.getWeekFirstLoginRed(arg_29_0)
+	local var_29_0 = math.floor(ServerTime.getWeekEndTimeStamp(true) / 3600)
+
+	return PlayerPrefsHelper.getNumber(PlayerModel.instance:getPlayinfo().userId .. "_" .. PlayerPrefsKey.FirstLoginWeekRed .. "_" .. arg_29_0, 0) ~= var_29_0
+end
+
+function var_0_0.getTodayWeedDay(arg_30_0)
+	if arg_30_0.wday == 1 then
 		return 7
 	end
 
-	return arg_28_0.wday - 1
+	return arg_30_0.wday - 1
 end
 
-function var_0_0.getFormatTime2(arg_29_0, arg_29_1)
-	arg_29_0 = math.floor(arg_29_0)
-
-	local var_29_0 = math.floor(arg_29_0 / 86400)
-	local var_29_1 = math.floor(arg_29_0 % 86400 / 3600)
-	local var_29_2 = math.floor(arg_29_0 % 3600 / 60)
-	local var_29_3 = arg_29_0 - var_29_0 * 86400 - var_29_1 * 3600 - var_29_2 * 60
-
-	if var_29_0 > 0 then
-		local var_29_4 = arg_29_1 and var_0_0.DateEnFormat.Day or luaLang("time_day")
-		local var_29_5 = arg_29_1 and var_0_0.DateEnFormat.Hour or luaLang("time_hour2")
-
-		return string.format("%s%s%s%s", var_29_0, var_29_4, var_29_1, var_29_5)
-	end
-
-	if var_29_1 > 0 then
-		local var_29_6 = arg_29_1 and var_0_0.DateEnFormat.Hour or luaLang("time_hour2")
-		local var_29_7 = arg_29_1 and var_0_0.DateEnFormat.Minute or luaLang("time_minute2")
-
-		return string.format("%s%s%s%s", var_29_1, var_29_6, var_29_2, var_29_7)
-	end
-
-	local var_29_8 = arg_29_1 and var_0_0.DateEnFormat.Second or luaLang("time_second")
-
-	if var_29_2 > 0 then
-		local var_29_9 = arg_29_1 and var_0_0.DateEnFormat.Minute or luaLang("time_minute2")
-
-		return string.format("%s%s%s%s", var_29_2, var_29_9, var_29_3, var_29_8)
-	else
-		return string.format("%s%s", var_29_3, var_29_8)
-	end
-end
-
-function var_0_0.getFormatTime1(arg_30_0, arg_30_1)
-	arg_30_0 = math.floor(arg_30_0)
-
-	local var_30_0 = math.floor(arg_30_0 / 86400)
-	local var_30_1 = math.floor(arg_30_0 % 86400 / 3600)
-	local var_30_2 = math.floor(arg_30_0 % 3600 / 60)
-	local var_30_3 = arg_30_0 - var_30_0 * 86400 - var_30_1 * 3600 - var_30_2 * 60
-
-	if var_30_0 > 0 then
-		local var_30_4 = arg_30_1 and var_0_0.DateEnFormat.Day or luaLang("time_day")
-
-		return string.format("%s%s", var_30_0, var_30_4)
-	end
-
-	if var_30_1 > 0 then
-		local var_30_5 = arg_30_1 and var_0_0.DateEnFormat.Hour or luaLang("time_hour2")
-
-		return string.format("%s%s", var_30_1, var_30_5)
-	end
-
-	local var_30_6 = arg_30_1 and var_0_0.DateEnFormat.Second or luaLang("time_second")
-
-	if var_30_2 > 0 then
-		local var_30_7 = arg_30_1 and var_0_0.DateEnFormat.Minute or luaLang("time_minute2")
-
-		return string.format("%s%s", var_30_2, var_30_7)
-	else
-		return string.format("%s%s", var_30_3, var_30_6)
-	end
-end
-
-function var_0_0.SecondToActivityTimeFormat(arg_31_0, arg_31_1)
+function var_0_0.getFormatTime2(arg_31_0, arg_31_1)
 	arg_31_0 = math.floor(arg_31_0)
 
-	local var_31_0
-	local var_31_1 = 31536000
-	local var_31_2 = math.floor(arg_31_0 / var_31_1)
+	local var_31_0 = math.floor(arg_31_0 / 86400)
+	local var_31_1 = math.floor(arg_31_0 % 86400 / 3600)
+	local var_31_2 = math.floor(arg_31_0 % 3600 / 60)
+	local var_31_3 = arg_31_0 - var_31_0 * 86400 - var_31_1 * 3600 - var_31_2 * 60
+
+	if var_31_0 > 0 then
+		local var_31_4 = arg_31_1 and var_0_0.DateEnFormat.Day or luaLang("time_day")
+		local var_31_5 = arg_31_1 and var_0_0.DateEnFormat.Hour or luaLang("time_hour2")
+
+		return string.format("%s%s%s%s", var_31_0, var_31_4, var_31_1, var_31_5)
+	end
+
+	if var_31_1 > 0 then
+		local var_31_6 = arg_31_1 and var_0_0.DateEnFormat.Hour or luaLang("time_hour2")
+		local var_31_7 = arg_31_1 and var_0_0.DateEnFormat.Minute or luaLang("time_minute2")
+
+		return string.format("%s%s%s%s", var_31_1, var_31_6, var_31_2, var_31_7)
+	end
+
+	local var_31_8 = arg_31_1 and var_0_0.DateEnFormat.Second or luaLang("time_second")
 
 	if var_31_2 > 0 then
-		local var_31_3 = math.floor(arg_31_0 % var_31_1 / var_0_0.OneDaySecond)
+		local var_31_9 = arg_31_1 and var_0_0.DateEnFormat.Minute or luaLang("time_minute2")
 
-		if LangSettings.instance:isEn() then
-			var_31_0 = arg_31_1 and var_31_2 .. var_0_0.DateEnFormat.Year .. " " .. var_31_3 .. var_0_0.DateEnFormat.Day or var_31_2 .. luaLang("time_year") .. " " .. var_31_3 .. luaLang("time_day")
-		else
-			var_31_0 = arg_31_1 and var_31_2 .. var_0_0.DateEnFormat.Year .. var_31_3 .. var_0_0.DateEnFormat.Day or var_31_2 .. luaLang("time_year") .. var_31_3 .. luaLang("time_day")
-		end
+		return string.format("%s%s%s%s", var_31_2, var_31_9, var_31_3, var_31_8)
+	else
+		return string.format("%s%s", var_31_3, var_31_8)
+	end
+end
 
-		return var_31_0
+function var_0_0.getFormatTime1(arg_32_0, arg_32_1)
+	arg_32_0 = math.floor(arg_32_0)
+
+	local var_32_0 = math.floor(arg_32_0 / 86400)
+	local var_32_1 = math.floor(arg_32_0 % 86400 / 3600)
+	local var_32_2 = math.floor(arg_32_0 % 3600 / 60)
+	local var_32_3 = arg_32_0 - var_32_0 * 86400 - var_32_1 * 3600 - var_32_2 * 60
+
+	if var_32_0 > 0 then
+		local var_32_4 = arg_32_1 and var_0_0.DateEnFormat.Day or luaLang("time_day")
+
+		return string.format("%s%s", var_32_0, var_32_4)
 	end
 
-	local var_31_4 = math.floor(arg_31_0 / var_0_0.OneDaySecond)
+	if var_32_1 > 0 then
+		local var_32_5 = arg_32_1 and var_0_0.DateEnFormat.Hour or luaLang("time_hour2")
 
-	if var_31_4 > 0 then
-		local var_31_5 = math.floor(arg_31_0 % var_0_0.OneDaySecond / var_0_0.OneHourSecond)
-
-		if LangSettings.instance:isEn() then
-			var_31_0 = arg_31_1 and var_31_4 .. var_0_0.DateEnFormat.Day .. " " .. var_31_5 .. var_0_0.DateEnFormat.Hour or var_31_4 .. luaLang("time_day") .. " " .. var_31_5 .. luaLang("time_hour")
-		else
-			var_31_0 = arg_31_1 and var_31_4 .. var_0_0.DateEnFormat.Day .. var_31_5 .. var_0_0.DateEnFormat.Hour or var_31_4 .. luaLang("time_day") .. var_31_5 .. luaLang("time_hour")
-		end
-
-		return var_31_0
+		return string.format("%s%s", var_32_1, var_32_5)
 	end
 
-	local var_31_6 = math.floor(arg_31_0 / var_0_0.OneHourSecond)
+	local var_32_6 = arg_32_1 and var_0_0.DateEnFormat.Second or luaLang("time_second")
 
-	if var_31_6 > 0 then
-		local var_31_7 = math.floor(arg_31_0 % var_0_0.OneHourSecond / var_0_0.OneMinuteSecond)
+	if var_32_2 > 0 then
+		local var_32_7 = arg_32_1 and var_0_0.DateEnFormat.Minute or luaLang("time_minute2")
+
+		return string.format("%s%s", var_32_2, var_32_7)
+	else
+		return string.format("%s%s", var_32_3, var_32_6)
+	end
+end
+
+function var_0_0.SecondToActivityTimeFormat(arg_33_0, arg_33_1)
+	arg_33_0 = math.floor(arg_33_0)
+
+	local var_33_0
+	local var_33_1 = 31536000
+	local var_33_2 = math.floor(arg_33_0 / var_33_1)
+
+	if var_33_2 > 0 then
+		local var_33_3 = math.floor(arg_33_0 % var_33_1 / var_0_0.OneDaySecond)
 
 		if LangSettings.instance:isEn() then
-			var_31_0 = arg_31_1 and var_31_6 .. var_0_0.DateEnFormat.Hour .. " " .. var_31_7 .. var_0_0.DateEnFormat.Minute or var_31_6 .. luaLang("time_hour") .. " " .. var_31_7 .. luaLang("time_minute2")
+			var_33_0 = arg_33_1 and var_33_2 .. var_0_0.DateEnFormat.Year .. " " .. var_33_3 .. var_0_0.DateEnFormat.Day or var_33_2 .. luaLang("time_year") .. " " .. var_33_3 .. luaLang("time_day")
 		else
-			var_31_0 = arg_31_1 and var_31_6 .. var_0_0.DateEnFormat.Hour .. var_31_7 .. var_0_0.DateEnFormat.Minute or var_31_6 .. luaLang("time_hour") .. var_31_7 .. luaLang("time_minute2")
+			var_33_0 = arg_33_1 and var_33_2 .. var_0_0.DateEnFormat.Year .. var_33_3 .. var_0_0.DateEnFormat.Day or var_33_2 .. luaLang("time_year") .. var_33_3 .. luaLang("time_day")
+		end
+
+		return var_33_0
+	end
+
+	local var_33_4 = math.floor(arg_33_0 / var_0_0.OneDaySecond)
+
+	if var_33_4 > 0 then
+		local var_33_5 = math.floor(arg_33_0 % var_0_0.OneDaySecond / var_0_0.OneHourSecond)
+
+		if LangSettings.instance:isEn() then
+			var_33_0 = arg_33_1 and var_33_4 .. var_0_0.DateEnFormat.Day .. " " .. var_33_5 .. var_0_0.DateEnFormat.Hour or var_33_4 .. luaLang("time_day") .. " " .. var_33_5 .. luaLang("time_hour")
+		else
+			var_33_0 = arg_33_1 and var_33_4 .. var_0_0.DateEnFormat.Day .. var_33_5 .. var_0_0.DateEnFormat.Hour or var_33_4 .. luaLang("time_day") .. var_33_5 .. luaLang("time_hour")
+		end
+
+		return var_33_0
+	end
+
+	local var_33_6 = math.floor(arg_33_0 / var_0_0.OneHourSecond)
+
+	if var_33_6 > 0 then
+		local var_33_7 = math.floor(arg_33_0 % var_0_0.OneHourSecond / var_0_0.OneMinuteSecond)
+
+		if LangSettings.instance:isEn() then
+			var_33_0 = arg_33_1 and var_33_6 .. var_0_0.DateEnFormat.Hour .. " " .. var_33_7 .. var_0_0.DateEnFormat.Minute or var_33_6 .. luaLang("time_hour") .. " " .. var_33_7 .. luaLang("time_minute2")
+		else
+			var_33_0 = arg_33_1 and var_33_6 .. var_0_0.DateEnFormat.Hour .. var_33_7 .. var_0_0.DateEnFormat.Minute or var_33_6 .. luaLang("time_hour") .. var_33_7 .. luaLang("time_minute2")
 		end
 	else
-		local var_31_8 = 0
-		local var_31_9 = math.floor(arg_31_0 / var_0_0.OneMinuteSecond)
+		local var_33_8 = 0
+		local var_33_9 = math.floor(arg_33_0 / var_0_0.OneMinuteSecond)
 
-		if var_31_9 < 1 then
-			var_31_9 = 1
+		if var_33_9 < 1 then
+			var_33_9 = 1
 		end
 
 		if LangSettings.instance:isEn() then
-			var_31_0 = arg_31_1 and var_31_8 .. var_0_0.DateEnFormat.Hour .. " " .. var_31_9 .. var_0_0.DateEnFormat.Minute or var_31_8 .. luaLang("time_hour") .. " " .. var_31_9 .. luaLang("time_minute2")
+			var_33_0 = arg_33_1 and var_33_8 .. var_0_0.DateEnFormat.Hour .. " " .. var_33_9 .. var_0_0.DateEnFormat.Minute or var_33_8 .. luaLang("time_hour") .. " " .. var_33_9 .. luaLang("time_minute2")
 		else
-			var_31_0 = arg_31_1 and var_31_8 .. var_0_0.DateEnFormat.Hour .. var_31_9 .. var_0_0.DateEnFormat.Minute or var_31_8 .. luaLang("time_hour") .. var_31_9 .. luaLang("time_minute2")
+			var_33_0 = arg_33_1 and var_33_8 .. var_0_0.DateEnFormat.Hour .. var_33_9 .. var_0_0.DateEnFormat.Minute or var_33_8 .. luaLang("time_hour") .. var_33_9 .. luaLang("time_minute2")
 		end
 	end
 
-	return var_31_0
+	return var_33_0
 end
 
 var_0_0.maxDateTimeStamp = var_0_0.dtTableToTimeStamp({
@@ -506,67 +518,67 @@ var_0_0.maxDateTimeStamp = var_0_0.dtTableToTimeStamp({
 })
 
 function var_0_0.getServerDateToString()
-	local var_32_0 = ServerTime.nowDateInLocal()
+	local var_34_0 = ServerTime.nowDateInLocal()
 
-	return string.format("%04d-%02d-%02d %02d:%02d:%02d", var_32_0.year, var_32_0.month, var_32_0.day, var_32_0.hour, var_32_0.min, var_32_0.sec)
+	return string.format("%04d-%02d-%02d %02d:%02d:%02d", var_34_0.year, var_34_0.month, var_34_0.day, var_34_0.hour, var_34_0.min, var_34_0.sec)
 end
 
 function var_0_0.getServerDateUTCToString()
 	return var_0_0.getServerDateToString() .. " (" .. ServerTime.GetUTCOffsetStr() .. ")"
 end
 
-function var_0_0.getTimeStamp(arg_34_0, arg_34_1)
-	return var_0_0.dtTableToTimeStamp(arg_34_0) + 3600 * (var_0_0.getCurrentZoneOffset() - arg_34_1) - ServerTime.getDstOffset()
+function var_0_0.getTimeStamp(arg_36_0, arg_36_1)
+	return var_0_0.dtTableToTimeStamp(arg_36_0) + 3600 * (var_0_0.getCurrentZoneOffset() - arg_36_1) - ServerTime.getDstOffset()
 end
 
 function var_0_0.getCurrentZoneOffset()
 	return os.difftime(os.time(), os.time(os.date("!*t", os.time()))) / 3600
 end
 
-function var_0_0.isDstTime(arg_36_0)
-	return os.date("*t", arg_36_0).isdst
+function var_0_0.isDstTime(arg_38_0)
+	return os.date("*t", arg_38_0).isdst
 end
 
 local var_0_1 = 31536000
 
-function var_0_0.getFormatTime(arg_37_0)
-	if not arg_37_0 or arg_37_0 <= 0 then
+function var_0_0.getFormatTime(arg_39_0)
+	if not arg_39_0 or arg_39_0 <= 0 then
 		return "<1" .. luaLang("time_minute2")
 	end
 
-	local var_37_0 = math.floor(arg_37_0 / var_0_1)
+	local var_39_0 = math.floor(arg_39_0 / var_0_1)
 
-	if var_37_0 > 0 then
-		local var_37_1 = luaLang("time_year")
-		local var_37_2 = math.floor(arg_37_0 % var_0_1 / var_0_0.OneDaySecond)
+	if var_39_0 > 0 then
+		local var_39_1 = luaLang("time_year")
+		local var_39_2 = math.floor(arg_39_0 % var_0_1 / var_0_0.OneDaySecond)
 
 		if LangSettings.instance:isEn() then
-			var_37_1 = var_37_1 .. " "
+			var_39_1 = var_39_1 .. " "
 		end
 
-		return var_37_0 .. var_37_1 .. var_37_2 .. luaLang("time_day")
+		return var_39_0 .. var_39_1 .. var_39_2 .. luaLang("time_day")
 	end
 
-	local var_37_3, var_37_4, var_37_5, var_37_6 = var_0_0.secondsToDDHHMMSS(arg_37_0)
+	local var_39_3, var_39_4, var_39_5, var_39_6 = var_0_0.secondsToDDHHMMSS(arg_39_0)
 
-	if var_37_3 > 0 then
-		local var_37_7 = luaLang("time_day")
-
-		if LangSettings.instance:isEn() then
-			var_37_7 = var_37_7 .. " "
-		end
-
-		return var_37_3 .. var_37_7 .. var_37_4 .. luaLang("time_hour2")
-	elseif var_37_4 > 0 then
-		local var_37_8 = luaLang("time_hour2")
+	if var_39_3 > 0 then
+		local var_39_7 = luaLang("time_day")
 
 		if LangSettings.instance:isEn() then
-			var_37_8 = var_37_8 .. " "
+			var_39_7 = var_39_7 .. " "
 		end
 
-		return var_37_4 .. var_37_8 .. var_37_5 .. luaLang("time_minute2")
-	elseif var_37_5 > 0 then
-		return var_37_5 .. luaLang("time_minute2")
+		return var_39_3 .. var_39_7 .. var_39_4 .. luaLang("time_hour2")
+	elseif var_39_4 > 0 then
+		local var_39_8 = luaLang("time_hour2")
+
+		if LangSettings.instance:isEn() then
+			var_39_8 = var_39_8 .. " "
+		end
+
+		return var_39_4 .. var_39_8 .. var_39_5 .. luaLang("time_minute2")
+	elseif var_39_5 > 0 then
+		return var_39_5 .. luaLang("time_minute2")
 	end
 
 	return "<1" .. luaLang("time_minute2")

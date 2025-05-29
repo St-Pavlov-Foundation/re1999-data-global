@@ -328,6 +328,16 @@ function var_0_0.checkIsShowActBgVisible()
 	return var_31_0.isShowActBg or false
 end
 
+function var_0_0.checkIsShowFxVisible()
+	local var_32_0 = ActivityConfig.instance:getMainActAtmosphereConfig()
+
+	if not var_32_0 then
+		return false
+	end
+
+	return var_32_0.isShowFx or false
+end
+
 function var_0_0.showActivityEffect()
 	if not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.FastDungeon) then
 		return false
@@ -337,16 +347,16 @@ function var_0_0.showActivityEffect()
 		return false
 	end
 
-	local var_32_0 = ActivityConfig.instance:getMainActAtmosphereConfig()
+	local var_33_0 = ActivityConfig.instance:getMainActAtmosphereConfig()
 
-	if not var_32_0 then
+	if not var_33_0 then
 		return false
 	end
 
-	local var_32_1 = var_32_0.id
-	local var_32_2 = ActivityHelper.getActivityStatus(var_32_1)
+	local var_33_1 = var_33_0.id
+	local var_33_2 = ActivityHelper.getActivityStatus(var_33_1)
 
-	if var_32_2 == ActivityEnum.ActivityStatus.Normal or var_32_2 == ActivityEnum.ActivityStatus.NotUnlock then
+	if var_33_2 == ActivityEnum.ActivityStatus.Normal or var_33_2 == ActivityEnum.ActivityStatus.NotUnlock then
 		return true
 	end
 

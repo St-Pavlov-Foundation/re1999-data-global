@@ -190,5 +190,17 @@
     "collectionBonus": "11#12505#1",
     "extraShowBuilding": "",
     "sourcesType": ""
+  },
+  {
+    "id": 2601,
+    "name": "language_10072171",
+    "nameEn": "Antarctic Elysium",
+    "desc": "language_10072247",
+    "rewardIcon": "1701700",
+    "building": "12601|12602|12603|12604|12605|12606",
+    "packages": "2601|2602|2603|2604|2605|2606",
+    "collectionBonus": "11#12605#1",
+    "extraShowBuilding": "",
+    "sourcesType": ""
   }
 ]

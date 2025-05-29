@@ -34,6 +34,7 @@ function var_0_0.initComponents(arg_4_0)
 	arg_4_0:addComp("skinSpineAction", FightSkinSpineAction)
 	arg_4_0:addComp("skinSpineEffect", FightSkinSpineEffect)
 	arg_4_0:addComp("totalDamage", FightTotalDamageComp)
+	arg_4_0:addComp("uniqueEffect", FightUniqueEffectComp)
 
 	local var_4_0 = arg_4_0:getMO()
 

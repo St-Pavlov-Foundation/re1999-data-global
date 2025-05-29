@@ -100,6 +100,8 @@ function var_0_0.onPointChange(arg_4_0, arg_4_1, arg_4_2)
 			var_4_5.animator:Play("empty", 0, 0)
 		end
 	end
+
+	arg_4_0.animator:Play("rotate_02", 0, 1)
 end
 
 function var_0_0.resetAllPoint(arg_5_0)

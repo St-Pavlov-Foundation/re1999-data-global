@@ -42,7 +42,8 @@ function var_0_0._initInteractHandle()
 			[RougeMapEnum.InteractType.LossCoin] = var_0_0.handleLossCoin,
 			[RougeMapEnum.InteractType.AdvanceDrop] = var_0_0.handleAdvanceDrop,
 			[RougeMapEnum.InteractType.LevelUpSp] = var_0_0.handleLevelUpSpCollection,
-			[RougeMapEnum.InteractType.LossSpCollection] = var_0_0.handleLossSpCollection
+			[RougeMapEnum.InteractType.LossSpCollection] = var_0_0.handleLossSpCollection,
+			[RougeMapEnum.InteractType.DropBossCollection] = var_0_0.handleDropBossCollection
 		}
 	end
 end
@@ -222,6 +223,19 @@ function var_0_0.handleLossSpCollection(arg_19_0)
 	elseif arg_19_0 == 2 then
 		logNormal("获得丢弃专武")
 	end
+end
+
+function var_0_0.handleDropBossCollection()
+	logNormal("选附带怪物属性的造物")
+
+	local var_20_0 = RougeMapModel.instance:getCurInteractiveJson()
+
+	RougePopController.instance:addPopViewWithViewName(ViewName.RougeBossCollectionDropView, {
+		viewEnum = RougeMapEnum.CollectionDropViewEnum.Select,
+		canSelectCount = var_20_0.dropSelectNum,
+		collectionList = var_20_0.dropCollectList,
+		monsterRuleList = var_20_0.dropCollectMonsterRuleList
+	})
 end
 
 return var_0_0

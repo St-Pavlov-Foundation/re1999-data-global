@@ -165,11 +165,12 @@ var_0_0.TabContentIndex = {
 	CharNewbie = 3,
 	EquipNormal = 2,
 	EquipProbUp = 5,
+	DoubleSsrUp = -1,
 	CharProbUp = 4
 }
 var_0_0.Type2PageIndex = {
 	[var_0_0.Type.NewPlayer] = var_0_0.TabContentIndex.CharProbUp,
-	[var_0_0.Type.DoubleSsrUp] = var_0_0.TabContentIndex.CharProbUp,
+	[var_0_0.Type.DoubleSsrUp] = var_0_0.TabContentIndex.DoubleSsrUp,
 	var_0_0.TabContentIndex.CharNewbie,
 	var_0_0.TabContentIndex.CharNormal,
 	var_0_0.TabContentIndex.CharProbUp,

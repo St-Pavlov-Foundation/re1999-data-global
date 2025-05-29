@@ -10035,14 +10035,199 @@
     "bankName": "ui_activity_2_5_tangren"
   },
   {
+    "id": 20260001,
+    "eventName": "play_ui_wenming_open1",
+    "bankName": "ui_activity_2_6_wenming"
+  },
+  {
+    "id": 20260002,
+    "eventName": "play_ui_wenming_open2",
+    "bankName": "ui_activity_2_6_wenming"
+  },
+  {
+    "id": 20260901,
+    "eventName": "play_ui_mln_page_turn",
+    "bankName": "ui_activity"
+  },
+  {
+    "id": 20260902,
+    "eventName": "play_ui_wenming_popup",
+    "bankName": "ui_activity_2_6_wenming"
+  },
+  {
+    "id": 20260903,
+    "eventName": "play_ui_wenming_cut",
+    "bankName": "ui_activity_2_6_wenming"
+  },
+  {
+    "id": 20260904,
+    "eventName": "play_ui_wenming_page",
+    "bankName": "ui_activity_2_6_wenming"
+  },
+  {
+    "id": 20260011,
+    "eventName": "play_replay_music_theme_2_6",
+    "bankName": "ui_replay_mainmusic2_6"
+  },
+  {
+    "id": 20260012,
+    "eventName": "play_replay_music_fictionalheart_2_6",
+    "bankName": "ui_replay_mainmusic2_6"
+  },
+  {
+    "id": 20260013,
+    "eventName": "play_replay_music_argentinedream_2_6",
+    "bankName": "ui_replay_mainmusic2_6"
+  },
+  {
     "id": 20260020,
     "eventName": "play_ui_wenming_tarot_click",
     "bankName": "ui_activity_2_6_wenming"
   },
   {
-    "id": 20260144,
-    "eventName": "play_ui_permit_pailian",
-    "bankName": "ui_permit_2_6"
+    "id": 20260101,
+    "eventName": "play_ui_activity_open",
+    "bankName": "ui_activity"
+  },
+  {
+    "id": 20260102,
+    "eventName": "play_ui_wenming_cardready",
+    "bankName": "ui_activity_2_6_wenming_alaifu"
+  },
+  {
+    "id": 20260103,
+    "eventName": "play_ui_wenming_cardunready",
+    "bankName": "ui_activity_2_6_wenming_alaifu"
+  },
+  {
+    "id": 20260104,
+    "eventName": "play_ui_wenming_cardrelease",
+    "bankName": "ui_activity_2_6_wenming_alaifu"
+  },
+  {
+    "id": 20260105,
+    "eventName": "play_ui_wenming_shot",
+    "bankName": "ui_activity_2_6_wenming_alaifu"
+  },
+  {
+    "id": 20260106,
+    "eventName": "play_ui_wenming_shotimp",
+    "bankName": "ui_activity_2_6_wenming_alaifu"
+  },
+  {
+    "id": 20260107,
+    "eventName": "play_ui_wenming_defense",
+    "bankName": "ui_activity_2_6_wenming_alaifu"
+  },
+  {
+    "id": 20260108,
+    "eventName": "play_ui_wenming_buff",
+    "bankName": "ui_activity_2_6_wenming_alaifu"
+  },
+  {
+    "id": 20260109,
+    "eventName": "play_ui_wenming_debuff",
+    "bankName": "ui_activity_2_6_wenming_alaifu"
+  },
+  {
+    "id": 20260110,
+    "eventName": "play_ui_wenming_roll",
+    "bankName": "ui_activity_2_6_wenming_alaifu"
+  },
+  {
+    "id": 20260111,
+    "eventName": "play_ui_wenming_ideachange",
+    "bankName": "ui_activity_2_6_wenming_alaifu"
+  },
+  {
+    "id": 20260112,
+    "eventName": "play_ui_wenming_alaifugameplay",
+    "bankName": "ui_activity_2_6_wenming_alaifu"
+  },
+  {
+    "id": 20260113,
+    "eventName": "play_ui_wenming_alaifuchapter",
+    "bankName": "ui_activity_2_6_wenming_alaifu"
+  },
+  {
+    "id": 20260114,
+    "eventName": "play_ui_wenming_unclockchapter",
+    "bankName": "ui_activity_2_6_wenming_alaifu"
+  },
+  {
+    "id": 20260115,
+    "eventName": "play_ui_wenming_glassclick",
+    "bankName": "ui_activity_2_6_wenming_alaifu"
+  },
+  {
+    "id": 20260116,
+    "eventName": "play_ui_wenming_unclockglass",
+    "bankName": "ui_activity_2_6_wenming_alaifu"
+  },
+  {
+    "id": 20260117,
+    "eventName": "play_ui_feichi_yure_caption",
+    "bankName": "ui_activity_feichi_yure"
+  },
+  {
+    "id": 20260118,
+    "eventName": "stop_ui_feichi_yure_caption",
+    "bankName": "ui_activity_feichi_yure"
+  },
+  {
+    "id": 20260119,
+    "eventName": "play_ui_rewards",
+    "bankName": "main_ui"
+  },
+  {
+    "id": 20260120,
+    "eventName": "play_ui_rewards_rare",
+    "bankName": "main_ui"
+  },
+  {
+    "id": 20260121,
+    "eventName": "play_ui_pkls_endpoint_arrival",
+    "bankName": "ui_activity"
+  },
+  {
+    "id": 20260122,
+    "eventName": "play_ui_pkls_challenge_fail",
+    "bankName": "ui_activity"
+  },
+  {
+    "id": 20260123,
+    "eventName": "play_ui_fight_artificial_equip",
+    "bankName": "fight_ui_sfx_artificial_2_6"
+  },
+  {
+    "id": 20260124,
+    "eventName": "play_ui_fight_artificial_unequip",
+    "bankName": "fight_ui_sfx_artificial_2_6"
+  },
+  {
+    "id": 20260125,
+    "eventName": "play_ui_fight_artificial_stars_pad",
+    "bankName": "fight_ui_sfx_artificial_2_6"
+  },
+  {
+    "id": 20260126,
+    "eventName": "play_ui_fight_artificial_star",
+    "bankName": "fight_ui_sfx_artificial_2_6"
+  },
+  {
+    "id": 20260127,
+    "eventName": "play_ui_fight_artificial_success",
+    "bankName": "fight_ui_sfx_artificial_2_6"
+  },
+  {
+    "id": 20260128,
+    "eventName": "play_ui_fight_artificial_success_away",
+    "bankName": "fight_ui_sfx_artificial_2_6"
+  },
+  {
+    "id": 20260129,
+    "eventName": "play_activitymusic_fictionalheart_2_6",
+    "bankName": "activity2_6_music"
   },
   {
     "id": 20260130,
@@ -10050,8 +10235,98 @@
     "bankName": "ui_permit_2_6"
   },
   {
-    "id": 20260901,
-    "eventName": "play_ui_mln_page_turn",
+    "id": 20260131,
+    "eventName": "play_ui_wenming_cards_flipping",
+    "bankName": "ui_activity_2_6_wenming_xugouji"
+  },
+  {
+    "id": 20260132,
+    "eventName": "play_ui_wenming_cards_cover",
+    "bankName": "ui_activity_2_6_wenming_xugouji"
+  },
+  {
+    "id": 20260133,
+    "eventName": "play_ui_wenming_cards_effect",
+    "bankName": "ui_activity_2_6_wenming_xugouji"
+  },
+  {
+    "id": 20260134,
+    "eventName": "play_ui_task_page",
+    "bankName": "main_ui"
+  },
+  {
+    "id": 20260135,
+    "eventName": "play_ui_wenming_cards_disappear",
+    "bankName": "ui_activity_2_6_wenming_xugouji"
+  },
+  {
+    "id": 20260136,
+    "eventName": "play_ui_wenming_cards_toushi",
+    "bankName": "ui_activity_2_6_wenming_xugouji"
+  },
+  {
+    "id": 20260137,
+    "eventName": "play_ui_wenming_cards_toushi_gone",
+    "bankName": "ui_activity_2_6_wenming_xugouji"
+  },
+  {
+    "id": 20260138,
+    "eventName": "play_ui_leimi_theft_open",
     "bankName": "ui_activity"
+  },
+  {
+    "id": 20260139,
+    "eventName": "play_ui_checkpoint_chain",
+    "bankName": "ui_checkpoint"
+  },
+  {
+    "id": 20260140,
+    "eventName": "play_ui_wenming_library_unfold",
+    "bankName": "ui_activity_2_6_wenming_xugouji"
+  },
+  {
+    "id": 20260141,
+    "eventName": "play_ui_wenming_library_close",
+    "bankName": "ui_activity_2_6_wenming_xugouji"
+  },
+  {
+    "id": 20260142,
+    "eventName": "play_ui_wenming_cards_lock",
+    "bankName": "ui_activity_2_6_wenming_xugouji"
+  },
+  {
+    "id": 20260143,
+    "eventName": "play_ui_fight_artificial_unlock",
+    "bankName": "fight_ui_sfx_artificial_2_6"
+  },
+  {
+    "id": 20260144,
+    "eventName": "play_ui_permit_pailian",
+    "bankName": "ui_permit_2_6"
+  },
+  {
+    "id": 20260145,
+    "eventName": "play_ui_wenming_enemy_hit",
+    "bankName": "ui_activity_2_6_wenming_xugouji"
+  },
+  {
+    "id": 20260146,
+    "eventName": "play_ui_wenming_our_hit",
+    "bankName": "ui_activity_2_6_wenming_xugouji"
+  },
+  {
+    "id": 20260147,
+    "eventName": "play_ui_qiutu_award_core",
+    "bankName": "ui_activity_1_4_qiutu"
+  },
+  {
+    "id": 20260148,
+    "eventName": "play_ui_leimi_level_difficulty",
+    "bankName": "ui_activity"
+  },
+  {
+    "id": 20260149,
+    "eventName": "play_ui_gudu_kaishi",
+    "bankName": "ui_activity_1_9_gudu"
   }
 ]

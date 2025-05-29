@@ -451,12 +451,48 @@
   },
   {
     "id": 308202,
-    "effect": "Drawables/bone/effect-Bone/roleeffect_xyns_yushui",
+    "effect": "Drawables/bone/effect-Bone/roleeffect_xyns_yushui/root",
+    "scale": 1.0,
+    "changeVisible": 0,
+    "delayVisible": 0,
+    "frameVisible": 1,
+    "realtime": "1"
+  },
+  {
+    "id": 311302,
+    "effect": "Drawables/bone2/effect-Bone/roleeffect_alf_qt2/root",
     "scale": 1.0,
     "changeVisible": 0,
     "delayVisible": 0,
     "frameVisible": 1,
     "realtime": ""
+  },
+  {
+    "id": 310203,
+    "effect": "Drawables/bone3/effect-Bone/roleeffect_lpl_nj3/root|Drawables/bone4/effect-Bone/roleeffect_lpl_nj4/root",
+    "scale": 1.0,
+    "changeVisible": 0,
+    "delayVisible": 0,
+    "frameVisible": 1,
+    "realtime": ""
+  },
+  {
+    "id": 311402,
+    "effect": "Drawables/bone2/effect-Bone/roleeffect_xgj_bj2/root",
+    "scale": 1.0,
+    "changeVisible": 0,
+    "delayVisible": 0,
+    "frameVisible": 1,
+    "realtime": ""
+  },
+  {
+    "id": 310403,
+    "effect": "Drawables/bone/effect-Bone/roleeffect_ddg_idle1/root",
+    "scale": 1.0,
+    "changeVisible": 0,
+    "delayVisible": 1,
+    "frameVisible": 1,
+    "realtime": "1"
   },
   {
     "id": 307904,

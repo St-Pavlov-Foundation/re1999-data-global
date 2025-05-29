@@ -112,6 +112,7 @@ function var_0_0.getFightStepString(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
 
 	table.insert(var_5_2, string.format("%s cardIndex : %s", var_5_4, arg_5_0.cardIndex))
 	table.insert(var_5_2, string.format("%s supportHeroId : %s", var_5_4, arg_5_0.supportHeroId))
+	table.insert(var_5_2, string.format("%s fakeTimeline : %s", var_5_4, arg_5_0.fakeTimeline))
 
 	arg_5_3 = var_0_0.getStack(arg_5_3, var_5_1)
 
@@ -155,7 +156,7 @@ function var_0_0.getFightActEffectString(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
 		table.insert(var_7_2, var_0_0.getFightBuffString(arg_7_0.buff, arg_7_1))
 	end
 
-	if arg_7_0:HasField("entity") then
+	if arg_7_0:HasField("entity") and arg_7_0.entity.uid ~= 0 then
 		table.insert(var_7_2, var_0_0.getEntityMoString(arg_7_0.entity, arg_7_1))
 	end
 
@@ -165,7 +166,7 @@ function var_0_0.getFightActEffectString(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
 	table.insert(var_7_2, string.format("%s reserveStr : %s", var_7_3, arg_7_0.reserveStr))
 	table.insert(var_7_2, string.format("%s teamType : %s", var_7_3, arg_7_0.teamType))
 
-	if arg_7_0:HasField("cardInfo") then
+	if arg_7_0:HasField("cardInfo") and arg_7_0.cardInfo.uid ~= 0 then
 		table.insert(var_7_2, var_0_0.getCardInfoString(arg_7_0.cardInfo, arg_7_1))
 	end
 
@@ -173,11 +174,11 @@ function var_0_0.getFightActEffectString(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
 
 	table.insert(var_7_2, var_0_0.getCardInfoListString(arg_7_0.cardInfoList, arg_7_1, "cardInfoList", arg_7_3))
 
-	if arg_7_0:HasField("fightStep") then
+	if arg_7_0:HasField("fightStep") and arg_7_0.fightStep.actType then
 		table.insert(var_7_2, var_0_0.getFightStepString(arg_7_0.fightStep, arg_7_1, nil, arg_7_3))
 	end
 
-	if arg_7_0:HasField("assistBossInfo") then
+	if arg_7_0:HasField("assistBossInfo") and arg_7_0.assistBossInfo.formId ~= 0 then
 		table.insert(var_7_2, var_0_0.getAssistBossInfoString(arg_7_0.assistBossInfo, arg_7_1))
 	end
 

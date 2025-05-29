@@ -275,4 +275,29 @@ function var_0_0.isUnlockEpisode(arg_29_0)
 	return LiangYueModel.instance:isEpisodeFinish(var_29_0, arg_29_0) == tonumber(arg_29_0)
 end
 
+function var_0_0.commonCheck(arg_30_0)
+	if not arg_30_0 then
+		return false
+	end
+
+	local var_30_0 = string.split(arg_30_0, "_")
+	local var_30_1 = _G[var_30_0[1]]
+
+	if not var_30_1 then
+		return false
+	end
+
+	local var_30_2 = var_30_1[var_30_0[2]]
+
+	if not var_30_2 then
+		return false
+	end
+
+	if var_30_1.instance then
+		return var_30_2(var_30_1.instance, unpack(var_30_0, 3))
+	else
+		return var_30_2(unpack(var_30_0, 3))
+	end
+end
+
 return var_0_0

@@ -26,6 +26,8 @@ function var_0_0.onInitView(arg_1_0)
 	arg_1_0.enemyActionSelect = gohelper.findChild(arg_1_0.viewGO, "root/topLeftContent/enemyaction/selected")
 	arg_1_0.enemyActionLocked = gohelper.findChild(arg_1_0.viewGO, "root/topLeftContent/enemyaction/locked")
 	arg_1_0.btnEnemyAction = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/topLeftContent/enemyaction/#btn_enemyaction")
+	arg_1_0.weeklyWalkSubEnemy = gohelper.findChild(arg_1_0.viewGO, "root/enemyweekwalkheart")
+	arg_1_0.btnCheckSub = gohelper.findChildClickWithDefaultAudio(arg_1_0.viewGO, "root/enemyweekwalkheart/btn_checkSub")
 end
 
 function var_0_0.addEvents(arg_2_0)
@@ -39,6 +41,7 @@ function var_0_0.addEvents(arg_2_0)
 	arg_2_0._btnSpecialTip:AddClickListener(arg_2_0._onClickBtnSpecialTip, arg_2_0)
 	arg_2_0._btnCareerRestrain:AddClickListener(arg_2_0._onClickCareerRestrain, arg_2_0)
 	arg_2_0.btnEnemyAction:AddClickListener(arg_2_0.onClickEnemyAction, arg_2_0)
+	arg_2_0:addClickCb(arg_2_0.btnCheckSub, arg_2_0.onBtnCheckSub, arg_2_0)
 	arg_2_0:addEventCb(FightController.instance, FightEvent.OnStartSequenceFinish, arg_2_0._checkStartAutoCards, arg_2_0)
 	arg_2_0:addEventCb(FightController.instance, FightEvent.OnRoundSequenceFinish, arg_2_0._checkStartAutoCards, arg_2_0)
 	arg_2_0:addEventCb(FightController.instance, FightEvent.OnClothSkillRoundSequenceFinish, arg_2_0._onClothSkillRoundSequenceFinish, arg_2_0)
@@ -58,6 +61,8 @@ function var_0_0.addEvents(arg_2_0)
 	arg_2_0:addEventCb(FightController.instance, FightEvent.OnStageChange, arg_2_0.onStageChange, arg_2_0)
 	arg_2_0:addEventCb(FightController.instance, FightEvent.RefreshUIRound, arg_2_0._onRefreshUIRound, arg_2_0)
 	arg_2_0:addEventCb(FightController.instance, FightEvent.AddSubEntity, arg_2_0._onAddSubEntity, arg_2_0)
+	arg_2_0:addEventCb(FightController.instance, FightEvent.ClearMonsterSub, arg_2_0._onClearMonsterSub, arg_2_0)
+	arg_2_0:addEventCb(FightController.instance, FightEvent.RefreshMonsterSubCount, arg_2_0._onRefreshMonsterSubCount, arg_2_0)
 	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_2_0._onOpenView, arg_2_0)
 	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_2_0._onCloseView, arg_2_0)
 	arg_2_0:addEventCb(FightController.instance, FightEvent.ChangeRound, arg_2_0._onChangeRound, arg_2_0)
@@ -424,43 +429,77 @@ function var_0_0._showEnemySubHeroCount(arg_29_0)
 	if #var_29_0 > 0 then
 		FightController.instance:dispatchEvent(FightEvent.OnGuideShowEnemyNum)
 	end
-end
 
-function var_0_0._showEnemySubCount(arg_30_0)
-	local var_30_0 = FightDataHelper.entityMgr:getEnemySubList()
-	local var_30_1 = GMFightShowState.leftMonster
+	local var_29_1 = FightDataHelper.fieldMgr.customData
 
-	gohelper.setActive(arg_30_0._goEnemyNum, #var_30_0 > 0 and var_30_1)
-end
-
-function var_0_0._onAddSubEntity(arg_31_0)
-	arg_31_0:_showEnemySubCount()
-	arg_31_0:_showEnemySubHeroCount()
-end
-
-function var_0_0._onBeginWave(arg_32_0)
-	arg_32_0:_showEnemySubCount()
-end
-
-function var_0_0._onChangeEntity(arg_33_0)
-	arg_33_0:_showEnemySubHeroCount()
-end
-
-function var_0_0._updateReplay(arg_34_0)
-	gohelper.setActive(arg_34_0._goReplay, FightReplayModel.instance:isReplay())
-end
-
-function var_0_0._onEscapeBtnClick(arg_35_0)
-	if arg_35_0._btnBack.gameObject.activeInHierarchy then
-		arg_35_0:_onClickBack()
+	if var_29_1 and var_29_1[FightCustomData.CustomDataType.WeekwalkVer2] then
+		arg_29_0._txtEnemyNum.text = "∞"
 	end
 end
 
-function var_0_0._onClickBack(arg_36_0)
-	if not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.FightBack) then
-		local var_36_0, var_36_1 = OpenModel.instance:getFuncUnlockDesc(OpenEnum.UnlockFunc.FightBack)
+function var_0_0.onBtnCheckSub(arg_30_0)
+	if not FightDataHelper.stageMgr:isFree() then
+		return
+	end
 
-		GameFacade.showToast(var_36_0, var_36_1)
+	local var_30_0 = FightDataHelper.fieldMgr.customData
+
+	if var_30_0 and var_30_0[FightCustomData.CustomDataType.WeekwalkVer2] then
+		ViewMgr.instance:openView(ViewName.FightWeekWalkEnemyTipsView)
+	end
+end
+
+function var_0_0._showEnemySubCount(arg_31_0)
+	local var_31_0 = FightDataHelper.entityMgr:getEnemySubList()
+	local var_31_1 = GMFightShowState.leftMonster
+
+	gohelper.setActive(arg_31_0._goEnemyNum, #var_31_0 > 0 and var_31_1)
+	gohelper.setActive(arg_31_0.weeklyWalkSubEnemy, false)
+
+	local var_31_2 = FightDataHelper.fieldMgr.customData
+
+	if var_31_2 and var_31_2[FightCustomData.CustomDataType.WeekwalkVer2] then
+		gohelper.setActive(arg_31_0._goEnemyNum, false)
+		gohelper.setActive(arg_31_0.weeklyWalkSubEnemy, true)
+	end
+end
+
+function var_0_0._onAddSubEntity(arg_32_0)
+	arg_32_0:_showEnemySubCount()
+	arg_32_0:_showEnemySubHeroCount()
+end
+
+function var_0_0._onClearMonsterSub(arg_33_0)
+	arg_33_0:_showEnemySubHeroCount()
+end
+
+function var_0_0._onRefreshMonsterSubCount(arg_34_0)
+	arg_34_0:_showEnemySubHeroCount()
+end
+
+function var_0_0._onBeginWave(arg_35_0)
+	arg_35_0:_showEnemySubCount()
+end
+
+function var_0_0._onChangeEntity(arg_36_0)
+	arg_36_0:_showEnemySubHeroCount()
+end
+
+function var_0_0._updateReplay(arg_37_0)
+	gohelper.setActive(arg_37_0._goReplay, FightReplayModel.instance:isReplay())
+end
+
+function var_0_0._onEscapeBtnClick(arg_38_0)
+	if arg_38_0._btnBack.gameObject.activeInHierarchy then
+		arg_38_0:_onClickBack()
+	end
+end
+
+function var_0_0._onClickBack(arg_39_0)
+	if not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.FightBack) then
+		local var_39_0, var_39_1 = OpenModel.instance:getFuncUnlockDesc(OpenEnum.UnlockFunc.FightBack)
+
+		GameFacade.showToast(var_39_0, var_39_1)
 
 		return
 	end
@@ -473,13 +512,13 @@ function var_0_0._onClickBack(arg_36_0)
 		return
 	end
 
-	local var_36_2 = FightModel.instance:getCurStage()
-	local var_36_3 = FightDataHelper.stageMgr:inFightState(FightStageMgr.FightStateType.Distribute1Card)
+	local var_39_2 = FightModel.instance:getCurStage()
+	local var_39_3 = FightDataHelper.stageMgr:inFightState(FightStageMgr.FightStateType.Distribute1Card)
 
-	if var_36_2 == FightEnum.Stage.StartRound or var_36_2 == FightEnum.Stage.Distribute or var_36_3 then
-		local var_36_4 = GuideModel.instance:getDoingGuideIdList()
+	if var_39_2 == FightEnum.Stage.StartRound or var_39_2 == FightEnum.Stage.Distribute or var_39_3 then
+		local var_39_4 = GuideModel.instance:getDoingGuideIdList()
 
-		if var_36_4 and #var_36_4 > 0 then
+		if var_39_4 and #var_39_4 > 0 then
 			return
 		end
 	end
@@ -488,7 +527,7 @@ function var_0_0._onClickBack(arg_36_0)
 	ViewMgr.instance:openView(ViewName.FightQuitTipView)
 end
 
-function var_0_0._onClickAuto(arg_37_0)
+function var_0_0._onClickAuto(arg_40_0)
 	if FightDataHelper.stageMgr:inFightState(FightStageMgr.FightStateType.PlaySeasonChangeHero) then
 		return
 	end
@@ -502,17 +541,17 @@ function var_0_0._onClickAuto(arg_37_0)
 	end
 
 	if not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.FightAuto) then
-		local var_37_0, var_37_1 = OpenModel.instance:getFuncUnlockDesc(OpenEnum.UnlockFunc.FightAuto)
+		local var_40_0, var_40_1 = OpenModel.instance:getFuncUnlockDesc(OpenEnum.UnlockFunc.FightAuto)
 
-		GameFacade.showToast(var_37_0, var_37_1)
+		GameFacade.showToast(var_40_0, var_40_1)
 
 		return
 	end
 
-	local var_37_2 = FightModel.instance:getFightParam().battleId
-	local var_37_3 = var_37_2 and lua_battle.configDict[var_37_2]
+	local var_40_2 = FightModel.instance:getFightParam().battleId
+	local var_40_3 = var_40_2 and lua_battle.configDict[var_40_2]
 
-	if not (var_37_3 and (not var_37_3.noAutoFight or var_37_3.noAutoFight == 0)) then
+	if not (var_40_3 and (not var_40_3.noAutoFight or var_40_3.noAutoFight == 0)) then
 		GameFacade.showToast(ToastEnum.EpisodeCantUse)
 
 		return
@@ -526,48 +565,48 @@ function var_0_0._onClickAuto(arg_37_0)
 		return
 	end
 
-	local var_37_4 = FightModel.instance:isAuto()
+	local var_40_4 = FightModel.instance:isAuto()
 
-	FightModel.instance:setAuto(not var_37_4)
-	FightController.instance:setPlayerPrefKeyAuto(0, not var_37_4)
-	arg_37_0:_updateAutoAnim()
+	FightModel.instance:setAuto(not var_40_4)
+	FightController.instance:setPlayerPrefKeyAuto(0, not var_40_4)
+	arg_40_0:_updateAutoAnim()
 
 	if FightViewHandCard.blockOperate then
-		arg_37_0._blockOperate = true
+		arg_40_0._blockOperate = true
 
 		return
 	end
 
-	arg_37_0:_checkAutoCard()
+	arg_40_0:_checkAutoCard()
 end
 
-function var_0_0._checkAutoCard(arg_38_0)
+function var_0_0._checkAutoCard(arg_41_0)
 	if FightModel.instance:getCurStage() == FightEnum.Stage.Card and FightModel.instance:isAuto() then
 		FightController.instance:setCurStage(FightEnum.Stage.AutoCard)
 		ViewMgr.instance:closeView(ViewName.FightSkillStrengthenView, true)
 
 		if not FightCardModel.instance:isCardOpEnd() then
-			TaskDispatcher.cancelTask(arg_38_0._delayStartAutoCards, arg_38_0)
+			TaskDispatcher.cancelTask(arg_41_0._delayStartAutoCards, arg_41_0)
 			UIBlockMgr.instance:endBlock(UIBlockKey.FightAuto)
-			arg_38_0:_autoPlayCard()
+			arg_41_0:_autoPlayCard()
 		end
 	end
 end
 
-function var_0_0._onClickSpeed(arg_39_0)
+function var_0_0._onClickSpeed(arg_42_0)
 	if GuideModel.instance:isFlagEnable(GuideModel.GuideFlag.FightForbidSpeed) then
 		return
 	end
 
-	local var_39_0 = FightModel.instance:getUserSpeed() == 1 and 2 or 1
+	local var_42_0 = FightModel.instance:getUserSpeed() == 1 and 2 or 1
 
-	FightModel.instance:setUserSpeed(var_39_0)
-	PlayerPrefsHelper.setNumber(arg_39_0:_getPlayerPrefKeySpeed(), var_39_0)
+	FightModel.instance:setUserSpeed(var_42_0)
+	PlayerPrefsHelper.setNumber(arg_42_0:_getPlayerPrefKeySpeed(), var_42_0)
 	FightController.instance:dispatchEvent(FightEvent.OnUpdateSpeed)
-	arg_39_0:_updateSpeed()
+	arg_42_0:_updateSpeed()
 end
 
-function var_0_0._onClickBtnSpecialTip(arg_40_0)
+function var_0_0._onClickBtnSpecialTip(arg_43_0)
 	if GuideModel.instance:getFlagValue(GuideModel.GuideFlag.FightForbidClickOpenView) then
 		return
 	end
@@ -576,21 +615,21 @@ function var_0_0._onClickBtnSpecialTip(arg_40_0)
 		return
 	end
 
-	local var_40_0 = GuideModel.instance:getDoingGuideIdList()
-	local var_40_1 = var_40_0 and #var_40_0 or 0
+	local var_43_0 = GuideModel.instance:getDoingGuideIdList()
+	local var_43_1 = var_43_0 and #var_43_0 or 0
 
-	if not FightModel.instance:isStartFinish() and var_40_1 > 0 then
+	if not FightModel.instance:isStartFinish() and var_43_1 > 0 then
 		return
 	end
 
 	FightController.instance:openFightSpecialTipView()
 end
 
-function var_0_0._getPlayerPrefKeySpeed(arg_41_0)
+function var_0_0._getPlayerPrefKeySpeed(arg_44_0)
 	return PlayerPrefsKey.FightSpeed .. PlayerModel.instance:getPlayinfo().userId
 end
 
-function var_0_0._autoPlayCard(arg_42_0)
+function var_0_0._autoPlayCard(arg_45_0)
 	if FightDataHelper.stageMgr:inFightState(FightStageMgr.FightStateType.Season2AutoChangeHero) then
 		return
 	end
@@ -605,11 +644,11 @@ function var_0_0._autoPlayCard(arg_42_0)
 	end
 end
 
-function var_0_0._onClickCareerRestrain(arg_43_0)
+function var_0_0._onClickCareerRestrain(arg_46_0)
 	if not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.FightProperty) then
-		local var_43_0, var_43_1 = OpenModel.instance:getFuncUnlockDesc(OpenEnum.UnlockFunc.FightProperty)
+		local var_46_0, var_46_1 = OpenModel.instance:getFuncUnlockDesc(OpenEnum.UnlockFunc.FightProperty)
 
-		GameFacade.showToast(var_43_0, var_43_1)
+		GameFacade.showToast(var_46_0, var_46_1)
 
 		return
 	end
@@ -621,45 +660,45 @@ function var_0_0._onClickCareerRestrain(arg_43_0)
 	ViewMgr.instance:openView(ViewName.HeroGroupCareerTipView)
 end
 
-function var_0_0._onFightReconnectLastWork(arg_44_0)
-	gohelper.setActive(arg_44_0._btnSpecialTip.gameObject, var_0_0.canShowSpecialBtn())
+function var_0_0._onFightReconnectLastWork(arg_47_0)
+	gohelper.setActive(arg_47_0._btnSpecialTip.gameObject, var_0_0.canShowSpecialBtn())
 end
 
-function var_0_0._onGMShowChange(arg_45_0)
-	arg_45_0:_showEnemySubCount()
+function var_0_0._onGMShowChange(arg_48_0)
+	arg_48_0:_showEnemySubCount()
 end
 
-function var_0_0.onDestroyView(arg_46_0)
-	TaskDispatcher.cancelTask(arg_46_0._resetCamera, arg_46_0)
+function var_0_0.onDestroyView(arg_49_0)
+	TaskDispatcher.cancelTask(arg_49_0._resetCamera, arg_49_0)
 end
 
 function var_0_0.canShowSpecialBtn()
-	local var_47_0 = FightWorkBeforeStartNoticeView.canShowTips()
+	local var_50_0 = FightWorkBeforeStartNoticeView.canShowTips()
 
-	if not var_47_0 then
-		local var_47_1 = FightModel.instance:getFightParam().episodeId
-		local var_47_2 = DungeonConfig.instance:getEpisodeCO(var_47_1)
-		local var_47_3 = var_47_2 and var_47_2.type
+	if not var_50_0 then
+		local var_50_1 = FightModel.instance:getFightParam().episodeId
+		local var_50_2 = DungeonConfig.instance:getEpisodeCO(var_50_1)
+		local var_50_3 = var_50_2 and var_50_2.type
 
-		if Activity104Model.instance:isSeasonEpisodeType(var_47_3) then
-			local var_47_4 = Activity104Model.instance:getFightCardDataList()
+		if Activity104Model.instance:isSeasonEpisodeType(var_50_3) then
+			local var_50_4 = Activity104Model.instance:getFightCardDataList()
 
-			var_47_0 = var_47_4 and #var_47_4 > 0
-		elseif Season123Controller.canUse123EquipEpisodeType(var_47_3) then
-			local var_47_5 = Season123Model.instance:getFightCardDataList()
+			var_50_0 = var_50_4 and #var_50_4 > 0
+		elseif Season123Controller.canUse123EquipEpisodeType(var_50_3) then
+			local var_50_5 = Season123Model.instance:getFightCardDataList()
 
-			var_47_0 = var_47_5 and #var_47_5 > 0
+			var_50_0 = var_50_5 and #var_50_5 > 0
 		end
 	end
 
 	if GuideModel.instance:isFlagEnable(GuideModel.GuideFlag.FightForbidRoundView) then
-		var_47_0 = false
+		var_50_0 = false
 	end
 
-	return var_47_0
+	return var_50_0
 end
 
-function var_0_0._resetCamera(arg_48_0)
+function var_0_0._resetCamera(arg_51_0)
 	FightController.instance:dispatchEvent(FightEvent.SetIsShowUI, true)
 	FightMsgMgr.sendMsg(FightMsgId.CameraFocusChanged, false)
 	FightController.instance:dispatchEvent(FightEvent.OnCameraFocusChanged, false)
@@ -668,92 +707,92 @@ function var_0_0._resetCamera(arg_48_0)
 		return
 	end
 
-	local var_48_0 = FightHelper.getAllEntitys()
+	local var_51_0 = FightHelper.getAllEntitys()
 
-	for iter_48_0, iter_48_1 in ipairs(var_48_0) do
-		iter_48_1:setVisibleByPos(true)
+	for iter_51_0, iter_51_1 in ipairs(var_51_0) do
+		iter_51_1:setVisibleByPos(true)
 
-		if iter_48_1.buff then
-			iter_48_1.buff:hideBuffEffects()
-			iter_48_1.buff:showBuffEffects()
+		if iter_51_1.buff then
+			iter_51_1.buff:hideBuffEffects()
+			iter_51_1.buff:showBuffEffects()
 		end
 
-		if iter_48_1.nameUI then
-			iter_48_1.nameUI:setActive(true)
+		if iter_51_1.nameUI then
+			iter_51_1.nameUI:setActive(true)
 		end
 	end
 
-	local var_48_1 = GameSceneMgr.instance:getScene(SceneType.Fight)
+	local var_51_1 = GameSceneMgr.instance:getScene(SceneType.Fight)
 
-	var_48_1.level:setFrontVisible(true)
-	var_48_1.camera:setSceneCameraOffset()
+	var_51_1.level:setFrontVisible(true)
+	var_51_1.camera:setSceneCameraOffset()
 end
 
-function var_0_0._onSetStateForDialogBeforeStartFight(arg_49_0, arg_49_1)
-	gohelper.setActive(arg_49_0._topRightBtnRoot, not arg_49_1)
-	gohelper.setActive(arg_49_0._roundGO, not arg_49_1)
+function var_0_0._onSetStateForDialogBeforeStartFight(arg_52_0, arg_52_1)
+	gohelper.setActive(arg_52_0._topRightBtnRoot, not arg_52_1)
+	gohelper.setActive(arg_52_0._roundGO, not arg_52_1)
 
 	if FightDataHelper.fieldMgr:isDouQuQu() then
-		gohelper.setActive(arg_49_0._enemyinfoRoot, false)
+		gohelper.setActive(arg_52_0._enemyinfoRoot, false)
 	else
-		gohelper.setActive(arg_49_0._enemyinfoRoot, not arg_49_1)
+		gohelper.setActive(arg_52_0._enemyinfoRoot, not arg_52_1)
 	end
 
-	arg_49_0:refreshEnemyAction(not arg_49_1)
+	arg_52_0:refreshEnemyAction(not arg_52_1)
 end
 
-function var_0_0.refreshEnemyAction(arg_50_0, arg_50_1)
-	if arg_50_0.actionStatus == FightEnum.EnemyActionStatus.NotOpen then
-		gohelper.setActive(arg_50_0._enemyActionRoot, false)
+function var_0_0.refreshEnemyAction(arg_53_0, arg_53_1)
+	if arg_53_0.actionStatus == FightEnum.EnemyActionStatus.NotOpen then
+		gohelper.setActive(arg_53_0._enemyActionRoot, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_50_0._enemyActionRoot, arg_50_1)
-	gohelper.setActive(arg_50_0.enemyActionNormal, arg_50_0.actionStatus == FightEnum.EnemyActionStatus.Normal)
-	gohelper.setActive(arg_50_0.enemyActionSelect, arg_50_0.actionStatus == FightEnum.EnemyActionStatus.Select)
-	gohelper.setActive(arg_50_0.enemyActionLocked, arg_50_0.actionStatus == FightEnum.EnemyActionStatus.Lock)
+	gohelper.setActive(arg_53_0._enemyActionRoot, arg_53_1)
+	gohelper.setActive(arg_53_0.enemyActionNormal, arg_53_0.actionStatus == FightEnum.EnemyActionStatus.Normal)
+	gohelper.setActive(arg_53_0.enemyActionSelect, arg_53_0.actionStatus == FightEnum.EnemyActionStatus.Select)
+	gohelper.setActive(arg_53_0.enemyActionLocked, arg_53_0.actionStatus == FightEnum.EnemyActionStatus.Lock)
 end
 
-function var_0_0.onStageChange(arg_51_0)
-	if arg_51_0.actionStatus == FightEnum.EnemyActionStatus.NotOpen then
+function var_0_0.onStageChange(arg_54_0)
+	if arg_54_0.actionStatus == FightEnum.EnemyActionStatus.NotOpen then
 		return
 	end
 
 	if FightModel.instance:getCurStage() ~= FightEnum.Stage.Card then
-		arg_51_0:setEnemyActionStatus(FightEnum.EnemyActionStatus.Lock)
+		arg_54_0:setEnemyActionStatus(FightEnum.EnemyActionStatus.Lock)
 	else
-		arg_51_0:setEnemyActionStatus(FightEnum.EnemyActionStatus.Normal)
+		arg_54_0:setEnemyActionStatus(FightEnum.EnemyActionStatus.Normal)
 	end
 end
 
-function var_0_0.setEnemyActionStatus(arg_52_0, arg_52_1)
-	arg_52_0.actionStatus = arg_52_1
+function var_0_0.setEnemyActionStatus(arg_55_0, arg_55_1)
+	arg_55_0.actionStatus = arg_55_1
 
-	FightController.instance:dispatchEvent(FightEvent.OnEnemyActionStatusChange, arg_52_0.actionStatus)
-	arg_52_0:refreshEnemyAction(true)
+	FightController.instance:dispatchEvent(FightEvent.OnEnemyActionStatusChange, arg_55_0.actionStatus)
+	arg_55_0:refreshEnemyAction(true)
 end
 
-function var_0_0.onClickEnemyAction(arg_53_0)
-	if arg_53_0.actionStatus ~= FightEnum.EnemyActionStatus.Normal then
+function var_0_0.onClickEnemyAction(arg_56_0)
+	if arg_56_0.actionStatus ~= FightEnum.EnemyActionStatus.Normal then
 		return
 	end
 
-	if arg_53_0:checkMonsterCardIsEmpty() then
+	if arg_56_0:checkMonsterCardIsEmpty() then
 		return
 	end
 
-	arg_53_0:setEnemyActionStatus(FightEnum.EnemyActionStatus.Select)
+	arg_56_0:setEnemyActionStatus(FightEnum.EnemyActionStatus.Select)
 	ViewMgr.instance:openView(ViewName.FightEnemyActionView)
 end
 
-function var_0_0.checkMonsterCardIsEmpty(arg_54_0)
-	local var_54_0 = FightModel.instance:getCurRoundMO()
-	local var_54_1 = var_54_0 and var_54_0:getAIUseCardMOList()
+function var_0_0.checkMonsterCardIsEmpty(arg_57_0)
+	local var_57_0 = FightModel.instance:getCurRoundMO()
+	local var_57_1 = var_57_0 and var_57_0:getAIUseCardMOList()
 
-	if var_54_1 then
-		for iter_54_0, iter_54_1 in ipairs(var_54_1) do
-			if FightDataHelper.entityMgr:getById(iter_54_1.uid) then
+	if var_57_1 then
+		for iter_57_0, iter_57_1 in ipairs(var_57_1) do
+			if FightDataHelper.entityMgr:getById(iter_57_1.uid) then
 				return false
 			end
 		end

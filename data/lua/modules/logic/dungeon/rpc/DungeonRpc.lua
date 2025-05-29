@@ -96,6 +96,8 @@ function var_0_0.packStartDungeonRequest(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg
 
 		if var_5_0 and var_5_0.type == DungeonEnum.EpisodeType.Rouge then
 			arg_5_1.params = tostring(RougeConfig1.instance:season())
+		elseif var_5_0 and var_5_0.type == DungeonEnum.EpisodeType.WeekWalk_2 then
+			arg_5_1.params = WeekWalk_2Model.instance:getFightParam()
 		elseif var_5_0 and var_5_0.type == DungeonEnum.EpisodeType.Act183 then
 			arg_5_1.params = Act183Helper.generateStartDungeonParams(var_5_0.id)
 		end

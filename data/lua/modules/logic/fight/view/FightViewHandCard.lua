@@ -608,6 +608,12 @@ function var_0_0._toAutoPlayCard(arg_33_0)
 	local var_33_0 = FightModel.instance.autoPlayCardList
 
 	if #var_33_0 > 0 then
+		if arg_33_0._autoPlayCardFlow then
+			arg_33_0._autoPlayCardFlow:stop()
+
+			arg_33_0._autoPlayCardFlow = nil
+		end
+
 		arg_33_0._autoPlayCardFlow = FlowSequence.New()
 
 		arg_33_0._autoPlayCardFlow:addWork(FightAutoBindContractWork.New())
@@ -1308,6 +1314,14 @@ function var_0_0._resetCard(arg_76_0, arg_76_1)
 
 	if arg_76_0._cardPlayFlow.status == WorkStatus.Running then
 		arg_76_0._cardPlayFlow:stop()
+	end
+
+	if arg_76_0._autoPlayCardFlow then
+		arg_76_0._autoPlayCardFlow:stop()
+	end
+
+	if FightModel.instance:getCurStage() == FightEnum.Stage.AutoCard and not FightModel.instance:isAuto() then
+		FightController.instance:setCurStage(FightEnum.Stage.Card)
 	end
 end
 

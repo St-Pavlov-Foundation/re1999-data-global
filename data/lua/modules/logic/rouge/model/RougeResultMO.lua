@@ -43,6 +43,8 @@ function var_0_0.init(arg_1_0, arg_1_1)
 	arg_1_0.preRemainScore2GeniusPoint = tonumber(arg_1_1.preRemainScore2GeniusPoint)
 
 	arg_1_0:updateLimiterResult(arg_1_1)
+
+	arg_1_0.extraAddPoint = tonumber(arg_1_1.extraAddPoint)
 end
 
 function var_0_0.updateReviewInfo(arg_2_0, arg_2_1)

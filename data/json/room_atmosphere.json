@@ -71,7 +71,7 @@
     "effectSequence": "8#9",
     "residentEffect": 1,
     "cyclesTimes": 0,
-    "openTime": "2025-05-01 05:00:00",
+    "openTime": "2025-04-24 05:00:00",
     "durationDay": 10,
     "triggerType": 3,
     "cdtimes": 3600
@@ -82,7 +82,7 @@
     "effectSequence": "9#8",
     "residentEffect": 1,
     "cyclesTimes": 0,
-    "openTime": "2025-05-11 05:00:00",
+    "openTime": "2025-04-24 05:00:00",
     "durationDay": 18,
     "triggerType": 3,
     "cdtimes": 3600
@@ -93,7 +93,7 @@
     "effectSequence": "10",
     "residentEffect": 1,
     "cyclesTimes": 0,
-    "openTime": "2025-04-24 20:00:00",
+    "openTime": "2025-04-24 05:00:00",
     "durationDay": 1,
     "triggerType": 3,
     "cdtimes": 14400
@@ -104,7 +104,7 @@
     "effectSequence": "10",
     "residentEffect": 1,
     "cyclesTimes": 0,
-    "openTime": "2025-05-11 05:00:00",
+    "openTime": "2025-04-24 05:00:00",
     "durationDay": 1,
     "triggerType": 3,
     "cdtimes": 14400

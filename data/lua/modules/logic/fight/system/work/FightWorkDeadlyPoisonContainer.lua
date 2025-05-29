@@ -40,10 +40,11 @@ function var_0_0.onStart(arg_1_0)
 					FightController.instance:dispatchEvent(FightEvent.OnHpChange, var_1_2, -var_1_4)
 
 					if iter_1_5[2] and not var_0_0.existWrapDict[iter_1_2] then
-						local var_1_6 = var_1_2.effect:addHangEffect("v2a3_ddg/ddg_innate_02", ModuleEnum.SpineHangPointRoot, nil, 1)
+						local var_1_6, var_1_7 = arg_1_0:getEffectRes()
+						local var_1_8 = var_1_2.effect:addHangEffect(var_1_6, var_1_7, nil, 1)
 
-						FightRenderOrderMgr.instance:onAddEffectWrap(iter_1_2, var_1_6)
-						var_1_6:setLocalPos(0, 0, 0)
+						FightRenderOrderMgr.instance:onAddEffectWrap(iter_1_2, var_1_8)
+						var_1_8:setLocalPos(0, 0, 0)
 
 						var_0_0.existWrapDict[iter_1_2] = true
 					end
@@ -55,37 +56,53 @@ function var_0_0.onStart(arg_1_0)
 	arg_1_0:onDone(true)
 end
 
-function var_0_0.addEffectMo(arg_2_0, arg_2_1)
-	local var_2_0 = arg_2_1.targetId
-	local var_2_1 = arg_2_0.targetDict[var_2_0]
+function var_0_0.getEffectRes(arg_2_0)
+	local var_2_0 = arg_2_0._fightStepMO.fromId
+	local var_2_1 = var_2_0 and FightDataHelper.entityMgr:getById(var_2_0)
+	local var_2_2 = var_2_1 and var_2_1.skin
+	local var_2_3 = var_2_2 and lua_fight_sp_effect_ddg.configDict[var_2_2]
+	local var_2_4 = "v2a3_ddg/ddg_innate_02"
+	local var_2_5 = ModuleEnum.SpineHangPointRoot
 
-	if not var_2_1 then
-		var_2_1 = {}
-		arg_2_0.targetDict[var_2_0] = var_2_1
+	if var_2_3 then
+		var_2_4 = var_2_3.posionEffect
+		var_2_5 = var_2_3.posionHang
 	end
 
-	local var_2_2 = tonumber(arg_2_1.reserveId)
-	local var_2_3 = not string.nilorempty(arg_2_1.reserveStr)
-	local var_2_4 = var_2_1[var_2_2]
-
-	if not var_2_4 then
-		var_2_4 = {
-			arg_2_1.effectNum,
-			var_2_3
-		}
-		var_2_1[var_2_2] = var_2_4
-	else
-		var_2_4[1] = var_2_4[1] + arg_2_1.effectNum
-	end
-
-	arg_2_1:setDone()
+	return var_2_4, var_2_5
 end
 
-function var_0_0.getEffectType(arg_3_0)
+function var_0_0.addEffectMo(arg_3_0, arg_3_1)
+	local var_3_0 = arg_3_1.targetId
+	local var_3_1 = arg_3_0.targetDict[var_3_0]
+
+	if not var_3_1 then
+		var_3_1 = {}
+		arg_3_0.targetDict[var_3_0] = var_3_1
+	end
+
+	local var_3_2 = tonumber(arg_3_1.reserveId)
+	local var_3_3 = not string.nilorempty(arg_3_1.reserveStr)
+	local var_3_4 = var_3_1[var_3_2]
+
+	if not var_3_4 then
+		var_3_4 = {
+			arg_3_1.effectNum,
+			var_3_3
+		}
+		var_3_1[var_3_2] = var_3_4
+	else
+		var_3_4[1] = var_3_4[1] + arg_3_1.effectNum
+	end
+
+	arg_3_1:setDone()
+end
+
+function var_0_0.getEffectType(arg_4_0)
 	return FightEnum.EffectType.DEADLYPOISONORIGINDAMAGE
 end
 
-function var_0_0.getFloatType(arg_4_0)
+function var_0_0.getFloatType(arg_5_0)
 	return FightEnum.FloatType.damage_origin
 end
 

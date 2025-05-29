@@ -1,4 +1,18 @@
 ﻿return {
+	WeekwalkVer2 = {
+		model = {
+			"WeekWalk_2Model"
+		},
+		controller = {
+			"WeekWalk_2Controller"
+		},
+		config = {
+			"WeekWalk_2Config"
+		},
+		rpc = {
+			"Weekwalk_2Rpc"
+		}
+	},
 	Activity187 = {
 		model = {
 			"Activity187Model"
@@ -64,22 +78,6 @@
 		},
 		config = {
 			"AutoChessConfig"
-		}
-	},
-	Activity189 = {
-		model = {
-			"Activity189Model",
-			"ShortenActModel"
-		},
-		config = {
-			"Activity189Config",
-			"ShortenActConfig"
-		},
-		controller = {
-			"Activity189Controller"
-		},
-		rpc = {
-			"Activity189Rpc"
 		}
 	},
 	Activity201 = {
@@ -221,34 +219,6 @@
 			"CritterConfig"
 		}
 	},
-	Activity181 = {
-		model = {
-			"Activity181Model"
-		},
-		controller = {
-			"Activity181Controller"
-		},
-		rpc = {
-			"Activity181Rpc"
-		},
-		config = {
-			"Activity181Config"
-		}
-	},
-	Activity160 = {
-		model = {
-			"Activity160Model"
-		},
-		controller = {
-			"Activity160Controller"
-		},
-		config = {
-			"Activity160Config"
-		},
-		rpc = {
-			"Activity160Rpc"
-		}
-	},
 	PickAssist = {
 		model = {
 			"PickAssistListModel"
@@ -342,7 +312,8 @@
 			"RougeConfig1",
 			"RougeCollectionConfig",
 			"RougeDLCConfig101",
-			"RougeDLCConfig102"
+			"RougeDLCConfig102",
+			"RougeDLCConfig103"
 		},
 		controller = {
 			"RougeController",
@@ -2534,6 +2505,61 @@
 	LifeCircle = {
 		controller = {
 			"LifeCircleController"
+		}
+	},
+	DiceHero = {
+		model = {
+			"DiceHeroModel",
+			"DiceHeroFightModel"
+		},
+		rpc = {
+			"DiceHeroRpc"
+		},
+		config = {
+			"DiceHeroConfig"
+		},
+		controller = {
+			"DiceHeroController"
+		}
+	},
+	Activity188 = {
+		model = {
+			"Activity188Model"
+		},
+		rpc = {
+			"Activity188Rpc"
+		},
+		config = {
+			"Activity188Config"
+		},
+		controller = {
+			"XugoujiController",
+			"XugoujiGameStepController"
+		}
+	},
+	Activity189 = {
+		model = {
+			"Activity189Model",
+			"ShortenActModel"
+		},
+		config = {
+			"Activity189Config",
+			"ShortenActConfig"
+		},
+		controller = {
+			"Activity189Controller"
+		},
+		rpc = {
+			"Activity189Rpc"
+		}
+	},
+	VersionActivity2_6Dungeon = {
+		model = {
+			"VersionActivity2_6StoreListModel",
+			"VersionActivity2_6TaskListModel"
+		},
+		controller = {
+			"VersionActivity2_6DungeonController"
 		}
 	}
 }

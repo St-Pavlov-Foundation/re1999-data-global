@@ -203,10 +203,17 @@ function var_0_0.playAddPointEffect(arg_19_0, arg_19_1, arg_19_2)
 	local var_19_0 = arg_19_0.mgr.entity
 
 	if FightBuffHelper.checkPlayDuDuGuAddExPointEffect(var_19_0) then
-		local var_19_1 = var_19_0.effect:addHangEffect("v2a3_ddg/ddg_innate_03", ModuleEnum.SpineHangPointRoot, nil, 1)
+		local var_19_1 = var_19_0:getMO().skin
+		local var_19_2 = lua_fight_sp_effect_ddg.configDict[var_19_1]
+		local var_19_3 = "v2a3_ddg/ddg_innate_03"
+		local var_19_4 = ModuleEnum.SpineHangPointRoot
 
-		var_19_1:setLocalPos(0, 0, 0)
-		FightRenderOrderMgr.instance:onAddEffectWrap(var_19_0.id, var_19_1)
+		if var_19_2 then
+			var_19_3 = var_19_2.addExPointEffect
+			var_19_4 = var_19_2.addExPointHang
+		end
+
+		var_19_0.uniqueEffect:addHangEffect(var_19_3, var_19_4, nil, 1):setLocalPos(0, 0, 0)
 	end
 end
 

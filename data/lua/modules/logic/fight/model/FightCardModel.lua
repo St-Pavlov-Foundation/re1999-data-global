@@ -535,7 +535,48 @@ function var_0_0.getCombineSkillId(arg_43_0, arg_43_1, arg_43_2)
 		end
 	end
 
-	return var_0_0.instance:getSkillNextLvId(var_43_0, var_43_1)
+	local var_43_2 = var_0_0.instance:getSkillNextLvId(var_43_0, var_43_1)
+
+	if not FightEnum.UniversalCard[arg_43_0.skillId] and not FightEnum.UniversalCard[arg_43_1.skillId] then
+		local var_43_3 = FightEnum.BuffFeature.ChangeComposeCardSkill
+		local var_43_4 = {}
+
+		tabletool.addValues(var_43_4, FightDataHelper.entityMgr:getMyPlayerList())
+		tabletool.addValues(var_43_4, FightDataHelper.entityMgr:getMyNormalList())
+		tabletool.addValues(var_43_4, FightDataHelper.entityMgr:getMySpList())
+
+		local var_43_5 = 0
+
+		for iter_43_0, iter_43_1 in ipairs(var_43_4) do
+			local var_43_6 = iter_43_1.buffDic
+
+			for iter_43_2, iter_43_3 in pairs(var_43_6) do
+				local var_43_7 = FightConfig.instance:hasBuffFeature(iter_43_3.buffId, var_43_3)
+
+				if var_43_7 then
+					local var_43_8 = string.splitToNumber(var_43_7.featureStr, "#")
+
+					if var_43_8[2] then
+						var_43_5 = var_43_5 + var_43_8[2]
+					end
+				end
+			end
+		end
+
+		if var_43_5 == 0 then
+			return var_43_2
+		elseif var_43_5 > 0 then
+			for iter_43_4 = 1, var_43_5 do
+				var_43_2 = var_0_0.instance:getSkillNextLvId(var_43_0, var_43_2) or var_43_2
+			end
+		else
+			for iter_43_5 = 1, math.abs(var_43_5) do
+				var_43_2 = var_0_0.instance:getSkillPrevLvId(var_43_0, var_43_2) or var_43_2
+			end
+		end
+	end
+
+	return var_43_2
 end
 
 function var_0_0.moveOnly(arg_44_0, arg_44_1, arg_44_2)

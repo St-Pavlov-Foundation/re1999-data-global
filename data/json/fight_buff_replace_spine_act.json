@@ -292,5 +292,26 @@
     "priority": 1,
     "combination": [],
     "suffix": "_channel"
+  },
+  {
+    "id": 308701,
+    "buffId": 81800061,
+    "priority": 1,
+    "combination": [],
+    "suffix": "_trans"
+  },
+  {
+    "id": 308702,
+    "buffId": 81800061,
+    "priority": 1,
+    "combination": [],
+    "suffix": "_trans"
+  },
+  {
+    "id": 308703,
+    "buffId": 81800061,
+    "priority": 1,
+    "combination": [],
+    "suffix": "_trans"
   }
 ]

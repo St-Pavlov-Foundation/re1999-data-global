@@ -32,6 +32,7 @@ function var_0_0.updateInfo(arg_2_0, arg_2_1, arg_2_2)
 	arg_2_0.towerLayer = arg_2_1.towerLayer
 	arg_2_0.towerBossPassCount = arg_2_1.towerBossPassCount
 	arg_2_0.maxLevelHero = arg_2_1.heroMaxLevelCount
+	arg_2_0.weekwalkVer2PlatinumCup = arg_2_1.weekwalkVer2PlatinumCup
 end
 
 function var_0_0.updateThemeId(arg_3_0, arg_3_1)
@@ -296,6 +297,12 @@ function var_0_0.getProgressByIndex(arg_27_0, arg_27_1)
 	elseif arg_27_1 == PlayerCardEnum.LeftContent.TowerBossPassCount then
 		if arg_27_0.towerBossPassCount > 0 then
 			return luaLang("playercard_towerbosspasscount") .. arg_27_0.towerBossPassCount
+		else
+			return -1
+		end
+	elseif arg_27_1 == PlayerCardEnum.LeftContent.WeekwalkVer2PlatinumCup then
+		if arg_27_0.weekwalkVer2PlatinumCup >= 0 then
+			return luaLang("playercard_weekwalkVer2PlatinumCup") .. arg_27_0.weekwalkVer2PlatinumCup
 		else
 			return -1
 		end

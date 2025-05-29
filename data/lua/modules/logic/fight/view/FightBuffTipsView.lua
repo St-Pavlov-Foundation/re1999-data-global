@@ -238,203 +238,298 @@ function var_0_0.onOpen(arg_9_0)
 	end
 end
 
-function var_0_0._updateBuffs(arg_10_0, arg_10_1)
-	var_0_0._updateBuffDesc_overseas(arg_10_1, arg_10_0._buffItemList, arg_10_0._gobuffitem, arg_10_0, arg_10_0.getCommonBuffTipScrollAnchor)
+function var_0_0._setPos(arg_10_0, arg_10_1)
+	local var_10_0 = arg_10_0.viewParam.iconPos
+	local var_10_1 = arg_10_0.viewParam.offsetX
+	local var_10_2 = arg_10_0.viewParam.offsetY
+
+	arg_10_0.enemyBuffTipPosY = 80
+
+	local var_10_3 = recthelper.rectToRelativeAnchorPos(var_10_0, arg_10_0._gobuffinfocontainer.transform.parent)
+	local var_10_4 = recthelper.getWidth(arg_10_0.rectTrScrollBuff)
+	local var_10_5 = recthelper.getHeight(arg_10_0.rectTrScrollBuff)
+	local var_10_6 = 0
+	local var_10_7 = 0
+
+	if arg_10_1.side == FightEnum.EntitySide.MySide then
+		var_10_6 = var_10_3.x - var_10_1
+		var_10_7 = var_10_3.y + var_10_2
+	else
+		var_10_6 = var_10_3.x + var_10_1
+		var_10_7 = arg_10_0.enemyBuffTipPosY
+	end
+
+	local var_10_8 = UnityEngine.Screen.width * 0.5
+	local var_10_9 = 10
+	local var_10_10 = {
+		min = -var_10_8 + var_10_4 + var_10_9,
+		max = var_10_8 - var_10_4 - var_10_9
+	}
+	local var_10_11 = GameUtil.clamp(var_10_6, var_10_10.min, var_10_10.max)
+
+	recthelper.setAnchor(arg_10_0._gobuffinfocontainer.transform, var_10_11, var_10_7)
+end
+
+function var_0_0._updateBuffs(arg_11_0, arg_11_1)
+	arg_11_0:updateBuffDesc(arg_11_1, arg_11_0._buffItemList, arg_11_0._gobuffitem, arg_11_0, arg_11_0.getCommonBuffTipScrollAnchor)
 end
 
 var_0_0.Interval = 10
 
-function var_0_0.getCommonBuffTipScrollAnchor(arg_11_0, arg_11_1, arg_11_2)
-	local var_11_0 = GameUtil.getViewSize() / 2
-	local var_11_1 = arg_11_0.rectTrScrollBuff
-	local var_11_2 = arg_11_0.rectTrBuffContent
-	local var_11_3, var_11_4 = recthelper.uiPosToScreenPos2(var_11_1)
-	local var_11_5, var_11_6 = SLFramework.UGUI.RectTrHelper.ScreenPosXYToAnchorPosXY(var_11_3, var_11_4, arg_11_1, CameraMgr.instance:getUICamera(), nil, nil)
-	local var_11_7 = recthelper.getWidth(var_11_1) / 2
-	local var_11_8 = var_11_0 + var_11_5 - var_11_7 - var_0_0.Interval
-	local var_11_9 = recthelper.getWidth(arg_11_2)
-	local var_11_10 = var_11_9 <= var_11_8
+function var_0_0.getCommonBuffTipScrollAnchor(arg_12_0, arg_12_1, arg_12_2)
+	local var_12_0 = GameUtil.getViewSize() / 2
+	local var_12_1 = arg_12_0.rectTrScrollBuff
+	local var_12_2 = arg_12_0.rectTrBuffContent
+	local var_12_3, var_12_4 = recthelper.uiPosToScreenPos2(var_12_1)
+	local var_12_5, var_12_6 = SLFramework.UGUI.RectTrHelper.ScreenPosXYToAnchorPosXY(var_12_3, var_12_4, arg_12_1, CameraMgr.instance:getUICamera(), nil, nil)
+	local var_12_7 = recthelper.getWidth(var_12_1) / 2
+	local var_12_8 = var_12_0 + var_12_5 - var_12_7 - var_0_0.Interval
+	local var_12_9 = recthelper.getWidth(arg_12_2)
+	local var_12_10 = var_12_9 <= var_12_8
 
-	arg_11_2.pivot = CommonBuffTipEnum.Pivot.Right
+	arg_12_2.pivot = CommonBuffTipEnum.Pivot.Right
 
-	local var_11_11 = var_11_5
-	local var_11_12 = var_11_6
+	local var_12_11 = var_12_5
+	local var_12_12 = var_12_6
 
-	if var_11_10 then
-		var_11_11 = var_11_11 - var_11_7 - var_0_0.Interval
+	if var_12_10 then
+		var_12_11 = var_12_11 - var_12_7 - var_0_0.Interval
 	else
-		var_11_11 = var_11_11 + var_11_7 + var_0_0.Interval + var_11_9
+		var_12_11 = var_12_11 + var_12_7 + var_0_0.Interval + var_12_9
 	end
 
-	local var_11_13 = math.min(recthelper.getHeight(var_11_1), recthelper.getHeight(var_11_2)) / 2
+	local var_12_13 = math.min(recthelper.getHeight(var_12_1), recthelper.getHeight(var_12_2)) / 2
 
-	recthelper.setAnchor(arg_11_2, var_11_11, var_11_12 + var_11_13)
+	recthelper.setAnchor(arg_12_2, var_12_11, var_12_12 + var_12_13)
 end
 
 var_0_0.filterTypeKey = {
 	[2] = true
 }
 
-function var_0_0.updateBuffDesc(arg_12_0, arg_12_1, arg_12_2, arg_12_3, arg_12_4)
-	local var_12_0 = arg_12_0 and arg_12_0:getBuffList() or {}
-	local var_12_1 = tabletool.copy(var_12_0)
-	local var_12_2 = FightBuffHelper.filterBuffType(var_12_1, var_0_0.filterTypeKey)
+local var_0_5 = 635
+local var_0_6 = 597
+local var_0_7 = 300
 
-	FightSkillBuffMgr.instance:dealStackerBuff(var_12_2)
-	table.sort(var_12_2, function(arg_13_0, arg_13_1)
-		if arg_13_0.time ~= arg_13_1.time then
-			return arg_13_0.time < arg_13_1.time
+function var_0_0.updateBuffDesc(arg_13_0, arg_13_1, arg_13_2, arg_13_3, arg_13_4, arg_13_5)
+	local var_13_0 = arg_13_1 and arg_13_1:getBuffList() or {}
+	local var_13_1 = tabletool.copy(var_13_0)
+	local var_13_2 = FightBuffHelper.filterBuffType(var_13_1, var_0_0.filterTypeKey)
+
+	FightSkillBuffMgr.instance:dealStackerBuff(var_13_2)
+	table.sort(var_13_2, function(arg_14_0, arg_14_1)
+		if arg_14_0.time ~= arg_14_1.time then
+			return arg_14_0.time < arg_14_1.time
 		end
 
-		return arg_13_0.id < arg_13_1.id
+		return arg_14_0.id < arg_14_1.id
 	end)
 
-	for iter_12_0, iter_12_1 in ipairs(arg_12_1) do
-		gohelper.setActive(iter_12_1.go, false)
+	for iter_13_0, iter_13_1 in ipairs(arg_13_2) do
+		gohelper.setActive(iter_13_1.go, false)
 	end
 
-	local var_12_3 = var_12_2 and #var_12_2 or 0
-	local var_12_4 = 0
+	local var_13_3 = var_13_2 and #var_13_2 or 0
+	local var_13_4 = 0
+	local var_13_5 = -1
+	local var_13_6 = var_0_5
+	local var_13_7 = var_0_6
+	local var_13_8 = {}
 
-	for iter_12_2 = 1, var_12_3 do
-		local var_12_5 = var_12_2[iter_12_2]
-		local var_12_6 = lua_skill_buff.configDict[var_12_5.buffId]
+	for iter_13_2 = 1, var_13_3 do
+		local var_13_9 = var_13_2[iter_13_2]
+		local var_13_10 = lua_skill_buff.configDict[var_13_9.buffId]
 
-		if var_12_6 and var_12_6.isNoShow == 0 then
-			local var_12_7 = lua_skill_bufftype.configDict[var_12_6.typeId]
+		if var_13_10 and var_13_10.isNoShow == 0 then
+			local var_13_11 = lua_skill_bufftype.configDict[var_13_10.typeId]
 
-			var_12_4 = var_12_4 + 1
+			var_13_4 = var_13_4 + 1
 
-			local var_12_8 = arg_12_1[var_12_4]
+			local var_13_12 = arg_13_2[var_13_4]
 
-			if not var_12_8 then
-				var_12_8 = arg_12_3:getUserDataTb_()
-				var_12_8.go = gohelper.cloneInPlace(arg_12_2, "buff" .. var_12_4)
-				var_12_8.getAnchorFunc = arg_12_4
-				var_12_8.viewClass = arg_12_3
+			if not var_13_12 then
+				var_13_12 = arg_13_4:getUserDataTb_()
+				var_13_12.go = gohelper.cloneInPlace(arg_13_3, "buff" .. var_13_4)
+				var_13_12.getAnchorFunc = arg_13_5
+				var_13_12.viewClass = arg_13_4
 
-				table.insert(arg_12_1, var_12_8)
+				table.insert(arg_13_2, var_13_12)
 			end
 
-			local var_12_9 = var_12_8.go
+			local var_13_13 = var_13_12.go
 
-			gohelper.setActive(var_12_9, true)
+			gohelper.setActive(var_13_13, true)
 
-			local var_12_10 = gohelper.findChildText(var_12_9, "title/txt_time")
+			local var_13_14 = gohelper.findChildText(var_13_13, "title/txt_time")
 
-			var_0_0.showBuffTime(var_12_10, var_12_5, var_12_6, arg_12_0)
+			var_0_0.showBuffTime(var_13_14, var_13_9, var_13_10, arg_13_1)
 
-			local var_12_11 = gohelper.findChildText(var_12_9, "txt_desc")
+			local var_13_15 = gohelper.findChildText(var_13_13, "txt_desc")
 
-			SkillHelper.addHyperLinkClick(var_12_11, var_0_0.onClickBuffHyperLink, var_12_8)
+			SkillHelper.addHyperLinkClick(var_13_15, var_0_0.onClickBuffHyperLink, var_13_12)
 
-			gohelper.findChildText(var_12_9, "title/txt_name").text = var_12_6.name
+			local var_13_16 = gohelper.findChildText(var_13_13, "title/txt_name")
 
-			local var_12_12 = FightBuffGetDescHelper.getBuffDesc(var_12_5)
-			local var_12_13 = GameUtil.getTextHeightByLine(var_12_11, var_12_12, 52.1) + 62
+			var_13_16.text = var_13_10.name
 
-			recthelper.setHeight(var_12_9.transform, var_12_13)
+			local var_13_17 = var_13_16.preferredWidth
+			local var_13_18 = FightBuffGetDescHelper.getBuffDesc(var_13_9)
+			local var_13_19 = GameUtil.getTextHeightByLine(var_13_15, var_13_18, 52.1) + 62
 
-			var_12_11.text = var_12_12
+			recthelper.setHeight(var_13_13.transform, var_13_19)
 
-			local var_12_14 = gohelper.findChildImage(var_12_9, "title/simage_icon")
+			var_13_15.text = var_13_18
 
-			if var_12_14 then
-				UISpriteSetMgr.instance:setBuffSprite(var_12_14, var_12_6.iconId)
+			local var_13_20 = gohelper.findChildImage(var_13_13, "title/simage_icon")
+
+			if var_13_20 then
+				UISpriteSetMgr.instance:setBuffSprite(var_13_20, var_13_10.iconId)
 			end
 
-			local var_12_15 = gohelper.findChild(var_12_9, "txt_desc/image_line")
-			local var_12_16 = gohelper.findChild(var_12_9, "title/txt_name/go_tag")
-			local var_12_17 = gohelper.findChildText(var_12_9, "title/txt_name/go_tag/bg/txt_tagname")
-			local var_12_18 = lua_skill_buff_desc.configDict[var_12_7.type]
+			local var_13_21 = gohelper.findChild(var_13_13, "txt_desc/image_line")
+			local var_13_22 = gohelper.findChild(var_13_13, "title/txt_name/go_tag")
+			local var_13_23 = gohelper.findChildText(var_13_13, "title/txt_name/go_tag/bg/txt_tagname")
+			local var_13_24 = lua_skill_buff_desc.configDict[var_13_11.type]
 
-			if var_12_18 then
-				var_12_17.text = var_12_18.name
+			if var_13_24 then
+				var_13_23.text = var_13_24.name
+				var_13_17 = var_13_17 + var_13_23.preferredWidth
 			end
 
-			gohelper.setActive(var_12_16, var_12_18)
-			gohelper.setActive(var_12_15, var_12_4 ~= var_12_3)
+			gohelper.setActive(var_13_22, var_13_24)
+			gohelper.setActive(var_13_21, var_13_4 ~= var_13_3)
 
-			arg_12_3._scrollbuff.verticalNormalizedPosition = 1
+			arg_13_4._scrollbuff.verticalNormalizedPosition = 1
+
+			local var_13_25 = var_13_15.transform
+			local var_13_26 = gohelper.findChild(var_13_13, "title").transform
+			local var_13_27 = var_13_13.transform
+
+			var_13_8[#var_13_8 + 1] = var_13_25
+			var_13_8[#var_13_8 + 1] = var_13_26
+			var_13_8[#var_13_8 + 1] = var_13_27
+			var_13_8[#var_13_8 + 1] = var_13_15
+			var_13_8[#var_13_8 + 1] = var_13_9
+
+			if var_13_17 > var_0_7 then
+				local var_13_28 = var_13_17 - var_0_7
+				local var_13_29 = var_0_6 + var_13_28
+
+				var_13_6 = math.max(var_13_6, var_13_29)
+				var_13_7 = math.max(var_13_7, var_13_29)
+			end
 		end
 	end
+
+	recthelper.setWidth(arg_13_0.rectTrScrollBuff, var_13_7)
+	recthelper.setWidth(arg_13_0.rectTrBuffContent, var_13_7)
+
+	if #var_13_8 > 0 then
+		for iter_13_3 = 0, #var_13_8 - 1, 5 do
+			local var_13_30 = var_13_8[iter_13_3 + 1]
+			local var_13_31 = var_13_8[iter_13_3 + 2]
+			local var_13_32 = var_13_8[iter_13_3 + 3]
+			local var_13_33 = var_13_8[iter_13_3 + 4]
+			local var_13_34 = var_13_8[iter_13_3 + 5]
+
+			recthelper.setWidth(var_13_31, var_13_7 - 10)
+			recthelper.setWidth(var_13_30, var_13_7 - 46)
+			ZProj.UGUIHelper.RebuildLayout(var_13_32)
+			recthelper.setWidth(var_13_32, var_13_7)
+
+			var_13_33.text = FightBuffGetDescHelper.getBuffDesc(var_13_34)
+			var_13_33.text = var_13_33.text
+
+			local var_13_35 = var_13_33.preferredHeight + 52.1 + 10
+
+			recthelper.setHeight(var_13_32, var_13_35)
+		end
+	end
+
+	for iter_13_4 in pairs(var_13_8) do
+		rawset(var_13_8, iter_13_4, nil)
+	end
+
+	local var_13_36
+
+	ZProj.UGUIHelper.RebuildLayout(arg_13_0.rectTrBuffContent)
 end
 
-function var_0_0.onClickBuffHyperLink(arg_14_0, arg_14_1, arg_14_2)
-	CommonBuffTipController.instance:openCommonTipViewWithCustomPosCallback(arg_14_1, arg_14_0.getAnchorFunc, arg_14_0.viewClass)
+function var_0_0.onClickBuffHyperLink(arg_15_0, arg_15_1, arg_15_2)
+	CommonBuffTipController.instance:openCommonTipViewWithCustomPosCallback(arg_15_1, arg_15_0.getAnchorFunc, arg_15_0.viewClass)
 end
 
-function var_0_0.showBuffTime(arg_15_0, arg_15_1, arg_15_2, arg_15_3)
-	if FightBuffHelper.isCountContinueChanelBuff(arg_15_1) then
-		arg_15_0.text = string.format(luaLang("enemytip_buff_time"), arg_15_1.exInfo)
+function var_0_0.showBuffTime(arg_16_0, arg_16_1, arg_16_2, arg_16_3)
+	if FightBuffHelper.isCountContinueChanelBuff(arg_16_1) then
+		arg_16_0.text = string.format(luaLang("enemytip_buff_time"), arg_16_1.exInfo)
 
 		return
 	end
 
-	if arg_15_1 and FightConfig.instance:hasBuffFeature(arg_15_1.buffId, FightEnum.BuffFeature.CountUseSelfSkillContinueChannel) then
-		arg_15_0.text = string.format(luaLang("enemytip_buff_time"), arg_15_1.exInfo)
+	if arg_16_1 and FightConfig.instance:hasBuffFeature(arg_16_1.buffId, FightEnum.BuffFeature.CountUseSelfSkillContinueChannel) then
+		arg_16_0.text = string.format(luaLang("enemytip_buff_time"), arg_16_1.exInfo)
 
 		return
 	end
 
-	if FightBuffHelper.isDuduBoneContinueChannelBuff(arg_15_1) then
-		arg_15_0.text = string.format(luaLang("buff_tip_duration"), arg_15_1.exInfo)
+	if FightBuffHelper.isDuduBoneContinueChannelBuff(arg_16_1) then
+		arg_16_0.text = string.format(luaLang("buff_tip_duration"), arg_16_1.exInfo)
 
 		return
 	end
 
-	if FightBuffHelper.isDeadlyPoisonBuff(arg_15_1) then
-		local var_15_0 = FightSkillBuffMgr.instance:getStackedCount(arg_15_1.entityId, arg_15_1)
+	if FightBuffHelper.isDeadlyPoisonBuff(arg_16_1) then
+		local var_16_0 = FightSkillBuffMgr.instance:getStackedCount(arg_16_1.entityId, arg_16_1)
 
-		arg_15_0.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("buff_tip_round_and_layer"), arg_15_1.duration, var_15_0)
+		arg_16_0.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("buff_tip_round_and_layer"), arg_16_1.duration, var_16_0)
 
 		return
 	end
 
-	local var_15_1 = lua_skill_bufftype.configDict[arg_15_2.typeId]
-	local var_15_2, var_15_3 = FightSkillBuffMgr.instance:buffIsStackerBuff(arg_15_2)
+	local var_16_1 = lua_skill_bufftype.configDict[arg_16_2.typeId]
+	local var_16_2, var_16_3 = FightSkillBuffMgr.instance:buffIsStackerBuff(arg_16_2)
 
-	if var_15_2 then
-		local var_15_4 = string.format(luaLang("enemytip_buff_stacked_count"), FightSkillBuffMgr.instance:getStackedCount(arg_15_3.id, arg_15_1))
+	if var_16_2 then
+		local var_16_4 = string.format(luaLang("enemytip_buff_stacked_count"), FightSkillBuffMgr.instance:getStackedCount(arg_16_3.id, arg_16_1))
 
-		if var_15_3 == FightEnum.BuffIncludeTypes.Stacked12 then
-			arg_15_0.text = var_15_4 .. " " .. string.format(luaLang("enemytip_buff_time"), arg_15_1.duration)
+		if var_16_3 == FightEnum.BuffIncludeTypes.Stacked12 then
+			arg_16_0.text = var_16_4 .. " " .. string.format(luaLang("enemytip_buff_time"), arg_16_1.duration)
 		else
-			arg_15_0.text = var_15_4
+			arg_16_0.text = var_16_4
 		end
-	elseif arg_15_1.duration == 0 then
-		if arg_15_1.count == 0 then
-			arg_15_0.text = luaLang("forever")
+	elseif arg_16_1.duration == 0 then
+		if arg_16_1.count == 0 then
+			arg_16_0.text = luaLang("forever")
 		else
-			local var_15_5 = arg_15_1.count
-			local var_15_6 = "enemytip_buff_count"
-			local var_15_7 = var_15_1 and var_15_1.includeTypes or ""
+			local var_16_5 = arg_16_1.count
+			local var_16_6 = "enemytip_buff_count"
+			local var_16_7 = var_16_1 and var_16_1.includeTypes or ""
 
-			if string.split(var_15_7, "#")[1] == "11" then
-				var_15_6 = "enemytip_buff_stacked_count"
-				var_15_5 = arg_15_1.layer
+			if string.split(var_16_7, "#")[1] == "11" then
+				var_16_6 = "enemytip_buff_stacked_count"
+				var_16_5 = arg_16_1.layer
 			end
 
-			arg_15_0.text = string.format(luaLang(var_15_6), var_15_5)
+			arg_16_0.text = string.format(luaLang(var_16_6), var_16_5)
 		end
-	elseif arg_15_1.count == 0 then
-		arg_15_0.text = string.format(luaLang("enemytip_buff_time"), arg_15_1.duration)
+	elseif arg_16_1.count == 0 then
+		arg_16_0.text = string.format(luaLang("enemytip_buff_time"), arg_16_1.duration)
 	else
-		local var_15_8 = arg_15_1.count
-		local var_15_9 = "round_or_times"
-		local var_15_10 = var_15_1 and var_15_1.includeTypes or ""
+		local var_16_8 = arg_16_1.count
+		local var_16_9 = "round_or_times"
+		local var_16_10 = var_16_1 and var_16_1.includeTypes or ""
 
-		if string.split(var_15_10, "#")[1] == "11" then
-			var_15_9 = "round_or_stacked_count"
-			var_15_8 = arg_15_1.layer
+		if string.split(var_16_10, "#")[1] == "11" then
+			var_16_9 = "round_or_stacked_count"
+			var_16_8 = arg_16_1.layer
 		end
 
-		local var_15_11 = {
-			arg_15_1.duration,
-			var_15_8
+		local var_16_11 = {
+			arg_16_1.duration,
+			var_16_8
 		}
 
-		arg_15_0.text = GameUtil.getSubPlaceholderLuaLang(luaLang(var_15_9), var_15_11)
+		arg_16_0.text = GameUtil.getSubPlaceholderLuaLang(luaLang(var_16_9), var_16_11)
 	end
 end
 

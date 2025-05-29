@@ -7,7 +7,7 @@ function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2)
 
 	arg_1_0.stepMo = arg_1_1
 	arg_1_0._fightStepMO = arg_1_1
-	arg_1_0.curIndex = arg_1_2
+	arg_1_0.asfdContext = arg_1_2
 end
 
 function var_0_0.onStart(arg_2_0)
@@ -19,9 +19,9 @@ function var_0_0.onStart(arg_2_0)
 		return arg_2_0:onDone(true)
 	end
 
-	var_2_0:emitMissile(arg_2_0.stepMo, arg_2_0.curIndex)
+	var_2_0:emitMissile(arg_2_0.stepMo, arg_2_0.asfdContext)
 
-	local var_2_1 = FightASFDConfig.instance:getMissileInterval(arg_2_0.curIndex) / FightModel.instance:getUISpeed()
+	local var_2_1 = FightASFDConfig.instance:getMissileInterval(arg_2_0.asfdContext.emitterAttackNum) / FightModel.instance:getUISpeed()
 
 	TaskDispatcher.runDelay(arg_2_0.waitDone, arg_2_0, var_2_1)
 end

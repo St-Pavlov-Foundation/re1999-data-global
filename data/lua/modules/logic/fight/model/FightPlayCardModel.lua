@@ -34,11 +34,14 @@ function var_0_0.setUsedCard(arg_5_0, arg_5_1)
 	end
 end
 
-function var_0_0.addUseCard(arg_6_0, arg_6_1, arg_6_2)
+function var_0_0.addUseCard(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
 	if arg_6_0._usedCards then
 		local var_6_0 = FightCardInfoMO.New()
 
 		var_6_0:init(arg_6_2)
+
+		var_6_0.custom_fromSkillId = arg_6_3 or 0
+
 		table.insert(arg_6_0._usedCards, arg_6_1, var_6_0)
 	end
 end

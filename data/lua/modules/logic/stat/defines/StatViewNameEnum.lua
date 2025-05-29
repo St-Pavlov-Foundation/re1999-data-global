@@ -106,7 +106,6 @@ var_0_0.ChineseViewName = {
 	[ViewName.PinballCityView] = "图图石子角色活动",
 	[ViewName.PinballTaskView] = "图图石子角色任务",
 	[ViewName.WuErLiXiLevelView] = "乌尔里希角色活动",
-	[ViewName.Season166MainView] = "2.4赛季",
 	[ViewName.Permanent1_7EnterView] = "1.7活动常驻",
 	[ViewName.TurnbackNewSignInView] = "回归界面-归途七日",
 	[ViewName.TurnbackNewTaskView] = "回归界面-箱中再会",
@@ -121,7 +120,16 @@ var_0_0.ChineseViewName = {
 	[ViewName.FeiLinShiDuoEpisodeLevelView] = "菲林士多角色活动",
 	[ViewName.FeiLinShiDuoTaskView] = "菲林士多角色任务",
 	[ViewName.Act183MainView] = "挑战玩法",
-	[ViewName.AutoChessMainView] = "魔精自走棋"
+	[ViewName.AutoChessMainView] = "魔精自走棋",
+	[ViewName.VersionActivity2_6EnterView] = "2.6版本活动页",
+	[ViewName.VersionActivity2_6StoreView] = "2.6副本商店",
+	[ViewName.Permanent1_6EnterView] = "1.6活动常驻",
+	[ViewName.XugoujiLevelView] = "虚构集角色活动",
+	[ViewName.XugoujiTaskView] = "虚构集角色任务",
+	[ViewName.DiceHeroMainView] = "阿莱夫角色活动",
+	[ViewName.DiceHeroTaskView] = "阿莱夫角色任务",
+	[ViewName.Season166MainView] = "2.6赛季",
+	[ViewName.WeekWalk_2HeartLayerView] = "醒梦域关卡"
 }
 var_0_0.NeedTrackViewDict = {
 	[ViewName.TurnBackFullView] = true,
@@ -224,7 +232,15 @@ var_0_0.NeedTrackViewDict = {
 	[ViewName.FeiLinShiDuoEpisodeLevelView] = true,
 	[ViewName.FeiLinShiDuoTaskView] = true,
 	[ViewName.Act183MainView] = true,
-	[ViewName.AutoChessMainView] = true
+	[ViewName.AutoChessMainView] = true,
+	[ViewName.VersionActivity2_6EnterView] = true,
+	[ViewName.Permanent1_6EnterView] = true,
+	[ViewName.VersionActivity2_6StoreView] = true,
+	[ViewName.XugoujiLevelView] = true,
+	[ViewName.XugoujiTaskView] = true,
+	[ViewName.DiceHeroMainView] = true,
+	[ViewName.DiceHeroTaskView] = true,
+	[ViewName.WeekWalk_2HeartLayerView] = true
 }
 var_0_0.NeedListenTabSwitchList = {
 	ViewName.VersionActivity1_8EnterView,
@@ -235,6 +251,7 @@ var_0_0.NeedListenTabSwitchList = {
 	ViewName.VersionActivity2_3EnterView,
 	ViewName.VersionActivity2_4EnterView,
 	ViewName.VersionActivity2_5EnterView,
+	ViewName.VersionActivity2_6EnterView,
 	ViewName.StoreView
 }
 var_0_0.TabViewContainerID = {
@@ -246,12 +263,13 @@ var_0_0.TabViewContainerID = {
 	[ViewName.VersionActivity2_3EnterView] = 2,
 	[ViewName.VersionActivity2_4EnterView] = 2,
 	[ViewName.VersionActivity2_5EnterView] = 2,
+	[ViewName.VersionActivity2_6EnterView] = 2,
 	[ViewName.StoreView] = 3
 }
 var_0_0.TabViewName = {
-	V2a2_Season166EnterView = "赛季",
+	V2a6_XugoujiEnterView = "虚构集",
 	VersionActivity2_3DuDuGuEnterView = "笃笃骨",
-	VersionActivity2_3Act174EnterView = "和平角斗场",
+	VersionActivity2_6RougeEnterView = "常驻肉鸽",
 	VersionActivity2_4WuErLiXiEnterView = "乌尔里希",
 	VersionActivity2_3ZhiXinQuanErEnterView = "纸信圈儿",
 	VersionActivity2_4RougeEnterView = "常驻肉鸽",
@@ -265,15 +283,22 @@ var_0_0.TabViewName = {
 	V2a2_LoperaEnterView = "洛佩拉",
 	V2a2_RoomCritterEnterView = "魔精公司",
 	VersionActivity2_5FeiLinShiDuoEnterView = "菲林士多",
+	V2a2_Season166EnterView = "赛季",
 	VersionActivity2_5DungeonEnterView = "唐人街影话",
 	VersionActivity2_4MusicEnterView = "芭卡洛儿",
 	VersionActivity2_4DungeonEnterView = "地球上最后的夜晚",
 	V2a2_DungeonEnterView = "忧郁的热带",
 	V2a2_TianShiNaNaEnterView = "天使娜娜",
 	VersionActivity2_5LiangYueEnterView = "梁月",
+	VersionActivity2_6DungeonEnterView = "疯癫与文明",
 	V2a2_EliminateEnterView = "小队玩法",
+	DiceHeroEnterView = "阿莱夫",
 	V2a4_PinballEnterView = "图图石子",
+	V2a6_Season166EnterView = "赛季",
+	VersionActivity2_3Act174EnterView = "和平角斗场",
+	ActivityWeekWalkDeepShowView = "深眠域",
 	V2a3_Season123EnterView = "赛季",
+	ActivityWeekWalkHeartShowView = "醒梦域",
 	[V1a8_DungeonEnterView] = "副本",
 	[V1a8_Season123EnterView] = "赛季",
 	[V1a8_WeilaEnterView] = "维拉",

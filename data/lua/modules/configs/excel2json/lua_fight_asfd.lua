@@ -3,13 +3,15 @@
 local var_0_0 = {}
 local var_0_1 = {
 	replaceRule = 3,
+	priority = 10,
+	sampleMinHeight = 8,
+	audio = 6,
 	res = 4,
-	sampleMinHeight = 7,
-	audio = 5,
+	sceneEmitterId = 5,
 	id = 1,
 	unit = 2,
-	scale = 6,
-	priority = 8
+	scale = 7,
+	flyPath = 9
 }
 local var_0_2 = {
 	"id"

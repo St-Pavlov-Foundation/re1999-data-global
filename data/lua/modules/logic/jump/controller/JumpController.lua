@@ -274,6 +274,8 @@ function var_0_0.jumpTo(arg_15_0, arg_15_1, arg_15_2, arg_15_3, arg_15_4)
 		return false
 	end
 
+	arg_15_0:_notAllowJumpViewNames_RoleSignPanelView()
+
 	for iter_15_0, iter_15_1 in ipairs(var_0_1) do
 		local var_15_1 = ViewName[iter_15_1]
 
@@ -542,6 +544,22 @@ function var_0_0.commonIconBeforeClickSetRecordItem(arg_27_0, arg_27_1, arg_27_2
 		sceneType = GameSceneMgr.instance:getCurSceneType(),
 		openedViewNameList = var_0_0.instance:getCurrentOpenedView()
 	})
+end
+
+local var_0_2 = false
+
+function var_0_0._notAllowJumpViewNames_RoleSignPanelView(arg_28_0)
+	if var_0_2 then
+		return
+	end
+
+	var_0_2 = true
+
+	local var_28_0 = GameBranchMgr.instance:Vxax_ViewName("Role_PanelSignView_Part1", ViewName.V2a5_Role_PanelSignView_Part1)
+	local var_28_1 = GameBranchMgr.instance:Vxax_ViewName("Role_PanelSignView_Part2", ViewName.V2a5_Role_PanelSignView_Part2)
+
+	table.insert(var_0_1, var_28_0)
+	table.insert(var_0_1, var_28_1)
 end
 
 var_0_0.instance = var_0_0.New()

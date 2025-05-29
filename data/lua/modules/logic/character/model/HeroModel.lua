@@ -184,8 +184,16 @@ function var_0_0.getVoiceConfig(arg_16_0, arg_16_1, arg_16_2, arg_16_3, arg_16_4
 	local var_16_1 = {}
 
 	for iter_16_0, iter_16_1 in pairs(var_16_0) do
-		if iter_16_1.type == arg_16_2 and (not arg_16_3 or arg_16_3(iter_16_1)) then
-			table.insert(var_16_1, iter_16_1)
+		if iter_16_1.type == arg_16_2 then
+			if not arg_16_3 then
+				table.insert(var_16_1, iter_16_1)
+			else
+				local var_16_2, var_16_3 = xpcall(arg_16_3, __G__TRACKBACK__, iter_16_1)
+
+				if var_16_2 and var_16_3 then
+					table.insert(var_16_1, iter_16_1)
+				end
+			end
 		end
 	end
 

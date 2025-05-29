@@ -41,12 +41,18 @@ end
 
 function var_0_0._updateNames(arg_6_0)
 	arg_6_0._txttipname.text = arg_6_0._curSelectedSectionItem:getSectionName()
-	arg_6_0._txttipnameen.text = arg_6_0._curSelectedSectionItem:getSectionNameEn()
+
+	if arg_6_0._txttipnameen then
+		arg_6_0._txttipnameen.text = arg_6_0._curSelectedSectionItem:getSectionNameEn()
+	end
 end
 
 function var_0_0._editableInitView(arg_7_0)
+	gohelper.addUIClickAudio(arg_7_0._btntip.gameObject, AudioEnum.UI.Play_UI_Copies)
+
 	arg_7_0._sectionList = arg_7_0:getUserDataTb_()
 	arg_7_0._chapterList = arg_7_0:getUserDataTb_()
+	arg_7_0._chapterPosMap = {}
 	arg_7_0._curSelectedSectionItem = nil
 	arg_7_0._showChapterItemList = arg_7_0:getUserDataTb_()
 	arg_7_0._posX = 0
@@ -119,6 +125,16 @@ function var_0_0.onOpen(arg_11_0)
 end
 
 function var_0_0._onOnFocusNormalChapter(arg_12_0, arg_12_1)
+	if (arg_12_1 and DungeonConfig.instance:getChapterDivideSectionId(arg_12_1)) == arg_12_0._targetSectionId then
+		local var_12_0 = arg_12_1 and arg_12_0._chapterPosMap[arg_12_1]
+
+		if var_12_0 then
+			arg_12_0:_moveToChapterPos(var_12_0)
+
+			return
+		end
+	end
+
 	arg_12_0:_beFocusChapter(arg_12_1)
 end
 
@@ -186,7 +202,6 @@ end
 
 function var_0_0._focusNormalChapter(arg_19_0, arg_19_1)
 	arg_19_0._curFocusChapterId = nil
-	arg_19_0._curFocusChapterPosX = nil
 
 	if arg_19_1 then
 		local var_19_0 = DungeonConfig.instance:getChapterDivideSectionId(arg_19_1)
@@ -200,220 +215,224 @@ function var_0_0._focusNormalChapter(arg_19_0, arg_19_1)
 
 	arg_19_0:_showAllChapterList()
 
-	if arg_19_0._curFocusChapterPosX then
-		arg_19_0._scrollchapter.movementType = 2
+	local var_19_1 = arg_19_0._curFocusChapterId and arg_19_0._chapterPosMap[arg_19_0._curFocusChapterId]
 
-		local var_19_1 = arg_19_0._curFocusChapterPosX - recthelper.getWidth(arg_19_0._scrollchapter.transform) / 2
-
-		recthelper.setAnchorX(arg_19_0._gocontent.transform, -var_19_1)
-		TaskDispatcher.cancelTask(arg_19_0._resetMovementType, arg_19_0)
-		TaskDispatcher.runDelay(arg_19_0._resetMovementType, arg_19_0, 0)
-	end
-
+	arg_19_0:_moveToChapterPos(var_19_1)
 	TaskDispatcher.cancelTask(arg_19_0.onScrollChange, arg_19_0)
 	TaskDispatcher.runDelay(arg_19_0.onScrollChange, arg_19_0, 0)
 	arg_19_0:onScrollChange()
 end
 
+function var_0_0._moveToChapterPos(arg_20_0, arg_20_1)
+	if arg_20_1 then
+		arg_20_0._scrollchapter.movementType = 2
+
+		local var_20_0 = arg_20_1 - recthelper.getWidth(arg_20_0._scrollchapter.transform) / 2
+
+		recthelper.setAnchorX(arg_20_0._gocontent.transform, -var_20_0)
+		TaskDispatcher.cancelTask(arg_20_0._resetMovementType, arg_20_0)
+		TaskDispatcher.runDelay(arg_20_0._resetMovementType, arg_20_0, 0)
+	end
+end
+
 local var_0_1 = "DungeonViewMainStoryBlock"
 
-function var_0_0._startBlock(arg_20_0, arg_20_1)
-	TaskDispatcher.cancelTask(arg_20_0._endBlock, arg_20_0)
-	TaskDispatcher.runDelay(arg_20_0._endBlock, arg_20_0, arg_20_1 + DungeonMainStoryEnum.SectionAnimTime)
+function var_0_0._startBlock(arg_21_0, arg_21_1)
+	TaskDispatcher.cancelTask(arg_21_0._endBlock, arg_21_0)
+	TaskDispatcher.runDelay(arg_21_0._endBlock, arg_21_0, arg_21_1 + DungeonMainStoryEnum.SectionAnimTime)
 	UIBlockMgr.instance:startBlock(var_0_1)
 end
 
-function var_0_0._endBlock(arg_21_0)
+function var_0_0._endBlock(arg_22_0)
 	UIBlockMgr.instance:endBlock(var_0_1)
 end
 
-function var_0_0._resetMovementType(arg_22_0)
-	arg_22_0._scrollchapter.movementType = 1
+function var_0_0._resetMovementType(arg_23_0)
+	arg_23_0._scrollchapter.movementType = 1
 end
 
-function var_0_0._initSectionSelected(arg_23_0)
-	for iter_23_0, iter_23_1 in ipairs(lua_chapter_divide.configList) do
-		local var_23_0 = iter_23_1.sectionId
-		local var_23_1 = DungeonMainStoryModel.instance:getChapterList(var_23_0)
-
-		if var_23_1 and #var_23_1 > 0 and not DungeonModel.instance:chapterIsLock(var_23_1[1].id) then
-			DungeonMainStoryModel.instance:setSectionSelected(var_23_0)
-		end
-	end
-end
-
-function var_0_0._showAllChapterList(arg_24_0)
-	tabletool.clear(arg_24_0._showChapterItemList)
-	arg_24_0:_setSelectedSectionItem(nil)
-
-	arg_24_0._startPosX = 147.5
-	arg_24_0._posX = arg_24_0._startPosX
-	arg_24_0._sectionPosX = arg_24_0._startPosX
-
-	local var_24_0 = 0
-
+function var_0_0._initSectionSelected(arg_24_0)
 	for iter_24_0, iter_24_1 in ipairs(lua_chapter_divide.configList) do
-		local var_24_1 = iter_24_1.sectionId
-		local var_24_2 = DungeonMainStoryModel.instance:getChapterList(var_24_1)
+		local var_24_0 = iter_24_1.sectionId
+		local var_24_1 = DungeonMainStoryModel.instance:getChapterList(var_24_0)
 
-		if var_24_2 and #var_24_2 > 0 then
-			arg_24_0:_showOneSectionChapterList(var_24_1, var_24_2, var_24_0)
+		if var_24_1 and #var_24_1 > 0 and not DungeonModel.instance:chapterIsLock(var_24_1[1].id) then
+			DungeonMainStoryModel.instance:setSectionSelected(var_24_0)
+		end
+	end
+end
 
-			var_24_0 = var_24_0 + #var_24_2
+function var_0_0._showAllChapterList(arg_25_0)
+	tabletool.clear(arg_25_0._showChapterItemList)
+	tabletool.clear(arg_25_0._chapterPosMap)
+	arg_25_0:_setSelectedSectionItem(nil)
+
+	arg_25_0._startPosX = 147.5
+	arg_25_0._posX = arg_25_0._startPosX
+	arg_25_0._sectionPosX = arg_25_0._startPosX
+
+	local var_25_0 = 0
+
+	for iter_25_0, iter_25_1 in ipairs(lua_chapter_divide.configList) do
+		local var_25_1 = iter_25_1.sectionId
+		local var_25_2 = DungeonMainStoryModel.instance:getChapterList(var_25_1)
+
+		if var_25_2 and #var_25_2 > 0 then
+			arg_25_0:_showOneSectionChapterList(var_25_1, var_25_2, var_25_0)
+
+			var_25_0 = var_25_0 + #var_25_2
 		end
 
-		arg_24_0._posX = arg_24_0._posX + DungeonMainStoryEnum.SectionSpace
+		arg_25_0._posX = arg_25_0._posX + DungeonMainStoryEnum.SectionSpace
 	end
 
-	recthelper.setWidth(arg_24_0._gocontent.transform, arg_24_0._posX)
+	recthelper.setWidth(arg_25_0._gocontent.transform, arg_25_0._posX)
 end
 
-function var_0_0._getSectionItem(arg_25_0, arg_25_1)
-	local var_25_0 = arg_25_0._sectionList[arg_25_1]
-
-	if not var_25_0 then
-		local var_25_1 = arg_25_0.viewContainer:getSetting().otherRes.section_item
-		local var_25_2 = gohelper.cloneInPlace(arg_25_0._gotemplatecell, "section")
-
-		gohelper.setActive(var_25_2, true)
-
-		local var_25_3 = arg_25_0:getResInst(var_25_1, var_25_2, tostring(arg_25_1))
-
-		var_25_0 = MonoHelper.addNoUpdateLuaComOnceToGo(var_25_3, DungeonSectionItem)
-		arg_25_0._sectionList[arg_25_1] = var_25_0
-
-		local var_25_4 = var_25_0.viewGO.transform
-		local var_25_5 = Vector2(0, 1)
-
-		var_25_4.pivot = var_25_5
-		var_25_4.anchorMin = var_25_5
-		var_25_4.anchorMax = var_25_5
-
-		recthelper.setWidth(var_25_4, DungeonMainStoryEnum.ChapterWidth.Section)
-	end
-
-	return var_25_0
-end
-
-function var_0_0._getChapterItem(arg_26_0, arg_26_1, arg_26_2)
-	local var_26_0 = arg_26_0._chapterList[arg_26_1]
+function var_0_0._getSectionItem(arg_26_0, arg_26_1)
+	local var_26_0 = arg_26_0._sectionList[arg_26_1]
 
 	if not var_26_0 then
-		local var_26_1 = DungeonModel.instance:isSpecialMainPlot(arg_26_1)
-		local var_26_2 = var_26_1 and arg_26_0.viewContainer:getSetting().otherRes.mini_item or arg_26_0.viewContainer:getSetting().otherRes[1]
-		local var_26_3 = gohelper.cloneInPlace(arg_26_0._gotemplatecell, "cell" .. arg_26_2 - 1)
+		local var_26_1 = arg_26_0.viewContainer:getSetting().otherRes.section_item
+		local var_26_2 = gohelper.cloneInPlace(arg_26_0._gotemplatecell, "section")
 
-		gohelper.setActive(var_26_3, true)
+		gohelper.setActive(var_26_2, true)
 
-		local var_26_4 = arg_26_0:getResInst(var_26_2, var_26_3, var_26_1 and "mini_item" or LuaListScrollView.PrefabInstName)
+		local var_26_3 = arg_26_0:getResInst(var_26_1, var_26_2, tostring(arg_26_1))
 
-		var_26_0 = MonoHelper.addNoUpdateLuaComOnceToGo(var_26_4, var_26_1 and DungeonChapterMiniItem or DungeonChapterItem)
-		arg_26_0._chapterList[arg_26_1] = var_26_0
+		var_26_0 = MonoHelper.addNoUpdateLuaComOnceToGo(var_26_3, DungeonSectionItem)
+		arg_26_0._sectionList[arg_26_1] = var_26_0
 
-		if var_26_1 then
-			recthelper.setWidth(var_26_3.transform, DungeonMainStoryEnum.ChapterWidth.Special)
-			recthelper.setWidth(var_26_0.viewGO.transform, DungeonMainStoryEnum.ChapterWidth.Special)
-		else
-			recthelper.setWidth(var_26_3.transform, DungeonMainStoryEnum.ChapterWidth.Normal)
-			recthelper.setWidth(var_26_0.viewGO.transform, DungeonMainStoryEnum.ChapterWidth.Normal)
-		end
+		local var_26_4 = var_26_0.viewGO.transform
+		local var_26_5 = Vector2(0, 1)
 
-		local var_26_5 = var_26_0.viewGO.transform
-		local var_26_6 = arg_26_0._anchorVec
+		var_26_4.pivot = var_26_5
+		var_26_4.anchorMin = var_26_5
+		var_26_4.anchorMax = var_26_5
 
-		var_26_5.pivot = var_26_6
-		var_26_5.anchorMin = var_26_6
-		var_26_5.anchorMax = var_26_6
+		recthelper.setWidth(var_26_4, DungeonMainStoryEnum.ChapterWidth.Section)
 	end
 
 	return var_26_0
 end
 
-function var_0_0._showSectionItem(arg_27_0, arg_27_1)
-	local var_27_0 = arg_27_0:_getSectionItem(arg_27_1)
+function var_0_0._getChapterItem(arg_27_0, arg_27_1, arg_27_2)
+	local var_27_0 = arg_27_0._chapterList[arg_27_1]
 
-	var_27_0:onUpdateMO(lua_chapter_divide.configDict[arg_27_1])
+	if not var_27_0 then
+		local var_27_1 = DungeonModel.instance:isSpecialMainPlot(arg_27_1)
+		local var_27_2 = var_27_1 and arg_27_0.viewContainer:getSetting().otherRes.mini_item or arg_27_0.viewContainer:getSetting().otherRes[1]
+		local var_27_3 = gohelper.cloneInPlace(arg_27_0._gotemplatecell, "cell" .. arg_27_2 - 1)
 
-	if DungeonMainStoryModel.instance:sectionIsSelected(arg_27_1) then
-		arg_27_0:_setSelectedSectionItem(var_27_0)
-		var_27_0:playAnimName("unfold")
+		gohelper.setActive(var_27_3, true)
+
+		local var_27_4 = arg_27_0:getResInst(var_27_2, var_27_3, var_27_1 and "mini_item" or LuaListScrollView.PrefabInstName)
+
+		var_27_0 = MonoHelper.addNoUpdateLuaComOnceToGo(var_27_4, var_27_1 and DungeonChapterMiniItem or DungeonChapterItem)
+		arg_27_0._chapterList[arg_27_1] = var_27_0
+
+		if var_27_1 then
+			recthelper.setWidth(var_27_3.transform, DungeonMainStoryEnum.ChapterWidth.Special)
+			recthelper.setWidth(var_27_0.viewGO.transform, DungeonMainStoryEnum.ChapterWidth.Special)
+		else
+			recthelper.setWidth(var_27_3.transform, DungeonMainStoryEnum.ChapterWidth.Normal)
+			recthelper.setWidth(var_27_0.viewGO.transform, DungeonMainStoryEnum.ChapterWidth.Normal)
+		end
+
+		local var_27_5 = var_27_0.viewGO.transform
+		local var_27_6 = arg_27_0._anchorVec
+
+		var_27_5.pivot = var_27_6
+		var_27_5.anchorMin = var_27_6
+		var_27_5.anchorMax = var_27_6
 	end
 
-	local var_27_1 = arg_27_0._posX
+	return var_27_0
+end
 
-	recthelper.setAnchor(var_27_0.viewGO.transform.parent, var_27_1, DungeonMainStoryEnum.ChapterPosY.Section)
-	var_27_0:setPosX(var_27_1)
-	var_27_0:setUnFoldPosX(arg_27_0._sectionPosX)
+function var_0_0._showSectionItem(arg_28_0, arg_28_1)
+	local var_28_0 = arg_28_0:_getSectionItem(arg_28_1)
 
-	arg_27_0._posX = arg_27_0._posX + DungeonMainStoryEnum.ChapterWidth.Section
-	arg_27_0._sectionPosX = arg_27_0._sectionPosX + DungeonMainStoryEnum.ChapterWidth.Section
+	var_28_0:onUpdateMO(lua_chapter_divide.configDict[arg_28_1])
 
-	if arg_27_0._posX ~= arg_27_0._sectionPosX then
-		recthelper.setAnchor(var_27_0.viewGO.transform.parent, arg_27_0._sectionPosX, DungeonMainStoryEnum.ChapterPosY.Section)
-		var_27_0:moveToPosX()
+	if DungeonMainStoryModel.instance:sectionIsSelected(arg_28_1) then
+		arg_28_0:_setSelectedSectionItem(var_28_0)
+		var_28_0:playAnimName("unfold")
+	end
+
+	local var_28_1 = arg_28_0._posX
+
+	recthelper.setAnchor(var_28_0.viewGO.transform.parent, var_28_1, DungeonMainStoryEnum.ChapterPosY.Section)
+	var_28_0:setPosX(var_28_1)
+	var_28_0:setUnFoldPosX(arg_28_0._sectionPosX)
+
+	arg_28_0._posX = arg_28_0._posX + DungeonMainStoryEnum.ChapterWidth.Section
+	arg_28_0._sectionPosX = arg_28_0._sectionPosX + DungeonMainStoryEnum.ChapterWidth.Section
+
+	if arg_28_0._posX ~= arg_28_0._sectionPosX then
+		recthelper.setAnchor(var_28_0.viewGO.transform.parent, arg_28_0._sectionPosX, DungeonMainStoryEnum.ChapterPosY.Section)
+		var_28_0:moveToPosX()
 	end
 end
 
-function var_0_0._hideChpaterList(arg_28_0, arg_28_1)
-	for iter_28_0, iter_28_1 in ipairs(arg_28_1) do
-		local var_28_0 = arg_28_0._chapterList[iter_28_1.id]
+function var_0_0._hideChpaterList(arg_29_0, arg_29_1)
+	for iter_29_0, iter_29_1 in ipairs(arg_29_1) do
+		local var_29_0 = arg_29_0._chapterList[iter_29_1.id]
 
-		if var_28_0 then
-			recthelper.setAnchorY(var_28_0.viewGO.transform.parent, 2000)
+		if var_29_0 then
+			recthelper.setAnchorY(var_29_0.viewGO.transform.parent, 2000)
 		end
 	end
 end
 
-function var_0_0._showOneSectionChapterList(arg_29_0, arg_29_1, arg_29_2, arg_29_3)
-	arg_29_0:_showSectionItem(arg_29_1)
+function var_0_0._showOneSectionChapterList(arg_30_0, arg_30_1, arg_30_2, arg_30_3)
+	arg_30_0:_showSectionItem(arg_30_1)
 
-	if not DungeonMainStoryModel.instance:sectionIsSelected(arg_29_1) then
-		arg_29_0:_hideChpaterList(arg_29_2)
+	if not DungeonMainStoryModel.instance:sectionIsSelected(arg_30_1) then
+		arg_30_0:_hideChpaterList(arg_30_2)
 
 		return
 	end
 
-	arg_29_0._posX = arg_29_0._posX + DungeonMainStoryEnum.ChapterStartPosX
+	arg_30_0._posX = arg_30_0._posX + DungeonMainStoryEnum.ChapterStartPosX
 
-	for iter_29_0, iter_29_1 in ipairs(arg_29_2) do
-		local var_29_0 = DungeonModel.instance:isSpecialMainPlot(iter_29_1.id)
-		local var_29_1 = arg_29_0:_getChapterItem(iter_29_1.id, arg_29_3 + iter_29_0)
+	for iter_30_0, iter_30_1 in ipairs(arg_30_2) do
+		local var_30_0 = DungeonModel.instance:isSpecialMainPlot(iter_30_1.id)
+		local var_30_1 = arg_30_0:_getChapterItem(iter_30_1.id, arg_30_3 + iter_30_0)
 
-		var_29_1:onUpdateMO(iter_29_1)
+		var_30_1:onUpdateMO(iter_30_1)
 
-		arg_29_0._showChapterItemList[iter_29_0] = var_29_1
+		arg_30_0._showChapterItemList[iter_30_0] = var_30_1
 
-		if var_29_1:getIsPlayCloseAnim() then
-			var_29_1:playIdleAnim()
+		if var_30_1:getIsPlayCloseAnim() then
+			var_30_1:playIdleAnim()
 		end
 
-		local var_29_2 = arg_29_0._posX
+		local var_30_2 = arg_30_0._posX
 
-		if iter_29_1.id == arg_29_0._curFocusChapterId then
-			arg_29_0._curFocusChapterPosX = var_29_2
-		end
+		arg_30_0._chapterPosMap[iter_30_1.id] = var_30_2
 
-		if var_29_0 then
-			recthelper.setAnchor(var_29_1.viewGO.transform.parent, var_29_2, DungeonMainStoryEnum.ChapterPosY.Special)
+		if var_30_0 then
+			recthelper.setAnchor(var_30_1.viewGO.transform.parent, var_30_2, DungeonMainStoryEnum.ChapterPosY.Special)
 
-			arg_29_0._posX = arg_29_0._posX + DungeonMainStoryEnum.ChapterWidth.Special
+			arg_30_0._posX = arg_30_0._posX + DungeonMainStoryEnum.ChapterWidth.Special
 		else
-			recthelper.setAnchor(var_29_1.viewGO.transform.parent, var_29_2, DungeonMainStoryEnum.ChapterPosY.Normal)
+			recthelper.setAnchor(var_30_1.viewGO.transform.parent, var_30_2, DungeonMainStoryEnum.ChapterPosY.Normal)
 
-			arg_29_0._posX = arg_29_0._posX + DungeonMainStoryEnum.ChapterWidth.Normal
+			arg_30_0._posX = arg_30_0._posX + DungeonMainStoryEnum.ChapterWidth.Normal
 		end
 
-		if iter_29_0 ~= #arg_29_2 then
-			arg_29_0._posX = arg_29_0._posX + DungeonMainStoryEnum.ChapterSpace
+		if iter_30_0 ~= #arg_30_2 then
+			arg_30_0._posX = arg_30_0._posX + DungeonMainStoryEnum.ChapterSpace
 		end
 	end
 end
 
-function var_0_0.onClose(arg_30_0)
-	TaskDispatcher.cancelTask(arg_30_0._resetMovementType, arg_30_0)
-	TaskDispatcher.cancelTask(arg_30_0._applyFocusChapter, arg_30_0)
-	TaskDispatcher.cancelTask(arg_30_0.onScrollChange, arg_30_0)
-	arg_30_0:_endBlock()
+function var_0_0.onClose(arg_31_0)
+	TaskDispatcher.cancelTask(arg_31_0._resetMovementType, arg_31_0)
+	TaskDispatcher.cancelTask(arg_31_0._applyFocusChapter, arg_31_0)
+	TaskDispatcher.cancelTask(arg_31_0.onScrollChange, arg_31_0)
+	arg_31_0:_endBlock()
 end
 
 return var_0_0

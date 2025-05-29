@@ -185,21 +185,37 @@ end
 function var_0_3.simpleOpenWebView(arg_10_0, arg_10_1, arg_10_2, arg_10_3, arg_10_4)
 	local var_10_0 = {}
 
-	var_0_1(var_10_0, arg_10_1 .. "?" .. var_0_0("timestamp=%s", ServerTime.now() * 1000))
-	var_0_1(var_10_0, var_0_0("gameId=%s", SDKMgr.instance:getGameId()))
-	var_0_1(var_10_0, var_0_0("gameRoleId=%s", PlayerModel.instance:getMyUserId()))
-	var_0_1(var_10_0, var_0_0("channelUserId=%s", LoginModel.instance.channelUserId))
-	var_0_1(var_10_0, var_0_0("deviceModel=%s", var_0_3.instance:urlEncode(UnityEngine.SystemInfo.deviceModel)))
-	var_0_1(var_10_0, var_0_0("deviceId=%s", SDKMgr.instance:getDeviceInfo().deviceId))
-	var_0_1(var_10_0, var_0_0("os=%s", var_0_3.instance:urlEncode(UnityEngine.SystemInfo.operatingSystem)))
-	var_0_1(var_10_0, var_0_0("token=%s", SDKMgr.instance:getGameSdkToken()))
-	var_0_1(var_10_0, var_0_0("channelId=%s", SDKMgr.instance:getChannelId()))
-	var_0_1(var_10_0, var_0_0("isEmulator=%s", SDKMgr.instance:isEmulator() and 1 or 0))
+	if GameChannelConfig.isEfun() then
+		local var_10_1 = SDKMgr.instance:getUserInfoExtraParams()
+		local var_10_2 = PayModel.instance:getGameRoleInfo()
 
-	local var_10_1 = var_0_2(var_10_0, "&")
+		var_0_1(var_10_0, arg_10_1)
+		var_0_1(var_10_0, var_0_0("userId=%s", var_10_1.userId))
+		var_0_1(var_10_0, var_0_0("sign=%s", var_10_1.sign))
+		var_0_1(var_10_0, var_0_0("timestamp=%s", var_10_1.timestamp))
+		var_0_1(var_10_0, "gameCode=twcfwl")
+		var_0_1(var_10_0, var_0_0("serverCode=%s", var_10_2.serverId))
+		var_0_1(var_10_0, var_0_0("roleId=%s", var_10_2.roleId))
+		var_0_1(var_10_0, var_0_0("serverName=%s", arg_10_0:urlEncode(var_10_2.serverName)))
+		var_0_1(var_10_0, var_0_0("roleName=%s", arg_10_0:urlEncode(var_10_2.roleName)))
+		var_0_1(var_10_0, "language=zh-TW")
+	else
+		var_0_1(var_10_0, arg_10_1 .. "?" .. var_0_0("timestamp=%s", ServerTime.now() * 1000))
+		var_0_1(var_10_0, var_0_0("gameId=%s", SDKMgr.instance:getGameId()))
+		var_0_1(var_10_0, var_0_0("gameRoleId=%s", PlayerModel.instance:getMyUserId()))
+		var_0_1(var_10_0, var_0_0("channelUserId=%s", LoginModel.instance.channelUserId))
+		var_0_1(var_10_0, var_0_0("deviceModel=%s", arg_10_0:urlEncode(UnityEngine.SystemInfo.deviceModel)))
+		var_0_1(var_10_0, var_0_0("deviceId=%s", SDKMgr.instance:getDeviceInfo().deviceId))
+		var_0_1(var_10_0, var_0_0("os=%s", arg_10_0:urlEncode(UnityEngine.SystemInfo.operatingSystem)))
+		var_0_1(var_10_0, var_0_0("token=%s", SDKMgr.instance:getGameSdkToken()))
+		var_0_1(var_10_0, var_0_0("channelId=%s", SDKMgr.instance:getChannelId()))
+		var_0_1(var_10_0, var_0_0("isEmulator=%s", SDKMgr.instance:isEmulator() and 1 or 0))
+	end
 
-	logNormal(var_10_1)
-	arg_10_0:openWebView(var_10_1, arg_10_2, arg_10_3, arg_10_4)
+	local var_10_3 = var_0_2(var_10_0, "&")
+
+	logNormal(var_10_3)
+	arg_10_0:openWebView(var_10_3, arg_10_2, arg_10_3, arg_10_4)
 end
 
 var_0_3.instance = var_0_3.New()

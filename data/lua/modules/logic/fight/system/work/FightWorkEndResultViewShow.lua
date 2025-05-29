@@ -31,6 +31,15 @@ function var_0_0.onStart(arg_1_0)
 
 	local var_1_6 = FightModel.instance:getRecordMO()
 	local var_1_7 = var_1_6.fightResult
+	local var_1_8
+
+	if var_1_1 and var_1_1.type == DungeonEnum.EpisodeType.WeekWalk_2 then
+		var_1_8 = WeekWalk_2Model.instance:isWin()
+
+		if var_1_7 == FightEnum.FightResult.Succ then
+			var_1_7 = FightEnum.FightResult.Fail
+		end
+	end
 
 	if FightModel.instance:isShowSettlement() == false then
 		arg_1_0:_done()
@@ -45,6 +54,8 @@ function var_0_0.onStart(arg_1_0)
 				fight_result = var_1_7
 			})
 		elseif var_1_1 and var_1_1.type == DungeonEnum.EpisodeType.TowerLimited then
+			arg_1_0:showSuccView()
+		elseif var_1_8 then
 			arg_1_0:showSuccView()
 		else
 			if var_1_7 == FightEnum.FightResult.OutOfRoundFail then

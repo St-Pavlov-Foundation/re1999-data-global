@@ -43,7 +43,14 @@ function var_0_0.jumpView(arg_4_0, arg_4_1)
 		arg_4_0:openEquipView()
 		table.insert(var_4_0, HandbookEquipView)
 	elseif var_4_1 == JumpEnum.HandbookType.Story then
-		arg_4_0:openStoryView()
+		local var_4_2 = tonumber(arg_4_1[3])
+
+		if var_4_2 then
+			arg_4_0:openStoryView(var_4_2)
+		else
+			arg_4_0:openStoryView()
+		end
+
 		table.insert(var_4_0, HandbookStoryView)
 	elseif var_4_1 == JumpEnum.HandbookType.CG then
 		arg_4_0:openCGView()

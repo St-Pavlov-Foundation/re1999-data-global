@@ -383,12 +383,14 @@ function var_0_0.setBtnStatus(arg_30_0)
 		DungeonController.instance:dispatchEvent(DungeonEvent.OnShowResourceView)
 	end
 
+	arg_30_0._isWeekWalkType = var_30_3
+
 	if var_30_3 then
-		arg_30_0.viewContainer:switchTab(1)
+		arg_30_0:_switchWeekWalkTab()
 	elseif var_30_5 then
-		arg_30_0.viewContainer:switchTab(2)
+		arg_30_0.viewContainer:switchTab(DungeonEnum.DungeonViewTabEnum.Explore)
 	elseif var_30_7 then
-		arg_30_0.viewContainer:switchTab(3)
+		arg_30_0.viewContainer:switchTab(DungeonEnum.DungeonViewTabEnum.Permanent)
 	else
 		arg_30_0.viewContainer:switchTab()
 	end
@@ -405,195 +407,221 @@ function var_0_0.setBtnStatus(arg_30_0)
 	AudioBgmManager.instance:checkBgm()
 end
 
-function var_0_0._showWeekWalkEffect(arg_31_0)
-	local var_31_0 = WeekWalkTaskListModel.instance:canGetReward(WeekWalkEnum.TaskType.Week)
-	local var_31_1 = WeekWalkModel.instance:getInfo()
-	local var_31_2 = var_31_0 or var_31_1 and var_31_1.isPopShallowSettle
-	local var_31_3 = var_31_1 and var_31_1.isPopDeepSettle
+function var_0_0._switchWeekWalkTab(arg_31_0)
+	local var_31_0 = WeekWalkModel.instance:getInfo():getNotFinishedMap()
 
-	gohelper.setActive(arg_31_0._goweekwalkreward1, var_31_2)
-	gohelper.setActive(arg_31_0._goweekwalkreward2, not var_31_2 and var_31_3)
-	gohelper.setActive(arg_31_0._goweekwalkicon, not var_31_2 and not var_31_3)
-end
-
-function var_0_0._showGoldEffect(arg_32_0)
-	local var_32_0 = DungeonModel.instance:getEquipRemainingNum() > 0
-
-	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.EquipDungeon) then
-		gohelper.setActive(arg_32_0._gogoldUnselectIcon, not var_32_0)
-		gohelper.setActive(arg_32_0._gogoldRedPoint, var_32_0)
+	if var_31_0 and WeekWalkModel.isShallowMap(var_31_0.sceneId) then
+		arg_31_0.viewContainer:switchTab(DungeonEnum.DungeonViewTabEnum.WeekWalk)
 	else
-		gohelper.setActive(arg_32_0._gogoldUnselectIcon, true)
-		gohelper.setActive(arg_32_0._gogoldRedPoint, false)
+		local var_31_1 = WeekWalk_2Model.instance:getInfo()
+
+		if var_31_1 and var_31_1:isOpen() then
+			arg_31_0.viewContainer:switchTab(DungeonEnum.DungeonViewTabEnum.WeekWalk_2)
+		else
+			arg_31_0.viewContainer:switchTab(DungeonEnum.DungeonViewTabEnum.WeekWalk)
+		end
 	end
 end
 
-function var_0_0._showTowerEffect(arg_33_0)
+function var_0_0._showWeekWalkEffect(arg_32_0)
+	local var_32_0 = WeekWalkTaskListModel.instance:canGetReward(WeekWalkEnum.TaskType.Week)
+	local var_32_1 = WeekWalkModel.instance:getInfo()
+	local var_32_2 = var_32_0 or var_32_1 and var_32_1.isPopShallowSettle
+	local var_32_3 = var_32_1 and var_32_1.isPopDeepSettle
+	local var_32_4 = WeekWalk_2Model.instance:getInfo()
+	local var_32_5 = var_32_4 and var_32_4.isPopSettle
+	local var_32_6 = var_32_3 or var_32_5
+
+	gohelper.setActive(arg_32_0._goweekwalkreward1, var_32_2)
+	gohelper.setActive(arg_32_0._goweekwalkreward2, not var_32_2 and var_32_6)
+	gohelper.setActive(arg_32_0._goweekwalkicon, not var_32_2 and not var_32_6)
+end
+
+function var_0_0._showGoldEffect(arg_33_0)
+	local var_33_0 = DungeonModel.instance:getEquipRemainingNum() > 0
+
+	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.EquipDungeon) then
+		gohelper.setActive(arg_33_0._gogoldUnselectIcon, not var_33_0)
+		gohelper.setActive(arg_33_0._gogoldRedPoint, var_33_0)
+	else
+		gohelper.setActive(arg_33_0._gogoldUnselectIcon, true)
+		gohelper.setActive(arg_33_0._gogoldRedPoint, false)
+	end
+end
+
+function var_0_0._showTowerEffect(arg_34_0)
 	if not TowerController.instance:isOpen() then
 		return
 	end
 
-	local var_33_0 = TaskModel.instance:getAllUnlockTasks(TaskEnum.TaskType.Tower) or {}
-	local var_33_1 = TowerTaskModel.instance:getTaskItemCanGetCount(var_33_0)
-	local var_33_2 = TowerPermanentModel.instance:checkCanShowMopUpReddot()
-	local var_33_3 = TowerController.instance:checkReddotHasNewUpdateTower()
+	local var_34_0 = TaskModel.instance:getAllUnlockTasks(TaskEnum.TaskType.Tower) or {}
+	local var_34_1 = TowerTaskModel.instance:getTaskItemCanGetCount(var_34_0)
+	local var_34_2 = TowerPermanentModel.instance:checkCanShowMopUpReddot()
+	local var_34_3 = TowerController.instance:checkReddotHasNewUpdateTower()
 
-	gohelper.setActive(arg_33_0._gotowerReddotEffect, var_33_1 > 0 or var_33_2 or var_33_3)
+	gohelper.setActive(arg_34_0._gotowerReddotEffect, var_34_1 > 0 or var_34_2 or var_34_3)
 end
 
-function var_0_0.onUpdateParam(arg_34_0)
-	arg_34_0:setBtnStatus()
+function var_0_0.onUpdateParam(arg_35_0)
+	arg_35_0:setBtnStatus()
 end
 
-function var_0_0.onOpen(arg_35_0)
+function var_0_0.onOpen(arg_36_0)
 	if ViewMgr.instance:isOpen(ViewName.MainView) then
 		AudioMgr.instance:trigger(AudioEnum.UI.UI_Main_enterance)
 	end
 
-	arg_35_0:addEventCb(DungeonController.instance, DungeonEvent.OnChangeChapter, arg_35_0._onChangeChapter, arg_35_0)
-	arg_35_0:addEventCb(MainController.instance, MainEvent.OnFuncUnlockRefresh, arg_35_0._refreshBtnUnlock, arg_35_0)
-	arg_35_0:addEventCb(ViewMgr.instance, ViewEvent.DestroyViewFinish, arg_35_0._onDestroyViewFinish, arg_35_0)
-	arg_35_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_35_0._onCloseView, arg_35_0)
-	arg_35_0:addEventCb(DungeonController.instance, DungeonEvent.OnDramaRewardStatusChange, arg_35_0._refreshDramaBtnStatus, arg_35_0)
-	arg_35_0:_refreshDramaBtnStatus()
-	arg_35_0:_moveChapter()
-	arg_35_0:_refreshBtnUnlock()
-	arg_35_0:playCategoryAnimation()
+	arg_36_0:addEventCb(DungeonController.instance, DungeonEvent.OnChangeChapter, arg_36_0._onChangeChapter, arg_36_0)
+	arg_36_0:addEventCb(MainController.instance, MainEvent.OnFuncUnlockRefresh, arg_36_0._refreshBtnUnlock, arg_36_0)
+	arg_36_0:addEventCb(ViewMgr.instance, ViewEvent.DestroyViewFinish, arg_36_0._onDestroyViewFinish, arg_36_0)
+	arg_36_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_36_0._onCloseView, arg_36_0)
+	arg_36_0:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnAllShallowLayerFinish, arg_36_0._onAllShallowLayerFinish, arg_36_0)
+	arg_36_0:addEventCb(DungeonController.instance, DungeonEvent.OnDramaRewardStatusChange, arg_36_0._refreshDramaBtnStatus, arg_36_0)
+	arg_36_0:_refreshDramaBtnStatus()
+	arg_36_0:_moveChapter()
+	arg_36_0:_refreshBtnUnlock()
+	arg_36_0:playCategoryAnimation()
 end
 
-function var_0_0._moveChapter(arg_36_0, arg_36_1)
-	if not arg_36_1 then
-		local var_36_0, var_36_1 = DungeonModel.instance:getLastEpisodeConfigAndInfo()
+function var_0_0._moveChapter(arg_37_0, arg_37_1)
+	if not arg_37_1 then
+		local var_37_0, var_37_1 = DungeonModel.instance:getLastEpisodeConfigAndInfo()
 
-		arg_36_1 = var_36_0.chapterId
+		arg_37_1 = var_37_0.chapterId
 	end
 
-	arg_36_0._moveChapterId = arg_36_1
+	arg_37_0._moveChapterId = arg_37_1
 
-	arg_36_0:setBtnStatus()
+	arg_37_0:setBtnStatus()
 
-	arg_36_0._moveChapter = nil
+	arg_37_0._moveChapter = nil
 
-	DungeonController.instance:dispatchEvent(DungeonEvent.OnEnterDungeonChatperView, arg_36_0._moveChapterId)
+	DungeonController.instance:dispatchEvent(DungeonEvent.OnEnterDungeonChatperView, arg_37_0._moveChapterId)
 end
 
-function var_0_0._onCloseView(arg_37_0, arg_37_1)
-	if arg_37_1 == ViewName.DungeonMapView and DungeonModel.instance.chapterTriggerNewChapter then
-		local var_37_0 = DungeonModel.instance.unlockNewChapterId
+function var_0_0._onCloseView(arg_38_0, arg_38_1)
+	if arg_38_1 == ViewName.DungeonMapView and DungeonModel.instance.chapterTriggerNewChapter then
+		local var_38_0 = DungeonModel.instance.unlockNewChapterId
 
-		arg_37_0:_focusNormalChapter(var_37_0)
+		arg_38_0:_focusNormalChapter(var_38_0)
 	end
 end
 
-function var_0_0._focusNormalChapter(arg_38_0, arg_38_1)
-	local var_38_0 = DungeonChapterListModel.instance:getMixCellPos(arg_38_1)
-	local var_38_1 = arg_38_0.viewContainer:getScrollParam().startSpace + var_38_0 - recthelper.getWidth(arg_38_0._scrollchapter.transform) / 2
-	local var_38_2 = gohelper.findChild(arg_38_0._scrollchapter.gameObject, "content")
-
-	arg_38_0._scrollchapter.movementType = 2
-
-	recthelper.setAnchorX(var_38_2.transform, -var_38_1)
-	TaskDispatcher.cancelTask(arg_38_0._resetMovementType, arg_38_0)
-	TaskDispatcher.runDelay(arg_38_0._resetMovementType, arg_38_0, 0)
-	arg_38_0.viewContainer:getScrollView():refreshScroll()
+function var_0_0._onAllShallowLayerFinish(arg_39_0)
+	if arg_39_0._isWeekWalkType then
+		arg_39_0:_switchWeekWalkTab()
+	end
 end
 
-function var_0_0._resetMovementType(arg_39_0)
-	arg_39_0._scrollchapter.movementType = 1
+function var_0_0._focusNormalChapter(arg_40_0, arg_40_1)
+	local var_40_0 = DungeonChapterListModel.instance:getMixCellPos(arg_40_1)
+	local var_40_1 = arg_40_0.viewContainer:getScrollParam().startSpace + var_40_0 - recthelper.getWidth(arg_40_0._scrollchapter.transform) / 2
+	local var_40_2 = gohelper.findChild(arg_40_0._scrollchapter.gameObject, "content")
+
+	arg_40_0._scrollchapter.movementType = 2
+
+	recthelper.setAnchorX(var_40_2.transform, -var_40_1)
+	TaskDispatcher.cancelTask(arg_40_0._resetMovementType, arg_40_0)
+	TaskDispatcher.runDelay(arg_40_0._resetMovementType, arg_40_0, 0)
+	arg_40_0.viewContainer:getScrollView():refreshScroll()
 end
 
-function var_0_0._onDestroyViewFinish(arg_40_0, arg_40_1)
+function var_0_0._resetMovementType(arg_41_0)
+	arg_41_0._scrollchapter.movementType = 1
+end
+
+function var_0_0._onDestroyViewFinish(arg_42_0, arg_42_1)
 	return
 end
 
-function var_0_0._onChangeChapter(arg_41_0, arg_41_1)
+function var_0_0._onChangeChapter(arg_43_0, arg_43_1)
 	if not DungeonModel.instance:chapterListIsNormalType() then
 		return
 	end
 
-	arg_41_0:_moveChapter(arg_41_1)
+	arg_43_0:_moveChapter(arg_43_1)
 end
 
-function var_0_0.refreshRoleStoryStatus(arg_42_0)
-	local var_42_0 = DungeonModel.instance:chapterListIsRoleStory()
-	local var_42_1 = RoleStoryModel.instance:isInResident()
-	local var_42_2 = RoleStoryModel.instance:checkActStoryOpen()
+function var_0_0.refreshRoleStoryStatus(arg_44_0)
+	local var_44_0 = DungeonModel.instance:chapterListIsRoleStory()
+	local var_44_1 = RoleStoryModel.instance:isInResident()
+	local var_44_2 = RoleStoryModel.instance:checkActStoryOpen()
 
-	arg_42_0:setRoleStoryStatus((var_42_1 or var_42_2) and var_42_0)
+	arg_44_0:setRoleStoryStatus((var_44_1 or var_44_2) and var_44_0)
 
-	if var_42_0 and not var_42_1 and not var_42_2 then
-		arg_42_0:_btnstoryOnClick()
-		arg_42_0:_refreshBtnUnlock()
+	if var_44_0 and not var_44_1 and not var_44_2 then
+		arg_44_0:_btnstoryOnClick()
+		arg_44_0:_refreshBtnUnlock()
 	end
 end
 
-function var_0_0.setRoleStoryStatus(arg_43_0, arg_43_1)
-	if arg_43_1 then
-		if not arg_43_0._roleStoryView then
-			arg_43_0._roleStoryView = RoleStoryView.New(arg_43_0._goRoleStory)
+function var_0_0.setRoleStoryStatus(arg_45_0, arg_45_1)
+	if arg_45_1 then
+		if not arg_45_0._roleStoryView then
+			arg_45_0._roleStoryView = RoleStoryView.New(arg_45_0._goRoleStory)
 		end
 
-		arg_43_0._roleStoryView:show()
-	elseif arg_43_0._roleStoryView then
-		arg_43_0._roleStoryView:hide()
+		arg_45_0._roleStoryView:show()
+	elseif arg_45_0._roleStoryView then
+		arg_45_0._roleStoryView:hide()
 	end
 end
 
-function var_0_0._onResidentStoryChange(arg_44_0)
-	arg_44_0:refreshRoleStoryStatus()
+function var_0_0._onResidentStoryChange(arg_46_0)
+	arg_46_0:refreshRoleStoryStatus()
 end
 
-function var_0_0.destoryRoleStory(arg_45_0)
-	if arg_45_0._roleStoryView then
-		arg_45_0._roleStoryView:destory()
+function var_0_0.destoryRoleStory(arg_47_0)
+	if arg_47_0._roleStoryView then
+		arg_47_0._roleStoryView:destory()
 
-		arg_45_0._roleStoryView = nil
+		arg_47_0._roleStoryView = nil
 	end
 end
 
-function var_0_0.onClose(arg_46_0)
+function var_0_0.onClose(arg_48_0)
 	return
 end
 
-function var_0_0.onDestroyView(arg_47_0)
-	arg_47_0._simagebg:UnLoadImage()
-	TaskDispatcher.cancelTask(arg_47_0._resetMovementType, arg_47_0)
-	TaskDispatcher.cancelTask(arg_47_0._delayOnShowStoryView, arg_47_0)
-	arg_47_0:destoryRoleStory()
+function var_0_0.onDestroyView(arg_49_0)
+	arg_49_0._simagebg:UnLoadImage()
+	TaskDispatcher.cancelTask(arg_49_0._resetMovementType, arg_49_0)
+	TaskDispatcher.cancelTask(arg_49_0._delayOnShowStoryView, arg_49_0)
+	arg_49_0:destoryRoleStory()
 end
 
-function var_0_0._refreshDramaBtnStatus(arg_48_0)
-	arg_48_0.storyUnSelectIconTag:refreshDot()
-	arg_48_0.storySelectIconTag:refreshDot()
+function var_0_0._refreshDramaBtnStatus(arg_50_0)
+	arg_50_0.storyUnSelectIconTag:refreshDot()
+	arg_50_0.storySelectIconTag:refreshDot()
 
-	local var_48_0 = DungeonModel.instance:isCanGetDramaReward()
+	local var_50_0 = DungeonModel.instance:isCanGetDramaReward()
 
-	gohelper.setActive(arg_48_0._btnDramaReward, var_48_0)
+	gohelper.setActive(arg_50_0._btnDramaReward, var_50_0)
 
-	if var_48_0 then
-		local var_48_1 = arg_48_0.viewParam
+	if var_50_0 then
+		local var_50_1 = arg_50_0.viewParam
 
-		if var_48_1 and var_48_1.fromMainView then
+		if var_50_1 and var_50_1.fromMainView then
 			DungeonController.instance:dispatchEvent(DungeonEvent.OnShowDramaRewardGuide)
 		end
 	end
 end
 
-function var_0_0.refreshStoryIcon(arg_49_0, arg_49_1)
-	local var_49_0 = RedDotModel.instance:isDotShow(arg_49_1.dotId, 0) or DungeonModel.instance:isCanGetDramaReward()
+function var_0_0.refreshStoryIcon(arg_51_0, arg_51_1)
+	local var_51_0 = RedDotModel.instance:isDotShow(arg_51_1.dotId, 0) or DungeonModel.instance:isCanGetDramaReward()
 
-	if arg_49_1.reverse then
-		var_49_0 = not var_49_0
+	if arg_51_1.reverse then
+		var_51_0 = not var_51_0
 	end
 
-	gohelper.setActive(arg_49_1.go, var_49_0)
+	gohelper.setActive(arg_51_1.go, var_51_0)
 end
 
-function var_0_0._checkPermanentReddot(arg_50_0, arg_50_1)
-	local var_50_0 = RedDotModel.instance:isDotShow(arg_50_1.dotId, 0) or not PermanentModel.instance:isActivityLocalRead()
+function var_0_0._checkPermanentReddot(arg_52_0, arg_52_1)
+	local var_52_0 = RedDotModel.instance:isDotShow(arg_52_1.dotId, 0) or not PermanentModel.instance:isActivityLocalRead()
 
-	gohelper.setActive(arg_50_0._goperUnselectIcon, not var_50_0)
-	gohelper.setActive(arg_50_0._goreddotpermanent, var_50_0)
+	gohelper.setActive(arg_52_0._goperUnselectIcon, not var_52_0)
+	gohelper.setActive(arg_52_0._goreddotpermanent, var_52_0)
 end
 
 return var_0_0

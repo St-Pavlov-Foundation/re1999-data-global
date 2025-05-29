@@ -581,6 +581,41 @@
     "everNode": ""
   },
   {
+    "heroResName": "311301_alf",
+    "effectCompName": "CommonRoleEffect",
+    "motion": "b_touzi2",
+    "node": "Drawables/bone/effect-Bone/roleeffect_alf_touzi1",
+    "everNode": ""
+  },
+  {
+    "heroResName": "311302_alf",
+    "effectCompName": "CommonRoleEffect",
+    "motion": "b_touzi2|b_qiutu",
+    "node": "Drawables/bone/effect-Bone/roleeffect_alf_touzi1|Drawables/bone2/effect-Bone/roleeffect_alf_qt2",
+    "everNode": ""
+  },
+  {
+    "heroResName": "310403_ddg",
+    "effectCompName": "CommonRoleEffect",
+    "motion": "b_huahuo",
+    "node": "Drawables/bone/effect-Bone/roleeffect_ddg_hh1",
+    "everNode": "Drawables/bone/effect-Bone/roleeffect_ddg_idle1"
+  },
+  {
+    "heroResName": "310203_luopeila",
+    "effectCompName": "CommonRoleEffect",
+    "motion": "b_ganguo|b_nujian",
+    "node": "Drawables/bone/effect-Bone/roleeffect_lpl_gg#Drawables/bone2/effect-Bone/roleeffect_lpl_gg|Drawables/bone3/effect-Bone/roleeffect_lpl_nj3#Drawables/bone4/effect-Bone/roleeffect_lpl_nj4",
+    "everNode": ""
+  },
+  {
+    "heroResName": "311402_xgj",
+    "effectCompName": "CommonRoleEffect",
+    "motion": "b_bajian",
+    "node": "Drawables/bone2/effect-Bone/roleeffect_xgj_bj2#Drawables/bone4/effect-Bone/roleeffect_xgj_bj4#Drawables/bone3/effect-Bone/roleeffect_xgj_bj3",
+    "everNode": ""
+  },
+  {
     "heroResName": "307904_6",
     "effectCompName": "RoleEffect307904_6",
     "motion": "b_idle|b_gaoju|b_chuimie|b_shishu",

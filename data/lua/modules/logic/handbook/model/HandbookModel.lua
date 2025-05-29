@@ -110,34 +110,26 @@ function var_0_0.getCGUnlockIndex(arg_9_0, arg_9_1, arg_9_2)
 	end
 end
 
-function var_0_0.getNextCG(arg_10_0, arg_10_1, arg_10_2)
-	local var_10_0 = HandbookConfig.instance:getCGIndex(arg_10_1, arg_10_2)
-	local var_10_1 = HandbookConfig.instance:getCGList(arg_10_2)
+function var_0_0.getCGUnlockIndexInChapter(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
+	local var_10_0 = 1
+	local var_10_1 = HandbookConfig.instance:getCGDictByChapter(arg_10_1)
 
-	for iter_10_0 = var_10_0 + 1, #var_10_1 do
-		local var_10_2 = var_10_1[iter_10_0]
+	for iter_10_0, iter_10_1 in ipairs(var_10_1) do
+		if iter_10_1.id == arg_10_2 then
+			return var_10_0
+		end
 
-		if arg_10_0:isCGUnlock(var_10_2.id) then
-			return var_10_2
+		if var_0_0.instance:isCGUnlock(iter_10_1.id) then
+			var_10_0 = var_10_0 + 1
 		end
 	end
-
-	for iter_10_1 = 1, var_10_0 - 1 do
-		local var_10_3 = var_10_1[iter_10_1]
-
-		if arg_10_0:isCGUnlock(var_10_3.id) then
-			return var_10_3
-		end
-	end
-
-	return nil
 end
 
-function var_0_0.getPrevCG(arg_11_0, arg_11_1, arg_11_2)
+function var_0_0.getNextCG(arg_11_0, arg_11_1, arg_11_2)
 	local var_11_0 = HandbookConfig.instance:getCGIndex(arg_11_1, arg_11_2)
 	local var_11_1 = HandbookConfig.instance:getCGList(arg_11_2)
 
-	for iter_11_0 = var_11_0 - 1, 1, -1 do
+	for iter_11_0 = var_11_0 + 1, #var_11_1 do
 		local var_11_2 = var_11_1[iter_11_0]
 
 		if arg_11_0:isCGUnlock(var_11_2.id) then
@@ -145,7 +137,7 @@ function var_0_0.getPrevCG(arg_11_0, arg_11_1, arg_11_2)
 		end
 	end
 
-	for iter_11_1 = #var_11_1, var_11_0 + 1, -1 do
+	for iter_11_1 = 1, var_11_0 - 1 do
 		local var_11_3 = var_11_1[iter_11_1]
 
 		if arg_11_0:isCGUnlock(var_11_3.id) then
@@ -156,31 +148,54 @@ function var_0_0.getPrevCG(arg_11_0, arg_11_1, arg_11_2)
 	return nil
 end
 
-function var_0_0.isStoryGroupUnlock(arg_12_0, arg_12_1)
-	local var_12_0 = HandbookConfig.instance:getStoryGroupConfig(arg_12_1).episodeId
+function var_0_0.getPrevCG(arg_12_0, arg_12_1, arg_12_2)
+	local var_12_0 = HandbookConfig.instance:getCGIndex(arg_12_1, arg_12_2)
+	local var_12_1 = HandbookConfig.instance:getCGList(arg_12_2)
 
-	return var_12_0 == 0 or DungeonModel.instance:hasPassLevelAndStory(var_12_0)
-end
+	for iter_12_0 = var_12_0 - 1, 1, -1 do
+		local var_12_2 = var_12_1[iter_12_0]
 
-function var_0_0.getStoryGroupUnlockCount(arg_13_0, arg_13_1)
-	local var_13_0 = 0
-	local var_13_1 = HandbookConfig.instance:getStoryGroupList()
-
-	for iter_13_0, iter_13_1 in ipairs(var_13_1) do
-		if (not arg_13_1 or iter_13_1.storyChapterId == arg_13_1) and var_0_0.instance:isStoryGroupUnlock(iter_13_1.id) then
-			var_13_0 = var_13_0 + 1
+		if arg_12_0:isCGUnlock(var_12_2.id) then
+			return var_12_2
 		end
 	end
 
-	return var_13_0
+	for iter_12_1 = #var_12_1, var_12_0 + 1, -1 do
+		local var_12_3 = var_12_1[iter_12_1]
+
+		if arg_12_0:isCGUnlock(var_12_3.id) then
+			return var_12_3
+		end
+	end
+
+	return nil
 end
 
-function var_0_0.getFragmentDialogIdList(arg_14_0, arg_14_1)
-	return arg_14_0._fragmentDict[arg_14_1]
+function var_0_0.isStoryGroupUnlock(arg_13_0, arg_13_1)
+	local var_13_0 = HandbookConfig.instance:getStoryGroupConfig(arg_13_1).episodeId
+
+	return var_13_0 == 0 or DungeonModel.instance:hasPassLevelAndStory(var_13_0)
 end
 
-function var_0_0.haveEquip(arg_15_0, arg_15_1)
-	return arg_15_0._equipDict[arg_15_1]
+function var_0_0.getStoryGroupUnlockCount(arg_14_0, arg_14_1)
+	local var_14_0 = 0
+	local var_14_1 = HandbookConfig.instance:getStoryGroupList()
+
+	for iter_14_0, iter_14_1 in ipairs(var_14_1) do
+		if (not arg_14_1 or iter_14_1.storyChapterId == arg_14_1) and var_0_0.instance:isStoryGroupUnlock(iter_14_1.id) then
+			var_14_0 = var_14_0 + 1
+		end
+	end
+
+	return var_14_0
+end
+
+function var_0_0.getFragmentDialogIdList(arg_15_0, arg_15_1)
+	return arg_15_0._fragmentDict[arg_15_1]
+end
+
+function var_0_0.haveEquip(arg_16_0, arg_16_1)
+	return arg_16_0._equipDict[arg_16_1]
 end
 
 var_0_0.instance = var_0_0.New()

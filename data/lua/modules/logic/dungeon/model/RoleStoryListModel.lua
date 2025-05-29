@@ -40,7 +40,9 @@ function var_0_0.refreshList(arg_2_0)
 	end
 
 	table.sort(var_2_1, SortUtil.tableKeyUpper({
+		"getUnlockOrder",
 		"unlockOrder",
+		"hasRewardUnget",
 		"getRewardOrder",
 		"order"
 	}))

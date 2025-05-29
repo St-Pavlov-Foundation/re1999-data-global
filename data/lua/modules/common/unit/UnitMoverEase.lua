@@ -44,58 +44,68 @@ function var_0_0.simpleMove(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4, arg_4_5
 		y = arg_4_5 - arg_4_2,
 		z = arg_4_6 - arg_4_3
 	}
+	arg_4_0._lastStartPos = arg_4_0._wayPointBegin
+	arg_4_0._lastEndPos = arg_4_0._wayPointEnd
 end
 
-function var_0_0.setPosDirectly(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	arg_5_0._wayPointBegin = nil
-	arg_5_0._wayPointValue = nil
-	arg_5_0._posX = arg_5_1
-	arg_5_0._posY = arg_5_2
-	arg_5_0._posZ = arg_5_3
-
-	arg_5_0:dispatchEvent(UnitMoveEvent.PosChanged, arg_5_0)
+function var_0_0.getLastStartPos(arg_5_0)
+	return arg_5_0._lastStartPos
 end
 
-function var_0_0.setGetTimeFunction(arg_6_0, arg_6_1, arg_6_2)
-	arg_6_0._getTimeFunction = arg_6_1
-	arg_6_0._getTimeObject = arg_6_2
+function var_0_0.getLastEndPos(arg_6_0)
+	return arg_6_0._lastEndPos
 end
 
-function var_0_0.getCurWayPoint(arg_7_0)
-	return arg_7_0._curWayPoint
+function var_0_0.setPosDirectly(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
+	arg_7_0._wayPointBegin = nil
+	arg_7_0._wayPointValue = nil
+	arg_7_0._posX = arg_7_1
+	arg_7_0._posY = arg_7_2
+	arg_7_0._posZ = arg_7_3
+
+	arg_7_0:dispatchEvent(UnitMoveEvent.PosChanged, arg_7_0)
 end
 
-function var_0_0.getPos(arg_8_0)
-	return arg_8_0._posX, arg_8_0._posY, arg_8_0._posZ
+function var_0_0.setGetTimeFunction(arg_8_0, arg_8_1, arg_8_2)
+	arg_8_0._getTimeFunction = arg_8_1
+	arg_8_0._getTimeObject = arg_8_2
 end
 
-function var_0_0.onUpdate(arg_9_0)
-	if not arg_9_0._wayPointBegin then
+function var_0_0.getCurWayPoint(arg_9_0)
+	return arg_9_0._curWayPoint
+end
+
+function var_0_0.getPos(arg_10_0)
+	return arg_10_0._posX, arg_10_0._posY, arg_10_0._posZ
+end
+
+function var_0_0.onUpdate(arg_11_0)
+	if not arg_11_0._wayPointBegin then
 		return
 	end
 
-	if arg_9_0._getTimeFunction then
-		arg_9_0._currTime = arg_9_0._getTimeFunction(arg_9_0._getTimeObject)
+	if arg_11_0._getTimeFunction then
+		arg_11_0._currTime = arg_11_0._getTimeFunction(arg_11_0._getTimeObject)
 	else
-		arg_9_0._currTime = arg_9_0._currTime + Time.deltaTime * arg_9_0._timeScale
+		arg_11_0._currTime = arg_11_0._currTime + Time.deltaTime * arg_11_0._timeScale
 	end
 
-	if arg_9_0._currTime >= arg_9_0._duration then
-		arg_9_0._posX = arg_9_0._wayPointEnd.x
-		arg_9_0._posY = arg_9_0._wayPointEnd.y
-		arg_9_0._posZ = arg_9_0._wayPointEnd.z
-		arg_9_0._wayPointBegin = nil
-		arg_9_0._wayPointEnd = nil
-		arg_9_0._wayPointValue = nil
+	if arg_11_0._currTime >= arg_11_0._duration then
+		arg_11_0._posX = arg_11_0._wayPointEnd.x
+		arg_11_0._posY = arg_11_0._wayPointEnd.y
+		arg_11_0._posZ = arg_11_0._wayPointEnd.z
+		arg_11_0._wayPointBegin = nil
+		arg_11_0._wayPointEnd = nil
+		arg_11_0._wayPointValue = nil
 
-		arg_9_0:dispatchEvent(UnitMoveEvent.PosChanged, arg_9_0)
-		arg_9_0:dispatchEvent(UnitMoveEvent.Arrive, arg_9_0)
+		arg_11_0:dispatchEvent(UnitMoveEvent.PosChanged, arg_11_0)
+		arg_11_0:dispatchEvent(UnitMoveEvent.Arrive, arg_11_0)
 	else
-		arg_9_0._posX = LuaTween.tween(arg_9_0._currTime, arg_9_0._wayPointBegin.x, arg_9_0._wayPointValue.x, arg_9_0._duration, arg_9_0._easeType)
-		arg_9_0._posY = LuaTween.tween(arg_9_0._currTime, arg_9_0._wayPointBegin.y, arg_9_0._wayPointValue.y, arg_9_0._duration, arg_9_0._easeType)
-		arg_9_0._posZ = LuaTween.tween(arg_9_0._currTime, arg_9_0._wayPointBegin.z, arg_9_0._wayPointValue.z, arg_9_0._duration, arg_9_0._easeType)
+		arg_11_0._posX = LuaTween.tween(arg_11_0._currTime, arg_11_0._wayPointBegin.x, arg_11_0._wayPointValue.x, arg_11_0._duration, arg_11_0._easeType)
+		arg_11_0._posY = LuaTween.tween(arg_11_0._currTime, arg_11_0._wayPointBegin.y, arg_11_0._wayPointValue.y, arg_11_0._duration, arg_11_0._easeType)
+		arg_11_0._posZ = LuaTween.tween(arg_11_0._currTime, arg_11_0._wayPointBegin.z, arg_11_0._wayPointValue.z, arg_11_0._duration, arg_11_0._easeType)
 
-		arg_9_0:dispatchEvent(UnitMoveEvent.PosChanged, arg_9_0)
+		arg_11_0:dispatchEvent(UnitMoveEvent.PosChanged, arg_11_0)
 	end
 end
 

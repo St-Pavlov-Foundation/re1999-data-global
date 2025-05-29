@@ -1800,154 +1800,215 @@ function var_0_0.playEffect295(arg_227_0, arg_227_1)
 	var_227_0:refreshPowerInfo(arg_227_1.powerInfo)
 end
 
-function var_0_0.playEffect308(arg_228_0, arg_228_1)
-	local var_228_0 = arg_228_0.dataMgr.teamDataMgr[arg_228_1.teamType]
-	local var_228_1 = arg_228_1.cardHeatValue.id
-	local var_228_2 = var_228_0.cardHeat.values[var_228_1]
+function var_0_0.playEffect306(arg_228_0, arg_228_1)
+	local var_228_0 = arg_228_0:getTarEntityMO(arg_228_1)
 
-	var_228_0.cardHeat.values[var_228_1] = FightDataHelper.coverData(FightDataCardHeatValue.New(arg_228_1.cardHeatValue), var_228_2)
-end
-
-function var_0_0.playEffect309(arg_229_0, arg_229_1)
-	local var_229_0 = arg_229_1.effectNum
-	local var_229_1 = arg_229_0.dataMgr.teamDataMgr[arg_229_1.teamType].cardHeat.values[var_229_0]
-
-	if not var_229_1 then
+	if not var_228_0 then
 		return
 	end
 
-	var_229_1.value = var_229_1.value + arg_229_1.effectNum1
+	local var_228_1 = arg_228_1.buff
+
+	if not var_228_1 then
+		return
+	end
+
+	var_228_0:updateBuff(var_228_1)
 end
 
-function var_0_0.playEffect310(arg_230_0, arg_230_1)
+function var_0_0.playEffect308(arg_229_0, arg_229_1)
+	local var_229_0 = arg_229_0.dataMgr.teamDataMgr[arg_229_1.teamType]
+	local var_229_1 = arg_229_1.cardHeatValue.id
+	local var_229_2 = var_229_0.cardHeat.values[var_229_1]
+
+	var_229_0.cardHeat.values[var_229_1] = FightDataHelper.coverData(FightDataCardHeatValue.New(arg_229_1.cardHeatValue), var_229_2)
+end
+
+function var_0_0.playEffect309(arg_230_0, arg_230_1)
 	local var_230_0 = arg_230_1.effectNum
+	local var_230_1 = arg_230_0.dataMgr.teamDataMgr[arg_230_1.teamType].cardHeat.values[var_230_0]
 
-	arg_230_0.dataMgr.fieldMgr:dirSetDeckNum(var_230_0)
-end
-
-function var_0_0.playEffect314(arg_231_0, arg_231_1)
-	local var_231_0 = arg_231_0:getTarEntityMO(arg_231_1)
-
-	if not var_231_0 then
+	if not var_230_1 then
 		return
 	end
 
-	var_231_0:setHp(var_231_0.currentHp - arg_231_1.effectNum)
+	var_230_1.value = var_230_1.value + arg_230_1.effectNum1
 end
 
-function var_0_0.playEffect316(arg_232_0, arg_232_1)
-	if not arg_232_1.entityMO then
+function var_0_0.playEffect310(arg_231_0, arg_231_1)
+	local var_231_0 = arg_231_1.effectNum
+
+	arg_231_0.dataMgr.fieldMgr:dirSetDeckNum(var_231_0)
+end
+
+function var_0_0.playEffect314(arg_232_0, arg_232_1)
+	local var_232_0 = arg_232_0:getTarEntityMO(arg_232_1)
+
+	if not var_232_0 then
 		return
 	end
 
-	arg_232_0.dataMgr.entityMgr:replaceEntityMO(arg_232_1.entityMO)
+	var_232_0:setHp(var_232_0.currentHp - arg_232_1.effectNum)
 end
 
-function var_0_0.playEffect320(arg_233_0, arg_233_1)
-	if not FightCardDataHelper.cardChangeIsMySide(arg_233_1) then
+function var_0_0.playEffect316(arg_233_0, arg_233_1)
+	if not arg_233_1.entityMO then
 		return
 	end
 
-	local var_233_0 = FightCardData.New(arg_233_1.cardInfo)
-	local var_233_1 = arg_233_0:getHandCard()
-
-	table.insert(var_233_1, var_233_0)
+	arg_233_0.dataMgr.entityMgr:replaceEntityMO(arg_233_1.entityMO)
 end
 
-function var_0_0.playUndefineEffect(arg_234_0)
+function var_0_0.playEffect320(arg_234_0, arg_234_1)
+	if not FightCardDataHelper.cardChangeIsMySide(arg_234_1) then
+		return
+	end
+
+	local var_234_0 = FightCardData.New(arg_234_1.cardInfo)
+	local var_234_1 = arg_234_0:getHandCard()
+
+	table.insert(var_234_1, var_234_0)
+end
+
+function var_0_0.playEffect322(arg_235_0, arg_235_1)
+	local var_235_0 = arg_235_0.dataMgr.entityMgr
+	local var_235_1 = var_235_0:getOriginSubList(arg_235_1.teamType)
+
+	if var_235_1 then
+		for iter_235_0, iter_235_1 in ipairs(var_235_1) do
+			var_235_0.entityDataDic[iter_235_1.uid] = nil
+		end
+
+		tabletool.clear(var_235_1)
+	end
+end
+
+function var_0_0.playEffect323(arg_236_0, arg_236_1)
+	local var_236_0 = arg_236_0.dataMgr.fieldMgr.fightTaskBox
+	local var_236_1 = var_236_0.tasks
+
+	for iter_236_0, iter_236_1 in ipairs(arg_236_1.fightTasks) do
+		local var_236_2 = iter_236_1.taskId
+		local var_236_3 = var_236_0:newTask(iter_236_1)
+
+		var_236_1[var_236_2] = FightDataHelper.coverData(var_236_3, var_236_1[var_236_2])
+	end
+end
+
+function var_0_0.playEffect325(arg_237_0, arg_237_1)
+	arg_237_0.dataMgr.entityMgr:removeEntity(arg_237_1.targetId)
+end
+
+function var_0_0.playEffect326(arg_238_0, arg_238_1)
+	local var_238_0 = arg_238_0:getTarEntityMO(arg_238_1)
+
+	if not var_238_0 then
+		return
+	end
+
+	local var_238_1 = arg_238_1.buff
+
+	if not var_238_1 then
+		return
+	end
+
+	var_238_0:updateBuff(var_238_1)
+end
+
+function var_0_0.playUndefineEffect(arg_239_0)
 	return
 end
 
-function var_0_0.dealExPointInfo(arg_235_0, arg_235_1)
-	for iter_235_0, iter_235_1 in ipairs(arg_235_1) do
-		local var_235_0 = arg_235_0.dataMgr:getEntityById(iter_235_1.uid)
+function var_0_0.dealExPointInfo(arg_240_0, arg_240_1)
+	for iter_240_0, iter_240_1 in ipairs(arg_240_1) do
+		local var_240_0 = arg_240_0.dataMgr:getEntityById(iter_240_1.uid)
 
-		if var_235_0 then
-			var_235_0:setHp(iter_235_1.currentHp)
+		if var_240_0 then
+			var_240_0:setHp(iter_240_1.currentHp)
 
 			if not isDebugBuild then
-				var_235_0:setExPoint(iter_235_1.exPoint)
-				var_235_0:setPowerInfos(iter_235_1.powerInfos)
+				var_240_0:setExPoint(iter_240_1.exPoint)
+				var_240_0:setPowerInfos(iter_240_1.powerInfos)
 			end
 		end
 	end
 end
 
-function var_0_0.playChangeWave(arg_236_0)
-	local var_236_0 = arg_236_0.dataMgr.cacheFightMgr:getAndRemove()
+function var_0_0.playChangeWave(arg_241_0)
+	local var_241_0 = arg_241_0.dataMgr.cacheFightMgr:getAndRemove()
 
-	if var_236_0 then
-		arg_236_0.dataMgr:updateFightData(var_236_0)
+	if var_241_0 then
+		arg_241_0.dataMgr:updateFightData(var_241_0)
 	end
 end
 
-function var_0_0.playChangeHero(arg_237_0, arg_237_1)
-	local var_237_0 = arg_237_0.dataMgr:getEntityById(arg_237_1.toId)
-	local var_237_1 = arg_237_0.dataMgr:getEntityById(arg_237_1.fromId)
+function var_0_0.playChangeHero(arg_242_0, arg_242_1)
+	local var_242_0 = arg_242_0.dataMgr:getEntityById(arg_242_1.toId)
+	local var_242_1 = arg_242_0.dataMgr:getEntityById(arg_242_1.fromId)
 
-	if not var_237_1 then
+	if not var_242_1 then
 		return
 	end
 
-	if var_237_0 and var_237_0.id ~= FightEntityScene.MySideId then
-		var_237_1.position = var_237_0.position
-		var_237_0.position = -1
+	if var_242_0 and var_242_0.id ~= FightEntityScene.MySideId then
+		var_242_1.position = var_242_0.position
+		var_242_0.position = -1
 	end
 
-	if arg_237_1.actEffectMOs then
-		for iter_237_0, iter_237_1 in ipairs(arg_237_1.actEffectMOs) do
-			if iter_237_1.effectType == FightEnum.EffectType.CHANGEHERO then
+	if arg_242_1.actEffectMOs then
+		for iter_242_0, iter_242_1 in ipairs(arg_242_1.actEffectMOs) do
+			if iter_242_1.effectType == FightEnum.EffectType.CHANGEHERO then
 				if FightModel.instance:getVersion() >= 1 then
-					if iter_237_1.entityMO then
-						arg_237_0.dataMgr.entityMgr:replaceEntityMO(iter_237_1.entityMO)
+					if iter_242_1.entityMO then
+						arg_242_0.dataMgr.entityMgr:replaceEntityMO(iter_242_1.entityMO)
 					end
 				else
-					FightHelper.setEffectEntitySide(iter_237_1)
+					FightHelper.setEffectEntitySide(iter_242_1)
 
-					if iter_237_1.entityMO then
-						arg_237_0.dataMgr.entityMgr:replaceEntityMO(iter_237_1.entityMO)
+					if iter_242_1.entityMO then
+						arg_242_0.dataMgr.entityMgr:replaceEntityMO(iter_242_1.entityMO)
 					end
 				end
 			end
 		end
 	end
 
-	local var_237_2 = var_237_1.side
-	local var_237_3 = arg_237_0.dataMgr.entityMgr:getOriginListById(arg_237_1.toId)
+	local var_242_2 = var_242_1.side
+	local var_242_3 = arg_242_0.dataMgr.entityMgr:getOriginListById(arg_242_1.toId)
 
-	for iter_237_2, iter_237_3 in ipairs(var_237_3) do
-		if iter_237_3.uid == arg_237_1.toId then
-			table.remove(var_237_3, iter_237_2)
-
-			break
-		end
-	end
-
-	local var_237_4 = arg_237_0.dataMgr.entityMgr:getOriginSubList(var_237_2)
-
-	for iter_237_4, iter_237_5 in ipairs(var_237_4) do
-		if iter_237_5.uid == arg_237_1.fromId then
-			table.remove(var_237_4, iter_237_4)
+	for iter_242_2, iter_242_3 in ipairs(var_242_3) do
+		if iter_242_3.uid == arg_242_1.toId then
+			table.remove(var_242_3, iter_242_2)
 
 			break
 		end
 	end
 
-	local var_237_5 = arg_237_0.dataMgr.entityMgr:getOriginNormalList(var_237_2)
+	local var_242_4 = arg_242_0.dataMgr.entityMgr:getOriginSubList(var_242_2)
 
-	table.insert(var_237_5, arg_237_0.dataMgr.entityMgr:getById(arg_237_1.fromId))
+	for iter_242_4, iter_242_5 in ipairs(var_242_4) do
+		if iter_242_5.uid == arg_242_1.fromId then
+			table.remove(var_242_4, iter_242_4)
+
+			break
+		end
+	end
+
+	local var_242_5 = arg_242_0.dataMgr.entityMgr:getOriginNormalList(var_242_2)
+
+	table.insert(var_242_5, arg_242_0.dataMgr.entityMgr:getById(arg_242_1.fromId))
 end
 
-function var_0_0.getTarEntityMO(arg_238_0, arg_238_1)
-	return arg_238_0.dataMgr:getEntityById(arg_238_1.targetId)
+function var_0_0.getTarEntityMO(arg_243_0, arg_243_1)
+	return arg_243_0.dataMgr:getEntityById(arg_243_1.targetId)
 end
 
-function var_0_0.getHandCard(arg_239_0)
-	return arg_239_0.dataMgr.handCardMgr:getHandCard()
+function var_0_0.getHandCard(arg_244_0)
+	return arg_244_0.dataMgr.handCardMgr:getHandCard()
 end
 
-function var_0_0.needLogError(arg_240_0)
-	if arg_240_0:isPerformanceData() then
+function var_0_0.needLogError(arg_245_0)
+	if arg_245_0:isPerformanceData() then
 		return
 	end
 
@@ -1958,62 +2019,62 @@ function var_0_0.needLogError(arg_240_0)
 	return true
 end
 
-function var_0_0.isLocalData(arg_241_0)
-	return arg_241_0.dataMgr.__cname == FightLocalDataMgr.__cname
+function var_0_0.isLocalData(arg_246_0)
+	return arg_246_0.dataMgr.__cname == FightLocalDataMgr.__cname
 end
 
-function var_0_0.isPerformanceData(arg_242_0)
-	return arg_242_0.dataMgr.__cname == FightDataMgr.__cname
+function var_0_0.isPerformanceData(arg_247_0)
+	return arg_247_0.dataMgr.__cname == FightDataMgr.__cname
 end
 
-function var_0_0.onConstructor(arg_243_0)
-	arg_243_0._type2FuncName = {}
+function var_0_0.onConstructor(arg_248_0)
+	arg_248_0._type2FuncName = {}
 end
 
-function var_0_0.playStepProto(arg_244_0, arg_244_1)
-	local var_244_0 = {}
+function var_0_0.playStepProto(arg_249_0, arg_249_1)
+	local var_249_0 = {}
 
-	for iter_244_0, iter_244_1 in ipairs(arg_244_1) do
-		local var_244_1 = FightStepMO.New()
+	for iter_249_0, iter_249_1 in ipairs(arg_249_1) do
+		local var_249_1 = FightStepMO.New()
 
-		var_244_1:init(iter_244_1, true)
-		table.insert(var_244_0, var_244_1)
+		var_249_1:init(iter_249_1, true)
+		table.insert(var_249_0, var_249_1)
 	end
 
-	for iter_244_2, iter_244_3 in ipairs(var_244_0) do
-		arg_244_0:playStepData(iter_244_3)
+	for iter_249_2, iter_249_3 in ipairs(var_249_0) do
+		arg_249_0:playStepData(iter_249_3)
 	end
 end
 
-function var_0_0.playStepData(arg_245_0, arg_245_1)
-	if arg_245_1.actType == FightEnum.ActType.SKILL or arg_245_1.actType == FightEnum.ActType.EFFECT then
-		for iter_245_0, iter_245_1 in ipairs(arg_245_1.actEffectMOs) do
-			arg_245_0:playActEffectData(iter_245_1)
+function var_0_0.playStepData(arg_250_0, arg_250_1)
+	if arg_250_1.actType == FightEnum.ActType.SKILL or arg_250_1.actType == FightEnum.ActType.EFFECT then
+		for iter_250_0, iter_250_1 in ipairs(arg_250_1.actEffectMOs) do
+			arg_250_0:playActEffectData(iter_250_1)
 		end
-	elseif arg_245_1.actType == FightEnum.ActType.CHANGEWAVE then
-		arg_245_0:playChangeWave()
-	elseif arg_245_1.actType == FightEnum.ActType.CHANGEHERO then
-		arg_245_0:playChangeHero(arg_245_1)
+	elseif arg_250_1.actType == FightEnum.ActType.CHANGEWAVE then
+		arg_250_0:playChangeWave()
+	elseif arg_250_1.actType == FightEnum.ActType.CHANGEHERO then
+		arg_250_0:playChangeHero(arg_250_1)
 	end
 end
 
-function var_0_0.playActEffectData(arg_246_0, arg_246_1)
-	local var_246_0 = arg_246_0._type2FuncName[arg_246_1.effectType]
+function var_0_0.playActEffectData(arg_251_0, arg_251_1)
+	local var_251_0 = arg_251_0._type2FuncName[arg_251_1.effectType]
 
-	if not var_246_0 then
-		var_246_0 = arg_246_0["playEffect" .. arg_246_1.effectType] or arg_246_0.playUndefineEffect
-		arg_246_0._type2FuncName[arg_246_1.effectType] = var_246_0
+	if not var_251_0 then
+		var_251_0 = arg_251_0["playEffect" .. arg_251_1.effectType] or arg_251_0.playUndefineEffect
+		arg_251_0._type2FuncName[arg_251_1.effectType] = var_251_0
 	end
 
-	if arg_246_0:isPerformanceData() then
-		arg_246_1:setDone()
-		xpcall(var_246_0, var_0_0.ingoreLogError, arg_246_0, arg_246_1)
+	if arg_251_0:isPerformanceData() then
+		arg_251_1:setDone()
+		xpcall(var_251_0, var_0_0.ingoreLogError, arg_251_0, arg_251_1)
 	else
-		xpcall(var_246_0, __G__TRACKBACK__, arg_246_0, arg_246_1)
+		xpcall(var_251_0, __G__TRACKBACK__, arg_251_0, arg_251_1)
 	end
 end
 
-function var_0_0.ingoreLogError(arg_247_0)
+function var_0_0.ingoreLogError(arg_252_0)
 	return
 end
 

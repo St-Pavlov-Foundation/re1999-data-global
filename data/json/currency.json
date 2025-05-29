@@ -1422,5 +1422,37 @@
     "dayRecoverNum": 0,
     "maxLimit": 0,
     "sources": ""
+  },
+  {
+    "id": 2601,
+    "name": "language_10070247",
+    "rare": 3,
+    "highQuality": 0,
+    "icon": "2601",
+    "smallIcon": "",
+    "useDesc": "language_10070248",
+    "desc": "language_10070249",
+    "recoverTime": 0,
+    "recoverNum": 0,
+    "recoverLimit": 0,
+    "dayRecoverNum": 0,
+    "maxLimit": 999999999,
+    "sources": ""
+  },
+  {
+    "id": 2602,
+    "name": "language_10053988",
+    "rare": 3,
+    "highQuality": 0,
+    "icon": "2203",
+    "smallIcon": "2203_1",
+    "useDesc": "language_10070250",
+    "desc": "language_10053990",
+    "recoverTime": 0,
+    "recoverNum": 0,
+    "recoverLimit": 0,
+    "dayRecoverNum": 0,
+    "maxLimit": 999999999,
+    "sources": ""
   }
 ]

@@ -156,6 +156,8 @@ function var_0_0.getMainHero(arg_12_0, arg_12_1)
 
 				arg_12_0._tempHeroId = var_12_6.heroId
 				arg_12_0._tempSkinId = var_12_7[math.random(#var_12_7)]
+
+				CharacterController.instance:dispatchEvent(CharacterEvent.RandomMainHero, arg_12_0._tempHeroId, arg_12_0._tempSkinId)
 			end
 		else
 			return arg_12_0._tempHeroId, arg_12_0._tempSkinId, true

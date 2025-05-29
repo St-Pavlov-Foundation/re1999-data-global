@@ -44,7 +44,7 @@ function var_0_0.onBuffStart(arg_2_0, arg_2_1, arg_2_2)
 		AudioMgr.instance:trigger(var_2_5)
 	end
 
-	arg_2_1.buff:setBuffEffectDict(arg_2_2.uid, arg_2_0.wrap)
+	arg_2_1.buff:addLoopBuff(arg_2_0.wrap)
 end
 
 function var_0_0.onBuffEnd(arg_3_0)
@@ -52,9 +52,9 @@ function var_0_0.onBuffEnd(arg_3_0)
 		return
 	end
 
+	arg_3_0.entity.buff:removeLoopBuff(arg_3_0.wrap)
 	arg_3_0.entity.effect:removeEffect(arg_3_0.wrap)
 	FightRenderOrderMgr.instance:onRemoveEffectWrap(arg_3_0.entity.id, arg_3_0.wrap)
-	arg_3_0.entity.buff:setBuffEffectDict(arg_3_0.buffMo.uid, nil)
 
 	arg_3_0.wrap = nil
 end

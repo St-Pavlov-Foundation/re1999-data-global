@@ -2456,7 +2456,7 @@
     "text": "1.6主活动Boss界面2",
     "icon": "v1a6_activityboss_help_2",
     "iconText": "v1a6_activityboss_help_2",
-    "unlockGuideId": 16103,
+    "unlockGuideId": 0,
     "isCn": 0
   },
   {
@@ -3978,6 +3978,56 @@
     "iconText": "v2a5_autochess_help_5",
     "unlockGuideId": 0,
     "isCn": 1
+  },
+  {
+    "id": 14014,
+    "title": "",
+    "type": 1,
+    "text": "醒梦域玩法说明页",
+    "icon": "bg_help_50112",
+    "iconText": "50112",
+    "unlockGuideId": 0,
+    "isCn": 0
+  },
+  {
+    "id": 14015,
+    "title": "",
+    "type": 1,
+    "text": "醒梦域关卡说明页",
+    "icon": "bg_help_50113",
+    "iconText": "50113",
+    "unlockGuideId": 0,
+    "isCn": 0
+  },
+  {
+    "id": 14016,
+    "title": "",
+    "type": 1,
+    "text": "醒梦域编队说明页",
+    "icon": "bg_help_50114",
+    "iconText": "50114",
+    "unlockGuideId": 0,
+    "isCn": 0
+  },
+  {
+    "id": 14017,
+    "title": "",
+    "type": 1,
+    "text": "醒梦域编队说明页",
+    "icon": "bg_help_50115",
+    "iconText": "50115",
+    "unlockGuideId": 0,
+    "isCn": 0
+  },
+  {
+    "id": 1971501,
+    "title": "",
+    "type": 1,
+    "text": "代价造物指引",
+    "icon": "rouge_help_26",
+    "iconText": "rouge_help_26",
+    "unlockGuideId": 0,
+    "isCn": 0
   },
   {
     "id": 19001,

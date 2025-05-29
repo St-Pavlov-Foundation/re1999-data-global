@@ -10,7 +10,8 @@ function var_0_0.reqConfigNames(arg_2_0)
 	return {
 		"fight_asfd",
 		"fight_asfd_emitter_position",
-		"fight_asfd_const"
+		"fight_asfd_const",
+		"fight_asfd_fly_path"
 	}
 end
 
@@ -19,6 +20,8 @@ function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
 		arg_3_0:buildFightASFDConfig(arg_3_2)
 	elseif arg_3_1 == "fight_asfd_const" then
 		arg_3_0:buildFightASFDConstConfig(arg_3_2)
+	elseif arg_3_1 == "fight_asfd_fly_path" then
+		arg_3_0:buildFightASFDFlyPathConfig(arg_3_2)
 	end
 end
 
@@ -82,6 +85,7 @@ function var_0_0.buildFightASFDConstConfig(arg_6_0, arg_6_1)
 	arg_6_0.headIcon = var_6_0[22].value
 	arg_6_0.sampleXRate = tonumber(var_6_0[23].value)
 	arg_6_0.lineType = tonumber(var_6_0[24].value)
+	arg_6_0.alfMaxShowEffectCount = tonumber(var_6_0[26].value)
 	arg_6_0.emitterCenterOffset = Vector2(0, 0)
 	arg_6_0.myASFDConfig = arg_6_0:buildASFDEmitterConfig("法术飞弹-我方")
 	arg_6_0.enemyASFDConfig = arg_6_0:buildASFDEmitterConfig("法术飞弹-敌方")
@@ -98,32 +102,77 @@ function var_0_0.buildASFDEmitterConfig(arg_7_0, arg_7_1)
 	}
 end
 
-function var_0_0.getASFDEmitterConfig(arg_8_0, arg_8_1)
-	return arg_8_1 == FightEnum.EntitySide.EnemySide and arg_8_0.enemyASFDConfig or arg_8_0.myASFDConfig
+function var_0_0.buildFightASFDFlyPathConfig(arg_8_0, arg_8_1)
+	arg_8_0.defaultFlyPath = arg_8_1.configDict[1]
 end
 
-function var_0_0.getUnitList(arg_9_0, arg_9_1)
-	return arg_9_0.unitListDict[arg_9_1]
-end
+function var_0_0.getFlyPathCo(arg_9_0, arg_9_1)
+	local var_9_0 = lua_fight_asfd_fly_path.configDict[arg_9_1]
 
-function var_0_0.getMissileInterval(arg_10_0, arg_10_1)
-	local var_10_0 = arg_10_0.missileInterval - (arg_10_1 - 1) * arg_10_0.missileReduceInterval
-
-	return math.max(arg_10_0.minMissileInterval, var_10_0)
-end
-
-function var_0_0.getFlyDuration(arg_11_0, arg_11_1)
-	local var_11_0 = arg_11_0.flyDuration - (arg_11_1 - 1) * arg_11_0.flyReduceInterval
-
-	return math.max(arg_11_0.minFlyDuration, var_11_0)
-end
-
-function var_0_0.getSkillCo(arg_12_0)
-	if not arg_12_0.skillLCo then
-		arg_12_0.skillCo = lua_skill.configDict[arg_12_0.skillId]
+	if not var_9_0 then
+		return arg_9_0.defaultFlyPath
 	end
 
-	return arg_12_0.skillCo
+	return var_9_0
+end
+
+function var_0_0.getASFDEmitterConfig(arg_10_0, arg_10_1)
+	return arg_10_1 == FightEnum.EntitySide.EnemySide and arg_10_0.enemyASFDConfig or arg_10_0.myASFDConfig
+end
+
+function var_0_0.getUnitList(arg_11_0, arg_11_1)
+	return arg_11_0.unitListDict[arg_11_1]
+end
+
+function var_0_0.getMissileInterval(arg_12_0, arg_12_1)
+	local var_12_0 = arg_12_0.missileInterval - (arg_12_1 - 1) * arg_12_0.missileReduceInterval
+
+	return math.max(arg_12_0.minMissileInterval, var_12_0)
+end
+
+function var_0_0.getFlyDuration(arg_13_0, arg_13_1, arg_13_2)
+	local var_13_0 = arg_13_1 - (arg_13_2 - 1) * arg_13_0.flyReduceInterval
+
+	return math.max(arg_13_0.minFlyDuration, var_13_0)
+end
+
+function var_0_0.getSkillCo(arg_14_0)
+	if not arg_14_0.skillLCo then
+		arg_14_0.skillCo = lua_skill.configDict[arg_14_0.skillId]
+	end
+
+	return arg_14_0.skillCo
+end
+
+function var_0_0.getASFDCoRes(arg_15_0, arg_15_1)
+	if not arg_15_1 then
+		return
+	end
+
+	local var_15_0 = arg_15_1.res
+
+	if not string.find(var_15_0, "|") then
+		return var_15_0
+	end
+
+	arg_15_0.tempResDict = arg_15_0.tempResDict or {}
+
+	local var_15_1 = arg_15_0.tempResDict[var_15_0]
+
+	if not var_15_1 or #var_15_1 < 1 then
+		var_15_1 = tabletool.copy(FightStrUtil.instance:getSplitCache(var_15_0, "|"))
+		arg_15_0.tempResDict[var_15_0] = var_15_1
+	end
+
+	local var_15_2 = #var_15_1
+
+	if var_15_2 == 1 then
+		return table.remove(var_15_1)
+	end
+
+	local var_15_3 = math.random(var_15_2)
+
+	return table.remove(var_15_1, var_15_3)
 end
 
 var_0_0.instance = var_0_0.New()

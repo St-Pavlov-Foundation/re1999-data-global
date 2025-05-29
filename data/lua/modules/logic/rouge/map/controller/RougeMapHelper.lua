@@ -59,7 +59,7 @@ end
 function var_0_0.getEpisodePosX(arg_7_0)
 	local var_7_0 = (arg_7_0 - 1) * RougeMapModel.instance:getMapEpisodeIntervalX()
 
-	return RougeMapEnum.MapStartOffsetX + var_7_0
+	return RougeMapModel.instance:getMapStartOffsetX() + var_7_0
 end
 
 function var_0_0.getNodeLocalPos(arg_8_0, arg_8_1)

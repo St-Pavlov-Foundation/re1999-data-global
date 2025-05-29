@@ -58,5 +58,35 @@
     "id": 5,
     "value1": 0,
     "value2": "ui/viewres/seasonver/act166/bg/season166mainbg2.prefab"
+  },
+  {
+    "activityId": 12618,
+    "id": 1,
+    "value1": 2602,
+    "value2": ""
+  },
+  {
+    "activityId": 12618,
+    "id": 2,
+    "value1": 8,
+    "value2": ""
+  },
+  {
+    "activityId": 12618,
+    "id": 3,
+    "value1": 14,
+    "value2": ""
+  },
+  {
+    "activityId": 12618,
+    "id": 4,
+    "value1": 0,
+    "value2": "singlebg/v2a6_mainactivity_singlebg/v2a6_enterview_season_fullbg.png"
+  },
+  {
+    "activityId": 12618,
+    "id": 5,
+    "value1": 0,
+    "value2": "ui/viewres/seasonver/act166/bg/season166mainbg3.prefab"
   }
 ]

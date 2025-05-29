@@ -413,6 +413,10 @@ function var_0_0.getStartViewAllInfo(arg_51_0, arg_51_1)
 	return var_51_2
 end
 
+function var_0_0.getCurExtraPoint(arg_52_0)
+	return arg_52_0._rougeInfo and arg_52_0._rougeInfo.curExtraPoint or 0
+end
+
 var_0_0.instance = var_0_0.New()
 
 return var_0_0

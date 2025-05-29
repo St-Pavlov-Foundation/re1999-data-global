@@ -72,6 +72,17 @@ function var_0_0.weekwalksettlement(arg_7_0)
 
 		WeekWalkController.instance:openWeekWalkShallowSettlementView()
 	end
+
+	if var_7_0 == 4 then
+		WeekWalk_2Controller.instance:openWeekWalk_2DeepLayerNoticeView()
+	end
+
+	if var_7_0 == 5 then
+		WeekWalkModel.instance:getInfo().isPopDeepSettle = true
+		WeekWalk_2Model.instance:getInfo().isPopSettle = true
+
+		WeekWalkController.instance:openWeekWalkShallowSettlementView()
+	end
 end
 
 function var_0_0.finishLayer(arg_8_0, arg_8_1)

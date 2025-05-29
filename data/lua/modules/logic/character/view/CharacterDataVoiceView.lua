@@ -407,6 +407,7 @@ function var_0_0.onUpdateParam(arg_27_0)
 end
 
 function var_0_0.onClose(arg_28_0)
+	CharacterDataModel.instance:setPlayingInfo(nil, nil)
 	FrameTimerController.onDestroyViewMember(arg_28_0, "_frameTimer")
 	CharacterVoiceModel.instance:setNeedItemAni(true)
 	UIBlockMgr.instance:endBlock(var_0_1)

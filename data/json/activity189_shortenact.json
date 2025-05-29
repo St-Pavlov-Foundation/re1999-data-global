@@ -1,8 +1,14 @@
 [
   {
     "id": 1,
-    "version": "2-3",
+    "version": "2-6",
     "settingId": 12607,
+    "style": 1
+  },
+  {
+    "id": 4,
+    "version": "2-6",
+    "settingId": 12681,
     "style": 1
   },
   {

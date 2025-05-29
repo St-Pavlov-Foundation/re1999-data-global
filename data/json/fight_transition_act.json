@@ -892,5 +892,83 @@
     "fromAct": "posture",
     "endAct": "idle",
     "transitionAct": "change2"
+  },
+  {
+    "id": 310203,
+    "fromAct": "skill2",
+    "endAct": "idle",
+    "transitionAct": "channel_idle"
+  },
+  {
+    "id": 310203,
+    "fromAct": "skill3",
+    "endAct": "idle",
+    "transitionAct": "change3"
+  },
+  {
+    "id": 310203,
+    "fromAct": "channel_idle",
+    "endAct": "idle",
+    "transitionAct": "change3"
+  },
+  {
+    "id": 310203,
+    "fromAct": "skill1",
+    "endAct": "channel_idle",
+    "transitionAct": "0"
+  },
+  {
+    "id": 310203,
+    "fromAct": "skill2",
+    "endAct": "channel_idle",
+    "transitionAct": "0"
+  },
+  {
+    "id": 310203,
+    "fromAct": "channel_idle",
+    "endAct": "skill3",
+    "transitionAct": "0"
+  },
+  {
+    "id": 310203,
+    "fromAct": "channel_idle",
+    "endAct": "skill1",
+    "transitionAct": "0"
+  },
+  {
+    "id": 310203,
+    "fromAct": "channel_idle",
+    "endAct": "skill1_1",
+    "transitionAct": "0"
+  },
+  {
+    "id": 310203,
+    "fromAct": "channel_idle",
+    "endAct": "skill2",
+    "transitionAct": "0"
+  },
+  {
+    "id": 310203,
+    "fromAct": "skill2",
+    "endAct": "posture",
+    "transitionAct": "channel_idle"
+  },
+  {
+    "id": 311301,
+    "fromAct": "idle",
+    "endAct": "posture",
+    "transitionAct": "change"
+  },
+  {
+    "id": 311302,
+    "fromAct": "idle",
+    "endAct": "posture",
+    "transitionAct": "change"
+  },
+  {
+    "id": 311302,
+    "fromAct": "posture",
+    "endAct": "idle",
+    "transitionAct": "change2"
   }
 ]

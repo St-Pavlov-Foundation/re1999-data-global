@@ -40,7 +40,7 @@ function var_0_0.openVersionActivityEnterView(arg_6_0, arg_6_1, arg_6_2, arg_6_3
 		enterVideo = arg_6_4
 	}
 
-	arg_6_0:_enterVersionActivityView(ViewName.VersionActivity2_5EnterView, VersionActivity2_5Enum.ActivityId.EnterView, arg_6_0._openVersionActivityEnterView, arg_6_0, var_6_0)
+	arg_6_0:_enterVersionActivityView(ViewName.VersionActivity1_6EnterView, VersionActivity1_6Enum.ActivityId.EnterView, arg_6_0._openVersionActivityEnterView, arg_6_0, var_6_0)
 end
 
 function var_0_0._onFinishStory(arg_7_0, arg_7_1)
@@ -72,10 +72,11 @@ function var_0_0._openVersionActivityEnterView(arg_8_0, arg_8_1, arg_8_2, arg_8_
 	end
 
 	ViewMgr.instance:openView(ViewName.VersionActivity1_6EnterView, {
-		activityIdList = VersionActivity1_6Enum.EnterViewActIdList,
-		actId = arg_8_0.actId,
-		jumpActId = arg_8_3 and arg_8_3.jumpActId,
-		enterVideo = arg_8_3 and arg_8_3.enterVideo
+		actId = VersionActivity1_6Enum.ActivityId.EnterView,
+		activityIdListWithGroup = VersionActivity1_6Enum.EnterViewActIdListWithGroup,
+		mainActIdList = VersionActivity1_6Enum.EnterViewMainActIdList,
+		actId2AmbientDict = VersionActivity1_6Enum.ActId2Ambient,
+		actId2OpenAudioDict = VersionActivity1_6Enum.ActId2OpenAudio
 	})
 
 	if arg_8_0.openedCallback then

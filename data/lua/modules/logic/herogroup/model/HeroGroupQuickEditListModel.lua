@@ -58,7 +58,8 @@ function var_0_0.copyQuickEditCardList(arg_1_0)
 	end
 
 	local var_1_7 = arg_1_0.isTowerBattle
-	local var_1_8 = {}
+	local var_1_8 = arg_1_0.isWeekWalk_2
+	local var_1_9 = {}
 
 	for iter_1_4, iter_1_5 in ipairs(var_1_0) do
 		if not var_1_2[iter_1_5.uid] then
@@ -66,13 +67,19 @@ function var_0_0.copyQuickEditCardList(arg_1_0)
 
 			if arg_1_0.adventure then
 				if WeekWalkModel.instance:getCurMapHeroCd(iter_1_5.heroId) > 0 then
-					table.insert(var_1_8, iter_1_5)
+					table.insert(var_1_9, iter_1_5)
+				else
+					table.insert(var_1_1, iter_1_5)
+				end
+			elseif var_1_8 then
+				if WeekWalk_2Model.instance:getCurMapHeroCd(iter_1_5.heroId) > 0 then
+					table.insert(var_1_9, iter_1_5)
 				else
 					table.insert(var_1_1, iter_1_5)
 				end
 			elseif var_1_7 then
 				if TowerModel.instance:isHeroBan(iter_1_5.heroId) then
-					table.insert(var_1_8, iter_1_5)
+					table.insert(var_1_9, iter_1_5)
 				else
 					table.insert(var_1_1, iter_1_5)
 				end
@@ -82,8 +89,8 @@ function var_0_0.copyQuickEditCardList(arg_1_0)
 		end
 	end
 
-	if arg_1_0.adventure or var_1_7 then
-		tabletool.addValues(var_1_1, var_1_8)
+	if arg_1_0.adventure or var_1_7 or var_1_8 then
+		tabletool.addValues(var_1_1, var_1_9)
 	end
 
 	arg_1_0:setList(var_1_1)
@@ -257,6 +264,10 @@ function var_0_0.checkHeroIsError(arg_14_0, arg_14_1)
 		if WeekWalkModel.instance:getCurMapHeroCd(var_14_0.heroId) > 0 then
 			return true
 		end
+	elseif arg_14_0.isWeekWalk_2 then
+		if WeekWalk_2Model.instance:getCurMapHeroCd(var_14_0.heroId) > 0 then
+			return true
+		end
 	elseif arg_14_0.isTowerBattle and TowerModel.instance:isHeroBan(var_14_0.heroId) then
 		return true
 	end
@@ -278,9 +289,11 @@ function var_0_0.cancelAllErrorSelected(arg_15_0)
 	end
 end
 
-function var_0_0.setParam(arg_16_0, arg_16_1, arg_16_2)
+function var_0_0.setParam(arg_16_0, arg_16_1, arg_16_2, arg_16_3)
 	arg_16_0.adventure = arg_16_1
 	arg_16_0.isTowerBattle = arg_16_2
+	arg_16_0._groupType = arg_16_3
+	arg_16_0.isWeekWalk_2 = arg_16_3 == HeroGroupEnum.GroupType.WeekWalk_2
 end
 
 function var_0_0.clear(arg_17_0)

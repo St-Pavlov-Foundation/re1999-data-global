@@ -542,12 +542,20 @@ function var_0_0.updateSelectStatus(arg_34_0, arg_34_1, arg_34_2)
 	end
 end
 
+local var_0_3 = 388.9144
+
 function var_0_0.calculatePosInContent(arg_35_0)
 	local var_35_0 = recthelper.getAnchorX(arg_35_0._txtsectionname.transform)
 	local var_35_1 = recthelper.getAnchorX(arg_35_0._txtnameen.transform)
 	local var_35_2 = var_35_0 + arg_35_0._txtsectionname.preferredWidth
 	local var_35_3 = var_35_1 + arg_35_0._txtsectionname.preferredWidth
 	local var_35_4 = math.max(var_35_2, var_35_3)
+
+	if var_35_4 > VersionActivity1_3DungeonEnum.EpisodeItemMinWidth then
+		local var_35_5 = var_35_4 - VersionActivity1_3DungeonEnum.EpisodeItemMinWidth
+
+		var_35_4 = (var_0_3 + var_35_5) / 2
+	end
 
 	arg_35_0._maxWidth = math.max(var_35_4 * 2, VersionActivity1_3DungeonEnum.EpisodeItemMinWidth) + var_0_1
 

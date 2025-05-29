@@ -73,6 +73,16 @@ function var_0_0._getBuffTriggerParam(arg_2_0, arg_2_1, arg_2_2)
 			local var_2_4 = var_2_3.effect
 			local var_2_5 = var_2_3.effectHangPoint
 			local var_2_6 = var_2_3.audioId
+			local var_2_7 = arg_2_2 and FightDataHelper.entityMgr:getById(arg_2_2.id)
+			local var_2_8 = var_2_7 and lua_fight_replace_buff_act_effect.configDict[var_2_7.skin]
+
+			var_2_8 = var_2_8 and var_2_8[var_2_3.id]
+
+			if var_2_8 then
+				var_2_4 = string.nilorempty(var_2_8.effect) and var_2_4 or var_2_8.effect
+				var_2_5 = string.nilorempty(var_2_8.effectHangPoint) and var_2_5 or var_2_8.effectHangPoint
+				var_2_6 = var_2_8.audioId == 0 and var_2_6 or var_2_8.audioId
+			end
 
 			if var_2_4 ~= "0" and not string.nilorempty(var_2_4) then
 				return var_2_4, var_2_5, var_2_6

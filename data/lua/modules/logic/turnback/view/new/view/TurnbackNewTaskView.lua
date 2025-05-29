@@ -68,7 +68,7 @@ function var_0_0.removeEvents(arg_3_0)
 	arg_3_0:removeEventCb(TurnbackController.instance, TurnbackEvent.OnTaskRewardGetFinish, arg_3_0._playGetRewardFinishAnim, arg_3_0)
 	arg_3_0:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_3_0.onCurrencyChange, arg_3_0)
 	arg_3_0:removeEventCb(TurnbackController.instance, TurnbackEvent.RefreshView, arg_3_0._refreshUI, arg_3_0)
-	arg_3_0:addEventCb(TurnbackController.instance, TurnbackEvent.AfterBuyDoubleReward, arg_3_0.succbuydoublereward, arg_3_0)
+	arg_3_0:removeEventCb(TurnbackController.instance, TurnbackEvent.AfterBuyDoubleReward, arg_3_0.succbuydoublereward, arg_3_0)
 	arg_3_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_3_0._onCloseViewFinish, arg_3_0)
 
 	for iter_3_0, iter_3_1 in ipairs(arg_3_0._rewardNodeList) do

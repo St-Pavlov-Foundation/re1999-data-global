@@ -99,7 +99,11 @@ function var_0_0.reqConfigNames(arg_2_0)
 		"monster_level",
 		"monster_job",
 		"card_heat",
-		"fight_float_effect"
+		"fight_float_effect",
+		"fight_task",
+		"fight_monster_skin_idle_map",
+		"fight_replace_buff_act_effect",
+		"fight_replace_skill_behavior_effect"
 	}
 
 	if SLFramework.FrameworkSettings.IsEditor then
@@ -966,20 +970,21 @@ function var_0_0.getMultiHpListByMonsterId(arg_50_0, arg_50_1, arg_50_2)
 		end
 	end
 
-	local var_50_5 = lua_monster_template.configDict[var_50_0.template].multiHp
+	local var_50_5 = lua_monster_template.configDict[var_50_0.template]
+	local var_50_6 = var_50_5 and var_50_5.multiHp
 
-	if string.nilorempty(var_50_5) then
+	if string.nilorempty(var_50_6) then
 		return nil
 	end
 
-	local var_50_6 = #string.split(var_50_5, "#")
-	local var_50_7 = {}
+	local var_50_7 = #string.split(var_50_6, "#")
+	local var_50_8 = {}
 
-	for iter_50_1 = 1, var_50_6 do
-		table.insert(var_50_7, var_50_1)
+	for iter_50_1 = 1, var_50_7 do
+		table.insert(var_50_8, var_50_1)
 	end
 
-	return var_50_7
+	return var_50_8
 end
 
 var_0_0.instance = var_0_0.New()

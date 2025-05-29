@@ -22,6 +22,8 @@ local var_0_1 = {
 	GMREPLYRESULTENUMFAILEDENUM = var_0_0.EnumValueDescriptor(),
 	GMREPLYRESULTENUMUNKNOWN_CMDENUM = var_0_0.EnumValueDescriptor(),
 	GMREPLYRESULTFIELD = var_0_0.FieldDescriptor(),
+	SERVERERRORINFOPUSH_MSG = var_0_0.Descriptor(),
+	SERVERERRORINFOPUSHMSGFIELD = var_0_0.FieldDescriptor(),
 	FIGHTTIPSMESSAGEPUSH_MSG = var_0_0.Descriptor(),
 	FIGHTTIPSMESSAGEPUSHMSGFIELD = var_0_0.FieldDescriptor(),
 	GPUCPULOGREPLY_MSG = var_0_0.Descriptor(),
@@ -190,6 +192,24 @@ var_0_1.GMREPLY_MSG.fields = {
 }
 var_0_1.GMREPLY_MSG.is_extendable = false
 var_0_1.GMREPLY_MSG.extensions = {}
+var_0_1.SERVERERRORINFOPUSHMSGFIELD.name = "msg"
+var_0_1.SERVERERRORINFOPUSHMSGFIELD.full_name = ".ServerErrorInfoPush.msg"
+var_0_1.SERVERERRORINFOPUSHMSGFIELD.number = 1
+var_0_1.SERVERERRORINFOPUSHMSGFIELD.index = 0
+var_0_1.SERVERERRORINFOPUSHMSGFIELD.label = 1
+var_0_1.SERVERERRORINFOPUSHMSGFIELD.has_default_value = false
+var_0_1.SERVERERRORINFOPUSHMSGFIELD.default_value = ""
+var_0_1.SERVERERRORINFOPUSHMSGFIELD.type = 9
+var_0_1.SERVERERRORINFOPUSHMSGFIELD.cpp_type = 9
+var_0_1.SERVERERRORINFOPUSH_MSG.name = "ServerErrorInfoPush"
+var_0_1.SERVERERRORINFOPUSH_MSG.full_name = ".ServerErrorInfoPush"
+var_0_1.SERVERERRORINFOPUSH_MSG.nested_types = {}
+var_0_1.SERVERERRORINFOPUSH_MSG.enum_types = {}
+var_0_1.SERVERERRORINFOPUSH_MSG.fields = {
+	var_0_1.SERVERERRORINFOPUSHMSGFIELD
+}
+var_0_1.SERVERERRORINFOPUSH_MSG.is_extendable = false
+var_0_1.SERVERERRORINFOPUSH_MSG.extensions = {}
 var_0_1.FIGHTTIPSMESSAGEPUSHMSGFIELD.name = "msg"
 var_0_1.FIGHTTIPSMESSAGEPUSHMSGFIELD.full_name = ".FightTipsMessagePush.msg"
 var_0_1.FIGHTTIPSMESSAGEPUSHMSGFIELD.number = 1
@@ -239,6 +259,7 @@ var_0_1.GMRequest = var_0_0.Message(var_0_1.GMREQUEST_MSG)
 var_0_1.GMSummonResultPush = var_0_0.Message(var_0_1.GMSUMMONRESULTPUSH_MSG)
 var_0_1.GpuCpuLogReply = var_0_0.Message(var_0_1.GPUCPULOGREPLY_MSG)
 var_0_1.GpuCpuLogRequest = var_0_0.Message(var_0_1.GPUCPULOGREQUEST_MSG)
+var_0_1.ServerErrorInfoPush = var_0_0.Message(var_0_1.SERVERERRORINFOPUSH_MSG)
 var_0_1.TestGMTextReply = var_0_0.Message(var_0_1.TESTGMTEXTREPLY_MSG)
 
 return var_0_1

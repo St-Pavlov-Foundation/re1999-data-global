@@ -315,40 +315,57 @@ function formatLuaLang(...)
 	return var_0_0.instance:_formatLuaLang(...)
 end
 
-function var_0_0.isZh(arg_24_0)
-	return arg_24_0:getCurLang() == var_0_0.zh
+function luaLangUTC(arg_24_0)
+	local var_24_0 = luaLang(arg_24_0)
+
+	if var_0_0.instance:isOverseas() then
+		var_24_0 = ServerTime.ReplaceUTCStr(var_24_0)
+	else
+		var_24_0 = string.gsub(var_24_0, "%(UTC%+8%)", "")
+		var_24_0 = string.gsub(var_24_0, "（UTC%+8）", "")
+	end
+
+	return var_24_0
 end
 
-function var_0_0.isTw(arg_25_0)
-	return arg_25_0:getCurLang() == var_0_0.tw
+function var_0_0.isOverseas(arg_25_0)
+	return true
 end
 
-function var_0_0.isEn(arg_26_0)
-	return arg_26_0:getCurLang() == var_0_0.en
+function var_0_0.isZh(arg_26_0)
+	return arg_26_0:getCurLang() == var_0_0.zh
 end
 
-function var_0_0.isKr(arg_27_0)
-	return arg_27_0:getCurLang() == var_0_0.kr
+function var_0_0.isTw(arg_27_0)
+	return arg_27_0:getCurLang() == var_0_0.tw
 end
 
-function var_0_0.isJp(arg_28_0)
-	return arg_28_0:getCurLang() == var_0_0.jp
+function var_0_0.isEn(arg_28_0)
+	return arg_28_0:getCurLang() == var_0_0.en
 end
 
-function var_0_0.isDe(arg_29_0)
-	return arg_29_0:getCurLang() == var_0_0.de
+function var_0_0.isKr(arg_29_0)
+	return arg_29_0:getCurLang() == var_0_0.kr
 end
 
-function var_0_0.isFr(arg_30_0)
-	return arg_30_0:getCurLang() == var_0_0.fr
+function var_0_0.isJp(arg_30_0)
+	return arg_30_0:getCurLang() == var_0_0.jp
 end
 
-function var_0_0.isThai(arg_31_0)
-	return arg_31_0:getCurLang() == var_0_0.thai
+function var_0_0.isDe(arg_31_0)
+	return arg_31_0:getCurLang() == var_0_0.de
 end
 
-function langVideoUrl(arg_32_0)
-	return var_0_0.instance:_langVideoUrl(arg_32_0)
+function var_0_0.isFr(arg_32_0)
+	return arg_32_0:getCurLang() == var_0_0.fr
+end
+
+function var_0_0.isThai(arg_33_0)
+	return arg_33_0:getCurLang() == var_0_0.thai
+end
+
+function langVideoUrl(arg_34_0)
+	return var_0_0.instance:_langVideoUrl(arg_34_0)
 end
 
 setGlobal("lang", lang)

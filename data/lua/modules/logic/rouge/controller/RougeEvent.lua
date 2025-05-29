@@ -71,6 +71,7 @@ var_0_2("OnSelectDLC")
 var_0_2("UpdateRougeVersion")
 var_0_2("OnGetVersionInfo")
 var_0_2("UpdateUnlockSkill")
+var_0_2("ShowMonsterRuleDesc")
 var_0_2("OnSwitchHeroGroupEditMode")
 
 return var_0_0

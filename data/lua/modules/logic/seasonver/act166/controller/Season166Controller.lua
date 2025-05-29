@@ -252,6 +252,18 @@ function var_0_0.showToast(arg_28_0, arg_28_1)
 	ToastController.instance:showToastWithCustomData(ToastEnum.Season166ReportNotUnlock, arg_28_0.fillToastObj, arg_28_0, var_28_2)
 end
 
+function var_0_0.enterReportItem(arg_29_0, arg_29_1, arg_29_2)
+	local var_29_0 = Season166Model.instance:getActInfo(arg_29_1)
+	local var_29_1 = var_29_0 and var_29_0:getInformationMO(arg_29_2)
+	local var_29_2 = {
+		actId = arg_29_1,
+		infoId = arg_29_2,
+		unlockState = var_29_1 and Season166Enum.UnlockState or Season166Enum.LockState
+	}
+
+	var_0_0.instance:dispatchEvent(Season166Event.ClickInfoReportItem, var_29_2)
+end
+
 var_0_0.instance = var_0_0.New()
 
 return var_0_0

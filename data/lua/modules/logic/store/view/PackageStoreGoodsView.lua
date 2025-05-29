@@ -252,6 +252,12 @@ function var_0_0._refreshPriceArea(arg_10_0)
 		arg_10_0._txtprice.text = arg_10_0._mo.config.originalCost
 
 		gohelper.setActive(arg_10_0._imagematerial.gameObject, true)
+
+		if ItemModel.instance:getItemQuantity(arg_10_0._costType, arg_10_0._costId) >= arg_10_0._costQuantity then
+			SLFramework.UGUI.GuiHelper.SetColor(arg_10_0._txtmaterialNum, "#393939")
+		else
+			SLFramework.UGUI.GuiHelper.SetColor(arg_10_0._txtmaterialNum, "#bf2e11")
+		end
 	end
 end
 

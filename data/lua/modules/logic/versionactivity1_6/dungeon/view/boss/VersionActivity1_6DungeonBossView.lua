@@ -1,7 +1,7 @@
 ﻿module("modules.logic.versionactivity1_6.dungeon.view.boss.VersionActivity1_6DungeonBossView", package.seeall)
 
 local var_0_0 = class("VersionActivity1_6DungeonBossView", BaseView)
-local var_0_1 = 5
+local var_0_1 = 8
 local var_0_2 = VersionActivity1_6DungeonEnum.bossMaxOrder
 local var_0_3 = VersionActivity1_6Enum.ActivityId.DungeonBossRush .. "UnlockBossEpisode_"
 local var_0_4 = VersionActivity1_6Enum.ActivityId.DungeonBossRush .. "GotMaxScore_"
@@ -205,7 +205,7 @@ function var_0_0._refreshScoreArea(arg_14_0)
 
 	arg_14_0._txtScoreNum.text = var_14_0
 
-	gohelper.setActive(arg_14_0._goBtnReward, not var_14_0 or var_14_0 == 0)
+	gohelper.setActive(arg_14_0._goBtnReward, false)
 
 	local var_14_1 = Activity149Config.instance:getEpisodeMaxScore(arg_14_0._curBossCfg.id, VersionActivity1_6Enum.ActivityId.DungeonBossRush)
 

@@ -122,67 +122,72 @@ function var_0_0._showProgress(arg_12_0)
 	local var_12_0 = WeekWalkModel.instance:getInfo()
 	local var_12_1, var_12_2 = var_12_0:getNotFinishedMap()
 	local var_12_3 = lua_weekwalk_scene.configDict[var_12_1.sceneId]
-	local var_12_4 = LangSettings.instance:getCurLangShortcut() == "en" and "[%s]" or "【%s】"
 
-	arg_12_0._txtcurprogress.text = string.format(var_12_4, var_12_3.battleName)
-	arg_12_0._txtscenetype.text = string.format("%s %s", var_12_3.typeName, var_12_3.name)
+	arg_12_0._txtcurprogress.text = formatLuaLang("DungeonWeekWalkView_txtcurprogress_battleName", var_12_3.battleName)
+	arg_12_0._txtscenetype.text = GameUtil.getSubPlaceholderLuaLang(luaLang("DungeonWeekWalkView_txtscenetype_typeName_name"), {
+		var_12_3.typeName,
+		var_12_3.name
+	})
 
 	if var_12_1 then
-		local var_12_5, var_12_6 = var_12_1:getCurStarInfo()
+		local var_12_4, var_12_5 = var_12_1:getCurStarInfo()
 
-		arg_12_0._txtmaptaskprogress.text = string.format("%s/%s", var_12_5, var_12_6)
+		arg_12_0._txtmaptaskprogress.text = string.format("%s/%s", var_12_4, var_12_5)
 	else
 		arg_12_0._txtmaptaskprogress.text = "0/10"
 	end
 
-	local var_12_7 = WeekWalkModel.isShallowMap(var_12_1.sceneId)
+	local var_12_6 = WeekWalkModel.isShallowMap(var_12_1.sceneId)
 
-	gohelper.setActive(arg_12_0._goeasy, var_12_7)
-	gohelper.setActive(arg_12_0._gohard, not var_12_7)
+	gohelper.setActive(arg_12_0._goeasy, var_12_6)
+	gohelper.setActive(arg_12_0._gohard, not var_12_6)
 
 	arg_12_0._mapFinishItemTab = arg_12_0._mapFinishItemTab or arg_12_0:getUserDataTb_()
 
-	local var_12_8 = var_12_0:getMapInfos()
-	local var_12_9 = 1
-	local var_12_10 = 10
+	local var_12_7 = var_12_0:getMapInfos()
+	local var_12_8 = 1
+	local var_12_9 = 10
 
-	if not var_12_7 then
-		var_12_9 = 11
-		var_12_10 = 16
+	if not var_12_6 then
+		local var_12_10 = WeekWalkModel.instance:getInfo()
+		local var_12_11 = WeekWalkConfig.instance:getDeepLayer(var_12_10.issueId)
+
+		var_12_8 = 11
+		var_12_9 = var_12_8 + #var_12_11 - 1
 	end
 
 	for iter_12_0, iter_12_1 in pairs(arg_12_0._mapFinishItemTab) do
 		gohelper.setActive(iter_12_1, false)
 	end
 
-	for iter_12_2 = var_12_9, var_12_10 do
-		local var_12_11 = arg_12_0._mapFinishItemTab[iter_12_2]
+	for iter_12_2 = var_12_8, var_12_9 do
+		local var_12_12 = arg_12_0._mapFinishItemTab[iter_12_2]
 
-		if not var_12_11 then
-			var_12_11 = gohelper.cloneInPlace(arg_12_0._gomapprogressitem, "item_" .. iter_12_2)
-			arg_12_0._mapFinishItemTab[iter_12_2] = var_12_11
+		if not var_12_12 then
+			var_12_12 = gohelper.cloneInPlace(arg_12_0._gomapprogressitem, "item_" .. iter_12_2)
+			arg_12_0._mapFinishItemTab[iter_12_2] = var_12_12
 		end
 
-		gohelper.setActive(var_12_11, true)
+		gohelper.setActive(var_12_12, true)
 
-		local var_12_12 = gohelper.findChild(var_12_11, "finish")
-		local var_12_13 = var_12_8[iter_12_2]
-		local var_12_14 = var_12_13 and var_12_13.isFinished > 0
+		local var_12_13 = gohelper.findChild(var_12_12, "finish")
+		local var_12_14 = var_12_7[iter_12_2]
+		local var_12_15 = var_12_14 and var_12_14.isFinished > 0
 
-		gohelper.setActive(var_12_12, var_12_14)
+		gohelper.setActive(var_12_13, var_12_15)
 
-		local var_12_15 = gohelper.findChildImage(var_12_11, "unfinish")
-		local var_12_16 = gohelper.findChildImage(var_12_11, "finish")
+		local var_12_16 = gohelper.findChildImage(var_12_12, "unfinish")
+		local var_12_17 = gohelper.findChildImage(var_12_12, "finish")
 
 		if not UISpriteSetMgr.instance:getWeekWalkSpriteSetUnit() then
-			arg_12_0:_setImgAlpha(var_12_15, 0)
 			arg_12_0:_setImgAlpha(var_12_16, 0)
+			arg_12_0:_setImgAlpha(var_12_17, 0)
 		end
 
-		UISpriteSetMgr.instance:setWeekWalkSprite(var_12_15, var_12_7 and "btn_dian2" or "btn_dian4", true, 1)
-		UISpriteSetMgr.instance:setWeekWalkSprite(var_12_16, var_12_7 and "btn_dian1" or "btn_dian3", true, 1)
-		gohelper.setActive(gohelper.findChild(var_12_11, "finish_light_deepdream01"), not var_12_7 and var_12_14)
-		gohelper.setActive(gohelper.findChild(var_12_11, "finish_light"), var_12_7 and var_12_14)
+		UISpriteSetMgr.instance:setWeekWalkSprite(var_12_16, var_12_6 and "btn_dian2" or "btn_dian4", true, 1)
+		UISpriteSetMgr.instance:setWeekWalkSprite(var_12_17, var_12_6 and "btn_dian1" or "btn_dian3", true, 1)
+		gohelper.setActive(gohelper.findChild(var_12_12, "finish_light_deepdream01"), not var_12_6 and var_12_15)
+		gohelper.setActive(gohelper.findChild(var_12_12, "finish_light"), var_12_6 and var_12_15)
 	end
 end
 

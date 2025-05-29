@@ -120,7 +120,9 @@ function var_0_0.killAllSubMonster(arg_9_0)
 			var_9_2:setDead()
 			FightDataHelper.entityMgr:addDeadUid(var_9_2.id)
 
-			arg_9_0._alphaDic[iter_9_1.id] = nil
+			if arg_9_0._alphaDic then
+				arg_9_0._alphaDic[iter_9_1.id] = nil
+			end
 		end
 	end
 end

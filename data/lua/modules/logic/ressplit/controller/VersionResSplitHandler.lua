@@ -607,37 +607,45 @@ function var_0_1._fillStoryRes(arg_20_0, arg_20_1, arg_20_2)
 			local var_20_5 = ResUrl.getStoryBg(iter_20_1.bg.bgImg)
 
 			arg_20_2:addResSplitInfo(ResSplitEnum.Path, var_0_0.StoryBg, var_20_5)
+
+			local var_20_6 = StoryBgZoneModel.instance:getBgZoneByPath(iter_20_1.bg.bgImg)
+
+			if var_20_6 then
+				local var_20_7 = ResUrl.getStoryRes(var_20_6.sourcePath)
+
+				arg_20_2:addResSplitInfo(ResSplitEnum.Path, var_0_0.StoryBg, var_20_7)
+			end
 		end
 
 		for iter_20_2, iter_20_3 in pairs(iter_20_1.videoList) do
-			local var_20_6 = string.split(iter_20_3.video, ".")[1]
+			local var_20_8 = string.split(iter_20_3.video, ".")[1]
 
-			arg_20_2:addResSplitInfo(ResSplitEnum.Video, var_0_0.StoryVideo, var_20_6)
+			arg_20_2:addResSplitInfo(ResSplitEnum.Video, var_0_0.StoryVideo, var_20_8)
 		end
 
 		for iter_20_4, iter_20_5 in pairs(iter_20_1.conversation.audios) do
-			local var_20_7 = arg_20_0._allAudioDic[iter_20_5]
+			local var_20_9 = arg_20_0._allAudioDic[iter_20_5]
 
-			if var_20_7 then
-				arg_20_2:addResSplitInfo(ResSplitEnum.AudioBank, var_0_0.StoryAudio, var_20_7.bankName)
-				arg_20_0:_fillAudioResByAudioBnkName(var_20_7.bankName, arg_20_2)
+			if var_20_9 then
+				arg_20_2:addResSplitInfo(ResSplitEnum.AudioBank, var_0_0.StoryAudio, var_20_9.bankName)
+				arg_20_0:_fillAudioResByAudioBnkName(var_20_9.bankName, arg_20_2)
 			end
 		end
 
 		for iter_20_6, iter_20_7 in pairs(iter_20_1.audioList) do
-			local var_20_8 = arg_20_0._allAudioDic[iter_20_7.audio]
+			local var_20_10 = arg_20_0._allAudioDic[iter_20_7.audio]
 
-			if var_20_8 then
-				arg_20_2:addResSplitInfo(ResSplitEnum.AudioBank, var_0_0.StoryAudio, var_20_8.bankName)
-				arg_20_0:_fillAudioResByAudioBnkName(var_20_8.bankName, arg_20_2)
+			if var_20_10 then
+				arg_20_2:addResSplitInfo(ResSplitEnum.AudioBank, var_0_0.StoryAudio, var_20_10.bankName)
+				arg_20_0:_fillAudioResByAudioBnkName(var_20_10.bankName, arg_20_2)
 			end
 		end
 
 		for iter_20_8, iter_20_9 in pairs(iter_20_1.picList) do
 			if not string.nilorempty(iter_20_9.picture) then
-				local var_20_9 = ResUrl.getStoryItem(iter_20_9.picture)
+				local var_20_11 = ResUrl.getStoryItem(iter_20_9.picture)
 
-				arg_20_2:addResSplitInfo(ResSplitEnum.Path, var_0_0.StoryBgItem, var_20_9)
+				arg_20_2:addResSplitInfo(ResSplitEnum.Path, var_0_0.StoryBgItem, var_20_11)
 			end
 		end
 	end

@@ -85,6 +85,11 @@ var_0_0.ResourceAudioPriority = {
 	[var_0_0.ResourceId.Plant] = 3,
 	[var_0_0.ResourceId.River] = 4
 }
+var_0_0.PPVolume = {
+	High = "ppassets/profiles/room_profile_high.asset",
+	Middle = "ppassets/profiles/room_profile_middle.asset",
+	Low = "ppassets/profiles/room_profile_low.asset"
+}
 
 for iter_0_0, iter_0_1 in pairs(var_0_0.ResourceId) do
 	if iter_0_1 ~= var_0_0.ResourceId.Empty then

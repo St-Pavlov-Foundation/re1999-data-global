@@ -79,30 +79,55 @@ function var_0_0._showDialog(arg_7_0, arg_7_1, arg_7_2, arg_7_3, arg_7_4)
 	end
 
 	local var_7_3 = gohelper.findChildText(var_7_0, "info")
-	local var_7_4 = IconMgr.instance:getCommonTextMarkTop(var_7_3.gameObject):GetComponent(gohelper.Type_TextMesh)
-	local var_7_5 = gohelper.onceAddComponent(var_7_3.gameObject, typeof(ZProj.TMPMark))
+	local var_7_4 = var_7_3.gameObject
+	local var_7_5 = IconMgr.instance:getCommonTextMarkTop(var_7_4):GetComponent(gohelper.Type_TextMesh)
+	local var_7_6 = gohelper.onceAddComponent(var_7_4, typeof(ZProj.TMPMark))
 
-	var_7_5:SetMarkTopGo(var_7_4.gameObject)
+	var_7_6:SetMarkTopGo(var_7_5.gameObject)
 
-	local var_7_6 = StoryTool.filterMarkTop(arg_7_2)
+	local var_7_7 = StoryTool.filterMarkTop(arg_7_2)
 
-	var_7_5:SetTopOffset(0, -0.5971)
+	var_7_6:SetTopOffset(0, -0.5971)
 
-	var_7_4.fontSize = 18
-	var_7_3.text = var_7_6
+	var_7_5.fontSize = 18
+	var_7_3.text = var_7_7
 
-	TaskDispatcher.runDelay(function()
-		local var_8_0 = StoryTool.getMarkTopTextList(arg_7_2)
+	local var_7_8 = StoryTool.getMarkTopTextList(arg_7_2)
+	local var_7_9 = {
+		commontextmarktopTextList = arg_7_0:getUserDataTb_()
+	}
 
-		var_7_5:SetMarksTop(var_8_0)
-	end, nil, 0.01)
+	if #var_7_8 > 0 then
+		TaskDispatcher.runDelay(function()
+			if gohelper.isNil(var_7_4) then
+				return
+			end
 
-	local var_7_7 = gohelper.findChildButtonWithAudio(var_7_0, "play")
-	local var_7_8 = gohelper.findChildButtonWithAudio(var_7_0, "pause")
+			var_7_6:SetMarksTop(var_7_8)
 
-	if var_7_7 and arg_7_4 and arg_7_4 > 0 then
-		gohelper.setActive(var_7_7.gameObject, true)
-		arg_7_0:_initBtn(var_7_7, var_7_8, arg_7_4, var_7_1, var_7_3)
+			local var_8_0 = var_7_4.transform
+			local var_8_1 = var_8_0.childCount
+
+			for iter_8_0 = 1, var_8_1 do
+				local var_8_2 = var_8_0:GetChild(iter_8_0 - 1).gameObject
+
+				if var_8_2.name == "commontextmarktop(Clone)" then
+					table.insert(var_7_9.commontextmarktopTextList, var_8_2:GetComponent(gohelper.Type_TextMesh))
+				end
+			end
+		end, nil, 0.01)
+	end
+
+	local var_7_10 = gohelper.findChildButtonWithAudio(var_7_0, "play")
+	local var_7_11 = gohelper.findChildButtonWithAudio(var_7_0, "pause")
+
+	if var_7_10 and arg_7_4 and arg_7_4 > 0 then
+		gohelper.setActive(var_7_10.gameObject, true)
+		arg_7_0:_initBtn(var_7_10, var_7_11, arg_7_4, var_7_1, var_7_3)
+
+		local var_7_12 = arg_7_0._btnList[#arg_7_0._btnList]
+
+		table.insert(var_7_12, var_7_9)
 	end
 end
 
@@ -152,6 +177,11 @@ function var_0_0._refreshBtnStatus(arg_13_0, arg_13_1, arg_13_2)
 		local var_13_2 = iter_13_1[3]
 		local var_13_3 = iter_13_1[4]
 		local var_13_4 = iter_13_1[5]
+		local var_13_5 = iter_13_1[#iter_13_1].commontextmarktopTextList
+
+		for iter_13_2, iter_13_3 in ipairs(var_13_5) do
+			iter_13_3.color = arg_13_2 and arg_13_1 == var_13_2 and arg_13_0._playColor or arg_13_0._pauseColor
+		end
 
 		if arg_13_1 == var_13_2 then
 			gohelper.setActive(var_13_0.gameObject, not arg_13_2)

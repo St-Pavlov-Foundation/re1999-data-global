@@ -121,6 +121,7 @@ function var_0_0._editableInitView(arg_8_0)
 	arg_8_0.enterConfig = RoleActivityConfig.instance:getActivityEnterInfo(ActQuNiangEnum.ActivityId)
 	arg_8_0.actConfig = ActivityConfig.instance:getActivityCo(ActQuNiangEnum.ActivityId)
 
+	gohelper.setActive(arg_8_0._gotime, false)
 	gohelper.setActive(arg_8_0._btnPlayBtn, arg_8_0.actConfig.storyId > 0)
 end
 
@@ -134,20 +135,21 @@ function var_0_0.onOpen(arg_9_0)
 	arg_9_0:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_9_0.OnCheckActEnd, arg_9_0)
 
 	local var_9_0 = gohelper.findChild(arg_9_0._btnTask.gameObject, "#go_reddot")
+	local var_9_1 = ActivityConfig.instance:getActivityCo(VersionActivity1_6Enum.ActivityId.Role1)
 
-	RedDotController.instance:addRedDot(var_9_0, RedDotEnum.DotNode.V1a6RoleActivityTask, ActQuNiangEnum.ActivityId)
+	RedDotController.instance:addRedDot(var_9_0, var_9_1.redDotId, VersionActivity1_6Enum.ActivityId.Role1)
 	arg_9_0:OnDotChange()
 	arg_9_0:_showLeftTime()
 	TaskDispatcher.runRepeat(arg_9_0._showLeftTime, arg_9_0, 1)
 
 	if arg_9_0.viewParam and arg_9_0.viewParam.needShowFight then
-		local var_9_1 = ActQuNiangModel.instance:getEnterFightIndex()
+		local var_9_2 = ActQuNiangModel.instance:getEnterFightIndex()
 
-		if var_9_1 then
-			arg_9_0.latestfightItem = var_9_1
+		if var_9_2 then
+			arg_9_0.latestfightItem = var_9_2
 
 			for iter_9_0, iter_9_1 in ipairs(arg_9_0.fightItemList) do
-				iter_9_1:refreshSelect(var_9_1)
+				iter_9_1:refreshSelect(var_9_2)
 			end
 		end
 

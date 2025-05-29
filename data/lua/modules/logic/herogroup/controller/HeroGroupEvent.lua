@@ -37,6 +37,7 @@ var_0_0.ShowEnemyInfoViewByGuide = 55
 var_0_0.OpenHeroGroupFinishWithEpisodeId = 56
 var_0_0.OpenHeroGroupFinishWithChapterId = 57
 var_0_0.OpenHeroGroupFinishWithEpisodeType = 58
+var_0_0.OnUseRecommendGroupFinish = 60
 var_0_0.OnCloseEquipTeamShowView = 61
 var_0_0.OnCompareEquip = 62
 var_0_0.OnSnapshotSaveSucc = 71

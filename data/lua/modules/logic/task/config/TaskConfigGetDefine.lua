@@ -22,7 +22,8 @@ function var_0_0.ctor(arg_2_0)
 		[TaskEnum.TaskType.Season123] = var_0_0._getSeason123,
 		[TaskEnum.TaskType.RoleActivity] = var_0_0._getRoleActivity,
 		[TaskEnum.TaskType.Activity125] = var_0_0._getActivity125,
-		[TaskEnum.TaskType.Activity183] = var_0_0._getAct183Task
+		[TaskEnum.TaskType.Activity183] = var_0_0._getAct183Task,
+		[TaskEnum.TaskType.Activity189] = var_0_0._getActivity189
 	}
 end
 
@@ -86,6 +87,10 @@ end
 
 function var_0_0._getActivity125(arg_17_0)
 	return Activity125Config.instance:getTaskCO(arg_17_0)
+end
+
+function var_0_0._getActivity189(arg_18_0)
+	return Activity189Config.instance:getTaskCO(arg_18_0)
 end
 
 var_0_0.instance = var_0_0.New()

@@ -632,6 +632,10 @@ function var_0_0._showHeadContentTxt(arg_36_0, arg_36_1, arg_36_2)
 		"%s",
 		"%p"
 	})) ~= "" and GameLanguageMgr.instance:getLanguageTypeStoryIndex() ~= LanguageEnum.LanguageStoryType.EN then
+		if LangSettings.instance:isJp() and arg_36_2 == "Aleph" then
+			arg_36_2 = ""
+		end
+
 		arg_36_0._txtnameen.text = arg_36_2 ~= "" and "<voffset=4>/ </voffset>" .. arg_36_2 or ""
 
 		gohelper.setActive(arg_36_0._txtnameen.gameObject, true)

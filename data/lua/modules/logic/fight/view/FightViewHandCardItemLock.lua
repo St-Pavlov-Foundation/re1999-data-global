@@ -349,6 +349,7 @@ local var_0_6 = {
 	},
 	[FightEnum.BuffType_NoneCastChannel] = true,
 	[FightEnum.BuffType_ContractCastChannel] = true,
+	[FightEnum.BuffType_AddCardCastChannel] = true,
 	[FightEnum.BuffFeature.UseSkillHasBuffCond] = {
 		UseSkillHasBuffCond = true
 	}

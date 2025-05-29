@@ -928,7 +928,9 @@ function var_0_0._onCardLoadFinish(arg_47_0)
 	}
 	arg_47_0._viewCls.viewContainer = arg_47_0.viewContainer
 
-	arg_47_0._viewCls:onOpen(var_47_2[2])
+	local var_47_4 = DecorateStoreConfig.instance:getDecorateConfig(var_47_0).showskinId
+
+	arg_47_0._viewCls:onOpen(var_47_4, var_47_2[2])
 	arg_47_0._viewCls:backBottomView()
 end
 

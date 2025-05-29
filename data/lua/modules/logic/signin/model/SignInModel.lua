@@ -543,7 +543,7 @@ function var_0_0.getShowMonthItemCo(arg_45_0)
 end
 
 function var_0_0.checkFestivalDecorationUnlock()
-	local var_46_0 = ActivityController.instance:Vxax_ActId("Calendar_Decoration", ActivityEnum.Activity.V2a2_Calendar_Decoration)
+	local var_46_0 = GameBranchMgr.instance:Vxax_ActId("Calendar_Decoration", ActivityEnum.Activity.V2a2_Calendar_Decoration)
 	local var_46_1 = ActivityModel.instance:isActOnLine(var_46_0)
 
 	if var_46_1 == nil or var_46_1 == false then

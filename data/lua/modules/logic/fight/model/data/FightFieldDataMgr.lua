@@ -32,6 +32,7 @@ function var_0_0.updateData(arg_3_0, arg_3_1)
 	arg_3_0.indicatorDict = arg_3_0:buildIndicators(arg_3_1)
 	arg_3_0.playerFinisherInfo = arg_3_0:buildPlayerFinisherInfo(arg_3_1)
 	arg_3_0.customData = FightDataHelper.coverData(FightCustomData.New(arg_3_1.customData), arg_3_0.customData)
+	arg_3_0.fightTaskBox = FightDataHelper.coverData(FightTaskBoxData.New(arg_3_1.fightTaskBox), arg_3_0.fightTaskBox)
 end
 
 function var_0_0.buildIndicators(arg_4_0, arg_4_1)

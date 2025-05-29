@@ -923,5 +923,625 @@
     "id": 925011423,
     "eventName": "play_battle_plot25_hero3111_23",
     "bankName": "hero3111_level_tangren2_5"
+  },
+  {
+    "id": 926015001,
+    "eventName": "play_level_chap9_npc522501_1",
+    "bankName": "npc522501_level_wenming2_6"
+  },
+  {
+    "id": 926015002,
+    "eventName": "play_level_chap9_npc522101_2",
+    "bankName": "npc522101_level_wenming2_6"
+  },
+  {
+    "id": 926015003,
+    "eventName": "play_level_chap9_npc522501_3",
+    "bankName": "npc522201_level_wenming2_6"
+  },
+  {
+    "id": 926015004,
+    "eventName": "play_level_chap9_npc522101_4",
+    "bankName": "npc522101_level_wenming2_6"
+  },
+  {
+    "id": 926015005,
+    "eventName": "play_level_chap9_hero3023_5",
+    "bankName": "hero3023_level_wenming2_6"
+  },
+  {
+    "id": 926015006,
+    "eventName": "play_level_chap9_npc522201_6",
+    "bankName": "npc522201_level_wenming2_6"
+  },
+  {
+    "id": 926015007,
+    "eventName": "play_level_chap9_npc522101_7",
+    "bankName": "npc522101_level_wenming2_6"
+  },
+  {
+    "id": 926015008,
+    "eventName": "play_level_chap9_hero5043_8",
+    "bankName": "hero5043_level_wenming2_6"
+  },
+  {
+    "id": 926015009,
+    "eventName": "play_level_chap9_hero311302_9",
+    "bankName": "hero311302_level_wenming2_6"
+  },
+  {
+    "id": 926015010,
+    "eventName": "play_level_chap9_hero311301_10",
+    "bankName": "hero311301_level_wenming2_6"
+  },
+  {
+    "id": 926015011,
+    "eventName": "play_level_chap9_hero311301_11",
+    "bankName": "hero311301_level_wenming2_6"
+  },
+  {
+    "id": 926015012,
+    "eventName": "play_level_chap9_hero311301_12",
+    "bankName": "hero311301_level_wenming2_6"
+  },
+  {
+    "id": 926015013,
+    "eventName": "play_level_chap9_hero311302_13",
+    "bankName": "hero311302_level_wenming2_6"
+  },
+  {
+    "id": 926015014,
+    "eventName": "play_level_chap9_hero311302_14",
+    "bankName": "hero311302_level_wenming2_6"
+  },
+  {
+    "id": 926015015,
+    "eventName": "play_level_chap9_npc513901_15",
+    "bankName": "npc513901_level_wenming2_6"
+  },
+  {
+    "id": 926015016,
+    "eventName": "play_level_chap9_npc513901_16",
+    "bankName": "npc513901_level_wenming2_6"
+  },
+  {
+    "id": 926015017,
+    "eventName": "play_level_chap9_npc512601_17",
+    "bankName": "npc512601_level_wenming2_6"
+  },
+  {
+    "id": 926015018,
+    "eventName": "play_level_chap9_npc512601_18",
+    "bankName": "npc512601_level_wenming2_6"
+  },
+  {
+    "id": 926015019,
+    "eventName": "play_level_chap9_npc618801_19",
+    "bankName": "npc618801_level_wenming2_6"
+  },
+  {
+    "id": 926015020,
+    "eventName": "play_level_chap9_npc618801_20",
+    "bankName": "npc618801_level_wenming2_6"
+  },
+  {
+    "id": 926015021,
+    "eventName": "play_battle_chap9_npc522101_1",
+    "bankName": "npc522101_level_wenming2_6"
+  },
+  {
+    "id": 926015022,
+    "eventName": "play_battle_chap9_npc522101_2",
+    "bankName": "npc522101_level_wenming2_6"
+  },
+  {
+    "id": 926015023,
+    "eventName": "play_battle_chap9_hero311301_3",
+    "bankName": "hero311301_level_wenming2_6"
+  },
+  {
+    "id": 926015024,
+    "eventName": "play_battle_chap9_hero311301_4",
+    "bankName": "hero311301_level_wenming2_6"
+  },
+  {
+    "id": 926015025,
+    "eventName": "play_battle_chap9_hero311302_5",
+    "bankName": "hero311302_level_wenming2_6"
+  },
+  {
+    "id": 926015026,
+    "eventName": "play_battle_chap9_hero311302_6",
+    "bankName": "hero311302_level_wenming2_6"
+  },
+  {
+    "id": 922600001,
+    "eventName": "play_guide507801_systemvoc_1083",
+    "bankName": "guide507801_systemvoc_part23"
+  },
+  {
+    "id": 922600002,
+    "eventName": "play_guide507801_systemvoc_1084",
+    "bankName": "guide507801_systemvoc_part23"
+  },
+  {
+    "id": 922600003,
+    "eventName": "play_guide507801_systemvoc_1085",
+    "bankName": "guide507801_systemvoc_part23"
+  },
+  {
+    "id": 922600004,
+    "eventName": "play_guide507801_systemvoc_1087",
+    "bankName": "guide507801_systemvoc_part23"
+  },
+  {
+    "id": 922600005,
+    "eventName": "play_guide507801_systemvoc_1089",
+    "bankName": "guide507801_systemvoc_part23"
+  },
+  {
+    "id": 922600006,
+    "eventName": "play_guide507801_systemvoc_1090",
+    "bankName": "guide507801_systemvoc_part23"
+  },
+  {
+    "id": 922600007,
+    "eventName": "play_guide507801_systemvoc_1092",
+    "bankName": "guide507801_systemvoc_part23"
+  },
+  {
+    "id": 922600008,
+    "eventName": "play_guide507801_systemvoc_1093",
+    "bankName": "guide507801_systemvoc_part23"
+  },
+  {
+    "id": 922600009,
+    "eventName": "play_guide507801_systemvoc_1094",
+    "bankName": "guide507801_systemvoc_part23"
+  },
+  {
+    "id": 922600010,
+    "eventName": "play_guide507801_systemvoc_1095",
+    "bankName": "guide507801_systemvoc_part23"
+  },
+  {
+    "id": 922600011,
+    "eventName": "play_guide507801_systemvoc_1097",
+    "bankName": "guide507801_systemvoc_part23"
+  },
+  {
+    "id": 922600012,
+    "eventName": "play_guide507801_systemvoc_1098",
+    "bankName": "guide507801_systemvoc_part23"
+  },
+  {
+    "id": 922600013,
+    "eventName": "play_guide507801_systemvoc_1099",
+    "bankName": "guide507801_systemvoc_part23"
+  },
+  {
+    "id": 922600014,
+    "eventName": "play_guide507801_systemvoc_1100",
+    "bankName": "guide507801_systemvoc_part23"
+  },
+  {
+    "id": 922600015,
+    "eventName": "play_guide507801_systemvoc_1101",
+    "bankName": "guide507801_systemvoc_part23"
+  },
+  {
+    "id": 922600016,
+    "eventName": "play_guide507801_systemvoc_1102",
+    "bankName": "guide507801_systemvoc_part23"
+  },
+  {
+    "id": 922600017,
+    "eventName": "play_guide507801_systemvoc_1103",
+    "bankName": "guide507801_systemvoc_part23"
+  },
+  {
+    "id": 922600018,
+    "eventName": "play_guide507801_systemvoc_1105",
+    "bankName": "guide507801_systemvoc_part23"
+  },
+  {
+    "id": 922600019,
+    "eventName": "play_guide507801_systemvoc_1106",
+    "bankName": "guide507801_systemvoc_part23"
+  },
+  {
+    "id": 922600020,
+    "eventName": "play_guide507801_systemvoc_1108",
+    "bankName": "guide507801_systemvoc_part23"
+  },
+  {
+    "id": 922600021,
+    "eventName": "play_guide507801_systemvoc_1109",
+    "bankName": "guide507801_systemvoc_part23"
+  },
+  {
+    "id": 922600022,
+    "eventName": "play_guide507801_systemvoc_1110",
+    "bankName": "guide507801_systemvoc_part23"
+  },
+  {
+    "id": 922600023,
+    "eventName": "play_guide507801_systemvoc_1112",
+    "bankName": "guide507801_systemvoc_part23"
+  },
+  {
+    "id": 922600024,
+    "eventName": "play_guide507801_systemvoc_1113",
+    "bankName": "guide507801_systemvoc_part23"
+  },
+  {
+    "id": 922600025,
+    "eventName": "play_guide507801_systemvoc_1114",
+    "bankName": "guide507801_systemvoc_part23"
+  },
+  {
+    "id": 922600026,
+    "eventName": "play_guide507801_systemvoc_1116",
+    "bankName": "guide507801_systemvoc_part23"
+  },
+  {
+    "id": 922600027,
+    "eventName": "play_guide507801_systemvoc_1117",
+    "bankName": "guide507801_systemvoc_part23"
+  },
+  {
+    "id": 922600028,
+    "eventName": "play_guide507801_systemvoc_1118",
+    "bankName": "guide507801_systemvoc_part23"
+  },
+  {
+    "id": 922600029,
+    "eventName": "play_guide507801_systemvoc_1119",
+    "bankName": "guide507801_systemvoc_part23"
+  },
+  {
+    "id": 922600030,
+    "eventName": "play_guide507801_systemvoc_1120",
+    "bankName": "guide507801_systemvoc_part23"
+  },
+  {
+    "id": 922600031,
+    "eventName": "play_guide507801_systemvoc_1122",
+    "bankName": "guide507801_systemvoc_part23"
+  },
+  {
+    "id": 922600032,
+    "eventName": "play_guide507801_systemvoc_1123",
+    "bankName": "guide507801_systemvoc_part23"
+  },
+  {
+    "id": 922600033,
+    "eventName": "play_guide507801_systemvoc_1124",
+    "bankName": "guide507801_systemvoc_part23"
+  },
+  {
+    "id": 922600034,
+    "eventName": "play_guide507801_systemvoc_1125",
+    "bankName": "guide507801_systemvoc_part23"
+  },
+  {
+    "id": 922600035,
+    "eventName": "play_guide507801_systemvoc_1126",
+    "bankName": "guide507801_systemvoc_part23"
+  },
+  {
+    "id": 922600036,
+    "eventName": "play_guide507801_systemvoc_1127",
+    "bankName": "guide507801_systemvoc_part23"
+  },
+  {
+    "id": 922600037,
+    "eventName": "play_guide507801_systemvoc_1128",
+    "bankName": "guide507801_systemvoc_part23"
+  },
+  {
+    "id": 922600038,
+    "eventName": "play_guide507801_systemvoc_1129",
+    "bankName": "guide507801_systemvoc_part23"
+  },
+  {
+    "id": 922600039,
+    "eventName": "play_guide507801_systemvoc_1130",
+    "bankName": "guide507801_systemvoc_part23"
+  },
+  {
+    "id": 922600040,
+    "eventName": "play_guide507801_systemvoc_1131",
+    "bankName": "guide507801_systemvoc_part23"
+  },
+  {
+    "id": 922600041,
+    "eventName": "play_guide507801_systemvoc_1132",
+    "bankName": "guide507801_systemvoc_part23"
+  },
+  {
+    "id": 922600042,
+    "eventName": "play_guide507801_systemvoc_1134",
+    "bankName": "guide507801_systemvoc_part23"
+  },
+  {
+    "id": 922600043,
+    "eventName": "play_guide507801_systemvoc_1135",
+    "bankName": "guide507801_systemvoc_part23"
+  },
+  {
+    "id": 922600044,
+    "eventName": "play_guide507801_systemvoc_1136",
+    "bankName": "guide507801_systemvoc_part23"
+  },
+  {
+    "id": 922600045,
+    "eventName": "play_guide507801_systemvoc_1137",
+    "bankName": "guide507801_systemvoc_part23"
+  },
+  {
+    "id": 922600046,
+    "eventName": "play_guide507801_systemvoc_1139",
+    "bankName": "guide507801_systemvoc_part23"
+  },
+  {
+    "id": 922600047,
+    "eventName": "play_guide507801_systemvoc_1140",
+    "bankName": "guide507801_systemvoc_part23"
+  },
+  {
+    "id": 922600048,
+    "eventName": "play_guide507801_systemvoc_1141",
+    "bankName": "guide507801_systemvoc_part23"
+  },
+  {
+    "id": 922600049,
+    "eventName": "play_guide507801_systemvoc_1143",
+    "bankName": "guide507801_systemvoc_part23"
+  },
+  {
+    "id": 922600050,
+    "eventName": "play_guide507801_systemvoc_1144",
+    "bankName": "guide507801_systemvoc_part24"
+  },
+  {
+    "id": 922600051,
+    "eventName": "play_guide507801_systemvoc_1145",
+    "bankName": "guide507801_systemvoc_part24"
+  },
+  {
+    "id": 922600052,
+    "eventName": "play_guide507801_systemvoc_1146",
+    "bankName": "guide507801_systemvoc_part24"
+  },
+  {
+    "id": 922600053,
+    "eventName": "play_guide507801_systemvoc_1147",
+    "bankName": "guide507801_systemvoc_part24"
+  },
+  {
+    "id": 922600054,
+    "eventName": "play_guide507801_systemvoc_1149",
+    "bankName": "guide507801_systemvoc_part24"
+  },
+  {
+    "id": 922600055,
+    "eventName": "play_guide507801_systemvoc_1150",
+    "bankName": "guide507801_systemvoc_part24"
+  },
+  {
+    "id": 922600056,
+    "eventName": "play_guide507801_systemvoc_1151",
+    "bankName": "guide507801_systemvoc_part24"
+  },
+  {
+    "id": 922600057,
+    "eventName": "play_guide507801_systemvoc_1152",
+    "bankName": "guide507801_systemvoc_part24"
+  },
+  {
+    "id": 922600058,
+    "eventName": "play_guide507801_systemvoc_1153",
+    "bankName": "guide507801_systemvoc_part24"
+  },
+  {
+    "id": 922600059,
+    "eventName": "play_guide507801_systemvoc_1154",
+    "bankName": "guide507801_systemvoc_part24"
+  },
+  {
+    "id": 922600060,
+    "eventName": "play_guide507801_systemvoc_1156",
+    "bankName": "guide507801_systemvoc_part24"
+  },
+  {
+    "id": 922600061,
+    "eventName": "play_guide507801_systemvoc_1158",
+    "bankName": "guide507801_systemvoc_part24"
+  },
+  {
+    "id": 922600062,
+    "eventName": "play_guide507801_systemvoc_1159",
+    "bankName": "guide507801_systemvoc_part24"
+  },
+  {
+    "id": 922600063,
+    "eventName": "play_guide507801_systemvoc_1161",
+    "bankName": "guide507801_systemvoc_part24"
+  },
+  {
+    "id": 922600064,
+    "eventName": "play_guide507801_systemvoc_1162",
+    "bankName": "guide507801_systemvoc_part24"
+  },
+  {
+    "id": 922600065,
+    "eventName": "play_guide507801_systemvoc_1163",
+    "bankName": "guide507801_systemvoc_part24"
+  },
+  {
+    "id": 922600066,
+    "eventName": "play_guide507801_systemvoc_1164",
+    "bankName": "guide507801_systemvoc_part24"
+  },
+  {
+    "id": 922600067,
+    "eventName": "play_guide507801_systemvoc_1166",
+    "bankName": "guide507801_systemvoc_part24"
+  },
+  {
+    "id": 922600068,
+    "eventName": "play_guide507801_systemvoc_1168",
+    "bankName": "guide507801_systemvoc_part24"
+  },
+  {
+    "id": 922600069,
+    "eventName": "play_guide507801_systemvoc_1169",
+    "bankName": "guide507801_systemvoc_part24"
+  },
+  {
+    "id": 922600070,
+    "eventName": "play_guide507801_systemvoc_1170",
+    "bankName": "guide507801_systemvoc_part24"
+  },
+  {
+    "id": 922600071,
+    "eventName": "play_guide507801_systemvoc_1171",
+    "bankName": "guide507801_systemvoc_part24"
+  },
+  {
+    "id": 922600072,
+    "eventName": "play_guide507801_systemvoc_1172",
+    "bankName": "guide507801_systemvoc_part24"
+  },
+  {
+    "id": 922600073,
+    "eventName": "play_guide507801_systemvoc_1173",
+    "bankName": "guide507801_systemvoc_part24"
+  },
+  {
+    "id": 922600074,
+    "eventName": "play_guide507801_systemvoc_1174",
+    "bankName": "guide507801_systemvoc_part24"
+  },
+  {
+    "id": 922600075,
+    "eventName": "play_guide507801_systemvoc_1175",
+    "bankName": "guide507801_systemvoc_part24"
+  },
+  {
+    "id": 922600076,
+    "eventName": "play_guide507801_systemvoc_1176",
+    "bankName": "guide507801_systemvoc_part24"
+  },
+  {
+    "id": 922600077,
+    "eventName": "play_guide507801_systemvoc_1178",
+    "bankName": "guide507801_systemvoc_part24"
+  },
+  {
+    "id": 922600078,
+    "eventName": "play_guide507801_systemvoc_1179",
+    "bankName": "guide507801_systemvoc_part24"
+  },
+  {
+    "id": 922600079,
+    "eventName": "play_guide507801_systemvoc_1180",
+    "bankName": "guide507801_systemvoc_part24"
+  },
+  {
+    "id": 922600080,
+    "eventName": "play_guide507801_systemvoc_1181",
+    "bankName": "guide507801_systemvoc_part24"
+  },
+  {
+    "id": 922600081,
+    "eventName": "play_guide507801_systemvoc_1182",
+    "bankName": "guide507801_systemvoc_part24"
+  },
+  {
+    "id": 922600082,
+    "eventName": "play_guide507801_systemvoc_1183",
+    "bankName": "guide507801_systemvoc_part24"
+  },
+  {
+    "id": 922600083,
+    "eventName": "play_guide507801_systemvoc_1184",
+    "bankName": "guide507801_systemvoc_part24"
+  },
+  {
+    "id": 922600084,
+    "eventName": "play_guide507801_systemvoc_1185",
+    "bankName": "guide507801_systemvoc_part24"
+  },
+  {
+    "id": 922600085,
+    "eventName": "play_guide507801_systemvoc_1187",
+    "bankName": "guide507801_systemvoc_part24"
+  },
+  {
+    "id": 922600086,
+    "eventName": "play_guide507801_systemvoc_1188",
+    "bankName": "guide507801_systemvoc_part24"
+  },
+  {
+    "id": 922600087,
+    "eventName": "play_guide507801_systemvoc_1190",
+    "bankName": "guide507801_systemvoc_part24"
+  },
+  {
+    "id": 922600088,
+    "eventName": "play_guide507801_systemvoc_1191",
+    "bankName": "guide507801_systemvoc_part24"
+  },
+  {
+    "id": 922600089,
+    "eventName": "play_guide507801_systemvoc_1192",
+    "bankName": "guide507801_systemvoc_part24"
+  },
+  {
+    "id": 922600090,
+    "eventName": "play_guide507801_systemvoc_1193",
+    "bankName": "guide507801_systemvoc_part24"
+  },
+  {
+    "id": 922600091,
+    "eventName": "play_guide507801_systemvoc_1194",
+    "bankName": "guide507801_systemvoc_part24"
+  },
+  {
+    "id": 922600092,
+    "eventName": "play_guide507801_systemvoc_1195",
+    "bankName": "guide507801_systemvoc_part24"
+  },
+  {
+    "id": 922600093,
+    "eventName": "play_guide507801_systemvoc_1196",
+    "bankName": "guide507801_systemvoc_part24"
+  },
+  {
+    "id": 922600094,
+    "eventName": "play_guide507801_systemvoc_1198",
+    "bankName": "guide507801_systemvoc_part24"
+  },
+  {
+    "id": 922600095,
+    "eventName": "play_guide507801_systemvoc_1199",
+    "bankName": "guide507801_systemvoc_part24"
+  },
+  {
+    "id": 922600096,
+    "eventName": "play_guide507801_systemvoc_1200",
+    "bankName": "guide507801_systemvoc_part24"
+  },
+  {
+    "id": 922600097,
+    "eventName": "play_guide507801_systemvoc_1201",
+    "bankName": "guide507801_systemvoc_part24"
+  },
+  {
+    "id": 922600098,
+    "eventName": "play_guide507801_systemvoc_1202",
+    "bankName": "guide507801_systemvoc_part24"
   }
 ]

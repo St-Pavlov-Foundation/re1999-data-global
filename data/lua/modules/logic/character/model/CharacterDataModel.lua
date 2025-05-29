@@ -81,6 +81,10 @@ function var_0_0._checkShow(arg_3_0, arg_3_1, arg_3_2)
 end
 
 function var_0_0._checkSpecialType(arg_4_0, arg_4_1)
+	if arg_4_1.type == CharacterEnum.VoiceType.MultiVoice then
+		return true
+	end
+
 	return arg_4_1.type >= CharacterEnum.VoiceType.SpecialIdle1 and arg_4_1.type <= CharacterEnum.VoiceType.SpecialIdle2
 end
 
@@ -98,30 +102,45 @@ function var_0_0.isCurHeroAudioPlaying(arg_6_0, arg_6_1)
 	return false
 end
 
-function var_0_0.setCurHeroAudioPlaying(arg_7_0, arg_7_1)
-	arg_7_0._playingList = {}
-
-	table.insert(arg_7_0._playingList, arg_7_1)
+function var_0_0.setPlayingInfo(arg_7_0, arg_7_1, arg_7_2)
+	arg_7_0._curAudioId = arg_7_1
+	arg_7_0._defaultAudioId = arg_7_2
 end
 
-function var_0_0.setCurHeroAudioFinished(arg_8_0, arg_8_1)
-	for iter_8_0 = #arg_8_0._playingList, 1, -1 do
-		if arg_8_0._playingList[iter_8_0] == arg_8_1 then
-			table.remove(arg_8_0._playingList, iter_8_0)
+function var_0_0.getPlayingAudioId(arg_8_0, arg_8_1)
+	if arg_8_0._defaultAudioId ~= arg_8_1 then
+		return
+	end
+
+	if arg_8_0:isCurHeroAudioPlaying(arg_8_0._curAudioId) then
+		return arg_8_0._curAudioId
+	end
+end
+
+function var_0_0.setCurHeroAudioPlaying(arg_9_0, arg_9_1)
+	arg_9_0._playingList = {}
+
+	table.insert(arg_9_0._playingList, arg_9_1)
+end
+
+function var_0_0.setCurHeroAudioFinished(arg_10_0, arg_10_1)
+	for iter_10_0 = #arg_10_0._playingList, 1, -1 do
+		if arg_10_0._playingList[iter_10_0] == arg_10_1 then
+			table.remove(arg_10_0._playingList, iter_10_0)
 
 			break
 		end
 	end
 end
 
-function var_0_0.getCurHeroId(arg_9_0)
-	return arg_9_0._heroId
+function var_0_0.getCurHeroId(arg_11_0)
+	return arg_11_0._heroId
 end
 
-function var_0_0.setCurHeroId(arg_10_0, arg_10_1)
-	if arg_10_0._heroId ~= arg_10_1 then
-		arg_10_0._playingList = {}
-		arg_10_0._heroId = arg_10_1
+function var_0_0.setCurHeroId(arg_12_0, arg_12_1)
+	if arg_12_0._heroId ~= arg_12_1 then
+		arg_12_0._playingList = {}
+		arg_12_0._heroId = arg_12_1
 	end
 end
 

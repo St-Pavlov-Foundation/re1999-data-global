@@ -19,6 +19,9 @@ function var_0_0.onStart(arg_1_0)
 
 	arg_1_0._entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
 	arg_1_0._targetId = arg_1_0._actEffectMO.targetId
+
+	FightRenderOrderMgr.instance:unregister(arg_1_0._targetId)
+
 	arg_1_0._targetEntity = FightHelper.getEntity(arg_1_0._targetId)
 
 	if FightEntityDataHelper.isPlayerUid(arg_1_0._targetId) then

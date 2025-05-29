@@ -1,0 +1,52 @@
+[
+  {
+    "id": 0,
+    "pointList": "1#2#3#4#5#6",
+    "txt": "X"
+  },
+  {
+    "id": 1,
+    "pointList": "1",
+    "txt": "<color=#FF0000>1</color>"
+  },
+  {
+    "id": 2,
+    "pointList": "2",
+    "txt": "<color=#FF0000>2</color>"
+  },
+  {
+    "id": 3,
+    "pointList": "3",
+    "txt": "<color=#FF0000>3</color>"
+  },
+  {
+    "id": 4,
+    "pointList": "4",
+    "txt": "<color=#0080FF>4</color>"
+  },
+  {
+    "id": 5,
+    "pointList": "5",
+    "txt": "<color=#0080FF>5</color>"
+  },
+  {
+    "id": 6,
+    "pointList": "6",
+    "txt": "<color=#9933FF>6</color>"
+  },
+  {
+    "id": 7,
+    "pointList": "1#3#5",
+    "txt": "-"
+  },
+  {
+    "id": 8,
+    "pointList": "2#4#6",
+    "txt": "-"
+  },
+  {
+    "id": 9,
+    "pointList": "5#6",
+    "txt": "5+"
+  }
+]

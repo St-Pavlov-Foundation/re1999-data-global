@@ -20,7 +20,7 @@ function var_0_0._parseData(arg_2_0)
 
 	local var_2_0 = DungeonConfig.instance:getEpisodeCO(arg_2_0.episodeId)
 
-	if var_2_0.type == DungeonEnum.EpisodeType.WeekWalk then
+	if var_2_0.type == DungeonEnum.EpisodeType.WeekWalk or var_2_0.type == DungeonEnum.EpisodeType.WeekWalk_2 then
 		local var_2_1 = string.splitToNumber(arg_2_0.data, "#")
 
 		arg_2_0.layerId = var_2_1[2]

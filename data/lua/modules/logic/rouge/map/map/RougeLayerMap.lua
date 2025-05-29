@@ -23,7 +23,7 @@ function var_0_0.updateMapXRange(arg_2_0)
 	local var_2_3 = var_2_1[1]
 	local var_2_4 = (var_2_1[3].x - var_2_3.x) * var_2_2
 	local var_2_5 = RougeMapModel.instance:getMapSize().x
-	local var_2_6 = -var_2_4 / 2
+	local var_2_6 = -var_2_4 / 2 - RougeMapModel.instance:getMapStartOffsetX() + RougeMapEnum.MapStartOffsetX
 	local var_2_7
 
 	if var_2_5 <= var_2_4 then

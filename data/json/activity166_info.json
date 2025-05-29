@@ -118,5 +118,65 @@
     "reportRes": "season_infoanalyze_reportpic_5",
     "reportPic": "season_infoanalyze_detailpic_05",
     "initContent": "language_10065165"
+  },
+  {
+    "activityId": 12618,
+    "infoId": 1,
+    "unlockType": 1,
+    "unlockParam": "1",
+    "unlockDes": "language_10072505",
+    "name": "language_10072506",
+    "nameEn": "Noise of the Foolish",
+    "reportRes": "season_infoanalyze_reportpic_1",
+    "reportPic": "season_infoanalyze_detailpic_02",
+    "initContent": "language_10072507"
+  },
+  {
+    "activityId": 12618,
+    "infoId": 2,
+    "unlockType": 1,
+    "unlockParam": "2",
+    "unlockDes": "language_10072508",
+    "name": "language_10072509",
+    "nameEn": "Sore Legs",
+    "reportRes": "season_infoanalyze_reportpic_2",
+    "reportPic": "season_infoanalyze_detailpic_03",
+    "initContent": "language_10072510"
+  },
+  {
+    "activityId": 12618,
+    "infoId": 3,
+    "unlockType": 1,
+    "unlockParam": "3",
+    "unlockDes": "language_10072511",
+    "name": "language_10072512",
+    "nameEn": "Who's Speaking?",
+    "reportRes": "season_infoanalyze_reportpic_3",
+    "reportPic": "season_infoanalyze_detailpic_04",
+    "initContent": "language_10072513"
+  },
+  {
+    "activityId": 12618,
+    "infoId": 4,
+    "unlockType": 2,
+    "unlockParam": "1#2#3",
+    "unlockDes": "language_10057820",
+    "name": "language_10072514",
+    "nameEn": "Anonymous Letter",
+    "reportRes": "season_infoanalyze_reportpic_4",
+    "reportPic": "season_infoanalyze_detailpic_01",
+    "initContent": "language_10072515"
+  },
+  {
+    "activityId": 12618,
+    "infoId": 5,
+    "unlockType": 2,
+    "unlockParam": "4",
+    "unlockDes": "language_10057823",
+    "name": "language_10072516",
+    "nameEn": "Interim Report: Beyond the Boundaries",
+    "reportRes": "season_infoanalyze_reportpic_5",
+    "reportPic": "season_infoanalyze_detailpic_05",
+    "initContent": "language_10072517"
   }
 ]

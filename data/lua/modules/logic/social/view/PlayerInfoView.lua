@@ -4,7 +4,7 @@ local var_0_0 = class("PlayerInfoView", BaseView)
 
 function var_0_0.onInitView(arg_1_0)
 	arg_1_0._goplayericon = gohelper.findChild(arg_1_0.viewGO, "Scroll_view/Viewport/Content/playerinfo/#go_playericon")
-	arg_1_0._imagebg = gohelper.findChildImage(arg_1_0.viewGO, "Scroll_view/Viewport/Content/bg/normal")
+	arg_1_0._goimagebg = gohelper.findChild(arg_1_0.viewGO, "Scroll_view/Viewport/Content/bg/normal2")
 	arg_1_0._goskinbg = gohelper.findChild(arg_1_0.viewGO, "Scroll_view/Viewport/Content/bg/actskin")
 	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "Scroll_view/Viewport/Content/playerinfo/#txt_name")
 	arg_1_0._txtlevel = gohelper.findChildText(arg_1_0.viewGO, "Scroll_view/Viewport/Content/playerinfo/level/#txt_level")
@@ -148,7 +148,7 @@ function var_0_0._refreshUI(arg_17_0)
 		arg_17_0._loader:startLoad(arg_17_0._onLoadFinish, arg_17_0)
 	end
 
-	gohelper.setActive(arg_17_0._imagebg.gameObject, not arg_17_0._hasSkin)
+	gohelper.setActive(arg_17_0._goimagebg, not arg_17_0._hasSkin)
 	gohelper.setActive(arg_17_0._goskinbg, arg_17_0._hasSkin)
 	arg_17_0._playericon:onUpdateMO(arg_17_0._mo)
 	arg_17_0._playericon:setShowLevel(false)

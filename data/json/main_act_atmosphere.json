@@ -13,7 +13,9 @@
     "mainThumbnailView": [
       "#simage_actbg",
       "#simage_logo"
-    ]
+    ],
+    "isShowfx": false,
+    "mainThumbnailViewActBg": false
   },
   {
     "id": 12431,
@@ -23,7 +25,9 @@
     "mainViewActBtnPrefix": "",
     "isShowLogo": false,
     "isShowActBg": true,
-    "mainThumbnailView": []
+    "mainThumbnailView": [],
+    "isShowfx": false,
+    "mainThumbnailViewActBg": false
   },
   {
     "id": 12510,
@@ -45,6 +49,20 @@
     "mainThumbnailView": [
       "#simage_actbg",
       "#simage_logo"
-    ]
+    ],
+    "isShowfx": true,
+    "mainThumbnailViewActBg": false
+  },
+  {
+    "id": 12611,
+    "effectDuration": 0,
+    "mainView": [],
+    "mainViewActBtn": [],
+    "mainViewActBtnPrefix": "",
+    "isShowLogo": false,
+    "isShowActBg": true,
+    "mainThumbnailView": [],
+    "isShowfx": false,
+    "mainThumbnailViewActBg": false
   }
 ]

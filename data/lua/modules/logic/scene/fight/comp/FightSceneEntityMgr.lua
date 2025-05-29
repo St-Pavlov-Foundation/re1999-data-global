@@ -418,7 +418,7 @@ function var_0_0.showSubEntity(arg_18_0)
 	arg_18_0._showSubWork:start()
 end
 
-function var_0_0.buildTempSpineByName(arg_19_0, arg_19_1, arg_19_2, arg_19_3, arg_19_4, arg_19_5)
+function var_0_0.buildTempSpineByName(arg_19_0, arg_19_1, arg_19_2, arg_19_3, arg_19_4, arg_19_5, arg_19_6)
 	local var_19_0 = tostring(arg_19_2)
 
 	var_19_0 = string.nilorempty(var_19_0) and arg_19_1 or var_19_0
@@ -429,6 +429,11 @@ function var_0_0.buildTempSpineByName(arg_19_0, arg_19_1, arg_19_2, arg_19_3, ar
 
 	local var_19_1 = gohelper.create3d(arg_19_0._containerGO, var_19_0)
 	local var_19_2 = MonoHelper.addLuaComOnceToGo(var_19_1, FightEntityTemp, var_19_0)
+
+	if arg_19_6 and arg_19_6.ingoreRainEffect then
+		var_19_2.ingoreRainEffect = true
+	end
+
 	local var_19_3 = arg_19_4 and arg_19_3 and FightHelper.getSpineLookDir(arg_19_3) or SpineLookDir.Left
 
 	var_19_2.spine:changeLookDir(var_19_3)
@@ -449,28 +454,33 @@ function var_0_0.buildTempSpineByName(arg_19_0, arg_19_1, arg_19_2, arg_19_3, ar
 	return var_19_2
 end
 
-function var_0_0.buildTempSpine(arg_20_0, arg_20_1, arg_20_2, arg_20_3, arg_20_4, arg_20_5)
-	local var_20_0 = arg_20_1
-	local var_20_1 = FightStrUtil.split(arg_20_1, "/")
-	local var_20_2 = var_20_1[#var_20_1]
-	local var_20_3 = gohelper.create3d(arg_20_0._containerGO, var_20_2)
-	local var_20_4 = MonoHelper.addLuaComOnceToGo(var_20_3, arg_20_5 or FightEntityTemp, arg_20_2)
+function var_0_0.buildTempSpine(arg_20_0, arg_20_1, arg_20_2, arg_20_3, arg_20_4, arg_20_5, arg_20_6)
+	local var_20_0 = arg_20_6
 
-	var_20_4.needLookCamera = false
+	if not var_20_0 then
+		local var_20_1 = FightStrUtil.split(arg_20_1, "/")
 
-	if arg_20_4 then
-		var_20_4.spine:setLayer(arg_20_4, true)
+		var_20_0 = var_20_1[#var_20_1]
 	end
 
-	local var_20_5 = arg_20_3 == FightEnum.EntitySide.MySide and SpineLookDir.Left or SpineLookDir.Right
+	local var_20_2 = gohelper.create3d(arg_20_0._containerGO, var_20_0)
+	local var_20_3 = MonoHelper.addLuaComOnceToGo(var_20_2, arg_20_5 or FightEntityTemp, arg_20_2)
 
-	var_20_4.spine:changeLookDir(var_20_5)
-	var_20_4:setSide(arg_20_3)
-	arg_20_0:addUnit(var_20_4)
-	var_20_4:loadSpineBySpinePath(arg_20_1, arg_20_0._onTempSpineLoaded, arg_20_0)
-	var_20_4:setSpeed(FightModel.instance:getSpeed())
+	var_20_3.needLookCamera = false
 
-	return var_20_4
+	if arg_20_4 then
+		var_20_3.spine:setLayer(arg_20_4, true)
+	end
+
+	local var_20_4 = arg_20_3 == FightEnum.EntitySide.MySide and SpineLookDir.Left or SpineLookDir.Right
+
+	var_20_3.spine:changeLookDir(var_20_4)
+	var_20_3:setSide(arg_20_3)
+	arg_20_0:addUnit(var_20_3)
+	var_20_3:loadSpineBySpinePath(arg_20_1, arg_20_0._onTempSpineLoaded, arg_20_0)
+	var_20_3:setSpeed(FightModel.instance:getSpeed())
+
+	return var_20_3
 end
 
 function var_0_0._onTempSpineLoaded(arg_21_0, arg_21_1, arg_21_2)

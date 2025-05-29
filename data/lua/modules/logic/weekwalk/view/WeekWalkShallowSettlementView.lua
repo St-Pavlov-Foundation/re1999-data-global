@@ -170,7 +170,11 @@ end
 function var_0_0.onCloseFinish(arg_16_0)
 	if arg_16_0._info.isPopDeepSettle then
 		WeekWalkController.instance:checkOpenWeekWalkDeepLayerNoticeView()
+
+		return
 	end
+
+	WeekWalk_2Controller.instance:checkOpenWeekWalk_2DeepLayerNoticeView()
 end
 
 function var_0_0.onDestroyView(arg_17_0)

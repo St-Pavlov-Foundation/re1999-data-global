@@ -307,6 +307,6 @@ function var_0_0.getEpisodeCoByEpisodeId(arg_30_0, arg_30_1)
 	end
 end
 
-var_0_0.instance = var_0_0.New(VersionActivity2_5Enum.ActivityId.BossRush)
+var_0_0.instance = var_0_0.New(VersionActivity2_6Enum.ActivityId.BossRush)
 
 return var_0_0

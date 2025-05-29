@@ -38,43 +38,23 @@ function var_0_0.getASFDType(arg_3_0)
 	return FightEnum.ASFDType.Normal
 end
 
-function var_0_0.hasASFDFissionEffect(arg_4_0)
-	if not arg_4_0 then
-		return false
-	end
+function var_0_0.mathReplyRule(arg_4_0, arg_4_1)
+	local var_4_0 = arg_4_1.replaceRule
 
-	for iter_4_0, iter_4_1 in ipairs(arg_4_0.actEffectMOs) do
-		if iter_4_1.effectType == FightEnum.EffectType.EMITTERSPLITNUM then
-			local var_4_0 = iter_4_1.reserveStr
-
-			if not string.nilorempty(var_4_0) then
-				local var_4_1 = cjson.decode(var_4_0)
-
-				return var_4_1.splitNum and var_4_1.splitNum > 0
-			end
-		end
-	end
-
-	return false
-end
-
-function var_0_0.mathReplyRule(arg_5_0, arg_5_1)
-	local var_5_0 = arg_5_1.replaceRule
-
-	if string.nilorempty(var_5_0) then
+	if string.nilorempty(var_4_0) then
 		return true
 	end
 
-	local var_5_1 = FightStrUtil.instance:getSplitString2Cache(var_5_0, true)
+	local var_4_1 = FightStrUtil.instance:getSplitString2Cache(var_4_0, true)
 
-	for iter_5_0, iter_5_1 in ipairs(var_5_1) do
-		local var_5_2 = iter_5_1[1]
+	for iter_4_0, iter_4_1 in ipairs(var_4_1) do
+		local var_4_2 = iter_4_1[1]
 
-		if var_5_2 == FightEnum.ASFDReplyRule.HasSkin then
-			if not var_0_0.checkHasSkinRule(iter_5_1, arg_5_0) then
+		if var_4_2 == FightEnum.ASFDReplyRule.HasSkin then
+			if not var_0_0.checkHasSkinRule(iter_4_1, arg_4_0) then
 				return false
 			end
-		elseif var_5_2 == FightEnum.ASFDReplyRule.HasBuffActId and not var_0_0.checkHasBuffActIdRule(iter_5_1, arg_5_0) then
+		elseif var_4_2 == FightEnum.ASFDReplyRule.HasBuffActId and not var_0_0.checkHasBuffActIdRule(iter_4_1, arg_4_0) then
 			return false
 		end
 	end
@@ -82,9 +62,9 @@ function var_0_0.mathReplyRule(arg_5_0, arg_5_1)
 	return true
 end
 
-function var_0_0.checkHasSkinRule(arg_6_0, arg_6_1)
-	for iter_6_0 = 2, #arg_6_0 do
-		if FightHelper.hasSkinId(arg_6_0[iter_6_0]) then
+function var_0_0.checkHasSkinRule(arg_5_0, arg_5_1)
+	for iter_5_0 = 2, #arg_5_0 do
+		if FightHelper.hasSkinId(arg_5_0[iter_5_0]) then
 			return true
 		end
 	end
@@ -92,11 +72,17 @@ function var_0_0.checkHasSkinRule(arg_6_0, arg_6_1)
 	return false
 end
 
-function var_0_0.checkHasBuffActIdRule(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_1 and FightDataHelper.entityMgr:getById(arg_7_1)
+function var_0_0.checkHasBuffActIdRule(arg_6_0, arg_6_1)
+	local var_6_0 = arg_6_1 and FightDataHelper.entityMgr:getById(arg_6_1)
 
-	return var_7_0 and var_7_0:hasBuffActId(arg_7_0[2])
+	return var_6_0 and var_6_0:hasBuffActId(arg_6_0[2])
 end
+
+function var_0_0.sortASFDCo(arg_7_0, arg_7_1)
+	return arg_7_0.priority > arg_7_1.priority
+end
+
+var_0_0.tempCoList = {}
 
 function var_0_0.getASFDCo(arg_8_0, arg_8_1, arg_8_2)
 	local var_8_0 = FightASFDConfig.instance:getUnitList(arg_8_1)
@@ -105,13 +91,21 @@ function var_0_0.getASFDCo(arg_8_0, arg_8_1, arg_8_2)
 		return arg_8_2
 	end
 
+	tabletool.clear(var_0_0.tempCoList)
+
 	for iter_8_0, iter_8_1 in ipairs(var_8_0) do
 		if var_0_0.mathReplyRule(arg_8_0, iter_8_1) then
-			return iter_8_1
+			table.insert(var_0_0.tempCoList, iter_8_1)
 		end
 	end
 
-	return arg_8_2
+	if #var_0_0.tempCoList < 1 then
+		return arg_8_2
+	end
+
+	table.sort(var_0_0.tempCoList, var_0_0.sortASFDCo)
+
+	return var_0_0.tempCoList[1]
 end
 
 function var_0_0.getBornCo(arg_9_0)
@@ -130,18 +124,22 @@ function var_0_0.getExplosionCo(arg_12_0)
 	return var_0_0.getASFDCo(arg_12_0, FightEnum.ASFDUnit.Explosion, FightASFDConfig.instance.defaultExplosionCo)
 end
 
-function var_0_0.getEmitterPos(arg_13_0)
+function var_0_0.getEmitterPos(arg_13_0, arg_13_1)
 	local var_13_0 = FightModel.instance:getFightParam()
 	local var_13_1 = FightModel.instance:getCurWaveId() or 1
 	local var_13_2 = var_13_0 and var_13_0:getScene(var_13_1) or 1
 	local var_13_3 = lua_fight_asfd_emitter_position.configDict[var_13_2] or lua_fight_asfd_emitter_position.configDict[1]
-	local var_13_4 = arg_13_0 == FightEnum.EntitySide.MySide and var_13_3.mySidePos or var_13_3.enemySidePos
+	local var_13_4 = arg_13_1 and var_13_3[arg_13_1]
 
-	return var_13_4[1], var_13_4[2], var_13_4[3]
+	var_13_4 = var_13_4 or var_13_3[1]
+
+	local var_13_5 = arg_13_0 == FightEnum.EntitySide.MySide and var_13_4.mySidePos or var_13_4.enemySidePos
+
+	return var_13_5[1], var_13_5[2], var_13_5[3]
 end
 
-function var_0_0.getStartPos(arg_14_0)
-	local var_14_0, var_14_1, var_14_2 = var_0_0.getEmitterPos(arg_14_0)
+function var_0_0.getStartPos(arg_14_0, arg_14_1)
+	local var_14_0, var_14_1, var_14_2 = var_0_0.getEmitterPos(arg_14_0, arg_14_1)
 	local var_14_3, var_14_4 = GameUtil.getRandomPosInCircle(var_14_0, var_14_1, FightASFDConfig.instance.randomRadius)
 	local var_14_5 = FightASFDConfig.instance.emitterCenterOffset
 
@@ -156,7 +154,9 @@ function var_0_0.getStartPos(arg_14_0)
 	return Vector3(var_14_3, var_14_6, var_14_2)
 end
 
-function var_0_0.getEndPos(arg_15_0)
+function var_0_0.getEndPos(arg_15_0, arg_15_1)
+	arg_15_1 = arg_15_1 or FightASFDConfig.instance.hitHangPoint
+
 	local var_15_0 = FightHelper.getEntity(arg_15_0):getHangPoint(FightASFDConfig.instance.hitHangPoint)
 
 	if not var_15_0 then
@@ -295,6 +295,62 @@ function var_0_0._checkTriggerMustCrit(arg_24_0, arg_24_1)
 	end
 
 	return false
+end
+
+function var_0_0.getStepContext(arg_25_0, arg_25_1)
+	if arg_25_0 then
+		for iter_25_0, iter_25_1 in ipairs(arg_25_0.actEffectMOs) do
+			if iter_25_1.effectType == FightEnum.EffectType.EMITTERFIGHTNOTIFY then
+				local var_25_0
+
+				if not string.nilorempty(iter_25_1.reserveStr) then
+					var_25_0 = cjson.decode(iter_25_1.reserveStr)
+				end
+
+				if not var_25_0.emitterAttackNum then
+					var_25_0.emitterAttackNum = arg_25_1
+				end
+
+				if not var_25_0.emitterAttackMaxNum then
+					var_25_0.emitterAttackMaxNum = arg_25_1
+				end
+
+				return var_25_0
+			end
+		end
+	end
+end
+
+function var_0_0.isALFPullOutStep(arg_26_0, arg_26_1)
+	local var_26_0 = var_0_0.getStepContext(arg_26_0, arg_26_1)
+
+	if not var_26_0 then
+		return false
+	end
+
+	if not var_26_0.emitterAttackNum or not var_26_0.emitterAttackMaxNum then
+		return false
+	end
+
+	if var_26_0.emitterAttackNum < var_26_0.emitterAttackMaxNum then
+		return false
+	end
+
+	local var_26_1 = arg_26_0.fromId
+	local var_26_2 = var_26_1 and FightDataHelper.entityMgr:getById(var_26_1)
+
+	return var_26_2 and var_26_2:hasBuffActId(924)
+end
+
+var_0_0.tempVector2_A = Vector2(-1, 0)
+var_0_0.tempVector2_B = Vector2()
+
+function var_0_0.getZRotation(arg_27_0, arg_27_1, arg_27_2, arg_27_3)
+	var_0_0.tempVector2_B:Set(arg_27_2 - arg_27_0, arg_27_3 - arg_27_1)
+
+	local var_27_0 = Mathf.Sign(var_0_0.tempVector2_A.x * var_0_0.tempVector2_B.y - var_0_0.tempVector2_A.y * var_0_0.tempVector2_B.x)
+
+	return Vector2.Angle(var_0_0.tempVector2_A, var_0_0.tempVector2_B) * var_27_0
 end
 
 return var_0_0

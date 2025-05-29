@@ -203,6 +203,14 @@ function var_0_0._btnrecommendOnClick(arg_9_0)
 		return
 	end
 
+	if arg_9_0._chapterConfig.type == DungeonEnum.ChapterType.WeekWalk_2 then
+		local var_9_1 = WeekWalk_2Model.instance:getBattleElementId()
+
+		Weekwalk_2Rpc.instance:sendWeekwalkVer2HeroRecommendRequest(var_9_1, WeekWalk_2Model.instance:getCurMapId(), arg_9_0._receiveRecommend, arg_9_0)
+
+		return
+	end
+
 	DungeonRpc.instance:sendGetEpisodeHeroRecommendRequest(arg_9_0._episodeId, arg_9_0._receiveRecommend, arg_9_0)
 end
 

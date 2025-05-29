@@ -6,13 +6,21 @@ local var_0_1 = {
 	EPISODENO_MSG = var_0_0.Descriptor(),
 	EPISODENOEPISODEIDFIELD = var_0_0.FieldDescriptor(),
 	EPISODENOSTATUSFIELD = var_0_0.FieldDescriptor(),
-	EPISODENOHEROIDSFIELD = var_0_0.FieldDescriptor(),
+	EPISODENOHEROSFIELD = var_0_0.FieldDescriptor(),
 	EPISODENOASSISTBOSSIDFIELD = var_0_0.FieldDescriptor(),
+	ASSISTBOSSNO_MSG = var_0_0.Descriptor(),
+	ASSISTBOSSNOIDFIELD = var_0_0.FieldDescriptor(),
+	ASSISTBOSSNOLEVELFIELD = var_0_0.FieldDescriptor(),
+	ASSISTBOSSNOTALENTPOINTFIELD = var_0_0.FieldDescriptor(),
+	ASSISTBOSSNOTALENTIDSFIELD = var_0_0.FieldDescriptor(),
 	LAYERNO_MSG = var_0_0.Descriptor(),
 	LAYERNOLAYERIDFIELD = var_0_0.FieldDescriptor(),
 	LAYERNOCURRHIGHSCOREFIELD = var_0_0.FieldDescriptor(),
 	LAYERNOHISTORYHIGHSCOREFIELD = var_0_0.FieldDescriptor(),
 	LAYERNOEPISODENOSFIELD = var_0_0.FieldDescriptor(),
+	HERONO_MSG = var_0_0.Descriptor(),
+	HERONOHEROIDFIELD = var_0_0.FieldDescriptor(),
+	HERONOEQUIPUIDFIELD = var_0_0.FieldDescriptor(),
 	TOWERNO_MSG = var_0_0.Descriptor(),
 	TOWERNOTYPEFIELD = var_0_0.FieldDescriptor(),
 	TOWERNOTOWERIDFIELD = var_0_0.FieldDescriptor(),
@@ -26,12 +34,7 @@ local var_0_1 = {
 	TOWEROPENNOTOWERIDFIELD = var_0_0.FieldDescriptor(),
 	TOWEROPENNOSTATUSFIELD = var_0_0.FieldDescriptor(),
 	TOWEROPENNOROUNDFIELD = var_0_0.FieldDescriptor(),
-	TOWEROPENNONEXTTIMEFIELD = var_0_0.FieldDescriptor(),
-	ASSISTBOSSNO_MSG = var_0_0.Descriptor(),
-	ASSISTBOSSNOIDFIELD = var_0_0.FieldDescriptor(),
-	ASSISTBOSSNOLEVELFIELD = var_0_0.FieldDescriptor(),
-	ASSISTBOSSNOTALENTPOINTFIELD = var_0_0.FieldDescriptor(),
-	ASSISTBOSSNOTALENTIDSFIELD = var_0_0.FieldDescriptor()
+	TOWEROPENNONEXTTIMEFIELD = var_0_0.FieldDescriptor()
 }
 
 var_0_1.EPISODENOEPISODEIDFIELD.name = "episodeId"
@@ -52,15 +55,16 @@ var_0_1.EPISODENOSTATUSFIELD.has_default_value = false
 var_0_1.EPISODENOSTATUSFIELD.default_value = 0
 var_0_1.EPISODENOSTATUSFIELD.type = 5
 var_0_1.EPISODENOSTATUSFIELD.cpp_type = 1
-var_0_1.EPISODENOHEROIDSFIELD.name = "heroIds"
-var_0_1.EPISODENOHEROIDSFIELD.full_name = ".EpisodeNO.heroIds"
-var_0_1.EPISODENOHEROIDSFIELD.number = 3
-var_0_1.EPISODENOHEROIDSFIELD.index = 2
-var_0_1.EPISODENOHEROIDSFIELD.label = 3
-var_0_1.EPISODENOHEROIDSFIELD.has_default_value = false
-var_0_1.EPISODENOHEROIDSFIELD.default_value = {}
-var_0_1.EPISODENOHEROIDSFIELD.type = 5
-var_0_1.EPISODENOHEROIDSFIELD.cpp_type = 1
+var_0_1.EPISODENOHEROSFIELD.name = "heros"
+var_0_1.EPISODENOHEROSFIELD.full_name = ".EpisodeNO.heros"
+var_0_1.EPISODENOHEROSFIELD.number = 3
+var_0_1.EPISODENOHEROSFIELD.index = 2
+var_0_1.EPISODENOHEROSFIELD.label = 3
+var_0_1.EPISODENOHEROSFIELD.has_default_value = false
+var_0_1.EPISODENOHEROSFIELD.default_value = {}
+var_0_1.EPISODENOHEROSFIELD.message_type = var_0_1.HERONO_MSG
+var_0_1.EPISODENOHEROSFIELD.type = 11
+var_0_1.EPISODENOHEROSFIELD.cpp_type = 10
 var_0_1.EPISODENOASSISTBOSSIDFIELD.name = "assistBossId"
 var_0_1.EPISODENOASSISTBOSSIDFIELD.full_name = ".EpisodeNO.assistBossId"
 var_0_1.EPISODENOASSISTBOSSIDFIELD.number = 4
@@ -77,11 +81,59 @@ var_0_1.EPISODENO_MSG.enum_types = {}
 var_0_1.EPISODENO_MSG.fields = {
 	var_0_1.EPISODENOEPISODEIDFIELD,
 	var_0_1.EPISODENOSTATUSFIELD,
-	var_0_1.EPISODENOHEROIDSFIELD,
+	var_0_1.EPISODENOHEROSFIELD,
 	var_0_1.EPISODENOASSISTBOSSIDFIELD
 }
 var_0_1.EPISODENO_MSG.is_extendable = false
 var_0_1.EPISODENO_MSG.extensions = {}
+var_0_1.ASSISTBOSSNOIDFIELD.name = "id"
+var_0_1.ASSISTBOSSNOIDFIELD.full_name = ".AssistBossNO.id"
+var_0_1.ASSISTBOSSNOIDFIELD.number = 1
+var_0_1.ASSISTBOSSNOIDFIELD.index = 0
+var_0_1.ASSISTBOSSNOIDFIELD.label = 1
+var_0_1.ASSISTBOSSNOIDFIELD.has_default_value = false
+var_0_1.ASSISTBOSSNOIDFIELD.default_value = 0
+var_0_1.ASSISTBOSSNOIDFIELD.type = 5
+var_0_1.ASSISTBOSSNOIDFIELD.cpp_type = 1
+var_0_1.ASSISTBOSSNOLEVELFIELD.name = "level"
+var_0_1.ASSISTBOSSNOLEVELFIELD.full_name = ".AssistBossNO.level"
+var_0_1.ASSISTBOSSNOLEVELFIELD.number = 2
+var_0_1.ASSISTBOSSNOLEVELFIELD.index = 1
+var_0_1.ASSISTBOSSNOLEVELFIELD.label = 1
+var_0_1.ASSISTBOSSNOLEVELFIELD.has_default_value = false
+var_0_1.ASSISTBOSSNOLEVELFIELD.default_value = 0
+var_0_1.ASSISTBOSSNOLEVELFIELD.type = 5
+var_0_1.ASSISTBOSSNOLEVELFIELD.cpp_type = 1
+var_0_1.ASSISTBOSSNOTALENTPOINTFIELD.name = "talentPoint"
+var_0_1.ASSISTBOSSNOTALENTPOINTFIELD.full_name = ".AssistBossNO.talentPoint"
+var_0_1.ASSISTBOSSNOTALENTPOINTFIELD.number = 3
+var_0_1.ASSISTBOSSNOTALENTPOINTFIELD.index = 2
+var_0_1.ASSISTBOSSNOTALENTPOINTFIELD.label = 1
+var_0_1.ASSISTBOSSNOTALENTPOINTFIELD.has_default_value = false
+var_0_1.ASSISTBOSSNOTALENTPOINTFIELD.default_value = 0
+var_0_1.ASSISTBOSSNOTALENTPOINTFIELD.type = 5
+var_0_1.ASSISTBOSSNOTALENTPOINTFIELD.cpp_type = 1
+var_0_1.ASSISTBOSSNOTALENTIDSFIELD.name = "talentIds"
+var_0_1.ASSISTBOSSNOTALENTIDSFIELD.full_name = ".AssistBossNO.talentIds"
+var_0_1.ASSISTBOSSNOTALENTIDSFIELD.number = 4
+var_0_1.ASSISTBOSSNOTALENTIDSFIELD.index = 3
+var_0_1.ASSISTBOSSNOTALENTIDSFIELD.label = 3
+var_0_1.ASSISTBOSSNOTALENTIDSFIELD.has_default_value = false
+var_0_1.ASSISTBOSSNOTALENTIDSFIELD.default_value = {}
+var_0_1.ASSISTBOSSNOTALENTIDSFIELD.type = 5
+var_0_1.ASSISTBOSSNOTALENTIDSFIELD.cpp_type = 1
+var_0_1.ASSISTBOSSNO_MSG.name = "AssistBossNO"
+var_0_1.ASSISTBOSSNO_MSG.full_name = ".AssistBossNO"
+var_0_1.ASSISTBOSSNO_MSG.nested_types = {}
+var_0_1.ASSISTBOSSNO_MSG.enum_types = {}
+var_0_1.ASSISTBOSSNO_MSG.fields = {
+	var_0_1.ASSISTBOSSNOIDFIELD,
+	var_0_1.ASSISTBOSSNOLEVELFIELD,
+	var_0_1.ASSISTBOSSNOTALENTPOINTFIELD,
+	var_0_1.ASSISTBOSSNOTALENTIDSFIELD
+}
+var_0_1.ASSISTBOSSNO_MSG.is_extendable = false
+var_0_1.ASSISTBOSSNO_MSG.extensions = {}
 var_0_1.LAYERNOLAYERIDFIELD.name = "layerId"
 var_0_1.LAYERNOLAYERIDFIELD.full_name = ".LayerNO.layerId"
 var_0_1.LAYERNOLAYERIDFIELD.number = 1
@@ -131,6 +183,34 @@ var_0_1.LAYERNO_MSG.fields = {
 }
 var_0_1.LAYERNO_MSG.is_extendable = false
 var_0_1.LAYERNO_MSG.extensions = {}
+var_0_1.HERONOHEROIDFIELD.name = "heroId"
+var_0_1.HERONOHEROIDFIELD.full_name = ".HeroNO.heroId"
+var_0_1.HERONOHEROIDFIELD.number = 1
+var_0_1.HERONOHEROIDFIELD.index = 0
+var_0_1.HERONOHEROIDFIELD.label = 1
+var_0_1.HERONOHEROIDFIELD.has_default_value = false
+var_0_1.HERONOHEROIDFIELD.default_value = 0
+var_0_1.HERONOHEROIDFIELD.type = 5
+var_0_1.HERONOHEROIDFIELD.cpp_type = 1
+var_0_1.HERONOEQUIPUIDFIELD.name = "equipUid"
+var_0_1.HERONOEQUIPUIDFIELD.full_name = ".HeroNO.equipUid"
+var_0_1.HERONOEQUIPUIDFIELD.number = 2
+var_0_1.HERONOEQUIPUIDFIELD.index = 1
+var_0_1.HERONOEQUIPUIDFIELD.label = 3
+var_0_1.HERONOEQUIPUIDFIELD.has_default_value = false
+var_0_1.HERONOEQUIPUIDFIELD.default_value = {}
+var_0_1.HERONOEQUIPUIDFIELD.type = 3
+var_0_1.HERONOEQUIPUIDFIELD.cpp_type = 2
+var_0_1.HERONO_MSG.name = "HeroNO"
+var_0_1.HERONO_MSG.full_name = ".HeroNO"
+var_0_1.HERONO_MSG.nested_types = {}
+var_0_1.HERONO_MSG.enum_types = {}
+var_0_1.HERONO_MSG.fields = {
+	var_0_1.HERONOHEROIDFIELD,
+	var_0_1.HERONOEQUIPUIDFIELD
+}
+var_0_1.HERONO_MSG.is_extendable = false
+var_0_1.HERONO_MSG.extensions = {}
 var_0_1.TOWERNOTYPEFIELD.name = "type"
 var_0_1.TOWERNOTYPEFIELD.full_name = ".TowerNO.type"
 var_0_1.TOWERNOTYPEFIELD.number = 1
@@ -268,56 +348,9 @@ var_0_1.TOWEROPENNO_MSG.fields = {
 }
 var_0_1.TOWEROPENNO_MSG.is_extendable = false
 var_0_1.TOWEROPENNO_MSG.extensions = {}
-var_0_1.ASSISTBOSSNOIDFIELD.name = "id"
-var_0_1.ASSISTBOSSNOIDFIELD.full_name = ".AssistBossNO.id"
-var_0_1.ASSISTBOSSNOIDFIELD.number = 1
-var_0_1.ASSISTBOSSNOIDFIELD.index = 0
-var_0_1.ASSISTBOSSNOIDFIELD.label = 1
-var_0_1.ASSISTBOSSNOIDFIELD.has_default_value = false
-var_0_1.ASSISTBOSSNOIDFIELD.default_value = 0
-var_0_1.ASSISTBOSSNOIDFIELD.type = 5
-var_0_1.ASSISTBOSSNOIDFIELD.cpp_type = 1
-var_0_1.ASSISTBOSSNOLEVELFIELD.name = "level"
-var_0_1.ASSISTBOSSNOLEVELFIELD.full_name = ".AssistBossNO.level"
-var_0_1.ASSISTBOSSNOLEVELFIELD.number = 2
-var_0_1.ASSISTBOSSNOLEVELFIELD.index = 1
-var_0_1.ASSISTBOSSNOLEVELFIELD.label = 1
-var_0_1.ASSISTBOSSNOLEVELFIELD.has_default_value = false
-var_0_1.ASSISTBOSSNOLEVELFIELD.default_value = 0
-var_0_1.ASSISTBOSSNOLEVELFIELD.type = 5
-var_0_1.ASSISTBOSSNOLEVELFIELD.cpp_type = 1
-var_0_1.ASSISTBOSSNOTALENTPOINTFIELD.name = "talentPoint"
-var_0_1.ASSISTBOSSNOTALENTPOINTFIELD.full_name = ".AssistBossNO.talentPoint"
-var_0_1.ASSISTBOSSNOTALENTPOINTFIELD.number = 3
-var_0_1.ASSISTBOSSNOTALENTPOINTFIELD.index = 2
-var_0_1.ASSISTBOSSNOTALENTPOINTFIELD.label = 1
-var_0_1.ASSISTBOSSNOTALENTPOINTFIELD.has_default_value = false
-var_0_1.ASSISTBOSSNOTALENTPOINTFIELD.default_value = 0
-var_0_1.ASSISTBOSSNOTALENTPOINTFIELD.type = 5
-var_0_1.ASSISTBOSSNOTALENTPOINTFIELD.cpp_type = 1
-var_0_1.ASSISTBOSSNOTALENTIDSFIELD.name = "talentIds"
-var_0_1.ASSISTBOSSNOTALENTIDSFIELD.full_name = ".AssistBossNO.talentIds"
-var_0_1.ASSISTBOSSNOTALENTIDSFIELD.number = 4
-var_0_1.ASSISTBOSSNOTALENTIDSFIELD.index = 3
-var_0_1.ASSISTBOSSNOTALENTIDSFIELD.label = 3
-var_0_1.ASSISTBOSSNOTALENTIDSFIELD.has_default_value = false
-var_0_1.ASSISTBOSSNOTALENTIDSFIELD.default_value = {}
-var_0_1.ASSISTBOSSNOTALENTIDSFIELD.type = 5
-var_0_1.ASSISTBOSSNOTALENTIDSFIELD.cpp_type = 1
-var_0_1.ASSISTBOSSNO_MSG.name = "AssistBossNO"
-var_0_1.ASSISTBOSSNO_MSG.full_name = ".AssistBossNO"
-var_0_1.ASSISTBOSSNO_MSG.nested_types = {}
-var_0_1.ASSISTBOSSNO_MSG.enum_types = {}
-var_0_1.ASSISTBOSSNO_MSG.fields = {
-	var_0_1.ASSISTBOSSNOIDFIELD,
-	var_0_1.ASSISTBOSSNOLEVELFIELD,
-	var_0_1.ASSISTBOSSNOTALENTPOINTFIELD,
-	var_0_1.ASSISTBOSSNOTALENTIDSFIELD
-}
-var_0_1.ASSISTBOSSNO_MSG.is_extendable = false
-var_0_1.ASSISTBOSSNO_MSG.extensions = {}
 var_0_1.AssistBossNO = var_0_0.Message(var_0_1.ASSISTBOSSNO_MSG)
 var_0_1.EpisodeNO = var_0_0.Message(var_0_1.EPISODENO_MSG)
+var_0_1.HeroNO = var_0_0.Message(var_0_1.HERONO_MSG)
 var_0_1.LayerNO = var_0_0.Message(var_0_1.LAYERNO_MSG)
 var_0_1.TowerNO = var_0_0.Message(var_0_1.TOWERNO_MSG)
 var_0_1.TowerOpenNO = var_0_0.Message(var_0_1.TOWEROPENNO_MSG)

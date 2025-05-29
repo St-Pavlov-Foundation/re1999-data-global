@@ -375,10 +375,10 @@ end
 
 function var_0_0.updateReport(arg_31_0, arg_31_1)
 	local var_31_0, var_31_1 = WeatherModel.instance:getReport()
-	local var_31_2 = arg_31_0:_getWelcomeReport()
+	local var_31_2, var_31_3 = xpcall(arg_31_0._getWelcomeReport, __G__TRACKBACK__, arg_31_0)
 
-	if var_31_2 then
-		var_31_0 = var_31_2
+	if var_31_2 and var_31_3 then
+		var_31_0 = var_31_3
 		var_31_1 = 3600
 	end
 

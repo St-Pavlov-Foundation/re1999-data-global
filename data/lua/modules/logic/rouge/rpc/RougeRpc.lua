@@ -1120,6 +1120,40 @@ function var_0_0.onReceiveRougeSelectCollectionLevelUpReply(arg_100_0, arg_100_1
 	RougeMapModel.instance:updateMapInfo(arg_100_2.map)
 end
 
+function var_0_0.sendRougeRefreshMapRuleRequest(arg_101_0, arg_101_1, arg_101_2)
+	local var_101_0 = RougeModule_pb.RougeRefreshMapRuleRequest()
+
+	var_101_0.season = arg_101_1
+	var_101_0.layer = arg_101_2
+
+	arg_101_0:sendMsg(var_101_0)
+end
+
+function var_0_0.onReceiveRougeRefreshMapRuleReply(arg_102_0, arg_102_1, arg_102_2)
+	if arg_102_1 ~= 0 then
+		return
+	end
+
+	RougeMapModel.instance:updateMapInfo(arg_102_2.map)
+end
+
+function var_0_0.sendRougeRefreshMonsterRuleRequest(arg_103_0, arg_103_1, arg_103_2)
+	local var_103_0 = RougeModule_pb.RougeRefreshMonsterRuleRequest()
+
+	var_103_0.season = arg_103_1
+	var_103_0.index = arg_103_2
+
+	arg_103_0:sendMsg(var_103_0)
+end
+
+function var_0_0.onReceiveRougeRefreshMonsterRuleReply(arg_104_0, arg_104_1, arg_104_2)
+	if arg_104_1 ~= 0 then
+		return
+	end
+
+	RougeMapModel.instance:updateMapInfo(arg_104_2.map)
+end
+
 var_0_0.instance = var_0_0.New()
 
 return var_0_0

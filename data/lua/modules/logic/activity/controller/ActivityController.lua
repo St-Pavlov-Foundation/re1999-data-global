@@ -1,19 +1,8 @@
 ﻿module("modules.logic.activity.controller.ActivityController", package.seeall)
 
 local var_0_0 = class("ActivityController", BaseController)
-local var_0_1 = string.format
 
 function var_0_0.onInit(arg_1_0)
-	arg_1_0._versionInfo = {}
-
-	arg_1_0:_getLatestVersion(arg_1_0._versionInfo)
-
-	if isDebugBuild then
-		local var_1_0 = var_0_1("<color=#FFFF00>[ActivityController] 当前版本: %s</color>", arg_1_0:getV_a())
-
-		logNormal(var_1_0)
-	end
-
 	arg_1_0:reInit()
 end
 
@@ -68,7 +57,7 @@ function var_0_0.openActivityWelfareView(arg_8_0)
 	end
 end
 
-local var_0_2 = {
+local var_0_1 = {
 	ActivityEnum.Activity.HarvestSeasonView_1_5,
 	ActivityEnum.Activity.V2a0_SummerSign,
 	ActivityEnum.Activity.V2a1_MoonFestival,
@@ -116,7 +105,7 @@ local var_0_2 = {
 	ActivityEnum.Activity.V2a5_DecorateStore,
 	ActivityEnum.Activity.V2a5_Act186Sign
 }
-local var_0_3 = {
+local var_0_2 = {
 	ActivityEnum.Activity.VersionActivity1_3Radio,
 	ActivityEnum.Activity.Activity1_6WarmUp,
 	ActivityEnum.Activity.Activity1_7WarmUp,
@@ -131,7 +120,7 @@ local var_0_3 = {
 }
 
 function var_0_0.checkGetActivityInfo(arg_9_0)
-	for iter_9_0, iter_9_1 in ipairs(var_0_3) do
+	for iter_9_0, iter_9_1 in ipairs(var_0_2) do
 		Activity125Controller.instance:getAct125InfoFromServer(iter_9_1)
 	end
 
@@ -176,6 +165,10 @@ function var_0_0.checkGetActivityInfo(arg_9_0)
 		Activity172Rpc.instance:sendGetAct172InfoRequest(ActivityEnum.Activity.V2a5_NewInsight)
 	end
 
+	if ActivityModel.instance:isActOnLine(ActivityEnum.Activity.V2a6_NewInsight) then
+		Activity172Rpc.instance:sendGetAct172InfoRequest(ActivityEnum.Activity.V2a6_NewInsight)
+	end
+
 	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Tower) then
 		TaskRpc.instance:sendGetTaskInfoRequest({
 			TaskEnum.TaskType.Tower
@@ -198,10 +191,11 @@ function var_0_0.requestAct186Info(arg_10_0)
 end
 
 function var_0_0.updateAct101Infos(arg_11_0, arg_11_1)
+	arg_11_0:_initRoleSign_kAct101RedList()
 	arg_11_0:_initLinkageActivity_kAct101RedList()
 
 	if not arg_11_1 then
-		for iter_11_0, iter_11_1 in ipairs(var_0_2) do
+		for iter_11_0, iter_11_1 in ipairs(var_0_1) do
 			if ActivityType101Model.instance:isOpen(iter_11_1) then
 				Activity101Rpc.instance:sendGet101InfosRequest(iter_11_1)
 			end
@@ -210,7 +204,7 @@ function var_0_0.updateAct101Infos(arg_11_0, arg_11_1)
 		return
 	end
 
-	for iter_11_2, iter_11_3 in ipairs(var_0_2) do
+	for iter_11_2, iter_11_3 in ipairs(var_0_1) do
 		if arg_11_1 == iter_11_3 then
 			Activity101Rpc.instance:sendGet101InfosRequest(iter_11_3)
 
@@ -223,138 +217,52 @@ function var_0_0._onDailyRefresh(arg_12_0)
 	arg_12_0:updateAct101Infos()
 end
 
-function var_0_0._getLatestVersion(arg_13_0, arg_13_1)
-	local var_13_0 = "AudioEnum%s_%s"
-	local var_13_1 = 1
-	local var_13_2 = 5
+local var_0_3 = false
 
-	arg_13_1.V = var_13_1
-	arg_13_1.A = var_13_2
-
-	while var_13_1 < math.huge do
-		while var_13_2 < 10 do
-			local var_13_3 = var_0_1(var_13_0, var_13_1, var_13_2)
-			local var_13_4 = _G[var_13_3]
-
-			if not var_13_4 then
-				local var_13_5 = var_13_2
-
-				while var_13_2 < 10 do
-					var_13_2 = var_13_2 + 1
-
-					local var_13_6 = var_0_1(var_13_0, var_13_1, var_13_2)
-
-					var_13_4 = _G[var_13_6]
-
-					if var_13_4 then
-						break
-					end
-				end
-
-				if var_13_5 == 0 and not var_13_4 then
-					return
-				end
-
-				if var_13_2 >= 10 then
-					break
-				end
-			end
-
-			if var_13_2 == 0 and not var_13_4 then
-				return
-			elseif not var_13_4 then
-				break
-			end
-
-			arg_13_1.V = var_13_1
-			arg_13_1.A = var_13_2
-			var_13_2 = var_13_2 + 1
-		end
-
-		var_13_1 = var_13_1 + 1
-		var_13_2 = 0
+function var_0_0._initRoleSign_kAct101RedList(arg_13_0)
+	if var_0_3 then
+		return
 	end
+
+	var_0_3 = true
+
+	local var_13_0 = GameBranchMgr.instance:Vxax_ActId("Role_SignView_Part1", ActivityEnum.Activity.V2a6_Role_SignView_Part1)
+	local var_13_1 = GameBranchMgr.instance:Vxax_ActId("Role_SignView_Part2", ActivityEnum.Activity.V2a6_Role_SignView_Part2)
+
+	table.insert(var_0_1, var_13_0)
+	table.insert(var_0_1, var_13_1)
 end
 
-function var_0_0.getMajorVer(arg_14_0)
-	return arg_14_0._versionInfo.V
-end
-
-function var_0_0.getMinorVer(arg_15_0)
-	return arg_15_0._versionInfo.A
-end
-
-function var_0_0.getVxax_(arg_16_0)
-	return "V" .. arg_16_0:getMajorVer() .. "a" .. arg_16_0:getMinorVer() .. "_"
-end
-
-function var_0_0.getV_a(arg_17_0)
-	return arg_17_0:getMajorVer() .. "_" .. arg_17_0:getMinorVer()
-end
-
-function var_0_0.Vxax_(arg_18_0, arg_18_1)
-	return arg_18_0:getVxax_() .. arg_18_1
-end
-
-function var_0_0.V_a(arg_19_0, arg_19_1, arg_19_2)
-	arg_19_1 = arg_19_1 or ""
-	arg_19_2 = arg_19_2 or ""
-
-	return arg_19_1 .. arg_19_0:getV_a() .. arg_19_2
-end
-
-function var_0_0.Vxax_ActId(arg_20_0, arg_20_1, arg_20_2)
-	local var_20_0 = arg_20_0:Vxax_(arg_20_1)
-
-	return ActivityEnum.Activity[var_20_0] or arg_20_2
+function var_0_0.onModuleViews(arg_14_0, arg_14_1, arg_14_2)
+	ActivityType101Model.instance:onModuleViews(arg_14_1, arg_14_2)
 end
 
 local var_0_4 = false
 
-function var_0_0._initRoleSign_kAct101RedList(arg_21_0)
+function var_0_0._initSpecialSign_kAct101RedList(arg_15_0)
 	if var_0_4 then
 		return
 	end
 
 	var_0_4 = true
 
-	local var_21_0 = GameBranchMgr.instance:Vxax_ActId("Role_SignView_Part1", ActivityEnum.Activity.V2a6_Role_SignView_Part1)
-	local var_21_1 = GameBranchMgr.instance:Vxax_ActId("Role_SignView_Part2", ActivityEnum.Activity.V2a6_Role_SignView_Part2)
+	local var_15_0 = GameBranchMgr.instance:Vxax_ActId("Special", ActivityEnum.Activity.V2a3_Special)
 
-	table.insert(var_0_2, var_21_0)
-	table.insert(var_0_2, var_21_1)
-end
-
-function var_0_0.onModuleViews(arg_22_0, arg_22_1, arg_22_2)
-	ActivityType101Model.instance:onModuleViews(arg_22_1, arg_22_2)
+	table.insert(var_0_1, var_15_0)
 end
 
 local var_0_5 = false
 
-function var_0_0._initSpecialSign_kAct101RedList(arg_23_0)
+function var_0_0._initLinkageActivity_kAct101RedList(arg_16_0)
 	if var_0_5 then
 		return
 	end
 
 	var_0_5 = true
 
-	local var_23_0 = GameBranchMgr.instance:Vxax_ActId("Special", ActivityEnum.Activity.V2a3_Special)
+	local var_16_0 = GameBranchMgr.instance:Vxax_ActId("LinkageActivity", ActivityEnum.Activity.V2a7_LinkageActivity)
 
-	table.insert(var_0_2, var_23_0)
-end
-
-local var_0_6 = false
-
-function var_0_0._initLinkageActivity_kAct101RedList(arg_24_0)
-	if var_0_6 then
-		return
-	end
-
-	var_0_6 = true
-
-	local var_24_0 = GameBranchMgr.instance:Vxax_ActId("LinkageActivity", ActivityEnum.Activity.V2a7_LinkageActivity)
-
-	table.insert(var_0_2, var_24_0)
+	table.insert(var_0_1, var_16_0)
 end
 
 var_0_0.instance = var_0_0.New()

@@ -259,6 +259,7 @@ function var_0_0.handleJump(arg_16_0)
 				[ViewName.V1a5_HeroGroupFightView] = true,
 				[ViewName.V1a6_HeroGroupFightView] = true,
 				[ViewName.HeroGroupFightWeekwalkView] = true,
+				[ViewName.HeroGroupFightWeekwalk_2View] = true,
 				[ViewName.Season123HeroGroupFightView] = true,
 				[ViewName.Season166HeroGroupFightView] = true,
 				[ViewName.HeroGroupEditView] = true,

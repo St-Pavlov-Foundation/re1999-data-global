@@ -105,4 +105,75 @@ function var_0_0.setEmitterInfo(arg_10_0, arg_10_1, arg_10_2)
 	end
 end
 
+var_0_0.EmitterId = "99998"
+
+function var_0_0.setEmitterEntityMo(arg_11_0, arg_11_1)
+	arg_11_0.emitterMo = arg_11_1
+end
+
+function var_0_0.getEmitterEmitterMo(arg_12_0)
+	return arg_12_0.emitterMo
+end
+
+function var_0_0.addEntityResidualData(arg_13_0, arg_13_1, arg_13_2)
+	arg_13_0.alfResidualDataDict = arg_13_0.alfResidualDataDict or {}
+
+	local var_13_0 = arg_13_0.alfResidualDataDict[arg_13_1]
+
+	if not var_13_0 then
+		var_13_0 = {}
+		arg_13_0.alfResidualDataDict[arg_13_1] = var_13_0
+	end
+
+	table.insert(var_13_0, arg_13_2)
+end
+
+function var_0_0.popEntityResidualData(arg_14_0, arg_14_1)
+	if not arg_14_0.alfResidualDataDict then
+		return
+	end
+
+	local var_14_0 = arg_14_0.alfResidualDataDict[arg_14_1]
+
+	if not var_14_0 then
+		return
+	end
+
+	return table.remove(var_14_0, 1)
+end
+
+function var_0_0.checkCanAddALFResidual(arg_15_0, arg_15_1)
+	arg_15_0:initALFResidualCountDict()
+
+	return (arg_15_0.alfResidualCountDict[arg_15_1] or 0) < FightASFDConfig.instance.alfMaxShowEffectCount
+end
+
+function var_0_0.addALFResidual(arg_16_0, arg_16_1, arg_16_2)
+	if arg_16_2 < 1 then
+		return
+	end
+
+	arg_16_0:initALFResidualCountDict()
+
+	arg_16_2 = (arg_16_0.alfResidualCountDict[arg_16_1] or 0) + arg_16_2
+	arg_16_2 = math.min(FightASFDConfig.instance.alfMaxShowEffectCount, arg_16_2)
+	arg_16_0.alfResidualCountDict[arg_16_1] = arg_16_2
+end
+
+function var_0_0.removeALFResidual(arg_17_0, arg_17_1, arg_17_2)
+	if arg_17_2 < 1 then
+		return
+	end
+
+	arg_17_0:initALFResidualCountDict()
+
+	arg_17_2 = (arg_17_0.alfResidualCountDict[arg_17_1] or 0) - arg_17_2
+	arg_17_2 = math.max(0, arg_17_2)
+	arg_17_0.alfResidualCountDict[arg_17_1] = arg_17_2
+end
+
+function var_0_0.initALFResidualCountDict(arg_18_0)
+	arg_18_0.alfResidualCountDict = arg_18_0.alfResidualCountDict or {}
+end
+
 return var_0_0

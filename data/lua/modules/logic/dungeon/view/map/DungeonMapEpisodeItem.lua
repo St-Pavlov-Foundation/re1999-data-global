@@ -118,6 +118,10 @@ function var_0_0.onUpdateParam(arg_11_0)
 	arg_11_0._txtsectionname.text = arg_11_0._config.name
 	arg_11_0._txtnameen.text = arg_11_0._config.name_En
 
+	if LangSettings.instance:isJp() and arg_11_0._txtnameen.text == "Aleph" then
+		arg_11_0._txtnameen.text = ""
+	end
+
 	local var_11_1 = arg_11_0._config.chainEpisode
 
 	if var_11_1 ~= 0 then

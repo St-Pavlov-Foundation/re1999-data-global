@@ -257,14 +257,25 @@ function var_0_0.refreshHeroGroupInfo(arg_23_0)
 	local var_23_8
 	local var_23_9
 	local var_23_10
+	local var_23_11
 
 	if var_23_5 then
-		var_23_6, var_23_7, var_23_8 = var_23_5:isHeroGroupLock(var_23_2, var_23_4)
-		var_23_9, var_23_10 = var_23_5:getBanHeroAndBoss(var_23_2, var_23_3, var_23_4)
+		local var_23_12, var_23_13 = var_23_5:isHeroGroupLock(var_23_2, var_23_4)
+
+		var_23_6 = var_23_12
+
+		if var_23_13 then
+			var_23_7 = var_23_13.heroIds
+			var_23_8 = var_23_13.assistBossId
+			var_23_9 = var_23_13.equipUids
+		end
+
+		var_23_10, var_23_11 = var_23_5:getBanHeroAndBoss(var_23_2, var_23_3, var_23_4)
 	end
 
 	arg_23_0.fightParam.isHeroGroupLock = var_23_6
 	arg_23_0.fightParam.heros = var_23_7
+	arg_23_0.fightParam.equipUids = var_23_9
 	arg_23_0.fightParam.herosDict = {}
 
 	if var_23_7 then
@@ -274,8 +285,8 @@ function var_0_0.refreshHeroGroupInfo(arg_23_0)
 	end
 
 	arg_23_0.fightParam.assistBoss = var_23_8
-	arg_23_0.fightParam.banHeroDict = var_23_9
-	arg_23_0.fightParam.banAssistBossDict = var_23_10
+	arg_23_0.fightParam.banHeroDict = var_23_10
+	arg_23_0.fightParam.banAssistBossDict = var_23_11
 end
 
 function var_0_0.getRecordFightParam(arg_24_0)

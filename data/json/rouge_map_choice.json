@@ -1,0 +1,57 @@
+[
+  {
+    "layerId": 111,
+    "groupId": 1001,
+    "dropId": 99999999
+  },
+  {
+    "layerId": 121,
+    "groupId": 1001,
+    "dropId": 99999999
+  },
+  {
+    "layerId": 122,
+    "groupId": 1001,
+    "dropId": 99999999
+  },
+  {
+    "layerId": 131,
+    "groupId": 1001,
+    "dropId": 99999999
+  },
+  {
+    "layerId": 132,
+    "groupId": 1001,
+    "dropId": 99999999
+  },
+  {
+    "layerId": 141,
+    "groupId": 1001,
+    "dropId": 99999999
+  },
+  {
+    "layerId": 142,
+    "groupId": 1001,
+    "dropId": 99999999
+  },
+  {
+    "layerId": 151,
+    "groupId": 1001,
+    "dropId": 99999999
+  },
+  {
+    "layerId": 152,
+    "groupId": 1001,
+    "dropId": 99999999
+  },
+  {
+    "layerId": 153,
+    "groupId": 1001,
+    "dropId": 99999999
+  },
+  {
+    "layerId": 154,
+    "groupId": 1001,
+    "dropId": 99999999
+  }
+]

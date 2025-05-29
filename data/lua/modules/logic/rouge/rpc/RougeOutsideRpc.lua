@@ -7,7 +7,7 @@ function var_0_0.sendGetRougeOutSideInfoRequest(arg_1_0, arg_1_1, arg_1_2, arg_1
 
 	var_1_0.season = arg_1_1
 
-	arg_1_0:sendMsg(var_1_0, arg_1_2, arg_1_3)
+	return arg_1_0:sendMsg(var_1_0, arg_1_2, arg_1_3)
 end
 
 function var_0_0.onReceiveGetRougeOutsideInfoReply(arg_2_0, arg_2_1, arg_2_2)

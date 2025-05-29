@@ -164,18 +164,27 @@ function var_0_0.pickAllUIPreloadRes(arg_12_0)
 	local var_12_1 = {}
 	local var_12_2 = SummonMainModel.getValidPools()
 
-	for iter_12_0, iter_12_1 in ipairs(var_12_2) do
-		local var_12_3 = SummonMainModel.instance:getADPageTabIndexForUI(iter_12_1)
+	for iter_12_0 = 1, tabletool.len(var_12_2) do
+		local var_12_3 = var_12_2[iter_12_0]
+		local var_12_4 = var_12_3.customClz
 
-		if var_12_3 then
-			local var_12_4 = SummonMainModel.instance:getUIClassDef(var_12_3)
+		if not string.nilorempty(var_12_4) then
+			local var_12_5 = SummonCharacterProbUpPreloadConfig.getPreLoadListByName(var_12_4)
 
-			if var_12_4 and var_12_4.preloadList then
-				for iter_12_2, iter_12_3 in ipairs(var_12_4.preloadList) do
-					if not var_12_0[iter_12_3] then
-						table.insert(var_12_1, iter_12_3)
+			if var_12_5 == nil then
+				local var_12_6 = SummonMainModel.instance:getADPageTabIndexForUI(var_12_3)
 
-						var_12_0[iter_12_3] = true
+				if var_12_6 then
+					var_12_5 = SummonMainModel.instance:getUIClassDef(var_12_6).preloadList
+				end
+			end
+
+			if var_12_5 ~= nil then
+				for iter_12_1, iter_12_2 in ipairs(var_12_5) do
+					if not var_12_0[iter_12_2] then
+						table.insert(var_12_1, iter_12_2)
+
+						var_12_0[iter_12_2] = true
 					end
 				end
 			end
@@ -192,22 +201,31 @@ function var_0_0.getCurPoolPreloadRes(arg_13_0)
 	local var_13_3 = SummonConfig.instance:getSummonPool(var_13_2)
 
 	if var_13_3 then
-		local var_13_4 = SummonMainModel.getADPageTabIndex(var_13_3)
-		local var_13_5 = SummonMainModel.defaultUIClzMap[var_13_4]
-		local var_13_6
+		local var_13_4 = var_13_3.customClz
 
-		if not string.nilorempty(var_13_3.customClz) then
-			var_13_6 = _G[var_13_3.customClz]
-		end
+		if not string.nilorempty(var_13_4) then
+			local var_13_5 = SummonCharacterProbUpPreloadConfig.getPreLoadListByName(var_13_4)
 
-		var_13_6 = var_13_6 or var_13_5
+			if var_13_5 == nil then
+				local var_13_6 = SummonMainModel.getADPageTabIndex(var_13_3)
+				local var_13_7 = SummonMainModel.defaultUIClzMap[var_13_6]
+				local var_13_8
 
-		if var_13_6 and var_13_6.preloadList then
-			for iter_13_0, iter_13_1 in ipairs(var_13_6.preloadList) do
-				if not var_13_0[iter_13_1] then
-					table.insert(var_13_1, iter_13_1)
+				if not string.nilorempty(var_13_3.customClz) then
+					var_13_8 = _G[var_13_3.customClz]
+				end
 
-					var_13_0[iter_13_1] = true
+				var_13_8 = var_13_8 or var_13_7
+				var_13_5 = var_13_8.preloadList
+			end
+
+			if var_13_5 ~= nil then
+				for iter_13_0, iter_13_1 in ipairs(var_13_5) do
+					if not var_13_0[iter_13_1] then
+						table.insert(var_13_1, iter_13_1)
+
+						var_13_0[iter_13_1] = true
+					end
 				end
 			end
 		end

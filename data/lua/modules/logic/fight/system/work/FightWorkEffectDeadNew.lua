@@ -188,7 +188,7 @@ function var_0_0._deadContinue(arg_9_0)
 		local var_9_1 = arg_9_0._deadEntity.spine:getSkeletonAnim()
 
 		if gohelper.isNil(var_9_1) then
-			logError("skeleton anim is nil " .. arg_9_0._deadEntity.id)
+			-- block empty
 		end
 
 		local var_9_2 = var_9_1 and var_9_1:GetCurAnimDuration() or 0.01

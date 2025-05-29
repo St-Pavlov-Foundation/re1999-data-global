@@ -3465,7 +3465,7 @@
   },
   {
     "key": "language_10000867",
-    "content": "abandoned"
+    "content": "Discard"
   },
   {
     "key": "language_10000868",
@@ -11281,7 +11281,7 @@
   },
   {
     "key": "language_10002822",
-    "content": "Use Burning Light to set the house on fire."
+    "content": "Use Fuego Burn to set the house on fire."
   },
   {
     "key": "language_10002823",
@@ -11313,7 +11313,7 @@
   },
   {
     "key": "language_10002830",
-    "content": "Use Burning Light to light the fireplace."
+    "content": "Use Fuego Burn to light the fireplace."
   },
   {
     "key": "language_10002831",
@@ -57649,7 +57649,7 @@
   },
   {
     "key": "language_10014415",
-    "content": "Justice"
+    "content": "Iron Justice"
   },
   {
     "key": "language_10014416",
@@ -91797,7 +91797,7 @@
   },
   {
     "key": "language_10022952",
-    "content": "Bloodthirst Reflux"
+    "content": "Bloodspirit Reflux"
   },
   {
     "key": "language_10022953",
@@ -93265,7 +93265,7 @@
   },
   {
     "key": "language_10023319",
-    "content": "At the end of the round, inflicts 1 stack of [Bloodthirst] on the enemy in character position #1."
+    "content": "At the end of the round, inflicts 1 stack of [Bloodspirit] on the enemy in character position #1."
   },
   {
     "key": "language_10023320",
@@ -103693,7 +103693,7 @@
   },
   {
     "key": "language_10025926",
-    "content": "DMG Taken Reduction +30%. After being attacked, cast a rank 1 incantation [Carnal Hanging] on the source of damage (-1 stack after being attacked)."
+    "content": "DMG Taken Reduction +30%. After being attacked, cast a rank 1 incantation Carnal Hanging on the source of damage (-1 stack after being attacked)."
   },
   {
     "key": "language_10025927",
@@ -104429,7 +104429,7 @@
   },
   {
     "key": "language_10026110",
-    "content": "Reality DEF +30, Mental DEF +30%."
+    "content": "Reality DEF +30%, Mental DEF +30%."
   },
   {
     "key": "language_10026111",
@@ -104709,7 +104709,7 @@
   },
   {
     "key": "language_10026180",
-    "content": "Characters affected by Disrupted cannot be deployed!"
+    "content": "Cannot deploy Disrupted characters!"
   },
   {
     "key": "language_10026181",
@@ -105797,7 +105797,7 @@
   },
   {
     "key": "language_10026452",
-    "content": "Defensive Posture"
+    "content": "Defensive Stance"
   },
   {
     "key": "language_10026453",
@@ -107657,7 +107657,7 @@
   },
   {
     "key": "language_10026917",
-    "content": "At the start of the round, inflicts [Bloodthirst<id:102411208>] on the enemy with the highest ATK for 1 round."
+    "content": "At the start of the round, inflicts [Bloodspirit<id:102411208>] on the enemy with the highest ATK for 1 round."
   },
   {
     "key": "language_10026918",
@@ -111809,7 +111809,7 @@
   },
   {
     "key": "language_10027955",
-    "content": "Alone and Helpless"
+    "content": "Alone and Aidless"
   },
   {
     "key": "language_10027956",
@@ -113449,15 +113449,15 @@
   },
   {
     "key": "language_10028365",
-    "content": "1-target buff. Grants [Guardian's Blessing I<id:0>] to the target for 1 round; repeated applications will extend its duration.\nIf {name} is in the [Arise, Qiangliang!<id:0>] status, actively casting this incantation grants 1 additional [Peace Talon<id:0>]."
+    "content": "1-target buff. Grants [Guardian's Blessing I<id:0>] to the target for 1 round; repeated applications will extend its duration.\nIf Liang Yue is in the [Arise, Qiangliang!<id:0>] status, actively casting this incantation grants 1 additional [Peace Talon<id:0>]."
   },
   {
     "key": "language_10028366",
-    "content": "1-target buff. Grants [Guardian's Blessing II<id:0>] to the target for 1 round; repeated applications will extend its duration.\nIf {name} is in the [Arise, Qiangliang!<id:0>] status, actively casting this incantation grants 1 additional [Peace Talon<id:0>]."
+    "content": "1-target buff. Grants [Guardian's Blessing II<id:0>] to the target for 1 round; repeated applications will extend its duration.\nIf Liang Yue is in the [Arise, Qiangliang!<id:0>] status, actively casting this incantation grants 1 additional [Peace Talon<id:0>]."
   },
   {
     "key": "language_10028367",
-    "content": "1-target buff. Grants [Guardian's Blessing III<id:0>] to the target for 1 round; repeated applications will extend its duration.\nIf {name} is in the [Arise, Qiangliang!<id:0>] status, actively casting this incantation grants 1 additional [Peace Talon<id:0>]."
+    "content": "1-target buff. Grants [Guardian's Blessing III<id:0>] to the target for 1 round; repeated applications will extend its duration.\nIf Liang Yue is in the [Arise, Qiangliang!<id:0>] status, actively casting this incantation grants 1 additional [Peace Talon<id:0>]."
   },
   {
     "key": "language_10028368",
@@ -113509,15 +113509,15 @@
   },
   {
     "key": "language_10028380",
-    "content": "1-target buff. Grants [Guardian's Blessing I<id:1>] to the target for 1 round; repeated applications will extend its duration.\nIf {name} is in the [Arise, Qiangliang!<id:1>] status, actively casting this incantation grants 1 additional [Peace Talon<id:1>]."
+    "content": "1-target buff. Grants [Guardian's Blessing I<id:1>] to the target for 1 round; repeated applications will extend its duration.\nIf Liang Yue is in the [Arise, Qiangliang!<id:1>] status, actively casting this incantation grants 1 additional [Peace Talon<id:1>]."
   },
   {
     "key": "language_10028381",
-    "content": "1-target buff. Grants [Guardian's Blessing II<id:1>] to the target for 1 round; repeated applications will extend its duration.\nIf {name} is in the [Arise, Qiangliang!<id:1>] status, actively casting this incantation grants 1 additional [Peace Talon<id:1>]."
+    "content": "1-target buff. Grants [Guardian's Blessing II<id:1>] to the target for 1 round; repeated applications will extend its duration.\nIf Liang Yue is in the [Arise, Qiangliang!<id:1>] status, actively casting this incantation grants 1 additional [Peace Talon<id:1>]."
   },
   {
     "key": "language_10028382",
-    "content": "1-target buff. Grants [Guardian's Blessing III<id:1>] to the target for 1 round; repeated applications will extend its duration.\nIf {name} is in the [Arise, Qiangliang!<id:1>] status, actively casting this incantation grants 1 additional [Peace Talon<id:1>]."
+    "content": "1-target buff. Grants [Guardian's Blessing III<id:1>] to the target for 1 round; repeated applications will extend its duration.\nIf Liang Yue is in the [Arise, Qiangliang!<id:1>] status, actively casting this incantation grants 1 additional [Peace Talon<id:1>]."
   },
   {
     "key": "language_10028383",
@@ -113573,15 +113573,15 @@
   },
   {
     "key": "language_10028396",
-    "content": "1-target buff. Grants [Guardian's Blessing I<id:4>] to the target for 1 round; repeated applications will extend its duration.\nIf {name} is in the [Arise, Qiangliang!<id:4>] status, actively casting this incantation grants 1 additional [Peace Talon<id:4>]."
+    "content": "1-target buff. Grants [Guardian's Blessing I<id:4>] to the target for 1 round; repeated applications will extend its duration.\nIf Liang Yue is in the [Arise, Qiangliang!<id:4>] status, actively casting this incantation grants 1 additional [Peace Talon<id:4>]."
   },
   {
     "key": "language_10028397",
-    "content": "1-target buff. Grants [Guardian's Blessing II<id:4>] to the target for 1 round; repeated applications will extend its duration.\nIf {name} is in the [Arise, Qiangliang!<id:4>] status, actively casting this incantation grants 1 additional [Peace Talon<id:4>]."
+    "content": "1-target buff. Grants [Guardian's Blessing II<id:4>] to the target for 1 round; repeated applications will extend its duration.\nIf Liang Yue is in the [Arise, Qiangliang!<id:4>] status, actively casting this incantation grants 1 additional [Peace Talon<id:4>]."
   },
   {
     "key": "language_10028398",
-    "content": "1-target buff. Grants [Guardian's Blessing III<id:4>] to the target for 1 round; repeated applications will extend its duration.\nIf {name} is in the [Arise, Qiangliang!<id:4>] status, actively casting this incantation grants 1 additional [Peace Talon<id:4>]."
+    "content": "1-target buff. Grants [Guardian's Blessing III<id:4>] to the target for 1 round; repeated applications will extend its duration.\nIf Liang Yue is in the [Arise, Qiangliang!<id:4>] status, actively casting this incantation grants 1 additional [Peace Talon<id:4>]."
   },
   {
     "key": "language_10028399",
@@ -114077,7 +114077,7 @@
   },
   {
     "key": "language_10028522",
-    "content": "Mass attack. Deals 300% Reality DMG; if this unit is in the [Extra Action DMG Up] status, cast an additional Efficient Execution 1 time."
+    "content": "Mass attack. Deals 300% Reality DMG; if this unit is in the [Extra Action DMG Up] status, cast an additional Decisive Execution 1 time."
   },
   {
     "key": "language_10028523",
@@ -114669,7 +114669,7 @@
   },
   {
     "key": "language_10028670",
-    "content": "DMG Heal -1%. After reaching 10 stacks, converts to [\"This Is Lit!\"] ([Burnt Scent] lasts for 1 round)."
+    "content": "DMG Heal -1%. After reaching 10 stacks, converts to [\"This Is Lit!\"] (Burnt Aroma lasts for 1 round)."
   },
   {
     "key": "language_10028671",
@@ -116509,7 +116509,4263 @@
   },
   {
     "key": "language_10029130",
-    "content": "An invitation. Will randomly invite a 6-star character to visit.\nIf you already own all 6-star characters within the selection pool (as of Version 2.2, excluding limited characters), you may select one 6-star character of your choice."
+    "content": "An invitation letter. Invites a random 6-star character to join you.\nIf you already own all 6-star characters in the selection pool (as of Version 2.2, excluding limited characters), you may choose any 6-star character you want."
+  },
+  {
+    "key": "language_10029131",
+    "content": "Gift from the Cells"
+  },
+  {
+    "key": "language_10029132",
+    "content": "Gift from the Poets"
+  },
+  {
+    "key": "language_10029133",
+    "content": "Souvenir of Imagination"
+  },
+  {
+    "key": "language_10029134",
+    "content": "Souvenir of Literature"
+  },
+  {
+    "key": "language_10029135",
+    "content": "Folie et Déraison"
+  },
+  {
+    "key": "language_10029136",
+    "content": "Limen"
+  },
+  {
+    "key": "language_10029137",
+    "content": "Comala's Callers"
+  },
+  {
+    "key": "language_10029138",
+    "content": "Circular Labyrinth"
+  },
+  {
+    "key": "language_10029139",
+    "content": "Gradual Understanding"
+  },
+  {
+    "key": "language_10029140",
+    "content": "Parallel Narratives"
+  },
+  {
+    "key": "language_10029141",
+    "content": "Genius Editor"
+  },
+  {
+    "key": "language_10029142",
+    "content": "A Direct Line from Prison"
+  },
+  {
+    "key": "language_10029143",
+    "content": "A Good Cellmate"
+  },
+  {
+    "key": "language_10029144",
+    "content": "Layered Metaphors"
+  },
+  {
+    "key": "language_10029145",
+    "content": "Goodbye, Jones"
+  },
+  {
+    "key": "language_10029146",
+    "content": "Literary Boom"
+  },
+  {
+    "key": "language_10029147",
+    "content": "Lucid Disorientation"
+  },
+  {
+    "key": "language_10029148",
+    "content": "Central Tower of the Panopticon"
+  },
+  {
+    "key": "language_10029149",
+    "content": "Aleph"
+  },
+  {
+    "key": "language_10029150",
+    "content": "A doctor whose medical methods embody a classic, systematic power model.\nThis character has balanced attributes, capable of damaging the opponent while enhancing himself with the flexible use of different cards."
+  },
+  {
+    "key": "language_10029151",
+    "content": "An alchemist who brewed himself a fate of endless, relentless cycles.\nThis character excels at efficiently refreshing dice and cards."
+  },
+  {
+    "key": "language_10029152",
+    "content": "A poet whose tongue isn't eloquent enough to express the ever-flowing ideas in his mind.\nThis character specializes in dealing damage through his mastery of Eureka."
+  },
+  {
+    "key": "language_10029153",
+    "content": "A philosopher who strives to extract a unified image from the memory of all things.\nThis character can enhance card effects by influencing dice values."
+  },
+  {
+    "key": "language_10029154",
+    "content": "Step: Excision"
+  },
+  {
+    "key": "language_10029155",
+    "content": "Deal DMG based on the number of Memory Dice."
+  },
+  {
+    "key": "language_10029156",
+    "content": "Step: Suture"
+  },
+  {
+    "key": "language_10029157",
+    "content": "Gain Armor based on the number of Memory Dice."
+  },
+  {
+    "key": "language_10029158",
+    "content": "Step: Diagnosis"
+  },
+  {
+    "key": "language_10029159",
+    "content": "Gain Eureka based on the number of Memory Dice."
+  },
+  {
+    "key": "language_10029160",
+    "content": "Anesthetic Treatment"
+  },
+  {
+    "key": "language_10029161",
+    "content": "Deal 8 DMG.\nInflict 2 stacks of [Agony].\n[Agony]: DMG Taken +50%."
+  },
+  {
+    "key": "language_10029162",
+    "content": "Intense Treatment"
+  },
+  {
+    "key": "language_10029163",
+    "content": "Deal 32 DMG."
+  },
+  {
+    "key": "language_10029164",
+    "content": "A Question"
+  },
+  {
+    "key": "language_10029165",
+    "content": "Deal 8 DMG.\nGain 1 stack of [Prowess].\n[Prowess]: DMG Dealt +1."
+  },
+  {
+    "key": "language_10029166",
+    "content": "Gain 7 Armor.\nGain 1 stack of [Perceptive].\n[Perceptive]: Armor Gained +1."
+  },
+  {
+    "key": "language_10029167",
+    "content": "A Singular Pursuit"
+  },
+  {
+    "key": "language_10029168",
+    "content": "Gain 2 Eureka."
+  },
+  {
+    "key": "language_10029169",
+    "content": "A New Reality"
+  },
+  {
+    "key": "language_10029170",
+    "content": "Gain 1 stack of [Association].\n[Association]: When playing a response card, add and roll 1 Short-term Memory Die."
+  },
+  {
+    "key": "language_10029171",
+    "content": "A Solutionless Solution"
+  },
+  {
+    "key": "language_10029172",
+    "content": "Max Eureka -1, down to a minimum of 1 Max Eureka."
+  },
+  {
+    "key": "language_10029173",
+    "content": "Commentator"
+  },
+  {
+    "key": "language_10029174",
+    "content": "Deal 8 DMG.\nEureka -1."
+  },
+  {
+    "key": "language_10029175",
+    "content": "Reader"
+  },
+  {
+    "key": "language_10029176",
+    "content": "Gain 7 Armor.\nEureka -1."
+  },
+  {
+    "key": "language_10029177",
+    "content": "Creator"
+  },
+  {
+    "key": "language_10029178",
+    "content": "Gain 3 Eureka."
+  },
+  {
+    "key": "language_10029179",
+    "content": "Further Truths"
+  },
+  {
+    "key": "language_10029180",
+    "content": "Gain 1 stack of [Musings].\n[Musings]: When Eureka changes, deal 3 DMG to a random enemy and gain 2 Armor."
+  },
+  {
+    "key": "language_10029181",
+    "content": "Transcribing the Ideal"
+  },
+  {
+    "key": "language_10029182",
+    "content": "Double the current Eureka."
+  },
+  {
+    "key": "language_10029183",
+    "content": "Symbol of History"
+  },
+  {
+    "key": "language_10029184",
+    "content": "Deal DMG based on the values of the dice consumed."
+  },
+  {
+    "key": "language_10029185",
+    "content": "Image of an Era"
+  },
+  {
+    "key": "language_10029186",
+    "content": "Gain Armor based on the values of the dice consumed."
+  },
+  {
+    "key": "language_10029187",
+    "content": "Introspection"
+  },
+  {
+    "key": "language_10029188",
+    "content": "Gain 1 stack of [Ideaphoria].\n[Ideaphoria]: When rolling dice, Eureka +1."
+  },
+  {
+    "key": "language_10029189",
+    "content": "Questioning"
+  },
+  {
+    "key": "language_10029190",
+    "content": "Add and roll 1 Short-term Memory Die."
+  },
+  {
+    "key": "language_10029191",
+    "content": "Expectation"
+  },
+  {
+    "key": "language_10029192",
+    "content": "Gain [Vision] based on the number of Memory Dice.\n[Vision]: At the start of the round, add and roll 1 Short-term Memory Die."
+  },
+  {
+    "key": "language_10029193",
+    "content": "Surgical Preparation"
+  },
+  {
+    "key": "language_10029194",
+    "content": "Spend all Eureka, gain 1 stack of [Profoundness].\n[Profoundness]: DMG Dealt +100%."
+  },
+  {
+    "key": "language_10029195",
+    "content": "One of the Endless Loops"
+  },
+  {
+    "key": "language_10029196",
+    "content": "Spend all Eureka to refresh all cast chances on response cards."
+  },
+  {
+    "key": "language_10029197",
+    "content": "Impromptu Piece"
+  },
+  {
+    "key": "language_10029198",
+    "content": "At the end of the round, deal 3 DMG to a random enemy, repeats X times, where X = current Eureka.\nAt the end of the round, Eureka -1.\nWhen gaining excess Eureka, deal 8 DMG to a random enemy for each excess Eureka gained."
+  },
+  {
+    "key": "language_10029199",
+    "content": "Ideas as Currency"
+  },
+  {
+    "key": "language_10029200",
+    "content": "When calculating response cards that consume dice values, add the current Eureka to the value of each consumed die.\nWhen playing a response card, Eureka -1."
+  },
+  {
+    "key": "language_10029201",
+    "content": "DMG Taken +50%."
+  },
+  {
+    "key": "language_10029202",
+    "content": "DMG Dealt +100%."
+  },
+  {
+    "key": "language_10029203",
+    "content": "DMG Dealt +1."
+  },
+  {
+    "key": "language_10029204",
+    "content": "Gain 1 additional Armor when gaining Armor."
+  },
+  {
+    "key": "language_10029205",
+    "content": "At the end of the round, gain 1 stack of [Prowess].\n[Prowess]: DMG Dealt +1."
+  },
+  {
+    "key": "language_10029206",
+    "content": "Each instance of damage taken is reduced to 1."
+  },
+  {
+    "key": "language_10029207",
+    "content": "Don't Show"
+  },
+  {
+    "key": "language_10029208",
+    "content": "During the starting roll, add and roll 1 additional Short-term Memory Die."
+  },
+  {
+    "key": "language_10029209",
+    "content": "When Eureka changes, deal 3 DMG to a random enemy and gain 2 Armor for self."
+  },
+  {
+    "key": "language_10029210",
+    "content": "When Eureka changes, gain 2 Armor for self."
+  },
+  {
+    "key": "language_10029211",
+    "content": "Cannot use attack-type response cards."
+  },
+  {
+    "key": "language_10029212",
+    "content": "DMG Dealt -50%."
+  },
+  {
+    "key": "language_10029213",
+    "content": "On death, deal 5 DMG to an enemy."
+  },
+  {
+    "key": "language_10029214",
+    "content": "When an enemy plays an attack-type response card, gain 2 stacks of [Prowess] for self.\n[Prowess]: DMG Dealt +1."
+  },
+  {
+    "key": "language_10029215",
+    "content": "When an enemy plays a defense-type response card, gain 2 stacks of [Prowess] for self.\n[Prowess]: DMG Dealt +1."
+  },
+  {
+    "key": "language_10029216",
+    "content": "1 Memory Die can't be rerolled."
+  },
+  {
+    "key": "language_10029217",
+    "content": "1 Memory Die can't be rerolled or used."
+  },
+  {
+    "key": "language_10029218",
+    "content": "When taking damage, deal 2 DMG to a random enemy."
+  },
+  {
+    "key": "language_10029219",
+    "content": "When playing a response card, gain 1 stack of [Restriction].\n[Restriction]: 1 Memory Die can't be rerolled."
+  },
+  {
+    "key": "language_10029220",
+    "content": "Can't use defense-type response cards."
+  },
+  {
+    "key": "language_10029221",
+    "content": "Can't use Eureka-type response cards."
+  },
+  {
+    "key": "language_10029222",
+    "content": "At the start of the action phase, Eureka -1."
+  },
+  {
+    "key": "language_10029223",
+    "content": "When rolling dice, gain 1 stack of [Restriction].\n[Restriction]: 1 Memory Die can't be rerolled."
+  },
+  {
+    "key": "language_10029224",
+    "content": "When an enemy rolls dice, deal 1 DMG."
+  },
+  {
+    "key": "language_10029225",
+    "content": "When rolling dice, Eureka +1."
+  },
+  {
+    "key": "language_10029226",
+    "content": "When gaining excess Eureka, deal 8 DMG to a random enemy."
+  },
+  {
+    "key": "language_10029227",
+    "content": "When playing a response card, add and roll 1 Short-term Memory Die."
+  },
+  {
+    "key": "language_10029228",
+    "content": "At the end of the round, Eureka -1."
+  },
+  {
+    "key": "language_10029229",
+    "content": "When playing a card, Eureka -1."
+  },
+  {
+    "key": "language_10029230",
+    "content": "At the end of the round, deal 3 DMG."
+  },
+  {
+    "key": "language_10029231",
+    "content": "When playing an attack card, gain 1 stack of [Prowess].\n[Prowess]: DMG Dealt +1."
+  },
+  {
+    "key": "language_10029232",
+    "content": "When playing a defense card, gain 1 stack of [Perceptive].\n[Perceptive]: Armor Gained +1."
+  },
+  {
+    "key": "language_10029233",
+    "content": "A Circular Crack"
+  },
+  {
+    "key": "language_10029234",
+    "content": "A Circular Crack: Phototaxis Imaging"
+  },
+  {
+    "key": "language_10029235",
+    "content": "The Epilogue of Dreams"
+  },
+  {
+    "key": "language_10029236",
+    "content": "The Die of Babylon"
+  },
+  {
+    "key": "language_10029237",
+    "content": "Notes of the Fool"
+  },
+  {
+    "key": "language_10029238",
+    "content": "A luggage tag that captures the murmurs of geniuses, fools, and madmen and stores them in your suitcase.\nUsed to change the appearance of your Travel Scrapbook."
+  },
+  {
+    "key": "language_10029239",
+    "content": "Artifice of Aleph"
+  },
+  {
+    "key": "language_10029240",
+    "content": "Artifice of Recoleta"
+  },
+  {
+    "key": "language_10029241",
+    "content": "A magnetic medium with a recorded memory. \"Folie et Déraison\" has been added to the Mood Switch."
+  },
+  {
+    "key": "language_10029242",
+    "content": "A magnetic medium with a recorded memory. \"Limen\" has been added to the Mood Switch."
+  },
+  {
+    "key": "language_10029243",
+    "content": "Comala's Callers"
+  },
+  {
+    "key": "language_10029244",
+    "content": "A magnetic medium with a recorded memory. \"Comala's Callers\" has been added to the Mood Switch."
+  },
+  {
+    "key": "language_10029245",
+    "content": "Luminite Ore"
+  },
+  {
+    "key": "language_10029246",
+    "content": "A mysterious ore, gently nestled in clay. Used in Insight and Resonance rituals for characters. Also usable as a material for crafting advanced materials."
+  },
+  {
+    "key": "language_10029247",
+    "content": "Red Lacquer Slab"
+  },
+  {
+    "key": "language_10029248",
+    "content": "Clay like this was never meant to be revered—but this one has been blessed. Used in Insight and Resonance rituals for characters. Also used as the material for crafting advanced materials."
+  },
+  {
+    "key": "language_10029249",
+    "content": "Emerald Slate"
+  },
+  {
+    "key": "language_10029250",
+    "content": "Each inscription on it holds profound wisdom. Used in Insight and Resonance rituals for characters. Also usable as a material for crafting advanced materials."
+  },
+  {
+    "key": "language_10029251",
+    "content": "Wealth Indicator"
+  },
+  {
+    "key": "language_10029252",
+    "content": "A symbol of value in civilized society, now only used for tracking changes in numbers. Can be exchanged at a special counter."
+  },
+  {
+    "key": "language_10029253",
+    "content": "Used to decode intelligence in [Moth Code].\nCan only be used during the [Phototaxis in Study: Beyond the Boundaries] event."
+  },
+  {
+    "key": "language_10029254",
+    "content": "DNT"
+  },
+  {
+    "key": "language_10029255",
+    "content": "The Answering Machine, the Butterfly, and the Literary Critic"
+  },
+  {
+    "key": "language_10029256",
+    "content": "Ruinas Gloriosas y Directrices de Metáforas"
+  },
+  {
+    "key": "language_10029257",
+    "content": "The Last Film"
+  },
+  {
+    "key": "language_10029258",
+    "content": "Prologue"
+  },
+  {
+    "key": "language_10029259",
+    "content": "More than Circles"
+  },
+  {
+    "key": "language_10029260",
+    "content": "The Place That Time Forgot"
+  },
+  {
+    "key": "language_10029261",
+    "content": "A Latin American Fable"
+  },
+  {
+    "key": "language_10029262",
+    "content": "Shadows of the Living"
+  },
+  {
+    "key": "language_10029263",
+    "content": "Passion and Delirium"
+  },
+  {
+    "key": "language_10029264",
+    "content": "The Spider's Web"
+  },
+  {
+    "key": "language_10029265",
+    "content": "The Central Tower"
+  },
+  {
+    "key": "language_10029266",
+    "content": "The Ant Mill"
+  },
+  {
+    "key": "language_10029267",
+    "content": "Soothsayer, Worldmaker"
+  },
+  {
+    "key": "language_10029268",
+    "content": "Behind the Operating Curtain"
+  },
+  {
+    "key": "language_10029269",
+    "content": "Master of the Labyrinth"
+  },
+  {
+    "key": "language_10029270",
+    "content": "The Mask in the Mirror"
+  },
+  {
+    "key": "language_10029271",
+    "content": "The Boundary of Fiction"
+  },
+  {
+    "key": "language_10029272",
+    "content": "Ghosts of the Past"
+  },
+  {
+    "key": "language_10029273",
+    "content": "In Praise of Folly"
+  },
+  {
+    "key": "language_10029274",
+    "content": "Aspects of Madness"
+  },
+  {
+    "key": "language_10029275",
+    "content": "In the Place of My Ashes"
+  },
+  {
+    "key": "language_10029276",
+    "content": "New Limbo"
+  },
+  {
+    "key": "language_10029277",
+    "content": "A Cry Across Time"
+  },
+  {
+    "key": "language_10029278",
+    "content": "Crescendo"
+  },
+  {
+    "key": "language_10029279",
+    "content": "Goddess of the Silver Screen"
+  },
+  {
+    "key": "language_10029280",
+    "content": "The World She Longs For"
+  },
+  {
+    "key": "language_10029281",
+    "content": "A Perfect Double"
+  },
+  {
+    "key": "language_10029282",
+    "content": "A Beautiful Day"
+  },
+  {
+    "key": "language_10029283",
+    "content": "The Empty Box"
+  },
+  {
+    "key": "language_10029284",
+    "content": "Manifest Analysis 2"
+  },
+  {
+    "key": "language_10029285",
+    "content": "Hymn of the Foam"
+  },
+  {
+    "key": "language_10029286",
+    "content": "She Who Seeks Miracles"
+  },
+  {
+    "key": "language_10029287",
+    "content": "In her dreams, she still sees herself as powerless, watching as her companions vanish into nothingness.\nWhen she wakes, her steps become ever more resolute."
+  },
+  {
+    "key": "language_10029288",
+    "content": "Mellow Munchalo"
+  },
+  {
+    "key": "language_10029289",
+    "content": "A critter that's always chewing, chewing, chewing.\nIts appetite and digestion skills have made it an indispensable resident at the Critter Center."
+  },
+  {
+    "key": "language_10029290",
+    "content": "Justice Detective C07"
+  },
+  {
+    "key": "language_10029291",
+    "content": "A girl imprisoned by the past.\n\"The ending ... it shouldn't be like this.\""
+  },
+  {
+    "key": "language_10029292",
+    "content": "Phantom of Justice"
+  },
+  {
+    "key": "language_10029293",
+    "content": "No thoughts, no consciousness—just an echo of someone's obsession with \"justice,\" trailing her every step."
+  },
+  {
+    "key": "language_10029294",
+    "content": "Hooded Girl"
+  },
+  {
+    "key": "language_10029295",
+    "content": "The evil of her homeland has been vanquished.\nWhat follows is neither the emptiness of a fulfilled wish nor the freedom of broken shackles—only the duty to keep moving forward."
+  },
+  {
+    "key": "language_10029296",
+    "content": "Spring · Mavka"
+  },
+  {
+    "key": "language_10029297",
+    "content": "Summer · Mavka"
+  },
+  {
+    "key": "language_10029298",
+    "content": "Autumn · Mavka"
+  },
+  {
+    "key": "language_10029299",
+    "content": "Winter · Mavka"
+  },
+  {
+    "key": "language_10029300",
+    "content": "Number of Reconciliation"
+  },
+  {
+    "key": "language_10029301",
+    "content": "A number belonging to the mediator of reconciliation.\nMoving through the fractures between differing ideologies, coordinating individuals with opposing views, each looking toward their own distant end."
+  },
+  {
+    "key": "language_10029302",
+    "content": "Wary Munchalo"
+  },
+  {
+    "key": "language_10029303",
+    "content": "Queen of Tides"
+  },
+  {
+    "key": "language_10029304",
+    "content": "An immortal with blue blood flowing through her veins.\nIt is said she once made a pact with a mysterious spirit of the ocean, gaining eternal life. As for the price paid—no one knows, and no one cares."
+  },
+  {
+    "key": "language_10029305",
+    "content": "The Idealist"
+  },
+  {
+    "key": "language_10029306",
+    "content": "A prisoner of Comala Prison, host of the literary salon.\nHe pursues a path beyond all else, immersed in literature—within this desolate prison."
+  },
+  {
+    "key": "language_10029307",
+    "content": "Octavia, Prison Poet"
+  },
+  {
+    "key": "language_10029308",
+    "content": "A prisoner of Comala Prison, a member of a rival poetry society.\nShe cherishes the freedom to discuss literature and dedicates herself wholly to it—within this remote prison."
+  },
+  {
+    "key": "language_10029309",
+    "content": "The Physician"
+  },
+  {
+    "key": "language_10029310",
+    "content": "The chief and only doctor of Comala Prison, overseeing its order and everything within.\n\"Even amidst ruins, as long as one finds the path leading to transcendentality, answers will come.\""
+  },
+  {
+    "key": "language_10029311",
+    "content": "Aleph, Ghost of Transcendentality"
+  },
+  {
+    "key": "language_10029312",
+    "content": "A persona born from the \"Tear of Comala,\" manifesting shattered inner turmoil into reality.\nHis original form no longer exists; every reflection in the mirror is a different face, crowding the narrow room like ghosts, whispering hazy truths."
+  },
+  {
+    "key": "language_10029313",
+    "content": "García, Other Self"
+  },
+  {
+    "key": "language_10029314",
+    "content": "A prisoner of Comala Prison, a member of the poetry society.\nThe artistic curator of the prison, a pursuer of irrational fantasies, and the embodiment of the writer's self."
+  },
+  {
+    "key": "language_10029315",
+    "content": "Chest"
+  },
+  {
+    "key": "language_10029316",
+    "content": "A chest filled with supplies."
+  },
+  {
+    "key": "language_10029317",
+    "content": "A chest filled with potions."
+  },
+  {
+    "key": "language_10029318",
+    "content": "A chest filled with medical items."
+  },
+  {
+    "key": "language_10029319",
+    "content": "Ushuaia Gendarme"
+  },
+  {
+    "key": "language_10029320",
+    "content": "A gendarme of Ushuaia. Serious in conduct, strict in his enforcement.\nHaving failed to become a track and field star, he ultimately chose a dull but stable job."
+  },
+  {
+    "key": "language_10029321",
+    "content": "Comala Jailer"
+  },
+  {
+    "key": "language_10029322",
+    "content": "The jailer of Comala Prison, an awakened jaguar.\nNo one knows how she became a jailer. All she knows is that it is her duty is to maintain order in the prison."
+  },
+  {
+    "key": "language_10029323",
+    "content": "A wooden directional sign.\nTurn left ahead. The infirmary is right there."
+  },
+  {
+    "key": "language_10029324",
+    "content": "A wooden directional sign.\nThe jailer says the path to the right is off-limits. What could be hiding there?"
+  },
+  {
+    "key": "language_10029325",
+    "content": "A wooden directional sign.\nThe exit is just ahead. But should you trust a prison signpost?"
+  },
+  {
+    "key": "language_10029326",
+    "content": "Comala Prisoner"
+  },
+  {
+    "key": "language_10029327",
+    "content": "A prisoner of Comala Prison, a zany member of the poetry society. Torn manuscripts, deranged screams, a nauseating reality. \"The city we live in ... is a madhouse ...!\""
+  },
+  {
+    "key": "language_10029328",
+    "content": "Recoleta"
+  },
+  {
+    "key": "language_10029329",
+    "content": "Prisoner's Shadow"
+  },
+  {
+    "key": "language_10029330",
+    "content": "A silhouette of a Comala Prison inmate. Eavesdropping is discouraged—even in a den of criminals."
+  },
+  {
+    "key": "language_10029331",
+    "content": "Prisoner's Dark Figure"
+  },
+  {
+    "key": "language_10029332",
+    "content": "A silhouette of a Comala Prison inmate. She seems to have some information; at the very least, this proves she refuses to submit to violence."
+  },
+  {
+    "key": "language_10029333",
+    "content": "The Door-Side Beggar"
+  },
+  {
+    "key": "language_10029334",
+    "content": "A ghost from the pages of a book. Elusive, fictional, intangible. Waiting beneath the blue eaves, a critic of predetermined thought."
+  },
+  {
+    "key": "language_10029335",
+    "content": "The Murdered Donkey Driver"
+  },
+  {
+    "key": "language_10029336",
+    "content": "A ghost from the pages of a book. Elusive, fictional, intangible. Waiting beneath the blue eaves, a victim of a murder."
+  },
+  {
+    "key": "language_10029337",
+    "content": "The Dune Piscator"
+  },
+  {
+    "key": "language_10029338",
+    "content": "A ghost from the pages of a book. Elusive, fictional, intangible. Waiting beneath the blue eaves, a pessimist who welcomes the truth."
+  },
+  {
+    "key": "language_10029339",
+    "content": "Along the river a girl sings for all, the last wavering reef amid the \"flood.\" A tiny rest note approaches, closer and closer, yet no single note ceases its melody. \"Don't be afraid,\" she says, \"for we are, after all, one complete song.\""
+  },
+  {
+    "key": "language_10029340",
+    "content": "River Bubble"
+  },
+  {
+    "key": "language_10029341",
+    "content": "Story Review"
+  },
+  {
+    "key": "language_10029342",
+    "content": "Story Review"
+  },
+  {
+    "key": "language_10029343",
+    "content": "Behind Bars Book Club"
+  },
+  {
+    "key": "language_10029344",
+    "content": "DNT"
+  },
+  {
+    "key": "language_10029345",
+    "content": "Ruinas Gloriosas y Directrices de Metáforas"
+  },
+  {
+    "key": "language_10029346",
+    "content": "The Answering Machine, the Butterfly, and the Literary Critic"
+  },
+  {
+    "key": "language_10029347",
+    "content": "Dialogues Behind Bars I"
+  },
+  {
+    "key": "language_10029348",
+    "content": "Dialogues Behind Bars II"
+  },
+  {
+    "key": "language_10029349",
+    "content": "Somnambulism Evolved"
+  },
+  {
+    "key": "language_10029350",
+    "content": "Beyond the Boundaries"
+  },
+  {
+    "key": "language_10029351",
+    "content": "Lucidscape"
+  },
+  {
+    "key": "language_10029352",
+    "content": "Lucidscape Home Page Entry"
+  },
+  {
+    "key": "language_10029353",
+    "content": "Lab Snapshots"
+  },
+  {
+    "key": "language_10029354",
+    "content": "Path of Thorns and Devotion"
+  },
+  {
+    "key": "language_10029355",
+    "content": "Seeking Miracles"
+  },
+  {
+    "key": "language_10029356",
+    "content": "Depart"
+  },
+  {
+    "key": "language_10029357",
+    "content": "Journey"
+  },
+  {
+    "key": "language_10029358",
+    "content": "Authority"
+  },
+  {
+    "key": "language_10029359",
+    "content": "Gluttonous Appetite"
+  },
+  {
+    "key": "language_10029360",
+    "content": "Dulled Constitution"
+  },
+  {
+    "key": "language_10029361",
+    "content": "Dulled"
+  },
+  {
+    "key": "language_10029362",
+    "content": "Justice Confidant"
+  },
+  {
+    "key": "language_10029363",
+    "content": "Misaligned Overlay"
+  },
+  {
+    "key": "language_10029364",
+    "content": "Reluctant Wings II"
+  },
+  {
+    "key": "language_10029365",
+    "content": "Desert Rose"
+  },
+  {
+    "key": "language_10029366",
+    "content": "Cold Current III"
+  },
+  {
+    "key": "language_10029367",
+    "content": "Four Seasons"
+  },
+  {
+    "key": "language_10029368",
+    "content": "Array Effect"
+  },
+  {
+    "key": "language_10029369",
+    "content": "Spring's Bloom"
+  },
+  {
+    "key": "language_10029370",
+    "content": "Summer's Flourish"
+  },
+  {
+    "key": "language_10029371",
+    "content": "Autumn's Harvest"
+  },
+  {
+    "key": "language_10029372",
+    "content": "Winter's Veil"
+  },
+  {
+    "key": "language_10029373",
+    "content": "Reconciliation"
+  },
+  {
+    "key": "language_10029374",
+    "content": "Substitution"
+  },
+  {
+    "key": "language_10029375",
+    "content": "Pain-Fueled Appetite"
+  },
+  {
+    "key": "language_10029376",
+    "content": "Ebb and Flow"
+  },
+  {
+    "key": "language_10029377",
+    "content": "Ocean's Vitality"
+  },
+  {
+    "key": "language_10029378",
+    "content": "A Touch Too Hot"
+  },
+  {
+    "key": "language_10029379",
+    "content": "Hidden Sting"
+  },
+  {
+    "key": "language_10029380",
+    "content": "Poison Unleashed"
+  },
+  {
+    "key": "language_10029381",
+    "content": "Active Boost"
+  },
+  {
+    "key": "language_10029382",
+    "content": "Emotional Buildup"
+  },
+  {
+    "key": "language_10029383",
+    "content": "Irritable Temper"
+  },
+  {
+    "key": "language_10029384",
+    "content": "Emotional Discharge"
+  },
+  {
+    "key": "language_10029385",
+    "content": "Type I Attire"
+  },
+  {
+    "key": "language_10029386",
+    "content": "Type II Attire"
+  },
+  {
+    "key": "language_10029387",
+    "content": "Type III Attire"
+  },
+  {
+    "key": "language_10029388",
+    "content": "A Familiar Formula"
+  },
+  {
+    "key": "language_10029389",
+    "content": "Instant Solution"
+  },
+  {
+    "key": "language_10029390",
+    "content": "Refined Calculations"
+  },
+  {
+    "key": "language_10029391",
+    "content": "Stance Dance"
+  },
+  {
+    "key": "language_10029392",
+    "content": "Starting Stance"
+  },
+  {
+    "key": "language_10029393",
+    "content": "Three Stances"
+  },
+  {
+    "key": "language_10029394",
+    "content": "Tactical Response"
+  },
+  {
+    "key": "language_10029395",
+    "content": "Disease Plague I"
+  },
+  {
+    "key": "language_10029396",
+    "content": "Disease Plague II"
+  },
+  {
+    "key": "language_10029397",
+    "content": "Toxic Feedback"
+  },
+  {
+    "key": "language_10029398",
+    "content": "Emboldened Guts I"
+  },
+  {
+    "key": "language_10029399",
+    "content": "Emboldened Guts II"
+  },
+  {
+    "key": "language_10029400",
+    "content": "Purge Order"
+  },
+  {
+    "key": "language_10029401",
+    "content": "Limber Body I"
+  },
+  {
+    "key": "language_10029402",
+    "content": "Limber Body II"
+  },
+  {
+    "key": "language_10029403",
+    "content": "Purging Domain"
+  },
+  {
+    "key": "language_10029404",
+    "content": "Toll - Vanguard Shield"
+  },
+  {
+    "key": "language_10029405",
+    "content": "Toll - Spotlight"
+  },
+  {
+    "key": "language_10029406",
+    "content": "Toll - Combo Restrainer"
+  },
+  {
+    "key": "language_10029407",
+    "content": "Toll - Monster Skill Target"
+  },
+  {
+    "key": "language_10029408",
+    "content": "Toll - Same-Type Incantation"
+  },
+  {
+    "key": "language_10029409",
+    "content": "Toll - Rank Down"
+  },
+  {
+    "key": "language_10029410",
+    "content": "Toll - Contaminated Backpack"
+  },
+  {
+    "key": "language_10029411",
+    "content": "Toll - Gold Restriction"
+  },
+  {
+    "key": "language_10029412",
+    "content": "Toll - Healing Restriction"
+  },
+  {
+    "key": "language_10029413",
+    "content": "Toll - Artefact Tag"
+  },
+  {
+    "key": "language_10029414",
+    "content": "Toll - Artefact Contamination"
+  },
+  {
+    "key": "language_10029415",
+    "content": "Counteractive - Vanguard Shield"
+  },
+  {
+    "key": "language_10029416",
+    "content": "Counteractive - Spotlight"
+  },
+  {
+    "key": "language_10029417",
+    "content": "Counteractive - Spotlight 1"
+  },
+  {
+    "key": "language_10029418",
+    "content": "Counteractive - Spotlight 2"
+  },
+  {
+    "key": "language_10029419",
+    "content": "Counteractive - Spotlight 3"
+  },
+  {
+    "key": "language_10029420",
+    "content": "Counteractive - Combo Restrainer"
+  },
+  {
+    "key": "language_10029421",
+    "content": "Counteractive - Combo Restrainer 1"
+  },
+  {
+    "key": "language_10029422",
+    "content": "Counteractive - Combo Restrainer 2"
+  },
+  {
+    "key": "language_10029423",
+    "content": "Counteractive - Combo Restrainer 3"
+  },
+  {
+    "key": "language_10029424",
+    "content": "Counteractive - Monster Skill Target"
+  },
+  {
+    "key": "language_10029425",
+    "content": "Counteractive - Same-Type Incantation"
+  },
+  {
+    "key": "language_10029426",
+    "content": "Counteractive - Rank Down 1"
+  },
+  {
+    "key": "language_10029427",
+    "content": "Counteractive - Rank Down 2"
+  },
+  {
+    "key": "language_10029428",
+    "content": "Counteractive - Contaminated Backpack"
+  },
+  {
+    "key": "language_10029429",
+    "content": "Counteractive - Gold Restriction"
+  },
+  {
+    "key": "language_10029430",
+    "content": "Counteractive - Healing Restriction"
+  },
+  {
+    "key": "language_10029431",
+    "content": "Counteractive - Artefact Tag"
+  },
+  {
+    "key": "language_10029432",
+    "content": "Counteractive - Artefact Contamination"
+  },
+  {
+    "key": "language_10029433",
+    "content": "Little Conch"
+  },
+  {
+    "key": "language_10029434",
+    "content": "Echoes of the River"
+  },
+  {
+    "key": "language_10029435",
+    "content": "Greetings from Her"
+  },
+  {
+    "key": "language_10029436",
+    "content": "Metaphysical Conceit"
+  },
+  {
+    "key": "language_10029437",
+    "content": "Literary Imagery"
+  },
+  {
+    "key": "language_10029438",
+    "content": "Maze of Visceral Realism"
+  },
+  {
+    "key": "language_10029439",
+    "content": "Spontaneous Writing"
+  },
+  {
+    "key": "language_10029440",
+    "content": "Spontaneous Writing II"
+  },
+  {
+    "key": "language_10029441",
+    "content": "Spontaneous Writing III"
+  },
+  {
+    "key": "language_10029442",
+    "content": "Flood of Fiction"
+  },
+  {
+    "key": "language_10029443",
+    "content": "Galvanizing Dream"
+  },
+  {
+    "key": "language_10029444",
+    "content": "Ethereal Dream"
+  },
+  {
+    "key": "language_10029445",
+    "content": "Mocking Dream"
+  },
+  {
+    "key": "language_10029446",
+    "content": "Vigilant Dream"
+  },
+  {
+    "key": "language_10029447",
+    "content": "Moxie Rising"
+  },
+  {
+    "key": "language_10029448",
+    "content": "Eureka in Bloom"
+  },
+  {
+    "key": "language_10029449",
+    "content": "Moxie Intensified"
+  },
+  {
+    "key": "language_10029450",
+    "content": "Incantation Echo"
+  },
+  {
+    "key": "language_10029451",
+    "content": "Eureka Abound"
+  },
+  {
+    "key": "language_10029452",
+    "content": "Fervent Drive"
+  },
+  {
+    "key": "language_10029453",
+    "content": "Ranked Exaltation"
+  },
+  {
+    "key": "language_10029454",
+    "content": "Nightmare Reprisal"
+  },
+  {
+    "key": "language_10029455",
+    "content": "Healing Dream"
+  },
+  {
+    "key": "language_10029456",
+    "content": "Invigorating Dream"
+  },
+  {
+    "key": "language_10029457",
+    "content": "Obscuring Smoke"
+  },
+  {
+    "key": "language_10029458",
+    "content": "Mending in Mist"
+  },
+  {
+    "key": "language_10029459",
+    "content": "Hazy Stirring"
+  },
+  {
+    "key": "language_10029460",
+    "content": "Disciplinary Power"
+  },
+  {
+    "key": "language_10029461",
+    "content": "Idealist's Declaration"
+  },
+  {
+    "key": "language_10029462",
+    "content": "Reflections of Omniscience"
+  },
+  {
+    "key": "language_10029463",
+    "content": "Know It All, Answer It All"
+  },
+  {
+    "key": "language_10029464",
+    "content": "Know It All, Answer It All II"
+  },
+  {
+    "key": "language_10029465",
+    "content": "Know It All, Answer It All III"
+  },
+  {
+    "key": "language_10029466",
+    "content": "For Literature"
+  },
+  {
+    "key": "language_10029467",
+    "content": "Oration of Ideals"
+  },
+  {
+    "key": "language_10029468",
+    "content": "Madness"
+  },
+  {
+    "key": "language_10029469",
+    "content": "For Life"
+  },
+  {
+    "key": "language_10029470",
+    "content": "For Order"
+  },
+  {
+    "key": "language_10029471",
+    "content": "Freedom of Literature"
+  },
+  {
+    "key": "language_10029472",
+    "content": "Rationality"
+  },
+  {
+    "key": "language_10029473",
+    "content": "Surgical Scalpel"
+  },
+  {
+    "key": "language_10029474",
+    "content": "Surgical Incision"
+  },
+  {
+    "key": "language_10029475",
+    "content": "Definitive Proof"
+  },
+  {
+    "key": "language_10029476",
+    "content": "Operation Ready"
+  },
+  {
+    "key": "language_10029477",
+    "content": "Lingering Hysteria"
+  },
+  {
+    "key": "language_10029478",
+    "content": "Shifting Personas"
+  },
+  {
+    "key": "language_10029479",
+    "content": "Selves and Egos"
+  },
+  {
+    "key": "language_10029480",
+    "content": "Overlapping Personalities I"
+  },
+  {
+    "key": "language_10029481",
+    "content": "Desire for Transcendentality"
+  },
+  {
+    "key": "language_10029482",
+    "content": "Desire for Transcendentality II"
+  },
+  {
+    "key": "language_10029483",
+    "content": "Curse of Literature"
+  },
+  {
+    "key": "language_10029484",
+    "content": "Endless Yet Finite"
+  },
+  {
+    "key": "language_10029485",
+    "content": "Multiple Personas"
+  },
+  {
+    "key": "language_10029486",
+    "content": "Overlapping Personalities II"
+  },
+  {
+    "key": "language_10029487",
+    "content": "DNT"
+  },
+  {
+    "key": "language_10029488",
+    "content": "DNT"
+  },
+  {
+    "key": "language_10029489",
+    "content": "\"Other Me\""
+  },
+  {
+    "key": "language_10029490",
+    "content": "Great Self-Awakening"
+  },
+  {
+    "key": "language_10029491",
+    "content": "DNT"
+  },
+  {
+    "key": "language_10029492",
+    "content": "DNT"
+  },
+  {
+    "key": "language_10029493",
+    "content": "DNT"
+  },
+  {
+    "key": "language_10029494",
+    "content": "Claw Swipe"
+  },
+  {
+    "key": "language_10029495",
+    "content": "Solemn Authority"
+  },
+  {
+    "key": "language_10029496",
+    "content": "Prison Discipline"
+  },
+  {
+    "key": "language_10029497",
+    "content": "Bestial Instinct"
+  },
+  {
+    "key": "language_10029498",
+    "content": "Bestial Instinct II"
+  },
+  {
+    "key": "language_10029499",
+    "content": "Scrap of Creation"
+  },
+  {
+    "key": "language_10029500",
+    "content": "Impromptu Poem"
+  },
+  {
+    "key": "language_10029501",
+    "content": "Rimbaudic Reverie"
+  },
+  {
+    "key": "language_10029502",
+    "content": "Kingdom of Freedom"
+  },
+  {
+    "key": "language_10029503",
+    "content": "Their Ending I"
+  },
+  {
+    "key": "language_10029504",
+    "content": "Their Ending II"
+  },
+  {
+    "key": "language_10029505",
+    "content": "Their Ending III"
+  },
+  {
+    "key": "language_10029506",
+    "content": "A Final Song to the Foam"
+  },
+  {
+    "key": "language_10029507",
+    "content": "Guiding the Way Home"
+  },
+  {
+    "key": "language_10029508",
+    "content": "Rushing Toward the Source"
+  },
+  {
+    "key": "language_10029509",
+    "content": "Treading the Rapid Waters"
+  },
+  {
+    "key": "language_10029510",
+    "content": "A Song for You"
+  },
+  {
+    "key": "language_10029511",
+    "content": "Riverside Finale"
+  },
+  {
+    "key": "language_10029512",
+    "content": "Treading the Still Waters"
+  },
+  {
+    "key": "language_10029513",
+    "content": "Treading the Deep Waters"
+  },
+  {
+    "key": "language_10029514",
+    "content": "Leaping Over Waves"
+  },
+  {
+    "key": "language_10029515",
+    "content": "Drifting into Dreams"
+  },
+  {
+    "key": "language_10029516",
+    "content": "Soaking the Mind"
+  },
+  {
+    "key": "language_10029517",
+    "content": "Love One Another"
+  },
+  {
+    "key": "language_10029518",
+    "content": "Hold On to Hope"
+  },
+  {
+    "key": "language_10029519",
+    "content": "Listen to Faith"
+  },
+  {
+    "key": "language_10029520",
+    "content": "Streamfall Cascade"
+  },
+  {
+    "key": "language_10029521",
+    "content": "After any ally takes an action, {name} gains 1 stack of [Gust<id:0>] for 3 rounds.\nAt the start of the round, {name} gains a Force Field based on the stacks of [Gust<id:0>] she has, while removing other Gust Force Fields she applied to herself in this way:\nAt 5 or more stacks, gain [Paper Parade<id:0>].\nAt 15 or more stacks, gain [Wave of Sheets<id:0>].\nAt 25 or more stacks, gain [Adieu, Mother Earth<id:0>]."
+  },
+  {
+    "key": "language_10029522",
+    "content": "At the start of every 1/2/3/4 rounds, delete all health/debuff/buff/attack incantations from the Spellbox."
+  },
+  {
+    "key": "language_10029523",
+    "content": "1-target attack. Deals 100% Mental DMG plus (the target's ATK x50%) Genesis DMG."
+  },
+  {
+    "key": "language_10029524",
+    "content": "Mass attack. Deals 100% Mental DMG plus (the target's Current HP x10%) Genesis DMG to 2 enemies."
+  },
+  {
+    "key": "language_10029525",
+    "content": "Self buff. Enters the [Seeking Miracles] status."
+  },
+  {
+    "key": "language_10029526",
+    "content": "Mass attack. Deals 100% Mental DMG plus (the target's ATK x50% + Current HP x10%) Genesis DMG to all enemies."
+  },
+  {
+    "key": "language_10029527",
+    "content": "When entering battle, gain 10 stacks of [Grand Miracle]. At the start of the round, if this unit is not in the [Seeking Miracles] status, cast an ultimate. When in the [Seeking Miracles] status, after being attacked by 3 ultimates, remove the [Seeking Miracles] status and enter the [Weight of Stagnation] status for 1 round."
+  },
+  {
+    "key": "language_10029528",
+    "content": "At the start of the round, dispel negative statuses from self. When another ally is dying, recover (the ally's Max HP x50%) HP for the ally, then lose 3 stacks of [Grand Miracle]."
+  },
+  {
+    "key": "language_10029529",
+    "content": "When being attacked, each stack of [Grand Miracle] grants DMG Taken Reduction +2%."
+  },
+  {
+    "key": "language_10029530",
+    "content": "At the start of the round, dispel all buffs from all enemies and cause them to lose 30% Max HP, then consume 5 stacks of [Grand Miracle]."
+  },
+  {
+    "key": "language_10029531",
+    "content": "Self heal. Recovers (ATK x200%) HP."
+  },
+  {
+    "key": "language_10029532",
+    "content": "Self buff. Gains 3 stacks of [Sturdiness]."
+  },
+  {
+    "key": "language_10029533",
+    "content": "Self heal. Recovers 20% of Missing HP, gains 10 stacks of [Grow Big]."
+  },
+  {
+    "key": "language_10029534",
+    "content": "Immune to all [Stats Down] effects. After taking each action, gain 2 stacks of [Grow Big]. At the end of the round, all enemies lose (Munchalo's Max HP x0.5%) HP."
+  },
+  {
+    "key": "language_10029535",
+    "content": "After being attacked, gain [Dulled]."
+  },
+  {
+    "key": "language_10029536",
+    "content": "DNT"
+  },
+  {
+    "key": "language_10029537",
+    "content": "1-target attack. Deals 250% Reality DMG, inflicts 2 effects from [Collection of Neg Status] to the target."
+  },
+  {
+    "key": "language_10029538",
+    "content": "Self counter. Gains 2 stacks of [Form and Intent II]."
+  },
+  {
+    "key": "language_10029539",
+    "content": "1-target attack. Deals 400% Reality DMG; inflicts 3 stacks of [Qi Obstruction] on the target."
+  },
+  {
+    "key": "language_10029540",
+    "content": "After casting a Damage-type incantation, inflict 1 stack of [Qi Obstruction] on the target. After casting an ultimate, inflict an additional 1 stack of [Qi Obstruction] on all enemies."
+  },
+  {
+    "key": "language_10029541",
+    "content": "When attacking, Penetration Rate +25%. After being attacked, inflict 1 stack of [Qi Obstruction] on the attacker (can trigger only 1 time per round)."
+  },
+  {
+    "key": "language_10029542",
+    "content": "At the start of the round, other allies gain 1 stack of [Iron Justice]."
+  },
+  {
+    "key": "language_10029543",
+    "content": "Mass attack. Deals 180% Mental DMG to 2 enemies."
+  },
+  {
+    "key": "language_10029544",
+    "content": "Mass buff. Grants 1 stack of [Sturdiness] and 1 stack of [Rousing Morale] to all allies."
+  },
+  {
+    "key": "language_10029545",
+    "content": "Mass buff. Recovers (the user's ATK x200%) HP to all allies, and grants 3 stacks of [Iron Justice] to all allies."
+  },
+  {
+    "key": "language_10029546",
+    "content": "When entering battle and at the end of every round, gain 3 stacks of [Mutated Poison Feather]; when being attacked while in the [Mutated Poison Feather] status, inflicts [Poison] on the attacker for 1 round."
+  },
+  {
+    "key": "language_10029547",
+    "content": "At the start of the round, grant 1 effect from [Collection of Buffs<id:725032001>] to all allies for 4 rounds; for every 15% Missing HP on an ally, grant 1 additional effect to that ally."
+  },
+  {
+    "key": "language_10029548",
+    "content": "Mass attack. Deals 150% Reality DMG to 2 enemies. Penetration Rate +30% for this attack."
+  },
+  {
+    "key": "language_10029549",
+    "content": "Mass debuff. Inflicts 1 stack of [Weakness] and 1 stack of [Fragility] on all enemies."
+  },
+  {
+    "key": "language_10029550",
+    "content": "1-target attack. Deals 400% Reality DMG; inflicts 1 stack of [Cold] on all enemies."
+  },
+  {
+    "key": "language_10029551",
+    "content": "At the end of the round, inflicts 1 stack of [Cold] on a random enemy; after being attacked by an 1-target attack, inflicts [Freeze] on the attacker for 1 round."
+  },
+  {
+    "key": "language_10029552",
+    "content": "When entering battle and at the start of every 2 rounds thereafter, enters the [Hard as Bedrock] status for 2 rounds."
+  },
+  {
+    "key": "language_10029553",
+    "content": "When entering battle, deploys the array [Four Seasons] for 4 rounds; at the start of every 5 rounds, if not in the [Four Seasons] array, redeploys [Four Seasons] for 4 rounds."
+  },
+  {
+    "key": "language_10029554",
+    "content": "At the end of the round, gains 1 stack of [Cycle of Seasons]; at the start of the round, if holding 4 stacks of [Cycle of Seasons], consume all of those stacks and immediately cast an ultimate."
+  },
+  {
+    "key": "language_10029555",
+    "content": "After attacking, inflicts 1 instance of [Poison] on the target for 3 rounds: at the end of the round, takes (the user's ATK x30%) Genesis DMG; if in the [Four Seasons] array, inflicts an additional 1 instance of [Poison]."
+  },
+  {
+    "key": "language_10029556",
+    "content": "At the end of the round, all allies gain Moxie +1; if in the [Four Seasons] array, gain an additional Moxie +1."
+  },
+  {
+    "key": "language_10029557",
+    "content": "When attacking, Penetration Rate +30%; if in the [Four Seasons] array, gain an additional Penetration Rate +30%."
+  },
+  {
+    "key": "language_10029558",
+    "content": "At the end of the round, gain [Winter's Veil]; if in the [Four Seasons] array, when attacking and breaking stealth with Winter's Veil, gain an additional Critical DMG +100%; after being attacked by an ultimate, dispel [Winter's Veil]."
+  },
+  {
+    "key": "language_10029559",
+    "content": "Mass attack. Deals 175% Mental DMG to 2 enemies; after attacking, inflicts 2 random effects from [Collection of Debuffs] on the targets for 2 rounds."
+  },
+  {
+    "key": "language_10029560",
+    "content": "1-target buff. Purifies 2 random types of [Stats Down], [Neg Status], or [Control] statuses; then grants 2 stacks of [Sturdiness] and 1 stack of [Rousing Morale] to all allies."
+  },
+  {
+    "key": "language_10029561",
+    "content": "1-target attack. Deals 500% Mental DMG. If at 6 or more Eureka, spend 6 Eureka to deal 50% increased Mental DMG to the target for every 1 type of [Stats Down], [Neg Status] and [Control] status they have. Increases up to 4 times."
+  },
+  {
+    "key": "language_10029562",
+    "content": "Ultimate DMG Taken +50%, all other DMG Taken -50%; at the start of the round, Eureka +2."
+  },
+  {
+    "key": "language_10029563",
+    "content": "When entering battle and at the end of every 5 rounds, deploys the array [Equivalent Substitution] for 5 rounds; while in the [Equivalent Substitution] array, at the start of the round, grants 2 effects from [Collection of Buffs<id:1261012421>] to all allies, and at the end of the round, gains Moxie +1 for self."
+  },
+  {
+    "key": "language_10029564",
+    "content": "When entering battle and at the end of every 2 rounds, enter the [Wary] status. When being attacked, if in the [Wary] status, gain 1 stack of [Grow Big]."
+  },
+  {
+    "key": "language_10029565",
+    "content": "1-target attack. Deals 200% Reality DMG plus (own ATK x50%) Genesis DMG."
+  },
+  {
+    "key": "language_10029566",
+    "content": "Mass attack. Deals 150% Reality DMG plus (own ATK x30%) Genesis DMG to 2 enemies."
+  },
+  {
+    "key": "language_10029567",
+    "content": "Mass attack. Deals 300% Reality DMG to all enemies. This attack gains Leech Rate +30%."
+  },
+  {
+    "key": "language_10029568",
+    "content": "When HP is above 50%, when attacking, Penetration Rate +25%. When HP is below 50%, when attacking, Leech Rate +25%. When casting an ultimate, the Penetration Rate/Leech Rate bonus is doubled."
+  },
+  {
+    "key": "language_10029569",
+    "content": "After taking each action, gain 2 stacks of [Ocean's Vitality]. At the end of the round, for every 15% Missing Max HP, gain 1 stack of [Ocean's Vitality]. After receiving a critical hit, consume 1 stack of [Ocean's Vitality] and grant Moxie +1 to self."
+  },
+  {
+    "key": "language_10029570",
+    "content": "At the start of the round, gain 5 stacks of [Ceremonious]; when actively casting an incantation, grant 2 points of [Inspiration] to [Impromptu Incantation] for the round."
+  },
+  {
+    "key": "language_10029571",
+    "content": "After casting an ultimate, gain 6 points of [Inspiration]."
+  },
+  {
+    "key": "language_10029572",
+    "content": "For every 3 attacks an enemy receives, a random ally gains Moxie +1."
+  },
+  {
+    "key": "language_10029573",
+    "content": "For every attack an enemy receives, the enemy gets 1 stack of [Flinch]."
+  },
+  {
+    "key": "language_10029574",
+    "content": "For every attack the enemy receives, all allies gain 2 stacks of [Ceremonious]."
+  },
+  {
+    "key": "language_10029575",
+    "content": "After casting an ultimate, all allies gain Incantation Might +2% (stackable)."
+  },
+  {
+    "key": "language_10029576",
+    "content": "After attacking an enemy, all allies gain Ultimate Might +2% (stackable)."
+  },
+  {
+    "key": "language_10029577",
+    "content": "After performing an extra action, a random incantation in the Spelldock gains rank +1."
+  },
+  {
+    "key": "language_10029578",
+    "content": "When actively casting a rank 2/3 incantation on an enemy, there's a 30% chance to cast it again."
+  },
+  {
+    "key": "language_10029579",
+    "content": "After performing an extra action, gain [Anticipation · Precast II]."
+  },
+  {
+    "key": "language_10029580",
+    "content": "At the end of the round, any ally who did not take action automatically casts a rank 1 Incantation #2."
+  },
+  {
+    "key": "language_10029581",
+    "content": "When triggering an extra action, there is a 30% chance to gain Moxie +1."
+  },
+  {
+    "key": "language_10029582",
+    "content": "When casting a rank 2/3 incantation, other allies gain 2 stacks of [Schemed]."
+  },
+  {
+    "key": "language_10029583",
+    "content": "After triggering an extra action, other allies have a 25% chance to gain 1 stack of [Rousing Morale]."
+  },
+  {
+    "key": "language_10029584",
+    "content": "At the start of the first round, every 2 rounds, lose 30% of current HP and gain 1 stack of [Moribund]; when attacking, for every 10% Missing HP, deal an additional 15% Mental DMG or 15% Reality DMG."
+  },
+  {
+    "key": "language_10029585",
+    "content": "When attacking, for every 10% Missing HP, gain an additional Penetration Rate +6%."
+  },
+  {
+    "key": "language_10029586",
+    "content": "When being attacked, if holding a [Shield], deal (own Missing HP x100%) Genesis DMG to the enemy."
+  },
+  {
+    "key": "language_10029587",
+    "content": "When HP is above 50%, right before attacking, lose 10% of current HP and gain 2 stacks of [Lucky]."
+  },
+  {
+    "key": "language_10029588",
+    "content": "When attacking, if it is a critical hit, gain a [Shield] with (ATK x200%) HP at the end of the round; if already holding a Shield, the new Shield value is stacked on top of the existing Shield, up to a maximum of 200% of the original Shield's cap."
+  },
+  {
+    "key": "language_10029589",
+    "content": "At the end of the round, if own HP is below 50%, gain Incantation Limit +1."
+  },
+  {
+    "key": "language_10029590",
+    "content": "When attacking, if holding a [Shield], Critical Rate +20% and Critical DMG +20%."
+  },
+  {
+    "key": "language_10029591",
+    "content": "When being attacked by Reality DMG, deal (the attacker's ATK x100%) Genesis DMG to the attacker."
+  },
+  {
+    "key": "language_10029592",
+    "content": "Whenever being attacked by an extra action, the attacker gets [Poison] for 2 rounds."
+  },
+  {
+    "key": "language_10029593",
+    "content": "At the start of the round, gains 4 stacks of [Sturdiness]; when casting an ultimate, resolves all [Poison] effects on the field."
+  },
+  {
+    "key": "language_10029594",
+    "content": "At the end of the round, if still holding a [Sturdiness], extend the [Poison] effects on all enemies by 2 rounds."
+  },
+  {
+    "key": "language_10029595",
+    "content": "At the start of the round, gain 10 stacks of [I'm Angry!]. Whenever being attacked, gain 5 stacks of [I'm Angry!]. When reaching 50 stacks of [I'm Angry!], enter a frenzied state."
+  },
+  {
+    "key": "language_10029596",
+    "content": "DMG Taken Reduction +50% and DMG Bonus +50%. When being attacked, Riposte against attacks of a non-stronger Afflatus."
+  },
+  {
+    "key": "language_10029597",
+    "content": "Whenever being attacked, lose 10 stacks of [I'm Angry!]. If not holding an [I'm Angry!] status, revert back to normal form."
+  },
+  {
+    "key": "language_10029598",
+    "content": "Starting from round 1, at the start of every 3 rounds, gain 6 stacks of [Artillery Support]; whenever being attacked, lose 1 stack of [Artillery Support]; at the end of the round, cast an ultimate if holding the [Artillery Support] status."
+  },
+  {
+    "key": "language_10029599",
+    "content": "Starting from round 2, at the start of every 3 rounds, gain 7 stacks of [Artillery Support]; whenever being attacked, lose 1 stack of [Artillery Support]; at the end of the round, cast an ultimate if holding the [Artillery Support] status."
+  },
+  {
+    "key": "language_10029600",
+    "content": "Starting from round 3, at the start of every 3 rounds, gain 8 stacks of [Artillery Support]; whenever being attacked, lose 1 stack of [Artillery Support]; at the end of the round, cast an ultimate if holding the [Artillery Support] status."
+  },
+  {
+    "key": "language_10029601",
+    "content": "Critical DEF -30%; when being attacked, if it is not a critical hit, gain 3 stacks of [Schemed]."
+  },
+  {
+    "key": "language_10029602",
+    "content": "After being attacked, if it was not a critical hit, immediately Ripostes with a rank 1 Incantation #1."
+  },
+  {
+    "key": "language_10029603",
+    "content": "After performing an extra action, DMG Bonus +8% and DMG Taken Reduction +8% (stackable, lasts for the entire battle)."
+  },
+  {
+    "key": "language_10029604",
+    "content": "Whenever being attacked by an ultimate, switches between [Resolute Stance], [Defensive Stance], and [Exalted Stance]."
+  },
+  {
+    "key": "language_10029605",
+    "content": "AP +1; when entering battle, gain [Defensive Stance]."
+  },
+  {
+    "key": "language_10029606",
+    "content": "When in [Resolute Stance], non-stronger Afflatus DMG Taken -90%.\nWhen in [Defensive Stance], cannot gain [Stats Down], [Neg Status], or [Control].\nWhen in [Exalted Stance], Critical Rate +100%, and attacks inflict [Daze] for 1 round."
+  },
+  {
+    "key": "language_10029607",
+    "content": "When another ally switches between [Resolute Stance], [Defensive Stance], and [Exalted Stance], gain Moxie +1 for self."
+  },
+  {
+    "key": "language_10029608",
+    "content": "When being attacked, remove [Resolute Stance]."
+  },
+  {
+    "key": "language_10029609",
+    "content": "When being attacked, remove [Defensive Stance]."
+  },
+  {
+    "key": "language_10029610",
+    "content": "When being attacked, remove [Exalted Stance]."
+  },
+  {
+    "key": "language_10029611",
+    "content": "When being attacked, inflict [Poison] on the attacker for 1 round (triggers up to 2 times per round)."
+  },
+  {
+    "key": "language_10029612",
+    "content": "When being attacked, inflict [Poison] on the attacker for 2 rounds (triggers up to 2 times per round)."
+  },
+  {
+    "key": "language_10029613",
+    "content": "After attacking, inflict [Poison] on the target for 2 rounds; when being attacked, immediately resolve [Poison] effects on the attacker."
+  },
+  {
+    "key": "language_10029614",
+    "content": "When being attacked by a non-stronger Afflatus, gain Moxie +1; when casting an ultimate, inflict 2 stacks of [Paralyze] on the main target."
+  },
+  {
+    "key": "language_10029615",
+    "content": "When being attacked by a non-stronger Afflatus, gain Moxie +2; when casting an ultimate, inflict 1 stack of [Paralyze] on all enemies."
+  },
+  {
+    "key": "language_10029616",
+    "content": "Deals an additional (the target's Max HP x20%) Genesis DMG to targets in the [Daze] status."
+  },
+  {
+    "key": "language_10029617",
+    "content": "After being attacked, if the attack was not a critical hit, the attacker gets Moxie -2, and this unit gets Moxie +1."
+  },
+  {
+    "key": "language_10029618",
+    "content": "After being attacked, if the attack was not a critical hit, the attacker gets Moxie -1, and this unit gets Moxie +2."
+  },
+  {
+    "key": "language_10029619",
+    "content": "When attacking a target that's with 2 or less Moxie, dispels all [Pos Status] and [Stats Up] from the target."
+  },
+  {
+    "key": "language_10029620",
+    "content": "[Impromptu Incantation] decreases Memory Shell on the target by 1 stack."
+  },
+  {
+    "key": "language_10029621",
+    "content": "Ally #1 gets [Extreme Vulnerability]."
+  },
+  {
+    "key": "language_10029622",
+    "content": "Whenever actively casting an incantation, get 1 stack of [Incantation Interference] for 1 round."
+  },
+  {
+    "key": "language_10029623",
+    "content": "Whenever performing an extra action, get 1 stack of [Cascading Interference] for the entire battle."
+  },
+  {
+    "key": "language_10029624",
+    "content": "Enemies gain DMG Bonus +15% to their mass skills."
+  },
+  {
+    "key": "language_10029625",
+    "content": "Whenever casting an Incantation #1/Incantation #2/ultimate, get [Entropy Degradation I]/[Entropy Degradation II]/[Entropy Degradation Ultimate]. Whenever casting an incantation of a different type, lose 1 stack of the damage down effect on the other types of incantations."
+  },
+  {
+    "key": "language_10029626",
+    "content": "When casting a rank 1 incantation, DMG Bonus -10%; when merging incantations, rank -1."
+  },
+  {
+    "key": "language_10029627",
+    "content": "When entering battle, grant 1 Marker buff to self."
+  },
+  {
+    "key": "language_10029628",
+    "content": "Healing Taken -30%."
+  },
+  {
+    "key": "language_10029629",
+    "content": "For each type of artefact tag held in the layout, all allies get 1 stack of [Omnipotent Shackles]."
+  },
+  {
+    "key": "language_10029630",
+    "content": "At the start of the first round, character #1 loses 1 stack of [Vanguard's Wane] and gains Max HP +20%."
+  },
+  {
+    "key": "language_10029631",
+    "content": "When holding 1/2/3 of this artefact in the layout, every 3/2/1 rounds, gain immunity to [Incantation Interference]; whenever actively casting an incantation, gain Final DMG Bonus +10% for 1 round."
+  },
+  {
+    "key": "language_10029632",
+    "content": "When holding 1/2/3 of this artefact in the layout, every 3/2/1 rounds, gain immunity to [Cascading Interference]; and whenever performing an extra action, all allies gain Final DMG Bonus +5% for 1 round."
+  },
+  {
+    "key": "language_10029633",
+    "content": "Right before receiving a mass attack, recovers (own ATK x50%) HP; for each Toll <Empowered Masses> held in the layout, all allies gain Final DMG Reduction +5%, stacks up to +50%."
+  },
+  {
+    "key": "language_10029634",
+    "content": "After taking an action, remove 1 stack of [Entropy Degradation I]/[Entropy Degradation II]/[Entropy Degradation Ultimate]; for each stack removed in this way, gain Final DMG Bonus +2% for self, up to a maximum of +50%."
+  },
+  {
+    "key": "language_10029635",
+    "content": "When actively casting an incantation, gain DMG Bonus +5%."
+  },
+  {
+    "key": "language_10029636",
+    "content": "When holding 3 of this artefact in the layout, ignore the Toll <Merge Suppression>, and every merge of an incantation results in a rank 3 incantation."
+  },
+  {
+    "key": "language_10029637",
+    "content": "For each [Clamor] held in the layout, DMG Bonus +10%."
+  },
+  {
+    "key": "language_10029638",
+    "content": "When entering battle, gain 5 stacks of [Lucky], and for every 20 coins held, lose 1 stack of [Lucky]."
+  },
+  {
+    "key": "language_10029639",
+    "content": "For every 10% Missing HP, gain Final DMG Bonus +2% and Final DMG Taken Reduction +2%."
+  },
+  {
+    "key": "language_10029640",
+    "content": "For each type of artefact tag held in the layout, all allies gain 1 stack of [Omnipotent Unraveling]; when holding 3 of this artefact in the layout, ignore the Toll <Collector's Bane>."
+  },
+  {
+    "key": "language_10029641",
+    "content": "At the start of the round, gain a Shield with (ATK x200%) HP."
+  },
+  {
+    "key": "language_10029642",
+    "content": "In the final battle, AP +1."
+  },
+  {
+    "key": "language_10029643",
+    "content": "When defeating an enemy, all allies gain a Shield with (Max HP x20%) HP."
+  },
+  {
+    "key": "language_10029644",
+    "content": "When Aleph is deployed:\nWhen entering battle, gain Moxie +5 for self."
+  },
+  {
+    "key": "language_10029645",
+    "content": "When Aleph is deployed:\nAt the start of the round, if Aleph is in the [Hyperthymesia] status, gain Moxie +3 for self."
+  },
+  {
+    "key": "language_10029646",
+    "content": "When Aleph is a companion:\nWhenever entering a Treasure Hunt, copies the first artefact obtained."
+  },
+  {
+    "key": "language_10029647",
+    "content": "DNT"
+  },
+  {
+    "key": "language_10029648",
+    "content": "When Recoleta is a companion:\nObtains 2 Flamboyant Mask and 1 Masquerade Mask (triggers only 1 time)."
+  },
+  {
+    "key": "language_10029649",
+    "content": "When Recoleta is deployed:\nWhen gaining [Monomythic Narrative]/[Ensemble Narrative], additionally gain [Ensemble Narrative]/[Monomythic Narrative]. At the start of the round, gain Moxie +2 for self."
+  },
+  {
+    "key": "language_10029650",
+    "content": "When Recoleta is deployed:\nMax Moxie +5; after Recoleta casts her ultimate, gain temporary allied AP +2 on the next round."
+  },
+  {
+    "key": "language_10029651",
+    "content": "When Liang Yue is deployed:\nAfter this unit performs an extra action, gain Moxie +1 for self."
+  },
+  {
+    "key": "language_10029652",
+    "content": "When Liang Yue is deployed:\nWhile in the [Arise, Qiangliang!] status, after this unit performs an extra action, gains 0.5 [Justice Talon] and 0.5 [Peace Talon] (triggers up to 2 times per round)."
+  },
+  {
+    "key": "language_10029653",
+    "content": "When Liang Yue is deployed:\nIn [Arise, Qiangliang!] status, the [Justice Talon] and [Peace Talon] gained are doubled."
+  },
+  {
+    "key": "language_10029654",
+    "content": "When Noire is a companion:\nObtains 1 Silver Sword (triggers up to 1 time)."
+  },
+  {
+    "key": "language_10029655",
+    "content": "When Noire is deployed:\nWhenever completing a Minor Obstacle/Present Danger/Impending Crisis, gains 1 Ceremonious Ritual.\nAt the start of the round, gains 3 stacks of [Genius Idea<id:31110161>]."
+  },
+  {
+    "key": "language_10029656",
+    "content": "When Noire is a companion:\nObtains 1 Magic Cape (triggers up to 1 time). Upgrades all Magic Capes in the layout, increasing the chance to immediately cast an ultimate to 100%."
+  },
+  {
+    "key": "language_10029657",
+    "content": "DNT"
+  },
+  {
+    "key": "language_10029658",
+    "content": "DNT"
+  },
+  {
+    "key": "language_10029659",
+    "content": "When Kakania is a companion:\nWhenever completing a path node, all companions recover (Max HP x30%) HP and get Stress -10."
+  },
+  {
+    "key": "language_10029660",
+    "content": "When Kakania is deployed:\nWhen entering battle, grant Max HP +20% to all allies."
+  },
+  {
+    "key": "language_10029661",
+    "content": "When Kakania is a companion:\nObtains 1 Everheart (triggers only 1 time). Upgrades all Everhearts in the layout, increasing the Genesis DMG Dealt gained by allies to 200%."
+  },
+  {
+    "key": "language_10029662",
+    "content": "When Vila is deployed:\nAt the end of the round, all allies gain Eureka +1 and Moxie +1."
+  },
+  {
+    "key": "language_10029663",
+    "content": "When Vila is deployed:\nWhen entering battle, immediately enters the [Rusalka] status permanently. At the start of the round, dispels 3 types of [Neg Status], [Stats Down], and or [Control] effects from all allies."
+  },
+  {
+    "key": "language_10029664",
+    "content": "When Vila is deployed:\nWhen an ally attacks, deals additional DMG to the main target based on the rank of the incantation: a rank 1/2/3 incantation deals an additional 50%/120%/200% DMG of the ally's corresponding damage type."
+  },
+  {
+    "key": "language_10029665",
+    "content": "DNT"
+  },
+  {
+    "key": "language_10029666",
+    "content": "DNT"
+  },
+  {
+    "key": "language_10029667",
+    "content": "When Mercuria is a companion:\nWhen reaching an [Into the Unknown], gains an additional 100 Goldfinch Coins. When reaching [Discovery], obtains an additional 1 random artefact."
+  },
+  {
+    "key": "language_10029668",
+    "content": "When Mercuria is deployed:\nAfter Mercuria casts her ultimate, all allies gain [Empower Incantation Ⅱ] for 3 rounds."
+  },
+  {
+    "key": "language_10029669",
+    "content": "When Mercuria is deployed:\nWhen Mercuria casts her ultimate, for each stack of [Cosmic Energy] held on self, deals an additional 30% Mental DMG."
+  },
+  {
+    "key": "language_10029670",
+    "content": "DNT"
+  },
+  {
+    "key": "language_10029671",
+    "content": "DNT"
+  },
+  {
+    "key": "language_10029672",
+    "content": "When Tooth Fairy is deployed:\nWhen entering battle, for each Medication in the layout, all allies gain Critical Rate +10%, and Tooth Fairy gains ATK +10%.\nWhen obtaining Fairy's Blessing, obtain an additional 3 Medications."
+  },
+  {
+    "key": "language_10029673",
+    "content": "When Tooth Fairy is deployed: At the start of the round, Tooth Fairy gains 3 stacks of [Baby Tooth]. When [Baby Tooth]'s Stats Down effect is triggered, dispels 2 random [Stats Down], [Neg Status], or [Control] effects from allies, then grants 1 stack of [Incorporeal] to all allies."
+  },
+  {
+    "key": "language_10029674",
+    "content": "When Tooth Fairy is deployed:\nWhen [Baby Tooth]'s Stats Down effect is triggered, allied excess Critical Rate is converted into Critical DMG for 1 round."
+  },
+  {
+    "key": "language_10029675",
+    "content": "When Isolde is deployed:\nWhen entering battle, gains 40 stacks of [Heat] for self; gain Incantation Might +50% for self."
+  },
+  {
+    "key": "language_10029676",
+    "content": "When Isolde is deployed:\nAfter casting [Intermezzo], inflicts 10 stacks of [Flinch] on all enemies."
+  },
+  {
+    "key": "language_10029677",
+    "content": "When Isolde is deployed:\nWhen actively casting an ultimate, for every 2 excess stacks of [Burn] inflicted on the main target, cast [Intermezzo] an additional 1 time."
+  },
+  {
+    "key": "language_10029678",
+    "content": "DNT"
+  },
+  {
+    "key": "language_10029679",
+    "content": "When Tuesday is deployed:\nAfter casting her ultimate, inflicts [Nightmare] on all enemies for 3 rounds; allied attacks on enemies afflicted with the [Nightmare] status do not remove the [Nightmare] status."
+  },
+  {
+    "key": "language_10029680",
+    "content": "When Tuesday is deployed:\nAt the end of the round, extends the [Poison] durations on enemies afflicted with the [Nightmare] status by 2 rounds."
+  },
+  {
+    "key": "language_10029681",
+    "content": "When Tuesday is deployed:\nWhen casting an ultimate for the first time, inflicting the [Nightmare] status ignores 100% of the target's Sleep Resistance."
+  },
+  {
+    "key": "language_10029682",
+    "content": "DNT"
+  },
+  {
+    "key": "language_10029683",
+    "content": "DNT"
+  },
+  {
+    "key": "language_10029684",
+    "content": "When 6 is deployed:\nAt the start of the round, inflicts 2 effects from [Collection of Debuffs] on all enemies. At the end of the round, for every 2 Eureka consumed from self in the round, gain Moxie +1 for self. At the start of the round, gain Eureka +2 for self."
+  },
+  {
+    "key": "language_10029685",
+    "content": "When 6 is deployed:\nRight before casting an ultimate, recovers all Eureka. When attacking, for each Eureka held on self, this attack gains an additional DMG Dealt +15%."
+  },
+  {
+    "key": "language_10029686",
+    "content": "When 6 is deployed:\nUltimate Might +100%. For every 5 Eureka consumed from self within a round, recover (6's ATK x666%) HP for all allies."
+  },
+  {
+    "key": "language_10029687",
+    "content": "DNT"
+  },
+  {
+    "key": "language_10029688",
+    "content": "DNT"
+  },
+  {
+    "key": "language_10029689",
+    "content": "When Windsong is a companion:\nThe Tuning Hall will always stock and refresh unowned Acoustica artefacts of characters on your team."
+  },
+  {
+    "key": "language_10029690",
+    "content": "When Windsong is a companion:\nAcoustica artefacts in Shopping Time cost 50% of the original price to buy."
+  },
+  {
+    "key": "language_10029691",
+    "content": "When Windsong is a companion:\nFor each Acoustica artefact in the layout, recover 3 Stimulus after passing a node (capped at 60)."
+  },
+  {
+    "key": "language_10029692",
+    "content": "When Fatutu is deployed:\nWhen entering battle, gains an additional 20 stacks of [Spirit Shell] for self. At the start of the round, deploys all of her [Spirit Shell] stacks onto a random enemy."
+  },
+  {
+    "key": "language_10029693",
+    "content": "When Fatutu is deployed:\nAfter any unit takes an action, if any ally is under a [Control] status, removes 5 stacks of [Shared Shells, Shared Fate] from all allies, then dispels [Control] statuses held on allies (triggers up to 3 times per battle)."
+  },
+  {
+    "key": "language_10029694",
+    "content": "When Fatutu is deployed:\nAt the end of the round, casts a 1 rank [Ocean in the Shell]."
+  },
+  {
+    "key": "language_10029695",
+    "content": "When Argus is a companion:\nWhen entering a new area, randomly replaces 2 non-Boss, non-Treasure Hunt, and or non-Treasure Trove path nodes with Treasure Hunts and or Treasure Troves, and illuminates Treasure Hunts and Treasure Troves in the fog."
+  },
+  {
+    "key": "language_10029696",
+    "content": "When Argus is deployed:\nWhenever completing a Treasure Hunt/Treasure Trove, [Miracle of a Hundred Eyes]'s Insight III effect triggers an additional 1 time."
+  },
+  {
+    "key": "language_10029697",
+    "content": "When Argus is deployed:\nAt the end of the round, casts a [No Mark Unstruck] without consuming Moxie. For each Treasure Hunt/Treasure Trove completed, this [No Mark Unstruck] deals an additional (ATK x 500%) Genesis DMG, capped at an additional (ATK x2000%) Genesis DMG."
+  },
+  {
+    "key": "language_10029698",
+    "content": "When Marcus is deployed:\nAt the start of the round, gains [Perusal] for self and inflicts [Annotate] on all enemies. When attacking while in the [Perusal] status, DMG Dealt + 50%."
+  },
+  {
+    "key": "language_10029699",
+    "content": "When Marcus is deployed:\n[Annotate] gains an additional effect: After taking an action, grants Moxie +1 to the user;\nAfter an enemy or ally takes an action, if Marcus has at least 4 Moxie, immediately casts an ultimate."
+  },
+  {
+    "key": "language_10029700",
+    "content": "When Marcus is deployed:\nWhen casting an ultimate, Penetration Rate +50%, and for each rank 2/3 incantation in the AP Area, the attack deals an additional 100%/150% Mental DMG."
+  },
+  {
+    "key": "language_10029701",
+    "content": "DNT"
+  },
+  {
+    "key": "language_10029702",
+    "content": "DNT"
+  },
+  {
+    "key": "language_10029703",
+    "content": "When Jessica is deployed:\nAfter this unit casts and attacks with a basic incantation, inflicts 3 instances of [Poison] on the target for 3 rounds."
+  },
+  {
+    "key": "language_10029704",
+    "content": "When Jessica is deployed:\nAfter entering battle and at the start of every 2 rounds thereafter, grants a Shield with (Jessica's ATK x300%) HP for 2 rounds. When an ally with this Shield is attacked, inflicts 1 stack of [Hag's Bane] on the attacker for 2 rounds, and grants ATK +5% to Jessica."
+  },
+  {
+    "key": "language_10029705",
+    "content": "When Jessica is deployed:\nAfter casting an ultimate, inflicts [Petrify] on the enemy for 1 round; then consumes up to 4 instances of [Poison] and resolves [Hag's Bane] on the target 1 time for each stack consumed (this effect does not decrease [Hag's Bane]'s round duration); allies attacking enemies in [Petrify] will not remove the [Petrify] status."
+  },
+  {
+    "key": "language_10029706",
+    "content": "DNT"
+  },
+  {
+    "key": "language_10029707",
+    "content": "DNT"
+  },
+  {
+    "key": "language_10029708",
+    "content": "When Ezra is deployed:\nAt the start of the round, for each mushroom present, lose (own current HP x10%) HP and recover (Missing HP 15%) HP for all allies, this effect can critically hit."
+  },
+  {
+    "key": "language_10029709",
+    "content": "When Ezra is deployed:\nObtain 1 The Incinerator (triggers up to 1 time). Whenever completing an Impending Crisis, obtain an additional The Incinerator. For each The Incinerator in the layout, gain Max HP +10% for self."
+  },
+  {
+    "key": "language_10029710",
+    "content": "When Ezra is deployed:\nUpgrades all The Incinerators in the layout: Whenever casting an Aid incantation, the number of effects granted from [Collection of Permanent Buffs] is increased to 5 types."
+  },
+  {
+    "key": "language_10029711",
+    "content": "DNT"
+  },
+  {
+    "key": "language_10029712",
+    "content": "DNT"
+  },
+  {
+    "key": "language_10029713",
+    "content": "When Getian is deployed:\nAt the start of the round, gain Eureka +3 for self. After an ally actively casts an incantation, Getian casts 1 [Induct Lightning] on a random enemy."
+  },
+  {
+    "key": "language_10029714",
+    "content": "When Getian is deployed:\nAt the start of the round, if under any array, retain all current ranks of allied incantations, randomly change them into new incantations, then cast 1 [Induct Lightning] on all enemies."
+  },
+  {
+    "key": "language_10029715",
+    "content": "When Getian is deployed:\nAfter an ally actively casts an incantation, casts 1 [Induct Lightning] on a random enemy, triggers 3 times."
+  },
+  {
+    "key": "language_10029716",
+    "content": "1-target attack. Deals 400% Reality DMG; inflicts 1 stack of [Paralyze] on the target."
+  },
+  {
+    "key": "language_10029717",
+    "content": "Mass attack. Deals 400% Reality DMG to all enemies; inflicts 1 stack of [Paralyze] on the targets."
+  },
+  {
+    "key": "language_10029718",
+    "content": "DNT"
+  },
+  {
+    "key": "language_10029719",
+    "content": "DNT"
+  },
+  {
+    "key": "language_10029720",
+    "content": "When Shamane is deployed:\nWhen entering battle, gains Moxie +5; at the start of the round, gains 5 stacks of [Nature's Blessing];\nAfter an ally takes an action, Shamane gains 1 stack of [Nature's Blessing]. Gain Ultimate Might +100% for self."
+  },
+  {
+    "key": "language_10029721",
+    "content": "When Shamane is deployed:\nFor each Ritual artefact in the layout, gain DMG Bonus +20% and Critical Rate +10% for self.\nAfter actively casting an incantation, grants 10 stacks of [Ceremonious] to all allies."
+  },
+  {
+    "key": "language_10029722",
+    "content": "When Shamane is deployed:\nWhen entering battle, gains an additional 15 stacks of [Nature's Blessing]. When casting an ultimate, for every 5 stacks of [Nature's Blessing] held on self, gain an additional Ultimate Might +50%."
+  },
+  {
+    "key": "language_10029723",
+    "content": "DNT"
+  },
+  {
+    "key": "language_10029724",
+    "content": "DNT"
+  },
+  {
+    "key": "language_10029725",
+    "content": "When Kaalaa Baunaa is deployed:\nWhen a [Planet] is removed, grant 1 of the following effects to all allies based on the type of planet removed: [Dusk · Saturn Divination], [Dusk · Mars Divination], or [Dusk · Full Moon Divination]."
+  },
+  {
+    "key": "language_10029726",
+    "content": "When Kaalaa Baunaa is deployed:\nAfter casting an ultimate, gains 1 effect based on the [Planet] that had the highest number removed (each effect can trigger only once per round).\nWhen removing 1/2/3+ [Saturn]: makes another ally immediately cast a rank 1/2/3 Skill 1.\nWhen removing 1/2/3+ [Mars]: makes another ally immediately cast a rank 1/2/3 Skill 2.\nWhen removing 1/2+ [Full Moon]: makes another ally immediately cast their ultimate 1/2 times."
+  },
+  {
+    "key": "language_10029727",
+    "content": "When Kaalaa Baunaa is a companion:\nWhen an ally performs an extra action, DMG Dealt +50%.\nObtains 2 random Epic Extra Action artefacts (triggers only 1 time)."
+  },
+  {
+    "key": "language_10029728",
+    "content": "DNT"
+  },
+  {
+    "key": "language_10029729",
+    "content": "DNT"
+  },
+  {
+    "key": "language_10029730",
+    "content": "DNT"
+  },
+  {
+    "key": "language_10029731",
+    "content": "DNT"
+  },
+  {
+    "key": "language_10029732",
+    "content": "When Yenisei is deployed:\nWhen entering battle, gains 30% Max HP for self. The [Immunity] status granted by self lasts 1 additional round."
+  },
+  {
+    "key": "language_10029733",
+    "content": "When Yenisei is deployed:\nAt the start of the round, gains 1 stack of [Flow]; at the end of the round, if [Flow] has reached 3 stacks, consume 1 stack of [Flow] to recover (own Max HP x15%) HP for all allies, then gains Moxie +1 for self."
+  },
+  {
+    "key": "language_10029734",
+    "content": "When Yenisei is a companion:\nAt the end of the round, if the total ranks of incantations played this round reach 3/5/7, Yenisei and the adjacent ally behind gain 1 stack of [Anticipation · Precast]/[Anticipation · Precast II]/[Anticipation · Precast III]."
+  },
+  {
+    "key": "language_10029735",
+    "content": "DNT"
+  },
+  {
+    "key": "language_10029736",
+    "content": "DNT"
+  },
+  {
+    "key": "language_10029737",
+    "content": "When Necrologist is a companion:\nAfter any ally becomes Lost, revive the ally immediately and recover 50% of the ally's Max HP (starts with 1 use, gains an additional use when entering a Safe Zone)."
+  },
+  {
+    "key": "language_10029738",
+    "content": "When Necrologist is aiding:\nWhen entering battle, all allies gain 3 stacks of [Moribund]; whenever [Moribund] disappears from an ally, dispel negative statuses from all allies and recover (their Max HP x50%) HP for all allies (triggers up to 2 times per battle)."
+  },
+  {
+    "key": "language_10029739",
+    "content": "When Necrologist is aiding:\nWhenever an ally is dying, all allies gain DMG dealt + 50%, stackable."
+  },
+  {
+    "key": "language_10029740",
+    "content": "When Bkornblume is aiding:\nAt the start of every 2 rounds, inflict Reality DEF -25% and DMG Taken +25% on all enemies for 2 rounds; if an enemy has a negative effect, allies gain DMG Dealt +50% against that target."
+  },
+  {
+    "key": "language_10029741",
+    "content": "When Bkornblume is aiding:\nAt the start of every 3 rounds, inflict [Seal] on all enemies for 1 round, and all enemies get Moxie -1."
+  },
+  {
+    "key": "language_10029742",
+    "content": "When Bkornblume is aiding:\nFor each Ritual artefact in the layout, all allies gain Ultimate Might +10%."
+  },
+  {
+    "key": "language_10029743",
+    "content": "At the start of every 2 rounds, inflict Reality DEF -25% and DMG Taken +25% on all enemies for 2 rounds."
+  },
+  {
+    "key": "language_10029744",
+    "content": "When an enemy is holding a negative effect, gain DMG Dealt +50% against the enemy."
+  },
+  {
+    "key": "language_10029745",
+    "content": "Every 3 rounds, inflict [Seal] on all enemies for 1 round, and all enemies get Moxie -1."
+  },
+  {
+    "key": "language_10029746",
+    "content": "When X is a companion:\nMystic Barters no longer have negative effects, Voiceless Scales trade chances +1."
+  },
+  {
+    "key": "language_10029747",
+    "content": "When X is a companion:\nAfter performing an Artefact Exchange, obtain 1 random artefact."
+  },
+  {
+    "key": "language_10029748",
+    "content": "When X is a companion:\nAfter trading with the Voiceless Scales 1 time, obtain 1 random Epic artefact."
+  },
+  {
+    "key": "language_10029749",
+    "content": "1-target attack. Deals 100% Reality DMG; after attacking, inflicts 2 stacks of [Passion Drain] on the target."
+  },
+  {
+    "key": "language_10029750",
+    "content": "1-target attack. Deals 150% Reality DMG; after attacking, inflicts 2 stacks of [Passion Drain] on the target."
+  },
+  {
+    "key": "language_10029751",
+    "content": "1-target attack. Deals 250% Reality DMG; after attacking, inflicts 2 stacks of [Passion Drain] on the target."
+  },
+  {
+    "key": "language_10029752",
+    "content": "Mass attack. Deals 120% Reality DMG to 2 enemies. If there's only 1 enemy target, grant 5 stacks of [Monomythic Narrative] to self; otherwise, grant 5 stacks of [Ensemble Narrative] to self."
+  },
+  {
+    "key": "language_10029753",
+    "content": "Mass attack. Deals 180% Reality DMG to 2 enemies. If there's only 1 enemy target, grant 5 stacks of [Monomythic Narrative] to self; otherwise, grant 5 stacks of [Ensemble Narrative] to self."
+  },
+  {
+    "key": "language_10029754",
+    "content": "Mass attack. Deals 300% Reality DMG to 2 enemies. If there's only 1 enemy target, grant 5 stacks of [Monomythic Narrative] to self; otherwise, grant 5 stacks of [Ensemble Narrative] to self."
+  },
+  {
+    "key": "language_10029755",
+    "content": "Mass attack. Deals 450% Reality DMG to all enemies and an additional 450% Reality DMG to the main target. Consumes all stacks of [Monomythic Narrative] and [Ensemble Narrative] on self to deal additional Reality DMG;\nWhen casting this ultimate, consume all Moxie on self. For each additional Moxie consumed, grant Ultimate Might +3% to this attack, and grant Moxie +1 to another ally with the lowest current Moxie;\nIf at least 5 additional Moxie are consumed, the bonus Ultimate Might granted to this attack is doubled."
+  },
+  {
+    "key": "language_10029756",
+    "content": "Max Moxie +2 (The Moxie required to gain ultimates is still 5).\nAfter another ally casts an ultimate, Recoleta gains Moxie +1; and for each point of Moxie consumed by that 1-target/mass ultimate, Recoleta gains 1 stack of [Monomythic Narrative]/[Ensemble Narrative]."
+  },
+  {
+    "key": "language_10029757",
+    "content": "Max Moxie +3. When entering battle, gain Moxie +3 and 1 stack of [Preparation · Recoleta].\nAfter casting an ultimate, for every 10 stacks of [Monomythic Narrative] and or [Ensemble Narrative] consumed, gain 1 stack of [Preparation · Recoleta]; a maximum of 1 stack can be gained in this way."
+  },
+  {
+    "key": "language_10029758",
+    "content": "Make the ally with the highest Moxie consume all their current Moxie to cast an ultimate, then recover the consumed Moxie.\n(This ultimate does not count as an extra action, and the recovered Moxie cannot exceed the Moxie required to cast the ultimate)."
+  },
+  {
+    "key": "language_10029759",
+    "content": "Max Moxie +3. When entering battle, gain Moxie +3 and 1 stack of [Preparation · Recoleta].\nAfter casting an ultimate, for every 10 stacks of [Monomythic Narrative] and or [Ensemble Narrative] consumed, gain 1 stack of [Preparation · Recoleta]; a maximum of 2 stacks can be gained in this way."
+  },
+  {
+    "key": "language_10029760",
+    "content": "Mass attack. Deals 450% Reality DMG to all enemies and an additional 450% Reality DMG to the main target. Consumes all stacks of [Monomythic Narrative<id:2>] and [Ensemble Narrative<id:2>] on self to deal additional Reality DMG;\nWhen casting this ultimate, consume all Moxie on self. For each additional Moxie consumed, grant Ultimate Might +3% to this attack, and grant Moxie +1 to another ally with the lowest current Moxie;\nIf at least 5 additional Moxie are consumed, the bonus Ultimate Might granted to this attack is doubled."
+  },
+  {
+    "key": "language_10029761",
+    "content": "Mass attack. Deals 120% Reality DMG to 2 enemies. If there's only 1 enemy target, grant 5 stacks of [Monomythic Narrative<id:2>] to self; otherwise, grant 5 stacks of [Ensemble Narrative<id:2>] to self."
+  },
+  {
+    "key": "language_10029762",
+    "content": "Mass attack. Deals 180% Reality DMG to 2 enemies. If there's only 1 enemy target, grant 5 stacks of [Monomythic Narrative<id:2>] to self; otherwise, grant 5 stacks of [Ensemble Narrative<id:2>] to self."
+  },
+  {
+    "key": "language_10029763",
+    "content": "Mass attack. Deals 300% Reality DMG to 2 enemies. If there's only 1 enemy target, grant 5 stacks of [Monomythic Narrative<id:2>] to self; otherwise, grant 5 stacks of [Ensemble Narrative<id:2>] to self."
+  },
+  {
+    "key": "language_10029764",
+    "content": "Max Moxie +2 (The Moxie required to gain ultimates is still 5).\nAfter another ally casts an ultimate, Recoleta gains Moxie +1; and for each point of Moxie consumed by that 1-target/mass ultimate, Recoleta gains 1 stack of [Monomythic Narrative<id:2>]/[Ensemble Narrative<id:2>]."
+  },
+  {
+    "key": "language_10029765",
+    "content": "Max Moxie +3. When entering battle, gain Moxie +3 and 1 stack of [Preparation · Recoleta].\nAfter casting an ultimate, for every 10 stacks of [Monomythic Narrative<id:2>] and or [Ensemble Narrative<id:2>] consumed, gain 1 stack of [Preparation · Recoleta]; a maximum of 2 stacks can be gained in this way."
+  },
+  {
+    "key": "language_10029766",
+    "content": "Mass attack. Deals 550% Reality DMG to all enemies and an additional 550% Reality DMG to the main target. Consumes all stacks of [Monomythic Narrative<id:2>] and [Ensemble Narrative<id:2>] on self to deal additional Reality DMG;\nWhen casting this ultimate, consume all Moxie on self. For each additional Moxie consumed, grant Ultimate Might +3% to this attack, and grant Moxie +1 to another ally with the lowest current Moxie;\nIf at least 5 additional Moxie are consumed, the bonus Ultimate Might granted to this attack is doubled."
+  },
+  {
+    "key": "language_10029767",
+    "content": "Mass attack. Deals 150% Reality DMG to 2 enemies. If there's only 1 enemy target, grant 10 stacks of [Monomythic Narrative<id:2>] to self; otherwise, grant 10 stacks of [Ensemble Narrative<id:2>] to self."
+  },
+  {
+    "key": "language_10029768",
+    "content": "Mass attack. Deals 225% Reality DMG to 2 enemies. If there's only 1 enemy target, grant 10 stacks of [Monomythic Narrative<id:2>] to self; otherwise, grant 10 stacks of [Ensemble Narrative<id:2>] to self."
+  },
+  {
+    "key": "language_10029769",
+    "content": "Mass attack. Deals 375% Reality DMG to 2 enemies. If there's only 1 enemy target, grant 10 stacks of [Monomythic Narrative<id:2>] to self; otherwise, grant 10 stacks of [Ensemble Narrative<id:2>] to self."
+  },
+  {
+    "key": "language_10029770",
+    "content": "Mass attack. Deals 650% Reality DMG to all enemies and an additional 650% Reality DMG to the main target. Consumes all stacks of [Monomythic Narrative<id:2>] and [Ensemble Narrative<id:2>] on self to deal additional Reality DMG;\nWhen casting this ultimate, consume all Moxie on self. For each additional Moxie consumed, grant Ultimate Might +6% to this attack, and grant Moxie +1 to another ally with the lowest current Moxie;\nIf at least 5 additional Moxie are consumed, the bonus Ultimate Might granted to this attack is doubled."
+  },
+  {
+    "key": "language_10029771",
+    "content": "After attacking, if only 1 enemy was attacked, gain 1 stack of [Monomythic Narrative]; otherwise, gain 1 stack of [Ensemble Narrative]."
+  },
+  {
+    "key": "language_10029772",
+    "content": "At the start of the round, Max Moxie +5. When casting an ultimate, consume all additional Moxie; for each additional Moxie consumed, Ultimate Might +10%;\nIf at least 5 additional Moxie is consumed, that bonus Ultimate Might granted to this attack is doubled;\nThe consumed additional Moxie are randomly distributed onto other allies."
+  },
+  {
+    "key": "language_10029773",
+    "content": "At the start of the round, make the ally with the highest Moxie cast an ultimate, then recover the consumed Moxie."
+  },
+  {
+    "key": "language_10029774",
+    "content": "At the start of the round, remove all stacks of [Monomythic Narrative] and [Ensemble Narrative]; for every 5 stacks removed, gain 1 stack of [Preparation: Recoleta]; a maximum of 1 stack can be gained in this way."
+  },
+  {
+    "key": "language_10029775",
+    "content": "After actively attacking, inflicts 1 stack of [Passion Drain] on the target."
+  },
+  {
+    "key": "language_10029776",
+    "content": "After casting an ultimate, grants 1 stack of [Fixed Plan<id:1>] to all allies."
+  },
+  {
+    "key": "language_10029777",
+    "content": "After casting an ultimate, grants 1 additional stack of [Fixed Plan<id:1>] to all allies."
+  },
+  {
+    "key": "language_10029778",
+    "content": "1-target attack. Deals 650% Mental DMG. Gains 1 stack of [Thief Master]. For every stack of [Fixed Plan<id:1>], this attack deals an additional 50% Mental DMG."
+  },
+  {
+    "key": "language_10029779",
+    "content": "1-target attack. Deals 725% Mental DMG. Gains 1 stack of [Thief Master]. For every stack of [Fixed Plan<id:1>], this attack deals an additional 50% Mental DMG."
+  },
+  {
+    "key": "language_10029780",
+    "content": "1-target attack. Deals 725% Mental DMG. Gains 2 stacks of [Thief Master]. For every stack of [Fixed Plan<id:1>], this attack deals an additional 50% Mental DMG."
+  },
+  {
+    "key": "language_10029781",
+    "content": "1-target attack. Deals 800% Mental DMG. Gains 2 stacks of [Thief Master]. For every stack of [Fixed Plan<id:1>], this attack deals an additional 50% Mental DMG."
+  },
+  {
+    "key": "language_10029782",
+    "content": "When entering battle, gain Moxie +5 for self. Excess Moxie on allies is temporarily stored. At the end of the round, each character's stored Moxie is used to replenish their own Moxie if able. Each character can store up to 5 points of Moxie this way."
+  },
+  {
+    "key": "language_10029783",
+    "content": "When the carrier attacks, for each point of Moxie held, the attack gains Ultimate Might +1.2%.\nIf the carrier is of the [Mineral] afflatus, for each point of Moxie consumed, gain Critical DMG +1%, stacks up to 16 times."
+  },
+  {
+    "key": "language_10029784",
+    "content": "When the carrier attacks, for each point of Moxie held, the attack gains Ultimate Might +1.8%.\nIf the carrier is of the [Mineral] afflatus, for each point of Moxie consumed, gain Critical DMG +1%, stacks up to 16 times."
+  },
+  {
+    "key": "language_10029785",
+    "content": "When the carrier attacks, for each point of Moxie held, the attack gains Ultimate Might +1.8%.\nIf the carrier is of the [Mineral] afflatus, for each point of Moxie consumed, gain Critical DMG +1.5%, stacks up to 16 times."
+  },
+  {
+    "key": "language_10029786",
+    "content": "When the carrier attacks, for each point of Moxie held, the attack gains Ultimate Might +2.4%.\nIf the carrier is of the [Mineral] afflatus, for each point of Moxie consumed, gain Critical DMG +1.5%, stacks up to 16 times."
+  },
+  {
+    "key": "language_10029787",
+    "content": "When the carrier attacks, for each point of Moxie held, the attack gains Ultimate Might +2.4%.\nIf the carrier is of the [Mineral] afflatus, for each point of Moxie consumed, gain Critical DMG +2%, stacks up to 16 times."
+  },
+  {
+    "key": "language_10029788",
+    "content": "For each point of Moxie consumed, gain Critical DMG +2%, stacks up to 16 times."
+  },
+  {
+    "key": "language_10029789",
+    "content": "When allies have casted more than 4 incantations in a single round, each additional cast grants DMG Dealt +{3%} to all allies for 1 round, stacks up to 3 times;\nIf the carrier is of the [Intelligence] afflatus, each Eureka consumed by allies grants Incantation Might +{0.2%} to all allies, stacks up to 30 times; when entering battle, gain Eureka +2 for self."
+  },
+  {
+    "key": "language_10029790",
+    "content": "When allies have casted more than 4 incantations in a single round, each additional cast grants DMG Dealt +{4.5%} to all allies for 1 round, stacks up to 3 times;\nIf the carrier is of the [Intelligence] afflatus, each Eureka consumed by allies grants Incantation Might +{0.2%} to all allies, stacks up to 30 times; when entering battle, gain Eureka +2 for self."
+  },
+  {
+    "key": "language_10029791",
+    "content": "When allies have casted more than 4 incantations in a single round, each additional cast grants DMG Dealt +{4.5%} to all allies for 1 round, stacks up to 3 times;\nIf the carrier is of the [Intelligence] afflatus, each Eureka consumed by allies grants Incantation Might +{0.3%} to all allies, stacks up to 30 times; when entering battle, gain Eureka +2 for self."
+  },
+  {
+    "key": "language_10029792",
+    "content": "When allies have casted more than 4 incantations in a single round, each additional cast grants DMG Dealt +{6%} to all allies for 1 round, stacks up to 3 times;\nIf the carrier is of the [Intelligence] afflatus, each Eureka consumed by allies grants Incantation Might +{0.3%} to all allies, stacks up to 30 times; when entering battle, gain Eureka +2 for self."
+  },
+  {
+    "key": "language_10029793",
+    "content": "When allies have casted more than 4 incantations in a single round, each additional cast grants DMG Dealt +{6%} to all allies for 1 round, stacks up to 3 times;\nIf the carrier is of the [Intelligence] afflatus, each Eureka consumed by allies grants Incantation Might +{0.4%} to all allies, stacks up to 30 times; when entering battle, gain Eureka +2 for self."
+  },
+  {
+    "key": "language_10029794",
+    "content": "All allies get DMG Dealt +{0.2%}."
+  },
+  {
+    "key": "language_10029795",
+    "content": "For each Eureka consumed, grant Incantation Might +0.2% to all allies, stacks up to 30 times."
+  },
+  {
+    "key": "language_10029796",
+    "content": "For each Eureka consumed, grant Incantation Might +0.3% to all allies, stacks up to 30 times."
+  },
+  {
+    "key": "language_10029797",
+    "content": "For each Eureka consumed, grant Incantation Might +0.4% to all allies, stacks up to 30 times."
+  },
+  {
+    "key": "language_10029798",
+    "content": "After the carrier casts a buff-type incantation, all allies gain DMG Dealt +1%, stacks up to 5 times.\nIf the carrier is of the [Mineral] afflatus, gain Reality DEF +18%."
+  },
+  {
+    "key": "language_10029799",
+    "content": "After the carrier casts a buff-type incantation, all allies gain DMG Dealt +1.5%, stacks up to 5 times.\nIf the carrier is of the [Mineral] afflatus, gain Reality DEF +18%."
+  },
+  {
+    "key": "language_10029800",
+    "content": "After the carrier casts a buff-type incantation, all allies gain DMG Dealt +1.5%, stacks up to 5 times.\nIf the carrier is of the [Mineral] afflatus, gain Reality DEF +27%."
+  },
+  {
+    "key": "language_10029801",
+    "content": "After the carrier casts a buff-type incantation, all allies gain DMG Dealt +2%, stacks up to 5 times.\nIf the carrier is of the [Mineral] afflatus, gain Reality DEF +27%."
+  },
+  {
+    "key": "language_10029802",
+    "content": "After the carrier casts a buff-type incantation, all allies gain DMG Dealt +2%, stacks up to 5 times.\nIf the carrier is of the [Mineral] afflatus, gain Reality DEF +36%."
+  },
+  {
+    "key": "language_10029803",
+    "content": "After a unit dies, a substitute monster takes its place and the unit is added to the end of the substitute list."
+  },
+  {
+    "key": "language_10029804",
+    "content": "After death, the substitute list is cleared, and all remaining allies are eliminated."
+  },
+  {
+    "key": "language_10029805",
+    "content": "Initialize the Passion Gauge."
+  },
+  {
+    "key": "language_10029806",
+    "content": "At the end of the round, Passion Gauge +50%."
+  },
+  {
+    "key": "language_10029807",
+    "content": "At the start of a major round, if the gauge is full, enter Passion Mode; when the Passion buff is lost, clear the gauge."
+  },
+  {
+    "key": "language_10029808",
+    "content": "When losing the Passion buff, progress bar is cleared."
+  },
+  {
+    "key": "language_10029809",
+    "content": "After death, the boss loses 100% of own Max HP."
+  },
+  {
+    "key": "language_10029810",
+    "content": "After death, Passion Gauge +5%."
+  },
+  {
+    "key": "language_10029811",
+    "content": "After casting an ultimate, Passion Gauge +25%."
+  },
+  {
+    "key": "language_10029812",
+    "content": "After being attacked, Passion Gauge +2%."
+  },
+  {
+    "key": "language_10029813",
+    "content": "In Lucid Domain, allies gain Ultimate Might +100%."
+  },
+  {
+    "key": "language_10029814",
+    "content": "In Lucid Domain, allies gain Incantation Might +70%."
+  },
+  {
+    "key": "language_10029815",
+    "content": "After taking an action, other allies gain Moxie +1."
+  },
+  {
+    "key": "language_10029816",
+    "content": "At the start of the round, if in Lucid Domain, all allies gain 1 stack of [Incorporeal]."
+  },
+  {
+    "key": "language_10029817",
+    "content": "At the start of an even-numbered round, gain [Taunt] for 1 round."
+  },
+  {
+    "key": "language_10029818",
+    "content": "At the start of the round, if in Lucid Domain, other allies gain Reality DEF +25% and Mental DEF +25% for 2 rounds."
+  },
+  {
+    "key": "language_10029819",
+    "content": "For every 1 Moxie consumed, Lucidness +5%."
+  },
+  {
+    "key": "language_10029820",
+    "content": "For every 1 Eureka consumed, Lucidness +3%."
+  },
+  {
+    "key": "language_10029821",
+    "content": "In Lucid Domain, recover 2 Moxie at the start of the round."
+  },
+  {
+    "key": "language_10029822",
+    "content": "In Lucid Domain, when casting a rank 2/3 incantation, there's a 30%/60% chance to cast it an additional 1 time."
+  },
+  {
+    "key": "language_10029823",
+    "content": "In Lucid Domain, after an ally actively performs an action, all allies recover 2 Eureka."
+  },
+  {
+    "key": "language_10029824",
+    "content": "In Lucid Domain, allies gain ATK +15%."
+  },
+  {
+    "key": "language_10029825",
+    "content": "Rank 2/3 incantations gain DMG +30%."
+  },
+  {
+    "key": "language_10029826",
+    "content": "When attacking, if there's at least 3 types of [Neg Status] on an enemy, the attack gains DMG +40% against that enemy."
+  },
+  {
+    "key": "language_10029827",
+    "content": "At the end of the round, recover (Missing HP x20%) HP for other allies."
+  },
+  {
+    "key": "language_10029828",
+    "content": "At the end of the round, grant 2 stacks of [Unsparing<id:90001>] to other allies."
+  },
+  {
+    "key": "language_10029829",
+    "content": "After being attacked, Stress +10 (can trigger only 1 time per round). When this unit has 4 or more [Neg Status], this passive has no effect."
+  },
+  {
+    "key": "language_10029830",
+    "content": "DNT"
+  },
+  {
+    "key": "language_10029831",
+    "content": "In Lucid Domain, allies gain Incantation Might +50%."
+  },
+  {
+    "key": "language_10029832",
+    "content": "After casting a rank 2/3 incantation, Lucidness +10%/20%."
+  },
+  {
+    "key": "language_10029833",
+    "content": "In Lucid Domain, rank 2/3 incantations gain DMG +50%/100%."
+  },
+  {
+    "key": "language_10029834",
+    "content": "In Lucid Domain, when an ally attacks, if an enemy has at least 1 type of [Neg Status], DMG +80%."
+  },
+  {
+    "key": "language_10029835",
+    "content": "When entering battle, gain 1 stack of [Chitinous] for self."
+  },
+  {
+    "key": "language_10029836",
+    "content": "Launches a ball of fire, dealing (own ATK x700%) Genesis DMG to all enemies."
+  },
+  {
+    "key": "language_10029837",
+    "content": "In Lucid Domain, after an ally casts an ultimate, deals (own ATK x700%) Genesis DMG to all enemies."
+  },
+  {
+    "key": "language_10029838",
+    "content": "After entering phase 2, at the end of each round, if this unit is not in the [Metamorphosis<id:3>] status, summons 2 Manus Vindictae members to the Backfield. After an ally dies, extends the channeling duration of [Metamorphosis<id:3>] by 1 round."
+  },
+  {
+    "key": "language_10029839",
+    "content": "At the end of the round, gain [Taunt] for 1 round."
+  },
+  {
+    "key": "language_10029840",
+    "content": "At the end of the round, recover (Missing HP x10%) HP for the ally with the lowest HP percentage."
+  },
+  {
+    "key": "language_10029841",
+    "content": "At the start of the round, Moxie +2 for the ally with the lowest Moxie."
+  },
+  {
+    "key": "language_10029842",
+    "content": "After casting an ultimate, all allies gain 3 stacks of [Ceremonious]."
+  },
+  {
+    "key": "language_10029843",
+    "content": "1-target attack. Deals 100% Mental DMG. Gains [Continuous Action Ⅰ] for 1 round. After the attack, consumes 2 Eureka and grants attack instance +1 to [Impromptu Incantation] for the round."
+  },
+  {
+    "key": "language_10029844",
+    "content": "1-target attack. Deals 200% Mental DMG. Gains [Continuous Action Ⅰ] for 1 round. After the attack, consumes 2 Eureka and grants attack instance +1 to [Impromptu Incantation] for the round."
+  },
+  {
+    "key": "language_10029845",
+    "content": "1-target attack. Deals 400% Mental DMG. Gains [Continuous Action Ⅰ] for 1 round. After the attack, consumes 2 Eureka and grants attack instance +1 to [Impromptu Incantation] for the round."
+  },
+  {
+    "key": "language_10029846",
+    "content": "1-target attack. Deals 100% Mental DMG. Gains [Continuous Action Ⅰ] for 2 rounds. After the attack, consumes 2 Eureka and grants attack instance +1 to [Impromptu Incantation] for the round."
+  },
+  {
+    "key": "language_10029847",
+    "content": "1-target attack. Deals 200% Mental DMG. Gains [Continuous Action Ⅰ] for 2 rounds. After the attack, consumes 2 Eureka and grants attack instance +1 to [Impromptu Incantation] for the round."
+  },
+  {
+    "key": "language_10029848",
+    "content": "1-target attack. Deals 400% Mental DMG. Gains [Continuous Action Ⅰ] for 2 rounds. After the attack, consumes 2 Eureka and grants attack instance +1 to [Impromptu Incantation] for the round."
+  },
+  {
+    "key": "language_10029849",
+    "content": "Mass buff. Grants 1 stack of [Clarification<id:1>] to all allies for 3 rounds; consumes 2 Eureka and grants an additional 1 stack of [Clarification<id:1>] to all allies for 3 rounds."
+  },
+  {
+    "key": "language_10029850",
+    "content": "Mass buff. Grants 2 stacks of [Clarification<id:1>] to all allies for 3 rounds; consumes 2 Eureka and grants an additional 1 stack of [Clarification<id:1>] to all allies for 3 rounds."
+  },
+  {
+    "key": "language_10029851",
+    "content": "Mass buff. Grants 3 stacks of [Clarification<id:1>] to all allies for 3 rounds; consumes 2 Eureka and grants an additional 1 stack of [Clarification<id:1>] to all allies for 3 rounds."
+  },
+  {
+    "key": "language_10029852",
+    "content": "Mass buff. Grants 1 stack of [Clarification<id:2>] to all allies for 3 rounds; consumes 2 Eureka and grants an additional 1 stack of [Clarification<id:2>] to all allies for 3 rounds."
+  },
+  {
+    "key": "language_10029853",
+    "content": "Mass buff. Grants 2 stacks of [Clarification<id:2>] to all allies for 3 rounds; consumes 2 Eureka and grants an additional 1 stack of [Clarification<id:2>] to all allies for 3 rounds."
+  },
+  {
+    "key": "language_10029854",
+    "content": "Mass buff. Grants 3 stacks of [Clarification<id:2>] to all allies for 3 rounds; consumes 2 Eureka and grants an additional 1 stack of [Clarification<id:2>] to all allies for 3 rounds."
+  },
+  {
+    "key": "language_10029855",
+    "content": "Self channel. {name} [Memorize] the first 2 basic incantations actively casted this round and enter the [Hyperthymesia<id:1>] status for 1 round."
+  },
+  {
+    "key": "language_10029856",
+    "content": "Self channel. {name} [Memorize] the first 3 basic incantations actively casted this round and enter the [Hyperthymesia<id:2>] status for 1 round."
+  },
+  {
+    "key": "language_10029857",
+    "content": "Self channel. {name} [Memorize] the first 3 basic incantations actively casted this round and enter the [Hyperthymesia<id:3>] status for 1 round."
+  },
+  {
+    "key": "language_10029858",
+    "content": "Self channel. {name} [Memorize] the first 3 basic incantations actively casted this round and enter the [Hyperthymesia<id:4>] status for 1 round."
+  },
+  {
+    "key": "language_10029859",
+    "content": "Max Eureka +2.\nWhenever an ally consumes Eureka, accumulate points of [Inspiration].\nAt the start of each round, gain Eureka +4.\nWhenever an ally in the [Clarification<id:1>] status actively casts and attacks with an incantation, {name} consumes 1 Eureka to make 1 attack instance of [Impromptu Incantation] this round inflict the [Interpretation<id:1>] status on the target hit."
+  },
+  {
+    "key": "language_10029860",
+    "content": "Each time after this unit consumes Eureka, there's a 25% chance to recover 1 Eureka."
+  },
+  {
+    "key": "language_10029861",
+    "content": "Max Eureka +2.\nWhenever an ally consumes Eureka, accumulate points of [Inspiration].\nAt the start of each round, gain Eureka +4.\nWhenever an ally in the [Clarification<id:1>] status actively casts and attacks with an incantation, {name} consumes 1 Eureka to make 1 attack instance of [Impromptu Incantation] this round inflict the [Interpretation<id:2>] status on the target hit."
+  },
+  {
+    "key": "language_10029862",
+    "content": "Max Eureka +2.\nWhenever an ally consumes Eureka, accumulate points of [Inspiration].\nAt the start of each round, gain Eureka +4.\nWhenever an ally in the [Clarification<id:2>] status actively casts and attacks with an incantation, {name} consumes 1 Eureka to make 1 attack instance of [Impromptu Incantation] this round inflict the [Interpretation<id:2>] status on the target hit."
+  },
+  {
+    "key": "language_10029863",
+    "content": "Max Eureka +2.\nWhenever an ally consumes Eureka, accumulate points of [Inspiration].\nAt the start of each round, gain Eureka +4.\nWhenever an ally in the [Clarification<id:2>] status actively casts and attacks with an incantation, {name} consumes 1 Eureka to make 1 attack instance of [Impromptu Incantation] this round inflict the [Interpretation<id:3>] status on the target hit."
+  },
+  {
+    "key": "language_10029864",
+    "content": "Each time after this unit consumes Eureka, there's a 50% chance to recover 1 Eureka."
+  },
+  {
+    "key": "language_10029865",
+    "content": "Grant attack instances +2 to [Impromptu Incantation] for the round, and all non-final attack instances of Impromptu Incantation this round inflict the [Interpretation<id:1>] status on the attack target, with the final attack instance also dealing an additional (the target's stacks of [Interpretation<id:1>] x 80)% Mental DMG to each enemy target holding the Interpretation status."
+  },
+  {
+    "key": "language_10029866",
+    "content": "Grant attack instances +2 to [Impromptu Incantation] for the round, and all non-final attack instances of Impromptu Incantation this round inflict the [Interpretation<id:2>] status on the attack target, with the final attack instance also dealing an additional (the target's stacks of [Interpretation<id:2>] x 80)% Mental DMG to each enemy target holding the Interpretation status."
+  },
+  {
+    "key": "language_10029867",
+    "content": "Grant attack instances +3 to [Impromptu Incantation] for the round, and all non-final attack instances of Impromptu Incantation this round inflict the [Interpretation<id:2>] status on the attack target, with the final attack instance also dealing an additional (the target's stacks of [Interpretation<id:2>] x 160)% Mental DMG to each enemy target holding the Interpretation status."
+  },
+  {
+    "key": "language_10029868",
+    "content": "Grant attack instances +3 to [Impromptu Incantation] for the round, and all non-final attack instances of Impromptu Incantation this round inflict the [Interpretation<id:5>] status on the attack target, with the final attack instance also dealing an additional (the target's stacks of [Interpretation<id:3>] x 240)% Mental DMG to each enemy target holding the Interpretation status."
+  },
+  {
+    "key": "language_10029869",
+    "content": "Grants Rational Passion, AP +X; whenever taking an action, take (Max HP x1%) DMG, the damage effect is stackable."
+  },
+  {
+    "key": "language_10029870",
+    "content": "Mass attack. Deals 130% Mental DMG to 2 enemies; if the target is in the [Hysteria] status, gain 2 stacks of [Rousing Morale] for self; otherwise, dispel all stacks of [Rousing Morale] from self."
+  },
+  {
+    "key": "language_10029871",
+    "content": "Mass attack. Deals 200% Mental DMG to 2 enemies; if a target is in the [Hysteria] status, gain 2 stacks of [Rousing Morale] for self; otherwise, dispel all stacks of [Rousing Morale] from self."
+  },
+  {
+    "key": "language_10029872",
+    "content": "Mass attack. Deals 130% Mental DMG to 2 enemies; if a target is in the [Hysteria] status, gain Moxie +1 for self."
+  },
+  {
+    "key": "language_10029873",
+    "content": "Mass attack. Deals 200% Mental DMG to 2 enemies; if a target is in the [Hysteria] status, gain Moxie +1 for self."
+  },
+  {
+    "key": "language_10029874",
+    "content": "Mass attack. Deals 200% Mental DMG to all enemies; inflicts 4 stacks of [Hysteria] on the targets hit."
+  },
+  {
+    "key": "language_10029875",
+    "content": "When Octavia is being attacked, gain Moxie +1 for self (triggers up to 2 times per round). When being attacked, if this unit is at 5 Moxie, cast [Oration of Ideals] 1 time."
+  },
+  {
+    "key": "language_10029876",
+    "content": "Mass attack. Deals 130% Mental DMG to 2 enemies; if the target is not in the [Hysteria] status, gain Moxie +1 for self."
+  },
+  {
+    "key": "language_10029877",
+    "content": "Mass attack. Deals 200% Mental DMG to 2 enemies; if the target is not in the [Hysteria] status, gain Moxie +1 for self."
+  },
+  {
+    "key": "language_10029878",
+    "content": "Mass attack. Deals 130% Mental DMG to 2 enemies; if the target is not in the [Hysteria] status, gain 2 stacks of [Rousing Morale] for self; otherwise, dispel all stacks of [Rousing Morale] from self."
+  },
+  {
+    "key": "language_10029879",
+    "content": "Mass attack. Deals 200% Mental DMG to 2 enemies; if the target is not in the [Hysteria] status, gain 2 stacks of [Rousing Morale] for self; otherwise, dispel all stacks of [Rousing Morale] from self."
+  },
+  {
+    "key": "language_10029880",
+    "content": "Mass attack. Deals 200% Mental DMG to all enemies; dispels all [Hysteria] statuses from the targets hit."
+  },
+  {
+    "key": "language_10029881",
+    "content": "When The Idealist is being attacked, gain Moxie +1 for self (triggers up to 2 times per round). When being attacked, if at 5 Moxie, cast [Freedom of Literature] 1 time."
+  },
+  {
+    "key": "language_10029882",
+    "content": "Self channel. Enters the [Operation Ready] status; if already in the [Operation Ready] status, gains an additional Moxie +1."
+  },
+  {
+    "key": "language_10029883",
+    "content": "Mass attack. Deals 120% Mental DMG to 2 enemies; if the target is in the [Sterile Rinsing] status, deals an additional 50% Mental DMG."
+  },
+  {
+    "key": "language_10029884",
+    "content": "Mass attack. Deals 180% Mental DMG to 2 enemies; if the target is in the [Sterile Rinsing] status, deals an additional 50% Mental DMG."
+  },
+  {
+    "key": "language_10029885",
+    "content": "1-target attack. Deals 400% Mental DMG; after attacking, inflicts 1 stack of [Sterile Rinsing] on the target and grants [Continuous Action Ⅰ] to self."
+  },
+  {
+    "key": "language_10029886",
+    "content": "When attacking, if in the [Operation Ready] status, inflicts 1 stack of [Sterile Rinsing] on the target. After being attacked by an ultimate, dispels [Operation Ready] from self."
+  },
+  {
+    "key": "language_10029887",
+    "content": "Mass attack. Deals 120% Mental DMG to 2 enemies; if the target is in the [Sterile Rinsing] status, deals an additional 100% Mental DMG."
+  },
+  {
+    "key": "language_10029888",
+    "content": "Mass attack. Deals 180% Mental DMG to 2 enemies; if the target is in the [Sterile Rinsing] status, deals an additional 100% Mental DMG."
+  },
+  {
+    "key": "language_10029889",
+    "content": "Self buff. Switches to the [Ego: The Idealist] status and dispels all stacks of [Sterile Rinsing] from enemies; afterward, can use incantations exclusive to the [Ego: The Idealist] status."
+  },
+  {
+    "key": "language_10029890",
+    "content": "When in the [Ego: The Idealist] status, attacks inflict 2 stacks of [Hysteria] on the target. When in the [Ego: The Physician] status, attacks apply [Continuous Action Ⅰ] and 1 stack of [Sterile Rinsing] on the target (currently in the [Ego: The Physician] status)."
+  },
+  {
+    "key": "language_10029891",
+    "content": "When attacking, if the target has at least 3 stacks of [Hysteria] or [Sterile Rinsing], DMG Dealt +25%."
+  },
+  {
+    "key": "language_10029892",
+    "content": "When entering the [Ego: The Idealist] status, grant 2 stacks of [Hysteria] to self. When entering the [Ego: The Physician] status, grant [Continuous Action Ⅰ] and 1 stack of [Sterile Rinsing] to self. At the start of this unit's round, if having taken ultimate damage at least 2 times in the previous round, clear all Moxie on self and cast an ultimate."
+  },
+  {
+    "key": "language_10029893",
+    "content": "Dying Transformation"
+  },
+  {
+    "key": "language_10029894",
+    "content": "Self buff. Switches to the [Ego: The Physician] status and dispels all stacks of [Hysteria] from enemies; afterward, can use incantations exclusive to the [Ego: The Physician] status."
+  },
+  {
+    "key": "language_10029895",
+    "content": "When in the [Ego: The Idealist] status, attacks inflict 2 stacks of [Hysteria] on the target. When in the [Ego: The Physician] status, attacks apply [Continuous Action Ⅰ] and 1 stack of [Sterile Rinsing] on the target (currently in the [Ego: The Idealist] status)."
+  },
+  {
+    "key": "language_10029896",
+    "content": "Mass attack. Deals 250% Mental DMG to all enemies; inflicts 1 stack of [Sterile Rinsing] and 1 stack of [Hysteria] on the targets."
+  },
+  {
+    "key": "language_10029897",
+    "content": "Can use incantations from both [Ego: The Idealist] and [Ego: The Physician]. When attacking with an incantation from [Ego: The Idealist], inflict 2 stacks of [Hysteria] on the target. When attacking with an incantation from [Ego: The Physician], apply [Continuous Action Ⅰ] and 1 stack of [Sterile Rinsing] on the target."
+  },
+  {
+    "key": "language_10029898",
+    "content": "When attacking, if the target has at least 3 stacks of [Hysteria] or 3 stacks of [Sterile Rinsing], DMG Dealt +30%; these two bonuses can stack."
+  },
+  {
+    "key": "language_10029899",
+    "content": "When entering battle, gain [Continuous Action Ⅰ]. After an enemy casts an ultimate, remove 2 stacks of [Hysteria] and 2 stacks of [Sterile Rinsing] from self."
+  },
+  {
+    "key": "language_10029900",
+    "content": "At the end of the round, if having taken ultimate damage at least 2 times during the round, clear all Moxie from self and cast an ultimate."
+  },
+  {
+    "key": "language_10029901",
+    "content": "Self buff. Grant the [Irrational Awakening] status to self."
+  },
+  {
+    "key": "language_10029902",
+    "content": "Take no damage on the first round."
+  },
+  {
+    "key": "language_10029903",
+    "content": "Throw a die every round and trigger effects based on the die roll:\n1. A random enemy recovers 20% HP.\n2. Nothing happens.\n3. Nothing happens.\n4. A random enemy loses 20% HP.\n5. Two random enemies lose 30% HP.\n6. A random enemy is eliminated."
+  },
+  {
+    "key": "language_10029904",
+    "content": "A random enemy recovers 20% HP."
+  },
+  {
+    "key": "language_10029905",
+    "content": "Nothing happens."
+  },
+  {
+    "key": "language_10029906",
+    "content": "Deal 1 DMG to a random enemy, triggers 2 times."
+  },
+  {
+    "key": "language_10029907",
+    "content": "Deal 1 DMG to a random enemy, triggers 4 times."
+  },
+  {
+    "key": "language_10029908",
+    "content": "A random enemy dies."
+  },
+  {
+    "key": "language_10029909",
+    "content": "1-target attack. Deals 150% Reality DMG. Inflicts 1 stack of [Rigidity] on the target."
+  },
+  {
+    "key": "language_10029910",
+    "content": "1-target attack. Deals 200% Reality DMG. Inflicts 1 stack of [Rigidity] on the target."
+  },
+  {
+    "key": "language_10029911",
+    "content": "Mass Debuff. Inflicts DMG Dealt -15% on all enemies and grants DMG Dealt +20% to self, lasts 2 rounds."
+  },
+  {
+    "key": "language_10029912",
+    "content": "Mass Debuff. Inflicts DMG Dealt -20% on all enemies and grants DMG Dealt +30% to self, lasts 2 rounds."
+  },
+  {
+    "key": "language_10029913",
+    "content": "Mass attack. Deals 150% Reality DMG to all enemies; when attacking, DMG Bonus +50%, and for each point of Moxie the main target has, DMG Bonus -10%."
+  },
+  {
+    "key": "language_10029914",
+    "content": "When attacking a target under a [Control] status, gain ATK +20% for self. When casting an ultimate for the first time, inflict [AP Reduction] on the main target."
+  },
+  {
+    "key": "language_10029915",
+    "content": "After being hit by an ultimate, Moxie -1 for self; after an enemy casts an ultimate, dispel the [AP Reduction] status from that enemy."
+  },
+  {
+    "key": "language_10029916",
+    "content": "After an enemy casts an ultimate, dispel the [AP Reduction] status from the enemy (Battlefield Rules)."
+  },
+  {
+    "key": "language_10029917",
+    "content": "On death, eliminates all allies."
+  },
+  {
+    "key": "language_10029918",
+    "content": "1-target attack. Deals 150% Reality DMG; if in the [Liberating Release] status, casts this attack an additional 1 time."
+  },
+  {
+    "key": "language_10029919",
+    "content": "1-target attack. Deals 200% Reality DMG; if in the [Liberating Release] status, casts this attack an additional 1 time."
+  },
+  {
+    "key": "language_10029920",
+    "content": "Self buff. DMG Taken -20% for 2 rounds; if in the [Liberating Release] status, gains Moxie +1."
+  },
+  {
+    "key": "language_10029921",
+    "content": "Self buff. DMG Taken -30% for 2 rounds; if in the [Liberating Release] status, gains Moxie +1."
+  },
+  {
+    "key": "language_10029922",
+    "content": "Mass attack. Deals 200% Reality DMG to all enemies; if in the [Liberating Release] status, deals an additional 200% Reality DMG."
+  },
+  {
+    "key": "language_10029923",
+    "content": "After casting an ultimate for the first time, grant the [Liberating Release] status to self."
+  },
+  {
+    "key": "language_10029924",
+    "content": "When entering battle, gain the [Continuous Action Ⅰ] status permanently."
+  },
+  {
+    "key": "language_10029925",
+    "content": "On death, grants Moxie +1 to the enemy with the lowest Moxie."
+  },
+  {
+    "key": "language_10029926",
+    "content": "On death, recovers 20% Max HP to the enemy with the lowest HP percentage."
+  },
+  {
+    "key": "language_10029927",
+    "content": "On death, grants ATK +20% to the enemy with the highest ATK."
+  },
+  {
+    "key": "language_10029928",
+    "content": "Recoleta casts her ultimate when entering battle."
+  },
+  {
+    "key": "language_10029929",
+    "content": "Mass attack. Deals 400% Mental DMG to all enemies; for each stack of [Zany<id:804830101>] on self, deals an additional 10% Mental DMG; for each ally on the field casts an additional 1 time."
+  },
+  {
+    "key": "language_10029930",
+    "content": "Mass debuff. Inflicts Moxie -1 on all enemies; if holding at least 5 stacks of [Zany<id:804830101>] on self, inflicts an additional Moxie -1 on all enemies; if holding at least 10 stacks of [Zany<id:804830101>] on self, inflicts an additional Moxie -3 on all enemies."
+  },
+  {
+    "key": "language_10029931",
+    "content": "Mass attack. Deals 120% Mental DMG to all enemies; for each stack of [Zany<id:804830101>] held on self, deals an additional 10% Mental DMG."
+  },
+  {
+    "key": "language_10029932",
+    "content": "At the start of round 1 and at the start of every 3 rounds thereafter, inflicts [Rushing Current<id:804830102>] on all enemies: after an enemy holding this status casts an Attack/Debuff-type incantation, the user of this status gains 1 stack of [Zany<id:804830101>] for 1 round."
+  },
+  {
+    "key": "language_10029933",
+    "content": "When casting an Attack/Debuff-type incantation, grants 1 stack of [Zany<id:804830101>] to Lorelei."
+  },
+  {
+    "key": "language_10029934",
+    "content": "When casting a Counter/Healing-type incantation, grants 1 stack of [Zany<id:804830101>] to Lorelei."
+  },
+  {
+    "key": "language_10029935",
+    "content": "When casting a Buff/Channel-type incantation, grants 1 stack of [Zany<id:804830101>] to Lorelei."
+  },
+  {
+    "key": "language_10029936",
+    "content": "At the start of the round, consume as many stacks of [Zany<id:804830101>] as possible to summon bubbles; summon 1 bubble for every 5 stacks of [Zany<id:804830101>] consumed."
+  },
+  {
+    "key": "language_10029937",
+    "content": "When entering phase 2, eliminates all allies, summons 3 bubbles, and gains 10 stacks of [Zany<id:804830101>] (triggers up to 1 time)."
+  },
+  {
+    "key": "language_10029938",
+    "content": "When another ally dies, deals (Max HP x20%) Genesis DMG to all enemies."
+  },
+  {
+    "key": "language_10029939",
+    "content": "At the start of round 2 and at the start of every 3 rounds thereafter, inflicts [Still Current<id:804830103>] on all enemies: after an enemy holding this status casts a Counter/Heal-type incantation, the user of this status gains 1 stack of [Zany<id:804830101>] for 1 round."
+  },
+  {
+    "key": "language_10029940",
+    "content": "At the start of round 3 and at the start of every 3 rounds thereafter, inflicts [Hidden Current<id:804830104>] on all enemies: after an enemy holding this status casts a Buff/Channel-type incantation, the user of this status gains 1 stack of [Zany<id:804830101>] for 1 round."
+  },
+  {
+    "key": "language_10029941",
+    "content": "For each type of [Rushing Current<id:804830102>]/[Still Current<id:804830103>]/[Hidden Current<id:804830104>] held on enemies, generate 4 negative incantations that can delete the corresponding types of incantations and insert them randomly into the Spellbox.\n(The Spellbox is the \"deck,\" or the \"library\")."
+  },
+  {
+    "key": "language_10029942",
+    "content": "For each type of [Rushing Current<id:804830102>]/[Still Current<id:804830103>]/[Hidden Current<id:804830104>] held on enemies, make the enemy draw 2 negative incantations that can delete the corresponding types of incantations.\n(The Spellbox is the \"deck,\" or the \"library\")."
+  },
+  {
+    "key": "language_10029943",
+    "content": "Delete 1 Attack/Debuff-type incantation from the Spellbox."
+  },
+  {
+    "key": "language_10029944",
+    "content": "Delete 1 Counter/Healing-type incantation from the Spellbox."
+  },
+  {
+    "key": "language_10029945",
+    "content": "Delete 1 Buff/Channel-type incantation from the Spellbox."
+  },
+  {
+    "key": "language_10029946",
+    "content": "When casting a Buff-type incantation, if the target is at 50% HP or below, the target recovers (own ATK x100%) HP; if the target is above 50% HP, the target gains a Shield with (own ATK x100%) HP for 2 rounds."
+  },
+  {
+    "key": "language_10029947",
+    "content": "When casting a Buff-type incantation, if the target is at 50% HP or below, the target recovers (the target's Max HP x100%) HP; if the target is above 50% HP, the target gains a Shield with (the target's ATK x100%) HP for 2 rounds."
+  },
+  {
+    "key": "language_10029948",
+    "content": "Mass heal. Recovers HP or grants a Shield to all allies, and grants an additional 1 stack of [Sturdiness] to all allies; if a target is at 50% HP or below, recover (the user's ATK x80%) HP to that target; if a target is above 50% HP, the target gains a Shield with (own ATK x96%) HP for 2 rounds."
+  },
+  {
+    "key": "language_10029949",
+    "content": "Mass heal. Recovers HP or grants a Shield to all allies, and grants an additional 1 stack of [Sturdiness] to all allies; if a target is at 50% HP or below, recover (the user's ATK x120%) HP to that target; if a target is above 50% HP, the target gains a Shield with (own ATK x144%) HP for 2 rounds."
+  },
+  {
+    "key": "language_10029950",
+    "content": "Mass heal. Recovers HP or grants a Shield to all allies, and grants an additional 1 stack of [Sturdiness] to all allies; if a target is at 50% HP or below, recover (the user's ATK x200%) HP to that target; if a target is above 50% HP, the target gains a Shield with (own ATK x240%) HP for 2 rounds."
+  },
+  {
+    "key": "language_10029951",
+    "content": "Mass heal. Recovers HP or grants a Shield to all allies, and grants an additional 1 stack of [Sturdiness] to all allies; if a target is at 50% HP or below, recover (the user's ATK x90%) HP to that target; if a target is above 50% HP, the target gains a Shield with (own ATK x108%) HP for 2 rounds."
+  },
+  {
+    "key": "language_10029952",
+    "content": "Mass heal. Recovers HP or grants a Shield to all allies, and grants an additional 1 stack of [Sturdiness] to all allies; if a target is at 50% HP or below, recover (the user's ATK x135%) HP to that target; if a target is above 50% HP, the target gains a Shield with (own ATK x162%) HP for 2 rounds."
+  },
+  {
+    "key": "language_10029953",
+    "content": "Mass heal. Recovers HP or grants a Shield to all allies, and grants an additional 1 stack of [Sturdiness] to all allies; if a target is at 50% HP or below, recover (the user's ATK x220%) HP to that target; if a target is above 50% HP, the target gains a Shield with (own ATK x264%) HP for 2 rounds."
+  },
+  {
+    "key": "language_10029954",
+    "content": "▩1%s: When cast, lose (own Current HP x10%) HP and inflict Critical Resist Rate -30% and Critical DEF -40% on the target for 2 rounds."
+  },
+  {
+    "key": "language_10029955",
+    "content": "After an ally is attacked, this unit casts a rank 1 ▩2%s as a follow-up attack (can trigger up to 2 times per round);\nWhen casting ▩2%s, cause all allies to lose (Current HP x10%) HP; and if a target is at 50% HP or below, recover an additional (the user's Missing HP x25%) HP for that target."
+  },
+  {
+    "key": "language_10029956",
+    "content": "1-target attack. Loses (Current HP x20%) HP to deal 450% Mental DMG plus (own Missing HP x150%) Genesis DMG to the target, and inflicts [Daze] for 1 round on the target hit; after attacking, gains Moxie +1 for self."
+  },
+  {
+    "key": "language_10029957",
+    "content": "1-target attack. Loses (Current HP x20%) HP to deal 500% Mental DMG plus (own Missing HP x150%) Genesis DMG to the target, and inflicts [Daze] for 1 round on the target hit; after attacking, gains Moxie +1 for self."
+  },
+  {
+    "key": "language_10029958",
+    "content": "If this channel status is still active at the end of the round, cast 1 [Shot].\n(After casting, if Flaming Bullet is at 0, remove this status)."
+  },
+  {
+    "key": "language_10029959",
+    "content": "If this channel status is still active at the end of the round, cast 1 [Bull's Eye<id:1>].\n(After casting, if Flaming Bullet is at 0, remove this status)."
+  },
+  {
+    "key": "language_10029960",
+    "content": "If this channel status is still active at the end of the round, cast 1 [Bull's Eye<id:2>].\n(After casting, if Flaming Bullet is at 0, remove this status)."
+  },
+  {
+    "key": "language_10029961",
+    "content": "If this channel status is still active after 7 rounds, deal 800% Reality DMG to the target with the lowest HP percentage."
+  },
+  {
+    "key": "language_10029962",
+    "content": "Cannot act. Damage Taken is fixed at 1 (undispellable)."
+  },
+  {
+    "key": "language_10029963",
+    "content": "Reality DEF +30%, Mental DEF +30% (up to 10 stacks; -1 stack when being attacked or after taking an action)."
+  },
+  {
+    "key": "language_10029964",
+    "content": "DMG Taken -30%. At the start of the round, gain 5 stacks of [Grand Miracle]. At the end of the round, cast the incantation [Path of Thorns and Devotion]."
+  },
+  {
+    "key": "language_10029965",
+    "content": "Cannot act. Cannot gain Moxie."
+  },
+  {
+    "key": "language_10029966",
+    "content": "After reaching 10/20/30 stacks, gain [Departure]/[Journey]/[Authority] (undispellable)."
+  },
+  {
+    "key": "language_10029967",
+    "content": "Max HP +1% (stackable)."
+  },
+  {
+    "key": "language_10029968",
+    "content": "DMG Taken -50%, Extra Action DMG Taken +100% (only 1 stack can exist at a time)."
+  },
+  {
+    "key": "language_10029969",
+    "content": "DMG Bonus +20%, DMG Taken Reduction +20%. After being attacked, casts and ripostes with Flowing Needles on the attacker."
+  },
+  {
+    "key": "language_10029970",
+    "content": "After taking each action, takes (Max HP x5%) Genesis DMG (stackable, removed after casting an ultimate)."
+  },
+  {
+    "key": "language_10029971",
+    "content": "DMG Bonus +10%; dispels and grants immunity to all [Stats Down] and [Control] effects (stacks up to 3 times, -1 stack after being attacked)."
+  },
+  {
+    "key": "language_10029972",
+    "content": "DMG Taken -15%. [Poison] applied lasts +1 round. Stacks up to 3 times, -1 stack after being attacked."
+  },
+  {
+    "key": "language_10029973",
+    "content": "ATK +15%, Regen Rate +30%. After being attacked, reflect 15% of the damage to the attacker (the damage cannot exceed 100% of own ATK)."
+  },
+  {
+    "key": "language_10029974",
+    "content": "After reaching 4 stacks, automatically casts an ultimate at the start of the round."
+  },
+  {
+    "key": "language_10029975",
+    "content": "Critical Rate +100%, dodges basic incantations (removed after taking an action)."
+  },
+  {
+    "key": "language_10029976",
+    "content": "DMG Taken -30%. After being attacked, gain Moxie +1."
+  },
+  {
+    "key": "language_10029977",
+    "content": "Genesis DMG Bonus +10%, DMG Taken Reduction +10%. Dispels and grants immunity to [Control] statuses (stacks up to 8 times, undispellable)."
+  },
+  {
+    "key": "language_10029978",
+    "content": "Incantation Might +2% (stackable)."
+  },
+  {
+    "key": "language_10029979",
+    "content": "Ultimate Might +2% (stackable)."
+  },
+  {
+    "key": "language_10029980",
+    "content": "Warning! A Carbuncle will enter a frenzied state if angered too much, and it cannot be dispelled!"
+  },
+  {
+    "key": "language_10029981",
+    "content": "DMG Taken Reduction +50%, DMG Bonus +50%."
+  },
+  {
+    "key": "language_10029982",
+    "content": "At the end of the round, if holding this status, automatically casts an ultimate."
+  },
+  {
+    "key": "language_10029983",
+    "content": "DMG Bonus +8% and DMG Taken Reduction +8%."
+  },
+  {
+    "key": "language_10029984",
+    "content": "Non-Stronger Afflatus Damage Taken -90%."
+  },
+  {
+    "key": "language_10029985",
+    "content": "Immune to [Stats Down], [Neg Status], and [Control] effects."
+  },
+  {
+    "key": "language_10029986",
+    "content": "Critical Rate +100%; when attacking, inflict [Daze] for 1 round."
+  },
+  {
+    "key": "language_10029987",
+    "content": "DMG Taken Reduction -30% (undispellable)."
+  },
+  {
+    "key": "language_10029988",
+    "content": "DMG Bonus -20% (undispellable)."
+  },
+  {
+    "key": "language_10029989",
+    "content": "DMG Bonus -10% for 2 rounds (stacks up to 4 times, undispellable)."
+  },
+  {
+    "key": "language_10029990",
+    "content": "When Incantation #1 deals damage, DMG Bonus -20%."
+  },
+  {
+    "key": "language_10029991",
+    "content": "When Incantation #2 deals damage, DMG Bonus -20%."
+  },
+  {
+    "key": "language_10029992",
+    "content": "When the ultimate deals damage, DMG Bonus -20%."
+  },
+  {
+    "key": "language_10029993",
+    "content": "Healing Taken -20% (undispellable)."
+  },
+  {
+    "key": "language_10029994",
+    "content": "DMG Taken Reduction -5% (undispellable)."
+  },
+  {
+    "key": "language_10029995",
+    "content": "Max HP +20% (undispellable)."
+  },
+  {
+    "key": "language_10029996",
+    "content": "Final DMG Bonus +5%."
+  },
+  {
+    "key": "language_10029997",
+    "content": "Final DMG Reduction +5%."
+  },
+  {
+    "key": "language_10029998",
+    "content": "Final DMG Bonus +2%."
+  },
+  {
+    "key": "language_10029999",
+    "content": "When Incantation #2 deals damage, Final DMG Bonus +5%."
+  },
+  {
+    "key": "language_10030000",
+    "content": "When an ultimate deals damage, Final DMG Bonus +5%."
+  },
+  {
+    "key": "language_10030001",
+    "content": "Final DMG Reduction +2% (stacks up to 25 times, undispellable)."
+  },
+  {
+    "key": "language_10030002",
+    "content": "After another ally casts an ultimate, if it was a 1-target/mass ultimate, Recoleta gains 1 stack of [Ensemble Narrative]/[Monomythic Narrative]."
+  },
+  {
+    "key": "language_10030003",
+    "content": "Max Moxie +5."
+  },
+  {
+    "key": "language_10030004",
+    "content": "DNT"
+  },
+  {
+    "key": "language_10030005",
+    "content": "Incantation Might +50%."
+  },
+  {
+    "key": "language_10030006",
+    "content": "Max HP +30%."
+  },
+  {
+    "key": "language_10030007",
+    "content": "Penetration Rate +10% (stackable)."
+  },
+  {
+    "key": "language_10030008",
+    "content": "Leech Rate +10% (stackable)."
+  },
+  {
+    "key": "language_10030009",
+    "content": "Incantation Might +20% (stackable)."
+  },
+  {
+    "key": "language_10030010",
+    "content": "When performing an extra action, DMG Bonus +50%."
+  },
+  {
+    "key": "language_10030011",
+    "content": "Shield that blocks DMG; after being attacked, inflicts 1 stack of [Hag's Bane] on the attacker for 2 rounds and grants ATK +5% to Jessica."
+  },
+  {
+    "key": "language_10030012",
+    "content": "When casting an ultimate, consume all stacks of this status, with each consumed stack dealing an additional 50% Reality DMG to the main target (stacks up to 20 times)."
+  },
+  {
+    "key": "language_10030013",
+    "content": "When casting an ultimate, consume all stacks of this status, with each consumed stack dealing an additional 25% Reality DMG to all targets (stacks up to 20 times)."
+  },
+  {
+    "key": "language_10030014",
+    "content": "Max Moxie +2.\nAfter another ally casts an ultimate, Recoleta gains Moxie +1; and for each point of Moxie consumed by that 1-target/mass ultimate, Recoleta gains 1 stack of [Monomythic Narrative]/[Ensemble Narrative]."
+  },
+  {
+    "key": "language_10030015",
+    "content": "Max Moxie +3."
+  },
+  {
+    "key": "language_10030016",
+    "content": "When casting an ultimate, consume all stacks of this status, with each consumed stack dealing an additional 70% Reality DMG to the main target (stacks up to 20 times)."
+  },
+  {
+    "key": "language_10030017",
+    "content": "When casting an ultimate, consume all stacks of this status, with each consumed stack dealing an additional 35% Reality DMG to all targets (stacks up to 20 times)."
+  },
+  {
+    "key": "language_10030018",
+    "content": "Max Moxie +2.\nAfter another ally casts an ultimate, Recoleta gains Moxie +1; and for each point of Moxie consumed by that 1-target/mass ultimate, Recoleta gains 1 stack of [Monomythic Narrative<id:2>]/[Ensemble Narrative<id:2>]."
+  },
+  {
+    "key": "language_10030019",
+    "content": "After being attacked, the attacker gains Moxie +1, and 1 stack is removed."
+  },
+  {
+    "key": "language_10030020",
+    "content": "After another ally casts an ultimate, for each point of Moxie consumed by that 1-target/mass ultimate, Recoleta gains 1 stack of [Monomythic Narrative]/[Ensemble Narrative]."
+  },
+  {
+    "key": "language_10030021",
+    "content": "After being attacked, the attacker gains Moxie +1 (-1 stack after trigger)."
+  },
+  {
+    "key": "language_10030022",
+    "content": "Ultimate Might +12%; Ultimate Critical Rate +6% and Ultimate Critical DMG +6% (stacks up to 6 times, undispellable)."
+  },
+  {
+    "key": "language_10030023",
+    "content": "DNT"
+  },
+  {
+    "key": "language_10030024",
+    "content": "DNT"
+  },
+  {
+    "key": "language_10030025",
+    "content": "DNT"
+  },
+  {
+    "key": "language_10030026",
+    "content": "DNT"
+  },
+  {
+    "key": "language_10030027",
+    "content": "DNT"
+  },
+  {
+    "key": "language_10030028",
+    "content": "DNT"
+  },
+  {
+    "key": "language_10030029",
+    "content": "DNT"
+  },
+  {
+    "key": "language_10030030",
+    "content": "DNT"
+  },
+  {
+    "key": "language_10030031",
+    "content": "DNT"
+  },
+  {
+    "key": "language_10030032",
+    "content": "DNT"
+  },
+  {
+    "key": "language_10030033",
+    "content": "DNT"
+  },
+  {
+    "key": "language_10030034",
+    "content": "DNT"
+  },
+  {
+    "key": "language_10030035",
+    "content": "DNT"
+  },
+  {
+    "key": "language_10030036",
+    "content": "DNT"
+  },
+  {
+    "key": "language_10030037",
+    "content": "DNT"
+  },
+  {
+    "key": "language_10030038",
+    "content": "DNT"
+  },
+  {
+    "key": "language_10030039",
+    "content": "DNT"
+  },
+  {
+    "key": "language_10030040",
+    "content": "DNT"
+  },
+  {
+    "key": "language_10030041",
+    "content": "DNT"
+  },
+  {
+    "key": "language_10030042",
+    "content": "DNT"
+  },
+  {
+    "key": "language_10030043",
+    "content": "Halo"
+  },
+  {
+    "key": "language_10030044",
+    "content": "DNT"
+  },
+  {
+    "key": "language_10030045",
+    "content": "DNT"
+  },
+  {
+    "key": "language_10030046",
+    "content": "In Lucid Domain, Ultimate Might +100%."
+  },
+  {
+    "key": "language_10030047",
+    "content": "In Lucid Domain, Incantation Might +70%."
+  },
+  {
+    "key": "language_10030048",
+    "content": "In Lucid Domain, ATK +15%."
+  },
+  {
+    "key": "language_10030049",
+    "content": "In Lucid Domain, Incantation Might +50%."
+  },
+  {
+    "key": "language_10030050",
+    "content": "Incantation Might +10% (stacks up to 4 times, each stack is timed independently)."
+  },
+  {
+    "key": "language_10030051",
+    "content": "Mental DEF -10%, DMG Taken Reduction -10%; each stack beyond the first inflicts Mental DEF -2% and DMG Taken Reduction -2% (stacks up to 8 times, each stack is timed independently)."
+  },
+  {
+    "key": "language_10030052",
+    "content": "Incantation Might +15% (stacks up to 4 times, each stack is timed independently)."
+  },
+  {
+    "key": "language_10030053",
+    "content": "This status channels until the next round, ending right before the AP Area resolves. When this channel status ends, the memorized incantations are added to the spell queue and casted alongside all other incantations from the round. These memorized incantations are considered actively cast, but do not grant any Moxie. Afterward, grant attack instances +2 to [Impromptu Incantation] for the round, and all non-final attack instances of Impromptu Incantation this round inflict the [Interpretation<id:1>] status on the attack target, with the final attack instance also dealing an additional (the target's stacks of [Interpretation<id:1>] x 50)% Mental DMG to each enemy target holding the [Interpretation<id:1>] status. Aleph cannot act while channeling, and all stacks of [Interpretation<id:1>] are removed from enemies after the final attack instance of Impromptu Incantation."
+  },
+  {
+    "key": "language_10030054",
+    "content": "The final attack instance of [Impromptu Incantation] also deals an additional (the target's stacks of [Interpretation] x 80)% Mental DMG to each enemy target holding the [Interpretation] status."
+  },
+  {
+    "key": "language_10030055",
+    "content": "This status channels until the next round, ending right before the AP Area resolves. When this channel status ends, the memorized incantations are added to the spell queue and casted alongside all other incantations from the round. These memorized incantations are considered actively cast, but do not grant any Moxie. Afterward, grant attack instances +2 to [Impromptu Incantation] for the round, and all non-final attack instances of Impromptu Incantation this round inflict the [Interpretation<id:2>] status on the attack target, with the final attack instance also dealing an additional (the target's stacks of [Interpretation<id:2>] x 80)% Mental DMG to each enemy target holding the [Interpretation<id:2>] status. Aleph cannot act while channeling, and all stacks of [Interpretation<id:2>] are removed from enemies after the final attack instance of Impromptu Incantation."
+  },
+  {
+    "key": "language_10030056",
+    "content": "This status channels until the next round, ending right before the AP Area resolves. When this channel status ends, the memorized incantations are added to the spell queue and casted alongside all other incantations from the round. These memorized incantations are considered actively cast, but do not grant any Moxie. Afterward, grant attack instances +4 to [Impromptu Incantation] for the round, and all non-final attack instances of Impromptu Incantation this round inflict the [Interpretation<id:2>] status on the attack target, with the final attack instance also dealing an additional (the target's stacks of [Interpretation<id:2>] x 160)% Mental DMG to each enemy target holding the [Interpretation<id:2>] status. Aleph cannot act while channeling, and all stacks of [Interpretation<id:2>] are removed from enemies after the final attack instance of Impromptu Incantation."
+  },
+  {
+    "key": "language_10030057",
+    "content": "This status channels until the next round, ending right before the AP Area resolves. When this channel status ends, the memorized incantations are added to the spell queue and casted alongside all other incantations from the round. These memorized incantations are considered actively cast, but do not grant any Moxie. Afterward, grant attack instances +4 to [Impromptu Incantation] for the round, and all non-final attack instances of Impromptu Incantation this round inflict the [Interpretation<id:3>] status on the attack target, with the final attack instance also dealing an additional (the target's stacks of [Interpretation<id:3>] x 240)% Mental DMG to each enemy target holding the [Interpretation<id:3>] status. Aleph cannot act while channeling, and all stacks of [Interpretation<id:3>] are removed from enemies after the final attack instance of Impromptu Incantation."
+  },
+  {
+    "key": "language_10030058",
+    "content": "The final attack instance of [Impromptu Incantation] also deals an additional (the target's stacks of [Interpretation] x 160)% Mental DMG to each enemy target holding the [Interpretation] status."
+  },
+  {
+    "key": "language_10030059",
+    "content": "The final attack instance of [Impromptu Incantation] also deals an additional (the target's stacks of [Interpretation] x 240)% Mental DMG to each enemy target holding the [Interpretation] status."
+  },
+  {
+    "key": "language_10030060",
+    "content": "Mental DEF -10%, DMG Taken Reduction -10%; each stack beyond the first inflicts Mental DEF -3% and DMG Taken Reduction -3% (stacks up to 8 times, each stack is timed independently)."
+  },
+  {
+    "key": "language_10030061",
+    "content": "Mental DEF -10%, DMG Taken Reduction -10%; each stack beyond the first inflicts Mental DEF -5% and DMG Taken Reduction -5% (stacks up to 8 times, each stack is timed independently)."
+  },
+  {
+    "key": "language_10030062",
+    "content": "Whenever an ally with this buff actively casts and attacks with an incantation, the user of this buff consumes 1 Eureka to grant attack instances +5 to [Impromptu Incantation] (this effect is unstackable)."
+  },
+  {
+    "key": "language_10030063",
+    "content": "Mental DEF -30%, DMG Taken Reduction -30%; each stack beyond the first inflicts Mental DEF -10% and DMG Taken Reduction -10%."
+  },
+  {
+    "key": "language_10030064",
+    "content": "DNT"
+  },
+  {
+    "key": "language_10030065",
+    "content": "DNT"
+  },
+  {
+    "key": "language_10030066",
+    "content": "AP +X. Whenever taking an action, take (Max HP x1%) DMG (stackable)."
+  },
+  {
+    "key": "language_10030067",
+    "content": "DMG Taken Reduction +2% and DMG Heal +2%; after reaching more than 5 stacks, converts into Daze for 1 round."
+  },
+  {
+    "key": "language_10030068",
+    "content": "At the start of the round, automatically casts a rank 1 [Surgical Incision] and gains Moxie +1."
+  },
+  {
+    "key": "language_10030069",
+    "content": "At the start of the round, automatically casts a rank 2 [Surgical Incision] and gains Moxie +1."
+  },
+  {
+    "key": "language_10030070",
+    "content": "Whenever taking an action, take (Max HP x1%) DMG (the damage effect is stackable)."
+  },
+  {
+    "key": "language_10030071",
+    "content": "ATK +10000%, Reality DEF +10000%, Mental DEF +10000%."
+  },
+  {
+    "key": "language_10030072",
+    "content": "ATK +10000%."
+  },
+  {
+    "key": "language_10030073",
+    "content": "Reality DEF +10000%."
+  },
+  {
+    "key": "language_10030074",
+    "content": "Mental DEF +10000%."
+  },
+  {
+    "key": "language_10030075",
+    "content": "Take no damage on the first round."
+  },
+  {
+    "key": "language_10030076",
+    "content": "DNT"
+  },
+  {
+    "key": "language_10030077",
+    "content": "DNT"
+  },
+  {
+    "key": "language_10030078",
+    "content": "DNT"
+  },
+  {
+    "key": "language_10030079",
+    "content": "DNT"
+  },
+  {
+    "key": "language_10030080",
+    "content": "DNT"
+  },
+  {
+    "key": "language_10030081",
+    "content": "DNT"
+  },
+  {
+    "key": "language_10030082",
+    "content": "DNT"
+  },
+  {
+    "key": "language_10030083",
+    "content": "DNT"
+  },
+  {
+    "key": "language_10030084",
+    "content": "DNT"
+  },
+  {
+    "key": "language_10030085",
+    "content": "AP -1. Casting an ultimate dispels this effect."
+  },
+  {
+    "key": "language_10030086",
+    "content": "ATK +20%, DMG Taken Reduction +10%, AP +1."
+  },
+  {
+    "key": "language_10030087",
+    "content": "DMG Bonus +5%, DMG Taken Reduction +5%, stacks up to 10 times."
+  },
+  {
+    "key": "language_10030088",
+    "content": "After casting an Attack/Debuff-type incantation, grants 1 stack of [Zany<id:804830101>] to Lorelei for 1 round."
+  },
+  {
+    "key": "language_10030089",
+    "content": "After casting a Counter/Healing-type incantation, grants 1 stack of [Zany<id:804830101>] to Lorelei for 1 round."
+  },
+  {
+    "key": "language_10030090",
+    "content": "After casting a Buff/Channel-type incantation, grants 1 stack of [Zany<id:804830101>] to Lorelei for 1 round."
+  },
+  {
+    "key": "language_10030091",
+    "content": "Stealing Between Curtains and Walls"
+  },
+  {
+    "key": "language_10030092",
+    "content": "The Mad Alchemy of Blood"
+  },
+  {
+    "key": "language_10030093",
+    "content": "Under the Spotlight"
+  },
+  {
+    "key": "language_10030094",
+    "content": "Public Service"
+  },
+  {
+    "key": "language_10030095",
+    "content": "Film Recommendation List"
+  },
+  {
+    "key": "language_10030096",
+    "content": "On Creation"
+  },
+  {
+    "key": "language_10030097",
+    "content": "What Remains"
+  },
+  {
+    "key": "language_10030098",
+    "content": "Red and White"
+  },
+  {
+    "key": "language_10030099",
+    "content": "Oaths and Bonuses"
+  },
+  {
+    "key": "language_10030100",
+    "content": "Memory Dice not selected"
+  },
+  {
+    "key": "language_10030101",
+    "content": "Chapter locked"
+  },
+  {
+    "key": "language_10030102",
+    "content": "No Reroll Chances left"
+  },
+  {
+    "key": "language_10030103",
+    "content": "Response Card does not meet cast requirements."
+  },
+  {
+    "key": "language_10030104",
+    "content": "La Biblioteca de Babel has been reset."
+  },
+  {
+    "key": "language_10030105",
+    "content": "Memory Dice maxed out at 12."
+  },
+  {
+    "key": "language_10030106",
+    "content": "Chances depleted"
+  },
+  {
+    "key": "language_10030107",
+    "content": "Dream Buff activated"
+  },
+  {
+    "key": "language_10030108",
+    "content": "Dream Buff locked"
+  },
+  {
+    "key": "language_10030109",
+    "content": "600916#600917"
+  },
+  {
+    "key": "language_10030110",
+    "content": "Surgical Kit"
+  },
+  {
+    "key": "language_10030111",
+    "content": "Tabletop Adventure"
+  },
+  {
+    "key": "language_10030112",
+    "content": "Mobile Phone"
+  },
+  {
+    "key": "language_10030113",
+    "content": "Where Dreams Take Shape"
+  },
+  {
+    "key": "language_10030114",
+    "content": "Exhibit Invitation"
+  },
+  {
+    "key": "language_10030115",
+    "content": "Strokes of Tomorrow"
+  },
+  {
+    "key": "language_10030116",
+    "content": "Artist's Pendulum"
+  },
+  {
+    "key": "language_10030117",
+    "content": "Corrective Force"
+  },
+  {
+    "key": "language_10030118",
+    "content": "Opera Ticket"
+  },
+  {
+    "key": "language_10030119",
+    "content": "Immaculate Bandeau"
+  },
+  {
+    "key": "language_10030120",
+    "content": "Balanced Dimensions"
+  },
+  {
+    "key": "language_10030121",
+    "content": "Portable Calibrator"
+  },
+  {
+    "key": "language_10030122",
+    "content": "Old Canoe"
+  },
+  {
+    "key": "language_10030123",
+    "content": "Pavo Ocellus"
+  },
+  {
+    "key": "language_10030124",
+    "content": "Lighthouse Diary"
+  },
+  {
+    "key": "language_10030125",
+    "content": "Deer Plush"
+  },
+  {
+    "key": "language_10030126",
+    "content": "The Art of Fungi"
+  },
+  {
+    "key": "language_10030127",
+    "content": "Bone Flute"
+  },
+  {
+    "key": "language_10030128",
+    "content": "Chiming Drum"
+  },
+  {
+    "key": "language_10030129",
+    "content": "Orbiting Stars"
+  },
+  {
+    "key": "language_10030130",
+    "content": "Bottled Message"
+  },
+  {
+    "key": "language_10030131",
+    "content": "Solemn Eulogy"
+  },
+  {
+    "key": "language_10030132",
+    "content": "Blue Kornblume"
+  },
+  {
+    "key": "language_10030133",
+    "content": "Meticulous Kettle"
+  },
+  {
+    "key": "language_10030134",
+    "content": "Bronze Button"
+  },
+  {
+    "key": "language_10030135",
+    "content": "Critter Card"
+  },
+  {
+    "key": "language_10030136",
+    "content": "Cache Bangle"
+  },
+  {
+    "key": "language_10030137",
+    "content": "Shell Button"
+  },
+  {
+    "key": "language_10030138",
+    "content": "Chrono Piece"
+  },
+  {
+    "key": "language_10030139",
+    "content": "Wizard Locket"
+  },
+  {
+    "key": "language_10030140",
+    "content": "Broken Pencil"
+  },
+  {
+    "key": "language_10030141",
+    "content": "Pencil Sharpener"
+  },
+  {
+    "key": "language_10030142",
+    "content": "Empty Golden Purse"
+  },
+  {
+    "key": "language_10030143",
+    "content": "Crystalized Heart"
+  },
+  {
+    "key": "language_10030144",
+    "content": "Bead Bracelet"
+  },
+  {
+    "key": "language_10030145",
+    "content": "Delicate Hatpin"
+  },
+  {
+    "key": "language_10030146",
+    "content": "Counteractive"
+  },
+  {
+    "key": "language_10030147",
+    "content": "New Limbo - One-time Reward"
+  },
+  {
+    "key": "language_10030148",
+    "content": "New Limbo - Cycle Reward"
+  },
+  {
+    "key": "language_10030149",
+    "content": "106#Antarctic Elysium#Antarctic Elysium"
+  },
+  {
+    "key": "language_10030150",
+    "content": "Red Lacquer Slab Design"
+  },
+  {
+    "key": "language_10030151",
+    "content": "Emerald Slate Design"
+  },
+  {
+    "key": "language_10030152",
+    "content": "Eye of Comala"
+  },
+  {
+    "key": "language_10030153",
+    "content": "Contemplator's Refuge"
+  },
+  {
+    "key": "language_10030154",
+    "content": "Farseer's Tower"
+  },
+  {
+    "key": "language_10030155",
+    "content": "Mirror Maze"
+  },
+  {
+    "key": "language_10030156",
+    "content": "Edge of the Simulation"
+  },
+  {
+    "key": "language_10030157",
+    "content": "Gallery of Bewilderment"
+  },
+  {
+    "key": "language_10030158",
+    "content": "Alpine Icefields"
+  },
+  {
+    "key": "language_10030159",
+    "content": "Lifeline Express"
+  },
+  {
+    "key": "language_10030160",
+    "content": "Antarctic Town I"
+  },
+  {
+    "key": "language_10030161",
+    "content": "Near-Polar Plains"
+  },
+  {
+    "key": "language_10030162",
+    "content": "Antarctic Town II"
+  },
+  {
+    "key": "language_10030163",
+    "content": "Dingy Harbor"
+  },
+  {
+    "key": "language_10030164",
+    "content": "Aleph's Billboard"
+  },
+  {
+    "key": "language_10030165",
+    "content": "Recoleta's Billboard"
+  },
+  {
+    "key": "language_10030166",
+    "content": "Behind Bars Book Club Closure Notice"
+  },
+  {
+    "key": "language_10030167",
+    "content": "A Writing Writer Written"
+  },
+  {
+    "key": "language_10030168",
+    "content": "The Shattered Product"
+  },
+  {
+    "key": "language_10030169",
+    "content": "DNT"
+  },
+  {
+    "key": "language_10030170",
+    "content": "DNT"
+  },
+  {
+    "key": "language_10030171",
+    "content": "DNT"
+  },
+  {
+    "key": "language_10030172",
+    "content": "The Final Roll"
+  },
+  {
+    "key": "language_10030173",
+    "content": "One last spin is all that remains,\nthe ending of the story you long for, the ending that belongs to you, to the ghost, to everyone.\nRoll the die one last time!\nNo longer heavy, no longer absurd—\nLook, it gleams in the dunes of night."
+  },
+  {
+    "key": "language_10030174",
+    "content": "Mental Cage"
+  },
+  {
+    "key": "language_10030175",
+    "content": "Complicated, endless, bewildering.\nReality, memory, illusion.\nThe existence of nonexistence.\nAleph.\nMerlin, the Idealist.\nZahir, Paracelsus.\nIn the cell, in the mirror, in the chambers of the mind."
+  },
+  {
+    "key": "language_10030176",
+    "content": "Off the Scene"
+  },
+  {
+    "key": "language_10030177",
+    "content": "Makeup removed, costume shed, the camera left behind.\nThe setting sun quietly mocks the endless rewrites in the margins.\nHow is one meant to act out the rest of their life?\nA monologue, laced with irony."
+  },
+  {
+    "key": "language_10030178",
+    "content": "2.6 Stage Task"
+  },
+  {
+    "key": "language_10030179",
+    "content": "2.6 Starter Insight Event"
+  },
+  {
+    "key": "language_10030180",
+    "content": "Recoleta Character Event"
+  },
+  {
+    "key": "language_10030181",
+    "content": "Limbo Revamp Event"
+  },
+  {
+    "key": "language_90001140",
+    "content": "Memorize"
+  },
+  {
+    "key": "language_90001141",
+    "content": "Monomythic Narrative"
+  },
+  {
+    "key": "language_90001142",
+    "content": "▩1%s stacks"
+  },
+  {
+    "key": "language_90001143",
+    "content": "Toll"
+  },
+  {
+    "key": "language_90001144",
+    "content": "Clarification"
+  },
+  {
+    "key": "language_90001145",
+    "content": "Liberating Release"
+  },
+  {
+    "key": "language_90001146",
+    "content": "An Allegory"
+  },
+  {
+    "key": "language_90001147",
+    "content": "Blue Kornblume"
+  },
+  {
+    "key": "language_90001148",
+    "content": "Justice"
+  },
+  {
+    "key": "language_90001149",
+    "content": "... You're right."
+  },
+  {
+    "key": "language_90001150",
+    "content": "Hello."
+  },
+  {
+    "key": "language_90001151",
+    "content": "Departure"
+  },
+  {
+    "key": "language_90001152",
+    "content": "Decision"
   },
   {
     "key": "language_90001117",

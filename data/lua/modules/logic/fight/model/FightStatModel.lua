@@ -16,19 +16,27 @@ function var_0_0.setAtkStatInfo(arg_2_0, arg_2_1)
 	local var_2_0 = {}
 
 	for iter_2_0, iter_2_1 in ipairs(arg_2_1) do
-		if not arg_2_0:checkShield(iter_2_1) and (iter_2_1.entityMO or FightDataHelper.entityMgr:getById(iter_2_1.heroUid)) then
-			local var_2_1 = FightStatMO.New()
+		if not arg_2_0:checkShield(iter_2_1) then
+			local var_2_1 = iter_2_1.entityMO or FightDataHelper.entityMgr:getById(iter_2_1.heroUid)
 
-			var_2_1:init(iter_2_1)
+			if iter_2_1.heroUid == FightASFDDataMgr.EmitterId then
+				var_2_1 = FightDataHelper.ASFDDataMgr:getEmitterEmitterMo()
+			end
 
-			var_2_1.entityMO = iter_2_1.entityMO
-			var_2_1.fromOtherFight = iter_2_1.entityMO and true or false
+			if var_2_1 then
+				local var_2_2 = FightStatMO.New()
 
-			table.insert(var_2_0, var_2_1)
+				var_2_2:init(iter_2_1)
 
-			arg_2_0._totalHarm = arg_2_0._totalHarm + var_2_1.harm
-			arg_2_0._totalHurt = arg_2_0._totalHurt + var_2_1.hurt
-			arg_2_0._totalHeal = arg_2_0._totalHeal + var_2_1.heal
+				var_2_2.entityMO = iter_2_1.entityMO
+				var_2_2.fromOtherFight = iter_2_1.entityMO and true or false
+
+				table.insert(var_2_0, var_2_2)
+
+				arg_2_0._totalHarm = arg_2_0._totalHarm + var_2_2.harm
+				arg_2_0._totalHurt = arg_2_0._totalHurt + var_2_2.hurt
+				arg_2_0._totalHeal = arg_2_0._totalHeal + var_2_2.heal
+			end
 		end
 	end
 

@@ -136,6 +136,7 @@ function var_0_0.getFightStepString(arg_6_0, arg_6_1, arg_6_2)
 
 	table.insert(var_6_2, string.format("%s cardIndex : %s", var_6_4, arg_6_0.cardIndex))
 	table.insert(var_6_2, string.format("%s supportHeroId : %s", var_6_4, arg_6_0.supportHeroId))
+	table.insert(var_6_2, string.format("%s fakeTimeline : %s", var_6_4, arg_6_0.fakeTimeline))
 	table.insert(var_6_2, var_0_0.getFightActEffectListString(arg_6_0.actEffectMOs, arg_6_1, "actEffectMOs"))
 	table.insert(var_6_2, var_6_0 .. "}")
 
@@ -179,6 +180,7 @@ function var_0_0.getFightActEffectString(arg_8_0, arg_8_1, arg_8_2)
 	table.insert(var_8_2, string.format("%s buffActId : %s", var_8_3, arg_8_0.buffActId))
 	table.insert(var_8_2, string.format("%s reserveId : %s", var_8_3, arg_8_0.reserveId))
 	table.insert(var_8_2, string.format("%s reserveStr : %s", var_8_3, arg_8_0.reserveStr))
+	table.insert(var_8_2, string.format("%s teamType : %s", var_8_3, arg_8_0.teamType))
 	table.insert(var_8_2, var_0_0.getAssistBossInfoString(arg_8_0.assistBossInfo, arg_8_1))
 
 	if arg_8_0.cus_stepMO then
@@ -779,7 +781,7 @@ var_0_0.EffectTypeNameDict = {
 	[FightEnum.EffectType.EMITTERMAINTARGET] = " 奥术飞弹优先攻击目标",
 	[FightEnum.EffectType.CONDITIONSPLITEMITTERNUM] = " 奥术飞弹条件分裂",
 	[FightEnum.EffectType.ADDSPLITEMITTERNUM] = " 奥术飞弹额外分裂",
-	[FightEnum.EffectType.EMITTERSPLITNUM] = " 奥术飞弹分裂通知",
+	[FightEnum.EffectType.EMITTERFIGHTNOTIFY] = "  奥术飞弹放技能前通知",
 	[FightEnum.EffectType.MUSTCRITBUFF] = " 必定暴击buff",
 	[FightEnum.EffectType.MUSTCRIT] = " 触发必定暴击",
 	[FightEnum.EffectType.CARDAREAREDORBLUE] = " (梁月大)手牌红蓝分区Buff",
@@ -800,6 +802,12 @@ var_0_0.EffectTypeNameDict = {
 	[FightEnum.EffectType.ROUNDOFFSET] = " 回合数偏移",
 	[FightEnum.EffectType.SAVEFIGHTRECORD] = " 战场回溯buff",
 	[FightEnum.EffectType.ADDSPHANDCARD] = " 添加SP手牌 78有问题 没有完整cardInfo 少用 ",
+	[FightEnum.EffectType.NONCAREERRESTRAINT] = " 非克制伤害",
+	[FightEnum.EffectType.CLEARMONSTERSUB] = " 清空怪物候场",
+	[FightEnum.EffectType.FIGHTTASKUPDATE] = " 战斗任务更新",
+	[FightEnum.EffectType.RETAINSLEEP] = " 攻击噩梦单位不解除噩梦",
+	[FightEnum.EffectType.REMOVEMONSTERSUB] = " 移除怪物候场",
+	[FightEnum.EffectType.ADDCARDRECORDBYROUND] = " 回合记忆卡牌数据更新",
 	[FightEnum.EffectType.TRIGGER] = "触发器"
 }
 

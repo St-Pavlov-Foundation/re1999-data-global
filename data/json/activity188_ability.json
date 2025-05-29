@@ -1,0 +1,79 @@
+[
+  {
+    "activityId": 12605,
+    "abilityId": 100,
+    "effectTime": 0,
+    "skillId": 112,
+    "desc": "language_10072560"
+  },
+  {
+    "activityId": 12605,
+    "abilityId": 101,
+    "effectTime": 0,
+    "skillId": 113,
+    "desc": "language_10072561"
+  },
+  {
+    "activityId": 12605,
+    "abilityId": 102,
+    "effectTime": 0,
+    "skillId": 114,
+    "desc": "language_10072562"
+  },
+  {
+    "activityId": 12605,
+    "abilityId": 103,
+    "effectTime": 0,
+    "skillId": 115,
+    "desc": "language_10072563"
+  },
+  {
+    "activityId": 12605,
+    "abilityId": 104,
+    "effectTime": 1,
+    "skillId": 116,
+    "desc": "language_10072564"
+  },
+  {
+    "activityId": 12605,
+    "abilityId": 105,
+    "effectTime": 1,
+    "skillId": 122,
+    "desc": "language_10072565"
+  },
+  {
+    "activityId": 12605,
+    "abilityId": 106,
+    "effectTime": 0,
+    "skillId": 117,
+    "desc": "language_10072566"
+  },
+  {
+    "activityId": 12605,
+    "abilityId": 107,
+    "effectTime": 0,
+    "skillId": 118,
+    "desc": "language_10072567"
+  },
+  {
+    "activityId": 12605,
+    "abilityId": 108,
+    "effectTime": 0,
+    "skillId": 119,
+    "desc": "language_10072568"
+  },
+  {
+    "activityId": 12605,
+    "abilityId": 109,
+    "effectTime": 0,
+    "skillId": 120,
+    "desc": "language_10072569"
+  },
+  {
+    "activityId": 12605,
+    "abilityId": 110,
+    "effectTime": 0,
+    "skillId": 121,
+    "desc": "language_10072570"
+  }
+]

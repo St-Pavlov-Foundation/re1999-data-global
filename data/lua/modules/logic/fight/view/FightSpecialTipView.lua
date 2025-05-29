@@ -3,6 +3,7 @@
 local var_0_0 = class("FightSpecialTipView", BaseView)
 
 function var_0_0.onInitView(arg_1_0)
+	arg_1_0.goSimageBg = gohelper.findChild(arg_1_0.viewGO, "content/#simage_bg")
 	arg_1_0._simagebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "content/#simage_bg")
 	arg_1_0._goBossRushLayer4 = gohelper.findChild(arg_1_0.viewGO, "content/#simage_bg/#go_BossRushLayer4")
 	arg_1_0._gospecialTip = gohelper.findChild(arg_1_0.viewGO, "content/#go_specialTip")
@@ -21,6 +22,12 @@ function var_0_0.onInitView(arg_1_0)
 	arg_1_0.goLayoutContent = gohelper.findChild(arg_1_0.viewGO, "content/layout/#go_additionTip/Viewport/#go_layoutContent")
 	arg_1_0.layoutContentTrans = arg_1_0.goLayoutContent:GetComponent(gohelper.Type_RectTransform)
 	arg_1_0.layoutContentSizeFilter = arg_1_0.goLayoutContent:GetComponent(typeof(UnityEngine.UI.ContentSizeFitter))
+	arg_1_0._go_weekwalkheart = gohelper.findChild(arg_1_0.viewGO, "content/#go_weekwalkheart")
+
+	gohelper.setActive(arg_1_0._go_weekwalkheart, false)
+
+	arg_1_0._weekwalkTagText = gohelper.findChildText(arg_1_0.viewGO, "content/#go_weekwalkheart/#go_ruleitem/scroll_tag/Viewport/Content/tag")
+	arg_1_0._weekwalkTagIcon = gohelper.findChildImage(arg_1_0.viewGO, "content/#go_weekwalkheart/#go_ruleitem/scroll_tag/Viewport/Content/tag/icon")
 
 	if arg_1_0._editableInitView then
 		arg_1_0:_editableInitView()
@@ -172,6 +179,50 @@ function var_0_0.onOpen(arg_9_0)
 		end
 	end
 
+	local var_9_19 = FightDataHelper.fieldMgr.customData[FightCustomData.CustomDataType.WeekwalkVer2]
+
+	if var_9_19 then
+		local var_9_20 = cjson.decode(var_9_19).ruleMap
+
+		if var_9_20 then
+			var_9_11 = var_9_11 or {}
+
+			if var_9_20.chooseSkill then
+				gohelper.setActive(arg_9_0.goSimageBg, #var_9_20.chooseSkill > 0)
+
+				for iter_9_6, iter_9_7 in ipairs(var_9_20.chooseSkill) do
+					local var_9_21 = GameUtil.splitString2(iter_9_7, true, "|", "#")
+
+					tabletool.addValues(var_9_11, var_9_21)
+				end
+			else
+				gohelper.setActive(arg_9_0.goSimageBg, false)
+			end
+
+			if var_9_20.defaultRule then
+				gohelper.setActive(arg_9_0._go_weekwalkheart, true)
+
+				local var_9_22 = GameUtil.splitString2(var_9_20.defaultRule[1], true, "|", "#")[1]
+				local var_9_23 = {
+					"#5283ca",
+					"#de4d4d",
+					"#dd9446",
+					"#ff0000"
+				}
+				local var_9_24 = lua_rule.configDict[var_9_22[2]]
+				local var_9_25 = var_9_22[1]
+				local var_9_26 = var_9_24.desc
+				local var_9_27 = SkillHelper.buildDesc(var_9_26, nil, "#5283ca")
+				local var_9_28 = luaLang("dungeon_add_rule_target_" .. var_9_25)
+				local var_9_29 = var_9_23[var_9_25]
+
+				arg_9_0._weekwalkTagText.text = string.format("<color=%s>[%s]</color>%s", var_9_29, var_9_28, var_9_27)
+
+				UISpriteSetMgr.instance:setDungeonLevelRuleSprite(arg_9_0._weekwalkTagIcon, var_9_24.icon, true)
+			end
+		end
+	end
+
 	if var_9_11 and #var_9_11 > 0 then
 		var_9_2 = FightEnum.FightSpecialTipsType.Addition
 
@@ -189,9 +240,9 @@ function var_0_0.onOpen(arg_9_0)
 	gohelper.setActive(arg_9_0._gospecialTip, var_9_2 == FightEnum.FightSpecialTipsType.Special)
 	gohelper.setActive(arg_9_0._golayout, var_9_2 == FightEnum.FightSpecialTipsType.Addition)
 
-	local var_9_19 = BossRushModel.instance:isSpecialLayerCurBattle()
+	local var_9_30 = BossRushModel.instance:isSpecialLayerCurBattle()
 
-	gohelper.setActive(arg_9_0._goBossRushLayer4, var_9_19)
+	gohelper.setActive(arg_9_0._goBossRushLayer4, var_9_30)
 	arg_9_0:setTipLayout(var_9_11)
 end
 

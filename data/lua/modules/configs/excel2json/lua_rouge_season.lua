@@ -13,9 +13,8 @@ local var_0_2 = {
 	"id"
 }
 local var_0_3 = {
-	desc = 3,
-	name = 1,
-	enName = 2
+	desc = 2,
+	name = 1
 }
 
 function var_0_0.onLoad(arg_1_0)

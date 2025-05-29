@@ -2,12 +2,14 @@
 
 local var_0_0 = {}
 local var_0_1 = {
-	mySidePos = 2,
-	enemySidePos = 3,
-	sceneId = 1
+	sceneId = 1,
+	enemySidePos = 4,
+	emitterId = 2,
+	mySidePos = 3
 }
 local var_0_2 = {
-	"sceneId"
+	"sceneId",
+	"emitterId"
 }
 local var_0_3 = {}
 

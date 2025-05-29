@@ -90,6 +90,9 @@ function var_0_0._initBgmDatas(arg_2_0)
 	arg_2_0:_addBgmData(AudioBgmEnum.Layer.VersionActivity2_4WuErLiXi, AudioEnum.WuErLiXi.bgm_wuerliximap, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
 	arg_2_0:_addBgmData(AudioBgmEnum.Layer.VersionActivity2_4WuErLiXiGame, AudioEnum.WuErLiXi.bgm_wuerliximapgame, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
 	arg_2_0:_addBgmData(AudioBgmEnum.Layer.VersionActivity2_5Main, 0, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
+	arg_2_0:_addBgmData(AudioBgmEnum.Layer.VersionActivity2_6Main, 0, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
+	arg_2_0:_addBgmData(AudioBgmEnum.Layer.VersionActivity2_6_DiceHero, AudioEnum2_6.DiceHero.Bgm, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
+	arg_2_0:_addBgmData(AudioBgmEnum.Layer.VersionActivity2_6_DiceHero_Game, AudioEnum2_6.DiceHero.Bgm_Game, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
 end
 
 function var_0_0._initBgmUsage(arg_3_0)
@@ -265,7 +268,8 @@ function var_0_0._initBgmUsage(arg_3_0)
 	arg_3_0:_addBgmUsage({
 		AudioBgmEnum.Layer.RoleStoryActivity
 	}, AudioBgmEnum.UsageType.View, {
-		ViewName.RoleStoryActivityMainView
+		ViewName.RoleStoryActivityMainView,
+		ViewName.RoleStoryDispatchMainView
 	})
 	arg_3_0:_addBgmUsage({
 		AudioBgmEnum.Layer.VersionActivity1_4Main
@@ -321,15 +325,16 @@ function var_0_0._initBgmUsage(arg_3_0)
 		ViewName.AiZiLaMapView
 	})
 	arg_3_0:_addBgmUsage({
-		AudioBgmEnum.Layer.VersionActivity1_6Main
-	}, AudioBgmEnum.UsageType.View, {
-		ViewName.VersionActivity1_6EnterView
-	}, nil, nil, true)
-	arg_3_0:_addBgmUsage({
 		AudioBgmEnum.Layer.VersionActivity1_6Dungeon
 	}, AudioBgmEnum.UsageType.View, {
 		ViewName.VersionActivity1_6DungeonMapView
 	})
+	arg_3_0:_addBgmUsage({
+		AudioBgmEnum.Layer.VersionActivity1_6Main
+	}, AudioBgmEnum.UsageType.View, {
+		ViewName.VersionActivity1_6EnterView,
+		ViewName.Permanent1_6EnterView
+	}, nil, nil, true)
 	arg_3_0:_addBgmUsage({
 		AudioBgmEnum.Layer.Act_QuNiang
 	}, AudioBgmEnum.UsageType.View, {
@@ -494,6 +499,26 @@ function var_0_0._initBgmUsage(arg_3_0)
 		AudioBgmEnum.Layer.VersionActivity2_5Main
 	}, AudioBgmEnum.UsageType.View, {
 		ViewName.VersionActivity2_5EnterView
+	}, nil, nil, true)
+	arg_3_0:_addBgmUsage({
+		AudioBgmEnum.Layer.AutoChess
+	}, AudioBgmEnum.UsageType.View, {
+		ViewName.AutoChessMainView
+	}, nil, nil, true)
+	arg_3_0:_addBgmUsage({
+		AudioBgmEnum.Layer.VersionActivity2_6Main
+	}, AudioBgmEnum.UsageType.View, {
+		ViewName.VersionActivity2_6EnterView
+	}, nil, nil, true)
+	arg_3_0:_addBgmUsage({
+		AudioBgmEnum.Layer.VersionActivity2_6_DiceHero
+	}, AudioBgmEnum.UsageType.View, {
+		ViewName.DiceHeroMainView
+	}, nil, nil, true)
+	arg_3_0:_addBgmUsage({
+		AudioBgmEnum.Layer.VersionActivity2_6_DiceHero_Game
+	}, AudioBgmEnum.UsageType.View, {
+		ViewName.DiceHeroGameView
 	}, nil, nil, true)
 end
 

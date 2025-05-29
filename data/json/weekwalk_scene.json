@@ -1956,5 +1956,49 @@
     "icon": "3045",
     "battleName": "language_10020509",
     "name_en": "language_10020510"
+  },
+  {
+    "id": 17,
+    "map": "scenes/m_s09_rgmy/scene_prefab/m_s09_rgmy_a_p.prefab",
+    "mapId": 17,
+    "buffId": 0,
+    "typeName": "language_10020492",
+    "name": "language_10072168",
+    "icon": "205",
+    "battleName": "language_10072169",
+    "name_en": "language_10072170"
+  },
+  {
+    "id": 27,
+    "map": "scenes/m_s09_rgmy/scene_prefab/m_s09_rgmy_b_p.prefab",
+    "mapId": 27,
+    "buffId": 0,
+    "typeName": "language_10020492",
+    "name": "language_10072168",
+    "icon": "205",
+    "battleName": "language_10072169",
+    "name_en": "language_10072170"
+  },
+  {
+    "id": 37,
+    "map": "scenes/m_s09_rgmy/scene_prefab/m_s09_rgmy_c_p.prefab",
+    "mapId": 37,
+    "buffId": 0,
+    "typeName": "language_10020492",
+    "name": "language_10072168",
+    "icon": "205",
+    "battleName": "language_10072169",
+    "name_en": "language_10072170"
+  },
+  {
+    "id": 47,
+    "map": "scenes/m_s09_rgmy/scene_prefab/m_s09_rgmy_d_p.prefab",
+    "mapId": 47,
+    "buffId": 0,
+    "typeName": "language_10020492",
+    "name": "language_10072168",
+    "icon": "205",
+    "battleName": "language_10072169",
+    "name_en": "language_10072170"
   }
 ]

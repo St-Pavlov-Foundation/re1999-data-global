@@ -137,7 +137,7 @@ function var_0_0.getAnyOnlineRareCharacterCount(arg_13_0, arg_13_1)
 		if iter_13_1.rare == arg_13_1 then
 			if iter_13_1.isOnline == "1" then
 				var_13_0 = var_13_0 + 1
-			elseif iter_13_1.isOnline ~= "0" and TimeUtil.stringToTimestamp(iter_13_1.isOnline) < ServerTime.Now() then
+			elseif iter_13_1.isOnline ~= "0" and TimeUtil.stringToTimestamp(iter_13_1.isOnline) < ServerTime.now() then
 				var_13_0 = var_13_0 + 1
 			end
 		end

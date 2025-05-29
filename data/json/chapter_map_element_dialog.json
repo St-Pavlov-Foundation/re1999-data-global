@@ -14380,5 +14380,1409 @@
     "audio": 0,
     "speaker": "",
     "content": ""
+  },
+  {
+    "id": 41,
+    "stepId": 1,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600001,
+    "speaker": "language_10000908",
+    "content": "language_10070395"
+  },
+  {
+    "id": 41,
+    "stepId": 2,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600002,
+    "speaker": "language_10000908",
+    "content": "language_10070396"
+  },
+  {
+    "id": 41,
+    "stepId": 3,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600003,
+    "speaker": "language_10000908",
+    "content": "language_10070397"
+  },
+  {
+    "id": 41,
+    "stepId": 4,
+    "type": "options",
+    "param": "1#2",
+    "audio": 0,
+    "speaker": "",
+    "content": "language_10070398"
+  },
+  {
+    "id": 41,
+    "stepId": 5,
+    "type": "selector",
+    "param": "1",
+    "audio": 0,
+    "speaker": "",
+    "content": ""
+  },
+  {
+    "id": 41,
+    "stepId": 6,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600004,
+    "speaker": "language_10000908",
+    "content": "language_10070399"
+  },
+  {
+    "id": 41,
+    "stepId": 7,
+    "type": "selector",
+    "param": "2",
+    "audio": 0,
+    "speaker": "",
+    "content": ""
+  },
+  {
+    "id": 41,
+    "stepId": 8,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600005,
+    "speaker": "language_10000908",
+    "content": "language_10070400"
+  },
+  {
+    "id": 41,
+    "stepId": 9,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600006,
+    "speaker": "language_10000908",
+    "content": "language_10070401"
+  },
+  {
+    "id": 41,
+    "stepId": 10,
+    "type": "selectorend",
+    "param": "",
+    "audio": 0,
+    "speaker": "",
+    "content": ""
+  },
+  {
+    "id": 41,
+    "stepId": 11,
+    "type": "options",
+    "param": "3",
+    "audio": 0,
+    "speaker": "",
+    "content": "language_10070402"
+  },
+  {
+    "id": 41,
+    "stepId": 12,
+    "type": "selector",
+    "param": "3",
+    "audio": 0,
+    "speaker": "",
+    "content": ""
+  },
+  {
+    "id": 41,
+    "stepId": 13,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600007,
+    "speaker": "language_10000908",
+    "content": "language_10070403"
+  },
+  {
+    "id": 41,
+    "stepId": 14,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600008,
+    "speaker": "language_10000908",
+    "content": "language_10070404"
+  },
+  {
+    "id": 41,
+    "stepId": 15,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600009,
+    "speaker": "language_10000908",
+    "content": "language_10070405"
+  },
+  {
+    "id": 41,
+    "stepId": 16,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600010,
+    "speaker": "language_10000908",
+    "content": "language_10070406"
+  },
+  {
+    "id": 41,
+    "stepId": 17,
+    "type": "selectorend",
+    "param": "",
+    "audio": 0,
+    "speaker": "",
+    "content": ""
+  },
+  {
+    "id": 41,
+    "stepId": 18,
+    "type": "options",
+    "param": "4",
+    "audio": 0,
+    "speaker": "",
+    "content": "language_10070407"
+  },
+  {
+    "id": 41,
+    "stepId": 19,
+    "type": "selector",
+    "param": "4",
+    "audio": 0,
+    "speaker": "",
+    "content": ""
+  },
+  {
+    "id": 41,
+    "stepId": 20,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600011,
+    "speaker": "language_10000908",
+    "content": "language_10070408"
+  },
+  {
+    "id": 41,
+    "stepId": 21,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600012,
+    "speaker": "language_10000908",
+    "content": "language_10070409"
+  },
+  {
+    "id": 41,
+    "stepId": 22,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600013,
+    "speaker": "language_10000908",
+    "content": "language_10070410"
+  },
+  {
+    "id": 41,
+    "stepId": 23,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600014,
+    "speaker": "language_10000908",
+    "content": "language_10070411"
+  },
+  {
+    "id": 41,
+    "stepId": 24,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600015,
+    "speaker": "language_10000908",
+    "content": "language_10070412"
+  },
+  {
+    "id": 41,
+    "stepId": 25,
+    "type": "selectorend",
+    "param": "",
+    "audio": 0,
+    "speaker": "",
+    "content": ""
+  },
+  {
+    "id": 42,
+    "stepId": 1,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600016,
+    "speaker": "language_10000908",
+    "content": "language_10070413"
+  },
+  {
+    "id": 42,
+    "stepId": 2,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600017,
+    "speaker": "language_10000908",
+    "content": "language_10070414"
+  },
+  {
+    "id": 42,
+    "stepId": 3,
+    "type": "options",
+    "param": "1",
+    "audio": 0,
+    "speaker": "",
+    "content": "language_10070415"
+  },
+  {
+    "id": 42,
+    "stepId": 4,
+    "type": "selector",
+    "param": "1",
+    "audio": 0,
+    "speaker": "",
+    "content": ""
+  },
+  {
+    "id": 42,
+    "stepId": 5,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600018,
+    "speaker": "language_10000908",
+    "content": "language_10070416"
+  },
+  {
+    "id": 42,
+    "stepId": 6,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600019,
+    "speaker": "language_10000908",
+    "content": "language_10070417"
+  },
+  {
+    "id": 42,
+    "stepId": 7,
+    "type": "selectorend",
+    "param": "",
+    "audio": 0,
+    "speaker": "",
+    "content": ""
+  },
+  {
+    "id": 42,
+    "stepId": 8,
+    "type": "options",
+    "param": "2",
+    "audio": 0,
+    "speaker": "",
+    "content": "language_10070418"
+  },
+  {
+    "id": 42,
+    "stepId": 9,
+    "type": "selector",
+    "param": "2",
+    "audio": 0,
+    "speaker": "",
+    "content": ""
+  },
+  {
+    "id": 42,
+    "stepId": 10,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600020,
+    "speaker": "language_10000908",
+    "content": "language_10070419"
+  },
+  {
+    "id": 42,
+    "stepId": 11,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600021,
+    "speaker": "language_10000908",
+    "content": "language_10070420"
+  },
+  {
+    "id": 42,
+    "stepId": 12,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600022,
+    "speaker": "language_10000908",
+    "content": "language_10070421"
+  },
+  {
+    "id": 42,
+    "stepId": 13,
+    "type": "selectorend",
+    "param": "",
+    "audio": 0,
+    "speaker": "",
+    "content": ""
+  },
+  {
+    "id": 42,
+    "stepId": 14,
+    "type": "options",
+    "param": "3",
+    "audio": 0,
+    "speaker": "",
+    "content": "language_10070422"
+  },
+  {
+    "id": 42,
+    "stepId": 15,
+    "type": "selector",
+    "param": "3",
+    "audio": 0,
+    "speaker": "",
+    "content": ""
+  },
+  {
+    "id": 42,
+    "stepId": 16,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600023,
+    "speaker": "language_10000908",
+    "content": "language_10070423"
+  },
+  {
+    "id": 42,
+    "stepId": 17,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600024,
+    "speaker": "language_10000908",
+    "content": "language_10070424"
+  },
+  {
+    "id": 42,
+    "stepId": 18,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600025,
+    "speaker": "language_10000908",
+    "content": "language_10070425"
+  },
+  {
+    "id": 42,
+    "stepId": 19,
+    "type": "selectorend",
+    "param": "",
+    "audio": 0,
+    "speaker": "",
+    "content": ""
+  },
+  {
+    "id": 42,
+    "stepId": 20,
+    "type": "options",
+    "param": "4",
+    "audio": 0,
+    "speaker": "",
+    "content": "language_10029266"
+  },
+  {
+    "id": 42,
+    "stepId": 21,
+    "type": "selector",
+    "param": "4",
+    "audio": 0,
+    "speaker": "",
+    "content": ""
+  },
+  {
+    "id": 42,
+    "stepId": 22,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600026,
+    "speaker": "language_10000908",
+    "content": "language_10070426"
+  },
+  {
+    "id": 42,
+    "stepId": 23,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600027,
+    "speaker": "language_10000908",
+    "content": "language_10070427"
+  },
+  {
+    "id": 42,
+    "stepId": 24,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600028,
+    "speaker": "language_10000908",
+    "content": "language_10070428"
+  },
+  {
+    "id": 42,
+    "stepId": 25,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600029,
+    "speaker": "language_10000908",
+    "content": "language_10070429"
+  },
+  {
+    "id": 42,
+    "stepId": 26,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600030,
+    "speaker": "language_10000908",
+    "content": "language_10070430"
+  },
+  {
+    "id": 42,
+    "stepId": 27,
+    "type": "selectorend",
+    "param": "",
+    "audio": 0,
+    "speaker": "",
+    "content": ""
+  },
+  {
+    "id": 42,
+    "stepId": 28,
+    "type": "options",
+    "param": "5",
+    "audio": 0,
+    "speaker": "",
+    "content": "language_10070431"
+  },
+  {
+    "id": 42,
+    "stepId": 29,
+    "type": "selector",
+    "param": "5",
+    "audio": 0,
+    "speaker": "",
+    "content": ""
+  },
+  {
+    "id": 42,
+    "stepId": 30,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600031,
+    "speaker": "language_10000908",
+    "content": "language_10070432"
+  },
+  {
+    "id": 42,
+    "stepId": 31,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600032,
+    "speaker": "language_10000908",
+    "content": "language_10070433"
+  },
+  {
+    "id": 42,
+    "stepId": 32,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600033,
+    "speaker": "language_10000908",
+    "content": "language_10070434"
+  },
+  {
+    "id": 42,
+    "stepId": 33,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600034,
+    "speaker": "language_10000908",
+    "content": "language_10070435"
+  },
+  {
+    "id": 42,
+    "stepId": 34,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600035,
+    "speaker": "language_10000908",
+    "content": "language_10070436"
+  },
+  {
+    "id": 42,
+    "stepId": 35,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600036,
+    "speaker": "language_10000908",
+    "content": "language_10070437"
+  },
+  {
+    "id": 42,
+    "stepId": 36,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600037,
+    "speaker": "language_10000908",
+    "content": "language_10070438"
+  },
+  {
+    "id": 42,
+    "stepId": 37,
+    "type": "selectorend",
+    "param": "",
+    "audio": 0,
+    "speaker": "",
+    "content": ""
+  },
+  {
+    "id": 43,
+    "stepId": 1,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600038,
+    "speaker": "language_10000908",
+    "content": "language_10070439"
+  },
+  {
+    "id": 43,
+    "stepId": 2,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600039,
+    "speaker": "language_10000908",
+    "content": "language_10070440"
+  },
+  {
+    "id": 43,
+    "stepId": 3,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600040,
+    "speaker": "language_10000908",
+    "content": "language_10070441"
+  },
+  {
+    "id": 43,
+    "stepId": 4,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600041,
+    "speaker": "language_10000908",
+    "content": "language_10070442"
+  },
+  {
+    "id": 43,
+    "stepId": 5,
+    "type": "options",
+    "param": "1",
+    "audio": 0,
+    "speaker": "",
+    "content": "language_10070443"
+  },
+  {
+    "id": 43,
+    "stepId": 6,
+    "type": "selector",
+    "param": "1",
+    "audio": 0,
+    "speaker": "",
+    "content": ""
+  },
+  {
+    "id": 43,
+    "stepId": 7,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600042,
+    "speaker": "language_10000908",
+    "content": "language_10070444"
+  },
+  {
+    "id": 43,
+    "stepId": 8,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600043,
+    "speaker": "language_10000908",
+    "content": "language_10070445"
+  },
+  {
+    "id": 43,
+    "stepId": 9,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600044,
+    "speaker": "language_10000908",
+    "content": "language_10070446"
+  },
+  {
+    "id": 43,
+    "stepId": 10,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600045,
+    "speaker": "language_10000908",
+    "content": "language_10070447"
+  },
+  {
+    "id": 43,
+    "stepId": 11,
+    "type": "selectorend",
+    "param": "",
+    "audio": 0,
+    "speaker": "",
+    "content": ""
+  },
+  {
+    "id": 43,
+    "stepId": 12,
+    "type": "options",
+    "param": "2",
+    "audio": 0,
+    "speaker": "",
+    "content": "language_10070448"
+  },
+  {
+    "id": 43,
+    "stepId": 13,
+    "type": "selector",
+    "param": "2",
+    "audio": 0,
+    "speaker": "",
+    "content": ""
+  },
+  {
+    "id": 43,
+    "stepId": 14,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600046,
+    "speaker": "language_10000908",
+    "content": "language_10070449"
+  },
+  {
+    "id": 43,
+    "stepId": 15,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600047,
+    "speaker": "language_10000908",
+    "content": "language_10070450"
+  },
+  {
+    "id": 43,
+    "stepId": 16,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600048,
+    "speaker": "language_10000908",
+    "content": "language_10070451"
+  },
+  {
+    "id": 43,
+    "stepId": 17,
+    "type": "selectorend",
+    "param": "",
+    "audio": 0,
+    "speaker": "",
+    "content": ""
+  },
+  {
+    "id": 43,
+    "stepId": 18,
+    "type": "options",
+    "param": "3",
+    "audio": 0,
+    "speaker": "",
+    "content": "language_10070452"
+  },
+  {
+    "id": 43,
+    "stepId": 19,
+    "type": "selector",
+    "param": "3",
+    "audio": 0,
+    "speaker": "",
+    "content": ""
+  },
+  {
+    "id": 43,
+    "stepId": 20,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600049,
+    "speaker": "language_10000908",
+    "content": "language_10070453"
+  },
+  {
+    "id": 43,
+    "stepId": 21,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600050,
+    "speaker": "language_10000908",
+    "content": "language_10070454"
+  },
+  {
+    "id": 43,
+    "stepId": 22,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600051,
+    "speaker": "language_10000908",
+    "content": "language_10070455"
+  },
+  {
+    "id": 43,
+    "stepId": 23,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600052,
+    "speaker": "language_10000908",
+    "content": "language_10070456"
+  },
+  {
+    "id": 43,
+    "stepId": 24,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600053,
+    "speaker": "language_10000908",
+    "content": "language_10070457"
+  },
+  {
+    "id": 43,
+    "stepId": 25,
+    "type": "selectorend",
+    "param": "",
+    "audio": 0,
+    "speaker": "",
+    "content": ""
+  },
+  {
+    "id": 43,
+    "stepId": 26,
+    "type": "options",
+    "param": "4",
+    "audio": 0,
+    "speaker": "",
+    "content": "language_10070458"
+  },
+  {
+    "id": 43,
+    "stepId": 27,
+    "type": "selector",
+    "param": "4",
+    "audio": 0,
+    "speaker": "",
+    "content": ""
+  },
+  {
+    "id": 43,
+    "stepId": 28,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600054,
+    "speaker": "language_10000908",
+    "content": "language_10070459"
+  },
+  {
+    "id": 43,
+    "stepId": 29,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600055,
+    "speaker": "language_10000908",
+    "content": "language_10070460"
+  },
+  {
+    "id": 43,
+    "stepId": 30,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600056,
+    "speaker": "language_10000908",
+    "content": "language_10070461"
+  },
+  {
+    "id": 43,
+    "stepId": 31,
+    "type": "selectorend",
+    "param": "",
+    "audio": 0,
+    "speaker": "",
+    "content": ""
+  },
+  {
+    "id": 44,
+    "stepId": 1,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600057,
+    "speaker": "language_10000908",
+    "content": "language_10070462"
+  },
+  {
+    "id": 44,
+    "stepId": 2,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600058,
+    "speaker": "language_10000908",
+    "content": "language_10070463"
+  },
+  {
+    "id": 44,
+    "stepId": 3,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600059,
+    "speaker": "language_10000908",
+    "content": "language_10070464"
+  },
+  {
+    "id": 44,
+    "stepId": 4,
+    "type": "options",
+    "param": "1#2",
+    "audio": 0,
+    "speaker": "",
+    "content": "language_10070465"
+  },
+  {
+    "id": 44,
+    "stepId": 5,
+    "type": "selector",
+    "param": "1",
+    "audio": 0,
+    "speaker": "",
+    "content": ""
+  },
+  {
+    "id": 44,
+    "stepId": 6,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600060,
+    "speaker": "language_10000908",
+    "content": "language_10070466"
+  },
+  {
+    "id": 44,
+    "stepId": 7,
+    "type": "selector",
+    "param": "2",
+    "audio": 0,
+    "speaker": "",
+    "content": ""
+  },
+  {
+    "id": 44,
+    "stepId": 8,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600061,
+    "speaker": "language_10000908",
+    "content": "language_10070467"
+  },
+  {
+    "id": 44,
+    "stepId": 9,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600062,
+    "speaker": "language_10000908",
+    "content": "language_10070468"
+  },
+  {
+    "id": 44,
+    "stepId": 10,
+    "type": "selectorend",
+    "param": "",
+    "audio": 0,
+    "speaker": "",
+    "content": ""
+  },
+  {
+    "id": 44,
+    "stepId": 11,
+    "type": "options",
+    "param": "3",
+    "audio": 0,
+    "speaker": "",
+    "content": "language_10070469"
+  },
+  {
+    "id": 44,
+    "stepId": 12,
+    "type": "selector",
+    "param": "3",
+    "audio": 0,
+    "speaker": "",
+    "content": ""
+  },
+  {
+    "id": 44,
+    "stepId": 13,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600063,
+    "speaker": "language_10000908",
+    "content": "language_10070470"
+  },
+  {
+    "id": 44,
+    "stepId": 14,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600064,
+    "speaker": "language_10000908",
+    "content": "language_10070471"
+  },
+  {
+    "id": 44,
+    "stepId": 15,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600065,
+    "speaker": "language_10000908",
+    "content": "language_10070472"
+  },
+  {
+    "id": 44,
+    "stepId": 16,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600066,
+    "speaker": "language_10000908",
+    "content": "language_10070473"
+  },
+  {
+    "id": 44,
+    "stepId": 17,
+    "type": "selectorend",
+    "param": "",
+    "audio": 0,
+    "speaker": "",
+    "content": ""
+  },
+  {
+    "id": 44,
+    "stepId": 18,
+    "type": "options",
+    "param": "4#5",
+    "audio": 0,
+    "speaker": "",
+    "content": "language_10070474"
+  },
+  {
+    "id": 44,
+    "stepId": 19,
+    "type": "selector",
+    "param": "4",
+    "audio": 0,
+    "speaker": "",
+    "content": ""
+  },
+  {
+    "id": 44,
+    "stepId": 20,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600067,
+    "speaker": "language_10000908",
+    "content": "language_10070475"
+  },
+  {
+    "id": 44,
+    "stepId": 21,
+    "type": "selector",
+    "param": "5",
+    "audio": 0,
+    "speaker": "",
+    "content": ""
+  },
+  {
+    "id": 44,
+    "stepId": 22,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600068,
+    "speaker": "language_10000908",
+    "content": "language_10070476"
+  },
+  {
+    "id": 44,
+    "stepId": 23,
+    "type": "selectorend",
+    "param": "",
+    "audio": 0,
+    "speaker": "",
+    "content": ""
+  },
+  {
+    "id": 44,
+    "stepId": 24,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600069,
+    "speaker": "language_10000908",
+    "content": "language_10070477"
+  },
+  {
+    "id": 44,
+    "stepId": 25,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600070,
+    "speaker": "language_10000908",
+    "content": "language_10070478"
+  },
+  {
+    "id": 44,
+    "stepId": 26,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600071,
+    "speaker": "language_10000908",
+    "content": "language_10070479"
+  },
+  {
+    "id": 44,
+    "stepId": 27,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600072,
+    "speaker": "language_10000908",
+    "content": "language_10070480"
+  },
+  {
+    "id": 44,
+    "stepId": 28,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600073,
+    "speaker": "language_10000908",
+    "content": "language_10070481"
+  },
+  {
+    "id": 44,
+    "stepId": 29,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600074,
+    "speaker": "language_10000908",
+    "content": "language_10070482"
+  },
+  {
+    "id": 44,
+    "stepId": 30,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600075,
+    "speaker": "language_10000908",
+    "content": "language_10070483"
+  },
+  {
+    "id": 45,
+    "stepId": 1,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600076,
+    "speaker": "language_10000908",
+    "content": "language_10070484"
+  },
+  {
+    "id": 45,
+    "stepId": 2,
+    "type": "options",
+    "param": "1",
+    "audio": 0,
+    "speaker": "",
+    "content": "language_10070485"
+  },
+  {
+    "id": 45,
+    "stepId": 3,
+    "type": "selector",
+    "param": "1",
+    "audio": 0,
+    "speaker": "",
+    "content": ""
+  },
+  {
+    "id": 45,
+    "stepId": 4,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600077,
+    "speaker": "language_10000908",
+    "content": "language_10070486"
+  },
+  {
+    "id": 45,
+    "stepId": 5,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600078,
+    "speaker": "language_10000908",
+    "content": "language_10070487"
+  },
+  {
+    "id": 45,
+    "stepId": 6,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600079,
+    "speaker": "language_10000908",
+    "content": "language_10070488"
+  },
+  {
+    "id": 45,
+    "stepId": 7,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600080,
+    "speaker": "language_10000908",
+    "content": "language_10070489"
+  },
+  {
+    "id": 45,
+    "stepId": 8,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600081,
+    "speaker": "language_10000908",
+    "content": "language_10070490"
+  },
+  {
+    "id": 45,
+    "stepId": 9,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600082,
+    "speaker": "language_10000908",
+    "content": "language_10070491"
+  },
+  {
+    "id": 45,
+    "stepId": 10,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600083,
+    "speaker": "language_10000908",
+    "content": "language_10070492"
+  },
+  {
+    "id": 45,
+    "stepId": 11,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600084,
+    "speaker": "language_10000908",
+    "content": "language_10070493"
+  },
+  {
+    "id": 45,
+    "stepId": 12,
+    "type": "selectorend",
+    "param": "",
+    "audio": 0,
+    "speaker": "",
+    "content": ""
+  },
+  {
+    "id": 45,
+    "stepId": 13,
+    "type": "options",
+    "param": "2#3",
+    "audio": 0,
+    "speaker": "",
+    "content": "language_10070494"
+  },
+  {
+    "id": 45,
+    "stepId": 14,
+    "type": "selector",
+    "param": "2",
+    "audio": 0,
+    "speaker": "",
+    "content": ""
+  },
+  {
+    "id": 45,
+    "stepId": 15,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600085,
+    "speaker": "language_10000908",
+    "content": "language_10070495"
+  },
+  {
+    "id": 45,
+    "stepId": 16,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600086,
+    "speaker": "language_10000908",
+    "content": "language_10070496"
+  },
+  {
+    "id": 45,
+    "stepId": 17,
+    "type": "selector",
+    "param": "3",
+    "audio": 0,
+    "speaker": "",
+    "content": ""
+  },
+  {
+    "id": 45,
+    "stepId": 18,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600087,
+    "speaker": "language_10000908",
+    "content": "language_10070497"
+  },
+  {
+    "id": 45,
+    "stepId": 19,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600088,
+    "speaker": "language_10000908",
+    "content": "language_10070498"
+  },
+  {
+    "id": 45,
+    "stepId": 20,
+    "type": "selectorend",
+    "param": "",
+    "audio": 0,
+    "speaker": "",
+    "content": ""
+  },
+  {
+    "id": 45,
+    "stepId": 21,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600089,
+    "speaker": "language_10000908",
+    "content": "language_10070499"
+  },
+  {
+    "id": 45,
+    "stepId": 22,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600090,
+    "speaker": "language_10000908",
+    "content": "language_10070500"
+  },
+  {
+    "id": 45,
+    "stepId": 23,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600091,
+    "speaker": "language_10000908",
+    "content": "language_10070501"
+  },
+  {
+    "id": 45,
+    "stepId": 24,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600092,
+    "speaker": "language_10000908",
+    "content": "language_10070502"
+  },
+  {
+    "id": 45,
+    "stepId": 25,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600093,
+    "speaker": "language_10000908",
+    "content": "language_10070503"
+  },
+  {
+    "id": 45,
+    "stepId": 26,
+    "type": "options",
+    "param": "4",
+    "audio": 0,
+    "speaker": "",
+    "content": "language_10070504"
+  },
+  {
+    "id": 45,
+    "stepId": 27,
+    "type": "selector",
+    "param": "4",
+    "audio": 0,
+    "speaker": "",
+    "content": ""
+  },
+  {
+    "id": 45,
+    "stepId": 28,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600094,
+    "speaker": "language_10000908",
+    "content": "language_10070505"
+  },
+  {
+    "id": 45,
+    "stepId": 29,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600095,
+    "speaker": "language_10000908",
+    "content": "language_10070506"
+  },
+  {
+    "id": 45,
+    "stepId": 30,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600096,
+    "speaker": "language_10000908",
+    "content": "language_10070507"
+  },
+  {
+    "id": 45,
+    "stepId": 31,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600097,
+    "speaker": "language_10000908",
+    "content": "language_10070508"
+  },
+  {
+    "id": 45,
+    "stepId": 32,
+    "type": "dialog",
+    "param": "",
+    "audio": 922600098,
+    "speaker": "language_10000908",
+    "content": "language_10070509"
+  },
+  {
+    "id": 45,
+    "stepId": 33,
+    "type": "selectorend",
+    "param": "",
+    "audio": 0,
+    "speaker": "",
+    "content": ""
   }
 ]

@@ -505,7 +505,7 @@
     "heroExp": "",
     "playerExp": "10*cost",
     "score": "10*cost",
-    "fixBonus": "2#5#800",
+    "fixBonus": "",
     "bonusView": "",
     "dailyGainWarning": 0
   },
@@ -1155,7 +1155,7 @@
     "heroExp": "",
     "playerExp": "10*cost",
     "score": "10*cost",
-    "fixBonus": "2#3#1000",
+    "fixBonus": "",
     "bonusView": "",
     "dailyGainWarning": 0
   },

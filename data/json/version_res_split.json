@@ -633,44 +633,65 @@
     "uiPath": []
   },
   {
-    "id": 17,
+    "id": 18,
     "audio": [
-      3200127,
-      3200130
+      3200095,
+      3200097
     ],
-    "chapter": [],
-    "guide": [],
+    "chapter": [
+      16101,
+      16201,
+      16301,
+      16401,
+      16501,
+      16601,
+      16602,
+      16603,
+      16604
+    ],
+    "guide": [
+      16101,
+      16102,
+      16103,
+      16104,
+      16301,
+      16302,
+      16303
+    ],
     "story": [
-      307701,
-      307702,
-      307703,
-      307704,
-      307705,
-      307706,
-      307707,
-      307708,
-      308701,
-      308702,
-      308703,
-      308704,
-      308705,
-      308706,
-      308707,
-      308708
+      308108,
+      308107,
+      308106,
+      308105,
+      308104,
+      308103,
+      308102,
+      308101,
+      308100,
+      308408,
+      308407,
+      308406,
+      308405,
+      308404,
+      308403,
+      308402,
+      308401,
+      308400
     ],
     "folderPath": [],
     "videoPath": [
-      "1_8_activity_01",
-      "1_8_activity_02",
-      "1_8_activity_03",
-      "1_8_enter",
-      "1_8_pv"
+      "1_6_activity_01",
+      "1_6_activity_02",
+      "1_6_activity_03",
+      "1_6_activity_04",
+      "1_6_enter",
+      "1_6_kaimu"
     ],
     "path": [],
     "uiFolder": [
-      "ui/viewres/versionactivity_1_8/v1a8_dungeon",
-      "ui/viewres/versionactivity_1_8/v1a8_weila",
-      "ui/viewres/versionactivity_1_8/v1a8_windsong"
+      "ui/viewres/versionactivity_1_6/dungeon",
+      "ui/viewres/versionactivity_1_6/v1a6_activityboss",
+      "ui/viewres/versionactivity_1_6/v1a6_talent"
     ],
     "uiPath": []
   }

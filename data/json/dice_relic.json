@@ -1,0 +1,66 @@
+[
+  {
+    "id": 1,
+    "name": "language_10070144",
+    "desc": "language_10070145",
+    "icon": "dicehero_collection_1",
+    "effect": "dice",
+    "param": "1#1"
+  },
+  {
+    "id": 2,
+    "name": "language_10070146",
+    "desc": "language_10070147",
+    "icon": "dicehero_collection_2",
+    "effect": "buff",
+    "param": "12"
+  },
+  {
+    "id": 3,
+    "name": "language_10070148",
+    "desc": "language_10070149",
+    "icon": "dicehero_collection_3",
+    "effect": "dice",
+    "param": "2#2"
+  },
+  {
+    "id": 4,
+    "name": "language_10070150",
+    "desc": "language_10070151",
+    "icon": "dicehero_collection_4",
+    "effect": "buff",
+    "param": "13"
+  },
+  {
+    "id": 5,
+    "name": "language_10070152",
+    "desc": "language_10070153",
+    "icon": "dicehero_collection_5",
+    "effect": "skill",
+    "param": "1001"
+  },
+  {
+    "id": 6,
+    "name": "language_10070154",
+    "desc": "language_10070155",
+    "icon": "dicehero_collection_6",
+    "effect": "skill",
+    "param": "1002"
+  },
+  {
+    "id": 7,
+    "name": "language_10070156",
+    "desc": "language_10070157",
+    "icon": "dicehero_collection_7",
+    "effect": "skill",
+    "param": "1003"
+  },
+  {
+    "id": 8,
+    "name": "language_10070158",
+    "desc": "language_10070159",
+    "icon": "dicehero_collection_8",
+    "effect": "skill",
+    "param": "1004"
+  }
+]

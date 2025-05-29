@@ -110,31 +110,52 @@ end
 var_0_0.ShowCount = 1
 
 function var_0_0._refreshRewards(arg_13_0)
-	local var_13_0 = string.split(arg_13_0._config.showBonus, "|")
+	local var_13_0 = WeekWalkDeepLayerNoticeView._getRewardList()
+	local var_13_1
 
-	for iter_13_0 = 1, #var_13_0 do
-		if not arg_13_0._rewardItems[iter_13_0] then
-			local var_13_1 = arg_13_0:getUserDataTb_()
+	for iter_13_0, iter_13_1 in ipairs(var_13_0) do
+		local var_13_2 = iter_13_1[1]
+		local var_13_3 = iter_13_1[2]
+		local var_13_4 = iter_13_1[3]
 
-			var_13_1.go = gohelper.clone(arg_13_0._gorewarditem, arg_13_0._gorewardContent, "rewarditem" .. iter_13_0)
-			var_13_1.item = IconMgr.instance:getCommonPropItemIcon(var_13_1.go)
+		if var_13_2 == 2 and var_13_3 == CurrencyEnum.CurrencyType.FreeDiamondCoupon then
+			var_13_1 = string.format("%s#%s#%s#1", var_13_2, var_13_3, var_13_4)
 
-			table.insert(arg_13_0._rewardItems, var_13_1)
+			break
 		end
-
-		gohelper.setActive(arg_13_0._rewardItems[iter_13_0].go, true)
-
-		local var_13_2 = string.splitToNumber(var_13_0[iter_13_0], "#")
-
-		arg_13_0._rewardItems[iter_13_0].item:setMOValue(var_13_2[1], var_13_2[2], var_13_2[3])
-		arg_13_0._rewardItems[iter_13_0].item:isShowCount(var_13_2[4] == var_0_0.ShowCount)
-		arg_13_0._rewardItems[iter_13_0].item:setCountFontSize(35)
-		arg_13_0._rewardItems[iter_13_0].item:setHideLvAndBreakFlag(true)
-		arg_13_0._rewardItems[iter_13_0].item:hideEquipLvAndBreak(true)
 	end
 
-	for iter_13_1 = #var_13_0 + 1, #arg_13_0._rewardItems do
-		gohelper.setActive(arg_13_0._rewardItems[iter_13_1].go, false)
+	local var_13_5 = arg_13_0._config.showBonus
+
+	if var_13_1 then
+		var_13_5 = string.format("%s|%s", var_13_1, var_13_5)
+	end
+
+	local var_13_6 = string.split(var_13_5, "|")
+
+	for iter_13_2 = 1, #var_13_6 do
+		if not arg_13_0._rewardItems[iter_13_2] then
+			local var_13_7 = arg_13_0:getUserDataTb_()
+
+			var_13_7.go = gohelper.clone(arg_13_0._gorewarditem, arg_13_0._gorewardContent, "rewarditem" .. iter_13_2)
+			var_13_7.item = IconMgr.instance:getCommonPropItemIcon(var_13_7.go)
+
+			table.insert(arg_13_0._rewardItems, var_13_7)
+		end
+
+		gohelper.setActive(arg_13_0._rewardItems[iter_13_2].go, true)
+
+		local var_13_8 = string.splitToNumber(var_13_6[iter_13_2], "#")
+
+		arg_13_0._rewardItems[iter_13_2].item:setMOValue(var_13_8[1], var_13_8[2], var_13_8[3])
+		arg_13_0._rewardItems[iter_13_2].item:isShowCount(var_13_8[4] == var_0_0.ShowCount)
+		arg_13_0._rewardItems[iter_13_2].item:setCountFontSize(35)
+		arg_13_0._rewardItems[iter_13_2].item:setHideLvAndBreakFlag(true)
+		arg_13_0._rewardItems[iter_13_2].item:hideEquipLvAndBreak(true)
+	end
+
+	for iter_13_3 = #var_13_6 + 1, #arg_13_0._rewardItems do
+		gohelper.setActive(arg_13_0._rewardItems[iter_13_3].go, false)
 	end
 end
 

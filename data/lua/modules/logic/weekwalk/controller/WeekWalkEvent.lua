@@ -29,6 +29,7 @@ var_0_0.OnSelectLevel = 201
 var_0_0.OnGetInfo = 202
 var_0_0.OnQuestionReply = 203
 var_0_0.OnSelectNotCdHeroReply = 204
+var_0_0.OnAllShallowLayerFinish = 205
 var_0_0.GuideClickElement = 301
 var_0_0.GuideShowResetBtn = 302
 var_0_0.GuideChangeToLayerPage3 = 303

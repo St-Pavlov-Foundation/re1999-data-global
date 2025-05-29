@@ -8558,5 +8558,25 @@
     "type": "negative",
     "pressParam": "1#1",
     "rule": "9241401"
+  },
+  {
+    "id": 9260210,
+    "identity": 9260210,
+    "desc": "",
+    "title": "2.4主活动-努库泰澳人（boss关）",
+    "condition": 404,
+    "type": "meltdown",
+    "pressParam": "1#1",
+    "rule": "9260210"
+  },
+  {
+    "id": 9260211,
+    "identity": 9260210,
+    "desc": "",
+    "title": "2.4主活动-努库泰澳人（boss关）",
+    "condition": 0,
+    "type": "negative",
+    "pressParam": "1#1",
+    "rule": "9241401"
   }
 ]

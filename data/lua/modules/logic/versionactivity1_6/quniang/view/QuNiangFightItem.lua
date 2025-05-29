@@ -27,6 +27,8 @@ function var_0_0.init(arg_1_0, arg_1_1)
 	arg_1_0._gostar2Nno = gohelper.findChild(arg_1_0.viewGO, "#go_UnSelected/info/#go_star/star2/no")
 	arg_1_0._gostar1Sno = gohelper.findChild(arg_1_0.viewGO, "#go_Selected/info/#txt_stagename/star1/no")
 	arg_1_0._gostar2Sno = gohelper.findChild(arg_1_0.viewGO, "#go_Selected/info/#txt_stagename/star2/no")
+
+	gohelper.setActive(arg_1_0._goSelected, false)
 end
 
 function var_0_0.addEventListeners(arg_2_0)

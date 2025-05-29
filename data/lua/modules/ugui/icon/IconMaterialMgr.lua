@@ -13,7 +13,8 @@ function var_0_0.init(arg_1_0)
 		"ui/materials/dynamic/ui_headicon_stylization_5.mat",
 		"ui/materials/dynamic/ui_headicon_stylization_6.mat",
 		"ui/materials/dynamic/ui_headicon_stylization_assist.mat",
-		"ui/materials/dynamic/ui_headicon_stylization_7.mat"
+		"ui/materials/dynamic/ui_headicon_stylization_7.mat",
+		"ui/materials/dynamic/ui_headicon_stylization_shadow.mat"
 	}
 	arg_1_0.variantIdToMaterialPathWithRound = {
 		[0] = "ui/materials/dynamic/ui_enemyinfo_headicon_mask.mat",
@@ -24,7 +25,8 @@ function var_0_0.init(arg_1_0)
 		"ui/materials/dynamic/ui_headicon_stylization_5_round.mat",
 		"ui/materials/dynamic/ui_headicon_stylization_6_round.mat",
 		"ui/materials/dynamic/ui_headicon_stylization_assist_round.mat",
-		"ui/materials/dynamic/ui_headicon_stylization_7_round.mat"
+		"ui/materials/dynamic/ui_headicon_stylization_7_round.mat",
+		"ui/materials/dynamic/ui_headicon_stylization_shadow_round.mat"
 	}
 	arg_1_0.needSetMaterialIconImages = {}
 	arg_1_0.loadedMaterials = {}

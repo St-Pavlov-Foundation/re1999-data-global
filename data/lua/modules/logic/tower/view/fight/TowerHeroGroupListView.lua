@@ -16,22 +16,26 @@ function var_0_0.checkReplaceHeroList(arg_3_0)
 
 	if var_3_0.isHeroGroupLock then
 		local var_3_1 = var_3_0.heros or {}
-		local var_3_2 = var_3_0.assistBoss
-		local var_3_3 = {}
+		local var_3_2 = var_3_0.equipUids or {}
+		local var_3_3 = var_3_0.assistBoss
+		local var_3_4 = {}
 
 		for iter_3_0 = 1, #var_3_1 do
-			local var_3_4 = HeroModel.instance:getByHeroId(var_3_1[iter_3_0] or 0)
+			local var_3_5 = HeroModel.instance:getByHeroId(var_3_1[iter_3_0] or 0)
 
-			if var_3_4 then
-				table.insert(var_3_3, var_3_4.uid)
+			if var_3_5 then
+				table.insert(var_3_4, {
+					heroUid = var_3_5.uid,
+					equipUid = var_3_2[iter_3_0]
+				})
 			end
 		end
 
-		local var_3_5 = HeroGroupModel.instance:getCurGroupMO()
+		local var_3_6 = HeroGroupModel.instance:getCurGroupMO()
 
-		var_3_5:replaceTowerHeroList(var_3_3)
-		var_3_5:setAssistBossId(var_3_2)
-		HeroSingleGroupModel.instance:setSingleGroup(var_3_5)
+		var_3_6:replaceTowerHeroList(var_3_4)
+		var_3_6:setAssistBossId(var_3_3)
+		HeroSingleGroupModel.instance:setSingleGroup(var_3_6)
 	end
 end
 

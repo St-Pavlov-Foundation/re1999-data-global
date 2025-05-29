@@ -3,9 +3,9 @@
 local var_0_0 = class("FightObjItemListItem", FightBaseClass)
 
 function var_0_0.onConstructor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	arg_1_0.autoSetSibling = true
+	arg_1_0.autoSetSibling = false
 	arg_1_0.siblingOffset = 0
-	arg_1_0.recycle = true
+	arg_1_0.recycle = false
 	arg_1_0.dataList = {}
 	arg_1_0._modelGameObject = arg_1_1
 	arg_1_0._class = arg_1_2

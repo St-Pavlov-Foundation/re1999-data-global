@@ -138,6 +138,9 @@ function var_0_0.ctor(arg_1_0)
 	arg_1_0._v2a5_challenge_sprite = arg_1_0:newSpriteSetUnit("ui/spriteassets/v2a5_challenge_spriteset.asset")
 	arg_1_0._v2a5_liangyue_sprite = arg_1_0:newSpriteSetUnit("ui/spriteassets/v2a5_liangyue_spriteset.asset")
 	arg_1_0._socialskin = arg_1_0:newSpriteSetUnit("ui/spriteassets/social_1.asset")
+	arg_1_0._v2a6dicehero = arg_1_0:newSpriteSetUnit("ui/spriteassets/v2a6_dicehero_spriteset.asset")
+	arg_1_0._v2a6_xugouji = arg_1_0:newSpriteSetUnit("ui/spriteassets/v2a6_xugouji_spriteset.asset")
+	arg_1_0._v2a6_main_activity = arg_1_0:newSpriteSetUnit("ui/spriteassets/v2a6_mainactivity_spriteset.asset")
 end
 
 function var_0_0.newSpriteSetUnit(arg_2_0, arg_2_1)
@@ -685,18 +688,30 @@ function var_0_0.setV2a5LiangYueSprite(arg_136_0, arg_136_1, arg_136_2, arg_136_
 	arg_136_0._v2a5_liangyue_sprite:setSprite(arg_136_1, arg_136_2, arg_136_3)
 end
 
-function var_0_0.setSocialSkinSprite(arg_137_0, arg_137_1, arg_137_2, arg_137_3)
-	arg_137_0._socialskin:setSprite(arg_137_1, arg_137_2, arg_137_3)
+function var_0_0.setV2a6MainActivitySprite(arg_137_0, arg_137_1, arg_137_2, arg_137_3)
+	arg_137_0._v2a6_main_activity:setSprite(arg_137_1, arg_137_2, arg_137_3)
 end
 
-function var_0_0.tryDispose(arg_138_0)
-	for iter_138_0, iter_138_1 in ipairs(arg_138_0._spriteSetList) do
-		iter_138_1:tryDispose()
+function var_0_0.setSocialSkinSprite(arg_138_0, arg_138_1, arg_138_2, arg_138_3)
+	arg_138_0._socialskin:setSprite(arg_138_1, arg_138_2, arg_138_3)
+end
+
+function var_0_0.setDiceHeroSprite(arg_139_0, arg_139_1, arg_139_2, arg_139_3)
+	arg_139_0._v2a6dicehero:setSprite(arg_139_1, arg_139_2, arg_139_3)
+end
+
+function var_0_0.setXugoujiSprite(arg_140_0, arg_140_1, arg_140_2, arg_140_3)
+	arg_140_0._v2a6_xugouji:setSprite(arg_140_1, arg_140_2, arg_140_3)
+end
+
+function var_0_0.tryDispose(arg_141_0)
+	for iter_141_0, iter_141_1 in ipairs(arg_141_0._spriteSetList) do
+		iter_141_1:tryDispose()
 	end
 end
 
-function var_0_0.setActivityPuzzle(arg_139_0, arg_139_1, arg_139_2, arg_139_3)
-	arg_139_0._activitypuzzle:setSprite(arg_139_1, arg_139_2, arg_139_3)
+function var_0_0.setActivityPuzzle(arg_142_0, arg_142_1, arg_142_2, arg_142_3)
+	arg_142_0._activitypuzzle:setSprite(arg_142_1, arg_142_2, arg_142_3)
 end
 
 var_0_0.instance = var_0_0.New()

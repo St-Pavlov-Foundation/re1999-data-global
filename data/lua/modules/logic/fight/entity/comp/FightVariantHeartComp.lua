@@ -10,7 +10,8 @@ var_0_0.VariantKey = {
 	"_STYLE_JOINT_ON",
 	"_STYLE_RAIN_STORM_ON",
 	"_STYLE_ASSIST_ON",
-	"_STYLIZATIONMOSTER4_ON"
+	"_STYLIZATIONMOSTER4_ON",
+	"_STYLE_SHADOW_ON"
 }
 
 local var_0_1 = "_NoiseMap3"
@@ -22,7 +23,8 @@ local var_0_2 = {
 	"noise_sty_joint2_manual",
 	"textures/style_rain_strom_manual",
 	"textures/style_assist_noise_manual",
-	"textures/noise_05_manual"
+	"textures/noise_05_manual",
+	""
 }
 local var_0_3 = "_Pow"
 local var_0_4 = {

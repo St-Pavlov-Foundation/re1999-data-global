@@ -926,10 +926,12 @@ function var_0_0.replaceTowerHeroList(arg_33_0, arg_33_1)
 	local var_33_3 = arg_33_1 and #arg_33_1 or 0
 
 	for iter_33_0 = 1, var_33_3 do
-		var_33_0[arg_33_1[iter_33_0]] = iter_33_0
+		local var_33_4 = arg_33_1[iter_33_0].heroUid
 
-		if arg_33_1[iter_33_0] ~= var_33_2 then
-			table.insert(var_33_1, arg_33_1[iter_33_0])
+		var_33_0[var_33_4] = arg_33_1[iter_33_0].equipUid
+
+		if var_33_4 ~= var_33_2 then
+			table.insert(var_33_1, var_33_4)
 		end
 	end
 
@@ -937,33 +939,50 @@ function var_0_0.replaceTowerHeroList(arg_33_0, arg_33_1)
 		arg_33_0.heroList = {}
 	end
 
-	local var_33_4 = {}
+	local var_33_5 = {}
 
 	for iter_33_1 = 1, ModuleEnum.MaxHeroCountInGroup do
-		local var_33_5 = arg_33_0.heroList[iter_33_1] or var_33_2
+		local var_33_6 = arg_33_0.heroList[iter_33_1] or var_33_2
 
-		if var_33_0[var_33_5] then
-			tabletool.removeValue(var_33_1, var_33_5)
+		if var_33_0[var_33_6] then
+			tabletool.removeValue(var_33_1, var_33_6)
 		else
 			arg_33_0.heroList[iter_33_1] = var_33_2
-			var_33_4[iter_33_1] = 1
+			var_33_5[iter_33_1] = 1
 		end
 	end
 
-	local var_33_6 = {}
+	local var_33_7 = {}
 
-	for iter_33_2, iter_33_3 in pairs(var_33_4) do
-		table.insert(var_33_6, iter_33_2)
+	for iter_33_2, iter_33_3 in pairs(var_33_5) do
+		table.insert(var_33_7, iter_33_2)
 	end
 
-	if #var_33_6 > 1 then
-		table.sort(var_33_6)
+	if #var_33_7 > 1 then
+		table.sort(var_33_7)
 	end
 
 	for iter_33_4, iter_33_5 in ipairs(var_33_1) do
-		local var_33_7 = var_33_6[iter_33_4]
+		local var_33_8 = var_33_7[iter_33_4]
 
-		arg_33_0.heroList[var_33_7] = iter_33_5
+		arg_33_0.heroList[var_33_8] = iter_33_5
+	end
+
+	arg_33_0.equips = {}
+
+	for iter_33_6 = 1, ModuleEnum.MaxHeroCountInGroup do
+		local var_33_9 = var_33_0[arg_33_0.heroList[iter_33_6] or var_33_2]
+
+		if var_33_9 then
+			local var_33_10 = iter_33_6 - 1
+
+			arg_33_0.equips[var_33_10] = HeroGroupEquipMO.New()
+
+			arg_33_0.equips[var_33_10]:init({
+				index = var_33_10,
+				equipUid = var_33_9
+			})
+		end
 	end
 end
 

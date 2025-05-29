@@ -4138,5 +4138,14 @@
     "param": "924103001",
     "isNoShow": 0,
     "desc": "language_10063535"
+  },
+  {
+    "id": 9260210,
+    "type": "triggerSkill",
+    "target": 103,
+    "targetLimit": 0,
+    "param": "9260210",
+    "isNoShow": 0,
+    "desc": "language_10063949"
   }
 ]

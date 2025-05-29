@@ -52,34 +52,73 @@ function var_0_0.onStart(arg_2_0, arg_2_1, arg_2_2)
 
 	CameraMgr.instance:setSceneCameraActive(false, var_0_0.UnitCameraKey)
 	var_0_0.super.onStart(arg_2_0, arg_2_1, arg_2_2)
-
-	local var_2_1 = gohelper.findChild(CameraMgr.instance:getUnitCameraGO(), "PPVolume")
-
-	if var_2_1 then
-		arg_2_0._goPPVolume = gohelper.clone(var_2_1, CameraMgr.instance:getMainCameraGO(), "PPVolume")
-	end
+	arg_2_0:initPPVolume()
+	GameGlobalMgr.instance:registerCallback(GameStateEvent.OnQualityChange, arg_2_0.updatePPLevel, arg_2_0)
 end
 
-function var_0_0.onClose(arg_3_0)
+function var_0_0.initPPVolume(arg_3_0)
+	if arg_3_0._ppVolumeGo then
+		return
+	end
+
+	arg_3_0._highProfile = ConstAbCache.instance:getRes(RoomResourceEnum.PPVolume.High)
+	arg_3_0._middleProfile = ConstAbCache.instance:getRes(RoomResourceEnum.PPVolume.Middle)
+	arg_3_0._lowProfile = ConstAbCache.instance:getRes(RoomResourceEnum.PPVolume.Low)
+	arg_3_0._ppVolumeGo = gohelper.create3d(CameraMgr.instance:getMainCameraGO(), "PPVolume")
+	arg_3_0._ppVolumeWrap = gohelper.onceAddComponent(arg_3_0._ppVolumeGo, PostProcessingMgr.PPVolumeWrapType)
+
+	arg_3_0:updatePPLevel()
+end
+
+function var_0_0.updatePPLevel(arg_4_0)
+	if not arg_4_0._ppVolumeWrap then
+		return
+	end
+
+	local var_4_0 = GameGlobalMgr.instance:getScreenState():getLocalQuality()
+	local var_4_1 = arg_4_0._highProfile
+
+	if var_4_0 == ModuleEnum.Performance.High then
+		var_4_1 = arg_4_0._highProfile
+	elseif var_4_0 == ModuleEnum.Performance.Middle then
+		var_4_1 = arg_4_0._middleProfile
+	elseif var_4_0 == ModuleEnum.Performance.Low then
+		var_4_1 = arg_4_0._lowProfile
+	end
+
+	arg_4_0._ppVolumeWrap:SetProfile(var_4_1)
+end
+
+function var_0_0.onClose(arg_5_0)
 	RoomHelper.logElapse("RoomScene:onClose")
 	GameGlobalMgr.instance:getScreenState():resetMaxFileLoadingCount()
 	CameraMgr.instance:setSceneCameraActive(true, var_0_0.UnitCameraKey)
-	var_0_0.super.onClose(arg_3_0)
+	var_0_0.super.onClose(arg_5_0)
+	GameGlobalMgr.instance:unregisterCallback(GameStateEvent.OnQualityChange, arg_5_0.updatePPLevel, arg_5_0)
+	arg_5_0:destroyPPVolume()
 
-	if arg_3_0._goPPVolume then
-		gohelper.destroy(arg_3_0._goPPVolume)
+	if arg_5_0._mainFarClipValue then
+		local var_5_0 = CameraMgr.instance:getMainCamera()
 
-		arg_3_0._goPPVolume = nil
+		var_5_0.farClipPlane = arg_5_0._mainFarClipValue
+		var_5_0.nearClipPlane = arg_5_0._mainNearClipValue
+		arg_5_0._mainFarClipValue = nil
+		arg_5_0._mainNearClipValue = nil
+	end
+end
+
+function var_0_0.destroyPPVolume(arg_6_0)
+	if not arg_6_0._ppVolumeGo then
+		return
 	end
 
-	if arg_3_0._mainFarClipValue then
-		local var_3_0 = CameraMgr.instance:getMainCamera()
+	gohelper.destroy(arg_6_0._ppVolumeGo)
 
-		var_3_0.farClipPlane = arg_3_0._mainFarClipValue
-		var_3_0.nearClipPlane = arg_3_0._mainNearClipValue
-		arg_3_0._mainFarClipValue = nil
-		arg_3_0._mainNearClipValue = nil
-	end
+	arg_6_0._ppVolumeGo = nil
+	arg_6_0._ppVolumeWrap = nil
+	arg_6_0._highProfile = nil
+	arg_6_0._middleProfile = nil
+	arg_6_0._lowProfile = nil
 end
 
 return var_0_0

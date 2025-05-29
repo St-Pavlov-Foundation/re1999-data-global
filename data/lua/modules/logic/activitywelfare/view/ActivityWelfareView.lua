@@ -32,7 +32,8 @@ local var_0_1 = {
 	[ActivityEnum.Activity.NewInsight] = ViewName.ActivityInsightShowView,
 	[ActivityEnum.Activity.V2a3_NewInsight] = ViewName.ActivityInsightShowView_2_3,
 	[ActivityEnum.Activity.V2a4_NewInsight] = ViewName.ActivityInsightShowView_2_4,
-	[ActivityEnum.Activity.V2a5_NewInsight] = ViewName.ActivityInsightShowView_2_5
+	[ActivityEnum.Activity.V2a5_NewInsight] = ViewName.ActivityInsightShowView_2_5,
+	[ActivityEnum.Activity.V2a6_NewInsight] = ViewName.ActivityInsightShowView_2_6
 }
 
 function var_0_0.onUpdateParam(arg_5_0)

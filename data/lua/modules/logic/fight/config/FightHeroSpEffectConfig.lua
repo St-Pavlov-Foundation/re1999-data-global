@@ -12,7 +12,11 @@ function var_0_0.reqConfigNames(arg_2_0)
 		"fight_sp_effect_kkny_heal",
 		"fight_sp_effect_kkny_bear_damage_hit",
 		"fight_sp_effect_bkle",
-		"fight_sp_effect_ly"
+		"fight_sp_effect_ly",
+		"fight_sp_effect_alf",
+		"fight_sp_effect_alf_timeline",
+		"fight_sp_effect_alf_add_card",
+		"fight_sp_effect_ddg"
 	}
 end
 
@@ -57,6 +61,19 @@ end
 
 function var_0_0.getLYEffectCo(arg_6_0, arg_6_1)
 	return lua_fight_sp_effect_ly.configDict[arg_6_1] or lua_fight_sp_effect_ly.configDict[1]
+end
+
+function var_0_0.getRandomAlfASFDMissileRes(arg_7_0)
+	if arg_7_0.tempRandomList and #arg_7_0.tempRandomList > 0 then
+		arg_7_0.tempRandomList = arg_7_0.tempRandomList
+	else
+		arg_7_0.tempRandomList = tabletool.copy(lua_fight_sp_effect_alf.configList)
+	end
+
+	local var_7_0 = #arg_7_0.tempRandomList
+	local var_7_1 = math.random(var_7_0)
+
+	return table.remove(arg_7_0.tempRandomList, var_7_1)
 end
 
 var_0_0.instance = var_0_0.New()

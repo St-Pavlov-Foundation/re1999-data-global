@@ -244,7 +244,7 @@ function var_0_0._refreshSkill(arg_10_0, arg_10_1)
 
 		arg_10_0:_refreshSkillSpecial(var_10_0)
 	else
-		logError("找不到技能: " .. arg_10_0._skillIdList[arg_10_1])
+		logError("找不到技能: " .. tostring(arg_10_0._skillIdList[arg_10_1]))
 	end
 end
 

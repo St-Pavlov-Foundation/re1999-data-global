@@ -6,7 +6,7 @@ local var_0_1 = 1
 function var_0_0.buildViews(arg_1_0)
 	return {
 		RougeMainView.New(),
-		RougeBaseDLCViewComp.New(true),
+		RougeBaseDLCViewComp.New(),
 		TabViewGroup.New(var_0_1, "#go_lefttop")
 	}
 end

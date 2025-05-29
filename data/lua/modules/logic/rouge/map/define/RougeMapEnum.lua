@@ -194,6 +194,8 @@ var_0_0.Scale = {
 	NodeBg = 1.3
 }
 var_0_0.MapStartOffsetX = 2.5
+var_0_0.MapEndOffsetX = 2.5
+var_0_0.MaxMapEpisodeIntervalX = 6
 var_0_0.NodeLocalPosXRange = 1
 var_0_0.NodeLocalPosY = {
 	{
@@ -263,7 +265,7 @@ var_0_0.ChoiceItemPos = {
 		Vector2(-48, 298.3),
 		Vector2(120, 67.9),
 		Vector2(-12, -155),
-		Vector2(-88, -382)
+		Vector2(70, -382)
 	}
 }
 var_0_0.ChoiceStatus = {
@@ -285,7 +287,7 @@ var_0_0.DialogueInterval = 0.05
 var_0_0.InteractType = {
 	Recruit = 5,
 	LossCollection = 2,
-	ReturnBlood = 3,
+	DropBossCollection = 15,
 	Drop = 1,
 	DropGroup = 6,
 	LossAndCopy = 7,
@@ -296,6 +298,7 @@ var_0_0.InteractType = {
 	AdvanceDrop = 12,
 	Resurgence = 4,
 	StorageCollection = 10,
+	ReturnBlood = 3,
 	LossAssignCollection = 8
 }
 var_0_0.ReturnBloodEnum = {

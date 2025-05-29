@@ -520,6 +520,19 @@
     "display": 0
   },
   {
+    "id": 1510504,
+    "unlockType": 0,
+    "unlockParam": "",
+    "activeType": 0,
+    "activeParam": "",
+    "title": "language_10071987",
+    "content": "language_10043246",
+    "talkDesc": "language_10071988",
+    "triggerType": 6,
+    "triggerParam": "2902323#104#1006",
+    "display": 0
+  },
+  {
     "id": 1410201,
     "unlockType": 0,
     "unlockParam": "",
@@ -549,11 +562,24 @@
     "id": 1410301,
     "unlockType": 1,
     "unlockParam": "8320907",
-    "activeType": 0,
+    "activeType": 12,
     "activeParam": "",
     "title": "language_10064627",
     "content": "language_10064628",
     "talkDesc": "language_10064629",
+    "triggerType": 0,
+    "triggerParam": "",
+    "display": 0
+  },
+  {
+    "id": 1410302,
+    "unlockType": 1,
+    "unlockParam": "8180501",
+    "activeType": 12,
+    "activeParam": "",
+    "title": "language_10071989",
+    "content": "language_10071990",
+    "talkDesc": "language_10071991",
     "triggerType": 0,
     "triggerParam": "",
     "display": 0

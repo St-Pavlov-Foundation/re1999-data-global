@@ -10,35 +10,36 @@ var_0_0.StarType = {
 }
 var_0_0.EpisodeType = {
 	Season166Base = 125,
-	RoleStoryChallenge = 16,
+	WeekWalk_2 = 24,
 	Boss = 2,
 	Act1_5Dungeon = 116,
 	SeasonSpecial = 13,
-	Act1_3Role1Chess = 111,
+	RoleStoryChallenge = 16,
 	TowerLimited = 23,
 	WeekWalk = 9,
-	Act1_4Role6 = 115,
+	Act1_3Role1Chess = 111,
 	SpecialEquip = 8,
-	DreamTailNormal = 128,
+	Act1_4Role6 = 115,
 	Cachot = 17,
-	DreamTailHard = 129,
+	DreamTailNormal = 128,
 	Season166Teach = 127,
+	TowerPermanent = 21,
 	Act1_6DungeonBoss = 119,
-	Season123Retail = 121,
 	TowerBoss = 22,
 	Story = 4,
-	Season123Trial = 122,
+	Season123Retail = 121,
 	Sp = 6,
 	Explore = 14,
-	Act1_8Dungeon = 123,
+	Season123Trial = 122,
 	Jiexika = 104,
+	Act1_8Dungeon = 123,
 	ToughBattle = 124,
 	SeasonTrial = 15,
-	Season166Train = 126,
 	Act183 = 130,
+	DreamTailHard = 129,
 	TrialHero = 205,
-	TowerPermanent = 21,
 	ToughBattleStory = 19,
+	Season166Train = 126,
 	Act1_3Operation = 112,
 	Act1_3Role2Chess = 108,
 	Act1_2Daily = 107,
@@ -63,7 +64,7 @@ var_0_0.EpisodeType = {
 }
 var_0_0.ChapterType = {
 	Season166Base = 30,
-	Season123Retail = 24,
+	WeekWalk_2 = 37,
 	Newbie = 3,
 	RoleActivityFight = 27,
 	Exp = 5,
@@ -76,29 +77,30 @@ var_0_0.ChapterType = {
 	Cachot = 22,
 	Gold = 4,
 	Season166Teach = 32,
+	Season123Retail = 24,
 	Simulate = 99,
-	LeiMiTeBeiNew = 111,
 	TowerBoss = 35,
 	Season123Trial = 25,
-	Activity1_2DungeonNormal1 = 121,
+	LeiMiTeBeiNew = 111,
 	TowerPermanent = 34,
 	Explore = 14,
-	Activity1_2DungeonHard = 122,
+	Activity1_2DungeonNormal1 = 121,
 	DreamTailNormal = 128,
 	RoleActivityStory = 26,
 	Activity1_2DungeonNormal2 = 123,
 	Buildings = 13,
 	Activity1_2DungeonNormal3 = 124,
 	YaXian = 126,
+	Activity1_2DungeonHard = 122,
 	BossRushNormal = 141,
 	BossRushInfinite = 142,
-	Act1_8Dungeon = 181,
 	Hard = 2,
-	ToughBattle = 191,
+	Act1_8Dungeon = 181,
 	Simple = 28,
-	Act183 = 183,
+	ToughBattle = 191,
 	TeachNote = 11,
 	Season = 15,
+	Act183 = 183,
 	Season166Train = 31,
 	Season123 = 23,
 	RoleStoryChallenge = 21,
@@ -221,42 +223,44 @@ var_0_0.UnlockContentType = {
 }
 var_0_0.ElementType = {
 	EnterDispatch = 501,
-	OuijaGame = 15,
-	ChangeColor = 10,
-	Question = 5,
-	Task = 3,
-	Investigate = 19,
-	Activity1_2Building_Repair = 102,
-	Activity1_2Building_Upgrade = 103,
-	Fight = 2,
-	FullScreenQuestion = 8,
-	Activity1_2Building_Trap = 104,
-	Activity1_2Fight = 105,
-	EnterDialogue = 18,
-	UnLockExplore = 17,
-	PuzzleGame = 101,
 	Dispatch = 502,
+	Fight = 2,
+	Activity1_2Building_Repair = 102,
+	Investigate = 19,
+	ChangeColor = 10,
+	FairyLand = 902,
+	Activity1_2Building_Trap = 104,
+	FullScreenQuestion = 8,
+	EnterDialogue = 18,
 	PipeGame = 9,
 	Story = 4,
 	ToughBattle = 901,
-	Guidepost = 7,
 	HeroInvitation = 904,
-	ToughBattleBoss = 903,
-	FairyLand = 902,
 	UnlockEpisode = 6,
 	Activity1_2Note = 107,
 	Activity1_2Episode13Unlock = 106,
+	UnLockExplore = 17,
+	None = 1,
+	Question = 5,
+	Graffiti = 503,
+	Activity1_2Fight = 105,
+	SpStory = 2601,
+	PuzzleGame = 101,
+	Activity1_2Building_Upgrade = 103,
+	Task = 3,
+	Guidepost = 7,
+	ToughBattleBoss = 903,
+	OuijaGame = 15,
 	PutCubeGame = 13,
 	MazeDraw = 12,
 	CircuitGame = 14,
-	Graffiti = 503,
-	DailyEpisode = 16,
-	None = 1
+	DailyEpisode = 16
 }
 var_0_0.FragmentType = {
-	OptionsText = 2,
 	LeiMiTeBeiNew = 101,
 	PlainText = 3,
+	OptionsText = 2,
+	AvgStory = 2601,
 	Normal = 1
 }
 var_0_0.ElementTypeIconIndex = {
@@ -307,9 +311,10 @@ var_0_0.ChapterId = {
 	HarvestDungeonChapterId = 1001,
 	Main1_7 = 107,
 	EquipDungeonChapterId = 601,
+	Main1_9 = 109,
 	HeroInvitation = 311,
-	RoleDuDuGu = 23501,
-	ToughBattleStory = 19101
+	ToughBattleStory = 19101,
+	RoleDuDuGu = 23501
 }
 var_0_0.SpecialMainPlot = {
 	[310] = "p_dungeonchapterminiitem_txt_Special",
@@ -319,11 +324,18 @@ var_0_0.ChapterWidth = {
 	Special = 270,
 	Normal = 415
 }
+var_0_0.DungeonViewTabEnum = {
+	Explore = 2,
+	Permanent = 3,
+	WeekWalk_2 = 4,
+	WeekWalk = 1
+}
 var_0_0.RefreshTimeAfterShowReward = 0
 var_0_0.ShowNewElementsTimeAfterShowReward = 0.7
 var_0_0.MoveEpisodeTimeAfterShowReward = 1.5
 var_0_0.UpdateLockTimeAfterShowReward = 2.5
 var_0_0.dungeonweekwalkviewPath = "ui/viewres/dungeon/dungeonweekwalkview.prefab"
+var_0_0.dungeonweekwalk_2viewPath = "ui/viewres/dungeon/dungeonweekwalkdeepview.prefab"
 var_0_0.dungeonexploreviewPath = "ui/viewres/explore/exploremainview.prefab"
 var_0_0.DefaultTweenMapTime = 0.26
 var_0_0.NotPopFragmentToastDict = {
@@ -343,50 +355,6 @@ var_0_0.AssistType = {
 	Normal = PickAssistEnum.Type.Normal,
 	Season123 = PickAssistEnum.Type.Activity123
 }
-var_0_0.MapIdGroupDef = {
-	{
-		10701,
-		10702,
-		10703,
-		10704,
-		10707,
-		10708,
-		10709,
-		10711,
-		10712,
-		10713,
-		10718,
-		10719,
-		10720,
-		10721,
-		10722,
-		10723,
-		10724,
-		10727,
-		10728
-	},
-	{
-		10705,
-		10706,
-		10710,
-		10714,
-		10715,
-		10716,
-		10717,
-		10725,
-		10726,
-		10729,
-		10730
-	}
-}
-var_0_0.MapIdGroup = {}
-
-for iter_0_0, iter_0_1 in pairs(var_0_0.MapIdGroupDef) do
-	for iter_0_2, iter_0_3 in pairs(iter_0_1) do
-		var_0_0.MapIdGroup[iter_0_3] = iter_0_0
-	end
-end
-
 var_0_0.ElementExEffectPath = {
 	[100702] = "scenes/v1a9_m_s08_hddt/vx/prefab/vx_boss_effect1.prefab",
 	[100709] = "scenes/v1a9_m_s08_hddt/vx/prefab/vx_boss_effect2.prefab"

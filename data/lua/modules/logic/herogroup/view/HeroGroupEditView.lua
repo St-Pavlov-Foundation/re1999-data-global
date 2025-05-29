@@ -245,11 +245,21 @@ function var_0_0._btnconfirmOnClick(arg_9_0)
 						return
 					end
 				end
-			elseif arg_9_0._isTowerBattle then
+			elseif arg_9_0._isWeekWalk_2 then
 				for iter_9_2, iter_9_3 in pairs(var_9_0) do
 					local var_9_2 = HeroModel.instance:getById(iter_9_3)
 
-					if var_9_2 and TowerModel.instance:isHeroBan(var_9_2.heroId) then
+					if var_9_2 and WeekWalk_2Model.instance:getCurMapHeroCd(var_9_2.heroId) > 0 then
+						GameFacade.showToast(ToastEnum.HeroGroupEdit)
+
+						return
+					end
+				end
+			elseif arg_9_0._isTowerBattle then
+				for iter_9_4, iter_9_5 in pairs(var_9_0) do
+					local var_9_3 = HeroModel.instance:getById(iter_9_5)
+
+					if var_9_3 and TowerModel.instance:isHeroBan(var_9_3.heroId) then
 						GameFacade.showToast(ToastEnum.TowerHeroGroupEdit)
 
 						return
@@ -270,9 +280,9 @@ function var_0_0._btnconfirmOnClick(arg_9_0)
 		return
 	end
 
-	local var_9_3 = HeroSingleGroupModel.instance:getById(arg_9_0._singleGroupMOId)
+	local var_9_4 = HeroSingleGroupModel.instance:getById(arg_9_0._singleGroupMOId)
 
-	if var_9_3.trialPos then
+	if var_9_4.trialPos then
 		GameFacade.showToast(ToastEnum.TrialCantTakeOff)
 
 		return
@@ -281,6 +291,12 @@ function var_0_0._btnconfirmOnClick(arg_9_0)
 	if arg_9_0._heroMO then
 		if arg_9_0._adventure then
 			if WeekWalkModel.instance:getCurMapHeroCd(arg_9_0._heroMO.heroId) > 0 then
+				GameFacade.showToast(ToastEnum.HeroGroupEdit)
+
+				return
+			end
+		elseif arg_9_0._isWeekWalk_2 then
+			if WeekWalk_2Model.instance:getCurMapHeroCd(arg_9_0._heroMO.heroId) > 0 then
 				GameFacade.showToast(ToastEnum.HeroGroupEdit)
 
 				return
@@ -297,22 +313,22 @@ function var_0_0._btnconfirmOnClick(arg_9_0)
 			return
 		end
 
-		if arg_9_0._heroMO:isTrial() and not HeroSingleGroupModel.instance:isInGroup(arg_9_0._heroMO.uid) and (var_9_3:isEmpty() or not var_9_3.trial) and HeroGroupEditListModel.instance:isTrialLimit() then
+		if arg_9_0._heroMO:isTrial() and not HeroSingleGroupModel.instance:isInGroup(arg_9_0._heroMO.uid) and (var_9_4:isEmpty() or not var_9_4.trial) and HeroGroupEditListModel.instance:isTrialLimit() then
 			GameFacade.showToast(ToastEnum.TrialJoinLimit, HeroGroupTrialModel.instance:getLimitNum())
 
 			return
 		end
 
-		local var_9_4, var_9_5 = HeroSingleGroupModel.instance:hasHeroUids(arg_9_0._heroMO.uid, arg_9_0._singleGroupMOId)
+		local var_9_5, var_9_6 = HeroSingleGroupModel.instance:hasHeroUids(arg_9_0._heroMO.uid, arg_9_0._singleGroupMOId)
 
-		if var_9_4 then
-			HeroSingleGroupModel.instance:removeFrom(var_9_5)
+		if var_9_5 then
+			HeroSingleGroupModel.instance:removeFrom(var_9_6)
 			HeroSingleGroupModel.instance:addTo(arg_9_0._heroMO.uid, arg_9_0._singleGroupMOId)
 
 			if arg_9_0._heroMO:isTrial() then
-				var_9_3:setTrial(arg_9_0._heroMO.trialCo.id, arg_9_0._heroMO.trialCo.trialTemplate)
+				var_9_4:setTrial(arg_9_0._heroMO.trialCo.id, arg_9_0._heroMO.trialCo.trialTemplate)
 			else
-				var_9_3:setTrial()
+				var_9_4:setTrial()
 			end
 
 			FightAudioMgr.instance:playHeroVoiceRandom(arg_9_0._heroMO.heroId, CharacterEnum.VoiceType.HeroGroup)
@@ -331,9 +347,9 @@ function var_0_0._btnconfirmOnClick(arg_9_0)
 		HeroSingleGroupModel.instance:addTo(arg_9_0._heroMO.uid, arg_9_0._singleGroupMOId)
 
 		if arg_9_0._heroMO:isTrial() then
-			var_9_3:setTrial(arg_9_0._heroMO.trialCo.id, arg_9_0._heroMO.trialCo.trialTemplate)
+			var_9_4:setTrial(arg_9_0._heroMO.trialCo.id, arg_9_0._heroMO.trialCo.trialTemplate)
 		else
-			var_9_3:setTrial()
+			var_9_4:setTrial()
 		end
 
 		FightAudioMgr.instance:playHeroVoiceRandom(arg_9_0._heroMO.heroId, CharacterEnum.VoiceType.HeroGroup)
@@ -1095,83 +1111,94 @@ function var_0_0._editableInitView(arg_40_0)
 	arg_40_0._animator = arg_40_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
 end
 
-function var_0_0.onOpen(arg_41_0)
-	arg_41_0._isShowQuickEdit = false
-	arg_41_0._scrollcard.verticalNormalizedPosition = 1
-	arg_41_0._scrollquickedit.verticalNormalizedPosition = 1
-	arg_41_0._originalHeroUid = arg_41_0.viewParam.originalHeroUid
-	arg_41_0._singleGroupMOId = arg_41_0.viewParam.singleGroupMOId
-	arg_41_0._adventure = arg_41_0.viewParam.adventure
-	arg_41_0._equips = arg_41_0.viewParam.equips
-	arg_41_0._isTowerBattle = TowerModel.instance:isInTowerBattle()
+function var_0_0._getGroupType(arg_41_0)
+	local var_41_0 = HeroGroupModel.instance.episodeId
+	local var_41_1 = var_41_0 and lua_episode.configDict[var_41_0]
 
-	for iter_41_0 = 1, 2 do
-		arg_41_0._selectDmgs[iter_41_0] = false
+	if (var_41_1 and var_41_1.type) == DungeonEnum.EpisodeType.WeekWalk_2 then
+		return HeroGroupEnum.GroupType.WeekWalk_2
+	end
+end
+
+function var_0_0.onOpen(arg_42_0)
+	arg_42_0._isShowQuickEdit = false
+	arg_42_0._scrollcard.verticalNormalizedPosition = 1
+	arg_42_0._scrollquickedit.verticalNormalizedPosition = 1
+	arg_42_0._originalHeroUid = arg_42_0.viewParam.originalHeroUid
+	arg_42_0._singleGroupMOId = arg_42_0.viewParam.singleGroupMOId
+	arg_42_0._adventure = arg_42_0.viewParam.adventure
+	arg_42_0._equips = arg_42_0.viewParam.equips
+	arg_42_0._isTowerBattle = TowerModel.instance:isInTowerBattle()
+	arg_42_0._groupType = arg_42_0:_getGroupType()
+	arg_42_0._isWeekWalk_2 = arg_42_0._groupType == HeroGroupEnum.GroupType.WeekWalk_2
+
+	for iter_42_0 = 1, 2 do
+		arg_42_0._selectDmgs[iter_42_0] = false
 	end
 
-	for iter_41_1 = 1, 6 do
-		arg_41_0._selectAttrs[iter_41_1] = false
+	for iter_42_1 = 1, 6 do
+		arg_42_0._selectAttrs[iter_42_1] = false
 	end
 
-	for iter_41_2 = 1, 6 do
-		arg_41_0._selectLocations[iter_41_2] = false
+	for iter_42_2 = 1, 6 do
+		arg_42_0._selectLocations[iter_42_2] = false
 	end
 
 	CharacterModel.instance:setCharacterList(false, CharacterEnum.FilterType.HeroGroup)
-	HeroGroupEditListModel.instance:setParam(arg_41_0._originalHeroUid, arg_41_0._adventure, arg_41_0._isTowerBattle)
-	HeroGroupQuickEditListModel.instance:setParam(arg_41_0._adventure, arg_41_0._isTowerBattle)
+	HeroGroupEditListModel.instance:setParam(arg_42_0._originalHeroUid, arg_42_0._adventure, arg_42_0._isTowerBattle, arg_42_0._groupType)
+	HeroGroupQuickEditListModel.instance:setParam(arg_42_0._adventure, arg_42_0._isTowerBattle, arg_42_0._groupType)
 
-	arg_41_0._heroMO = HeroGroupEditListModel.instance:copyCharacterCardList(true)
+	arg_42_0._heroMO = HeroGroupEditListModel.instance:copyCharacterCardList(true)
 
-	arg_41_0:_refreshEditMode()
-	arg_41_0:_refreshBtnIcon()
-	arg_41_0:_refreshCharacterInfo()
-	arg_41_0:_showRecommendCareer()
-	arg_41_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroRankUp, arg_41_0._updateHeroList, arg_41_0)
-	arg_41_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroLevelUp, arg_41_0._updateHeroList, arg_41_0)
-	arg_41_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroExSkillUp, arg_41_0._updateHeroList, arg_41_0)
-	arg_41_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnClickHeroEditItem, arg_41_0._onHeroItemClick, arg_41_0)
-	arg_41_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroRankUp, arg_41_0._refreshCharacterInfo, arg_41_0)
-	arg_41_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroLevelUp, arg_41_0._refreshCharacterInfo, arg_41_0)
-	arg_41_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroExSkillUp, arg_41_0._refreshCharacterInfo, arg_41_0)
-	arg_41_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroTalentUp, arg_41_0._refreshCharacterInfo, arg_41_0)
-	arg_41_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroExSkillUp, arg_41_0._refreshCharacterInfo, arg_41_0)
-	arg_41_0:addEventCb(CharacterController.instance, CharacterEvent.levelUpAttribute, arg_41_0._onAttributeChanged, arg_41_0)
-	arg_41_0:addEventCb(CharacterController.instance, CharacterEvent.showCharacterRankUpView, arg_41_0._showCharacterRankUpView, arg_41_0)
-	arg_41_0:addEventCb(CharacterController.instance, CharacterEvent.OnMarkFavorSuccess, arg_41_0._markFavorSuccess, arg_41_0)
-	arg_41_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyHeroGroup, arg_41_0._onGroupModify, arg_41_0)
-	arg_41_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnSnapshotSaveSucc, arg_41_0._onGroupModify, arg_41_0)
-	arg_41_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_41_0._onOpenView, arg_41_0)
-	arg_41_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_41_0._onCloseView, arg_41_0)
-	arg_41_0:addEventCb(CharacterController.instance, CharacterEvent.HeroUpdatePush, arg_41_0._refreshCharacterInfo, arg_41_0)
-	arg_41_0:addEventCb(AudioMgr.instance, AudioMgr.Evt_Trigger, arg_41_0._onAudioTrigger, arg_41_0)
-	gohelper.addUIClickAudio(arg_41_0._btnlvrank.gameObject, AudioEnum.UI.UI_Common_Click)
-	gohelper.addUIClickAudio(arg_41_0._btnrarerank.gameObject, AudioEnum.UI.UI_Common_Click)
-	gohelper.addUIClickAudio(arg_41_0._btnexskillrank.gameObject, AudioEnum.UI.UI_Common_Click)
-	gohelper.addUIClickAudio(arg_41_0._btnattribute.gameObject, AudioEnum.UI.UI_Common_Click)
-	gohelper.addUIClickAudio(arg_41_0._btnpassiveskill.gameObject, AudioEnum.UI.UI_Common_Click)
-	gohelper.addUIClickAudio(arg_41_0._btncharacter.gameObject, AudioEnum.UI.UI_Common_Click)
+	arg_42_0:_refreshEditMode()
+	arg_42_0:_refreshBtnIcon()
+	arg_42_0:_refreshCharacterInfo()
+	arg_42_0:_showRecommendCareer()
+	arg_42_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroRankUp, arg_42_0._updateHeroList, arg_42_0)
+	arg_42_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroLevelUp, arg_42_0._updateHeroList, arg_42_0)
+	arg_42_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroExSkillUp, arg_42_0._updateHeroList, arg_42_0)
+	arg_42_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnClickHeroEditItem, arg_42_0._onHeroItemClick, arg_42_0)
+	arg_42_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroRankUp, arg_42_0._refreshCharacterInfo, arg_42_0)
+	arg_42_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroLevelUp, arg_42_0._refreshCharacterInfo, arg_42_0)
+	arg_42_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroExSkillUp, arg_42_0._refreshCharacterInfo, arg_42_0)
+	arg_42_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroTalentUp, arg_42_0._refreshCharacterInfo, arg_42_0)
+	arg_42_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroExSkillUp, arg_42_0._refreshCharacterInfo, arg_42_0)
+	arg_42_0:addEventCb(CharacterController.instance, CharacterEvent.levelUpAttribute, arg_42_0._onAttributeChanged, arg_42_0)
+	arg_42_0:addEventCb(CharacterController.instance, CharacterEvent.showCharacterRankUpView, arg_42_0._showCharacterRankUpView, arg_42_0)
+	arg_42_0:addEventCb(CharacterController.instance, CharacterEvent.OnMarkFavorSuccess, arg_42_0._markFavorSuccess, arg_42_0)
+	arg_42_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyHeroGroup, arg_42_0._onGroupModify, arg_42_0)
+	arg_42_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnSnapshotSaveSucc, arg_42_0._onGroupModify, arg_42_0)
+	arg_42_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_42_0._onOpenView, arg_42_0)
+	arg_42_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_42_0._onCloseView, arg_42_0)
+	arg_42_0:addEventCb(CharacterController.instance, CharacterEvent.HeroUpdatePush, arg_42_0._refreshCharacterInfo, arg_42_0)
+	arg_42_0:addEventCb(AudioMgr.instance, AudioMgr.Evt_Trigger, arg_42_0._onAudioTrigger, arg_42_0)
+	gohelper.addUIClickAudio(arg_42_0._btnlvrank.gameObject, AudioEnum.UI.UI_Common_Click)
+	gohelper.addUIClickAudio(arg_42_0._btnrarerank.gameObject, AudioEnum.UI.UI_Common_Click)
+	gohelper.addUIClickAudio(arg_42_0._btnexskillrank.gameObject, AudioEnum.UI.UI_Common_Click)
+	gohelper.addUIClickAudio(arg_42_0._btnattribute.gameObject, AudioEnum.UI.UI_Common_Click)
+	gohelper.addUIClickAudio(arg_42_0._btnpassiveskill.gameObject, AudioEnum.UI.UI_Common_Click)
+	gohelper.addUIClickAudio(arg_42_0._btncharacter.gameObject, AudioEnum.UI.UI_Common_Click)
 
-	_, arg_41_0._initScrollContentPosY = transformhelper.getLocalPos(arg_41_0._goScrollContent.transform)
+	_, arg_42_0._initScrollContentPosY = transformhelper.getLocalPos(arg_42_0._goScrollContent.transform)
 end
 
-function var_0_0.onClose(arg_42_0)
-	arg_42_0:removeEventCb(CharacterController.instance, CharacterEvent.successHeroRankUp, arg_42_0._updateHeroList, arg_42_0)
-	arg_42_0:removeEventCb(CharacterController.instance, CharacterEvent.successHeroLevelUp, arg_42_0._updateHeroList, arg_42_0)
-	arg_42_0:removeEventCb(CharacterController.instance, CharacterEvent.successHeroExSkillUp, arg_42_0._updateHeroList, arg_42_0)
-	arg_42_0:removeEventCb(HeroGroupController.instance, HeroGroupEvent.OnClickHeroEditItem, arg_42_0._onHeroItemClick, arg_42_0)
-	arg_42_0:removeEventCb(CharacterController.instance, CharacterEvent.successHeroRankUp, arg_42_0._refreshCharacterInfo, arg_42_0)
-	arg_42_0:removeEventCb(CharacterController.instance, CharacterEvent.successHeroLevelUp, arg_42_0._refreshCharacterInfo, arg_42_0)
-	arg_42_0:removeEventCb(CharacterController.instance, CharacterEvent.successHeroExSkillUp, arg_42_0._refreshCharacterInfo, arg_42_0)
-	arg_42_0:removeEventCb(CharacterController.instance, CharacterEvent.successHeroTalentUp, arg_42_0._refreshCharacterInfo, arg_42_0)
-	arg_42_0:removeEventCb(CharacterController.instance, CharacterEvent.successHeroExSkillUp, arg_42_0._refreshCharacterInfo, arg_42_0)
-	arg_42_0:removeEventCb(CharacterController.instance, CharacterEvent.levelUpAttribute, arg_42_0._onAttributeChanged, arg_42_0)
-	arg_42_0:removeEventCb(CharacterController.instance, CharacterEvent.showCharacterRankUpView, arg_42_0._showCharacterRankUpView, arg_42_0)
-	arg_42_0:removeEventCb(CharacterController.instance, CharacterEvent.OnMarkFavorSuccess, arg_42_0._markFavorSuccess, arg_42_0)
-	arg_42_0:removeEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyHeroGroup, arg_42_0._onGroupModify, arg_42_0)
-	arg_42_0:removeEventCb(HeroGroupController.instance, HeroGroupEvent.OnSnapshotSaveSucc, arg_42_0._onGroupModify, arg_42_0)
-	arg_42_0:removeEventCb(CharacterController.instance, CharacterEvent.HeroUpdatePush, arg_42_0._refreshCharacterInfo, arg_42_0)
-	arg_42_0:removeEventCb(AudioMgr.instance, AudioMgr.Evt_Trigger, arg_42_0._onAudioTrigger, arg_42_0)
+function var_0_0.onClose(arg_43_0)
+	arg_43_0:removeEventCb(CharacterController.instance, CharacterEvent.successHeroRankUp, arg_43_0._updateHeroList, arg_43_0)
+	arg_43_0:removeEventCb(CharacterController.instance, CharacterEvent.successHeroLevelUp, arg_43_0._updateHeroList, arg_43_0)
+	arg_43_0:removeEventCb(CharacterController.instance, CharacterEvent.successHeroExSkillUp, arg_43_0._updateHeroList, arg_43_0)
+	arg_43_0:removeEventCb(HeroGroupController.instance, HeroGroupEvent.OnClickHeroEditItem, arg_43_0._onHeroItemClick, arg_43_0)
+	arg_43_0:removeEventCb(CharacterController.instance, CharacterEvent.successHeroRankUp, arg_43_0._refreshCharacterInfo, arg_43_0)
+	arg_43_0:removeEventCb(CharacterController.instance, CharacterEvent.successHeroLevelUp, arg_43_0._refreshCharacterInfo, arg_43_0)
+	arg_43_0:removeEventCb(CharacterController.instance, CharacterEvent.successHeroExSkillUp, arg_43_0._refreshCharacterInfo, arg_43_0)
+	arg_43_0:removeEventCb(CharacterController.instance, CharacterEvent.successHeroTalentUp, arg_43_0._refreshCharacterInfo, arg_43_0)
+	arg_43_0:removeEventCb(CharacterController.instance, CharacterEvent.successHeroExSkillUp, arg_43_0._refreshCharacterInfo, arg_43_0)
+	arg_43_0:removeEventCb(CharacterController.instance, CharacterEvent.levelUpAttribute, arg_43_0._onAttributeChanged, arg_43_0)
+	arg_43_0:removeEventCb(CharacterController.instance, CharacterEvent.showCharacterRankUpView, arg_43_0._showCharacterRankUpView, arg_43_0)
+	arg_43_0:removeEventCb(CharacterController.instance, CharacterEvent.OnMarkFavorSuccess, arg_43_0._markFavorSuccess, arg_43_0)
+	arg_43_0:removeEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyHeroGroup, arg_43_0._onGroupModify, arg_43_0)
+	arg_43_0:removeEventCb(HeroGroupController.instance, HeroGroupEvent.OnSnapshotSaveSucc, arg_43_0._onGroupModify, arg_43_0)
+	arg_43_0:removeEventCb(CharacterController.instance, CharacterEvent.HeroUpdatePush, arg_43_0._refreshCharacterInfo, arg_43_0)
+	arg_43_0:removeEventCb(AudioMgr.instance, AudioMgr.Evt_Trigger, arg_43_0._onAudioTrigger, arg_43_0)
 	CharacterModel.instance:setFakeLevel()
 	HeroGroupEditListModel.instance:cancelAllSelected()
 	HeroGroupEditListModel.instance:clear()
@@ -1180,65 +1207,65 @@ function var_0_0.onClose(arg_42_0)
 	HeroGroupTrialModel.instance:setFilter()
 	CommonHeroHelper.instance:resetGrayState()
 
-	arg_42_0._selectDmgs = {}
-	arg_42_0._selectAttrs = {}
-	arg_42_0._selectLocations = {}
+	arg_43_0._selectDmgs = {}
+	arg_43_0._selectAttrs = {}
+	arg_43_0._selectLocations = {}
 end
 
-function var_0_0._onAudioTrigger(arg_43_0, arg_43_1)
+function var_0_0._onAudioTrigger(arg_44_0, arg_44_1)
 	return
 end
 
-function var_0_0._onOpenView(arg_44_0, arg_44_1)
+function var_0_0._onOpenView(arg_45_0, arg_45_1)
 	return
 end
 
-function var_0_0._markFavorSuccess(arg_45_0)
+function var_0_0._markFavorSuccess(arg_46_0)
 	CharacterModel.instance:setCharacterList(false, CharacterEnum.FilterType.HeroGroup)
 	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnModifyHeroGroup)
 end
 
-function var_0_0._showRecommendCareer(arg_46_0)
-	local var_46_0, var_46_1 = FightHelper.detectAttributeCounter()
+function var_0_0._showRecommendCareer(arg_47_0)
+	local var_47_0, var_47_1 = FightHelper.detectAttributeCounter()
 
-	gohelper.CreateObjList(arg_46_0, arg_46_0._onRecommendCareerItemShow, var_46_0, arg_46_0._goattrlist, arg_46_0._goattritem)
+	gohelper.CreateObjList(arg_47_0, arg_47_0._onRecommendCareerItemShow, var_47_0, arg_47_0._goattrlist, arg_47_0._goattritem)
 
-	arg_46_0._txtrecommendAttrDesc.text = #var_46_0 == 0 and luaLang("herogroupeditview_notrecommend") or luaLang("herogroupeditview_recommend")
+	arg_47_0._txtrecommendAttrDesc.text = #var_47_0 == 0 and luaLang("herogroupeditview_notrecommend") or luaLang("herogroupeditview_recommend")
 
-	gohelper.setActive(arg_46_0._goattrlist, #var_46_0 ~= 0)
+	gohelper.setActive(arg_47_0._goattrlist, #var_47_0 ~= 0)
 end
 
-function var_0_0._onRecommendCareerItemShow(arg_47_0, arg_47_1, arg_47_2, arg_47_3)
-	local var_47_0 = gohelper.findChildImage(arg_47_1, "icon")
+function var_0_0._onRecommendCareerItemShow(arg_48_0, arg_48_1, arg_48_2, arg_48_3)
+	local var_48_0 = gohelper.findChildImage(arg_48_1, "icon")
 
-	UISpriteSetMgr.instance:setHeroGroupSprite(var_47_0, "career_" .. arg_47_2)
+	UISpriteSetMgr.instance:setHeroGroupSprite(var_48_0, "career_" .. arg_48_2)
 end
 
-function var_0_0._onCloseView(arg_48_0, arg_48_1)
+function var_0_0._onCloseView(arg_49_0, arg_49_1)
 	return
 end
 
-function var_0_0._showCharacterRankUpView(arg_49_0, arg_49_1)
-	arg_49_1()
+function var_0_0._showCharacterRankUpView(arg_50_0, arg_50_1)
+	arg_50_1()
 end
 
-function var_0_0.onDestroyView(arg_50_0)
-	arg_50_0._imgBg:UnLoadImage()
-	arg_50_0._simageredlight:UnLoadImage()
+function var_0_0.onDestroyView(arg_51_0)
+	arg_51_0._imgBg:UnLoadImage()
+	arg_51_0._simageredlight:UnLoadImage()
 
-	arg_50_0._imgBg = nil
-	arg_50_0._simageredlight = nil
+	arg_51_0._imgBg = nil
+	arg_51_0._simageredlight = nil
 
-	for iter_50_0 = 1, 2 do
-		arg_50_0._dmgBtnClicks[iter_50_0]:RemoveClickListener()
+	for iter_51_0 = 1, 2 do
+		arg_51_0._dmgBtnClicks[iter_51_0]:RemoveClickListener()
 	end
 
-	for iter_50_1 = 1, 6 do
-		arg_50_0._attrBtnClicks[iter_50_1]:RemoveClickListener()
+	for iter_51_1 = 1, 6 do
+		arg_51_0._attrBtnClicks[iter_51_1]:RemoveClickListener()
 	end
 
-	for iter_50_2 = 1, 6 do
-		arg_50_0._locationBtnClicks[iter_50_2]:RemoveClickListener()
+	for iter_51_2 = 1, 6 do
+		arg_51_0._locationBtnClicks[iter_51_2]:RemoveClickListener()
 	end
 end
 

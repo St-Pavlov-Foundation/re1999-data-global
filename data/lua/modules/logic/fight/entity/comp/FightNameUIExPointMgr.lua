@@ -626,7 +626,7 @@ function var_0_0.onExPointChange(arg_30_0, arg_30_1, arg_30_2, arg_30_3)
 		return
 	end
 
-	arg_30_0:log("激情点改变")
+	arg_30_0:log(string.format("激情点改变 oldNum : %s, newNUm : %s", arg_30_2, arg_30_3))
 
 	if arg_30_2 < arg_30_3 then
 		arg_30_0:playAddPointEffect(arg_30_2, arg_30_3)
@@ -677,7 +677,7 @@ end
 function var_0_0.playRemovePointEffect(arg_32_0, arg_32_1, arg_32_2)
 	if arg_32_1 >= arg_32_0.entity:getMO():getMaxExPoint() then
 		for iter_32_0, iter_32_1 in ipairs(arg_32_0.pointItemList) do
-			iter_32_1:directSetState(FightEnum.ExPointState.Server)
+			iter_32_1:updateExPoint()
 		end
 	end
 

@@ -38,4 +38,8 @@ function var_0_0._checkLimit(arg_4_0)
 	end
 end
 
+function var_0_0._onInputNameValueChange(arg_5_0)
+	arg_5_0:_checkLimit()
+end
+
 return var_0_0

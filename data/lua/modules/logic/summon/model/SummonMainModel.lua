@@ -138,6 +138,9 @@ function var_0_0.getValidPools()
 end
 
 var_0_0.defaultSettings = {
+	[SummonEnum.TabContentIndex.DoubleSsrUp] = {
+		"ui/viewres/summon/summonmaincharacterprobup.prefab"
+	},
 	{
 		"ui/viewres/summon/summonmaincharacterview.prefab"
 	},
@@ -155,47 +158,51 @@ var_0_0.defaultSettings = {
 	}
 }
 var_0_0.defaultUIClzMap = {
+	[SummonEnum.TabContentIndex.DoubleSsrUp] = SummonCharacterProbDoubleUpBase,
 	SummonMainCharacterView,
 	SummonMainEquipView,
 	SummonMainCharacterNewbie,
 	SummonMainCharacterProbUp,
 	SummonMainEquipProbUp
 }
+var_0_0.defaultUIClzMapByType = {
+	[SummonEnum.Type.ProbUp] = SummonMainCharacterProbUp,
+	[SummonEnum.Type.Limit] = SummonMainCharacterProbUp,
+	[SummonEnum.Type.StrongCustomOnePick] = SummonStrongOneCustomPickView
+}
 
 function var_0_0.resetTabResSettings(arg_12_0)
 	local var_12_0 = tabletool.copy(var_0_0.defaultSettings)
 	local var_12_1 = tabletool.copy(var_0_0.defaultUIClzMap)
 	local var_12_2 = SummonConfig.instance:getValidPoolList()
-	local var_12_3 = {}
-	local var_12_4 = {}
 
 	arg_12_0._poolIDTabMap = {}
 
 	for iter_12_0, iter_12_1 in ipairs(var_12_2) do
-		local var_12_5 = var_0_0.getADPageTabIndex(iter_12_1)
-		local var_12_6 = var_0_0.defaultUIClzMap[var_12_5]
+		local var_12_3 = var_0_0.defaultUIClzMapByType[iter_12_1.type]
+		local var_12_4 = var_0_0.getADPageTabIndex(iter_12_1)
+		local var_12_5 = var_0_0.defaultUIClzMap[var_12_4]
+
+		if var_12_3 == nil and not string.nilorempty(iter_12_1.customClz) then
+			var_12_3 = _G[iter_12_1.customClz]
+		end
+
+		var_12_3 = var_12_3 or var_12_5
+
+		local var_12_6 = var_0_0.defaultSettings[var_12_4][1]
 		local var_12_7
 
-		if not string.nilorempty(iter_12_1.customClz) then
-			var_12_7 = _G[iter_12_1.customClz]
+		if not string.nilorempty(iter_12_1.prefabPath) then
+			var_12_7 = string.format("ui/viewres/summon/%s.prefab", iter_12_1.prefabPath)
 		end
 
 		var_12_7 = var_12_7 or var_12_6
 
-		local var_12_8 = var_0_0.defaultSettings[var_12_5][1]
-		local var_12_9
-
-		if not string.nilorempty(iter_12_1.prefabPath) then
-			var_12_9 = string.format("ui/viewres/summon/%s.prefab", iter_12_1.prefabPath)
-		end
-
-		var_12_9 = var_12_9 or var_12_8
-
-		if var_12_7 ~= var_12_6 or var_12_9 ~= var_12_8 then
+		if var_12_3 ~= var_12_5 or var_12_7 ~= var_12_6 then
 			table.insert(var_12_0, {
-				var_12_9
+				var_12_7
 			})
-			table.insert(var_12_1, var_12_7)
+			table.insert(var_12_1, var_12_3)
 
 			arg_12_0._poolIDTabMap[iter_12_1.id] = #var_12_0
 		end
@@ -667,7 +674,7 @@ end
 function var_0_0.isProbUp(arg_55_0)
 	local var_55_0 = var_0_0.getADPageTabIndex(arg_55_0)
 
-	return var_55_0 == SummonEnum.TabContentIndex.CharProbUp or var_55_0 == SummonEnum.TabContentIndex.EquipProbUp
+	return var_55_0 == SummonEnum.TabContentIndex.CharProbUp or var_55_0 == SummonEnum.TabContentIndex.EquipProbUp or var_55_0 == SummonEnum.TabContentIndex.DoubleSsrUp
 end
 
 function var_0_0.getCostCurrencyParam(arg_56_0)

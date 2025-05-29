@@ -57,12 +57,18 @@ function var_0_0.updateLimitStatus(arg_7_0)
 		local var_7_0 = WeekWalkModel.instance:getCurMapHeroCd(arg_7_0._mo.config.id)
 
 		arg_7_0._heroItem:setInjury(var_7_0 > 0)
+	elseif HeroGroupQuickEditListModel.instance.isWeekWalk_2 then
+		gohelper.setActive(arg_7_0._gohp, false)
+
+		local var_7_1 = WeekWalk_2Model.instance:getCurMapHeroCd(arg_7_0._mo.config.id)
+
+		arg_7_0._heroItem:setInjury(var_7_1 > 0)
 	elseif HeroGroupQuickEditListModel.instance.isTowerBattle then
 		gohelper.setActive(arg_7_0._gohp, false)
 
-		local var_7_1 = TowerModel.instance:isHeroBan(arg_7_0._mo.config.id)
+		local var_7_2 = TowerModel.instance:isHeroBan(arg_7_0._mo.config.id)
 
-		arg_7_0._heroItem:setLost(var_7_1)
+		arg_7_0._heroItem:setLost(var_7_2)
 	else
 		gohelper.setActive(arg_7_0._gohp, false)
 

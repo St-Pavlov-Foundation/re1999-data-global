@@ -306,6 +306,10 @@ function var_0_0._onResItemOnClick(arg_23_0, arg_23_1)
 end
 
 function var_0_0._setSelectResData(arg_24_0, arg_24_1)
+	if arg_24_0._curSelectResData ~= arg_24_1 then
+		GameSceneMgr.instance:getCurScene().fsm:triggerEvent(RoomSceneEvent.CancelPlaceBlock)
+	end
+
 	arg_24_0._curSelectResData = arg_24_1
 
 	for iter_24_0 = 1, #arg_24_0._resItemList do

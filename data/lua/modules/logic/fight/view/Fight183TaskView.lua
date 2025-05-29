@@ -61,7 +61,9 @@ function var_0_0._refreshData(arg_7_0)
 		local var_7_5 = var_7_0.decs1
 
 		if var_7_1 then
-			var_7_4 = string.format("<color=#7A8E51>%s</color>", luaLang("act183task_condition_title_complete"))
+			local var_7_6 = luaLang("act183task_condition_title_complete")
+
+			var_7_4 = string.format("<color=#7A8E51>%s</color>", var_7_6)
 			var_7_5 = string.format("<s><color=#7A8E51>%s</color></s>", var_7_5)
 		else
 			var_7_4 = luaLang("act183task_condition_title")

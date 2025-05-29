@@ -133,6 +133,12 @@ function var_0_0._initInfo(arg_1_0)
 			"sendGetWeekwalkInfoRequest",
 			false
 		})
+		table.insert(arg_1_0.GetInfoFuncList, {
+			Weekwalk_2Rpc.sendWeekwalkVer2GetInfoRequest,
+			Weekwalk_2Rpc.instance,
+			"sendWeekwalkVer2GetInfoRequest",
+			false
+		})
 	end
 
 	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Explore) then
@@ -162,6 +168,18 @@ function var_0_0._initInfo(arg_1_0)
 		})
 	end
 
+	if RougeOutsideController.instance:isOpen() then
+		local var_1_0 = RougeOutsideModel.instance:season()
+
+		table.insert(arg_1_0.GetInfoFuncList, {
+			RougeOutsideRpc.sendGetRougeOutSideInfoRequest,
+			RougeOutsideRpc.instance,
+			"sendGetRougeOutSideInfoRequest",
+			false,
+			var_1_0
+		})
+	end
+
 	arg_1_0._callbackIdDict = {}
 end
 
@@ -183,7 +201,7 @@ function var_0_0.onStart(arg_2_0, arg_2_1)
 
 		local function var_2_5(arg_3_0, arg_3_1, arg_3_2)
 			if not var_2_3 and arg_3_1 ~= 0 then
-				logWarn((var_2_1.__cname or "nil") .. " " .. var_2_2 .. " 服务端报错了 resultCode = " .. arg_3_1)
+				logError((var_2_1.__cname or "nil") .. " " .. var_2_2 .. " 服务端报错了 resultCode = " .. arg_3_1)
 			end
 
 			arg_2_0:_onGetInfo(iter_2_0)
@@ -200,7 +218,7 @@ function var_0_0.onStart(arg_2_0, arg_2_1)
 		if var_2_6 then
 			arg_2_0._callbackIdDict[iter_2_0] = var_2_6
 		else
-			logWarn((var_2_1.__cname or "nil") .. " " .. var_2_2 .. " 不支持callback")
+			logError((var_2_1.__cname or "nil") .. " " .. var_2_2 .. " 不支持callback")
 			arg_2_0:_onGetInfo(iter_2_0)
 		end
 	end

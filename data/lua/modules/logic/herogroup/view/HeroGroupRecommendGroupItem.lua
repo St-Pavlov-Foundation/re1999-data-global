@@ -131,6 +131,7 @@ function var_0_0._btnuseOnClick(arg_4_0)
 	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnModifyHeroGroup)
 	HeroGroupModel.instance:saveCurGroupData()
 	ViewMgr.instance:closeView(ViewName.HeroGroupRecommendView)
+	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnUseRecommendGroupFinish)
 end
 
 function var_0_0.onTowerUse(arg_5_0, arg_5_1, arg_5_2, ...)

@@ -146,7 +146,7 @@ function var_0_0.onInitView(arg_1_0)
 	arg_1_0._gorewardContent = gohelper.findChild(arg_1_0._gorewarditem, "#go_birthdayrewarditem/#go_birthday/#go_birthdayrewarddetail/#go_contentSize/Scroll View/Viewport/Content")
 	arg_1_0._goclickarea = gohelper.findChild(arg_1_0._gorewarditem, "#go_birthdayrewarditem/#go_birthday/#go_birthdayrewarddetail/#go_contentSize/Scroll View/Viewport/Content/#go_rewardContent/#go_clickarea")
 	arg_1_0._gorewarddetailitem = gohelper.findChild(arg_1_0._gorewarditem, "#go_birthdayrewarditem/#go_birthday/#go_birthdayrewarddetail/#go_contentSize/Scroll View/#go_rewarddetailItem")
-	arg_1_0._txtdeco = gohelper.findChildText(arg_1_0._gorewarditem, "#go_birthdayrewarditem/#go_birthday/scroll_desc/Viewport/Content/#txt_deco")
+	arg_1_0._txtdeco = gohelper.findChildText(arg_1_0._gorewarditem, "#go_birthdayrewarditem/#go_birthday/ScrollView/Viewport/#txt_deco")
 	arg_1_0._simagesignature = gohelper.findChildSingleImage(arg_1_0._gorewarditem, "#go_birthdayrewarditem/#go_birthday/#simage_signature")
 	arg_1_0._btnqiehuan = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "leftBottomContent/#btn_qiehuan")
 	arg_1_0._goqiehuan = gohelper.findChild(arg_1_0.viewGO, "leftBottomContent/#btn_qiehuan/#qiehuan")
@@ -275,7 +275,19 @@ var_0_0.TipVerticalInterval = 25
 local var_0_2 = "SignInView:_switchLifeCircleAnsSignIn"
 
 function var_0_0._onTimesValueChanged(arg_4_0, arg_4_1)
-	return
+	local var_4_0 = arg_4_0:_getTextInputheros()
+
+	if not var_4_0 or var_4_0 == "" then
+		return
+	end
+
+	local var_4_1 = string.splitToNumber(var_4_0, "|")
+
+	if not var_4_1 or #var_4_1 < 1 then
+		return
+	end
+
+	gohelper.setActive(arg_4_0._btnqiehuan.gameObject, true)
 end
 
 function var_0_0._onInputDateChange(arg_5_0)

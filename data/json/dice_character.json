@@ -1,0 +1,54 @@
+[
+  {
+    "id": 1,
+    "name": "language_10070040",
+    "desc": "language_10070041",
+    "icon": 311301,
+    "dicelist": "1#1#1#1#1#1",
+    "skilllist": "1#2#3",
+    "relicIds": "1",
+    "resetTimes": 3,
+    "hp": 200,
+    "power": 5,
+    "powerSkill": 1001
+  },
+  {
+    "id": 2,
+    "name": "language_10069668",
+    "desc": "language_10070042",
+    "icon": 311312,
+    "dicelist": "1#1#1#1#1",
+    "skilllist": "6#7#8",
+    "relicIds": "2",
+    "resetTimes": 3,
+    "hp": 200,
+    "power": 5,
+    "powerSkill": 1002
+  },
+  {
+    "id": 3,
+    "name": "language_10070043",
+    "desc": "language_10070044",
+    "icon": 522101,
+    "dicelist": "1#1#1#1#1",
+    "skilllist": "11#12#13",
+    "relicIds": "3",
+    "resetTimes": 3,
+    "hp": 200,
+    "power": 5,
+    "powerSkill": 1003
+  },
+  {
+    "id": 4,
+    "name": "language_10070045",
+    "desc": "language_10070046",
+    "icon": 631801,
+    "dicelist": "1#1#1#1#1",
+    "skilllist": "16#17#18",
+    "relicIds": "4",
+    "resetTimes": 3,
+    "hp": 200,
+    "power": 5,
+    "powerSkill": 1004
+  }
+]

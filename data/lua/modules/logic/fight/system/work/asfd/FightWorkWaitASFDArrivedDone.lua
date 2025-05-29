@@ -12,7 +12,11 @@ function var_0_0.onStart(arg_2_0)
 	FightController.instance:registerCallback(FightEvent.ASFD_OnASFDArrivedDone, arg_2_0.onASFDArrivedDone, arg_2_0)
 end
 
-function var_0_0.onASFDArrivedDone(arg_3_0)
+function var_0_0.onASFDArrivedDone(arg_3_0, arg_3_1)
+	if arg_3_1 ~= arg_3_0.stepMo then
+		return
+	end
+
 	return arg_3_0:onDone(true)
 end
 

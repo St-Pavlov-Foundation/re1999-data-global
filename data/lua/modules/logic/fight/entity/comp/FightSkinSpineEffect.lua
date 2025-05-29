@@ -30,13 +30,7 @@ function var_0_0.removeEventListeners(arg_3_0)
 end
 
 function var_0_0.onDestroy(arg_4_0)
-	if arg_4_0._effectWrapDict then
-		for iter_4_0, iter_4_1 in pairs(arg_4_0._effectWrapDict) do
-			arg_4_0.entity.effect:removeEffect(iter_4_1)
-		end
-
-		arg_4_0._effectWrapDict = nil
-	end
+	arg_4_0._effectWrapDict = nil
 end
 
 function var_0_0._onSkillPlayStart(arg_5_0, arg_5_1, arg_5_2, arg_5_3)

@@ -65,397 +65,401 @@ function var_0_0._onSpineLoaded(arg_6_0, arg_6_1)
 	end
 end
 
-function var_0_0.addHangEffect(arg_7_0, arg_7_1, arg_7_2, arg_7_3, arg_7_4, arg_7_5, arg_7_6)
-	local var_7_0 = FightHelper.getEffectUrlWithLod(arg_7_1)
-	local var_7_1 = arg_7_0.entity:getHangPoint(arg_7_2, arg_7_6)
-	local var_7_2 = FightEffectPool.getEffect(var_7_0, arg_7_3 or arg_7_0.entity:getSide(), arg_7_0._onEffectLoaded, arg_7_0, var_7_1)
+function var_0_0.playingEffect(arg_7_0, arg_7_1)
+	return arg_7_0._playingEffectDict and arg_7_0._playingEffectDict[arg_7_1]
+end
 
-	arg_7_0._playingEffectDict[var_7_2.uniqueId] = var_7_2
+function var_0_0.addHangEffect(arg_8_0, arg_8_1, arg_8_2, arg_8_3, arg_8_4, arg_8_5, arg_8_6)
+	local var_8_0 = FightHelper.getEffectUrlWithLod(arg_8_1)
+	local var_8_1 = arg_8_0.entity:getHangPoint(arg_8_2, arg_8_6)
+	local var_8_2 = FightEffectPool.getEffect(var_8_0, arg_8_3 or arg_8_0.entity:getSide(), arg_8_0._onEffectLoaded, arg_8_0, var_8_1)
 
-	local var_7_3 = AudioEffectMgr.instance:playAudioByEffectPath(var_7_0)
+	arg_8_0._playingEffectDict[var_8_2.uniqueId] = var_8_2
 
-	FightAudioMgr.instance:onDirectPlayAudio(var_7_3)
+	local var_8_3 = AudioEffectMgr.instance:playAudioByEffectPath(var_8_0)
 
-	if arg_7_0.entity.spine and not arg_7_0.entity.spine:getSpineGO() then
-		arg_7_0.cache_effect[var_7_2.uniqueId] = {
-			effectWrap = var_7_2,
-			hangPoint = arg_7_2,
-			cache_local_position = arg_7_5
+	FightAudioMgr.instance:onDirectPlayAudio(var_8_3)
+
+	if arg_8_0.entity.spine and not arg_8_0.entity.spine:getSpineGO() then
+		arg_8_0.cache_effect[var_8_2.uniqueId] = {
+			effectWrap = var_8_2,
+			hangPoint = arg_8_2,
+			cache_local_position = arg_8_5
 		}
 	end
 
-	if arg_7_4 then
-		arg_7_0:_releaseEffectByTime(var_7_2, arg_7_4)
+	if arg_8_4 then
+		arg_8_0:_releaseEffectByTime(var_8_2, arg_8_4)
 	end
 
-	arg_7_0._hangEffects[var_7_2.uniqueId] = {
-		effectWrap = var_7_2,
-		hangPoint = arg_7_2
+	arg_8_0._hangEffects[var_8_2.uniqueId] = {
+		effectWrap = var_8_2,
+		hangPoint = arg_8_2
 	}
 
-	return var_7_2
+	return var_8_2
 end
 
-function var_0_0.addGlobalEffect(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
-	local var_8_0 = FightHelper.getEffectUrlWithLod(arg_8_1)
-	local var_8_1 = FightEffectPool.getEffect(var_8_0, arg_8_2 or arg_8_0.entity:getSide(), arg_8_0._onEffectLoaded, arg_8_0)
+function var_0_0.addGlobalEffect(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
+	local var_9_0 = FightHelper.getEffectUrlWithLod(arg_9_1)
+	local var_9_1 = FightEffectPool.getEffect(var_9_0, arg_9_2 or arg_9_0.entity:getSide(), arg_9_0._onEffectLoaded, arg_9_0)
 
-	arg_8_0._playingEffectDict[var_8_1.uniqueId] = var_8_1
+	arg_9_0._playingEffectDict[var_9_1.uniqueId] = var_9_1
 
-	FightEffectPool.returnEffectToPoolContainer(var_8_1)
+	FightEffectPool.returnEffectToPoolContainer(var_9_1)
 
-	local var_8_2 = AudioEffectMgr.instance:playAudioByEffectPath(var_8_0)
+	local var_9_2 = AudioEffectMgr.instance:playAudioByEffectPath(var_9_0)
 
-	FightAudioMgr.instance:onDirectPlayAudio(var_8_2)
+	FightAudioMgr.instance:onDirectPlayAudio(var_9_2)
 
-	if arg_8_3 then
-		arg_8_0:_releaseEffectByTime(var_8_1, arg_8_3)
+	if arg_9_3 then
+		arg_9_0:_releaseEffectByTime(var_9_1, arg_9_3)
 	end
 
-	return var_8_1
+	return var_9_1
 end
 
-function var_0_0.getEffectWrap(arg_9_0, arg_9_1)
-	local var_9_0 = FightHelper.getEffectUrlWithLod(arg_9_1)
+function var_0_0.getEffectWrap(arg_10_0, arg_10_1)
+	local var_10_0 = FightHelper.getEffectUrlWithLod(arg_10_1)
 
-	for iter_9_0, iter_9_1 in pairs(arg_9_0._playingEffectDict) do
-		if iter_9_1.path == var_9_0 then
-			return iter_9_1
+	for iter_10_0, iter_10_1 in pairs(arg_10_0._playingEffectDict) do
+		if iter_10_1.path == var_10_0 then
+			return iter_10_1
 		end
 	end
 end
 
-function var_0_0._releaseEffectByTime(arg_10_0, arg_10_1, arg_10_2)
-	arg_10_0._release_by_time[arg_10_1.uniqueId] = arg_10_1
+function var_0_0._releaseEffectByTime(arg_11_0, arg_11_1, arg_11_2)
+	arg_11_0._release_by_time[arg_11_1.uniqueId] = arg_11_1
 
-	local var_10_0 = arg_10_0.entity.id
+	local var_11_0 = arg_11_0.entity.id
 
 	TaskDispatcher.runDelay(function()
-		arg_10_0._release_by_time[arg_10_1.uniqueId] = nil
+		arg_11_0._release_by_time[arg_11_1.uniqueId] = nil
 
-		FightRenderOrderMgr.instance:onRemoveEffectWrap(var_10_0, arg_10_1)
-		arg_10_0:removeEffect(arg_10_1)
-	end, arg_10_0, arg_10_2)
+		FightRenderOrderMgr.instance:onRemoveEffectWrap(var_11_0, arg_11_1)
+		arg_11_0:removeEffect(arg_11_1)
+	end, arg_11_0, arg_11_2)
 end
 
-function var_0_0._onEffectLoaded(arg_12_0, arg_12_1, arg_12_2)
-	if not arg_12_2 then
+function var_0_0._onEffectLoaded(arg_13_0, arg_13_1, arg_13_2)
+	if not arg_13_2 then
 		return
 	end
 
-	local var_12_0 = FightHelper.getEffectLabel(arg_12_1.effectGO, 0)
-
-	if var_12_0 and #var_12_0 >= 1 then
-		local var_12_1 = arg_12_0.entity:getMO()
-
-		if var_12_1 then
-			local var_12_2 = FightConfig.instance:getSkinCO(var_12_1.skin)
-
-			if var_12_2 and var_12_2.flipX and var_12_2.flipX == 1 then
-				transformhelper.setLocalScale(arg_12_1.containerTr, -1, 1, 1)
-			end
-		end
-	end
-
-	arg_12_0:refreshEffectLabel1(arg_12_1)
-	FightController.instance:dispatchEvent(FightEvent.EntityEffectLoaded, arg_12_0.entity.id, arg_12_1)
-end
-
-function var_0_0.refreshEffectLabel1(arg_13_0, arg_13_1)
-	local var_13_0 = FightHelper.getEffectLabel(arg_13_1.effectGO, 1)
+	local var_13_0 = FightHelper.getEffectLabel(arg_13_1.effectGO, 0)
 
 	if var_13_0 and #var_13_0 >= 1 then
 		local var_13_1 = arg_13_0.entity:getMO()
 
 		if var_13_1 then
-			for iter_13_0, iter_13_1 in ipairs(var_13_0) do
-				local var_13_2, var_13_3, var_13_4, var_13_5 = FightHelper.getEntityStandPos(var_13_1)
+			local var_13_2 = FightConfig.instance:getSkinCO(var_13_1.skin)
 
-				iter_13_1.standPosX = var_13_2
-				iter_13_1.label = 1
+			if var_13_2 and var_13_2.flipX and var_13_2.flipX == 1 then
+				transformhelper.setLocalScale(arg_13_1.containerTr, -1, 1, 1)
+			end
+		end
+	end
 
-				if arg_13_0._followCameraRotation then
-					arg_13_0._followCameraRotation[arg_13_1.uniqueId] = true
+	arg_13_0:refreshEffectLabel1(arg_13_1)
+	FightController.instance:dispatchEvent(FightEvent.EntityEffectLoaded, arg_13_0.entity.id, arg_13_1)
+end
+
+function var_0_0.refreshEffectLabel1(arg_14_0, arg_14_1)
+	local var_14_0 = FightHelper.getEffectLabel(arg_14_1.effectGO, 1)
+
+	if var_14_0 and #var_14_0 >= 1 then
+		local var_14_1 = arg_14_0.entity:getMO()
+
+		if var_14_1 then
+			for iter_14_0, iter_14_1 in ipairs(var_14_0) do
+				local var_14_2, var_14_3, var_14_4, var_14_5 = FightHelper.getEntityStandPos(var_14_1)
+
+				iter_14_1.standPosX = var_14_2
+				iter_14_1.label = 1
+
+				if arg_14_0._followCameraRotation then
+					arg_14_0._followCameraRotation[arg_14_1.uniqueId] = true
 				end
 			end
 		end
 	end
 end
 
-function var_0_0.refreshAllEffectLabel1(arg_14_0)
-	if arg_14_0._playingEffectDict then
-		for iter_14_0, iter_14_1 in pairs(arg_14_0._playingEffectDict) do
-			if arg_14_0._followCameraRotation and arg_14_0._followCameraRotation[iter_14_1.uniqueId] then
-				arg_14_0:revertFollowCameraEffectLabel1(iter_14_1)
-				arg_14_0:refreshEffectLabel1(iter_14_1)
+function var_0_0.refreshAllEffectLabel1(arg_15_0)
+	if arg_15_0._playingEffectDict then
+		for iter_15_0, iter_15_1 in pairs(arg_15_0._playingEffectDict) do
+			if arg_15_0._followCameraRotation and arg_15_0._followCameraRotation[iter_15_1.uniqueId] then
+				arg_15_0:revertFollowCameraEffectLabel1(iter_15_1)
+				arg_15_0:refreshEffectLabel1(iter_15_1)
 			end
 		end
 	end
 end
 
-function var_0_0.revertFollowCameraEffectLabel1(arg_15_0, arg_15_1)
-	local var_15_0 = FightHelper.getEffectLabel(arg_15_1.effectGO, -1)
+function var_0_0.revertFollowCameraEffectLabel1(arg_16_0, arg_16_1)
+	local var_16_0 = FightHelper.getEffectLabel(arg_16_1.effectGO, -1)
 
-	if var_15_0 and #var_15_0 >= 1 then
-		for iter_15_0, iter_15_1 in ipairs(var_15_0) do
-			iter_15_1.label = 1
+	if var_16_0 and #var_16_0 >= 1 then
+		for iter_16_0, iter_16_1 in ipairs(var_16_0) do
+			iter_16_1.label = 1
 		end
 	end
 end
 
-function var_0_0.removeEffect(arg_16_0, arg_16_1)
-	if arg_16_0._release_by_time[arg_16_1.uniqueId] then
+function var_0_0.removeEffect(arg_17_0, arg_17_1)
+	if arg_17_0._release_by_time[arg_17_1.uniqueId] then
 		return
 	end
 
-	if arg_16_0._followCameraRotation then
-		arg_16_0:revertFollowCameraEffectLabel1(arg_16_1)
+	if arg_17_0._followCameraRotation then
+		arg_17_0:revertFollowCameraEffectLabel1(arg_17_1)
 
-		arg_16_0._followCameraRotation[arg_16_1.uniqueId] = nil
+		arg_17_0._followCameraRotation[arg_17_1.uniqueId] = nil
 	end
 
-	if arg_16_0._playingEffectDict and arg_16_0._playingEffectDict[arg_16_1.uniqueId] then
-		arg_16_0._playingEffectDict[arg_16_1.uniqueId] = nil
+	if arg_17_0._playingEffectDict and arg_17_0._playingEffectDict[arg_17_1.uniqueId] then
+		arg_17_0._playingEffectDict[arg_17_1.uniqueId] = nil
 	end
 
-	FightEffectPool.returnEffectToPoolContainer(arg_16_1)
-	FightEffectPool.returnEffect(arg_16_1)
+	FightEffectPool.returnEffectToPoolContainer(arg_17_1)
+	FightEffectPool.returnEffect(arg_17_1)
 
-	if arg_16_0.cache_effect then
-		arg_16_0.cache_effect[arg_16_1.uniqueId] = nil
+	if arg_17_0.cache_effect then
+		arg_17_0.cache_effect[arg_17_1.uniqueId] = nil
 	end
 
-	if arg_16_0._hangEffects then
-		arg_16_0._hangEffects[arg_16_1.uniqueId] = nil
+	if arg_17_0._hangEffects then
+		arg_17_0._hangEffects[arg_17_1.uniqueId] = nil
 	end
 
-	arg_16_0:_checkDisableEffectLabel(arg_16_1)
+	arg_17_0:_checkDisableEffectLabel(arg_17_1)
 end
 
-function var_0_0._checkDisableEffectLabel(arg_17_0, arg_17_1)
-	if arg_17_0._effectWrap4EffectLabel == arg_17_1 then
-		arg_17_0._effectWrap4EffectLabel = nil
+function var_0_0._checkDisableEffectLabel(arg_18_0, arg_18_1)
+	if arg_18_0._effectWrap4EffectLabel == arg_18_1 then
+		arg_18_0._effectWrap4EffectLabel = nil
 
-		local var_17_0 = arg_17_0.entity.spine and arg_17_0.entity.spine:getPPEffectMask()
+		local var_18_0 = arg_18_0.entity.spine and arg_18_0.entity.spine:getPPEffectMask()
 
-		if var_17_0 then
-			var_17_0.partMat = nil
+		if var_18_0 then
+			var_18_0.partMat = nil
 
-			var_17_0:SetPassEnable(arg_17_0.entity.spineRenderer:getReplaceMat(), "useMulShadow", false)
+			var_18_0:SetPassEnable(arg_18_0.entity.spineRenderer:getReplaceMat(), "useMulShadow", false)
 		end
 	end
 end
 
-function var_0_0.removeEffectByEffectName(arg_18_0, arg_18_1)
-	arg_18_1 = FightHelper.getEffectUrlWithLod(arg_18_1)
+function var_0_0.removeEffectByEffectName(arg_19_0, arg_19_1)
+	arg_19_1 = FightHelper.getEffectUrlWithLod(arg_19_1)
 
-	for iter_18_0, iter_18_1 in pairs(arg_18_0._playingEffectDict) do
-		if iter_18_1.path == arg_18_1 then
-			arg_18_0:removeEffect(iter_18_1)
+	for iter_19_0, iter_19_1 in pairs(arg_19_0._playingEffectDict) do
+		if iter_19_1.path == arg_19_1 then
+			arg_19_0:removeEffect(iter_19_1)
 
 			return
 		end
 	end
 end
 
-function var_0_0.addServerRelease(arg_19_0, arg_19_1, arg_19_2)
-	arg_19_0._serverRelease[arg_19_1] = arg_19_0._serverRelease[arg_19_1] or {}
+function var_0_0.addServerRelease(arg_20_0, arg_20_1, arg_20_2)
+	arg_20_0._serverRelease[arg_20_1] = arg_20_0._serverRelease[arg_20_1] or {}
 
-	table.insert(arg_19_0._serverRelease[arg_19_1], arg_19_2)
+	table.insert(arg_20_0._serverRelease[arg_20_1], arg_20_2)
 end
 
-function var_0_0._onInvokeFightWorkEffectType(arg_20_0, arg_20_1)
-	if arg_20_0._serverRelease[arg_20_1] then
-		for iter_20_0, iter_20_1 in ipairs(arg_20_0._serverRelease[arg_20_1]) do
-			arg_20_0:removeEffect(iter_20_1)
-			FightRenderOrderMgr.instance:onRemoveEffectWrap(arg_20_0.entity.id, iter_20_1)
+function var_0_0._onInvokeFightWorkEffectType(arg_21_0, arg_21_1)
+	if arg_21_0._serverRelease[arg_21_1] then
+		for iter_21_0, iter_21_1 in ipairs(arg_21_0._serverRelease[arg_21_1]) do
+			arg_21_0:removeEffect(iter_21_1)
+			FightRenderOrderMgr.instance:onRemoveEffectWrap(arg_21_0.entity.id, iter_21_1)
 		end
 
-		arg_20_0._serverRelease[arg_20_1] = nil
+		arg_21_0._serverRelease[arg_21_1] = nil
 	end
 end
 
-function var_0_0.addTokenRelease(arg_21_0, arg_21_1, arg_21_2)
-	arg_21_0._tokenRelease[arg_21_1] = arg_21_0._tokenRelease[arg_21_1] or {}
+function var_0_0.addTokenRelease(arg_22_0, arg_22_1, arg_22_2)
+	arg_22_0._tokenRelease[arg_22_1] = arg_22_0._tokenRelease[arg_22_1] or {}
 
-	table.insert(arg_21_0._tokenRelease[arg_21_1], arg_21_2)
+	table.insert(arg_22_0._tokenRelease[arg_22_1], arg_22_2)
 end
 
-function var_0_0._onInvokeTokenRelease(arg_22_0, arg_22_1)
-	if arg_22_0._tokenRelease[arg_22_1] then
-		for iter_22_0, iter_22_1 in ipairs(arg_22_0._tokenRelease[arg_22_1]) do
-			arg_22_0:removeEffect(iter_22_1)
-			FightRenderOrderMgr.instance:onRemoveEffectWrap(arg_22_0.entity.id, iter_22_1)
+function var_0_0._onInvokeTokenRelease(arg_23_0, arg_23_1)
+	if arg_23_0._tokenRelease[arg_23_1] then
+		for iter_23_0, iter_23_1 in ipairs(arg_23_0._tokenRelease[arg_23_1]) do
+			arg_23_0:removeEffect(iter_23_1)
+			FightRenderOrderMgr.instance:onRemoveEffectWrap(arg_23_0.entity.id, iter_23_1)
 		end
 
-		arg_22_0._tokenRelease[arg_22_1] = nil
+		arg_23_0._tokenRelease[arg_23_1] = nil
 	end
 end
 
-function var_0_0.addRoundRelease(arg_23_0, arg_23_1, arg_23_2)
-	local var_23_0 = arg_23_1 + FightModel.instance:getCurRoundId()
+function var_0_0.addRoundRelease(arg_24_0, arg_24_1, arg_24_2)
+	local var_24_0 = arg_24_1 + FightModel.instance:getCurRoundId()
 
-	arg_23_0._roundRelease[var_23_0] = arg_23_0._roundRelease[var_23_0] or {}
+	arg_24_0._roundRelease[var_24_0] = arg_24_0._roundRelease[var_24_0] or {}
 
-	table.insert(arg_23_0._roundRelease[var_23_0], arg_23_2)
+	table.insert(arg_24_0._roundRelease[var_24_0], arg_24_2)
 end
 
-function var_0_0._onChangeRound(arg_24_0)
-	local var_24_0 = FightModel.instance:getCurRoundId()
+function var_0_0._onChangeRound(arg_25_0)
+	local var_25_0 = FightModel.instance:getCurRoundId()
 
-	if arg_24_0._roundRelease[var_24_0] then
-		for iter_24_0, iter_24_1 in ipairs(arg_24_0._roundRelease[var_24_0]) do
-			arg_24_0:removeEffect(iter_24_1)
-			FightRenderOrderMgr.instance:onRemoveEffectWrap(arg_24_0.entity.id, iter_24_1)
+	if arg_25_0._roundRelease[var_25_0] then
+		for iter_25_0, iter_25_1 in ipairs(arg_25_0._roundRelease[var_25_0]) do
+			arg_25_0:removeEffect(iter_25_1)
+			FightRenderOrderMgr.instance:onRemoveEffectWrap(arg_25_0.entity.id, iter_25_1)
 		end
 
-		arg_24_0._roundRelease[var_24_0] = nil
+		arg_25_0._roundRelease[var_25_0] = nil
 	end
 end
 
-function var_0_0._onSkillPlayStart(arg_25_0, arg_25_1, arg_25_2, arg_25_3)
-	local var_25_0 = arg_25_1:getMO()
-
-	if var_25_0 and var_25_0:isUniqueSkill(arg_25_2) and arg_25_1.id ~= arg_25_0.entity.id then
-		for iter_25_0, iter_25_1 in pairs(arg_25_0._tokenRelease) do
-			for iter_25_2, iter_25_3 in ipairs(iter_25_1) do
-				iter_25_3:setActive(false, "FightEffectTokenRelease" .. arg_25_3.stepUid)
-			end
-		end
-	end
-end
-
-function var_0_0._onSkillPlayFinish(arg_26_0, arg_26_1, arg_26_2, arg_26_3)
+function var_0_0._onSkillPlayStart(arg_26_0, arg_26_1, arg_26_2, arg_26_3)
 	local var_26_0 = arg_26_1:getMO()
 
 	if var_26_0 and var_26_0:isUniqueSkill(arg_26_2) and arg_26_1.id ~= arg_26_0.entity.id then
 		for iter_26_0, iter_26_1 in pairs(arg_26_0._tokenRelease) do
 			for iter_26_2, iter_26_3 in ipairs(iter_26_1) do
-				iter_26_3:setActive(true, "FightEffectTokenRelease" .. arg_26_3.stepUid)
+				iter_26_3:setActive(false, "FightEffectTokenRelease" .. arg_26_3.stepUid)
 			end
 		end
 	end
 end
 
-function var_0_0._initSpecialEffectClass(arg_27_0)
-	if isTypeOf(arg_27_0.entity, FightEntitySub) then
+function var_0_0._onSkillPlayFinish(arg_27_0, arg_27_1, arg_27_2, arg_27_3)
+	local var_27_0 = arg_27_1:getMO()
+
+	if var_27_0 and var_27_0:isUniqueSkill(arg_27_2) and arg_27_1.id ~= arg_27_0.entity.id then
+		for iter_27_0, iter_27_1 in pairs(arg_27_0._tokenRelease) do
+			for iter_27_2, iter_27_3 in ipairs(iter_27_1) do
+				iter_27_3:setActive(true, "FightEffectTokenRelease" .. arg_27_3.stepUid)
+			end
+		end
+	end
+end
+
+function var_0_0._initSpecialEffectClass(arg_28_0)
+	if isTypeOf(arg_28_0.entity, FightEntitySub) then
 		return
 	end
 
-	if arg_27_0.entity:getMO() then
-		if arg_27_0.entity:isEnemySide() then
-			local var_27_0 = lua_fight_monster_use_character_effect.configDict[arg_27_0.entity:getMO().modelId]
+	if arg_28_0.entity:getMO() then
+		if arg_28_0.entity:isEnemySide() then
+			local var_28_0 = lua_fight_monster_use_character_effect.configDict[arg_28_0.entity:getMO().modelId]
 
-			if var_27_0 then
-				local var_27_1 = "FightEntitySpecialEffect" .. var_27_0.characterId
+			if var_28_0 then
+				local var_28_1 = "FightEntitySpecialEffect" .. var_28_0.characterId
 
-				if _G[var_27_1] then
-					arg_27_0:_registSpecialClass(_G[var_27_1])
+				if _G[var_28_1] then
+					arg_28_0:_registSpecialClass(_G[var_28_1])
 				end
 			end
 		end
 
-		local var_27_2 = "FightEntitySpecialEffect" .. arg_27_0.entity:getMO().modelId
+		local var_28_2 = "FightEntitySpecialEffect" .. arg_28_0.entity:getMO().modelId
 
-		if _G[var_27_2] then
-			arg_27_0:_registSpecialClass(_G[var_27_2])
+		if _G[var_28_2] then
+			arg_28_0:_registSpecialClass(_G[var_28_2])
 		end
 
-		arg_27_0:_registSpecialClass(FightEntityCustomSpecialEffect)
+		arg_28_0:_registSpecialClass(FightEntityCustomSpecialEffect)
 
 		if BossRushController.instance:isInBossRushFight() then
-			local var_27_3 = FightModel.instance:getCurMonsterGroupId()
-			local var_27_4 = var_27_3 and lua_monster_group.configDict[var_27_3]
-			local var_27_5 = var_27_4 and var_27_4.bossId
+			local var_28_3 = FightModel.instance:getCurMonsterGroupId()
+			local var_28_4 = var_28_3 and lua_monster_group.configDict[var_28_3]
+			local var_28_5 = var_28_4 and var_28_4.bossId
 
-			if var_27_5 and FightHelper.isBossId(var_27_5, arg_27_0.entity:getMO().modelId) then
-				arg_27_0:_registSpecialClass(FightEntitySpecialEffectBossRush)
+			if var_28_5 and FightHelper.isBossId(var_28_5, arg_28_0.entity:getMO().modelId) then
+				arg_28_0:_registSpecialClass(FightEntitySpecialEffectBossRush)
 			end
 		end
 
-		arg_27_0:_registSkinEffect()
+		arg_28_0:_registSkinEffect()
 	end
 
-	local var_27_6 = "FightSceneSpecialEffect" .. arg_27_0.entity.id
+	local var_28_6 = "FightSceneSpecialEffect" .. arg_28_0.entity.id
 
-	if _G[var_27_6] then
-		arg_27_0:_registSpecialClass(_G[var_27_6])
+	if _G[var_28_6] then
+		arg_28_0:_registSpecialClass(_G[var_28_6])
 	end
 end
 
-function var_0_0._registSpecialClass(arg_28_0, arg_28_1)
-	table.insert(arg_28_0._specialEffectClass, arg_28_1.New(arg_28_0.entity))
+function var_0_0._registSpecialClass(arg_29_0, arg_29_1)
+	table.insert(arg_29_0._specialEffectClass, arg_29_1.New(arg_29_0.entity))
 end
 
-function var_0_0.showSpecialEffects(arg_29_0)
-	if arg_29_0._specialEffectClass then
-		for iter_29_0, iter_29_1 in ipairs(arg_29_0._specialEffectClass) do
-			if iter_29_1.showSpecialEffects then
-				iter_29_1:showSpecialEffects()
+function var_0_0.showSpecialEffects(arg_30_0)
+	if arg_30_0._specialEffectClass then
+		for iter_30_0, iter_30_1 in ipairs(arg_30_0._specialEffectClass) do
+			if iter_30_1.showSpecialEffects then
+				iter_30_1:showSpecialEffects()
 			end
 
-			if iter_29_1.setEffectActive then
-				iter_29_1:setEffectActive(true)
+			if iter_30_1.setEffectActive then
+				iter_30_1:setEffectActive(true)
 			end
 		end
 	end
 end
 
-function var_0_0.hideSpecialEffects(arg_30_0)
-	for iter_30_0, iter_30_1 in ipairs(arg_30_0._specialEffectClass) do
-		if iter_30_1.hideSpecialEffects then
-			iter_30_1:hideSpecialEffects()
-		end
-
-		if iter_30_1.setEffectActive then
-			iter_30_1:setEffectActive(false)
-		end
-	end
-end
-
-function var_0_0.beforeDestroy(arg_31_0)
+function var_0_0.hideSpecialEffects(arg_31_0)
 	for iter_31_0, iter_31_1 in ipairs(arg_31_0._specialEffectClass) do
-		if iter_31_1.disposeSelf then
-			iter_31_1:disposeSelf()
+		if iter_31_1.hideSpecialEffects then
+			iter_31_1:hideSpecialEffects()
 		end
-	end
 
-	arg_31_0._specialEffectClass = nil
-
-	FightController.instance:unregisterCallback(FightEvent.OnSpineLoaded, arg_31_0._onSpineLoaded, arg_31_0)
-	arg_31_0:_dealTimeEffect()
-
-	for iter_31_2, iter_31_3 in pairs(arg_31_0._playingEffectDict) do
-		arg_31_0:removeEffect(iter_31_3)
+		if iter_31_1.setEffectActive then
+			iter_31_1:setEffectActive(false)
+		end
 	end
 end
 
-function var_0_0._dealTimeEffect(arg_32_0)
-	local var_32_0 = arg_32_0._release_by_time
-	local var_32_1 = FightEffectPool.getPoolContainerGO()
-	local var_32_2 = var_32_1 and var_32_1.transform
+function var_0_0.beforeDestroy(arg_32_0)
+	for iter_32_0, iter_32_1 in ipairs(arg_32_0._specialEffectClass) do
+		if iter_32_1.disposeSelf then
+			iter_32_1:disposeSelf()
+		end
+	end
 
-	if var_32_2 then
-		for iter_32_0, iter_32_1 in pairs(var_32_0) do
-			if not gohelper.isNil(iter_32_1.containerGO) then
-				iter_32_1.containerGO.transform:SetParent(var_32_2, true)
+	arg_32_0._specialEffectClass = nil
+
+	FightController.instance:unregisterCallback(FightEvent.OnSpineLoaded, arg_32_0._onSpineLoaded, arg_32_0)
+	arg_32_0:_dealTimeEffect()
+
+	for iter_32_2, iter_32_3 in pairs(arg_32_0._playingEffectDict) do
+		arg_32_0:removeEffect(iter_32_3)
+	end
+end
+
+function var_0_0._dealTimeEffect(arg_33_0)
+	local var_33_0 = arg_33_0._release_by_time
+	local var_33_1 = FightEffectPool.getPoolContainerGO()
+	local var_33_2 = var_33_1 and var_33_1.transform
+
+	if var_33_2 then
+		for iter_33_0, iter_33_1 in pairs(var_33_0) do
+			if not gohelper.isNil(iter_33_1.containerGO) then
+				iter_33_1.containerGO.transform:SetParent(var_33_2, true)
 			end
 		end
 	end
 end
 
-function var_0_0.getHangEffect(arg_33_0)
-	return arg_33_0._hangEffects
+function var_0_0.getHangEffect(arg_34_0)
+	return arg_34_0._hangEffects
 end
 
-function var_0_0.onDestroy(arg_34_0)
-	arg_34_0._playingEffectDict = nil
-	arg_34_0.cache_effect = nil
-	arg_34_0.destroyed = true
+function var_0_0.onDestroy(arg_35_0)
+	arg_35_0._playingEffectDict = nil
+	arg_35_0.cache_effect = nil
+	arg_35_0.destroyed = true
 end
 
-function var_0_0.isDestroyed(arg_35_0)
-	return arg_35_0.destroyed
+function var_0_0.isDestroyed(arg_36_0)
+	return arg_36_0.destroyed
 end
 
 local var_0_1 = {
@@ -463,12 +467,12 @@ local var_0_1 = {
 	[307302] = 307301
 }
 
-function var_0_0._registSkinEffect(arg_36_0)
-	local var_36_0 = var_0_1[arg_36_0.entity:getMO().skin] or arg_36_0.entity:getMO().skin
-	local var_36_1 = _G["FightEntitySpecialSkinEffect" .. var_36_0]
+function var_0_0._registSkinEffect(arg_37_0)
+	local var_37_0 = var_0_1[arg_37_0.entity:getMO().skin] or arg_37_0.entity:getMO().skin
+	local var_37_1 = _G["FightEntitySpecialSkinEffect" .. var_37_0]
 
-	if var_36_1 then
-		arg_36_0:_registSpecialClass(var_36_1)
+	if var_37_1 then
+		arg_37_0:_registSpecialClass(var_37_1)
 	end
 end
 

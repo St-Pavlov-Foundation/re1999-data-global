@@ -39,6 +39,7 @@ var_0_0.UnlockFunc = {
 	FightFocus = 26,
 	FairyLand = 90102,
 	Setting = 8,
+	DiceHero = 260101,
 	RoomTrade = 220106,
 	RoomAccelerate = 40,
 	FastDungeon = 32,

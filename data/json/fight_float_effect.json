@@ -9,8 +9,8 @@
   {
     "id": 2,
     "prefabPath": "fightfloat_skin1",
-    "startTime": "2025-4-24 5:00:00",
-    "endTime": "2025-5-29 5:00:00",
-    "priority": 1
+    "startTime": "2025-1-1 5:00:00",
+    "endTime": "2025-1-1 5:00:00",
+    "priority": 0
   }
 ]

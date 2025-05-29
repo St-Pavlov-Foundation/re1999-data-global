@@ -82,5 +82,21 @@
     "maxWeekWalk": 0,
     "roomTheme": [],
     "heroStoryIds": []
+  },
+  {
+    "id": 3,
+    "character": [
+      3104,
+      3102
+    ],
+    "chapter": [],
+    "story": [],
+    "seasonIds": [],
+    "guide": [],
+    "video": [],
+    "path": [],
+    "maxWeekWalk": 0,
+    "roomTheme": [],
+    "heroStoryIds": []
   }
 ]

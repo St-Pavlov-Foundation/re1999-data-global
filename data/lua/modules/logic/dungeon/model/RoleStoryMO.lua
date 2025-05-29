@@ -116,6 +116,8 @@ end
 
 function var_0_0.refreshOrder(arg_10_0)
 	arg_10_0.getRewardOrder = arg_10_0.getReward and 0 or 1
+	arg_10_0.getUnlockOrder = arg_10_0.hasUnlock and 0 or 1
+	arg_10_0.hasRewardUnget = arg_10_0:canGetReward() and 1 or 0
 end
 
 function var_0_0.caleMaxProgress(arg_11_0)

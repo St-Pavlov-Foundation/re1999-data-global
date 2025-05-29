@@ -147,6 +147,10 @@ function var_0_0._onEntityDead(arg_12_0, arg_12_1)
 
 	local var_12_0 = FightDataHelper.entityMgr:getById(arg_12_1)
 
+	if not var_12_0 then
+		return
+	end
+
 	if var_12_0.side == FightEnum.EntitySide.MySide then
 		arg_12_0._mySideDead = true
 	elseif var_12_0.side == FightEnum.EntitySide.EnemySide then

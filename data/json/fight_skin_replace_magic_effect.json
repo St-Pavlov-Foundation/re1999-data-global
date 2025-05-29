@@ -83,5 +83,56 @@
       0,
       -1
     ]
+  },
+  {
+    "id": 10006,
+    "skinId": 310203,
+    "enterEffect": "",
+    "enterTime": 0,
+    "enterAudio": 0,
+    "loopEffect": "buff/v2a6_shuzhen_lopera1",
+    "closeEffect": "",
+    "closeTime": 2100,
+    "closeAniName": "close",
+    "closeAudio": 0,
+    "posArr": [
+      5.5,
+      0,
+      -0.75
+    ]
+  },
+  {
+    "id": 10007,
+    "skinId": 310203,
+    "enterEffect": "",
+    "enterTime": 0,
+    "enterAudio": 0,
+    "loopEffect": "buff/v2a6_shuzhen_lopera1",
+    "closeEffect": "",
+    "closeTime": 2100,
+    "closeAniName": "close",
+    "closeAudio": 0,
+    "posArr": [
+      5.5,
+      0,
+      -0.75
+    ]
+  },
+  {
+    "id": 10008,
+    "skinId": 310203,
+    "enterEffect": "",
+    "enterTime": 0,
+    "enterAudio": 0,
+    "loopEffect": "buff/v2a6_shuzhen_lopera1",
+    "closeEffect": "",
+    "closeTime": 2100,
+    "closeAniName": "close",
+    "closeAudio": 0,
+    "posArr": [
+      5.5,
+      0,
+      -0.75
+    ]
   }
 ]

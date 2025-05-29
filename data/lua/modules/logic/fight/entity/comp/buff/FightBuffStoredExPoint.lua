@@ -43,6 +43,12 @@ function var_0_0.onBuffEnd(arg_3_0)
 
 		var_3_0:setStoredExPoint(0)
 		FightController.instance:dispatchEvent(FightEvent.OnStoreExPointChange, var_3_0.id, var_3_1)
+
+		local var_3_2 = FightLocalDataMgr.instance.entityMgr:getById(arg_3_0.entity.id)
+
+		if var_3_2 then
+			var_3_2:setStoredExPoint(0)
+		end
 	end
 end
 

@@ -1,0 +1,30 @@
+[
+  {
+    "activityId": 12605,
+    "difficult": 1,
+    "reverseTime": 0,
+    "pairRound": 0,
+    "pairRate": 0
+  },
+  {
+    "activityId": 12605,
+    "difficult": 2,
+    "reverseTime": 2,
+    "pairRound": 5,
+    "pairRate": 0
+  },
+  {
+    "activityId": 12605,
+    "difficult": 3,
+    "reverseTime": 1,
+    "pairRound": 4,
+    "pairRate": 0
+  },
+  {
+    "activityId": 12605,
+    "difficult": 4,
+    "reverseTime": 1,
+    "pairRound": 3,
+    "pairRate": 300
+  }
+]

@@ -42,15 +42,15 @@ function var_0_0._editableInitView(arg_4_0)
 end
 
 function var_0_0._onBtnStartClick(arg_5_0)
-	if not arg_5_0.episodeConfig then
+	if not arg_5_0.selectLayerId then
 		return
 	end
 
 	local var_5_0 = {
 		towerType = arg_5_0.towerType,
 		towerId = arg_5_0.towerId,
-		layerId = arg_5_0.episodeConfig.layerId,
-		episodeId = arg_5_0.episodeConfig.episodeId
+		layerId = arg_5_0.selectLayerId,
+		episodeId = arg_5_0.episodeMo:getEpisodeConfig(arg_5_0.towerId, arg_5_0.selectLayerId).episodeId
 	}
 
 	TowerController.instance:enterFight(var_5_0)

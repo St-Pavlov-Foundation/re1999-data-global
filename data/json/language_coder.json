@@ -5748,6 +5748,138 @@
     "lang": "language_10068453"
   },
   {
+    "id": "dicehero_behavior_atk",
+    "lang": "language_10071589"
+  },
+  {
+    "id": "dicehero_behavior_def",
+    "lang": "language_10071590"
+  },
+  {
+    "id": "dicehero_behavior_buff",
+    "lang": "language_10071591"
+  },
+  {
+    "id": "dicehero_behavior_debuff",
+    "lang": "language_10071592"
+  },
+  {
+    "id": "dicehero_behavior_def_friend",
+    "lang": "language_10071593"
+  },
+  {
+    "id": "dicehero_behavior_def_all",
+    "lang": "language_10071594"
+  },
+  {
+    "id": "dicehero_behavior_buff_all",
+    "lang": "language_10071595"
+  },
+  {
+    "id": "dicehero_behavior_atk_title",
+    "lang": "language_10071596"
+  },
+  {
+    "id": "dicehero_behavior_def_title",
+    "lang": "language_10071597"
+  },
+  {
+    "id": "dicehero_behavior_buff_title",
+    "lang": "language_10071598"
+  },
+  {
+    "id": "dicehero_behavior_debuff_title",
+    "lang": "language_10071599"
+  },
+  {
+    "id": "dicehero_buff",
+    "lang": "language_10017338"
+  },
+  {
+    "id": "dicehero_debuff",
+    "lang": "language_10017339"
+  },
+  {
+    "id": "dicehero_card_nocount",
+    "lang": "language_10071600"
+  },
+  {
+    "id": "dicehero_card_banskill",
+    "lang": "language_10055650"
+  },
+  {
+    "id": "dicehero_card_nodice",
+    "lang": "language_10071601"
+  },
+  {
+    "id": "dicehero_buff_0",
+    "lang": "language_90001142"
+  },
+  {
+    "id": "dicehero_buff_1",
+    "lang": "language_90001142"
+  },
+  {
+    "id": "dicehero_buff_2",
+    "lang": "language_90001142"
+  },
+  {
+    "id": "dicehero_buff_3",
+    "lang": "language_10071602"
+  },
+  {
+    "id": "dicehero_buff_4",
+    "lang": "language_10071603"
+  },
+  {
+    "id": "dicehero_target",
+    "lang": "language_10071604"
+  },
+  {
+    "id": "rougemainview_extrapointtips",
+    "lang": "language_10071605"
+  },
+  {
+    "id": "rougebosscollectionselectview_refresh",
+    "lang": "language_10071606"
+  },
+  {
+    "id": "xugouji_round_target",
+    "lang": "language_10071607"
+  },
+  {
+    "id": "ShortenAct_TaskItem_remain_open",
+    "lang": "language_10062113"
+  },
+  {
+    "id": "rougebosscollectionselectview_txt_title",
+    "lang": "language_10071608"
+  },
+  {
+    "id": "rougebosscollectionselectview_txt_tips",
+    "lang": "language_10071609"
+  },
+  {
+    "id": "weekwalk_2resulttxt1",
+    "lang": "language_10071610"
+  },
+  {
+    "id": "mainview_rougeactextradisplay",
+    "lang": "language_10071611"
+  },
+  {
+    "id": "activity188_mopup_layer",
+    "lang": "language_90001142"
+  },
+  {
+    "id": "DungeonWeekWalkView_txtcurprogress_battleName",
+    "lang": "language_10072605"
+  },
+  {
+    "id": "DungeonWeekWalkView_txtscenetype_typeName_name",
+    "lang": "language_10072606"
+  },
+  {
     "id": "AutoChessLeaderCard_txtSkillDesc",
     "lang": "language_10068454"
   },
@@ -5822,10 +5954,6 @@
   {
     "id": "SkillDescComp_buildSkillNameLinkTag_overseas",
     "lang": "language_10053330"
-  },
-  {
-    "id": "ShortenAct_TaskItem_remain_open",
-    "lang": "language_10062113"
   },
   {
     "id": "EliminateChessTipView_1",

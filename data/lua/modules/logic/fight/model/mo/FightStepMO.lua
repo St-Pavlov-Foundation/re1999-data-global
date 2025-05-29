@@ -29,6 +29,7 @@ function var_0_0.init(arg_2_0, arg_2_1, arg_2_2)
 
 	arg_2_0.cardIndex = arg_2_1.cardIndex
 	arg_2_0.supportHeroId = arg_2_1.supportHeroId
+	arg_2_0.fakeTimeline = arg_2_1.fakeTimeline
 end
 
 function var_0_0._buildActEffect(arg_3_0, arg_3_1, arg_3_2)
@@ -48,7 +49,9 @@ function var_0_0._buildActEffect(arg_3_0, arg_3_1, arg_3_2)
 		local var_3_3 = false
 
 		if iter_3_1.effectType == FightEnum.EffectType.FIGHTSTEP then
-			if FightHelper.isTimelineStep(iter_3_1.fightStep) then
+			local var_3_4 = iter_3_1.fightStep
+
+			if var_3_4.fakeTimeline or FightHelper.isTimelineStep(var_3_4) then
 				var_3_3 = true
 			end
 		elseif iter_3_1.effectType == FightEnum.EffectType.ATTR then
@@ -60,10 +63,10 @@ function var_0_0._buildActEffect(arg_3_0, arg_3_1, arg_3_2)
 		end
 
 		if not var_3_3 then
-			local var_3_4 = FightActEffectMO.New()
+			local var_3_5 = FightActEffectMO.New()
 
-			var_3_4:init(iter_3_1, var_3_2)
-			table.insert(var_3_0, var_3_4)
+			var_3_5:init(iter_3_1, var_3_2)
+			table.insert(var_3_0, var_3_5)
 		end
 	end
 

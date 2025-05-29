@@ -12,10 +12,10 @@ function var_0_0.getSubPlaceholderLuaLang(arg_1_0, arg_1_1)
 	if arg_1_1 and #arg_1_1 > 0 then
 		arg_1_0 = var_0_1(arg_1_0, arg_1_1)
 
-		if var_0_0.instance:checkHasCache(arg_1_0) == false then
+		if not var_0_0.instance:checkHasCache(arg_1_0) then
 			var_0_0.instance._inUseDic[arg_1_0] = {}
 
-			for iter_1_0, iter_1_1 in pairs(var_1_0) do
+			for iter_1_0, iter_1_1 in pairs(var_1_0 or {}) do
 				var_0_0.instance._inUseDic[arg_1_0][iter_1_0] = var_0_1(iter_1_1, arg_1_1)
 			end
 

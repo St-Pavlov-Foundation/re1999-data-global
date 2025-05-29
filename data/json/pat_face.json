@@ -298,7 +298,7 @@
     "patFaceActivityId": 0,
     "patFaceViewName": "BPFaceView",
     "patFaceStoryId": 0,
-    "patFaceOrder": 7
+    "patFaceOrder": 80000
   },
   {
     "id": 20504,
@@ -315,6 +315,34 @@
     "patFaceOrder": 2
   },
   {
+    "id": 20600,
+    "patFaceActivityId": 12609,
+    "patFaceViewName": "V2a6_Role_PanelSignView_Part1",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 20600
+  },
+  {
+    "id": 20601,
+    "patFaceActivityId": 12610,
+    "patFaceViewName": "V2a6_Role_PanelSignView_Part2",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 20601
+  },
+  {
+    "id": 20602,
+    "patFaceActivityId": 12681,
+    "patFaceViewName": "ShortenAct_PanelView",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 20602
+  },
+  {
+    "id": 20603,
+    "patFaceActivityId": 12613,
+    "patFaceViewName": "V2a6_WeekwalkHeart_PanelView",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 20603
+  },
+  {
     "id": 20702,
     "patFaceActivityId": 12710,
     "patFaceViewName": "V2a7_Labor_PanelSignView",
@@ -327,13 +355,6 @@
     "patFaceViewName": "V2a7_LinkageActivity_PanelView",
     "patFaceStoryId": 0,
     "patFaceOrder": 21111
-  },
-  {
-    "id": 20602,
-    "patFaceActivityId": 12581,
-    "patFaceViewName": "ShortenAct_PanelView",
-    "patFaceStoryId": 0,
-    "patFaceOrder": 20602
   },
   {
     "id": 20206,

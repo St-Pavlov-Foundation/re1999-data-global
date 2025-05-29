@@ -99,10 +99,14 @@ local var_0_1 = {
 	[ActivityEnum.Activity.V2a4_WarmUp] = ViewName.V2a4_WarmUp,
 	[ActivityEnum.Activity.V2a5_Role_SignView_Part1] = ViewName.V2a5_Role_FullSignView_Part1,
 	[ActivityEnum.Activity.V2a5_Role_SignView_Part2] = ViewName.V2a5_Role_FullSignView_Part2,
+	[ActivityEnum.Activity.V2a5_TurnBack_H5] = ViewName.TurnBackInvitationMainView,
 	[ActivityEnum.Activity.V2a5_DecaLogPresent] = ViewName.V2a5DecalogPresentFullView,
 	[ActivityEnum.Activity.V2a5_DecorateStore] = ViewName.V2a5_DecorateStoreFullView,
 	[ActivityEnum.Activity.V2a5_GoldenMilletPresent] = ViewName.V2a5_GoldenMilletPresentFullView,
-	[ActivityEnum.Activity.V2a5_WarmUp] = ViewName.V2a5_WarmUp
+	[ActivityEnum.Activity.V2a5_WarmUp] = ViewName.V2a5_WarmUp,
+	[ShortenActConfig.instance:getActivityId()] = ViewName.ShortenAct_FullView,
+	[ActivityEnum.Activity.V2a6_WeekwalkHeart] = ViewName.V2a6_WeekwalkHeart_FullView,
+	[ActivityEnum.Activity.V2a6_WarmUp] = ViewName.V2a6_WarmUp
 }
 local var_0_2 = {
 	[ActivityEnum.ActivityTypeID.Act201] = ViewName.TurnBackFullView,
@@ -118,6 +122,8 @@ function var_0_0.onOpen(arg_6_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Activity_open)
 	arg_6_0:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_6_0._refreshView, arg_6_0)
 	arg_6_0:addEventCb(ActivityController.instance, ActivityEvent.SetBannerViewCategoryListInteract, arg_6_0.setCategoryListInteractable, arg_6_0)
+	arg_6_0:_initRole_FullSignView()
+	arg_6_0:_initSpecial_FullSignView()
 	arg_6_0:_initLinkageActivity_FullView()
 
 	arg_6_0._needSetSortInfos = true

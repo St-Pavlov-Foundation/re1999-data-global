@@ -278,6 +278,14 @@ function var_0_0.onUpdateMO(arg_12_0, arg_12_1, arg_12_2)
 			var_12_6 = StoryConfig.instance:replaceStoryMagicText(var_12_6)
 		end
 
+		if GameLanguageMgr.instance:getLanguageTypeStoryIndex() == LanguageEnum.LanguageStoryType.EN then
+			var_12_6 = string.gsub(var_12_6, "<glitch>", "")
+			var_12_6 = string.gsub(var_12_6, "</glitch>", "")
+		else
+			var_12_6 = string.gsub(var_12_6, "<glitch>", "<i><b>")
+			var_12_6 = string.gsub(var_12_6, "</glitch>", "</i></b>")
+		end
+
 		arg_12_0._txtcontent.text = StoryTool.filterSpTag(var_12_6)
 
 		TaskDispatcher.runDelay(function()

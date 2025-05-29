@@ -286,7 +286,8 @@ function var_0_0.getActivityEnterHandleFunc(arg_22_0, arg_22_1)
 			[ActivityEnum.VersionActivityIdDict.Activity2_2] = VersionActivity2_2EnterController.instance,
 			[ActivityEnum.VersionActivityIdDict.Activity2_3] = VersionActivity2_3EnterController.instance,
 			[ActivityEnum.VersionActivityIdDict.Activity2_4] = VersionActivity2_4EnterController.instance,
-			[ActivityEnum.VersionActivityIdDict.Activity2_5] = VersionActivity2_5EnterController.instance
+			[ActivityEnum.VersionActivityIdDict.Activity2_5] = VersionActivity2_5EnterController.instance,
+			[ActivityEnum.VersionActivityIdDict.Activity2_6] = VersionActivity2_6EnterController.instance
 		}
 	end
 

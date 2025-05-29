@@ -104,7 +104,7 @@ function var_0_0._btnclickOnClick(arg_10_0)
 	TurnbackRpc.instance:sendFinishReadTaskRequest(TurnbackEnum.ReadTaskId)
 	StatController.instance:track(StatEnum.EventName.ReflowActivityJump, {
 		[StatEnum.EventProperties.TurnbackJumpName] = arg_10_0.config.name,
-		[StatEnum.EventProperties.TurnbackJumpId] = tostring(arg_10_0.config.id)
+		[StatEnum.EventProperties.TurnbackJumpId] = tonumber(arg_10_0.config.id) or -1
 	})
 	GameFacade.jump(arg_10_0.config.jumpId)
 end

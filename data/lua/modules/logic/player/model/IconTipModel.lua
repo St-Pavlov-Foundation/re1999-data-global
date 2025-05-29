@@ -37,13 +37,23 @@ function var_0_0.setIconList(arg_2_0, arg_2_1)
 				var_2_3[var_2_4.effect] = var_2_6
 			end
 
-			local var_2_7 = false
+			local var_2_7 = #var_2_6
 
-			for iter_2_4 = #var_2_6, 1, -1 do
-				if var_2_7 then
-					var_2_1[var_2_6[iter_2_4]] = true
-				elseif var_2_6[iter_2_4] == var_2_4.id then
-					var_2_7 = true
+			if var_2_7 > 0 then
+				local var_2_8 = false
+
+				var_2_5.effectPortraitDic = {}
+
+				for iter_2_4 = var_2_7, 1, -1 do
+					local var_2_9 = var_2_6[iter_2_4]
+
+					var_2_5.effectPortraitDic[var_2_9] = true
+
+					if var_2_8 then
+						var_2_1[var_2_9] = true
+					elseif var_2_9 == var_2_4.id then
+						var_2_8 = true
+					end
 				end
 			end
 

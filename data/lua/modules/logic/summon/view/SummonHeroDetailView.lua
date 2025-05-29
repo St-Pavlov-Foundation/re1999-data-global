@@ -150,6 +150,10 @@ function var_0_0._refreshHero(arg_10_0, arg_10_1)
 	arg_10_0._txtname.text = var_10_0.name
 	arg_10_0._txtnameen.text = var_10_0.nameEng
 
+	if var_10_0.id == 3113 and LangSettings.instance:isJp() then
+		arg_10_0._txtnameen.text = ""
+	end
+
 	UISpriteSetMgr.instance:setCharactergetSprite(arg_10_0._imagecareericon, "charactercareer" .. tostring(var_10_0.career))
 	UISpriteSetMgr.instance:setCommonSprite(arg_10_0._imagedmgtype, "dmgtype" .. tostring(var_10_0.dmgType))
 

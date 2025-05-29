@@ -28,7 +28,7 @@ function var_0_0._editableInitView(arg_4_0)
 	arg_4_0._bpItem = nil
 	arg_4_0._bpSpItem = nil
 	arg_4_0._turnbackItem = nil
-	arg_4_0._activityImg = gohelper.findChildImage(arg_4_0.viewGO, "left/#go_activity")
+	arg_4_0._goactivity = gohelper.findChild(arg_4_0.viewGO, "left/#go_activity")
 	arg_4_0._activityLogo = gohelper.findChild(arg_4_0.viewGO, "left/#go_activity/actlogo")
 	arg_4_0._goactbg = gohelper.findChild(arg_4_0.viewGO, "left/#go_activity/scroll_view/#go_actbg")
 	arg_4_0._goactbgTrans = arg_4_0._goactbg.transform
@@ -37,7 +37,7 @@ function var_0_0._editableInitView(arg_4_0)
 	local var_4_0 = gohelper.findChildClickWithAudio(arg_4_0.viewGO, "left/#go_activity/actlogo/click")
 
 	if var_4_0 then
-		arg_4_0._activityAnimator = arg_4_0._activityImg:GetComponent("Animator")
+		arg_4_0._activityAnimator = arg_4_0._goactivity:GetComponent(gohelper.Type_Animator)
 
 		arg_4_0:addClickCb(var_4_0, arg_4_0._logoClickHandler, arg_4_0)
 	end
@@ -305,17 +305,8 @@ end
 
 function var_0_0._checkBpBtn(arg_21_0)
 	if BpModel.instance:isEnd() then
-		if arg_21_0._bpItem then
-			arg_21_0._bpItem:destroy()
-
-			arg_21_0._bpItem = nil
-		end
-
-		if arg_21_0._bpSpItem then
-			arg_21_0._bpSpItem:destroy()
-
-			arg_21_0._bpSpItem = nil
-		end
+		GameUtil.onDestroyViewMember(arg_21_0, "_bpItem")
+		GameUtil.onDestroyViewMember(arg_21_0, "_bpSpItem")
 
 		return
 	end
@@ -348,27 +339,25 @@ function var_0_0._refreshActCenter(arg_22_0)
 		return
 	end
 
-	local var_22_0 = ActivityModel.instance:getActivityCenter()
+	GameUtil.onDestroyViewMemberList(arg_22_0, "_centerItems")
 
-	for iter_22_0, iter_22_1 in pairs(arg_22_0._centerItems) do
-		iter_22_1:destroy()
-	end
+	local var_22_0 = ActivityModel.instance:getActivityCenter()
 
 	arg_22_0._centerItems = arg_22_0:getUserDataTb_()
 
-	for iter_22_2, iter_22_3 in pairs(var_22_0) do
-		if iter_22_2 == ActivityEnum.ActivityType.Beginner then
-			ActivityModel.instance:removeFinishedCategory(iter_22_3)
-			ActivityModel.instance:removeUnExitAct(iter_22_3)
-		elseif iter_22_2 == ActivityEnum.ActivityType.Welfare then
-			ActivityModel.instance:removeFinishedWelfare(iter_22_3)
-			ActivityModel.instance:removeUnExitAct(iter_22_3)
+	for iter_22_0, iter_22_1 in pairs(var_22_0) do
+		if iter_22_0 == ActivityEnum.ActivityType.Beginner then
+			ActivityModel.instance:removeFinishedCategory(iter_22_1)
+			ActivityModel.instance:removeUnExitAct(iter_22_1)
+		elseif iter_22_0 == ActivityEnum.ActivityType.Welfare then
+			ActivityModel.instance:removeFinishedWelfare(iter_22_1)
+			ActivityModel.instance:removeUnExitAct(iter_22_1)
 		end
 
-		if GameUtil.getTabLen(iter_22_3) ~= 0 then
+		if GameUtil.getTabLen(iter_22_1) ~= 0 then
 			local var_22_1 = ActivityMainBtnItem.New()
 
-			var_22_1:init(iter_22_2, arg_22_0._itemGo)
+			var_22_1:init(iter_22_0, arg_22_0._itemGo)
 			table.insert(arg_22_0._centerItems, var_22_1)
 		end
 	end
@@ -380,11 +369,7 @@ end
 
 function var_0_0._checkTurnbackBtn(arg_24_0)
 	if not TurnbackModel.instance:isInOpenTime() or not TurnbackModel.instance:getCurTurnbackMo() then
-		if arg_24_0._turnbackItem then
-			arg_24_0._turnbackItem:destroy()
-
-			arg_24_0._turnbackItem = nil
-		end
+		GameUtil.onDestroyViewMember(arg_24_0, "_turnbackItem")
 
 		return
 	end
@@ -403,11 +388,7 @@ end
 
 function var_0_0._checkTestTaskBtn(arg_25_0)
 	if not OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.TestTask) then
-		if arg_25_0._testTaskItem then
-			arg_25_0._testTaskItem:destroy()
-
-			arg_25_0._testTaskItem = nil
-		end
+		GameUtil.onDestroyViewMember(arg_25_0, "_testTaskItem")
 
 		return
 	end
@@ -425,20 +406,20 @@ function var_0_0._checkTestTaskBtn(arg_25_0)
 end
 
 function var_0_0._checkSelfSelectCharacterBtn(arg_26_0)
-	if Activity136Model.instance:isActivity136InOpen() then
-		if arg_26_0._selfSelectCharacterBtn then
-			arg_26_0._selfSelectCharacterBtn:refreshRedDot()
-		else
-			local var_26_0 = gohelper.cloneInPlace(arg_26_0._itemGo)
+	if not Activity136Model.instance:isActivity136InOpen() then
+		GameUtil.onDestroyViewMember(arg_26_0, "_selfSelectCharacterBtn")
 
-			arg_26_0._selfSelectCharacterBtn = MonoHelper.addNoUpdateLuaComOnceToGo(var_26_0, Activity136MainBtnItem)
+		return
+	end
 
-			arg_26_0:_addSortBtn(Activity136Model.instance:getCurActivity136Id(), arg_26_0._selfSelectCharacterBtn)
-		end
-	elseif arg_26_0._selfSelectCharacterBtn then
-		arg_26_0._selfSelectCharacterBtn:destroy()
+	if arg_26_0._selfSelectCharacterBtn then
+		arg_26_0._selfSelectCharacterBtn:refresh()
+	else
+		local var_26_0 = gohelper.cloneInPlace(arg_26_0._itemGo)
 
-		arg_26_0._selfSelectCharacterBtn = nil
+		arg_26_0._selfSelectCharacterBtn = MonoHelper.addNoUpdateLuaComOnceToGo(var_26_0, Activity136MainBtnItem)
+
+		arg_26_0:_addSortBtn(Activity136Model.instance:getCurActivity136Id(), arg_26_0._selfSelectCharacterBtn)
 	end
 end
 
@@ -542,11 +523,7 @@ end
 
 function var_0_0._checkActivity186Btn(arg_30_0)
 	if not Activity186Model.instance:isActivityOnline() then
-		if arg_30_0._act186Item then
-			arg_30_0._act186Item:onDestroyView()
-
-			arg_30_0._act186Item = nil
-		end
+		GameUtil.onDestroyViewMember(arg_30_0, "_act186Item")
 
 		return
 	end
@@ -576,46 +553,13 @@ function var_0_0.onClose(arg_32_0)
 end
 
 function var_0_0.onDestroyView(arg_33_0)
-	for iter_33_0, iter_33_1 in pairs(arg_33_0._centerItems) do
-		iter_33_1:destroy()
-	end
-
-	if arg_33_0._bpItem then
-		arg_33_0._bpItem:destroy()
-
-		arg_33_0._bpItem = nil
-	end
-
-	if arg_33_0._bpSpItem then
-		arg_33_0._bpSpItem:destroy()
-
-		arg_33_0._bpSpItem = nil
-	end
-
-	if arg_33_0._testTaskItem then
-		arg_33_0._testTaskItem:destroy()
-
-		arg_33_0._testTaskItem = nil
-	end
-
-	if arg_33_0._turnbackItem then
-		arg_33_0._turnbackItem:destroy()
-
-		arg_33_0._turnbackItem = nil
-	end
-
-	if arg_33_0._selfSelectCharacterBtn then
-		arg_33_0._selfSelectCharacterBtn:destroy()
-
-		arg_33_0._selfSelectCharacterBtn = nil
-	end
-
-	if arg_33_0._act186Item then
-		arg_33_0._act186Item:onDestroyView()
-
-		arg_33_0._act186Item = nil
-	end
-
+	GameUtil.onDestroyViewMemberList(arg_33_0, "_centerItems")
+	GameUtil.onDestroyViewMember(arg_33_0, "_bpItem")
+	GameUtil.onDestroyViewMember(arg_33_0, "_bpSpItem")
+	GameUtil.onDestroyViewMember(arg_33_0, "_testTaskItem")
+	GameUtil.onDestroyViewMember(arg_33_0, "_turnbackItem")
+	GameUtil.onDestroyViewMember(arg_33_0, "_selfSelectCharacterBtn")
+	GameUtil.onDestroyViewMember(arg_33_0, "_act186Item")
 	GameUtil.onDestroyViewMember(arg_33_0, "_roleSignViewBtn")
 	GameUtil.onDestroyViewMember(arg_33_0, "_springSignViewBtn")
 	arg_33_0:removeEventCb(MainController.instance, MainEvent.OnFuncUnlockRefresh, arg_33_0._freshBtns, arg_33_0)
@@ -649,23 +593,31 @@ end
 local var_0_2 = 840.4
 
 function var_0_0._refreshActBgWidth(arg_37_0)
-	local var_37_0 = 0
+	local var_37_0 = ActivityModel.checkIsShowLogoVisible()
+	local var_37_1 = 0
 
 	if arg_37_0._sortBtnList then
 		for iter_37_0, iter_37_1 in pairs(arg_37_0._sortBtnList) do
-			var_37_0 = var_37_0 + 1
+			var_37_1 = var_37_1 + 1
 		end
 	end
 
 	if arg_37_0._centerItems then
-		var_37_0 = var_37_0 + #arg_37_0._centerItems
+		var_37_1 = var_37_1 + #arg_37_0._centerItems
 	end
 
-	local var_37_1 = arg_37_0._horizontal.spacing
-	local var_37_2 = (var_37_0 - 1) * var_37_1
-	local var_37_3 = var_37_0 * arg_37_0._itemSize + arg_37_0._horizontalLeft + var_37_2 + -math.min(0, arg_37_0._goactbgOffsetX) * 2
+	local var_37_2 = arg_37_0._horizontal.spacing
+	local var_37_3 = (var_37_1 - 1) * var_37_2
+	local var_37_4 = var_37_1 * arg_37_0._itemSize + arg_37_0._horizontalLeft
+	local var_37_5 = 0
 
-	recthelper.setWidth(arg_37_0._goactbgTrans, GameUtil.clamp(var_37_3, 0, var_0_2))
+	if not var_37_0 then
+		var_37_5 = -math.min(0, arg_37_0._goactbgOffsetX) * 2
+	end
+
+	local var_37_6 = var_37_4 + var_37_5
+
+	recthelper.setWidth(arg_37_0._goactbgTrans, GameUtil.clamp(var_37_6, 0, var_0_2))
 end
 
 return var_0_0

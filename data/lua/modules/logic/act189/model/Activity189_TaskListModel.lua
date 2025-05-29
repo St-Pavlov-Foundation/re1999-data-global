@@ -114,6 +114,12 @@ function var_0_0.getGetRewardTaskCount(arg_6_0)
 	return var_6_0
 end
 
+function var_0_0.getTaskMoListByActivityId(arg_7_0, arg_7_1)
+	arg_7_0:setTaskList(arg_7_1)
+
+	return arg_7_0._taskMoList
+end
+
 var_0_0.instance = var_0_0.New()
 
 return var_0_0

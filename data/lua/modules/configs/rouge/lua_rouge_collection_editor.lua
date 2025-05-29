@@ -5450,6 +5450,3437 @@
 		}
 	},
 	{
+		ownerId = 3113,
+		type = 107,
+		holeNum = 2,
+		showRare = 4,
+		interactable = true,
+		iconPath = "8180001",
+		unremovable = false,
+		rare = 4,
+		id = 8180001,
+		isUnique = true,
+		versions = {
+			102
+		},
+		seasons = {
+			1
+		},
+		tags = {
+			107
+		},
+		shapeParam = {
+			shapeArea = {
+				Vector2(0, 0)
+			},
+			effectArea = {
+				Vector2(0, 1),
+				Vector2(0, -1),
+				Vector2(-1, 0),
+				Vector2(1, 0)
+			},
+			dragPos = Vector2(-1, -1),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(1, 1),
+			leftTopPos = Vector2(0, 0),
+			shapeMatrix = {
+				{
+					1
+				}
+			}
+		}
+	},
+	{
+		ownerId = 3114,
+		type = 107,
+		holeNum = 1,
+		showRare = 4,
+		interactable = true,
+		iconPath = "8180002",
+		unremovable = false,
+		rare = 4,
+		id = 8180002,
+		isUnique = true,
+		versions = {
+			102
+		},
+		seasons = {
+			1
+		},
+		tags = {
+			107
+		},
+		shapeParam = {
+			shapeArea = {
+				Vector2(0, 0)
+			},
+			effectArea = {
+				Vector2(0, 1),
+				Vector2(0, -1),
+				Vector2(-1, 0),
+				Vector2(1, 0)
+			},
+			dragPos = Vector2(-1, -1),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(1, 1),
+			leftTopPos = Vector2(0, 0),
+			shapeMatrix = {
+				{
+					1
+				}
+			}
+		}
+	},
+	{
+		ownerId = 3110,
+		type = 107,
+		holeNum = 1,
+		showRare = 4,
+		interactable = true,
+		iconPath = "8180003",
+		unremovable = false,
+		rare = 4,
+		id = 8180003,
+		isUnique = true,
+		versions = {
+			102
+		},
+		seasons = {
+			1
+		},
+		tags = {
+			107
+		},
+		shapeParam = {
+			shapeArea = {
+				Vector2(0, 1),
+				Vector2(0, 0)
+			},
+			effectArea = {
+				Vector2(0, 2),
+				Vector2(-1, 1),
+				Vector2(1, 1),
+				Vector2(0, -1),
+				Vector2(-1, 0),
+				Vector2(1, 0)
+			},
+			dragPos = Vector2(0, 0),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(1, 2),
+			leftTopPos = Vector2(0, 1),
+			shapeMatrix = {
+				{
+					1
+				},
+				{
+					1
+				}
+			}
+		}
+	},
+	{
+		ownerId = 3111,
+		type = 107,
+		holeNum = 2,
+		showRare = 4,
+		interactable = true,
+		iconPath = "8180004",
+		unremovable = false,
+		rare = 4,
+		id = 8180004,
+		isUnique = true,
+		versions = {
+			102
+		},
+		seasons = {
+			1
+		},
+		tags = {
+			107
+		},
+		shapeParam = {
+			shapeArea = {
+				Vector2(0, 1),
+				Vector2(0, 0),
+				Vector2(1, 1),
+				Vector2(1, 0)
+			},
+			effectArea = {
+				Vector2(0, 2),
+				Vector2(-1, 1),
+				Vector2(0, -1),
+				Vector2(-1, 0),
+				Vector2(1, 2),
+				Vector2(2, 1),
+				Vector2(1, -1),
+				Vector2(2, 0)
+			},
+			dragPos = Vector2(0, 0),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(2, 2),
+			leftTopPos = Vector2(0, 1),
+			shapeMatrix = {
+				{
+					1,
+					1
+				},
+				{
+					1,
+					1
+				}
+			}
+		}
+	},
+	{
+		ownerId = 3080,
+		type = 107,
+		holeNum = 1,
+		showRare = 4,
+		interactable = true,
+		iconPath = "8180005",
+		unremovable = false,
+		rare = 4,
+		id = 8180005,
+		isUnique = true,
+		versions = {
+			102
+		},
+		seasons = {
+			1
+		},
+		tags = {
+			107
+		},
+		shapeParam = {
+			shapeArea = {
+				Vector2(0, 0)
+			},
+			effectArea = {
+				Vector2(0, 1),
+				Vector2(0, -1),
+				Vector2(-1, 0),
+				Vector2(1, 0)
+			},
+			dragPos = Vector2(-1, -1),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(1, 1),
+			leftTopPos = Vector2(0, 0),
+			shapeMatrix = {
+				{
+					1
+				}
+			}
+		}
+	},
+	{
+		ownerId = 3087,
+		type = 107,
+		holeNum = 2,
+		showRare = 4,
+		interactable = true,
+		iconPath = "8180006",
+		unremovable = false,
+		rare = 4,
+		id = 8180006,
+		isUnique = true,
+		versions = {
+			102
+		},
+		seasons = {
+			1
+		},
+		tags = {
+			107
+		},
+		shapeParam = {
+			shapeArea = {
+				Vector2(0, 1),
+				Vector2(0, 0),
+				Vector2(1, 1),
+				Vector2(1, 0)
+			},
+			effectArea = {
+				Vector2(0, 2),
+				Vector2(-1, 1),
+				Vector2(0, -1),
+				Vector2(-1, 0),
+				Vector2(1, 2),
+				Vector2(2, 1),
+				Vector2(1, -1),
+				Vector2(2, 0)
+			},
+			dragPos = Vector2(0, 0),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(2, 2),
+			leftTopPos = Vector2(0, 1),
+			shapeMatrix = {
+				{
+					1,
+					1
+				},
+				{
+					1,
+					1
+				}
+			}
+		}
+	},
+	{
+		ownerId = 3095,
+		type = 107,
+		holeNum = 1,
+		showRare = 4,
+		interactable = true,
+		iconPath = "8180007",
+		unremovable = false,
+		rare = 4,
+		id = 8180007,
+		isUnique = true,
+		versions = {
+			102
+		},
+		seasons = {
+			1
+		},
+		tags = {
+			107
+		},
+		shapeParam = {
+			shapeArea = {
+				Vector2(0, 0)
+			},
+			effectArea = {
+				Vector2(0, 1),
+				Vector2(0, -1),
+				Vector2(-1, 0),
+				Vector2(1, 0)
+			},
+			dragPos = Vector2(-1, -1),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(1, 1),
+			leftTopPos = Vector2(0, 0),
+			shapeMatrix = {
+				{
+					1
+				}
+			}
+		}
+	},
+	{
+		ownerId = 3053,
+		type = 107,
+		holeNum = 3,
+		showRare = 4,
+		interactable = true,
+		iconPath = "8180008",
+		unremovable = false,
+		rare = 4,
+		id = 8180008,
+		isUnique = true,
+		versions = {
+			102
+		},
+		seasons = {
+			1
+		},
+		tags = {
+			107
+		},
+		shapeParam = {
+			shapeArea = {
+				Vector2(0, 1),
+				Vector2(0, 0)
+			},
+			effectArea = {
+				Vector2(0, 2),
+				Vector2(-1, 1),
+				Vector2(1, 1),
+				Vector2(0, -1),
+				Vector2(-1, 0),
+				Vector2(1, 0)
+			},
+			dragPos = Vector2(0, 0),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(1, 2),
+			leftTopPos = Vector2(0, 1),
+			shapeMatrix = {
+				{
+					1
+				},
+				{
+					1
+				}
+			}
+		}
+	},
+	{
+		ownerId = 3081,
+		type = 107,
+		holeNum = 3,
+		showRare = 4,
+		interactable = true,
+		iconPath = "8180009",
+		unremovable = false,
+		rare = 4,
+		id = 8180009,
+		isUnique = true,
+		versions = {
+			102
+		},
+		seasons = {
+			1
+		},
+		tags = {
+			107
+		},
+		shapeParam = {
+			shapeArea = {
+				Vector2(0, 1),
+				Vector2(0, 0),
+				Vector2(1, 1),
+				Vector2(1, 0)
+			},
+			effectArea = {
+				Vector2(0, 2),
+				Vector2(-1, 1),
+				Vector2(0, -1),
+				Vector2(-1, 0),
+				Vector2(1, 2),
+				Vector2(2, 1),
+				Vector2(1, -1),
+				Vector2(2, 0)
+			},
+			dragPos = Vector2(0, 0),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(2, 2),
+			leftTopPos = Vector2(0, 1),
+			shapeMatrix = {
+				{
+					1,
+					1
+				},
+				{
+					1,
+					1
+				}
+			}
+		}
+	},
+	{
+		ownerId = 3098,
+		type = 107,
+		holeNum = 2,
+		showRare = 4,
+		interactable = true,
+		iconPath = "8180010",
+		unremovable = false,
+		rare = 4,
+		id = 8180010,
+		isUnique = true,
+		versions = {
+			102
+		},
+		seasons = {
+			1
+		},
+		tags = {
+			107
+		},
+		shapeParam = {
+			shapeArea = {
+				Vector2(-1, 0),
+				Vector2(0, 0),
+				Vector2(1, 0)
+			},
+			effectArea = {
+				Vector2(-1, 1),
+				Vector2(-1, -1),
+				Vector2(-2, 0),
+				Vector2(0, 1),
+				Vector2(0, -1),
+				Vector2(1, 1),
+				Vector2(1, -1),
+				Vector2(2, 0)
+			},
+			dragPos = Vector2(-1, 0),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(3, 1),
+			leftTopPos = Vector2(-1, 0),
+			shapeMatrix = {
+				{
+					1,
+					1,
+					1
+				}
+			}
+		}
+	},
+	{
+		ownerId = 3079,
+		type = 107,
+		holeNum = 1,
+		showRare = 4,
+		interactable = true,
+		iconPath = "8180011",
+		unremovable = false,
+		rare = 4,
+		id = 8180011,
+		isUnique = true,
+		versions = {
+			102
+		},
+		seasons = {
+			1
+		},
+		tags = {
+			107
+		},
+		shapeParam = {
+			shapeArea = {
+				Vector2(-1, 0),
+				Vector2(0, 0),
+				Vector2(1, 0)
+			},
+			effectArea = {
+				Vector2(-1, 1),
+				Vector2(-1, -1),
+				Vector2(-2, 0),
+				Vector2(0, 1),
+				Vector2(0, -1),
+				Vector2(1, 1),
+				Vector2(1, -1),
+				Vector2(2, 0)
+			},
+			dragPos = Vector2(-1, 0),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(3, 1),
+			leftTopPos = Vector2(-1, 0),
+			shapeMatrix = {
+				{
+					1,
+					1,
+					1
+				}
+			}
+		}
+	},
+	{
+		ownerId = 3077,
+		type = 107,
+		holeNum = 1,
+		showRare = 4,
+		interactable = true,
+		iconPath = "8180012",
+		unremovable = false,
+		rare = 4,
+		id = 8180012,
+		isUnique = true,
+		versions = {
+			102
+		},
+		seasons = {
+			1
+		},
+		tags = {
+			107
+		},
+		shapeParam = {
+			shapeArea = {
+				Vector2(0, 0),
+				Vector2(-1, 0),
+				Vector2(1, 0),
+				Vector2(1, 1)
+			},
+			effectArea = {
+				Vector2(0, 1),
+				Vector2(0, -1),
+				Vector2(-1, 1),
+				Vector2(-1, -1),
+				Vector2(-2, 0),
+				Vector2(1, -1),
+				Vector2(2, 0),
+				Vector2(1, 2),
+				Vector2(2, 1)
+			},
+			dragPos = Vector2(0, 0),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(3, 2),
+			leftTopPos = Vector2(-1, 1),
+			shapeMatrix = {
+				{
+					0,
+					0,
+					1
+				},
+				{
+					1,
+					1,
+					1
+				}
+			}
+		}
+	},
+	{
+		ownerId = 3109,
+		type = 107,
+		holeNum = 1,
+		showRare = 4,
+		interactable = true,
+		iconPath = "8180013",
+		unremovable = false,
+		rare = 4,
+		id = 8180013,
+		isUnique = true,
+		versions = {
+			102
+		},
+		seasons = {
+			1
+		},
+		tags = {
+			107
+		},
+		shapeParam = {
+			shapeArea = {
+				Vector2(0, 1),
+				Vector2(0, 0),
+				Vector2(1, 1),
+				Vector2(1, 0)
+			},
+			effectArea = {
+				Vector2(0, 2),
+				Vector2(-1, 1),
+				Vector2(0, -1),
+				Vector2(-1, 0),
+				Vector2(1, 2),
+				Vector2(2, 1),
+				Vector2(1, -1),
+				Vector2(2, 0)
+			},
+			dragPos = Vector2(0, 0),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(2, 2),
+			leftTopPos = Vector2(0, 1),
+			shapeMatrix = {
+				{
+					1,
+					1
+				},
+				{
+					1,
+					1
+				}
+			}
+		}
+	},
+	{
+		ownerId = 3097,
+		type = 107,
+		holeNum = 2,
+		showRare = 4,
+		interactable = true,
+		iconPath = "8180014",
+		unremovable = false,
+		rare = 4,
+		id = 8180014,
+		isUnique = true,
+		versions = {
+			102
+		},
+		seasons = {
+			1
+		},
+		tags = {
+			107
+		},
+		shapeParam = {
+			shapeArea = {
+				Vector2(0, 0),
+				Vector2(-1, 0),
+				Vector2(1, 0),
+				Vector2(2, 0)
+			},
+			effectArea = {
+				Vector2(0, 1),
+				Vector2(0, -1),
+				Vector2(-1, 1),
+				Vector2(-1, -1),
+				Vector2(-2, 0),
+				Vector2(1, 1),
+				Vector2(1, -1),
+				Vector2(2, 1),
+				Vector2(2, -1),
+				Vector2(3, 0)
+			},
+			dragPos = Vector2(0, -2),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(4, 1),
+			leftTopPos = Vector2(-1, 0),
+			shapeMatrix = {
+				{
+					1,
+					1,
+					1,
+					1
+				}
+			}
+		}
+	},
+	{
+		ownerId = 3065,
+		type = 107,
+		holeNum = 1,
+		showRare = 4,
+		interactable = true,
+		iconPath = "8180015",
+		unremovable = false,
+		rare = 4,
+		id = 8180015,
+		isUnique = true,
+		versions = {
+			102
+		},
+		seasons = {
+			1
+		},
+		tags = {
+			107
+		},
+		shapeParam = {
+			shapeArea = {
+				Vector2(0, 1),
+				Vector2(0, 0)
+			},
+			effectArea = {
+				Vector2(0, 2),
+				Vector2(-1, 1),
+				Vector2(1, 1),
+				Vector2(0, -1),
+				Vector2(-1, 0),
+				Vector2(1, 0)
+			},
+			dragPos = Vector2(0, 0),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(1, 2),
+			leftTopPos = Vector2(0, 1),
+			shapeMatrix = {
+				{
+					1
+				},
+				{
+					1
+				}
+			}
+		}
+	},
+	{
+		ownerId = 3056,
+		type = 107,
+		holeNum = 1,
+		showRare = 4,
+		interactable = true,
+		iconPath = "8180016",
+		unremovable = false,
+		rare = 4,
+		id = 8180016,
+		isUnique = true,
+		versions = {
+			102
+		},
+		seasons = {
+			1
+		},
+		tags = {
+			107
+		},
+		shapeParam = {
+			shapeArea = {
+				Vector2(0, 1),
+				Vector2(0, 0),
+				Vector2(1, 1),
+				Vector2(1, 0)
+			},
+			effectArea = {
+				Vector2(0, 2),
+				Vector2(-1, 1),
+				Vector2(0, -1),
+				Vector2(-1, 0),
+				Vector2(1, 2),
+				Vector2(2, 1),
+				Vector2(1, -1),
+				Vector2(2, 0)
+			},
+			dragPos = Vector2(0, 0),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(2, 2),
+			leftTopPos = Vector2(0, 1),
+			shapeMatrix = {
+				{
+					1,
+					1
+				},
+				{
+					1,
+					1
+				}
+			}
+		}
+	},
+	{
+		ownerId = 3074,
+		type = 107,
+		holeNum = 2,
+		showRare = 4,
+		interactable = true,
+		iconPath = "8180017",
+		unremovable = false,
+		rare = 4,
+		id = 8180017,
+		isUnique = true,
+		versions = {
+			102
+		},
+		seasons = {
+			1
+		},
+		tags = {
+			107
+		},
+		shapeParam = {
+			shapeArea = {
+				Vector2(0, 1),
+				Vector2(0, 0)
+			},
+			effectArea = {
+				Vector2(0, 2),
+				Vector2(-1, 1),
+				Vector2(1, 1),
+				Vector2(0, -1),
+				Vector2(-1, 0),
+				Vector2(1, 0)
+			},
+			dragPos = Vector2(0, 0),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(1, 2),
+			leftTopPos = Vector2(0, 1),
+			shapeMatrix = {
+				{
+					1
+				},
+				{
+					1
+				}
+			}
+		}
+	},
+	{
+		ownerId = 3084,
+		type = 107,
+		holeNum = 3,
+		showRare = 4,
+		interactable = true,
+		iconPath = "8180018",
+		unremovable = false,
+		rare = 4,
+		id = 8180018,
+		isUnique = true,
+		versions = {
+			102
+		},
+		seasons = {
+			1
+		},
+		tags = {
+			107
+		},
+		shapeParam = {
+			shapeArea = {
+				Vector2(0, 0),
+				Vector2(1, 0)
+			},
+			effectArea = {
+				Vector2(0, 1),
+				Vector2(0, -1),
+				Vector2(-1, 0),
+				Vector2(1, 1),
+				Vector2(1, -1),
+				Vector2(2, 0)
+			},
+			dragPos = Vector2(0, 0),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(2, 1),
+			leftTopPos = Vector2(0, 0),
+			shapeMatrix = {
+				{
+					1,
+					1
+				}
+			}
+		}
+	},
+	{
+		ownerId = 3072,
+		type = 107,
+		holeNum = 2,
+		showRare = 4,
+		interactable = true,
+		iconPath = "8180019",
+		unremovable = false,
+		rare = 4,
+		id = 8180019,
+		isUnique = true,
+		versions = {
+			102
+		},
+		seasons = {
+			1
+		},
+		tags = {
+			107
+		},
+		shapeParam = {
+			shapeArea = {
+				Vector2(0, 1),
+				Vector2(0, 0),
+				Vector2(1, 1),
+				Vector2(1, 0)
+			},
+			effectArea = {
+				Vector2(0, 2),
+				Vector2(-1, 1),
+				Vector2(0, -1),
+				Vector2(-1, 0),
+				Vector2(1, 2),
+				Vector2(2, 1),
+				Vector2(1, -1),
+				Vector2(2, 0)
+			},
+			dragPos = Vector2(0, 0),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(2, 2),
+			leftTopPos = Vector2(0, 1),
+			shapeMatrix = {
+				{
+					1,
+					1
+				},
+				{
+					1,
+					1
+				}
+			}
+		}
+	},
+	{
+		ownerId = 3070,
+		type = 107,
+		holeNum = 2,
+		showRare = 4,
+		interactable = true,
+		iconPath = "8180020",
+		unremovable = false,
+		rare = 4,
+		id = 8180020,
+		isUnique = true,
+		versions = {
+			102
+		},
+		seasons = {
+			1
+		},
+		tags = {
+			107
+		},
+		shapeParam = {
+			shapeArea = {
+				Vector2(-1, 1),
+				Vector2(-1, 0),
+				Vector2(0, 1),
+				Vector2(0, 0),
+				Vector2(1, 1),
+				Vector2(1, 0)
+			},
+			effectArea = {
+				Vector2(-1, 2),
+				Vector2(-2, 1),
+				Vector2(-1, -1),
+				Vector2(-2, 0),
+				Vector2(0, 2),
+				Vector2(0, -1),
+				Vector2(1, 2),
+				Vector2(2, 1),
+				Vector2(1, -1),
+				Vector2(2, 0)
+			},
+			dragPos = Vector2(-1, 0),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(3, 2),
+			leftTopPos = Vector2(-1, 1),
+			shapeMatrix = {
+				{
+					1,
+					1,
+					1
+				},
+				{
+					1,
+					1,
+					1
+				}
+			}
+		}
+	},
+	{
+		ownerId = 3082,
+		type = 107,
+		holeNum = 2,
+		showRare = 4,
+		interactable = true,
+		iconPath = "8180021",
+		unremovable = false,
+		rare = 4,
+		id = 8180021,
+		isUnique = true,
+		versions = {
+			102
+		},
+		seasons = {
+			1
+		},
+		tags = {
+			107
+		},
+		shapeParam = {
+			shapeArea = {
+				Vector2(0, 1),
+				Vector2(0, 0),
+				Vector2(1, 1),
+				Vector2(1, 0)
+			},
+			effectArea = {
+				Vector2(0, 2),
+				Vector2(-1, 1),
+				Vector2(0, -1),
+				Vector2(-1, 0),
+				Vector2(1, 2),
+				Vector2(2, 1),
+				Vector2(1, -1),
+				Vector2(2, 0)
+			},
+			dragPos = Vector2(0, 0),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(2, 2),
+			leftTopPos = Vector2(0, 1),
+			shapeMatrix = {
+				{
+					1,
+					1
+				},
+				{
+					1,
+					1
+				}
+			}
+		}
+	},
+	{
+		ownerId = 3037,
+		type = 107,
+		holeNum = 3,
+		showRare = 4,
+		interactable = true,
+		iconPath = "8180022",
+		unremovable = false,
+		rare = 4,
+		id = 8180022,
+		isUnique = true,
+		versions = {
+			102
+		},
+		seasons = {
+			1
+		},
+		tags = {
+			107
+		},
+		shapeParam = {
+			shapeArea = {
+				Vector2(0, 1),
+				Vector2(0, 0),
+				Vector2(0, -1),
+				Vector2(1, 1),
+				Vector2(1, 0),
+				Vector2(1, -1)
+			},
+			effectArea = {
+				Vector2(0, 2),
+				Vector2(-1, 1),
+				Vector2(-1, 0),
+				Vector2(0, -2),
+				Vector2(-1, -1),
+				Vector2(1, 2),
+				Vector2(2, 1),
+				Vector2(2, 0),
+				Vector2(1, -2),
+				Vector2(2, -1)
+			},
+			dragPos = Vector2(0, -1),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(2, 3),
+			leftTopPos = Vector2(0, 1),
+			shapeMatrix = {
+				{
+					1,
+					1
+				},
+				{
+					1,
+					1
+				},
+				{
+					1,
+					1
+				}
+			}
+		}
+	},
+	{
+		ownerId = 3020,
+		type = 107,
+		holeNum = 1,
+		showRare = 4,
+		interactable = true,
+		iconPath = "8180023",
+		unremovable = false,
+		rare = 4,
+		id = 8180023,
+		isUnique = true,
+		versions = {
+			102
+		},
+		seasons = {
+			1
+		},
+		tags = {
+			107
+		},
+		shapeParam = {
+			shapeArea = {
+				Vector2(0, 1),
+				Vector2(0, 0),
+				Vector2(1, 1),
+				Vector2(1, 0)
+			},
+			effectArea = {
+				Vector2(0, 2),
+				Vector2(-1, 1),
+				Vector2(0, -1),
+				Vector2(-1, 0),
+				Vector2(1, 2),
+				Vector2(2, 1),
+				Vector2(1, -1),
+				Vector2(2, 0)
+			},
+			dragPos = Vector2(0, 0),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(2, 2),
+			leftTopPos = Vector2(0, 1),
+			shapeMatrix = {
+				{
+					1,
+					1
+				},
+				{
+					1,
+					1
+				}
+			}
+		}
+	},
+	{
+		ownerId = 3010,
+		type = 107,
+		holeNum = 2,
+		showRare = 4,
+		interactable = true,
+		iconPath = "8180024",
+		unremovable = false,
+		rare = 4,
+		id = 8180024,
+		isUnique = true,
+		versions = {
+			102
+		},
+		seasons = {
+			1
+		},
+		tags = {
+			107
+		},
+		shapeParam = {
+			shapeArea = {
+				Vector2(0, 1),
+				Vector2(0, 0),
+				Vector2(1, 1),
+				Vector2(1, 0),
+				Vector2(-1, 1),
+				Vector2(-1, 0)
+			},
+			effectArea = {
+				Vector2(0, 2),
+				Vector2(0, -1),
+				Vector2(1, 2),
+				Vector2(2, 1),
+				Vector2(1, -1),
+				Vector2(2, 0),
+				Vector2(-1, 2),
+				Vector2(-2, 1),
+				Vector2(-1, -1),
+				Vector2(-2, 0)
+			},
+			dragPos = Vector2(0, -1),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(3, 2),
+			leftTopPos = Vector2(-1, 1),
+			shapeMatrix = {
+				{
+					1,
+					1,
+					1
+				},
+				{
+					1,
+					1,
+					1
+				}
+			}
+		}
+	},
+	{
+		ownerId = 0,
+		type = 0,
+		holeNum = 0,
+		showRare = 0,
+		interactable = false,
+		iconPath = "",
+		unremovable = false,
+		rare = 0,
+		id = 8180101,
+		isUnique = false,
+		versions = {
+			103
+		},
+		seasons = {},
+		tags = {},
+		shapeParam = {
+			shapeArea = {},
+			effectArea = {},
+			dragPos = Vector2(5, 5),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(0, 0),
+			leftTopPos = Vector2(0, 0),
+			shapeMatrix = {
+				{
+					0
+				}
+			}
+		}
+	},
+	{
+		ownerId = 0,
+		type = 0,
+		holeNum = 0,
+		showRare = 0,
+		interactable = false,
+		iconPath = "",
+		unremovable = false,
+		rare = 0,
+		id = 8180102,
+		isUnique = false,
+		versions = {
+			103
+		},
+		seasons = {},
+		tags = {},
+		shapeParam = {
+			shapeArea = {},
+			effectArea = {},
+			dragPos = Vector2(5, 5),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(0, 0),
+			leftTopPos = Vector2(0, 0),
+			shapeMatrix = {
+				{
+					0
+				}
+			}
+		}
+	},
+	{
+		ownerId = 0,
+		type = 0,
+		holeNum = 0,
+		showRare = 0,
+		interactable = false,
+		iconPath = "",
+		unremovable = false,
+		rare = 0,
+		id = 8180103,
+		isUnique = false,
+		versions = {
+			103
+		},
+		seasons = {},
+		tags = {},
+		shapeParam = {
+			shapeArea = {},
+			effectArea = {},
+			dragPos = Vector2(5, 5),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(0, 0),
+			leftTopPos = Vector2(0, 0),
+			shapeMatrix = {
+				{
+					0
+				}
+			}
+		}
+	},
+	{
+		ownerId = 0,
+		type = 0,
+		holeNum = 0,
+		showRare = 0,
+		interactable = false,
+		iconPath = "",
+		unremovable = false,
+		rare = 0,
+		id = 8180104,
+		isUnique = false,
+		versions = {
+			103
+		},
+		seasons = {},
+		tags = {},
+		shapeParam = {
+			shapeArea = {},
+			effectArea = {},
+			dragPos = Vector2(5, 5),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(0, 0),
+			leftTopPos = Vector2(0, 0),
+			shapeMatrix = {
+				{
+					0
+				}
+			}
+		}
+	},
+	{
+		ownerId = 0,
+		type = 0,
+		holeNum = 0,
+		showRare = 0,
+		interactable = false,
+		iconPath = "",
+		unremovable = false,
+		rare = 0,
+		id = 8180105,
+		isUnique = false,
+		versions = {
+			103
+		},
+		seasons = {},
+		tags = {},
+		shapeParam = {
+			shapeArea = {},
+			effectArea = {},
+			dragPos = Vector2(5, 5),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(0, 0),
+			leftTopPos = Vector2(0, 0),
+			shapeMatrix = {
+				{
+					0
+				}
+			}
+		}
+	},
+	{
+		ownerId = 0,
+		type = 0,
+		holeNum = 0,
+		showRare = 0,
+		interactable = false,
+		iconPath = "",
+		unremovable = false,
+		rare = 0,
+		id = 8180106,
+		isUnique = false,
+		versions = {
+			103
+		},
+		seasons = {},
+		tags = {},
+		shapeParam = {
+			shapeArea = {},
+			effectArea = {},
+			dragPos = Vector2(5, 5),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(0, 0),
+			leftTopPos = Vector2(0, 0),
+			shapeMatrix = {
+				{
+					0
+				}
+			}
+		}
+	},
+	{
+		ownerId = 0,
+		type = 0,
+		holeNum = 0,
+		showRare = 0,
+		interactable = false,
+		iconPath = "",
+		unremovable = false,
+		rare = 0,
+		id = 8180107,
+		isUnique = false,
+		versions = {
+			103
+		},
+		seasons = {},
+		tags = {},
+		shapeParam = {
+			shapeArea = {},
+			effectArea = {},
+			dragPos = Vector2(5, 5),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(0, 0),
+			leftTopPos = Vector2(0, 0),
+			shapeMatrix = {
+				{
+					0
+				}
+			}
+		}
+	},
+	{
+		ownerId = 0,
+		type = 0,
+		holeNum = 0,
+		showRare = 0,
+		interactable = false,
+		iconPath = "",
+		unremovable = false,
+		rare = 0,
+		id = 8180108,
+		isUnique = false,
+		versions = {
+			103
+		},
+		seasons = {},
+		tags = {},
+		shapeParam = {
+			shapeArea = {},
+			effectArea = {},
+			dragPos = Vector2(5, 5),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(0, 0),
+			leftTopPos = Vector2(0, 0),
+			shapeMatrix = {
+				{
+					0
+				}
+			}
+		}
+	},
+	{
+		ownerId = 0,
+		type = 0,
+		holeNum = 0,
+		showRare = 0,
+		interactable = false,
+		iconPath = "",
+		unremovable = false,
+		rare = 0,
+		id = 8180109,
+		isUnique = false,
+		versions = {
+			103
+		},
+		seasons = {},
+		tags = {},
+		shapeParam = {
+			shapeArea = {},
+			effectArea = {},
+			dragPos = Vector2(5, 5),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(0, 0),
+			leftTopPos = Vector2(0, 0),
+			shapeMatrix = {
+				{
+					0
+				}
+			}
+		}
+	},
+	{
+		ownerId = 0,
+		type = 0,
+		holeNum = 0,
+		showRare = 0,
+		interactable = false,
+		iconPath = "",
+		unremovable = false,
+		rare = 0,
+		id = 8180110,
+		isUnique = false,
+		versions = {
+			103
+		},
+		seasons = {},
+		tags = {},
+		shapeParam = {
+			shapeArea = {},
+			effectArea = {},
+			dragPos = Vector2(5, 5),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(0, 0),
+			leftTopPos = Vector2(0, 0),
+			shapeMatrix = {
+				{
+					0
+				}
+			}
+		}
+	},
+	{
+		ownerId = 0,
+		type = 0,
+		holeNum = 0,
+		showRare = 0,
+		interactable = false,
+		iconPath = "",
+		unremovable = false,
+		rare = 0,
+		id = 8180111,
+		isUnique = false,
+		versions = {
+			103
+		},
+		seasons = {},
+		tags = {},
+		shapeParam = {
+			shapeArea = {},
+			effectArea = {},
+			dragPos = Vector2(5, 5),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(0, 0),
+			leftTopPos = Vector2(0, 0),
+			shapeMatrix = {
+				{
+					0
+				}
+			}
+		}
+	},
+	{
+		ownerId = 0,
+		type = 0,
+		holeNum = 0,
+		showRare = 0,
+		interactable = false,
+		iconPath = "",
+		unremovable = false,
+		rare = 0,
+		id = 8180112,
+		isUnique = false,
+		versions = {
+			103
+		},
+		seasons = {},
+		tags = {},
+		shapeParam = {
+			shapeArea = {},
+			effectArea = {},
+			dragPos = Vector2(5, 5),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(0, 0),
+			leftTopPos = Vector2(0, 0),
+			shapeMatrix = {
+				{
+					0
+				}
+			}
+		}
+	},
+	{
+		ownerId = 0,
+		type = 108,
+		holeNum = 2,
+		showRare = 4,
+		interactable = true,
+		iconPath = "8180101",
+		unremovable = false,
+		rare = 4,
+		id = 8180201,
+		isUnique = false,
+		versions = {
+			103
+		},
+		seasons = {},
+		tags = {
+			108
+		},
+		shapeParam = {
+			shapeArea = {
+				Vector2(0, 1),
+				Vector2(0, 0),
+				Vector2(1, 1),
+				Vector2(1, 0)
+			},
+			effectArea = {
+				Vector2(0, 2),
+				Vector2(-1, 1),
+				Vector2(0, -1),
+				Vector2(-1, 0),
+				Vector2(1, 2),
+				Vector2(2, 1),
+				Vector2(1, -1),
+				Vector2(2, 0)
+			},
+			dragPos = Vector2(0, 0),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(2, 2),
+			leftTopPos = Vector2(0, 1),
+			shapeMatrix = {
+				{
+					1,
+					1
+				},
+				{
+					1,
+					1
+				}
+			}
+		}
+	},
+	{
+		ownerId = 0,
+		type = 108,
+		holeNum = 1,
+		showRare = 4,
+		interactable = true,
+		iconPath = "8180102",
+		unremovable = false,
+		rare = 4,
+		id = 8180202,
+		isUnique = false,
+		versions = {
+			103
+		},
+		seasons = {},
+		tags = {
+			108
+		},
+		shapeParam = {
+			shapeArea = {
+				Vector2(0, 0)
+			},
+			effectArea = {
+				Vector2(0, 1),
+				Vector2(0, -1),
+				Vector2(-1, 0),
+				Vector2(1, 0)
+			},
+			dragPos = Vector2(-1, -1),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(1, 1),
+			leftTopPos = Vector2(0, 0),
+			shapeMatrix = {
+				{
+					1
+				}
+			}
+		}
+	},
+	{
+		ownerId = 0,
+		type = 108,
+		holeNum = 0,
+		showRare = 4,
+		interactable = true,
+		iconPath = "8180103",
+		unremovable = false,
+		rare = 4,
+		id = 8180203,
+		isUnique = false,
+		versions = {
+			103
+		},
+		seasons = {},
+		tags = {
+			108
+		},
+		shapeParam = {
+			shapeArea = {
+				Vector2(0, 0)
+			},
+			effectArea = {
+				Vector2(0, 1),
+				Vector2(0, -1),
+				Vector2(-1, 0),
+				Vector2(1, 0)
+			},
+			dragPos = Vector2(-1, -1),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(1, 1),
+			leftTopPos = Vector2(0, 0),
+			shapeMatrix = {
+				{
+					1
+				}
+			}
+		}
+	},
+	{
+		ownerId = 0,
+		type = 108,
+		holeNum = 2,
+		showRare = 4,
+		interactable = true,
+		iconPath = "8180104",
+		unremovable = false,
+		rare = 4,
+		id = 8180204,
+		isUnique = false,
+		versions = {
+			103
+		},
+		seasons = {},
+		tags = {
+			108
+		},
+		shapeParam = {
+			shapeArea = {
+				Vector2(0, 1),
+				Vector2(0, 0),
+				Vector2(1, 1),
+				Vector2(1, 0)
+			},
+			effectArea = {
+				Vector2(0, 2),
+				Vector2(-1, 1),
+				Vector2(0, -1),
+				Vector2(-1, 0),
+				Vector2(1, 2),
+				Vector2(2, 1),
+				Vector2(1, -1),
+				Vector2(2, 0)
+			},
+			dragPos = Vector2(0, 0),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(2, 2),
+			leftTopPos = Vector2(0, 1),
+			shapeMatrix = {
+				{
+					1,
+					1
+				},
+				{
+					1,
+					1
+				}
+			}
+		}
+	},
+	{
+		ownerId = 0,
+		type = 108,
+		holeNum = 1,
+		showRare = 4,
+		interactable = true,
+		iconPath = "8180105",
+		unremovable = false,
+		rare = 4,
+		id = 8180205,
+		isUnique = false,
+		versions = {
+			103
+		},
+		seasons = {},
+		tags = {
+			108
+		},
+		shapeParam = {
+			shapeArea = {
+				Vector2(0, 0)
+			},
+			effectArea = {
+				Vector2(0, 1),
+				Vector2(0, -1),
+				Vector2(-1, 0),
+				Vector2(1, 0)
+			},
+			dragPos = Vector2(-1, -1),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(1, 1),
+			leftTopPos = Vector2(0, 0),
+			shapeMatrix = {
+				{
+					1
+				}
+			}
+		}
+	},
+	{
+		ownerId = 0,
+		type = 108,
+		holeNum = 0,
+		showRare = 4,
+		interactable = true,
+		iconPath = "8180106",
+		unremovable = false,
+		rare = 4,
+		id = 8180206,
+		isUnique = false,
+		versions = {
+			103
+		},
+		seasons = {},
+		tags = {
+			108
+		},
+		shapeParam = {
+			shapeArea = {
+				Vector2(0, 0)
+			},
+			effectArea = {
+				Vector2(0, 1),
+				Vector2(0, -1),
+				Vector2(-1, 0),
+				Vector2(1, 0)
+			},
+			dragPos = Vector2(-1, -1),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(1, 1),
+			leftTopPos = Vector2(0, 0),
+			shapeMatrix = {
+				{
+					1
+				}
+			}
+		}
+	},
+	{
+		ownerId = 0,
+		type = 108,
+		holeNum = 2,
+		showRare = 4,
+		interactable = true,
+		iconPath = "8180107",
+		unremovable = false,
+		rare = 4,
+		id = 8180207,
+		isUnique = false,
+		versions = {
+			103
+		},
+		seasons = {},
+		tags = {
+			108
+		},
+		shapeParam = {
+			shapeArea = {
+				Vector2(0, 0),
+				Vector2(0, -1),
+				Vector2(1, 0)
+			},
+			effectArea = {
+				Vector2(0, 1),
+				Vector2(-1, 0),
+				Vector2(0, -2),
+				Vector2(-1, -1),
+				Vector2(1, -1),
+				Vector2(1, 1),
+				Vector2(2, 0)
+			},
+			dragPos = Vector2(-1, -1),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(2, 2),
+			leftTopPos = Vector2(0, 0),
+			shapeMatrix = {
+				{
+					1,
+					1
+				},
+				{
+					1,
+					0
+				}
+			}
+		}
+	},
+	{
+		ownerId = 0,
+		type = 108,
+		holeNum = 1,
+		showRare = 4,
+		interactable = true,
+		iconPath = "8180108",
+		unremovable = true,
+		rare = 4,
+		id = 8180208,
+		isUnique = false,
+		versions = {
+			103
+		},
+		seasons = {},
+		tags = {
+			108
+		},
+		shapeParam = {
+			shapeArea = {
+				Vector2(0, 0)
+			},
+			effectArea = {
+				Vector2(0, 1),
+				Vector2(0, -1),
+				Vector2(-1, 0),
+				Vector2(1, 0)
+			},
+			dragPos = Vector2(-1, 0),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(1, 1),
+			leftTopPos = Vector2(0, 0),
+			shapeMatrix = {
+				{
+					1
+				}
+			}
+		}
+	},
+	{
+		ownerId = 0,
+		type = 108,
+		holeNum = 0,
+		showRare = 4,
+		interactable = true,
+		iconPath = "8180109",
+		unremovable = false,
+		rare = 4,
+		id = 8180209,
+		isUnique = false,
+		versions = {
+			103
+		},
+		seasons = {},
+		tags = {
+			108
+		},
+		shapeParam = {
+			shapeArea = {
+				Vector2(0, 1),
+				Vector2(0, 0)
+			},
+			effectArea = {
+				Vector2(0, 2),
+				Vector2(-1, 1),
+				Vector2(1, 1),
+				Vector2(0, -1),
+				Vector2(-1, 0),
+				Vector2(1, 0)
+			},
+			dragPos = Vector2(0, 0),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(1, 2),
+			leftTopPos = Vector2(0, 1),
+			shapeMatrix = {
+				{
+					1
+				},
+				{
+					1
+				}
+			}
+		}
+	},
+	{
+		ownerId = 0,
+		type = 108,
+		holeNum = 2,
+		showRare = 4,
+		interactable = true,
+		iconPath = "8180110",
+		unremovable = false,
+		rare = 4,
+		id = 8180210,
+		isUnique = false,
+		versions = {
+			103
+		},
+		seasons = {},
+		tags = {
+			108
+		},
+		shapeParam = {
+			shapeArea = {
+				Vector2(0, 1),
+				Vector2(0, 0)
+			},
+			effectArea = {
+				Vector2(0, 2),
+				Vector2(-1, 1),
+				Vector2(1, 1),
+				Vector2(0, -1),
+				Vector2(-1, 0),
+				Vector2(1, 0)
+			},
+			dragPos = Vector2(0, 0),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(1, 2),
+			leftTopPos = Vector2(0, 1),
+			shapeMatrix = {
+				{
+					1
+				},
+				{
+					1
+				}
+			}
+		}
+	},
+	{
+		ownerId = 0,
+		type = 108,
+		holeNum = 0,
+		showRare = 4,
+		interactable = true,
+		iconPath = "8180111",
+		unremovable = false,
+		rare = 4,
+		id = 8180211,
+		isUnique = false,
+		versions = {
+			103
+		},
+		seasons = {},
+		tags = {
+			108
+		},
+		shapeParam = {
+			shapeArea = {
+				Vector2(0, 0)
+			},
+			effectArea = {
+				Vector2(0, 1),
+				Vector2(0, -1),
+				Vector2(-1, 0),
+				Vector2(1, 0)
+			},
+			dragPos = Vector2(-1, -1),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(1, 1),
+			leftTopPos = Vector2(0, 0),
+			shapeMatrix = {
+				{
+					1
+				}
+			}
+		}
+	},
+	{
+		ownerId = 0,
+		type = 108,
+		holeNum = 0,
+		showRare = 4,
+		interactable = true,
+		iconPath = "8180112",
+		unremovable = false,
+		rare = 4,
+		id = 8180212,
+		isUnique = false,
+		versions = {
+			103
+		},
+		seasons = {},
+		tags = {
+			108
+		},
+		shapeParam = {
+			shapeArea = {
+				Vector2(-1, 0),
+				Vector2(0, 0),
+				Vector2(1, 0)
+			},
+			effectArea = {
+				Vector2(-1, 1),
+				Vector2(-1, -1),
+				Vector2(-2, 0),
+				Vector2(0, 1),
+				Vector2(0, -1),
+				Vector2(1, 1),
+				Vector2(1, -1),
+				Vector2(2, 0)
+			},
+			dragPos = Vector2(-1, 0),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(3, 1),
+			leftTopPos = Vector2(-1, 0),
+			shapeMatrix = {
+				{
+					1,
+					1,
+					1
+				}
+			}
+		}
+	},
+	{
+		ownerId = 0,
+		type = 0,
+		holeNum = 0,
+		showRare = 0,
+		interactable = false,
+		iconPath = "",
+		unremovable = false,
+		rare = 0,
+		id = 8180301,
+		isUnique = false,
+		versions = {
+			103
+		},
+		seasons = {},
+		tags = {},
+		shapeParam = {
+			shapeArea = {},
+			effectArea = {},
+			dragPos = Vector2(5, 5),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(0, 0),
+			leftTopPos = Vector2(0, 0),
+			shapeMatrix = {
+				{
+					0
+				}
+			}
+		}
+	},
+	{
+		ownerId = 0,
+		type = 0,
+		holeNum = 0,
+		showRare = 0,
+		interactable = false,
+		iconPath = "",
+		unremovable = false,
+		rare = 0,
+		id = 8180302,
+		isUnique = false,
+		versions = {
+			103
+		},
+		seasons = {},
+		tags = {},
+		shapeParam = {
+			shapeArea = {},
+			effectArea = {},
+			dragPos = Vector2(5, 5),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(0, 0),
+			leftTopPos = Vector2(0, 0),
+			shapeMatrix = {
+				{
+					0
+				}
+			}
+		}
+	},
+	{
+		ownerId = 0,
+		type = 0,
+		holeNum = 0,
+		showRare = 0,
+		interactable = false,
+		iconPath = "",
+		unremovable = false,
+		rare = 0,
+		id = 8180303,
+		isUnique = false,
+		versions = {
+			103
+		},
+		seasons = {},
+		tags = {},
+		shapeParam = {
+			shapeArea = {},
+			effectArea = {},
+			dragPos = Vector2(5, 5),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(0, 0),
+			leftTopPos = Vector2(0, 0),
+			shapeMatrix = {
+				{
+					0
+				}
+			}
+		}
+	},
+	{
+		ownerId = 0,
+		type = 0,
+		holeNum = 0,
+		showRare = 0,
+		interactable = false,
+		iconPath = "",
+		unremovable = false,
+		rare = 0,
+		id = 8180304,
+		isUnique = false,
+		versions = {
+			103
+		},
+		seasons = {},
+		tags = {},
+		shapeParam = {
+			shapeArea = {},
+			effectArea = {},
+			dragPos = Vector2(5, 5),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(0, 0),
+			leftTopPos = Vector2(0, 0),
+			shapeMatrix = {
+				{
+					0
+				}
+			}
+		}
+	},
+	{
+		ownerId = 0,
+		type = 0,
+		holeNum = 0,
+		showRare = 0,
+		interactable = false,
+		iconPath = "",
+		unremovable = false,
+		rare = 0,
+		id = 8180305,
+		isUnique = false,
+		versions = {
+			103
+		},
+		seasons = {},
+		tags = {},
+		shapeParam = {
+			shapeArea = {},
+			effectArea = {},
+			dragPos = Vector2(5, 5),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(0, 0),
+			leftTopPos = Vector2(0, 0),
+			shapeMatrix = {
+				{
+					0
+				}
+			}
+		}
+	},
+	{
+		ownerId = 0,
+		type = 0,
+		holeNum = 0,
+		showRare = 0,
+		interactable = false,
+		iconPath = "",
+		unremovable = false,
+		rare = 0,
+		id = 8180306,
+		isUnique = false,
+		versions = {
+			103
+		},
+		seasons = {},
+		tags = {},
+		shapeParam = {
+			shapeArea = {},
+			effectArea = {},
+			dragPos = Vector2(5, 5),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(0, 0),
+			leftTopPos = Vector2(0, 0),
+			shapeMatrix = {
+				{
+					0
+				}
+			}
+		}
+	},
+	{
+		ownerId = 0,
+		type = 0,
+		holeNum = 0,
+		showRare = 0,
+		interactable = false,
+		iconPath = "",
+		unremovable = false,
+		rare = 0,
+		id = 8180307,
+		isUnique = false,
+		versions = {
+			103
+		},
+		seasons = {},
+		tags = {},
+		shapeParam = {
+			shapeArea = {},
+			effectArea = {},
+			dragPos = Vector2(5, 5),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(0, 0),
+			leftTopPos = Vector2(0, 0),
+			shapeMatrix = {
+				{
+					0
+				}
+			}
+		}
+	},
+	{
+		ownerId = 0,
+		type = 0,
+		holeNum = 0,
+		showRare = 0,
+		interactable = false,
+		iconPath = "",
+		unremovable = false,
+		rare = 0,
+		id = 8180308,
+		isUnique = false,
+		versions = {
+			103
+		},
+		seasons = {},
+		tags = {},
+		shapeParam = {
+			shapeArea = {},
+			effectArea = {},
+			dragPos = Vector2(5, 5),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(0, 0),
+			leftTopPos = Vector2(0, 0),
+			shapeMatrix = {
+				{
+					0
+				}
+			}
+		}
+	},
+	{
+		ownerId = 0,
+		type = 0,
+		holeNum = 0,
+		showRare = 0,
+		interactable = false,
+		iconPath = "",
+		unremovable = false,
+		rare = 0,
+		id = 8180309,
+		isUnique = false,
+		versions = {
+			103
+		},
+		seasons = {},
+		tags = {},
+		shapeParam = {
+			shapeArea = {},
+			effectArea = {},
+			dragPos = Vector2(5, 5),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(0, 0),
+			leftTopPos = Vector2(0, 0),
+			shapeMatrix = {
+				{
+					0
+				}
+			}
+		}
+	},
+	{
+		ownerId = 0,
+		type = 0,
+		holeNum = 0,
+		showRare = 0,
+		interactable = false,
+		iconPath = "",
+		unremovable = false,
+		rare = 0,
+		id = 8180310,
+		isUnique = false,
+		versions = {
+			103
+		},
+		seasons = {},
+		tags = {},
+		shapeParam = {
+			shapeArea = {},
+			effectArea = {},
+			dragPos = Vector2(5, 5),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(0, 0),
+			leftTopPos = Vector2(0, 0),
+			shapeMatrix = {
+				{
+					0
+				}
+			}
+		}
+	},
+	{
+		ownerId = 0,
+		type = 0,
+		holeNum = 0,
+		showRare = 0,
+		interactable = false,
+		iconPath = "",
+		unremovable = false,
+		rare = 0,
+		id = 8180311,
+		isUnique = false,
+		versions = {
+			103
+		},
+		seasons = {},
+		tags = {},
+		shapeParam = {
+			shapeArea = {},
+			effectArea = {},
+			dragPos = Vector2(5, 5),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(0, 0),
+			leftTopPos = Vector2(0, 0),
+			shapeMatrix = {
+				{
+					0
+				}
+			}
+		}
+	},
+	{
+		ownerId = 0,
+		type = 0,
+		holeNum = 0,
+		showRare = 0,
+		interactable = false,
+		iconPath = "",
+		unremovable = false,
+		rare = 0,
+		id = 8180312,
+		isUnique = false,
+		versions = {
+			103
+		},
+		seasons = {},
+		tags = {},
+		shapeParam = {
+			shapeArea = {},
+			effectArea = {},
+			dragPos = Vector2(5, 5),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(0, 0),
+			leftTopPos = Vector2(0, 0),
+			shapeMatrix = {
+				{
+					0
+				}
+			}
+		}
+	},
+	{
+		ownerId = 0,
+		type = 0,
+		holeNum = 0,
+		showRare = 0,
+		interactable = false,
+		iconPath = "",
+		unremovable = false,
+		rare = 0,
+		id = 8180313,
+		isUnique = false,
+		versions = {
+			103
+		},
+		seasons = {},
+		tags = {},
+		shapeParam = {
+			shapeArea = {},
+			effectArea = {},
+			dragPos = Vector2(5, 5),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(0, 0),
+			leftTopPos = Vector2(0, 0),
+			shapeMatrix = {
+				{
+					0
+				}
+			}
+		}
+	},
+	{
+		ownerId = 0,
+		type = 0,
+		holeNum = 0,
+		showRare = 0,
+		interactable = false,
+		iconPath = "",
+		unremovable = false,
+		rare = 0,
+		id = 8180314,
+		isUnique = false,
+		versions = {
+			103
+		},
+		seasons = {},
+		tags = {},
+		shapeParam = {
+			shapeArea = {},
+			effectArea = {},
+			dragPos = Vector2(5, 5),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(0, 0),
+			leftTopPos = Vector2(0, 0),
+			shapeMatrix = {
+				{
+					0
+				}
+			}
+		}
+	},
+	{
+		ownerId = 0,
+		type = 0,
+		holeNum = 0,
+		showRare = 0,
+		interactable = false,
+		iconPath = "",
+		unremovable = false,
+		rare = 0,
+		id = 8180315,
+		isUnique = false,
+		versions = {
+			103
+		},
+		seasons = {},
+		tags = {},
+		shapeParam = {
+			shapeArea = {},
+			effectArea = {},
+			dragPos = Vector2(5, 5),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(0, 0),
+			leftTopPos = Vector2(0, 0),
+			shapeMatrix = {
+				{
+					0
+				}
+			}
+		}
+	},
+	{
+		ownerId = 0,
+		type = 0,
+		holeNum = 0,
+		showRare = 0,
+		interactable = false,
+		iconPath = "",
+		unremovable = false,
+		rare = 0,
+		id = 8180316,
+		isUnique = false,
+		versions = {
+			103
+		},
+		seasons = {},
+		tags = {},
+		shapeParam = {
+			shapeArea = {},
+			effectArea = {},
+			dragPos = Vector2(5, 5),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(0, 0),
+			leftTopPos = Vector2(0, 0),
+			shapeMatrix = {
+				{
+					0
+				}
+			}
+		}
+	},
+	{
+		ownerId = 0,
+		type = 0,
+		holeNum = 0,
+		showRare = 0,
+		interactable = false,
+		iconPath = "",
+		unremovable = false,
+		rare = 0,
+		id = 8180317,
+		isUnique = false,
+		versions = {
+			103
+		},
+		seasons = {},
+		tags = {},
+		shapeParam = {
+			shapeArea = {},
+			effectArea = {},
+			dragPos = Vector2(5, 5),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(0, 0),
+			leftTopPos = Vector2(0, 0),
+			shapeMatrix = {
+				{
+					0
+				}
+			}
+		}
+	},
+	{
+		ownerId = 0,
+		type = 0,
+		holeNum = 0,
+		showRare = 0,
+		interactable = false,
+		iconPath = "",
+		unremovable = false,
+		rare = 0,
+		id = 8180318,
+		isUnique = false,
+		versions = {
+			103
+		},
+		seasons = {},
+		tags = {},
+		shapeParam = {
+			shapeArea = {},
+			effectArea = {},
+			dragPos = Vector2(5, 5),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(0, 0),
+			leftTopPos = Vector2(0, 0),
+			shapeMatrix = {
+				{
+					0
+				}
+			}
+		}
+	},
+	{
+		ownerId = 0,
+		type = 0,
+		holeNum = 0,
+		showRare = 0,
+		interactable = false,
+		iconPath = "",
+		unremovable = false,
+		rare = 0,
+		id = 8180319,
+		isUnique = false,
+		versions = {
+			103
+		},
+		seasons = {},
+		tags = {},
+		shapeParam = {
+			shapeArea = {},
+			effectArea = {},
+			dragPos = Vector2(5, 5),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(0, 0),
+			leftTopPos = Vector2(0, 0),
+			shapeMatrix = {
+				{
+					0
+				}
+			}
+		}
+	},
+	{
+		ownerId = 0,
+		type = 0,
+		holeNum = 0,
+		showRare = 0,
+		interactable = false,
+		iconPath = "",
+		unremovable = false,
+		rare = 0,
+		id = 8180320,
+		isUnique = false,
+		versions = {
+			103
+		},
+		seasons = {},
+		tags = {},
+		shapeParam = {
+			shapeArea = {},
+			effectArea = {},
+			dragPos = Vector2(5, 5),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(0, 0),
+			leftTopPos = Vector2(0, 0),
+			shapeMatrix = {
+				{
+					0
+				}
+			}
+		}
+	},
+	{
+		ownerId = 0,
+		type = 0,
+		holeNum = 0,
+		showRare = 0,
+		interactable = false,
+		iconPath = "",
+		unremovable = false,
+		rare = 0,
+		id = 8180321,
+		isUnique = false,
+		versions = {
+			103
+		},
+		seasons = {},
+		tags = {},
+		shapeParam = {
+			shapeArea = {},
+			effectArea = {},
+			dragPos = Vector2(5, 5),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(0, 0),
+			leftTopPos = Vector2(0, 0),
+			shapeMatrix = {
+				{
+					0
+				}
+			}
+		}
+	},
+	{
+		ownerId = 0,
+		type = 0,
+		holeNum = 0,
+		showRare = 0,
+		interactable = false,
+		iconPath = "",
+		unremovable = false,
+		rare = 0,
+		id = 8180322,
+		isUnique = false,
+		versions = {
+			103
+		},
+		seasons = {},
+		tags = {},
+		shapeParam = {
+			shapeArea = {},
+			effectArea = {},
+			dragPos = Vector2(5, 5),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(0, 0),
+			leftTopPos = Vector2(0, 0),
+			shapeMatrix = {
+				{
+					0
+				}
+			}
+		}
+	},
+	{
+		ownerId = 0,
+		type = 0,
+		holeNum = 0,
+		showRare = 0,
+		interactable = false,
+		iconPath = "",
+		unremovable = false,
+		rare = 0,
+		id = 8180323,
+		isUnique = false,
+		versions = {
+			103
+		},
+		seasons = {},
+		tags = {},
+		shapeParam = {
+			shapeArea = {},
+			effectArea = {},
+			dragPos = Vector2(5, 5),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(0, 0),
+			leftTopPos = Vector2(0, 0),
+			shapeMatrix = {
+				{
+					0
+				}
+			}
+		}
+	},
+	{
+		ownerId = 0,
+		type = 0,
+		holeNum = 0,
+		showRare = 0,
+		interactable = false,
+		iconPath = "",
+		unremovable = false,
+		rare = 0,
+		id = 8180324,
+		isUnique = false,
+		versions = {
+			103
+		},
+		seasons = {},
+		tags = {},
+		shapeParam = {
+			shapeArea = {},
+			effectArea = {},
+			dragPos = Vector2(5, 5),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(0, 0),
+			leftTopPos = Vector2(0, 0),
+			shapeMatrix = {
+				{
+					0
+				}
+			}
+		}
+	},
+	{
+		ownerId = 0,
+		type = 0,
+		holeNum = 0,
+		showRare = 0,
+		interactable = false,
+		iconPath = "",
+		unremovable = false,
+		rare = 0,
+		id = 8180325,
+		isUnique = false,
+		versions = {
+			103
+		},
+		seasons = {},
+		tags = {},
+		shapeParam = {
+			shapeArea = {},
+			effectArea = {},
+			dragPos = Vector2(5, 5),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(0, 0),
+			leftTopPos = Vector2(0, 0),
+			shapeMatrix = {
+				{
+					0
+				}
+			}
+		}
+	},
+	{
+		ownerId = 0,
+		type = 0,
+		holeNum = 0,
+		showRare = 0,
+		interactable = false,
+		iconPath = "",
+		unremovable = false,
+		rare = 0,
+		id = 8180326,
+		isUnique = false,
+		versions = {
+			103
+		},
+		seasons = {},
+		tags = {},
+		shapeParam = {
+			shapeArea = {},
+			effectArea = {},
+			dragPos = Vector2(5, 5),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(0, 0),
+			leftTopPos = Vector2(0, 0),
+			shapeMatrix = {
+				{
+					0
+				}
+			}
+		}
+	},
+	{
+		ownerId = 0,
+		type = 0,
+		holeNum = 0,
+		showRare = 0,
+		interactable = false,
+		iconPath = "",
+		unremovable = false,
+		rare = 0,
+		id = 8180327,
+		isUnique = false,
+		versions = {
+			103
+		},
+		seasons = {},
+		tags = {},
+		shapeParam = {
+			shapeArea = {},
+			effectArea = {},
+			dragPos = Vector2(5, 5),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(0, 0),
+			leftTopPos = Vector2(0, 0),
+			shapeMatrix = {
+				{
+					0
+				}
+			}
+		}
+	},
+	{
+		ownerId = 0,
+		type = 0,
+		holeNum = 0,
+		showRare = 0,
+		interactable = false,
+		iconPath = "",
+		unremovable = false,
+		rare = 0,
+		id = 8180328,
+		isUnique = false,
+		versions = {
+			103
+		},
+		seasons = {},
+		tags = {},
+		shapeParam = {
+			shapeArea = {},
+			effectArea = {},
+			dragPos = Vector2(5, 5),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(0, 0),
+			leftTopPos = Vector2(0, 0),
+			shapeMatrix = {
+				{
+					0
+				}
+			}
+		}
+	},
+	{
+		ownerId = 0,
+		type = 0,
+		holeNum = 0,
+		showRare = 0,
+		interactable = false,
+		iconPath = "",
+		unremovable = false,
+		rare = 0,
+		id = 8180329,
+		isUnique = false,
+		versions = {
+			103
+		},
+		seasons = {},
+		tags = {},
+		shapeParam = {
+			shapeArea = {},
+			effectArea = {},
+			dragPos = Vector2(5, 5),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(0, 0),
+			leftTopPos = Vector2(0, 0),
+			shapeMatrix = {
+				{
+					0
+				}
+			}
+		}
+	},
+	{
+		ownerId = 0,
+		type = 0,
+		holeNum = 0,
+		showRare = 0,
+		interactable = false,
+		iconPath = "",
+		unremovable = false,
+		rare = 0,
+		id = 8180330,
+		isUnique = false,
+		versions = {
+			103
+		},
+		seasons = {},
+		tags = {},
+		shapeParam = {
+			shapeArea = {},
+			effectArea = {},
+			dragPos = Vector2(5, 5),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(0, 0),
+			leftTopPos = Vector2(0, 0),
+			shapeMatrix = {
+				{
+					0
+				}
+			}
+		}
+	},
+	{
+		ownerId = 0,
+		type = 0,
+		holeNum = 0,
+		showRare = 0,
+		interactable = false,
+		iconPath = "",
+		unremovable = false,
+		rare = 0,
+		id = 8180331,
+		isUnique = false,
+		versions = {
+			103
+		},
+		seasons = {},
+		tags = {},
+		shapeParam = {
+			shapeArea = {},
+			effectArea = {},
+			dragPos = Vector2(5, 5),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(0, 0),
+			leftTopPos = Vector2(0, 0),
+			shapeMatrix = {
+				{
+					0
+				}
+			}
+		}
+	},
+	{
+		ownerId = 0,
+		type = 0,
+		holeNum = 0,
+		showRare = 0,
+		interactable = false,
+		iconPath = "",
+		unremovable = false,
+		rare = 0,
+		id = 8180332,
+		isUnique = false,
+		versions = {
+			103
+		},
+		seasons = {},
+		tags = {},
+		shapeParam = {
+			shapeArea = {},
+			effectArea = {},
+			dragPos = Vector2(5, 5),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(0, 0),
+			leftTopPos = Vector2(0, 0),
+			shapeMatrix = {
+				{
+					0
+				}
+			}
+		}
+	},
+	{
+		ownerId = 0,
+		type = 0,
+		holeNum = 0,
+		showRare = 0,
+		interactable = false,
+		iconPath = "",
+		unremovable = false,
+		rare = 0,
+		id = 8180333,
+		isUnique = false,
+		versions = {
+			103
+		},
+		seasons = {},
+		tags = {},
+		shapeParam = {
+			shapeArea = {},
+			effectArea = {},
+			dragPos = Vector2(5, 5),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(0, 0),
+			leftTopPos = Vector2(0, 0),
+			shapeMatrix = {
+				{
+					0
+				}
+			}
+		}
+	},
+	{
+		ownerId = 0,
+		type = 0,
+		holeNum = 0,
+		showRare = 0,
+		interactable = false,
+		iconPath = "",
+		unremovable = false,
+		rare = 0,
+		id = 8180334,
+		isUnique = false,
+		versions = {
+			103
+		},
+		seasons = {},
+		tags = {},
+		shapeParam = {
+			shapeArea = {},
+			effectArea = {},
+			dragPos = Vector2(5, 5),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(0, 0),
+			leftTopPos = Vector2(0, 0),
+			shapeMatrix = {
+				{
+					0
+				}
+			}
+		}
+	},
+	{
+		ownerId = 0,
+		type = 0,
+		holeNum = 0,
+		showRare = 0,
+		interactable = false,
+		iconPath = "",
+		unremovable = false,
+		rare = 0,
+		id = 8180335,
+		isUnique = false,
+		versions = {
+			103
+		},
+		seasons = {},
+		tags = {},
+		shapeParam = {
+			shapeArea = {},
+			effectArea = {},
+			dragPos = Vector2(5, 5),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(0, 0),
+			leftTopPos = Vector2(0, 0),
+			shapeMatrix = {
+				{
+					0
+				}
+			}
+		}
+	},
+	{
+		ownerId = 0,
+		type = 0,
+		holeNum = 0,
+		showRare = 0,
+		interactable = false,
+		iconPath = "",
+		unremovable = false,
+		rare = 0,
+		id = 8180336,
+		isUnique = false,
+		versions = {
+			103
+		},
+		seasons = {},
+		tags = {},
+		shapeParam = {
+			shapeArea = {},
+			effectArea = {},
+			dragPos = Vector2(5, 5),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(0, 0),
+			leftTopPos = Vector2(0, 0),
+			shapeMatrix = {
+				{
+					0
+				}
+			}
+		}
+	},
+	{
+		ownerId = 0,
+		type = 0,
+		holeNum = 0,
+		showRare = 0,
+		interactable = false,
+		iconPath = "",
+		unremovable = false,
+		rare = 0,
+		id = 8180401,
+		isUnique = false,
+		versions = {
+			103
+		},
+		seasons = {},
+		tags = {},
+		shapeParam = {
+			shapeArea = {},
+			effectArea = {},
+			dragPos = Vector2(5, 5),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(0, 0),
+			leftTopPos = Vector2(0, 0),
+			shapeMatrix = {
+				{
+					0
+				}
+			}
+		}
+	},
+	{
+		ownerId = 0,
+		type = 101,
+		holeNum = 0,
+		showRare = 4,
+		interactable = true,
+		iconPath = "8180501",
+		unremovable = false,
+		rare = 4,
+		id = 8180501,
+		isUnique = false,
+		versions = {},
+		seasons = {
+			1
+		},
+		tags = {
+			101,
+			6
+		},
+		shapeParam = {
+			shapeArea = {
+				Vector2(0, 0)
+			},
+			effectArea = {
+				Vector2(0, 1),
+				Vector2(0, -1),
+				Vector2(-1, 0),
+				Vector2(1, 0)
+			},
+			dragPos = Vector2(-1, -1),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(1, 1),
+			leftTopPos = Vector2(0, 0),
+			shapeMatrix = {
+				{
+					1
+				}
+			}
+		}
+	},
+	{
+		ownerId = 0,
+		type = 101,
+		holeNum = 0,
+		showRare = 4,
+		interactable = true,
+		iconPath = "8180502",
+		unremovable = false,
+		rare = 4,
+		id = 8180502,
+		isUnique = false,
+		versions = {},
+		seasons = {
+			1
+		},
+		tags = {
+			101,
+			6
+		},
+		shapeParam = {
+			shapeArea = {
+				Vector2(0, 0)
+			},
+			effectArea = {
+				Vector2(0, 1),
+				Vector2(0, -1),
+				Vector2(-1, 0),
+				Vector2(1, 0)
+			},
+			dragPos = Vector2(-1, -1),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(1, 1),
+			leftTopPos = Vector2(0, 0),
+			shapeMatrix = {
+				{
+					1
+				}
+			}
+		}
+	},
+	{
+		ownerId = 0,
+		type = 101,
+		holeNum = 0,
+		showRare = 4,
+		interactable = true,
+		iconPath = "8180503",
+		unremovable = false,
+		rare = 4,
+		id = 8180503,
+		isUnique = false,
+		versions = {},
+		seasons = {
+			1
+		},
+		tags = {
+			101,
+			6
+		},
+		shapeParam = {
+			shapeArea = {
+				Vector2(0, 0)
+			},
+			effectArea = {
+				Vector2(0, 1),
+				Vector2(0, -1),
+				Vector2(-1, 0),
+				Vector2(1, 0)
+			},
+			dragPos = Vector2(-1, -1),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(1, 1),
+			leftTopPos = Vector2(0, 0),
+			shapeMatrix = {
+				{
+					1
+				}
+			}
+		}
+	},
+	{
+		ownerId = 0,
+		type = 0,
+		holeNum = 0,
+		showRare = 0,
+		interactable = false,
+		iconPath = "",
+		unremovable = false,
+		rare = 0,
+		id = 8180601,
+		isUnique = false,
+		versions = {},
+		seasons = {},
+		tags = {},
+		shapeParam = {
+			shapeArea = {},
+			effectArea = {},
+			dragPos = Vector2(5, 5),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(0, 0),
+			leftTopPos = Vector2(0, 0),
+			shapeMatrix = {
+				{
+					0
+				}
+			}
+		}
+	},
+	{
+		ownerId = 0,
+		type = 0,
+		holeNum = 0,
+		showRare = 0,
+		interactable = false,
+		iconPath = "",
+		unremovable = false,
+		rare = 0,
+		id = 8180602,
+		isUnique = false,
+		versions = {},
+		seasons = {},
+		tags = {},
+		shapeParam = {
+			shapeArea = {},
+			effectArea = {},
+			dragPos = Vector2(5, 5),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(0, 0),
+			leftTopPos = Vector2(0, 0),
+			shapeMatrix = {
+				{
+					0
+				}
+			}
+		}
+	},
+	{
+		ownerId = 0,
+		type = 0,
+		holeNum = 0,
+		showRare = 0,
+		interactable = false,
+		iconPath = "",
+		unremovable = false,
+		rare = 0,
+		id = 8180603,
+		isUnique = false,
+		versions = {},
+		seasons = {},
+		tags = {},
+		shapeParam = {
+			shapeArea = {},
+			effectArea = {},
+			dragPos = Vector2(5, 5),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(0, 0),
+			leftTopPos = Vector2(0, 0),
+			shapeMatrix = {
+				{
+					0
+				}
+			}
+		}
+	},
+	{
+		ownerId = 0,
+		type = 0,
+		holeNum = 0,
+		showRare = 0,
+		interactable = false,
+		iconPath = "",
+		unremovable = false,
+		rare = 0,
+		id = 8180604,
+		isUnique = false,
+		versions = {},
+		seasons = {},
+		tags = {},
+		shapeParam = {
+			shapeArea = {},
+			effectArea = {},
+			dragPos = Vector2(5, 5),
+			iconOffset = Vector2(0, 0),
+			shapeSize = Vector2(0, 0),
+			leftTopPos = Vector2(0, 0),
+			shapeMatrix = {
+				{
+					0
+				}
+			}
+		}
+	},
+	{
 		ownerId = 0,
 		type = 103,
 		holeNum = 1,
@@ -10750,11 +14181,11 @@
 		ownerId = 0,
 		type = 102,
 		holeNum = 0,
-		showRare = 3,
+		showRare = 4,
 		interactable = true,
 		iconPath = "8320025",
 		unremovable = false,
-		rare = 3,
+		rare = 4,
 		id = 8320025,
 		isUnique = false,
 		versions = {},
@@ -13849,7 +17280,8 @@
 		id = 8360054,
 		isUnique = false,
 		versions = {
-			101
+			101,
+			102
 		},
 		seasons = {
 			1

@@ -110,8 +110,8 @@ function var_0_0.initCoverPageUI(arg_9_0)
 
 	arg_9_0._simageCover:LoadImage(var_9_0)
 
-	arg_9_0._txttitleDesc.text = luaLang("activity123_overseas_11700_1")
-	arg_9_0._txtcoverTitle.text = luaLang("activity123_overseas_11700_2")
+	arg_9_0._txttitleDesc.text = Season123Config.instance:getSeasonConstLangStr(arg_9_0.actId, Activity123Enum.Const.StoryCoverDesc)
+	arg_9_0._txtcoverTitle.text = Season123Config.instance:getSeasonConstLangStr(arg_9_0.actId, Activity123Enum.Const.StoryCoverTitle)
 end
 
 function var_0_0.refreshDetailPageUI(arg_10_0)

@@ -158,8 +158,9 @@ function var_0_0.refreshRedAndBlueArea(arg_7_0)
 
 	local var_7_0 = arg_7_0.fightBeginRoundOp and arg_7_0.fightBeginRoundOp.cardColor
 
-	arg_7_0._cardItem:setActiveRed(var_7_0 == FightEnum.CardColor.Both or var_7_0 == FightEnum.CardColor.Red)
-	arg_7_0._cardItem:setActiveBlue(var_7_0 == FightEnum.CardColor.Both or var_7_0 == FightEnum.CardColor.Blue)
+	arg_7_0._cardItem:setActiveRed(var_7_0 == FightEnum.CardColor.Red)
+	arg_7_0._cardItem:setActiveBlue(var_7_0 == FightEnum.CardColor.Blue)
+	arg_7_0._cardItem:setActiveBoth(var_7_0 == FightEnum.CardColor.Both)
 end
 
 function var_0_0.refreshASFDEnergy(arg_8_0)

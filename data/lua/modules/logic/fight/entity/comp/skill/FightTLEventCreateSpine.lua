@@ -70,7 +70,7 @@ function var_0_0.handleSkillEvent(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
 		var_3_5 = -var_3_5
 	end
 
-	local var_3_14 = arg_3_0:_getHangPointGO(arg_3_1, var_3_12)
+	local var_3_14 = arg_3_0:_getHangPointGO(arg_3_1, var_3_12, arg_3_3)
 	local var_3_15 = 0
 
 	if var_3_9 == -1 then
@@ -147,55 +147,79 @@ end
 function var_0_0._createSpine(arg_7_0, arg_7_1, arg_7_2, arg_7_3, arg_7_4, arg_7_5, arg_7_6, arg_7_7, arg_7_8, arg_7_9, arg_7_10)
 	local var_7_0 = GameSceneMgr.instance:getCurScene().entityMgr
 	local var_7_1 = arg_7_0._attacker:getSide()
-	local var_7_2 = var_7_0:buildTempSpineByName(arg_7_1, arg_7_2, var_7_1, arg_7_3 == 1)
+	local var_7_2 = {}
 
-	var_7_2.variantHeart:setEntity(arg_7_0._attacker)
-	var_7_2:setScale(arg_7_4)
+	if arg_7_0._paramsArr[17] == "1" then
+		var_7_2 = {
+			ingoreRainEffect = true
+		}
+	end
+
+	local var_7_3 = var_7_0:buildTempSpineByName(arg_7_1, arg_7_2, var_7_1, arg_7_3 == 1, nil, var_7_2)
+
+	var_7_3.variantHeart:setEntity(arg_7_0._attacker)
+	var_7_3:setScale(arg_7_4)
 
 	if arg_7_8 then
-		gohelper.addChild(arg_7_8, var_7_2.go)
+		gohelper.addChild(arg_7_8, var_7_3.go)
 	end
 
 	if arg_7_0._paramsArr[7] == "3" or arg_7_0._paramsArr[7] == "4" then
-		transformhelper.setPos(var_7_2.go.transform, arg_7_5, arg_7_6, arg_7_7)
+		transformhelper.setPos(var_7_3.go.transform, arg_7_5, arg_7_6, arg_7_7)
 	else
-		transformhelper.setLocalPos(var_7_2.go.transform, arg_7_5, arg_7_6, arg_7_7)
+		transformhelper.setLocalPos(var_7_3.go.transform, arg_7_5, arg_7_6, arg_7_7)
 	end
 
-	var_7_2:setRenderOrder(arg_7_9)
+	var_7_3:setRenderOrder(arg_7_9)
 
 	if not string.nilorempty(arg_7_10) then
-		var_7_2.spine:play(arg_7_10)
+		var_7_3.spine:play(arg_7_10)
 
 		if arg_7_0._attacker and arg_7_0._attacker.skill and arg_7_0._attacker.skill:sameSkillPlaying() and not string.nilorempty(arg_7_0._paramsArr[12]) then
-			var_7_2.spine._skeletonAnim:Jump2Time(tonumber(arg_7_0._paramsArr[12]))
+			var_7_3.spine._skeletonAnim:Jump2Time(tonumber(arg_7_0._paramsArr[12]))
 		end
 	end
 
 	if arg_7_0._paramsArr[14] == "1" then
-		FightController.instance:dispatchEvent(FightEvent.EntrustTempEntity, var_7_2)
+		FightController.instance:dispatchEvent(FightEvent.EntrustTempEntity, var_7_3)
 	end
 
 	if not string.nilorempty(arg_7_0._paramsArr[15]) then
-		GameSceneMgr.instance:getCurScene().entityMgr:removeUnitData(var_7_2:getTag(), var_7_2.id)
-		FightMsgMgr.sendMsg(FightMsgId.SetBossEvolution, var_7_2, tonumber(arg_7_0._paramsArr[15]))
-		FightController.instance:dispatchEvent(FightEvent.SetBossEvolution, var_7_2, tonumber(arg_7_0._paramsArr[15]))
+		GameSceneMgr.instance:getCurScene().entityMgr:removeUnitData(var_7_3:getTag(), var_7_3.id)
+		FightMsgMgr.sendMsg(FightMsgId.SetBossEvolution, var_7_3, tonumber(arg_7_0._paramsArr[15]))
+		FightController.instance:dispatchEvent(FightEvent.SetBossEvolution, var_7_3, tonumber(arg_7_0._paramsArr[15]))
 	end
 
-	table.insert(arg_7_0._spineEntityList, var_7_2)
+	table.insert(arg_7_0._spineEntityList, var_7_3)
 end
 
-function var_0_0._getHangPointGO(arg_8_0, arg_8_1, arg_8_2)
+function var_0_0._getHangPointGO(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
+	local var_8_0 = arg_8_3[16]
+
+	if not string.nilorempty(var_8_0) then
+		local var_8_1 = CameraMgr.instance:getCameraRootGO()
+		local var_8_2 = string.split(var_8_0, "#")
+		local var_8_3 = var_8_2[arg_8_0._attacker:getSide()] or var_8_2[1]
+
+		if var_8_3 then
+			local var_8_4 = gohelper.findChild(var_8_1, var_8_3)
+
+			if var_8_4 then
+				return var_8_4
+			end
+		end
+	end
+
 	if arg_8_2 == 2 then
 		return CameraMgr.instance:getCameraTraceGO()
 	elseif arg_8_2 == 3 then
-		local var_8_0 = FightHelper.getEntity(arg_8_1.fromId)
+		local var_8_5 = FightHelper.getEntity(arg_8_1.fromId)
 
-		return var_8_0 and var_8_0.go
+		return var_8_5 and var_8_5.go
 	elseif arg_8_2 == 4 then
-		local var_8_1 = FightHelper.getEntity(arg_8_1.toId)
+		local var_8_6 = FightHelper.getEntity(arg_8_1.toId)
 
-		return var_8_1 and var_8_1.go
+		return var_8_6 and var_8_6.go
 	end
 end
 

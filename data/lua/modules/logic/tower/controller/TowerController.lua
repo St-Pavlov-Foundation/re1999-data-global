@@ -102,7 +102,11 @@ function var_0_0.openBossTowerEpisodeView(arg_10_0, arg_10_1, arg_10_2, arg_10_3
 			else
 				var_10_5.episodeConfig = var_10_0:getEpisodeConfig(arg_10_2, var_10_2)
 
-				ViewMgr.instance:openView(ViewName.TowerBossEpisodeView, var_10_5)
+				if var_10_5.episodeConfig.openRound > 0 then
+					ViewMgr.instance:openView(ViewName.TowerBossSpEpisodeView, var_10_5)
+				else
+					ViewMgr.instance:openView(ViewName.TowerBossEpisodeView, var_10_5)
+				end
 			end
 		else
 			ViewMgr.instance:openView(ViewName.TowerBossEpisodeView, var_10_5)

@@ -596,5 +596,18 @@
     "showcolor": 0,
     "icon": "",
     "sortId": 0
+  },
+  {
+    "id": 221,
+    "attrType": "bigSkillRate",
+    "type": 3,
+    "name": "language_10071538",
+    "desc": "language_10071539",
+    "isShowTips": 0,
+    "isShow": 0,
+    "showType": 1,
+    "showcolor": 0,
+    "icon": "",
+    "sortId": 0
   }
 ]

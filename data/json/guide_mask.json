@@ -388,5 +388,35 @@
     "uiOffset4": "",
     "uiInfo4": "",
     "goPath4": ""
+  },
+  {
+    "id": 2610107,
+    "uiOffset1": "0#0",
+    "uiInfo1": "2#171#241#1#1",
+    "goPath1": "UIRoot/POPUP_TOP/XugoujiGameView/#go_cameraMain/Middle/Middle/#scroll_FileList/Viewport/#go_Content/1022/#image_RoleBG",
+    "uiOffset2": "",
+    "uiInfo2": "",
+    "goPath2": "",
+    "uiOffset3": "",
+    "uiInfo3": "",
+    "goPath3": "",
+    "uiOffset4": "",
+    "uiInfo4": "",
+    "goPath4": ""
+  },
+  {
+    "id": 2610303,
+    "uiOffset1": "0#0",
+    "uiInfo1": "2#562#307#1#1",
+    "goPath1": "UIRoot/POPUP_TOP/XugoujiGameView/#go_cameraMain/Right/Enemy/#go_ViewSkillTips/image_TipsBG",
+    "uiOffset2": "",
+    "uiInfo2": "",
+    "goPath2": "",
+    "uiOffset3": "",
+    "uiInfo3": "",
+    "goPath3": "",
+    "uiOffset4": "",
+    "uiInfo4": "",
+    "goPath4": ""
   }
 ]

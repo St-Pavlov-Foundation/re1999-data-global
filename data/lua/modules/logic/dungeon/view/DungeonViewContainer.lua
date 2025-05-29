@@ -8,15 +8,17 @@ function var_0_0.buildViews(arg_1_0)
 
 	var_1_1:stopOpenDefaultTab(true)
 	var_1_1:setDynamicNodeContainers({
-		"#go_weekwalk",
-		"#go_explore",
-		"#go_permanent"
+		[DungeonEnum.DungeonViewTabEnum.WeekWalk] = "#go_weekwalk",
+		[DungeonEnum.DungeonViewTabEnum.Explore] = "#go_explore",
+		[DungeonEnum.DungeonViewTabEnum.Permanent] = "#go_permanent",
+		[DungeonEnum.DungeonViewTabEnum.WeekWalk_2] = "#go_weekwalk"
 	})
 	var_1_1:setDynamicNodeResHandlers({
-		[2] = var_0_0._getExploreRes
+		[DungeonEnum.DungeonViewTabEnum.Explore] = var_0_0._getExploreRes
 	})
 	table.insert(var_1_0, var_1_1)
 
+	arg_1_0._dynamicGroup = var_1_1
 	arg_1_0._dungeonViewAudio = DungeonViewAudio.New()
 
 	table.insert(var_1_0, arg_1_0._dungeonViewAudio)
@@ -99,9 +101,10 @@ function var_0_0.buildTabViews(arg_8_0, arg_8_1)
 		arg_8_0._exploreView = DungeonExploreView.New()
 
 		return {
-			DungeonWeekWalkView.New(),
-			arg_8_0._exploreView,
-			PermanentMainView.New()
+			[DungeonEnum.DungeonViewTabEnum.WeekWalk] = DungeonWeekWalkView.New(),
+			[DungeonEnum.DungeonViewTabEnum.Explore] = arg_8_0._exploreView,
+			[DungeonEnum.DungeonViewTabEnum.Permanent] = PermanentMainView.New(),
+			[DungeonEnum.DungeonViewTabEnum.WeekWalk_2] = DungeonWeekWalk_2View.New()
 		}
 	end
 end
@@ -114,15 +117,19 @@ function var_0_0.switchTab(arg_10_0, arg_10_1)
 	arg_10_0:dispatchEvent(ViewEvent.ToSwitchTab, 2, arg_10_1)
 end
 
-function var_0_0.onContainerOpenFinish(arg_11_0)
-	arg_11_0._navigateButtonView:resetOnCloseViewAudio()
+function var_0_0.destoryTab(arg_11_0, arg_11_1)
+	arg_11_0._dynamicGroup:destoryTab(arg_11_1)
 end
 
-function var_0_0.setOverrideClose(arg_12_0, arg_12_1, arg_12_2)
-	arg_12_0._navigateButtonView:setOverrideClose(arg_12_1, arg_12_2)
+function var_0_0.onContainerOpenFinish(arg_12_0)
+	arg_12_0._navigateButtonView:resetOnCloseViewAudio()
 end
 
-function var_0_0._closeCallback(arg_13_0)
+function var_0_0.setOverrideClose(arg_13_0, arg_13_1, arg_13_2)
+	arg_13_0._navigateButtonView:setOverrideClose(arg_13_1, arg_13_2)
+end
+
+function var_0_0._closeCallback(arg_14_0)
 	if GuideModel.instance:isFlagEnable(GuideModel.GuideFlag.DontOpenMain) then
 		if ViewMgr.instance:isOpen(ViewName.MainView) then
 			ViewMgr.instance:closeView(ViewName.MainView)
@@ -132,21 +139,21 @@ function var_0_0._closeCallback(arg_13_0)
 	end
 end
 
-function var_0_0.setNavigateButtonViewLight(arg_14_0, arg_14_1)
-	if arg_14_0._navigateButtonView then
-		arg_14_0._navigateButtonView:setLight(arg_14_1)
-	end
-end
-
-function var_0_0.setNavigateButtonViewHelpId(arg_15_0)
+function var_0_0.setNavigateButtonViewLight(arg_15_0, arg_15_1)
 	if arg_15_0._navigateButtonView then
-		arg_15_0._navigateButtonView:setHelpId(HelpEnum.HelpId.WeekWalk)
+		arg_15_0._navigateButtonView:setLight(arg_15_1)
 	end
 end
 
-function var_0_0.resetNavigateButtonViewHelpId(arg_16_0)
+function var_0_0.setNavigateButtonViewHelpId(arg_16_0)
 	if arg_16_0._navigateButtonView then
-		arg_16_0._navigateButtonView:hideHelpIcon()
+		arg_16_0._navigateButtonView:setHelpId(HelpEnum.HelpId.WeekWalk)
+	end
+end
+
+function var_0_0.resetNavigateButtonViewHelpId(arg_17_0)
+	if arg_17_0._navigateButtonView then
+		arg_17_0._navigateButtonView:hideHelpIcon()
 	end
 end
 

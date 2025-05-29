@@ -75,11 +75,19 @@ function var_0_0.initRedDot(arg_8_0)
 		return
 	end
 
-	arg_8_0.actId = VersionActivity2_5Enum.ActivityId.Reactivity
+	local var_8_0 = arg_8_0.tabContainer:getCurTabId()
 
-	local var_8_0 = ActivityConfig.instance:getActivityCo(arg_8_0.actId)
+	arg_8_0.actId = (arg_8_0.viewParam and arg_8_0.viewParam.activityIdList or {})[var_8_0]
 
-	RedDotController.instance:addRedDot(arg_8_0._goreddot, var_8_0.redDotId)
+	if not arg_8_0.actId then
+		logError("ReactivityEnterview activity id is nil")
+
+		return
+	end
+
+	local var_8_1 = ActivityConfig.instance:getActivityCo(arg_8_0.actId)
+
+	RedDotController.instance:addRedDot(arg_8_0._goreddot, var_8_1.redDotId)
 end
 
 function var_0_0._onRefreshRedDot(arg_9_0)

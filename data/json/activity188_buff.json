@@ -1,0 +1,38 @@
+[
+  {
+    "activityId": 12605,
+    "buffId": 100,
+    "laminate": 2,
+    "maxLayer": 10,
+    "name": "language_10006965",
+    "desc": "language_10072573",
+    "icon": "3205"
+  },
+  {
+    "activityId": 12605,
+    "buffId": 101,
+    "laminate": 0,
+    "maxLayer": 10,
+    "name": "language_10072574",
+    "desc": "language_10072575",
+    "icon": "4201"
+  },
+  {
+    "activityId": 12605,
+    "buffId": 102,
+    "laminate": 1,
+    "maxLayer": 10,
+    "name": "language_10015499",
+    "desc": "language_10072576",
+    "icon": "4102"
+  },
+  {
+    "activityId": 12605,
+    "buffId": 103,
+    "laminate": 1,
+    "maxLayer": 10,
+    "name": "language_10015341",
+    "desc": "language_10072577",
+    "icon": "5304"
+  }
+]

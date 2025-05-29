@@ -44,6 +44,8 @@ function var_0_0._btncategoryOnClick(arg_7_0)
 end
 
 function var_0_0._editableInitView(arg_8_0)
+	gohelper.addUIClickAudio(arg_8_0._btntip.gameObject, AudioEnum.UI.Play_UI_Copies)
+
 	arg_8_0._click = SLFramework.UGUI.UIClickListener.Get(arg_8_0.viewGO)
 
 	local var_8_0 = gohelper.findChild(arg_8_0.viewGO, "anim")

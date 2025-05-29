@@ -1,6 +1,6 @@
 ﻿module("modules.logic.fight.FightBaseClass", package.seeall)
 
-local var_0_0 = class("FightBaseClass", FightBaseCoreClass)
+local var_0_0 = class("FightBaseClass", FightObject)
 
 function var_0_0.onConstructor(arg_1_0)
 	arg_1_0.USER_DATA_LIST = {}

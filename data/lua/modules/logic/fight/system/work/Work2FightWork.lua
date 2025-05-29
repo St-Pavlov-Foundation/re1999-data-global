@@ -11,11 +11,10 @@ function var_0_0.onAwake(arg_1_0, arg_1_1, ...)
 end
 
 function var_0_0.onStart(arg_2_0)
-	arg_2_0:cancelFightWorkSafeTimer()
-
 	arg_2_0._work = arg_2_0._class.New(unpack(arg_2_0._param, 1, arg_2_0._paramCount))
 
 	arg_2_0._work:registerDoneListener(arg_2_0.onWorkItemDone, arg_2_0)
+	arg_2_0:cancelFightWorkSafeTimer()
 
 	return arg_2_0._work:onStartInternal(arg_2_0.context)
 end

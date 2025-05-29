@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1,
+    "suit": "1",
+    "icon": "dice_maintex_red",
+    "icon2": "v2a6_dicehero_game_carddice4#v2a6_dicehero_game_carddiceslot4"
+  },
+  {
+    "id": 2,
+    "suit": "2",
+    "icon": "dice_maintex_yellow",
+    "icon2": "v2a6_dicehero_game_carddice5#v2a6_dicehero_game_carddiceslot5"
+  },
+  {
+    "id": 3,
+    "suit": "1#2",
+    "icon": "dice_maintex_green",
+    "icon2": "v2a6_dicehero_game_carddice6#v2a6_dicehero_game_carddiceslot6"
+  },
+  {
+    "id": 4,
+    "suit": "4",
+    "icon": "dice_maintex_blue",
+    "icon2": "v2a6_dicehero_game_carddice2#v2a6_dicehero_game_carddiceslot2"
+  },
+  {
+    "id": 8,
+    "suit": "1#2#4",
+    "icon": "dice_maintex_purple",
+    "icon2": "v2a6_dicehero_game_carddice0#v2a6_dicehero_game_carddiceslot0"
+  }
+]
