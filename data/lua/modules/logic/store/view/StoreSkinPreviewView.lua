@@ -80,7 +80,7 @@ function var_0_0._btnvideoOnClick(arg_5_0)
 
 	local var_5_0 = WebViewController.instance:getVideoUrl(arg_5_0.skinCo.characterId)
 
-	if UnityEngine.Application.version == "2.2.0" and GameChannelConfig.isLongCheng() and BootNativeUtil.isAndroid() then
+	if UnityEngine.Application.version == "2.6.0" and GameChannelConfig.isLongCheng() and BootNativeUtil.isAndroid() then
 		GameUtil.openURL(var_5_0)
 
 		return

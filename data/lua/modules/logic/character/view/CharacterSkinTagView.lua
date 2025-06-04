@@ -111,7 +111,7 @@ function var_0_0._btnplayOnClick(arg_9_0)
 	local var_9_1 = arg_9_0._skinCo.characterId
 	local var_9_2 = WebViewController.instance:getVideoUrl(var_9_1, var_9_0)
 
-	if UnityEngine.Application.version == "2.2.0" and GameChannelConfig.isLongCheng() and BootNativeUtil.isAndroid() then
+	if UnityEngine.Application.version == "2.6.0" and GameChannelConfig.isLongCheng() and BootNativeUtil.isAndroid() then
 		UnityEngine.Application.OpenURL(var_9_2)
 
 		return

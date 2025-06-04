@@ -80,7 +80,7 @@ function var_0_0._btnvideoOnClick(arg_6_0)
 
 	logNormal("播放视频,当前英雄id:" .. var_6_0 .. " 皮肤id: " .. var_6_1 .. " url: " .. var_6_3)
 
-	if UnityEngine.Application.version == "2.2.0" and GameChannelConfig.isLongCheng() and BootNativeUtil.isAndroid() then
+	if UnityEngine.Application.version == "2.6.0" and GameChannelConfig.isLongCheng() and BootNativeUtil.isAndroid() then
 		GameUtil.openURL(var_6_3)
 	else
 		WebViewController.instance:openWebView(var_6_3, false, arg_6_0.OnWebViewBack, arg_6_0)

@@ -87,7 +87,7 @@ var_0_0.EnterViewActIdListWithRedDot = {
 }
 var_0_0.TabSetting = {
 	select = {
-		fontSize = 42,
+		fontSize = 36,
 		cnColor = "#FFFFFF",
 		enFontSize = 14,
 		enColor = "#337C61",
@@ -96,7 +96,7 @@ var_0_0.TabSetting = {
 		}
 	},
 	unselect = {
-		fontSize = 38,
+		fontSize = 34,
 		cnColor = "#8D8D8D",
 		enFontSize = 14,
 		enColor = "#485143",

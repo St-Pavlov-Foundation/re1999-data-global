@@ -52,11 +52,17 @@ function var_0_0.getElementCoList(arg_10_0, arg_10_1)
 
 		if var_10_6 and var_10_6.chapterId == VersionActivity1_8DungeonEnum.DungeonChapterId.Story and arg_10_1 == var_10_5.mapId then
 			local var_10_7 = Activity157Config.instance:getMissionIdByElementId(var_10_1, iter_10_1)
-			local var_10_8 = Activity157Config.instance:getMissionGroup(var_10_1, var_10_7)
-			local var_10_9 = Activity157Model.instance:isFinishMission(var_10_8, var_10_7)
-			local var_10_10 = Activity157Config.instance:isSideMissionGroup(var_10_1, var_10_8)
+			local var_10_8 = true
 
-			if not var_10_7 or iter_10_1 == var_10_2 or var_10_9 or var_10_10 and var_10_3 then
+			if var_10_7 then
+				local var_10_9 = Activity157Config.instance:getMissionGroup(var_10_1, var_10_7)
+				local var_10_10 = Activity157Model.instance:isFinishMission(var_10_9, var_10_7)
+				local var_10_11 = Activity157Config.instance:isSideMissionGroup(var_10_1, var_10_9)
+
+				var_10_8 = not var_10_7 or iter_10_1 == var_10_2 or var_10_10 or var_10_11 and var_10_3
+			end
+
+			if var_10_8 then
 				table.insert(var_10_0, var_10_5)
 			end
 		end
