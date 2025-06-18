@@ -347,87 +347,94 @@ function var_0_0._editableInitView(arg_30_0)
 	SLFramework.UGUI.UIClickListener.Get(arg_30_0._inputanswer.gameObject):AddClickListener(arg_30_0._hidePlaceholderText, arg_30_0)
 end
 
-function var_0_0._editableInitView(arg_31_0)
-	arg_31_0._txtinfo = gohelper.findChildText(arg_31_0.viewGO, "rotate/bg/#txt_info")
-
-	var_0_0.super._editableInitView(arg_31_0)
+function var_0_0._loadBgImage(arg_31_0)
+	arg_31_0._simagebgimage:LoadImage("singlebg/v1a3_dungeon_singlebg/v1a3_dungeoninteractive_panelbg.png")
 end
 
-function var_0_0._loadBgImage(arg_32_0)
-	arg_32_0._simagebgimage:LoadImage("singlebg/v1a3_dungeon_singlebg/v1a3_dungeoninteractive_panelbg.png")
-end
-
-function var_0_0._onScreenResize(arg_33_0)
+function var_0_0._onScreenResize(arg_32_0)
 	DungeonMapModel.instance.directFocusElement = true
 
-	DungeonController.instance:dispatchEvent(DungeonMapElementEvent.OnFocusElement, arg_33_0._config.id)
+	DungeonController.instance:dispatchEvent(DungeonMapElementEvent.OnFocusElement, arg_32_0._config.id)
 
 	DungeonMapModel.instance.directFocusElement = false
 end
 
-function var_0_0._hidePlaceholderText(arg_34_0)
-	gohelper.setActive(arg_34_0._goplaceholdertext, false)
+function var_0_0._hidePlaceholderText(arg_33_0)
+	gohelper.setActive(arg_33_0._goplaceholdertext, false)
 end
 
-function var_0_0._onInputAnswerEndEdit(arg_35_0)
-	gohelper.setActive(arg_35_0._goplaceholdertext, true)
+function var_0_0._onInputAnswerEndEdit(arg_34_0)
+	gohelper.setActive(arg_34_0._goplaceholdertext, true)
 end
 
-function var_0_0._playAnim(arg_36_0, arg_36_1, arg_36_2)
-	arg_36_1:GetComponent(typeof(UnityEngine.Animator)):Play(arg_36_2)
+function var_0_0._playAnim(arg_35_0, arg_35_1, arg_35_2)
+	arg_35_1:GetComponent(typeof(UnityEngine.Animator)):Play(arg_35_2)
 end
 
-function var_0_0._playBtnsQuitAnim(arg_37_0)
-	for iter_37_0, iter_37_1 in pairs(DungeonEnum.ElementType) do
-		local var_37_0 = arg_37_0["_goop" .. iter_37_1]
+function var_0_0._playBtnsQuitAnim(arg_36_0)
+	for iter_36_0, iter_36_1 in pairs(DungeonEnum.ElementType) do
+		local var_36_0 = arg_36_0["_goop" .. iter_36_1]
 
-		if var_37_0 and var_37_0.activeInHierarchy then
-			local var_37_1 = var_37_0:GetComponentsInChildren(typeof(UnityEngine.Animator)):GetEnumerator()
+		if var_36_0 and var_36_0.activeInHierarchy then
+			local var_36_1 = var_36_0:GetComponentsInChildren(typeof(UnityEngine.Animator)):GetEnumerator()
 
-			while var_37_1:MoveNext() do
-				var_37_1.Current:Play("dungeonmap_interactive_btn_out")
+			while var_36_1:MoveNext() do
+				var_36_1.Current:Play("dungeonmap_interactive_btn_out")
 			end
 		end
 	end
 end
 
-function var_0_0._onShow(arg_38_0)
-	if arg_38_0._show then
+function var_0_0._onShow(arg_37_0)
+	if arg_37_0._show then
 		return
 	end
 
-	arg_38_0._show = true
+	arg_37_0._show = true
 
 	DungeonMapModel.instance:clearDialog()
 	DungeonMapModel.instance:clearDialogId()
-	gohelper.setActive(arg_38_0.viewGO, true)
-	arg_38_0._animator:Play("dungeonmap_interactive_in")
-	arg_38_0:_playAnim(arg_38_0._gonext, "dungeonmap_interactive_in")
-	TaskDispatcher.cancelTask(arg_38_0._showCloseBtn, arg_38_0)
-	TaskDispatcher.runDelay(arg_38_0._showCloseBtn, arg_38_0, 0)
+	gohelper.setActive(arg_37_0.viewGO, true)
+	arg_37_0._animator:Play("dungeonmap_interactive_in")
+	arg_37_0:_playAnim(arg_37_0._gonext, "dungeonmap_interactive_in")
+	TaskDispatcher.cancelTask(arg_37_0._showCloseBtn, arg_37_0)
+	TaskDispatcher.runDelay(arg_37_0._showCloseBtn, arg_37_0, 0)
 	DungeonController.instance:dispatchEvent(DungeonEvent.OnSetEpisodeListVisible, false)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_warnopen)
 end
 
-function var_0_0._showCloseBtn(arg_39_0)
-	gohelper.setActive(arg_39_0._btnclose.gameObject, true)
+function var_0_0._showCloseBtn(arg_38_0)
+	gohelper.setActive(arg_38_0._btnclose.gameObject, true)
 end
 
-function var_0_0._onOutAnimationFinished(arg_40_0)
-	gohelper.setActive(arg_40_0.viewGO, false)
+function var_0_0._onOutAnimationFinished(arg_39_0)
+	gohelper.setActive(arg_39_0.viewGO, false)
 	UIBlockMgr.instance:endBlock("dungeonmap_interactive_out")
-	gohelper.destroy(arg_40_0.viewGO)
+	gohelper.destroy(arg_39_0.viewGO)
 end
 
-function var_0_0._asynHide(arg_41_0, arg_41_1)
-	if not arg_41_1 then
+function var_0_0._asynHide(arg_40_0, arg_40_1)
+	if not arg_40_1 then
 		logError("_asynHide viewName is nil")
 
 		return
 	end
 
-	arg_41_0._waitCloseViewName = arg_41_1
+	arg_40_0._waitCloseViewName = arg_40_1
 
+	if not arg_40_0._show then
+		return
+	end
+
+	arg_40_0:_clearScroll()
+
+	arg_40_0._show = false
+
+	gohelper.setActive(arg_40_0.viewGO, false)
+	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_warnclose)
+end
+
+function var_0_0._onHide(arg_41_0)
 	if not arg_41_0._show then
 		return
 	end
@@ -436,36 +443,23 @@ function var_0_0._asynHide(arg_41_0, arg_41_1)
 
 	arg_41_0._show = false
 
-	gohelper.setActive(arg_41_0.viewGO, false)
-	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_warnclose)
-end
-
-function var_0_0._onHide(arg_42_0)
-	if not arg_42_0._show then
-		return
-	end
-
-	arg_42_0:_clearScroll()
-
-	arg_42_0._show = false
-
-	gohelper.setActive(arg_42_0._btnclose.gameObject, false)
+	gohelper.setActive(arg_41_0._btnclose.gameObject, false)
 	UIBlockMgr.instance:startBlock("dungeonmap_interactive_out")
-	arg_42_0._animator:Play("dungeonmap_interactive_out")
+	arg_41_0._animator:Play("dungeonmap_interactive_out")
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_continuedisappear)
-	arg_42_0:_playBtnsQuitAnim()
-	TaskDispatcher.runDelay(arg_42_0._onOutAnimationFinished, arg_42_0, 0.23)
+	arg_41_0:_playBtnsQuitAnim()
+	TaskDispatcher.runDelay(arg_41_0._onOutAnimationFinished, arg_41_0, 0.23)
 
 	if SLFramework.FrameworkSettings.IsEditor then
-		local var_42_0, var_42_1 = transformhelper.getPos(arg_42_0.viewGO.transform)
-		local var_42_2 = var_42_0 - arg_42_0._elementAddX
-		local var_42_3 = var_42_1 - arg_42_0._elementAddY
+		local var_41_0, var_41_1 = transformhelper.getPos(arg_41_0.viewGO.transform)
+		local var_41_2 = var_41_0 - arg_41_0._elementAddX
+		local var_41_3 = var_41_1 - arg_41_0._elementAddY
 
-		if var_42_2 ~= 0 or var_42_3 ~= 0 then
-			local var_42_4 = var_42_0 - arg_42_0._elementX
-			local var_42_5 = var_42_1 - arg_42_0._elementY
+		if var_41_2 ~= 0 or var_41_3 ~= 0 then
+			local var_41_4 = var_41_0 - arg_41_0._elementX
+			local var_41_5 = var_41_1 - arg_41_0._elementY
 
-			print(string.format("偏移坐标xy：%s#%s", string.format(var_42_4 == 0 and "%s" or "%.2f", var_42_4), string.format(var_42_5 == 0 and "%s" or "%.2f", var_42_5)))
+			print(string.format("偏移坐标xy：%s#%s", string.format(var_41_4 == 0 and "%s" or "%.2f", var_41_4), string.format(var_41_5 == 0 and "%s" or "%.2f", var_41_5)))
 		end
 	end
 
@@ -473,697 +467,697 @@ function var_0_0._onHide(arg_42_0)
 	DungeonController.instance:dispatchEvent(DungeonEvent.OnSetEpisodeListVisible, true)
 end
 
-function var_0_0._onViewClose(arg_43_0, arg_43_1)
-	if arg_43_1 == arg_43_0._waitCloseViewName then
-		arg_43_0:_cancelAsynHide()
+function var_0_0._onViewClose(arg_42_0, arg_42_1)
+	if arg_42_1 == arg_42_0._waitCloseViewName then
+		arg_42_0:_cancelAsynHide()
 	end
 end
 
-function var_0_0._onClickElement(arg_44_0)
-	arg_44_0:_cancelAsynHide()
+function var_0_0._onClickElement(arg_43_0)
+	arg_43_0:_cancelAsynHide()
 end
 
-function var_0_0._cancelAsynHide(arg_45_0)
-	arg_45_0._waitCloseViewName = nil
+function var_0_0._cancelAsynHide(arg_44_0)
+	arg_44_0._waitCloseViewName = nil
 
-	gohelper.destroy(arg_45_0.viewGO)
+	gohelper.destroy(arg_44_0.viewGO)
 	DungeonController.instance:dispatchEvent(DungeonEvent.OnSetEpisodeListVisible, true)
 end
 
-function var_0_0.init(arg_46_0, arg_46_1)
-	arg_46_0.viewGO = arg_46_1
-	arg_46_0._animator = arg_46_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	arg_46_0._optionBtnList = arg_46_0:getUserDataTb_()
-	arg_46_0._dialogItemList = arg_46_0:getUserDataTb_()
-	arg_46_0._dialogItemCacheList = arg_46_0:getUserDataTb_()
+function var_0_0.init(arg_45_0, arg_45_1)
+	arg_45_0.viewGO = arg_45_1
+	arg_45_0._animator = arg_45_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	arg_45_0._optionBtnList = arg_45_0:getUserDataTb_()
+	arg_45_0._dialogItemList = arg_45_0:getUserDataTb_()
+	arg_45_0._dialogItemCacheList = arg_45_0:getUserDataTb_()
 
-	arg_46_0:onInitView()
-	arg_46_0:addEvents()
-	arg_46_0:_editableAddEvents()
+	arg_45_0:onInitView()
+	arg_45_0:addEvents()
+	arg_45_0:_editableAddEvents()
 end
 
-function var_0_0._editableAddEvents(arg_47_0)
-	arg_47_0:addEventCb(DungeonController.instance, DungeonEvent.closeMapInteractiveItem, arg_47_0._closeMapInteractiveItem, arg_47_0)
-	arg_47_0:addEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, arg_47_0._onScreenResize, arg_47_0)
-	arg_47_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_47_0._onViewClose, arg_47_0)
-	arg_47_0:addEventCb(DungeonController.instance, DungeonEvent.OnClickElement, arg_47_0._onClickElement, arg_47_0, LuaEventSystem.High)
+function var_0_0._editableAddEvents(arg_46_0)
+	arg_46_0:addEventCb(DungeonController.instance, DungeonEvent.closeMapInteractiveItem, arg_46_0._closeMapInteractiveItem, arg_46_0)
+	arg_46_0:addEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, arg_46_0._onScreenResize, arg_46_0)
+	arg_46_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_46_0._onViewClose, arg_46_0)
+	arg_46_0:addEventCb(DungeonController.instance, DungeonEvent.OnClickElement, arg_46_0._onClickElement, arg_46_0, LuaEventSystem.High)
 
-	arg_47_0._handleTypeMap = {}
-	arg_47_0._handleTypeMap[DungeonEnum.ElementType.None] = arg_47_0._directlyComplete
-	arg_47_0._handleTypeMap[DungeonEnum.ElementType.Fight] = arg_47_0._showFight
-	arg_47_0._handleTypeMap[DungeonEnum.ElementType.Task] = arg_47_0._showTask
-	arg_47_0._handleTypeMap[DungeonEnum.ElementType.Story] = arg_47_0._playStory
-	arg_47_0._handleTypeMap[DungeonEnum.ElementType.Question] = arg_47_0._playQuestion
-	arg_47_0._handleTypeMap[DungeonEnum.ElementType.FullScreenQuestion] = arg_47_0._showPuzzleQuestion
-	arg_47_0._handleTypeMap[DungeonEnum.ElementType.PipeGame] = arg_47_0._showPuzzlePipeGame
-	arg_47_0._handleTypeMap[DungeonEnum.ElementType.ChangeColor] = arg_47_0._showPuzzleChangeColor
-	arg_47_0._handleTypeMap[DungeonEnum.ElementType.MazeDraw] = arg_47_0._showPuzzleMazeDraw
-	arg_47_0._handleTypeMap[DungeonEnum.ElementType.PutCubeGame] = arg_47_0._showPutCubeGame
-	arg_47_0._handleTypeMap[DungeonEnum.ElementType.CircuitGame] = arg_47_0._showPuzzlePipeGame
-	arg_47_0._handleTypeMap[DungeonEnum.ElementType.OuijaGame] = arg_47_0._showOuijaGame
-	arg_47_0._handleTypeMap[DungeonEnum.ElementType.PuzzleGame] = arg_47_0._showPuzzleGame
+	arg_46_0._handleTypeMap = {}
+	arg_46_0._handleTypeMap[DungeonEnum.ElementType.None] = arg_46_0._directlyComplete
+	arg_46_0._handleTypeMap[DungeonEnum.ElementType.Fight] = arg_46_0._showFight
+	arg_46_0._handleTypeMap[DungeonEnum.ElementType.Task] = arg_46_0._showTask
+	arg_46_0._handleTypeMap[DungeonEnum.ElementType.Story] = arg_46_0._playStory
+	arg_46_0._handleTypeMap[DungeonEnum.ElementType.Question] = arg_46_0._playQuestion
+	arg_46_0._handleTypeMap[DungeonEnum.ElementType.FullScreenQuestion] = arg_46_0._showPuzzleQuestion
+	arg_46_0._handleTypeMap[DungeonEnum.ElementType.PipeGame] = arg_46_0._showPuzzlePipeGame
+	arg_46_0._handleTypeMap[DungeonEnum.ElementType.ChangeColor] = arg_46_0._showPuzzleChangeColor
+	arg_46_0._handleTypeMap[DungeonEnum.ElementType.MazeDraw] = arg_46_0._showPuzzleMazeDraw
+	arg_46_0._handleTypeMap[DungeonEnum.ElementType.PutCubeGame] = arg_46_0._showPutCubeGame
+	arg_46_0._handleTypeMap[DungeonEnum.ElementType.CircuitGame] = arg_46_0._showPuzzlePipeGame
+	arg_46_0._handleTypeMap[DungeonEnum.ElementType.OuijaGame] = arg_46_0._showOuijaGame
+	arg_46_0._handleTypeMap[DungeonEnum.ElementType.PuzzleGame] = arg_46_0._showPuzzleGame
 end
 
-function var_0_0._showElementTitle(arg_48_0)
-	arg_48_0._txttitle.text = arg_48_0._config.title
+function var_0_0._showElementTitle(arg_47_0)
+	arg_47_0._txttitle.text = arg_47_0._config.title
 end
 
-function var_0_0._OnClickElement(arg_49_0, arg_49_1)
-	arg_49_0._mapElement = arg_49_1
+function var_0_0._OnClickElement(arg_48_0, arg_48_1)
+	arg_48_0._mapElement = arg_48_1
 
-	if arg_49_0._show then
-		arg_49_0:_onHide()
+	if arg_48_0._show then
+		arg_48_0:_onHide()
 
 		return
 	end
 
-	arg_49_0:_onShow()
+	arg_48_0:_onShow()
 
-	arg_49_0._config = arg_49_0._mapElement._config
-	arg_49_0._elementGo = arg_49_0._mapElement._go
+	arg_48_0._config = arg_48_0._mapElement._config
+	arg_48_0._elementGo = arg_48_0._mapElement._go
 
-	arg_49_0:_showElementTitle()
+	arg_48_0:_showElementTitle()
 
-	arg_49_0._elementX, arg_49_0._elementY, arg_49_0._elementZ = transformhelper.getPos(arg_49_0._elementGo.transform)
+	arg_48_0._elementX, arg_48_0._elementY, arg_48_0._elementZ = transformhelper.getPos(arg_48_0._elementGo.transform)
 
-	if not string.nilorempty(arg_49_0._config.offsetPos) then
-		local var_49_0 = string.splitToNumber(arg_49_0._config.offsetPos, "#")
+	if not string.nilorempty(arg_48_0._config.offsetPos) then
+		local var_48_0 = string.splitToNumber(arg_48_0._config.offsetPos, "#")
 
-		arg_49_0._elementAddX = arg_49_0._elementX + (var_49_0[1] or 0)
-		arg_49_0._elementAddY = arg_49_0._elementY + (var_49_0[2] or 0)
+		arg_48_0._elementAddX = arg_48_0._elementX + (var_48_0[1] or 0)
+		arg_48_0._elementAddY = arg_48_0._elementY + (var_48_0[2] or 0)
 	end
 
-	arg_49_0.viewGO.transform.position = Vector3(arg_49_0._elementAddX, arg_49_0._elementAddY, 0)
+	arg_48_0.viewGO.transform.position = Vector3(arg_48_0._elementAddX, arg_48_0._elementAddY, 0)
 
-	arg_49_0:_showRewards()
+	arg_48_0:_showRewards()
 
-	local var_49_1 = not string.nilorempty(arg_49_0._config.flagText)
+	local var_48_1 = not string.nilorempty(arg_48_0._config.flagText)
 
-	gohelper.setActive(arg_49_0._goimportanttips, var_49_1)
+	gohelper.setActive(arg_48_0._goimportanttips, var_48_1)
 
-	if var_49_1 then
-		arg_49_0._txttipsinfo.text = arg_49_0._config.flagText
+	if var_48_1 then
+		arg_48_0._txttipsinfo.text = arg_48_0._config.flagText
 	end
 
-	local var_49_2 = arg_49_0._config.type
-	local var_49_3 = var_49_2 == DungeonEnum.ElementType.Story
+	local var_48_2 = arg_48_0._config.type
+	local var_48_3 = var_48_2 == DungeonEnum.ElementType.Story
 
-	gohelper.setActive(arg_49_0._txtinfo.gameObject, not var_49_3)
-	gohelper.setActive(arg_49_0._gochatarea, var_49_3)
+	gohelper.setActive(arg_48_0._txtinfo.gameObject, not var_48_3)
+	gohelper.setActive(arg_48_0._gochatarea, var_48_3)
 
-	for iter_49_0, iter_49_1 in pairs(DungeonEnum.ElementType) do
-		local var_49_4 = arg_49_0["_goop" .. iter_49_1]
+	for iter_48_0, iter_48_1 in pairs(DungeonEnum.ElementType) do
+		local var_48_4 = arg_48_0["_goop" .. iter_48_1]
 
-		if var_49_4 then
-			gohelper.setActive(var_49_4, iter_49_1 == var_49_2)
+		if var_48_4 then
+			gohelper.setActive(var_48_4, iter_48_1 == var_48_2)
 		end
 	end
 
-	if var_49_2 == DungeonEnum.ElementType.CircuitGame then
-		gohelper.setActive(arg_49_0._goop9, true)
+	if var_48_2 == DungeonEnum.ElementType.CircuitGame then
+		gohelper.setActive(arg_48_0._goop9, true)
 	end
 
-	local var_49_5 = arg_49_0._handleTypeMap[var_49_2]
+	local var_48_5 = arg_48_0._handleTypeMap[var_48_2]
 
-	if var_49_5 then
-		var_49_5(arg_49_0)
+	if var_48_5 then
+		var_48_5(arg_48_0)
 	else
 		logError("element type undefined!")
 	end
 end
 
-function var_0_0._showRewards(arg_50_0)
-	local var_50_0 = gohelper.findChild(arg_50_0.viewGO, "rotate/layout/top/reward")
-	local var_50_1 = DungeonModel.instance:getMapElementReward(arg_50_0._config.id)
-	local var_50_2 = GameUtil.splitString2(var_50_1, true, "|", "#")
+function var_0_0._showRewards(arg_49_0)
+	local var_49_0 = gohelper.findChild(arg_49_0.viewGO, "rotate/layout/top/reward")
+	local var_49_1 = DungeonModel.instance:getMapElementReward(arg_49_0._config.id)
+	local var_49_2 = GameUtil.splitString2(var_49_1, true, "|", "#")
 
-	if not var_50_2 then
-		gohelper.setActive(var_50_0, false)
+	if not var_49_2 then
+		gohelper.setActive(var_49_0, false)
 
 		return
 	end
 
-	gohelper.setActive(var_50_0, true)
+	gohelper.setActive(var_49_0, true)
 
-	for iter_50_0, iter_50_1 in ipairs(var_50_2) do
-		local var_50_3 = gohelper.cloneInPlace(arg_50_0._gorewarditem)
+	for iter_49_0, iter_49_1 in ipairs(var_49_2) do
+		local var_49_3 = gohelper.cloneInPlace(arg_49_0._gorewarditem)
 
-		gohelper.setActive(var_50_3, true)
+		gohelper.setActive(var_49_3, true)
 	end
 
-	arg_50_0._rewardClick = gohelper.getClick(gohelper.findChild(var_50_0, "click"))
+	arg_49_0._rewardClick = gohelper.getClick(gohelper.findChild(var_49_0, "click"))
 
-	arg_50_0._rewardClick:AddClickListener(arg_50_0._openRewardView, arg_50_0, var_50_2)
+	arg_49_0._rewardClick:AddClickListener(arg_49_0._openRewardView, arg_49_0, var_49_2)
 end
 
-function var_0_0._openRewardView(arg_51_0, arg_51_1)
+function var_0_0._openRewardView(arg_50_0, arg_50_1)
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Copies)
-	DungeonController.instance:openDungeonElementRewardView(arg_51_1)
+	DungeonController.instance:openDungeonElementRewardView(arg_50_1)
 end
 
-function var_0_0._playQuestion(arg_52_0)
-	arg_52_0._txtinfo.text = arg_52_0._config.desc
+function var_0_0._playQuestion(arg_51_0)
+	arg_51_0._txtinfo.text = arg_51_0._config.desc
 end
 
-function var_0_0._showFight(arg_53_0)
-	local var_53_0 = tonumber(arg_53_0._config.param)
-	local var_53_1 = DungeonModel.instance:hasPassLevel(var_53_0)
+function var_0_0._showFight(arg_52_0)
+	local var_52_0 = tonumber(arg_52_0._config.param)
+	local var_52_1 = DungeonModel.instance:hasPassLevel(var_52_0)
 
-	gohelper.setActive(arg_53_0._gofinishFight, var_53_1)
-	gohelper.setActive(arg_53_0._gounfinishedFight, not var_53_1)
+	gohelper.setActive(arg_52_0._gofinishFight, var_52_1)
+	gohelper.setActive(arg_52_0._gounfinishedFight, not var_52_1)
 
-	if var_53_1 then
-		arg_53_0._txtinfo.text = arg_53_0._config.finishText
+	if var_52_1 then
+		arg_52_0._txtinfo.text = arg_52_0._config.finishText
 	else
-		arg_53_0._txtinfo.text = arg_53_0._config.desc
-		arg_53_0._txtfight.text = arg_53_0._config.acceptText
+		arg_52_0._txtinfo.text = arg_52_0._config.desc
+		arg_52_0._txtfight.text = arg_52_0._config.acceptText
 	end
 
 	if GuideModel.instance:isFlagEnable(GuideModel.GuideFlag.MoveFightBtn2MapView) then
-		TaskDispatcher.runDelay(arg_53_0._addToMapView, arg_53_0, 0.5)
+		TaskDispatcher.runDelay(arg_52_0._addToMapView, arg_52_0, 0.5)
 	end
 end
 
-function var_0_0._addToMapView(arg_54_0)
-	gohelper.setActive(arg_54_0._btnfightuiuse.gameObject, true)
+function var_0_0._addToMapView(arg_53_0)
+	gohelper.setActive(arg_53_0._btnfightuiuse.gameObject, true)
 
-	local var_54_0 = ViewMgr.instance:getContainer(ViewName.DungeonMapView).viewGO
-	local var_54_1 = CameraMgr.instance:getMainCamera()
-	local var_54_2 = arg_54_0._btnfightuiuse.transform.position
-	local var_54_3 = recthelper.worldPosToAnchorPos(var_54_2, var_54_0.transform, nil, var_54_1)
+	local var_53_0 = ViewMgr.instance:getContainer(ViewName.DungeonMapView).viewGO
+	local var_53_1 = CameraMgr.instance:getMainCamera()
+	local var_53_2 = arg_53_0._btnfightuiuse.transform.position
+	local var_53_3 = recthelper.worldPosToAnchorPos(var_53_2, var_53_0.transform, nil, var_53_1)
 
-	arg_54_0._btnfightuiuse.transform.parent = var_54_0.transform
+	arg_53_0._btnfightuiuse.transform.parent = var_53_0.transform
 
-	transformhelper.setLocalPosXY(arg_54_0._btnfightuiuse.transform, var_54_3.x, var_54_3.y)
+	transformhelper.setLocalPosXY(arg_53_0._btnfightuiuse.transform, var_53_3.x, var_53_3.y)
 end
 
-function var_0_0._showTask(arg_55_0)
-	arg_55_0._txtinfo.text = arg_55_0._config.desc
+function var_0_0._showTask(arg_54_0)
+	arg_54_0._txtinfo.text = arg_54_0._config.desc
 
-	local var_55_0 = arg_55_0._config.param
-	local var_55_1 = string.splitToNumber(var_55_0, "#")
-	local var_55_2 = var_55_1[3]
-	local var_55_3 = ItemModel.instance:getItemConfig(var_55_1[1], var_55_1[2])
-	local var_55_4 = ItemModel.instance:getItemQuantity(var_55_1[1], var_55_1[2])
+	local var_54_0 = arg_54_0._config.param
+	local var_54_1 = string.splitToNumber(var_54_0, "#")
+	local var_54_2 = var_54_1[3]
+	local var_54_3 = ItemModel.instance:getItemConfig(var_54_1[1], var_54_1[2])
+	local var_54_4 = ItemModel.instance:getItemQuantity(var_54_1[1], var_54_1[2])
 
-	arg_55_0._finishTask = var_55_2 <= var_55_4
+	arg_54_0._finishTask = var_54_2 <= var_54_4
 
-	gohelper.setActive(arg_55_0._gofinishtask, arg_55_0._finishTask)
-	gohelper.setActive(arg_55_0._gounfinishtask, not arg_55_0._finishTask)
+	gohelper.setActive(arg_54_0._gofinishtask, arg_54_0._finishTask)
+	gohelper.setActive(arg_54_0._gounfinishtask, not arg_54_0._finishTask)
 
-	if arg_55_0._finishTask then
-		arg_55_0._txtfinishtask.text = string.format("%s%s<color=#00ff00>%s</color>/%s", luaLang("dungeon_map_submit"), var_55_3.name, var_55_4, var_55_2)
+	if arg_54_0._finishTask then
+		arg_54_0._txtfinishtask.text = string.format("%s%s<color=#00ff00>%s</color>/%s", luaLang("dungeon_map_submit"), var_54_3.name, var_54_4, var_54_2)
 	else
-		arg_55_0._txtunfinishtask.text = string.format("%s%s<color=#ff0000>%s</color>/%s", luaLang("dungeon_map_submit"), var_55_3.name, var_55_4, var_55_2)
+		arg_54_0._txtunfinishtask.text = string.format("%s%s<color=#ff0000>%s</color>/%s", luaLang("dungeon_map_submit"), var_54_3.name, var_54_4, var_54_2)
 	end
 end
 
-function var_0_0._showPuzzleQuestion(arg_56_0)
+function var_0_0._showPuzzleQuestion(arg_55_0)
+	local var_55_0 = DungeonMapModel.instance:hasMapPuzzleStatus(arg_55_0._config.id)
+
+	if var_55_0 then
+		arg_55_0._txtinfo.text = arg_55_0._config.finishText
+	else
+		arg_55_0._txtpuzzlequestion.text = arg_55_0._config.acceptText
+		arg_55_0._txtinfo.text = arg_55_0._config.desc
+	end
+
+	arg_55_0._gopuzzlequestion:SetActive(not var_55_0)
+	arg_55_0._gopuzzlequestionfinish.gameObject:SetActive(var_55_0)
+end
+
+function var_0_0._showPuzzlePipeGame(arg_56_0)
 	local var_56_0 = DungeonMapModel.instance:hasMapPuzzleStatus(arg_56_0._config.id)
 
 	if var_56_0 then
 		arg_56_0._txtinfo.text = arg_56_0._config.finishText
 	else
-		arg_56_0._txtpuzzlequestion.text = arg_56_0._config.acceptText
+		arg_56_0._txtpuzzlepipe.text = arg_56_0._config.acceptText
 		arg_56_0._txtinfo.text = arg_56_0._config.desc
 	end
 
-	arg_56_0._gopuzzlequestion:SetActive(not var_56_0)
-	arg_56_0._gopuzzlequestionfinish.gameObject:SetActive(var_56_0)
+	arg_56_0._gopipe:SetActive(not var_56_0)
+	arg_56_0._gopipefinish:SetActive(var_56_0)
 end
 
-function var_0_0._showPuzzlePipeGame(arg_57_0)
-	local var_57_0 = DungeonMapModel.instance:hasMapPuzzleStatus(arg_57_0._config.id)
+function var_0_0._showPuzzleChangeColor(arg_57_0)
+	local var_57_0
+end
 
-	if var_57_0 then
-		arg_57_0._txtinfo.text = arg_57_0._config.finishText
+function var_0_0._showPuzzleMazeDraw(arg_58_0)
+	local var_58_0 = DungeonMapModel.instance:hasMapPuzzleStatus(arg_58_0._config.id)
+
+	if var_58_0 then
+		arg_58_0._txtinfo.text = arg_58_0._config.finishText
 	else
-		arg_57_0._txtpuzzlepipe.text = arg_57_0._config.acceptText
-		arg_57_0._txtinfo.text = arg_57_0._config.desc
+		arg_58_0._txtmazedraw.text = arg_58_0._config.acceptText
+		arg_58_0._txtinfo.text = arg_58_0._config.desc
 	end
 
-	arg_57_0._gopipe:SetActive(not var_57_0)
-	arg_57_0._gopipefinish:SetActive(var_57_0)
+	arg_58_0._gomazedraw:SetActive(not var_58_0)
+	arg_58_0._gomazedrawfinish:SetActive(var_58_0)
 end
 
-function var_0_0._showPuzzleChangeColor(arg_58_0)
-	local var_58_0
-end
-
-function var_0_0._showPuzzleMazeDraw(arg_59_0)
-	local var_59_0 = DungeonMapModel.instance:hasMapPuzzleStatus(arg_59_0._config.id)
-
-	if var_59_0 then
-		arg_59_0._txtinfo.text = arg_59_0._config.finishText
-	else
-		arg_59_0._txtmazedraw.text = arg_59_0._config.acceptText
-		arg_59_0._txtinfo.text = arg_59_0._config.desc
-	end
-
-	arg_59_0._gomazedraw:SetActive(not var_59_0)
-	arg_59_0._gomazedrawfinish:SetActive(var_59_0)
-end
-
-function var_0_0._showPutCubeGame(arg_60_0)
+function var_0_0._showPutCubeGame(arg_59_0)
 	return
 end
 
-function var_0_0._showOuijaGame(arg_61_0)
+function var_0_0._showOuijaGame(arg_60_0)
+	local var_60_0 = DungeonMapModel.instance:hasMapPuzzleStatus(arg_60_0._config.id)
+
+	if var_60_0 then
+		arg_60_0._txtinfo.text = arg_60_0._config.finishText
+	else
+		arg_60_0._txtouija.text = arg_60_0._config.acceptText
+		arg_60_0._txtinfo.text = arg_60_0._config.desc
+	end
+
+	arg_60_0._goouijagame:SetActive(not var_60_0)
+	arg_60_0._goouijagamefinish:SetActive(var_60_0)
+end
+
+function var_0_0._showPuzzleGame(arg_61_0)
 	local var_61_0 = DungeonMapModel.instance:hasMapPuzzleStatus(arg_61_0._config.id)
 
 	if var_61_0 then
 		arg_61_0._txtinfo.text = arg_61_0._config.finishText
 	else
-		arg_61_0._txtouija.text = arg_61_0._config.acceptText
+		arg_61_0._txt101puzzle.text = arg_61_0._config.acceptText
 		arg_61_0._txtinfo.text = arg_61_0._config.desc
 	end
 
-	arg_61_0._goouijagame:SetActive(not var_61_0)
-	arg_61_0._goouijagamefinish:SetActive(var_61_0)
+	arg_61_0._goop101puzzle:SetActive(not var_61_0)
+	arg_61_0._goop101puzzlefinish:SetActive(var_61_0)
 end
 
-function var_0_0._showPuzzleGame(arg_62_0)
-	local var_62_0 = DungeonMapModel.instance:hasMapPuzzleStatus(arg_62_0._config.id)
+function var_0_0._directlyComplete(arg_62_0)
+	arg_62_0._txtdoit.text = arg_62_0._config.acceptText
+	arg_62_0._txtinfo.text = arg_62_0._config.desc
+end
 
-	if var_62_0 then
-		arg_62_0._txtinfo.text = arg_62_0._config.finishText
-	else
-		arg_62_0._txt101puzzle.text = arg_62_0._config.acceptText
-		arg_62_0._txtinfo.text = arg_62_0._config.desc
+function var_0_0._playNextSectionOrDialog(arg_63_0)
+	arg_63_0:_clearDialog()
+
+	if #arg_63_0._sectionList >= arg_63_0._dialogIndex then
+		arg_63_0:_playNextDialog()
+
+		return
 	end
 
-	arg_62_0._goop101puzzle:SetActive(not var_62_0)
-	arg_62_0._goop101puzzlefinish:SetActive(var_62_0)
+	local var_63_0 = table.remove(arg_63_0._sectionStack)
+
+	arg_63_0:_playSection(var_63_0[1], var_63_0[2])
 end
 
-function var_0_0._directlyComplete(arg_63_0)
-	arg_63_0._txtdoit.text = arg_63_0._config.acceptText
-	arg_63_0._txtinfo.text = arg_63_0._config.desc
-end
-
-function var_0_0._playNextSectionOrDialog(arg_64_0)
+function var_0_0._playStory(arg_64_0)
 	arg_64_0:_clearDialog()
 
-	if #arg_64_0._sectionList >= arg_64_0._dialogIndex then
-		arg_64_0:_playNextDialog()
+	arg_64_0._sectionStack = {}
+	arg_64_0._dialogId = tonumber(arg_64_0._config.param)
 
-		return
+	arg_64_0:_playSection(0)
+end
+
+function var_0_0._playSection(arg_65_0, arg_65_1, arg_65_2)
+	arg_65_0:_setSectionData(arg_65_1, arg_65_2)
+	arg_65_0:_playNextDialog()
+end
+
+function var_0_0._setSectionData(arg_66_0, arg_66_1, arg_66_2)
+	arg_66_0._sectionList = DungeonConfig.instance:getDialog(arg_66_0._dialogId, arg_66_1)
+	arg_66_0._dialogIndex = arg_66_2 or 1
+	arg_66_0._sectionId = arg_66_1
+end
+
+function var_0_0._playNextDialog(arg_67_0)
+	local var_67_0 = arg_67_0._sectionList[arg_67_0._dialogIndex]
+
+	arg_67_0._dialogIndex = arg_67_0._dialogIndex + 1
+
+	if var_67_0.type == "dialog" then
+		arg_67_0:_showDialog("dialog", var_67_0.content, var_67_0.speaker, var_67_0.audio)
 	end
 
-	local var_64_0 = table.remove(arg_64_0._sectionStack)
+	if #arg_67_0._sectionStack > 0 and #arg_67_0._sectionList < arg_67_0._dialogIndex then
+		local var_67_1 = table.remove(arg_67_0._sectionStack)
 
-	arg_64_0:_playSection(var_64_0[1], var_64_0[2])
-end
-
-function var_0_0._playStory(arg_65_0)
-	arg_65_0:_clearDialog()
-
-	arg_65_0._sectionStack = {}
-	arg_65_0._dialogId = tonumber(arg_65_0._config.param)
-
-	arg_65_0:_playSection(0)
-end
-
-function var_0_0._playSection(arg_66_0, arg_66_1, arg_66_2)
-	arg_66_0:_setSectionData(arg_66_1, arg_66_2)
-	arg_66_0:_playNextDialog()
-end
-
-function var_0_0._setSectionData(arg_67_0, arg_67_1, arg_67_2)
-	arg_67_0._sectionList = DungeonConfig.instance:getDialog(arg_67_0._dialogId, arg_67_1)
-	arg_67_0._dialogIndex = arg_67_2 or 1
-	arg_67_0._sectionId = arg_67_1
-end
-
-function var_0_0._playNextDialog(arg_68_0)
-	local var_68_0 = arg_68_0._sectionList[arg_68_0._dialogIndex]
-
-	arg_68_0._dialogIndex = arg_68_0._dialogIndex + 1
-
-	if var_68_0.type == "dialog" then
-		arg_68_0:_showDialog("dialog", var_68_0.content, var_68_0.speaker, var_68_0.audio)
+		arg_67_0:_setSectionData(var_67_1[1], var_67_1[2])
 	end
 
-	if #arg_68_0._sectionStack > 0 and #arg_68_0._sectionList < arg_68_0._dialogIndex then
-		local var_68_1 = table.remove(arg_68_0._sectionStack)
+	local var_67_2 = false
+	local var_67_3 = arg_67_0._sectionList[arg_67_0._dialogIndex]
 
-		arg_68_0:_setSectionData(var_68_1[1], var_68_1[2])
-	end
+	if var_67_3 and var_67_3.type == "options" then
+		arg_67_0._dialogIndex = arg_67_0._dialogIndex + 1
 
-	local var_68_2 = false
-	local var_68_3 = arg_68_0._sectionList[arg_68_0._dialogIndex]
+		local var_67_4 = string.split(var_67_3.content, "#")
+		local var_67_5 = string.split(var_67_3.param, "#")
 
-	if var_68_3 and var_68_3.type == "options" then
-		arg_68_0._dialogIndex = arg_68_0._dialogIndex + 1
-
-		local var_68_4 = string.split(var_68_3.content, "#")
-		local var_68_5 = string.split(var_68_3.param, "#")
-
-		for iter_68_0, iter_68_1 in pairs(arg_68_0._optionBtnList) do
-			gohelper.setActive(iter_68_1[1], false)
+		for iter_67_0, iter_67_1 in pairs(arg_67_0._optionBtnList) do
+			gohelper.setActive(iter_67_1[1], false)
 		end
 
-		for iter_68_2, iter_68_3 in ipairs(var_68_4) do
-			arg_68_0:_addDialogOption(iter_68_2, var_68_5[iter_68_2], iter_68_3)
+		for iter_67_2, iter_67_3 in ipairs(var_67_4) do
+			arg_67_0:_addDialogOption(iter_67_2, var_67_5[iter_67_2], iter_67_3)
 		end
 
-		var_68_2 = true
+		var_67_2 = true
 	end
 
-	local var_68_6 = not var_68_3 or var_68_3.type ~= "dialogend"
+	local var_67_6 = not var_67_3 or var_67_3.type ~= "dialogend"
 
-	arg_68_0:_refreshDialogBtnState(var_68_2, var_68_6)
+	arg_67_0:_refreshDialogBtnState(var_67_2, var_67_6)
 
-	if arg_68_0._dissolveInfo then
-		gohelper.setActive(arg_68_0._curBtnGo, false)
+	if arg_67_0._dissolveInfo then
+		gohelper.setActive(arg_67_0._curBtnGo, false)
 	end
 end
 
-function var_0_0._refreshDialogBtnState(arg_69_0, arg_69_1, arg_69_2)
-	gohelper.setActive(arg_69_0._gooptions, arg_69_1)
+function var_0_0._refreshDialogBtnState(arg_68_0, arg_68_1, arg_68_2)
+	gohelper.setActive(arg_68_0._gooptions, arg_68_1)
 
-	if arg_69_1 then
-		arg_69_0._nextAnimator:Play("dungeonmap_interactive_btn_out")
+	if arg_68_1 then
+		arg_68_0._nextAnimator:Play("dungeonmap_interactive_btn_out")
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_continuedisappear)
-		gohelper.setActive(arg_69_0._gofinishtalk.gameObject, false)
+		gohelper.setActive(arg_68_0._gofinishtalk.gameObject, false)
 
-		arg_69_0._curBtnGo = arg_69_0._gooptions
+		arg_68_0._curBtnGo = arg_68_0._gooptions
 
 		return
 	end
 
-	arg_69_2 = arg_69_2 and (#arg_69_0._sectionStack > 0 or #arg_69_0._sectionList >= arg_69_0._dialogIndex)
+	arg_68_2 = arg_68_2 and (#arg_68_0._sectionStack > 0 or #arg_68_0._sectionList >= arg_68_0._dialogIndex)
 
-	if arg_69_2 then
-		arg_69_0._curBtnGo = arg_69_0._gonext
+	if arg_68_2 then
+		arg_68_0._curBtnGo = arg_68_0._gonext
 
-		gohelper.setActive(arg_69_0._gonext.gameObject, arg_69_2)
-		arg_69_0._nextAnimator:Play("dungeonmap_interactive_btn_in1")
+		gohelper.setActive(arg_68_0._gonext.gameObject, arg_68_2)
+		arg_68_0._nextAnimator:Play("dungeonmap_interactive_btn_in1")
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_continueappear)
 	else
-		arg_69_0._nextAnimator:Play("dungeonmap_interactive_btn_out")
+		arg_68_0._nextAnimator:Play("dungeonmap_interactive_btn_out")
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_continuedisappear)
 
-		arg_69_0._curBtnGo = arg_69_0._gofinishtalk
+		arg_68_0._curBtnGo = arg_68_0._gofinishtalk
 	end
 
-	gohelper.setActive(arg_69_0._gofinishtalk.gameObject, not arg_69_2)
+	gohelper.setActive(arg_68_0._gofinishtalk.gameObject, not arg_68_2)
 end
 
-function var_0_0._addDialogOption(arg_70_0, arg_70_1, arg_70_2, arg_70_3)
-	local var_70_0 = arg_70_0._optionBtnList[arg_70_1] and arg_70_0._optionBtnList[arg_70_1][1] or gohelper.cloneInPlace(arg_70_0._gotalkitem)
+function var_0_0._addDialogOption(arg_69_0, arg_69_1, arg_69_2, arg_69_3)
+	local var_69_0 = arg_69_0._optionBtnList[arg_69_1] and arg_69_0._optionBtnList[arg_69_1][1] or gohelper.cloneInPlace(arg_69_0._gotalkitem)
 
-	arg_70_0._maxOptionIndex = arg_70_1
+	arg_69_0._maxOptionIndex = arg_69_1
 
-	gohelper.setActive(var_70_0, false)
+	gohelper.setActive(var_69_0, false)
 
-	gohelper.findChildText(var_70_0, "txt_talkitem").text = arg_70_3
+	gohelper.findChildText(var_69_0, "txt_talkitem").text = arg_69_3
 
-	local var_70_1 = gohelper.findChildButtonWithAudio(var_70_0, "btn_talkitem")
+	local var_69_1 = gohelper.findChildButtonWithAudio(var_69_0, "btn_talkitem")
 
-	var_70_1:AddClickListener(arg_70_0._onOptionClick, arg_70_0, {
-		arg_70_2,
-		arg_70_3
+	var_69_1:AddClickListener(arg_69_0._onOptionClick, arg_69_0, {
+		arg_69_2,
+		arg_69_3
 	})
 
-	if not arg_70_0._optionBtnList[arg_70_1] then
-		arg_70_0._optionBtnList[arg_70_1] = {
-			var_70_0,
-			var_70_1
+	if not arg_69_0._optionBtnList[arg_69_1] then
+		arg_69_0._optionBtnList[arg_69_1] = {
+			var_69_0,
+			var_69_1
 		}
 	end
 end
 
-function var_0_0._onOptionClick(arg_71_0, arg_71_1)
-	if arg_71_0._playScrollAnim then
+function var_0_0._onOptionClick(arg_70_0, arg_70_1)
+	if arg_70_0._playScrollAnim then
 		return
 	end
 
-	local var_71_0 = arg_71_1[1]
-	local var_71_1 = string.format("<color=#c95318>\"%s\"</color>", arg_71_1[2])
+	local var_70_0 = arg_70_1[1]
+	local var_70_1 = string.format("<color=#c95318>\"%s\"</color>", arg_70_1[2])
 
-	arg_71_0:_clearDialog()
-	arg_71_0:_showDialog("option", var_71_1)
+	arg_70_0:_clearDialog()
+	arg_70_0:_showDialog("option", var_70_1)
 
-	arg_71_0._showOption = true
+	arg_70_0._showOption = true
 
-	if #arg_71_0._sectionList >= arg_71_0._dialogIndex then
-		table.insert(arg_71_0._sectionStack, {
-			arg_71_0._sectionId,
-			arg_71_0._dialogIndex
+	if #arg_70_0._sectionList >= arg_70_0._dialogIndex then
+		table.insert(arg_70_0._sectionStack, {
+			arg_70_0._sectionId,
+			arg_70_0._dialogIndex
 		})
 	end
 
-	DungeonMapModel.instance:addDialogId(var_71_0)
-	arg_71_0:_playSection(var_71_0)
+	DungeonMapModel.instance:addDialogId(var_70_0)
+	arg_70_0:_playSection(var_70_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_continuemesh)
 end
 
-function var_0_0._showDialog(arg_72_0, arg_72_1, arg_72_2, arg_72_3, arg_72_4)
-	DungeonMapModel.instance:addDialog(arg_72_1, arg_72_2, arg_72_3, arg_72_4)
+function var_0_0._showDialog(arg_71_0, arg_71_1, arg_71_2, arg_71_3, arg_71_4)
+	DungeonMapModel.instance:addDialog(arg_71_1, arg_71_2, arg_71_3, arg_71_4)
 
-	local var_72_0 = table.remove(arg_72_0._dialogItemCacheList) or gohelper.cloneInPlace(arg_72_0._gochatitem)
+	local var_71_0 = table.remove(arg_71_0._dialogItemCacheList) or gohelper.cloneInPlace(arg_71_0._gochatitem)
 
-	transformhelper.setLocalPos(var_72_0.transform, 0, 0, 200)
-	gohelper.setActive(var_72_0, true)
-	gohelper.setAsLastSibling(var_72_0)
+	transformhelper.setLocalPos(var_71_0.transform, 0, 0, 200)
+	gohelper.setActive(var_71_0, true)
+	gohelper.setAsLastSibling(var_71_0)
 
-	gohelper.findChildText(var_72_0, "name").text = arg_72_3 and arg_72_3 .. ":" or ""
+	gohelper.findChildText(var_71_0, "name").text = arg_71_3 and arg_71_3 .. ":" or ""
 
-	local var_72_1 = gohelper.findChild(var_72_0, "usericon")
+	local var_71_1 = gohelper.findChild(var_71_0, "usericon")
 
-	gohelper.setActive(var_72_1, not arg_72_3)
+	gohelper.setActive(var_71_1, not arg_71_3)
 
-	local var_72_2 = gohelper.findChildText(var_72_0, "info")
+	local var_71_2 = gohelper.findChildText(var_71_0, "info")
 
-	var_72_2.text = arg_72_2
+	var_71_2.text = arg_71_2
 
-	if arg_72_3 and arg_72_4 and arg_72_4 > 0 then
-		arg_72_0._audioIcon = gohelper.findChild(var_72_0, "name/laba")
-		arg_72_0._audioId = arg_72_4
+	if arg_71_3 and arg_71_4 and arg_71_4 > 0 then
+		arg_71_0._audioIcon = gohelper.findChild(var_71_0, "name/laba")
+		arg_71_0._audioId = arg_71_4
 	end
 
-	if arg_72_0._showOption and arg_72_0._addDialog then
-		arg_72_0._dissolveInfo = {
-			var_72_0,
-			var_72_2,
-			arg_72_2
+	if arg_71_0._showOption and arg_71_0._addDialog then
+		arg_71_0._dissolveInfo = {
+			var_71_0,
+			var_71_2,
+			arg_71_2
 		}
 	end
 
-	arg_72_0._showOption = false
+	arg_71_0._showOption = false
 
-	table.insert(arg_72_0._dialogItemList, var_72_0)
+	table.insert(arg_71_0._dialogItemList, var_71_0)
 
-	arg_72_0._addDialog = true
+	arg_71_0._addDialog = true
 end
 
-function var_0_0._clearDialog(arg_73_0)
-	arg_73_0._dialogItemList = arg_73_0:getUserDataTb_()
-	arg_73_0._playScrollAnim = true
+function var_0_0._clearDialog(arg_72_0)
+	arg_72_0._dialogItemList = arg_72_0:getUserDataTb_()
+	arg_72_0._playScrollAnim = true
 
-	gohelper.setActive(arg_73_0._gomask, false)
-	TaskDispatcher.runDelay(arg_73_0._delayScroll, arg_73_0, 0)
+	gohelper.setActive(arg_72_0._gomask, false)
+	TaskDispatcher.runDelay(arg_72_0._delayScroll, arg_72_0, 0)
 
-	if arg_73_0._audioId then
-		AudioEffectMgr.instance:stopAudio(arg_73_0._audioId)
+	if arg_72_0._audioId then
+		AudioEffectMgr.instance:stopAudio(arg_72_0._audioId)
 
-		arg_73_0._audioId = nil
+		arg_72_0._audioId = nil
 	end
 end
 
-function var_0_0._delayScroll(arg_74_0)
-	gohelper.setActive(arg_74_0._gomask, true)
+function var_0_0._delayScroll(arg_73_0)
+	gohelper.setActive(arg_73_0._gomask, true)
 
-	arg_74_0._imgMask.enabled = true
+	arg_73_0._imgMask.enabled = true
 
-	local var_74_0 = 0.26
-	local var_74_1 = arg_74_0._curScrollGo
+	local var_73_0 = 0.26
+	local var_73_1 = arg_73_0._curScrollGo
 
-	if var_74_1 then
-		arg_74_0._oldScrollGo = var_74_1
+	if var_73_1 then
+		arg_73_0._oldScrollGo = var_73_1
 
-		ZProj.TweenHelper.DOLocalMoveY(var_74_1.transform, 229, var_74_0, arg_74_0._scrollEnd, arg_74_0, var_74_1)
+		ZProj.TweenHelper.DOLocalMoveY(var_73_1.transform, 229, var_73_0, arg_73_0._scrollEnd, arg_73_0, var_73_1)
 	else
-		var_74_0 = 0.1
+		var_73_0 = 0.1
 	end
 
-	local var_74_2 = gohelper.cloneInPlace(arg_74_0._goscroll)
+	local var_73_2 = gohelper.cloneInPlace(arg_73_0._goscroll)
 
-	for iter_74_0, iter_74_1 in ipairs(arg_74_0._dialogItemList) do
-		local var_74_3 = iter_74_1.transform.position
+	for iter_73_0, iter_73_1 in ipairs(arg_73_0._dialogItemList) do
+		local var_73_3 = iter_73_1.transform.position
 
-		gohelper.addChild(var_74_2, iter_74_1)
+		gohelper.addChild(var_73_2, iter_73_1)
 
-		iter_74_1.transform.position = var_74_3
+		iter_73_1.transform.position = var_73_3
 
-		local var_74_4, var_74_5, var_74_6 = transformhelper.getLocalPos(iter_74_1.transform)
+		local var_73_4, var_73_5, var_73_6 = transformhelper.getLocalPos(iter_73_1.transform)
 
-		transformhelper.setLocalPos(iter_74_1.transform, var_74_4, var_74_5, 0)
+		transformhelper.setLocalPos(iter_73_1.transform, var_73_4, var_73_5, 0)
 	end
 
-	gohelper.setActive(var_74_2, true)
+	gohelper.setActive(var_73_2, true)
 
-	arg_74_0._curScrollGo = var_74_2
+	arg_73_0._curScrollGo = var_73_2
 
-	if var_74_2 then
-		if arg_74_0._dissolveInfo then
-			local var_74_7 = arg_74_0._dissolveInfo[2]
-			local var_74_8 = arg_74_0._dissolveInfo[3]
+	if var_73_2 then
+		if arg_73_0._dissolveInfo then
+			local var_73_7 = arg_73_0._dissolveInfo[2]
+			local var_73_8 = arg_73_0._dissolveInfo[3]
 
-			var_74_7.text = ""
+			var_73_7.text = ""
 		end
 
-		transformhelper.setLocalPosXY(var_74_2.transform, 0, -229)
-		ZProj.TweenHelper.DOLocalMoveY(var_74_2.transform, 0, var_74_0, arg_74_0._scrollEnd, arg_74_0, var_74_2)
+		transformhelper.setLocalPosXY(var_73_2.transform, 0, -229)
+		ZProj.TweenHelper.DOLocalMoveY(var_73_2.transform, 0, var_73_0, arg_73_0._scrollEnd, arg_73_0, var_73_2)
 	end
 end
 
-function var_0_0._scrollEnd(arg_75_0, arg_75_1)
-	if arg_75_1 ~= arg_75_0._curScrollGo then
-		gohelper.destroy(arg_75_1)
+function var_0_0._scrollEnd(arg_74_0, arg_74_1)
+	if arg_74_1 ~= arg_74_0._curScrollGo then
+		gohelper.destroy(arg_74_1)
 	else
-		if arg_75_0._dissolveInfo then
-			TaskDispatcher.runDelay(arg_75_0._onDissolveStart, arg_75_0, 0.3)
+		if arg_74_0._dissolveInfo then
+			TaskDispatcher.runDelay(arg_74_0._onDissolveStart, arg_74_0, 0.3)
 
 			return
 		end
 
-		arg_75_0:_onDissolveFinish()
+		arg_74_0:_onDissolveFinish()
 	end
 end
 
-function var_0_0._onDissolveStart(arg_76_0)
-	local var_76_0 = arg_76_0._dissolveInfo[1]
+function var_0_0._onDissolveStart(arg_75_0)
+	local var_75_0 = arg_75_0._dissolveInfo[1]
 
-	arg_76_0._dissolveInfo[2].text = arg_76_0._dissolveInfo[3]
-	arg_76_0._imgMask.enabled = false
+	arg_75_0._dissolveInfo[2].text = arg_75_0._dissolveInfo[3]
+	arg_75_0._imgMask.enabled = false
 
-	var_76_0:GetComponent(typeof(UnityEngine.Animation)):Play("dungeonmap_chatarea")
-	TaskDispatcher.runDelay(arg_76_0._onDissolveFinish, arg_76_0, 1.3)
+	var_75_0:GetComponent(typeof(UnityEngine.Animation)):Play("dungeonmap_chatarea")
+	TaskDispatcher.runDelay(arg_75_0._onDissolveFinish, arg_75_0, 1.3)
 end
 
-function var_0_0._onDissolveFinish(arg_77_0)
-	arg_77_0:_playAudio()
-	gohelper.setActive(arg_77_0._curBtnGo, true)
+function var_0_0._onDissolveFinish(arg_76_0)
+	arg_76_0:_playAudio()
+	gohelper.setActive(arg_76_0._curBtnGo, true)
 
-	arg_77_0._dissolveInfo = nil
-	arg_77_0._playScrollAnim = false
+	arg_76_0._dissolveInfo = nil
+	arg_76_0._playScrollAnim = false
 
-	if arg_77_0._curBtnGo == arg_77_0._gooptions then
-		for iter_77_0 = 1, arg_77_0._maxOptionIndex do
-			local var_77_0 = (iter_77_0 - 1) * 0.03
-			local var_77_1 = arg_77_0._optionBtnList[iter_77_0][1]
+	if arg_76_0._curBtnGo == arg_76_0._gooptions then
+		for iter_76_0 = 1, arg_76_0._maxOptionIndex do
+			local var_76_0 = (iter_76_0 - 1) * 0.03
+			local var_76_1 = arg_76_0._optionBtnList[iter_76_0][1]
 
-			if var_77_0 > 0 then
-				gohelper.setActive(var_77_1, false)
+			if var_76_0 > 0 then
+				gohelper.setActive(var_76_1, false)
 				TaskDispatcher.runDelay(function()
-					if not gohelper.isNil(var_77_1) then
-						gohelper.setActive(var_77_1, true)
+					if not gohelper.isNil(var_76_1) then
+						gohelper.setActive(var_76_1, true)
 					end
-				end, nil, var_77_0)
+				end, nil, var_76_0)
 			else
-				gohelper.setActive(var_77_1, true)
+				gohelper.setActive(var_76_1, true)
 			end
 		end
 	end
 end
 
-function var_0_0._playAudio(arg_79_0)
-	if not arg_79_0._audioId then
+function var_0_0._playAudio(arg_78_0)
+	if not arg_78_0._audioId then
 		return
 	end
 
-	gohelper.setActive(arg_79_0._audioIcon, true)
+	gohelper.setActive(arg_78_0._audioIcon, true)
 
-	if not arg_79_0._audioParam then
-		arg_79_0._audioParam = AudioParam.New()
+	if not arg_78_0._audioParam then
+		arg_78_0._audioParam = AudioParam.New()
 	end
 
-	arg_79_0._audioParam.callback = arg_79_0._onAudioStop
-	arg_79_0._audioParam.callbackTarget = arg_79_0
+	arg_78_0._audioParam.callback = arg_78_0._onAudioStop
+	arg_78_0._audioParam.callbackTarget = arg_78_0
 
-	AudioEffectMgr.instance:playAudio(arg_79_0._audioId, arg_79_0._audioParam)
+	AudioEffectMgr.instance:playAudio(arg_78_0._audioId, arg_78_0._audioParam)
 end
 
-function var_0_0._onAudioStop(arg_80_0, arg_80_1)
-	gohelper.setActive(arg_80_0._audioIcon, false)
+function var_0_0._onAudioStop(arg_79_0, arg_79_1)
+	gohelper.setActive(arg_79_0._audioIcon, false)
 end
 
-function var_0_0.setBtnClosePosZ(arg_81_0, arg_81_1)
-	local var_81_0 = arg_81_0._btnclose.transform
-	local var_81_1 = var_81_0.localPosition
+function var_0_0.setBtnClosePosZ(arg_80_0, arg_80_1)
+	local var_80_0 = arg_80_0._btnclose.transform
+	local var_80_1 = var_80_0.localPosition
 
-	var_81_0.localPosition = Vector3(var_81_1.x, var_81_1.y, arg_81_1)
+	var_80_0.localPosition = Vector3(var_80_1.x, var_80_1.y, arg_80_1)
 end
 
-function var_0_0.setScale(arg_82_0, arg_82_1)
-	transformhelper.setLocalScale(arg_82_0.viewGO.transform, arg_82_1, arg_82_1, arg_82_1)
+function var_0_0.setScale(arg_81_0, arg_81_1)
+	transformhelper.setLocalScale(arg_81_0.viewGO.transform, arg_81_1, arg_81_1, arg_81_1)
 end
 
-function var_0_0._clearScroll(arg_83_0)
-	arg_83_0._showOption = false
-	arg_83_0._dissolveInfo = nil
-	arg_83_0._playScrollAnim = false
+function var_0_0._clearScroll(arg_82_0)
+	arg_82_0._showOption = false
+	arg_82_0._dissolveInfo = nil
+	arg_82_0._playScrollAnim = false
 
-	TaskDispatcher.cancelTask(arg_83_0._delayScroll, arg_83_0)
+	TaskDispatcher.cancelTask(arg_82_0._delayScroll, arg_82_0)
 
-	if arg_83_0._oldScrollGo then
-		gohelper.destroy(arg_83_0._oldScrollGo)
+	if arg_82_0._oldScrollGo then
+		gohelper.destroy(arg_82_0._oldScrollGo)
 
-		arg_83_0._oldScrollGo = nil
+		arg_82_0._oldScrollGo = nil
 	end
 
-	if arg_83_0._curScrollGo then
-		gohelper.destroy(arg_83_0._curScrollGo)
+	if arg_82_0._curScrollGo then
+		gohelper.destroy(arg_82_0._curScrollGo)
 
-		arg_83_0._curScrollGo = nil
+		arg_82_0._curScrollGo = nil
 	end
 
-	arg_83_0._dialogItemList = arg_83_0:getUserDataTb_()
+	arg_82_0._dialogItemList = arg_82_0:getUserDataTb_()
 end
 
-function var_0_0._editableRemoveEvents(arg_84_0)
-	for iter_84_0, iter_84_1 in pairs(arg_84_0._optionBtnList) do
-		iter_84_1[2]:RemoveClickListener()
+function var_0_0._editableRemoveEvents(arg_83_0)
+	for iter_83_0, iter_83_1 in pairs(arg_83_0._optionBtnList) do
+		iter_83_1[2]:RemoveClickListener()
 	end
 
-	arg_84_0:removeEventCb(DungeonController.instance, DungeonEvent.closeMapInteractiveItem, arg_84_0._closeMapInteractiveItem, arg_84_0)
-	arg_84_0:removeEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, arg_84_0._onScreenResize, arg_84_0)
-	arg_84_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_84_0._onViewClose, arg_84_0)
-	arg_84_0:removeEventCb(DungeonController.instance, DungeonEvent.OnClickElement, arg_84_0._onClickElement, arg_84_0)
+	arg_83_0:removeEventCb(DungeonController.instance, DungeonEvent.closeMapInteractiveItem, arg_83_0._closeMapInteractiveItem, arg_83_0)
+	arg_83_0:removeEventCb(GameGlobalMgr.instance, GameStateEvent.OnScreenResize, arg_83_0._onScreenResize, arg_83_0)
+	arg_83_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_83_0._onViewClose, arg_83_0)
+	arg_83_0:removeEventCb(DungeonController.instance, DungeonEvent.OnClickElement, arg_83_0._onClickElement, arg_83_0)
 end
 
-function var_0_0.onDestroy(arg_85_0)
+function var_0_0.onDestroy(arg_84_0)
 	DungeonMapModel.instance:setMapInteractiveItemVisible(false)
-	TaskDispatcher.cancelTask(arg_85_0._showCloseBtn, arg_85_0)
-	TaskDispatcher.cancelTask(arg_85_0._delayScroll, arg_85_0)
-	TaskDispatcher.cancelTask(arg_85_0._onDissolveStart, arg_85_0)
-	TaskDispatcher.cancelTask(arg_85_0._onDissolveFinish, arg_85_0)
-	arg_85_0:removeEvents()
-	arg_85_0:_editableRemoveEvents()
-	TaskDispatcher.cancelTask(arg_85_0._addToMapView, arg_85_0)
-	gohelper.destroy(arg_85_0._btnfightuiuse.gameObject)
+	TaskDispatcher.cancelTask(arg_84_0._showCloseBtn, arg_84_0)
+	TaskDispatcher.cancelTask(arg_84_0._delayScroll, arg_84_0)
+	TaskDispatcher.cancelTask(arg_84_0._onDissolveStart, arg_84_0)
+	TaskDispatcher.cancelTask(arg_84_0._onDissolveFinish, arg_84_0)
+	arg_84_0:removeEvents()
+	arg_84_0:_editableRemoveEvents()
+	TaskDispatcher.cancelTask(arg_84_0._addToMapView, arg_84_0)
+	gohelper.destroy(arg_84_0._btnfightuiuse.gameObject)
 
-	if arg_85_0._audioParam then
-		arg_85_0._audioParam.callback = nil
-		arg_85_0._audioParam.callbackTarget = nil
-		arg_85_0._audioParam = nil
+	if arg_84_0._audioParam then
+		arg_84_0._audioParam.callback = nil
+		arg_84_0._audioParam.callbackTarget = nil
+		arg_84_0._audioParam = nil
 	end
 
-	if arg_85_0._audioId then
-		AudioEffectMgr.instance:stopAudio(arg_85_0._audioId)
+	if arg_84_0._audioId then
+		AudioEffectMgr.instance:stopAudio(arg_84_0._audioId)
 
-		arg_85_0._audioId = nil
+		arg_84_0._audioId = nil
 	end
 
-	if arg_85_0._rewardClick then
-		arg_85_0._rewardClick:RemoveClickListener()
+	if arg_84_0._rewardClick then
+		arg_84_0._rewardClick:RemoveClickListener()
 	end
 
-	SLFramework.UGUI.UIClickListener.Get(arg_85_0._inputanswer.gameObject):RemoveClickListener()
-	arg_85_0._simagebgimage:UnLoadImage()
-	arg_85_0._simageanswerbg:UnLoadImage()
+	SLFramework.UGUI.UIClickListener.Get(arg_84_0._inputanswer.gameObject):RemoveClickListener()
+	arg_84_0._simagebgimage:UnLoadImage()
+	arg_84_0._simageanswerbg:UnLoadImage()
 end
 
 return var_0_0

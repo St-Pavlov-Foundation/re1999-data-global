@@ -1145,7 +1145,7 @@
     "zh": "<size=44>           本书谨献给：马里奥·<sprite=6></size>",
     "tw": "<size=44>           本書謹獻給：馬里奧·<sprite=6></size>",
     "en": "<size=40>This book is dedicated to Maria<sprite=6></size>",
-    "kr": "<size=30>              이 책을 마리오에게<sprite=6></size>",
+    "kr": "<size=30>              이 책을 마리오 <sprite=6>에게 바칩니다</size>",
     "jp": "<size=30>           本書をミス・マリオ・<sprite=6>に捧ぐ</size>",
     "de": "",
     "fr": "",
