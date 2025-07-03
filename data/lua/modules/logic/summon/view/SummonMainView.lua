@@ -34,10 +34,10 @@ end
 
 function var_0_0._btnconvertStoreOnClick(arg_4_0)
 	local var_4_0 = SummonMainModel.instance:getCurPool()
-	local var_4_1 = StoreEnum.SummonExchange
+	local var_4_1 = StoreEnum.StoreId.SummonExchange
 
 	if var_4_0 and SummonMainModel.getResultType(var_4_0) == SummonEnum.ResultType.Equip then
-		var_4_1 = StoreEnum.SummonEquipExchange
+		var_4_1 = StoreEnum.StoreId.SummonEquipExchange
 	end
 
 	StoreController.instance:checkAndOpenStoreView(var_4_1)

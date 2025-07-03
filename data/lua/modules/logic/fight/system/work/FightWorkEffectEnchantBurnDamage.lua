@@ -3,10 +3,10 @@
 local var_0_0 = class("FightWorkEffectEnchantBurnDamage", FightEffectBase)
 
 function var_0_0.onStart(arg_1_0)
-	local var_1_0 = FightHelper.getEntity(arg_1_0._actEffectMO.targetId)
+	local var_1_0 = FightHelper.getEntity(arg_1_0.actEffectData.targetId)
 
 	if var_1_0 then
-		local var_1_1 = arg_1_0._actEffectMO.effectNum
+		local var_1_1 = arg_1_0.actEffectData.effectNum
 
 		if var_1_1 > 0 then
 			local var_1_2 = var_1_0:isMySide() and -var_1_1 or var_1_1

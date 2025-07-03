@@ -85,17 +85,19 @@ end
 function var_0_0.setPlayCardInfo(arg_5_0, arg_5_1)
 	arg_5_0.playCardInfoList = {}
 
-	local var_5_0 = FightModel.instance:getCurRoundMO()
+	local var_5_0 = FightDataHelper.roundMgr:getRoundData()
 
 	if var_5_0 then
-		if arg_5_1 then
-			local var_5_1 = var_5_0:getEntityLastAIUseCard(arg_5_0.entity.id)
+		local var_5_1 = FightDataHelper.roundMgr:getPreRoundData()
 
-			tabletool.addValues(arg_5_0.playCardInfoList, var_5_1)
-		else
-			local var_5_2 = var_5_0:getEntityAIUseCardMOs(arg_5_0.entity.id)
+		if arg_5_1 and var_5_1 then
+			local var_5_2 = var_5_1:getEntityAIUseCardMOList(arg_5_0.entity.id)
 
 			tabletool.addValues(arg_5_0.playCardInfoList, var_5_2)
+		else
+			local var_5_3 = var_5_0:getEntityAIUseCardMOList(arg_5_0.entity.id)
+
+			tabletool.addValues(arg_5_0.playCardInfoList, var_5_3)
 		end
 	end
 end
@@ -124,10 +126,10 @@ function var_0_0._playEnemyChangeCardEffect(arg_8_0, arg_8_1)
 			local var_8_0 = arg_8_0._opItemList[iter_8_1.cardIndex]
 
 			if var_8_0 then
-				local var_8_1 = FightCardInfoMO.New()
-
-				var_8_1.uid = iter_8_1.entityId
-				var_8_1.skillId = iter_8_1.targetSkillId
+				local var_8_1 = FightCardInfoData.New({
+					uid = iter_8_1.entityId,
+					skillId = iter_8_1.targetSkillId
+				})
 
 				var_8_0:updateCardInfoMO(var_8_1)
 			end
@@ -204,7 +206,7 @@ function var_0_0._canUseCardSkill(arg_13_0, arg_13_1, arg_13_2)
 	end
 
 	if var_13_2 then
-		var_13_1 = FightDataHelper.coverData(var_13_1)
+		var_13_1 = FightDataUtil.coverData(var_13_1)
 
 		for iter_13_2 = #var_13_1, 1, -1 do
 			if var_13_1[iter_13_2].buffId == 832400103 then
@@ -229,7 +231,7 @@ function var_0_0._playOpInAnim(arg_14_0)
 		gohelper.onceAddComponent(iter_14_1.go, typeof(UnityEngine.CanvasGroup)).alpha = 0
 
 		local var_14_0 = iter_14_1.cardInfoMO.skillId
-		local var_14_1 = iter_14_1.cardInfoMO.custom_enemyCardIndex
+		local var_14_1 = iter_14_1.cardInfoMO.clientData.custom_enemyCardIndex
 
 		arg_14_0._canUseCard[var_14_1] = arg_14_0:_canUseCardSkill(arg_14_0.entity.id, var_14_0)
 	end
@@ -238,10 +240,10 @@ end
 function var_0_0._calCanUseCard(arg_15_0)
 	arg_15_0._canUseCard = {}
 
-	if FightModel.instance:getCurRoundMO() then
+	if FightDataHelper.roundMgr:getRoundData() then
 		for iter_15_0, iter_15_1 in ipairs(arg_15_0.playCardInfoList) do
 			local var_15_0 = iter_15_1.skillId
-			local var_15_1 = iter_15_1.custom_enemyCardIndex
+			local var_15_1 = iter_15_1.clientData.custom_enemyCardIndex
 
 			arg_15_0._canUseCard[var_15_1] = arg_15_0:_canUseCardSkill(arg_15_0.entity.id, var_15_0)
 		end
@@ -268,12 +270,17 @@ end
 function var_0_0._canUseSkill(arg_17_0, arg_17_1)
 	local var_17_0 = arg_17_0.entity:getMO()
 	local var_17_1 = arg_17_0:_canUseCardSkill(arg_17_0.entity.id, arg_17_1)
+	local var_17_2 = FightCardDataHelper.isBigSkill(arg_17_1)
 
-	if FightCardModel.instance:isUniqueSkill(arg_17_0.entity.id, arg_17_1) then
-		local var_17_2 = var_17_0.exPoint
-		local var_17_3 = var_17_0:getUniqueSkillPoint()
+	if lua_skill_next.configDict[arg_17_1] then
+		var_17_2 = false
+	end
 
-		var_17_1 = var_17_1 and var_17_3 <= var_17_2
+	if var_17_2 then
+		local var_17_3 = var_17_0.exPoint
+		local var_17_4 = var_17_0:getUniqueSkillPoint()
+
+		var_17_1 = var_17_1 and var_17_4 <= var_17_3
 	end
 
 	return var_17_1
@@ -289,7 +296,7 @@ end
 
 function var_0_0._checkPlaySkill(arg_19_0, arg_19_1)
 	for iter_19_0, iter_19_1 in ipairs(arg_19_0._opItemList) do
-		if iter_19_1.cardInfoMO and iter_19_1.cardInfoMO.custom_enemyCardIndex == arg_19_1.cardIndex then
+		if iter_19_1.cardInfoMO and iter_19_1.cardInfoMO.clientData.custom_enemyCardIndex == arg_19_1.cardIndex then
 			iter_19_1.cardInfoMO.custom_done = true
 
 			arg_19_0:_playOpOut(iter_19_1)
@@ -346,7 +353,7 @@ function var_0_0._checkPlayForbid(arg_24_0)
 		if var_24_0 and not var_24_0.custom_done then
 			local var_24_1 = iter_24_1.cardInfoMO.skillId
 			local var_24_2 = arg_24_0:_canUseSkill(var_24_1)
-			local var_24_3 = iter_24_1.cardInfoMO.custom_enemyCardIndex
+			local var_24_3 = iter_24_1.cardInfoMO.clientData.custom_enemyCardIndex
 			local var_24_4 = arg_24_0._canUseCard[var_24_3]
 
 			if arg_24_0.forceLockFirst and iter_24_0 == 1 then
@@ -391,7 +398,7 @@ end
 function var_0_0._onInvalidEnemyUsedCard(arg_26_0, arg_26_1)
 	if arg_26_0._opItemList then
 		for iter_26_0, iter_26_1 in ipairs(arg_26_0._opItemList) do
-			if iter_26_1.cardInfoMO and iter_26_1.cardInfoMO.custom_enemyCardIndex == arg_26_1 then
+			if iter_26_1.cardInfoMO and iter_26_1.cardInfoMO.clientData.custom_enemyCardIndex == arg_26_1 then
 				arg_26_0:_playOpForbidIn(iter_26_1)
 
 				iter_26_1.cardInfoMO.custom_done = true

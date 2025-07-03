@@ -110,13 +110,13 @@ end
 
 function var_0_0._onRoundSequenceFinish(arg_5_0)
 	arg_5_0:_resetDefaultFocus()
-	FightController.instance:dispatchEvent(FightEvent.SelectSkillTarget, FightCardModel.instance.curSelectEntityId)
+	FightController.instance:dispatchEvent(FightEvent.SelectSkillTarget, FightDataHelper.operationDataMgr.curSelectEntityId)
 end
 
 function var_0_0.onChangeEntity(arg_6_0, arg_6_1)
-	if not FightHelper.getEntity(FightCardModel.instance.curSelectEntityId) then
+	if not FightHelper.getEntity(FightDataHelper.operationDataMgr.curSelectEntityId) then
 		arg_6_0:_resetDefaultFocus()
-		FightController.instance:dispatchEvent(FightEvent.SelectSkillTarget, FightCardModel.instance.curSelectEntityId)
+		FightController.instance:dispatchEvent(FightEvent.SelectSkillTarget, FightDataHelper.operationDataMgr.curSelectEntityId)
 	end
 end
 
@@ -285,18 +285,18 @@ function var_0_0._onClick(arg_11_0, arg_11_1, arg_11_2)
 	end
 
 	if FightModel.instance:isAuto() then
-		if var_11_0 == FightCardModel.instance.curSelectEntityId then
-			FightCardModel.instance:setCurSelectEntityId(0)
+		if var_11_0 == FightDataHelper.operationDataMgr.curSelectEntityId then
+			FightDataHelper.operationDataMgr:setCurSelectEntityId(0)
 		else
 			arg_11_0:_playSelectAnim()
-			FightCardModel.instance:setCurSelectEntityId(var_11_0)
+			FightDataHelper.operationDataMgr:setCurSelectEntityId(var_11_0)
 		end
 	else
-		if var_11_0 ~= FightCardModel.instance.curSelectEntityId then
+		if var_11_0 ~= FightDataHelper.operationDataMgr.curSelectEntityId then
 			arg_11_0:_playSelectAnim()
 		end
 
-		FightCardModel.instance:setCurSelectEntityId(var_11_0)
+		FightDataHelper.operationDataMgr:setCurSelectEntityId(var_11_0)
 	end
 
 	arg_11_0:_updateSelectUI()
@@ -392,7 +392,7 @@ function var_0_0._onLongPress(arg_15_0, arg_15_1)
 		return
 	end
 
-	if FightCardModel.instance:isCardOpEnd() then
+	if FightDataHelper.operationDataMgr:isCardOpEnd() then
 		logNormal("出完牌了不能长按查看详情")
 
 		return
@@ -434,7 +434,7 @@ end
 
 function var_0_0.onEntityDeadFinish(arg_17_0)
 	arg_17_0:_resetDefaultFocus()
-	FightController.instance:dispatchEvent(FightEvent.SelectSkillTarget, FightCardModel.instance.curSelectEntityId)
+	FightController.instance:dispatchEvent(FightEvent.SelectSkillTarget, FightDataHelper.operationDataMgr.curSelectEntityId)
 	arg_17_0:_updatePos()
 end
 
@@ -458,18 +458,18 @@ end
 
 function var_0_0.onClose(arg_21_0)
 	TaskDispatcher.cancelTask(arg_21_0._updateGuideClick, arg_21_0)
-	FightCardModel.instance:setCurSelectEntityId(0)
+	FightDataHelper.operationDataMgr:setCurSelectEntityId(0)
 	TaskDispatcher.cancelTask(arg_21_0._delayStartSequenceFinish, arg_21_0)
 	arg_21_0:removeLateUpdate()
 end
 
 function var_0_0._onBeginWave(arg_22_0)
 	arg_22_0:_resetDefaultFocus()
-	FightController.instance:dispatchEvent(FightEvent.SelectSkillTarget, FightCardModel.instance.curSelectEntityId)
+	FightController.instance:dispatchEvent(FightEvent.SelectSkillTarget, FightDataHelper.operationDataMgr.curSelectEntityId)
 end
 
 function var_0_0._setEntityVisibleByTimeline(arg_23_0, arg_23_1, arg_23_2, arg_23_3, arg_23_4)
-	if arg_23_1.id ~= FightCardModel.instance.curSelectEntityId then
+	if arg_23_1.id ~= FightDataHelper.operationDataMgr.curSelectEntityId then
 		return
 	end
 
@@ -479,7 +479,7 @@ function var_0_0._setEntityVisibleByTimeline(arg_23_0, arg_23_1, arg_23_2, arg_2
 end
 
 function var_0_0._onSkillPlayStart(arg_24_0, arg_24_1)
-	if FightCardModel.instance.curSelectEntityId ~= arg_24_1.id then
+	if FightDataHelper.operationDataMgr.curSelectEntityId ~= arg_24_1.id then
 		return
 	end
 
@@ -491,7 +491,7 @@ end
 function var_0_0._onSkillTimeLineDone(arg_25_0, arg_25_1)
 	local var_25_0 = arg_25_1 and arg_25_1.fromId
 
-	if FightCardModel.instance.curSelectEntityId ~= var_25_0 then
+	if FightDataHelper.operationDataMgr.curSelectEntityId ~= var_25_0 then
 		return
 	end
 
@@ -582,12 +582,12 @@ end
 
 function var_0_0._resetSelect(arg_31_0)
 	arg_31_0:_resetDefaultFocus()
-	FightController.instance:dispatchEvent(FightEvent.SelectSkillTarget, FightCardModel.instance.curSelectEntityId)
+	FightController.instance:dispatchEvent(FightEvent.SelectSkillTarget, FightDataHelper.operationDataMgr.curSelectEntityId)
 	arg_31_0:_updateSelectUI()
 end
 
 function var_0_0._onStartSequenceFinish(arg_32_0)
-	FightCardModel.instance:setCurSelectEntityId(0)
+	FightDataHelper.operationDataMgr:setCurSelectEntityId(0)
 	TaskDispatcher.runDelay(arg_32_0._delayStartSequenceFinish, arg_32_0, 0.01)
 end
 
@@ -597,7 +597,7 @@ function var_0_0._delayStartSequenceFinish(arg_33_0)
 	arg_33_0:clearAllFlag()
 	gohelper.setActive(arg_33_0._containerGO, true)
 	arg_33_0:_resetDefaultFocus()
-	FightController.instance:dispatchEvent(FightEvent.SelectSkillTarget, FightCardModel.instance.curSelectEntityId)
+	FightController.instance:dispatchEvent(FightEvent.SelectSkillTarget, FightDataHelper.operationDataMgr.curSelectEntityId)
 	arg_33_0:addEventCb(PCInputController.instance, PCInputEvent.NotifyBattleSelect, arg_33_0.OnKeySelect, arg_33_0)
 	arg_33_0:initUpdateBeat()
 end
@@ -607,7 +607,7 @@ function var_0_0.OnKeySelect(arg_34_0, arg_34_1)
 		return
 	end
 
-	local var_34_0 = FightCardModel.instance:getSelectEnemyPosLOrR(arg_34_1)
+	local var_34_0 = FightDataHelper.operationDataMgr:getSelectEnemyPosLOrR(arg_34_1)
 
 	if var_34_0 ~= nil then
 		arg_34_0:_onClick(var_34_0)
@@ -661,12 +661,12 @@ end
 
 function var_0_0._resetDefaultFocus(arg_41_0)
 	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.FightAutoFocus) then
-		FightCardModel.instance:resetCurSelectEntityIdDefault()
+		FightDataHelper.operationDataMgr:resetCurSelectEntityIdDefault()
 	end
 end
 
 function var_0_0._updateSelectUI(arg_42_0)
-	local var_42_0 = FightHelper.getEntity(FightCardModel.instance.curSelectEntityId)
+	local var_42_0 = FightHelper.getEntity(FightDataHelper.operationDataMgr.curSelectEntityId)
 
 	arg_42_0:_setSelectGOActive(var_42_0 ~= nil)
 

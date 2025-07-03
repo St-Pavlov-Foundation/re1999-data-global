@@ -1,13 +1,13 @@
 ﻿module("modules.logic.fight.entity.comp.skill.FightTLEventTargetEffect", package.seeall)
 
-local var_0_0 = class("FightTLEventTargetEffect")
+local var_0_0 = class("FightTLEventTargetEffect", FightTimelineTrackItem)
 local var_0_1 = {
 	[FightEnum.EffectType.EXPOINTCHANGE] = true,
 	[FightEnum.EffectType.FIGHTSTEP] = true
 }
 
-function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	arg_1_0._fightStepMO = arg_1_1
+function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	arg_1_0.fightStepData = arg_1_1
 	arg_1_0._delayReleaseEffect = not string.nilorempty(arg_1_3[8]) and tonumber(arg_1_3[8])
 
 	if arg_1_0._delayReleaseEffect then
@@ -53,12 +53,12 @@ function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 			var_1_11[iter_1_1] = iter_1_1
 		end
 
-		for iter_1_2, iter_1_3 in ipairs(arg_1_1.actEffectMOs) do
+		for iter_1_2, iter_1_3 in ipairs(arg_1_1.actEffect) do
 			if var_1_11[iter_1_3.effectType] then
 				local var_1_12 = FightHelper.getEntity(iter_1_3.targetId)
 
 				if var_1_12 then
-					local var_1_13 = FightHelper.getEntity(arg_1_0._fightStepMO.fromId)
+					local var_1_13 = FightHelper.getEntity(arg_1_0.fightStepData.fromId)
 					local var_1_14 = false
 
 					if arg_1_3[6] == "2" then
@@ -76,7 +76,7 @@ function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 			end
 		end
 	else
-		for iter_1_4, iter_1_5 in ipairs(arg_1_1.actEffectMOs) do
+		for iter_1_4, iter_1_5 in ipairs(arg_1_1.actEffect) do
 			local var_1_15 = false
 			local var_1_16 = iter_1_5
 
@@ -88,7 +88,7 @@ function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 				local var_1_17 = FightHelper.getEntity(iter_1_5.targetId)
 
 				if var_1_17 then
-					local var_1_18 = FightHelper.getEntity(arg_1_0._fightStepMO.fromId)
+					local var_1_18 = FightHelper.getEntity(arg_1_0.fightStepData.fromId)
 					local var_1_19 = false
 
 					if arg_1_3[6] == "2" then
@@ -135,12 +135,12 @@ function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 	end
 end
 
-function var_0_0.handleSkillEventEnd(arg_2_0)
+function var_0_0.onTrackEnd(arg_2_0)
 	arg_2_0:_removeEffect()
 end
 
 function var_0_0._createEffect(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4, arg_3_5, arg_3_6, arg_3_7)
-	local var_3_0 = FightHelper.getEntity(arg_3_0._fightStepMO.fromId)
+	local var_3_0 = FightHelper.getEntity(arg_3_0.fightStepData.fromId)
 	local var_3_1
 
 	if not string.nilorempty(arg_3_3) then
@@ -190,23 +190,19 @@ function var_0_0._setRenderOrder(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
 	end
 end
 
-function var_0_0.reset(arg_5_0)
+function var_0_0.onDestructor(arg_5_0)
 	arg_5_0:_removeEffect()
 end
 
-function var_0_0.dispose(arg_6_0)
-	arg_6_0:_removeEffect()
-end
-
-function var_0_0._removeEffect(arg_7_0)
-	if arg_7_0._effectWrapDict and not arg_7_0._delayReleaseEffect then
-		for iter_7_0, iter_7_1 in pairs(arg_7_0._effectWrapDict) do
-			FightRenderOrderMgr.instance:onRemoveEffectWrap(iter_7_0.id, iter_7_1)
-			iter_7_0.effect:removeEffect(iter_7_1)
+function var_0_0._removeEffect(arg_6_0)
+	if arg_6_0._effectWrapDict and not arg_6_0._delayReleaseEffect then
+		for iter_6_0, iter_6_1 in pairs(arg_6_0._effectWrapDict) do
+			FightRenderOrderMgr.instance:onRemoveEffectWrap(iter_6_0.id, iter_6_1)
+			iter_6_0.effect:removeEffect(iter_6_1)
 		end
 	end
 
-	arg_7_0._effectWrapDict = nil
+	arg_6_0._effectWrapDict = nil
 end
 
 return var_0_0

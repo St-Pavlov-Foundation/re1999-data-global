@@ -1,0 +1,64 @@
+[
+  {
+    "id": 1,
+    "maps": [
+      1,
+      2
+    ],
+    "removeCount": [
+      0,
+      6
+    ],
+    "cubeOpenAnim": "",
+    "cubeSwitchAnim": "up",
+    "panelImage": "singlebg/v2a7_coopergarland_singlebg/v2a7_coopergarland_game_square1.png",
+    "scenePath": "scenes/v2a7_m_s12_kbhh_jshd/scenes_prefab/v2a7_m_s12_kbhh_jshd_a_p.prefab"
+  },
+  {
+    "id": 2,
+    "maps": [
+      3,
+      4
+    ],
+    "removeCount": [
+      8,
+      8
+    ],
+    "cubeOpenAnim": "left",
+    "cubeSwitchAnim": "left",
+    "panelImage": "singlebg/v2a7_coopergarland_singlebg/v2a7_coopergarland_game_square2.png",
+    "scenePath": "scenes/v2a7_m_s12_kbhh_jshd/scenes_prefab/v2a7_m_s12_kbhh_jshd_b_p.prefab"
+  },
+  {
+    "id": 3,
+    "maps": [
+      5,
+      6
+    ],
+    "removeCount": [
+      10,
+      0
+    ],
+    "cubeOpenAnim": "up",
+    "cubeSwitchAnim": "left",
+    "panelImage": "singlebg/v2a7_coopergarland_singlebg/v2a7_coopergarland_game_square1.png",
+    "scenePath": "scenes/v2a7_m_s12_kbhh_jshd/scenes_prefab/v2a7_m_s12_kbhh_jshd_c_p.prefab"
+  },
+  {
+    "id": 4,
+    "maps": [
+      7,
+      8,
+      9
+    ],
+    "removeCount": [
+      99,
+      99,
+      99
+    ],
+    "cubeOpenAnim": "",
+    "cubeSwitchAnim": "left",
+    "panelImage": "singlebg/v2a7_coopergarland_singlebg/v2a7_coopergarland_game_square1.png",
+    "scenePath": "scenes/v2a7_m_s12_kbhh_jshd/scenes_prefab/v2a7_m_s12_kbhh_jshd_a_p.prefab"
+  }
+]

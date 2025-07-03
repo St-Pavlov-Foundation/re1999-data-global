@@ -22,7 +22,7 @@ function var_0_0.JumpByCurrency(arg_1_0)
 end
 
 function var_0_0.handleGold()
-	StoreController.instance:checkAndOpenStoreView(StoreEnum.SummonExchange)
+	StoreController.instance:checkAndOpenStoreView(StoreEnum.StoreId.SummonExchange)
 end
 
 function var_0_0.handlePower()

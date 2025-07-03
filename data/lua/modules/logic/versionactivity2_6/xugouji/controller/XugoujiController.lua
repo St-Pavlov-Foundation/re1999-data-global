@@ -50,7 +50,7 @@ end
 
 function var_0_0.openCardInfoView(arg_10_0, arg_10_1)
 	arg_10_1 = arg_10_1 or Activity188Model.instance:getLastCardId()
-	arg_10_0._lastCardInfoUId = cardUid
+	arg_10_0._lastCardInfoUId = arg_10_1
 
 	AudioMgr.instance:trigger(AudioEnum2_6.Xugouji.cardInfo)
 	ViewMgr.instance:openView(ViewName.XugoujiCardInfoView, {

@@ -21,6 +21,7 @@ function var_0_0.init(arg_1_0, arg_1_1)
 		arg_1_0.spNodeList[iter_1_0] = gohelper.findChild(arg_1_0.viewGO, string.format("root/level/%s", iter_1_0))
 	end
 
+	arg_1_0.goProgress = gohelper.findChild(arg_1_0.viewGO, "root/progress")
 	arg_1_0.taskList = {}
 
 	for iter_1_1 = 1, 4 do
@@ -83,7 +84,7 @@ function var_0_0.updateItem(arg_6_0, arg_6_1)
 end
 
 function var_0_0.refreshLev(arg_7_0)
-	if arg_7_0.bossInfo then
+	if arg_7_0.bossInfo and not arg_7_0.bossInfo:getTempState() then
 		gohelper.setActive(arg_7_0.goLev, true)
 
 		arg_7_0.txtLev.text = arg_7_0.bossInfo.level
@@ -106,54 +107,55 @@ function var_0_0.refreshLev(arg_7_0)
 end
 
 function var_0_0.refreshTask(arg_8_0)
-	local var_8_0 = arg_8_0.towerInfo:getTaskGroupId()
-	local var_8_1 = TowerConfig.instance:getTaskListByGroupId(var_8_0)
-	local var_8_2 = 0
+	local var_8_0 = TowerTaskModel.instance:getBossTaskList(arg_8_0.towerId)
 
-	if var_8_1 then
-		for iter_8_0, iter_8_1 in pairs(var_8_1) do
-			if TowerTaskModel.instance:isTaskFinishedById(iter_8_1) then
-				var_8_2 = var_8_2 + 1
+	if var_8_0 and #var_8_0 > 0 then
+		gohelper.setActive(arg_8_0.goProgress, true)
+
+		local var_8_1 = 0
+
+		for iter_8_0, iter_8_1 in pairs(var_8_0) do
+			if TowerTaskModel.instance:isTaskFinishedById(iter_8_1.id) then
+				var_8_1 = var_8_1 + 1
 			end
 		end
-	end
 
-	local var_8_3 = var_8_1 and #var_8_1 or 0
+		local var_8_2 = var_8_0 and #var_8_0 or 0
 
-	for iter_8_2 = 1, #arg_8_0.taskList do
-		local var_8_4 = arg_8_0.taskList[iter_8_2]
+		for iter_8_2 = 1, #arg_8_0.taskList do
+			local var_8_3 = arg_8_0.taskList[iter_8_2]
 
-		if iter_8_2 <= var_8_3 then
-			gohelper.setActive(var_8_4.go, true)
-			gohelper.setActive(var_8_4.goLight, iter_8_2 <= var_8_2)
-		else
-			gohelper.setActive(var_8_4.go, false)
+			if iter_8_2 <= var_8_2 then
+				gohelper.setActive(var_8_3.go, true)
+				gohelper.setActive(var_8_3.goLight, iter_8_2 <= var_8_1)
+			else
+				gohelper.setActive(var_8_3.go, false)
+			end
 		end
+	else
+		gohelper.setActive(arg_8_0.goProgress, false)
 	end
 end
 
-function var_0_0.refreshTime(arg_9_0, arg_9_1)
-	if arg_9_0.towerId ~= arg_9_1 then
+function var_0_0.refreshTime(arg_9_0)
+	local var_9_0 = TowerConfig.instance:getBossTimeTowerConfig(arg_9_0.towerId, arg_9_0.towerOpenMo.round)
+
+	if var_9_0 and var_9_0.taskGroupId > 0 and arg_9_0.towerOpenMo.taskEndTime > 0 then
+		arg_9_0:_refreshTime()
+		TaskDispatcher.cancelTask(arg_9_0._refreshTime, arg_9_0)
+		TaskDispatcher.runRepeat(arg_9_0._refreshTime, arg_9_0, 1)
+	else
 		arg_9_0:clearTime()
-
-		return
 	end
-
-	gohelper.setActive(arg_9_0.goTime, true)
-	arg_9_0:_refreshTime()
-	TaskDispatcher.cancelTask(arg_9_0._refreshTime, arg_9_0)
-	TaskDispatcher.runRepeat(arg_9_0._refreshTime, arg_9_0, 1)
 end
 
 function var_0_0._refreshTime(arg_10_0)
-	local var_10_0 = arg_10_0.towerOpenMo and arg_10_0.towerOpenMo.nextTime or 0
-	local var_10_1 = ServerTime.now()
-	local var_10_2 = var_10_0 * 0.001 - var_10_1
+	gohelper.setActive(arg_10_0.goTime, true)
 
-	if var_10_2 > 0 then
-		local var_10_3 = TimeUtil.getFormatTime1(var_10_2)
+	local var_10_0, var_10_1 = arg_10_0.towerOpenMo:getTaskRemainTime(true)
 
-		arg_10_0.txtTime.text = formatLuaLang("towerboss_nexttime", var_10_3)
+	if var_10_0 then
+		arg_10_0.txtTime.text = var_10_0 .. var_10_1
 	else
 		arg_10_0:clearTime()
 	end

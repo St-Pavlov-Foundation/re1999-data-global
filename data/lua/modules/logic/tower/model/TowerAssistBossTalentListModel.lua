@@ -68,6 +68,14 @@ function var_0_0.isTalentCanReset(arg_6_0, arg_6_1, arg_6_2)
 	return true
 end
 
+function var_0_0.setAutoTalentState(arg_7_0, arg_7_1)
+	arg_7_0.isAutoTalent = arg_7_1
+end
+
+function var_0_0.getAutoTalentState(arg_8_0)
+	return arg_8_0.isAutoTalent
+end
+
 var_0_0.instance = var_0_0.New()
 
 return var_0_0

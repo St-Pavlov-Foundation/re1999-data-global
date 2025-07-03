@@ -142,5 +142,53 @@
     "sampleMinHeight": 0,
     "flyPath": 0,
     "priority": 11
+  },
+  {
+    "id": 14,
+    "unit": 1,
+    "replaceRule": "1#310803|2#876",
+    "res": "buff/asfd_bklepf1_fz",
+    "sceneEmitterId": 3,
+    "audio": 431080344,
+    "scale": 1,
+    "sampleMinHeight": 0,
+    "flyPath": 0,
+    "priority": 10
+  },
+  {
+    "id": 15,
+    "unit": 2,
+    "replaceRule": "1#310803|2#876",
+    "res": "buff/asfd_bklepf1_fx",
+    "sceneEmitterId": 3,
+    "audio": 431080345,
+    "scale": 1,
+    "sampleMinHeight": 13,
+    "flyPath": 1,
+    "priority": 10
+  },
+  {
+    "id": 16,
+    "unit": 3,
+    "replaceRule": "1#310803|2#876",
+    "res": "buff/asfd_bklepf1_hit",
+    "sceneEmitterId": 0,
+    "audio": 431080346,
+    "scale": 1,
+    "sampleMinHeight": 0,
+    "flyPath": 0,
+    "priority": 10
+  },
+  {
+    "id": 17,
+    "unit": 4,
+    "replaceRule": "1#310803|2#876",
+    "res": "buff/asfd_bklepf1_fz_xl",
+    "sceneEmitterId": 3,
+    "audio": 431080343,
+    "scale": 0,
+    "sampleMinHeight": 0,
+    "flyPath": 0,
+    "priority": 10
   }
 ]

@@ -529,188 +529,200 @@ end
 
 function var_0_0.getHeroBaseSkillIdDictByExSkillLevel(arg_43_0, arg_43_1, arg_43_2, arg_43_3)
 	if arg_43_3 and arg_43_3.trialAttrCo then
-		return arg_43_0:getHeroBaseSkillIdDictByStr(arg_43_3.trialAttrCo.activeSkill, arg_43_3.trialAttrCo.uniqueSkill)
+		local var_43_0 = arg_43_0:getHeroBaseSkillIdDictByStr(arg_43_3.trialAttrCo.activeSkill, arg_43_3.trialAttrCo.uniqueSkill)
+
+		return (arg_43_0:_checkDestinyEffect(var_43_0, arg_43_3))
 	end
 
-	local var_43_0 = arg_43_0:getHeroBaseSkillIdDict(arg_43_1)
+	local var_43_1 = arg_43_0:getHeroBaseSkillIdDict(arg_43_1)
 
 	arg_43_3 = arg_43_3 or HeroModel.instance:getByHeroId(arg_43_1)
 	arg_43_2 = arg_43_2 or CharacterEnum.showAttributeOption.ShowCurrent
 
-	local var_43_1 = 0
+	local var_43_2 = 0
 
 	if arg_43_2 == CharacterEnum.showAttributeOption.ShowMax then
-		var_43_1 = CharacterModel.instance:getMaxexskill(arg_43_1)
+		var_43_2 = CharacterModel.instance:getMaxexskill(arg_43_1)
 	else
-		var_43_1 = arg_43_2 == CharacterEnum.showAttributeOption.ShowMin and 0 or arg_43_3.exSkillLevel
+		var_43_2 = arg_43_2 == CharacterEnum.showAttributeOption.ShowMin and 0 or arg_43_3.exSkillLevel
 	end
 
-	if var_43_1 < 1 then
-		return var_43_0
+	if var_43_2 < 1 then
+		var_43_1 = arg_43_0:_checkDestinyEffect(var_43_1, arg_43_3)
+
+		return var_43_1
 	end
 
-	local var_43_2 = math.min(var_43_1, CharacterEnum.MaxSkillExLevel)
-	local var_43_3
+	local var_43_3 = math.min(var_43_2, CharacterEnum.MaxSkillExLevel)
+	local var_43_4
 
-	for iter_43_0 = 1, var_43_2 do
-		local var_43_4 = arg_43_0:getherolevelexskillCO(arg_43_1, iter_43_0)
+	for iter_43_0 = 1, var_43_3 do
+		local var_43_5 = arg_43_0:getherolevelexskillCO(arg_43_1, iter_43_0)
 
-		if not string.nilorempty(var_43_4.skillGroup1) then
-			var_43_0[1] = string.splitToNumber(var_43_4.skillGroup1, "|")[1]
+		if not string.nilorempty(var_43_5.skillGroup1) then
+			var_43_1[1] = string.splitToNumber(var_43_5.skillGroup1, "|")[1]
 		end
 
-		if not string.nilorempty(var_43_4.skillGroup2) then
-			var_43_0[2] = string.splitToNumber(var_43_4.skillGroup2, "|")[1]
+		if not string.nilorempty(var_43_5.skillGroup2) then
+			var_43_1[2] = string.splitToNumber(var_43_5.skillGroup2, "|")[1]
 		end
 
-		if var_43_4.skillEx ~= 0 then
-			var_43_0[3] = var_43_4.skillEx
+		if var_43_5.skillEx ~= 0 then
+			var_43_1[3] = var_43_5.skillEx
 		end
 	end
 
-	return var_43_0
+	return (arg_43_0:_checkDestinyEffect(var_43_1, arg_43_3))
 end
 
-function var_0_0.getHeroAllSkillIdDictByExSkillLevel(arg_44_0, arg_44_1, arg_44_2, arg_44_3, arg_44_4)
-	if arg_44_3 and arg_44_3.trialAttrCo then
-		return arg_44_0:getHeroAllSkillIdDictByStr(arg_44_3.trialAttrCo.activeSkill, arg_44_3.trialAttrCo.uniqueSkill)
+function var_0_0._checkDestinyEffect(arg_44_0, arg_44_1, arg_44_2)
+	if arg_44_1 and arg_44_2 and arg_44_2.destinyStoneMo then
+		arg_44_1 = arg_44_2.destinyStoneMo:_replaceSkill(arg_44_1)
 	end
 
-	local var_44_0 = arg_44_0:getHeroAllSkillIdDict(arg_44_1)
+	return arg_44_1
+end
 
-	arg_44_3 = arg_44_3 or HeroModel.instance:getByHeroId(arg_44_1)
-	arg_44_2 = arg_44_2 or CharacterEnum.showAttributeOption.ShowCurrent
-
-	local var_44_1 = 0
-
-	if arg_44_2 == CharacterEnum.showAttributeOption.ShowMax then
-		var_44_1 = CharacterModel.instance:getMaxexskill(arg_44_1)
-	elseif arg_44_2 == CharacterEnum.showAttributeOption.ShowMin then
-		var_44_1 = 0
-	elseif arg_44_4 then
-		var_44_1 = arg_44_4
-	elseif arg_44_3 then
-		var_44_1 = arg_44_3.exSkillLevel
+function var_0_0.getHeroAllSkillIdDictByExSkillLevel(arg_45_0, arg_45_1, arg_45_2, arg_45_3, arg_45_4)
+	if arg_45_3 and arg_45_3.trialAttrCo then
+		return arg_45_0:getHeroAllSkillIdDictByStr(arg_45_3.trialAttrCo.activeSkill, arg_45_3.trialAttrCo.uniqueSkill)
 	end
 
-	if var_44_1 < 1 then
-		return var_44_0
+	local var_45_0 = arg_45_0:getHeroAllSkillIdDict(arg_45_1)
+
+	arg_45_3 = arg_45_3 or HeroModel.instance:getByHeroId(arg_45_1)
+	arg_45_2 = arg_45_2 or CharacterEnum.showAttributeOption.ShowCurrent
+
+	local var_45_1 = 0
+
+	if arg_45_2 == CharacterEnum.showAttributeOption.ShowMax then
+		var_45_1 = CharacterModel.instance:getMaxexskill(arg_45_1)
+	elseif arg_45_2 == CharacterEnum.showAttributeOption.ShowMin then
+		var_45_1 = 0
+	elseif arg_45_4 then
+		var_45_1 = arg_45_4
+	elseif arg_45_3 then
+		var_45_1 = arg_45_3.exSkillLevel
 	end
 
-	local var_44_2
+	if var_45_1 < 1 then
+		return var_45_0
+	end
 
-	for iter_44_0 = 1, var_44_1 do
-		local var_44_3 = arg_44_0:getherolevelexskillCO(arg_44_1, iter_44_0)
+	local var_45_2
 
-		if not string.nilorempty(var_44_3.skillGroup1) then
-			var_44_0[1] = string.splitToNumber(var_44_3.skillGroup1, "|")
+	for iter_45_0 = 1, var_45_1 do
+		local var_45_3 = arg_45_0:getherolevelexskillCO(arg_45_1, iter_45_0)
+
+		if not string.nilorempty(var_45_3.skillGroup1) then
+			var_45_0[1] = string.splitToNumber(var_45_3.skillGroup1, "|")
 		end
 
-		if not string.nilorempty(var_44_3.skillGroup2) then
-			var_44_0[2] = string.splitToNumber(var_44_3.skillGroup2, "|")
+		if not string.nilorempty(var_45_3.skillGroup2) then
+			var_45_0[2] = string.splitToNumber(var_45_3.skillGroup2, "|")
 		end
 
-		if var_44_3.skillEx ~= 0 then
-			var_44_0[3] = {
-				var_44_3.skillEx
+		if var_45_3.skillEx ~= 0 then
+			var_45_0[3] = {
+				var_45_3.skillEx
 			}
 		end
 	end
 
-	return var_44_0
+	return (arg_45_0:_checkDestinyEffect(var_45_0, arg_45_3))
 end
 
-function var_0_0.getRankLevelByLevel(arg_45_0, arg_45_1, arg_45_2)
-	local var_45_0 = arg_45_0.rankConfig.configDict[arg_45_1]
+function var_0_0.getRankLevelByLevel(arg_46_0, arg_46_1, arg_46_2)
+	local var_46_0 = arg_46_0.rankConfig.configDict[arg_46_1]
 
-	if not var_45_0 then
+	if not var_46_0 then
 		return 0
 	end
 
-	local var_45_1 = {}
+	local var_46_1 = {}
 
-	for iter_45_0, iter_45_1 in pairs(var_45_0) do
-		table.insert(var_45_1, iter_45_1)
+	for iter_46_0, iter_46_1 in pairs(var_46_0) do
+		table.insert(var_46_1, iter_46_1)
 	end
 
-	table.sort(var_45_1, function(arg_46_0, arg_46_1)
-		return arg_46_0.rank < arg_46_1.rank
+	table.sort(var_46_1, function(arg_47_0, arg_47_1)
+		return arg_47_0.rank < arg_47_1.rank
 	end)
 
-	local var_45_2 = 1
+	local var_46_2 = 1
 
-	for iter_45_2, iter_45_3 in ipairs(var_45_1) do
-		local var_45_3 = 0
+	for iter_46_2, iter_46_3 in ipairs(var_46_1) do
+		local var_46_3 = 0
 
-		for iter_45_4, iter_45_5 in pairs(GameUtil.splitString2(iter_45_3.effect, true, "|", "#")) do
-			if iter_45_5[1] == 1 then
-				var_45_3 = iter_45_5[2]
+		for iter_46_4, iter_46_5 in pairs(GameUtil.splitString2(iter_46_3.effect, true, "|", "#")) do
+			if iter_46_5[1] == 1 then
+				var_46_3 = iter_46_5[2]
 
 				break
 			end
 		end
 
-		if arg_45_2 <= var_45_3 then
-			return iter_45_3.rank
+		if arg_46_2 <= var_46_3 then
+			return iter_46_3.rank
 		end
 	end
 
-	return var_45_2
+	return var_46_2
 end
 
-function var_0_0.getConstNum(arg_47_0, arg_47_1)
-	local var_47_0 = arg_47_0:getConstStr(arg_47_1)
+function var_0_0.getConstNum(arg_48_0, arg_48_1)
+	local var_48_0 = arg_48_0:getConstStr(arg_48_1)
 
-	if string.nilorempty(var_47_0) then
+	if string.nilorempty(var_48_0) then
 		return 0
 	else
-		return tonumber(var_47_0)
+		return tonumber(var_48_0)
 	end
 end
 
-function var_0_0.getConstStr(arg_48_0, arg_48_1)
-	local var_48_0 = lua_fight_const.configDict[arg_48_1]
+function var_0_0.getConstStr(arg_49_0, arg_49_1)
+	local var_49_0 = lua_fight_const.configDict[arg_49_1]
 
-	if not var_48_0 then
-		printError("fight const not exist: ", arg_48_1)
+	if not var_49_0 then
+		printError("fight const not exist: ", arg_49_1)
 
 		return nil
 	end
 
-	local var_48_1 = var_48_0.value
+	local var_49_1 = var_49_0.value
 
-	if not string.nilorempty(var_48_1) then
-		return var_48_1
+	if not string.nilorempty(var_49_1) then
+		return var_49_1
 	end
 
-	return var_48_0.value2
+	return var_49_0.value2
 end
 
-function var_0_0.getHeroUpgradeSkill(arg_49_0, arg_49_1, arg_49_2, arg_49_3)
-	local var_49_0 = arg_49_0.heroUpgradeBreakLevelConfig.configDict[arg_49_1]
+function var_0_0.getHeroUpgradeSkill(arg_50_0, arg_50_1, arg_50_2, arg_50_3)
+	local var_50_0 = arg_50_0.heroUpgradeBreakLevelConfig.configDict[arg_50_1]
 
-	if not var_49_0 then
+	if not var_50_0 then
 		return false, nil
 	end
 
-	local var_49_1 = var_49_0[arg_49_2]
-	local var_49_2
+	local var_50_1 = var_50_0[arg_50_2]
+	local var_50_2
 
-	if arg_49_3 == CharacterEnum.skillIndex.Skill1 and not string.nilorempty(var_49_1.skillGroup1) then
-		var_49_2 = string.splitToNumber(var_49_1.skillGroup1, "|")
+	if arg_50_3 == CharacterEnum.skillIndex.Skill1 and not string.nilorempty(var_50_1.skillGroup1) then
+		var_50_2 = string.splitToNumber(var_50_1.skillGroup1, "|")
 	end
 
-	if arg_49_3 == CharacterEnum.skillIndex.Skill2 and not string.nilorempty(var_49_1.skillGroup2) then
-		var_49_2 = string.splitToNumber(var_49_1.skillGroup2, "|")
+	if arg_50_3 == CharacterEnum.skillIndex.Skill2 and not string.nilorempty(var_50_1.skillGroup2) then
+		var_50_2 = string.splitToNumber(var_50_1.skillGroup2, "|")
 	end
 
-	if arg_49_3 == CharacterEnum.skillIndex.SkillEx and var_49_1.skillEx ~= 0 then
-		var_49_2 = {
-			var_49_1.skillEx
+	if arg_50_3 == CharacterEnum.skillIndex.SkillEx and var_50_1.skillEx ~= 0 then
+		var_50_2 = {
+			var_50_1.skillEx
 		}
 	end
 
-	return var_49_2 ~= nil, var_49_2
+	return var_50_2 ~= nil, var_50_2
 end
 
 var_0_0.instance = var_0_0.New()

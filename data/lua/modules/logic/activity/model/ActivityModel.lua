@@ -240,6 +240,10 @@ function var_0_0.removeFinishedCategory(arg_25_0, arg_25_1)
 					arg_25_0:addFinishActivity(iter_25_1)
 				end
 			end
+		elseif iter_25_1 == ActivityEnum.Activity.V2a7_SelfSelectSix1 and ActivityType101Model.instance:isType101RewardGet(iter_25_1, 1) then
+			arg_25_1[iter_25_0] = nil
+
+			arg_25_0:addFinishActivity(iter_25_1)
 		end
 	end
 end
@@ -248,11 +252,12 @@ function var_0_0.removeFinishedWelfare(arg_26_0, arg_26_1)
 	local var_26_0 = false
 	local var_26_1 = ActivityType101Model.instance:hasReceiveAllReward(ActivityEnum.Activity.NoviceSign)
 	local var_26_2 = TeachNoteModel.instance:isFinalRewardGet()
-	local var_26_3
+	local var_26_3 = Activity160Model.instance:allRewardReceive(ActivityEnum.Activity.NewWelfare)
 
 	for iter_26_0, iter_26_1 in pairs(arg_26_1) do
 		if iter_26_1 == ActivityEnum.Activity.StoryShow and TaskModel.instance:isTypeAllTaskFinished(TaskEnum.TaskType.Novice) then
-			var_26_0 = true
+			local var_26_4 = true
+
 			arg_26_1[iter_26_0] = nil
 
 			arg_26_0:addFinishActivity(iter_26_1)
@@ -270,72 +275,76 @@ function var_0_0.removeFinishedWelfare(arg_26_0, arg_26_1)
 			arg_26_0:addFinishActivity(iter_26_1)
 		end
 
-		if iter_26_1 == ActivityEnum.Activity.NewWelfare then
-			var_26_3 = iter_26_0
+		if iter_26_1 == ActivityEnum.Activity.NewWelfare and var_26_3 then
+			arg_26_1[iter_26_0] = nil
+
+			arg_26_0:addFinishActivity(ActivityEnum.Activity.NewWelfare)
 		end
 	end
+end
 
-	if var_26_3 and not Activity160Model.instance:hasRewardCanGet(ActivityEnum.Activity.NewWelfare) and var_26_2 and var_26_0 and var_26_1 then
-		arg_26_1[var_26_3] = nil
-
-		arg_26_0:addFinishActivity(ActivityEnum.Activity.NewWelfare)
+function var_0_0.removeSelectSixAfterRemoveFinished(arg_27_0, arg_27_1)
+	for iter_27_0, iter_27_1 in pairs(arg_27_1) do
+		if iter_27_1 == ActivityEnum.Activity.V2a7_SelfSelectSix2 and ActivityType101Model.instance:isType101RewardGet(iter_27_1, 1) then
+			arg_27_1[iter_27_0] = nil
+		end
 	end
 end
 
-function var_0_0.getRemainTimeSec(arg_27_0, arg_27_1)
-	local var_27_0 = arg_27_0:getActMO(arg_27_1)
-
-	if var_27_0 then
-		return var_27_0.endTime / 1000 - ServerTime.now()
-	end
-end
-
-function var_0_0.setPermanentUnlock(arg_28_0, arg_28_1)
+function var_0_0.getRemainTimeSec(arg_28_0, arg_28_1)
 	local var_28_0 = arg_28_0:getActMO(arg_28_1)
 
 	if var_28_0 then
-		var_28_0:setPermanentUnlock()
+		return var_28_0.endTime / 1000 - ServerTime.now()
 	end
 end
 
-function var_0_0.isReceiveAllBonus(arg_29_0, arg_29_1)
+function var_0_0.setPermanentUnlock(arg_29_0, arg_29_1)
 	local var_29_0 = arg_29_0:getActMO(arg_29_1)
 
 	if var_29_0 then
-		return var_29_0.isReceiveAllBonus
+		var_29_0:setPermanentUnlock()
+	end
+end
+
+function var_0_0.isReceiveAllBonus(arg_30_0, arg_30_1)
+	local var_30_0 = arg_30_0:getActMO(arg_30_1)
+
+	if var_30_0 then
+		return var_30_0.isReceiveAllBonus
 	end
 
 	return false
 end
 
 function var_0_0.checkIsShowLogoVisible()
-	local var_30_0 = ActivityConfig.instance:getMainActAtmosphereConfig()
-
-	if not var_30_0 then
-		return false
-	end
-
-	return var_30_0.isShowLogo or false
-end
-
-function var_0_0.checkIsShowActBgVisible()
 	local var_31_0 = ActivityConfig.instance:getMainActAtmosphereConfig()
 
 	if not var_31_0 then
 		return false
 	end
 
-	return var_31_0.isShowActBg or false
+	return var_31_0.isShowLogo or false
 end
 
-function var_0_0.checkIsShowFxVisible()
+function var_0_0.checkIsShowActBgVisible()
 	local var_32_0 = ActivityConfig.instance:getMainActAtmosphereConfig()
 
 	if not var_32_0 then
 		return false
 	end
 
-	return var_32_0.isShowFx or false
+	return var_32_0.isShowActBg or false
+end
+
+function var_0_0.checkIsShowFxVisible()
+	local var_33_0 = ActivityConfig.instance:getMainActAtmosphereConfig()
+
+	if not var_33_0 then
+		return false
+	end
+
+	return var_33_0.isShowFx or false
 end
 
 function var_0_0.showActivityEffect()
@@ -347,16 +356,16 @@ function var_0_0.showActivityEffect()
 		return false
 	end
 
-	local var_33_0 = ActivityConfig.instance:getMainActAtmosphereConfig()
+	local var_34_0 = ActivityConfig.instance:getMainActAtmosphereConfig()
 
-	if not var_33_0 then
+	if not var_34_0 then
 		return false
 	end
 
-	local var_33_1 = var_33_0.id
-	local var_33_2 = ActivityHelper.getActivityStatus(var_33_1)
+	local var_34_1 = var_34_0.id
+	local var_34_2 = ActivityHelper.getActivityStatus(var_34_1)
 
-	if var_33_2 == ActivityEnum.ActivityStatus.Normal or var_33_2 == ActivityEnum.ActivityStatus.NotUnlock then
+	if var_34_2 == ActivityEnum.ActivityStatus.Normal or var_34_2 == ActivityEnum.ActivityStatus.NotUnlock then
 		return true
 	end
 

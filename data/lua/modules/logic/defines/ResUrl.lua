@@ -1515,4 +1515,12 @@ function var_0_0.getShortenActSingleBg(arg_351_0)
 	return string.format("singlebg/shortenact_singlebg/%s.png", arg_351_0)
 end
 
+function var_0_0.getAct191SingleBg(arg_352_0)
+	return string.format("singlebg/act191/%s.png", arg_352_0)
+end
+
+function var_0_0.getV2a7WarmUpSingleBg(arg_353_0)
+	return string.format("singlebg/v2a7_warmup_singlebg/%s.png", arg_353_0)
+end
+
 return var_0_0

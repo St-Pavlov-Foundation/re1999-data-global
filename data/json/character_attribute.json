@@ -609,5 +609,57 @@
     "showcolor": 0,
     "icon": "",
     "sortId": 0
+  },
+  {
+    "id": 605,
+    "attrType": "hp_percent",
+    "type": 4,
+    "name": "language_10017996",
+    "desc": "language_10017998",
+    "isShowTips": 0,
+    "isShow": 0,
+    "showType": 1,
+    "showcolor": 0,
+    "icon": "",
+    "sortId": 0
+  },
+  {
+    "id": 606,
+    "attrType": "attack_percent",
+    "type": 4,
+    "name": "language_10012689",
+    "desc": "language_10017999",
+    "isShowTips": 0,
+    "isShow": 0,
+    "showType": 1,
+    "showcolor": 0,
+    "icon": "",
+    "sortId": 0
+  },
+  {
+    "id": 607,
+    "attrType": "defense_percent",
+    "type": 4,
+    "name": "language_10018000",
+    "desc": "language_10018001",
+    "isShowTips": 0,
+    "isShow": 0,
+    "showType": 1,
+    "showcolor": 0,
+    "icon": "",
+    "sortId": 0
+  },
+  {
+    "id": 608,
+    "attrType": "mdefense_percent",
+    "type": 4,
+    "name": "language_10018002",
+    "desc": "language_10018003",
+    "isShowTips": 0,
+    "isShow": 0,
+    "showType": 1,
+    "showcolor": 0,
+    "icon": "",
+    "sortId": 0
   }
 ]

@@ -20,8 +20,10 @@ end
 
 function var_0_0.onReceiveBeginFightReply(arg_2_0, arg_2_1, arg_2_2)
 	if arg_2_1 == 0 then
-		FightMgr.instance:startFight(arg_2_2.fight)
-		FightModel.instance:updateFight(arg_2_2.fight)
+		local var_2_0 = FightData.New(arg_2_2.fight)
+
+		FightMgr.instance:startFight(var_2_0)
+		FightModel.instance:updateFight(var_2_0)
 		FightModel.instance:updateFightRound(arg_2_2.round)
 		FightController.instance:dispatchEvent(FightEvent.RespBeginFight)
 	else
@@ -46,9 +48,11 @@ end
 
 function var_0_0.onReceiveTestFightReply(arg_4_0, arg_4_1, arg_4_2)
 	if arg_4_1 == 0 then
-		FightMgr.instance:startFight(arg_4_2.fight)
-		FightModel.instance:updateFight(arg_4_2.fight)
-		FightModel.instance:refreshBattleId(arg_4_2.fight)
+		local var_4_0 = FightData.New(arg_4_2.fight)
+
+		FightMgr.instance:startFight(var_4_0)
+		FightModel.instance:updateFight(var_4_0)
+		FightModel.instance:refreshBattleId(var_4_0)
 		FightModel.instance:updateFightRound(arg_4_2.round)
 		FightController.instance:dispatchEvent(FightEvent.RespBeginFight)
 	else
@@ -69,8 +73,10 @@ end
 
 function var_0_0.onReceiveTestFightIdReply(arg_6_0, arg_6_1, arg_6_2)
 	if arg_6_1 == 0 then
-		FightMgr.instance:startFight(arg_6_2.fight)
-		FightModel.instance:updateFight(arg_6_2.fight)
+		local var_6_0 = FightData.New(arg_6_2.fight)
+
+		FightMgr.instance:startFight(var_6_0)
+		FightModel.instance:updateFight(var_6_0)
 		FightModel.instance:updateFightRound(arg_6_2.round)
 		FightController.instance:dispatchEvent(FightEvent.RespBeginFight)
 	else
@@ -86,28 +92,7 @@ end
 
 function var_0_0.onReceiveResetRoundReply(arg_8_0, arg_8_1, arg_8_2)
 	if arg_8_1 == 0 then
-		if arg_8_2:HasField("fight") then
-			FightModel.instance:updateFight(arg_8_2.fight)
-		end
-
-		if arg_8_2:HasField("round") then
-			FightModel.instance:updateFightRound(arg_8_2.round)
-
-			FightCardModel.instance:getCardMO().actPoint = arg_8_2.round.actPoint
-		end
-
-		local var_8_0 = FightCardModel.instance:getCardOps()
-
-		if #arg_8_2.cards > 0 then
-			local var_8_1 = FightHelper.buildInfoMOs(arg_8_2.cards, FightCardInfoMO)
-
-			FightCardModel.instance:clearCardOps()
-			FightCardModel.instance:coverCard(var_8_1)
-
-			local var_8_2 = FightCardModel.instance:getCardMO().cardGroup
-
-			FightController.instance:dispatchEvent(FightEvent.UpdateHandCards, var_8_2)
-		end
+		local var_8_0 = FightDataHelper.operationDataMgr:getOpList()
 
 		FightMgr.instance:cancelOperation()
 		FightController.instance:dispatchEvent(FightEvent.ResetCard, var_8_0)
@@ -147,7 +132,6 @@ end
 
 function var_0_0.onReceiveBeginRoundReply(arg_10_0, arg_10_1, arg_10_2)
 	FightDataHelper.stageMgr:exitOperateState(FightStageMgr.FightStateType.sendOperation2Server)
-	FightCardModel.instance:clearCardOps()
 	FightDataHelper.paTaMgr:resetOp()
 
 	if arg_10_1 == 0 then
@@ -229,8 +213,10 @@ function var_0_0.onReceiveReconnectFightReply(arg_17_0, arg_17_1, arg_17_2)
 		FightModel.instance.needFightReconnect = arg_17_2:HasField("fight")
 
 		if FightModel.instance.needFightReconnect then
-			FightMgr.instance:startFight(arg_17_2.fight)
-			FightModel.instance:updateFight(arg_17_2.fight)
+			local var_17_0 = FightData.New(arg_17_2.fight)
+
+			FightMgr.instance:startFight(var_17_0)
+			FightModel.instance:updateFight(var_17_0)
 			FightModel.instance:updateFightRound(arg_17_2.lastRound)
 			FightModel.instance:updateFightReason(arg_17_2.fightReason)
 			FightModel.instance:recordFightGroup(arg_17_2.fightGroup)
@@ -242,7 +228,7 @@ end
 
 function var_0_0.onReceiveCardInfoPush(arg_18_0, arg_18_1, arg_18_2)
 	FightLocalDataMgr.instance.handCardMgr:updateHandCardByProto(arg_18_2.cardGroup)
-	FightLocalDataMgr.instance.fieldMgr:dealCardInfoPush(arg_18_2)
+	FightLocalDataMgr.instance.operationDataMgr:dealCardInfoPush(arg_18_2)
 
 	arg_18_0._lastCardInfoPushMsg = arg_18_2
 
@@ -254,8 +240,7 @@ end
 function var_0_0.dealCardInfoPushData(arg_19_0)
 	if arg_19_0._lastCardInfoPushMsg then
 		FightDataMgr.instance.handCardMgr:updateHandCardByProto(arg_19_0._lastCardInfoPushMsg.cardGroup)
-		FightDataMgr.instance.fieldMgr:dealCardInfoPush(arg_19_0._lastCardInfoPushMsg)
-		FightCardModel.instance:updateCard(arg_19_0._lastCardInfoPushMsg)
+		FightDataMgr.instance.operationDataMgr:dealCardInfoPush(arg_19_0._lastCardInfoPushMsg)
 		FightController.instance:dispatchEvent(FightEvent.PushCardInfo)
 
 		arg_19_0._lastCardInfoPushMsg = nil
@@ -265,14 +250,15 @@ end
 function var_0_0.onReceiveTeamInfoPush(arg_20_0, arg_20_1, arg_20_2)
 	local var_20_0 = GameSceneMgr.instance:getCurSceneType() == SceneType.Fight
 	local var_20_1 = GameSceneMgr.instance:getScene(SceneType.Fight).entityMgr
+	local var_20_2 = FightData.New(arg_20_2.fight)
 
-	FightLocalDataMgr.instance:updateFightData(arg_20_2.fight)
-	FightDataMgr.instance:updateFightData(arg_20_2.fight)
+	FightLocalDataMgr.instance:updateFightData(var_20_2)
+	FightDataMgr.instance:updateFightData(var_20_2)
 
 	if var_20_0 then
-		var_20_1:compareUpdate(arg_20_2.fight)
+		var_20_1:compareUpdate(var_20_2)
 	else
-		FightModel.instance:updateFight(arg_20_2.fight)
+		FightModel.instance:updateFight(var_20_2)
 	end
 
 	FightController.instance:dispatchEvent(FightEvent.PushTeamInfo)
@@ -316,13 +302,14 @@ function var_0_0.onReceiveEndFightPush(arg_23_0, arg_23_1, arg_23_2)
 	FightModel.instance:recordFightGroup(arg_23_2.fightGroupA)
 	FightModel.instance:onEndFight()
 	FightModel.instance:recordPassModel(arg_23_2)
-	FightCardModel.instance:clearCardOps()
 	FightController.instance:dispatchEvent(FightEvent.PushEndFight)
 end
 
 function var_0_0.onReceiveFightWavePush(arg_24_0, arg_24_1, arg_24_2)
 	if arg_24_1 == 0 then
-		FightDataHelper.cacheFightWavePush(arg_24_2)
+		local var_24_0 = FightData.New(arg_24_2.fight)
+
+		FightDataHelper.cacheFightWavePush(var_24_0)
 	end
 
 	FightModel.instance:setNextWaveMsg(arg_24_2)
@@ -388,7 +375,9 @@ function var_0_0.sendAutoRoundRequest(arg_27_0, arg_27_1)
 		table.insert(var_27_0.opers, var_27_1)
 	end
 
-	var_27_0.toId = FightCardModel.instance.curSelectEntityId or "0"
+	local var_27_2 = FightDataHelper.operationDataMgr.curSelectEntityId
+
+	var_27_0.toId = var_27_2 == 0 and "0" or var_27_2
 
 	arg_27_0:sendMsg(var_27_0)
 end
@@ -404,12 +393,6 @@ function var_0_0.onReceiveRedealCardInfoPush(arg_29_0, arg_29_1, arg_29_2)
 	if arg_29_1 == 0 then
 		FightLocalDataMgr.instance.handCardMgr:cacheRedealCard(arg_29_2)
 		FightDataMgr.instance.handCardMgr:cacheRedealCard(arg_29_2)
-		FightCardModel.instance:clearDistributeQueue()
-
-		local var_29_0 = FightHelper.buildInfoMOs(arg_29_2.dealCardGroup, FightCardInfoMO)
-
-		FightCardModel.instance.redealCardInfoList = var_29_0
-
 		FightController.instance:dispatchEvent(FightEvent.PushRedealCardInfo)
 	end
 end

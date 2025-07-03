@@ -339,7 +339,7 @@ end
 function var_0_0._calcFovInternal(arg_29_0, arg_29_1)
 	local var_29_0 = 1.7777777777777777 * (UnityEngine.Screen.height / UnityEngine.Screen.width)
 
-	if BootNativeUtil.isWindows() then
+	if BootNativeUtil.isWindows() and not SLFramework.FrameworkSettings.IsEditor then
 		local var_29_1, var_29_2 = SettingsModel.instance:getCurrentScreenSize()
 
 		var_29_0 = 16 * var_29_2 / 9 / var_29_1

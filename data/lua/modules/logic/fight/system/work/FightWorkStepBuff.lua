@@ -3,11 +3,11 @@
 local var_0_0 = class("FightWorkStepBuff", FightEffectBase)
 
 function var_0_0.beforePlayEffectData(arg_1_0)
-	local var_1_0 = arg_1_0._actEffectMO.buff
+	local var_1_0 = arg_1_0.actEffectData.buff
 
 	arg_1_0._buffUid = var_1_0 and var_1_0.uid
 	arg_1_0._buffId = var_1_0 and var_1_0.buffId
-	arg_1_0._entityId = arg_1_0._actEffectMO.targetId
+	arg_1_0._entityId = arg_1_0.actEffectData.targetId
 	arg_1_0._entityMO = FightDataHelper.entityMgr:getById(arg_1_0._entityId)
 
 	if not arg_1_0._entityMO then
@@ -40,9 +40,9 @@ function var_0_0.onStart(arg_2_0)
 		return
 	end
 
-	var_0_0.canPlayDormantBuffAni = FightBuffHelper.canPlayDormantBuffAni(arg_2_0._actEffectMO, arg_2_0._fightStepMO)
+	var_0_0.canPlayDormantBuffAni = FightBuffHelper.canPlayDormantBuffAni(arg_2_0.actEffectData, arg_2_0.fightStepData)
 
-	local var_2_1 = arg_2_0._actEffectMO.effectType
+	local var_2_1 = arg_2_0.actEffectData.effectType
 
 	if var_2_1 == FightEnum.EffectType.BUFFADD or var_2_1 == FightEnum.EffectType.BUFFUPDATE then
 		arg_2_0._newBuffMO = arg_2_0._entityMO:getBuffMO(arg_2_0._buffUid)
@@ -55,14 +55,14 @@ function var_0_0.onStart(arg_2_0)
 	end
 
 	if var_2_1 == FightEnum.EffectType.BUFFADD then
-		var_2_0.buff:addBuff(arg_2_0._newBuffMO, false, arg_2_0._fightStepMO.stepUid)
+		var_2_0.buff:addBuff(arg_2_0._newBuffMO, false, arg_2_0.fightStepData.stepUid)
 	elseif var_2_1 == FightEnum.EffectType.BUFFDEL or var_2_1 == FightEnum.EffectType.BUFFDELNOEFFECT then
 		var_2_0.buff:delBuff(arg_2_0._buffUid)
 	elseif var_2_1 == FightEnum.EffectType.BUFFUPDATE then
-		var_2_0.buff:updateBuff(arg_2_0._newBuffMO, arg_2_0._oldBuffMO or arg_2_0._newBuffMO, arg_2_0._actEffectMO)
+		var_2_0.buff:updateBuff(arg_2_0._newBuffMO, arg_2_0._oldBuffMO or arg_2_0._newBuffMO, arg_2_0.actEffectData)
 	end
 
-	FightController.instance:dispatchEvent(FightEvent.OnBuffUpdate, arg_2_0._entityId, var_2_1, arg_2_0._buffId, arg_2_0._buffUid, arg_2_0._actEffectMO.configEffect, arg_2_0._newBuffMO)
+	FightController.instance:dispatchEvent(FightEvent.OnBuffUpdate, arg_2_0._entityId, var_2_1, arg_2_0._buffId, arg_2_0._buffUid, arg_2_0.actEffectData.configEffect, arg_2_0.actEffectData.buff)
 
 	if var_0_0.canPlayDormantBuffAni then
 		arg_2_0:com_registTimer(arg_2_0._delayDone, 2 / FightModel.instance:getSpeed())

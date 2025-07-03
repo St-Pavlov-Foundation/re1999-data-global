@@ -52,7 +52,7 @@ function var_0_0.onClickGroupBtn(arg_5_0, arg_5_1)
 			local var_5_4 = ActivityModel.instance:getActMO(var_5_0)
 			local var_5_5 = var_5_4:getRealStartTimeStamp() - ServerTime.now()
 			local var_5_6 = var_5_4.config.name
-			local var_5_7 = TimeUtil.getFormatTime_overseas(var_5_5)
+			local var_5_7 = TimeUtil.getFormatTime(var_5_5)
 
 			GameFacade.showToast(ToastEnum.V1a4_ActPreTips, var_5_6, var_5_7)
 		elseif var_5_2 then

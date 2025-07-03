@@ -6,6 +6,7 @@ function var_0_0.onInitView(arg_1_0)
 	arg_1_0._gonormal = gohelper.findChild(arg_1_0.viewGO, "#go_normal")
 	arg_1_0._golight = gohelper.findChild(arg_1_0.viewGO, "#go_normal/progress/#go_light")
 	arg_1_0._txttaskdes = gohelper.findChildText(arg_1_0.viewGO, "#go_normal/#txt_taskdes")
+	arg_1_0._goStar = gohelper.findChild(arg_1_0.viewGO, "#go_normal/#txt_taskdes/#go_star")
 	arg_1_0._goscrollRewards = gohelper.findChild(arg_1_0.viewGO, "#go_normal/#scroll_rewards")
 	arg_1_0._gorewardContent = gohelper.findChild(arg_1_0.viewGO, "#go_normal/#scroll_rewards/Viewport/#go_rewardContent")
 	arg_1_0._btnnormal = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_normal/#btn_normal")
@@ -124,7 +125,17 @@ function var_0_0.refreshNormal(arg_12_0)
 	arg_12_0.taskId = arg_12_0.mo.id
 	arg_12_0.config = arg_12_0.mo.config
 	arg_12_0.jumpId = arg_12_0.config.jumpId
-	arg_12_0._txttaskdes.text = arg_12_0.config.desc
+
+	local var_12_0 = arg_12_0.config.desc
+	local var_12_1 = string.find(var_12_0, "%$")
+
+	if var_12_1 then
+		var_12_0 = string.gsub(var_12_0, "%$", "")
+	end
+
+	gohelper.setActive(arg_12_0._goStar, var_12_1)
+
+	arg_12_0._txttaskdes.text = var_12_0
 
 	arg_12_0:refreshReward()
 	arg_12_0:refreshState()

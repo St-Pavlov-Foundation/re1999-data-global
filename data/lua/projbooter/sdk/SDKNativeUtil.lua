@@ -36,9 +36,13 @@ function var_0_0.isGamePad()
 	return false
 end
 
-function var_0_0.updateGame()
+function var_0_0.updateGame(arg_4_0)
 	if BootNativeUtil.isAndroid() then
-		SLFramework.NativeUtil.BoolCallNative(var_0_0.nativeClsName, "updateGame", "")
+		if VersionUtil.isVersionLargeEqual("2.7.0") then
+			SLFramework.NativeUtil.VoidCallNative(var_0_0.nativeClsName, "updateGame", arg_4_0)
+		else
+			SLFramework.NativeUtil.BoolCallNative(var_0_0.nativeClsName, "updateGame", "")
+		end
 	end
 end
 

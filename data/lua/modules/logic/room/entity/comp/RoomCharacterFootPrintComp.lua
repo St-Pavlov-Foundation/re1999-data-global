@@ -44,6 +44,10 @@ function var_0_0._updateMovingLookDir(arg_6_0)
 		return
 	end
 
+	if var_6_0.roomCharacterConfig.hideFootprint ~= 0 then
+		return
+	end
+
 	if var_6_0:getMoveState() ~= RoomCharacterEnum.CharacterMoveState.Move then
 		arg_6_0._needFootPrint = true
 

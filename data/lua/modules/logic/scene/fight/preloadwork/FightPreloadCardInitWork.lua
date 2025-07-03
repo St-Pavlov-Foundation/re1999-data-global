@@ -18,7 +18,7 @@ function var_0_0._onOpenViewFinish(arg_2_0, arg_2_1)
 end
 
 function var_0_0._updateCards(arg_3_0)
-	local var_3_0 = FightCardModel.instance:getHandCards()
+	local var_3_0 = FightDataHelper.handCardMgr.handCard
 
 	FightController.instance:dispatchEvent(FightEvent.UpdateHandCards, var_3_0)
 

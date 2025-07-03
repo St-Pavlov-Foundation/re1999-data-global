@@ -1,19 +1,19 @@
 ﻿module("modules.logic.fight.entity.comp.skill.FightTLEventAtkEffect", package.seeall)
 
-local var_0_0 = class("FightTLEventAtkEffect")
+local var_0_0 = class("FightTLEventAtkEffect", FightTimelineTrackItem)
 
-function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 	if not FightHelper.detectTimelinePlayEffectCondition(arg_1_1, arg_1_3[10]) then
 		return
 	end
 
 	arg_1_0._attacker = FightHelper.getEntity(arg_1_1.fromId)
 
-	if arg_1_0._attacker.skill and arg_1_0._attacker.skill:atkEffectNeedFilter(arg_1_3[1]) then
+	if arg_1_0._attacker.skill and arg_1_0._attacker.skill:atkEffectNeedFilter(arg_1_3[1], arg_1_1) then
 		return
 	end
 
-	arg_1_0.fightStepMO = arg_1_1
+	arg_1_0.fightStepData = arg_1_1
 	arg_1_0.duration = arg_1_2
 	arg_1_0.paramsArr = arg_1_3
 	arg_1_0.release_time = not string.nilorempty(arg_1_3[9]) and arg_1_3[9] ~= "0" and tonumber(arg_1_3[9])
@@ -107,11 +107,34 @@ function var_0_0._bootLogic(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
 			if var_2_8 then
 				TaskDispatcher.runRepeat(arg_2_0._onFrameUpdateEffectRotation, arg_2_0, 0.01)
 			end
+
+			if not string.nilorempty(arg_2_3[13]) then
+				local var_2_9 = string.split(arg_2_3[13], "#")
+				local var_2_10 = var_2_9[1]
+				local var_2_11 = var_2_9[2]
+				local var_2_12 = var_2_10 + var_2_11
+				local var_2_13 = FightHelper.getEntity(arg_2_1.fromId)
+				local var_2_14 = FightHelper.getEntity(arg_2_1.toId)
+
+				if var_2_13 and var_2_14 then
+					local var_2_15, var_2_16, var_2_17 = transformhelper.getLocalPos(var_2_13.go.transform)
+					local var_2_18, var_2_19, var_2_20 = transformhelper.getLocalPos(var_2_14.go.transform)
+					local var_2_21 = (math.abs(var_2_15 - var_2_18) + var_2_11) / var_2_12
+
+					if arg_2_0._effectWrap.containerTr then
+						local var_2_22, var_2_23, var_2_24 = transformhelper.getLocalPos(arg_2_0._effectWrap.containerTr)
+						local var_2_25, var_2_26, var_2_27 = transformhelper.getLocalScale(arg_2_0._effectWrap.containerTr)
+
+						transformhelper.setLocalScale(arg_2_0._effectWrap.containerTr, var_2_21, var_2_26, var_2_27)
+						transformhelper.setLocalPos(arg_2_0._effectWrap.containerTr, var_2_22, var_2_23, var_2_24)
+					end
+				end
+			end
 		end
 	end
 end
 
-function var_0_0.handleSkillEventEnd(arg_3_0)
+function var_0_0.onTrackEnd(arg_3_0)
 	arg_3_0:_removeEffect()
 end
 
@@ -220,33 +243,26 @@ function var_0_0._onSpineLoaded(arg_10_0, arg_10_1)
 		arg_10_0._targetEntity = arg_10_1.unitSpawn
 
 		FightController.instance:unregisterCallback(FightEvent.OnSpineLoaded, arg_10_0._onSpineLoaded, arg_10_0)
-		arg_10_0:_bootLogic(arg_10_0.fightStepMO, arg_10_0.duration, arg_10_0.paramsArr)
+		arg_10_0:_bootLogic(arg_10_0.fightStepData, arg_10_0.duration, arg_10_0.paramsArr)
 	end
 end
 
-function var_0_0.reset(arg_11_0)
+function var_0_0.onDestructor(arg_11_0)
 	arg_11_0:_removeEffect()
 	TaskDispatcher.cancelTask(arg_11_0._onFrameUpdateEffectPos, arg_11_0)
 	TaskDispatcher.cancelTask(arg_11_0._onFrameUpdateEffectRotation, arg_11_0)
 	FightController.instance:unregisterCallback(FightEvent.OnSpineLoaded, arg_11_0._onSpineLoaded, arg_11_0)
 end
 
-function var_0_0.dispose(arg_12_0)
-	arg_12_0:_removeEffect()
-	TaskDispatcher.cancelTask(arg_12_0._onFrameUpdateEffectPos, arg_12_0)
-	TaskDispatcher.cancelTask(arg_12_0._onFrameUpdateEffectRotation, arg_12_0)
-	FightController.instance:unregisterCallback(FightEvent.OnSpineLoaded, arg_12_0._onSpineLoaded, arg_12_0)
-end
+function var_0_0._removeEffect(arg_12_0)
+	if arg_12_0._effectWrap and not arg_12_0.release_time then
+		FightRenderOrderMgr.instance:onRemoveEffectWrap(arg_12_0._targetEntity.id, arg_12_0._effectWrap)
+		arg_12_0._targetEntity.effect:removeEffect(arg_12_0._effectWrap)
 
-function var_0_0._removeEffect(arg_13_0)
-	if arg_13_0._effectWrap and not arg_13_0.release_time then
-		FightRenderOrderMgr.instance:onRemoveEffectWrap(arg_13_0._targetEntity.id, arg_13_0._effectWrap)
-		arg_13_0._targetEntity.effect:removeEffect(arg_13_0._effectWrap)
-
-		arg_13_0._effectWrap = nil
+		arg_12_0._effectWrap = nil
 	end
 
-	arg_13_0._targetEntity = nil
+	arg_12_0._targetEntity = nil
 end
 
 return var_0_0

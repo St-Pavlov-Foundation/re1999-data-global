@@ -21,6 +21,8 @@ function var_0_0.init(arg_1_0, arg_1_1)
 
 	arg_1_0._config = Act183Config.instance:getEpisodeCo(arg_1_0._episodeId)
 	arg_1_0._params = arg_1_1.params
+	arg_1_0._star = arg_1_1.star
+	arg_1_0._totalStarCount = Act183Helper.calcEpisodeTotalConditionCount(arg_1_0._episodeId)
 end
 
 function var_0_0.getConfig(arg_2_0)
@@ -93,6 +95,14 @@ function var_0_0.getRuleStatus(arg_15_0, arg_15_1)
 	end
 
 	return Act183Enum.RuleStatus.Escape
+end
+
+function var_0_0.getFinishStarCount(arg_16_0)
+	return arg_16_0._star
+end
+
+function var_0_0.getTotalStarCount(arg_17_0)
+	return arg_17_0._totalStarCount
 end
 
 return var_0_0

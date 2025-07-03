@@ -49,6 +49,58 @@ function var_0_0.createStep(arg_1_0, arg_1_1)
 		var_1_0 = EliminateChessRefreshStep.New()
 	end
 
+	if arg_1_0 == EliminateEnum.StepWorkType.Arrange_XY then
+		var_1_0 = EliminateChessArrange_XYStep.New()
+	end
+
+	if arg_1_0 == EliminateEnum.StepWorkType.DieEffect then
+		var_1_0 = EliminateChessDieEffectStep.New()
+	end
+
+	if arg_1_0 == EliminateEnum.StepWorkType.ChangeState then
+		var_1_0 = EliminateChessChangeStateStep.New()
+	end
+
+	if arg_1_0 == EliminateEnum.StepWorkType.CheckEliminate then
+		var_1_0 = EliminateChessCheckStep.New()
+	end
+
+	if arg_1_0 == EliminateEnum.StepWorkType.EliminateChessDebug2_7 then
+		var_1_0 = EliminateChessDebug2_7Step.New()
+	end
+
+	if arg_1_0 == EliminateEnum.StepWorkType.EliminateChessRevert then
+		var_1_0 = EliminateChessRevertStep.New()
+	end
+
+	if arg_1_0 == EliminateEnum.StepWorkType.EliminateChessUpdateDamage then
+		var_1_0 = EliminateChessUpdateDamageStep.New()
+	end
+
+	if arg_1_0 == EliminateEnum.StepWorkType.EliminateChessUpdateGameInfo then
+		var_1_0 = EliminateChessUpdateGameInfoStep.New()
+	end
+
+	if arg_1_0 == EliminateEnum.StepWorkType.LengZhou6EnemyReleaseSkillStep then
+		var_1_0 = LengZhou6EnemyReleaseSkillStep.New()
+	end
+
+	if arg_1_0 == EliminateEnum.StepWorkType.ChessItemUpdateInfo then
+		var_1_0 = EliminateChessItemUpdateInfoStep.New()
+	end
+
+	if arg_1_0 == EliminateEnum.StepWorkType.LengZhou6EnemyGenerateSkillStep then
+		var_1_0 = LengZhou6EnemyGenerateSkillStep.New()
+	end
+
+	if arg_1_0 == EliminateEnum.StepWorkType.EliminateCheckAndRefresh then
+		var_1_0 = EliminateCheckAndRefreshStep.New()
+	end
+
+	if arg_1_0 == EliminateEnum.StepWorkType.PlayAudio then
+		var_1_0 = EliminatePlayAudioStep.New()
+	end
+
 	if var_1_0 then
 		var_1_0:initData(arg_1_1)
 	else

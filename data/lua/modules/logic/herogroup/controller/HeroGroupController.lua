@@ -57,14 +57,16 @@ function var_0_0._getGroupFightViewName(arg_6_0, arg_6_1)
 			[VersionActivity1_5Enum.ActivityId.Dungeon] = ViewName.V1a5_HeroGroupFightView,
 			[VersionActivity1_6Enum.ActivityId.Dungeon] = ViewName.V1a6_HeroGroupFightView,
 			[VersionActivity1_6Enum.ActivityId.DungeonBossRush] = ViewName.V1a6_HeroGroupFightView,
-			[VersionActivity2_5Enum.ActivityId.Challenge] = ViewName.Act183HeroGroupFightView
+			[VersionActivity2_7Enum.ActivityId.Act191] = ViewName.Act191HeroGroupView
 		}
 		arg_6_0.ChapterTypeToHeroGroupView = {
 			[DungeonEnum.ChapterType.WeekWalk] = ViewName.HeroGroupFightWeekwalkView,
 			[DungeonEnum.ChapterType.WeekWalk_2] = ViewName.HeroGroupFightWeekwalk_2View,
 			[DungeonEnum.ChapterType.TowerPermanent] = ViewName.TowerHeroGroupFightView,
 			[DungeonEnum.ChapterType.TowerBoss] = ViewName.TowerHeroGroupFightView,
-			[DungeonEnum.ChapterType.TowerLimited] = ViewName.TowerHeroGroupFightView
+			[DungeonEnum.ChapterType.TowerLimited] = ViewName.TowerHeroGroupFightView,
+			[DungeonEnum.ChapterType.TowerBossTeach] = ViewName.TowerHeroGroupFightView,
+			[DungeonEnum.ChapterType.Act183] = ViewName.Act183HeroGroupFightView
 		}
 	end
 

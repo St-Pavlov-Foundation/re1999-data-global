@@ -26,12 +26,11 @@ function var_0_0._playTimeline(arg_3_0)
 	if arg_3_0._entity.skill then
 		local var_3_0 = {
 			actId = 0,
-			actEffectMOs = {
+			actEffect = {
 				{
 					targetId = arg_3_0._entityId
 				}
 			},
-			actEffect = {},
 			fromId = arg_3_0._entityId,
 			toId = arg_3_0._entityId,
 			actType = FightEnum.ActType.SKILL,

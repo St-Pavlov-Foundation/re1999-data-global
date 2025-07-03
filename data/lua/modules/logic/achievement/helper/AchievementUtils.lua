@@ -50,4 +50,16 @@ function var_0_0.encodeShowStr()
 	return
 end
 
+function var_0_0.isActivityGroup(arg_4_0)
+	local var_4_0 = AchievementConfig.instance:getAchievement(arg_4_0)
+
+	return var_4_0 and var_4_0.category == AchievementEnum.Type.Activity
+end
+
+function var_0_0.isGamePlayGroup(arg_5_0)
+	local var_5_0 = AchievementConfig.instance:getAchievement(arg_5_0)
+
+	return var_5_0 and var_5_0.category == AchievementEnum.Type.GamePlay
+end
+
 return var_0_0

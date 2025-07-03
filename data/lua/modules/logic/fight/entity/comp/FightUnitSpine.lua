@@ -118,12 +118,12 @@ function var_0_0.replaceAnimState(arg_5_0, arg_5_1)
 		return arg_5_1
 	end
 
-	if arg_5_1 == SpineAnimState.idle1 then
-		return var_5_2.idleAnimName
-	elseif arg_5_1 == SpineAnimState.hit then
-		return var_5_2.hitAnimName
-	else
+	local var_5_3 = var_5_2[arg_5_1 .. "AnimName"]
+
+	if string.nilorempty(var_5_3) then
 		return arg_5_1
+	else
+		return var_5_3
 	end
 end
 

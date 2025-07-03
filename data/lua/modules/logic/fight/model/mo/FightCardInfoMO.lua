@@ -43,8 +43,8 @@ function var_0_0.init(arg_2_0, arg_2_1)
 	arg_2_0.heatId = arg_2_1.heatId or 0
 end
 
-function var_0_0.isUniqueSkill(arg_3_0)
-	return FightCardModel.instance:isUniqueSkill(arg_3_0.targetUid, arg_3_0.skillId)
+function var_0_0.isBigSkill(arg_3_0)
+	return FightCardDataHelper.isBigSkill(arg_3_0.skillId)
 end
 
 function var_0_0.clone(arg_4_0)

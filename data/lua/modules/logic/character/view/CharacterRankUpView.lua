@@ -129,6 +129,7 @@ function var_0_0._editableInitView(arg_10_0)
 
 	arg_10_0._uiSpine = GuiModelAgent.Create(arg_10_0._gospine, true)
 
+	arg_10_0._uiSpine:setShareRT(CharacterVoiceEnum.RTShareType.Normal, CharacterVoiceEnum.NormalPriority.CharacterRankUpView)
 	arg_10_0._uiSpine:useRT()
 
 	arg_10_0._items = {}

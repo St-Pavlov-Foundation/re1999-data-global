@@ -14,7 +14,7 @@ function var_0_0.isNotPlayerUid(arg_2_0)
 end
 
 function var_0_0.copyEntityMO(arg_3_0, arg_3_1)
-	FightDataHelper.coverData(arg_3_0, arg_3_1, var_0_1)
+	FightDataUtil.coverData(arg_3_0, arg_3_1, var_0_1)
 end
 
 function var_0_0.sortSubEntityList(arg_4_0, arg_4_1)

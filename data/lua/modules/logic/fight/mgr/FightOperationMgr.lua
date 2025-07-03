@@ -9,10 +9,10 @@ function var_0_0.onConstructor(arg_1_0)
 end
 
 local var_0_1 = {
-	[FightOperationDataMgr.StateType.PlayHandCard] = "onPlayHandCard",
-	[FightOperationDataMgr.StateType.PlayAssistBossCard] = "onPlayVirtualCard",
-	[FightOperationDataMgr.StateType.PlayPlayerFinisherSkill] = "onPlayVirtualCard",
-	[FightOperationDataMgr.StateType.MoveHandCard] = "onMoveHandCard"
+	[FightOperationStateMgr.StateType.PlayHandCard] = "onPlayHandCard",
+	[FightOperationStateMgr.StateType.PlayAssistBossCard] = "onPlayVirtualCard",
+	[FightOperationStateMgr.StateType.PlayPlayerFinisherSkill] = "onPlayVirtualCard",
+	[FightOperationStateMgr.StateType.MoveHandCard] = "onMoveHandCard"
 }
 
 function var_0_0._onRequestOperation(arg_2_0, arg_2_1, ...)
@@ -22,7 +22,7 @@ function var_0_0._onRequestOperation(arg_2_0, arg_2_1, ...)
 		local var_2_1, var_2_2 = arg_2_0[var_2_0](arg_2_0, ...)
 
 		if var_2_1 then
-			FightDataHelper.operationMgr:enterOperationState(arg_2_1)
+			FightDataHelper.operationStateMgr:enterOperationState(arg_2_1)
 			var_2_1:registFinishCallback(arg_2_0._onOperationFinish, arg_2_0, arg_2_1)
 			var_2_1:start(var_2_2)
 		else
@@ -33,7 +33,7 @@ function var_0_0._onRequestOperation(arg_2_0, arg_2_1, ...)
 end
 
 function var_0_0._onOperationFinish(arg_3_0, arg_3_1)
-	FightDataHelper.operationMgr:exitOperationState(arg_3_1)
+	FightDataHelper.operationStateMgr:exitOperationState(arg_3_1)
 	arg_3_0:_checkSend2Server()
 end
 
@@ -41,7 +41,7 @@ function var_0_0.onPlayHandCard(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
 	local var_4_0 = arg_4_0:com_sendMsg(FightMsgId.PlayCard, arg_4_1, arg_4_2)
 
 	if var_4_0 then
-		local var_4_1 = FightDataHelper.operationMgr:newOperation()
+		local var_4_1 = FightDataHelper.operationDataMgr:newOperation()
 
 		var_4_1:playCard(arg_4_1, arg_4_2, arg_4_3)
 
@@ -57,7 +57,7 @@ function var_0_0.onPlayVirtualCard(arg_5_0, arg_5_1, ...)
 	local var_5_0 = arg_5_0:com_sendMsg(FightMsgId.RegistPlayAtOperationView, arg_5_1, ...)
 
 	if var_5_0 then
-		FightDataHelper.operationMgr:addOperation(arg_5_1)
+		FightDataHelper.operationDataMgr:addOperation(arg_5_1)
 
 		local var_5_1 = {
 			operationData = arg_5_1
@@ -84,7 +84,7 @@ end
 
 function var_0_0._onMoveCardFinish(arg_7_0, arg_7_1)
 	if arg_7_1.param1 ~= arg_7_1.param2 then
-		FightDataHelper.operationMgr:addOperation(arg_7_1)
+		FightDataHelper.operationDataMgr:addOperation(arg_7_1)
 	end
 end
 
@@ -93,7 +93,7 @@ function var_0_0._checkSend2Server(arg_8_0)
 		return
 	end
 
-	if FightDataHelper.operationMgr:isCardOpEnd() then
+	if FightDataHelper.operationDataMgr:isCardOpEnd() then
 		local var_8_0 = arg_8_0:com_sendMsg(FightMsgId.CheckAliveOperationWork)
 
 		if not var_8_0 then
@@ -123,12 +123,12 @@ end
 
 function var_0_0._requestOperation(arg_10_0)
 	FightDataHelper.stageMgr:enterFightState(FightStageMgr.FightStateType.SendOperation2Server)
-	FightRpc.instance:sendBeginRoundRequest(FightDataHelper.operationMgr.operationList)
+	FightRpc.instance:sendBeginRoundRequest(FightDataHelper.operationDataMgr.operationList)
 
 	local var_10_0 = arg_10_0:com_sendMsg(FightMsgId.GetUIHandCardDataList)
 
-	FightDataHelper.coverData(var_10_0, FightLocalDataMgr.instance.handCardMgr.handCard)
-	FightDataHelper.coverData(var_10_0, FightDataMgr.instance.handCardMgr.handCard)
+	FightDataUtil.coverData(var_10_0, FightLocalDataMgr.instance.handCardMgr.handCard)
+	FightDataUtil.coverData(var_10_0, FightDataMgr.instance.handCardMgr.handCard)
 end
 
 function var_0_0._onEnterStage(arg_11_0, arg_11_1)

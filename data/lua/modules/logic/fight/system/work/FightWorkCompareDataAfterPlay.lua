@@ -21,11 +21,12 @@ function var_0_0._registRefreshPerformance(arg_3_0)
 end
 
 function var_0_0.refreshPerformanceData(arg_4_0)
-	FightDataHelper.coverData(FightLocalDataMgr.instance.fieldMgr.param, FightDataMgr.instance.fieldMgr.param)
-	FightDataHelper.coverData(FightLocalDataMgr.instance.fieldMgr.fightTaskBox, FightDataMgr.instance.fieldMgr.fightTaskBox)
+	FightDataUtil.coverData(FightLocalDataMgr.instance.fieldMgr.param, FightDataMgr.instance.fieldMgr.param)
+	FightDataUtil.coverData(FightLocalDataMgr.instance.fieldMgr.fightTaskBox, FightDataMgr.instance.fieldMgr.fightTaskBox)
 end
 
 function var_0_0._onFlowFinish(arg_5_0)
+	FightController.instance:dispatchEvent(FightEvent.AfterCorrectData)
 	arg_5_0:onDone(true)
 end
 

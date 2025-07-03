@@ -1341,8 +1341,6 @@ function var_0_0._setPropItems(arg_55_0)
 end
 
 function var_0_0._setMonthItems(arg_56_0)
-	gohelper.setActive(arg_56_0._gomonth, true)
-
 	local var_56_0 = SignInModel.instance:getShowMonthItemCo()
 
 	arg_56_0:_onCloneSigninMonthItem(var_56_0)
@@ -1587,6 +1585,8 @@ function var_0_0._btnchangeOnClick(arg_74_0)
 end
 
 function var_0_0._setActive_LifeCicle(arg_75_0, arg_75_1)
+	gohelper.setActive(arg_75_0._gomonth, not arg_75_1)
+
 	if arg_75_0._isActiveLifeCircle == arg_75_1 then
 		return
 	end

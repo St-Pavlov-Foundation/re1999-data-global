@@ -27,7 +27,11 @@ function var_0_0._initBuildingCaramer(arg_2_0)
 	for iter_2_0, iter_2_1 in ipairs(arg_2_0._buildingCameraIds) do
 		local var_2_0 = RoomConfig.instance:getCharacterBuildingInteractCameraConfig(iter_2_1)
 
-		if not string.nilorempty(var_2_0.nodesXYZ) then
+		if not var_2_0 then
+			logError(string.format("[export_角色交互]Id:%s,字段\"buildingCameraIds\"配置了[export_角色建筑交互镜头表]中不存在id:%s", arg_2_0.interactionId, iter_2_1))
+		end
+
+		if var_2_0 and not string.nilorempty(var_2_0.nodesXYZ) then
 			local var_2_1 = GameUtil.splitString2(var_2_0.nodesXYZ, true)
 
 			arg_2_0._buildingNodesDic[iter_2_1] = var_2_1

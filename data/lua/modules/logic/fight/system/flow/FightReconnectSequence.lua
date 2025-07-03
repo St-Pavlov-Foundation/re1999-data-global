@@ -22,7 +22,7 @@ function var_0_0.buildFlow(arg_1_0, arg_1_1)
 		FightController.instance:dispatchEvent(FightEvent.BeforeEnterStepBehaviour)
 	end))
 
-	local var_1_0 = FightStepBuilder.buildStepWorkList(arg_1_1.fightStepMOs)
+	local var_1_0 = FightStepBuilder.buildStepWorkList(arg_1_1.fightStep)
 
 	if var_1_0 then
 		for iter_1_0, iter_1_1 in ipairs(var_1_0) do
@@ -31,7 +31,9 @@ function var_0_0.buildFlow(arg_1_0, arg_1_1)
 	end
 
 	arg_1_0:addWork(FunctionWork.New(function()
-		FightDataMgr.instance:afterPlayRoundProto(FightDataModel.instance.cacheRoundProto)
+		local var_5_0 = FightDataHelper.roundMgr:getRoundData()
+
+		FightDataMgr.instance:afterPlayRoundData(var_5_0)
 	end))
 	arg_1_0:addWork(FunctionWork.New(function()
 		FightController.instance:dispatchEvent(FightEvent.AfterEnterStepBehaviour)

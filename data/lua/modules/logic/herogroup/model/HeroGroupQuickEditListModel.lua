@@ -61,30 +61,39 @@ function var_0_0.copyQuickEditCardList(arg_1_0)
 	local var_1_8 = arg_1_0.isWeekWalk_2
 	local var_1_9 = {}
 
-	for iter_1_4, iter_1_5 in ipairs(var_1_0) do
-		if not var_1_2[iter_1_5.uid] then
-			var_1_2[iter_1_5.uid] = true
+	if var_1_7 then
+		for iter_1_4 = #var_1_1, 1, -1 do
+			if TowerModel.instance:isHeroBan(var_1_1[iter_1_4].heroId) then
+				table.insert(var_1_9, var_1_1[iter_1_4])
+				table.remove(var_1_1, iter_1_4)
+			end
+		end
+	end
+
+	for iter_1_5, iter_1_6 in ipairs(var_1_0) do
+		if not var_1_2[iter_1_6.uid] then
+			var_1_2[iter_1_6.uid] = true
 
 			if arg_1_0.adventure then
-				if WeekWalkModel.instance:getCurMapHeroCd(iter_1_5.heroId) > 0 then
-					table.insert(var_1_9, iter_1_5)
+				if WeekWalkModel.instance:getCurMapHeroCd(iter_1_6.heroId) > 0 then
+					table.insert(var_1_9, iter_1_6)
 				else
-					table.insert(var_1_1, iter_1_5)
+					table.insert(var_1_1, iter_1_6)
 				end
 			elseif var_1_8 then
-				if WeekWalk_2Model.instance:getCurMapHeroCd(iter_1_5.heroId) > 0 then
-					table.insert(var_1_9, iter_1_5)
+				if WeekWalk_2Model.instance:getCurMapHeroCd(iter_1_6.heroId) > 0 then
+					table.insert(var_1_9, iter_1_6)
 				else
-					table.insert(var_1_1, iter_1_5)
+					table.insert(var_1_1, iter_1_6)
 				end
 			elseif var_1_7 then
-				if TowerModel.instance:isHeroBan(iter_1_5.heroId) then
-					table.insert(var_1_9, iter_1_5)
+				if TowerModel.instance:isHeroBan(iter_1_6.heroId) then
+					table.insert(var_1_9, iter_1_6)
 				else
-					table.insert(var_1_1, iter_1_5)
+					table.insert(var_1_1, iter_1_6)
 				end
 			else
-				table.insert(var_1_1, iter_1_5)
+				table.insert(var_1_1, iter_1_6)
 			end
 		end
 	end

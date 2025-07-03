@@ -11,23 +11,10 @@ function var_0_0.onInitView(arg_1_0)
 	arg_1_0._btnHardware = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/item17/btnHardware")
 	arg_1_0._sliderRenderScale = gohelper.findChildSlider(arg_1_0.viewGO, "viewport/content/item19/Slider")
 	arg_1_0._txtRenderScale = gohelper.findChildText(arg_1_0.viewGO, "viewport/content/item19/Text")
-	arg_1_0._btnRoomOb = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/item23/btnRoomOb")
-	arg_1_0._btnRoomMap = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/item23/btnRoomMap")
-	arg_1_0._btnRoomDebug = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/item23/btnRoomDebug")
-	arg_1_0._btnRoomDebugBuildingArea = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/item23/btnRoomDebugBuildingArea")
 	arg_1_0._btnForbidFightEffect = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/item26/Button1")
 	arg_1_0._btnCancelForbidFightEffect = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/item26/Button2")
 	arg_1_0._btnTest1 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/item27/Button1")
 	arg_1_0._btnTest2 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/item27/Button2")
-	arg_1_0._btnTest3 = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/item27/Button3")
-	arg_1_0._sliderRoomRotateSpeed = gohelper.findChildSlider(arg_1_0.viewGO, "viewport/content/item43/Slider")
-	arg_1_0._txtRoomRotateSpeed = gohelper.findChildText(arg_1_0.viewGO, "viewport/content/item43/txtValue")
-	arg_1_0._sliderRoomMoveSpeed = gohelper.findChildSlider(arg_1_0.viewGO, "viewport/content/item44/Slider")
-	arg_1_0._txtRoomMoveSpeed = gohelper.findChildText(arg_1_0.viewGO, "viewport/content/item44/txtValue")
-	arg_1_0._sliderRoomScaleSpeed = gohelper.findChildSlider(arg_1_0.viewGO, "viewport/content/item45/Slider")
-	arg_1_0._txtRoomScaleSpeed = gohelper.findChildText(arg_1_0.viewGO, "viewport/content/item45/txtValue")
-	arg_1_0._silderRoomTouchSpeed = gohelper.findChildSlider(arg_1_0.viewGO, "viewport/content/roomTouchSpeed/Slider")
-	arg_1_0._txtRoomTouchSpeed = gohelper.findChildText(arg_1_0.viewGO, "viewport/content/roomTouchSpeed/txtValue")
 	arg_1_0._textCheckAudio2 = gohelper.findChildText(arg_1_0.viewGO, "viewport/content/item47/btnCheckAudio2/Text")
 	arg_1_0._textCallAudioGCThreshold = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "viewport/content/item47/InputField")
 	arg_1_0._inpTestAudio = gohelper.findChildInputField(arg_1_0.viewGO, "viewport/content/testAudio1/inpTextAudio")
@@ -35,8 +22,6 @@ function var_0_0.onInitView(arg_1_0)
 	arg_1_0._inpEndTestAudio = gohelper.findChildInputField(arg_1_0.viewGO, "viewport/content/testAudio1/inpTextAudioEnd")
 	arg_1_0._btnLoadTestAudio = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/testAudio2/btnLoadTestAudio")
 	arg_1_0._btnUnloadTestAudio = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/testAudio2/btnUnloadTestAudio")
-	arg_1_0._dropRoomClock = gohelper.findChildDropdown(arg_1_0.viewGO, "viewport/content/roomclock/Dropdown")
-	arg_1_0._btnRoomBuildingCamera = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "viewport/content/roomclock/btnRoomBuildingCamera")
 	arg_1_0._visualToggle = gohelper.findChildToggle(arg_1_0.viewGO, "viewport/content/item48/visualToggle")
 	arg_1_0._visualToggle.isOn = GMController.instance:getVisualInteractive()
 	arg_1_0._dropActivity = gohelper.findChildDropdown(arg_1_0.viewGO, "viewport/content/versionactivity/activityDropdown")
@@ -65,24 +50,13 @@ function var_0_0.addEvents(arg_2_0)
 	arg_2_0:_AddClickListener(arg_2_0._btnVersion, arg_2_0._onClickBtnVersion, arg_2_0)
 	arg_2_0:_AddClickListener(arg_2_0._btnHardware, arg_2_0._onClickBtnHardware, arg_2_0)
 	arg_2_0:_AddOnValueChanged(arg_2_0._sliderRenderScale, arg_2_0._onRenderScaleChange, arg_2_0)
-	arg_2_0:_AddClickListener(arg_2_0._btnRoomOb, arg_2_0._onClickBtnRoomOb, arg_2_0)
-	arg_2_0:_AddClickListener(arg_2_0._btnRoomMap, arg_2_0._onClickBtnRoomMap, arg_2_0)
-	arg_2_0:_AddClickListener(arg_2_0._btnRoomDebug, arg_2_0._onClickBtnRoomDebug, arg_2_0)
-	arg_2_0:_AddClickListener(arg_2_0._btnRoomDebugBuildingArea, arg_2_0._onClickRoomDebugBuildingArea, arg_2_0)
 	arg_2_0:_AddClickListener(arg_2_0._btnForbidFightEffect, arg_2_0._onClickForbidFightEffect, arg_2_0)
 	arg_2_0:_AddClickListener(arg_2_0._btnCancelForbidFightEffect, arg_2_0._onClickCancelForbidFightEffect, arg_2_0)
 	arg_2_0:_AddClickListener(arg_2_0._btnTest1, arg_2_0._onClickTest1, arg_2_0)
 	arg_2_0:_AddClickListener(arg_2_0._btnTest2, arg_2_0._onClickTest2, arg_2_0)
-	arg_2_0:_AddClickListener(arg_2_0._btnTest3, arg_2_0._onClickTest3, arg_2_0)
-	arg_2_0:_AddOnValueChanged(arg_2_0._sliderRoomRotateSpeed, arg_2_0._onRoomRotateSpeedChange, arg_2_0)
-	arg_2_0:_AddOnValueChanged(arg_2_0._sliderRoomMoveSpeed, arg_2_0._onRoomMoveSpeedChange, arg_2_0)
-	arg_2_0:_AddOnValueChanged(arg_2_0._sliderRoomScaleSpeed, arg_2_0._onRoomScaleSpeedChange, arg_2_0)
-	arg_2_0:_AddOnValueChanged(arg_2_0._silderRoomTouchSpeed, arg_2_0._onRoomTouchSpeedChange, arg_2_0)
 	arg_2_0:_AddClickListener(arg_2_0._btnLoadTestAudio, arg_2_0._onClickLoadTestAudio, arg_2_0)
 	arg_2_0:_AddClickListener(arg_2_0._btnUnloadTestAudio, arg_2_0._onClickUnloadTestAudio, arg_2_0)
 	arg_2_0:_AddOnValueChanged(arg_2_0._visualToggle, arg_2_0._onVisualToggleValueChange, arg_2_0)
-	arg_2_0:_AddOnValueChanged(arg_2_0._dropRoomClock, arg_2_0._onRoomClockSelectChanged, arg_2_0)
-	arg_2_0:_AddClickListener(arg_2_0._btnRoomBuildingCamera, arg_2_0._onClickRoomBuildingCamera, arg_2_0)
 	arg_2_0:_AddClickListener(arg_2_0._btnChangeActivity, arg_2_0._onClickChangeActivityBtn, arg_2_0)
 	arg_2_0:_AddClickListener(arg_2_0._btnResetActivity, arg_2_0._onClickResetActivityBtn, arg_2_0)
 	arg_2_0:_AddClickListener(arg_2_0._btnEnterActivity, arg_2_0._onClickEnterActivity, arg_2_0)
@@ -102,24 +76,13 @@ function var_0_0.removeEvents(arg_3_0)
 	arg_3_0:_RemoveClickListener(arg_3_0._btnVersion)
 	arg_3_0:_RemoveClickListener(arg_3_0._btnHardware)
 	arg_3_0:_RemoveOnValueChanged(arg_3_0._sliderRenderScale)
-	arg_3_0:_RemoveClickListener(arg_3_0._btnRoomOb)
-	arg_3_0:_RemoveClickListener(arg_3_0._btnRoomMap)
-	arg_3_0:_RemoveClickListener(arg_3_0._btnRoomDebug)
-	arg_3_0:_RemoveClickListener(arg_3_0._btnRoomDebugBuildingArea)
 	arg_3_0:_RemoveClickListener(arg_3_0._btnForbidFightEffect)
 	arg_3_0:_RemoveClickListener(arg_3_0._btnCancelForbidFightEffect)
 	arg_3_0:_RemoveClickListener(arg_3_0._btnTest1)
 	arg_3_0:_RemoveClickListener(arg_3_0._btnTest2)
-	arg_3_0:_RemoveClickListener(arg_3_0._btnTest3)
-	arg_3_0:_RemoveOnValueChanged(arg_3_0._sliderRoomRotateSpeed)
-	arg_3_0:_RemoveOnValueChanged(arg_3_0._sliderRoomMoveSpeed)
-	arg_3_0:_RemoveOnValueChanged(arg_3_0._sliderRoomScaleSpeed)
-	arg_3_0:_RemoveOnValueChanged(arg_3_0._silderRoomTouchSpeed)
 	arg_3_0:_RemoveClickListener(arg_3_0._btnLoadTestAudio)
 	arg_3_0:_RemoveClickListener(arg_3_0._btnUnloadTestAudio)
 	arg_3_0:_RemoveOnValueChanged(arg_3_0._visualToggle)
-	arg_3_0:_RemoveOnValueChanged(arg_3_0._dropRoomClock)
-	arg_3_0:_RemoveClickListener(arg_3_0._btnRoomBuildingCamera)
 	arg_3_0:_RemoveClickListener(arg_3_0._btnChangeActivity)
 	arg_3_0:_RemoveClickListener(arg_3_0._btnResetActivity)
 	arg_3_0:_RemoveOnValueChanged(arg_3_0._dropActivity)
@@ -166,27 +129,6 @@ function var_0_0.onOpen(arg_9_0)
 	arg_9_0._sliderRenderScale:SetValue(var_9_0)
 
 	arg_9_0._txtRenderScale.text = string.format("RenderScale\n%.2f", var_9_0)
-
-	arg_9_0._sliderRoomRotateSpeed:SetValue((RoomController.instance.rotateSpeed - 0.2) / 1.8)
-	arg_9_0._sliderRoomMoveSpeed:SetValue((RoomController.instance.moveSpeed - 0.2) / 1.8)
-	arg_9_0._sliderRoomScaleSpeed:SetValue((RoomController.instance.scaleSpeed - 0.2) / 1.8)
-
-	if arg_9_0._silderRoomTouchSpeed then
-		arg_9_0._silderRoomTouchSpeed:SetValue((RoomController.instance.touchMoveSpeed - 0.2) / 1.8)
-	end
-
-	if arg_9_0._dropRoomClock then
-		local var_9_1 = {
-			"选择时间"
-		}
-
-		for iter_9_0 = 1, 24 do
-			table.insert(var_9_1, iter_9_0 .. "时")
-		end
-
-		arg_9_0._dropRoomClock:ClearOptions()
-		arg_9_0._dropRoomClock:AddOptions(var_9_1)
-	end
 
 	arg_9_0:initActivityDrop()
 	arg_9_0:initActivityEnterFunc()
@@ -555,183 +497,96 @@ function var_0_0._onRenderScaleChange(arg_29_0, arg_29_1, arg_29_2)
 	arg_29_0._txtRenderScale.text = string.format("RenderScale\n%.2f", arg_29_2)
 end
 
-function var_0_0._onClickBtnRoomOb(arg_30_0)
-	RoomController.instance:enterRoom(RoomEnum.GameMode.Ob)
-end
-
-function var_0_0._onClickBtnRoomMap(arg_31_0)
-	RoomController.instance:enterRoom(RoomEnum.GameMode.Edit)
-end
-
-function var_0_0._onClickBtnRoomDebug(arg_32_0)
-	ViewMgr.instance:openView(ViewName.RoomDebugEntranceView)
-end
-
-function var_0_0._onClickRoomDebugBuildingArea(arg_33_0)
-	if GameSceneMgr.instance:getCurSceneType() == SceneType.Room then
-		RoomDebugController.instance:openBuildingAreaView()
-	else
-		GameFacade.showToast(94, "GM需要进入小屋后使用。")
-	end
-end
-
-function var_0_0._onClickForbidFightEffect(arg_34_0)
+function var_0_0._onClickForbidFightEffect(arg_30_0)
 	FightEffectPool.isForbidEffect = true
 end
 
-function var_0_0._onClickCancelForbidFightEffect(arg_35_0)
+function var_0_0._onClickCancelForbidFightEffect(arg_31_0)
 	FightEffectPool.isForbidEffect = nil
 end
 
-function var_0_0._onClickTest1(arg_36_0)
+function var_0_0._onClickTest1(arg_32_0)
 	ViewMgr.instance:openView(ViewName.GMLangTxtView)
 end
 
-function var_0_0._onQueryProductDetailsCallBack(arg_37_0)
+function var_0_0._onQueryProductDetailsCallBack(arg_33_0)
 	logError("_onQueryProductDetailsCallBack")
 end
 
-function var_0_0._onClickTest2(arg_38_0)
+function var_0_0._onClickTest2(arg_34_0)
 	logError("test2")
 	System.GC.Collect(2, System.GCCollectionMode.Forced, true, true)
 end
 
-function var_0_0._onClickTest3(arg_39_0)
-	logError("test3")
-
-	if GameSceneMgr.instance:getCurSceneType() == SceneType.Room and RoomController.instance:isObMode() then
-		local var_39_0 = RoomMapVehicleEntity:getTag()
-		local var_39_1 = RoomMapVehicleModel.instance:getList()
-		local var_39_2 = GameSceneMgr.instance:getCurScene()
-
-		for iter_39_0, iter_39_1 in ipairs(var_39_1) do
-			local var_39_3 = var_39_2.vehiclemgr:getUnit(var_39_0, iter_39_1.id)
-
-			if var_39_3 then
-				var_39_2.cameraFollow:setFollowTarget(var_39_3.cameraFollowTargetComp)
-
-				return
-			end
-		end
-
-		GameFacade.showToast(94, "GM交通工具数量：" .. #var_39_1)
-	else
-		GameFacade.showToast(94, "GM需要进入小屋后观察模式下使用。")
-	end
-end
-
-function var_0_0._onRoomRotateSpeedChange(arg_40_0, arg_40_1, arg_40_2)
-	local var_40_0 = 0.2 + 1.8 * arg_40_2
-
-	RoomController.instance.rotateSpeed = var_40_0
-	arg_40_0._txtRoomRotateSpeed.text = string.format("%.2f", var_40_0)
-end
-
-function var_0_0._onRoomMoveSpeedChange(arg_41_0, arg_41_1, arg_41_2)
-	local var_41_0 = 0.2 + 1.8 * arg_41_2
-
-	RoomController.instance.moveSpeed = var_41_0
-	arg_41_0._txtRoomMoveSpeed.text = string.format("%.2f", var_41_0)
-end
-
-function var_0_0._onRoomScaleSpeedChange(arg_42_0, arg_42_1, arg_42_2)
-	local var_42_0 = 0.2 + 1.8 * arg_42_2
-
-	RoomController.instance.scaleSpeed = var_42_0
-	arg_42_0._txtRoomScaleSpeed.text = string.format("%.2f", var_42_0)
-end
-
-function var_0_0._onRoomTouchSpeedChange(arg_43_0, arg_43_1, arg_43_2)
-	local var_43_0 = 0.2 + 1.8 * arg_43_2
-
-	RoomController.instance.touchMoveSpeed = var_43_0
-	arg_43_0._txtRoomTouchSpeed.text = string.format("%.2f", var_43_0)
-end
-
-function var_0_0._onVisualToggleValueChange(arg_44_0, arg_44_1, arg_44_2)
-	if not arg_44_0.isOpenFinish then
+function var_0_0._onVisualToggleValueChange(arg_35_0, arg_35_1, arg_35_2)
+	if not arg_35_0.isOpenFinish then
 		return
 	end
 
-	GMController.instance:setVisualInteractive(arg_44_2)
+	GMController.instance:setVisualInteractive(arg_35_2)
 
-	if arg_44_2 then
+	if arg_35_2 then
 		GMController.instance:getVisualInteractiveMgr():start()
 	else
 		GMController.instance:getVisualInteractiveMgr():stop()
 	end
 end
 
-function var_0_0._onRoomClockSelectChanged(arg_45_0, arg_45_1)
-	if arg_45_1 >= 1 or arg_45_1 <= 24 then
-		RoomMapController.instance:dispatchEvent(RoomEvent.OnHourReporting, arg_45_1)
-	end
-end
+function var_0_0._onClickChangeActivityBtn(arg_36_0)
+	local var_36_0 = arg_36_0.activityIdList[arg_36_0.selectActivityIndex or 1]
 
-function var_0_0._onClickRoomBuildingCamera(arg_46_0)
-	if GameSceneMgr.instance:getCurSceneType() == SceneType.Room then
-		RoomDebugController.instance:openBuildingCamerView()
-		arg_46_0:closeThis()
-	else
-		GameFacade.showToast(94, "GM需要进入小屋后使用。")
-	end
-end
-
-function var_0_0._onClickChangeActivityBtn(arg_47_0)
-	local var_47_0 = arg_47_0.activityIdList[arg_47_0.selectActivityIndex or 1]
-
-	if arg_47_0.activityAll[var_47_0] then
-		for iter_47_0, iter_47_1 in pairs(arg_47_0.activityAll[var_47_0]) do
-			arg_47_0:_changeActivityInfo(iter_47_1)
+	if arg_36_0.activityAll[var_36_0] then
+		for iter_36_0, iter_36_1 in pairs(arg_36_0.activityAll[var_36_0]) do
+			arg_36_0:_changeActivityInfo(iter_36_1)
 		end
 
 		return
 	end
 
-	arg_47_0:_changeActivityInfo(var_47_0)
+	arg_36_0:_changeActivityInfo(var_36_0)
 end
 
-function var_0_0._changeActivityInfo(arg_48_0, arg_48_1)
-	local var_48_0 = arg_48_0.statusList[arg_48_0.selectStatusIndex or 1]
-	local var_48_1 = ActivityModel.instance:getActivityInfo()[arg_48_1]
+function var_0_0._changeActivityInfo(arg_37_0, arg_37_1)
+	local var_37_0 = arg_37_0.statusList[arg_37_0.selectStatusIndex or 1]
+	local var_37_1 = ActivityModel.instance:getActivityInfo()[arg_37_1]
 
-	if ActivityHelper.getActivityStatus(arg_48_1) == var_48_0 then
+	if ActivityHelper.getActivityStatus(arg_37_1) == var_37_0 then
 		return
 	end
 
-	local var_48_2 = ServerTime.now() * 1000
-	local var_48_3 = TimeUtil.maxDateTimeStamp * 1000
+	local var_37_2 = ServerTime.now() * 1000
+	local var_37_3 = TimeUtil.maxDateTimeStamp * 1000
 
-	var_48_1.config = arg_48_0:copyConfig(var_48_1.config)
+	var_37_1.config = arg_37_0:copyConfig(var_37_1.config)
 
-	if var_48_0 == ActivityEnum.ActivityStatus.Normal then
-		var_48_1.startTime = var_48_2 - 1
-		var_48_1.endTime = var_48_3
-		var_48_1.config.openId = 0
-		var_48_1.online = true
-	elseif var_48_0 == ActivityEnum.ActivityStatus.NotOpen then
-		var_48_1.startTime = var_48_3
-	elseif var_48_0 == ActivityEnum.ActivityStatus.Expired then
-		var_48_1.startTime = var_48_2 - 1
-		var_48_1.endTime = var_48_1.startTime
-	elseif var_48_0 == ActivityEnum.ActivityStatus.NotUnlock then
-		var_48_1.startTime = var_48_2 - 1
-		var_48_1.endTime = var_48_3
-		var_48_1.config.openId = arg_48_1
-		OpenModel.instance._unlocks[arg_48_1] = false
-	elseif var_48_0 == ActivityEnum.ActivityStatus.NotOnLine then
-		var_48_1.startTime = var_48_2 - 1
-		var_48_1.endTime = var_48_3
-		var_48_1.config.openId = 0
-		var_48_1.online = false
+	if var_37_0 == ActivityEnum.ActivityStatus.Normal then
+		var_37_1.startTime = var_37_2 - 1
+		var_37_1.endTime = var_37_3
+		var_37_1.config.openId = 0
+		var_37_1.online = true
+	elseif var_37_0 == ActivityEnum.ActivityStatus.NotOpen then
+		var_37_1.startTime = var_37_3
+	elseif var_37_0 == ActivityEnum.ActivityStatus.Expired then
+		var_37_1.startTime = var_37_2 - 1
+		var_37_1.endTime = var_37_1.startTime
+	elseif var_37_0 == ActivityEnum.ActivityStatus.NotUnlock then
+		var_37_1.startTime = var_37_2 - 1
+		var_37_1.endTime = var_37_3
+		var_37_1.config.openId = arg_37_1
+		OpenModel.instance._unlocks[arg_37_1] = false
+	elseif var_37_0 == ActivityEnum.ActivityStatus.NotOnLine then
+		var_37_1.startTime = var_37_2 - 1
+		var_37_1.endTime = var_37_3
+		var_37_1.config.openId = 0
+		var_37_1.online = false
 	end
 
-	ActivityController.instance:dispatchEvent(ActivityEvent.RefreshActivityState, arg_48_1)
+	ActivityController.instance:dispatchEvent(ActivityEvent.RefreshActivityState, arg_37_1)
 end
 
-function var_0_0.copyConfig(arg_49_0, arg_49_1)
-	local var_49_0 = {}
-	local var_49_1 = {
+function var_0_0.copyConfig(arg_38_0, arg_38_1)
+	local var_38_0 = {}
+	local var_38_1 = {
 		logoName = 9,
 		name = 3,
 		banner = 13,
@@ -760,50 +615,50 @@ function var_0_0.copyConfig(arg_49_0, arg_49_1)
 		nameEn = 4
 	}
 
-	for iter_49_0, iter_49_1 in pairs(var_49_1) do
-		var_49_0[iter_49_0] = arg_49_1[iter_49_0]
+	for iter_38_0, iter_38_1 in pairs(var_38_1) do
+		var_38_0[iter_38_0] = arg_38_1[iter_38_0]
 	end
 
-	return var_49_0
+	return var_38_0
 end
 
-function var_0_0._onClickResetActivityBtn(arg_50_0)
+function var_0_0._onClickResetActivityBtn(arg_39_0)
 	ActivityRpc.instance:sendGetActivityInfosRequest()
 end
 
-function var_0_0._onActivityDropValueChange(arg_51_0, arg_51_1)
-	arg_51_0.selectActivityIndex = arg_51_1 + 1
+function var_0_0._onActivityDropValueChange(arg_40_0, arg_40_1)
+	arg_40_0.selectActivityIndex = arg_40_1 + 1
 end
 
-function var_0_0._onActivityStatusDropValueChange(arg_52_0, arg_52_1)
-	arg_52_0.selectStatusIndex = arg_52_1 + 1
+function var_0_0._onActivityStatusDropValueChange(arg_41_0, arg_41_1)
+	arg_41_0.selectStatusIndex = arg_41_1 + 1
 end
 
-function var_0_0._onClickResetActivityUnlockAim(arg_53_0)
+function var_0_0._onClickResetActivityUnlockAim(arg_42_0)
 	PlayerPrefsHelper.deleteKey(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.PlayedActUnlockAnimationKey))
 
 	VersionActivityBaseController.instance.playedActUnlockAnimationList = nil
 end
 
-function var_0_0._onClickEnterActivity(arg_54_0)
-	local var_54_0 = arg_54_0.activityIdList[arg_54_0.selectActivityIndex or 1]
-	local var_54_1 = arg_54_0._activityEnterFuncMap[var_54_0]
+function var_0_0._onClickEnterActivity(arg_43_0)
+	local var_43_0 = arg_43_0.activityIdList[arg_43_0.selectActivityIndex or 1]
+	local var_43_1 = arg_43_0._activityEnterFuncMap[var_43_0]
 
-	if not var_54_1 then
+	if not var_43_1 then
 		return
 	end
 
-	local var_54_2 = arg_54_0._activityEnterFuncParamsMap[var_54_0]
+	local var_43_2 = arg_43_0._activityEnterFuncParamsMap[var_43_0]
 
-	var_54_1(var_54_2.obj, var_54_2.params)
+	var_43_1(var_43_2.obj, var_43_2.params)
 end
 
-function var_0_0.initActivityEnterFunc(arg_55_0)
-	arg_55_0._activityEnterFuncMap = {
+function var_0_0.initActivityEnterFunc(arg_44_0)
+	arg_44_0._activityEnterFuncMap = {
 		[11304] = Activity1_3ChessController.openMapView,
 		[12204] = LoperaController.openLoperaMainView
 	}
-	arg_55_0._activityEnterFuncParamsMap = {
+	arg_44_0._activityEnterFuncParamsMap = {
 		[11304] = {
 			params = 1,
 			obj = Activity1_3ChessController
@@ -814,50 +669,50 @@ function var_0_0.initActivityEnterFunc(arg_55_0)
 	}
 end
 
-function var_0_0._onClickOnekeyFightSucc(arg_56_0)
-	arg_56_0:closeThis()
+function var_0_0._onClickOnekeyFightSucc(arg_45_0)
+	arg_45_0:closeThis()
 	GMRpc.instance:sendGMRequest("set fight 1")
 end
 
-function var_0_0._onClickEnterDialogue(arg_57_0)
-	local var_57_0 = arg_57_0._inputDialogue:GetText()
-	local var_57_1 = tonumber(var_57_0)
+function var_0_0._onClickEnterDialogue(arg_46_0)
+	local var_46_0 = arg_46_0._inputDialogue:GetText()
+	local var_46_1 = tonumber(var_46_0)
 
-	if not var_57_1 then
+	if not var_46_1 then
 		return
 	end
 
-	if lua_tip_dialog.configDict[var_57_1] then
-		TipDialogController.instance:openTipDialogView(var_57_1)
+	if lua_tip_dialog.configDict[var_46_1] then
+		TipDialogController.instance:openTipDialogView(var_46_1)
 
 		return
 	end
 
-	if not DialogueConfig.instance:getDialogueCo(var_57_1) then
+	if not DialogueConfig.instance:getDialogueCo(var_46_1) then
 		GameFacade.showToastString("对话id不存在，请检查配置")
 	end
 
-	DialogueController.instance:enterDialogue(var_57_1)
+	DialogueController.instance:enterDialogue(var_46_1)
 end
 
-function var_0_0._onClickStartEditV1a5HoleBtn(arg_58_0)
-	local var_58_0 = ViewMgr.instance:getContainer(ViewName.VersionActivity1_5DungeonMapView)
+function var_0_0._onClickStartEditV1a5HoleBtn(arg_47_0)
+	local var_47_0 = ViewMgr.instance:getContainer(ViewName.VersionActivity1_5DungeonMapView)
 
-	if not var_58_0 then
+	if not var_47_0 then
 		ToastController.instance:showToastWithString("请先打开1.5副本界面")
 
 		return
 	end
 
-	if not var_58_0:isOpenFinish() then
+	if not var_47_0:isOpenFinish() then
 		ToastController.instance:showToastWithString("请等待1.5副本界面打开完成")
 
 		return
 	end
 
-	arg_58_0.holeEditView = EditorV1a5DungeonHoleView.start(var_58_0)
+	arg_47_0.holeEditView = EditorV1a5DungeonHoleView.start(var_47_0)
 
-	arg_58_0:closeThis()
+	arg_47_0:closeThis()
 end
 
 return var_0_0

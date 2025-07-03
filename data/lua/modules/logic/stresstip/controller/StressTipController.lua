@@ -18,6 +18,14 @@ function var_0_0.openHeroStressTip(arg_2_0, arg_2_1, arg_2_2)
 	})
 end
 
+function var_0_0.openAct183StressTip(arg_3_0, arg_3_1, arg_3_2)
+	ViewMgr.instance:openView(ViewName.StressTipView, {
+		openEnum = StressTipView.OpenEnum.Act183,
+		identityIdList = arg_3_1,
+		clickPosition = arg_3_2 or UnityEngine.Input.mousePosition
+	})
+end
+
 var_0_0.instance = var_0_0.New()
 
 return var_0_0

@@ -373,5 +373,6 @@ setGlobal("serverLang", serverLang)
 setGlobal("luaLang", luaLang)
 setGlobal("formatLuaLang", formatLuaLang)
 setGlobal("langVideoUrl", langVideoUrl)
+setGlobal("luaLangUTC", luaLangUTC)
 
 return var_0_0

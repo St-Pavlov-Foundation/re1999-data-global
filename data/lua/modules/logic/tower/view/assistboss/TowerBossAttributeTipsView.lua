@@ -49,7 +49,7 @@ end
 
 function var_0_0.refreshAttr(arg_9_0)
 	local var_9_0 = 0
-	local var_9_1 = arg_9_0.bossMo and arg_9_0.bossMo.level or 1
+	local var_9_1 = arg_9_0.bossMo and arg_9_0.bossMo.trialLevel > 0 and arg_9_0.bossMo.trialLevel or arg_9_0.bossMo and arg_9_0.bossMo.level or 1
 	local var_9_2 = TowerConfig.instance:getHeroGroupAddAttr(arg_9_0.bossId, var_9_0, var_9_1)
 	local var_9_3 = math.max(#var_9_2, #arg_9_0.items)
 

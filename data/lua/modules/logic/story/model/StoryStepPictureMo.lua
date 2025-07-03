@@ -5,7 +5,7 @@ local var_0_0 = pureTable("StoryStepPictureMo")
 function var_0_0.ctor(arg_1_0)
 	arg_1_0.picType = 0
 	arg_1_0.cirRadius = 0
-	arg_1_0.picColor = "#000000"
+	arg_1_0.picColor = "#ffffffff"
 	arg_1_0.picture = ""
 	arg_1_0.delayTimes = {
 		0,

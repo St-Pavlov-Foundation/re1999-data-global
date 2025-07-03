@@ -76,66 +76,81 @@ function var_0_0.openAct183RepressView(arg_12_0, arg_12_1)
 	ViewMgr.instance:openView(ViewName.Act183RepressView, arg_12_1)
 end
 
-function var_0_0.resetGroupEpisode(arg_13_0, arg_13_1, arg_13_2)
-	if arg_13_1 and arg_13_1 ~= 0 and arg_13_2 and arg_13_2 ~= 0 then
-		arg_13_0:_clearGroupEpisodeRefreshAnimRecord(arg_13_2)
-		Activity183Rpc.instance:sendAct183ResetGroupRequest(arg_13_1, arg_13_2)
+function var_0_0.openAct183StoreView(arg_13_0, arg_13_1)
+	ViewMgr.instance:openView(ViewName.V1a6_BossRush_StoreView, arg_13_1)
+end
+
+function var_0_0.openAct183CurrencyReplaceTipsView(arg_14_0, arg_14_1)
+	ViewMgr.instance:openView(ViewName.Act183CurrencyReplaceTipsView, arg_14_1)
+end
+
+function var_0_0.resetGroupEpisode(arg_15_0, arg_15_1, arg_15_2)
+	if arg_15_1 and arg_15_1 ~= 0 and arg_15_2 and arg_15_2 ~= 0 then
+		arg_15_0:_clearGroupEpisodeRefreshAnimRecord(arg_15_2)
+		Activity183Rpc.instance:sendAct183ResetGroupRequest(arg_15_1, arg_15_2)
 	end
 end
 
-function var_0_0.updateResetGroupEpisodeInfo(arg_14_0, arg_14_1, arg_14_2)
-	Act183Model.instance:getActInfo():updateGroupMo(arg_14_2)
-	arg_14_0:dispatchEvent(Act183Event.OnUpdateGroupInfo)
+function var_0_0.updateResetGroupEpisodeInfo(arg_16_0, arg_16_1, arg_16_2)
+	Act183Model.instance:getActInfo():updateGroupMo(arg_16_2)
+	arg_16_0:dispatchEvent(Act183Event.OnUpdateGroupInfo)
 end
 
-function var_0_0.resetEpisode(arg_15_0, arg_15_1, arg_15_2)
-	if not arg_15_2 then
+function var_0_0.resetEpisode(arg_17_0, arg_17_1, arg_17_2)
+	if not arg_17_2 then
 		return
 	end
 
-	local var_15_0 = Act183Model.instance:getEpisodeMoById(arg_15_2)
-	local var_15_1 = var_15_0 and var_15_0:getGroupId()
+	local var_17_0 = Act183Model.instance:getEpisodeMoById(arg_17_2)
+	local var_17_1 = var_17_0 and var_17_0:getGroupId()
 
-	arg_15_0:_clearGroupEpisodeRefreshAnimRecord(var_15_1)
-	Activity183Rpc.instance:sendAct183ResetEpisodeRequest(arg_15_1, arg_15_2)
+	arg_17_0:_clearGroupEpisodeRefreshAnimRecord(var_17_1)
+	Activity183Rpc.instance:sendAct183ResetEpisodeRequest(arg_17_1, arg_17_2)
 end
 
-function var_0_0._clearGroupEpisodeRefreshAnimRecord(arg_16_0, arg_16_1)
-	local var_16_0 = Act183Model.instance:getGroupEpisodeMo(arg_16_1)
-	local var_16_1 = var_16_0 and var_16_0:getEpisodeListByPassOrder()
-	local var_16_2 = {}
+function var_0_0._clearGroupEpisodeRefreshAnimRecord(arg_18_0, arg_18_1)
+	local var_18_0 = Act183Model.instance:getGroupEpisodeMo(arg_18_1)
+	local var_18_1 = var_18_0 and var_18_0:getEpisodeListByPassOrder()
+	local var_18_2 = {}
 
-	for iter_16_0, iter_16_1 in ipairs(var_16_1 or {}) do
-		Act183Helper.saveHasPlayRefreshAnimRuleIdsInLocal(iter_16_1:getEpisodeId(), var_16_2)
+	for iter_18_0, iter_18_1 in ipairs(var_18_1 or {}) do
+		Act183Helper.saveHasPlayRefreshAnimRuleIdsInLocal(iter_18_1:getEpisodeId(), var_18_2)
 	end
 end
 
-function var_0_0.updateResetEpisodeInfo(arg_17_0, arg_17_1)
-	Act183Model.instance:getActInfo():updateGroupMo(arg_17_1)
-	arg_17_0:dispatchEvent(Act183Event.OnUpdateGroupInfo)
+function var_0_0.updateResetEpisodeInfo(arg_19_0, arg_19_1)
+	Act183Model.instance:getActInfo():updateGroupMo(arg_19_1)
+	arg_19_0:dispatchEvent(Act183Event.OnUpdateGroupInfo)
 end
 
-function var_0_0.tryChooseRepress(arg_18_0, arg_18_1, arg_18_2, arg_18_3, arg_18_4, arg_18_5, arg_18_6)
-	Activity183Rpc.instance:sendAct183ChooseRepressRequest(arg_18_1, arg_18_2, arg_18_3, arg_18_4, arg_18_5, arg_18_6)
+function var_0_0.tryChooseRepress(arg_20_0, arg_20_1, arg_20_2, arg_20_3, arg_20_4, arg_20_5, arg_20_6)
+	Activity183Rpc.instance:sendAct183ChooseRepressRequest(arg_20_1, arg_20_2, arg_20_3, arg_20_4, arg_20_5, arg_20_6)
 end
 
-function var_0_0.updateChooseRepressInfo(arg_19_0, arg_19_1, arg_19_2)
-	local var_19_0 = Act183Model.instance:getActInfo()
+function var_0_0.updateChooseRepressInfo(arg_21_0, arg_21_1, arg_21_2)
+	local var_21_0 = Act183Model.instance:getActInfo()
 
-	if not var_19_0 then
+	if not var_21_0 then
 		return
 	end
 
-	local var_19_1 = Act183Config.instance:getEpisodeCo(arg_19_1)
-	local var_19_2 = var_19_0:getGroupEpisodeMo(var_19_1.groupId):getEpisodeMo(arg_19_1)
+	local var_21_1 = Act183Config.instance:getEpisodeCo(arg_21_1)
+	local var_21_2 = var_21_0:getGroupEpisodeMo(var_21_1.groupId):getEpisodeMo(arg_21_1)
 
-	var_19_2:updateRepressMo(arg_19_2)
-	Act183Model.instance:recordLastRepressEpisodeId(arg_19_1)
-	var_0_0.instance:dispatchEvent(Act183Event.OnUpdateRepressInfo, arg_19_1, var_19_2)
+	var_21_2:updateRepressMo(arg_21_2)
+	Act183Model.instance:recordLastRepressEpisodeId(arg_21_1)
+	var_0_0.instance:dispatchEvent(Act183Event.OnUpdateRepressInfo, arg_21_1, var_21_2)
+end
+
+function var_0_0.onReconnectFight(arg_22_0, arg_22_1)
+	local var_22_0 = Act183Config.instance:getEpisodeCo(arg_22_1)
+	local var_22_1 = var_22_0 and var_22_0.activityId
+
+	Act183Model.instance:setActivityId(var_22_1)
 end
 
 var_0_0.instance = var_0_0.New()
 
-LuaEventSystem.addEventMechanism(var_0_0.instance)
+Act183JumpHelper.activate()
 
 return var_0_0

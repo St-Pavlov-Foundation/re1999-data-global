@@ -3,14 +3,14 @@
 local var_0_0 = class("FightWorkEffectExpointMaxAdd", FightEffectBase)
 
 function var_0_0.onStart(arg_1_0)
-	local var_1_0 = arg_1_0._actEffectMO.targetId
+	local var_1_0 = arg_1_0.actEffectData.targetId
 
-	FightController.instance:dispatchEvent(FightEvent.OnExpointMaxAdd, var_1_0, arg_1_0._actEffectMO.effectNum)
+	FightController.instance:dispatchEvent(FightEvent.OnExpointMaxAdd, var_1_0, arg_1_0.actEffectData.effectNum)
 	arg_1_0:onDone(true)
 end
 
 function var_0_0._startAddExpointMax(arg_2_0)
-	local var_2_0 = arg_2_0._actEffectMO.targetId
+	local var_2_0 = arg_2_0.actEffectData.targetId
 	local var_2_1 = FightHelper.getEntity(var_2_0)
 
 	if not var_2_1 then
@@ -33,8 +33,8 @@ function var_0_0._startAddExpointMax(arg_2_0)
 		return
 	end
 
-	var_2_2:changeExpointMaxAdd(arg_2_0._actEffectMO.effectNum)
-	FightController.instance:dispatchEvent(FightEvent.OnExpointMaxAdd, var_2_0, arg_2_0._actEffectMO.effectNum)
+	var_2_2:changeExpointMaxAdd(arg_2_0.actEffectData.effectNum)
+	FightController.instance:dispatchEvent(FightEvent.OnExpointMaxAdd, var_2_0, arg_2_0.actEffectData.effectNum)
 	arg_2_0:_onDone()
 end
 

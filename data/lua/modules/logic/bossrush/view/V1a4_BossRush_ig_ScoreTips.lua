@@ -24,7 +24,11 @@ function var_0_0._initView(arg_3_0)
 	local var_3_0 = BossRushEnum.ResPath.v1a4_bossrush_ig_scoretips
 	local var_3_1 = arg_3_0._abLoader:getAssetItem(var_3_0):GetResource(var_3_0)
 
-	arg_3_0._go = gohelper.clone(var_3_1, arg_3_0.goIndicatorRoot, "v1a4_bossrush_ig_scoretips")
+	arg_3_0.viewContainer.rightElementLayoutView:showElement(FightRightElementEnum.Elements.BossRush)
+
+	local var_3_2 = arg_3_0.viewContainer.rightElementLayoutView:getElementContainer(FightRightElementEnum.Elements.BossRush)
+
+	arg_3_0._go = gohelper.clone(var_3_1, var_3_2, "v1a4_bossrush_ig_scoretips")
 	arg_3_0._txtScoreNum = gohelper.findChildText(arg_3_0._go, "Tips/#txt_ScoreNum")
 	arg_3_0._txtScoreNum1 = gohelper.findChildText(arg_3_0._go, "Tips/#txt_ScoreNum/#txt_ScoreNum1")
 	arg_3_0._goAssessIcon = gohelper.findChild(arg_3_0._go, "Tips/#go_AssessIcon")

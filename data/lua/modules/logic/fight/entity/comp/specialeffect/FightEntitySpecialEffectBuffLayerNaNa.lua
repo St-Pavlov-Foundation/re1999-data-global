@@ -60,7 +60,7 @@ function var_0_0.onBuffUpdate(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4)
 	local var_2_9 = var_2_6.effectAudio
 	local var_2_10 = var_2_6.duration
 
-	arg_2_0.curEffectWrap = arg_2_0.entity.effect:addHangEffect(var_2_7, var_2_8, var_2_10)
+	arg_2_0.curEffectWrap = arg_2_0.entity.effect:addHangEffect(var_2_7, var_2_8, nil, var_2_10)
 
 	arg_2_0.curEffectWrap:setLocalPos(0, 0, 0)
 	FightRenderOrderMgr.instance:onAddEffectWrap(arg_2_1, arg_2_0.curEffectWrap)
@@ -74,6 +74,8 @@ function var_0_0.removeEffect(arg_3_0)
 	if arg_3_0.curEffectWrap then
 		arg_3_0.entity.effect:removeEffect(arg_3_0.curEffectWrap)
 		FightRenderOrderMgr.instance:onRemoveEffectWrap(arg_3_0.entityId, arg_3_0.curEffectWrap)
+
+		arg_3_0.curEffectWrap = nil
 	end
 end
 

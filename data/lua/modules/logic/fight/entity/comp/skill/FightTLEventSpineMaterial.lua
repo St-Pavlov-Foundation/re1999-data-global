@@ -1,8 +1,8 @@
 ﻿module("modules.logic.fight.entity.comp.skill.FightTLEventSpineMaterial", package.seeall)
 
-local var_0_0 = class("FightTLEventSpineMaterial")
+local var_0_0 = class("FightTLEventSpineMaterial", FightTimelineTrackItem)
 
-function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 	local var_1_0 = arg_1_3[1]
 
 	arg_1_0._matName = arg_1_3[2]
@@ -79,24 +79,20 @@ function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 	end
 end
 
-function var_0_0.handleSkillEventEnd(arg_3_0)
+function var_0_0.onTrackEnd(arg_3_0)
 	arg_3_0:_clear()
 end
 
-function var_0_0.reset(arg_4_0)
-	arg_4_0:_clear()
-end
+function var_0_0._clear(arg_4_0)
+	if arg_4_0._tweenId then
+		ZProj.TweenHelper.KillById(arg_4_0._tweenId)
 
-function var_0_0.dispose(arg_5_0)
-	arg_5_0:_clear()
-end
-
-function var_0_0._clear(arg_6_0)
-	if arg_6_0._tweenId then
-		ZProj.TweenHelper.KillById(arg_6_0._tweenId)
-
-		arg_6_0._tweenId = nil
+		arg_4_0._tweenId = nil
 	end
+end
+
+function var_0_0.onDestructor(arg_5_0)
+	arg_5_0:_clear()
 end
 
 return var_0_0

@@ -25,6 +25,7 @@ function var_0_0.init(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 	FightController.instance:registerCallback(FightEvent.OnClothSkillRoundSequenceFinish, arg_1_0.updateBuff, arg_1_0)
 	FightController.instance:registerCallback(FightEvent.GMForceRefreshNameUIBuff, arg_1_0._onGMForceRefreshNameUIBuff, arg_1_0)
 	FightController.instance:registerCallback(FightEvent.AfterForceUpdatePerformanceData, arg_1_0._onAfterForceUpdatePerformanceData, arg_1_0)
+	FightController.instance:registerCallback(FightEvent.CoverPerformanceEntityData, arg_1_0._onCoverPerformanceEntityData, arg_1_0)
 end
 
 function var_0_0.beforeDestroy(arg_2_0)
@@ -41,6 +42,7 @@ function var_0_0.beforeDestroy(arg_2_0)
 	FightController.instance:unregisterCallback(FightEvent.OnClothSkillRoundSequenceFinish, arg_2_0.updateBuff, arg_2_0)
 	FightController.instance:unregisterCallback(FightEvent.GMForceRefreshNameUIBuff, arg_2_0._onGMForceRefreshNameUIBuff, arg_2_0)
 	FightController.instance:unregisterCallback(FightEvent.AfterForceUpdatePerformanceData, arg_2_0._onAfterForceUpdatePerformanceData, arg_2_0)
+	FightController.instance:unregisterCallback(FightEvent.CoverPerformanceEntityData, arg_2_0._onCoverPerformanceEntityData, arg_2_0)
 end
 
 function var_0_0.updateBuff(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4, arg_3_5)
@@ -204,6 +206,14 @@ end
 
 function var_0_0._onAfterForceUpdatePerformanceData(arg_12_0)
 	arg_12_0:refreshBuffList()
+end
+
+function var_0_0._onCoverPerformanceEntityData(arg_13_0, arg_13_1)
+	if arg_13_1 ~= arg_13_0.entity.id then
+		return
+	end
+
+	arg_13_0:refreshBuffList()
 end
 
 return var_0_0

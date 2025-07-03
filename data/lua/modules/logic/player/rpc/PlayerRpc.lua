@@ -13,6 +13,7 @@ function var_0_0.onReceiveGetPlayerInfoReply(arg_2_0, arg_2_1, arg_2_2)
 		local var_2_0 = arg_2_2.playerInfo
 
 		PlayerModel.instance:setMainThumbnail(arg_2_2.mainThumbnail)
+		PlayerModel.instance:GMSetMainThumbnail()
 		PlayerModel.instance:setCanRename(arg_2_2.canRename)
 		PlayerModel.instance:setExtraRename(arg_2_2.extRename)
 		PlayerModel.instance:setPlayerinfo(var_2_0)

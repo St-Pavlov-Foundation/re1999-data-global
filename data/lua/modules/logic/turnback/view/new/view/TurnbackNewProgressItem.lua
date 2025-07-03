@@ -50,7 +50,7 @@ function var_0_0._onClickMainActivity(arg_7_0)
 	local var_7_0 = ActivityEnum.VersionActivityIdList[#ActivityEnum.VersionActivityIdList]
 	local var_7_1 = ActivityHelper.getActivityVersion(var_7_0)
 
-	_G[string.format("VersionActivity%sEnterController", var_7_1)]:openVersionActivityEnterView()
+	;(_G[string.format("VersionActivity%sEnterController", var_7_1)] or VersionActivityFixedEnterController.instance):openVersionActivityEnterView()
 end
 
 function var_0_0.refreshItem(arg_8_0, arg_8_1)

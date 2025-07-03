@@ -6,15 +6,15 @@ local var_0_1
 function var_0_0.onStart(arg_1_0)
 	if var_0_1 then
 		table.insert(var_0_1, {
-			arg_1_0._fightStepMO,
-			arg_1_0._actEffectMO
+			arg_1_0.fightStepData,
+			arg_1_0.actEffectData
 		})
 	else
 		var_0_1 = {}
 
 		table.insert(var_0_1, {
-			arg_1_0._fightStepMO,
-			arg_1_0._actEffectMO
+			arg_1_0.fightStepData,
+			arg_1_0.actEffectData
 		})
 		TaskDispatcher.runDelay(arg_1_0._delayStart, arg_1_0, 0.01)
 	end

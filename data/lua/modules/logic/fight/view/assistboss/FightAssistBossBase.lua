@@ -149,14 +149,15 @@ function var_0_0.onLongPress(arg_17_0)
 		return
 	end
 
-	if FightCardModel.instance:isCardOpEnd() then
+	if FightDataHelper.operationDataMgr:isCardOpEnd() then
 		return
 	end
 
 	local var_17_0 = FightDataHelper.paTaMgr:getCurUseSkillInfo()
+	local var_17_1 = FightDataHelper.paTaMgr:getBossSkillInfoList()
 
 	if not var_17_0 then
-		var_17_0 = FightDataHelper.paTaMgr:getBossSkillInfoList()[1]
+		var_17_0 = var_17_1[1]
 
 		if not var_17_0 then
 			logError("boss not found any one skill!")
@@ -165,11 +166,11 @@ function var_0_0.onLongPress(arg_17_0)
 		end
 	end
 
-	local var_17_1 = var_17_0.skillId
-	local var_17_2 = lua_skill.configDict[var_17_1]
+	local var_17_2 = var_17_0.skillId
+	local var_17_3 = lua_skill.configDict[var_17_2]
 
-	if not var_17_2 then
-		logError("long press assist boss, skill not exist !!! id : " .. tostring(var_17_1))
+	if not var_17_3 then
+		logError("long press assist boss, skill not exist !!! id : " .. tostring(var_17_2))
 
 		return
 	end
@@ -182,16 +183,24 @@ function var_0_0.onLongPress(arg_17_0)
 
 	tabletool.clear(arg_17_0.tempSkillIdList)
 
-	arg_17_0.tempSkillIdList[1] = var_17_1
-	arg_17_0.tempInfo.super = var_17_2.isBigSkill == 1
+	for iter_17_0, iter_17_1 in ipairs(var_17_1) do
+		table.insert(arg_17_0.tempSkillIdList, iter_17_1.skillId)
+	end
+
+	arg_17_0.tempInfo.super = var_17_3.isBigSkill == 1
 	arg_17_0.tempInfo.skillIdList = arg_17_0.tempSkillIdList
 	arg_17_0.tempInfo.skillIndex = 1
+	arg_17_0.tempInfo.userSkillId = var_17_0.skillId
 
-	local var_17_3 = FightDataHelper.entityMgr:getAssistBoss()
+	local var_17_4 = FightDataHelper.entityMgr:getAssistBoss()
 
-	arg_17_0.tempInfo.monsterName = var_17_3 and var_17_3:getEntityName() or ""
+	arg_17_0.tempInfo.monsterName = var_17_4 and var_17_4:getEntityName() or ""
 
-	ViewMgr.instance:openView(ViewName.SkillTipView, arg_17_0.tempInfo)
+	if var_17_4 and arg_17_0.tempInfo.super then
+		ViewMgr.instance:openView(ViewName.TowerSkillTipView, arg_17_0.tempInfo)
+	else
+		ViewMgr.instance:openView(ViewName.SkillTipView, arg_17_0.tempInfo)
+	end
 end
 
 function var_0_0.playAssistBossCard(arg_18_0)
@@ -203,7 +212,7 @@ function var_0_0.playAssistBossCard(arg_18_0)
 		return
 	end
 
-	if FightCardModel.instance:isCardOpEnd() then
+	if FightDataHelper.operationDataMgr:isCardOpEnd() then
 		return
 	end
 
@@ -213,8 +222,9 @@ function var_0_0.playAssistBossCard(arg_18_0)
 		return
 	end
 
-	local var_18_1 = FightCardModel.instance:playAssistBossHandCardOp(var_18_0.skillId)
+	local var_18_1 = FightDataHelper.operationDataMgr:newOperation()
 
+	var_18_1:playAssistBossHandCard(var_18_0.skillId)
 	FightController.instance:dispatchEvent(FightEvent.AddPlayOperationData, var_18_1)
 	FightController.instance:dispatchEvent(FightEvent.onNoActCostMoveFlowOver)
 	FightController.instance:dispatchEvent(FightEvent.RefreshPlayCardRoundOp, var_18_1)

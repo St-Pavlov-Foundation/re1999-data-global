@@ -633,6 +633,48 @@
     "uiPath": []
   },
   {
+    "id": 17,
+    "audio": [
+      3200127,
+      3200130
+    ],
+    "chapter": [],
+    "guide": [],
+    "story": [
+      307701,
+      307702,
+      307703,
+      307704,
+      307705,
+      307706,
+      307707,
+      307708,
+      308701,
+      308702,
+      308703,
+      308704,
+      308705,
+      308706,
+      308707,
+      308708
+    ],
+    "folderPath": [],
+    "videoPath": [
+      "1_8_activity_01",
+      "1_8_activity_02",
+      "1_8_activity_03",
+      "1_8_enter",
+      "1_8_pv"
+    ],
+    "path": [],
+    "uiFolder": [
+      "ui/viewres/versionactivity_1_8/v1a8_dungeon",
+      "ui/viewres/versionactivity_1_8/v1a8_weila",
+      "ui/viewres/versionactivity_1_8/v1a8_windsong"
+    ],
+    "uiPath": []
+  },
+  {
     "id": 18,
     "audio": [
       3200095,

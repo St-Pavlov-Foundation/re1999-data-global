@@ -11,16 +11,13 @@ function var_0_0.onStart(arg_1_0, arg_1_1)
 		TaskDispatcher.runDelay(arg_1_0._delayDone, arg_1_0, 10)
 		FightController.instance:registerCallback(FightEvent.OnCombineCardEnd, arg_1_0._onCombineDone, arg_1_0)
 
-		local var_1_1 = arg_1_0.context.cards
+		local var_1_1 = arg_1_0.context.beforeDissolveCards
 		local var_1_2 = FightCardDataHelper.calcRemoveCardTime2(var_1_1, var_1_0)
-
-		arg_1_1.view:_updateHandCards(var_1_1)
 
 		for iter_1_0, iter_1_1 in ipairs(var_1_0) do
 			FightController.instance:dispatchEvent(FightEvent.CardRemove, {
 				iter_1_1
 			}, var_1_2, true)
-			table.remove(var_1_1, iter_1_1)
 		end
 
 		return

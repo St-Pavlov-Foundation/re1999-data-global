@@ -7,6 +7,7 @@ return {
 	Selected = "selected",
 	Switch = "switch",
 	Unlock = "unlock",
+	Unopen = "unopen",
 	Idle = "idle",
 	Finish = "finish",
 	Click = "click",

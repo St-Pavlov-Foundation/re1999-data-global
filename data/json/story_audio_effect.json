@@ -4100,21 +4100,6 @@
     "bankName": "activitystory_tangren2_5_liangyue_sfx"
   },
   {
-    "id": 25500059,
-    "eventName": "play_activitystorysfx_tangren_liangyue_bell_1",
-    "bankName": "activitystory_tangren2_5_liangyue_sfx"
-  },
-  {
-    "id": 25500060,
-    "eventName": "play_activitystorysfx_tangren_liangyue_bell_2",
-    "bankName": "activitystory_tangren2_5_liangyue_sfx"
-  },
-  {
-    "id": 25500061,
-    "eventName": "play_activitystorysfx_tangren_liangyue_bell_3",
-    "bankName": "activitystory_tangren2_5_liangyue_sfx"
-  },
-  {
     "id": 25500062,
     "eventName": "play_activitystorysfx_tangren_bell_slow_loop",
     "bankName": "activitystory_tangren2_5_liangyue_sfx"
@@ -5210,6 +5195,716 @@
     "bankName": "prologuechapter_9_fuyong"
   },
   {
+    "id": 27500001,
+    "eventName": "play_activitystorysfx_yuzhou_baby",
+    "bankName": "activitystory_yuzhou2_7_huahuan_sfx"
+  },
+  {
+    "id": 27500002,
+    "eventName": "play_activitystorysfx_yuzhou_sai",
+    "bankName": "activitystory_yuzhou2_7_huahuan_sfx"
+  },
+  {
+    "id": 27500003,
+    "eventName": "play_activitystorysfx_yuzhou_snow2_lp",
+    "bankName": "activitystory_yuzhou2_7_huahuan_sfx"
+  },
+  {
+    "id": 27500004,
+    "eventName": "play_activitystorysfx_yuzhou_ftstep2_lp",
+    "bankName": "activitystory_yuzhou2_7_huahuan_sfx"
+  },
+  {
+    "id": 27500005,
+    "eventName": "play_activitystorysfx_yuzhou_ftstep3",
+    "bankName": "activitystory_yuzhou2_7_huahuan_sfx"
+  },
+  {
+    "id": 27500006,
+    "eventName": "play_activitystorysfx_yuzhou_tumble",
+    "bankName": "activitystory_yuzhou2_7_huahuan_sfx"
+  },
+  {
+    "id": 27500007,
+    "eventName": "play_activitystorysfx_yuzhou_snow2",
+    "bankName": "activitystory_yuzhou2_7_huahuan_sfx"
+  },
+  {
+    "id": 27500008,
+    "eventName": "play_activitystorysfx_yuzhou_teleport",
+    "bankName": "activitystory_yuzhou2_7_huahuan_sfx"
+  },
+  {
+    "id": 27500009,
+    "eventName": "play_activitystorysfx_yuzhou_circus1_lp",
+    "bankName": "activitystory_yuzhou2_7_huahuan_sfx"
+  },
+  {
+    "id": 27500010,
+    "eventName": "play_activitystorysfx_yuzhou_circus2_lp",
+    "bankName": "activitystory_yuzhou2_7_huahuan_sfx"
+  },
+  {
+    "id": 27500011,
+    "eventName": "play_activitystorysfx_yuzhou_newt01",
+    "bankName": "activitystory_yuzhou2_7_huahuan_sfx"
+  },
+  {
+    "id": 27500012,
+    "eventName": "play_activitystorysfx_yuzhou_newt02",
+    "bankName": "activitystory_yuzhou2_7_huahuan_sfx"
+  },
+  {
+    "id": 27500013,
+    "eventName": "play_activitystorysfx_yuzhou_newt03",
+    "bankName": "activitystory_yuzhou2_7_huahuan_sfx"
+  },
+  {
+    "id": 27500014,
+    "eventName": "play_activitystorysfx_yuzhou_snake01",
+    "bankName": "activitystory_yuzhou2_7_zhouliu_sfx"
+  },
+  {
+    "id": 27500015,
+    "eventName": "play_activitystorysfx_yuzhou_snake02",
+    "bankName": "activitystory_yuzhou2_7_zhouliu_sfx"
+  },
+  {
+    "id": 27500016,
+    "eventName": "play_activitystorysfx_yuzhou_snake03",
+    "bankName": "activitystory_yuzhou2_7_zhouliu_sfx"
+  },
+  {
+    "id": 27500017,
+    "eventName": "play_activitystorysfx_yuzhou_snake04",
+    "bankName": "activitystory_yuzhou2_7_zhouliu_sfx"
+  },
+  {
+    "id": 27500018,
+    "eventName": "play_activitystorysfx_yuzhou_snake05",
+    "bankName": "activitystory_yuzhou2_7_zhouliu_sfx"
+  },
+  {
+    "id": 27500019,
+    "eventName": "play_activitystorysfx_yuzhou_snake06_lp",
+    "bankName": "activitystory_yuzhou2_7_zhouliu_sfx"
+  },
+  {
+    "id": 27500020,
+    "eventName": "play_activitysfx_yuzhou_room_lp",
+    "bankName": "activity_yuzhou2_7_sfx_part01"
+  },
+  {
+    "id": 27500021,
+    "eventName": "play_activitysfx_yuzhou_boxian1",
+    "bankName": "activity_yuzhou2_7_sfx_part01"
+  },
+  {
+    "id": 27500022,
+    "eventName": "play_activitysfx_yuzhou_boxian2",
+    "bankName": "activity_yuzhou2_7_sfx_part01"
+  },
+  {
+    "id": 27500023,
+    "eventName": "play_activitysfx_yuzhou_circus_lp",
+    "bankName": "activity_yuzhou2_7_sfx_part01"
+  },
+  {
+    "id": 27500024,
+    "eventName": "play_activitysfx_yuzhou_snow_lp",
+    "bankName": "activity_yuzhou2_7_sfx_part01"
+  },
+  {
+    "id": 27500025,
+    "eventName": "play_activitysfx_yuzhou_footsteps1",
+    "bankName": "activity_yuzhou2_7_sfx_part01"
+  },
+  {
+    "id": 27500026,
+    "eventName": "play_activitysfx_yuzhou_footsteps2",
+    "bankName": "activity_yuzhou2_7_sfx_part01"
+  },
+  {
+    "id": 27500027,
+    "eventName": "play_activitysfx_yuzhou_footsteps3",
+    "bankName": "activity_yuzhou2_7_sfx_part01"
+  },
+  {
+    "id": 27500028,
+    "eventName": "play_activitysfx_yuzhou_footsteps4_lp",
+    "bankName": "activity_yuzhou2_7_sfx_part01"
+  },
+  {
+    "id": 27500029,
+    "eventName": "play_activitysfx_yuzhou_footsteps5",
+    "bankName": "activity_yuzhou2_7_sfx_part01"
+  },
+  {
+    "id": 27500030,
+    "eventName": "play_activitysfx_yuzhou_qishen",
+    "bankName": "activity_yuzhou2_7_sfx_part01"
+  },
+  {
+    "id": 27500031,
+    "eventName": "play_activitysfx_yuzhou_town1_lp",
+    "bankName": "activity_yuzhou2_7_sfx_part01"
+  },
+  {
+    "id": 27500032,
+    "eventName": "play_activitysfx_yuzhou_violin1",
+    "bankName": "activity_yuzhou2_7_sfx_part01"
+  },
+  {
+    "id": 27500033,
+    "eventName": "play_activitysfx_yuzhou_violin2",
+    "bankName": "activity_yuzhou2_7_sfx_part01"
+  },
+  {
+    "id": 27500034,
+    "eventName": "play_activitysfx_yuzhou_actor",
+    "bankName": "activity_yuzhou2_7_sfx_part01"
+  },
+  {
+    "id": 27500035,
+    "eventName": "play_activitysfx_yuzhou_crowd_lp",
+    "bankName": "activity_yuzhou2_7_sfx_part01"
+  },
+  {
+    "id": 27500036,
+    "eventName": "play_activitysfx_yuzhou_huxi1_lp",
+    "bankName": "activity_yuzhou2_7_sfx_part01"
+  },
+  {
+    "id": 27500037,
+    "eventName": "play_activitysfx_yuzhou_huxi2_lp",
+    "bankName": "activity_yuzhou2_7_sfx_part01"
+  },
+  {
+    "id": 27500038,
+    "eventName": "play_activitysfx_yuzhou_huxi3",
+    "bankName": "activity_yuzhou2_7_sfx_part01"
+  },
+  {
+    "id": 27500039,
+    "eventName": "play_activitysfx_yuzhou_switch",
+    "bankName": "activity_yuzhou2_7_sfx_part01"
+  },
+  {
+    "id": 27500040,
+    "eventName": "play_activitysfx_yuzhou_bell",
+    "bankName": "activity_yuzhou2_7_sfx_part01"
+  },
+  {
+    "id": 27500041,
+    "eventName": "play_activitysfx_yuzhou_tent",
+    "bankName": "activity_yuzhou2_7_sfx_part01"
+  },
+  {
+    "id": 27500042,
+    "eventName": "play_activitysfx_yuzhou_jimu",
+    "bankName": "activity_yuzhou2_7_sfx_part02"
+  },
+  {
+    "id": 27500043,
+    "eventName": "play_activitysfx_yuzhou_caidan",
+    "bankName": "activity_yuzhou2_7_sfx_part02"
+  },
+  {
+    "id": 27500044,
+    "eventName": "play_activitysfx_yuzhou_sorting1",
+    "bankName": "activity_yuzhou2_7_sfx_part02"
+  },
+  {
+    "id": 27500045,
+    "eventName": "play_activitysfx_yuzhou_sorting2",
+    "bankName": "activity_yuzhou2_7_sfx_part02"
+  },
+  {
+    "id": 27500046,
+    "eventName": "play_activitysfx_yuzhou_pen1",
+    "bankName": "activity_yuzhou2_7_sfx_part02"
+  },
+  {
+    "id": 27500047,
+    "eventName": "play_activitysfx_yuzhou_map",
+    "bankName": "activity_yuzhou2_7_sfx_part02"
+  },
+  {
+    "id": 27500048,
+    "eventName": "play_activitysfx_yuzhou_fstp_snow",
+    "bankName": "activity_yuzhou2_7_sfx_part02"
+  },
+  {
+    "id": 27500049,
+    "eventName": "play_activitysfx_yuzhou_rise",
+    "bankName": "activity_yuzhou2_7_sfx_part02"
+  },
+  {
+    "id": 27500050,
+    "eventName": "play_activitysfx_yuzhou_ding1",
+    "bankName": "activity_yuzhou2_7_sfx_part02"
+  },
+  {
+    "id": 27500051,
+    "eventName": "play_activitysfx_yuzhou_ding2",
+    "bankName": "activity_yuzhou2_7_sfx_part02"
+  },
+  {
+    "id": 27500052,
+    "eventName": "play_activitysfx_yuzhou_ding3",
+    "bankName": "activity_yuzhou2_7_sfx_part02"
+  },
+  {
+    "id": 27500053,
+    "eventName": "play_activitysfx_yuzhou_ding4",
+    "bankName": "activity_yuzhou2_7_sfx_part02"
+  },
+  {
+    "id": 27500054,
+    "eventName": "play_activitysfx_yuzhou_ding5",
+    "bankName": "activity_yuzhou2_7_sfx_part02"
+  },
+  {
+    "id": 27500055,
+    "eventName": "play_activitysfx_yuzhou_moca",
+    "bankName": "activity_yuzhou2_7_sfx_part02"
+  },
+  {
+    "id": 27500056,
+    "eventName": "play_activitysfx_yuzhou_twig",
+    "bankName": "activity_yuzhou2_7_sfx_part02"
+  },
+  {
+    "id": 27500057,
+    "eventName": "play_activitysfx_yuzhou_walk_lp",
+    "bankName": "activity_yuzhou2_7_sfx_part02"
+  },
+  {
+    "id": 27500058,
+    "eventName": "play_activitysfx_yuzhou_chair",
+    "bankName": "activity_yuzhou2_7_sfx_part02"
+  },
+  {
+    "id": 27500059,
+    "eventName": "play_activitysfx_yuzhou_bag_cloth",
+    "bankName": "activity_yuzhou2_7_sfx_part02"
+  },
+  {
+    "id": 27500060,
+    "eventName": "play_activitysfx_yuzhou_throw_jewel",
+    "bankName": "activity_yuzhou2_7_sfx_part02"
+  },
+  {
+    "id": 27500061,
+    "eventName": "play_activitysfx_yuzhou_tie",
+    "bankName": "activity_yuzhou2_7_sfx_part02"
+  },
+  {
+    "id": 27500062,
+    "eventName": "play_activitysfx_yuzhou_throw_knife",
+    "bankName": "activity_yuzhou2_7_sfx_part02"
+  },
+  {
+    "id": 27500063,
+    "eventName": "play_activitysfx_yuzhou_cheers",
+    "bankName": "activity_yuzhou2_7_sfx_part02"
+  },
+  {
+    "id": 27500064,
+    "eventName": "play_activitysfx_yuzhou_bubble",
+    "bankName": "activity_yuzhou2_7_sfx_part03"
+  },
+  {
+    "id": 27500065,
+    "eventName": "play_activitysfx_yuzhou_qizi1",
+    "bankName": "activity_yuzhou2_7_sfx_part03"
+  },
+  {
+    "id": 27500066,
+    "eventName": "play_activitysfx_yuzhou_qizi2",
+    "bankName": "activity_yuzhou2_7_sfx_part03"
+  },
+  {
+    "id": 27500067,
+    "eventName": "play_activitysfx_yuzhou_succeed",
+    "bankName": "activity_yuzhou2_7_sfx_part03"
+  },
+  {
+    "id": 27500068,
+    "eventName": "play_activitysfx_yuzhou_fail",
+    "bankName": "activity_yuzhou2_7_sfx_part03"
+  },
+  {
+    "id": 27500069,
+    "eventName": "play_activitysfx_yuzhou_clockwork",
+    "bankName": "activity_yuzhou2_7_sfx_part03"
+  },
+  {
+    "id": 27500070,
+    "eventName": "play_activitysfx_yuzhou_fish",
+    "bankName": "activity_yuzhou2_7_sfx_part03"
+  },
+  {
+    "id": 27500071,
+    "eventName": "play_activitysfx_yuzhou_paper",
+    "bankName": "activity_yuzhou2_7_sfx_part03"
+  },
+  {
+    "id": 27500072,
+    "eventName": "play_activitysfx_yuzhou_fall_gem",
+    "bankName": "activity_yuzhou2_7_sfx_part03"
+  },
+  {
+    "id": 27500073,
+    "eventName": "play_activitysfx_yuzhou_fish_tank",
+    "bankName": "activity_yuzhou2_7_sfx_part03"
+  },
+  {
+    "id": 27500074,
+    "eventName": "play_activitysfx_yuzhou_throw_bi",
+    "bankName": "activity_yuzhou2_7_sfx_part03"
+  },
+  {
+    "id": 27500075,
+    "eventName": "play_activitysfx_yuzhou_cd_lp",
+    "bankName": "activity_yuzhou2_7_sfx_part03"
+  },
+  {
+    "id": 27500076,
+    "eventName": "play_activitysfx_yuzhou_shake_lp",
+    "bankName": "activity_yuzhou2_7_sfx_part03"
+  },
+  {
+    "id": 27500077,
+    "eventName": "play_activitysfx_yuzhou_yu",
+    "bankName": "activity_yuzhou2_7_sfx_part03"
+  },
+  {
+    "id": 27500078,
+    "eventName": "play_activitysfx_yuzhou_patted",
+    "bankName": "activity_yuzhou2_7_sfx_part03"
+  },
+  {
+    "id": 27500079,
+    "eventName": "play_activitysfx_yuzhou_town2_lp",
+    "bankName": "activity_yuzhou2_7_sfx_part03"
+  },
+  {
+    "id": 27500080,
+    "eventName": "play_activitysfx_yuzhou_town3_lp",
+    "bankName": "activity_yuzhou2_7_sfx_part03"
+  },
+  {
+    "id": 27500081,
+    "eventName": "play_activitysfx_yuzhou_box",
+    "bankName": "activity_yuzhou2_7_sfx_part03"
+  },
+  {
+    "id": 27500082,
+    "eventName": "play_activitysfx_yuzhou_throw_stone",
+    "bankName": "activity_yuzhou2_7_sfx_part03"
+  },
+  {
+    "id": 27500083,
+    "eventName": "play_activitysfx_yuzhou_snow_write",
+    "bankName": "activity_yuzhou2_7_sfx_part03"
+  },
+  {
+    "id": 27500084,
+    "eventName": "play_activitysfx_yuzhou_wind1",
+    "bankName": "activity_yuzhou2_7_sfx_part03"
+  },
+  {
+    "id": 27500085,
+    "eventName": "play_activitysfx_yuzhou_sitdown",
+    "bankName": "activity_yuzhou2_7_sfx_part03"
+  },
+  {
+    "id": 27500086,
+    "eventName": "play_activitysfx_yuzhou_pack01",
+    "bankName": "activity_yuzhou2_7_sfx_part04"
+  },
+  {
+    "id": 27500087,
+    "eventName": "play_activitysfx_yuzhou_pack02",
+    "bankName": "activity_yuzhou2_7_sfx_part04"
+  },
+  {
+    "id": 27500088,
+    "eventName": "play_activitysfx_yuzhou_move_lp",
+    "bankName": "activity_yuzhou2_7_sfx_part04"
+  },
+  {
+    "id": 27500089,
+    "eventName": "play_activitysfx_yuzhou_bite",
+    "bankName": "activity_yuzhou2_7_sfx_part04"
+  },
+  {
+    "id": 27500090,
+    "eventName": "play_activitysfx_yuzhou_unpack",
+    "bankName": "activity_yuzhou2_7_sfx_part04"
+  },
+  {
+    "id": 27500091,
+    "eventName": "play_activitysfx_yuzhou_eat_noodles",
+    "bankName": "activity_yuzhou2_7_sfx_part04"
+  },
+  {
+    "id": 27500092,
+    "eventName": "play_activitysfx_yuzhou_grap",
+    "bankName": "activity_yuzhou2_7_sfx_part04"
+  },
+  {
+    "id": 27500093,
+    "eventName": "play_activitysfx_yuzhou_writer2",
+    "bankName": "activity_yuzhou2_7_sfx_part04"
+  },
+  {
+    "id": 27500094,
+    "eventName": "play_activitysfx_yuzhou_wear",
+    "bankName": "activity_yuzhou2_7_sfx_part04"
+  },
+  {
+    "id": 27500095,
+    "eventName": "play_activitysfx_yuzhou_hatch",
+    "bankName": "activity_yuzhou2_7_sfx_part04"
+  },
+  {
+    "id": 27500096,
+    "eventName": "play_activitysfx_yuzhou_pad1_lp",
+    "bankName": "activity_yuzhou2_7_sfx_part04"
+  },
+  {
+    "id": 27500097,
+    "eventName": "play_activitysfx_yuzhou_pad2_lp",
+    "bankName": "activity_yuzhou2_7_sfx_part04"
+  },
+  {
+    "id": 27500098,
+    "eventName": "play_activitysfx_yuzhou_bounce",
+    "bankName": "activity_yuzhou2_7_sfx_part04"
+  },
+  {
+    "id": 27500099,
+    "eventName": "play_activitysfx_yuzhou_typing",
+    "bankName": "activity_yuzhou2_7_sfx_part04"
+  },
+  {
+    "id": 27500100,
+    "eventName": "play_activitysfx_yuzhou_ti_knife",
+    "bankName": "activity_yuzhou2_7_sfx_part04"
+  },
+  {
+    "id": 27500101,
+    "eventName": "play_activitysfx_yuzhou_wander_lp",
+    "bankName": "activity_yuzhou2_7_sfx_part04"
+  },
+  {
+    "id": 27500102,
+    "eventName": "play_activitysfx_yuzhou_didi1_lp",
+    "bankName": "activity_yuzhou2_7_sfx_part04"
+  },
+  {
+    "id": 27500103,
+    "eventName": "play_activitysfx_yuzhou_didi2_lp",
+    "bankName": "activity_yuzhou2_7_sfx_part04"
+  },
+  {
+    "id": 27500104,
+    "eventName": "play_activitysfx_yuzhou_clockwise",
+    "bankName": "activity_yuzhou2_7_sfx_part04"
+  },
+  {
+    "id": 27500105,
+    "eventName": "play_activitysfx_yuzhou_cut",
+    "bankName": "activity_yuzhou2_7_sfx_part04"
+  },
+  {
+    "id": 27500106,
+    "eventName": "play_activitysfx_yuzhou_belt",
+    "bankName": "activity_yuzhou2_7_sfx_part04"
+  },
+  {
+    "id": 27500107,
+    "eventName": "play_activitystorysfx_yuzhou_shell_chaime",
+    "bankName": "activitystory_yuzhou2_7_yishi_tutushizi_sfx"
+  },
+  {
+    "id": 27500108,
+    "eventName": "play_activitystorysfx_yuzhou_window_clap",
+    "bankName": "activitystory_yuzhou2_7_yishi_tutushizi_sfx"
+  },
+  {
+    "id": 27500109,
+    "eventName": "play_activitystorysfx_yuzhou_plant_growing",
+    "bankName": "activitystory_yuzhou2_7_yishi_tutushizi_sfx"
+  },
+  {
+    "id": 27500110,
+    "eventName": "play_activitystorysfx_yuzhou_necklace_loop",
+    "bankName": "activitystory_yuzhou2_7_yishi_tutushizi_sfx"
+  },
+  {
+    "id": 27500111,
+    "eventName": "play_activitysfx_yuzhou_shell_collision",
+    "bankName": "activitystory_yuzhou2_7_yishi_tutushizi_sfx_fuyong"
+  },
+  {
+    "id": 27500112,
+    "eventName": "play_activitysfx_yuzhou_scrubbed_shell",
+    "bankName": "activitystory_yuzhou2_7_yishi_tutushizi_sfx_fuyong"
+  },
+  {
+    "id": 27500113,
+    "eventName": "play_activitysfx_yuzhou_shell_roll",
+    "bankName": "activitystory_yuzhou2_7_yishi_tutushizi_sfx_fuyong"
+  },
+  {
+    "id": 27500114,
+    "eventName": "play_activitystorysfx_yuzhou_hum",
+    "bankName": "activitystory_yuzhou2_7_yishi_tutushizi_sfx_fuyong"
+  },
+  {
+    "id": 27500115,
+    "eventName": "play_activitystorysfx_yuzhou_girl_panting",
+    "bankName": "activitystory_yuzhou2_7_yishi_tutushizi_sfx_fuyong"
+  },
+  {
+    "id": 27500116,
+    "eventName": "play_activitysfx_yuzhou_pick_lantern",
+    "bankName": "activitystory_yuzhou2_7_yishi_tutushizi_sfx_fuyong"
+  },
+  {
+    "id": 27500117,
+    "eventName": "play_activitysfx_yuzhou_grace_attack",
+    "bankName": "activitystory_yuzhou2_7_yishi_tutushizi_sfx_fuyong"
+  },
+  {
+    "id": 27500118,
+    "eventName": "play_activitystorysfx_yuzhou_wry",
+    "bankName": "activitystory_yuzhou2_7_yishi_tutushizi_sfx_fuyong"
+  },
+  {
+    "id": 27500119,
+    "eventName": "play_activitystorysfx_yuzhou_tears_drop",
+    "bankName": "activitystory_yuzhou2_7_yishi_tutushizi_sfx_fuyong"
+  },
+  {
+    "id": 27500120,
+    "eventName": "play_activitysfx_yuzhou_cutscene_nukutai_song_sfx_1",
+    "bankName": "activitystory_yuzhou2_7_yishi_tutushizi_sfx_fuyong"
+  },
+  {
+    "id": 27500121,
+    "eventName": "play_activitysfx_yuzhou_cutscene_nukutai_song_sfx_2",
+    "bankName": "activitystory_yuzhou2_7_yishi_tutushizi_sfx_fuyong"
+  },
+  {
+    "id": 27500122,
+    "eventName": "play_activitysfx_yuzhou_touch_id",
+    "bankName": "activity_yuzhou2_7_sfx_part05"
+  },
+  {
+    "id": 27500123,
+    "eventName": "play_activitysfx_yuzhou_firing_button",
+    "bankName": "activity_yuzhou2_7_sfx_part05"
+  },
+  {
+    "id": 27500124,
+    "eventName": "play_activitysfx_yuzhou_fish_bubble",
+    "bankName": "activity_yuzhou2_7_sfx_part05"
+  },
+  {
+    "id": 27500125,
+    "eventName": "play_activitysfx_yuzhou_spacecraft_ascent",
+    "bankName": "activity_yuzhou2_7_sfx_part05"
+  },
+  {
+    "id": 27500126,
+    "eventName": "play_activitysfx_yuzhou_shatte_sky",
+    "bankName": "activity_yuzhou2_7_sfx_part05"
+  },
+  {
+    "id": 27500127,
+    "eventName": "play_activitysfx_yuzhou_recording_run",
+    "bankName": "activity_yuzhou2_7_sfx_part05"
+  },
+  {
+    "id": 27500128,
+    "eventName": "play_activitysfx_yuzhou_starburst",
+    "bankName": "activity_yuzhou2_7_sfx_part05"
+  },
+  {
+    "id": 27500129,
+    "eventName": "play_activitysfx_yuzhou_finger_fireworks",
+    "bankName": "activity_yuzhou2_7_sfx_part05"
+  },
+  {
+    "id": 27500130,
+    "eventName": "play_activitysfx_yuzhou_consciousness",
+    "bankName": "activity_yuzhou2_7_sfx_part05"
+  },
+  {
+    "id": 27500131,
+    "eventName": "play_activitysfx_yuzhou_arcane_dagger",
+    "bankName": "activity_yuzhou2_7_sfx_part05"
+  },
+  {
+    "id": 27500132,
+    "eventName": "play_activitysfx_yuzhou_arcane_music",
+    "bankName": "activity_yuzhou2_7_sfx_part05"
+  },
+  {
+    "id": 27500133,
+    "eventName": "play_activitysfx_yuzhou_push_planet",
+    "bankName": "activity_yuzhou2_7_sfx_part05"
+  },
+  {
+    "id": 27500134,
+    "eventName": "play_activitysfx_yuzhou_local_flip",
+    "bankName": "activity_yuzhou2_7_sfx_part05"
+  },
+  {
+    "id": 27500135,
+    "eventName": "play_activitysfx_yuzhou_travelling_violin",
+    "bankName": "activity_yuzhou2_7_sfx_part05"
+  },
+  {
+    "id": 27500136,
+    "eventName": "play_activitysfx_yuzhou_rocket_launch",
+    "bankName": "activity_yuzhou2_7_sfx_part05"
+  },
+  {
+    "id": 27500137,
+    "eventName": "play_activitysfx_yuzhou_detector_demon",
+    "bankName": "activity_yuzhou2_7_sfx_part05"
+  },
+  {
+    "id": 27500138,
+    "eventName": "play_activitystorysfx_yuzhou_cloth",
+    "bankName": "activitystory_yuzhou2_7_huahuan_sfx"
+  },
+  {
+    "id": 27500139,
+    "eventName": "play_activitysfx_yuzhou_firefly_amb",
+    "bankName": "activity_yuzhou2_7_sfx_fuyong"
+  },
+  {
+    "id": 27500140,
+    "eventName": "play_activitysfx_yuzhou_puppy_whimper",
+    "bankName": "activity_yuzhou2_7_sfx_fuyong"
+  },
+  {
+    "id": 27500141,
+    "eventName": "play_activitysfx_yuzhou_hero3048_04",
+    "bankName": "activity_yuzhou2_7_sfx_fuyong"
+  },
+  {
+    "id": 27500142,
+    "eventName": "play_activitysfx_yuzhou_hero3048_14",
+    "bankName": "activity_yuzhou2_7_sfx_fuyong"
+  },
+  {
     "id": 530053,
     "eventName": "play_activitymusic_thememusic_full_2_0",
     "bankName": "activity2_0_music"
@@ -5363,6 +6058,26 @@
     "id": 26530004,
     "eventName": "play_activitymusic_tango_interlude_2_6",
     "bankName": "activity2_6_music"
+  },
+  {
+    "id": 27530001,
+    "eventName": "play_activitymusic_theme_2_7",
+    "bankName": "activity2_7_music"
+  },
+  {
+    "id": 27530002,
+    "eventName": "play_activitymusic_daily_2_7",
+    "bankName": "activity2_7_music"
+  },
+  {
+    "id": 27530003,
+    "eventName": "play_activitymusic_moonlight_2_7",
+    "bankName": "activity2_7_music"
+  },
+  {
+    "id": 27530004,
+    "eventName": "play_battle_2_7_normalfight_combatlist",
+    "bankName": "activtiy_yuzhou_combataudio"
   },
   {
     "id": 520105,
@@ -5648,5 +6363,45 @@
     "id": 26520009,
     "eventName": "play_chap9_freedom_chorus_3",
     "bankName": "prologuechapter_9_part05"
+  },
+  {
+    "id": 27520001,
+    "eventName": "play_activitysfx_yuzhou_chapter_open",
+    "bankName": "activity_yuzhou2_7_sfx"
+  },
+  {
+    "id": 27520002,
+    "eventName": "play_activitysfx_yuzhou_subsection_open",
+    "bankName": "activity_yuzhou2_7_sfx"
+  },
+  {
+    "id": 27520003,
+    "eventName": "play_activitysfx_yuzhou_chapter_continue",
+    "bankName": "activity_yuzhou2_7_sfx"
+  },
+  {
+    "id": 27520004,
+    "eventName": "play_yuzhou2_7_cutscene_ending",
+    "bankName": "yuzhou2_7_cutscene_sfx_vo"
+  },
+  {
+    "id": 27520005,
+    "eventName": "play_yuzhou2_7_cutscene_opening",
+    "bankName": "yuzhou2_7_cutscene_sfx_vo"
+  },
+  {
+    "id": 27520006,
+    "eventName": "play_yuzhou2_7_cutscene_bossfought_sfx_vo",
+    "bankName": "yuzhou2_7_cutscene_sfx_vo"
+  },
+  {
+    "id": 27520007,
+    "eventName": "play_yuzhou2_7_cutscene_transfer",
+    "bankName": "yuzhou2_7_cutscene_sfx_vo"
+  },
+  {
+    "id": 27520008,
+    "eventName": "play_yuzhou2_7_pv_sfx_vo_music",
+    "bankName": "yuzhou2_7_cutscene_sfx_vo"
   }
 ]

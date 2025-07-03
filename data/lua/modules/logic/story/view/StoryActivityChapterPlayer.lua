@@ -50,6 +50,10 @@ var_0_0.VersionSetting = {
 	[25] = {
 		[var_0_0.StoryType.Open] = "StoryActivityChapterOpen2_5",
 		[var_0_0.StoryType.Close] = "StoryActivityChapterClose2_5"
+	},
+	[27] = {
+		[var_0_0.StoryType.Open] = "StoryActivityChapterOpen2_7",
+		[var_0_0.StoryType.Close] = "StoryActivityChapterClose2_7"
 	}
 }
 

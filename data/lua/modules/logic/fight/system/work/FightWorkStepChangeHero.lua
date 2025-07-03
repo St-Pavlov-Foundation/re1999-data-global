@@ -3,26 +3,26 @@
 local var_0_0 = class("FightWorkStepChangeHero", BaseWork)
 
 function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0._fightStepMO = arg_1_1
+	arg_1_0.fightStepData = arg_1_1
 end
 
 function var_0_0.isMySide(arg_2_0)
-	local var_2_0 = FightDataHelper.entityMgr:getById(arg_2_0._fightStepMO.fromId)
+	local var_2_0 = FightDataHelper.entityMgr:getById(arg_2_0.fightStepData.fromId)
 
 	if var_2_0 then
 		return var_2_0.side == FightEnum.EntitySide.MySide
 	end
 
-	return tonumber(arg_2_0._fightStepMO.fromId) > 0
+	return tonumber(arg_2_0.fightStepData.fromId) > 0
 end
 
 function var_0_0.onStart(arg_3_0)
 	TaskDispatcher.runDelay(arg_3_0._delayDone, arg_3_0, 5)
 
-	arg_3_0.from_id = arg_3_0._fightStepMO.fromId
-	arg_3_0.to_id = arg_3_0._fightStepMO.toId
+	arg_3_0.from_id = arg_3_0.fightStepData.fromId
+	arg_3_0.to_id = arg_3_0.fightStepData.toId
 
-	FightDataHelper.calMgr:playChangeHero(arg_3_0._fightStepMO)
+	FightDataHelper.calMgr:playChangeHero(arg_3_0.fightStepData)
 
 	arg_3_0._changedEntityMO = FightDataHelper.entityMgr:getById(arg_3_0.from_id)
 	arg_3_0.entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
@@ -121,12 +121,11 @@ function var_0_0._playJumpTimeline(arg_8_0)
 	local var_8_0 = {
 		actId = 0,
 		customType = "change_hero",
-		actEffectMOs = {
+		actEffect = {
 			{
 				targetId = arg_8_0.to_id
 			}
 		},
-		actEffect = {},
 		fromId = arg_8_0.from_id,
 		toId = arg_8_0.to_id,
 		actType = FightEnum.ActType.SKILL,
@@ -242,7 +241,7 @@ function var_0_0._onSubSpineLoaded(arg_14_0, arg_14_1)
 end
 
 function var_0_0._delayDone(arg_15_0)
-	logError("change entity step timeout, targetId = " .. arg_15_0._fightStepMO.fromId .. " -> " .. arg_15_0._fightStepMO.toId)
+	logError("change entity step timeout, targetId = " .. arg_15_0.fightStepData.fromId .. " -> " .. arg_15_0.fightStepData.toId)
 	arg_15_0:onDone(true)
 end
 
@@ -272,7 +271,7 @@ function var_0_0.clearWork(arg_16_0)
 	FightController.instance:unregisterCallback(FightEvent.OnSpineLoaded, arg_16_0._onNextSubSpineLoaded, arg_16_0)
 	FightController.instance:unregisterCallback(FightEvent.OnSpineLoaded, arg_16_0._onEnterEntitySpineLoadFinish, arg_16_0)
 
-	arg_16_0._fightStepMO = nil
+	arg_16_0.fightStepData = nil
 
 	if arg_16_0._work then
 		arg_16_0._work:unregisterDoneListener(arg_16_0._onEntityBornDone, arg_16_0)

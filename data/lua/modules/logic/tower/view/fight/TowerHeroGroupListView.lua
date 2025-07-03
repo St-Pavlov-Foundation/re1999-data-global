@@ -18,24 +18,58 @@ function var_0_0.checkReplaceHeroList(arg_3_0)
 		local var_3_1 = var_3_0.heros or {}
 		local var_3_2 = var_3_0.equipUids or {}
 		local var_3_3 = var_3_0.assistBoss
-		local var_3_4 = {}
+		local var_3_4 = var_3_0.trialHeros or {}
+		local var_3_5 = {}
 
 		for iter_3_0 = 1, #var_3_1 do
-			local var_3_5 = HeroModel.instance:getByHeroId(var_3_1[iter_3_0] or 0)
+			local var_3_6 = HeroModel.instance:getByHeroId(var_3_1[iter_3_0] or 0)
 
-			if var_3_5 then
-				table.insert(var_3_4, {
-					heroUid = var_3_5.uid,
-					equipUid = var_3_2[iter_3_0]
-				})
+			if var_3_6 then
+				local var_3_7 = var_3_4[iter_3_0]
+
+				if var_3_7 and var_3_7 > 0 then
+					local var_3_8 = lua_hero_trial.configDict[var_3_7][0]
+					local var_3_9 = tostring(tonumber(var_3_8.id .. "." .. var_3_8.trialTemplate) - 1099511627776)
+
+					table.insert(var_3_5, {
+						heroUid = var_3_9,
+						equipUid = {
+							tostring(var_3_8.equipId)
+						}
+					})
+				else
+					table.insert(var_3_5, {
+						heroUid = var_3_6.uid,
+						equipUid = var_3_2[iter_3_0]
+					})
+				end
+			else
+				for iter_3_1, iter_3_2 in ipairs(var_3_4) do
+					if iter_3_2 > 0 then
+						local var_3_10 = lua_hero_trial.configDict[iter_3_2][0]
+
+						if var_3_10 and var_3_10.heroId == var_3_1[iter_3_0] then
+							local var_3_11 = tostring(tonumber(var_3_10.id .. "." .. var_3_10.trialTemplate) - 1099511627776)
+
+							table.insert(var_3_5, {
+								heroUid = var_3_11,
+								equipUid = {
+									tostring(var_3_10.equipId)
+								}
+							})
+
+							break
+						end
+					end
+				end
 			end
 		end
 
-		local var_3_6 = HeroGroupModel.instance:getCurGroupMO()
+		local var_3_12 = HeroGroupModel.instance:getCurGroupMO()
 
-		var_3_6:replaceTowerHeroList(var_3_4)
-		var_3_6:setAssistBossId(var_3_3)
-		HeroSingleGroupModel.instance:setSingleGroup(var_3_6)
+		var_3_12:replaceTowerHeroList(var_3_5)
+		var_3_12:setAssistBossId(var_3_3)
+		HeroSingleGroupModel.instance:setSingleGroup(var_3_12, #var_3_5 > 0)
 	end
 end
 

@@ -7,6 +7,8 @@ function var_0_0.ctor(arg_1_0)
 end
 
 function var_0_0.onBuffStart(arg_2_0, arg_2_1, arg_2_2)
+	arg_2_0:clearEffectAndEntity()
+
 	arg_2_0.entity = arg_2_1
 	arg_2_0.entityMo = arg_2_1:getMO()
 	arg_2_0.side = arg_2_0.entityMo.side
@@ -30,7 +32,10 @@ function var_0_0.onBuffStart(arg_2_0, arg_2_1, arg_2_2)
 	arg_2_0.loaded = false
 
 	arg_2_0:startLoadRes()
-	FightDataHelper.LYDataMgr:setLYCardAreaBuff(arg_2_2)
+
+	if arg_2_0.side == FightEnum.EntitySide.MySide then
+		FightDataHelper.LYDataMgr:setLYCardAreaBuff(arg_2_2)
+	end
 end
 
 function var_0_0.startLoadRes(arg_3_0)
@@ -238,7 +243,10 @@ function var_0_0.clear(arg_22_0)
 		arg_22_0:clearEffectAndEntity()
 	end
 
-	FightDataHelper.LYDataMgr:setLYCardAreaBuff(nil)
+	if arg_22_0.side == FightEnum.EntitySide.MySide then
+		FightDataHelper.LYDataMgr:setLYCardAreaBuff(nil)
+	end
+
 	FightController.instance:unregisterCallback(FightEvent.TimelineLYSpecialSpinePlayAniName, arg_22_0.playAnim, arg_22_0)
 	FightController.instance:unregisterCallback(FightEvent.BeforePlayUniqueSkill, arg_22_0.onBeforePlayUniqueSkill, arg_22_0)
 	FightController.instance:unregisterCallback(FightEvent.AfterPlayUniqueSkill, arg_22_0.onAfterPlayUniqueSkill, arg_22_0)

@@ -536,41 +536,46 @@ function var_0_0.getCombineSkillId(arg_43_0, arg_43_1, arg_43_2)
 	end
 
 	local var_43_2 = var_0_0.instance:getSkillNextLvId(var_43_0, var_43_1)
+	local var_43_3 = true
 
-	if not FightEnum.UniversalCard[arg_43_0.skillId] and not FightEnum.UniversalCard[arg_43_1.skillId] then
-		local var_43_3 = FightEnum.BuffFeature.ChangeComposeCardSkill
-		local var_43_4 = {}
+	if FightCardDataHelper.isSkill3(arg_43_0) or FightCardDataHelper.isSkill3(arg_43_1) then
+		var_43_3 = false
+	end
 
-		tabletool.addValues(var_43_4, FightDataHelper.entityMgr:getMyPlayerList())
-		tabletool.addValues(var_43_4, FightDataHelper.entityMgr:getMyNormalList())
-		tabletool.addValues(var_43_4, FightDataHelper.entityMgr:getMySpList())
+	if var_43_3 and not FightEnum.UniversalCard[arg_43_0.skillId] and not FightEnum.UniversalCard[arg_43_1.skillId] then
+		local var_43_4 = FightEnum.BuffFeature.ChangeComposeCardSkill
+		local var_43_5 = {}
 
-		local var_43_5 = 0
+		tabletool.addValues(var_43_5, FightDataHelper.entityMgr:getMyPlayerList())
+		tabletool.addValues(var_43_5, FightDataHelper.entityMgr:getMyNormalList())
+		tabletool.addValues(var_43_5, FightDataHelper.entityMgr:getMySpList())
 
-		for iter_43_0, iter_43_1 in ipairs(var_43_4) do
-			local var_43_6 = iter_43_1.buffDic
+		local var_43_6 = 0
 
-			for iter_43_2, iter_43_3 in pairs(var_43_6) do
-				local var_43_7 = FightConfig.instance:hasBuffFeature(iter_43_3.buffId, var_43_3)
+		for iter_43_0, iter_43_1 in ipairs(var_43_5) do
+			local var_43_7 = iter_43_1.buffDic
 
-				if var_43_7 then
-					local var_43_8 = string.splitToNumber(var_43_7.featureStr, "#")
+			for iter_43_2, iter_43_3 in pairs(var_43_7) do
+				local var_43_8 = FightConfig.instance:hasBuffFeature(iter_43_3.buffId, var_43_4)
 
-					if var_43_8[2] then
-						var_43_5 = var_43_5 + var_43_8[2]
+				if var_43_8 then
+					local var_43_9 = string.splitToNumber(var_43_8.featureStr, "#")
+
+					if var_43_9[2] then
+						var_43_6 = var_43_6 + var_43_9[2]
 					end
 				end
 			end
 		end
 
-		if var_43_5 == 0 then
+		if var_43_6 == 0 then
 			return var_43_2
-		elseif var_43_5 > 0 then
-			for iter_43_4 = 1, var_43_5 do
+		elseif var_43_6 > 0 then
+			for iter_43_4 = 1, var_43_6 do
 				var_43_2 = var_0_0.instance:getSkillNextLvId(var_43_0, var_43_2) or var_43_2
 			end
 		else
-			for iter_43_5 = 1, math.abs(var_43_5) do
+			for iter_43_5 = 1, math.abs(var_43_6) do
 				var_43_2 = var_0_0.instance:getSkillPrevLvId(var_43_0, var_43_2) or var_43_2
 			end
 		end
@@ -690,13 +695,24 @@ function var_0_0.playPlayerFinisherSkill(arg_51_0, arg_51_1, arg_51_2)
 	return var_51_0
 end
 
-function var_0_0.simulateDissolveCard(arg_52_0, arg_52_1)
+function var_0_0.playBloodPoolCardOp(arg_52_0, arg_52_1, arg_52_2)
 	local var_52_0 = FightBeginRoundOp.New()
 
-	var_52_0:simulateDissolveCard(arg_52_1)
+	arg_52_2 = arg_52_2 or arg_52_0.curSelectEntityId
+
+	var_52_0:playBloodPoolCard(arg_52_1, arg_52_2)
 	table.insert(arg_52_0._cardOps, var_52_0)
 
 	return var_52_0
+end
+
+function var_0_0.simulateDissolveCard(arg_53_0, arg_53_1)
+	local var_53_0 = FightBeginRoundOp.New()
+
+	var_53_0:simulateDissolveCard(arg_53_1)
+	table.insert(arg_53_0._cardOps, var_53_0)
+
+	return var_53_0
 end
 
 local var_0_1 = {
@@ -722,59 +738,55 @@ local var_0_1 = {
 	0.4
 }
 
-function var_0_0.getHandCardContainerScale(arg_53_0, arg_53_1, arg_53_2)
-	local var_53_0 = #(arg_53_2 or arg_53_0:getHandCards())
-	local var_53_1 = var_0_1[var_53_0] or 1
+function var_0_0.getHandCardContainerScale(arg_54_0, arg_54_1, arg_54_2)
+	local var_54_0 = #(arg_54_2 or arg_54_0:getHandCards())
+	local var_54_1 = var_0_1[var_54_0] or 1
 
-	if var_53_0 > 20 then
-		var_53_1 = 0.4
+	if var_54_0 > 20 then
+		var_54_1 = 0.4
 	end
 
-	if arg_53_1 and var_53_0 >= 8 then
-		var_53_1 = var_53_1 * 0.9
+	if arg_54_1 and var_54_0 >= 8 then
+		var_54_1 = var_54_1 * 0.9
 	end
 
-	return var_53_1
+	return var_54_1
 end
 
-function var_0_0.getSkillLv(arg_54_0, arg_54_1, arg_54_2)
-	local var_54_0 = FightDataHelper.entityMgr:getById(arg_54_1)
-
-	if var_54_0 then
-		return var_54_0:getSkillLv(arg_54_2)
-	end
-
-	return FightConfig.instance:getSkillLv(arg_54_2)
-end
-
-function var_0_0.getSkillNextLvId(arg_55_0, arg_55_1, arg_55_2)
+function var_0_0.getSkillLv(arg_55_0, arg_55_1, arg_55_2)
 	local var_55_0 = FightDataHelper.entityMgr:getById(arg_55_1)
 
 	if var_55_0 then
-		return var_55_0:getSkillNextLvId(arg_55_2)
+		return var_55_0:getSkillLv(arg_55_2)
 	end
 
-	return FightConfig.instance:getSkillNextLvId(arg_55_2)
+	return FightConfig.instance:getSkillLv(arg_55_2)
 end
 
-function var_0_0.getSkillPrevLvId(arg_56_0, arg_56_1, arg_56_2)
-	local var_56_0 = FightDataHelper.entityMgr:getById(arg_56_1)
+function var_0_0.getSkillNextLvId(arg_56_0, arg_56_1, arg_56_2)
+	local var_56_0 = lua_skill_next.configDict[arg_56_2]
 
-	if var_56_0 then
-		return var_56_0:getSkillPrevLvId(arg_56_2)
+	if var_56_0 and var_56_0.nextId ~= 0 then
+		return var_56_0.nextId
 	end
 
-	return FightConfig.instance:getSkillPrevLvId(arg_56_2)
+	local var_56_1 = FightDataHelper.entityMgr:getById(arg_56_1)
+
+	if var_56_1 then
+		return var_56_1:getSkillNextLvId(arg_56_2)
+	end
+
+	return FightConfig.instance:getSkillNextLvId(arg_56_2)
 end
 
-function var_0_0.isUniqueSkill(arg_57_0, arg_57_1, arg_57_2)
+function var_0_0.getSkillPrevLvId(arg_57_0, arg_57_1, arg_57_2)
 	local var_57_0 = FightDataHelper.entityMgr:getById(arg_57_1)
 
 	if var_57_0 then
-		return var_57_0:isUniqueSkill(arg_57_2)
+		return var_57_0:getSkillPrevLvId(arg_57_2)
 	end
 
-	return FightConfig.instance:isUniqueSkill(arg_57_2)
+	return FightConfig.instance:getSkillPrevLvId(arg_57_2)
 end
 
 function var_0_0.isActiveSkill(arg_58_0, arg_58_1, arg_58_2)

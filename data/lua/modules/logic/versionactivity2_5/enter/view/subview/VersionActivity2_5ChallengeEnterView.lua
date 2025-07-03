@@ -35,9 +35,7 @@ function var_0_0._btnEnterOnClick(arg_4_0)
 	local var_4_0, var_4_1, var_4_2 = ActivityHelper.getActivityStatusAndToast(arg_4_0.actId)
 
 	if var_4_0 ~= ActivityEnum.ActivityStatus.Normal then
-		if var_4_0 == ActivityEnum.ActivityStatus.NotUnlock and var_4_1 then
-			GameFacade.showToastWithTableParam(var_4_1, var_4_2)
-		end
+		GameFacade.showToastWithTableParam(var_4_1, var_4_2)
 
 		return
 	end
@@ -49,9 +47,7 @@ function var_0_0._btnRewardOnClick(arg_5_0)
 	local var_5_0, var_5_1, var_5_2 = ActivityHelper.getActivityStatusAndToast(arg_5_0.actId)
 
 	if var_5_0 ~= ActivityEnum.ActivityStatus.Normal then
-		if var_5_0 == ActivityEnum.ActivityStatus.NotUnlock and var_5_1 then
-			GameFacade.showToastWithTableParam(var_5_1, var_5_2)
-		end
+		GameFacade.showToastWithTableParam(var_5_1, var_5_2)
 
 		return
 	end

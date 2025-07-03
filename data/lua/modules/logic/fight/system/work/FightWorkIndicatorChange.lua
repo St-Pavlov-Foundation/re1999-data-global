@@ -8,10 +8,10 @@ var_0_0.ConfigEffect = {
 }
 
 function var_0_0.onStart(arg_1_0)
-	local var_1_0 = tonumber(arg_1_0._actEffectMO.targetId)
+	local var_1_0 = tonumber(arg_1_0.actEffectData.targetId)
 
 	FightModel.instance:setWaitIndicatorAnimation(false)
-	arg_1_0:com_sendFightEvent(FightEvent.OnIndicatorChange, var_1_0)
+	arg_1_0:com_sendFightEvent(FightEvent.OnIndicatorChange, var_1_0, arg_1_0.actEffectData.effectNum)
 
 	if FightModel.instance:isWaitIndicatorAnimation() then
 		arg_1_0:com_registTimer(arg_1_0._delayDone, 3)

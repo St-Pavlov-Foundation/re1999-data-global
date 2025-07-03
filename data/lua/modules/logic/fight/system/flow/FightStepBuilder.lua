@@ -58,6 +58,7 @@ var_0_0.ActEffectWorkCls = {
 	[FightEnum.EffectType.MAGICCIRCLEADD] = FightWorkMagicCircleAdd,
 	[FightEnum.EffectType.MAGICCIRCLEDELETE] = FightWorkMagicCircleDelete,
 	[FightEnum.EffectType.MAGICCIRCLEUPDATE] = FightWorkMagicCircleUpdate,
+	[FightEnum.EffectType.MAGICCIRCLEUPGRADE] = FightWorkMagicCircleUpgrade340,
 	[FightEnum.EffectType.CHANGETOTEMPCARD] = FightWorkChangeToTempCard,
 	[FightEnum.EffectType.MASTERPOWERCHANGE] = FightWorkMasterPowerChange,
 	[FightEnum.EffectType.ADDHANDCARD] = FightWorkAddHandCard,
@@ -142,6 +143,13 @@ var_0_0.ActEffectWorkCls = {
 	[FightEnum.EffectType.FIGHTTASKUPDATE] = FightWorkFightTaskUpdate323,
 	[FightEnum.EffectType.REMOVEMONSTERSUB] = FightWorkRemoveMonsterSub325,
 	[FightEnum.EffectType.ADDCARDRECORDBYROUND] = FightWorkAddRecordCard,
+	[FightEnum.EffectType.FIGHTPARAMCHANGE] = FightWorkFightParamChange330,
+	[FightEnum.EffectType.BLOODPOOLMAXCREATE] = FightWorkCreateBloodPool333,
+	[FightEnum.EffectType.BLOODPOOLMAXCHANGE] = FightWorkBloodPoolMaxChange334,
+	[FightEnum.EffectType.BLOODPOOLVALUECHANGE] = FightWorkBloodPoolValueChange335,
+	[FightEnum.EffectType.COLDSATURDAYHURT] = FightWorkColdSaturdayHurt336,
+	[FightEnum.EffectType.NEWCHANGEWAVE] = FightWorkNewChangeWave337,
+	[FightEnum.EffectType.CLIENTEFFECT] = FightWorkClientEffect339,
 	[FightEnum.EffectType.CURE] = FightBuffTriggerEffect,
 	[FightEnum.EffectType.DOT] = FightBuffTriggerEffect,
 	[FightEnum.EffectType.REBOUND] = FightBuffTriggerEffect,
@@ -158,6 +166,7 @@ var_0_0.ActEffectWorkCls = {
 	[FightEnum.EffectType.EMITTERREMOVE] = FightWorkEmitterRemove,
 	[FightEnum.EffectType.TEAMENERGYCHANGE] = FightWorkTeamEnergyChange,
 	[FightEnum.EffectType.ALLOCATECARDENERGY] = FightWorkAllocateCardEnergy,
+	[FightEnum.EffectType.CHANGECARDENERGY] = FightWorkChangeCardEnergy,
 	[FightEnum.EffectType.REDORBLUECOUNTCHANGE] = FightWorkRedOrBlueCountChange,
 	[FightEnum.EffectType.REDORBLUECOUNTEXSKILL] = FightWorkRedOrBlueCountExSkill,
 	[FightEnum.EffectType.TOCARDAREAREDORBLUE] = FightWorkToCardAreaRedOrBlue,
@@ -192,7 +201,8 @@ var_0_0.EffectType2FlowOrWork = {
 	[FightEnum.EffectType.GUARDBREAK] = FightWorkEffectGuardBreakContainer,
 	[FightEnum.EffectType.ZXQREMOVECARD] = FightWorkZXQRemoveCardContainer,
 	[FightEnum.EffectType.DEADLYPOISONORIGINDAMAGE] = FightWorkDeadlyPoisonContainer,
-	[FightEnum.EffectType.DEADLYPOISONORIGINCRIT] = FightWorkDeadlyPoisonCritContainer
+	[FightEnum.EffectType.DEADLYPOISONORIGINCRIT] = FightWorkDeadlyPoisonCritContainer,
+	[FightEnum.EffectType.COLDSATURDAYHURT] = FightWorkColdSaturdayHurt336Container
 }
 
 setmetatable(var_0_0.EffectType2FlowOrWork, {
@@ -224,8 +234,14 @@ function var_0_0.buildStepWorkList(arg_1_0)
 		elseif iter_1_1.actType == FightEnum.ActType.EFFECT then
 			tabletool.addValues(var_1_1, var_0_0._buildEffectWorks(iter_1_1, nil))
 
-			for iter_1_2, iter_1_3 in ipairs(iter_1_1.actEffectMOs) do
-				if iter_1_3.effectType == FightEnum.EffectType.DEALCARD1 or iter_1_3.effectType == FightEnum.EffectType.DEALCARD2 or iter_1_3.effectType == FightEnum.EffectType.ROUNDEND then
+			for iter_1_2, iter_1_3 in ipairs(iter_1_1.actEffect) do
+				if iter_1_3.effectType == FightEnum.EffectType.DEALCARD1 or iter_1_3.effectType == FightEnum.EffectType.DEALCARD2 or iter_1_3.effectType == FightEnum.EffectType.ROUNDEND or iter_1_3.effectType == FightEnum.EffectType.NEWCHANGEWAVE then
+					if iter_1_3.effectType == FightEnum.EffectType.NEWCHANGEWAVE then
+						FightDataHelper.tempMgr.hasNextWave = true
+
+						FightController.instance:dispatchEvent(FightEvent.HaveNextWave)
+					end
+
 					var_1_0 = nil
 
 					break
@@ -251,7 +267,7 @@ function var_0_0.buildStepWorkList(arg_1_0)
 			local var_1_5 = tabletool.copy(var_1_2)
 
 			table.insert(var_1_1, FightWorkWaitForSkillsDone.New(var_1_5))
-			table.insert(var_1_1, FightWorkStepChangeWave.New(iter_1_1))
+			table.insert(var_1_1, FightWorkStepChangeWave.New())
 			table.insert(var_1_1, FightWorkAppearTimeline.New())
 			table.insert(var_1_1, FightWorkStartBornEnemy.New())
 			table.insert(var_1_1, FightWorkFocusMonster.New())
@@ -326,7 +342,7 @@ var_0_0.lastEffect = nil
 function var_0_0._buildEffectWorks(arg_8_0)
 	var_0_0.lastEffect = nil
 
-	local var_8_0 = FightWorkFlowSequence.New(arg_8_0)
+	local var_8_0 = FightWorkFlowSequence.New()
 
 	var_0_0.addEffectWork(var_8_0, arg_8_0)
 
@@ -342,7 +358,7 @@ function var_0_0._buildEffectWorks(arg_8_0)
 end
 
 function var_0_0.addEffectWork(arg_9_0, arg_9_1)
-	for iter_9_0, iter_9_1 in ipairs(arg_9_1.actEffectMOs) do
+	for iter_9_0, iter_9_1 in ipairs(arg_9_1.actEffect) do
 		local var_9_0 = iter_9_1.effectType
 		local var_9_1 = false
 
@@ -357,7 +373,7 @@ function var_0_0.addEffectWork(arg_9_0, arg_9_1)
 				local var_9_3 = arg_9_0:registWork(var_9_2, arg_9_1, iter_9_1)
 
 				if var_0_0.lastEffect then
-					var_0_0.lastEffect.NEXTEFFECT = iter_9_1
+					var_0_0.lastEffect.nextActEffectData = iter_9_1
 				end
 
 				var_0_0.lastEffect = iter_9_1
@@ -365,10 +381,10 @@ function var_0_0.addEffectWork(arg_9_0, arg_9_1)
 				if var_9_0 == FightEnum.EffectType.FIGHTSTEP then
 					local var_9_4 = FightWorkFlowSequence.New()
 
-					var_0_0.addEffectWork(var_9_4, iter_9_1.cus_stepMO)
+					var_0_0.addEffectWork(var_9_4, iter_9_1.fightStep)
 					var_9_3:setFlow(var_9_4)
 
-					iter_9_1.FIGHTSTEPNEXTEFFECT = arg_9_1.actEffectMOs[iter_9_0 + 1]
+					iter_9_1.fightStepNextActEffectData = arg_9_1.actEffect[iter_9_0 + 1]
 				end
 			end
 		end

@@ -13,12 +13,12 @@ function var_0_0.onStart(arg_2_0, arg_2_1)
 
 	arg_2_0._dt = var_0_2 / FightModel.instance:getUISpeed()
 
-	local var_2_0 = FightCardModel.instance:getCardOps()
+	local var_2_0 = FightDataHelper.operationDataMgr:getOpList()
 
 	arg_2_0._playCardCount = 0
 
 	for iter_2_0, iter_2_1 in ipairs(var_2_0) do
-		if iter_2_1:isPlayCard() or iter_2_1:isAssistBossPlayCard() or iter_2_1:isPlayerFinisherSkill() then
+		if FightCardDataHelper.checkOpAsPlayCardHandle(iter_2_1) then
 			arg_2_0._playCardCount = arg_2_0._playCardCount + 1
 		end
 	end
@@ -123,7 +123,7 @@ function var_0_0._playCardFlow(arg_5_0)
 	arg_5_0._cloneItemGOs = {}
 
 	local var_5_4 = {}
-	local var_5_5 = FightCardModel.instance:getCardOps()
+	local var_5_5 = FightDataHelper.operationDataMgr:getOpList()
 	local var_5_6 = ViewMgr.instance:getContainer(ViewName.FightView)
 
 	if var_5_6 then
@@ -131,7 +131,7 @@ function var_0_0._playCardFlow(arg_5_0)
 
 		if var_5_7 then
 			for iter_5_0, iter_5_1 in ipairs(var_5_5) do
-				if iter_5_1:isPlayCard() or iter_5_1:isAssistBossPlayCard() or iter_5_1:isPlayerFinisherSkill() then
+				if FightCardDataHelper.checkOpAsPlayCardHandle(iter_5_1) then
 					local var_5_8 = var_5_7:getShowIndex(iter_5_1)
 
 					if var_5_8 then

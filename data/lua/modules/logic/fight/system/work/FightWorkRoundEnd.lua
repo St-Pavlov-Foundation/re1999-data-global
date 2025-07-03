@@ -4,7 +4,6 @@ local var_0_0 = class("FightWorkRoundEnd", BaseWork)
 
 function var_0_0.onStart(arg_1_0, arg_1_1)
 	FightPlayCardModel.instance:onEndRound()
-	FightCardModel.instance:onEndRound()
 
 	local var_1_0 = FightHelper.getAllEntitys()
 
@@ -34,7 +33,7 @@ function var_0_0._playCardExpand(arg_4_0)
 
 	if not FightModel.instance:isFinish() and not gohelper.isNil(var_4_0) then
 		local var_4_1 = FightWorkEffectDistributeCard.getHandCardScaleTime()
-		local var_4_2 = FightCardModel.instance:getHandCardContainerScale()
+		local var_4_2 = FightCardDataHelper.getHandCardContainerScale()
 
 		arg_4_0._tweenId = ZProj.TweenHelper.DOScale(var_4_0.transform, var_4_2, var_4_2, var_4_2, var_4_1, arg_4_0._onHandCardsExpand, arg_4_0)
 	else

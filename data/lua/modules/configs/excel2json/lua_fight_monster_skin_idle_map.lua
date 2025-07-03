@@ -2,9 +2,11 @@
 
 local var_0_0 = {}
 local var_0_1 = {
+	freezeAnimName = 4,
 	idleAnimName = 2,
-	hitAnimName = 3,
-	skinId = 1
+	skinId = 1,
+	sleepAnimName = 5,
+	hitAnimName = 3
 }
 local var_0_2 = {
 	"skinId"

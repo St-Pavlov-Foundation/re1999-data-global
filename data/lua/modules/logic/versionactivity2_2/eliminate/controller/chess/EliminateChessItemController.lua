@@ -105,7 +105,17 @@ function var_0_0.getMaxLineAndRow(arg_8_0)
 end
 
 function var_0_0.getChessItem(arg_9_0, arg_9_1, arg_9_2)
-	return arg_9_0._chess[arg_9_1][arg_9_2]
+	local var_9_0
+
+	if arg_9_0._chess[arg_9_1] ~= nil then
+		var_9_0 = arg_9_0._chess[arg_9_1][arg_9_2]
+	end
+
+	if var_9_0 == nil then
+		logNormal("EliminateChessItemController:getChessItem chess is nil x = " .. arg_9_1 .. " y = " .. arg_9_2)
+	end
+
+	return var_9_0
 end
 
 function var_0_0.getChess(arg_10_0)
@@ -114,7 +124,10 @@ end
 
 function var_0_0.updateChessItem(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
 	arg_11_0._chess[arg_11_1][arg_11_2] = arg_11_3
-	arg_11_3._go.name = string.format("chess_%d_%d", arg_11_1, arg_11_2)
+
+	if arg_11_3 ~= nil then
+		arg_11_3._go.name = string.format("chess_%d_%d", arg_11_1, arg_11_2)
+	end
 end
 
 function var_0_0.getChessBoardItem(arg_12_0, arg_12_1, arg_12_2)

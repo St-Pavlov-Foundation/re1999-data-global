@@ -12,5 +12,12 @@
     "path": "v2a4_bkle/bkle_xiezou_01|v2a4_bkle/bkle_xiezou_02|v2a4_bkle/bkle_xiezou_03|v2a4_bkle/bkle_xiezou_04",
     "hangPoint": "mountroot",
     "audio": 431080141
+  },
+  {
+    "id": 310803,
+    "buffId": 31080132,
+    "path": "v2a7_bkle/bkle_xiezou_01|v2a7_bkle/bkle_xiezou_02|v2a7_bkle/bkle_xiezou_03|v2a7_bkle/bkle_xiezou_04",
+    "hangPoint": "mountroot",
+    "audio": 431080341
   }
 ]

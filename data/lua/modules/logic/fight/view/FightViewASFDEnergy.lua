@@ -3,11 +3,11 @@
 local var_0_0 = class("FightViewASFDEnergy", BaseView)
 
 function var_0_0.onInitView(arg_1_0)
-	arg_1_0.goASFD = gohelper.findChild(arg_1_0.viewGO, "root/asfd_icon")
-	arg_1_0.txtASFDEnergy = gohelper.findChildText(arg_1_0.viewGO, "root/asfd_icon/#txt_Num")
-	arg_1_0.goClick = gohelper.findChild(arg_1_0.viewGO, "root/asfd_icon/#click")
-	arg_1_0.goFlyContainer = gohelper.findChild(arg_1_0.viewGO, "root/asfd_icon/#go_fly_container")
-	arg_1_0.goFlyItem = gohelper.findChild(arg_1_0.viewGO, "root/asfd_icon/#go_fly_container/#go_fly_item")
+	arg_1_0.goASFD = gohelper.findChild(arg_1_0.viewGO, "root/asfd_container")
+	arg_1_0.txtASFDEnergy = gohelper.findChildText(arg_1_0.viewGO, "root/asfd_container/asfd_icon/#txt_Num")
+	arg_1_0.goClick = gohelper.findChild(arg_1_0.viewGO, "root/asfd_container/asfd_icon/#click")
+	arg_1_0.goFlyContainer = gohelper.findChild(arg_1_0.viewGO, "root/asfd_container/asfd_icon/#go_fly_container")
+	arg_1_0.goFlyItem = gohelper.findChild(arg_1_0.viewGO, "root/asfd_container/asfd_icon/#go_fly_container/#go_fly_item")
 
 	if arg_1_0._editableInitView then
 		arg_1_0:_editableInitView()
@@ -23,6 +23,14 @@ function var_0_0.removeEvents(arg_3_0)
 end
 
 function var_0_0._editableInitView(arg_4_0)
+	local var_4_0 = arg_4_0.viewContainer.rightBottomElementLayoutView:getElementContainer(FightRightBottomElementEnum.Elements.ASFD)
+
+	gohelper.addChild(var_4_0, arg_4_0.goASFD)
+
+	local var_4_1 = arg_4_0.goASFD:GetComponent(gohelper.Type_RectTransform)
+
+	recthelper.setAnchor(var_4_1, 0, 0)
+
 	arg_4_0.animatorPlayer = ZProj.ProjAnimatorPlayer.Get(arg_4_0.goASFD)
 
 	arg_4_0:_hideASFD()
@@ -47,7 +55,7 @@ end
 var_0_0.FlyDuration = 0.3
 
 function var_0_0.startAllocateCardEnergy(arg_5_0)
-	local var_5_0 = FightCardModel.instance:getHandCardData()
+	local var_5_0 = FightDataHelper.handCardMgr.handCard
 
 	tabletool.clear(arg_5_0.tweenIdList)
 
@@ -73,7 +81,7 @@ function var_0_0.startAllocateCardEnergy(arg_5_0)
 
 				recthelper.setAnchor(var_5_6.rectTr, 0, 0)
 
-				local var_5_7 = ZProj.TweenHelper.DOAnchorPos(var_5_6.rectTr, var_5_4, var_5_5, var_0_0.FlyDuration, arg_5_0.onFlyDone, arg_5_0)
+				local var_5_7 = ZProj.TweenHelper.DOAnchorPos(var_5_6.rectTr, var_5_4, var_5_5, var_0_0.FlyDuration / FightModel.instance:getUISpeed(), arg_5_0.onFlyDone, arg_5_0)
 
 				table.insert(arg_5_0.tweenIdList, var_5_7)
 			end
@@ -139,10 +147,12 @@ end
 
 function var_0_0._hideASFD(arg_10_0)
 	gohelper.setActive(arg_10_0.goASFD, false)
+	FightController.instance:dispatchEvent(FightEvent.RightBottomElements_HideElement, FightRightBottomElementEnum.Elements.ASFD)
 end
 
 function var_0_0.showASFD(arg_11_0)
 	gohelper.setActive(arg_11_0.goASFD, true)
+	FightController.instance:dispatchEvent(FightEvent.RightBottomElements_ShowElement, FightRightBottomElementEnum.Elements.ASFD)
 end
 
 function var_0_0.stageChange(arg_12_0)

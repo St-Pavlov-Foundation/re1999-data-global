@@ -10328,5 +10328,295 @@
     "id": 20260149,
     "eventName": "play_ui_gudu_kaishi",
     "bankName": "ui_activity_1_9_gudu"
+  },
+  {
+    "id": 20270001,
+    "eventName": "play_ui_fight_electric_update",
+    "bankName": "fight_ui_sfx2_7"
+  },
+  {
+    "id": 20270002,
+    "eventName": "play_ui_yuzhou_open",
+    "bankName": "ui_activity_2_7_yuzhou"
+  },
+  {
+    "id": 20270003,
+    "eventName": "play_ui_qiutu_revelation_open",
+    "bankName": "ui_activity_1_4_qiutu"
+  },
+  {
+    "id": 20270004,
+    "eventName": "play_ui_fight_xinxue_click",
+    "bankName": "fight_ui_sfx2_7"
+  },
+  {
+    "id": 20270005,
+    "eventName": "play_ui_fight_xinxue_entrance",
+    "bankName": "fight_ui_sfx2_7"
+  },
+  {
+    "id": 20270006,
+    "eventName": "play_ui_fight_xinxue_flushed",
+    "bankName": "fight_ui_sfx2_7"
+  },
+  {
+    "id": 20270007,
+    "eventName": "play_ui_fight_xinxue_appear",
+    "bankName": "fight_ui_sfx2_7"
+  },
+  {
+    "id": 20270008,
+    "eventName": "play_ui_fight_xinxue_disappear",
+    "bankName": "fight_ui_sfx2_7"
+  },
+  {
+    "id": 20270011,
+    "eventName": "play_replay_music_theme_2_7",
+    "bankName": "ui_replay_mainmusic2_7"
+  },
+  {
+    "id": 20270012,
+    "eventName": "play_ui_yuzhou_level_unlock",
+    "bankName": "ui_activity_2_7_yuzhou_kubohuahuan"
+  },
+  {
+    "id": 20270013,
+    "eventName": "play_ui_yuzhou_level_lit",
+    "bankName": "ui_activity_2_7_yuzhou_kubohuahuan"
+  },
+  {
+    "id": 20270014,
+    "eventName": "play_ui_yuzhou_ball_loop",
+    "bankName": "ui_activity_2_7_yuzhou_kubohuahuan"
+  },
+  {
+    "id": 20270015,
+    "eventName": "stop_ui_yuzhou_ball_loop",
+    "bankName": "ui_activity_2_7_yuzhou_kubohuahuan"
+  },
+  {
+    "id": 20270016,
+    "eventName": "play_ui_yuzhou_cube_turn",
+    "bankName": "ui_activity_2_7_yuzhou_kubohuahuan"
+  },
+  {
+    "id": 20270017,
+    "eventName": "play_ui_yuzhou_ball_fall",
+    "bankName": "ui_activity_2_7_yuzhou_kubohuahuan"
+  },
+  {
+    "id": 20270018,
+    "eventName": "play_ui_yuzhou_ball_trap",
+    "bankName": "ui_activity_2_7_yuzhou_kubohuahuan"
+  },
+  {
+    "id": 20270019,
+    "eventName": "play_ui_yuzhou_level_next",
+    "bankName": "ui_activity_2_7_yuzhou_kubohuahuan"
+  },
+  {
+    "id": 20270020,
+    "eventName": "play_ui_yuzhou_ball_reset",
+    "bankName": "ui_activity_2_7_yuzhou_kubohuahuan"
+  },
+  {
+    "id": 20270021,
+    "eventName": "play_ui_yuzhou_trap_choose",
+    "bankName": "ui_activity_2_7_yuzhou_kubohuahuan"
+  },
+  {
+    "id": 20270022,
+    "eventName": "play_ui_yuzhou_trap_dispel",
+    "bankName": "ui_activity_2_7_yuzhou_kubohuahuan"
+  },
+  {
+    "id": 20270023,
+    "eventName": "play_ui_pkls_star_light",
+    "bankName": "ui_activity"
+  },
+  {
+    "id": 20270024,
+    "eventName": "play_ui_pkls_challenge_fail",
+    "bankName": "ui_activity"
+  },
+  {
+    "id": 20270025,
+    "eventName": "play_ui_pkls_endpoint_arrival",
+    "bankName": "ui_activity"
+  },
+  {
+    "id": 20270026,
+    "eventName": "play_ui_yuzhou_ball_spikes",
+    "bankName": "ui_activity_2_7_yuzhou_kubohuahuan"
+  },
+  {
+    "id": 20270027,
+    "eventName": "play_ui_yuzhou_ball_star",
+    "bankName": "ui_activity_2_7_yuzhou_kubohuahuan"
+  },
+  {
+    "id": 20270028,
+    "eventName": "play_ui_yuzhou_ball_fire",
+    "bankName": "ui_activity_2_7_yuzhou_kubohuahuan"
+  },
+  {
+    "id": 20270029,
+    "eventName": "play_ui_yuzhou_ball_fire_loop",
+    "bankName": "ui_activity_2_7_yuzhou_kubohuahuan"
+  },
+  {
+    "id": 20270030,
+    "eventName": "stop_ui_yuzhou_ball_fire_loop",
+    "bankName": "ui_activity_2_7_yuzhou_kubohuahuan"
+  },
+  {
+    "id": 20270031,
+    "eventName": "play_ui_yuzhou_lzl_open",
+    "bankName": "ui_activity_2_7_yuzhou_lengzhouliu"
+  },
+  {
+    "id": 20270032,
+    "eventName": "play_ui_yuzhou_lzl_level_open",
+    "bankName": "ui_activity_2_7_yuzhou_lengzhouliu"
+  },
+  {
+    "id": 20270033,
+    "eventName": "play_ui_yuzhou_lzl_loading",
+    "bankName": "ui_activity_2_7_yuzhou_lengzhouliu"
+  },
+  {
+    "id": 20270034,
+    "eventName": "play_ui_yuzhou_lzl_click",
+    "bankName": "ui_activity_2_7_yuzhou_lengzhouliu"
+  },
+  {
+    "id": 20270035,
+    "eventName": "play_ui_yuzhou_lzl_boom",
+    "bankName": "ui_activity_2_7_yuzhou_lengzhouliu"
+  },
+  {
+    "id": 20270036,
+    "eventName": "play_ui_yuzhou_lzl_result",
+    "bankName": "ui_activity_2_7_yuzhou_lengzhouliu"
+  },
+  {
+    "id": 20270037,
+    "eventName": "play_ui_yuzhou_lzl_refresh",
+    "bankName": "ui_activity_2_7_yuzhou_lengzhouliu"
+  },
+  {
+    "id": 20270038,
+    "eventName": "play_ui_yuzhou_lzl_success",
+    "bankName": "ui_activity_2_7_yuzhou_lengzhouliu"
+  },
+  {
+    "id": 20270039,
+    "eventName": "play_ui_yuzhou_lzl_fail",
+    "bankName": "ui_activity_2_7_yuzhou_lengzhouliu"
+  },
+  {
+    "id": 20270040,
+    "eventName": "play_ui_yuzhou_lzl_explosion",
+    "bankName": "ui_activity_2_7_yuzhou_lengzhouliu"
+  },
+  {
+    "id": 20270041,
+    "eventName": "play_ui_yuzhou_lzl_combustion",
+    "bankName": "ui_activity_2_7_yuzhou_lengzhouliu"
+  },
+  {
+    "id": 20270042,
+    "eventName": "play_ui_yuzhou_dqq_pmgressbar_01",
+    "bankName": "ui_activity_2_7_yuzou_dqq"
+  },
+  {
+    "id": 20270043,
+    "eventName": "play_ui_yuzhou_dqq_pmgressbar_02",
+    "bankName": "ui_activity_2_7_yuzou_dqq"
+  },
+  {
+    "id": 20270044,
+    "eventName": "play_ui_yuzhou_dqq_fire_interface",
+    "bankName": "ui_activity_2_7_yuzou_dqq"
+  },
+  {
+    "id": 20270045,
+    "eventName": "play_ui_yuzhou_dqq_pmgressbar_unfold",
+    "bankName": "ui_activity_2_7_yuzou_dqq"
+  },
+  {
+    "id": 20270046,
+    "eventName": "play_ui_yuzhou_dqq_earn_gold",
+    "bankName": "ui_activity_2_7_yuzou_dqq"
+  },
+  {
+    "id": 20270047,
+    "eventName": "play_ui_yuzhou_dqq_panel_close",
+    "bankName": "ui_activity_2_7_yuzou_dqq"
+  },
+  {
+    "id": 20270048,
+    "eventName": "play_ui_yuzhou_dqq_reward_increase",
+    "bankName": "ui_activity_2_7_yuzou_dqq"
+  },
+  {
+    "id": 20270049,
+    "eventName": "play_ui_yuzhou_dqq_equip_creation",
+    "bankName": "ui_activity_2_7_yuzou_dqq"
+  },
+  {
+    "id": 20270050,
+    "eventName": "play_ui_fate_slots_unlock",
+    "bankName": "ui_fate_slots_unlock"
+  },
+  {
+    "id": 20270051,
+    "eventName": "play_ui_checkpoint_doom_disappear",
+    "bankName": "ui_checkpoint"
+  },
+  {
+    "id": 20270052,
+    "eventName": "play_ui_leimi_theft_open",
+    "bankName": "ui_activity"
+  },
+  {
+    "id": 20270053,
+    "eventName": "play_ui_mln_day_night",
+    "bankName": "ui_activity"
+  },
+  {
+    "id": 20270054,
+    "eventName": "play_ui_mln_page_turn",
+    "bankName": "ui_activity"
+  },
+  {
+    "id": 20270055,
+    "eventName": "play_monster690401_ux_zhizhen",
+    "bankName": "monster690401"
+  },
+  {
+    "id": 20270056,
+    "eventName": "play_monster690401_ux_zhuan",
+    "bankName": "monster690401"
+  },
+  {
+    "id": 20270057,
+    "eventName": "play_monster690401_ux_posui",
+    "bankName": "monster690401"
+  },
+  {
+    "id": 20270058,
+    "eventName": "play_ui_yuzhou_fax_earcap",
+    "bankName": "ui_activity_2_7_yuzhou"
+  },
+  {
+    "id": 20270059,
+    "eventName": "play_ui_yuzhou_fax_beep",
+    "bankName": "ui_activity_2_7_yuzhou"
+  },
+  {
+    "id": 20270060,
+    "eventName": "play_ui_yuzhou_fax_print",
+    "bankName": "ui_activity_2_7_yuzhou"
   }
 ]

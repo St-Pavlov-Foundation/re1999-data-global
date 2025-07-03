@@ -3,8 +3,7 @@
 local var_0_0 = class("FightWorkASFDDone", BaseWork)
 
 function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.stepMo = arg_1_1
-	arg_1_0._fightStepMO = arg_1_1
+	arg_1_0.fightStepData = arg_1_1
 end
 
 function var_0_0.onStart(arg_2_0)
@@ -13,10 +12,10 @@ function var_0_0.onStart(arg_2_0)
 	local var_2_0 = FightHelper.getASFDMgr()
 
 	if var_2_0 then
-		var_2_0:onASFDFlowDone(arg_2_0.stepMo)
+		var_2_0:onASFDFlowDone(arg_2_0.fightStepData)
 	end
 
-	FightController.instance:dispatchEvent(FightEvent.ASFD_OnDone, arg_2_0.stepMo and arg_2_0.stepMo.cardIndex)
+	FightController.instance:dispatchEvent(FightEvent.ASFD_OnDone, arg_2_0.fightStepData and arg_2_0.fightStepData.cardIndex)
 
 	return arg_2_0:onDone(true)
 end

@@ -173,7 +173,7 @@ function var_0_0.initCategoryItemTable(arg_12_0, arg_12_1)
 	var_12_0.btn:AddClickListener(function(arg_13_0)
 		local var_13_0 = arg_13_0.tabId
 
-		if arg_13_0.tabId == StoreEnum.SubRoomOld then
+		if arg_13_0.tabId == StoreEnum.StoreId.OldRoomStore then
 			StoreModel.instance:setNewRedDotKey(arg_13_0.tabId)
 		end
 
@@ -516,7 +516,7 @@ function var_0_0._onRefreshRedDot(arg_25_0)
 		local var_25_0, var_25_1 = StoreModel.instance:isTabFirstRedDotShow(iter_25_1.tabId)
 		local var_25_2 = false
 
-		if iter_25_1.tabId == StoreEnum.SubRoomOld then
+		if iter_25_1.tabId == StoreEnum.StoreId.OldRoomStore then
 			var_25_2 = StoreModel.instance:checkShowNewRedDot(iter_25_1.tabId)
 		end
 

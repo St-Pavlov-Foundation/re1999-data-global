@@ -1,11 +1,9 @@
 ﻿module("modules.logic.fight.view.FightViewBossEnergy", package.seeall)
 
-local var_0_0 = class("FightViewBossEnergy", BaseViewExtended)
+local var_0_0 = class("FightViewBossEnergy", FightBaseView)
 
-function var_0_0.ctor(arg_1_0, arg_1_1)
+function var_0_0.onConstructor(arg_1_0, arg_1_1)
 	arg_1_0._bossEntityMO = arg_1_1
-
-	var_0_0.super.ctor(arg_1_0)
 end
 
 function var_0_0.onInitView(arg_2_0)
@@ -18,11 +16,11 @@ function var_0_0.onInitView(arg_2_0)
 end
 
 function var_0_0.addEvents(arg_3_0)
-	arg_3_0:addEventCb(FightController.instance, FightEvent.PowerChange, arg_3_0._onPowerChange, arg_3_0)
+	arg_3_0:com_registFightEvent(FightEvent.PowerChange, arg_3_0._onPowerChange)
 end
 
 function var_0_0.removeEvents(arg_4_0)
-	arg_4_0:removeEventCb(FightController.instance, FightEvent.PowerChange, arg_4_0._onPowerChange, arg_4_0)
+	return
 end
 
 function var_0_0.onOpen(arg_5_0)

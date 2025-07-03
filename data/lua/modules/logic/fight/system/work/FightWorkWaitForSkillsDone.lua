@@ -30,7 +30,7 @@ function var_0_0._timeOut(arg_4_0)
 	if arg_4_0._skillFlowList then
 		for iter_4_0, iter_4_1 in ipairs(arg_4_0._skillFlowList) do
 			if not iter_4_1:hasDone() then
-				logError("检测回合技能完成超时，技能id = " .. iter_4_1._fightStepMO.actId)
+				logError("检测回合技能完成超时，技能id = " .. iter_4_1.fightStepData.actId)
 			end
 		end
 	end

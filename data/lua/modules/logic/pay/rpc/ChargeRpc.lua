@@ -111,14 +111,14 @@ function var_0_0.onReceiveSandboxChargeReply(arg_11_0, arg_11_1, arg_11_2)
 	PayModel.instance:updateSandboxBalance(arg_11_2.sandboxBalance)
 end
 
-function var_0_0.sendReadChargeNewRequest(arg_12_0, arg_12_1)
+function var_0_0.sendReadChargeNewRequest(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
 	local var_12_0 = ChargeModule_pb.ReadChargeNewRequest()
 
 	for iter_12_0, iter_12_1 in ipairs(arg_12_1) do
 		table.insert(var_12_0.goodsIds, iter_12_1)
 	end
 
-	return arg_12_0:sendMsg(var_12_0)
+	return arg_12_0:sendMsg(var_12_0, arg_12_2, arg_12_3)
 end
 
 function var_0_0.onReceiveReadChargeNewReply(arg_13_0, arg_13_1, arg_13_2)

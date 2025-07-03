@@ -33,6 +33,7 @@ function var_0_0.buildViews(arg_1_0)
 		GMToolView.New(),
 		GMToolView2.New(),
 		GMAddItemView.New(),
+		GMCommandHistoryView.New(),
 		GMCommandView.New(),
 		GMToolFightView.New(),
 		GMAudioTool.New(),
@@ -51,7 +52,8 @@ function var_0_0.buildViews(arg_1_0)
 		GMSubViewRouge.New(),
 		GMSubViewResource.New(),
 		GMSubViewProfiler.New(),
-		GMSubViewRoom.New()
+		GMSubViewRoom.New(),
+		GMSubViewEliminate.New()
 	}
 end
 

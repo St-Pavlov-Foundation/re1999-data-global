@@ -3,7 +3,7 @@
 local var_0_0 = class("FightWorkBeContract", FightEffectBase)
 
 function var_0_0.onStart(arg_1_0)
-	FightModel.instance:setBeContractEntityUid(arg_1_0._actEffectMO.targetId)
+	FightModel.instance:setBeContractEntityUid(arg_1_0.actEffectData.targetId)
 	arg_1_0:onDone(true)
 end
 

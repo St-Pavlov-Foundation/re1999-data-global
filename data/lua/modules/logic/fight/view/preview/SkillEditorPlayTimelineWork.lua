@@ -34,7 +34,7 @@ function var_0_0.onStart(arg_2_0)
 						var_2_5 = var_2_7[1]
 					end
 
-					local var_2_8 = SkillEditorStepBuilder.buildStepMOs(iter_2_3, var_2_4, var_2_5)
+					local var_2_8 = SkillEditorStepBuilder.buildFightStepDataList(iter_2_3, var_2_4, var_2_5)
 
 					for iter_2_4, iter_2_5 in ipairs(var_2_8) do
 						arg_2_0.flow:addWork(FunctionWork.New(function()

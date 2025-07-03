@@ -57,7 +57,7 @@ function var_0_0._onCameraFocusChanged(arg_8_0, arg_8_1)
 	if arg_8_1 then
 		arg_8_0:_hideOutlineEffect()
 	else
-		arg_8_0:_onSelectSkillTarget(FightCardModel.instance.curSelectEntityId)
+		arg_8_0:_onSelectSkillTarget(FightDataHelper.operationDataMgr.curSelectEntityId)
 	end
 end
 
@@ -69,7 +69,7 @@ end
 
 function var_0_0.onCloseView(arg_10_0, arg_10_1)
 	if arg_10_1 == ViewName.FightEnemyActionView then
-		arg_10_0:_onSelectSkillTarget(FightCardModel.instance.curSelectEntityId)
+		arg_10_0:_onSelectSkillTarget(FightDataHelper.operationDataMgr.curSelectEntityId)
 	end
 end
 

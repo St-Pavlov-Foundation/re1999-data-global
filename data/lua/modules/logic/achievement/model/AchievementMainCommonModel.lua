@@ -104,122 +104,126 @@ function var_0_0.getViewExcuteModelInstance(arg_13_0, arg_13_1)
 	end
 end
 
-function var_0_0.getCategoryAchievementConfigList(arg_14_0, arg_14_1)
-	return arg_14_0._infoDict and arg_14_0._infoDict[arg_14_1]
+function var_0_0.getCurViewExcuteModelInstance(arg_14_0)
+	return arg_14_0:getViewExcuteModelInstance(arg_14_0._curViewType)
 end
 
-function var_0_0.getCategoryAchievementUnlockInfo(arg_15_0, arg_15_1)
-	local var_15_0 = 0
-	local var_15_1 = 0
+function var_0_0.getCategoryAchievementConfigList(arg_15_0, arg_15_1)
+	return arg_15_0._infoDict and arg_15_0._infoDict[arg_15_1]
+end
 
-	if not arg_15_0._categoryAchievementCountMap[arg_15_1] then
-		var_15_0, var_15_1 = arg_15_0:buildCategoryAchievementCountMap(arg_15_1)
-		arg_15_0._categoryAchievementCountMap[arg_15_1] = var_15_0
-		arg_15_0._categoryUnlockAchievementCountMap[arg_15_1] = var_15_1
+function var_0_0.getCategoryAchievementUnlockInfo(arg_16_0, arg_16_1)
+	local var_16_0 = 0
+	local var_16_1 = 0
+
+	if not arg_16_0._categoryAchievementCountMap[arg_16_1] then
+		var_16_0, var_16_1 = arg_16_0:buildCategoryAchievementCountMap(arg_16_1)
+		arg_16_0._categoryAchievementCountMap[arg_16_1] = var_16_0
+		arg_16_0._categoryUnlockAchievementCountMap[arg_16_1] = var_16_1
 	else
-		var_15_0 = arg_15_0._categoryAchievementCountMap[arg_15_1] or 0
-		var_15_1 = arg_15_0._categoryUnlockAchievementCountMap[arg_15_1] or 0
+		var_16_0 = arg_16_0._categoryAchievementCountMap[arg_16_1] or 0
+		var_16_1 = arg_16_0._categoryUnlockAchievementCountMap[arg_16_1] or 0
 	end
 
-	return var_15_0, var_15_1
+	return var_16_0, var_16_1
 end
 
-function var_0_0.buildCategoryAchievementCountMap(arg_16_0, arg_16_1)
-	local var_16_0 = arg_16_0:getCategoryAchievementConfigList(arg_16_1)
-	local var_16_1 = 0
-	local var_16_2 = 0
+function var_0_0.buildCategoryAchievementCountMap(arg_17_0, arg_17_1)
+	local var_17_0 = arg_17_0:getCategoryAchievementConfigList(arg_17_1)
+	local var_17_1 = 0
+	local var_17_2 = 0
 
-	if var_16_0 then
-		for iter_16_0, iter_16_1 in pairs(var_16_0) do
-			local var_16_3 = AchievementConfig.instance:getTasksByAchievementId(iter_16_1.id)
-			local var_16_4 = false
+	if var_17_0 then
+		for iter_17_0, iter_17_1 in pairs(var_17_0) do
+			local var_17_3 = AchievementConfig.instance:getTasksByAchievementId(iter_17_1.id)
+			local var_17_4 = false
 
-			if var_16_3 then
-				for iter_16_2, iter_16_3 in ipairs(var_16_3) do
-					var_16_4 = AchievementModel.instance:isAchievementTaskFinished(iter_16_3.id)
+			if var_17_3 then
+				for iter_17_2, iter_17_3 in ipairs(var_17_3) do
+					var_17_4 = AchievementModel.instance:isAchievementTaskFinished(iter_17_3.id)
 
-					if var_16_4 then
+					if var_17_4 then
 						break
 					end
 				end
 			end
 
-			var_16_2 = var_16_2 + 1
-			var_16_1 = var_16_4 and var_16_1 + 1 or var_16_1
+			var_17_2 = var_17_2 + 1
+			var_17_1 = var_17_4 and var_17_1 + 1 or var_17_1
 		end
 	end
 
-	return var_16_2, var_16_1
+	return var_17_2, var_17_1
 end
 
-function var_0_0.getCurrentSortType(arg_17_0)
-	return arg_17_0._curSortType
+function var_0_0.getCurrentSortType(arg_18_0)
+	return arg_18_0._curSortType
 end
 
-function var_0_0.getCurrentScrollType(arg_18_0)
-	return arg_18_0._curViewType
+function var_0_0.getCurrentScrollType(arg_19_0)
+	return arg_19_0._curViewType
 end
 
-function var_0_0.getCurrentFilterType(arg_19_0)
-	return arg_19_0._curFilterType
+function var_0_0.getCurrentFilterType(arg_20_0)
+	return arg_20_0._curFilterType
 end
 
-function var_0_0.getViewAchievementIndex(arg_20_0, arg_20_1, arg_20_2, arg_20_3)
-	local var_20_0 = arg_20_0:getViewExcuteModelInstance(arg_20_1)
-	local var_20_1 = false
-	local var_20_2 = 0
-	local var_20_3 = 0
+function var_0_0.getViewAchievementIndex(arg_21_0, arg_21_1, arg_21_2, arg_21_3)
+	local var_21_0 = arg_21_0:getViewExcuteModelInstance(arg_21_1)
+	local var_21_1 = false
+	local var_21_2 = 0
+	local var_21_3 = 0
 
-	if var_20_0 and var_20_0.getAchievementIndexAndScrollPixel then
-		var_20_1, var_20_2, var_20_3 = var_20_0:getAchievementIndexAndScrollPixel(arg_20_2, arg_20_3)
+	if var_21_0 and var_21_0.getAchievementIndexAndScrollPixel then
+		var_21_1, var_21_2, var_21_3 = var_21_0:getAchievementIndexAndScrollPixel(arg_21_2, arg_21_3)
 	end
 
-	return var_20_1, var_20_2, var_20_3
+	return var_21_1, var_21_2, var_21_3
 end
 
-function var_0_0.getNewestUnlockAchievementId(arg_21_0, arg_21_1, arg_21_2)
-	local var_21_0 = arg_21_0._infoDict[arg_21_1]
-	local var_21_1 = arg_21_0:getViewExcuteModelInstance(arg_21_0._curViewType):getFitCategoryAchievementCfgs(arg_21_1, arg_21_2, var_21_0)
+function var_0_0.getNewestUnlockAchievementId(arg_22_0, arg_22_1, arg_22_2)
+	local var_22_0 = arg_22_0._infoDict[arg_22_1]
+	local var_22_1 = arg_22_0:getViewExcuteModelInstance(arg_22_0._curViewType):getFitCategoryAchievementCfgs(arg_22_1, arg_22_2, var_22_0)
 
-	if var_21_1 then
-		local var_21_2
-		local var_21_3
+	if var_22_1 then
+		local var_22_2
+		local var_22_3
 
-		for iter_21_0, iter_21_1 in ipairs(var_21_1) do
-			local var_21_4 = iter_21_1.id
+		for iter_22_0, iter_22_1 in ipairs(var_22_1) do
+			local var_22_4 = iter_22_1.id
 
-			if not arg_21_0:isAchievementPlayEffect(var_21_4) then
-				local var_21_5 = arg_21_0:getAchievementNewFinishedTask(var_21_4)
+			if not arg_22_0:isAchievementPlayEffect(var_22_4) then
+				local var_22_5 = arg_22_0:getAchievementNewFinishedTask(var_22_4)
 
-				if var_21_5 and (not var_21_3 or var_21_3 < var_21_5) then
-					var_21_3 = var_21_5
-					var_21_2 = var_21_4
+				if var_22_5 and (not var_22_3 or var_22_3 < var_22_5) then
+					var_22_3 = var_22_5
+					var_22_2 = var_22_4
 				end
 			end
 		end
 
-		return var_21_2
+		return var_22_2
 	end
 end
 
-function var_0_0.getAchievementNewFinishedTask(arg_22_0, arg_22_1)
-	local var_22_0 = AchievementModel.instance:getAchievementTaskCoList(arg_22_1)
-	local var_22_1
-	local var_22_2
+function var_0_0.getAchievementNewFinishedTask(arg_23_0, arg_23_1)
+	local var_23_0 = AchievementModel.instance:getAchievementTaskCoList(arg_23_1)
+	local var_23_1
+	local var_23_2
 
-	if var_22_0 then
-		for iter_22_0, iter_22_1 in ipairs(var_22_0) do
-			local var_22_3 = iter_22_1.id
-			local var_22_4 = AchievementModel.instance:getById(var_22_3)
+	if var_23_0 then
+		for iter_23_0, iter_23_1 in ipairs(var_23_0) do
+			local var_23_3 = iter_23_1.id
+			local var_23_4 = AchievementModel.instance:getById(var_23_3)
 
-			if var_22_4 and var_22_4.hasFinished then
-				local var_22_5 = var_22_4 and var_22_4.isNew
-				local var_22_6 = var_22_4 and var_22_4.finishTime
-				local var_22_7 = arg_22_0:isTaskPlayFinishedEffect(var_22_3)
+			if var_23_4 and var_23_4.hasFinished then
+				local var_23_5 = var_23_4 and var_23_4.isNew
+				local var_23_6 = var_23_4 and var_23_4.finishTime
+				local var_23_7 = arg_23_0:isTaskPlayFinishedEffect(var_23_3)
 
-				if var_22_5 and not var_22_7 and (not var_22_1 or var_22_1 < var_22_6) then
-					var_22_1 = var_22_6
-					var_22_2 = var_22_4.id
+				if var_23_5 and not var_23_7 and (not var_23_1 or var_23_1 < var_23_6) then
+					var_23_1 = var_23_6
+					var_23_2 = var_23_4.id
 				end
 			else
 				break
@@ -227,97 +231,97 @@ function var_0_0.getAchievementNewFinishedTask(arg_22_0, arg_22_1)
 		end
 	end
 
-	return var_22_1, var_22_2
+	return var_23_1, var_23_2
 end
 
-function var_0_0.getNewestUpgradeGroupId(arg_23_0, arg_23_1, arg_23_2)
-	if arg_23_1 ~= AchievementEnum.Type.Activity or arg_23_0._curViewType ~= AchievementEnum.ViewType.Tile then
+function var_0_0.getNewestUpgradeGroupId(arg_24_0, arg_24_1, arg_24_2)
+	if arg_24_1 ~= AchievementEnum.Type.Activity or arg_24_0._curViewType ~= AchievementEnum.ViewType.Tile then
 		return
 	end
 
-	local var_23_0 = arg_23_0._infoDict[arg_23_1]
-	local var_23_1 = arg_23_0:getViewExcuteModelInstance(arg_23_0._curViewType):getFitCategoryAchievementCfgs(arg_23_1, arg_23_2, var_23_0)
+	local var_24_0 = arg_24_0._infoDict[arg_24_1]
+	local var_24_1 = arg_24_0:getViewExcuteModelInstance(arg_24_0._curViewType):getFitCategoryAchievementCfgs(arg_24_1, arg_24_2, var_24_0)
 
-	if var_23_1 then
-		local var_23_2
-		local var_23_3
-		local var_23_4 = {}
+	if var_24_1 then
+		local var_24_2
+		local var_24_3
+		local var_24_4 = {}
 
-		for iter_23_0, iter_23_1 in ipairs(var_23_1) do
-			local var_23_5 = iter_23_1 and iter_23_1.groupId
-			local var_23_6 = arg_23_0:isGroupPlayUpgradeEffect(var_23_5)
+		for iter_24_0, iter_24_1 in ipairs(var_24_1) do
+			local var_24_5 = iter_24_1 and iter_24_1.groupId
+			local var_24_6 = arg_24_0:isGroupPlayUpgradeEffect(var_24_5)
 
-			if var_23_5 ~= 0 and not var_23_4[var_23_5] and not var_23_6 then
-				var_23_4[var_23_5] = true
+			if var_24_5 ~= 0 and not var_24_4[var_24_5] and not var_24_6 then
+				var_24_4[var_24_5] = true
 
-				local var_23_7 = AchievementConfig.instance:getGroup(var_23_5)
-				local var_23_8 = var_23_7 and var_23_7.unLockAchievement
-				local var_23_9 = AchievementModel.instance:getById(var_23_8)
+				local var_24_7 = AchievementConfig.instance:getGroup(var_24_5)
+				local var_24_8 = var_24_7 and var_24_7.unLockAchievement
+				local var_24_9 = AchievementModel.instance:getById(var_24_8)
 
-				if var_23_9 then
-					local var_23_10 = var_23_9 and var_23_9.hasFinished
-					local var_23_11 = var_23_9 and var_23_9.isNew
+				if var_24_9 then
+					local var_24_10 = var_24_9 and var_24_9.hasFinished
+					local var_24_11 = var_24_9 and var_24_9.isNew
 
-					if var_23_10 and var_23_11 then
-						local var_23_12 = var_23_9 and var_23_9.finishTime
+					if var_24_10 and var_24_11 then
+						local var_24_12 = var_24_9 and var_24_9.finishTime
 
-						if not var_23_3 or var_23_3 < var_23_12 then
-							var_23_2 = var_23_5
-							var_23_3 = var_23_12
+						if not var_24_3 or var_24_3 < var_24_12 then
+							var_24_2 = var_24_5
+							var_24_3 = var_24_12
 						end
 					end
 				end
 			end
 		end
 
-		return var_23_2
+		return var_24_2
 	end
 end
 
-function var_0_0.isCurrentViewBagEmpty(arg_24_0)
-	local var_24_0 = arg_24_0:getViewExcuteModelInstance(arg_24_0._curViewType)
-	local var_24_1 = false
+function var_0_0.isCurrentViewBagEmpty(arg_25_0)
+	local var_25_0 = arg_25_0:getViewExcuteModelInstance(arg_25_0._curViewType)
+	local var_25_1 = false
 
-	if var_24_0 then
-		var_24_1 = var_24_0:getCount() <= 0
+	if var_25_0 then
+		var_25_1 = var_25_0:getCount() <= 0
 	end
 
-	return var_24_1
+	return var_25_1
 end
 
-function var_0_0.markAchievementPlayEffect(arg_25_0, arg_25_1)
-	arg_25_0._achievementEffectMap = arg_25_0._achievementEffectMap or {}
-	arg_25_0._achievementEffectMap[arg_25_1] = true
+function var_0_0.markAchievementPlayEffect(arg_26_0, arg_26_1)
+	arg_26_0._achievementEffectMap = arg_26_0._achievementEffectMap or {}
+	arg_26_0._achievementEffectMap[arg_26_1] = true
 end
 
-function var_0_0.isAchievementPlayEffect(arg_26_0, arg_26_1)
-	return arg_26_0._achievementEffectMap and arg_26_0._achievementEffectMap[arg_26_1]
+function var_0_0.isAchievementPlayEffect(arg_27_0, arg_27_1)
+	return arg_27_0._achievementEffectMap and arg_27_0._achievementEffectMap[arg_27_1]
 end
 
-function var_0_0.markTaskPlayFinishedEffect(arg_27_0, arg_27_1)
-	arg_27_0._taskEffectMap = arg_27_0._taskEffectMap or {}
-	arg_27_0._taskEffectMap[arg_27_1] = true
+function var_0_0.markTaskPlayFinishedEffect(arg_28_0, arg_28_1)
+	arg_28_0._taskEffectMap = arg_28_0._taskEffectMap or {}
+	arg_28_0._taskEffectMap[arg_28_1] = true
 end
 
-function var_0_0.isTaskPlayFinishedEffect(arg_28_0, arg_28_1)
-	return arg_28_0._taskEffectMap and arg_28_0._taskEffectMap[arg_28_1]
+function var_0_0.isTaskPlayFinishedEffect(arg_29_0, arg_29_1)
+	return arg_29_0._taskEffectMap and arg_29_0._taskEffectMap[arg_29_1]
 end
 
-function var_0_0.markGroupPlayUpgradeEffect(arg_29_0, arg_29_1)
-	arg_29_0._groupUpgradeEffectMap = arg_29_0._groupUpgradeEffectMap or {}
-	arg_29_0._groupUpgradeEffectMap[arg_29_1] = true
+function var_0_0.markGroupPlayUpgradeEffect(arg_30_0, arg_30_1)
+	arg_30_0._groupUpgradeEffectMap = arg_30_0._groupUpgradeEffectMap or {}
+	arg_30_0._groupUpgradeEffectMap[arg_30_1] = true
 end
 
-function var_0_0.isGroupPlayUpgradeEffect(arg_30_0, arg_30_1)
-	return arg_30_0._groupUpgradeEffectMap and arg_30_0._groupUpgradeEffectMap[arg_30_1]
+function var_0_0.isGroupPlayUpgradeEffect(arg_31_0, arg_31_1)
+	return arg_31_0._groupUpgradeEffectMap and arg_31_0._groupUpgradeEffectMap[arg_31_1]
 end
 
-function var_0_0.isCurrentScrollFocusing(arg_31_0)
-	return arg_31_0._isCurrentScrollFocusing
+function var_0_0.isCurrentScrollFocusing(arg_32_0)
+	return arg_32_0._isCurrentScrollFocusing
 end
 
-function var_0_0.markCurrentScrollFocusing(arg_32_0, arg_32_1)
-	arg_32_0._isCurrentScrollFocusing = arg_32_1
+function var_0_0.markCurrentScrollFocusing(arg_33_0, arg_33_1)
+	arg_33_0._isCurrentScrollFocusing = arg_33_1
 end
 
 var_0_0.instance = var_0_0.New()

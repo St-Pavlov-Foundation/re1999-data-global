@@ -19,7 +19,7 @@ function var_0_0.reconnectFight(arg_2_0)
 	if FightModel.instance:isFinish() then
 		FightRpc.instance:sendEndFightRequest(false)
 	else
-		local var_2_0 = FightModel.instance:getCurRoundMO()
+		local var_2_0 = FightDataHelper.roundMgr:getRoundData()
 
 		arg_2_0._reconnectSequence:buildFlow(var_2_0)
 		arg_2_0._reconnectSequence:start(arg_2_0._onStartFinish, arg_2_0)
@@ -30,7 +30,7 @@ function var_0_0.startFight(arg_3_0)
 	FightController.instance:setCurStage(FightEnum.Stage.StartRound)
 	FightController.instance:dispatchEvent(FightEvent.OnStartSequenceStart)
 
-	local var_3_0 = FightModel.instance:getCurRoundMO()
+	local var_3_0 = FightDataHelper.roundMgr:getRoundData()
 
 	arg_3_0._startSequence:buildFlow(var_3_0)
 	arg_3_0._startSequence:start(arg_3_0._onStartFinish, arg_3_0)
@@ -64,9 +64,8 @@ function var_0_0.startRound(arg_8_0)
 	FightController.instance:setCurStage(FightEnum.Stage.Play)
 	FightController.instance:dispatchEvent(FightEvent.OnRoundSequenceStart)
 
-	local var_8_0 = FightModel.instance:getCurRoundMO()
+	local var_8_0 = FightDataHelper.roundMgr:getRoundData()
 
-	var_8_0:onBeginRound()
 	arg_8_0._roundSequence:buildFlow(var_8_0)
 	FightMgr.instance:enterStage(FightStageMgr.StageType.Play, FightStageMgr.PlayType.Normal)
 	arg_8_0._roundSequence:start(arg_8_0._onRoundFinish, arg_8_0)
@@ -77,7 +76,7 @@ function var_0_0.startClothSkillRound(arg_9_0)
 
 	FightController.instance:setCurStage(FightEnum.Stage.ClothSkill)
 
-	local var_9_0 = FightModel.instance:getCurRoundMO()
+	local var_9_0 = FightDataHelper.roundMgr:getRoundData()
 
 	arg_9_0._clothSkillSequence:buildFlow(var_9_0)
 	FightMgr.instance:enterStage(FightStageMgr.StageType.Play, FightStageMgr.PlayType.ClothSkill)
@@ -199,7 +198,6 @@ function var_0_0.dispose(arg_23_0)
 	FightPlayCardModel.instance:onEndRound()
 	FightModel.instance:clear()
 	FightModel.instance:setCurStage(nil)
-	FightCardModel.instance:clear()
 end
 
 function var_0_0.dumpStates(arg_24_0)

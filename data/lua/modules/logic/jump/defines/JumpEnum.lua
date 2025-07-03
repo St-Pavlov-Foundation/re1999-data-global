@@ -46,6 +46,7 @@ var_0_0.JumpView = {
 	DiceHero = 108,
 	StoryHandBook = 173,
 	SummonViewGroup = 24,
+	Challenge = 183,
 	RoomProductLineView = 15,
 	LeiMiTeBeiDungeonView = 101,
 	Act1_3DungeonView = 103,

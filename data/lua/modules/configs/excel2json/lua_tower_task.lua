@@ -2,19 +2,21 @@
 
 local var_0_0 = {}
 local var_0_1 = {
-	jumpId = 12,
-	name = 5,
-	isOnline = 3,
-	bonusMail = 7,
-	listenerType = 9,
-	maxProgress = 11,
+	jumpId = 13,
+	name = 6,
+	openLimit = 9,
+	bonusMail = 8,
+	listenerType = 10,
+	maxProgress = 12,
+	isOnline = 4,
+	desc = 7,
+	listenerParam = 11,
+	minType = 5,
+	isKeyReward = 15,
 	id = 1,
-	desc = 6,
-	listenerParam = 10,
-	minType = 4,
-	openLimit = 8,
 	taskGroupId = 2,
-	bonus = 13
+	activityId = 3,
+	bonus = 14
 }
 local var_0_2 = {
 	"id"

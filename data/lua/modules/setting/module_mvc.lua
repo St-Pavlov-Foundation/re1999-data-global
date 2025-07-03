@@ -1,4 +1,54 @@
 ﻿return {
+	Activity191 = {
+		model = {
+			"Activity191Model"
+		},
+		controller = {
+			"Activity191Controller",
+			"Act191StatController"
+		},
+		rpc = {
+			"Activity191Rpc"
+		},
+		config = {
+			"Activity191Config"
+		}
+	},
+	Activity190 = {
+		model = {
+			"LengZhou6Model",
+			"LengZhou6GameModel",
+			"LengZhou6TaskListModel"
+		},
+		controller = {
+			"LengZhou6Controller",
+			"LengZhou6GameController",
+			"LengZhou6EliminateController"
+		},
+		rpc = {
+			"LengZhou6Rpc"
+		},
+		config = {
+			"LengZhou6Config",
+			"LengZhou6EliminateConfig"
+		}
+	},
+	CooperGarland = {
+		model = {
+			"CooperGarlandModel",
+			"CooperGarlandGameModel"
+		},
+		controller = {
+			"CooperGarlandController",
+			"CooperGarlandGameEntityMgr"
+		},
+		rpc = {
+			"Activity192Rpc"
+		},
+		config = {
+			"CooperGarlandConfig"
+		}
+	},
 	WeekwalkVer2 = {
 		model = {
 			"WeekWalk_2Model"
@@ -156,7 +206,8 @@
 	},
 	Live2d = {
 		controller = {
-			"Live2dMaskController"
+			"Live2dMaskController",
+			"Live2dRTShareController"
 		}
 	},
 	Investigate = {
@@ -2560,6 +2611,32 @@
 		},
 		controller = {
 			"VersionActivity2_6DungeonController"
+		}
+	},
+	VersionActivityFixedDungeon = {
+		model = {
+			"VersionActivityFixedDungeonModel",
+			"VersionActivityFixedTaskListModel"
+		},
+		controller = {
+			"VersionActivityFixedDungeonController",
+			"VersionActivity2_7DungeonController"
+		}
+	},
+	V2a7_SelfSelectSix = {
+		model = {
+			"V2a7_SelfSelectSix_PickChoiceListModel"
+		},
+		controller = {
+			"V2a7_SelfSelectSix_PickChoiceController"
+		}
+	},
+	DestinyStoneGiftPickChoice = {
+		model = {
+			"DestinyStoneGiftPickChoiceListModel"
+		},
+		controller = {
+			"DestinyStoneGiftPickChoiceController"
 		}
 	}
 }

@@ -56,13 +56,17 @@ function var_0_0._editableInitView(arg_4_0)
 
 	arg_4_0.nextStepClick:AddClickListener(arg_4_0.onClickNextStep, arg_4_0)
 
-	arg_4_0.leftBlankClick = gohelper.getClickWithDefaultAudio(arg_4_0._goleftblank)
+	if arg_4_0._goleftblank then
+		arg_4_0.leftBlankClick = gohelper.getClickWithDefaultAudio(arg_4_0._goleftblank)
 
-	arg_4_0.leftBlankClick:AddClickListener(arg_4_0._clickBlank, arg_4_0)
+		arg_4_0.leftBlankClick:AddClickListener(arg_4_0._clickBlank, arg_4_0)
+	end
 
-	arg_4_0.rightBlankClick = gohelper.getClickWithDefaultAudio(arg_4_0._gorightblank)
+	if arg_4_0._gorightblank then
+		arg_4_0.rightBlankClick = gohelper.getClickWithDefaultAudio(arg_4_0._gorightblank)
 
-	arg_4_0.rightBlankClick:AddClickListener(arg_4_0._clickBlank, arg_4_0)
+		arg_4_0.rightBlankClick:AddClickListener(arg_4_0._clickBlank, arg_4_0)
+	end
 
 	arg_4_0.drag = SLFramework.UGUI.UIDragListener.Get(arg_4_0.scrollContent.gameObject)
 
@@ -260,8 +264,15 @@ function var_0_0.onDestroyView(arg_24_0)
 	arg_24_0._simagefullbg:UnLoadImage()
 	arg_24_0.nextStepClick:RemoveClickListener()
 	arg_24_0.nextStepClick2:RemoveClickListener()
-	arg_24_0.leftBlankClick:RemoveClickListener()
-	arg_24_0.rightBlankClick:RemoveClickListener()
+
+	if arg_24_0.leftBlankClick then
+		arg_24_0.leftBlankClick:RemoveClickListener()
+	end
+
+	if arg_24_0.rightBlankClick then
+		arg_24_0.rightBlankClick:RemoveClickListener()
+	end
+
 	arg_24_0.scrollContent:RemoveOnValueChanged()
 	arg_24_0.drag:RemoveDragBeginListener()
 	arg_24_0.drag:RemoveDragEndListener()

@@ -89,7 +89,7 @@ function var_0_0.checkGroupUnlocked(arg_9_0, arg_9_1)
 	local var_9_2 = AchievementConfig.instance:getAchievement(arg_9_1.achievementId)
 	local var_9_3 = var_9_2 and var_9_2.groupId
 
-	if var_9_1 and var_9_3 and var_9_3 ~= 0 and not arg_9_0._groupUnlockToastMap[var_9_3] then
+	if var_9_1 and AchievementUtils.isActivityGroup(arg_9_1.achievementId) and not arg_9_0._groupUnlockToastMap[var_9_3] then
 		local var_9_4 = AchievementModel.instance:getGroupFinishTaskList(var_9_3)
 
 		if (var_9_4 and #var_9_4 or 0) <= 1 then
@@ -105,7 +105,7 @@ function var_0_0.checkGroupUpgrade(arg_10_0, arg_10_1)
 	local var_10_0 = AchievementConfig.instance:getAchievement(arg_10_1.achievementId)
 	local var_10_1 = false
 
-	if var_10_0 and var_10_0.groupId ~= 0 then
+	if var_10_0 and AchievementUtils.isActivityGroup(arg_10_1.achievementId) then
 		local var_10_2 = AchievementConfig.instance:getGroup(var_10_0.groupId)
 
 		var_10_1 = var_10_2 and var_10_2.unLockAchievement == arg_10_1.id
@@ -119,7 +119,7 @@ function var_0_0.checkIsGroupFinished(arg_11_0, arg_11_1)
 	local var_11_1 = false
 	local var_11_2 = var_11_0 and var_11_0.groupId
 
-	if var_11_2 and var_11_2 ~= 0 and not arg_11_0._groupFinishedToastMap[var_11_2] then
+	if AchievementUtils.isActivityGroup(arg_11_1.achievementId) and not arg_11_0._groupFinishedToastMap[var_11_2] then
 		var_11_1 = AchievementModel.instance:isGroupFinished(var_11_0.groupId)
 
 		if var_11_1 then

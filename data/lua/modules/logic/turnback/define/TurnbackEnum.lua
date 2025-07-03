@@ -62,11 +62,6 @@ local var_0_0 = {
 		eFun = 2,
 		Global = 1,
 		KO = 3
-	},
-	ChannelType = {
-		eFun = 2,
-		Global = 1,
-		KO = 3
 	}
 }
 

@@ -73,11 +73,11 @@ function var_0_0.onUpdateBaseAttrMO(arg_9_0, arg_9_1, arg_9_2, arg_9_3, arg_9_4)
 
 	arg_9_0.attrId = var_9_4
 
-	if CharacterDestinyEnum.DestinyUpBaseParseOffAttr[var_9_4] then
-		var_9_4 = CharacterDestinyEnum.DestinyUpBaseParseOffAttr[var_9_4]
-	end
+	local var_9_5
 
-	CharacterController.instance:SetAttriIcon(arg_9_0._imageunlockicon, var_9_4)
+	var_9_5 = CharacterDestinyModel.instance:destinyUpBaseReverseParseAttr(var_9_4) or arg_9_2.attrId
+
+	CharacterController.instance:SetAttriIcon(arg_9_0._imageunlockicon, var_9_5)
 	gohelper.setActive(arg_9_0._gounlockarrow, var_9_3 > 0)
 	gohelper.setActive(arg_9_0._txtunlocknext.gameObject, var_9_3 > 0)
 	gohelper.setActive(arg_9_0._gounlock, true)
@@ -85,9 +85,9 @@ function var_0_0.onUpdateBaseAttrMO(arg_9_0, arg_9_1, arg_9_2, arg_9_3, arg_9_4)
 	recthelper.setAnchorY(arg_9_0._gospecialbg.transform, 0)
 
 	if arg_9_3 then
-		local var_9_5 = arg_9_0:_getSpecialBgHeight(arg_9_4)
+		local var_9_6 = arg_9_0:_getSpecialBgHeight(arg_9_4)
 
-		recthelper.setHeight(arg_9_0._gospecialbg.transform, var_9_5)
+		recthelper.setHeight(arg_9_0._gospecialbg.transform, var_9_6)
 	end
 
 	gohelper.setActive(arg_9_0._gospecialbg, arg_9_3)
@@ -121,26 +121,26 @@ function var_0_0.onUpdateLockSpecialAttrMO(arg_11_0, arg_11_1, arg_11_2, arg_11_
 					var_11_1 = var_11_0
 				end
 
-				if CharacterDestinyEnum.DestinyUpBaseParseOffAttr[var_11_6] then
-					var_11_6 = CharacterDestinyEnum.DestinyUpBaseParseOffAttr[var_11_6]
-				end
+				local var_11_7
 
-				CharacterController.instance:SetAttriIcon(var_11_5.iconImage, var_11_6)
+				var_11_7 = CharacterDestinyModel.instance:destinyUpBaseReverseParseAttr(var_11_6) or iter_11_1.attrId
+
+				CharacterController.instance:SetAttriIcon(var_11_5.iconImage, var_11_7)
 			end
 
 			var_11_0 = var_11_0 + 1
 		end
 
 		if var_11_1 > 0 and arg_11_0._gospecialbg.activeSelf then
-			local var_11_7 = arg_11_0:_getSpecialBgHeight(var_11_0 - var_11_1)
+			local var_11_8 = arg_11_0:_getSpecialBgHeight(var_11_0 - var_11_1)
 
-			recthelper.setHeight(arg_11_0._gospecialbg.transform, var_11_7)
+			recthelper.setHeight(arg_11_0._gospecialbg.transform, var_11_8)
 		end
 
-		local var_11_8 = luaLang("character_destinyslot_unlockrank")
-		local var_11_9 = CharacterDestinyEnum.RomanNum[arg_11_2]
+		local var_11_9 = luaLang("character_destinyslot_unlockrank")
+		local var_11_10 = CharacterDestinyEnum.RomanNum[arg_11_2]
 
-		arg_11_0._txtunlocktips.text = GameUtil.getSubPlaceholderLuaLangOneParam(var_11_8, var_11_9)
+		arg_11_0._txtunlocktips.text = GameUtil.getSubPlaceholderLuaLangOneParam(var_11_9, var_11_10)
 	end
 
 	gohelper.setActive(arg_11_0._gounlock, false)

@@ -3,7 +3,7 @@
 local var_0_0 = class("FightWorkDouQuQuGMEnter", FightWorkItem)
 
 function var_0_0.onAwake(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0.fight = arg_1_1
+	arg_1_0.fightData = FightData.New(arg_1_1)
 	arg_1_0.startRound = arg_1_2
 end
 
@@ -13,9 +13,9 @@ function var_0_0.onStart(arg_2_0)
 end
 
 function var_0_0._onClearFinish(arg_3_0)
-	FightMgr.instance:startFight(arg_3_0.fight, arg_3_0.startRound)
-	FightModel.instance:updateFight(arg_3_0.fight)
-	FightModel.instance:refreshBattleId(arg_3_0.fight)
+	FightMgr.instance:startFight(arg_3_0.fightData, arg_3_0.startRound)
+	FightModel.instance:updateFight(arg_3_0.fightData)
+	FightModel.instance:refreshBattleId(arg_3_0.fightData)
 	FightModel.instance:updateFightRound(arg_3_0.startRound)
 	FightDataHelper.stageMgr:enterFightState(FightStageMgr.FightStateType.DouQuQu)
 	arg_3_0:com_registEvent(GameSceneMgr.instance, SceneType.Fight, arg_3_0._onFightSceneStart)

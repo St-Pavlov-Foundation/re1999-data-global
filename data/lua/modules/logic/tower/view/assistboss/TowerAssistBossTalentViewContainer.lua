@@ -7,6 +7,7 @@ function var_0_0.buildViews(arg_1_0)
 
 	table.insert(var_1_0, TowerAssistBossTalentView.New())
 	table.insert(var_1_0, TowerAssistBossTalentTreeView.New())
+	table.insert(var_1_0, TowerAssistBossTalentPlanModifyView.New())
 	table.insert(var_1_0, TabViewGroup.New(1, "#go_lefttop"))
 
 	return var_1_0

@@ -1,8 +1,8 @@
 ﻿module("modules.logic.fight.entity.comp.skill.FightTLEventObjFly", package.seeall)
 
-local var_0_0 = class("FightTLEventObjFly")
+local var_0_0 = class("FightTLEventObjFly", FightTimelineTrackItem)
 
-function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 	arg_1_0.fly_obj = nil
 	arg_1_0.entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
 	arg_1_0.from_entity = arg_1_0.entityMgr:getEntity(arg_1_1.fromId)
@@ -18,7 +18,7 @@ function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 		arg_1_0.fly_obj = arg_1_0.entityMgr:getEntity(arg_1_1.fromId).spine:getSpineGO()
 		arg_1_0._attacker = FightHelper.getEntity(FightEntityScene.MySideId)
 
-		arg_1_0._attacker.skill:_cancelSideRenderOrder()
+		arg_1_0.timelineItem.workTimelineItem:_cancelSideRenderOrder()
 	end
 
 	if not arg_1_0.fly_obj then
@@ -29,7 +29,7 @@ function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 end
 
 function var_0_0.calFly(arg_2_0, arg_2_1, arg_2_2)
-	arg_2_0._fightStepMO = arg_2_1
+	arg_2_0.fightStepData = arg_2_1
 
 	local var_2_0 = 0
 	local var_2_1 = 0
@@ -83,8 +83,8 @@ function var_0_0.calFly(arg_2_0, arg_2_1, arg_2_2)
 
 	local var_2_18 = arg_2_0._duration * FightModel.instance:getSpeed()
 
-	arg_2_0._totalFrame = arg_2_0._binder:GetFrameFloatByTime(var_2_18)
-	arg_2_0._startFrame = arg_2_0._binder.CurFrameFloat + 1
+	arg_2_0._totalFrame = arg_2_0.binder:GetFrameFloatByTime(var_2_18)
+	arg_2_0._startFrame = arg_2_0.binder.CurFrameFloat + 1
 
 	arg_2_0:_startFly(var_2_11, var_2_12, var_2_13, var_2_15, var_2_16, var_2_17)
 end
@@ -172,22 +172,18 @@ function var_0_0._flyEffectTarget(arg_8_0, arg_8_1, arg_8_2, arg_8_3, arg_8_4, a
 	return arg_8_1, arg_8_2, arg_8_3
 end
 
-function var_0_0.reset(arg_9_0)
-	arg_9_0:dispose()
-end
+function var_0_0.onDestructor(arg_9_0)
+	if not gohelper.isNil(arg_9_0.fly_obj) then
+		if not arg_9_0.UnitMoverHandler_comp then
+			MonoHelper.removeLuaComFromGo(arg_9_0.fly_obj, UnitMoverHandler)
 
-function var_0_0.dispose(arg_10_0)
-	if not gohelper.isNil(arg_10_0.fly_obj) then
-		if not arg_10_0.UnitMoverHandler_comp then
-			MonoHelper.removeLuaComFromGo(arg_10_0.fly_obj, UnitMoverHandler)
-
-			arg_10_0.UnitMoverHandler_comp = nil
+			arg_9_0.UnitMoverHandler_comp = nil
 		end
 
-		if not arg_10_0.UnitMoverCurve_comp then
-			MonoHelper.removeLuaComFromGo(arg_10_0.fly_obj, UnitMoverCurve)
+		if not arg_9_0.UnitMoverCurve_comp then
+			MonoHelper.removeLuaComFromGo(arg_9_0.fly_obj, UnitMoverCurve)
 
-			arg_10_0.UnitMoverCurve_comp = nil
+			arg_9_0.UnitMoverCurve_comp = nil
 		end
 	end
 end

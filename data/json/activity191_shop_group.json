@@ -1,0 +1,114 @@
+[
+  {
+    "id": 10101,
+    "coin": 6,
+    "num": 1,
+    "type": "mixtureShop",
+    "groupType": "role"
+  },
+  {
+    "id": 10102,
+    "coin": 9,
+    "num": 1,
+    "type": "mixtureShop",
+    "groupType": "role"
+  },
+  {
+    "id": 10103,
+    "coin": 16,
+    "num": 1,
+    "type": "mixtureShop",
+    "groupType": "role"
+  },
+  {
+    "id": 10104,
+    "coin": 6,
+    "num": 1,
+    "type": "mixtureShop",
+    "groupType": "collection"
+  },
+  {
+    "id": 10105,
+    "coin": 8,
+    "num": 1,
+    "type": "mixtureShop",
+    "groupType": "collection"
+  },
+  {
+    "id": 10106,
+    "coin": 16,
+    "num": 1,
+    "type": "mixtureShop",
+    "groupType": "collection"
+  },
+  {
+    "id": 10201,
+    "coin": 8,
+    "num": 1,
+    "type": "roleShop",
+    "groupType": "role"
+  },
+  {
+    "id": 10202,
+    "coin": 12,
+    "num": 1,
+    "type": "roleShop",
+    "groupType": "role"
+  },
+  {
+    "id": 10203,
+    "coin": 20,
+    "num": 1,
+    "type": "roleShop",
+    "groupType": "role"
+  },
+  {
+    "id": 10301,
+    "coin": 8,
+    "num": 1,
+    "type": "collectionShop",
+    "groupType": "collection"
+  },
+  {
+    "id": 10302,
+    "coin": 10,
+    "num": 1,
+    "type": "collectionShop",
+    "groupType": "collection"
+  },
+  {
+    "id": 10303,
+    "coin": 20,
+    "num": 1,
+    "type": "collectionShop",
+    "groupType": "collection"
+  },
+  {
+    "id": 10401,
+    "coin": 10,
+    "num": 1,
+    "type": "tagShop",
+    "groupType": "role"
+  },
+  {
+    "id": 10402,
+    "coin": 15,
+    "num": 1,
+    "type": "tagShop",
+    "groupType": "role"
+  },
+  {
+    "id": 10403,
+    "coin": 24,
+    "num": 1,
+    "type": "tagShop",
+    "groupType": "role"
+  },
+  {
+    "id": 10404,
+    "coin": 24,
+    "num": 1,
+    "type": "tagShop",
+    "groupType": "collection"
+  }
+]

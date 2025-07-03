@@ -7,7 +7,7 @@ local var_0_2 = var_0_1 * 0.033
 function var_0_0.onStart(arg_1_0, arg_1_1)
 	var_0_0.super.onStart(arg_1_0, arg_1_1)
 
-	local var_1_0 = FightModel.instance:getCurRoundMO()
+	local var_1_0 = FightDataHelper.roundMgr:getRoundData()
 
 	if not var_1_0 then
 		arg_1_0:onDone(true)

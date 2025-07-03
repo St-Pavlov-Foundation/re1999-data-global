@@ -2,16 +2,36 @@
   {
     "skinId": 640401,
     "idleAnimName": "idle",
-    "hitAnimName": "hit"
+    "hitAnimName": "hit",
+    "freezeAnimName": "",
+    "sleepAnimName": ""
   },
   {
     "skinId": 6404011,
     "idleAnimName": "idle2",
-    "hitAnimName": "hit2"
+    "hitAnimName": "hit2",
+    "freezeAnimName": "",
+    "sleepAnimName": ""
   },
   {
     "skinId": 6404012,
     "idleAnimName": "idle3",
-    "hitAnimName": "hit3"
+    "hitAnimName": "hit3",
+    "freezeAnimName": "",
+    "sleepAnimName": ""
+  },
+  {
+    "skinId": 690401,
+    "idleAnimName": "idle",
+    "hitAnimName": "hit",
+    "freezeAnimName": "freeze",
+    "sleepAnimName": "sleep"
+  },
+  {
+    "skinId": 6904011,
+    "idleAnimName": "idle2",
+    "hitAnimName": "hit2",
+    "freezeAnimName": "freeze2",
+    "sleepAnimName": "sleep2"
   }
 ]

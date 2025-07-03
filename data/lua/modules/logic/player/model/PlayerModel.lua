@@ -11,6 +11,7 @@ function var_0_0.onInit(arg_1_0)
 	arg_1_0._signature = ""
 	arg_1_0._birthday = ""
 	arg_1_0._showHeros = {}
+	arg_1_0._simpleProperties = {}
 	arg_1_0._registerTime = 0
 	arg_1_0._lastLoginTime = 0
 	arg_1_0._lastLogoutTime = 0
@@ -388,55 +389,63 @@ function var_0_0.setMainThumbnail(arg_41_0, arg_41_1)
 	arg_41_0._mainThumbnail = arg_41_1
 end
 
-function var_0_0.getMainThumbnail(arg_42_0)
-	return arg_42_0._mainThumbnail
+function var_0_0.GMSetMainThumbnail(arg_42_0)
+	if isDebugBuild and PlayerPrefsHelper.getNumber(PlayerPrefsKey.GMToolViewOpenMainThumbnail, 0) == 1 then
+		arg_42_0._mainThumbnail = false
+
+		logError("GM设置了登录开启缩略页，请知悉！")
+	end
+end
+
+function var_0_0.getMainThumbnail(arg_43_0)
+	return arg_43_0._mainThumbnail
 end
 
 local var_0_2 = 18000
 
-function var_0_0.setCanRename(arg_43_0, arg_43_1)
-	arg_43_0._canRename = arg_43_1 == true
+function var_0_0.setCanRename(arg_44_0, arg_44_1)
+	arg_44_0._canRename = arg_44_1 == true
 
-	local var_43_0 = os.date("*t", ServerTime.nowInLocal() - var_0_2)
+	local var_44_0 = os.date("*t", ServerTime.nowInLocal() - var_0_2)
 
-	if var_43_0 then
-		arg_43_0._canRenameFlagMonth = var_43_0.month
+	if var_44_0 then
+		arg_44_0._canRenameFlagMonth = var_44_0.month
 	end
 
 	PlayerController.instance:dispatchEvent(PlayerEvent.RenameFlagUpdate)
 end
 
-function var_0_0.setExtraRename(arg_44_0, arg_44_1)
-	arg_44_0.extraRenameCount = arg_44_1
+function var_0_0.setExtraRename(arg_45_0, arg_45_1)
+	arg_45_0.extraRenameCount = arg_45_1
 end
 
-function var_0_0.getExtraRename(arg_45_0)
-	return arg_45_0.extraRenameCount or 0
+function var_0_0.getExtraRename(arg_46_0)
+	return arg_46_0.extraRenameCount or 0
 end
 
-function var_0_0.checkCanRenameReset(arg_46_0)
-	local var_46_0 = os.date("*t", ServerTime.nowInLocal() - var_0_2)
+function var_0_0.checkCanRenameReset(arg_47_0)
+	local var_47_0 = os.date("*t", ServerTime.nowInLocal() - var_0_2)
 
-	if var_46_0 and arg_46_0._canRenameFlagMonth ~= nil and arg_46_0._canRenameFlagMonth ~= var_46_0.month then
+	if var_47_0 and arg_47_0._canRenameFlagMonth ~= nil and arg_47_0._canRenameFlagMonth ~= var_47_0.month then
 		logNormal("CanRenameFlag Reset")
-		arg_46_0:setCanRename(true)
+		arg_47_0:setCanRename(true)
 	end
 end
 
-function var_0_0.getCanRename(arg_47_0)
-	return arg_47_0._canRename
+function var_0_0.getCanRename(arg_48_0)
+	return arg_48_0._canRename
 end
 
-function var_0_0.getShowAchievement(arg_48_0)
-	return arg_48_0._showAchievement
+function var_0_0.getShowAchievement(arg_49_0)
+	return arg_49_0._showAchievement
 end
 
-function var_0_0.getPlayerPrefsKey(arg_49_0, arg_49_1)
-	return arg_49_1 .. arg_49_0._userId
+function var_0_0.getPlayerPrefsKey(arg_50_0, arg_50_1)
+	return arg_50_1 .. arg_50_0._userId
 end
 
-function var_0_0.getPlayerRegisterTime(arg_50_0)
-	return arg_50_0._registerTime
+function var_0_0.getPlayerRegisterTime(arg_51_0)
+	return arg_51_0._registerTime
 end
 
 var_0_0.instance = var_0_0.New()

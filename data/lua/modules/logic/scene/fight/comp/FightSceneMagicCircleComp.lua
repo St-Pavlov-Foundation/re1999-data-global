@@ -12,6 +12,7 @@ function var_0_0.onScenePrepared(arg_2_0, arg_2_1, arg_2_2)
 	FightController.instance:registerCallback(FightEvent.AddMagicCircile, arg_2_0._onAddMagicCircile, arg_2_0)
 	FightController.instance:registerCallback(FightEvent.DeleteMagicCircile, arg_2_0._onDeleteMagicCircile, arg_2_0)
 	FightController.instance:registerCallback(FightEvent.UpdateMagicCircile, arg_2_0._onUpdateMagicCircile, arg_2_0)
+	FightController.instance:registerCallback(FightEvent.UpgradeMagicCircile, arg_2_0._onUpgradeMagicCircile, arg_2_0)
 	FightController.instance:registerCallback(FightEvent.OnRestartStageBefore, arg_2_0._onRestartStageBefore, arg_2_0)
 	FightController.instance:registerCallback(FightEvent.ChangeSceneVisible, arg_2_0._onChangeSceneVisible, arg_2_0)
 	FightController.instance:registerCallback(FightEvent.BeforeEnterStepBehaviour, arg_2_0._onBeforeEnterStepBehaviour, arg_2_0)
@@ -166,17 +167,13 @@ function var_0_0._onCloseViewFinish(arg_15_0, arg_15_1)
 end
 
 function var_0_0._onSkillPlayStart(arg_16_0, arg_16_1, arg_16_2, arg_16_3)
-	local var_16_0 = arg_16_1:getMO()
-
-	if var_16_0 and var_16_0:isUniqueSkill(arg_16_2) and arg_16_0._loopEffect then
+	if arg_16_1:getMO() and FightCardDataHelper.isBigSkill(arg_16_2) and arg_16_0._loopEffect then
 		arg_16_0._loopEffect:setActive(false, "FightSceneMagicCircleComp_onSkillPlayStart" .. arg_16_3.stepUid)
 	end
 end
 
 function var_0_0._onSkillPlayFinish(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
-	local var_17_0 = arg_17_1:getMO()
-
-	if var_17_0 and var_17_0:isUniqueSkill(arg_17_2) and arg_17_0._loopEffect then
+	if arg_17_1:getMO() and FightCardDataHelper.isBigSkill(arg_17_2) and arg_17_0._loopEffect then
 		arg_17_0._loopEffect:setActive(true, "FightSceneMagicCircleComp_onSkillPlayStart" .. arg_17_3.stepUid)
 	end
 end
@@ -189,48 +186,61 @@ function var_0_0._onUpdateMagicCircile(arg_19_0, arg_19_1)
 	return
 end
 
-function var_0_0._onRestartStageBefore(arg_20_0)
-	arg_20_0:releaseAllEffect()
+function var_0_0._onUpgradeMagicCircile(arg_20_0, arg_20_1)
+	arg_20_0:clearLastLoopEffect()
+
+	arg_20_0._config = arg_20_0:_getConfig(arg_20_1.magicCircleId)
+
+	arg_20_0:createEffect(arg_20_0._config.enterEffect, arg_20_0._config.enterTime)
+
+	arg_20_0._loopEffect = arg_20_0:createEffect(arg_20_0._config.loopEffect, nil)
+
+	arg_20_0:_playAudio(arg_20_0._config.enterAudio)
 end
 
-function var_0_0._releaseEffect(arg_21_0, arg_21_1)
-	arg_21_0._effectDic[arg_21_1.uniqueId] = nil
+function var_0_0._onRestartStageBefore(arg_21_0)
+	arg_21_0:releaseAllEffect()
+end
 
-	if arg_21_0._entity then
-		arg_21_0._entity.effect:removeEffect(arg_21_1)
+function var_0_0._releaseEffect(arg_22_0, arg_22_1)
+	arg_22_0._effectDic[arg_22_1.uniqueId] = nil
+
+	if arg_22_0._entity then
+		arg_22_0._entity.effect:removeEffect(arg_22_1)
 	end
 end
 
-function var_0_0.releaseAllEffect(arg_22_0)
-	for iter_22_0, iter_22_1 in pairs(arg_22_0._effectDic) do
-		arg_22_0:_releaseEffect(iter_22_1)
+function var_0_0.releaseAllEffect(arg_23_0)
+	for iter_23_0, iter_23_1 in pairs(arg_23_0._effectDic) do
+		arg_23_0:_releaseEffect(iter_23_1)
 	end
 
-	arg_22_0._effectDic = {}
-	arg_22_0._loopEffect = nil
+	arg_23_0._effectDic = {}
+	arg_23_0._loopEffect = nil
 end
 
-function var_0_0._onStartFightEnd(arg_23_0)
-	arg_23_0:releaseAllEffect()
-end
-
-function var_0_0.onSceneClose(arg_24_0, arg_24_1, arg_24_2)
-	TaskDispatcher.cancelTask(arg_24_0._releaseLoopAfterCloseAni, arg_24_0)
-	FightController.instance:unregisterCallback(FightEvent.EntityEffectLoaded, arg_24_0._onRemoveEffectLoaded, arg_24_0)
-	FightController.instance:unregisterCallback(FightEvent.AddMagicCircile, arg_24_0._onAddMagicCircile, arg_24_0)
-	FightController.instance:unregisterCallback(FightEvent.DeleteMagicCircile, arg_24_0._onDeleteMagicCircile, arg_24_0)
-	FightController.instance:unregisterCallback(FightEvent.UpdateMagicCircile, arg_24_0._onUpdateMagicCircile, arg_24_0)
-	FightController.instance:unregisterCallback(FightEvent.OnRestartStageBefore, arg_24_0._onRestartStageBefore, arg_24_0)
-	FightController.instance:unregisterCallback(FightEvent.ChangeSceneVisible, arg_24_0._onChangeSceneVisible, arg_24_0)
-	FightController.instance:unregisterCallback(FightEvent.BeforeEnterStepBehaviour, arg_24_0._onBeforeEnterStepBehaviour, arg_24_0)
-	FightController.instance:unregisterCallback(FightEvent.OnSkillPlayStart, arg_24_0._onSkillPlayStart, arg_24_0)
-	FightController.instance:unregisterCallback(FightEvent.OnSkillPlayFinish, arg_24_0._onSkillPlayFinish, arg_24_0)
-	FightController.instance:unregisterCallback(FightEvent.StartFightEnd, arg_24_0._onStartFightEnd, arg_24_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenView, arg_24_0._onOpenView, arg_24_0)
-	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_24_0._onCloseViewFinish, arg_24_0)
+function var_0_0._onStartFightEnd(arg_24_0)
 	arg_24_0:releaseAllEffect()
+end
 
-	arg_24_0._entity = nil
+function var_0_0.onSceneClose(arg_25_0, arg_25_1, arg_25_2)
+	TaskDispatcher.cancelTask(arg_25_0._releaseLoopAfterCloseAni, arg_25_0)
+	FightController.instance:unregisterCallback(FightEvent.EntityEffectLoaded, arg_25_0._onRemoveEffectLoaded, arg_25_0)
+	FightController.instance:unregisterCallback(FightEvent.AddMagicCircile, arg_25_0._onAddMagicCircile, arg_25_0)
+	FightController.instance:unregisterCallback(FightEvent.DeleteMagicCircile, arg_25_0._onDeleteMagicCircile, arg_25_0)
+	FightController.instance:unregisterCallback(FightEvent.UpdateMagicCircile, arg_25_0._onUpdateMagicCircile, arg_25_0)
+	FightController.instance:unregisterCallback(FightEvent.UpgradeMagicCircile, arg_25_0._onUpgradeMagicCircile, arg_25_0)
+	FightController.instance:unregisterCallback(FightEvent.OnRestartStageBefore, arg_25_0._onRestartStageBefore, arg_25_0)
+	FightController.instance:unregisterCallback(FightEvent.ChangeSceneVisible, arg_25_0._onChangeSceneVisible, arg_25_0)
+	FightController.instance:unregisterCallback(FightEvent.BeforeEnterStepBehaviour, arg_25_0._onBeforeEnterStepBehaviour, arg_25_0)
+	FightController.instance:unregisterCallback(FightEvent.OnSkillPlayStart, arg_25_0._onSkillPlayStart, arg_25_0)
+	FightController.instance:unregisterCallback(FightEvent.OnSkillPlayFinish, arg_25_0._onSkillPlayFinish, arg_25_0)
+	FightController.instance:unregisterCallback(FightEvent.StartFightEnd, arg_25_0._onStartFightEnd, arg_25_0)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenView, arg_25_0._onOpenView, arg_25_0)
+	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseViewFinish, arg_25_0._onCloseViewFinish, arg_25_0)
+	arg_25_0:releaseAllEffect()
+
+	arg_25_0._entity = nil
 end
 
 return var_0_0

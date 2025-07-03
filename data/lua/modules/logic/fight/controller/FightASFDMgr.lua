@@ -11,7 +11,7 @@ var_0_0.LoadingStatus = {
 function var_0_0.init(arg_1_0)
 	var_0_0.super.init(arg_1_0)
 
-	arg_1_0.stepMoArrivedCount = {}
+	arg_1_0.fightStepDataArrivedCount = {}
 	arg_1_0.effectWrap2EntityIdDict = {}
 	arg_1_0.sideEmitterWrap = nil
 	arg_1_0.missileWrapList = {}
@@ -182,8 +182,8 @@ function var_0_0.emitMissile(arg_10_0, arg_10_1, arg_10_2)
 		return arg_10_0:emitterFail(arg_10_1)
 	end
 
-	arg_10_0.curStepMo = arg_10_1
-	arg_10_0.stepMoArrivedCount[arg_10_1] = {
+	arg_10_0.curStepData = arg_10_1
+	arg_10_0.fightStepDataArrivedCount[arg_10_1] = {
 		0,
 		0
 	}
@@ -209,7 +209,7 @@ function var_0_0.emitterNormalMissile(arg_11_0, arg_11_1, arg_11_2)
 	local var_11_0 = FightASFDHelper.getMissileTargetId(arg_11_1)
 
 	if arg_11_0:_emitterOneMissile(arg_11_1, var_11_0, arg_11_2) then
-		arg_11_0.stepMoArrivedCount[arg_11_1][1] = arg_11_0.stepMoArrivedCount[arg_11_1][1] + 1
+		arg_11_0.fightStepDataArrivedCount[arg_11_1][1] = arg_11_0.fightStepDataArrivedCount[arg_11_1][1] + 1
 
 		return true
 	end
@@ -224,7 +224,7 @@ function var_0_0.emitterFissionMissile(arg_12_0, arg_12_1, arg_12_2)
 
 	tabletool.clear(arg_12_0.targetDict)
 
-	for iter_12_0, iter_12_1 in ipairs(arg_12_1.actEffectMOs) do
+	for iter_12_0, iter_12_1 in ipairs(arg_12_1.actEffect) do
 		if FightASFDHelper.isDamageEffect(iter_12_1.effectType) then
 			arg_12_0.targetDict[iter_12_1.targetId] = true
 		end
@@ -237,7 +237,7 @@ function var_0_0.emitterFissionMissile(arg_12_0, arg_12_1, arg_12_2)
 
 		if var_12_1 then
 			var_12_0 = false
-			arg_12_0.stepMoArrivedCount[arg_12_1][1] = arg_12_0.stepMoArrivedCount[arg_12_1][1] + 1
+			arg_12_0.fightStepDataArrivedCount[arg_12_1][1] = arg_12_0.fightStepDataArrivedCount[arg_12_1][1] + 1
 
 			var_12_1:setEffectScale(FightASFDConfig.instance.fissionScale)
 		end
@@ -273,7 +273,7 @@ function var_0_0._emitterOneMissile(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
 	local var_13_5 = FightASFDFlyPathHelper.getMissileMover(var_13_1, var_13_2, var_13_4, arg_13_2, arg_13_3, arg_13_0.onArrived, arg_13_0)
 
 	var_13_5.missileWrap = var_13_4
-	var_13_5.stepMo = arg_13_1
+	var_13_5.fightStepData = arg_13_1
 	var_13_5.toId = arg_13_2
 	var_13_5.asfdContext = arg_13_3
 	var_13_5.missileRes = var_13_3
@@ -328,10 +328,10 @@ function var_0_0.emitterFail(arg_15_0, arg_15_1)
 end
 
 function var_0_0.onArrived(arg_16_0, arg_16_1)
-	local var_16_0 = arg_16_1.stepMo
+	local var_16_0 = arg_16_1.fightStepData
 	local var_16_1 = arg_16_1.asfdContext
 	local var_16_2 = arg_16_1.missileRes
-	local var_16_3 = arg_16_0.stepMoArrivedCount[var_16_0] or {
+	local var_16_3 = arg_16_0.fightStepDataArrivedCount[var_16_0] or {
 		1,
 		0
 	}
@@ -341,11 +341,11 @@ function var_0_0.onArrived(arg_16_0, arg_16_1)
 	arg_16_0:tryAddALFResidualEffectData(var_16_2, arg_16_1)
 	arg_16_0:createExplosionEffect(var_16_0, arg_16_1.toId, var_16_1)
 	arg_16_0:playHitAction(arg_16_1.toId)
-	arg_16_0:floatDamage(arg_16_1.stepMo, arg_16_1.toId)
+	arg_16_0:floatDamage(arg_16_1.fightStepData, arg_16_1.toId)
 	arg_16_0:clearMover(arg_16_1)
 
 	if var_16_3[2] >= var_16_3[1] then
-		arg_16_0.stepMoArrivedCount[var_16_0] = nil
+		arg_16_0.fightStepDataArrivedCount[var_16_0] = nil
 
 		return arg_16_0:onASFDArrived(var_16_0)
 	end
@@ -442,7 +442,7 @@ function var_0_0.floatDamage(arg_23_0, arg_23_1, arg_23_2)
 end
 
 function var_0_0.addDamageWork(arg_24_0, arg_24_1, arg_24_2, arg_24_3)
-	local var_24_0 = arg_24_2 and arg_24_2.actEffectMOs
+	local var_24_0 = arg_24_2 and arg_24_2.actEffect
 
 	if not var_24_0 then
 		return
@@ -458,19 +458,19 @@ function var_0_0.addDamageWork(arg_24_0, arg_24_1, arg_24_2, arg_24_3)
 				arg_24_1:registWork(var_24_2, arg_24_2, iter_24_1)
 			end
 		elseif var_24_1 == FightEnum.EffectType.FIGHTSTEP then
-			arg_24_0:addDamageWork(arg_24_1, iter_24_1.cus_stepMO, arg_24_3)
+			arg_24_0:addDamageWork(arg_24_1, iter_24_1.fightStep, arg_24_3)
 		end
 	end
 end
 
 function var_0_0.onContinueASFDFlowDone(arg_25_0)
-	arg_25_0.curStepMo = nil
+	arg_25_0.curStepData = nil
 
 	TaskDispatcher.cancelTask(arg_25_0.onExplosionEffectDone, arg_25_0)
 end
 
 function var_0_0.onASFDFlowDone(arg_26_0, arg_26_1)
-	arg_26_0.curStepMo = nil
+	arg_26_0.curStepData = nil
 
 	arg_26_0:clearBornEffect(true)
 	arg_26_0:clearEmitterEffect(arg_26_1)
@@ -479,7 +479,7 @@ function var_0_0.onASFDFlowDone(arg_26_0, arg_26_1)
 	tabletool.clear(arg_26_0.effectWrap2EntityIdDict)
 	TaskDispatcher.cancelTask(arg_26_0.onExplosionEffectDone, arg_26_0)
 	arg_26_0:resetSpineAnim()
-	tabletool.clear(arg_26_0.stepMoArrivedCount)
+	tabletool.clear(arg_26_0.fightStepDataArrivedCount)
 end
 
 function var_0_0.clearBornEffect(arg_27_0, arg_27_1)
@@ -592,7 +592,7 @@ function var_0_0.clearMover(arg_32_0, arg_32_1)
 	arg_32_1:unregisterCallback(UnitMoveEvent.Arrive, arg_32_0.onArrived, arg_32_0)
 
 	arg_32_1.missileWrap = nil
-	arg_32_1.stepMo = nil
+	arg_32_1.fightStepData = nil
 	arg_32_1.toId = nil
 	arg_32_1.asfdContext = nil
 	arg_32_1.missileRes = nil

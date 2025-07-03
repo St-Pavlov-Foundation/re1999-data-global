@@ -77,7 +77,7 @@ function var_0_0.getStoreGoodsMO(arg_9_0)
 end
 
 function var_0_0.checkShowTicket(arg_10_0)
-	if arg_10_0.storeGoodsMO.belongStoreId == StoreEnum.SubRoomOld or arg_10_0.storeGoodsMO.belongStoreId == StoreEnum.SubRoomNew then
+	if arg_10_0.storeGoodsMO.belongStoreId == StoreEnum.StoreId.OldRoomStore or arg_10_0.storeGoodsMO.belongStoreId == StoreEnum.StoreId.NewRoomStore then
 		if arg_10_0.materialType ~= MaterialEnum.MaterialType.BlockPackage and arg_10_0.materialType ~= MaterialEnum.MaterialType.Building then
 			return false
 		end

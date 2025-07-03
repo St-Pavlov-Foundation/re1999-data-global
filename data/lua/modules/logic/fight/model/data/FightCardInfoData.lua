@@ -3,6 +3,8 @@
 local var_0_0 = FightDataClass("FightCardInfoData")
 
 function var_0_0.onConstructor(arg_1_0, arg_1_1)
+	arg_1_0:initClientData()
+
 	arg_1_0.uid = arg_1_1.uid
 	arg_1_0.skillId = arg_1_1.skillId
 	arg_1_0.cardEffect = arg_1_1.cardEffect or 0
@@ -31,11 +33,27 @@ function var_0_0.onConstructor(arg_1_0, arg_1_1)
 	arg_1_0.targetUid = arg_1_1.targetUid or "0"
 	arg_1_0.energy = arg_1_1.energy or 0
 	arg_1_0.areaRedOrBlue = arg_1_1.areaRedOrBlue
-	arg_1_0.heatId = arg_1_1.heatId
+	arg_1_0.heatId = arg_1_1.heatId or 0
 end
 
-function var_0_0.isUniqueSkill(arg_2_0)
-	return FightCardModel.instance:isUniqueSkill(arg_2_0.targetUid, arg_2_0.skillId)
+function var_0_0.initClientData(arg_2_0)
+	local var_2_0 = FightClientData.New()
+
+	var_2_0.custom_lock = nil
+	var_2_0.custom_enemyCardIndex = nil
+	var_2_0.custom_playedCard = nil
+	var_2_0.custom_handCardIndex = nil
+	var_2_0.custom_color = FightEnum.CardColor.None
+	var_2_0.custom_fromSkillId = 0
+	arg_2_0.clientData = var_2_0
+end
+
+function var_0_0.isBigSkill(arg_3_0)
+	return FightCardDataHelper.isBigSkill(arg_3_0.skillId)
+end
+
+function var_0_0.clone(arg_4_0)
+	return FightDataUtil.copyData(arg_4_0)
 end
 
 return var_0_0

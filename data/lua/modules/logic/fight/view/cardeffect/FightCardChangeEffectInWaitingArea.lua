@@ -22,8 +22,8 @@ function var_0_0._playEffects(arg_2_0)
 	for iter_2_0, iter_2_1 in ipairs(arg_2_0.context.changeInfos) do
 		for iter_2_2, iter_2_3 in ipairs(arg_2_0.context.cardItemList) do
 			local var_2_2 = iter_2_3.go.activeInHierarchy
-			local var_2_3 = FightCardModel.instance:getSkillPrevLvId(iter_2_3.skillId)
-			local var_2_4 = FightCardModel.instance:getSkillNextLvId(iter_2_3.skillId)
+			local var_2_3 = FightCardDataHelper.getSkillPrevLvId(iter_2_3.entityId, iter_2_3.skillId)
+			local var_2_4 = FightCardDataHelper.getSkillNextLvId(iter_2_3.entityId, iter_2_3.skillId)
 
 			if var_2_2 and var_2_3 and var_2_3 == iter_2_1.targetSkillId then
 				if not tabletool.indexOf(var_2_0, iter_2_3) then
@@ -42,11 +42,11 @@ function var_0_0._playEffects(arg_2_0)
 			local var_2_5 = var_2_1[iter_2_4]
 			local var_2_6 = var_2_5.entityId
 			local var_2_7 = var_2_5.targetSkillId
-			local var_2_8 = FightCardModel.instance:getSkillLv(iter_2_5.entityId, iter_2_5.skillId)
+			local var_2_8 = FightCardDataHelper.getSkillLv(iter_2_5.entityId, iter_2_5.skillId)
 			local var_2_9 = iter_2_5.go
 			local var_2_10 = gohelper.findChild(var_2_9, "lvChangeEffect") or gohelper.create2d(var_2_9, "lvChangeEffect")
 			local var_2_11 = PrefabInstantiate.Create(var_2_10)
-			local var_2_12 = FightCardModel.instance:getSkillLv(var_2_6, var_2_7)
+			local var_2_12 = FightCardDataHelper.getSkillLv(var_2_6, var_2_7)
 
 			if var_2_12 ~= var_2_8 then
 				arg_2_0._paramDict[var_2_11] = {

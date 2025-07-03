@@ -9,6 +9,7 @@ end
 function var_0_0.reInit(arg_2_0)
 	arg_2_0:initDataInfo()
 
+	arg_2_0.curPassLayer = 0
 	arg_2_0.lastPassLayer = 0
 	arg_2_0.localCurPassLayer = -1
 end
@@ -19,7 +20,6 @@ function var_0_0.initDataInfo(arg_3_0)
 	arg_3_0.PermanentInfoMap = {}
 	arg_3_0.defaultStage = 1
 	arg_3_0.curSelectStage = 1
-	arg_3_0.curPassLayer = 0
 	arg_3_0.curSelectLayer = 1
 	arg_3_0.curSelectEpisodeId = 0
 	arg_3_0.realSelectMap = {}

@@ -47,7 +47,7 @@ function var_0_0.onDeleteCard(arg_5_0, arg_5_1)
 		gohelper.setActive(var_5_0.innerCardGo, true)
 		var_5_0.innerCardItem:updateItem(iter_5_3.uid, iter_5_3.skillId, iter_5_3)
 
-		local var_5_1 = FightCardModel.instance:isUniqueSkill(iter_5_3.uid, iter_5_3.skillId)
+		local var_5_1 = FightCardDataHelper.isBigSkill(iter_5_3.skillId)
 
 		gohelper.setActive(var_5_0.goPlaySkillEffect, not var_5_1)
 		gohelper.setActive(var_5_0.goPlayBigSkillEffect, var_5_1)

@@ -3,13 +3,13 @@
 local var_0_0 = class("FightWorkAddUseCard", FightEffectBase)
 
 function var_0_0.onStart(arg_1_0)
-	if not FightCardDataHelper.cardChangeIsMySide(arg_1_0._actEffectMO) then
+	if not FightCardDataHelper.cardChangeIsMySide(arg_1_0.actEffectData) then
 		arg_1_0:onDone(true)
 
 		return
 	end
 
-	local var_1_0 = arg_1_0._actEffectMO.effectNum
+	local var_1_0 = arg_1_0.actEffectData.effectNum
 	local var_1_1 = FightPlayCardModel.instance:getUsedCards()
 
 	if var_1_0 - 1 > #var_1_1 then
@@ -17,7 +17,7 @@ function var_0_0.onStart(arg_1_0)
 	end
 
 	FightViewPartVisible.set(false, false, false, false, true)
-	FightPlayCardModel.instance:addUseCard(var_1_0, arg_1_0._actEffectMO.cardInfo, arg_1_0._actEffectMO.effectNum1)
+	FightPlayCardModel.instance:addUseCard(var_1_0, arg_1_0.actEffectData.cardInfo, arg_1_0.actEffectData.effectNum1)
 	FightController.instance:dispatchEvent(FightEvent.AddUseCard, var_1_0)
 
 	local var_1_2 = arg_1_0:getWaitTime()
@@ -26,7 +26,7 @@ function var_0_0.onStart(arg_1_0)
 end
 
 function var_0_0.getWaitTime(arg_2_0)
-	if FightHeroALFComp.ALFSkillDict[arg_2_0._actEffectMO.effectNum1] then
+	if FightHeroALFComp.ALFSkillDict[arg_2_0.actEffectData.effectNum1] then
 		return 1.8
 	end
 

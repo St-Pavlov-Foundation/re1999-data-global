@@ -7,13 +7,13 @@ var_0_0.targetDict = {}
 
 function var_0_0.onStart(arg_1_0)
 	local var_1_0 = arg_1_0:getEffectType()
-	local var_1_1 = arg_1_0._fightStepMO.actEffectMOs
+	local var_1_1 = arg_1_0.fightStepData.actEffect
 
 	arg_1_0.targetDict = {}
 
 	for iter_1_0, iter_1_1 in ipairs(var_1_1) do
 		if not iter_1_1:isDone() and var_1_0 == iter_1_1.effectType then
-			arg_1_0:addEffectMo(iter_1_1)
+			arg_1_0:addActEffectData(iter_1_1)
 		end
 	end
 
@@ -57,7 +57,7 @@ function var_0_0.onStart(arg_1_0)
 end
 
 function var_0_0.getEffectRes(arg_2_0)
-	local var_2_0 = arg_2_0._fightStepMO.fromId
+	local var_2_0 = arg_2_0.fightStepData.fromId
 	local var_2_1 = var_2_0 and FightDataHelper.entityMgr:getById(var_2_0)
 	local var_2_2 = var_2_1 and var_2_1.skin
 	local var_2_3 = var_2_2 and lua_fight_sp_effect_ddg.configDict[var_2_2]
@@ -72,7 +72,7 @@ function var_0_0.getEffectRes(arg_2_0)
 	return var_2_4, var_2_5
 end
 
-function var_0_0.addEffectMo(arg_3_0, arg_3_1)
+function var_0_0.addActEffectData(arg_3_0, arg_3_1)
 	local var_3_0 = arg_3_1.targetId
 	local var_3_1 = arg_3_0.targetDict[var_3_0]
 

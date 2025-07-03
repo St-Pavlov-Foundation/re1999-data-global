@@ -1,9 +1,9 @@
 ﻿module("modules.logic.fight.entity.comp.skill.FightTLEventSetSceneObjVisible", package.seeall)
 
-local var_0_0 = class("FightTLEventSetSceneObjVisible")
+local var_0_0 = class("FightTLEventSetSceneObjVisible", FightTimelineTrackItem)
 
-function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	arg_1_0._fightStepMO = arg_1_1
+function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	arg_1_0.fightStepData = arg_1_1
 	arg_1_0._paramsArr = arg_1_3
 
 	if arg_1_0._paramsArr[3] == "1" then
@@ -15,7 +15,7 @@ end
 
 function var_0_0._setVisible(arg_2_0)
 	if arg_2_0._paramsArr[4] == "1" then
-		local var_2_0 = FightHelper.getEntity(arg_2_0._fightStepMO.fromId)
+		local var_2_0 = FightHelper.getEntity(arg_2_0.fightStepData.fromId)
 
 		if var_2_0 and var_2_0.skinSpineEffect then
 			if arg_2_0._paramsArr[2] == "1" then
@@ -43,22 +43,14 @@ function var_0_0._setVisible(arg_2_0)
 	end
 end
 
-function var_0_0.handleSkillEventEnd(arg_3_0)
+function var_0_0.onTrackEnd(arg_3_0)
 	return
 end
 
-function var_0_0.onSkillEnd(arg_4_0)
+function var_0_0.onDestructor(arg_4_0)
 	if arg_4_0._paramsArr and arg_4_0._paramsArr[3] == "1" then
 		arg_4_0:_setVisible()
 	end
-end
-
-function var_0_0.reset(arg_5_0)
-	return
-end
-
-function var_0_0.dispose(arg_6_0)
-	return
 end
 
 return var_0_0

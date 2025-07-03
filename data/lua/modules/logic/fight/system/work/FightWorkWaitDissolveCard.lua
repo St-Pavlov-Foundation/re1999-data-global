@@ -3,8 +3,8 @@
 local var_0_0 = class("FightWorkWaitDissolveCard", BaseWork)
 
 function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	arg_1_0._fightStepMO = arg_1_1
-	arg_1_0._fightActEffectMO = arg_1_2
+	arg_1_0.fightStepData = arg_1_1
+	arg_1_0.actEffectData = arg_1_2
 	arg_1_0._isDeadInSkill = arg_1_3
 end
 
@@ -15,7 +15,7 @@ function var_0_0.onStart(arg_2_0)
 		return
 	end
 
-	local var_2_0 = FightDataHelper.entityMgr:getById(arg_2_0._fightActEffectMO.targetId)
+	local var_2_0 = FightDataHelper.entityMgr:getById(arg_2_0.actEffectData.targetId)
 
 	if not var_2_0 or var_2_0.side ~= FightEnum.EntitySide.MySide then
 		arg_2_0:onDone(true)
@@ -34,7 +34,7 @@ function var_0_0.onStart(arg_2_0)
 end
 
 function var_0_0._onSkillPlayFinish(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
-	if arg_3_3 == arg_3_0._fightStepMO then
+	if arg_3_3 == arg_3_0.fightStepData then
 		FightController.instance:unregisterCallback(FightEvent.OnSkillPlayFinish, arg_3_0._onSkillPlayFinish, arg_3_0)
 
 		local var_3_0 = FightModel.instance:getUISpeed()
@@ -45,16 +45,7 @@ function var_0_0._onSkillPlayFinish(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
 end
 
 function var_0_0._waitForCardDissolveStart(arg_4_0)
-	if FightCardModel.instance:isDissolving() then
-		FightController.instance:registerCallback(FightEvent.OnCombineCardEnd, arg_4_0._onCombineCardEnd, arg_4_0)
-
-		local var_4_0 = FightModel.instance:getUISpeed()
-		local var_4_1 = 10 / Mathf.Clamp(var_4_0, 0.01, 100)
-
-		TaskDispatcher.runDelay(arg_4_0._timeOut, arg_4_0, var_4_1)
-	else
-		arg_4_0:onDone(true)
-	end
+	arg_4_0:onDone(true)
 end
 
 function var_0_0._onCombineCardEnd(arg_5_0)

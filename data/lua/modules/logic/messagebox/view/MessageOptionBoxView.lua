@@ -145,6 +145,7 @@ function var_0_0.refreshOptionUI(arg_15_0)
 	gohelper.setActive(arg_15_0._toggleoption.gameObject, true)
 
 	arg_15_0.optionType = arg_15_0.viewParam.optionType
+	arg_15_0.optionExParam = arg_15_0.viewParam.optionExParam
 	arg_15_0.messageBoxId = arg_15_0.viewParam.messageBoxId
 
 	if arg_15_0.optionType == MsgBoxEnum.optionType.Daily then
@@ -161,7 +162,7 @@ function var_0_0.saveOptionData(arg_16_0)
 		return
 	end
 
-	local var_16_0 = MessageBoxController.instance:getOptionLocalKey(arg_16_0.messageBoxId, arg_16_0.optionType)
+	local var_16_0 = MessageBoxController.instance:getOptionLocalKey(arg_16_0.messageBoxId, arg_16_0.optionType, arg_16_0.optionExParam)
 
 	if arg_16_0.optionType == MsgBoxEnum.optionType.Daily then
 		TimeUtil.setDayFirstLoginRed(var_16_0)

@@ -7,7 +7,7 @@ function var_0_0.onStart(arg_1_0)
 end
 
 function var_0_0.beforePlayEffectData(arg_2_0)
-	arg_2_0._entityId = arg_2_0._actEffectMO.targetId
+	arg_2_0._entityId = arg_2_0.actEffectData.targetId
 	arg_2_0._entityMO = FightDataHelper.entityMgr:getById(arg_2_0._entityId)
 	arg_2_0._oldValue = arg_2_0._entityMO and arg_2_0._entityMO.attrMO.hp
 end
@@ -27,7 +27,7 @@ function var_0_0._startChangeMaxHp(arg_3_0)
 
 	arg_3_0._newValue = arg_3_0._entityMO and arg_3_0._entityMO.attrMO.hp
 
-	FightController.instance:dispatchEvent(FightEvent.OnMaxHpChange, arg_3_0._actEffectMO.targetId, arg_3_0._oldValue, arg_3_0._newValue)
+	FightController.instance:dispatchEvent(FightEvent.OnMaxHpChange, arg_3_0.actEffectData.targetId, arg_3_0._oldValue, arg_3_0._newValue)
 	arg_3_0:_onDone()
 end
 

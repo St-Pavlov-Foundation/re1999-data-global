@@ -17,5 +17,23 @@ var_0_0.PlayType = {
 var_0_0.UIBloomView = {
 	CharacterDataView = "view_CharacterDataView"
 }
+var_0_0.RTShareType = {
+	BloomClose = 2,
+	BloomOpen = 3,
+	BloomAuto = 100,
+	FullScreen = 4,
+	Normal = 1
+}
+var_0_0.NormalPriority = {
+	CharacterGetView = 14,
+	CharacterRankUpResultView = 12,
+	CharacterRankUpView = 10
+}
+var_0_0.BloomCameraSize = {
+	[3116] = 10,
+	[3108] = 10
+}
+var_0_0.BloomFullScreenEffectCameraSize = 13
+var_0_0.DelayFrame = 5
 
 return var_0_0

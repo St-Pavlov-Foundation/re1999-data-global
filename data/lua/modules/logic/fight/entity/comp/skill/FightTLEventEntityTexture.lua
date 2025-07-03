@@ -1,8 +1,8 @@
 ﻿module("modules.logic.fight.entity.comp.skill.FightTLEventEntityTexture", package.seeall)
 
-local var_0_0 = class("FightTLEventEntityTexture")
+local var_0_0 = class("FightTLEventEntityTexture", FightTimelineTrackItem)
 
-function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 	local var_1_0 = arg_1_3[1]
 
 	arg_1_0._targetEntitys = nil
@@ -65,12 +65,8 @@ function var_0_0._clear(arg_3_0)
 	end
 end
 
-function var_0_0.reset(arg_4_0)
+function var_0_0.onDestructor(arg_4_0)
 	arg_4_0:_clear()
-end
-
-function var_0_0.dispose(arg_5_0)
-	arg_5_0:_clear()
 end
 
 return var_0_0

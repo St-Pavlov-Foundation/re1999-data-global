@@ -78,7 +78,7 @@ end
 
 function var_0_0.filterAchievementByUnlocked(arg_7_0, arg_7_1)
 	local var_7_0 = arg_7_1.groupId
-	local var_7_1 = var_7_0 and var_7_0 ~= 0
+	local var_7_1 = AchievementUtils.isActivityGroup(arg_7_1.id)
 	local var_7_2 = false
 
 	if var_7_1 then
@@ -98,7 +98,7 @@ end
 
 function var_0_0.filterAchievementByLocked(arg_8_0, arg_8_1)
 	local var_8_0 = arg_8_1.groupId
-	local var_8_1 = var_8_0 and var_8_0 ~= 0
+	local var_8_1 = AchievementUtils.isActivityGroup(arg_8_1.id)
 	local var_8_2 = false
 
 	if var_8_1 then
@@ -125,6 +125,7 @@ function var_0_0.buildAchievementMOList(arg_9_0, arg_9_1)
 	end
 
 	local var_9_2 = 0
+	local var_9_3 = true
 
 	for iter_9_0, iter_9_1 in ipairs(arg_9_1) do
 		if var_9_2 == 0 then
@@ -137,27 +138,33 @@ function var_0_0.buildAchievementMOList(arg_9_0, arg_9_1)
 
 				var_9_2 = iter_9_1.groupId
 			end
-		elseif iter_9_1.groupId ~= var_9_2 then
-			arg_9_0:buildMO(var_9_0, var_9_1, var_9_2)
+		else
+			local var_9_4 = iter_9_1.category == AchievementEnum.Type.GamePlay and #var_9_1 >= AchievementEnum.MainListLineCount
+			local var_9_5 = iter_9_1.groupId ~= var_9_2
 
-			var_9_2 = iter_9_1.groupId
-			var_9_1 = {}
+			if var_9_5 or var_9_4 then
+				arg_9_0:buildMO(var_9_0, var_9_1, var_9_2, var_9_3)
+
+				var_9_2 = iter_9_1.groupId
+				var_9_1 = {}
+				var_9_3 = var_9_5 and true or false
+			end
 		end
 
 		table.insert(var_9_1, iter_9_1)
 	end
 
 	if #var_9_1 > 0 then
-		arg_9_0:buildMO(var_9_0, var_9_1, var_9_2)
+		arg_9_0:buildMO(var_9_0, var_9_1, var_9_2, var_9_3)
 	end
 
 	return var_9_0
 end
 
-function var_0_0.buildMO(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
+function var_0_0.buildMO(arg_10_0, arg_10_1, arg_10_2, arg_10_3, arg_10_4)
 	local var_10_0 = AchievementTileMO.New()
 
-	var_10_0:init(arg_10_2, arg_10_3)
+	var_10_0:init(arg_10_2, arg_10_3, arg_10_4)
 	table.insert(arg_10_1, var_10_0)
 end
 
@@ -193,18 +200,18 @@ function var_0_0.sortAchievementByRareDown(arg_12_0, arg_12_1)
 			return arg_12_0.groupId < arg_12_1.groupId
 		end
 
-		return arg_12_0.order < arg_12_1.order
-	else
-		local var_12_5 = arg_12_0.id
-		local var_12_6 = arg_12_1.id
-		local var_12_7 = AchievementModel.instance:achievementHasLocked(var_12_5)
-
-		if var_12_7 ~= AchievementModel.instance:achievementHasLocked(var_12_6) then
-			return not var_12_7
+		if arg_12_0.order ~= arg_12_1.order then
+			return arg_12_0.order < arg_12_1.order
 		end
+	else
+		local var_12_5 = AchievementModel.instance:achievementHasLocked(arg_12_0.id)
 
-		return var_12_5 < var_12_6
+		if var_12_5 ~= AchievementModel.instance:achievementHasLocked(arg_12_1.id) then
+			return not var_12_5
+		end
 	end
+
+	return arg_12_0.id < arg_12_1.id
 end
 
 function var_0_0.sortAchievementByRareUp(arg_13_0, arg_13_1)
@@ -254,9 +261,11 @@ function var_0_0.getInfoList(arg_14_0, arg_14_1)
 	local var_14_1 = arg_14_0:getList()
 
 	for iter_14_0, iter_14_1 in ipairs(var_14_1) do
-		local var_14_2 = SLFramework.UGUI.MixCellInfo.New(iter_14_1:getAchievementType(), iter_14_1:getLineHeight(), iter_14_0)
+		local var_14_2 = iter_14_1:getIsFold()
+		local var_14_3 = iter_14_1:getLineHeight(nil, var_14_2)
+		local var_14_4 = SLFramework.UGUI.MixCellInfo.New(iter_14_1:getAchievementType(), var_14_3, iter_14_0)
 
-		table.insert(var_14_0, var_14_2)
+		table.insert(var_14_0, var_14_4)
 	end
 
 	return var_14_0
@@ -330,6 +339,26 @@ end
 
 function var_0_0.resetScrollFocusIndex(arg_23_0)
 	arg_23_0._curScrollFocusIndex = nil
+end
+
+function var_0_0.getCurGroupMoList(arg_24_0, arg_24_1)
+	local var_24_0 = {}
+
+	for iter_24_0, iter_24_1 in ipairs(arg_24_0:getCurMoList()) do
+		if iter_24_1.groupId == arg_24_1 then
+			table.insert(var_24_0, iter_24_1)
+		end
+	end
+
+	return var_24_0
+end
+
+function var_0_0.getCurMoList(arg_25_0)
+	local var_25_0 = AchievementMainCommonModel.instance:getCurrentCategory()
+	local var_25_1 = AchievementMainCommonModel.instance:getCurrentSortType()
+	local var_25_2 = AchievementMainCommonModel.instance:getCurrentFilterType()
+
+	return arg_25_0:getAchievementMOList(var_25_0, var_25_1, var_25_2)
 end
 
 var_0_0.instance = var_0_0.New()

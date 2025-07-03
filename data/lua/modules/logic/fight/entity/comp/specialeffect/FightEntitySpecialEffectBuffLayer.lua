@@ -48,7 +48,7 @@ end
 function var_0_0._onSkillPlayStart(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
 	local var_5_0 = arg_5_1:getMO()
 
-	if var_5_0 and var_5_0.id == arg_5_0._entity.id and var_5_0:isUniqueSkill(arg_5_2) then
+	if var_5_0 and var_5_0.id == arg_5_0._entity.id and FightCardDataHelper.isBigSkill(arg_5_2) then
 		arg_5_0:_onSetBuffEffectVisible(var_5_0.id, false, "FightEntitySpecialEffectBuffLayer_onSkillPlayStart")
 	end
 end
@@ -56,7 +56,7 @@ end
 function var_0_0._onSkillPlayFinish(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
 	local var_6_0 = arg_6_1:getMO()
 
-	if var_6_0 and var_6_0.id == arg_6_0._entity.id and var_6_0:isUniqueSkill(arg_6_2) then
+	if var_6_0 and var_6_0.id == arg_6_0._entity.id and FightCardDataHelper.isBigSkill(arg_6_2) then
 		arg_6_0:_onSetBuffEffectVisible(var_6_0.id, true, "FightEntitySpecialEffectBuffLayer_onSkillPlayStart")
 	end
 end
@@ -193,14 +193,20 @@ function var_0_0._refreshEffect(arg_9_0, arg_9_1, arg_9_2, arg_9_3, arg_9_4)
 	end
 
 	if var_9_7 then
+		local var_9_9 = arg_9_0._effectWraps[arg_9_1] and arg_9_0._effectWraps[arg_9_1][var_9_5]
+
+		if var_9_9 then
+			var_9_9:setActive(false, "FightEntitySpecialEffectBuffLayer_newEffect")
+		end
+
 		arg_9_0:_hideEffect(arg_9_1)
 
 		if not string.nilorempty(var_9_4.createEffect) then
-			local var_9_9 = var_9_4.releaseCreateEffectTime > 0 and var_9_4.releaseCreateEffectTime or var_0_1
-			local var_9_10 = arg_9_0._entity.effect:addHangEffect(var_9_4.createEffect, var_9_4.createEffectRoot, nil, var_9_9 / 1000)
+			local var_9_10 = var_9_4.releaseCreateEffectTime > 0 and var_9_4.releaseCreateEffectTime or var_0_1
+			local var_9_11 = arg_9_0._entity.effect:addHangEffect(var_9_4.createEffect, var_9_4.createEffectRoot, nil, var_9_10 / 1000)
 
-			var_9_10:setLocalPos(0, 0, 0)
-			FightRenderOrderMgr.instance:onAddEffectWrap(arg_9_0._entity.id, var_9_10)
+			var_9_11:setLocalPos(0, 0, 0)
+			FightRenderOrderMgr.instance:onAddEffectWrap(arg_9_0._entity.id, var_9_11)
 
 			if var_9_4.createAudio > 0 then
 				AudioMgr.instance:trigger(var_9_4.createAudio)
@@ -209,9 +215,17 @@ function var_0_0._refreshEffect(arg_9_0, arg_9_1, arg_9_2, arg_9_3, arg_9_4)
 
 		if var_9_4.delayTimeBeforeLoop > 0 then
 			TaskDispatcher.runDelay(function()
+				if var_9_9 then
+					var_9_9:setActive(true, "FightEntitySpecialEffectBuffLayer_newEffect")
+				end
+
 				arg_9_0:_refreshEffectState(arg_9_1)
 			end, arg_9_0, var_9_4.delayTimeBeforeLoop / 1000)
 		else
+			if var_9_9 then
+				var_9_9:setActive(true, "FightEntitySpecialEffectBuffLayer_newEffect")
+			end
+
 			arg_9_0:_refreshEffectState(arg_9_1)
 		end
 	else
@@ -223,11 +237,11 @@ function var_0_0._refreshEffect(arg_9_0, arg_9_1, arg_9_2, arg_9_3, arg_9_4)
 
 		if arg_9_4 == FightEnum.EffectType.BUFFUPDATE and var_9_0 < arg_9_3 then
 			if not string.nilorempty(var_9_4.addLayerEffect) then
-				local var_9_11 = var_9_4.releaseAddLayerEffectTime > 0 and var_9_4.releaseAddLayerEffectTime or var_0_1
-				local var_9_12 = arg_9_0._entity.effect:addHangEffect(var_9_4.addLayerEffect, var_9_4.addLayerEffectRoot, nil, var_9_11 / 1000)
+				local var_9_12 = var_9_4.releaseAddLayerEffectTime > 0 and var_9_4.releaseAddLayerEffectTime or var_0_1
+				local var_9_13 = arg_9_0._entity.effect:addHangEffect(var_9_4.addLayerEffect, var_9_4.addLayerEffectRoot, nil, var_9_12 / 1000)
 
-				var_9_12:setLocalPos(0, 0, 0)
-				FightRenderOrderMgr.instance:onAddEffectWrap(arg_9_0._entity.id, var_9_12)
+				var_9_13:setLocalPos(0, 0, 0)
+				FightRenderOrderMgr.instance:onAddEffectWrap(arg_9_0._entity.id, var_9_13)
 			end
 
 			if var_9_4.addLayerAudio > 0 then

@@ -119,6 +119,7 @@ function var_0_0._editableInitView(arg_7_0)
 	arg_7_0._uiSpine = GuiModelAgent.Create(arg_7_0._gospine, true)
 
 	arg_7_0._uiSpine:openBloomView(CharacterVoiceEnum.UIBloomView.CharacterDataView)
+	arg_7_0._uiSpine:setShareRT(CharacterVoiceEnum.RTShareType.BloomAuto)
 	CharacterController.instance:registerCallback(CharacterEvent.PlayVoice, arg_7_0._onPlayVoice, arg_7_0)
 	CharacterController.instance:registerCallback(CharacterEvent.StopVoice, arg_7_0._onStopVoice, arg_7_0)
 
@@ -237,7 +238,7 @@ function var_0_0._refreshSpine(arg_17_0)
 	local var_17_0 = HeroModel.instance:getByHeroId(arg_17_0._heroId)
 	local var_17_1 = SkinConfig.instance:getSkinCo(var_17_0.skin)
 
-	arg_17_0._uiSpine:setResPath(var_17_1, arg_17_0._onSpineLoaded, arg_17_0)
+	arg_17_0._uiSpine:setResPath(var_17_1, arg_17_0._onSpineLoaded, arg_17_0, CharacterVoiceEnum.FullScreenEffectCameraSize)
 
 	local var_17_2 = var_17_1.characterDataVoiceViewOffset
 	local var_17_3
@@ -428,6 +429,7 @@ function var_0_0._setModelVisible(arg_29_0, arg_29_1)
 		arg_29_0._uiSpine:setModelVisible(arg_29_1)
 	else
 		arg_29_0._uiSpine:setLayer(UnityLayer.Water)
+		arg_29_0._uiSpine:hideCamera()
 		TaskDispatcher.runDelay(arg_29_0._delaySetModelHide, arg_29_0, 1)
 	end
 end

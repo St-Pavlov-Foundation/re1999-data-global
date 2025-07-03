@@ -204,6 +204,16 @@ function var_0_0._onReceiveMaterialChangePush_default(arg_7_0, arg_7_1, arg_7_2,
 		end
 	end
 
+	local var_7_3 = ItemConfig.instance:getItemListBySubType(ItemEnum.SubType.PlayerBg)
+
+	if var_7_3 and #var_7_3 > 0 then
+		for iter_7_0, iter_7_1 in ipairs(var_7_3) do
+			if #arg_7_2 == 1 and iter_7_1.id == arg_7_2[1].materilId then
+				PlayerCardController.instance:ShowChangeBgSkin(iter_7_1.id)
+			end
+		end
+	end
+
 	arg_7_0:simpleShowView(arg_7_2)
 end
 

@@ -144,7 +144,7 @@ function var_0_0.onOpen(arg_10_0)
 	FightViewPartVisible.set(false, false, false, false, false)
 	arg_10_0:initBossList()
 
-	local var_10_0 = FightModel.instance:getCurRoundMO()
+	local var_10_0 = FightDataHelper.roundMgr:getRoundData()
 	local var_10_1 = var_10_0 and var_10_0:getAIUseCardMOList() or {}
 
 	arg_10_0.cardList = tabletool.copy(var_10_1)
@@ -294,7 +294,7 @@ function var_0_0.refreshSelectStatus(arg_18_0)
 
 		if var_18_0 then
 			if iter_18_1 == arg_18_0.selectCardMo then
-				local var_18_1 = iter_18_1:isUniqueSkill()
+				local var_18_1 = iter_18_1:isBigSkill()
 
 				gohelper.setActive(var_18_0.goSelectBig, var_18_1)
 				gohelper.setActive(var_18_0.goSelectSmall, not var_18_1)
@@ -711,7 +711,7 @@ function var_0_0.canUseSkill(arg_40_0, arg_40_1)
 	local var_40_2 = var_40_1:getMO()
 	local var_40_3 = FightViewHandCardItemLock.canUseCardSkill(var_40_1.id, var_40_0)
 
-	if FightCardModel.instance:isUniqueSkill(var_40_1.id, var_40_0) then
+	if FightCardDataHelper.isBigSkill(var_40_0) then
 		local var_40_4 = var_40_2.exPoint
 		local var_40_5 = var_40_2:getUniqueSkillPoint()
 

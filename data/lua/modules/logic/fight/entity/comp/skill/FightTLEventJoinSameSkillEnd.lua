@@ -1,8 +1,8 @@
 ﻿module("modules.logic.fight.entity.comp.skill.FightTLEventJoinSameSkillEnd", package.seeall)
 
-local var_0_0 = class("FightTLEventJoinSameSkillEnd")
+local var_0_0 = class("FightTLEventJoinSameSkillEnd", FightTimelineTrackItem)
 
-function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 	return
 end
 

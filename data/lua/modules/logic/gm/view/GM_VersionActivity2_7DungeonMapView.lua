@@ -1,0 +1,11 @@
+﻿module("modules.logic.gm.view.GM_VersionActivity2_7DungeonMapView", package.seeall)
+
+local var_0_0 = class("GM_VersionActivity2_7DungeonMapView", GM_VersionActivity_DungeonMapView)
+
+function var_0_0.register()
+	GM_VersionActivity_DungeonMapView.VersionActivityX_XDungeonMapView_register(VersionActivityFixedDungeonMapView)
+	GM_VersionActivity_DungeonMapView.VersionActivityX_XMapEpisodeItem_register(VersionActivityFixedDungeonMapEpisodeItem)
+	GM_VersionActivity_DungeonMapView.VersionActivityX_XDungeonMapLevelView_register(VersionActivityFixedDungeonMapLevelView, 2, 6)
+end
+
+return var_0_0

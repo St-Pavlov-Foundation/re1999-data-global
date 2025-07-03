@@ -643,7 +643,7 @@ function var_0_0.jumpToActivityView(arg_33_0, arg_33_1)
 				VersionActivityDungeonController.instance:openVersionActivityDungeonMapView(VersionActivityEnum.DungeonChapterId.LeiMiTeBei)
 			end
 		end, nil, var_33_1)
-	elseif var_33_1 == ActivityEnum.Activity.Work_SignView_1_8 or var_33_1 == ActivityEnum.Activity.V2a0_SummerSign or var_33_1 == ActivityEnum.Activity.V2a1_MoonFestival or var_33_1 == ActivityEnum.Activity.V2a2_RedLeafFestival_PanelView or var_33_1 == VersionActivity2_2Enum.ActivityId.LimitDecorate or var_33_1 == ActivityEnum.Activity.V2a2_TurnBack_H5 or var_33_1 == ActivityEnum.Activity.V2a2_SummonCustomPickNew or var_33_1 == ActivityEnum.Activity.V2a3_NewCultivationGift or var_33_1 == ActivityEnum.Activity.V2a7_Labor_Sign then
+	elseif var_33_1 == ActivityEnum.Activity.Work_SignView_1_8 or var_33_1 == ActivityEnum.Activity.V3a0_SummerSign or var_33_1 == ActivityEnum.Activity.V2a0_SummerSign or var_33_1 == ActivityEnum.Activity.V2a1_MoonFestival or var_33_1 == ActivityEnum.Activity.V2a2_RedLeafFestival_PanelView or var_33_1 == VersionActivity2_2Enum.ActivityId.LimitDecorate or var_33_1 == ActivityEnum.Activity.V2a2_TurnBack_H5 or var_33_1 == ActivityEnum.Activity.V2a2_SummonCustomPickNew or var_33_1 == ActivityEnum.Activity.V2a3_NewCultivationGift or var_33_1 == ActivityEnum.Activity.V2a7_Labor_Sign then
 		if ActivityHelper.getActivityStatus(var_33_1, true) ~= ActivityEnum.ActivityStatus.Normal then
 			return JumpEnum.JumpResult.Fail
 		end
@@ -651,7 +651,7 @@ function var_0_0.jumpToActivityView(arg_33_0, arg_33_1)
 		table.insert(arg_33_0.waitOpenViewNames, ViewName.ActivityBeginnerView)
 		ActivityModel.instance:setTargetActivityCategoryId(var_33_1)
 		ActivityController.instance:openActivityBeginnerView()
-	elseif var_33_1 == ActivityEnum.Activity.VersionActivity1_3Radio or var_33_1 == ActivityEnum.Activity.Activity1_9WarmUp or var_33_1 == ActivityEnum.Activity.V2a0_WarmUp or var_33_1 == ActivityEnum.Activity.V2a1_WarmUp or var_33_1 == ActivityEnum.Activity.V2a2_WarmUp or var_33_1 == ActivityEnum.Activity.V2a3_WarmUp or var_33_1 == ActivityEnum.Activity.V2a4_WarmUp or var_33_1 == ActivityEnum.Activity.V2a5_WarmUp or var_33_1 == ActivityEnum.Activity.V2a6_WarmUp then
+	elseif var_33_1 == ActivityEnum.Activity.VersionActivity1_3Radio or var_33_1 == ActivityEnum.Activity.Activity1_9WarmUp or var_33_1 == ActivityEnum.Activity.V2a0_WarmUp or var_33_1 == ActivityEnum.Activity.V2a1_WarmUp or var_33_1 == ActivityEnum.Activity.V2a2_WarmUp or var_33_1 == ActivityEnum.Activity.V2a3_WarmUp or var_33_1 == ActivityEnum.Activity.V2a4_WarmUp or var_33_1 == ActivityEnum.Activity.V2a5_WarmUp or var_33_1 == ActivityEnum.Activity.V2a6_WarmUp or var_33_1 == ActivityEnum.Activity.V2a7_WarmUp then
 		if ActivityHelper.getActivityStatus(var_33_1, true) ~= ActivityEnum.ActivityStatus.Normal then
 			return JumpEnum.JumpResult.Fail
 		end
@@ -1432,7 +1432,7 @@ function var_0_0.jumpToVersionEnterView(arg_121_0, arg_121_1)
 	end
 
 	local var_121_2 = string.format("VersionActivity%sEnterController", var_121_1)
-	local var_121_3 = _G[var_121_2]
+	local var_121_3 = _G[var_121_2] or VersionActivityFixedEnterController
 
 	if var_121_3 then
 		var_121_3.instance:openVersionActivityEnterView(nil, nil, var_121_0)
@@ -1599,6 +1599,7 @@ var_0_0.JumpViewToHandleFunc = {
 	[JumpEnum.JumpView.RoleStoryActivity] = var_0_0.jumpToRoleStoryActivity,
 	[JumpEnum.JumpView.BossRush] = var_0_0.jumpToBossRush,
 	[JumpEnum.JumpView.Tower] = var_0_0.jumpToTowerView,
+	[JumpEnum.JumpView.Challenge] = Act183JumpHelper.jumpToAct183,
 	[JumpEnum.JumpView.V1a5Dungeon] = var_0_0.jumpToAct1_5DungeonView,
 	[JumpEnum.JumpView.V1a6Dungeon] = var_0_0.jumpToAct1_6DungeonView,
 	[JumpEnum.JumpView.Season123] = var_0_0.jumpToSeason123,

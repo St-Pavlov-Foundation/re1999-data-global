@@ -111,8 +111,8 @@ function var_0_0._refreshUI(arg_10_0)
 		gohelper.setActive(arg_10_0._gobalance, true)
 
 		arg_10_0._txtBalanceRoleLv.text = HeroConfig.instance:getCommonLevelDisplay(var_10_2)
-		arg_10_0._txtBalanceEquipLv.text = var_10_4 .. luaLang("level")
-		arg_10_0._txtBalanceTalent.text = var_10_3 .. luaLang("level")
+		arg_10_0._txtBalanceEquipLv.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("common_format_level"), var_10_4)
+		arg_10_0._txtBalanceTalent.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("common_format_level"), var_10_3)
 	else
 		gohelper.setActive(arg_10_0._gobalance, false)
 	end

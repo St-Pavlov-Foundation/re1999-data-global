@@ -194,381 +194,433 @@ function var_0_0._btnsummon1OnClick(arg_14_0)
 		return
 	end
 
-	local var_14_1, var_14_2, var_14_3 = SummonMainModel.getCostByConfig(var_14_0.cost1)
-	local var_14_4 = {
-		type = var_14_1,
-		id = var_14_2,
-		quantity = var_14_3,
-		callback = arg_14_0._summon1Confirm,
-		callbackObj = arg_14_0
-	}
+	local var_14_1 = arg_14_0:getPickHeroIds(var_14_0)
+	local var_14_2 = SummonModel.instance:getSummonFullExSkillHero(var_14_0.id, var_14_1)
 
-	var_14_4.notEnough = false
-
-	local var_14_5 = var_14_3 <= ItemModel.instance:getItemQuantity(var_14_1, var_14_2)
-	local var_14_6 = SummonMainModel.instance.everyCostCount
-	local var_14_7 = SummonMainModel.instance:getOwnCostCurrencyNum()
-
-	if not var_14_5 and var_14_7 < var_14_6 then
-		var_14_4.notEnough = true
-	end
-
-	if var_14_5 then
-		var_14_4.needTransform = false
-
-		arg_14_0:_summon1Confirm()
-
-		return
+	if var_14_2 == nil then
+		arg_14_0:_btnsummon1OnClick_2()
 	else
-		var_14_4.needTransform = true
-		var_14_4.cost_type = SummonMainModel.instance.costCurrencyType
-		var_14_4.cost_id = SummonMainModel.instance.costCurrencyId
-		var_14_4.cost_quantity = var_14_6
-		var_14_4.miss_quantity = 1
-	end
+		local var_14_3 = HeroConfig.instance:getHeroCO(var_14_2).name
 
-	ViewMgr.instance:openView(ViewName.SummonConfirmView, var_14_4)
+		GameFacade.showOptionAndParamsMessageBox(MessageBoxIdDefine.SummonHeroExFull, MsgBoxEnum.BoxType.Yes_No, MsgBoxEnum.optionType.Daily, var_14_0.id, arg_14_0._btnsummon1OnClick_2, nil, nil, arg_14_0, nil, nil, var_14_3)
+	end
 end
 
-function var_0_0._btnsummon10OnClick(arg_15_0)
+function var_0_0._btnsummon1OnClick_2(arg_15_0)
+	if SummonController.instance:isInSummonGuide() then
+		return
+	end
+
 	local var_15_0 = SummonMainModel.instance:getCurPool()
 
 	if not var_15_0 then
 		return
 	end
 
-	local var_15_1, var_15_2, var_15_3 = SummonMainModel.getCostByConfig(var_15_0.cost10)
-	local var_15_4 = SummonMainModel.instance:getDiscountCost10(var_15_0.id)
-
-	if SummonMainModel.instance:getDiscountCostId(var_15_0.id) == var_15_2 then
-		var_15_3 = var_15_4 < 0 and var_15_3 or var_15_4
-	end
-
-	local var_15_5 = {
+	local var_15_1, var_15_2, var_15_3 = SummonMainModel.getCostByConfig(var_15_0.cost1)
+	local var_15_4 = {
 		type = var_15_1,
 		id = var_15_2,
 		quantity = var_15_3,
-		callback = arg_15_0._summon10Confirm,
+		callback = arg_15_0._summon1Confirm,
 		callbackObj = arg_15_0
 	}
 
-	var_15_5.notEnough = false
+	var_15_4.notEnough = false
 
-	local var_15_6 = ItemModel.instance:getItemQuantity(var_15_1, var_15_2)
-	local var_15_7 = var_15_3 <= var_15_6
-	local var_15_8 = SummonMainModel.instance.everyCostCount
-	local var_15_9 = SummonMainModel.instance:getOwnCostCurrencyNum()
-	local var_15_10 = var_15_3 - var_15_6
-	local var_15_11 = var_15_8 * var_15_10
+	local var_15_5 = var_15_3 <= ItemModel.instance:getItemQuantity(var_15_1, var_15_2)
+	local var_15_6 = SummonMainModel.instance.everyCostCount
+	local var_15_7 = SummonMainModel.instance:getOwnCostCurrencyNum()
 
-	if not var_15_7 and var_15_9 < var_15_11 then
-		var_15_5.notEnough = true
+	if not var_15_5 and var_15_7 < var_15_6 then
+		var_15_4.notEnough = true
 	end
 
-	if var_15_7 then
-		var_15_5.needTransform = false
+	if var_15_5 then
+		var_15_4.needTransform = false
 
-		arg_15_0:_summon10Confirm()
+		arg_15_0:_summon1Confirm()
 
 		return
 	else
-		var_15_5.needTransform = true
-		var_15_5.cost_type = SummonMainModel.instance.costCurrencyType
-		var_15_5.cost_id = SummonMainModel.instance.costCurrencyId
-		var_15_5.cost_quantity = var_15_11
-		var_15_5.miss_quantity = var_15_10
+		var_15_4.needTransform = true
+		var_15_4.cost_type = SummonMainModel.instance.costCurrencyType
+		var_15_4.cost_id = SummonMainModel.instance.costCurrencyId
+		var_15_4.cost_quantity = var_15_6
+		var_15_4.miss_quantity = 1
 	end
 
-	ViewMgr.instance:openView(ViewName.SummonConfirmView, var_15_5)
+	ViewMgr.instance:openView(ViewName.SummonConfirmView, var_15_4)
 end
 
-function var_0_0._summon10Confirm(arg_16_0)
+function var_0_0._btnsummon10OnClick(arg_16_0)
 	local var_16_0 = SummonMainModel.instance:getCurPool()
 
 	if not var_16_0 then
 		return
 	end
 
-	SummonMainController.instance:sendStartSummon(var_16_0.id, 10, false, true)
+	local var_16_1 = arg_16_0:getPickHeroIds(var_16_0)
+	local var_16_2 = SummonModel.instance:getSummonFullExSkillHero(var_16_0.id, var_16_1)
+
+	if var_16_2 == nil then
+		arg_16_0:_btnsummon10OnClick_2()
+	else
+		local var_16_3 = HeroConfig.instance:getHeroCO(var_16_2).name
+
+		GameFacade.showOptionAndParamsMessageBox(MessageBoxIdDefine.SummonHeroExFull, MsgBoxEnum.BoxType.Yes_No, MsgBoxEnum.optionType.Daily, var_16_0.id, arg_16_0._btnsummon10OnClick_2, nil, nil, arg_16_0, nil, nil, var_16_3)
+	end
 end
 
-function var_0_0._summon1Confirm(arg_17_0)
+function var_0_0._btnsummon10OnClick_2(arg_17_0)
 	local var_17_0 = SummonMainModel.instance:getCurPool()
 
 	if not var_17_0 then
 		return
 	end
 
-	SummonMainController.instance:sendStartSummon(var_17_0.id, 1, false, true)
+	local var_17_1, var_17_2, var_17_3 = SummonMainModel.getCostByConfig(var_17_0.cost10)
+	local var_17_4 = SummonMainModel.instance:getDiscountCost10(var_17_0.id)
+
+	if SummonMainModel.instance:getDiscountCostId(var_17_0.id) == var_17_2 then
+		var_17_3 = var_17_4 < 0 and var_17_3 or var_17_4
+	end
+
+	local var_17_5 = {
+		type = var_17_1,
+		id = var_17_2,
+		quantity = var_17_3,
+		callback = arg_17_0._summon10Confirm,
+		callbackObj = arg_17_0
+	}
+
+	var_17_5.notEnough = false
+
+	local var_17_6 = ItemModel.instance:getItemQuantity(var_17_1, var_17_2)
+	local var_17_7 = var_17_3 <= var_17_6
+	local var_17_8 = SummonMainModel.instance.everyCostCount
+	local var_17_9 = SummonMainModel.instance:getOwnCostCurrencyNum()
+	local var_17_10 = var_17_3 - var_17_6
+	local var_17_11 = var_17_8 * var_17_10
+
+	if not var_17_7 and var_17_9 < var_17_11 then
+		var_17_5.notEnough = true
+	end
+
+	if var_17_7 then
+		var_17_5.needTransform = false
+
+		arg_17_0:_summon10Confirm()
+
+		return
+	else
+		var_17_5.needTransform = true
+		var_17_5.cost_type = SummonMainModel.instance.costCurrencyType
+		var_17_5.cost_id = SummonMainModel.instance.costCurrencyId
+		var_17_5.cost_quantity = var_17_11
+		var_17_5.miss_quantity = var_17_10
+	end
+
+	ViewMgr.instance:openView(ViewName.SummonConfirmView, var_17_5)
 end
 
-function var_0_0._btnpickOnClick(arg_18_0)
+function var_0_0._summon10Confirm(arg_18_0)
 	local var_18_0 = SummonMainModel.instance:getCurPool()
 
 	if not var_18_0 then
 		return
 	end
 
-	ViewMgr.instance:openView(ViewName.SummonCustomPickChoice, {
-		poolId = var_18_0.id
-	})
+	SummonMainController.instance:sendStartSummon(var_18_0.id, 10, false, true)
 end
 
-function var_0_0._onClickDetailByIndex(arg_19_0, arg_19_1)
+function var_0_0._summon1Confirm(arg_19_0)
 	local var_19_0 = SummonMainModel.instance:getCurPool()
 
 	if not var_19_0 then
 		return
 	end
 
-	local var_19_1 = SummonMainModel.instance:getPoolServerMO(var_19_0.id)
-
-	if var_19_1 and var_19_1.customPickMO then
-		local var_19_2 = var_19_1.customPickMO.pickHeroIds[arg_19_1]
-
-		if var_19_2 then
-			ViewMgr.instance:openView(ViewName.SummonHeroDetailView, {
-				heroId = var_19_2
-			})
-		end
-	end
+	SummonMainController.instance:sendStartSummon(var_19_0.id, 1, false, true)
 end
 
-function var_0_0.refreshView(arg_20_0)
-	arg_20_0.summonSuccess = false
+function var_0_0._btnpickOnClick(arg_20_0)
+	local var_20_0 = SummonMainModel.instance:getCurPool()
 
-	local var_20_0 = SummonMainModel.instance:getList()
-
-	if not var_20_0 or #var_20_0 <= 0 then
-		gohelper.setActive(arg_20_0._goui, false)
-
+	if not var_20_0 then
 		return
 	end
 
-	arg_20_0:refreshPoolUI()
+	ViewMgr.instance:openView(ViewName.SummonCustomPickChoice, {
+		poolId = var_20_0.id
+	})
 end
 
-function var_0_0.refreshPoolUI(arg_21_0)
+function var_0_0._onClickDetailByIndex(arg_21_0, arg_21_1)
 	local var_21_0 = SummonMainModel.instance:getCurPool()
 
 	if not var_21_0 then
 		return
 	end
 
-	if SummonCustomPickModel.instance:isCustomPickOver(var_21_0.id) then
-		arg_21_0:handlePickOverStatus(var_21_0)
-	else
-		arg_21_0:handleNeedPickStatus()
+	local var_21_1 = SummonMainModel.instance:getPoolServerMO(var_21_0.id)
+
+	if var_21_1 and var_21_1.customPickMO then
+		local var_21_2 = var_21_1.customPickMO.pickHeroIds[arg_21_1]
+
+		if var_21_2 then
+			ViewMgr.instance:openView(ViewName.SummonHeroDetailView, {
+				heroId = var_21_2
+			})
+		end
 	end
-
-	arg_21_0:refreshPickHeroes(var_21_0)
-	arg_21_0:_refreshOpenTime()
-
-	local var_21_1 = SummonMainModel.instance:getDiscountCost10(var_21_0.id, 1)
-
-	arg_21_0._txttips.text = string.format(luaLang("summon_discount_tips"), var_21_1)
-
-	arg_21_0:refreshCost()
 end
 
-function var_0_0.refreshCost10(arg_22_0, arg_22_1)
-	local var_22_0, var_22_1, var_22_2 = SummonMainModel.instance.getCostByConfig(arg_22_1)
-	local var_22_3 = SummonMainModel.instance.getSummonItemIcon(var_22_0, var_22_1)
+function var_0_0.refreshView(arg_22_0)
+	arg_22_0.summonSuccess = false
 
-	arg_22_0._simagecurrency10:LoadImage(var_22_3)
-	arg_22_0._simagecurrency10normal:LoadImage(var_22_3)
+	local var_22_0 = SummonMainModel.instance:getList()
 
-	local var_22_4 = SummonMainModel.instance:getCurId()
-	local var_22_5 = SummonMainModel.instance:getDiscountCostId(var_22_4)
-	local var_22_6 = SummonMainModel.instance:getDiscountTime10Server(var_22_4)
-	local var_22_7 = var_22_6 > 0
+	if not var_22_0 or #var_22_0 <= 0 then
+		gohelper.setActive(arg_22_0._goui, false)
 
-	gohelper.setActive(arg_22_0._gotip2bg, var_22_7)
-	gohelper.setActive(arg_22_0._gosummon10, var_22_7)
-	gohelper.setActive(arg_22_0._gosummon10normal, not var_22_7)
+		return
+	end
 
-	local var_22_8 = ""
-	local var_22_9 = ""
+	arg_22_0:refreshPoolUI()
+end
 
-	if var_22_1 == var_22_5 then
-		gohelper.setActive(arg_22_0._gocount, var_22_6 > 0)
+function var_0_0.refreshPoolUI(arg_23_0)
+	local var_23_0 = SummonMainModel.instance:getCurPool()
 
-		if var_22_6 > 0 then
-			local var_22_10 = SummonMainModel.instance:getDiscountCost10(var_22_4)
+	if not var_23_0 then
+		return
+	end
 
-			var_22_8 = string.format("<color=%s>%s</color>", "#FFE095", luaLang("multiple") .. var_22_10)
-			var_22_9 = var_22_2
+	if SummonCustomPickModel.instance:isCustomPickOver(var_23_0.id) then
+		arg_23_0:handlePickOverStatus(var_23_0)
+	else
+		arg_23_0:handleNeedPickStatus()
+	end
 
-			local var_22_11 = (var_22_2 - var_22_10) / var_22_2 * 100
+	arg_23_0:refreshPickHeroes(var_23_0)
+	arg_23_0:_refreshOpenTime()
 
-			arg_22_0._txtcount.text = string.format(luaLang("summonpickchoice_discount"), var_22_11)
+	local var_23_1 = SummonMainModel.instance:getDiscountCost10(var_23_0.id, 1)
+
+	arg_23_0._txttips.text = string.format(luaLang("summon_discount_tips"), var_23_1)
+
+	arg_23_0:refreshCost()
+end
+
+function var_0_0.refreshCost10(arg_24_0, arg_24_1)
+	local var_24_0, var_24_1, var_24_2 = SummonMainModel.instance.getCostByConfig(arg_24_1)
+	local var_24_3 = SummonMainModel.instance.getSummonItemIcon(var_24_0, var_24_1)
+
+	arg_24_0._simagecurrency10:LoadImage(var_24_3)
+	arg_24_0._simagecurrency10normal:LoadImage(var_24_3)
+
+	local var_24_4 = SummonMainModel.instance:getCurId()
+	local var_24_5 = SummonMainModel.instance:getDiscountCostId(var_24_4)
+	local var_24_6 = SummonMainModel.instance:getDiscountTime10Server(var_24_4)
+	local var_24_7 = var_24_6 > 0
+
+	gohelper.setActive(arg_24_0._gotip2bg, var_24_7)
+	gohelper.setActive(arg_24_0._gosummon10, var_24_7)
+	gohelper.setActive(arg_24_0._gosummon10normal, not var_24_7)
+
+	local var_24_8 = ""
+	local var_24_9 = ""
+
+	if var_24_1 == var_24_5 then
+		gohelper.setActive(arg_24_0._gocount, var_24_6 > 0)
+
+		if var_24_6 > 0 then
+			local var_24_10 = SummonMainModel.instance:getDiscountCost10(var_24_4)
+
+			var_24_8 = string.format("<color=%s>%s</color>", "#FFE095", luaLang("multiple") .. var_24_10)
+			var_24_9 = var_24_2
+
+			local var_24_11 = (var_24_2 - var_24_10) / var_24_2 * 100
+
+			arg_24_0._txtcount.text = string.format(luaLang("summonpickchoice_discount"), var_24_11)
 		else
-			var_22_8 = string.format("<color=%s>%s</color>", "#000000", luaLang("multiple") .. var_22_2)
+			var_24_8 = string.format("<color=%s>%s</color>", "#000000", luaLang("multiple") .. var_24_2)
 		end
 	else
-		var_22_8 = string.format("<color=%s>%s</color>", "#000000", luaLang("multiple") .. var_22_2)
+		var_24_8 = string.format("<color=%s>%s</color>", "#000000", luaLang("multiple") .. var_24_2)
 
-		gohelper.setActive(arg_22_0._gocount, false)
+		gohelper.setActive(arg_24_0._gocount, false)
 	end
 
-	arg_22_0._txtcurrency101.text = var_22_8
-	arg_22_0._txtcurrency101normal.text = var_22_8
-	arg_22_0._txtcurrency102.text = var_22_9
-	arg_22_0._txtcurrency102normal.text = var_22_9
+	arg_24_0._txtcurrency101.text = var_24_8
+	arg_24_0._txtcurrency101normal.text = var_24_8
+	arg_24_0._txtcurrency102.text = var_24_9
+	arg_24_0._txtcurrency102normal.text = var_24_9
 end
 
-function var_0_0.handleNeedPickStatus(arg_23_0)
-	gohelper.setActive(arg_23_0._gosummonbtns, false)
-	gohelper.setActive(arg_23_0._goselected, false)
-	gohelper.setActive(arg_23_0._simageunselect, true)
-	gohelper.setActive(arg_23_0._goselfselect, true)
-	gohelper.setActive(arg_23_0._simageunselect, true)
+function var_0_0.handleNeedPickStatus(arg_25_0)
+	gohelper.setActive(arg_25_0._gosummonbtns, false)
+	gohelper.setActive(arg_25_0._goselected, false)
+	gohelper.setActive(arg_25_0._simageunselect, true)
+	gohelper.setActive(arg_25_0._goselfselect, true)
+	gohelper.setActive(arg_25_0._simageunselect, true)
 end
 
-function var_0_0.handlePickOverStatus(arg_24_0, arg_24_1)
-	gohelper.setActive(arg_24_0._gosummonbtns, true)
-	gohelper.setActive(arg_24_0._goselected, true)
-	gohelper.setActive(arg_24_0._simageunselect, false)
-	gohelper.setActive(arg_24_0._goselfselect, false)
-	gohelper.setActive(arg_24_0._simageunselect, false)
-	arg_24_0:refreshFreeSummonButton(arg_24_1)
+function var_0_0.handlePickOverStatus(arg_26_0, arg_26_1)
+	gohelper.setActive(arg_26_0._gosummonbtns, true)
+	gohelper.setActive(arg_26_0._goselected, true)
+	gohelper.setActive(arg_26_0._simageunselect, false)
+	gohelper.setActive(arg_26_0._goselfselect, false)
+	gohelper.setActive(arg_26_0._simageunselect, false)
+	arg_26_0:refreshFreeSummonButton(arg_26_1)
 end
 
-function var_0_0.refreshPickHeroes(arg_25_0, arg_25_1)
-	local var_25_0 = SummonMainModel.instance:getPoolServerMO(arg_25_1.id)
+function var_0_0.refreshPickHeroes(arg_27_0, arg_27_1)
+	local var_27_0 = SummonMainModel.instance:getPoolServerMO(arg_27_1.id)
 
-	if var_25_0 and var_25_0.customPickMO then
-		for iter_25_0 = 1, arg_25_0._charaterItemCount do
-			local var_25_1 = var_25_0.customPickMO.pickHeroIds[iter_25_0]
+	if var_27_0 and var_27_0.customPickMO then
+		for iter_27_0 = 1, arg_27_0._charaterItemCount do
+			local var_27_1 = var_27_0.customPickMO.pickHeroIds[iter_27_0]
 
-			arg_25_0:_refreshPickHero(arg_25_1.id, iter_25_0, var_25_1)
+			arg_27_0:_refreshPickHero(arg_27_1.id, iter_27_0, var_27_1)
 		end
 	end
 end
 
-function var_0_0._refreshPickHero(arg_26_0, arg_26_1, arg_26_2, arg_26_3)
-	local var_26_0 = arg_26_0._characteritems[arg_26_2]
+function var_0_0.getPickHeroIds(arg_28_0, arg_28_1)
+	local var_28_0 = SummonMainModel.instance:getPoolServerMO(arg_28_1.id)
 
-	if var_26_0 then
-		if arg_26_3 then
-			gohelper.setActive(var_26_0.go, true)
-			gohelper.setActive(var_26_0.simagehero, true)
+	if var_28_0 and var_28_0.customPickMO then
+		return var_28_0.customPickMO.pickHeroIds
+	end
 
-			local var_26_1 = HeroConfig.instance:getHeroCO(arg_26_3)
+	return nil
+end
 
-			UISpriteSetMgr.instance:setCommonSprite(var_26_0.imagecareer, "lssx_" .. tostring(var_26_1.career))
+function var_0_0._refreshPickHero(arg_29_0, arg_29_1, arg_29_2, arg_29_3)
+	local var_29_0 = arg_29_0._characteritems[arg_29_2]
 
-			var_26_0.txtnamecn.text = var_26_1.name
+	if var_29_0 then
+		if arg_29_3 then
+			gohelper.setActive(var_29_0.go, true)
+			gohelper.setActive(var_29_0.simagehero, true)
 
-			for iter_26_0 = 1, 6 do
-				gohelper.setActive(var_26_0.rares[iter_26_0], iter_26_0 <= CharacterEnum.Star[var_26_1.rare])
+			local var_29_1 = HeroConfig.instance:getHeroCO(arg_29_3)
+
+			UISpriteSetMgr.instance:setCommonSprite(var_29_0.imagecareer, "lssx_" .. tostring(var_29_1.career))
+
+			var_29_0.txtnamecn.text = var_29_1.name
+
+			for iter_29_0 = 1, 6 do
+				gohelper.setActive(var_29_0.rares[iter_29_0], iter_29_0 <= CharacterEnum.Star[var_29_1.rare])
 			end
 
-			var_26_0.simagehero:LoadImage(ResUrl.getHeadIconImg(var_26_1.skinId), arg_26_0.handleLoadedImage, {
-				panel = arg_26_0,
-				skinId = var_26_1.skinId,
-				index = arg_26_2
+			var_29_0.simagehero:LoadImage(ResUrl.getHeadIconImg(var_29_1.skinId), arg_29_0.handleLoadedImage, {
+				panel = arg_29_0,
+				skinId = var_29_1.skinId,
+				index = arg_29_2
 			})
 		else
-			gohelper.setActive(var_26_0.go, false)
-			gohelper.setActive(var_26_0.simagehero, false)
+			gohelper.setActive(var_29_0.go, false)
+			gohelper.setActive(var_29_0.simagehero, false)
 		end
 	end
 end
 
-function var_0_0.handleLoadedImage(arg_27_0)
-	local var_27_0 = arg_27_0.panel
-	local var_27_1 = arg_27_0.skinId
-	local var_27_2 = arg_27_0.index
-	local var_27_3 = var_27_0._characteritems[var_27_2]
+function var_0_0.handleLoadedImage(arg_30_0)
+	local var_30_0 = arg_30_0.panel
+	local var_30_1 = arg_30_0.skinId
+	local var_30_2 = arg_30_0.index
+	local var_30_3 = var_30_0._characteritems[var_30_2]
 
-	ZProj.UGUIHelper.SetImageSize(var_27_3.simagehero.gameObject)
+	ZProj.UGUIHelper.SetImageSize(var_30_3.simagehero.gameObject)
 
-	local var_27_4 = SkinConfig.instance:getSkinCo(var_27_1).skinViewImgOffset
+	local var_30_4 = SkinConfig.instance:getSkinCo(var_30_1).skinViewImgOffset
 
-	if not string.nilorempty(var_27_4) then
-		local var_27_5 = string.splitToNumber(var_27_4, "#")
+	if not string.nilorempty(var_30_4) then
+		local var_30_5 = string.splitToNumber(var_30_4, "#")
 
-		recthelper.setAnchor(var_27_3.tfimagehero, tonumber(var_27_5[1]), tonumber(var_27_5[2]))
-		transformhelper.setLocalScale(var_27_3.tfimagehero, tonumber(var_27_5[3]), tonumber(var_27_5[3]), tonumber(var_27_5[3]))
+		recthelper.setAnchor(var_30_3.tfimagehero, tonumber(var_30_5[1]), tonumber(var_30_5[2]))
+		transformhelper.setLocalScale(var_30_3.tfimagehero, tonumber(var_30_5[3]), tonumber(var_30_5[3]), tonumber(var_30_5[3]))
 	else
-		recthelper.setAnchor(var_27_3.tfimagehero, -150, -150)
-		transformhelper.setLocalScale(var_27_3.tfimagehero, 0.6, 0.6, 0.6)
+		recthelper.setAnchor(var_30_3.tfimagehero, -150, -150)
+		transformhelper.setLocalScale(var_30_3.tfimagehero, 0.6, 0.6, 0.6)
 	end
 end
 
-function var_0_0.refreshFreeSummonButton(arg_28_0, arg_28_1)
-	arg_28_0._compFreeButton = arg_28_0._compFreeButton or SummonFreeSingleGacha.New(arg_28_0._btnsummon1.gameObject, arg_28_1.id)
+function var_0_0.refreshFreeSummonButton(arg_31_0, arg_31_1)
+	arg_31_0._compFreeButton = arg_31_0._compFreeButton or SummonFreeSingleGacha.New(arg_31_0._btnsummon1.gameObject, arg_31_1.id)
 
-	arg_28_0._compFreeButton:refreshUI()
+	arg_31_0._compFreeButton:refreshUI()
 end
 
-function var_0_0.refreshRemainTimes(arg_29_0, arg_29_1)
-	local var_29_0 = SummonConfig.getSummonSSRTimes(arg_29_1)
-	local var_29_1 = SummonMainModel.instance:getPoolServerMO(arg_29_1.id)
+function var_0_0.refreshRemainTimes(arg_32_0, arg_32_1)
+	local var_32_0 = SummonConfig.getSummonSSRTimes(arg_32_1)
+	local var_32_1 = SummonMainModel.instance:getPoolServerMO(arg_32_1.id)
 
-	if var_29_1 and var_29_1.luckyBagMO then
-		arg_29_0._txttimes.text = string.format("%s/%s", var_29_1.luckyBagMO.summonTimes, var_29_0)
+	if var_32_1 and var_32_1.luckyBagMO then
+		arg_32_0._txttimes.text = string.format("%s/%s", var_32_1.luckyBagMO.summonTimes, var_32_0)
 	else
-		arg_29_0._txttimes.text = "-"
+		arg_32_0._txttimes.text = "-"
 	end
 end
 
-function var_0_0.refreshCost(arg_30_0)
-	local var_30_0 = SummonMainModel.instance:getCurPool()
+function var_0_0.refreshCost(arg_33_0)
+	local var_33_0 = SummonMainModel.instance:getCurPool()
 
-	if var_30_0 then
-		arg_30_0:_refreshSingleCost(var_30_0.cost1, arg_30_0._simagecurrency1, "_txtcurrency1")
-		arg_30_0:refreshCost10(var_30_0.cost10)
+	if var_33_0 then
+		arg_33_0:_refreshSingleCost(var_33_0.cost1, arg_33_0._simagecurrency1, "_txtcurrency1")
+		arg_33_0:refreshCost10(var_33_0.cost10)
 	end
 end
 
-function var_0_0._refreshSingleCost(arg_31_0, arg_31_1, arg_31_2, arg_31_3)
-	local var_31_0, var_31_1, var_31_2 = SummonMainModel.getCostByConfig(arg_31_1)
-	local var_31_3 = SummonMainModel.getSummonItemIcon(var_31_0, var_31_1)
+function var_0_0._refreshSingleCost(arg_34_0, arg_34_1, arg_34_2, arg_34_3)
+	local var_34_0, var_34_1, var_34_2 = SummonMainModel.getCostByConfig(arg_34_1)
+	local var_34_3 = SummonMainModel.getSummonItemIcon(var_34_0, var_34_1)
 
-	arg_31_2:LoadImage(var_31_3)
+	arg_34_2:LoadImage(var_34_3)
 
-	local var_31_4 = ItemModel.instance:getItemQuantity(var_31_0, var_31_1)
+	local var_34_4 = ItemModel.instance:getItemQuantity(var_34_0, var_34_1)
 
-	arg_31_0[arg_31_3 .. "1"].text = luaLang("multiple") .. var_31_2
-	arg_31_0[arg_31_3 .. "2"].text = ""
+	arg_34_0[arg_34_3 .. "1"].text = luaLang("multiple") .. var_34_2
+	arg_34_0[arg_34_3 .. "2"].text = ""
 end
 
-function var_0_0._refreshOpenTime(arg_32_0)
-	local var_32_0 = SummonMainModel.instance:getCurPool()
+function var_0_0._refreshOpenTime(arg_35_0)
+	local var_35_0 = SummonMainModel.instance:getCurPool()
 
-	if not var_32_0 then
+	if not var_35_0 then
 		return
 	end
 
-	local var_32_1 = SummonMainModel.instance:getPoolServerMO(var_32_0.id)
+	local var_35_1 = SummonMainModel.instance:getPoolServerMO(var_35_0.id)
 
-	if var_32_1 ~= nil and var_32_1.offlineTime ~= 0 and var_32_1.offlineTime < TimeUtil.maxDateTimeStamp then
-		local var_32_2 = var_32_1.offlineTime - ServerTime.now()
+	if var_35_1 ~= nil and var_35_1.offlineTime ~= 0 and var_35_1.offlineTime < TimeUtil.maxDateTimeStamp then
+		local var_35_2 = var_35_1.offlineTime - ServerTime.now()
 
-		arg_32_0._txtdeadline.text = string.format(luaLang("summonmainequipprobup_deadline"), SummonModel.formatRemainTime(var_32_2))
+		arg_35_0._txtdeadline.text = string.format(luaLang("summonmainequipprobup_deadline"), SummonModel.formatRemainTime(var_35_2))
 	else
-		arg_32_0._txtdeadline.text = ""
+		arg_35_0._txtdeadline.text = ""
 	end
 end
 
-function var_0_0.onSummonFailed(arg_33_0)
-	arg_33_0.summonSuccess = false
+function var_0_0.onSummonFailed(arg_36_0)
+	arg_36_0.summonSuccess = false
 
-	arg_33_0:refreshCost()
+	arg_36_0:refreshCost()
 end
 
-function var_0_0.onSummonReply(arg_34_0)
-	arg_34_0.summonSuccess = true
+function var_0_0.onSummonReply(arg_37_0)
+	arg_37_0.summonSuccess = true
 end
 
-function var_0_0.onItemChanged(arg_35_0)
-	if SummonController.instance.isWaitingSummonResult or arg_35_0.summonSuccess then
+function var_0_0.onItemChanged(arg_38_0)
+	if SummonController.instance.isWaitingSummonResult or arg_38_0.summonSuccess then
 		return
 	end
 
-	arg_35_0:refreshCost()
+	arg_38_0:refreshCost()
 end
 
 return var_0_0

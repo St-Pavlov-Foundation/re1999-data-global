@@ -24,6 +24,8 @@ function var_0_0.sendGM(arg_2_0)
 		return
 	end
 
+	GMCommandHistoryModel.instance:addCommandHistory(arg_2_0)
+
 	var_0_1 = false
 	var_0_2 = string.lower(arg_2_0)
 

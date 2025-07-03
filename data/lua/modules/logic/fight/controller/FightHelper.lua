@@ -152,7 +152,7 @@ end
 function var_0_0.getDefenders(arg_9_0, arg_9_1, arg_9_2)
 	local var_9_0 = {}
 
-	for iter_9_0, iter_9_1 in ipairs(arg_9_0.actEffectMOs) do
+	for iter_9_0, iter_9_1 in ipairs(arg_9_0.actEffect) do
 		local var_9_1 = false
 
 		if arg_9_2 and arg_9_2[iter_9_1.effectType] then
@@ -323,7 +323,7 @@ function var_0_0.getRelativeEntityIdDict(arg_18_0, arg_18_1)
 		var_18_0[arg_18_0.toId] = true
 	end
 
-	for iter_18_0, iter_18_1 in ipairs(arg_18_0.actEffectMOs) do
+	for iter_18_0, iter_18_1 in ipairs(arg_18_0.actEffect) do
 		local var_18_1 = false
 
 		if arg_18_1 and arg_18_1[iter_18_1.effectType] then
@@ -345,7 +345,7 @@ end
 function var_0_0.getSkillTargetEntitys(arg_19_0, arg_19_1)
 	local var_19_0 = {}
 
-	for iter_19_0, iter_19_1 in ipairs(arg_19_0.actEffectMOs) do
+	for iter_19_0, iter_19_1 in ipairs(arg_19_0.actEffect) do
 		local var_19_1 = false
 
 		if arg_19_1 and arg_19_1[iter_19_1.effectType] then
@@ -899,7 +899,7 @@ function var_0_0.detectTimelinePlayEffectCondition(arg_47_0, arg_47_1, arg_47_2)
 	if arg_47_1 == "1" then
 		local var_47_0 = false
 
-		for iter_47_0, iter_47_1 in pairs(arg_47_0.actEffectMOs) do
+		for iter_47_0, iter_47_1 in pairs(arg_47_0.actEffect) do
 			if iter_47_1.effectType == FightEnum.EffectType.DEAD then
 				var_47_0 = true
 			end
@@ -909,18 +909,19 @@ function var_0_0.detectTimelinePlayEffectCondition(arg_47_0, arg_47_1, arg_47_2)
 	end
 
 	local var_47_1 = FightStrUtil.instance:getSplitToNumberCache(arg_47_1, "#")
+	local var_47_2 = var_47_1[1]
 
-	if var_47_1[1] == 2 then
-		for iter_47_2, iter_47_3 in ipairs(arg_47_0.actEffectMOs) do
+	if var_47_2 == 2 then
+		for iter_47_2, iter_47_3 in ipairs(arg_47_0.actEffect) do
 			if iter_47_3.effectType == FightEnum.EffectType.MISS or iter_47_3.effectType == FightEnum.EffectType.DAMAGE or iter_47_3.effectType == FightEnum.EffectType.CRIT or iter_47_3.effectType == FightEnum.EffectType.SHIELD then
-				local var_47_2 = var_0_0.getEntity(iter_47_3.targetId)
+				local var_47_3 = var_0_0.getEntity(iter_47_3.targetId)
 
 				for iter_47_4 = 2, #var_47_1 do
 					if arg_47_2 then
-						if arg_47_2 == var_47_2 and var_0_0.detectEntityIncludeBuffType(var_47_2, var_47_1[iter_47_4]) then
+						if arg_47_2 == var_47_3 and var_0_0.detectEntityIncludeBuffType(var_47_3, var_47_1[iter_47_4]) then
 							return true
 						end
-					elseif var_0_0.detectEntityIncludeBuffType(var_47_2, var_47_1[iter_47_4]) then
+					elseif var_0_0.detectEntityIncludeBuffType(var_47_3, var_47_1[iter_47_4]) then
 						return true
 					end
 				end
@@ -928,29 +929,29 @@ function var_0_0.detectTimelinePlayEffectCondition(arg_47_0, arg_47_1, arg_47_2)
 		end
 	end
 
-	if var_47_1[1] == 3 then
-		local var_47_3 = var_0_0.getEntity(arg_47_0.fromId)
+	if var_47_2 == 3 then
+		local var_47_4 = var_0_0.getEntity(arg_47_0.fromId)
 
-		if var_47_3 then
+		if var_47_4 then
 			for iter_47_5 = 2, #var_47_1 do
-				if var_0_0.detectEntityIncludeBuffType(var_47_3, var_47_1[iter_47_5]) then
+				if var_0_0.detectEntityIncludeBuffType(var_47_4, var_47_1[iter_47_5]) then
 					return true
 				end
 			end
 		end
 	end
 
-	if var_47_1[1] == 4 then
-		for iter_47_6, iter_47_7 in ipairs(arg_47_0.actEffectMOs) do
+	if var_47_2 == 4 then
+		for iter_47_6, iter_47_7 in ipairs(arg_47_0.actEffect) do
 			if iter_47_7.effectType == FightEnum.EffectType.MISS or iter_47_7.effectType == FightEnum.EffectType.DAMAGE or iter_47_7.effectType == FightEnum.EffectType.CRIT or iter_47_7.effectType == FightEnum.EffectType.SHIELD then
-				local var_47_4 = var_0_0.getEntity(iter_47_7.targetId)
+				local var_47_5 = var_0_0.getEntity(iter_47_7.targetId)
 
 				for iter_47_8 = 2, #var_47_1 do
 					if arg_47_2 then
-						if arg_47_2 == var_47_4 and arg_47_2.buff and arg_47_2.buff:haveBuffId(var_47_1[iter_47_8]) then
+						if arg_47_2 == var_47_5 and arg_47_2.buff and arg_47_2.buff:haveBuffId(var_47_1[iter_47_8]) then
 							return true
 						end
-					elseif var_47_4.buff and var_47_4.buff:haveBuffId(var_47_1[iter_47_8]) then
+					elseif var_47_5.buff and var_47_5.buff:haveBuffId(var_47_1[iter_47_8]) then
 						return true
 					end
 				end
@@ -958,36 +959,36 @@ function var_0_0.detectTimelinePlayEffectCondition(arg_47_0, arg_47_1, arg_47_2)
 		end
 	end
 
-	if var_47_1[1] == 5 then
-		local var_47_5 = var_0_0.getEntity(arg_47_0.fromId)
+	if var_47_2 == 5 then
+		local var_47_6 = var_0_0.getEntity(arg_47_0.fromId)
 
-		if var_47_5 and var_47_5.buff then
+		if var_47_6 and var_47_6.buff then
 			for iter_47_9 = 2, #var_47_1 do
-				if var_47_5.buff:haveBuffId(var_47_1[iter_47_9]) then
+				if var_47_6.buff:haveBuffId(var_47_1[iter_47_9]) then
 					return true
 				end
 			end
 		end
 	end
 
-	if var_47_1[1] == 6 then
-		for iter_47_10, iter_47_11 in ipairs(arg_47_0.actEffectMOs) do
+	if var_47_2 == 6 then
+		for iter_47_10, iter_47_11 in ipairs(arg_47_0.actEffect) do
 			if iter_47_11.effectType == FightEnum.EffectType.MISS or iter_47_11.effectType == FightEnum.EffectType.DAMAGE or iter_47_11.effectType == FightEnum.EffectType.CRIT or iter_47_11.effectType == FightEnum.EffectType.SHIELD then
-				local var_47_6 = var_0_0.getEntity(iter_47_11.targetId)
+				local var_47_7 = var_0_0.getEntity(iter_47_11.targetId)
 
 				for iter_47_12 = 2, #var_47_1 do
 					if arg_47_2 then
-						if arg_47_2 == var_47_6 then
-							local var_47_7 = arg_47_2:getMO()
+						if arg_47_2 == var_47_7 then
+							local var_47_8 = arg_47_2:getMO()
 
-							if var_47_7 and var_47_7.skin == var_47_1[iter_47_12] then
+							if var_47_8 and var_47_8.skin == var_47_1[iter_47_12] then
 								return true
 							end
 						end
 					else
-						local var_47_8 = var_47_6:getMO()
+						local var_47_9 = var_47_7:getMO()
 
-						if var_47_8 and var_47_8.skin == var_47_1[iter_47_12] then
+						if var_47_9 and var_47_9.skin == var_47_1[iter_47_12] then
 							return true
 						end
 					end
@@ -996,8 +997,8 @@ function var_0_0.detectTimelinePlayEffectCondition(arg_47_0, arg_47_1, arg_47_2)
 		end
 	end
 
-	if var_47_1[1] == 7 then
-		for iter_47_13, iter_47_14 in ipairs(arg_47_0.actEffectMOs) do
+	if var_47_2 == 7 then
+		for iter_47_13, iter_47_14 in ipairs(arg_47_0.actEffect) do
 			if iter_47_14.targetId == arg_47_0.fromId and iter_47_14.configEffect == var_47_1[2] then
 				if iter_47_14.configEffect == 30011 then
 					if iter_47_14.effectNum ~= 0 then
@@ -1010,8 +1011,8 @@ function var_0_0.detectTimelinePlayEffectCondition(arg_47_0, arg_47_1, arg_47_2)
 		end
 	end
 
-	if var_47_1[1] == 8 then
-		for iter_47_15, iter_47_16 in ipairs(arg_47_0.actEffectMOs) do
+	if var_47_2 == 8 then
+		for iter_47_15, iter_47_16 in ipairs(arg_47_0.actEffect) do
 			if iter_47_16.targetId ~= arg_47_0.fromId and iter_47_16.configEffect == var_47_1[2] then
 				if iter_47_16.configEffect == 30011 then
 					if iter_47_16.effectNum ~= 0 then
@@ -1024,43 +1025,43 @@ function var_0_0.detectTimelinePlayEffectCondition(arg_47_0, arg_47_1, arg_47_2)
 		end
 	end
 
-	if var_47_1[1] == 9 then
-		local var_47_9 = var_0_0.getEntity(arg_47_0.fromId)
+	if var_47_2 == 9 then
+		local var_47_10 = var_0_0.getEntity(arg_47_0.fromId)
 
-		if var_47_9 and var_47_9.buff then
+		if var_47_10 and var_47_10.buff then
 			for iter_47_17 = 2, #var_47_1 do
-				if var_47_9.buff:haveBuffId(var_47_1[iter_47_17]) then
+				if var_47_10.buff:haveBuffId(var_47_1[iter_47_17]) then
 					return false
 				end
 			end
 
 			return true
 		end
-	elseif var_47_1[1] == 10 then
-		local var_47_10 = arg_47_0.playerOperationCountForPlayEffectTimeline
+	elseif var_47_2 == 10 then
+		local var_47_11 = arg_47_0.playerOperationCountForPlayEffectTimeline
 
-		if var_47_10 and var_47_1[2] == var_47_10 then
+		if var_47_11 and var_47_1[2] == var_47_11 then
 			return true
 		end
-	elseif var_47_1[1] == 11 then
-		local var_47_11 = var_47_1[2]
-		local var_47_12 = var_47_1[3]
-		local var_47_13 = FightDataHelper.entityMgr:getById(arg_47_0.fromId)
+	elseif var_47_2 == 11 then
+		local var_47_12 = var_47_1[2]
+		local var_47_13 = var_47_1[3]
+		local var_47_14 = FightDataHelper.entityMgr:getById(arg_47_0.fromId)
 
-		if var_47_13 then
-			local var_47_14 = var_47_13:getPowerInfo(FightEnum.PowerType.Power)
+		if var_47_14 then
+			local var_47_15 = var_47_14:getPowerInfo(FightEnum.PowerType.Power)
 
-			if var_47_14 then
-				if var_47_11 == 1 then
-					return var_47_12 < var_47_14.num
-				elseif var_47_11 == 2 then
-					return var_47_12 > var_47_14.num
-				elseif var_47_11 == 3 then
-					return var_47_14.num == var_47_12
-				elseif var_47_11 == 4 then
-					return var_47_12 <= var_47_14.num
-				elseif var_47_11 == 5 then
-					return var_47_12 >= var_47_14.num
+			if var_47_15 then
+				if var_47_12 == 1 then
+					return var_47_13 < var_47_15.num
+				elseif var_47_12 == 2 then
+					return var_47_13 > var_47_15.num
+				elseif var_47_12 == 3 then
+					return var_47_15.num == var_47_13
+				elseif var_47_12 == 4 then
+					return var_47_13 <= var_47_15.num
+				elseif var_47_12 == 5 then
+					return var_47_13 >= var_47_15.num
 				end
 			end
 		end
@@ -1151,20 +1152,40 @@ function var_0_0.hideDefenderBuffEffect(arg_49_0, arg_49_1)
 					end
 				end
 			end
+
+			local var_49_10 = iter_49_5.buff and iter_49_5.buff._loopBuffEffectWrapDict
+
+			if var_49_10 then
+				for iter_49_12, iter_49_13 in pairs(var_49_10) do
+					if var_49_3 then
+						var_49_1[iter_49_5.id] = iter_49_5.id
+
+						table.insert(var_49_2, iter_49_13)
+					else
+						for iter_49_14, iter_49_15 in ipairs(var_49_4) do
+							if var_0_0.getEffectUrlWithLod(iter_49_15) == iter_49_13.path then
+								var_49_1[iter_49_5.id] = iter_49_5.id
+
+								table.insert(var_49_2, iter_49_13)
+							end
+						end
+					end
+				end
+			end
 		end
 
-		local var_49_10 = FightStrUtil.instance:getSplitCache(var_49_0.exceptEffect, "#")
-		local var_49_11 = {}
+		local var_49_11 = FightStrUtil.instance:getSplitCache(var_49_0.exceptEffect, "#")
+		local var_49_12 = {}
 
-		for iter_49_12, iter_49_13 in ipairs(var_49_10) do
-			var_49_11[var_0_0.getEffectUrlWithLod(iter_49_13)] = true
+		for iter_49_16, iter_49_17 in ipairs(var_49_11) do
+			var_49_12[var_0_0.getEffectUrlWithLod(iter_49_17)] = true
 		end
 
-		for iter_49_14, iter_49_15 in ipairs(var_49_2) do
-			local var_49_12 = var_49_2[iter_49_14]
+		for iter_49_18, iter_49_19 in ipairs(var_49_2) do
+			local var_49_13 = var_49_2[iter_49_18]
 
-			if not var_49_11[var_49_12.path] then
-				var_49_12:setActive(false, arg_49_1)
+			if not var_49_12[var_49_13.path] then
+				var_49_13:setActive(false, arg_49_1)
 			end
 		end
 	end
@@ -1192,6 +1213,10 @@ function var_0_0.getEffectAbPath(arg_51_0)
 	if GameResMgr.IsFromEditorDir or string.find(arg_51_0, "/buff/") then
 		return arg_51_0
 	else
+		if isDebugBuild and string.find(arg_51_0, "always") then
+			logError(arg_51_0)
+		end
+
 		return SLFramework.FileHelper.GetUnityPath(System.IO.Path.GetDirectoryName(arg_51_0))
 	end
 end
@@ -1340,10 +1365,10 @@ function var_0_0.getPredeductionExpoint(arg_60_0)
 
 		if var_60_1 then
 			local var_60_2 = var_60_1:getMO()
-			local var_60_3 = FightCardModel.instance:getCardOps()
+			local var_60_3 = FightDataHelper.operationDataMgr:getOpList()
 
 			for iter_60_0, iter_60_1 in ipairs(var_60_3) do
-				if arg_60_0 == iter_60_1.belongToEntityId and iter_60_1:isPlayCard() and var_60_2:isUniqueSkill(iter_60_1.skillId) then
+				if arg_60_0 == iter_60_1.belongToEntityId and iter_60_1:isPlayCard() and FightCardDataHelper.isBigSkill(iter_60_1.skillId) and not FightCardDataHelper.isSkill3(iter_60_1.cardInfoMO) then
 					var_60_0 = var_60_0 + var_60_2:getUniqueSkillPoint()
 				end
 			end
@@ -1418,7 +1443,7 @@ function var_0_0._stepBuffDealStackedBuff(arg_66_0, arg_66_1, arg_66_2, arg_66_3
 	local var_66_0 = false
 
 	if arg_66_3 then
-		local var_66_1 = arg_66_3._actEffectMO
+		local var_66_1 = arg_66_3.actEffectData
 
 		if var_66_1 and not FightSkillBuffMgr.instance:hasPlayBuff(var_66_1) then
 			local var_66_2 = lua_skill_buff.configDict[var_66_1.buff.buffId]
@@ -1466,23 +1491,27 @@ function var_0_0.getCurBossId()
 	return var_70_1 and not string.nilorempty(var_70_1.bossId) and var_70_1.bossId or nil
 end
 
-function var_0_0.setEffectEntitySide(arg_71_0)
+function var_0_0.setEffectEntitySide(arg_71_0, arg_71_1)
+	if FightModel.instance:getVersion() >= 1 then
+		return
+	end
+
 	local var_71_0 = arg_71_0.targetId
 
 	if var_71_0 == FightEntityScene.MySideId then
-		arg_71_0.entityMO.side = FightEnum.EntitySide.MySide
+		arg_71_1.side = FightEnum.EntitySide.MySide
 
 		return
 	elseif var_71_0 == FightEntityScene.EnemySideId then
-		arg_71_0.entityMO.side = FightEnum.EntitySide.EnemySide
+		arg_71_1.side = FightEnum.EntitySide.EnemySide
 
 		return
 	end
 
 	local var_71_1 = FightDataHelper.entityMgr:getById(var_71_0)
 
-	if var_71_1 and arg_71_0.entityMO then
-		arg_71_0.entityMO.side = var_71_1.side
+	if var_71_1 then
+		arg_71_1.side = var_71_1.side
 	end
 end
 
@@ -1632,7 +1661,7 @@ function var_0_0.processEntityActionName(arg_79_0, arg_79_1, arg_79_2)
 		local var_79_10 = arg_79_0:getPartIndex()
 
 		if arg_79_2 then
-			for iter_79_10, iter_79_11 in ipairs(arg_79_2.actEffectMOs) do
+			for iter_79_10, iter_79_11 in ipairs(arg_79_2.actEffect) do
 				if FightTLEventDefHit.directCharacterHitEffectType[iter_79_11.effectType] and iter_79_11.targetId ~= arg_79_0.id then
 					local var_79_11 = var_0_0.getEntity(iter_79_11.targetId)
 
@@ -1770,7 +1799,7 @@ function var_0_0.getBuffListForReplaceTimeline(arg_87_0, arg_87_1, arg_87_2)
 	local var_87_0 = var_0_0.getEntitysCloneBuff(arg_87_1)
 
 	if arg_87_0 and arg_87_0.simulate == 1 then
-		var_87_0 = var_0_0.simulateFightStepMO(arg_87_2, var_87_0)
+		var_87_0 = var_0_0.simulateFightStepData(arg_87_2, var_87_0)
 	end
 
 	local var_87_1 = {}
@@ -1872,7 +1901,7 @@ function var_0_0.detectReplaceTimeline(arg_89_0, arg_89_1)
 					end
 				end
 			elseif var_89_8 == "2" then
-				for iter_89_8, iter_89_9 in pairs(arg_89_1.actEffectMOs) do
+				for iter_89_8, iter_89_9 in pairs(arg_89_1.actEffect) do
 					if iter_89_9.effectType == FightEnum.EffectType.DEAD then
 						return iter_89_3.timeline
 					end
@@ -1910,7 +1939,7 @@ function var_0_0.detectReplaceTimeline(arg_89_0, arg_89_1)
 					local var_89_16 = iter_89_16.skin
 
 					if iter_89_3.target == 1 then
-						var_89_16 = var_0_0.processSkinByStepMO(arg_89_1, iter_89_16)
+						var_89_16 = var_0_0.processSkinByStepData(arg_89_1, iter_89_16)
 					end
 
 					if iter_89_16 and var_89_15[var_89_16] then
@@ -1924,7 +1953,7 @@ function var_0_0.detectReplaceTimeline(arg_89_0, arg_89_1)
 					var_89_17[tonumber(var_89_7[iter_89_17])] = true
 				end
 
-				for iter_89_18, iter_89_19 in ipairs(arg_89_1.actEffectMOs) do
+				for iter_89_18, iter_89_19 in ipairs(arg_89_1.actEffect) do
 					if var_89_2[iter_89_19.targetId] and var_89_17[iter_89_19.configEffect] then
 						return iter_89_3.timeline
 					end
@@ -1959,7 +1988,7 @@ function var_0_0.detectReplaceTimeline(arg_89_0, arg_89_1)
 						end
 					end
 
-					if var_0_0.simulateFightStepMO(arg_89_1, var_89_22, var_0_0.detectBuffCountEnough, {
+					if var_0_0.simulateFightStepData(arg_89_1, var_89_22, var_0_0.detectBuffCountEnough, {
 						buffId = var_89_20,
 						count = var_89_21
 					}) == true then
@@ -1984,7 +2013,7 @@ function var_0_0.detectReplaceTimeline(arg_89_0, arg_89_1)
 						local var_89_27 = iter_89_30.skin
 
 						if iter_89_3.target == 1 then
-							var_89_27 = var_0_0.processSkinByStepMO(arg_89_1, iter_89_30)
+							var_89_27 = var_0_0.processSkinByStepData(arg_89_1, iter_89_30)
 						end
 
 						if var_89_27 == var_89_26 then
@@ -2032,7 +2061,7 @@ function var_0_0.detectReplaceTimeline(arg_89_0, arg_89_1)
 					local var_89_34 = iter_89_33.skin
 
 					if iter_89_3.target == 1 then
-						var_89_34 = var_0_0.processSkinByStepMO(arg_89_1, iter_89_33)
+						var_89_34 = var_0_0.processSkinByStepData(arg_89_1, iter_89_33)
 					end
 
 					if var_89_33 == var_89_34 then
@@ -2056,7 +2085,7 @@ function var_0_0.detectReplaceTimeline(arg_89_0, arg_89_1)
 					local var_89_37 = iter_89_38.skin
 
 					if iter_89_3.target == 1 then
-						var_89_37 = var_0_0.processSkinByStepMO(arg_89_1, iter_89_38)
+						var_89_37 = var_0_0.processSkinByStepData(arg_89_1, iter_89_38)
 					end
 
 					if iter_89_38 and var_89_36[var_89_37] then
@@ -2101,8 +2130,8 @@ function var_0_0.detectBuffCountEnough(arg_90_0, arg_90_1)
 	end
 end
 
-function var_0_0.simulateFightStepMO(arg_91_0, arg_91_1, arg_91_2, arg_91_3)
-	for iter_91_0, iter_91_1 in ipairs(arg_91_0.actEffectMOs) do
+function var_0_0.simulateFightStepData(arg_91_0, arg_91_1, arg_91_2, arg_91_3)
+	for iter_91_0, iter_91_1 in ipairs(arg_91_0.actEffect) do
 		local var_91_0 = iter_91_1.targetId
 		local var_91_1 = var_0_0.getEntity(var_91_0)
 		local var_91_2 = var_91_1 and var_91_1:getMO()
@@ -2511,7 +2540,7 @@ function var_0_0.curIsRougeFight()
 	return var_109_2 and var_109_2.type == DungeonEnum.ChapterType.Rouge
 end
 
-function var_0_0.processSkinByStepMO(arg_110_0, arg_110_1)
+function var_0_0.processSkinByStepData(arg_110_0, arg_110_1)
 	arg_110_1 = arg_110_1 or FightDataHelper.entityMgr:getById(arg_110_0.fromId)
 
 	local var_110_0 = arg_110_0.supportHeroId
@@ -2750,7 +2779,7 @@ end
 function var_0_0.getNextRoundGetCardList()
 	local var_119_0 = {}
 	local var_119_1 = {}
-	local var_119_2 = FightCardModel.instance:getCardOps()
+	local var_119_2 = FightDataHelper.operationDataMgr:getOpList()
 
 	for iter_119_0, iter_119_1 in ipairs(var_119_2) do
 		if iter_119_1:isPlayCard() then
@@ -2808,14 +2837,14 @@ function var_0_0.getNextRoundGetCardList()
 		local var_119_9 = string.splitToNumber(iter_119_9.skillId, "#")
 
 		for iter_119_10, iter_119_11 in ipairs(var_119_9) do
-			local var_119_10 = FightCardInfoMO.New()
-
-			var_119_10:init({
+			local var_119_10 = {
 				uid = iter_119_9.entityId,
 				skillId = iter_119_11,
 				tempCard = iter_119_9.tempCard
-			})
-			table.insert(var_119_8, var_119_10)
+			}
+			local var_119_11 = FightCardInfoData.New(var_119_10)
+
+			table.insert(var_119_8, var_119_11)
 		end
 	end
 
@@ -3204,72 +3233,52 @@ function var_0_0._buildAttr(arg_132_0)
 	return var_132_0
 end
 
-function var_0_0.buildTestCard()
-	local var_133_0 = {
-		cardGroup = {
-			300201,
-			300301,
-			300401,
-			300501,
-			300401,
-			300301,
-			300201,
-			300501
-		}
-	}
+function var_0_0.getEpisodeRecommendLevel(arg_133_0, arg_133_1)
+	local var_133_0 = DungeonConfig.instance:getEpisodeBattleId(arg_133_0)
 
-	var_133_0.actPoint = 4
-	var_133_0.moveNum = 20
-
-	FightCardModel.instance:updateCard(var_133_0)
-end
-
-function var_0_0.getEpisodeRecommendLevel(arg_134_0, arg_134_1)
-	local var_134_0 = DungeonConfig.instance:getEpisodeBattleId(arg_134_0)
-
-	if not var_134_0 then
+	if not var_133_0 then
 		return 0
 	end
 
-	return var_0_0.getBattleRecommendLevel(var_134_0, arg_134_1)
+	return var_0_0.getBattleRecommendLevel(var_133_0, arg_133_1)
 end
 
-function var_0_0.getBattleRecommendLevel(arg_135_0, arg_135_1)
-	local var_135_0 = arg_135_1 and "levelEasy" or "level"
-	local var_135_1 = lua_battle.configDict[arg_135_0]
+function var_0_0.getBattleRecommendLevel(arg_134_0, arg_134_1)
+	local var_134_0 = arg_134_1 and "levelEasy" or "level"
+	local var_134_1 = lua_battle.configDict[arg_134_0]
 
-	if not var_135_1 then
+	if not var_134_1 then
 		return 0
 	end
 
-	local var_135_2 = {}
-	local var_135_3 = {}
-	local var_135_4
-	local var_135_5
+	local var_134_2 = {}
+	local var_134_3 = {}
+	local var_134_4
+	local var_134_5
 
-	for iter_135_0, iter_135_1 in ipairs(FightStrUtil.instance:getSplitToNumberCache(var_135_1.monsterGroupIds, "#")) do
-		local var_135_6 = lua_monster_group.configDict[iter_135_1].bossId
-		local var_135_7 = FightStrUtil.instance:getSplitToNumberCache(lua_monster_group.configDict[iter_135_1].monster, "#")
+	for iter_134_0, iter_134_1 in ipairs(FightStrUtil.instance:getSplitToNumberCache(var_134_1.monsterGroupIds, "#")) do
+		local var_134_6 = lua_monster_group.configDict[iter_134_1].bossId
+		local var_134_7 = FightStrUtil.instance:getSplitToNumberCache(lua_monster_group.configDict[iter_134_1].monster, "#")
 
-		for iter_135_2, iter_135_3 in ipairs(var_135_7) do
-			if var_0_0.isBossId(var_135_6, iter_135_3) then
-				table.insert(var_135_3, iter_135_3)
+		for iter_134_2, iter_134_3 in ipairs(var_134_7) do
+			if var_0_0.isBossId(var_134_6, iter_134_3) then
+				table.insert(var_134_3, iter_134_3)
 			else
-				table.insert(var_135_2, iter_135_3)
+				table.insert(var_134_2, iter_134_3)
 			end
 		end
 	end
 
-	if #var_135_3 > 0 then
-		return lua_monster.configDict[var_135_3[1]][var_135_0]
-	elseif #var_135_2 > 0 then
-		local var_135_8 = 0
+	if #var_134_3 > 0 then
+		return lua_monster.configDict[var_134_3[1]][var_134_0]
+	elseif #var_134_2 > 0 then
+		local var_134_8 = 0
 
-		for iter_135_4, iter_135_5 in ipairs(var_135_2) do
-			var_135_8 = var_135_8 + lua_monster.configDict[iter_135_5][var_135_0]
+		for iter_134_4, iter_134_5 in ipairs(var_134_2) do
+			var_134_8 = var_134_8 + lua_monster.configDict[iter_134_5][var_134_0]
 		end
 
-		return math.ceil(var_135_8 / #var_135_2)
+		return math.ceil(var_134_8 / #var_134_2)
 	else
 		return 0
 	end
@@ -3286,191 +3295,191 @@ function var_0_0.initBuildSceneAndLevelHandle()
 	}
 end
 
-function var_0_0.buildDefaultSceneAndLevel(arg_137_0, arg_137_1)
-	local var_137_0 = {}
-	local var_137_1 = {}
-	local var_137_2 = lua_battle.configDict[arg_137_1].sceneIds
-	local var_137_3 = string.splitToNumber(var_137_2, "#")
+function var_0_0.buildDefaultSceneAndLevel(arg_136_0, arg_136_1)
+	local var_136_0 = {}
+	local var_136_1 = {}
+	local var_136_2 = lua_battle.configDict[arg_136_1].sceneIds
+	local var_136_3 = string.splitToNumber(var_136_2, "#")
 
-	for iter_137_0, iter_137_1 in ipairs(var_137_3) do
-		local var_137_4 = SceneConfig.instance:getSceneLevelCOs(iter_137_1)[1].id
+	for iter_136_0, iter_136_1 in ipairs(var_136_3) do
+		local var_136_4 = SceneConfig.instance:getSceneLevelCOs(iter_136_1)[1].id
 
-		table.insert(var_137_0, iter_137_1)
-		table.insert(var_137_1, var_137_4)
+		table.insert(var_136_0, iter_136_1)
+		table.insert(var_136_1, var_136_4)
 	end
 
-	return var_137_0, var_137_1
+	return var_136_0, var_136_1
 end
 
-function var_0_0.buildCachotSceneAndLevel(arg_138_0, arg_138_1)
-	local var_138_0 = 0
-	local var_138_1 = V1a6_CachotRoomModel.instance:getNowBattleEventMo()
+function var_0_0.buildCachotSceneAndLevel(arg_137_0, arg_137_1)
+	local var_137_0 = 0
+	local var_137_1 = V1a6_CachotRoomModel.instance:getNowBattleEventMo()
 
-	if var_138_1 and lua_rogue_event_fight.configDict[var_138_1:getEventCo().eventId].isChangeScene ~= 1 then
-		var_138_0 = V1a6_CachotModel.instance:getRogueInfo().layer
+	if var_137_1 and lua_rogue_event_fight.configDict[var_137_1:getEventCo().eventId].isChangeScene ~= 1 then
+		var_137_0 = V1a6_CachotModel.instance:getRogueInfo().layer
 	end
 
-	if var_138_0 > 0 then
-		local var_138_2 = V1a6_CachotEventConfig.instance:getSceneIdByLayer(var_138_0)
+	if var_137_0 > 0 then
+		local var_137_2 = V1a6_CachotEventConfig.instance:getSceneIdByLayer(var_137_0)
 
-		if var_138_2 then
-			local var_138_3 = {}
-			local var_138_4 = {}
+		if var_137_2 then
+			local var_137_3 = {}
+			local var_137_4 = {}
 
-			table.insert(var_138_3, var_138_2.sceneId)
-			table.insert(var_138_4, var_138_2.levelId)
+			table.insert(var_137_3, var_137_2.sceneId)
+			table.insert(var_137_4, var_137_2.levelId)
 
-			return var_138_3, var_138_4
+			return var_137_3, var_137_4
 		else
-			logError("肉鸽战斗场景配置不存在" .. var_138_0)
+			logError("肉鸽战斗场景配置不存在" .. var_137_0)
 
-			return var_0_0.buildDefaultSceneAndLevel(arg_138_0, arg_138_1)
+			return var_0_0.buildDefaultSceneAndLevel(arg_137_0, arg_137_1)
 		end
+	else
+		return var_0_0.buildDefaultSceneAndLevel(arg_137_0, arg_137_1)
+	end
+end
+
+function var_0_0.buildRougeSceneAndLevel(arg_138_0, arg_138_1)
+	local var_138_0 = RougeMapModel.instance:getCurEvent()
+	local var_138_1 = var_138_0 and var_138_0.type
+	local var_138_2 = RougeMapHelper.isFightEvent(var_138_1) and lua_rouge_fight_event.configDict[var_138_0.id]
+
+	if var_138_2 and var_138_2.isChangeScene == 1 then
+		local var_138_3 = RougeMapModel.instance:getLayerCo()
+		local var_138_4 = var_138_3 and var_138_3.sceneId
+		local var_138_5 = var_138_3 and var_138_3.levelId
+
+		if var_138_4 ~= 0 and var_138_5 ~= 0 then
+			return {
+				var_138_4
+			}, {
+				var_138_5
+			}
+		end
+
+		logError(string.format("layerId : %s, config Incorrect, sceneId : %s, levelId : %s", var_138_3 and var_138_3.id, var_138_4, var_138_5))
+
+		return var_0_0.buildDefaultSceneAndLevel(arg_138_0, arg_138_1)
 	else
 		return var_0_0.buildDefaultSceneAndLevel(arg_138_0, arg_138_1)
 	end
 end
 
-function var_0_0.buildRougeSceneAndLevel(arg_139_0, arg_139_1)
-	local var_139_0 = RougeMapModel.instance:getCurEvent()
-	local var_139_1 = var_139_0 and var_139_0.type
-	local var_139_2 = RougeMapHelper.isFightEvent(var_139_1) and lua_rouge_fight_event.configDict[var_139_0.id]
-
-	if var_139_2 and var_139_2.isChangeScene == 1 then
-		local var_139_3 = RougeMapModel.instance:getLayerCo()
-		local var_139_4 = var_139_3 and var_139_3.sceneId
-		local var_139_5 = var_139_3 and var_139_3.levelId
-
-		if var_139_4 ~= 0 and var_139_5 ~= 0 then
-			return {
-				var_139_4
-			}, {
-				var_139_5
-			}
-		end
-
-		logError(string.format("layerId : %s, config Incorrect, sceneId : %s, levelId : %s", var_139_3 and var_139_3.id, var_139_4, var_139_5))
-
-		return var_0_0.buildDefaultSceneAndLevel(arg_139_0, arg_139_1)
-	else
-		return var_0_0.buildDefaultSceneAndLevel(arg_139_0, arg_139_1)
-	end
-end
-
-function var_0_0.buildSceneAndLevel(arg_140_0, arg_140_1)
+function var_0_0.buildSceneAndLevel(arg_139_0, arg_139_1)
 	var_0_0.initBuildSceneAndLevelHandle()
 
-	local var_140_0 = lua_episode.configDict[arg_140_0]
-	local var_140_1 = var_140_0 and var_0_0.buildSceneAndLevelHandleDict[var_140_0.type]
+	local var_139_0 = lua_episode.configDict[arg_139_0]
+	local var_139_1 = var_139_0 and var_0_0.buildSceneAndLevelHandleDict[var_139_0.type]
 
-	var_140_1 = var_140_1 or var_0_0.buildDefaultSceneAndLevel
+	var_139_1 = var_139_1 or var_0_0.buildDefaultSceneAndLevel
 
-	return var_140_1(arg_140_0, arg_140_1)
+	return var_139_1(arg_139_0, arg_139_1)
 end
 
-function var_0_0.getStressStatus(arg_141_0)
-	if not arg_141_0 then
+function var_0_0.getStressStatus(arg_140_0)
+	if not arg_140_0 then
 		logError("stress is nil")
 
 		return FightEnum.Status.Positive
 	end
 
-	for iter_141_0 = 1, 2 do
-		if arg_141_0 <= FightEnum.StressThreshold[iter_141_0] then
-			return iter_141_0
+	for iter_140_0 = 1, 2 do
+		if arg_140_0 <= FightEnum.StressThreshold[iter_140_0] then
+			return iter_140_0
 		end
 	end
 
 	return nil
 end
 
-function var_0_0.getResistanceKeyById(arg_142_0)
+function var_0_0.getResistanceKeyById(arg_141_0)
 	if not var_0_0.resistanceId2KeyDict then
 		var_0_0.resistanceId2KeyDict = {}
 
-		for iter_142_0, iter_142_1 in pairs(FightEnum.Resistance) do
-			var_0_0.resistanceId2KeyDict[iter_142_1] = iter_142_0
+		for iter_141_0, iter_141_1 in pairs(FightEnum.Resistance) do
+			var_0_0.resistanceId2KeyDict[iter_141_1] = iter_141_0
 		end
 	end
 
-	return var_0_0.resistanceId2KeyDict[arg_142_0]
+	return var_0_0.resistanceId2KeyDict[arg_141_0]
 end
 
-function var_0_0.canAddPoint(arg_143_0)
-	if not arg_143_0 then
+function var_0_0.canAddPoint(arg_142_0)
+	if not arg_142_0 then
 		return false
 	end
 
-	if arg_143_0:hasBuffFeature(FightEnum.BuffType_TransferAddExPoint) then
+	if arg_142_0:hasBuffFeature(FightEnum.BuffType_TransferAddExPoint) then
 		return false
 	end
 
-	if arg_143_0:hasBuffFeature(FightEnum.ExPointCantAdd) then
+	if arg_142_0:hasBuffFeature(FightEnum.ExPointCantAdd) then
 		return false
 	end
 
 	return true
 end
 
-function var_0_0.getEntityName(arg_144_0)
-	local var_144_0 = arg_144_0 and arg_144_0:getMO()
-	local var_144_1 = var_144_0 and var_144_0:getEntityName()
+function var_0_0.getEntityName(arg_143_0)
+	local var_143_0 = arg_143_0 and arg_143_0:getMO()
+	local var_143_1 = var_143_0 and var_143_0:getEntityName()
 
-	return tostring(var_144_1)
+	return tostring(var_143_1)
 end
 
-function var_0_0.getEntityById(arg_145_0)
-	local var_145_0 = var_0_0.getEntity(arg_145_0)
+function var_0_0.getEntityById(arg_144_0)
+	local var_144_0 = var_0_0.getEntity(arg_144_0)
 
-	return var_0_0.getEntityName(var_145_0)
+	return var_0_0.getEntityName(var_144_0)
 end
 
-function var_0_0.isSameCardMo(arg_146_0, arg_146_1)
-	if arg_146_0 == arg_146_1 then
+function var_0_0.isSameCardMo(arg_145_0, arg_145_1)
+	if arg_145_0 == arg_145_1 then
 		return true
 	end
 
-	if not arg_146_0 or not arg_146_1 then
+	if not arg_145_0 or not arg_145_1 then
 		return false
 	end
 
-	return arg_146_0.custom_enemyCardIndex == arg_146_1.custom_enemyCardIndex
+	return arg_145_0.clientData.custom_enemyCardIndex == arg_145_1.clientData.custom_enemyCardIndex
 end
 
-function var_0_0.getAssitHeroInfoByUid(arg_147_0, arg_147_1)
-	local var_147_0 = FightDataHelper.entityMgr:getById(arg_147_0)
+function var_0_0.getAssitHeroInfoByUid(arg_146_0, arg_146_1)
+	local var_146_0 = FightDataHelper.entityMgr:getById(arg_146_0)
 
-	if var_147_0 and var_147_0:isCharacter() then
-		local var_147_1 = HeroConfig.instance:getHeroCO(var_147_0.modelId)
+	if var_146_0 and var_146_0:isCharacter() then
+		local var_146_1 = HeroConfig.instance:getHeroCO(var_146_0.modelId)
 
 		return {
-			skin = var_147_0.skin,
-			level = var_147_0.level,
-			config = var_147_1
+			skin = var_146_0.skin,
+			level = var_146_0.level,
+			config = var_146_1
 		}
 	end
 end
 
-function var_0_0.canSelectEnemyEntity(arg_148_0)
-	if not arg_148_0 then
+function var_0_0.canSelectEnemyEntity(arg_147_0)
+	if not arg_147_0 then
 		return false
 	end
 
-	local var_148_0 = FightDataHelper.entityMgr:getById(arg_148_0)
+	local var_147_0 = FightDataHelper.entityMgr:getById(arg_147_0)
 
-	if not var_148_0 then
+	if not var_147_0 then
 		return false
 	end
 
-	if var_148_0.side == FightEnum.EntitySide.MySide then
+	if var_147_0.side == FightEnum.EntitySide.MySide then
 		return false
 	end
 
-	if var_148_0:hasBuffFeature(FightEnum.BuffType_CantSelect) then
+	if var_147_0:hasBuffFeature(FightEnum.BuffType_CantSelect) then
 		return false
 	end
 
-	if var_148_0:hasBuffFeature(FightEnum.BuffType_CantSelectEx) then
+	if var_147_0:hasBuffFeature(FightEnum.BuffType_CantSelectEx) then
 		return false
 	end
 
@@ -3478,61 +3487,69 @@ function var_0_0.canSelectEnemyEntity(arg_148_0)
 end
 
 function var_0_0.clearNoUseEffect()
-	local var_149_0 = FightEffectPool.releaseUnuseEffect()
+	local var_148_0 = FightEffectPool.releaseUnuseEffect()
 
-	for iter_149_0, iter_149_1 in pairs(var_149_0) do
-		FightPreloadController.instance:releaseAsset(iter_149_0)
+	for iter_148_0, iter_148_1 in pairs(var_148_0) do
+		FightPreloadController.instance:releaseAsset(iter_148_0)
 	end
 
 	GameGCMgr.instance:dispatchEvent(GameGCEvent.FullGC)
 end
 
-function var_0_0.isASFDSkill(arg_150_0)
-	return arg_150_0 == FightASFDConfig.instance.skillId
+function var_0_0.isASFDSkill(arg_149_0)
+	return arg_149_0 == FightASFDConfig.instance.skillId
 end
 
-function var_0_0.isPreDeleteSkill(arg_151_0)
-	local var_151_0 = arg_151_0 and lua_skill.configDict[arg_151_0]
+function var_0_0.isPreDeleteSkill(arg_150_0)
+	local var_150_0 = arg_150_0 and lua_skill.configDict[arg_150_0]
 
-	return var_151_0 and var_151_0.icon == FightEnum.CardIconId.PreDelete
+	return var_150_0 and var_150_0.icon == FightEnum.CardIconId.PreDelete
 end
 
 function var_0_0.getASFDMgr()
-	local var_152_0 = GameSceneMgr.instance:getCurScene()
-	local var_152_1 = var_152_0 and var_152_0.mgr
+	local var_151_0 = GameSceneMgr.instance:getCurScene()
+	local var_151_1 = var_151_0 and var_151_0.mgr
 
-	return var_152_1 and var_152_1:getASFDMgr()
+	return var_151_1 and var_151_1:getASFDMgr()
 end
 
-function var_0_0.getEntityCareer(arg_153_0)
-	local var_153_0 = arg_153_0 and FightDataHelper.entityMgr:getById(arg_153_0)
+function var_0_0.getEntityCareer(arg_152_0)
+	local var_152_0 = arg_152_0 and FightDataHelper.entityMgr:getById(arg_152_0)
 
-	return var_153_0 and var_153_0:getCareer() or 0
+	return var_152_0 and var_152_0:getCareer() or 0
 end
 
-function var_0_0.isRestrain(arg_154_0, arg_154_1)
-	local var_154_0 = var_0_0.getEntityCareer(arg_154_0)
-	local var_154_1 = var_0_0.getEntityCareer(arg_154_1)
+function var_0_0.isRestrain(arg_153_0, arg_153_1)
+	local var_153_0 = var_0_0.getEntityCareer(arg_153_0)
+	local var_153_1 = var_0_0.getEntityCareer(arg_153_1)
 
-	return (FightConfig.instance:getRestrain(var_154_0, var_154_1) or 1000) > 1000
+	return (FightConfig.instance:getRestrain(var_153_0, var_153_1) or 1000) > 1000
 end
 
 var_0_0.tempEntityMoList = {}
 
-function var_0_0.hasSkinId(arg_155_0)
-	local var_155_0 = var_0_0.tempEntityMoList
+function var_0_0.hasSkinId(arg_154_0)
+	local var_154_0 = var_0_0.tempEntityMoList
 
-	tabletool.clear(var_155_0)
+	tabletool.clear(var_154_0)
 
-	local var_155_1 = FightDataHelper.entityMgr:getMyNormalList(var_155_0)
+	local var_154_1 = FightDataHelper.entityMgr:getMyNormalList(var_154_0)
 
-	for iter_155_0, iter_155_1 in ipairs(var_155_1) do
-		if iter_155_1.originSkin == arg_155_0 then
+	for iter_154_0, iter_154_1 in ipairs(var_154_1) do
+		if iter_154_1.originSkin == arg_154_0 then
 			return true
 		end
 	end
 
 	return false
+end
+
+function var_0_0.getBloodPoolSkillId()
+	return tonumber(lua_fight_xcjl_const.configDict[4].value)
+end
+
+function var_0_0.isBloodPoolSkill(arg_156_0)
+	return arg_156_0 == var_0_0.getBloodPoolSkillId()
 end
 
 return var_0_0

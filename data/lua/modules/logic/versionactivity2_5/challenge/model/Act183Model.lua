@@ -59,7 +59,7 @@ function var_0_0.setActivityId(arg_8_0, arg_8_1)
 end
 
 function var_0_0.getActivityId(arg_9_0)
-	return arg_9_0._activityId or VersionActivity2_5Enum.ActivityId.Challenge
+	return arg_9_0._activityId
 end
 
 function var_0_0.getBadgeNum(arg_10_0)
@@ -122,8 +122,9 @@ end
 function var_0_0.isHeroRepressInPreEpisode(arg_19_0, arg_19_1, arg_19_2)
 	local var_19_0 = Act183Config.instance:getEpisodeCo(arg_19_1)
 	local var_19_1 = var_19_0 and var_19_0.groupId
+	local var_19_2 = arg_19_0:getGroupEpisodeMo(var_19_1)
 
-	return (arg_19_0:getGroupEpisodeMo(var_19_1):isHeroRepressInPreEpisode(arg_19_1, arg_19_2))
+	return var_19_2 and var_19_2:isHeroRepressInPreEpisode(arg_19_1, arg_19_2)
 end
 
 function var_0_0.recordEpisodeSelectConditions(arg_20_0, arg_20_1)

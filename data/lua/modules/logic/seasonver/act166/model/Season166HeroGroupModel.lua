@@ -243,9 +243,8 @@ function var_0_0.setParam(arg_9_0, arg_9_1, arg_9_2, arg_9_3, arg_9_4)
 		end
 
 		local var_9_16 = arg_9_0.heroGroupTypeCo and arg_9_0:getCustomHeroGroupMo(arg_9_0.heroGroupTypeCo.id) or arg_9_0._commonGroups[1]
-		local var_9_17 = GameUtil.getSubPlaceholderLuaLang(luaLang("herogroup_name"), {
-			var_9_3.name,
-			luaLang("hero_group")
+		local var_9_17 = GameUtil.getSubPlaceholderLuaLang(luaLang("herogroup_groupName"), {
+			var_9_3.name
 		})
 
 		var_9_16:setTempName(var_9_17)
@@ -352,9 +351,8 @@ function var_0_0.generateTempGroup(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
 			local var_13_5 = arg_13_0.episodeId and lua_episode.configDict[arg_13_0.episodeId]
 
 			if var_13_5 then
-				local var_13_6 = GameUtil.getSubPlaceholderLuaLang(luaLang("herogroup_name"), {
-					var_13_5.name,
-					luaLang("hero_group")
+				local var_13_6 = GameUtil.getSubPlaceholderLuaLang(luaLang("herogroup_groupName"), {
+					var_13_5.name
 				})
 
 				var_13_0:setTempName(var_13_6)

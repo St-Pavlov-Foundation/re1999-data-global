@@ -452,7 +452,7 @@ function var_0_0.checkTabIsOpen(arg_41_0, arg_41_1, arg_41_2)
 				local var_41_4 = ActivityModel.instance:getActMO(var_41_0)
 				local var_41_5 = var_41_4:getRealStartTimeStamp() - ServerTime.now()
 				local var_41_6 = var_41_4.config.name
-				local var_41_7 = TimeUtil.getFormatTime_overseas(var_41_5)
+				local var_41_7 = TimeUtil.getFormatTime(var_41_5)
 
 				GameFacade.showToast(ToastEnum.V1a4_ActPreTips, var_41_6, var_41_7)
 			elseif var_41_2 then

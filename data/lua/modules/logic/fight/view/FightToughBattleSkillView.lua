@@ -19,10 +19,12 @@ end
 
 function var_0_0._onRoundSequenceStart(arg_4_0)
 	gohelper.setActive(arg_4_0.viewGO, false)
+	FightController.instance:dispatchEvent(FightEvent.RightElements_HideElement, FightRightElementEnum.Elements.CharSupport)
 end
 
 function var_0_0._onRoundSequenceFinish(arg_5_0)
 	gohelper.setActive(arg_5_0.viewGO, true)
+	FightController.instance:dispatchEvent(FightEvent.RightElements_ShowElement, FightRightElementEnum.Elements.CharSupport, arg_5_0.height)
 end
 
 function var_0_0.onOpen(arg_6_0)
@@ -49,6 +51,8 @@ function var_0_0.refreshView(arg_7_0)
 	local var_7_0 = arg_7_0:getInfo()
 
 	if not var_7_0 then
+		FightController.instance:dispatchEvent(FightEvent.RightElements_HideElement, FightRightElementEnum.Elements.CharSupport)
+
 		return
 	end
 
@@ -81,7 +85,12 @@ function var_0_0.refreshView(arg_7_0)
 		end
 	end
 
+	local var_7_7 = FightRightElementEnum.ElementsSizeDict[FightRightElementEnum.Elements.CharSupport]
+
+	arg_7_0.height = #var_7_2 * var_7_7.y
+
 	gohelper.CreateObjList(arg_7_0, arg_7_0.createItem, var_7_2, arg_7_0._item.transform.parent.gameObject, arg_7_0._item, FightToughBattleSkillItem)
+	FightController.instance:dispatchEvent(FightEvent.RightElements_ShowElement, FightRightElementEnum.Elements.CharSupport, arg_7_0.height)
 end
 
 function var_0_0.addHeroId(arg_8_0, arg_8_1, arg_8_2, arg_8_3)

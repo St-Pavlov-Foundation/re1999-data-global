@@ -129,6 +129,8 @@ end
 
 function var_0_0.refreshLYCard(arg_8_0)
 	if arg_8_0.LY_cardLoadStatus ~= var_0_0.LoadStatus.Loaded then
+		gohelper.setActive(arg_8_0._goLyCardContainer, false)
+
 		return
 	end
 
@@ -145,7 +147,7 @@ function var_0_0.refreshLYCard(arg_8_0)
 	local var_8_1 = #var_8_0
 	local var_8_2 = FightDataHelper.LYDataMgr.LYPointAreaSize
 
-	arg_8_0:getOpRedOrBlueList(FightCardModel.instance:getCardOps())
+	arg_8_0:getOpRedOrBlueList(FightDataHelper.operationDataMgr:getOpList())
 	arg_8_0:resetAllPoint()
 
 	local var_8_3 = math.min(math.max(0, var_8_2), FightLYWaitAreaCard.LY_MAXPoint)

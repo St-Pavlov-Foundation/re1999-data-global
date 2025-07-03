@@ -122,7 +122,7 @@ function var_0_0._onCheck(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
 			local var_12_4 = "b_" .. tostring(var_12_2[1])
 			local var_12_5 = tonumber(var_12_2[2])
 
-			if (tonumber(actionParam[3]) or 0) < -1 then
+			if (tonumber(var_12_2[3]) or 0) < -1 then
 				var_12_3 = "loopTimes < -1"
 			end
 

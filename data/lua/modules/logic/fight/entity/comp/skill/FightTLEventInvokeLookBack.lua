@@ -1,9 +1,9 @@
 ﻿module("modules.logic.fight.entity.comp.skill.FightTLEventInvokeLookBack", package.seeall)
 
-local var_0_0 = class("FightTLEventInvokeLookBack")
+local var_0_0 = class("FightTLEventInvokeLookBack", FightTimelineTrackItem)
 
-function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	local var_1_0 = arg_1_1 and arg_1_1.actEffectMOs
+function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	local var_1_0 = arg_1_1 and arg_1_1.actEffect
 
 	if not var_1_0 then
 		return
@@ -26,32 +26,25 @@ function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 		return
 	end
 
-	arg_1_0._flow = FlowParallel.New()
+	local var_1_3 = arg_1_0:com_registFlowParallel()
 
 	for iter_1_2, iter_1_3 in ipairs(var_1_1) do
-		local var_1_3 = FightStepBuilder.ActEffectWorkCls[iter_1_3.effectType]
+		local var_1_4 = FightStepBuilder.ActEffectWorkCls[iter_1_3.effectType]
 
-		if var_1_3 then
-			arg_1_0._flow:addWork(FightWork2Work.New(var_1_3, arg_1_1, iter_1_3))
+		if var_1_4 then
+			var_1_3:registWork(var_1_4, arg_1_1, iter_1_3)
 		end
 	end
 
-	arg_1_0._flow:start()
+	arg_1_0:addWork2TimelineFinishWork(var_1_3)
+	var_1_3:start()
 end
 
-function var_0_0.handleSkillEventEnd(arg_2_0)
+function var_0_0.onTrackEnd(arg_2_0)
 	return
 end
 
-function var_0_0.onSkillEnd(arg_3_0)
-	return
-end
-
-function var_0_0.clear(arg_4_0)
-	return
-end
-
-function var_0_0.dispose(arg_5_0)
+function var_0_0.onDestructor(arg_3_0)
 	return
 end
 

@@ -1,8 +1,8 @@
 ﻿module("modules.logic.fight.entity.comp.skill.FightTLEventAtkFullEffect", package.seeall)
 
-local var_0_0 = class("FightTLEventAtkFullEffect")
+local var_0_0 = class("FightTLEventAtkFullEffect", FightTimelineTrackItem)
 
-function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 	if not FightHelper.detectTimelinePlayEffectCondition(arg_1_1, arg_1_3[4]) then
 		return
 	end
@@ -125,44 +125,40 @@ function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 	end
 end
 
-function var_0_0.handleSkillEventEnd(arg_2_0)
+function var_0_0.onTrackEnd(arg_2_0)
 	arg_2_0:_removeEffect()
 end
 
-function var_0_0.reset(arg_3_0)
+function var_0_0.onDestructor(arg_3_0)
 	arg_3_0:_removeEffect()
 end
 
-function var_0_0.dispose(arg_4_0)
-	arg_4_0:_removeEffect()
-end
+function var_0_0._removeEffect(arg_4_0)
+	local var_4_0 = true
 
-function var_0_0._removeEffect(arg_5_0)
-	local var_5_0 = true
-
-	if arg_5_0._releaseByServer then
-		var_5_0 = false
+	if arg_4_0._releaseByServer then
+		var_4_0 = false
 	end
 
-	if arg_5_0._tokenRelease then
-		var_5_0 = false
+	if arg_4_0._tokenRelease then
+		var_4_0 = false
 	end
 
-	if arg_5_0._releaseTime then
-		var_5_0 = false
+	if arg_4_0._releaseTime then
+		var_4_0 = false
 	end
 
-	if arg_5_0._roundRelease then
-		var_5_0 = false
+	if arg_4_0._roundRelease then
+		var_4_0 = false
 	end
 
-	if var_5_0 and arg_5_0._effectWrap then
-		arg_5_0._attacker.effect:removeEffect(arg_5_0._effectWrap)
-		FightRenderOrderMgr.instance:onRemoveEffectWrap(arg_5_0._attacker.id, arg_5_0._effectWrap)
+	if var_4_0 and arg_4_0._effectWrap then
+		arg_4_0._attacker.effect:removeEffect(arg_4_0._effectWrap)
+		FightRenderOrderMgr.instance:onRemoveEffectWrap(arg_4_0._attacker.id, arg_4_0._effectWrap)
 	end
 
-	arg_5_0._effectWrap = nil
-	arg_5_0._attacker = nil
+	arg_4_0._effectWrap = nil
+	arg_4_0._attacker = nil
 end
 
 return var_0_0

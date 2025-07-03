@@ -254,24 +254,21 @@ end
 function var_0_0.onOpen(arg_18_0)
 	arg_18_0._type2FuncName = {}
 
-	local var_18_0 = GameSceneMgr.instance:getCurScene().fightLog
-
-	if not var_18_0 then
-		return
-	end
-
-	local var_18_1 = var_18_0:getProtoList()
+	local var_18_0 = FightDataHelper.protoCacheMgr.roundProtoList
 
 	arg_18_0._strList = {}
 
-	for iter_18_0, iter_18_1 in ipairs(var_18_1) do
-		if iter_18_1.protoType == FightEnum.CacheProtoType.Round then
-			arg_18_0:addLog("回合" .. iter_18_1.round)
-			arg_18_0:addLog(tostring(iter_18_1.proto))
-		elseif iter_18_1.protoType == FightEnum.CacheProtoType.Fight then
-			arg_18_0:addLog("更新战场")
-			arg_18_0:addLog(tostring(iter_18_1.proto))
+	arg_18_0:addLog("入场数据")
+	arg_18_0:addLog(FightHelper.logStr(FightDataHelper.roundMgr.enterData))
+
+	for iter_18_0, iter_18_1 in ipairs(var_18_0) do
+		local var_18_1 = var_18_0[iter_18_0 - 1]
+
+		if var_18_1 then
+			arg_18_0:addLog("回合" .. var_18_1.curRound)
 		end
+
+		arg_18_0:addLog(tostring(iter_18_1))
 	end
 
 	local var_18_2 = ""

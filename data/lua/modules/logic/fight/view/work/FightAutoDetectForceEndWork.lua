@@ -9,7 +9,7 @@ end
 function var_0_0.onStart(arg_2_0)
 	TaskDispatcher.runDelay(arg_2_0._delayDone, arg_2_0, 1)
 
-	if not FightCardModel.instance:isCardOpEnd() then
+	if not FightDataHelper.operationDataMgr:isCardOpEnd() then
 		FightController.instance:dispatchEvent(FightEvent.ForceEndAutoCardFlow)
 	end
 

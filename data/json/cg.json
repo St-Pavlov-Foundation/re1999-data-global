@@ -2583,5 +2583,16 @@
     "episodeId": 192208,
     "image": "story_bg/bg/at_guanzhedemen1.jpg",
     "preCgId": 0
+  },
+  {
+    "id": 102301,
+    "order": 0,
+    "storyChapterId": 1023,
+    "name": "language_10074872",
+    "nameEn": "The Clattering of Shells",
+    "desc": "language_10074873",
+    "episodeId": 192308,
+    "image": "story_atcg/2_7/2_7_at_ys_tutushizi.jpg",
+    "preCgId": 0
   }
 ]

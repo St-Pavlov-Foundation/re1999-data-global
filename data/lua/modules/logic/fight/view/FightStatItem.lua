@@ -6,6 +6,7 @@ function var_0_0.init(arg_1_0, arg_1_1)
 	arg_1_0._heroIcon = gohelper.findChildSingleImage(arg_1_1, "heroinfo/hero/icon")
 	arg_1_0._career = gohelper.findChildImage(arg_1_1, "heroinfo/career")
 	arg_1_0._rare = gohelper.findChildImage(arg_1_1, "heroinfo/rare")
+	arg_1_0._front = gohelper.findChildImage(arg_1_1, "heroinfo/front")
 	arg_1_0.goLayout = gohelper.findChild(arg_1_1, "heroinfo/layout")
 	arg_1_0.goRare = gohelper.findChild(arg_1_1, "heroinfo/rare")
 	arg_1_0.goCareer = gohelper.findChild(arg_1_1, "heroinfo/career")
@@ -58,8 +59,9 @@ function var_0_0.onUpdateMO(arg_4_0, arg_4_1)
 	end
 
 	local var_4_0 = ViewMgr.instance:isOpen(ViewName.Act174FightResultView)
-	local var_4_1 = arg_4_0._mo.fromOtherFight
-	local var_4_2 = lua_character.configDict[arg_4_0.entityMO.modelId]
+	local var_4_1 = ViewMgr.instance:isOpen(ViewName.Act191FightSuccView)
+	local var_4_2 = arg_4_0._mo.fromOtherFight
+	local var_4_3 = lua_character.configDict[arg_4_0.entityMO.modelId]
 
 	gohelper.setActive(arg_4_0.goLayout, true)
 	gohelper.setActive(arg_4_0.goRare, true)
@@ -71,71 +73,73 @@ function var_0_0.onUpdateMO(arg_4_0, arg_4_1)
 		arg_4_0:refreshASFDInfo()
 	elseif var_4_0 then
 		arg_4_0:refreshAct174Info()
-	elseif not var_4_2 then
-		local var_4_3 = lua_monster.configDict[arg_4_0.entityMO.modelId]
+	elseif var_4_1 then
+		arg_4_0:refreshAct191Info()
+	elseif not var_4_3 then
+		local var_4_4 = lua_monster.configDict[arg_4_0.entityMO.modelId]
 
-		arg_4_0._txtName.text = FightConfig.instance:getNewMonsterConfig(var_4_3) and var_4_3.highPriorityName or var_4_3.name
+		arg_4_0._txtName.text = FightConfig.instance:getNewMonsterConfig(var_4_4) and var_4_4.highPriorityName or var_4_4.name
 
-		if var_4_3 then
-			local var_4_4, var_4_5 = HeroConfig.instance:getShowLevel(var_4_3.level)
+		if var_4_4 then
+			local var_4_5, var_4_6 = HeroConfig.instance:getShowLevel(var_4_4.level)
 
-			arg_4_0._txtLv.text = string.format("<size=20>Lv.</size>%d", var_4_4)
+			arg_4_0._txtLv.text = string.format("<size=20>Lv.</size>%d", var_4_5)
 
-			gohelper.setActive(arg_4_0._gorankobj, var_4_5 > 1)
+			gohelper.setActive(arg_4_0._gorankobj, var_4_6 > 1)
 
 			for iter_4_0 = 1, 3 do
-				gohelper.setActive(arg_4_0._rankGOs[iter_4_0], var_4_5 > 1 and iter_4_0 == var_4_5 - 1 or false)
+				gohelper.setActive(arg_4_0._rankGOs[iter_4_0], var_4_6 > 1 and iter_4_0 == var_4_6 - 1 or false)
 			end
 
-			local var_4_6 = FightConfig.instance:getSkinCO(var_4_3.skinId)
+			local var_4_7 = FightConfig.instance:getSkinCO(var_4_4.skinId)
 
-			arg_4_0._heroIcon:LoadImage(ResUrl.getHeadIconSmall(var_4_6.retangleIcon))
-			UISpriteSetMgr.instance:setCommonSprite(arg_4_0._career, "lssx_" .. tostring(var_4_3.career))
+			arg_4_0._heroIcon:LoadImage(ResUrl.getHeadIconSmall(var_4_7.retangleIcon))
+			UISpriteSetMgr.instance:setCommonSprite(arg_4_0._career, "lssx_" .. tostring(var_4_4.career))
 			UISpriteSetMgr.instance:setCommonSprite(arg_4_0._rare, "bgequip" .. 1)
 		end
 	else
-		local var_4_7 = arg_4_0.entityMO:getTrialAttrCo()
+		local var_4_8 = arg_4_0.entityMO:getTrialAttrCo()
 
-		arg_4_0._txtName.text = var_4_2 and var_4_2.name or ""
+		arg_4_0._txtName.text = var_4_3 and var_4_3.name or ""
 
-		if var_4_7 then
-			arg_4_0._txtName.text = var_4_7.name
+		if var_4_8 then
+			arg_4_0._txtName.text = var_4_8.name
 		end
 
-		if not var_4_1 and FightReplayModel.instance:isReplay() then
-			local var_4_8, var_4_9 = HeroConfig.instance:getShowLevel(arg_4_0.entityMO.level)
+		if not var_4_2 and FightReplayModel.instance:isReplay() then
+			local var_4_9, var_4_10 = HeroConfig.instance:getShowLevel(arg_4_0.entityMO.level)
 
-			arg_4_0._txtLv.text = string.format("<size=20>Lv.</size>%d", var_4_8)
+			arg_4_0._txtLv.text = string.format("<size=20>Lv.</size>%d", var_4_9)
 
-			gohelper.setActive(arg_4_0._gorankobj, var_4_9 > 1)
+			gohelper.setActive(arg_4_0._gorankobj, var_4_10 > 1)
 
 			for iter_4_1 = 1, 3 do
-				gohelper.setActive(arg_4_0._rankGOs[iter_4_1], var_4_9 > 1 and iter_4_1 == var_4_9 - 1 or false)
+				gohelper.setActive(arg_4_0._rankGOs[iter_4_1], var_4_10 > 1 and iter_4_1 == var_4_10 - 1 or false)
 			end
 
-			local var_4_10 = FightConfig.instance:getSkinCO(arg_4_0.entityMO.skin)
+			local var_4_11 = FightConfig.instance:getSkinCO(arg_4_0.entityMO.skin)
 
-			arg_4_0._heroIcon:LoadImage(ResUrl.getHeadIconSmall(var_4_10.retangleIcon))
-			UISpriteSetMgr.instance:setCommonSprite(arg_4_0._career, "lssx_" .. tostring(var_4_2.career))
-			UISpriteSetMgr.instance:setCommonSprite(arg_4_0._rare, "bgequip" .. CharacterEnum.Star[var_4_2.rare])
+			arg_4_0._heroIcon:LoadImage(ResUrl.getHeadIconSmall(var_4_11.retangleIcon))
+			UISpriteSetMgr.instance:setCommonSprite(arg_4_0._career, "lssx_" .. tostring(var_4_3.career))
+			UISpriteSetMgr.instance:setCommonSprite(arg_4_0._rare, "bgequip" .. CharacterEnum.Star[var_4_3.rare])
 		else
-			local var_4_11 = HeroModel.instance:getByHeroId(arg_4_0.entityMO.modelId)
+			local var_4_12 = HeroModel.instance:getByHeroId(arg_4_0.entityMO.modelId)
 
-			if not var_4_11 and var_4_2 or tonumber(arg_4_0.entityMO.uid) < 0 or var_4_1 then
-				var_4_11 = HeroMo.New()
+			if not var_4_12 and var_4_3 or tonumber(arg_4_0.entityMO.uid) < 0 or var_4_2 then
+				var_4_12 = HeroMo.New()
 
-				var_4_11:initFromConfig(var_4_2)
+				var_4_12:initFromConfig(var_4_3)
 
-				var_4_11.level = arg_4_0.entityMO.level
-				var_4_11.skin = arg_4_0.entityMO.skin
+				var_4_12.level = arg_4_0.entityMO.level
+				var_4_12.skin = arg_4_0.entityMO.skin
 			end
 
-			if var_4_11 then
-				local var_4_12 = HeroGroupBalanceHelper.getHeroBalanceLv(var_4_11.heroId)
-				local var_4_13
+			if var_4_12 then
+				local var_4_13 = HeroGroupBalanceHelper.getHeroBalanceLv(var_4_12.heroId)
+				local var_4_14
 
-				if var_4_12 and var_4_12 > var_4_11.level and not var_4_1 then
-					var_4_13 = true
+				if var_4_13 and var_4_13 > var_4_12.level and not var_4_2 then
+					var_4_14 = true
 
 					for iter_4_2 = 1, 3 do
 						SLFramework.UGUI.GuiHelper.SetColor(arg_4_0._rankGOs[iter_4_2], "#547a99")
@@ -146,23 +150,23 @@ function var_0_0.onUpdateMO(arg_4_0, arg_4_1)
 					end
 				end
 
-				local var_4_14 = arg_4_0.entityMO and arg_4_0.entityMO.level or var_4_11.level
-				local var_4_15, var_4_16 = HeroConfig.instance:getShowLevel(var_4_13 and var_4_12 or var_4_14)
+				local var_4_15 = arg_4_0.entityMO and arg_4_0.entityMO.level or var_4_12.level
+				local var_4_16, var_4_17 = HeroConfig.instance:getShowLevel(var_4_14 and var_4_13 or var_4_15)
 
-				arg_4_0._txtLv.text = (var_4_13 and "<color=#547a99>" or "") .. string.format("<size=20>Lv.</size>%d", var_4_15)
+				arg_4_0._txtLv.text = (var_4_14 and "<color=#547a99>" or "") .. string.format("<size=20>Lv.</size>%d", var_4_16)
 
-				gohelper.setActive(arg_4_0._gorankobj, var_4_16 > 1)
+				gohelper.setActive(arg_4_0._gorankobj, var_4_17 > 1)
 
 				for iter_4_4 = 1, 3 do
-					gohelper.setActive(arg_4_0._rankGOs[iter_4_4], var_4_16 > 1 and iter_4_4 == var_4_16 - 1 or false)
+					gohelper.setActive(arg_4_0._rankGOs[iter_4_4], var_4_17 > 1 and iter_4_4 == var_4_17 - 1 or false)
 				end
 
-				local var_4_17 = arg_4_0.entityMO and arg_4_0.entityMO.skin or var_4_11.skin
-				local var_4_18 = FightConfig.instance:getSkinCO(var_4_17)
+				local var_4_18 = arg_4_0.entityMO and arg_4_0.entityMO.skin or var_4_12.skin
+				local var_4_19 = FightConfig.instance:getSkinCO(var_4_18)
 
-				arg_4_0._heroIcon:LoadImage(ResUrl.getHeadIconSmall(var_4_18.retangleIcon))
-				UISpriteSetMgr.instance:setCommonSprite(arg_4_0._career, "lssx_" .. tostring(var_4_11.config.career))
-				UISpriteSetMgr.instance:setCommonSprite(arg_4_0._rare, "bgequip" .. CharacterEnum.Star[var_4_11.config.rare])
+				arg_4_0._heroIcon:LoadImage(ResUrl.getHeadIconSmall(var_4_19.retangleIcon))
+				UISpriteSetMgr.instance:setCommonSprite(arg_4_0._career, "lssx_" .. tostring(var_4_12.config.career))
+				UISpriteSetMgr.instance:setCommonSprite(arg_4_0._rare, "bgequip" .. CharacterEnum.Star[var_4_12.config.rare])
 			end
 		end
 	end
@@ -171,25 +175,25 @@ function var_0_0.onUpdateMO(arg_4_0, arg_4_1)
 	arg_4_0._txtHurt.text = arg_4_1.hurt
 	arg_4_0._txtHeal.text = arg_4_1.heal
 
-	local var_4_19 = FightStatModel.instance:getTotalHarm()
-	local var_4_20 = FightStatModel.instance:getTotalHurt()
-	local var_4_21 = FightStatModel.instance:getTotalHeal()
-	local var_4_22 = var_4_19 > 0 and arg_4_1.harm / var_4_19 or 0
-	local var_4_23 = var_4_20 > 0 and arg_4_1.hurt / var_4_20 or 0
-	local var_4_24 = var_4_21 > 0 and arg_4_1.heal / var_4_21 or 0
+	local var_4_20 = FightStatModel.instance:getTotalHarm()
+	local var_4_21 = FightStatModel.instance:getTotalHurt()
+	local var_4_22 = FightStatModel.instance:getTotalHeal()
+	local var_4_23 = var_4_20 > 0 and arg_4_1.harm / var_4_20 or 0
+	local var_4_24 = var_4_21 > 0 and arg_4_1.hurt / var_4_21 or 0
+	local var_4_25 = var_4_22 > 0 and arg_4_1.heal / var_4_22 or 0
 
-	arg_4_0._txtHarmRate.text = string.format("%.2f%%", var_4_22 * 100)
-	arg_4_0._txtHurtRate.text = string.format("%.2f%%", var_4_23 * 100)
-	arg_4_0._txtHealRate.text = string.format("%.2f%%", var_4_24 * 100)
+	arg_4_0._txtHarmRate.text = string.format("%.2f%%", var_4_23 * 100)
+	arg_4_0._txtHurtRate.text = string.format("%.2f%%", var_4_24 * 100)
+	arg_4_0._txtHealRate.text = string.format("%.2f%%", var_4_25 * 100)
 
 	if not arg_4_0._tweenHarm then
-		arg_4_0._tweenHarm = ZProj.TweenHelper.DOFillAmount(arg_4_0._imgProgressHarm, var_4_22, var_4_22 * 2)
-		arg_4_0._tweenHurt = ZProj.TweenHelper.DOFillAmount(arg_4_0._imgProgressHurt, var_4_23, var_4_23 * 2)
-		arg_4_0._tweenHeal = ZProj.TweenHelper.DOFillAmount(arg_4_0._imgProgressHeal, var_4_24, var_4_24 * 2)
+		arg_4_0._tweenHarm = ZProj.TweenHelper.DOFillAmount(arg_4_0._imgProgressHarm, var_4_23, var_4_23 * 2)
+		arg_4_0._tweenHurt = ZProj.TweenHelper.DOFillAmount(arg_4_0._imgProgressHurt, var_4_24, var_4_24 * 2)
+		arg_4_0._tweenHeal = ZProj.TweenHelper.DOFillAmount(arg_4_0._imgProgressHeal, var_4_25, var_4_25 * 2)
 	else
-		arg_4_0._imgProgressHarm.fillAmount = var_4_22
-		arg_4_0._imgProgressHurt.fillAmount = var_4_23
-		arg_4_0._imgProgressHeal.fillAmount = var_4_24
+		arg_4_0._imgProgressHarm.fillAmount = var_4_23
+		arg_4_0._imgProgressHurt.fillAmount = var_4_24
+		arg_4_0._imgProgressHeal.fillAmount = var_4_25
 	end
 
 	arg_4_0:_refreshInfoUI(arg_4_0._statType)
@@ -241,7 +245,11 @@ function var_0_0._refreshInfoUI(arg_5_0, arg_5_1)
 			end
 
 			for iter_5_3, iter_5_4 in ipairs(var_5_4.skillIconGo) do
-				iter_5_4.isUniqueSkill = arg_5_0.entityMO:isUniqueSkill(iter_5_1.skillId)
+				iter_5_4.isBigSkill = FightCardDataHelper.isBigSkill(iter_5_1.skillId)
+
+				if lua_skill_next.configDict[iter_5_1.skillId] then
+					iter_5_4.isBigSkill = false
+				end
 
 				gohelper.setActive(iter_5_4.goStar, true)
 			end
@@ -276,7 +284,7 @@ function var_0_0._sortCard(arg_6_0)
 			end
 		end
 
-		if arg_6_0.entityMO:isUniqueSkill(iter_6_1.skillId) then
+		if FightCardDataHelper.isBigSkill(iter_6_1.skillId) then
 			var_6_0[iter_6_1.skillId] = 0
 		end
 	end
@@ -315,7 +323,7 @@ function var_0_0._setSkillCardInfo(arg_8_0, arg_8_1, arg_8_2)
 
 			iter_8_1.imgIcon:LoadImage(var_8_2)
 
-			if not iter_8_1.isUniqueSkill then
+			if not iter_8_1.isBigSkill then
 				iter_8_1.tag:LoadImage(ResUrl.getAttributeIcon("attribute_" .. var_8_1.showTag))
 			end
 
@@ -399,7 +407,7 @@ function var_0_0.onDestroy(arg_12_0)
 			for iter_12_2, iter_12_3 in pairs(iter_12_1.skillIconGo) do
 				iter_12_3.imgIcon:UnLoadImage()
 
-				if not iter_12_3.isUniqueSkill then
+				if not iter_12_3.isBigSkill then
 					iter_12_3.tag:UnLoadImage()
 				end
 			end
@@ -410,7 +418,7 @@ function var_0_0.onDestroy(arg_12_0)
 end
 
 function var_0_0.refreshAct174Info(arg_13_0)
-	gohelper.setActive(arg_13_0._txtLv.gameObject.transform.parent, false)
+	gohelper.setActive(arg_13_0.goLayout, false)
 	recthelper.setAnchorY(arg_13_0._txtName.gameObject.transform, 0)
 
 	local var_13_0 = arg_13_0.entityMO.modelId
@@ -423,6 +431,26 @@ function var_0_0.refreshAct174Info(arg_13_0)
 		arg_13_0._heroIcon:LoadImage(ResUrl.getHeadIconSmall(var_13_1.skinId))
 
 		arg_13_0._txtName.text = var_13_1.name
+	end
+end
+
+function var_0_0.refreshAct191Info(arg_14_0)
+	gohelper.setActive(arg_14_0.goLayout, false)
+	recthelper.setAnchorY(arg_14_0._txtName.gameObject.transform, 0)
+
+	local var_14_0 = arg_14_0.entityMO.modelId
+
+	if var_14_0 then
+		local var_14_1 = Activity191Config.instance:getRoleCoByNativeId(var_14_0, 1)
+
+		UISpriteSetMgr.instance:setCommonSprite(arg_14_0._career, "lssx_" .. tostring(var_14_1.career))
+		UISpriteSetMgr.instance:setAct174Sprite(arg_14_0._rare, "act191_collection_rolebg")
+		transformhelper.setLocalScale(arg_14_0._rare.gameObject.transform, 0.8, 0.8, 1)
+		UISpriteSetMgr.instance:setAct174Sprite(arg_14_0._front, "act174_roleframe_" .. var_14_1.quality)
+		gohelper.setActive(arg_14_0._front, true)
+		arg_14_0._heroIcon:LoadImage(ResUrl.getHeadIconSmall(var_14_1.skinId))
+
+		arg_14_0._txtName.text = var_14_1.name
 	end
 end
 

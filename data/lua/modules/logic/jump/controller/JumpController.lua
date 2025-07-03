@@ -245,7 +245,8 @@ local var_0_1 = {
 	"V2a4_Role_PanelSignView_Part2",
 	"V2a5_Role_PanelSignView_Part1",
 	"V2a5_Role_PanelSignView_Part2",
-	"V2a7_Labor_PanelSignView"
+	"V2a7_Labor_PanelSignView",
+	"V3a0_SummerSign_PanelView"
 }
 
 function var_0_0.jumpTo(arg_15_0, arg_15_1, arg_15_2, arg_15_3, arg_15_4)
@@ -275,6 +276,7 @@ function var_0_0.jumpTo(arg_15_0, arg_15_1, arg_15_2, arg_15_3, arg_15_4)
 	end
 
 	arg_15_0:_notAllowJumpViewNames_RoleSignPanelView()
+	arg_15_0:_notAllowJumpViewNames_SpecialSignPanelView()
 
 	for iter_15_0, iter_15_1 in ipairs(var_0_1) do
 		local var_15_1 = ViewName[iter_15_1]
@@ -560,6 +562,20 @@ function var_0_0._notAllowJumpViewNames_RoleSignPanelView(arg_28_0)
 
 	table.insert(var_0_1, var_28_0)
 	table.insert(var_0_1, var_28_1)
+end
+
+local var_0_3 = false
+
+function var_0_0._notAllowJumpViewNames_SpecialSignPanelView(arg_29_0)
+	if var_0_3 then
+		return
+	end
+
+	var_0_3 = true
+
+	local var_29_0 = GameBranchMgr.instance:Vxax_ViewName("Special_PanelsView", ViewName.V2a3_Special_PanelsView)
+
+	table.insert(var_0_1, var_29_0)
 end
 
 var_0_0.instance = var_0_0.New()

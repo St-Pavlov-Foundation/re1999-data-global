@@ -58,36 +58,37 @@ end
 
 function var_0_0.compareAttrMO(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
 	if arg_2_0.hp ~= arg_2_1.hp then
-		FightDataHelper.addDiff("hp", FightDataHelper.diffType.difference)
+		FightDataUtil.addDiff("hp", FightDataUtil.diffType.difference)
 	end
 
 	if arg_2_0.multiHpNum ~= arg_2_1.multiHpNum then
-		FightDataHelper.addDiff("multiHpNum", FightDataHelper.diffType.difference)
+		FightDataUtil.addDiff("multiHpNum", FightDataUtil.diffType.difference)
 	end
 end
 
 function var_0_0.comparSummonedOneData(arg_3_0, arg_3_1)
-	FightDataHelper.doFindDiff(arg_3_0, arg_3_1, {
+	FightDataUtil.doFindDiff(arg_3_0, arg_3_1, {
 		stanceIndex = true
 	})
 end
 
 function var_0_0.compareSummonedInfo(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
-	FightDataHelper.addPathkey("dataDic")
-	FightDataHelper.doFindDiff(arg_4_0.dataDic, arg_4_1.dataDic, nil, nil, var_0_0.comparSummonedOneData)
-	FightDataHelper.removePathKey()
+	FightDataUtil.addPathkey("dataDic")
+	FightDataUtil.doFindDiff(arg_4_0.dataDic, arg_4_1.dataDic, nil, nil, var_0_0.comparSummonedOneData)
+	FightDataUtil.removePathKey()
 end
 
 local var_0_1 = {
-	[FightDataHelper.diffType.missingSource] = "服务器数据不存在",
-	[FightDataHelper.diffType.missingTarget] = "本地数据不存在",
-	[FightDataHelper.diffType.difference] = "数据不一致"
+	[FightDataUtil.diffType.missingSource] = "服务器数据不存在",
+	[FightDataUtil.diffType.missingTarget] = "本地数据不存在",
+	[FightDataUtil.diffType.difference] = "数据不一致"
 }
 local var_0_2 = {
 	buffFeaturesSplit = true,
 	playCardExPoint = true,
 	resistanceDict = true,
 	_playCardAddExpoint = true,
+	configMaxExPoint = true,
 	moveCardExPoint = true,
 	passiveSkillDic = true,
 	_combineCardAddExpoint = true,
@@ -111,7 +112,7 @@ function var_0_0._onCountEntityInfoReply(arg_5_0, arg_5_1, arg_5_2)
 
 			var_5_2:init(arg_5_2.entityInfo, var_5_0.side)
 
-			local var_5_3, var_5_4 = FightDataHelper.findDiff(var_5_2, var_5_0, var_0_2, var_0_3)
+			local var_5_3, var_5_4 = FightDataUtil.findDiff(var_5_2, var_5_0, var_0_2, var_0_3)
 
 			if var_5_3 then
 				local var_5_5 = var_5_0:getCO()
@@ -122,8 +123,8 @@ function var_0_0._onCountEntityInfoReply(arg_5_0, arg_5_1, arg_5_2)
 					for iter_5_2, iter_5_3 in ipairs(iter_5_1) do
 						local var_5_8 = " "
 
-						if iter_5_3.diffType == FightDataHelper.diffType.difference then
-							local var_5_9, var_5_10 = FightDataHelper.getDiffValue(var_5_2, var_5_0, iter_5_3)
+						if iter_5_3.diffType == FightDataUtil.diffType.difference then
+							local var_5_9, var_5_10 = FightDataUtil.getDiffValue(var_5_2, var_5_0, iter_5_3)
 
 							var_5_8 = string.format("    服务器数据:%s, 本地数据:%s", var_5_9, var_5_10)
 						end

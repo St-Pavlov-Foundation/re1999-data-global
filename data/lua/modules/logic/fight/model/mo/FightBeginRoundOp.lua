@@ -57,6 +57,14 @@ function var_0_0.playCard(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4, arg_5_5, 
 		end
 	end
 
+	if FightCardDataHelper.isSkill3(arg_5_5) then
+		arg_5_0.costActPoint = 0
+	end
+
+	if not FightCardDataHelper.checkIsBigSkillCostActPoint(arg_5_4, arg_5_3) then
+		arg_5_0.costActPoint = 0
+	end
+
 	local var_5_0 = FightDataHelper.entityMgr:getById(arg_5_0.belongToEntityId)
 	local var_5_1 = FightBuffHelper.simulateBuffList(var_5_0)
 
@@ -83,50 +91,63 @@ function var_0_0.playPlayerFinisherSkill(arg_7_0, arg_7_1, arg_7_2)
 	arg_7_0.costActPoint = 0
 end
 
-function var_0_0.simulateDissolveCard(arg_8_0, arg_8_1)
-	arg_8_0.operType = FightEnum.CardOpType.SimulateDissolveCard
-	arg_8_0.dissolveIndex = arg_8_1
+function var_0_0.playBloodPoolCard(arg_8_0, arg_8_1, arg_8_2)
+	arg_8_0.operType = FightEnum.CardOpType.BloodPool
+	arg_8_0.param1 = arg_8_1
+	arg_8_0.toId = arg_8_2 or 0
+	arg_8_0.skillId = arg_8_1
+	arg_8_0.belongToEntityId = FightEntityScene.MySideId
 	arg_8_0.costActPoint = 0
 end
 
-function var_0_0.selectSkillTarget(arg_9_0, arg_9_1)
-	arg_9_0.toId = arg_9_1
+function var_0_0.simulateDissolveCard(arg_9_0, arg_9_1)
+	arg_9_0.operType = FightEnum.CardOpType.SimulateDissolveCard
+	arg_9_0.dissolveIndex = arg_9_1
+	arg_9_0.costActPoint = 0
 end
 
-function var_0_0.isMoveCard(arg_10_0)
-	return arg_10_0.operType == FightEnum.CardOpType.MoveCard
+function var_0_0.selectSkillTarget(arg_10_0, arg_10_1)
+	arg_10_0.toId = arg_10_1
 end
 
-function var_0_0.isMoveUniversal(arg_11_0)
-	return arg_11_0.operType == FightEnum.CardOpType.MoveUniversal
+function var_0_0.isMoveCard(arg_11_0)
+	return arg_11_0.operType == FightEnum.CardOpType.MoveCard
 end
 
-function var_0_0.isPlayCard(arg_12_0)
-	return arg_12_0.operType == FightEnum.CardOpType.PlayCard
+function var_0_0.isMoveUniversal(arg_12_0)
+	return arg_12_0.operType == FightEnum.CardOpType.MoveUniversal
 end
 
-function var_0_0.isAssistBossPlayCard(arg_13_0)
-	return arg_13_0.operType == FightEnum.CardOpType.AssistBoss
+function var_0_0.isPlayCard(arg_13_0)
+	return arg_13_0.operType == FightEnum.CardOpType.PlayCard
 end
 
-function var_0_0.isPlayerFinisherSkill(arg_14_0)
-	return arg_14_0.operType == FightEnum.CardOpType.PlayerFinisherSkill
+function var_0_0.isAssistBossPlayCard(arg_14_0)
+	return arg_14_0.operType == FightEnum.CardOpType.AssistBoss
 end
 
-function var_0_0.isSeason2ChangeHero(arg_15_0)
-	return arg_15_0.operType == FightEnum.CardOpType.Season2ChangeHero
+function var_0_0.isPlayerFinisherSkill(arg_15_0)
+	return arg_15_0.operType == FightEnum.CardOpType.PlayerFinisherSkill
 end
 
-function var_0_0.isSimulateDissolveCard(arg_16_0)
-	return arg_16_0.operType == FightEnum.CardOpType.SimulateDissolveCard
+function var_0_0.isBloodPoolSkill(arg_16_0)
+	return arg_16_0.operType == FightEnum.CardOpType.BloodPool
 end
 
-function var_0_0.copyCard(arg_17_0)
-	arg_17_0._needCopyCard = 1
+function var_0_0.isSeason2ChangeHero(arg_17_0)
+	return arg_17_0.operType == FightEnum.CardOpType.Season2ChangeHero
 end
 
-function var_0_0.needCopyCard(arg_18_0)
-	return arg_18_0._needCopyCard == 1
+function var_0_0.isSimulateDissolveCard(arg_18_0)
+	return arg_18_0.operType == FightEnum.CardOpType.SimulateDissolveCard
+end
+
+function var_0_0.copyCard(arg_19_0)
+	arg_19_0._needCopyCard = 1
+end
+
+function var_0_0.needCopyCard(arg_20_0)
+	return arg_20_0._needCopyCard == 1
 end
 
 return var_0_0

@@ -205,7 +205,7 @@ function var_0_0._onSkillPlayStart(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
 		[arg_10_3.toId] = true
 	}
 
-	for iter_10_0, iter_10_1 in ipairs(arg_10_3.actEffectMOs) do
+	for iter_10_0, iter_10_1 in ipairs(arg_10_3.actEffect) do
 		if var_0_2[iter_10_1.effectType] then
 			var_10_0[iter_10_1.targetId] = true
 		end

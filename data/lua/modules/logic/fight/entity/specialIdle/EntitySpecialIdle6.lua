@@ -16,7 +16,7 @@ function var_0_0._onSkillPlayFinish(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
 		local var_2_1 = var_2_0:getMO()
 
 		if var_2_1 and var_2_1.modelId == 3025 then
-			for iter_2_0, iter_2_1 in ipairs(arg_2_3.actEffectMOs) do
+			for iter_2_0, iter_2_1 in ipairs(arg_2_3.actEffect) do
 				if iter_2_1.effectType == FightEnum.EffectType.MISS and iter_2_1.targetId == var_2_0.id then
 					local var_2_2 = var_2_1:getBuffDic()
 

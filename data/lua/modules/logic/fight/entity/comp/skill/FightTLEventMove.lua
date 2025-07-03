@@ -1,8 +1,8 @@
 ﻿module("modules.logic.fight.entity.comp.skill.FightTLEventMove", package.seeall)
 
-local var_0_0 = class("FightTLEventMove")
+local var_0_0 = class("FightTLEventMove", FightTimelineTrackItem)
 
-function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 	arg_1_2 = arg_1_2 * FightModel.instance:getSpeed()
 	arg_1_0._paramsArr = arg_1_3
 
@@ -231,7 +231,7 @@ function var_0_0._getMoveEntitys(arg_4_0, arg_4_1)
 	elseif arg_4_1 == "2" then
 		local var_4_3 = {}
 
-		for iter_4_0, iter_4_1 in ipairs(arg_4_0.actEffectMOs) do
+		for iter_4_0, iter_4_1 in ipairs(arg_4_0.actEffect) do
 			local var_4_4 = FightHelper.getEntity(iter_4_1.targetId)
 
 			if not var_4_4 and iter_4_1.effectType ~= FightEnum.EffectType.INDICATORCHANGE then
@@ -306,7 +306,7 @@ function var_0_0._setCombinativeEntitysPos(arg_6_0)
 	end
 end
 
-function var_0_0.handleSkillEventEnd(arg_7_0)
+function var_0_0.onTrackEnd(arg_7_0)
 	TaskDispatcher.cancelTask(arg_7_0._setCombinativeEntitysPos, arg_7_0)
 end
 

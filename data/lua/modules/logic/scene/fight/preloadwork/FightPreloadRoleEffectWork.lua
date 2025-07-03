@@ -105,7 +105,7 @@ function var_0_0._analyseEffectUrlList(arg_6_0)
 	local var_6_10 = {}
 
 	if FightModel.instance:getFightParam().isReplay then
-		local var_6_11 = FightCardModel.instance:getHandCards()
+		local var_6_11 = FightDataHelper.handCardMgr.handCard
 		local var_6_12 = FightReplayModel.instance:getList()
 		local var_6_13 = var_6_12 and var_6_12[1]
 

@@ -33,14 +33,6 @@ function var_0_0._startReplay(arg_4_0)
 	for iter_4_0, iter_4_1 in pairs(FightEvent) do
 		local function var_4_0()
 			arg_4_0._startTime = Time.time
-
-			local var_5_0 = "nil"
-
-			for iter_5_0, iter_5_1 in pairs(FightEvent) do
-				if iter_5_1 == iter_4_1 then
-					local var_5_1 = iter_5_0
-				end
-			end
 		end
 
 		arg_4_0._callbackDict[iter_4_1] = var_4_0
@@ -126,8 +118,6 @@ function var_0_0._fixErrorState(arg_13_0)
 		var_13_3:doneRunningWork()
 	elseif var_13_4 == FightEnum.Stage.Card or var_13_4 == FightEnum.Stage.AutoCard then
 		arg_13_0:_log("行为复现出错，出牌阶段卡住")
-		FightCardModel.instance:setDissolving(false)
-		FightCardModel.instance:setChanging(false)
 		FightReplayController.instance:doneCardStage()
 		FightRpc.instance:sendBeginRoundRequest({})
 	end

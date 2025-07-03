@@ -219,7 +219,7 @@ function var_0_0.TaskListCommonItem_register(arg_20_0)
 		end
 
 		local var_26_3 = "GM_Task" .. var_26_1 .. "View"
-		local var_26_4 = getModulePath(var_26_3)
+		local var_26_4 = _G.getModulePath(var_26_3)
 
 		if not var_26_4 then
 			logWarn("[GM_TaskView] lua class not found " .. var_26_3)

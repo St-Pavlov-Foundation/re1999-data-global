@@ -1,23 +1,27 @@
 ﻿module("modules.logic.fight.entity.comp.skill.FightTLEventAtkFlyEffect", package.seeall)
 
-local var_0_0 = class("FightTLEventAtkFlyEffect")
+local var_0_0 = class("FightTLEventAtkFlyEffect", FightTimelineTrackItem)
 local var_0_1 = {
+	[-666] = true,
 	[FightEnum.EffectType.MISS] = true,
 	[FightEnum.EffectType.DAMAGE] = true,
-	[FightEnum.EffectType.CRIT] = true
+	[FightEnum.EffectType.CRIT] = true,
+	[FightEnum.EffectType.COLDSATURDAYHURT] = true
 }
 
-function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 	arg_1_0._attacker = FightHelper.getEntity(arg_1_1.fromId)
 
-	if arg_1_0._attacker.skill:flyEffectNeedFilter(arg_1_3[1]) then
+	if arg_1_0._attacker.skill:flyEffectNeedFilter(arg_1_3[1], arg_1_1) then
 		return
 	end
 
 	arg_1_0._paramsArr = arg_1_3
 	arg_1_0._effectName = arg_1_3[1]
-	arg_1_0._fightStepMO = arg_1_1
+	arg_1_0.fightStepData = arg_1_1
 	arg_1_0._duration = arg_1_2
+	arg_1_0._releaseTime = tonumber(arg_1_3[22])
+	arg_1_0._tokenRelease = not string.nilorempty(arg_1_0._paramsArr[23])
 
 	if string.nilorempty(arg_1_0._effectName) then
 		logError("atk effect name is nil")
@@ -38,16 +42,28 @@ function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 		var_1_3 = var_1_4[3] and tonumber(var_1_4[3]) or var_1_3
 	end
 
-	local var_1_5 = 0
-	local var_1_6 = 0
+	if not string.nilorempty(arg_1_3[21]) then
+		local var_1_5 = GameUtil.splitString2(arg_1_3[21], true, "#", ",")
+
+		if #var_1_5 > 0 then
+			local var_1_6 = var_1_5[math.random(1, #var_1_5)]
+
+			var_1_1 = var_1_6[1] or var_1_1
+			var_1_2 = var_1_6[2] or var_1_2
+			var_1_3 = var_1_6[3] or var_1_3
+		end
+	end
+
 	local var_1_7 = 0
+	local var_1_8 = 0
+	local var_1_9 = 0
 
 	if arg_1_3[5] then
-		local var_1_8 = string.split(arg_1_3[5], ",")
+		local var_1_10 = string.split(arg_1_3[5], ",")
 
-		var_1_5 = var_1_8[1] and tonumber(var_1_8[1]) or var_1_5
-		var_1_6 = var_1_8[2] and tonumber(var_1_8[2]) or var_1_6
-		var_1_7 = var_1_8[3] and tonumber(var_1_8[3]) or var_1_7
+		var_1_7 = var_1_10[1] and tonumber(var_1_10[1]) or var_1_7
+		var_1_8 = var_1_10[2] and tonumber(var_1_10[2]) or var_1_8
+		var_1_9 = var_1_10[3] and tonumber(var_1_10[3]) or var_1_9
 	end
 
 	arg_1_0._easeFunc = arg_1_3[6]
@@ -64,19 +80,19 @@ function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 	arg_1_0._actSide = nil
 
 	if not string.nilorempty(arg_1_3[20]) then
-		local var_1_9 = arg_1_3[20]
+		local var_1_11 = arg_1_3[20]
 
-		if var_1_9 == "1" then
+		if var_1_11 == "1" then
 			arg_1_0._actSide = FightEnum.EntitySide.EnemySide
-		elseif var_1_9 == "2" then
+		elseif var_1_11 == "2" then
 			arg_1_0._actSide = FightEnum.EntitySide.MySide
 		end
 	end
 
 	if arg_1_0._act_on_index_entity then
-		arg_1_0._actEffectMOs_list = FightHelper.dealDirectActEffectData(arg_1_0._fightStepMO.actEffectMOs, arg_1_0._act_on_index_entity, var_0_1)
+		arg_1_0._actEffect_list = FightHelper.dealDirectActEffectData(arg_1_0.fightStepData.actEffect, arg_1_0._act_on_index_entity, var_0_1)
 	else
-		arg_1_0._actEffectMOs_list = arg_1_0._fightStepMO.actEffectMOs
+		arg_1_0._actEffect_list = arg_1_0.fightStepData.actEffect
 	end
 
 	if string.nilorempty(arg_1_3[16]) then
@@ -91,73 +107,75 @@ function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 		var_1_1 = -var_1_1
 	end
 
-	local var_1_10, var_1_11, var_1_12 = transformhelper.getPos(arg_1_0._attacker.go.transform)
+	local var_1_12, var_1_13, var_1_14 = transformhelper.getPos(arg_1_0._attacker.go.transform)
 
 	if arg_1_3[17] == "1" then
-		local var_1_13 = FightHelper.getEntity(arg_1_1.toId)
+		local var_1_15 = FightHelper.getEntity(arg_1_1.toId)
 
-		var_1_10, var_1_11, var_1_12 = transformhelper.getPos(var_1_13.go.transform)
+		var_1_12, var_1_13, var_1_14 = transformhelper.getPos(var_1_15.go.transform)
 	elseif arg_1_3[17] == "2" then
-		var_1_10, var_1_11, var_1_12 = FightHelper.getProcessEntityStancePos(arg_1_0._attacker:getMO())
+		var_1_12, var_1_13, var_1_14 = FightHelper.getProcessEntityStancePos(arg_1_0._attacker:getMO())
 	elseif arg_1_3[17] == "3" then
-		local var_1_14 = FightHelper.getEntity(arg_1_1.toId)
+		local var_1_16 = FightHelper.getEntity(arg_1_1.toId)
 
-		var_1_10, var_1_11, var_1_12 = FightHelper.getEntityWorldCenterPos(var_1_14)
+		if var_1_16 then
+			var_1_12, var_1_13, var_1_14 = FightHelper.getEntityWorldCenterPos(var_1_16)
+		end
 	end
 
-	local var_1_15 = var_1_10 + var_1_1
-	local var_1_16 = var_1_11 + var_1_2
-	local var_1_17 = var_1_12 + var_1_3
+	local var_1_17 = var_1_12 + var_1_1
+	local var_1_18 = var_1_13 + var_1_2
+	local var_1_19 = var_1_14 + var_1_3
 
 	if arg_1_3[3] == "1" then
-		local var_1_18 = string.split(arg_1_3[4], ",")
+		local var_1_20 = string.split(arg_1_3[4], ",")
 
-		var_1_15 = var_1_18[1] and tonumber(var_1_18[1]) or 0
+		var_1_17 = var_1_20[1] and tonumber(var_1_20[1]) or 0
 
 		if not arg_1_0._attacker:isMySide() then
-			var_1_15 = -var_1_15
+			var_1_17 = -var_1_17
 		end
 
-		var_1_16 = var_1_18[2] and tonumber(var_1_18[2]) or 0
-		var_1_17 = var_1_18[3] and tonumber(var_1_18[3]) or 0
+		var_1_18 = var_1_20[2] and tonumber(var_1_20[2]) or 0
+		var_1_19 = var_1_20[3] and tonumber(var_1_20[3]) or 0
 	end
 
 	if var_1_0 == 1 then
-		arg_1_0:_flyEffectSingle(var_1_15, var_1_16, var_1_17, var_1_5, var_1_6, var_1_7)
+		arg_1_0:_flyEffectSingle(var_1_17, var_1_18, var_1_19, var_1_7, var_1_8, var_1_9)
 	elseif var_1_0 == 2 then
-		arg_1_0:_flyEffectTarget(var_1_15, var_1_16, var_1_17, var_1_5, var_1_6, var_1_7, FightHelper.getEntityWorldCenterPos)
+		arg_1_0:_flyEffectTarget(var_1_17, var_1_18, var_1_19, var_1_7, var_1_8, var_1_9, FightHelper.getEntityWorldCenterPos)
 	elseif var_1_0 == 3 then
-		arg_1_0:_flyEffectTarget(var_1_15, var_1_16, var_1_17, var_1_5, var_1_6, var_1_7, false)
+		arg_1_0:_flyEffectTarget(var_1_17, var_1_18, var_1_19, var_1_7, var_1_8, var_1_9, false)
 	elseif var_1_0 == 4 then
-		arg_1_0:_flyEffectSingle(var_1_15, var_1_16, var_1_17, var_1_5, var_1_6, var_1_7, true)
+		arg_1_0:_flyEffectSingle(var_1_17, var_1_18, var_1_19, var_1_7, var_1_8, var_1_9, true)
 	elseif var_1_0 == 5 then
-		local var_1_19, var_1_20, var_1_21 = FightHelper.getProcessEntitySpinePos(arg_1_0._attacker)
+		local var_1_21, var_1_22, var_1_23 = FightHelper.getProcessEntitySpinePos(arg_1_0._attacker)
 
-		var_1_5 = var_1_5 + var_1_19
-
-		if not arg_1_0._attacker:isMySide() then
-			var_1_5 = -var_1_5
-		end
-
-		var_1_6 = var_1_6 + var_1_20
 		var_1_7 = var_1_7 + var_1_21
 
-		arg_1_0:_flyEffectSingle(var_1_15, var_1_16, var_1_17, var_1_5, var_1_6, var_1_7)
+		if not arg_1_0._attacker:isMySide() then
+			var_1_7 = -var_1_7
+		end
+
+		var_1_8 = var_1_8 + var_1_22
+		var_1_9 = var_1_9 + var_1_23
+
+		arg_1_0:_flyEffectSingle(var_1_17, var_1_18, var_1_19, var_1_7, var_1_8, var_1_9)
 	elseif var_1_0 == 6 then
-		arg_1_0:_flyEffectAbsolutely(var_1_15, var_1_16, var_1_17, var_1_5, var_1_6, var_1_7)
+		arg_1_0:_flyEffectAbsolutely(var_1_17, var_1_18, var_1_19, var_1_7, var_1_8, var_1_9)
 	else
-		arg_1_0:_flyEffectTarget(var_1_15, var_1_16, var_1_17, var_1_5, var_1_6, var_1_7, FightHelper.getEntityHangPointPos, arg_1_3[2])
+		arg_1_0:_flyEffectTarget(var_1_17, var_1_18, var_1_19, var_1_7, var_1_8, var_1_9, FightHelper.getEntityHangPointPos, arg_1_3[2])
 	end
 
-	local var_1_22 = arg_1_0._duration * FightModel.instance:getSpeed()
+	local var_1_24 = arg_1_0._duration * FightModel.instance:getSpeed()
 
-	arg_1_0._totalFrame = arg_1_0._binder:GetFrameFloatByTime(var_1_22) - arg_1_0._previousFrame - arg_1_0._afterFrame
-	arg_1_0._startFrame = arg_1_0._binder.CurFrameFloat + 1
+	arg_1_0._totalFrame = arg_1_0.binder:GetFrameFloatByTime(var_1_24) - arg_1_0._previousFrame - arg_1_0._afterFrame
+	arg_1_0._startFrame = arg_1_0.binder.CurFrameFloat + 1
 
 	arg_1_0:_startFly()
 end
 
-function var_0_0.handleSkillEventEnd(arg_2_0)
+function var_0_0.onTrackEnd(arg_2_0)
 	if arg_2_0._paramsArr and arg_2_0._paramsArr[18] ~= "1" then
 		arg_2_0:_removeEffect()
 		arg_2_0:_removeMover()
@@ -173,7 +191,7 @@ function var_0_0._flyEffectAbsolutely(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_
 end
 
 function var_0_0._flyEffectSingle(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4, arg_4_5, arg_4_6, arg_4_7)
-	for iter_4_0, iter_4_1 in ipairs(arg_4_0._actEffectMOs_list) do
+	for iter_4_0, iter_4_1 in ipairs(arg_4_0._actEffect_list) do
 		local var_4_0 = var_0_1[iter_4_1.effectType]
 
 		if not var_4_0 and iter_4_1.effectType ~= FightEnum.EffectType.EXPOINTCHANGE and iter_4_1.effectType ~= FightEnum.EffectType.FIGHTSTEP and arg_4_0._act_entity_finished and not arg_4_0._act_entity_finished[iter_4_1.targetId] then
@@ -183,14 +201,14 @@ function var_0_0._flyEffectSingle(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4, a
 		local var_4_1 = FightHelper.getEntity(iter_4_1.targetId)
 
 		if arg_4_7 then
-			local var_4_2 = FightHelper.getEntity(arg_4_0._fightStepMO.fromId)
+			local var_4_2 = FightHelper.getEntity(arg_4_0.fightStepData.fromId)
 
 			if var_4_2 and var_4_1 and var_4_2:getSide() == var_4_1:getSide() then
 				var_4_0 = false
 			end
 		end
 
-		if arg_4_0._onlyActOnToId and iter_4_1.targetId ~= arg_4_0._fightStepMO.toId then
+		if arg_4_0._onlyActOnToId and iter_4_1.targetId ~= arg_4_0.fightStepData.toId then
 			var_4_0 = false
 		end
 
@@ -213,7 +231,7 @@ function var_0_0._flyEffectSingle(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4, a
 end
 
 function var_0_0._flyEffectTarget(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4, arg_5_5, arg_5_6, arg_5_7, arg_5_8)
-	local var_5_0 = arg_5_0._actEffectMOs_list
+	local var_5_0 = arg_5_0._actEffect_list
 
 	for iter_5_0, iter_5_1 in ipairs(var_5_0) do
 		local var_5_1 = var_0_1[iter_5_1.effectType]
@@ -222,7 +240,7 @@ function var_0_0._flyEffectTarget(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4, a
 			var_5_1 = true
 		end
 
-		if arg_5_0._onlyActOnToId and iter_5_1.targetId ~= arg_5_0._fightStepMO.toId then
+		if arg_5_0._onlyActOnToId and iter_5_1.targetId ~= arg_5_0.fightStepData.toId then
 			var_5_1 = false
 		end
 
@@ -252,7 +270,11 @@ function var_0_0._flyEffectTarget(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4, a
 end
 
 function var_0_0._addFlyEffect(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4, arg_6_5, arg_6_6)
-	local var_6_0 = arg_6_0._attacker.effect:addGlobalEffect(arg_6_0._effectName)
+	local var_6_0 = arg_6_0._attacker.effect:addGlobalEffect(arg_6_0._effectName, nil, arg_6_0._releaseTime)
+
+	if arg_6_0._tokenRelease then
+		arg_6_0._attacker.effect:addTokenRelease(arg_6_0._paramsArr[23], var_6_0)
+	end
 
 	var_6_0:setWorldPos(arg_6_1, arg_6_2, arg_6_3)
 
@@ -479,9 +501,15 @@ function var_0_0.getTimeFunction(arg_15_0)
 		return 1000
 	end
 
-	local var_15_0 = arg_15_0._attacker.skill:getCurFrameFloat() + 1 - arg_15_0._startFrame
+	local var_15_0 = arg_15_0._attacker.skill:getCurFrameFloat()
 
-	if var_15_0 <= arg_15_0._previousFrame then
+	if not var_15_0 then
+		return 1000
+	end
+
+	local var_15_1 = var_15_0 + 1 - arg_15_0._startFrame
+
+	if var_15_1 <= arg_15_0._previousFrame then
 		return 0
 	end
 
@@ -489,7 +517,7 @@ function var_0_0.getTimeFunction(arg_15_0)
 		return arg_15_0._duration
 	end
 
-	return (var_15_0 - arg_15_0._previousFrame) / arg_15_0._totalFrame * arg_15_0._duration
+	return (var_15_1 - arg_15_0._previousFrame) / arg_15_0._totalFrame * arg_15_0._duration
 end
 
 function var_0_0.getFrameFunction(arg_16_0)
@@ -497,10 +525,16 @@ function var_0_0.getFrameFunction(arg_16_0)
 		return 1000, 1, 1
 	end
 
-	return arg_16_0._attacker.skill:getCurFrameFloat() + 1 - arg_16_0._startFrame, arg_16_0._previousFrame, arg_16_0._totalFrame
+	local var_16_0 = arg_16_0._attacker.skill:getCurFrameFloat()
+
+	if not var_16_0 then
+		return 1000, 1, 1
+	end
+
+	return var_16_0 + 1 - arg_16_0._startFrame, arg_16_0._previousFrame, arg_16_0._totalFrame
 end
 
-function var_0_0.reset(arg_17_0)
+function var_0_0.onDestructor(arg_17_0)
 	if arg_17_0._moverParamDict then
 		for iter_17_0, iter_17_1 in pairs(arg_17_0._moverParamDict) do
 			iter_17_0:unregisterCallback(UnitMoveEvent.PosChanged, arg_17_0._onPosChange, arg_17_0)
@@ -513,42 +547,54 @@ function var_0_0.reset(arg_17_0)
 	arg_17_0:_removeMover()
 end
 
-function var_0_0.dispose(arg_18_0)
-	arg_18_0:_removeEffect()
-	arg_18_0:_removeMover()
-end
-
-function var_0_0._removeMover(arg_19_0)
-	if arg_19_0._mover then
-		if arg_19_0._mover.setGetTimeFunction then
-			arg_19_0._mover:setGetTimeFunction(nil, nil)
+function var_0_0._removeMover(arg_18_0)
+	if arg_18_0._mover then
+		if arg_18_0._mover.setGetTimeFunction then
+			arg_18_0._mover:setGetTimeFunction(nil, nil)
 		end
 
-		if arg_19_0._mover.setGetFrameFunction then
-			arg_19_0._mover:setGetFrameFunction(nil, nil)
+		if arg_18_0._mover.setGetFrameFunction then
+			arg_18_0._mover:setGetFrameFunction(nil, nil)
 		end
 
-		arg_19_0._mover = nil
+		arg_18_0._mover = nil
+	end
+
+	if arg_18_0._attackEffectWrapList then
+		for iter_18_0, iter_18_1 in ipairs(arg_18_0._attackEffectWrapList) do
+			MonoHelper.removeLuaComFromGo(iter_18_1.containerGO, UnitMoverEase)
+			MonoHelper.removeLuaComFromGo(iter_18_1.containerGO, UnitMoverParabola)
+			MonoHelper.removeLuaComFromGo(iter_18_1.containerGO, UnitMoverBezier)
+			MonoHelper.removeLuaComFromGo(iter_18_1.containerGO, UnitMoverCurve)
+			MonoHelper.removeLuaComFromGo(iter_18_1.containerGO, UnitMoverHandler)
+		end
 	end
 end
 
-function var_0_0._removeEffect(arg_20_0)
-	if arg_20_0._attackEffectWrapList then
-		for iter_20_0, iter_20_1 in ipairs(arg_20_0._attackEffectWrapList) do
-			FightRenderOrderMgr.instance:onRemoveEffectWrap(arg_20_0._attacker.id, iter_20_1)
-			arg_20_0._attacker.effect:removeEffect(iter_20_1)
-			MonoHelper.removeLuaComFromGo(iter_20_1.containerGO, UnitMoverEase)
-			MonoHelper.removeLuaComFromGo(iter_20_1.containerGO, UnitMoverParabola)
-			MonoHelper.removeLuaComFromGo(iter_20_1.containerGO, UnitMoverBezier)
-			MonoHelper.removeLuaComFromGo(iter_20_1.containerGO, UnitMoverCurve)
-			MonoHelper.removeLuaComFromGo(iter_20_1.containerGO, UnitMoverHandler)
-		end
+function var_0_0._removeEffect(arg_19_0)
+	local var_19_0 = true
 
-		arg_20_0._attackEffectWrapList = nil
+	if arg_19_0._releaseTime then
+		var_19_0 = false
 	end
 
-	arg_20_0._flyParamDict = nil
-	arg_20_0._attacker = nil
+	if arg_19_0._tokenRelease then
+		var_19_0 = false
+	end
+
+	if arg_19_0._attackEffectWrapList then
+		for iter_19_0, iter_19_1 in ipairs(arg_19_0._attackEffectWrapList) do
+			if var_19_0 then
+				FightRenderOrderMgr.instance:onRemoveEffectWrap(arg_19_0._attacker.id, iter_19_1)
+				arg_19_0._attacker.effect:removeEffect(iter_19_1)
+			end
+		end
+
+		arg_19_0._attackEffectWrapList = nil
+	end
+
+	arg_19_0._flyParamDict = nil
+	arg_19_0._attacker = nil
 end
 
 return var_0_0

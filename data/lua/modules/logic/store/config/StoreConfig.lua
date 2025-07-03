@@ -13,6 +13,7 @@ function var_0_0.ctor(arg_1_0)
 	arg_1_0._storeMonthAddCfg = nil
 	arg_1_0._critterStoreGoods = {}
 	arg_1_0._preGoodsIdDict = nil
+	arg_1_0._decorateProduct2GoodsId = {}
 	arg_1_0._roomProduct2GoodsId = {}
 	arg_1_0._configPriceKey = "price"
 	arg_1_0._configBasePriceKey = "price"
@@ -84,7 +85,7 @@ function var_0_0.initPreGoodsIdDict(arg_4_0, arg_4_1)
 
 		local var_4_0 = tonumber(iter_4_1.storeId)
 
-		if var_4_0 == StoreEnum.SubRoomNew or var_4_0 == StoreEnum.SubRoomOld then
+		if var_4_0 == StoreEnum.StoreId.NewRoomStore or var_4_0 == StoreEnum.StoreId.OldRoomStore then
 			local var_4_1
 			local var_4_2
 			local var_4_3 = GameUtil.splitString2(iter_4_1.product, true)
@@ -117,6 +118,14 @@ function var_0_0.initPreGoodsIdDict(arg_4_0, arg_4_1)
 			end
 
 			table.insert(arg_4_0._critterStoreGoods[var_4_7[2]], iter_4_1)
+		elseif var_4_0 == StoreEnum.StoreId.NewDecorateStore or var_4_0 == StoreEnum.StoreId.OldDecorateStore then
+			local var_4_8 = string.splitToNumber(iter_4_1.product, "#")
+
+			if not arg_4_0._decorateProduct2GoodsId[var_4_8[2]] then
+				arg_4_0._decorateProduct2GoodsId[var_4_8[2]] = {}
+			end
+
+			arg_4_0._decorateProduct2GoodsId[var_4_8[2]] = iter_4_1
 		end
 	end
 end
@@ -318,92 +327,80 @@ function var_0_0.getTabHierarchy(arg_22_0, arg_22_1)
 	end
 end
 
-function var_0_0.getMonthCardConfig(arg_23_0, arg_23_1)
-	if arg_23_1 == StoreEnum.LittleMonthCardGoodsId then
-		local var_23_0 = arg_23_0._storeMonthAddCfg.configDict[arg_23_1]
+function var_0_0.isPackageStore(arg_23_0, arg_23_1)
+	local var_23_0 = arg_23_0:getTabConfig(arg_23_1)
 
-		if var_23_0 ~= nil then
-			return arg_23_0._monthCardConfig.configDict[var_23_0.month_id]
+	if var_23_0 and var_23_0.belongFirstTab == StoreEnum.StoreId.Package then
+		return true
+	end
+
+	return false
+end
+
+function var_0_0.getMonthCardConfig(arg_24_0, arg_24_1)
+	if arg_24_1 == StoreEnum.LittleMonthCardGoodsId then
+		local var_24_0 = arg_24_0._storeMonthAddCfg.configDict[arg_24_1]
+
+		if var_24_0 ~= nil then
+			return arg_24_0._monthCardConfig.configDict[var_24_0.month_id]
 		end
 	end
 
-	return arg_23_0._monthCardConfig.configDict[arg_23_1]
+	return arg_24_0._monthCardConfig.configDict[arg_24_1]
 end
 
-function var_0_0.getDailyReleasePackageCfg(arg_24_0, arg_24_1)
-	return arg_24_0._dailyReleasePackageCfg.configDict[arg_24_1]
+function var_0_0.getDailyReleasePackageCfg(arg_25_0, arg_25_1)
+	return arg_25_0._dailyReleasePackageCfg.configDict[arg_25_1]
 end
 
-function var_0_0.getOpenTimeDiff(arg_25_0, arg_25_1, arg_25_2, arg_25_3)
-	if arg_25_2 <= arg_25_1 then
+function var_0_0.getOpenTimeDiff(arg_26_0, arg_26_1, arg_26_2, arg_26_3)
+	if arg_26_2 <= arg_26_1 then
 		logError("结束时间比开启时间早")
-	elseif arg_25_3 < arg_25_1 then
-		return arg_25_3 - arg_25_1
-	elseif arg_25_3 < arg_25_2 then
-		return arg_25_2 - arg_25_3
+	elseif arg_26_3 < arg_26_1 then
+		return arg_26_3 - arg_26_1
+	elseif arg_26_3 < arg_26_2 then
+		return arg_26_2 - arg_26_3
 	end
 
 	return 0
 end
 
-function var_0_0.hasTab(arg_26_0, arg_26_1)
-	return arg_26_1 and arg_26_1 ~= 0
+function var_0_0.hasTab(arg_27_0, arg_27_1)
+	return arg_27_1 and arg_27_1 ~= 0
 end
 
-function var_0_0.getRemain(arg_27_0, arg_27_1, arg_27_2, arg_27_3)
-	if arg_27_2 <= 0 then
+function var_0_0.getRemain(arg_28_0, arg_28_1, arg_28_2, arg_28_3)
+	if arg_28_2 <= 0 then
 		return nil
 	end
 
-	local var_27_0 = arg_27_1.maxBuyCount
+	local var_28_0 = arg_28_1.maxBuyCount
 
-	if arg_27_1.refreshTime == StoreEnum.RefreshTime.Forever then
-		if var_27_0 > 0 then
-			if arg_27_1.jumpId ~= 0 then
-				return formatLuaLang("store_limitget", arg_27_2)
-			elseif arg_27_3 > 0 then
-				return formatLuaLang("v1a4_bossrush_storeview_buylimit", arg_27_2)
+	if arg_28_1.refreshTime == StoreEnum.RefreshTime.Forever then
+		if var_28_0 > 0 then
+			if arg_28_1.jumpId ~= 0 then
+				return formatLuaLang("store_limitget", arg_28_2)
+			elseif arg_28_3 > 0 then
+				return formatLuaLang("v1a4_bossrush_storeview_buylimit", arg_28_2)
 			else
-				return formatLuaLang("store_buylimit_forever", arg_27_2)
+				return formatLuaLang("store_buylimit_forever", arg_28_2)
 			end
 		else
 			return nil
 		end
-	elseif arg_27_1.refreshTime == StoreEnum.RefreshTime.Day then
-		return formatLuaLang("store_buylimit_day", arg_27_2)
-	elseif arg_27_1.refreshTime == StoreEnum.RefreshTime.Week then
-		return formatLuaLang("store_buylimit_week", arg_27_2)
-	elseif arg_27_1.refreshTime == StoreEnum.RefreshTime.Month then
-		return formatLuaLang("store_buylimit_month", arg_27_2)
+	elseif arg_28_1.refreshTime == StoreEnum.RefreshTime.Day then
+		return formatLuaLang("store_buylimit_day", arg_28_2)
+	elseif arg_28_1.refreshTime == StoreEnum.RefreshTime.Week then
+		return formatLuaLang("store_buylimit_week", arg_28_2)
+	elseif arg_28_1.refreshTime == StoreEnum.RefreshTime.Month then
+		return formatLuaLang("store_buylimit_month", arg_28_2)
 	else
-		return formatLuaLang("v1a4_bossrush_storeview_buylimit", arg_27_2)
+		return formatLuaLang("v1a4_bossrush_storeview_buylimit", arg_28_2)
 	end
 end
 
-function var_0_0.getRemainText(arg_28_0, arg_28_1, arg_28_2, arg_28_3, arg_28_4)
-	if arg_28_2 == StoreEnum.RefreshTime.Forever then
-		if arg_28_1 > 0 then
-			if arg_28_4 > 0 then
-				return formatLuaLang("v1a4_bossrush_storeview_buylimit", arg_28_3)
-			else
-				return formatLuaLang("store_buylimit_forever", arg_28_3)
-			end
-		else
-			return nil
-		end
-	elseif arg_28_2 == StoreEnum.RefreshTime.Day then
-		return formatLuaLang("store_buylimit_day", arg_28_3)
-	elseif arg_28_2 == StoreEnum.RefreshTime.Week then
-		return formatLuaLang("store_buylimit_week", arg_28_3)
-	elseif arg_28_2 == StoreEnum.RefreshTime.Month then
-		return formatLuaLang("store_buylimit_month", arg_28_3)
-	else
-		return formatLuaLang("v1a4_bossrush_storeview_buylimit", arg_28_3)
-	end
-end
-
-function var_0_0.getChargeRemainText(arg_29_0, arg_29_1, arg_29_2, arg_29_3, arg_29_4)
-	if arg_29_2 == StoreEnum.ChargeRefreshTime.Forever then
+function var_0_0.getRemainText(arg_29_0, arg_29_1, arg_29_2, arg_29_3, arg_29_4)
+	if arg_29_2 == StoreEnum.RefreshTime.Forever then
 		if arg_29_1 > 0 then
 			if arg_29_4 > 0 then
 				return formatLuaLang("v1a4_bossrush_storeview_buylimit", arg_29_3)
@@ -413,67 +410,104 @@ function var_0_0.getChargeRemainText(arg_29_0, arg_29_1, arg_29_2, arg_29_3, arg
 		else
 			return nil
 		end
-	elseif arg_29_2 == StoreEnum.ChargeRefreshTime.MonthCard then
-		local var_29_0 = StoreModel.instance:getMonthCardInfo()
-
-		if var_29_0 then
-			local var_29_1 = var_29_0:getRemainDay()
-
-			if var_29_1 == StoreEnum.MonthCardStatus.NotPurchase then
-				return nil
-			elseif var_29_1 == StoreEnum.MonthCardStatus.NotEnoughOneDay then
-				return luaLang("not_enough_one_day")
-			else
-				return formatLuaLang("remain_day", var_29_1)
-			end
-		else
-			return nil
-		end
-	elseif arg_29_2 == StoreEnum.ChargeRefreshTime.Day then
+	elseif arg_29_2 == StoreEnum.RefreshTime.Day then
 		return formatLuaLang("store_buylimit_day", arg_29_3)
-	elseif arg_29_2 == StoreEnum.ChargeRefreshTime.Week then
+	elseif arg_29_2 == StoreEnum.RefreshTime.Week then
 		return formatLuaLang("store_buylimit_week", arg_29_3)
-	elseif arg_29_2 == StoreEnum.ChargeRefreshTime.Month then
+	elseif arg_29_2 == StoreEnum.RefreshTime.Month then
 		return formatLuaLang("store_buylimit_month", arg_29_3)
 	else
 		return formatLuaLang("v1a4_bossrush_storeview_buylimit", arg_29_3)
 	end
 end
 
-function var_0_0.hasNextGood(arg_30_0, arg_30_1)
-	return arg_30_0._preGoodsIdDict[arg_30_1] ~= nil
+function var_0_0.getChargeRemainText(arg_30_0, arg_30_1, arg_30_2, arg_30_3, arg_30_4)
+	if arg_30_2 == StoreEnum.ChargeRefreshTime.Forever then
+		if arg_30_1 > 0 then
+			if arg_30_4 > 0 then
+				return formatLuaLang("v1a4_bossrush_storeview_buylimit", arg_30_3)
+			else
+				return formatLuaLang("store_buylimit_forever", arg_30_3)
+			end
+		else
+			return nil
+		end
+	elseif arg_30_2 == StoreEnum.ChargeRefreshTime.MonthCard then
+		local var_30_0 = StoreModel.instance:getMonthCardInfo()
+
+		if var_30_0 then
+			local var_30_1 = var_30_0:getRemainDay()
+
+			if var_30_1 == StoreEnum.MonthCardStatus.NotPurchase then
+				return nil
+			elseif var_30_1 == StoreEnum.MonthCardStatus.NotEnoughOneDay then
+				return luaLang("not_enough_one_day")
+			else
+				return formatLuaLang("remain_day", var_30_1)
+			end
+		else
+			return nil
+		end
+	elseif arg_30_2 == StoreEnum.ChargeRefreshTime.Day then
+		return formatLuaLang("store_buylimit_day", arg_30_3)
+	elseif arg_30_2 == StoreEnum.ChargeRefreshTime.Week then
+		return formatLuaLang("store_buylimit_week", arg_30_3)
+	elseif arg_30_2 == StoreEnum.ChargeRefreshTime.Month then
+		return formatLuaLang("store_buylimit_month", arg_30_3)
+	else
+		return formatLuaLang("v1a4_bossrush_storeview_buylimit", arg_30_3)
+	end
 end
 
-function var_0_0.getRoomProductGoodsId(arg_31_0, arg_31_1, arg_31_2)
-	local var_31_0
+function var_0_0.hasNextGood(arg_31_0, arg_31_1)
+	return arg_31_0._preGoodsIdDict[arg_31_1] ~= nil
+end
 
-	if arg_31_0._roomProduct2GoodsId then
-		var_31_0 = (arg_31_0._roomProduct2GoodsId[arg_31_1] or {})[arg_31_2]
+function var_0_0.getRoomProductGoodsId(arg_32_0, arg_32_1, arg_32_2)
+	local var_32_0
+
+	if arg_32_0._roomProduct2GoodsId then
+		var_32_0 = (arg_32_0._roomProduct2GoodsId[arg_32_1] or {})[arg_32_2]
 	end
 
-	return var_31_0
+	return var_32_0
 end
 
-function var_0_0.getRoomCritterProductGoods(arg_32_0, arg_32_1)
-	return arg_32_0._critterStoreGoods[arg_32_1] or {}
+function var_0_0.getRoomCritterProductGoods(arg_33_0, arg_33_1)
+	return arg_33_0._critterStoreGoods[arg_33_1] or {}
 end
 
-function var_0_0.getChargeOptionalGroup(arg_33_0, arg_33_1)
-	local var_33_0 = arg_33_0._chargeOptionalConfig.configDict[arg_33_1]
+function var_0_0.getChargeOptionalGroup(arg_34_0, arg_34_1)
+	local var_34_0 = arg_34_0._chargeOptionalConfig.configDict[arg_34_1]
 
-	if not var_33_0 then
-		logError("充值商品ID未配置充值自选礼包表" .. tostring(arg_33_1))
+	if not var_34_0 then
+		logError("充值商品ID未配置充值自选礼包表" .. tostring(arg_34_1))
 	end
 
-	return var_33_0
+	return var_34_0
 end
 
-function var_0_0.getMonthCardAddConfig(arg_34_0, arg_34_1)
-	return arg_34_0._storeMonthAddCfg.configDict[arg_34_1]
+function var_0_0.getMonthCardAddConfig(arg_35_0, arg_35_1)
+	return arg_35_0._storeMonthAddCfg.configDict[arg_35_1]
 end
 
-function var_0_0.getSeasonCardMultiFactor(arg_35_0)
+function var_0_0.getSeasonCardMultiFactor(arg_36_0)
 	return CommonConfig.instance:getConstNum(2501)
+end
+
+function var_0_0.getDecorateGoodsCfgById(arg_37_0, arg_37_1)
+	return arg_37_0._decorateProduct2GoodsId[arg_37_1]
+end
+
+function var_0_0.getDecorateGoodsIdById(arg_38_0, arg_38_1)
+	local var_38_0
+	local var_38_1 = arg_38_0:getDecorateGoodsCfgById(arg_38_1)
+
+	if var_38_1 then
+		var_38_0 = var_38_1.id
+	end
+
+	return var_38_0
 end
 
 var_0_0.instance = var_0_0.New()

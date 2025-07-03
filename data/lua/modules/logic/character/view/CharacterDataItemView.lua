@@ -290,9 +290,6 @@ function var_0_0.updateTMPRectHeight_LayoutElement(arg_21_0)
 end
 
 function var_0_0.refreshItem(arg_22_0)
-	TaskDispatcher.cancelTask(arg_22_0.updateTMPRectHeight_LayoutElement, arg_22_0)
-	TaskDispatcher.runDelay(arg_22_0.updateTMPRectHeight_LayoutElement, arg_22_0, 2)
-
 	local var_22_0
 	local var_22_1
 	local var_22_2
@@ -372,6 +369,10 @@ function var_0_0.refreshItem(arg_22_0)
 			end
 		end
 	end
+
+	arg_22_0:updateTMPRectHeight_LayoutElement()
+	TaskDispatcher.cancelTask(arg_22_0.updateTMPRectHeight_LayoutElement, arg_22_0)
+	TaskDispatcher.runDelay(arg_22_0.updateTMPRectHeight_LayoutElement, arg_22_0, 2)
 end
 
 function var_0_0.checkAndCloneMaterialIfNeed(arg_23_0, arg_23_1, arg_23_2)
@@ -442,6 +443,8 @@ function var_0_0._onTreasureBtnClick(arg_26_0, arg_26_1)
 		UIBlockMgr.instance:startBlock("playRewardsAnimtion")
 		arg_26_0:playAniEffect(var_26_0.itemId)
 		var_26_4.animator:Play(UIAnimationName.Unlock)
+		TaskDispatcher.cancelTask(arg_26_0.updateTMPRectHeight_LayoutElement, arg_26_0)
+		TaskDispatcher.runDelay(arg_26_0.updateTMPRectHeight_LayoutElement, arg_26_0, 2)
 		TaskDispatcher.runDelay(function()
 			HeroRpc.instance:sendItemUnlockRequest(arg_26_0._heroId, var_26_0.itemId)
 		end, nil, 2)

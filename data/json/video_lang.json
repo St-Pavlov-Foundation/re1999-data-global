@@ -520,5 +520,29 @@
       "jp",
       "kr"
     ]
+  },
+  {
+    "name": "2_7_activity_03",
+    "supportLang": [
+      "zh"
+    ]
+  },
+  {
+    "name": "2_7_pv",
+    "supportLang": [
+      "en",
+      "zh",
+      "jp",
+      "kr"
+    ]
+  },
+  {
+    "name": "2_7_opening_1",
+    "supportLang": [
+      "en",
+      "zh",
+      "jp",
+      "kr"
+    ]
   }
 ]

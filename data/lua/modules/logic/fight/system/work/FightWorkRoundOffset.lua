@@ -4,7 +4,7 @@ local var_0_0 = class("FightWorkRoundOffset", FightEffectBase)
 
 function var_0_0.onStart(arg_1_0)
 	local var_1_0 = FightModel.instance:getMaxRound()
-	local var_1_1 = arg_1_0._actEffectMO.effectNum
+	local var_1_1 = arg_1_0.actEffectData.effectNum
 
 	FightModel.instance.maxRound = var_1_0 + var_1_1
 

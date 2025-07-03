@@ -120,7 +120,7 @@ function var_0_0._refreshLeftTime(arg_12_0)
 	local var_12_0 = TaskModel.instance:getTaskTypeExpireTime(TaskEnum.TaskType.Daily) - ServerTime.now()
 
 	if var_12_0 > 0 then
-		local var_12_1 = TimeUtil.getFormatTime_overseas(var_12_0)
+		local var_12_1 = TimeUtil.getFormatTime(var_12_0)
 
 		arg_12_0._txtLeftTime.text = var_12_1 and luaLang("task_remaintime") .. var_12_1 or ""
 	else

@@ -2048,6 +2048,70 @@
     "condition": "5#310903"
   },
   {
+    "id": "aergusi_309701_skill1",
+    "timeline": "aergusi_309703_skill1",
+    "priority": 2,
+    "target": 1,
+    "simulate": 1,
+    "condition": "5#309703"
+  },
+  {
+    "id": "aergusi_309701_skill2",
+    "timeline": "aergusi_309703_skill2",
+    "priority": 2,
+    "target": 1,
+    "simulate": 1,
+    "condition": "5#309703"
+  },
+  {
+    "id": "aergusi_309701_skill3",
+    "timeline": "aergusi_309703_skill3",
+    "priority": 2,
+    "target": 1,
+    "simulate": 1,
+    "condition": "5#309703"
+  },
+  {
+    "id": "aergusi_309701_unique",
+    "timeline": "aergusi_309703_unique",
+    "priority": 2,
+    "target": 1,
+    "simulate": 1,
+    "condition": "5#309703"
+  },
+  {
+    "id": "yuanlv_304801_skill1",
+    "timeline": "yuanlv_304804_skill1",
+    "priority": 2,
+    "target": 1,
+    "simulate": 1,
+    "condition": "5#304804"
+  },
+  {
+    "id": "yuanlv_304801_skill2",
+    "timeline": "yuanlv_304804_skill2",
+    "priority": 2,
+    "target": 1,
+    "simulate": 1,
+    "condition": "5#304804"
+  },
+  {
+    "id": "yuanlv_304801_unique",
+    "timeline": "yuanlv_304804_unique",
+    "priority": 2,
+    "target": 1,
+    "simulate": 1,
+    "condition": "5#304804"
+  },
+  {
+    "id": "yuanlv_304801_innate",
+    "timeline": "yuanlv_304804_innate",
+    "priority": 2,
+    "target": 1,
+    "simulate": 1,
+    "condition": "5#304804"
+  },
+  {
     "id": "liu_307901_innate1",
     "timeline": "liu_307904_innate1",
     "priority": 1,
@@ -2078,5 +2142,29 @@
     "target": 1,
     "simulate": 1,
     "condition": "5#307904"
+  },
+  {
+    "id": "bakaluoer_310801_skill1",
+    "timeline": "bakaluoer_310803_skill1",
+    "priority": 1,
+    "target": 1,
+    "simulate": 1,
+    "condition": "5#310803"
+  },
+  {
+    "id": "bakaluoer_310801_skill2",
+    "timeline": "bakaluoer_310803_skill2",
+    "priority": 1,
+    "target": 1,
+    "simulate": 1,
+    "condition": "5#310803"
+  },
+  {
+    "id": "bakaluoer_310801_unique",
+    "timeline": "bakaluoer_310803_unique",
+    "priority": 1,
+    "target": 1,
+    "simulate": 1,
+    "condition": "5#310803"
   }
 ]

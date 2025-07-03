@@ -33,6 +33,7 @@ function var_0_0._editableInitView(arg_4_0)
 	arg_4_0._rectMaskClick = var_0_2.Get(arg_4_0._gorectMask)
 
 	arg_4_0._rectMaskClick:AddClickListener(arg_4_0.onClick, arg_4_0)
+	arg_4_0:setCanvas()
 end
 
 function var_0_0.onClick(arg_5_0)
@@ -126,10 +127,10 @@ function var_0_0.setTargetTrAndHoleSize(arg_9_0, arg_9_1, arg_9_2, arg_9_3, arg_
 	arg_9_0._rectMaskHole:SetTarget(arg_9_1, var_9_1, var_9_1, nil)
 end
 
-function var_0_0.setCanvas(arg_10_0, arg_10_1)
-	arg_10_0._rectMaskHole.mainCanvas = arg_10_1
+function var_0_0.setCanvas(arg_10_0)
+	arg_10_0._rectMaskHole.mainCanvas = ViewMgr.instance:getUICanvas()
 
-	local var_10_0 = CameraMgr.instance:getMainCamera()
+	local var_10_0 = CameraMgr.instance:getUICamera()
 
 	arg_10_0._rectMaskHole.mainCamera = var_10_0
 	arg_10_0._rectMaskHole.uiCamera = var_10_0

@@ -27,20 +27,17 @@ function var_0_0.setUsedCard(arg_5_0, arg_5_1)
 	arg_5_0:clearUsedCards()
 
 	for iter_5_0, iter_5_1 in ipairs(arg_5_1) do
-		local var_5_0 = FightCardInfoMO.New()
+		local var_5_0 = FightCardInfoData.New(iter_5_1)
 
-		var_5_0:init(iter_5_1)
 		table.insert(arg_5_0._usedCards, var_5_0)
 	end
 end
 
 function var_0_0.addUseCard(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
 	if arg_6_0._usedCards then
-		local var_6_0 = FightCardInfoMO.New()
+		local var_6_0 = FightCardInfoData.New(arg_6_2)
 
-		var_6_0:init(arg_6_2)
-
-		var_6_0.custom_fromSkillId = arg_6_3 or 0
+		var_6_0.clientData.custom_fromSkillId = arg_6_3 or 0
 
 		table.insert(arg_6_0._usedCards, arg_6_1, var_6_0)
 	end
@@ -54,7 +51,7 @@ function var_0_0.updateClientOps(arg_8_0)
 	arg_8_0._clientSkillOpAll = {}
 	arg_8_0._clientSkillOpList = {}
 
-	local var_8_0 = FightCardModel.instance:getCardOps()
+	local var_8_0 = FightDataHelper.operationDataMgr:getOpList()
 
 	for iter_8_0, iter_8_1 in ipairs(var_8_0) do
 		if iter_8_1:isPlayCard() then
@@ -83,11 +80,11 @@ end
 function var_0_0.updateFightRound(arg_10_0, arg_10_1)
 	arg_10_0._serverSkillOpList = {}
 
-	for iter_10_0, iter_10_1 in ipairs(arg_10_1.fightStepMOs) do
+	for iter_10_0, iter_10_1 in ipairs(arg_10_1.fightStep) do
 		local var_10_0 = FightDataHelper.entityMgr:getById(iter_10_1.fromId)
 		local var_10_1 = var_10_0 and var_10_0.side == FightEnum.EntitySide.MySide
 		local var_10_2 = iter_10_1.actType == FightEnum.ActType.SKILL
-		local var_10_3 = var_10_2 and FightCardModel.instance:isActiveSkill(iter_10_1.fromId, iter_10_1.actId) or false
+		local var_10_3 = var_10_2 and FightCardDataHelper.isActiveSkill(iter_10_1.fromId, iter_10_1.actId) or false
 
 		if var_10_1 and var_10_2 and var_10_3 then
 			local var_10_4 = FightSkillDisplayMO.New()

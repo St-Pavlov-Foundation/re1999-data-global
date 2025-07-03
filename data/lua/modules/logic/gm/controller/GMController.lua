@@ -576,6 +576,145 @@ function var_0_0._checkProfilerCmdFile(arg_37_0)
 	end
 end
 
+function var_0_0.setRecordASFDCo(arg_38_0, arg_38_1, arg_38_2, arg_38_3)
+	arg_38_0.emitterId = tonumber(arg_38_1)
+	arg_38_0.missileId = tonumber(arg_38_2)
+	arg_38_0.explosionId = tonumber(arg_38_3)
+end
+
+function var_0_0.tempHasField(arg_39_0, arg_39_1)
+	return false
+end
+
+function var_0_0.startASFDFlow(arg_40_0, arg_40_1, arg_40_2, arg_40_3)
+	if arg_40_0.asfdSequence then
+		return
+	end
+
+	local var_40_0 = FightDataHelper.entityMgr:getASFDEntityMo(arg_40_2) or arg_40_0:createASFDEmitter(arg_40_2)
+	local var_40_1 = {}
+
+	for iter_40_0 = 1, arg_40_1 do
+		local var_40_2 = {
+			cardIndex = 1,
+			actType = 1,
+			fromId = var_40_0.id,
+			toId = arg_40_3,
+			actId = FightASFDConfig.instance.skillId,
+			actEffect = {
+				{
+					targetId = arg_40_3,
+					effectType = FightEnum.EffectType.EMITTERFIGHTNOTIFY,
+					reserveStr = cjson.encode({
+						splitNum = 0,
+						emitterAttackNum = iter_40_0,
+						emitterAttackMaxNum = arg_40_1
+					}),
+					HasField = var_0_0.tempHasField,
+					cardInfoList = {},
+					fightTasks = {}
+				}
+			}
+		}
+		local var_40_3 = FightStepData.New(var_40_2)
+
+		table.insert(var_40_1, var_40_3)
+	end
+
+	arg_40_0.asfdSequence = FlowSequence.New()
+
+	for iter_40_1, iter_40_2 in ipairs(var_40_1) do
+		local var_40_4 = FightASFDFlow.New(iter_40_2, var_40_1[iter_40_1 + 1], iter_40_1)
+
+		arg_40_0.asfdSequence:addWork(var_40_4)
+	end
+
+	TaskDispatcher.runDelay(arg_40_0.delayStartASFDFlow, arg_40_0, 1)
+end
+
+function var_0_0.delayStartASFDFlow(arg_41_0)
+	var_0_0.srcGetASFDCoFunc = FightASFDHelper.getASFDCo
+	FightASFDHelper.getASFDCo = var_0_0.tempGetASFDCo
+
+	arg_41_0.asfdSequence:registerDoneListener(arg_41_0.onASFDDone, arg_41_0)
+	arg_41_0.asfdSequence:start()
+end
+
+function var_0_0.tempGetASFDCo(arg_42_0, arg_42_1, arg_42_2)
+	if arg_42_1 == FightEnum.ASFDUnit.Emitter then
+		local var_42_0 = var_0_0.instance.emitterId
+
+		return lua_fight_asfd.configDict[var_42_0] or arg_42_2
+	elseif arg_42_1 == FightEnum.ASFDUnit.Missile then
+		local var_42_1 = var_0_0.instance.missileId
+
+		return lua_fight_asfd.configDict[var_42_1] or arg_42_2
+	elseif arg_42_1 == FightEnum.ASFDUnit.Explosion then
+		local var_42_2 = var_0_0.instance.explosionId
+
+		return lua_fight_asfd.configDict[var_42_2] or arg_42_2
+	else
+		return arg_42_2
+	end
+end
+
+function var_0_0.onASFDDone(arg_43_0)
+	FightASFDHelper.getASFDCo = var_0_0.srcGetASFDCoFunc
+	arg_43_0.asfdSequence = nil
+end
+
+function var_0_0.createASFDEmitter(arg_44_0, arg_44_1)
+	local var_44_0 = FightEntityMO.New()
+
+	var_44_0:init({
+		skin = 0,
+		exSkillLevel = 0,
+		userId = 0,
+		career = 0,
+		exSkill = 0,
+		status = 0,
+		position = 0,
+		level = 0,
+		teamType = 0,
+		guard = 0,
+		subCd = 0,
+		exPoint = 0,
+		shieldValue = 0,
+		modelId = 0,
+		uid = arg_44_1 == FightEnum.TeamType.MySide and "99998" or "-99998",
+		entityType = FightEnum.EntityType.ASFDEmitter,
+		side = arg_44_1,
+		attr = {
+			defense = 0,
+			multiHpNum = 0,
+			hp = 0,
+			multiHpIdx = 0,
+			mdefense = 0,
+			technic = 0,
+			attack = 0
+		},
+		buffs = {},
+		skillGroup1 = {},
+		skillGroup2 = {},
+		passiveSkill = {},
+		powerInfos = {},
+		SummonedList = {}
+	})
+
+	var_44_0.side = arg_44_1
+
+	local var_44_1 = FightDataHelper.entityMgr:addEntityMO(var_44_0)
+	local var_44_2 = FightDataHelper.entityMgr:getOriginASFDEmitterList(var_44_1.side)
+
+	table.insert(var_44_2, var_44_1)
+
+	local var_44_3 = GameSceneMgr.instance:getCurScene()
+
+	;(var_44_3 and var_44_3.entityMgr):addASFDUnit()
+
+	return var_44_1
+end
+
 var_0_0.instance = var_0_0.New()
 
 return var_0_0

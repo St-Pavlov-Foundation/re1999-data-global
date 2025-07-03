@@ -4030,6 +4030,346 @@
     "isCn": 0
   },
   {
+    "id": 2500200,
+    "title": "",
+    "type": 2,
+    "text": "冷周六活动指引",
+    "icon": "v2a7_hissabeth_help_1",
+    "iconText": "v2a7_hissabeth_help_1",
+    "unlockGuideId": 27201,
+    "isCn": 0
+  },
+  {
+    "id": 2700001,
+    "title": "",
+    "type": 1,
+    "text": "弃置附魔引导图",
+    "icon": "v2a7_abandon_help_1",
+    "iconText": "v2a7_abandon_help_1",
+    "unlockGuideId": 220311,
+    "isCn": 0
+  },
+  {
+    "id": 2700002,
+    "title": "",
+    "type": 1,
+    "text": "精准附魔引导图1",
+    "icon": "v2a7_abandon_help_2",
+    "iconText": "v2a7_abandon_help_2",
+    "unlockGuideId": 22030,
+    "isCn": 0
+  },
+  {
+    "id": 2700003,
+    "title": "",
+    "type": 1,
+    "text": "精准附魔引导图2",
+    "icon": "v2a7_abandon_help_3",
+    "iconText": "v2a7_abandon_help_3",
+    "unlockGuideId": 22030,
+    "isCn": 0
+  },
+  {
+    "id": 2700004,
+    "title": "",
+    "type": 1,
+    "text": "封锁附魔引导图1",
+    "icon": "v2a7_abandon_help_4",
+    "iconText": "v2a7_abandon_help_4",
+    "unlockGuideId": 220322,
+    "isCn": 0
+  },
+  {
+    "id": 2700005,
+    "title": "",
+    "type": 1,
+    "text": "封锁附魔引导图2",
+    "icon": "v2a7_abandon_help_5",
+    "iconText": "v2a7_abandon_help_5",
+    "unlockGuideId": 220322,
+    "isCn": 0
+  },
+  {
+    "id": 2700101,
+    "title": "",
+    "type": 1,
+    "text": "翻覆之舟引导图2",
+    "icon": "v2a7_tower_help_1",
+    "iconText": "v2a7_tower_help_1",
+    "unlockGuideId": 23207,
+    "isCn": 0
+  },
+  {
+    "id": 2700102,
+    "title": "",
+    "type": 1,
+    "text": "翻覆之舟引导图1",
+    "icon": "v2a7_tower_help_2",
+    "iconText": "v2a7_tower_help_2",
+    "unlockGuideId": 23207,
+    "isCn": 0
+  },
+  {
+    "id": 2700103,
+    "title": "",
+    "type": 1,
+    "text": "教学关岩1a",
+    "icon": "v2a7_tower_help_3",
+    "iconText": "v2a7_tower_help_3",
+    "unlockGuideId": 27407,
+    "isCn": 0
+  },
+  {
+    "id": 2700104,
+    "title": "",
+    "type": 1,
+    "text": "教学关岩1b",
+    "icon": "v2a7_tower_help_4",
+    "iconText": "v2a7_tower_help_4",
+    "unlockGuideId": 27407,
+    "isCn": 0
+  },
+  {
+    "id": 2700105,
+    "title": "",
+    "type": 1,
+    "text": "教学关岩2a",
+    "icon": "v2a7_tower_help_5",
+    "iconText": "v2a7_tower_help_5",
+    "unlockGuideId": 27408,
+    "isCn": 0
+  },
+  {
+    "id": 2700106,
+    "title": "",
+    "type": 1,
+    "text": "教学关岩2b",
+    "icon": "v2a7_tower_help_6",
+    "iconText": "v2a7_tower_help_6",
+    "unlockGuideId": 27408,
+    "isCn": 0
+  },
+  {
+    "id": 2700107,
+    "title": "",
+    "type": 1,
+    "text": "回声屿教学关卡引导图",
+    "icon": "v2a7_tower_help_7",
+    "iconText": "v2a7_tower_help_7",
+    "unlockGuideId": 23205,
+    "isCn": 0
+  },
+  {
+    "id": 2700108,
+    "title": "",
+    "type": 1,
+    "text": "教学关木1a",
+    "icon": "v2a7_tower_help_8",
+    "iconText": "v2a7_tower_help_8",
+    "unlockGuideId": 27401,
+    "isCn": 0
+  },
+  {
+    "id": 2700109,
+    "title": "",
+    "type": 1,
+    "text": "教学关木1b",
+    "icon": "v2a7_tower_help_9",
+    "iconText": "v2a7_tower_help_9",
+    "unlockGuideId": 27401,
+    "isCn": 0
+  },
+  {
+    "id": 2700110,
+    "title": "",
+    "type": 1,
+    "text": "教学关木2a",
+    "icon": "v2a7_tower_help_10",
+    "iconText": "v2a7_tower_help_10",
+    "unlockGuideId": 27402,
+    "isCn": 0
+  },
+  {
+    "id": 2700111,
+    "title": "",
+    "type": 1,
+    "text": "教学关木2b",
+    "icon": "v2a7_tower_help_11",
+    "iconText": "v2a7_tower_help_11",
+    "unlockGuideId": 27402,
+    "isCn": 0
+  },
+  {
+    "id": 2700112,
+    "title": "",
+    "type": 1,
+    "text": "天赋树引导图",
+    "icon": "v2a7_tower_help_12",
+    "iconText": "v2a7_tower_help_12",
+    "unlockGuideId": 23208,
+    "isCn": 0
+  },
+  {
+    "id": 2700113,
+    "title": "",
+    "type": 1,
+    "text": "教学关兽1a",
+    "icon": "v2a7_tower_help_13",
+    "iconText": "v2a7_tower_help_13",
+    "unlockGuideId": 27405,
+    "isCn": 0
+  },
+  {
+    "id": 2700114,
+    "title": "",
+    "type": 1,
+    "text": "教学关兽1b",
+    "icon": "v2a7_tower_help_14",
+    "iconText": "v2a7_tower_help_14",
+    "unlockGuideId": 27405,
+    "isCn": 0
+  },
+  {
+    "id": 2700115,
+    "title": "",
+    "type": 1,
+    "text": "教学关兽2a",
+    "icon": "v2a7_tower_help_15",
+    "iconText": "v2a7_tower_help_15",
+    "unlockGuideId": 27406,
+    "isCn": 0
+  },
+  {
+    "id": 2700116,
+    "title": "",
+    "type": 1,
+    "text": "教学关兽2b",
+    "icon": "v2a7_tower_help_16",
+    "iconText": "v2a7_tower_help_16",
+    "unlockGuideId": 27406,
+    "isCn": 0
+  },
+  {
+    "id": 2700117,
+    "title": "",
+    "type": 1,
+    "text": "教学关星1a",
+    "icon": "v2a7_tower_help_17",
+    "iconText": "v2a7_tower_help_17",
+    "unlockGuideId": 27403,
+    "isCn": 0
+  },
+  {
+    "id": 2700118,
+    "title": "",
+    "type": 1,
+    "text": "教学关星1b",
+    "icon": "v2a7_tower_help_18",
+    "iconText": "v2a7_tower_help_18",
+    "unlockGuideId": 27403,
+    "isCn": 0
+  },
+  {
+    "id": 2700119,
+    "title": "",
+    "type": 1,
+    "text": "教学关星2a",
+    "icon": "v2a7_tower_help_19",
+    "iconText": "v2a7_tower_help_19",
+    "unlockGuideId": 27404,
+    "isCn": 0
+  },
+  {
+    "id": 2700120,
+    "title": "",
+    "type": 1,
+    "text": "教学关星2b",
+    "icon": "v2a7_tower_help_20",
+    "iconText": "v2a7_tower_help_20",
+    "unlockGuideId": 27404,
+    "isCn": 0
+  },
+  {
+    "id": 2700121,
+    "title": "",
+    "type": 1,
+    "text": "教学关灵1a",
+    "icon": "v2a7_tower_help_21",
+    "iconText": "v2a7_tower_help_21",
+    "unlockGuideId": 27409,
+    "isCn": 0
+  },
+  {
+    "id": 2700122,
+    "title": "",
+    "type": 1,
+    "text": "教学关灵1b",
+    "icon": "v2a7_tower_help_22",
+    "iconText": "v2a7_tower_help_22",
+    "unlockGuideId": 27409,
+    "isCn": 0
+  },
+  {
+    "id": 2700123,
+    "title": "",
+    "type": 1,
+    "text": "教学关灵2a",
+    "icon": "v2a7_tower_help_23",
+    "iconText": "v2a7_tower_help_23",
+    "unlockGuideId": 27410,
+    "isCn": 0
+  },
+  {
+    "id": 2700124,
+    "title": "",
+    "type": 1,
+    "text": "教学关灵2b",
+    "icon": "v2a7_tower_help_22",
+    "iconText": "v2a7_tower_help_22",
+    "unlockGuideId": 27410,
+    "isCn": 0
+  },
+  {
+    "id": 2700125,
+    "title": "",
+    "type": 1,
+    "text": "2.7boss关教学1",
+    "icon": "v2a7_clock_help_1",
+    "iconText": "v2a7_clock_help_1",
+    "unlockGuideId": 27501,
+    "isCn": 0
+  },
+  {
+    "id": 2700126,
+    "title": "",
+    "type": 1,
+    "text": "2.7boss关教学2",
+    "icon": "v2a7_clock_help_2",
+    "iconText": "v2a7_clock_help_2",
+    "unlockGuideId": 27501,
+    "isCn": 0
+  },
+  {
+    "id": 2700127,
+    "title": "",
+    "type": 1,
+    "text": "2.7boss关教学3",
+    "icon": "v2a7_clock_help_3",
+    "iconText": "v2a7_clock_help_3",
+    "unlockGuideId": 27501,
+    "isCn": 0
+  },
+  {
+    "id": 2500201,
+    "title": "",
+    "type": 2,
+    "text": "冷周六活动指引2",
+    "icon": "v2a7_hissabeth_help_2",
+    "iconText": "v2a7_hissabeth_help_2",
+    "unlockGuideId": 27201,
+    "isCn": 0
+  },
+  {
     "id": 19001,
     "title": "language_10000135",
     "type": 1,

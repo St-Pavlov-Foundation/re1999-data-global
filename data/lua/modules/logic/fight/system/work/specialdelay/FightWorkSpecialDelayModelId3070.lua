@@ -6,7 +6,7 @@ function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2)
 	arg_1_0:__onInit()
 
 	arg_1_0._parentClass = arg_1_1
-	arg_1_0._fightStepMO = arg_1_2
+	arg_1_0.fightStepData = arg_1_2
 
 	arg_1_0:onStart()
 end
@@ -15,14 +15,14 @@ local var_0_1 = 0.4
 local var_0_2 = 0.45
 
 function var_0_0.onStart(arg_2_0)
-	if arg_2_0._fightStepMO.actType == FightEnum.ActType.SKILL then
-		local var_2_0 = FightHelper.getEntity(arg_2_0._fightStepMO.fromId)
+	if arg_2_0.fightStepData.actType == FightEnum.ActType.SKILL then
+		local var_2_0 = FightHelper.getEntity(arg_2_0.fightStepData.fromId)
 
 		if var_2_0 and var_2_0:getMO() then
 			local var_2_1 = 0
 			local var_2_2
 
-			for iter_2_0, iter_2_1 in ipairs(arg_2_0._fightStepMO.actEffectMOs) do
+			for iter_2_0, iter_2_1 in ipairs(arg_2_0.fightStepData.actEffect) do
 				if iter_2_1.effectType == FightEnum.EffectType.BUFFADD and iter_2_1.buff then
 					local var_2_3 = lua_skill_buff.configDict[iter_2_1.buff.buffId]
 

@@ -28,6 +28,10 @@ function var_0_0.onLoadCallback(arg_2_0, arg_2_1)
 
 		arg_2_0.txtScore = gohelper.findChildText(arg_2_0.instanceGo, "Score/#txt_num")
 		arg_2_0.txtScore1 = gohelper.findChildText(arg_2_0.instanceGo, "Score/#txt_num/#txt_num1")
+		arg_2_0.imageScoreIcon = gohelper.findChildImage(arg_2_0.instanceGo, "Score/#image_ScoreIcon")
+		arg_2_0.canvasGroupScoreIcon = arg_2_0.imageScoreIcon.gameObject:GetComponent(typeof(UnityEngine.CanvasGroup))
+		arg_2_0._animLevelUp = gohelper.findChild(arg_2_0.instanceGo, "Score/#ani_levelup"):GetComponent(gohelper.Type_Animator)
+		arg_2_0.lastLevel = 0
 
 		arg_2_0:refreshScore()
 
@@ -44,6 +48,8 @@ function var_0_0.refreshScore(arg_3_0)
 
 	arg_3_0.txtScore.text = var_3_0
 	arg_3_0.txtScore1.text = var_3_0
+
+	arg_3_0:refreshScoreStar(var_3_0)
 end
 
 var_0_0.Duration = 0.5
@@ -64,25 +70,43 @@ function var_0_0.onFrameCallback(arg_5_0, arg_5_1)
 	arg_5_1 = math.floor(arg_5_1)
 	arg_5_0.txtScore.text = arg_5_1
 	arg_5_0.txtScore1.text = arg_5_1
+
+	arg_5_0:refreshScoreStar(arg_5_1)
 end
 
-function var_0_0.killTween(arg_6_0)
-	if arg_6_0.tweenId then
-		ZProj.TweenHelper.KillById(arg_6_0.tweenId)
+function var_0_0.refreshScoreStar(arg_6_0, arg_6_1)
+	local var_6_0 = TowerConfig.instance:getScoreToStarConfig(arg_6_1)
+
+	if var_6_0 ~= arg_6_0.lastLevel then
+		arg_6_0._animLevelUp:Play("levelup", 0, 0)
+
+		arg_6_0.lastLevel = var_6_0
+	end
+
+	local var_6_1 = var_6_0 > 0 and "tower_assist_point" .. Mathf.Min(var_6_0, TowerEnum.MaxShowStarNum) or "tower_assist_point1"
+
+	UISpriteSetMgr.instance:setTowerSprite(arg_6_0.imageScoreIcon, var_6_1)
+
+	arg_6_0.canvasGroupScoreIcon.alpha = var_6_0 > 0 and 1 or 0.3
+end
+
+function var_0_0.killTween(arg_7_0)
+	if arg_7_0.tweenId then
+		ZProj.TweenHelper.KillById(arg_7_0.tweenId)
 	end
 end
 
-function var_0_0.destroy(arg_7_0)
-	removeAssetLoadCb(var_0_1, arg_7_0._onLoadCallback, arg_7_0)
+function var_0_0.destroy(arg_8_0)
+	removeAssetLoadCb(var_0_1, arg_8_0._onLoadCallback, arg_8_0)
 
-	if arg_7_0._assetItem then
-		arg_7_0._assetItem:Release()
+	if arg_8_0._assetItem then
+		arg_8_0._assetItem:Release()
 
-		arg_7_0._assetItem = nil
+		arg_8_0._assetItem = nil
 	end
 
-	arg_7_0:killTween()
-	arg_7_0:__onDispose()
+	arg_8_0:killTween()
+	arg_8_0:__onDispose()
 end
 
 return var_0_0

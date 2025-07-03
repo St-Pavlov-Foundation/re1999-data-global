@@ -381,36 +381,26 @@ function var_0_0._loadCondition(arg_21_0)
 end
 
 function var_0_0._getPlatinumProgress7(arg_22_0)
-	local var_22_0 = FightModel.instance:getHistoryRoundMOList()
-	local var_22_1
+	local var_22_0 = FightDataHelper.roundMgr.dataList
+	local var_22_1 = 0
 
-	var_22_1 = var_22_0 and tabletool.copy(var_22_0) or {}
+	for iter_22_0, iter_22_1 in ipairs(var_22_0) do
+		local var_22_2 = 0
 
-	local var_22_2 = FightModel.instance:getCurRoundMO()
-
-	if var_22_2 and not tabletool.indexOf(var_22_1, var_22_2) then
-		table.insert(var_22_1, FightModel.instance:getCurRoundMO())
-	end
-
-	local var_22_3 = 0
-
-	for iter_22_0, iter_22_1 in ipairs(var_22_1) do
-		local var_22_4 = 0
-
-		for iter_22_2, iter_22_3 in ipairs(iter_22_1.fightStepMOs) do
+		for iter_22_2, iter_22_3 in ipairs(iter_22_1.fightStep) do
 			if iter_22_3.hasPlay and iter_22_3.actType == FightEnum.ActType.SKILL then
-				local var_22_5 = FightDataHelper.entityMgr:getById(iter_22_3.fromId)
+				local var_22_3 = FightDataHelper.entityMgr:getById(iter_22_3.fromId)
 
-				if var_22_5 and var_22_5.side == FightEnum.EntitySide.MySide and var_22_5:isUniqueSkill(iter_22_3.actId) then
-					var_22_4 = var_22_4 + 1
+				if var_22_3 and var_22_3.side == FightEnum.EntitySide.MySide and FightCardDataHelper.isBigSkill(iter_22_3.actId) then
+					var_22_2 = var_22_2 + 1
 				end
 			end
 		end
 
-		var_22_3 = math.max(var_22_3, var_22_4)
+		var_22_1 = math.max(var_22_1, var_22_2)
 	end
 
-	return var_22_3
+	return var_22_1
 end
 
 local var_0_2 = {
@@ -421,46 +411,36 @@ local var_0_2 = {
 }
 
 function var_0_0._getPlatinumProgress8(arg_23_0)
-	local var_23_0 = FightModel.instance:getHistoryRoundMOList()
-	local var_23_1
+	local var_23_0 = FightDataHelper.roundMgr.dataList
+	local var_23_1 = 0
 
-	var_23_1 = var_23_0 and tabletool.copy(var_23_0) or {}
+	for iter_23_0, iter_23_1 in ipairs(var_23_0) do
+		for iter_23_2, iter_23_3 in ipairs(iter_23_1.fightStep) do
+			local var_23_2 = FightDataHelper.entityMgr:getById(iter_23_3.fromId)
 
-	local var_23_2 = FightModel.instance:getCurRoundMO()
+			if iter_23_3.hasPlay and var_23_2 and var_23_2.side == FightEnum.EntitySide.MySide then
+				local var_23_3 = 0
 
-	if var_23_2 and not tabletool.indexOf(var_23_1, var_23_2) then
-		table.insert(var_23_1, FightModel.instance:getCurRoundMO())
-	end
+				for iter_23_4, iter_23_5 in ipairs(iter_23_3.actEffect) do
+					local var_23_4 = FightDataHelper.entityMgr:getById(iter_23_5.targetId)
 
-	local var_23_3 = 0
-
-	for iter_23_0, iter_23_1 in ipairs(var_23_1) do
-		for iter_23_2, iter_23_3 in ipairs(iter_23_1.fightStepMOs) do
-			local var_23_4 = FightDataHelper.entityMgr:getById(iter_23_3.fromId)
-
-			if iter_23_3.hasPlay and var_23_4 and var_23_4.side == FightEnum.EntitySide.MySide then
-				local var_23_5 = 0
-
-				for iter_23_4, iter_23_5 in ipairs(iter_23_3.actEffectMOs) do
-					local var_23_6 = FightDataHelper.entityMgr:getById(iter_23_5.targetId)
-
-					if var_23_6 and var_23_6.side == FightEnum.EntitySide.EnemySide then
+					if var_23_4 and var_23_4.side == FightEnum.EntitySide.EnemySide then
 						if var_0_2[iter_23_5.effectType] then
-							var_23_5 = var_23_5 + iter_23_5.effectNum
+							var_23_3 = var_23_3 + iter_23_5.effectNum
 						elseif iter_23_5.effectType == FightEnum.EffectType.SHIELDDEL then
-							var_23_5 = var_23_5 + iter_23_5.effectNum
-						elseif iter_23_5.effectType == FightEnum.EffectType.SHIELD and iter_23_5.entityMO then
-							var_23_5 = var_23_5 + iter_23_5.entityMO.shieldValue - iter_23_5.effectNum
+							var_23_3 = var_23_3 + iter_23_5.effectNum
+						elseif iter_23_5.effectType == FightEnum.EffectType.SHIELD and iter_23_5.entity then
+							var_23_3 = var_23_3 + iter_23_5.entity.shieldValue - iter_23_5.effectNum
 						end
 					end
 				end
 
-				var_23_3 = math.max(var_23_3, var_23_5)
+				var_23_1 = math.max(var_23_1, var_23_3)
 			end
 		end
 	end
 
-	return var_23_3
+	return var_23_1
 end
 
 function var_0_0._getPlatinumProgress9(arg_24_0)

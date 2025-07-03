@@ -977,7 +977,9 @@ function var_0_0._initVersionActivityEpisodeList(arg_57_0)
 		VersionActivity2_4DungeonEnum.DungeonChapterId.Story2,
 		VersionActivity2_4DungeonEnum.DungeonChapterId.Story3,
 		VersionActivity2_5DungeonEnum.DungeonChapterId.Story2,
-		VersionActivity2_5DungeonEnum.DungeonChapterId.Story3
+		VersionActivity2_5DungeonEnum.DungeonChapterId.Story3,
+		VersionActivity2_7DungeonEnum.DungeonChapterId.Story2,
+		VersionActivity2_7DungeonEnum.DungeonChapterId.Story3
 	}
 	local var_57_1
 

@@ -352,6 +352,7 @@ function var_0_0._refreshActCenter(arg_22_0)
 		elseif iter_22_0 == ActivityEnum.ActivityType.Welfare then
 			ActivityModel.instance:removeFinishedWelfare(iter_22_1)
 			ActivityModel.instance:removeUnExitAct(iter_22_1)
+			ActivityModel.instance:removeSelectSixAfterRemoveFinished(iter_22_1)
 		end
 
 		if GameUtil.getTabLen(iter_22_1) ~= 0 then

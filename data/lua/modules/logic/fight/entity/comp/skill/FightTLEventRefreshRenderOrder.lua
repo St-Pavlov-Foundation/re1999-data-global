@@ -1,8 +1,8 @@
 ﻿module("modules.logic.fight.entity.comp.skill.FightTLEventRefreshRenderOrder", package.seeall)
 
-local var_0_0 = class("FightTLEventRefreshRenderOrder")
+local var_0_0 = class("FightTLEventRefreshRenderOrder", FightTimelineTrackItem)
 
-function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 	local var_1_0 = FightHelper.getEntity(arg_1_1.fromId)
 	local var_1_1 = FightHelper.getSideEntitys(var_1_0:getSide(), true)
 	local var_1_2 = FightHelper.getDefenders(arg_1_1, true)
@@ -29,20 +29,14 @@ function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 	end
 end
 
-function var_0_0.reset(arg_2_0)
-	arg_2_0._keepOrderPriorityDict = nil
-
-	TaskDispatcher.cancelTask(arg_2_0._refreshOrder, arg_2_0)
+function var_0_0._refreshOrder(arg_2_0)
+	FightRenderOrderMgr.instance:refreshRenderOrder(arg_2_0._keepOrderPriorityDict)
 end
 
-function var_0_0.dispose(arg_3_0)
+function var_0_0.onDestructor(arg_3_0)
 	arg_3_0._keepOrderPriorityDict = nil
 
 	TaskDispatcher.cancelTask(arg_3_0._refreshOrder, arg_3_0)
-end
-
-function var_0_0._refreshOrder(arg_4_0)
-	FightRenderOrderMgr.instance:refreshRenderOrder(arg_4_0._keepOrderPriorityDict)
 end
 
 return var_0_0

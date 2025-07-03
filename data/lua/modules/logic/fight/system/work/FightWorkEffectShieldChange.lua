@@ -3,8 +3,8 @@
 local var_0_0 = class("FightWorkEffectShieldChange", FightEffectBase)
 
 function var_0_0.onStart(arg_1_0)
-	local var_1_0 = FightHelper.getEntity(arg_1_0._actEffectMO.targetId)
-	local var_1_1 = arg_1_0._actEffectMO.effectNum
+	local var_1_0 = FightHelper.getEntity(arg_1_0.actEffectData.targetId)
+	local var_1_1 = arg_1_0.actEffectData.effectNum
 
 	if var_1_0 and var_1_0.nameUI and var_1_1 > 0 then
 		var_1_0.nameUI:addHp(var_1_1)

@@ -248,7 +248,7 @@ function var_0_0.alreadyHas(arg_10_0)
 	local var_10_3 = var_10_1[1][2]
 	local var_10_4 = false
 
-	if arg_10_0.belongStoreId == StoreEnum.SubRoomNew or arg_10_0.belongStoreId == StoreEnum.SubRoomOld then
+	if arg_10_0.belongStoreId == StoreEnum.StoreId.NewRoomStore or arg_10_0.belongStoreId == StoreEnum.StoreId.OldRoomStore then
 		var_10_4 = true
 
 		for iter_10_0, iter_10_1 in ipairs(var_10_1) do
@@ -397,7 +397,7 @@ function var_0_0.checkShowNewRedDot(arg_25_0)
 	local var_25_0 = PlayerPrefsKey.StoreRoomTreeItemShowNew .. arg_25_0.goodsId
 	local var_25_1 = GameUtil.playerPrefsGetStringByUserId(var_25_0, nil)
 
-	if arg_25_0.belongStoreId ~= StoreEnum.SubRoomNew then
+	if arg_25_0.belongStoreId ~= StoreEnum.StoreId.NewRoomStore then
 		return false
 	end
 

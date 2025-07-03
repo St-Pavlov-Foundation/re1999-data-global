@@ -9,7 +9,7 @@ function var_0_0.onStart(arg_1_0)
 		return
 	end
 
-	if not arg_1_0._actEffectMO.entityMO then
+	if not arg_1_0.actEffectData.entity then
 		arg_1_0:onDone(true)
 
 		return
@@ -18,7 +18,7 @@ function var_0_0.onStart(arg_1_0)
 	arg_1_0:com_registTimer(arg_1_0._delayDone, 5)
 
 	arg_1_0._entityMgr = GameSceneMgr.instance:getCurScene().entityMgr
-	arg_1_0._targetId = arg_1_0._actEffectMO.targetId
+	arg_1_0._targetId = arg_1_0.actEffectData.targetId
 
 	FightRenderOrderMgr.instance:unregister(arg_1_0._targetId)
 
@@ -28,13 +28,13 @@ function var_0_0.onStart(arg_1_0)
 		arg_1_0._targetEntity = nil
 	end
 
-	arg_1_0._changedId = arg_1_0._actEffectMO.entityMO.id
+	arg_1_0._changedId = arg_1_0.actEffectData.entity.id
 	arg_1_0._changedSubEntity = FightHelper.getEntity(arg_1_0._changedId)
 	arg_1_0._changedEntityMO = FightDataHelper.entityMgr:getById(arg_1_0._changedId)
 
 	FightController.instance:dispatchEvent(FightEvent.BeforeChangeSubHero, arg_1_0._targetId, arg_1_0._changedId)
 
-	arg_1_0._seasonUseChangeHero = FightModel.instance:isSeason2() and arg_1_0._actEffectMO.configEffect == 1
+	arg_1_0._seasonUseChangeHero = FightModel.instance:isSeason2() and arg_1_0.actEffectData.configEffect == 1
 
 	if arg_1_0._changedEntityMO.side == FightEnum.EntitySide.MySide then
 		if arg_1_0._seasonUseChangeHero then
@@ -77,7 +77,7 @@ function var_0_0._startChangeHero(arg_2_0)
 			local var_2_1 = "always/ui_renwuxiaoshi"
 			local var_2_2
 
-			if arg_2_0._actEffectMO.configEffect == 1 then
+			if arg_2_0.actEffectData.configEffect == 1 then
 				var_2_1 = "buff/buff_huanren"
 				var_2_2 = ModuleEnum.SpineHangPoint.mountmiddle
 			end
@@ -118,12 +118,11 @@ function var_0_0._playJumpTimeline(arg_4_0)
 	local var_4_3 = {
 		actId = 0,
 		customType = "change_hero",
-		actEffectMOs = {
+		actEffect = {
 			{
 				targetId = arg_4_0._targetId
 			}
 		},
-		actEffect = {},
 		fromId = arg_4_0._changedId,
 		toId = arg_4_0._targetId,
 		actType = FightEnum.ActType.SKILL,
@@ -205,7 +204,7 @@ function var_0_0._onEnterEntitySpineLoadFinish(arg_9_0, arg_9_1)
 			local var_9_1 = "always/ui_renwuxiaoshi"
 			local var_9_2
 
-			if arg_9_0._actEffectMO.configEffect == 1 then
+			if arg_9_0.actEffectData.configEffect == 1 then
 				var_9_1 = "buff/buff_huanren"
 				var_9_2 = ModuleEnum.SpineHangPoint.mountmiddle
 			end
@@ -289,7 +288,7 @@ function var_0_0.clearWork(arg_14_0)
 	FightController.instance:unregisterCallback(FightEvent.OnSpineLoaded, arg_14_0._onNextSubSpineLoaded, arg_14_0)
 	FightController.instance:unregisterCallback(FightEvent.OnSpineLoaded, arg_14_0._onEnterEntitySpineLoadFinish, arg_14_0)
 
-	arg_14_0._fightStepMO = nil
+	arg_14_0.fightStepData = nil
 
 	if arg_14_0._work then
 		arg_14_0._work:unregisterDoneListener(arg_14_0._onEntityBornDone, arg_14_0)

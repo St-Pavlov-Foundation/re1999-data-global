@@ -209,7 +209,7 @@ function var_0_0._checkIsShowRed_ActivityBeginner(arg_16_0, arg_16_1, arg_16_2)
 			return true
 		end
 
-		if (iter_16_1 == ActivityEnum.Activity.Activity1_9WarmUp or iter_16_1 == ActivityEnum.Activity.V2a0_WarmUp or iter_16_1 == ActivityEnum.Activity.V2a1_WarmUp or iter_16_1 == ActivityEnum.Activity.V2a2_WarmUp or iter_16_1 == ActivityEnum.Activity.V2a3_WarmUp or iter_16_1 == ActivityEnum.Activity.V2a5_WarmUp or iter_16_1 == ActivityEnum.Activity.V2a6_WarmUp) and Activity125Controller.instance:checkActRed2(iter_16_1) then
+		if (iter_16_1 == ActivityEnum.Activity.Activity1_9WarmUp or iter_16_1 == ActivityEnum.Activity.V2a0_WarmUp or iter_16_1 == ActivityEnum.Activity.V2a1_WarmUp or iter_16_1 == ActivityEnum.Activity.V2a2_WarmUp or iter_16_1 == ActivityEnum.Activity.V2a3_WarmUp or iter_16_1 == ActivityEnum.Activity.V2a5_WarmUp or iter_16_1 == ActivityEnum.Activity.V2a6_WarmUp or iter_16_1 == ActivityEnum.Activity.V2a7_WarmUp) and Activity125Controller.instance:checkActRed2(iter_16_1) then
 			return true
 		end
 
@@ -289,7 +289,7 @@ function var_0_0._checkActivityShowRedDotData(arg_17_0, arg_17_1)
 				return
 			end
 
-			if (iter_17_1 == ActivityEnum.Activity.Activity1_9WarmUp or iter_17_1 == ActivityEnum.Activity.V2a0_WarmUp or iter_17_1 == ActivityEnum.Activity.V2a1_WarmUp or iter_17_1 == ActivityEnum.Activity.V2a2_WarmUp or iter_17_1 == ActivityEnum.Activity.V2a3_WarmUp or iter_17_1 == ActivityEnum.Activity.V2a5_WarmUp or iter_17_1 == ActivityEnum.Activity.V2a6_WarmUp) and Activity125Controller.instance:checkActRed2(iter_17_1) then
+			if (iter_17_1 == ActivityEnum.Activity.Activity1_9WarmUp or iter_17_1 == ActivityEnum.Activity.V2a0_WarmUp or iter_17_1 == ActivityEnum.Activity.V2a1_WarmUp or iter_17_1 == ActivityEnum.Activity.V2a2_WarmUp or iter_17_1 == ActivityEnum.Activity.V2a3_WarmUp or iter_17_1 == ActivityEnum.Activity.V2a5_WarmUp or iter_17_1 == ActivityEnum.Activity.V2a6_WarmUp or iter_17_1 == ActivityEnum.Activity.V2a7_WarmUp) and Activity125Controller.instance:checkActRed2(iter_17_1) then
 				arg_17_0:_showRedDotType(arg_17_1, iter_17_1)
 
 				return

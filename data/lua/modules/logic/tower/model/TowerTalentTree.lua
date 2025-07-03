@@ -78,48 +78,52 @@ function var_0_0.isActiveTalent(arg_6_0, arg_6_1)
 	return arg_6_0.bossMo:isActiveTalent(arg_6_1)
 end
 
-function var_0_0.isActiveGroup(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_0.nodeGroupDict[arg_7_1]
-	local var_7_1 = false
-	local var_7_2
+function var_0_0.isSelectedSystemTalentPlan(arg_7_0)
+	return arg_7_0.bossMo:isSelectedSystemTalentPlan()
+end
 
-	if var_7_0 then
-		for iter_7_0, iter_7_1 in pairs(var_7_0) do
-			if arg_7_0:isActiveTalent(iter_7_1) then
-				var_7_1 = true
-				var_7_2 = iter_7_1
+function var_0_0.isActiveGroup(arg_8_0, arg_8_1)
+	local var_8_0 = arg_8_0.nodeGroupDict[arg_8_1]
+	local var_8_1 = false
+	local var_8_2
+
+	if var_8_0 then
+		for iter_8_0, iter_8_1 in pairs(var_8_0) do
+			if arg_8_0:isActiveTalent(iter_8_1) then
+				var_8_1 = true
+				var_8_2 = iter_8_1
 
 				break
 			end
 		end
 	end
 
-	return var_7_1, var_7_2
+	return var_8_1, var_8_2
 end
 
-function var_0_0.getTalentPoint(arg_8_0)
-	return arg_8_0.bossMo:getTalentPoint()
+function var_0_0.getTalentPoint(arg_9_0)
+	return arg_9_0.bossMo:getTalentPoint()
 end
 
-function var_0_0.getList(arg_9_0)
-	if not arg_9_0.nodeList then
-		arg_9_0.nodeList = {}
+function var_0_0.getList(arg_10_0)
+	if not arg_10_0.nodeList then
+		arg_10_0.nodeList = {}
 
-		for iter_9_0, iter_9_1 in pairs(arg_9_0.nodeDict) do
-			table.insert(arg_9_0.nodeList, iter_9_1)
+		for iter_10_0, iter_10_1 in pairs(arg_10_0.nodeDict) do
+			table.insert(arg_10_0.nodeList, iter_10_1)
 		end
 
-		if #arg_9_0.nodeList > 1 then
-			table.sort(arg_9_0.nodeList, SortUtil.keyLower("nodeId"))
+		if #arg_10_0.nodeList > 1 then
+			table.sort(arg_10_0.nodeList, SortUtil.keyLower("nodeId"))
 		end
 	end
 
-	return arg_9_0.nodeList
+	return arg_10_0.nodeList
 end
 
-function var_0_0.hasTalentCanActive(arg_10_0)
-	for iter_10_0, iter_10_1 in pairs(arg_10_0.nodeDict) do
-		if iter_10_1:isTalentCanActive() then
+function var_0_0.hasTalentCanActive(arg_11_0)
+	for iter_11_0, iter_11_1 in pairs(arg_11_0.nodeDict) do
+		if iter_11_1:isTalentCanActive() then
 			return true
 		end
 	end
@@ -127,17 +131,17 @@ function var_0_0.hasTalentCanActive(arg_10_0)
 	return false
 end
 
-function var_0_0.getActiveTalentList(arg_11_0)
-	local var_11_0 = arg_11_0:getList()
-	local var_11_1 = {}
+function var_0_0.getActiveTalentList(arg_12_0)
+	local var_12_0 = arg_12_0:getList()
+	local var_12_1 = {}
 
-	for iter_11_0, iter_11_1 in ipairs(var_11_0) do
-		if iter_11_1:isActiveTalent() then
-			table.insert(var_11_1, iter_11_1)
+	for iter_12_0, iter_12_1 in ipairs(var_12_0) do
+		if iter_12_1:isActiveTalent() then
+			table.insert(var_12_1, iter_12_1)
 		end
 	end
 
-	return var_11_1
+	return var_12_1
 end
 
 return var_0_0

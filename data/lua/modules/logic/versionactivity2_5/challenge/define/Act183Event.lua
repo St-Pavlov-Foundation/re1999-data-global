@@ -20,5 +20,8 @@ var_0_2("RefreshMedalReddot")
 var_0_2("OnInitDungeonDone")
 var_0_2("ClickToGetReward")
 var_0_2("OnGroupAllTaskFinished")
+var_0_2("OnUpdateSelectBadgeNum")
+var_0_2("OnUpdateBadgeDetailVisible")
+var_0_2("EpisodeStartPlayFinishAnim")
 
 return var_0_0

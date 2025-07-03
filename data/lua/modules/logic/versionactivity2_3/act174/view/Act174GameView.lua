@@ -198,7 +198,7 @@ function var_0_0.refreshUI(arg_17_0)
 		if var_17_3 then
 			local var_17_4 = var_17_0:getBetScore()
 			local var_17_5 = Activity174Config.instance:getTurnCo(arg_17_0.actId, var_17_1)
-			local var_17_6 = string.format("%s%s", luaLang("multiple"), var_17_5.point / 1000)
+			local var_17_6 = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("multiple_1"), var_17_5.point / 1000)
 
 			arg_17_0._txtEndlessMultiple.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("act174_endless_multiple"), var_17_4, var_17_6)
 

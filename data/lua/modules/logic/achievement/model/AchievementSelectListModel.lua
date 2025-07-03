@@ -72,7 +72,7 @@ function var_0_0.decodeShowAchievement(arg_4_0)
 		if var_4_4 then
 			local var_4_5 = AchievementConfig.instance:getAchievement(var_4_4.achievementId)
 
-			if var_4_5.groupId ~= 0 and not arg_4_0.groupSet[var_4_5.groupId] then
+			if AchievementUtils.isActivityGroup(var_4_4.achievementId) and not arg_4_0.groupSet[var_4_5.groupId] then
 				arg_4_0.groupSet[var_4_5.groupId] = true
 
 				table.insert(arg_4_0.groupSelectList, var_4_5.groupId)
@@ -222,7 +222,7 @@ function var_0_0.buildGroupMOList(arg_13_0, arg_13_1)
 	local var_13_3 = 0
 
 	for iter_13_0, iter_13_1 in ipairs(var_13_2) do
-		if iter_13_1.groupId ~= 0 then
+		if AchievementUtils.isActivityGroup(iter_13_1.id) then
 			if var_13_3 ~= iter_13_1.groupId then
 				if var_13_3 == 0 then
 					var_13_3 = iter_13_1.groupId

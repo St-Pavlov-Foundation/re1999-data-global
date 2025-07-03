@@ -3,9 +3,9 @@
 local var_0_0 = class("FightWorkResonanceLevel", FightEffectBase)
 
 function var_0_0.onStart(arg_1_0)
-	FightRoundSequence.roundTempData.ResonanceLevel = arg_1_0._actEffectMO.effectNum
+	FightRoundSequence.roundTempData.ResonanceLevel = arg_1_0.actEffectData.effectNum
 
-	FightController.instance:dispatchEvent(FightEvent.ResonanceLevel, arg_1_0._actEffectMO.effectNum)
+	FightController.instance:dispatchEvent(FightEvent.ResonanceLevel, arg_1_0.actEffectData.effectNum)
 	arg_1_0:onDone(true)
 end
 

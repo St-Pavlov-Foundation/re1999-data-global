@@ -2701,7 +2701,7 @@
   },
   {
     "id": "p_commonheroitemnew_hurt",
-    "lang": "language_10006661"
+    "lang": "language_90001158"
   },
   {
     "id": "p_fightsuccview_coverconfirm",
@@ -3621,7 +3621,7 @@
   },
   {
     "id": "p_helpcontentitem_50801_1",
-    "lang": "language_10006661"
+    "lang": "language_90001158"
   },
   {
     "id": "p_helpcontentitem_50801_2",
@@ -15489,7 +15489,7 @@
   },
   {
     "id": "p_act174mainview_txt_rule",
-    "lang": "language_10061125"
+    "lang": "language_10074584"
   },
   {
     "id": "p_characterdestinyslotview_txt_title",
@@ -15537,7 +15537,7 @@
   },
   {
     "id": "p_act174ruledetailview_txt_rule3",
-    "lang": "language_10061133"
+    "lang": "language_10074585"
   },
   {
     "id": "p_act174ruledetailview_txt_role",
@@ -15817,7 +15817,7 @@
   },
   {
     "id": "p_act174mainview_txt_endgame",
-    "lang": "language_10061187"
+    "lang": "language_90001162"
   },
   {
     "id": "p_act174endlessview_txt_Escape",
@@ -16205,7 +16205,7 @@
   },
   {
     "id": "p_act174gameview_txt_shoptip",
-    "lang": "language_10061254"
+    "lang": "language_10074586"
   },
   {
     "id": "p_act174forcepickview_txt_title",
@@ -17485,7 +17485,7 @@
   },
   {
     "id": "p_v2a5_challenge_help_3_txt_2",
-    "lang": "language_10068541"
+    "lang": "language_10074587"
   },
   {
     "id": "p_v2a5_challenge_help_4_txt_1",
@@ -17849,7 +17849,7 @@
   },
   {
     "id": "playercard_weekwalkVer2PlatinumCup",
-    "lang": "language_10071615"
+    "lang": "language_10074588"
   },
   {
     "id": "p_versionactivity_2_6_enterview_dec",
@@ -18300,6 +18300,106 @@
     "lang": "language_10071695"
   },
   {
+    "id": "p_packagestoregoodsitem_txt_discover",
+    "lang": "language_10065764"
+  },
+  {
+    "id": "p_v2a7_giftrecommendview_txt_shopnamecn1",
+    "lang": "language_10074589"
+  },
+  {
+    "id": "p_v2a7_giftrecommendview_txt_shopnamecn2",
+    "lang": "language_10074590"
+  },
+  {
+    "id": "p_v2a7_giftrecommendview_txt_shopnamecn3",
+    "lang": "language_10036749"
+  },
+  {
+    "id": "p_v2a7_giftrecommendview2_txt_shopnamecn1",
+    "lang": "language_10074591"
+  },
+  {
+    "id": "p_v2a7_giftrecommendview2_txt_shopnamecn2",
+    "lang": "language_10032116"
+  },
+  {
+    "id": "p_v2a7_giftrecommendview2_txt_shopnamecn3",
+    "lang": "language_10074589"
+  },
+  {
+    "id": "p_towermainview_txt_bossHandbook2",
+    "lang": "language_10074592"
+  },
+  {
+    "id": "p_towerassistbosstview_txt_tips",
+    "lang": "language_10074593"
+  },
+  {
+    "id": "p_towerbossepisodeview_txt_teach",
+    "lang": "language_10073124"
+  },
+  {
+    "id": "p_towerbossteachview_txt_check",
+    "lang": "language_10074594"
+  },
+  {
+    "id": "p_towerbossteachview_txt_start",
+    "lang": "language_10074595"
+  },
+  {
+    "id": "p_towerbosstipview_txt_unlock",
+    "lang": "language_10074596"
+  },
+  {
+    "id": "p_towerherogroupview_txt_Buff2",
+    "lang": "language_10074597"
+  },
+  {
+    "id": "p_towerassistbossitem_txt_try",
+    "lang": "language_10074598"
+  },
+  {
+    "id": "p_towerstoreview_txt_title1",
+    "lang": "language_10074599"
+  },
+  {
+    "id": "p_towerstoreview_txt_title2",
+    "lang": "language_10074600"
+  },
+  {
+    "id": "p_towerstoreview_txt_task",
+    "lang": "language_10061152"
+  },
+  {
+    "id": "p_towermainview_txt_store",
+    "lang": "language_10073411"
+  },
+  {
+    "id": "p_towermainview_txt_task",
+    "lang": "language_10074601"
+  },
+  {
+    "id": "p_towermainview_txt_hero",
+    "lang": "language_10074602"
+  },
+  {
+    "id": "p_towerherotrialview_txt_title",
+    "lang": "language_10074603"
+  },
+  {
+    "id": "p_towerherotrialview_txt_ruletitle",
+    "lang": "language_10074604"
+  },
+  {
+    "id": "p_towertalentview_txt_talentPlanTip",
+    "lang": "language_10074605"
+  },
+  {
+    "id": "p_v2a5_challenge_txt_LeaderTips",
+    "lang": "language_10074606"
+  },
+  {
     "id": "p_v2a7_giftrecommendview3_txt_shopnamecn1",
     "lang": "language_10068606"
   },
@@ -18312,24 +18412,868 @@
     "lang": "language_10068608"
   },
   {
-    "id": "p_turnback_fullview_txt_smallreward",
-    "lang": "language_10068611"
+    "id": "p_turnbacknewtaskview_txt_replay2",
+    "lang": "language_10074607"
   },
   {
-    "id": "p_turnback_fullview_txt_bigreward",
-    "lang": "language_10068612"
+    "id": "p_turnbacknewtaskview_txt_newtips",
+    "lang": "language_10074608"
   },
   {
-    "id": "p_packagestoregoodsitem_txt_discover",
-    "lang": "language_10065764"
+    "id": "p_playercardcontentview_txt_get",
+    "lang": "language_10047759"
   },
   {
-    "id": "p_v2a4_pinbal_txt_light",
-    "lang": "language_90001110"
+    "id": "p_playercardmainview_txt_limitsale",
+    "lang": "language_10031236"
   },
   {
-    "id": "p_v2a4_storeskinview_skintips2",
-    "lang": "language_90001116"
+    "id": "p_fight_act191collectionview_txt_collection",
+    "lang": "language_10001421"
+  },
+  {
+    "id": "p_v2a7_storeview_txt_title1",
+    "lang": "language_10074609"
+  },
+  {
+    "id": "p_v2a7_storeview_txt_title2",
+    "lang": "language_10074610"
+  },
+  {
+    "id": "p_v2a7_storeview_txt_title3",
+    "lang": "language_10074611"
+  },
+  {
+    "id": "p_v2a7_dungeonmapview_txt_shop",
+    "lang": "language_10073407"
+  },
+  {
+    "id": "p_v2a7_act191enterview_txt_dec",
+    "lang": "language_10074612"
+  },
+  {
+    "id": "p_act191herogroupview_txt_level",
+    "lang": "language_10074613"
+  },
+  {
+    "id": "p_act191herogroupview_txt_autofight",
+    "lang": "language_10074614"
+  },
+  {
+    "id": "p_act191herogroupview_txt_subteam",
+    "lang": "language_10074615"
+  },
+  {
+    "id": "p_act191shopherogroupview_txt_title",
+    "lang": "language_10074616"
+  },
+  {
+    "id": "p_act191enemyinfoview_txt_main",
+    "lang": "language_10074617"
+  },
+  {
+    "id": "p_act191enemyinfoview_txt_sub",
+    "lang": "language_10074618"
+  },
+  {
+    "id": "p_v2a7_coopergarland_gameview_txt_tips",
+    "lang": "language_10074619"
+  },
+  {
+    "id": "p_v2a7_coopergarland_gameview_txt_Joystick",
+    "lang": "language_10074620"
+  },
+  {
+    "id": "p_v2a7_coopergarland_gameview_txt_Gyroscope",
+    "lang": "language_10074621"
+  },
+  {
+    "id": "p_v2a7_coopergarland_gameview_txt_target",
+    "lang": "language_10074622"
+  },
+  {
+    "id": "p_v2a7_coopergarland_gameview_txt_light",
+    "lang": "language_10074623"
+  },
+  {
+    "id": "p_act191fightsuccview_txt_fail",
+    "lang": "language_10074624"
+  },
+  {
+    "id": "p_act191herogroupview_txt_startautofight",
+    "lang": "language_10074625"
+  },
+  {
+    "id": "p_act174settlementview_txt_fight2",
+    "lang": "language_10074626"
+  },
+  {
+    "id": "p_v2a7_storeroleskinview_roletxt1",
+    "lang": "language_10074627"
+  },
+  {
+    "id": "p_v2a7_storeroleskinview_rolename1",
+    "lang": "language_10050785"
+  },
+  {
+    "id": "p_v2a7_storeroleskinview_roletxt2",
+    "lang": "language_10074628"
+  },
+  {
+    "id": "p_v2a7_storeroleskinview_rolename2",
+    "lang": "language_10062222"
+  },
+  {
+    "id": "p_v2a7_dungeonenterview_txt_unlock",
+    "lang": "language_10074629"
+  },
+  {
+    "id": "p_v2a7_abandon_help_1_txt_1",
+    "lang": "language_10074630"
+  },
+  {
+    "id": "p_v2a7_abandon_help_2_txt_1",
+    "lang": "language_10074631"
+  },
+  {
+    "id": "p_v2a7_abandon_help_4_txt_1",
+    "lang": "language_10074632"
+  },
+  {
+    "id": "p_v2a7_abandon_help_5_txt_1",
+    "lang": "language_10074633"
+  },
+  {
+    "id": "p_v2a7_selfselectsix_fullview_txt_tips1",
+    "lang": "language_10074634"
+  },
+  {
+    "id": "p_v2a7_selfselectsix_fullview_txt_tips2",
+    "lang": "language_10074635"
+  },
+  {
+    "id": "p_v2a7_selfselectsix_fullview_txt_tips3",
+    "lang": "language_10074636"
+  },
+  {
+    "id": "p_v2a7_selfselectsix_fullview_txt_tips4",
+    "lang": "language_10074637"
+  },
+  {
+    "id": "p_v2a7_selfselectsix_fullview_txt_tips5",
+    "lang": "language_10074638"
+  },
+  {
+    "id": "p_v2a7_selfselectsix_panelview_txt_tips1",
+    "lang": "language_10074639"
+  },
+  {
+    "id": "p_v2a7_selfselectsix_panelview_txt_tips2",
+    "lang": "language_10074640"
+  },
+  {
+    "id": "p_v2a7_selfselectsix_panelview_txt_tips3",
+    "lang": "language_10074641"
+  },
+  {
+    "id": "p_newwelfarepanelview_txt_title1",
+    "lang": "language_10074642"
+  },
+  {
+    "id": "p_newwelfarepanelview_txt_title2",
+    "lang": "language_10074643"
+  },
+  {
+    "id": "p_newwelfarepanelview_txt_title3",
+    "lang": "language_10074644"
+  },
+  {
+    "id": "p_v2a7_selfselectsix_pickchoiceview_txt_tips1",
+    "lang": "language_10074645"
+  },
+  {
+    "id": "p_v2a7_selfselectsix_pickchoiceview_txt_tips2",
+    "lang": "language_10074646"
+  },
+  {
+    "id": "p_v2a7_selfselectsix_pickchoiceview_txt_tips3",
+    "lang": "language_10074647"
+  },
+  {
+    "id": "p_v2a7_tower_fullview_txt_check",
+    "lang": "language_10061139"
+  },
+  {
+    "id": "p_v2a7_tower_fullview_txt_reward",
+    "lang": "language_10074648"
+  },
+  {
+    "id": "p_v2a7_tower_fullview_txt_tips1",
+    "lang": "language_10074649"
+  },
+  {
+    "id": "p_v2a7_tower_fullview_txt_tips2",
+    "lang": "language_10074650"
+  },
+  {
+    "id": "p_v2a7_tower_fullview_txt_tips3",
+    "lang": "language_10074651"
+  },
+  {
+    "id": "p_v2a7_tower_fullview_txt_tips4",
+    "lang": "language_10074652"
+  },
+  {
+    "id": "p_v2a7_tower_fullview_txt_reward1",
+    "lang": "language_10074653"
+  },
+  {
+    "id": "p_v2a7_tower_fullview_txt_reward2",
+    "lang": "language_10073099"
+  },
+  {
+    "id": "p_v2a7_tower_fullview_txt_dec",
+    "lang": "language_10074654"
+  },
+  {
+    "id": "p_v2a7_tower_fullview_txt_goto",
+    "lang": "language_10074655"
+  },
+  {
+    "id": "p_v2a7_tower_fullview_txt_canget",
+    "lang": "language_10074656"
+  },
+  {
+    "id": "p_v2a7_tower_fullview_txt_finished",
+    "lang": "language_10074657"
+  },
+  {
+    "id": "p_v2a7_tower_panelview_txt_goto",
+    "lang": "language_10074658"
+  },
+  {
+    "id": "p_v2a7_tower_pickchoiceview_txt_tips",
+    "lang": "language_10074659"
+  },
+  {
+    "id": "p_v2a7_tower_pickchoiceview_txt_confirm",
+    "lang": "language_10074660"
+  },
+  {
+    "id": "p_v2a7_tower_pickchoiceview_txt_cancel",
+    "lang": "language_10032254"
+  },
+  {
+    "id": "p_v2a7_tower_pickchoiceview_txt_title",
+    "lang": "language_10074661"
+  },
+  {
+    "id": "p_characterdestinystoneview_txt_oncefull",
+    "lang": "language_10074662"
+  },
+  {
+    "id": "p_characterdestinystoneview_txt_oncefulltips",
+    "lang": "language_10074663"
+  },
+  {
+    "id": "p_characterdestinystoneview_txt_hasoncefull",
+    "lang": "language_10074664"
+  },
+  {
+    "id": "p_v2a7_hissabeth_help_1_txt_title",
+    "lang": "language_10000133"
+  },
+  {
+    "id": "p_v2a7_hissabeth_help_1_txt_1",
+    "lang": "language_10074665"
+  },
+  {
+    "id": "p_v2a7_hissabeth_help_1_txt_2",
+    "lang": "language_10074666"
+  },
+  {
+    "id": "p_v2a7_hissabeth_help_1_txt_3",
+    "lang": "language_10074667"
+  },
+  {
+    "id": "p_v2a7_hissabeth_help_1_txt_4",
+    "lang": "language_10074668"
+  },
+  {
+    "id": "p_v2a7_hissabeth_help_1_txt_5",
+    "lang": "language_10074669"
+  },
+  {
+    "id": "p_v2a7_hissabeth_help_1_txt_6",
+    "lang": "language_10074670"
+  },
+  {
+    "id": "p_v2a7_hissabeth_help_1_txt_7",
+    "lang": "language_10074671"
+  },
+  {
+    "id": "p_act191_autofight_tip",
+    "lang": "language_10074672"
+  },
+  {
+    "id": "p_v2a7_warmup_txt_WrongChannel",
+    "lang": "language_10074673"
+  },
+  {
+    "id": "p_v2a7_warmup_txt_tips",
+    "lang": "language_10074674"
+  },
+  {
+    "id": "p_v2a7_hissabeth_gameview_txt_dec1",
+    "lang": "language_10074675"
+  },
+  {
+    "id": "p_v2a7_hissabeth_gameview_txt_dec2",
+    "lang": "language_10074676"
+  },
+  {
+    "id": "p_v2a7_hissabeth_gameview_txt_dec3",
+    "lang": "language_10029425"
+  },
+  {
+    "id": "p_v2a7_hissabeth_gameview_txt_dec4",
+    "lang": "language_10074677"
+  },
+  {
+    "id": "p_v2a7_hissabeth_gameview_txt_dec5",
+    "lang": "language_10074678"
+  },
+  {
+    "id": "p_v2a7_hissabeth_gameview_txt_dec6",
+    "lang": "language_10074679"
+  },
+  {
+    "id": "p_v2a7_hissabeth_gameview_txt_dec7",
+    "lang": "language_10074680"
+  },
+  {
+    "id": "p_v2a7_blood_help_1_txt_1",
+    "lang": "language_10074681"
+  },
+  {
+    "id": "p_v2a7_blood_help_2_txt_1",
+    "lang": "language_10074682"
+  },
+  {
+    "id": "p_v2a7_blood_help_2_txt_2",
+    "lang": "language_10074683"
+  },
+  {
+    "id": "p_weekwalkdeeplayernoticeview_title2",
+    "lang": "language_10074684"
+  },
+  {
+    "id": "p_weekwalkdeeplayernoticeview_resettip2",
+    "lang": "language_10074685"
+  },
+  {
+    "id": "p_v2a7_act191heroeditview_filterype",
+    "lang": "language_10073022"
+  },
+  {
+    "id": "p_v2a7_tower_fullview_txt_tipsforitem",
+    "lang": "language_10074686"
+  },
+  {
+    "id": "p_v2a7_challenge_mainview_store",
+    "lang": "language_10074687"
+  },
+  {
+    "id": "p_v2a5_challenge_currencyreplacetipsview_txt_title",
+    "lang": "language_10074688"
+  },
+  {
+    "id": "p_act191fightsuccview_txt_dead",
+    "lang": "language_10074689"
+  },
+  {
+    "id": "p_v2a7_tower_help_1_txt_1",
+    "lang": "language_10061216"
+  },
+  {
+    "id": "p_v2a7_tower_help_1_txt_2",
+    "lang": "language_10074690"
+  },
+  {
+    "id": "p_v2a7_tower_help_1_txt_3",
+    "lang": "language_10061221"
+  },
+  {
+    "id": "p_v2a7_tower_help_2_txt_1",
+    "lang": "language_10061217"
+  },
+  {
+    "id": "p_v2a7_tower_help_2_txt_2",
+    "lang": "language_10074691"
+  },
+  {
+    "id": "p_v2a7_tower_help_3_txt_1",
+    "lang": "language_10074692"
+  },
+  {
+    "id": "p_v2a7_tower_help_3_txt_2",
+    "lang": "language_10074693"
+  },
+  {
+    "id": "p_v2a7_tower_help_3_txt_3",
+    "lang": "language_10074694"
+  },
+  {
+    "id": "p_v2a7_tower_help_3_txt_4",
+    "lang": "language_10074695"
+  },
+  {
+    "id": "p_v2a7_tower_help_3_txt_5",
+    "lang": "language_10062670"
+  },
+  {
+    "id": "p_v2a7_tower_help_3_txt_6",
+    "lang": "language_10074696"
+  },
+  {
+    "id": "p_v2a7_tower_help_3_txt_7",
+    "lang": "language_10062672"
+  },
+  {
+    "id": "p_v2a7_tower_help_3_txt_8",
+    "lang": "language_10074697"
+  },
+  {
+    "id": "p_v2a7_tower_help_3_txt_9",
+    "lang": "language_10062678"
+  },
+  {
+    "id": "p_v2a7_tower_help_3_txt_10",
+    "lang": "language_10074698"
+  },
+  {
+    "id": "p_v2a7_tower_help_3_txt_11",
+    "lang": "language_10074699"
+  },
+  {
+    "id": "p_v2a7_tower_help_4_txt_1",
+    "lang": "language_10073271"
+  },
+  {
+    "id": "p_v2a7_tower_help_4_txt_2",
+    "lang": "language_10031550"
+  },
+  {
+    "id": "p_v2a7_tower_help_4_txt_3",
+    "lang": "language_10073272"
+  },
+  {
+    "id": "p_v2a7_tower_help_4_txt_4",
+    "lang": "language_10073423"
+  },
+  {
+    "id": "p_v2a7_tower_help_4_txt_5",
+    "lang": "language_10074700"
+  },
+  {
+    "id": "p_v2a7_tower_help_4_txt_6",
+    "lang": "language_10074701"
+  },
+  {
+    "id": "p_v2a7_tower_help_5_txt_1",
+    "lang": "language_10074702"
+  },
+  {
+    "id": "p_v2a7_tower_help_5_txt_2",
+    "lang": "language_10062679"
+  },
+  {
+    "id": "p_v2a7_tower_help_5_txt_3",
+    "lang": "language_10074703"
+  },
+  {
+    "id": "p_v2a7_tower_help_5_txt_4",
+    "lang": "language_10062686"
+  },
+  {
+    "id": "p_v2a7_tower_help_5_txt_5",
+    "lang": "language_10074704"
+  },
+  {
+    "id": "p_v2a7_tower_help_5_txt_6",
+    "lang": "language_10074705"
+  },
+  {
+    "id": "p_v2a7_tower_help_6_txt_1",
+    "lang": "language_10073424"
+  },
+  {
+    "id": "p_v2a7_tower_help_6_txt_2",
+    "lang": "language_10074706"
+  },
+  {
+    "id": "p_v2a7_tower_help_6_txt_3",
+    "lang": "language_10074707"
+  },
+  {
+    "id": "p_v2a7_tower_help_7_txt_1",
+    "lang": "language_10061222"
+  },
+  {
+    "id": "p_v2a7_tower_help_7_txt_2",
+    "lang": "language_10074708"
+  },
+  {
+    "id": "p_v2a7_tower_help_7_txt_3",
+    "lang": "language_10074709"
+  },
+  {
+    "id": "p_v2a7_tower_help_8_txt_1",
+    "lang": "language_10060867"
+  },
+  {
+    "id": "p_v2a7_tower_help_8_txt_2",
+    "lang": "language_10072746"
+  },
+  {
+    "id": "p_v2a7_tower_help_8_txt_3",
+    "lang": "language_10061291"
+  },
+  {
+    "id": "p_v2a7_tower_help_8_txt_4",
+    "lang": "language_10074710"
+  },
+  {
+    "id": "p_v2a7_tower_help_8_txt_5",
+    "lang": "language_10074711"
+  },
+  {
+    "id": "p_v2a7_tower_help_9_txt_1",
+    "lang": "language_10073263"
+  },
+  {
+    "id": "p_v2a7_tower_help_9_txt_2",
+    "lang": "language_10074712"
+  },
+  {
+    "id": "p_v2a7_tower_help_9_txt_3",
+    "lang": "language_10073418"
+  },
+  {
+    "id": "p_v2a7_tower_help_9_txt_4",
+    "lang": "language_10074713"
+  },
+  {
+    "id": "p_v2a7_tower_help_9_txt_5",
+    "lang": "language_10074714"
+  },
+  {
+    "id": "p_v2a7_tower_help_10_txt_1",
+    "lang": "language_10015041"
+  },
+  {
+    "id": "p_v2a7_tower_help_10_txt_2",
+    "lang": "language_10061279"
+  },
+  {
+    "id": "p_v2a7_tower_help_10_txt_3",
+    "lang": "language_10061280"
+  },
+  {
+    "id": "p_v2a7_tower_help_10_txt_4",
+    "lang": "language_10074715"
+  },
+  {
+    "id": "p_v2a7_tower_help_11_txt_1",
+    "lang": "language_10073419"
+  },
+  {
+    "id": "p_v2a7_tower_help_11_txt_2",
+    "lang": "language_10074716"
+  },
+  {
+    "id": "p_v2a7_tower_help_11_txt_3",
+    "lang": "language_10074717"
+  },
+  {
+    "id": "p_v2a7_tower_help_11_txt_4",
+    "lang": "language_10074084"
+  },
+  {
+    "id": "p_v2a7_tower_help_11_txt_5",
+    "lang": "language_10017562"
+  },
+  {
+    "id": "p_v2a7_tower_help_11_txt_6",
+    "lang": "language_10074718"
+  },
+  {
+    "id": "p_v2a7_tower_help_12_txt_1",
+    "lang": "language_10061237"
+  },
+  {
+    "id": "p_v2a7_tower_help_12_txt_2",
+    "lang": "language_10074719"
+  },
+  {
+    "id": "p_v2a7_tower_help_13_txt_1",
+    "lang": "language_10061264"
+  },
+  {
+    "id": "p_v2a7_tower_help_13_txt_2",
+    "lang": "language_10074720"
+  },
+  {
+    "id": "p_v2a7_tower_help_13_txt_3",
+    "lang": "language_10061353"
+  },
+  {
+    "id": "p_v2a7_tower_help_13_txt_4",
+    "lang": "language_10074721"
+  },
+  {
+    "id": "p_v2a7_tower_help_13_txt_5",
+    "lang": "language_10061351"
+  },
+  {
+    "id": "p_v2a7_tower_help_13_txt_6",
+    "lang": "language_10061352"
+  },
+  {
+    "id": "p_v2a7_tower_help_13_txt_7",
+    "lang": "language_10074722"
+  },
+  {
+    "id": "p_v2a7_tower_help_14_txt_1",
+    "lang": "language_10073269"
+  },
+  {
+    "id": "p_v2a7_tower_help_14_txt_2",
+    "lang": "language_10073270"
+  },
+  {
+    "id": "p_v2a7_tower_help_14_txt_3",
+    "lang": "language_10073421"
+  },
+  {
+    "id": "p_v2a7_tower_help_14_txt_4",
+    "lang": "language_10074723"
+  },
+  {
+    "id": "p_v2a7_tower_help_14_txt_5",
+    "lang": "language_10074724"
+  },
+  {
+    "id": "p_v2a7_tower_help_15_txt_1",
+    "lang": "language_10074725"
+  },
+  {
+    "id": "p_v2a7_tower_help_15_txt_2",
+    "lang": "language_10061341"
+  },
+  {
+    "id": "p_v2a7_tower_help_15_txt_3",
+    "lang": "language_10074726"
+  },
+  {
+    "id": "p_v2a7_tower_help_15_txt_4",
+    "lang": "language_10060475"
+  },
+  {
+    "id": "p_v2a7_tower_help_15_txt_5",
+    "lang": "language_10059670"
+  },
+  {
+    "id": "p_v2a7_tower_help_15_txt_6",
+    "lang": "language_10061332"
+  },
+  {
+    "id": "p_v2a7_tower_help_15_txt_7",
+    "lang": "language_10074727"
+  },
+  {
+    "id": "p_v2a7_tower_help_15_txt_8",
+    "lang": "language_10074728"
+  },
+  {
+    "id": "p_v2a7_tower_help_16_txt_1",
+    "lang": "language_10073422"
+  },
+  {
+    "id": "p_v2a7_tower_help_16_txt_2",
+    "lang": "language_10074729"
+  },
+  {
+    "id": "p_v2a7_tower_help_16_txt_3",
+    "lang": "language_10074730"
+  },
+  {
+    "id": "p_v2a7_tower_help_17_txt_1",
+    "lang": "language_10074731"
+  },
+  {
+    "id": "p_v2a7_tower_help_17_txt_2",
+    "lang": "language_10074732"
+  },
+  {
+    "id": "p_v2a7_tower_help_17_txt_3",
+    "lang": "language_10061384"
+  },
+  {
+    "id": "p_v2a7_tower_help_17_txt_4",
+    "lang": "language_10061385"
+  },
+  {
+    "id": "p_v2a7_tower_help_17_txt_5",
+    "lang": "language_10061374"
+  },
+  {
+    "id": "p_v2a7_tower_help_17_txt_6",
+    "lang": "language_10060269"
+  },
+  {
+    "id": "p_v2a7_tower_help_17_txt_7",
+    "lang": "language_10074733"
+  },
+  {
+    "id": "p_v2a7_tower_help_18_txt_1",
+    "lang": "language_10073265"
+  },
+  {
+    "id": "p_v2a7_tower_help_18_txt_2",
+    "lang": "language_10074734"
+  },
+  {
+    "id": "p_v2a7_tower_help_18_txt_3",
+    "lang": "language_10073420"
+  },
+  {
+    "id": "p_v2a7_tower_help_18_txt_4",
+    "lang": "language_10074735"
+  },
+  {
+    "id": "p_v2a7_tower_help_18_txt_5",
+    "lang": "language_10074736"
+  },
+  {
+    "id": "p_v2a7_tower_help_19_txt_1",
+    "lang": "language_10074737"
+  },
+  {
+    "id": "p_v2a7_tower_help_19_txt_2",
+    "lang": "language_10061378"
+  },
+  {
+    "id": "p_v2a7_tower_help_19_txt_3",
+    "lang": "language_10061379"
+  },
+  {
+    "id": "p_v2a7_tower_help_19_txt_4",
+    "lang": "language_10074738"
+  },
+  {
+    "id": "p_v2a7_tower_help_20_txt_1",
+    "lang": "language_10073421"
+  },
+  {
+    "id": "p_v2a7_tower_help_20_txt_2",
+    "lang": "language_10074723"
+  },
+  {
+    "id": "p_v2a7_tower_help_20_txt_3",
+    "lang": "language_10074724"
+  },
+  {
+    "id": "p_v2a7_tower_help_20_txt_4",
+    "lang": "language_10063573"
+  },
+  {
+    "id": "p_v2a7_tower_help_20_txt_5",
+    "lang": "language_10074739"
+  },
+  {
+    "id": "p_v2a7_tower_help_21_txt_1",
+    "lang": "language_10068621"
+  },
+  {
+    "id": "p_v2a7_tower_help_21_txt_2",
+    "lang": "language_10074740"
+  },
+  {
+    "id": "p_v2a7_tower_help_21_txt_3",
+    "lang": "language_10066886"
+  },
+  {
+    "id": "p_v2a7_tower_help_21_txt_4",
+    "lang": "language_10074741"
+  },
+  {
+    "id": "p_v2a7_tower_help_21_txt_5",
+    "lang": "language_10066878"
+  },
+  {
+    "id": "p_v2a7_tower_help_21_txt_6",
+    "lang": "language_10074742"
+  },
+  {
+    "id": "p_v2a7_tower_help_21_txt_7",
+    "lang": "language_10066881"
+  },
+  {
+    "id": "p_v2a7_tower_help_21_txt_8",
+    "lang": "language_10074743"
+  },
+  {
+    "id": "p_v2a7_tower_help_21_txt_9",
+    "lang": "language_10074744"
+  },
+  {
+    "id": "p_v2a7_tower_help_22_txt_1",
+    "lang": "language_10073273"
+  },
+  {
+    "id": "p_v2a7_tower_help_22_txt_2",
+    "lang": "language_10073274"
+  },
+  {
+    "id": "p_v2a7_tower_help_22_txt_3",
+    "lang": "language_10073425"
+  },
+  {
+    "id": "p_v2a7_tower_help_22_txt_4",
+    "lang": "language_10074745"
+  },
+  {
+    "id": "p_v2a7_tower_help_22_txt_5",
+    "lang": "language_10074746"
+  },
+  {
+    "id": "p_v2a7_tower_help_23_txt_1",
+    "lang": "language_10074747"
+  },
+  {
+    "id": "p_v2a7_tower_help_23_txt_2",
+    "lang": "language_10074748"
+  },
+  {
+    "id": "p_v2a7_tower_help_23_txt_3",
+    "lang": "language_10074749"
+  },
+  {
+    "id": "p_v2a7_tower_help_23_txt_4",
+    "lang": "language_10066877"
+  },
+  {
+    "id": "p_v2a7_tower_help_23_txt_5",
+    "lang": "language_10074750"
+  },
+  {
+    "id": "p_v2a7_tower_help_23_txt_6",
+    "lang": "language_10074751"
+  },
+  {
+    "id": "p_v2a7_storeblockpackageview_name",
+    "lang": "language_10074752"
   },
   {
     "id": "p_v2a7_storeroleskinview_roletxt3",
@@ -18346,6 +19290,138 @@
   {
     "id": "p_v2a7_storeroleskinview_rolename4",
     "lang": "language_10017975"
+  },
+  {
+    "id": "p_v2a7_coopergarland_levelview_txt_Challenge",
+    "lang": "language_10074753"
+  },
+  {
+    "id": "p_v2a7_hissabeth_gameview_txt_endlesstitle",
+    "lang": "language_10074754"
+  },
+  {
+    "id": "p_v2a7_tower_fullview_txt_lock",
+    "lang": "language_10074755"
+  },
+  {
+    "id": "p_v2a7_coopergarland_gameview_txt_extratips",
+    "lang": "language_10074756"
+  },
+  {
+    "id": "p_act191teamitem_txt_Level",
+    "lang": "language_10074757"
+  },
+  {
+    "id": "p_act191stageview_txt_enemy",
+    "lang": "language_10074758"
+  },
+  {
+    "id": "p_act191getview_txt_title1",
+    "lang": "language_10074759"
+  },
+  {
+    "id": "p_act191getview_txt_title2",
+    "lang": "language_10074760"
+  },
+  {
+    "id": "p_v2a7_clock_help_1_txt_1",
+    "lang": "language_10074761"
+  },
+  {
+    "id": "p_v2a7_clock_help_1_txt_2",
+    "lang": "language_10074762"
+  },
+  {
+    "id": "p_v2a7_clock_help_2_txt_1",
+    "lang": "language_10074763"
+  },
+  {
+    "id": "p_v2a7_clock_help_2_txt_2",
+    "lang": "language_10074764"
+  },
+  {
+    "id": "p_v2a7_clock_help_2_txt_3",
+    "lang": "language_10074765"
+  },
+  {
+    "id": "p_v2a7_clock_help_2_txt_4",
+    "lang": "language_10074766"
+  },
+  {
+    "id": "p_v2a7_clock_help_3_txt_1",
+    "lang": "language_10074767"
+  },
+  {
+    "id": "p_v2a7_clock_help_3_txt_2",
+    "lang": "language_10074768"
+  },
+  {
+    "id": "p_v2a7_clock_help_3_txt_3",
+    "lang": "language_10074769"
+  },
+  {
+    "id": "p_act191herogroupview_txt_autotips",
+    "lang": "language_10074770"
+  },
+  {
+    "id": "p_act191herogroupview_txt_add",
+    "lang": "language_10074771"
+  },
+  {
+    "id": "p_v3a0_giftrecommendview_txt_shopnamecn1",
+    "lang": "language_10075464"
+  },
+  {
+    "id": "p_v3a0_giftrecommendview_txt_shopnamecn2",
+    "lang": "language_10075465"
+  },
+  {
+    "id": "p_v3a0_giftrecommendview_txt_shopnamecn3",
+    "lang": "language_10075466"
+  },
+  {
+    "id": "p_v3a0_giftrecommendview2_txt_shopnamecn1",
+    "lang": "language_10075467"
+  },
+  {
+    "id": "p_v3a0_giftrecommendview2_txt_shopnamecn2",
+    "lang": "language_10075468"
+  },
+  {
+    "id": "p_v3a0_giftrecommendview2_txt_shopnamecn3",
+    "lang": "language_10075464"
+  },
+  {
+    "id": "p_v3a0_giftrecommendview3_txt_shopnamecn1",
+    "lang": "language_10075463"
+  },
+  {
+    "id": "p_v3a0_giftrecommendview3_txt_shopnamecn2",
+    "lang": "language_10036746"
+  },
+  {
+    "id": "p_v3a0_giftrecommendview3_txt_shopnamecn3",
+    "lang": "language_10036747"
+  },
+  {
+    "id": "p_seasonheroview_dress_overseas",
+    "lang": "language_10031256"
+  },
+  {
+    "id": "p_turnback_fullview_txt_smallreward",
+    "lang": "language_10068611"
+  },
+  {
+    "id": "p_turnback_fullview_txt_bigreward",
+    "lang": "language_10068612"
+  },
+  {
+    "id": "p_v2a4_pinbal_txt_light",
+    "lang": "language_90001110"
+  },
+  {
+    "id": "p_v2a4_storeskinview_skintips2",
+    "lang": "language_90001116"
   },
   {
     "id": "p_v2a2_lopera_levelview_txt1",

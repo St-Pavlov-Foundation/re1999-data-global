@@ -1,6 +1,6 @@
 ﻿module("modules.logic.fight.model.data.FightLYDataMgr", package.seeall)
 
-local var_0_0 = FightDataClass("FightLYDataMgr")
+local var_0_0 = FightDataClass("FightLYDataMgr", FightDataMgrBase)
 
 function var_0_0.onConstructor(arg_1_0)
 	arg_1_0.LYCardAreaSize = 0
@@ -41,38 +41,56 @@ function var_0_0.getCardColor(arg_3_0, arg_3_1, arg_3_2)
 	return FightEnum.CardColor.None
 end
 
-function var_0_0.setLYCountBuff(arg_4_0, arg_4_1)
-	arg_4_0.countBuff = arg_4_1
+function var_0_0.checkIsMySideBuff(arg_4_0, arg_4_1)
+	if not arg_4_1 then
+		return true
+	end
 
-	arg_4_0:refreshPointList()
-	arg_4_0:refreshShowAreaSize()
+	local var_4_0 = arg_4_1.entityId
+
+	return FightDataHelper.entityMgr:getById(var_4_0).side == FightEnum.EntitySide.MySide
 end
 
-function var_0_0.setLYChangeTriggerBuff(arg_5_0, arg_5_1)
-	arg_5_0.changeTriggerBuff = arg_5_1
+function var_0_0.setLYCountBuff(arg_5_0, arg_5_1)
+	if not arg_5_0:checkIsMySideBuff(arg_5_1) then
+		return
+	end
 
+	arg_5_0.countBuff = arg_5_1
+
+	arg_5_0:refreshPointList()
 	arg_5_0:refreshShowAreaSize()
 end
 
-function var_0_0.refreshShowAreaSize(arg_6_0)
-	arg_6_0.LYPointAreaSize = 0
+function var_0_0.setLYChangeTriggerBuff(arg_6_0, arg_6_1)
+	if not arg_6_0:checkIsMySideBuff(arg_6_1) then
+		return
+	end
 
-	if arg_6_0.countBuff then
-		local var_6_0 = arg_6_0.countBuff:getCO()
-		local var_6_1 = FightBuffHelper.getFeatureList(var_6_0, FightEnum.BuffType_RedOrBlueCount)
+	arg_6_0.changeTriggerBuff = arg_6_1
 
-		if var_6_1 then
-			arg_6_0.LYPointAreaSize = tonumber(var_6_1[2])
+	arg_6_0:refreshShowAreaSize()
+end
+
+function var_0_0.refreshShowAreaSize(arg_7_0)
+	arg_7_0.LYPointAreaSize = 0
+
+	if arg_7_0.countBuff then
+		local var_7_0 = arg_7_0.countBuff:getCO()
+		local var_7_1 = FightBuffHelper.getFeatureList(var_7_0, FightEnum.BuffType_RedOrBlueCount)
+
+		if var_7_1 then
+			arg_7_0.LYPointAreaSize = tonumber(var_7_1[2])
 		end
 
-		if arg_6_0.changeTriggerBuff then
-			local var_6_2 = arg_6_0.changeTriggerBuff:getCO()
-			local var_6_3 = FightBuffHelper.getFeatureList(var_6_2, FightEnum.BuffType_RedOrBlueChangeTrigger)
+		if arg_7_0.changeTriggerBuff then
+			local var_7_2 = arg_7_0.changeTriggerBuff:getCO()
+			local var_7_3 = FightBuffHelper.getFeatureList(var_7_2, FightEnum.BuffType_RedOrBlueChangeTrigger)
 
-			if var_6_3 then
-				local var_6_4 = tonumber(var_6_3[2]) or 0
+			if var_7_3 then
+				local var_7_4 = tonumber(var_7_3[2]) or 0
 
-				arg_6_0.LYPointAreaSize = arg_6_0.LYPointAreaSize + var_6_4 * arg_6_0.changeTriggerBuff.layer
+				arg_7_0.LYPointAreaSize = arg_7_0.LYPointAreaSize + var_7_4 * arg_7_0.changeTriggerBuff.layer
 			end
 		end
 	end
@@ -80,35 +98,35 @@ function var_0_0.refreshShowAreaSize(arg_6_0)
 	FightController.instance:dispatchEvent(FightEvent.LY_PointAreaSizeChange)
 end
 
-function var_0_0.getPointList(arg_7_0)
-	return arg_7_0.pointList
+function var_0_0.getPointList(arg_8_0)
+	return arg_8_0.pointList
 end
 
-function var_0_0.refreshPointList(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_0.pointList and #arg_8_0.pointList or 0
+function var_0_0.refreshPointList(arg_9_0, arg_9_1)
+	local var_9_0 = arg_9_0.pointList and #arg_9_0.pointList or 0
 
-	if not arg_8_0.countBuff then
-		arg_8_0.pointList = nil
+	if not arg_9_0.countBuff then
+		arg_9_0.pointList = nil
 
-		FightController.instance:dispatchEvent(FightEvent.LY_HadRedAndBluePointChange, arg_8_0.pointList, var_8_0)
+		FightController.instance:dispatchEvent(FightEvent.LY_HadRedAndBluePointChange, arg_9_0.pointList, var_9_0)
 
 		return
 	end
 
-	if not arg_8_1 and var_8_0 > #FightStrUtil.instance:getSplitToNumberCache(arg_8_0.countBuff.actCommonParams, "#") then
+	if not arg_9_1 and var_9_0 > #FightStrUtil.instance:getSplitToNumberCache(arg_9_0.countBuff.actCommonParams, "#") then
 		return
 	end
 
-	local var_8_1 = FightStrUtil.instance:getSplitToNumberCache(arg_8_0.countBuff.actCommonParams, "#")
+	local var_9_1 = FightStrUtil.instance:getSplitToNumberCache(arg_9_0.countBuff.actCommonParams, "#")
 
-	arg_8_0.pointList = tabletool.copy(var_8_1)
+	arg_9_0.pointList = tabletool.copy(var_9_1)
 
-	table.remove(arg_8_0.pointList, 1)
-	FightController.instance:dispatchEvent(FightEvent.LY_HadRedAndBluePointChange, arg_8_0.pointList, var_8_0)
+	table.remove(arg_9_0.pointList, 1)
+	FightController.instance:dispatchEvent(FightEvent.LY_HadRedAndBluePointChange, arg_9_0.pointList, var_9_0)
 end
 
-function var_0_0.hasCountBuff(arg_9_0)
-	return arg_9_0.countBuff ~= nil
+function var_0_0.hasCountBuff(arg_10_0)
+	return arg_10_0.countBuff ~= nil
 end
 
 return var_0_0

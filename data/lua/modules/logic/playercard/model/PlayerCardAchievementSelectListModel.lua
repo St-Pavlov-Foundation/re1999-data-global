@@ -222,7 +222,7 @@ function var_0_0.buildGroupMOList(arg_13_0, arg_13_1)
 	local var_13_3 = 0
 
 	for iter_13_0, iter_13_1 in ipairs(var_13_2) do
-		if iter_13_1.groupId ~= 0 then
+		if AchievementUtils.isActivityGroup(iter_13_1.id) then
 			if var_13_3 ~= iter_13_1.groupId then
 				if var_13_3 == 0 then
 					var_13_3 = iter_13_1.groupId

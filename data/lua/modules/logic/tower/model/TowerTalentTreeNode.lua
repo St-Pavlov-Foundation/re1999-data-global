@@ -35,84 +35,88 @@ function var_0_0.isActiveTalent(arg_7_0)
 	return arg_7_0.tree:isActiveTalent(arg_7_0.nodeId)
 end
 
-function var_0_0.isParentActive(arg_8_0)
-	local var_8_0
-
-	if arg_8_0.isOr then
-		for iter_8_0, iter_8_1 in pairs(arg_8_0.parents) do
-			if iter_8_1:isActiveTalent() then
-				var_8_0 = true
-
-				break
-			else
-				var_8_0 = false
-			end
-		end
-	else
-		for iter_8_2, iter_8_3 in pairs(arg_8_0.parents) do
-			if not iter_8_3:isActiveTalent() then
-				var_8_0 = false
-
-				break
-			end
-		end
-	end
-
-	if var_8_0 == nil then
-		var_8_0 = true
-	end
-
-	return var_8_0
+function var_0_0.isSelectedSystemTalentPlan(arg_8_0)
+	return arg_8_0.tree:isSelectedSystemTalentPlan()
 end
 
-function var_0_0.getParentActiveResult(arg_9_0)
-	local var_9_0 = 2
+function var_0_0.isParentActive(arg_9_0)
+	local var_9_0
 
 	if arg_9_0.isOr then
 		for iter_9_0, iter_9_1 in pairs(arg_9_0.parents) do
 			if iter_9_1:isActiveTalent() then
-				var_9_0 = 2
+				var_9_0 = true
 
 				break
 			else
-				var_9_0 = 0
+				var_9_0 = false
 			end
 		end
 	else
-		local var_9_1 = 0
-		local var_9_2 = 0
-
 		for iter_9_2, iter_9_3 in pairs(arg_9_0.parents) do
-			if iter_9_3:isActiveTalent() then
-				var_9_2 = var_9_2 + 1
+			if not iter_9_3:isActiveTalent() then
+				var_9_0 = false
+
+				break
 			end
-
-			var_9_1 = var_9_1 + 1
 		end
+	end
 
-		if var_9_1 > 0 then
-			var_9_0 = var_9_1 <= var_9_2 and 2 or var_9_2 == 0 and 0 or 1
-		end
+	if var_9_0 == nil then
+		var_9_0 = true
 	end
 
 	return var_9_0
 end
 
-function var_0_0.isTalentCanActive(arg_10_0)
-	return arg_10_0:isParentActive() and arg_10_0:isTalentConsumeEnough()
+function var_0_0.getParentActiveResult(arg_10_0)
+	local var_10_0 = 2
+
+	if arg_10_0.isOr then
+		for iter_10_0, iter_10_1 in pairs(arg_10_0.parents) do
+			if iter_10_1:isActiveTalent() then
+				var_10_0 = 2
+
+				break
+			else
+				var_10_0 = 0
+			end
+		end
+	else
+		local var_10_1 = 0
+		local var_10_2 = 0
+
+		for iter_10_2, iter_10_3 in pairs(arg_10_0.parents) do
+			if iter_10_3:isActiveTalent() then
+				var_10_2 = var_10_2 + 1
+			end
+
+			var_10_1 = var_10_1 + 1
+		end
+
+		if var_10_1 > 0 then
+			var_10_0 = var_10_1 <= var_10_2 and 2 or var_10_2 == 0 and 0 or 1
+		end
+	end
+
+	return var_10_0
 end
 
-function var_0_0.isTalentConsumeEnough(arg_11_0)
-	return arg_11_0.tree:getTalentPoint() >= arg_11_0.config.consume
+function var_0_0.isTalentCanActive(arg_11_0)
+	return arg_11_0:isParentActive() and arg_11_0:isTalentConsumeEnough()
 end
 
-function var_0_0.isActiveGroup(arg_12_0)
-	return arg_12_0.tree:isActiveGroup(arg_12_0.config.nodeGroup)
+function var_0_0.isTalentConsumeEnough(arg_12_0)
+	return arg_12_0.tree:getTalentPoint() >= arg_12_0.config.consume
 end
 
-function var_0_0.isLeafNode(arg_13_0)
-	for iter_13_0, iter_13_1 in pairs(arg_13_0.childs) do
-		if iter_13_1:isActiveTalent() then
+function var_0_0.isActiveGroup(arg_13_0)
+	return arg_13_0.tree:isActiveGroup(arg_13_0.config.nodeGroup)
+end
+
+function var_0_0.isLeafNode(arg_14_0)
+	for iter_14_0, iter_14_1 in pairs(arg_14_0.childs) do
+		if iter_14_1:isActiveTalent() then
 			return false
 		end
 	end

@@ -164,6 +164,8 @@ function var_0_0._editableInitView(arg_10_0)
 
 	arg_10_0.resistanceComp:onInitView()
 	arg_10_0.resistanceComp:setParent(arg_10_0.scrollEnemyInfo.gameObject)
+
+	arg_10_0.anim = arg_10_0.viewGO:GetComponent(gohelper.Type_Animator)
 end
 
 function var_0_0.onSelectMonsterChange(arg_11_0, arg_11_1)
@@ -171,18 +173,35 @@ function var_0_0.onSelectMonsterChange(arg_11_0, arg_11_1)
 		return
 	end
 
-	local var_11_0 = arg_11_1.monsterId
+	local var_11_0 = false
+	local var_11_1 = arg_11_1.enemyIndex
 
-	if arg_11_0.monsterId == var_11_0 then
+	if arg_11_0.enemyIndex ~= var_11_1 then
+		if arg_11_0.enemyIndex then
+			var_11_0 = true
+
+			arg_11_0.anim:Play("switch", 0, 0)
+		end
+
+		arg_11_0.enemyIndex = var_11_1
+	end
+
+	local var_11_2 = arg_11_1.monsterId
+
+	if arg_11_0.monsterId == var_11_2 then
 		return
 	end
 
-	arg_11_0.monsterId = var_11_0
+	arg_11_0.monsterId = var_11_2
 	arg_11_0.isBoss = arg_11_1.isBoss
 	arg_11_0.monsterConfig = lua_monster.configDict[arg_11_0.monsterId]
 	arg_11_0.skinConfig = FightConfig.instance:getSkinCO(arg_11_0.monsterConfig.skinId)
 
-	arg_11_0:refreshUI()
+	if var_11_0 then
+		TaskDispatcher.runDelay(arg_11_0.refreshUI, arg_11_0, 0.16)
+	else
+		arg_11_0:refreshUI()
+	end
 end
 
 function var_0_0.refreshUI(arg_12_0)
@@ -217,6 +236,9 @@ function var_0_0.refreshHeader(arg_14_0)
 	local var_14_2 = arg_14_0.isSimple and "levelEasy" or "level"
 
 	arg_14_0._txtlevel.text = HeroConfig.instance:getLevelDisplayVariant(var_14_0[var_14_2])
+
+	gohelper.setActive(arg_14_0._txtlevel, arg_14_0.viewParam.tabEnum ~= EnemyInfoEnum.TabEnum.Act191)
+
 	arg_14_0._txtname.text = FightConfig.instance:getMonsterName(var_14_0)
 
 	if arg_14_0.viewParam.tabEnum == EnemyInfoEnum.TabEnum.Rouge then
@@ -841,6 +863,8 @@ function var_0_0.onDestroyView(arg_44_0)
 
 	arg_44_0.resistanceComp = nil
 	arg_44_0.stageItemList = nil
+
+	TaskDispatcher.cancelTask(arg_44_0.refreshUI, arg_44_0)
 end
 
 return var_0_0

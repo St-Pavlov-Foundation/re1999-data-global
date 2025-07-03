@@ -1,8 +1,8 @@
 ﻿module("modules.logic.fight.entity.comp.skill.FightTLEventAtkSpineLookDir", package.seeall)
 
-local var_0_0 = class("FightTLEventAtkSpineLookDir")
+local var_0_0 = class("FightTLEventAtkSpineLookDir", FightTimelineTrackItem)
 
-function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 	local var_1_0 = string.nilorempty(arg_1_3[2]) and "1" or arg_1_3[2]
 	local var_1_1 = arg_1_3[3] == "1"
 	local var_1_2 = arg_1_0._getEntitys(arg_1_1, var_1_0)
@@ -47,7 +47,7 @@ function var_0_0._getEntitys(arg_2_0, arg_2_1)
 	elseif arg_2_1 == "2" then
 		local var_2_3 = {}
 
-		for iter_2_0, iter_2_1 in ipairs(arg_2_0.actEffectMOs) do
+		for iter_2_0, iter_2_1 in ipairs(arg_2_0.actEffect) do
 			local var_2_4 = FightHelper.getEntity(iter_2_1.targetId)
 
 			if var_2_4 and var_2_4:getSide() ~= var_2_1:getSide() and not var_2_3[iter_2_1.targetId] then

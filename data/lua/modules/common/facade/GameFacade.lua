@@ -67,4 +67,16 @@ function var_0_0.showOptionMessageBox(arg_14_0, arg_14_1, arg_14_2, arg_14_3, ar
 	MessageBoxController.instance:showOptionMsgBox(arg_14_0, arg_14_1, arg_14_2, arg_14_3, arg_14_4, arg_14_5, arg_14_6, arg_14_7, arg_14_8, ...)
 end
 
+function var_0_0.showOptionAndParamsMessageBox(arg_15_0, arg_15_1, arg_15_2, arg_15_3, arg_15_4, arg_15_5, arg_15_6, arg_15_7, arg_15_8, arg_15_9, ...)
+	if not MessageBoxController.instance:canShowMessageOptionBoxView(arg_15_0, arg_15_2, arg_15_3) then
+		if arg_15_4 then
+			arg_15_4(arg_15_7)
+		end
+
+		return
+	end
+
+	MessageBoxController.instance:showOptionAndParamsMsgBox(arg_15_0, arg_15_1, arg_15_2, arg_15_3, arg_15_4, arg_15_5, arg_15_6, arg_15_7, arg_15_8, arg_15_9, ...)
+end
+
 return var_0_0

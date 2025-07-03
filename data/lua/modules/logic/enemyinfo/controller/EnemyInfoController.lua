@@ -61,6 +61,13 @@ function var_0_0.openBossRushEnemyInfoView(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
 	})
 end
 
+function var_0_0.openAct191EnemyInfoView(arg_8_0, arg_8_1)
+	ViewMgr.instance:openView(ViewName.BaseEnemyInfoView, {
+		battleId = arg_8_1,
+		tabEnum = EnemyInfoEnum.TabEnum.Act191
+	})
+end
+
 var_0_0.instance = var_0_0.New()
 
 LuaEventSystem.addEventMechanism(var_0_0.instance)

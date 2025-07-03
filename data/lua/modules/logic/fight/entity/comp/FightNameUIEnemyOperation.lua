@@ -30,7 +30,7 @@ function var_0_0._onAct174MonsterAiCard(arg_2_0)
 end
 
 function var_0_0.setPlayCardInfo(arg_3_0)
-	FightDataHelper.coverData(FightDataHelper.playCardMgr.enemyAct174PlayCard, arg_3_0.playCardInfoList)
+	FightDataUtil.coverData(FightDataHelper.playCardMgr.enemyAct174PlayCard, arg_3_0.playCardInfoList)
 
 	for iter_3_0 = #arg_3_0.playCardInfoList, 1, -1 do
 		if arg_3_0.playCardInfoList[iter_3_0].uid ~= arg_3_0._entityMO.uid then

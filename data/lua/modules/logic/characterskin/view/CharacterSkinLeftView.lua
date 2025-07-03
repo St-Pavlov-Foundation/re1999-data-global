@@ -210,6 +210,8 @@ function var_0_0.refreshBigVertical(arg_20_0)
 	if arg_20_0.showDynamicVertical then
 		if arg_20_0.bigSpine == nil then
 			arg_20_0.bigSpine = GuiModelAgent.Create(arg_20_0._gobigspine, true)
+
+			arg_20_0.bigSpine:setShareRT(CharacterVoiceEnum.RTShareType.Normal)
 		end
 
 		arg_20_0.bigSpine:setResPath(arg_20_0.skinCo, arg_20_0.onBigSpineLoaded, arg_20_0)

@@ -3,7 +3,7 @@
 local var_0_0 = class("FightWorkMultiHpChange", FightEffectBase)
 
 function var_0_0.beforePlayEffectData(arg_1_0)
-	arg_1_0._entityId = arg_1_0._actEffectMO.targetId
+	arg_1_0._entityId = arg_1_0.actEffectData.targetId
 	arg_1_0._oldEntityMO = FightDataHelper.entityMgr:getOldEntityMO(arg_1_0._entityId)
 end
 

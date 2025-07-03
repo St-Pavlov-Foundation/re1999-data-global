@@ -56,6 +56,10 @@ function var_0_0.GMToolView_register(arg_3_0)
 	function arg_3_0.onInitView(arg_4_0, ...)
 		GMMinusModel.instance:callOriginalSelfFunc(arg_4_0, "onInitView", ...)
 
+		if not SettingsModel.instance:isOverseas() then
+			return
+		end
+
 		local var_4_0 = gohelper.findChild(arg_4_0.viewGO, "viewport/content")
 		local var_4_1 = gohelper.findChild(var_4_0, "item25")
 		local var_4_2 = gohelper.findChild(var_4_0, "item40")
@@ -73,11 +77,21 @@ function var_0_0.GMToolView_register(arg_3_0)
 
 	function arg_3_0.removeEvents(arg_5_0, ...)
 		GMMinusModel.instance:callOriginalSelfFunc(arg_5_0, "removeEvents", ...)
+
+		if not SettingsModel.instance:isOverseas() then
+			return
+		end
+
 		arg_5_0._dropLangChange:RemoveOnValueChanged()
 	end
 
 	function arg_3_0.onOpen(arg_6_0, ...)
 		GMMinusModel.instance:callOriginalSelfFunc(arg_6_0, "onOpen", ...)
+
+		if not SettingsModel.instance:isOverseas() then
+			return
+		end
+
 		arg_6_0:_initLangChange()
 		arg_6_0._dropLangChange:AddOnValueChanged(arg_6_0._onLangChange, arg_6_0)
 	end
@@ -108,6 +122,10 @@ function var_0_0.GMToolView_register(arg_3_0)
 	end
 
 	function arg_3_0._initLangChange(arg_8_0)
+		if not SettingsModel.instance:isOverseas() then
+			return
+		end
+
 		local var_8_0 = GameConfig:GetSupportedLangs()
 		local var_8_1 = var_8_0.Length
 
@@ -132,6 +150,10 @@ function var_0_0.GMToolView_register(arg_3_0)
 	end
 
 	function arg_3_0._onLangChange(arg_9_0, arg_9_1)
+		if not SettingsModel.instance:isOverseas() then
+			return
+		end
+
 		local var_9_0 = arg_9_0.supportLangs[arg_9_1 + 1]
 
 		LangSettings.instance:SetCurLangType(var_9_0)
@@ -141,6 +163,14 @@ function var_0_0.GMToolView_register(arg_3_0)
 		GameLanguageMgr.instance:setLanguageTypeByStoryIndex(var_9_1)
 		PlayerPrefsHelper.setNumber("StoryTxtLanType", var_9_1 - 1)
 		SettingsController.instance:changeLangTxt()
+	end
+
+	if SettingsModel.instance:isOverseas() then
+		var_0_1()
+	else
+		local var_3_0 = LangSettings.shortcutTab[LangSettings.zh]
+
+		LangSettings.instance:SetCurLangType(var_3_0)
 	end
 
 	var_0_1()

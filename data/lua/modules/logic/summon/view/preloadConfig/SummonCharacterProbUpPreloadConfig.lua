@@ -13,6 +13,26 @@ function var_0_0.getCharacterItemCountByName(arg_2_0)
 	return var_0_0.characterItemCounts[arg_2_0] or 1
 end
 
+var_0_0.preloadLists.SummonCharacterProbUpVer274 = {
+	"singlebg/summon/heroversion_2_7/v2a7_hissabeth/v2a7_summon_hissabeth_fullbg.png"
+}
+var_0_0.preloadLists.SummonCharacterProbUpVer275 = {
+	"singlebg/summon/heroversion_2_7/v2a7_coopergarland/v2a7_summon_coopergarland_fullbg.png"
+}
+var_0_0.preloadLists.SummonCharacterProbUpVer276 = {
+	"singlebg/summon/heroversion_2_7/v2a7_lake/v2a7_lake_fulldec.png",
+	"singlebg/summon/heroversion_2_7/v2a7_lake/v2a7_lake_role1.png",
+	"singlebg/summon/heroversion_2_7/v2a7_lake/v2a7_lake_fullbg.png"
+}
+var_0_0.preloadLists.SummonCharacterProbUpVer278 = {
+	"singlebg/summon/heroversion_2_0/mercury/v2a0_mercury_role1.png",
+	"singlebg/summon/heroversion_2_0/mercury/full/v2a0_mercury_fullbg.png"
+}
+var_0_0.preloadLists.SummonCharacterProbUpVer277 = {
+	"singlebg/summon/heroversion_1_9/getian/v1a9_getian_summon_fontbg.png",
+	"singlebg/summon/heroversion_1_9/getian/v1a9_getian_summon_role1.png",
+	"singlebg/summon/heroversion_1_9/getian/v1a9_getian_summon_fullbg.png"
+}
 var_0_0.preloadLists.SummonCharacterProbUpVer269 = {
 	"singlebg/summon/heroversion_2_6/v2a6_lake/v2a6_lake_fulldec.png",
 	"singlebg/summon/heroversion_2_6/v2a6_lake/v2a6_lake_role1.png",
@@ -42,6 +62,24 @@ var_0_0.preloadLists.SummonCharacterProbUpVer264 = {
 	"singlebg/summon/heroversion_2_2/v2a2_luopeila/v2a2_luopeila_decbg.png",
 	"singlebg/summon/heroversion_2_2/v2a2_luopeila/v2a2_luopeila_rolebg.png",
 	"singlebg/summon/heroversion_2_2/v2a2_luopeila/v2a2_luopeila_fullbg.png"
+}
+var_0_0.preloadLists.SummonCharacterProbUpVer273 = {
+	"singlebg/summon/heroversion_2_1/tuesday/v2a1_tuesday_frontbg1.png",
+	"singlebg/summon/heroversion_2_1/tuesday/v2a1_tuesday_fullbg.png"
+}
+var_0_0.preloadLists.SummonCharacterProbUpVer271 = {
+	"singlebg/summon/heroversion_2_4/v2a4_bakaluoer/v2a4_summon_bakaluoer_decbg1.png",
+	"singlebg/summon/heroversion_2_4/v2a4_bakaluoer/v2a4_summon_bakaluoer_role1.png",
+	"singlebg/summon/heroversion_2_4/v2a4_bakaluoer/v2a4_summon_bakaluoer_fullbg.png"
+}
+var_0_0.preloadLists.SummonCharacterProbUpVer272 = {
+	"singlebg/summon/heroversion_2_4/v2a4_tutushizi/v2a4_summon_tutushizi_role1.png",
+	"singlebg/summon/heroversion_2_4/v2a4_tutushizi/v2a4_summon_tutushizi_fullbg.png"
+}
+var_0_0.preloadLists.SummonStrongOneCustomPick27 = {
+	"singlebg/summon/heroversion_2_4/v2a4_selfselectsix/v2a4_selfselectsix_role1.png",
+	"singlebg/summon/heroversion_2_7/v2a7_selfselectsix_role.png",
+	"singlebg/summon/heroversion_2_3/v2a3_selfselectsix/v2a3_selfselectsix_fullbg.png"
 }
 var_0_0.preloadLists.SummonCharacterProbUpVer263 = {
 	"singlebg/summon/heroversion_2_3/dudugu/v2a3_dudugu_dec2.png",
@@ -437,6 +475,8 @@ var_0_0.preloadLists.SummonCharacterProbUpVerBeta1 = {
 	ResUrl.getSummonCoverBg("hero/leftdown"),
 	ResUrl.getSummonCoverBg("hero/rightup")
 }
+var_0_0.characterItemCounts.SummonCharacterProbUpVer274 = 2
+var_0_0.characterItemCounts.SummonCharacterProbUpVer276 = 2
 var_0_0.characterItemCounts.SummonCharacterProbUpVer269 = 2
 var_0_0.characterItemCounts.SummonCharacterProbUpVer112 = 2
 var_0_0.characterItemCounts.SummonCharacterProbUpVer124 = 2

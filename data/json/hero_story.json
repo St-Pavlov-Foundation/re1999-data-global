@@ -504,5 +504,28 @@
     "cgScale": "1",
     "mainviewName": "language_10071478",
     "permanentUnlock": "2#24#1"
+  },
+  {
+    "id": 23,
+    "chapterId": 1923,
+    "unlock": "2#24#0",
+    "bonus": "1#180003#1|1#110303#1|1#120011#3|2#3#5000|2#5#10000",
+    "heroName": "language_10063973",
+    "photo": "310902",
+    "cgBg": "310901",
+    "order": 23,
+    "name": "language_10073125",
+    "nameEn": "<size=40>T</size>he Sea Breeze<color=#D2CDBC><size=30> Still Whispers</size></color>",
+    "episodeId": 0,
+    "main_pic": "rolestory_img_23",
+    "monster_pic": "",
+    "challengeBonus": "",
+    "activityId": 12714,
+    "activity_pic": "",
+    "cgUnlockEpisodeId": 192306,
+    "cgPos": "306#780",
+    "cgScale": "2",
+    "mainviewName": "language_10074422",
+    "permanentUnlock": "2#24#1"
   }
 ]

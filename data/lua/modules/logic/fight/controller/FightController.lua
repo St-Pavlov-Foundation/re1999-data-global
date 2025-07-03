@@ -739,7 +739,6 @@ function var_0_0.clearFightData(arg_45_0)
 
 	FightModel.instance:onEndFight()
 	FightSystem.instance:dispose()
-	FightCardModel.instance:clear()
 	FightModel.instance:clearRecordMO()
 end
 

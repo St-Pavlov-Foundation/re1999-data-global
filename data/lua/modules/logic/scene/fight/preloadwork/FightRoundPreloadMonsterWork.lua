@@ -3,6 +3,14 @@
 local var_0_0 = class("FightRoundPreloadMonsterWork", BaseWork)
 
 function var_0_0.onStart(arg_1_0, arg_1_1)
+	if FightDataHelper.tempMgr.hasNextWave then
+		arg_1_0:_onFightWavePush()
+
+		FightDataHelper.tempMgr.hasNextWave = false
+
+		return
+	end
+
 	if FightModel.instance.hasNextWave then
 		arg_1_0:_onFightWavePush()
 	else

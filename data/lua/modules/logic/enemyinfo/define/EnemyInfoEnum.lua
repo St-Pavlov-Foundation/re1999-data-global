@@ -7,6 +7,7 @@ var_0_0.TabEnum = {
 	WeekWalk_2 = 6,
 	Rouge = 5,
 	BossRush = 4,
+	Act191 = 7,
 	WeekWalk = 2,
 	Normal = 1
 }

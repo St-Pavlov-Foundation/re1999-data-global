@@ -11,7 +11,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6200301|6200313"
+    "roleVoice": "6200301|6200313",
+    "hideFootprint": 0
   },
   {
     "skinId": 300302,
@@ -25,7 +26,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6200301|6200313"
+    "roleVoice": "6200301|6200313",
+    "hideFootprint": 0
   },
   {
     "skinId": 300401,
@@ -39,7 +41,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6200402|6200404"
+    "roleVoice": "6200402|6200404",
+    "hideFootprint": 0
   },
   {
     "skinId": 300402,
@@ -53,7 +56,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6200402|6200404"
+    "roleVoice": "6200402|6200404",
+    "hideFootprint": 0
   },
   {
     "skinId": 300501,
@@ -67,7 +71,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6200509|6200511"
+    "roleVoice": "6200509|6200511",
+    "hideFootprint": 0
   },
   {
     "skinId": 300502,
@@ -81,7 +86,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6200509|6200511"
+    "roleVoice": "6200509|6200511",
+    "hideFootprint": 0
   },
   {
     "skinId": 300601,
@@ -95,7 +101,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6200603|6200604|6200605"
+    "roleVoice": "6200603|6200604|6200605",
+    "hideFootprint": 0
   },
   {
     "skinId": 300602,
@@ -109,7 +116,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6200603|6200604|6200605"
+    "roleVoice": "6200603|6200604|6200605",
+    "hideFootprint": 0
   },
   {
     "skinId": 300603,
@@ -123,7 +131,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6200603|6200604|6200605"
+    "roleVoice": "6200603|6200604|6200605",
+    "hideFootprint": 0
   },
   {
     "skinId": 300701,
@@ -137,7 +146,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6200703|6200711"
+    "roleVoice": "6200703|6200711",
+    "hideFootprint": 0
   },
   {
     "skinId": 300702,
@@ -151,7 +161,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6200703|6200711"
+    "roleVoice": "6200703|6200711",
+    "hideFootprint": 0
   },
   {
     "skinId": 300901,
@@ -165,7 +176,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6200901|6200905"
+    "roleVoice": "6200901|6200905",
+    "hideFootprint": 0
   },
   {
     "skinId": 300902,
@@ -179,7 +191,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6200901|6200905"
+    "roleVoice": "6200901|6200905",
+    "hideFootprint": 0
   },
   {
     "skinId": 300903,
@@ -193,7 +206,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6200901|6200905"
+    "roleVoice": "6200901|6200905",
+    "hideFootprint": 0
   },
   {
     "skinId": 301001,
@@ -207,7 +221,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6201002|6201004"
+    "roleVoice": "6201002|6201004",
+    "hideFootprint": 0
   },
   {
     "skinId": 301002,
@@ -221,7 +236,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6201002|6201004"
+    "roleVoice": "6201002|6201004",
+    "hideFootprint": 0
   },
   {
     "skinId": 301003,
@@ -235,7 +251,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6201002|6201004"
+    "roleVoice": "6201002|6201004",
+    "hideFootprint": 0
   },
   {
     "skinId": 301101,
@@ -249,7 +266,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6201101|6201106|6201111"
+    "roleVoice": "6201101|6201106|6201111",
+    "hideFootprint": 0
   },
   {
     "skinId": 301102,
@@ -263,7 +281,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6201101|6201106|6201111"
+    "roleVoice": "6201101|6201106|6201111",
+    "hideFootprint": 0
   },
   {
     "skinId": 301201,
@@ -277,7 +296,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6201202|6201205"
+    "roleVoice": "6201202|6201205",
+    "hideFootprint": 0
   },
   {
     "skinId": 301301,
@@ -291,7 +311,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6201301|6201305"
+    "roleVoice": "6201301|6201305",
+    "hideFootprint": 0
   },
   {
     "skinId": 301302,
@@ -305,7 +326,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6201301|6201305"
+    "roleVoice": "6201301|6201305",
+    "hideFootprint": 0
   },
   {
     "skinId": 301401,
@@ -319,7 +341,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6201401|6201405"
+    "roleVoice": "6201401|6201405",
+    "hideFootprint": 0
   },
   {
     "skinId": 301402,
@@ -333,7 +356,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6201401|6201405"
+    "roleVoice": "6201401|6201405",
+    "hideFootprint": 0
   },
   {
     "skinId": 301501,
@@ -347,7 +371,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6201502|6201504|6201507"
+    "roleVoice": "6201502|6201504|6201507",
+    "hideFootprint": 0
   },
   {
     "skinId": 301502,
@@ -361,7 +386,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6201502|6201504|6201507"
+    "roleVoice": "6201502|6201504|6201507",
+    "hideFootprint": 0
   },
   {
     "skinId": 301601,
@@ -375,7 +401,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6201601|6201602|6201615"
+    "roleVoice": "6201601|6201602|6201615",
+    "hideFootprint": 0
   },
   {
     "skinId": 301602,
@@ -389,7 +416,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6201601|6201602|6201615"
+    "roleVoice": "6201601|6201602|6201615",
+    "hideFootprint": 0
   },
   {
     "skinId": 301701,
@@ -403,7 +431,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6201706|6201708"
+    "roleVoice": "6201706|6201708",
+    "hideFootprint": 0
   },
   {
     "skinId": 301702,
@@ -417,7 +446,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6201706|6201708"
+    "roleVoice": "6201706|6201708",
+    "hideFootprint": 0
   },
   {
     "skinId": 301703,
@@ -431,7 +461,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6201706|6201708"
+    "roleVoice": "6201706|6201708",
+    "hideFootprint": 0
   },
   {
     "skinId": 301801,
@@ -445,7 +476,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6201801|6201803|6201806"
+    "roleVoice": "6201801|6201803|6201806",
+    "hideFootprint": 0
   },
   {
     "skinId": 301802,
@@ -459,7 +491,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6201801|6201803|6201806"
+    "roleVoice": "6201801|6201803|6201806",
+    "hideFootprint": 0
   },
   {
     "skinId": 302001,
@@ -473,7 +506,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6202001|6202002|6202005"
+    "roleVoice": "6202001|6202002|6202005",
+    "hideFootprint": 0
   },
   {
     "skinId": 302002,
@@ -487,7 +521,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6202001|6202002|6202005"
+    "roleVoice": "6202001|6202002|6202005",
+    "hideFootprint": 0
   },
   {
     "skinId": 302003,
@@ -501,7 +536,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6202001|6202002|6202005"
+    "roleVoice": "6202001|6202002|6202005",
+    "hideFootprint": 0
   },
   {
     "skinId": 302201,
@@ -515,7 +551,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6202201|6202202|6202208"
+    "roleVoice": "6202201|6202202|6202208",
+    "hideFootprint": 0
   },
   {
     "skinId": 302202,
@@ -529,7 +566,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6202201|6202202|6202208"
+    "roleVoice": "6202201|6202202|6202208",
+    "hideFootprint": 0
   },
   {
     "skinId": 302301,
@@ -543,7 +581,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6202301|6202302|6202308"
+    "roleVoice": "6202301|6202302|6202308",
+    "hideFootprint": 0
   },
   {
     "skinId": 302302,
@@ -557,7 +596,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6202301|6202302|6202308"
+    "roleVoice": "6202301|6202302|6202308",
+    "hideFootprint": 0
   },
   {
     "skinId": 302303,
@@ -571,7 +611,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6202301|6202302|6202308"
+    "roleVoice": "6202301|6202302|6202308",
+    "hideFootprint": 0
   },
   {
     "skinId": 302401,
@@ -585,7 +626,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6202401|6202407|6202408"
+    "roleVoice": "6202401|6202407|6202408",
+    "hideFootprint": 0
   },
   {
     "skinId": 302402,
@@ -599,7 +641,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6202401|6202407|6202408"
+    "roleVoice": "6202401|6202407|6202408",
+    "hideFootprint": 0
   },
   {
     "skinId": 302501,
@@ -613,7 +656,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 80,
-    "roleVoice": "6202508|6202510"
+    "roleVoice": "6202508|6202510",
+    "hideFootprint": 0
   },
   {
     "skinId": 302502,
@@ -627,7 +671,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 80,
-    "roleVoice": "6202508|6202510"
+    "roleVoice": "6202508|6202510",
+    "hideFootprint": 0
   },
   {
     "skinId": 302503,
@@ -641,7 +686,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6202508|6202510"
+    "roleVoice": "6202508|6202510",
+    "hideFootprint": 0
   },
   {
     "skinId": 302601,
@@ -655,7 +701,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6202601|6202606"
+    "roleVoice": "6202601|6202606",
+    "hideFootprint": 0
   },
   {
     "skinId": 302602,
@@ -669,7 +716,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6202601|6202606"
+    "roleVoice": "6202601|6202606",
+    "hideFootprint": 0
   },
   {
     "skinId": 302701,
@@ -683,7 +731,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6202701|6202704"
+    "roleVoice": "6202701|6202704",
+    "hideFootprint": 0
   },
   {
     "skinId": 302801,
@@ -697,7 +746,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6202803|6202804|6202805"
+    "roleVoice": "6202803|6202804|6202805",
+    "hideFootprint": 0
   },
   {
     "skinId": 302802,
@@ -711,7 +761,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6202803|6202804|6202805"
+    "roleVoice": "6202803|6202804|6202805",
+    "hideFootprint": 0
   },
   {
     "skinId": 302803,
@@ -725,7 +776,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6202803|6202804|6202805"
+    "roleVoice": "6202803|6202804|6202805",
+    "hideFootprint": 0
   },
   {
     "skinId": 303001,
@@ -739,7 +791,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6203001|6203002|6203006"
+    "roleVoice": "6203001|6203002|6203006",
+    "hideFootprint": 0
   },
   {
     "skinId": 303101,
@@ -753,7 +806,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6203101|6203102"
+    "roleVoice": "6203101|6203102",
+    "hideFootprint": 0
   },
   {
     "skinId": 303102,
@@ -767,7 +821,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6203101|6203102"
+    "roleVoice": "6203101|6203102",
+    "hideFootprint": 0
   },
   {
     "skinId": 303201,
@@ -781,7 +836,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6203202|6203204"
+    "roleVoice": "6203202|6203204",
+    "hideFootprint": 0
   },
   {
     "skinId": 303202,
@@ -795,7 +851,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6203202|6203204"
+    "roleVoice": "6203202|6203204",
+    "hideFootprint": 0
   },
   {
     "skinId": 303203,
@@ -809,7 +866,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 460,
-    "roleVoice": "6203202|6203204"
+    "roleVoice": "6203202|6203204",
+    "hideFootprint": 0
   },
   {
     "skinId": 303301,
@@ -823,7 +881,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6203301|6203302|6203305"
+    "roleVoice": "6203301|6203302|6203305",
+    "hideFootprint": 0
   },
   {
     "skinId": 303302,
@@ -837,7 +896,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6203301|6203302|6203305"
+    "roleVoice": "6203301|6203302|6203305",
+    "hideFootprint": 0
   },
   {
     "skinId": 303401,
@@ -851,7 +911,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6203402|6203403|6203407"
+    "roleVoice": "6203402|6203403|6203407",
+    "hideFootprint": 0
   },
   {
     "skinId": 303402,
@@ -865,7 +926,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6203402|6203403|6203407"
+    "roleVoice": "6203402|6203403|6203407",
+    "hideFootprint": 0
   },
   {
     "skinId": 303501,
@@ -879,7 +941,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6203501|6203504|6203507"
+    "roleVoice": "6203501|6203504|6203507",
+    "hideFootprint": 0
   },
   {
     "skinId": 303601,
@@ -893,7 +956,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6203602|6203603"
+    "roleVoice": "6203602|6203603",
+    "hideFootprint": 0
   },
   {
     "skinId": 303701,
@@ -907,7 +971,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6203701|6203704|6203708"
+    "roleVoice": "6203701|6203704|6203708",
+    "hideFootprint": 0
   },
   {
     "skinId": 303702,
@@ -921,7 +986,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6203701|6203704|6203708"
+    "roleVoice": "6203701|6203704|6203708",
+    "hideFootprint": 0
   },
   {
     "skinId": 303801,
@@ -935,7 +1001,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6203801|6203802|6203803"
+    "roleVoice": "6203801|6203802|6203803",
+    "hideFootprint": 0
   },
   {
     "skinId": 303802,
@@ -949,7 +1016,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6203801|6203802|6203803"
+    "roleVoice": "6203801|6203802|6203803",
+    "hideFootprint": 0
   },
   {
     "skinId": 303901,
@@ -963,12 +1031,13 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6203902|6203903"
+    "roleVoice": "6203902|6203903",
+    "hideFootprint": 0
   },
   {
     "skinId": 303902,
-    "specialIdle": 0,
-    "specialRate": 0,
+    "specialIdle": 1,
+    "specialRate": 100,
     "moveInterval": 15,
     "moveRate": 300,
     "moveSpeed": 0.48,
@@ -977,7 +1046,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6203902|6203903"
+    "roleVoice": "6203902|6203903",
+    "hideFootprint": 0
   },
   {
     "skinId": 304001,
@@ -991,7 +1061,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6204002|6204007|6204008"
+    "roleVoice": "6204002|6204007|6204008",
+    "hideFootprint": 0
   },
   {
     "skinId": 304101,
@@ -1005,7 +1076,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6204101|6204105|6204107"
+    "roleVoice": "6204101|6204105|6204107",
+    "hideFootprint": 0
   },
   {
     "skinId": 304102,
@@ -1019,7 +1091,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6204101|6204105|6204107"
+    "roleVoice": "6204101|6204105|6204107",
+    "hideFootprint": 0
   },
   {
     "skinId": 304201,
@@ -1033,7 +1106,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6204201|6204202|6204206"
+    "roleVoice": "6204201|6204202|6204206",
+    "hideFootprint": 0
   },
   {
     "skinId": 304202,
@@ -1047,7 +1121,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6204201|6204202|6204206"
+    "roleVoice": "6204201|6204202|6204206",
+    "hideFootprint": 0
   },
   {
     "skinId": 304301,
@@ -1061,7 +1136,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6204301|6204302|6204305"
+    "roleVoice": "6204301|6204302|6204305",
+    "hideFootprint": 0
   },
   {
     "skinId": 304302,
@@ -1075,7 +1151,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6204301|6204302|6204305"
+    "roleVoice": "6204301|6204302|6204305",
+    "hideFootprint": 0
   },
   {
     "skinId": 304401,
@@ -1089,7 +1166,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6204401|6204403"
+    "roleVoice": "6204401|6204403",
+    "hideFootprint": 0
   },
   {
     "skinId": 304402,
@@ -1103,7 +1181,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6204401|6204403"
+    "roleVoice": "6204401|6204403",
+    "hideFootprint": 0
   },
   {
     "skinId": 304501,
@@ -1117,7 +1196,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6204506|6204507|6204508"
+    "roleVoice": "6204506|6204507|6204508",
+    "hideFootprint": 0
   },
   {
     "skinId": 304601,
@@ -1131,7 +1211,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6204602|6204603|6204605"
+    "roleVoice": "6204602|6204603|6204605",
+    "hideFootprint": 0
   },
   {
     "skinId": 304602,
@@ -1145,7 +1226,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6204602|6204603|6204605"
+    "roleVoice": "6204602|6204603|6204605",
+    "hideFootprint": 0
   },
   {
     "skinId": 304701,
@@ -1159,7 +1241,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6204704|6204705|6204707"
+    "roleVoice": "6204704|6204705|6204707",
+    "hideFootprint": 0
   },
   {
     "skinId": 304702,
@@ -1173,7 +1256,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6204704|6204705|6204707"
+    "roleVoice": "6204704|6204705|6204707",
+    "hideFootprint": 0
   },
   {
     "skinId": 304801,
@@ -1187,7 +1271,8 @@
     "cameraAnimPath": "yuanlv_room",
     "effectPath": "yuanlv/304801_yuanlv_room",
     "waterDistance": 0,
-    "roleVoice": "6204801|6204806|6204811"
+    "roleVoice": "6204801|6204806|6204811",
+    "hideFootprint": 0
   },
   {
     "skinId": 304802,
@@ -1201,7 +1286,8 @@
     "cameraAnimPath": "yuanlv_room",
     "effectPath": "yuanlv/304801_yuanlv_room",
     "waterDistance": 0,
-    "roleVoice": "6204801|6204806|6204811"
+    "roleVoice": "6204801|6204806|6204811",
+    "hideFootprint": 0
   },
   {
     "skinId": 304901,
@@ -1215,7 +1301,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6204901|6204902|6204907"
+    "roleVoice": "6204901|6204902|6204907",
+    "hideFootprint": 0
   },
   {
     "skinId": 304902,
@@ -1229,7 +1316,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6204901|6204902|6204907"
+    "roleVoice": "6204901|6204902|6204907",
+    "hideFootprint": 0
   },
   {
     "skinId": 305001,
@@ -1243,7 +1331,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6205001|6205003|6205005"
+    "roleVoice": "6205001|6205003|6205005",
+    "hideFootprint": 0
   },
   {
     "skinId": 305101,
@@ -1257,7 +1346,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6205101|6205102|6205104"
+    "roleVoice": "6205101|6205102|6205104",
+    "hideFootprint": 0
   },
   {
     "skinId": 305102,
@@ -1271,7 +1361,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6205101|6205102|6205104"
+    "roleVoice": "6205101|6205102|6205104",
+    "hideFootprint": 0
   },
   {
     "skinId": 305201,
@@ -1285,7 +1376,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 200,
-    "roleVoice": "6205202|6205205|6205207"
+    "roleVoice": "6205202|6205205|6205207",
+    "hideFootprint": 0
   },
   {
     "skinId": 305202,
@@ -1299,7 +1391,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 200,
-    "roleVoice": "6205202|6205205|6205207"
+    "roleVoice": "6205202|6205205|6205207",
+    "hideFootprint": 0
   },
   {
     "skinId": 305401,
@@ -1313,7 +1406,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6205402|6205405|6205407"
+    "roleVoice": "6205402|6205405|6205407",
+    "hideFootprint": 0
   },
   {
     "skinId": 305501,
@@ -1327,7 +1421,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6205501|6205503|6205505"
+    "roleVoice": "6205501|6205503|6205505",
+    "hideFootprint": 0
   },
   {
     "skinId": 305701,
@@ -1341,7 +1436,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6205701|6205707"
+    "roleVoice": "6205701|6205707",
+    "hideFootprint": 0
   },
   {
     "skinId": 305702,
@@ -1355,7 +1451,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6205701|6205707"
+    "roleVoice": "6205701|6205707",
+    "hideFootprint": 0
   },
   {
     "skinId": 305801,
@@ -1369,7 +1466,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6205803|6205806"
+    "roleVoice": "6205803|6205806",
+    "hideFootprint": 0
   },
   {
     "skinId": 305802,
@@ -1383,7 +1481,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6205803|6205806"
+    "roleVoice": "6205803|6205806",
+    "hideFootprint": 0
   },
   {
     "skinId": 305901,
@@ -1397,7 +1496,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6205901|6205902|6205905"
+    "roleVoice": "6205901|6205902|6205905",
+    "hideFootprint": 0
   },
   {
     "skinId": 306201,
@@ -1411,7 +1511,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6206204|6206206|6206207"
+    "roleVoice": "6206204|6206206|6206207",
+    "hideFootprint": 0
   },
   {
     "skinId": 306202,
@@ -1425,7 +1526,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6206204|6206206|6206207"
+    "roleVoice": "6206204|6206206|6206207",
+    "hideFootprint": 0
   },
   {
     "skinId": 306301,
@@ -1439,7 +1541,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6206302|6206305"
+    "roleVoice": "6206302|6206305",
+    "hideFootprint": 0
   },
   {
     "skinId": 306302,
@@ -1453,7 +1556,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6206302|6206305"
+    "roleVoice": "6206302|6206305",
+    "hideFootprint": 0
   },
   {
     "skinId": 306401,
@@ -1467,7 +1571,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6206402|6206403|6206407"
+    "roleVoice": "6206402|6206403|6206407",
+    "hideFootprint": 0
   },
   {
     "skinId": 306402,
@@ -1481,7 +1586,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6206402|6206403|6206407"
+    "roleVoice": "6206402|6206403|6206407",
+    "hideFootprint": 0
   },
   {
     "skinId": 305301,
@@ -1495,7 +1601,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 291,
-    "roleVoice": "6205311|6205317"
+    "roleVoice": "6205311|6205317",
+    "hideFootprint": 0
   },
   {
     "skinId": 305302,
@@ -1509,7 +1616,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 291,
-    "roleVoice": "6205311|6205317"
+    "roleVoice": "6205311|6205317",
+    "hideFootprint": 0
   },
   {
     "skinId": 305601,
@@ -1523,7 +1631,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 122,
-    "roleVoice": "6205601|6205608"
+    "roleVoice": "6205601|6205608",
+    "hideFootprint": 0
   },
   {
     "skinId": 305602,
@@ -1537,7 +1646,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 122,
-    "roleVoice": "6205601|6205608"
+    "roleVoice": "6205601|6205608",
+    "hideFootprint": 0
   },
   {
     "skinId": 306001,
@@ -1551,7 +1661,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6206010|6206012"
+    "roleVoice": "6206010|6206012",
+    "hideFootprint": 0
   },
   {
     "skinId": 306002,
@@ -1565,7 +1676,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6206010|6206012"
+    "roleVoice": "6206010|6206012",
+    "hideFootprint": 0
   },
   {
     "skinId": 306101,
@@ -1579,7 +1691,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6206105|6206109"
+    "roleVoice": "6206105|6206109",
+    "hideFootprint": 0
   },
   {
     "skinId": 306102,
@@ -1593,7 +1706,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6206105|6206109"
+    "roleVoice": "6206105|6206109",
+    "hideFootprint": 0
   },
   {
     "skinId": 303502,
@@ -1607,7 +1721,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6203501|6203504|6203507"
+    "roleVoice": "6203501|6203504|6203507",
+    "hideFootprint": 0
   },
   {
     "skinId": 304103,
@@ -1621,7 +1736,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6204101|6204105|6204107"
+    "roleVoice": "6204101|6204105|6204107",
+    "hideFootprint": 0
   },
   {
     "skinId": 304303,
@@ -1635,7 +1751,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6204301|6204302|6204305"
+    "roleVoice": "6204301|6204302|6204305",
+    "hideFootprint": 0
   },
   {
     "skinId": 306303,
@@ -1649,7 +1766,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6206302|6206305"
+    "roleVoice": "6206302|6206305",
+    "hideFootprint": 0
   },
   {
     "skinId": 307001,
@@ -1663,7 +1781,8 @@
     "cameraAnimPath": "",
     "effectPath": "v1a3_jialabona/jialabona_room_xingkong",
     "waterDistance": 0,
-    "roleVoice": "6207011|6207016"
+    "roleVoice": "6207011|6207016",
+    "hideFootprint": 0
   },
   {
     "skinId": 307002,
@@ -1677,7 +1796,8 @@
     "cameraAnimPath": "",
     "effectPath": "v1a3_jialabona/jialabona_room_xingkong",
     "waterDistance": 0,
-    "roleVoice": "6207011|6207016"
+    "roleVoice": "6207011|6207016",
+    "hideFootprint": 0
   },
   {
     "skinId": 307101,
@@ -1691,7 +1811,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6207104|6207107"
+    "roleVoice": "6207104|6207107",
+    "hideFootprint": 0
   },
   {
     "skinId": 307102,
@@ -1705,7 +1826,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6207104|6207107"
+    "roleVoice": "6207104|6207107",
+    "hideFootprint": 0
   },
   {
     "skinId": 307201,
@@ -1719,7 +1841,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6207201|6207210"
+    "roleVoice": "6207201|6207210",
+    "hideFootprint": 0
   },
   {
     "skinId": 307202,
@@ -1733,7 +1856,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6207201|6207210"
+    "roleVoice": "6207201|6207210",
+    "hideFootprint": 0
   },
   {
     "skinId": 306601,
@@ -1747,7 +1871,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6206603|6206605"
+    "roleVoice": "6206603|6206605",
+    "hideFootprint": 0
   },
   {
     "skinId": 306602,
@@ -1761,7 +1886,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6206603|6206605"
+    "roleVoice": "6206603|6206605",
+    "hideFootprint": 0
   },
   {
     "skinId": 307901,
@@ -1775,7 +1901,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6207912|6207914"
+    "roleVoice": "6207912|6207914",
+    "hideFootprint": 0
   },
   {
     "skinId": 307902,
@@ -1789,7 +1916,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6207912|6207914"
+    "roleVoice": "6207912|6207914",
+    "hideFootprint": 0
   },
   {
     "skinId": 300403,
@@ -1803,7 +1931,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6200402|6200404"
+    "roleVoice": "6200402|6200404",
+    "hideFootprint": 0
   },
   {
     "skinId": 301103,
@@ -1817,7 +1946,8 @@
     "cameraAnimPath": "",
     "effectPath": "v1a4_malilian/v1a4_malilian_idle_rm",
     "waterDistance": 0,
-    "roleVoice": "6201101|6201106|6201111"
+    "roleVoice": "6201101|6201106|6201111",
+    "hideFootprint": 0
   },
   {
     "skinId": 306403,
@@ -1831,7 +1961,8 @@
     "cameraAnimPath": "",
     "effectPath": "v1a3_wajueyishu/v1a3_room_paopao01",
     "waterDistance": 0,
-    "roleVoice": "6206402|6206403|6206407"
+    "roleVoice": "6206402|6206403|6206407",
+    "hideFootprint": 0
   },
   {
     "skinId": 303002,
@@ -1845,7 +1976,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6203001|6203002|6203006"
+    "roleVoice": "6203001|6203002|6203006",
+    "hideFootprint": 0
   },
   {
     "skinId": 307301,
@@ -1859,7 +1991,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6207308|6207309"
+    "roleVoice": "6207308|6207309",
+    "hideFootprint": 0
   },
   {
     "skinId": 307302,
@@ -1873,7 +2006,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6207308|6207309"
+    "roleVoice": "6207308|6207309",
+    "hideFootprint": 0
   },
   {
     "skinId": 307401,
@@ -1887,7 +2021,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6207406|6207409"
+    "roleVoice": "6207406|6207409",
+    "hideFootprint": 0
   },
   {
     "skinId": 307402,
@@ -1901,7 +2036,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6207406|6207409"
+    "roleVoice": "6207406|6207409",
+    "hideFootprint": 0
   },
   {
     "skinId": 307501,
@@ -1915,7 +2051,8 @@
     "cameraAnimPath": "",
     "effectPath": "v1a5_shasirong/v1a5_shasirong_dianji",
     "waterDistance": 0,
-    "roleVoice": "6207506|6207512"
+    "roleVoice": "6207506|6207512",
+    "hideFootprint": 0
   },
   {
     "skinId": 307502,
@@ -1929,7 +2066,8 @@
     "cameraAnimPath": "",
     "effectPath": "v1a5_shasirong/v1a5_shasirong_dianji",
     "waterDistance": 0,
-    "roleVoice": "6207506|6207512"
+    "roleVoice": "6207506|6207512",
+    "hideFootprint": 0
   },
   {
     "skinId": 307601,
@@ -1943,7 +2081,8 @@
     "cameraAnimPath": "",
     "effectPath": "v1a5_hepingwulu/v1a5_hpwl_r_dianji",
     "waterDistance": 0,
-    "roleVoice": "6207602|6207611"
+    "roleVoice": "6207602|6207611",
+    "hideFootprint": 0
   },
   {
     "skinId": 307602,
@@ -1957,7 +2096,8 @@
     "cameraAnimPath": "",
     "effectPath": "v1a5_hepingwulu/v1a5_hpwl_r_dianji",
     "waterDistance": 0,
-    "roleVoice": "6207602|6207611"
+    "roleVoice": "6207602|6207611",
+    "hideFootprint": 0
   },
   {
     "skinId": 301503,
@@ -1971,7 +2111,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6201502|6201504|6201507"
+    "roleVoice": "6201502|6201504|6201507",
+    "hideFootprint": 0
   },
   {
     "skinId": 302203,
@@ -1985,7 +2126,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6202201|6202202|6202208"
+    "roleVoice": "6202201|6202202|6202208",
+    "hideFootprint": 0
   },
   {
     "skinId": 305303,
@@ -1999,7 +2141,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6205311|6205317"
+    "roleVoice": "6205311|6205317",
+    "hideFootprint": 0
   },
   {
     "skinId": 305002,
@@ -2013,7 +2156,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6205001|6205003|6205005"
+    "roleVoice": "6205001|6205003|6205005",
+    "hideFootprint": 0
   },
   {
     "skinId": 308201,
@@ -2027,7 +2171,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6207701|6207710"
+    "roleVoice": "6207701|6207710",
+    "hideFootprint": 0
   },
   {
     "skinId": 308202,
@@ -2041,7 +2186,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6207701|6207710"
+    "roleVoice": "6207701|6207710",
+    "hideFootprint": 0
   },
   {
     "skinId": 308301,
@@ -2055,7 +2201,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6207802|6207806|6207813"
+    "roleVoice": "6207802|6207806|6207813",
+    "hideFootprint": 0
   },
   {
     "skinId": 308302,
@@ -2069,7 +2216,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6207802|6207806|6207813"
+    "roleVoice": "6207802|6207806|6207813",
+    "hideFootprint": 0
   },
   {
     "skinId": 308401,
@@ -2083,7 +2231,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6208107|6208112"
+    "roleVoice": "6208107|6208112",
+    "hideFootprint": 0
   },
   {
     "skinId": 308402,
@@ -2097,7 +2246,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6208107|6208112"
+    "roleVoice": "6208107|6208112",
+    "hideFootprint": 0
   },
   {
     "skinId": 300305,
@@ -2111,7 +2261,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6200301|6200313"
+    "roleVoice": "6200301|6200313",
+    "hideFootprint": 0
   },
   {
     "skinId": 300703,
@@ -2125,7 +2276,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6200703|6200711"
+    "roleVoice": "6200703|6200711",
+    "hideFootprint": 0
   },
   {
     "skinId": 301303,
@@ -2139,7 +2291,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6201301|6201305"
+    "roleVoice": "6201301|6201305",
+    "hideFootprint": 0
   },
   {
     "skinId": 302403,
@@ -2153,7 +2306,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6202401|6202407|6202408"
+    "roleVoice": "6202401|6202407|6202408",
+    "hideFootprint": 0
   },
   {
     "skinId": 303903,
@@ -2167,7 +2321,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6203902|6203903"
+    "roleVoice": "6203902|6203903",
+    "hideFootprint": 0
   },
   {
     "skinId": 306501,
@@ -2181,7 +2336,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6206510|6206515"
+    "roleVoice": "6206510|6206515",
+    "hideFootprint": 0
   },
   {
     "skinId": 306502,
@@ -2195,7 +2351,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6206510|6206515"
+    "roleVoice": "6206510|6206515",
+    "hideFootprint": 0
   },
   {
     "skinId": 308101,
@@ -2209,7 +2366,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6208304|6208311"
+    "roleVoice": "6208304|6208311",
+    "hideFootprint": 0
   },
   {
     "skinId": 308102,
@@ -2223,7 +2381,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6208304|6208311"
+    "roleVoice": "6208304|6208311",
+    "hideFootprint": 0
   },
   {
     "skinId": 303803,
@@ -2237,7 +2396,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6203801|6203802|6203803"
+    "roleVoice": "6203801|6203802|6203803",
+    "hideFootprint": 0
   },
   {
     "skinId": 306203,
@@ -2251,7 +2411,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6206204|6206206|6206207"
+    "roleVoice": "6206204|6206206|6206207",
+    "hideFootprint": 0
   },
   {
     "skinId": 304403,
@@ -2265,7 +2426,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6204401|6204403"
+    "roleVoice": "6204401|6204403",
+    "hideFootprint": 0
   },
   {
     "skinId": 306603,
@@ -2279,7 +2441,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6206603|6206605"
+    "roleVoice": "6206603|6206605",
+    "hideFootprint": 0
   },
   {
     "skinId": 307701,
@@ -2293,7 +2456,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6208202|6208209"
+    "roleVoice": "6208202|6208209",
+    "hideFootprint": 0
   },
   {
     "skinId": 307702,
@@ -2307,7 +2471,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6208202|6208209"
+    "roleVoice": "6208202|6208209",
+    "hideFootprint": 0
   },
   {
     "skinId": 307801,
@@ -2321,7 +2486,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6208404|6208406"
+    "roleVoice": "6208404|6208406",
+    "hideFootprint": 0
   },
   {
     "skinId": 307802,
@@ -2335,7 +2501,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6208404|6208406"
+    "roleVoice": "6208404|6208406",
+    "hideFootprint": 0
   },
   {
     "skinId": 308701,
@@ -2349,7 +2516,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6208706|6208708"
+    "roleVoice": "6208706|6208708",
+    "hideFootprint": 0
   },
   {
     "skinId": 308702,
@@ -2363,7 +2531,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6208706|6208708"
+    "roleVoice": "6208706|6208708",
+    "hideFootprint": 0
   },
   {
     "skinId": 301603,
@@ -2377,7 +2546,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6201601|6201602|6201615"
+    "roleVoice": "6201601|6201602|6201615",
+    "hideFootprint": 0
   },
   {
     "skinId": 301803,
@@ -2391,7 +2561,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6201801|6201803|6201806"
+    "roleVoice": "6201801|6201803|6201806",
+    "hideFootprint": 0
   },
   {
     "skinId": 305103,
@@ -2405,7 +2576,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6205101|6205102|6205104"
+    "roleVoice": "6205101|6205102|6205104",
+    "hideFootprint": 0
   },
   {
     "skinId": 304703,
@@ -2419,7 +2591,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6204704|6204705|6204707"
+    "roleVoice": "6204704|6204705|6204707",
+    "hideFootprint": 0
   },
   {
     "skinId": 304104,
@@ -2433,7 +2606,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6204101|6204105|6204107"
+    "roleVoice": "6204101|6204105|6204107",
+    "hideFootprint": 0
   },
   {
     "skinId": 308001,
@@ -2447,7 +2621,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "62080103|62080110"
+    "roleVoice": "62080103|62080110",
+    "hideFootprint": 0
   },
   {
     "skinId": 308002,
@@ -2461,7 +2636,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "62080103|62080110"
+    "roleVoice": "62080103|62080110",
+    "hideFootprint": 0
   },
   {
     "skinId": 308801,
@@ -2475,7 +2651,8 @@
     "cameraAnimPath": "smews_room",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6208801|6208808"
+    "roleVoice": "6208801|6208808",
+    "hideFootprint": 0
   },
   {
     "skinId": 308802,
@@ -2489,7 +2666,8 @@
     "cameraAnimPath": "smews_room",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6208801|6208808"
+    "roleVoice": "6208801|6208808",
+    "hideFootprint": 0
   },
   {
     "skinId": 309101,
@@ -2503,7 +2681,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6209106|6209113"
+    "roleVoice": "6209106|6209113",
+    "hideFootprint": 0
   },
   {
     "skinId": 309102,
@@ -2517,7 +2696,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6209106|6209113"
+    "roleVoice": "6209106|6209113",
+    "hideFootprint": 0
   },
   {
     "skinId": 308601,
@@ -2531,7 +2711,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6208605|6208607"
+    "roleVoice": "6208605|6208607",
+    "hideFootprint": 0
   },
   {
     "skinId": 308602,
@@ -2545,7 +2726,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6208605|6208607"
+    "roleVoice": "6208605|6208607",
+    "hideFootprint": 0
   },
   {
     "skinId": 307503,
@@ -2559,7 +2741,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6207506|6207512"
+    "roleVoice": "6207506|6207512",
+    "hideFootprint": 0
   },
   {
     "skinId": 302304,
@@ -2573,7 +2756,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6202301|6202302|6202308"
+    "roleVoice": "6202301|6202302|6202308",
+    "hideFootprint": 0
   },
   {
     "skinId": 304803,
@@ -2587,7 +2771,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6204801|6204806|6204811"
+    "roleVoice": "6204801|6204806|6204811",
+    "hideFootprint": 0
   },
   {
     "skinId": 305703,
@@ -2601,7 +2786,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6205701|6205707"
+    "roleVoice": "6205701|6205707",
+    "hideFootprint": 0
   },
   {
     "skinId": 305603,
@@ -2615,7 +2801,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6205601|6205608"
+    "roleVoice": "6205601|6205608",
+    "hideFootprint": 0
   },
   {
     "skinId": 302504,
@@ -2629,7 +2816,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6202508|6202510"
+    "roleVoice": "6202508|6202510",
+    "hideFootprint": 0
   },
   {
     "skinId": 300604,
@@ -2643,7 +2831,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6200603|6200604|6200605"
+    "roleVoice": "6200603|6200604|6200605",
+    "hideFootprint": 0
   },
   {
     "skinId": 309401,
@@ -2657,7 +2846,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6209401|6209406|6209415"
+    "roleVoice": "6209401|6209406|6209415",
+    "hideFootprint": 0
   },
   {
     "skinId": 309402,
@@ -2671,7 +2861,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6209401|6209406|6209415"
+    "roleVoice": "6209401|6209406|6209415",
+    "hideFootprint": 0
   },
   {
     "skinId": 309501,
@@ -2685,7 +2876,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6209501|6209508|6209516"
+    "roleVoice": "6209501|6209508|6209516",
+    "hideFootprint": 0
   },
   {
     "skinId": 309502,
@@ -2699,7 +2891,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6209501|6209508|6209516"
+    "roleVoice": "6209501|6209508|6209516",
+    "hideFootprint": 0
   },
   {
     "skinId": 309601,
@@ -2713,7 +2906,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6209601|6209606|6209610"
+    "roleVoice": "6209601|6209606|6209610",
+    "hideFootprint": 0
   },
   {
     "skinId": 305502,
@@ -2727,7 +2921,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6205501|6205503|6205505"
+    "roleVoice": "6205501|6205503|6205505",
+    "hideFootprint": 0
   },
   {
     "skinId": 307003,
@@ -2741,7 +2936,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6207011|6207016"
+    "roleVoice": "6207011|6207016",
+    "hideFootprint": 0
   },
   {
     "skinId": 307103,
@@ -2755,7 +2951,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6207104|6207107"
+    "roleVoice": "6207104|6207107",
+    "hideFootprint": 0
   },
   {
     "skinId": 307303,
@@ -2769,7 +2966,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6207308|6207309"
+    "roleVoice": "6207308|6207309",
+    "hideFootprint": 0
   },
   {
     "skinId": 307903,
@@ -2783,7 +2981,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6207912|6207914"
+    "roleVoice": "6207912|6207914",
+    "hideFootprint": 0
   },
   {
     "skinId": 309701,
@@ -2797,7 +2996,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6209701|6209704|6209711|6209715"
+    "roleVoice": "6209701|6209704|6209711|6209715",
+    "hideFootprint": 0
   },
   {
     "skinId": 309702,
@@ -2811,7 +3011,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6209701|6209704|6209711|6209715"
+    "roleVoice": "6209701|6209704|6209711|6209715",
+    "hideFootprint": 0
   },
   {
     "skinId": 309801,
@@ -2825,7 +3026,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6209802|6209808|6209812"
+    "roleVoice": "6209802|6209808|6209812",
+    "hideFootprint": 0
   },
   {
     "skinId": 309802,
@@ -2839,7 +3041,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6209802|6209808|6209812"
+    "roleVoice": "6209802|6209808|6209812",
+    "hideFootprint": 0
   },
   {
     "skinId": 309901,
@@ -2853,7 +3056,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6209902|6209915|6209916"
+    "roleVoice": "6209902|6209915|6209916",
+    "hideFootprint": 0
   },
   {
     "skinId": 309902,
@@ -2867,7 +3071,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6209902|6209915|6209916"
+    "roleVoice": "6209902|6209915|6209916",
+    "hideFootprint": 0
   },
   {
     "skinId": 303303,
@@ -2881,7 +3086,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6203301|6203302|6203305"
+    "roleVoice": "6203301|6203302|6203305",
+    "hideFootprint": 0
   },
   {
     "skinId": 306003,
@@ -2895,7 +3101,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6206010|6206012"
+    "roleVoice": "6206010|6206012",
+    "hideFootprint": 0
   },
   {
     "skinId": 307403,
@@ -2909,7 +3116,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6207406|6207409"
+    "roleVoice": "6207406|6207409",
+    "hideFootprint": 0
   },
   {
     "skinId": 308103,
@@ -2923,7 +3131,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6208304|6208311"
+    "roleVoice": "6208304|6208311",
+    "hideFootprint": 0
   },
   {
     "skinId": 310001,
@@ -2937,7 +3146,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6205733|6205741|6205748"
+    "roleVoice": "6205733|6205741|6205748",
+    "hideFootprint": 0
   },
   {
     "skinId": 310002,
@@ -2951,7 +3161,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6205733|6205741|6205748"
+    "roleVoice": "6205733|6205741|6205748",
+    "hideFootprint": 0
   },
   {
     "skinId": 310101,
@@ -2965,7 +3176,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6210112|6210106|6210104"
+    "roleVoice": "6210112|6210106|6210104",
+    "hideFootprint": 0
   },
   {
     "skinId": 310102,
@@ -2979,7 +3191,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6210112|6210106|6210104"
+    "roleVoice": "6210112|6210106|6210104",
+    "hideFootprint": 0
   },
   {
     "skinId": 310201,
@@ -2993,7 +3206,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6205718|6205719|6205721"
+    "roleVoice": "6205718|6205719|6205721",
+    "hideFootprint": 0
   },
   {
     "skinId": 310202,
@@ -3007,7 +3221,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6205718|6205719|6205721"
+    "roleVoice": "6205718|6205719|6205721",
+    "hideFootprint": 0
   },
   {
     "skinId": 310301,
@@ -3021,7 +3236,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6210302|6210303|6210307"
+    "roleVoice": "6210302|6210303|6210307",
+    "hideFootprint": 0
   },
   {
     "skinId": 310302,
@@ -3035,7 +3251,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6210302|6210303|6210307"
+    "roleVoice": "6210302|6210303|6210307",
+    "hideFootprint": 0
   },
   {
     "skinId": 304603,
@@ -3049,7 +3266,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6204602|6204603|6204605"
+    "roleVoice": "6204602|6204603|6204605",
+    "hideFootprint": 0
   },
   {
     "skinId": 306503,
@@ -3063,7 +3281,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6206510|6206515"
+    "roleVoice": "6206510|6206515",
+    "hideFootprint": 0
   },
   {
     "skinId": 306604,
@@ -3077,7 +3296,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6206603|6206605"
+    "roleVoice": "6206603|6206605",
+    "hideFootprint": 0
   },
   {
     "skinId": 307203,
@@ -3091,7 +3311,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6207201|6207210"
+    "roleVoice": "6207201|6207210",
+    "hideFootprint": 0
   },
   {
     "skinId": 308203,
@@ -3105,7 +3326,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6207701|6207710"
+    "roleVoice": "6207701|6207710",
+    "hideFootprint": 0
   },
   {
     "skinId": 308703,
@@ -3119,7 +3341,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6208706|6208708"
+    "roleVoice": "6208706|6208708",
+    "hideFootprint": 0
   },
   {
     "skinId": 310401,
@@ -3133,7 +3356,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6210404|6210407|6210411|6210416"
+    "roleVoice": "6210404|6210407|6210411|6210416",
+    "hideFootprint": 0
   },
   {
     "skinId": 310402,
@@ -3147,7 +3371,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6210404|6210407|6210411|6210416"
+    "roleVoice": "6210404|6210407|6210411|6210416",
+    "hideFootprint": 0
   },
   {
     "skinId": 310501,
@@ -3161,7 +3386,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6210501|6210503|6210504|6210510"
+    "roleVoice": "6210501|6210503|6210504|6210510",
+    "hideFootprint": 0
   },
   {
     "skinId": 310502,
@@ -3175,7 +3401,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6210501|6210503|6210504|6210510"
+    "roleVoice": "6210501|6210503|6210504|6210510",
+    "hideFootprint": 0
   },
   {
     "skinId": 310601,
@@ -3189,7 +3416,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6210605|6210606|6210612|6210614"
+    "roleVoice": "6210605|6210606|6210612|6210614",
+    "hideFootprint": 0
   },
   {
     "skinId": 310602,
@@ -3203,7 +3431,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6210605|6210606|6210612|6210614"
+    "roleVoice": "6210605|6210606|6210612|6210614",
+    "hideFootprint": 0
   },
   {
     "skinId": 300404,
@@ -3217,7 +3446,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6200402|6200404"
+    "roleVoice": "6200402|6200404",
+    "hideFootprint": 0
   },
   {
     "skinId": 303602,
@@ -3231,7 +3461,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6203602|6203603"
+    "roleVoice": "6203602|6203603",
+    "hideFootprint": 0
   },
   {
     "skinId": 304304,
@@ -3245,7 +3476,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6204301|6204302|6204305"
+    "roleVoice": "6204301|6204302|6204305",
+    "hideFootprint": 0
   },
   {
     "skinId": 305304,
@@ -3259,7 +3491,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6205311|6205317"
+    "roleVoice": "6205311|6205317",
+    "hideFootprint": 0
   },
   {
     "skinId": 308404,
@@ -3273,7 +3506,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6208107|6208112"
+    "roleVoice": "6208107|6208112",
+    "hideFootprint": 0
   },
   {
     "skinId": 308803,
@@ -3287,7 +3521,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6208801|6208808"
+    "roleVoice": "6208801|6208808",
+    "hideFootprint": 0
   },
   {
     "skinId": 310801,
@@ -3301,7 +3536,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6210801|6210802|6210811"
+    "roleVoice": "6210801|6210802|6210811",
+    "hideFootprint": 0
   },
   {
     "skinId": 310802,
@@ -3315,7 +3551,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6210801|6210802|6210811"
+    "roleVoice": "6210801|6210802|6210811",
+    "hideFootprint": 0
   },
   {
     "skinId": 310901,
@@ -3329,7 +3566,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6210902|6210904|6210906"
+    "roleVoice": "6210902|6210904|6210906",
+    "hideFootprint": 0
   },
   {
     "skinId": 310902,
@@ -3343,7 +3581,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6210902|6210904|6210906"
+    "roleVoice": "6210902|6210904|6210906",
+    "hideFootprint": 0
   },
   {
     "skinId": 303703,
@@ -3357,7 +3596,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6203701|6203704|6203708"
+    "roleVoice": "6203701|6203704|6203708",
+    "hideFootprint": 0
   },
   {
     "skinId": 309503,
@@ -3371,7 +3611,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6209501|6209508|6209516"
+    "roleVoice": "6209501|6209508|6209516",
+    "hideFootprint": 0
   },
   {
     "skinId": 305203,
@@ -3385,7 +3626,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 200,
-    "roleVoice": "6205202|6205205|6205207"
+    "roleVoice": "6205202|6205205|6205207",
+    "hideFootprint": 0
   },
   {
     "skinId": 302603,
@@ -3399,7 +3641,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6202601|6202606"
+    "roleVoice": "6202601|6202606",
+    "hideFootprint": 0
   },
   {
     "skinId": 308003,
@@ -3413,7 +3656,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "62080103|62080110"
+    "roleVoice": "62080103|62080110",
+    "hideFootprint": 0
   },
   {
     "skinId": 311001,
@@ -3427,7 +3671,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6211001|6211013|6211016"
+    "roleVoice": "6211001|6211013|6211016",
+    "hideFootprint": 0
   },
   {
     "skinId": 311002,
@@ -3441,7 +3686,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6211001|6211013|6211016"
+    "roleVoice": "6211001|6211013|6211016",
+    "hideFootprint": 0
   },
   {
     "skinId": 311101,
@@ -3455,7 +3701,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6211104|6211105|6211109|6211116"
+    "roleVoice": "6211104|6211105|6211109|6211116",
+    "hideFootprint": 1
   },
   {
     "skinId": 311102,
@@ -3469,7 +3716,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6211104|6211105|6211109|6211116"
+    "roleVoice": "6211104|6211105|6211109|6211116",
+    "hideFootprint": 1
   },
   {
     "skinId": 311201,
@@ -3483,7 +3731,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6211201|6211203|6211204|6211209"
+    "roleVoice": "6211201|6211203|6211204|6211209",
+    "hideFootprint": 0
   },
   {
     "skinId": 311202,
@@ -3497,7 +3746,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6211201|6211203|6211204|6211209"
+    "roleVoice": "6211201|6211203|6211204|6211209",
+    "hideFootprint": 0
   },
   {
     "skinId": 308303,
@@ -3511,7 +3761,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6207802|6207806|6207813"
+    "roleVoice": "6207802|6207806|6207813",
+    "hideFootprint": 0
   },
   {
     "skinId": 300904,
@@ -3525,7 +3776,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6200901|6200905"
+    "roleVoice": "6200901|6200905",
+    "hideFootprint": 0
   },
   {
     "skinId": 309803,
@@ -3539,7 +3791,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6209802|6209808|6209812"
+    "roleVoice": "6209802|6209808|6209812",
+    "hideFootprint": 0
   },
   {
     "skinId": 300306,
@@ -3553,7 +3806,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6200301|6200313"
+    "roleVoice": "6200301|6200313",
+    "hideFootprint": 0
   },
   {
     "skinId": 307703,
@@ -3567,7 +3821,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6208202|6208209"
+    "roleVoice": "6208202|6208209",
+    "hideFootprint": 0
   },
   {
     "skinId": 301202,
@@ -3581,7 +3836,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6201202|6201205"
+    "roleVoice": "6201202|6201205",
+    "hideFootprint": 0
   },
   {
     "skinId": 311301,
@@ -3595,7 +3851,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6211303|6211308|6211313 "
+    "roleVoice": "6211303|6211308|6211313 ",
+    "hideFootprint": 0
   },
   {
     "skinId": 311302,
@@ -3609,7 +3866,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6211303|6211308|6211313 "
+    "roleVoice": "6211303|6211308|6211313 ",
+    "hideFootprint": 0
   },
   {
     "skinId": 311401,
@@ -3623,7 +3881,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6211401|6211407|6211416"
+    "roleVoice": "6211401|6211407|6211416",
+    "hideFootprint": 0
   },
   {
     "skinId": 311402,
@@ -3637,7 +3896,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6211401|6211407|6211416"
+    "roleVoice": "6211401|6211407|6211416",
+    "hideFootprint": 0
   },
   {
     "skinId": 310203,
@@ -3651,7 +3911,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6205718|6205719|6205721"
+    "roleVoice": "6205718|6205719|6205721",
+    "hideFootprint": 0
   },
   {
     "skinId": 306204,
@@ -3665,7 +3926,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6206204|6206206|6206207"
+    "roleVoice": "6206204|6206206|6206207",
+    "hideFootprint": 0
   },
   {
     "skinId": 310403,
@@ -3679,7 +3941,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6210404|6210407|6210411|6210416"
+    "roleVoice": "6210404|6210407|6210411|6210416",
+    "hideFootprint": 0
   },
   {
     "skinId": 305803,
@@ -3693,7 +3956,128 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6205803|6205806"
+    "roleVoice": "6205803|6205806",
+    "hideFootprint": 0
+  },
+  {
+    "skinId": 311601,
+    "specialIdle": 1,
+    "specialRate": 100,
+    "moveInterval": 15,
+    "moveRate": 500,
+    "moveSpeed": 0.48,
+    "zeroMix": false,
+    "shadow": "shadow",
+    "cameraAnimPath": "",
+    "effectPath": "",
+    "waterDistance": 0,
+    "roleVoice": "6211601|6211605|6211608",
+    "hideFootprint": 0
+  },
+  {
+    "skinId": 311602,
+    "specialIdle": 1,
+    "specialRate": 100,
+    "moveInterval": 15,
+    "moveRate": 500,
+    "moveSpeed": 0.48,
+    "zeroMix": false,
+    "shadow": "shadow",
+    "cameraAnimPath": "",
+    "effectPath": "",
+    "waterDistance": 0,
+    "roleVoice": "6211601|6211605|6211608",
+    "hideFootprint": 0
+  },
+  {
+    "skinId": 311701,
+    "specialIdle": 1,
+    "specialRate": 100,
+    "moveInterval": 15,
+    "moveRate": 400,
+    "moveSpeed": 0.48,
+    "zeroMix": false,
+    "shadow": "shadow",
+    "cameraAnimPath": "",
+    "effectPath": "",
+    "waterDistance": 0,
+    "roleVoice": "6211704|6211705|6211709|6211712",
+    "hideFootprint": 0
+  },
+  {
+    "skinId": 311702,
+    "specialIdle": 1,
+    "specialRate": 100,
+    "moveInterval": 15,
+    "moveRate": 400,
+    "moveSpeed": 0.48,
+    "zeroMix": false,
+    "shadow": "shadow",
+    "cameraAnimPath": "",
+    "effectPath": "",
+    "waterDistance": 0,
+    "roleVoice": "6211704|6211705|6211709|6211712",
+    "hideFootprint": 0
+  },
+  {
+    "skinId": 311801,
+    "specialIdle": 0,
+    "specialRate": 0,
+    "moveInterval": 15,
+    "moveRate": 400,
+    "moveSpeed": 0.48,
+    "zeroMix": false,
+    "shadow": "",
+    "cameraAnimPath": "",
+    "effectPath": "",
+    "waterDistance": 0,
+    "roleVoice": "6211805|6211811|6211812",
+    "hideFootprint": 0
+  },
+  {
+    "skinId": 311802,
+    "specialIdle": 0,
+    "specialRate": 0,
+    "moveInterval": 15,
+    "moveRate": 400,
+    "moveSpeed": 0.48,
+    "zeroMix": false,
+    "shadow": "",
+    "cameraAnimPath": "",
+    "effectPath": "",
+    "waterDistance": 0,
+    "roleVoice": "6211805|6211811|6211812",
+    "hideFootprint": 0
+  },
+  {
+    "skinId": 309703,
+    "specialIdle": 1,
+    "specialRate": 100,
+    "moveInterval": 15,
+    "moveRate": 600,
+    "moveSpeed": 0.48,
+    "zeroMix": false,
+    "shadow": "",
+    "cameraAnimPath": "",
+    "effectPath": "",
+    "waterDistance": 0,
+    "roleVoice": "6209701|6209704|6209711|6209715",
+    "hideFootprint": 0
+  },
+  {
+    "skinId": 304804,
+    "specialIdle": 1,
+    "specialRate": 100,
+    "moveInterval": 15,
+    "moveRate": 250,
+    "moveSpeed": 0.48,
+    "zeroMix": false,
+    "shadow": "",
+    "cameraAnimPath": "",
+    "effectPath": "",
+    "waterDistance": 0,
+    "roleVoice": "6204801|6204806|6204811",
+    "hideFootprint": 0
   },
   {
     "skinId": 310903,
@@ -3707,7 +4091,8 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6210902|6210904|6210906"
+    "roleVoice": "6210902|6210904|6210906",
+    "hideFootprint": 0
   },
   {
     "skinId": 307904,
@@ -3721,6 +4106,37 @@
     "cameraAnimPath": "",
     "effectPath": "",
     "waterDistance": 0,
-    "roleVoice": "6207912|6207914"
+    "roleVoice": "6207912|6207914",
+    "hideFootprint": 0
+  },
+  {
+    "skinId": 310803,
+    "specialIdle": 1,
+    "specialRate": 100,
+    "moveInterval": 15,
+    "moveRate": 400,
+    "moveSpeed": 0.48,
+    "zeroMix": false,
+    "shadow": "",
+    "cameraAnimPath": "",
+    "effectPath": "",
+    "waterDistance": 0,
+    "roleVoice": "6210801|6210802|6210811",
+    "hideFootprint": 0
+  },
+  {
+    "skinId": 304203,
+    "specialIdle": 0,
+    "specialRate": 0,
+    "moveInterval": 15,
+    "moveRate": 400,
+    "moveSpeed": 0.48,
+    "zeroMix": false,
+    "shadow": "",
+    "cameraAnimPath": "",
+    "effectPath": "",
+    "waterDistance": 0,
+    "roleVoice": "6204201|6204202|6204206",
+    "hideFootprint": 0
   }
 ]

@@ -1,6 +1,6 @@
 ﻿module("modules.logic.fight.view.FightViewHandCard", package.seeall)
 
-local var_0_0 = class("FightViewHandCard", BaseView)
+local var_0_0 = class("FightViewHandCard", FightBaseView)
 local var_0_1 = 256
 local var_0_2 = 185
 
@@ -91,10 +91,6 @@ function var_0_0.onInitView(arg_1_0)
 	arg_1_0._cardEndFlow:addWork(FightGuideCardEnd.New())
 	arg_1_0._cardEndFlow:addWork(FightCardEndEffect.New())
 
-	arg_1_0._changeCardFlow = FightViewHandCardSequenceFlow.New()
-
-	arg_1_0._changeCardFlow:addWork(FightCardChangeEffect.New())
-
 	arg_1_0._redealCardFlow = FightViewHandCardSequenceFlow.New()
 
 	arg_1_0._redealCardFlow:addWork(FightCardRedealEffect.New())
@@ -135,7 +131,6 @@ function var_0_0.onOpen(arg_4_0)
 	arg_4_0:addEventCb(FightController.instance, FightEvent.DragHandCardEnd, arg_4_0._onDragHandCardEnd, arg_4_0)
 	arg_4_0:addEventCb(FightController.instance, FightEvent.LongPressHandCard, arg_4_0._longPressHandCard, arg_4_0)
 	arg_4_0:addEventCb(FightController.instance, FightEvent.LongPressHandCardEnd, arg_4_0._longPressHandCardEnd, arg_4_0)
-	arg_4_0:addEventCb(FightController.instance, FightEvent.PlayChangeCardEffect, arg_4_0._playChangeCardEffect, arg_4_0)
 	arg_4_0:addEventCb(FightController.instance, FightEvent.PlayRedealCardEffect, arg_4_0._playRedealCardEffect, arg_4_0)
 	arg_4_0:addEventCb(FightController.instance, FightEvent.UniversalAppear, arg_4_0._playUniversalAppear, arg_4_0)
 	arg_4_0:addEventCb(FightController.instance, FightEvent.CheckCardOpEnd, arg_4_0._checkCardOpEnd, arg_4_0)
@@ -177,6 +172,7 @@ function var_0_0.onOpen(arg_4_0)
 	arg_4_0:addEventCb(FightController.instance, FightEvent.RefreshHandCardPrecisionEffect, arg_4_0._onRefreshHandCardPrecisionEffect, arg_4_0)
 	arg_4_0:addEventCb(FightController.instance, FightEvent.LY_CardAreaSizeChange, arg_4_0.onLY_CardAreaSizeChange, arg_4_0)
 	arg_4_0:addEventCb(FightController.instance, FightEvent.RefreshCardHeatShow, arg_4_0._onRefreshCardHeatShow, arg_4_0)
+	arg_4_0:addEventCb(FightController.instance, FightEvent.ASFD_OnChangeCardEnergy, arg_4_0.onChangeCardEnergy, arg_4_0)
 	arg_4_0:_setBlockOperate(false)
 	arg_4_0:_refreshPrecisionShow()
 end
@@ -184,7 +180,6 @@ end
 function var_0_0.onClose(arg_5_0)
 	FightCardModel.instance:setLongPressIndex(-1)
 	TaskDispatcher.cancelTask(arg_5_0._delayCancelBlock, arg_5_0)
-	TaskDispatcher.cancelTask(arg_5_0._delayPlayCardsChangeEffect, arg_5_0)
 	TaskDispatcher.cancelTask(arg_5_0._combineCardsAfterAddHandCard, arg_5_0)
 	TaskDispatcher.cancelTask(arg_5_0._correctActiveCardObjPos, arg_5_0)
 	TaskDispatcher.cancelTask(arg_5_0._combineAfterCardLevelChange, arg_5_0)
@@ -213,7 +208,6 @@ function var_0_0.onClose(arg_5_0)
 	arg_5_0._cardDragFlow:stop()
 	arg_5_0._cardDragEndFlow:stop()
 	arg_5_0._cardEndFlow:stop()
-	arg_5_0._changeCardFlow:stop()
 	arg_5_0._redealCardFlow:stop()
 	arg_5_0._universalAppearFlow:stop()
 	arg_5_0._magicEffectCardFlow:stop()
@@ -239,7 +233,13 @@ function var_0_0._onHandCardFlowStart(arg_8_0, arg_8_1)
 	return arg_8_0:refreshLYAreaActive()
 end
 
-function var_0_0._onStageChanged(arg_9_0)
+function var_0_0._onStageChanged(arg_9_0, arg_9_1)
+	if arg_9_1 == FightStageMgr.StageType.Normal then
+		for iter_9_0, iter_9_1 in ipairs(arg_9_0._handCardItemList) do
+			iter_9_1:setASFDActive(true)
+		end
+	end
+
 	return arg_9_0:refreshLYAreaActive()
 end
 
@@ -293,7 +293,7 @@ function var_0_0.onLY_CardAreaSizeChange(arg_12_0)
 end
 
 function var_0_0.refreshLyCardTag(arg_13_0)
-	local var_13_0 = FightCardModel.instance:getHandCards()
+	local var_13_0 = FightDataHelper.handCardMgr.handCard
 	local var_13_1 = FightDataHelper.LYDataMgr.LYCardAreaSize
 	local var_13_2 = var_13_0 and #var_13_0 or 0
 
@@ -315,10 +315,10 @@ end
 
 function var_0_0.refreshLyAreaPos(arg_14_0)
 	local var_14_0 = FightDataHelper.LYDataMgr.LYCardAreaSize
-	local var_14_1 = FightCardModel.instance:getHandCards()
+	local var_14_1 = FightDataHelper.handCardMgr.handCard
 	local var_14_2 = var_14_1 and #var_14_1 or 0
 	local var_14_3 = math.min(var_14_0, var_14_2)
-	local var_14_4 = FightCardModel.instance:getHandCards()
+	local var_14_4 = FightDataHelper.handCardMgr.handCard
 	local var_14_5 = var_14_4 and #var_14_4 or 0
 	local var_14_6 = var_14_3 and var_14_3 > 0 and var_14_5 > 0
 
@@ -343,12 +343,7 @@ function var_0_0._onApplicationPause(arg_15_0, arg_15_1)
 			arg_15_0._cardDragFlow:stop()
 		end
 
-		if FightCardModel.instance:tryGettingHandCardsByOps(FightCardModel.instance:getCardOps()) then
-			arg_15_0:_updateNow()
-		else
-			FightCardModel.instance:clearCardOps()
-			FightRpc.instance:sendResetRoundRequest()
-		end
+		arg_15_0:_updateNow()
 	end
 end
 
@@ -369,7 +364,7 @@ function var_0_0.isCombineCardFlow(arg_19_0)
 end
 
 function var_0_0._checkCardOpEnd(arg_20_0)
-	if FightCardModel.instance:isCardOpEnd() and #FightCardModel.instance:getCardOps() > 0 then
+	if FightDataHelper.operationDataMgr:isCardOpEnd() and #FightDataHelper.operationDataMgr:getOpList() > 0 then
 		FightController.instance:dispatchEvent(FightEvent.CardOpEnd)
 
 		if arg_20_0._cardEndFlow.status ~= WorkStatus.Running then
@@ -412,11 +407,9 @@ function var_0_0._onDetectCardOpEndAfterOperationEffectDone(arg_21_0, arg_21_1)
 end
 
 function var_0_0._onCardEndFlowDone(arg_22_0)
-	local var_22_0 = FightCardModel.instance:getHandCards()
+	local var_22_0 = FightDataHelper.handCardMgr.handCard
 
-	FightCardModel.instance:coverCard(var_22_0)
-	FightDataHelper.coverData(var_22_0, FightLocalDataMgr.instance.handCardMgr:getHandCard())
-	FightDataHelper.coverData(var_22_0, FightDataHelper.handCardMgr:getHandCard())
+	FightDataUtil.coverData(var_22_0, FightLocalDataMgr.instance.handCardMgr:getHandCard())
 	arg_22_0:_setBlockOperate(false)
 	arg_22_0._cardEndFlow:unregisterDoneListener(arg_22_0._onCardEndFlowDone, arg_22_0)
 
@@ -424,7 +417,7 @@ function var_0_0._onCardEndFlowDone(arg_22_0)
 		return
 	end
 
-	FightRpc.instance:sendBeginRoundRequest(FightCardModel.instance:getCardOps())
+	FightRpc.instance:sendBeginRoundRequest(FightDataHelper.operationDataMgr:getOpList())
 
 	if FightModel.instance:getVersion() >= 1 then
 		FightController.instance:dispatchEvent(FightEvent.ShowSimulateClientUsedCard)
@@ -535,7 +528,11 @@ function var_0_0._onRefreshHandCardPrecisionEffect(arg_29_0)
 	arg_29_0:_detectPlayPrecisionEffect()
 end
 
-function var_0_0._startDistributeCards(arg_30_0)
+function var_0_0._startDistributeCards(arg_30_0, arg_30_1, arg_30_2)
+	arg_30_0.distributeCards = FightDataUtil.copyData(arg_30_2) or {}
+
+	FightDataUtil.coverData(arg_30_1, FightDataHelper.handCardMgr.handCard)
+	arg_30_0:_updateHandCards()
 	arg_30_0:_nextDistributeCards()
 end
 
@@ -543,50 +540,45 @@ function var_0_0._nextDistributeCards(arg_31_0, arg_31_1)
 	arg_31_0._correctHandCardScale:stop()
 	arg_31_0._cardDistributeFlow:stop()
 	arg_31_0._cardCombineFlow:stop()
-	arg_31_0._changeCardFlow:stop()
 	arg_31_0._redealCardFlow:stop()
 	arg_31_0._magicEffectCardFlow:stop()
 
-	local var_31_0 = FightCardModel.instance:getDistributeQueueLen()
+	local var_31_0 = arg_31_0.distributeCards and #arg_31_0.distributeCards
 
 	if var_31_0 > 0 then
-		local var_31_1, var_31_2 = FightCardModel.instance:dequeueDistribute()
+		local var_31_1 = FightDataHelper.handCardMgr.handCard
+		local var_31_2 = #var_31_1
+		local var_31_3 = {}
 
-		if canLogNormal then
-			local var_31_3 = {}
-			local var_31_4 = {}
+		for iter_31_0 = 1, var_31_0 do
+			local var_31_4 = table.remove(arg_31_0.distributeCards, 1)
 
-			for iter_31_0, iter_31_1 in ipairs(var_31_1) do
-				table.insert(var_31_3, iter_31_1.skillId)
+			table.insert(var_31_3, var_31_4)
+			table.insert(var_31_1, var_31_4)
+
+			local var_31_5 = var_31_1[#var_31_1 - 1]
+
+			if FightCardDataHelper.canCombineCardForPerformance(var_31_4, var_31_5) then
+				break
 			end
-
-			for iter_31_2, iter_31_3 in ipairs(var_31_2) do
-				table.insert(var_31_4, iter_31_3.skillId)
-			end
-
-			logNormal(string.format("发牌: before(%s) new(%s)", table.concat(var_31_3, ","), table.concat(var_31_4, ",")))
 		end
-
-		local var_31_5 = {}
-
-		tabletool.addValues(var_31_5, var_31_1)
-		tabletool.addValues(var_31_5, var_31_2)
 
 		local var_31_6 = FightCardCombineEffect.getCardPosXList(arg_31_0._handCardItemList)
 
-		arg_31_0:_updateHandCards(var_31_5)
+		arg_31_0:_updateHandCards(var_31_1)
 
 		local var_31_7 = arg_31_0:getUserDataTb_()
 
-		var_31_7.cards = var_31_5
+		var_31_7.cards = var_31_1
 		var_31_7.handCardItemList = arg_31_0._handCardItemList
 		var_31_7.oldPosXList = var_31_6
 		var_31_7.preCombineIndex = arg_31_1
-		var_31_7.preCardCount = #var_31_1
-		var_31_7.newCardCount = #var_31_2
+		var_31_7.preCardCount = var_31_2
+		var_31_7.newCardCount = #var_31_3
 		var_31_7.playCardContainer = gohelper.findChild(arg_31_0.viewGO, "root/playcards")
 		var_31_7.isEnd = var_31_0 == 1
 		var_31_7.handCardContainer = arg_31_0._handCardContainer
+		var_31_7.oldScale = 0
 
 		arg_31_0:_setBlockOperate(true)
 		arg_31_0._cardDistributeFlow:registerDoneListener(arg_31_0._onDistributeCards, arg_31_0)
@@ -599,7 +591,7 @@ end
 function var_0_0._onDistributeCards(arg_32_0)
 	arg_32_0._cardDistributeFlow:unregisterDoneListener(arg_32_0._onDistributeCards, arg_32_0)
 
-	local var_32_0 = arg_32_0._cardDistributeFlow.context and arg_32_0._cardDistributeFlow.context.cards or FightCardModel.instance:getHandCards()
+	local var_32_0 = arg_32_0._cardDistributeFlow.context and arg_32_0._cardDistributeFlow.context.cards or FightDataHelper.handCardMgr.handCard
 
 	arg_32_0:_combineCards(var_32_0)
 end
@@ -639,6 +631,8 @@ function var_0_0._toAutoPlayCard(arg_33_0)
 			elseif iter_33_1:isPlayerFinisherSkill() then
 				arg_33_0._autoPlayCardFlow:addWork(WorkWaitSeconds.New(0.1))
 				arg_33_0._autoPlayCardFlow:addWork(FightWorkAutoPlayerFinisherSkill.New(iter_33_1))
+			elseif iter_33_1:isBloodPoolSkill() then
+				logError("自动打牌  血池牌 todo")
 			else
 				arg_33_0._autoPlayCardFlow:addWork(WorkWaitSeconds.New(0.01))
 				arg_33_0._autoPlayCardFlow:addWork(FightAutoPlayCardWork.New(iter_33_1))
@@ -669,11 +663,15 @@ function var_0_0._onAutoPlayCardFlowDone(arg_35_0)
 end
 
 function var_0_0._playHandCard(arg_36_0, arg_36_1, arg_36_2, arg_36_3)
-	if FightCardModel.instance:isCardOpEnd() then
+	if FightDataHelper.operationDataMgr:isCardOpEnd() then
 		return
 	end
 
-	local var_36_0 = FightCardModel.instance:getHandCards()
+	if arg_36_0._cardPlayFlow.status == WorkStatus.Running then
+		return
+	end
+
+	local var_36_0 = FightDataHelper.handCardMgr.handCard
 	local var_36_1 = var_36_0[arg_36_1]
 
 	if not var_36_1 then
@@ -682,16 +680,14 @@ function var_0_0._playHandCard(arg_36_0, arg_36_1, arg_36_2, arg_36_3)
 		return
 	end
 
-	if arg_36_0._cardPlayFlow.status == WorkStatus.Running then
-		return
-	end
-
 	FightController.instance:dispatchEvent(FightEvent.HideCardSkillTips)
 	arg_36_0:_setBlockOperate(true)
 
 	var_36_1.playCanAddExpoint = FightCardDataHelper.playCanAddExpoint(var_36_0, var_36_1)
 
-	local var_36_2 = FightCardModel.instance:playHandCardOp(arg_36_1, arg_36_2, var_36_1.skillId, var_36_1.uid, var_36_1)
+	local var_36_2 = FightDataHelper.operationDataMgr:newOperation()
+
+	var_36_2:playCard(arg_36_1, arg_36_2, var_36_1)
 
 	var_36_2.cardColor = FightDataHelper.LYDataMgr:getCardColor(var_36_0, arg_36_1)
 	var_36_2.cardInfoMO.areaRedOrBlue = var_36_2.cardColor
@@ -708,30 +704,30 @@ function var_0_0._playHandCard(arg_36_0, arg_36_1, arg_36_2, arg_36_3)
 	end
 
 	FightController.instance:dispatchEvent(FightEvent.AddPlayOperationData, var_36_2)
+	table.remove(var_36_0, arg_36_1)
 
-	local var_36_7
+	local var_36_7 = FightDataUtil.copyData(var_36_0)
+	local var_36_8
 
-	if FightConfig.instance:isUniqueSkill(var_36_1.skillId) then
-		local var_36_8 = FightCardModel.instance:getHandCards()
-
+	if not FightCardDataHelper.isSkill3(var_36_1) and FightCardDataHelper.isBigSkill(var_36_1.skillId) then
 		while true do
-			if #var_36_8 > 0 then
+			if #var_36_0 > 0 then
 				local var_36_9 = false
 
-				for iter_36_0 = 1, #var_36_8 do
-					local var_36_10 = var_36_8[iter_36_0]
+				for iter_36_0 = 1, #var_36_0 do
+					local var_36_10 = var_36_0[iter_36_0]
 
-					if var_36_10.uid == var_36_1.uid and FightConfig.instance:isUniqueSkill(var_36_10.skillId) then
-						var_36_7 = var_36_7 or {}
+					if var_36_10.uid == var_36_1.uid and FightCardDataHelper.isBigSkill(var_36_10.skillId) and not FightCardDataHelper.isSkill3(var_36_10) then
+						var_36_8 = var_36_8 or {}
 
-						table.insert(var_36_7, iter_36_0)
-						FightCardModel.instance:simulateDissolveCard(iter_36_0)
-						table.remove(var_36_8, iter_36_0)
+						table.insert(var_36_8, iter_36_0)
+						FightDataHelper.operationDataMgr:newOperation():simulateDissolveCard(iter_36_0)
+						table.remove(var_36_0, iter_36_0)
 
 						break
 					end
 
-					if iter_36_0 == #var_36_8 then
+					if iter_36_0 == #var_36_0 then
 						var_36_9 = true
 					end
 				end
@@ -762,7 +758,8 @@ function var_0_0._playHandCard(arg_36_0, arg_36_1, arg_36_2, arg_36_3)
 	var_36_12.handCardTr = arg_36_0._handCardTr
 	var_36_12.handCardItemList = arg_36_0._handCardItemList
 	var_36_12.fightBeginRoundOp = var_36_2
-	var_36_12.dissolveCardIndexsAfterPlay = var_36_7
+	var_36_12.beforeDissolveCards = var_36_7
+	var_36_12.dissolveCardIndexsAfterPlay = var_36_8
 	var_36_12.needDiscard = var_36_11
 	var_36_12.param2 = arg_36_3
 
@@ -787,14 +784,14 @@ function var_0_0._playCardAudio(arg_37_0, arg_37_1)
 		return
 	end
 
-	local var_37_2 = FightCardModel.instance:getCardOps()
+	local var_37_2 = FightDataHelper.operationDataMgr:getOpList()
 	local var_37_3 = FightBuffHelper.simulateBuffList(var_37_1, var_37_2[#var_37_2])
 
 	if not FightViewHandCardItemLock.canUseCardSkill(arg_37_1.uid, arg_37_1.skillId, var_37_3) then
 		return
 	end
 
-	local var_37_4 = FightCardModel.instance:getSkillLv(arg_37_1.uid, arg_37_1.skillId)
+	local var_37_4 = FightCardDataHelper.getSkillLv(arg_37_1.uid, arg_37_1.skillId)
 	local var_37_5 = var_37_1.modelId
 	local var_37_6 = HeroConfig.instance:getHeroCO(var_37_5)
 	local var_37_7
@@ -823,36 +820,26 @@ end
 function var_0_0._onPlayCardDone(arg_38_0, arg_38_1)
 	arg_38_0._cardPlayFlow:unregisterDoneListener(arg_38_0._onPlayCardDone, arg_38_0)
 
-	local var_38_0 = arg_38_0._cardPlayFlow.context.cards or FightCardModel.instance:getHandCards()
+	local var_38_0 = arg_38_0._cardPlayFlow.context.cards or FightDataHelper.handCardMgr.handCard
 
 	arg_38_0:_updateHandCards(var_38_0)
 	FightController.instance:dispatchEvent(FightEvent.OnPlayCardFlowDone, arg_38_0._cardPlayFlow.context.fightBeginRoundOp)
 	FightController.instance:dispatchEvent(FightEvent.PlayCardOver)
 	arg_38_0:_detectPlayPrecisionEffect()
 
-	if FightCardModel.instance:isCardOpEnd() then
+	if FightDataHelper.operationDataMgr:isCardOpEnd() then
 		arg_38_0:_setBlockOperate(true)
 
 		return
 	end
 end
 
-function var_0_0._playRedealCardEffect(arg_39_0, arg_39_1, arg_39_2, arg_39_3)
-	arg_39_0._canCombineAfterRedealCards = arg_39_3
-
+function var_0_0._playRedealCardEffect(arg_39_0, arg_39_1, arg_39_2)
 	local var_39_0 = arg_39_0:getUserDataTb_()
 
 	var_39_0.oldCards = arg_39_1
 	var_39_0.newCards = arg_39_2
 	var_39_0.handCardItemList = arg_39_0._handCardItemList
-
-	if #arg_39_2 > #arg_39_0._handCardItemList then
-		arg_39_0:_updateHandCards(arg_39_1)
-	end
-
-	for iter_39_0, iter_39_1 in ipairs(arg_39_0._handCardItemList) do
-		iter_39_1:refreshCardMO(iter_39_0, arg_39_2[iter_39_0])
-	end
 
 	arg_39_0:beforeRedealCardFlow()
 	arg_39_0._redealCardFlow:registerDoneListener(arg_39_0._onRedealCardDone, arg_39_0)
@@ -875,449 +862,339 @@ function var_0_0._onRedealCardDone(arg_42_0)
 	arg_42_0._redealCardFlow:unregisterDoneListener(arg_42_0._onRedealCardDone, arg_42_0)
 	arg_42_0:afterRedealCardFlow()
 	arg_42_0:_updateNow()
-
-	if arg_42_0._canCombineAfterRedealCards then
-		local var_42_0 = FightCardModel.instance:getHandCards()
-
-		arg_42_0:_combineCards(var_42_0)
-	end
 end
 
-function var_0_0._playChangeCardEffect(arg_43_0, arg_43_1)
-	local var_43_0 = FightCardModel.instance:getHandCards()
-
-	for iter_43_0 = #arg_43_1, 1, -1 do
-		if arg_43_1[iter_43_0].cardIndex > #var_43_0 then
-			table.remove(arg_43_1, iter_43_0)
-		end
-	end
-
-	arg_43_0._changeInfos = arg_43_0._changeInfos or {}
-
-	tabletool.addValues(arg_43_0._changeInfos, arg_43_1)
-	FightCardModel.instance:setChanging(true)
-	TaskDispatcher.cancelTask(arg_43_0._delayPlayCardsChangeEffect, arg_43_0)
-	TaskDispatcher.runDelay(arg_43_0._delayPlayCardsChangeEffect, arg_43_0, 0.03)
-end
-
-function var_0_0._delayPlayCardsChangeEffect(arg_44_0)
-	if arg_44_0._changeCardFlow.status ~= WorkStatus.Running then
-		local var_44_0 = arg_44_0:getUserDataTb_()
-
-		var_44_0.changeInfos = arg_44_0._changeInfos
-		arg_44_0._changeInfos = nil
-		var_44_0.handCardItemList = arg_44_0._handCardItemList
-
-		arg_44_0:_setBlockOperate(true)
-		arg_44_0:addEventCb(FightController.instance, FightEvent.OnCombineCardEnd, arg_44_0._onChangeCombineDone, arg_44_0)
-		arg_44_0._changeCardFlow:registerDoneListener(arg_44_0._onChangeCardDone, arg_44_0)
-		arg_44_0._changeCardFlow:start(var_44_0)
-	end
-end
-
-function var_0_0._setCardMagicEffectChange(arg_45_0, arg_45_1, arg_45_2, arg_45_3)
-	arg_45_0._card_magic_effect_change_info = arg_45_0._card_magic_effect_change_info or {}
-	arg_45_0._card_magic_effect_change_info[arg_45_1] = {
-		old_effect = arg_45_2,
-		new_effect = arg_45_3
+function var_0_0._setCardMagicEffectChange(arg_43_0, arg_43_1, arg_43_2, arg_43_3)
+	arg_43_0._card_magic_effect_change_info = arg_43_0._card_magic_effect_change_info or {}
+	arg_43_0._card_magic_effect_change_info[arg_43_1] = {
+		old_effect = arg_43_2,
+		new_effect = arg_43_3
 	}
 end
 
-function var_0_0._playCardMagicEffectChange(arg_46_0)
+function var_0_0._playCardMagicEffectChange(arg_44_0)
+	local var_44_0 = arg_44_0:getUserDataTb_()
+
+	var_44_0.changeInfos = arg_44_0._card_magic_effect_change_info
+	var_44_0.handCardItemList = arg_44_0._handCardItemList
+	arg_44_0._card_magic_effect_change_info = nil
+
+	arg_44_0:_setBlockOperate(true)
+	arg_44_0._magicEffectCardFlow:registerDoneListener(arg_44_0._onMagicEffectCardFlowDone, arg_44_0)
+	arg_44_0._magicEffectCardFlow:start(var_44_0)
+end
+
+function var_0_0._onMagicEffectCardFlowDone(arg_45_0)
+	arg_45_0._magicEffectCardFlow:unregisterDoneListener(arg_45_0._onMagicEffectCardFlowDone, arg_45_0)
+
+	local var_45_0 = FightDataHelper.handCardMgr.handCard
+
+	arg_45_0:_combineCards(var_45_0)
+end
+
+function var_0_0._playUniversalAppear(arg_46_0)
+	arg_46_0:_setBlockOperate(true)
+	arg_46_0:_updateNow()
+
 	local var_46_0 = arg_46_0:getUserDataTb_()
 
-	var_46_0.changeInfos = arg_46_0._card_magic_effect_change_info
 	var_46_0.handCardItemList = arg_46_0._handCardItemList
-	arg_46_0._card_magic_effect_change_info = nil
 
-	arg_46_0:_setBlockOperate(true)
-	arg_46_0._magicEffectCardFlow:registerDoneListener(arg_46_0._onMagicEffectCardFlowDone, arg_46_0)
-	arg_46_0._magicEffectCardFlow:start(var_46_0)
+	arg_46_0._universalAppearFlow:start(var_46_0)
+	arg_46_0._universalAppearFlow:registerDoneListener(arg_46_0._onUniversalAppearDone, arg_46_0)
 end
 
-function var_0_0._onMagicEffectCardFlowDone(arg_47_0)
-	arg_47_0._magicEffectCardFlow:unregisterDoneListener(arg_47_0._onMagicEffectCardFlowDone, arg_47_0)
+function var_0_0._onSpCardAdd(arg_47_0, arg_47_1)
+	arg_47_0:_playCorrectHandCardScale(0)
 
-	local var_47_0 = FightCardModel.instance:getHandCards()
+	local var_47_0 = FightDataHelper.handCardMgr.handCard
 
-	arg_47_0:_combineCards(var_47_0)
+	arg_47_0:_updateHandCards(var_47_0, arg_47_1)
+
+	local var_47_1 = arg_47_0._handCardItemList[arg_47_1]
+
+	gohelper.setActive(var_47_1.go, false)
+	var_47_1:playCardAni(ViewAnim.FightCardBalance)
 end
 
-function var_0_0._onChangeCardDone(arg_48_0)
-	arg_48_0._changeCardFlow:unregisterDoneListener(arg_48_0._onChangeCardDone, arg_48_0)
-	arg_48_0:_onChangeOrRedealCardDone(arg_48_0._changeCardFlow.context.changeInfos)
+function var_0_0._onCorrectHandCardScale(arg_48_0, arg_48_1)
+	arg_48_0:_playCorrectHandCardScale(arg_48_1)
 end
 
-function var_0_0._onChangeOrRedealCardDone(arg_49_0, arg_49_1)
-	if arg_49_1 then
-		local var_49_0 = FightCardModel.instance:getHandCards()
-		local var_49_1 = arg_49_0:_filterInvalidCard(var_49_0)
+function var_0_0._playCorrectHandCardScale(arg_49_0, arg_49_1, arg_49_2)
+	arg_49_0._correctHandCardScale:stop()
 
-		for iter_49_0, iter_49_1 in ipairs(arg_49_1) do
-			local var_49_2 = iter_49_1.cardIndex
-			local var_49_3 = iter_49_1.cardInfo
-			local var_49_4 = var_49_1[var_49_2]
+	local var_49_0 = arg_49_0:getUserDataTb_()
 
-			if var_49_4 then
-				if var_49_3 then
-					var_49_4:init(var_49_3)
-				else
-					var_49_4.uid = iter_49_1.entityId
-					var_49_4.skillId = iter_49_1.targetSkillId
-				end
-			else
-				local var_49_5 = string.format("更换当前手牌中的第%d张牌的数据,但是并没有找到这张牌", var_49_2)
+	var_49_0.cards = tabletool.copy(FightDataHelper.handCardMgr.handCard)
+	var_49_0.oldScale = arg_49_1
+	var_49_0.newScale = arg_49_2
+	var_49_0.handCardContainer = arg_49_0._handCardContainer
 
-				logError(var_49_5)
-			end
-		end
-
-		FightCardModel.instance:clearCardOps()
-		FightCardModel.instance:coverCard(var_49_1)
-		arg_49_0:_updateNow()
-		arg_49_0:_combineCards(var_49_1)
-	end
+	arg_49_0._correctHandCardScale:start(var_49_0)
 end
 
-function var_0_0._onRedealCombineDone(arg_50_0, arg_50_1)
-	FightCardModel.instance:clearCardOps()
-	FightCardModel.instance:coverCard(arg_50_1)
-	arg_50_0:removeEventCb(FightController.instance, FightEvent.OnCombineCardEnd, arg_50_0._onRedealCombineDone, arg_50_0)
-	FightController.instance:dispatchEvent(FightEvent.OnChangeCardEffectDone)
-	arg_50_0:_setBlockOperate(false)
+function var_0_0._onCardsCompose(arg_50_0)
+	local var_50_0 = FightDataHelper.handCardMgr.handCard
+
+	arg_50_0:_combineCards(var_50_0)
 end
 
-function var_0_0._onChangeCombineDone(arg_51_0, arg_51_1)
-	FightCardModel.instance:clearCardOps()
-	FightCardModel.instance:coverCard(arg_51_1)
-	arg_51_0:removeEventCb(FightController.instance, FightEvent.OnCombineCardEnd, arg_51_0._onChangeCombineDone, arg_51_0)
-
-	if arg_51_0._changeInfos and #arg_51_0._changeInfos > 0 then
-		TaskDispatcher.cancelTask(arg_51_0._delayPlayCardsChangeEffect, arg_51_0)
-		TaskDispatcher.runDelay(arg_51_0._delayPlayCardsChangeEffect, arg_51_0, 0.03)
-	else
-		FightCardModel.instance:setChanging(false)
-		FightController.instance:dispatchEvent(FightEvent.OnChangeCardEffectDone)
-		arg_51_0:_setBlockOperate(false)
-	end
-end
-
-function var_0_0._playUniversalAppear(arg_52_0, arg_52_1)
-	arg_52_0:_setBlockOperate(true)
-
-	local var_52_0 = FightCardModel.instance:getHandCards()
-
-	table.insert(var_52_0, arg_52_1)
-	FightCardModel.instance:coverCard(var_52_0)
-	arg_52_0:_updateNow()
-
-	local var_52_1 = arg_52_0:getUserDataTb_()
-
-	var_52_1.handCardItemList = arg_52_0._handCardItemList
-
-	arg_52_0._universalAppearFlow:start(var_52_1)
-	arg_52_0._universalAppearFlow:registerDoneListener(arg_52_0._onUniversalAppearDone, arg_52_0)
-end
-
-function var_0_0._onSpCardAdd(arg_53_0, arg_53_1)
-	arg_53_0:_playCorrectHandCardScale(0)
-
-	local var_53_0 = FightCardModel.instance:getHandCards()
-
-	arg_53_0:_updateHandCards(var_53_0, arg_53_1)
-
-	local var_53_1 = arg_53_0._handCardItemList[arg_53_1]
-
-	gohelper.setActive(var_53_1.go, false)
-	var_53_1:playCardAni(ViewAnim.FightCardBalance)
-end
-
-function var_0_0._onCorrectHandCardScale(arg_54_0, arg_54_1)
-	arg_54_0:_playCorrectHandCardScale(arg_54_1)
-end
-
-function var_0_0._playCorrectHandCardScale(arg_55_0, arg_55_1, arg_55_2)
-	arg_55_0._correctHandCardScale:stop()
-
-	local var_55_0 = arg_55_0:getUserDataTb_()
-
-	var_55_0.cards = tabletool.copy(FightCardModel.instance:getHandCards())
-	var_55_0.oldScale = arg_55_1
-	var_55_0.newScale = arg_55_2
-	var_55_0.handCardContainer = arg_55_0._handCardContainer
-
-	arg_55_0._correctHandCardScale:start(var_55_0)
-end
-
-function var_0_0._onCardsCompose(arg_56_0)
-	local var_56_0 = FightCardModel.instance:getHandCards()
-
-	arg_56_0:_combineCards(var_56_0)
-end
-
-function var_0_0._onCardsComposeTimeOut(arg_57_0)
-	if arg_57_0._cardCombineFlow then
-		arg_57_0._cardCombineFlow:stop()
+function var_0_0._onCardsComposeTimeOut(arg_51_0)
+	if arg_51_0._cardCombineFlow then
+		arg_51_0._cardCombineFlow:stop()
 	end
 
-	arg_57_0:_updateNow()
+	arg_51_0:_updateNow()
 end
 
-function var_0_0._onRemoveEntityCards(arg_58_0, arg_58_1)
-	for iter_58_0 = #arg_58_0._handCardItemList, 1, -1 do
-		local var_58_0 = arg_58_0._handCardItemList[iter_58_0]
+function var_0_0._onRemoveEntityCards(arg_52_0, arg_52_1)
+	for iter_52_0 = #arg_52_0._handCardItemList, 1, -1 do
+		local var_52_0 = arg_52_0._handCardItemList[iter_52_0]
 
-		if var_58_0.go.activeInHierarchy and var_58_0:dissolveEntityCard(arg_58_1) then
-			table.insert(arg_58_0._handCardItemList, table.remove(arg_58_0._handCardItemList, iter_58_0))
+		if var_52_0.go.activeInHierarchy and var_52_0:dissolveEntityCard(arg_52_1) then
+			table.insert(arg_52_0._handCardItemList, table.remove(arg_52_0._handCardItemList, iter_52_0))
 		end
 	end
 
-	TaskDispatcher.cancelTask(arg_58_0._correctActiveCardObjPos, arg_58_0)
-	TaskDispatcher.runDelay(arg_58_0._correctActiveCardObjPos, arg_58_0, 1 / FightModel.instance:getUISpeed())
+	var_0_0.refreshCardIndex(arg_52_0._handCardItemList)
+	TaskDispatcher.cancelTask(arg_52_0._correctActiveCardObjPos, arg_52_0)
+	TaskDispatcher.runDelay(arg_52_0._correctActiveCardObjPos, arg_52_0, 1 / FightModel.instance:getUISpeed())
 end
 
-function var_0_0._onCardLevelChange(arg_59_0, arg_59_1, arg_59_2, arg_59_3, arg_59_4)
-	local var_59_0 = arg_59_0._handCardItemList[arg_59_2]
-
-	if var_59_0 then
-		var_59_0:playCardLevelChange(arg_59_1, arg_59_3)
-	end
-
-	if arg_59_4 then
-		TaskDispatcher.cancelTask(arg_59_0._combineAfterCardLevelChange, arg_59_0)
-		TaskDispatcher.runDelay(arg_59_0._combineAfterCardLevelChange, arg_59_0, FightEnum.PerformanceTime.CardLevelChange / FightModel.instance:getUISpeed())
+function var_0_0.refreshCardIndex(arg_53_0)
+	for iter_53_0, iter_53_1 in ipairs(arg_53_0) do
+		iter_53_1.index = iter_53_0
 	end
 end
 
-function var_0_0._combineAfterCardLevelChange(arg_60_0)
-	local var_60_0 = FightCardModel.instance:getHandCards()
+function var_0_0._onCardLevelChange(arg_54_0, arg_54_1, arg_54_2, arg_54_3)
+	local var_54_0 = arg_54_0._handCardItemList[arg_54_1]
 
-	arg_60_0:_combineCards(var_60_0)
-end
+	if var_54_0 then
+		var_54_0:playCardLevelChange(arg_54_2)
+	end
 
-function var_0_0._onPlayCombineCards(arg_61_0, arg_61_1)
-	arg_61_0:_combineCards(arg_61_1)
-end
-
-function var_0_0._onCardRemove(arg_62_0, arg_62_1, arg_62_2, arg_62_3)
-	arg_62_0:_onCardRemove2(arg_62_1)
-
-	if arg_62_3 then
-		TaskDispatcher.cancelTask(arg_62_0._combineAfterCardRemove, arg_62_0)
-		TaskDispatcher.runDelay(arg_62_0._combineAfterCardRemove, arg_62_0, arg_62_2 / FightModel.instance:getUISpeed())
+	if arg_54_3 then
+		TaskDispatcher.cancelTask(arg_54_0._combineAfterCardLevelChange, arg_54_0)
+		TaskDispatcher.runDelay(arg_54_0._combineAfterCardLevelChange, arg_54_0, FightEnum.PerformanceTime.CardLevelChange / FightModel.instance:getUISpeed())
 	end
 end
 
-function var_0_0._combineAfterCardRemove(arg_63_0)
-	local var_63_0 = FightCardModel.instance:getHandCards()
+function var_0_0._combineAfterCardLevelChange(arg_55_0)
+	local var_55_0 = FightDataHelper.handCardMgr.handCard
 
-	arg_63_0:_combineCards(var_63_0)
+	arg_55_0:_combineCards(var_55_0)
 end
 
-function var_0_0._onCardRemove2(arg_64_0, arg_64_1)
-	for iter_64_0, iter_64_1 in ipairs(arg_64_1) do
-		local var_64_0 = table.remove(arg_64_0._handCardItemList, iter_64_1)
+function var_0_0._onPlayCombineCards(arg_56_0, arg_56_1)
+	arg_56_0:_combineCards(arg_56_1)
+end
 
-		if var_64_0 and var_64_0.go.activeInHierarchy then
-			var_64_0:dissolveCard()
-			table.insert(arg_64_0._handCardItemList, var_64_0)
+function var_0_0._onCardRemove(arg_57_0, arg_57_1, arg_57_2, arg_57_3)
+	arg_57_0:_onCardRemove2(arg_57_1)
+
+	if arg_57_3 then
+		TaskDispatcher.cancelTask(arg_57_0._combineAfterCardRemove, arg_57_0)
+		TaskDispatcher.runDelay(arg_57_0._combineAfterCardRemove, arg_57_0, arg_57_2 / FightModel.instance:getUISpeed())
+	end
+end
+
+function var_0_0._combineAfterCardRemove(arg_58_0)
+	local var_58_0 = FightDataHelper.handCardMgr.handCard
+
+	arg_58_0:_combineCards(var_58_0)
+end
+
+function var_0_0._onCardRemove2(arg_59_0, arg_59_1)
+	for iter_59_0, iter_59_1 in ipairs(arg_59_1) do
+		local var_59_0 = table.remove(arg_59_0._handCardItemList, iter_59_1)
+
+		if var_59_0 and var_59_0.go.activeInHierarchy then
+			var_59_0:dissolveCard()
+			table.insert(arg_59_0._handCardItemList, var_59_0)
 		end
 	end
 
-	TaskDispatcher.cancelTask(arg_64_0._correctActiveCardObjPos, arg_64_0)
-	TaskDispatcher.runDelay(arg_64_0._correctActiveCardObjPos, arg_64_0, 1 / FightModel.instance:getUISpeed())
+	var_0_0.refreshCardIndex(arg_59_0._handCardItemList)
+	TaskDispatcher.cancelTask(arg_59_0._correctActiveCardObjPos, arg_59_0)
+	TaskDispatcher.runDelay(arg_59_0._correctActiveCardObjPos, arg_59_0, 1 / FightModel.instance:getUISpeed())
 end
 
-function var_0_0._correctActiveCardObjPos(arg_65_0)
-	local var_65_0 = 0
+function var_0_0._correctActiveCardObjPos(arg_60_0)
+	local var_60_0 = 0
 
-	for iter_65_0 = 1, #arg_65_0._handCardItemList do
-		local var_65_1 = arg_65_0._handCardItemList[iter_65_0]
+	for iter_60_0 = 1, #arg_60_0._handCardItemList do
+		local var_60_1 = arg_60_0._handCardItemList[iter_60_0]
 
-		var_65_1.index = iter_65_0
-		var_65_1.go.name = "cardItem" .. iter_65_0
+		var_60_1.index = iter_60_0
+		var_60_1.go.name = "cardItem" .. iter_60_0
 
-		local var_65_2 = var_65_1.go
+		local var_60_2 = var_60_1.go
 
-		if not var_65_2.activeInHierarchy then
+		if not var_60_2.activeInHierarchy then
 			break
 		end
 
-		local var_65_3 = recthelper.getAnchorX(var_65_2.transform)
-		local var_65_4 = var_0_0.calcCardPosX(iter_65_0)
+		local var_60_3 = recthelper.getAnchorX(var_60_2.transform)
+		local var_60_4 = var_0_0.calcCardPosX(iter_60_0)
 
-		if math.abs(var_65_3 - var_65_4) >= 10 then
-			var_65_1:moveSelfPos(iter_65_0, var_65_0, var_65_4)
+		if math.abs(var_60_3 - var_60_4) >= 10 then
+			var_60_1:moveSelfPos(iter_60_0, var_60_0, var_60_4)
 
-			var_65_0 = var_65_0 + 1
+			var_60_0 = var_60_0 + 1
 		end
 	end
 end
 
-function var_0_0._onAddHandCard(arg_66_0, arg_66_1, arg_66_2)
-	arg_66_0:_playCorrectHandCardScale(0)
+function var_0_0._onAddHandCard(arg_61_0, arg_61_1, arg_61_2)
+	arg_61_0:_playCorrectHandCardScale(0)
 
-	local var_66_0 = FightCardModel.instance:getHandCards()
-	local var_66_1 = #var_66_0
+	local var_61_0 = FightDataHelper.handCardMgr.handCard
+	local var_61_1 = #var_61_0
 
-	arg_66_0:_updateHandCards(var_66_0, var_66_1)
-	arg_66_0._handCardItemList[var_66_1]:playDistribute()
+	arg_61_0:_updateHandCards(var_61_0, var_61_1)
+	arg_61_0._handCardItemList[var_61_1]:playDistribute()
 
-	if arg_66_2 then
-		TaskDispatcher.runDelay(arg_66_0._combineCardsAfterAddHandCard, arg_66_0, 0.5 / FightModel.instance:getUISpeed())
+	if arg_61_2 then
+		TaskDispatcher.runDelay(arg_61_0._combineCardsAfterAddHandCard, arg_61_0, 0.5 / FightModel.instance:getUISpeed())
 	end
 end
 
-function var_0_0._onMasterAddHandCard(arg_67_0, arg_67_1, arg_67_2)
-	arg_67_0:_playCorrectHandCardScale(0)
+function var_0_0._onMasterAddHandCard(arg_62_0, arg_62_1, arg_62_2)
+	arg_62_0:_playCorrectHandCardScale(0)
 
-	local var_67_0 = FightCardModel.instance:getHandCards()
-	local var_67_1 = #var_67_0
+	local var_62_0 = FightDataHelper.handCardMgr.handCard
+	local var_62_1 = #var_62_0
 
-	arg_67_0:_updateHandCards(var_67_0, var_67_1)
-	arg_67_0._handCardItemList[var_67_1]:playMasterAddHandCard()
+	arg_62_0:_updateHandCards(var_62_0, var_62_1)
+	arg_62_0._handCardItemList[var_62_1]:playMasterAddHandCard()
 
-	if arg_67_2 then
-		TaskDispatcher.runDelay(arg_67_0._combineCardsAfterAddHandCard, arg_67_0, 1 / FightModel.instance:getUISpeed())
+	if arg_62_2 then
+		TaskDispatcher.runDelay(arg_62_0._combineCardsAfterAddHandCard, arg_62_0, 1 / FightModel.instance:getUISpeed())
 	end
 end
 
-function var_0_0._onMasterCardRemove(arg_68_0, arg_68_1, arg_68_2, arg_68_3)
-	for iter_68_0, iter_68_1 in ipairs(arg_68_1) do
-		local var_68_0 = table.remove(arg_68_0._handCardItemList, iter_68_1)
+function var_0_0._onMasterCardRemove(arg_63_0, arg_63_1, arg_63_2, arg_63_3)
+	for iter_63_0, iter_63_1 in ipairs(arg_63_1) do
+		local var_63_0 = table.remove(arg_63_0._handCardItemList, iter_63_1)
 
-		if var_68_0 and var_68_0.go.activeInHierarchy then
-			var_68_0:playMasterCardRemove()
-			table.insert(arg_68_0._handCardItemList, var_68_0)
+		if var_63_0 and var_63_0.go.activeInHierarchy then
+			var_63_0:playMasterCardRemove()
+			table.insert(arg_63_0._handCardItemList, var_63_0)
 		end
 	end
 
-	TaskDispatcher.cancelTask(arg_68_0._correctActiveCardObjPos, arg_68_0)
-	TaskDispatcher.runDelay(arg_68_0._correctActiveCardObjPos, arg_68_0, 0.7 / FightModel.instance:getUISpeed())
+	var_0_0.refreshCardIndex(arg_63_0._handCardItemList)
+	TaskDispatcher.cancelTask(arg_63_0._correctActiveCardObjPos, arg_63_0)
+	TaskDispatcher.runDelay(arg_63_0._correctActiveCardObjPos, arg_63_0, 0.7 / FightModel.instance:getUISpeed())
 
-	if arg_68_3 then
-		TaskDispatcher.cancelTask(arg_68_0._combineAfterCardRemove, arg_68_0)
-		TaskDispatcher.runDelay(arg_68_0._combineAfterCardRemove, arg_68_0, arg_68_2 / FightModel.instance:getUISpeed())
+	if arg_63_3 then
+		TaskDispatcher.cancelTask(arg_63_0._combineAfterCardRemove, arg_63_0)
+		TaskDispatcher.runDelay(arg_63_0._combineAfterCardRemove, arg_63_0, arg_63_2 / FightModel.instance:getUISpeed())
 	end
 end
 
-function var_0_0._combineCardsAfterAddHandCard(arg_69_0)
-	local var_69_0 = FightCardModel.instance:getHandCards()
+function var_0_0._combineCardsAfterAddHandCard(arg_64_0)
+	local var_64_0 = FightDataHelper.handCardMgr.handCard
 
-	arg_69_0:_combineCards(var_69_0)
+	arg_64_0:_combineCards(var_64_0)
 end
 
-function var_0_0._onCardAConvertCardB(arg_70_0, arg_70_1)
-	local var_70_0 = FightCardModel.instance:getHandCards()
-	local var_70_1 = arg_70_0._handCardItemList[arg_70_1]
+function var_0_0._onCardAConvertCardB(arg_65_0, arg_65_1)
+	local var_65_0 = FightDataHelper.handCardMgr.handCard
+	local var_65_1 = arg_65_0._handCardItemList[arg_65_1]
 
-	if var_70_1 then
-		var_70_1:playCardAConvertCardB()
-		var_70_1:updateItem(arg_70_1, var_70_0[arg_70_1])
+	if var_65_1 then
+		var_65_1:playCardAConvertCardB()
+		var_65_1:updateItem(arg_65_1, var_65_0[arg_65_1])
 	else
-		arg_70_0:_updateNow()
+		arg_65_0:_updateNow()
 	end
 end
 
-function var_0_0._onTempCardRemove(arg_71_0)
-	arg_71_0:_updateNow()
+function var_0_0._onTempCardRemove(arg_66_0)
+	arg_66_0:_updateNow()
 
-	local var_71_0 = FightCardModel.instance:getHandCards()
+	local var_66_0 = FightDataHelper.handCardMgr.handCard
 
-	arg_71_0:_combineCards(var_71_0)
+	arg_66_0:_combineCards(var_66_0)
 end
 
-function var_0_0._onChangeToTempCard(arg_72_0, arg_72_1)
-	local var_72_0 = arg_72_0._handCardItemList[arg_72_1]
+function var_0_0._onChangeToTempCard(arg_67_0, arg_67_1)
+	local var_67_0 = arg_67_0._handCardItemList[arg_67_1]
 
-	if var_72_0 then
-		var_72_0:changeToTempCard()
+	if var_67_0 then
+		var_67_0:changeToTempCard()
 	end
 end
 
-function var_0_0._onUniversalAppearDone(arg_73_0)
-	arg_73_0._universalAppearFlow:unregisterDoneListener(arg_73_0._onUniversalAppearDone, arg_73_0)
-	arg_73_0:_setBlockOperate(false)
+function var_0_0._onUniversalAppearDone(arg_68_0)
+	arg_68_0._universalAppearFlow:unregisterDoneListener(arg_68_0._onUniversalAppearDone, arg_68_0)
+	arg_68_0:_setBlockOperate(false)
 	FightController.instance:dispatchEvent(FightEvent.OnUniversalAppear)
 end
 
-function var_0_0._combineCards(arg_74_0, arg_74_1, arg_74_2, arg_74_3)
-	arg_74_0._combineIndex = arg_74_2 or FightCardModel.getCombineIndexOnce(arg_74_1)
-	arg_74_0._isUniversalCombine = arg_74_2 and true or false
+function var_0_0._combineCards(arg_69_0, arg_69_1, arg_69_2, arg_69_3)
+	arg_69_0._combineIndex = arg_69_2 or FightCardDataHelper.canCombineCardListForPerformance(arg_69_1)
+	arg_69_0._isUniversalCombine = arg_69_2 and true or false
 
-	if arg_74_0._combineIndex then
-		arg_74_0._cardsForCombines = arg_74_1
+	if arg_69_0._combineIndex then
+		arg_69_0._cardsForCombines = arg_69_1
 
-		local var_74_0 = arg_74_0:getUserDataTb_()
+		local var_69_0 = arg_69_0:getUserDataTb_()
 
-		var_74_0.cards = arg_74_1
-		var_74_0.combineIndex = arg_74_0._combineIndex
-		var_74_0.handCardItemList = arg_74_0._handCardItemList
-		var_74_0.fightBeginRoundOp = arg_74_3
+		var_69_0.cards = arg_69_1
+		var_69_0.combineIndex = arg_69_0._combineIndex
+		var_69_0.handCardItemList = arg_69_0._handCardItemList
+		var_69_0.fightBeginRoundOp = arg_69_3
 
-		arg_74_0._cardCombineFlow:registerDoneListener(arg_74_0._onCombineCardDone, arg_74_0)
-		arg_74_0._cardCombineFlow:start(var_74_0)
+		arg_69_0._cardCombineFlow:registerDoneListener(arg_69_0._onCombineCardDone, arg_69_0)
+		arg_69_0._cardCombineFlow:start(var_69_0)
 	else
-		arg_74_0:_setBlockOperate(false)
-		FightCardModel.instance:setDissolving(false)
-		FightController.instance:dispatchEvent(FightEvent.OnCombineCardEnd, arg_74_1)
+		arg_69_0:_setBlockOperate(false)
+		FightController.instance:dispatchEvent(FightEvent.OnCombineCardEnd, arg_69_1)
 
-		local var_74_1 = FightModel.instance:getCurStage()
+		local var_69_1 = FightModel.instance:getCurStage()
 
-		if var_74_1 == FightEnum.Stage.Distribute or var_74_1 == FightEnum.Stage.FillCard then
-			if FightCardModel.instance:getDistributeQueueLen() > 0 then
-				arg_74_0:_nextDistributeCards(#arg_74_1)
+		if var_69_1 == FightEnum.Stage.Distribute or var_69_1 == FightEnum.Stage.FillCard then
+			if arg_69_0.distributeCards and #arg_69_0.distributeCards > 0 then
+				arg_69_0:_nextDistributeCards(#arg_69_1)
 			else
-				gohelper.destroy(gohelper.findChild(arg_74_0._handCardGO, "CombineEffect"))
-
-				local var_74_2 = {}
-
-				for iter_74_0, iter_74_1 in ipairs(arg_74_1) do
-					table.insert(var_74_2, iter_74_1.skillId)
-				end
-
-				if var_74_1 == FightEnum.Stage.Distribute then
-					logNormal("发牌结果" .. table.concat(var_74_2, ","))
-				else
-					logNormal("补牌结果" .. table.concat(var_74_2, ","))
-				end
-
-				FightCardModel.instance:clearCardOps()
-				FightCardModel.instance:coverCard(arg_74_1)
-				arg_74_0:_updateNow()
+				gohelper.destroy(gohelper.findChild(arg_69_0._handCardGO, "CombineEffect"))
+				arg_69_0:_updateNow()
 				FightController.instance:dispatchEvent(FightEvent.OnDistributeCards)
 			end
-		elseif var_74_1 == FightEnum.Stage.AutoCard and arg_74_0._autoPlayCardFlow and arg_74_0._autoPlayCardFlow.status == WorkStatus.Running then
+		elseif var_69_1 == FightEnum.Stage.AutoCard and arg_69_0._autoPlayCardFlow and arg_69_0._autoPlayCardFlow.status == WorkStatus.Running then
 			FightController.instance:dispatchEvent(FightEvent.OneAutoPlayCardFinish)
 		end
 
-		if arg_74_3 then
-			FightController.instance:dispatchEvent(FightEvent.PlayOperationEffectDone, arg_74_3)
-			arg_74_0:_detectPlayPrecisionEffect()
+		if arg_69_3 then
+			FightController.instance:dispatchEvent(FightEvent.PlayOperationEffectDone, arg_69_3)
+			arg_69_0:_detectPlayPrecisionEffect()
 		end
 	end
 end
 
-function var_0_0._onCombineCardDone(arg_75_0, arg_75_1)
-	arg_75_0._cardCombineFlow:unregisterDoneListener(arg_75_0._onCombineCardDone, arg_75_0)
+function var_0_0._onCombineCardDone(arg_70_0, arg_70_1)
+	arg_70_0._cardCombineFlow:unregisterDoneListener(arg_70_0._onCombineCardDone, arg_70_0)
 
-	local var_75_0 = arg_75_0._cardsForCombines[arg_75_0._combineIndex]
+	local var_70_0 = arg_70_0._cardsForCombines[arg_70_0._combineIndex]
 
-	FightController.instance:dispatchEvent(FightEvent.OnCombineOneCard, var_75_0, arg_75_0._isUniversalCombine)
-	arg_75_0:_combineCards(arg_75_0._cardsForCombines, nil, arg_75_0._cardCombineFlow.context.fightBeginRoundOp)
+	FightController.instance:dispatchEvent(FightEvent.OnCombineOneCard, var_70_0, arg_70_0._isUniversalCombine)
+	arg_70_0:_combineCards(arg_70_0._cardsForCombines, nil, arg_70_0._cardCombineFlow.context.fightBeginRoundOp)
 end
 
-function var_0_0._resetCard(arg_76_0, arg_76_1)
-	FightCardModel.instance:resetCardOps()
+function var_0_0._resetCard(arg_71_0, arg_71_1)
 	FightDataHelper.paTaMgr:resetOp()
-	FightController.instance:dispatchEvent(FightEvent.OnResetCard, arg_76_1)
+	FightController.instance:dispatchEvent(FightEvent.OnResetCard, arg_71_1)
 
-	if arg_76_0._cardPlayFlow.status == WorkStatus.Running then
-		arg_76_0._cardPlayFlow:stop()
+	if arg_71_0._cardPlayFlow.status == WorkStatus.Running then
+		arg_71_0._cardPlayFlow:stop()
 	end
 
-	if arg_76_0._autoPlayCardFlow then
-		arg_76_0._autoPlayCardFlow:stop()
+	if arg_71_0._autoPlayCardFlow then
+		arg_71_0._autoPlayCardFlow:stop()
 	end
 
 	if FightModel.instance:getCurStage() == FightEnum.Stage.AutoCard and not FightModel.instance:isAuto() then
@@ -1325,290 +1202,303 @@ function var_0_0._resetCard(arg_76_0, arg_76_1)
 	end
 end
 
-function var_0_0._updateNow(arg_77_0)
-	arg_77_0:_updateHandCards(FightCardModel.instance:getHandCards())
+function var_0_0._updateNow(arg_72_0)
+	arg_72_0:_updateHandCards(FightDataHelper.handCardMgr.handCard)
 end
 
-function var_0_0._filterInvalidCard(arg_78_0, arg_78_1)
-	for iter_78_0 = #arg_78_1, 1, -1 do
-		local var_78_0 = arg_78_1[iter_78_0].skillId
+function var_0_0._filterInvalidCard(arg_73_0, arg_73_1)
+	for iter_73_0 = #arg_73_1, 1, -1 do
+		local var_73_0 = arg_73_1[iter_73_0].skillId
 
-		if not lua_skill.configDict[var_78_0] then
-			if not var_78_0 then
+		if not lua_skill.configDict[var_73_0] then
+			if not var_73_0 then
 				logError("手牌数据没有skillId,请保存复现数据找开发看看")
 			else
-				logError("技能表找不到id:" .. var_78_0)
+				logError("技能表找不到id:" .. var_73_0)
 			end
 
-			table.remove(arg_78_1, iter_78_0)
+			table.remove(arg_73_1, iter_73_0)
 		end
 	end
 
-	return arg_78_1
+	return arg_73_1
 end
 
-function var_0_0._updateHandCards(arg_79_0, arg_79_1, arg_79_2)
-	arg_79_1 = arg_79_0:_filterInvalidCard(arg_79_1)
+function var_0_0._updateHandCards(arg_74_0, arg_74_1, arg_74_2)
+	arg_74_1 = arg_74_1 or FightDataHelper.handCardMgr.handCard
+	arg_74_1 = arg_74_0:_filterInvalidCard(arg_74_1)
 
-	local var_79_0 = arg_79_1 and #arg_79_1 or 0
+	local var_74_0 = arg_74_1 and #arg_74_1 or 0
 
-	for iter_79_0 = arg_79_2 or 1, var_79_0 do
-		local var_79_1 = arg_79_0._handCardItemList[iter_79_0]
+	for iter_74_0 = arg_74_2 or 1, var_74_0 do
+		local var_74_1 = arg_74_0._handCardItemList[iter_74_0]
 
-		if not var_79_1 then
-			local var_79_2 = gohelper.clone(arg_79_0._handCardItemPrefab, arg_79_0._handCardGO)
+		if not var_74_1 then
+			local var_74_2 = gohelper.clone(arg_74_0._handCardItemPrefab, arg_74_0._handCardGO)
 
-			var_79_1 = MonoHelper.addLuaComOnceToGo(var_79_2, FightViewHandCardItem, arg_79_0)
+			var_74_1 = MonoHelper.addLuaComOnceToGo(var_74_2, FightViewHandCardItem, arg_74_0)
 
-			table.insert(arg_79_0._handCardItemList, var_79_1)
+			table.insert(arg_74_0._handCardItemList, var_74_1)
 		end
 
-		var_79_1.go.name = "cardItem" .. iter_79_0
+		var_74_1.go.name = "cardItem" .. iter_74_0
 
-		local var_79_3 = var_0_0.calcCardPosX(iter_79_0)
+		local var_74_3 = var_0_0.calcCardPosX(iter_74_0)
 
-		recthelper.setAnchor(var_79_1.tr, var_79_3, 0)
-		gohelper.setActive(var_79_1.go, true)
-		transformhelper.setLocalScale(var_79_1.tr, 1, 1, 1)
-		var_79_1:updateItem(iter_79_0, arg_79_1[iter_79_0])
-		gohelper.setAsLastSibling(var_79_1.go)
+		recthelper.setAnchor(var_74_1.tr, var_74_3, 0)
+		gohelper.setActive(var_74_1.go, true)
+		transformhelper.setLocalScale(var_74_1.tr, 1, 1, 1)
+		var_74_1:updateItem(iter_74_0, arg_74_1[iter_74_0])
+		gohelper.setAsLastSibling(var_74_1.go)
 	end
 
-	for iter_79_1 = var_79_0 + 1, #arg_79_0._handCardItemList do
-		local var_79_4 = arg_79_0._handCardItemList[iter_79_1]
+	for iter_74_1 = var_74_0 + 1, #arg_74_0._handCardItemList do
+		local var_74_4 = arg_74_0._handCardItemList[iter_74_1]
 
-		gohelper.setActive(var_79_4.go, false)
+		gohelper.setActive(var_74_4.go, false)
 
-		var_79_4.go.name = "cardItem" .. iter_79_1
+		var_74_4.go.name = "cardItem" .. iter_74_1
 
-		var_79_4:updateItem(iter_79_1, nil)
+		var_74_4:updateItem(iter_74_1, nil)
 	end
 
-	arg_79_0:refreshPreDeleteCard(arg_79_1)
-	arg_79_0:refreshLyCardTag()
+	arg_74_0:refreshPreDeleteCard(arg_74_1)
+	arg_74_0:refreshLyCardTag()
 end
 
-function var_0_0._setBlockOperate(arg_80_0, arg_80_1)
-	var_0_0.blockOperate = arg_80_1 and true or false
+function var_0_0._setBlockOperate(arg_75_0, arg_75_1)
+	var_0_0.blockOperate = arg_75_1 and true or false
 
-	if not gohelper.isNil(arg_80_0._handCardGOCanvasGroup) then
-		arg_80_0._handCardGOCanvasGroup.blocksRaycasts = not arg_80_1
+	if not gohelper.isNil(arg_75_0._handCardGOCanvasGroup) then
+		arg_75_0._handCardGOCanvasGroup.blocksRaycasts = not arg_75_1
 	end
 
-	if arg_80_1 then
-		TaskDispatcher.cancelTask(arg_80_0._delayCancelBlock, arg_80_0)
-		TaskDispatcher.runDelay(arg_80_0._delayCancelBlock, arg_80_0, 10)
+	if arg_75_1 then
+		TaskDispatcher.cancelTask(arg_75_0._delayCancelBlock, arg_75_0)
+		TaskDispatcher.runDelay(arg_75_0._delayCancelBlock, arg_75_0, 10)
 	else
-		TaskDispatcher.cancelTask(arg_80_0._delayCancelBlock, arg_80_0)
+		TaskDispatcher.cancelTask(arg_75_0._delayCancelBlock, arg_75_0)
 	end
 
-	arg_80_0:refreshLYAreaActive()
+	arg_75_0:refreshLYAreaActive()
 end
 
-function var_0_0._delayCancelBlock(arg_81_0)
-	arg_81_0:_setBlockOperate(false)
+function var_0_0._delayCancelBlock(arg_76_0)
+	arg_76_0:_setBlockOperate(false)
 end
 
-function var_0_0._onAfterForceUpdatePerformanceData(arg_82_0)
-	arg_82_0:_updateNow()
+function var_0_0._onAfterForceUpdatePerformanceData(arg_77_0)
+	arg_77_0:_updateNow()
 end
 
-function var_0_0._onRoundSequenceFinish(arg_83_0)
-	arg_83_0:_updateNow()
+function var_0_0._onRoundSequenceFinish(arg_78_0)
+	arg_78_0:_updateNow()
 end
 
-function var_0_0._onClothSkillRoundSequenceFinish(arg_84_0)
+function var_0_0._onClothSkillRoundSequenceFinish(arg_79_0)
 	return
 end
 
-function var_0_0._onDragHandCardBegin(arg_85_0, arg_85_1, arg_85_2)
-	if arg_85_0._cardDragFlow.status == WorkStatus.Running then
+function var_0_0._onDragHandCardBegin(arg_80_0, arg_80_1, arg_80_2)
+	if arg_80_0._cardDragFlow.status == WorkStatus.Running then
 		return
 	end
 
-	if arg_85_0._cardLongPressFlow.status == WorkStatus.Running then
-		arg_85_0._cardLongPressFlow:stop()
-		arg_85_0._cardLongPressFlow:reset()
+	if arg_80_0._cardLongPressFlow.status == WorkStatus.Running then
+		arg_80_0._cardLongPressFlow:stop()
+		arg_80_0._cardLongPressFlow:reset()
 	end
 
-	arg_85_0._dragBeginCards = FightCardModel.instance:getHandCards()
-	arg_85_0._cardCount = #arg_85_0._dragBeginCards
+	arg_80_0._dragBeginCards = FightDataHelper.handCardMgr.handCard
+	arg_80_0._cardCount = #arg_80_0._dragBeginCards
 
-	if arg_85_1 > arg_85_0._cardCount then
+	if arg_80_1 > arg_80_0._cardCount then
 		return
 	end
 
-	local var_85_0 = arg_85_0:getUserDataTb_()
+	local var_80_0 = arg_80_0:getUserDataTb_()
 
-	var_85_0.index = arg_85_1
-	var_85_0.position = arg_85_2
-	var_85_0.cardCount = arg_85_0._cardCount
-	var_85_0.handCardItemList = arg_85_0._handCardItemList
-	var_85_0.handCardTr = arg_85_0._handCardTr
-	var_85_0.handCards = arg_85_0._dragBeginCards
+	var_80_0.index = arg_80_1
+	var_80_0.position = arg_80_2
+	var_80_0.cardCount = arg_80_0._cardCount
+	var_80_0.handCardItemList = arg_80_0._handCardItemList
+	var_80_0.handCardTr = arg_80_0._handCardTr
+	var_80_0.handCards = arg_80_0._dragBeginCards
 
-	arg_85_0._cardDragFlow:start(var_85_0)
-	arg_85_0._handCardItemList[arg_85_1]:stopLongPressEffect()
+	arg_80_0._cardDragFlow:start(var_80_0)
+	arg_80_0._handCardItemList[arg_80_1]:stopLongPressEffect()
 	FightController.instance:dispatchEvent(FightEvent.HideCardSkillTips)
 end
 
-function var_0_0._onDragHandCardEnd(arg_86_0, arg_86_1, arg_86_2)
-	if arg_86_1 > arg_86_0._cardCount then
-		arg_86_0:_updateNow()
+function var_0_0._onDragHandCardEnd(arg_81_0, arg_81_1, arg_81_2)
+	if arg_81_1 > arg_81_0._cardCount then
+		arg_81_0:_updateNow()
 
 		return
 	end
 
-	arg_86_0._cardDragFlow:stop()
-	arg_86_0._cardDragFlow:reset()
+	arg_81_0._cardDragFlow:stop()
+	arg_81_0._cardDragFlow:reset()
 
-	arg_86_0._dragIndex = arg_86_1
+	arg_81_0._dragIndex = arg_81_1
 
-	local var_86_0 = recthelper.screenPosToAnchorPos(arg_86_2, arg_86_0._handCardTr)
-	local var_86_1, var_86_2, var_86_3 = transformhelper.getLocalScale(arg_86_0._handCardItemList[arg_86_1].tr)
-	local var_86_4 = var_86_0.x - var_0_0.HalfWidth
+	local var_81_0 = recthelper.screenPosToAnchorPos(arg_81_2, arg_81_0._handCardTr)
+	local var_81_1, var_81_2, var_81_3 = transformhelper.getLocalScale(arg_81_0._handCardItemList[arg_81_1].tr)
+	local var_81_4 = var_81_0.x - var_0_0.HalfWidth
 
-	arg_86_0._targetIndex = var_0_0.calcCardIndexDraging(var_86_4, arg_86_0._cardCount, 1)
+	arg_81_0._targetIndex = var_0_0.calcCardIndexDraging(var_81_4, arg_81_0._cardCount, 1)
 
-	local var_86_5 = arg_86_0:getUserDataTb_()
+	local var_81_5 = arg_81_0:getUserDataTb_()
 
-	var_86_5.index = arg_86_1
-	var_86_5.targetIndex = arg_86_0._targetIndex
-	var_86_5.cardCount = arg_86_0._cardCount
-	var_86_5.handCardItemList = arg_86_0._handCardItemList
-	var_86_5.handCardTr = arg_86_0._handCardTr
-	var_86_5.handCards = arg_86_0._dragBeginCards
+	var_81_5.index = arg_81_1
+	var_81_5.targetIndex = arg_81_0._targetIndex
+	var_81_5.cardCount = arg_81_0._cardCount
+	var_81_5.handCardItemList = arg_81_0._handCardItemList
+	var_81_5.handCardTr = arg_81_0._handCardTr
+	var_81_5.handCards = arg_81_0._dragBeginCards
 
-	arg_86_0._cardDragEndFlow:registerDoneListener(arg_86_0._onDragEndFlowDone, arg_86_0)
-	arg_86_0._cardDragEndFlow:start(var_86_5)
-	arg_86_0:_setBlockOperate(true)
+	arg_81_0._cardDragEndFlow:registerDoneListener(arg_81_0._onDragEndFlowDone, arg_81_0)
+	arg_81_0._cardDragEndFlow:start(var_81_5)
+	arg_81_0:_setBlockOperate(true)
 end
 
-function var_0_0._onDragEndFlowDone(arg_87_0)
-	arg_87_0._cardDragEndFlow:unregisterDoneListener(arg_87_0._onDragEndFlowDone, arg_87_0)
+function var_0_0._onDragEndFlowDone(arg_82_0)
+	arg_82_0._cardDragEndFlow:unregisterDoneListener(arg_82_0._onDragEndFlowDone, arg_82_0)
 
-	local var_87_0 = arg_87_0._dragIndex
-	local var_87_1 = arg_87_0._targetIndex
+	local var_82_0 = arg_82_0._dragIndex
+	local var_82_1 = arg_82_0._targetIndex
 
-	if not arg_87_0:_checkGuideMoveCard(var_87_0, var_87_1) then
+	if not arg_82_0:_checkGuideMoveCard(var_82_0, var_82_1) then
 		return
 	end
 
-	local var_87_2 = arg_87_0._dragBeginCards
-
-	var_87_2[var_87_0].moveCanAddExpoint = FightCardDataHelper.moveCanAddExpoint(var_87_2, var_87_2[var_87_0])
-
-	local var_87_3 = FightCardModel.instance:getBeCombineCardMO()
-	local var_87_4 = var_87_2[var_87_0].skillId
-
-	if FightEnum.UniversalCard[var_87_4] and not var_87_3 then
-		arg_87_0:_updateNow()
-		arg_87_0:_setBlockOperate(false)
+	if var_82_0 == var_82_1 then
+		arg_82_0:_setBlockOperate(false)
 
 		return
 	end
 
-	if (var_87_2[var_87_0].uid == FightEntityScene.MySideId or var_87_2[var_87_0].uid == FightEntityScene.EnemySideId) and not FightEnum.UniversalCard[var_87_4] then
-		arg_87_0:_updateNow()
-		arg_87_0:_setBlockOperate(false)
+	local var_82_2 = arg_82_0._dragBeginCards[var_82_0]
+	local var_82_3 = false
 
-		return
-	end
+	if FightEnum.UniversalCard[var_82_2.skillId] then
+		local var_82_4 = tabletool.copy(arg_82_0._dragBeginCards)
 
-	arg_87_0:_moveCardItemInList(var_87_0, var_87_1)
+		table.remove(var_82_4, var_82_0)
+		table.insert(var_82_4, var_82_1, var_82_2)
 
-	if not FightCardModel.instance:isCardOpEnd() then
-		local var_87_5
-		local var_87_6 = var_87_2[var_87_0]
-		local var_87_7 = tabletool.indexOf(var_87_2, var_87_3)
-		local var_87_8 = var_87_7
+		if not FightCardDataHelper.canCombineWithUniversalForPerformance(var_82_2, var_82_4[var_82_1 + 1]) then
+			arg_82_0:_updateNow()
+			arg_82_0:_setBlockOperate(false)
 
-		if var_87_3 and var_87_7 then
-			if var_87_1 < var_87_7 then
-				var_87_8 = var_87_1
-			end
-
-			var_87_5 = FightCardModel.instance:moveUniversalCardOp(var_87_0, var_87_7, var_87_6.skillId, var_87_6.uid, var_87_1)
-		else
-			var_87_5 = FightCardModel.instance:moveHandCardOp(var_87_0, var_87_1, var_87_6.skillId, var_87_6.uid)
+			return
 		end
 
-		FightCardModel.moveOnly(var_87_2, var_87_0, var_87_1)
+		var_82_3 = var_82_1
+	end
 
-		if var_87_0 ~= var_87_1 then
+	local var_82_5 = arg_82_0._dragBeginCards
+	local var_82_6 = var_82_2.skillId
+
+	if (var_82_2.uid == FightEntityScene.MySideId or var_82_2.uid == FightEntityScene.EnemySideId) and not FightEnum.UniversalCard[var_82_6] then
+		arg_82_0:_updateNow()
+		arg_82_0:_setBlockOperate(false)
+
+		return
+	end
+
+	arg_82_0:_moveCardItemInList(var_82_0, var_82_1)
+
+	if not FightDataHelper.operationDataMgr:isCardOpEnd() then
+		local var_82_7 = FightDataHelper.operationDataMgr:newOperation()
+
+		var_82_7.moveCanAddExpoint = FightCardDataHelper.moveCanAddExpoint(var_82_5, var_82_2)
+
+		if var_82_3 then
+			var_82_7:moveUniversalCard(var_82_0, var_82_1, var_82_2)
+		else
+			var_82_7:moveCard(var_82_0, var_82_1, var_82_2)
+		end
+
+		FightCardDataHelper.moveOnly(var_82_5, var_82_0, var_82_1)
+
+		if var_82_0 ~= var_82_1 then
 			AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_FightMoveCardEnd)
 		end
 
-		arg_87_0:_updateHandCards(var_87_2)
-		FightController.instance:dispatchEvent(FightEvent.OnMoveHandCard, var_87_6, var_87_0, var_87_1)
-		FightController.instance:dispatchEvent(FightEvent.AddPlayOperationData, var_87_5)
-		arg_87_0:_combineCards(var_87_2, var_87_8, var_87_5)
+		arg_82_0:_updateHandCards(var_82_5)
+		FightController.instance:dispatchEvent(FightEvent.OnMoveHandCard, var_82_7, var_82_2)
+		FightController.instance:dispatchEvent(FightEvent.AddPlayOperationData, var_82_7)
+
+		local var_82_8 = var_82_3 and var_82_1
+
+		arg_82_0:_combineCards(var_82_5, var_82_8, var_82_7)
 	else
-		arg_87_0:_updateHandCards(var_87_2)
+		arg_82_0:_updateHandCards(var_82_5)
 
 		if not FightReplayModel.instance:isReplay() then
 			-- block empty
 		end
 
-		arg_87_0:_setBlockOperate(false)
+		arg_82_0:_setBlockOperate(false)
 	end
 end
 
-function var_0_0._moveCardItemInList(arg_88_0, arg_88_1, arg_88_2)
-	if not arg_88_0._handCardItemList or not arg_88_0._handCardItemList[arg_88_1] or not arg_88_0._handCardItemList[arg_88_2] then
+function var_0_0._moveCardItemInList(arg_83_0, arg_83_1, arg_83_2)
+	if not arg_83_0._handCardItemList or not arg_83_0._handCardItemList[arg_83_1] or not arg_83_0._handCardItemList[arg_83_2] then
 		return
 	end
 
-	if arg_88_1 == arg_88_2 then
+	if arg_83_1 == arg_83_2 then
 		return
 	end
 
-	local var_88_0 = arg_88_0._handCardItemList[arg_88_1]
-	local var_88_1 = arg_88_1 < arg_88_2 and 1 or -1
+	local var_83_0 = arg_83_0._handCardItemList[arg_83_1]
+	local var_83_1 = arg_83_1 < arg_83_2 and 1 or -1
 
-	for iter_88_0 = arg_88_1, arg_88_2 - var_88_1, var_88_1 do
-		arg_88_0._handCardItemList[iter_88_0] = arg_88_0._handCardItemList[iter_88_0 + var_88_1]
+	for iter_83_0 = arg_83_1, arg_83_2 - var_83_1, var_83_1 do
+		arg_83_0._handCardItemList[iter_83_0] = arg_83_0._handCardItemList[iter_83_0 + var_83_1]
 	end
 
-	arg_88_0._handCardItemList[arg_88_2] = var_88_0
+	arg_83_0._handCardItemList[arg_83_2] = var_83_0
 end
 
-function var_0_0._playCardItemInList(arg_89_0, arg_89_1)
-	if not arg_89_0._handCardItemList or not arg_89_0._handCardItemList[arg_89_1] then
+function var_0_0._playCardItemInList(arg_84_0, arg_84_1)
+	if not arg_84_0._handCardItemList or not arg_84_0._handCardItemList[arg_84_1] then
 		return
 	end
 
-	arg_89_0:_moveCardItemInList(arg_89_1, #arg_89_0._handCardItemList)
+	arg_84_0:_moveCardItemInList(arg_84_1, #arg_84_0._handCardItemList)
 end
 
-function var_0_0._checkGuideMoveCard(arg_90_0, arg_90_1, arg_90_2)
-	local var_90_0 = GuideModel.instance:getFlagValue(GuideModel.GuideFlag.FightMoveCard)
+function var_0_0._checkGuideMoveCard(arg_85_0, arg_85_1, arg_85_2)
+	local var_85_0 = GuideModel.instance:getFlagValue(GuideModel.GuideFlag.FightMoveCard)
 
-	if var_90_0 then
-		local var_90_1 = arg_90_1 == var_90_0.from
+	if var_85_0 then
+		local var_85_1 = arg_85_1 == var_85_0.from
 
-		if var_90_1 then
-			local var_90_2 = false
-			local var_90_3 = var_90_0.tos
+		if var_85_1 then
+			local var_85_2 = false
+			local var_85_3 = var_85_0.tos
 
-			for iter_90_0, iter_90_1 in ipairs(var_90_3) do
-				if arg_90_2 == iter_90_1 then
-					var_90_2 = true
+			for iter_85_0, iter_85_1 in ipairs(var_85_3) do
+				if arg_85_2 == iter_85_1 then
+					var_85_2 = true
 
 					break
 				end
 			end
 
-			var_90_1 = var_90_2
+			var_85_1 = var_85_2
 		end
 
-		if var_90_1 then
+		if var_85_1 then
 			FightController.instance:dispatchEvent(FightEvent.OnGuideDragCard)
 
 			return true
 		else
-			arg_90_0:_resetCard({})
-			arg_90_0:_setBlockOperate(false)
+			arg_85_0:_resetCard({})
+			arg_85_0:_setBlockOperate(false)
 
 			return false
 		end
@@ -1617,275 +1507,289 @@ function var_0_0._checkGuideMoveCard(arg_90_0, arg_90_1, arg_90_2)
 	return true
 end
 
-function var_0_0.selectLeftCard(arg_91_0)
-	if arg_91_0._longPressIndex == nil then
-		local var_91_0 = 1
+function var_0_0.selectLeftCard(arg_86_0)
+	if arg_86_0._longPressIndex == nil then
+		local var_86_0 = 1
 
-		for iter_91_0, iter_91_1 in pairs(arg_91_0._handCardItemList) do
-			if iter_91_1.go.activeInHierarchy and var_91_0 < iter_91_1.index then
-				var_91_0 = iter_91_1.index
+		for iter_86_0, iter_86_1 in pairs(arg_86_0._handCardItemList) do
+			if iter_86_1.go.activeInHierarchy and var_86_0 < iter_86_1.index then
+				var_86_0 = iter_86_1.index
 			end
 		end
 
-		arg_91_0:OnkeyLongPress(var_91_0)
+		arg_86_0:OnkeyLongPress(var_86_0)
 	else
-		if arg_91_0._longPressIndex + 1 > #arg_91_0._handCardItemList then
+		if arg_86_0._longPressIndex + 1 > #arg_86_0._handCardItemList then
 			return
 		end
 
-		local var_91_1 = arg_91_0._handCardItemList[arg_91_0._longPressIndex + 1]
+		local var_86_1 = arg_86_0._handCardItemList[arg_86_0._longPressIndex + 1]
 
-		if var_91_1 and not var_91_1.go.activeInHierarchy then
+		if var_86_1 and not var_86_1.go.activeInHierarchy then
 			return
 		end
 
-		arg_91_0:OnkeyLongPress(arg_91_0._longPressIndex + 1)
+		arg_86_0:OnkeyLongPress(arg_86_0._longPressIndex + 1)
 	end
 end
 
-function var_0_0.selectRightCard(arg_92_0)
-	if arg_92_0._longPressIndex == nil then
-		local var_92_0 = 1
+function var_0_0.selectRightCard(arg_87_0)
+	if arg_87_0._longPressIndex == nil then
+		local var_87_0 = 1
 
-		for iter_92_0, iter_92_1 in pairs(arg_92_0._handCardItemList) do
-			if iter_92_1.go.activeInHierarchy and var_92_0 > iter_92_1.index then
-				var_92_0 = iter_92_1.index
+		for iter_87_0, iter_87_1 in pairs(arg_87_0._handCardItemList) do
+			if iter_87_1.go.activeInHierarchy and var_87_0 > iter_87_1.index then
+				var_87_0 = iter_87_1.index
 			end
 		end
 
-		arg_92_0:OnkeyLongPress(var_92_0)
+		arg_87_0:OnkeyLongPress(var_87_0)
 	else
-		if arg_92_0._longPressIndex - 1 < 1 then
+		if arg_87_0._longPressIndex - 1 < 1 then
 			return
 		end
 
-		arg_92_0:OnkeyLongPress(arg_92_0._longPressIndex - 1)
+		arg_87_0:OnkeyLongPress(arg_87_0._longPressIndex - 1)
 	end
 end
 
-function var_0_0.OnKeyPlayCard(arg_93_0, arg_93_1)
+function var_0_0.OnKeyPlayCard(arg_88_0, arg_88_1)
 	if ViewMgr.instance:IsPopUpViewOpen() then
 		return
 	end
 
-	arg_93_0:_longPressHandCardEnd()
+	arg_88_0:_longPressHandCardEnd()
 
-	local var_93_0 = #FightCardModel.instance:getHandCards()
+	local var_88_0 = #FightDataHelper.handCardMgr.handCard
 
-	for iter_93_0, iter_93_1 in pairs(arg_93_0._handCardItemList) do
-		if iter_93_1.index == var_93_0 - arg_93_1 + 1 and iter_93_1.go.activeInHierarchy then
-			iter_93_1:_onClickThis()
+	for iter_88_0, iter_88_1 in pairs(arg_88_0._handCardItemList) do
+		if iter_88_1.index == var_88_0 - arg_88_1 + 1 and iter_88_1.go.activeInHierarchy then
+			iter_88_1:_onClickThis()
 		end
 	end
 end
 
-function var_0_0.OnkeyLongPress(arg_94_0, arg_94_1)
+function var_0_0.OnkeyLongPress(arg_89_0, arg_89_1)
 	if FightReplayModel.instance:isReplay() then
 		return
 	end
 
-	arg_94_0:_longPressHandCardEnd()
+	arg_89_0:_longPressHandCardEnd()
 	FightController.instance:dispatchEvent(FightEvent.HideCardSkillTips)
 
-	for iter_94_0, iter_94_1 in pairs(arg_94_0._handCardItemList) do
-		if iter_94_1.index == arg_94_1 and iter_94_1.go.activeInHierarchy then
-			iter_94_1:_onLongPress()
+	for iter_89_0, iter_89_1 in pairs(arg_89_0._handCardItemList) do
+		if iter_89_1.index == arg_89_1 and iter_89_1.go.activeInHierarchy then
+			iter_89_1:_onLongPress()
 		end
 	end
 end
 
-function var_0_0.onControlRelease(arg_95_0)
-	if not arg_95_0._longPressIndex then
+function var_0_0.onControlRelease(arg_90_0)
+	if not arg_90_0._longPressIndex then
 		return
 	end
 
-	for iter_95_0, iter_95_1 in pairs(arg_95_0._handCardItemList) do
-		if iter_95_1 and iter_95_1.index == arg_95_0._longPressIndex then
-			iter_95_1:_onClickThis()
+	for iter_90_0, iter_90_1 in pairs(arg_90_0._handCardItemList) do
+		if iter_90_1 and iter_90_1.index == arg_90_0._longPressIndex then
+			iter_90_1:_onClickThis()
 		end
 	end
 end
 
-function var_0_0.OnSeleCardMoveEnd(arg_96_0)
-	arg_96_0._keyDrag = false
+function var_0_0.OnSeleCardMoveEnd(arg_91_0)
+	arg_91_0._keyDrag = false
 
-	FightController.instance:dispatchEvent(FightEvent.SimulateDragHandCardEnd, arg_96_0.startDragIndex, arg_96_0.dragIndex)
+	FightController.instance:dispatchEvent(FightEvent.SimulateDragHandCardEnd, arg_91_0.startDragIndex, arg_91_0.dragIndex)
 
-	arg_96_0.dragIndex = nil
-	arg_96_0.curLongPress = nil
+	arg_91_0.dragIndex = nil
+	arg_91_0.curLongPress = nil
 end
 
-function var_0_0.getLongPressItemIndex(arg_97_0)
-	for iter_97_0, iter_97_1 in pairs(arg_97_0._handCardItemList) do
-		if iter_97_1 and iter_97_1._isLongPress then
-			return iter_97_1
+function var_0_0.getLongPressItemIndex(arg_92_0)
+	for iter_92_0, iter_92_1 in pairs(arg_92_0._handCardItemList) do
+		if iter_92_1 and iter_92_1._isLongPress then
+			return iter_92_1
 		end
 	end
 
 	return nil
 end
 
-function var_0_0._longPressHandCard(arg_98_0, arg_98_1)
-	arg_98_0:_longPressHandCardEnd()
+function var_0_0._longPressHandCard(arg_93_0, arg_93_1)
+	arg_93_0:_longPressHandCardEnd()
 
-	if arg_98_0._cardDragFlow.status == WorkStatus.Running then
+	if arg_93_0._cardDragFlow.status == WorkStatus.Running then
 		return
 	end
 
-	if arg_98_0._cardLongPressFlow.status == WorkStatus.Running then
+	if arg_93_0._cardLongPressFlow.status == WorkStatus.Running then
 		return
 	end
 
-	FightCardModel.instance:setLongPressIndex(arg_98_1)
+	FightCardModel.instance:setLongPressIndex(arg_93_1)
 
-	arg_98_0._longPressIndex = arg_98_1
-	arg_98_0._clearPressIndex = false
-	arg_98_0._cardCount = #FightCardModel.instance:getHandCards()
+	arg_93_0._longPressIndex = arg_93_1
+	arg_93_0._cardCount = #FightDataHelper.handCardMgr.handCard
+	arg_93_0._clearPressIndex = false
 
-	local var_98_0 = arg_98_0:getUserDataTb_()
+	local var_93_0 = arg_93_0:getUserDataTb_()
 
-	var_98_0.index = arg_98_1
-	var_98_0.cardCount = arg_98_0._cardCount
-	var_98_0.handCardItemList = arg_98_0._handCardItemList
+	var_93_0.index = arg_93_1
+	var_93_0.cardCount = arg_93_0._cardCount
+	var_93_0.handCardItemList = arg_93_0._handCardItemList
 
-	arg_98_0._cardLongPressFlow:registerDoneListener(arg_98_0._onLongPressFlowDone, arg_98_0)
-	arg_98_0._cardLongPressFlow:start(var_98_0)
-	arg_98_0._handCardItemList[arg_98_1]:playLongPressEffect()
+	arg_93_0._cardLongPressFlow:registerDoneListener(arg_93_0._onLongPressFlowDone, arg_93_0)
+	arg_93_0._cardLongPressFlow:start(var_93_0)
+	arg_93_0._handCardItemList[arg_93_1]:playLongPressEffect()
 end
 
-function var_0_0._onLongPressFlowDone(arg_99_0)
-	arg_99_0._cardLongPressFlow:unregisterDoneListener(arg_99_0._onLongPressFlowDone, arg_99_0)
+function var_0_0._onLongPressFlowDone(arg_94_0)
+	arg_94_0._cardLongPressFlow:unregisterDoneListener(arg_94_0._onLongPressFlowDone, arg_94_0)
 end
 
-function var_0_0._longPressHandCardEnd(arg_100_0, arg_100_1)
-	arg_100_1 = arg_100_1 or arg_100_0._longPressIndex
+function var_0_0._longPressHandCardEnd(arg_95_0, arg_95_1)
+	arg_95_1 = arg_95_1 or arg_95_0._longPressIndex
 
-	if not arg_100_1 then
+	if not arg_95_1 then
 		return
 	end
 
-	arg_100_0._handCardItemList[arg_100_1]:stopLongPressEffect()
-	arg_100_0._handCardItemList[arg_100_1]:onLongPressEnd()
+	arg_95_0._handCardItemList[arg_95_1]:stopLongPressEffect()
+	arg_95_0._handCardItemList[arg_95_1]:onLongPressEnd()
 
-	if arg_100_0._cardLongPressFlow.status == WorkStatus.Running then
-		arg_100_0._cardLongPressFlow:stop()
-		arg_100_0._cardLongPressFlow:reset()
+	if arg_95_0._cardLongPressFlow.status == WorkStatus.Running then
+		arg_95_0._cardLongPressFlow:stop()
+		arg_95_0._cardLongPressFlow:reset()
 	end
 
-	arg_100_0._clearPressIndex = true
+	arg_95_0._clearPressIndex = true
 
-	local var_100_0 = arg_100_0:getUserDataTb_()
+	local var_95_0 = arg_95_0:getUserDataTb_()
 
-	var_100_0.index = arg_100_1
-	var_100_0.cardCount = arg_100_0._cardCount
-	var_100_0.handCardItemList = arg_100_0._handCardItemList
+	var_95_0.index = arg_95_1
+	var_95_0.cardCount = arg_95_0._cardCount
+	var_95_0.handCardItemList = arg_95_0._handCardItemList
 
-	arg_100_0._cardLongPressEndFlow:registerDoneListener(arg_100_0._onLongPressEndFlowDone, arg_100_0)
-	arg_100_0._cardLongPressEndFlow:start(var_100_0)
+	arg_95_0._cardLongPressEndFlow:registerDoneListener(arg_95_0._onLongPressEndFlowDone, arg_95_0)
+	arg_95_0._cardLongPressEndFlow:start(var_95_0)
 
-	arg_100_0._longPressIndex = nil
+	arg_95_0._longPressIndex = nil
 end
 
-function var_0_0._onLongPressEndFlowDone(arg_101_0)
-	if arg_101_0._clearPressIndex then
-		arg_101_0._longPressIndex = nil
+function var_0_0._onLongPressEndFlowDone(arg_96_0)
+	if arg_96_0._clearPressIndex then
+		arg_96_0._longPressIndex = nil
 
 		FightCardModel.instance:setLongPressIndex(-1)
 	end
 
-	arg_101_0._cardLongPressEndFlow:unregisterDoneListener(arg_101_0._onLongPressEndFlowDone, arg_101_0)
+	arg_96_0._cardLongPressEndFlow:unregisterDoneListener(arg_96_0._onLongPressEndFlowDone, arg_96_0)
 end
 
-function var_0_0._onEnterOperateState(arg_102_0, arg_102_1)
-	if arg_102_1 == FightStageMgr.OperateStateType.Discard then
-		arg_102_0._abandonTran:SetAsLastSibling()
-		gohelper.setActive(arg_102_0._abandon, true)
-		arg_102_0._playCardTransform:SetAsLastSibling()
+function var_0_0._onEnterOperateState(arg_97_0, arg_97_1)
+	if arg_97_1 == FightStageMgr.OperateStateType.Discard then
+		arg_97_0._abandonTran:SetAsLastSibling()
+		gohelper.setActive(arg_97_0._abandon, true)
+		arg_97_0._playCardTransform:SetAsLastSibling()
 
-		local var_102_0 = 0
+		local var_97_0 = 0
 
-		for iter_102_0 = 1, #arg_102_0._handCardItemList do
-			local var_102_1 = arg_102_0._handCardItemList[iter_102_0]
+		for iter_97_0 = 1, #arg_97_0._handCardItemList do
+			local var_97_1 = arg_97_0._handCardItemList[iter_97_0]
 
-			if var_102_1 then
-				if var_102_1.go.activeInHierarchy then
-					var_102_0 = var_102_0 + 1
+			if var_97_1 then
+				if var_97_1.go.activeInHierarchy then
+					var_97_0 = var_97_0 + 1
 				else
 					break
 				end
 
-				local var_102_2 = var_102_1.cardInfoMO
-				local var_102_3 = false
-				local var_102_4 = FightDataHelper.entityMgr:getById(var_102_2.uid)
+				local var_97_2 = var_97_1.cardInfoMO
+				local var_97_3 = false
 
-				if var_102_4 then
-					if not var_102_4:isUniqueSkill(var_102_2.skillId) then
-						var_102_3 = true
+				if FightDataHelper.entityMgr:getById(var_97_2.uid) then
+					if not FightCardDataHelper.isBigSkill(var_97_2.skillId) then
+						var_97_3 = true
 					end
 				else
-					var_102_3 = true
+					var_97_3 = true
 				end
 
-				if var_102_3 then
-					var_102_1.go.transform:SetParent(arg_102_0._abandonCardRootTran, true)
+				if var_97_3 then
+					var_97_1.go.transform:SetParent(arg_97_0._abandonCardRootTran, true)
 				end
 			end
 		end
 
-		recthelper.setWidth(arg_102_0._abandonLine, var_102_0 * var_0_2 + 20)
+		recthelper.setWidth(arg_97_0._abandonLine, var_97_0 * var_0_2 + 20)
 	end
 end
 
-function var_0_0.cancelAbandonState(arg_103_0)
-	gohelper.setActive(arg_103_0._abandon, false)
+function var_0_0.cancelAbandonState(arg_98_0)
+	gohelper.setActive(arg_98_0._abandon, false)
 
-	for iter_103_0 = arg_103_0._abandonCardRootTran.childCount - 1, 0, -1 do
-		arg_103_0._abandonCardRootTran:GetChild(iter_103_0):SetParent(arg_103_0._handCardTr, true)
+	for iter_98_0 = arg_98_0._abandonCardRootTran.childCount - 1, 0, -1 do
+		arg_98_0._abandonCardRootTran:GetChild(iter_98_0):SetParent(arg_98_0._handCardTr, true)
 	end
 
-	arg_103_0._playCardTransform:SetSiblingIndex(var_0_0.playCardSiblingIndex)
+	arg_98_0._playCardTransform:SetSiblingIndex(var_0_0.playCardSiblingIndex)
 end
 
-function var_0_0._onExitOperateState(arg_104_0, arg_104_1)
-	if arg_104_1 == FightStageMgr.OperateStateType.Discard then
-		arg_104_0:cancelAbandonState()
+function var_0_0._onExitOperateState(arg_99_0, arg_99_1)
+	if arg_99_1 == FightStageMgr.OperateStateType.Discard then
+		arg_99_0:cancelAbandonState()
 	end
 end
 
-function var_0_0._onRefreshCardHeatShow(arg_105_0, arg_105_1)
-	if arg_105_0._handCardItemList then
-		for iter_105_0, iter_105_1 in ipairs(arg_105_0._handCardItemList) do
-			iter_105_1:showCardHeat()
+function var_0_0._onRefreshCardHeatShow(arg_100_0, arg_100_1)
+	if arg_100_0._handCardItemList then
+		for iter_100_0, iter_100_1 in ipairs(arg_100_0._handCardItemList) do
+			iter_100_1:showCardHeat()
 		end
 	end
 end
 
-function var_0_0.calcCardPosXDraging(arg_106_0, arg_106_1, arg_106_2, arg_106_3)
-	local var_106_0 = var_0_0.calcTotalWidth(arg_106_1, arg_106_3) / (arg_106_1 - 1 + arg_106_3)
+function var_0_0.onChangeCardEnergy(arg_101_0, arg_101_1)
+	if not arg_101_1 then
+		return
+	end
 
-	if arg_106_0 < arg_106_2 then
-		return -0.5 * var_106_0 - var_106_0 * (arg_106_0 - 1)
-	elseif arg_106_2 < arg_106_0 then
-		return -0.5 * var_106_0 - var_106_0 * (arg_106_0 - 1) - (arg_106_3 - 1) * var_106_0
-	else
-		return -0.5 * var_106_0 - var_106_0 * (arg_106_0 - 2) - (arg_106_3 * 0.5 + 0.5) * var_106_0
+	for iter_101_0, iter_101_1 in ipairs(arg_101_1) do
+		local var_101_0 = iter_101_1[1]
+		local var_101_1 = arg_101_0._handCardItemList[var_101_0]
+
+		if var_101_1 then
+			var_101_1:changeEnergy()
+		end
 	end
 end
 
-function var_0_0.calcCardIndexDraging(arg_107_0, arg_107_1, arg_107_2)
-	local var_107_0 = var_0_0.calcTotalWidth(arg_107_1, arg_107_2) / (arg_107_1 - 1 + arg_107_2)
-	local var_107_1 = -arg_107_0 / var_107_0 - arg_107_2 * 0.5 + 1
-	local var_107_2 = math.floor(var_107_1 + 0.5)
+function var_0_0.calcCardPosXDraging(arg_102_0, arg_102_1, arg_102_2, arg_102_3)
+	local var_102_0 = var_0_0.calcTotalWidth(arg_102_1, arg_102_3) / (arg_102_1 - 1 + arg_102_3)
 
-	return (Mathf.Clamp(var_107_2, 1, arg_107_1))
+	if arg_102_0 < arg_102_2 then
+		return -0.5 * var_102_0 - var_102_0 * (arg_102_0 - 1)
+	elseif arg_102_2 < arg_102_0 then
+		return -0.5 * var_102_0 - var_102_0 * (arg_102_0 - 1) - (arg_102_3 - 1) * var_102_0
+	else
+		return -0.5 * var_102_0 - var_102_0 * (arg_102_0 - 2) - (arg_102_3 * 0.5 + 0.5) * var_102_0
+	end
 end
 
-function var_0_0.calcTotalWidth(arg_108_0, arg_108_1)
-	return arg_108_0 * var_0_2 + (arg_108_1 - 1) * var_0_2 * 0.5
+function var_0_0.calcCardIndexDraging(arg_103_0, arg_103_1, arg_103_2)
+	local var_103_0 = var_0_0.calcTotalWidth(arg_103_1, arg_103_2) / (arg_103_1 - 1 + arg_103_2)
+	local var_103_1 = -arg_103_0 / var_103_0 - arg_103_2 * 0.5 + 1
+	local var_103_2 = math.floor(var_103_1 + 0.5)
+
+	return (Mathf.Clamp(var_103_2, 1, arg_103_1))
 end
 
-function var_0_0.calcCardPosX(arg_109_0)
-	return -1 * var_0_2 * (arg_109_0 - 1) - var_0_2 / 2
+function var_0_0.calcTotalWidth(arg_104_0, arg_104_1)
+	return arg_104_0 * var_0_2 + (arg_104_1 - 1) * var_0_2 * 0.5
+end
+
+function var_0_0.calcCardPosX(arg_105_0)
+	return -1 * var_0_2 * (arg_105_0 - 1) - var_0_2 / 2
 end
 
 return var_0_0

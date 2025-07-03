@@ -41,8 +41,7 @@ end
 
 function var_0_0._onExPointChange(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
 	if arg_4_1 == arg_4_0._entityId then
-		arg_4_0._hideInfoTimer = arg_4_0:com_registSingleTimer(arg_4_0._hideInfoTimer, arg_4_0._delayHideInfo, 0.6)
-
+		arg_4_0:com_registSingleTimer(arg_4_0._delayHideInfo, 0.6)
 		arg_4_0:_refreshExpoint(true, arg_4_2, arg_4_3)
 
 		if arg_4_0:_canUse() then
@@ -93,8 +92,7 @@ function var_0_0._onChangeSubEntityHp(arg_9_0, arg_9_1, arg_9_2)
 		arg_9_0:_refreshHp(true)
 
 		if arg_9_2 > 0 then
-			arg_9_0._hideInfoTimer = arg_9_0:com_registSingleTimer(arg_9_0._hideInfoTimer, arg_9_0._delayHideInfo, 0.6)
-
+			arg_9_0:com_registSingleTimer(arg_9_0._delayHideInfo, 0.6)
 			gohelper.setActive(arg_9_0._effectHeal, true)
 		end
 	end

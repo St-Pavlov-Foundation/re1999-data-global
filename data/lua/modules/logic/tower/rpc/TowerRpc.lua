@@ -70,62 +70,94 @@ function var_0_0.onReceiveTowerResetTalentReply(arg_10_0, arg_10_1, arg_10_2)
 	end
 end
 
-function var_0_0.sendTowerResetSubEpisodeRequest(arg_11_0, arg_11_1, arg_11_2, arg_11_3, arg_11_4, arg_11_5, arg_11_6)
-	local var_11_0 = TowerModule_pb.TowerResetSubEpisodeRequest()
+function var_0_0.sendTowerRenameTalentPlanRequest(arg_11_0, arg_11_1, arg_11_2, arg_11_3, arg_11_4)
+	local var_11_0 = TowerModule_pb.TowerRenameTalentPlanRequest()
 
-	var_11_0.towerType = arg_11_1
-	var_11_0.towerId = arg_11_2
-	var_11_0.layerId = arg_11_3
-	var_11_0.subEpisode = arg_11_4
+	var_11_0.bossId = arg_11_1
+	var_11_0.planName = arg_11_2
 
-	return arg_11_0:sendMsg(var_11_0, arg_11_5, arg_11_6)
+	return arg_11_0:sendMsg(var_11_0, arg_11_3, arg_11_4)
 end
 
-function var_0_0.onReceiveTowerResetSubEpisodeReply(arg_12_0, arg_12_1, arg_12_2)
+function var_0_0.onReceiveTowerRenameTalentPlanReply(arg_12_0, arg_12_1, arg_12_2)
 	if arg_12_1 == 0 then
-		TowerModel.instance:resetTowerSubEpisode(arg_12_2)
-		TowerController.instance:dispatchEvent(TowerEvent.OnTowerResetSubEpisode, arg_12_2)
+		TowerAssistBossModel.instance:onTowerRenameTalentPlan(arg_12_2)
+		TowerController.instance:dispatchEvent(TowerEvent.RenameTalentPlan, arg_12_2.planName)
 	end
 end
 
-function var_0_0.sendStartTowerBattleRequest(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
-	local var_13_0 = TowerModule_pb.StartTowerBattleRequest()
-	local var_13_1 = TowerModel.instance:getRecordFightParam()
+function var_0_0.sendTowerChangeTalentPlanRequest(arg_13_0, arg_13_1, arg_13_2)
+	local var_13_0 = TowerModule_pb.TowerChangeTalentPlanRequest()
 
-	var_13_0.type = var_13_1.towerType
-	var_13_0.towerId = var_13_1.towerId or 0
-	var_13_0.layerId = var_13_1.layerId or 0
-	var_13_0.difficulty = var_13_1.difficulty or 0
+	var_13_0.bossId = arg_13_1
+	var_13_0.planId = arg_13_2
 
-	arg_13_0:packStartTowerBattleRequest(var_13_0, arg_13_1)
-
-	return arg_13_0:sendMsg(var_13_0, arg_13_2, arg_13_3)
+	return arg_13_0:sendMsg(var_13_0)
 end
 
-function var_0_0.onReceiveStartTowerBattleReply(arg_14_0, arg_14_1, arg_14_2)
-	FightRpc.instance:onReceiveTestFightReply(arg_14_1, arg_14_2 and arg_14_2.startDungeonReply)
-end
-
-function var_0_0.packStartTowerBattleRequest(arg_15_0, arg_15_1, arg_15_2)
-	local var_15_0 = arg_15_1.startDungeonRequest
-	local var_15_1 = arg_15_2.fightParam
-
-	var_15_0.chapterId = arg_15_2.chapterId
-	var_15_0.episodeId = arg_15_2.episodeId
-	var_15_0.isRestart = arg_15_2.isRestart and true or false
-	var_15_0.isBalance = HeroGroupBalanceHelper.getIsBalanceMode()
-	var_15_0.multiplication = arg_15_2.multiplication or 1
-	var_15_0.useRecord = arg_15_2.useRecord and true or false
-
-	if var_15_1 then
-		var_15_1:setReqFightGroup(var_15_0)
-		FightModel.instance:recordFightGroup(var_15_0.fightGroup)
+function var_0_0.onReceiveTowerChangeTalentPlanReply(arg_14_0, arg_14_1, arg_14_2)
+	if arg_14_1 == 0 then
+		TowerController.instance:dispatchEvent(TowerEvent.ChangeTalentPlan, arg_14_2)
 	end
 end
 
-function var_0_0.onReceiveTowerBattleFinishPush(arg_16_0, arg_16_1, arg_16_2)
+function var_0_0.sendTowerResetSubEpisodeRequest(arg_15_0, arg_15_1, arg_15_2, arg_15_3, arg_15_4, arg_15_5, arg_15_6)
+	local var_15_0 = TowerModule_pb.TowerResetSubEpisodeRequest()
+
+	var_15_0.towerType = arg_15_1
+	var_15_0.towerId = arg_15_2
+	var_15_0.layerId = arg_15_3
+	var_15_0.subEpisode = arg_15_4
+
+	return arg_15_0:sendMsg(var_15_0, arg_15_5, arg_15_6)
+end
+
+function var_0_0.onReceiveTowerResetSubEpisodeReply(arg_16_0, arg_16_1, arg_16_2)
 	if arg_16_1 == 0 then
-		TowerModel.instance:onReceiveTowerBattleFinishPush(arg_16_2)
+		TowerModel.instance:resetTowerSubEpisode(arg_16_2)
+		TowerController.instance:dispatchEvent(TowerEvent.OnTowerResetSubEpisode, arg_16_2)
+	end
+end
+
+function var_0_0.sendStartTowerBattleRequest(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
+	local var_17_0 = TowerModule_pb.StartTowerBattleRequest()
+	local var_17_1 = TowerModel.instance:getRecordFightParam()
+
+	var_17_0.type = var_17_1.towerType
+	var_17_0.towerId = var_17_1.towerId or 0
+	var_17_0.layerId = var_17_1.layerId or 0
+	var_17_0.difficulty = var_17_1.difficulty or 0
+	var_17_0.talentPlanId = TowerAssistBossModel.instance:getLimitedTrialBossTalentPlan(var_17_1)
+
+	arg_17_0:packStartTowerBattleRequest(var_17_0, arg_17_1)
+
+	return arg_17_0:sendMsg(var_17_0, arg_17_2, arg_17_3)
+end
+
+function var_0_0.onReceiveStartTowerBattleReply(arg_18_0, arg_18_1, arg_18_2)
+	FightRpc.instance:onReceiveTestFightReply(arg_18_1, arg_18_2 and arg_18_2.startDungeonReply)
+end
+
+function var_0_0.packStartTowerBattleRequest(arg_19_0, arg_19_1, arg_19_2)
+	local var_19_0 = arg_19_1.startDungeonRequest
+	local var_19_1 = arg_19_2.fightParam
+
+	var_19_0.chapterId = arg_19_2.chapterId
+	var_19_0.episodeId = arg_19_2.episodeId
+	var_19_0.isRestart = arg_19_2.isRestart and true or false
+	var_19_0.isBalance = HeroGroupBalanceHelper.getIsBalanceMode()
+	var_19_0.multiplication = arg_19_2.multiplication or 1
+	var_19_0.useRecord = arg_19_2.useRecord and true or false
+
+	if var_19_1 then
+		var_19_1:setReqFightGroup(var_19_0)
+		FightModel.instance:recordFightGroup(var_19_0.fightGroup)
+	end
+end
+
+function var_0_0.onReceiveTowerBattleFinishPush(arg_20_0, arg_20_1, arg_20_2)
+	if arg_20_1 == 0 then
+		TowerModel.instance:onReceiveTowerBattleFinishPush(arg_20_2)
 	end
 end
 

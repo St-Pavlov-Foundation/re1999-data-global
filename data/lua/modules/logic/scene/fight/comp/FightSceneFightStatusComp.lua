@@ -12,7 +12,7 @@ function var_0_0.onScenePrepared(arg_2_0, arg_2_1, arg_2_2)
 	FightController.instance:registerCallback(FightEvent.OnRestartStageBefore, arg_2_0._onRestartStageBefore, arg_2_0)
 	FightController.instance:registerCallback(FightEvent.FightDialogEnd, arg_2_0._onFightDialogEnd, arg_2_0)
 	FightController.instance:registerCallback(FightEvent.PushEndFight, arg_2_0._pushEndFight, arg_2_0)
-	FightController.instance:registerCallback(FightEvent.ForceUpdatePerformanceData, arg_2_0._onForceUpdatePerformanceData, arg_2_0)
+	FightController.instance:registerCallback(FightEvent.CoverPerformanceEntityData, arg_2_0.onCoverPerformanceEntityData, arg_2_0)
 	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, arg_2_0._onCloseView, arg_2_0)
 end
 
@@ -111,7 +111,7 @@ function var_0_0._clearTab(arg_12_0)
 	arg_12_0._buffCount = nil
 end
 
-function var_0_0._onForceUpdatePerformanceData(arg_13_0, arg_13_1)
+function var_0_0.onCoverPerformanceEntityData(arg_13_0, arg_13_1)
 	local var_13_0 = FightHelper.getEntity(arg_13_1)
 
 	if var_13_0 and var_13_0.buff then
@@ -127,7 +127,7 @@ function var_0_0.onSceneClose(arg_14_0, arg_14_1, arg_14_2)
 	FightController.instance:unregisterCallback(FightEvent.OnRestartStageBefore, arg_14_0._onRestartStageBefore, arg_14_0)
 	FightController.instance:unregisterCallback(FightEvent.FightDialogEnd, arg_14_0._onFightDialogEnd, arg_14_0)
 	FightController.instance:unregisterCallback(FightEvent.PushEndFight, arg_14_0._pushEndFight, arg_14_0)
-	FightController.instance:unregisterCallback(FightEvent.ForceUpdatePerformanceData, arg_14_0._onForceUpdatePerformanceData, arg_14_0)
+	FightController.instance:unregisterCallback(FightEvent.CoverPerformanceEntityData, arg_14_0.onCoverPerformanceEntityData, arg_14_0)
 	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, arg_14_0._onCloseView, arg_14_0)
 end
 

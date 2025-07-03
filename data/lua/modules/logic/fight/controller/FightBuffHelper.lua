@@ -54,7 +54,7 @@ function var_0_0.canPlayDormantBuffAni(arg_6_0, arg_6_1)
 
 	local var_6_4 = var_6_2
 
-	for iter_6_2, iter_6_3 in ipairs(arg_6_1.actEffectMOs) do
+	for iter_6_2, iter_6_3 in ipairs(arg_6_1.actEffect) do
 		if iter_6_3.buff and var_0_0.isDormantBuff(iter_6_3.buff.buffId) then
 			if iter_6_3.effectType == FightEnum.EffectType.BUFFADD then
 				var_6_2 = var_6_2 + 1
@@ -77,7 +77,7 @@ function var_0_0.simulateBuffList(arg_7_0, arg_7_1)
 	end
 
 	local var_7_0 = arg_7_0 and arg_7_0:getBuffList()
-	local var_7_1 = FightCardModel.instance:getCardOps()
+	local var_7_1 = FightDataHelper.operationDataMgr:getOpList()
 
 	for iter_7_0, iter_7_1 in ipairs(var_7_1) do
 		if iter_7_1:isPlayCard() then
@@ -292,7 +292,7 @@ function var_0_0.checkSkillCanPurifyBySkill(arg_15_0, arg_15_1, arg_15_2, arg_15
 		return false
 	end
 
-	if var_0_0.hasFeature(var_15_1, arg_15_3, FightEnum.BuffFeature.Dream) and not FightCardModel.instance:isUniqueSkill(arg_15_0, arg_15_1) then
+	if var_0_0.hasFeature(var_15_1, arg_15_3, FightEnum.BuffFeature.Dream) and not FightCardDataHelper.isBigSkill(arg_15_1) then
 		return false
 	end
 
@@ -327,7 +327,7 @@ function var_0_0.checkSkillCanPurifyByBehaviour(arg_16_0, arg_16_1, arg_16_2, ar
 		return false
 	end
 
-	if var_0_0.hasFeature(var_16_0, arg_16_3, FightEnum.BuffFeature.Dream) and not FightCardModel.instance:isUniqueSkill(arg_16_0, arg_16_1) then
+	if var_0_0.hasFeature(var_16_0, arg_16_3, FightEnum.BuffFeature.Dream) and not FightCardDataHelper.isBigSkill(arg_16_1) then
 		return false
 	end
 

@@ -1,0 +1,122 @@
+[
+  {
+    "id": "beast",
+    "type": "base",
+    "damageRate": "1",
+    "healRate": ""
+  },
+  {
+    "id": "beast",
+    "type": "three",
+    "damageRate": "3",
+    "healRate": ""
+  },
+  {
+    "id": "beast",
+    "type": "four",
+    "damageRate": "6",
+    "healRate": ""
+  },
+  {
+    "id": "beast",
+    "type": "cross",
+    "damageRate": "6#1",
+    "healRate": ""
+  },
+  {
+    "id": "beast",
+    "type": "five",
+    "damageRate": "9#2",
+    "healRate": ""
+  },
+  {
+    "id": "tree",
+    "type": "base",
+    "damageRate": "",
+    "healRate": "1"
+  },
+  {
+    "id": "tree",
+    "type": "three",
+    "damageRate": "",
+    "healRate": "3"
+  },
+  {
+    "id": "tree",
+    "type": "four",
+    "damageRate": "",
+    "healRate": "6"
+  },
+  {
+    "id": "tree",
+    "type": "cross",
+    "damageRate": "",
+    "healRate": "6#1"
+  },
+  {
+    "id": "tree",
+    "type": "five",
+    "damageRate": "",
+    "healRate": "9#2"
+  },
+  {
+    "id": "cliff",
+    "type": "base",
+    "damageRate": "1",
+    "healRate": ""
+  },
+  {
+    "id": "cliff",
+    "type": "three",
+    "damageRate": "3",
+    "healRate": ""
+  },
+  {
+    "id": "cliff",
+    "type": "four",
+    "damageRate": "6",
+    "healRate": ""
+  },
+  {
+    "id": "cliff",
+    "type": "cross",
+    "damageRate": "6#1",
+    "healRate": ""
+  },
+  {
+    "id": "cliff",
+    "type": "five",
+    "damageRate": "9#2",
+    "healRate": ""
+  },
+  {
+    "id": "star",
+    "type": "base",
+    "damageRate": "1",
+    "healRate": ""
+  },
+  {
+    "id": "star",
+    "type": "three",
+    "damageRate": "3",
+    "healRate": ""
+  },
+  {
+    "id": "star",
+    "type": "four",
+    "damageRate": "6",
+    "healRate": ""
+  },
+  {
+    "id": "star",
+    "type": "cross",
+    "damageRate": "6#1",
+    "healRate": ""
+  },
+  {
+    "id": "star",
+    "type": "five",
+    "damageRate": "9#2",
+    "healRate": ""
+  }
+]

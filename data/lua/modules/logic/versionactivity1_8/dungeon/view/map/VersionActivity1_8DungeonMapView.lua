@@ -92,6 +92,7 @@ end
 
 function var_0_0.playCloseAnimaDone(arg_6_0)
 	arg_6_0:setNavBtnIsShow(false)
+	gohelper.setActive(arg_6_0._gotopright, false)
 	gohelper.setActive(arg_6_0._goswitchmodecontainer, false)
 	UIBlockMgr.instance:endBlock(VersionActivity1_8DungeonEnum.BlockKey.MapViewPlayCloseAnim)
 end
@@ -109,6 +110,7 @@ end
 
 function var_0_0.showBtnUI(arg_8_0)
 	arg_8_0:setNavBtnIsShow(true)
+	gohelper.setActive(arg_8_0._gotopright, false)
 	gohelper.setActive(arg_8_0._goswitchmodecontainer, true)
 	arg_8_0.animator:Play("open", 0, 0)
 	UIBlockMgrExtend.setNeedCircleMv(false)
@@ -272,6 +274,7 @@ end
 function var_0_0.onOpen(arg_25_0)
 	VersionActivity1_8DungeonController.instance:onVersionActivityDungeonMapViewOpen()
 	arg_25_0:refreshUI()
+	gohelper.setActive(arg_25_0._gotopright, false)
 end
 
 function var_0_0.refreshUI(arg_26_0)

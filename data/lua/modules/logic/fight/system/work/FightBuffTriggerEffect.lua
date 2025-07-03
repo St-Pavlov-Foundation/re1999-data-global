@@ -5,7 +5,7 @@ local var_0_1 = 2
 local var_0_2 = 2
 
 function var_0_0.onStart(arg_1_0)
-	local var_1_0 = FightHelper.getEntity(arg_1_0._actEffectMO.targetId)
+	local var_1_0 = FightHelper.getEntity(arg_1_0.actEffectData.targetId)
 
 	if not var_1_0 then
 		arg_1_0:onDone(true)
@@ -13,7 +13,7 @@ function var_0_0.onStart(arg_1_0)
 		return
 	end
 
-	local var_1_1 = lua_skill_buff.configDict[arg_1_0._actEffectMO.effectNum]
+	local var_1_1 = lua_skill_buff.configDict[arg_1_0.actEffectData.effectNum]
 
 	if var_1_1 and FightHelper.shouUIPoisoningEffect(var_1_1.id) and var_1_0.nameUI and var_1_0.nameUI.showPoisoningEffect then
 		var_1_0.nameUI:showPoisoningEffect(var_1_1)
@@ -67,7 +67,7 @@ function var_0_0._getBuffTriggerParam(arg_2_0, arg_2_1, arg_2_2)
 	local var_2_2 = arg_2_1 and arg_2_1.triggerAudio
 
 	if string.nilorempty(var_2_0) or var_2_0 == "0" then
-		local var_2_3 = lua_buff_act.configDict[arg_2_0._actEffectMO.buffActId]
+		local var_2_3 = lua_buff_act.configDict[arg_2_0.actEffectData.buffActId]
 
 		if var_2_3 and not string.nilorempty(var_2_3.effect) then
 			local var_2_4 = var_2_3.effect
@@ -99,7 +99,7 @@ end
 
 function var_0_0._onAnimEvent(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
 	if arg_3_1 == arg_3_0._animationName and arg_3_2 == SpineAnimEvent.ActionComplete then
-		local var_3_0 = FightHelper.getEntity(arg_3_0._actEffectMO.targetId)
+		local var_3_0 = FightHelper.getEntity(arg_3_0.actEffectData.targetId)
 
 		if var_3_0 then
 			var_3_0.spine:removeAnimEventCallback(arg_3_0._onAnimEvent, arg_3_0)
@@ -116,7 +116,7 @@ function var_0_0._onTickCheckRemoveEffect(arg_4_0)
 		return
 	end
 
-	local var_4_0 = FightHelper.getEntity(arg_4_0._actEffectMO.targetId)
+	local var_4_0 = FightHelper.getEntity(arg_4_0.actEffectData.targetId)
 
 	if arg_4_0._effectWrap and var_4_0 then
 		var_4_0.effect:removeEffect(arg_4_0._effectWrap)
@@ -130,7 +130,7 @@ function var_0_0._onTickCheckRemoveAnim(arg_5_0)
 		return
 	end
 
-	local var_5_0 = FightHelper.getEntity(arg_5_0._actEffectMO.targetId)
+	local var_5_0 = FightHelper.getEntity(arg_5_0.actEffectData.targetId)
 
 	if var_5_0 then
 		var_5_0.spine:removeAnimEventCallback(arg_5_0._onAnimEvent, arg_5_0)
@@ -142,7 +142,7 @@ function var_0_0.onDestroy(arg_6_0)
 	TaskDispatcher.cancelTask(arg_6_0._onTickCheckRemoveAnim, arg_6_0)
 
 	if arg_6_0._hasPlayAnim then
-		local var_6_0 = FightHelper.getEntity(arg_6_0._actEffectMO.targetId)
+		local var_6_0 = FightHelper.getEntity(arg_6_0.actEffectData.targetId)
 
 		if var_6_0 then
 			var_6_0.spine:removeAnimEventCallback(arg_6_0._onAnimEvent, arg_6_0)

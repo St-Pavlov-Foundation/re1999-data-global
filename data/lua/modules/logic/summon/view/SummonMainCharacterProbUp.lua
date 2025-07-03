@@ -190,319 +190,355 @@ function var_0_0._btnsummon1OnClick(arg_14_0)
 		return
 	end
 
-	local var_14_1, var_14_2, var_14_3 = SummonMainModel.getCostByConfig(var_14_0.cost1)
-	local var_14_4 = {
-		type = var_14_1,
-		id = var_14_2,
-		quantity = var_14_3,
-		callback = arg_14_0._summon1Confirm,
-		callbackObj = arg_14_0
-	}
+	local var_14_1 = SummonModel.instance:getSummonFullExSkillHero(var_14_0.id)
 
-	var_14_4.notEnough = false
-
-	local var_14_5 = var_14_3 <= ItemModel.instance:getItemQuantity(var_14_1, var_14_2)
-	local var_14_6 = SummonMainModel.instance.everyCostCount
-	local var_14_7 = SummonMainModel.instance:getOwnCostCurrencyNum()
-
-	if not var_14_5 and var_14_7 < var_14_6 then
-		var_14_4.notEnough = true
-	end
-
-	if var_14_5 then
-		var_14_4.needTransform = false
-
-		arg_14_0:_summon1Confirm()
-
-		return
+	if var_14_1 == nil then
+		arg_14_0:_btnsummon1OnClick_2()
 	else
-		var_14_4.needTransform = true
-		var_14_4.cost_type = SummonMainModel.instance.costCurrencyType
-		var_14_4.cost_id = SummonMainModel.instance.costCurrencyId
-		var_14_4.cost_quantity = var_14_6
-		var_14_4.miss_quantity = 1
-	end
+		local var_14_2 = HeroConfig.instance:getHeroCO(var_14_1).name
 
-	ViewMgr.instance:openView(ViewName.SummonConfirmView, var_14_4)
+		GameFacade.showOptionAndParamsMessageBox(MessageBoxIdDefine.SummonHeroExFull, MsgBoxEnum.BoxType.Yes_No, MsgBoxEnum.optionType.Daily, var_14_0.id, arg_14_0._btnsummon1OnClick_2, nil, nil, arg_14_0, nil, nil, var_14_2)
+	end
 end
 
-function var_0_0._summon1Confirm(arg_15_0)
+function var_0_0._btnsummon1OnClick_2(arg_15_0)
 	local var_15_0 = SummonMainModel.instance:getCurPool()
 
 	if not var_15_0 then
 		return
 	end
 
-	SummonMainController.instance:sendStartSummon(var_15_0.id, 1, false, true)
+	local var_15_1, var_15_2, var_15_3 = SummonMainModel.getCostByConfig(var_15_0.cost1)
+	local var_15_4 = {
+		type = var_15_1,
+		id = var_15_2,
+		quantity = var_15_3,
+		callback = arg_15_0._summon1Confirm,
+		callbackObj = arg_15_0
+	}
+
+	var_15_4.notEnough = false
+
+	local var_15_5 = var_15_3 <= ItemModel.instance:getItemQuantity(var_15_1, var_15_2)
+	local var_15_6 = SummonMainModel.instance.everyCostCount
+	local var_15_7 = SummonMainModel.instance:getOwnCostCurrencyNum()
+
+	if not var_15_5 and var_15_7 < var_15_6 then
+		var_15_4.notEnough = true
+	end
+
+	if var_15_5 then
+		var_15_4.needTransform = false
+
+		arg_15_0:_summon1Confirm()
+
+		return
+	else
+		var_15_4.needTransform = true
+		var_15_4.cost_type = SummonMainModel.instance.costCurrencyType
+		var_15_4.cost_id = SummonMainModel.instance.costCurrencyId
+		var_15_4.cost_quantity = var_15_6
+		var_15_4.miss_quantity = 1
+	end
+
+	ViewMgr.instance:openView(ViewName.SummonConfirmView, var_15_4)
 end
 
-function var_0_0._btnsummon10OnClick(arg_16_0)
+function var_0_0._summon1Confirm(arg_16_0)
 	local var_16_0 = SummonMainModel.instance:getCurPool()
 
 	if not var_16_0 then
 		return
 	end
 
-	local var_16_1, var_16_2, var_16_3 = SummonMainModel.getCostByConfig(var_16_0.cost10)
-	local var_16_4 = {
-		type = var_16_1,
-		id = var_16_2,
-		quantity = var_16_3,
-		callback = arg_16_0._summon10Confirm,
-		callbackObj = arg_16_0
-	}
-
-	var_16_4.notEnough = false
-
-	local var_16_5 = ItemModel.instance:getItemQuantity(var_16_1, var_16_2)
-	local var_16_6 = var_16_3 <= var_16_5
-	local var_16_7 = SummonMainModel.instance.everyCostCount
-	local var_16_8 = SummonMainModel.instance:getOwnCostCurrencyNum()
-	local var_16_9 = 10 - var_16_5
-	local var_16_10 = var_16_7 * var_16_9
-
-	if not var_16_6 and var_16_8 < var_16_10 then
-		var_16_4.notEnough = true
-	end
-
-	if var_16_6 then
-		var_16_4.needTransform = false
-
-		arg_16_0:_summon10Confirm()
-
-		return
-	else
-		var_16_4.needTransform = true
-		var_16_4.cost_type = SummonMainModel.instance.costCurrencyType
-		var_16_4.cost_id = SummonMainModel.instance.costCurrencyId
-		var_16_4.cost_quantity = var_16_10
-		var_16_4.miss_quantity = var_16_9
-	end
-
-	ViewMgr.instance:openView(ViewName.SummonConfirmView, var_16_4)
+	SummonMainController.instance:sendStartSummon(var_16_0.id, 1, false, true)
 end
 
-function var_0_0._summon10Confirm(arg_17_0)
+function var_0_0._btnsummon10OnClick(arg_17_0)
 	local var_17_0 = SummonMainModel.instance:getCurPool()
 
 	if not var_17_0 then
 		return
 	end
 
-	SummonMainController.instance:sendStartSummon(var_17_0.id, 10, false, true)
+	local var_17_1 = SummonModel.instance:getSummonFullExSkillHero(var_17_0.id)
+
+	if var_17_1 == nil then
+		arg_17_0:_btnsummon10OnClick_2()
+	else
+		local var_17_2 = HeroConfig.instance:getHeroCO(var_17_1).name
+
+		GameFacade.showOptionAndParamsMessageBox(MessageBoxIdDefine.SummonHeroExFull, MsgBoxEnum.BoxType.Yes_No, MsgBoxEnum.optionType.Daily, var_17_0.id, arg_17_0._btnsummon10OnClick_2, nil, nil, arg_17_0, nil, nil, var_17_2)
+	end
 end
 
-function var_0_0._onClickDetailByIndex(arg_18_0, arg_18_1)
-	if not arg_18_0._characteritems then
+function var_0_0._btnsummon10OnClick_2(arg_18_0)
+	local var_18_0 = SummonMainModel.instance:getCurPool()
+
+	if not var_18_0 then
 		return
 	end
 
-	local var_18_0 = arg_18_0._characteritems[arg_18_1]
+	local var_18_1, var_18_2, var_18_3 = SummonMainModel.getCostByConfig(var_18_0.cost10)
+	local var_18_4 = {
+		type = var_18_1,
+		id = var_18_2,
+		quantity = var_18_3,
+		callback = arg_18_0._summon10Confirm,
+		callbackObj = arg_18_0
+	}
 
-	if var_18_0 then
+	var_18_4.notEnough = false
+
+	local var_18_5 = ItemModel.instance:getItemQuantity(var_18_1, var_18_2)
+	local var_18_6 = var_18_3 <= var_18_5
+	local var_18_7 = SummonMainModel.instance.everyCostCount
+	local var_18_8 = SummonMainModel.instance:getOwnCostCurrencyNum()
+	local var_18_9 = 10 - var_18_5
+	local var_18_10 = var_18_7 * var_18_9
+
+	if not var_18_6 and var_18_8 < var_18_10 then
+		var_18_4.notEnough = true
+	end
+
+	if var_18_6 then
+		var_18_4.needTransform = false
+
+		arg_18_0:_summon10Confirm()
+
+		return
+	else
+		var_18_4.needTransform = true
+		var_18_4.cost_type = SummonMainModel.instance.costCurrencyType
+		var_18_4.cost_id = SummonMainModel.instance.costCurrencyId
+		var_18_4.cost_quantity = var_18_10
+		var_18_4.miss_quantity = var_18_9
+	end
+
+	ViewMgr.instance:openView(ViewName.SummonConfirmView, var_18_4)
+end
+
+function var_0_0._summon10Confirm(arg_19_0)
+	local var_19_0 = SummonMainModel.instance:getCurPool()
+
+	if not var_19_0 then
+		return
+	end
+
+	SummonMainController.instance:sendStartSummon(var_19_0.id, 10, false, true)
+end
+
+function var_0_0._onClickDetailByIndex(arg_20_0, arg_20_1)
+	if not arg_20_0._characteritems then
+		return
+	end
+
+	local var_20_0 = arg_20_0._characteritems[arg_20_1]
+
+	if var_20_0 then
 		ViewMgr.instance:openView(ViewName.SummonHeroDetailView, {
-			id = var_18_0.characterDetailId
+			id = var_20_0.characterDetailId
 		})
 	end
 end
 
-function var_0_0._refreshView(arg_19_0)
-	arg_19_0.summonSuccess = false
+function var_0_0._refreshView(arg_21_0)
+	arg_21_0.summonSuccess = false
 
-	local var_19_0 = SummonMainModel.instance:getList()
+	local var_21_0 = SummonMainModel.instance:getList()
 
-	if not var_19_0 or #var_19_0 <= 0 then
-		gohelper.setActive(arg_19_0._goui, false)
+	if not var_21_0 or #var_21_0 <= 0 then
+		gohelper.setActive(arg_21_0._goui, false)
 
 		return
 	end
 
-	arg_19_0:_refreshPoolUI()
-	arg_19_0:_refreshTicket()
+	arg_21_0:_refreshPoolUI()
+	arg_21_0:_refreshTicket()
 end
 
-function var_0_0._refreshPoolUI(arg_20_0)
-	local var_20_0 = SummonMainModel.instance:getCurPool()
-
-	if not var_20_0 then
-		return
-	end
-
-	arg_20_0:_refreshCost()
-	arg_20_0:showCharacter(var_20_0)
-	arg_20_0:refreshFreeSummonButton(var_20_0)
-	arg_20_0:_refreshOpenTime()
-	arg_20_0:_refreshPreferentialInfo()
-end
-
-function var_0_0.refreshFreeSummonButton(arg_21_0, arg_21_1)
-	arg_21_0._compFreeButton = arg_21_0._compFreeButton or SummonFreeSingleGacha.New(arg_21_0._btnsummon1.gameObject, arg_21_1.id)
-
-	arg_21_0._compFreeButton:refreshUI()
-end
-
-function var_0_0._refreshOpenTime(arg_22_0)
-	arg_22_0._txtdeadline.text = ""
-
+function var_0_0._refreshPoolUI(arg_22_0)
 	local var_22_0 = SummonMainModel.instance:getCurPool()
 
 	if not var_22_0 then
 		return
 	end
 
-	local var_22_1 = SummonMainModel.instance:getPoolServerMO(var_22_0.id)
+	arg_22_0:_refreshCost()
+	arg_22_0:showCharacter(var_22_0)
+	arg_22_0:refreshFreeSummonButton(var_22_0)
+	arg_22_0:_refreshOpenTime()
+	arg_22_0:_refreshPreferentialInfo()
+end
 
-	if not var_22_1 then
+function var_0_0.refreshFreeSummonButton(arg_23_0, arg_23_1)
+	arg_23_0._compFreeButton = arg_23_0._compFreeButton or SummonFreeSingleGacha.New(arg_23_0._btnsummon1.gameObject, arg_23_1.id)
+
+	arg_23_0._compFreeButton:refreshUI()
+end
+
+function var_0_0._refreshOpenTime(arg_24_0)
+	arg_24_0._txtdeadline.text = ""
+
+	local var_24_0 = SummonMainModel.instance:getCurPool()
+
+	if not var_24_0 then
 		return
 	end
 
-	local var_22_2, var_22_3 = var_22_1:onOffTimestamp()
+	local var_24_1 = SummonMainModel.instance:getPoolServerMO(var_24_0.id)
 
-	if var_22_2 < var_22_3 and var_22_3 > 0 then
-		local var_22_4 = var_22_3 - ServerTime.now()
+	if not var_24_1 then
+		return
+	end
 
-		arg_22_0._txtdeadline.text = formatLuaLang("summonmainequipprobup_deadline", SummonModel.formatRemainTime(var_22_4))
+	local var_24_2, var_24_3 = var_24_1:onOffTimestamp()
+
+	if var_24_2 < var_24_3 and var_24_3 > 0 then
+		local var_24_4 = var_24_3 - ServerTime.now()
+
+		arg_24_0._txtdeadline.text = formatLuaLang("summonmainequipprobup_deadline", SummonModel.formatRemainTime(var_24_4))
 	end
 end
 
-function var_0_0._refreshPreferentialInfo(arg_23_0)
-	local var_23_0 = SummonMainModel.instance:getCurPool()
+function var_0_0._refreshPreferentialInfo(arg_25_0)
+	local var_25_0 = SummonMainModel.instance:getCurPool()
 
-	if not var_23_0 then
+	if not var_25_0 then
 		return
 	end
 
-	local var_23_1 = SummonMainModel.instance:getPoolServerMO(var_23_0.id)
-	local var_23_2 = var_23_1.canGetGuaranteeSRCount
+	local var_25_1 = SummonMainModel.instance:getPoolServerMO(var_25_0.id)
+	local var_25_2 = var_25_1.canGetGuaranteeSRCount
 
-	if arg_23_0._gopreferential then
-		gohelper.setActive(arg_23_0._gopreferential, var_23_2 > 0)
+	if arg_25_0._gopreferential then
+		gohelper.setActive(arg_25_0._gopreferential, var_25_2 > 0)
 
-		if arg_23_0._txtpreferential and var_23_2 > 0 then
-			local var_23_3 = var_23_1.guaranteeSRCountDown
+		if arg_25_0._txtpreferential and var_25_2 > 0 then
+			local var_25_3 = var_25_1.guaranteeSRCountDown
 
-			arg_23_0._txtpreferential.text = var_23_3
+			arg_25_0._txtpreferential.text = var_25_3
 		end
 	end
 end
 
-function var_0_0._adLoaded(arg_24_0)
-	for iter_24_0 = 1, var_0_0.SIMAGE_COUNT do
-		arg_24_0["_simagead" .. iter_24_0]:GetComponent(typeof(UnityEngine.UI.Image)):SetNativeSize()
+function var_0_0._adLoaded(arg_26_0)
+	for iter_26_0 = 1, var_0_0.SIMAGE_COUNT do
+		arg_26_0["_simagead" .. iter_26_0]:GetComponent(typeof(UnityEngine.UI.Image)):SetNativeSize()
 	end
 end
 
-function var_0_0.showCharacter(arg_25_0, arg_25_1)
-	local var_25_0
+function var_0_0.showCharacter(arg_27_0, arg_27_1)
+	local var_27_0
 
-	if not string.nilorempty(arg_25_1.characterDetail) then
-		var_25_0 = string.split(arg_25_1.characterDetail, "#")
+	if not string.nilorempty(arg_27_1.characterDetail) then
+		var_27_0 = string.split(arg_27_1.characterDetail, "#")
 	end
 
-	local var_25_1 = {}
+	local var_27_1 = {}
 
-	if var_25_0 ~= nil then
-		for iter_25_0 = 1, #var_25_0 do
-			local var_25_2 = tonumber(var_25_0[iter_25_0])
-			local var_25_3 = SummonConfig.instance:getCharacterDetailConfig(var_25_2)
-			local var_25_4 = var_25_3.location
-			local var_25_5 = arg_25_0._characteritems[var_25_4]
+	if var_27_0 ~= nil then
+		for iter_27_0 = 1, #var_27_0 do
+			local var_27_2 = tonumber(var_27_0[iter_27_0])
+			local var_27_3 = SummonConfig.instance:getCharacterDetailConfig(var_27_2)
+			local var_27_4 = var_27_3.location
+			local var_27_5 = arg_27_0._characteritems[var_27_4]
 
-			if var_25_5 then
-				local var_25_6 = var_25_3.heroId
-				local var_25_7 = HeroConfig.instance:getHeroCO(var_25_6)
+			if var_27_5 then
+				local var_27_6 = var_27_3.heroId
+				local var_27_7 = HeroConfig.instance:getHeroCO(var_27_6)
 
-				UISpriteSetMgr.instance:setCommonSprite(var_25_5.imagecareer, "lssx_" .. tostring(var_25_7.career))
+				UISpriteSetMgr.instance:setCommonSprite(var_27_5.imagecareer, "lssx_" .. tostring(var_27_7.career))
 
-				var_25_5.txtnamecn.text = var_25_7.name
+				var_27_5.txtnamecn.text = var_27_7.name
 
-				for iter_25_1 = 1, 6 do
-					gohelper.setActive(var_25_5.rares[iter_25_1], iter_25_1 <= CharacterEnum.Star[var_25_7.rare])
+				for iter_27_1 = 1, 6 do
+					gohelper.setActive(var_27_5.rares[iter_27_1], iter_27_1 <= CharacterEnum.Star[var_27_7.rare])
 				end
 
-				var_25_5.characterDetailId = var_25_2
+				var_27_5.characterDetailId = var_27_2
 
-				gohelper.setActive(var_25_5.go, true)
+				gohelper.setActive(var_27_5.go, true)
 
-				var_25_1[var_25_4] = true
+				var_27_1[var_27_4] = true
 			end
 		end
 	end
 
-	for iter_25_2 = 1, #arg_25_0._characteritems do
-		gohelper.setActive(arg_25_0._characteritems[iter_25_2].go, var_25_1[iter_25_2])
+	for iter_27_2 = 1, #arg_27_0._characteritems do
+		gohelper.setActive(arg_27_0._characteritems[iter_27_2].go, var_27_1[iter_27_2])
 	end
 end
 
-function var_0_0._refreshCost(arg_26_0)
-	local var_26_0 = SummonMainModel.instance:getCurPool()
+function var_0_0._refreshCost(arg_28_0)
+	local var_28_0 = SummonMainModel.instance:getCurPool()
 
-	if var_26_0 then
-		arg_26_0:_refreshSingleCost(var_26_0.cost1, arg_26_0._simagecurrency1, "_txtcurrency1")
-		arg_26_0:_refreshSingleCost(var_26_0.cost10, arg_26_0._simagecurrency10, "_txtcurrency10")
+	if var_28_0 then
+		arg_28_0:_refreshSingleCost(var_28_0.cost1, arg_28_0._simagecurrency1, "_txtcurrency1")
+		arg_28_0:_refreshSingleCost(var_28_0.cost10, arg_28_0._simagecurrency10, "_txtcurrency10")
 	end
 end
 
-function var_0_0._refreshSingleCost(arg_27_0, arg_27_1, arg_27_2, arg_27_3)
-	local var_27_0, var_27_1, var_27_2 = SummonMainModel.getCostByConfig(arg_27_1)
-	local var_27_3 = SummonMainModel.getSummonItemIcon(var_27_0, var_27_1)
+function var_0_0._refreshSingleCost(arg_29_0, arg_29_1, arg_29_2, arg_29_3)
+	local var_29_0, var_29_1, var_29_2 = SummonMainModel.getCostByConfig(arg_29_1)
+	local var_29_3 = SummonMainModel.getSummonItemIcon(var_29_0, var_29_1)
 
-	arg_27_2:LoadImage(var_27_3)
+	arg_29_2:LoadImage(var_29_3)
 
-	local var_27_4
+	local var_29_4
 
-	var_27_4 = var_27_2 <= ItemModel.instance:getItemQuantity(var_27_0, var_27_1)
-	arg_27_0[arg_27_3 .. "1"].text = luaLang("multiple") .. var_27_2
-	arg_27_0[arg_27_3 .. "2"].text = ""
+	var_29_4 = var_29_2 <= ItemModel.instance:getItemQuantity(var_29_0, var_29_1)
+	arg_29_0[arg_29_3 .. "1"].text = luaLang("multiple") .. var_29_2
+	arg_29_0[arg_29_3 .. "2"].text = ""
 end
 
-function var_0_0.onSummonFailed(arg_28_0)
-	arg_28_0.summonSuccess = false
-
-	arg_28_0:_refreshCost()
-end
-
-function var_0_0.onSummonReply(arg_29_0)
-	arg_29_0.summonSuccess = true
-
-	arg_29_0:_refreshPreferentialInfo()
-end
-
-function var_0_0.onItemChanged(arg_30_0)
-	if SummonController.instance.isWaitingSummonResult or arg_30_0.summonSuccess then
-		return
-	end
+function var_0_0.onSummonFailed(arg_30_0)
+	arg_30_0.summonSuccess = false
 
 	arg_30_0:_refreshCost()
-	arg_30_0:_refreshTicket()
 end
 
-function var_0_0._refreshTicket(arg_31_0)
-	if arg_31_0._txtticket == nil then
+function var_0_0.onSummonReply(arg_31_0)
+	arg_31_0.summonSuccess = true
+
+	arg_31_0:_refreshPreferentialInfo()
+end
+
+function var_0_0.onItemChanged(arg_32_0)
+	if SummonController.instance.isWaitingSummonResult or arg_32_0.summonSuccess then
 		return
 	end
 
-	local var_31_0 = SummonMainModel.instance:getCurPool()
+	arg_32_0:_refreshCost()
+	arg_32_0:_refreshTicket()
+end
 
-	if not var_31_0 then
+function var_0_0._refreshTicket(arg_33_0)
+	if arg_33_0._txtticket == nil then
 		return
 	end
 
-	local var_31_1 = 0
+	local var_33_0 = SummonMainModel.instance:getCurPool()
 
-	if var_31_0.ticketId ~= 0 then
-		local var_31_2 = ItemModel.instance:getItemQuantity(MaterialEnum.MaterialType.Item, var_31_0.ticketId)
-
-		arg_31_0._txtticket.text = tostring(var_31_2)
+	if not var_33_0 then
+		return
 	end
 
-	gohelper.setActive(arg_31_0._goShop, var_31_0.ticketId ~= 0)
+	local var_33_1 = 0
+
+	if var_33_0.ticketId ~= 0 then
+		local var_33_2 = ItemModel.instance:getItemQuantity(MaterialEnum.MaterialType.Item, var_33_0.ticketId)
+
+		arg_33_0._txtticket.text = tostring(var_33_2)
+	end
+
+	gohelper.setActive(arg_33_0._goShop, var_33_0.ticketId ~= 0)
 end
 
-function var_0_0._btnshopOnClick(arg_32_0)
-	local var_32_0 = StoreEnum.StoreId.LimitStore
+function var_0_0._btnshopOnClick(arg_34_0)
+	local var_34_0 = StoreEnum.StoreId.LimitStore
 
-	StoreController.instance:checkAndOpenStoreView(var_32_0)
+	StoreController.instance:checkAndOpenStoreView(var_34_0)
 end
 
 return var_0_0

@@ -3,8 +3,7 @@
 local var_0_0 = class("FightObject")
 
 function var_0_0.onConstructor(arg_1_0)
-	arg_1_0.INSTANTIATE_CLASS_LIST = {}
-	arg_1_0.COMPONENT_LIST = {}
+	return
 end
 
 function var_0_0.onAwake(arg_2_0, ...)
@@ -16,10 +15,13 @@ function var_0_0.releaseSelf(arg_3_0)
 end
 
 function var_0_0.onDestructor(arg_4_0)
-	arg_4_0:disposeClassList(arg_4_0.COMPONENT_LIST)
+	if arg_4_0.COMPONENT_LIST then
+		arg_4_0:disposeObjectList(arg_4_0.COMPONENT_LIST)
+
+		arg_4_0.COMPONENT_LIST = nil
+	end
 
 	arg_4_0.INSTANTIATE_CLASS_LIST = nil
-	arg_4_0.COMPONENT_LIST = nil
 end
 
 function var_0_0.onDestructorFinish(arg_5_0)
@@ -29,6 +31,10 @@ end
 function var_0_0.newClass(arg_6_0, arg_6_1, ...)
 	if arg_6_0.IS_DISPOSED or arg_6_0.IS_RELEASING then
 		logError("生命周期已经结束了,但是又调用注册类的方法,请检查代码,类名:" .. arg_6_0.__cname)
+	end
+
+	if not arg_6_0.INSTANTIATE_CLASS_LIST then
+		arg_6_0.INSTANTIATE_CLASS_LIST = {}
 	end
 
 	local var_6_0 = arg_6_1.New(...)
@@ -43,6 +49,10 @@ end
 function var_0_0.addComponent(arg_7_0, arg_7_1)
 	if arg_7_0.IS_DISPOSED then
 		logError("生命周期已经结束了,但是又调用了添加组件的方法,请检查代码,类名:" .. arg_7_0.__cname)
+	end
+
+	if not arg_7_0.COMPONENT_LIST then
+		arg_7_0.COMPONENT_LIST = {}
 	end
 
 	local var_7_0 = arg_7_1.New()
@@ -133,9 +143,13 @@ function var_0_0.internalClearDeadInstantiatedClass(arg_14_0)
 
 	arg_14_0.CLEARTIMER = nil
 
-	for iter_14_0 = #arg_14_0.INSTANTIATE_CLASS_LIST, 1, -1 do
-		if arg_14_0.INSTANTIATE_CLASS_LIST[iter_14_0].IS_DISPOSED then
-			table.remove(arg_14_0.INSTANTIATE_CLASS_LIST, iter_14_0)
+	local var_14_0 = arg_14_0.INSTANTIATE_CLASS_LIST
+
+	if var_14_0 then
+		for iter_14_0 = #var_14_0, 1, -1 do
+			if var_14_0[iter_14_0].IS_DISPOSED then
+				table.remove(var_14_0, iter_14_0)
+			end
 		end
 	end
 end
@@ -151,7 +165,7 @@ function var_0_0.markReleasing(arg_15_0)
 		end
 
 		local var_15_2 = var_15_0.IS_RELEASING + 1
-		local var_15_3 = var_15_1[var_15_2]
+		local var_15_3 = var_15_1 and var_15_1[var_15_2]
 
 		if not var_15_3 then
 			if var_15_0 == arg_15_0 then
@@ -176,11 +190,11 @@ function var_0_0.releaseChildRoot(arg_16_0)
 		local var_16_1 = var_16_0.INSTANTIATE_CLASS_LIST
 
 		if not var_16_0.DISPOSEINDEX then
-			var_16_0.DISPOSEINDEX = #var_16_1 + 1
+			var_16_0.DISPOSEINDEX = var_16_1 and #var_16_1 + 1 or 1
 		end
 
 		local var_16_2 = var_16_0.DISPOSEINDEX - 1
-		local var_16_3 = var_16_1[var_16_2]
+		local var_16_3 = var_16_1 and var_16_1[var_16_2]
 
 		if not var_16_3 then
 			if var_16_0 == arg_16_0 then
@@ -216,7 +230,7 @@ function var_0_0.destructorInternal(arg_17_0, arg_17_1, arg_17_2)
 	end
 end
 
-function var_0_0.disposeClassList(arg_18_0, arg_18_1)
+function var_0_0.disposeObjectList(arg_18_0, arg_18_1)
 	for iter_18_0 = #arg_18_1, 1, -1 do
 		local var_18_0 = arg_18_1[iter_18_0]
 

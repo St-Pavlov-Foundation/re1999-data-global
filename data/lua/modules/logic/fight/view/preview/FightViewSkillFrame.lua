@@ -133,11 +133,13 @@ function var_0_0._setFrameText(arg_11_0)
 		return
 	end
 
-	if arg_11_0._entity and arg_11_0._entity.skill and arg_11_0._entity.skill:getBinder() then
-		local var_11_0 = arg_11_0._entity.skill:getCurFrame()
+	local var_11_0 = arg_11_0._entity.skill:getBinder()
 
-		if var_11_0 > 0 then
-			arg_11_0._text.text = "技能预览\n" .. var_11_0
+	if arg_11_0._entity and arg_11_0._entity.skill and var_11_0 then
+		local var_11_1 = var_11_0.CurFrame
+
+		if var_11_1 > 0 then
+			arg_11_0._text.text = "技能预览\n" .. var_11_1
 		end
 	end
 end

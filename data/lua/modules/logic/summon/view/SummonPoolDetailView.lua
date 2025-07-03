@@ -65,10 +65,12 @@ function var_0_0._refreshTitle(arg_5_0, arg_5_1)
 		arg_5_0._txtspecialtitlecn.text = string.format("<size=60>%s</size>%s", var_5_5, var_5_6)
 	end
 
-	arg_5_0._txttitlecn.text = string.format("「%s」%s", var_5_1, luaLang("ruledetail"))
+	local var_5_7 = luaLang("ruledetail")
+
+	arg_5_0._txttitlecn.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("summon_pool_exchange"), var_5_1, var_5_7)
 
 	if var_5_3 then
-		arg_5_0._txttitleen.text = string.format("「%s」%s", var_5_2, "Rules")
+		arg_5_0._txttitleen.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("summon_pool_exchange"), var_5_2, "Rules")
 	end
 
 	arg_5_0:_refreshline(arg_5_1)

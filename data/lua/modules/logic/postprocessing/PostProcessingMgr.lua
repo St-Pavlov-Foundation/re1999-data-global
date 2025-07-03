@@ -426,201 +426,213 @@ function var_0_0.setUIBloom(arg_35_0, arg_35_1)
 	arg_35_0._uiBloomActive = arg_35_1
 end
 
-function var_0_0.setUIBlurActive(arg_36_0, arg_36_1, arg_36_2, arg_36_3, arg_36_4)
-	if arg_36_0._uiCamData and arg_36_0._unitCamData and arg_36_0._capture then
-		local var_36_0 = CameraMgr.instance:getMainCamera()
-		local var_36_1 = CameraMgr.instance:getUICamera()
-		local var_36_2 = GameSceneMgr.instance:getCurSceneType()
+function var_0_0.setIgnoreUIBlur(arg_36_0, arg_36_1)
+	arg_36_0._isIgnoreUIBlur = arg_36_1
+end
 
-		if arg_36_1 == false or arg_36_1 == 0 then
-			if arg_36_4 ~= ViewEvent.OnCloseView then
-				arg_36_0:setUIActive(false)
+function var_0_0.getIgnoreUIBlur(arg_37_0)
+	return arg_37_0._isIgnoreUIBlur
+end
+
+function var_0_0.setUIBlurActive(arg_38_0, arg_38_1, arg_38_2, arg_38_3, arg_38_4)
+	if arg_38_0._isIgnoreUIBlur then
+		return
+	end
+
+	if arg_38_0._uiCamData and arg_38_0._unitCamData and arg_38_0._capture then
+		local var_38_0 = CameraMgr.instance:getMainCamera()
+		local var_38_1 = CameraMgr.instance:getUICamera()
+		local var_38_2 = GameSceneMgr.instance:getCurSceneType()
+
+		if arg_38_1 == false or arg_38_1 == 0 then
+			if arg_38_4 ~= ViewEvent.OnCloseView then
+				arg_38_0:setUIActive(false)
 			end
 
-			arg_36_0._unitCamData.usePostProcess = var_36_2 ~= SceneType.Room
+			arg_38_0._unitCamData.usePostProcess = var_38_2 ~= SceneType.Room
 
-			arg_36_0:setUIPPValue("bloomActive", false)
-			arg_36_0:setUIPPValue("localMaskActive", false)
-			arg_36_0:setUIPPValue("LocalMaskActive", false)
-			arg_36_0:setFreezeVisble(true)
-			arg_36_0:setUIBlur(false)
+			arg_38_0:setUIPPValue("bloomActive", false)
+			arg_38_0:setUIPPValue("localMaskActive", false)
+			arg_38_0:setUIPPValue("LocalMaskActive", false)
+			arg_38_0:setFreezeVisble(true)
+			arg_38_0:setUIBlur(false)
 		else
-			arg_36_0:setUIActive(true)
+			arg_38_0:setUIActive(true)
 
-			arg_36_0._unitCamData.usePostProcess = (arg_36_1 == 2 or arg_36_1 == 4) and var_36_2 ~= SceneType.Room
+			arg_38_0._unitCamData.usePostProcess = (arg_38_1 == 2 or arg_38_1 == 4) and var_38_2 ~= SceneType.Room
 
-			arg_36_0:setUIPPValue("bloomActive", false)
-			arg_36_0:setUIPPValue("localMaskActive", arg_36_1 == 2 or arg_36_1 == 4)
-			arg_36_0:setUIPPValue("LocalMaskActive", arg_36_1 == 2 or arg_36_1 == 4)
-			arg_36_0:setFreezeVisble(true, arg_36_3)
-			arg_36_0:setUIBlur(true, arg_36_1 == 3 or arg_36_1 == 4, arg_36_2)
+			arg_38_0:setUIPPValue("bloomActive", false)
+			arg_38_0:setUIPPValue("localMaskActive", arg_38_1 == 2 or arg_38_1 == 4)
+			arg_38_0:setUIPPValue("LocalMaskActive", arg_38_1 == 2 or arg_38_1 == 4)
+			arg_38_0:setFreezeVisble(true, arg_38_3)
+			arg_38_0:setUIBlur(true, arg_38_1 == 3 or arg_38_1 == 4, arg_38_2)
 
-			if arg_36_1 == 1 then
-				TaskDispatcher.runDelay(arg_36_0.setFreezeVisbleBack, arg_36_0, 0)
+			if arg_38_1 == 1 then
+				TaskDispatcher.runDelay(arg_38_0.setFreezeVisbleBack, arg_38_0, 0)
 			end
 		end
 
-		if arg_36_0._uiBloomActive then
-			arg_36_0._uiCamData.usePostProcess = true
+		if arg_38_0._uiBloomActive then
+			arg_38_0._uiCamData.usePostProcess = true
 
-			arg_36_0:setUIPPValue("bloomActive", true)
-			arg_36_0:setUIPPValue("localBloomActive", false)
+			arg_38_0:setUIPPValue("bloomActive", true)
+			arg_38_0:setUIPPValue("localBloomActive", false)
 		end
 	end
 end
 
-function var_0_0.setFreezeVisbleBack(arg_37_0)
-	arg_37_0:setFreezeVisble(false)
+function var_0_0.setFreezeVisbleBack(arg_39_0)
+	arg_39_0:setFreezeVisble(false)
 end
 
-function var_0_0.setFreezeVisble(arg_38_0, arg_38_1, arg_38_2)
-	local var_38_0 = CameraMgr.instance:getMainCamera()
-	local var_38_1 = CameraMgr.instance:getUICamera()
+function var_0_0.setFreezeVisble(arg_40_0, arg_40_1, arg_40_2)
+	local var_40_0 = CameraMgr.instance:getMainCamera()
+	local var_40_1 = CameraMgr.instance:getUICamera()
 
-	if arg_38_1 == false then
-		if arg_38_0._capture and not arg_38_0._capture:isCaptureComplete() then
-			arg_38_1 = true
+	if arg_40_1 == false then
+		if arg_40_0._capture and not arg_40_0._capture:isCaptureComplete() then
+			arg_40_1 = true
 		end
 
-		if not arg_38_0:IsGaussianFreezeStatus() then
-			arg_38_1 = true
+		if not arg_40_0:IsGaussianFreezeStatus() then
+			arg_40_1 = true
 		end
 	end
 
-	arg_38_0._unitCamera.enabled = arg_38_1
+	arg_40_0._unitCamera.enabled = arg_40_1
 
-	var_0_0.setCameraLayer(var_38_0, "UI3D", arg_38_1)
-	var_0_0.setCameraLayer(var_38_0, "Scene", arg_38_1)
-	var_0_0.setCameraLayer(var_38_0, "SceneOpaque", arg_38_1)
-	var_0_0.setCameraLayer(var_38_1, "UI", arg_38_1 and not arg_38_2)
+	var_0_0.setCameraLayer(var_40_0, "UI3D", arg_40_1)
+	var_0_0.setCameraLayer(var_40_0, "Scene", arg_40_1)
+	var_0_0.setCameraLayer(var_40_0, "SceneOpaque", arg_40_1)
+	var_0_0.setCameraLayer(var_40_1, "UI", arg_40_1 and not arg_40_2)
 end
 
-function var_0_0.setCameraLayer(arg_39_0, arg_39_1, arg_39_2)
-	local var_39_0 = arg_39_0.cullingMask
-	local var_39_1 = LayerMask.GetMask(arg_39_1)
+function var_0_0.setCameraLayer(arg_41_0, arg_41_1, arg_41_2)
+	local var_41_0 = arg_41_0.cullingMask
+	local var_41_1 = LayerMask.GetMask(arg_41_1)
 
-	var_0_0.setCameraLayerInt(arg_39_0, var_39_1, arg_39_2)
+	var_0_0.setCameraLayerInt(arg_41_0, var_41_1, arg_41_2)
 end
 
-function var_0_0.setCameraLayerInt(arg_40_0, arg_40_1, arg_40_2)
-	local var_40_0 = arg_40_0.cullingMask
+function var_0_0.setCameraLayerInt(arg_42_0, arg_42_1, arg_42_2)
+	local var_42_0 = arg_42_0.cullingMask
 
-	if arg_40_2 then
-		var_40_0 = bit.bor(var_40_0, arg_40_1)
+	if arg_42_2 then
+		var_42_0 = bit.bor(var_42_0, arg_42_1)
 	else
-		var_40_0 = bit.band(var_40_0, bit.bnot(arg_40_1))
+		var_42_0 = bit.band(var_42_0, bit.bnot(arg_42_1))
 	end
 
-	arg_40_0.cullingMask = var_40_0
+	arg_42_0.cullingMask = var_42_0
 end
 
-function var_0_0.getUnitPPValue(arg_41_0, arg_41_1)
-	if arg_41_0._unitPPVolume then
-		return arg_41_0._unitPPVolume[arg_41_1]
-	end
-end
-
-function var_0_0.setUnitPPValue(arg_42_0, arg_42_1, arg_42_2)
-	if arg_42_0._unitPPVolume then
-		arg_42_0._unitPPVolume.refresh = true
-		arg_42_0._unitPPVolume[arg_42_1] = arg_42_2
+function var_0_0.getUnitPPValue(arg_43_0, arg_43_1)
+	if arg_43_0._unitPPVolume then
+		return arg_43_0._unitPPVolume[arg_43_1]
 	end
 end
 
-function var_0_0.setLocalBloomColor(arg_43_0, arg_43_1)
-	arg_43_0:setUnitPPValue("localBloomColor", arg_43_1)
-end
-
-function var_0_0.getLocalBloomColor(arg_44_0)
+function var_0_0.setUnitPPValue(arg_44_0, arg_44_1, arg_44_2)
 	if arg_44_0._unitPPVolume then
-		return arg_44_0._unitPPVolume.localBloomColor
+		arg_44_0._unitPPVolume.refresh = true
+		arg_44_0._unitPPVolume[arg_44_1] = arg_44_2
 	end
 end
 
-function var_0_0.setLocalBloomActive(arg_45_0, arg_45_1)
-	arg_45_0:setUnitPPValue("localBloomActive", arg_45_1)
+function var_0_0.setLocalBloomColor(arg_45_0, arg_45_1)
+	arg_45_0:setUnitPPValue("localBloomColor", arg_45_1)
 end
 
-function var_0_0.getFlickerSceneFactor(arg_46_0)
+function var_0_0.getLocalBloomColor(arg_46_0)
 	if arg_46_0._unitPPVolume then
-		return arg_46_0._unitPPVolume.flickerSceneFactor
+		return arg_46_0._unitPPVolume.localBloomColor
 	end
 end
 
-function var_0_0.setFlickerSceneFactor(arg_47_0, arg_47_1)
-	arg_47_0:setUnitPPValue("flickerSceneFactor", arg_47_1)
+function var_0_0.setLocalBloomActive(arg_47_0, arg_47_1)
+	arg_47_0:setUnitPPValue("localBloomActive", arg_47_1)
 end
 
-function var_0_0.getUIPPValue(arg_48_0, arg_48_1)
-	if arg_48_0._uiPPVolume then
-		return arg_48_0._uiPPVolume[arg_48_1]
+function var_0_0.getFlickerSceneFactor(arg_48_0)
+	if arg_48_0._unitPPVolume then
+		return arg_48_0._unitPPVolume.flickerSceneFactor
 	end
 end
 
-function var_0_0.setUIPPValue(arg_49_0, arg_49_1, arg_49_2)
-	if arg_49_0._uiPPVolume then
-		arg_49_0._uiPPVolume.refresh = true
-		arg_49_0._uiPPVolume[arg_49_1] = arg_49_2
+function var_0_0.setFlickerSceneFactor(arg_49_0, arg_49_1)
+	arg_49_0:setUnitPPValue("flickerSceneFactor", arg_49_1)
+end
 
-		arg_49_0._uiPPVolume:UpdateImmediately()
+function var_0_0.getUIPPValue(arg_50_0, arg_50_1)
+	if arg_50_0._uiPPVolume then
+		return arg_50_0._uiPPVolume[arg_50_1]
 	end
 end
 
-function var_0_0._onEnterScene(arg_50_0, arg_50_1, arg_50_2)
-	if arg_50_0:IsGaussianFreezeStatus() then
-		arg_50_0:setUIBlurActive(1)
+function var_0_0.setUIPPValue(arg_51_0, arg_51_1, arg_51_2)
+	if arg_51_0._uiPPVolume then
+		arg_51_0._uiPPVolume.refresh = true
+		arg_51_0._uiPPVolume[arg_51_1] = arg_51_2
+
+		arg_51_0._uiPPVolume:UpdateImmediately()
+	end
+end
+
+function var_0_0._onEnterScene(arg_52_0, arg_52_1, arg_52_2)
+	if arg_52_0:IsGaussianFreezeStatus() then
+		arg_52_0:setUIBlurActive(1)
 	end
 
-	arg_50_0:setPPMaskType(arg_50_1 ~= SceneType.Fight)
+	arg_52_0:setPPMaskType(arg_52_1 ~= SceneType.Fight)
 end
 
-function var_0_0.setRenderShadow(arg_51_0, arg_51_1)
-	arg_51_0._mainCamData.renderShadow = arg_51_1
+function var_0_0.setRenderShadow(arg_53_0, arg_53_1)
+	arg_53_0._mainCamData.renderShadow = arg_53_1
 end
 
-function var_0_0.setLayerCullDistance(arg_52_0, arg_52_1, arg_52_2)
-	arg_52_0._mainCamData:SetCullLayerDistance(arg_52_1, arg_52_2)
+function var_0_0.setLayerCullDistance(arg_54_0, arg_54_1, arg_54_2)
+	arg_54_0._mainCamData:SetCullLayerDistance(arg_54_1, arg_54_2)
 end
 
-function var_0_0.clearLayerCullDistance(arg_53_0)
-	arg_53_0._mainCamData:ClearCullLayer()
+function var_0_0.clearLayerCullDistance(arg_55_0)
+	arg_55_0._mainCamData:ClearCullLayer()
 end
 
-function var_0_0.setPPMaskType(arg_54_0, arg_54_1)
-	arg_54_0:setUnitPPValue("rolesStoryMaskActive", arg_54_1)
-	arg_54_0:setUnitPPValue("RolesStoryMaskActive", arg_54_1)
-	arg_54_0:setUnitPPValue("rgbSplitStrength", 0)
-	arg_54_0:setUnitPPValue("RgbSplitStrength", 0)
-	arg_54_0:setUnitPPValue("radialBlurLevel", 1)
-	arg_54_0:setUnitPPValue("RadialBlurLevel", 1)
-	arg_54_0:setUnitPPValue("dofFactor", 0)
-	arg_54_0:setUnitPPValue("DofFactor", 0)
+function var_0_0.setPPMaskType(arg_56_0, arg_56_1)
+	arg_56_0:setUnitPPValue("rolesStoryMaskActive", arg_56_1)
+	arg_56_0:setUnitPPValue("RolesStoryMaskActive", arg_56_1)
+	arg_56_0:setUnitPPValue("rgbSplitStrength", 0)
+	arg_56_0:setUnitPPValue("RgbSplitStrength", 0)
+	arg_56_0:setUnitPPValue("radialBlurLevel", 1)
+	arg_56_0:setUnitPPValue("RadialBlurLevel", 1)
+	arg_56_0:setUnitPPValue("dofFactor", 0)
+	arg_56_0:setUnitPPValue("DofFactor", 0)
 end
 
-function var_0_0.setMainPPLevel(arg_55_0, arg_55_1)
-	arg_55_0._ppGrade = arg_55_1
+function var_0_0.setMainPPLevel(arg_57_0, arg_57_1)
+	arg_57_0._ppGrade = arg_57_1
 
-	local var_55_0 = arg_55_0:getProfile()
+	local var_57_0 = arg_57_0:getProfile()
 
-	arg_55_0._unitPPVolume:SetProfile(var_55_0)
+	arg_57_0._unitPPVolume:SetProfile(var_57_0)
 end
 
-function var_0_0.getProfile(arg_56_0)
-	local var_56_0 = arg_56_0._ppGrade
-	local var_56_1 = arg_56_0._highProfile
+function var_0_0.getProfile(arg_58_0)
+	local var_58_0 = arg_58_0._ppGrade
+	local var_58_1 = arg_58_0._highProfile
 
-	if var_56_0 == ModuleEnum.Performance.High then
-		var_56_1 = arg_56_0._highProfile
-	elseif var_56_0 == ModuleEnum.Performance.Middle then
-		var_56_1 = arg_56_0._middleProfile
-	elseif var_56_0 == ModuleEnum.Performance.Low then
-		var_56_1 = arg_56_0._lowProfile
+	if var_58_0 == ModuleEnum.Performance.High then
+		var_58_1 = arg_58_0._highProfile
+	elseif var_58_0 == ModuleEnum.Performance.Middle then
+		var_58_1 = arg_58_0._middleProfile
+	elseif var_58_0 == ModuleEnum.Performance.Low then
+		var_58_1 = arg_58_0._lowProfile
 	end
 
-	return var_56_1
+	return var_58_1
 end
 
-function var_0_0.ClearPPRenderRts(arg_57_0)
+function var_0_0.ClearPPRenderRts(arg_59_0)
 	return
 end
 

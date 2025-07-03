@@ -318,9 +318,7 @@ function var_0_0._onChangeRound(arg_25_0)
 end
 
 function var_0_0._onSkillPlayStart(arg_26_0, arg_26_1, arg_26_2, arg_26_3)
-	local var_26_0 = arg_26_1:getMO()
-
-	if var_26_0 and var_26_0:isUniqueSkill(arg_26_2) and arg_26_1.id ~= arg_26_0.entity.id then
+	if arg_26_1:getMO() and FightCardDataHelper.isBigSkill(arg_26_2) and arg_26_1.id ~= arg_26_0.entity.id then
 		for iter_26_0, iter_26_1 in pairs(arg_26_0._tokenRelease) do
 			for iter_26_2, iter_26_3 in ipairs(iter_26_1) do
 				iter_26_3:setActive(false, "FightEffectTokenRelease" .. arg_26_3.stepUid)
@@ -330,9 +328,7 @@ function var_0_0._onSkillPlayStart(arg_26_0, arg_26_1, arg_26_2, arg_26_3)
 end
 
 function var_0_0._onSkillPlayFinish(arg_27_0, arg_27_1, arg_27_2, arg_27_3)
-	local var_27_0 = arg_27_1:getMO()
-
-	if var_27_0 and var_27_0:isUniqueSkill(arg_27_2) and arg_27_1.id ~= arg_27_0.entity.id then
+	if arg_27_1:getMO() and FightCardDataHelper.isBigSkill(arg_27_2) and arg_27_1.id ~= arg_27_0.entity.id then
 		for iter_27_0, iter_27_1 in pairs(arg_27_0._tokenRelease) do
 			for iter_27_2, iter_27_3 in ipairs(iter_27_1) do
 				iter_27_3:setActive(true, "FightEffectTokenRelease" .. arg_27_3.stepUid)

@@ -204,7 +204,7 @@
     "verifingEpisodeId": 10113,
     "isAlwaysShowBtn": 0,
     "showInEpisode": 0,
-    "dec": 2001,
+    "dec": 2003,
     "verifingHide": 0,
     "bindActivityId": 0,
     "roomLevel": 0
@@ -219,7 +219,7 @@
     "verifingEpisodeId": 10110,
     "isAlwaysShowBtn": 0,
     "showInEpisode": 0,
-    "dec": 2001,
+    "dec": 2003,
     "verifingHide": 0,
     "bindActivityId": 0,
     "roomLevel": 0
@@ -264,7 +264,7 @@
     "verifingEpisodeId": 10210,
     "isAlwaysShowBtn": 0,
     "showInEpisode": 1,
-    "dec": 2001,
+    "dec": 2003,
     "verifingHide": 0,
     "bindActivityId": 0,
     "roomLevel": 0
@@ -279,7 +279,7 @@
     "verifingEpisodeId": 10208,
     "isAlwaysShowBtn": 0,
     "showInEpisode": 1,
-    "dec": 2001,
+    "dec": 2003,
     "verifingHide": 0,
     "bindActivityId": 0,
     "roomLevel": 0
@@ -669,7 +669,7 @@
     "verifingEpisodeId": 10214,
     "isAlwaysShowBtn": 0,
     "showInEpisode": 1,
-    "dec": 2001,
+    "dec": 2003,
     "verifingHide": 1,
     "bindActivityId": 0,
     "roomLevel": 0
@@ -1090,7 +1090,7 @@
     "isAlwaysShowBtn": 0,
     "showInEpisode": 0,
     "dec": 2001,
-    "verifingHide": 0,
+    "verifingHide": 1,
     "bindActivityId": 0,
     "roomLevel": 0
   },
@@ -1676,6 +1676,21 @@
     "showInEpisode": 0,
     "dec": 2001,
     "verifingHide": 1,
+    "bindActivityId": 0,
+    "roomLevel": 0
+  },
+  {
+    "id": 270101,
+    "name": "language_10070525",
+    "isOnline": 1,
+    "playerLv": 1,
+    "episodeId": 10920,
+    "elementId": 0,
+    "verifingEpisodeId": 10920,
+    "isAlwaysShowBtn": 0,
+    "showInEpisode": 0,
+    "dec": 2005,
+    "verifingHide": 0,
     "bindActivityId": 0,
     "roomLevel": 0
   }

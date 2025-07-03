@@ -16,7 +16,7 @@ function var_0_0.onStart(arg_1_0)
 	local var_1_2 = 0.5
 
 	for iter_1_0, iter_1_1 in ipairs(var_1_0) do
-		local var_1_3 = iter_1_1.effect
+		local var_1_3 = iter_1_1.actEffectData
 		local var_1_4 = var_1_3.effectNum
 		local var_1_5 = FightPlayCardModel.instance:getUsedCards()
 
@@ -33,13 +33,13 @@ function var_0_0.onStart(arg_1_0)
 	end
 
 	FightController.instance:dispatchEvent(FightEvent.AddUseCard, var_1_1)
-	FightController.instance:dispatchEvent(FightEvent.AfterAddUseCardContainer, arg_1_0._fightStepMO)
+	FightController.instance:dispatchEvent(FightEvent.AfterAddUseCardContainer, arg_1_0.fightStepData)
 	arg_1_0:com_registTimer(arg_1_0._delayAfterPerformance, var_1_2 / FightModel.instance:getUISpeed())
 end
 
 function var_0_0.customPlayEffectData(arg_2_0, arg_2_1)
 	for iter_2_0, iter_2_1 in ipairs(arg_2_1) do
-		FightDataHelper.playEffectData(iter_2_1.effect)
+		FightDataHelper.playEffectData(iter_2_1.actEffectData)
 	end
 end
 

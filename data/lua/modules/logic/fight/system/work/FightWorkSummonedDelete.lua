@@ -3,8 +3,8 @@
 local var_0_0 = class("FightWorkSummonedDelete", FightEffectBase)
 
 function var_0_0.beforePlayEffectData(arg_1_0)
-	arg_1_0._entityId = arg_1_0._actEffectMO.targetId
-	arg_1_0._uid = arg_1_0._actEffectMO.reserveId
+	arg_1_0._entityId = arg_1_0.actEffectData.targetId
+	arg_1_0._uid = arg_1_0.actEffectData.reserveId
 	arg_1_0._entityMO = FightDataHelper.entityMgr:getById(arg_1_0._entityId)
 
 	local var_1_0 = arg_1_0._entityMO and arg_1_0._entityMO:getSummonedInfo()

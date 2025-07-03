@@ -140,7 +140,7 @@ function var_0_0._showSuccView(arg_4_0)
 			Season166Controller.instance:openResultPanel()
 
 			return
-		elseif var_4_0.type == DungeonEnum.EpisodeType.TowerBoss then
+		elseif var_4_0.type == DungeonEnum.EpisodeType.TowerBoss or var_4_0.type == DungeonEnum.EpisodeType.TowerBossTeach then
 			ViewMgr.instance:openView(ViewName.TowerBossResultView)
 
 			return
@@ -150,6 +150,10 @@ function var_0_0._showSuccView(arg_4_0)
 			return
 		elseif var_4_0.type == DungeonEnum.EpisodeType.Act183 then
 			ViewMgr.instance:openView(ViewName.Act183FightSuccView)
+
+			return
+		elseif var_4_0.type == DungeonEnum.EpisodeType.Act191 then
+			Activity191Controller.instance:openResultPanel(true)
 
 			return
 		end
@@ -185,6 +189,10 @@ function var_0_0.showFailView(arg_5_0)
 			return
 		elseif var_5_0.type == DungeonEnum.EpisodeType.Season166Base then
 			Season166Controller.instance:openResultPanel()
+
+			return
+		elseif var_5_0.type == DungeonEnum.EpisodeType.Act191 then
+			Activity191Controller.instance:openResultPanel(false)
 
 			return
 		end

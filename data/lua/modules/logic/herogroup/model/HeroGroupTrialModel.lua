@@ -28,35 +28,41 @@ function var_0_0.setTrialByBattleId(arg_2_0, arg_2_1)
 	arg_2_0._trialEquipMo:clear()
 	var_0_0.super.clear(arg_2_0)
 
-	if not string.nilorempty(var_2_0.trialHeros) then
-		local var_2_1 = GameUtil.splitString2(var_2_0.trialHeros, true)
+	local var_2_1 = var_2_0.trialHeros
 
-		for iter_2_0, iter_2_1 in pairs(var_2_1) do
-			local var_2_2 = iter_2_1[1]
-			local var_2_3 = iter_2_1[2] or 0
+	if HeroGroupModel.instance.episodeId and arg_2_1 == HeroGroupModel.instance.battleId then
+		var_2_1 = HeroGroupHandler.getTrialHeros(HeroGroupModel.instance.episodeId)
+	end
 
-			if lua_hero_trial.configDict[var_2_2] and lua_hero_trial.configDict[var_2_2][var_2_3] then
-				local var_2_4 = HeroMo.New()
+	if not string.nilorempty(var_2_1) then
+		local var_2_2 = GameUtil.splitString2(var_2_1, true)
 
-				var_2_4:initFromTrial(unpack(iter_2_1))
-				arg_2_0:addAtLast(var_2_4)
+		for iter_2_0, iter_2_1 in pairs(var_2_2) do
+			local var_2_3 = iter_2_1[1]
+			local var_2_4 = iter_2_1[2] or 0
+
+			if lua_hero_trial.configDict[var_2_3] and lua_hero_trial.configDict[var_2_3][var_2_4] then
+				local var_2_5 = HeroMo.New()
+
+				var_2_5:initFromTrial(unpack(iter_2_1))
+				arg_2_0:addAtLast(var_2_5)
 			else
-				logError(string.format("试用角色配置不存在:%s#%s", var_2_2, var_2_3))
+				logError(string.format("试用角色配置不存在:%s#%s", var_2_3, var_2_4))
 			end
 		end
 	end
 
 	if not string.nilorempty(var_2_0.trialEquips) then
-		local var_2_5 = string.splitToNumber(var_2_0.trialEquips, "|")
+		local var_2_6 = string.splitToNumber(var_2_0.trialEquips, "|")
 
-		for iter_2_2, iter_2_3 in pairs(var_2_5) do
-			local var_2_6 = lua_equip_trial.configDict[iter_2_3]
+		for iter_2_2, iter_2_3 in pairs(var_2_6) do
+			local var_2_7 = lua_equip_trial.configDict[iter_2_3]
 
-			if var_2_6 then
-				local var_2_7 = EquipMO.New()
+			if var_2_7 then
+				local var_2_8 = EquipMO.New()
 
-				var_2_7:initByTrialEquipCO(var_2_6)
-				arg_2_0._trialEquipMo:addAtLast(var_2_7)
+				var_2_8:initByTrialEquipCO(var_2_7)
+				arg_2_0._trialEquipMo:addAtLast(var_2_8)
 			else
 				logError("试用心相配置不存在" .. tostring(iter_2_3))
 			end
@@ -65,16 +71,16 @@ function var_0_0.setTrialByBattleId(arg_2_0, arg_2_1)
 
 	arg_2_0._limitNum = var_2_0.trialLimit
 
-	local var_2_8 = ToughBattleModel.instance:getAddTrialHeros()
+	local var_2_9 = ToughBattleModel.instance:getAddTrialHeros()
 
-	if var_2_8 then
-		arg_2_0._limitNum = math.min(4, #var_2_8 + arg_2_0._limitNum)
+	if var_2_9 then
+		arg_2_0._limitNum = math.min(4, #var_2_9 + arg_2_0._limitNum)
 
-		for iter_2_4, iter_2_5 in pairs(var_2_8) do
-			local var_2_9 = HeroMo.New()
+		for iter_2_4, iter_2_5 in pairs(var_2_9) do
+			local var_2_10 = HeroMo.New()
 
-			var_2_9:initFromTrial(iter_2_5)
-			arg_2_0:addAtLast(var_2_9)
+			var_2_10:initFromTrial(iter_2_5)
+			arg_2_0:addAtLast(var_2_10)
 		end
 	end
 end
@@ -147,7 +153,7 @@ function var_0_0.getLimitNum(arg_8_0)
 end
 
 function var_0_0.getHeroMo(arg_9_0, arg_9_1)
-	return arg_9_0:getById(tostring(arg_9_1 - 1099511627776))
+	return arg_9_0:getById(tostring(tonumber(arg_9_1.id .. "." .. arg_9_1.trialTemplate) - 1099511627776))
 end
 
 function var_0_0.getEquipMo(arg_10_0, arg_10_1)

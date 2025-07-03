@@ -35,6 +35,8 @@ function var_0_0.onInitView(arg_1_0)
 	arg_1_0._gohero = gohelper.findChild(arg_1_0.viewGO, "root/#go_detailInfo/#btn_StartAgain/go_group/hero")
 	arg_1_0._goheroitem = gohelper.findChild(arg_1_0.viewGO, "root/#go_detailInfo/#btn_StartAgain/go_group/hero/heroItem")
 	arg_1_0._goSwitchEfeect = gohelper.findChild(arg_1_0.viewGO, "root/#go_detailInfo/#go_difficulty/index/vx_refresh")
+	arg_1_0._goScore = gohelper.findChild(arg_1_0.viewGO, "root/#go_detailInfo/#go_score")
+	arg_1_0._txtScore = gohelper.findChildText(arg_1_0.viewGO, "root/#go_detailInfo/#go_score/txt_score")
 
 	if arg_1_0._editableInitView then
 		arg_1_0:_editableInitView()
@@ -195,6 +197,7 @@ function var_0_0.refreshUI(arg_16_0)
 	arg_16_0:refreshRecommend()
 	arg_16_0:refreshAdditionRule()
 	arg_16_0:refreshHeroList()
+	arg_16_0:refreshScore()
 end
 
 function var_0_0.refreshDifficulty(arg_17_0)
@@ -328,27 +331,46 @@ function var_0_0._onHeroItemShow(arg_24_0, arg_24_1, arg_24_2, arg_24_3)
 		arg_24_0.heroItemTab[arg_24_3] = var_24_0
 	end
 
-	local var_24_1 = HeroModel.instance:getByHeroId(arg_24_2)
-	local var_24_2 = FightConfig.instance:getSkinCO(var_24_1.skin)
+	local var_24_1 = {}
+	local var_24_2 = HeroModel.instance:getByHeroId(arg_24_2)
 
-	var_24_0.simagehero:LoadImage(ResUrl.getHeadIconSmall(var_24_2.retangleIcon))
-end
+	if not var_24_2 then
+		local var_24_3 = HeroConfig.instance:getHeroCO(arg_24_2)
 
-function var_0_0.onClose(arg_25_0)
-	TowerTimeLimitLevelModel.instance:saveLastEntranceDifficulty(arg_25_0.curOpenMo)
-end
-
-function var_0_0.onDestroyView(arg_26_0)
-	for iter_26_0, iter_26_1 in pairs(arg_26_0.ruleItemTab) do
-		iter_26_1.btnClick:RemoveClickListener()
+		var_24_1 = SkinConfig.instance:getSkinCo(var_24_3.skinId)
+	else
+		var_24_1 = FightConfig.instance:getSkinCO(var_24_2.skin)
 	end
 
-	for iter_26_2, iter_26_3 in pairs(arg_26_0.heroItemTab) do
-		iter_26_3.simagehero:UnLoadImage()
+	var_24_0.simagehero:LoadImage(ResUrl.getHeadIconSmall(var_24_1.retangleIcon))
+end
+
+function var_0_0.refreshScore(arg_25_0)
+	local var_25_0 = TowerModel.instance:getTowerInfoById(TowerEnum.TowerType.Limited, arg_25_0.seasonId)
+	local var_25_1 = var_25_0:getLayerScore(arg_25_0.layerId)
+	local var_25_2 = var_25_0:getLayerSubEpisodeList(arg_25_0.layerId)
+	local var_25_3 = var_25_2 and var_25_2[1].heroIds or {}
+
+	gohelper.setActive(arg_25_0._goScore, var_25_3 and #var_25_3 > 0)
+
+	arg_25_0._txtScore.text = var_25_1
+end
+
+function var_0_0.onClose(arg_26_0)
+	TowerTimeLimitLevelModel.instance:saveLastEntranceDifficulty(arg_26_0.curOpenMo)
+end
+
+function var_0_0.onDestroyView(arg_27_0)
+	for iter_27_0, iter_27_1 in pairs(arg_27_0.ruleItemTab) do
+		iter_27_1.btnClick:RemoveClickListener()
 	end
 
-	arg_26_0._simageenemy:UnLoadImage()
-	arg_26_0._animEventWrap:RemoveAllEventListener()
+	for iter_27_2, iter_27_3 in pairs(arg_27_0.heroItemTab) do
+		iter_27_3.simagehero:UnLoadImage()
+	end
+
+	arg_27_0._simageenemy:UnLoadImage()
+	arg_27_0._animEventWrap:RemoveAllEventListener()
 end
 
 return var_0_0

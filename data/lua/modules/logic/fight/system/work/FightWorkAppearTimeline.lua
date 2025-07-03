@@ -86,21 +86,6 @@ function var_0_0._beforePlayAppearTimeline(arg_3_0)
 	end
 
 	gohelper.setActive(ViewMgr.instance:getUILayer(UILayerName.Hud), false)
-
-	if arg_3_0._timeline == "650402_born" then
-		local var_3_1 = FightHelper.getAllEntitys()
-
-		for iter_3_2, iter_3_3 in ipairs(var_3_1) do
-			if iter_3_3.nameUI then
-				iter_3_3.nameUI:setActive(false)
-			end
-		end
-
-		arg_3_0._targetEntity:setAlpha(1, 0)
-		arg_3_0._targetEntity.spine:getSkeletonAnim():SetMixDuration(0)
-		arg_3_0._targetEntity.spine:play(SpineAnimState.born, false, true)
-		arg_3_0._targetEntity.spine:getSkeletonAnim():ClearMixDuration()
-	end
 end
 
 function var_0_0._onOneSpineLoaded(arg_4_0, arg_4_1)
@@ -134,19 +119,20 @@ function var_0_0._playTimeline(arg_7_0)
 	FightController.instance:registerCallback(FightEvent.SkipAppearTimeline, arg_7_0._skipAppearTimeline, arg_7_0)
 	ViewMgr.instance:openView(ViewName.FightSkipTimelineView, arg_7_0._timeline)
 
-	local var_7_0 = FightStepMO.New()
-	local var_7_1 = {
+	local var_7_0 = {
 		actType = FightEnum.ActType.SKILL,
 		fromId = arg_7_0._targetEntity.id,
 		toId = arg_7_0._targetEntity.id,
 		actId = FightEnum.AppearTimelineSkillId,
 		actEffect = {}
 	}
+	local var_7_1 = FightStepData.New(var_7_0)
 
-	var_7_0:init(var_7_1)
+	var_7_1.isFakeStep = true
+
 	TaskDispatcher.runDelay(arg_7_0._delayDone, arg_7_0, 25)
 	FightController.instance:registerCallback(FightEvent.OnSkillPlayFinish, arg_7_0._onSkillEnd, arg_7_0, LuaEventSystem.Low)
-	arg_7_0._targetEntity.skill:playTimeline(arg_7_0._timeline, var_7_0)
+	arg_7_0._targetEntity.skill:playTimeline(arg_7_0._timeline, var_7_1)
 end
 
 function var_0_0._skipAppearTimeline(arg_8_0)

@@ -12,6 +12,12 @@ var_0_0.DestinyUpBaseAttr = {
 	CharacterEnum.AttrId.DefenseBase,
 	CharacterEnum.AttrId.MdefenseBase
 }
+var_0_0.DestinyUpBaseAttrPercent = {
+	CharacterEnum.AttrId.HpPercent,
+	CharacterEnum.AttrId.AttackPercent,
+	CharacterEnum.AttrId.DefensePercent,
+	CharacterEnum.AttrId.MdefensePercent
+}
 var_0_0.DestinyUpSpecialAttr = {
 	CharacterEnum.AttrId.ReboundDmg,
 	CharacterEnum.AttrId.ExtraDmg,
@@ -19,16 +25,22 @@ var_0_0.DestinyUpSpecialAttr = {
 	CharacterEnum.AttrId.PoisonAddRate
 }
 var_0_0.DestinyUpBaseParseAttr = {
-	[CharacterEnum.AttrId.Hp] = CharacterEnum.AttrId.HpBase,
-	[CharacterEnum.AttrId.Attack] = CharacterEnum.AttrId.AttackBase,
-	[CharacterEnum.AttrId.Defense] = CharacterEnum.AttrId.DefenseBase,
-	[CharacterEnum.AttrId.Mdefense] = CharacterEnum.AttrId.MdefenseBase
-}
-var_0_0.DestinyUpBaseParseOffAttr = {
-	[CharacterEnum.AttrId.HpBase] = CharacterEnum.AttrId.Hp,
-	[CharacterEnum.AttrId.AttackBase] = CharacterEnum.AttrId.Attack,
-	[CharacterEnum.AttrId.DefenseBase] = CharacterEnum.AttrId.Defense,
-	[CharacterEnum.AttrId.MdefenseBase] = CharacterEnum.AttrId.Mdefense
+	[CharacterEnum.AttrId.Hp] = {
+		CharacterEnum.AttrId.HpBase,
+		CharacterEnum.AttrId.HpPercent
+	},
+	[CharacterEnum.AttrId.Attack] = {
+		CharacterEnum.AttrId.AttackBase,
+		CharacterEnum.AttrId.AttackPercent
+	},
+	[CharacterEnum.AttrId.Defense] = {
+		CharacterEnum.AttrId.DefenseBase,
+		CharacterEnum.AttrId.DefensePercent
+	},
+	[CharacterEnum.AttrId.Mdefense] = {
+		CharacterEnum.AttrId.MdefenseBase,
+		CharacterEnum.AttrId.MdefensePercent
+	}
 }
 var_0_0.SlotTitle = {
 	[1] = "character_destiny_slot_title_1",

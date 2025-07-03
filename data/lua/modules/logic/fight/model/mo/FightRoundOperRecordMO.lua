@@ -20,9 +20,9 @@ function var_0_0.init(arg_2_0, arg_2_1)
 	end
 
 	for iter_2_2, iter_2_3 in ipairs(arg_2_1.opers) do
-		local var_2_1 = FightBeginRoundOp.New()
+		local var_2_1 = FightOperationItemData.New()
 
-		var_2_1:init(iter_2_3)
+		var_2_1:setByProto(iter_2_3)
 		table.insert(arg_2_0.opers, var_2_1)
 	end
 end

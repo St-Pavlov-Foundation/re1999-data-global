@@ -3118,5 +3118,293 @@
     "titleEn": "Waking of Insects",
     "labelRes": "8",
     "storyBg": ""
+  },
+  {
+    "chapter": 27,
+    "part": 1,
+    "title": "language_10073126",
+    "titleEn": "How to Find Shelter",
+    "labelRes": "1",
+    "storyBg": ""
+  },
+  {
+    "chapter": 27,
+    "part": 2,
+    "title": "language_10073128",
+    "titleEn": "The Voyagers",
+    "labelRes": "2",
+    "storyBg": ""
+  },
+  {
+    "chapter": 27,
+    "part": 3,
+    "title": "language_10073130",
+    "titleEn": "The Meaning of Meaning",
+    "labelRes": "3",
+    "storyBg": ""
+  },
+  {
+    "chapter": 27,
+    "part": 4,
+    "title": "language_10073132",
+    "titleEn": "Beautiful New Things",
+    "labelRes": "4",
+    "storyBg": ""
+  },
+  {
+    "chapter": 27,
+    "part": 5,
+    "title": "language_10073134",
+    "titleEn": "A Score of Time",
+    "labelRes": "5",
+    "storyBg": ""
+  },
+  {
+    "chapter": 27,
+    "part": 6,
+    "title": "language_10073136",
+    "titleEn": "What's Worse Than the Journey",
+    "labelRes": "6",
+    "storyBg": ""
+  },
+  {
+    "chapter": 27,
+    "part": 7,
+    "title": "language_10073138",
+    "titleEn": "The Wilds and the Garden",
+    "labelRes": "7",
+    "storyBg": ""
+  },
+  {
+    "chapter": 27,
+    "part": 8,
+    "title": "language_10073140",
+    "titleEn": "When We Move Forward",
+    "labelRes": "8",
+    "storyBg": ""
+  },
+  {
+    "chapter": 27,
+    "part": 9,
+    "title": "language_10073142",
+    "titleEn": "To Former Strangers",
+    "labelRes": "9",
+    "storyBg": ""
+  },
+  {
+    "chapter": 27,
+    "part": 10,
+    "title": "language_10073144",
+    "titleEn": "A Freezing Rain",
+    "labelRes": "10",
+    "storyBg": ""
+  },
+  {
+    "chapter": 27,
+    "part": 11,
+    "title": "language_10073146",
+    "titleEn": "Poems Come By Chance",
+    "labelRes": "11",
+    "storyBg": ""
+  },
+  {
+    "chapter": 27,
+    "part": 12,
+    "title": "language_10073148",
+    "titleEn": "Concerto",
+    "labelRes": "12",
+    "storyBg": ""
+  },
+  {
+    "chapter": 27,
+    "part": 13,
+    "title": "language_10073150",
+    "titleEn": "Where Ever Spring Stays",
+    "labelRes": "13",
+    "storyBg": ""
+  },
+  {
+    "chapter": 27,
+    "part": 14,
+    "title": "language_10073152",
+    "titleEn": "We Who Chase the Stars",
+    "labelRes": "14",
+    "storyBg": ""
+  },
+  {
+    "chapter": 27,
+    "part": 15,
+    "title": "language_10073154",
+    "titleEn": "Time to Say Goodbye",
+    "labelRes": "15",
+    "storyBg": ""
+  },
+  {
+    "chapter": 27,
+    "part": 16,
+    "title": "language_10073156",
+    "titleEn": "What's About Time",
+    "labelRes": "16",
+    "storyBg": ""
+  },
+  {
+    "chapter": 27,
+    "part": 17,
+    "title": "language_10073158",
+    "titleEn": "The Measure of a Melusine",
+    "labelRes": "17",
+    "storyBg": ""
+  },
+  {
+    "chapter": 27,
+    "part": 18,
+    "title": "language_10073160",
+    "titleEn": "Epitaph",
+    "labelRes": "18",
+    "storyBg": ""
+  },
+  {
+    "chapter": 27,
+    "part": 19,
+    "title": "language_10073162",
+    "titleEn": "You Are Not Alone",
+    "labelRes": "19",
+    "storyBg": ""
+  },
+  {
+    "chapter": 27,
+    "part": 20,
+    "title": "language_10073164",
+    "titleEn": "As If Nothing Happened Up There",
+    "labelRes": "20",
+    "storyBg": ""
+  },
+  {
+    "chapter": 27,
+    "part": 21,
+    "title": "language_10075372",
+    "titleEn": "Earthbound",
+    "labelRes": "1",
+    "storyBg": ""
+  },
+  {
+    "chapter": 27,
+    "part": 22,
+    "title": "language_10075373",
+    "titleEn": "A Long Winter",
+    "labelRes": "2",
+    "storyBg": ""
+  },
+  {
+    "chapter": 27,
+    "part": 23,
+    "title": "language_10075374",
+    "titleEn": "Doomsday",
+    "labelRes": "3",
+    "storyBg": ""
+  },
+  {
+    "chapter": 27,
+    "part": 24,
+    "title": "language_10075375",
+    "titleEn": "A Warm Place in the North",
+    "labelRes": "4",
+    "storyBg": ""
+  },
+  {
+    "chapter": 27,
+    "part": 25,
+    "title": "language_10075376",
+    "titleEn": "Days of Yore",
+    "labelRes": "5",
+    "storyBg": ""
+  },
+  {
+    "chapter": 27,
+    "part": 26,
+    "title": "language_10075377",
+    "titleEn": "Between the Wind and Snow",
+    "labelRes": "6",
+    "storyBg": ""
+  },
+  {
+    "chapter": 27,
+    "part": 27,
+    "title": "language_10075378",
+    "titleEn": "Message from Afar",
+    "labelRes": "7",
+    "storyBg": ""
+  },
+  {
+    "chapter": 27,
+    "part": 28,
+    "title": "language_10075379",
+    "titleEn": "The Days After",
+    "labelRes": "8",
+    "storyBg": ""
+  },
+  {
+    "chapter": 27,
+    "part": 29,
+    "title": "language_10075313",
+    "titleEn": "An Unexpected Visitor",
+    "labelRes": "1",
+    "storyBg": ""
+  },
+  {
+    "chapter": 27,
+    "part": 30,
+    "title": "language_10075314",
+    "titleEn": "A Close Friend",
+    "labelRes": "2",
+    "storyBg": ""
+  },
+  {
+    "chapter": 27,
+    "part": 31,
+    "title": "language_10075315",
+    "titleEn": "Resort",
+    "labelRes": "3",
+    "storyBg": ""
+  },
+  {
+    "chapter": 27,
+    "part": 32,
+    "title": "language_10075316",
+    "titleEn": "What the Snake Said",
+    "labelRes": "4",
+    "storyBg": ""
+  },
+  {
+    "chapter": 27,
+    "part": 33,
+    "title": "language_10075317",
+    "titleEn": "The Proof in the Pudding",
+    "labelRes": "5",
+    "storyBg": ""
+  },
+  {
+    "chapter": 27,
+    "part": 34,
+    "title": "language_10075318",
+    "titleEn": "Weightless Wasteland",
+    "labelRes": "6",
+    "storyBg": ""
+  },
+  {
+    "chapter": 27,
+    "part": 35,
+    "title": "language_10000414",
+    "titleEn": "Cognitive Bias",
+    "labelRes": "7",
+    "storyBg": ""
+  },
+  {
+    "chapter": 27,
+    "part": 36,
+    "title": "language_10075319",
+    "titleEn": "Au revoir, chers amis",
+    "labelRes": "8",
+    "storyBg": ""
   }
 ]

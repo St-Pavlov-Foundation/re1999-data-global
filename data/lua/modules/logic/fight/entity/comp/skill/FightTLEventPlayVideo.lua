@@ -1,8 +1,8 @@
 ﻿module("modules.logic.fight.entity.comp.skill.FightTLEventPlayVideo", package.seeall)
 
-local var_0_0 = class("FightTLEventPlayVideo")
+local var_0_0 = class("FightTLEventPlayVideo", FightTimelineTrackItem)
 
-function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 	arg_1_0._resName = arg_1_3[1]
 
 	if not string.nilorempty(arg_1_0._resName) then
@@ -20,23 +20,15 @@ function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 	end
 end
 
-function var_0_0.handleSkillEventEnd(arg_2_0)
-	arg_2_0:_onFinish()
+function var_0_0.onTrackEnd(arg_2_0)
+	arg_2_0:_clear()
 end
 
-function var_0_0._onFinish(arg_3_0)
-	FightVideoMgr.instance:stop()
+function var_0_0.onDestructor(arg_3_0)
+	arg_3_0:_clear()
 end
 
-function var_0_0.reset(arg_4_0)
-	arg_4_0:_clear()
-end
-
-function var_0_0.dispose(arg_5_0)
-	arg_5_0:_clear()
-end
-
-function var_0_0._clear(arg_6_0)
+function var_0_0._clear(arg_4_0)
 	FightVideoMgr.instance:stop()
 end
 

@@ -195,6 +195,8 @@ function var_0_0.refreshDynamicVertical(arg_15_0)
 	arg_15_0.imageHeight = 1400
 	arg_15_0._uiSpine = GuiModelAgent.Create(arg_15_0.goSpineSkin, true)
 
+	arg_15_0._uiSpine:setShareRT(CharacterVoiceEnum.RTShareType.FullScreen)
+
 	if arg_15_0.isLive2D then
 		arg_15_0._uiSpine:setLive2dCameraLoadedCallback(arg_15_0.onLive2dCameraLoadedCallback, arg_15_0)
 	end

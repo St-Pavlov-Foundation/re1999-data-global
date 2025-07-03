@@ -310,8 +310,11 @@ function var_0_0._updateStatus(arg_21_0)
 
 	if arg_21_0._layerPage:getVisible() and var_21_1 and var_21_1 < arg_21_0._config.id or arg_21_0._showUnlockAnim then
 		WeekWalkModel.instance:setFinishMapId(nil)
-		arg_21_0:_playAnim("weekwalklayerpageitem_unlock_in")
-		AudioMgr.instance:trigger(AudioEnum.WeekWalk.play_artificial_ui_unlockdream)
+
+		if arg_21_0._mapInfo.isFinish ~= 1 then
+			arg_21_0:_playAnim("weekwalklayerpageitem_unlock_in")
+			AudioMgr.instance:trigger(AudioEnum.WeekWalk.play_artificial_ui_unlockdream)
+		end
 	else
 		local var_21_2 = arg_21_0._mapInfo
 

@@ -28,4 +28,11 @@ if isDebugBuild then
 	end
 end
 
+function string.delBracketContent(arg_4_0)
+	arg_4_0 = string.gsub(arg_4_0, "%b()", "")
+	arg_4_0 = string.gsub(arg_4_0, "（.-）", "")
+
+	return arg_4_0
+end
+
 return var_0_0

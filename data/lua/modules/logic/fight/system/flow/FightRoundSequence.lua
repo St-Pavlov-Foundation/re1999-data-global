@@ -5,7 +5,7 @@ local var_0_0 = class("FightRoundSequence", BaseFightSequence)
 function var_0_0.buildFlow(arg_1_0, arg_1_1)
 	var_0_0.super.buildFlow(arg_1_0)
 
-	arg_1_0.roundMO = arg_1_1
+	arg_1_0.roundData = arg_1_1
 
 	arg_1_0:buildRoundFlows()
 end
@@ -29,7 +29,7 @@ function var_0_0.buildRoundFlows(arg_3_0)
 	arg_3_0:addWork(FightWork2Work.New(FightWorkDialogueBeforeRoundStart))
 	arg_3_0:addWork(FightWorkRoundStart.New())
 
-	local var_3_0, var_3_1 = FightStepBuilder.buildStepWorkList(arg_3_0.roundMO and arg_3_0.roundMO.fightStepMOs)
+	local var_3_0, var_3_1 = FightStepBuilder.buildStepWorkList(arg_3_0.roundData and arg_3_0.roundData.fightStep)
 
 	arg_3_0._skillFlowList = var_3_1
 
@@ -60,7 +60,7 @@ function var_0_0.buildRoundFlows(arg_3_0)
 			end))
 		end
 
-		local var_3_4, var_3_5 = FightStepBuilder.buildStepWorkList(arg_3_0.roundMO and arg_3_0.roundMO.nextRoundBeginStepMOs)
+		local var_3_4, var_3_5 = FightStepBuilder.buildStepWorkList(arg_3_0.roundData and arg_3_0.roundData.nextRoundBeginStep)
 
 		if var_3_4 and #var_3_4 > 0 then
 			for iter_3_0, iter_3_1 in ipairs(var_3_4) do
@@ -79,7 +79,9 @@ function var_0_0.buildRoundFlows(arg_3_0)
 
 	arg_3_0:addWork(FightWorkClearAfterRound.New())
 	arg_3_0:addWork(FunctionWork.New(function()
-		FightDataMgr.instance:afterPlayRoundProto(FightDataModel.instance.cacheRoundProto)
+		local var_6_0 = FightDataHelper.roundMgr:getRoundData()
+
+		FightDataMgr.instance:afterPlayRoundData(var_6_0)
 	end))
 	arg_3_0:addWork(FightWorkCompareDataAfterPlay.New())
 	arg_3_0:addWork(FunctionWork.New(arg_3_0._refreshPosition, arg_3_0))

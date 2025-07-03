@@ -256,7 +256,7 @@ function var_0_0.refreshBaseAttrItem(arg_15_0, arg_15_1, arg_15_2)
 
 	for iter_15_0, iter_15_1 in ipairs(CharacterEnum.BaseAttrIdList) do
 		local var_15_6 = HeroConfig.instance:getHeroAttributeCO(iter_15_1)
-		local var_15_7 = var_15_4 and var_15_4:getAddValueByAttrId(var_15_5, iter_15_1) or 0
+		local var_15_7 = var_15_4 and var_15_4:getAddValueByAttrId(var_15_5, iter_15_1, var_15_3) or 0
 		local var_15_8 = var_15_1[iter_15_1] + (var_15_2[iter_15_1] and var_15_2[iter_15_1].value or 0) + var_15_7
 
 		arg_15_0._attnormalitems[iter_15_0].value.text = var_15_0[iter_15_1]
@@ -306,7 +306,7 @@ function var_0_0.refreshUpAttrItem(arg_16_0, arg_16_1, arg_16_2)
 		gohelper.setActive(arg_16_0._attrupperitems[iter_16_0].go, true)
 
 		local var_16_10 = HeroConfig.instance:getHeroAttributeCO(iter_16_1)
-		local var_16_11 = var_16_5 and var_16_5:getAddValueByAttrId(var_16_6, iter_16_1) or 0
+		local var_16_11 = var_16_5 and var_16_5:getAddValueByAttrId(var_16_6, iter_16_1, var_16_4) or 0
 		local var_16_12 = var_16_2[iter_16_1] + (var_16_3[iter_16_1] and var_16_3[iter_16_1].value or 0) + var_16_11
 		local var_16_13 = (var_16_1[iter_16_1] or 0) / 10
 
@@ -345,7 +345,7 @@ function var_0_0.refreshUpAttrItem(arg_16_0, arg_16_1, arg_16_2)
 	end
 
 	for iter_16_2, iter_16_3 in ipairs(CharacterDestinyEnum.DestinyUpSpecialAttr) do
-		local var_16_17 = var_16_5 and var_16_5:getAddValueByAttrId(var_16_6, iter_16_3) or 0
+		local var_16_17 = var_16_5 and var_16_5:getAddValueByAttrId(var_16_6, iter_16_3, var_16_4) or 0
 
 		if var_16_17 ~= 0 then
 			local var_16_18 = arg_16_0:_getAttrUpperItem(var_16_9)

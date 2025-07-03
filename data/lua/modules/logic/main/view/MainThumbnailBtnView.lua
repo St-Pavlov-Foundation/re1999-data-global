@@ -8,6 +8,7 @@ function var_0_0.onInitView(arg_1_0)
 	arg_1_0._gosocialreddot = gohelper.findChild(arg_1_0.viewGO, "btns/btn_content/#go_content/#btn_social/#go_socialreddot")
 	arg_1_0._btnbell = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btns/btn_content/#go_content/#btn_bell")
 	arg_1_0._btnplayercard = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btns/btn_content/#go_content/#btn_playercard")
+	arg_1_0._goreddotplayercard = gohelper.findChild(arg_1_0.viewGO, "btns/btn_content/#go_content/#btn_playercard/#go_reddot")
 	arg_1_0._btnfeedback = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btns/btn_content/#go_content/#btn_feedback")
 	arg_1_0._gobelllreddot = gohelper.findChild(arg_1_0.viewGO, "btns/btn_content/#go_content/#btn_bell/#go_belllreddot")
 	arg_1_0._btncalendar = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btns/btn_content/#go_content/#btn_calendar")
@@ -23,6 +24,7 @@ function var_0_0.onInitView(arg_1_0)
 	arg_1_0._gobtncontent1 = gohelper.findChild(arg_1_0.viewGO, "btns/btn_content/#go_content/#go_btncontent1")
 	arg_1_0._gobtncontent2 = gohelper.findChild(arg_1_0.viewGO, "btns/btn_content/#go_content/#go_btncontent2")
 	arg_1_0._goscroll = gohelper.findChild(arg_1_0.viewGO, "btns/#go_scroll")
+	arg_1_0._playercardreddot = RedDotController.instance:addNotEventRedDot(arg_1_0._goreddotplayercard, arg_1_0._isShowPlayerCardRedDot, arg_1_0)
 
 	if arg_1_0._editableInitView then
 		arg_1_0:_editableInitView()
@@ -130,6 +132,9 @@ end
 function var_0_0._btnzhoubianOnClick(arg_9_0)
 	local var_9_0 = CommonConfig.instance:getConstStr(ConstEnum.MallWebUrl)
 	local var_9_1 = CommonConfig.instance:getConstStr(ConstEnum.MallDeepLink)
+
+	StatController.instance:track(StatEnum.EventName.Click_Collectibles_Button, {})
+
 	local var_9_2 = SettingsModel.instance:extractByRegion(var_9_0)
 	local var_9_3 = SettingsModel.instance:extractByRegion(var_9_1)
 
@@ -217,6 +222,7 @@ function var_0_0.onOpen(arg_20_0)
 	arg_20_0:addEventCb(NoticeController.instance, NoticeEvent.OnRefreshRedDot, arg_20_0._onRefreshNoticeRedDot, arg_20_0)
 	arg_20_0:addEventCb(NoticeController.instance, NoticeEvent.OnGetNoticeInfo, arg_20_0._onRefreshNoticeRedDot, arg_20_0)
 	arg_20_0:addEventCb(GuideController.instance, GuideEvent.FinishGuide, arg_20_0._onRefreshNoticeRedDot, arg_20_0)
+	arg_20_0:addEventCb(PlayerCardController.instance, PlayerCardEvent.SwitchTheme, arg_20_0._isShowPlayerCardRedDot, arg_20_0)
 end
 
 function var_0_0._checkOpen(arg_21_0)

@@ -3517,5 +3517,77 @@
     "levels": [
       140011
     ]
+  },
+  {
+    "id": 294,
+    "name": "language_10073043",
+    "nameen": "Illusory Space",
+    "levels": [
+      29401
+    ]
+  },
+  {
+    "id": 295,
+    "name": "language_10073044",
+    "nameen": "\tSnowy Field",
+    "levels": [
+      29501
+    ]
+  },
+  {
+    "id": 296,
+    "name": "language_10073045",
+    "nameen": "Space",
+    "levels": [
+      29601
+    ]
+  },
+  {
+    "id": 29501,
+    "name": "language_10073044",
+    "nameen": "\tSnowy Field",
+    "levels": [
+      29501
+    ]
+  },
+  {
+    "id": 29502,
+    "name": "language_10073046",
+    "nameen": "Street, Mirny",
+    "levels": [
+      29501
+    ]
+  },
+  {
+    "id": 29503,
+    "name": "language_10073047",
+    "nameen": "Suburb, Mirny",
+    "levels": [
+      29501
+    ]
+  },
+  {
+    "id": 29601,
+    "name": "language_10073048",
+    "nameen": "Head Space",
+    "levels": [
+      29601
+    ]
+  },
+  {
+    "id": 29602,
+    "name": "language_10073049",
+    "nameen": "Simulation Room, Plesetsk",
+    "levels": [
+      29601
+    ]
+  },
+  {
+    "id": 29603,
+    "name": "language_10073045",
+    "nameen": "Space",
+    "levels": [
+      29601
+    ]
   }
 ]

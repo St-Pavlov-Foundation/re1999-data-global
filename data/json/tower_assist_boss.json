@@ -12,11 +12,13 @@
     "coldTime": 0,
     "activeSkills": "370001001#100#0#100",
     "passiveSkills": "370001010#370001003",
+    "teachSkills": "12720011#12720012",
     "passiveSkillName": "language_10060867",
     "resInitVal": 50,
     "resMaxVal": 100,
     "bossPic": "singlebg/tower_singlebg/boss/tower_boss_1.png",
-    "bossShadowPic": "singlebg/tower_singlebg/boss/tower_boss_shadow1.png"
+    "bossShadowPic": "singlebg/tower_singlebg/boss/tower_boss_shadow1.png",
+    "bossDesc": "language_10074794"
   },
   {
     "bossId": 2,
@@ -31,11 +33,13 @@
     "coldTime": 2,
     "activeSkills": "4700101#0#0#6",
     "passiveSkills": "4700104#4700106",
+    "teachSkills": "12720021#12720022",
     "passiveSkillName": "language_10061263",
     "resInitVal": 0,
     "resMaxVal": 6,
     "bossPic": "singlebg/tower_singlebg/boss/tower_boss_2.png",
-    "bossShadowPic": "singlebg/tower_singlebg/boss/tower_boss_shadow2.png"
+    "bossShadowPic": "singlebg/tower_singlebg/boss/tower_boss_shadow2.png",
+    "bossDesc": "language_10074795"
   },
   {
     "bossId": 3,
@@ -50,11 +54,13 @@
     "coldTime": 3,
     "activeSkills": "12310011#25#25#49|12310012#50#50#99|12310013#100#100#999",
     "passiveSkills": "12310014#12310015",
+    "teachSkills": "12720031#12720032",
     "passiveSkillName": "language_10061264",
     "resInitVal": 0,
     "resMaxVal": 100,
     "bossPic": "singlebg/tower_singlebg/boss/tower_boss_3.png",
-    "bossShadowPic": "singlebg/tower_singlebg/boss/tower_boss_shadow3.png"
+    "bossShadowPic": "singlebg/tower_singlebg/boss/tower_boss_shadow3.png",
+    "bossDesc": "language_10074796"
   },
   {
     "bossId": 4,
@@ -69,11 +75,13 @@
     "coldTime": 0,
     "activeSkills": "12410010#50#0#100",
     "passiveSkills": "12410021",
+    "teachSkills": "12720041#12720042",
     "passiveSkillName": "language_10064231",
     "resInitVal": 0,
     "resMaxVal": 100,
     "bossPic": "singlebg/tower_singlebg/boss/tower_boss_4.png",
-    "bossShadowPic": "singlebg/tower_singlebg/boss/tower_boss_shadow4.png"
+    "bossShadowPic": "singlebg/tower_singlebg/boss/tower_boss_shadow4.png",
+    "bossDesc": "language_10074797"
   },
   {
     "bossId": 5,
@@ -88,10 +96,12 @@
     "coldTime": 4,
     "activeSkills": "1251001#3#0#5",
     "passiveSkills": "1251002",
+    "teachSkills": "12720051#12720052",
     "passiveSkillName": "language_10068621",
     "resInitVal": 0,
     "resMaxVal": 5,
     "bossPic": "singlebg/tower_singlebg/boss/tower_boss_5.png",
-    "bossShadowPic": "singlebg/tower_singlebg/boss/tower_boss_shadow5.png"
+    "bossShadowPic": "singlebg/tower_singlebg/boss/tower_boss_shadow5.png",
+    "bossDesc": "language_10074798"
   }
 ]

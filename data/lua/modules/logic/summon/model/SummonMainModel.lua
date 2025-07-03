@@ -706,7 +706,7 @@ function var_0_0.getCostCurrencyParam(arg_56_0)
 end
 
 function var_0_0.jumpToSummonCostShop()
-	StoreController.instance:checkAndOpenStoreView(StoreEnum.SummonCost)
+	StoreController.instance:checkAndOpenStoreView(StoreEnum.StoreId.SummonCost)
 end
 
 function var_0_0.addCurrencyByCostStr(arg_58_0, arg_58_1, arg_58_2)

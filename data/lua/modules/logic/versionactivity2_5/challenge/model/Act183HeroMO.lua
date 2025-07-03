@@ -23,6 +23,7 @@ function var_0_0.init(arg_1_0, arg_1_1)
 	end
 
 	arg_1_0._config = arg_1_0._heroMo and arg_1_0._heroMo.config
+	arg_1_0._type = arg_1_1.type
 end
 
 function var_0_0.getHeroMo(arg_2_0)
@@ -49,6 +50,10 @@ end
 
 function var_0_0.getHeroId(arg_6_0)
 	return arg_6_0._heroMo and arg_6_0._heroMo.heroId
+end
+
+function var_0_0.isTeamLeader(arg_7_0)
+	return arg_7_0._type == 1
 end
 
 return var_0_0

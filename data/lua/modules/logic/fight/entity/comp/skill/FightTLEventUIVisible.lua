@@ -1,6 +1,6 @@
 ﻿module("modules.logic.fight.entity.comp.skill.FightTLEventUIVisible", package.seeall)
 
-local var_0_0 = class("FightTLEventUIVisible")
+local var_0_0 = class("FightTLEventUIVisible", FightTimelineTrackItem)
 local var_0_1
 local var_0_2 = {
 	[FightEnum.EffectType.DAMAGEFROMABSORB] = true,
@@ -13,13 +13,13 @@ function var_0_0.resetLatestStepUid()
 	var_0_1 = nil
 end
 
-function var_0_0.handleSkillEvent(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
+function var_0_0.onTrackStart(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
 	if var_0_1 and arg_2_1.stepUid < var_0_1 then
 		return
 	end
 
 	var_0_1 = arg_2_1.stepUid
-	arg_2_0._fightStepMO = arg_2_1
+	arg_2_0.fightStepData = arg_2_1
 	arg_2_0._isShowUI = arg_2_3[1] == "1" and true or false
 	arg_2_0._isShowFloat = arg_2_3[2] == "1" and true or false
 	arg_2_0._isShowNameUI = arg_2_3[3] == "1" and true or false
@@ -52,7 +52,7 @@ function var_0_0.handleSkillEvent(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
 	FightController.instance:registerCallback(FightEvent.ForceEndSkillStep, arg_2_0._onDoneThis, arg_2_0)
 end
 
-function var_0_0.handleSkillEventEnd(arg_3_0)
+function var_0_0.onTrackEnd(arg_3_0)
 	arg_3_0:_removeEvent()
 end
 
@@ -62,39 +62,27 @@ function var_0_0._setShowUI(arg_4_0)
 
 	if arg_4_0._entitys then
 		for iter_4_0, iter_4_1 in ipairs(arg_4_0._entitys) do
-			FightController.instance:dispatchEvent(FightEvent.SetNameUIVisibleByTimeline, iter_4_1, arg_4_0._fightStepMO, arg_4_0._isShowNameUI)
+			FightController.instance:dispatchEvent(FightEvent.SetNameUIVisibleByTimeline, iter_4_1, arg_4_0.fightStepData, arg_4_0._isShowNameUI)
 		end
 	end
 end
 
 function var_0_0._onDoneThis(arg_5_0, arg_5_1)
-	if arg_5_1 == arg_5_0._fightStepMO then
+	if arg_5_1 == arg_5_0.fightStepData then
 		arg_5_0:_removeEvent()
 	end
 end
 
-function var_0_0.onSkillEnd(arg_6_0)
-	arg_6_0._entitys = nil
-
-	arg_6_0:_removeEvent()
+function var_0_0._removeEvent(arg_6_0)
+	TaskDispatcher.cancelTask(arg_6_0._setShowUI, arg_6_0)
+	FightController.instance:unregisterCallback(FightEvent.ParallelPlayNextSkillDoneThis, arg_6_0._onDoneThis, arg_6_0)
+	FightController.instance:unregisterCallback(FightEvent.ForceEndSkillStep, arg_6_0._onDoneThis, arg_6_0)
 end
 
-function var_0_0.reset(arg_7_0)
+function var_0_0.onDestructor(arg_7_0)
 	arg_7_0._entitys = nil
 
 	arg_7_0:_removeEvent()
-end
-
-function var_0_0.dispose(arg_8_0)
-	arg_8_0._entitys = nil
-
-	arg_8_0:_removeEvent()
-end
-
-function var_0_0._removeEvent(arg_9_0)
-	TaskDispatcher.cancelTask(arg_9_0._setShowUI, arg_9_0)
-	FightController.instance:unregisterCallback(FightEvent.ParallelPlayNextSkillDoneThis, arg_9_0._onDoneThis, arg_9_0)
-	FightController.instance:unregisterCallback(FightEvent.ForceEndSkillStep, arg_9_0._onDoneThis, arg_9_0)
 end
 
 return var_0_0

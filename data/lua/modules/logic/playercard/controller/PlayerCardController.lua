@@ -295,6 +295,29 @@ function var_0_0.getHeadName(arg_22_0)
 	return lua_item.configDict[var_22_0].name
 end
 
+function var_0_0.ShowChangeBgSkin(arg_23_0, arg_23_1)
+	local function var_23_0()
+		PlayerCardRpc.instance:sendSetPlayerCardThemeRequest(arg_23_1)
+	end
+
+	GameFacade.showMessageBox(MessageBoxIdDefine.PlayerCardChangeSkinTips, MsgBoxEnum.BoxType.Yes_No, var_23_0)
+	arg_23_0:setBgSkinRed(arg_23_1, true)
+	PlayerCardModel.instance:setShowRed()
+end
+
+function var_0_0.getBgSkinRed(arg_25_0, arg_25_1)
+	local var_25_0 = PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.PlayerCardNewBgSkinRed) .. arg_25_1
+
+	return PlayerPrefsHelper.getNumber(var_25_0, 0)
+end
+
+function var_0_0.setBgSkinRed(arg_26_0, arg_26_1, arg_26_2)
+	local var_26_0 = arg_26_2 and 1 or 0
+	local var_26_1 = PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.PlayerCardNewBgSkinRed) .. arg_26_1
+
+	PlayerPrefsHelper.setNumber(var_26_1, var_26_0)
+end
+
 var_0_0.instance = var_0_0.New()
 
 return var_0_0

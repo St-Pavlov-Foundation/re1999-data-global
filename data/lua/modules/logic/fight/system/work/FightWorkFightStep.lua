@@ -7,15 +7,15 @@ function var_0_0.onStart(arg_1_0)
 		arg_1_0._workFlow = FightWorkFlowSequence.New()
 		FightStepBuilder.lastEffect = nil
 
-		FightStepBuilder.addEffectWork(arg_1_0._workFlow, arg_1_0._actEffectMO.cus_stepMO)
+		FightStepBuilder.addEffectWork(arg_1_0._workFlow, arg_1_0.actEffectData.fightStep)
 
 		FightStepBuilder.lastEffect = nil
 	end
 
-	arg_1_0._workFlow:addWork(Work2FightWork.New(FightWorkShowEquipSkillEffect, arg_1_0._actEffectMO.cus_stepMO))
+	arg_1_0._workFlow:addWork(Work2FightWork.New(FightWorkShowEquipSkillEffect, arg_1_0.actEffectData.fightStep))
 
-	if arg_1_0._actEffectMO.cus_stepMO.actType == FightEnum.ActType.SKILL and not FightHelper.isTimelineStep(arg_1_0._actEffectMO.cus_stepMO) then
-		arg_1_0._workFlow:addWork(Work2FightWork.New(FightNonTimelineSkillStep, arg_1_0._actEffectMO.cus_stepMO))
+	if arg_1_0.actEffectData.fightStep.actType == FightEnum.ActType.SKILL and not FightHelper.isTimelineStep(arg_1_0.actEffectData.fightStep) then
+		arg_1_0._workFlow:addWork(Work2FightWork.New(FightNonTimelineSkillStep, arg_1_0.actEffectData.fightStep))
 	end
 
 	arg_1_0:cancelFightWorkSafeTimer()

@@ -39,12 +39,6 @@ function var_0_0.onReceiveAct157UnlockComponentReply(arg_4_0, arg_4_1, arg_4_2)
 
 	Activity157Model.instance:setProductionInfo(var_4_0, var_4_1)
 	Activity157Model.instance:setSideMissionUnlockTime(arg_4_2.sideMissionUnlockTime)
-
-	local var_4_2, var_4_3 = Activity157Model.instance:getSideMissionUnlockTime()
-
-	if var_4_3 and not Activity157Model.instance:getIsSideMissionUnlocked() then
-		arg_4_0:sendGet157InfoRequest(arg_4_2.activityId or Activity157Model.instance:getActId())
-	end
 end
 
 function var_0_0.sendAct157AcceptProductionRequest(arg_5_0, arg_5_1, arg_5_2, arg_5_3)

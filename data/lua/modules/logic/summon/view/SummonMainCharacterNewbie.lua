@@ -52,6 +52,14 @@ var_0_0.preloadList = {
 	ResUrl.getSummonHeroIcon("full/bg000")
 }
 
+if var_0_0.heroId ~= nil then
+	for iter_0_0 = 1, #var_0_0.heroId do
+		local var_0_1 = var_0_0.heroId[iter_0_0]
+
+		table.insert(var_0_0.preloadList, ResUrl.getSummonHeroIcon(var_0_1))
+	end
+end
+
 function var_0_0.onUpdateParam(arg_4_0)
 	arg_4_0:_refreshView()
 end

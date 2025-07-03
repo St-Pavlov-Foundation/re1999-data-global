@@ -318,7 +318,7 @@ function var_0_0._showCardSkillTips(arg_22_0, arg_22_1, arg_22_2, arg_22_3)
 	local var_22_0 = arg_22_0._goskilltip.transform
 
 	if PCInputController.instance:getIsUse() and PlayerPrefsHelper.getNumber("keyTips", 0) ~= 0 then
-		if FightConfig.instance:isUniqueSkill(arg_22_1) then
+		if FightCardDataHelper.isBigSkill(arg_22_1) then
 			recthelper.setAnchor(var_22_0, arg_22_0._originSkillPosX, var_0_0.OnKeyTipsUniquePosY)
 		else
 			recthelper.setAnchor(var_22_0, arg_22_0._originSkillPosX, var_0_0.OnKeyTipsPosY)

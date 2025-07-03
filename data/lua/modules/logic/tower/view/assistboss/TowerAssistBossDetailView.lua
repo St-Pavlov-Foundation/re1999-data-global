@@ -21,6 +21,8 @@ function var_0_0.onInitView(arg_1_0)
 		arg_1_0.passiveSkillItems[iter_1_0] = var_1_0
 	end
 
+	arg_1_0.goTeachSkills = gohelper.findChild(arg_1_0.viewGO, "root/right/info/passiveskill/#go_teachskills")
+	arg_1_0.canvasGroupTeachSkills = arg_1_0.goTeachSkills:GetComponent(gohelper.Type_CanvasGroup)
 	arg_1_0.btnSkill = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/right/info/#go_skill/line/go_skills/skillicon")
 	arg_1_0.skillIcon = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/right/info/#go_skill/line/go_skills/skillicon/imgIcon")
 	arg_1_0.skillTagIcon = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/right/info/#go_skill/line/go_skills/skillicon/tagIcon")
@@ -46,6 +48,7 @@ function var_0_0.addEvents(arg_2_0)
 	arg_2_0:addEventCb(TowerController.instance, TowerEvent.ResetTalent, arg_2_0._onResetTalent, arg_2_0)
 	arg_2_0:addEventCb(TowerController.instance, TowerEvent.ActiveTalent, arg_2_0._onActiveTalent, arg_2_0)
 	arg_2_0:addEventCb(TowerController.instance, TowerEvent.TowerUpdate, arg_2_0._onTowerUpdate, arg_2_0)
+	arg_2_0:addEventCb(TowerController.instance, TowerEvent.RefreshTalent, arg_2_0.refreshTalent, arg_2_0)
 end
 
 function var_0_0.removeEvents(arg_3_0)
@@ -57,6 +60,7 @@ function var_0_0.removeEvents(arg_3_0)
 	arg_3_0:removeEventCb(TowerController.instance, TowerEvent.ResetTalent, arg_3_0._onResetTalent, arg_3_0)
 	arg_3_0:removeEventCb(TowerController.instance, TowerEvent.ActiveTalent, arg_3_0._onActiveTalent, arg_3_0)
 	arg_3_0:removeEventCb(TowerController.instance, TowerEvent.TowerUpdate, arg_3_0._onTowerUpdate, arg_3_0)
+	arg_3_0:removeEventCb(TowerController.instance, TowerEvent.RefreshTalent, arg_3_0.refreshTalent, arg_3_0)
 end
 
 function var_0_0._editableInitView(arg_4_0)
@@ -105,7 +109,8 @@ function var_0_0.onBtnTalentClick(arg_8_0)
 	end
 
 	ViewMgr.instance:openView(ViewName.TowerAssistBossTalentView, {
-		bossId = arg_8_0.bossId
+		bossId = arg_8_0.bossId,
+		isFromHeroGroup = arg_8_0.isFromHeroGroup
 	})
 end
 
@@ -140,10 +145,41 @@ function var_0_0.refreshParam(arg_15_0)
 	arg_15_0.bossMo = TowerAssistBossModel.instance:getById(arg_15_0.bossId)
 	arg_15_0.config = TowerConfig.instance:getAssistBossConfig(arg_15_0.bossId)
 	arg_15_0.isFromHeroGroup = arg_15_0.viewParam.isFromHeroGroup and true or false
+
+	local var_15_0 = TowerModel.instance:getCurTowerType()
+	local var_15_1 = tonumber(TowerConfig.instance:getTowerConstConfig(TowerEnum.ConstId.BalanceBossLevel))
+
+	arg_15_0.isBlanced = var_15_0 == TowerEnum.TowerType.Limited and var_15_1 > arg_15_0.bossMo.level
+
+	if arg_15_0.isFromHeroGroup then
+		local var_15_2 = TowerModel.instance:getRecordFightParam()
+
+		if tabletool.len(var_15_2) > 0 then
+			arg_15_0.isTeach = var_15_2.towerType == TowerEnum.TowerType.Boss and var_15_2.layerId == 0
+
+			if arg_15_0.isTeach then
+				local var_15_3 = tonumber(TowerConfig.instance:getTowerConstConfig(TowerEnum.ConstId.TeachBossLevel))
+				local var_15_4 = TowerConfig.instance:getBossTeachConfig(var_15_2.towerId, var_15_2.difficulty)
+
+				arg_15_0.bossMo:setTrialInfo(var_15_3, var_15_4.planId)
+				arg_15_0.bossMo:refreshTalent()
+			elseif arg_15_0.isBlanced then
+				TowerAssistBossModel.instance:setLimitedTrialBossInfo(arg_15_0.bossMo)
+			else
+				arg_15_0.bossMo:setTrialInfo(0, 0)
+				arg_15_0.bossMo:refreshTalent()
+			end
+		end
+	elseif var_15_0 and var_15_0 == TowerEnum.TowerType.Limited and arg_15_0.isBlanced then
+		TowerAssistBossModel.instance:setLimitedTrialBossInfo(arg_15_0.bossMo)
+	else
+		arg_15_0.bossMo:setTrialInfo(0, 0)
+		arg_15_0.bossMo:refreshTalent()
+	end
 end
 
 function var_0_0.refreshView(arg_16_0)
-	local var_16_0 = arg_16_0.bossMo and arg_16_0.bossMo.level or 1
+	local var_16_0 = arg_16_0.bossMo and arg_16_0.bossMo.trialLevel > 0 and arg_16_0.bossMo.trialLevel or arg_16_0.bossMo and arg_16_0.bossMo.level > 0 and arg_16_0.bossMo.level or 1
 
 	arg_16_0.txtLev.text = tostring(var_16_0)
 	arg_16_0.txtName.text = arg_16_0.config.name
@@ -160,6 +196,7 @@ function var_0_0.refreshView(arg_16_0)
 	gohelper.setActive(arg_16_0.btnBase, #var_16_2 > 0)
 	arg_16_0:refreshPassiveSkill()
 	arg_16_0:refreshActiveSkill()
+	arg_16_0:refreshTeachSkill()
 	arg_16_0:refreshTalent()
 	arg_16_0:refreshTags()
 end
@@ -171,7 +208,7 @@ function var_0_0.refreshTalent(arg_17_0)
 
 		arg_17_0.txtNum.text = var_17_2
 
-		gohelper.setActive(arg_17_0.goCanLight, arg_17_0.bossMo:hasTalentCanActive())
+		gohelper.setActive(arg_17_0.goCanLight, arg_17_0.bossMo:hasTalentCanActive() and not arg_17_0.isBlanced and not arg_17_0.isTeach)
 	else
 		arg_17_0.txtNum.text = ""
 
@@ -184,7 +221,7 @@ function var_0_0.refreshPassiveSkill(arg_18_0)
 
 	arg_18_0.txtPassiveName.text = arg_18_0.config.passiveSkillName
 
-	local var_18_1 = arg_18_0.bossMo and arg_18_0.bossMo.level or 1
+	local var_18_1 = arg_18_0.bossMo and arg_18_0.bossMo.trialLevel > 0 and arg_18_0.bossMo.trialLevel or arg_18_0.bossMo and arg_18_0.bossMo.level or 1
 
 	for iter_18_0, iter_18_1 in ipairs(arg_18_0.passiveSkillItems) do
 		local var_18_2 = var_18_0[iter_18_0]
@@ -242,14 +279,24 @@ function var_0_0.refreshTags(arg_20_0)
 	end
 end
 
-function var_0_0.onClose(arg_21_0)
+function var_0_0.refreshTeachSkill(arg_21_0)
+	local var_21_0 = string.splitToNumber(arg_21_0.config.teachSkills, "#") or {}
+
+	gohelper.setActive(arg_21_0.goTeachSkills, #var_21_0 > 0)
+
+	local var_21_1 = TowerBossTeachModel.instance:isAllEpisodeFinish(arg_21_0.bossId)
+
+	arg_21_0.canvasGroupTeachSkills.alpha = var_21_1 and 1 or 0.5
+end
+
+function var_0_0.onClose(arg_22_0)
 	return
 end
 
-function var_0_0.onDestroyView(arg_22_0)
-	arg_22_0.skillIcon:UnLoadImage()
-	arg_22_0.skillTagIcon:UnLoadImage()
-	arg_22_0.simageBoss:UnLoadImage()
+function var_0_0.onDestroyView(arg_23_0)
+	arg_23_0.skillIcon:UnLoadImage()
+	arg_23_0.skillTagIcon:UnLoadImage()
+	arg_23_0.simageBoss:UnLoadImage()
 end
 
 return var_0_0

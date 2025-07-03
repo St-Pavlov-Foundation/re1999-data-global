@@ -90,7 +90,7 @@ function var_0_0.onShow(arg_8_0)
 end
 
 function var_0_0.refreshView(arg_9_0)
-	local var_9_0 = arg_9_0.bossMo and arg_9_0.bossMo.level or 1
+	local var_9_0 = arg_9_0.bossMo and arg_9_0.bossMo.trialLevel > 0 and arg_9_0.bossMo.trialLevel or arg_9_0.bossMo and arg_9_0.bossMo.level > 0 and arg_9_0.bossMo.level or 1
 
 	arg_9_0.txtLev.text = tostring(var_9_0)
 	arg_9_0.txtName.text = arg_9_0.config.name
@@ -110,7 +110,7 @@ function var_0_0.refreshPassiveSkill(arg_10_0)
 
 	arg_10_0.txtPassiveName.text = arg_10_0.config.passiveSkillName
 
-	local var_10_1 = arg_10_0.bossMo and arg_10_0.bossMo.level or 1
+	local var_10_1 = arg_10_0.bossMo and arg_10_0.bossMo.trialLevel > 0 and arg_10_0.bossMo.trialLevel or arg_10_0.bossMo and arg_10_0.bossMo.level > 0 and arg_10_0.bossMo.level or 1
 
 	for iter_10_0, iter_10_1 in ipairs(arg_10_0.passiveSkillItems) do
 		local var_10_2 = var_10_0[iter_10_0]

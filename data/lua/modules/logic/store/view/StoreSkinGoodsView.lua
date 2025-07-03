@@ -181,6 +181,7 @@ function var_0_0._updateActivityStore(arg_11_0)
 	gohelper.setActive(arg_11_0._gooffTag, false)
 	gohelper.setActive(arg_11_0._gonormaltitle, true)
 	gohelper.setActive(arg_11_0._goadvancedtitle, false)
+	gohelper.setActive(arg_11_0._simagedreesing, false)
 end
 
 function var_0_0._updateSkinStore(arg_12_0)

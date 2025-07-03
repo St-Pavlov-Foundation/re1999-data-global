@@ -4,7 +4,10 @@ local var_0_0 = class("FightWorkRoundStart", BaseWork)
 
 function var_0_0.onStart(arg_1_0, arg_1_1)
 	FightController.instance:dispatchEvent(FightEvent.FightRoundStart)
-	FightCardModel.instance:onStartRound()
+
+	FightDataHelper.operationDataMgr.extraMoveAct = 0
+	FightLocalDataMgr.instance.extraMoveAct = 0
+
 	arg_1_0:onDone(true)
 end
 

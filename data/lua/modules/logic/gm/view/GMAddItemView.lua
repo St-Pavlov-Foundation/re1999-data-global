@@ -194,6 +194,10 @@ function var_0_0._hideScroll(arg_12_0)
 end
 
 function var_0_0._onClickItem(arg_13_0, arg_13_1)
+	if not arg_13_1.type then
+		return
+	end
+
 	if arg_13_1.isRoot == 1 then
 		arg_13_0._rootType = arg_13_1.type
 

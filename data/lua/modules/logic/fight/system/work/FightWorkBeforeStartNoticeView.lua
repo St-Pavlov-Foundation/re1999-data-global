@@ -69,17 +69,32 @@ function var_0_0.canShowTips()
 	end
 
 	local var_5_11 = FightDataHelper.fieldMgr.customData
-	local var_5_12 = var_5_11 and var_5_11[FightCustomData.CustomDataType.WeekwalkVer2]
 
-	if var_5_12 and cjson.decode(var_5_12).ruleMap then
-		var_5_1 = true
+	if var_5_11 then
+		local var_5_12 = var_5_11[FightCustomData.CustomDataType.WeekwalkVer2]
+
+		if var_5_12 and cjson.decode(var_5_12).ruleMap then
+			var_5_1 = true
+		end
+
+		local var_5_13 = var_5_11[FightCustomData.CustomDataType.Act183]
+
+		if var_5_13 then
+			if var_5_13.currRules and #var_5_13.currRules > 0 then
+				var_5_1 = true
+			end
+
+			if var_5_13.transferRules and #var_5_13.transferRules > 0 then
+				var_5_1 = true
+			end
+		end
 	end
 
-	local var_5_13 = GuideModel.instance:isDoingFirstGuide()
-	local var_5_14 = GuideController.instance:isForbidGuides()
-	local var_5_15 = FightReplayModel.instance:isReplay()
+	local var_5_14 = GuideModel.instance:isDoingFirstGuide()
+	local var_5_15 = GuideController.instance:isForbidGuides()
+	local var_5_16 = FightReplayModel.instance:isReplay()
 
-	if var_5_1 and (not var_5_13 or var_5_14) and not var_5_15 then
+	if var_5_1 and (not var_5_14 or var_5_15) and not var_5_16 then
 		return true
 	else
 		return false

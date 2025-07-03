@@ -37,15 +37,9 @@ function var_0_0.onOpen(arg_6_0)
 
 	arg_6_0:com_createObjList(arg_6_0._onBtnItemShow, var_6_0, arg_6_0._btnListRoot, arg_6_0._btnModel)
 
-	local var_6_1 = GameSceneMgr.instance:getCurScene().fightLog
+	local var_6_1 = FightDataHelper.protoCacheMgr:getLastRoundProto()
 
 	if not var_6_1 then
-		return
-	end
-
-	local var_6_2 = var_6_1:getLastRoundProto()
-
-	if not var_6_2 then
 		arg_6_0._logText.text = "没有数据"
 
 		return
@@ -53,8 +47,13 @@ function var_0_0.onOpen(arg_6_0)
 
 	arg_6_0._strList = {}
 
-	arg_6_0:addLog("回合" .. var_6_2.round)
-	arg_6_0:addLog(tostring(var_6_2.proto))
+	local var_6_2 = FightDataHelper.protoCacheMgr:getLastRoundNum()
+
+	if var_6_2 then
+		arg_6_0:addLog("回合" .. var_6_2)
+	end
+
+	arg_6_0:addLog(tostring(var_6_1))
 
 	local var_6_3 = table.concat(arg_6_0._strList, "\n")
 

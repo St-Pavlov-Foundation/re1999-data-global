@@ -25,6 +25,7 @@ function var_0_0.init(arg_2_0, arg_2_1)
 	arg_2_0.clothId = arg_2_1.clothId
 	arg_2_0.assistBossId = arg_2_1.assistBossId
 	arg_2_0.heroList = {}
+	arg_2_0.trialDict = {}
 
 	local var_2_0 = arg_2_1.heroList and #arg_2_1.heroList or 0
 
@@ -94,7 +95,7 @@ function var_0_0.initByFightGroup(arg_3_0, arg_3_1)
 			var_3_6 = var_3_3 - var_3_6
 		end
 
-		local var_3_7 = tostring(var_3_5.heroId - 1099511627776)
+		local var_3_7 = tostring(tonumber(var_3_5.id .. "." .. var_3_5.trialTemplate) - 1099511627776)
 
 		var_3_0[var_3_7] = var_3_6
 		arg_3_0.heroList[var_3_6] = var_3_7
@@ -270,19 +271,24 @@ function var_0_0.initByLocalData(arg_4_0, arg_4_1)
 	arg_4_0.equips = {}
 	arg_4_0.activity104Equips = {}
 
-	local var_4_0 = HeroGroupModel.instance.battleId
-	local var_4_1 = var_4_0 and lua_battle.configDict[var_4_0]
-	local var_4_2 = {}
+	local var_4_0 = arg_4_1.version or HeroGroupEnum.saveOldVersion
+	local var_4_1 = HeroGroupModel.instance.battleId
+	local var_4_2
 
-	if not string.nilorempty(var_4_1.trialHeros) then
-		var_4_2 = GameUtil.splitString2(var_4_1.trialHeros, true)
+	var_4_2 = var_4_1 and lua_battle.configDict[var_4_1]
+
+	local var_4_3 = {}
+	local var_4_4 = HeroGroupHandler.getTrialHeros(HeroGroupModel.instance.episodeId)
+
+	if not string.nilorempty(var_4_4) then
+		var_4_3 = GameUtil.splitString2(var_4_4, true)
 	end
 
-	local var_4_3 = ToughBattleModel.instance:getAddTrialHeros()
+	local var_4_5 = ToughBattleModel.instance:getAddTrialHeros()
 
-	if var_4_3 then
-		for iter_4_0, iter_4_1 in pairs(var_4_3) do
-			table.insert(var_4_2, {
+	if var_4_5 then
+		for iter_4_0, iter_4_1 in pairs(var_4_5) do
+			table.insert(var_4_3, {
 				iter_4_1
 			})
 		end
@@ -304,31 +310,42 @@ function var_0_0.initByLocalData(arg_4_0, arg_4_1)
 		})
 
 		if tonumber(arg_4_0.heroList[iter_4_2]) < 0 then
-			local var_4_4 = false
+			local var_4_6 = false
 
-			for iter_4_3, iter_4_4 in pairs(var_4_2) do
-				if lua_hero_trial.configDict[iter_4_4[1]][iter_4_4[2] or 0].heroId - 1099511627776 == tonumber(arg_4_0.heroList[iter_4_2]) then
+			for iter_4_3, iter_4_4 in pairs(var_4_3) do
+				local var_4_7 = lua_hero_trial.configDict[iter_4_4[1]][iter_4_4[2] or 0]
+				local var_4_8 = tonumber(var_4_7.id .. "." .. var_4_7.trialTemplate) - 1099511627776
+
+				if var_4_0 == HeroGroupEnum.saveOldVersion then
+					var_4_8 = var_4_7.heroId - 1099511627776
+				end
+
+				if var_4_8 == tonumber(arg_4_0.heroList[iter_4_2]) then
+					if var_4_0 == HeroGroupEnum.saveOldVersion then
+						arg_4_0.heroList[iter_4_2] = tostring(tonumber(var_4_7.id .. "." .. var_4_7.trialTemplate) - 1099511627776)
+					end
+
 					arg_4_0.trialDict[iter_4_2] = iter_4_4
-					var_4_4 = true
+					var_4_6 = true
 
 					break
 				end
 			end
 
-			if not var_4_4 then
+			if not var_4_6 then
 				arg_4_0.heroList[iter_4_2] = "0"
 			end
 		end
 	end
 
-	local var_4_5 = ModuleEnum.MaxHeroCountInGroup + 1
+	local var_4_9 = ModuleEnum.MaxHeroCountInGroup + 1
 
 	arg_4_0:updateActivity104PosEquips({
-		index = var_4_5 - 1,
-		equipUid = arg_4_1.activity104Equips and arg_4_1.activity104Equips[var_4_5] or {}
+		index = var_4_9 - 1,
+		equipUid = arg_4_1.activity104Equips and arg_4_1.activity104Equips[var_4_9] or {}
 	})
 
-	if Activity104Model.instance:isSeasonChapter() and arg_4_1.battleId ~= var_4_0 then
+	if Activity104Model.instance:isSeasonChapter() and arg_4_1.battleId ~= var_4_1 then
 		for iter_4_5, iter_4_6 in ipairs(arg_4_0.heroList) do
 			if tonumber(iter_4_6) < 0 then
 				arg_4_0.heroList[iter_4_5] = tostring(0)
@@ -346,31 +363,32 @@ function var_0_0.setTrials(arg_5_0, arg_5_1)
 	local var_5_0 = HeroGroupModel.instance.battleId
 	local var_5_1 = var_5_0 and lua_battle.configDict[var_5_0]
 	local var_5_2 = {}
+	local var_5_3 = HeroGroupHandler.getTrialHeros(HeroGroupModel.instance.episodeId)
 
-	if not string.nilorempty(var_5_1.trialHeros) then
-		var_5_2 = GameUtil.splitString2(var_5_1.trialHeros, true)
+	if not string.nilorempty(var_5_3) then
+		var_5_2 = GameUtil.splitString2(var_5_3, true)
 	end
 
-	local var_5_3 = {}
+	local var_5_4 = {}
 
 	for iter_5_0, iter_5_1 in pairs(var_5_2) do
 		if iter_5_1[3] then
-			local var_5_4 = iter_5_1[3]
+			local var_5_5 = iter_5_1[3]
 
-			if var_5_4 < 0 then
-				var_5_4 = arg_5_0._playerMax - var_5_4
+			if var_5_5 < 0 then
+				var_5_5 = arg_5_0._playerMax - var_5_5
 			end
 
-			arg_5_0.trialDict[var_5_4] = iter_5_1
+			arg_5_0.trialDict[var_5_5] = iter_5_1
 
-			local var_5_5 = lua_hero_trial.configDict[iter_5_1[1]][iter_5_1[2] or 0]
+			local var_5_6 = lua_hero_trial.configDict[iter_5_1[1]][iter_5_1[2] or 0]
 
-			arg_5_0.heroList[var_5_4] = tostring(var_5_5.heroId - 1099511627776)
-			var_5_3[var_5_5.heroId] = true
+			arg_5_0.heroList[var_5_5] = tostring(tonumber(var_5_6.id .. "." .. var_5_6.trialTemplate) - 1099511627776)
+			var_5_4[var_5_6.heroId] = true
 
-			if not arg_5_1 and (var_5_5.act104EquipId1 > 0 or var_5_5.act104EquipId2 > 0) then
+			if not arg_5_1 and (var_5_6.act104EquipId1 > 0 or var_5_6.act104EquipId2 > 0) then
 				arg_5_0:updateActivity104PosEquips({
-					index = var_5_4 - 1
+					index = var_5_5 - 1
 				})
 			end
 		end
@@ -378,22 +396,22 @@ function var_0_0.setTrials(arg_5_0, arg_5_1)
 
 	for iter_5_2, iter_5_3 in pairs(arg_5_0.heroList) do
 		if tonumber(iter_5_3) > 0 then
-			local var_5_6 = HeroModel.instance:getById(iter_5_3)
+			local var_5_7 = HeroModel.instance:getById(iter_5_3)
 
-			if var_5_6 and var_5_3[var_5_6.heroId] then
+			if var_5_7 and var_5_4[var_5_7.heroId] then
 				arg_5_0.heroList[iter_5_2] = "0"
 			end
 		end
 	end
 
 	if not arg_5_1 and not OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Equip) and not string.nilorempty(var_5_1.trialEquips) then
-		local var_5_7 = string.splitToNumber(var_5_1.trialEquips, "|")
+		local var_5_8 = string.splitToNumber(var_5_1.trialEquips, "|")
 
-		for iter_5_4 = 1, math.min(#var_5_7, ModuleEnum.MaxHeroCountInGroup) do
+		for iter_5_4 = 1, math.min(#var_5_8, ModuleEnum.MaxHeroCountInGroup) do
 			arg_5_0:updatePosEquips({
 				index = iter_5_4 - 1,
 				equipUid = {
-					tostring(-var_5_7[iter_5_4])
+					tostring(-var_5_8[iter_5_4])
 				}
 			})
 		end
@@ -429,6 +447,7 @@ function var_0_0.saveData(arg_6_0)
 
 	var_6_1.activity104Equips[var_6_2] = arg_6_0.activity104Equips[var_6_2 - 1] and arg_6_0.activity104Equips[var_6_2 - 1].equipUid
 	var_6_1.battleId = var_6_0
+	var_6_1.version = HeroGroupEnum.saveTrialVersion
 
 	local var_6_3
 
@@ -708,7 +727,7 @@ function var_0_0.initWithBattle(arg_23_0, arg_23_1, arg_23_2, arg_23_3, arg_23_4
 					table.insert(var_23_2, arg_23_0:getPosEquips(var_23_4 - 1))
 				end
 
-				arg_23_0.heroList[var_23_4] = tostring(var_23_5.heroId - 1099511627776)
+				arg_23_0.heroList[var_23_4] = tostring(tonumber(var_23_5.id .. "." .. var_23_5.trialTemplate) - 1099511627776)
 				arg_23_0.trialDict[var_23_4] = iter_23_1
 				var_23_3[var_23_5.heroId] = true
 			end
@@ -982,6 +1001,23 @@ function var_0_0.replaceTowerHeroList(arg_33_0, arg_33_1)
 				index = var_33_10,
 				equipUid = var_33_9
 			})
+		end
+	end
+
+	arg_33_0.trialDict = {}
+
+	for iter_33_7, iter_33_8 in ipairs(arg_33_0.heroList) do
+		if tonumber(iter_33_8) < 0 then
+			local var_33_11 = HeroGroupTrialModel.instance:getById(iter_33_8)
+
+			if var_33_11 then
+				arg_33_0.trialDict[iter_33_7] = {
+					var_33_11.trialCo.id,
+					0
+				}
+			else
+				arg_33_0.heroList[iter_33_7] = "0"
+			end
 		end
 	end
 end

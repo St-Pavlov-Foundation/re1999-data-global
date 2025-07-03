@@ -17,7 +17,7 @@ end
 
 function var_0_0.initActivityMgrList(arg_3_0)
 	arg_3_0.actMgrInstanceList = {
-		ActivityLiveMgr2_6.instance
+		ActivityLiveMgr2_7.instance
 	}
 	arg_3_0.actId2ViewList = {}
 

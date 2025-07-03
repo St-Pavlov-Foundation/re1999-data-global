@@ -1,0 +1,32 @@
+[
+  {
+    "id": 1001,
+    "triggerPoint": 910,
+    "effect": "poison",
+    "cover": "InfiniteOverlays",
+    "limit": 50,
+    "name": "language_10075366",
+    "desc": "language_10075367",
+    "icon": "5201"
+  },
+  {
+    "id": 1002,
+    "triggerPoint": 900,
+    "effect": "petrify",
+    "cover": "InfiniteOverlays",
+    "limit": 50,
+    "name": "language_10075368",
+    "desc": "language_10075369",
+    "icon": "3201"
+  },
+  {
+    "id": 1003,
+    "triggerPoint": 101,
+    "effect": "damageUp",
+    "cover": "InfiniteOverlays",
+    "limit": 50,
+    "name": "language_10075370",
+    "desc": "language_10075371",
+    "icon": "9103"
+  }
+]

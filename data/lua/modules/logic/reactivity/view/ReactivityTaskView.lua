@@ -50,10 +50,6 @@ function var_0_0.onOpen(arg_7_0)
 	UIBlockMgr.instance:startBlock(UIBlockKey.WaitItemAnimeDone)
 	TaskDispatcher.runDelay(arg_7_0._delayEndBlock, arg_7_0, var_0_1)
 	AudioMgr.instance:trigger(AudioEnum.UI.Act1_6DungeonEnterTaskView)
-
-	local var_7_0 = gohelper.findChild(arg_7_0.viewGO, "Left/LimitTime")
-
-	gohelper.setActive(var_7_0, false)
 end
 
 function var_0_0._delayEndBlock(arg_8_0)

@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1001,
+    "name": "language_10075331",
+    "icon": 0,
+    "hp": 100,
+    "skill": 0,
+    "specialAttr1": ""
+  },
+  {
+    "id": 1002,
+    "name": "language_10075332",
+    "icon": 0,
+    "hp": 100,
+    "skill": 1006,
+    "specialAttr1": ""
+  },
+  {
+    "id": 1003,
+    "name": "language_10075333",
+    "icon": 0,
+    "hp": 100,
+    "skill": 1007,
+    "specialAttr1": ""
+  },
+  {
+    "id": 1004,
+    "name": "language_10075334",
+    "icon": 0,
+    "hp": 100,
+    "skill": 1005,
+    "specialAttr1": ""
+  },
+  {
+    "id": 1009,
+    "name": "language_10075335",
+    "icon": 0,
+    "hp": 100,
+    "skill": 0,
+    "specialAttr1": ""
+  }
+]

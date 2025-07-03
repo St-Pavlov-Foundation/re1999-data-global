@@ -7,7 +7,7 @@ function var_0_0.onStart(arg_1_0, arg_1_1)
 	var_0_0.super.onStart(arg_1_0, arg_1_1)
 
 	local var_1_0 = 1.2 / FightModel.instance:getUISpeed()
-	local var_1_1 = FightCardModel.instance:getHandCards()
+	local var_1_1 = FightDataHelper.handCardMgr.handCard
 	local var_1_2 = arg_1_1.handCardItemList[#var_1_1]
 	local var_1_3 = gohelper.findChild(var_1_2.go, "downEffect") or gohelper.create2d(var_1_2.go, "downEffect")
 

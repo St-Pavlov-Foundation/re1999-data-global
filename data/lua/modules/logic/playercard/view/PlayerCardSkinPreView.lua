@@ -17,6 +17,7 @@ function var_0_0.onInitView(arg_2_0)
 	arg_2_0._gochat = gohelper.findChild(arg_2_0.viewGO, "#go_chat")
 	arg_2_0._btnclose = gohelper.findChildButton(arg_2_0.viewGO, "#go_chat/#btn_close")
 	arg_2_0._simagebg = gohelper.findChildSingleImage(arg_2_0.viewGO, "#go_chat/#simage_chatbg")
+	arg_2_0._gobg = gohelper.findChild(arg_2_0.viewGO, "#go_chat/#simage_chatbg")
 	arg_2_0._goSkinbg = gohelper.findChild(arg_2_0.viewGO, "#go_chat/#go_skinbg")
 
 	gohelper.setActive(arg_2_0._gochat, arg_2_0._isopen)
@@ -55,7 +56,7 @@ function var_0_0.initView(arg_6_0)
 	end
 
 	gohelper.setActive(arg_6_0._goSkinbg, arg_6_0._hasSkin)
-	gohelper.setActive(arg_6_0._simagebg.gameObject, not arg_6_0._hasSkin)
+	gohelper.setActive(arg_6_0._gobg, not arg_6_0._hasSkin)
 	arg_6_0._loader:addPath(arg_6_0._itemPath)
 	arg_6_0._loader:startLoad(arg_6_0._onLoadFinish, arg_6_0)
 
@@ -76,7 +77,7 @@ function var_0_0.switchSkin(arg_7_0, arg_7_1)
 		arg_7_0._hasSkin = false
 	end
 
-	gohelper.setActive(arg_7_0._simagebg.gameObject, not arg_7_0._hasSkin)
+	gohelper.setActive(arg_7_0._gobg, not arg_7_0._hasSkin)
 	gohelper.setActive(arg_7_0._goSkinbg, arg_7_0._hasSkin)
 	gohelper.setActive(arg_7_0._gosocialfrienditem, false)
 	arg_7_0._switchskinloader:addPath(arg_7_0._skinPath)
@@ -132,7 +133,7 @@ function var_0_0.onSwitchView(arg_12_0, arg_12_1)
 
 	if arg_12_0._selectMo.id ~= 0 then
 		gohelper.setActive(arg_12_0._goSkinbg, true)
-		gohelper.setActive(arg_12_0._simagebg.gameObject, false)
+		gohelper.setActive(arg_12_0._gobg, false)
 
 		if arg_12_0._selectMo.id ~= arg_12_0._skinId then
 			arg_12_0._skinId = arg_12_0._selectMo.id
@@ -142,7 +143,7 @@ function var_0_0.onSwitchView(arg_12_0, arg_12_1)
 		end
 	else
 		gohelper.setActive(arg_12_0._goSkinbg, false)
-		gohelper.setActive(arg_12_0._simagebg.gameObject, true)
+		gohelper.setActive(arg_12_0._gobg, true)
 		arg_12_0._socialfrienditemcls:selectSkin(arg_12_0._selectMo.id)
 
 		arg_12_0._skinId = arg_12_0._selectMo.id
@@ -152,7 +153,11 @@ end
 function var_0_0.onHide(arg_13_0)
 	local var_13_0 = PlayerCardModel.instance:getPlayerCardSkinId()
 
-	arg_13_0._skinId = var_13_0
+	if arg_13_0._skinId ~= var_13_0 then
+		arg_13_0:switchSkin(var_13_0)
+
+		arg_13_0._skinId = var_13_0
+	end
 
 	arg_13_0._socialfrienditemcls:selectSkin(var_13_0)
 end

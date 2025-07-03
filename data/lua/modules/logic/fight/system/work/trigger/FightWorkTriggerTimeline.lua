@@ -3,12 +3,12 @@
 local var_0_0 = class("FightWorkTriggerTimeline", BaseWork)
 
 function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0._fightStepMO = arg_1_1
-	arg_1_0._actEffectMO = arg_1_2
+	arg_1_0.fightStepData = arg_1_1
+	arg_1_0.actEffectData = arg_1_2
 end
 
 function var_0_0.onStart(arg_2_0)
-	arg_2_0._config = lua_trigger_action.configDict[arg_2_0._actEffectMO.effectNum]
+	arg_2_0._config = lua_trigger_action.configDict[arg_2_0.actEffectData.effectNum]
 
 	local var_2_0 = tonumber(arg_2_0._config.param1)
 	local var_2_1 = FightHelper.getEnemyEntityByMonsterId(var_2_0)
@@ -23,14 +23,13 @@ function var_0_0.onStart(arg_2_0)
 		local var_2_2 = {
 			actId = 0,
 			stepUid = 0,
-			actEffectMOs = {
+			actEffect = {
 				{
 					targetId = arg_2_0._entityId
 				}
 			},
-			actEffect = {},
 			fromId = arg_2_0._entityId,
-			toId = arg_2_0._fightStepMO.toId,
+			toId = arg_2_0.fightStepData.toId,
 			actType = FightEnum.ActType.SKILL
 		}
 

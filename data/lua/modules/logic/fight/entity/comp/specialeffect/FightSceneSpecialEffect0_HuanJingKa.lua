@@ -132,17 +132,13 @@ function var_0_0._isEffectBuff(arg_11_0, arg_11_1)
 end
 
 function var_0_0._onSkillPlayStart(arg_12_0, arg_12_1, arg_12_2)
-	local var_12_0 = arg_12_1:getMO()
-
-	if var_12_0 and var_12_0:isUniqueSkill(arg_12_2) and arg_12_0:_detectHaveBuff() and arg_12_0._effectWrap then
+	if arg_12_1:getMO() and FightCardDataHelper.isBigSkill(arg_12_2) and arg_12_0:_detectHaveBuff() and arg_12_0._effectWrap then
 		arg_12_0:_hideEffect()
 	end
 end
 
 function var_0_0._onSkillPlayFinish(arg_13_0, arg_13_1, arg_13_2)
-	local var_13_0 = arg_13_1:getMO()
-
-	if var_13_0 and var_13_0:isUniqueSkill(arg_13_2) and arg_13_0:_detectHaveBuff() and arg_13_0._effectWrap then
+	if arg_13_1:getMO() and FightCardDataHelper.isBigSkill(arg_13_2) and arg_13_0:_detectHaveBuff() and arg_13_0._effectWrap then
 		arg_13_0._aniName = var_0_4
 
 		arg_13_0:_refreshAni()

@@ -3,7 +3,7 @@
 local var_0_0 = class("FightWorkEffectSummon", FightEffectBase)
 
 function var_0_0.onStart(arg_1_0)
-	arg_1_0._entityMO = FightDataHelper.entityMgr:getById(arg_1_0._actEffectMO.entityMO.id)
+	arg_1_0._entityMO = FightDataHelper.entityMgr:getById(arg_1_0.actEffectData.entity.id)
 
 	if arg_1_0._entityMO then
 		if FightDataHelper.entityMgr:isDeadUid(arg_1_0._entityMO.uid) then

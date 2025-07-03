@@ -80,7 +80,7 @@ function var_0_0.clearFlow(arg_11_0)
 end
 
 function var_0_0.isWeeklyScoreFull(arg_12_0)
-	return (arg_12_0.weeklyScore or 0) >= var_0_0.instance:getWeeklyMaxScore()
+	return (arg_12_0.weeklyScore or 0) >= arg_12_0:getWeeklyMaxScore()
 end
 
 function var_0_0.getBpChargeLeftSec(arg_13_0)

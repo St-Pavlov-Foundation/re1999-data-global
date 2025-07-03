@@ -54,5 +54,12 @@
     "icon": "singlebg/activity/weekwalkheart_img_01.png",
     "sortId": 3,
     "show": 1
+  },
+  {
+    "id": 10,
+    "name": "",
+    "icon": "singlebg_lang/txt_act191_singlebg/act191_main_banner.png",
+    "sortId": 3,
+    "show": 1
   }
 ]

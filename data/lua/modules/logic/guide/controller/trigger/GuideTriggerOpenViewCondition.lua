@@ -53,7 +53,9 @@ function var_0_0.checkTowerLimitOpen()
 
 	var_8_2 = var_8_2 and TowerTimeLimitLevelModel.instance:getCurOpenTimeLimitTower() ~= nil
 
-	return var_8_2
+	local var_8_3 = GuideModel.instance:isGuideFinish(TowerEnum.BossGuideId)
+
+	return var_8_2 and var_8_3
 end
 
 function var_0_0.checkTowerPermanentElite()

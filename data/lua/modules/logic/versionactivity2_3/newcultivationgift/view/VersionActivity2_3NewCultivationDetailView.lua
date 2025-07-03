@@ -39,6 +39,7 @@ function var_0_0.removeEvents(arg_3_0)
 end
 
 function var_0_0._btncloseOnClick(arg_4_0)
+	AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
 	arg_4_0:closeThis()
 end
 
@@ -151,10 +152,10 @@ function var_0_0._refreshRoleInfo(arg_12_0)
 	if arg_12_0._needShowHeroIds ~= nil then
 		local var_12_1 = {}
 
-		for iter_12_0, iter_12_1 in ipairs(var_12_0) do
-			for iter_12_2, iter_12_3 in ipairs(arg_12_0._needShowHeroIds) do
-				if iter_12_1.heroId == iter_12_3 then
-					table.insert(var_12_1, iter_12_1)
+		for iter_12_0, iter_12_1 in ipairs(arg_12_0._needShowHeroIds) do
+			for iter_12_2, iter_12_3 in ipairs(var_12_0) do
+				if iter_12_3.heroId == iter_12_1 then
+					table.insert(var_12_1, iter_12_3)
 				end
 			end
 		end

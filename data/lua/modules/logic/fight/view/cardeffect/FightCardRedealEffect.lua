@@ -7,7 +7,7 @@ local var_0_2 = "ui/materials/dynamic/kapairongjie.mat"
 function var_0_0.onStart(arg_1_0, arg_1_1)
 	var_0_0.super.onStart(arg_1_0, arg_1_1)
 
-	if arg_1_0.context.newCards and #arg_1_0.context.newCards > 0 then
+	if arg_1_0.context.oldCards and #arg_1_0.context.oldCards > 0 then
 		arg_1_0._paramDict = {}
 		arg_1_0._loadingDissolveMat = true
 
@@ -38,7 +38,7 @@ function var_0_0._playEffects(arg_3_0)
 
 	local var_3_0 = arg_3_0.context.oldCards
 
-	for iter_3_0, iter_3_1 in ipairs(arg_3_0.context.newCards) do
+	for iter_3_0, iter_3_1 in ipairs(arg_3_0.context.oldCards) do
 		if not arg_3_0.context.handCardItemList[iter_3_0].go.activeInHierarchy then
 			arg_3_0:onDone(true)
 
@@ -46,10 +46,10 @@ function var_0_0._playEffects(arg_3_0)
 		end
 	end
 
-	for iter_3_2, iter_3_3 in ipairs(arg_3_0.context.newCards) do
+	for iter_3_2, iter_3_3 in ipairs(arg_3_0.context.oldCards) do
 		local var_3_1 = arg_3_0.context.handCardItemList[iter_3_2]
 		local var_3_2 = var_3_0[iter_3_2]
-		local var_3_3 = FightCardModel.instance:getSkillLv(var_3_2.uid, var_3_2.skillId)
+		local var_3_3 = FightCardDataHelper.getSkillLv(var_3_2.uid, var_3_2.skillId)
 		local var_3_4 = gohelper.findChild(var_3_1.go, "changeEffect") or gohelper.create2d(var_3_1.go, "changeEffect")
 		local var_3_5 = PrefabInstantiate.Create(var_3_4)
 
@@ -75,7 +75,7 @@ function var_0_0._setupDissolveMat(arg_5_0)
 	arg_5_0._imgMaskMatDict = {}
 	arg_5_0._imgMaskCloneDict = {}
 
-	for iter_5_0, iter_5_1 in ipairs(arg_5_0.context.newCards) do
+	for iter_5_0, iter_5_1 in ipairs(arg_5_0.context.oldCards) do
 		local var_5_0 = arg_5_0.context.handCardItemList[iter_5_0]
 		local var_5_1 = gohelper.findChild(var_5_0.go, "foranim")
 		local var_5_2 = {}
@@ -137,8 +137,14 @@ function var_0_0._playDissolveMat(arg_7_0)
 			end
 		end
 	end, function()
-		for iter_9_0, iter_9_1 in ipairs(arg_7_0.context.newCards) do
-			arg_7_0.context.handCardItemList[iter_9_0]:updateItem(iter_9_0, iter_9_1)
+		if arg_7_0.context.newCards then
+			for iter_9_0, iter_9_1 in ipairs(arg_7_0.context.newCards) do
+				local var_9_0 = arg_7_0.context.handCardItemList[iter_9_0]
+
+				if var_9_0 then
+					var_9_0:updateItem(iter_9_0, iter_9_1)
+				end
+			end
 		end
 
 		arg_7_0._tweenId = ZProj.TweenHelper.DOTweenFloat(1.7526, 0.07, 0.6, function(arg_10_0)

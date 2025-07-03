@@ -3,7 +3,7 @@
 local var_0_0 = class("FightWorkRedOrBlueCountChange", FightEffectBase)
 
 function var_0_0.onStart(arg_1_0)
-	local var_1_0 = arg_1_0._actEffectMO.buff
+	local var_1_0 = arg_1_0.actEffectData.buff
 
 	FightDataHelper.LYDataMgr:setLYCountBuff(var_1_0)
 

@@ -266,55 +266,79 @@ end
 
 function var_0_0._refreshProgress(arg_24_0, arg_24_1)
 	local var_24_0 = arg_24_1 or arg_24_0.playercardinfo:getProgressSetting()
+	local var_24_1 = ItemConfig.instance:getItemCo(arg_24_0.themeId)
+	local var_24_2
+
+	if var_24_1 and not string.nilorempty(var_24_1.effect) then
+		var_24_2 = string.split(var_24_1.effect, "#")
+	end
 
 	if var_24_0 and #var_24_0 > 0 then
 		for iter_24_0, iter_24_1 in ipairs(var_24_0) do
-			local var_24_1 = iter_24_1[2]
-			local var_24_2 = iter_24_1[1]
-			local var_24_3 = arg_24_0._progressItemList[var_24_2]
+			local var_24_3 = iter_24_1[2]
+			local var_24_4 = iter_24_1[1]
+			local var_24_5 = arg_24_0._progressItemList[var_24_4]
 
-			if var_24_3 then
-				if not var_24_3.isload then
-					var_24_3.anim:Update(0)
-					var_24_3.anim:Play("open")
+			if var_24_5 then
+				if not var_24_5.isload then
+					var_24_5.anim:Update(0)
+					var_24_5.anim:Play("open")
 
-					var_24_3.isload = true
+					var_24_5.isload = true
 				end
 
-				local var_24_4 = PlayerCardConfig.instance:getCardProgressById(var_24_1)
+				local var_24_6 = PlayerCardConfig.instance:getCardProgressById(var_24_3)
 
-				gohelper.setActive(var_24_3.gofull, true)
-				gohelper.setActive(var_24_3.goempty, false)
+				gohelper.setActive(var_24_5.gofull, true)
+				gohelper.setActive(var_24_5.goempty, false)
 
 				for iter_24_2, iter_24_3 in pairs(PlayerCardEnum.ProgressShowType) do
-					local var_24_5 = gohelper.findChild(var_24_3.gofull, "type" .. iter_24_3)
+					local var_24_7 = gohelper.findChild(var_24_5.gofull, "type" .. iter_24_3)
 
-					gohelper.setActive(var_24_5, false)
+					gohelper.setActive(var_24_7, false)
 				end
 
-				local var_24_6 = var_24_4.type
+				local var_24_8 = var_24_6.type
 
-				var_24_3.txtname.text = var_24_4.name
-				var_24_3.gotype = gohelper.findChild(var_24_3.gofull, "type" .. var_24_6)
+				var_24_5.txtname.text = var_24_6.name
+				var_24_5.gotype = gohelper.findChild(var_24_5.gofull, "type" .. var_24_8)
 
-				gohelper.setActive(var_24_3.gotype, true)
-				arg_24_0:setProgressType(var_24_3.gotype, var_24_6, var_24_1)
-				UISpriteSetMgr.instance:setPlayerCardSprite(var_24_3.imgpic, "playercard_main_img_" .. var_24_1)
-				UISpriteSetMgr.instance:setPlayerCardSprite(var_24_3.imgicon, "playercard_main_icon_" .. var_24_1)
+				gohelper.setActive(var_24_5.gotype, true)
+				arg_24_0:setProgressType(var_24_5.gotype, var_24_8, var_24_3)
+
+				if var_24_2 then
+					local var_24_9 = var_24_2[1]
+					local var_24_10 = var_24_2[2]
+
+					if not string.nilorempty(var_24_9) then
+						UISpriteSetMgr.instance:setPlayerCardSprite(var_24_5.imgicon, "playercard_progress_icon_" .. var_24_3 .. "_" .. var_24_9)
+					else
+						UISpriteSetMgr.instance:setPlayerCardSprite(var_24_5.imgicon, "playercard_main_icon_" .. var_24_3)
+					end
+
+					if not string.nilorempty(var_24_10) then
+						UISpriteSetMgr.instance:setPlayerCardSprite(var_24_5.imgpic, "playercard_main_img_" .. var_24_3 .. "_" .. var_24_10)
+					else
+						UISpriteSetMgr.instance:setPlayerCardSprite(var_24_5.imgpic, "playercard_main_img_" .. var_24_3)
+					end
+				else
+					UISpriteSetMgr.instance:setPlayerCardSprite(var_24_5.imgpic, "playercard_main_img_" .. var_24_3)
+					UISpriteSetMgr.instance:setPlayerCardSprite(var_24_5.imgicon, "playercard_main_icon_" .. var_24_3)
+				end
 			end
 		end
 	end
 
-	local var_24_7 = arg_24_0.progressopen and PlayerCardProgressModel.instance:getEmptyPosList() or arg_24_0.playercardinfo:getEmptyPosList()
+	local var_24_11 = arg_24_0.progressopen and PlayerCardProgressModel.instance:getEmptyPosList() or arg_24_0.playercardinfo:getEmptyPosList()
 
-	for iter_24_4, iter_24_5 in ipairs(var_24_7) do
+	for iter_24_4, iter_24_5 in ipairs(var_24_11) do
 		if iter_24_5 then
-			local var_24_8 = arg_24_0._progressItemList[iter_24_4]
+			local var_24_12 = arg_24_0._progressItemList[iter_24_4]
 
-			gohelper.setActive(var_24_8.gofull, false)
-			gohelper.setActive(var_24_8.goempty, true)
+			gohelper.setActive(var_24_12.gofull, false)
+			gohelper.setActive(var_24_12.goempty, true)
 
-			var_24_8.isload = false
+			var_24_12.isload = false
 		end
 	end
 end

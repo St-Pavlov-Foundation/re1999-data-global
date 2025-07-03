@@ -14,7 +14,8 @@ function var_0_0.buildViews(arg_1_0)
 		arg_1_0._scrollListView,
 		arg_1_0._poolView,
 		AchievementMainViewFocus.New(),
-		AchievementMainTopView.New()
+		AchievementMainTopView.New(),
+		AchievementMainViewFold.New()
 	}
 end
 
@@ -40,7 +41,7 @@ function var_0_0.getMixContentParam(arg_3_0)
 	var_3_0.prefabUrl = arg_3_0._viewSetting.otherRes[1]
 	var_3_0.cellClass = AchievementMainItem
 	var_3_0.scrollDir = ScrollEnum.ScrollDirV
-	var_3_0.startSpace = -20
+	var_3_0.startSpace = 0
 	var_3_0.endSpace = 50
 
 	return var_3_0
@@ -54,6 +55,8 @@ function var_0_0.getListContentParam(arg_4_0)
 	var_4_0.prefabUrl = "#go_container/#scroll_list/Viewport/content/#go_listitem"
 	var_4_0.cellClass = AchievementMainListItem
 	var_4_0.scrollDir = ScrollEnum.ScrollDirV
+	var_4_0.startSpace = 0
+	var_4_0.endSpace = 50
 
 	return var_4_0
 end

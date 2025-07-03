@@ -1574,6 +1574,24 @@
         "mainRes": 5,
         "defineId": 265001,
         "blockId": 52216
+      },
+      {
+        "ownType": 1,
+        "mainRes": 5,
+        "defineId": 275001,
+        "blockId": 53949
+      },
+      {
+        "ownType": 1,
+        "mainRes": 5,
+        "defineId": 275002,
+        "blockId": 53950
+      },
+      {
+        "ownType": 1,
+        "mainRes": 5,
+        "defineId": 275003,
+        "blockId": 53951
       }
     ],
     "id": 16
@@ -10469,5 +10487,527 @@
       }
     ],
     "id": 2604
+  },
+  {
+    "infos": [
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270014,
+        "blockId": 53217
+      },
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270010,
+        "blockId": 53213
+      },
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270005,
+        "blockId": 53208
+      },
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270004,
+        "blockId": 53207
+      },
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270017,
+        "blockId": 53219
+      },
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270013,
+        "blockId": 53216
+      },
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270003,
+        "blockId": 53206
+      },
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270012,
+        "blockId": 53215
+      },
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270016,
+        "blockId": 53218
+      },
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270002,
+        "blockId": 53205
+      },
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270001,
+        "blockId": 53204
+      },
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270007,
+        "blockId": 53210
+      },
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270006,
+        "blockId": 53209
+      },
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270011,
+        "blockId": 53214
+      }
+    ],
+    "id": 2701
+  },
+  {
+    "infos": [
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270007,
+        "blockId": 53973
+      },
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270010,
+        "blockId": 53968
+      },
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270025,
+        "blockId": 53931
+      },
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270033,
+        "blockId": 53919
+      },
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270032,
+        "blockId": 53920
+      },
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270026,
+        "blockId": 53990
+      },
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270017,
+        "blockId": 53993
+      },
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270017,
+        "blockId": 53991
+      },
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270031,
+        "blockId": 53921
+      },
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270028,
+        "blockId": 53922
+      },
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270017,
+        "blockId": 53992
+      },
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270010,
+        "blockId": 53971
+      },
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270017,
+        "blockId": 53994
+      },
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270017,
+        "blockId": 53995
+      }
+    ],
+    "id": 2703
+  },
+  {
+    "infos": [
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270017,
+        "blockId": 53996
+      },
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270020,
+        "blockId": 53962
+      },
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270027,
+        "blockId": 53923
+      },
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270026,
+        "blockId": 53924
+      },
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270017,
+        "blockId": 53997
+      },
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270017,
+        "blockId": 53998
+      },
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270021,
+        "blockId": 53928
+      },
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270024,
+        "blockId": 53925
+      },
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270023,
+        "blockId": 53926
+      },
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270020,
+        "blockId": 53929
+      },
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270022,
+        "blockId": 53927
+      },
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270018,
+        "blockId": 53963
+      },
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270019,
+        "blockId": 53930
+      },
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270017,
+        "blockId": 53961
+      }
+    ],
+    "id": 2704
+  },
+  {
+    "infos": [
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270017,
+        "blockId": 53982
+      },
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270017,
+        "blockId": 53983
+      },
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270036,
+        "blockId": 53979
+      },
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270029,
+        "blockId": 53933
+      },
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270030,
+        "blockId": 53932
+      },
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270035,
+        "blockId": 53980
+      },
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270017,
+        "blockId": 53984
+      },
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270035,
+        "blockId": 53981
+      },
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270034,
+        "blockId": 53977
+      },
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270034,
+        "blockId": 53978
+      },
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270017,
+        "blockId": 53986
+      },
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270017,
+        "blockId": 53985
+      },
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270029,
+        "blockId": 53988
+      },
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270017,
+        "blockId": 53987
+      }
+    ],
+    "id": 2702
+  },
+  {
+    "infos": [
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270008,
+        "blockId": 54248
+      },
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270024,
+        "blockId": 54244
+      },
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270020,
+        "blockId": 54240
+      },
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270019,
+        "blockId": 54241
+      },
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270016,
+        "blockId": 54245
+      },
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270008,
+        "blockId": 54249
+      },
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270008,
+        "blockId": 54250
+      },
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270010,
+        "blockId": 54246
+      },
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270022,
+        "blockId": 54242
+      },
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270027,
+        "blockId": 54247
+      },
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270015,
+        "blockId": 54243
+      },
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270020,
+        "blockId": 54252
+      },
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270008,
+        "blockId": 54251
+      }
+    ],
+    "id": 2706
+  },
+  {
+    "infos": [
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270017,
+        "blockId": 54264
+      },
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270017,
+        "blockId": 54265
+      },
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270022,
+        "blockId": 54256
+      },
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270017,
+        "blockId": 54260
+      },
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270017,
+        "blockId": 54263
+      },
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270033,
+        "blockId": 54255
+      },
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270017,
+        "blockId": 54259
+      },
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270025,
+        "blockId": 54254
+      },
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270031,
+        "blockId": 54253
+      },
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270020,
+        "blockId": 54257
+      },
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270024,
+        "blockId": 54258
+      },
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270017,
+        "blockId": 54261
+      },
+      {
+        "ownType": 0,
+        "mainRes": 0,
+        "defineId": 270017,
+        "blockId": 54262
+      }
+    ],
+    "id": 2705
   }
 ]

@@ -441,6 +441,7 @@ function var_0_0.onSceneClose(arg_29_0)
 	arg_29_0._matFogParticle = nil
 	arg_29_0._matFogPlane = nil
 	arg_29_0._curRoomMode = nil
+	arg_29_0._lastAutoUpdateReport = nil
 
 	TaskDispatcher.cancelTask(arg_29_0.updateReport, arg_29_0)
 	TaskDispatcher.cancelTask(arg_29_0._initReport, arg_29_0)

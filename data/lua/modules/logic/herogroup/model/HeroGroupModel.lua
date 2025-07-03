@@ -167,49 +167,57 @@ function var_0_0.setParam(arg_9_0, arg_9_1, arg_9_2, arg_9_3, arg_9_4)
 		var_9_8 = string.splitToNumber(var_9_1.aid, "#")
 	end
 
-	if var_9_1 and (var_9_1.trialLimit > 0 or not string.nilorempty(var_9_1.trialEquips)) or ToughBattleModel.instance:getAddTrialHeros() then
-		local var_9_9 = Activity104Model.instance:isSeasonChapter()
-		local var_9_10
+	local var_9_9 = HeroGroupHandler.checkIsTowerEpisodeByEpisodeId(arg_9_0.episodeId)
 
-		if var_9_9 then
-			var_9_10 = PlayerPrefsHelper.getString(Activity104Model.instance:getSeasonTrialPrefsKey(), "")
+	if var_9_1 and (var_9_1.trialLimit > 0 or not string.nilorempty(var_9_1.trialEquips)) or ToughBattleModel.instance:getAddTrialHeros() or var_9_9 then
+		local var_9_10 = Activity104Model.instance:isSeasonChapter()
+		local var_9_11
+
+		if var_9_10 then
+			var_9_11 = PlayerPrefsHelper.getString(Activity104Model.instance:getSeasonTrialPrefsKey(), "")
 		else
-			var_9_10 = PlayerPrefsHelper.getString(PlayerPrefsKey.HeroGroupTrial .. tostring(PlayerModel.instance:getMyUserId()) .. var_9_1.id, "")
+			var_9_11 = PlayerPrefsHelper.getString(PlayerPrefsKey.HeroGroupTrial .. tostring(PlayerModel.instance:getMyUserId()) .. var_9_1.id, "")
 		end
 
 		arg_9_0.heroGroupType = ModuleEnum.HeroGroupType.Trial
 		arg_9_0._curGroupId = 1
 
-		local var_9_11
+		local var_9_12
 
 		if var_9_1.trialLimit > 0 and var_9_1.onlyTrial == 1 then
-			var_9_11 = arg_9_0:generateTempGroup(nil, nil, true)
-		elseif string.nilorempty(var_9_10) then
+			var_9_12 = arg_9_0:generateTempGroup(nil, nil, true)
+		elseif string.nilorempty(var_9_11) then
 			if arg_9_0.curGroupSelectIndex > 0 then
-				var_9_11 = arg_9_0:generateTempGroup(arg_9_0._commonGroups[arg_9_0.curGroupSelectIndex], var_9_4, var_9_1 and var_9_1.useTemp == 2)
+				var_9_12 = arg_9_0:generateTempGroup(arg_9_0._commonGroups[arg_9_0.curGroupSelectIndex], var_9_4, var_9_1 and var_9_1.useTemp == 2)
 			else
-				var_9_11 = arg_9_0.heroGroupTypeCo and arg_9_0:getCustomHeroGroupMo(arg_9_0.heroGroupTypeCo.id, true) or arg_9_0:generateTempGroup(nil, var_9_4, var_9_1 and var_9_1.useTemp == 2)
+				var_9_12 = arg_9_0.heroGroupTypeCo and arg_9_0:getCustomHeroGroupMo(arg_9_0.heroGroupTypeCo.id, true) or arg_9_0:generateTempGroup(nil, var_9_4, var_9_1 and var_9_1.useTemp == 2)
 			end
 		else
-			local var_9_12 = cjson.decode(var_9_10)
+			local var_9_13 = cjson.decode(var_9_11)
 
-			GameUtil.removeJsonNull(var_9_12)
+			GameUtil.removeJsonNull(var_9_13)
 
-			var_9_11 = arg_9_0:generateTempGroup(nil, nil, true)
+			var_9_12 = arg_9_0:generateTempGroup(nil, nil, true)
 
-			var_9_11:initByLocalData(var_9_12)
+			var_9_12:initByLocalData(var_9_13)
 		end
 
-		var_9_11:setTrials(arg_9_4)
+		var_9_12:setTrials(arg_9_4)
 
 		arg_9_0._heroGroupList = {
-			var_9_11
+			var_9_12
 		}
-	elseif var_9_3 and SeasonHeroGroupHandler.checkIsSeasonEpisodeType(arg_9_0._episodeType) then
-		local var_9_13 = SeasonHeroGroupHandler.buildSeasonHandleFunc[arg_9_0._episodeType]
 
-		if var_9_13 then
-			arg_9_0.heroGroupType = var_9_13(var_9_0)
+		if var_9_9 then
+			arg_9_0.heroGroupType = ModuleEnum.HeroGroupType.General
+
+			HeroGroupSnapshotModel.instance:setParam(arg_9_0.episodeId)
+		end
+	elseif var_9_3 and SeasonHeroGroupHandler.checkIsSeasonEpisodeType(arg_9_0._episodeType) then
+		local var_9_14 = SeasonHeroGroupHandler.buildSeasonHandleFunc[arg_9_0._episodeType]
+
+		if var_9_14 then
+			arg_9_0.heroGroupType = var_9_14(var_9_0)
 		end
 	elseif HeroGroupHandler.checkIsEpisodeType(arg_9_0._episodeType) then
 		arg_9_0.heroGroupType = ModuleEnum.HeroGroupType.General
@@ -219,19 +227,19 @@ function var_0_0.setParam(arg_9_0, arg_9_1, arg_9_2, arg_9_3, arg_9_4)
 		arg_9_0.heroGroupType = ModuleEnum.HeroGroupType.Temp
 		arg_9_0._heroGroupList = {}
 
-		local var_9_14
+		local var_9_15
 
 		if var_9_3 and var_9_3.saveHeroGroup and (not var_9_1 or var_9_1.useTemp ~= 2) then
 			if arg_9_0.curGroupSelectIndex > 0 then
-				var_9_14 = arg_9_0:generateTempGroup(arg_9_0._commonGroups[arg_9_0.curGroupSelectIndex], var_9_4, var_9_1 and var_9_1.useTemp == 2)
+				var_9_15 = arg_9_0:generateTempGroup(arg_9_0._commonGroups[arg_9_0.curGroupSelectIndex], var_9_4, var_9_1 and var_9_1.useTemp == 2)
 			else
-				var_9_14 = arg_9_0.heroGroupTypeCo and arg_9_0:getCustomHeroGroupMo(arg_9_0.heroGroupTypeCo.id, true) or arg_9_0:generateTempGroup(nil, var_9_4, var_9_1 and var_9_1.useTemp == 2)
+				var_9_15 = arg_9_0.heroGroupTypeCo and arg_9_0:getCustomHeroGroupMo(arg_9_0.heroGroupTypeCo.id, true) or arg_9_0:generateTempGroup(nil, var_9_4, var_9_1 and var_9_1.useTemp == 2)
 			end
 		end
 
-		local var_9_15 = arg_9_0:generateTempGroup(var_9_14, var_9_4, var_9_1 and var_9_1.useTemp == 2)
+		local var_9_16 = arg_9_0:generateTempGroup(var_9_15, var_9_4, var_9_1 and var_9_1.useTemp == 2)
 
-		table.insert(arg_9_0._heroGroupList, var_9_15)
+		table.insert(arg_9_0._heroGroupList, var_9_16)
 
 		arg_9_0._curGroupId = 1
 	elseif not var_9_6 and var_9_3 then
@@ -243,23 +251,22 @@ function var_0_0.setParam(arg_9_0, arg_9_1, arg_9_2, arg_9_3, arg_9_4)
 			var_9_5 = true
 		end
 
-		local var_9_16 = arg_9_0.heroGroupTypeCo and arg_9_0:getCustomHeroGroupMo(arg_9_0.heroGroupTypeCo.id) or arg_9_0._commonGroups[1]
-		local var_9_17 = GameUtil.getSubPlaceholderLuaLang(luaLang("herogroup_name"), {
-			var_9_3.name,
-			luaLang("hero_group")
+		local var_9_17 = arg_9_0.heroGroupTypeCo and arg_9_0:getCustomHeroGroupMo(arg_9_0.heroGroupTypeCo.id) or arg_9_0._commonGroups[1]
+		local var_9_18 = GameUtil.getSubPlaceholderLuaLang(luaLang("herogroup_groupName"), {
+			var_9_3.name
 		})
 
-		var_9_16:setTempName(var_9_17)
-		table.insert(arg_9_0._heroGroupList, var_9_16)
+		var_9_17:setTempName(var_9_18)
+		table.insert(arg_9_0._heroGroupList, var_9_17)
 	elseif var_9_6 then
 		arg_9_0.heroGroupType = ModuleEnum.HeroGroupType.NormalFb
 		arg_9_0._heroGroupList = {}
 		arg_9_0._curGroupId = 1
 
-		local var_9_18 = arg_9_0:getCurGroupMO()
+		local var_9_19 = arg_9_0:getCurGroupMO()
 
-		if var_9_18 and var_9_18.aidDict then
-			var_9_18.aidDict = nil
+		if var_9_19 and var_9_19.aidDict then
+			var_9_19.aidDict = nil
 		end
 	else
 		arg_9_0.heroGroupType = ModuleEnum.HeroGroupType.Default
@@ -366,27 +373,27 @@ function var_0_0.generateTempGroup(arg_15_0, arg_15_1, arg_15_2, arg_15_3)
 		end
 
 		local var_15_3 = {}
+		local var_15_4 = HeroGroupHandler.getTrialHeros(arg_15_0.episodeId)
 
-		if not string.nilorempty(var_15_1.trialHeros) then
-			var_15_3 = GameUtil.splitString2(var_15_1.trialHeros, true)
+		if not string.nilorempty(var_15_4) then
+			var_15_3 = GameUtil.splitString2(var_15_4, true)
 		end
 
 		arg_15_2 = arg_15_2 or var_15_1.roleNum
 
-		local var_15_4 = var_15_1.playerMax
+		local var_15_5 = var_15_1.playerMax
 
-		var_15_0:initWithBattle(arg_15_1 or HeroGroupMO.New(), var_15_2, arg_15_2, var_15_4, nil, var_15_3)
+		var_15_0:initWithBattle(arg_15_1 or HeroGroupMO.New(), var_15_2, arg_15_2, var_15_5, nil, var_15_3)
 
 		if arg_15_0.adventure then
-			local var_15_5 = arg_15_0.episodeId and lua_episode.configDict[arg_15_0.episodeId]
+			local var_15_6 = arg_15_0.episodeId and lua_episode.configDict[arg_15_0.episodeId]
 
-			if var_15_5 then
-				local var_15_6 = GameUtil.getSubPlaceholderLuaLang(luaLang("herogroup_name"), {
-					var_15_5.name,
-					luaLang("hero_group")
+			if var_15_6 then
+				local var_15_7 = GameUtil.getSubPlaceholderLuaLang(luaLang("herogroup_groupName"), {
+					var_15_6.name
 				})
 
-				var_15_0:setTempName(var_15_6)
+				var_15_0:setTempName(var_15_7)
 			end
 		end
 	else
@@ -433,6 +440,7 @@ function var_0_0._setSingleGroup(arg_17_0)
 	end
 
 	var_17_0:clearAidHero()
+	HeroGroupHandler.hanldeHeroListData(arg_17_0.episodeId)
 	HeroSingleGroupModel.instance:setSingleGroup(var_17_0, true)
 end
 
@@ -640,7 +648,11 @@ function var_0_0.saveCurGroupData(arg_26_0, arg_26_1, arg_26_2, arg_26_3)
 	else
 		local var_26_3 = HeroGroupModule_pb.SetHeroGroupSnapshotRequest()
 
-		FightParam.initFightGroup(var_26_3.fightGroup, arg_26_3.clothId, arg_26_3:getMainList(), arg_26_3:getSubList(), arg_26_3:getAllHeroEquips(), arg_26_3:getAllHeroActivity104Equips(), arg_26_3:getAssistBossId())
+		if HeroGroupHandler.checkIsTowerEpisodeByEpisodeId(arg_26_0.episodeId) then
+			FightParam.initTowerFightGroup(var_26_3.fightGroup, arg_26_3.clothId, arg_26_3:getMainList(), arg_26_3:getSubList(), arg_26_3:getAllHeroEquips(), arg_26_3:getAllHeroActivity104Equips(), arg_26_3:getAssistBossId())
+		else
+			FightParam.initFightGroup(var_26_3.fightGroup, arg_26_3.clothId, arg_26_3:getMainList(), arg_26_3:getSubList(), arg_26_3:getAllHeroEquips(), arg_26_3:getAllHeroActivity104Equips(), arg_26_3:getAssistBossId())
+		end
 
 		local var_26_4 = ModuleEnum.HeroGroupSnapshotType.Common
 		local var_26_5 = var_26_1

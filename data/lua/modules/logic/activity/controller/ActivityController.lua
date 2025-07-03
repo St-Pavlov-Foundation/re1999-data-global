@@ -59,11 +59,8 @@ end
 
 local var_0_1 = {
 	ActivityEnum.Activity.HarvestSeasonView_1_5,
-	ActivityEnum.Activity.V2a0_SummerSign,
-	ActivityEnum.Activity.V2a1_MoonFestival,
-	ActivityEnum.Activity.LinkageActivity_FullView,
 	ActivityEnum.Activity.V2a2_SpringFestival,
-	ActivityEnum.Activity.V2a7_Labor_Sign,
+	ActivityEnum.Activity.V3a0_SummerSign,
 	ActivityEnum.Activity.NorSign,
 	ActivityEnum.Activity.NoviceSign,
 	ActivityEnum.Activity.SummerSignPart1_1_2,
@@ -103,7 +100,10 @@ local var_0_1 = {
 	ActivityEnum.Activity.V2a5_Role_SignView_Part1,
 	ActivityEnum.Activity.V2a5_Role_SignView_Part2,
 	ActivityEnum.Activity.V2a5_DecorateStore,
-	ActivityEnum.Activity.V2a5_Act186Sign
+	ActivityEnum.Activity.V2a5_Act186Sign,
+	ActivityEnum.Activity.V2a7_Labor_Sign,
+	ActivityEnum.Activity.V2a7_SelfSelectSix1,
+	ActivityEnum.Activity.V2a7_SelfSelectSix2
 }
 local var_0_2 = {
 	ActivityEnum.Activity.VersionActivity1_3Radio,
@@ -116,7 +116,8 @@ local var_0_2 = {
 	ActivityEnum.Activity.RoomSign,
 	ActivityEnum.Activity.V2a3_WarmUp,
 	ActivityEnum.Activity.V2a4_WarmUp,
-	ActivityEnum.Activity.V2a5_WarmUp
+	ActivityEnum.Activity.V2a5_WarmUp,
+	ActivityEnum.Activity.V2a7_WarmUp
 }
 
 function var_0_0.checkGetActivityInfo(arg_9_0)
@@ -149,24 +150,8 @@ function var_0_0.checkGetActivityInfo(arg_9_0)
 		Activity160Rpc.instance:sendGetAct160InfoRequest(ActivityEnum.Activity.NewWelfare)
 	end
 
-	if ActivityModel.instance:isActOnLine(ActivityEnum.Activity.NewInsight) then
-		Activity172Rpc.instance:sendGetAct172InfoRequest(ActivityEnum.Activity.NewInsight)
-	end
-
-	if ActivityModel.instance:isActOnLine(ActivityEnum.Activity.V2a3_NewInsight) then
-		Activity172Rpc.instance:sendGetAct172InfoRequest(ActivityEnum.Activity.V2a3_NewInsight)
-	end
-
-	if ActivityModel.instance:isActOnLine(ActivityEnum.Activity.V2a4_NewInsight) then
-		Activity172Rpc.instance:sendGetAct172InfoRequest(ActivityEnum.Activity.V2a4_NewInsight)
-	end
-
-	if ActivityModel.instance:isActOnLine(ActivityEnum.Activity.V2a5_NewInsight) then
-		Activity172Rpc.instance:sendGetAct172InfoRequest(ActivityEnum.Activity.V2a5_NewInsight)
-	end
-
-	if ActivityModel.instance:isActOnLine(ActivityEnum.Activity.V2a6_NewInsight) then
-		Activity172Rpc.instance:sendGetAct172InfoRequest(ActivityEnum.Activity.V2a6_NewInsight)
+	if ActivityModel.instance:isActOnLine(ActivityEnum.Activity.V2a7_NewInsight) then
+		Activity172Rpc.instance:sendGetAct172InfoRequest(ActivityEnum.Activity.V2a7_NewInsight)
 	end
 
 	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Tower) then
@@ -192,6 +177,7 @@ end
 
 function var_0_0.updateAct101Infos(arg_11_0, arg_11_1)
 	arg_11_0:_initRoleSign_kAct101RedList()
+	arg_11_0:_initSpecialSign_kAct101RedList()
 	arg_11_0:_initLinkageActivity_kAct101RedList()
 
 	if not arg_11_1 then
@@ -260,7 +246,7 @@ function var_0_0._initLinkageActivity_kAct101RedList(arg_16_0)
 
 	var_0_5 = true
 
-	local var_16_0 = GameBranchMgr.instance:Vxax_ActId("LinkageActivity", ActivityEnum.Activity.V2a7_LinkageActivity)
+	local var_16_0 = GameBranchMgr.instance:Vxax_ActId("LinkageActivity", ActivityEnum.Activity.LinkageActivity_FullView)
 
 	table.insert(var_0_1, var_16_0)
 end

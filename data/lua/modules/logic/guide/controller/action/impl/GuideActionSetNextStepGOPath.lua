@@ -289,4 +289,16 @@ function var_0_0.getAct178OperHolePath(arg_19_0, arg_19_1)
 	return string.format("UIRoot/POPUP_TOP/PinballCityView/#go_buildingui/UI_%s%s", var_19_1, var_19_0)
 end
 
+function var_0_0.getBossTowerFirstBossPath(arg_20_0)
+	local var_20_0 = TowerModel.instance:getTowerListByStatus(TowerEnum.TowerType.Boss, TowerEnum.TowerStatus.Open)
+
+	if #var_20_0 > 1 then
+		table.sort(var_20_0, TowerAssistBossModel.sortBossList)
+	end
+
+	local var_20_1 = var_20_0[1] and var_20_0[1].id or 1
+
+	return string.format("UIRoot/POPUP_TOP/TowerBossSelectView/root/#scroll_boss/Viewport/#go_bossContent/boss%s/towerbossselectitem(Clone)/click", var_20_1)
+end
+
 return var_0_0

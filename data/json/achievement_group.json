@@ -158,5 +158,15 @@
     "uiListParam": "{\"groupNormalBgUrl\":\"singlebg_lang/txt_achievement/list/119.png\",\"groupUpgradeBgUrl\":\"singlebg_lang/txt_achievement/list/119_1.png\",\"id\":[1,2,3,4,5,6,7,8,9],\"pX\":[-188.9,-16.9,185.2,396.7,571.1,-50.0,109.5,267.9,423.5],\"pY\":[7.7,78.6,81.4,78.6,5.8,-87.0,-87.0,-87.0,-87.0],\"sX\":[0.63,0.93,0.99,0.94,0.63,0.7,0.7,0.7,0.7],\"sY\":[0.63,0.93,0.99,0.94,0.63,0.7,0.7,0.7,0.7]}",
     "uiPlayerParam": "{\"groupNormalBgUrl\":\"singlebg_lang/txt_achievement/player/119.png\",\"groupUpgradeBgUrl\":\"singlebg_lang/txt_achievement/player/119_1.png\",\"groupTitleColor\":\"#A7B8A7FF\",\"id\":[1,2,3,4,5,6,7,8,9],\"pX\":[-56.5,5.5,93.1,182.9,242.8,1.0,62.2,127.1,190.5],\"pY\":[-22.8,5.3,6.7,5.3,-22.8,-60.0,-60.0,-60.0,-60.0],\"sX\":[0.25,0.38,0.4,0.38,0.25,0.28,0.28,0.28,0.28],\"sY\":[0.25,0.38,0.4,0.38,0.25,0.28,0.28,0.28,0.28]}",
     "unLockAchievement": 41190901
+  },
+  {
+    "id": 120,
+    "category": 4,
+    "order": 983,
+    "name": "language_10073085",
+    "desc": "",
+    "uiListParam": "{\"groupNormalBgUrl\":\"singlebg_lang/txt_achievement/list/120.png\",\"groupUpgradeBgUrl\":\"singlebg_lang/txt_achievement/list/120_1.png\",\"id\":[1,2,3,4,5,6,7,8,9],\"pX\":[-26.0,252.1,517.5,124.0,358.0,-26.0,172.2,326.3,519.0],\"pY\":[103.9,131.6,107.7,12.8000031,12.8,-82.5,-126.1,-126.1,-82.5],\"sX\":[0.59,0.5,0.59,0.83,0.83,0.59,0.5,0.5,0.59],\"sY\":[0.59,0.5,0.59,0.83,0.83,0.59,0.5,0.5,0.59]}",
+    "uiPlayerParam": "{\"groupNormalBgUrl\":\"singlebg_lang/txt_achievement/player/120.png\",\"groupUpgradeBgUrl\":\"singlebg_lang/txt_achievement/player/120_1.png\",\"groupTitleColor\":\"#829CA2FF\",\"id\":[1,2,3,4,5,6,7,8,9],\"pX\":[-22.4,108.0,234.5,51.7000122,156.9,-22.4,75.5,144.6,237.0],\"pY\":[11.8,29.8,15.5,-14.3000193,-11.9,-55.2,-71.7,-70.8,-53.9],\"sX\":[0.26,0.22,0.26,0.374,0.374,0.26,0.22,0.22,0.26],\"sY\":[0.26,0.22,0.26,0.374,0.374,0.26,0.22,0.22,0.26]}",
+    "unLockAchievement": 41200901
   }
 ]

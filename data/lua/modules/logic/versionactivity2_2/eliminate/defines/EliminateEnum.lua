@@ -3,21 +3,35 @@
 local var_0_0 = class("EliminateEnum")
 
 var_0_0.ChessState = {
-	Selected = 1,
-	Die = 2,
-	Normal = 0
+	Frost = 1000,
+	SpecialSkill = 10000,
+	Selected = 10,
+	Die = 100,
+	Normal = 1
 }
 var_0_0.StepWorkType = {
 	StartShowView = 5,
-	PlayAudio = 9,
+	Arrange_XY = 11,
 	RefreshEliminate = 10,
-	HandleData = 3,
-	Die = 1,
+	PlayAudio = 23,
+	ChangeState = 13,
+	EliminateChessRevert = 16,
+	EliminateChessUpdateGameInfo = 18,
+	LengZhou6EnemyReleaseSkillStep = 19,
 	Arrange = 2,
-	ShowEvaluate = 7,
-	PlayEffect = 8,
+	LengZhou6EnemyGenerateSkillStep = 21,
+	ChessItemUpdateInfo = 20,
 	Debug = 4,
 	EndShowView = 6,
+	EliminateCheckAndRefresh = 22,
+	HandleData = 3,
+	Die = 1,
+	DieEffect = 12,
+	CheckEliminate = 14,
+	ShowEvaluate = 7,
+	PlayEffect = 8,
+	EliminateChessUpdateDamage = 17,
+	EliminateChessDebug2_7 = 15,
 	Move = 0
 }
 var_0_0.EffectType = {
@@ -85,5 +99,6 @@ var_0_0.levelTargetTipShowTimeInTeamChess = 0.5
 var_0_0.dieEffectCacheCount = 30
 var_0_0.damageCacheCount = 10
 var_0_0.hpDamageCacheCount = 10
+var_0_0.InvalidId = -1
 
 return var_0_0

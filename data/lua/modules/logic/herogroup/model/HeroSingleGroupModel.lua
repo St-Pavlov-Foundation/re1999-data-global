@@ -256,16 +256,21 @@ function var_0_0.isAidConflict(arg_21_0, arg_21_1)
 end
 
 function var_0_0.getTeamLevel(arg_22_0)
-	local var_22_0 = arg_22_0:getHeroUids()
+	local var_22_0 = arg_22_0:getList()
 	local var_22_1 = 0
 	local var_22_2 = 0
 
 	for iter_22_0, iter_22_1 in ipairs(var_22_0) do
-		local var_22_3 = HeroModel.instance:getById(iter_22_1)
-
-		if var_22_3 then
-			var_22_1 = var_22_1 + var_22_3.level
+		if tonumber(iter_22_1.heroUid) < 0 and iter_22_1.trial > 0 then
+			var_22_1 = var_22_1 + (lua_hero_trial.configDict[iter_22_1.trial] and lua_hero_trial.configDict[iter_22_1.trial][0]).level
 			var_22_2 = var_22_2 + 1
+		else
+			local var_22_3 = HeroModel.instance:getById(iter_22_1.heroUid)
+
+			if var_22_3 then
+				var_22_1 = var_22_1 + var_22_3.level
+				var_22_2 = var_22_2 + 1
+			end
 		end
 	end
 

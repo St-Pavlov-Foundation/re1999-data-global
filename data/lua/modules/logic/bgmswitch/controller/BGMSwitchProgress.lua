@@ -77,9 +77,7 @@ function var_0_0._onTick(arg_6_0)
 
 	local var_6_2 = arg_6_0._bgmAudioLength and arg_6_0._bgmAudioLength > 0 and arg_6_0._bgmAudioLength or 10
 
-	arg_6_0._progressTimeSec = var_6_1
-
-	if var_6_2 <= var_6_1 + 0.5 then
+	if var_6_1 < arg_6_0._progressTimeSec and arg_6_0._progressTimeSec - var_6_1 > var_6_2 * 0.5 or var_6_2 <= var_6_1 then
 		local var_6_3 = BGMSwitchModel.instance:getUsedBgmIdFromServer() == BGMSwitchModel.RandomBgmId
 		local var_6_4 = ViewMgr.instance:isOpen(ViewName.BGMSwitchView)
 
@@ -90,6 +88,8 @@ function var_0_0._onTick(arg_6_0)
 		end
 
 		BGMSwitchController.instance:dispatchEvent(BGMSwitchEvent.BgmProgressEnd)
+	else
+		arg_6_0._progressTimeSec = var_6_1
 	end
 
 	arg_6_0:_updateGMProgress()

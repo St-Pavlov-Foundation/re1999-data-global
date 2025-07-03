@@ -63,4 +63,18 @@ function var_0_0.isBossId(arg_3_0, arg_3_1)
 	end
 end
 
+function var_0_0.getEpisodeName(arg_4_0)
+	local var_4_0 = DungeonConfig.instance:getEpisodeCO(arg_4_0)
+	local var_4_1 = var_4_0 and DungeonConfig.instance:getChapterCO(var_4_0.chapterId)
+
+	if not var_4_0 or not var_4_1 then
+		return nil
+	end
+
+	local var_4_2 = var_4_1.chapterIndex
+	local var_4_3, var_4_4 = DungeonConfig.instance:getChapterEpisodeIndexWithSP(var_4_1.id, var_4_0.id)
+
+	return string.format("%s-%s", var_4_2, var_4_3)
+end
+
 return var_0_0

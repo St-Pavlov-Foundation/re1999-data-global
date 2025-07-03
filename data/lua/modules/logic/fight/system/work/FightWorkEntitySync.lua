@@ -3,7 +3,7 @@
 local var_0_0 = class("FightWorkEntitySync", FightEffectBase)
 
 function var_0_0.onStart(arg_1_0)
-	local var_1_0 = arg_1_0._actEffectMO.entityMO
+	local var_1_0 = arg_1_0.actEffectData.entity
 
 	if var_1_0 then
 		arg_1_0:com_sendFightEvent(FightEvent.EntitySync, var_1_0.id)

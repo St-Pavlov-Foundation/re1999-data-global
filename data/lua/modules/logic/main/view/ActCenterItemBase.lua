@@ -16,6 +16,7 @@ function var_0_0.init(arg_1_0, arg_1_1)
 	arg_1_0._txttime = gohelper.findChildText(arg_1_1, "#go_deadline/#txt_time")
 	arg_1_0._act_iconbgGo = gohelper.findChild(arg_1_1, "act_iconbg")
 	arg_1_0._act_iconbg_effGo = gohelper.findChild(arg_1_1, "act_iconbg_eff")
+	arg_1_0._goexpup = gohelper.findChild(arg_1_0.go, "#go_expup")
 
 	arg_1_0:_initActEff()
 

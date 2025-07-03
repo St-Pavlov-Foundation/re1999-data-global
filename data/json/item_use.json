@@ -106,5 +106,17 @@
     "name": "language_10066475",
     "useType": 2,
     "use_max": 1
+  },
+  {
+    "id": 64,
+    "name": "language_10073119",
+    "useType": 6,
+    "use_max": 1
+  },
+  {
+    "id": 65,
+    "name": "language_10073120",
+    "useType": 6,
+    "use_max": 1
   }
 ]

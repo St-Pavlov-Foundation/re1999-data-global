@@ -107,7 +107,7 @@ function var_0_0.onReceiveMsg(arg_10_0, arg_10_1, arg_10_2, arg_10_3, arg_10_4, 
 	local var_10_0 = arg_10_0["onReceive" .. arg_10_3]
 
 	if var_10_0 then
-		var_10_0(arg_10_0, arg_10_1, arg_10_4)
+		callWithCatch(var_10_0, arg_10_0, arg_10_1, arg_10_4)
 	else
 		logError(string.format("cmd_%d onReceive%s = nil, %s", arg_10_2, arg_10_3, arg_10_0.__cname))
 	end
@@ -124,7 +124,7 @@ function var_0_0.onReceiveMsg(arg_10_0, arg_10_1, arg_10_2, arg_10_3, arg_10_4, 
 		arg_10_0._cmdCallbackTab[arg_10_2] = nil
 
 		for iter_10_0, iter_10_1 in ipairs(var_10_1) do
-			iter_10_1:invoke(arg_10_2, arg_10_1, arg_10_4)
+			callWithCatch(iter_10_1.invoke, iter_10_1, arg_10_2, arg_10_1, arg_10_4)
 			LuaGeneralCallback.getPool():putObject(iter_10_1)
 		end
 	end

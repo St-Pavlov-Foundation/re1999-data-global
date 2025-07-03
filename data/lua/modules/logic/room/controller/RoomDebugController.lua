@@ -719,13 +719,13 @@ function var_0_0.saveInitMapParam(arg_56_0, arg_56_1, arg_56_2)
 	logNormal("导出完成 记得提交前后端配置文件")
 end
 
-function var_0_0.getDebugPackageInfo(arg_57_0, arg_57_1, arg_57_2)
+function var_0_0.getDebugPackageInfo(arg_57_0, arg_57_1, arg_57_2, arg_57_3)
 	if arg_57_0._tempPackageConfig then
 		if arg_57_1 then
 			if arg_57_2 then
-				arg_57_1(arg_57_2, arg_57_0._tempPackageConfig)
+				arg_57_1(arg_57_2, arg_57_0._tempPackageConfig, arg_57_3)
 			else
-				arg_57_1(arg_57_0._tempPackageConfig)
+				arg_57_1(arg_57_0._tempPackageConfig, arg_57_3)
 			end
 		end
 
@@ -758,9 +758,9 @@ function var_0_0.getDebugPackageInfo(arg_57_0, arg_57_1, arg_57_2)
 
 		if arg_57_1 then
 			if arg_57_2 then
-				arg_57_1(arg_57_2, var_58_2)
+				arg_57_1(arg_57_2, var_58_2, arg_57_3)
 			else
-				arg_57_1(var_58_2)
+				arg_57_1(var_58_2, arg_57_3)
 			end
 		end
 

@@ -216,8 +216,6 @@ function var_0_0.setCardsUniversalMatch(arg_15_0, arg_15_1, arg_15_2, arg_15_3, 
 		end
 	end
 
-	FightCardModel.instance:setUniversalCombine(nil, nil)
-
 	local var_15_8
 
 	for iter_15_1 = 1, arg_15_4 do
@@ -228,7 +226,6 @@ function var_0_0.setCardsUniversalMatch(arg_15_0, arg_15_1, arg_15_2, arg_15_3, 
 
 			if var_15_3 and iter_15_1 == var_15_5 and FightCardDataHelper.canCombineWithUniversalForPerformance(var_15_0, arg_15_1[iter_15_1]) then
 				var_15_9:setUniversal(true)
-				FightCardModel.instance:setUniversalCombine(var_15_0, arg_15_1[iter_15_1])
 
 				var_15_8 = var_15_9
 			end
@@ -239,7 +236,7 @@ function var_0_0.setCardsUniversalMatch(arg_15_0, arg_15_1, arg_15_2, arg_15_3, 
 		var_0_0._setUniversalLinkEffect(var_15_1, var_15_8)
 	end
 
-	arg_15_0[arg_15_2]:setUniversal(var_15_3 and FightCardModel.instance:getUniversalCardMO())
+	arg_15_0[arg_15_2]:setUniversal(var_15_3)
 end
 
 function var_0_0._setUniversalLinkEffect(arg_16_0, arg_16_1)

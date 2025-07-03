@@ -24,6 +24,7 @@ function var_0_0.onInitView(arg_1_0)
 	arg_1_0.simageSpBoss = gohelper.findChildSingleImage(arg_1_0.viewGO, "goSpResult/goBoss/imgBoss")
 	arg_1_0.txtSpTower = gohelper.findChildTextMesh(arg_1_0.viewGO, "goSpResult/goBoss/txtTower")
 	arg_1_0.txtSpIndex = gohelper.findChildTextMesh(arg_1_0.viewGO, "goSpResult/goBoss/episodeItem/goOpen/txtCurEpisode")
+	arg_1_0.goEpisodeItem = gohelper.findChild(arg_1_0.viewGO, "goSpResult/goBoss/episodeItem")
 	arg_1_0.goSpRewards = gohelper.findChild(arg_1_0.viewGO, "goSpResult/goReward")
 	arg_1_0.goSpReward = gohelper.findChild(arg_1_0.viewGO, "goSpResult/goReward/scroll_reward/Viewport/#go_rewards")
 	arg_1_0.btnRank = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "goResult/#btn_Rank")
@@ -96,6 +97,7 @@ function var_0_0.refreshParam(arg_8_0)
 	arg_8_0.episodeMo = TowerModel.instance:getEpisodeMoByTowerType(arg_8_0.towerType)
 	arg_8_0.layerConfig = arg_8_0.episodeMo:getEpisodeConfig(arg_8_0.towerId, arg_8_0.layerId)
 	arg_8_0.bossConfig = TowerConfig.instance:getAssistBossConfig(arg_8_0.towerConfig.bossId)
+	arg_8_0.isTeach = arg_8_0.towerType == TowerEnum.TowerType.Boss and arg_8_0.layerId == 0
 end
 
 function var_0_0.refreshView(arg_9_0)
@@ -103,16 +105,16 @@ function var_0_0.refreshView(arg_9_0)
 
 	arg_9_0.simageBoss:LoadImage(arg_9_0.bossConfig.bossPic)
 
-	local var_9_0 = arg_9_0.layerConfig.openRound > 0
+	local var_9_0 = arg_9_0.layerConfig and arg_9_0.layerConfig.openRound > 0
 
-	if var_9_0 then
+	if var_9_0 or arg_9_0.isTeach then
 		arg_9_0:refreshSp()
 	else
 		arg_9_0:refreshAttr()
 	end
 
 	arg_9_0:refreshLev()
-	arg_9_0:refreshRewards(var_9_0 and arg_9_0.goSpReward or arg_9_0.goReward, var_9_0 and arg_9_0.goSpRewards or arg_9_0.goRewards)
+	arg_9_0:refreshRewards((var_9_0 or arg_9_0.isTeach) and arg_9_0.goSpReward or arg_9_0.goReward, (var_9_0 or arg_9_0.isTeach) and arg_9_0.goSpRewards or arg_9_0.goRewards)
 	arg_9_0:startFlow(var_9_0)
 end
 
@@ -127,7 +129,7 @@ function var_0_0.startFlow(arg_10_0, arg_10_1)
 
 	arg_10_0.popupFlow:addWork(TowerBossResultShowFinishWork.New(arg_10_0.goFinish, AudioEnum.Tower.play_ui_fight_explore))
 	arg_10_0.popupFlow:addWork(TowerBossResultShowLevChangeWork.New(arg_10_0.goBossLevChange, arg_10_0.goBoss, arg_10_0.isBossLevChange))
-	arg_10_0.popupFlow:addWork(TowerBossResultShowResultWork.New(arg_10_1 and arg_10_0.goSpResult or arg_10_0.goResult, AudioEnum.Tower.play_ui_fight_explore))
+	arg_10_0.popupFlow:addWork(TowerBossResultShowResultWork.New((arg_10_1 or arg_10_0.isTeach) and arg_10_0.goSpResult or arg_10_0.goResult, AudioEnum.Tower.play_ui_fight_explore))
 	arg_10_0.popupFlow:registerDoneListener(arg_10_0._onAllFinish, arg_10_0)
 	arg_10_0.popupFlow:start()
 end
@@ -161,6 +163,12 @@ function var_0_0.refreshRewards(arg_11_0, arg_11_1, arg_11_2)
 end
 
 function var_0_0.refreshLev(arg_12_0)
+	if arg_12_0.isTeach then
+		arg_12_0.isBossLevChange = false
+
+		return
+	end
+
 	local var_12_0 = arg_12_0.towerConfig.bossId
 	local var_12_1 = arg_12_0.layerConfig.bossLevel
 	local var_12_2 = arg_12_0.episodeMo:getEpisodeConfig(arg_12_0.towerId, arg_12_0.layerConfig.preLayerId)
@@ -244,8 +252,12 @@ function var_0_0.refreshSp(arg_16_0)
 	arg_16_0.simageSpBoss:LoadImage(arg_16_0.bossConfig.bossPic)
 
 	arg_16_0.txtSpTower.text = arg_16_0.towerConfig.name
-	arg_16_0.txtSpIndex.text = arg_16_0.episodeMo:getEpisodeIndex(arg_16_0.towerId, arg_16_0.layerId)
 
+	if not arg_16_0.isTeach then
+		arg_16_0.txtSpIndex.text = arg_16_0.episodeMo:getEpisodeIndex(arg_16_0.towerId, arg_16_0.layerId)
+	end
+
+	gohelper.setActive(arg_16_0.goEpisodeItem, not arg_16_0.isTeach)
 	arg_16_0:refreshHeroGroup()
 end
 
@@ -254,7 +266,7 @@ function var_0_0.refreshHeroGroup(arg_17_0)
 		arg_17_0.heroItemList = arg_17_0:getUserDataTb_()
 	end
 
-	local var_17_0 = FightModel.instance:getFightParam():getHeroEquipMoList()
+	local var_17_0 = FightModel.instance:getFightParam():getHeroEquipAndTrialMoList(true)
 
 	for iter_17_0 = 1, 4 do
 		local var_17_1 = arg_17_0.heroItemList[iter_17_0]

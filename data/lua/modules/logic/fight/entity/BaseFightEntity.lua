@@ -214,6 +214,10 @@ function var_0_0.setAlpha(arg_19_0, arg_19_1, arg_19_2)
 end
 
 function var_0_0.resetEntity(arg_20_0)
+	if gohelper.isNil(arg_20_0.go) then
+		return
+	end
+
 	local var_20_0 = arg_20_0:getMO()
 
 	if var_20_0 then
@@ -275,7 +279,7 @@ end
 function var_0_0.resetStandPos(arg_23_0)
 	local var_23_0 = arg_23_0:getMO()
 
-	if var_23_0 then
+	if var_23_0 and not gohelper.isNil(arg_23_0.go) then
 		transformhelper.setLocalPos(arg_23_0.go.transform, FightHelper.getEntityStandPos(var_23_0))
 	end
 end

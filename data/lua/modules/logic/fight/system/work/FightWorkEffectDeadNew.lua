@@ -9,13 +9,13 @@ local var_0_5 = 0.1
 local var_0_6 = 0.6
 
 function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	arg_1_0._fightStepMO = arg_1_1
-	arg_1_0._actEffectMO = arg_1_2
+	arg_1_0.fightStepData = arg_1_1
+	arg_1_0.actEffectData = arg_1_2
 	arg_1_0._waitForLastHit = arg_1_3
 end
 
 function var_0_0.onStart(arg_2_0)
-	arg_2_0._deadEntity = FightHelper.getEntity(arg_2_0._actEffectMO.targetId)
+	arg_2_0._deadEntity = FightHelper.getEntity(arg_2_0.actEffectData.targetId)
 
 	if arg_2_0._deadEntity and not arg_2_0._deadEntity.isDead then
 		arg_2_0._deadEntity.isDead = true
@@ -34,12 +34,12 @@ function var_0_0.onStart(arg_2_0)
 
 		FightController.instance:dispatchEvent(FightEvent.OnStartEntityDead, arg_2_0._deadEntity.id)
 
-		if arg_2_0._fightStepMO.actType == FightEnum.ActType.SKILL then
-			arg_2_0._deadEntity.deadBySkillId = arg_2_0._fightStepMO.actId
+		if arg_2_0.fightStepData.actType == FightEnum.ActType.SKILL then
+			arg_2_0._deadEntity.deadBySkillId = arg_2_0.fightStepData.actId
 		end
 
 		if arg_2_0._waitForLastHit then
-			if not FightHelper.getEntity(arg_2_0._fightStepMO.fromId) then
+			if not FightHelper.getEntity(arg_2_0.fightStepData.fromId) then
 				arg_2_0:_playDeadWork()
 
 				return
@@ -63,8 +63,8 @@ function var_0_0._invokeEntityDeadImmediately(arg_3_0, arg_3_1, arg_3_2)
 end
 
 function var_0_0._onLastHit(arg_4_0, arg_4_1, arg_4_2)
-	if arg_4_0._fightStepMO == arg_4_2 then
-		if arg_4_2.actId ~= arg_4_0._fightStepMO.actId then
+	if arg_4_0.fightStepData == arg_4_2 then
+		if arg_4_2.actId ~= arg_4_0.fightStepData.actId then
 			return
 		end
 
@@ -93,7 +93,7 @@ function var_0_0._onLastHit(arg_4_0, arg_4_1, arg_4_2)
 end
 
 function var_0_0._playSameSKillOneDone(arg_5_0, arg_5_1)
-	if arg_5_0._fightStepMO == arg_5_1 then
+	if arg_5_0.fightStepData == arg_5_1 then
 		FightController.instance:unregisterCallback(FightEvent.OnSkillLastHit, arg_5_0._onLastHit, arg_5_0)
 		FightController.instance:unregisterCallback(FightEvent.OnSkillPlayFinish, arg_5_0._onSkillPlayFinish, arg_5_0)
 		FightController.instance:unregisterCallback(FightEvent.PlaySameSkillOneDone, arg_5_0._playSameSKillOneDone, arg_5_0)
@@ -102,7 +102,7 @@ function var_0_0._playSameSKillOneDone(arg_5_0, arg_5_1)
 end
 
 function var_0_0._onSkillPlayFinish(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
-	if arg_6_0._fightStepMO == arg_6_3 then
+	if arg_6_0.fightStepData == arg_6_3 then
 		FightController.instance:unregisterCallback(FightEvent.OnSkillLastHit, arg_6_0._onLastHit, arg_6_0)
 		FightController.instance:unregisterCallback(FightEvent.OnSkillPlayFinish, arg_6_0._onSkillPlayFinish, arg_6_0)
 		FightController.instance:unregisterCallback(FightEvent.PlaySameSkillOneDone, arg_6_0._playSameSKillOneDone, arg_6_0)
@@ -290,7 +290,7 @@ function var_0_0._delayNoDeadEffectDone(arg_15_0)
 end
 
 function var_0_0._delayDone(arg_16_0)
-	logError("dead step play timeout, targetId = " .. arg_16_0._actEffectMO.targetId)
+	logError("dead step play timeout, targetId = " .. arg_16_0.actEffectData.targetId)
 	arg_16_0:_doneAndRemoveEntity()
 end
 
@@ -387,8 +387,8 @@ function var_0_0.clearWork(arg_23_0)
 	TaskDispatcher.cancelTask(arg_23_0._deadComplete, arg_23_0)
 	TaskDispatcher.cancelTask(arg_23_0._delayNoDeadEffectDone, arg_23_0)
 
-	arg_23_0._fightStepMO = nil
-	arg_23_0._actEffectMO = nil
+	arg_23_0.fightStepData = nil
+	arg_23_0.actEffectData = nil
 end
 
 function var_0_0.onResume(arg_24_0)

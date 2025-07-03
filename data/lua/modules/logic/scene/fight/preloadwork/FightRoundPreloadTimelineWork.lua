@@ -105,9 +105,9 @@ function var_0_0._clacEditor(arg_6_0)
 end
 
 function var_0_0._calcFightCards(arg_7_0)
-	local var_7_0 = FightModel.instance:getCurRoundMO()
+	local var_7_0 = FightDataHelper.roundMgr:getRoundData()
 	local var_7_1 = var_7_0 and var_7_0:getAIUseCardMOList()
-	local var_7_2 = FightCardModel.instance:getHandCards()
+	local var_7_2 = FightDataHelper.handCardMgr.handCard
 
 	if var_7_1 then
 		for iter_7_0, iter_7_1 in ipairs(var_7_1) do

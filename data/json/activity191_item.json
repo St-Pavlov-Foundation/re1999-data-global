@@ -1,0 +1,194 @@
+[
+  {
+    "id": 1001,
+    "activityId": 12701,
+    "name": "language_10072973",
+    "desc": "language_10072974",
+    "icon": "act174_endless_icon_0",
+    "rare": 0
+  },
+  {
+    "id": 1003,
+    "activityId": 12701,
+    "name": "language_10072975",
+    "desc": "language_10072976",
+    "icon": "act174_store_icon_unknown",
+    "rare": 3
+  },
+  {
+    "id": 1004,
+    "activityId": 12701,
+    "name": "language_10072977",
+    "desc": "language_10072978",
+    "icon": "act174_store_icon_unknown",
+    "rare": 4
+  },
+  {
+    "id": 1005,
+    "activityId": 12701,
+    "name": "language_10072979",
+    "desc": "language_10072980",
+    "icon": "act174_store_icon_unknown",
+    "rare": 5
+  },
+  {
+    "id": 1006,
+    "activityId": 12701,
+    "name": "language_10072981",
+    "desc": "language_10072982",
+    "icon": "act174_shop_icon_randomitem",
+    "rare": 0
+  },
+  {
+    "id": 1007,
+    "activityId": 12701,
+    "name": "language_10072983",
+    "desc": "language_10072984",
+    "icon": "act174_shop_icon_randomitem",
+    "rare": 0
+  },
+  {
+    "id": 1008,
+    "activityId": 12701,
+    "name": "language_10072985",
+    "desc": "language_10072986",
+    "icon": "act174_shop_icon_randomitem",
+    "rare": 0
+  },
+  {
+    "id": 1009,
+    "activityId": 12701,
+    "name": "language_10058581",
+    "desc": "language_10072987",
+    "icon": "act174_endless_icon_1",
+    "rare": 0
+  },
+  {
+    "id": 1010,
+    "activityId": 12701,
+    "name": "language_10001488",
+    "desc": "",
+    "icon": "act174_shop_icon_randomitem",
+    "rare": 0
+  },
+  {
+    "id": 1011,
+    "activityId": 12701,
+    "name": "language_10043933",
+    "desc": "",
+    "icon": "act174_shop_icon_randomitem",
+    "rare": 0
+  },
+  {
+    "id": 1012,
+    "activityId": 12701,
+    "name": "language_10072784",
+    "desc": "",
+    "icon": "act174_shop_icon_randomitem",
+    "rare": 0
+  },
+  {
+    "id": 1013,
+    "activityId": 12701,
+    "name": "language_10072786",
+    "desc": "",
+    "icon": "act174_shop_icon_randomitem",
+    "rare": 0
+  },
+  {
+    "id": 1014,
+    "activityId": 12701,
+    "name": "language_10072788",
+    "desc": "",
+    "icon": "act174_shop_icon_randomitem",
+    "rare": 0
+  },
+  {
+    "id": 1015,
+    "activityId": 12701,
+    "name": "language_10072790",
+    "desc": "",
+    "icon": "act174_shop_icon_randomitem",
+    "rare": 0
+  },
+  {
+    "id": 1016,
+    "activityId": 12701,
+    "name": "language_10072792",
+    "desc": "",
+    "icon": "act174_shop_icon_randomitem",
+    "rare": 0
+  },
+  {
+    "id": 1017,
+    "activityId": 12701,
+    "name": "language_10072988",
+    "desc": "",
+    "icon": "act174_shop_icon_randomitem",
+    "rare": 0
+  },
+  {
+    "id": 1018,
+    "activityId": 12701,
+    "name": "language_10010657",
+    "desc": "",
+    "icon": "act174_store_icon_unknown",
+    "rare": 5
+  },
+  {
+    "id": 1019,
+    "activityId": 12701,
+    "name": "language_10070162",
+    "desc": "",
+    "icon": "act174_store_icon_unknown",
+    "rare": 5
+  },
+  {
+    "id": 1020,
+    "activityId": 12701,
+    "name": "language_10050783",
+    "desc": "",
+    "icon": "act174_store_icon_unknown",
+    "rare": 5
+  },
+  {
+    "id": 1021,
+    "activityId": 12701,
+    "name": "language_10027340",
+    "desc": "",
+    "icon": "act174_store_icon_unknown",
+    "rare": 5
+  },
+  {
+    "id": 1022,
+    "activityId": 12701,
+    "name": "language_10062222",
+    "desc": "",
+    "icon": "act174_store_icon_unknown",
+    "rare": 5
+  },
+  {
+    "id": 1023,
+    "activityId": 12701,
+    "name": "language_10005404",
+    "desc": "",
+    "icon": "act174_store_icon_unknown",
+    "rare": 5
+  },
+  {
+    "id": 1024,
+    "activityId": 12701,
+    "name": "language_10041764",
+    "desc": "",
+    "icon": "act174_store_icon_unknown",
+    "rare": 5
+  },
+  {
+    "id": 1025,
+    "activityId": 12701,
+    "name": "language_10045590",
+    "desc": "",
+    "icon": "act174_store_icon_unknown",
+    "rare": 5
+  }
+]

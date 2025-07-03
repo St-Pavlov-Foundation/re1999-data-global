@@ -71,29 +71,6 @@ function var_0_0.initViewContent(arg_4_0)
 
 	arg_4_0:addButton(arg_4_0:getLineGroup(), "我方牌库", arg_4_0.onClickMyCardDeck, arg_4_0)
 	arg_4_0:addButton(arg_4_0:getLineGroup(), "敌方牌库", arg_4_0.onClickEnemyCardDeck, arg_4_0)
-	arg_4_0:addLineIndex()
-
-	arg_4_0.countASFDInput = arg_4_0:addInputText(arg_4_0:getLineGroup(), "", "奥术飞弹数量...", nil, nil, {
-		fsize = 30,
-		w = 200
-	})
-	arg_4_0.optionStrList = {
-		"我方",
-		"敌方"
-	}
-	arg_4_0.optionValueList = {
-		FightEnum.EntitySide.MySide,
-		FightEnum.EntitySide.EnemySide
-	}
-	arg_4_0.sideASFDDrop = arg_4_0:addDropDown(arg_4_0:getLineGroup(), "奥术飞弹发射方:", arg_4_0.optionStrList, nil, nil, {
-		fsize = 25,
-		label_w = 100,
-		total_w = 300,
-		drop_w = 200
-	})
-	arg_4_0.toEntityASFDInput = arg_4_0:addInputText(arg_4_0:getLineGroup(), "", "奥术飞弹目标uid...")
-	arg_4_0.btnSendASFD = arg_4_0:addButton(arg_4_0:getLineGroup(), "发射", arg_4_0.onClickSendASFDBtn, arg_4_0)
-
 	arg_4_0:getEntityNameList()
 	arg_4_0:getMountList()
 	arg_4_0:addLineIndex()
@@ -125,6 +102,59 @@ function var_0_0.initViewContent(arg_4_0)
 	})
 	arg_4_0.btnMount = arg_4_0:addButton(arg_4_0:getLineGroup(), "挂载", arg_4_0.onClickBtnMount, arg_4_0)
 
+	arg_4_0:addTitleSplitLine("奥术飞弹GM")
+	arg_4_0:addLineIndex()
+
+	arg_4_0.emitterList, arg_4_0.missileList, arg_4_0.explosionList = arg_4_0:getASFDUnitList()
+	arg_4_0.emitterDrop = arg_4_0:addDropDown(arg_4_0:getLineGroup(), "发射器特效配置:", arg_4_0.emitterList, nil, nil, {
+		fsize = 25,
+		label_w = 100,
+		total_w = 300,
+		drop_w = 200
+	})
+	arg_4_0.missileDrop = arg_4_0:addDropDown(arg_4_0:getLineGroup(), "飞弹特效配置:", arg_4_0.missileList, nil, nil, {
+		fsize = 25,
+		label_w = 100,
+		total_w = 300,
+		drop_w = 200
+	})
+	arg_4_0.explosionDrop = arg_4_0:addDropDown(arg_4_0:getLineGroup(), "爆点特效配置:", arg_4_0.explosionList, nil, nil, {
+		fsize = 25,
+		label_w = 100,
+		total_w = 300,
+		drop_w = 200
+	})
+
+	local var_4_0 = GMController.instance.emitterId and tostring(GMController.instance.emitterId) or arg_4_0.emitterList[1]
+	local var_4_1 = GMController.instance.missileId and tostring(GMController.instance.missileId) or arg_4_0.missileList[1]
+	local var_4_2 = GMController.instance.explosionId and tostring(GMController.instance.explosionId) or arg_4_0.explosionList[1]
+
+	arg_4_0.emitterDrop:SetValue((tabletool.indexOf(arg_4_0.emitterList, var_4_0) or 1) - 1)
+	arg_4_0.missileDrop:SetValue((tabletool.indexOf(arg_4_0.missileList, var_4_1) or 1) - 1)
+	arg_4_0.explosionDrop:SetValue((tabletool.indexOf(arg_4_0.explosionList, var_4_2) or 1) - 1)
+	arg_4_0:addLineIndex()
+
+	arg_4_0.countASFDInput = arg_4_0:addInputText(arg_4_0:getLineGroup(), "", "奥术飞弹数量...", nil, nil, {
+		fsize = 30,
+		w = 200
+	})
+	arg_4_0.optionStrList = {
+		"我方",
+		"敌方"
+	}
+	arg_4_0.optionValueList = {
+		FightEnum.EntitySide.MySide,
+		FightEnum.EntitySide.EnemySide
+	}
+	arg_4_0.sideASFDDrop = arg_4_0:addDropDown(arg_4_0:getLineGroup(), "奥术飞弹发射方:", arg_4_0.optionStrList, nil, nil, {
+		fsize = 25,
+		label_w = 100,
+		total_w = 300,
+		drop_w = 200
+	})
+	arg_4_0.toEntityASFDInput = arg_4_0:addInputText(arg_4_0:getLineGroup(), "", "奥术飞弹目标uid...")
+	arg_4_0.btnSendASFD = arg_4_0:addButton(arg_4_0:getLineGroup(), "发射", arg_4_0.onClickSendASFDBtn, arg_4_0)
+
 	arg_4_0:addTitleSplitLine("战中打印")
 	arg_4_0:addLineIndex()
 
@@ -134,365 +164,309 @@ function var_0_0.initViewContent(arg_4_0)
 	arg_4_0.btnLogLife = arg_4_0:addButton(arg_4_0:getLineGroup(), "打印生命百分比", arg_4_0.onClickLogLife, arg_4_0)
 end
 
-function var_0_0.getEntityNameList(arg_5_0)
-	arg_5_0.entityNameList = {}
-	arg_5_0.entityList = {}
+function var_0_0.getASFDUnitList(arg_5_0)
+	local var_5_0 = {}
+	local var_5_1 = {}
+	local var_5_2 = {}
 
-	FightDataHelper.entityMgr:getAllEntityList(arg_5_0.entityList)
+	for iter_5_0, iter_5_1 in ipairs(lua_fight_asfd.configList) do
+		local var_5_3 = iter_5_1.unit
 
-	for iter_5_0, iter_5_1 in ipairs(arg_5_0.entityList) do
-		local var_5_0 = iter_5_1:getCO()
-		local var_5_1 = var_5_0 and var_5_0.name
+		if var_5_3 == FightEnum.ASFDUnit.Emitter then
+			table.insert(var_5_0, tostring(iter_5_1.id))
+		elseif var_5_3 == FightEnum.ASFDUnit.Missile then
+			table.insert(var_5_1, tostring(iter_5_1.id))
+		elseif var_5_3 == FightEnum.ASFDUnit.Explosion then
+			table.insert(var_5_2, tostring(iter_5_1.id))
+		end
+	end
 
-		var_5_1 = var_5_1 or iter_5_1.id
+	return var_5_0, var_5_1, var_5_2
+end
 
-		table.insert(arg_5_0.entityNameList, var_5_1)
+function var_0_0.getEntityNameList(arg_6_0)
+	arg_6_0.entityNameList = {}
+	arg_6_0.entityList = {}
+
+	FightDataHelper.entityMgr:getAllEntityList(arg_6_0.entityList)
+
+	for iter_6_0, iter_6_1 in ipairs(arg_6_0.entityList) do
+		local var_6_0 = iter_6_1:getCO()
+		local var_6_1 = var_6_0 and var_6_0.name
+
+		var_6_1 = var_6_1 or iter_6_1.id
+
+		table.insert(arg_6_0.entityNameList, var_6_1)
 	end
 end
 
-function var_0_0.getMountList(arg_6_0)
-	arg_6_0.mountList = {
+function var_0_0.getMountList(arg_7_0)
+	arg_7_0.mountList = {
 		ModuleEnum.SpineHangPointRoot
 	}
 
-	for iter_6_0, iter_6_1 in pairs(ModuleEnum.SpineHangPoint) do
-		table.insert(arg_6_0.mountList, iter_6_1)
+	for iter_7_0, iter_7_1 in pairs(ModuleEnum.SpineHangPoint) do
+		table.insert(arg_7_0.mountList, iter_7_1)
 	end
 end
 
-function var_0_0.addFightNumToggle(arg_7_0)
-	arg_7_0.showFightNumToggle = arg_7_0:addToggle(arg_7_0:getLineGroup(), "显示战斗数值", arg_7_0.onFightNumToggleValueChange, arg_7_0)
-	arg_7_0.showFightNumToggle.isOn = PlayerPrefsHelper.getNumber(PlayerPrefsKey.FightShowFightNum, 1) == 1
+function var_0_0.addFightNumToggle(arg_8_0)
+	arg_8_0.showFightNumToggle = arg_8_0:addToggle(arg_8_0:getLineGroup(), "显示战斗数值", arg_8_0.onFightNumToggleValueChange, arg_8_0)
+	arg_8_0.showFightNumToggle.isOn = PlayerPrefsHelper.getNumber(PlayerPrefsKey.FightShowFightNum, 1) == 1
 end
 
-function var_0_0.addShowFightUIToggle(arg_8_0)
-	arg_8_0.showFightUIToggle = arg_8_0:addToggle(arg_8_0:getLineGroup(), "显示战斗UI", arg_8_0.onFightUIToggleValueChange, arg_8_0)
-	arg_8_0.showFightUIToggle.isOn = true
+function var_0_0.addShowFightUIToggle(arg_9_0)
+	arg_9_0.showFightUIToggle = arg_9_0:addToggle(arg_9_0:getLineGroup(), "显示战斗UI", arg_9_0.onFightUIToggleValueChange, arg_9_0)
+	arg_9_0.showFightUIToggle.isOn = true
 end
 
-function var_0_0.onClickMyCardDeck(arg_9_0)
+function var_0_0.onClickMyCardDeck(arg_10_0)
 	FightRpc.instance:sendGetFightCardDeckDetailInfoRequest(FightRpc.DeckInfoRequestType.MySide)
 end
 
-function var_0_0.onClickEnemyCardDeck(arg_10_0)
+function var_0_0.onClickEnemyCardDeck(arg_11_0)
 	FightRpc.instance:sendGetFightCardDeckDetailInfoRequest(FightRpc.DeckInfoRequestType.EnemySide)
 end
 
-function var_0_0.onClickSendBtn(arg_11_0)
-	local var_11_0 = arg_11_0.gmInput:GetText()
+function var_0_0.onClickSendBtn(arg_12_0)
+	local var_12_0 = arg_12_0.gmInput:GetText()
 
-	if string.nilorempty(var_11_0) then
+	if string.nilorempty(var_12_0) then
 		return
 	end
 
-	GMRpc.instance:sendGMRequest(var_11_0)
+	GMRpc.instance:sendGMRequest(var_12_0)
 end
 
-function var_0_0.onClickBtnEnterFightByMonsterGroupId(arg_12_0)
-	local var_12_0 = arg_12_0.battleInput:GetText()
+function var_0_0.onClickBtnEnterFightByMonsterGroupId(arg_13_0)
+	local var_13_0 = arg_13_0.battleInput:GetText()
 
-	if not string.nilorempty(var_12_0) then
-		local var_12_1 = string.splitToNumber(var_12_0, "#")
+	if not string.nilorempty(var_13_0) then
+		local var_13_1 = string.splitToNumber(var_13_0, "#")
 
-		if #var_12_1 > 0 then
-			PlayerPrefsHelper.setString(PlayerPrefsKey.GMToolViewTestFight, var_12_0)
+		if #var_13_1 > 0 then
+			PlayerPrefsHelper.setString(PlayerPrefsKey.GMToolViewTestFight, var_13_0)
 			HeroGroupModel.instance:setParam(nil, nil, nil)
 
-			local var_12_2 = HeroGroupModel.instance:getCurGroupMO()
+			local var_13_2 = HeroGroupModel.instance:getCurGroupMO()
 
-			if not var_12_2 then
+			if not var_13_2 then
 				logError("current HeroGroupMO is nil")
 				GameFacade.showMessageBox(MessageBoxIdDefine.HeroGroupPleaseAdd, MsgBoxEnum.BoxType.Yes)
 
 				return
 			end
 
-			local var_12_3, var_12_4 = var_12_2:getMainList()
-			local var_12_5, var_12_6 = var_12_2:getSubList()
-			local var_12_7 = var_12_2:getAllHeroEquips()
+			local var_13_3, var_13_4 = var_13_2:getMainList()
+			local var_13_5, var_13_6 = var_13_2:getSubList()
+			local var_13_7 = var_13_2:getAllHeroEquips()
 
-			arg_12_0:closeThis()
+			arg_13_0:closeThis()
 
-			local var_12_8 = FightParam.New()
+			local var_13_8 = FightParam.New()
 
-			var_12_8.monsterGroupIds = var_12_1
-			var_12_8.isTestFight = true
+			var_13_8.monsterGroupIds = var_13_1
+			var_13_8.isTestFight = true
 
-			var_12_8:setSceneLevel(10601)
-			var_12_8:setMySide(var_12_2.clothId, var_12_3, var_12_5, var_12_7)
-			FightModel.instance:setFightParam(var_12_8)
-			FightController.instance:sendTestFight(var_12_8)
+			var_13_8:setSceneLevel(10601)
+			var_13_8:setMySide(var_13_2.clothId, var_13_3, var_13_5, var_13_7)
+			FightModel.instance:setFightParam(var_13_8)
+			FightController.instance:sendTestFight(var_13_8)
 
 			return
 		end
 	end
 end
 
-function var_0_0.onClickBtnEnterFightByBattleId(arg_13_0)
-	local var_13_0 = arg_13_0.battleInput:GetText()
-	local var_13_1 = tonumber(var_13_0)
+function var_0_0.onClickBtnEnterFightByBattleId(arg_14_0)
+	local var_14_0 = arg_14_0.battleInput:GetText()
+	local var_14_1 = tonumber(var_14_0)
 
-	if not (var_13_1 and lua_battle.configDict[var_13_1]) then
-		local var_13_2 = string.format("没有找到战斗id ：%s 对应的配置", var_13_1)
+	if not (var_14_1 and lua_battle.configDict[var_14_1]) then
+		local var_14_2 = string.format("没有找到战斗id ：%s 对应的配置", var_14_1)
 
-		logError(var_13_2)
-		ToastController.instance:showToastWithString(var_13_2)
+		logError(var_14_2)
+		ToastController.instance:showToastWithString(var_14_2)
 
 		return
 	end
 
-	local var_13_3
+	local var_14_3
 
-	for iter_13_0, iter_13_1 in ipairs(lua_episode.configList) do
-		if iter_13_1.battleId == var_13_1 or iter_13_1.firstBattleId == var_13_1 then
-			var_13_3 = iter_13_1
+	for iter_14_0, iter_14_1 in ipairs(lua_episode.configList) do
+		if iter_14_1.battleId == var_14_1 or iter_14_1.firstBattleId == var_14_1 then
+			var_14_3 = iter_14_1
 
 			break
 		end
 	end
 
-	if not var_13_3 then
+	if not var_14_3 then
 		logError("没有找到战斗id对应的关卡id")
 		ToastController.instance:showToastWithString("没有找到战斗id对应的关卡id")
 
 		return
 	end
 
-	local var_13_4 = FightController.instance:setFightParamByBattleId(var_13_1)
+	local var_14_4 = FightController.instance:setFightParamByBattleId(var_14_1)
 
-	HeroGroupModel.instance:setParam(var_13_1, nil, nil)
+	HeroGroupModel.instance:setParam(var_14_1, nil, nil)
 
-	local var_13_5 = HeroGroupModel.instance:getCurGroupMO()
+	local var_14_5 = HeroGroupModel.instance:getCurGroupMO()
 
-	if not var_13_5 then
+	if not var_14_5 then
 		logError("current HeroGroupMO is nil")
 		GameFacade.showMessageBox(MessageBoxIdDefine.HeroGroupPleaseAdd, MsgBoxEnum.BoxType.Yes)
 
 		return
 	end
 
-	local var_13_6, var_13_7 = var_13_5:getMainList()
-	local var_13_8, var_13_9 = var_13_5:getSubList()
-	local var_13_10 = var_13_5:getAllHeroEquips()
+	local var_14_6, var_14_7 = var_14_5:getMainList()
+	local var_14_8, var_14_9 = var_14_5:getSubList()
+	local var_14_10 = var_14_5:getAllHeroEquips()
 
-	PlayerPrefsHelper.setString(PlayerPrefsKey.GMToolViewTestFight, var_13_0)
-	arg_13_0:closeThis()
+	PlayerPrefsHelper.setString(PlayerPrefsKey.GMToolViewTestFight, var_14_0)
+	arg_14_0:closeThis()
 
-	var_13_4.episodeId = var_13_3.id
-	FightResultModel.instance.episodeId = var_13_3.id
+	var_14_4.episodeId = var_14_3.id
+	FightResultModel.instance.episodeId = var_14_3.id
 
-	DungeonModel.instance:SetSendChapterEpisodeId(var_13_3.chapterId, var_13_3.id)
-	var_13_4:setMySide(var_13_5.clothId, var_13_6, var_13_8, var_13_10)
-	FightController.instance:sendTestFightId(var_13_4)
+	DungeonModel.instance:SetSendChapterEpisodeId(var_14_3.chapterId, var_14_3.id)
+	var_14_4:setMySide(var_14_5.clothId, var_14_6, var_14_8, var_14_10)
+	FightController.instance:sendTestFightId(var_14_4)
 end
 
-function var_0_0.onClickSimulateBattle(arg_14_0)
-	arg_14_0:closeThis()
+function var_0_0.onClickSimulateBattle(arg_15_0)
+	arg_15_0:closeThis()
 	ViewMgr.instance:openView(ViewName.GMFightSimulateView)
 end
 
-function var_0_0.onClickSkillEditor(arg_15_0)
+function var_0_0.onClickSkillEditor(arg_16_0)
 	SkillEditorMgr.instance:start()
 end
 
-function var_0_0.onFightNumToggleValueChange(arg_16_0)
-	local var_16_0 = arg_16_0.showFightNumToggle.isOn
+function var_0_0.onFightNumToggleValueChange(arg_17_0)
+	local var_17_0 = arg_17_0.showFightNumToggle.isOn
 
-	FightFloatMgr.instance:setCanShowFightNumUI(var_16_0)
-	PlayerPrefsHelper.setNumber(PlayerPrefsKey.FightShowFightNum, var_16_0 and 1 or 0)
+	FightFloatMgr.instance:setCanShowFightNumUI(var_17_0)
+	PlayerPrefsHelper.setNumber(PlayerPrefsKey.FightShowFightNum, var_17_0 and 1 or 0)
 end
 
-function var_0_0.onFightUIToggleValueChange(arg_17_0)
-	local var_17_0 = GMFightShowState.getList()
+function var_0_0.onFightUIToggleValueChange(arg_18_0)
+	local var_18_0 = GMFightShowState.getList()
 
-	for iter_17_0, iter_17_1 in ipairs(var_17_0) do
-		GMFightShowState.setStatus(iter_17_1.valueKey, true)
+	for iter_18_0, iter_18_1 in ipairs(var_18_0) do
+		GMFightShowState.setStatus(iter_18_1.valueKey, true)
 	end
 
 	FightController.instance:dispatchEvent(FightEvent.GMHideFightView)
 end
 
-function var_0_0.onClickLockLifeMySide(arg_18_0)
+function var_0_0.onClickLockLifeMySide(arg_19_0)
 	GMRpc.instance:sendGMRequest("fight lockLife 0")
 end
 
-function var_0_0.onClickLockLifeEnemySide(arg_19_0)
+function var_0_0.onClickLockLifeEnemySide(arg_20_0)
 	GMRpc.instance:sendGMRequest("fight lockLife 1")
 end
 
-function var_0_0.onClickAddHurtMySide(arg_20_0)
+function var_0_0.onClickAddHurtMySide(arg_21_0)
 	GMRpc.instance:sendGMRequest("fight addHurt 0")
 end
 
-function var_0_0.onClickAddHurtEnemySide(arg_21_0)
+function var_0_0.onClickAddHurtEnemySide(arg_22_0)
 	GMRpc.instance:sendGMRequest("fight addHurt 1")
 end
 
-function var_0_0.onClickReduceDamageMySide(arg_22_0)
+function var_0_0.onClickReduceDamageMySide(arg_23_0)
 	GMRpc.instance:sendGMRequest("fight reduceDamage 0")
 end
 
-function var_0_0.onClickReduceDamageEnemySide(arg_23_0)
+function var_0_0.onClickReduceDamageEnemySide(arg_24_0)
 	GMRpc.instance:sendGMRequest("fight reduceDamage 1")
 end
 
-function var_0_0.onClickAddCost(arg_24_0)
-	local var_24_0 = arg_24_0.costInput:GetText()
+function var_0_0.onClickAddCost(arg_25_0)
+	local var_25_0 = arg_25_0.costInput:GetText()
 
-	if string.nilorempty(var_24_0) then
+	if string.nilorempty(var_25_0) then
 		return
 	end
 
-	GMRpc.instance:sendGMRequest(string.format("fight addPower %s 0", var_24_0))
+	GMRpc.instance:sendGMRequest(string.format("fight addPower %s 0", var_25_0))
 end
 
-function var_0_0.onClickAddExPointMySide(arg_25_0)
+function var_0_0.onClickAddExPointMySide(arg_26_0)
 	GMRpc.instance:sendGMRequest("fight addExpoint 5 0")
 end
 
-function var_0_0.onClickAddExPointEnemySide(arg_26_0)
+function var_0_0.onClickAddExPointEnemySide(arg_27_0)
 	GMRpc.instance:sendGMRequest("fight addExpoint 5 1")
 end
 
-function var_0_0.onClickChangeCard(arg_27_0)
+function var_0_0.onClickChangeCard(arg_28_0)
 	if GameSceneMgr.instance:getCurSceneType() == SceneType.Fight then
-		arg_27_0:closeThis()
+		arg_28_0:closeThis()
 		ViewMgr.instance:openView(ViewName.GMResetCardsView)
 	else
 		GameFacade.showToast(ToastEnum.IconId, "not in fight")
 	end
 end
 
-function var_0_0.onClickFightGm(arg_28_0)
-	arg_28_0:closeThis()
+function var_0_0.onClickFightGm(arg_29_0)
+	arg_29_0:closeThis()
 	ViewMgr.instance:openView(ViewName.GMFightEntityView)
 end
 
-function var_0_0.onClickEnableFightLog(arg_29_0)
+function var_0_0.onClickEnableFightLog(arg_30_0)
 	GMRpc.instance:sendGMRequest("fight log 2")
 end
 
-function var_0_0.onClickLogAttr(arg_30_0)
+function var_0_0.onClickLogAttr(arg_31_0)
 	GMRpc.instance:sendGMRequest("fight printAttrWithCompute")
 end
 
-function var_0_0.onClickLogBaseAttr(arg_31_0)
+function var_0_0.onClickLogBaseAttr(arg_32_0)
 	GMRpc.instance:sendGMRequest("fight printAttr")
 end
 
-function var_0_0.onClickLogLife(arg_32_0)
+function var_0_0.onClickLogLife(arg_33_0)
 	GMRpc.instance:sendGMRequest("fight printLife")
 end
 
-function var_0_0.onClickSendASFDBtn(arg_33_0)
-	local var_33_0 = tonumber(arg_33_0.countASFDInput:GetText()) or 1
-	local var_33_1 = arg_33_0.sideASFDDrop:GetValue() + 1
-	local var_33_2 = arg_33_0.optionValueList[var_33_1]
-	local var_33_3 = arg_33_0.toEntityASFDInput:GetText()
+function var_0_0.onClickSendASFDBtn(arg_34_0)
+	local var_34_0 = tonumber(arg_34_0.countASFDInput:GetText()) or 1
+	local var_34_1 = arg_34_0.sideASFDDrop:GetValue() + 1
+	local var_34_2 = arg_34_0.optionValueList[var_34_1]
+	local var_34_3 = arg_34_0.toEntityASFDInput:GetText()
 
-	if not FightHelper.getEntity(var_33_3) then
-		local var_33_4
+	if not FightHelper.getEntity(var_34_3) then
+		local var_34_4
 
-		if var_33_2 == FightEnum.TeamType.MySide then
-			var_33_4 = FightDataHelper.entityMgr:getEnemyNormalList()
+		if var_34_2 == FightEnum.TeamType.MySide then
+			var_34_4 = FightDataHelper.entityMgr:getEnemyNormalList()
 		else
-			var_33_4 = FightDataHelper.entityMgr:getMyNormalList()
+			var_34_4 = FightDataHelper.entityMgr:getMyNormalList()
 		end
 
-		var_33_3 = var_33_4 and var_33_4[1] and var_33_4[1].id
+		var_34_3 = var_34_4 and var_34_4[1] and var_34_4[1].id
 
-		local var_33_5 = FightHelper.getEntity(var_33_3)
+		local var_34_5 = FightHelper.getEntity(var_34_3)
 
-		if not var_33_3 then
+		if not var_34_3 then
 			ToastController.instance:showToastWithString("没有找到奥术飞弹目标实体")
 
 			return
 		end
 	end
 
-	local var_33_6 = FightDataHelper.entityMgr:getASFDEntityMo(var_33_2) or arg_33_0:createASFDEmitter(var_33_2)
-	local var_33_7 = {}
+	local var_34_6 = arg_34_0.emitterDrop:GetValue() + 1
+	local var_34_7 = arg_34_0.missileDrop:GetValue() + 1
+	local var_34_8 = arg_34_0.explosionDrop:GetValue() + 1
 
-	for iter_33_0 = 1, var_33_0 do
-		local var_33_8 = FightStepMO.New()
-
-		var_33_8:init({
-			cardIndex = 1,
-			actType = 1,
-			fromId = var_33_6.id,
-			toId = var_33_3,
-			actId = FightASFDConfig.instance.skillId,
-			actEffect = {}
-		})
-		table.insert(var_33_7, var_33_8)
-	end
-
-	if arg_33_0.asfdSequence then
-		arg_33_0.asfdSequence:stop()
-	end
-
-	arg_33_0.asfdSequence = FlowSequence.New()
-
-	for iter_33_1, iter_33_2 in ipairs(var_33_7) do
-		local var_33_9 = FightASFDFlow.New(iter_33_2, var_33_7[iter_33_1 + 1], iter_33_1)
-
-		arg_33_0.asfdSequence:addWork(var_33_9)
-	end
-
-	arg_33_0.asfdSequence:start()
-	arg_33_0:closeThis()
-end
-
-function var_0_0.createASFDEmitter(arg_34_0, arg_34_1)
-	local var_34_0 = FightEntityMO.New()
-
-	var_34_0:init({
-		skin = 0,
-		exSkillLevel = 0,
-		userId = 0,
-		career = 0,
-		exSkill = 0,
-		status = 0,
-		position = 0,
-		level = 0,
-		teamType = 0,
-		guard = 0,
-		subCd = 0,
-		exPoint = 0,
-		shieldValue = 0,
-		modelId = 0,
-		uid = arg_34_1 == FightEnum.TeamType.MySide and "99998" or "-99998",
-		entityType = FightEnum.EntityType.ASFDEmitter,
-		side = arg_34_1,
-		attr = {
-			defense = 0,
-			multiHpNum = 0,
-			hp = 0,
-			multiHpIdx = 0,
-			mdefense = 0,
-			technic = 0,
-			attack = 0
-		},
-		buffs = {},
-		skillGroup1 = {},
-		skillGroup2 = {},
-		passiveSkill = {},
-		powerInfos = {},
-		SummonedList = {}
-	})
-
-	var_34_0.side = arg_34_1
-
-	local var_34_1 = FightDataHelper.entityMgr:addEntityMO(var_34_0)
-	local var_34_2 = FightDataHelper.entityMgr:getOriginASFDEmitterList(var_34_1.side)
-
-	table.insert(var_34_2, var_34_1)
-
-	local var_34_3 = GameSceneMgr.instance:getCurScene()
-
-	;(var_34_3 and var_34_3.entityMgr):addASFDUnit()
-
-	return var_34_1
+	GMController.instance:setRecordASFDCo(arg_34_0.emitterList[var_34_6], arg_34_0.missileList[var_34_7], arg_34_0.explosionList[var_34_8])
+	GMController.instance:startASFDFlow(var_34_0, var_34_2, var_34_3)
+	arg_34_0:closeThis()
 end
 
 function var_0_0.onClickBtnMount(arg_35_0)

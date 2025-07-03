@@ -1,6 +1,6 @@
 ﻿module("modules.logic.fight.model.data.FightEntityDataMgr", package.seeall)
 
-local var_0_0 = FightDataClass("FightEntityDataMgr")
+local var_0_0 = FightDataClass("FightEntityDataMgr", FightDataMgrBase)
 local var_0_1 = {
 	normal = "normal",
 	assistBoss = "assistBoss",
@@ -294,7 +294,7 @@ end
 function var_0_0.getOldEntityMO(arg_40_0, arg_40_1)
 	local var_40_0 = FightEntityMO.New()
 
-	FightDataHelper.coverData(arg_40_0:getById(arg_40_1), var_40_0)
+	FightDataUtil.coverData(arg_40_0:getById(arg_40_1), var_40_0)
 
 	return var_40_0
 end
@@ -367,7 +367,7 @@ function var_0_0.updateData(arg_49_0, arg_49_1)
 	local var_49_0 = arg_49_0.sideDic[FightEnum.EntitySide.MySide]
 	local var_49_1 = arg_49_0.sideDic[FightEnum.EntitySide.EnemySide]
 
-	if arg_49_1.attacker:HasField("playerEntity") then
+	if arg_49_1.attacker.playerEntity then
 		arg_49_0:initOneEntityListByProto(arg_49_1.attacker.playerEntity, FightEnum.EntitySide.MySide, var_49_0[var_0_1.player])
 	end
 
@@ -375,15 +375,15 @@ function var_0_0.updateData(arg_49_0, arg_49_1)
 	arg_49_0:initEntityListByProto(arg_49_1.attacker.subEntitys, FightEnum.EntitySide.MySide, var_49_0[var_0_1.sub])
 	arg_49_0:initEntityListByProto(arg_49_1.attacker.spEntitys, FightEnum.EntitySide.MySide, var_49_0[var_0_1.sp])
 
-	if arg_49_1.attacker:HasField("assistBoss") then
+	if arg_49_1.attacker.assistBoss then
 		arg_49_0:initOneEntityListByProto(arg_49_1.attacker.assistBoss, FightEnum.EntitySide.MySide, var_49_0[var_0_1.assistBoss])
 	end
 
-	if arg_49_1.attacker:HasField("emitter") then
+	if arg_49_1.attacker.emitter then
 		arg_49_0:initOneEntityListByProto(arg_49_1.attacker.emitter, FightEnum.EntitySide.MySide, var_49_0[var_0_1.ASFD_emitter])
 	end
 
-	if arg_49_1.defender:HasField("playerEntity") then
+	if arg_49_1.defender.playerEntity then
 		arg_49_0:initOneEntityListByProto(arg_49_1.defender.playerEntity, FightEnum.EntitySide.EnemySide, var_49_1[var_0_1.player])
 	end
 
@@ -391,7 +391,7 @@ function var_0_0.updateData(arg_49_0, arg_49_1)
 	arg_49_0:initEntityListByProto(arg_49_1.defender.subEntitys, FightEnum.EntitySide.EnemySide, var_49_1[var_0_1.sub])
 	arg_49_0:initEntityListByProto(arg_49_1.defender.spEntitys, FightEnum.EntitySide.EnemySide, var_49_1[var_0_1.sp])
 
-	if arg_49_1.defender:HasField("emitter") then
+	if arg_49_1.defender.emitter then
 		arg_49_0:initOneEntityListByProto(arg_49_1.defender.emitter, FightEnum.EntitySide.EnemySide, var_49_1[var_0_1.ASFD_emitter])
 	end
 end

@@ -13,7 +13,7 @@ function var_0_0.onStart(arg_1_0, arg_1_1)
 
 	local var_1_1 = Act183Model.instance:getBattleFinishedInfo()
 
-	if not var_1_1 then
+	if not var_1_1 or not var_1_1.win then
 		arg_1_0:onDone(true)
 
 		return
@@ -28,16 +28,15 @@ function var_0_0.onStart(arg_1_0, arg_1_1)
 	end
 
 	local var_1_3 = var_1_1.episodeMo
-	local var_1_4 = var_1_1.win
-	local var_1_5 = var_1_3 and var_1_3:getEpisodeType() == Act183Enum.EpisodeType.Sub
-	local var_1_6 = Act183Helper.isLastPassEpisodeInType(var_1_3)
 
-	if var_1_4 and var_1_5 and not var_1_6 then
+	if not Act183Helper.isLastPassEpisodeInGroup(var_1_3) then
 		ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, arg_1_0._onCloseViewFinish, arg_1_0)
 		Act183Controller.instance:openAct183RepressView(var_1_1)
-	else
-		arg_1_0:onDone(true)
+
+		return
 	end
+
+	arg_1_0:onDone(true)
 end
 
 function var_0_0._onCloseViewFinish(arg_2_0, arg_2_1)

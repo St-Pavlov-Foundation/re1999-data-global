@@ -131,8 +131,9 @@ function var_0_0.needShowNew(arg_9_0)
 		return false
 	else
 		local var_9_0 = ServerTime.now()
+		local var_9_1 = var_9_0 >= arg_9_0.newStartTime and var_9_0 <= arg_9_0.newEndTime
 
-		return var_9_0 >= arg_9_0.newStartTime and var_9_0 <= arg_9_0.newEndTime
+		return RedDotModel.instance:isDotShow(RedDotEnum.DotNode.StoreChargeGoodsRead, arg_9_0.goodsId) and var_9_1
 	end
 end
 

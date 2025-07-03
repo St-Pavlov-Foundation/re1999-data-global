@@ -23,6 +23,8 @@ function var_0_0.init(arg_1_0, arg_1_1)
 	arg_1_0._config = Act183Config.instance:getEpisodeCo(arg_1_0._episodeId)
 	arg_1_0._groupId = arg_1_0._config and arg_1_0._config.groupId
 	arg_1_0._params = arg_1_1.params
+	arg_1_0._star = arg_1_1.star
+	arg_1_0._totalStarCount = Act183Helper.calcEpisodeTotalConditionCount(arg_1_0._episodeId)
 
 	arg_1_0:_buildEscapeRules()
 end
@@ -197,6 +199,14 @@ end
 
 function var_0_0.getGroupId(arg_26_0)
 	return arg_26_0._groupId
+end
+
+function var_0_0.getFinishStarCount(arg_27_0)
+	return arg_27_0._star
+end
+
+function var_0_0.getTotalStarCount(arg_28_0)
+	return arg_28_0._totalStarCount
 end
 
 return var_0_0

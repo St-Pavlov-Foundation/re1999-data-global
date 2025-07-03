@@ -2,7 +2,7 @@
 
 local var_0_0 = pureTable("Act183GroupEpisodeRecordMO")
 
-function var_0_0.init(arg_1_0, arg_1_1)
+function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
 	arg_1_0._playerName = arg_1_1.playerName
 	arg_1_0._portrait = arg_1_1.portrait
 	arg_1_0._groupId = arg_1_1.groupId
@@ -11,6 +11,7 @@ function var_0_0.init(arg_1_0, arg_1_1)
 	arg_1_0:_onEpisodeListInfoLoaded(arg_1_1.episodeList)
 
 	arg_1_0._finishedTime = arg_1_1.finishedTime
+	arg_1_0._actId = arg_1_2
 end
 
 function var_0_0._onEpisodeListInfoLoaded(arg_2_0, arg_2_1)
@@ -83,25 +84,30 @@ function var_0_0.getGroupId(arg_12_0)
 	return arg_12_0._groupId
 end
 
-function var_0_0.getBossEpisodeConditionStatus(arg_13_0)
-	local var_13_0 = {}
-	local var_13_1 = {}
+function var_0_0.getActivityId(arg_13_0)
+	return arg_13_0._actId
+end
 
-	for iter_13_0, iter_13_1 in ipairs(arg_13_0._episodeList) do
-		if iter_13_1:getEpisodeType() ~= Act183Enum.EpisodeType.Boss then
-			local var_13_2 = iter_13_1:getConditionIds()
-			local var_13_3 = iter_13_1:getPassConditions()
+function var_0_0.getBossEpisodeConditionStatus(arg_14_0)
+	local var_14_0 = {}
+	local var_14_1 = {}
+	local var_14_2 = {}
+	local var_14_3 = {}
 
-			tabletool.addValues(var_13_0, var_13_2)
-			tabletool.addValues(var_13_1, var_13_3)
+	for iter_14_0, iter_14_1 in ipairs(arg_14_0._episodeList) do
+		if iter_14_1:getEpisodeType() ~= Act183Enum.EpisodeType.Boss then
+			local var_14_4 = iter_14_1:getConditionIds()
+			local var_14_5 = iter_14_1:getPassConditions()
+
+			tabletool.addValues(var_14_0, var_14_4)
+			tabletool.addValues(var_14_1, var_14_5)
+		else
+			var_14_2 = iter_14_1:getPassConditions()
+			var_14_3 = iter_14_1:getChooseConditions()
 		end
 	end
 
-	local var_13_4 = arg_13_0:getBossEpisode()
-	local var_13_5 = var_13_4 and var_13_4:getPassConditions()
-	local var_13_6 = var_13_4 and var_13_4:getChooseConditions()
-
-	return var_13_0, var_13_1, var_13_5, var_13_6
+	return var_14_0, var_14_1, var_14_2, var_14_3
 end
 
 return var_0_0

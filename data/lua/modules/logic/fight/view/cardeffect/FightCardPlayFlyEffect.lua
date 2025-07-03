@@ -159,22 +159,23 @@ function var_0_0._buildAniFlow_2_1(arg_6_0)
 
 		if GMFightShowState.cards then
 			local var_7_0 = FightDataHelper.entityMgr:getById(arg_6_0._card_mo.uid)
-			local var_7_1 = var_7_0 and FightCardModel.instance:isUniqueSkill(var_7_0.id, arg_6_0._card_mo.skillId)
-			local var_7_2 = ResUrl.getUIEffect(FightPreloadViewWork.ui_chupai_01)
-			local var_7_3 = FightHelper.getPreloadAssetItem(var_7_2)
+			local var_7_1 = FightCardDataHelper.isBigSkill(arg_6_0._card_mo.skillId)
+			local var_7_2 = FightConfig.instance:getSkillLv(arg_6_0._card_mo.skillId)
+			local var_7_3 = ResUrl.getUIEffect(FightPreloadViewWork.ui_chupai_01)
+			local var_7_4 = FightHelper.getPreloadAssetItem(var_7_3)
 
-			gohelper.clone(var_7_3:GetResource(var_7_2), arg_6_0._card_transform.gameObject)
+			gohelper.clone(var_7_4:GetResource(var_7_3), arg_6_0._card_transform.gameObject)
 
-			if not var_7_1 then
-				local var_7_4 = ResUrl.getUIEffect(FightPreloadViewWork.ui_chupai_02)
-				local var_7_5 = FightHelper.getPreloadAssetItem(var_7_4)
+			if var_7_2 < FightEnum.UniqueSkillCardLv then
+				local var_7_5 = ResUrl.getUIEffect(FightPreloadViewWork.ui_chupai_02)
+				local var_7_6 = FightHelper.getPreloadAssetItem(var_7_5)
 
-				gohelper.clone(var_7_5:GetResource(var_7_4), arg_6_0._card_transform.gameObject)
+				gohelper.clone(var_7_6:GetResource(var_7_5), arg_6_0._card_transform.gameObject)
 			else
-				local var_7_6 = ResUrl.getUIEffect(FightPreloadViewWork.ui_chupai_03)
-				local var_7_7 = FightHelper.getPreloadAssetItem(var_7_6)
+				local var_7_7 = ResUrl.getUIEffect(FightPreloadViewWork.ui_chupai_03)
+				local var_7_8 = FightHelper.getPreloadAssetItem(var_7_7)
 
-				gohelper.clone(var_7_7:GetResource(var_7_6), arg_6_0._card_transform.gameObject)
+				gohelper.clone(var_7_8:GetResource(var_7_7), arg_6_0._card_transform.gameObject)
 			end
 
 			FightController.instance:dispatchEvent(FightEvent.ShowPlayCardEffect, arg_6_0._card_mo, arg_6_0._show_index)

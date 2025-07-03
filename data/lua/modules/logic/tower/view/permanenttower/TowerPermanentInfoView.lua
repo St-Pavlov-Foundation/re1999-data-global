@@ -194,7 +194,15 @@ function var_0_0.showHeroGroupItem(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
 		var_14_3:LoadImage(ResUrl.monsterHeadIcon(var_14_6.headIcon))
 	else
 		local var_14_7 = HeroModel.instance:getByHeroId(arg_14_2.id)
-		local var_14_8 = FightConfig.instance:getSkinCO(var_14_7.skin)
+		local var_14_8 = {}
+
+		if not var_14_7 then
+			local var_14_9 = HeroConfig.instance:getHeroCO(arg_14_2.id)
+
+			var_14_8 = SkinConfig.instance:getSkinCo(var_14_9.skinId)
+		else
+			var_14_8 = FightConfig.instance:getSkinCO(var_14_7.skin)
+		end
 
 		var_14_2:LoadImage(ResUrl.getHeadIconSmall(var_14_8.retangleIcon))
 	end

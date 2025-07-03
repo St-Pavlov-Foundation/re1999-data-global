@@ -3,8 +3,8 @@
 local var_0_0 = class("FigthCardDistributeCorrectScale", BaseWork)
 
 function var_0_0.onStart(arg_1_0, arg_1_1)
-	local var_1_0 = arg_1_1.oldScale or FightCardModel.instance:getHandCardContainerScale()
-	local var_1_1 = arg_1_1.newScale or FightCardModel.instance:getHandCardContainerScale(nil, arg_1_1.cards)
+	local var_1_0 = arg_1_1.oldScale or FightCardDataHelper.getHandCardContainerScale()
+	local var_1_1 = arg_1_1.newScale or FightCardDataHelper.getHandCardContainerScale(nil, arg_1_1.cards)
 
 	if var_1_0 ~= var_1_1 then
 		arg_1_0:_releaseTween()

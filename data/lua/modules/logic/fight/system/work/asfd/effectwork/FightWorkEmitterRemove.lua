@@ -3,7 +3,7 @@
 local var_0_0 = class("FightWorkEmitterRemove", FightEffectBase)
 
 function var_0_0.beforePlayEffectData(arg_1_0)
-	local var_1_0 = arg_1_0._actEffectMO.effectNum
+	local var_1_0 = arg_1_0.actEffectData.effectNum
 
 	arg_1_0.emitterMo = FightDataHelper.entityMgr:getASFDEntityMo(var_1_0)
 end

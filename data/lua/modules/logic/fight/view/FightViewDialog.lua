@@ -626,7 +626,7 @@ function var_0_0._onFightDialogCheck(arg_28_0, arg_28_1, arg_28_2, arg_28_3, arg
 end
 
 function var_0_0._haveSkillCard(arg_29_0, arg_29_1)
-	local var_29_0 = FightCardModel.instance:getCardOps()
+	local var_29_0 = FightDataHelper.operationDataMgr:getOpList()
 
 	for iter_29_0, iter_29_1 in ipairs(var_29_0) do
 		if iter_29_1:isPlayCard() and arg_29_1 == iter_29_1.skillId then
@@ -679,7 +679,7 @@ function var_0_0._detectStepIsDamgeSkill(arg_31_0, arg_31_1)
 			end
 		end
 
-		if arg_31_0:_haveDamageSkillActEffectMOS(arg_31_1.actEffectMOs) then
+		if arg_31_0:_haveDamageSkillactEffect(arg_31_1.actEffect) then
 			return true
 		end
 	end
@@ -693,9 +693,9 @@ function var_0_0._haveDamageSkill(arg_32_0, arg_32_1)
 	end
 end
 
-function var_0_0._haveDamageSkillActEffectMOS(arg_33_0, arg_33_1)
+function var_0_0._haveDamageSkillactEffect(arg_33_0, arg_33_1)
 	for iter_33_0, iter_33_1 in ipairs(arg_33_1) do
-		local var_33_0 = iter_33_1.cus_stepMO
+		local var_33_0 = iter_33_1.fightStep
 
 		if var_33_0 and arg_33_0:_detectStepIsDamgeSkill(var_33_0) then
 			return
@@ -732,7 +732,9 @@ function var_0_0._onHaveBuffAndHaveDamageSkill_onlyCheckOnce(arg_35_0)
 
 					for iter_35_4, iter_35_5 in pairs(var_35_3) do
 						if iter_35_5.buffId == var_35_1 then
-							if arg_35_0:_haveDamageSkill(FightModel.instance:getCurRoundMO().fightStepMOs) then
+							local var_35_4 = FightDataHelper.roundMgr:getRoundData()
+
+							if var_35_4 and arg_35_0:_haveDamageSkill(var_35_4.fightStep) then
 								arg_35_0:_checkShowDialog(iter_35_1.type, var_35_1)
 							else
 								arg_35_0:_checkShowDialog(var_0_0.Type.DetectFail31, var_35_1)

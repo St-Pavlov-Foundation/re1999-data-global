@@ -549,6 +549,7 @@ function var_0_0.onDestroyView(arg_29_0)
 	TowerPermanentModel.instance:cleanData()
 	arg_29_0._simageEnterBg:UnLoadImage()
 	arg_29_0._animEventWrap:RemoveAllEventListener()
+	TowerModel.instance:cleanTrialData()
 end
 
 return var_0_0

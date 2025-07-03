@@ -9,6 +9,7 @@ end
 function var_0_0.reInit(arg_2_0)
 	arg_2_0._battleElementId = nil
 	arg_2_0._weekWalkInfo = nil
+	arg_2_0._curFinishMapId = nil
 end
 
 function var_0_0.isShallowLayer(arg_3_0)

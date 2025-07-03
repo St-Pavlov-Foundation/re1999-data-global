@@ -127,17 +127,13 @@ function var_0_0.onCloseViewFinish(arg_9_0, arg_9_1)
 end
 
 function var_0_0.onSkillPlayStart(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
-	local var_10_0 = arg_10_1:getMO()
-
-	if var_10_0 and var_10_0:isUniqueSkill(arg_10_2) then
+	if arg_10_1:getMO() and FightCardDataHelper.isBigSkill(arg_10_2) then
 		arg_10_0:setEffectActive(false)
 	end
 end
 
 function var_0_0.onSkillPlayFinish(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
-	local var_11_0 = arg_11_1:getMO()
-
-	if var_11_0 and var_11_0:isUniqueSkill(arg_11_2) then
+	if arg_11_1:getMO() and FightCardDataHelper.isBigSkill(arg_11_2) then
 		arg_11_0:setEffectActive(true)
 	end
 end

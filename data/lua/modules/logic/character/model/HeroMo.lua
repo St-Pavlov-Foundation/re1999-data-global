@@ -158,7 +158,7 @@ function var_0_0.initFromTrial(arg_18_0, arg_18_1, arg_18_2, arg_18_3)
 	local var_18_1 = HeroConfig.instance:getHeroCO(var_18_0.heroId)
 	local var_18_2 = HeroDef_pb.HeroInfo()
 
-	var_18_2.uid = tostring(var_18_0.heroId - 1099511627776)
+	var_18_2.uid = tostring(tonumber(var_18_0.id .. "." .. var_18_0.trialTemplate) - 1099511627776)
 	var_18_2.level = var_18_0.level
 	var_18_2.heroId = var_18_0.heroId
 	var_18_2.defaultEquipUid = tostring(-var_18_0.equipId)
@@ -690,7 +690,7 @@ function var_0_0.getTotalBaseAttrDict(arg_42_0, arg_42_1, arg_42_2, arg_42_3, ar
 	local var_42_16 = {}
 
 	for iter_42_8, iter_42_9 in ipairs(CharacterEnum.BaseAttrIdList) do
-		local var_42_17 = arg_42_0.destinyStoneMo and arg_42_0.destinyStoneMo:getAddValueByAttrId(var_42_15, iter_42_9) or 0
+		local var_42_17 = arg_42_0.destinyStoneMo and arg_42_0.destinyStoneMo:getAddValueByAttrId(var_42_15, iter_42_9, arg_42_0) or 0
 
 		var_42_16[iter_42_9] = var_42_7[iter_42_9] + var_42_8[iter_42_9] + (var_42_12[iter_42_9] and var_42_12[iter_42_9].value or 0) + var_42_17
 	end

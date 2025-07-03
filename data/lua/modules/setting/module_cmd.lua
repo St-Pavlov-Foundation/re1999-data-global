@@ -1845,6 +1845,112 @@
 		"GetAct189OnceBonusRequest",
 		"GetAct189OnceBonusReply"
 	},
+	[-16010] = {
+		"Activity190",
+		"GetAct190InfoRequest",
+		"GetAct190InfoReply"
+	},
+	[11476] = {
+		"Activity190",
+		"Act190FinishEpisodeRequest",
+		"Act190FinishEpisodeReply"
+	},
+	[-19422] = {
+		"Activity190",
+		"Act190ChooseEpisodeBranchRequest",
+		"Act190ChooseEpisodeBranchReply"
+	},
+	[-20185] = {
+		"Activity190",
+		"Act190EpisodePush"
+	},
+	[-3784] = {
+		"Activity191",
+		"GetAct191InfoRequest",
+		"GetAct191InfoReply"
+	},
+	[-30084] = {
+		"Activity191",
+		"Start191GameRequest",
+		"Start191GameReply"
+	},
+	[5592] = {
+		"Activity191",
+		"Select191InitBuildRequest",
+		"Select191InitBuildReply"
+	},
+	[-7238] = {
+		"Activity191",
+		"Select191NodeRequest",
+		"Select191NodeReply"
+	},
+	[-12378] = {
+		"Activity191",
+		"Fresh191ShopRequest",
+		"Fresh191ShopReply"
+	},
+	[17301] = {
+		"Activity191",
+		"BuyIn191ShopRequest",
+		"BuyIn191ShopReply"
+	},
+	[23419] = {
+		"Activity191",
+		"Leave191ShopRequest",
+		"Leave191ShopReply"
+	},
+	[-14426] = {
+		"Activity191",
+		"Select191EnhanceRequest",
+		"Select191EnhanceReply"
+	},
+	[4862] = {
+		"Activity191",
+		"Fresh191EnhanceRequest",
+		"Fresh191EnhanceReply"
+	},
+	[-2310] = {
+		"Activity191",
+		"Gain191RewardEventRequest",
+		"Gain191RewardEventReply"
+	},
+	[1209] = {
+		"Activity191",
+		"ChangeAct191TeamRequest",
+		"ChangeAct191TeamReply"
+	},
+	[-31907] = {
+		"Activity191",
+		"EndAct191GameRequest",
+		"EndAct191GameReply"
+	},
+	[26889] = {
+		"Activity191",
+		"Act191GameInfoUpdatePush"
+	},
+	[-1407] = {
+		"Activity191",
+		"Act191TriggerEffectPush"
+	},
+	[8442] = {
+		"Activity192",
+		"GetAct192InfoRequest",
+		"GetAct192InfoReply"
+	},
+	[10264] = {
+		"Activity192",
+		"Act192FinishEpisodeRequest",
+		"Act192FinishEpisodeReply"
+	},
+	[4710] = {
+		"Activity192",
+		"Act192ChooseEpisodeBranchRequest",
+		"Act192ChooseEpisodeBranchReply"
+	},
+	[235] = {
+		"Activity192",
+		"Act192EpisodePush"
+	},
 	[-5040] = {
 		"Activity201",
 		"Get201InfoRequest",
@@ -4505,6 +4611,16 @@
 		"Tower",
 		"TowerResetTalentRequest",
 		"TowerResetTalentReply"
+	},
+	[20167] = {
+		"Tower",
+		"TowerRenameTalentPlanRequest",
+		"TowerRenameTalentPlanReply"
+	},
+	[7733] = {
+		"Tower",
+		"TowerChangeTalentPlanRequest",
+		"TowerChangeTalentPlanReply"
 	},
 	[5874] = {
 		"Tower",

@@ -3,13 +3,13 @@
 local var_0_0 = class("FightWorkDissolveCardForDeadVersion0", BaseWork)
 
 function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0._actEffectMO = arg_1_1
+	arg_1_0.actEffectData = arg_1_1
 end
 
 function var_0_0.onStart(arg_2_0)
 	TaskDispatcher.runDelay(arg_2_0._delayDone, arg_2_0, 0.5)
 
-	local var_2_0 = arg_2_0._actEffectMO.targetId
+	local var_2_0 = arg_2_0.actEffectData.targetId
 	local var_2_1 = FightHelper.getEntity(var_2_0)
 
 	if not var_2_1 then
@@ -37,7 +37,7 @@ function var_0_0._removeCard(arg_3_0, arg_3_1)
 
 	FightController.instance:dispatchEvent(FightEvent.SetHandCardVisible, true)
 
-	local var_3_0 = tabletool.copy(FightCardModel.instance:getHandCards())
+	local var_3_0 = FightDataHelper.handCardMgr.handCard
 	local var_3_1 = #var_3_0
 
 	table.sort(arg_3_1, FightWorkCardRemove2.sort)
@@ -46,14 +46,10 @@ function var_0_0._removeCard(arg_3_0, arg_3_1)
 		table.remove(var_3_0, iter_3_1)
 	end
 
-	FightCardModel.instance:coverCard(var_3_0)
-
-	arg_3_0._finalCards, arg_3_0._combineCount = FightCardModel.calcCardsAfterCombine(var_3_0)
-
 	local var_3_2 = 0.033
 	local var_3_3 = 1.2 + var_3_2 * 7 + 3 * var_3_2 * (var_3_1 - #arg_3_1)
 
-	if arg_3_0._combineCount > 0 then
+	if FightCardDataHelper.canCombineCardListForPerformance(var_3_0) then
 		TaskDispatcher.cancelTask(arg_3_0._delayDone, arg_3_0)
 		TaskDispatcher.runDelay(arg_3_0._delayDone, arg_3_0, 10)
 		FightController.instance:registerCallback(FightEvent.OnCombineCardEnd, arg_3_0._onCombineDone, arg_3_0)
@@ -65,18 +61,10 @@ function var_0_0._removeCard(arg_3_0, arg_3_1)
 end
 
 function var_0_0._onCombineDone(arg_4_0)
-	if arg_4_0._finalCards then
-		FightCardModel.instance:coverCard(arg_4_0._finalCards)
-	end
-
 	arg_4_0:onDone(true)
 end
 
 function var_0_0._delayDone(arg_5_0)
-	if arg_5_0._finalCards then
-		FightCardModel.instance:coverCard(arg_5_0._finalCards)
-	end
-
 	FightController.instance:dispatchEvent(FightEvent.RefreshHandCard)
 	arg_5_0:onDone(true)
 end
@@ -86,7 +74,7 @@ function var_0_0._delayAfterPerformance(arg_6_0)
 end
 
 function var_0_0._calcRemoveCard(arg_7_0, arg_7_1)
-	local var_7_0 = FightCardModel.instance:getHandCards()
+	local var_7_0 = FightDataHelper.handCardMgr.handCard
 	local var_7_1
 
 	for iter_7_0 = #var_7_0, 1, -1 do

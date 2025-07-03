@@ -34,6 +34,7 @@ function var_0_0.onInitFinish(arg_1_0)
 	arg_1_0:_addTrigger(GuideTriggerRoomLv.New("RoomLv"))
 	arg_1_0:_addTrigger(GuideTriggerRoomTradeLv.New("RoomTradeLv"))
 	arg_1_0:_addTrigger(GuideTriggerDestinyStone.New("DestinyStone"))
+	arg_1_0:_addTrigger(GuideTriggerStoryStep.New("StoryStep"))
 	arg_1_0:_addTrigger(GuideTriggerGuideEvent.New("GuideEvent"))
 end
 

@@ -734,7 +734,7 @@ function var_0_0.getAdapterScale()
 	local var_37_1 = UnityEngine.Screen.width
 	local var_37_2 = UnityEngine.Screen.height
 
-	if BootNativeUtil.isWindows() then
+	if BootNativeUtil.isWindows() and not SLFramework.FrameworkSettings.IsEditor then
 		var_37_1, var_37_2 = SettingsModel.instance:getCurrentScreenSize()
 	end
 
@@ -880,7 +880,7 @@ function var_0_0.openURL(arg_48_0)
 	end
 
 	local var_48_0 = {
-		deepLink = deepLinkUrl,
+		deepLink = "",
 		url = arg_48_0
 	}
 	local var_48_1 = cjson.encode(var_48_0)

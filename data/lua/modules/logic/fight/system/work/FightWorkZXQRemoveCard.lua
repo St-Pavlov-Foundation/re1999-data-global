@@ -3,21 +3,13 @@
 local var_0_0 = class("FightWorkZXQRemoveCard", FightEffectBase)
 
 function var_0_0.onStart(arg_1_0)
-	if arg_1_0._actEffectMO.teamType ~= FightEnum.TeamType.MySide then
+	if arg_1_0.actEffectData.teamType ~= FightEnum.TeamType.MySide then
 		arg_1_0:onDone(true)
 
 		return
 	end
 
-	local var_1_0 = FightCardModel.instance:getHandCards()
-	local var_1_1 = arg_1_0._actEffectMO.effectNum
-
-	if var_1_0[var_1_1] then
-		table.remove(var_1_0, var_1_1)
-		FightCardModel.instance:coverCard(var_1_0)
-		FightController.instance:dispatchEvent(FightEvent.RefreshHandCard)
-	end
-
+	FightController.instance:dispatchEvent(FightEvent.RefreshHandCard)
 	arg_1_0:onDone(true)
 end
 

@@ -70,7 +70,6 @@ function var_0_0.addEventListeners(arg_3_0)
 	arg_3_0:addEventCb(FightController.instance, FightEvent.SimulatePlayHandCard, arg_3_0._simulatePlayHandCard, arg_3_0)
 	arg_3_0:addEventCb(FightController.instance, FightEvent.StartReplay, arg_3_0._checkStartReplay, arg_3_0)
 	arg_3_0:addEventCb(FightController.instance, FightEvent.RefreshOneHandCard, arg_3_0._onRefreshOneHandCard, arg_3_0)
-	arg_3_0:addEventCb(FightController.instance, FightEvent.RefreshHandCardMO, arg_3_0._onRefreshHandCardMO, arg_3_0)
 	arg_3_0:addEventCb(FightController.instance, FightEvent.CardLevelChangeDone, arg_3_0._onCardLevelChangeDone, arg_3_0)
 	arg_3_0:addEventCb(FightController.instance, FightEvent.GMForceRefreshNameUIBuff, arg_3_0._onGMForceRefreshNameUIBuff, arg_3_0)
 	arg_3_0:addEventCb(FightController.instance, FightEvent.SeasonSelectChangeHeroTarget, arg_3_0._onSeasonSelectChangeHeroTarget, arg_3_0)
@@ -103,7 +102,6 @@ function var_0_0.removeEventListeners(arg_4_0)
 	arg_4_0:removeEventCb(FightController.instance, FightEvent.SimulatePlayHandCard, arg_4_0._simulatePlayHandCard, arg_4_0)
 	arg_4_0:removeEventCb(FightController.instance, FightEvent.StartReplay, arg_4_0._checkStartReplay, arg_4_0)
 	arg_4_0:removeEventCb(FightController.instance, FightEvent.RefreshOneHandCard, arg_4_0._onRefreshOneHandCard, arg_4_0)
-	arg_4_0:removeEventCb(FightController.instance, FightEvent.RefreshHandCardMO, arg_4_0._onRefreshHandCardMO, arg_4_0)
 	arg_4_0:removeEventCb(FightController.instance, FightEvent.CardLevelChangeDone, arg_4_0._onCardLevelChangeDone, arg_4_0)
 	arg_4_0:removeEventCb(FightController.instance, FightEvent.GMForceRefreshNameUIBuff, arg_4_0._onGMForceRefreshNameUIBuff, arg_4_0)
 	arg_4_0:removeEventCb(FightController.instance, FightEvent.SeasonSelectChangeHeroTarget, arg_4_0._onSeasonSelectChangeHeroTarget, arg_4_0)
@@ -120,154 +118,156 @@ function var_0_0._allocateEnergyDone(arg_5_0)
 	end
 end
 
-function var_0_0._showASFD(arg_6_0)
-	arg_6_0:setASFDActive(true)
-end
-
-function var_0_0._onCancelOperation(arg_7_0)
-	arg_7_0:setASFDActive(true)
-end
-
-function var_0_0._onSeasonSelectChangeHeroTarget(arg_8_0, arg_8_1)
-	if arg_8_0.cardInfoMO and arg_8_0.cardInfoMO.uid == arg_8_1 then
-		arg_8_0._seasonChangeHeroSelecting = true
-
-		arg_8_0._cardItemAni:Play("preview")
-	elseif arg_8_0._seasonChangeHeroSelecting then
-		arg_8_0._cardItemAni:Play("idle")
-
-		arg_8_0._seasonChangeHeroSelecting = false
+function var_0_0.changeEnergy(arg_6_0)
+	if arg_6_0._cardItem then
+		arg_6_0._cardItem:changeEnergy()
 	end
 end
 
-function var_0_0._onExitOperateState(arg_9_0)
-	if arg_9_0._seasonChangeHeroSelecting then
+function var_0_0._showASFD(arg_7_0)
+	arg_7_0:setASFDActive(true)
+end
+
+function var_0_0._onCancelOperation(arg_8_0)
+	arg_8_0:setASFDActive(true)
+end
+
+function var_0_0._onSeasonSelectChangeHeroTarget(arg_9_0, arg_9_1)
+	if arg_9_0.cardInfoMO and arg_9_0.cardInfoMO.uid == arg_9_1 then
+		arg_9_0._seasonChangeHeroSelecting = true
+
+		arg_9_0._cardItemAni:Play("preview")
+	elseif arg_9_0._seasonChangeHeroSelecting then
 		arg_9_0._cardItemAni:Play("idle")
 
 		arg_9_0._seasonChangeHeroSelecting = false
 	end
 end
 
-function var_0_0.setASFDActive(arg_10_0, arg_10_1)
-	if arg_10_0._cardItem then
-		arg_10_0._cardItem:setASFDActive(arg_10_1)
+function var_0_0._onExitOperateState(arg_10_0)
+	if arg_10_0._seasonChangeHeroSelecting then
+		arg_10_0._cardItemAni:Play("idle")
+
+		arg_10_0._seasonChangeHeroSelecting = false
 	end
 end
 
-function var_0_0.playASFDAnim(arg_11_0, arg_11_1)
+function var_0_0.setASFDActive(arg_11_0, arg_11_1)
 	if arg_11_0._cardItem then
-		arg_11_0._cardItem:playASFDAnim(arg_11_1)
+		arg_11_0._cardItem:setASFDActive(arg_11_1)
 	end
 end
 
-function var_0_0.onStart(arg_12_0)
-	local var_12_0 = FightModel.instance:getCurStage()
-
-	if var_12_0 then
-		arg_12_0:_onStageChange(var_12_0)
+function var_0_0.playASFDAnim(arg_12_0, arg_12_1)
+	if arg_12_0._cardItem then
+		arg_12_0._cardItem:playASFDAnim(arg_12_1)
 	end
-
-	arg_12_0:_checkStartReplay()
 end
 
-function var_0_0._checkStartReplay(arg_13_0)
+function var_0_0.onStart(arg_13_0)
+	local var_13_0 = FightModel.instance:getCurStage()
+
+	if var_13_0 then
+		arg_13_0:_onStageChange(var_13_0)
+	end
+
+	arg_13_0:_checkStartReplay()
+end
+
+function var_0_0._checkStartReplay(arg_14_0)
 	if FightReplayModel.instance:isReplay() then
-		arg_13_0._click:RemoveClickListener()
-		arg_13_0._drag:RemoveDragBeginListener()
-		arg_13_0._drag:RemoveDragListener()
-		arg_13_0._drag:RemoveDragEndListener()
-		arg_13_0._long:RemoveLongPressListener()
-		arg_13_0._long:RemoveHoverListener()
-		arg_13_0._rightClick:RemoveClickListener()
+		arg_14_0._click:RemoveClickListener()
+		arg_14_0._drag:RemoveDragBeginListener()
+		arg_14_0._drag:RemoveDragListener()
+		arg_14_0._drag:RemoveDragEndListener()
+		arg_14_0._long:RemoveLongPressListener()
+		arg_14_0._long:RemoveHoverListener()
+		arg_14_0._rightClick:RemoveClickListener()
 	end
 end
 
-function var_0_0.setUniversal(arg_14_0, arg_14_1)
-	gohelper.setActive(arg_14_0._universalGO, arg_14_1)
+function var_0_0.setUniversal(arg_15_0, arg_15_1)
+	gohelper.setActive(arg_15_0._universalGO, arg_15_1)
 end
 
-function var_0_0.refreshPreDelete(arg_15_0, arg_15_1)
-	if arg_15_1 then
+function var_0_0.refreshPreDelete(arg_16_0, arg_16_1)
+	if arg_16_1 then
 		-- block empty
 	end
 end
 
-function var_0_0.updateItem(arg_16_0, arg_16_1, arg_16_2)
-	arg_16_0.index = arg_16_1 or arg_16_0.index
+function var_0_0.updateItem(arg_17_0, arg_17_1, arg_17_2)
+	arg_17_0.index = arg_17_1 or arg_17_0.index
 
-	if arg_16_2 then
-		arg_16_0.cardInfoMO = arg_16_2
-		arg_16_2.custom_handCardIndex = arg_16_0.index
+	if arg_17_2 then
+		arg_17_0.cardInfoMO = arg_17_2
+		arg_17_2.clientData.custom_handCardIndex = arg_17_0.index
 
-		if not lua_skill.configDict[arg_16_2.skillId] then
-			logError("skill not exist: " .. arg_16_2.skillId)
+		if not lua_skill.configDict[arg_17_2.skillId] then
+			logError("skill not exist: " .. arg_17_2.skillId)
 
 			return
 		end
 
-		arg_16_0._cardItem:updateItem(arg_16_2.uid, arg_16_2.skillId, arg_16_2)
+		arg_17_0._cardItem:updateItem(arg_17_2.uid, arg_17_2.skillId, arg_17_2)
 
-		arg_16_0._isDraging = false
-		arg_16_0._isLongPress = false
-		arg_16_0._skillId = arg_16_2.skillId
+		arg_17_0._isDraging = false
+		arg_17_0._isLongPress = false
+		arg_17_0._skillId = arg_17_2.skillId
 
-		arg_16_0:setUniversal(false)
-		arg_16_0:_updateSpEffect()
-		arg_16_0._restrainComp:updateItem(arg_16_2)
-		arg_16_0._lockComp:updateItem(arg_16_2)
-		arg_16_0._cardItem:updateResistanceByCardInfo(arg_16_2)
+		arg_17_0:setUniversal(false)
+		arg_17_0:_updateSpEffect()
+		arg_17_0._restrainComp:updateItem(arg_17_2)
+		arg_17_0._lockComp:updateItem(arg_17_2)
+		arg_17_0._cardItem:updateResistanceByCardInfo(arg_17_2)
 	end
 
-	arg_16_0:_hideEffect()
-	arg_16_0:_refreshBlueStar()
-	arg_16_0:showKeytips()
-	arg_16_0:showCardHeat()
+	arg_17_0:_hideEffect()
+	arg_17_0:_refreshBlueStar()
+	arg_17_0:showKeytips()
+	arg_17_0:showCardHeat()
 end
 
-function var_0_0.showCardHeat(arg_17_0)
-	arg_17_0._cardItem:showCardHeat()
+function var_0_0.showCardHeat(arg_18_0)
+	arg_18_0._cardItem:showCardHeat()
 end
 
-function var_0_0.showKeytips(arg_18_0)
-	local var_18_0 = gohelper.findChild(arg_18_0.go, "foranim/card/#go_pcbtn")
-	local var_18_1 = #FightCardModel.instance:getHandCards()
+function var_0_0.showKeytips(arg_19_0)
+	local var_19_0 = gohelper.findChild(arg_19_0.go, "foranim/card/#go_pcbtn")
+	local var_19_1 = #FightDataHelper.handCardMgr.handCard
 
-	if var_18_1 == 0 then
+	if var_19_1 == 0 then
 		return
 	end
 
-	local var_18_2 = var_18_1 - arg_18_0.index + 1
+	local var_19_2 = var_19_1 - arg_19_0.index + 1
 
-	if var_18_2 >= 1 and var_18_2 <= var_18_1 and var_18_2 <= arg_18_0._keyMaxTipsNum then
-		if not arg_18_0._pcTips then
-			arg_18_0._pcTips = PCInputController.instance:showkeyTips(var_18_0, PCInputModel.Activity.battle, var_18_2 + arg_18_0._keyOffset)
+	if var_19_2 >= 1 and var_19_2 <= var_19_1 and var_19_2 <= arg_19_0._keyMaxTipsNum then
+		if not arg_19_0._pcTips then
+			arg_19_0._pcTips = PCInputController.instance:showkeyTips(var_19_0, PCInputModel.Activity.battle, var_19_2 + arg_19_0._keyOffset)
 		else
-			arg_18_0._pcTips:Refresh(PCInputModel.Activity.battle, var_18_2 + arg_18_0._keyOffset)
+			arg_19_0._pcTips:Refresh(PCInputModel.Activity.battle, var_19_2 + arg_19_0._keyOffset)
 		end
 
-		if arg_18_0._pcTips == nil then
+		if arg_19_0._pcTips == nil then
 			return
 		end
 
-		if arg_18_0._cardItem and arg_18_0._cardItem:IsUniqueSkill() then
-			recthelper.setAnchorY(arg_18_0._pcTips._go.transform, 200)
+		if arg_19_0._cardItem and arg_19_0.cardInfoMO and FightCardDataHelper.isBigSkill(arg_19_0.cardInfoMO.skillId) then
+			recthelper.setAnchorY(arg_19_0._pcTips._go.transform, 200)
 		else
-			recthelper.setAnchorY(arg_18_0._pcTips._go.transform, 150)
+			recthelper.setAnchorY(arg_19_0._pcTips._go.transform, 150)
 		end
 
-		arg_18_0._pcTips:Show(true)
-	elseif arg_18_0._pcTips then
-		arg_18_0._pcTips:Show(false)
+		arg_19_0._pcTips:Show(true)
+	elseif arg_19_0._pcTips then
+		arg_19_0._pcTips:Show(false)
 	end
 end
 
-function var_0_0.refreshCardMO(arg_19_0, arg_19_1, arg_19_2)
-	arg_19_0.index = arg_19_1
-	arg_19_0.cardInfoMO = arg_19_2
-end
-
-function var_0_0._onRefreshHandCardMO(arg_20_0, arg_20_1, arg_20_2)
-	arg_20_0:refreshCardMO(arg_20_1, arg_20_2)
+function var_0_0.refreshCardMO(arg_20_0, arg_20_1, arg_20_2)
+	arg_20_0.index = arg_20_1
+	arg_20_0.cardInfoMO = arg_20_2
 end
 
 function var_0_0.onLongPressEnd(arg_21_0)
@@ -297,7 +297,7 @@ end
 function var_0_0._refreshBlueStar(arg_24_0)
 	local var_24_0 = arg_24_0.cardInfoMO and arg_24_0.cardInfoMO.uid
 	local var_24_1 = arg_24_0.cardInfoMO and arg_24_0.cardInfoMO.skillId
-	local var_24_2 = var_24_0 and var_24_1 and FightCardModel.instance:getSkillLv(var_24_0, var_24_1)
+	local var_24_2 = var_24_0 and var_24_1 and FightCardDataHelper.getSkillLv(var_24_0, var_24_1)
 
 	arg_24_0._cardItem:showBlueStar(var_24_2)
 end
@@ -311,8 +311,8 @@ function var_0_0._onDragHandCardBegin(arg_25_0, arg_25_1, arg_25_2, arg_25_3)
 		return
 	end
 
-	local var_25_0 = FightCardModel.instance:getSkillLv(arg_25_3.uid, arg_25_3.skillId)
-	local var_25_1 = FightCardModel.instance:getSkillLv(arg_25_0.cardInfoMO.uid, arg_25_0.cardInfoMO.skillId)
+	local var_25_0 = FightCardDataHelper.getSkillLv(arg_25_3.uid, arg_25_3.skillId)
+	local var_25_1 = FightCardDataHelper.getSkillLv(arg_25_0.cardInfoMO.uid, arg_25_0.cardInfoMO.skillId)
 
 	if var_25_1 <= var_25_0 then
 		return
@@ -387,7 +387,7 @@ function var_0_0._getConditionTargetUid(arg_29_0, arg_29_1)
 	if arg_29_1 == 103 then
 		return arg_29_0.cardInfoMO.uid
 	elseif arg_29_1 == 0 then
-		return FightCardModel.instance.curSelectEntityId
+		return FightDataHelper.operationDataMgr.curSelectEntityId
 	elseif arg_29_1 == 202 then
 		for iter_29_0, iter_29_1 in ipairs(FightDataHelper.entityMgr:getEnemyNormalList()) do
 			return iter_29_1.id
@@ -402,7 +402,7 @@ function var_0_0._getConditionTargetUids(arg_30_0, arg_30_1)
 		}
 	elseif arg_30_1 == 0 then
 		return {
-			FightCardModel.instance.curSelectEntityId
+			FightDataHelper.operationDataMgr.curSelectEntityId
 		}
 	elseif arg_30_1 == 202 then
 		local var_30_0 = {}
@@ -750,7 +750,7 @@ end
 
 function var_0_0._simulateBuffList(arg_36_0, arg_36_1)
 	local var_36_0 = arg_36_1:getBuffList()
-	local var_36_1 = FightCardModel.instance:getCardOps()
+	local var_36_1 = FightDataHelper.operationDataMgr:getOpList()
 
 	for iter_36_0, iter_36_1 in ipairs(var_36_1) do
 		if iter_36_1:isPlayCard() then
@@ -954,9 +954,7 @@ function var_0_0._onClickThis(arg_44_0)
 	end
 
 	if FightDataHelper.stageMgr:getCurOperateState() == FightStageMgr.OperateStateType.Discard then
-		local var_44_0 = FightDataHelper.entityMgr:getById(arg_44_0.cardInfoMO.uid)
-
-		if var_44_0 and var_44_0:isUniqueSkill(arg_44_0.cardInfoMO.skillId) then
+		if FightDataHelper.entityMgr:getById(arg_44_0.cardInfoMO.uid) and FightCardDataHelper.isBigSkill(arg_44_0.cardInfoMO.skillId) then
 			return
 		end
 
@@ -992,32 +990,32 @@ function var_0_0._onClickThis(arg_44_0)
 		return
 	end
 
-	local var_44_1 = arg_44_0.cardInfoMO.skillId
+	local var_44_0 = arg_44_0.cardInfoMO.skillId
 
-	if FightEnum.UniversalCard[var_44_1] then
+	if FightEnum.UniversalCard[var_44_0] then
 		return
 	end
 
-	local var_44_2 = 0
+	local var_44_1 = 0
 
-	for iter_44_0, iter_44_1 in ipairs(FightCardModel.instance:getPlayCardOpList()) do
-		var_44_2 = var_44_2 + iter_44_1.costActPoint
+	for iter_44_0, iter_44_1 in ipairs(FightDataHelper.operationDataMgr:getPlayCardOpList()) do
+		var_44_1 = var_44_1 + iter_44_1.costActPoint
 	end
 
-	if var_44_2 >= FightCardModel.instance:getCardMO().actPoint then
+	if var_44_1 >= FightDataHelper.operationDataMgr.actPoint then
 		return
 	end
 
-	local var_44_3 = lua_skill.configDict[var_44_1]
-	local var_44_4 = FightDataHelper.entityMgr:getMyNormalList()
-	local var_44_5 = FightDataHelper.entityMgr:getSpList(FightEnum.EntitySide.MySide)
-	local var_44_6 = #var_44_4 + #var_44_5
+	local var_44_2 = lua_skill.configDict[var_44_0]
+	local var_44_3 = FightDataHelper.entityMgr:getMyNormalList()
+	local var_44_4 = FightDataHelper.entityMgr:getSpList(FightEnum.EntitySide.MySide)
+	local var_44_5 = #var_44_3 + #var_44_4
 
-	if var_44_3 and FightEnum.ShowLogicTargetView[var_44_3.logicTarget] and var_44_3.targetLimit == FightEnum.TargetLimit.MySide then
-		if var_44_6 > 1 then
+	if var_44_2 and FightEnum.ShowLogicTargetView[var_44_2.logicTarget] and var_44_2.targetLimit == FightEnum.TargetLimit.MySide then
+		if var_44_5 > 1 then
 			ViewMgr.instance:openView(ViewName.FightSkillTargetView, {
 				fromId = arg_44_0.cardInfoMO.uid,
-				skillId = var_44_1,
+				skillId = var_44_0,
 				callback = arg_44_0._toPlayCard,
 				callbackObj = arg_44_0
 			})
@@ -1025,8 +1023,8 @@ function var_0_0._onClickThis(arg_44_0)
 			return
 		end
 
-		if var_44_6 == 1 then
-			arg_44_0:_toPlayCard(var_44_4[1].id)
+		if var_44_5 == 1 then
+			arg_44_0:_toPlayCard(var_44_3[1].id)
 
 			return
 		end
@@ -1312,7 +1310,7 @@ function var_0_0.playDistribute(arg_65_0)
 
 	local var_65_0 = arg_65_0:getUserDataTb_()
 
-	var_65_0.cards = tabletool.copy(FightCardModel.instance:getHandCards())
+	var_65_0.cards = tabletool.copy(FightDataHelper.handCardMgr.handCard)
 	var_65_0.handCardItemList = arg_65_0._subViewInst._handCardItemList
 	var_65_0.preCardCount = #var_65_0.cards - 1
 	var_65_0.newCardCount = 1
@@ -1405,7 +1403,7 @@ function var_0_0.moveSelfPos(arg_70_0, arg_70_1, arg_70_2)
 	arg_70_0._moveCardFlow:start()
 end
 
-function var_0_0.playCardLevelChange(arg_71_0, arg_71_1, arg_71_2)
+function var_0_0.playCardLevelChange(arg_71_0, arg_71_1)
 	if not arg_71_0.cardInfoMO then
 		return
 	end
@@ -1415,10 +1413,7 @@ function var_0_0.playCardLevelChange(arg_71_0, arg_71_1, arg_71_2)
 	end
 
 	gohelper.setActive(arg_71_0._lockGO, false)
-
-	arg_71_0.cardInfoMO = arg_71_1
-
-	arg_71_0._cardItem:playCardLevelChange(arg_71_1, arg_71_2)
+	arg_71_0._cardItem:playCardLevelChange(arg_71_0.cardInfoMO, arg_71_1)
 end
 
 function var_0_0._onCardLevelChangeDone(arg_72_0, arg_72_1)
@@ -1439,7 +1434,7 @@ function var_0_0.playCardAConvertCardB(arg_73_0)
 	if arg_73_0._convertEffect then
 		local var_73_0 = arg_73_0._convertEffect.transform
 		local var_73_1 = var_73_0.childCount
-		local var_73_2 = FightCardModel.instance:isUniqueSkill(arg_73_0.cardInfoMO.uid, arg_73_0.cardInfoMO.skillId)
+		local var_73_2 = FightCardDataHelper.isBigSkill(arg_73_0.cardInfoMO.skillId)
 		local var_73_3
 
 		if var_73_2 then
@@ -1455,7 +1450,7 @@ function var_0_0.playCardAConvertCardB(arg_73_0)
 				end
 			end
 		else
-			local var_73_5 = FightCardModel.instance:getSkillLv(arg_73_0.cardInfoMO.uid, arg_73_0.cardInfoMO.skillId)
+			local var_73_5 = FightCardDataHelper.getSkillLv(arg_73_0.cardInfoMO.uid, arg_73_0.cardInfoMO.skillId)
 
 			for iter_73_1 = 0, var_73_1 - 1 do
 				local var_73_6 = var_73_0:GetChild(iter_73_1).gameObject

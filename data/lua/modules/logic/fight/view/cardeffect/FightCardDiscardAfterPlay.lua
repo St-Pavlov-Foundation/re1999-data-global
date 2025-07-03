@@ -14,14 +14,12 @@ function var_0_0.onStart(arg_1_0, arg_1_1)
 			return
 		end
 	elseif arg_1_1.needDiscard then
-		local var_1_1 = FightCardModel.instance:getHandCards()
+		local var_1_1 = FightDataHelper.handCardMgr.handCard
 		local var_1_2 = false
 
 		for iter_1_0, iter_1_1 in ipairs(var_1_1) do
-			local var_1_3 = FightDataHelper.entityMgr:getById(iter_1_1.uid)
-
-			if var_1_3 then
-				if not var_1_3:isUniqueSkill(iter_1_1.skillId) then
+			if FightDataHelper.entityMgr:getById(iter_1_1.uid) then
+				if not FightCardDataHelper.isBigSkill(iter_1_1.skillId) then
 					var_1_2 = true
 
 					break

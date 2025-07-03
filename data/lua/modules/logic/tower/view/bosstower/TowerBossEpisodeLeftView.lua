@@ -8,6 +8,7 @@ function var_0_0.onInitView(arg_1_0)
 	arg_1_0.bossIcon = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/Left/Pass/Head/Mask/image_bossIcon")
 	arg_1_0.btnTask = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/Left/Pass")
 	arg_1_0.txtPassLev = gohelper.findChildTextMesh(arg_1_0.viewGO, "root/Left/Pass/#txt_PassLevel")
+	arg_1_0.txtTaskNum = gohelper.findChildTextMesh(arg_1_0.viewGO, "root/Left/Pass/#txt_taskNum")
 	arg_1_0.taskList = {}
 
 	for iter_1_0 = 1, 4 do
@@ -19,6 +20,8 @@ function var_0_0.onInitView(arg_1_0)
 	end
 
 	arg_1_0._goTaskReddot = gohelper.findChild(arg_1_0.viewGO, "root/Left/Pass/#go_RedPoint")
+	arg_1_0._goTaskTime = gohelper.findChild(arg_1_0.viewGO, "root/Left/Pass/time")
+	arg_1_0._txtTaskTime = gohelper.findChildTextMesh(arg_1_0.viewGO, "root/Left/Pass/time/#txt_taskTime")
 
 	if arg_1_0._editableInitView then
 		arg_1_0:_editableInitView()
@@ -62,9 +65,10 @@ function var_0_0._onBtnHandBookClick(arg_7_0)
 	local var_7_0 = arg_7_0.towerConfig.bossId
 
 	if TowerAssistBossModel.instance:getById(var_7_0) == nil then
-		TowerController.instance:openAssistBossView()
+		local var_7_1 = TowerAssistBossModel.instance:getTempUnlockTrialBossMO(var_7_0)
 
-		return
+		var_7_1:setTrialInfo(0, 0)
+		var_7_1:refreshTalent()
 	end
 
 	ViewMgr.instance:openView(ViewName.TowerAssistBossDetailView, {
@@ -113,6 +117,7 @@ function var_0_0.refreshView(arg_14_0)
 	arg_14_0:refreshPassLayer()
 	arg_14_0:refreshTask()
 	arg_14_0:refreshTalent()
+	arg_14_0:refreshTaskTime()
 end
 
 function var_0_0.refreshPassLayer(arg_15_0)
@@ -126,55 +131,91 @@ end
 
 function var_0_0.refreshTask(arg_16_0)
 	local var_16_0 = arg_16_0.towerInfo:getTaskGroupId()
+	local var_16_1 = TowerTaskModel.instance:getBossTaskList(arg_16_0.towerId)
+	local var_16_2 = var_16_1 and #var_16_1 > 0 and var_16_0 ~= 0
 
-	gohelper.setActive(arg_16_0.btnTask, var_16_0 ~= 0)
+	gohelper.setActive(arg_16_0.btnTask, var_16_2)
 
-	if var_16_0 == 0 then
+	if not var_16_2 then
 		return
 	end
 
-	local var_16_1 = TowerConfig.instance:getTaskListByGroupId(var_16_0)
-	local var_16_2 = 0
+	local var_16_3 = TowerConfig.instance:getTaskListByGroupId(var_16_0)
+	local var_16_4 = 0
 
-	if var_16_1 then
-		for iter_16_0, iter_16_1 in pairs(var_16_1) do
+	if var_16_3 then
+		for iter_16_0, iter_16_1 in pairs(var_16_3) do
 			if TowerTaskModel.instance:isTaskFinishedById(iter_16_1) then
-				var_16_2 = var_16_2 + 1
+				var_16_4 = var_16_4 + 1
 			end
 		end
 	end
 
-	local var_16_3 = var_16_1 and #var_16_1 or 0
+	local var_16_5 = var_16_3 and #var_16_3 or 0
 
 	for iter_16_2 = 1, #arg_16_0.taskList do
-		local var_16_4 = arg_16_0.taskList[iter_16_2]
+		local var_16_6 = arg_16_0.taskList[iter_16_2]
 
-		if iter_16_2 <= var_16_3 then
-			gohelper.setActive(var_16_4.go, true)
-			gohelper.setActive(var_16_4.goLight, iter_16_2 <= var_16_2)
+		if iter_16_2 <= var_16_5 then
+			gohelper.setActive(var_16_6.go, true)
+			gohelper.setActive(var_16_6.goLight, iter_16_2 <= var_16_4)
 		else
-			gohelper.setActive(var_16_4.go, false)
+			gohelper.setActive(var_16_6.go, false)
 		end
+	end
+
+	arg_16_0.txtTaskNum.text = string.format("%s/%s", var_16_4, var_16_5)
+end
+
+function var_0_0.refreshTaskTime(arg_17_0)
+	arg_17_0.towerOpenMo = TowerModel.instance:getTowerOpenInfo(arg_17_0.towerType, arg_17_0.towerId)
+
+	local var_17_0 = TowerConfig.instance:getBossTimeTowerConfig(arg_17_0.towerId, arg_17_0.towerOpenMo.round)
+
+	if var_17_0 and var_17_0.taskGroupId > 0 and arg_17_0.towerOpenMo.taskEndTime > 0 then
+		arg_17_0:_refreshTaskTime()
+		TaskDispatcher.cancelTask(arg_17_0._refreshTaskTime, arg_17_0)
+		TaskDispatcher.runRepeat(arg_17_0._refreshTaskTime, arg_17_0, 1)
+	else
+		arg_17_0:clearTime()
 	end
 end
 
-function var_0_0.refreshTalent(arg_17_0)
-	if not arg_17_0.towerConfig then
+function var_0_0._refreshTaskTime(arg_18_0)
+	gohelper.setActive(arg_18_0._goTaskTime, true)
+
+	local var_18_0, var_18_1 = arg_18_0.towerOpenMo:getTaskRemainTime(true)
+
+	if var_18_0 then
+		arg_18_0._txtTaskTime.text = var_18_0 .. var_18_1
+	else
+		arg_18_0:clearTime()
+	end
+end
+
+function var_0_0.clearTime(arg_19_0)
+	gohelper.setActive(arg_19_0._goTaskTime, false)
+	TaskDispatcher.cancelTask(arg_19_0._refreshTaskTime, arg_19_0)
+end
+
+function var_0_0.refreshTalent(arg_20_0)
+	if not arg_20_0.towerConfig then
 		return
 	end
 
-	local var_17_0 = TowerAssistBossModel.instance:getById(arg_17_0.towerConfig.bossId)
-	local var_17_1 = var_17_0 and var_17_0:hasTalentCanActive() or false
+	local var_20_0 = TowerAssistBossModel.instance:getById(arg_20_0.towerConfig.bossId)
+	local var_20_1 = var_20_0 and var_20_0:hasTalentCanActive() or false
 
-	gohelper.setActive(arg_17_0.goUp, var_17_1)
+	gohelper.setActive(arg_20_0.goUp, var_20_1)
 end
 
-function var_0_0.onClose(arg_18_0)
+function var_0_0.onClose(arg_21_0)
 	return
 end
 
-function var_0_0.onDestroyView(arg_19_0)
-	arg_19_0.bossIcon:UnLoadImage()
+function var_0_0.onDestroyView(arg_22_0)
+	arg_22_0.bossIcon:UnLoadImage()
+	TaskDispatcher.cancelTask(arg_22_0._refreshTaskTime, arg_22_0)
 end
 
 return var_0_0

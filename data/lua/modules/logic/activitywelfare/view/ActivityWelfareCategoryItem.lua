@@ -81,7 +81,7 @@ end
 function var_0_0.refreshSelect(arg_7_0)
 	arg_7_0._selected = arg_7_0._mo.id == ActivityModel.instance:getTargetActivityCategoryId(ActivityEnum.ActivityType.Welfare)
 
-	local var_7_0 = arg_7_0._mo.id == ActivityEnum.Activity.NewWelfare
+	local var_7_0 = false
 
 	gohelper.setActive(arg_7_0._gonewwelfare, var_7_0)
 	gohelper.setActive(arg_7_0._goselectwelfare, var_7_0 and arg_7_0._selected)

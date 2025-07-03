@@ -58,12 +58,11 @@ function var_0_0._detectPlayTimeline(arg_2_0)
 			local var_2_3 = {
 				actId = 0,
 				stepUid = 0,
-				actEffectMOs = {
+				actEffect = {
 					{
 						targetId = var_2_1
 					}
 				},
-				actEffect = {},
 				fromId = var_2_1,
 				toId = var_2_1,
 				actType = FightEnum.ActType.SKILL

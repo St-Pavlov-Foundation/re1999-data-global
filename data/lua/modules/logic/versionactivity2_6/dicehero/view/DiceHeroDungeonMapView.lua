@@ -3,25 +3,25 @@
 local var_0_0 = class("DiceHeroDungeonMapView", BaseView)
 
 function var_0_0.onInitView(arg_1_0)
-	arg_1_0._goroot = gohelper.findChild(arg_1_0.viewGO, "#go_act/#go_dicebtn")
-	arg_1_0._btnEnter = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_act/#go_dicebtn/#btn_enter", AudioEnum2_6.DiceHero.play_ui_wenming_alaifugameplay)
-	arg_1_0._gored = gohelper.findChild(arg_1_0.viewGO, "#go_act/#go_dicebtn/#btn_enter/#go_reddot")
-	arg_1_0._anim = gohelper.findChildAnim(arg_1_0.viewGO, "#go_act/#go_dicebtn/#btn_enter")
+	arg_1_0._goroot = gohelper.findChild(arg_1_0.viewGO, "#go_dicebtn")
+	arg_1_0._btnEnter = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_dicebtn/#btn_enter", AudioEnum2_6.DiceHero.play_ui_wenming_alaifugameplay)
+	arg_1_0._gored = gohelper.findChild(arg_1_0.viewGO, "#go_dicebtn/#btn_enter/#go_reddot")
+	arg_1_0._anim = gohelper.findChildAnim(arg_1_0.viewGO, "#go_dicebtn/#btn_enter")
 end
 
 function var_0_0.addEvents(arg_2_0)
 	arg_2_0._btnEnter:AddClickListener(arg_2_0.onClickEnter, arg_2_0)
-	arg_2_0:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_2_0.onActStateChange, arg_2_0)
 	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_2_0.onOpenView, arg_2_0)
 	arg_2_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_2_0.onCloseViewFinish, arg_2_0)
+	arg_2_0:addEventCb(DiceHeroController.instance, DiceHeroEvent.InfoUpdate, arg_2_0.onActStateChange, arg_2_0)
 	arg_2_0:addEventCb(DungeonController.instance, DungeonEvent.OnSetEpisodeListVisible, arg_2_0.setEpisodeListVisible, arg_2_0)
 end
 
 function var_0_0.removeEvents(arg_3_0)
 	arg_3_0._btnEnter:RemoveClickListener()
-	arg_3_0:removeEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_3_0.onActStateChange, arg_3_0)
 	arg_3_0:removeEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_3_0.onOpenView, arg_3_0)
 	arg_3_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_3_0.onCloseViewFinish, arg_3_0)
+	arg_3_0:removeEventCb(DiceHeroController.instance, DiceHeroEvent.InfoUpdate, arg_3_0.onActStateChange, arg_3_0)
 	arg_3_0:removeEventCb(DungeonController.instance, DungeonEvent.OnSetEpisodeListVisible, arg_3_0.setEpisodeListVisible, arg_3_0)
 end
 
@@ -67,7 +67,7 @@ function var_0_0.setEpisodeListVisible(arg_9_0, arg_9_1)
 end
 
 function var_0_0.isShowRoot(arg_10_0)
-	if ActivityHelper.isOpen(VersionActivity2_6Enum.ActivityId.DiceHero) and OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.DiceHero) and arg_10_0.chapterId == DungeonEnum.ChapterId.Main1_9 then
+	if OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.DiceHero) and arg_10_0.chapterId == DungeonEnum.ChapterId.Main1_9 then
 		return true
 	end
 end

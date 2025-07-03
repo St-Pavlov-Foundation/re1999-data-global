@@ -953,6 +953,16 @@ function var_0_0.enterTowerView(arg_58_0, arg_58_1)
 		}
 	end
 
+	if var_58_0.type == DungeonEnum.EpisodeType.TowerBossTeach then
+		var_58_1 = {
+			jumpId = TowerEnum.JumpId.TowerBossTeach
+		}
+
+		local var_58_4 = TowerModel.instance:getRecordFightParam()
+
+		var_58_1.towerId = var_58_4 and var_58_4.towerId
+	end
+
 	if var_58_1 then
 		TowerModel.instance:clearFightFinishParam()
 		DungeonModel.instance:changeCategory(DungeonEnum.ChapterType.Normal)

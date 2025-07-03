@@ -19,6 +19,7 @@ function var_0_0.addConstEvents(arg_3_0)
 	FightController.instance:registerCallback(FightEvent.OnBeginWave, arg_3_0._refreshCurBossHP, arg_3_0)
 	FightController.instance:registerCallback(FightEvent.OnHpChange, arg_3_0._onHpChange, arg_3_0)
 	FightController.instance:registerCallback(FightEvent.OnMonsterChange, arg_3_0._onMonsterChange, arg_3_0)
+	LoginController.instance:registerCallback(LoginEvent.OnGetInfoFinish, arg_3_0._onGetInfoFinish, arg_3_0)
 	RedDotController.instance:registerCallback(RedDotEvent.RefreshClientCharacterDot, arg_3_0._refreshClientCharacterDot, arg_3_0)
 	DungeonController.instance:registerCallback(DungeonEvent.OnEndDungeonPush, arg_3_0._onEndDungeonPush, arg_3_0)
 	ActivityController.instance:registerCallback(ActivityEvent.RefreshActivityState, arg_3_0._refreshActivityState, arg_3_0)
@@ -252,88 +253,103 @@ function var_0_0._onMonsterChange(arg_19_0, arg_19_1, arg_19_2)
 	arg_19_0._model:subBossBlood()
 end
 
-function var_0_0.checkBattleChapterType(arg_20_0, arg_20_1, arg_20_2)
-	if arg_20_1 and GameSceneMgr.instance:getCurSceneType() ~= SceneType.Fight then
-		return false
-	end
-
-	local var_20_0 = DungeonModel.instance.curSendChapterId
-
-	if not var_20_0 then
-		return false
-	end
-
-	local var_20_1 = DungeonConfig.instance:getChapterCO(var_20_0)
-
-	if not var_20_1 then
-		return false
-	end
-
-	return var_20_1.type == arg_20_2
+function var_0_0._onGetInfoFinish(arg_20_0)
+	arg_20_0:_recordBossRushCurrencyNum()
 end
 
-function var_0_0.isInBossRushInfiniteFight(arg_21_0, arg_21_1)
-	return arg_21_0:checkBattleChapterType(arg_21_1, DungeonEnum.ChapterType.BossRushInfinite)
+function var_0_0._recordBossRushCurrencyNum(arg_21_0)
+	local var_21_0 = PlayerEnum.SimpleProperty.V2a7_BossRushCurrencyNum
+
+	if not PlayerModel.instance:getSimpleProperty(var_21_0) then
+		local var_21_1 = V1a6_BossRush_StoreModel.instance:getCurrencyCount()
+
+		PlayerModel.instance:forceSetSimpleProperty(var_21_0, tostring(var_21_1))
+		PlayerRpc.instance:sendSetSimplePropertyRequest(var_21_0, tostring(var_21_1))
+	end
 end
 
-function var_0_0.isInBossRushNormalFight(arg_22_0, arg_22_1)
-	return arg_22_0:checkBattleChapterType(arg_22_1, DungeonEnum.ChapterType.BossRushNormal)
-end
-
-function var_0_0.isInBossRushFight(arg_23_0, arg_23_1)
-	return arg_23_0:isInBossRushNormalFight(arg_23_1) or arg_23_0:isInBossRushInfiniteFight(arg_23_1)
-end
-
-function var_0_0.isInBossRushDungeon(arg_24_0)
-	local var_24_0 = DungeonModel.instance.curSendEpisodeId
-
-	if not var_24_0 then
+function var_0_0.checkBattleChapterType(arg_22_0, arg_22_1, arg_22_2)
+	if arg_22_1 and GameSceneMgr.instance:getCurSceneType() ~= SceneType.Fight then
 		return false
 	end
 
-	local var_24_1 = DungeonConfig.instance:getEpisodeCO(var_24_0)
+	local var_22_0 = DungeonModel.instance.curSendChapterId
 
-	if not var_24_1 then
+	if not var_22_0 then
 		return false
 	end
 
-	local var_24_2 = var_24_1.chapterId
-	local var_24_3 = DungeonConfig.instance:getChapterCO(var_24_2)
+	local var_22_1 = DungeonConfig.instance:getChapterCO(var_22_0)
 
-	if not var_24_3 then
+	if not var_22_1 then
 		return false
 	end
 
-	local var_24_4 = var_24_3.type
-	local var_24_5 = DungeonEnum.ChapterType
+	return var_22_1.type == arg_22_2
+end
 
-	if var_24_4 == var_24_5.BossRushInfinite or var_24_4 == var_24_5.BossRushNormal then
+function var_0_0.isInBossRushInfiniteFight(arg_23_0, arg_23_1)
+	return arg_23_0:checkBattleChapterType(arg_23_1, DungeonEnum.ChapterType.BossRushInfinite)
+end
+
+function var_0_0.isInBossRushNormalFight(arg_24_0, arg_24_1)
+	return arg_24_0:checkBattleChapterType(arg_24_1, DungeonEnum.ChapterType.BossRushNormal)
+end
+
+function var_0_0.isInBossRushFight(arg_25_0, arg_25_1)
+	return arg_25_0:isInBossRushNormalFight(arg_25_1) or arg_25_0:isInBossRushInfiniteFight(arg_25_1)
+end
+
+function var_0_0.isInBossRushDungeon(arg_26_0)
+	local var_26_0 = DungeonModel.instance.curSendEpisodeId
+
+	if not var_26_0 then
+		return false
+	end
+
+	local var_26_1 = DungeonConfig.instance:getEpisodeCO(var_26_0)
+
+	if not var_26_1 then
+		return false
+	end
+
+	local var_26_2 = var_26_1.chapterId
+	local var_26_3 = DungeonConfig.instance:getChapterCO(var_26_2)
+
+	if not var_26_3 then
+		return false
+	end
+
+	local var_26_4 = var_26_3.type
+	local var_26_5 = DungeonEnum.ChapterType
+
+	if var_26_4 == var_26_5.BossRushInfinite or var_26_4 == var_26_5.BossRushNormal then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.openBossRushStoreView(arg_25_0, arg_25_1)
+function var_0_0.openBossRushStoreView(arg_27_0, arg_27_1)
 	StoreRpc.instance:sendGetStoreInfosRequest(StoreEnum.BossRushStore, function()
-		local var_26_0 = {
-			actId = arg_25_1
+		local var_28_0 = {
+			actId = arg_27_1
 		}
 
-		ViewMgr.instance:openView(ViewName.V1a6_BossRush_StoreView, var_26_0)
-	end, arg_25_0)
+		ViewMgr.instance:openView(ViewName.V1a6_BossRush_StoreView, var_28_0)
+	end, arg_27_0)
 end
 
-function var_0_0.openResultPanel(arg_27_0, arg_27_1)
-	ViewMgr.instance:openView(ViewName.V1a6_BossRush_ResultPanel, arg_27_1)
+function var_0_0.openResultPanel(arg_29_0, arg_29_1)
+	ViewMgr.instance:openView(ViewName.V1a6_BossRush_ResultPanel, arg_29_1)
 end
 
-function var_0_0.openBossRushOfferRoleView(arg_28_0)
-	local var_28_0 = {
+function var_0_0.openBossRushOfferRoleView(arg_30_0)
+	local var_30_0 = {
 		actId = BossRushConfig.instance:getActivityId()
 	}
 
-	ViewMgr.instance:openView(ViewName.V2a1_BossRush_OfferRoleView, var_28_0)
+	ViewMgr.instance:openView(ViewName.V2a1_BossRush_OfferRoleView, var_30_0)
 end
 
 var_0_0.instance = var_0_0.New()

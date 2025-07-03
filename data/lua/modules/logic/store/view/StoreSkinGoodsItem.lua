@@ -160,143 +160,11 @@ function var_0_0.onUpdateMO(arg_10_0, arg_10_1)
 	local var_10_3 = not var_10_0 and arg_10_0:_isUniqueSkin()
 	local var_10_4 = var_0_5
 	local var_10_5 = arg_10_0._mo.config.product
-	local var_10_6 = arg_10_0._mo.config.isAdvancedSkin or arg_10_0._mo.config.skinLevel == 1
-	local var_10_7 = arg_10_0._mo.config.skinLevel == 2
+	local var_10_6 = string.splitToNumber(var_10_5, "#")[2]
 
-	gohelper.setActive(arg_10_0._goNormalSkin, arg_10_0._mo.config.skinLevel == 0)
-	gohelper.setActive(arg_10_0._goAdvanceSkin, arg_10_0._mo.config.isAdvancedSkin or arg_10_0._mo.config.skinLevel == 1)
-	gohelper.setActive(arg_10_0._goUniqueSkin, arg_10_0._mo.config.skinLevel == 2)
+	arg_10_0.skinCo = SkinConfig.instance:getSkinCo(var_10_6)
 
-	local var_10_8 = var_0_5
-
-	if var_10_7 then
-		arg_10_0:clearSpine()
-		arg_10_0:addEventCb(StoreController.instance, StoreEvent.DragSkinListBegin, arg_10_0._onDraggingBegin, arg_10_0)
-		arg_10_0:addEventCb(StoreController.instance, StoreEvent.DragSkinListEnd, arg_10_0._onDraggingEnd, arg_10_0)
-		arg_10_0:addEventCb(StoreController.instance, StoreEvent.DraggingSkinList, arg_10_0._onDragging, arg_10_0)
-		gohelper.setAsLastSibling(arg_10_0.viewGO.transform.parent.gameObject)
-
-		local var_10_9 = arg_10_0._mo.config.bigImg
-		local var_10_10 = arg_10_0._mo.config.spineParams
-
-		if not string.nilorempty(var_10_10) then
-			local var_10_11 = string.split(var_10_10, "#")
-			local var_10_12 = #var_10_11
-			local var_10_13 = var_10_11[1]
-			local var_10_14 = var_10_12 > 1 and var_10_11[2]
-			local var_10_15 = var_10_12 > 2 and string.splitToNumber(var_10_11[3], ",")
-			local var_10_16 = var_10_12 > 3 and tonumber(var_10_11[4])
-			local var_10_17 = var_10_12 > 4 and var_10_11[5]
-
-			var_10_8 = var_10_12 > 6 and var_10_11[7] or var_10_8
-
-			if arg_10_0._skinSpine then
-				arg_10_0._skinSpine:setResPath(var_10_13, arg_10_0._onSkinSpineLoaded, arg_10_0, true)
-			else
-				arg_10_0._skinSpineGO = arg_10_0._skinSpineGO or gohelper.create2d(arg_10_0._goUniqueSkinsImage, "uniqueSkinSpine")
-
-				local var_10_18 = arg_10_0._skinSpineGO.transform
-
-				recthelper.setWidth(var_10_18, var_0_4[1])
-				transformhelper.setLocalPos(var_10_18, var_10_15[1], var_10_15[2], 0)
-				transformhelper.setLocalScale(var_10_18, var_10_16, var_10_16, var_10_16)
-
-				arg_10_0._skinSpine = GuiSpine.Create(arg_10_0._skinSpineGO, false)
-
-				arg_10_0._skinSpine:setResPath(var_10_13, arg_10_0._onSkinSpineLoaded, arg_10_0, true)
-
-				if not string.nilorempty(var_10_14) then
-					arg_10_0._skinSpineGO2 = arg_10_0._skinSpineGO2 or gohelper.create2d(arg_10_0._goUniqueImageicon2, "uniqueSkinSpine2")
-
-					local var_10_19 = arg_10_0._skinSpineGO2.transform
-
-					recthelper.setWidth(var_10_19, var_0_4[1])
-					transformhelper.setLocalPos(var_10_19, var_10_15[1], var_10_15[2], 0)
-					transformhelper.setLocalScale(var_10_19, var_10_16, var_10_16, var_10_16)
-
-					arg_10_0._skinSpine2 = GuiSpine.Create(arg_10_0._skinSpineGO2, false)
-
-					arg_10_0._skinSpine2:setResPath(var_10_14, arg_10_0._onSkinSpine2Loaded, arg_10_0, true)
-				end
-
-				transformhelper.setLocalPos(arg_10_0._uniqueImageicon.transform, 0, 0, 0)
-
-				arg_10_0._uniqueImageicon.transform.sizeDelta = Vector2.New(var_0_3[1], var_0_3[2])
-			end
-
-			gohelper.setActive(arg_10_0._skinSpineGO, true)
-			gohelper.setActive(arg_10_0._goUniqueSkinBubble, false)
-			gohelper.setActive(arg_10_0._govx_iconbg, false)
-			gohelper.setActive(arg_10_0._govx_bg, false)
-
-			if not string.nilorempty(var_10_17) then
-				arg_10_0._uniqueImagebg:LoadImage(var_10_17)
-
-				arg_10_0._uniqueImageicon.enabled = true
-
-				arg_10_0._uniqueSingleImageicon:LoadImage(var_10_17)
-			else
-				gohelper.setActive(arg_10_0._uniqueImagebg.gameObject, false)
-
-				arg_10_0._uniqueImageicon.enabled = false
-			end
-		elseif string.find(var_10_9, "prefab") then
-			local var_10_20 = string.split(var_10_9, "#")
-			local var_10_21 = #var_10_20
-			local var_10_22 = var_10_20[1]
-			local var_10_23 = var_10_20[2]
-
-			var_10_8 = var_10_21 > 3 and var_10_20[4] or var_10_8
-
-			if arg_10_0._skinSpine then
-				arg_10_0._skinSpine:setResPath(var_10_22, arg_10_0._onSpineLoaded, arg_10_0, true)
-			else
-				arg_10_0._skinSpineGO = arg_10_0._skinSpineGO or gohelper.create2d(arg_10_0._goUniqueSkinsImage, "uniqueSkinSpine")
-
-				transformhelper.setLocalPos(arg_10_0._skinSpineGO.transform, var_0_1[1], var_0_1[2], var_0_1[3])
-
-				arg_10_0._skinSpine = GuiSpine.Create(arg_10_0._skinSpineGO, false)
-
-				arg_10_0._skinSpine:setResPath(var_10_22, arg_10_0._onSpineLoaded, arg_10_0, true)
-			end
-
-			gohelper.setActive(arg_10_0._skinSpineGO, true)
-
-			if not string.nilorempty(var_10_23) then
-				arg_10_0._uniqueImagebg:LoadImage(var_10_23)
-			else
-				arg_10_0._uniqueImagebg:LoadImage(var_0_2)
-			end
-
-			arg_10_0._uniqueImageicon.enabled = true
-		else
-			arg_10_0._uniqueImageicon.enabled = true
-
-			if not string.nilorempty(var_10_9) then
-				arg_10_0._uniqueSingleImageicon:LoadImage(arg_10_0._mo.config.bigImg)
-			else
-				arg_10_0._uniqueSingleImageicon:LoadImage(ResUrl.getHeadSkinIconMiddle(303202))
-			end
-		end
-	else
-		arg_10_0:clearSpine()
-
-		local var_10_24 = var_10_6 and arg_10_0._advanceImageicon or arg_10_0._simageicon
-
-		if string.nilorempty(arg_10_0._mo.config.bigImg) == false then
-			var_10_24:LoadImage(arg_10_0._mo.config.bigImg)
-		else
-			var_10_24:LoadImage(ResUrl.getHeadSkinIconMiddle(303202))
-		end
-	end
-
-	arg_10_0._simagesign:LoadImage(var_10_8, arg_10_0._loadedSignImage, arg_10_0)
-
-	local var_10_25 = string.splitToNumber(var_10_5, "#")[2]
-
-	arg_10_0.skinCo = SkinConfig.instance:getSkinCo(var_10_25)
-
-	local var_10_26 = HeroConfig.instance:getHeroCO(arg_10_0.skinCo.characterId)
+	local var_10_7 = HeroConfig.instance:getHeroCO(arg_10_0.skinCo.characterId)
 
 	arg_10_0:clearSpine()
 	gohelper.setActive(arg_10_0._goNormalSkin, var_10_1)
@@ -307,36 +175,36 @@ function var_0_0.onUpdateMO(arg_10_0, arg_10_1)
 	if var_10_3 then
 		arg_10_0:_onUpdateMO_uniqueSkin()
 	else
-		local var_10_27
+		local var_10_8
 
 		if var_10_0 then
-			var_10_27 = arg_10_0._linkage_simageicon
+			var_10_8 = arg_10_0._linkage_simageicon
 
 			gohelper.setActive(arg_10_0._goLinkageBgA, arg_10_0:_isAdvanceSkin())
 			gohelper.setActive(arg_10_0._goLinkageBgG, arg_10_0:_isNormalSkin())
 			gohelper.setActive(arg_10_0._goLinkageLetterA, arg_10_0:_isAdvanceSkin())
 			gohelper.setActive(arg_10_0._goLinkageLetterG, arg_10_0:_isNormalSkin())
 		elseif var_10_2 then
-			var_10_27 = arg_10_0._advanceImageicon
+			var_10_8 = arg_10_0._advanceImageicon
 		else
-			var_10_27 = arg_10_0._simageicon
+			var_10_8 = arg_10_0._simageicon
 		end
 
 		if string.nilorempty(arg_10_0._mo.config.bigImg) == false then
-			var_10_27:LoadImage(arg_10_0._mo.config.bigImg)
+			var_10_8:LoadImage(arg_10_0._mo.config.bigImg)
 		else
-			var_10_27:LoadImage(ResUrl.getHeadSkinIconMiddle(303202))
+			var_10_8:LoadImage(ResUrl.getHeadSkinIconMiddle(303202))
 		end
 	end
 
-	arg_10_0._simagesign:LoadImage(var_10_8, arg_10_0._loadedSignImage, arg_10_0)
+	arg_10_0._simagesign:LoadImage(var_10_4, arg_10_0._loadedSignImage, arg_10_0)
 
 	arg_10_0._txtskinname.text = arg_10_0.skinCo.characterSkin
-	arg_10_0._txtname.text = var_10_26.name
+	arg_10_0._txtname.text = var_10_7.name
 
-	local var_10_28 = arg_10_1:alreadyHas() and not StoreModel.instance:isSkinGoodsCanRepeatBuy(arg_10_1)
+	local var_10_9 = arg_10_1:alreadyHas() and not StoreModel.instance:isSkinGoodsCanRepeatBuy(arg_10_1)
 
-	if var_10_28 then
+	if var_10_9 then
 		gohelper.setActive(arg_10_0._goowned, true)
 		gohelper.setActive(arg_10_0._goprice, false)
 		gohelper.setActive(arg_10_0._godeduction, false)
@@ -344,52 +212,52 @@ function var_0_0.onUpdateMO(arg_10_0, arg_10_1)
 		gohelper.setActive(arg_10_0._goowned, false)
 		gohelper.setActive(arg_10_0._goprice, true)
 
-		local var_10_29 = 0
+		local var_10_10 = 0
 
 		if not string.nilorempty(arg_10_0._mo.config.deductionItem) then
-			local var_10_30 = GameUtil.splitString2(arg_10_0._mo.config.deductionItem, true)
+			local var_10_11 = GameUtil.splitString2(arg_10_0._mo.config.deductionItem, true)
 
-			var_10_29 = ItemModel.instance:getItemCount(var_10_30[1][2])
-			arg_10_0._txtdeduction.text = -var_10_30[2][1]
+			var_10_10 = ItemModel.instance:getItemCount(var_10_11[1][2])
+			arg_10_0._txtdeduction.text = -var_10_11[2][1]
 		end
 
-		gohelper.setActive(arg_10_0._godeduction, var_10_29 > 0)
+		gohelper.setActive(arg_10_0._godeduction, var_10_10 > 0)
 	end
 
-	local var_10_31 = string.splitToNumber(arg_10_0._mo.config.cost, "#")
+	local var_10_12 = string.splitToNumber(arg_10_0._mo.config.cost, "#")
 
-	arg_10_0._costType = var_10_31[1]
-	arg_10_0._costId = var_10_31[2]
-	arg_10_0._costQuantity = var_10_31[3]
+	arg_10_0._costType = var_10_12[1]
+	arg_10_0._costId = var_10_12[2]
+	arg_10_0._costQuantity = var_10_12[3]
 
-	local var_10_32, var_10_33 = ItemModel.instance:getItemConfigAndIcon(arg_10_0._costType, arg_10_0._costId)
-	local var_10_34 = var_10_32.icon
-	local var_10_35 = string.format("%s_1", var_10_34)
+	local var_10_13, var_10_14 = ItemModel.instance:getItemConfigAndIcon(arg_10_0._costType, arg_10_0._costId)
+	local var_10_15 = var_10_13.icon
+	local var_10_16 = string.format("%s_1", var_10_15)
 
-	UISpriteSetMgr.instance:setCurrencyItemSprite(arg_10_0._simagematerial, var_10_35, true)
+	UISpriteSetMgr.instance:setCurrencyItemSprite(arg_10_0._simagematerial, var_10_16, true)
 
 	arg_10_0._txtmaterialNum.text = arg_10_0._costQuantity
 
 	gohelper.setActive(arg_10_0._gotag, arg_10_1.config.originalCost > 0)
 	gohelper.setActive(arg_10_0._txtoriginalprice.gameObject, arg_10_1.config.originalCost > 0)
 
-	local var_10_36 = arg_10_0._costQuantity / arg_10_1.config.originalCost
-	local var_10_37 = math.ceil(var_10_36 * 100)
+	local var_10_17 = arg_10_0._costQuantity / arg_10_1.config.originalCost
+	local var_10_18 = math.ceil(var_10_17 * 100)
 
-	arg_10_0._txtdiscount.text = string.format("-%d%%", 100 - var_10_37)
+	arg_10_0._txtdiscount.text = string.format("-%d%%", 100 - var_10_18)
 	arg_10_0._txtoriginalprice.text = arg_10_1.config.originalCost
 
 	gohelper.setActive(arg_10_0._gonewtag, arg_10_1:needShowNew())
 
-	local var_10_38 = arg_10_1:getOfflineTime()
-	local var_10_39 = var_10_38 - ServerTime.now()
+	local var_10_19 = arg_10_1:getOfflineTime()
+	local var_10_20 = var_10_19 - ServerTime.now()
 
-	gohelper.setActive(arg_10_0._goremaintime, var_10_38 > 0 and var_10_28 == false)
+	gohelper.setActive(arg_10_0._goremaintime, var_10_19 > 0 and var_10_9 == false)
 
-	if var_10_39 > 3600 then
-		local var_10_40, var_10_41 = TimeUtil.secondToRoughTime(var_10_39)
+	if var_10_20 > 3600 then
+		local var_10_21, var_10_22 = TimeUtil.secondToRoughTime(var_10_20)
 
-		arg_10_0._txtremaintime.text = formatLuaLang("remain", var_10_40 .. var_10_41)
+		arg_10_0._txtremaintime.text = formatLuaLang("remain", var_10_21 .. var_10_22)
 	else
 		arg_10_0._txtremaintime.text = luaLang("not_enough_one_hour")
 	end
@@ -506,18 +374,6 @@ function var_0_0.refreshSkinTips(arg_19_0)
 end
 
 function var_0_0.clearSpine(arg_20_0)
-	if arg_20_0._skinSpine then
-		arg_20_0._skinSpine:doClear()
-
-		arg_20_0._skinSpine = nil
-	end
-
-	if arg_20_0._skinSpine2 then
-		arg_20_0._skinSpine2:doClear()
-
-		arg_20_0._skinSpine2 = nil
-	end
-
 	GameUtil.doClearMember(arg_20_0, "_skinSpine")
 	GameUtil.doClearMember(arg_20_0, "_skinSpine2")
 end
@@ -541,52 +397,55 @@ function var_0_0.onDestroyView(arg_21_0)
 end
 
 function var_0_0._onUpdateMO_uniqueSkin(arg_22_0)
+	local var_22_0 = var_0_5
+
 	arg_22_0:addEventCb(StoreController.instance, StoreEvent.DragSkinListBegin, arg_22_0._onDraggingBegin, arg_22_0)
 	arg_22_0:addEventCb(StoreController.instance, StoreEvent.DragSkinListEnd, arg_22_0._onDraggingEnd, arg_22_0)
 	arg_22_0:addEventCb(StoreController.instance, StoreEvent.DraggingSkinList, arg_22_0._onDragging, arg_22_0)
 	gohelper.setAsLastSibling(arg_22_0.viewGO.transform.parent.gameObject)
 
-	local var_22_0 = arg_22_0._mo.config.bigImg
-	local var_22_1 = arg_22_0._mo.config.spineParams
+	local var_22_1 = arg_22_0._mo.config.bigImg
+	local var_22_2 = arg_22_0._mo.config.spineParams
 
-	if not string.nilorempty(var_22_1) then
-		local var_22_2 = string.split(var_22_1, "#")
-		local var_22_3 = #var_22_2
-		local var_22_4 = var_22_2[1]
-		local var_22_5 = var_22_3 > 1 and var_22_2[2]
-		local var_22_6 = var_22_3 > 2 and string.splitToNumber(var_22_2[3], ",")
-		local var_22_7 = var_22_3 > 3 and tonumber(var_22_2[4])
-		local var_22_8 = var_22_3 > 4 and var_22_2[5]
+	if not string.nilorempty(var_22_2) then
+		local var_22_3 = string.split(var_22_2, "#")
+		local var_22_4 = #var_22_3
+		local var_22_5 = var_22_3[1]
+		local var_22_6 = var_22_4 > 1 and var_22_3[2]
+		local var_22_7 = var_22_4 > 2 and string.splitToNumber(var_22_3[3], ",")
+		local var_22_8 = var_22_4 > 3 and tonumber(var_22_3[4])
+		local var_22_9 = var_22_4 > 4 and var_22_3[5]
+		local var_22_10
 
-		signTexturePath = var_22_3 > 6 and var_22_2[7] or signTexturePath
+		var_22_10 = var_22_4 > 6 and var_22_3[7] or var_22_10
 
 		if arg_22_0._skinSpine then
-			arg_22_0._skinSpine:setResPath(var_22_4, arg_22_0._onSkinSpineLoaded, arg_22_0, true)
+			arg_22_0._skinSpine:setResPath(var_22_5, arg_22_0._onSkinSpineLoaded, arg_22_0, true)
 		else
 			arg_22_0._skinSpineGO = arg_22_0._skinSpineGO or gohelper.create2d(arg_22_0._goUniqueSkinsImage, "uniqueSkinSpine")
 
-			local var_22_9 = arg_22_0._skinSpineGO.transform
+			local var_22_11 = arg_22_0._skinSpineGO.transform
 
-			recthelper.setWidth(var_22_9, var_0_4[1])
-			transformhelper.setLocalPos(var_22_9, var_22_6[1], var_22_6[2], 0)
-			transformhelper.setLocalScale(var_22_9, var_22_7, var_22_7, var_22_7)
+			recthelper.setWidth(var_22_11, var_0_4[1])
+			transformhelper.setLocalPos(var_22_11, var_22_7[1], var_22_7[2], 0)
+			transformhelper.setLocalScale(var_22_11, var_22_8, var_22_8, var_22_8)
 
 			arg_22_0._skinSpine = GuiSpine.Create(arg_22_0._skinSpineGO, false)
 
-			arg_22_0._skinSpine:setResPath(var_22_4, arg_22_0._onSkinSpineLoaded, arg_22_0, true)
+			arg_22_0._skinSpine:setResPath(var_22_5, arg_22_0._onSkinSpineLoaded, arg_22_0, true)
 
-			if not string.nilorempty(var_22_5) then
+			if not string.nilorempty(var_22_6) then
 				arg_22_0._skinSpineGO2 = arg_22_0._skinSpineGO2 or gohelper.create2d(arg_22_0._goUniqueImageicon2, "uniqueSkinSpine2")
 
-				local var_22_10 = arg_22_0._skinSpineGO2.transform
+				local var_22_12 = arg_22_0._skinSpineGO2.transform
 
-				recthelper.setWidth(var_22_10, var_0_4[1])
-				transformhelper.setLocalPos(var_22_10, var_22_6[1], var_22_6[2], 0)
-				transformhelper.setLocalScale(var_22_10, var_22_7, var_22_7, var_22_7)
+				recthelper.setWidth(var_22_12, var_0_4[1])
+				transformhelper.setLocalPos(var_22_12, var_22_7[1], var_22_7[2], 0)
+				transformhelper.setLocalScale(var_22_12, var_22_8, var_22_8, var_22_8)
 
 				arg_22_0._skinSpine2 = GuiSpine.Create(arg_22_0._skinSpineGO2, false)
 
-				arg_22_0._skinSpine2:setResPath(var_22_5, arg_22_0._onSkinSpine2Loaded, arg_22_0, true)
+				arg_22_0._skinSpine2:setResPath(var_22_6, arg_22_0._onSkinSpine2Loaded, arg_22_0, true)
 			end
 
 			transformhelper.setLocalPos(arg_22_0._uniqueImageicon.transform, 0, 0, 0)
@@ -599,27 +458,28 @@ function var_0_0._onUpdateMO_uniqueSkin(arg_22_0)
 		gohelper.setActive(arg_22_0._govx_iconbg, false)
 		gohelper.setActive(arg_22_0._govx_bg, false)
 
-		if not string.nilorempty(var_22_8) then
-			arg_22_0._uniqueImagebg:LoadImage(var_22_8)
+		if not string.nilorempty(var_22_9) then
+			arg_22_0._uniqueImagebg:LoadImage(var_22_9)
 
 			arg_22_0._uniqueImageicon.enabled = true
 
-			arg_22_0._uniqueSingleImageicon:LoadImage(var_22_8)
+			arg_22_0._uniqueSingleImageicon:LoadImage(var_22_9)
 		else
 			gohelper.setActive(arg_22_0._uniqueImagebg.gameObject, false)
 
 			arg_22_0._uniqueImageicon.enabled = false
 		end
-	elseif string.find(var_22_0, "prefab") then
-		local var_22_11 = string.split(var_22_0, "#")
-		local var_22_12 = #var_22_11
-		local var_22_13 = var_22_11[1]
-		local var_22_14 = var_22_11[2]
+	elseif string.find(var_22_1, "prefab") then
+		local var_22_13 = string.split(var_22_1, "#")
+		local var_22_14 = #var_22_13
+		local var_22_15 = var_22_13[1]
+		local var_22_16 = var_22_13[2]
+		local var_22_17
 
-		signTexturePath = var_22_12 > 3 and var_22_11[4] or signTexturePath
+		var_22_17 = var_22_14 > 3 and var_22_13[4] or var_22_17
 
 		if arg_22_0._skinSpine then
-			arg_22_0._skinSpine:setResPath(var_22_13, arg_22_0._onSpineLoaded, arg_22_0, true)
+			arg_22_0._skinSpine:setResPath(var_22_15, arg_22_0._onSpineLoaded, arg_22_0, true)
 		else
 			arg_22_0._skinSpineGO = arg_22_0._skinSpineGO or gohelper.create2d(arg_22_0._goUniqueSkinsImage, "uniqueSkinSpine")
 
@@ -627,13 +487,13 @@ function var_0_0._onUpdateMO_uniqueSkin(arg_22_0)
 
 			arg_22_0._skinSpine = GuiSpine.Create(arg_22_0._skinSpineGO, false)
 
-			arg_22_0._skinSpine:setResPath(var_22_13, arg_22_0._onSpineLoaded, arg_22_0, true)
+			arg_22_0._skinSpine:setResPath(var_22_15, arg_22_0._onSpineLoaded, arg_22_0, true)
 		end
 
 		gohelper.setActive(arg_22_0._skinSpineGO, true)
 
-		if not string.nilorempty(var_22_14) then
-			arg_22_0._uniqueImagebg:LoadImage(var_22_14)
+		if not string.nilorempty(var_22_16) then
+			arg_22_0._uniqueImagebg:LoadImage(var_22_16)
 		else
 			arg_22_0._uniqueImagebg:LoadImage(var_0_2)
 		end
@@ -642,7 +502,7 @@ function var_0_0._onUpdateMO_uniqueSkin(arg_22_0)
 	else
 		arg_22_0._uniqueImageicon.enabled = true
 
-		if not string.nilorempty(var_22_0) then
+		if not string.nilorempty(var_22_1) then
 			arg_22_0._uniqueSingleImageicon:LoadImage(arg_22_0._mo.config.bigImg)
 		else
 			arg_22_0._uniqueSingleImageicon:LoadImage(ResUrl.getHeadSkinIconMiddle(303202))

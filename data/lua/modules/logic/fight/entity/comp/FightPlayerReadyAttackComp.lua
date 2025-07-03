@@ -31,9 +31,9 @@ function var_0_0._onPlayHandCard(arg_5_0, arg_5_1)
 		return
 	end
 
-	if #FightCardModel.instance:getEntityOps(arg_5_1.uid, FightEnum.CardOpType.PlayCard) > 0 and not arg_5_0._readyAttackWork then
+	if #FightDataHelper.operationDataMgr:getEntityOps(arg_5_1.uid, FightEnum.CardOpType.PlayCard) > 0 and not arg_5_0._readyAttackWork then
 		local var_5_0 = FightDataHelper.entityMgr:getById(arg_5_1.uid)
-		local var_5_1 = var_5_0 and FightCardModel.instance:getCardOps()
+		local var_5_1 = var_5_0 and FightDataHelper.operationDataMgr:getOpList()
 		local var_5_2 = var_5_1 and FightBuffHelper.simulateBuffList(var_5_0, var_5_1[#var_5_1])
 
 		if FightViewHandCardItemLock.canUseCardSkill(arg_5_1.uid, arg_5_1.skillId, var_5_2) then
@@ -50,7 +50,7 @@ function var_0_0._onRevertCard(arg_6_0, arg_6_1)
 	end
 
 	if arg_6_1:isPlayCard() then
-		local var_6_0 = FightCardModel.instance:getEntityOps(arg_6_0.entity.id)
+		local var_6_0 = FightDataHelper.operationDataMgr:getEntityOps(arg_6_0.entity.id)
 
 		if (not var_6_0 or #var_6_0 == 0) and arg_6_0._readyAttackWork then
 			arg_6_0.entity:resetAnimState()

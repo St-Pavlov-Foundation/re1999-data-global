@@ -8,12 +8,12 @@ local var_0_2 = {
 }
 
 function var_0_0.onStart(arg_1_0)
-	local var_1_0 = FightHelper.getEntity(arg_1_0._actEffectMO.targetId)
+	local var_1_0 = FightHelper.getEntity(arg_1_0.actEffectData.targetId)
 
 	if var_1_0 and var_1_0.skill then
 		if arg_1_0:_isBossRushBossShieldBroken(var_1_0) then
 			FightController.instance:registerCallback(FightEvent.OnSkillPlayFinish, arg_1_0._onSkillEnd, arg_1_0, LuaEventSystem.Low)
-			var_1_0.skill:playTimeline(var_0_1, arg_1_0._fightStepMO)
+			var_1_0.skill:playTimeline(var_0_1, arg_1_0.fightStepData)
 			arg_1_0:com_registTimer(arg_1_0._delayDone, 10)
 		else
 			arg_1_0:onDone(true)

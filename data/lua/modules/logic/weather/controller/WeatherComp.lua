@@ -156,7 +156,10 @@ function var_0_0.playWeatherVoice(arg_13_0, arg_13_1)
 	end, arg_13_0._skinId)
 
 	if var_13_3 and #var_13_3 > 0 and (arg_13_1 or var_13_0 == false and var_13_1 or math.random() <= 0.3) then
-		arg_13_0._dispatchParam[1] = var_13_3[1]
+		local var_13_4 = var_13_3[1]
+		local var_13_5 = MainHeroView.getRandomMultiVoice(var_13_4, arg_13_0._heroId, arg_13_0._skinId)
+
+		arg_13_0._dispatchParam[1] = var_13_5
 		arg_13_0._dispatchParam[2] = false
 
 		arg_13_0._weatherController:dispatchEvent(WeatherEvent.PlayVoice, arg_13_0._dispatchParam)

@@ -3,8 +3,8 @@
 local var_0_0 = class("FightWorkTriggerDialog", BaseWork)
 
 function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2)
-	arg_1_0._fightStepMO = arg_1_1
-	arg_1_0._actEffectMO = arg_1_2
+	arg_1_0.fightStepData = arg_1_1
+	arg_1_0.actEffectData = arg_1_2
 end
 
 function var_0_0.onStart(arg_2_0)
@@ -14,7 +14,7 @@ function var_0_0.onStart(arg_2_0)
 		return
 	end
 
-	arg_2_0._config = lua_trigger_action.configDict[arg_2_0._actEffectMO.effectNum]
+	arg_2_0._config = lua_trigger_action.configDict[arg_2_0.actEffectData.effectNum]
 
 	if arg_2_0._config then
 		local var_2_0 = tonumber(arg_2_0._config.param1)

@@ -76,7 +76,7 @@ function var_0_0.setItem(arg_8_0)
 	arg_8_0._simagereward:LoadImage(var_8_1)
 	UISpriteSetMgr.instance:setUiFBSprite(arg_8_0._imagecircle, "bg_pinjidi_lanse_" .. var_8_0.rare)
 
-	arg_8_0._txtrewardcount.text = string.format("%s%s", luaLang("multiple"), arg_8_0.data.quantity)
+	arg_8_0._txtrewardcount.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("multiple_1"), arg_8_0.data.quantity)
 	arg_8_0._txtpointvalue.text = formatLuaLang("times2", arg_8_0.id)
 
 	local var_8_2 = false

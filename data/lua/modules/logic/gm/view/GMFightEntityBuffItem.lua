@@ -65,6 +65,12 @@ function var_0_0._onClickDel(arg_5_0)
 		var_5_2.buff:delBuff(arg_5_0._mo.uid)
 	end
 
+	local var_5_3 = FightLocalDataMgr.instance.entityMgr:getById(var_5_1.id)
+
+	if var_5_3 then
+		var_5_3:delBuff(arg_5_0._mo.uid)
+	end
+
 	FightController.instance:dispatchEvent(FightEvent.OnBuffUpdate, var_5_1.id, FightEnum.EffectType.BUFFDEL, arg_5_0._mo.buffId, arg_5_0._mo.uid, 0)
 	FightRpc.instance:sendEntityInfoRequest(var_5_1.id)
 end
@@ -76,6 +82,16 @@ function var_0_0._onAddEditDuration(arg_6_0, arg_6_1)
 		local var_6_1 = GMFightEntityModel.instance.entityMO
 
 		arg_6_0._mo.duration = var_6_0
+
+		local var_6_2 = FightLocalDataMgr.instance.entityMgr:getById(var_6_1.id)
+
+		if var_6_2 then
+			local var_6_3 = var_6_2:getBuffMO(arg_6_0._mo.uid)
+
+			if var_6_3 then
+				var_6_3.duration = var_6_0
+			end
+		end
 
 		GMRpc.instance:sendGMRequest(string.format("fightChangeBuff %s %s %d %d %d", var_6_1.id, arg_6_0._mo.id, arg_6_0._mo.count, var_6_0, arg_6_0._mo.layer))
 		FightController.instance:dispatchEvent(FightEvent.OnBuffUpdate, var_6_1.id, FightEnum.EffectType.BUFFUPDATE, arg_6_0._mo.buffId, arg_6_0._mo.uid, 0)
@@ -93,6 +109,16 @@ function var_0_0._onAddEditCount(arg_7_0, arg_7_1)
 
 		arg_7_0._mo.count = var_7_0
 
+		local var_7_2 = FightLocalDataMgr.instance.entityMgr:getById(var_7_1.id)
+
+		if var_7_2 then
+			local var_7_3 = var_7_2:getBuffMO(arg_7_0._mo.uid)
+
+			if var_7_3 then
+				var_7_3.count = var_7_0
+			end
+		end
+
 		GMRpc.instance:sendGMRequest(string.format("fightChangeBuff %s %s %d %d %d", var_7_1.id, arg_7_0._mo.id, var_7_0, arg_7_0._mo.duration, arg_7_0._mo.layer))
 		FightController.instance:dispatchEvent(FightEvent.OnBuffUpdate, var_7_1.id, FightEnum.EffectType.BUFFUPDATE, arg_7_0._mo.buffId, arg_7_0._mo.uid, 0)
 	else
@@ -108,6 +134,16 @@ function var_0_0._onAddEditLayer(arg_8_0, arg_8_1)
 		local var_8_1 = GMFightEntityModel.instance.entityMO
 
 		arg_8_0._mo.layer = var_8_0
+
+		local var_8_2 = FightLocalDataMgr.instance.entityMgr:getById(var_8_1.id)
+
+		if var_8_2 then
+			local var_8_3 = var_8_2:getBuffMO(arg_8_0._mo.uid)
+
+			if var_8_3 then
+				var_8_3.layer = var_8_0
+			end
+		end
 
 		GMRpc.instance:sendGMRequest(string.format("fightChangeBuff %s %s %d %d %d", var_8_1.id, arg_8_0._mo.id, arg_8_0._mo.count, arg_8_0._mo.duration, var_8_0))
 		FightController.instance:dispatchEvent(FightEvent.OnBuffUpdate, var_8_1.id, FightEnum.EffectType.BUFFUPDATE, arg_8_0._mo.buffId, arg_8_0._mo.uid, 0)

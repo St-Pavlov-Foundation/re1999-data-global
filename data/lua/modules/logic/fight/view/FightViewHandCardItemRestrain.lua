@@ -103,12 +103,12 @@ end
 function var_0_0.getNewRestrainStatus(arg_11_0, arg_11_1)
 	local var_11_0 = FightModel.instance:getCurStage()
 	local var_11_1 = var_11_0 == FightEnum.Stage.Distribute or var_11_0 == FightEnum.Stage.Card
-	local var_11_2 = FightHelper.getEntity(FightCardModel.instance.curSelectEntityId)
+	local var_11_2 = FightHelper.getEntity(FightDataHelper.operationDataMgr.curSelectEntityId)
 	local var_11_3 = lua_skill.configDict[arg_11_1]
 	local var_11_4 = var_11_3 and var_11_3.showTag
 	local var_11_5 = var_11_4 and FightEnum.NeedShowRestrainTag[var_11_4]
 	local var_11_6 = not FightModel.instance:isAuto()
-	local var_11_7 = FightCardModel.instance.curSelectEntityId ~= 0
+	local var_11_7 = FightDataHelper.operationDataMgr.curSelectEntityId ~= 0
 	local var_11_8 = OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.FightRestrainTag)
 	local var_11_9 = GuideModel.instance:isFlagEnable(GuideModel.GuideFlag.FightForbidRestrainTag)
 

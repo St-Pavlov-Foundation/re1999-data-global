@@ -908,5 +908,115 @@
     "triggerEffect": "",
     "delEffect": "",
     "audio": 430790424
+  },
+  {
+    "buffId": 31080131,
+    "orEnemy": 2,
+    "skinId": 310803,
+    "effectHang": "",
+    "effectPath": "v2a7_bkle/bkle_yanzou",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 431080342
+  },
+  {
+    "buffId": 31080133,
+    "orEnemy": 2,
+    "skinId": 310803,
+    "effectHang": "",
+    "effectPath": "v2a7_bkle/bkle_yanzou",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 431080342
+  },
+  {
+    "buffId": 308301311,
+    "orEnemy": 2,
+    "skinId": 308303,
+    "effectHang": "",
+    "effectPath": "v2a5_qn/v2a5_qn_bd2",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 430830353
+  },
+  {
+    "buffId": 308301321,
+    "orEnemy": 2,
+    "skinId": 308303,
+    "effectHang": "",
+    "effectPath": "v2a5_qn/v2a5_qn_bd2",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 430830353
+  },
+  {
+    "buffId": 308301331,
+    "orEnemy": 2,
+    "skinId": 308303,
+    "effectHang": "",
+    "effectPath": "v2a5_qn/v2a5_qn_bd2",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 430830353
+  },
+  {
+    "buffId": 308301341,
+    "orEnemy": 2,
+    "skinId": 308303,
+    "effectHang": "",
+    "effectPath": "v2a5_qn/v2a5_qn_bd2",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 430830353
+  },
+  {
+    "buffId": 308301351,
+    "orEnemy": 2,
+    "skinId": 308303,
+    "effectHang": "",
+    "effectPath": "v2a5_qn/v2a5_qn_bd2",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 430830353
+  },
+  {
+    "buffId": 308301361,
+    "orEnemy": 2,
+    "skinId": 308303,
+    "effectHang": "",
+    "effectPath": "v2a5_qn/v2a5_qn_bd2",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 430830353
+  },
+  {
+    "buffId": 308301371,
+    "orEnemy": 2,
+    "skinId": 308303,
+    "effectHang": "",
+    "effectPath": "v2a5_qn/v2a5_qn_bd2",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 430830353
+  },
+  {
+    "buffId": 308301381,
+    "orEnemy": 2,
+    "skinId": 308303,
+    "effectHang": "",
+    "effectPath": "v2a5_qn/v2a5_qn_bd2",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 430830353
+  },
+  {
+    "buffId": 308301391,
+    "orEnemy": 2,
+    "skinId": 308303,
+    "effectHang": "",
+    "effectPath": "v2a5_qn/v2a5_qn_bd2",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 430830353
   }
 ]

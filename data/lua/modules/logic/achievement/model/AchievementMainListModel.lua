@@ -147,26 +147,28 @@ end
 function var_0_0.sortAchievementByRareDown(arg_12_0, arg_12_1)
 	local var_12_0 = arg_12_0 and arg_12_0.id
 	local var_12_1 = arg_12_1 and arg_12_1.id
+	local var_12_2 = arg_12_0 and arg_12_0.groupId
+	local var_12_3 = arg_12_1 and arg_12_1.groupId
 
-	if arg_12_0.groupId ~= 0 and arg_12_1.groupId ~= 0 then
-		local var_12_2 = AchievementConfig.instance:getGroup(arg_12_0.groupId)
-		local var_12_3 = AchievementConfig.instance:getGroup(arg_12_1.groupId)
-		local var_12_4 = var_12_2 and var_12_2.order or 0
-		local var_12_5 = var_12_3 and var_12_3.order or 0
+	if var_12_2 ~= 0 and var_12_3 ~= 0 then
+		local var_12_4 = AchievementConfig.instance:getGroup(var_12_2)
+		local var_12_5 = AchievementConfig.instance:getGroup(var_12_3)
+		local var_12_6 = var_12_4 and var_12_4.order or 0
+		local var_12_7 = var_12_5 and var_12_5.order or 0
 
-		if var_12_4 ~= var_12_5 then
-			return var_12_4 < var_12_5
+		if var_12_6 ~= var_12_7 then
+			return var_12_6 < var_12_7
 		end
 
-		if arg_12_0.groupId ~= arg_12_1.groupId then
-			return arg_12_0.groupId > arg_12_1.groupId
+		if var_12_2 ~= var_12_3 then
+			return var_12_2 < var_12_3
 		end
 	end
 
-	local var_12_6 = AchievementModel.instance:achievementHasLocked(var_12_0)
+	local var_12_8 = AchievementModel.instance:achievementHasLocked(var_12_0)
 
-	if var_12_6 ~= AchievementModel.instance:achievementHasLocked(var_12_1) then
-		return not var_12_6
+	if var_12_8 ~= AchievementModel.instance:achievementHasLocked(var_12_1) then
+		return not var_12_8
 	end
 
 	return var_12_0 < var_12_1
@@ -248,20 +250,20 @@ function var_0_0.getAchievementIndexAndScrollPixel(arg_15_0, arg_15_1, arg_15_2)
 	return var_15_0, var_15_1, var_15_2
 end
 
-function var_0_0.getGroupMOList(arg_16_0, arg_16_1)
-	local var_16_0 = AchievementMainCommonModel.instance:getCurrentFilterType()
-	local var_16_1 = AchievementMainCommonModel.instance:getCurrentSortType()
-	local var_16_2 = arg_16_0._moGroupMap[var_16_0] and arg_16_0._moGroupMap[var_16_0][var_16_1]
-
-	return var_16_2 and var_16_2[arg_16_1]
+function var_0_0.isCurTaskNeedPlayIdleAnim(arg_16_0)
+	return arg_16_0._isCurTaskNeedPlayIdleAnim
 end
 
-function var_0_0.isCurTaskNeedPlayIdleAnim(arg_17_0)
-	return arg_17_0._isCurTaskNeedPlayIdleAnim
+function var_0_0.setIsCurTaskNeedPlayIdleAnim(arg_17_0, arg_17_1)
+	arg_17_0._isCurTaskNeedPlayIdleAnim = arg_17_1
 end
 
-function var_0_0.setIsCurTaskNeedPlayIdleAnim(arg_18_0, arg_18_1)
-	arg_18_0._isCurTaskNeedPlayIdleAnim = arg_18_1
+function var_0_0.getCurGroupMoList(arg_18_0, arg_18_1)
+	local var_18_0 = AchievementMainCommonModel.instance:getCurrentFilterType()
+	local var_18_1 = AchievementMainCommonModel.instance:getCurrentSortType()
+	local var_18_2 = arg_18_0._moGroupMap[var_18_0] and arg_18_0._moGroupMap[var_18_0][var_18_1]
+
+	return var_18_2 and var_18_2[arg_18_1]
 end
 
 var_0_0.instance = var_0_0.New()

@@ -113,88 +113,104 @@ function var_0_0.onUseOptionalHeroGift(arg_5_0, arg_5_1, arg_5_2)
 	CustomPickChoiceController.instance:dispatchEvent(CustomPickChoiceEvent.onCustomPickComplete)
 end
 
-function var_0_0.openView_LifeCirclePickChoice(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
-	local var_6_0 = ItemConfig.instance:getItemConfig(arg_6_1, arg_6_2)
+function var_0_0.onUseSelfSelectSixHeroGift(arg_6_0, arg_6_1, arg_6_2)
+	if not arg_6_2 or #arg_6_2 < 0 then
+		return
+	end
 
-	arg_6_0:_openView_LifeCirclePickChoice(var_6_0, arg_6_3)
+	local var_6_0 = {}
+	local var_6_1 = {
+		materialId = arg_6_1.id,
+		quantity = arg_6_1.quantity
+	}
+
+	table.insert(var_6_0, var_6_1)
+	ItemRpc.instance:sendUseItemRequest(var_6_0, arg_6_2[1])
+	V2a7_SelfSelectSix_PickChoiceController.instance:dispatchEvent(V2a7_SelfSelectSix_PickChoiceEvent.onCustomPickComplete)
 end
 
-function var_0_0._openView_LifeCirclePickChoice(arg_7_0, arg_7_1, arg_7_2)
-	arg_7_2 = arg_7_2 or 1
+function var_0_0.openView_LifeCirclePickChoice(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
+	local var_7_0 = ItemConfig.instance:getItemConfig(arg_7_1, arg_7_2)
 
-	if arg_7_2 <= 0 then
+	arg_7_0:_openView_LifeCirclePickChoice(var_7_0, arg_7_3)
+end
+
+function var_0_0._openView_LifeCirclePickChoice(arg_8_0, arg_8_1, arg_8_2)
+	arg_8_2 = arg_8_2 or 1
+
+	if arg_8_2 <= 0 then
 		return
 	end
 
-	local var_7_0 = arg_7_1.effect
+	local var_8_0 = arg_8_1.effect
 
-	if string.nilorempty(var_7_0) then
+	if string.nilorempty(var_8_0) then
 		return
 	end
 
-	local var_7_1 = string.split(var_7_0, "|")
-	local var_7_2 = {}
-	local var_7_3
-	local var_7_4 = #var_7_1
+	local var_8_1 = string.split(var_8_0, "|")
+	local var_8_2 = {}
+	local var_8_3
+	local var_8_4 = #var_8_1
 
-	for iter_7_0, iter_7_1 in ipairs(var_7_1) do
-		local var_7_5 = tonumber(iter_7_1)
+	for iter_8_0, iter_8_1 in ipairs(var_8_1) do
+		local var_8_5 = tonumber(iter_8_1)
 
-		table.insert(var_7_2, var_7_5)
+		table.insert(var_8_2, var_8_5)
 
-		if var_7_3 == nil then
-			if not HeroModel.instance:getByHeroId(var_7_5) then
-				var_7_3 = false
-			elseif iter_7_0 == var_7_4 then
-				var_7_3 = true
+		if var_8_3 == nil then
+			if not HeroModel.instance:getByHeroId(var_8_5) then
+				var_8_3 = false
+			elseif iter_8_0 == var_8_4 then
+				var_8_3 = true
 			end
 		end
 	end
 
-	local var_7_6 = var_7_3 and luaLang("lifecirclepickchoice_txt_Title_custom") or luaLang("lifecirclepickchoice_txt_Title_random")
-	local var_7_7 = var_7_3 and luaLang("lifecirclepickchoice_txt_confirm_custom") or luaLang("lifecirclepickchoice_txt_confirm_random")
-	local var_7_8 = {
-		heroIdList = var_7_2,
-		title = var_7_6,
-		confirmDesc = var_7_7,
-		isCustomSelect = var_7_3,
-		callback = function(arg_8_0)
-			local var_8_0 = var_7_3 and arg_8_0:selectedHeroId() or 0
+	local var_8_6 = var_8_3 and luaLang("lifecirclepickchoice_txt_Title_custom") or luaLang("lifecirclepickchoice_txt_Title_random")
+	local var_8_7 = var_8_3 and luaLang("lifecirclepickchoice_txt_confirm_custom") or luaLang("lifecirclepickchoice_txt_confirm_random")
+	local var_8_8 = {
+		heroIdList = var_8_2,
+		title = var_8_6,
+		confirmDesc = var_8_7,
+		isCustomSelect = var_8_3,
+		callback = function(arg_9_0)
+			local var_9_0 = var_8_3 and arg_9_0:selectedHeroId() or 0
 
-			if var_7_3 and var_8_0 == 0 then
+			if var_8_3 and var_9_0 == 0 then
 				GameFacade.showToast(ToastEnum.MaterialTipController_LifeCirclePickChoiceSelectOneTips)
 
 				return
 			end
 
-			local var_8_1 = arg_7_1.id
+			local var_9_1 = arg_8_1.id
 
-			MaterialRpc.instance:set_onReceiveMaterialChangePushOnce(arg_7_0._onReceiveMaterialChangePush_LifeCirclePickChoice, arg_7_0)
-			HeroRpc.instance:set_onReceiveHeroGainPushOnce(arg_7_0._onReceiveHeroGainPush_LifeCirclePickChoice, arg_7_0)
+			MaterialRpc.instance:set_onReceiveMaterialChangePushOnce(arg_8_0._onReceiveMaterialChangePush_LifeCirclePickChoice, arg_8_0)
+			HeroRpc.instance:set_onReceiveHeroGainPushOnce(arg_8_0._onReceiveHeroGainPush_LifeCirclePickChoice, arg_8_0)
 			CharacterModel.instance:setGainHeroViewShowState(true)
-			ItemRpc.instance:simpleSendUseItemRequest(var_8_1, arg_7_2, var_8_0, arg_8_0.closeThis, arg_8_0)
+			ItemRpc.instance:simpleSendUseItemRequest(var_9_1, arg_8_2, var_9_0, arg_9_0.closeThis, arg_9_0)
 		end
 	}
 
-	ViewMgr.instance:openView(ViewName.LifeCirclePickChoice, var_7_8)
+	ViewMgr.instance:openView(ViewName.LifeCirclePickChoice, var_8_8)
 end
 
-function var_0_0._onReceiveMaterialChangePush_LifeCirclePickChoice(arg_9_0, arg_9_1, arg_9_2)
+function var_0_0._onReceiveMaterialChangePush_LifeCirclePickChoice(arg_10_0, arg_10_1, arg_10_2)
 	CharacterModel.instance:setGainHeroViewShowState(false)
 
-	if arg_9_1 ~= 0 then
-		return
-	end
-
-	LifeCircleController.instance:onReceiveMaterialChangePush(arg_9_2)
-end
-
-function var_0_0._onReceiveHeroGainPush_LifeCirclePickChoice(arg_10_0, arg_10_1, arg_10_2)
 	if arg_10_1 ~= 0 then
 		return
 	end
 
-	LifeCircleController.instance:onReceiveHeroGainPush(arg_10_2)
+	LifeCircleController.instance:onReceiveMaterialChangePush(arg_10_2)
+end
+
+function var_0_0._onReceiveHeroGainPush_LifeCirclePickChoice(arg_11_0, arg_11_1, arg_11_2)
+	if arg_11_1 ~= 0 then
+		return
+	end
+
+	LifeCircleController.instance:onReceiveHeroGainPush(arg_11_2)
 end
 
 var_0_0.instance = var_0_0.New()

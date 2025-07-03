@@ -331,7 +331,7 @@ function var_0_0.isEpisodeCanReRepress(arg_25_0, arg_25_1)
 	local var_25_1 = var_25_0:getPassOrder()
 	local var_25_2 = var_25_0:isFinished()
 	local var_25_3 = arg_25_0:findMaxPassOrder()
-	local var_25_4 = Act183Helper.isLastPassEpisodeInType(var_25_0)
+	local var_25_4 = Act183Helper.isLastPassEpisodeInGroup(var_25_0)
 
 	return var_25_2 and var_25_1 == var_25_3 and not var_25_4
 end

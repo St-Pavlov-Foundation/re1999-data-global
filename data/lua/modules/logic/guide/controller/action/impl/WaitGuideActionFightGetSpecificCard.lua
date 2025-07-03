@@ -19,7 +19,7 @@ function var_0_0._onRoundStart(arg_3_0)
 	local var_3_0 = FightModel.instance:getCurStage()
 
 	if var_3_0 == FightEnum.Stage.Card or var_3_0 == FightEnum.Stage.AutoCard then
-		local var_3_1 = FightCardModel.instance:getHandCards()
+		local var_3_1 = FightDataHelper.handCardMgr.handCard
 
 		for iter_3_0, iter_3_1 in ipairs(var_3_1) do
 			if arg_3_0._cardSkillId == iter_3_1.skillId then
@@ -37,7 +37,7 @@ end
 
 function var_0_0._onDistributeCardDone(arg_4_0)
 	local var_4_0 = FightModel.instance:getCurStage()
-	local var_4_1 = FightCardModel.instance:getHandCards()
+	local var_4_1 = FightDataHelper.handCardMgr.handCard
 
 	for iter_4_0, iter_4_1 in ipairs(var_4_1) do
 		if arg_4_0._cardSkillId == iter_4_1.skillId then

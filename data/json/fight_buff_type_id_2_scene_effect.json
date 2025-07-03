@@ -1,0 +1,22 @@
+[
+  {
+    "id": 7253501,
+    "effect": "buff/buff_yinyangyu",
+    "pos": [
+      0,
+      0,
+      0
+    ],
+    "reverseX": 0
+  },
+  {
+    "id": 6270517,
+    "effect": "buff/buff_zdcd",
+    "pos": [
+      0,
+      0,
+      0
+    ],
+    "reverseX": 0
+  }
+]

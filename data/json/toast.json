@@ -3649,7 +3649,7 @@
   },
   {
     "id": 2681,
-    "tips": "language_10020117",
+    "tips": "language_10074824",
     "icon": 11,
     "audioId": 1,
     "notMerge": 0,
@@ -8224,8 +8224,120 @@
     "notShow": 0
   },
   {
+    "id": 270001,
+    "tips": "language_10074825",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 270002,
+    "tips": "language_10020209",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
     "id": 270003,
     "tips": "language_10065808",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 270004,
+    "tips": "language_10074826",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 270005,
+    "tips": "language_10074827",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 270101,
+    "tips": "language_10074828",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 270102,
+    "tips": "language_10074829",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 270103,
+    "tips": "language_10074830",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 270104,
+    "tips": "language_10074831",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 270105,
+    "tips": "language_10074832",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 270106,
+    "tips": "language_10074833",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 270107,
+    "tips": "language_10074834",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 270108,
+    "tips": "language_10074835",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 270109,
+    "tips": "language_10074836",
+    "icon": 11,
+    "audioId": 1,
+    "notMerge": 0,
+    "notShow": 0
+  },
+  {
+    "id": 270110,
+    "tips": "language_10074837",
     "icon": 11,
     "audioId": 1,
     "notMerge": 0,

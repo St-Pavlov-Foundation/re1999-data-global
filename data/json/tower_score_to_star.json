@@ -1,0 +1,50 @@
+[
+  {
+    "level": 1,
+    "needScore": 10000
+  },
+  {
+    "level": 2,
+    "needScore": 20000
+  },
+  {
+    "level": 3,
+    "needScore": 30000
+  },
+  {
+    "level": 4,
+    "needScore": 40000
+  },
+  {
+    "level": 5,
+    "needScore": 50000
+  },
+  {
+    "level": 6,
+    "needScore": 60000
+  },
+  {
+    "level": 7,
+    "needScore": 70000
+  },
+  {
+    "level": 8,
+    "needScore": 80000
+  },
+  {
+    "level": 9,
+    "needScore": 90000
+  },
+  {
+    "level": 10,
+    "needScore": 100000
+  },
+  {
+    "level": 11,
+    "needScore": 110000
+  },
+  {
+    "level": 12,
+    "needScore": 120000
+  }
+]

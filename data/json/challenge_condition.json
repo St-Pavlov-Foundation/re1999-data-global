@@ -30,5 +30,37 @@
     "decs1": "language_10069349",
     "rule": "1#251300004|1#251302053",
     "decs2": "language_10069350"
+  },
+  {
+    "id": 2001,
+    "type": 19,
+    "value": "251300339",
+    "decs1": "language_10075266",
+    "rule": "1#9270319",
+    "decs2": "language_10075267"
+  },
+  {
+    "id": 2002,
+    "type": 19,
+    "value": "251300339",
+    "decs1": "language_10075268",
+    "rule": "1#9270320",
+    "decs2": "language_10075269"
+  },
+  {
+    "id": 2003,
+    "type": 19,
+    "value": "251300339",
+    "decs1": "language_10075270",
+    "rule": "1#9270321",
+    "decs2": "language_10075271"
+  },
+  {
+    "id": 2004,
+    "type": 19,
+    "value": "251300339",
+    "decs1": "language_10075272",
+    "rule": "1#9270322",
+    "decs2": "language_10075273"
   }
 ]

@@ -30,6 +30,12 @@
     "node": "Drawables/bone/effect-Bone/roleeffect_aegs_sms"
   },
   {
+    "heroResName": "309703_aegs",
+    "effectCompName": "CommonRoleFaceEffect",
+    "face": "e_shenmishu",
+    "node": "Drawables/bone/effect-Bone/roleeffect_aegs_sms"
+  },
+  {
     "heroResName": "310101_blm",
     "effectCompName": "CommonRoleFaceEffect",
     "face": "e_chijing|e_shengqi|e_kaixin|e_nanguo",

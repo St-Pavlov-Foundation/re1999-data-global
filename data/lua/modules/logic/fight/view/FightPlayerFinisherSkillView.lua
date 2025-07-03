@@ -5,9 +5,9 @@ local var_0_0 = class("FightPlayerFinisherSkillView", FightBaseView)
 function var_0_0.onInitView(arg_1_0)
 	arg_1_0._click = gohelper.findChildClickWithDefaultAudio(arg_1_0.viewGO, "skill/btn_skill")
 	arg_1_0._longPress = SLFramework.UGUI.UILongPressListener.Get(arg_1_0._click.gameObject)
-	arg_1_0._used = gohelper.findChild(arg_1_0.viewGO, "skill/melody/used")
-	arg_1_0._power = gohelper.findChild(arg_1_0.viewGO, "skill/melody/power")
-	arg_1_0._noPower = gohelper.findChild(arg_1_0.viewGO, "skill/melody/noPower")
+	arg_1_0._used = gohelper.findChild(arg_1_0.viewGO, "used")
+	arg_1_0._power = gohelper.findChild(arg_1_0.viewGO, "power")
+	arg_1_0._noPower = gohelper.findChild(arg_1_0.viewGO, "noPower")
 	arg_1_0._powerList = {}
 	arg_1_0._aniList = {}
 
@@ -83,7 +83,7 @@ function var_0_0._canUse(arg_8_0)
 
 		arg_8_0._curSkillId = var_8_0.skillId
 
-		local var_8_3 = FightDataHelper.operationMgr.playerFinisherSkillUsedCount or 0
+		local var_8_3 = FightDataHelper.operationDataMgr.playerFinisherSkillUsedCount or 0
 
 		if var_8_3 >= FightDataHelper.fieldMgr.playerFinisherInfo.roundUseLimit then
 			return
@@ -106,7 +106,7 @@ function var_0_0._onClick(arg_9_0)
 		return
 	end
 
-	if FightCardModel.instance:isCardOpEnd() then
+	if FightDataHelper.operationDataMgr:isCardOpEnd() then
 		return
 	end
 
@@ -141,21 +141,22 @@ function var_0_0._onClick(arg_9_0)
 			end
 		end
 
-		arg_9_0:_useSkill(FightCardModel.instance.curSelectEntityId)
+		arg_9_0:_useSkill(FightDataHelper.operationDataMgr.curSelectEntityId)
 	end
 end
 
 function var_0_0._useSkill(arg_10_0, arg_10_1)
 	arg_10_0:_playAudio(20249031)
 
-	local var_10_0 = FightCardModel.instance:playPlayerFinisherSkill(arg_10_0._curSkillId, arg_10_1)
+	local var_10_0 = FightDataHelper.operationDataMgr:newOperation()
 
+	var_10_0:playPlayerFinisherSkill(arg_10_0._curSkillId, arg_10_1)
 	FightController.instance:dispatchEvent(FightEvent.AddPlayOperationData, var_10_0)
 	FightController.instance:dispatchEvent(FightEvent.onNoActCostMoveFlowOver)
 	FightController.instance:dispatchEvent(FightEvent.RefreshPlayCardRoundOp, var_10_0)
 	FightController.instance:dispatchEvent(FightEvent.OnPlayCardFlowDone, var_10_0)
 
-	FightDataHelper.operationMgr.playerFinisherSkillUsedCount = (FightDataHelper.operationMgr.playerFinisherSkillUsedCount or 0) + 1
+	FightDataHelper.operationDataMgr.playerFinisherSkillUsedCount = (FightDataHelper.operationDataMgr.playerFinisherSkillUsedCount or 0) + 1
 
 	arg_10_0:_refreshPower()
 end
@@ -210,7 +211,7 @@ function var_0_0._refreshPower(arg_16_0)
 	if var_16_2 then
 		gohelper.setActive(arg_16_0.viewGO, true)
 
-		local var_16_3 = FightDataHelper.operationMgr.playerFinisherSkillUsedCount or 0
+		local var_16_3 = FightDataHelper.operationDataMgr.playerFinisherSkillUsedCount or 0
 		local var_16_4 = var_16_0 and var_16_0.needPower or 0
 		local var_16_5 = var_16_2.max
 		local var_16_6 = var_16_2.num

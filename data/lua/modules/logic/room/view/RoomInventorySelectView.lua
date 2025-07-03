@@ -155,7 +155,7 @@ function var_0_0._confirmYesCallback()
 end
 
 function var_0_0._confirmCallback()
-	StoreController.instance:checkAndOpenStoreView(StoreEnum.Room)
+	StoreController.instance:checkAndOpenStoreView(StoreEnum.StoreId.RoomStore)
 end
 
 function var_0_0._btnreformOnClick(arg_18_0)

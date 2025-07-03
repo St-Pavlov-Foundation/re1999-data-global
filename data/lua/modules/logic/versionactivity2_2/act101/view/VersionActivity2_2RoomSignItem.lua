@@ -147,7 +147,7 @@ function var_0_0._onRefreshDeadline(arg_11_0)
 	end
 
 	if var_11_2 < TimeUtil.OneDaySecond then
-		local var_11_3 = TimeUtil.getFormatTime_overseas(var_11_2)
+		local var_11_3 = TimeUtil.getFormatTime(var_11_2)
 
 		arg_11_0._txtTime.text = formatLuaLang("season123_overview_unlocktime_custom", var_11_3)
 	else

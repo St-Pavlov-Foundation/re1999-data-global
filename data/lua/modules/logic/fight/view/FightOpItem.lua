@@ -10,9 +10,9 @@ function var_0_0.init(arg_1_0, arg_1_1)
 	arg_1_0._imgBgs = arg_1_0:getUserDataTb_()
 	arg_1_0._imgBgGos = arg_1_0:getUserDataTb_()
 
-	for iter_1_0 = 1, 4 do
-		table.insert(arg_1_0._imgBgs, gohelper.findChildImage(arg_1_1, "imgBg/" .. iter_1_0))
-		table.insert(arg_1_0._imgBgGos, gohelper.findChild(arg_1_1, "imgBg/" .. iter_1_0))
+	for iter_1_0 = 0, 4 do
+		arg_1_0._imgBgs[iter_1_0] = gohelper.findChildImage(arg_1_1, "imgBg/" .. iter_1_0)
+		arg_1_0._imgBgGos[iter_1_0] = gohelper.findChild(arg_1_1, "imgBg/" .. iter_1_0)
 	end
 
 	arg_1_0._imgBg2 = gohelper.findChildImage(arg_1_1, "forbid/mask")
@@ -43,7 +43,11 @@ end
 
 function var_0_0.onSelectMonsterCardMo(arg_3_0, arg_3_1)
 	local var_3_0 = FightHelper.isSameCardMo(arg_3_1, arg_3_0.cardInfoMO)
-	local var_3_1 = FightCardModel.instance:isUniqueSkill(arg_3_0.cardInfoMO.uid, arg_3_0.cardInfoMO.skillId)
+	local var_3_1 = FightCardDataHelper.isBigSkill(arg_3_0.cardInfoMO.skillId)
+
+	if lua_skill_next.configDict[arg_3_0.cardInfoMO.skillId] then
+		var_3_1 = false
+	end
 
 	gohelper.setActive(arg_3_0.goEmitNormal, var_3_0 and not var_3_1)
 	gohelper.setActive(arg_3_0.goEmitUitimate, var_3_0 and var_3_1)
@@ -73,14 +77,19 @@ function var_0_0.updateCardInfoMO(arg_6_0, arg_6_1)
 		return
 	end
 
-	local var_6_1 = FightCardModel.instance:getSkillLv(arg_6_1.uid, arg_6_1.skillId)
+	local var_6_1 = FightCardDataHelper.getSkillLv(arg_6_1.uid, arg_6_1.skillId)
 	local var_6_2 = FightDataHelper.entityMgr:getById(arg_6_1.uid)
+	local var_6_3 = FightCardDataHelper.isBigSkill(arg_6_1.skillId)
 
-	var_6_1 = FightCardModel.instance:isUniqueSkill(arg_6_1.uid, arg_6_1.skillId) and FightEnum.UniqueSkillCardLv or var_6_1 == FightEnum.UniqueSkillCardLv and 1 or var_6_1
+	if lua_skill_next.configDict[arg_6_1.skillId] then
+		var_6_3 = false
+	end
+
+	var_6_1 = var_6_3 and FightEnum.UniqueSkillCardLv or var_6_1 == FightEnum.UniqueSkillCardLv and 1 or var_6_1
 
 	UISpriteSetMgr.instance:setFightSprite(arg_6_0._imgTag, "jnk_gj" .. var_6_0.showTag)
 
-	for iter_6_0, iter_6_1 in ipairs(arg_6_0._imgBgs) do
+	for iter_6_0, iter_6_1 in pairs(arg_6_0._imgBgs) do
 		gohelper.setActive(iter_6_1.gameObject, iter_6_0 == var_6_1)
 	end
 
@@ -92,7 +101,7 @@ function var_0_0.updateCardInfoMO(arg_6_0, arg_6_1)
 end
 
 function var_0_0.showOpForbid(arg_7_0)
-	local var_7_0 = FightCardModel.instance:getSkillLv(arg_7_0.cardInfoMO.uid, arg_7_0.cardInfoMO.skillId)
+	local var_7_0 = FightCardDataHelper.getSkillLv(arg_7_0.cardInfoMO.uid, arg_7_0.cardInfoMO.skillId)
 	local var_7_1 = arg_7_0._imgBgGos[var_7_0]
 
 	if var_7_1 then
@@ -109,7 +118,7 @@ function var_0_0.showOpForbid(arg_7_0)
 end
 
 function var_0_0.cancelOpForbid(arg_8_0)
-	for iter_8_0, iter_8_1 in ipairs(arg_8_0._imgBgs) do
+	for iter_8_0, iter_8_1 in pairs(arg_8_0._imgBgs) do
 		iter_8_1.material = nil
 	end
 end

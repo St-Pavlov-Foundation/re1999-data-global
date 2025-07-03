@@ -6,15 +6,15 @@ function var_0_0.onStart(arg_1_0)
 	arg_1_0._flow = FlowParallel.New()
 
 	arg_1_0._flow:addWork(FunctionWork.New(arg_1_0._resignDone, arg_1_0))
-	arg_1_0._flow:addWork(FightWork2Work.New(FightWorkEffectDamage, arg_1_0._fightStepMO, arg_1_0._actEffectMO))
+	arg_1_0._flow:addWork(FightWork2Work.New(FightWorkEffectDamage, arg_1_0.fightStepData, arg_1_0.actEffectData))
 	arg_1_0._flow:addWork(FunctionWork.New(arg_1_0._resignDone, arg_1_0))
-	arg_1_0._flow:addWork(FightWork2Work.New(FightBuffTriggerEffect, arg_1_0._fightStepMO, arg_1_0._actEffectMO))
+	arg_1_0._flow:addWork(FightWork2Work.New(FightBuffTriggerEffect, arg_1_0.fightStepData, arg_1_0.actEffectData))
 	arg_1_0._flow:registerDoneListener(arg_1_0._onFlowDone, arg_1_0)
 	arg_1_0._flow:start()
 end
 
 function var_0_0._resignDone(arg_2_0)
-	arg_2_0._actEffectMO:revertDone()
+	arg_2_0.actEffectData:revertDone()
 end
 
 function var_0_0._onFlowDone(arg_3_0)

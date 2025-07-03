@@ -211,7 +211,7 @@ end
 function var_0_0._onSkillPlayStart(arg_13_0, arg_13_1, arg_13_2)
 	local var_13_0 = arg_13_1:getMO()
 
-	if var_13_0 and var_13_0:isUniqueSkill(arg_13_2) then
+	if var_13_0 and FightCardDataHelper.isBigSkill(arg_13_2) then
 		local var_13_1 = FightHelper.getSideEntitys(var_13_0.side)
 
 		for iter_13_0, iter_13_1 in ipairs(var_13_1) do
@@ -223,7 +223,7 @@ end
 function var_0_0._onSkillPlayFinish(arg_14_0, arg_14_1, arg_14_2)
 	local var_14_0 = arg_14_1:getMO()
 
-	if var_14_0 and var_14_0:isUniqueSkill(arg_14_2) then
+	if var_14_0 and FightCardDataHelper.isBigSkill(arg_14_2) then
 		local var_14_1 = FightHelper.getSideEntitys(var_14_0.side)
 
 		for iter_14_0, iter_14_1 in ipairs(var_14_1) do

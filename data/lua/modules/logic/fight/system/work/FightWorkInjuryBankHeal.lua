@@ -4,11 +4,11 @@ local var_0_0 = class("FightWorkInjuryBankHeal", FightEffectBase)
 
 function var_0_0.onStart(arg_1_0)
 	local var_1_0 = 2 / FightModel.instance:getSpeed()
-	local var_1_1 = FightHelper.getEntity(arg_1_0._actEffectMO.targetId)
+	local var_1_1 = FightHelper.getEntity(arg_1_0.actEffectData.targetId)
 
 	if var_1_1 then
 		if var_1_1.nameUI then
-			local var_1_2 = arg_1_0._actEffectMO.effectNum
+			local var_1_2 = arg_1_0.actEffectData.effectNum
 			local var_1_3 = FightEnum.FloatType.heal
 
 			FightFloatMgr.instance:float(var_1_1.id, var_1_3, var_1_2)

@@ -5,14 +5,14 @@ local var_0_0 = class("FightASFDFlow", BaseFlow)
 var_0_0.DelayWaitTime = 61
 
 function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	arg_1_0.stepMo = arg_1_1
+	arg_1_0.fightStepData = arg_1_1
 	arg_1_0.curIndex = arg_1_3
 	arg_1_0.asfdContext = arg_1_0:getContext(arg_1_1)
-	arg_1_0.nextStepMo = arg_1_2
+	arg_1_0.nextStepData = arg_1_2
 end
 
 function var_0_0.createNormalSeq(arg_2_0)
-	local var_2_0 = arg_2_0.stepMo
+	local var_2_0 = arg_2_0.fightStepData
 
 	arg_2_0._sequence = FlowSequence.New()
 
@@ -23,7 +23,7 @@ function var_0_0.createNormalSeq(arg_2_0)
 	var_2_1:addWork(FightWorkMissileASFD.New(var_2_0, arg_2_0.asfdContext))
 
 	local var_2_2 = FlowParallel.New()
-	local var_2_3 = arg_2_0:checkNeedAddWaitDoneWork(arg_2_0.nextStepMo)
+	local var_2_3 = arg_2_0:checkNeedAddWaitDoneWork(arg_2_0.nextStepData)
 
 	if var_2_3 then
 		var_2_1:addWork(FightWorkMissileASFDDone.New(var_2_0))
@@ -46,11 +46,11 @@ function var_0_0.createPullOutSeq(arg_3_0)
 
 	local var_3_0 = FlowParallel.New()
 
-	var_3_0:addWork(FightWorkASFDClearEmitter.New(arg_3_0.stepMo))
-	var_3_0:addWork(FightWorkASFDPullOut.New(arg_3_0.stepMo))
-	var_3_0:addWork(FightWorkASFDEffectFlow.New(arg_3_0.stepMo))
+	var_3_0:addWork(FightWorkASFDClearEmitter.New(arg_3_0.fightStepData))
+	var_3_0:addWork(FightWorkASFDPullOut.New(arg_3_0.fightStepData))
+	var_3_0:addWork(FightWorkASFDEffectFlow.New(arg_3_0.fightStepData))
 	arg_3_0._sequence:addWork(var_3_0)
-	arg_3_0._sequence:addWork(FightWorkASFDDone.New(arg_3_0.stepMo))
+	arg_3_0._sequence:addWork(FightWorkASFDDone.New(arg_3_0.fightStepData))
 end
 
 function var_0_0.getContext(arg_4_0, arg_4_1)
@@ -70,7 +70,7 @@ function var_0_0.getContext(arg_4_0, arg_4_1)
 end
 
 function var_0_0.checkNeedAddWaitDoneWork(arg_5_0, arg_5_1)
-	if arg_5_0:checkHasMonsterChangeEffectType(arg_5_0.stepMo) then
+	if arg_5_0:checkHasMonsterChangeEffectType(arg_5_0.fightStepData) then
 		return true
 	end
 
@@ -94,12 +94,12 @@ function var_0_0.checkHasMonsterChangeEffectType(arg_6_0, arg_6_1)
 		return false
 	end
 
-	for iter_6_0, iter_6_1 in ipairs(arg_6_1.actEffectMOs) do
+	for iter_6_0, iter_6_1 in ipairs(arg_6_1.actEffect) do
 		if iter_6_1.effectType == FightEnum.EffectType.MONSTERCHANGE then
 			return true
 		end
 
-		if iter_6_1.effectType == FightEnum.EffectType.FIGHTSTEP and arg_6_0:checkHasMonsterChangeEffectType(iter_6_1.cus_stepMO) then
+		if iter_6_1.effectType == FightEnum.EffectType.FIGHTSTEP and arg_6_0:checkHasMonsterChangeEffectType(iter_6_1.fightStepData) then
 			return true
 		end
 	end
@@ -108,7 +108,7 @@ function var_0_0.checkHasMonsterChangeEffectType(arg_6_0, arg_6_1)
 end
 
 function var_0_0.onStart(arg_7_0)
-	if FightASFDHelper.isALFPullOutStep(arg_7_0.stepMo, arg_7_0.curIndex) then
+	if FightASFDHelper.isALFPullOutStep(arg_7_0.fightStepData, arg_7_0.curIndex) then
 		arg_7_0:createPullOutSeq()
 	else
 		arg_7_0:createNormalSeq()

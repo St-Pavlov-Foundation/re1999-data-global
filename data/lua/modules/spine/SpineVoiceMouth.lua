@@ -177,11 +177,11 @@ function var_0_0._playMouthActionList(arg_12_0, arg_12_1)
 
 				if var_12_3 then
 					if var_12_7 < var_12_6 then
-						logError(string.format("SpineVoiceMouth mouth配置后面的时间比前面的时间还小, mouthStart:%s > mouthEnd:%s", var_12_6, var_12_7))
+						logError(string.format("SpineVoiceMouth audio:%s mouth配置后面的时间比前面的时间还小, mouthStart:%s > mouthEnd:%s", arg_12_0._voiceConfig.audio, var_12_6, var_12_7))
 					end
 
 					if var_12_6 < var_12_2 then
-						logError(string.format("SpineVoiceMouth mouth配置后面的时间比前面的时间还小, mouthStart:%s < lastMouthEnd:%s", var_12_6, var_12_2))
+						logError(string.format("SpineVoiceMouth audio:%s mouth配置后面的时间比前面的时间还小, mouthStart:%s < lastMouthEnd:%s", arg_12_0._voiceConfig.audio, var_12_6, var_12_2))
 					end
 				end
 

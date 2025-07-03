@@ -665,10 +665,12 @@ function var_0_0._showTask(arg_54_0)
 	gohelper.setActive(arg_54_0._gofinishtask, arg_54_0._finishTask)
 	gohelper.setActive(arg_54_0._gounfinishtask, not arg_54_0._finishTask)
 
+	local var_54_5 = luaLang("dungeon_map_submit_new")
+
 	if arg_54_0._finishTask then
-		arg_54_0._txtfinishtask.text = string.format("%s%s<color=#00ff00>%s</color>/%s", luaLang("dungeon_map_submit"), var_54_3.name, var_54_4, var_54_2)
+		arg_54_0._txtfinishtask.text = GameUtil.getSubPlaceholderLuaLangThreeParam(var_54_5, var_54_3.name, var_54_4, var_54_2)
 	else
-		arg_54_0._txtunfinishtask.text = string.format("%s%s<color=#ff0000>%s</color>/%s", luaLang("dungeon_map_submit"), var_54_3.name, var_54_4, var_54_2)
+		arg_54_0._txtunfinishtask.text = GameUtil.getSubPlaceholderLuaLangThreeParam(var_54_5, var_54_3.name, var_54_4, var_54_2)
 	end
 end
 

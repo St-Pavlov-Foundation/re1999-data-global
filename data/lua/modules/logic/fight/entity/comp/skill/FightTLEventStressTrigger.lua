@@ -1,8 +1,8 @@
 ﻿module("modules.logic.fight.entity.comp.skill.FightTLEventStressTrigger", package.seeall)
 
-local var_0_0 = class("FightTLEventStressTrigger")
+local var_0_0 = class("FightTLEventStressTrigger", FightTimelineTrackItem)
 
-function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 	local var_1_0 = arg_1_1.fromId
 	local var_1_1 = FightModel.instance:popNoHandledStressBehaviour(var_1_0)
 
@@ -28,7 +28,7 @@ function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 	FightFloatMgr.instance:float(var_1_0, FightEnum.FloatType.stress, var_1_6, var_1_5)
 	FightController.instance:dispatchEvent(FightEvent.TriggerStressBehaviour, var_1_0, var_1_2)
 
-	for iter_1_0, iter_1_1 in ipairs(arg_1_1.actEffectMOs) do
+	for iter_1_0, iter_1_1 in ipairs(arg_1_1.actEffect) do
 		if iter_1_1.effectType == FightEnum.EffectType.POWERCHANGE and iter_1_1.targetId == var_1_0 and iter_1_1.configEffect == FightEnum.PowerType.Stress then
 			local var_1_7 = FightDataHelper.entityMgr:getById(var_1_0)
 			local var_1_8 = var_1_7 and var_1_7:getPowerInfo(FightEnum.PowerType.Stress)
@@ -47,19 +47,11 @@ function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 	end
 end
 
-function var_0_0.handleSkillEventEnd(arg_2_0)
+function var_0_0.onTrackEnd(arg_2_0)
 	return
 end
 
-function var_0_0.onSkillEnd(arg_3_0)
-	return
-end
-
-function var_0_0.clear(arg_4_0)
-	return
-end
-
-function var_0_0.dispose(arg_5_0)
+function var_0_0.onDestructor(arg_3_0)
 	return
 end
 

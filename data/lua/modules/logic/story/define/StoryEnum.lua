@@ -113,6 +113,7 @@ var_0_0.EffectOutType = {
 	Hard = 0
 }
 var_0_0.PictureType = {
+	Transparency = 4,
 	PicTxt = 3,
 	Float = 2,
 	FullScreen = 1,

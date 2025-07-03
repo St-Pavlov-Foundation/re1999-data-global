@@ -65,7 +65,7 @@ function var_0_0._showTotalFloat(arg_6_0)
 			local var_6_0 = false
 			local var_6_1 = 0
 
-			for iter_6_2, iter_6_3 in ipairs(iter_6_0.actEffectMOs) do
+			for iter_6_2, iter_6_3 in ipairs(iter_6_0.actEffect) do
 				if iter_6_3.targetId == arg_6_0.entity.id then
 					local var_6_2 = iter_6_3.effectType
 
@@ -75,7 +75,7 @@ function var_0_0._showTotalFloat(arg_6_0)
 				end
 			end
 
-			for iter_6_4, iter_6_5 in ipairs(iter_6_0.actEffectMOs) do
+			for iter_6_4, iter_6_5 in ipairs(iter_6_0.actEffect) do
 				if iter_6_5.targetId == arg_6_0.entity.id then
 					local var_6_3 = iter_6_5.effectType
 

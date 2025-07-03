@@ -103,7 +103,7 @@ function var_0_0.updateItem(arg_6_0, arg_6_1)
 	local var_6_0 = arg_6_1
 	local var_6_1 = not var_6_0
 	local var_6_2 = var_6_0 and (var_6_0:isMoveCard() or var_6_0:isMoveUniversal())
-	local var_6_3 = var_6_0 and (var_6_0:isPlayCard() or var_6_0:isAssistBossPlayCard() or var_6_0:isPlayerFinisherSkill())
+	local var_6_3 = FightCardDataHelper.checkOpAsPlayCardHandle(var_6_0)
 
 	gohelper.setActive(arg_6_0._emtpyGO, var_6_1)
 	gohelper.setActive(arg_6_0._moveGO, var_6_2)
@@ -256,7 +256,7 @@ function var_0_0._onClickThis(arg_21_0)
 		return
 	end
 
-	if FightCardModel.instance:isCardOpEnd() then
+	if FightDataHelper.operationDataMgr:isCardOpEnd() then
 		return
 	end
 

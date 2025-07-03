@@ -8,6 +8,7 @@ function var_0_0.onInitView(arg_1_0)
 	arg_1_0.txtlv = gohelper.findChildText(arg_1_0.viewGO, "anim/layout/auxiliary/#go_equipcontainer/#txt_lv")
 	arg_1_0._godestiny = gohelper.findChild(arg_1_0.viewGO, "anim/layout/auxiliary/#go_destiny")
 	arg_1_0._gostone = gohelper.findChild(arg_1_0.viewGO, "anim/layout/auxiliary/#go_destiny/#go_stone")
+	arg_1_0._txtdestiny = gohelper.findChildText(arg_1_0.viewGO, "anim/layout/auxiliary/#go_destiny/#txt_destiny")
 	arg_1_0._imagestone = gohelper.findChildSingleImage(arg_1_0.viewGO, "anim/layout/auxiliary/#go_destiny/#go_stone/#image_stone")
 	arg_1_0._btndestiny = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "anim/layout/auxiliary/#go_destiny/#btn_destiny")
 
@@ -260,6 +261,12 @@ function var_0_0._onRefreshDestinySystem(arg_16_0)
 
 			arg_16_0._imagestone:LoadImage(var_16_8)
 		end
+	end
+
+	if var_16_0 then
+		local var_16_9 = CharacterDestinyEnum.SlotTitle[arg_16_0.heroMo.config.heroType] or CharacterDestinyEnum.SlotTitle[1]
+
+		arg_16_0._txtdestiny.text = luaLang(var_16_9)
 	end
 
 	gohelper.setActive(arg_16_0._godestiny, var_16_0)

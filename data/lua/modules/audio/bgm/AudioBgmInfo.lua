@@ -93,6 +93,7 @@ function var_0_0._initBgmDatas(arg_2_0)
 	arg_2_0:_addBgmData(AudioBgmEnum.Layer.VersionActivity2_6Main, 0, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
 	arg_2_0:_addBgmData(AudioBgmEnum.Layer.VersionActivity2_6_DiceHero, AudioEnum2_6.DiceHero.Bgm, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
 	arg_2_0:_addBgmData(AudioBgmEnum.Layer.VersionActivity2_6_DiceHero_Game, AudioEnum2_6.DiceHero.Bgm_Game, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
+	arg_2_0:_addBgmData(AudioBgmEnum.Layer.VersionActivity2_7Main, 0, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
 end
 
 function var_0_0._initBgmUsage(arg_3_0)
@@ -519,6 +520,11 @@ function var_0_0._initBgmUsage(arg_3_0)
 		AudioBgmEnum.Layer.VersionActivity2_6_DiceHero_Game
 	}, AudioBgmEnum.UsageType.View, {
 		ViewName.DiceHeroGameView
+	}, nil, nil, true)
+	arg_3_0:_addBgmUsage({
+		AudioBgmEnum.Layer.VersionActivity2_7Main
+	}, AudioBgmEnum.UsageType.View, {
+		ViewName.VersionActivity2_7EnterView
 	}, nil, nil, true)
 end
 

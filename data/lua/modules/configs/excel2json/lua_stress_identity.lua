@@ -3,12 +3,13 @@
 local var_0_0 = {}
 local var_0_1 = {
 	param = 6,
-	name = 2,
 	effect = 5,
-	id = 1,
+	name = 2,
 	typeParam = 4,
 	isNoShow = 7,
 	desc = 8,
+	id = 1,
+	uiType = 9,
 	identity = 3
 }
 local var_0_2 = {

@@ -256,5 +256,11 @@
     "icon": "shen_guize_08",
     "additionRule": "1#9260207",
     "isCn": 0
+  },
+  {
+    "id": 44,
+    "icon": "shen_guize_12",
+    "additionRule": "1#9270102",
+    "isCn": 0
   }
 ]

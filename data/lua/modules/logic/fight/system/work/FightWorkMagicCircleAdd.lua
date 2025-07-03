@@ -6,9 +6,9 @@ function var_0_0.onStart(arg_1_0)
 	local var_1_0 = FightModel.instance:getMagicCircleInfo()
 
 	if var_1_0 then
-		local var_1_1 = arg_1_0._actEffectMO.magicCircle.magicCircleId
+		local var_1_1 = arg_1_0.actEffectData.magicCircle.magicCircleId
 
-		var_1_0:refreshData(arg_1_0._actEffectMO.magicCircle)
+		var_1_0:refreshData(arg_1_0.actEffectData.magicCircle)
 
 		local var_1_2 = lua_magic_circle.configDict[var_1_1]
 

@@ -117,6 +117,9 @@ function var_0_0._editableInitView(arg_7_0)
 	arg_7_0._simagebgleft:LoadImage(ResUrl.getCharacterGetIcon("bg_wz"))
 
 	arg_7_0._uiSpine = GuiModelAgent.Create(arg_7_0._gospine, true)
+
+	arg_7_0._uiSpine:setShareRT(CharacterVoiceEnum.RTShareType.Normal, CharacterVoiceEnum.NormalPriority.CharacterGetView)
+
 	arg_7_0._starList = arg_7_0:getUserDataTb_()
 
 	for iter_7_0 = 1, 6 do

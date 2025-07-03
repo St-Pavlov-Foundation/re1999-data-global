@@ -91,10 +91,6 @@ function var_0_0._enterFight(arg_2_0)
 end
 
 function var_0_0._initFightGroupDrop(arg_3_0)
-	if not arg_3_0:_noAidHero() then
-		return
-	end
-
 	local var_3_0 = HeroGroupModel.instance.episodeId
 	local var_3_1 = DungeonConfig.instance:getEpisodeCO(var_3_0).type
 	local var_3_2 = {}

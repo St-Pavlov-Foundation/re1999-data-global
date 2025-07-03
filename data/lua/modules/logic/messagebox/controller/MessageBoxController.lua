@@ -226,29 +226,57 @@ function var_0_0.showOptionMsgBox(arg_14_0, arg_14_1, arg_14_2, arg_14_3, arg_14
 	ViewMgr.instance:openView(ViewName.MessageOptionBoxView, var_14_1)
 end
 
-function var_0_0.canShowMessageOptionBoxView(arg_15_0, arg_15_1, arg_15_2)
-	local var_15_0 = arg_15_0:getOptionLocalKey(arg_15_1, arg_15_2)
-	local var_15_1 = true
+function var_0_0.showOptionAndParamsMsgBox(arg_15_0, arg_15_1, arg_15_2, arg_15_3, arg_15_4, arg_15_5, arg_15_6, arg_15_7, arg_15_8, arg_15_9, arg_15_10, ...)
+	arg_15_0._isShowSystemMsgBox = false
 
-	if arg_15_2 == MsgBoxEnum.optionType.Daily then
-		var_15_1 = TimeUtil.getDayFirstLoginRed(var_15_0)
-	elseif arg_15_2 == MsgBoxEnum.optionType.NotShow then
-		local var_15_2 = PlayerPrefsHelper.getString(var_15_0, "")
+	local var_15_0 = {
+		...
+	}
+	local var_15_1 = {
+		msg = MessageBoxConfig.instance:getMessage(arg_15_1),
+		messageBoxId = arg_15_1,
+		msgBoxType = arg_15_2,
+		optionType = arg_15_3,
+		optionExParam = arg_15_4,
+		yesCallback = arg_15_5,
+		noCallback = arg_15_6,
+		openCallback = arg_15_7,
+		yesCallbackObj = arg_15_8,
+		noCallbackObj = arg_15_9,
+		openCallbackObj = arg_15_10,
+		extra = var_15_0
+	}
 
-		var_15_1 = string.nilorempty(var_15_2)
+	ViewMgr.instance:openView(ViewName.MessageOptionBoxView, var_15_1)
+end
+
+function var_0_0.canShowMessageOptionBoxView(arg_16_0, arg_16_1, arg_16_2, arg_16_3)
+	local var_16_0 = arg_16_0:getOptionLocalKey(arg_16_1, arg_16_2, arg_16_3)
+	local var_16_1 = true
+
+	if arg_16_2 == MsgBoxEnum.optionType.Daily then
+		var_16_1 = TimeUtil.getDayFirstLoginRed(var_16_0)
+	elseif arg_16_2 == MsgBoxEnum.optionType.NotShow then
+		local var_16_2 = PlayerPrefsHelper.getString(var_16_0, "")
+
+		var_16_1 = string.nilorempty(var_16_2)
 	end
 
-	return var_15_1
+	return var_16_1
 end
 
-function var_0_0.getOptionLocalKey(arg_16_0, arg_16_1, arg_16_2)
-	return string.format("MessageOptionBoxView#%s#%s#%s", arg_16_1, arg_16_2, tostring(PlayerModel.instance:getPlayinfo().userId))
+function var_0_0.getOptionLocalKey(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
+	if arg_17_3 == nil then
+		return string.format("MessageOptionBoxView#%s#%s#%s", arg_17_1, arg_17_2, tostring(PlayerModel.instance:getPlayinfo().userId))
+	else
+		return string.format("MessageOptionBoxView#%s#%s#%s#%s", arg_17_1, arg_17_2, arg_17_3, tostring(PlayerModel.instance:getPlayinfo().userId))
+	end
 end
 
-function var_0_0.clearOption(arg_17_0, arg_17_1, arg_17_2)
-	local var_17_0 = arg_17_0:getOptionLocalKey(arg_17_1, arg_17_2)
+function var_0_0.clearOption(arg_18_0, arg_18_1, arg_18_2, arg_18_3)
+	local var_18_0 = arg_18_0:getOptionLocalKey(arg_18_1, arg_18_2, arg_18_3)
 
-	PlayerPrefsHelper.deleteKey(var_17_0)
+	PlayerPrefsHelper.deleteKey(var_18_0)
 end
 
 var_0_0.instance = var_0_0.New()

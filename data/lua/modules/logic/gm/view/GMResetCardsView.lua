@@ -19,7 +19,7 @@ end
 
 function var_0_0.onOpen(arg_4_0)
 	local var_4_0 = {}
-	local var_4_1 = FightCardModel.instance:getHandCardsByOps({})
+	local var_4_1 = FightDataHelper.handCardMgr.handCard
 
 	for iter_4_0, iter_4_1 in ipairs(var_4_1) do
 		table.insert(var_4_0, {

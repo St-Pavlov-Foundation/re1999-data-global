@@ -183,7 +183,7 @@ function var_0_0.endShowRewardView(arg_19_0)
 end
 
 function var_0_0.onRemoveElement(arg_20_0, arg_20_1)
-	if not arg_20_0._showRewardView then
+	if not arg_20_0._showRewardView or DungeonMapModel.instance:elementIsFinished(arg_20_1) then
 		arg_20_0:_removeElement(arg_20_1)
 		arg_20_0:showNewElements()
 	else

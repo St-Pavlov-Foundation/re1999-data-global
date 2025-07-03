@@ -2491,5 +2491,176 @@
     "audioId": 0,
     "dec_Type": 0,
     "dec": ""
+  },
+  {
+    "id": 60183,
+    "type": "SupplyShield2",
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0,
+    "dec_Type": 0,
+    "dec": ""
+  },
+  {
+    "id": 60184,
+    "type": "ResetBuffDuration1",
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0,
+    "dec_Type": 0,
+    "dec": ""
+  },
+  {
+    "id": 60185,
+    "type": "ResetBuffDuration2",
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0,
+    "dec_Type": 0,
+    "dec": ""
+  },
+  {
+    "id": 60186,
+    "type": "ResetBuffDuration3",
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0,
+    "dec_Type": 0,
+    "dec": ""
+  },
+  {
+    "id": 60187,
+    "type": "AddPowerByCritCount",
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0,
+    "dec_Type": 0,
+    "dec": ""
+  },
+  {
+    "id": 60188,
+    "type": "ConsumePowerUseSkill",
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0,
+    "dec_Type": 0,
+    "dec": ""
+  },
+  {
+    "id": 60189,
+    "type": "AddEnergyToCard",
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0,
+    "dec_Type": 0,
+    "dec": ""
+  },
+  {
+    "id": 60190,
+    "type": "BloodPoolMaxChange",
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0,
+    "dec_Type": 0,
+    "dec": ""
+  },
+  {
+    "id": 60191,
+    "type": "BloodPoolValueChange",
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0,
+    "dec_Type": 0,
+    "dec": ""
+  },
+  {
+    "id": 60192,
+    "type": "DoomsdayClockInit",
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0,
+    "dec_Type": 0,
+    "dec": ""
+  },
+  {
+    "id": 60193,
+    "type": "DoomsdayClockChange",
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0,
+    "dec_Type": 0,
+    "dec": ""
+  },
+  {
+    "id": 60194,
+    "type": "ColdSaturdayFIxBuff",
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0,
+    "dec_Type": 0,
+    "dec": ""
+  },
+  {
+    "id": 60195,
+    "type": "ElectricTransform",
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0,
+    "dec_Type": 0,
+    "dec": ""
+  },
+  {
+    "id": 60196,
+    "type": "DirectUseExSkillNoConsumeExPoint",
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0,
+    "dec_Type": 0,
+    "dec": ""
+  },
+  {
+    "id": 60197,
+    "type": "DoomsdayClockChassisChange",
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0,
+    "dec_Type": 0,
+    "dec": ""
+  },
+  {
+    "id": 60198,
+    "type": "ClientEffect",
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0,
+    "dec_Type": 0,
+    "dec": ""
+  },
+  {
+    "id": 60199,
+    "type": "ConsumeBloodPoolHeal",
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0,
+    "dec_Type": 0,
+    "dec": ""
+  },
+  {
+    "id": 60200,
+    "type": "ChangeHuntingValue",
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0,
+    "dec_Type": 0,
+    "dec": ""
+  },
+  {
+    "id": 60201,
+    "type": "ChangeCoinValue",
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0,
+    "dec_Type": 0,
+    "dec": ""
   }
 ]

@@ -3,13 +3,13 @@
 local var_0_0 = class("FightWorkEffectHeal", FightEffectBase)
 
 function var_0_0.onStart(arg_1_0)
-	if not arg_1_0._actEffectMO then
+	if not arg_1_0.actEffectData then
 		arg_1_0:onDone(true)
 
 		return
 	end
 
-	local var_1_0 = FightHelper.getEntity(arg_1_0._actEffectMO.targetId)
+	local var_1_0 = FightHelper.getEntity(arg_1_0.actEffectData.targetId)
 
 	if var_1_0 then
 		if not var_1_0.nameUI then
@@ -19,8 +19,8 @@ function var_0_0.onStart(arg_1_0)
 		end
 
 		local var_1_1 = var_1_0.nameUI:getHp()
-		local var_1_2 = arg_1_0._actEffectMO.effectNum
-		local var_1_3 = arg_1_0._actEffectMO.effectType == FightEnum.EffectType.HEALCRIT and FightEnum.FloatType.crit_heal or FightEnum.FloatType.heal
+		local var_1_2 = arg_1_0.actEffectData.effectNum
+		local var_1_3 = arg_1_0.actEffectData.effectType == FightEnum.EffectType.HEALCRIT and FightEnum.FloatType.crit_heal or FightEnum.FloatType.heal
 
 		FightFloatMgr.instance:float(var_1_0.id, var_1_3, var_1_2)
 		var_1_0.nameUI:addHp(var_1_2)

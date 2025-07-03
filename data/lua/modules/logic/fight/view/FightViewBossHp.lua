@@ -1,6 +1,6 @@
 ﻿module("modules.logic.fight.view.FightViewBossHp", package.seeall)
 
-local var_0_0 = class("FightViewBossHp", BaseViewExtended)
+local var_0_0 = class("FightViewBossHp", FightBaseView)
 
 var_0_0.VariantIdToMaterialPath = {
 	"ui/materials/dynamic/ui_headicon_stylization_1.mat",
@@ -52,57 +52,37 @@ end
 
 function var_0_0.onOpen(arg_2_0)
 	arg_2_0._btnpassiveSkill:AddClickListener(arg_2_0._onClickPassiveSkill, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.RespBeginRound, arg_2_0._checkBossAndUpdate, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.OnChangeEntity, arg_2_0._checkBossAndUpdate, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.OnEntityDead, arg_2_0._onEntityDead, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.OnBeginWave, arg_2_0._onBeginWave, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.UpdateExPoint, arg_2_0._updateExPoint, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.OnHpChange, arg_2_0._onHpChange, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.OnShieldChange, arg_2_0._onShieldChange, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.OnMonsterChange, arg_2_0._onMonsterChange, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.OnRestartStageBefore, arg_2_0._onRestartStage, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.GMHideFightView, arg_2_0._checkBossAndUpdate, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.OnMaxHpChange, arg_2_0._onMaxHpChange, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.OnCurrentHpChange, arg_2_0._onCurrentHpChange, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.OnBuffUpdate, arg_2_0._onBuffUpdate, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.MultiHpChange, arg_2_0._onMultiHpChange, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.BeforeDeadEffect, arg_2_0._onBeforeDeadEffect, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.PushTeamInfo, arg_2_0._onMonsterChange, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.OnSummon, arg_2_0._checkBossAndUpdate, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.ForceUpdatePerformanceData, arg_2_0._onForceUpdatePerformanceData, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.ChangeCareer, arg_2_0._onChangeCareer, arg_2_0)
-	arg_2_0:addEventCb(FightController.instance, FightEvent.ChangeShield, arg_2_0._onChangeShield, arg_2_0)
+	arg_2_0:com_registFightEvent(FightEvent.RespBeginRound, arg_2_0._checkBossAndUpdate)
+	arg_2_0:com_registFightEvent(FightEvent.OnChangeEntity, arg_2_0._checkBossAndUpdate)
+	arg_2_0:com_registFightEvent(FightEvent.OnEntityDead, arg_2_0._onEntityDead)
+	arg_2_0:com_registFightEvent(FightEvent.OnBeginWave, arg_2_0._onBeginWave)
+	arg_2_0:com_registFightEvent(FightEvent.UpdateExPoint, arg_2_0._updateExPoint)
+	arg_2_0:com_registFightEvent(FightEvent.OnHpChange, arg_2_0._onHpChange)
+	arg_2_0:com_registFightEvent(FightEvent.OnShieldChange, arg_2_0._onShieldChange)
+	arg_2_0:com_registFightEvent(FightEvent.OnMonsterChange, arg_2_0._onMonsterChange)
+	arg_2_0:com_registFightEvent(FightEvent.OnRestartStageBefore, arg_2_0._onRestartStage)
+	arg_2_0:com_registFightEvent(FightEvent.GMHideFightView, arg_2_0._checkBossAndUpdate)
+	arg_2_0:com_registFightEvent(FightEvent.OnMaxHpChange, arg_2_0._onMaxHpChange)
+	arg_2_0:com_registFightEvent(FightEvent.OnCurrentHpChange, arg_2_0._onCurrentHpChange)
+	arg_2_0:com_registFightEvent(FightEvent.OnBuffUpdate, arg_2_0._onBuffUpdate)
+	arg_2_0:com_registFightEvent(FightEvent.MultiHpChange, arg_2_0._onMultiHpChange)
+	arg_2_0:com_registFightEvent(FightEvent.BeforeDeadEffect, arg_2_0._onBeforeDeadEffect)
+	arg_2_0:com_registFightEvent(FightEvent.PushTeamInfo, arg_2_0._onMonsterChange)
+	arg_2_0:com_registFightEvent(FightEvent.OnSummon, arg_2_0._checkBossAndUpdate)
+	arg_2_0:com_registFightEvent(FightEvent.CoverPerformanceEntityData, arg_2_0.onCoverPerformanceEntityData)
+	arg_2_0:com_registFightEvent(FightEvent.ChangeCareer, arg_2_0._onChangeCareer)
+	arg_2_0:com_registFightEvent(FightEvent.ChangeShield, arg_2_0._onChangeShield)
 
 	arg_2_0.sheildWidth = recthelper.getWidth(arg_2_0._goHpShield.transform)
 
 	arg_2_0:_checkBossAndUpdate()
 
 	if BossRushController.instance:isInBossRushFight(true) then
-		arg_2_0:openSubView(FightViewBossHpBossRushAction, "ui/viewres/fight/fightviewbosshpbossrushaction.prefab", arg_2_0._bossActionRoot)
+		arg_2_0:com_openSubView(FightViewBossHpBossRushAction, "ui/viewres/fight/fightviewbosshpbossrushaction.prefab", arg_2_0._bossActionRoot)
 	end
 end
 
 function var_0_0.onClose(arg_3_0)
-	arg_3_0:removeEventCb(FightController.instance, FightEvent.RespBeginRound, arg_3_0._checkBossAndUpdate, arg_3_0)
-	arg_3_0:removeEventCb(FightController.instance, FightEvent.OnChangeEntity, arg_3_0._checkBossAndUpdate, arg_3_0)
-	arg_3_0:removeEventCb(FightController.instance, FightEvent.OnEntityDead, arg_3_0._onEntityDead, arg_3_0)
-	arg_3_0:removeEventCb(FightController.instance, FightEvent.OnBeginWave, arg_3_0._onBeginWave, arg_3_0)
-	arg_3_0:removeEventCb(FightController.instance, FightEvent.UpdateExPoint, arg_3_0._updateExPoint, arg_3_0)
-	arg_3_0:removeEventCb(FightController.instance, FightEvent.OnHpChange, arg_3_0._onHpChange, arg_3_0)
-	arg_3_0:removeEventCb(FightController.instance, FightEvent.OnShieldChange, arg_3_0._onShieldChange, arg_3_0)
-	arg_3_0:removeEventCb(FightController.instance, FightEvent.OnMonsterChange, arg_3_0._onMonsterChange, arg_3_0)
-	arg_3_0:removeEventCb(FightController.instance, FightEvent.OnRestartStageBefore, arg_3_0._onRestartStage, arg_3_0)
-	arg_3_0:removeEventCb(FightController.instance, FightEvent.GMHideFightView, arg_3_0._checkBossAndUpdate, arg_3_0)
-	arg_3_0:removeEventCb(FightController.instance, FightEvent.OnMaxHpChange, arg_3_0._onMaxHpChange, arg_3_0)
-	arg_3_0:removeEventCb(FightController.instance, FightEvent.OnCurrentHpChange, arg_3_0._onCurrentHpChange, arg_3_0)
-	arg_3_0:removeEventCb(FightController.instance, FightEvent.OnBuffUpdate, arg_3_0._onBuffUpdate, arg_3_0)
-	arg_3_0:removeEventCb(FightController.instance, FightEvent.MultiHpChange, arg_3_0._onMultiHpChange, arg_3_0)
-	arg_3_0:removeEventCb(FightController.instance, FightEvent.BeforeDeadEffect, arg_3_0._onBeforeDeadEffect, arg_3_0)
-	arg_3_0:removeEventCb(FightController.instance, FightEvent.PushTeamInfo, arg_3_0._onMonsterChange, arg_3_0)
-	arg_3_0:removeEventCb(FightController.instance, FightEvent.OnSummon, arg_3_0._checkBossAndUpdate, arg_3_0)
-	arg_3_0:removeEventCb(FightController.instance, FightEvent.ForceUpdatePerformanceData, arg_3_0._onForceUpdatePerformanceData, arg_3_0)
-	arg_3_0:removeEventCb(FightController.instance, FightEvent.ChangeCareer, arg_3_0._onChangeCareer, arg_3_0)
-	arg_3_0:removeEventCb(FightController.instance, FightEvent.ChangeShield, arg_3_0._onChangeShield, arg_3_0)
 	arg_3_0._btnpassiveSkill:RemoveClickListener()
 end
 
@@ -157,7 +137,7 @@ function var_0_0._checkBossAndUpdate(arg_7_0)
 
 	if arg_7_0._bossEntityMO and arg_7_0._bossEntityMO:getPowerInfo(FightEnum.PowerType.Energy) then
 		if not arg_7_0._bossEnergyView then
-			arg_7_0._bossEnergyView = arg_7_0:openSubView(FightViewBossEnergy, "ui/viewres/fight/assisthpbar.prefab", arg_7_0._bossEnergyRoot, arg_7_0._bossEntityMO)
+			arg_7_0._bossEnergyView = arg_7_0:com_openSubView(FightViewBossEnergy, "ui/viewres/fight/assisthpbar.prefab", arg_7_0._bossEnergyRoot, arg_7_0._bossEntityMO)
 		end
 
 		gohelper.setActive(arg_7_0._bossEnergyRoot, true)
@@ -655,7 +635,7 @@ function var_0_0._onChangeShield(arg_37_0, arg_37_1)
 	end
 end
 
-function var_0_0._onForceUpdatePerformanceData(arg_38_0, arg_38_1)
+function var_0_0.onCoverPerformanceEntityData(arg_38_0, arg_38_1)
 	if not arg_38_0._bossEntityMO or arg_38_1 ~= arg_38_0._bossEntityMO.id then
 		return
 	end

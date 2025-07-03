@@ -2788,5 +2788,104 @@
     "effect": "",
     "effectHangPoint": "",
     "audioId": 0
+  },
+  {
+    "id": 945,
+    "type": "CritRateAlter2",
+    "effectTime": 903,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 946,
+    "type": "BigSkillNoUseActPoint",
+    "effectTime": 0,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 947,
+    "type": "AddSelfSkill3Card",
+    "effectTime": 306,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 948,
+    "type": "ColdSaturdayHurt",
+    "effectTime": 302,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 949,
+    "type": "ColdSaturdayPro",
+    "effectTime": 0,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 950,
+    "type": "ConsumeBuffAddSelfSkill3Card",
+    "effectTime": 105,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 951,
+    "type": "CardNotCalSize",
+    "effectTime": 0,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 952,
+    "type": "ConsumeBuffAddSelfSkill3Card",
+    "effectTime": 306,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 953,
+    "type": "BloodPoolTag",
+    "effectTime": 0,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 954,
+    "type": "GravitationalTraps",
+    "effectTime": 302,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 955,
+    "type": "AttrByShield",
+    "effectTime": 0,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
   }
 ]

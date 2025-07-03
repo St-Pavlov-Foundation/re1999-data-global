@@ -40,7 +40,7 @@ function var_0_0.onAfterAddUseCardOnContainer(arg_4_0, arg_4_1)
 	end
 
 	local var_4_0 = 0
-	local var_4_1 = arg_4_1.actEffectMOs
+	local var_4_1 = arg_4_1.actEffect
 	local var_4_2 = 0
 
 	for iter_4_0, iter_4_1 in ipairs(var_4_1) do

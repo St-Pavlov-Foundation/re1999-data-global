@@ -1,0 +1,32 @@
+[
+  {
+    "activityId": 12701,
+    "id": 101,
+    "nextId": 102,
+    "initStage": 1,
+    "rule": "1011",
+    "name": "language_10027323",
+    "score": 300,
+    "coin": 40
+  },
+  {
+    "activityId": 12701,
+    "id": 102,
+    "nextId": 103,
+    "initStage": 0,
+    "rule": "1021",
+    "name": "language_10006180",
+    "score": 500,
+    "coin": 60
+  },
+  {
+    "activityId": 12701,
+    "id": 103,
+    "nextId": 0,
+    "initStage": 0,
+    "rule": "1031",
+    "name": "language_10027326",
+    "score": 700,
+    "coin": 0
+  }
+]

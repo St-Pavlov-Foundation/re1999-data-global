@@ -1,0 +1,65 @@
+[
+  {
+    "activityId": 12701,
+    "style": 1,
+    "name": "language_10018041",
+    "desc": "",
+    "coin": 25,
+    "hero": "10371#10461#10141",
+    "item": "20016#20024"
+  },
+  {
+    "activityId": 12701,
+    "style": 2,
+    "name": "language_10042206",
+    "desc": "",
+    "coin": 25,
+    "hero": "10441#10031#10331",
+    "item": "20022#20019"
+  },
+  {
+    "activityId": 12701,
+    "style": 3,
+    "name": "language_10063814",
+    "desc": "",
+    "coin": 25,
+    "hero": "10411#10801#10011",
+    "item": "20018#20018"
+  },
+  {
+    "activityId": 12701,
+    "style": 4,
+    "name": "language_10072858",
+    "desc": "",
+    "coin": 25,
+    "hero": "10611#10311#10011",
+    "item": "20017#20023"
+  },
+  {
+    "activityId": 12701,
+    "style": 5,
+    "name": "language_90001154",
+    "desc": "",
+    "coin": 25,
+    "hero": "10551#10071#10641",
+    "item": "20020#20016"
+  },
+  {
+    "activityId": 12701,
+    "style": 6,
+    "name": "language_10072844",
+    "desc": "",
+    "coin": 25,
+    "hero": "10391#10701#10401",
+    "item": "20021#20021"
+  },
+  {
+    "activityId": 12701,
+    "style": 7,
+    "name": "language_10072893",
+    "desc": "",
+    "coin": 25,
+    "hero": "10521#10731#10381",
+    "item": "20019#20019"
+  }
+]

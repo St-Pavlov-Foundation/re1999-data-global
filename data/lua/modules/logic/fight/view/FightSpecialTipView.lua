@@ -156,7 +156,7 @@ function var_0_0.onOpen(arg_9_0)
 	local var_9_15 = FightDataHelper.fieldMgr.customData[FightCustomData.CustomDataType.Act183]
 
 	if var_9_15 then
-		local var_9_16 = cjson.decode(var_9_15)
+		local var_9_16 = var_9_15
 
 		if var_9_16.currRules then
 			var_9_11 = var_9_11 or {}

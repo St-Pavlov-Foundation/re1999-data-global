@@ -234,7 +234,7 @@ function var_0_0.refreshNormalGoods(arg_16_0)
 		local var_16_2 = StoreConfig.instance:getGoodsConfig(var_16_0.goodsId).needEpisodeId
 
 		if var_16_2 == StoreEnum.Need4RDEpisodeId then
-			arg_16_0._txtlvlimit.text = string.format("%s%s", luaLang("level_limit_4RD_unlock"), luaLang("dungeon_unlock"))
+			arg_16_0._txtlvlimit.text = luaLang("store_decorate_good_unlock")
 		else
 			local var_16_3 = DungeonConfig.instance:getEpisodeCO(var_16_2)
 			local var_16_4 = DungeonConfig.instance:getChapterCO(var_16_3.chapterId)
@@ -553,7 +553,9 @@ function var_0_0.refreshActGoods(arg_21_0)
 
 	local var_21_10 = FurnaceTreasureModel.instance:getGoodsRemainCount(var_21_1, var_21_2)
 
-	arg_21_0._txtremain.text = string.format("%s:%d", luaLang("store_buylimit_day"), var_21_10)
+	arg_21_0._txtremain.text = GameUtil.getSubPlaceholderLuaLang(luaLang("store_decorate_good_remain"), {
+		var_21_10
+	})
 
 	gohelper.setActive(arg_21_0._txtremain.gameObject, true)
 	gohelper.setActive(arg_21_0._gohas, false)
@@ -689,7 +691,7 @@ function var_0_0.refreshGoUnique(arg_30_0)
 end
 
 function var_0_0.checkShowTicket(arg_31_0)
-	if arg_31_0._mo.belongStoreId == StoreEnum.SubRoomOld or arg_31_0._mo.belongStoreId == StoreEnum.SubRoomNew then
+	if arg_31_0._mo.belongStoreId == StoreEnum.StoreId.OldRoomStore or arg_31_0._mo.belongStoreId == StoreEnum.StoreId.NewRoomStore then
 		if arg_31_0._itemType ~= MaterialEnum.MaterialType.BlockPackage and arg_31_0._itemType ~= MaterialEnum.MaterialType.Building then
 			return false
 		end

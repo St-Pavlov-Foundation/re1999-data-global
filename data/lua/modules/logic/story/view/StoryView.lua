@@ -1214,7 +1214,10 @@ end
 function var_0_0._destroyPicture(arg_67_0, arg_67_1, arg_67_2, arg_67_3)
 	if not arg_67_0._pictures[arg_67_1] then
 		if arg_67_3 then
-			arg_67_0:_buildPicture(arg_67_1, arg_67_2, arg_67_3)
+			if arg_67_2.orderType == StoryEnum.PictureOrderType.Produce then
+				arg_67_0:_buildPicture(arg_67_1, arg_67_2, arg_67_3)
+			end
+
 			TaskDispatcher.runDelay(function()
 				local var_68_0 = 0
 				local var_68_1 = arg_67_0._stepCo.videoList
@@ -1223,6 +1226,10 @@ function var_0_0._destroyPicture(arg_67_0, arg_67_1, arg_67_2, arg_67_3)
 					if iter_68_1.orderType == StoryEnum.VideoOrderType.Produce then
 						var_68_0 = 0.5
 					end
+				end
+
+				if not arg_67_0._pictures[arg_67_1] then
+					return
 				end
 
 				arg_67_0._pictures[arg_67_1]:destroyPicture(arg_67_2, arg_67_3, var_68_0)

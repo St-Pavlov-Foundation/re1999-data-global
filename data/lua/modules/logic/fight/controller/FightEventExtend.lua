@@ -11,12 +11,10 @@ function var_0_0._onStageChange(arg_2_0, arg_2_1)
 		return
 	end
 
-	local var_2_0 = FightCardModel.instance:getHandCards()
+	local var_2_0 = FightDataHelper.handCardMgr.handCard
 
 	for iter_2_0, iter_2_1 in ipairs(var_2_0) do
-		local var_2_1 = FightDataHelper.entityMgr:getById(iter_2_1.uid)
-
-		if var_2_1 and FightConfig:isUniqueSkill(iter_2_1.skillId, var_2_1.modelId) then
+		if FightDataHelper.entityMgr:getById(iter_2_1.uid) and FightCardDataHelper.isBigSkill(iter_2_1.skillId) then
 			FightController.instance:dispatchEvent(FightEvent.OnGuideGetUniqueCard)
 
 			return

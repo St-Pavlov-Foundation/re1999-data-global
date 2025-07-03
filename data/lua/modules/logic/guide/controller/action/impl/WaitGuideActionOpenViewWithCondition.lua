@@ -275,28 +275,69 @@ function var_0_0.isUnlockEpisode(arg_29_0)
 	return LiangYueModel.instance:isEpisodeFinish(var_29_0, arg_29_0) == tonumber(arg_29_0)
 end
 
-function var_0_0.commonCheck(arg_30_0)
-	if not arg_30_0 then
+function var_0_0.checkAct191NodeType(arg_30_0)
+	arg_30_0 = tonumber(arg_30_0)
+
+	local var_30_0 = Activity191Model.instance:getActInfo()
+
+	if var_30_0 then
+		local var_30_1 = var_30_0:getGameInfo()
+		local var_30_2 = var_30_1:getNodeInfoById(var_30_1.curNode)
+
+		if #var_30_2.selectNodeStr ~= 0 then
+			local var_30_3 = Act191NodeDetailMO.New()
+
+			var_30_3:init(var_30_2.selectNodeStr[1])
+
+			if arg_30_0 == 1 and Activity191Helper.isPveBattle(var_30_3.type) then
+				return true
+			elseif arg_30_0 == 2 and Activity191Helper.isPvpBattle(var_30_3.type) then
+				return true
+			end
+		end
+	end
+
+	return false
+end
+
+function var_0_0.checkAct191Stage(arg_31_0)
+	arg_31_0 = tonumber(arg_31_0)
+
+	local var_31_0 = Activity191Model.instance:getActInfo()
+
+	if var_31_0 then
+		local var_31_1 = var_31_0:getGameInfo()
+
+		if var_31_1 and var_31_1.curStage == arg_31_0 then
+			return true
+		end
+	end
+
+	return false
+end
+
+function var_0_0.commonCheck(arg_32_0)
+	if not arg_32_0 then
 		return false
 	end
 
-	local var_30_0 = string.split(arg_30_0, "_")
-	local var_30_1 = _G[var_30_0[1]]
+	local var_32_0 = string.split(arg_32_0, "_")
+	local var_32_1 = _G[var_32_0[1]]
 
-	if not var_30_1 then
+	if not var_32_1 then
 		return false
 	end
 
-	local var_30_2 = var_30_1[var_30_0[2]]
+	local var_32_2 = var_32_1[var_32_0[2]]
 
-	if not var_30_2 then
+	if not var_32_2 then
 		return false
 	end
 
-	if var_30_1.instance then
-		return var_30_2(var_30_1.instance, unpack(var_30_0, 3))
+	if var_32_1.instance then
+		return var_32_2(var_32_1.instance, unpack(var_32_0, 3))
 	else
-		return var_30_2(unpack(var_30_0, 3))
+		return var_32_2(unpack(var_32_0, 3))
 	end
 end
 

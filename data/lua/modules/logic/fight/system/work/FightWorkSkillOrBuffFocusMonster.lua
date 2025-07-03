@@ -3,11 +3,11 @@
 local var_0_0 = class("FightWorkSkillOrBuffFocusMonster", BaseWork)
 
 function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0._fightStepMO = arg_1_1
+	arg_1_0.fightStepData = arg_1_1
 end
 
 function var_0_0.onStart(arg_2_0)
-	local var_2_0 = arg_2_0:isSkillFocus(arg_2_0._fightStepMO)
+	local var_2_0 = arg_2_0:isSkillFocus(arg_2_0.fightStepData)
 
 	if var_2_0 then
 		ViewMgr.instance:openView(ViewName.FightTechniqueGuideView, {
@@ -54,7 +54,7 @@ function var_0_0.isSkillFocus(arg_5_0, arg_5_1)
 	local var_5_2 = FightConfig.instance:getMonsterGuideFocusConfig(var_5_0.episodeId, arg_5_1.actType, arg_5_1.actId, var_5_1:getMO().modelId)
 
 	if not var_5_2 then
-		for iter_5_0, iter_5_1 in ipairs(arg_5_1.actEffectMOs) do
+		for iter_5_0, iter_5_1 in ipairs(arg_5_1.actEffect) do
 			if iter_5_1.effectType == FightEnum.EffectType.BUFFADD then
 				local var_5_3 = FightDataHelper.entityMgr:getById(iter_5_1.targetId)
 

@@ -89,7 +89,7 @@ local function var_0_1(arg_13_0)
 	local var_13_0 = GameBranchMgr.instance:getMajorVer()
 	local var_13_1 = GameBranchMgr.instance:getMinorVer()
 
-	return _G[string.format(arg_13_0, 2, 7)]
+	return _G[string.format(arg_13_0, var_13_0, var_13_1)]
 end
 
 function var_0_0.Vxax_LinkageActivity_FullView_ContainerImpl()

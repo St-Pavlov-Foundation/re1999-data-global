@@ -6,13 +6,16 @@ function var_0_0._rewardItemShow(arg_1_0, arg_1_1, arg_1_2)
 	local var_1_0 = arg_1_0._itemList[arg_1_2]
 	local var_1_1 = var_1_0.itemIcon
 	local var_1_2 = var_1_0.viewGO
-	local var_1_3 = string.splitToNumber(arg_1_1, "#")
+	local var_1_3 = var_1_0.goHasGet
+	local var_1_4 = string.splitToNumber(arg_1_1, "#")
+	local var_1_5 = Season166TrainModel.instance:checkIsFinish(arg_1_0.actId, arg_1_0.trainId)
 
 	gohelper.setActive(var_1_2, true)
-	var_1_1:setMOValue(var_1_3[1], var_1_3[2], var_1_3[3])
+	var_1_1:setMOValue(var_1_4[1], var_1_4[2], var_1_4[3])
 	var_1_1:setHideLvAndBreakFlag(true)
 	var_1_1:hideEquipLvAndBreak(true)
 	var_1_1:setCountFontSize(51)
+	gohelper.setActive(var_1_3, var_1_5)
 end
 
 function var_0_0.onInitView(arg_2_0)
@@ -129,23 +132,24 @@ function var_0_0.refreshReward(arg_13_0)
 	for iter_13_0, iter_13_1 in ipairs(var_13_0) do
 		if not arg_13_0._itemList[iter_13_0] then
 			local var_13_1 = gohelper.cloneInPlace(arg_13_0._gorewardItem)
-			local var_13_2 = arg_13_0:rewardItemShow(var_13_1, iter_13_1, iter_13_0)
-			local var_13_3 = {
+			local var_13_2, var_13_3 = arg_13_0:rewardItemShow(var_13_1, iter_13_1, iter_13_0)
+			local var_13_4 = {
 				viewGO = var_13_1,
-				itemIcon = var_13_2
+				itemIcon = var_13_2,
+				goHasGet = var_13_3
 			}
 
-			arg_13_0._itemList[iter_13_0] = var_13_3
+			arg_13_0._itemList[iter_13_0] = var_13_4
 		end
 
 		arg_13_0:_rewardItemShow(iter_13_1, iter_13_0)
 	end
 
 	for iter_13_2 = #var_13_0 + 1, #arg_13_0._itemList do
-		local var_13_4 = arg_13_0._itemList[iter_13_2]
+		local var_13_5 = arg_13_0._itemList[iter_13_2]
 
-		if var_13_4 then
-			gohelper.setActive(var_13_4.viewGO, false)
+		if var_13_5 then
+			gohelper.setActive(var_13_5.viewGO, false)
 		end
 	end
 end
@@ -165,7 +169,7 @@ function var_0_0.rewardItemShow(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
 
 	gohelper.setActive(var_14_1, var_14_4)
 
-	return var_14_2
+	return var_14_2, var_14_1
 end
 
 function var_0_0.setCloseOverrideFunc(arg_15_0)

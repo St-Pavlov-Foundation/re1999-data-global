@@ -5,6 +5,7 @@ local var_0_0 = class("ActivityCategoryItem", ListScrollCell)
 function var_0_0.init(arg_1_0, arg_1_1)
 	arg_1_0.go = arg_1_1
 	arg_1_0._goselect = gohelper.findChild(arg_1_1, "beselected")
+	arg_1_0._goselectbg = gohelper.findChild(arg_1_1, "beselected/selecticon")
 	arg_1_0._gounselect = gohelper.findChild(arg_1_1, "noselected")
 	arg_1_0._txtnamecn = gohelper.findChildText(arg_1_1, "beselected/activitynamecn")
 	arg_1_0._txtnameen = gohelper.findChildText(arg_1_1, "beselected/activitynamecn/activitynameen")
@@ -12,6 +13,9 @@ function var_0_0.init(arg_1_0, arg_1_1)
 	arg_1_0._txtunselectnameen = gohelper.findChildText(arg_1_1, "noselected/noactivitynamecn/noactivitynameen")
 	arg_1_0._goreddot = gohelper.findChild(arg_1_1, "#go_reddot")
 	arg_1_0._itemClick = gohelper.getClickWithAudio(arg_1_0.go)
+
+	gohelper.setActive(arg_1_0._goselectbg, false)
+
 	arg_1_0._anim = arg_1_0.go:GetComponent(typeof(UnityEngine.Animator))
 	arg_1_0._openAnimTime = 0.43
 
@@ -124,7 +128,7 @@ function var_0_0._refreshItem(arg_6_0)
 			RedDotController.instance:addRedDot(arg_6_0._goreddot, var_6_4, nil, arg_6_0.checkActivityShowFirstEnter, arg_6_0)
 		elseif var_6_2 == VersionActivity2_2Enum.ActivityId.LimitDecorate then
 			RedDotController.instance:addRedDot(arg_6_0._goreddot, var_6_8, var_6_2, arg_6_0.checkActivityShowFirstEnter, arg_6_0)
-		elseif var_6_2 == ActivityEnum.Activity.Activity1_9WarmUp or var_6_2 == ActivityEnum.Activity.V2a0_WarmUp or var_6_2 == ActivityEnum.Activity.V2a1_WarmUp or var_6_2 == ActivityEnum.Activity.V2a2_WarmUp or var_6_2 == ActivityEnum.Activity.V2a3_WarmUp or var_6_2 == ActivityEnum.Activity.RoomSign or var_6_2 == ActivityEnum.Activity.V2a5_WarmUp or var_6_2 == ActivityEnum.Activity.V2a6_WarmUp then
+		elseif var_6_2 == ActivityEnum.Activity.Activity1_9WarmUp or var_6_2 == ActivityEnum.Activity.V2a0_WarmUp or var_6_2 == ActivityEnum.Activity.V2a1_WarmUp or var_6_2 == ActivityEnum.Activity.V2a2_WarmUp or var_6_2 == ActivityEnum.Activity.V2a3_WarmUp or var_6_2 == ActivityEnum.Activity.RoomSign or var_6_2 == ActivityEnum.Activity.V2a5_WarmUp or var_6_2 == ActivityEnum.Activity.V2a6_WarmUp or var_6_2 == ActivityEnum.Activity.V2a7_WarmUp then
 			if arg_6_0._selected then
 				Activity125Controller.instance:saveEnterActDateInfo(var_6_2)
 

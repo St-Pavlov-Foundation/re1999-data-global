@@ -3989,10 +3989,10 @@
     "consume": "1#133074#1",
     "requirement": "",
     "desc": "language_10017829",
-    "skillGroup1": "",
+    "skillGroup1": "30740101|30740102|30740103",
     "skillGroup2": "30740124|30740125|30740126",
-    "skillEx": 0,
-    "passiveSkill": "",
+    "skillEx": 30740134,
+    "passiveSkill": "30740161#30740165|30740141#30740147",
     "consume2": ""
   },
   {
@@ -4220,7 +4220,7 @@
     "skillGroup1": "30830114|30830115|30830116",
     "skillGroup2": "30830124|30830125|30830126",
     "skillEx": 0,
-    "passiveSkill": "",
+    "passiveSkill": "30830141#30830143",
     "consume2": ""
   },
   {
@@ -4244,7 +4244,7 @@
     "skillGroup1": "30830117|30830118|30830119",
     "skillGroup2": "30830127|30830128|30830129",
     "skillEx": 0,
-    "passiveSkill": "",
+    "passiveSkill": "30830141#30830144",
     "consume2": ""
   },
   {
@@ -6057,6 +6057,186 @@
     "skillGroup2": "",
     "skillEx": 31130134,
     "passiveSkill": "31130141#31130146",
+    "consume2": ""
+  },
+  {
+    "heroId": 3116,
+    "skillLevel": 1,
+    "consume": "1#133116#1",
+    "requirement": "",
+    "desc": "language_10074395",
+    "skillGroup1": "",
+    "skillGroup2": "31160124|31160125|31160126",
+    "skillEx": 31160132,
+    "passiveSkill": "31160141#311601411",
+    "consume2": ""
+  },
+  {
+    "heroId": 3116,
+    "skillLevel": 2,
+    "consume": "1#133116#1",
+    "requirement": "",
+    "desc": "language_10074396",
+    "skillGroup1": "",
+    "skillGroup2": "",
+    "skillEx": 0,
+    "passiveSkill": "31160143#311601431",
+    "consume2": ""
+  },
+  {
+    "heroId": 3116,
+    "skillLevel": 3,
+    "consume": "1#133116#1",
+    "requirement": "",
+    "desc": "language_10074397",
+    "skillGroup1": "",
+    "skillGroup2": "",
+    "skillEx": 31160135,
+    "passiveSkill": "",
+    "consume2": ""
+  },
+  {
+    "heroId": 3116,
+    "skillLevel": 4,
+    "consume": "1#133116#1",
+    "requirement": "",
+    "desc": "language_10017728",
+    "skillGroup1": "",
+    "skillGroup2": "",
+    "skillEx": 31160133,
+    "passiveSkill": "",
+    "consume2": ""
+  },
+  {
+    "heroId": 3116,
+    "skillLevel": 5,
+    "consume": "1#133116#1",
+    "requirement": "",
+    "desc": "language_10074398",
+    "skillGroup1": "",
+    "skillGroup2": "",
+    "skillEx": 31160134,
+    "passiveSkill": "",
+    "consume2": ""
+  },
+  {
+    "heroId": 3117,
+    "skillLevel": 1,
+    "consume": "1#133117#1",
+    "requirement": "",
+    "desc": "language_10074399",
+    "skillGroup1": "",
+    "skillGroup2": "",
+    "skillEx": 0,
+    "passiveSkill": "31170141#311701411",
+    "consume2": ""
+  },
+  {
+    "heroId": 3117,
+    "skillLevel": 2,
+    "consume": "1#133117#1",
+    "requirement": "",
+    "desc": "language_10074400",
+    "skillGroup1": "",
+    "skillGroup2": "31170124|31170125|31170126",
+    "skillEx": 0,
+    "passiveSkill": "31170143#311701431",
+    "consume2": ""
+  },
+  {
+    "heroId": 3117,
+    "skillLevel": 3,
+    "consume": "1#133117#1",
+    "requirement": "",
+    "desc": "language_10074401",
+    "skillGroup1": "",
+    "skillGroup2": "31170127|31170128|31170129",
+    "skillEx": 0,
+    "passiveSkill": "31170143#311701432",
+    "consume2": ""
+  },
+  {
+    "heroId": 3117,
+    "skillLevel": 4,
+    "consume": "1#133117#1",
+    "requirement": "",
+    "desc": "language_10074402",
+    "skillGroup1": "",
+    "skillGroup2": "311701210|311701211|311701212",
+    "skillEx": 0,
+    "passiveSkill": "31170143#311701433",
+    "consume2": ""
+  },
+  {
+    "heroId": 3117,
+    "skillLevel": 5,
+    "consume": "1#133117#1",
+    "requirement": "",
+    "desc": "language_10074403",
+    "skillGroup1": "",
+    "skillGroup2": "",
+    "skillEx": 0,
+    "passiveSkill": "31170141#311701412",
+    "consume2": ""
+  },
+  {
+    "heroId": 3118,
+    "skillLevel": 1,
+    "consume": "1#133118#1",
+    "requirement": "",
+    "desc": "language_10074404",
+    "skillGroup1": "31180114|31180115|31180116",
+    "skillGroup2": "",
+    "skillEx": 0,
+    "passiveSkill": "",
+    "consume2": ""
+  },
+  {
+    "heroId": 3118,
+    "skillLevel": 2,
+    "consume": "1#133118#1",
+    "requirement": "",
+    "desc": "language_10074405",
+    "skillGroup1": "",
+    "skillGroup2": "31180124|31180125|31180126",
+    "skillEx": 0,
+    "passiveSkill": "",
+    "consume2": ""
+  },
+  {
+    "heroId": 3118,
+    "skillLevel": 3,
+    "consume": "1#133118#1",
+    "requirement": "",
+    "desc": "language_10074406",
+    "skillGroup1": "",
+    "skillGroup2": "",
+    "skillEx": 0,
+    "passiveSkill": "31180141#31180142",
+    "consume2": ""
+  },
+  {
+    "heroId": 3118,
+    "skillLevel": 4,
+    "consume": "1#133118#1",
+    "requirement": "",
+    "desc": "language_10074407",
+    "skillGroup1": "",
+    "skillGroup2": "",
+    "skillEx": 31180133,
+    "passiveSkill": "",
+    "consume2": ""
+  },
+  {
+    "heroId": 3118,
+    "skillLevel": 5,
+    "consume": "1#133118#1",
+    "requirement": "",
+    "desc": "language_10074408",
+    "skillGroup1": "",
+    "skillGroup2": "",
+    "skillEx": 31180132,
+    "passiveSkill": "",
     "consume2": ""
   }
 ]

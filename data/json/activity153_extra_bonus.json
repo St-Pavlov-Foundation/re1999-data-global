@@ -376,5 +376,47 @@
     "episodeId": 60107,
     "chapterId": 601,
     "extraBonus": ""
+  },
+  {
+    "activityId": 12719,
+    "episodeId": 60101,
+    "chapterId": 601,
+    "extraBonus": ""
+  },
+  {
+    "activityId": 12719,
+    "episodeId": 60102,
+    "chapterId": 601,
+    "extraBonus": ""
+  },
+  {
+    "activityId": 12719,
+    "episodeId": 60103,
+    "chapterId": 601,
+    "extraBonus": ""
+  },
+  {
+    "activityId": 12719,
+    "episodeId": 60104,
+    "chapterId": 601,
+    "extraBonus": ""
+  },
+  {
+    "activityId": 12719,
+    "episodeId": 60105,
+    "chapterId": 601,
+    "extraBonus": ""
+  },
+  {
+    "activityId": 12719,
+    "episodeId": 60106,
+    "chapterId": 601,
+    "extraBonus": ""
+  },
+  {
+    "activityId": 12719,
+    "episodeId": 60107,
+    "chapterId": 601,
+    "extraBonus": ""
   }
 ]

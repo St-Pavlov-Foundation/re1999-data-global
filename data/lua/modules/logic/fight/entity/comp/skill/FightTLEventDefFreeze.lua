@@ -1,6 +1,6 @@
 ﻿module("modules.logic.fight.entity.comp.skill.FightTLEventDefFreeze", package.seeall)
 
-local var_0_0 = class("FightTLEventDefFreeze")
+local var_0_0 = class("FightTLEventDefFreeze", FightTimelineTrackItem)
 local var_0_1 = {
 	[FightEnum.EffectType.MISS] = true,
 	[FightEnum.EffectType.DAMAGE] = true,
@@ -12,7 +12,7 @@ local var_0_1 = {
 	[FightEnum.EffectType.SHIELD] = true
 }
 
-function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 	local var_1_0 = arg_1_2 * FightModel.instance:getSpeed()
 
 	arg_1_0._action = arg_1_3[1]
@@ -40,7 +40,7 @@ function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 	end
 end
 
-function var_0_0.handleSkillEventEnd(arg_2_0)
+function var_0_0.onTrackEnd(arg_2_0)
 	arg_2_0:_onDurationEnd()
 end
 
@@ -54,7 +54,7 @@ function var_0_0._getDefenders(arg_3_0, arg_3_1, arg_3_2)
 
 	local var_3_2 = {}
 
-	for iter_3_0, iter_3_1 in ipairs(arg_3_1.actEffectMOs) do
+	for iter_3_0, iter_3_1 in ipairs(arg_3_1.actEffect) do
 		if var_0_1[iter_3_1.effectType] then
 			if var_3_0 == 1 then
 				local var_3_3 = FightHelper.getEntity(arg_3_1.fromId)
@@ -129,10 +129,10 @@ function var_0_0._onDurationEnd(arg_5_0)
 		end
 	end
 
-	arg_5_0:reset()
+	arg_5_0:onDestructor()
 end
 
-function var_0_0.reset(arg_6_0)
+function var_0_0.onDestructor(arg_6_0)
 	if arg_6_0._defenders then
 		for iter_6_0, iter_6_1 in ipairs(arg_6_0._defenders) do
 			iter_6_1.spine:setFreeze(false)
@@ -142,10 +142,6 @@ function var_0_0.reset(arg_6_0)
 	arg_6_0._defenders = nil
 
 	TaskDispatcher.cancelTask(arg_6_0._startFreeze, arg_6_0)
-end
-
-function var_0_0.dispose(arg_7_0)
-	arg_7_0:reset()
 end
 
 return var_0_0

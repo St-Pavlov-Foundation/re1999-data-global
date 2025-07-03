@@ -458,9 +458,12 @@ function var_0_0.playNormalText(arg_16_0, arg_16_1, arg_16_2, arg_16_3)
 		arg_16_0._txtcontentcn.fontSharedMaterial:SetFloat("_BloomFactor", 0)
 		PostProcessingMgr.instance:setUIPPValue("localBloomActive", false)
 		PostProcessingMgr.instance:setUIPPValue("bloomDiffusion", 7)
-		gohelper.setActive(arg_16_0._goline, true)
-		gohelper.setActive(arg_16_0._goblackbottom, true)
-		gohelper.setActive(arg_16_0._gonexticon, true)
+
+		local var_16_3 = arg_16_0._stepCo.conversation.type ~= StoryEnum.ConversationType.IrregularShake
+
+		gohelper.setActive(arg_16_0._goline, var_16_3)
+		gohelper.setActive(arg_16_0._goblackbottom, var_16_3)
+		gohelper.setActive(arg_16_0._gonexticon, var_16_3)
 
 		arg_16_0._norDiaLayoutElement.ignoreLayout = false
 
@@ -474,13 +477,13 @@ function var_0_0.playNormalText(arg_16_0, arg_16_1, arg_16_2, arg_16_3)
 	arg_16_0._dialogTextShowFinishedCallback = nil
 	arg_16_0._dialogTextShowFinishedCallbackObj = nil
 
-	local var_16_3 = string.match(arg_16_0._txt, "<glitch>")
+	local var_16_4 = string.match(arg_16_0._txt, "<glitch>")
 
 	if arg_16_0._glitchGo then
-		gohelper.setActive(arg_16_0._glitchGo, var_16_3)
+		gohelper.setActive(arg_16_0._glitchGo, var_16_4)
 	end
 
-	if var_16_3 then
+	if var_16_4 then
 		arg_16_0._glitchTxt = string.gsub(arg_16_0._txt, "<glitch>", "<i><b>")
 		arg_16_0._glitchTxt = string.gsub(arg_16_0._glitchTxt, "</glitch>", "</i></b>")
 		arg_16_0._dialogTextShowFinishedCallback = arg_16_0._onDialogTextShowFinished

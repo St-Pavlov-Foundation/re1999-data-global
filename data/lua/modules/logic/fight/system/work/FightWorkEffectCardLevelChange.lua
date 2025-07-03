@@ -2,70 +2,69 @@
 
 local var_0_0 = class("FightWorkEffectCardLevelChange", FightEffectBase)
 
-function var_0_0.onStart(arg_1_0)
-	arg_1_0:_startChangeCardEffect()
+function var_0_0.beforePlayEffectData(arg_1_0)
+	local var_1_0 = FightDataHelper.handCardMgr.handCard
+
+	arg_1_0.cardIndex = tonumber(arg_1_0.actEffectData.targetId)
+
+	local var_1_1 = var_1_0[arg_1_0.cardIndex]
+
+	arg_1_0.oldSkillId = var_1_1 and var_1_1.skillId
 end
 
-function var_0_0._startChangeCardEffect(arg_2_0)
-	if not FightCardDataHelper.cardChangeIsMySide(arg_2_0._actEffectMO) then
-		arg_2_0:onDone(true)
+function var_0_0.onStart(arg_2_0)
+	arg_2_0:_startChangeCardEffect()
+end
+
+function var_0_0._startChangeCardEffect(arg_3_0)
+	if not FightCardDataHelper.cardChangeIsMySide(arg_3_0.actEffectData) then
+		arg_3_0:onDone(true)
 
 		return
 	end
 
 	if FightModel.instance:getVersion() < 1 then
-		local var_2_0 = arg_2_0._actEffectMO.entityMO.id
-		local var_2_1 = FightHelper.getEntity(var_2_0)
+		local var_3_0 = arg_3_0.actEffectData.entity.id
+		local var_3_1 = FightHelper.getEntity(var_3_0)
 
-		if not var_2_1 then
-			arg_2_0:onDone(true)
+		if not var_3_1 then
+			arg_3_0:onDone(true)
 
 			return
 		end
 
-		if not var_2_1:isMySide() then
-			arg_2_0:onDone(true)
+		if not var_3_1:isMySide() then
+			arg_3_0:onDone(true)
 
 			return
 		end
 	end
 
-	local var_2_2 = tonumber(arg_2_0._actEffectMO.targetId)
-	local var_2_3 = arg_2_0._actEffectMO.effectNum
-	local var_2_4 = FightCardModel.instance:getHandCards()
-	local var_2_5 = var_2_4[var_2_2]
-
-	if not var_2_5 then
-		arg_2_0:onDone(true)
+	if not arg_3_0.oldSkillId then
+		arg_3_0:onDone(true)
 
 		return
 	end
 
-	arg_2_0._revertVisible = true
+	arg_3_0._revertVisible = true
 
 	FightController.instance:dispatchEvent(FightEvent.SetHandCardVisible, true)
 
-	local var_2_6 = var_2_5.skillId
-
-	var_2_5.uid = arg_2_0._actEffectMO.entityMO.id
-	var_2_5.skillId = var_2_3
-
 	if FightModel.instance:getVersion() >= 4 then
-		FightController.instance:dispatchEvent(FightEvent.CardLevelChange, var_2_5, var_2_2, var_2_6)
-		arg_2_0:com_registTimer(arg_2_0._delayDone, FightEnum.PerformanceTime.CardLevelChange / FightModel.instance:getUISpeed())
+		FightController.instance:dispatchEvent(FightEvent.CardLevelChange, arg_3_0.cardIndex, arg_3_0.oldSkillId)
+		arg_3_0:com_registTimer(arg_3_0._delayDone, FightEnum.PerformanceTime.CardLevelChange / FightModel.instance:getUISpeed())
 	else
-		FightCardModel.instance:coverCard(FightCardModel.calcCardsAfterCombine(var_2_4))
 		FightController.instance:dispatchEvent(FightEvent.RefreshHandCard)
-		arg_2_0:onDone(true)
+		arg_3_0:onDone(true)
 	end
 end
 
-function var_0_0._delayDone(arg_3_0)
-	arg_3_0:onDone(true)
+function var_0_0._delayDone(arg_4_0)
+	arg_4_0:onDone(true)
 end
 
-function var_0_0.clearWork(arg_4_0)
-	if arg_4_0._revertVisible then
+function var_0_0.clearWork(arg_5_0)
+	if arg_5_0._revertVisible then
 		FightController.instance:dispatchEvent(FightEvent.SetHandCardVisible, true, true)
 	end
 end

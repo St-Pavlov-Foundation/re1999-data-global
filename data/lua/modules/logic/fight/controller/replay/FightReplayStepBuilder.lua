@@ -27,6 +27,8 @@ function var_0_0.buildReplaySequence()
 				var_1_0:addWork(FightReplayWorkMoveUniversal.New(iter_1_5))
 			elseif iter_1_5:isPlayerFinisherSkill() then
 				var_1_0:addWork(FightReplyWorkPlayerFinisherSkill.New(iter_1_5))
+			elseif iter_1_5:isBloodPoolSkill() then
+				var_1_0:addWork(FightReplyWorkPlayerFinisherSkill.New(iter_1_5))
 			end
 		end
 

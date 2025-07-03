@@ -34,35 +34,33 @@ var_0_0.ChargeRefreshTime = {
 	None = 0
 }
 var_0_0.LittleMonthCardGoodsId = 811512
-var_0_0.WeekWalkTabId = 160
-var_0_0.SummonExchange = 110
-var_0_0.SummonEquipExchange = 150
-var_0_0.SummonCost = 118
-var_0_0.Room = 170
-var_0_0.SubRoomNew = 171
-var_0_0.SubRoomOld = 172
-var_0_0.RecommendStore = 700
-var_0_0.DefaultTabId = var_0_0.RecommendStore
 var_0_0.StoreId = {
-	NormalPackage = 614,
-	OneTimePackage = 613,
+	Charge = 410,
+	PubbleCharge = 411,
 	EventPackage = 615,
 	CritterStore = 173,
-	NewRoomStore = 171,
-	Charge = 410,
+	SummonExchange = 110,
+	OneTimePackage = 613,
 	OldRoomStore = 172,
+	WeekWalk = 160,
+	LimitStore = 112,
+	DecorateStore = 800,
 	RecommendPackage = 611,
 	Summon = 130,
+	RoomStore = 170,
 	VersionPackage = 612,
-	LimitStore = 112,
+	SummonCost = 118,
+	SummonEquipExchange = 150,
 	Package = 610,
-	DecorateStore = 800,
+	RecommendStore = 700,
+	NormalPackage = 614,
 	NewDecorateStore = 801,
-	PubbleCharge = 411,
+	NewRoomStore = 171,
 	OldDecorateStore = 802,
 	Skin = 510,
 	GlowCharge = 412
 }
+var_0_0.DefaultTabId = var_0_0.StoreId.RecommendStore
 var_0_0.RecommendSubStoreId = {
 	StoreRoleSkinView = 801,
 	GiftrecommendView1 = 803,
@@ -121,6 +119,11 @@ var_0_0.BossRushStore = {
 	NormalStore = 901,
 	ManeTrust = 900,
 	UpdateStore = 902
+}
+var_0_0.TowerStore = {
+	UpdateStore = 302,
+	NormalStore = 301,
+	MainStore = 300
 }
 
 return var_0_0

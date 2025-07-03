@@ -17,9 +17,11 @@ function var_0_0.initClass(arg_1_0)
 
 	arg_1_0:newClass(FightEntitySpecialEffect3070_Ball)
 	arg_1_0:newClass(FightEntitySpecialEffectBuffLayer)
+	arg_1_0:newClass(FightEntitySpecialEffectBuffLayerEnemySkin)
 	arg_1_0:newClass(FightEntitySpecialEffect3081_Ball)
 	arg_1_0:newClass(FightEntitySpecialEffectSeasonChangeHero)
 	arg_1_0:newClass(FightEntitySpecialEffectBuffLayerNaNa)
+	arg_1_0:newClass(FightEntitySpecialEffectBuffLayerLZL)
 end
 
 return var_0_0

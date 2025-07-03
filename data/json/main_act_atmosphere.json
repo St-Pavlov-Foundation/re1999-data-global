@@ -64,5 +64,17 @@
     "mainThumbnailView": [],
     "isShowfx": false,
     "mainThumbnailViewActBg": false
+  },
+  {
+    "id": 12717,
+    "effectDuration": 0,
+    "mainView": [],
+    "mainViewActBtn": [],
+    "mainViewActBtnPrefix": "",
+    "isShowLogo": false,
+    "isShowActBg": true,
+    "mainThumbnailView": [],
+    "isShowfx": false,
+    "mainThumbnailViewActBg": false
   }
 ]

@@ -3,7 +3,7 @@
 local var_0_0 = class("FightWorkEffectShield", FightEffectBase)
 
 function var_0_0.beforePlayEffectData(arg_1_0)
-	arg_1_0._entityId = arg_1_0._actEffectMO.targetId
+	arg_1_0._entityId = arg_1_0.actEffectData.targetId
 	arg_1_0._entityMO = FightDataHelper.entityMgr:getById(arg_1_0._entityId)
 	arg_1_0._oldValue = arg_1_0._entityMO and arg_1_0._entityMO.shieldValue or 0
 end
@@ -14,9 +14,9 @@ function var_0_0.onStart(arg_2_0)
 	local var_2_0 = FightHelper.getEntity(arg_2_0._entityId)
 
 	if var_2_0 and var_2_0.nameUI then
-		var_2_0.nameUI:setShield(arg_2_0._actEffectMO.effectNum)
+		var_2_0.nameUI:setShield(arg_2_0.actEffectData.effectNum)
 
-		local var_2_1 = arg_2_0._actEffectMO.effectNum - arg_2_0._oldValue
+		local var_2_1 = arg_2_0.actEffectData.effectNum - arg_2_0._oldValue
 
 		if var_2_1 < 0 then
 			local var_2_2 = var_2_0:isMySide() and var_2_1 or -var_2_1
@@ -33,16 +33,16 @@ function var_0_0.onStart(arg_2_0)
 end
 
 function var_0_0._getOriginFloatType(arg_3_0)
-	local var_3_0 = tabletool.indexOf(arg_3_0._fightStepMO.actEffectMOs, arg_3_0._actEffectMO)
+	local var_3_0 = tabletool.indexOf(arg_3_0.fightStepData.actEffect, arg_3_0.actEffectData)
 
 	if var_3_0 then
-		local var_3_1 = arg_3_0._fightStepMO.actEffectMOs[var_3_0 + 1]
+		local var_3_1 = arg_3_0.fightStepData.actEffect[var_3_0 + 1]
 
 		if var_3_1 and var_3_1.effectType == FightEnum.EffectType.SHIELDBROCKEN then
-			var_3_1 = arg_3_0._fightStepMO.actEffectMOs[var_3_0 + 2]
+			var_3_1 = arg_3_0.fightStepData.actEffect[var_3_0 + 2]
 		end
 
-		if var_3_1 and var_3_1.targetId == arg_3_0._actEffectMO.targetId then
+		if var_3_1 and var_3_1.targetId == arg_3_0.actEffectData.targetId then
 			if var_3_1.effectType == FightEnum.EffectType.ORIGINDAMAGE then
 				return FightEnum.FloatType.damage_origin
 			elseif var_3_1.effectType == FightEnum.EffectType.ORIGINCRIT then
@@ -52,9 +52,9 @@ function var_0_0._getOriginFloatType(arg_3_0)
 			elseif var_3_1.effectType == FightEnum.EffectType.ADDITIONALDAMAGECRIT then
 				return FightEnum.FloatType.crit_additional_damage
 			elseif var_3_1.effectType == FightEnum.EffectType.DAMAGE then
-				return FightHelper.isRestrain(arg_3_0._fightStepMO.fromId, arg_3_0._actEffectMO.targetId) and FightEnum.FloatType.restrain or FightEnum.FloatType.damage
+				return FightHelper.isRestrain(arg_3_0.fightStepData.fromId, arg_3_0.actEffectData.targetId) and FightEnum.FloatType.restrain or FightEnum.FloatType.damage
 			elseif var_3_1.effectType == FightEnum.EffectType.CRIT then
-				return FightHelper.isRestrain(arg_3_0._fightStepMO.fromId, arg_3_0._actEffectMO.targetId) and FightEnum.FloatType.crit_restrain or FightEnum.FloatType.crit_damage
+				return FightHelper.isRestrain(arg_3_0.fightStepData.fromId, arg_3_0.actEffectData.targetId) and FightEnum.FloatType.crit_restrain or FightEnum.FloatType.crit_damage
 			elseif var_3_1.effectType == FightEnum.EffectType.DEADLYPOISONORIGINDAMAGE then
 				return FightEnum.FloatType.damage_origin
 			elseif var_3_1.effectType == FightEnum.EffectType.DEADLYPOISONORIGINCRIT then

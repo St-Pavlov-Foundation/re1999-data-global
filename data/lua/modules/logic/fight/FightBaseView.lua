@@ -89,7 +89,7 @@ end
 
 function var_0_0.onDestructor(arg_16_0)
 	if arg_16_0.INVOKED_OPEN_VIEW and not arg_16_0.INVOKED_DESTROY_VIEW then
-		arg_16_0:killMyComponent(FightViewComponent)
+		arg_16_0:killComponent(FightViewComponent)
 		arg_16_0:inner_destroyView()
 	end
 end
@@ -160,76 +160,104 @@ function var_0_0.isHasTryCallFail(arg_32_0)
 	return false
 end
 
-function var_0_0.com_registViewItemList(arg_33_0, arg_33_1, arg_33_2, arg_33_3)
-	return arg_33_0:getComponent(FightObjItemListComponent):registViewItemList(arg_33_1, arg_33_2, arg_33_3)
+function var_0_0.com_createObjList(arg_33_0, arg_33_1, arg_33_2, arg_33_3, arg_33_4)
+	if type(arg_33_2) == "number" then
+		local var_33_0 = arg_33_2
+
+		arg_33_2 = {}
+
+		for iter_33_0 = 1, var_33_0 do
+			table.insert(arg_33_2, iter_33_0)
+		end
+	end
+
+	gohelper.CreateObjList(arg_33_0, arg_33_1, arg_33_2, arg_33_3, arg_33_4)
 end
 
-function var_0_0.com_openSubView(arg_34_0, arg_34_1, arg_34_2, arg_34_3, ...)
-	return arg_34_0:getComponent(FightViewComponent):openSubView(arg_34_1, arg_34_2, arg_34_3, ...)
+function var_0_0.addEventCb(arg_34_0, arg_34_1, arg_34_2, arg_34_3, arg_34_4, arg_34_5)
+	arg_34_0:getComponent(FightEventComponent):registEvent(arg_34_1, arg_34_2, arg_34_3, arg_34_4, arg_34_5)
 end
 
-function var_0_0.com_openSubViewForBaseView(arg_35_0, arg_35_1, arg_35_2, ...)
-	return arg_35_0:getComponent(FightViewComponent):openSubViewForBaseView(arg_35_1, arg_35_2, ...)
-end
+function var_0_0.removeEventCb(arg_35_0, arg_35_1, arg_35_2, arg_35_3, arg_35_4)
+	if not arg_35_1 or not arg_35_2 or not arg_35_3 then
+		logError("UserDataDispose:removeEventCb ctrlInstance or evtName or callback is null!")
 
-function var_0_0.com_openExclusiveView(arg_36_0, arg_36_1, arg_36_2, arg_36_3, arg_36_4, ...)
-	return arg_36_0:getComponent(FightViewComponent):openExclusiveView(arg_36_1, arg_36_2, arg_36_3, arg_36_4, ...)
-end
-
-function var_0_0.com_hideExclusiveGroup(arg_37_0, arg_37_1)
-	return arg_37_0:getComponent(FightViewComponent):hideExclusiveGroup(arg_37_1)
-end
-
-function var_0_0.com_hideExclusiveView(arg_38_0, arg_38_1, arg_38_2, arg_38_3)
-	return arg_38_0:getComponent(FightViewComponent):hideExclusiveView(arg_38_1, arg_38_2, arg_38_3)
-end
-
-function var_0_0.com_setExclusiveViewVisible(arg_39_0, arg_39_1, arg_39_2)
-	return arg_39_0:getComponent(FightViewComponent):setExclusiveViewVisible(arg_39_1, arg_39_2)
-end
-
-function var_0_0.com_registClick(arg_40_0, arg_40_1, arg_40_2, arg_40_3)
-	return arg_40_0:getComponent(FightClickComponent):registClick(arg_40_1, arg_40_2, arg_40_0, arg_40_3)
-end
-
-function var_0_0.com_removeClick(arg_41_0, arg_41_1)
-	return arg_41_0:getComponent(FightClickComponent):removeClick(arg_41_1)
-end
-
-function var_0_0.com_registDragBegin(arg_42_0, arg_42_1, arg_42_2, arg_42_3)
-	return arg_42_0:getComponent(FightDragComponent):registDragBegin(arg_42_1, arg_42_2, arg_42_0, arg_42_3)
-end
-
-function var_0_0.com_registDrag(arg_43_0, arg_43_1, arg_43_2, arg_43_3)
-	return arg_43_0:getComponent(FightDragComponent):registDrag(arg_43_1, arg_43_2, arg_43_0, arg_43_3)
-end
-
-function var_0_0.com_registDragEnd(arg_44_0, arg_44_1, arg_44_2, arg_44_3)
-	return arg_44_0:getComponent(FightDragComponent):registDragEnd(arg_44_1, arg_44_2, arg_44_0, arg_44_3)
-end
-
-function var_0_0.com_registLongPress(arg_45_0, arg_45_1, arg_45_2, arg_45_3)
-	return arg_45_0:getComponent(FightLongPressComponent):registLongPress(arg_45_1, arg_45_2, arg_45_0, arg_45_3)
-end
-
-function var_0_0.com_registHover(arg_46_0, arg_46_1, arg_46_2)
-	return arg_46_0:getComponent(FightLongPressComponent):registHover(arg_46_1, arg_46_2, arg_46_0)
-end
-
-function var_0_0.com_playTween(arg_47_0, arg_47_1, ...)
-	return arg_47_0:getComponent(FightTweenComponent):playTween(arg_47_1, ...)
-end
-
-function var_0_0.com_killTween(arg_48_0, arg_48_1)
-	if not arg_48_1 then
 		return
 	end
 
-	return arg_48_0:getComponent(FightTweenComponent):killTween(arg_48_1)
+	arg_35_0:getComponent(FightEventComponent):cancelEvent(arg_35_1, arg_35_2, arg_35_3, arg_35_4)
 end
 
-function var_0_0.com_KillTweenByObj(arg_49_0, arg_49_1, arg_49_2)
-	return arg_49_0:getComponent(FightTweenComponent):KillTweenByObj(arg_49_1, arg_49_2)
+function var_0_0.com_registViewItemList(arg_36_0, arg_36_1, arg_36_2, arg_36_3)
+	return arg_36_0:getComponent(FightObjItemListComponent):registViewItemList(arg_36_1, arg_36_2, arg_36_3)
+end
+
+function var_0_0.com_openSubView(arg_37_0, arg_37_1, arg_37_2, arg_37_3, ...)
+	return arg_37_0:getComponent(FightViewComponent):openSubView(arg_37_1, arg_37_2, arg_37_3, ...)
+end
+
+function var_0_0.com_openSubViewForBaseView(arg_38_0, arg_38_1, arg_38_2, ...)
+	return arg_38_0:getComponent(FightViewComponent):openSubViewForBaseView(arg_38_1, arg_38_2, ...)
+end
+
+function var_0_0.com_openExclusiveView(arg_39_0, arg_39_1, arg_39_2, arg_39_3, arg_39_4, ...)
+	return arg_39_0:getComponent(FightViewComponent):openExclusiveView(arg_39_1, arg_39_2, arg_39_3, arg_39_4, ...)
+end
+
+function var_0_0.com_hideExclusiveGroup(arg_40_0, arg_40_1)
+	return arg_40_0:getComponent(FightViewComponent):hideExclusiveGroup(arg_40_1)
+end
+
+function var_0_0.com_hideExclusiveView(arg_41_0, arg_41_1, arg_41_2, arg_41_3)
+	return arg_41_0:getComponent(FightViewComponent):hideExclusiveView(arg_41_1, arg_41_2, arg_41_3)
+end
+
+function var_0_0.com_setExclusiveViewVisible(arg_42_0, arg_42_1, arg_42_2)
+	return arg_42_0:getComponent(FightViewComponent):setExclusiveViewVisible(arg_42_1, arg_42_2)
+end
+
+function var_0_0.com_registClick(arg_43_0, arg_43_1, arg_43_2, arg_43_3)
+	return arg_43_0:getComponent(FightClickComponent):registClick(arg_43_1, arg_43_2, arg_43_0, arg_43_3)
+end
+
+function var_0_0.com_removeClick(arg_44_0, arg_44_1)
+	return arg_44_0:getComponent(FightClickComponent):removeClick(arg_44_1)
+end
+
+function var_0_0.com_registDragBegin(arg_45_0, arg_45_1, arg_45_2, arg_45_3)
+	return arg_45_0:getComponent(FightDragComponent):registDragBegin(arg_45_1, arg_45_2, arg_45_0, arg_45_3)
+end
+
+function var_0_0.com_registDrag(arg_46_0, arg_46_1, arg_46_2, arg_46_3)
+	return arg_46_0:getComponent(FightDragComponent):registDrag(arg_46_1, arg_46_2, arg_46_0, arg_46_3)
+end
+
+function var_0_0.com_registDragEnd(arg_47_0, arg_47_1, arg_47_2, arg_47_3)
+	return arg_47_0:getComponent(FightDragComponent):registDragEnd(arg_47_1, arg_47_2, arg_47_0, arg_47_3)
+end
+
+function var_0_0.com_registLongPress(arg_48_0, arg_48_1, arg_48_2, arg_48_3)
+	return arg_48_0:getComponent(FightLongPressComponent):registLongPress(arg_48_1, arg_48_2, arg_48_0, arg_48_3)
+end
+
+function var_0_0.com_registHover(arg_49_0, arg_49_1, arg_49_2)
+	return arg_49_0:getComponent(FightLongPressComponent):registHover(arg_49_1, arg_49_2, arg_49_0)
+end
+
+function var_0_0.com_killTween(arg_50_0, arg_50_1)
+	if not arg_50_1 then
+		return
+	end
+
+	return arg_50_0:getComponent(FightTweenComponent):killTween(arg_50_1)
+end
+
+function var_0_0.com_KillTweenByObj(arg_51_0, arg_51_1, arg_51_2)
+	return arg_51_0:getComponent(FightTweenComponent):KillTweenByObj(arg_51_1, arg_51_2)
+end
+
+function var_0_0.com_scrollNumTween(arg_52_0, arg_52_1, arg_52_2, arg_52_3, arg_52_4, arg_52_5)
+	return arg_52_0:getComponent(FightTweenComponent):scrollNumTween(arg_52_1, arg_52_2, arg_52_3, arg_52_4, arg_52_5)
 end
 
 return var_0_0

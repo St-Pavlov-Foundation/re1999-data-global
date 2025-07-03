@@ -24,7 +24,7 @@ function var_0_0.resetEffectFilter()
 	table.insert(var_0_1, FightEnum.EffectType.FIGHTSTEP)
 end
 
-function var_0_0.checkEffectMoIsFilter(arg_3_0)
+function var_0_0.checkActEffectDataIsFilter(arg_3_0)
 	if not var_0_2 then
 		return false
 	end

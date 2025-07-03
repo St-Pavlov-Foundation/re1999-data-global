@@ -76,7 +76,9 @@ function var_0_0.getGroupEpisodeMos(arg_8_0, arg_8_1)
 end
 
 function var_0_0.getGroupEpisodeMo(arg_9_0, arg_9_1)
-	return arg_9_0._groupMap and arg_9_0._groupMap[arg_9_1]
+	if arg_9_1 then
+		return arg_9_0._groupMap and arg_9_0._groupMap[arg_9_1]
+	end
 end
 
 function var_0_0.getUnlockSupportHeros(arg_10_0)

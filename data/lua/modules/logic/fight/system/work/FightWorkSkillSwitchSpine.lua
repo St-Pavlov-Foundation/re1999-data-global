@@ -3,13 +3,13 @@
 local var_0_0 = class("FightWorkSkillSwitchSpine", BaseWork)
 
 function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0._fightStepMO = arg_1_1
+	arg_1_0.fightStepData = arg_1_1
 end
 
 function var_0_0.onStart(arg_2_0)
 	TaskDispatcher.runDelay(arg_2_0._delayDone, arg_2_0, 0.5)
 
-	local var_2_0 = FightHelper.getEntity(arg_2_0._fightStepMO.fromId)
+	local var_2_0 = FightHelper.getEntity(arg_2_0.fightStepData.fromId)
 	local var_2_1 = var_2_0 and var_2_0:getMO()
 
 	if not var_2_1 then
@@ -24,7 +24,7 @@ function var_0_0.onStart(arg_2_0)
 		return
 	end
 
-	local var_2_2 = arg_2_0._fightStepMO.supportHeroId
+	local var_2_2 = arg_2_0.fightStepData.supportHeroId
 
 	if not var_2_2 then
 		arg_2_0:onDone(true)
@@ -38,7 +38,7 @@ function var_0_0.onStart(arg_2_0)
 
 		arg_2_0._flow = FlowSequence.New()
 
-		local var_2_3 = FightHelper.processSkinByStepMO(arg_2_0._fightStepMO)
+		local var_2_3 = FightHelper.processSkinByStepData(arg_2_0.fightStepData)
 		local var_2_4 = FightConfig.instance:getSkinCO(var_2_3)
 		local var_2_5 = var_2_4 and var_2_0:getSpineUrl(var_2_4)
 

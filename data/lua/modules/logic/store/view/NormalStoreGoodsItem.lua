@@ -691,7 +691,7 @@ function var_0_0.refreshGoUnique(arg_30_0)
 end
 
 function var_0_0.checkShowTicket(arg_31_0)
-	if arg_31_0._mo.belongStoreId == StoreEnum.SubRoomOld or arg_31_0._mo.belongStoreId == StoreEnum.SubRoomNew then
+	if arg_31_0._mo.belongStoreId == StoreEnum.StoreId.OldRoomStore or arg_31_0._mo.belongStoreId == StoreEnum.StoreId.NewRoomStore then
 		if arg_31_0._itemType ~= MaterialEnum.MaterialType.BlockPackage and arg_31_0._itemType ~= MaterialEnum.MaterialType.Building then
 			return false
 		end

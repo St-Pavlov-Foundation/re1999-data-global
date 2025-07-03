@@ -3,8 +3,7 @@
 local var_0_0 = class("FightBaseClass", FightObject)
 
 function var_0_0.onConstructor(arg_1_0)
-	arg_1_0.USER_DATA_LIST = {}
-	arg_1_0.MY_COMPONENT_DIC = {}
+	return
 end
 
 function var_0_0.onAwake(arg_2_0, ...)
@@ -16,16 +15,20 @@ function var_0_0.releaseSelf(arg_3_0)
 end
 
 function var_0_0.onDestructor(arg_4_0)
-	local var_4_0 = arg_4_0.USER_DATA_LIST
+	if arg_4_0.USER_DATA_LIST then
+		local var_4_0 = arg_4_0.USER_DATA_LIST
 
-	for iter_4_0 = #var_4_0, 1, -1 do
-		local var_4_1 = var_4_0[iter_4_0]
+		for iter_4_0 = #var_4_0, 1, -1 do
+			local var_4_1 = var_4_0[iter_4_0]
 
-		for iter_4_1 in pairs(var_4_1) do
-			rawset(var_4_1, iter_4_1, nil)
+			for iter_4_1 in pairs(var_4_1) do
+				rawset(var_4_1, iter_4_1, nil)
+			end
+
+			rawset(var_4_0, iter_4_0, nil)
 		end
 
-		rawset(var_4_0, iter_4_0, nil)
+		arg_4_0.USER_DATA_LIST = nil
 	end
 
 	for iter_4_2, iter_4_3 in pairs(arg_4_0) do
@@ -33,9 +36,6 @@ function var_0_0.onDestructor(arg_4_0)
 			rawset(arg_4_0, iter_4_2, nil)
 		end
 	end
-
-	arg_4_0.USER_DATA_LIST = nil
-	arg_4_0.MY_COMPONENT_DIC = nil
 end
 
 function var_0_0.onDestructorFinish(arg_5_0)
@@ -45,6 +45,10 @@ end
 function var_0_0.newUserDataTable(arg_6_0)
 	if arg_6_0.IS_DISPOSED then
 		logError("生命周期已经结束了,但是又调用注册table的方法,请检查代码,类名:" .. arg_6_0.__cname)
+	end
+
+	if not arg_6_0.USER_DATA_LIST then
+		arg_6_0.USER_DATA_LIST = {}
 	end
 
 	local var_6_0 = {}
@@ -65,28 +69,29 @@ function var_0_0.getComponent(arg_8_0, arg_8_1)
 
 	local var_8_0 = arg_8_1.__cname
 
-	if arg_8_0.MY_COMPONENT_DIC[var_8_0] then
-		return arg_8_0.MY_COMPONENT_DIC[var_8_0]
+	if arg_8_0[var_8_0] then
+		return arg_8_0[var_8_0]
 	end
 
 	local var_8_1 = arg_8_0:addComponent(arg_8_1)
 
-	arg_8_0.MY_COMPONENT_DIC[var_8_0] = var_8_1
+	arg_8_0[var_8_0] = var_8_1
 
 	return var_8_1
 end
 
-function var_0_0.killMyComponent(arg_9_0, arg_9_1)
+function var_0_0.killComponent(arg_9_0, arg_9_1)
 	if not arg_9_1 then
 		return
 	end
 
 	local var_9_0 = arg_9_1.__cname
+	local var_9_1 = arg_9_0[var_9_0]
 
-	if arg_9_0.MY_COMPONENT_DIC[var_9_0] then
-		arg_9_0.MY_COMPONENT_DIC[var_9_0]:disposeSelf()
+	if var_9_1 then
+		var_9_1:disposeSelf()
 
-		arg_9_0.MY_COMPONENT_DIC[var_9_0] = nil
+		arg_9_0[var_9_0] = nil
 	end
 end
 
@@ -134,8 +139,8 @@ function var_0_0.com_registRepeatTimer(arg_19_0, arg_19_1, arg_19_2, arg_19_3, a
 	return arg_19_0:getComponent(FightTimerComponent):registRepeatTimer(arg_19_1, arg_19_0, arg_19_2, arg_19_3, arg_19_4)
 end
 
-function var_0_0.com_registSingleTimer(arg_20_0, arg_20_1, arg_20_2, arg_20_3, arg_20_4)
-	return arg_20_0:getComponent(FightTimerComponent):registSingleTimer(arg_20_1, arg_20_2, arg_20_0, arg_20_3, 1, arg_20_4)
+function var_0_0.com_registSingleTimer(arg_20_0, arg_20_1, arg_20_2, arg_20_3)
+	return arg_20_0:getComponent(FightTimerComponent):registSingleTimer(arg_20_1, arg_20_0, arg_20_2, 1, arg_20_3)
 end
 
 function var_0_0.com_restartTimer(arg_21_0, arg_21_1, arg_21_2, arg_21_3)

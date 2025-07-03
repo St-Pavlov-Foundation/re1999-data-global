@@ -220,7 +220,10 @@ function var_0_0._initIcon(arg_19_0)
 	gohelper.setActive(arg_19_0._simagerightproduct.gameObject, true)
 	arg_19_0._simagerightproduct:LoadImage(var_19_3)
 
-	arg_19_0._txtrightproductname.text = string.format("%s%s%s", var_19_2.name, luaLang("multiple"), var_19_1[3])
+	arg_19_0._txtrightproductname.text = GameUtil.getSubPlaceholderLuaLang(luaLang("room_critter_exchange"), {
+		var_19_2.name,
+		var_19_1[3]
+	})
 
 	local var_19_4 = string.splitToNumber(var_19_0.config.cost, "#")
 	local var_19_5, var_19_6 = ItemModel.instance:getItemConfigAndIcon(var_19_4[1], var_19_4[2], true)
@@ -228,7 +231,10 @@ function var_0_0._initIcon(arg_19_0)
 	gohelper.setActive(arg_19_0._simageleftproduct.gameObject, true)
 	arg_19_0._simageleftproduct:LoadImage(var_19_6)
 
-	arg_19_0._txtleftproductname.text = string.format("%s%s%s", var_19_5.name, luaLang("multiple"), var_19_4[3])
+	arg_19_0._txtleftproductname.text = GameUtil.getSubPlaceholderLuaLang(luaLang("room_critter_exchange"), {
+		var_19_5.name,
+		var_19_4[3]
+	})
 
 	arg_19_0._simagecosticon:LoadImage(var_19_6)
 

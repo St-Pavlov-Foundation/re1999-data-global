@@ -3,8 +3,6 @@
 local var_0_0 = class("FightViewAssistBoss", BaseView)
 
 function var_0_0.onInitView(arg_1_0)
-	arg_1_0.goAssistBossContainer = gohelper.findChild(arg_1_0.viewGO, "root/assistboss")
-
 	if arg_1_0._editableInitView then
 		arg_1_0:_editableInitView()
 	end
@@ -37,7 +35,6 @@ function var_0_0.onOpen(arg_6_0)
 		return
 	end
 
-	gohelper.setActive(arg_6_0.goAssistBossContainer, true)
 	arg_6_0:createAssistBossBehaviour()
 	arg_6_0:createAssistBossScore()
 end
@@ -66,7 +63,10 @@ function var_0_0.createAssistBossBehaviour(arg_7_0)
 
 	arg_7_0.bossBehaviour = var_7_2.New()
 
-	arg_7_0.bossBehaviour:init(arg_7_0.goAssistBossContainer)
+	local var_7_3 = arg_7_0.viewContainer.rightElementLayoutView:getElementContainer(FightRightElementEnum.Elements.AssistBoss)
+
+	arg_7_0.bossBehaviour:init(var_7_3)
+	arg_7_0.viewContainer.rightElementLayoutView:showElement(FightRightElementEnum.Elements.AssistBoss)
 end
 
 function var_0_0.createAssistBossScore(arg_8_0)
@@ -82,7 +82,10 @@ function var_0_0.createAssistBossScore(arg_8_0)
 
 	arg_8_0.scoreComp = FightAssistBossScoreView.New()
 
-	arg_8_0.scoreComp:init(arg_8_0.goAssistBossContainer)
+	local var_8_0 = arg_8_0.viewContainer.rightElementLayoutView:getElementContainer(FightRightElementEnum.Elements.AssistBossScore)
+
+	arg_8_0.scoreComp:init(var_8_0)
+	arg_8_0.viewContainer.rightElementLayoutView:showElement(FightRightElementEnum.Elements.AssistBossScore)
 end
 
 function var_0_0.onDestroyView(arg_9_0)

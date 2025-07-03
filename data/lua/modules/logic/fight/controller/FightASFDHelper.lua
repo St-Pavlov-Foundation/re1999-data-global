@@ -7,8 +7,8 @@ function var_0_0.getMissileTargetId(arg_1_0)
 		return
 	end
 
-	if arg_1_0.actEffectMOs then
-		for iter_1_0, iter_1_1 in ipairs(arg_1_0.actEffectMOs) do
+	if arg_1_0.actEffect then
+		for iter_1_0, iter_1_1 in ipairs(arg_1_0.actEffect) do
 			if var_0_0.isDamageEffect(iter_1_1.effectType) then
 				return iter_1_1.targetId
 			end
@@ -282,7 +282,7 @@ function var_0_0._checkTriggerMustCrit(arg_24_0, arg_24_1)
 		return false
 	end
 
-	local var_24_0 = arg_24_0.actEffectMOs
+	local var_24_0 = arg_24_0.actEffect
 
 	if not var_24_0 then
 		return false
@@ -299,7 +299,7 @@ end
 
 function var_0_0.getStepContext(arg_25_0, arg_25_1)
 	if arg_25_0 then
-		for iter_25_0, iter_25_1 in ipairs(arg_25_0.actEffectMOs) do
+		for iter_25_0, iter_25_1 in ipairs(arg_25_0.actEffect) do
 			if iter_25_1.effectType == FightEnum.EffectType.EMITTERFIGHTNOTIFY then
 				local var_25_0
 

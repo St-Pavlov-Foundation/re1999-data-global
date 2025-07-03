@@ -1,0 +1,252 @@
+[
+  {
+    "id": 110001,
+    "activityId": 12701,
+    "name": "language_10058414",
+    "desc": "language_10072648",
+    "relateHero": "3003",
+    "relateItem": "",
+    "icon": "act174_pick_bufficon_6",
+    "effects": "401|451"
+  },
+  {
+    "id": 110002,
+    "activityId": 12701,
+    "name": "language_10058414",
+    "desc": "language_10072649",
+    "relateHero": "3004",
+    "relateItem": "",
+    "icon": "act174_pick_bufficon_6",
+    "effects": "402|452"
+  },
+  {
+    "id": 110003,
+    "activityId": 12701,
+    "name": "language_10058414",
+    "desc": "language_10072650",
+    "relateHero": "3004",
+    "relateItem": "",
+    "icon": "act174_pick_bufficon_6",
+    "effects": "403|453"
+  },
+  {
+    "id": 110004,
+    "activityId": 12701,
+    "name": "language_10058414",
+    "desc": "language_10072651",
+    "relateHero": "3009",
+    "relateItem": "",
+    "icon": "act174_pick_bufficon_6",
+    "effects": "404|454"
+  },
+  {
+    "id": 110005,
+    "activityId": 12701,
+    "name": "language_10058414",
+    "desc": "language_10072652",
+    "relateHero": "3051",
+    "relateItem": "",
+    "icon": "act174_pick_bufficon_6",
+    "effects": "405|455"
+  },
+  {
+    "id": 110006,
+    "activityId": 12701,
+    "name": "language_10058414",
+    "desc": "language_10072653",
+    "relateHero": "3052",
+    "relateItem": "",
+    "icon": "act174_pick_bufficon_6",
+    "effects": "406|456"
+  },
+  {
+    "id": 110007,
+    "activityId": 12701,
+    "name": "language_10058414",
+    "desc": "language_10072654",
+    "relateHero": "3072",
+    "relateItem": "",
+    "icon": "act174_pick_bufficon_6",
+    "effects": "407|457"
+  },
+  {
+    "id": 110008,
+    "activityId": 12701,
+    "name": "language_10058414",
+    "desc": "language_10072655",
+    "relateHero": "3020",
+    "relateItem": "",
+    "icon": "act174_pick_bufficon_6",
+    "effects": "408|458"
+  },
+  {
+    "id": 110009,
+    "activityId": 12701,
+    "name": "language_10058414",
+    "desc": "language_10072656",
+    "relateHero": "3043",
+    "relateItem": "",
+    "icon": "act174_pick_bufficon_6",
+    "effects": "409|459"
+  },
+  {
+    "id": 110010,
+    "activityId": 12701,
+    "name": "language_10058414",
+    "desc": "language_10072657",
+    "relateHero": "3048",
+    "relateItem": "",
+    "icon": "act174_pick_bufficon_6",
+    "effects": "410|460"
+  },
+  {
+    "id": 110011,
+    "activityId": 12701,
+    "name": "language_10058414",
+    "desc": "language_10072658",
+    "relateHero": "3041",
+    "relateItem": "",
+    "icon": "act174_pick_bufficon_6",
+    "effects": "411|461"
+  },
+  {
+    "id": 110013,
+    "activityId": 12701,
+    "name": "language_10058414",
+    "desc": "language_10072659",
+    "relateHero": "3039",
+    "relateItem": "",
+    "icon": "act174_pick_bufficon_6",
+    "effects": "412|462"
+  },
+  {
+    "id": 110014,
+    "activityId": 12701,
+    "name": "language_10058414",
+    "desc": "language_10072660",
+    "relateHero": "3062",
+    "relateItem": "",
+    "icon": "act174_pick_bufficon_6",
+    "effects": "413|463"
+  },
+  {
+    "id": 110015,
+    "activityId": 12701,
+    "name": "language_10058414",
+    "desc": "language_10072661",
+    "relateHero": "3047",
+    "relateItem": "",
+    "icon": "act174_pick_bufficon_6",
+    "effects": "414|464"
+  },
+  {
+    "id": 110016,
+    "activityId": 12701,
+    "name": "language_10058414",
+    "desc": "language_10072662",
+    "relateHero": "3074",
+    "relateItem": "",
+    "icon": "act174_pick_bufficon_6",
+    "effects": "415|465"
+  },
+  {
+    "id": 110017,
+    "activityId": 12701,
+    "name": "language_10058414",
+    "desc": "language_10072663",
+    "relateHero": "3074",
+    "relateItem": "",
+    "icon": "act174_pick_bufficon_6",
+    "effects": "416|466"
+  },
+  {
+    "id": 110018,
+    "activityId": 12701,
+    "name": "language_10058414",
+    "desc": "language_10072664",
+    "relateHero": "3074",
+    "relateItem": "",
+    "icon": "act174_pick_bufficon_6",
+    "effects": "417|467"
+  },
+  {
+    "id": 110021,
+    "activityId": 12701,
+    "name": "language_10058414",
+    "desc": "language_10072665",
+    "relateHero": "",
+    "relateItem": "8330715",
+    "icon": "act174_pick_bufficon_7",
+    "effects": "421|468"
+  },
+  {
+    "id": 110022,
+    "activityId": 12701,
+    "name": "language_10058414",
+    "desc": "language_10072666",
+    "relateHero": "",
+    "relateItem": "8310212",
+    "icon": "act174_pick_bufficon_7",
+    "effects": "422|469"
+  },
+  {
+    "id": 110023,
+    "activityId": 12701,
+    "name": "language_10058414",
+    "desc": "language_10072667",
+    "relateHero": "",
+    "relateItem": "8320210",
+    "icon": "act174_pick_bufficon_7",
+    "effects": "423|470"
+  },
+  {
+    "id": 110024,
+    "activityId": 12701,
+    "name": "language_10058414",
+    "desc": "language_10072668",
+    "relateHero": "",
+    "relateItem": "8330306",
+    "icon": "act174_pick_bufficon_7",
+    "effects": "424|471"
+  },
+  {
+    "id": 110025,
+    "activityId": 12701,
+    "name": "language_10058414",
+    "desc": "language_10072669",
+    "relateHero": "",
+    "relateItem": "8330020",
+    "icon": "act174_pick_bufficon_7",
+    "effects": "425|472"
+  },
+  {
+    "id": 110026,
+    "activityId": 12701,
+    "name": "language_10058414",
+    "desc": "language_10072670",
+    "relateHero": "",
+    "relateItem": "8320506",
+    "icon": "act174_pick_bufficon_7",
+    "effects": "426|473"
+  },
+  {
+    "id": 110027,
+    "activityId": 12701,
+    "name": "language_10058414",
+    "desc": "language_10075394",
+    "relateHero": "",
+    "relateItem": "8120416",
+    "icon": "act174_pick_bufficon_7",
+    "effects": "427|474"
+  },
+  {
+    "id": 110028,
+    "activityId": 12701,
+    "name": "language_10058414",
+    "desc": "language_10072672",
+    "relateHero": "",
+    "relateItem": "8330211",
+    "icon": "act174_pick_bufficon_7",
+    "effects": "428|475"
+  }
+]

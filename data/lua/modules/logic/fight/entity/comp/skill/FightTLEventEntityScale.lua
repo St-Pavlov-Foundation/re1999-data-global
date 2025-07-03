@@ -1,8 +1,8 @@
 ﻿module("modules.logic.fight.entity.comp.skill.FightTLEventEntityScale", package.seeall)
 
-local var_0_0 = class("FightTLEventEntityScale")
+local var_0_0 = class("FightTLEventEntityScale", FightTimelineTrackItem)
 
-function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 	arg_1_0._paramsArr = arg_1_3
 	arg_1_0._targetScale = tonumber(arg_1_3[1])
 	arg_1_0._revertScale = arg_1_3[5] == "1"
@@ -24,7 +24,11 @@ function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 	elseif var_1_0 == "4" then
 		local var_1_4 = FightHelper.getEntity(arg_1_1.toId)
 
-		var_1_2 = FightHelper.getSideEntitys(var_1_4:getSide(), true)
+		if var_1_4 then
+			var_1_2 = FightHelper.getSideEntitys(var_1_4:getSide(), true)
+		else
+			var_1_2 = {}
+		end
 	end
 
 	if not string.nilorempty(arg_1_3[4]) then
@@ -88,25 +92,21 @@ function var_0_0._getScale(arg_3_0, arg_3_1)
 	return arg_3_0._targetScale
 end
 
-function var_0_0.handleSkillEventEnd(arg_4_0)
+function var_0_0.onTrackEnd(arg_4_0)
 	arg_4_0:_clear()
 end
 
-function var_0_0.reset(arg_5_0)
+function var_0_0.onDestructor(arg_5_0)
 	arg_5_0:_clear()
 end
 
-function var_0_0.dispose(arg_6_0)
-	arg_6_0:_clear()
-end
-
-function var_0_0._clear(arg_7_0)
-	if arg_7_0._tweenList then
-		for iter_7_0, iter_7_1 in ipairs(arg_7_0._tweenList) do
-			ZProj.TweenHelper.KillById(iter_7_1)
+function var_0_0._clear(arg_6_0)
+	if arg_6_0._tweenList then
+		for iter_6_0, iter_6_1 in ipairs(arg_6_0._tweenList) do
+			ZProj.TweenHelper.KillById(iter_6_1)
 		end
 
-		arg_7_0._tweenList = nil
+		arg_6_0._tweenList = nil
 	end
 end
 

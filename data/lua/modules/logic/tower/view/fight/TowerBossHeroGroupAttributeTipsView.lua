@@ -60,7 +60,7 @@ function var_0_0.refreshAttr(arg_10_0)
 
 	arg_10_0.txtTeamLev.text = HeroConfig.instance:getCommonLevelDisplay(var_10_0)
 
-	local var_10_1 = arg_10_0.bossMo and arg_10_0.bossMo.level or 1
+	local var_10_1 = arg_10_0.bossMo and arg_10_0.bossMo.trialLevel > 0 and arg_10_0.bossMo.trialLevel or arg_10_0.bossMo and arg_10_0.bossMo.level or 1
 	local var_10_2 = TowerConfig.instance:getHeroGroupAddAttr(arg_10_0.bossId, var_10_0, var_10_1)
 	local var_10_3 = math.max(#var_10_2, #arg_10_0.items)
 

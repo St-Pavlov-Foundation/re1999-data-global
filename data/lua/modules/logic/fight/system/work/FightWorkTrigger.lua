@@ -3,23 +3,23 @@
 local var_0_0 = class("FightWorkTrigger", FightEffectBase)
 
 function var_0_0.onStart(arg_1_0)
-	local var_1_0 = arg_1_0._actEffectMO.effectNum
+	local var_1_0 = arg_1_0.actEffectData.effectNum
 
-	if arg_1_0._actEffectMO.configEffect == -1 and var_1_0 == 4150002 then
+	if arg_1_0.actEffectData.configEffect == -1 and var_1_0 == 4150002 then
 		local var_1_1 = false
 
-		if arg_1_0._fightStepMO.actEffectMOs then
+		if arg_1_0.fightStepData.actEffect then
 			local var_1_2 = false
 
-			for iter_1_0, iter_1_1 in ipairs(arg_1_0._fightStepMO.actEffectMOs) do
-				if iter_1_1 == arg_1_0._actEffectMO then
+			for iter_1_0, iter_1_1 in ipairs(arg_1_0.fightStepData.actEffect) do
+				if iter_1_1 == arg_1_0.actEffectData then
 					var_1_2 = iter_1_0
 					var_1_1 = true
 				end
 			end
 
-			for iter_1_2 = var_1_2 + 1, #arg_1_0._fightStepMO.actEffectMOs do
-				local var_1_3 = arg_1_0._fightStepMO.actEffectMOs[iter_1_2]
+			for iter_1_2 = var_1_2 + 1, #arg_1_0.fightStepData.actEffect do
+				local var_1_3 = arg_1_0.fightStepData.actEffect[iter_1_2]
 
 				if var_1_3.effectType == FightEnum.EffectType.TRIGGER and var_1_3.configEffect == -1 and var_1_3.effectNum == 4150002 then
 					var_1_1 = false
@@ -45,7 +45,7 @@ function var_0_0.onStart(arg_1_0)
 		if var_1_5 then
 			arg_1_0:cancelFightWorkSafeTimer()
 
-			arg_1_0._work = var_1_5.New(arg_1_0._fightStepMO, arg_1_0._actEffectMO)
+			arg_1_0._work = var_1_5.New(arg_1_0.fightStepData, arg_1_0.actEffectData)
 
 			arg_1_0._work:registerDoneListener(arg_1_0._onWorkDone, arg_1_0)
 			arg_1_0._work:onStart(arg_1_0.context)

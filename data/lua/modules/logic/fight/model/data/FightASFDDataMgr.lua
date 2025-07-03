@@ -1,19 +1,19 @@
 ﻿module("modules.logic.fight.model.data.FightASFDDataMgr", package.seeall)
 
-local var_0_0 = FightDataClass("FightASFDDataMgr")
+local var_0_0 = FightDataClass("FightASFDDataMgr", FightDataMgrBase)
 
 function var_0_0.onConstructor(arg_1_0)
 	return
 end
 
 function var_0_0.updateData(arg_2_0, arg_2_1)
-	if arg_2_1.attacker:HasField("emitterInfo") then
+	if arg_2_1.attacker.emitterInfo then
 		arg_2_0.attackerEmitterInfo = FightASFDEmitterInfoMO.New()
 
 		arg_2_0.attackerEmitterInfo:init(arg_2_1.attacker.emitterInfo)
 	end
 
-	if arg_2_1.defender:HasField("emitterInfo") then
+	if arg_2_1.defender.emitterInfo then
 		arg_2_0.defenderEmitterInfo = FightASFDEmitterInfoMO.New()
 
 		arg_2_0.defenderEmitterInfo:init(arg_2_1.defender.emitterInfo)

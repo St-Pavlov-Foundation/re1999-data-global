@@ -46,48 +46,49 @@ function var_0_0._btnuseOnClick(arg_4_0)
 	end
 
 	local var_4_5 = {}
+	local var_4_6 = HeroGroupHandler.getTrialHeros(HeroGroupModel.instance.episodeId)
 
-	if not string.nilorempty(var_4_3.trialHeros) then
-		var_4_5 = GameUtil.splitString2(var_4_3.trialHeros, true)
+	if not string.nilorempty(var_4_6) then
+		var_4_5 = GameUtil.splitString2(var_4_6, true)
 	end
 
-	local var_4_6 = {}
+	local var_4_7 = {}
 
 	for iter_4_0, iter_4_1 in pairs(var_4_5) do
 		if iter_4_1[3] then
-			var_4_6[lua_hero_trial.configDict[iter_4_1[1]][iter_4_1[2]].heroId] = true
+			var_4_7[lua_hero_trial.configDict[iter_4_1[1]][iter_4_1[2]].heroId] = true
 		end
 	end
 
 	for iter_4_2 = 1, #var_4_0 do
-		local var_4_7 = var_4_0[iter_4_2].heroId
+		local var_4_8 = var_4_0[iter_4_2].heroId
 
-		if var_4_7 and var_4_7 > 0 then
-			local var_4_8 = HeroModel.instance:getByHeroId(var_4_7)
+		if var_4_8 and var_4_8 > 0 then
+			local var_4_9 = HeroModel.instance:getByHeroId(var_4_8)
 
 			if HeroGroupModel.instance:isAdventureOrWeekWalk() then
-				if WeekWalkModel.instance:getCurMapHeroCd(var_4_7) > 0 then
+				if WeekWalkModel.instance:getCurMapHeroCd(var_4_8) > 0 then
 					GameFacade.showToast(ToastEnum.HeroGroupEdit)
 
-					var_4_8 = nil
+					var_4_9 = nil
 				end
-			elseif var_4_8 and HeroGroupModel.instance:isRestrict(var_4_8.uid) then
-				local var_4_9 = HeroGroupModel.instance:getCurrentBattleConfig()
-				local var_4_10 = var_4_9 and var_4_9.restrictReason
+			elseif var_4_9 and HeroGroupModel.instance:isRestrict(var_4_9.uid) then
+				local var_4_10 = HeroGroupModel.instance:getCurrentBattleConfig()
+				local var_4_11 = var_4_10 and var_4_10.restrictReason
 
-				if not string.nilorempty(var_4_10) then
-					ToastController.instance:showToastWithString(var_4_10)
+				if not string.nilorempty(var_4_11) then
+					ToastController.instance:showToastWithString(var_4_11)
 				end
 
-				var_4_8 = nil
+				var_4_9 = nil
 			end
 
-			if var_4_6[var_4_7] then
-				var_4_8 = nil
+			if var_4_7[var_4_8] then
+				var_4_9 = nil
 			end
 
-			if var_4_8 then
-				table.insert(var_4_1, var_4_8.uid)
+			if var_4_9 then
+				table.insert(var_4_1, var_4_9.uid)
 			else
 				table.insert(var_4_1, "0")
 			end
@@ -96,38 +97,38 @@ function var_0_0._btnuseOnClick(arg_4_0)
 		end
 	end
 
-	local var_4_11 = HeroGroupModel.instance:getCurGroupMO()
-	local var_4_12 = 0
+	local var_4_12 = HeroGroupModel.instance:getCurGroupMO()
+	local var_4_13 = 0
 
 	if arg_4_0._mo.cloth and arg_4_0._mo.cloth ~= 0 and PlayerClothModel.instance:canUse(arg_4_0._mo.cloth) then
-		var_4_12 = arg_4_0._mo.cloth
+		var_4_13 = arg_4_0._mo.cloth
 	elseif OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.LeadRoleSkill) then
-		local var_4_13 = PlayerClothModel.instance:getList()
+		local var_4_14 = PlayerClothModel.instance:getList()
 
-		for iter_4_3, iter_4_4 in ipairs(var_4_13) do
+		for iter_4_3, iter_4_4 in ipairs(var_4_14) do
 			if PlayerClothModel.instance:hasCloth(iter_4_4.id) then
-				var_4_12 = iter_4_4.id
+				var_4_13 = iter_4_4.id
 
 				break
 			end
 		end
 	end
 
-	local var_4_14 = {
-		groupId = var_4_11.id,
-		name = var_4_11.name,
-		clothId = var_4_12,
+	local var_4_15 = {
+		groupId = var_4_12.id,
+		name = var_4_12.name,
+		clothId = var_4_13,
 		heroList = var_4_1
 	}
 
 	if TowerModel.instance:isInTowerBattle() then
-		arg_4_0:onTowerUse(var_4_14, var_4_11, var_4_4, var_4_3.roleNum, var_4_3.playerMax, true, var_4_5)
+		arg_4_0:onTowerUse(var_4_15, var_4_12, var_4_4, var_4_3.roleNum, var_4_3.playerMax, true, var_4_5)
 
 		return
 	end
 
-	var_4_11:initWithBattle(var_4_14, var_4_4, var_4_3.roleNum, var_4_3.playerMax, true, var_4_5)
-	HeroSingleGroupModel.instance:setSingleGroup(var_4_11, true)
+	var_4_12:initWithBattle(var_4_15, var_4_4, var_4_3.roleNum, var_4_3.playerMax, true, var_4_5)
+	HeroSingleGroupModel.instance:setSingleGroup(var_4_12, true)
 	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnModifyHeroGroup)
 	HeroGroupModel.instance:saveCurGroupData()
 	ViewMgr.instance:closeView(ViewName.HeroGroupRecommendView)

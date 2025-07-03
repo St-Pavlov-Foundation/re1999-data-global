@@ -59,7 +59,6 @@ end
 function var_0_0._editableInitView(arg_9_0)
 	arg_9_0._txtLimitTime.text = ""
 
-	arg_9_0._simagePanelBG:LoadImage(ResUrl.getV2a0SignSingleBg("v2a0_summersign_panelbg"))
 	arg_9_0:internal_set_openMode(Activity101SignViewBase.eOpenMode.PaiLian)
 end
 

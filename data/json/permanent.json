@@ -30,6 +30,11 @@
     "enterview": "Permanent1_7EnterView"
   },
   {
+    "id": 11803,
+    "kvIcon": "reappear_img_kv08",
+    "enterview": "Permanent1_8EnterView"
+  },
+  {
     "id": 11601,
     "kvIcon": "reappear_img_kv06",
     "enterview": "Permanent1_6EnterView"

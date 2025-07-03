@@ -202,5 +202,17 @@
     "collectionBonus": "11#12605#1",
     "extraShowBuilding": "",
     "sourcesType": ""
+  },
+  {
+    "id": 2701,
+    "name": "language_10074856",
+    "nameEn": "Where Auroras Rest",
+    "desc": "language_10074924",
+    "rewardIcon": "1701800",
+    "building": "12701|12702|12703|12704|12705|12706",
+    "packages": "2701|2702|2703|2704|2705|2706",
+    "collectionBonus": "11#12705#1",
+    "extraShowBuilding": "",
+    "sourcesType": ""
   }
 ]

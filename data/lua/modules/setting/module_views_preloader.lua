@@ -252,108 +252,114 @@ function var_0_0.V1a4_BossRushLevelDetail(arg_27_0)
 	table.insert(arg_27_0, BossRushConfig.instance:getBossRushLevelDetailFullBgSimage(var_27_2))
 end
 
-function var_0_0.OptionalChargeView(arg_28_0)
-	local var_28_0 = {
+function var_0_0.VersionActivity2_7DungeonMapView(arg_28_0)
+	local var_28_0 = VersionActivity2_7DungeonEnum.SpaceScene
+
+	table.insert(arg_28_0, var_28_0)
+end
+
+function var_0_0.OptionalChargeView(arg_29_0)
+	local var_29_0 = {
 		"ui/viewres/store/optionalgiftview.prefab"
 	}
 
-	var_0_0._startLoad(var_28_0, arg_28_0)
+	var_0_0._startLoad(var_29_0, arg_29_0)
 end
 
-function var_0_0.Season166MainView(arg_29_0)
-	local var_29_0 = Season166Model.instance:getCurSeasonId()
-	local var_29_1 = Season166Config.instance:getSeasonConstStr(var_29_0, Season166Enum.MainSceneUrl)
+function var_0_0.Season166MainView(arg_30_0)
+	local var_30_0 = Season166Model.instance:getCurSeasonId()
+	local var_30_1 = Season166Config.instance:getSeasonConstStr(var_30_0, Season166Enum.MainSceneUrl)
 
-	if var_29_1 then
-		table.insert(arg_29_0, var_29_1)
+	if var_30_1 then
+		table.insert(arg_30_0, var_30_1)
 	end
 end
 
-function var_0_0.V2a3_WarmUp(arg_30_0)
-	local var_30_0 = ViewMgr.instance:getContainer(ViewName.V2a3_WarmUp)
+function var_0_0.V2a3_WarmUp(arg_31_0)
+	local var_31_0 = ViewMgr.instance:getContainer(ViewName.V2a3_WarmUp)
 
-	if not var_30_0 then
+	if not var_31_0 then
 		return
 	end
 
-	local var_30_1 = var_30_0:getEpisodeCount()
+	local var_31_1 = var_31_0:getEpisodeCount()
 
-	for iter_30_0 = 1, var_30_1 do
-		local var_30_2 = var_30_0:getImgResUrl(iter_30_0)
+	for iter_31_0 = 1, var_31_1 do
+		local var_31_2 = var_31_0:getImgResUrl(iter_31_0)
 
-		table.insert(arg_30_0, var_30_2)
+		table.insert(arg_31_0, var_31_2)
 	end
 end
 
 local var_0_1 = {}
 
-function var_0_0._startLoad(arg_31_0, arg_31_1, arg_31_2)
-	local var_31_0 = MultiAbLoader.New()
+function var_0_0._startLoad(arg_32_0, arg_32_1, arg_32_2)
+	local var_32_0 = MultiAbLoader.New()
 
-	var_0_1[var_31_0] = true
+	var_0_1[var_32_0] = true
 
 	UIBlockMgr.instance:startBlock("ui_preload")
-	var_31_0:setPathList(arg_31_0)
-	var_31_0:startLoad(function()
-		var_0_1[var_31_0] = nil
+	var_32_0:setPathList(arg_32_0)
+	var_32_0:startLoad(function()
+		var_0_1[var_32_0] = nil
 
 		UIBlockMgr.instance:endBlock("ui_preload")
-		var_31_0:dispose()
-		arg_31_1(arg_31_2)
+		var_32_0:dispose()
+		arg_32_1(arg_32_2)
 	end)
 end
 
 function var_0_0.stopPreload()
-	for iter_33_0, iter_33_1 in pairs(var_0_1) do
-		iter_33_0:dispose()
+	for iter_34_0, iter_34_1 in pairs(var_0_1) do
+		iter_34_0:dispose()
 		logNormal("module_views_preloader dispose loader")
 	end
 
 	var_0_1 = {}
 end
 
-function var_0_0._getResPathList(arg_34_0)
-	local var_34_0 = {}
-	local var_34_1 = ViewMgr.instance:getSetting(arg_34_0)
+function var_0_0._getResPathList(arg_35_0)
+	local var_35_0 = {}
+	local var_35_1 = ViewMgr.instance:getSetting(arg_35_0)
 
-	if var_34_1.mainRes then
-		table.insert(var_34_0, var_34_1.mainRes)
+	if var_35_1.mainRes then
+		table.insert(var_35_0, var_35_1.mainRes)
 	end
 
-	if var_34_1.otherRes then
-		for iter_34_0, iter_34_1 in pairs(var_34_1.otherRes) do
-			table.insert(var_34_0, iter_34_1)
+	if var_35_1.otherRes then
+		for iter_35_0, iter_35_1 in pairs(var_35_1.otherRes) do
+			table.insert(var_35_0, iter_35_1)
 		end
 	end
 
-	if var_34_1.tabRes then
-		for iter_34_2, iter_34_3 in pairs(var_34_1.tabRes) do
-			for iter_34_4, iter_34_5 in pairs(iter_34_3) do
-				for iter_34_6, iter_34_7 in pairs(iter_34_5) do
-					table.insert(var_34_0, iter_34_7)
+	if var_35_1.tabRes then
+		for iter_35_2, iter_35_3 in pairs(var_35_1.tabRes) do
+			for iter_35_4, iter_35_5 in pairs(iter_35_3) do
+				for iter_35_6, iter_35_7 in pairs(iter_35_5) do
+					table.insert(var_35_0, iter_35_7)
 				end
 			end
 		end
 	end
 
-	if var_34_1.anim and var_34_1.anim ~= ViewAnim.Default and string.find(var_34_1.anim, ".controller") then
-		table.insert(var_34_0, var_34_1.anim)
+	if var_35_1.anim and var_35_1.anim ~= ViewAnim.Default and string.find(var_35_1.anim, ".controller") then
+		table.insert(var_35_0, var_35_1.anim)
 	end
 
-	return var_34_0
+	return var_35_0
 end
 
-function var_0_0.VersionActivityEnterView(arg_35_0)
-	local var_35_0 = ViewMgr.instance:getContainer(ViewName.VersionActivityEnterView)
+function var_0_0.VersionActivityEnterView(arg_36_0)
+	local var_36_0 = ViewMgr.instance:getContainer(ViewName.VersionActivityEnterView)
 
-	if not var_35_0 then
+	if not var_36_0 then
 		return
 	end
 
-	local var_35_1 = var_35_0:getPreLoaderResPathList()
+	local var_36_1 = var_36_0:getPreLoaderResPathList()
 
-	for iter_35_0, iter_35_1 in ipairs(var_35_1) do
-		table.insert(arg_35_0, iter_35_1)
+	for iter_36_0, iter_36_1 in ipairs(var_36_1) do
+		table.insert(arg_36_0, iter_36_1)
 	end
 end
 

@@ -54,5 +54,40 @@
     "icon": "1004",
     "desc": "language_10070598",
     "rules": "1#9260033"
+  },
+  {
+    "id": 2011,
+    "name": "language_10074846",
+    "icon": "1009",
+    "desc": "language_10073351",
+    "rules": "1#9270511"
+  },
+  {
+    "id": 2012,
+    "name": "language_10074847",
+    "icon": "1012",
+    "desc": "language_10073352",
+    "rules": "1#9270512"
+  },
+  {
+    "id": 2013,
+    "name": "language_10074848",
+    "icon": "1014",
+    "desc": "language_10073353",
+    "rules": "1#9270513"
+  },
+  {
+    "id": 2014,
+    "name": "language_10074849",
+    "icon": "1013",
+    "desc": "language_10073354",
+    "rules": "1#9270514"
+  },
+  {
+    "id": 2015,
+    "name": "language_10074850",
+    "icon": "1011",
+    "desc": "language_10073355",
+    "rules": "1#9270515"
   }
 ]

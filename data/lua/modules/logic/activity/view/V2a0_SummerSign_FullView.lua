@@ -21,8 +21,6 @@ function var_0_0.removeEvents(arg_3_0)
 end
 
 function var_0_0._editableInitView(arg_4_0)
-	arg_4_0._simageFullBG:LoadImage(ResUrl.getV2a0SignSingleBg("v2a0_summersign_fullbg"))
-
 	arg_4_0._txtLimitTime.text = ""
 
 	arg_4_0:internal_set_openMode(Activity101SignViewBase.eOpenMode.ActivityBeginnerView)

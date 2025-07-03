@@ -92,7 +92,7 @@ function var_0_0._updateTaskStatus(arg_10_0)
 end
 
 function var_0_0._openStoreView(arg_11_0)
-	StoreController.instance:openStoreView(StoreEnum.WeekWalkTabId)
+	StoreController.instance:openStoreView(StoreEnum.StoreId.WeekWalk)
 end
 
 function var_0_0._btnstartOnClick(arg_12_0)

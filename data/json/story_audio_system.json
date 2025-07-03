@@ -1543,5 +1543,100 @@
     "id": 922600098,
     "eventName": "play_guide507801_systemvoc_1202",
     "bankName": "guide507801_systemvoc_part24"
+  },
+  {
+    "id": 927015001,
+    "eventName": "play_battle_plot27_npc512901_1",
+    "bankName": "npc512901_level_yuzhou2_7"
+  },
+  {
+    "id": 927015002,
+    "eventName": "play_battle_plot27_hero3117_2",
+    "bankName": "hero3117_level_yuzhou2_7"
+  },
+  {
+    "id": 927015003,
+    "eventName": "play_battle_plot27_hero3117_4",
+    "bankName": "hero3117_level_yuzhou2_7"
+  },
+  {
+    "id": 927015004,
+    "eventName": "play_battle_plot27_hero3117_5",
+    "bankName": "hero3117_level_yuzhou2_7"
+  },
+  {
+    "id": 927015005,
+    "eventName": "play_battle_plot27_hero3117_6",
+    "bankName": "hero3117_level_yuzhou2_7"
+  },
+  {
+    "id": 927015006,
+    "eventName": "play_battle_plot27_hero3117_7",
+    "bankName": "hero3117_level_yuzhou2_7"
+  },
+  {
+    "id": 927015007,
+    "eventName": "play_battle_plot27_hero3117_8",
+    "bankName": "hero3117_level_yuzhou2_7"
+  },
+  {
+    "id": 927015008,
+    "eventName": "play_battle_plot27_hero3117_9",
+    "bankName": "hero3117_level_yuzhou2_7"
+  },
+  {
+    "id": 927015009,
+    "eventName": "play_battle_plot27_hero3117_10",
+    "bankName": "hero3117_level_yuzhou2_7"
+  },
+  {
+    "id": 927015010,
+    "eventName": "play_battle_plot27_hero3117_11",
+    "bankName": "hero3117_level_yuzhou2_7"
+  },
+  {
+    "id": 927015011,
+    "eventName": "play_battle_plot27_hero3117_12",
+    "bankName": "hero3117_level_yuzhou2_7"
+  },
+  {
+    "id": 927015012,
+    "eventName": "play_battle_plot27_hero3117_13",
+    "bankName": "hero3117_level_yuzhou2_7"
+  },
+  {
+    "id": 927015013,
+    "eventName": "play_battle_plot27_hero3117_14",
+    "bankName": "hero3117_level_yuzhou2_7"
+  },
+  {
+    "id": 927015014,
+    "eventName": "play_battle_plot27_hero3117_15",
+    "bankName": "hero3117_level_yuzhou2_7"
+  },
+  {
+    "id": 927015015,
+    "eventName": "play_battle_plot27_npc512901_16",
+    "bankName": "npc512901_level_yuzhou2_7"
+  },
+  {
+    "id": 927015016,
+    "eventName": "play_battle_plot27_hero3117_17",
+    "bankName": "hero3117_level_yuzhou2_7"
+  },
+  {
+    "id": 927015017,
+    "eventName": "play_battle_plot27_hero3117_18",
+    "bankName": "hero3117_level_yuzhou2_7"
+  },
+  {
+    "id": 927015018,
+    "eventName": "play_battle_plot27_hero3117_19",
+    "bankName": "hero3117_level_yuzhou2_7"
+  },
+  {
+    "id": 927015019,
+    "eventName": "play_battle_plot27_hero3117_20",
+    "bankName": "hero3117_level_yuzhou2_7"
   }
 ]

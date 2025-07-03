@@ -1,6 +1,6 @@
 ﻿module("modules.logic.fight.entity.comp.skill.FightTLEventDefHeal", package.seeall)
 
-local var_0_0 = class("FightTLEventDefHeal")
+local var_0_0 = class("FightTLEventDefHeal", FightTimelineTrackItem)
 local var_0_1 = {
 	[FightEnum.EffectType.HEAL] = true,
 	[FightEnum.EffectType.HEALCRIT] = true,
@@ -11,12 +11,12 @@ function var_0_0.setContext(arg_1_0, arg_1_1)
 	arg_1_0._context = arg_1_1
 end
 
-function var_0_0.handleSkillEvent(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
-	arg_2_0._fightStepMO = arg_2_1
+function var_0_0.onTrackStart(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
+	arg_2_0.fightStepData = arg_2_1
 	arg_2_0._hasRatio = not string.nilorempty(arg_2_3[1])
 	arg_2_0._ratio = tonumber(arg_2_3[1]) or 0
 
-	for iter_2_0, iter_2_1 in ipairs(arg_2_1.actEffectMOs) do
+	for iter_2_0, iter_2_1 in ipairs(arg_2_1.actEffect) do
 		local var_2_0 = FightHelper.getEntity(iter_2_1.targetId)
 
 		if var_2_0 then
@@ -120,15 +120,7 @@ function var_0_0._playSkillBehavior(arg_6_0)
 		return
 	end
 
-	FightSkillBehaviorMgr.instance:playSkillBehavior(arg_6_0._fightStepMO, arg_6_0._behaviorTypeDict, true)
-end
-
-function var_0_0.reset(arg_7_0)
-	return
-end
-
-function var_0_0.dispose(arg_8_0)
-	return
+	FightSkillBehaviorMgr.instance:playSkillBehavior(arg_6_0.fightStepData, arg_6_0._behaviorTypeDict, true)
 end
 
 return var_0_0

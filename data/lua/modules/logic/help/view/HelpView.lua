@@ -175,6 +175,7 @@ function var_0_0._refreshView(arg_13_0)
 
 	if #arg_13_0._pagesCo < 1 then
 		logError(string.format("help view(helpId : %s) not found can show pages", arg_13_0._helpId))
+		arg_13_0:closeThis()
 
 		return
 	end

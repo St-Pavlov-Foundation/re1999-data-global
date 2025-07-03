@@ -51,7 +51,7 @@ local var_0_5 = "GM_"
 
 function var_0_4._onBeforeOpenView(arg_5_0, arg_5_1)
 	local var_5_0 = var_0_5 .. arg_5_1
-	local var_5_1 = getModulePath(var_5_0)
+	local var_5_1 = _G.getModulePath(var_5_0)
 
 	if not var_5_1 then
 		return

@@ -159,5 +159,12 @@
     "desc": "language_10006439",
     "attr": "750",
     "progress": 1
+  },
+  {
+    "id": 26,
+    "type": 2,
+    "desc": "language_10073317",
+    "attr": "20",
+    "progress": 0
   }
 ]

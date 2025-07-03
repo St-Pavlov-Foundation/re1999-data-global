@@ -7,11 +7,18 @@ function var_0_0.ctor(arg_1_0)
 end
 
 function var_0_0.onBuffStart(arg_2_0, arg_2_1, arg_2_2)
-	FightDataHelper.LYDataMgr:setLYCountBuff(arg_2_2)
+	arg_2_0.entityMo = arg_2_1:getMO()
+	arg_2_0.side = arg_2_0.entityMo.side
+
+	if arg_2_0.side == FightEnum.EntitySide.MySide then
+		FightDataHelper.LYDataMgr:setLYCountBuff(arg_2_2)
+	end
 end
 
 function var_0_0.clear(arg_3_0)
-	FightDataHelper.LYDataMgr:setLYCountBuff(nil)
+	if arg_3_0.side == FightEnum.EntitySide.MySide then
+		FightDataHelper.LYDataMgr:setLYCountBuff(nil)
+	end
 end
 
 function var_0_0.onBuffEnd(arg_4_0)

@@ -161,7 +161,7 @@ function var_0_0._onCardClick(arg_11_0, arg_11_1)
 	local var_11_1 = lua_skill.configDict[var_11_0]
 
 	for iter_11_0, iter_11_1 in ipairs(arg_11_0._cardObjList) do
-		local var_11_2 = FightConfig.instance:isUniqueSkill(var_11_0)
+		local var_11_2 = FightCardDataHelper.isBigSkill(var_11_0)
 
 		gohelper.setActive(gohelper.findChild(iter_11_1, "select"), arg_11_1 == iter_11_1 and not var_11_2)
 		gohelper.setActive(gohelper.findChild(iter_11_1, "uniqueSelect"), arg_11_1 == iter_11_1 and var_11_2)

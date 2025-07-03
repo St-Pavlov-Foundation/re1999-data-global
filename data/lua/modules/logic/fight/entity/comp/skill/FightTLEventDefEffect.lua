@@ -1,6 +1,6 @@
 ﻿module("modules.logic.fight.entity.comp.skill.FightTLEventDefEffect", package.seeall)
 
-local var_0_0 = class("FightTLEventDefEffect")
+local var_0_0 = class("FightTLEventDefEffect", FightTimelineTrackItem)
 local var_0_1 = 8
 local var_0_2 = 28
 local var_0_3 = {
@@ -16,12 +16,12 @@ local var_0_3 = {
 	}
 }
 
-function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 	if arg_1_0.type == var_0_1 and not FightHelper.detectTimelinePlayEffectCondition(arg_1_1, arg_1_3[8]) then
 		return
 	end
 
-	arg_1_0._fightStepMO = arg_1_1
+	arg_1_0.fightStepData = arg_1_1
 
 	local var_1_0 = arg_1_3[1]
 
@@ -34,7 +34,7 @@ function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 	end
 
 	if not string.nilorempty(arg_1_3[10]) then
-		local var_1_2 = FightHelper.getEntity(arg_1_0._fightStepMO.fromId):getMO()
+		local var_1_2 = FightHelper.getEntity(arg_1_0.fightStepData.fromId):getMO()
 		local var_1_3 = var_1_2 and var_1_2.skin
 
 		if var_1_3 then
@@ -71,10 +71,10 @@ function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 	arg_1_0._act_on_index_entity = arg_1_3[6] and tonumber(arg_1_3[6])
 
 	local var_1_13 = arg_1_3[7]
-	local var_1_14 = arg_1_0._fightStepMO.actEffectMOs
+	local var_1_14 = arg_1_0.fightStepData.actEffect
 
 	if arg_1_0._act_on_index_entity then
-		var_1_14 = FightHelper.dealDirectActEffectData(arg_1_0._fightStepMO.actEffectMOs, arg_1_0._act_on_index_entity, var_0_3[arg_1_0.type])
+		var_1_14 = FightHelper.dealDirectActEffectData(arg_1_0.fightStepData.actEffect, arg_1_0._act_on_index_entity, var_0_3[arg_1_0.type])
 	end
 
 	local var_1_15 = var_0_3[arg_1_0.type]
@@ -171,12 +171,12 @@ function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 	end
 end
 
-function var_0_0.handleSkillEventEnd(arg_2_0)
+function var_0_0.onTrackEnd(arg_2_0)
 	arg_2_0:_removeEffect()
 end
 
 function var_0_0._createHitEffect(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4, arg_3_5, arg_3_6, arg_3_7)
-	local var_3_0 = FightHelper.getEntity(arg_3_0._fightStepMO.fromId)
+	local var_3_0 = FightHelper.getEntity(arg_3_0.fightStepData.fromId)
 	local var_3_1
 
 	if not string.nilorempty(arg_3_3) then
@@ -226,40 +226,36 @@ function var_0_0._setRenderOrder(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
 	end
 end
 
-function var_0_0.reset(arg_5_0)
+function var_0_0.onDestructor(arg_5_0)
 	arg_5_0:_removeEffect()
 end
 
-function var_0_0.dispose(arg_6_0)
-	arg_6_0:_removeEffect()
-end
-
-function var_0_0._removeEffect(arg_7_0)
-	if arg_7_0._defenderEffectWrapDict then
-		for iter_7_0, iter_7_1 in pairs(arg_7_0._defenderEffectWrapDict) do
-			FightRenderOrderMgr.instance:onRemoveEffectWrap(iter_7_0.id, iter_7_1)
-			iter_7_0.effect:removeEffect(iter_7_1)
+function var_0_0._removeEffect(arg_6_0)
+	if arg_6_0._defenderEffectWrapDict then
+		for iter_6_0, iter_6_1 in pairs(arg_6_0._defenderEffectWrapDict) do
+			FightRenderOrderMgr.instance:onRemoveEffectWrap(iter_6_0.id, iter_6_1)
+			iter_6_0.effect:removeEffect(iter_6_1)
 		end
 
-		arg_7_0._defenderEffectWrapDict = nil
+		arg_6_0._defenderEffectWrapDict = nil
 	end
 
-	if arg_7_0._monster_scale_dic then
-		for iter_7_2, iter_7_3 in pairs(arg_7_0._monster_scale_dic) do
-			local var_7_0 = FightHelper.getEntity(iter_7_2)
+	if arg_6_0._monster_scale_dic then
+		for iter_6_2, iter_6_3 in pairs(arg_6_0._monster_scale_dic) do
+			local var_6_0 = FightHelper.getEntity(iter_6_2)
 
-			if var_7_0 then
-				var_7_0:setScale(1)
+			if var_6_0 then
+				var_6_0:setScale(1)
 			end
 		end
 
-		if arg_7_0._revert_combinative_position then
-			FightHelper.refreshCombinativeMonsterScaleAndPos(arg_7_0._revert_combinative_position, 1)
+		if arg_6_0._revert_combinative_position then
+			FightHelper.refreshCombinativeMonsterScaleAndPos(arg_6_0._revert_combinative_position, 1)
 		end
 	end
 
-	arg_7_0._revert_combinative_position = nil
-	arg_7_0._monster_scale_dic = nil
+	arg_6_0._revert_combinative_position = nil
+	arg_6_0._monster_scale_dic = nil
 end
 
 return var_0_0

@@ -1743,5 +1743,65 @@
     "id": 3260025,
     "eventName": "play_ui_checkpoint_noise_prison_out",
     "bankName": "activtiy_wenming_combataudio_noise"
+  },
+  {
+    "id": 3270001,
+    "eventName": "play_activitymusic_daily_2_7",
+    "bankName": "activity2_7_music"
+  },
+  {
+    "id": 3270002,
+    "eventName": "play_activitymusic_moonlight_2_7",
+    "bankName": "activity2_7_music"
+  },
+  {
+    "id": 3270003,
+    "eventName": "play_activitymusic_theme_2_7",
+    "bankName": "activity2_7_music"
+  },
+  {
+    "id": 3270011,
+    "eventName": "play_battle_yuzhou_2_7_normalfight",
+    "bankName": "activtiy_yuzhou_combataudio"
+  },
+  {
+    "id": 3270012,
+    "eventName": "play_battle_yuzhou_2_7_bossfight",
+    "bankName": "activtiy_yuzhou_combataudio"
+  },
+  {
+    "id": 3270021,
+    "eventName": "play_ui_checkpoint_noise_cosmic_side",
+    "bankName": "activtiy_yuzhou_combataudio_noise"
+  },
+  {
+    "id": 3270022,
+    "eventName": "play_ui_checkpoint_noise_snow",
+    "bankName": "activtiy_yuzhou_combataudio_noise"
+  },
+  {
+    "id": 3270023,
+    "eventName": "play_ui_checkpoint_noise_cosmic",
+    "bankName": "activtiy_yuzhou_combataudio_noise"
+  },
+  {
+    "id": 3270031,
+    "eventName": "play_2_7_yuzhou_ui_checkpoint_amb_space",
+    "bankName": "ui_checkpoint_2_7_yuzhou_amb"
+  },
+  {
+    "id": 3270032,
+    "eventName": "stop_2_7_yuzhou_ui_checkpoint_amb_space",
+    "bankName": "ui_checkpoint_2_7_yuzhou_amb"
+  },
+  {
+    "id": 3270033,
+    "eventName": "play_2_7_yuzhou_ui_checkinspace",
+    "bankName": "ui_checkpoint_2_7_yuzhou_amb"
+  },
+  {
+    "id": 3270034,
+    "eventName": "play_2_7_yuzhou_ui_checkoutspace",
+    "bankName": "ui_checkpoint_2_7_yuzhou_amb"
   }
 ]

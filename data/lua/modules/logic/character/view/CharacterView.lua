@@ -92,6 +92,8 @@ function var_0_0.addEvents(arg_2_0)
 	arg_2_0:addEventCb(CharacterController.instance, CharacterEvent.onUseTalentStyleReply, arg_2_0._onRefreshStyleIcon, arg_2_0)
 	arg_2_0:addEventCb(CharacterController.instance, CharacterEvent.UseTalentTemplateReply, arg_2_0._onRefreshStyleIcon, arg_2_0)
 	arg_2_0:addEventCb(HeroResonanceController.instance, HeroResonanceEvent.UseShareCode, arg_2_0._onRefreshStyleIcon, arg_2_0)
+	arg_2_0:addEventCb(CharacterDestinyController.instance, CharacterDestinyEvent.OnUseStoneReply, arg_2_0._onRefreshDestiny, arg_2_0)
+	arg_2_0:addEventCb(CharacterDestinyController.instance, CharacterDestinyEvent.OnRankUpReply, arg_2_0._onRefreshDestiny, arg_2_0)
 end
 
 function var_0_0.removeEvents(arg_3_0)
@@ -114,6 +116,8 @@ function var_0_0.removeEvents(arg_3_0)
 	arg_3_0:removeEventCb(CharacterController.instance, CharacterEvent.UseTalentTemplateReply, arg_3_0._onRefreshStyleIcon, arg_3_0)
 	arg_3_0:removeEventCb(CharacterController.instance, CharacterEvent.OnMarkFavorSuccess, arg_3_0._markFavorSuccess, arg_3_0)
 	arg_3_0:removeEventCb(HeroResonanceController.instance, HeroResonanceEvent.UseShareCode, arg_3_0._onRefreshStyleIcon, arg_3_0)
+	arg_3_0:removeEventCb(CharacterDestinyController.instance, CharacterDestinyEvent.OnUseStoneReply, arg_3_0._onRefreshDestiny, arg_3_0)
+	arg_3_0:removeEventCb(CharacterDestinyController.instance, CharacterDestinyEvent.OnRankUpReply, arg_3_0._onRefreshDestiny, arg_3_0)
 end
 
 var_0_0.HpAttrId = 101
@@ -150,6 +154,9 @@ function var_0_0._editableInitView(arg_4_0)
 	arg_4_0._simageplayerbg:LoadImage(ResUrl.getCharacterIcon("guangyun"))
 
 	arg_4_0._uiSpine = GuiModelAgent.Create(arg_4_0._gospine, true)
+
+	arg_4_0._uiSpine:setShareRT(CharacterVoiceEnum.RTShareType.Normal)
+
 	arg_4_0._rareStars = arg_4_0:getUserDataTb_()
 
 	for iter_4_0 = 1, 6 do
@@ -1013,538 +1020,569 @@ function var_0_0._onSpineLoaded(arg_61_0)
 		end
 
 		if arg_61_0._greetingVoices and #arg_61_0._greetingVoices > 0 then
-			TaskDispatcher.cancelTask(arg_61_0._playSpineVoice, arg_61_0)
-			TaskDispatcher.runDelay(arg_61_0._playSpineVoice, arg_61_0, arg_61_0._delayPlayVoiceTime or 0)
+			arg_61_0._delayTime = arg_61_0._delayPlayVoiceTime or 0
+
+			if arg_61_0._uiSpine:isLive2D() then
+				arg_61_0._uiSpine:setLive2dCameraLoadFinishCallback(arg_61_0.onLive2dCameraLoadedCallback, arg_61_0)
+
+				return
+			end
+
+			arg_61_0:_startDelayPlayVoice(arg_61_0._delayTime)
 
 			arg_61_0._delayPlayVoiceTime = 0
 		end
 	end
 end
 
-function var_0_0._playSpineVoice(arg_62_0)
-	if not arg_62_0._uiSpine then
-		return
-	end
-
-	arg_62_0._uiSpine:playVoice(arg_62_0._greetingVoices[1], nil, arg_62_0._txtanacn, arg_62_0._txtanaen, arg_62_0._gocontentbg)
+function var_0_0.onLive2dCameraLoadedCallback(arg_62_0)
+	arg_62_0._uiSpine:setLive2dCameraLoadFinishCallback(nil, nil)
+	arg_62_0:_startDelayPlayVoice(arg_62_0._delayTime)
 end
 
-function var_0_0._refreshDrawingState(arg_63_0)
-	local var_63_0 = false
-	local var_63_1 = SkinConfig.instance:getSkinCo(arg_63_0._heroMO.skin)
+function var_0_0._startDelayPlayVoice(arg_63_0, arg_63_1)
+	arg_63_1 = arg_63_1 or 0
+	arg_63_0._repeatNum = math.max(arg_63_1 * 30, CharacterVoiceEnum.DelayFrame + 1)
+	arg_63_0._repeatCount = 0
 
-	if var_63_1.showDrawingSwitch == 1 then
-		arg_63_0._enableSwitchDrawing = true
-
-		if CharacterDataConfig.instance:getCharacterDrawingState(var_63_1.characterId) == CharacterEnum.DrawingState.Static then
-			var_63_0 = true
-		end
-	else
-		arg_63_0._enableSwitchDrawing = false
-
-		CharacterDataConfig.instance:setCharacterDrawingState(var_63_1.characterId, CharacterEnum.DrawingState.Dynamic)
-	end
-
-	if arg_63_0._heroMO.isSettingSkinOffset then
-		var_63_0 = true
-	end
-
-	if arg_63_0._spineNeedHide and var_63_0 then
-		gohelper.setActive(arg_63_0._godynamiccontainer, false)
-	else
-		gohelper.setActive(arg_63_0._godynamiccontainer, true)
-	end
-
-	arg_63_0._spineNeedHide = false
-
-	local var_63_2 = var_63_0 and 0.01 or 1
-
-	transformhelper.setLocalScale(arg_63_0._godynamiccontainer.transform, var_63_2, var_63_2, var_63_2)
-
-	if not var_63_0 then
-		arg_63_0._uiSpine:hideModelEffect()
-		arg_63_0._uiSpine:showModelEffect()
-	end
-
-	gohelper.setActive(arg_63_0._gostaticcontainer, var_63_0)
-
-	if var_63_0 then
-		arg_63_0._playGreetingVoices = nil
-
-		if arg_63_0._uiSpine then
-			arg_63_0._uiSpine:stopVoice()
-		end
-
-		arg_63_0._simagestatic:LoadImage(ResUrl.getHeadIconImg(var_63_1.drawing), arg_63_0._loadedImage, arg_63_0)
-	else
-		arg_63_0._simagestatic:UnLoadImage()
-		arg_63_0:_setModelVisible(true)
-	end
-
-	gohelper.setActive(arg_63_0._gopifu, arg_63_0._enableSwitchDrawing)
+	TaskDispatcher.cancelTask(arg_63_0._playSpineVoice, arg_63_0)
+	TaskDispatcher.runRepeat(arg_63_0._playSpineVoice, arg_63_0, 0, arg_63_0._repeatNum)
 end
 
-function var_0_0._checkGuide(arg_64_0)
-	arg_64_0._showSwitchDrawingGuide = false
+function var_0_0._playSpineVoice(arg_64_0)
+	arg_64_0._repeatCount = arg_64_0._repeatCount + 1
 
-	if not arg_64_0._enableSwitchDrawing then
+	if arg_64_0._repeatCount < arg_64_0._repeatNum then
 		return
 	end
 
-	if not arg_64_0.viewContainer._isVisible then
+	if not arg_64_0._uiSpine then
 		return
 	end
 
-	local var_64_0 = false
-	local var_64_1 = HeroModel.instance:getList()
+	arg_64_0._uiSpine:playVoice(arg_64_0._greetingVoices[1], nil, arg_64_0._txtanacn, arg_64_0._txtanaen, arg_64_0._gocontentbg)
+end
 
-	for iter_64_0, iter_64_1 in ipairs(var_64_1) do
-		if iter_64_1.rank > 1 and iter_64_1.config.rare >= 3 then
-			var_64_0 = true
+function var_0_0._refreshDrawingState(arg_65_0)
+	local var_65_0 = false
+	local var_65_1 = SkinConfig.instance:getSkinCo(arg_65_0._heroMO.skin)
+
+	if var_65_1.showDrawingSwitch == 1 then
+		arg_65_0._enableSwitchDrawing = true
+
+		if CharacterDataConfig.instance:getCharacterDrawingState(var_65_1.characterId) == CharacterEnum.DrawingState.Static then
+			var_65_0 = true
+		end
+	else
+		arg_65_0._enableSwitchDrawing = false
+
+		CharacterDataConfig.instance:setCharacterDrawingState(var_65_1.characterId, CharacterEnum.DrawingState.Dynamic)
+	end
+
+	if arg_65_0._heroMO.isSettingSkinOffset then
+		var_65_0 = true
+	end
+
+	if arg_65_0._spineNeedHide and var_65_0 then
+		gohelper.setActive(arg_65_0._godynamiccontainer, false)
+	else
+		gohelper.setActive(arg_65_0._godynamiccontainer, true)
+	end
+
+	arg_65_0._spineNeedHide = false
+
+	local var_65_2 = var_65_0 and 0.01 or 1
+
+	transformhelper.setLocalScale(arg_65_0._godynamiccontainer.transform, var_65_2, var_65_2, var_65_2)
+
+	if not var_65_0 then
+		arg_65_0._uiSpine:hideModelEffect()
+		arg_65_0._uiSpine:showModelEffect()
+	end
+
+	gohelper.setActive(arg_65_0._gostaticcontainer, var_65_0)
+
+	if var_65_0 then
+		arg_65_0._playGreetingVoices = nil
+
+		if arg_65_0._uiSpine then
+			arg_65_0._uiSpine:stopVoice()
+		end
+
+		arg_65_0._simagestatic:LoadImage(ResUrl.getHeadIconImg(var_65_1.drawing), arg_65_0._loadedImage, arg_65_0)
+	else
+		arg_65_0._simagestatic:UnLoadImage()
+		arg_65_0:_setModelVisible(true)
+	end
+
+	gohelper.setActive(arg_65_0._gopifu, arg_65_0._enableSwitchDrawing)
+end
+
+function var_0_0._checkGuide(arg_66_0)
+	arg_66_0._showSwitchDrawingGuide = false
+
+	if not arg_66_0._enableSwitchDrawing then
+		return
+	end
+
+	if not arg_66_0.viewContainer._isVisible then
+		return
+	end
+
+	local var_66_0 = false
+	local var_66_1 = HeroModel.instance:getList()
+
+	for iter_66_0, iter_66_1 in ipairs(var_66_1) do
+		if iter_66_1.rank > 1 and iter_66_1.config.rare >= 3 then
+			var_66_0 = true
 
 			break
 		end
 	end
 
-	if var_64_0 then
+	if var_66_0 then
 		CharacterController.instance:dispatchEvent(CharacterEvent.OnGuideSwitchDrawing)
 	end
 
-	arg_64_0._showSwitchDrawingGuide = var_64_0
+	arg_66_0._showSwitchDrawingGuide = var_66_0
 end
 
-function var_0_0._loadedImage(arg_65_0)
-	local var_65_0 = SkinConfig.instance:getSkinCo(arg_65_0._heroMO.skin)
+function var_0_0._loadedImage(arg_67_0)
+	local var_67_0 = SkinConfig.instance:getSkinCo(arg_67_0._heroMO.skin)
 
-	gohelper.onceAddComponent(arg_65_0._simagestatic.gameObject, gohelper.Type_Image):SetNativeSize()
+	gohelper.onceAddComponent(arg_67_0._simagestatic.gameObject, gohelper.Type_Image):SetNativeSize()
 
-	local var_65_1 = var_65_0.characterViewImgOffset
+	local var_67_1 = var_67_0.characterViewImgOffset
 
-	if not string.nilorempty(var_65_1) then
-		local var_65_2 = string.splitToNumber(var_65_1, "#")
+	if not string.nilorempty(var_67_1) then
+		local var_67_2 = string.splitToNumber(var_67_1, "#")
 
-		recthelper.setAnchor(arg_65_0._simagestatic.transform, tonumber(var_65_2[1]), tonumber(var_65_2[2]))
-		transformhelper.setLocalScale(arg_65_0._simagestatic.transform, tonumber(var_65_2[3]), tonumber(var_65_2[3]), tonumber(var_65_2[3]))
+		recthelper.setAnchor(arg_67_0._simagestatic.transform, tonumber(var_67_2[1]), tonumber(var_67_2[2]))
+		transformhelper.setLocalScale(arg_67_0._simagestatic.transform, tonumber(var_67_2[3]), tonumber(var_67_2[3]), tonumber(var_67_2[3]))
 	else
-		recthelper.setAnchor(arg_65_0._simagestatic.transform, 0, 0)
-		transformhelper.setLocalScale(arg_65_0._simagestatic.transform, 1, 1, 1)
+		recthelper.setAnchor(arg_67_0._simagestatic.transform, 0, 0)
+		transformhelper.setLocalScale(arg_67_0._simagestatic.transform, 1, 1, 1)
 	end
 end
 
-function var_0_0._refreshInfo(arg_66_0)
-	for iter_66_0 = 1, 6 do
-		gohelper.setActive(arg_66_0._rareStars[iter_66_0], iter_66_0 <= CharacterEnum.Star[arg_66_0._heroMO.config.rare])
+function var_0_0._refreshInfo(arg_68_0)
+	for iter_68_0 = 1, 6 do
+		gohelper.setActive(arg_68_0._rareStars[iter_68_0], iter_68_0 <= CharacterEnum.Star[arg_68_0._heroMO.config.rare])
 	end
 
-	UISpriteSetMgr.instance:setCharactergetSprite(arg_66_0._imagecareericon, "charactercareer" .. tostring(arg_66_0._heroMO.config.career))
-	UISpriteSetMgr.instance:setCommonSprite(arg_66_0._imagedmgtype, "dmgtype" .. tostring(arg_66_0._heroMO.config.dmgType))
+	UISpriteSetMgr.instance:setCharactergetSprite(arg_68_0._imagecareericon, "charactercareer" .. tostring(arg_68_0._heroMO.config.career))
+	UISpriteSetMgr.instance:setCommonSprite(arg_68_0._imagedmgtype, "dmgtype" .. tostring(arg_68_0._heroMO.config.dmgType))
 
-	local var_66_0 = arg_66_0:_getFaithPercent()
+	local var_68_0 = arg_68_0:_getFaithPercent()
 
-	arg_66_0._txttrust.text = var_66_0 * 100 .. "%"
+	arg_68_0._txttrust.text = var_68_0 * 100 .. "%"
 
-	arg_66_0._slidertrust:SetValue(var_66_0)
+	arg_68_0._slidertrust:SetValue(var_68_0)
 
-	arg_66_0._txtnamecn.text = arg_66_0._heroMO:getHeroName()
-	arg_66_0._txtnameen.text = arg_66_0._heroMO.config.nameEng
-	arg_66_0._txttalentcn.text = luaLang("talent_character_talentcn" .. CharacterEnum.TalentTxtByHeroType[arg_66_0._heroMO.config.heroType])
-	arg_66_0._txttalenten.text = luaLang("talent_character_talenten" .. CharacterEnum.TalentTxtByHeroType[arg_66_0._heroMO.config.heroType])
+	arg_68_0._txtnamecn.text = arg_68_0._heroMO:getHeroName()
+	arg_68_0._txtnameen.text = arg_68_0._heroMO.config.nameEng
+	arg_68_0._txttalentcn.text = luaLang("talent_character_talentcn" .. CharacterEnum.TalentTxtByHeroType[arg_68_0._heroMO.config.heroType])
+	arg_68_0._txttalenten.text = luaLang("talent_character_talenten" .. CharacterEnum.TalentTxtByHeroType[arg_68_0._heroMO.config.heroType])
 end
 
-function var_0_0._getFaithPercent(arg_67_0)
-	local var_67_0 = HeroConfig.instance:getFaithPercent(arg_67_0._heroMO.faith)
+function var_0_0._getFaithPercent(arg_69_0)
+	local var_69_0 = HeroConfig.instance:getFaithPercent(arg_69_0._heroMO.faith)
 
-	arg_67_0.nextFaith = var_67_0[2]
+	arg_69_0.nextFaith = var_69_0[2]
 
-	return var_67_0[1]
+	return var_69_0[1]
 end
 
-function var_0_0._refreshCareer(arg_68_0)
-	local var_68_0 = arg_68_0._heroMO.config.battleTag
-	local var_68_1 = {}
+function var_0_0._refreshCareer(arg_70_0)
+	local var_70_0 = arg_70_0._heroMO.config.battleTag
+	local var_70_1 = {}
 
-	if not string.nilorempty(var_68_0) then
-		var_68_1 = string.split(var_68_0, "#")
+	if not string.nilorempty(var_70_0) then
+		var_70_1 = string.split(var_70_0, "#")
 	end
 
-	for iter_68_0 = 1, 3 do
-		if iter_68_0 <= #var_68_1 then
-			arg_68_0._careerlabels[iter_68_0].text = HeroConfig.instance:getBattleTagConfigCO(var_68_1[iter_68_0]).tagName
+	for iter_70_0 = 1, 3 do
+		if iter_70_0 <= #var_70_1 then
+			arg_70_0._careerlabels[iter_70_0].text = HeroConfig.instance:getBattleTagConfigCO(var_70_1[iter_70_0]).tagName
 		else
-			arg_68_0._careerlabels[iter_68_0].text = ""
+			arg_70_0._careerlabels[iter_70_0].text = ""
 		end
 	end
 end
 
-function var_0_0._onAttributeChanged(arg_69_0, arg_69_1, arg_69_2)
-	if not arg_69_2 or arg_69_2 == arg_69_0._heroMO.heroId then
-		arg_69_0:_refreshAttribute(arg_69_1)
+function var_0_0._onAttributeChanged(arg_71_0, arg_71_1, arg_71_2)
+	if not arg_71_2 or arg_71_2 == arg_71_0._heroMO.heroId then
+		arg_71_0:_refreshAttribute(arg_71_1)
 	end
 end
 
-function var_0_0.onEquipChange(arg_70_0)
-	if not arg_70_0.viewParam:hasDefaultEquip() then
+function var_0_0.onEquipChange(arg_72_0)
+	if not arg_72_0.viewParam:hasDefaultEquip() then
 		return
 	end
 
-	arg_70_0:_refreshAttribute()
+	arg_72_0:_refreshAttribute()
 end
 
-function var_0_0._refreshAttribute(arg_71_0, arg_71_1)
-	local var_71_0 = arg_71_0._heroMO
-	local var_71_1 = var_71_0:getHeroBaseAttrDict(arg_71_1)
-	local var_71_2 = HeroConfig.instance:talentGainTab2IDTab(var_71_0:getTalentGain(arg_71_1))
-	local var_71_3 = var_71_0.destinyStoneMo
-	local var_71_4 = var_71_3:getAddAttrValues()
-	local var_71_5 = {}
+function var_0_0._refreshAttribute(arg_73_0, arg_73_1)
+	local var_73_0 = arg_73_0._heroMO
+	local var_73_1 = var_73_0:getHeroBaseAttrDict(arg_73_1)
+	local var_73_2 = HeroConfig.instance:talentGainTab2IDTab(var_73_0:getTalentGain(arg_73_1))
+	local var_73_3 = var_73_0.destinyStoneMo
+	local var_73_4 = var_73_3:getAddAttrValues()
+	local var_73_5 = {}
 
-	for iter_71_0, iter_71_1 in ipairs(var_0_0.AttrIdList) do
-		var_71_5[iter_71_1] = 0
+	for iter_73_0, iter_73_1 in ipairs(var_0_0.AttrIdList) do
+		var_73_5[iter_73_1] = 0
 	end
 
-	local var_71_6 = arg_71_0._heroMO:isOtherPlayerHero()
-	local var_71_7 = arg_71_0._heroMO:hasDefaultEquip()
+	local var_73_6 = arg_73_0._heroMO:isOtherPlayerHero()
+	local var_73_7 = arg_73_0._heroMO:hasDefaultEquip()
 
-	if not var_71_6 and var_71_7 then
-		local var_71_8 = arg_71_0._heroMO and arg_71_0._heroMO:getTrialEquipMo()
+	if not var_73_6 and var_73_7 then
+		local var_73_8 = arg_73_0._heroMO and arg_73_0._heroMO:getTrialEquipMo()
 
-		var_71_8 = var_71_8 or EquipModel.instance:getEquip(arg_71_0._heroMO.defaultEquipUid)
+		var_73_8 = var_73_8 or EquipModel.instance:getEquip(arg_73_0._heroMO.defaultEquipUid)
 
-		local var_71_9, var_71_10, var_71_11, var_71_12 = EquipConfig.instance:getEquipAddBaseAttr(var_71_8)
+		local var_73_9, var_73_10, var_73_11, var_73_12 = EquipConfig.instance:getEquipAddBaseAttr(var_73_8)
 
-		var_71_5[CharacterEnum.AttrId.Attack] = var_71_10
-		var_71_5[CharacterEnum.AttrId.Hp] = var_71_9
-		var_71_5[CharacterEnum.AttrId.Defense] = var_71_11
-		var_71_5[CharacterEnum.AttrId.Mdefense] = var_71_12
+		var_73_5[CharacterEnum.AttrId.Attack] = var_73_10
+		var_73_5[CharacterEnum.AttrId.Hp] = var_73_9
+		var_73_5[CharacterEnum.AttrId.Defense] = var_73_11
+		var_73_5[CharacterEnum.AttrId.Mdefense] = var_73_12
 
-		local var_71_13 = EquipConfig.instance:getEquipBreakAddAttrValueDict(var_71_8.config, var_71_8.breakLv)
+		local var_73_13 = EquipConfig.instance:getEquipBreakAddAttrValueDict(var_73_8.config, var_73_8.breakLv)
 
-		for iter_71_2, iter_71_3 in ipairs(var_0_0.AttrIdList) do
-			local var_71_14 = var_71_13[iter_71_3]
+		for iter_73_2, iter_73_3 in ipairs(var_0_0.AttrIdList) do
+			local var_73_14 = var_73_13[iter_73_3]
 
-			if var_71_14 ~= 0 then
-				var_71_5[iter_71_3] = var_71_5[iter_71_3] + math.floor(var_71_14 / 100 * var_71_1[iter_71_3])
+			if var_73_14 ~= 0 then
+				var_73_5[iter_73_3] = var_73_5[iter_73_3] + math.floor(var_73_14 / 100 * var_73_1[iter_73_3])
 			end
 		end
 	end
 
-	for iter_71_4, iter_71_5 in ipairs(var_0_0.AttrIdList) do
-		local var_71_15 = var_71_2[iter_71_5] and var_71_2[iter_71_5].value and math.floor(var_71_2[iter_71_5].value) or 0
-		local var_71_16 = var_71_3 and var_71_3:getAddValueByAttrId(var_71_4, iter_71_5) or 0
-		local var_71_17 = var_71_1[iter_71_5] + var_71_5[iter_71_5] + var_71_15 + var_71_16
+	for iter_73_4, iter_73_5 in ipairs(var_0_0.AttrIdList) do
+		local var_73_15 = var_73_2[iter_73_5] and var_73_2[iter_73_5].value and math.floor(var_73_2[iter_73_5].value) or 0
+		local var_73_16 = var_73_3 and var_73_3:getAddValueByAttrId(var_73_4, iter_73_5, var_73_0) or 0
+		local var_73_17 = var_73_1[iter_73_5] + var_73_5[iter_73_5] + var_73_15 + var_73_16
 
-		arg_71_0._attributevalues[iter_71_4].value.text = var_71_17
+		arg_73_0._attributevalues[iter_73_4].value.text = var_73_17
 
-		local var_71_18 = HeroConfig.instance:getHeroAttributeCO(iter_71_5)
+		local var_73_18 = HeroConfig.instance:getHeroAttributeCO(iter_73_5)
 
-		arg_71_0._attributevalues[iter_71_4].name.text = var_71_18.name
+		arg_73_0._attributevalues[iter_73_4].name.text = var_73_18.name
 
-		CharacterController.instance:SetAttriIcon(arg_71_0._attributevalues[iter_71_4].icon, iter_71_5, var_0_0.AttrIconColor)
+		CharacterController.instance:SetAttriIcon(arg_73_0._attributevalues[iter_73_4].icon, iter_73_5, var_0_0.AttrIconColor)
 
-		local var_71_19 = arg_71_0._levelUpAttributeValues[iter_71_4]
+		local var_73_19 = arg_73_0._levelUpAttributeValues[iter_73_4]
 
-		var_71_19.value.text = var_71_17
-		var_71_19.name.text = var_71_18.name
+		var_73_19.value.text = var_73_17
+		var_73_19.name.text = var_73_18.name
 
-		CharacterController.instance:SetAttriIcon(var_71_19.icon, iter_71_5, var_0_0.AttrIconColor)
+		CharacterController.instance:SetAttriIcon(var_73_19.icon, iter_73_5, var_0_0.AttrIconColor)
 	end
 end
 
-function var_0_0._refreshAttributeTips(arg_72_0, arg_72_1)
-	local var_72_0 = arg_72_0._heroMO
-	local var_72_1 = var_72_0.level
+function var_0_0._refreshAttributeTips(arg_74_0, arg_74_1)
+	local var_74_0 = arg_74_0._heroMO
+	local var_74_1 = var_74_0.level
 
-	if not arg_72_1 or arg_72_1 < var_72_1 then
-		for iter_72_0, iter_72_1 in ipairs(arg_72_0._levelUpAttributeValues) do
-			iter_72_1.newValue.text = 0
+	if not arg_74_1 or arg_74_1 < var_74_1 then
+		for iter_74_0, iter_74_1 in ipairs(arg_74_0._levelUpAttributeValues) do
+			iter_74_1.newValue.text = 0
 		end
 
 		return
 	end
 
-	local var_72_2 = arg_72_1 == var_72_1
-	local var_72_3 = var_72_0:getHeroBaseAttrDict(arg_72_1)
-	local var_72_4 = HeroConfig.instance:talentGainTab2IDTab(var_72_0:getTalentGain(arg_72_1))
-	local var_72_5 = var_72_0.destinyStoneMo
-	local var_72_6 = var_72_5:getAddAttrValues()
-	local var_72_7 = {}
+	local var_74_2 = arg_74_1 == var_74_1
+	local var_74_3 = var_74_0:getHeroBaseAttrDict(arg_74_1)
+	local var_74_4 = HeroConfig.instance:talentGainTab2IDTab(var_74_0:getTalentGain(arg_74_1))
+	local var_74_5 = var_74_0.destinyStoneMo
+	local var_74_6 = var_74_5:getAddAttrValues()
+	local var_74_7 = {}
 
-	for iter_72_2, iter_72_3 in ipairs(var_0_0.AttrIdList) do
-		var_72_7[iter_72_3] = 0
+	for iter_74_2, iter_74_3 in ipairs(var_0_0.AttrIdList) do
+		var_74_7[iter_74_3] = 0
 	end
 
-	if var_72_0:hasDefaultEquip() then
-		local var_72_8 = EquipModel.instance:getEquip(var_72_0.defaultEquipUid)
-		local var_72_9, var_72_10, var_72_11, var_72_12 = EquipConfig.instance:getEquipAddBaseAttr(var_72_8)
+	if var_74_0:hasDefaultEquip() then
+		local var_74_8 = EquipModel.instance:getEquip(var_74_0.defaultEquipUid)
+		local var_74_9, var_74_10, var_74_11, var_74_12 = EquipConfig.instance:getEquipAddBaseAttr(var_74_8)
 
-		var_72_7[CharacterEnum.AttrId.Attack] = var_72_10
-		var_72_7[CharacterEnum.AttrId.Hp] = var_72_9
-		var_72_7[CharacterEnum.AttrId.Defense] = var_72_11
-		var_72_7[CharacterEnum.AttrId.Mdefense] = var_72_12
+		var_74_7[CharacterEnum.AttrId.Attack] = var_74_10
+		var_74_7[CharacterEnum.AttrId.Hp] = var_74_9
+		var_74_7[CharacterEnum.AttrId.Defense] = var_74_11
+		var_74_7[CharacterEnum.AttrId.Mdefense] = var_74_12
 
-		local var_72_13 = EquipConfig.instance:getEquipBreakAddAttrValueDict(var_72_8.config, var_72_8.breakLv)
+		local var_74_13 = EquipConfig.instance:getEquipBreakAddAttrValueDict(var_74_8.config, var_74_8.breakLv)
 
-		for iter_72_4, iter_72_5 in ipairs(var_0_0.AttrIdList) do
-			local var_72_14 = var_72_13[iter_72_5]
+		for iter_74_4, iter_74_5 in ipairs(var_0_0.AttrIdList) do
+			local var_74_14 = var_74_13[iter_74_5]
 
-			if var_72_14 ~= 0 then
-				var_72_7[iter_72_5] = var_72_7[iter_72_5] + math.floor(var_72_14 / 100 * var_72_3[iter_72_5])
+			if var_74_14 ~= 0 then
+				var_74_7[iter_74_5] = var_74_7[iter_74_5] + math.floor(var_74_14 / 100 * var_74_3[iter_74_5])
 			end
 		end
 	end
 
-	for iter_72_6, iter_72_7 in ipairs(var_0_0.AttrIdList) do
-		local var_72_15 = var_72_4[iter_72_7] and var_72_4[iter_72_7].value and math.floor(var_72_4[iter_72_7].value) or 0
-		local var_72_16 = var_72_5 and var_72_5:getAddValueByAttrId(var_72_6, iter_72_7) or 0
-		local var_72_17 = var_72_3[iter_72_7] + var_72_7[iter_72_7] + var_72_15 + var_72_16
-		local var_72_18 = arg_72_0._levelUpAttributeValues[iter_72_6]
-		local var_72_19 = var_72_18.newValue
+	for iter_74_6, iter_74_7 in ipairs(var_0_0.AttrIdList) do
+		local var_74_15 = var_74_4[iter_74_7] and var_74_4[iter_74_7].value and math.floor(var_74_4[iter_74_7].value) or 0
+		local var_74_16 = var_74_5 and var_74_5:getAddValueByAttrId(var_74_6, iter_74_7, var_74_0) or 0
+		local var_74_17 = var_74_3[iter_74_7] + var_74_7[iter_74_7] + var_74_15 + var_74_16
+		local var_74_18 = arg_74_0._levelUpAttributeValues[iter_74_6]
+		local var_74_19 = var_74_18.newValue
 
-		var_72_19.text = var_72_17
+		var_74_19.text = var_74_17
 
-		local var_72_20 = var_72_2 and "#C7C3C0" or "#65B96F"
+		local var_74_20 = var_74_2 and "#C7C3C0" or "#65B96F"
 
-		var_72_19.color = GameUtil.parseColor(var_72_20)
-		var_72_18.newValueArrow.color = GameUtil.parseColor(var_72_20)
+		var_74_19.color = GameUtil.parseColor(var_74_20)
+		var_74_18.newValueArrow.color = GameUtil.parseColor(var_74_20)
 	end
 end
 
-function var_0_0._refreshLevel(arg_73_0)
-	local var_73_0 = HeroConfig.instance:getShowLevel(arg_73_0._heroMO.level)
-	local var_73_1 = HeroConfig.instance:getShowLevel(CharacterModel.instance:getrankEffects(arg_73_0._heroMO.heroId, arg_73_0._heroMO.rank)[1])
-	local var_73_2 = var_73_0 .. "/"
+function var_0_0._refreshLevel(arg_75_0)
+	local var_75_0 = HeroConfig.instance:getShowLevel(arg_75_0._heroMO.level)
+	local var_75_1 = HeroConfig.instance:getShowLevel(CharacterModel.instance:getrankEffects(arg_75_0._heroMO.heroId, arg_75_0._heroMO.rank)[1])
+	local var_75_2 = var_75_0 .. "/"
 
-	if arg_73_0._heroMO:getIsBalance() then
-		var_73_2 = string.format("<color=#81abe5>%s</color>/", var_73_0)
+	if arg_75_0._heroMO:getIsBalance() then
+		var_75_2 = string.format("<color=#81abe5>%s</color>/", var_75_0)
 	end
 
-	arg_73_0._txtlevel.text = var_73_2
-	arg_73_0._txtlevelmax.text = var_73_1
+	arg_75_0._txtlevel.text = var_75_2
+	arg_75_0._txtlevelmax.text = var_75_1
 end
 
-function var_0_0._refreshRank(arg_74_0)
-	local var_74_0 = arg_74_0._heroMO.config.rare
-	local var_74_1 = arg_74_0._heroMO.rank
-	local var_74_2 = HeroConfig.instance:getMaxRank(var_74_0)
+function var_0_0._refreshRank(arg_76_0)
+	local var_76_0 = arg_76_0._heroMO.config.rare
+	local var_76_1 = arg_76_0._heroMO.rank
+	local var_76_2 = HeroConfig.instance:getMaxRank(var_76_0)
 
-	for iter_74_0 = 1, 3 do
-		gohelper.setActive(arg_74_0._ranklights[iter_74_0].go, var_74_2 == iter_74_0)
+	for iter_76_0 = 1, 3 do
+		gohelper.setActive(arg_76_0._ranklights[iter_76_0].go, var_76_2 == iter_76_0)
 
-		for iter_74_1 = 1, iter_74_0 do
-			if iter_74_1 <= var_74_1 - 1 then
-				SLFramework.UGUI.GuiHelper.SetColor(arg_74_0._ranklights[iter_74_0].lights[iter_74_1]:GetComponent("Image"), "#feb73b")
+		for iter_76_1 = 1, iter_76_0 do
+			if iter_76_1 <= var_76_1 - 1 then
+				SLFramework.UGUI.GuiHelper.SetColor(arg_76_0._ranklights[iter_76_0].lights[iter_76_1]:GetComponent("Image"), "#feb73b")
 			else
-				SLFramework.UGUI.GuiHelper.SetColor(arg_74_0._ranklights[iter_74_0].lights[iter_74_1]:GetComponent("Image"), "#737373")
+				SLFramework.UGUI.GuiHelper.SetColor(arg_76_0._ranklights[iter_76_0].lights[iter_76_1]:GetComponent("Image"), "#737373")
 			end
 		end
 	end
 end
 
-function var_0_0._refreshSkill(arg_75_0)
-	arg_75_0._skillContainer:onUpdateMO(arg_75_0._heroMO.heroId, nil, arg_75_0._heroMO)
+function var_0_0._refreshSkill(arg_77_0)
+	arg_77_0._skillContainer:onUpdateMO(arg_77_0._heroMO.heroId, nil, arg_77_0._heroMO)
 end
 
-function var_0_0._refreshPassiveSkill(arg_76_0)
-	local var_76_0 = arg_76_0._heroMO:getpassiveskillsCO()
-	local var_76_1 = var_76_0[1].skillPassive
-	local var_76_2 = lua_skill.configDict[var_76_1]
+function var_0_0._onRefreshDestiny(arg_78_0, arg_78_1, arg_78_2)
+	arg_78_0:_refreshSkill()
+end
 
-	if not var_76_2 then
-		logError("找不到被动技能, skillId: " .. tostring(var_76_1))
+function var_0_0._refreshPassiveSkill(arg_79_0)
+	local var_79_0 = arg_79_0._heroMO:getpassiveskillsCO()
+	local var_79_1 = var_79_0[1].skillPassive
+	local var_79_2 = lua_skill.configDict[var_79_1]
+
+	if not var_79_2 then
+		logError("找不到被动技能, skillId: " .. tostring(var_79_1))
 
 		return
 	end
 
-	arg_76_0._txtpassivename.text = var_76_2.name
+	arg_79_0._txtpassivename.text = var_79_2.name
 
-	for iter_76_0 = 1, #var_76_0 do
-		local var_76_3 = CharacterModel.instance:isPassiveUnlockByHeroMo(arg_76_0._heroMO, iter_76_0)
+	for iter_79_0 = 1, #var_79_0 do
+		local var_79_3 = CharacterModel.instance:isPassiveUnlockByHeroMo(arg_79_0._heroMO, iter_79_0)
 
-		gohelper.setActive(arg_76_0._passiveskillitems[iter_76_0].on, var_76_3)
-		gohelper.setActive(arg_76_0._passiveskillitems[iter_76_0].off, not var_76_3)
-		gohelper.setActive(arg_76_0._passiveskillitems[iter_76_0].go, true)
+		gohelper.setActive(arg_79_0._passiveskillitems[iter_79_0].on, var_79_3)
+		gohelper.setActive(arg_79_0._passiveskillitems[iter_79_0].off, not var_79_3)
+		gohelper.setActive(arg_79_0._passiveskillitems[iter_79_0].go, true)
 	end
 
-	for iter_76_1 = #var_76_0 + 1, #arg_76_0._passiveskillitems do
-		gohelper.setActive(arg_76_0._passiveskillitems[iter_76_1].go, false)
+	for iter_79_1 = #var_79_0 + 1, #arg_79_0._passiveskillitems do
+		gohelper.setActive(arg_79_0._passiveskillitems[iter_79_1].go, false)
 	end
 end
 
-function var_0_0._refreshExSkill(arg_77_0)
-	for iter_77_0 = 1, 5 do
-		if iter_77_0 <= arg_77_0._heroMO.exSkillLevel then
-			SLFramework.UGUI.GuiHelper.SetColor(arg_77_0._exskills[iter_77_0]:GetComponent("Image"), "#feb73b")
+function var_0_0._refreshExSkill(arg_80_0)
+	for iter_80_0 = 1, 5 do
+		if iter_80_0 <= arg_80_0._heroMO.exSkillLevel then
+			SLFramework.UGUI.GuiHelper.SetColor(arg_80_0._exskills[iter_80_0]:GetComponent("Image"), "#feb73b")
 		else
-			SLFramework.UGUI.GuiHelper.SetColor(arg_77_0._exskills[iter_77_0]:GetComponent("Image"), "#737373")
+			SLFramework.UGUI.GuiHelper.SetColor(arg_80_0._exskills[iter_80_0]:GetComponent("Image"), "#737373")
 		end
 	end
 end
 
-function var_0_0._refreshTalent(arg_78_0)
-	local var_78_0 = arg_78_0._heroMO:isOwnHero()
-	local var_78_1 = OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.Talent) or not var_78_0
-	local var_78_2 = false
-	local var_78_3 = arg_78_0._heroMO:isOtherPlayerHero()
-	local var_78_4
+function var_0_0._refreshTalent(arg_81_0)
+	local var_81_0 = arg_81_0._heroMO:isOwnHero()
+	local var_81_1 = OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.Talent) or not var_81_0
+	local var_81_2 = false
+	local var_81_3 = arg_81_0._heroMO:isOtherPlayerHero()
+	local var_81_4
 
-	if var_78_3 then
-		var_78_2 = arg_78_0._heroMO:getOtherPlayerIsOpenTalent()
+	if var_81_3 then
+		var_81_2 = arg_81_0._heroMO:getOtherPlayerIsOpenTalent()
 	else
-		var_78_2 = OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Talent) or arg_78_0._heroMO:isTrial()
+		var_81_2 = OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Talent) or arg_81_0._heroMO:isTrial()
 	end
 
-	gohelper.setActive(arg_78_0._gotalent, var_78_1)
-	gohelper.setActive(arg_78_0._gotalentlock, not var_78_2)
-	ZProj.UGUIHelper.SetGrayscale(arg_78_0._gotalents, not var_78_2)
-	arg_78_0:_showTalentStyleBtn()
-
-	arg_78_0._txttalentvalue.text = HeroResonanceConfig.instance:getTalentConfig(arg_78_0._heroMO.heroId, arg_78_0._heroMO.talent + 1) and arg_78_0._heroMO.talent or luaLang("character_max_overseas")
-end
-
-function var_0_0._showTalentStyleBtn(arg_79_0)
-	local var_79_0 = arg_79_0._heroMO:isOwnHero()
-	local var_79_1 = TalentStyleModel.instance:isUnlockStyleSystem(arg_79_0._heroMO.talent)
-
-	if not var_79_0 and not var_79_1 and not var_79_1 then
-		arg_79_0:_showTalentBtn()
-
-		return
-	end
-
-	local var_79_2 = arg_79_0._heroMO:getHeroUseCubeStyleId()
-	local var_79_3 = arg_79_0._heroMO.talentCubeInfos:getMainCubeMo()
-
-	if var_79_2 == 0 or not var_79_3 then
-		arg_79_0:_showTalentBtn()
-
-		return
-	end
-
-	local var_79_4 = var_79_3.id
-	local var_79_5 = HeroResonanceConfig.instance:getTalentStyle(var_79_4)
-	local var_79_6 = var_79_5 and var_79_5[var_79_2]
-
-	if var_79_6 then
-		local var_79_7, var_79_8 = var_79_6:getStyleTagIcon()
-		local var_79_9 = var_79_6._styleCo.color
-
-		arg_79_0._imageicon.color = GameUtil.parseColor(var_79_9)
-
-		UISpriteSetMgr.instance:setCharacterTalentSprite(arg_79_0._imageicon, var_79_8)
-		gohelper.setActive(arg_79_0._gotalentstyle, true)
-		gohelper.setActive(arg_79_0._gotalents, false)
-	else
-		arg_79_0:_showTalentBtn()
-	end
-end
-
-function var_0_0._showTalentBtn(arg_80_0)
-	gohelper.setActive(arg_80_0._gotalentstyle, false)
-	gohelper.setActive(arg_80_0._gotalents, true)
-end
-
-function var_0_0._onRefreshStyleIcon(arg_81_0)
+	gohelper.setActive(arg_81_0._gotalent, var_81_1)
+	gohelper.setActive(arg_81_0._gotalentlock, not var_81_2)
+	ZProj.UGUIHelper.SetGrayscale(arg_81_0._gotalents, not var_81_2)
 	arg_81_0:_showTalentStyleBtn()
+
+	arg_81_0._txttalentvalue.text = HeroResonanceConfig.instance:getTalentConfig(arg_81_0._heroMO.heroId, arg_81_0._heroMO.talent + 1) and arg_81_0._heroMO.talent or luaLang("character_max_overseas")
 end
 
-function var_0_0.onClose(arg_82_0)
-	if arg_82_0._drag then
-		arg_82_0._drag:RemoveDragBeginListener()
-		arg_82_0._drag:RemoveDragEndListener()
-		arg_82_0._drag:RemoveDragListener()
+function var_0_0._showTalentStyleBtn(arg_82_0)
+	local var_82_0 = arg_82_0._heroMO:isOwnHero()
+	local var_82_1 = TalentStyleModel.instance:isUnlockStyleSystem(arg_82_0._heroMO.talent)
+
+	if not var_82_0 and not var_82_1 and not var_82_1 then
+		arg_82_0:_showTalentBtn()
+
+		return
 	end
 
-	if arg_82_0._signatureDrag then
-		arg_82_0._signatureDrag:RemoveDragBeginListener()
-		arg_82_0._signatureDrag:RemoveDragEndListener()
-		arg_82_0._signatureDrag:RemoveDragListener()
+	local var_82_2 = arg_82_0._heroMO:getHeroUseCubeStyleId()
+	local var_82_3 = arg_82_0._heroMO.talentCubeInfos:getMainCubeMo()
+
+	if var_82_2 == 0 or not var_82_3 then
+		arg_82_0:_showTalentBtn()
+
+		return
 	end
 
-	arg_82_0._trustclick:RemoveClickListener()
-	arg_82_0._careerclick:RemoveClickListener()
-	arg_82_0._signatureClick:RemoveClickListener()
+	local var_82_4 = var_82_3.id
+	local var_82_5 = HeroResonanceConfig.instance:getTalentStyle(var_82_4)
+	local var_82_6 = var_82_5 and var_82_5[var_82_2]
 
-	if arg_82_0._uiSpine then
-		arg_82_0._uiSpine:stopVoice()
+	if var_82_6 then
+		local var_82_7, var_82_8 = var_82_6:getStyleTagIcon()
+		local var_82_9 = var_82_6._styleCo.color
+
+		arg_82_0._imageicon.color = GameUtil.parseColor(var_82_9)
+
+		UISpriteSetMgr.instance:setCharacterTalentSprite(arg_82_0._imageicon, var_82_8)
+		gohelper.setActive(arg_82_0._gotalentstyle, true)
+		gohelper.setActive(arg_82_0._gotalents, false)
+	else
+		arg_82_0:_showTalentBtn()
+	end
+end
+
+function var_0_0._showTalentBtn(arg_83_0)
+	gohelper.setActive(arg_83_0._gotalentstyle, false)
+	gohelper.setActive(arg_83_0._gotalents, true)
+end
+
+function var_0_0._onRefreshStyleIcon(arg_84_0)
+	arg_84_0:_showTalentStyleBtn()
+end
+
+function var_0_0.onClose(arg_85_0)
+	if arg_85_0._drag then
+		arg_85_0._drag:RemoveDragBeginListener()
+		arg_85_0._drag:RemoveDragEndListener()
+		arg_85_0._drag:RemoveDragListener()
 	end
 
-	if arg_82_0._dragTweenId then
-		ZProj.TweenHelper.KillById(arg_82_0._dragTweenId)
-
-		arg_82_0._dragTweenId = nil
+	if arg_85_0._signatureDrag then
+		arg_85_0._signatureDrag:RemoveDragBeginListener()
+		arg_85_0._signatureDrag:RemoveDragEndListener()
+		arg_85_0._signatureDrag:RemoveDragListener()
 	end
 
-	TaskDispatcher.cancelTask(arg_82_0._playSpineVoice, arg_82_0)
-	TaskDispatcher.cancelTask(arg_82_0._delaySetModelHide, arg_82_0)
-	arg_82_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_82_0._onCloseViewFinish, arg_82_0)
-	arg_82_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseFullView, arg_82_0._onCloseFullView, arg_82_0)
-	arg_82_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_82_0._onCloseView, arg_82_0)
-end
+	arg_85_0._trustclick:RemoveClickListener()
+	arg_85_0._careerclick:RemoveClickListener()
+	arg_85_0._signatureClick:RemoveClickListener()
 
-function var_0_0.onUpdateParam(arg_83_0)
-	arg_83_0._playGreetingVoices = true
-
-	arg_83_0:clear()
-	arg_83_0:_refreshView()
-end
-
-function var_0_0.clear(arg_84_0)
-	arg_84_0._simagestatic:UnLoadImage()
-	arg_84_0._simagesignature:UnLoadImage()
-end
-
-function var_0_0.playCloseViewAnim(arg_85_0, arg_85_1)
-	if arg_85_0._tempFunc then
-		TaskDispatcher.cancelTask(arg_85_0._tempFunc, arg_85_0)
+	if arg_85_0._uiSpine then
+		arg_85_0._uiSpine:stopVoice()
 	end
 
-	arg_85_0:playAnim(UIAnimationName.Close)
+	if arg_85_0._dragTweenId then
+		ZProj.TweenHelper.KillById(arg_85_0._dragTweenId)
 
-	arg_85_0._tempFunc = arg_85_1
+		arg_85_0._dragTweenId = nil
+	end
 
-	UIBlockMgr.instance:startBlock(arg_85_0.viewName .. "ViewCloseAnim")
-	TaskDispatcher.runDelay(arg_85_0._closeAnimFinish, arg_85_0, 0.18)
+	TaskDispatcher.cancelTask(arg_85_0._playSpineVoice, arg_85_0)
+	TaskDispatcher.cancelTask(arg_85_0._delaySetModelHide, arg_85_0)
+	arg_85_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseViewFinish, arg_85_0._onCloseViewFinish, arg_85_0)
+	arg_85_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseFullView, arg_85_0._onCloseFullView, arg_85_0)
+	arg_85_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_85_0._onCloseView, arg_85_0)
 end
 
-function var_0_0._closeAnimFinish(arg_86_0)
-	UIBlockMgr.instance:endBlock(arg_86_0.viewName .. "ViewCloseAnim")
-	arg_86_0:_tempFunc()
+function var_0_0.onUpdateParam(arg_86_0)
+	arg_86_0._playGreetingVoices = true
+
+	arg_86_0:clear()
+	arg_86_0:_refreshView()
 end
 
-function var_0_0.playAnim(arg_87_0, arg_87_1)
-	arg_87_0._isAnim = true
-
-	arg_87_0:setShaderKeyWord()
-	arg_87_0._animator:Play(arg_87_1, arg_87_0.onAnimDone, arg_87_0)
+function var_0_0.clear(arg_87_0)
+	arg_87_0._simagestatic:UnLoadImage()
+	arg_87_0._simagesignature:UnLoadImage()
 end
 
-function var_0_0.onAnimDone(arg_88_0)
-	arg_88_0._isAnim = false
+function var_0_0.playCloseViewAnim(arg_88_0, arg_88_1)
+	if arg_88_0._tempFunc then
+		TaskDispatcher.cancelTask(arg_88_0._tempFunc, arg_88_0)
+	end
 
-	arg_88_0:setShaderKeyWord()
+	arg_88_0:playAnim(UIAnimationName.Close)
+
+	arg_88_0._tempFunc = arg_88_1
+
+	UIBlockMgr.instance:startBlock(arg_88_0.viewName .. "ViewCloseAnim")
+	TaskDispatcher.runDelay(arg_88_0._closeAnimFinish, arg_88_0, 0.18)
 end
 
-function var_0_0.setShaderKeyWord(arg_89_0)
-	if arg_89_0._isDragingSpine or arg_89_0._isAnim then
+function var_0_0._closeAnimFinish(arg_89_0)
+	UIBlockMgr.instance:endBlock(arg_89_0.viewName .. "ViewCloseAnim")
+	arg_89_0:_tempFunc()
+end
+
+function var_0_0.playAnim(arg_90_0, arg_90_1)
+	arg_90_0._isAnim = true
+
+	arg_90_0:setShaderKeyWord()
+	arg_90_0._animator:Play(arg_90_1, arg_90_0.onAnimDone, arg_90_0)
+end
+
+function var_0_0.onAnimDone(arg_91_0)
+	arg_91_0._isAnim = false
+
+	arg_91_0:setShaderKeyWord()
+end
+
+function var_0_0.setShaderKeyWord(arg_92_0)
+	if arg_92_0._isDragingSpine or arg_92_0._isAnim then
 		UnityEngine.Shader.EnableKeyword("_CLIPALPHA_ON")
 	else
 		UnityEngine.Shader.DisableKeyword("_CLIPALPHA_ON")
 	end
 end
 
-function var_0_0.onDestroyView(arg_90_0)
-	if arg_90_0._uiSpine then
-		arg_90_0._uiSpine:onDestroy()
+function var_0_0.onDestroyView(arg_93_0)
+	if arg_93_0._uiSpine then
+		arg_93_0._uiSpine:onDestroy()
 
-		arg_90_0._uiSpine = nil
+		arg_93_0._uiSpine = nil
 	end
 
-	arg_90_0._simageplayerbg:UnLoadImage()
-	arg_90_0._simagebg:UnLoadImage()
-	arg_90_0:clear()
-	TaskDispatcher.cancelTask(arg_90_0._closeAnimFinish, arg_90_0)
-	TaskDispatcher.cancelTask(arg_90_0._delaySetModelHide, arg_90_0)
-	TaskDispatcher.cancelTask(arg_90_0._playSpineVoice, arg_90_0)
+	arg_93_0._simageplayerbg:UnLoadImage()
+	arg_93_0._simagebg:UnLoadImage()
+	arg_93_0:clear()
+	TaskDispatcher.cancelTask(arg_93_0._closeAnimFinish, arg_93_0)
+	TaskDispatcher.cancelTask(arg_93_0._delaySetModelHide, arg_93_0)
+	TaskDispatcher.cancelTask(arg_93_0._playSpineVoice, arg_93_0)
 	UnityEngine.Shader.DisableKeyword("_CLIPALPHA_ON")
 end
 

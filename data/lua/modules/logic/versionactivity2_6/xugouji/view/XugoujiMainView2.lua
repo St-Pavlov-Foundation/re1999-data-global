@@ -133,7 +133,7 @@ function var_0_0._initStages(arg_11_0)
 
 		local var_11_8 = gohelper.findChild(arg_11_0._gostages, "stage" .. iter_11_0)
 		local var_11_9 = arg_11_0:getResInst(var_11_0, var_11_8)
-		local var_11_10 = MonoHelper.addNoUpdateLuaComOnceToGo(var_11_9, XugoujiMainViewStageItem, arg_11_0)
+		local var_11_10 = MonoHelper.addNoUpdateLuaComOnceToGo(var_11_9, XugoujiLevelViewStageItem, arg_11_0)
 
 		var_11_10:refreshItem(var_11_7, iter_11_0)
 		table.insert(arg_11_0._stageItemList, var_11_10)

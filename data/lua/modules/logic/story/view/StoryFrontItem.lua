@@ -362,6 +362,8 @@ end
 function var_0_0._startShowLine(arg_33_0, arg_33_1)
 	local var_33_0 = gohelper.Type_Text
 
+	arg_33_0._conCopyMark = nil
+
 	if not arg_33_0._copyText then
 		local var_33_1 = gohelper.cloneInPlace(arg_33_0._markScreenText.gameObject, "copytext")
 

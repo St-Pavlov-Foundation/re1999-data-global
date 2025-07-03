@@ -73,5 +73,15 @@
     "heroId": 3047,
     "slotsId": 3047,
     "facetsId": "304701"
+  },
+  {
+    "heroId": 3074,
+    "slotsId": 3074,
+    "facetsId": "307401#307402"
+  },
+  {
+    "heroId": 3083,
+    "slotsId": 3083,
+    "facetsId": "308301"
   }
 ]

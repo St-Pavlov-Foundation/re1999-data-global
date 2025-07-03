@@ -151,7 +151,12 @@ function var_0_0.setCardLock(arg_10_0, arg_10_1, arg_10_2, arg_10_3, arg_10_4)
 
 	if not var_10_0 then
 		local var_10_1 = lua_skill.configDict[arg_10_1].isBigSkill == 1 and true or false
-		local var_10_2 = FightCardModel.instance:getSkillLv(arg_10_0, arg_10_1)
+
+		if lua_skill_next.configDict[arg_10_1] then
+			var_10_1 = false
+		end
+
+		local var_10_2 = FightCardDataHelper.getSkillLv(arg_10_0, arg_10_1)
 		local var_10_3 = var_0_0._getCardLockReason(arg_10_0, arg_10_1, arg_10_4)
 		local var_10_4 = gohelper.findChild(arg_10_2, "normal")
 		local var_10_5 = gohelper.findChild(arg_10_2, "bigskill")
@@ -159,7 +164,7 @@ function var_0_0.setCardLock(arg_10_0, arg_10_1, arg_10_2, arg_10_3, arg_10_4)
 		gohelper.setActive(var_10_4, not var_10_1)
 		gohelper.setActive(var_10_5, var_10_1)
 
-		for iter_10_0 = 1, 4 do
+		for iter_10_0 = 0, 4 do
 			local var_10_6 = gohelper.findChild(iter_10_0 == FightEnum.UniqueSkillCardLv and var_10_5 or var_10_4, tostring(iter_10_0))
 
 			gohelper.setActive(var_10_6, iter_10_0 == var_10_2)
@@ -216,15 +221,15 @@ function var_0_0._setCardPreRemove(arg_11_0, arg_11_1, arg_11_2)
 end
 
 function var_0_0.setCardPreRemove(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
-	local var_12_0 = FightCardModel.instance:isUniqueSkill(arg_12_0, arg_12_1)
-	local var_12_1 = FightCardModel.instance:getSkillLv(arg_12_0, arg_12_1)
+	local var_12_0 = FightCardDataHelper.isBigSkill(arg_12_1)
+	local var_12_1 = FightCardDataHelper.getSkillLv(arg_12_0, arg_12_1)
 	local var_12_2 = gohelper.findChild(arg_12_2, "normal")
 	local var_12_3 = gohelper.findChild(arg_12_2, "bigskill")
 
 	gohelper.setActive(var_12_2, not var_12_0)
 	gohelper.setActive(var_12_3, var_12_0)
 
-	for iter_12_0 = 1, 4 do
+	for iter_12_0 = 0, 4 do
 		local var_12_4 = gohelper.findChild(iter_12_0 == FightEnum.UniqueSkillCardLv and var_12_3 or var_12_2, tostring(iter_12_0))
 
 		gohelper.setActive(var_12_4, iter_12_0 == var_12_1)
@@ -243,14 +248,14 @@ end
 
 function var_0_0.setCardUnLock(arg_13_0, arg_13_1, arg_13_2)
 	local var_13_0 = lua_skill.configDict[arg_13_1].isBigSkill == 1 and true or false
-	local var_13_1 = FightCardModel.instance:getSkillLv(arg_13_0, arg_13_1)
+	local var_13_1 = FightCardDataHelper.getSkillLv(arg_13_0, arg_13_1)
 	local var_13_2 = gohelper.findChild(arg_13_2, "normal")
 	local var_13_3 = gohelper.findChild(arg_13_2, "bigskill")
 
 	gohelper.setActive(var_13_2, not var_13_0)
 	gohelper.setActive(var_13_3, var_13_0)
 
-	for iter_13_0 = 1, 4 do
+	for iter_13_0 = 0, 4 do
 		local var_13_4 = gohelper.findChild(iter_13_0 == FightEnum.UniqueSkillCardLv and var_13_3 or var_13_2, tostring(iter_13_0))
 
 		gohelper.setActive(var_13_4, iter_13_0 == var_13_1)
@@ -288,11 +293,11 @@ function var_0_0.canPreRemove(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
 		return false
 	end
 
-	if FightBuffHelper.hasFeature(var_14_0, arg_14_3, FightEnum.BuffFeature.Dream) and not FightCardModel.instance:isUniqueSkill(arg_14_0, arg_14_1) then
+	if FightBuffHelper.hasFeature(var_14_0, arg_14_3, FightEnum.BuffFeature.Dream) and not FightCardDataHelper.isBigSkill(arg_14_1) then
 		return false
 	end
 
-	local var_14_1 = FightCardModel.instance:getCardOps()
+	local var_14_1 = FightDataHelper.operationDataMgr:getOpList()
 
 	for iter_14_0, iter_14_1 in ipairs(var_14_1) do
 		if iter_14_1 == arg_14_2 then
@@ -426,8 +431,14 @@ function var_0_0.isLockByLockBuffType(arg_16_0, arg_16_1, arg_16_2)
 					end
 				end
 			end
-		elseif var_16_2[arg_16_1.effectTag] == true and var_16_2.bigSkill == var_16_0 then
-			return true
+		else
+			if var_16_0 and var_16_2.bigSkill then
+				return true
+			end
+
+			if var_16_2[arg_16_1.effectTag] == true and var_16_2.bigSkill == var_16_0 then
+				return true
+			end
 		end
 	end
 end

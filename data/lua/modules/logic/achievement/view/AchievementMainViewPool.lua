@@ -93,6 +93,12 @@ function var_0_0.createIconInternal(arg_11_0)
 end
 
 function var_0_0.recycleIcon(arg_12_0, arg_12_1)
+	if arg_12_0._releaseDone then
+		arg_12_1:dispose()
+
+		return
+	end
+
 	if not gohelper.isNil(arg_12_1.viewGO) then
 		arg_12_1.viewGO.transform:SetParent(arg_12_0._tfpool)
 	end
@@ -114,6 +120,8 @@ function var_0_0.release(arg_14_0)
 
 		arg_14_0._freeIconList = nil
 	end
+
+	arg_14_0._releaseDone = true
 end
 
 return var_0_0

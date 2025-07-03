@@ -80,11 +80,11 @@ function var_0_0._btncloseviewOnClick(arg_4_0)
 end
 
 function var_0_0._btnactivitystoreOnClick(arg_5_0)
-	VersionActivity2_0DungeonController.instance:openStoreView()
+	ReactivityController.instance:openReactivityStoreView(VersionActivity2_7Enum.ActivityId.Reactivity)
 end
 
 function var_0_0._btnactivitytaskOnClick(arg_6_0)
-	VersionActivity2_0DungeonController.instance:openTaskView()
+	ReactivityController.instance:openReactivityTaskView(VersionActivity2_7Enum.ActivityId.Reactivity)
 end
 
 function var_0_0._btngraffitiOnClick(arg_7_0)
@@ -323,7 +323,7 @@ function var_0_0.refreshMask(arg_34_0)
 end
 
 function var_0_0.refreshStoreRemainTime(arg_35_0)
-	local var_35_0 = VersionActivity2_0Enum.ActivityId.DungeonStore
+	local var_35_0 = VersionActivity2_7Enum.ActivityId.ReactivityStore
 	local var_35_1 = ActivityModel.instance:getActMO(var_35_0):getRealEndTimeStamp() - ServerTime.now()
 
 	if var_35_1 > TimeUtil.OneDaySecond then

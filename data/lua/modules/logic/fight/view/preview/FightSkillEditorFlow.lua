@@ -3,14 +3,14 @@
 local var_0_0 = class("FightSkillEditorFlow", BaseFlow)
 
 function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0._fightStepMO = arg_1_1
+	arg_1_0.fightStepData = arg_1_1
 	arg_1_0._skillReleaseFlow = FlowParallel.New()
 
 	arg_1_0._skillReleaseFlow:addWork(FunctionWork.New(arg_1_0._playSkill, arg_1_0))
 
 	local var_1_0
 
-	for iter_1_0, iter_1_1 in ipairs(arg_1_1.actEffectMOs) do
+	for iter_1_0, iter_1_1 in ipairs(arg_1_1.actEffect) do
 		if (iter_1_1.effectType == FightEnum.EffectType.HEAL or iter_1_1.effectType == FightEnum.EffectType.HEALCRIT) and iter_1_1.effectNum > 0 then
 			if not var_1_0 then
 				var_1_0 = FightWorkSkillFinallyHeal.New(arg_1_1)
@@ -18,14 +18,14 @@ function var_0_0.ctor(arg_1_0, arg_1_1)
 				arg_1_0._skillReleaseFlow:addWork(var_1_0)
 			end
 
-			var_1_0:addActEffectMO(iter_1_1)
+			var_1_0:addActEffectData(iter_1_1)
 		end
 	end
 end
 
 function var_0_0._playSkill(arg_2_0)
-	arg_2_0._attacker = FightHelper.getEntity(arg_2_0._fightStepMO.fromId)
-	arg_2_0._skillId = arg_2_0._fightStepMO.actId
+	arg_2_0._attacker = FightHelper.getEntity(arg_2_0.fightStepData.fromId)
+	arg_2_0._skillId = arg_2_0.fightStepData.actId
 
 	local var_2_0 = arg_2_0._attacker:getMO()
 	local var_2_1 = var_2_0 and var_2_0.skin
@@ -42,14 +42,14 @@ function var_0_0._playSkill(arg_2_0)
 	if FightSkillMgr.instance:isEntityPlayingTimeline(arg_2_0._attacker.id) then
 		TaskDispatcher.runRepeat(arg_2_0._checkNoSkillPlaying, arg_2_0, 0.01)
 	else
-		arg_2_0._attacker.skill:playSkill(arg_2_0._skillId, arg_2_0._fightStepMO)
+		arg_2_0._attacker.skill:playSkill(arg_2_0._skillId, arg_2_0.fightStepData)
 	end
 end
 
 function var_0_0._checkNoSkillPlaying(arg_3_0)
 	if not FightSkillMgr.instance:isEntityPlayingTimeline(arg_3_0._attacker.id) then
 		TaskDispatcher.cancelTask(arg_3_0._checkNoSkillPlaying, arg_3_0)
-		arg_3_0._attacker.skill:playSkill(arg_3_0._skillId, arg_3_0._fightStepMO)
+		arg_3_0._attacker.skill:playSkill(arg_3_0._skillId, arg_3_0.fightStepData)
 	end
 end
 

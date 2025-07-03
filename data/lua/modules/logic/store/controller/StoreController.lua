@@ -90,7 +90,7 @@ function var_0_0.openStoreView(arg_11_0, arg_11_1, arg_11_2)
 end
 
 function var_0_0.openNormalGoodsView(arg_12_0, arg_12_1)
-	if arg_12_1.belongStoreId == StoreEnum.SubRoomNew or arg_12_1.belongStoreId == StoreEnum.SubRoomOld then
+	if arg_12_1.belongStoreId == StoreEnum.StoreId.NewRoomStore or arg_12_1.belongStoreId == StoreEnum.StoreId.OldRoomStore then
 		RoomController.instance:openStoreGoodsTipView(arg_12_1)
 	else
 		ViewMgr.instance:openView(ViewName.NormalStoreGoodsView, arg_12_1)
@@ -114,7 +114,7 @@ function var_0_0.openDecorateStoreGoodsView(arg_15_0, arg_15_1)
 end
 
 function var_0_0.openSummonStoreGoodsView(arg_16_0, arg_16_1)
-	if arg_16_1.belongStoreId == StoreEnum.Room then
+	if arg_16_1.belongStoreId == StoreEnum.StoreId.RoomStore then
 		RoomController.instance:openStoreGoodsTipView(arg_16_1)
 	else
 		ViewMgr.instance:openView(ViewName.SummonStoreGoodsView, arg_16_1)
@@ -183,7 +183,22 @@ function var_0_0._readTab(arg_20_0, arg_20_1)
 		end
 
 		if #var_20_6 > 0 then
-			ChargeRpc.instance:sendReadChargeNewRequest(var_20_6)
+			if not StoreConfig.instance:isPackageStore(arg_20_1) then
+				ChargeRpc.instance:sendReadChargeNewRequest(var_20_6)
+			else
+				local var_20_8 = {}
+
+				for iter_20_4, iter_20_5 in pairs(var_20_6) do
+					local var_20_9 = StoreModel.instance:getGoodsMO(iter_20_5)
+					local var_20_10 = ServerTime.now()
+
+					if not (var_20_10 >= var_20_9.newStartTime and var_20_10 <= var_20_9.newEndTime) then
+						table.insert(var_20_8, iter_20_5)
+					end
+				end
+
+				ChargeRpc.instance:sendReadChargeNewRequest(var_20_8)
+			end
 		end
 	end
 end
@@ -306,7 +321,7 @@ function var_0_0.statBuyGoods(arg_27_0, arg_27_1, arg_27_2, arg_27_3, arg_27_4, 
 	local var_27_1 = var_27_0.product
 	local var_27_2
 
-	if arg_27_1 == StoreEnum.Room then
+	if arg_27_1 == StoreEnum.StoreId.RoomStore then
 		local var_27_3 = arg_27_0.roomStoreCanBuyGoodsStr
 		local var_27_4 = arg_27_0:_itemsMultipleWithBuyCount(arg_27_0.recordCostItem, arg_27_3, arg_27_4)
 	elseif arg_27_1 == StoreEnum.StoreId.Skin and arg_27_0.exchangeDiamondQuantity and arg_27_0.exchangeDiamondQuantity > 0 then

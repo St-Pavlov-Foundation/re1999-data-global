@@ -3,7 +3,7 @@
 local var_0_0 = class("StoreHelper", BaseController)
 
 function var_0_0.getRecommendStoreSecondTabConfig()
-	local var_1_0 = StoreModel.instance:getRecommendSecondTabs(StoreEnum.RecommendStore, true)
+	local var_1_0 = StoreModel.instance:getRecommendSecondTabs(StoreEnum.StoreId.RecommendStore, true)
 	local var_1_1 = {}
 	local var_1_2 = {}
 
@@ -256,21 +256,53 @@ function var_0_0.getRemainExpireTimeDeep(arg_10_0)
 	return var_10_0
 end
 
-function var_0_0.checkIsShowCoBrandedTag(arg_11_0)
-	if not arg_11_0 then
+function var_0_0.getRemainExpireTimeByStoreId(arg_11_0)
+	local var_11_0 = 0
+	local var_11_1 = StoreModel.instance:getStoreMO(arg_11_0):getGoodsList()
+
+	for iter_11_0, iter_11_1 in pairs(var_11_1) do
+		if not string.nilorempty(iter_11_1.config.offlineTime) and type(iter_11_1.config.offlineTime) == "string" then
+			local var_11_2 = TimeUtil.stringToTimestamp(iter_11_1.config.offlineTime) - ServerTime.now()
+
+			if var_11_2 > 0 then
+				var_11_0 = var_11_0 == 0 and var_11_2 or math.min(var_11_2, var_11_0)
+			end
+		end
+	end
+
+	return var_11_0
+end
+
+function var_0_0.getRemainExpireTimeDeepByStoreId(arg_12_0)
+	local var_12_0 = 0
+	local var_12_1 = StoreModel.instance:getSecondTabs(arg_12_0, true, true)
+
+	for iter_12_0 = 1, #var_12_1 do
+		local var_12_2 = var_0_0.getRemainExpireTimeByStoreId(var_12_1[iter_12_0].id)
+
+		if var_12_2 > 0 then
+			var_12_0 = var_12_0 == 0 and var_12_2 or math.min(var_12_2, var_12_0)
+		end
+	end
+
+	return var_12_0
+end
+
+function var_0_0.checkIsShowCoBrandedTag(arg_13_0)
+	if not arg_13_0 then
 		return false
 	end
 
-	local var_11_0 = CommonConfig.instance:getConstStr(ConstEnum.StorePackageShowCoBradedTagGoodIds)
+	local var_13_0 = CommonConfig.instance:getConstStr(ConstEnum.StorePackageShowCoBradedTagGoodIds)
 
-	if string.nilorempty(var_11_0) then
+	if string.nilorempty(var_13_0) then
 		return false
 	end
 
-	local var_11_1 = string.split(var_11_0, "#")
+	local var_13_1 = string.split(var_13_0, "#")
 
-	for iter_11_0, iter_11_1 in ipairs(var_11_1 or {}) do
-		if tonumber(iter_11_1) == arg_11_0 then
+	for iter_13_0, iter_13_1 in ipairs(var_13_1 or {}) do
+		if tonumber(iter_13_1) == arg_13_0 then
 			return true
 		end
 	end

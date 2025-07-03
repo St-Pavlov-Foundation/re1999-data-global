@@ -24,8 +24,8 @@ function var_0_0.onInitView(arg_1_0)
 
 	arg_1_0.descFixTmpBreakLine = MonoHelper.addNoUpdateLuaComOnceToGo(arg_1_0.txtDesc.gameObject, FixTmpBreakLine)
 	arg_1_0.bossIcon = gohelper.findChildSingleImage(arg_1_0.viewGO, "BOSS/Head/Mask/image_bossIcon")
-	arg_1_0.txtActiveCount = gohelper.findChildTextMesh(arg_1_0.viewGO, "BOSS/#txt_PassLevel")
-	arg_1_0.btnResetAll = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "BOSS/btn_reset")
+	arg_1_0.txtActiveCount = gohelper.findChildTextMesh(arg_1_0.viewGO, "BOSS/layout/#txt_PassLevel")
+	arg_1_0.btnResetAll = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "BOSS/layout/btn_reset")
 	arg_1_0.txtPoint = gohelper.findChildTextMesh(arg_1_0.viewGO, "Tips/txt_point")
 	arg_1_0.btnAttr = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "btn_Attr")
 	arg_1_0.isBottomVisible = false
@@ -48,6 +48,7 @@ function var_0_0.addEvents(arg_2_0)
 	arg_2_0:addEventCb(TowerController.instance, TowerEvent.ResetTalent, arg_2_0._onResetTalent, arg_2_0)
 	arg_2_0:addEventCb(TowerController.instance, TowerEvent.ActiveTalent, arg_2_0._onActiveTalent, arg_2_0)
 	arg_2_0:addEventCb(TowerController.instance, TowerEvent.SelectTalentItem, arg_2_0._onSelectTalentItem, arg_2_0)
+	arg_2_0:addEventCb(TowerController.instance, TowerEvent.RefreshTalent, arg_2_0.refreshView, arg_2_0)
 end
 
 function var_0_0.removeEvents(arg_3_0)
@@ -63,6 +64,7 @@ function var_0_0.removeEvents(arg_3_0)
 	arg_3_0:removeEventCb(TowerController.instance, TowerEvent.ResetTalent, arg_3_0._onResetTalent, arg_3_0)
 	arg_3_0:removeEventCb(TowerController.instance, TowerEvent.ActiveTalent, arg_3_0._onActiveTalent, arg_3_0)
 	arg_3_0:removeEventCb(TowerController.instance, TowerEvent.SelectTalentItem, arg_3_0._onSelectTalentItem, arg_3_0)
+	arg_3_0:removeEventCb(TowerController.instance, TowerEvent.RefreshTalent, arg_3_0.refreshView, arg_3_0)
 end
 
 function var_0_0._editableInitView(arg_4_0)
@@ -115,6 +117,12 @@ function var_0_0.onBtnCloseTips(arg_8_0)
 end
 
 function var_0_0.onBtnReset(arg_9_0)
+	if TowerAssistBossTalentListModel.instance:getAutoTalentState() then
+		GameFacade.showToast(ToastEnum.TowerBossTalentPlanCantModify)
+
+		return
+	end
+
 	local var_9_0 = TowerAssistBossTalentListModel.instance:getSelectTalent()
 
 	if TowerAssistBossTalentListModel.instance:isTalentCanReset(var_9_0, true) then
@@ -123,6 +131,10 @@ function var_0_0.onBtnReset(arg_9_0)
 end
 
 function var_0_0.onBtnResetAll(arg_10_0)
+	if TowerAssistBossTalentListModel.instance:getAutoTalentState() then
+		return
+	end
+
 	GameFacade.showMessageBox(MessageBoxIdDefine.TowerTalentReset, MsgBoxEnum.BoxType.Yes_No, arg_10_0._sendTowerResetAllTalentRequest, nil, nil, arg_10_0)
 end
 
@@ -141,6 +153,12 @@ function var_0_0.onBtnSure(arg_12_0)
 	local var_12_2 = var_12_1 and var_12_1:getNode(var_12_0)
 
 	if not var_12_2 then
+		return
+	end
+
+	if TowerAssistBossTalentListModel.instance:getAutoTalentState() then
+		GameFacade.showToast(ToastEnum.TowerBossTalentPlanCantModify)
+
 		return
 	end
 
@@ -251,8 +269,9 @@ function var_0_0.refreshBoss(arg_22_0)
 	arg_22_0.bossIcon:LoadImage(ResUrl.monsterHeadIcon(var_22_4 and var_22_4.headIcon))
 
 	local var_22_5 = TowerAssistBossModel.instance:getById(arg_22_0.bossId)
+	local var_22_6 = TowerAssistBossTalentListModel.instance:getAutoTalentState()
 
-	gohelper.setActive(arg_22_0.btnResetAll, var_22_5 ~= nil)
+	gohelper.setActive(arg_22_0.btnResetAll, var_22_5 ~= nil and not var_22_6)
 end
 
 function var_0_0.refreshBottom(arg_23_0)

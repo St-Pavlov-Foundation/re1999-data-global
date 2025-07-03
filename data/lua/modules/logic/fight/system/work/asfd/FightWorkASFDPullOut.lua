@@ -3,12 +3,11 @@
 local var_0_0 = class("FightWorkASFDPullOut", BaseWork)
 
 function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.stepMo = arg_1_1
-	arg_1_0._fightStepMO = arg_1_1
+	arg_1_0.fightStepData = arg_1_1
 end
 
 function var_0_0.onStart(arg_2_0)
-	FightController.instance:dispatchEvent(FightEvent.ASFD_PullOut, arg_2_0.stepMo)
+	FightController.instance:dispatchEvent(FightEvent.ASFD_PullOut, arg_2_0.fightStepData)
 	TaskDispatcher.runDelay(arg_2_0._delayDone, arg_2_0, 0.3)
 end
 

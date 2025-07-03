@@ -5,7 +5,7 @@ local var_0_0 = class("FightStartSequence", BaseFightSequence)
 function var_0_0.buildFlow(arg_1_0, arg_1_1)
 	var_0_0.super.buildFlow(arg_1_0)
 
-	arg_1_0.startRoundMO = arg_1_1
+	arg_1_0.roundData = arg_1_1
 
 	arg_1_0:_buildStartRoundSteps()
 end
@@ -25,12 +25,15 @@ function var_0_0._buildStartRoundSteps(arg_2_0)
 		arg_2_0:_buildNormalBorn()
 	end
 
+	arg_2_0:addWork(FightWorkCompareDataAfterPlay.New())
 	arg_2_0:addWork(FightWorkFbStory.New(FightWorkFbStory.Type_EnterWave))
 	arg_2_0:addWork(FunctionWork.New(function()
-		FightRpc.instance:dealCardInfoPushData()
+		local var_3_0 = FightDataHelper.roundMgr:getRoundData()
+
+		FightDataMgr.instance:afterPlayRoundData(var_3_0)
 	end))
 	arg_2_0:addWork(FunctionWork.New(function()
-		FightDataMgr.instance:afterPlayRoundProto(FightDataModel.instance.cacheRoundProto)
+		FightRpc.instance:dealCardInfoPushData()
 	end))
 	arg_2_0:addWork(FunctionWork.New(function()
 		FightViewPartVisible.set(true, true, true, false, false)
@@ -67,7 +70,7 @@ function var_0_0._buildFocusBorn(arg_6_0)
 		FightController.instance:dispatchEvent(FightEvent.BeforeEnterStepBehaviour)
 	end))
 
-	local var_6_0 = FightStepBuilder.buildStepWorkList(arg_6_0.startRoundMO.fightStepMOs)
+	local var_6_0 = FightStepBuilder.buildStepWorkList(arg_6_0.roundData.fightStep)
 
 	if var_6_0 then
 		for iter_6_0, iter_6_1 in ipairs(var_6_0) do
@@ -120,7 +123,7 @@ function var_0_0._buildNormalBorn(arg_12_0)
 		FightController.instance:dispatchEvent(FightEvent.BeforeEnterStepBehaviour)
 	end))
 
-	local var_12_3 = FightStepBuilder.buildStepWorkList(arg_12_0.startRoundMO and arg_12_0.startRoundMO.fightStepMOs)
+	local var_12_3 = FightStepBuilder.buildStepWorkList(arg_12_0.roundData and arg_12_0.roundData.fightStep)
 
 	if var_12_3 then
 		for iter_12_0, iter_12_1 in ipairs(var_12_3) do

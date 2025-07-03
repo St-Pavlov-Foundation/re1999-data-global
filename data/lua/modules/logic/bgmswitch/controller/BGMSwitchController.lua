@@ -183,12 +183,8 @@ function var_0_0.playMainBgm(arg_18_0, arg_18_1, arg_18_2, arg_18_3)
 	arg_18_0:stopMainBgm()
 	var_0_0.instance:resumeMainBgm()
 
-	if arg_18_0._preAudioId ~= nil and arg_18_0._preAudioId ~= arg_18_1 and arg_18_3 and arg_18_0._playingId then
-		local var_18_0 = BGMSwitchConfig.instance:getBGMSwitchCoByAudioId(arg_18_0._preAudioId)
-
-		if var_18_0 and var_18_0.isNonLoop == 1 then
-			AudioMgr.instance:stopPlayingID(arg_18_0._playingId)
-		end
+	if arg_18_0._preAudioId ~= nil and arg_18_0._preAudioId ~= arg_18_1 and arg_18_3 and arg_18_0._playingId and BGMSwitchConfig.instance:getBGMSwitchCoByAudioId(arg_18_0._preAudioId) then
+		AudioMgr.instance:stopPlayingID(arg_18_0._playingId)
 	end
 
 	arg_18_0._playingId = AudioMgr.instance:triggerEx(arg_18_1, bit.bor(AkCallbackEnum.Type.AK_EnableGetSourcePlayPosition, AkCallbackEnum.Type.AK_Duration), nil)

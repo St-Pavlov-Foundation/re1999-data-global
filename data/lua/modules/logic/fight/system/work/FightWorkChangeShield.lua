@@ -3,12 +3,12 @@
 local var_0_0 = class("FightWorkChangeShield", FightEffectBase)
 
 function var_0_0.onStart(arg_1_0)
-	local var_1_0 = arg_1_0._actEffectMO.targetId
+	local var_1_0 = arg_1_0.actEffectData.targetId
 
 	arg_1_0:com_sendFightEvent(FightEvent.ChangeShield, var_1_0)
 
-	if arg_1_0._actEffectMO.reserveId == "1" then
-		FightFloatMgr.instance:float(var_1_0, FightEnum.FloatType.addShield, "+" .. arg_1_0._actEffectMO.effectNum)
+	if arg_1_0.actEffectData.reserveId == "1" then
+		FightFloatMgr.instance:float(var_1_0, FightEnum.FloatType.addShield, "+" .. arg_1_0.actEffectData.effectNum)
 	end
 
 	arg_1_0:onDone(true)

@@ -11,7 +11,7 @@ function var_0_0.onStart(arg_2_0)
 
 	arg_2_0:com_sendFightEvent(FightEvent.CardBoxNumChange, arg_2_0.beforeNum, var_2_0)
 	arg_2_0:com_registFightEvent(FightEvent.CardDeckGenerateDone, arg_2_0._delayDone)
-	arg_2_0:com_sendFightEvent(FightEvent.CardDeckGenerate, arg_2_0._actEffectMO.cardInfoList)
+	arg_2_0:com_sendFightEvent(FightEvent.CardDeckGenerate, arg_2_0.actEffectData.cardInfoList)
 	arg_2_0:onDone(true)
 end
 

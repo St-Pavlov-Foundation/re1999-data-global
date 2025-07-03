@@ -20,5 +20,10 @@ var_0_0.ActiveTalent = 10102
 var_0_0.LocalKeyChange = 10103
 var_0_0.RefreshTowerReddot = 10104
 var_0_0.TowerUpdate = 10105
+var_0_0.RefreshTalent = 10106
+var_0_0.ChangeTalentPlan = 10107
+var_0_0.RenameTalentPlan = 10108
+var_0_0.OnHandleInStoreView = 10109
+var_0_0.OnEnterStoreView = 10110
 
 return var_0_0

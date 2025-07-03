@@ -6,7 +6,7 @@ function var_0_0.onStart(arg_1_0)
 	local var_1_0 = FightModel.instance:getMagicCircleInfo()
 
 	if var_1_0 then
-		local var_1_1 = tonumber(arg_1_0._actEffectMO.reserveId)
+		local var_1_1 = tonumber(arg_1_0.actEffectData.reserveId)
 
 		if var_1_0:deleteData(var_1_1) then
 			local var_1_2 = lua_magic_circle.configDict[var_1_1]

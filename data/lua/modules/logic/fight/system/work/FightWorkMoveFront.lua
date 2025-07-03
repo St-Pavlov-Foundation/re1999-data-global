@@ -18,7 +18,7 @@ function var_0_0.onStart(arg_2_0)
 	arg_2_0._flow = FlowParallel.New()
 	arg_2_0._cacheEntityIds = {}
 
-	local var_2_0 = arg_2_0._actEffectMO.targetId
+	local var_2_0 = arg_2_0.actEffectData.targetId
 	local var_2_1 = FightDataHelper.entityMgr:getById(var_2_0)
 
 	if var_2_1 then
@@ -67,7 +67,7 @@ function var_0_0.onStart(arg_2_0)
 		end
 	end
 
-	local var_2_10 = string.split(arg_2_0._actEffectMO.reserveStr, "|")
+	local var_2_10 = string.split(arg_2_0.actEffectData.reserveStr, "|")
 
 	if #var_2_10 > 0 then
 		for iter_2_0, iter_2_1 in ipairs(var_2_10) do

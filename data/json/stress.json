@@ -8578,5 +8578,15 @@
     "type": "negative",
     "pressParam": "1#1",
     "rule": "9241401"
+  },
+  {
+    "id": 9270200,
+    "identity": 9270200,
+    "desc": "",
+    "title": "2.7挑战",
+    "condition": 404,
+    "type": "resolute",
+    "pressParam": "1#1",
+    "rule": "9270200"
   }
 ]

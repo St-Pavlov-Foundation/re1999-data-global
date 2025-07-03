@@ -48,9 +48,14 @@ function var_0_0.copyCharacterCardList(arg_3_0, arg_3_1)
 		end
 	end
 
-	local var_3_6 = HeroGroupTrialModel.instance:getFilterList()
+	local var_3_6 = CharacterModel.instance:getRankState()
+	local var_3_7 = CharacterModel.instance:getBtnTag(CharacterEnum.FilterType.HeroGroup)
 
-	for iter_3_2, iter_3_3 in ipairs(var_3_6) do
+	HeroGroupTrialModel.instance:sortByLevelAndRare(var_3_7 == 1, var_3_6[var_3_7] == 1)
+
+	local var_3_8 = HeroGroupTrialModel.instance:getFilterList()
+
+	for iter_3_2, iter_3_3 in ipairs(var_3_8) do
 		if not var_3_2[iter_3_3.uid] then
 			table.insert(var_3_1, iter_3_3)
 		end
@@ -65,53 +70,62 @@ function var_0_0.copyCharacterCardList(arg_3_0, arg_3_1)
 		end
 	end
 
-	local var_3_7 = #var_3_1
-	local var_3_8 = arg_3_0.isTowerBattle
-	local var_3_9 = arg_3_0.isWeekWalk_2
-	local var_3_10 = {}
+	local var_3_9 = #var_3_1
+	local var_3_10 = arg_3_0.isTowerBattle
+	local var_3_11 = arg_3_0.isWeekWalk_2
+	local var_3_12 = {}
 
-	for iter_3_6, iter_3_7 in ipairs(var_3_0) do
-		if not var_3_2[iter_3_7.uid] then
-			var_3_2[iter_3_7.uid] = true
-
-			if arg_3_0.adventure then
-				if WeekWalkModel.instance:getCurMapHeroCd(iter_3_7.heroId) > 0 then
-					table.insert(var_3_10, iter_3_7)
-				else
-					table.insert(var_3_1, iter_3_7)
-				end
-			elseif var_3_9 then
-				if WeekWalk_2Model.instance:getCurMapHeroCd(iter_3_7.heroId) > 0 then
-					table.insert(var_3_10, iter_3_7)
-				else
-					table.insert(var_3_1, iter_3_7)
-				end
-			elseif var_3_8 then
-				if TowerModel.instance:isHeroBan(iter_3_7.heroId) then
-					table.insert(var_3_10, iter_3_7)
-				else
-					table.insert(var_3_1, iter_3_7)
-				end
-			elseif arg_3_0._moveHeroId and iter_3_7.heroId == arg_3_0._moveHeroId then
-				arg_3_0._moveHeroId = nil
-				arg_3_0._moveHeroIndex = var_3_7 + 1
-
-				table.insert(var_3_1, arg_3_0._moveHeroIndex, iter_3_7)
-			else
-				table.insert(var_3_1, iter_3_7)
+	if var_3_10 then
+		for iter_3_6 = #var_3_1, 1, -1 do
+			if TowerModel.instance:isHeroBan(var_3_1[iter_3_6].heroId) then
+				table.insert(var_3_12, var_3_1[iter_3_6])
+				table.remove(var_3_1, iter_3_6)
 			end
 		end
 	end
 
-	if arg_3_0.adventure or var_3_8 or var_3_9 then
-		tabletool.addValues(var_3_1, var_3_10)
+	for iter_3_7, iter_3_8 in ipairs(var_3_0) do
+		if not var_3_2[iter_3_8.uid] then
+			var_3_2[iter_3_8.uid] = true
+
+			if arg_3_0.adventure then
+				if WeekWalkModel.instance:getCurMapHeroCd(iter_3_8.heroId) > 0 then
+					table.insert(var_3_12, iter_3_8)
+				else
+					table.insert(var_3_1, iter_3_8)
+				end
+			elseif var_3_11 then
+				if WeekWalk_2Model.instance:getCurMapHeroCd(iter_3_8.heroId) > 0 then
+					table.insert(var_3_12, iter_3_8)
+				else
+					table.insert(var_3_1, iter_3_8)
+				end
+			elseif var_3_10 then
+				if TowerModel.instance:isHeroBan(iter_3_8.heroId) then
+					table.insert(var_3_12, iter_3_8)
+				else
+					table.insert(var_3_1, iter_3_8)
+				end
+			elseif arg_3_0._moveHeroId and iter_3_8.heroId == arg_3_0._moveHeroId then
+				arg_3_0._moveHeroId = nil
+				arg_3_0._moveHeroIndex = var_3_9 + 1
+
+				table.insert(var_3_1, arg_3_0._moveHeroIndex, iter_3_8)
+			else
+				table.insert(var_3_1, iter_3_8)
+			end
+		end
+	end
+
+	if arg_3_0.adventure or var_3_10 or var_3_11 then
+		tabletool.addValues(var_3_1, var_3_12)
 	end
 
 	arg_3_0:setList(var_3_1)
 
 	if arg_3_1 and #var_3_1 > 0 and var_3_3 > 0 and #arg_3_0._scrollViews > 0 then
-		for iter_3_8, iter_3_9 in ipairs(arg_3_0._scrollViews) do
-			iter_3_9:selectCell(var_3_3, true)
+		for iter_3_9, iter_3_10 in ipairs(arg_3_0._scrollViews) do
+			iter_3_10:selectCell(var_3_3, true)
 		end
 
 		if var_3_1[var_3_3] then
@@ -127,6 +141,12 @@ function var_0_0.isRepeatHero(arg_4_0, arg_4_1, arg_4_2)
 
 	for iter_4_0 in pairs(arg_4_0._inTeamHeroUids) do
 		local var_4_0 = arg_4_0:getById(iter_4_0)
+
+		if not var_4_0 then
+			logError("heroId:" .. arg_4_1 .. ", " .. "uid:" .. arg_4_2 .. "数据为空")
+
+			return false
+		end
 
 		if var_4_0.heroId == arg_4_1 and arg_4_2 ~= var_4_0.uid then
 			return true

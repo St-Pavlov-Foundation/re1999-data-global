@@ -33,7 +33,12 @@ function var_0_0.buildViews(arg_1_0)
 		arg_1_0.waitingArea = FightViewWaitingArea.New()
 	end
 
+	arg_1_0.rightElementLayoutView = FightViewRightElementsLayout.New()
+	arg_1_0.rightBottomElementLayoutView = FightViewRightBottomElementsLayout.New()
+
 	local var_1_2 = {
+		arg_1_0.rightElementLayoutView,
+		arg_1_0.rightBottomElementLayoutView,
 		arg_1_0.fightView,
 		FightViewPartVisible.New(),
 		arg_1_0.fightViewHandCard,

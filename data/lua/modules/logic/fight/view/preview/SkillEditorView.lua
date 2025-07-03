@@ -65,6 +65,7 @@ function var_0_0.addEvents(arg_4_0)
 	arg_4_0:addEventCb(FightController.instance, FightEvent.OnSkillEditorSceneChange, arg_4_0._showSceneDissolveBtn, arg_4_0)
 	arg_4_0:addEventCb(FightController.instance, FightEvent.SetSkillEditorViewVisible, arg_4_0._onSetSkillEditorViewVisible, arg_4_0)
 	arg_4_0:addEventCb(FightController.instance, FightEvent.OnBuffClick, arg_4_0._onBuffClick, arg_4_0)
+	arg_4_0:addEventCb(FightController.instance, FightEvent.SetGMViewVisible, arg_4_0.onSetGMViewVisible, arg_4_0)
 end
 
 function var_0_0.removeEvents(arg_5_0)
@@ -259,6 +260,10 @@ function var_0_0._onBuffClick(arg_22_0, arg_22_1, arg_22_2, arg_22_3, arg_22_4)
 
 		logNormal(string.format("buff list %d :\n%s", #var_22_1, table.concat(var_22_1, "\n")))
 	end
+end
+
+function var_0_0.onSetGMViewVisible(arg_23_0, arg_23_1)
+	gohelper.setActive(arg_23_0.viewGO, arg_23_1)
 end
 
 return var_0_0

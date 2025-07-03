@@ -3,9 +3,6 @@
 local var_0_0 = class("FightWorkCardsPush", FightEffectBase)
 
 function var_0_0.onStart(arg_1_0)
-	local var_1_0 = FightHelper.buildInfoMOs(arg_1_0._actEffectMO.cardInfoList, FightCardInfoMO)
-
-	FightCardModel.instance:getCardMO():setCards(var_1_0)
 	FightController.instance:dispatchEvent(FightEvent.RefreshHandCard)
 	arg_1_0:onDone(true)
 end

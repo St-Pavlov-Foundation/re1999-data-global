@@ -203,7 +203,9 @@ function var_0_0.activityRedDotRefreshFunc(arg_18_0, arg_18_1)
 	local var_18_0 = arg_18_0:getEnterViewActIdList()
 
 	if var_18_0 then
-		if ActivityStageHelper.checkActivityStageHasChange(var_18_0) then
+		local var_18_1 = arg_18_0:_isShowHardModeNewTag(var_18_0)
+
+		if ActivityStageHelper.checkActivityStageHasChange(var_18_0) or var_18_1 then
 			arg_18_1.show = true
 
 			arg_18_1:showRedDot(RedDotEnum.Style.ObliqueNewTag)
@@ -220,9 +222,23 @@ function var_0_0.activityRedDotRefreshFunc(arg_18_0, arg_18_1)
 	arg_18_1:defaultRefreshDot()
 end
 
-function var_0_0.getEnterViewActIdList(arg_19_0)
-	if not arg_19_0.enterActId2ActIdListDict then
-		arg_19_0.enterActId2ActIdListDict = {
+function var_0_0._isShowHardModeNewTag(arg_19_0, arg_19_1)
+	if arg_19_1 then
+		for iter_19_0, iter_19_1 in ipairs(arg_19_1) do
+			if VersionActivityFixedDungeonModel.instance:isTipHardModeUnlockOpen(iter_19_1) then
+				return true
+			end
+		end
+	end
+end
+
+function var_0_0._showNewTag(arg_20_0, arg_20_1)
+	return
+end
+
+function var_0_0.getEnterViewActIdList(arg_21_0)
+	if not arg_21_0.enterActId2ActIdListDict then
+		arg_21_0.enterActId2ActIdListDict = {
 			[ActivityEnum.VersionActivityIdDict.Activity1_1] = VersionActivityEnum.EnterViewActIdList,
 			[ActivityEnum.VersionActivityIdDict.Activity1_2] = VersionActivity1_2Enum.EnterViewActIdList,
 			[ActivityEnum.VersionActivityIdDict.Activity1_3] = VersionActivity1_3Enum.EnterViewActIdList,
@@ -233,52 +249,53 @@ function var_0_0.getEnterViewActIdList(arg_19_0)
 			[ActivityEnum.VersionActivityIdDict.Activity1_6] = VersionActivity1_6Enum.EnterViewActIdList,
 			[ActivityEnum.VersionActivityIdDict.Activity1_7] = VersionActivity1_7Enum.EnterViewActIdListWithRedDot,
 			[ActivityEnum.VersionActivityIdDict.Activity1_8] = VersionActivity1_8Enum.EnterViewActIdListWithRedDot,
-			[ActivityEnum.VersionActivityIdDict.Activity1_9] = VersionActivity1_9Enum.EnterViewActIdListWithRedDot
+			[ActivityEnum.VersionActivityIdDict.Activity1_9] = VersionActivity1_9Enum.EnterViewActIdListWithRedDot,
+			[ActivityEnum.VersionActivityIdDict.Activity2_7] = VersionActivity2_7Enum.EnterViewActIdListWithRedDot
 		}
 	end
 
-	return arg_19_0.enterActId2ActIdListDict[arg_19_0.showActivityId]
+	return arg_21_0.enterActId2ActIdListDict[arg_21_0.showActivityId]
 end
 
-function var_0_0.refreshActivityIcon(arg_20_0)
-	if arg_20_0.showFightGroupEnum ~= var_0_0.ShowFightGroupEnum.Activity then
+function var_0_0.refreshActivityIcon(arg_22_0)
+	if arg_22_0.showFightGroupEnum ~= var_0_0.ShowFightGroupEnum.Activity then
 		return
 	end
 
-	arg_20_0.simageActivityIcon:LoadImage(ResUrl.getMainActivityIcon(ActivityEnum.MainIcon[arg_20_0.showActivityId]))
+	arg_22_0.simageActivityIcon:LoadImage(ResUrl.getMainActivityIcon(ActivityEnum.MainIcon[arg_22_0.showActivityId]))
 
-	if ActivityHelper.getActivityStatus(arg_20_0.showActivityId) ~= ActivityEnum.ActivityStatus.Normal then
-		arg_20_0.imageActivityIcon.color = var_0_0.notOpenColor
+	if ActivityHelper.getActivityStatus(arg_22_0.showActivityId) ~= ActivityEnum.ActivityStatus.Normal then
+		arg_22_0.imageActivityIcon.color = var_0_0.notOpenColor
 
-		gohelper.setAsFirstSibling(arg_20_0.btnEnterActivity.gameObject)
+		gohelper.setAsFirstSibling(arg_22_0.btnEnterActivity.gameObject)
 	else
-		arg_20_0.imageActivityIcon.color = Color.white
+		arg_22_0.imageActivityIcon.color = Color.white
 
-		gohelper.setAsLastSibling(arg_20_0.btnEnterActivity.gameObject)
+		gohelper.setAsLastSibling(arg_22_0.btnEnterActivity.gameObject)
 	end
 end
 
-function var_0_0.getActivityHandleFunc(arg_21_0, arg_21_1)
-	if not arg_21_0.activityHandleFuncDict then
-		arg_21_0.activityHandleFuncDict = {
-			[ActivityEnum.VersionActivityIdDict.Activity1_1] = arg_21_0.enterVersionActivity1_1,
-			[ActivityEnum.VersionActivityIdDict.Activity1_2] = arg_21_0.enterVersionActivity1_2,
-			[ActivityEnum.VersionActivityIdDict.Activity1_3] = arg_21_0.enterVersionActivity1_3,
-			[ActivityEnum.VersionActivityIdDict.Activity1_41] = arg_21_0.enterVersionActivity1_4,
-			[ActivityEnum.VersionActivityIdDict.Activity1_42] = arg_21_0.enterVersionActivity1_4,
-			[ActivityEnum.VersionActivityIdDict.Activity1_51] = arg_21_0.enterVersionActivity1_5,
-			[ActivityEnum.VersionActivityIdDict.Activity1_52] = arg_21_0.enterVersionActivity1_5,
-			[ActivityEnum.VersionActivityIdDict.Activity1_6] = arg_21_0.enterVersionActivity1_6,
-			[ActivityEnum.VersionActivityIdDict.Activity1_7] = arg_21_0.enterVersionActivity1_7
+function var_0_0.getActivityHandleFunc(arg_23_0, arg_23_1)
+	if not arg_23_0.activityHandleFuncDict then
+		arg_23_0.activityHandleFuncDict = {
+			[ActivityEnum.VersionActivityIdDict.Activity1_1] = arg_23_0.enterVersionActivity1_1,
+			[ActivityEnum.VersionActivityIdDict.Activity1_2] = arg_23_0.enterVersionActivity1_2,
+			[ActivityEnum.VersionActivityIdDict.Activity1_3] = arg_23_0.enterVersionActivity1_3,
+			[ActivityEnum.VersionActivityIdDict.Activity1_41] = arg_23_0.enterVersionActivity1_4,
+			[ActivityEnum.VersionActivityIdDict.Activity1_42] = arg_23_0.enterVersionActivity1_4,
+			[ActivityEnum.VersionActivityIdDict.Activity1_51] = arg_23_0.enterVersionActivity1_5,
+			[ActivityEnum.VersionActivityIdDict.Activity1_52] = arg_23_0.enterVersionActivity1_5,
+			[ActivityEnum.VersionActivityIdDict.Activity1_6] = arg_23_0.enterVersionActivity1_6,
+			[ActivityEnum.VersionActivityIdDict.Activity1_7] = arg_23_0.enterVersionActivity1_7
 		}
 	end
 
-	return arg_21_0.activityHandleFuncDict[arg_21_1] or arg_21_0.commonEnterVersionActivity
+	return arg_23_0.activityHandleFuncDict[arg_23_1] or arg_23_0.commonEnterVersionActivity
 end
 
-function var_0_0.getActivityEnterHandleFunc(arg_22_0, arg_22_1)
-	if not arg_22_0._activityEnterHandleFuncDict then
-		arg_22_0._activityEnterHandleFuncDict = {
+function var_0_0.getActivityEnterHandleFunc(arg_24_0, arg_24_1)
+	if not arg_24_0._activityEnterHandleFuncDict then
+		arg_24_0._activityEnterHandleFuncDict = {
 			[ActivityEnum.VersionActivityIdDict.Activity1_8] = VersionActivity1_8EnterController.instance,
 			[ActivityEnum.VersionActivityIdDict.Activity1_9] = VersionActivity1_9EnterController.instance,
 			[ActivityEnum.VersionActivityIdDict.Activity2_0] = VersionActivity2_0EnterController.instance,
@@ -291,65 +308,65 @@ function var_0_0.getActivityEnterHandleFunc(arg_22_0, arg_22_1)
 		}
 	end
 
-	return arg_22_0._activityEnterHandleFuncDict[arg_22_1]
+	return arg_24_0._activityEnterHandleFuncDict[arg_24_1]
 end
 
-function var_0_0.getCurEnterController(arg_23_0)
-	return arg_23_0:getActivityEnterHandleFunc(arg_23_0.showActivityId)
+function var_0_0.getCurEnterController(arg_25_0)
+	return arg_25_0:getActivityEnterHandleFunc(arg_25_0.showActivityId) or VersionActivityFixedHelper.getVersionActivityEnterController().instance
 end
 
-function var_0_0.enterVersionActivity1_1(arg_24_0)
+function var_0_0.enterVersionActivity1_1(arg_26_0)
 	VersionActivityController.instance:openVersionActivityEnterView()
 end
 
-function var_0_0.enterVersionActivity1_2(arg_25_0)
+function var_0_0.enterVersionActivity1_2(arg_27_0)
 	VersionActivity1_2EnterController.instance:openVersionActivity1_2EnterView()
 end
 
-function var_0_0.enterVersionActivity1_3(arg_26_0)
+function var_0_0.enterVersionActivity1_3(arg_28_0)
 	VersionActivity1_3EnterController.instance:openVersionActivityEnterView()
 end
 
-function var_0_0.enterVersionActivity1_4(arg_27_0)
+function var_0_0.enterVersionActivity1_4(arg_29_0)
 	VersionActivity1_4EnterController.instance:openVersionActivityEnterView()
 end
 
-function var_0_0.enterVersionActivity1_5(arg_28_0)
+function var_0_0.enterVersionActivity1_5(arg_30_0)
 	VersionActivity1_5EnterController.instance:openVersionActivityEnterView()
 end
 
-function var_0_0.enterVersionActivity1_6(arg_29_0)
+function var_0_0.enterVersionActivity1_6(arg_31_0)
 	VersionActivity1_6EnterController.instance:openVersionActivityEnterView(nil, nil, nil, true)
 end
 
-function var_0_0.enterVersionActivity1_7(arg_30_0)
+function var_0_0.enterVersionActivity1_7(arg_32_0)
 	VersionActivity1_7EnterController.instance:openVersionActivityEnterView()
 end
 
-function var_0_0.commonEnterVersionActivity(arg_31_0)
-	arg_31_0:getCurEnterController():openVersionActivityEnterView()
+function var_0_0.commonEnterVersionActivity(arg_33_0)
+	arg_33_0:getCurEnterController():openVersionActivityEnterView()
 end
 
-function var_0_0.onRefreshActivityState(arg_32_0)
-	arg_32_0:refreshUI()
+function var_0_0.onRefreshActivityState(arg_34_0)
+	arg_34_0:refreshUI()
 end
 
-function var_0_0.onUpdateDungeonInfo(arg_33_0)
-	arg_33_0:refreshUI()
+function var_0_0.onUpdateDungeonInfo(arg_35_0)
+	arg_35_0:refreshUI()
 end
 
-function var_0_0.onClose(arg_34_0)
+function var_0_0.onClose(arg_36_0)
 	return
 end
 
-function var_0_0.onDestroyView(arg_35_0)
-	arg_35_0.simageActivityIcon:UnLoadImage()
+function var_0_0.onDestroyView(arg_37_0)
+	arg_37_0.simageActivityIcon:UnLoadImage()
 end
 
-function var_0_0.showKeyTips(arg_36_0)
-	PCInputController.instance:showkeyTips(arg_36_0.pckeyActivityFight, PCInputModel.Activity.MainActivity, PCInputModel.MainActivityFun.activityCenter)
-	PCInputController.instance:showkeyTips(arg_36_0.pckeyEnterFight, PCInputModel.Activity.MainActivity, PCInputModel.MainActivityFun.Enter)
-	PCInputController.instance:showkeyTips(arg_36_0.pckeyNormalFight, PCInputModel.Activity.MainActivity, PCInputModel.MainActivityFun.Enter)
+function var_0_0.showKeyTips(arg_38_0)
+	PCInputController.instance:showkeyTips(arg_38_0.pckeyActivityFight, PCInputModel.Activity.MainActivity, PCInputModel.MainActivityFun.activityCenter)
+	PCInputController.instance:showkeyTips(arg_38_0.pckeyEnterFight, PCInputModel.Activity.MainActivity, PCInputModel.MainActivityFun.Enter)
+	PCInputController.instance:showkeyTips(arg_38_0.pckeyNormalFight, PCInputModel.Activity.MainActivity, PCInputModel.MainActivityFun.Enter)
 end
 
 return var_0_0

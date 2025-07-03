@@ -26,13 +26,13 @@ function var_0_0._respBeginFight(arg_4_0)
 end
 
 function var_0_0._respBeginRound(arg_5_0)
-	local var_5_0 = FightModel.instance:getCurRoundMO()
+	local var_5_0 = FightDataHelper.roundMgr:getRoundData()
 
 	if not var_5_0 then
 		return
 	end
 
-	local var_5_1 = var_5_0.fightStepMOs
+	local var_5_1 = var_5_0.fightStep
 
 	if not var_5_1 or not next(var_5_1) then
 		return
@@ -44,7 +44,7 @@ function var_0_0._respBeginRound(arg_5_0)
 	local var_5_5 = 0
 
 	for iter_5_0 = #var_5_1, 1, -1 do
-		local var_5_6 = var_5_1[iter_5_0].actEffectMOs or {}
+		local var_5_6 = var_5_1[iter_5_0].actEffect or {}
 
 		for iter_5_1 = #var_5_6, 1, -1 do
 			local var_5_7 = var_5_6[iter_5_1]

@@ -1,12 +1,12 @@
 ﻿module("modules.logic.fight.entity.comp.skill.FightTLEventHideScene", package.seeall)
 
-local var_0_0 = class("FightTLEventHideScene")
+local var_0_0 = class("FightTLEventHideScene", FightTimelineTrackItem)
 
-function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 	arg_1_0:_disable()
 end
 
-function var_0_0.handleSkillEventEnd(arg_2_0)
+function var_0_0.onTrackEnd(arg_2_0)
 	arg_2_0:_enable()
 end
 
@@ -28,12 +28,8 @@ function var_0_0._do(arg_5_0, arg_5_1)
 	end
 end
 
-function var_0_0.reset(arg_6_0)
+function var_0_0.onDestructor(arg_6_0)
 	arg_6_0:_enable()
-end
-
-function var_0_0.dispose(arg_7_0)
-	return
 end
 
 return var_0_0

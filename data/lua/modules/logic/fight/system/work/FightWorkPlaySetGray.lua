@@ -3,17 +3,17 @@
 local var_0_0 = class("FightWorkPlaySetGray", FightEffectBase)
 
 function var_0_0.onStart(arg_1_0)
-	if not FightCardDataHelper.cardChangeIsMySide(arg_1_0._actEffectMO) then
+	if not FightCardDataHelper.cardChangeIsMySide(arg_1_0.actEffectData) then
 		arg_1_0:onDone(true)
 
 		return
 	end
 
-	local var_1_0 = arg_1_0._actEffectMO.effectNum
+	local var_1_0 = arg_1_0.actEffectData.effectNum
 	local var_1_1 = FightPlayCardModel.instance:getUsedCards()[var_1_0]
 
 	if var_1_1 then
-		var_1_1:init(arg_1_0._actEffectMO.cardInfo)
+		var_1_1:init(arg_1_0.actEffectData.cardInfo)
 		FightController.instance:dispatchEvent(FightEvent.PlayCardAroundSetGray, var_1_0)
 	end
 

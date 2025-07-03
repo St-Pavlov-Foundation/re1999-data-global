@@ -133,7 +133,11 @@ function var_0_0._refreshRemainDay(arg_11_0)
 		if var_11_0 == StoreEnum.MonthCardStatus.NotPurchase then
 			arg_11_0._txtlefttimetips.text = luaLang("not_purchase")
 		elseif var_11_0 == StoreEnum.MonthCardStatus.NotEnoughOneDay then
-			arg_11_0._txtlefttimetips.text = luaLang("not_enough_one_day") .. (arg_11_0._seasonCardInfo.hasGetBonus and luaLang("today_reward") or "")
+			if arg_11_0._seasonCardInfo.hasGetBonus then
+				arg_11_0._txtlefttimetips.text = luaLang("StoreSeasonCardView_not_enough_one_day")
+			else
+				arg_11_0._txtlefttimetips.text = luaLang("not_enough_one_day")
+			end
 		else
 			arg_11_0._txtlefttimetips.text = formatLuaLang("remain_day", var_11_0) .. (arg_11_0._seasonCardInfo.hasGetBonus and luaLang("today_reward") or "")
 		end

@@ -64,6 +64,10 @@ function var_0_0.setReqFightGroup(arg_6_0, arg_6_1)
 		var_6_0.assistHeroUid = var_6_1.assistHeroUid
 		var_6_0.assistUserId = var_6_1.assistUserId
 
+		if var_6_1.assistBossId then
+			var_6_0.assistBossId = var_6_1.assistBossId
+		end
+
 		return
 	end
 
@@ -489,6 +493,160 @@ function var_0_0.getHeroEquipMoListWithTrial(arg_22_0)
 	end
 
 	return var_22_0, var_22_1
+end
+
+function var_0_0.initTowerFightGroup(arg_23_0, arg_23_1, arg_23_2, arg_23_3, arg_23_4, arg_23_5, arg_23_6)
+	if arg_23_1 then
+		arg_23_0.clothId = arg_23_1
+	end
+
+	if arg_23_6 then
+		arg_23_0.assistBossId = arg_23_6
+	end
+
+	if arg_23_2 then
+		for iter_23_0, iter_23_1 in ipairs(arg_23_2) do
+			if tonumber(iter_23_1) < 0 then
+				local var_23_0 = HeroGroupTrialModel.instance:getById(iter_23_1)
+
+				if var_23_0 then
+					local var_23_1 = var_23_0.trialCo.id > 0 and tostring(-var_23_0.trialCo.id) or "0"
+
+					table.insert(arg_23_0.heroList, var_23_1)
+				end
+			else
+				table.insert(arg_23_0.heroList, iter_23_1)
+			end
+		end
+	end
+
+	if arg_23_3 then
+		for iter_23_2, iter_23_3 in ipairs(arg_23_3) do
+			if tonumber(iter_23_3) < 0 then
+				local var_23_2 = HeroGroupTrialModel.instance:getById(iter_23_3)
+
+				if var_23_2 then
+					local var_23_3 = var_23_2.trialCo.id > 0 and tostring(-var_23_2.trialCo.id) or "0"
+
+					table.insert(arg_23_0.subHeroList, var_23_3)
+				end
+			else
+				table.insert(arg_23_0.subHeroList, iter_23_3)
+			end
+		end
+	end
+
+	if arg_23_4 then
+		for iter_23_4, iter_23_5 in ipairs(arg_23_4) do
+			local var_23_4 = FightDef_pb.FightEquip()
+
+			if tonumber(iter_23_5.heroUid) < 0 then
+				local var_23_5 = HeroGroupTrialModel.instance:getById(iter_23_5.heroUid)
+
+				var_23_4.heroUid = var_23_5 and var_23_5.trialCo.id > 0 and tostring(-var_23_5.trialCo.id) or "0"
+			else
+				var_23_4.heroUid = iter_23_5.heroUid
+			end
+
+			for iter_23_6, iter_23_7 in ipairs(iter_23_5.equipUid) do
+				table.insert(var_23_4.equipUid, iter_23_7)
+			end
+
+			table.insert(arg_23_0.equips, var_23_4)
+		end
+	end
+
+	if arg_23_5 then
+		for iter_23_8, iter_23_9 in ipairs(arg_23_5) do
+			local var_23_6 = FightDef_pb.FightEquip()
+
+			if tonumber(iter_23_9.heroUid) < 0 then
+				local var_23_7 = HeroGroupTrialModel.instance:getById(iter_23_9.heroUid)
+
+				var_23_6.heroUid = var_23_7 and var_23_7.trialCo.id > 0 and tostring(-var_23_7.trialCo.id) or "0"
+			else
+				var_23_6.heroUid = iter_23_9.heroUid
+			end
+
+			if iter_23_9.equipUid then
+				for iter_23_10, iter_23_11 in ipairs(iter_23_9.equipUid) do
+					table.insert(var_23_6.equipUid, iter_23_11)
+				end
+			end
+
+			table.insert(arg_23_0.activity104Equips, var_23_6)
+		end
+	end
+end
+
+function var_0_0.getHeroEquipAndTrialMoList(arg_24_0, arg_24_1)
+	local var_24_0 = {}
+	local var_24_1 = {}
+
+	for iter_24_0, iter_24_1 in ipairs(arg_24_0.equips) do
+		local var_24_2 = iter_24_1.heroUid
+		local var_24_3 = iter_24_1.equipUid[1]
+
+		var_24_1[var_24_2] = EquipModel.instance:getEquip(var_24_3)
+	end
+
+	for iter_24_2, iter_24_3 in ipairs(arg_24_0.mySideUids) do
+		local var_24_4 = HeroModel.instance:getById(iter_24_3)
+
+		if var_24_4 then
+			local var_24_5 = var_24_4.uid
+
+			table.insert(var_24_0, {
+				heroMo = var_24_4,
+				equipMo = var_24_1[var_24_5]
+			})
+		else
+			table.insert(var_24_0, {})
+		end
+	end
+
+	for iter_24_4, iter_24_5 in ipairs(arg_24_0.mySideSubUids) do
+		local var_24_6 = HeroModel.instance:getById(iter_24_5)
+
+		if var_24_6 then
+			local var_24_7 = var_24_6.uid
+
+			table.insert(var_24_0, {
+				heroMo = var_24_6,
+				equipMo = var_24_1[var_24_7]
+			})
+		else
+			table.insert(var_24_0, {})
+		end
+	end
+
+	if arg_24_0.trialHeroList then
+		for iter_24_6, iter_24_7 in ipairs(arg_24_0.trialHeroList) do
+			local var_24_8 = lua_hero_trial.configDict[iter_24_7.trialId][0]
+
+			if var_24_8 and var_24_8.equipId > 0 then
+				local var_24_9 = EquipMO.New()
+
+				var_24_9:initByTrialCO(var_24_8)
+
+				local var_24_10 = HeroMo.New()
+
+				var_24_10:initFromTrial(iter_24_7.trialId)
+				table.insert(var_24_0, iter_24_7.pos, {
+					heroMo = var_24_10,
+					equipMo = var_24_9
+				})
+			end
+		end
+	end
+
+	for iter_24_8 = #var_24_0, 1, -1 do
+		if var_24_0[iter_24_8].heroMo == nil and arg_24_1 then
+			table.remove(var_24_0, iter_24_8)
+		end
+	end
+
+	return var_24_0
 end
 
 return var_0_0

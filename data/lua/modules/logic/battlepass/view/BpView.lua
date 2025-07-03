@@ -23,6 +23,8 @@ function var_0_0.onInitView(arg_1_0)
 	arg_1_0._btnInfo = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_info", AudioEnum.UI.UI_role_introduce_open)
 	arg_1_0._btnRule = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_rule")
 	arg_1_0._btnDetail = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "left/desc/#txt_skinname/#btn_faj", AudioEnum.UI.play_artificial_ui_carddisappear)
+	arg_1_0._goexpup = gohelper.findChild(arg_1_0.viewGO, "right/title/#go_expup")
+	arg_1_0._btntitleClick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "right/title/#btn_titleClick")
 
 	if arg_1_0._editableInitView then
 		arg_1_0:_editableInitView()
@@ -41,6 +43,7 @@ function var_0_0.addEvents(arg_2_0)
 	arg_2_0:addEventCb(BpController.instance, BpEvent.ForcePlayBonusAnim, arg_2_0._forcePlayBonusAnim, arg_2_0)
 	arg_2_0.viewContainer:registerCallback(ViewEvent.ToSwitchTab, arg_2_0._toSwitchTab, arg_2_0)
 	arg_2_0.viewContainer:registerCallback(BpEvent.TaskTabChange, arg_2_0._taskTabChange, arg_2_0)
+	arg_2_0._btntitleClick:AddClickListener(arg_2_0._btntitleClickOnClick, arg_2_0)
 end
 
 function var_0_0.removeEvents(arg_3_0)
@@ -55,6 +58,7 @@ function var_0_0.removeEvents(arg_3_0)
 	arg_3_0:removeEventCb(BpController.instance, BpEvent.ForcePlayBonusAnim, arg_3_0._forcePlayBonusAnim, arg_3_0)
 	arg_3_0.viewContainer:unregisterCallback(ViewEvent.ToSwitchTab, arg_3_0._toSwitchTab, arg_3_0)
 	arg_3_0.viewContainer:unregisterCallback(BpEvent.TaskTabChange, arg_3_0._taskTabChange, arg_3_0)
+	arg_3_0._btntitleClick:RemoveClickListener()
 end
 
 function var_0_0._editableInitView(arg_4_0)
@@ -90,6 +94,7 @@ function var_0_0._editableInitView(arg_4_0)
 	RedDotController.instance:addRedDot(arg_4_0._taskRedDot, RedDotEnum.DotNode.BattlePassTaskMain)
 	RedDotController.instance:addRedDot(arg_4_0._bonusRedDot, RedDotEnum.DotNode.BattlePassBonus)
 	arg_4_0:_initToggle()
+	gohelper.setActive(arg_4_0._goexpup, BpModel.instance:isShowExpUp())
 end
 
 function var_0_0._forcePlayBonusAnim(arg_5_0)
@@ -201,7 +206,7 @@ function var_0_0._updateLevelScore(arg_18_0, arg_18_1)
 	local var_18_1 = math.floor(BpModel.instance.score / var_18_0)
 	local var_18_2 = BpModel.instance.score % var_18_0
 	local var_18_3 = BpModel.instance.weeklyScore
-	local var_18_4 = CommonConfig.instance:getConstNum(ConstEnum.BpWeeklyMaxScore)
+	local var_18_4 = BpModel.instance:getWeeklyMaxScore()
 
 	arg_18_0._txtLevel.text = var_18_1
 	arg_18_0._txtScore.text = var_18_2 .. "/" .. var_18_0
@@ -245,6 +250,12 @@ function var_0_0.setSliderValue(arg_19_0, arg_19_1)
 	arg_19_0._sliderScore:SetValue(arg_19_1)
 
 	arg_19_0._sliderImage.fillAmount = arg_19_1
+end
+
+function var_0_0._btntitleClickOnClick(arg_20_0)
+	if BpModel.instance:isShowExpUp() then
+		ToastController.instance:showToast(ToastEnum.BpExpUp)
+	end
 end
 
 return var_0_0

@@ -101,7 +101,9 @@ function var_0_0.addSelf(arg_8_0)
 		return var_8_0
 	end
 
-	EquipController.instance:dispatchEvent(EquipEvent.onAddEquipToPlayEffect, arg_8_0._mo.uid)
+	EquipController.instance:dispatchEvent(EquipEvent.onAddEquipToPlayEffect, {
+		arg_8_0._mo.uid
+	})
 
 	return var_8_0
 end

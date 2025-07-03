@@ -10,7 +10,7 @@ function var_0_0.onInitView(arg_1_0)
 	arg_1_0._ani:Play("idle", nil, nil)
 end
 
-function var_0_0.onRefreshViewParam(arg_2_0, arg_2_1)
+function var_0_0.onConstructor(arg_2_0, arg_2_1)
 	arg_2_0._entityId = arg_2_1
 end
 

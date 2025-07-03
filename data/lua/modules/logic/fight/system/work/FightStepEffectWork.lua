@@ -3,7 +3,7 @@
 local var_0_0 = class("FightStepEffectWork", BaseWork)
 
 function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0._fightStepMO = arg_1_1
+	arg_1_0.fightStepData = arg_1_1
 	arg_1_0._workFlow = nil
 end
 

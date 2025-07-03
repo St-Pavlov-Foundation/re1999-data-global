@@ -3,7 +3,7 @@
 local var_0_0 = class("FightWorkSaveFightRecordUpdate", FightEffectBase)
 
 function var_0_0.beforePlayEffectData(arg_1_0)
-	local var_1_0 = arg_1_0._actEffectMO.entityMO and arg_1_0._actEffectMO.entityMO.uid
+	local var_1_0 = arg_1_0.actEffectData.entity and arg_1_0.actEffectData.entity.uid
 	local var_1_1 = var_1_0 and FightHelper.getEntity(var_1_0)
 	local var_1_2 = var_1_1 and var_1_1:getMO()
 
@@ -11,7 +11,7 @@ function var_0_0.beforePlayEffectData(arg_1_0)
 end
 
 function var_0_0.onStart(arg_2_0)
-	local var_2_0 = arg_2_0._actEffectMO.entityMO and arg_2_0._actEffectMO.entityMO.uid
+	local var_2_0 = arg_2_0.actEffectData.entity and arg_2_0.actEffectData.entity.uid
 	local var_2_1 = var_2_0 and FightHelper.getEntity(var_2_0)
 
 	if not var_2_1 then

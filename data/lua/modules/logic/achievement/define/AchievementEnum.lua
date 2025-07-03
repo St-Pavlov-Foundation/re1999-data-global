@@ -56,6 +56,26 @@ var_0_0.GroupParamType = {
 	Player = 1,
 	List = 2
 }
+var_0_0.SpGroupType = {
+	Tower = 6,
+	Journey = 1,
+	Room = 3,
+	BossRush = 5,
+	Explore = 4,
+	WeekWalk = 2
+}
+var_0_0.SpGroupNameLangId = {
+	[var_0_0.SpGroupType.Journey] = "achievementmainview_spgroup_journey",
+	[var_0_0.SpGroupType.WeekWalk] = "achievementmainview_spgroup_weekwalk",
+	[var_0_0.SpGroupType.Room] = "achievementmainview_spgroup_room",
+	[var_0_0.SpGroupType.Explore] = "achievementmainview_spgroup_explore",
+	[var_0_0.SpGroupType.BossRush] = "achievementmainview_spgroup_bossrush",
+	[var_0_0.SpGroupType.Tower] = "achievementmainview_spgroup_tower"
+}
+var_0_0.MainTileGroupItemHeight = 460
+var_0_0.MainTileLineItemHeight = 300
+var_0_0.SpGroupTitleBarHeight = 74
+var_0_0.MainSpGroupLineCount = 5
 var_0_0.MainListLineCount = 5
 var_0_0.ShowMaxSingleCount = 6
 var_0_0.ShowMaxGroupCount = 1

@@ -13,7 +13,7 @@ function var_0_0.onStart(arg_1_0)
 	local var_1_2 = {}
 
 	for iter_1_0, iter_1_1 in ipairs(var_1_0) do
-		local var_1_3 = iter_1_1.effect
+		local var_1_3 = iter_1_1.actEffectData
 		local var_1_4 = var_1_3.buff
 
 		if var_1_4 then
@@ -37,8 +37,8 @@ function var_0_0.onStart(arg_1_0)
 
 	for iter_1_2, iter_1_3 in pairs(var_1_2) do
 		for iter_1_4, iter_1_5 in ipairs(iter_1_3) do
-			local var_1_9 = iter_1_5.stepMO
-			local var_1_10 = iter_1_5.effect
+			local var_1_9 = iter_1_5.fightStepData
+			local var_1_10 = iter_1_5.actEffectData
 			local var_1_11 = var_1_10.buff.buffId
 			local var_1_12 = lua_skill_buff.configDict[var_1_11]
 			local var_1_13 = lua_skill_bufftype.configDict[var_1_12.typeId]

@@ -144,4 +144,10 @@ function var_0_0.getAchievementType(arg_16_0)
 	return arg_16_0._achievementType
 end
 
+function var_0_0.getGroupId(arg_17_0)
+	local var_17_0 = AchievementConfig.instance:getAchievement(arg_17_0.id)
+
+	return var_17_0 and var_17_0.groupId
+end
+
 return var_0_0

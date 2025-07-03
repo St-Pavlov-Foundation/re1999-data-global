@@ -5,26 +5,26 @@
   },
   {
     "groupId": 1002,
-    "unlock": 172800
+    "unlock": 86400
   },
   {
     "groupId": 1003,
-    "unlock": 345600
+    "unlock": 172800
   },
   {
     "groupId": 1004,
-    "unlock": 518400
+    "unlock": 259200
   },
   {
     "groupId": 1005,
-    "unlock": 691200
+    "unlock": 345600
   },
   {
     "groupId": 1006,
-    "unlock": 864000
+    "unlock": 432000
   },
   {
     "groupId": 1007,
-    "unlock": 1036800
+    "unlock": 518400
   }
 ]

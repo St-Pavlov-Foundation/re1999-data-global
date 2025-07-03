@@ -659,337 +659,341 @@ function var_0_0._updateDecorateDefault(arg_32_0)
 
 	gohelper.setActive(arg_32_0._gotypebg7, false)
 	gohelper.setActive(arg_32_0._gotypebg1, true)
-	arg_32_0._simagetypebg1:LoadImage(ResUrl.getDecorateStoreImg(var_32_1.biglmg))
+	arg_32_0._simagetypebg1:LoadImage(ResUrl.getDecorateStoreImg(var_32_1.biglmg), arg_32_0._onType1ImageLoaded, arg_32_0)
 end
 
-function var_0_0._checkEffectBigImg(arg_33_0, arg_33_1)
-	if not arg_33_1 then
-		local var_33_0 = DecorateStoreModel.instance:getCurGood(arg_33_0._selectSecondTabId)
+function var_0_0._onType1ImageLoaded(arg_33_0)
+	arg_33_0._simagetypebg1.gameObject:GetComponent(gohelper.Type_Image):SetNativeSize()
+end
 
-		arg_33_1 = DecorateStoreConfig.instance:getDecorateConfig(var_33_0)
+function var_0_0._checkEffectBigImg(arg_34_0, arg_34_1)
+	if not arg_34_1 then
+		local var_34_0 = DecorateStoreModel.instance:getCurGood(arg_34_0._selectSecondTabId)
+
+		arg_34_1 = DecorateStoreConfig.instance:getDecorateConfig(var_34_0)
 	end
 
-	return arg_33_1 and arg_33_1.effectbiglmg == 1
+	return arg_34_1 and arg_34_1.effectbiglmg == 1
 end
 
-function var_0_0._hideDecorateSkin(arg_34_0)
-	gohelper.setActive(arg_34_0._gotype2, false)
-	gohelper.setActive(arg_34_0._btnswitch.gameObject, false)
-	gohelper.setActive(arg_34_0._godynamiccontainer, false)
-	gohelper.setActive(arg_34_0._gotypebg2, false)
-	gohelper.setActive(arg_34_0._gotype2, false)
+function var_0_0._hideDecorateSkin(arg_35_0)
+	gohelper.setActive(arg_35_0._gotype2, false)
+	gohelper.setActive(arg_35_0._btnswitch.gameObject, false)
+	gohelper.setActive(arg_35_0._godynamiccontainer, false)
+	gohelper.setActive(arg_35_0._gotypebg2, false)
+	gohelper.setActive(arg_35_0._gotype2, false)
 end
 
-function var_0_0._updateDecorateSkin(arg_35_0)
-	gohelper.setActive(arg_35_0._btnswitch.gameObject, true)
-	gohelper.setActive(arg_35_0._godynamiccontainer, true)
-	gohelper.setActive(arg_35_0._gotypebg2, true)
-	gohelper.setActive(arg_35_0._gotype2, true)
+function var_0_0._updateDecorateSkin(arg_36_0)
+	gohelper.setActive(arg_36_0._btnswitch.gameObject, true)
+	gohelper.setActive(arg_36_0._godynamiccontainer, true)
+	gohelper.setActive(arg_36_0._gotypebg2, true)
+	gohelper.setActive(arg_36_0._gotype2, true)
 
-	local var_35_0 = DecorateStoreModel.instance:getCurGood(arg_35_0._selectSecondTabId)
-	local var_35_1 = StoreModel.instance:getGoodsMO(var_35_0)
-	local var_35_2 = string.splitToNumber(var_35_1.config.product, "#")
+	local var_36_0 = DecorateStoreModel.instance:getCurGood(arg_36_0._selectSecondTabId)
+	local var_36_1 = StoreModel.instance:getGoodsMO(var_36_0)
+	local var_36_2 = string.splitToNumber(var_36_1.config.product, "#")
 
-	arg_35_0._skinCo = SkinConfig.instance:getSkinCo(var_35_2[2])
+	arg_36_0._skinCo = SkinConfig.instance:getSkinCo(var_36_2[2])
 
-	local var_35_3 = lua_character.configDict[arg_35_0._skinCo.characterId]
+	local var_36_3 = lua_character.configDict[arg_36_0._skinCo.characterId]
 
-	arg_35_0._txtrolename.text = var_35_3.name
+	arg_36_0._txtrolename.text = var_36_3.name
 
-	arg_35_0._simagesignature:LoadImage(ResUrl.getSignature(var_35_3.signature))
-	arg_35_0:_refreshSmallSpine()
-	arg_35_0:_refreshBigSkin()
+	arg_36_0._simagesignature:LoadImage(ResUrl.getSignature(var_36_3.signature))
+	arg_36_0:_refreshSmallSpine()
+	arg_36_0:_refreshBigSkin()
 end
 
-function var_0_0._refreshBigSkin(arg_36_0)
-	if not string.nilorempty(arg_36_0._skinCo.live2dbg) then
-		gohelper.setActive(arg_36_0._simagel2d.gameObject, arg_36_0._showLive2d)
-		gohelper.setActive(arg_36_0._gozs, arg_36_0._showLive2d)
-		arg_36_0._simagel2d:LoadImage(ResUrl.getCharacterSkinLive2dBg(arg_36_0._skinCo.live2dbg))
+function var_0_0._refreshBigSkin(arg_37_0)
+	if not string.nilorempty(arg_37_0._skinCo.live2dbg) then
+		gohelper.setActive(arg_37_0._simagel2d.gameObject, arg_37_0._showLive2d)
+		gohelper.setActive(arg_37_0._gozs, arg_37_0._showLive2d)
+		arg_37_0._simagel2d:LoadImage(ResUrl.getCharacterSkinLive2dBg(arg_37_0._skinCo.live2dbg))
 	else
-		gohelper.setActive(arg_36_0._simagel2d.gameObject, false)
-		gohelper.setActive(arg_36_0._gozs, false)
+		gohelper.setActive(arg_37_0._simagel2d.gameObject, false)
+		gohelper.setActive(arg_37_0._gozs, false)
 	end
 
-	if arg_36_0._showLive2d then
-		if arg_36_0._uiSpine then
-			TaskDispatcher.cancelTask(arg_36_0._playSpineVoice, arg_36_0)
-			arg_36_0._uiSpine:onDestroy()
-			arg_36_0._uiSpine:stopVoice()
+	if arg_37_0._showLive2d then
+		if arg_37_0._uiSpine then
+			TaskDispatcher.cancelTask(arg_37_0._playSpineVoice, arg_37_0)
+			arg_37_0._uiSpine:onDestroy()
+			arg_37_0._uiSpine:stopVoice()
 
-			arg_36_0._uiSpine = nil
+			arg_37_0._uiSpine = nil
 		end
 
-		gohelper.setActive(arg_36_0._gobigspine, true)
+		gohelper.setActive(arg_37_0._gobigspine, true)
 
-		arg_36_0._uiSpine = GuiModelAgent.Create(arg_36_0._gobigspine, true)
+		arg_37_0._uiSpine = GuiModelAgent.Create(arg_37_0._gobigspine, true)
 
-		arg_36_0._uiSpine:setResPath(arg_36_0._skinCo, arg_36_0._onUISpineLoaded, arg_36_0)
+		arg_37_0._uiSpine:setResPath(arg_37_0._skinCo, arg_37_0._onUISpineLoaded, arg_37_0)
 
-		if not string.nilorempty(arg_36_0._skinCo.live2d) then
-			arg_36_0._uiSpine:setLive2dCameraLoadedCallback(arg_36_0._live2DCameraLoaded, arg_36_0)
+		if not string.nilorempty(arg_37_0._skinCo.live2d) then
+			arg_37_0._uiSpine:setLive2dCameraLoadedCallback(arg_37_0._live2DCameraLoaded, arg_37_0)
 		end
 
-		arg_36_0._txtswitch.text = luaLang("storeskinpreviewview_btnswitch")
+		arg_37_0._txtswitch.text = luaLang("storeskinpreviewview_btnswitch")
 	else
-		gohelper.setActive(arg_36_0._gobigspine, false)
-		gohelper.setActive(arg_36_0._simageskin.gameObject, true)
-		arg_36_0._simageskin:LoadImage(ResUrl.getHeadIconImg(arg_36_0._skinCo.id), arg_36_0._loadedImage, arg_36_0)
+		gohelper.setActive(arg_37_0._gobigspine, false)
+		gohelper.setActive(arg_37_0._simageskin.gameObject, true)
+		arg_37_0._simageskin:LoadImage(ResUrl.getHeadIconImg(arg_37_0._skinCo.id), arg_37_0._loadedImage, arg_37_0)
 
-		arg_36_0._txtswitch.text = "L2D"
+		arg_37_0._txtswitch.text = "L2D"
 	end
 end
 
-function var_0_0._loadedImage(arg_37_0)
-	ZProj.UGUIHelper.SetImageSize(arg_37_0._simageskin.gameObject)
+function var_0_0._loadedImage(arg_38_0)
+	ZProj.UGUIHelper.SetImageSize(arg_38_0._simageskin.gameObject)
 
-	local var_37_0 = arg_37_0._skinCo.skinViewImgOffset
+	local var_38_0 = arg_38_0._skinCo.skinViewImgOffset
 
-	if not string.nilorempty(var_37_0) then
-		local var_37_1 = string.splitToNumber(var_37_0, "#")
+	if not string.nilorempty(var_38_0) then
+		local var_38_1 = string.splitToNumber(var_38_0, "#")
 
-		recthelper.setAnchor(arg_37_0._simageskin.transform, tonumber(var_37_1[1]), tonumber(var_37_1[2]))
-		transformhelper.setLocalScale(arg_37_0._simageskin.transform, tonumber(var_37_1[3]), tonumber(var_37_1[3]), tonumber(var_37_1[3]))
+		recthelper.setAnchor(arg_38_0._simageskin.transform, tonumber(var_38_1[1]), tonumber(var_38_1[2]))
+		transformhelper.setLocalScale(arg_38_0._simageskin.transform, tonumber(var_38_1[3]), tonumber(var_38_1[3]), tonumber(var_38_1[3]))
 	else
-		recthelper.setAnchor(arg_37_0._simageskin.transform, -150, -150)
-		transformhelper.setLocalScale(arg_37_0._simageskin.transform, 0.6, 0.6, 0.6)
+		recthelper.setAnchor(arg_38_0._simageskin.transform, -150, -150)
+		transformhelper.setLocalScale(arg_38_0._simageskin.transform, 0.6, 0.6, 0.6)
 	end
 
-	if arg_37_0._adjust then
+	if arg_38_0._adjust then
 		return
 	end
 
-	local var_37_2 = DecorateStoreModel.instance:getCurGood(arg_37_0._selectSecondTabId)
-	local var_37_3 = DecorateStoreConfig.instance:getDecorateConfig(var_37_2)
-	local var_37_4 = string.splitToNumber(var_37_3.decorateskinOffset, "#")
+	local var_38_2 = DecorateStoreModel.instance:getCurGood(arg_38_0._selectSecondTabId)
+	local var_38_3 = DecorateStoreConfig.instance:getDecorateConfig(var_38_2)
+	local var_38_4 = string.splitToNumber(var_38_3.decorateskinOffset, "#")
 
-	recthelper.setAnchor(arg_37_0._goskincontainer.transform, var_37_4[1] or 0, var_37_4[2] or 0)
-	transformhelper.setLocalScale(arg_37_0._goskincontainer.transform, var_37_4[3] or 1, var_37_4[3] or 1, var_37_4[3] or 1)
+	recthelper.setAnchor(arg_38_0._goskincontainer.transform, var_38_4[1] or 0, var_38_4[2] or 0)
+	transformhelper.setLocalScale(arg_38_0._goskincontainer.transform, var_38_4[3] or 1, var_38_4[3] or 1, var_38_4[3] or 1)
 end
 
-function var_0_0._live2DCameraLoaded(arg_38_0)
-	gohelper.setAsFirstSibling(arg_38_0._simagel2d.gameObject)
+function var_0_0._live2DCameraLoaded(arg_39_0)
+	gohelper.setAsFirstSibling(arg_39_0._simagel2d.gameObject)
 end
 
-function var_0_0._onUISpineLoaded(arg_39_0)
-	gohelper.setActive(arg_39_0._simageskin.gameObject, false)
-	ZProj.UGUIHelper.SetImageSize(arg_39_0._simageskin.gameObject)
-	arg_39_0._uiSpine:setAllLayer(UnityLayer.SceneEffect)
+function var_0_0._onUISpineLoaded(arg_40_0)
+	gohelper.setActive(arg_40_0._simageskin.gameObject, false)
+	ZProj.UGUIHelper.SetImageSize(arg_40_0._simageskin.gameObject)
+	arg_40_0._uiSpine:setAllLayer(UnityLayer.SceneEffect)
 
-	local var_39_0 = arg_39_0._skinCo.skinViewLive2dOffset
+	local var_40_0 = arg_40_0._skinCo.skinViewLive2dOffset
 
-	if string.nilorempty(var_39_0) then
-		var_39_0 = arg_39_0._skinCo.characterViewOffset
+	if string.nilorempty(var_40_0) then
+		var_40_0 = arg_40_0._skinCo.characterViewOffset
 	end
 
-	local var_39_1 = SkinConfig.instance:getSkinOffset(var_39_0)
+	local var_40_1 = SkinConfig.instance:getSkinOffset(var_40_0)
 
-	recthelper.setAnchor(arg_39_0._gobigspine.transform, tonumber(var_39_1[1]), tonumber(var_39_1[2]))
-	transformhelper.setLocalScale(arg_39_0._gobigspine.transform, tonumber(var_39_1[3]), tonumber(var_39_1[3]), tonumber(var_39_1[3]))
+	recthelper.setAnchor(arg_40_0._gobigspine.transform, tonumber(var_40_1[1]), tonumber(var_40_1[2]))
+	transformhelper.setLocalScale(arg_40_0._gobigspine.transform, tonumber(var_40_1[3]), tonumber(var_40_1[3]), tonumber(var_40_1[3]))
 
-	if arg_39_0._adjust then
+	if arg_40_0._adjust then
 		return
 	end
 
-	local var_39_2 = DecorateStoreModel.instance:getCurGood(arg_39_0._selectSecondTabId)
-	local var_39_3 = DecorateStoreConfig.instance:getDecorateConfig(var_39_2)
-	local var_39_4 = string.splitToNumber(var_39_3.decorateskinl2dOffset, "#")
+	local var_40_2 = DecorateStoreModel.instance:getCurGood(arg_40_0._selectSecondTabId)
+	local var_40_3 = DecorateStoreConfig.instance:getDecorateConfig(var_40_2)
+	local var_40_4 = string.splitToNumber(var_40_3.decorateskinl2dOffset, "#")
 
-	recthelper.setAnchor(arg_39_0._goskincontainer.transform, var_39_4[1] or 0, var_39_4[2] or 0)
-	transformhelper.setLocalScale(arg_39_0._goskincontainer.transform, var_39_4[3] or 1, var_39_4[3] or 1, var_39_4[3] or 1)
+	recthelper.setAnchor(arg_40_0._goskincontainer.transform, var_40_4[1] or 0, var_40_4[2] or 0)
+	transformhelper.setLocalScale(arg_40_0._goskincontainer.transform, var_40_4[3] or 1, var_40_4[3] or 1, var_40_4[3] or 1)
 end
 
-function var_0_0._refreshSmallSpine(arg_40_0)
-	if not arg_40_0._smallSpine then
-		arg_40_0._smallSpine = GuiSpine.Create(arg_40_0._gosmallspine, false)
+function var_0_0._refreshSmallSpine(arg_41_0)
+	if not arg_41_0._smallSpine then
+		arg_41_0._smallSpine = GuiSpine.Create(arg_41_0._gosmallspine, false)
 	end
 
-	arg_40_0._smallSpine:stopVoice()
-	arg_40_0._smallSpine:setResPath(ResUrl.getSpineUIPrefab(arg_40_0._skinCo.spine), nil, nil, true)
+	arg_41_0._smallSpine:stopVoice()
+	arg_41_0._smallSpine:setResPath(ResUrl.getSpineUIPrefab(arg_41_0._skinCo.spine), nil, nil, true)
 
-	local var_40_0 = SkinConfig.instance:getSkinOffset(arg_40_0._skinCo.skinSpineOffset)
+	local var_41_0 = SkinConfig.instance:getSkinOffset(arg_41_0._skinCo.skinSpineOffset)
 
-	recthelper.setAnchor(arg_40_0._gosmallspine.transform, tonumber(var_40_0[1]), tonumber(var_40_0[2]))
-	transformhelper.setLocalScale(arg_40_0._gosmallspine.transform, tonumber(var_40_0[3]), tonumber(var_40_0[3]), tonumber(var_40_0[3]))
+	recthelper.setAnchor(arg_41_0._gosmallspine.transform, tonumber(var_41_0[1]), tonumber(var_41_0[2]))
+	transformhelper.setLocalScale(arg_41_0._gosmallspine.transform, tonumber(var_41_0[3]), tonumber(var_41_0[3]), tonumber(var_41_0[3]))
 end
 
-function var_0_0._hideMainScene(arg_41_0)
-	if not arg_41_0._needShowMainScene then
+function var_0_0._hideMainScene(arg_42_0)
+	if not arg_42_0._needShowMainScene then
 		return
 	end
 
-	arg_41_0._needShowMainScene = false
+	arg_42_0._needShowMainScene = false
 
 	MainSceneSwitchCameraController.instance:hideScene()
 	WeatherController.instance:onSceneShow()
-	gohelper.setActive(arg_41_0._gotype5, false)
-	gohelper.setActive(arg_41_0._rawImage, false)
-	gohelper.setActive(arg_41_0._gotypebg3, false)
+	gohelper.setActive(arg_42_0._gotype5, false)
+	gohelper.setActive(arg_42_0._rawImage, false)
+	gohelper.setActive(arg_42_0._gotypebg3, false)
 end
 
-function var_0_0._updateDecorateMainScene(arg_42_0)
-	arg_42_0._sceneId = arg_42_0:_getMainSceneId()
+function var_0_0._updateDecorateMainScene(arg_43_0)
+	arg_43_0._sceneId = arg_43_0:_getMainSceneId()
 
-	if not arg_42_0._sceneId then
+	if not arg_43_0._sceneId then
 		logError("DecorateStoreView:_updateDecorateMainScene sceneId is nil")
 
 		return
 	end
 
-	gohelper.setActive(arg_42_0._gotypebg3, false)
+	gohelper.setActive(arg_43_0._gotypebg3, false)
 
-	arg_42_0._needShowMainScene = true
+	arg_43_0._needShowMainScene = true
 
-	gohelper.setActive(arg_42_0._rawImage, false)
+	gohelper.setActive(arg_43_0._rawImage, false)
 	WeatherController.instance:onSceneHide()
-	MainSceneSwitchCameraController.instance:showScene(arg_42_0._sceneId, arg_42_0._showSceneFinished, arg_42_0)
+	MainSceneSwitchCameraController.instance:showScene(arg_43_0._sceneId, arg_43_0._showSceneFinished, arg_43_0)
 end
 
-function var_0_0._getMainSceneId(arg_43_0)
-	local var_43_0 = DecorateStoreModel.instance:getCurGood(arg_43_0._selectSecondTabId)
-	local var_43_1 = var_43_0 and lua_store_goods.configDict[var_43_0]
-	local var_43_2 = var_43_1 and var_43_1.product
+function var_0_0._getMainSceneId(arg_44_0)
+	local var_44_0 = DecorateStoreModel.instance:getCurGood(arg_44_0._selectSecondTabId)
+	local var_44_1 = var_44_0 and lua_store_goods.configDict[var_44_0]
+	local var_44_2 = var_44_1 and var_44_1.product
 
-	if not var_43_2 then
+	if not var_44_2 then
 		return nil
 	end
 
-	for iter_43_0, iter_43_1 in ipairs(lua_scene_switch.configList) do
-		if string.find(var_43_2, iter_43_1.itemId) then
-			return iter_43_1.id
+	for iter_44_0, iter_44_1 in ipairs(lua_scene_switch.configList) do
+		if string.find(var_44_2, iter_44_1.itemId) then
+			return iter_44_1.id
 		end
 	end
 
 	return nil
 end
 
-function var_0_0._showSceneFinished(arg_44_0, arg_44_1)
-	gohelper.setActive(arg_44_0._gotype5, true)
+function var_0_0._showSceneFinished(arg_45_0, arg_45_1)
+	gohelper.setActive(arg_45_0._gotype5, true)
 
-	if not arg_44_0._weatherSwitchControlComp then
-		arg_44_0._weatherSwitchControlComp = MonoHelper.addNoUpdateLuaComOnceToGo(arg_44_0._gotype5, WeatherSwitchControlComp)
-		arg_44_0._rawImage = gohelper.onceAddComponent(gohelper.findChild(arg_44_0.viewGO, "Bg/typebg/#go_typebg3/mainscenebg"), gohelper.Type_RawImage)
+	if not arg_45_0._weatherSwitchControlComp then
+		arg_45_0._weatherSwitchControlComp = MonoHelper.addNoUpdateLuaComOnceToGo(arg_45_0._gotype5, WeatherSwitchControlComp)
+		arg_45_0._rawImage = gohelper.onceAddComponent(gohelper.findChild(arg_45_0.viewGO, "Bg/typebg/#go_typebg3/mainscenebg"), gohelper.Type_RawImage)
 	end
 
-	gohelper.setActive(arg_44_0._rawImage, true)
-	gohelper.setActive(arg_44_0._gotypebg3, true)
-	MainSceneSwitchInfoDisplayView.adjustRt(arg_44_0._rawImage, arg_44_1)
-	arg_44_0._weatherSwitchControlComp:updateScene(arg_44_0._sceneId, MainSceneSwitchCameraDisplayController.instance)
+	gohelper.setActive(arg_45_0._rawImage, true)
+	gohelper.setActive(arg_45_0._gotypebg3, true)
+	MainSceneSwitchInfoDisplayView.adjustRt(arg_45_0._rawImage, arg_45_1)
+	arg_45_0._weatherSwitchControlComp:updateScene(arg_45_0._sceneId, MainSceneSwitchCameraDisplayController.instance)
 end
 
-function var_0_0._hideDecorateSelfCard(arg_45_0)
-	gohelper.setActive(arg_45_0._gotypebg5, false)
+function var_0_0._hideDecorateSelfCard(arg_46_0)
+	gohelper.setActive(arg_46_0._gotypebg5, false)
 
-	if arg_45_0._viewGo then
-		gohelper.destroy(arg_45_0._viewGo)
+	if arg_46_0._viewGo then
+		gohelper.destroy(arg_46_0._viewGo)
 
-		arg_45_0._viewGo = nil
+		arg_46_0._viewGo = nil
 	end
 
-	if arg_45_0._viewCls then
-		arg_45_0._viewCls:onCloseInternal()
+	if arg_46_0._viewCls then
+		arg_46_0._viewCls:onCloseInternal()
 
-		arg_45_0._viewCls = nil
+		arg_46_0._viewCls = nil
 	end
 
-	if arg_45_0._cardLoader then
-		arg_45_0._cardLoader:dispose()
+	if arg_46_0._cardLoader then
+		arg_46_0._cardLoader:dispose()
 
-		arg_45_0._cardLoader = nil
+		arg_46_0._cardLoader = nil
 	end
 end
 
-function var_0_0._updateDecorateSelfCard(arg_46_0)
-	local var_46_0 = DecorateStoreModel.instance:getCurGood(arg_46_0._selectSecondTabId)
-	local var_46_1 = StoreModel.instance:getGoodsMO(var_46_0)
-	local var_46_2 = string.splitToNumber(var_46_1.config.product, "#")
-	local var_46_3 = string.format("playercardview_%s", var_46_2[2])
-
-	arg_46_0._cardPath = string.format("ui/viewres/player/playercard/%s.prefab", var_46_3)
-	arg_46_0._cardLoader = MultiAbLoader.New()
-
-	arg_46_0._cardLoader:addPath(arg_46_0._cardPath)
-	arg_46_0._cardLoader:startLoad(arg_46_0._onCardLoadFinish, arg_46_0)
-end
-
-function var_0_0._onCardLoadFinish(arg_47_0)
+function var_0_0._updateDecorateSelfCard(arg_47_0)
 	local var_47_0 = DecorateStoreModel.instance:getCurGood(arg_47_0._selectSecondTabId)
 	local var_47_1 = StoreModel.instance:getGoodsMO(var_47_0)
 	local var_47_2 = string.splitToNumber(var_47_1.config.product, "#")
+	local var_47_3 = string.format("playercardview_%s", var_47_2[2])
 
-	gohelper.setActive(arg_47_0._gotypebg5, true)
+	arg_47_0._cardPath = string.format("ui/viewres/player/playercard/%s.prefab", var_47_3)
+	arg_47_0._cardLoader = MultiAbLoader.New()
 
-	local var_47_3 = arg_47_0._cardLoader:getAssetItem(arg_47_0._cardPath):GetResource(arg_47_0._cardPath)
+	arg_47_0._cardLoader:addPath(arg_47_0._cardPath)
+	arg_47_0._cardLoader:startLoad(arg_47_0._onCardLoadFinish, arg_47_0)
+end
 
-	arg_47_0._viewGo = arg_47_0._viewGo or gohelper.clone(var_47_3, arg_47_0._gotypebg5)
-	arg_47_0._viewCls = arg_47_0._viewCls or MonoHelper.addNoUpdateLuaComOnceToGo(arg_47_0._viewGo, StorePlayerCardView)
-	arg_47_0._viewCls.viewParam = {
+function var_0_0._onCardLoadFinish(arg_48_0)
+	local var_48_0 = DecorateStoreModel.instance:getCurGood(arg_48_0._selectSecondTabId)
+	local var_48_1 = StoreModel.instance:getGoodsMO(var_48_0)
+	local var_48_2 = string.splitToNumber(var_48_1.config.product, "#")
+
+	gohelper.setActive(arg_48_0._gotypebg5, true)
+
+	local var_48_3 = arg_48_0._cardLoader:getAssetItem(arg_48_0._cardPath):GetResource(arg_48_0._cardPath)
+
+	arg_48_0._viewGo = arg_48_0._viewGo or gohelper.clone(var_48_3, arg_48_0._gotypebg5)
+	arg_48_0._viewCls = arg_48_0._viewCls or MonoHelper.addNoUpdateLuaComOnceToGo(arg_48_0._viewGo, StorePlayerCardView)
+	arg_48_0._viewCls.viewParam = {
 		userId = PlayerModel.instance:getPlayinfo().userId
 	}
-	arg_47_0._viewCls.viewContainer = arg_47_0.viewContainer
+	arg_48_0._viewCls.viewContainer = arg_48_0.viewContainer
 
-	local var_47_4 = DecorateStoreConfig.instance:getDecorateConfig(var_47_0).showskinId
+	local var_48_4 = DecorateStoreConfig.instance:getDecorateConfig(var_48_0).showskinId
 
-	arg_47_0._viewCls:onOpen(var_47_4, var_47_2[2])
-	arg_47_0._viewCls:backBottomView()
+	arg_48_0._viewCls:onOpen(var_48_4, var_48_2[2])
+	arg_48_0._viewCls:backBottomView()
 end
 
-function var_0_0._hideDecorateBuildingVideo(arg_48_0)
-	gohelper.setActive(arg_48_0._gotypebg6, false)
+function var_0_0._hideDecorateBuildingVideo(arg_49_0)
+	gohelper.setActive(arg_49_0._gotypebg6, false)
 
-	if arg_48_0._videoPlayer then
-		arg_48_0._videoPlayer:Clear()
+	if arg_49_0._videoPlayer then
+		arg_49_0._videoPlayer:Clear()
 
-		arg_48_0._videoPlayer = nil
+		arg_49_0._videoPlayer = nil
 	end
 end
 
-function var_0_0._updateDecorateBuildingVideo(arg_49_0)
-	gohelper.setActive(arg_49_0._gotypebg6, true)
+function var_0_0._updateDecorateBuildingVideo(arg_50_0)
+	gohelper.setActive(arg_50_0._gotypebg6, true)
 
-	if not arg_49_0._videoPlayer then
-		local var_49_0 = gohelper.findChild(arg_49_0._gotypebg6, "#go_video")
+	if not arg_50_0._videoPlayer then
+		local var_50_0 = gohelper.findChild(arg_50_0._gotypebg6, "#go_video")
 
-		arg_49_0._videoPlayer, arg_49_0._displauUGUI = AvProMgr.instance:getVideoPlayer(var_49_0)
+		arg_50_0._videoPlayer, arg_50_0._displauUGUI = AvProMgr.instance:getVideoPlayer(var_50_0)
 	end
 
-	local var_49_1 = DecorateStoreModel.instance:getCurGood(arg_49_0._selectSecondTabId)
-	local var_49_2 = DecorateStoreConfig.instance:getDecorateConfig(var_49_1)
+	local var_50_1 = DecorateStoreModel.instance:getCurGood(arg_50_0._selectSecondTabId)
+	local var_50_2 = DecorateStoreConfig.instance:getDecorateConfig(var_50_1)
 
-	arg_49_0._videoPlayer:Play(arg_49_0._displauUGUI, langVideoUrl(var_49_2.video), true, nil, nil)
+	arg_50_0._videoPlayer:Play(arg_50_0._displauUGUI, langVideoUrl(var_50_2.video), true, nil, nil)
 end
 
-function var_0_0.onClose(arg_50_0)
+function var_0_0.onClose(arg_51_0)
 	UIBlockMgr.instance:endBlock("decorateswitch")
 	UIBlockMgr.instance:endBlock("decoratehide")
-	TaskDispatcher.cancelTask(arg_50_0._switchTabRefresh, arg_50_0)
-	TaskDispatcher.cancelTask(arg_50_0._startDefaultShowView, arg_50_0)
-	TaskDispatcher.cancelTask(arg_50_0._startGoodIn, arg_50_0)
-	arg_50_0:_removeEvents()
-	arg_50_0:_hideMainScene()
+	TaskDispatcher.cancelTask(arg_51_0._switchTabRefresh, arg_51_0)
+	TaskDispatcher.cancelTask(arg_51_0._startDefaultShowView, arg_51_0)
+	TaskDispatcher.cancelTask(arg_51_0._startGoodIn, arg_51_0)
+	arg_51_0:_removeEvents()
+	arg_51_0:_hideMainScene()
 end
 
-function var_0_0.onDestroyView(arg_51_0)
+function var_0_0.onDestroyView(arg_52_0)
 	MainSceneSwitchCameraController.instance:clear()
 
-	if arg_51_0._goodItems then
-		for iter_51_0, iter_51_1 in pairs(arg_51_0._goodItems) do
-			for iter_51_2, iter_51_3 in pairs(iter_51_1) do
-				for iter_51_4, iter_51_5 in pairs(iter_51_3) do
-					iter_51_5:destroy()
+	if arg_52_0._goodItems then
+		for iter_52_0, iter_52_1 in pairs(arg_52_0._goodItems) do
+			for iter_52_2, iter_52_3 in pairs(iter_52_1) do
+				for iter_52_4, iter_52_5 in pairs(iter_52_3) do
+					iter_52_5:destroy()
 				end
 			end
 		end
 
-		arg_51_0._goodItems = nil
+		arg_52_0._goodItems = nil
 	end
 
-	if arg_51_0._categoryItemContainer and #arg_51_0._categoryItemContainer > 0 then
-		for iter_51_6 = 1, #arg_51_0._categoryItemContainer do
-			arg_51_0._categoryItemContainer[iter_51_6].btn:RemoveClickListener()
+	if arg_52_0._categoryItemContainer and #arg_52_0._categoryItemContainer > 0 then
+		for iter_52_6 = 1, #arg_52_0._categoryItemContainer do
+			arg_52_0._categoryItemContainer[iter_52_6].btn:RemoveClickListener()
 		end
 
-		arg_51_0._categoryItemContainer = nil
+		arg_52_0._categoryItemContainer = nil
 	end
 end
 

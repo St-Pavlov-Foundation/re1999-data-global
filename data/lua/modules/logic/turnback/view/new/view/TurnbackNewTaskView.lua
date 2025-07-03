@@ -4,6 +4,10 @@ local var_0_0 = class("TurnbackNewTaskView", BaseView)
 
 function var_0_0.onInitView(arg_1_0)
 	arg_1_0._btnreplay = gohelper.findChildButton(arg_1_0.viewGO, "top/#btn_replay")
+	arg_1_0._btnreplay2 = gohelper.findChildButton(arg_1_0.viewGO, "top/#btn_replay2")
+	arg_1_0._btntips = gohelper.findChildButton(arg_1_0.viewGO, "top/tips/#btn_tips")
+	arg_1_0._btnclosetips = gohelper.findChildButton(arg_1_0.viewGO, "top/tips/go_tips/#btn_close")
+	arg_1_0._gotips = gohelper.findChild(arg_1_0.viewGO, "top/tips/go_tips")
 	arg_1_0._btnbuy = gohelper.findChildButton(arg_1_0.viewGO, "top/normalbg/#btn_buy")
 	arg_1_0._gotop = gohelper.findChild(arg_1_0.viewGO, "top")
 	arg_1_0._goright = gohelper.findChild(arg_1_0.viewGO, "right")
@@ -32,6 +36,7 @@ function var_0_0.onInitView(arg_1_0)
 	arg_1_0._heroIndex = 1
 	arg_1_0._isreverse = false
 	arg_1_0._isfinish = false
+	arg_1_0._isopentips = false
 	arg_1_0._topAnimator = arg_1_0._gotop:GetComponent(typeof(UnityEngine.Animator))
 	arg_1_0._rightAnimator = arg_1_0._goright:GetComponent(typeof(UnityEngine.Animator))
 	arg_1_0._rightTextAnim = arg_1_0._goscrolldesc:GetComponent(typeof(UnityEngine.Animation))
@@ -45,6 +50,9 @@ end
 
 function var_0_0.addEvents(arg_2_0)
 	arg_2_0._btnreplay:AddClickListener(arg_2_0.onClickReplay, arg_2_0)
+	arg_2_0._btnreplay2:AddClickListener(arg_2_0.onClickReplay2, arg_2_0)
+	arg_2_0._btntips:AddClickListener(arg_2_0.onClickBtnTips, arg_2_0)
+	arg_2_0._btnclosetips:AddClickListener(arg_2_0.onClickBtnCloseTips, arg_2_0)
 	arg_2_0._btnbuy:AddClickListener(arg_2_0.onClickBuy, arg_2_0)
 	arg_2_0._btnleft:AddClickListener(arg_2_0.onClickLeft, arg_2_0)
 	arg_2_0._btnright:AddClickListener(arg_2_0.onClickRight, arg_2_0)
@@ -59,6 +67,9 @@ end
 
 function var_0_0.removeEvents(arg_3_0)
 	arg_3_0._btnreplay:RemoveClickListener()
+	arg_3_0._btnreplay2:RemoveClickListener()
+	arg_3_0._btntips:RemoveClickListener()
+	arg_3_0._btnclosetips:RemoveClickListener()
 	arg_3_0._btnbuy:RemoveClickListener()
 	arg_3_0._btnleft:RemoveClickListener()
 	arg_3_0._btnright:RemoveClickListener()
@@ -84,10 +95,14 @@ function var_0_0._editableInitView(arg_4_0)
 	arg_4_0:_refreshFill()
 	arg_4_0:refreshTopBg()
 
-	local var_4_0 = TurnbackModel.instance:getUnlockHeroList()
+	local var_4_0 = TurnbackModel.instance:checkHasGetAllTaskReward()
 
-	arg_4_0._heroIndex = #var_4_0
-	arg_4_0._maxUnlockHeroIndex = #var_4_0
+	gohelper.setActive(arg_4_0._btnreplay2.gameObject, var_4_0)
+
+	local var_4_1 = TurnbackModel.instance:getUnlockHeroList()
+
+	arg_4_0._heroIndex = #var_4_1
+	arg_4_0._maxUnlockHeroIndex = #var_4_1
 
 	arg_4_0:_refreshHero()
 
@@ -149,16 +164,20 @@ function var_0_0._refreshUI(arg_8_0)
 		arg_8_0:refreshRewardNode(iter_8_1)
 	end
 
-	if TurnbackModel.instance:checkHasGetAllTaskReward() then
-		local var_8_0 = TurnbackConfig.instance:getTurnbackCo(arg_8_0._turnbackId)
+	local var_8_0 = TurnbackModel.instance:checkHasGetAllTaskReward()
 
-		if var_8_0 and not StoryModel.instance:isStoryFinished(var_8_0.endStory) then
-			local var_8_1 = var_8_0.endStory
+	gohelper.setActive(arg_8_0._btnreplay2.gameObject, var_8_0)
 
-			if var_8_1 then
-				StoryController.instance:playStory(var_8_1)
+	if var_8_0 then
+		local var_8_1 = TurnbackConfig.instance:getTurnbackCo(arg_8_0._turnbackId)
+
+		if var_8_1 and not StoryModel.instance:isStoryFinished(var_8_1.endStory) then
+			local var_8_2 = var_8_1.endStory
+
+			if var_8_2 then
+				StoryController.instance:playStory(var_8_2)
 			else
-				logError(string.format("TurnbackTaskView endStoryId is nil", var_8_1))
+				logError(string.format("TurnbackTaskView endStoryId is nil", var_8_2))
 			end
 		end
 	end
@@ -440,162 +459,185 @@ function var_0_0.onClickReplay(arg_19_0)
 	end
 end
 
-function var_0_0.onClickBuy(arg_20_0)
+function var_0_0.onClickReplay2(arg_20_0)
+	local var_20_0 = TurnbackModel.instance:getCurTurnbackMo()
+	local var_20_1 = var_20_0 and var_20_0.config and var_20_0.config.endStory
+
+	if var_20_1 then
+		StoryController.instance:playStory(var_20_1)
+	else
+		logError(string.format("TurnbackRewardShowView startStoryId is nil", var_20_1))
+	end
+end
+
+function var_0_0.onClickBtnTips(arg_21_0)
+	arg_21_0._isopentips = not arg_21_0._isopentips
+
+	gohelper.setActive(arg_21_0._gotips, arg_21_0._isopentips)
+end
+
+function var_0_0.onClickBtnCloseTips(arg_22_0)
+	arg_22_0._isopentips = false
+
+	gohelper.setActive(arg_22_0._gotips, arg_22_0._isopentips)
+end
+
+function var_0_0.onClickBuy(arg_23_0)
 	if not TurnbackModel.instance:getBuyDoubleBonus() then
 		ViewMgr.instance:openView(ViewName.TurnbackDoubleRewardChargeView)
 		StatController.instance:track(StatEnum.EventName.ClickReflowDoubleClaim, {})
 	end
 end
 
-function var_0_0.onClickLeft(arg_21_0)
-	if arg_21_0._heroIndex > 1 then
-		arg_21_0._rightAnimator:Update(0)
-		arg_21_0._rightAnimator:Play("leftout")
-		TaskDispatcher.runDelay(arg_21_0._afterleftout, arg_21_0, 0.3)
+function var_0_0.onClickLeft(arg_24_0)
+	if arg_24_0._heroIndex > 1 then
+		arg_24_0._rightAnimator:Update(0)
+		arg_24_0._rightAnimator:Play("leftout")
+		TaskDispatcher.runDelay(arg_24_0._afterleftout, arg_24_0, 0.3)
 		AudioMgr.instance:trigger(AudioEnum.NewTurnabck.play_ui_call_back_nameplate_switch)
 	end
 end
 
-function var_0_0._afterleftout(arg_22_0)
-	TaskDispatcher.cancelTask(arg_22_0._afterleftout, arg_22_0)
-	arg_22_0._rightAnimator:Update(0)
-	arg_22_0._rightAnimator:Play("leftin")
+function var_0_0._afterleftout(arg_25_0)
+	TaskDispatcher.cancelTask(arg_25_0._afterleftout, arg_25_0)
+	arg_25_0._rightAnimator:Update(0)
+	arg_25_0._rightAnimator:Play("leftin")
 
-	local var_22_0 = TurnbackConfig.instance:getAllTurnbackTaskBonusCo(arg_22_0._turnbackId)
+	local var_25_0 = TurnbackConfig.instance:getAllTurnbackTaskBonusCo(arg_25_0._turnbackId)
 
-	if arg_22_0._heroIndex == #var_22_0 and arg_22_0._isfinish then
-		arg_22_0._isfinish = false
+	if arg_25_0._heroIndex == #var_25_0 and arg_25_0._isfinish then
+		arg_25_0._isfinish = false
 
-		gohelper.setActive(arg_22_0._gofinished, arg_22_0._isfinish)
-		gohelper.setActive(arg_22_0._gounfinish, not arg_22_0._isfinish)
-		gohelper.setActive(arg_22_0._gonumbg, not arg_22_0._isfinish)
-		gohelper.setActive(arg_22_0._gotitlebg, not arg_22_0._isfinish)
-		gohelper.setActive(arg_22_0._btnright.gameObject, not arg_22_0._isfinish)
+		gohelper.setActive(arg_25_0._gofinished, arg_25_0._isfinish)
+		gohelper.setActive(arg_25_0._gounfinish, not arg_25_0._isfinish)
+		gohelper.setActive(arg_25_0._gonumbg, not arg_25_0._isfinish)
+		gohelper.setActive(arg_25_0._gotitlebg, not arg_25_0._isfinish)
+		gohelper.setActive(arg_25_0._btnright.gameObject, not arg_25_0._isfinish)
 	else
-		arg_22_0._heroIndex = arg_22_0._heroIndex - 1
+		arg_25_0._heroIndex = arg_25_0._heroIndex - 1
 
-		arg_22_0:_refreshHero()
+		arg_25_0:_refreshHero()
 	end
 
-	TaskDispatcher.runDelay(arg_22_0._afterleftin, arg_22_0, 0.3)
+	TaskDispatcher.runDelay(arg_25_0._afterleftin, arg_25_0, 0.3)
 end
 
-function var_0_0._afterleftin(arg_23_0)
-	TaskDispatcher.cancelTask(arg_23_0._afterleftin, arg_23_0)
+function var_0_0._afterleftin(arg_26_0)
+	TaskDispatcher.cancelTask(arg_26_0._afterleftin, arg_26_0)
 end
 
-function var_0_0._afterrightout(arg_24_0)
-	TaskDispatcher.cancelTask(arg_24_0._afterrightout, arg_24_0)
-	arg_24_0._rightAnimator:Update(0)
-	arg_24_0._rightAnimator:Play("rightin")
+function var_0_0._afterrightout(arg_27_0)
+	TaskDispatcher.cancelTask(arg_27_0._afterrightout, arg_27_0)
+	arg_27_0._rightAnimator:Update(0)
+	arg_27_0._rightAnimator:Play("rightin")
 
-	local var_24_0 = TurnbackConfig.instance:getAllTurnbackTaskBonusCo(arg_24_0._turnbackId)
+	local var_27_0 = TurnbackConfig.instance:getAllTurnbackTaskBonusCo(arg_27_0._turnbackId)
 
-	if arg_24_0._heroIndex < #var_24_0 then
-		arg_24_0._heroIndex = arg_24_0._heroIndex + 1
+	if arg_27_0._heroIndex < #var_27_0 then
+		arg_27_0._heroIndex = arg_27_0._heroIndex + 1
 
-		arg_24_0:_refreshHero()
+		arg_27_0:_refreshHero()
 	else
-		arg_24_0._isfinish = true
+		arg_27_0._isfinish = true
 
-		gohelper.setActive(arg_24_0._gofinished, arg_24_0._isfinish)
-		gohelper.setActive(arg_24_0._gounfinish, not arg_24_0._isfinish)
-		gohelper.setActive(arg_24_0._gonumbg, not arg_24_0._isfinish)
-		gohelper.setActive(arg_24_0._gotitlebg, not arg_24_0._isfinish)
-		gohelper.setActive(arg_24_0._btnright.gameObject, not arg_24_0._isfinish)
+		gohelper.setActive(arg_27_0._gofinished, arg_27_0._isfinish)
+		gohelper.setActive(arg_27_0._gounfinish, not arg_27_0._isfinish)
+		gohelper.setActive(arg_27_0._gonumbg, not arg_27_0._isfinish)
+		gohelper.setActive(arg_27_0._gotitlebg, not arg_27_0._isfinish)
+		gohelper.setActive(arg_27_0._btnright.gameObject, not arg_27_0._isfinish)
 	end
 
-	TaskDispatcher.runDelay(arg_24_0._afterrightin, arg_24_0, 0.3)
+	TaskDispatcher.runDelay(arg_27_0._afterrightin, arg_27_0, 0.3)
 end
 
-function var_0_0._afterrightin(arg_25_0)
-	TaskDispatcher.cancelTask(arg_25_0._afterrightin, arg_25_0)
+function var_0_0._afterrightin(arg_28_0)
+	TaskDispatcher.cancelTask(arg_28_0._afterrightin, arg_28_0)
 end
 
-function var_0_0.onClickRight(arg_26_0)
-	arg_26_0._rightAnimator:Update(0)
-	arg_26_0._rightAnimator:Play("rightout")
-	TaskDispatcher.runDelay(arg_26_0._afterrightout, arg_26_0, 0.3)
+function var_0_0.onClickRight(arg_29_0)
+	arg_29_0._rightAnimator:Update(0)
+	arg_29_0._rightAnimator:Play("rightout")
+	TaskDispatcher.runDelay(arg_29_0._afterrightout, arg_29_0, 0.3)
 	AudioMgr.instance:trigger(AudioEnum.NewTurnabck.play_ui_call_back_nameplate_switch)
 end
 
-function var_0_0.onCilckReverse(arg_27_0)
-	arg_27_0._isreverse = not arg_27_0._isreverse
+function var_0_0.onCilckReverse(arg_30_0)
+	arg_30_0._isreverse = not arg_30_0._isreverse
 
-	gohelper.setActive(arg_27_0._simageHero.gameObject, not arg_27_0._isreverse)
-	gohelper.setActive(arg_27_0._goscrolldesc, arg_27_0._isreverse)
+	gohelper.setActive(arg_30_0._simageHero.gameObject, not arg_30_0._isreverse)
+	gohelper.setActive(arg_30_0._goscrolldesc, arg_30_0._isreverse)
 	AudioMgr.instance:trigger(AudioEnum.NewTurnabck.play_ui_call_back_nameplate_switch)
 
-	if arg_27_0._isreverse then
-		arg_27_0._rightTextAnim:Play()
+	if arg_30_0._isreverse then
+		arg_30_0._rightTextAnim:Play()
 	end
 end
 
-function var_0_0._playGetRewardFinishAnim(arg_28_0, arg_28_1)
-	if arg_28_1 then
-		arg_28_0.removeIndexTab = {
-			arg_28_1
+function var_0_0._playGetRewardFinishAnim(arg_31_0, arg_31_1)
+	if arg_31_1 then
+		arg_31_0.removeIndexTab = {
+			arg_31_1
 		}
 	end
 
-	TaskDispatcher.runDelay(arg_28_0.delayPlayFinishAnim, arg_28_0, TurnbackEnum.TaskGetAnimTime)
+	TaskDispatcher.runDelay(arg_31_0.delayPlayFinishAnim, arg_31_0, TurnbackEnum.TaskGetAnimTime)
 end
 
-function var_0_0.delayPlayFinishAnim(arg_29_0)
-	arg_29_0._taskAnimRemoveItem:removeByIndexs(arg_29_0.removeIndexTab)
+function var_0_0.delayPlayFinishAnim(arg_32_0)
+	arg_32_0._taskAnimRemoveItem:removeByIndexs(arg_32_0.removeIndexTab)
 end
 
-function var_0_0.succbuydoublereward(arg_30_0)
-	arg_30_0._needPlayAnim = true
+function var_0_0.succbuydoublereward(arg_33_0)
+	arg_33_0._needPlayAnim = true
 end
 
-function var_0_0._afterbuyanim(arg_31_0)
-	arg_31_0._needPlayAnim = false
+function var_0_0._afterbuyanim(arg_34_0)
+	arg_34_0._needPlayAnim = false
 
-	TaskDispatcher.cancelTask(arg_31_0._afterbuyanim, arg_31_0)
-	gohelper.setActive(arg_31_0._gonormal, true)
-	gohelper.setActive(arg_31_0._godouble, true)
-	arg_31_0._topAnimator:Play("unlock")
-	TaskDispatcher.runDelay(arg_31_0._afterunlockanim, arg_31_0, 0.6)
+	TaskDispatcher.cancelTask(arg_34_0._afterbuyanim, arg_34_0)
+	gohelper.setActive(arg_34_0._gonormal, true)
+	gohelper.setActive(arg_34_0._godouble, true)
+	arg_34_0._topAnimator:Play("unlock")
+	TaskDispatcher.runDelay(arg_34_0._afterunlockanim, arg_34_0, 0.6)
 end
 
-function var_0_0._afterunlockanim(arg_32_0)
-	TaskDispatcher.cancelTask(arg_32_0._afterunlockanim, arg_32_0)
-	arg_32_0:refreshTopBg()
-end
-
-function var_0_0._onCloseViewFinish(arg_33_0, arg_33_1)
-	if arg_33_1 == ViewName.CommonPropView then
-		arg_33_0:_refreshUI()
-	end
-
-	if arg_33_0._needPlayAnim then
-		TaskDispatcher.runDelay(arg_33_0._afterbuyanim, arg_33_0, 0.3)
-	end
-end
-
-function var_0_0.onOpen(arg_34_0)
-	local var_34_0 = arg_34_0.viewParam.parent
-
-	gohelper.addChild(var_34_0, arg_34_0.viewGO)
-	AudioMgr.instance:trigger(AudioEnum.NewTurnabck.play_ui_call_back_Interface_entry_01)
-	arg_34_0:refreshTopBg()
-end
-
-function var_0_0.onClose(arg_35_0)
-	TaskDispatcher.cancelTask(arg_35_0._afterbuyanim, arg_35_0)
+function var_0_0._afterunlockanim(arg_35_0)
 	TaskDispatcher.cancelTask(arg_35_0._afterunlockanim, arg_35_0)
-	TaskDispatcher.cancelTask(arg_35_0._afterleftin, arg_35_0)
-	TaskDispatcher.cancelTask(arg_35_0._afterleftout, arg_35_0)
-	TaskDispatcher.cancelTask(arg_35_0._afterrightin, arg_35_0)
-	TaskDispatcher.cancelTask(arg_35_0._afterrightout, arg_35_0)
-	TaskDispatcher.cancelTask(arg_35_0.checkScrollEnd, arg_35_0)
-	TaskDispatcher.cancelTask(arg_35_0.checkTaskScrollEnd, arg_35_0)
-	arg_35_0._simageHero:UnLoadImage()
+	arg_35_0:refreshTopBg()
 end
 
-function var_0_0.onDestroyView(arg_36_0)
-	TaskDispatcher.cancelTask(arg_36_0.delayPlayFinishAnim, arg_36_0)
+function var_0_0._onCloseViewFinish(arg_36_0, arg_36_1)
+	if arg_36_1 == ViewName.CommonPropView then
+		arg_36_0:_refreshUI()
+	end
+
+	if arg_36_0._needPlayAnim then
+		TaskDispatcher.runDelay(arg_36_0._afterbuyanim, arg_36_0, 0.3)
+	end
+end
+
+function var_0_0.onOpen(arg_37_0)
+	local var_37_0 = arg_37_0.viewParam.parent
+
+	gohelper.addChild(var_37_0, arg_37_0.viewGO)
+	AudioMgr.instance:trigger(AudioEnum.NewTurnabck.play_ui_call_back_Interface_entry_01)
+	arg_37_0:refreshTopBg()
+end
+
+function var_0_0.onClose(arg_38_0)
+	TaskDispatcher.cancelTask(arg_38_0._afterbuyanim, arg_38_0)
+	TaskDispatcher.cancelTask(arg_38_0._afterunlockanim, arg_38_0)
+	TaskDispatcher.cancelTask(arg_38_0._afterleftin, arg_38_0)
+	TaskDispatcher.cancelTask(arg_38_0._afterleftout, arg_38_0)
+	TaskDispatcher.cancelTask(arg_38_0._afterrightin, arg_38_0)
+	TaskDispatcher.cancelTask(arg_38_0._afterrightout, arg_38_0)
+	TaskDispatcher.cancelTask(arg_38_0.checkScrollEnd, arg_38_0)
+	TaskDispatcher.cancelTask(arg_38_0.checkTaskScrollEnd, arg_38_0)
+	arg_38_0._simageHero:UnLoadImage()
+end
+
+function var_0_0.onDestroyView(arg_39_0)
+	TaskDispatcher.cancelTask(arg_39_0.delayPlayFinishAnim, arg_39_0)
 end
 
 return var_0_0

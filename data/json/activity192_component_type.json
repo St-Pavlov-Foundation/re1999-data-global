@@ -1,0 +1,42 @@
+[
+  {
+    "id": 1,
+    "name": "起点",
+    "path": "ui/viewres/versionactivity_2_7/v2a7_coopergarland/map/start.prefab"
+  },
+  {
+    "id": 2,
+    "name": "终点",
+    "path": "ui/viewres/versionactivity_2_7/v2a7_coopergarland/map/end.prefab"
+  },
+  {
+    "id": 3,
+    "name": "墙",
+    "path": "ui/viewres/versionactivity_2_7/v2a7_coopergarland/map/wall.prefab"
+  },
+  {
+    "id": 4,
+    "name": "活板门",
+    "path": "ui/viewres/versionactivity_2_7/v2a7_coopergarland/map/door.prefab"
+  },
+  {
+    "id": 5,
+    "name": "活板门开关",
+    "path": "ui/viewres/versionactivity_2_7/v2a7_coopergarland/map/door_sw.prefab"
+  },
+  {
+    "id": 6,
+    "name": "洞",
+    "path": "ui/viewres/versionactivity_2_7/v2a7_coopergarland/map/hole.prefab"
+  },
+  {
+    "id": 7,
+    "name": "尖刺",
+    "path": "ui/viewres/versionactivity_2_7/v2a7_coopergarland/map/spike.prefab"
+  },
+  {
+    "id": 8,
+    "name": "剧情触发器",
+    "path": "ui/viewres/versionactivity_2_7/v2a7_coopergarland/map/story.prefab"
+  }
+]

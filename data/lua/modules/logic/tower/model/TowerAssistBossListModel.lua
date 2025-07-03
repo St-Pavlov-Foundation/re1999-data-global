@@ -100,7 +100,7 @@ function var_0_0.buildBossData(arg_4_0, arg_4_1, arg_4_2)
 	arg_4_2.config = arg_4_1
 	arg_4_2.bossId = arg_4_1.bossId
 	arg_4_2.bossInfo = TowerAssistBossModel.instance:getById(arg_4_1.bossId)
-	arg_4_2.isLock = arg_4_2.bossInfo == nil and 1 or 0
+	arg_4_2.isLock = (arg_4_2.bossInfo == nil or arg_4_2.bossInfo:getTempState()) and 1 or 0
 	arg_4_2.isFromHeroGroup = arg_4_0.isFromHeroGroup
 
 	if arg_4_0.isFromHeroGroup then

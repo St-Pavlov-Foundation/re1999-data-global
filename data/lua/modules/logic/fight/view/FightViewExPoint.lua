@@ -31,30 +31,26 @@ function var_0_0.removeEvents(arg_2_0)
 end
 
 function var_0_0._onStartSequenceFinish(arg_3_0)
-	FightCardModel.instance:applyNextRoundActPoint()
+	return
 end
 
 function var_0_0._onRoundSequenceFinish(arg_4_0)
-	FightCardModel.instance:applyNextRoundActPoint()
+	FightDataHelper.operationDataMgr:applyNextRoundActPoint()
 end
 
-function var_0_0._onMoveHandCard(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	if arg_5_2 == arg_5_3 then
-		return
-	end
-
+function var_0_0._onMoveHandCard(arg_5_0, arg_5_1, arg_5_2)
 	if not arg_5_1.moveCanAddExpoint then
 		return
 	end
 
-	local var_5_0 = FightCardModel.instance:getCardMO().extraMoveAct
+	local var_5_0 = FightDataHelper.operationDataMgr.extraMoveAct
 
 	if var_5_0 > 0 then
-		if var_5_0 < #FightCardModel.instance:getMoveCardOpCostActList() then
-			arg_5_0:_onMoveOrCombine(arg_5_1.uid, true)
+		if var_5_0 < #FightDataHelper.operationDataMgr:getMoveCardOpCostActList() then
+			arg_5_0:_onMoveOrCombine(arg_5_2.uid, true)
 		end
 	else
-		arg_5_0:_onMoveOrCombine(arg_5_1.uid, true)
+		arg_5_0:_onMoveOrCombine(arg_5_2.uid, true)
 	end
 end
 

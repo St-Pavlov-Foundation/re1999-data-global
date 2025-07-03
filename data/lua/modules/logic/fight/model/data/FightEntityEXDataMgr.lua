@@ -1,6 +1,6 @@
 ﻿module("modules.logic.fight.model.data.FightEntityEXDataMgr", package.seeall)
 
-local var_0_0 = FightDataClass("FightEntityEXDataMgr")
+local var_0_0 = FightDataClass("FightEntityEXDataMgr", FightDataMgrBase)
 
 function var_0_0.onConstructor(arg_1_0)
 	arg_1_0._exDataDic = {}

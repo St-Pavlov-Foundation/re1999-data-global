@@ -52,7 +52,7 @@ function var_0_0.playSkillBehavior(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
 		return
 	end
 
-	for iter_3_0, iter_3_1 in ipairs(arg_3_1.actEffectMOs) do
+	for iter_3_0, iter_3_1 in ipairs(arg_3_1.actEffect) do
 		local var_3_1 = iter_3_1.configEffect
 
 		if var_3_1 and var_3_1 > 0 then
@@ -81,7 +81,7 @@ function var_0_0.playSkillBehavior(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
 end
 
 function var_0_0._doSkillBehaviorEffect(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4)
-	local var_4_0 = FightHelper.getEntity(arg_4_2.targetId) or arg_4_2.entityMO and FightHelper.getEntity(arg_4_2.entityMO.id)
+	local var_4_0 = FightHelper.getEntity(arg_4_2.targetId) or arg_4_2.entity and FightHelper.getEntity(arg_4_2.entity.id)
 	local var_4_1 = arg_4_3.effect
 	local var_4_2 = arg_4_3.effectHangPoint
 	local var_4_3 = arg_4_3.audioId
@@ -142,7 +142,7 @@ function var_0_0._doSkillBehaviorEffect(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_
 		local var_4_8 = arg_4_2.targetId
 
 		if arg_4_2.effectType == FightEnum.EffectType.CARDLEVELCHANGE then
-			var_4_8 = arg_4_2.entityMO and arg_4_2.entityMO.uid or arg_4_1.fromId
+			var_4_8 = arg_4_2.entity and arg_4_2.entity.uid or arg_4_1.fromId
 		end
 
 		FightFloatMgr.instance:float(var_4_8, FightEnum.FloatType.buff, arg_4_3.dec, arg_4_3.dec_Type)

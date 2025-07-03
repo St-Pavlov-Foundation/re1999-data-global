@@ -370,17 +370,19 @@ function var_0_0.addSlider(arg_18_0, arg_18_1, arg_18_2, arg_18_3, arg_18_4, arg
 	arg_18_0._setGraphicsColor(var_18_2, arg_18_5)
 	arg_18_0._setRectTransSize(var_18_1, arg_18_5, 600, 80)
 
-	local var_18_3 = SLFramework.UGUI.SliderWrap.GetWithPath(var_18_1, "Slider")
+	local var_18_3 = gohelper.findChildText(var_18_1, "Slider/ValueTxt")
+	local var_18_4 = SLFramework.UGUI.SliderWrap.GetWithPath(var_18_1, "Slider")
 
 	if arg_18_3 and arg_18_4 then
-		var_18_3:AddOnValueChanged(arg_18_3, arg_18_4)
+		var_18_4:AddOnValueChanged(arg_18_3, arg_18_4)
 	end
 
-	arg_18_0._sliders[#arg_18_0._sliders + 1] = var_18_3
+	arg_18_0._sliders[#arg_18_0._sliders + 1] = var_18_4
 
 	return {
-		var_18_3,
-		var_18_2
+		var_18_4,
+		var_18_2,
+		var_18_3
 	}
 end
 
@@ -406,6 +408,10 @@ function var_0_0.addDropDown(arg_19_0, arg_19_1, arg_19_2, arg_19_3, arg_19_4, a
 	arg_19_0._setRectTransSize(var_19_3, arg_19_6, arg_19_6 and arg_19_6.drop_w or var_19_2.preferredWidth + 150, 90)
 
 	local var_19_4 = gohelper.findChildComponent(var_19_1, "Dropdown/Template", gohelper.Type_RectTransform)
+
+	if arg_19_6 and arg_19_6.tempH then
+		recthelper.setHeight(var_19_4, arg_19_6.tempH)
+	end
 
 	arg_19_0._setOffset(var_19_4, arg_19_6)
 

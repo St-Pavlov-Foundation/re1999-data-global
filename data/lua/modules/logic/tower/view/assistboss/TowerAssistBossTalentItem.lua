@@ -98,8 +98,9 @@ function var_0_0.refreshState(arg_10_0)
 	local var_10_1 = var_10_0:isActiveTalent()
 	local var_10_2 = var_10_0:isActiveGroup()
 	local var_10_3 = var_10_0:isParentActive()
+	local var_10_4 = var_10_0:isSelectedSystemTalentPlan()
 
-	if not var_10_1 and not var_10_2 and var_10_3 then
+	if not var_10_1 and not var_10_2 and var_10_3 and not var_10_4 then
 		if arg_10_0.isGray then
 			arg_10_0.anim:Play("tocanlight")
 		else

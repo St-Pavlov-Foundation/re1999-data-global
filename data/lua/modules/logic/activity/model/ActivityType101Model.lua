@@ -512,7 +512,7 @@ function var_0_1.onModuleViews(arg_31_0, arg_31_1, arg_31_2)
 
 	var_0_16(var_31_0, var_31_1, arg_31_2)
 	var_0_17(var_31_0, var_31_1, arg_31_2)
-	var_0_18(2, 7, arg_31_2)
+	var_0_18(var_31_0, var_31_1, arg_31_2)
 end
 
 var_0_1.instance = var_0_1.New()

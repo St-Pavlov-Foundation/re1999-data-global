@@ -105,6 +105,10 @@ function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
 		end
 	elseif arg_3_1 == "character_voice" then
 		arg_3_0._voiceConfig = arg_3_2
+
+		if SLFramework.FrameworkSettings.IsEditor then
+			CharacterVoiceConfigChecker.instance:checkConfig()
+		end
 	elseif arg_3_1 == "episode" then
 		arg_3_0._episodeConfig = arg_3_2
 	elseif arg_3_1 == "character_shop_voice" then

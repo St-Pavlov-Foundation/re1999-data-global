@@ -3,11 +3,11 @@
 local var_0_0 = class("FightWorkSkillDelay", BaseWork)
 
 function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0._fightStepMO = arg_1_1
+	arg_1_0.fightStepData = arg_1_1
 end
 
 function var_0_0.onStart(arg_2_0)
-	local var_2_0 = lua_fight_skill_delay.configDict[arg_2_0._fightStepMO.actId]
+	local var_2_0 = lua_fight_skill_delay.configDict[arg_2_0.fightStepData.actId]
 
 	if var_2_0 then
 		if FightReplayModel.instance:isReplay() then

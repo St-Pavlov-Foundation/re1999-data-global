@@ -198,61 +198,83 @@ function var_0_0.refreshTimeDeadline(arg_9_0, arg_9_1, arg_9_2)
 	end
 
 	local var_9_0 = false
-	local var_9_1 = StoreHelper.getRemainExpireTime(arg_9_1)
-	local var_9_2 = StoreModel.instance:isTabMainRedDotShow(arg_9_1.id)
-	local var_9_3 = false
+	local var_9_1 = StoreModel.instance:isTabMainRedDotShow(arg_9_1.id)
+	local var_9_2 = false
 
-	if StoreEnum.SummonExchange == arg_9_1.id then
-		var_9_1 = StoreHelper.getRemainExpireTimeDeep(arg_9_1)
-	end
+	if arg_9_1.id == StoreEnum.StoreId.SummonExchange then
+		if arg_9_1.id ~= arg_9_0._selectFirstTabId and not var_9_1 then
+			local var_9_3 = StoreHelper.getRemainExpireTimeDeep(arg_9_1)
 
-	if StoreEnum.SummonExchange == arg_9_1.id and arg_9_1.id ~= arg_9_0._selectFirstTabId and not var_9_2 and var_9_1 and var_9_1 > 0 and var_9_1 <= TimeUtil.OneDaySecond * 7 then
-		gohelper.setActive(arg_9_2.godeadline, true)
-		gohelper.setActive(arg_9_2.txttime.gameObject, true)
+			if var_9_3 and var_9_3 > 0 and var_9_3 <= TimeUtil.OneDaySecond * 7 then
+				gohelper.setActive(arg_9_2.godeadline, true)
+				gohelper.setActive(arg_9_2.txttime.gameObject, true)
 
-		local var_9_4
+				local var_9_4
 
-		arg_9_2.txttime.text, arg_9_2.txtformat.text, var_9_4 = TimeUtil.secondToRoughTime(math.floor(var_9_1), true)
+				arg_9_2.txttime.text, arg_9_2.txtformat.text, var_9_4 = TimeUtil.secondToRoughTime(math.floor(var_9_3), true)
 
-		UISpriteSetMgr.instance:setCommonSprite(arg_9_2.imagetimebg, var_9_4 and "daojishi_01" or "daojishi_02")
-		UISpriteSetMgr.instance:setCommonSprite(arg_9_2.imagetimeicon, var_9_4 and "daojishiicon_01" or "daojishiicon_02")
-		SLFramework.UGUI.GuiHelper.SetColor(arg_9_2.txttime, var_9_4 and "#98D687" or "#E99B56")
-		SLFramework.UGUI.GuiHelper.SetColor(arg_9_2.txtformat, var_9_4 and "#98D687" or "#E99B56")
-		gohelper.setActive(arg_9_2.godeadlineEffect, not var_9_4)
+				UISpriteSetMgr.instance:setCommonSprite(arg_9_2.imagetimebg, var_9_4 and "daojishi_01" or "daojishi_02")
+				UISpriteSetMgr.instance:setCommonSprite(arg_9_2.imagetimeicon, var_9_4 and "daojishiicon_01" or "daojishiicon_02")
+				SLFramework.UGUI.GuiHelper.SetColor(arg_9_2.txttime, var_9_4 and "#98D687" or "#E99B56")
+				SLFramework.UGUI.GuiHelper.SetColor(arg_9_2.txtformat, var_9_4 and "#98D687" or "#E99B56")
+				gohelper.setActive(arg_9_2.godeadlineEffect, not var_9_4)
 
-		var_9_3 = true
+				var_9_2 = true
+			end
+		end
+	elseif arg_9_1.id == StoreEnum.StoreId.DecorateStore then
+		if arg_9_1.id ~= arg_9_0._selectFirstTabId and not var_9_1 then
+			local var_9_5 = StoreHelper.getRemainExpireTimeDeepByStoreId(arg_9_1.id)
+
+			if var_9_5 and var_9_5 > 0 then
+				gohelper.setActive(arg_9_2.godeadline, true)
+				gohelper.setActive(arg_9_2.txttime.gameObject, true)
+
+				local var_9_6
+
+				arg_9_2.txttime.text, arg_9_2.txtformat.text, var_9_6 = TimeUtil.secondToRoughTime(math.floor(var_9_5), true)
+
+				UISpriteSetMgr.instance:setCommonSprite(arg_9_2.imagetimebg, var_9_6 and "daojishi_01" or "daojishi_02")
+				UISpriteSetMgr.instance:setCommonSprite(arg_9_2.imagetimeicon, var_9_6 and "daojishiicon_01" or "daojishiicon_02")
+				SLFramework.UGUI.GuiHelper.SetColor(arg_9_2.txttime, var_9_6 and "#98D687" or "#E99B56")
+				SLFramework.UGUI.GuiHelper.SetColor(arg_9_2.txtformat, var_9_6 and "#98D687" or "#E99B56")
+				gohelper.setActive(arg_9_2.godeadlineEffect, not var_9_6)
+
+				var_9_2 = true
+			end
+		end
 	elseif StoreEnum.StoreId.Skin == arg_9_1.storeId then
-		local var_9_5 = 0
-		local var_9_6 = ItemModel.instance:getItemsBySubType(ItemEnum.SubType.SkinTicket)
+		local var_9_7 = 0
+		local var_9_8 = ItemModel.instance:getItemsBySubType(ItemEnum.SubType.SkinTicket)
 
-		if var_9_6[1] then
-			local var_9_7 = ItemModel.instance:getItemConfigAndIcon(MaterialEnum.MaterialType.Item, var_9_6[1].id)
+		if var_9_8[1] then
+			local var_9_9 = ItemModel.instance:getItemConfigAndIcon(MaterialEnum.MaterialType.Item, var_9_8[1].id)
 
-			if var_9_7 and not string.nilorempty(var_9_7.expireTime) then
-				local var_9_8 = TimeUtil.stringToTimestamp(var_9_7.expireTime)
-				local var_9_9 = math.floor(var_9_8 - ServerTime.now())
+			if var_9_9 and not string.nilorempty(var_9_9.expireTime) then
+				local var_9_10 = TimeUtil.stringToTimestamp(var_9_9.expireTime)
+				local var_9_11 = math.floor(var_9_10 - ServerTime.now())
 
-				if var_9_9 >= 0 and var_9_9 <= 259200 then
-					var_9_5 = var_9_9
+				if var_9_11 >= 0 and var_9_11 <= 259200 then
+					var_9_7 = var_9_11
 				end
 			end
 		end
 
-		if var_9_5 > 0 then
+		if var_9_7 > 0 then
 			gohelper.setActive(arg_9_2.godeadline, true)
 			gohelper.setActive(arg_9_2.txttime.gameObject, true)
 
-			local var_9_10
+			local var_9_12
 
-			arg_9_2.txttime.text, arg_9_2.txtformat.text, var_9_10 = TimeUtil.secondToRoughTime(math.floor(var_9_5), true)
+			arg_9_2.txttime.text, arg_9_2.txtformat.text, var_9_12 = TimeUtil.secondToRoughTime(math.floor(var_9_7), true)
 
-			UISpriteSetMgr.instance:setCommonSprite(arg_9_2.imagetimebg, var_9_10 and "daojishi_01" or "daojishi_02")
-			UISpriteSetMgr.instance:setCommonSprite(arg_9_2.imagetimeicon, var_9_10 and "daojishiicon_01" or "daojishiicon_02")
-			SLFramework.UGUI.GuiHelper.SetColor(arg_9_2.txttime, var_9_10 and "#98D687" or "#E99B56")
-			SLFramework.UGUI.GuiHelper.SetColor(arg_9_2.txtformat, var_9_10 and "#98D687" or "#E99B56")
-			gohelper.setActive(arg_9_2.godeadlineEffect, not var_9_10)
+			UISpriteSetMgr.instance:setCommonSprite(arg_9_2.imagetimebg, var_9_12 and "daojishi_01" or "daojishi_02")
+			UISpriteSetMgr.instance:setCommonSprite(arg_9_2.imagetimeicon, var_9_12 and "daojishiicon_01" or "daojishiicon_02")
+			SLFramework.UGUI.GuiHelper.SetColor(arg_9_2.txttime, var_9_12 and "#98D687" or "#E99B56")
+			SLFramework.UGUI.GuiHelper.SetColor(arg_9_2.txtformat, var_9_12 and "#98D687" or "#E99B56")
+			gohelper.setActive(arg_9_2.godeadlineEffect, not var_9_12)
 
-			var_9_3 = true
+			var_9_2 = true
 		else
 			gohelper.setActive(arg_9_2.godeadline, false)
 			gohelper.setActive(arg_9_2.txttime.gameObject, false)
@@ -262,7 +284,7 @@ function var_0_0.refreshTimeDeadline(arg_9_0, arg_9_1, arg_9_2)
 		gohelper.setActive(arg_9_2.txttime.gameObject, false)
 	end
 
-	arg_9_0._needCountdown = var_9_3
+	arg_9_0._needCountdown = var_9_2
 end
 
 function var_0_0.onOpen(arg_10_0)

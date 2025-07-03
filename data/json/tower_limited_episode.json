@@ -754,5 +754,131 @@
     "season": 12,
     "episodeId": 90201233,
     "entrance": 3
+  },
+  {
+    "layerId": 1301,
+    "difficulty": 1,
+    "season": 13,
+    "episodeId": 90201311,
+    "entrance": 1
+  },
+  {
+    "layerId": 1301,
+    "difficulty": 2,
+    "season": 13,
+    "episodeId": 90201312,
+    "entrance": 1
+  },
+  {
+    "layerId": 1301,
+    "difficulty": 3,
+    "season": 13,
+    "episodeId": 90201313,
+    "entrance": 1
+  },
+  {
+    "layerId": 1302,
+    "difficulty": 1,
+    "season": 13,
+    "episodeId": 90201321,
+    "entrance": 2
+  },
+  {
+    "layerId": 1302,
+    "difficulty": 2,
+    "season": 13,
+    "episodeId": 90201322,
+    "entrance": 2
+  },
+  {
+    "layerId": 1302,
+    "difficulty": 3,
+    "season": 13,
+    "episodeId": 90201323,
+    "entrance": 2
+  },
+  {
+    "layerId": 1303,
+    "difficulty": 1,
+    "season": 13,
+    "episodeId": 90201331,
+    "entrance": 3
+  },
+  {
+    "layerId": 1303,
+    "difficulty": 2,
+    "season": 13,
+    "episodeId": 90201332,
+    "entrance": 3
+  },
+  {
+    "layerId": 1303,
+    "difficulty": 3,
+    "season": 13,
+    "episodeId": 90201333,
+    "entrance": 3
+  },
+  {
+    "layerId": 1401,
+    "difficulty": 1,
+    "season": 14,
+    "episodeId": 90201414,
+    "entrance": 1
+  },
+  {
+    "layerId": 1401,
+    "difficulty": 2,
+    "season": 14,
+    "episodeId": 90201412,
+    "entrance": 1
+  },
+  {
+    "layerId": 1401,
+    "difficulty": 3,
+    "season": 14,
+    "episodeId": 90201413,
+    "entrance": 1
+  },
+  {
+    "layerId": 1402,
+    "difficulty": 1,
+    "season": 14,
+    "episodeId": 90201421,
+    "entrance": 2
+  },
+  {
+    "layerId": 1402,
+    "difficulty": 2,
+    "season": 14,
+    "episodeId": 90201422,
+    "entrance": 2
+  },
+  {
+    "layerId": 1402,
+    "difficulty": 3,
+    "season": 14,
+    "episodeId": 90201423,
+    "entrance": 2
+  },
+  {
+    "layerId": 1403,
+    "difficulty": 1,
+    "season": 14,
+    "episodeId": 90201431,
+    "entrance": 3
+  },
+  {
+    "layerId": 1403,
+    "difficulty": 2,
+    "season": 14,
+    "episodeId": 90201432,
+    "entrance": 3
+  },
+  {
+    "layerId": 1403,
+    "difficulty": 3,
+    "season": 14,
+    "episodeId": 90201433,
+    "entrance": 3
   }
 ]

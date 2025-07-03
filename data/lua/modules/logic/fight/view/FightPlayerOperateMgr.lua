@@ -78,7 +78,7 @@ function var_0_0._checkHeroUpgrade(arg_9_0)
 		return
 	end
 
-	if FightCardModel.instance:isCardOpEnd() then
+	if FightDataHelper.operationDataMgr:isCardOpEnd() then
 		return
 	end
 
@@ -99,7 +99,7 @@ function var_0_0._checkHeroUpgrade(arg_9_0)
 		end
 
 		if #var_9_0 > 0 then
-			arg_9_0._upgradeDatas = var_9_0
+			arg_9_0._upgradeDataList = var_9_0
 
 			ViewMgr.instance:openView(ViewName.FightSkillStrengthenView, var_9_0)
 		end
@@ -171,7 +171,7 @@ function var_0_0._checkChangeHeroNeedUseSkill(arg_11_0)
 		return
 	end
 
-	if FightCardModel.instance:isCardOpEnd() then
+	if FightDataHelper.operationDataMgr:isCardOpEnd() then
 		return
 	end
 
@@ -179,7 +179,7 @@ function var_0_0._checkChangeHeroNeedUseSkill(arg_11_0)
 		return
 	end
 
-	local var_11_0 = FightModel.instance:getCurRoundMO()
+	local var_11_0 = FightDataHelper.roundMgr:getRoundData()
 
 	if not var_11_0 then
 		return
@@ -231,7 +231,7 @@ function var_0_0._checkBindContract(arg_12_0)
 		return
 	end
 
-	if FightCardModel.instance:isCardOpEnd() then
+	if FightDataHelper.operationDataMgr:isCardOpEnd() then
 		return
 	end
 

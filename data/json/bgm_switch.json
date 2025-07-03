@@ -682,5 +682,23 @@
     "audioLength": 117.818,
     "audioEvaluates": "language_10069602",
     "isNonLoop": 1
+  },
+  {
+    "id": 1022701,
+    "audio": 20270011,
+    "isReport": 0,
+    "unlockCondition": "",
+    "itemId": 221171,
+    "defaultUnlock": 0,
+    "audioName": "language_10073040",
+    "audioNameEn": "1987 Cosmic Overture",
+    "audioIntroduce": "language_10073041",
+    "audioBg": "1022701_1",
+    "audioicon": "1022701_2",
+    "sort": 22701,
+    "audioType": 18,
+    "audioLength": 123.325,
+    "audioEvaluates": "language_10073042",
+    "isNonLoop": 1
   }
 ]

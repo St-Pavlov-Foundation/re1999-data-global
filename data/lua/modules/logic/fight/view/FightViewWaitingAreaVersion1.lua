@@ -146,21 +146,16 @@ function var_0_0.updateCardLockObj(arg_13_0)
 	local var_13_0 = FightPlayCardModel.instance:getUsedCards()
 
 	for iter_13_0, iter_13_1 in ipairs(var_13_0) do
-		local var_13_1 = arg_13_0._cardItemList[iter_13_0]
-		local var_13_2 = gohelper.findChild(var_13_1.tr.parent.gameObject, "lock")
+		local var_13_1 = gohelper.findChild(arg_13_0._cardItemList[iter_13_0].tr.parent.gameObject, "lock")
 
-		if var_13_1.showAlfEffectIng then
-			gohelper.setActive(var_13_2, false)
-		else
-			iter_13_1.custom_lock = FightViewHandCardItemLock.setCardLock(iter_13_1.uid, iter_13_1.skillId, var_13_2, false)
-		end
+		iter_13_1.clientData.custom_lock = FightViewHandCardItemLock.setCardLock(iter_13_1.uid, iter_13_1.skillId, var_13_1, false)
 	end
 end
 
 function var_0_0._onShowSimulateClientUsedCard(arg_14_0)
 	local var_14_0 = {}
 
-	for iter_14_0, iter_14_1 in ipairs(FightCardModel.instance:getPlayCardOpList()) do
+	for iter_14_0, iter_14_1 in ipairs(FightDataHelper.operationDataMgr:getPlayCardOpList()) do
 		table.insert(var_14_0, iter_14_1.cardInfoMO)
 	end
 
@@ -170,7 +165,7 @@ function var_0_0._onShowSimulateClientUsedCard(arg_14_0)
 	for iter_14_2, iter_14_3 in ipairs(var_14_0) do
 		local var_14_1 = gohelper.findChild(arg_14_0._cardItemList[iter_14_2].tr.parent.gameObject, "lock")
 
-		iter_14_3.custom_lock = FightViewHandCardItemLock.setCardLock(iter_14_3.uid, iter_14_3.skillId, var_14_1, false)
+		iter_14_3.clientData.custom_lock = FightViewHandCardItemLock.setCardLock(iter_14_3.uid, iter_14_3.skillId, var_14_1, false)
 	end
 
 	if arg_14_0.LYCard then
@@ -331,13 +326,13 @@ function var_0_0._onBuffUpdate(arg_25_0, arg_25_1, arg_25_2, arg_25_3)
 
 		if var_25_4 then
 			local var_25_5 = var_25_1[iter_25_0]
-			local var_25_6 = var_25_5.custom_lock
+			local var_25_6 = var_25_5.clientData.custom_lock
 			local var_25_7 = not FightViewHandCardItemLock.canUseCardSkill(var_25_5.uid, var_25_5.skillId)
 
 			if var_25_6 ~= var_25_7 then
 				local var_25_8 = gohelper.findChild(var_25_4.tr.parent.gameObject, "lock")
 
-				var_25_5.custom_lock = var_25_7
+				var_25_5.clientData.custom_lock = var_25_7
 
 				if var_25_7 then
 					FightViewHandCardItemLock.setCardLock(var_25_5.uid, var_25_5.skillId, var_25_8, false)
@@ -391,7 +386,7 @@ function var_0_0._updateView(arg_27_0, arg_27_1, arg_27_2)
 
 		gohelper.setActive(var_27_6.go, true)
 
-		var_27_3.custom_playedCard = true
+		var_27_3.clientData.custom_playedCard = true
 
 		var_27_6:updateItem(var_27_4, var_27_5, var_27_3)
 		var_27_6:detectShowBlueStar()

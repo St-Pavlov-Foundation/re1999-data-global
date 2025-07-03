@@ -1,10 +1,10 @@
 ﻿module("modules.logic.fight.entity.comp.skill.FightTLEventCatapult", package.seeall)
 
-local var_0_0 = class("FightTLEventCatapult")
+local var_0_0 = class("FightTLEventCatapult", FightTimelineTrackItem)
 
-function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 	arg_1_0._paramsArr = arg_1_3
-	arg_1_0._fightStepMO = arg_1_1
+	arg_1_0.fightStepData = arg_1_1
 	arg_1_0._duration = arg_1_2
 	arg_1_0.index = FightTLHelper.getNumberParam(arg_1_3[1])
 	arg_1_0.effectName = arg_1_3[2]
@@ -80,11 +80,11 @@ function var_0_0.playAddFirstBuff(arg_2_0)
 	local var_2_2 = arg_2_0.startEntity.id
 	local var_2_3 = 0
 
-	for iter_2_0, iter_2_1 in ipairs(arg_2_0._fightStepMO.actEffectMOs) do
+	for iter_2_0, iter_2_1 in ipairs(arg_2_0.fightStepData.actEffect) do
 		if not iter_2_1:isDone() and var_2_2 == iter_2_1.targetId and iter_2_1.effectType == var_2_1 and arg_2_0:inCheckNeedPlayBuff(iter_2_1.effectNum) then
 			var_2_3 = var_2_3 + 1
 
-			FightSkillBuffMgr.instance:playSkillBuff(arg_2_0._fightStepMO, iter_2_1)
+			FightSkillBuffMgr.instance:playSkillBuff(arg_2_0.fightStepData, iter_2_1)
 			FightDataHelper.playEffectData(iter_2_1)
 
 			if var_2_0 <= var_2_3 then
@@ -97,7 +97,7 @@ end
 function var_0_0.getCatapultBuffCount(arg_3_0, arg_3_1)
 	local var_3_0 = FightEnum.EffectType.CATAPULTBUFF
 
-	for iter_3_0, iter_3_1 in ipairs(arg_3_0._fightStepMO.actEffectMOs) do
+	for iter_3_0, iter_3_1 in ipairs(arg_3_0.fightStepData.actEffect) do
 		if iter_3_1.effectType == var_3_0 and iter_3_1.effectNum == arg_3_1 then
 			return tonumber(iter_3_1.reserveId)
 		end
@@ -125,7 +125,7 @@ end
 function var_0_0.get217EffectEntity(arg_6_0, arg_6_1)
 	local var_6_0 = FightEnum.EffectType.CATAPULTBUFF
 
-	for iter_6_0, iter_6_1 in ipairs(arg_6_0._fightStepMO.actEffectMOs) do
+	for iter_6_0, iter_6_1 in ipairs(arg_6_0.fightStepData.actEffect) do
 		if iter_6_1.effectType == var_6_0 and iter_6_1.effectNum == arg_6_1 then
 			local var_6_1 = iter_6_1.targetId
 
@@ -192,11 +192,11 @@ function var_0_0._playAddBuff(arg_13_0)
 	local var_13_1 = arg_13_0.endEntity.id
 	local var_13_2 = 0
 
-	for iter_13_0, iter_13_1 in ipairs(arg_13_0._fightStepMO.actEffectMOs) do
+	for iter_13_0, iter_13_1 in ipairs(arg_13_0.fightStepData.actEffect) do
 		if not iter_13_1:isDone() and var_13_1 == iter_13_1.targetId and iter_13_1.effectType == var_13_0 and arg_13_0:inCheckNeedPlayBuff(iter_13_1.effectNum) then
 			var_13_2 = var_13_2 + 1
 
-			FightSkillBuffMgr.instance:playSkillBuff(arg_13_0._fightStepMO, iter_13_1)
+			FightSkillBuffMgr.instance:playSkillBuff(arg_13_0.fightStepData, iter_13_1)
 			FightDataHelper.playEffectData(iter_13_1)
 
 			if var_13_2 >= arg_13_0.catapultBuffCount then
@@ -241,30 +241,22 @@ function var_0_0.removeEffectMover(arg_16_0)
 	arg_16_0.effectWrap = nil
 end
 
-function var_0_0.handleSkillEventEnd(arg_17_0)
+function var_0_0.onTrackEnd(arg_17_0)
 	return
 end
 
-function var_0_0.onSkillEnd(arg_18_0)
-	arg_18_0:clear()
-end
+function var_0_0.onDestructor(arg_18_0)
+	arg_18_0:removeEffectMover()
+	TaskDispatcher.cancelTask(arg_18_0._playHitEffect, arg_18_0)
+	TaskDispatcher.cancelTask(arg_18_0._playAddBuff, arg_18_0)
 
-function var_0_0.clear(arg_19_0)
-	arg_19_0:removeEffectMover()
-	TaskDispatcher.cancelTask(arg_19_0._playHitEffect, arg_19_0)
-	TaskDispatcher.cancelTask(arg_19_0._playAddBuff, arg_19_0)
-
-	arg_19_0.mover = nil
-	arg_19_0.skillUser = nil
-	arg_19_0.skillUser = nil
-	arg_19_0.side = nil
-	arg_19_0.skillUserId = nil
-	arg_19_0.startEntity = nil
-	arg_19_0.endEntity = nil
-end
-
-function var_0_0.dispose(arg_20_0)
-	arg_20_0:clear()
+	arg_18_0.mover = nil
+	arg_18_0.skillUser = nil
+	arg_18_0.skillUser = nil
+	arg_18_0.side = nil
+	arg_18_0.skillUserId = nil
+	arg_18_0.startEntity = nil
+	arg_18_0.endEntity = nil
 end
 
 return var_0_0

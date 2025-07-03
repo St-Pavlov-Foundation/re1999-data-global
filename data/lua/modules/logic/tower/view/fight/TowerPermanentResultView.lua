@@ -39,6 +39,9 @@ function var_0_0.onInitView(arg_1_0)
 	arg_1_0.simageWaveEntry = gohelper.findChildSingleImage(arg_1_0.viewGO, "go_Entry/#go_Limit/wavebg")
 	arg_1_0.goEntryPermanent = gohelper.findChild(arg_1_0.viewGO, "go_Entry/#go_Permanent")
 	arg_1_0.imgStage = gohelper.findChildImage(arg_1_0.viewGO, "go_Entry/#go_Permanent/imgStage")
+	arg_1_0.goScoreStar = gohelper.findChild(arg_1_0.viewGO, "go_Result/LimitDetail/#go_scoreStar")
+	arg_1_0.goPointContent = gohelper.findChild(arg_1_0.viewGO, "go_Result/LimitDetail/#go_scoreStar/#go_PointContent")
+	arg_1_0.goPointItem = gohelper.findChild(arg_1_0.viewGO, "go_Result/LimitDetail/#go_scoreStar/#go_PointContent/#go_PointItem")
 
 	gohelper.setActive(arg_1_0.goFinish, false)
 	gohelper.setActive(arg_1_0.goEntry, false)
@@ -156,6 +159,7 @@ end
 function var_0_0.refreshResult(arg_13_0)
 	gohelper.setActive(arg_13_0.goLimitDetail, arg_13_0.isLimit)
 	gohelper.setActive(arg_13_0.goPermanentDetail, not arg_13_0.isLimit)
+	gohelper.setActive(arg_13_0.goScoreStar, arg_13_0.isLimit)
 
 	if arg_13_0.isLimit then
 		arg_13_0.txtScoreDetail.text = tostring(arg_13_0.score)
@@ -168,131 +172,149 @@ function var_0_0.refreshResult(arg_13_0)
 		for iter_13_0, iter_13_1 in ipairs(arg_13_0.difficultyItems) do
 			gohelper.setActive(iter_13_1, iter_13_0 == arg_13_0.difficulty)
 		end
-	else
-		local var_13_0 = string.splitToNumber(arg_13_0.layerConfig.episodeIds, "|") or {}
-		local var_13_1 = tabletool.indexOf(var_13_0, arg_13_0.episodeId)
 
-		UISpriteSetMgr.instance:setTowerPermanentSprite(arg_13_0.imgStageDetail, string.format("towerpermanent_stage_%s_1", var_13_1))
+		local var_13_0 = TowerConfig.instance:getScoreToStarConfig(arg_13_0.score)
+
+		gohelper.setActive(arg_13_0.goScoreStar, var_13_0 > 0)
+
+		if var_13_0 > 0 then
+			local var_13_1 = {}
+
+			for iter_13_2 = 1, var_13_0 do
+				table.insert(var_13_1, iter_13_2)
+			end
+
+			gohelper.CreateObjList(arg_13_0, arg_13_0.scoreStarShow, var_13_1, arg_13_0.goPointContent, arg_13_0.goPointItem)
+		end
+	else
+		local var_13_2 = string.splitToNumber(arg_13_0.layerConfig.episodeIds, "|") or {}
+		local var_13_3 = tabletool.indexOf(var_13_2, arg_13_0.episodeId)
+
+		UISpriteSetMgr.instance:setTowerPermanentSprite(arg_13_0.imgStageDetail, string.format("towerpermanent_stage_%s_1", var_13_3))
 
 		arg_13_0.txtTowerPermanent.text = arg_13_0.episodeConfig.name
 
-		local var_13_2 = 0
+		local var_13_4 = 0
 
 		if arg_13_0.layer and arg_13_0.layer.episodeNOs then
-			for iter_13_2 = 1, #arg_13_0.layer.episodeNOs do
-				if arg_13_0.layer.episodeNOs[iter_13_2].status == 1 then
-					var_13_2 = var_13_2 + 1
+			for iter_13_3 = 1, #arg_13_0.layer.episodeNOs do
+				if arg_13_0.layer.episodeNOs[iter_13_3].status == 1 then
+					var_13_4 = var_13_4 + 1
 				end
 			end
 		end
 
-		local var_13_3 = #var_13_0
-		local var_13_4 = var_13_3 <= var_13_2
+		local var_13_5 = #var_13_2
+		local var_13_6 = var_13_5 <= var_13_4
 
-		arg_13_0.txtSchedule.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("towerpermanentresultview_schedule"), var_13_2, var_13_3)
+		arg_13_0.txtSchedule.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("towerpermanentresultview_schedule"), var_13_4, var_13_5)
 
-		gohelper.setActive(arg_13_0.goSchedule, var_13_3 > 1)
+		gohelper.setActive(arg_13_0.goSchedule, var_13_5 > 1)
 
-		arg_13_0._isComplete = var_13_4
+		arg_13_0._isComplete = var_13_6
 
-		gohelper.setActive(arg_13_0.goComplete, var_13_4)
+		gohelper.setActive(arg_13_0.goComplete, var_13_6)
 	end
 
 	arg_13_0:refreshHeroGroup()
 	arg_13_0:refreshRewards(arg_13_0.goReward, arg_13_0.goRewards)
 end
 
-function var_0_0.refreshRewards(arg_14_0, arg_14_1, arg_14_2)
-	if arg_14_0.rewardItems == nil then
-		arg_14_0.rewardItems = {}
-	end
-
-	local var_14_0 = FightResultModel.instance:getMaterialDataList() or {}
-
-	for iter_14_0 = 1, math.max(#arg_14_0.rewardItems, #var_14_0) do
-		local var_14_1 = arg_14_0.rewardItems[iter_14_0]
-		local var_14_2 = var_14_0[iter_14_0]
-
-		if not var_14_1 then
-			var_14_1 = IconMgr.instance:getCommonPropItemIcon(arg_14_1)
-			arg_14_0.rewardItems[iter_14_0] = var_14_1
-		end
-
-		gohelper.setActive(var_14_1.go, var_14_2 ~= nil)
-
-		if var_14_2 then
-			var_14_1:setMOValue(var_14_2.materilType, var_14_2.materilId, var_14_2.quantity)
-			var_14_1:setScale(0.7)
-			var_14_1:setCountTxtSize(51)
-		end
-	end
-
-	gohelper.setActive(arg_14_2, #var_14_0 ~= 0)
+function var_0_0.scoreStarShow(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
+	gohelper.setActive(arg_14_1, arg_14_3 <= arg_14_2)
 end
 
-function var_0_0.refreshHeroGroup(arg_15_0)
-	if arg_15_0.heroItemList == nil then
-		arg_15_0.heroItemList = arg_15_0:getUserDataTb_()
+function var_0_0.refreshRewards(arg_15_0, arg_15_1, arg_15_2)
+	if arg_15_0.rewardItems == nil then
+		arg_15_0.rewardItems = {}
 	end
 
-	local var_15_0 = FightModel.instance:getFightParam()
-	local var_15_1 = var_15_0:getHeroEquipMoList()
+	local var_15_0 = FightResultModel.instance:getMaterialDataList() or {}
 
-	for iter_15_0 = 1, 4 do
-		local var_15_2 = arg_15_0.heroItemList[iter_15_0]
+	for iter_15_0 = 1, math.max(#arg_15_0.rewardItems, #var_15_0) do
+		local var_15_1 = arg_15_0.rewardItems[iter_15_0]
+		local var_15_2 = var_15_0[iter_15_0]
 
-		if var_15_2 == nil then
-			local var_15_3 = gohelper.findChild(arg_15_0.viewGO, string.format("go_Result/goGroup/Group/heroitem%s", iter_15_0))
-
-			var_15_2 = MonoHelper.addNoUpdateLuaComOnceToGo(var_15_3, TowerBossResultHeroItem)
-			arg_15_0.heroItemList[iter_15_0] = var_15_2
+		if not var_15_1 then
+			var_15_1 = IconMgr.instance:getCommonPropItemIcon(arg_15_1)
+			arg_15_0.rewardItems[iter_15_0] = var_15_1
 		end
 
-		local var_15_4 = var_15_1[iter_15_0]
+		gohelper.setActive(var_15_1.go, var_15_2 ~= nil)
 
-		if var_15_4 then
-			var_15_2:setData(var_15_4.heroMo, var_15_4.equipMo)
+		if var_15_2 then
+			var_15_1:setMOValue(var_15_2.materilType, var_15_2.materilId, var_15_2.quantity)
+			var_15_1:setScale(0.7)
+			var_15_1:setCountTxtSize(51)
+		end
+	end
+
+	gohelper.setActive(arg_15_2, #var_15_0 ~= 0)
+end
+
+function var_0_0.refreshHeroGroup(arg_16_0)
+	if arg_16_0.heroItemList == nil then
+		arg_16_0.heroItemList = arg_16_0:getUserDataTb_()
+	end
+
+	local var_16_0 = FightModel.instance:getFightParam()
+	local var_16_1 = var_16_0:getHeroEquipAndTrialMoList(true)
+
+	for iter_16_0 = 1, 4 do
+		local var_16_2 = arg_16_0.heroItemList[iter_16_0]
+
+		if var_16_2 == nil then
+			local var_16_3 = gohelper.findChild(arg_16_0.viewGO, string.format("go_Result/goGroup/Group/heroitem%s", iter_16_0))
+
+			var_16_2 = MonoHelper.addNoUpdateLuaComOnceToGo(var_16_3, TowerBossResultHeroItem)
+			arg_16_0.heroItemList[iter_16_0] = var_16_2
+		end
+
+		local var_16_4 = var_16_1[iter_16_0]
+
+		if var_16_4 then
+			var_16_2:setData(var_16_4.heroMo, var_16_4.equipMo)
 		else
-			var_15_2:setData()
+			var_16_2:setData()
 		end
 	end
 
-	local var_15_5 = var_15_0.assistBossId
-	local var_15_6 = TowerConfig.instance:getAssistBossConfig(var_15_5)
-	local var_15_7 = var_15_6 == nil
+	local var_16_5 = var_16_0.assistBossId
+	local var_16_6 = TowerConfig.instance:getAssistBossConfig(var_16_5)
+	local var_16_7 = var_16_6 == nil
 
-	gohelper.setActive(arg_15_0.goBossEmpty, var_15_7)
-	gohelper.setActive(arg_15_0.goBossRoot, not var_15_7)
+	gohelper.setActive(arg_16_0.goBossEmpty, var_16_7)
+	gohelper.setActive(arg_16_0.goBossRoot, not var_16_7)
 
-	if not var_15_7 then
-		arg_15_0.simageBoss:LoadImage(var_15_6.bossPic)
+	if not var_16_7 then
+		arg_16_0.simageBoss:LoadImage(var_16_6.bossPic)
 
-		arg_15_0.txtBossName.text = var_15_6.name
-		arg_15_0.txtBossLev.text = tostring(arg_15_0.bossLevel)
+		arg_16_0.txtBossName.text = var_16_6.name
+		arg_16_0.txtBossLev.text = tostring(arg_16_0.bossLevel)
 
-		UISpriteSetMgr.instance:setCommonSprite(arg_15_0.imgBossCareer, string.format("lssx_%s", var_15_6.career))
+		UISpriteSetMgr.instance:setCommonSprite(arg_16_0.imgBossCareer, string.format("lssx_%s", var_16_6.career))
 	end
 end
 
-function var_0_0._onAllFinish(arg_16_0)
-	arg_16_0.canClick = true
+function var_0_0._onAllFinish(arg_17_0)
+	arg_17_0.canClick = true
 end
 
-function var_0_0.onClose(arg_17_0)
+function var_0_0.onClose(arg_18_0)
 	FightController.onResultViewClose()
 end
 
-function var_0_0.onDestroyView(arg_18_0)
-	arg_18_0.simageBoss:UnLoadImage()
-	arg_18_0.simageWaveEntry:UnLoadImage()
-	arg_18_0.simageStageEntry:UnLoadImage()
-	arg_18_0.simageStageDetail:UnLoadImage()
-	arg_18_0.simageWaveDetail:UnLoadImage()
+function var_0_0.onDestroyView(arg_19_0)
+	arg_19_0.simageBoss:UnLoadImage()
+	arg_19_0.simageWaveEntry:UnLoadImage()
+	arg_19_0.simageStageEntry:UnLoadImage()
+	arg_19_0.simageStageDetail:UnLoadImage()
+	arg_19_0.simageWaveDetail:UnLoadImage()
 
-	if arg_18_0._popupFlow then
-		arg_18_0._popupFlow:destroy()
+	if arg_19_0._popupFlow then
+		arg_19_0._popupFlow:destroy()
 
-		arg_18_0._popupFlow = nil
+		arg_19_0._popupFlow = nil
 	end
 end
 

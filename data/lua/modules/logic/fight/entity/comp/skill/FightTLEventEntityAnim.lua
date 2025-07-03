@@ -1,8 +1,8 @@
 ﻿module("modules.logic.fight.entity.comp.skill.FightTLEventEntityAnim", package.seeall)
 
-local var_0_0 = class("FightTLEventEntityAnim")
+local var_0_0 = class("FightTLEventEntityAnim", FightTimelineTrackItem)
 
-function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 	local var_1_0 = arg_1_3[1]
 
 	arg_1_0._targetEntitys = nil
@@ -73,8 +73,8 @@ function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 	end
 end
 
-function var_0_0.handleSkillEventEnd(arg_2_0)
-	arg_2_0:_onFinish()
+function var_0_0.onTrackEnd(arg_2_0)
+	arg_2_0:onDestructor()
 end
 
 function var_0_0._onLoaded(arg_3_0, arg_3_1)
@@ -200,75 +200,67 @@ function var_0_0._onUpdateSpeed(arg_5_0)
 	end
 end
 
-function var_0_0._onFinish(arg_6_0)
-	arg_6_0:dispose()
+function var_0_0.onDestructor(arg_6_0)
+	FightController.instance:unregisterCallback(FightEvent.OnUpdateSpeed, arg_6_0._onUpdateSpeed, arg_6_0)
+	arg_6_0:_clearLoader()
+	arg_6_0:_clearAnim()
+	arg_6_0:_resetEntitys()
+	arg_6_0:clearWaitSpine()
 end
 
-function var_0_0.reset(arg_7_0)
-	arg_7_0:dispose()
-end
+function var_0_0._clearAnim(arg_7_0)
+	if arg_7_0._animCompList then
+		for iter_7_0, iter_7_1 in ipairs(arg_7_0._animCompList) do
+			if not gohelper.isNil(iter_7_1) then
+				local var_7_0 = arg_7_0._animStateName[iter_7_0]
 
-function var_0_0.dispose(arg_8_0)
-	FightController.instance:unregisterCallback(FightEvent.OnUpdateSpeed, arg_8_0._onUpdateSpeed, arg_8_0)
-	arg_8_0:_clearLoader()
-	arg_8_0:_clearAnim()
-	arg_8_0:_resetEntitys()
-	arg_8_0:clearWaitSpine()
-end
-
-function var_0_0._clearAnim(arg_9_0)
-	if arg_9_0._animCompList then
-		for iter_9_0, iter_9_1 in ipairs(arg_9_0._animCompList) do
-			if not gohelper.isNil(iter_9_1) then
-				local var_9_0 = arg_9_0._animStateName[iter_9_0]
-
-				if iter_9_1:GetClip(var_9_0) then
-					iter_9_1:RemoveClip(var_9_0)
+				if iter_7_1:GetClip(var_7_0) then
+					iter_7_1:RemoveClip(var_7_0)
 				end
 
-				if iter_9_1.clip and iter_9_1.clip.name == var_9_0 then
-					iter_9_1.clip = nil
+				if iter_7_1.clip and iter_7_1.clip.name == var_7_0 then
+					iter_7_1.clip = nil
 				end
 
-				iter_9_1.enabled = false
+				iter_7_1.enabled = false
 			end
 		end
 
-		tabletool.clear(arg_9_0._animCompList)
+		tabletool.clear(arg_7_0._animCompList)
 
-		arg_9_0._animCompList = nil
+		arg_7_0._animCompList = nil
 	end
 end
 
-function var_0_0._resetEntitys(arg_10_0)
-	if arg_10_0._targetEntitys then
-		for iter_10_0, iter_10_1 in ipairs(arg_10_0._targetEntitys) do
-			local var_10_0 = iter_10_1.spine and iter_10_1.spine:getSpineGO()
+function var_0_0._resetEntitys(arg_8_0)
+	if arg_8_0._targetEntitys then
+		for iter_8_0, iter_8_1 in ipairs(arg_8_0._targetEntitys) do
+			local var_8_0 = iter_8_1.spine and iter_8_1.spine:getSpineGO()
 
-			ZProj.CharacterSetVariantHelper.Disable(var_10_0)
-			FightController.instance:dispatchEvent(FightEvent.TimelinePlayEntityAni, iter_10_1.id, false)
+			ZProj.CharacterSetVariantHelper.Disable(var_8_0)
+			FightController.instance:dispatchEvent(FightEvent.TimelinePlayEntityAni, iter_8_1.id, false)
 
-			if arg_10_0._revertSpinePosAndColor then
-				transformhelper.setLocalPos(var_10_0.transform, 0, 0, 0)
+			if arg_8_0._revertSpinePosAndColor then
+				transformhelper.setLocalPos(var_8_0.transform, 0, 0, 0)
 			end
 		end
 	end
 
-	arg_10_0._targetEntitys = nil
+	arg_8_0._targetEntitys = nil
 end
 
-function var_0_0._clearLoader(arg_11_0)
-	if arg_11_0._loader then
-		arg_11_0._loader:dispose()
+function var_0_0._clearLoader(arg_9_0)
+	if arg_9_0._loader then
+		arg_9_0._loader:dispose()
 
-		arg_11_0._loader = nil
+		arg_9_0._loader = nil
 	end
 end
 
-function var_0_0.clearWaitSpine(arg_12_0)
-	arg_12_0.waitSpineList = nil
+function var_0_0.clearWaitSpine(arg_10_0)
+	arg_10_0.waitSpineList = nil
 
-	FightController.instance:unregisterCallback(FightEvent.OnSpineLoaded, arg_12_0.onSpineLoaded, arg_12_0)
+	FightController.instance:unregisterCallback(FightEvent.OnSpineLoaded, arg_10_0.onSpineLoaded, arg_10_0)
 end
 
 return var_0_0

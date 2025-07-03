@@ -3,8 +3,7 @@
 local var_0_0 = class("FightWorkCreateASFDEmitter", BaseWork)
 
 function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.stepMo = arg_1_1
-	arg_1_0._fightStepMO = arg_1_1
+	arg_1_0.fightStepData = arg_1_1
 end
 
 function var_0_0.onStart(arg_2_0)
@@ -16,7 +15,7 @@ function var_0_0.onStart(arg_2_0)
 		return arg_2_0:onDone(true)
 	end
 
-	if var_2_0:createEmitterWrap(arg_2_0.stepMo) then
+	if var_2_0:createEmitterWrap(arg_2_0.fightStepData) then
 		TaskDispatcher.runDelay(arg_2_0.waitDone, arg_2_0, FightASFDConfig.instance.emitterWaitTime)
 	else
 		return arg_2_0:onDone(true)

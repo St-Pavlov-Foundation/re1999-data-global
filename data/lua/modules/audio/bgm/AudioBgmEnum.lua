@@ -63,6 +63,7 @@ var_0_0.Layer = {
 	VersionActivity1_9SemmelWeisGift = 902,
 	AutoChess = 2502,
 	VersionActivity2_6_DiceHero = 2602,
+	VersionActivity2_7Main = 2701,
 	VersionActivity1_3Act120 = 308,
 	RoleStoryActivity = 402,
 	PushBox = 13,

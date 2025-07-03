@@ -135,7 +135,7 @@ function var_0_0.removeEvents(arg_3_0)
 end
 
 function var_0_0._onClick(arg_4_0)
-	if FightCardModel.instance:isCardOpEnd() then
+	if FightDataHelper.operationDataMgr:isCardOpEnd() then
 		return
 	end
 
@@ -320,16 +320,12 @@ function var_0_0._onPlayHandCard(arg_18_0, arg_18_1)
 	end
 end
 
-function var_0_0._onMoveHandCard(arg_19_0, arg_19_1, arg_19_2, arg_19_3)
-	if arg_19_2 == arg_19_3 then
-		return
-	end
-
+function var_0_0._onMoveHandCard(arg_19_0, arg_19_1, arg_19_2)
 	if not arg_19_1.moveCanAddExpoint then
 		return
 	end
 
-	if FightEnum.UniversalCard[arg_19_1.skillId] then
+	if FightEnum.UniversalCard[arg_19_2.skillId] then
 		return
 	end
 
@@ -524,7 +520,7 @@ function var_0_0._onClickSkillIcon(arg_31_0, arg_31_1)
 	arg_31_0._clothSkillOp = nil
 	arg_31_0._hasClickDetailIcon = true
 
-	if FightCardModel.instance:isCardOpEnd() then
+	if FightDataHelper.operationDataMgr:isCardOpEnd() then
 		return
 	end
 
@@ -536,7 +532,7 @@ function var_0_0._onClickSkillIcon(arg_31_0, arg_31_1)
 		return
 	end
 
-	if #FightCardModel.instance:getCardOps() > 0 then
+	if #FightDataHelper.operationDataMgr:getOpList() > 0 then
 		GameFacade.showToast(ToastEnum.FightCardOps)
 
 		return
@@ -693,7 +689,7 @@ function var_0_0._sendUseClothSkill(arg_41_0)
 end
 
 function var_0_0._sendUseClothSkillRequest(arg_42_0)
-	FightRpc.instance:sendUseClothSkillRequest(arg_42_0._toUseSkillId, nil, FightCardModel.instance.curSelectEntityId)
+	FightRpc.instance:sendUseClothSkillRequest(arg_42_0._toUseSkillId, nil, FightDataHelper.operationDataMgr.curSelectEntityId)
 end
 
 function var_0_0._sendChangeSubEntity(arg_43_0)

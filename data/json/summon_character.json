@@ -3,13 +3,13 @@
     "id": 11,
     "heroId": 3003,
     "skinId": 0,
-    "location": 1
+    "location": 2
   },
   {
     "id": 12,
     "heroId": 3062,
     "skinId": 0,
-    "location": 2
+    "location": 1
   },
   {
     "id": 13,
@@ -435,7 +435,7 @@
     "id": 231211,
     "heroId": 3105,
     "skinId": 0,
-    "location": 1
+    "location": 2
   },
   {
     "id": 231212,
@@ -484,6 +484,30 @@
     "heroId": 3113,
     "skinId": 0,
     "location": 1
+  },
+  {
+    "id": 271111,
+    "heroId": 3116,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 271211,
+    "heroId": 3117,
+    "skinId": 0,
+    "location": 1
+  },
+  {
+    "id": 271112,
+    "heroId": 3118,
+    "skinId": 0,
+    "location": 2
+  },
+  {
+    "id": 25,
+    "heroId": 3056,
+    "skinId": 0,
+    "location": 3
   },
   {
     "id": 253088,

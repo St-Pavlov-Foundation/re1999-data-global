@@ -85,16 +85,28 @@ function var_0_0.hasRewardCanGet(arg_9_0, arg_9_1)
 	return false
 end
 
-function var_0_0.isMissionCanGet(arg_10_0, arg_10_1, arg_10_2)
+function var_0_0.allRewardReceive(arg_10_0, arg_10_1)
 	local var_10_0 = arg_10_0:getActInfo(arg_10_1)
 
-	return var_10_0[arg_10_2] and var_10_0[arg_10_2].state == 1
+	for iter_10_0, iter_10_1 in pairs(var_10_0) do
+		if iter_10_1.state ~= 2 then
+			return false
+		end
+	end
+
+	return true
 end
 
-function var_0_0.isMissionFinish(arg_11_0, arg_11_1, arg_11_2)
+function var_0_0.isMissionCanGet(arg_11_0, arg_11_1, arg_11_2)
 	local var_11_0 = arg_11_0:getActInfo(arg_11_1)
 
-	return var_11_0[arg_11_2] and var_11_0[arg_11_2].state == 2
+	return var_11_0[arg_11_2] and var_11_0[arg_11_2].state == 1
+end
+
+function var_0_0.isMissionFinish(arg_12_0, arg_12_1, arg_12_2)
+	local var_12_0 = arg_12_0:getActInfo(arg_12_1)
+
+	return var_12_0[arg_12_2] and var_12_0[arg_12_2].state == 2
 end
 
 var_0_0.instance = var_0_0.New()

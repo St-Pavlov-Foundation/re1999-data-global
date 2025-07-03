@@ -1,6 +1,6 @@
 ﻿module("modules.logic.fight.entity.comp.skill.FightTLEventEntityVisible", package.seeall)
 
-local var_0_0 = class("FightTLEventEntityVisible")
+local var_0_0 = class("FightTLEventEntityVisible", FightTimelineTrackItem)
 local var_0_1
 local var_0_2 = {
 	[FightEnum.EffectType.DAMAGEFROMABSORB] = true,
@@ -9,7 +9,7 @@ local var_0_2 = {
 	[FightEnum.EffectType.SHAREHURT] = true
 }
 
-function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 	local var_1_0 = FightHelper.getEntity(arg_1_1.fromId)
 	local var_1_1 = var_1_0 and var_1_0.skill and var_1_0.skill:sameSkillPlaying()
 
@@ -19,8 +19,10 @@ function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 		return
 	end
 
-	var_0_1 = arg_1_1.stepUid
-	var_0_0.latestStepUid = var_0_1
+	if not arg_1_1.isFakeStep then
+		var_0_1 = arg_1_1.stepUid
+		var_0_0.latestStepUid = var_0_1
+	end
 
 	local var_1_2 = tonumber(arg_1_3[1]) or 1
 	local var_1_3 = tonumber(arg_1_3[2]) or 1

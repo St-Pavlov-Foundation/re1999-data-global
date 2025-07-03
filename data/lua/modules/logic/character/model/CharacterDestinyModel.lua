@@ -133,6 +133,20 @@ function var_0_0.__isHadAttr(arg_7_0, arg_7_1, arg_7_2)
 	end
 end
 
+function var_0_0.destinyUpBaseReverseParseAttr(arg_8_0, arg_8_1)
+	if not arg_8_0._reverseParseBaseAttrList then
+		arg_8_0._reverseParseBaseAttrList = {}
+
+		for iter_8_0, iter_8_1 in pairs(CharacterDestinyEnum.DestinyUpBaseParseAttr) do
+			for iter_8_2, iter_8_3 in ipairs(iter_8_1) do
+				arg_8_0._reverseParseBaseAttrList[iter_8_3] = iter_8_0
+			end
+		end
+	end
+
+	return arg_8_0._reverseParseBaseAttrList[arg_8_1]
+end
+
 var_0_0.instance = var_0_0.New()
 
 return var_0_0

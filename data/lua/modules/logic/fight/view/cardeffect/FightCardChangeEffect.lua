@@ -74,7 +74,12 @@ function var_0_0._onLvEffectLoaded(arg_3_0, arg_3_1)
 	local var_3_0 = arg_3_0._paramDict[arg_3_1]
 	local var_3_1 = var_3_0.newCardLevel
 	local var_3_2 = var_3_0.oldCardLv
-	local var_3_3 = FightCardModel.instance:isUniqueSkill(arg_3_0._entityId, arg_3_0._skillId)
+	local var_3_3 = FightCardDataHelper.isBigSkill(arg_3_0._skillId)
+
+	if lua_skill_next.configDict[arg_3_0._skillId] then
+		var_3_3 = false
+	end
+
 	local var_3_4 = arg_3_1:getInstGO()
 	local var_3_5 = gohelper.findChild(var_3_4, "#card/normal_effect")
 	local var_3_6 = gohelper.findChild(var_3_4, "#card/ultimate_effect")

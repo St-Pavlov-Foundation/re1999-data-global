@@ -102,4 +102,30 @@ function var_0_0.onRefresh(arg_7_0)
 	gohelper.setActive(arg_7_0._goFinishedBG, var_7_2)
 end
 
+function var_0_0._refreshRewardItem(arg_8_0, arg_8_1, arg_8_2)
+	arg_8_1:setMOValue(arg_8_2[1], arg_8_2[2], arg_8_2[3])
+	arg_8_1:setCountFontSize(36)
+	arg_8_1:setHideLvAndBreakFlag(true)
+	arg_8_1:hideEquipLvAndBreak(true)
+	arg_8_1:setScale(0.75, 0.75)
+	arg_8_1:customOnClickCallback(function()
+		local var_9_0 = arg_8_0:actId()
+		local var_9_1 = arg_8_0._index
+
+		if not ActivityModel.instance:isActOnLine(var_9_0) then
+			GameFacade.showToast(ToastEnum.BattlePass)
+
+			return
+		end
+
+		if ActivityType101Model.instance:isType101RewardCouldGet(var_9_0, var_9_1) then
+			Activity101Rpc.instance:sendGet101BonusRequest(var_9_0, var_9_1)
+
+			return
+		end
+
+		MaterialTipController.instance:showMaterialInfo(arg_8_2[1], arg_8_2[2])
+	end)
+end
+
 return var_0_0

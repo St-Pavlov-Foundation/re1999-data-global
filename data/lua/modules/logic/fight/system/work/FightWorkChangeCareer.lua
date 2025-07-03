@@ -12,9 +12,9 @@ local var_0_1 = {
 
 function var_0_0.onStart(arg_1_0)
 	local var_1_0 = arg_1_0:com_registWorkDoneFlowSequence()
-	local var_1_1 = FightDataHelper.entityMgr:getById(arg_1_0._actEffectMO.targetId)
+	local var_1_1 = FightDataHelper.entityMgr:getById(arg_1_0.actEffectData.targetId)
 
-	if var_1_1 and var_1_1.career ~= arg_1_0._actEffectMO.effectNum then
+	if var_1_1 and var_1_1.career ~= arg_1_0.actEffectData.effectNum then
 		var_1_0:registWork(FightWorkFunction, arg_1_0._playCareerChange, arg_1_0)
 		var_1_0:addWork(Work2FightWork.New(FightWorkNormalDialog, FightViewDialog.Type.ChangeCareer))
 	end
@@ -23,7 +23,7 @@ function var_0_0.onStart(arg_1_0)
 end
 
 function var_0_0._playCareerChange(arg_2_0)
-	local var_2_0 = FightDataHelper.entityMgr:getById(arg_2_0._actEffectMO.targetId)
+	local var_2_0 = FightDataHelper.entityMgr:getById(arg_2_0.actEffectData.targetId)
 
 	if var_2_0 then
 		FightController.instance:dispatchEvent(FightEvent.ChangeCareer, var_2_0.id)

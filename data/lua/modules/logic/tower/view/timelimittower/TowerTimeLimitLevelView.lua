@@ -8,6 +8,7 @@ function var_0_0.onInitView(arg_1_0)
 	arg_1_0._goTaskPointContent = gohelper.findChild(arg_1_0.viewGO, "score/#go_taskPointContent")
 	arg_1_0._goTaskPointItem = gohelper.findChild(arg_1_0.viewGO, "score/#go_taskPointContent/#go_taskPointItem")
 	arg_1_0._txtscore = gohelper.findChildText(arg_1_0.viewGO, "score/#txt_score")
+	arg_1_0._txtTaskNum = gohelper.findChildText(arg_1_0.viewGO, "score/#txt_taskNum")
 	arg_1_0._btntaskClick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "score/#btn_taskClick")
 	arg_1_0._goBoss = gohelper.findChild(arg_1_0.viewGO, "root/main/boss")
 	arg_1_0._btnbossClick = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/main/boss/#btn_bossClick")
@@ -138,6 +139,11 @@ function var_0_0.initEpisodeItem(arg_11_0)
 		var_11_0.goHeroContent = gohelper.findChild(var_11_0.go, "go_finish/group/hero")
 		var_11_0.goHeroItem = gohelper.findChild(var_11_0.go, "go_finish/group/hero/heroItem")
 		var_11_0.txtScore = gohelper.findChildText(var_11_0.go, "go_finish/score/txt_score")
+		var_11_0.goScore = gohelper.findChild(var_11_0.go, "go_finish/score")
+		var_11_0.goPointContent = gohelper.findChild(var_11_0.go, "go_finish/score/go_PointContent")
+		var_11_0.goPointItem = gohelper.findChild(var_11_0.go, "go_finish/score/go_PointContent/go_PointItem")
+		var_11_0.goPointItemLight = gohelper.findChild(var_11_0.go, "go_finish/score/go_PointContent/go_PointItem/ani")
+		var_11_0.goPointItemGrey = gohelper.findChild(var_11_0.go, "go_finish/score/go_PointContent/go_PointItem/grey")
 		var_11_0.btnClick = gohelper.findChildButtonWithAudio(var_11_0.go, "click")
 
 		var_11_0.btnClick:AddClickListener(arg_11_0._btnEpisodeItemClick, arg_11_0, var_11_0)
@@ -206,216 +212,246 @@ function var_0_0.refreshEpisode(arg_15_0)
 
 		iter_15_1.txtScore.text = var_15_2
 
+		local var_15_7 = TowerConfig.instance:getScoreToStarConfig(var_15_2)
+
+		gohelper.setActive(iter_15_1.goScore, var_15_2 > 0)
+		gohelper.setActive(iter_15_1.goPointItemLight, var_15_7 > 0)
+		gohelper.setActive(iter_15_1.goPointItemGrey, var_15_7 == 0)
+
+		if var_15_7 > 0 then
+			local var_15_8 = {}
+
+			for iter_15_2 = 1, Mathf.Min(var_15_7, TowerEnum.MaxShowStarNum) do
+				table.insert(var_15_8, iter_15_2)
+			end
+
+			gohelper.CreateObjList(arg_15_0, arg_15_0.scoreStarShow, var_15_8, iter_15_1.goPointContent, iter_15_1.goPointItem)
+		end
+
 		if var_15_4 > 0 then
-			local var_15_7 = TowerConfig.instance:getAssistBossConfig(var_15_4)
-			local var_15_8 = FightConfig.instance:getSkinCO(var_15_7.skinId)
+			local var_15_9 = TowerConfig.instance:getAssistBossConfig(var_15_4)
+			local var_15_10 = FightConfig.instance:getSkinCO(var_15_9.skinId)
 
-			iter_15_1.simageEnemy:LoadImage(ResUrl.monsterHeadIcon(var_15_8.headIcon))
+			iter_15_1.simageEnemy:LoadImage(ResUrl.monsterHeadIcon(var_15_10.headIcon))
 		end
 
-		for iter_15_2, iter_15_3 in ipairs(var_15_5) do
-			if not iter_15_1.heroItemTab[iter_15_2] then
-				iter_15_1.heroItemTab[iter_15_2] = {}
-				iter_15_1.heroItemTab[iter_15_2].go = gohelper.clone(iter_15_1.goHeroItem, iter_15_1.goHeroContent, "heroItem" .. iter_15_2)
-				iter_15_1.heroItemTab[iter_15_2].simageHero = gohelper.findChildSingleImage(iter_15_1.heroItemTab[iter_15_2].go, "simage_hero")
+		for iter_15_3, iter_15_4 in ipairs(var_15_5) do
+			if not iter_15_1.heroItemTab[iter_15_3] then
+				iter_15_1.heroItemTab[iter_15_3] = {}
+				iter_15_1.heroItemTab[iter_15_3].go = gohelper.clone(iter_15_1.goHeroItem, iter_15_1.goHeroContent, "heroItem" .. iter_15_3)
+				iter_15_1.heroItemTab[iter_15_3].simageHero = gohelper.findChildSingleImage(iter_15_1.heroItemTab[iter_15_3].go, "simage_hero")
 			end
 
-			gohelper.setActive(iter_15_1.heroItemTab[iter_15_2].go, true)
+			gohelper.setActive(iter_15_1.heroItemTab[iter_15_3].go, true)
 
-			local var_15_9 = HeroModel.instance:getByHeroId(iter_15_3)
+			local var_15_11 = HeroModel.instance:getByHeroId(iter_15_4)
 
-			if var_15_9 then
-				local var_15_10 = FightConfig.instance:getSkinCO(var_15_9.skin)
+			if var_15_11 then
+				local var_15_12 = FightConfig.instance:getSkinCO(var_15_11.skin)
 
-				iter_15_1.heroItemTab[iter_15_2].simageHero:LoadImage(ResUrl.getHeadIconSmall(var_15_10.retangleIcon))
+				iter_15_1.heroItemTab[iter_15_3].simageHero:LoadImage(ResUrl.getHeadIconSmall(var_15_12.retangleIcon))
 			else
-				logError(iter_15_3 .. " 对应的heroMO不存在，请检查")
+				local var_15_13 = HeroConfig.instance:getHeroCO(iter_15_4)
+				local var_15_14 = SkinConfig.instance:getSkinCo(var_15_13.skinId)
+
+				iter_15_1.heroItemTab[iter_15_3].simageHero:LoadImage(ResUrl.getHeadIconSmall(var_15_14.retangleIcon))
 			end
 		end
 
-		for iter_15_4 = #var_15_5 + 1, #iter_15_1.heroItemTab do
-			gohelper.setActive(iter_15_1.heroItemTab[iter_15_4].go, false)
+		for iter_15_5 = #var_15_5 + 1, #iter_15_1.heroItemTab do
+			gohelper.setActive(iter_15_1.heroItemTab[iter_15_5].go, false)
 		end
 
 		arg_15_0.totalScore = arg_15_0.totalScore + var_15_2
 	end
 end
 
-function var_0_0.refreshTotalScore(arg_16_0)
-	local var_16_0 = TowerTaskModel.instance.limitTimeTaskList
+function var_0_0.scoreStarShow(arg_16_0, arg_16_1, arg_16_2, arg_16_3)
+	gohelper.setActive(arg_16_1, arg_16_3 <= arg_16_2)
+end
 
-	arg_16_0.taskFinishCount = TowerTaskModel.instance:getTaskItemRewardCount(var_16_0)
+function var_0_0.refreshTotalScore(arg_17_0)
+	local var_17_0 = TowerTaskModel.instance.limitTimeTaskList
 
-	gohelper.CreateObjList(arg_16_0, arg_16_0.taskProgressShow, var_16_0, arg_16_0._goTaskPointContent, arg_16_0._goTaskPointItem)
+	arg_17_0.taskFinishCount = TowerTaskModel.instance:getTaskItemRewardCount(var_17_0)
 
-	arg_16_0._txtscore.text = GameUtil.getSubPlaceholderLuaLang(luaLang("towertimelimit_curtotalscore"), {
-		arg_16_0.totalScore
+	gohelper.CreateObjList(arg_17_0, arg_17_0.taskProgressShow, var_17_0, arg_17_0._goTaskPointContent, arg_17_0._goTaskPointItem)
+
+	arg_17_0._txtscore.text = GameUtil.getSubPlaceholderLuaLang(luaLang("towertimelimit_curtotalscore"), {
+		arg_17_0.totalScore
 	})
+
+	local var_17_1 = TowerTaskModel.instance:getCurTaskList(TowerEnum.TowerType.Limited)
+	local var_17_2 = TowerTaskModel.instance:getTaskItemRewardCount(var_17_1)
+
+	arg_17_0._txtTaskNum.text = string.format("%s/%s", var_17_2, #var_17_1)
 end
 
-function var_0_0.taskProgressShow(arg_17_0, arg_17_1, arg_17_2, arg_17_3)
-	local var_17_0 = gohelper.findChild(arg_17_1, "go_light")
+function var_0_0.taskProgressShow(arg_18_0, arg_18_1, arg_18_2, arg_18_3)
+	local var_18_0 = gohelper.findChild(arg_18_1, "go_light")
 
-	gohelper.setActive(var_17_0, arg_17_3 <= arg_17_0.taskFinishCount)
+	gohelper.setActive(var_18_0, arg_18_3 <= arg_18_0.taskFinishCount)
 end
 
-function var_0_0.refreshRemainTime(arg_18_0)
-	local var_18_0 = TowerModel.instance:getTowerOpenInfo(TowerEnum.TowerType.Limited, arg_18_0.seasonId, TowerEnum.TowerStatus.Open).nextTime / 1000 - ServerTime.now()
-	local var_18_1 = TimeUtil.getFormatTime(var_18_0)
-	local var_18_2 = ""
+function var_0_0.refreshRemainTime(arg_19_0)
+	local var_19_0 = TowerModel.instance:getTowerOpenInfo(TowerEnum.TowerType.Limited, arg_19_0.seasonId, TowerEnum.TowerStatus.Open).nextTime / 1000 - ServerTime.now()
+	local var_19_1 = TimeUtil.getFormatTime(var_19_0)
+	local var_19_2 = ""
 
-	arg_18_0._txttime.text = var_18_0 > 0 and GameUtil.getSubPlaceholderLuaLang(luaLang("towertimelimit_refreshtime"), {
-		var_18_1,
-		var_18_2
+	arg_19_0._txttime.text = var_19_0 > 0 and GameUtil.getSubPlaceholderLuaLang(luaLang("towertimelimit_refreshtime"), {
+		var_19_1,
+		var_19_2
 	}) or ""
 end
 
-function var_0_0.refreshAssistBoss(arg_19_0)
-	local var_19_0 = TowerConfig.instance:getTowerLimitedTimeCo(arg_19_0.seasonId)
-	local var_19_1 = string.splitToNumber(var_19_0.bossPool, "#")
+function var_0_0.refreshAssistBoss(arg_20_0)
+	local var_20_0 = TowerConfig.instance:getTowerLimitedTimeCo(arg_20_0.seasonId)
+	local var_20_1 = string.splitToNumber(var_20_0.bossPool, "#")
 
-	arg_19_0.entranceBossUseMap = TowerTimeLimitLevelModel.instance:getEntranceBossUsedMap(arg_19_0.seasonId)
+	arg_20_0.entranceBossUseMap = TowerTimeLimitLevelModel.instance:getEntranceBossUsedMap(arg_20_0.seasonId)
 
-	gohelper.CreateObjList(arg_19_0, arg_19_0.bossItemShow, var_19_1, arg_19_0._gobossContent, arg_19_0._gobossItem)
+	gohelper.CreateObjList(arg_20_0, arg_20_0.bossItemShow, var_20_1, arg_20_0._gobossContent, arg_20_0._gobossItem)
 
 	if ViewMgr.instance:isOpen(ViewName.TowerAssistBossView) then
-		TowerController.instance:openAssistBossView(nil, nil, TowerEnum.TowerType.Limited, arg_19_0.seasonId)
+		TowerController.instance:openAssistBossView(nil, nil, TowerEnum.TowerType.Limited, arg_20_0.seasonId)
 	end
 end
 
-function var_0_0.bossItemShow(arg_20_0, arg_20_1, arg_20_2, arg_20_3)
-	local var_20_0 = arg_20_0.bossItemTab[arg_20_3]
+function var_0_0.bossItemShow(arg_21_0, arg_21_1, arg_21_2, arg_21_3)
+	local var_21_0 = arg_21_0.bossItemTab[arg_21_3]
 
-	if not var_20_0 then
-		var_20_0 = {}
-		arg_20_0.bossItemTab[arg_20_3] = var_20_0
+	if not var_21_0 then
+		var_21_0 = {}
+		arg_21_0.bossItemTab[arg_21_3] = var_21_0
 	end
 
-	var_20_0.go = arg_20_1
-	var_20_0.simageEnemy = gohelper.findChildSingleImage(var_20_0.go, "simage_enemy")
-	var_20_0.imageCareer = gohelper.findChildImage(var_20_0.go, "image_career")
-	var_20_0.goUsed = gohelper.findChild(var_20_0.go, "go_used")
-	var_20_0.txtOrder = gohelper.findChildText(var_20_0.go, "go_used/txt_order")
+	var_21_0.go = arg_21_1
+	var_21_0.simageEnemy = gohelper.findChildSingleImage(var_21_0.go, "simage_enemy")
+	var_21_0.imageCareer = gohelper.findChildImage(var_21_0.go, "image_career")
+	var_21_0.goUsed = gohelper.findChild(var_21_0.go, "go_used")
+	var_21_0.txtOrder = gohelper.findChildText(var_21_0.go, "go_used/txt_order")
 
-	local var_20_1 = TowerConfig.instance:getAssistBossConfig(arg_20_2)
-	local var_20_2 = FightConfig.instance:getSkinCO(var_20_1.skinId)
+	local var_21_1 = TowerConfig.instance:getAssistBossConfig(arg_21_2)
+	local var_21_2 = FightConfig.instance:getSkinCO(var_21_1.skinId)
 
-	var_20_0.simageEnemy:LoadImage(ResUrl.monsterHeadIcon(var_20_2.headIcon))
-	UISpriteSetMgr.instance:setEnemyInfoSprite(var_20_0.imageCareer, "sxy_" .. tostring(var_20_1.career))
+	var_21_0.simageEnemy:LoadImage(ResUrl.monsterHeadIcon(var_21_2.headIcon))
+	UISpriteSetMgr.instance:setEnemyInfoSprite(var_21_0.imageCareer, "sxy_" .. tostring(var_21_1.career))
 
-	local var_20_3 = 0
+	local var_21_3 = 0
 
-	for iter_20_0, iter_20_1 in pairs(arg_20_0.entranceBossUseMap) do
-		if iter_20_1 == arg_20_2 then
-			var_20_3 = iter_20_0
+	for iter_21_0, iter_21_1 in pairs(arg_21_0.entranceBossUseMap) do
+		if iter_21_1 == arg_21_2 then
+			var_21_3 = iter_21_0
 
 			break
 		end
 	end
 
-	gohelper.setActive(var_20_0.goUsed, var_20_3 > 0)
+	gohelper.setActive(var_21_0.goUsed, var_21_3 > 0)
 
-	var_20_0.txtOrder.text = var_20_3 > 0 and var_20_3 or ""
+	var_21_0.txtOrder.text = var_21_3 > 0 and var_21_3 or ""
 end
 
-function var_0_0.refreshDetailShowUI(arg_21_0)
-	gohelper.setActive(arg_21_0._godetailInfo.gameObject, arg_21_0.isOpenDetail)
-	gohelper.setActive(arg_21_0._goBoss, not arg_21_0.isOpenDetail)
-	gohelper.setActive(arg_21_0._btncloseDetail.gameObject, arg_21_0.isOpenDetail)
+function var_0_0.refreshDetailShowUI(arg_22_0)
+	gohelper.setActive(arg_22_0._godetailInfo.gameObject, arg_22_0.isOpenDetail)
+	gohelper.setActive(arg_22_0._goBoss, not arg_22_0.isOpenDetail)
+	gohelper.setActive(arg_22_0._btncloseDetail.gameObject, arg_22_0.isOpenDetail)
 
-	local var_21_0 = TowerTimeLimitLevelModel.instance.curSelectEntrance
+	local var_22_0 = TowerTimeLimitLevelModel.instance.curSelectEntrance
 
-	for iter_21_0, iter_21_1 in pairs(arg_21_0.episodeTab) do
-		gohelper.setActive(iter_21_1.goSelect, iter_21_0 == var_21_0)
+	for iter_22_0, iter_22_1 in pairs(arg_22_0.episodeTab) do
+		gohelper.setActive(iter_22_1.goSelect, iter_22_0 == var_22_0)
 	end
 end
 
-function var_0_0.playOpenAndSwitchItemAnim(arg_22_0, arg_22_1)
-	if arg_22_0.lastSelectEntranceId ~= arg_22_1.entranceId then
-		arg_22_1.anim:Play(UIAnimationName.Open, 0, 0)
+function var_0_0.playOpenAndSwitchItemAnim(arg_23_0, arg_23_1)
+	if arg_23_0.lastSelectEntranceId ~= arg_23_1.entranceId then
+		arg_23_1.anim:Play(UIAnimationName.Open, 0, 0)
 
-		if arg_22_0.isOpenDetail then
-			if arg_22_0["itemTweenId" .. arg_22_1.entranceId] then
-				ZProj.TweenHelper.KillById(arg_22_0["itemTweenId" .. arg_22_1.entranceId])
+		if arg_23_0.isOpenDetail then
+			if arg_23_0["itemTweenId" .. arg_23_1.entranceId] then
+				ZProj.TweenHelper.KillById(arg_23_0["itemTweenId" .. arg_23_1.entranceId])
 			end
 
-			arg_22_0["itemTweenId" .. arg_22_1.entranceId] = ZProj.TweenHelper.DOFadeCanvasGroup(arg_22_0.episodeTab[arg_22_1.entranceId].go, var_0_0.fadeItemAlpha, 1, var_0_0.OpenDetailTime)
+			arg_23_0["itemTweenId" .. arg_23_1.entranceId] = ZProj.TweenHelper.DOFadeCanvasGroup(arg_23_0.episodeTab[arg_23_1.entranceId].go, var_0_0.fadeItemAlpha, 1, var_0_0.OpenDetailTime)
 		end
 
-		if arg_22_0.lastSelectEntranceId ~= 0 then
-			arg_22_0.rootAnimtorPlayer:Play(UIAnimationName.Switch)
-			arg_22_0.episodeTab[arg_22_0.lastSelectEntranceId].anim:Play(UIAnimationName.Close, 0, 0)
+		if arg_23_0.lastSelectEntranceId ~= 0 then
+			arg_23_0.rootAnimtorPlayer:Play(UIAnimationName.Switch)
+			arg_23_0.episodeTab[arg_23_0.lastSelectEntranceId].anim:Play(UIAnimationName.Close, 0, 0)
 
-			if arg_22_0["itemTweenId" .. arg_22_0.lastSelectEntranceId] then
-				ZProj.TweenHelper.KillById(arg_22_0["itemTweenId" .. arg_22_0.lastSelectEntranceId])
+			if arg_23_0["itemTweenId" .. arg_23_0.lastSelectEntranceId] then
+				ZProj.TweenHelper.KillById(arg_23_0["itemTweenId" .. arg_23_0.lastSelectEntranceId])
 			end
 
-			arg_22_0["itemTweenId" .. arg_22_0.lastSelectEntranceId] = ZProj.TweenHelper.DOFadeCanvasGroup(arg_22_0.episodeTab[arg_22_0.lastSelectEntranceId].go, 1, var_0_0.fadeItemAlpha, var_0_0.closeDetailTime)
+			arg_23_0["itemTweenId" .. arg_23_0.lastSelectEntranceId] = ZProj.TweenHelper.DOFadeCanvasGroup(arg_23_0.episodeTab[arg_23_0.lastSelectEntranceId].go, 1, var_0_0.fadeItemAlpha, var_0_0.closeDetailTime)
 		end
 
-		for iter_22_0, iter_22_1 in ipairs(arg_22_0.episodeTab) do
-			if arg_22_0.lastSelectEntranceId > 0 then
-				if iter_22_0 ~= arg_22_1.entranceId and iter_22_0 ~= arg_22_0.lastSelectEntranceId then
-					iter_22_1.anim:Play(UIAnimationName.Idle, 0, 0)
+		for iter_23_0, iter_23_1 in ipairs(arg_23_0.episodeTab) do
+			if arg_23_0.lastSelectEntranceId > 0 then
+				if iter_23_0 ~= arg_23_1.entranceId and iter_23_0 ~= arg_23_0.lastSelectEntranceId then
+					iter_23_1.anim:Play(UIAnimationName.Idle, 0, 0)
 
-					iter_22_1.canvasGroup.alpha = var_0_0.fadeItemAlpha
+					iter_23_1.canvasGroup.alpha = var_0_0.fadeItemAlpha
 				end
-			elseif iter_22_0 ~= arg_22_1.entranceId then
-				if arg_22_0["itemTweenId" .. iter_22_0] then
-					ZProj.TweenHelper.KillById(arg_22_0["itemTweenId" .. iter_22_0])
+			elseif iter_23_0 ~= arg_23_1.entranceId then
+				if arg_23_0["itemTweenId" .. iter_23_0] then
+					ZProj.TweenHelper.KillById(arg_23_0["itemTweenId" .. iter_23_0])
 				end
 
-				arg_22_0["itemTweenId" .. iter_22_0] = ZProj.TweenHelper.DOFadeCanvasGroup(arg_22_0.episodeTab[iter_22_0].go, 1, var_0_0.fadeItemAlpha, var_0_0.OpenDetailTime)
+				arg_23_0["itemTweenId" .. iter_23_0] = ZProj.TweenHelper.DOFadeCanvasGroup(arg_23_0.episodeTab[iter_23_0].go, 1, var_0_0.fadeItemAlpha, var_0_0.OpenDetailTime)
 			end
 		end
 	end
 end
 
-function var_0_0.playCloseItemAnim(arg_23_0)
-	arg_23_0.episodeTab[arg_23_0.lastSelectEntranceId].anim:Play(UIAnimationName.Close, 0, 0)
+function var_0_0.playCloseItemAnim(arg_24_0)
+	arg_24_0.episodeTab[arg_24_0.lastSelectEntranceId].anim:Play(UIAnimationName.Close, 0, 0)
 
-	for iter_23_0, iter_23_1 in pairs(arg_23_0.episodeTab) do
-		if iter_23_0 ~= arg_23_0.lastSelectEntranceId then
-			if arg_23_0["itemTweenId" .. iter_23_0] then
-				ZProj.TweenHelper.KillById(arg_23_0["itemTweenId" .. iter_23_0])
+	for iter_24_0, iter_24_1 in pairs(arg_24_0.episodeTab) do
+		if iter_24_0 ~= arg_24_0.lastSelectEntranceId then
+			if arg_24_0["itemTweenId" .. iter_24_0] then
+				ZProj.TweenHelper.KillById(arg_24_0["itemTweenId" .. iter_24_0])
 			end
 
-			arg_23_0["itemTweenId" .. iter_23_0] = ZProj.TweenHelper.DOFadeCanvasGroup(iter_23_1.go, var_0_0.fadeItemAlpha, 1, var_0_0.closeToNormalTime)
+			arg_24_0["itemTweenId" .. iter_24_0] = ZProj.TweenHelper.DOFadeCanvasGroup(iter_24_1.go, var_0_0.fadeItemAlpha, 1, var_0_0.closeToNormalTime)
 		end
 	end
 end
 
-function var_0_0.setCloseOverrideFunc(arg_24_0)
-	if arg_24_0.isOpenDetail then
-		arg_24_0.viewContainer:setOverrideCloseClick(arg_24_0._btncloseDetailOnClick, arg_24_0)
+function var_0_0.setCloseOverrideFunc(arg_25_0)
+	if arg_25_0.isOpenDetail then
+		arg_25_0.viewContainer:setOverrideCloseClick(arg_25_0._btncloseDetailOnClick, arg_25_0)
 	else
-		arg_24_0.viewContainer:setOverrideCloseClick(arg_24_0.closeThis, arg_24_0)
+		arg_25_0.viewContainer:setOverrideCloseClick(arg_25_0.closeThis, arg_25_0)
 	end
 end
 
-function var_0_0.onClose(arg_25_0)
+function var_0_0.onClose(arg_26_0)
 	TowerTimeLimitLevelModel.instance:cleanData()
-	arg_25_0.rootAnimtorPlayer:Stop()
+	arg_26_0.rootAnimtorPlayer:Stop()
 
-	for iter_25_0 = 1, 3 do
-		if arg_25_0["itemTweenId" .. iter_25_0] then
-			ZProj.TweenHelper.KillById(arg_25_0["itemTweenId" .. iter_25_0])
+	for iter_26_0 = 1, 3 do
+		if arg_26_0["itemTweenId" .. iter_26_0] then
+			ZProj.TweenHelper.KillById(arg_26_0["itemTweenId" .. iter_26_0])
 		end
 	end
+
+	TowerModel.instance:cleanTrialData()
 end
 
-function var_0_0.onDestroyView(arg_26_0)
-	for iter_26_0, iter_26_1 in pairs(arg_26_0.episodeTab) do
-		iter_26_1.simageEnemy:UnLoadImage()
-		iter_26_1.btnClick:RemoveClickListener()
+function var_0_0.onDestroyView(arg_27_0)
+	for iter_27_0, iter_27_1 in pairs(arg_27_0.episodeTab) do
+		iter_27_1.simageEnemy:UnLoadImage()
+		iter_27_1.btnClick:RemoveClickListener()
 
-		for iter_26_2, iter_26_3 in pairs(iter_26_1.heroItemTab) do
-			iter_26_3.simageHero:UnLoadImage()
+		for iter_27_2, iter_27_3 in pairs(iter_27_1.heroItemTab) do
+			iter_27_3.simageHero:UnLoadImage()
 		end
 	end
 
-	for iter_26_4, iter_26_5 in pairs(arg_26_0.bossItemTab) do
-		iter_26_5.simageEnemy:UnLoadImage()
+	for iter_27_4, iter_27_5 in pairs(arg_27_0.bossItemTab) do
+		iter_27_5.simageEnemy:UnLoadImage()
 	end
 end
 

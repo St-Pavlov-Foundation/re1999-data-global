@@ -280,7 +280,7 @@ function var_0_0.getProgressByIndex(arg_27_0, arg_27_1)
 		return arg_27_0.exploreCollection
 	elseif arg_27_1 == PlayerCardEnum.LeftContent.Act148SSSCount then
 		if arg_27_0.act128SSSCount > 0 then
-			return luaLang("playercard_act128SSSCount") .. arg_27_0.act128SSSCount
+			return GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("playercard_act128SSSCount"), arg_27_0.act128SSSCount)
 		else
 			return -1
 		end
@@ -296,13 +296,13 @@ function var_0_0.getProgressByIndex(arg_27_0, arg_27_1)
 		return -1
 	elseif arg_27_1 == PlayerCardEnum.LeftContent.TowerBossPassCount then
 		if arg_27_0.towerBossPassCount > 0 then
-			return luaLang("playercard_towerbosspasscount") .. arg_27_0.towerBossPassCount
+			return GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("playercard_towerbosspasscount"), arg_27_0.towerBossPassCount)
 		else
 			return -1
 		end
 	elseif arg_27_1 == PlayerCardEnum.LeftContent.WeekwalkVer2PlatinumCup then
 		if arg_27_0.weekwalkVer2PlatinumCup >= 0 then
-			return luaLang("playercard_weekwalkVer2PlatinumCup") .. arg_27_0.weekwalkVer2PlatinumCup
+			return GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("playercard_weekwalkVer2PlatinumCup"), arg_27_0.weekwalkVer2PlatinumCup)
 		else
 			return -1
 		end
@@ -320,7 +320,9 @@ function var_0_0.getBaseInfoByIndex(arg_28_0, arg_28_1, arg_28_2)
 		if arg_28_2 then
 			return var_28_0.totalLoginDays, luaLang("time_day")
 		else
-			return var_28_0.totalLoginDays .. luaLang("time_day")
+			local var_28_1 = luaLang("time_day")
+
+			return var_28_0.totalLoginDays .. var_28_1
 		end
 	elseif arg_28_1 == PlayerCardEnum.RightContent.HeroCount then
 		return arg_28_0:getHeroCount()
@@ -335,20 +337,20 @@ function var_0_0.getBaseInfoByIndex(arg_28_0, arg_28_1, arg_28_2)
 	elseif arg_28_1 == PlayerCardEnum.RightContent.SkinCount then
 		return arg_28_0.skinCount or 0
 	elseif arg_28_1 == PlayerCardEnum.RightContent.TotalCostPower then
-		local var_28_1 = arg_28_0.totalCostPower or 0
+		local var_28_2 = arg_28_0.totalCostPower or 0
 
 		if arg_28_2 then
-			return var_28_1, luaLang("NewPlayerCardView_activity_only")
+			return var_28_2, luaLang("NewPlayerCardView_activity_only")
 		else
-			return string.format(luaLang("NewPlayerCardView_activity"), var_28_1)
+			return string.format(luaLang("NewPlayerCardView_activity"), var_28_2)
 		end
 	elseif arg_28_1 == PlayerCardEnum.RightContent.HeroCoverTimes then
-		local var_28_2 = arg_28_0.heroCoverTimes or 0
+		local var_28_3 = arg_28_0.heroCoverTimes or 0
 
 		if arg_28_2 then
-			return var_28_2, luaLang("NewPlayerCardView_times_only")
+			return var_28_3, luaLang("NewPlayerCardView_times_only")
 		else
-			return string.format(luaLang("NewPlayerCardView_times"), var_28_2)
+			return string.format(luaLang("NewPlayerCardView_times"), var_28_3)
 		end
 	end
 end

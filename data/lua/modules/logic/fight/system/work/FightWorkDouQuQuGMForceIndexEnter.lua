@@ -28,7 +28,7 @@ function var_0_0._onClearFinish(arg_3_0)
 end
 
 function var_0_0._onFightAct174Reply(arg_4_0, arg_4_1)
-	local var_4_0 = arg_4_1.fight
+	local var_4_0 = FightData.New(arg_4_1.fight)
 	local var_4_1 = arg_4_1.startRound
 
 	FightMgr.instance:startFight(var_4_0)
@@ -59,7 +59,6 @@ end
 function var_0_0._onFightAct174ReplyRound(arg_5_0, arg_5_1)
 	arg_5_0._endRound = arg_5_0._endRound - 1
 
-	FightCardModel.instance:clearCardOps()
 	FightDataHelper.paTaMgr:resetOp()
 	FightModel.instance:updateFightRound(arg_5_1.fightRound)
 
@@ -70,14 +69,13 @@ function var_0_0._onFightAct174ReplyRound(arg_5_0, arg_5_1)
 			class = true
 		}
 
-		FightDataHelper.coverData(FightLocalDataMgr.instance, FightDataMgr.instance, var_5_0)
-		FightCardModel.instance:coverCard(FightDataHelper.handCardMgr.handCard)
+		FightDataUtil.coverData(FightLocalDataMgr.instance, FightDataMgr.instance, var_5_0)
 
 		FightModel.instance._curRoundId = FightDataModel.instance.douQuQuMgr.isGMStartRound
 
 		arg_5_0:com_sendFightEvent(FightEvent.ChangeRound)
 
-		FightModel.instance:getCurRoundMO().fightStepMOs = nil
+		FightDataHelper.roundMgr:getRoundData().fightStep = nil
 
 		GameSceneMgr.instance:getCurScene().director:registRespBeginFight()
 		FightController.instance:dispatchEvent(FightEvent.RespBeginFight)

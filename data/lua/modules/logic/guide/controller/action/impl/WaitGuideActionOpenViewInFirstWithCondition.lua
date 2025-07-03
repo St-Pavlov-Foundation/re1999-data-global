@@ -136,4 +136,8 @@ function var_0_0.checkDestinyStone()
 	end
 end
 
+function var_0_0.checkTowerLimitGuideTrigger()
+	return GuideTriggerOpenViewCondition.checkTowerLimitOpen()
+end
+
 return var_0_0

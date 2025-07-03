@@ -119,10 +119,9 @@ function var_0_0._onClickStart(arg_9_0)
 		FightController.instance:dispatchEvent(FightEvent.OnUpdateSpeed)
 	end
 
-	local var_9_0 = FightRoundMO.New()
+	local var_9_0 = FightRoundData.New(FightDef_pb.FightRound())
 
-	FightModel.instance._curRoundMO = var_9_0
-	var_9_0.fightStepMOs = {}
+	FightDataHelper.roundMgr:setRoundData(var_9_0)
 
 	for iter_9_0, iter_9_1 in ipairs(arg_9_0._infos) do
 		local var_9_1 = iter_9_1.skillId
@@ -143,9 +142,9 @@ function var_0_0._onClickStart(arg_9_0)
 				var_9_4 = var_9_7[1]
 			end
 
-			local var_9_8 = SkillEditorStepBuilder.buildStepMOs(var_9_1, var_9_3, var_9_4)
+			local var_9_8 = SkillEditorStepBuilder.buildFightStepDataList(var_9_1, var_9_3, var_9_4)
 
-			tabletool.addValues(var_9_0.fightStepMOs, var_9_8)
+			tabletool.addValues(var_9_0.fightStep, var_9_8)
 		end
 	end
 
@@ -159,7 +158,7 @@ function var_0_0._onClickStart(arg_9_0)
 		arg_9_0._playSkillsFlow:addWork(WorkWaitSeconds.New(var_9_10))
 	end
 
-	local var_9_11, var_9_12 = FightStepBuilder.buildStepWorkList(var_9_0.fightStepMOs)
+	local var_9_11, var_9_12 = FightStepBuilder.buildStepWorkList(var_9_0.fightStep)
 
 	for iter_9_2, iter_9_3 in ipairs(var_9_11) do
 		arg_9_0._playSkillsFlow:addWork(iter_9_3)

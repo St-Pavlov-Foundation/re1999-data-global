@@ -14,10 +14,6 @@ function var_0_0.onConstructor(arg_1_0)
 	arg_1_0:com_registFightEvent(FightEvent.OnRoundSequenceFinish, arg_1_0._onOnRoundSequenceFinish)
 end
 
-local var_0_1 = {
-	[7253501] = "buff/buff_yinyangyu"
-}
-
 function var_0_0._isValid(arg_2_0, arg_2_1)
 	local var_2_0 = lua_skill_buff.configDict[arg_2_1]
 
@@ -27,7 +23,7 @@ function var_0_0._isValid(arg_2_0, arg_2_1)
 
 	local var_2_1 = var_2_0.typeId
 
-	if not var_0_1[var_2_1] then
+	if not lua_fight_buff_type_id_2_scene_effect.configDict[var_2_1] then
 		return
 	end
 
@@ -41,7 +37,7 @@ function var_0_0._onAddEntityBuff(arg_3_0, arg_3_1, arg_3_2)
 		return
 	end
 
-	arg_3_0:addBuff(var_3_1.typeId)
+	arg_3_0:addBuff(arg_3_1, var_3_1.typeId)
 end
 
 function var_0_0._onRemoveEntityBuff(arg_4_0, arg_4_1, arg_4_2)
@@ -54,13 +50,13 @@ function var_0_0._onRemoveEntityBuff(arg_4_0, arg_4_1, arg_4_2)
 	arg_4_0:deleteBuff(var_4_1.typeId)
 end
 
-function var_0_0.addBuff(arg_5_0, arg_5_1)
-	local var_5_0 = (arg_5_0.refCounter[arg_5_1] or 0) + 1
+function var_0_0.addBuff(arg_5_0, arg_5_1, arg_5_2)
+	local var_5_0 = (arg_5_0.refCounter[arg_5_2] or 0) + 1
 
-	arg_5_0.refCounter[arg_5_1] = var_5_0
+	arg_5_0.refCounter[arg_5_2] = var_5_0
 
 	if var_5_0 == 1 then
-		arg_5_0:addEffect(arg_5_1)
+		arg_5_0:addEffect(arg_5_1, arg_5_2)
 	end
 end
 
@@ -74,14 +70,38 @@ function var_0_0.deleteBuff(arg_6_0, arg_6_1)
 	end
 end
 
-function var_0_0.addEffect(arg_7_0, arg_7_1)
+function var_0_0.addEffect(arg_7_0, arg_7_1, arg_7_2)
 	local var_7_0 = FightHelper.getEntity(FightEntityScene.MySideId)
 
 	if not var_7_0 then
 		return
 	end
 
-	arg_7_0.effectDic[arg_7_1] = var_7_0.effect:addGlobalEffect(var_0_1[arg_7_1])
+	local var_7_1 = lua_fight_buff_type_id_2_scene_effect.configDict[arg_7_2]
+
+	if not var_7_1 then
+		return
+	end
+
+	local var_7_2 = var_7_1.effect
+	local var_7_3 = var_7_1.pos
+	local var_7_4 = var_7_3[1] or 0
+
+	if var_7_1.reverseX == 1 then
+		local var_7_5 = FightDataHelper.entityMgr:getById(arg_7_1)
+
+		if var_7_5 and var_7_5:isEnemySide() then
+			var_7_4 = -var_7_4
+		end
+	end
+
+	local var_7_6 = var_7_3[2] or 0
+	local var_7_7 = var_7_3[3] or 0
+	local var_7_8 = var_7_0.effect:addGlobalEffect(var_7_2)
+
+	var_7_8:setLocalPos(var_7_4, var_7_6, var_7_7)
+
+	arg_7_0.effectDic[arg_7_2] = var_7_8
 end
 
 function var_0_0.releaseEffect(arg_8_0, arg_8_1)
@@ -115,17 +135,13 @@ function var_0_0._onFightReconnectLastWork(arg_9_0)
 end
 
 function var_0_0._onSkillPlayStart(arg_10_0, arg_10_1, arg_10_2)
-	local var_10_0 = arg_10_1:getMO()
-
-	if var_10_0 and var_10_0:isUniqueSkill(arg_10_2) then
+	if arg_10_1:getMO() and FightCardDataHelper.isBigSkill(arg_10_2) then
 		arg_10_0:_hideEffect()
 	end
 end
 
 function var_0_0._onSkillPlayFinish(arg_11_0, arg_11_1, arg_11_2)
-	local var_11_0 = arg_11_1:getMO()
-
-	if var_11_0 and var_11_0:isUniqueSkill(arg_11_2) then
+	if arg_11_1:getMO() and FightCardDataHelper.isBigSkill(arg_11_2) then
 		arg_11_0:_showEffect()
 	end
 end
@@ -156,7 +172,7 @@ function var_0_0._onOnRoundSequenceFinish(arg_14_0)
 		for iter_14_2, iter_14_3 in pairs(var_14_2) do
 			local var_14_3 = lua_skill_buff.configDict[iter_14_3.buffId]
 
-			if var_14_3 and var_0_1[var_14_3.typeId] then
+			if var_14_3 and lua_fight_buff_type_id_2_scene_effect.configDict[var_14_3.typeId] then
 				local var_14_4 = (var_14_0[var_14_3.typeId] or 0) + 1
 
 				var_14_0[var_14_3.typeId] = var_14_4
@@ -164,7 +180,7 @@ function var_0_0._onOnRoundSequenceFinish(arg_14_0)
 		end
 	end
 
-	if FightDataHelper.findDiff(arg_14_0.refCounter, var_14_0) then
+	if FightDataUtil.findDiff(arg_14_0.refCounter, var_14_0) then
 		arg_14_0:releaseAllEffect()
 
 		arg_14_0.refCounter = {}

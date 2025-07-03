@@ -5425,11 +5425,11 @@
   },
   {
     "id": "playercard_act128SSSCount",
-    "lang": "language_10064076"
+    "lang": "language_10074546"
   },
   {
     "id": "playercard_towerbosspasscount",
-    "lang": "language_10064077"
+    "lang": "language_10074547"
   },
   {
     "id": "towerbossepisodepasscount",
@@ -5865,7 +5865,255 @@
   },
   {
     "id": "mainview_rougeactextradisplay",
-    "lang": "language_10071611"
+    "lang": "language_10019916"
+  },
+  {
+    "id": "towerbosstalentplan",
+    "lang": "language_10074548"
+  },
+  {
+    "id": "towerbossteachtitle",
+    "lang": "language_10074549"
+  },
+  {
+    "id": "towerbossteachstart",
+    "lang": "language_10061243"
+  },
+  {
+    "id": "towerbossteachpass",
+    "lang": "language_10074550"
+  },
+  {
+    "id": "towerassistbossviewtips",
+    "lang": "language_10074551"
+  },
+  {
+    "id": "achievementmainview_spgroup_journey",
+    "lang": "language_10074552"
+  },
+  {
+    "id": "achievementmainview_spgroup_weekwalk",
+    "lang": "language_10000146"
+  },
+  {
+    "id": "achievementmainview_spgroup_room",
+    "lang": "language_90001117"
+  },
+  {
+    "id": "achievementmainview_spgroup_explore",
+    "lang": "language_10000064"
+  },
+  {
+    "id": "achievementmainview_spgroup_bossrush",
+    "lang": "language_10000065"
+  },
+  {
+    "id": "achievementmainview_spgroup_tower",
+    "lang": "language_10058491"
+  },
+  {
+    "id": "towertask_act_name",
+    "lang": "language_10073417"
+  },
+  {
+    "id": "towertask_act_nameEn",
+    "lang": "language_10075393"
+  },
+  {
+    "id": "multi_num",
+    "lang": "language_10074553"
+  },
+  {
+    "id": "act191adventureview_gainreward",
+    "lang": "language_10030967"
+  },
+  {
+    "id": "act191adventureview_start",
+    "lang": "language_10074554"
+  },
+  {
+    "id": "weekday1",
+    "lang": "language_10055705"
+  },
+  {
+    "id": "weekday2",
+    "lang": "language_10055706"
+  },
+  {
+    "id": "weekday3",
+    "lang": "language_10055707"
+  },
+  {
+    "id": "weekday4",
+    "lang": "language_10003331"
+  },
+  {
+    "id": "weekday5",
+    "lang": "language_10055708"
+  },
+  {
+    "id": "weekday6",
+    "lang": "language_10055709"
+  },
+  {
+    "id": "weekday7",
+    "lang": "language_10055710"
+  },
+  {
+    "id": "lengZhou6_enemy_skill_title",
+    "lang": "language_10074555"
+  },
+  {
+    "id": "lengZhou6_skill_round",
+    "lang": "language_10074556"
+  },
+  {
+    "id": "lengZhou6_skill_round_end",
+    "lang": "language_10029645"
+  },
+  {
+    "id": "lengZhou6_enemy_skill_title_2",
+    "lang": "language_10074557"
+  },
+  {
+    "id": "warmup_radiotaskitem_day",
+    "lang": "language_10065816"
+  },
+  {
+    "id": "v2a5_challenge_currencyreplacetipsview_desc1",
+    "lang": "language_10074558"
+  },
+  {
+    "id": "v2a7_coopergarland_change_control_mode1",
+    "lang": "language_10074559"
+  },
+  {
+    "id": "v2a7_coopergarland_change_control_mode2",
+    "lang": "language_10074560"
+  },
+  {
+    "id": "v2a7_coopergarland_remove_comp",
+    "lang": "language_10074561"
+  },
+  {
+    "id": "v2a7_coopergarland_right_joystick",
+    "lang": "language_10074562"
+  },
+  {
+    "id": "v2a7_coopergarland_left_joystick",
+    "lang": "language_10074563"
+  },
+  {
+    "id": "towertask_currenthighscore_level",
+    "lang": "language_10074564"
+  },
+  {
+    "id": "towerboss_teachskill_unlock",
+    "lang": "language_10074565"
+  },
+  {
+    "id": "activitymap_hardmode_reward_count",
+    "lang": "language_10051181"
+  },
+  {
+    "id": "v2a7_lengZhou6_endLess_Lv",
+    "lang": "language_10074566"
+  },
+  {
+    "id": "v2a7_lengZhou6_endLess_activeSkill",
+    "lang": "language_10074567"
+  },
+  {
+    "id": "v2a7_lengZhou6_endLess_unActiveSkill",
+    "lang": "language_10074568"
+  },
+  {
+    "id": "common_format_level",
+    "lang": "language_10055610"
+  },
+  {
+    "id": "herogroup_groupName",
+    "lang": "language_10074569"
+  },
+  {
+    "id": "room_critter_exchange",
+    "lang": "language_10035525"
+  },
+  {
+    "id": "store_decorate_good_remain",
+    "lang": "language_10074570"
+  },
+  {
+    "id": "store_decorate_good_unlock",
+    "lang": "language_10074571"
+  },
+  {
+    "id": "MaterialTipViewPackageSkinDescFmt",
+    "lang": "language_10074572"
+  },
+  {
+    "id": "StoreSeasonCardView_not_enough_one_day",
+    "lang": "language_10074573"
+  },
+  {
+    "id": "dungeon_map_submit_new",
+    "lang": "language_10074574"
+  },
+  {
+    "id": "multiple_1",
+    "lang": "language_10074553"
+  },
+  {
+    "id": "item_characterdestinystone_second_confirm",
+    "lang": "language_10074575"
+  },
+  {
+    "id": "summon_pool_exchange",
+    "lang": "language_10074576"
+  },
+  {
+    "id": "v2a7_newbie_storyprocess_locate_item",
+    "lang": "language_10074577"
+  },
+  {
+    "id": "v2a7_newbie_storyprocess_locate_eventiterface",
+    "lang": "language_10074578"
+  },
+  {
+    "id": "v2a7_newbie_rewardclaim_texts",
+    "lang": "language_10074579"
+  },
+  {
+    "id": "v2a7_newbie_storyprocess_locate_item_finish",
+    "lang": "language_10074580"
+  },
+  {
+    "id": "Act191FetterTipView_goFetterDesc",
+    "lang": "language_10074581"
+  },
+  {
+    "id": "Act191FetterTipView_goFetterDesc_Empty1",
+    "lang": "language_10074582"
+  },
+  {
+    "id": "Act191FetterTipView_goFetterDesc_Empty2",
+    "lang": "language_10074583"
+  },
+  {
+    "id": "fightbloodpooltipview_txtdesc",
+    "lang": "language_10075392"
+  },
+  {
+    "id": "Act191SkillDescComp_replaceSkillTag_fmt",
+    "lang": "language_10065815"
+  },
+  {
+    "id": "Activity191Helper_buildDesc1",
+    "lang": "language_10075475"
+  },
+  {
+    "id": "Activity191Helper_buildDesc",
+    "lang": "language_10075476"
   },
   {
     "id": "activity188_mopup_layer",
@@ -5930,10 +6178,6 @@
   {
     "id": "PinballController_sep",
     "lang": "language_10029560"
-  },
-  {
-    "id": "warmup_radiotaskitem_day",
-    "lang": "language_10065816"
   },
   {
     "id": "Season166_2_4InformationAnalyView_consume",
@@ -6246,34 +6490,6 @@
   {
     "id": "CharacterSkillTipView_chess_residue_round_fmt",
     "lang": "language_10055704"
-  },
-  {
-    "id": "weekday1",
-    "lang": "language_10055705"
-  },
-  {
-    "id": "weekday2",
-    "lang": "language_10055706"
-  },
-  {
-    "id": "weekday3",
-    "lang": "language_10055707"
-  },
-  {
-    "id": "weekday4",
-    "lang": "language_10003331"
-  },
-  {
-    "id": "weekday5",
-    "lang": "language_10055708"
-  },
-  {
-    "id": "weekday6",
-    "lang": "language_10055709"
-  },
-  {
-    "id": "weekday7",
-    "lang": "language_10055710"
   },
   {
     "id": "OptionPackageController_checkNeedDownload",

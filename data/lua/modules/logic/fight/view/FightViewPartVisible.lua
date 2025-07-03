@@ -126,7 +126,7 @@ end
 
 function var_0_0._tweenHandCardContainerScale(arg_13_0)
 	local var_13_0 = FightWorkEffectDistributeCard.getHandCardScaleTime()
-	local var_13_1 = FightCardModel.instance:getHandCardContainerScale(arg_13_0._clothSkillExpand)
+	local var_13_1 = FightCardDataHelper.getHandCardContainerScale(arg_13_0._clothSkillExpand)
 
 	arg_13_0._scaleTweenId = ZProj.TweenHelper.DOScale(arg_13_0._handCardGO.transform, var_13_1, var_13_1, var_13_1, var_13_0)
 end

@@ -42,6 +42,7 @@ function var_0_0.addEvents(arg_3_0)
 	arg_3_0:addEventCb(FightController.instance, FightEvent.OnRoundSequenceFinish, arg_3_0._onRoundSequenceFinish, arg_3_0, LuaEventSystem.Low)
 	arg_3_0:addEventCb(FightController.instance, FightEvent.OnRoundSequenceStart, arg_3_0._onRoundSequenceStart, arg_3_0)
 	arg_3_0:addEventCb(FightController.instance, FightEvent.PushFightWave, arg_3_0._onPushFightWave, arg_3_0)
+	arg_3_0:addEventCb(FightController.instance, FightEvent.HaveNextWave, arg_3_0.onHaveNextWave, arg_3_0)
 	arg_3_0:addEventCb(FightController.instance, FightEvent.BeforeDeadEffect, arg_3_0._onEntityDead, arg_3_0)
 	arg_3_0:addEventCb(FightController.instance, FightEvent.OnSummon, arg_3_0._onSummon, arg_3_0)
 end
@@ -51,6 +52,7 @@ function var_0_0.removeEvents(arg_4_0)
 	arg_4_0:removeEventCb(FightController.instance, FightEvent.OnRoundSequenceFinish, arg_4_0._onRoundSequenceFinish, arg_4_0)
 	arg_4_0:removeEventCb(FightController.instance, FightEvent.OnRoundSequenceStart, arg_4_0._onRoundSequenceStart, arg_4_0)
 	arg_4_0:removeEventCb(FightController.instance, FightEvent.PushFightWave, arg_4_0._onPushFightWave, arg_4_0)
+	arg_4_0:removeEventCb(FightController.instance, FightEvent.HaveNextWave, arg_4_0.onHaveNextWave, arg_4_0)
 	arg_4_0:removeEventCb(FightController.instance, FightEvent.BeforeDeadEffect, arg_4_0._onEntityDead, arg_4_0)
 	arg_4_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_4_0._onCloseView, arg_4_0)
 	arg_4_0:removeEventCb(FightController.instance, FightEvent.OnSummon, arg_4_0._onSummon, arg_4_0)
@@ -60,9 +62,9 @@ end
 function var_0_0._onStartSequenceFinish(arg_5_0)
 	arg_5_0:_updateEnemyCardItems()
 
-	local var_5_0 = FightModel.instance:getCurRoundMO()
+	local var_5_0 = FightDataHelper.roundMgr:getRoundData()
 
-	arg_5_0._myActPoint = FightCardModel.instance:getCardMO().actPoint
+	arg_5_0._myActPoint = FightDataHelper.operationDataMgr.actPoint
 	arg_5_0._enemyCurrActPoint = var_5_0 and var_5_0:getEnemyActPoint() or 0
 	arg_5_0._enemyNextActPoint = arg_5_0._enemyCurrActPoint
 
@@ -88,8 +90,8 @@ function var_0_0._onRoundSequenceFinish(arg_7_0)
 
 	arg_7_0:_updateEnemyCardItems()
 
-	local var_7_0 = FightModel.instance:getCurRoundMO()
-	local var_7_1 = FightCardModel.instance:getCardMO().actPoint
+	local var_7_0 = FightDataHelper.roundMgr:getRoundData()
+	local var_7_1 = FightDataHelper.operationDataMgr.actPoint
 	local var_7_2 = var_7_0 and var_7_0:getEnemyActPoint() or 0
 
 	arg_7_0._enemyCurrActPoint = var_7_2
@@ -117,206 +119,210 @@ function var_0_0._playEffect(arg_8_0, arg_8_1)
 end
 
 function var_0_0._onRoundSequenceStart(arg_9_0)
-	local var_9_0 = FightModel.instance:getCurRoundMO()
+	local var_9_0 = FightDataHelper.roundMgr:getRoundData()
 
 	arg_9_0._enemyNextActPoint = var_9_0 and var_9_0:getEnemyActPoint() or 0
 
 	gohelper.setActive(arg_9_0._opItemContainer, false)
 end
 
-function var_0_0._onPushFightWave(arg_10_0)
-	if FightModel.instance:getNextWaveMsg() then
-		arg_10_0._enemyNextActPoint = 0
+function var_0_0.onHaveNextWave(arg_10_0)
+	arg_10_0._enemyNextActPoint = 0
+end
+
+function var_0_0._onPushFightWave(arg_11_0)
+	if FightDataHelper.cacheFightMgr:getNextFightData() then
+		arg_11_0._enemyNextActPoint = 0
 	end
 end
 
-function var_0_0._onSummon(arg_11_0, arg_11_1)
+function var_0_0._onSummon(arg_12_0, arg_12_1)
 	if not OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.FightBack) then
 		return
 	end
 
-	if not arg_11_1 or not arg_11_1:isEnemySide() then
+	if not arg_12_1 or not arg_12_1:isEnemySide() then
 		return
 	end
 
-	arg_11_0:_updateEnemyCardItems()
+	arg_12_0:_updateEnemyCardItems()
 end
 
-function var_0_0._onEntityDead(arg_12_0, arg_12_1)
-	arg_12_0._minusCount = arg_12_0._minusCount or 0
+function var_0_0._onEntityDead(arg_13_0, arg_13_1)
+	arg_13_0._minusCount = arg_13_0._minusCount or 0
 
-	local var_12_0 = FightDataHelper.entityMgr:getById(arg_12_1)
+	local var_13_0 = FightDataHelper.entityMgr:getById(arg_13_1)
 
-	if not var_12_0 then
+	if not var_13_0 then
 		return
 	end
 
-	if var_12_0.side == FightEnum.EntitySide.MySide then
-		arg_12_0._mySideDead = true
-	elseif var_12_0.side == FightEnum.EntitySide.EnemySide then
-		arg_12_0._enemySideDead = true
+	if var_13_0.side == FightEnum.EntitySide.MySide then
+		arg_13_0._mySideDead = true
+	elseif var_13_0.side == FightEnum.EntitySide.EnemySide then
+		arg_13_0._enemySideDead = true
 
 		if FightHelper.isAllEntityDead(FightEnum.EntitySide.EnemySide) then
-			arg_12_0._minusCount = arg_12_0._enemyCurrActPoint
+			arg_13_0._minusCount = arg_13_0._enemyCurrActPoint
 		else
-			arg_12_0._minusCount = arg_12_0._minusCount + arg_12_0:_calcMinusCount(arg_12_1)
+			arg_13_0._minusCount = arg_13_0._minusCount + arg_13_0:_calcMinusCount(arg_13_1)
 		end
 	end
 
 	if FightSkillMgr.instance:isPlayingAnyTimeline() then
-		arg_12_0:addEventCb(FightController.instance, FightEvent.OnSkillPlayFinish, arg_12_0._onSkillFinishDoActPoint, arg_12_0)
+		arg_13_0:addEventCb(FightController.instance, FightEvent.OnSkillPlayFinish, arg_13_0._onSkillFinishDoActPoint, arg_13_0)
 	else
-		arg_12_0:_onDeadPlayActPointEffect()
+		arg_13_0:_onDeadPlayActPointEffect()
 	end
 end
 
-function var_0_0._onSkillFinishDoActPoint(arg_13_0)
-	arg_13_0:removeEventCb(FightController.instance, FightEvent.OnSkillPlayFinish, arg_13_0._onSkillFinishDoActPoint, arg_13_0)
-	arg_13_0:_onDeadPlayActPointEffect()
+function var_0_0._onSkillFinishDoActPoint(arg_14_0)
+	arg_14_0:removeEventCb(FightController.instance, FightEvent.OnSkillPlayFinish, arg_14_0._onSkillFinishDoActPoint, arg_14_0)
+	arg_14_0:_onDeadPlayActPointEffect()
 end
 
-function var_0_0._onDeadPlayActPointEffect(arg_14_0)
+function var_0_0._onDeadPlayActPointEffect(arg_15_0)
 	if not OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.FightBack) then
 		return
 	end
 
-	if arg_14_0._minusCount and arg_14_0._minusCount > 0 then
-		local var_14_0
+	if arg_15_0._minusCount and arg_15_0._minusCount > 0 then
+		local var_15_0
 
-		if arg_14_0._enemyActBreakFlow.status == WorkStatus.Running then
-			var_14_0 = arg_14_0._enemyActBreakFlow.context
+		if arg_15_0._enemyActBreakFlow.status == WorkStatus.Running then
+			var_15_0 = arg_15_0._enemyActBreakFlow.context
 
-			arg_14_0._enemyActBreakFlow:stop()
+			arg_15_0._enemyActBreakFlow:stop()
 
-			var_14_0.enemyHasDeadEntity = arg_14_0._enemySideDead
-			var_14_0.enemyNowActPoint = var_14_0.enemyNowActPoint - arg_14_0._minusCount
-			var_14_0.enemyBreakActPoint = var_14_0.enemyBreakActPoint + arg_14_0._minusCount
+			var_15_0.enemyHasDeadEntity = arg_15_0._enemySideDead
+			var_15_0.enemyNowActPoint = var_15_0.enemyNowActPoint - arg_15_0._minusCount
+			var_15_0.enemyBreakActPoint = var_15_0.enemyBreakActPoint + arg_15_0._minusCount
 		else
-			var_14_0 = {
-				enemyHasDeadEntity = arg_14_0._enemySideDead,
-				enemyNowActPoint = arg_14_0._enemyCurrActPoint - arg_14_0._minusCount,
-				enemyBreakActPoint = arg_14_0._minusCount
+			var_15_0 = {
+				enemyHasDeadEntity = arg_15_0._enemySideDead,
+				enemyNowActPoint = arg_15_0._enemyCurrActPoint - arg_15_0._minusCount,
+				enemyBreakActPoint = arg_15_0._minusCount
 			}
 		end
 
-		var_14_0.viewGO = arg_14_0.viewGO
+		var_15_0.viewGO = arg_15_0.viewGO
 
-		arg_14_0._enemyActBreakFlow:registerDoneListener(arg_14_0._onEnemyActBreakDone, arg_14_0)
-		arg_14_0._enemyActBreakFlow:start(var_14_0)
-		gohelper.setActive(arg_14_0._opItemContainer, false)
+		arg_15_0._enemyActBreakFlow:registerDoneListener(arg_15_0._onEnemyActBreakDone, arg_15_0)
+		arg_15_0._enemyActBreakFlow:start(var_15_0)
+		gohelper.setActive(arg_15_0._opItemContainer, false)
 
-		arg_14_0._enemyCurrActPoint = arg_14_0._enemyCurrActPoint - arg_14_0._minusCount
+		arg_15_0._enemyCurrActPoint = arg_15_0._enemyCurrActPoint - arg_15_0._minusCount
 
-		if arg_14_0._enemySideDead then
+		if arg_15_0._enemySideDead then
 			AudioMgr.instance:trigger(AudioEnum.UI.play_buff_disappear_grid)
 		end
 	end
 
-	arg_14_0._minusCount = nil
+	arg_15_0._minusCount = nil
 end
 
-function var_0_0._calcMinusCount(arg_15_0, arg_15_1)
-	local var_15_0 = FightDataHelper.entityMgr:getById(arg_15_1)
+function var_0_0._calcMinusCount(arg_16_0, arg_16_1)
+	local var_16_0 = FightDataHelper.entityMgr:getById(arg_16_1)
 
-	if not var_15_0 or var_15_0.side ~= FightEnum.EntitySide.EnemySide then
+	if not var_16_0 or var_16_0.side ~= FightEnum.EntitySide.EnemySide then
 		return 0
 	end
 
-	local var_15_1 = 1
-	local var_15_2 = FightHelper.buildSkills(var_15_0.modelId)
-	local var_15_3 = var_15_2 and #var_15_2 or 0
+	local var_16_1 = 1
+	local var_16_2 = FightHelper.buildSkills(var_16_0.modelId)
+	local var_16_3 = var_16_2 and #var_16_2 or 0
 
-	for iter_15_0 = 1, var_15_3 do
-		local var_15_4 = var_15_2[iter_15_0]
-		local var_15_5 = lua_skill.configDict[var_15_4]
+	for iter_16_0 = 1, var_16_3 do
+		local var_16_4 = var_16_2[iter_16_0]
+		local var_16_5 = lua_skill.configDict[var_16_4]
 
-		if var_15_5 then
-			for iter_15_1 = 1, FightEnum.MaxBehavior do
-				local var_15_6 = var_15_5["behavior" .. iter_15_1]
+		if var_16_5 then
+			for iter_16_1 = 1, FightEnum.MaxBehavior do
+				local var_16_6 = var_16_5["behavior" .. iter_16_1]
 
-				if not string.nilorempty(var_15_6) then
-					local var_15_7 = FightStrUtil.instance:getSplitToNumberCache(var_15_6, "#")
+				if not string.nilorempty(var_16_6) then
+					local var_16_7 = FightStrUtil.instance:getSplitToNumberCache(var_16_6, "#")
 
-					if var_15_7[1] == 50006 then
-						var_15_1 = var_15_1 + (var_15_7[2] or 0)
+					if var_16_7[1] == 50006 then
+						var_16_1 = var_16_1 + (var_16_7[2] or 0)
 					end
 				end
 			end
 		end
 	end
 
-	if arg_15_0._enemyCurrActPoint - var_15_1 >= arg_15_0._enemyNextActPoint then
-		return var_15_1
+	if arg_16_0._enemyCurrActPoint - var_16_1 >= arg_16_0._enemyNextActPoint then
+		return var_16_1
 	else
-		return arg_15_0._enemyCurrActPoint - arg_15_0._enemyNextActPoint
+		return arg_16_0._enemyCurrActPoint - arg_16_0._enemyNextActPoint
 	end
 end
 
-function var_0_0._onEnemyActBreakDone(arg_16_0)
-	gohelper.setActive(arg_16_0._opItemContainer, false)
+function var_0_0._onEnemyActBreakDone(arg_17_0)
+	gohelper.setActive(arg_17_0._opItemContainer, false)
 end
 
-function var_0_0._updateEnemyCardItems(arg_17_0)
-	local var_17_0 = FightModel.instance:getCurRoundMO()
+function var_0_0._updateEnemyCardItems(arg_18_0)
+	local var_18_0 = FightDataHelper.roundMgr:getRoundData()
 
-	if not var_17_0 then
+	if not var_18_0 then
 		return
 	end
 
-	local var_17_1 = var_17_0:getAIUseCardMOList()
-	local var_17_2 = var_17_1 and #var_17_1 or 0
+	local var_18_1 = var_18_0:getAIUseCardMOList()
+	local var_18_2 = var_18_1 and #var_18_1 or 0
 
-	for iter_17_0 = 1, var_17_2 do
-		local var_17_3 = var_17_1[iter_17_0]
-		local var_17_4 = arg_17_0._opItemList[iter_17_0]
+	for iter_18_0 = 1, var_18_2 do
+		local var_18_3 = var_18_1[iter_18_0]
+		local var_18_4 = arg_18_0._opItemList[iter_18_0]
 
-		if not var_17_4 then
-			local var_17_5 = gohelper.cloneInPlace(arg_17_0._opItemGO, "item" .. iter_17_0)
-			local var_17_6 = gohelper.findChild(var_17_5, "op")
+		if not var_18_4 then
+			local var_18_5 = gohelper.cloneInPlace(arg_18_0._opItemGO, "item" .. iter_18_0)
+			local var_18_6 = gohelper.findChild(var_18_5, "op")
 
-			var_17_4 = MonoHelper.addNoUpdateLuaComOnceToGo(var_17_6, FightOpItem)
+			var_18_4 = MonoHelper.addNoUpdateLuaComOnceToGo(var_18_6, FightOpItem)
 
-			table.insert(arg_17_0._opItemList, var_17_4)
+			table.insert(arg_18_0._opItemList, var_18_4)
 		end
 
-		local var_17_7 = var_17_4.go.transform.parent.gameObject
-		local var_17_8 = {
-			longPress = SLFramework.UGUI.UILongPressListener.Get(var_17_7),
-			clickUp = SLFramework.UGUI.UIClickListener.Get(var_17_7)
+		local var_18_7 = var_18_4.go.transform.parent.gameObject
+		local var_18_8 = {
+			longPress = SLFramework.UGUI.UILongPressListener.Get(var_18_7),
+			clickUp = SLFramework.UGUI.UIClickListener.Get(var_18_7)
 		}
 
-		var_17_8.longPress:AddLongPressListener(arg_17_0._showEnemyCardTip, arg_17_0)
-		var_17_8.clickUp:AddClickUpListener(arg_17_0._onEnemyCardClickUp, arg_17_0)
+		var_18_8.longPress:AddLongPressListener(arg_18_0._showEnemyCardTip, arg_18_0)
+		var_18_8.clickUp:AddClickUpListener(arg_18_0._onEnemyCardClickUp, arg_18_0)
 
-		arg_17_0._longPressTab[iter_17_0] = var_17_8
+		arg_18_0._longPressTab[iter_18_0] = var_18_8
 
-		gohelper.setActive(var_17_7, true)
-		var_17_4:updateCardInfoMO(var_17_3)
-		gohelper.setActive(var_17_4.go, false)
+		gohelper.setActive(var_18_7, true)
+		var_18_4:updateCardInfoMO(var_18_3)
+		gohelper.setActive(var_18_4.go, false)
 	end
 
-	for iter_17_1 = var_17_2 + 1, #arg_17_0._opItemList do
-		local var_17_9 = arg_17_0._opItemList[iter_17_1].go.transform.parent.gameObject
+	for iter_18_1 = var_18_2 + 1, #arg_18_0._opItemList do
+		local var_18_9 = arg_18_0._opItemList[iter_18_1].go.transform.parent.gameObject
 
-		gohelper.setActive(var_17_9, false)
+		gohelper.setActive(var_18_9, false)
 	end
 end
 
-function var_0_0._showEnemyCardTip(arg_18_0)
-	local var_18_0 = FightModel.instance:getCurRoundMO():getAIUseCardMOList()
-	local var_18_1 = var_18_0 and #var_18_0 or 0
-	local var_18_2 = recthelper.getAnchorX(arg_18_0._opItemList[var_18_1].go.transform.parent)
-	local var_18_3 = recthelper.getAnchorY(arg_18_0._opItemList[var_18_1].go.transform.parent)
+function var_0_0._showEnemyCardTip(arg_19_0)
+	local var_19_0 = FightDataHelper.roundMgr:getRoundData():getAIUseCardMOList()
+	local var_19_1 = var_19_0 and #var_19_0 or 0
+	local var_19_2 = recthelper.getAnchorX(arg_19_0._opItemList[var_19_1].go.transform.parent)
+	local var_19_3 = recthelper.getAnchorY(arg_19_0._opItemList[var_19_1].go.transform.parent)
 
-	recthelper.setAnchor(arg_18_0._enemyCardTip.transform, var_18_2 + 31, var_18_3 + 7.5)
+	recthelper.setAnchor(arg_19_0._enemyCardTip.transform, var_19_2 + 31, var_19_3 + 7.5)
 
-	arg_18_0._txtActionCount.text = var_18_1
+	arg_19_0._txtActionCount.text = var_19_1
 
-	gohelper.setActive(arg_18_0._enemyCardTip, true)
+	gohelper.setActive(arg_19_0._enemyCardTip, true)
 end
 
-function var_0_0._onEnemyCardClickUp(arg_19_0)
-	gohelper.setActive(arg_19_0._enemyCardTip, false)
+function var_0_0._onEnemyCardClickUp(arg_20_0)
+	gohelper.setActive(arg_20_0._enemyCardTip, false)
 end
 
 return var_0_0

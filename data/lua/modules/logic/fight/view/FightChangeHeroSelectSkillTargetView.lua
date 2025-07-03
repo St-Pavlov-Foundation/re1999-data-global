@@ -72,7 +72,7 @@ function var_0_0.onOpen(arg_9_0)
 			arg_9_0:closeThis()
 		end
 	else
-		FightRpc.instance:sendChangeSubHeroExSkillRequest(FightCardModel.instance.curSelectEntityId)
+		FightRpc.instance:sendChangeSubHeroExSkillRequest(FightDataHelper.operationDataMgr.curSelectEntityId)
 	end
 end
 

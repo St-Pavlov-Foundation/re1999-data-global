@@ -1,0 +1,252 @@
+[
+  {
+    "monsterId": 6270001,
+    "skillLevel": 1,
+    "desc": "language_10072989"
+  },
+  {
+    "monsterId": 6270001,
+    "skillLevel": 2,
+    "desc": "language_10072990"
+  },
+  {
+    "monsterId": 6270001,
+    "skillLevel": 3,
+    "desc": "language_10072991"
+  },
+  {
+    "monsterId": 6270001,
+    "skillLevel": 4,
+    "desc": "language_10072992"
+  },
+  {
+    "monsterId": 6270001,
+    "skillLevel": 5,
+    "desc": "language_10072993"
+  },
+  {
+    "monsterId": 6270002,
+    "skillLevel": 1,
+    "desc": "language_10072994"
+  },
+  {
+    "monsterId": 6270002,
+    "skillLevel": 2,
+    "desc": "language_10072995"
+  },
+  {
+    "monsterId": 6270002,
+    "skillLevel": 3,
+    "desc": "language_10072996"
+  },
+  {
+    "monsterId": 6270002,
+    "skillLevel": 4,
+    "desc": "language_10072997"
+  },
+  {
+    "monsterId": 6270002,
+    "skillLevel": 5,
+    "desc": "language_10072998"
+  },
+  {
+    "monsterId": 6270003,
+    "skillLevel": 1,
+    "desc": "language_10017601"
+  },
+  {
+    "monsterId": 6270003,
+    "skillLevel": 2,
+    "desc": "language_10017602"
+  },
+  {
+    "monsterId": 6270003,
+    "skillLevel": 3,
+    "desc": "language_10017603"
+  },
+  {
+    "monsterId": 6270003,
+    "skillLevel": 4,
+    "desc": "language_10017604"
+  },
+  {
+    "monsterId": 6270003,
+    "skillLevel": 5,
+    "desc": "language_10017605"
+  },
+  {
+    "monsterId": 6270004,
+    "skillLevel": 1,
+    "desc": "language_10017601"
+  },
+  {
+    "monsterId": 6270004,
+    "skillLevel": 2,
+    "desc": "language_10017602"
+  },
+  {
+    "monsterId": 6270004,
+    "skillLevel": 3,
+    "desc": "language_10017603"
+  },
+  {
+    "monsterId": 6270004,
+    "skillLevel": 4,
+    "desc": "language_10017604"
+  },
+  {
+    "monsterId": 6270004,
+    "skillLevel": 5,
+    "desc": "language_10017605"
+  },
+  {
+    "monsterId": 6270005,
+    "skillLevel": 1,
+    "desc": "language_10072999"
+  },
+  {
+    "monsterId": 6270005,
+    "skillLevel": 2,
+    "desc": "language_10073000"
+  },
+  {
+    "monsterId": 6270005,
+    "skillLevel": 3,
+    "desc": "language_10017655"
+  },
+  {
+    "monsterId": 6270005,
+    "skillLevel": 4,
+    "desc": "language_10073001"
+  },
+  {
+    "monsterId": 6270005,
+    "skillLevel": 5,
+    "desc": "language_10073002"
+  },
+  {
+    "monsterId": 6270006,
+    "skillLevel": 1,
+    "desc": "language_10017601"
+  },
+  {
+    "monsterId": 6270006,
+    "skillLevel": 2,
+    "desc": "language_10017602"
+  },
+  {
+    "monsterId": 6270006,
+    "skillLevel": 3,
+    "desc": "language_10017603"
+  },
+  {
+    "monsterId": 6270006,
+    "skillLevel": 4,
+    "desc": "language_10017604"
+  },
+  {
+    "monsterId": 6270006,
+    "skillLevel": 5,
+    "desc": "language_10017605"
+  },
+  {
+    "monsterId": 6270007,
+    "skillLevel": 1,
+    "desc": "language_10017601"
+  },
+  {
+    "monsterId": 6270007,
+    "skillLevel": 2,
+    "desc": "language_10017602"
+  },
+  {
+    "monsterId": 6270007,
+    "skillLevel": 3,
+    "desc": "language_10017603"
+  },
+  {
+    "monsterId": 6270007,
+    "skillLevel": 4,
+    "desc": "language_10017604"
+  },
+  {
+    "monsterId": 6270007,
+    "skillLevel": 5,
+    "desc": "language_10017605"
+  },
+  {
+    "monsterId": 6270008,
+    "skillLevel": 1,
+    "desc": "language_10073003"
+  },
+  {
+    "monsterId": 6270008,
+    "skillLevel": 2,
+    "desc": "language_10073004"
+  },
+  {
+    "monsterId": 6270008,
+    "skillLevel": 3,
+    "desc": "language_10073005"
+  },
+  {
+    "monsterId": 6270008,
+    "skillLevel": 4,
+    "desc": "language_10017725"
+  },
+  {
+    "monsterId": 6270008,
+    "skillLevel": 5,
+    "desc": "language_10073006"
+  },
+  {
+    "monsterId": 6270009,
+    "skillLevel": 1,
+    "desc": "language_10017601"
+  },
+  {
+    "monsterId": 6270009,
+    "skillLevel": 2,
+    "desc": "language_10017602"
+  },
+  {
+    "monsterId": 6270009,
+    "skillLevel": 3,
+    "desc": "language_10017603"
+  },
+  {
+    "monsterId": 6270009,
+    "skillLevel": 4,
+    "desc": "language_10017604"
+  },
+  {
+    "monsterId": 6270009,
+    "skillLevel": 5,
+    "desc": "language_10017605"
+  },
+  {
+    "monsterId": 6270010,
+    "skillLevel": 1,
+    "desc": "language_10073003"
+  },
+  {
+    "monsterId": 6270010,
+    "skillLevel": 2,
+    "desc": "language_10073007"
+  },
+  {
+    "monsterId": 6270010,
+    "skillLevel": 3,
+    "desc": "language_10017655"
+  },
+  {
+    "monsterId": 6270010,
+    "skillLevel": 4,
+    "desc": "language_10073008"
+  },
+  {
+    "monsterId": 6270010,
+    "skillLevel": 5,
+    "desc": "language_10073009"
+  }
+]

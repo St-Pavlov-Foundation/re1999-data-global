@@ -394,6 +394,60 @@ function var_0_0.getIsDrawing(arg_24_0)
 	return arg_24_0._isDrawing
 end
 
+function var_0_0.getSummonFullExSkillHero(arg_25_0, arg_25_1, arg_25_2)
+	local var_25_0 = SummonConfig.instance:getSummonPool(arg_25_1)
+	local var_25_1 = {}
+
+	if var_25_0 and not string.nilorempty(var_25_0.upWeight) then
+		local var_25_2 = string.split(var_25_0.upWeight, "|")
+
+		table.insert(var_25_1, tonumber(var_25_2[1]))
+	end
+
+	if arg_25_2 ~= nil and #arg_25_2 > 0 then
+		var_25_1 = arg_25_2
+	end
+
+	for iter_25_0 = 1, #var_25_1 do
+		local var_25_3 = var_25_1[iter_25_0]
+		local var_25_4 = 0
+		local var_25_5 = HeroModel.instance:getByHeroId(var_25_3)
+
+		if var_25_5 then
+			var_25_4 = var_25_5.exSkillLevel
+
+			if var_25_4 >= 5 then
+				return var_25_3
+			end
+		end
+
+		local var_25_6 = SkillConfig.instance:getheroexskillco(var_25_3)
+		local var_25_7 = 0
+		local var_25_8
+		local var_25_9
+
+		for iter_25_1 = 1, #var_25_6 do
+			if var_25_4 < iter_25_1 then
+				local var_25_10 = var_25_6[iter_25_1]
+
+				if var_25_10 then
+					local var_25_11 = string.splitToNumber(var_25_10.consume, "#")
+
+					var_25_9 = var_25_11[1]
+					var_25_8 = var_25_11[2]
+					var_25_7 = var_25_11[3] + var_25_7
+				end
+			end
+		end
+
+		if var_25_8 and var_25_9 and var_25_7 <= ItemModel.instance:getItemQuantity(var_25_9, var_25_8) then
+			return var_25_3
+		end
+	end
+
+	return nil
+end
+
 var_0_0.instance = var_0_0.New()
 
 return var_0_0

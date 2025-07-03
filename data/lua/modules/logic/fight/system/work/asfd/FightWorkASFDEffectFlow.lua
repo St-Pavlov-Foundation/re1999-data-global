@@ -3,12 +3,11 @@
 local var_0_0 = class("FightWorkASFDEffectFlow", BaseWork)
 
 function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.stepMo = arg_1_1
-	arg_1_0._fightStepMO = arg_1_1
+	arg_1_0.fightStepData = arg_1_1
 end
 
 function var_0_0.onStart(arg_2_0)
-	local var_2_0 = FightStepBuilder._buildEffectWorks(arg_2_0.stepMo)
+	local var_2_0 = FightStepBuilder._buildEffectWorks(arg_2_0.fightStepData)
 
 	arg_2_0.stepWork = var_2_0 and var_2_0[1]
 

@@ -1,13 +1,13 @@
 ﻿module("modules.logic.fight.entity.comp.skill.FightTLEventSceneMove", package.seeall)
 
-local var_0_0 = class("FightTLEventSceneMove")
+local var_0_0 = class("FightTLEventSceneMove", FightTimelineTrackItem)
 
 var_0_0.MoveType = {
 	Revert = 2,
 	Move = 1
 }
 
-function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 	arg_1_0.moveType = tonumber(arg_1_3[1])
 	arg_1_0.easeType = tonumber(arg_1_3[3])
 
@@ -83,36 +83,27 @@ function var_0_0.onRevertCallback(arg_5_0)
 	end
 end
 
-function var_0_0.onSkillEnd(arg_6_0)
+function var_0_0.onTrackEnd(arg_6_0)
 	return
 end
 
-function var_0_0.handleSkillEventEnd(arg_7_0)
-	return
-end
+function var_0_0.clearTween(arg_7_0)
+	if arg_7_0.tweenId then
+		ZProj.TweenHelper.KillById(arg_7_0.tweenId)
 
-function var_0_0.clearTween(arg_8_0)
-	if arg_8_0.tweenId then
-		ZProj.TweenHelper.KillById(arg_8_0.tweenId)
-
-		arg_8_0.tweenId = nil
+		arg_7_0.tweenId = nil
 	end
 end
 
-function var_0_0.clearData(arg_9_0)
-	arg_9_0.moveType = nil
-	arg_9_0.targetPos = nil
-	arg_9_0.easeType = nil
+function var_0_0.clearData(arg_8_0)
+	arg_8_0.moveType = nil
+	arg_8_0.targetPos = nil
+	arg_8_0.easeType = nil
 end
 
-function var_0_0.reset(arg_10_0)
-	arg_10_0:clearTween()
-	arg_10_0:clearData()
-end
-
-function var_0_0.dispose(arg_11_0)
-	arg_11_0:clearTween()
-	arg_11_0:clearData()
+function var_0_0.onDestructor(arg_9_0)
+	arg_9_0:clearTween()
+	arg_9_0:clearData()
 end
 
 return var_0_0

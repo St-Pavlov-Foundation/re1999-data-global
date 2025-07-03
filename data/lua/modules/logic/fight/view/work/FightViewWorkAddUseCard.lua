@@ -90,7 +90,7 @@ function var_0_0.checkCanPlayAppearEffect(arg_2_0, arg_2_1)
 		return false
 	end
 
-	if arg_2_1.custom_fromSkillId and FightHeroALFComp.ALFSkillDict[arg_2_1.custom_fromSkillId] then
+	if arg_2_1.clientData.custom_fromSkillId and FightHeroALFComp.ALFSkillDict[arg_2_1.clientData.custom_fromSkillId] then
 		return false
 	end
 

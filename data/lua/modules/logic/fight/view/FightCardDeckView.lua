@@ -90,10 +90,7 @@ function var_0_0._onGetFightCardDeckInfoReply(arg_11_0, arg_11_1)
 	local var_11_0 = {}
 
 	for iter_11_0, iter_11_1 in ipairs(arg_11_1.deckInfos) do
-		local var_11_1 = FightCardInfoMO.New()
-
-		var_11_1:init(iter_11_1)
-
+		local var_11_1 = FightCardInfoData.New(iter_11_1)
 		local var_11_2 = var_11_1.uid
 		local var_11_3 = var_11_0[var_11_2]
 

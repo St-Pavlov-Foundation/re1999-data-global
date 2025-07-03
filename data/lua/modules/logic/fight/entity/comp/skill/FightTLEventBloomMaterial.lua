@@ -1,8 +1,8 @@
 ﻿module("modules.logic.fight.entity.comp.skill.FightTLEventBloomMaterial", package.seeall)
 
-local var_0_0 = class("FightTLEventBloomMaterial")
+local var_0_0 = class("FightTLEventBloomMaterial", FightTimelineTrackItem)
 
-function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 	local var_1_0 = arg_1_3[1]
 	local var_1_1 = arg_1_3[2]
 
@@ -30,7 +30,7 @@ function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 	arg_1_0:_setPassEnable(true)
 end
 
-function var_0_0.handleSkillEventEnd(arg_2_0)
+function var_0_0.onTrackEnd(arg_2_0)
 	arg_2_0:_clear()
 end
 
@@ -46,18 +46,14 @@ function var_0_0._setPassEnable(arg_3_0, arg_3_1)
 	end
 end
 
-function var_0_0.reset(arg_4_0)
-	arg_4_0:_clear()
+function var_0_0._clear(arg_4_0)
+	arg_4_0:_setPassEnable(false)
+
+	arg_4_0._targetEntitys = nil
 end
 
-function var_0_0.dispose(arg_5_0)
+function var_0_0.onDestructor(arg_5_0)
 	arg_5_0:_clear()
-end
-
-function var_0_0._clear(arg_6_0)
-	arg_6_0:_setPassEnable(false)
-
-	arg_6_0._targetEntitys = nil
 end
 
 return var_0_0

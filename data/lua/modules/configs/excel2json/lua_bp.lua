@@ -2,7 +2,7 @@
 
 local var_0_0 = {}
 local var_0_1 = {
-	isSp = 19,
+	isSp = 17,
 	name = 7,
 	chargeId2 = 3,
 	bpSkinEnNametxt = 12,
@@ -14,13 +14,13 @@ local var_0_1 = {
 	chargeId1to2 = 4,
 	bpviewpos = 14,
 	showBonus = 15,
-	weekLimitTimes = 17,
+	weekLimitTimes = 18,
 	bpSkinDesc = 10,
 	bpSkinNametxt = 11,
 	expLevelUp = 9,
 	payStatus1Bonus = 5,
 	payStatus2AddLevel = 8,
-	expUpShow = 18
+	expUpShow = 19
 }
 local var_0_2 = {
 	"bpId"

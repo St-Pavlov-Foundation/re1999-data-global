@@ -332,14 +332,19 @@ function var_0_0._onSetJumpItem(arg_20_0, arg_20_1, arg_20_2, arg_20_3)
 
 		local var_20_5 = var_20_0.data.probability
 		local var_20_6 = var_20_4 and var_20_5 and MaterialEnum.JumpProbabilityDisplay[var_20_5]
+		local var_20_7 = ""
 
-		var_20_0.txtProbability.text = var_20_6 and string.format("%s", luaLang(MaterialEnum.JumpProbabilityDisplay[var_20_5])) or ""
+		if var_20_6 then
+			local var_20_8 = luaLang(MaterialEnum.JumpProbabilityDisplay[var_20_5])
+		end
+
+		var_20_0.txtProbability.text = var_20_5
 
 		gohelper.setActive(var_20_0.probabilityBg, var_20_6 and true or false)
 
-		local var_20_7 = JumpController.instance:isOnlyShowJump(var_20_0.jumpId)
+		local var_20_9 = JumpController.instance:isOnlyShowJump(var_20_0.jumpId)
 
-		gohelper.setActive(var_20_0.hasJump, not var_20_7)
+		gohelper.setActive(var_20_0.hasJump, not var_20_9)
 
 		if JumpController.instance:isJumpOpen(var_20_0.jumpId) then
 			var_20_0.cantJumpTips, var_20_0.cantJumpParam = JumpController.instance:cantJump(var_20_1.param)

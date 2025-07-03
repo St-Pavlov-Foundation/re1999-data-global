@@ -42,7 +42,7 @@ function var_0_0.onReceiveBuyGoodsReply(arg_4_0, arg_4_1, arg_4_2)
 
 		table.insert(var_4_0, arg_4_2.storeId)
 
-		if arg_4_2.storeId ~= StoreEnum.SubRoomNew and arg_4_2.storeId ~= StoreEnum.SubRoomOld then
+		if arg_4_2.storeId ~= StoreEnum.StoreId.NewRoomStore and arg_4_2.storeId ~= StoreEnum.StoreId.OldRoomStore then
 			var_0_0.instance:sendGetStoreInfosRequest(var_4_0)
 		end
 

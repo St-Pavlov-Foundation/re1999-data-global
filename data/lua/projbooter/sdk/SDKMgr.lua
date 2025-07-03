@@ -600,7 +600,7 @@ function var_0_0.getUserInfo(arg_92_0)
 end
 
 function var_0_0.getUserInfoExtraParams(arg_93_0)
-	local var_93_0 = cjson.decode(arg_93_0:getUserInfo()).extraJson
+	local var_93_0 = cjson.decode(arg_93_0:getUserInfo() or "{}").extraJson
 
 	if var_93_0 == nil then
 		return nil

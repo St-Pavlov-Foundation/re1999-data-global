@@ -378,25 +378,26 @@ function var_0_0._onClickLangTxtSearch(arg_24_0, arg_24_1)
 end
 
 function var_0_0._onLangDropChange(arg_25_0, arg_25_1)
-	local var_25_0 = arg_25_0.langList[arg_25_1 + 1]
-
-	if var_25_0 == arg_25_0.curLang then
+	if arg_25_0.langList[arg_25_1 + 1] == arg_25_0.curUILang then
 		return
 	end
 
-	local var_25_1 = GameConfig:GetCurLangType()
+	local var_25_0 = GameConfig:GetCurLangType()
 
-	GameConfig:SetCurLangType(arg_25_0.langShortCutList[arg_25_1 + 1])
-
-	LangSettings.instance._curLang = var_25_0
-	LangSettings.instance._captionsActive = LangSettings._captionsSetting[var_25_0] ~= false
-
-	UnityEngine.PlayerPrefs.SetInt("CurLanguageType", var_25_1)
-	UnityEngine.PlayerPrefs.Save()
+	LangSettings.instance:SetCurLangType(arg_25_0.langShortCutList[arg_25_1 + 1], arg_25_0._onChangeLangTxtType2, arg_25_0)
 end
 
-function var_0_0._switchKeyInput(arg_26_0, arg_26_1, arg_26_2)
-	UnityEngine.PlayerPrefs.SetInt("PCInputSwitch", arg_26_2 and 1 or 0)
+function var_0_0._onChangeLangTxtType2(arg_26_0)
+	local var_26_0 = GameConfig:GetCurLangShortcut()
+	local var_26_1 = GameLanguageMgr.instance:getStoryIndexByShortCut(var_26_0)
+
+	GameLanguageMgr.instance:setLanguageTypeByStoryIndex(var_26_1)
+	PlayerPrefsHelper.setNumber("StoryTxtLanType", var_26_1 - 1)
+	SettingsController.instance:changeLangTxt()
+end
+
+function var_0_0._switchKeyInput(arg_27_0, arg_27_1, arg_27_2)
+	UnityEngine.PlayerPrefs.SetInt("PCInputSwitch", arg_27_2 and 1 or 0)
 	UnityEngine.PlayerPrefs.Save()
 	PCInputController.instance:Switch()
 end

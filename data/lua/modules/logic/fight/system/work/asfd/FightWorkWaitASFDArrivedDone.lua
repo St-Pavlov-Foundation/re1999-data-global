@@ -3,8 +3,7 @@
 local var_0_0 = class("FightWorkWaitASFDArrivedDone", BaseWork)
 
 function var_0_0.ctor(arg_1_0, arg_1_1)
-	arg_1_0.stepMo = arg_1_1
-	arg_1_0._fightStepMO = arg_1_1
+	arg_1_0.fightStepData = arg_1_1
 end
 
 function var_0_0.onStart(arg_2_0)
@@ -13,7 +12,7 @@ function var_0_0.onStart(arg_2_0)
 end
 
 function var_0_0.onASFDArrivedDone(arg_3_0, arg_3_1)
-	if arg_3_1 ~= arg_3_0.stepMo then
+	if arg_3_1 ~= arg_3_0.fightStepData then
 		return
 	end
 

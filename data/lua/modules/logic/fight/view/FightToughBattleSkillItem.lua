@@ -4,6 +4,7 @@ local var_0_0 = class("FightToughBattleSkillItem", LuaCompBase)
 
 function var_0_0.init(arg_1_0, arg_1_1)
 	arg_1_0.go = arg_1_1
+	arg_1_1 = gohelper.findChild(arg_1_1, "anchoroffset")
 	arg_1_0._goselect = gohelper.findChild(arg_1_1, "#go_Selected")
 	arg_1_0._btn = gohelper.getClickWithDefaultAudio(arg_1_1, "btn")
 	arg_1_0._gonum = gohelper.findChild(arg_1_1, "#go_Num")
@@ -168,7 +169,7 @@ function var_0_0.clickIcon(arg_12_0)
 		return
 	end
 
-	if FightCardModel.instance:isCardOpEnd() then
+	if FightDataHelper.operationDataMgr:isCardOpEnd() then
 		return
 	end
 
@@ -180,7 +181,7 @@ function var_0_0.clickIcon(arg_12_0)
 		return
 	end
 
-	if #FightCardModel.instance:getCardOps() > 0 then
+	if #FightDataHelper.operationDataMgr:getOpList() > 0 then
 		FightRpc.instance:sendResetRoundRequest()
 	end
 

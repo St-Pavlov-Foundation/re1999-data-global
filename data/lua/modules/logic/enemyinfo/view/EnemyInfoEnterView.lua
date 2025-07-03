@@ -40,7 +40,8 @@ function var_0_0.initHandleDict(arg_5_0)
 		[EnemyInfoEnum.TabEnum.WeekWalk] = arg_5_0.refreshWeekWalk,
 		[EnemyInfoEnum.TabEnum.WeekWalk_2] = arg_5_0.refreshWeekWalk_2,
 		[EnemyInfoEnum.TabEnum.Season123] = arg_5_0.refreshSeason,
-		[EnemyInfoEnum.TabEnum.BossRush] = arg_5_0.refreshBossRush
+		[EnemyInfoEnum.TabEnum.BossRush] = arg_5_0.refreshBossRush,
+		[EnemyInfoEnum.TabEnum.Act191] = arg_5_0.refreshNormal
 	}
 end
 

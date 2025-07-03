@@ -46,12 +46,28 @@ function var_0_0.isUnLock(arg_8_0)
 	return ItemModel.instance:getItemCount(arg_8_0.id) > 0
 end
 
-function var_0_0.checkIsUse(arg_9_0)
-	local var_9_0 = PlayerCardModel.instance:getPlayerCardSkinId()
+function var_0_0.canBuyInStore(arg_9_0)
+	if not StoreConfig.instance:getDecorateGoodsIdById(arg_9_0.id) then
+		return false
+	end
 
-	if var_9_0 and var_9_0 ~= 0 then
-		return var_9_0 == arg_9_0.id
-	elseif arg_9_0._isEmpty then
+	return true
+end
+
+function var_0_0.isStoreDecorateGoodsValid(arg_10_0)
+	return StoreModel.instance:isStoreDecorateGoodsValid(arg_10_0.id)
+end
+
+function var_0_0.getSources(arg_11_0)
+	return arg_11_0._config.sources
+end
+
+function var_0_0.checkIsUse(arg_12_0)
+	local var_12_0 = PlayerCardModel.instance:getPlayerCardSkinId()
+
+	if var_12_0 and var_12_0 ~= 0 then
+		return var_12_0 == arg_12_0.id
+	elseif arg_12_0._isEmpty then
 		return true
 	end
 

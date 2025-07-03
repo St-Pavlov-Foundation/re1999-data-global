@@ -36,6 +36,7 @@ function var_0_0.exitStage(arg_5_0, arg_5_1)
 end
 
 function var_0_0.cancelOperation(arg_6_0)
+	arg_6_0:com_sendFightEvent(FightEvent.BeforeCancelOperation)
 	FightDataMgr.instance:cancelOperation()
 	FightLocalDataMgr.instance:cancelOperation()
 	arg_6_0:com_sendFightEvent(FightEvent.CancelOperation)

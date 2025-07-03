@@ -32,8 +32,8 @@ function var_0_0.init(arg_1_0)
 end
 
 function var_0_0.sort(arg_2_0, arg_2_1)
-	local var_2_0 = arg_2_0:checkIsUse() and 3 or arg_2_0:isEmpty() and 2 or 1
-	local var_2_1 = arg_2_1:checkIsUse() and 3 or arg_2_1:isEmpty() and 2 or 1
+	local var_2_0 = arg_2_0:checkIsUse() and 4 or arg_2_0:isUnLock() and 3 or arg_2_0:isEmpty() and 2 or 1
+	local var_2_1 = arg_2_1:checkIsUse() and 4 or arg_2_1:isUnLock() and 3 or arg_2_1:isEmpty() and 2 or 1
 
 	if var_2_0 ~= var_2_1 then
 		return var_2_1 < var_2_0

@@ -54,6 +54,7 @@ function var_0_0._editableInitView(arg_4_0)
 	arg_4_0._uiSpine = GuiModelAgent.Create(arg_4_0._gospine, true)
 
 	arg_4_0._uiSpine:openBloomView(CharacterVoiceEnum.UIBloomView.CharacterDataView)
+	arg_4_0._uiSpine:setShareRT(CharacterVoiceEnum.RTShareType.BloomAuto)
 
 	arg_4_0.showStatusDraw = false
 

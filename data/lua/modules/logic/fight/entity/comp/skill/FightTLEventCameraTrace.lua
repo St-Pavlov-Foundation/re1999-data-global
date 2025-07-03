@@ -1,6 +1,6 @@
 ﻿module("modules.logic.fight.entity.comp.skill.FightTLEventCameraTrace", package.seeall)
 
-local var_0_0 = class("FightTLEventCameraTrace")
+local var_0_0 = class("FightTLEventCameraTrace", FightTimelineTrackItem)
 local var_0_1 = {
 	Attacker = 1,
 	Defender = 2,
@@ -9,7 +9,7 @@ local var_0_1 = {
 	PosAbs = 3
 }
 
-function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 	local var_1_0 = GameSceneMgr.instance:getCurScene().camera
 
 	var_1_0:setEaseTime(arg_1_2)

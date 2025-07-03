@@ -515,17 +515,17 @@
     "id": 8180003,
     "effectId": 7,
     "condition": "language_10071740",
-    "desc": "language_10070926",
+    "desc": "language_10074843",
     "conditionSimply": "language_10071740",
-    "descSimply": "language_10070926"
+    "descSimply": "language_10074844"
   },
   {
     "id": 8180003,
     "effectId": 8,
     "condition": "language_10071741",
-    "desc": "language_10070927",
+    "desc": "language_10074845",
     "conditionSimply": "language_10071741",
-    "descSimply": "language_10070927"
+    "descSimply": "language_10074845"
   },
   {
     "id": 8180004,

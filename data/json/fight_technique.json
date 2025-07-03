@@ -780,5 +780,39 @@
     "isCn": 0,
     "displayType": "",
     "noDisplayType": ""
+  },
+  {
+    "id": 54,
+    "mainTitleId": 0,
+    "subTitleId": 0,
+    "condition": "7",
+    "mainTitle_cn": "language_10033387",
+    "mainTitle_en": "language_10033388",
+    "title_cn": "language_10074378",
+    "title_en": "Bloodtithe",
+    "iconShow": "1",
+    "picture1": "",
+    "picture2": "v2a7_blood_help_1",
+    "content1": "language_10075165",
+    "isCn": 0,
+    "displayType": "",
+    "noDisplayType": ""
+  },
+  {
+    "id": 55,
+    "mainTitleId": 1,
+    "subTitleId": 8,
+    "condition": "7",
+    "mainTitle_cn": "language_10033387",
+    "mainTitle_en": "language_10033388",
+    "title_cn": "language_10074378",
+    "title_en": "Bloodtithe",
+    "iconShow": "",
+    "picture1": "v2a7_blood_help_2",
+    "picture2": "",
+    "content1": "language_10075165",
+    "isCn": 0,
+    "displayType": "",
+    "noDisplayType": ""
   }
 ]

@@ -65,6 +65,7 @@ function var_0_0.createBehaviour(arg_6_0, arg_6_1, arg_6_2)
 
 	if var_6_0 then
 		var_6_1 = var_6_0.New()
+		var_6_1.viewContainer = arg_6_0.viewContainer
 
 		var_6_1:initView(arg_6_0, arg_6_1, arg_6_2)
 		var_6_1:startLoadPrefab()

@@ -1,0 +1,92 @@
+[
+  {
+    "towerId": 1,
+    "teachId": 101,
+    "episodeId": 90300101,
+    "firstBonus": "1#110103#1|2#3#10000",
+    "planId": 101,
+    "name": "language_10072746",
+    "desc": "language_10074799"
+  },
+  {
+    "towerId": 1,
+    "teachId": 102,
+    "episodeId": 90300102,
+    "firstBonus": "1#110303#1|2#5#10000",
+    "planId": 102,
+    "name": "language_10015041",
+    "desc": "language_10074800"
+  },
+  {
+    "towerId": 2,
+    "teachId": 201,
+    "episodeId": 90300201,
+    "firstBonus": "1#110503#1|2#3#10000",
+    "planId": 201,
+    "name": "language_10074732",
+    "desc": "language_10074801"
+  },
+  {
+    "towerId": 2,
+    "teachId": 202,
+    "episodeId": 90300202,
+    "firstBonus": "1#110603#1|2#5#10000",
+    "planId": 202,
+    "name": "language_10074737",
+    "desc": "language_10074802"
+  },
+  {
+    "towerId": 3,
+    "teachId": 301,
+    "episodeId": 90300301,
+    "firstBonus": "1#111012#1|2#3#10000",
+    "planId": 301,
+    "name": "language_10074720",
+    "desc": "language_10074803"
+  },
+  {
+    "towerId": 3,
+    "teachId": 302,
+    "episodeId": 90300302,
+    "firstBonus": "1#110903#1|2#5#10000",
+    "planId": 302,
+    "name": "language_10074725",
+    "desc": "language_10074804"
+  },
+  {
+    "towerId": 4,
+    "teachId": 401,
+    "episodeId": 90300401,
+    "firstBonus": "1#110203#1|2#3#10000",
+    "planId": 401,
+    "name": "language_10074695",
+    "desc": "language_10074805"
+  },
+  {
+    "towerId": 4,
+    "teachId": 402,
+    "episodeId": 90300402,
+    "firstBonus": "1#110403#1|2#5#10000",
+    "planId": 402,
+    "name": "language_10074702",
+    "desc": "language_10074806"
+  },
+  {
+    "towerId": 5,
+    "teachId": 501,
+    "episodeId": 90300501,
+    "firstBonus": "1#111002#1|2#3#10000",
+    "planId": 501,
+    "name": "language_10074740",
+    "desc": "language_10074807"
+  },
+  {
+    "towerId": 5,
+    "teachId": 502,
+    "episodeId": 90300502,
+    "firstBonus": "1#110703#1|2#5#10000",
+    "planId": 502,
+    "name": "language_10074747",
+    "desc": "language_10074808"
+  }
+]

@@ -38,12 +38,14 @@ function var_0_0._parseData(arg_2_0)
 		arg_2_0.actElementId = var_2_3[2]
 		arg_2_0.battleId = var_2_3[3]
 		arg_2_0.actEpisodeId = var_2_3[4]
-	elseif var_2_0.type == DungeonEnum.EpisodeType.TowerPermanent or var_2_0.type == DungeonEnum.EpisodeType.TowerBoss or var_2_0.type == DungeonEnum.EpisodeType.TowerLimited then
+	elseif var_2_0.type == DungeonEnum.EpisodeType.TowerPermanent or var_2_0.type == DungeonEnum.EpisodeType.TowerBoss or var_2_0.type == DungeonEnum.EpisodeType.TowerLimited or var_2_0.type == DungeonEnum.EpisodeType.TowerBossTeach then
 		local var_2_4 = string.splitToNumber(arg_2_0.data, "#")
 
 		TowerModel.instance:setRecordFightParam(var_2_4[1], var_2_4[2], var_2_4[3], var_2_4[4], var_2_4[5])
 	elseif var_2_0.type == DungeonEnum.EpisodeType.Season166Base or var_2_0.type == DungeonEnum.EpisodeType.Season166Train then
 		Season166Model.instance:unpackFightReconnectData(arg_2_0.data)
+	elseif var_2_0.type == DungeonEnum.EpisodeType.Act183 then
+		Act183Controller.instance:onReconnectFight(arg_2_0.episodeId)
 	end
 end
 

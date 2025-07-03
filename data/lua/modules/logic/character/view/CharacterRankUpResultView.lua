@@ -49,6 +49,7 @@ function var_0_0._editableInitView(arg_5_0)
 	arg_5_0._txtlevel = gohelper.findChildText(arg_5_0._goeffect, "#go_level")
 	arg_5_0._uiSpine = GuiModelAgent.Create(arg_5_0._gospine, true)
 
+	arg_5_0._uiSpine:setShareRT(CharacterVoiceEnum.RTShareType.Normal, CharacterVoiceEnum.NormalPriority.CharacterRankUpResultView)
 	arg_5_0._uiSpine:useRT()
 
 	arg_5_0._rareGos = arg_5_0:getUserDataTb_()

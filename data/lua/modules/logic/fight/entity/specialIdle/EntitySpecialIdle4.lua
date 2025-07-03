@@ -14,7 +14,7 @@ function var_0_0._onSkillPlayFinish(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
 		return
 	end
 
-	for iter_2_0, iter_2_1 in ipairs(arg_2_3.actEffectMOs) do
+	for iter_2_0, iter_2_1 in ipairs(arg_2_3.actEffect) do
 		if iter_2_1.effectType == FightEnum.EffectType.EXPOINTCHANGE and iter_2_1.configEffect ~= 0 then
 			FightController.instance:dispatchEvent(FightEvent.PlaySpecialIdle, arg_2_1.id)
 

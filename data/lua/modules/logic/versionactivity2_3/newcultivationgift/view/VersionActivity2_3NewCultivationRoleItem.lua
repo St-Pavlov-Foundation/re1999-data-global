@@ -43,6 +43,7 @@ function var_0_0.onClickSelf(arg_6_0)
 	logNormal("onClickChoice id = " .. tostring(arg_6_0._config.heroId))
 
 	if arg_6_0._callBack and arg_6_0._callBackObj then
+		AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
 		arg_6_0._callBack(arg_6_0._callBackObj, arg_6_0._config.heroId)
 	end
 end

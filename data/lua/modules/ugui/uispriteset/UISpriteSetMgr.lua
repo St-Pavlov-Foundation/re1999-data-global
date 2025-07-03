@@ -141,6 +141,10 @@ function var_0_0.ctor(arg_1_0)
 	arg_1_0._v2a6dicehero = arg_1_0:newSpriteSetUnit("ui/spriteassets/v2a6_dicehero_spriteset.asset")
 	arg_1_0._v2a6_xugouji = arg_1_0:newSpriteSetUnit("ui/spriteassets/v2a6_xugouji_spriteset.asset")
 	arg_1_0._v2a6_main_activity = arg_1_0:newSpriteSetUnit("ui/spriteassets/v2a6_mainactivity_spriteset.asset")
+	arg_1_0._v2a7_main_activity = arg_1_0:newSpriteSetUnit("ui/spriteassets/v2a7_mainactivity_spriteset.asset")
+	arg_1_0._v2a7_dungeon_sprite = arg_1_0:newSpriteSetUnit("ui/spriteassets/v2a7_dungeon.asset")
+	arg_1_0._v2a7_coopergarland_sprite = arg_1_0:newSpriteSetUnit("ui/spriteassets/v2a7_coopergarland_spriteset.asset")
+	arg_1_0._v2a7_hissabeth_sprite = arg_1_0:newSpriteSetUnit("ui/spriteassets/v2a7_hissabeth_spriteset.asset")
 end
 
 function var_0_0.newSpriteSetUnit(arg_2_0, arg_2_1)
@@ -692,26 +696,42 @@ function var_0_0.setV2a6MainActivitySprite(arg_137_0, arg_137_1, arg_137_2, arg_
 	arg_137_0._v2a6_main_activity:setSprite(arg_137_1, arg_137_2, arg_137_3)
 end
 
-function var_0_0.setSocialSkinSprite(arg_138_0, arg_138_1, arg_138_2, arg_138_3)
-	arg_138_0._socialskin:setSprite(arg_138_1, arg_138_2, arg_138_3)
+function var_0_0.setV2a7MainActivitySprite(arg_138_0, arg_138_1, arg_138_2, arg_138_3)
+	arg_138_0._v2a7_main_activity:setSprite(arg_138_1, arg_138_2, arg_138_3)
 end
 
-function var_0_0.setDiceHeroSprite(arg_139_0, arg_139_1, arg_139_2, arg_139_3)
-	arg_139_0._v2a6dicehero:setSprite(arg_139_1, arg_139_2, arg_139_3)
+function var_0_0.setV2a7DungeonSprite(arg_139_0, arg_139_1, arg_139_2, arg_139_3)
+	arg_139_0._v2a7_dungeon_sprite:setSprite(arg_139_1, arg_139_2, arg_139_3)
 end
 
-function var_0_0.setXugoujiSprite(arg_140_0, arg_140_1, arg_140_2, arg_140_3)
-	arg_140_0._v2a6_xugouji:setSprite(arg_140_1, arg_140_2, arg_140_3)
+function var_0_0.setV2a7CooperGarlandSprite(arg_140_0, arg_140_1, arg_140_2, arg_140_3)
+	arg_140_0._v2a7_coopergarland_sprite:setSprite(arg_140_1, arg_140_2, arg_140_3)
 end
 
-function var_0_0.tryDispose(arg_141_0)
-	for iter_141_0, iter_141_1 in ipairs(arg_141_0._spriteSetList) do
-		iter_141_1:tryDispose()
+function var_0_0.setSocialSkinSprite(arg_141_0, arg_141_1, arg_141_2, arg_141_3)
+	arg_141_0._socialskin:setSprite(arg_141_1, arg_141_2, arg_141_3)
+end
+
+function var_0_0.setDiceHeroSprite(arg_142_0, arg_142_1, arg_142_2, arg_142_3)
+	arg_142_0._v2a6dicehero:setSprite(arg_142_1, arg_142_2, arg_142_3)
+end
+
+function var_0_0.setXugoujiSprite(arg_143_0, arg_143_1, arg_143_2, arg_143_3)
+	arg_143_0._v2a6_xugouji:setSprite(arg_143_1, arg_143_2, arg_143_3)
+end
+
+function var_0_0.setHisSaBethSprite(arg_144_0, arg_144_1, arg_144_2, arg_144_3)
+	arg_144_0._v2a7_hissabeth_sprite:setSprite(arg_144_1, arg_144_2, arg_144_3)
+end
+
+function var_0_0.tryDispose(arg_145_0)
+	for iter_145_0, iter_145_1 in ipairs(arg_145_0._spriteSetList) do
+		iter_145_1:tryDispose()
 	end
 end
 
-function var_0_0.setActivityPuzzle(arg_142_0, arg_142_1, arg_142_2, arg_142_3)
-	arg_142_0._activitypuzzle:setSprite(arg_142_1, arg_142_2, arg_142_3)
+function var_0_0.setActivityPuzzle(arg_146_0, arg_146_1, arg_146_2, arg_146_3)
+	arg_146_0._activitypuzzle:setSprite(arg_146_1, arg_146_2, arg_146_3)
 end
 
 var_0_0.instance = var_0_0.New()

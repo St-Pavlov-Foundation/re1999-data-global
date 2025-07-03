@@ -3,7 +3,7 @@
 local var_0_0 = class("FightWorkEffectMonsterChange", FightEffectBase)
 
 function var_0_0.beforePlayEffectData(arg_1_0)
-	arg_1_0._entityId = arg_1_0._actEffectMO.entityMO.id
+	arg_1_0._entityId = arg_1_0.actEffectData.entity.id
 	arg_1_0._oldEntityMO = FightDataHelper.entityMgr:getOldEntityMO(arg_1_0._entityId)
 end
 
@@ -16,7 +16,7 @@ function var_0_0.onStart(arg_2_0)
 		return
 	end
 
-	local var_2_0 = FightHelper.getEntity(arg_2_0._actEffectMO.targetId)
+	local var_2_0 = FightHelper.getEntity(arg_2_0.actEffectData.targetId)
 
 	if not var_2_0 then
 		arg_2_0:_buildNewEntity()

@@ -98,7 +98,25 @@ end
 
 function var_0_0._playActionAudio(arg_8_0, arg_8_1)
 	if arg_8_1.audioId and arg_8_1.audioId > 0 then
-		FightAudioMgr.instance:playAudio(arg_8_1.audioId)
+		if not arg_8_0.entity:getMO() then
+			return
+		end
+
+		local var_8_0
+		local var_8_1 = arg_8_0.entity:getMO().modelId
+
+		if not var_8_1 then
+			return
+		end
+
+		local var_8_2, var_8_3, var_8_4 = SettingsRoleVoiceModel.instance:getCharVoiceLangPrefValue(var_8_1)
+		local var_8_5 = LangSettings.shortcutTab[var_8_2]
+
+		if not string.nilorempty(var_8_5) and not var_8_4 then
+			var_8_0 = var_8_5
+		end
+
+		FightAudioMgr.instance:playAudioWithLang(arg_8_1.audioId, var_8_0)
 	end
 end
 

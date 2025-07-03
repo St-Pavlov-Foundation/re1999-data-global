@@ -33,6 +33,7 @@ local var_0_1 = {
 	[ActivityEnum.Activity.V2a2_SpringFestival] = ViewName.V2a2_SpringFestival_FullView,
 	[ShortenActConfig.instance:getActivityId()] = ViewName.ShortenAct_FullView,
 	[ActivityEnum.Activity.V2a7_Labor_Sign] = ViewName.V2a7_Labor_FullSignView,
+	[ActivityEnum.Activity.V3a0_SummerSign] = ViewName.V3a0_SummerSign_FullView,
 	[ActivityEnum.Activity.NoviceSign] = ViewName.ActivityNoviceSignView,
 	[ActivityEnum.Activity.NorSign] = ViewName.ActivityNorSignView,
 	[ActivityEnum.Activity.NoviceInsight] = ViewName.ActivityNoviceInsightView,
@@ -106,7 +107,11 @@ local var_0_1 = {
 	[ActivityEnum.Activity.V2a5_WarmUp] = ViewName.V2a5_WarmUp,
 	[ShortenActConfig.instance:getActivityId()] = ViewName.ShortenAct_FullView,
 	[ActivityEnum.Activity.V2a6_WeekwalkHeart] = ViewName.V2a6_WeekwalkHeart_FullView,
-	[ActivityEnum.Activity.V2a6_WarmUp] = ViewName.V2a6_WarmUp
+	[ActivityEnum.Activity.V2a6_WarmUp] = ViewName.V2a6_WarmUp,
+	[ActivityEnum.Activity.V2a7_Labor_Sign] = ViewName.V2a7_Labor_FullSignView,
+	[ActivityEnum.Activity.V2a7_WarmUp] = ViewName.V2a7_WarmUp,
+	[ActivityEnum.Activity.V2a7_SelfSelectSix1] = ViewName.V2a7_SelfSelectSix_FullView,
+	[ActivityEnum.Activity.V2a7_TowerGift] = ViewName.TowerGiftFullView
 }
 local var_0_2 = {
 	[ActivityEnum.ActivityTypeID.Act201] = ViewName.TurnBackFullView,
@@ -289,8 +294,8 @@ function var_0_0._initLinkageActivity_FullView(arg_16_0)
 
 	var_0_5 = true
 
-	local var_16_0 = GameBranchMgr.instance:Vxax_ActId("LinkageActivity", ActivityEnum.Activity.V2a7_LinkageActivity)
-	local var_16_1 = GameBranchMgr.instance:Vxax_ViewName("LinkageActivity_FullView", ViewName.V2a7_LinkageActivity_FullView)
+	local var_16_0 = GameBranchMgr.instance:Vxax_ActId("LinkageActivity", ActivityEnum.Activity.LinkageActivity_FullView)
+	local var_16_1 = GameBranchMgr.instance:Vxax_ViewName("LinkageActivity_FullView", ViewName.LinkageActivity_FullView)
 
 	var_0_1[var_16_0] = var_16_1
 end

@@ -144,7 +144,7 @@ function var_0_0._saveCantUseStatus(arg_10_0)
 		local var_10_2 = var_10_1 and var_10_1:isStatusDead()
 		local var_10_3 = var_10_1 and var_10_1.exPoint or 0
 		local var_10_4 = var_10_1 and var_10_1:getUniqueSkillPoint() or 5
-		local var_10_5 = var_10_1 and FightCardModel.instance:isUniqueSkill(iter_10_1.entityId, iter_10_1.skillId) and var_10_3 < var_10_4
+		local var_10_5 = var_10_1 and FightCardDataHelper.isBigSkill(iter_10_1.skillId) and var_10_3 < var_10_4
 		local var_10_6 = FightViewHandCardItemLock.canUseCardSkill(iter_10_1.entityId, iter_10_1.skillId)
 
 		if var_10_2 or var_10_5 or not var_10_6 then

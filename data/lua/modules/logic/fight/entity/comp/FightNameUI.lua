@@ -219,7 +219,7 @@ function var_0_0._onLoaded(arg_15_0)
 	arg_15_0:addEventCb(FightController.instance, FightEvent.OnCurrentHpChange, arg_15_0._onCurrentHpChange, arg_15_0)
 	arg_15_0:addEventCb(FightController.instance, FightEvent.MultiHpChange, arg_15_0._onMultiHpChange, arg_15_0)
 	arg_15_0:addEventCb(FightController.instance, FightEvent.ChangeWaveEnd, arg_15_0._onChangeWaveEnd, arg_15_0)
-	arg_15_0:addEventCb(FightController.instance, FightEvent.ForceUpdatePerformanceData, arg_15_0._onForceUpdatePerformanceData, arg_15_0)
+	arg_15_0:addEventCb(FightController.instance, FightEvent.CoverPerformanceEntityData, arg_15_0.onCoverPerformanceEntityData, arg_15_0)
 	arg_15_0:addEventCb(FightController.instance, FightEvent.ChangeCareer, arg_15_0._onChangeCareer, arg_15_0)
 	arg_15_0:addEventCb(FightController.instance, FightEvent.UpdateUIFollower, arg_15_0._onUpdateUIFollower, arg_15_0)
 	arg_15_0:addEventCb(FightController.instance, FightEvent.ChangeShield, arg_15_0._onChangeShield, arg_15_0)
@@ -232,7 +232,7 @@ end
 
 function var_0_0._onStageChange(arg_16_0)
 	if FightDataHelper.stageMgr:getCurStage() == FightStageMgr.StageType.Normal then
-		local var_16_0 = FightModel.instance:getCurRoundMO()
+		local var_16_0 = FightDataHelper.roundMgr:getRoundData()
 		local var_16_1 = var_16_0 and var_16_0:getAIUseCardMOList()
 
 		arg_16_0:refreshBossFocusIcon(var_16_1)
@@ -263,8 +263,8 @@ function var_0_0.refreshBossFocusIcon(arg_17_0, arg_17_1)
 end
 
 function var_0_0._onSkillPlayFinish(arg_18_0)
-	local var_18_0 = FightModel.instance:getCurRoundMO()
-	local var_18_1 = var_18_0 and var_18_0:getAILastUseCard()
+	local var_18_0 = FightDataHelper.roundMgr:getPreRoundData()
+	local var_18_1 = var_18_0 and var_18_0:getAIUseCardMOList()
 
 	arg_18_0:refreshBossFocusIcon(var_18_1)
 end
@@ -345,7 +345,6 @@ function var_0_0.beforeDestroy(arg_22_0)
 	arg_22_0:removeEventCb(FightController.instance, FightEvent.OnCurrentHpChange, arg_22_0._onCurrentHpChange, arg_22_0)
 	arg_22_0:removeEventCb(FightController.instance, FightEvent.MultiHpChange, arg_22_0._onMultiHpChange, arg_22_0)
 	arg_22_0:removeEventCb(FightController.instance, FightEvent.ChangeWaveEnd, arg_22_0._onChangeWaveEnd, arg_22_0)
-	arg_22_0:removeEventCb(FightController.instance, FightEvent.ForceUpdatePerformanceData, arg_22_0._onForceUpdatePerformanceData, arg_22_0)
 	arg_22_0:removeEventCb(FightController.instance, FightEvent.ChangeCareer, arg_22_0._onChangeCareer, arg_22_0)
 	arg_22_0:removeEventCb(FightController.instance, FightEvent.UpdateUIFollower, arg_22_0._onUpdateUIFollower, arg_22_0)
 	arg_22_0:removeEventCb(FightController.instance, FightEvent.ChangeShield, arg_22_0._onChangeShield, arg_22_0)
@@ -716,7 +715,7 @@ function var_0_0._onChangeWaveEnd(arg_53_0)
 	arg_53_0:_setPosOffset()
 end
 
-function var_0_0._onForceUpdatePerformanceData(arg_54_0, arg_54_1)
+function var_0_0.onCoverPerformanceEntityData(arg_54_0, arg_54_1)
 	if arg_54_1 ~= arg_54_0.entity.id then
 		return
 	end

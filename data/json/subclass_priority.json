@@ -41,7 +41,7 @@
   },
   {
     "id": 52,
-    "priority": 47
+    "priority": 2
   },
   {
     "id": 53,
@@ -49,18 +49,26 @@
   },
   {
     "id": 60,
-    "priority": 60
+    "priority": 2
   },
   {
     "id": 54,
-    "priority": 46
+    "priority": 2
   },
   {
     "id": 55,
-    "priority": 55
+    "priority": 2
   },
   {
     "id": 62,
     "priority": 12
+  },
+  {
+    "id": 64,
+    "priority": 2
+  },
+  {
+    "id": 65,
+    "priority": 2
   }
 ]

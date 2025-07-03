@@ -11,172 +11,256 @@ function var_0_0.initViewContent(arg_2_0)
 		return
 	end
 
+	arg_2_0:_initL1()
+	arg_2_0:_initL2()
+	arg_2_0:_initL3()
+	arg_2_0:_initL4()
+	arg_2_0:_initL5()
+	arg_2_0:_initL6()
+	arg_2_0:_initL7()
+	arg_2_0:_initL8()
+
 	arg_2_0._isInit = true
+end
 
-	local var_2_0 = "L1"
-	local var_2_1 = {
-		"选择时间"
-	}
+function var_0_0._initL1(arg_3_0)
+	local var_3_0 = "L1"
 
-	for iter_2_0 = 1, 24 do
-		table.insert(var_2_1, iter_2_0 .. "时")
-	end
+	arg_3_0:addButton(var_3_0, "小屋观察", arg_3_0._onClickBtnRoomOb, arg_3_0)
+	arg_3_0:addButton(var_3_0, "小屋编辑", arg_3_0._onClickBtnRoomMap, arg_3_0)
+	arg_3_0:addButton(var_3_0, "小屋Debug", arg_3_0._onClickBtnRoomDebug, arg_3_0)
+	arg_3_0:addButton(var_3_0, "小屋建筑占地", arg_3_0._onClickRoomDebugBuildingArea, arg_3_0)
+end
 
-	arg_2_0._dropRoomClock = arg_2_0:addDropDown(var_2_0, "小屋时\n钟触发", var_2_1, arg_2_0._onRoomClockSelectChanged, arg_2_0)
+function var_0_0._onClickBtnRoomOb(arg_4_0)
+	RoomController.instance:enterRoom(RoomEnum.GameMode.Ob)
+end
 
-	local var_2_2, var_2_3 = arg_2_0:_findInitFollowTargetParams()
+function var_0_0._onClickBtnRoomMap(arg_5_0)
+	RoomController.instance:enterRoom(RoomEnum.GameMode.Edit)
+end
 
-	arg_2_0._dropFollowTarget = arg_2_0:addDropDown(var_2_0, "乘坐交通", var_2_2, arg_2_0._onFollowTargetSelectChanged, arg_2_0)
-	arg_2_0._vehicleIdList = var_2_3
+function var_0_0._onClickBtnRoomDebug(arg_6_0)
+	ViewMgr.instance:openView(ViewName.RoomDebugEntranceView)
+end
 
-	local var_2_4, var_2_5 = arg_2_0:_findInitFollowCharacterParams()
-
-	arg_2_0._dropFollowCharacter = arg_2_0:addDropDown(var_2_0, "角色镜\n头跟随", var_2_4, arg_2_0._onFollowCharacterSelectChanged, arg_2_0)
-	arg_2_0._characterIdList = var_2_5
-
-	local var_2_6 = "L2"
-
-	arg_2_0:addDropDown(var_2_6, "地块用途", {
-		"地块用途选择",
-		"正常",
-		"货运"
-	}, arg_2_0._onBlockUseStateSelectChanged, arg_2_0)
-
-	local var_2_7 = "L3"
-
-	arg_2_0:addButton(var_2_7, "mini地图", arg_2_0._onOpenMiniMapView, arg_2_0)
-	arg_2_0:addButton(var_2_7, "货运编辑", arg_2_0._onOpenEditPathView, arg_2_0)
-
-	arg_2_0._transporQuickLinkToggle = arg_2_0:addToggle(var_2_7, "调试运输路线【快速绘制】", arg_2_0._ontransporQuickLinkChange, arg_2_0)
-	arg_2_0._transporQuickLinkToggle.isOn = RoomTransportPathQuickLinkViewUI._IsShow_ == true
-
-	if RoomController.instance:isEditMode() and GameResMgr.IsFromEditorDir then
-		RoomDebugController.instance:getDebugPackageInfo(arg_2_0._onInitDebugMapPackageInfo, arg_2_0)
+function var_0_0._onClickRoomDebugBuildingArea(arg_7_0)
+	if GameSceneMgr.instance:getCurSceneType() == SceneType.Room then
+		RoomDebugController.instance:openBuildingAreaView()
+	else
+		GameFacade.showToast(94, "GM需要进入小屋后使用。")
 	end
 end
 
-function var_0_0._findInitFollowTargetParams(arg_3_0)
-	return arg_3_0:_findObMOList("选择交通", RoomMapVehicleModel.instance:getList(), "config")
+function var_0_0._initL2(arg_8_0)
+	local var_8_0 = "L2"
+	local var_8_1 = arg_8_0:addSlider(var_8_0, "QE灵敏度", arg_8_0._onRoomRotateSpeedChange, arg_8_0, {
+		w = 610
+	})
+
+	arg_8_0._txtRoomRotateSpeed = var_8_1[3]
+
+	local var_8_2 = (RoomController.instance.rotateSpeed - 0.2) / 1.8
+
+	var_8_1[1]:SetValue(var_8_2)
+	arg_8_0:_onRoomRotateSpeedChange(nil, var_8_2)
+
+	local var_8_3 = arg_8_0:addSlider(var_8_0, "WASD灵敏度", arg_8_0._onRoomMoveSpeedChange, arg_8_0, {
+		w = 685
+	})
+
+	arg_8_0._txtRoomMoveSpeed = var_8_3[3]
+
+	local var_8_4 = (RoomController.instance.moveSpeed - 0.2) / 1.8
+
+	var_8_3[1]:SetValue(var_8_4)
+	arg_8_0:_onRoomMoveSpeedChange(nil, var_8_4)
 end
 
-function var_0_0._findInitFollowCharacterParams(arg_4_0)
-	return arg_4_0:_findObMOList("选择角色", RoomCharacterModel.instance:getList(), "skinConfig")
+function var_0_0._initL3(arg_9_0)
+	local var_9_0 = "L3"
+	local var_9_1 = arg_9_0:addSlider(var_9_0, "RF灵敏度", arg_9_0._onRoomScaleSpeedChange, arg_9_0, {
+		w = 610
+	})
+
+	arg_9_0._txtRoomScaleSpeed = var_9_1[3]
+
+	local var_9_2 = (RoomController.instance.scaleSpeed - 0.2) / 1.8
+
+	var_9_1[1]:SetValue(var_9_2)
+	arg_9_0:_onRoomScaleSpeedChange(nil, var_9_2)
+
+	local var_9_3 = arg_9_0:addSlider(var_9_0, "滑屏灵敏度", arg_9_0._onRoomTouchSpeedChange, arg_9_0, {
+		w = 685
+	})
+
+	arg_9_0._txtRoomTouchSpeed = var_9_3[3]
+
+	local var_9_4 = (RoomController.instance.touchMoveSpeed - 0.2) / 1.8
+
+	var_9_3[1]:SetValue((RoomController.instance.touchMoveSpeed - 0.2) / 1.8)
+	arg_9_0:_onRoomTouchSpeedChange(nil, var_9_4)
 end
 
-function var_0_0._findObMOList(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	if not arg_5_0:_checkObMode() then
-		arg_5_2 = nil
+function var_0_0._onRoomRotateSpeedChange(arg_10_0, arg_10_1, arg_10_2)
+	local var_10_0 = 0.2 + 1.8 * arg_10_2
+
+	RoomController.instance.rotateSpeed = var_10_0
+	arg_10_0._txtRoomRotateSpeed.text = string.format("%.2f", var_10_0)
+end
+
+function var_0_0._onRoomMoveSpeedChange(arg_11_0, arg_11_1, arg_11_2)
+	local var_11_0 = 0.2 + 1.8 * arg_11_2
+
+	RoomController.instance.moveSpeed = var_11_0
+	arg_11_0._txtRoomMoveSpeed.text = string.format("%.2f", var_11_0)
+end
+
+function var_0_0._onRoomScaleSpeedChange(arg_12_0, arg_12_1, arg_12_2)
+	local var_12_0 = 0.2 + 1.8 * arg_12_2
+
+	RoomController.instance.scaleSpeed = var_12_0
+	arg_12_0._txtRoomScaleSpeed.text = string.format("%.2f", var_12_0)
+end
+
+function var_0_0._onRoomTouchSpeedChange(arg_13_0, arg_13_1, arg_13_2)
+	local var_13_0 = 0.2 + 1.8 * arg_13_2
+
+	RoomController.instance.touchMoveSpeed = var_13_0
+	arg_13_0._txtRoomTouchSpeed.text = string.format("%.2f", var_13_0)
+end
+
+function var_0_0._sortCharacterInteractionFunc(arg_14_0, arg_14_1)
+	if arg_14_0.behaviour ~= arg_14_1.behaviour then
+		return arg_14_0.behaviour < arg_14_1.behaviour
 	end
-
-	return arg_5_0:_findMOList(arg_5_1, arg_5_2, arg_5_3)
 end
 
-function var_0_0._findMOList(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
-	local var_6_0 = {
-		arg_6_1 .. "#id-选择"
-	}
-	local var_6_1 = {}
+function var_0_0._initL4(arg_15_0)
+	local var_15_0 = "L4"
 
-	if arg_6_2 then
-		for iter_6_0, iter_6_1 in ipairs(arg_6_2) do
-			if iter_6_1 and iter_6_1[arg_6_3] then
-				table.insert(var_6_0, string.format("%s#%s", iter_6_1[arg_6_3].name, iter_6_1.id))
-				table.insert(var_6_1, iter_6_1.id)
+	if not arg_15_0.characterInteractionList then
+		arg_15_0.characterInteractionList = {}
+
+		for iter_15_0, iter_15_1 in ipairs(lua_room_character_interaction.configList) do
+			local var_15_1 = RoomCharacterModel.instance:getCharacterMOById(iter_15_1.heroId)
+
+			if var_15_1 and var_15_1.characterState == RoomCharacterEnum.CharacterState.Map then
+				table.insert(arg_15_0.characterInteractionList, iter_15_1)
 			end
 		end
+
+		table.sort(arg_15_0.characterInteractionList, var_0_0._sortCharacterInteractionFunc)
 	end
 
-	return var_6_0, var_6_1
-end
-
-function var_0_0._sortCharacterInteractionFunc(arg_7_0, arg_7_1)
-	if arg_7_0.behaviour ~= arg_7_1.behaviour then
-		return arg_7_0.behaviour < arg_7_1.behaviour
-	end
-end
-
-function var_0_0._finInitCharacterInteractParams(arg_8_0)
-	local var_8_0 = {}
-
-	for iter_8_0, iter_8_1 in ipairs(lua_room_character_interaction.configList) do
-		local var_8_1 = RoomCharacterModel.instance:getCharacterMOById(iter_8_1.heroId)
-
-		if var_8_1 and var_8_1.characterState == RoomCharacterEnum.CharacterState.Map then
-			table.insert(var_8_0, iter_8_1)
-		end
-	end
-
-	table.sort(var_8_0, GMToolView._sortCharacterInteractionFunc)
-
-	local var_8_2 = {}
-	local var_8_3 = {
+	local var_15_2 = {}
+	local var_15_3 = {
 		[RoomCharacterEnum.InteractionType.Dialog] = "对话",
 		[RoomCharacterEnum.InteractionType.Building] = "建筑"
 	}
 
-	table.insert(var_8_2, "英雄-交互#id选择")
+	table.insert(var_15_2, "英雄-交互#id选择")
 
-	for iter_8_2, iter_8_3 in ipairs(var_8_0) do
-		if var_8_3[iter_8_3.behaviour] then
-			local var_8_4 = HeroConfig.instance:getHeroCO(iter_8_3.heroId)
-			local var_8_5 = string.format("%s-%s#%s", var_8_4.name or iter_8_3.heroId, var_8_3[iter_8_3.behaviour], iter_8_3.id)
+	for iter_15_2, iter_15_3 in ipairs(arg_15_0.characterInteractionList) do
+		if var_15_3[iter_15_3.behaviour] then
+			local var_15_4 = HeroConfig.instance:getHeroCO(iter_15_3.heroId)
+			local var_15_5 = string.format("%s-%s#%s", var_15_4.name or iter_15_3.heroId, var_15_3[iter_15_3.behaviour], iter_15_3.id)
 
-			table.insert(var_8_2, var_8_5)
+			table.insert(var_15_2, var_15_5)
 		end
 	end
 
-	return var_8_0
+	arg_15_0:addDropDown(var_15_0, "小屋角色交互", var_15_2, arg_15_0._onRoomInteractionSelectChanged, arg_15_0, {
+		tempH = 450,
+		total_w = 650,
+		drop_w = 415
+	})
+	arg_15_0:addButton(var_15_0, "确定", arg_15_0._onClickRoomInteractionOk, arg_15_0)
+
+	local var_15_6 = {
+		"选择时间"
+	}
+
+	for iter_15_4 = 1, 24 do
+		table.insert(var_15_6, iter_15_4 .. "时")
+	end
+
+	arg_15_0:addDropDown(var_15_0, "小屋时钟触发", var_15_6, arg_15_0._onRoomClockSelectChanged, arg_15_0, {
+		total_w = 600,
+		tempH = 450
+	})
 end
 
-function var_0_0._onFollowTargetSelectChanged(arg_9_0, arg_9_1)
-	if not arg_9_0._vehicleIdList or arg_9_1 == 0 then
+function var_0_0._onRoomInteractionSelectChanged(arg_16_0, arg_16_1)
+	if not arg_16_0.characterInteractionList then
 		return
 	end
 
-	if not arg_9_0:_checkObMode() then
-		GameFacade.showToast(ToastEnum.IconId, "GM需要进入小屋后观察模式下使用。")
-
-		return
-	end
-
-	GameFacade.showToast(ToastEnum.IconId, "乘坐交通工具")
-
-	local var_9_0 = arg_9_0._vehicleIdList[arg_9_1]
-	local var_9_1 = RoomMapVehicleEntity:getTag()
-	local var_9_2 = GameSceneMgr.instance:getCurScene()
-	local var_9_3 = var_9_2.vehiclemgr:getUnit(var_9_1, var_9_0)
-
-	if var_9_3 then
-		var_9_2.cameraFollow:setFollowTarget(var_9_3.cameraFollowTargetComp, true)
-	end
-end
-
-function var_0_0._onFollowCharacterSelectChanged(arg_10_0, arg_10_1)
-	if not arg_10_0._characterIdList or arg_10_1 == 0 then
-		return
-	end
-
-	if not arg_10_0:_checkObMode() then
-		GameFacade.showToast(ToastEnum.IconId, "GM需要进入小屋后观察模式下使用。")
+	if arg_16_1 == 0 then
+		arg_16_0.selectCharacterInteractionCfg = nil
 
 		return
 	end
 
-	local var_10_0 = RoomCharacterEntity:getTag()
-	local var_10_1 = arg_10_0._characterIdList[arg_10_1]
-	local var_10_2 = GameSceneMgr.instance:getCurScene()
-	local var_10_3 = var_10_2.charactermgr:getUnit(var_10_0, var_10_1)
+	arg_16_0.selectCharacterInteractionCfg = arg_16_0.characterInteractionList[arg_16_1]
+end
 
-	if var_10_3 then
-		var_10_2.cameraFollow:setFollowTarget(var_10_3.cameraFollowTargetComp, false)
+function var_0_0._onClickRoomInteractionOk(arg_17_0)
+	if #arg_17_0.characterInteractionList < 1 then
+		GameFacade.showToast(94, "GM需要进入小屋并放置可交互角色。")
+	end
+
+	if not arg_17_0.selectCharacterInteractionCfg then
+		return
+	end
+
+	local var_17_0 = RoomCharacterModel.instance:getCharacterMOById(arg_17_0.selectCharacterInteractionCfg.heroId)
+
+	if not var_17_0 or var_17_0.characterState ~= RoomCharacterEnum.CharacterState.Map then
+		GameFacade.showToast(94, "GM 需要放置角色后可交互。")
+
+		return
+	end
+
+	if arg_17_0.selectCharacterInteractionCfg.behaviour == RoomCharacterEnum.InteractionType.Dialog then
+		GameFacade.showToast(94, string.format("GM %s 触发交互", var_17_0.heroConfig.name))
+		var_17_0:setCurrentInteractionId(arg_17_0.selectCharacterInteractionCfg.id)
+		RoomCharacterController.instance:dispatchEvent(RoomEvent.UpdateCharacterInteractionUI)
+	elseif arg_17_0.selectCharacterInteractionCfg.behaviour == RoomCharacterEnum.InteractionType.Building then
+		local var_17_1 = RoomMapInteractionModel.instance:getBuildingInteractionMO(arg_17_0.selectCharacterInteractionCfg.id)
+		local var_17_2 = RoomConfig.instance:getBuildingConfig(arg_17_0.selectCharacterInteractionCfg.buildingId)
+		local var_17_3 = var_17_2 and var_17_2.name or arg_17_0.selectCharacterInteractionCfg.buildingId
+
+		if not var_17_1 then
+			GameFacade.showToast(94, string.format("GM 场景无【%s】建筑，【%s】无发交互", var_17_3, var_17_0.heroConfig.name))
+
+			return
+		end
+
+		if not RoomHelper.isFSMState(RoomEnum.FSMObState.Idle) then
+			GameFacade.showToast(94, string.format("GM 当场景状态机非[%s]", RoomEnum.FSMObState.Idle))
+
+			return
+		end
+
+		if not RoomInteractionController.instance:showTimeByInteractionMO(var_17_1) then
+			GameFacade.showToast(94, string.format("GM【%s】不在【%s】交互点范围内", var_17_0.heroConfig.name, var_17_3))
+
+			return
+		end
+
+		arg_17_0:closeThis()
+		logNormal(string.format("GM【%s】【%s】触发角色建筑交互", var_17_0.heroConfig.name, var_17_3))
 	end
 end
 
-function var_0_0._ontransporQuickLinkChange(arg_11_0)
-	RoomTransportPathQuickLinkViewUI._IsShow_ = RoomTransportPathQuickLinkViewUI._IsShow_ ~= true
+function var_0_0._onRoomClockSelectChanged(arg_18_0, arg_18_1)
+	if arg_18_1 >= 1 or arg_18_1 <= 24 then
+		RoomMapController.instance:dispatchEvent(RoomEvent.OnHourReporting, arg_18_1)
+	end
 end
 
-function var_0_0._checkScene(arg_12_0)
+function var_0_0._checkScene(arg_19_0)
 	if GameSceneMgr.instance:getCurSceneType() == SceneType.Room and GameSceneMgr.instance:getCurScene() ~= nil then
 		return true
 	end
@@ -184,111 +268,211 @@ function var_0_0._checkScene(arg_12_0)
 	return false
 end
 
-function var_0_0._checkObMode(arg_13_0, arg_13_1)
-	return arg_13_0:_checkScene() and RoomController.instance:isObMode()
+function var_0_0._checkObMode(arg_20_0, arg_20_1)
+	return arg_20_0:_checkScene() and RoomController.instance:isObMode()
 end
 
-function var_0_0._checkEditMode(arg_14_0, arg_14_1)
-	return arg_14_0:_checkScene() and RoomController.instance:isEditMode()
+function var_0_0._checkEditMode(arg_21_0, arg_21_1)
+	return arg_21_0:_checkScene() and RoomController.instance:isEditMode()
 end
 
-function var_0_0._onBlockUseStateSelectChanged(arg_15_0, arg_15_1)
-	if arg_15_1 == 0 then
+function var_0_0._findObMOList(arg_22_0, arg_22_1, arg_22_2, arg_22_3)
+	if not arg_22_0:_checkObMode() then
+		arg_22_2 = nil
+	end
+
+	return arg_22_0:_findMOList(arg_22_1, arg_22_2, arg_22_3)
+end
+
+function var_0_0._findMOList(arg_23_0, arg_23_1, arg_23_2, arg_23_3)
+	local var_23_0 = {
+		arg_23_1 .. "#id-选择"
+	}
+	local var_23_1 = {}
+
+	if arg_23_2 then
+		for iter_23_0, iter_23_1 in ipairs(arg_23_2) do
+			if iter_23_1 and iter_23_1[arg_23_3] then
+				table.insert(var_23_0, string.format("%s#%s", iter_23_1[arg_23_3].name, iter_23_1.id))
+				table.insert(var_23_1, iter_23_1.id)
+			end
+		end
+	end
+
+	return var_23_0, var_23_1
+end
+
+function var_0_0._initL5(arg_24_0)
+	local var_24_0 = "L5"
+	local var_24_1, var_24_2 = arg_24_0:_findInitFollowCharacterParams()
+
+	arg_24_0._dropFollowCharacter = arg_24_0:addDropDown(var_24_0, "角色镜头跟随", var_24_1, arg_24_0._onFollowCharacterSelectChanged, arg_24_0, {
+		total_w = 650,
+		drop_w = 415
+	})
+	arg_24_0._characterIdList = var_24_2
+
+	arg_24_0:addButton(var_24_0, "小屋交互镜头", arg_24_0._onClickRoomBuildingCamera, arg_24_0)
+	arg_24_0:addButton(var_24_0, "清空角色交互数据", arg_24_0._onClickRoomClearInteractionData, arg_24_0)
+end
+
+function var_0_0._findInitFollowCharacterParams(arg_25_0)
+	return arg_25_0:_findObMOList("选择角色", RoomCharacterModel.instance:getList(), "skinConfig")
+end
+
+function var_0_0._onFollowCharacterSelectChanged(arg_26_0, arg_26_1)
+	if not arg_26_0._characterIdList or arg_26_1 == 0 then
 		return
 	end
 
-	if not arg_15_0:_checkEditMode() then
+	if not arg_26_0:_checkObMode() then
+		GameFacade.showToast(ToastEnum.IconId, "GM需要进入小屋后观察模式下使用。")
+
+		return
+	end
+
+	local var_26_0 = RoomCharacterEntity:getTag()
+	local var_26_1 = arg_26_0._characterIdList[arg_26_1]
+	local var_26_2 = GameSceneMgr.instance:getCurScene()
+	local var_26_3 = var_26_2.charactermgr:getUnit(var_26_0, var_26_1)
+
+	if var_26_3 then
+		var_26_2.cameraFollow:setFollowTarget(var_26_3.cameraFollowTargetComp, false)
+	end
+end
+
+function var_0_0._onClickRoomBuildingCamera(arg_27_0)
+	if GameSceneMgr.instance:getCurSceneType() == SceneType.Room then
+		RoomDebugController.instance:openBuildingCamerView()
+		arg_27_0:closeThis()
+	else
+		GameFacade.showToast(94, "GM需要进入小屋后使用。")
+	end
+end
+
+local var_0_1 = 46
+
+function var_0_0._onClickRoomClearInteractionData(arg_28_0)
+	local var_28_0 = lua_gm_command.configDict[var_0_1]
+
+	if var_28_0 then
+		local var_28_1 = var_28_0.command
+
+		GameFacade.showToast(ToastEnum.IconId, var_28_1)
+		GMRpc.instance:sendGMRequest(var_28_1)
+	end
+end
+
+function var_0_0._initL6(arg_29_0)
+	local var_29_0 = "L6"
+	local var_29_1, var_29_2 = arg_29_0:_findInitFollowTargetParams()
+
+	arg_29_0._dropFollowTarget = arg_29_0:addDropDown(var_29_0, "乘坐交通", var_29_1, arg_29_0._onFollowTargetSelectChanged, arg_29_0, {
+		total_w = 650,
+		drop_w = 415
+	})
+	arg_29_0._vehicleIdList = var_29_2
+
+	arg_29_0:addDropDown(var_29_0, "地块用途", {
+		"地块用途选择",
+		"正常",
+		"货运"
+	}, arg_29_0._onBlockUseStateSelectChanged, arg_29_0, {
+		total_w = 600,
+		drop_w = 415
+	})
+end
+
+function var_0_0._findInitFollowTargetParams(arg_30_0)
+	return arg_30_0:_findObMOList("选择交通", RoomMapVehicleModel.instance:getList(), "config")
+end
+
+function var_0_0._onFollowTargetSelectChanged(arg_31_0, arg_31_1)
+	if not arg_31_0._vehicleIdList or arg_31_1 == 0 then
+		return
+	end
+
+	if not arg_31_0:_checkObMode() then
+		GameFacade.showToast(ToastEnum.IconId, "GM需要进入小屋后观察模式下使用。")
+
+		return
+	end
+
+	GameFacade.showToast(ToastEnum.IconId, "乘坐交通工具")
+
+	local var_31_0 = arg_31_0._vehicleIdList[arg_31_1]
+	local var_31_1 = RoomMapVehicleEntity:getTag()
+	local var_31_2 = GameSceneMgr.instance:getCurScene()
+	local var_31_3 = var_31_2.vehiclemgr:getUnit(var_31_1, var_31_0)
+
+	if var_31_3 then
+		var_31_2.cameraFollow:setFollowTarget(var_31_3.cameraFollowTargetComp, true)
+	end
+end
+
+function var_0_0._onBlockUseStateSelectChanged(arg_32_0, arg_32_1)
+	if arg_32_1 == 0 then
+		return
+	end
+
+	if not arg_32_0:_checkEditMode() then
 		GameFacade.showToast(ToastEnum.IconId, "GM需要进入小屋后编辑模式下使用。")
 
 		return
 	end
 
-	local var_15_0 = GameSceneMgr.instance:getCurScene().mapmgr
-	local var_15_1 = {}
-	local var_15_2 = RoomMapBlockModel.instance:getFullBlockMOList()
+	local var_32_0 = GameSceneMgr.instance:getCurScene().mapmgr
+	local var_32_1 = {}
+	local var_32_2 = RoomMapBlockModel.instance:getFullBlockMOList()
 
-	for iter_15_0, iter_15_1 in ipairs(var_15_2) do
-		iter_15_1:setUseState(arg_15_1)
+	for iter_32_0, iter_32_1 in ipairs(var_32_2) do
+		iter_32_1:setUseState(arg_32_1)
 
-		local var_15_3 = var_15_0:getBlockEntity(iter_15_1.id, SceneTag.RoomMapBlock)
+		local var_32_3 = var_32_0:getBlockEntity(iter_32_1.id, SceneTag.RoomMapBlock)
 
-		if var_15_3 then
-			table.insert(var_15_1, var_15_3)
+		if var_32_3 then
+			table.insert(var_32_1, var_32_3)
 		end
 	end
 
-	RoomBlockHelper.refreshBlockEntity(var_15_1, "refreshLand")
-	GameFacade.showToast(ToastEnum.IconId, string.format("GM index:%s, entityCount:%s blockCount:%s", arg_15_1, #var_15_1, #var_15_2))
+	RoomBlockHelper.refreshBlockEntity(var_32_1, "refreshLand")
+	GameFacade.showToast(ToastEnum.IconId, string.format("GM index:%s, entityCount:%s blockCount:%s", arg_32_1, #var_32_1, #var_32_2))
 end
 
-function var_0_0._onRoomClockSelectChanged(arg_16_0, arg_16_1)
-	if arg_16_1 >= 1 or arg_16_1 <= 24 then
-		RoomMapController.instance:dispatchEvent(RoomEvent.OnHourReporting, arg_16_1)
-	end
+function var_0_0._initL7(arg_33_0)
+	local var_33_0 = "L7"
+
+	arg_33_0:addButton(var_33_0, "交通工具测试", arg_33_0._onClickTestVehicle, arg_33_0)
+	arg_33_0:addButton(var_33_0, "mini地图", arg_33_0._onOpenMiniMapView, arg_33_0)
+	arg_33_0:addButton(var_33_0, "货运编辑", arg_33_0._onOpenEditPathView, arg_33_0)
+
+	arg_33_0._transporQuickLinkToggle = arg_33_0:addToggle(var_33_0, "调试运输路线【快速绘制】", arg_33_0._ontransporQuickLinkChange, arg_33_0)
+	arg_33_0._transporQuickLinkToggle.isOn = RoomTransportPathQuickLinkViewUI._IsShow_ == true
 end
 
-function var_0_0._onInitDebugMapPackageInfo(arg_17_0, arg_17_1)
-	local var_17_0 = {
-		"选择需要复制的地图"
-	}
+function var_0_0._onClickTestVehicle(arg_34_0)
+	if GameSceneMgr.instance:getCurSceneType() == SceneType.Room and RoomController.instance:isObMode() then
+		local var_34_0 = RoomMapVehicleEntity:getTag()
+		local var_34_1 = RoomMapVehicleModel.instance:getList()
+		local var_34_2 = GameSceneMgr.instance:getCurScene()
 
-	arg_17_0._blockInfosList = {}
+		for iter_34_0, iter_34_1 in ipairs(var_34_1) do
+			local var_34_3 = var_34_2.vehiclemgr:getUnit(var_34_0, iter_34_1.id)
 
-	local var_17_1 = RoomConfig.instance
+			if var_34_3 then
+				var_34_2.cameraFollow:setFollowTarget(var_34_3.cameraFollowTargetComp)
 
-	for iter_17_0, iter_17_1 in ipairs(arg_17_1) do
-		local var_17_2 = {}
-
-		for iter_17_2, iter_17_3 in ipairs(iter_17_1.infos) do
-			if var_17_1:getBlock(iter_17_3.blockId) and not var_17_1:getInitBlock(iter_17_3.blockId) then
-				table.insert(var_17_2, iter_17_3)
+				return
 			end
 		end
 
-		if #var_17_2 > 1 then
-			table.insert(var_17_0, iter_17_1.packageName)
-			table.insert(arg_17_0._blockInfosList, var_17_2)
-		end
-	end
-
-	arg_17_0:addDropDown("L2", "一键复制\n地图地块", var_17_0, arg_17_0._onDropDownMapPackageChanged, arg_17_0)
-end
-
-var_0_0.Drop_Down_Map_Package_Changed = "GMSubViewRoom.Drop_Down_Map_Package_Changed"
-
-function var_0_0._onDropDownMapPackageChanged(arg_18_0, arg_18_1)
-	if arg_18_1 >= 1 or arg_18_1 <= #arg_18_0._blockInfosList then
-		if RoomMapBlockModel.instance:getConfirmBlockCount() > 0 then
-			GameFacade.showToast(ToastEnum.IconId, "需要先重置下荒原")
-
-			return
-		end
-
-		arg_18_0._waitUseBlockList = {}
-
-		tabletool.addValues(arg_18_0._waitUseBlockList, arg_18_0._blockInfosList[arg_18_1])
-		TaskDispatcher.cancelTask(arg_18_0._onWaitUseBlockList, arg_18_0)
-
-		if #arg_18_0._waitUseBlockList > 0 then
-			UIBlockMgr.instance:startBlock(var_0_0.Drop_Down_Map_Package_Changed)
-			TaskDispatcher.runRepeat(arg_18_0._onWaitUseBlockList, arg_18_0, 0.001, #arg_18_0._waitUseBlockList + 1)
-		end
-	end
-end
-
-function var_0_0._onWaitUseBlockList(arg_19_0)
-	if arg_19_0._waitUseBlockList and #arg_19_0._waitUseBlockList > 0 then
-		local var_19_0 = arg_19_0._waitUseBlockList[#arg_19_0._waitUseBlockList]
-
-		table.remove(arg_19_0._waitUseBlockList, #arg_19_0._waitUseBlockList)
-		RoomMapController.instance:useBlockRequest(var_19_0.blockId, var_19_0.rotate, var_19_0.x, var_19_0.y)
+		GameFacade.showToast(94, "GM交通工具数量：" .. #var_34_1)
 	else
-		UIBlockMgr.instance:endBlock(var_0_0.Drop_Down_Map_Package_Changed)
-		RoomController.instance:exitRoom(true)
+		GameFacade.showToast(94, "GM需要进入小屋后观察模式下使用。")
 	end
 end
 
-function var_0_0._onOpenMiniMapView(arg_20_0)
+function var_0_0._onOpenMiniMapView(arg_35_0)
 	PopupController.instance:addPopupView(PopupEnum.PriorityType.RoomBlockPackageGetView, ViewName.RoomBlockPackageGetView, {
 		itemList = {
 			{
@@ -299,39 +483,160 @@ function var_0_0._onOpenMiniMapView(arg_20_0)
 	})
 end
 
-function var_0_0._onOpenEditPathView(arg_21_0)
-	if arg_21_0:_checkScene() then
+function var_0_0._onOpenEditPathView(arg_36_0)
+	if arg_36_0:_checkScene() then
 		ViewMgr.instance:openView(ViewName.RoomTransportPathView)
-		arg_21_0:closeThis()
+		arg_36_0:closeThis()
 	else
 		GameFacade.showToast(ToastEnum.IconId, "GM需要进入小屋后编辑模式下使用。")
 	end
 end
 
-function var_0_0._findCharacterShadow(arg_22_0)
-	local var_22_0 = lua_room_character.configList or {}
-	local var_22_1 = {}
-	local var_22_2 = {
+function var_0_0._ontransporQuickLinkChange(arg_37_0)
+	RoomTransportPathQuickLinkViewUI._IsShow_ = RoomTransportPathQuickLinkViewUI._IsShow_ ~= true
+end
+
+function var_0_0._initL8(arg_38_0)
+	local var_38_0 = "L8"
+
+	arg_38_0.roomWeatherIdList = {}
+
+	local var_38_1 = RoomConfig.instance:getSceneAmbientConfigList()
+
+	for iter_38_0, iter_38_1 in ipairs(var_38_1) do
+		table.insert(arg_38_0.roomWeatherIdList, iter_38_1.id)
+	end
+
+	local var_38_2 = {
+		"请选择天气"
+	}
+
+	tabletool.addValues(var_38_2, arg_38_0.roomWeatherIdList)
+	arg_38_0:addDropDown(var_38_0, "小屋天气", var_38_2, arg_38_0._onRoomWeatherSelectChanged, arg_38_0, {
+		total_w = 500,
+		drop_w = 330
+	})
+
+	if RoomController.instance:isEditMode() and GameResMgr.IsFromEditorDir then
+		RoomDebugController.instance:getDebugPackageInfo(arg_38_0._onInitDebugMapPackageInfo, arg_38_0, var_38_0)
+	end
+end
+
+function var_0_0._onRoomWeatherSelectChanged(arg_39_0, arg_39_1)
+	if not arg_39_0.roomWeatherIdList then
+		return
+	end
+
+	if arg_39_1 == 0 then
+		return
+	end
+
+	if GameSceneMgr.instance:getCurSceneType() == SceneType.Room then
+		local var_39_0 = GameSceneMgr.instance:getCurScene()
+
+		if var_39_0 and var_39_0.ambient then
+			local var_39_1 = arg_39_0.roomWeatherIdList[arg_39_1]
+
+			var_39_0.ambient:tweenToAmbientId(var_39_1)
+			GameFacade.showToast(94, string.format("GM切换小屋天气:%s", var_39_1))
+			arg_39_0:closeThis()
+		end
+	else
+		GameFacade.showToast(94, "GM需要进入小屋可使用。")
+	end
+end
+
+function var_0_0._onInitDebugMapPackageInfo(arg_40_0, arg_40_1, arg_40_2)
+	local var_40_0 = {
+		"选择需要复制的地图"
+	}
+
+	arg_40_0._blockInfosList = {}
+
+	local var_40_1 = RoomConfig.instance
+
+	for iter_40_0, iter_40_1 in ipairs(arg_40_1) do
+		local var_40_2 = {}
+
+		for iter_40_2, iter_40_3 in ipairs(iter_40_1.infos) do
+			local var_40_3 = HexPoint(iter_40_3.x, iter_40_3.y)
+			local var_40_4 = RoomBlockHelper.isInBoundary(var_40_3)
+
+			if var_40_1:getBlock(iter_40_3.blockId) and not var_40_1:getInitBlock(iter_40_3.blockId) and var_40_4 then
+				table.insert(var_40_2, iter_40_3)
+			end
+		end
+
+		if #var_40_2 > 1 then
+			table.insert(var_40_0, iter_40_1.packageName)
+			table.insert(arg_40_0._blockInfosList, var_40_2)
+		end
+	end
+
+	arg_40_0:addDropDown(arg_40_2, "一键复制地图地块", var_40_0, arg_40_0._onDropDownMapPackageChanged, arg_40_0, {
+		total_w = 750,
+		drop_w = 450
+	})
+end
+
+var_0_0.Drop_Down_Map_Package_Changed = "GMSubViewRoom.Drop_Down_Map_Package_Changed"
+
+function var_0_0._onDropDownMapPackageChanged(arg_41_0, arg_41_1)
+	if arg_41_1 >= 1 or arg_41_1 <= #arg_41_0._blockInfosList then
+		if RoomMapBlockModel.instance:getConfirmBlockCount() > 0 then
+			GameFacade.showToast(ToastEnum.IconId, "需要先重置下荒原")
+
+			return
+		end
+
+		arg_41_0._waitUseBlockList = {}
+
+		tabletool.addValues(arg_41_0._waitUseBlockList, arg_41_0._blockInfosList[arg_41_1])
+		TaskDispatcher.cancelTask(arg_41_0._onWaitUseBlockList, arg_41_0)
+
+		if #arg_41_0._waitUseBlockList > 0 then
+			UIBlockMgr.instance:startBlock(var_0_0.Drop_Down_Map_Package_Changed)
+			TaskDispatcher.runRepeat(arg_41_0._onWaitUseBlockList, arg_41_0, 0.001, #arg_41_0._waitUseBlockList + 1)
+		end
+	end
+end
+
+function var_0_0._onWaitUseBlockList(arg_42_0)
+	if arg_42_0._waitUseBlockList and #arg_42_0._waitUseBlockList > 0 then
+		local var_42_0 = arg_42_0._waitUseBlockList[#arg_42_0._waitUseBlockList]
+
+		table.remove(arg_42_0._waitUseBlockList, #arg_42_0._waitUseBlockList)
+		RoomMapController.instance:useBlockRequest(var_42_0.blockId, var_42_0.rotate, var_42_0.x, var_42_0.y)
+	else
+		UIBlockMgr.instance:endBlock(var_0_0.Drop_Down_Map_Package_Changed)
+		RoomController.instance:exitRoom(true)
+	end
+end
+
+function var_0_0._findCharacterShadow(arg_43_0)
+	local var_43_0 = lua_room_character.configList or {}
+	local var_43_1 = {}
+	local var_43_2 = {
 		shadow = true
 	}
 
-	for iter_22_0, iter_22_1 in ipairs(var_22_0) do
-		if not string.nilorempty(iter_22_1.shadow) and not var_22_2[iter_22_1.shadow] then
-			local var_22_3 = SkinConfig.instance:getSkinCo(iter_22_1.skinId)
+	for iter_43_0, iter_43_1 in ipairs(var_43_0) do
+		if not string.nilorempty(iter_43_1.shadow) and not var_43_2[iter_43_1.shadow] then
+			local var_43_3 = SkinConfig.instance:getSkinCo(iter_43_1.skinId)
 
-			if var_22_3 and not string.nilorempty(var_22_3.spine) then
-				local var_22_4 = string.split(var_22_3.spine, "/")
+			if var_43_3 and not string.nilorempty(var_43_3.spine) then
+				local var_43_4 = string.split(var_43_3.spine, "/")
 
-				var_22_1[string.format("%s_room", var_22_4[#var_22_4])] = iter_22_1.shadow
+				var_43_1[string.format("%s_room", var_43_4[#var_43_4])] = iter_43_1.shadow
 			end
 		end
 	end
 
-	logError(JsonUtil.encode(var_22_1))
+	logError(JsonUtil.encode(var_43_1))
 end
 
-function var_0_0.onDestroyView(arg_23_0)
-	TaskDispatcher.cancelTask(arg_23_0._onWaitUseBlockList, arg_23_0)
+function var_0_0.onDestroyView(arg_44_0)
+	TaskDispatcher.cancelTask(arg_44_0._onWaitUseBlockList, arg_44_0)
 end
 
 return var_0_0

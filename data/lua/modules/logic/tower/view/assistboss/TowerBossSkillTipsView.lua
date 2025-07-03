@@ -3,20 +3,22 @@
 local var_0_0 = class("TowerBossSkillTipsView", BaseView)
 
 function var_0_0.onInitView(arg_1_0)
-	arg_1_0._txtpassivename = gohelper.findChildText(arg_1_0.viewGO, "#go_passiveskilltip/name/bg/#txt_passivename")
+	arg_1_0._txtpassivename = gohelper.findChildText(arg_1_0.viewGO, "#go_passiveskilltip/root/content/skills/name/bg/#txt_passivename")
 	arg_1_0._gopassiveskilltip = gohelper.findChild(arg_1_0.viewGO, "#go_passiveskilltip")
-	arg_1_0._goeffectdesc = gohelper.findChild(arg_1_0.viewGO, "#go_passiveskilltip/mask/root/scrollview/viewport/content/#go_effectdesc")
-	arg_1_0._goeffectdescitem = gohelper.findChild(arg_1_0.viewGO, "#go_passiveskilltip/mask/root/scrollview/viewport/content/#go_effectdesc/#go_effectdescitem")
-	arg_1_0._scrollview = gohelper.findChildScrollRect(arg_1_0.viewGO, "#go_passiveskilltip/mask/root/scrollview")
-	arg_1_0._gomask1 = gohelper.findChild(arg_1_0.viewGO, "#go_passiveskilltip/mask/root/scrollview/#go_mask1")
-	arg_1_0._simageshadow = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_passiveskilltip/mask/root/scrollview/#simage_shadow")
+	arg_1_0._goeffectdesc = gohelper.findChild(arg_1_0.viewGO, "#go_passiveskilltip/root/content/skills/#go_effectContent/#go_effectdesc")
+	arg_1_0._goeffectdescitem = gohelper.findChild(arg_1_0.viewGO, "#go_passiveskilltip/root/content/skills/#go_effectContent/#go_effectdesc/#go_effectdescitem")
 	arg_1_0._btnclosepassivetip = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_passiveskilltip/#btn_closepassivetip")
+	arg_1_0._rectbg = gohelper.findChild(arg_1_0.viewGO, "#go_passiveskilltip/root/bg"):GetComponent(gohelper.Type_RectTransform)
+	arg_1_0._canvasGroupTeachSkills = gohelper.findChild(arg_1_0.viewGO, "#go_passiveskilltip/root/content/teachSkills"):GetComponent(typeof(UnityEngine.CanvasGroup))
+	arg_1_0._goTeachSkills = gohelper.findChild(arg_1_0.viewGO, "#go_passiveskilltip/root/content/teachSkills/#go_teachSkills")
+	arg_1_0._txtTeachSkillTitle = gohelper.findChildText(arg_1_0.viewGO, "#go_passiveskilltip/root/content/teachSkills/#txt_teachSkillTitle")
+	arg_1_0._txtTeachDesc = gohelper.findChildText(arg_1_0.viewGO, "#go_passiveskilltip/root/content/teachSkills/#go_teachSkills/#txt_teachDesc")
 	arg_1_0._passiveskillitems = {}
 
 	for iter_1_0 = 1, 3 do
 		local var_1_0 = arg_1_0:getUserDataTb_()
 
-		var_1_0.go = gohelper.findChild(arg_1_0._gopassiveskilltip, "mask/root/scrollview/viewport/content/talentstar" .. tostring(iter_1_0))
+		var_1_0.go = gohelper.findChild(arg_1_0._gopassiveskilltip, "root/content/skills/#go_effectContent/talentstar" .. tostring(iter_1_0))
 		var_1_0.desc = gohelper.findChildTextMesh(var_1_0.go, "desctxt")
 		var_1_0.hyperLinkClick = SkillHelper.addHyperLinkClick(var_1_0.desc, arg_1_0._onHyperLinkClick, arg_1_0)
 		var_1_0.fixTmpBreakLine = MonoHelper.addNoUpdateLuaComOnceToGo(var_1_0.desc.gameObject, FixTmpBreakLine)
@@ -28,7 +30,6 @@ function var_0_0.onInitView(arg_1_0)
 	end
 
 	arg_1_0._skillEffectDescItems = arg_1_0:getUserDataTb_()
-	arg_1_0._txtpassivename = gohelper.findChildText(arg_1_0.viewGO, "#go_passiveskilltip/name/bg/#txt_passivename")
 
 	if arg_1_0._editableInitView then
 		arg_1_0:_editableInitView()
@@ -44,16 +45,16 @@ function var_0_0.removeEvents(arg_3_0)
 end
 
 function var_0_0._editableInitView(arg_4_0)
-	return
+	arg_4_0.teachSkillTab = arg_4_0:getUserDataTb_()
 end
 
 function var_0_0._onHyperLinkClick(arg_5_0, arg_5_1, arg_5_2)
 	CommonBuffTipController.instance:openCommonTipViewWithCustomPosCallback(tonumber(arg_5_1), arg_5_0.setTipPosCallback, arg_5_0)
 end
 
-var_0_0.LeftWidth = 470
-var_0_0.RightWidth = 190
-var_0_0.TopHeight = 292
+var_0_0.LeftWidth = 910
+var_0_0.RightWidth = 390
+var_0_0.TopHeightOffset = 25
 var_0_0.Interval = 10
 
 function var_0_0.setTipPosCallback(arg_6_0, arg_6_1, arg_6_2)
@@ -77,7 +78,7 @@ function var_0_0.setTipPosCallback(arg_6_0, arg_6_1, arg_6_2)
 		var_6_8 = var_6_8 + var_0_0.RightWidth + var_0_0.Interval + var_6_6
 	end
 
-	local var_6_10 = var_6_9 + var_0_0.TopHeight
+	local var_6_10 = var_6_9 + recthelper.getHeight(arg_6_0._rectbg) / 2 - var_0_0.TopHeightOffset
 
 	recthelper.setAnchor(arg_6_2, var_6_8, var_6_10)
 end
@@ -105,6 +106,7 @@ end
 
 function var_0_0.refreshView(arg_11_0)
 	arg_11_0:refreshPassiveSkill()
+	arg_11_0:refreshTeachSkill()
 end
 
 function var_0_0.refreshPassiveSkill(arg_12_0)
@@ -124,7 +126,7 @@ function var_0_0.refreshPassiveSkill(arg_12_0)
 	local var_12_4 = HeroSkillModel.instance:getSkillEffectTagIdsFormDescTabRecursion(var_12_1)
 	local var_12_5 = {}
 	local var_12_6 = {}
-	local var_12_7 = arg_12_0.bossMo and arg_12_0.bossMo.level or 0
+	local var_12_7 = arg_12_0.bossMo and arg_12_0.bossMo.trialLevel > 0 and arg_12_0.bossMo.trialLevel or arg_12_0.bossMo and arg_12_0.bossMo.level or 0
 
 	for iter_12_1, iter_12_2 in ipairs(arg_12_0._passiveskillitems) do
 		local var_12_8 = var_12_0[iter_12_1] and var_12_0[iter_12_1][1]
@@ -217,11 +219,38 @@ function var_0_0._getSkillEffectDescItem(arg_14_0, arg_14_1)
 	return var_14_0
 end
 
-function var_0_0.onClose(arg_15_0)
+function var_0_0.refreshTeachSkill(arg_15_0)
+	local var_15_0 = TowerBossTeachModel.instance:isAllEpisodeFinish(arg_15_0.bossId)
+
+	arg_15_0._canvasGroupTeachSkills.alpha = var_15_0 and 1 or 0.5
+	arg_15_0._txtTeachSkillTitle.text = var_15_0 and formatLuaLang("towerboss_skill_order", GameUtil.getRomanNums(4)) or luaLang("towerboss_teachskill_unlock")
+
+	local var_15_1 = string.splitToNumber(arg_15_0.config.teachSkills, "#")
+
+	gohelper.CreateObjList(arg_15_0, arg_15_0.showTeachSkill, var_15_1, arg_15_0._goTeachSkills, arg_15_0._txtTeachDesc.gameObject)
+end
+
+function var_0_0.showTeachSkill(arg_16_0, arg_16_1, arg_16_2, arg_16_3)
+	local var_16_0 = lua_skill.configDict[arg_16_2]
+	local var_16_1 = FightConfig.instance:getSkillEffectDesc(arg_16_0.config.name, var_16_0)
+	local var_16_2 = arg_16_1:GetComponent(gohelper.Type_TextMesh)
+
+	var_16_2.text = SkillHelper.buildDesc(var_16_1)
+
+	if not arg_16_0.teachSkillTab[arg_16_3] then
+		arg_16_0.teachSkillTab[arg_16_3] = {}
+		arg_16_0.teachSkillTab[arg_16_3].teachHyperLinkClick = SkillHelper.addHyperLinkClick(var_16_2, arg_16_0._onHyperLinkClick, arg_16_0)
+		arg_16_0.teachSkillTab[arg_16_3].teachfixTmpBreakLine = MonoHelper.addNoUpdateLuaComOnceToGo(arg_16_1, FixTmpBreakLine)
+	end
+
+	arg_16_0.teachSkillTab[arg_16_3].teachfixTmpBreakLine:refreshTmpContent(var_16_2)
+end
+
+function var_0_0.onClose(arg_17_0)
 	return
 end
 
-function var_0_0.onDestroyView(arg_16_0)
+function var_0_0.onDestroyView(arg_18_0)
 	return
 end
 

@@ -75,7 +75,7 @@ function var_0_0.updateByCardInfo(arg_7_0, arg_7_1)
 		return arg_7_0:hideResistanceGo()
 	end
 
-	local var_7_0 = FightCardModel.instance.curSelectEntityId
+	local var_7_0 = FightDataHelper.operationDataMgr.curSelectEntityId
 
 	if var_7_0 == 0 then
 		return arg_7_0:hideResistanceGo()

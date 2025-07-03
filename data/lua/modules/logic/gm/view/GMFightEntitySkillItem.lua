@@ -40,7 +40,7 @@ function var_0_0.onUpdateMO(arg_4_0, arg_4_1)
 
 	if var_4_0:isPassiveSkill(arg_4_0._skillCO.id) then
 		arg_4_0._level.text = "被动"
-	elseif var_4_0:isUniqueSkill(arg_4_0._skillCO.id) then
+	elseif FightCardDataHelper.isBigSkill(arg_4_0._skillCO.id) then
 		arg_4_0._level.text = "大招"
 	else
 		arg_4_0._level.text = var_4_0:getSkillLv(arg_4_0._skillCO.id)

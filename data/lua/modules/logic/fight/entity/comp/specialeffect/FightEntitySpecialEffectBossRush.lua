@@ -34,7 +34,7 @@ function var_0_0.ctor(arg_1_0, arg_1_1)
 end
 
 function var_0_0._onSkillPlayStart(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4)
-	if arg_2_1 and arg_2_0._entity ~= arg_2_1 and arg_2_1:getMO() and arg_2_1:getMO():isUniqueSkill(arg_2_2) then
+	if arg_2_1 and arg_2_0._entity ~= arg_2_1 and arg_2_1:getMO() and FightCardDataHelper.isBigSkill(arg_2_2) then
 		arg_2_0._uniqueSkill = arg_2_2
 
 		arg_2_0:hideSpecialEffects("UniqueSkill")

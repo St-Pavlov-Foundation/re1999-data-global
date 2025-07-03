@@ -291,7 +291,7 @@ function var_0_0._onClickEquip(arg_11_0)
 		}
 
 		if arg_11_0.trialCO then
-			var_11_0.heroMo = HeroGroupTrialModel.instance:getHeroMo(arg_11_0.trialCO.heroId)
+			var_11_0.heroMo = HeroGroupTrialModel.instance:getHeroMo(arg_11_0.trialCO)
 
 			if arg_11_0.trialCO.equipId > 0 then
 				var_11_0.equipMo = var_11_0.heroMo.trialEquipMo

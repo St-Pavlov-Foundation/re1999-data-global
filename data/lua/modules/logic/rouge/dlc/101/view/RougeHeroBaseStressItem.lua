@@ -2,7 +2,7 @@
 
 local var_0_0 = class("RougeHeroBaseStressItem", LuaCompBase)
 
-var_0_0.AssetUrl = FightNameUIStressMgr.PrefabPath
+var_0_0.AssetUrl = RougeDLCEnum101.StressPrefabPath
 
 function var_0_0.init(arg_1_0, arg_1_1)
 	var_0_0.super.init(arg_1_0, arg_1_1)

@@ -111,6 +111,7 @@ var_0_0.HelpId = {
 	Talent = 112,
 	Dungeon = 107,
 	VersionActivity1_3BuffView = 172,
+	V2A7_boss = 2700111,
 	ExploreMap = 1450104
 }
 var_0_0.SaveServer = {

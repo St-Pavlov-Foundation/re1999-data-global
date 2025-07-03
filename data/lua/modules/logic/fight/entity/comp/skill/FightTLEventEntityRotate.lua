@@ -1,8 +1,8 @@
 ﻿module("modules.logic.fight.entity.comp.skill.FightTLEventEntityRotate", package.seeall)
 
-local var_0_0 = class("FightTLEventEntityRotate")
+local var_0_0 = class("FightTLEventEntityRotate", FightTimelineTrackItem)
 
-function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 	arg_1_0._attacker = FightHelper.getEntity(arg_1_1.fromId)
 
 	if not arg_1_0._attacker then
@@ -73,22 +73,18 @@ function var_0_0.handleSkillEvent(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 	end
 end
 
-function var_0_0.reset(arg_2_0)
-	arg_2_0:_clear()
-end
-
-function var_0_0.dispose(arg_3_0)
-	arg_3_0:_clear()
-end
-
-function var_0_0._clear(arg_4_0)
-	if arg_4_0._tweenIdList then
-		for iter_4_0, iter_4_1 in ipairs(arg_4_0._tweenIdList) do
-			ZProj.TweenHelper.KillById(iter_4_1)
+function var_0_0._clear(arg_2_0)
+	if arg_2_0._tweenIdList then
+		for iter_2_0, iter_2_1 in ipairs(arg_2_0._tweenIdList) do
+			ZProj.TweenHelper.KillById(iter_2_1)
 		end
 
-		arg_4_0._tweenIdList = nil
+		arg_2_0._tweenIdList = nil
 	end
+end
+
+function var_0_0.onDestructor(arg_3_0)
+	arg_3_0:_clear()
 end
 
 return var_0_0

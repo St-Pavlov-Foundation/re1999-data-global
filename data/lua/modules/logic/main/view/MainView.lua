@@ -490,60 +490,65 @@ function var_0_0.storeRedDotRefreshFunc(arg_41_0, arg_41_1)
 	arg_41_1:defaultRefreshDot()
 	arg_41_0:showBankNewEffect(false)
 
-	if not arg_41_1.show then
-		local var_41_0 = StoreHelper.getRecommendStoreSecondTabConfig()
+	local var_41_0 = StoreHelper.getRecommendStoreSecondTabConfig()
 
-		for iter_41_0, iter_41_1 in ipairs(var_41_0) do
-			if StoreController.instance:isNeedShowRedDotNewTag(iter_41_1) and not StoreController.instance:isEnteredRecommendStore(iter_41_1.id) then
-				arg_41_1.show = true
-
-				arg_41_1:showRedDot(RedDotEnum.Style.NewTag)
-				arg_41_1:SetRedDotTrsWithType(RedDotEnum.Style.NewTag, 9.7, 4.2)
-				arg_41_0:showStoreDeadline(false)
-				arg_41_0:registStoreDeadlineCall(false)
-				arg_41_0:showBankNewEffect(true)
-
-				return
-			end
-		end
-
-		if not arg_41_1.show and StoreModel.instance:isRedTabReadOnceClient(StoreEnum.StoreId.EventPackage) then
+	for iter_41_0, iter_41_1 in ipairs(var_41_0) do
+		if StoreController.instance:isNeedShowRedDotNewTag(iter_41_1) and not StoreController.instance:isEnteredRecommendStore(iter_41_1.id) then
 			arg_41_1.show = true
 
-			arg_41_1:showRedDot(RedDotEnum.Style.Normal)
+			arg_41_1:showRedDot(RedDotEnum.Style.NewTag)
+			arg_41_1:SetRedDotTrsWithType(RedDotEnum.Style.NewTag, 9.7, 4.2)
+			arg_41_0:showStoreDeadline(false)
+			arg_41_0:registStoreDeadlineCall(false)
+			arg_41_0:showBankNewEffect(true)
+
+			return
 		end
-	else
-		local var_41_1 = false
-		local var_41_2 = StoreModel.instance:getAllRedDotInfo()
+	end
+
+	local var_41_1 = StoreModel.instance:getAllRedDotInfo()
+
+	if var_41_1 then
+		local var_41_2 = false
+
+		for iter_41_2, iter_41_3 in pairs(var_41_1) do
+			local var_41_3 = StoreModel.instance:getGoodsMO(iter_41_3.uid)
+
+			if var_41_3 then
+				local var_41_4 = var_41_3.refreshTime == StoreEnum.ChargeRefreshTime.Month
+
+				var_41_2 = var_41_3.refreshTime == StoreEnum.ChargeRefreshTime.Week or var_41_4
+
+				if StoreConfig.instance:isPackageStore(var_41_3.belongStoreId) then
+					local var_41_5 = ServerTime.now()
+
+					var_41_2 = var_41_5 >= var_41_3.newStartTime and var_41_5 <= var_41_3.newEndTime
+				end
+			end
+
+			if var_41_2 then
+				break
+			end
+		end
 
 		if var_41_2 then
-			for iter_41_2, iter_41_3 in pairs(var_41_2) do
-				local var_41_3 = StoreModel.instance:getGoodsMO(iter_41_3.uid)
+			arg_41_1.show = true
 
-				if var_41_3 then
-					local var_41_4 = var_41_3.refreshTime == StoreEnum.ChargeRefreshTime.Month
-
-					var_41_1 = var_41_3.refreshTime == StoreEnum.ChargeRefreshTime.Week or var_41_4
-				end
-
-				if var_41_1 then
-					break
-				end
-			end
-
-			if var_41_1 then
-				arg_41_1.show = true
-
-				arg_41_1:showRedDot(RedDotEnum.Style.NewTag)
-				arg_41_1:SetRedDotTrsWithType(RedDotEnum.Style.NewTag, 9.7, 4.2)
-				arg_41_0:showBankNewEffect(true)
-			end
+			arg_41_1:showRedDot(RedDotEnum.Style.NewTag)
+			arg_41_1:SetRedDotTrsWithType(RedDotEnum.Style.NewTag, 9.7, 4.2)
+			arg_41_0:showBankNewEffect(true)
 		end
 
-		arg_41_0:showStoreDeadline(false)
-		arg_41_0:registStoreDeadlineCall(false)
+		arg_41_0:showStoreDeadline(not var_41_2 and not arg_41_1.show)
+		arg_41_0:registStoreDeadlineCall(not var_41_2 and not arg_41_1.show)
 
 		return
+	end
+
+	if not arg_41_1.show and StoreModel.instance:isRedTabReadOnceClient(StoreEnum.StoreId.EventPackage) then
+		arg_41_1.show = true
+
+		arg_41_1:showRedDot(RedDotEnum.Style.Normal)
 	end
 
 	arg_41_0:registStoreDeadlineCall(true)
@@ -571,25 +576,38 @@ function var_0_0.showStoreDeadline(arg_43_0, arg_43_1)
 
 	var_43_0.needShow = arg_43_1 or var_43_0.needShow
 
-	local var_43_1 = StoreConfig.instance:getTabConfig(StoreEnum.StoreId.LimitStore)
+	if var_43_0.needShow then
+		local var_43_1 = false
+		local var_43_2 = StoreConfig.instance:getTabConfig(StoreEnum.StoreId.LimitStore)
+		local var_43_3 = 0
 
-	if var_43_1 and var_43_0.needShow then
-		local var_43_2 = false
-		local var_43_3 = StoreHelper.getRemainExpireTime(var_43_1)
+		if var_43_2 then
+			local var_43_4 = StoreHelper.getRemainExpireTime(var_43_2)
 
-		if var_43_3 and var_43_3 > 0 and var_43_3 <= TimeUtil.OneDaySecond * 7 then
+			if var_43_4 and var_43_4 > 0 and var_43_4 <= TimeUtil.OneDaySecond * 7 then
+				var_43_3 = var_43_4
+			end
+		end
+
+		local var_43_5 = StoreHelper.getRemainExpireTimeDeepByStoreId(StoreEnum.StoreId.DecorateStore)
+
+		if var_43_5 > 0 then
+			var_43_3 = var_43_3 == 0 and var_43_5 or Mathf.Min(var_43_5, var_43_3)
+		end
+
+		if var_43_3 > 0 then
 			gohelper.setActive(var_43_0.godeadline, true)
 			gohelper.setActive(var_43_0.txttime.gameObject, true)
 
-			local var_43_4
+			local var_43_6
 
-			var_43_0.txttime.text, var_43_0.txtformat.text, var_43_4 = TimeUtil.secondToRoughTime(math.floor(var_43_3), true)
+			var_43_0.txttime.text, var_43_0.txtformat.text, var_43_6 = TimeUtil.secondToRoughTime(math.floor(var_43_3), true)
 
-			UISpriteSetMgr.instance:setCommonSprite(var_43_0.imagetimebg, var_43_4 and "daojishi_01" or "daojishi_02")
-			UISpriteSetMgr.instance:setCommonSprite(var_43_0.imagetimeicon, var_43_4 and "daojishiicon_01" or "daojishiicon_02")
-			SLFramework.UGUI.GuiHelper.SetColor(var_43_0.txttime, var_43_4 and "#98D687" or "#E99B56")
-			SLFramework.UGUI.GuiHelper.SetColor(var_43_0.txtformat, var_43_4 and "#98D687" or "#E99B56")
-			gohelper.setActive(var_43_0.godeadlineEffect, not var_43_4)
+			UISpriteSetMgr.instance:setCommonSprite(var_43_0.imagetimebg, var_43_6 and "daojishi_01" or "daojishi_02")
+			UISpriteSetMgr.instance:setCommonSprite(var_43_0.imagetimeicon, var_43_6 and "daojishiicon_01" or "daojishiicon_02")
+			SLFramework.UGUI.GuiHelper.SetColor(var_43_0.txttime, var_43_6 and "#98D687" or "#E99B56")
+			SLFramework.UGUI.GuiHelper.SetColor(var_43_0.txtformat, var_43_6 and "#98D687" or "#E99B56")
+			gohelper.setActive(var_43_0.godeadlineEffect, not var_43_6)
 
 			return
 		end

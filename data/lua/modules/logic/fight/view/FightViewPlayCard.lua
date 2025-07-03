@@ -36,6 +36,7 @@ function var_0_0.removeEvents(arg_3_0)
 end
 
 function var_0_0.onOpen(arg_4_0)
+	arg_4_0:addEventCb(FightController.instance, FightEvent.CancelOperation, arg_4_0._refreshAllItemData, arg_4_0)
 	arg_4_0:addEventCb(FightController.instance, FightEvent.DistributeCards, arg_4_0._refreshAllItemData, arg_4_0)
 	arg_4_0:addEventCb(FightController.instance, FightEvent.OnRoundSequenceFinish, arg_4_0._refreshAllItemData, arg_4_0)
 	arg_4_0:addEventCb(FightController.instance, FightEvent.PushCardInfo, arg_4_0._refreshAllItemData, arg_4_0)
@@ -60,6 +61,7 @@ function var_0_0.onOpen(arg_4_0)
 	arg_4_0:addEventCb(FightController.instance, FightEvent.ExitOperateState, arg_4_0._onExitOperateState, arg_4_0)
 	arg_4_0:addEventCb(FightController.instance, FightEvent.HidePlayCardAllCard, arg_4_0._onHidePlayCardAllCard, arg_4_0)
 	arg_4_0:addEventCb(FightController.instance, FightEvent.EnterStage, arg_4_0._onEnterStage, arg_4_0)
+	arg_4_0:addEventCb(FightController.instance, FightEvent.BeforeCancelOperation, arg_4_0.onBeforeCancelOperation, arg_4_0)
 end
 
 function var_0_0._onEnterStage(arg_5_0, arg_5_1)
@@ -196,8 +198,8 @@ function var_0_0._onAddPlayOperationData(arg_13_0, arg_13_1)
 end
 
 function var_0_0.getMaxItemCount()
-	local var_14_0 = FightCardModel.instance:getCardMO().actPoint
-	local var_14_1 = FightCardModel.instance:getCardMO().extraMoveAct
+	local var_14_0 = FightDataHelper.operationDataMgr.actPoint
+	local var_14_1 = FightDataHelper.operationDataMgr.extraMoveAct
 	local var_14_2 = var_14_0
 	local var_14_3 = 0
 
@@ -205,7 +207,7 @@ function var_0_0.getMaxItemCount()
 		var_14_2 = var_14_1 + var_14_0
 	end
 
-	local var_14_4 = FightCardModel.instance:getShowOpActList()
+	local var_14_4 = FightDataHelper.operationDataMgr:getShowOpActList()
 
 	for iter_14_0, iter_14_1 in ipairs(var_14_4) do
 		if iter_14_1:isPlayCard() and iter_14_1.costActPoint == 0 then
@@ -227,20 +229,21 @@ function var_0_0.getMaxItemCount()
 			var_14_2 = var_14_2 + 1
 			var_14_3 = var_14_3 + 1
 		end
+
+		if iter_14_1:isBloodPoolSkill() then
+			var_14_2 = var_14_2 + 1
+			var_14_3 = var_14_3 + 1
+		end
 	end
 
 	return var_14_2, var_14_3
 end
 
 function var_0_0._refreshAllItemData(arg_15_0)
-	if not FightCardModel.instance:getCardMO() then
-		return
-	end
-
 	arg_15_0:_clearAllItemData()
 
 	local var_15_0 = arg_15_0:_onCorrectPlayCardObjList()
-	local var_15_1 = FightCardModel.instance:getShowOpActList()
+	local var_15_1 = FightDataHelper.operationDataMgr:getShowOpActList()
 
 	for iter_15_0, iter_15_1 in ipairs(var_15_1) do
 		arg_15_0:recordPlayData(iter_15_1)
@@ -266,14 +269,14 @@ function var_0_0.recordPlayData(arg_17_0, arg_17_1)
 		return
 	end
 
-	if not FightCardModel.instance:canShowOpAct(arg_17_1) then
+	if not FightDataHelper.operationDataMgr:canShowOpAct(arg_17_1) then
 		return
 	end
 
-	if arg_17_1:isPlayCard() or arg_17_1:isAssistBossPlayCard() or arg_17_1:isPlayerFinisherSkill() then
+	if FightCardDataHelper.checkOpAsPlayCardHandle(arg_17_1) then
 		table.insert(arg_17_0._begin_round_ops, arg_17_1)
 	elseif arg_17_1:isMoveCard() then
-		local var_17_0 = FightCardModel.instance:getCardMO().extraMoveAct
+		local var_17_0 = FightDataHelper.operationDataMgr.extraMoveAct
 
 		if var_17_0 > 0 and var_17_0 > #arg_17_0._extra_move_round_ops then
 			table.insert(arg_17_0._extra_move_round_ops, arg_17_1)
@@ -319,7 +322,7 @@ function var_0_0._refreshSeasonArrowShow(arg_22_0)
 		return
 	end
 
-	if FightCardModel.instance:isCardOpEnd() then
+	if FightDataHelper.operationDataMgr:isCardOpEnd() then
 		return
 	end
 
@@ -368,7 +371,7 @@ function var_0_0.getShowIndex(arg_24_0, arg_24_1)
 		local var_24_1 = tabletool.indexOf(arg_24_0._extra_move_round_ops, arg_24_1)
 
 		if var_24_1 then
-			var_24_0 = var_0_0.getMaxItemCount() - FightCardModel.instance:getCardMO().extraMoveAct + var_24_1
+			var_24_0 = var_0_0.getMaxItemCount() - FightDataHelper.operationDataMgr.extraMoveAct + var_24_1
 		end
 	end
 
@@ -413,7 +416,7 @@ function var_0_0._refreshItemAni(arg_26_0, arg_26_1, arg_26_2)
 	local var_26_0 = arg_26_0._playCardItemList[arg_26_1]
 	local var_26_1, var_26_2 = var_0_0.getMaxItemCount()
 
-	if arg_26_1 > var_26_1 - FightCardModel.instance:getCardMO().extraMoveAct then
+	if arg_26_1 > var_26_1 - FightDataHelper.operationDataMgr.extraMoveAct then
 		if arg_26_2 then
 			var_26_0:showExtMoveEndEffect()
 		else
@@ -639,37 +642,47 @@ function var_0_0._clearBeginRoundOps(arg_39_0)
 	arg_39_0._all_recorded_ops = {}
 end
 
-function var_0_0._onResetCard(arg_40_0, arg_40_1)
-	arg_40_0:_releaseAllFlyItems()
-	FightController.instance:dispatchEvent(FightEvent.SetBlockCardOperate, true)
+function var_0_0.onBeforeCancelOperation(arg_40_0)
+	arg_40_0.curIndex2OriginHandCardIndex = {}
 
-	local var_40_0 = arg_40_0:getUserDataTb_()
-
-	var_40_0.view = arg_40_0
-	var_40_0.viewGO = arg_40_0.viewGO
-	var_40_0.playCardItemList = arg_40_0._playCardItemList
-	var_40_0.oldCardOps = arg_40_1
-
-	arg_40_0:_hideRankChangeEffect()
-	arg_40_0._resetCardFlow:registerDoneListener(arg_40_0._onResetEffectDone, arg_40_0)
-	arg_40_0._resetCardFlow:start(var_40_0)
-end
-
-function var_0_0._hideRankChangeEffect(arg_41_0)
-	for iter_41_0, iter_41_1 in ipairs(arg_41_0._playCardItemList) do
-		gohelper.setActive(iter_41_1.rankChangeRoot, false)
+	for iter_40_0, iter_40_1 in ipairs(FightDataHelper.handCardMgr.handCard) do
+		arg_40_0.curIndex2OriginHandCardIndex[iter_40_0] = iter_40_1.originHandCardIndex
 	end
 end
 
-function var_0_0._onResetEffectDone(arg_42_0)
-	arg_42_0:_onCorrectPlayCardObjList()
-	arg_42_0:_clearAllItemData()
-	arg_42_0._resetCardFlow:unregisterDoneListener(arg_42_0._onResetEffectDone, arg_42_0)
+function var_0_0._onResetCard(arg_41_0, arg_41_1)
+	arg_41_0:_releaseAllFlyItems()
+	FightController.instance:dispatchEvent(FightEvent.SetBlockCardOperate, true)
+
+	local var_41_0 = arg_41_0:getUserDataTb_()
+
+	var_41_0.view = arg_41_0
+	var_41_0.viewGO = arg_41_0.viewGO
+	var_41_0.playCardItemList = arg_41_0._playCardItemList
+	var_41_0.oldCardOps = arg_41_1
+	var_41_0.curIndex2OriginHandCardIndex = arg_41_0.curIndex2OriginHandCardIndex
+	arg_41_0.curIndex2OriginHandCardIndex = nil
+
+	arg_41_0:_hideRankChangeEffect()
+	arg_41_0._resetCardFlow:registerDoneListener(arg_41_0._onResetEffectDone, arg_41_0)
+	arg_41_0._resetCardFlow:start(var_41_0)
+end
+
+function var_0_0._hideRankChangeEffect(arg_42_0)
+	for iter_42_0, iter_42_1 in ipairs(arg_42_0._playCardItemList) do
+		gohelper.setActive(iter_42_1.rankChangeRoot, false)
+	end
+end
+
+function var_0_0._onResetEffectDone(arg_43_0)
+	arg_43_0:_onCorrectPlayCardObjList()
+	arg_43_0:_clearAllItemData()
+	arg_43_0._resetCardFlow:unregisterDoneListener(arg_43_0._onResetEffectDone, arg_43_0)
 	FightController.instance:dispatchEvent(FightEvent.SetBlockCardOperate, false)
 end
 
-function var_0_0.calcCardPosX(arg_43_0, arg_43_1)
-	return -var_0_0.PlayCardWidth * arg_43_1 / 2 - var_0_0.HalfCardWidth + var_0_0.PlayCardWidth * arg_43_0, 2
+function var_0_0.calcCardPosX(arg_44_0, arg_44_1)
+	return -var_0_0.PlayCardWidth * arg_44_1 / 2 - var_0_0.HalfCardWidth + var_0_0.PlayCardWidth * arg_44_0, 2
 end
 
 return var_0_0

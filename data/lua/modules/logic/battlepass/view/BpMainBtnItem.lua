@@ -11,8 +11,6 @@ function var_0_0.onInit(arg_2_0, arg_2_1)
 
 	local var_2_0 = BpConfig.instance:getBpCO(BpModel.instance.id)
 
-	arg_2_0._goexpup = gohelper.findChild(arg_2_0.go, "#go_expup")
-
 	gohelper.setActive(arg_2_0._goexpup, BpModel.instance:isShowExpUp())
 
 	if var_2_0 and var_2_0.isSp then

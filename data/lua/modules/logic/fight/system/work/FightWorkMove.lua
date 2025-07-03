@@ -18,7 +18,7 @@ function var_0_0.onStart(arg_2_0)
 	arg_2_0._flow = FlowParallel.New()
 	arg_2_0._cacheEntityIds = {}
 
-	local var_2_0 = string.split(arg_2_0._actEffectMO.reserveStr, "|")
+	local var_2_0 = string.split(arg_2_0.actEffectData.reserveStr, "|")
 
 	if #var_2_0 > 0 then
 		AudioMgr.instance:trigger(410000090)
