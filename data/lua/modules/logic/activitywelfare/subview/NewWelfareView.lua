@@ -204,6 +204,8 @@ function var_0_0.onClose(arg_19_0)
 		iter_19_1.btnClaim:RemoveClickListener()
 		iter_19_1.btnGo:RemoveClickListener()
 	end
+
+	GameUtil.onDestroyViewMember_TweenId(arg_19_0, "_faithTweenId")
 end
 
 return var_0_0

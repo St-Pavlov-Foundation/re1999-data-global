@@ -15,7 +15,7 @@ function var_0_0.onStart(arg_1_0)
 	if var_1_1 then
 		local var_1_2 = var_1_1.skillId
 
-		var_1_1:init(arg_1_0.actEffectData.cardInfo)
+		FightDataUtil.coverData(arg_1_0.actEffectData.cardInfo, var_1_1)
 		arg_1_0:com_sendFightEvent(FightEvent.PlayCardAroundDownRank, var_1_0, var_1_2)
 	end
 

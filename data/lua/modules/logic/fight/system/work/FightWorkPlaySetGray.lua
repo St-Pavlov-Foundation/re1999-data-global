@@ -13,7 +13,7 @@ function var_0_0.onStart(arg_1_0)
 	local var_1_1 = FightPlayCardModel.instance:getUsedCards()[var_1_0]
 
 	if var_1_1 then
-		var_1_1:init(arg_1_0.actEffectData.cardInfo)
+		FightDataUtil.coverData(arg_1_0.actEffectData.cardInfo, var_1_1)
 		FightController.instance:dispatchEvent(FightEvent.PlayCardAroundSetGray, var_1_0)
 	end
 

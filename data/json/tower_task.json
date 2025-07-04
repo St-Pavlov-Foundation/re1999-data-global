@@ -513,7 +513,7 @@
     "id": 90010201,
     "taskGroupId": 900102,
     "activityId": 0,
-    "isOnline": 1,
+    "isOnline": 0,
     "minType": "language_10061265",
     "name": "",
     "desc": "language_10071696",
