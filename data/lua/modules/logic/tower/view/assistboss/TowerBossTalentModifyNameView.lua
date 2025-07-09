@@ -44,7 +44,7 @@ function var_0_0._btnsureOnClick(arg_5_0)
 		return
 	end
 
-	if GameUtil.utf8len(var_5_0) > 6 then
+	if CommonConfig.instance:getConstNum(141) < GameUtil.utf8len(var_5_0) then
 		GameFacade.showToast(ToastEnum.InformPlayerCharLen)
 
 		return
