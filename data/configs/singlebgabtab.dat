@@ -27139,6 +27139,18 @@
   "lang/common/singlebg_lang/txt_adventuretask/v2a5_live_jp.png.dat": [
     "Assets/ZResourcesLib/lang/common/singlebg_lang/txt_adventuretask/v2a5_live_jp.png"
   ],
+  "lang/common/singlebg_lang/txt_adventuretask/v2a7_live_en.png.dat": [
+    "Assets/ZResourcesLib/lang/common/singlebg_lang/txt_adventuretask/v2a7_live_en.png"
+  ],
+  "lang/common/singlebg_lang/txt_adventuretask/v2a7_live_jp.png.dat": [
+    "Assets/ZResourcesLib/lang/common/singlebg_lang/txt_adventuretask/v2a7_live_jp.png"
+  ],
+  "lang/common/singlebg_lang/txt_adventuretask/v2a7_live_kr.png.dat": [
+    "Assets/ZResourcesLib/lang/common/singlebg_lang/txt_adventuretask/v2a7_live_kr.png"
+  ],
+  "lang/common/singlebg_lang/txt_adventuretask/v2a7_live_tw.png.dat": [
+    "Assets/ZResourcesLib/lang/common/singlebg_lang/txt_adventuretask/v2a7_live_tw.png"
+  ],
   "lang/common/singlebg_lang/txt_adventuretask/welcome.png.dat": [
     "Assets/ZResourcesLib/lang/common/singlebg_lang/txt_adventuretask/welcome.png"
   ],
