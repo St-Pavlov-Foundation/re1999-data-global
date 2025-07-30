@@ -106,6 +106,7 @@ local var_0_1 = {
 	ActivityEnum.Activity.V2a7_SelfSelectSix2
 }
 local var_0_2 = {
+	ActivityEnum.Activity.V3a0_WarmUp,
 	ActivityEnum.Activity.VersionActivity1_3Radio,
 	ActivityEnum.Activity.Activity1_6WarmUp,
 	ActivityEnum.Activity.Activity1_7WarmUp,

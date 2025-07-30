@@ -307,6 +307,43 @@
 			[1] = "ui/viewres/activity/v3a0_summersign_signitem.prefab"
 		}
 	},
+	Permanent2_0EnterView = {
+		destroy = 0,
+		container = "Permanent2_0EnterViewContainer",
+		mainRes = "ui/viewres/dungeon/reappear/a10_reappear_mainactivity_enterview.prefab",
+		layer = "POPUP_TOP",
+		viewType = ViewType.Full,
+		tabRes = {
+			{
+				{
+					NavigateButtonsView.prefabPath
+				}
+			}
+		}
+	},
+	VersionActivity3_0_v2a1_ReactivityEnterview = {
+		destroy = 0,
+		container = "VersionActivity3_0_v2a1_ReactivityEnterviewContainer",
+		mainRes = "ui/viewres/versionactivity_3_0/v3a0_reprint/v3a0_v2a1reprint_enterview.prefab",
+		layer = "POPUP_TOP",
+		viewType = ViewType.Full,
+		tabRes = {
+			{
+				{
+					NavigateButtonsView.prefabPath
+				}
+			}
+		}
+	},
+	V3a0_WarmUp = {
+		destroy = 0,
+		container = "V3a0_WarmUpContainer",
+		bgBlur = 0,
+		mainRes = "ui/viewres/v3a0_warmup/v3a0_warmup.prefab",
+		layer = "POPUP_TOP",
+		viewType = ViewType.Normal,
+		anim = ViewAnim.Default
+	},
 	SimulateLoginView = {
 		destroy = 3,
 		container = "SimulateLoginViewContainer",

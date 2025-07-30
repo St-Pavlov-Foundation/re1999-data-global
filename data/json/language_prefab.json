@@ -19408,6 +19408,22 @@
     "lang": "language_10031256"
   },
   {
+    "id": "p_v3a0_warmup_txt_goto",
+    "lang": "language_10075488"
+  },
+  {
+    "id": "p_v3a0_warmup_txt_Reward",
+    "lang": "language_10075489"
+  },
+  {
+    "id": "p_v3a0_warmup_txt_WrongChannel",
+    "lang": "language_10075490"
+  },
+  {
+    "id": "p_v3a0_warmup_txt_tips",
+    "lang": "language_10075491"
+  },
+  {
     "id": "p_turnback_fullview_txt_smallreward",
     "lang": "language_10068611"
   },

@@ -353,6 +353,8 @@ function var_0_0.endShowRewardView(arg_27_0)
 	arg_27_0:_showAllElementTipView()
 end
 
+local var_0_1 = 388.9144
+
 function var_0_0.calculatePosInContent(arg_28_0)
 	local var_28_0 = recthelper.getAnchorX(arg_28_0._txtsectionname.transform)
 	local var_28_1 = recthelper.getAnchorX(arg_28_0._txtnameen.transform)
@@ -360,7 +362,13 @@ function var_0_0.calculatePosInContent(arg_28_0)
 	local var_28_3 = var_28_1 + arg_28_0._txtsectionname.preferredWidth
 	local var_28_4 = math.max(var_28_2, var_28_3)
 
-	arg_28_0._maxWidth = math.max(var_28_4 * 2, VersionActivity2_0DungeonEnum.EpisodeItemMinWidth) + 30
+	if var_28_4 > VersionActivity2_0DungeonEnum.EpisodeItemMinWidth then
+		local var_28_5 = var_28_4 - VersionActivity2_0DungeonEnum.EpisodeItemMinWidth
+
+		var_28_4 = (var_0_1 + var_28_5) / 2
+	end
+
+	arg_28_0._maxWidth = math.max(var_28_4 * 2, VersionActivity2_0DungeonEnum.EpisodeItemMinWidth)
 
 	recthelper.setWidth(arg_28_0._goclickarea.transform, arg_28_0._maxWidth)
 	recthelper.setWidth(arg_28_0._goraycast.transform, arg_28_0._maxWidth + arg_28_0._layout._constDungeonNormalDeltaX)

@@ -60,7 +60,10 @@ var_0_0.Act191 = {
 }
 var_0_0.WarmUp = {
 	play_ui_yuzhou_fax_print = 20270060,
+	stop_ui_lushang_yure_typewriter = 20300033,
+	play_ui_lushang_yure_tear = 20300031,
 	play_ui_min_day_night = 20220210,
+	play_ui_lushang_yure_typewriter = 20300032,
 	play_ui_yuzhou_fax_beep = 20270059,
 	play_ui_yuzhou_fax_earcap = 20270058
 }

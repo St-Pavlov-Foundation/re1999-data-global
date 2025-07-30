@@ -10618,5 +10618,20 @@
     "id": 20270060,
     "eventName": "play_ui_yuzhou_fax_print",
     "bankName": "ui_activity_2_7_yuzhou"
+  },
+  {
+    "id": 20300031,
+    "eventName": "play_ui_lushang_yure_tear",
+    "bankName": "ui_activity_3_0_lushang_yure"
+  },
+  {
+    "id": 20300032,
+    "eventName": "play_ui_lushang_yure_typewriter",
+    "bankName": "ui_activity_3_0_lushang_yure"
+  },
+  {
+    "id": 20300033,
+    "eventName": "stop_ui_lushang_yure_typewriter",
+    "bankName": "ui_activity_3_0_lushang_yure"
   }
 ]

@@ -128,7 +128,7 @@ function var_0_0._refreshItem(arg_6_0)
 			RedDotController.instance:addRedDot(arg_6_0._goreddot, var_6_4, nil, arg_6_0.checkActivityShowFirstEnter, arg_6_0)
 		elseif var_6_2 == VersionActivity2_2Enum.ActivityId.LimitDecorate then
 			RedDotController.instance:addRedDot(arg_6_0._goreddot, var_6_8, var_6_2, arg_6_0.checkActivityShowFirstEnter, arg_6_0)
-		elseif var_6_2 == ActivityEnum.Activity.Activity1_9WarmUp or var_6_2 == ActivityEnum.Activity.V2a0_WarmUp or var_6_2 == ActivityEnum.Activity.V2a1_WarmUp or var_6_2 == ActivityEnum.Activity.V2a2_WarmUp or var_6_2 == ActivityEnum.Activity.V2a3_WarmUp or var_6_2 == ActivityEnum.Activity.RoomSign or var_6_2 == ActivityEnum.Activity.V2a5_WarmUp or var_6_2 == ActivityEnum.Activity.V2a6_WarmUp or var_6_2 == ActivityEnum.Activity.V2a7_WarmUp then
+		elseif var_6_2 == ActivityEnum.Activity.Activity1_9WarmUp or var_6_2 == ActivityEnum.Activity.V3a0_WarmUp or var_6_2 == ActivityEnum.Activity.V2a0_WarmUp or var_6_2 == ActivityEnum.Activity.V2a1_WarmUp or var_6_2 == ActivityEnum.Activity.V2a2_WarmUp or var_6_2 == ActivityEnum.Activity.V2a3_WarmUp or var_6_2 == ActivityEnum.Activity.RoomSign or var_6_2 == ActivityEnum.Activity.V2a5_WarmUp or var_6_2 == ActivityEnum.Activity.V2a6_WarmUp or var_6_2 == ActivityEnum.Activity.V2a7_WarmUp then
 			if arg_6_0._selected then
 				Activity125Controller.instance:saveEnterActDateInfo(var_6_2)
 

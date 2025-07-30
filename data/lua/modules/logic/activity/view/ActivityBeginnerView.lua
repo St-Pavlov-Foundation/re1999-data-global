@@ -34,6 +34,7 @@ local var_0_1 = {
 	[ShortenActConfig.instance:getActivityId()] = ViewName.ShortenAct_FullView,
 	[ActivityEnum.Activity.V2a7_Labor_Sign] = ViewName.V2a7_Labor_FullSignView,
 	[ActivityEnum.Activity.V3a0_SummerSign] = ViewName.V3a0_SummerSign_FullView,
+	[ActivityEnum.Activity.V3a0_WarmUp] = ViewName.V3a0_WarmUp,
 	[ActivityEnum.Activity.NoviceSign] = ViewName.ActivityNoviceSignView,
 	[ActivityEnum.Activity.NorSign] = ViewName.ActivityNorSignView,
 	[ActivityEnum.Activity.NoviceInsight] = ViewName.ActivityNoviceInsightView,
