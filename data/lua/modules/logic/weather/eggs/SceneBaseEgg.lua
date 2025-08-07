@@ -40,6 +40,10 @@ function var_0_0.init(arg_8_0, arg_8_1, arg_8_2, arg_8_3, arg_8_4)
 end
 
 function var_0_0.setGoListVisible(arg_9_0, arg_9_1)
+	if not arg_9_0._goList then
+		return
+	end
+
 	for iter_9_0, iter_9_1 in pairs(arg_9_0._goList) do
 		gohelper.setActive(iter_9_1, arg_9_1)
 	end

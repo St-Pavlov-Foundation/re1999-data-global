@@ -152,7 +152,7 @@
   {
     "chapterId": 21201,
     "activityId": 12102,
-    "openDay": 8
+    "openDay": 1
   },
   {
     "chapterId": 21301,
@@ -172,7 +172,7 @@
   {
     "chapterId": 23201,
     "activityId": 12302,
-    "openDay": 8
+    "openDay": 1
   },
   {
     "chapterId": 23301,
@@ -242,6 +242,21 @@
   {
     "chapterId": 27401,
     "activityId": 12706,
+    "openDay": 1
+  },
+  {
+    "chapterId": 305101,
+    "activityId": 130502,
+    "openDay": 1
+  },
+  {
+    "chapterId": 305301,
+    "activityId": 130502,
+    "openDay": 1
+  },
+  {
+    "chapterId": 305401,
+    "activityId": 130502,
     "openDay": 1
   }
 ]

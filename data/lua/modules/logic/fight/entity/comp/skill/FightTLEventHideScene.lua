@@ -3,33 +3,27 @@
 local var_0_0 = class("FightTLEventHideScene", FightTimelineTrackItem)
 
 function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
-	arg_1_0:_disable()
-end
+	arg_1_0.noRevert = arg_1_3[1] == "1"
 
-function var_0_0.onTrackEnd(arg_2_0)
-	arg_2_0:_enable()
-end
+	local var_1_0 = GameSceneMgr.instance:getCurScene().level
 
-function var_0_0._enable(arg_3_0)
-	arg_3_0:_do(true)
-end
+	if var_1_0 then
+		local var_1_1 = var_1_0:getSceneGo()
 
-function var_0_0._disable(arg_4_0)
-	arg_4_0:_do(false)
-end
+		arg_1_0.sceneGO = var_1_1
 
-function var_0_0._do(arg_5_0, arg_5_1)
-	local var_5_0 = GameSceneMgr.instance:getCurScene().level
-
-	if var_5_0 then
-		local var_5_1 = var_5_0:getSceneGo()
-
-		gohelper.setActive(var_5_1, arg_5_1)
+		gohelper.setActive(var_1_1, false)
 	end
 end
 
-function var_0_0.onDestructor(arg_6_0)
-	arg_6_0:_enable()
+function var_0_0.onTrackEnd(arg_2_0)
+	if not arg_2_0.noRevert then
+		gohelper.setActive(arg_2_0.sceneGO, true)
+	end
+end
+
+function var_0_0.onDestructor(arg_3_0)
+	arg_3_0:onTrackEnd()
 end
 
 return var_0_0

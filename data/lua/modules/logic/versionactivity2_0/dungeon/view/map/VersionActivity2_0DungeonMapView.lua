@@ -15,6 +15,7 @@ function var_0_0.onInitView(arg_1_0)
 	arg_1_0._goswitchmodecontainer = gohelper.findChild(arg_1_0.viewGO, "#go_switchmodecontainer")
 	arg_1_0._gotopleft = gohelper.findChild(arg_1_0.viewGO, "#go_topleft")
 	arg_1_0._gotopright = gohelper.findChild(arg_1_0.viewGO, "#go_topright")
+	arg_1_0._goactivitystore = gohelper.findChild(arg_1_0.viewGO, "#go_topright/#btn_activitystore")
 	arg_1_0._txtstorenum = gohelper.findChildText(arg_1_0.viewGO, "#go_topright/#btn_activitystore/normal/#txt_num")
 	arg_1_0._txtStoreRemainTime = gohelper.findChildText(arg_1_0.viewGO, "#go_topright/#btn_activitystore/#go_time/#txt_time")
 	arg_1_0._goTaskReddot = gohelper.findChild(arg_1_0.viewGO, "#go_topright/#btn_activitytask/#go_reddot")
@@ -185,6 +186,9 @@ function var_0_0._editableInitView(arg_16_0)
 	RedDotController.instance:addRedDot(arg_16_0._goRestaurantReddot, RedDotEnum.DotNode.V2a0DungeonRestaurant)
 
 	arg_16_0.isEnterRestaurant = false
+
+	gohelper.setActive(arg_16_0._goactivitystore, false)
+	gohelper.setActive(arg_16_0._btnactivitytask.gameObject, false)
 end
 
 function var_0_0._everyMinuteCall(arg_17_0)
@@ -323,7 +327,7 @@ function var_0_0.refreshMask(arg_34_0)
 end
 
 function var_0_0.refreshStoreRemainTime(arg_35_0)
-	local var_35_0 = VersionActivity2_7Enum.ActivityId.ReactivityStore
+	local var_35_0 = VersionActivity2_0Enum.ActivityId.DungeonStore
 	local var_35_1 = ActivityModel.instance:getActMO(var_35_0):getRealEndTimeStamp() - ServerTime.now()
 
 	if var_35_1 > TimeUtil.OneDaySecond then

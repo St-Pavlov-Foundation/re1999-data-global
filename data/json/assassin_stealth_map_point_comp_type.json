@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "name": "language_10078682",
+    "icon": "assassin2_stealth_game_haystack",
+    "smallIcon": ""
+  },
+  {
+    "id": 2,
+    "name": "language_10078683",
+    "icon": "assassin2_stealth_game_garden",
+    "smallIcon": ""
+  },
+  {
+    "id": 3,
+    "name": "language_10077748",
+    "icon": "assassin2_stealth_game_tower",
+    "smallIcon": "assassinstealthoverview_legend_tower"
+  }
+]

@@ -119,7 +119,7 @@ function var_0_0.switchVoiceType(arg_7_0, arg_7_1, arg_7_2)
 		voice_pack_before = var_7_0 or ""
 	}
 
-	if arg_7_2 == "in_settings" then
+	if arg_7_2 == "in_settings" or arg_7_2 == "in_voiceview" then
 		StatController.instance:track(SDKDataTrackMgr.EventName.voice_pack_switch, var_7_2)
 	else
 		SDKDataTrackMgr.instance:trackVoicePackSwitch(var_7_2)

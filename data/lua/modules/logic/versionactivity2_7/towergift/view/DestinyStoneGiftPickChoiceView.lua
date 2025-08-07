@@ -38,6 +38,7 @@ function var_0_0._btnconfirmOnClick(arg_4_0)
 		var_4_0.heroMo.destinyStoneMo:setUpStoneId(var_4_0.stoneId)
 
 		local var_4_1 = {
+			materialId = arg_4_0._materialId,
 			heroMo = var_4_0.heroMo,
 			stoneMo = var_4_0.stoneMo
 		}
@@ -67,6 +68,8 @@ function var_0_0.onUpdateParam(arg_9_0)
 end
 
 function var_0_0.onOpen(arg_10_0)
+	arg_10_0._materialId = arg_10_0.viewParam and arg_10_0.viewParam.materialId
+
 	arg_10_0:refreshUI()
 end
 

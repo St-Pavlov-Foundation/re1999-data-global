@@ -42,6 +42,7 @@ var_0_0.UnlockFunc = {
 	DiceHero = 270101,
 	RoomTrade = 220106,
 	RoomAccelerate = 40,
+	AssassinOutside = 3050101,
 	FastDungeon = 32,
 	TestTask = 53,
 	Rouge1 = 74,

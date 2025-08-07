@@ -626,6 +626,80 @@ function var_0_0.onReceiveHeroRedDotReadReply(arg_63_0, arg_63_1, arg_63_2)
 	CharacterDestinyController.instance:onHeroRedDotReadReply(arg_63_2.heroId, arg_63_2.redDot)
 end
 
+function var_0_0.setChoiceHero3124TalentTreeRequest(arg_64_0, arg_64_1, arg_64_2, arg_64_3)
+	local var_64_0 = HeroModule_pb.ChoiceHero3124TalentTreeRequest()
+
+	var_64_0.heroId = arg_64_1
+	var_64_0.subId = arg_64_2
+	var_64_0.level = arg_64_3
+
+	arg_64_0:sendMsg(var_64_0)
+end
+
+function var_0_0.onReceiveChoiceHero3124TalentTreeReply(arg_65_0, arg_65_1, arg_65_2)
+	if arg_65_1 ~= 0 then
+		return
+	end
+
+	CharacterController.instance:dispatchEvent(CharacterEvent.onChoiceHero3124TalentTreeReply, arg_65_2.extraStr)
+	CharacterController.instance:dispatchEvent(CharacterEvent.onRefreshCharacterSkill)
+end
+
+function var_0_0.setCancelHero3124TalentTreeRequest(arg_66_0, arg_66_1, arg_66_2, arg_66_3)
+	local var_66_0 = HeroModule_pb.CancelHero3124TalentTreeRequest()
+
+	var_66_0.heroId = arg_66_1
+	var_66_0.subId = arg_66_2
+	var_66_0.level = arg_66_3
+
+	arg_66_0:sendMsg(var_66_0)
+end
+
+function var_0_0.onReceiveCancelHero3124TalentTreeReply(arg_67_0, arg_67_1, arg_67_2)
+	if arg_67_1 ~= 0 then
+		return
+	end
+
+	CharacterController.instance:dispatchEvent(CharacterEvent.onCancelHero3124TalentTreeReply, arg_67_2.extraStr)
+	CharacterController.instance:dispatchEvent(CharacterEvent.onRefreshCharacterSkill)
+end
+
+function var_0_0.setResetHero3124TalentTreeRequest(arg_68_0, arg_68_1)
+	local var_68_0 = HeroModule_pb.ResetHero3124TalentTreeRequest()
+
+	var_68_0.heroId = arg_68_1
+
+	arg_68_0:sendMsg(var_68_0)
+end
+
+function var_0_0.onReceiveResetHero3124TalentTreeReply(arg_69_0, arg_69_1, arg_69_2)
+	if arg_69_1 ~= 0 then
+		return
+	end
+
+	CharacterController.instance:dispatchEvent(CharacterEvent.onResetHero3124TalentTreeReply, arg_69_2.extraStr)
+	CharacterController.instance:dispatchEvent(CharacterEvent.onRefreshCharacterSkill)
+end
+
+function var_0_0.setChoiceHero3123WeaponRequest(arg_70_0, arg_70_1, arg_70_2, arg_70_3)
+	local var_70_0 = HeroModule_pb.ChoiceHero3123WeaponRequest()
+
+	var_70_0.heroId = arg_70_1
+	var_70_0.mainId = arg_70_2
+	var_70_0.subId = arg_70_3
+
+	arg_70_0:sendMsg(var_70_0)
+end
+
+function var_0_0.onReceiveChoiceHero3123WeaponReply(arg_71_0, arg_71_1, arg_71_2)
+	if arg_71_1 ~= 0 then
+		return
+	end
+
+	CharacterController.instance:dispatchEvent(CharacterEvent.onChoiceHero3123WeaponReply, arg_71_2.heroId, arg_71_2.mainId, arg_71_2.subId)
+	CharacterController.instance:dispatchEvent(CharacterEvent.onRefreshCharacterSkill)
+end
+
 var_0_0.instance = var_0_0.New()
 
 return var_0_0

@@ -11,7 +11,7 @@ function var_0_0.onStart(arg_1_0)
 			local var_1_2 = arg_1_0.actEffectData.effectNum
 			local var_1_3 = FightEnum.FloatType.heal
 
-			FightFloatMgr.instance:float(var_1_1.id, var_1_3, var_1_2)
+			FightFloatMgr.instance:float(var_1_1.id, var_1_3, var_1_2, nil, arg_1_0.actEffectData.effectNum1 == 1)
 			var_1_1.nameUI:addHp(var_1_2)
 			FightController.instance:dispatchEvent(FightEvent.OnHpChange, var_1_1, var_1_2)
 		end

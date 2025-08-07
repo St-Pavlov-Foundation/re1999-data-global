@@ -2,7 +2,7 @@
 
 local var_0_0 = class("StorePackageGoodsItemListModel", ListScrollModel)
 
-function var_0_0.setMOList(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+function var_0_0.setMOList(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4)
 	local var_1_0 = {}
 	local var_1_1 = {}
 
@@ -53,7 +53,7 @@ function var_0_0.setMOList(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 
 	local var_1_5 = StoreModel.instance:getCurBuyPackageId()
 
-	if #arg_1_0._moList == 0 and var_1_5 == nil then
+	if #arg_1_0._moList == 0 and var_1_5 == nil and not arg_1_4 then
 		StoreController.instance:dispatchEvent(StoreEvent.CurPackageListEmpty)
 	end
 
@@ -74,6 +74,10 @@ function var_0_0.checkShow(arg_2_0, arg_2_1, arg_2_2)
 
 		if arg_2_2 == false and arg_2_1.config.refreshTime == StoreEnum.RefreshTime.Forever then
 			var_2_0 = false
+		end
+
+		if not var_2_0 and StoreCharageConditionalHelper.isCharageTaskNotFinish(arg_2_1.goodsId) then
+			var_2_0 = true
 		end
 	end
 
@@ -97,37 +101,66 @@ end
 function var_0_0._sortFunction(arg_4_0, arg_4_1)
 	local var_4_0 = arg_4_0.config
 	local var_4_1 = arg_4_1.config
-	local var_4_2 = arg_4_0:isSoldOut()
-	local var_4_3 = arg_4_1:isSoldOut()
+	local var_4_2 = StoreCharageConditionalHelper.isHasCanFinishGoodsTask(arg_4_0.goodsId)
 
-	if var_4_2 ~= var_4_3 then
-		return var_4_3
+	if var_4_2 ~= StoreCharageConditionalHelper.isHasCanFinishGoodsTask(arg_4_1.goodsId) then
+		return var_4_2
 	end
 
-	local var_4_4 = arg_4_0.goodsId == StoreEnum.MonthCardGoodsId
-	local var_4_5 = arg_4_1.goodsId == StoreEnum.MonthCardGoodsId
+	local var_4_3 = arg_4_0:isSoldOut()
+	local var_4_4 = arg_4_1:isSoldOut()
 
-	if var_4_4 ~= var_4_5 and StoreModel.instance:IsMonthCardDaysEnough() then
-		return var_4_5
+	if var_4_3 ~= var_4_4 then
+		return var_4_4
 	end
 
-	local var_4_6 = arg_4_0:isLevelOpen()
+	local var_4_5 = arg_4_0.goodsId == StoreEnum.MonthCardGoodsId
+	local var_4_6 = arg_4_1.goodsId == StoreEnum.MonthCardGoodsId
 
-	if var_4_6 ~= arg_4_1:isLevelOpen() then
+	if var_4_5 ~= var_4_6 and StoreModel.instance:IsMonthCardDaysEnough() then
 		return var_4_6
 	end
 
-	local var_4_7 = arg_4_0:checkPreGoodsSoldOut()
+	local var_4_7 = arg_4_0:isLevelOpen()
 
-	if var_4_7 ~= arg_4_1:checkPreGoodsSoldOut() then
+	if var_4_7 ~= arg_4_1:isLevelOpen() then
 		return var_4_7
+	end
+
+	local var_4_8 = arg_4_0:checkPreGoodsSoldOut()
+
+	if var_4_8 ~= arg_4_1:checkPreGoodsSoldOut() then
+		return var_4_8
 	end
 
 	if var_4_0.order ~= var_4_1.order then
 		return var_4_0.order < var_4_1.order
 	end
 
+	local var_4_9 = var_0_0._getMOOrder(arg_4_0)
+	local var_4_10 = var_0_0._getMOOrder(arg_4_1)
+
+	if var_4_9 ~= var_4_10 then
+		return var_4_9 < var_4_10
+	end
+
 	return var_4_0.id < var_4_1.id
+end
+
+function var_0_0._getMOOrder(arg_5_0)
+	if arg_5_0 and arg_5_0.config then
+		if arg_5_0.buyCount and arg_5_0.buyCount > 0 and arg_5_0.config.taskid ~= 0 then
+			local var_5_0 = StoreConfig.instance:getChargeConditionalConfig(arg_5_0.config.taskid)
+
+			if var_5_0 and var_5_0.order2 then
+				return var_5_0.order2
+			end
+		end
+
+		return arg_5_0.config.order
+	end
+
+	return -1
 end
 
 var_0_0.instance = var_0_0.New()

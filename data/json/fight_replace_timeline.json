@@ -29,7 +29,7 @@
     "priority": 3,
     "target": 1,
     "simulate": 0,
-    "condition": "4#30870131#30870132#81800061"
+    "condition": "4#30870131#30870132#81800061#30870331#30870332"
   },
   {
     "id": "weila_308701_skill2",
@@ -37,7 +37,7 @@
     "priority": 3,
     "target": 1,
     "simulate": 0,
-    "condition": "4#30870131#30870132#81800061"
+    "condition": "4#30870131#30870132#81800061#30870331#30870332"
   },
   {
     "id": "weila_308701_innate",
@@ -45,7 +45,7 @@
     "priority": 3,
     "target": 1,
     "simulate": 0,
-    "condition": "4#30870131#30870132#81800061"
+    "condition": "4#30870131#30870132#81800061#30870331#30870332"
   },
   {
     "id": "670211_skill1",
@@ -1301,7 +1301,7 @@
     "priority": 1,
     "target": 1,
     "simulate": 1,
-    "condition": "11#308703#30870131#30870132"
+    "condition": "11#308703#30870131#30870132#30870331#30870332#81800061"
   },
   {
     "id": "weila_308701_skill2",
@@ -1309,7 +1309,7 @@
     "priority": 1,
     "target": 1,
     "simulate": 1,
-    "condition": "11#308703#30870131#30870132"
+    "condition": "11#308703#30870131#30870132#30870331#30870332#81800061"
   },
   {
     "id": "weila_308701_innate",
@@ -1317,7 +1317,7 @@
     "priority": 1,
     "target": 1,
     "simulate": 1,
-    "condition": "11#308703#30870131#30870132"
+    "condition": "11#308703#30870131#30870132#30870331#30870332#81800061"
   },
   {
     "id": "37_306601_skill1",
@@ -2166,5 +2166,357 @@
     "target": 1,
     "simulate": 1,
     "condition": "5#310803"
+  },
+  {
+    "id": "wennifuleide_305101_skill1",
+    "timeline": "wennifuleide_305104_skill1",
+    "priority": 1,
+    "target": 1,
+    "simulate": 1,
+    "condition": "5#305104"
+  },
+  {
+    "id": "wennifuleide_305101_skill2",
+    "timeline": "wennifuleide_305104_skill2",
+    "priority": 1,
+    "target": 1,
+    "simulate": 1,
+    "condition": "5#305104"
+  },
+  {
+    "id": "wennifuleide_305101_unique",
+    "timeline": "wennifuleide_305104_unique",
+    "priority": 1,
+    "target": 1,
+    "simulate": 1,
+    "condition": "5#305104"
+  },
+  {
+    "id": "makusi_306501_skill1",
+    "timeline": "makusi_306504_skill1",
+    "priority": 1,
+    "target": 1,
+    "simulate": 1,
+    "condition": "5#306504"
+  },
+  {
+    "id": "makusi_306501_skill1_3",
+    "timeline": "makusi_306504_skill1_3",
+    "priority": -1,
+    "target": 1,
+    "simulate": 1,
+    "condition": "5#306504"
+  },
+  {
+    "id": "makusi_306501_skill2",
+    "timeline": "makusi_306504_skill2",
+    "priority": 1,
+    "target": 1,
+    "simulate": 1,
+    "condition": "5#306504"
+  },
+  {
+    "id": "makusi_306501_skill2_3",
+    "timeline": "makusi_306504_skill2_3",
+    "priority": -1,
+    "target": 1,
+    "simulate": 1,
+    "condition": "5#306504"
+  },
+  {
+    "id": "makusi_306501_unique",
+    "timeline": "makusi_306504_unique",
+    "priority": 1,
+    "target": 1,
+    "simulate": 1,
+    "condition": "5#306504"
+  },
+  {
+    "id": "lzl_311601_skill1",
+    "timeline": "lzl_311603_skill1",
+    "priority": 1,
+    "target": 1,
+    "simulate": 1,
+    "condition": "5#311603"
+  },
+  {
+    "id": "lzl_311601_skill2",
+    "timeline": "lzl_311603_skill2",
+    "priority": 1,
+    "target": 1,
+    "simulate": 1,
+    "condition": "5#311603"
+  },
+  {
+    "id": "lzl_311601_skill3_1",
+    "timeline": "lzl_311603_skill3_1",
+    "priority": 1,
+    "target": 1,
+    "simulate": 1,
+    "condition": "5#311603"
+  },
+  {
+    "id": "lzl_311601_skill3_2",
+    "timeline": "lzl_311603_skill3_2",
+    "priority": 1,
+    "target": 1,
+    "simulate": 1,
+    "condition": "5#311603"
+  },
+  {
+    "id": "lzl_311601_skill3_3",
+    "timeline": "lzl_311603_skill3_3",
+    "priority": 1,
+    "target": 1,
+    "simulate": 1,
+    "condition": "5#311603"
+  },
+  {
+    "id": "lzl_311601_shefa_1",
+    "timeline": "lzl_311603_shefa_1",
+    "priority": 1,
+    "target": 1,
+    "simulate": 1,
+    "condition": "5#311603"
+  },
+  {
+    "id": "lzl_311601_shefa_2",
+    "timeline": "lzl_311603_shefa_2",
+    "priority": 1,
+    "target": 1,
+    "simulate": 1,
+    "condition": "5#311603"
+  },
+  {
+    "id": "lzl_311601_shefa_3",
+    "timeline": "lzl_311603_shefa_3",
+    "priority": 1,
+    "target": 1,
+    "simulate": 1,
+    "condition": "5#311603"
+  },
+  {
+    "id": "lzl_311601_unique",
+    "timeline": "lzl_311603_unique",
+    "priority": 1,
+    "target": 1,
+    "simulate": 1,
+    "condition": "5#311603"
+  },
+  {
+    "id": "weila_308701_innate",
+    "timeline": "weila_308704_innate",
+    "priority": 2,
+    "target": 1,
+    "simulate": 1,
+    "condition": "5#308704"
+  },
+  {
+    "id": "weila_308701_innate_1",
+    "timeline": "weila_308704_innate_1",
+    "priority": 1,
+    "target": 1,
+    "simulate": 1,
+    "condition": "5#308704"
+  },
+  {
+    "id": "weila_308701_skill1",
+    "timeline": "weila_308704_skill1",
+    "priority": 2,
+    "target": 1,
+    "simulate": 1,
+    "condition": "5#308704"
+  },
+  {
+    "id": "weila_308701_skill2",
+    "timeline": "weila_308704_skill2",
+    "priority": 2,
+    "target": 1,
+    "simulate": 1,
+    "condition": "5#308704"
+  },
+  {
+    "id": "weila_308701_special",
+    "timeline": "weila_308704_special",
+    "priority": 1,
+    "target": 3,
+    "simulate": 1,
+    "condition": "5#308704"
+  },
+  {
+    "id": "weila_308701_unique",
+    "timeline": "weila_308704_unique",
+    "priority": 1,
+    "target": 1,
+    "simulate": 1,
+    "condition": "5#308704"
+  },
+  {
+    "id": "weila_308701_skill1",
+    "timeline": "weila_308704_skill1_1",
+    "priority": 1,
+    "target": 1,
+    "simulate": 1,
+    "condition": "11#308704#30870131#30870132#30870331#30870332#81800061"
+  },
+  {
+    "id": "weila_308701_skill2",
+    "timeline": "weila_308704_skill2_1",
+    "priority": 1,
+    "target": 1,
+    "simulate": 1,
+    "condition": "11#308704#30870131#30870132#30870331#30870332#81800061"
+  },
+  {
+    "id": "weila_308701_innate",
+    "timeline": "weila_308704_innate_0",
+    "priority": 1,
+    "target": 1,
+    "simulate": 1,
+    "condition": "11#308704#30870131#30870132#30870331#30870332#81800061"
+  },
+  {
+    "id": "aijiao_312301_qte1_1",
+    "timeline": "aijiao_312301_qte1_1",
+    "priority": 1,
+    "target": 1,
+    "simulate": 1,
+    "condition": "9#312301"
+  },
+  {
+    "id": "aijiao_312301_qte1_1",
+    "timeline": "aijiao_312301_qte1_2",
+    "priority": 1,
+    "target": 1,
+    "simulate": 1,
+    "condition": "9#312301"
+  },
+  {
+    "id": "aijiao_312301_qte1_1",
+    "timeline": "aijiao_312301_qte1_3",
+    "priority": 1,
+    "target": 1,
+    "simulate": 1,
+    "condition": "9#312301"
+  },
+  {
+    "id": "aijiao_312301_qte1_1",
+    "timeline": "aijiao_312301_qte1_4",
+    "priority": 1,
+    "target": 1,
+    "simulate": 1,
+    "condition": "9#312301"
+  },
+  {
+    "id": "aijiao_312301_qte1_1",
+    "timeline": "aijiao_312301_qte1_5",
+    "priority": 1,
+    "target": 1,
+    "simulate": 1,
+    "condition": "9#312301"
+  },
+  {
+    "id": "aijiao_312301_qte1_1",
+    "timeline": "aijiao_312301_qte1_6",
+    "priority": 1,
+    "target": 1,
+    "simulate": 1,
+    "condition": "9#312301"
+  },
+  {
+    "id": "aijiao_312301_qte2_1",
+    "timeline": "aijiao_312301_qte2_1",
+    "priority": 1,
+    "target": 1,
+    "simulate": 1,
+    "condition": "9#312301"
+  },
+  {
+    "id": "aijiao_312301_qte2_1",
+    "timeline": "aijiao_312301_qte2_2",
+    "priority": 1,
+    "target": 1,
+    "simulate": 1,
+    "condition": "9#312301"
+  },
+  {
+    "id": "aijiao_312301_qte2_1",
+    "timeline": "aijiao_312301_qte2_3",
+    "priority": 1,
+    "target": 1,
+    "simulate": 1,
+    "condition": "9#312301"
+  },
+  {
+    "id": "aijiao_312301_qte1_1",
+    "timeline": "aijiao_312302_qte1_7",
+    "priority": 1,
+    "target": 1,
+    "simulate": 1,
+    "condition": "9#312302"
+  },
+  {
+    "id": "aijiao_312301_qte1_1",
+    "timeline": "aijiao_312302_qte1_8",
+    "priority": 1,
+    "target": 1,
+    "simulate": 1,
+    "condition": "9#312302"
+  },
+  {
+    "id": "aijiao_312301_qte1_1",
+    "timeline": "aijiao_312302_qte1_9",
+    "priority": 1,
+    "target": 1,
+    "simulate": 1,
+    "condition": "9#312302"
+  },
+  {
+    "id": "aijiao_312301_qte1_1",
+    "timeline": "aijiao_312302_qte1_10",
+    "priority": 1,
+    "target": 1,
+    "simulate": 1,
+    "condition": "9#312302"
+  },
+  {
+    "id": "aijiao_312301_qte1_1",
+    "timeline": "aijiao_312302_qte1_11",
+    "priority": 1,
+    "target": 1,
+    "simulate": 1,
+    "condition": "9#312302"
+  },
+  {
+    "id": "aijiao_312301_qte1_1",
+    "timeline": "aijiao_312302_qte1_12",
+    "priority": 1,
+    "target": 1,
+    "simulate": 1,
+    "condition": "9#312302"
+  },
+  {
+    "id": "aijiao_312301_qte2_1",
+    "timeline": "aijiao_312302_qte2_4",
+    "priority": 1,
+    "target": 1,
+    "simulate": 1,
+    "condition": "9#312302"
+  },
+  {
+    "id": "aijiao_312301_qte2_1",
+    "timeline": "aijiao_312302_qte2_5",
+    "priority": 1,
+    "target": 1,
+    "simulate": 1,
+    "condition": "9#312302"
+  },
+  {
+    "id": "aijiao_312301_qte2_1",
+    "timeline": "aijiao_312302_qte2_6",
+    "priority": 1,
+    "target": 1,
+    "simulate": 1,
+    "condition": "9#312302"
   }
 ]

@@ -27,6 +27,7 @@ function var_0_0.onStart(arg_2_0, arg_2_1)
 	arg_2_0._scene = GameSceneMgr.instance:getCurScene()
 	arg_2_0._heroAnimName, arg_2_0._heroAnimDelay = arg_2_0:_splitAnimState(arg_2_0._interaTionCfg.heroAnimState)
 	arg_2_0._effectCfgList = arg_2_0._heroAnimName and RoomConfig.instance:getCharacterEffectListByAnimName(arg_2_0._skinId, arg_2_0._heroAnimName)
+	arg_2_0._interactHeroPointName = RoomEnum.EntityChildKey.CritterPointList[1]
 	arg_2_0._interactSpineList = {}
 
 	local var_2_0 = arg_2_0._interaTionCfg.buildingInsideSpines
@@ -249,7 +250,9 @@ end
 function var_0_0.playInteraction(arg_16_0)
 	arg_16_0:endState()
 
-	local var_16_0 = arg_16_0._scene.buildingmgr:getBuildingEntity(arg_16_0._buildingUid, SceneTag.RoomBuilding)
+	arg_16_0._buildingEntity = arg_16_0._scene.buildingmgr:getBuildingEntity(arg_16_0._buildingUid, SceneTag.RoomBuilding)
+
+	local var_16_0 = arg_16_0._buildingEntity
 
 	if var_16_0 and not string.nilorempty(arg_16_0._interaTionCfg.buildingAnimState) then
 		var_16_0:playAnimator(arg_16_0._interaTionCfg.buildingAnimState)
@@ -299,239 +302,295 @@ function var_0_0._onPlayHeroAnimState(arg_17_0)
 end
 
 function var_0_0.moveCharacterInsideBuilding(arg_18_0)
-	local var_18_0 = arg_18_0._scene.charactermgr:getCharacterEntity(arg_18_0._characterId, SceneTag.RoomCharacter)
-	local var_18_1 = arg_18_0._scene.buildingmgr:getBuildingEntity(arg_18_0._buildingUid, SceneTag.RoomBuilding)
-	local var_18_2 = var_18_1 and var_18_1:getPlayerInsideInteractionNode()
+	arg_18_0._characterEntity = arg_18_0._scene.charactermgr:getCharacterEntity(arg_18_0._characterId, SceneTag.RoomCharacter)
 
-	if not var_18_0 or gohelper.isNil(var_18_2) then
+	local var_18_0 = arg_18_0._characterEntity
+
+	if not var_18_0 then
 		return
 	end
 
-	local var_18_3, var_18_4, var_18_5 = transformhelper.getPos(var_18_2.transform)
+	local var_18_1
+	local var_18_2 = arg_18_0._buildingEntity
+	local var_18_3 = var_18_2:getMainEffectKey()
+	local var_18_4 = arg_18_0._buildingEntity.effect:getGameObjectsTrsByName(var_18_3, arg_18_0._interactHeroPointName)
 
-	var_18_0:setLocalPos(var_18_3, var_18_4, var_18_5)
+	if var_18_4 and #var_18_4 > 0 then
+		var_18_1 = var_18_4[1]
+	end
+
+	if gohelper.isNil(var_18_1) then
+		local var_18_5 = var_18_2 and var_18_2:getPlayerInsideInteractionNode()
+
+		if gohelper.isNil(var_18_5) then
+			return
+		end
+
+		local var_18_6, var_18_7, var_18_8 = transformhelper.getPos(var_18_5.transform)
+
+		var_18_0:setLocalPos(var_18_6, var_18_7, var_18_8)
+	else
+		local var_18_9 = arg_18_0:_getShowTime()
+
+		arg_18_0._tweenMoveId = arg_18_0._scene.tween:tweenFloat(0, 1, var_18_9, arg_18_0._framePointCallback, arg_18_0._finishCallback, arg_18_0)
+	end
+
 	arg_18_0._roomCharacterMO:setIsFreeze(true)
 end
 
-function var_0_0.setInteractBuildingSideIsActive(arg_19_0, arg_19_1, arg_19_2)
-	local var_19_0 = arg_19_0._scene.buildingmgr:getBuildingEntity(arg_19_0._buildingUid, SceneTag.RoomBuilding)
+function var_0_0._framePointCallback(arg_19_0, arg_19_1, arg_19_2)
+	local var_19_0
+	local var_19_1 = arg_19_0._buildingEntity:getMainEffectKey()
+	local var_19_2 = arg_19_0._buildingEntity.effect:getGameObjectsTrsByName(var_19_1, arg_19_0._interactHeroPointName)
 
-	if var_19_0 then
-		var_19_0:setSideIsActive(arg_19_1, arg_19_2)
+	if var_19_2 and #var_19_2 > 0 then
+		var_19_0 = var_19_2[1]
+	end
+
+	if gohelper.isNil(var_19_0) then
+		return
+	end
+
+	local var_19_3, var_19_4, var_19_5 = transformhelper.getPos(var_19_0)
+
+	arg_19_0._characterEntity:setLocalPos(var_19_3, var_19_4, var_19_5)
+end
+
+function var_0_0._finishCallback(arg_20_0, arg_20_1, arg_20_2)
+	return
+end
+
+function var_0_0._killTween(arg_21_0)
+	if arg_21_0._tweenMoveId then
+		arg_21_0._scene.tween:killById(arg_21_0._tweenMoveId)
+
+		arg_21_0._tweenMoveId = nil
 	end
 end
 
-function var_0_0._getShowTime(arg_20_0)
-	if arg_20_0._interaTionCfg and arg_20_0._interaTionCfg.showtime and arg_20_0._interaTionCfg.showtime ~= 0 then
-		return arg_20_0._interaTionCfg.showtime * 0.001
+function var_0_0.setInteractBuildingSideIsActive(arg_22_0, arg_22_1, arg_22_2)
+	local var_22_0 = arg_22_0._scene.buildingmgr:getBuildingEntity(arg_22_0._buildingUid, SceneTag.RoomBuilding)
+
+	if var_22_0 then
+		var_22_0:setSideIsActive(arg_22_1, arg_22_2)
+	end
+end
+
+function var_0_0._getShowTime(arg_23_0)
+	if arg_23_0._interaTionCfg and arg_23_0._interaTionCfg.showtime and arg_23_0._interaTionCfg.showtime ~= 0 then
+		return arg_23_0._interaTionCfg.showtime * 0.001
 	end
 
 	return 8
 end
 
-function var_0_0.playIneteractionEffect(arg_21_0)
-	local var_21_0 = arg_21_0._effectCfgList
+function var_0_0.playIneteractionEffect(arg_24_0)
+	local var_24_0 = arg_24_0._effectCfgList
 
-	if not var_21_0 then
+	if not var_24_0 then
 		return
 	end
 
-	local var_21_1 = arg_21_0._scene.charactermgr:getCharacterEntity(arg_21_0._characterId, SceneTag.RoomCharacter)
-	local var_21_2 = var_21_1.characterspine:getCharacterGO()
-	local var_21_3 = var_21_1.characterspineeffect
+	local var_24_1 = arg_24_0._scene.charactermgr:getCharacterEntity(arg_24_0._characterId, SceneTag.RoomCharacter)
+	local var_24_2 = var_24_1.characterspine:getCharacterGO()
+	local var_24_3 = var_24_1.characterspineeffect
 
-	arg_21_0._interationGOs = arg_21_0._interationGOs or {}
-	arg_21_0._interationGODict = arg_21_0._interationGODict or {}
+	arg_24_0._interationGOs = arg_24_0._interationGOs or {}
+	arg_24_0._interationGODict = arg_24_0._interationGODict or {}
 
-	for iter_21_0, iter_21_1 in ipairs(var_21_0) do
-		if not var_21_3:isHasEffectGO(iter_21_1.animName) then
-			local var_21_4 = "effect_" .. iter_21_1.id
-			local var_21_5 = arg_21_0._interationGODict[var_21_4]
+	for iter_24_0, iter_24_1 in ipairs(var_24_0) do
+		if not var_24_3:isHasEffectGO(iter_24_1.animName) then
+			local var_24_4 = "effect_" .. iter_24_1.id
+			local var_24_5 = arg_24_0._interationGODict[var_24_4]
 
-			if gohelper.isNil(var_21_5) then
-				local var_21_6 = RoomCharacterHelper.getSpinePointPath(iter_21_1.point)
-				local var_21_7 = gohelper.findChild(var_21_2, var_21_6) or var_21_2 or var_21_1.containerGO
-				local var_21_8 = arg_21_0:_getEffecRes(iter_21_1.effectRes)
-				local var_21_9 = arg_21_0:_getEffecResAb(iter_21_1.effectRes)
-				local var_21_10 = arg_21_0._loader:getAssetItem(var_21_9):GetResource(var_21_8)
+			if gohelper.isNil(var_24_5) then
+				local var_24_6 = RoomCharacterHelper.getSpinePointPath(iter_24_1.point)
+				local var_24_7 = gohelper.findChild(var_24_2, var_24_6) or var_24_2 or var_24_1.containerGO
+				local var_24_8 = arg_24_0:_getEffecRes(iter_24_1.effectRes)
+				local var_24_9 = arg_24_0:_getEffecResAb(iter_24_1.effectRes)
+				local var_24_10 = arg_24_0._loader:getAssetItem(var_24_9):GetResource(var_24_8)
 
-				var_21_5 = gohelper.clone(var_21_10, var_21_7, var_21_4)
+				var_24_5 = gohelper.clone(var_24_10, var_24_7, var_24_4)
 
-				table.insert(arg_21_0._interationGOs, var_21_5)
+				table.insert(arg_24_0._interationGOs, var_24_5)
 
-				arg_21_0._interationGODict[var_21_4] = var_21_5
+				arg_24_0._interationGODict[var_24_4] = var_24_5
 			else
-				gohelper.setActive(var_21_5, false)
-				gohelper.setActive(var_21_5, true)
+				gohelper.setActive(var_24_5, false)
+				gohelper.setActive(var_24_5, true)
 			end
 		end
 	end
 end
 
-function var_0_0.createInteractionSpine(arg_22_0)
-	local var_22_0 = arg_22_0._interactSpineList
-	local var_22_1 = arg_22_0._scene.buildingmgr:getBuildingEntity(arg_22_0._buildingUid, SceneTag.RoomBuilding)
+function var_0_0.createInteractionSpine(arg_25_0)
+	local var_25_0 = arg_25_0._interactSpineList
+	local var_25_1 = arg_25_0._scene.buildingmgr:getBuildingEntity(arg_25_0._buildingUid, SceneTag.RoomBuilding)
 
-	if not var_22_0 or #var_22_0 <= 0 or not var_22_1 then
+	if not var_25_0 or #var_25_0 <= 0 or not var_25_1 then
 		return
 	end
 
-	arg_22_0._interactionSpineGODict = arg_22_0._interactionSpineGODict or {}
+	arg_25_0._interactionSpineGODict = arg_25_0._interactionSpineGODict or {}
 
-	for iter_22_0, iter_22_1 in ipairs(var_22_0) do
-		local var_22_2 = arg_22_0._interactionSpineGODict[iter_22_1]
+	for iter_25_0, iter_25_1 in ipairs(var_25_0) do
+		local var_25_2 = arg_25_0._interactionSpineGODict[iter_25_1]
 
-		if gohelper.isNil(var_22_2) then
-			local var_22_3 = var_22_1:getSpineWidgetNode(iter_22_0)
-			local var_22_4 = ResUrl.getSpineBxhyPrefab(iter_22_1)
-			local var_22_5 = arg_22_0._loader:getAssetItem(var_22_4)
-			local var_22_6 = var_22_5 and var_22_5:GetResource(var_22_4)
+		if gohelper.isNil(var_25_2) then
+			local var_25_3 = var_25_1:getSpineWidgetNode(iter_25_0)
+			local var_25_4 = ResUrl.getSpineBxhyPrefab(iter_25_1)
+			local var_25_5 = arg_25_0._loader:getAssetItem(var_25_4)
+			local var_25_6 = var_25_5 and var_25_5:GetResource(var_25_4)
 
-			if var_22_6 then
-				var_22_2 = gohelper.clone(var_22_6, var_22_3, iter_22_1)
-				arg_22_0._interactionSpineGODict[iter_22_1] = var_22_2
+			if var_25_6 then
+				var_25_2 = gohelper.clone(var_25_6, var_25_3, iter_25_1)
+				arg_25_0._interactionSpineGODict[iter_25_1] = var_25_2
 
-				local var_22_7 = var_22_2:GetComponent(typeof(Spine.Unity.SkeletonAnimation))
+				local var_25_7 = var_25_2:GetComponent(typeof(Spine.Unity.SkeletonAnimation))
 
-				if var_22_7 then
-					var_22_7:PlayAnim(RoomEnum.InteractSpineAnimName, true, true)
+				if var_25_7 then
+					var_25_7:PlayAnim(RoomEnum.InteractSpineAnimName, true, true)
 				end
 			end
 		else
-			gohelper.setActive(var_22_2, false)
-			gohelper.setActive(var_22_2, true)
+			gohelper.setActive(var_25_2, false)
+			gohelper.setActive(var_25_2, true)
 		end
 	end
 end
 
-function var_0_0.playInteractionSpineAnim(arg_23_0)
-	local var_23_0 = arg_23_0._interactSpineList
+function var_0_0.playInteractionSpineAnim(arg_26_0)
+	local var_26_0 = arg_26_0._interactSpineList
 
-	if not var_23_0 or #var_23_0 <= 0 then
+	if not var_26_0 or #var_26_0 <= 0 then
 		return
 	end
 
-	arg_23_0._interactionSpineGODict = arg_23_0._interactionSpineGODict or {}
+	arg_26_0._interactionSpineGODict = arg_26_0._interactionSpineGODict or {}
 
-	for iter_23_0, iter_23_1 in ipairs(var_23_0) do
-		local var_23_1
-		local var_23_2 = arg_23_0._interactionSpineGODict[iter_23_1]
+	for iter_26_0, iter_26_1 in ipairs(var_26_0) do
+		local var_26_1
+		local var_26_2 = arg_26_0._interactionSpineGODict[iter_26_1]
 
-		if not gohelper.isNil(var_23_2) then
-			var_23_1 = var_23_2:GetComponent(typeof(Spine.Unity.SkeletonAnimation))
+		if not gohelper.isNil(var_26_2) then
+			var_26_1 = var_26_2:GetComponent(typeof(Spine.Unity.SkeletonAnimation))
 		end
 
-		if var_23_1 then
-			var_23_1:PlayAnim(RoomEnum.InteractSpineAnimName, true, true)
+		if var_26_1 then
+			var_26_1:PlayAnim(RoomEnum.InteractSpineAnimName, true, true)
 		end
 	end
 end
 
-function var_0_0._clearLoader(arg_24_0)
-	if arg_24_0._loader then
-		arg_24_0._loader:dispose()
+function var_0_0._clearLoader(arg_27_0)
+	if arg_27_0._loader then
+		arg_27_0._loader:dispose()
 
-		arg_24_0._loader = nil
+		arg_27_0._loader = nil
 	end
 
-	if arg_24_0._interationGOs then
-		local var_24_0 = #arg_24_0._interationGOs
+	if arg_27_0._interationGOs then
+		local var_27_0 = #arg_27_0._interationGOs
 
-		for iter_24_0 = 1, var_24_0 do
-			local var_24_1 = arg_24_0._interationGOs[iter_24_0]
+		for iter_27_0 = 1, var_27_0 do
+			local var_27_1 = arg_27_0._interationGOs[iter_27_0]
 
-			arg_24_0._interationGOs[iter_24_0] = nil
+			arg_27_0._interationGOs[iter_27_0] = nil
 
-			gohelper.destroy(var_24_1)
+			gohelper.destroy(var_27_1)
 		end
 
-		arg_24_0._interationGOs = nil
+		arg_27_0._interationGOs = nil
 	end
 
-	if arg_24_0._interationGODict then
-		for iter_24_1, iter_24_2 in pairs(arg_24_0._interationGODict) do
-			arg_24_0._interationGODict[iter_24_1] = nil
+	if arg_27_0._interationGODict then
+		for iter_27_1, iter_27_2 in pairs(arg_27_0._interationGODict) do
+			arg_27_0._interationGODict[iter_27_1] = nil
 		end
 
-		arg_24_0._interationGODict = nil
+		arg_27_0._interationGODict = nil
 	end
 
-	if arg_24_0._interactionSpineGODict then
-		for iter_24_3, iter_24_4 in pairs(arg_24_0._interactionSpineGODict) do
-			gohelper.destroy(iter_24_4)
+	if arg_27_0._interactionSpineGODict then
+		for iter_27_3, iter_27_4 in pairs(arg_27_0._interactionSpineGODict) do
+			gohelper.destroy(iter_27_4)
 		end
 
-		arg_24_0._interactionSpineGODict = nil
+		arg_27_0._interactionSpineGODict = nil
 	end
 end
 
-function var_0_0._getEffecRes(arg_25_0, arg_25_1)
-	return RoomResHelper.getCharacterEffectPath(arg_25_1)
+function var_0_0._getEffecRes(arg_28_0, arg_28_1)
+	return RoomResHelper.getCharacterEffectPath(arg_28_1)
 end
 
-function var_0_0._getEffecResAb(arg_26_0, arg_26_1)
-	return RoomResHelper.getCharacterEffectABPath(arg_26_1)
+function var_0_0._getEffecResAb(arg_29_0, arg_29_1)
+	return RoomResHelper.getCharacterEffectABPath(arg_29_1)
 end
 
-function var_0_0._onInteractionFinish(arg_27_0)
-	local var_27_0 = arg_27_0:checkInteract()
+function var_0_0._onInteractionFinish(arg_30_0)
+	arg_30_0:_killTween()
 
-	if var_27_0 then
+	local var_30_0 = arg_30_0:checkInteract()
+
+	if var_30_0 then
 		RoomCharacterController.instance:endInteraction()
 		ViewMgr.instance:closeView(ViewName.RoomBuildingInteractionView)
 	end
 
-	local var_27_1 = arg_27_0._scene.camera
+	local var_30_1 = arg_30_0._scene.camera
 
-	if var_27_0 and var_27_1:getCameraState() == RoomEnum.CameraState.InteractionCharacterBuilding then
-		local var_27_2 = arg_27_0._roomCharacterMO.currentPosition
+	if var_30_0 and var_30_1:getCameraState() == RoomEnum.CameraState.InteractionCharacterBuilding then
+		local var_30_2 = arg_30_0._roomCharacterMO.currentPosition
 
-		var_27_1:switchCameraState(RoomEnum.CameraState.Normal, {
-			focusX = var_27_2.x,
-			focusY = var_27_2.z
-		}, nil, arg_27_0.insideBuildingInteractFinish, arg_27_0)
+		var_30_1:switchCameraState(RoomEnum.CameraState.Normal, {
+			focusX = var_30_2.x,
+			focusY = var_30_2.z
+		}, nil, arg_30_0.insideBuildingInteractFinish, arg_30_0)
 	else
-		arg_27_0:insideBuildingInteractFinish()
+		arg_30_0:insideBuildingInteractFinish()
 	end
 
-	arg_27_0:_clearLoader()
+	arg_30_0:_clearLoader()
 
-	if arg_27_0._interaTionCfg.buildingInside then
-		arg_27_0._roomCharacterMO:setIsFreeze(false)
-		RoomCharacterController.instance:correctCharacterHeight(arg_27_0._roomCharacterMO)
+	if arg_30_0._interaTionCfg.buildingInside then
+		arg_30_0._roomCharacterMO:setIsFreeze(false)
+		RoomCharacterController.instance:correctCharacterHeight(arg_30_0._roomCharacterMO)
 	end
 end
 
-function var_0_0.insideBuildingInteractFinish(arg_28_0)
-	if not arg_28_0._interaTionCfg.buildingInside then
+function var_0_0.insideBuildingInteractFinish(arg_31_0)
+	if not arg_31_0._interaTionCfg.buildingInside then
 		return
 	end
 
-	arg_28_0:setInteractBuildingSideIsActive(RoomEnum.EntityChildKey.InSideKey, false)
+	arg_31_0:setInteractBuildingSideIsActive(RoomEnum.EntityChildKey.InSideKey, false)
 end
 
-function var_0_0.onDone(arg_29_0)
+function var_0_0.onDone(arg_32_0)
 	return
 end
 
-function var_0_0.endState(arg_30_0)
-	if arg_30_0.fsmTransition then
-		arg_30_0.fsmTransition:endState()
+function var_0_0.endState(arg_33_0)
+	arg_33_0:_killTween()
+
+	if arg_33_0.fsmTransition then
+		arg_33_0.fsmTransition:endState()
 	end
 end
 
-function var_0_0.stop(arg_31_0)
-	arg_31_0:endState()
+function var_0_0.stop(arg_34_0)
+	arg_34_0:endState()
 end
 
-function var_0_0.clear(arg_32_0)
-	arg_32_0:endState()
-	arg_32_0:_clearLoader()
-	TaskDispatcher.cancelTask(arg_32_0._onInteractionFinish, arg_32_0)
-	TaskDispatcher.cancelTask(arg_32_0._onDelayLoadDone, arg_32_0)
-	TaskDispatcher.cancelTask(arg_32_0._onDelayNextCamera, arg_32_0)
-	TaskDispatcher.cancelTask(arg_32_0._onPlayHeroAnimState, arg_32_0)
-	TaskDispatcher.cancelTask(arg_32_0.moveCharacterInsideBuilding)
+function var_0_0.clear(arg_35_0)
+	arg_35_0:endState()
+	arg_35_0:_clearLoader()
+	TaskDispatcher.cancelTask(arg_35_0._onInteractionFinish, arg_35_0)
+	TaskDispatcher.cancelTask(arg_35_0._onDelayLoadDone, arg_35_0)
+	TaskDispatcher.cancelTask(arg_35_0._onDelayNextCamera, arg_35_0)
+	TaskDispatcher.cancelTask(arg_35_0._onPlayHeroAnimState, arg_35_0)
+	TaskDispatcher.cancelTask(arg_35_0.moveCharacterInsideBuilding)
 end
 
 return var_0_0

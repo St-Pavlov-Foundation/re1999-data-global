@@ -58,7 +58,7 @@ end
 
 function var_0_0._setNewSkills(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
 	arg_5_0._curSkillLevel = arg_5_0._curSkillLevel or nil
-	arg_5_1 = arg_5_0:_checkDestinyEffect(arg_5_1)
+	arg_5_1 = arg_5_0:_checkReplaceSkill(arg_5_1)
 	arg_5_0._skillIdList = arg_5_1
 	arg_5_0._super = arg_5_2
 

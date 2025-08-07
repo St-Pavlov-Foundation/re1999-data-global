@@ -23,7 +23,7 @@ function var_0_0.onStart(arg_1_0)
 		local var_1_4 = tonumber(var_1_3.value)
 		local var_1_5 = var_1_3.value2
 
-		FightFloatMgr.instance:float(var_1_0, FightEnum.FloatType.stress, var_1_5, var_1_4)
+		FightFloatMgr.instance:float(var_1_0, FightEnum.FloatType.stress, var_1_5, var_1_4, false)
 		FightController.instance:dispatchEvent(FightEvent.TriggerStressBehaviour, var_1_0, var_1_1)
 	end
 

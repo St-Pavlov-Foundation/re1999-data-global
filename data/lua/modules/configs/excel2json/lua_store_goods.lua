@@ -11,6 +11,7 @@ local var_0_1 = {
 	openLevel = 14,
 	discountItem = 35,
 	onlineTime = 18,
+	showLinkageLogo = 37,
 	duration = 17,
 	activityId = 27,
 	jumpId = 29,

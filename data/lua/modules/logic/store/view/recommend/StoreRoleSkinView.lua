@@ -44,42 +44,81 @@ function var_0_0._btnbuyOnClick(arg_5_0)
 		[StatEnum.EventProperties.RecommendPageId] = tostring(arg_5_0.config and arg_5_0.config.id or ""),
 		[StatEnum.EventProperties.RecommendPageName] = arg_5_0.config and arg_5_0.config.name or "StoreRoleSkinView"
 	})
-	GameFacade.jumpByAdditionParam(arg_5_0.config.systemJumpCode)
+
+	local var_5_0 = {}
+
+	if arg_5_0.config.relations and not string.nilorempty(arg_5_0.config.relations) then
+		local var_5_1 = string.split(arg_5_0.config.relations, "|")
+
+		for iter_5_0, iter_5_1 in pairs(var_5_1) do
+			local var_5_2 = string.splitToNumber(iter_5_1, "#")
+
+			if var_5_2[1] == 5 then
+				table.insert(var_5_0, var_5_2[2])
+			end
+		end
+	end
+
+	local var_5_3 = {}
+
+	for iter_5_2, iter_5_3 in pairs(var_5_0) do
+		local var_5_4 = StoreModel.instance:getGoodsMO(iter_5_3)
+
+		if not var_5_4:isSoldOut() then
+			table.insert(var_5_3, var_5_4)
+		end
+	end
+
+	table.sort(var_5_3, function(arg_6_0, arg_6_1)
+		return arg_6_0.goodsId < arg_6_1.goodsId
+	end)
+
+	if #var_5_3 < 1 then
+		return
+	end
+
+	if #var_5_0 == 1 then
+		ViewMgr.instance:openView(ViewName.StoreSkinPreviewView, {
+			goodsMO = var_5_3[1]
+		})
+	elseif #var_5_3 > 0 then
+		GameFacade.jumpByAdditionParam(arg_5_0.config.systemJumpCode .. "#" .. tostring(var_5_3[1].goodsId) .. "#1")
+	end
 end
 
-function var_0_0._editableInitView(arg_6_0)
-	arg_6_0._txtprice = gohelper.findChildText(arg_6_0.viewGO, "view/left/#txt_price")
-	arg_6_0._animator = arg_6_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
-	arg_6_0._animatorPlayer = SLFramework.AnimatorPlayer.Get(arg_6_0.viewGO)
+function var_0_0._editableInitView(arg_7_0)
+	arg_7_0._txtprice = gohelper.findChildText(arg_7_0.viewGO, "view/left/#txt_price")
+	arg_7_0._animator = arg_7_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
+	arg_7_0._animatorPlayer = SLFramework.AnimatorPlayer.Get(arg_7_0.viewGO)
 end
 
-function var_0_0.onUpdateParam(arg_7_0)
+function var_0_0.onUpdateParam(arg_8_0)
 	return
 end
 
-function var_0_0.onOpen(arg_8_0)
-	var_0_0.super.onOpen(arg_8_0)
-	arg_8_0:refreshUI()
+function var_0_0.onOpen(arg_9_0)
+	var_0_0.super.onOpen(arg_9_0)
+	arg_9_0:refreshUI()
 end
 
-function var_0_0.refreshUI(arg_9_0)
-	arg_9_0.config = arg_9_0.config or StoreConfig.instance:getStoreRecommendConfig(StoreEnum.RecommendSubStoreId.StoreRoleSkinView)
-	arg_9_0._txtdurationTime.text = StoreController.instance:getRecommendStoreTime(arg_9_0.config)
+function var_0_0.refreshUI(arg_10_0)
+	arg_10_0.config = arg_10_0.config or StoreConfig.instance:getStoreRecommendConfig(StoreEnum.RecommendSubStoreId.StoreRoleSkinView)
+	arg_10_0._txtdurationTime.text = StoreController.instance:getRecommendStoreTime(arg_10_0.config)
 
-	if arg_9_0._txtprice then
-		local var_9_0, var_9_1 = arg_9_0:_getCostSymbolAndPrice(arg_9_0.config.systemJumpCode)
+	if arg_10_0._txtprice then
+		local var_10_0, var_10_1 = arg_10_0:_getCostSymbolAndPrice(arg_10_0.config.systemJumpCode)
 
-		if var_9_0 then
-			arg_9_0._txtprice.text = string.format("%s%s", var_9_0, var_9_1)
+		if var_10_0 then
+			arg_10_0._txtprice.text = string.format("%s%s", var_10_0, var_10_1)
 		end
 	end
 end
 
-function var_0_0.onClose(arg_10_0)
+function var_0_0.onClose(arg_11_0)
 	return
 end
 
-function var_0_0.onDestroyView(arg_11_0)
+function var_0_0.onDestroyView(arg_12_0)
 	return
 end
 

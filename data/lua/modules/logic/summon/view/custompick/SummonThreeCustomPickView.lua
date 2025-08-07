@@ -268,14 +268,14 @@ function var_0_0._btnsummon10OnClick_2(arg_13_0)
 	end
 
 	local var_13_1 = SummonMainModel.instance
-	local var_13_2, var_13_3, var_13_4 = var_13_1.getCostByConfig(var_13_0.cost10)
-	local var_13_5 = var_13_1:getDiscountCost10(var_13_0.id)
+	local var_13_2, var_13_3, var_13_4, var_13_5 = var_13_1.getCostByConfig(var_13_0.cost10)
+	local var_13_6 = var_13_1:getDiscountCost10(var_13_0.id)
 
 	if var_13_1:getDiscountCostId(var_13_0.id) == var_13_3 then
-		var_13_4 = var_13_5 < 0 and var_13_4 or var_13_5
+		var_13_4 = var_13_6 < 0 and var_13_4 or var_13_6
 	end
 
-	local var_13_6 = {
+	local var_13_7 = {
 		type = var_13_2,
 		id = var_13_3,
 		quantity = var_13_4,
@@ -283,34 +283,34 @@ function var_0_0._btnsummon10OnClick_2(arg_13_0)
 		callbackObj = arg_13_0
 	}
 
-	var_13_6.notEnough = false
+	var_13_7.notEnough = false
+	var_13_5 = var_13_5 or ItemModel.instance:getItemQuantity(var_13_2, var_13_3)
 
-	local var_13_7 = ItemModel.instance:getItemQuantity(var_13_2, var_13_3)
-	local var_13_8 = var_13_4 <= var_13_7
+	local var_13_8 = var_13_4 <= var_13_5
 	local var_13_9 = var_13_1.everyCostCount
 	local var_13_10 = var_13_1:getOwnCostCurrencyNum()
-	local var_13_11 = var_13_4 - var_13_7
+	local var_13_11 = var_13_4 - var_13_5
 	local var_13_12 = var_13_9 * var_13_11
 
 	if not var_13_8 and var_13_10 < var_13_12 then
-		var_13_6.notEnough = true
+		var_13_7.notEnough = true
 	end
 
 	if var_13_8 then
-		var_13_6.needTransform = false
+		var_13_7.needTransform = false
 
 		arg_13_0:_summon10Confirm()
 
 		return
 	else
-		var_13_6.needTransform = true
-		var_13_6.cost_type = var_13_1.costCurrencyType
-		var_13_6.cost_id = var_13_1.costCurrencyId
-		var_13_6.cost_quantity = var_13_12
-		var_13_6.miss_quantity = var_13_11
+		var_13_7.needTransform = true
+		var_13_7.cost_type = var_13_1.costCurrencyType
+		var_13_7.cost_id = var_13_1.costCurrencyId
+		var_13_7.cost_quantity = var_13_12
+		var_13_7.miss_quantity = var_13_11
 	end
 
-	ViewMgr.instance:openView(ViewName.SummonConfirmView, var_13_6)
+	ViewMgr.instance:openView(ViewName.SummonConfirmView, var_13_7)
 end
 
 function var_0_0._summon10Confirm(arg_14_0)
@@ -564,7 +564,7 @@ function var_0_0.refreshTicket(arg_29_0)
 end
 
 function var_0_0._refreshSingleCost(arg_30_0, arg_30_1, arg_30_2, arg_30_3)
-	local var_30_0, var_30_1, var_30_2 = SummonMainModel.getCostByConfig(arg_30_1)
+	local var_30_0, var_30_1, var_30_2 = SummonMainModel.getCostByConfig(arg_30_1, true)
 	local var_30_3 = SummonMainModel.getSummonItemIcon(var_30_0, var_30_1)
 
 	arg_30_2:LoadImage(var_30_3)

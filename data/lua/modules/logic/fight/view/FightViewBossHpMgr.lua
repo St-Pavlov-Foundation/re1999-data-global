@@ -3,7 +3,9 @@
 local var_0_0 = class("FightViewBossHpMgr", FightBaseView)
 
 function var_0_0.onInitView(arg_1_0)
-	arg_1_0._bossHpRoot = gohelper.findChild(arg_1_0.viewGO, "root/bossHpRoot").transform
+	arg_1_0.viewRoot = gohelper.findChild(arg_1_0.viewGO, "root")
+	arg_1_0.hpRootObj = gohelper.findChild(arg_1_0.viewGO, "root/bossHpRoot")
+	arg_1_0._bossHpRoot = arg_1_0.hpRootObj.transform
 
 	if arg_1_0._editableInitView then
 		arg_1_0:_editableInitView()
@@ -13,6 +15,7 @@ end
 function var_0_0.addEvents(arg_2_0)
 	arg_2_0:com_registFightEvent(FightEvent.BeforeEnterStepBehaviour, arg_2_0._onBeforeEnterStepBehaviour)
 	arg_2_0:com_registFightEvent(FightEvent.OnRestartStageBefore, arg_2_0._onRestartStage)
+	arg_2_0:com_registFightEvent(FightEvent.SetBossHpVisibleWhenHidingFightView, arg_2_0.onSetBossHpVisibleWhenHidingFightView)
 end
 
 function var_0_0.removeEvents(arg_3_0)
@@ -111,15 +114,26 @@ function var_0_0._onBeforeEnterStepBehaviour(arg_6_0)
 	end
 end
 
-function var_0_0.onOpen(arg_7_0)
+function var_0_0.onSetBossHpVisibleWhenHidingFightView(arg_7_0, arg_7_1)
+	if not arg_7_0.originRootPosX then
+		arg_7_0.originRootPosX = recthelper.getAnchorX(arg_7_0._bossHpRoot)
+		arg_7_0.siblingIndex = gohelper.getSibling(arg_7_0.hpRootObj) - 1
+	end
+
+	gohelper.addChild(arg_7_1 and arg_7_0.viewGO or arg_7_0.viewRoot, arg_7_0.hpRootObj)
+	recthelper.setAnchorX(arg_7_0._bossHpRoot, arg_7_0.originRootPosX)
+	gohelper.setSibling(arg_7_0.hpRootObj, arg_7_0.siblingIndex)
+end
+
+function var_0_0.onOpen(arg_8_0)
 	return
 end
 
-function var_0_0.onClose(arg_8_0)
+function var_0_0.onClose(arg_9_0)
 	return
 end
 
-function var_0_0.onDestroyView(arg_9_0)
+function var_0_0.onDestroyView(arg_10_0)
 	return
 end
 

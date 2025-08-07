@@ -12,6 +12,7 @@ var_0_0.OneDaySecond = 86400
 var_0_0.OneHourSecond = 3600
 var_0_0.OneMinuteSecond = 60
 var_0_0.OneSecond = 1
+var_0_0.OneSecondMilliSecond = 1000
 var_0_0.DateEnFormat = {
 	Day = "d",
 	Hour = "h",
@@ -436,7 +437,7 @@ function var_0_0.SecondToActivityTimeFormat(arg_39_0, arg_39_1)
 	end
 
 	local var_39_0 = math.floor(arg_39_0 / var_0_8)
-	local var_39_1, var_39_2, var_39_3, var_39_4 = var_0_0.secondsToDDHHMMSS(arg_39_0)
+	local var_39_1, var_39_2, var_39_3, var_39_4 = var_0_0.secondsToDDHHMMSS(arg_39_0 % var_0_8)
 	local var_39_5, var_39_6, var_39_7, var_39_8, var_39_9 = var_0_4(arg_39_1)
 
 	if var_39_0 > 0 then
@@ -487,7 +488,7 @@ function var_0_0.getFormatTime(arg_45_0)
 	end
 
 	local var_45_0 = math.floor(arg_45_0 / var_0_8)
-	local var_45_1, var_45_2, var_45_3, var_45_4 = var_0_0.secondsToDDHHMMSS(arg_45_0)
+	local var_45_1, var_45_2, var_45_3, var_45_4 = var_0_0.secondsToDDHHMMSS(arg_45_0 % var_0_8)
 	local var_45_5, var_45_6, var_45_7, var_45_8, var_45_9 = var_0_4()
 
 	if var_45_0 > 0 then

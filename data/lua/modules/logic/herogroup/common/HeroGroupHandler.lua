@@ -89,15 +89,21 @@ var_0_0.getTrialHerosHandleFunc = {
 }
 
 function var_0_0.getTrialHeros(arg_9_0)
-	local var_9_0 = DungeonConfig.instance:getEpisodeCO(arg_9_0).type
-	local var_9_1 = var_0_0.getTrialHerosHandleFunc[var_9_0]
+	local var_9_0 = DungeonConfig.instance:getEpisodeCO(arg_9_0)
 
-	if var_9_1 then
-		return var_9_1(arg_9_0)
+	if not var_9_0 then
+		return ""
+	end
+
+	local var_9_1 = var_9_0.type
+	local var_9_2 = var_0_0.getTrialHerosHandleFunc[var_9_1]
+
+	if var_9_2 then
+		return var_9_2(arg_9_0)
 	else
-		local var_9_2 = HeroGroupModel.instance.battleId
+		local var_9_3 = HeroGroupModel.instance.battleId
 
-		return (var_9_2 and lua_battle.configDict[var_9_2]).trialHeros
+		return (var_9_3 and lua_battle.configDict[var_9_3]).trialHeros
 	end
 end
 

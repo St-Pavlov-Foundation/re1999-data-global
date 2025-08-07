@@ -168,7 +168,8 @@ var_0_0.defaultUIClzMap = {
 var_0_0.defaultUIClzMapByType = {
 	[SummonEnum.Type.ProbUp] = SummonMainCharacterProbUp,
 	[SummonEnum.Type.Limit] = SummonMainCharacterProbUp,
-	[SummonEnum.Type.StrongCustomOnePick] = SummonStrongOneCustomPickView
+	[SummonEnum.Type.StrongCustomOnePick] = SummonStrongOneCustomPickView,
+	[SummonEnum.Type.CoBranding] = SummonMainCharacterCoBranding
 }
 
 function var_0_0.resetTabResSettings(arg_12_0)
@@ -587,27 +588,46 @@ function var_0_0.getDiscountCost10(arg_49_0, arg_49_1, arg_49_2)
 	return -1
 end
 
-function var_0_0.getCostByConfig(arg_50_0)
+function var_0_0.getCostByConfig(arg_50_0, arg_50_1)
 	if string.nilorempty(arg_50_0) then
 		logError("no summon cost config")
 
 		return
 	end
 
+	arg_50_1 = arg_50_1 == true
+
 	local var_50_0 = string.split(arg_50_0, "|")
+	local var_50_1 = {}
+	local var_50_2 = {}
+	local var_50_3 = arg_50_1 and {} or nil
+	local var_50_4 = arg_50_1 and {} or nil
 
 	for iter_50_0, iter_50_1 in ipairs(var_50_0) do
-		local var_50_1 = string.splitToNumber(iter_50_1, "#")
-		local var_50_2 = var_50_1[1]
-		local var_50_3 = var_50_1[2]
-		local var_50_4 = var_50_1[3]
+		local var_50_5 = string.splitToNumber(iter_50_1, "#")
+		local var_50_6 = var_50_5[1]
+		local var_50_7 = var_50_5[2]
+		local var_50_8 = var_50_5[3]
+		local var_50_9 = ItemModel.instance:getItemQuantity(var_50_6, var_50_7)
+		local var_50_10 = (var_50_1[var_50_8] or 0) + var_50_9
 
-		if iter_50_0 >= #var_50_0 then
-			return var_50_2, var_50_3, var_50_4
+		if arg_50_1 and var_50_9 > 0 and not var_50_3[var_50_8] then
+			var_50_3[var_50_8] = var_50_7
+			var_50_4[var_50_8] = var_50_6
 		end
 
-		if var_50_4 <= ItemModel.instance:getItemQuantity(var_50_2, var_50_3) then
-			return var_50_2, var_50_3, var_50_4
+		if iter_50_0 >= #var_50_0 or var_50_8 <= var_50_10 then
+			if arg_50_1 then
+				var_50_7 = var_50_3[var_50_8] or var_50_7
+				var_50_6 = var_50_4[var_50_8] or var_50_6
+			end
+
+			return var_50_6, var_50_7, var_50_8, var_50_10
+		end
+
+		if not var_50_2[iter_50_1] then
+			var_50_2[iter_50_1] = true
+			var_50_1[var_50_8] = var_50_10
 		end
 	end
 end
@@ -709,36 +729,47 @@ function var_0_0.jumpToSummonCostShop()
 	StoreController.instance:checkAndOpenStoreView(StoreEnum.StoreId.SummonCost)
 end
 
-function var_0_0.addCurrencyByCostStr(arg_58_0, arg_58_1, arg_58_2)
-	if not string.nilorempty(arg_58_1) then
-		local var_58_0 = string.split(arg_58_1, "|")
+function var_0_0._isCurrencyHideAddBtn(arg_58_0)
+	if tabletool.indexOf(SummonEnum.CurrencyShowAddItemIds, arg_58_0) then
+		return false
+	end
 
-		for iter_58_0, iter_58_1 in ipairs(var_58_0) do
-			local var_58_1 = string.splitToNumber(iter_58_1, "#")
-			local var_58_2 = var_58_1[1]
-			local var_58_3 = var_58_1[2]
-			local var_58_4 = var_58_1[3]
+	return true
+end
 
-			if not arg_58_2[var_58_3] then
-				table.insert(arg_58_0, {
+function var_0_0.addCurrencyByCostStr(arg_59_0, arg_59_1, arg_59_2)
+	if not string.nilorempty(arg_59_1) then
+		local var_59_0 = string.split(arg_59_1, "|")
+
+		for iter_59_0, iter_59_1 in ipairs(var_59_0) do
+			local var_59_1 = string.splitToNumber(iter_59_1, "#")
+			local var_59_2 = var_59_1[1]
+			local var_59_3 = var_59_1[2]
+			local var_59_4 = var_59_1[3]
+
+			if not arg_59_2[var_59_3] then
+				local var_59_5 = var_0_0._isCurrencyHideAddBtn(var_59_3)
+
+				table.insert(arg_59_0, {
 					isIcon = true,
-					id = var_58_3,
-					type = var_58_2,
+					id = var_59_3,
+					type = var_59_2,
+					isHideAddBtn = var_59_5,
 					jumpFunc = var_0_0.jumpToSummonCostShop
 				})
 
-				arg_58_2[var_58_3] = true
+				arg_59_2[var_59_3] = true
 			end
 		end
 	end
 end
 
-function var_0_0.entryNeedReddot(arg_59_0)
-	local var_59_0 = arg_59_0:getServerMOMap()
+function var_0_0.entryNeedReddot(arg_60_0)
+	local var_60_0 = arg_60_0:getServerMOMap()
 
-	if var_59_0 then
-		for iter_59_0, iter_59_1 in pairs(var_59_0) do
-			if var_0_0.needShowReddot(iter_59_1) then
+	if var_60_0 then
+		for iter_60_0, iter_60_1 in pairs(var_60_0) do
+			if var_0_0.needShowReddot(iter_60_1) then
 				return true
 			end
 		end
@@ -747,16 +778,34 @@ function var_0_0.entryNeedReddot(arg_59_0)
 	return false
 end
 
-function var_0_0.needShowReddot(arg_60_0)
-	if not arg_60_0:isOpening() then
+function var_0_0.needShowReddot(arg_61_0)
+	if not arg_61_0:isOpening() then
 		return false
 	end
 
-	if arg_60_0.luckyBagMO and arg_60_0.luckyBagMO:isGot() and not arg_60_0.luckyBagMO:isOpened() then
+	if arg_61_0.luckyBagMO and arg_61_0.luckyBagMO:isGot() and not arg_61_0.luckyBagMO:isOpened() then
 		return true
 	end
 
-	if arg_60_0.haveFree then
+	if arg_61_0.haveFree then
+		return true
+	end
+
+	if arg_61_0:isHasProgressReward() then
+		return true
+	end
+
+	local var_61_0 = StoreConfig.instance:getCharageGoodsCfgListByPoolId(arg_61_0.id)
+
+	if var_61_0 then
+		for iter_61_0, iter_61_1 in ipairs(var_61_0) do
+			if StoreCharageConditionalHelper.isHasCanFinishGoodsTask(iter_61_1.id) then
+				return true
+			end
+		end
+	end
+
+	if StoreGoodsTaskController.instance:isHasNewRedDotByPoolId(arg_61_0.id) then
 		return true
 	end
 

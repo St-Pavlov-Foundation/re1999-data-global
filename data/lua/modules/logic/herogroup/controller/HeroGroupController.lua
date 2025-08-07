@@ -57,7 +57,8 @@ function var_0_0._getGroupFightViewName(arg_6_0, arg_6_1)
 			[VersionActivity1_5Enum.ActivityId.Dungeon] = ViewName.V1a5_HeroGroupFightView,
 			[VersionActivity1_6Enum.ActivityId.Dungeon] = ViewName.V1a6_HeroGroupFightView,
 			[VersionActivity1_6Enum.ActivityId.DungeonBossRush] = ViewName.V1a6_HeroGroupFightView,
-			[VersionActivity2_7Enum.ActivityId.Act191] = ViewName.Act191HeroGroupView
+			[VersionActivity2_7Enum.ActivityId.Act191] = ViewName.Act191HeroGroupView,
+			[VersionActivity2_9Enum.ActivityId.Dungeon] = ViewName.VersionActivity2_9HeroGroupFightView
 		}
 		arg_6_0.ChapterTypeToHeroGroupView = {
 			[DungeonEnum.ChapterType.WeekWalk] = ViewName.HeroGroupFightWeekwalkView,
@@ -66,15 +67,25 @@ function var_0_0._getGroupFightViewName(arg_6_0, arg_6_1)
 			[DungeonEnum.ChapterType.TowerBoss] = ViewName.TowerHeroGroupFightView,
 			[DungeonEnum.ChapterType.TowerLimited] = ViewName.TowerHeroGroupFightView,
 			[DungeonEnum.ChapterType.TowerBossTeach] = ViewName.TowerHeroGroupFightView,
-			[DungeonEnum.ChapterType.Act183] = ViewName.Act183HeroGroupFightView
+			[DungeonEnum.ChapterType.Act183] = ViewName.Act183HeroGroupFightView,
+			[DungeonEnum.ChapterType.Odyssey] = ViewName.OdysseyHeroGroupView
 		}
 	end
 
 	local var_6_0 = DungeonConfig.instance:getEpisodeCO(arg_6_1)
-	local var_6_1 = var_6_0 and DungeonConfig.instance:getChapterCO(var_6_0.chapterId)
 
-	if var_6_1 then
-		return arg_6_0.ActivityIdToHeroGroupView[var_6_1.actId] or arg_6_0.ChapterTypeToHeroGroupView[var_6_1.type] or ViewName.HeroGroupFightView
+	if var_6_0.type == DungeonEnum.EpisodeType.BossRush then
+		local var_6_1 = BossRushController.instance:getGroupFightViewName(arg_6_1)
+
+		if var_6_1 then
+			return var_6_1
+		end
+	end
+
+	local var_6_2 = var_6_0 and DungeonConfig.instance:getChapterCO(var_6_0.chapterId)
+
+	if var_6_2 then
+		return arg_6_0.ActivityIdToHeroGroupView[var_6_2.actId] or arg_6_0.ChapterTypeToHeroGroupView[var_6_2.type] or ViewName.HeroGroupFightView
 	end
 
 	return ViewName.HeroGroupFightView

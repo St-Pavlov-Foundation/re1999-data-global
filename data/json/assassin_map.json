@@ -1,0 +1,23 @@
+[
+  {
+    "id": 1,
+    "title": "language_10078556",
+    "unlock": "",
+    "bg": "assassin2_map_fullbg1",
+    "bgCenter": "-20#413.8"
+  },
+  {
+    "id": 2,
+    "title": "language_10078557",
+    "unlock": "finish_quest#3016",
+    "bg": "assassin2_map_fullbg2",
+    "bgCenter": "-20#248"
+  },
+  {
+    "id": 3,
+    "title": "language_10078558",
+    "unlock": "finish_quest#3022",
+    "bg": "assassin2_map_fullbg1",
+    "bgCenter": "0#-220"
+  }
+]

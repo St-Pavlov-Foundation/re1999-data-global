@@ -78,6 +78,21 @@ function var_0_0._sort(arg_5_0, arg_5_1)
 	return var_5_2 < var_5_3
 end
 
+function var_0_0.isReddot(arg_6_0, arg_6_1)
+	local var_6_0 = BossRushModel.instance:getScheduleViewRewardList(arg_6_1)
+	local var_6_1 = BossRushModel.instance:getLastPointInfo(arg_6_1)
+	local var_6_2 = var_6_1 and var_6_1.cur or 0
+
+	for iter_6_0, iter_6_1 in pairs(var_6_0) do
+		local var_6_3 = var_6_2 >= iter_6_1.stageRewardCO.rewardPointNum
+		local var_6_4 = BossRushModel.instance:hasGetBonusIds(arg_6_1, iter_6_1.id)
+
+		if not iter_6_1.isGot and var_6_3 then
+			return true
+		end
+	end
+end
+
 var_0_0.instance = var_0_0.New()
 
 return var_0_0

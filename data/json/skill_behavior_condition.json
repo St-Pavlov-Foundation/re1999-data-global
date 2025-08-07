@@ -22858,5 +22858,325 @@
   {
     "id": 552,
     "type": "Random"
+  },
+  {
+    "id": 1000002,
+    "type": "TeamContainHero"
+  },
+  {
+    "id": 1000212,
+    "type": "TeamContainHero"
+  },
+  {
+    "id": 1001208,
+    "type": "Assassinate"
+  },
+  {
+    "id": 1001210,
+    "type": "Assassinate"
+  },
+  {
+    "id": 1001212,
+    "type": "Assassinate"
+  },
+  {
+    "id": 1001203,
+    "type": "Assassinate"
+  },
+  {
+    "id": 1001103,
+    "type": "Assassinate"
+  },
+  {
+    "id": 1002103,
+    "type": "HeroIdCount"
+  },
+  {
+    "id": 1002212,
+    "type": "HeroIdCount"
+  },
+  {
+    "id": 1007204,
+    "type": "FromBuffAndToBuff"
+  },
+  {
+    "id": 1008000,
+    "type": "Synchronization"
+  },
+  {
+    "id": 1008101,
+    "type": "Synchronization"
+  },
+  {
+    "id": 1008106,
+    "type": "Synchronization"
+  },
+  {
+    "id": 1008301,
+    "type": "Synchronization"
+  },
+  {
+    "id": 1008304,
+    "type": "Synchronization"
+  },
+  {
+    "id": 1009101,
+    "type": "Adrenaline"
+  },
+  {
+    "id": 1009301,
+    "type": "Adrenaline"
+  },
+  {
+    "id": 1010101,
+    "type": "ProgressValue"
+  },
+  {
+    "id": 1010301,
+    "type": "ProgressValue"
+  },
+  {
+    "id": 1011201,
+    "type": "EnemyAliveNum"
+  },
+  {
+    "id": 1011203,
+    "type": "EnemyAliveNum"
+  },
+  {
+    "id": 1011208,
+    "type": "EnemyAliveNum"
+  },
+  {
+    "id": 1011210,
+    "type": "EnemyAliveNum"
+  },
+  {
+    "id": 1012,
+    "type": "BeAssassinate"
+  },
+  {
+    "id": 1012204,
+    "type": "BeAssassinate"
+  },
+  {
+    "id": 1012209,
+    "type": "BeAssassinate"
+  },
+  {
+    "id": 10122091,
+    "type": "BeAssassinate"
+  },
+  {
+    "id": 1012213,
+    "type": "BeAssassinate"
+  },
+  {
+    "id": 1013,
+    "type": "AnyoneHasBuff"
+  },
+  {
+    "id": 1013002,
+    "type": "AnyoneHasBuff"
+  },
+  {
+    "id": 1013004,
+    "type": "AnyoneHasBuff"
+  },
+  {
+    "id": 1013005,
+    "type": "AnyoneHasBuff"
+  },
+  {
+    "id": 1013100,
+    "type": "AnyoneHasBuff"
+  },
+  {
+    "id": 1013101,
+    "type": "AnyoneHasBuff"
+  },
+  {
+    "id": 1013102,
+    "type": "AnyoneHasBuff"
+  },
+  {
+    "id": 1013103,
+    "type": "AnyoneHasBuff"
+  },
+  {
+    "id": 1013104,
+    "type": "AnyoneHasBuff"
+  },
+  {
+    "id": 1013105,
+    "type": "AnyoneHasBuff"
+  },
+  {
+    "id": 1013106,
+    "type": "AnyoneHasBuff"
+  },
+  {
+    "id": 1013201,
+    "type": "AnyoneHasBuff"
+  },
+  {
+    "id": 1013202,
+    "type": "AnyoneHasBuff"
+  },
+  {
+    "id": 1013203,
+    "type": "AnyoneHasBuff"
+  },
+  {
+    "id": 1013204,
+    "type": "AnyoneHasBuff"
+  },
+  {
+    "id": 1013205,
+    "type": "AnyoneHasBuff"
+  },
+  {
+    "id": 1013206,
+    "type": "AnyoneHasBuff"
+  },
+  {
+    "id": 1013207,
+    "type": "AnyoneHasBuff"
+  },
+  {
+    "id": 1013208,
+    "type": "AnyoneHasBuff"
+  },
+  {
+    "id": 1013209,
+    "type": "AnyoneHasBuff"
+  },
+  {
+    "id": 1013210,
+    "type": "AnyoneHasBuff"
+  },
+  {
+    "id": 1013211,
+    "type": "AnyoneHasBuff"
+  },
+  {
+    "id": 1013212,
+    "type": "AnyoneHasBuff"
+  },
+  {
+    "id": 1013213,
+    "type": "AnyoneHasBuff"
+  },
+  {
+    "id": 1013301,
+    "type": "AnyoneHasBuff"
+  },
+  {
+    "id": 1013302,
+    "type": "AnyoneHasBuff"
+  },
+  {
+    "id": 1013303,
+    "type": "AnyoneHasBuff"
+  },
+  {
+    "id": 1013304,
+    "type": "AnyoneHasBuff"
+  },
+  {
+    "id": 1013305,
+    "type": "AnyoneHasBuff"
+  },
+  {
+    "id": 1013306,
+    "type": "AnyoneHasBuff"
+  },
+  {
+    "id": 1013307,
+    "type": "AnyoneHasBuff"
+  },
+  {
+    "id": 1013401,
+    "type": "AnyoneHasBuff"
+  },
+  {
+    "id": 1013402,
+    "type": "AnyoneHasBuff"
+  },
+  {
+    "id": 617104,
+    "type": "TeammateAliveOrDying"
+  },
+  {
+    "id": 513208,
+    "type": "SelfTeamHasBuffTypeLayerMoreThan"
+  },
+  {
+    "id": 1001206,
+    "type": "Assassinate"
+  },
+  {
+    "id": 1001209,
+    "type": "Assassinate"
+  },
+  {
+    "id": 1001211,
+    "type": "Assassinate"
+  },
+  {
+    "id": 1001204,
+    "type": "Assassinate"
+  },
+  {
+    "id": 51012,
+    "type": "HasTypeIdBuffMoreThan"
+  },
+  {
+    "id": 252081,
+    "type": "UseExSkill"
+  },
+  {
+    "id": 19016,
+    "type": "HasBuffId"
+  },
+  {
+    "id": 180016,
+    "type": "PowerCompare"
+  },
+  {
+    "id": 57016,
+    "type": "NoBuffId"
+  },
+  {
+    "id": 182081,
+    "type": "HasBuff"
+  },
+  {
+    "id": 513100,
+    "type": "SelfTeamHasBuffTypeLayerMoreThan"
+  },
+  {
+    "id": 643004,
+    "type": "HasConditionTarget"
+  },
+  {
+    "id": 180202,
+    "type": "PowerCompare"
+  },
+  {
+    "id": 18205,
+    "type": "HasBuff"
+  },
+  {
+    "id": 61100,
+    "type": "PerBuffIdCount"
+  },
+  {
+    "id": 1012211,
+    "type": "BeAssassinate"
+  },
+  {
+    "id": 1014002,
+    "type": "AssassinGridType"
   }
 ]

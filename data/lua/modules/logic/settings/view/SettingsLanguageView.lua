@@ -364,7 +364,7 @@ function var_0_0._onChangeLangTxtType(arg_19_0, arg_19_1)
 	LangSettings.instance:SetCurLangType(var_19_0, arg_19_0._onChangeLangTxtType2, arg_19_0)
 end
 
-function var_0_0._onChangeLangTxtType2(arg_20_0)
+function var_0_0._onChangeLangTxtType2(arg_20_0, arg_20_1)
 	local var_20_0 = GameConfig:GetCurLangShortcut()
 	local var_20_1 = GameLanguageMgr.instance:getStoryIndexByShortCut(var_20_0)
 

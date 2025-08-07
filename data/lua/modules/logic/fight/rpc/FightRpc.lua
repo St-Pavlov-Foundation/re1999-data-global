@@ -445,48 +445,39 @@ function var_0_0.onReceiveEntityInfoReply(arg_35_0, arg_35_1, arg_35_2)
 	FightController.instance:dispatchEvent(FightEvent.CountEntityInfoReply, arg_35_1, arg_35_2)
 end
 
-function var_0_0.refreshEntityMO(arg_36_0, arg_36_1)
-	local var_36_0 = arg_36_1.entityInfo
-	local var_36_1 = var_36_0 and FightDataHelper.entityMgr:getById(var_36_0.uid)
+function var_0_0.sendGetEntityDetailInfosRequest(arg_36_0)
+	local var_36_0 = FightModule_pb.GetEntityDetailInfosRequest()
 
-	if var_36_1 then
-		var_36_1:init(var_36_0, var_36_1.side)
-	end
+	arg_36_0:sendMsg(var_36_0)
 end
 
-function var_0_0.sendGetEntityDetailInfosRequest(arg_37_0)
-	local var_37_0 = FightModule_pb.GetEntityDetailInfosRequest()
-
-	arg_37_0:sendMsg(var_37_0)
-end
-
-function var_0_0.onReceiveGetEntityDetailInfosReply(arg_38_0, arg_38_1, arg_38_2)
-	if arg_38_1 == 0 then
-		GMFightEntityModel.instance:onGetEntityDetailInfos(arg_38_2)
+function var_0_0.onReceiveGetEntityDetailInfosReply(arg_37_0, arg_37_1, arg_37_2)
+	if arg_37_1 == 0 then
+		GMFightEntityModel.instance:onGetEntityDetailInfos(arg_37_2)
 		GMController.instance:dispatchEvent(GMFightEntityView.Evt_OnGetEntityDetailInfos)
 	end
 end
 
-function var_0_0.sendGetFightRecordAllRequest(arg_39_0)
-	local var_39_0 = FightModule_pb.GetFightRecordAllRequest()
+function var_0_0.sendGetFightRecordAllRequest(arg_38_0)
+	local var_38_0 = FightModule_pb.GetFightRecordAllRequest()
 
-	arg_39_0:sendMsg(var_39_0)
+	arg_38_0:sendMsg(var_38_0)
 end
 
-function var_0_0.onReceiveGetFightRecordAllReply(arg_40_0, arg_40_1, arg_40_2)
-	if arg_40_1 == 0 then
-		GMBattleModel.instance:setGMFightRecord(arg_40_2)
+function var_0_0.onReceiveGetFightRecordAllReply(arg_39_0, arg_39_1, arg_39_2)
+	if arg_39_1 == 0 then
+		GMBattleModel.instance:setGMFightRecord(arg_39_2)
 		FightController.instance:dispatchEvent(FightEvent.OnGMFightWithRecordAllReply)
 	end
 end
 
-function var_0_0.sendFightWithRecordAllRequest(arg_41_0, arg_41_1)
-	arg_41_0:sendMsg(arg_41_1)
+function var_0_0.sendFightWithRecordAllRequest(arg_40_0, arg_40_1)
+	arg_40_0:sendMsg(arg_40_1)
 end
 
-function var_0_0.onReceiveFightWithRecordAllReply(arg_42_0, arg_42_1, arg_42_2)
-	if arg_42_1 == 0 then
-		var_0_0.instance:onReceiveTestFightReply(arg_42_1, arg_42_2)
+function var_0_0.onReceiveFightWithRecordAllReply(arg_41_0, arg_41_1, arg_41_2)
+	if arg_41_1 == 0 then
+		var_0_0.instance:onReceiveTestFightReply(arg_41_1, arg_41_2)
 	end
 end
 
@@ -495,36 +486,36 @@ var_0_0.DeckInfoRequestType = {
 	EnemySide = 1
 }
 
-function var_0_0.sendGetFightCardDeckInfoRequest(arg_43_0, arg_43_1)
-	local var_43_0 = FightModule_pb.GetFightCardDeckInfoRequest()
+function var_0_0.sendGetFightCardDeckInfoRequest(arg_42_0, arg_42_1)
+	local var_42_0 = FightModule_pb.GetFightCardDeckInfoRequest()
 
-	var_43_0.type = arg_43_1 or var_0_0.DeckInfoRequestType.MySide
+	var_42_0.type = arg_42_1 or var_0_0.DeckInfoRequestType.MySide
 
-	arg_43_0:sendMsg(var_43_0)
+	arg_42_0:sendMsg(var_42_0)
 end
 
-function var_0_0.onReceiveGetFightCardDeckInfoReply(arg_44_0, arg_44_1, arg_44_2)
-	if arg_44_1 == 0 then
-		FightController.instance:dispatchEvent(FightEvent.GetFightCardDeckInfoReply, arg_44_2)
+function var_0_0.onReceiveGetFightCardDeckInfoReply(arg_43_0, arg_43_1, arg_43_2)
+	if arg_43_1 == 0 then
+		FightController.instance:dispatchEvent(FightEvent.GetFightCardDeckInfoReply, arg_43_2)
 	end
 end
 
-function var_0_0.sendGetFightCardDeckDetailInfoRequest(arg_45_0, arg_45_1)
-	local var_45_0 = FightModule_pb.GetFightCardDeckDetailInfoRequest()
+function var_0_0.sendGetFightCardDeckDetailInfoRequest(arg_44_0, arg_44_1)
+	local var_44_0 = FightModule_pb.GetFightCardDeckDetailInfoRequest()
 
-	var_45_0.type = arg_45_1 or var_0_0.DeckInfoRequestType.MySide
+	var_44_0.type = arg_44_1 or var_0_0.DeckInfoRequestType.MySide
 
-	arg_45_0:sendMsg(var_45_0)
+	arg_44_0:sendMsg(var_44_0)
 end
 
-function var_0_0.onReceiveGetFightCardDeckDetailInfoReply(arg_46_0, arg_46_1, arg_46_2)
-	if arg_46_1 == 0 then
-		ViewMgr.instance:openView(ViewName.FightCardDeckGMView, arg_46_2)
+function var_0_0.onReceiveGetFightCardDeckDetailInfoReply(arg_45_0, arg_45_1, arg_45_2)
+	if arg_45_1 == 0 then
+		ViewMgr.instance:openView(ViewName.FightCardDeckGMView, arg_45_2)
 	end
 end
 
-function var_0_0.onReceiveAct174FightRoundInfo(arg_47_0, arg_47_1, arg_47_2)
-	FightMgr.instance:playGMDouQuQu(arg_47_2)
+function var_0_0.onReceiveAct174FightRoundInfo(arg_46_0, arg_46_1, arg_46_2)
+	FightMgr.instance:playGMDouQuQu(arg_46_2)
 end
 
 var_0_0.instance = var_0_0.New()

@@ -67,6 +67,15 @@ function var_0_0.onOpen(arg_9_0)
 	local var_9_0 = false
 
 	if arg_9_0.viewParam then
+		if arg_9_0.viewParam.isGift then
+			gohelper.setActive(arg_9_0._gobuildingArrow, false)
+			gohelper.setActive(arg_9_0._goblockpackageArrow, true)
+			arg_9_0.viewContainer:layoutContentTrs(arg_9_0._gocontent.transform, var_9_0)
+			recthelper.setAnchorY(arg_9_0._gocontent.transform, 400)
+
+			return
+		end
+
 		var_9_0 = arg_9_0.viewParam.isBottom
 	end
 

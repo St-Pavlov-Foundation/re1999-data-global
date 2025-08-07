@@ -20,6 +20,7 @@ var_0_0.VoiceType = {
 	GetSkin = 9,
 	SpecialIdle2 = 21,
 	FightResult = 7,
+	FightCardSkill3 = 27,
 	MultiVoice = 26,
 	MainViewSpecialInteraction = 23,
 	WeatherChange = 14,
@@ -197,6 +198,11 @@ var_0_0.skillIndex = {
 }
 var_0_0.DefaultSkinId = {
 	DuDuGu = 310401
+}
+var_0_0.StatType = {
+	ALL = -1,
+	NotStat = 1,
+	Normal = 0
 }
 
 setmetatable(var_0_0.TalentTxtByHeroType, {

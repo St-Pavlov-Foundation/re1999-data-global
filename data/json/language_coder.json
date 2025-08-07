@@ -6088,6 +6088,478 @@
     "lang": "language_10074580"
   },
   {
+    "id": "assassin_quest_fight_pick_hero",
+    "lang": "language_10022458"
+  },
+  {
+    "id": "assassin_quest_fight_begin",
+    "lang": "language_10031486"
+  },
+  {
+    "id": "assassin_stealth_game_pick_hero",
+    "lang": "language_10022458"
+  },
+  {
+    "id": "assassin_stealth_game_begin",
+    "lang": "language_10004757"
+  },
+  {
+    "id": "assassin_stealth_game_has_pick_hero",
+    "lang": "language_10077575"
+  },
+  {
+    "id": "assassin_stealth_game_fight_has_pick_hero",
+    "lang": "language_10077576"
+  },
+  {
+    "id": "assassin_stealth_game_player_turn",
+    "lang": "language_10071635"
+  },
+  {
+    "id": "assassin_stealth_game_enemy_turn",
+    "lang": "language_10030225"
+  },
+  {
+    "id": "assassin_stealth_game_recommend",
+    "lang": "language_10029402"
+  },
+  {
+    "id": "assassin_stealth_game_mission_progress",
+    "lang": "language_10077577"
+  },
+  {
+    "id": "assassin_stealth_enemy_refresh_point",
+    "lang": "language_10077578"
+  },
+  {
+    "id": "assassin_stealth_use_skill_prop_select_target",
+    "lang": "language_10077579"
+  },
+  {
+    "id": "assassin_stealth_use_skill_prop_no_target",
+    "lang": "language_10077580"
+  },
+  {
+    "id": "assassin_stealth_expose_tip",
+    "lang": "language_10077581"
+  },
+  {
+    "id": "assassin_stealth_game_unlock_hero",
+    "lang": "language_10077582"
+  },
+  {
+    "id": "assassin_stealth_game_recommend_hero",
+    "lang": "language_10077583"
+  },
+  {
+    "id": "assassineyegameview_title",
+    "lang": "language_10077584"
+  },
+  {
+    "id": "assassineyegameview_title1",
+    "lang": "language_10077585"
+  },
+  {
+    "id": "assassinbuildinglevelupsuccessview_tips",
+    "lang": "language_10077586"
+  },
+  {
+    "id": "odyssey_get_rateup",
+    "lang": "language_10077587"
+  },
+  {
+    "id": "odyssey_conquest_wave",
+    "lang": "language_10077588"
+  },
+  {
+    "id": "odyssey_myth_record",
+    "lang": "language_10077589"
+  },
+  {
+    "id": "odyssey_myth_record1",
+    "lang": "language_10077590"
+  },
+  {
+    "id": "odyssey_myth_record_empty",
+    "lang": "language_10077591"
+  },
+  {
+    "id": "odyssey_tag_mercenary_normal",
+    "lang": "language_10077592"
+  },
+  {
+    "id": "odyssey_tag_mercenary_rare",
+    "lang": "language_10077593"
+  },
+  {
+    "id": "odyssey_tag_mercenary_epic",
+    "lang": "language_10077594"
+  },
+  {
+    "id": "odyssey_tag_religion",
+    "lang": "language_10077595"
+  },
+  {
+    "id": "odyssey_tag_conquest",
+    "lang": "language_10077596"
+  },
+  {
+    "id": "odyssey_tag_myth",
+    "lang": "language_10077597"
+  },
+  {
+    "id": "odyssey_tag_fight",
+    "lang": "language_10029298"
+  },
+  {
+    "id": "odyssey_tag_fight_elite",
+    "lang": "language_10029298"
+  },
+  {
+    "id": "odyssey_equip_normal",
+    "lang": "language_10077598"
+  },
+  {
+    "id": "odyssey_equip_rare",
+    "lang": "language_10077599"
+  },
+  {
+    "id": "odyssey_equip_epic",
+    "lang": "language_10077600"
+  },
+  {
+    "id": "odyssey_equip_legend",
+    "lang": "language_10077601"
+  },
+  {
+    "id": "odyssey_dungeon_mercenary_nexttime",
+    "lang": "language_10077602"
+  },
+  {
+    "id": "odyssey_dungeon_mercenary_totaltime",
+    "lang": "language_10077603"
+  },
+  {
+    "id": "odyssey_dungeon_mapselectinfo_mythRecord3",
+    "lang": "language_10077604"
+  },
+  {
+    "id": "odyssey_dungeon_mapselectinfo_mythRecord2",
+    "lang": "language_10077605"
+  },
+  {
+    "id": "odyssey_dungeon_mapselectinfo_mythRecord1",
+    "lang": "language_10077606"
+  },
+  {
+    "id": "odyssey_dungeon_mapselectinfo_conquest",
+    "lang": "language_10077607"
+  },
+  {
+    "id": "odyssey_reward_getexp",
+    "lang": "language_10077608"
+  },
+  {
+    "id": "odyssey_reward_gettalent",
+    "lang": "language_10077609"
+  },
+  {
+    "id": "odyssey_talenttree_locktip_needlight",
+    "lang": "language_10077610"
+  },
+  {
+    "id": "odyssey_talenttree_locktip_prenode",
+    "lang": "language_10077611"
+  },
+  {
+    "id": "odyssey_talenttree_type1",
+    "lang": "language_10053122"
+  },
+  {
+    "id": "odyssey_talenttree_type2",
+    "lang": "language_10077612"
+  },
+  {
+    "id": "odyssey_talenttree_type3",
+    "lang": "language_10077613"
+  },
+  {
+    "id": "assassinlibrary_type_Hero_1",
+    "lang": "language_10077614"
+  },
+  {
+    "id": "assassinlibrary_type_Hero_2",
+    "lang": "language_10075645"
+  },
+  {
+    "id": "assassinlibrary_type_Geology",
+    "lang": "language_10077615"
+  },
+  {
+    "id": "assassinlibrary_type_Culture",
+    "lang": "language_10077616"
+  },
+  {
+    "id": "assassinlibrary_type_Video",
+    "lang": "language_10077617"
+  },
+  {
+    "id": "odyssey_religion_notexpose_clue",
+    "lang": "language_10077618"
+  },
+  {
+    "id": "character_rankup_unlock_system",
+    "lang": "language_10077619"
+  },
+  {
+    "id": "character_rankup_talentskilltree_add_point",
+    "lang": "language_10077620"
+  },
+  {
+    "id": "character_rankup_system_1",
+    "lang": "language_10077621"
+  },
+  {
+    "id": "character_rankup_system_2",
+    "lang": "language_10077622"
+  },
+  {
+    "id": "character_rankup_system_3",
+    "lang": "language_10077623"
+  },
+  {
+    "id": "characterskilltalent_warning_1",
+    "lang": "language_10077624"
+  },
+  {
+    "id": "characterskilltalent_warning_2",
+    "lang": "language_10077625"
+  },
+  {
+    "id": "characterskilltalent_warning_3",
+    "lang": "language_10077626"
+  },
+  {
+    "id": "characterskilltalent_sub_1",
+    "lang": "language_10053122"
+  },
+  {
+    "id": "characterskilltalent_sub_2",
+    "lang": "language_10077612"
+  },
+  {
+    "id": "characterskilltalent_sub_3",
+    "lang": "language_10077613"
+  },
+  {
+    "id": "odyssey_task_tab_1",
+    "lang": "language_10077627"
+  },
+  {
+    "id": "odyssey_task_tab_2",
+    "lang": "language_10027557"
+  },
+  {
+    "id": "odyssey_task_tab_3",
+    "lang": "language_90001177"
+  },
+  {
+    "id": "odyssey_task_tab_4",
+    "lang": "language_10077597"
+  },
+  {
+    "id": "bossrush_skillcomp_title",
+    "lang": "language_10077628"
+  },
+  {
+    "id": "aijiao_expoint_desc",
+    "lang": "language_10077629"
+  },
+  {
+    "id": "act205_canPlayGameTimes",
+    "lang": "language_10077630"
+  },
+  {
+    "id": "act205_ocean_nextStep",
+    "lang": "language_10042006"
+  },
+  {
+    "id": "act205_ocean_startGame",
+    "lang": "language_10077631"
+  },
+  {
+    "id": "act205_ocean_selectDiceCount",
+    "lang": "language_10077632"
+  },
+  {
+    "id": "act205_remainGameTimes",
+    "lang": "language_10077633"
+  },
+  {
+    "id": "main_switch_classify_title_1",
+    "lang": "language_10055717"
+  },
+  {
+    "id": "main_switch_classify_title_2",
+    "lang": "language_10077634"
+  },
+  {
+    "id": "act205_ocean_firstStepName",
+    "lang": "language_10077635"
+  },
+  {
+    "id": "act205_ocean_secondStepName",
+    "lang": "language_10077636"
+  },
+  {
+    "id": "act205_ocean_firstStepNameEn",
+    "lang": "language_10077637"
+  },
+  {
+    "id": "act205_ocean_secondStepNameEn",
+    "lang": "language_10077638"
+  },
+  {
+    "id": "act205_ocean_needPoints",
+    "lang": "language_10077639"
+  },
+  {
+    "id": "act205_card_selected",
+    "lang": "language_10079705"
+  },
+  {
+    "id": "characterweaponview_unlock_rank",
+    "lang": "language_10030541"
+  },
+  {
+    "id": "freemonthcard_canget_day",
+    "lang": "language_10077642"
+  },
+  {
+    "id": "freemonthcard_hasget_day",
+    "lang": "language_10077643"
+  },
+  {
+    "id": "summonmaincharacter_progress_rewards",
+    "lang": "language_10077644"
+  },
+  {
+    "id": "summonmaincharacter_progress_rewards_full",
+    "lang": "language_10077645"
+  },
+  {
+    "id": "summonmaincharacter_progress_rewards_hero",
+    "lang": "language_10077646"
+  },
+  {
+    "id": "characterskilltalent_sure_light",
+    "lang": "language_10077647"
+  },
+  {
+    "id": "characterskilltalent_cancel_light",
+    "lang": "language_10029702"
+  },
+  {
+    "id": "assassinChase_change_direction_time_tip",
+    "lang": "language_10077648"
+  },
+  {
+    "id": "assassinChase_get_reward_time_tip",
+    "lang": "language_10077649"
+  },
+  {
+    "id": "character_skill_passive_0",
+    "lang": "language_10077650"
+  },
+  {
+    "id": "store_linkgift_totalcount_txt",
+    "lang": "language_10077651"
+  },
+  {
+    "id": "odyssey_mapselect_lock_time",
+    "lang": "language_10077652"
+  },
+  {
+    "id": "add_percent_value",
+    "lang": "language_10077653"
+  },
+  {
+    "id": "battle_id_9290103_task_text",
+    "lang": "language_10077654"
+  },
+  {
+    "id": "v2a9_versionsummon_txt_tips1",
+    "lang": "language_10077655"
+  },
+  {
+    "id": "v2a9_versionsummon_txt_tips2",
+    "lang": "language_10077656"
+  },
+  {
+    "id": "assassinbuildinglevelupview_unlocktips",
+    "lang": "language_10077657"
+  },
+  {
+    "id": "activity204taskview_dailyget",
+    "lang": "language_10077658"
+  },
+  {
+    "id": "bossrush_unlockepisode",
+    "lang": "language_10020017"
+  },
+  {
+    "id": "summon_cobrand_banner_flag",
+    "lang": "language_10065764"
+  },
+  {
+    "id": "activity204entranceview_bubble",
+    "lang": "language_10074827"
+  },
+  {
+    "id": "activity204entranceview_lock",
+    "lang": "language_10077659"
+  },
+  {
+    "id": "activity204entranceview_open",
+    "lang": "language_10077660"
+  },
+  {
+    "id": "store_linkfigt_getitnow_txt",
+    "lang": "language_10079529"
+  },
+  {
+    "id": "odyssey_lvdown",
+    "lang": "language_10077822"
+  },
+  {
+    "id": "odyssey_lvcancel",
+    "lang": "language_10029702"
+  },
+  {
+    "id": "roomblockgift_colloctcount1",
+    "lang": "language_10077661"
+  },
+  {
+    "id": "roomblockgift_colloctcount2",
+    "lang": "language_10051181"
+  },
+  {
+    "id": "roomblockgift_select",
+    "lang": "language_10077662"
+  },
+  {
+    "id": "roombuildinggift_placingrange",
+    "lang": "language_10030673"
+  },
+  {
+    "id": "CharacterBackpackEquipView_showEquipBackpackNum",
+    "lang": "language_10079589"
+  },
+  {
+    "id": "V2a9BossRushModel_getUnlockEpisodeDisplay",
+    "lang": "language_10079777"
+  },
+  {
     "id": "Act191FetterTipView_goFetterDesc",
     "lang": "language_10074581"
   },

@@ -46,7 +46,7 @@ function var_0_0._playDefHeal(arg_3_0, arg_3_1, arg_3_2)
 
 		local var_3_1 = arg_3_2.effectType == FightEnum.EffectType.HEAL and FightEnum.FloatType.heal or FightEnum.FloatType.crit_heal
 
-		FightFloatMgr.instance:float(arg_3_2.targetId, var_3_1, var_3_0)
+		FightFloatMgr.instance:float(arg_3_2.targetId, var_3_1, var_3_0, nil, arg_3_2.effectNum1 == 1)
 		FightController.instance:dispatchEvent(FightEvent.OnHpChange, arg_3_1, var_3_0)
 	elseif arg_3_2.effectType == FightEnum.EffectType.AVERAGELIFE and not arg_3_2.hasDoAverageLiveEffect then
 		FightDataHelper.playEffectData(arg_3_2)

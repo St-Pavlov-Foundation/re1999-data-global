@@ -31,7 +31,8 @@ var_0_0.NormalPriority = {
 }
 var_0_0.BloomCameraSize = {
 	[3116] = 10,
-	[3108] = 10
+	[3108] = 10,
+	[3122] = 10
 }
 var_0_0.BloomFullScreenEffectCameraSize = 13
 var_0_0.DelayFrame = 5

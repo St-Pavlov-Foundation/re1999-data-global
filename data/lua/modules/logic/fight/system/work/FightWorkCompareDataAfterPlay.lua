@@ -23,6 +23,7 @@ end
 function var_0_0.refreshPerformanceData(arg_4_0)
 	FightDataUtil.coverData(FightLocalDataMgr.instance.fieldMgr.param, FightDataMgr.instance.fieldMgr.param)
 	FightDataUtil.coverData(FightLocalDataMgr.instance.fieldMgr.fightTaskBox, FightDataMgr.instance.fieldMgr.fightTaskBox)
+	FightDataUtil.coverData(FightLocalDataMgr.instance.fieldMgr.progressDic, FightDataMgr.instance.fieldMgr.progressDic)
 end
 
 function var_0_0._onFlowFinish(arg_5_0)

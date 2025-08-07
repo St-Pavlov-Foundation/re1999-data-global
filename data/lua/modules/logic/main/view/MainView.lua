@@ -48,7 +48,8 @@ function var_0_0.onInitView(arg_1_0)
 	arg_1_0._btnpower = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "right/#btn_power")
 	arg_1_0._btnrole = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "right/#btn_role")
 	arg_1_0._btnsummon = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "right/#btn_summon")
-	arg_1_0._imagesummonnew = gohelper.findChildImage(arg_1_0.viewGO, "right/#btn_summon/#image_summonnew")
+	arg_1_0._imagesummonnew1 = gohelper.findChildImage(arg_1_0.viewGO, "right/#btn_summon/1/#image_summonnew")
+	arg_1_0._imagesummonnew2 = gohelper.findChildImage(arg_1_0.viewGO, "right/#btn_summon/2/#image_summonnew")
 	arg_1_0._imagesummonfree = gohelper.findChildImage(arg_1_0.viewGO, "right/#btn_summon/#image_free")
 	arg_1_0._imagesummonreddot = gohelper.findChildImage(arg_1_0.viewGO, "right/#btn_summon/#image_summonreddot")
 	arg_1_0._txtpower = gohelper.findChildText(arg_1_0.viewGO, "right/txtContainer/#txt_power")
@@ -417,7 +418,7 @@ function var_0_0._editableInitView(arg_34_0)
 	arg_34_0._cameraAnimator.speed = 1
 	arg_34_0._animatorRight = gohelper.findChildComponent(arg_34_0.viewGO, "right", typeof(UnityEngine.Animator))
 	arg_34_0._openOtherView = false
-	arg_34_0._goroomImage = gohelper.findChild(arg_34_0.viewGO, "right/#btn_room/image2")
+	arg_34_0._goroomImage = gohelper.findChild(arg_34_0.viewGO, "right/#btn_room")
 	arg_34_0._roomCanvasGroup = gohelper.onceAddComponent(arg_34_0._goroomImage, typeof(UnityEngine.CanvasGroup))
 	arg_34_0._openMainThumbnailTime = Time.realtimeSinceStartup
 end
@@ -489,6 +490,16 @@ end
 function var_0_0.storeRedDotRefreshFunc(arg_41_0, arg_41_1)
 	arg_41_1:defaultRefreshDot()
 	arg_41_0:showBankNewEffect(false)
+
+	if not arg_41_1.show and StoreModel.instance:isHasTaskGoodsReward() then
+		arg_41_1.show = true
+
+		arg_41_1:showRedDot(RedDotEnum.Style.Normal)
+		arg_41_0:showStoreDeadline(false)
+		arg_41_0:registStoreDeadlineCall(false)
+
+		return
+	end
 
 	local var_41_0 = StoreHelper.getRecommendStoreSecondTabConfig()
 
@@ -943,7 +954,8 @@ function var_0_0._refreshSummonNewFlag(arg_63_0)
 	local var_63_0 = OpenModel.instance:isFuncBtnShow(OpenEnum.UnlockFunc.Summon)
 	local var_63_1 = SummonMainModel.instance:entryHasNew()
 
-	gohelper.setActive(arg_63_0._imagesummonnew, var_63_0 and var_63_1)
+	gohelper.setActive(arg_63_0._imagesummonnew1, var_63_0 and var_63_1)
+	gohelper.setActive(arg_63_0._imagesummonnew2, var_63_0 and var_63_1)
 
 	local var_63_2 = SummonMainModel.instance:entryHasFree()
 

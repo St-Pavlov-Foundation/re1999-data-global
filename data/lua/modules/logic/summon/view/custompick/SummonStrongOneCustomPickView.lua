@@ -190,14 +190,14 @@ function var_0_0._btnsummon10OnClick_2(arg_11_0)
 		return
 	end
 
-	local var_11_1, var_11_2, var_11_3 = SummonMainModel.getCostByConfig(var_11_0.cost10)
-	local var_11_4 = SummonMainModel.instance:getDiscountCost10(var_11_0.id)
+	local var_11_1, var_11_2, var_11_3, var_11_4 = SummonMainModel.getCostByConfig(var_11_0.cost10)
+	local var_11_5 = SummonMainModel.instance:getDiscountCost10(var_11_0.id)
 
 	if SummonMainModel.instance:getDiscountCostId(var_11_0.id) == var_11_2 then
-		var_11_3 = var_11_4 < 0 and var_11_3 or var_11_4
+		var_11_3 = var_11_5 < 0 and var_11_3 or var_11_5
 	end
 
-	local var_11_5 = {
+	local var_11_6 = {
 		type = var_11_1,
 		id = var_11_2,
 		quantity = var_11_3,
@@ -205,34 +205,34 @@ function var_0_0._btnsummon10OnClick_2(arg_11_0)
 		callbackObj = arg_11_0
 	}
 
-	var_11_5.notEnough = false
+	var_11_6.notEnough = false
+	var_11_4 = var_11_4 or ItemModel.instance:getItemQuantity(var_11_1, var_11_2)
 
-	local var_11_6 = ItemModel.instance:getItemQuantity(var_11_1, var_11_2)
-	local var_11_7 = var_11_3 <= var_11_6
+	local var_11_7 = var_11_3 <= var_11_4
 	local var_11_8 = SummonMainModel.instance.everyCostCount
 	local var_11_9 = SummonMainModel.instance:getOwnCostCurrencyNum()
-	local var_11_10 = var_11_3 - var_11_6
+	local var_11_10 = var_11_3 - var_11_4
 	local var_11_11 = var_11_8 * var_11_10
 
 	if not var_11_7 and var_11_9 < var_11_11 then
-		var_11_5.notEnough = true
+		var_11_6.notEnough = true
 	end
 
 	if var_11_7 then
-		var_11_5.needTransform = false
+		var_11_6.needTransform = false
 
 		arg_11_0:_summon10Confirm()
 
 		return
 	else
-		var_11_5.needTransform = true
-		var_11_5.cost_type = SummonMainModel.instance.costCurrencyType
-		var_11_5.cost_id = SummonMainModel.instance.costCurrencyId
-		var_11_5.cost_quantity = var_11_11
-		var_11_5.miss_quantity = var_11_10
+		var_11_6.needTransform = true
+		var_11_6.cost_type = SummonMainModel.instance.costCurrencyType
+		var_11_6.cost_id = SummonMainModel.instance.costCurrencyId
+		var_11_6.cost_quantity = var_11_11
+		var_11_6.miss_quantity = var_11_10
 	end
 
-	ViewMgr.instance:openView(ViewName.SummonConfirmView, var_11_5)
+	ViewMgr.instance:openView(ViewName.SummonConfirmView, var_11_6)
 end
 
 function var_0_0._onClickDetail(arg_12_0)

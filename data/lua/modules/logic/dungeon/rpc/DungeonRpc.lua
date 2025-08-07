@@ -101,6 +101,8 @@ function var_0_0.packStartDungeonRequest(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg
 		elseif var_5_0 and var_5_0.type == DungeonEnum.EpisodeType.Act183 then
 			arg_5_1.params = Act183Helper.generateStartDungeonParams(var_5_0.id)
 		end
+
+		DungeonController.instance:dispatchEvent(DungeonEvent.OnStartDungeonExtraParams, arg_5_1, var_5_0)
 	end
 
 	arg_5_1.multiplication = arg_5_5 or 1
@@ -152,7 +154,7 @@ function var_0_0.onReceiveEndDungeonPush(arg_10_0, arg_10_1, arg_10_2)
 
 	FightResultModel.instance:onEndDungeonPush(arg_10_2)
 	DungeonController.instance:onReceiveEndDungeonReply(arg_10_1, arg_10_2)
-	DungeonController.instance:dispatchEvent(DungeonEvent.OnEndDungeonPush)
+	DungeonController.instance:dispatchEvent(DungeonEvent.OnEndDungeonPush, arg_10_2)
 end
 
 function var_0_0.sendMapElementRequest(arg_11_0, arg_11_1, arg_11_2, arg_11_3, arg_11_4)

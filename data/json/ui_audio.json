@@ -10620,6 +10620,566 @@
     "bankName": "ui_activity_2_7_yuzhou"
   },
   {
+    "id": 20305001,
+    "eventName": "play_ui_fight_click_expand",
+    "bankName": "fight_ui_sfx_s01"
+  },
+  {
+    "id": 20305002,
+    "eventName": "play_ui_fight_click_switch",
+    "bankName": "fight_ui_sfx_s01"
+  },
+  {
+    "id": 20305003,
+    "eventName": "play_ui_fight_click_confirm",
+    "bankName": "fight_ui_sfx_s01"
+  },
+  {
+    "id": 20305004,
+    "eventName": "play_ui_replay_noise_thunder",
+    "bankName": "ui_replay_mainnoise_s01"
+  },
+  {
+    "id": 20305005,
+    "eventName": "stop_ui_replay_noise_thunder",
+    "bankName": "ui_replay_mainnoise_s01"
+  },
+  {
+    "id": 20305011,
+    "eventName": "play_replay_music_celebration_s01_cikexia_01",
+    "bankName": "ui_replay_mainmusic_s01"
+  },
+  {
+    "id": 20305012,
+    "eventName": "play_replay_music_lullaby_main_2_8",
+    "bankName": "ui_replay_mainmusic_s01_nfc"
+  },
+  {
+    "id": 20305020,
+    "eventName": "play_ui_cikeshang_yueka_unfold",
+    "bankName": "ui_activity_s01_cikeshang"
+  },
+  {
+    "id": 20305030,
+    "eventName": "play_ui_fight_cisha_s01",
+    "bankName": "fight_ui_sfx_ezioux_s01"
+  },
+  {
+    "id": 20305031,
+    "eventName": "play_ui_fight_ezio_powerup",
+    "bankName": "fight_ui_sfx_ezioux_s01"
+  },
+  {
+    "id": 20305032,
+    "eventName": "play_ui_fight_ezio_open",
+    "bankName": "fight_ui_sfx_ezioux_s01"
+  },
+  {
+    "id": 20305033,
+    "eventName": "play_ui_fight_ezio_choose",
+    "bankName": "fight_ui_sfx_ezioux_s01"
+  },
+  {
+    "id": 20305034,
+    "eventName": "play_ui_fight_ezio_confirm",
+    "bankName": "fight_ui_sfx_ezioux_s01"
+  },
+  {
+    "id": 20305035,
+    "eventName": "play_ui_fight_ezio_qteclick",
+    "bankName": "fight_ui_sfx_ezioux_s01"
+  },
+  {
+    "id": 20305101,
+    "eventName": "play_ui_cikeshang_start",
+    "bankName": "ui_activity_s01_cikeshang"
+  },
+  {
+    "id": 20305102,
+    "eventName": "play_ui_cikeshang_unlockmap",
+    "bankName": "ui_activity_s01_cikeshang"
+  },
+  {
+    "id": 20305103,
+    "eventName": "play_ui_cikeshang_openmap",
+    "bankName": "ui_activity_s01_cikeshang"
+  },
+  {
+    "id": 20305104,
+    "eventName": "play_ui_cikeshang_glassclick",
+    "bankName": "ui_activity_s01_cikeshang"
+  },
+  {
+    "id": 20305105,
+    "eventName": "play_ui_cikeshang_taskchoose",
+    "bankName": "ui_activity_s01_cikeshang"
+  },
+  {
+    "id": 20305106,
+    "eventName": "play_ui_cikeshang_itemchoose",
+    "bankName": "ui_activity_s01_cikeshang"
+  },
+  {
+    "id": 20305107,
+    "eventName": "play_ui_cikeshang_skillopen",
+    "bankName": "ui_activity_s01_cikeshang"
+  },
+  {
+    "id": 20305108,
+    "eventName": "play_ui_cikeshang_skillchoose",
+    "bankName": "ui_activity_s01_cikeshang"
+  },
+  {
+    "id": 20305109,
+    "eventName": "play_ui_cikeshang_herochoose",
+    "bankName": "ui_activity_s01_cikeshang"
+  },
+  {
+    "id": 20305110,
+    "eventName": "play_ui_cikeshang_taskin",
+    "bankName": "ui_activity_s01_cikeshang"
+  },
+  {
+    "id": 20305111,
+    "eventName": "play_ui_cikeshang_normalclick",
+    "bankName": "ui_activity_s01_cikeshang"
+  },
+  {
+    "id": 20305112,
+    "eventName": "play_ui_cikeshang_danger",
+    "bankName": "ui_activity_s01_cikeshang"
+  },
+  {
+    "id": 20305201,
+    "eventName": "play_ui_cikeshang_detectdownbuff",
+    "bankName": "ui_activity_s01_cikeshang_buff"
+  },
+  {
+    "id": 20305202,
+    "eventName": "play_ui_cikeshang_actionupbuff",
+    "bankName": "ui_activity_s01_cikeshang_buff"
+  },
+  {
+    "id": 20305203,
+    "eventName": "play_ui_cikeshang_itemsupbuff",
+    "bankName": "ui_activity_s01_cikeshang_buff"
+  },
+  {
+    "id": 20305204,
+    "eventName": "play_ui_cikeshang_rockbuff",
+    "bankName": "ui_activity_s01_cikeshang_buff"
+  },
+  {
+    "id": 20305205,
+    "eventName": "play_ui_cikeshang_blockadebuff",
+    "bankName": "ui_activity_s01_cikeshang_buff"
+  },
+  {
+    "id": 20305206,
+    "eventName": "play_ui_cikeshang_lightbuff",
+    "bankName": "ui_activity_s01_cikeshang_buff"
+  },
+  {
+    "id": 20305207,
+    "eventName": "play_ui_cikeshang_recoverbuff",
+    "bankName": "ui_activity_s01_cikeshang_buff"
+  },
+  {
+    "id": 20305208,
+    "eventName": "play_ui_cikeshang_transbuff",
+    "bankName": "ui_activity_s01_cikeshang_buff"
+  },
+  {
+    "id": 20305209,
+    "eventName": "play_ui_cikeshang_stealbuff",
+    "bankName": "ui_activity_s01_cikeshang_buff"
+  },
+  {
+    "id": 20305210,
+    "eventName": "play_ui_cikeshang_acidbuff",
+    "bankName": "ui_activity_s01_cikeshang_buff"
+  },
+  {
+    "id": 20305211,
+    "eventName": "play_ui_cikeshang_waterbuff",
+    "bankName": "ui_activity_s01_cikeshang_buff"
+  },
+  {
+    "id": 20305212,
+    "eventName": "play_ui_cikeshang_charmbuff",
+    "bankName": "ui_activity_s01_cikeshang_buff"
+  },
+  {
+    "id": 20305213,
+    "eventName": "play_ui_cikeshang_flybuff",
+    "bankName": "ui_activity_s01_cikeshang_buff"
+  },
+  {
+    "id": 20305214,
+    "eventName": "play_ui_cikeshang_treatbuff",
+    "bankName": "ui_activity_s01_cikeshang_buff"
+  },
+  {
+    "id": 20305215,
+    "eventName": "play_ui_cikeshang_scanbuff",
+    "bankName": "ui_activity_s01_cikeshang_buff"
+  },
+  {
+    "id": 20305216,
+    "eventName": "play_ui_cikeshang_smokebuff",
+    "bankName": "ui_activity_s01_cikeshang_buff"
+  },
+  {
+    "id": 20305217,
+    "eventName": "play_ui_cikeshang_heroatkbuff",
+    "bankName": "ui_activity_s01_cikeshang_buff"
+  },
+  {
+    "id": 20305218,
+    "eventName": "play_ui_cikeshang_foeatkbuff",
+    "bankName": "ui_activity_s01_cikeshang_buff"
+  },
+  {
+    "id": 20305219,
+    "eventName": "play_ui_cikeshang_stabbedbuff",
+    "bankName": "ui_activity_s01_cikeshang_buff"
+  },
+  {
+    "id": 20305220,
+    "eventName": "play_ui_cikeshang_flycutterbuff",
+    "bankName": "ui_activity_s01_cikeshang_buff"
+  },
+  {
+    "id": 20305221,
+    "eventName": "play_ui_cikeshang_flymovebuff",
+    "bankName": "ui_activity_s01_cikeshang_buff"
+  },
+  {
+    "id": 20305222,
+    "eventName": "play_ui_cikeshang_acidstabbuff",
+    "bankName": "ui_activity_s01_cikeshang_buff"
+  },
+  {
+    "id": 20305301,
+    "eventName": "play_ui_cikeshang_link_entry",
+    "bankName": "ui_activity_s01_cikeshang_link"
+  },
+  {
+    "id": 20305302,
+    "eventName": "play_ui_cikeshang_link_unlock",
+    "bankName": "ui_activity_s01_cikeshang_link"
+  },
+  {
+    "id": 20305303,
+    "eventName": "play_ui_cikeshang_link_kv_switch",
+    "bankName": "ui_activity_s01_cikeshang_link"
+  },
+  {
+    "id": 20305304,
+    "eventName": "play_ui_cikeshang_link_click_level",
+    "bankName": "ui_activity_s01_cikeshang_link"
+  },
+  {
+    "id": 20305305,
+    "eventName": "play_ui_cikeshang_link_level_appear",
+    "bankName": "ui_activity_s01_cikeshang_link"
+  },
+  {
+    "id": 20305306,
+    "eventName": "play_ui_cikeshang_link_chapter",
+    "bankName": "ui_activity_s01_cikeshang_link"
+  },
+  {
+    "id": 20305401,
+    "eventName": "play_ui_cikeshang_airass",
+    "bankName": "ui_activity_s01_cikeshang"
+  },
+  {
+    "id": 20305402,
+    "eventName": "play_ui_cikeshang_atknormal",
+    "bankName": "ui_activity_s01_cikeshang"
+  },
+  {
+    "id": 20305403,
+    "eventName": "play_ui_cikeshang_leapoffaith",
+    "bankName": "ui_activity_s01_cikeshang"
+  },
+  {
+    "id": 20305404,
+    "eventName": "play_ui_cikeshang_heromove",
+    "bankName": "ui_activity_s01_cikeshang"
+  },
+  {
+    "id": 20305405,
+    "eventName": "play_ui_cikeshang_foeround",
+    "bankName": "ui_activity_s01_cikeshang"
+  },
+  {
+    "id": 20305406,
+    "eventName": "play_ui_cikeshang_nexttask",
+    "bankName": "ui_activity_s01_cikeshang"
+  },
+  {
+    "id": 20305407,
+    "eventName": "play_ui_cikeshang_inhidden",
+    "bankName": "ui_activity_s01_cikeshang"
+  },
+  {
+    "id": 20305408,
+    "eventName": "play_ui_cikeshang_exposure",
+    "bankName": "ui_activity_s01_cikeshang"
+  },
+  {
+    "id": 20305409,
+    "eventName": "play_ui_cikeshang_getitems",
+    "bankName": "ui_activity_s01_cikeshang"
+  },
+  {
+    "id": 20305410,
+    "eventName": "play_ui_cikeshang_syncsucceed",
+    "bankName": "ui_activity_s01_cikeshang"
+  },
+  {
+    "id": 20305411,
+    "eventName": "play_ui_cikeshang_movestart",
+    "bankName": "ui_activity_s01_cikeshang"
+  },
+  {
+    "id": 20305412,
+    "eventName": "play_ui_cikeshang_taskring",
+    "bankName": "ui_activity_s01_cikeshang"
+  },
+  {
+    "id": 20305413,
+    "eventName": "play_ui_cikeshang_overround",
+    "bankName": "ui_activity_s01_cikeshang"
+  },
+  {
+    "id": 20305414,
+    "eventName": "play_ui_cikeshang_getitembag",
+    "bankName": "ui_activity_s01_cikeshang"
+  },
+  {
+    "id": 20305415,
+    "eventName": "play_ui_cikeshang_shadow",
+    "bankName": "ui_activity_s01_cikeshang"
+  },
+  {
+    "id": 20305416,
+    "eventName": "play_ui_cikeshang_into",
+    "bankName": "ui_activity_s01_cikeshang"
+  },
+  {
+    "id": 20305417,
+    "eventName": "play_ui_cikeshang_training",
+    "bankName": "ui_activity_s01_cikeshang"
+  },
+  {
+    "id": 20305501,
+    "eventName": "play_ui_role_aijiao_jiesuo",
+    "bankName": "ui_role_s01"
+  },
+  {
+    "id": 20305502,
+    "eventName": "play_ui_role_aijiao_wuqi",
+    "bankName": "ui_role_s01"
+  },
+  {
+    "id": 20305503,
+    "eventName": "play_ui_role_aijiao_jiesuo2",
+    "bankName": "ui_role_s01"
+  },
+  {
+    "id": 20305504,
+    "eventName": "play_ui_role_kashan_zhuangbei",
+    "bankName": "ui_role_s01"
+  },
+  {
+    "id": 20305505,
+    "eventName": "play_ui_role_kashan_jihuo",
+    "bankName": "ui_role_s01"
+  },
+  {
+    "id": 20305511,
+    "eventName": "play_ui_s01_yunying_open",
+    "bankName": "ui_activity_s01_cikeshang_yunying"
+  },
+  {
+    "id": 20305512,
+    "eventName": "play_ui_s01_yunying_yun",
+    "bankName": "ui_activity_s01_cikeshang_yunying"
+  },
+  {
+    "id": 20305513,
+    "eventName": "play_ui_s01_yunying_touzi",
+    "bankName": "ui_activity_s01_cikeshang_yunying"
+  },
+  {
+    "id": 20305514,
+    "eventName": "play_ui_s01_yunying_fail",
+    "bankName": "ui_activity_s01_cikeshang_yunying"
+  },
+  {
+    "id": 20305515,
+    "eventName": "play_ui_s01_yunying_win",
+    "bankName": "ui_activity_s01_cikeshang_yunying"
+  },
+  {
+    "id": 20305516,
+    "eventName": "play_ui_s01_yunying_fail",
+    "bankName": "ui_activity_s01_cikeshang_yunying"
+  },
+  {
+    "id": 20305517,
+    "eventName": "play_ui_s01_yunying_swich1",
+    "bankName": "ui_activity_s01_cikeshang_yunying"
+  },
+  {
+    "id": 20305518,
+    "eventName": "play_ui_common_click",
+    "bankName": "uiclick"
+  },
+  {
+    "id": 20305519,
+    "eventName": "play_ui_s01_yunying_swich2",
+    "bankName": "ui_activity_s01_cikeshang_yunying"
+  },
+  {
+    "id": 20305520,
+    "eventName": "play_ui_s01_yunying_pk",
+    "bankName": "ui_activity_s01_cikeshang_yunying"
+  },
+  {
+    "id": 20305521,
+    "eventName": "play_ui_s01_yunying_gone",
+    "bankName": "ui_activity_s01_cikeshang_yunying"
+  },
+  {
+    "id": 20305522,
+    "eventName": "play_ui_s01_yunying_tan",
+    "bankName": "ui_activity_s01_cikeshang_yunying"
+  },
+  {
+    "id": 20305523,
+    "eventName": "play_ui_common_click",
+    "bankName": "uiclick"
+  },
+  {
+    "id": 20305524,
+    "eventName": "play_ui_s01_yunying_run",
+    "bankName": "ui_activity_s01_cikeshang_yunying"
+  },
+  {
+    "id": 20305525,
+    "eventName": "stop_ui_s01_yunying_run",
+    "bankName": "ui_activity_s01_cikeshang_yunying"
+  },
+  {
+    "id": 20305526,
+    "eventName": "play_ui_s01_yunying_win",
+    "bankName": "ui_activity_s01_cikeshang_yunying"
+  },
+  {
+    "id": 20305601,
+    "eventName": "play_ui_cikexia_link_popup_unfold",
+    "bankName": "ui_activity_s01_cikexia_link"
+  },
+  {
+    "id": 20305602,
+    "eventName": "play_ui_cikexia_link_popup_fold",
+    "bankName": "ui_activity_s01_cikexia_link"
+  },
+  {
+    "id": 20305603,
+    "eventName": "play_ui_cikexia_link_press",
+    "bankName": "ui_activity_s01_cikexia_link"
+  },
+  {
+    "id": 20305604,
+    "eventName": "play_ui_cikexia_link_disclose",
+    "bankName": "ui_activity_s01_cikexia_link"
+  },
+  {
+    "id": 20305605,
+    "eventName": "play_ui_cikexia_link_list_unfold",
+    "bankName": "ui_activity_s01_cikexia_link"
+  },
+  {
+    "id": 20305606,
+    "eventName": "play_ui_cikexia_link_list_fold",
+    "bankName": "ui_activity_s01_cikexia_link"
+  },
+  {
+    "id": 20305607,
+    "eventName": "play_ui_cikexia_link_activate",
+    "bankName": "ui_activity_s01_cikexia_link"
+  },
+  {
+    "id": 20305608,
+    "eventName": "play_ui_cikexia_link_task",
+    "bankName": "ui_activity_s01_cikexia_link"
+  },
+  {
+    "id": 20305609,
+    "eventName": "play_ui_cikexia_link_award",
+    "bankName": "ui_activity_s01_cikexia_link"
+  },
+  {
+    "id": 20305610,
+    "eventName": "play_ui_cikexia_link_choice",
+    "bankName": "ui_activity_s01_cikexia_link"
+  },
+  {
+    "id": 20305611,
+    "eventName": "play_ui_cikexia_link_receive_award",
+    "bankName": "ui_activity_s01_cikexia_link"
+  },
+  {
+    "id": 20305612,
+    "eventName": "play_ui_cikexia_link_level_up",
+    "bankName": "ui_activity_s01_cikexia_link"
+  },
+  {
+    "id": 20305613,
+    "eventName": "play_ui_cikexia_link_unlock",
+    "bankName": "ui_activity_s01_cikexia_link"
+  },
+  {
+    "id": 20305614,
+    "eventName": "play_ui_cikexia_link_hint",
+    "bankName": "ui_activity_s01_cikexia_link"
+  },
+  {
+    "id": 20305615,
+    "eventName": "play_ui_cikexia_link_mist",
+    "bankName": "ui_activity_s01_cikexia_link"
+  },
+  {
+    "id": 20305616,
+    "eventName": "play_ui_cikexia_link_icons",
+    "bankName": "ui_activity_s01_cikexia_link"
+  },
+  {
+    "id": 20305617,
+    "eventName": "play_ui_cikexia_link_main_quest",
+    "bankName": "ui_activity_s01_cikexia_link"
+  },
+  {
+    "id": 20305618,
+    "eventName": "play_ui_cikexia_link_disp",
+    "bankName": "ui_activity_s01_cikexia_link"
+  },
+  {
+    "id": 20305619,
+    "eventName": "play_ui_cikexia_link_drag",
+    "bankName": "ui_activity_s01_cikexia_link"
+  },
+  {
+    "id": 20305620,
+    "eventName": "play_ui_cikexia_link_fade_away",
+    "bankName": "ui_activity_s01_cikexia_link"
+  },
+  {
     "id": 20300031,
     "eventName": "play_ui_lushang_yure_tear",
     "bankName": "ui_activity_3_0_lushang_yure"

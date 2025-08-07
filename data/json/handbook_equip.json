@@ -640,5 +640,11 @@
     "order": 0,
     "equipId": 1440,
     "desc": ""
+  },
+  {
+    "id": 5053,
+    "order": 0,
+    "equipId": 1551,
+    "desc": "language_10077504"
   }
 ]

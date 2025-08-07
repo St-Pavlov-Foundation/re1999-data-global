@@ -183,6 +183,12 @@ function var_0_0.isRepeatHero(arg_6_0, arg_6_1, arg_6_2)
 	for iter_6_0 in pairs(arg_6_0._inTeamHeroUidMap) do
 		local var_6_0 = arg_6_0:getById(iter_6_0)
 
+		if not var_6_0 then
+			logError("heroId:" .. arg_6_1 .. ", " .. "uid:" .. arg_6_2 .. "数据为空")
+
+			return false
+		end
+
 		if var_6_0.heroId == arg_6_1 and arg_6_2 ~= var_6_0.uid then
 			return true
 		end

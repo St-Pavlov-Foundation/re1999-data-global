@@ -12,6 +12,7 @@ function var_0_0.onInitView(arg_1_0)
 	arg_1_0._txtlimit = gohelper.findChildText(arg_1_0.viewGO, "bg/#go_roleitem/#txt_limit")
 	arg_1_0._txtmonth = gohelper.findChildText(arg_1_0.viewGO, "content/#txt_month")
 	arg_1_0._txtday = gohelper.findChildText(arg_1_0.viewGO, "content/#txt_day")
+	arg_1_0._txtdayfestival = gohelper.findChildText(arg_1_0.viewGO, "content/#txt_day_festival")
 	arg_1_0._imageweek = gohelper.findChildImage(arg_1_0.viewGO, "content/#image_week")
 	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "content/scroll_desc/Viewport/Content/#txt_desc")
 	arg_1_0._simageorangebg = gohelper.findChildSingleImage(arg_1_0.viewGO, "content/reward/#simage_orangebg")
@@ -142,6 +143,7 @@ function var_0_0.onInitView(arg_1_0)
 	arg_1_0._btnqiehuan = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "content/#btn_qiehuan")
 	arg_1_0._goqiehuan = gohelper.findChild(arg_1_0.viewGO, "content/#btn_qiehuan/#qiehuan")
 	arg_1_0._btncalendar = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_calendar")
+	arg_1_0._btncalendarfestival = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_calendar_festival")
 	arg_1_0._btncloseview = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_closeview")
 	arg_1_0._gonodes = gohelper.findChild(arg_1_0.viewGO, "#go_nodes")
 	arg_1_0._gonodeitem = gohelper.findChild(arg_1_0.viewGO, "#go_nodes/#go_nodeitem")
@@ -178,6 +180,8 @@ function var_0_0.addEvents(arg_2_0)
 	if arg_2_0._btnswitchdecorate then
 		arg_2_0._btnswitchdecorate:AddClickListener(arg_2_0._onBtnChangeDecorate, arg_2_0)
 	end
+
+	arg_2_0._btncalendarfestival:AddClickListener(arg_2_0._btncalendarOnClick, arg_2_0)
 end
 
 function var_0_0.removeEvents(arg_3_0)
@@ -190,6 +194,8 @@ function var_0_0.removeEvents(arg_3_0)
 	if arg_3_0._btnswitchdecorate then
 		arg_3_0._btnswitchdecorate:RemoveClickListener()
 	end
+
+	arg_3_0._btncalendarfestival:RemoveClickListener()
 end
 
 function var_0_0._onBtnChangeDecorate(arg_4_0)
@@ -751,23 +757,27 @@ function var_0_0._setTitleInfo(arg_36_0)
 	UISpriteSetMgr.instance:setSignInSprite(arg_36_0._imageweek, "date_" .. tostring(var_36_1))
 
 	arg_36_0._txtdesc.text = SignInConfig.instance:getSignDescByDate(var_36_0)
-	arg_36_0._txtday.text = string.format("%02d", arg_36_0._targetDate[3])
+
+	local var_36_2 = string.format("%02d", arg_36_0._targetDate[3])
+
+	arg_36_0._txtday.text = var_36_2
+	arg_36_0._txtdayfestival.text = var_36_2
 	arg_36_0._txtmonth.text = string.format("%02d", arg_36_0._targetDate[2])
 
-	local var_36_2, var_36_3 = SignInModel.instance:getAdvanceHero()
+	local var_36_3, var_36_4 = SignInModel.instance:getAdvanceHero()
 
-	if var_36_2 == 0 then
+	if var_36_3 == 0 then
 		gohelper.setActive(arg_36_0._goroleitem, false)
 	else
 		gohelper.setActive(arg_36_0._goroleitem, true)
 
-		local var_36_4 = HeroModel.instance:getByHeroId(var_36_2)
-		local var_36_5 = var_36_4 and var_36_4.skin or HeroConfig.instance:getHeroCO(var_36_2).skinId
+		local var_36_5 = HeroModel.instance:getByHeroId(var_36_3)
+		local var_36_6 = var_36_5 and var_36_5.skin or HeroConfig.instance:getHeroCO(var_36_3).skinId
 
-		arg_36_0._simagetopicon:LoadImage(ResUrl.getHeadIconSmall(var_36_5))
+		arg_36_0._simagetopicon:LoadImage(ResUrl.getHeadIconSmall(var_36_6))
 
-		arg_36_0._txtbirtime.text = var_36_3
-		arg_36_0._txtlimit.text = var_36_3 > 1 and "Days Later" or "Day Later"
+		arg_36_0._txtbirtime.text = var_36_4
+		arg_36_0._txtlimit.text = var_36_4 > 1 and "Days Later" or "Day Later"
 	end
 end
 
@@ -884,6 +894,9 @@ function var_0_0._setBirthdayInfo(arg_41_0)
 
 	arg_41_0._txtdeco.text = var_41_7
 
+	ZProj.UGUIHelper.RebuildLayout(arg_41_0._txtdeco.gameObject.transform)
+	gohelper.setActive(arg_41_0._txtdeco.gameObject, false)
+	gohelper.setActive(arg_41_0._txtdeco.gameObject, true)
 	arg_41_0._simagesignature:LoadImage(ResUrl.getSignature(tostring(var_41_1)))
 
 	local var_41_8 = true
@@ -1219,6 +1232,10 @@ function var_0_0._refreshFestivalDecoration(arg_56_0)
 	gohelper.setActive(arg_56_0._gorewardicon, not var_56_0)
 	gohelper.setActive(arg_56_0._goeffect, var_56_0)
 	gohelper.setActive(arg_56_0._godayrewarditem_image3, var_56_0)
+	gohelper.setActive(arg_56_0._btncalendarfestival, var_56_0)
+	gohelper.setActive(arg_56_0._btncalendar, not var_56_0)
+	gohelper.setActive(arg_56_0._txtday, not var_56_0)
+	gohelper.setActive(arg_56_0._txtdayfestival, var_56_0)
 	arg_56_0:_setFestivalColor(arg_56_0._txtmonth)
 	arg_56_0:_setFestivalColor(arg_56_0._imgbias)
 	arg_56_0:_setFestivalColor(arg_56_0._txtday)

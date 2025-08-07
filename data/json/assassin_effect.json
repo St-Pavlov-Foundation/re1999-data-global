@@ -1,0 +1,146 @@
+[
+  {
+    "id": 1,
+    "resName": "assassinstealth_skill_move",
+    "duration": 1.2,
+    "audioId": 20305221
+  },
+  {
+    "id": 2,
+    "resName": "assassinstealth_skill_kill",
+    "duration": 2.0,
+    "audioId": 20305219
+  },
+  {
+    "id": 3,
+    "resName": "assassinstealth_grid_scan",
+    "duration": 1.0,
+    "audioId": 20305215
+  },
+  {
+    "id": 4,
+    "resName": "assassinstealth_buff_jhzy",
+    "duration": 2.0,
+    "audioId": 20305201
+  },
+  {
+    "id": 5,
+    "resName": "assassinstealth_buff_jjys",
+    "duration": 2.0,
+    "audioId": 20305202
+  },
+  {
+    "id": 6,
+    "resName": "assassinstealth_buff_jqsg",
+    "duration": 2.0,
+    "audioId": 20305203
+  },
+  {
+    "id": 7,
+    "resName": "assassinstealth_cskill_lzl1",
+    "duration": 1.0,
+    "audioId": 20305204
+  },
+  {
+    "id": 8,
+    "resName": "assassinstealth_cskill_lzl2",
+    "duration": 2.0,
+    "audioId": 20305205
+  },
+  {
+    "id": 9,
+    "resName": "assassinstealth_cskill_mks1",
+    "duration": 2.0,
+    "audioId": 20305206
+  },
+  {
+    "id": 10,
+    "resName": "assassinstealth_cskill_mks2",
+    "duration": 2.0,
+    "audioId": 20305207
+  },
+  {
+    "id": 11,
+    "resName": "assassinstealth_cskill_mln1",
+    "duration": 2.0,
+    "audioId": 20305208
+  },
+  {
+    "id": 12,
+    "resName": "assassinstealth_cskill_mln2",
+    "duration": 2.0,
+    "audioId": 20305209
+  },
+  {
+    "id": 13,
+    "resName": "assassinstealth_cskill_sfb1",
+    "duration": 0.0,
+    "audioId": 20305210
+  },
+  {
+    "id": 14,
+    "resName": "assassinstealth_cskill_wl1",
+    "duration": 2.0,
+    "audioId": 20305211
+  },
+  {
+    "id": 15,
+    "resName": "assassinstealth_cskill_wn1",
+    "duration": 2.0,
+    "audioId": 20305212
+  },
+  {
+    "id": 16,
+    "resName": "assassinstealth_daoju_feixingqi",
+    "duration": 3.0,
+    "audioId": 20305213
+  },
+  {
+    "id": 17,
+    "resName": "assassinstealth_daoju_yaowu",
+    "duration": 2.0,
+    "audioId": 20305214
+  },
+  {
+    "id": 18,
+    "resName": "assassinstealth_mapskill_fog",
+    "duration": 0.0,
+    "audioId": 0
+  },
+  {
+    "id": 19,
+    "resName": "assassinstealth_mapskill_somke",
+    "duration": 0.0,
+    "audioId": 20305216
+  },
+  {
+    "id": 20,
+    "resName": "assassinstealth_skill_hit1",
+    "duration": 2.0,
+    "audioId": 20305217
+  },
+  {
+    "id": 21,
+    "resName": "assassinstealth_skill_hit2",
+    "duration": 2.0,
+    "audioId": 20305218
+  },
+  {
+    "id": 22,
+    "resName": "assassinstealth_skill_knife",
+    "duration": 2.0,
+    "audioId": 20305220
+  },
+  {
+    "id": 23,
+    "resName": "assassinstealth_skill_poison",
+    "duration": 2.0,
+    "audioId": 20305222
+  },
+  {
+    "id": 24,
+    "resName": "assassinstealth_cskill_wn1",
+    "duration": 0.0,
+    "audioId": 20305212
+  }
+]

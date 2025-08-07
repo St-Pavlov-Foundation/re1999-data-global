@@ -1,0 +1,30 @@
+[
+  {
+    "trapId": 1001,
+    "type": 1,
+    "effect": "",
+    "duration": 1,
+    "effectId": 13
+  },
+  {
+    "trapId": 1002,
+    "type": 2,
+    "effect": "",
+    "duration": 1,
+    "effectId": 0
+  },
+  {
+    "trapId": 1003,
+    "type": 3,
+    "effect": "",
+    "duration": 1,
+    "effectId": 19
+  },
+  {
+    "trapId": 1004,
+    "type": 3,
+    "effect": "",
+    "duration": 2,
+    "effectId": 19
+  }
+]

@@ -52,15 +52,15 @@ function var_0_0.removeEvents(arg_4_0)
 end
 
 function var_0_0._btn1OnClick(arg_5_0)
-	arg_5_0:cutTab(BossRushEnum.BonusViewTab.AchievementTab)
+	arg_5_0:cutTab(1)
 end
 
 function var_0_0._btn2OnClick(arg_6_0)
-	arg_6_0:cutTab(BossRushEnum.BonusViewTab.ScheduleTab)
+	arg_6_0:cutTab(2)
 end
 
 function var_0_0._btn3OnClick(arg_7_0)
-	arg_7_0:cutTab(BossRushEnum.BonusViewTab.SpecialScheduleTab)
+	arg_7_0:cutTab(3)
 end
 
 function var_0_0._btnOnClick(arg_8_0)
@@ -124,28 +124,40 @@ function var_0_0.activeTab(arg_17_0)
 end
 
 function var_0_0._addRedDot(arg_18_0)
-	local var_18_0 = RedDotEnum.DotNode.BossRushBossSchedule
-	local var_18_1 = BossRushRedModel.instance:getUId(var_18_0, arg_18_0._stage)
+	local var_18_0 = BossRushModel.instance:getActivityBonus()
 
-	RedDotController.instance:addRedDot(arg_18_0._goRedDot2, var_18_0, var_18_1)
+	if var_18_0 then
+		for iter_18_0, iter_18_1 in ipairs(var_18_0) do
+			local var_18_1 = iter_18_1.Reddot
+			local var_18_2 = arg_18_0["_goRedDot" .. iter_18_0]
 
-	local var_18_2 = RedDotEnum.DotNode.BossRushBossAchievement
-	local var_18_3 = BossRushRedModel.instance:getUId(var_18_2, arg_18_0._stage)
+			if var_18_1 and var_18_2 then
+				local var_18_3 = BossRushRedModel.instance:getUId(var_18_1, arg_18_0._stage)
 
-	RedDotController.instance:addRedDot(arg_18_0._goRedDot1, var_18_2, var_18_3)
-	RedDotController.instance:addRedDot(arg_18_0._goRedDot3, var_18_2, var_18_3)
+				RedDotController.instance:addRedDot(var_18_2, var_18_1, var_18_3)
+			end
+		end
+	end
 end
 
 function var_0_0._refreshRedDot(arg_19_0)
-	local var_19_0 = V1a4_BossRush_ScoreTaskAchievementListModel.instance:isReddot(arg_19_0._stage)
-	local var_19_1 = V2a1_BossRush_SpecialScheduleViewListModel.instance:isReddot(arg_19_0._stage)
+	local var_19_0 = BossRushModel.instance:getActivityBonus()
 
-	gohelper.setActive(arg_19_0._goRedDot1, var_19_0)
-	gohelper.setActive(arg_19_0._goRedDot3, var_19_1)
+	if var_19_0 then
+		for iter_19_0, iter_19_1 in ipairs(var_19_0) do
+			local var_19_1 = arg_19_0["_goRedDot" .. iter_19_0]
+
+			if var_19_1 and iter_19_1.ListModel and iter_19_1.ListModel.instance.isReddot then
+				local var_19_2 = iter_19_1.ListModel.instance:isReddot(arg_19_0._stage, iter_19_0)
+
+				gohelper.setActive(var_19_1, var_19_2)
+			end
+		end
+	end
 end
 
 function var_0_0._refreshTab(arg_20_0)
-	local var_20_0 = BossRushModel.instance:isSpecialActivity()
+	local var_20_0 = #BossRushModel.instance:getActivityBonus() > 2
 
 	gohelper.setActive(arg_20_0._goTab3, var_20_0)
 

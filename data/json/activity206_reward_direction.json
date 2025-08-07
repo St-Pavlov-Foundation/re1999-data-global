@@ -1,0 +1,86 @@
+[
+  {
+    "activityId": 130520,
+    "directionId": 1,
+    "baseRate": 20,
+    "nextDayDecRate": 20,
+    "haveGuarantee": true,
+    "guaranteeCount": 1,
+    "rewardGroupId": 6,
+    "des": "language_10079490",
+    "name": "language_10079491",
+    "pic": "recruit_targeticon_03"
+  },
+  {
+    "activityId": 130520,
+    "directionId": 2,
+    "baseRate": 20,
+    "nextDayDecRate": 20,
+    "haveGuarantee": true,
+    "guaranteeCount": 0,
+    "rewardGroupId": 5,
+    "des": "language_10079492",
+    "name": "language_10079493",
+    "pic": "recruit_targeticon_04"
+  },
+  {
+    "activityId": 130520,
+    "directionId": 3,
+    "baseRate": 20,
+    "nextDayDecRate": 20,
+    "haveGuarantee": true,
+    "guaranteeCount": 0,
+    "rewardGroupId": 1,
+    "des": "language_10079494",
+    "name": "language_10079495",
+    "pic": "recruit_targeticon_07"
+  },
+  {
+    "activityId": 130520,
+    "directionId": 4,
+    "baseRate": 20,
+    "nextDayDecRate": 20,
+    "haveGuarantee": true,
+    "guaranteeCount": 0,
+    "rewardGroupId": 4,
+    "des": "language_10079496",
+    "name": "language_10079497",
+    "pic": "recruit_targeticon_06"
+  },
+  {
+    "activityId": 130520,
+    "directionId": 5,
+    "baseRate": 20,
+    "nextDayDecRate": 20,
+    "haveGuarantee": true,
+    "guaranteeCount": 0,
+    "rewardGroupId": 2,
+    "des": "language_10079498",
+    "name": "language_10079499",
+    "pic": "recruit_targeticon_05"
+  },
+  {
+    "activityId": 130520,
+    "directionId": 6,
+    "baseRate": 80,
+    "nextDayDecRate": 20,
+    "haveGuarantee": true,
+    "guaranteeCount": 0,
+    "rewardGroupId": 3,
+    "des": "language_10079500",
+    "name": "language_10079501",
+    "pic": "recruit_targeticon_02"
+  },
+  {
+    "activityId": 130520,
+    "directionId": 7,
+    "baseRate": 20,
+    "nextDayDecRate": 20,
+    "haveGuarantee": true,
+    "guaranteeCount": 0,
+    "rewardGroupId": 7,
+    "des": "language_10079502",
+    "name": "language_10079503",
+    "pic": "recruit_targeticon_01"
+  }
+]

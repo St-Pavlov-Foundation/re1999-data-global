@@ -229,7 +229,7 @@ function var_0_0._refreshInfoUI(arg_5_0, arg_5_1)
 				var_5_4.go = gohelper.clone(arg_5_0._goskillItem, arg_5_0._goskillContent, "skillitem" .. iter_5_0)
 				var_5_4.skillIconGo = arg_5_0:getUserDataTb_()
 
-				for iter_5_2 = 1, 4 do
+				for iter_5_2 = 0, 4 do
 					local var_5_5 = gohelper.findChild(var_5_4.go, "skillicon" .. iter_5_2)
 					local var_5_6 = arg_5_0:getUserDataTb_()
 
@@ -238,7 +238,7 @@ function var_0_0._refreshInfoUI(arg_5_0, arg_5_1)
 					var_5_6.tag = gohelper.findChildSingleImage(var_5_5, "tag/tagIcon")
 					var_5_6.count = gohelper.findChildText(var_5_5, "count/txt_count")
 					var_5_6.goStar = gohelper.findChildText(var_5_5, "star")
-					var_5_4.skillIconGo[iter_5_2] = var_5_6
+					var_5_4.skillIconGo[iter_5_2 + 1] = var_5_6
 				end
 
 				table.insert(arg_5_0._skillItems, var_5_4)
@@ -316,12 +316,14 @@ function var_0_0._setSkillCardInfo(arg_8_0, arg_8_1, arg_8_2)
 	local var_8_1 = lua_skill.configDict[arg_8_2.skillId]
 
 	for iter_8_0, iter_8_1 in ipairs(arg_8_1.skillIconGo) do
-		gohelper.setActive(iter_8_1.go, iter_8_0 == var_8_0)
+		local var_8_2 = iter_8_0 - 1
 
-		if iter_8_0 == var_8_0 then
-			local var_8_2 = ResUrl.getSkillIcon(var_8_1.icon)
+		gohelper.setActive(iter_8_1.go, var_8_2 == var_8_0)
 
-			iter_8_1.imgIcon:LoadImage(var_8_2)
+		if var_8_2 == var_8_0 then
+			local var_8_3 = ResUrl.getSkillIcon(var_8_1.icon)
+
+			iter_8_1.imgIcon:LoadImage(var_8_3)
 
 			if not iter_8_1.isBigSkill then
 				iter_8_1.tag:LoadImage(ResUrl.getAttributeIcon("attribute_" .. var_8_1.showTag))

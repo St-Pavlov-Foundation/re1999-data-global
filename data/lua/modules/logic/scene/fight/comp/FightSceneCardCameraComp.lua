@@ -10,6 +10,7 @@ function var_0_0.onSceneStart(arg_1_0, arg_1_1, arg_1_2)
 	FightController.instance:registerCallback(FightEvent.SkillEditorPlayCardCameraAni, arg_1_0._onSkillEditorPlayCardCameraAni, arg_1_0)
 	ViewMgr.instance:registerCallback(ViewEvent.OnOpenView, arg_1_0._onOpenView, arg_1_0)
 	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, arg_1_0._onCloseView, arg_1_0)
+	FightController.instance:registerCallback(FightEvent.StopCardCameraAnimator, arg_1_0._stopCameraAnim, arg_1_0)
 end
 
 function var_0_0.onSceneClose(arg_2_0, arg_2_1, arg_2_2)
@@ -20,6 +21,7 @@ function var_0_0.onSceneClose(arg_2_0, arg_2_1, arg_2_2)
 	FightController.instance:unregisterCallback(FightEvent.SkillEditorPlayCardCameraAni, arg_2_0._onSkillEditorPlayCardCameraAni, arg_2_0)
 	ViewMgr.instance:unregisterCallback(ViewEvent.OnOpenView, arg_2_0._onOpenView, arg_2_0)
 	ViewMgr.instance:unregisterCallback(ViewEvent.OnCloseView, arg_2_0._onCloseView, arg_2_0)
+	FightController.instance:unregisterCallback(FightEvent.StopCardCameraAnimator, arg_2_0._stopCameraAnim, arg_2_0)
 
 	if arg_2_0._multiLoader then
 		arg_2_0._multiLoader:dispose()

@@ -12,7 +12,7 @@ function var_0_0.onStart(arg_1_0)
 			arg_1_0.actEffectData.configEffect
 		})
 
-		FightFloatMgr.instance:float(var_1_1.id, FightEnum.FloatType.buff, var_1_2, 1)
+		FightFloatMgr.instance:float(var_1_1.id, FightEnum.FloatType.buff, var_1_2, 1, false)
 	end
 
 	arg_1_0:onDone(true)

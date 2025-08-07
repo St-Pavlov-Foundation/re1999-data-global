@@ -1,0 +1,110 @@
+[
+  {
+    "id": 1001,
+    "weight": 100,
+    "type": 1,
+    "param": "",
+    "name": "language_10078695",
+    "img": "assassinstealthevent_pic_01",
+    "desc": "language_10078696"
+  },
+  {
+    "id": 1002,
+    "weight": 100,
+    "type": 2,
+    "param": "1",
+    "name": "language_10078697",
+    "img": "assassinstealthevent_pic_02",
+    "desc": "language_10078698"
+  },
+  {
+    "id": 1003,
+    "weight": 100,
+    "type": 3,
+    "param": "5000",
+    "name": "language_10078699",
+    "img": "assassinstealthevent_pic_03",
+    "desc": "language_10078700"
+  },
+  {
+    "id": 1004,
+    "weight": 100,
+    "type": 4,
+    "param": "1",
+    "name": "language_10078701",
+    "img": "assassinstealthevent_pic_05",
+    "desc": "language_10078702"
+  },
+  {
+    "id": 1005,
+    "weight": 100,
+    "type": 3,
+    "param": "-1000",
+    "name": "language_10077243",
+    "img": "assassinstealthevent_pic_04",
+    "desc": "language_10078703"
+  },
+  {
+    "id": 1006,
+    "weight": 100,
+    "type": 4,
+    "param": "-2",
+    "name": "language_10077763",
+    "img": "assassinstealthevent_pic_06",
+    "desc": "language_10078704"
+  },
+  {
+    "id": 1007,
+    "weight": 100,
+    "type": 5,
+    "param": "",
+    "name": "language_10015844",
+    "img": "assassinstealthevent_pic_07",
+    "desc": "language_10078705"
+  },
+  {
+    "id": 1008,
+    "weight": 100,
+    "type": 6,
+    "param": "-1",
+    "name": "language_10078706",
+    "img": "assassinstealthevent_pic_08",
+    "desc": "language_10078707"
+  },
+  {
+    "id": 1009,
+    "weight": 100,
+    "type": 6,
+    "param": "1",
+    "name": "language_10078708",
+    "img": "assassinstealthevent_pic_09",
+    "desc": "language_10078709"
+  },
+  {
+    "id": 1010,
+    "weight": 100,
+    "type": 8,
+    "param": "-250",
+    "name": "language_10078710",
+    "img": "assassinstealthevent_pic_10",
+    "desc": "language_10078711"
+  },
+  {
+    "id": 1011,
+    "weight": 100,
+    "type": 8,
+    "param": "250",
+    "name": "language_10078712",
+    "img": "assassinstealthevent_pic_11",
+    "desc": "language_10078713"
+  },
+  {
+    "id": 1012,
+    "weight": 100,
+    "type": 7,
+    "param": "",
+    "name": "language_10078714",
+    "img": "assassinstealthevent_pic_12",
+    "desc": "language_10078715"
+  }
+]

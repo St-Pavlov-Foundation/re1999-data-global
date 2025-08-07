@@ -1,0 +1,1082 @@
+[
+  {
+    "id": 214001,
+    "stepId": 1,
+    "nextStep": 2,
+    "picture": "",
+    "optionList": "",
+    "name": "",
+    "desc": "language_10078899"
+  },
+  {
+    "id": 214001,
+    "stepId": 2,
+    "nextStep": 0,
+    "picture": "odyssey_map_role_11",
+    "optionList": "21400101#3|21400102#6",
+    "name": "language_10078900",
+    "desc": "language_10078901"
+  },
+  {
+    "id": 214001,
+    "stepId": 3,
+    "nextStep": 4,
+    "picture": "odyssey_map_role_11",
+    "optionList": "",
+    "name": "language_10078900",
+    "desc": "language_10078902"
+  },
+  {
+    "id": 214001,
+    "stepId": 4,
+    "nextStep": 5,
+    "picture": "odyssey_map_role_11",
+    "optionList": "",
+    "name": "language_10078900",
+    "desc": "language_10078903"
+  },
+  {
+    "id": 214001,
+    "stepId": 5,
+    "nextStep": 0,
+    "picture": "odyssey_map_role_11",
+    "optionList": "",
+    "name": "language_10078900",
+    "desc": "language_10078904"
+  },
+  {
+    "id": 214001,
+    "stepId": 6,
+    "nextStep": 7,
+    "picture": "odyssey_map_role_11",
+    "optionList": "",
+    "name": "language_10078900",
+    "desc": "language_10078905"
+  },
+  {
+    "id": 214001,
+    "stepId": 7,
+    "nextStep": 8,
+    "picture": "odyssey_map_role_11",
+    "optionList": "",
+    "name": "language_10078900",
+    "desc": "language_10078903"
+  },
+  {
+    "id": 214001,
+    "stepId": 8,
+    "nextStep": 0,
+    "picture": "odyssey_map_role_11",
+    "optionList": "",
+    "name": "language_10078900",
+    "desc": "language_10078904"
+  },
+  {
+    "id": 214002,
+    "stepId": 1,
+    "nextStep": 2,
+    "picture": "odyssey_map_role_07",
+    "optionList": "",
+    "name": "language_10078906",
+    "desc": "language_10078907"
+  },
+  {
+    "id": 214002,
+    "stepId": 2,
+    "nextStep": 3,
+    "picture": "",
+    "optionList": "",
+    "name": "",
+    "desc": "language_10078908"
+  },
+  {
+    "id": 214002,
+    "stepId": 3,
+    "nextStep": 4,
+    "picture": "odyssey_map_role_01",
+    "optionList": "",
+    "name": "language_10075645",
+    "desc": "language_10078909"
+  },
+  {
+    "id": 214002,
+    "stepId": 4,
+    "nextStep": 5,
+    "picture": "odyssey_map_role_07",
+    "optionList": "",
+    "name": "language_10078906",
+    "desc": "language_10078910"
+  },
+  {
+    "id": 214002,
+    "stepId": 5,
+    "nextStep": 6,
+    "picture": "odyssey_map_role_07",
+    "optionList": "",
+    "name": "language_10078906",
+    "desc": "language_10078911"
+  },
+  {
+    "id": 214002,
+    "stepId": 6,
+    "nextStep": 0,
+    "picture": "odyssey_map_role_07",
+    "optionList": "",
+    "name": "language_10078906",
+    "desc": "language_10078912"
+  },
+  {
+    "id": 215001,
+    "stepId": 1,
+    "nextStep": 0,
+    "picture": "odyssey_map_role_02",
+    "optionList": "21500101#2|21500102#5",
+    "name": "language_10078916",
+    "desc": "language_10078917"
+  },
+  {
+    "id": 215001,
+    "stepId": 2,
+    "nextStep": 3,
+    "picture": "odyssey_map_role_02",
+    "optionList": "",
+    "name": "language_10078916",
+    "desc": "language_10078918"
+  },
+  {
+    "id": 215001,
+    "stepId": 3,
+    "nextStep": 4,
+    "picture": "odyssey_map_role_02",
+    "optionList": "",
+    "name": "language_10078916",
+    "desc": "language_10078919"
+  },
+  {
+    "id": 215001,
+    "stepId": 4,
+    "nextStep": 0,
+    "picture": "odyssey_map_role_02",
+    "optionList": "21500103#7|21500104#8",
+    "name": "language_10078916",
+    "desc": "language_10078920"
+  },
+  {
+    "id": 215001,
+    "stepId": 5,
+    "nextStep": 6,
+    "picture": "odyssey_map_role_02",
+    "optionList": "",
+    "name": "language_10078916",
+    "desc": "language_10078921"
+  },
+  {
+    "id": 215001,
+    "stepId": 6,
+    "nextStep": 0,
+    "picture": "odyssey_map_role_02",
+    "optionList": "21500103#7|21500104#8",
+    "name": "language_10078916",
+    "desc": "language_10078922"
+  },
+  {
+    "id": 215001,
+    "stepId": 7,
+    "nextStep": 0,
+    "picture": "odyssey_map_role_02",
+    "optionList": "",
+    "name": "language_10078916",
+    "desc": "language_10078923"
+  },
+  {
+    "id": 215001,
+    "stepId": 8,
+    "nextStep": 0,
+    "picture": "odyssey_map_role_02",
+    "optionList": "",
+    "name": "language_10078916",
+    "desc": "language_10078924"
+  },
+  {
+    "id": 215002,
+    "stepId": 1,
+    "nextStep": 0,
+    "picture": "odyssey_map_role_02",
+    "optionList": "",
+    "name": "language_10078916",
+    "desc": "language_10078925"
+  },
+  {
+    "id": 216001,
+    "stepId": 1,
+    "nextStep": 2,
+    "picture": "odyssey_map_role_08",
+    "optionList": "",
+    "name": "language_10078926",
+    "desc": "language_10078927"
+  },
+  {
+    "id": 216001,
+    "stepId": 2,
+    "nextStep": 3,
+    "picture": "odyssey_map_role_08",
+    "optionList": "",
+    "name": "language_10078926",
+    "desc": "language_10078928"
+  },
+  {
+    "id": 216001,
+    "stepId": 3,
+    "nextStep": 0,
+    "picture": "odyssey_map_role_08",
+    "optionList": "21600101#4|21600102#7",
+    "name": "language_10078926",
+    "desc": "language_10078929"
+  },
+  {
+    "id": 216001,
+    "stepId": 4,
+    "nextStep": 5,
+    "picture": "odyssey_map_role_08",
+    "optionList": "",
+    "name": "language_10078926",
+    "desc": "language_10078930"
+  },
+  {
+    "id": 216001,
+    "stepId": 5,
+    "nextStep": 6,
+    "picture": "odyssey_map_role_08",
+    "optionList": "",
+    "name": "language_10078926",
+    "desc": "language_10078931"
+  },
+  {
+    "id": 216001,
+    "stepId": 6,
+    "nextStep": 0,
+    "picture": "odyssey_map_role_08",
+    "optionList": "",
+    "name": "language_10078926",
+    "desc": "language_10078932"
+  },
+  {
+    "id": 216001,
+    "stepId": 7,
+    "nextStep": 8,
+    "picture": "odyssey_map_role_08",
+    "optionList": "",
+    "name": "language_10078926",
+    "desc": "language_10078933"
+  },
+  {
+    "id": 216001,
+    "stepId": 8,
+    "nextStep": 9,
+    "picture": "odyssey_map_role_08",
+    "optionList": "",
+    "name": "language_10078926",
+    "desc": "language_10078934"
+  },
+  {
+    "id": 216001,
+    "stepId": 9,
+    "nextStep": 0,
+    "picture": "odyssey_map_role_08",
+    "optionList": "",
+    "name": "language_10078926",
+    "desc": "language_10078935"
+  },
+  {
+    "id": 216002,
+    "stepId": 1,
+    "nextStep": 2,
+    "picture": "odyssey_map_role_08",
+    "optionList": "",
+    "name": "language_10078926",
+    "desc": "language_10078936"
+  },
+  {
+    "id": 216002,
+    "stepId": 2,
+    "nextStep": 3,
+    "picture": "odyssey_map_role_01",
+    "optionList": "",
+    "name": "language_10075645",
+    "desc": "language_10078937"
+  },
+  {
+    "id": 216002,
+    "stepId": 3,
+    "nextStep": 4,
+    "picture": "odyssey_map_role_08",
+    "optionList": "",
+    "name": "language_10078926",
+    "desc": "language_10078938"
+  },
+  {
+    "id": 216002,
+    "stepId": 4,
+    "nextStep": 0,
+    "picture": "odyssey_map_role_08",
+    "optionList": "",
+    "name": "language_10078926",
+    "desc": "language_10078939"
+  },
+  {
+    "id": 314001,
+    "stepId": 1,
+    "nextStep": 2,
+    "picture": "odyssey_map_role_06",
+    "optionList": "",
+    "name": "language_10078940",
+    "desc": "language_10079557"
+  },
+  {
+    "id": 314001,
+    "stepId": 2,
+    "nextStep": 3,
+    "picture": "",
+    "optionList": "",
+    "name": "",
+    "desc": "language_10079558"
+  },
+  {
+    "id": 314001,
+    "stepId": 3,
+    "nextStep": 4,
+    "picture": "odyssey_map_role_01",
+    "optionList": "",
+    "name": "language_10075645",
+    "desc": "language_10078942"
+  },
+  {
+    "id": 314001,
+    "stepId": 4,
+    "nextStep": 5,
+    "picture": "odyssey_map_role_06",
+    "optionList": "",
+    "name": "language_10078940",
+    "desc": "language_10078943"
+  },
+  {
+    "id": 314001,
+    "stepId": 5,
+    "nextStep": 6,
+    "picture": "odyssey_map_role_01",
+    "optionList": "",
+    "name": "language_10075645",
+    "desc": "language_10078944"
+  },
+  {
+    "id": 314001,
+    "stepId": 6,
+    "nextStep": 0,
+    "picture": "odyssey_map_role_06",
+    "optionList": "31400101#7|31400102#8",
+    "name": "language_10078940",
+    "desc": "language_10078945"
+  },
+  {
+    "id": 314001,
+    "stepId": 7,
+    "nextStep": 10,
+    "picture": "odyssey_map_role_06",
+    "optionList": "",
+    "name": "language_10078940",
+    "desc": "language_10078946"
+  },
+  {
+    "id": 314001,
+    "stepId": 8,
+    "nextStep": 9,
+    "picture": "odyssey_map_role_06",
+    "optionList": "",
+    "name": "language_10078940",
+    "desc": "language_10078947"
+  },
+  {
+    "id": 314001,
+    "stepId": 9,
+    "nextStep": 10,
+    "picture": "odyssey_map_role_06",
+    "optionList": "",
+    "name": "language_10078940",
+    "desc": "language_10078948"
+  },
+  {
+    "id": 314001,
+    "stepId": 10,
+    "nextStep": 0,
+    "picture": "odyssey_map_role_06",
+    "optionList": "",
+    "name": "language_10078940",
+    "desc": "language_10078949"
+  },
+  {
+    "id": 314002,
+    "stepId": 1,
+    "nextStep": 2,
+    "picture": "",
+    "optionList": "",
+    "name": "",
+    "desc": "language_10078950"
+  },
+  {
+    "id": 314002,
+    "stepId": 2,
+    "nextStep": 3,
+    "picture": "odyssey_map_role_09",
+    "optionList": "",
+    "name": "language_10078951",
+    "desc": "language_10078952"
+  },
+  {
+    "id": 314002,
+    "stepId": 3,
+    "nextStep": 4,
+    "picture": "odyssey_map_role_09",
+    "optionList": "",
+    "name": "language_10078953",
+    "desc": "language_10078954"
+  },
+  {
+    "id": 314002,
+    "stepId": 4,
+    "nextStep": 0,
+    "picture": "odyssey_map_role_09",
+    "optionList": "31400201#5|31400202#10",
+    "name": "language_10078955",
+    "desc": "language_10078956"
+  },
+  {
+    "id": 314002,
+    "stepId": 5,
+    "nextStep": 6,
+    "picture": "odyssey_map_role_01",
+    "optionList": "",
+    "name": "language_10075645",
+    "desc": "language_10078957"
+  },
+  {
+    "id": 314002,
+    "stepId": 6,
+    "nextStep": 7,
+    "picture": "odyssey_map_role_09",
+    "optionList": "",
+    "name": "language_10078951",
+    "desc": "language_10078958"
+  },
+  {
+    "id": 314002,
+    "stepId": 7,
+    "nextStep": 8,
+    "picture": "odyssey_map_role_01",
+    "optionList": "",
+    "name": "language_10075645",
+    "desc": "language_10078959"
+  },
+  {
+    "id": 314002,
+    "stepId": 8,
+    "nextStep": 9,
+    "picture": "odyssey_map_role_09",
+    "optionList": "",
+    "name": "language_10078951",
+    "desc": "language_10078960"
+  },
+  {
+    "id": 314002,
+    "stepId": 9,
+    "nextStep": 15,
+    "picture": "",
+    "optionList": "",
+    "name": "",
+    "desc": "language_10078961"
+  },
+  {
+    "id": 314002,
+    "stepId": 10,
+    "nextStep": 11,
+    "picture": "odyssey_map_role_09",
+    "optionList": "",
+    "name": "language_10078951",
+    "desc": "language_10024089"
+  },
+  {
+    "id": 314002,
+    "stepId": 11,
+    "nextStep": 12,
+    "picture": "",
+    "optionList": "",
+    "name": "",
+    "desc": "language_10078962"
+  },
+  {
+    "id": 314002,
+    "stepId": 12,
+    "nextStep": 13,
+    "picture": "odyssey_map_role_09",
+    "optionList": "",
+    "name": "language_10078951",
+    "desc": "language_10078963"
+  },
+  {
+    "id": 314002,
+    "stepId": 13,
+    "nextStep": 14,
+    "picture": "odyssey_map_role_01",
+    "optionList": "",
+    "name": "language_10075645",
+    "desc": "language_10078964"
+  },
+  {
+    "id": 314002,
+    "stepId": 14,
+    "nextStep": 15,
+    "picture": "odyssey_map_role_09",
+    "optionList": "",
+    "name": "language_10078951",
+    "desc": "language_10078965"
+  },
+  {
+    "id": 314002,
+    "stepId": 15,
+    "nextStep": 16,
+    "picture": "odyssey_map_role_09",
+    "optionList": "",
+    "name": "language_10078951",
+    "desc": "language_10078966"
+  },
+  {
+    "id": 314002,
+    "stepId": 16,
+    "nextStep": 17,
+    "picture": "odyssey_map_role_09",
+    "optionList": "",
+    "name": "language_10078951",
+    "desc": "language_10078967"
+  },
+  {
+    "id": 314002,
+    "stepId": 17,
+    "nextStep": 0,
+    "picture": "odyssey_map_role_01",
+    "optionList": "",
+    "name": "language_10075645",
+    "desc": "language_10078968"
+  },
+  {
+    "id": 315001,
+    "stepId": 1,
+    "nextStep": 2,
+    "picture": "odyssey_map_role_03",
+    "optionList": "",
+    "name": "language_10078971",
+    "desc": "language_10078972"
+  },
+  {
+    "id": 315001,
+    "stepId": 2,
+    "nextStep": 3,
+    "picture": "odyssey_map_role_03",
+    "optionList": "",
+    "name": "language_10078971",
+    "desc": "language_10078973"
+  },
+  {
+    "id": 315001,
+    "stepId": 3,
+    "nextStep": 4,
+    "picture": "odyssey_map_role_03",
+    "optionList": "",
+    "name": "language_10078971",
+    "desc": "language_10078974"
+  },
+  {
+    "id": 315001,
+    "stepId": 4,
+    "nextStep": 5,
+    "picture": "odyssey_map_role_01",
+    "optionList": "",
+    "name": "language_10075645",
+    "desc": "language_10078975"
+  },
+  {
+    "id": 315001,
+    "stepId": 5,
+    "nextStep": 6,
+    "picture": "odyssey_map_role_03",
+    "optionList": "",
+    "name": "language_10078971",
+    "desc": "language_10078976"
+  },
+  {
+    "id": 315001,
+    "stepId": 6,
+    "nextStep": 0,
+    "picture": "odyssey_map_role_03",
+    "optionList": "31500101#7|31500102#9",
+    "name": "language_10078971",
+    "desc": "language_10078977"
+  },
+  {
+    "id": 315001,
+    "stepId": 7,
+    "nextStep": 8,
+    "picture": "odyssey_map_role_03",
+    "optionList": "",
+    "name": "language_10078971",
+    "desc": "language_10078978"
+  },
+  {
+    "id": 315001,
+    "stepId": 8,
+    "nextStep": 11,
+    "picture": "odyssey_map_role_03",
+    "optionList": "",
+    "name": "language_10078971",
+    "desc": "language_10078979"
+  },
+  {
+    "id": 315001,
+    "stepId": 9,
+    "nextStep": 10,
+    "picture": "odyssey_map_role_03",
+    "optionList": "",
+    "name": "language_10078971",
+    "desc": "language_10078980"
+  },
+  {
+    "id": 315001,
+    "stepId": 10,
+    "nextStep": 11,
+    "picture": "odyssey_map_role_03",
+    "optionList": "",
+    "name": "language_10078971",
+    "desc": "language_10078981"
+  },
+  {
+    "id": 315001,
+    "stepId": 11,
+    "nextStep": 0,
+    "picture": "",
+    "optionList": "",
+    "name": "",
+    "desc": "language_10078982"
+  },
+  {
+    "id": 315002,
+    "stepId": 1,
+    "nextStep": 0,
+    "picture": "odyssey_map_role_03",
+    "optionList": "31500201#2|31500202#3",
+    "name": "language_10078971",
+    "desc": "language_10078983"
+  },
+  {
+    "id": 315002,
+    "stepId": 2,
+    "nextStep": 0,
+    "picture": "odyssey_map_role_03",
+    "optionList": "",
+    "name": "language_10078971",
+    "desc": "language_10078984"
+  },
+  {
+    "id": 315002,
+    "stepId": 3,
+    "nextStep": 0,
+    "picture": "odyssey_map_role_03",
+    "optionList": "",
+    "name": "language_10078971",
+    "desc": "language_10078985"
+  },
+  {
+    "id": 316001,
+    "stepId": 1,
+    "nextStep": 2,
+    "picture": "odyssey_map_role_04",
+    "optionList": "",
+    "name": "language_10078986",
+    "desc": "language_10078987"
+  },
+  {
+    "id": 316001,
+    "stepId": 2,
+    "nextStep": 3,
+    "picture": "odyssey_map_role_01",
+    "optionList": "",
+    "name": "language_10075645",
+    "desc": "language_10078988"
+  },
+  {
+    "id": 316001,
+    "stepId": 3,
+    "nextStep": 4,
+    "picture": "odyssey_map_role_04",
+    "optionList": "",
+    "name": "language_10078986",
+    "desc": "language_10078989"
+  },
+  {
+    "id": 316001,
+    "stepId": 4,
+    "nextStep": 0,
+    "picture": "odyssey_map_role_04",
+    "optionList": "31600101#5|31600102#6",
+    "name": "language_10078986",
+    "desc": "language_10078990"
+  },
+  {
+    "id": 316001,
+    "stepId": 5,
+    "nextStep": 7,
+    "picture": "odyssey_map_role_04",
+    "optionList": "",
+    "name": "language_10078986",
+    "desc": "language_10078991"
+  },
+  {
+    "id": 316001,
+    "stepId": 6,
+    "nextStep": 7,
+    "picture": "odyssey_map_role_04",
+    "optionList": "",
+    "name": "language_10078986",
+    "desc": "language_10078992"
+  },
+  {
+    "id": 316001,
+    "stepId": 7,
+    "nextStep": 8,
+    "picture": "odyssey_map_role_04",
+    "optionList": "",
+    "name": "language_10078986",
+    "desc": "language_10078993"
+  },
+  {
+    "id": 316001,
+    "stepId": 8,
+    "nextStep": 9,
+    "picture": "odyssey_map_role_01",
+    "optionList": "",
+    "name": "language_10075645",
+    "desc": "language_10078994"
+  },
+  {
+    "id": 316001,
+    "stepId": 9,
+    "nextStep": 0,
+    "picture": "odyssey_map_role_04",
+    "optionList": "",
+    "name": "language_10078986",
+    "desc": "language_10078995"
+  },
+  {
+    "id": 316002,
+    "stepId": 1,
+    "nextStep": 0,
+    "picture": "odyssey_map_role_04",
+    "optionList": "",
+    "name": "language_10078986",
+    "desc": "language_10078996"
+  },
+  {
+    "id": 414001,
+    "stepId": 1,
+    "nextStep": 2,
+    "picture": "odyssey_map_role_03",
+    "optionList": "",
+    "name": "language_10078971",
+    "desc": "language_10078997"
+  },
+  {
+    "id": 414001,
+    "stepId": 2,
+    "nextStep": 3,
+    "picture": "odyssey_map_role_01",
+    "optionList": "",
+    "name": "language_10075645",
+    "desc": "language_10078998"
+  },
+  {
+    "id": 414001,
+    "stepId": 3,
+    "nextStep": 4,
+    "picture": "odyssey_map_role_03",
+    "optionList": "",
+    "name": "language_10078971",
+    "desc": "language_10078999"
+  },
+  {
+    "id": 414001,
+    "stepId": 4,
+    "nextStep": 5,
+    "picture": "odyssey_map_role_01",
+    "optionList": "",
+    "name": "language_10075645",
+    "desc": "language_10079000"
+  },
+  {
+    "id": 414001,
+    "stepId": 5,
+    "nextStep": 6,
+    "picture": "odyssey_map_role_03",
+    "optionList": "",
+    "name": "language_10078971",
+    "desc": "language_10079001"
+  },
+  {
+    "id": 414001,
+    "stepId": 6,
+    "nextStep": 0,
+    "picture": "odyssey_map_role_03",
+    "optionList": "41400101#7|41400102#7",
+    "name": "language_10078971",
+    "desc": "language_10079002"
+  },
+  {
+    "id": 414001,
+    "stepId": 7,
+    "nextStep": 8,
+    "picture": "odyssey_map_role_03",
+    "optionList": "",
+    "name": "language_10078971",
+    "desc": "language_10079003"
+  },
+  {
+    "id": 414001,
+    "stepId": 8,
+    "nextStep": 0,
+    "picture": "",
+    "optionList": "",
+    "name": "",
+    "desc": "language_10079004"
+  },
+  {
+    "id": 415001,
+    "stepId": 1,
+    "nextStep": 2,
+    "picture": "odyssey_map_role_05",
+    "optionList": "",
+    "name": "language_10079005",
+    "desc": "language_10079006"
+  },
+  {
+    "id": 415001,
+    "stepId": 2,
+    "nextStep": 0,
+    "picture": "odyssey_map_role_05",
+    "optionList": "41500101#3|41500102#3",
+    "name": "language_10079005",
+    "desc": "language_10079007"
+  },
+  {
+    "id": 415001,
+    "stepId": 3,
+    "nextStep": 4,
+    "picture": "odyssey_map_role_05",
+    "optionList": "",
+    "name": "language_10079005",
+    "desc": "language_10079008"
+  },
+  {
+    "id": 415001,
+    "stepId": 4,
+    "nextStep": 5,
+    "picture": "odyssey_map_role_05",
+    "optionList": "",
+    "name": "language_10079005",
+    "desc": "language_10079009"
+  },
+  {
+    "id": 415001,
+    "stepId": 5,
+    "nextStep": 6,
+    "picture": "",
+    "optionList": "",
+    "name": "",
+    "desc": "language_10079010"
+  },
+  {
+    "id": 415001,
+    "stepId": 6,
+    "nextStep": 0,
+    "picture": "",
+    "optionList": "",
+    "name": "",
+    "desc": "language_10079011"
+  },
+  {
+    "id": 514001,
+    "stepId": 1,
+    "nextStep": 2,
+    "picture": "odyssey_map_role_0",
+    "optionList": "",
+    "name": "language_10000321",
+    "desc": "language_10079012"
+  },
+  {
+    "id": 514001,
+    "stepId": 2,
+    "nextStep": 3,
+    "picture": "odyssey_map_role_01",
+    "optionList": "",
+    "name": "language_10075645",
+    "desc": "language_10079013"
+  },
+  {
+    "id": 514001,
+    "stepId": 3,
+    "nextStep": 4,
+    "picture": "odyssey_map_role_0",
+    "optionList": "",
+    "name": "language_10000321",
+    "desc": "language_10079014"
+  },
+  {
+    "id": 514001,
+    "stepId": 4,
+    "nextStep": 5,
+    "picture": "odyssey_map_role_0",
+    "optionList": "",
+    "name": "language_10000321",
+    "desc": "language_10079015"
+  },
+  {
+    "id": 514001,
+    "stepId": 5,
+    "nextStep": 6,
+    "picture": "odyssey_map_role_01",
+    "optionList": "",
+    "name": "language_10075645",
+    "desc": "language_10079016"
+  },
+  {
+    "id": 514001,
+    "stepId": 6,
+    "nextStep": 0,
+    "picture": "odyssey_map_role_0",
+    "optionList": "",
+    "name": "language_10000321",
+    "desc": "language_10079017"
+  },
+  {
+    "id": 514002,
+    "stepId": 1,
+    "nextStep": 0,
+    "picture": "odyssey_map_role_0",
+    "optionList": "",
+    "name": "language_10000321",
+    "desc": "language_10079018"
+  },
+  {
+    "id": 515001,
+    "stepId": 1,
+    "nextStep": 2,
+    "picture": "odyssey_map_role_10",
+    "optionList": "",
+    "name": "language_10079020",
+    "desc": "language_10079021"
+  },
+  {
+    "id": 515001,
+    "stepId": 2,
+    "nextStep": 3,
+    "picture": "odyssey_map_role_10",
+    "optionList": "",
+    "name": "language_10079020",
+    "desc": "language_10079022"
+  },
+  {
+    "id": 515001,
+    "stepId": 3,
+    "nextStep": 4,
+    "picture": "odyssey_map_role_01",
+    "optionList": "",
+    "name": "language_10075645",
+    "desc": "language_10079023"
+  },
+  {
+    "id": 515001,
+    "stepId": 4,
+    "nextStep": 5,
+    "picture": "odyssey_map_role_10",
+    "optionList": "51500101#5|51500102#6",
+    "name": "language_10079020",
+    "desc": "language_10079024"
+  },
+  {
+    "id": 515001,
+    "stepId": 5,
+    "nextStep": 7,
+    "picture": "odyssey_map_role_10",
+    "optionList": "",
+    "name": "language_10079020",
+    "desc": "language_10079025"
+  },
+  {
+    "id": 515001,
+    "stepId": 6,
+    "nextStep": 7,
+    "picture": "odyssey_map_role_10",
+    "optionList": "",
+    "name": "language_10079020",
+    "desc": "language_10079026"
+  },
+  {
+    "id": 515001,
+    "stepId": 7,
+    "nextStep": 8,
+    "picture": "odyssey_map_role_10",
+    "optionList": "",
+    "name": "language_10079020",
+    "desc": "language_10079027"
+  },
+  {
+    "id": 515001,
+    "stepId": 8,
+    "nextStep": 9,
+    "picture": "odyssey_map_role_01",
+    "optionList": "",
+    "name": "language_10075645",
+    "desc": "language_10079028"
+  },
+  {
+    "id": 515001,
+    "stepId": 9,
+    "nextStep": 10,
+    "picture": "odyssey_map_role_01",
+    "optionList": "",
+    "name": "language_10075645",
+    "desc": "language_10079029"
+  },
+  {
+    "id": 515001,
+    "stepId": 10,
+    "nextStep": 11,
+    "picture": "odyssey_map_role_10",
+    "optionList": "",
+    "name": "language_10079020",
+    "desc": "language_10079030"
+  },
+  {
+    "id": 515001,
+    "stepId": 11,
+    "nextStep": 12,
+    "picture": "odyssey_map_role_01",
+    "optionList": "",
+    "name": "language_10075645",
+    "desc": "language_10079031"
+  },
+  {
+    "id": 515001,
+    "stepId": 12,
+    "nextStep": 0,
+    "picture": "",
+    "optionList": "",
+    "name": "",
+    "desc": "language_10079032"
+  }
+]

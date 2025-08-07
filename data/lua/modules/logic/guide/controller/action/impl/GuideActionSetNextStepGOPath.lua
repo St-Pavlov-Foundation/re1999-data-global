@@ -223,7 +223,7 @@ end
 function var_0_0.getMainSceneSkinItem(arg_13_0)
 	local var_13_0 = MainSceneSwitchListModel.instance:getFirstUnlockSceneIndex()
 
-	return string.format("UIRoot/POPUP_TOP/MainSwitchView/#go_container/mainsceneswitchview(Clone)/right/mask/#scroll_card/scrollcontent/cell%s/prefabInst", var_13_0 - 1)
+	return string.format("UIRoot/POPUP_TOP/MainSwitchView/#go_container/mainswitchclassifyview(Clone)/root/mainsceneswitchnewview(Clone)/right/mask/#scroll_card/scrollcontent/cell%s/prefabInst", var_13_0 - 1)
 end
 
 function var_0_0.getMainSceneBgmObj(arg_14_0)

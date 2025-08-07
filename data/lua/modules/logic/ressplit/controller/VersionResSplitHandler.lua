@@ -596,6 +596,10 @@ function var_0_1._fillStoryRes(arg_20_0, arg_20_1, arg_20_2)
 	local var_20_2 = arg_20_0._storyCfgMap[var_20_0]
 	local var_20_3 = arg_20_0._storyCfgMap[var_20_1]
 
+	if var_20_2 == nil or var_20_3 == nil then
+		return
+	end
+
 	StoryModel.instance:clearData()
 	StoryStepModel.instance:setStepList(var_20_2[3])
 	StoryGroupModel.instance:setGroupList(var_20_3)

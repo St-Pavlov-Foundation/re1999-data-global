@@ -66,11 +66,19 @@ end
 function var_0_0.addEvents(arg_2_0)
 	arg_2_0._btnbuy:AddClickListener(arg_2_0._btnbuyOnClick, arg_2_0)
 	arg_2_0._btnclose:AddClickListener(arg_2_0._btncloseOnClick, arg_2_0)
+
+	if arg_2_0._btnoverview then
+		arg_2_0._btnoverview:AddClickListener(arg_2_0._btnoverviewOnClick, arg_2_0)
+	end
 end
 
 function var_0_0.removeEvents(arg_3_0)
 	arg_3_0._btnbuy:RemoveClickListener()
 	arg_3_0._btnclose:RemoveClickListener()
+
+	if arg_3_0._btnoverview then
+		arg_3_0._btnoverview:RemoveClickListener()
+	end
 end
 
 function var_0_0._btnbuyOnClick(arg_4_0)
@@ -116,217 +124,176 @@ function var_0_0._btncloseOnClick(arg_6_0)
 	arg_6_0:closeThis()
 end
 
-function var_0_0._editableInitView(arg_7_0)
-	arg_7_0._simageleftbg:LoadImage(ResUrl.getCommonIcon("bg_1"))
-	arg_7_0._simagerightbg:LoadImage(ResUrl.getCommonIcon("bg_2"))
-
-	arg_7_0._productList = {}
-	arg_7_0._gooffTag = gohelper.findChild(arg_7_0.viewGO, "view/propinfo/#simage_icon/#go_offTag")
-	arg_7_0._txtoff = gohelper.findChildText(arg_7_0.viewGO, "view/propinfo/#simage_icon/#go_offTag/#txt_off")
-	arg_7_0._gotxtCost = gohelper.findChildText(arg_7_0.viewGO, "view/propinfo/#btn_buy/cost/txt")
-	arg_7_0._seasoncardGo = gohelper.findChild(arg_7_0.viewGO, "view/seasoncard")
-
-	local var_7_0 = gohelper.findChild(arg_7_0._seasoncardGo, "reward")
-
-	arg_7_0._seasoncard_txtleft = gohelper.findChildText(var_7_0, "left/txt")
-	arg_7_0._seasoncard_txtright = gohelper.findChildText(var_7_0, "right/txt")
-	arg_7_0._seasoncard_iconleft = gohelper.findChild(var_7_0, "left/#go_lefticon")
-	arg_7_0._seasoncard_iconleft2 = gohelper.findChild(var_7_0, "left/#go_lefticon2")
-	arg_7_0._seasoncard_goicon2new = gohelper.findChild(var_7_0, "left/#go_lefticon2/new")
-	arg_7_0._seasoncard_iconright = gohelper.findChild(var_7_0, "right/#go_righticon")
-	arg_7_0._seasoncard_iconpower = gohelper.findChild(var_7_0, "right/#go_powericon")
+function var_0_0._btnoverviewOnClick(arg_7_0)
+	if not string.nilorempty(arg_7_0._overviewJumpId) then
+		GameFacade.jumpByAdditionParam(arg_7_0._overviewJumpId)
+	end
 end
 
-function var_0_0.onUpdateParam(arg_8_0)
+function var_0_0._editableInitView(arg_8_0)
+	arg_8_0._simageleftbg:LoadImage(ResUrl.getCommonIcon("bg_1"))
+	arg_8_0._simagerightbg:LoadImage(ResUrl.getCommonIcon("bg_2"))
+
+	arg_8_0._productList = {}
+	arg_8_0._gooffTag = gohelper.findChild(arg_8_0.viewGO, "view/propinfo/#simage_icon/#go_offTag")
+	arg_8_0._txtoff = gohelper.findChildText(arg_8_0.viewGO, "view/propinfo/#simage_icon/#go_offTag/#txt_off")
+	arg_8_0._gotxtCost = gohelper.findChildText(arg_8_0.viewGO, "view/propinfo/#btn_buy/cost/txt")
+	arg_8_0._seasoncardGo = gohelper.findChild(arg_8_0.viewGO, "view/seasoncard")
+
+	local var_8_0 = gohelper.findChild(arg_8_0._seasoncardGo, "reward")
+
+	arg_8_0._seasoncard_txtleft = gohelper.findChildText(var_8_0, "left/txt")
+	arg_8_0._seasoncard_txtright = gohelper.findChildText(var_8_0, "right/txt")
+	arg_8_0._seasoncard_iconleft = gohelper.findChild(var_8_0, "left/#go_lefticon")
+	arg_8_0._seasoncard_iconleft2 = gohelper.findChild(var_8_0, "left/#go_lefticon2")
+	arg_8_0._seasoncard_goicon2new = gohelper.findChild(var_8_0, "left/#go_lefticon2/new")
+	arg_8_0._seasoncard_iconright = gohelper.findChild(var_8_0, "right/#go_righticon")
+	arg_8_0._seasoncard_iconpower = gohelper.findChild(var_8_0, "right/#go_powericon")
+	arg_8_0._btnoverview = gohelper.findChildButtonWithAudio(arg_8_0.viewGO, "view/#go_overview")
+end
+
+function var_0_0.onUpdateParam(arg_9_0)
 	return
 end
 
-function var_0_0.onOpen(arg_9_0)
-	arg_9_0._mo = arg_9_0.viewParam
+function var_0_0.onOpen(arg_10_0)
+	arg_10_0._mo = arg_10_0.viewParam
+	arg_10_0._overviewJumpId = arg_10_0._mo and arg_10_0._mo.config and arg_10_0._mo.config.overviewJumpId
 
 	StoreModel.instance:setCurBuyPackageId(nil)
-	StoreController.instance:statOpenChargeGoods(arg_9_0._mo.belongStoreId, arg_9_0._mo.config)
-	arg_9_0:addEventCb(PayController.instance, PayEvent.PayFinished, arg_9_0._payFinished, arg_9_0)
+	StoreController.instance:statOpenChargeGoods(arg_10_0._mo.belongStoreId, arg_10_0._mo.config)
+	arg_10_0:addEventCb(PayController.instance, PayEvent.PayFinished, arg_10_0._payFinished, arg_10_0)
 
-	arg_9_0._txtgoodsNameCn.text = arg_9_0._mo.config.name
+	arg_10_0._txtgoodsNameCn.text = arg_10_0._mo.config.name
 
-	arg_9_0._simageicon:LoadImage(ResUrl.getStorePackageIcon("detail_" .. arg_9_0._mo.config.bigImg), arg_9_0._loadiconCb, arg_9_0)
+	arg_10_0._simageicon:LoadImage(ResUrl.getStorePackageIcon("detail_" .. arg_10_0._mo.config.bigImg), arg_10_0._loadiconCb, arg_10_0)
 
-	if arg_9_0._mo.config.id == var_0_2 then
-		recthelper.setAnchor(arg_9_0._simageicon.transform, var_0_3, var_0_4)
+	if arg_10_0._mo.config.id == var_0_2 then
+		recthelper.setAnchor(arg_10_0._simageicon.transform, var_0_3, var_0_4)
 	end
 
-	if arg_9_0._mo.goodsId == StoreEnum.LittleMonthCardGoodsId or arg_9_0._mo.config.id == var_0_2 or arg_9_0._mo.config.type == StoreEnum.StoreEnum.StoreChargeType.DailyReleasePackage then
-		recthelper.setAnchor(arg_9_0._btnbuy.transform, 280.63, -232.8)
+	if arg_10_0._mo.goodsId == StoreEnum.LittleMonthCardGoodsId or arg_10_0._mo.config.id == var_0_2 or arg_10_0._mo.config.type == StoreEnum.StoreEnum.StoreChargeType.DailyReleasePackage then
+		recthelper.setAnchor(arg_10_0._btnbuy.transform, 280.63, -232.8)
 	end
 
-	arg_9_0._simageicon.gameObject:GetComponent(gohelper.Type_Image):SetNativeSize()
-	arg_9_0:_refreshPriceArea()
-	arg_9_0:_refreshTagArea()
+	arg_10_0._simageicon.gameObject:GetComponent(gohelper.Type_Image):SetNativeSize()
+	arg_10_0:_refreshPriceArea()
+	arg_10_0:_refreshTagArea()
 
-	local var_9_0 = arg_9_0._mo.goodsId == StoreEnum.MonthCardGoodsId
-	local var_9_1 = arg_9_0._mo.goodsId == StoreEnum.SeasonCardGoodsId
-	local var_9_2 = arg_9_0._mo.goodsId == StoreEnum.LittleMonthCardGoodsId
-	local var_9_3 = arg_9_0._mo.config.type == StoreEnum.StoreEnum.StoreChargeType.DailyReleasePackage
-	local var_9_4 = arg_9_0._mo.id == StoreEnum.NewbiePackId
-	local var_9_5 = not string.nilorempty(arg_9_0._mo.config.detailDesc)
+	local var_10_0 = arg_10_0._mo.goodsId == StoreEnum.MonthCardGoodsId
+	local var_10_1 = arg_10_0._mo.goodsId == StoreEnum.SeasonCardGoodsId
+	local var_10_2 = arg_10_0._mo.goodsId == StoreEnum.LittleMonthCardGoodsId
+	local var_10_3 = arg_10_0._mo.config.type == StoreEnum.StoreEnum.StoreChargeType.DailyReleasePackage
+	local var_10_4 = arg_10_0._mo.id == StoreEnum.NewbiePackId
+	local var_10_5 = not string.nilorempty(arg_10_0._mo.config.detailDesc)
 
-	gohelper.setActive(arg_9_0._gonormal, false)
-	gohelper.setActive(arg_9_0._goDetailDescNormal, false)
-	gohelper.setActive(arg_9_0._goyueka, false)
-	gohelper.setActive(arg_9_0._godailyrelease, false)
-	gohelper.setActive(arg_9_0._golittlemonthcard, false)
-	gohelper.setActive(arg_9_0._seasoncardGo, false)
+	gohelper.setActive(arg_10_0._gonormal, false)
+	gohelper.setActive(arg_10_0._goDetailDescNormal, false)
+	gohelper.setActive(arg_10_0._goyueka, false)
+	gohelper.setActive(arg_10_0._godailyrelease, false)
+	gohelper.setActive(arg_10_0._golittlemonthcard, false)
+	gohelper.setActive(arg_10_0._seasoncardGo, false)
 
-	if var_9_0 then
-		gohelper.setActive(arg_9_0._goyueka, true)
-		arg_9_0:_updateMonthCard()
-	elseif var_9_1 then
-		gohelper.setActive(arg_9_0._seasoncardGo, true)
-		arg_9_0:_updateSeasonCard()
-	elseif var_9_2 then
-		gohelper.setActive(arg_9_0._golittlemonthcard, true)
-		arg_9_0:_updateLittleMonthCard()
-	elseif var_9_3 then
-		gohelper.setActive(arg_9_0._godailyrelease, true)
-		arg_9_0:_updateDailyReleasePackage()
-	elseif var_9_5 then
-		gohelper.setActive(arg_9_0._goDetailDescNormal, true)
-		arg_9_0:_updateDetailDescNormalPack()
+	if var_10_0 then
+		gohelper.setActive(arg_10_0._goyueka, true)
+		arg_10_0:_updateMonthCard()
+	elseif var_10_1 then
+		gohelper.setActive(arg_10_0._seasoncardGo, true)
+		arg_10_0:_updateSeasonCard()
+	elseif var_10_2 then
+		gohelper.setActive(arg_10_0._golittlemonthcard, true)
+		arg_10_0:_updateLittleMonthCard()
+	elseif var_10_3 then
+		gohelper.setActive(arg_10_0._godailyrelease, true)
+		arg_10_0:_updateDailyReleasePackage()
+	elseif var_10_5 then
+		gohelper.setActive(arg_10_0._goDetailDescNormal, true)
+		arg_10_0:_updateDetailDescNormalPack()
 	else
-		gohelper.setActive(arg_9_0._gonormal, true)
-		arg_9_0:_updateNormal()
+		gohelper.setActive(arg_10_0._gonormal, true)
+		arg_10_0:_updateNormal()
 	end
 
-	gohelper.setActive(arg_9_0._gonewbiePick, var_9_4)
-	arg_9_0:refreshSkinTips(arg_9_0._mo)
+	gohelper.setActive(arg_10_0._gonewbiePick, var_10_4)
+	arg_10_0:refreshSkinTips(arg_10_0._mo)
+
+	if arg_10_0._btnoverview then
+		gohelper.setActive(arg_10_0._btnoverview, not string.nilorempty(arg_10_0._overviewJumpId))
+	end
 end
 
-function var_0_0._refreshPriceArea(arg_10_0)
-	local var_10_0 = arg_10_0._mo.cost
+function var_0_0._refreshPriceArea(arg_11_0)
+	local var_11_0 = arg_11_0._mo.cost
 
-	if arg_10_0._mo.isChargeGoods then
-		gohelper.setActive(arg_10_0._txtprice.gameObject, StoreConfig.instance:getChargeGoodsOriginalCost(arg_10_0._mo.config.id) > 0)
+	if arg_11_0._mo.isChargeGoods then
+		gohelper.setActive(arg_11_0._txtprice.gameObject, StoreConfig.instance:getChargeGoodsOriginalCost(arg_11_0._mo.config.id) > 0)
 	else
-		gohelper.setActive(arg_10_0._txtprice.gameObject, arg_10_0._mo.config.originalCost > 0)
+		gohelper.setActive(arg_11_0._txtprice.gameObject, arg_11_0._mo.config.originalCost > 0)
 	end
 
-	gohelper.setActive(arg_10_0._gotxtCost.gameObject, string.nilorempty(var_10_0) == false)
+	gohelper.setActive(arg_11_0._gotxtCost.gameObject, string.nilorempty(var_11_0) == false)
 
-	if string.nilorempty(var_10_0) or var_10_0 == 0 then
-		arg_10_0._txtmaterialNum.text = luaLang("store_free")
+	if string.nilorempty(var_11_0) or var_11_0 == 0 then
+		arg_11_0._txtmaterialNum.text = luaLang("store_free")
 
-		gohelper.setActive(arg_10_0._imagematerial.gameObject, false)
-	elseif arg_10_0._mo.isChargeGoods then
-		local var_10_1 = PayModel.instance:getProductOriginPriceSymbol(arg_10_0._mo.id)
-		local var_10_2, var_10_3, var_10_4 = PayModel.instance:getProductOriginPriceNum(arg_10_0._mo.id)
+		gohelper.setActive(arg_11_0._imagematerial.gameObject, false)
+	elseif arg_11_0._mo.isChargeGoods then
+		local var_11_1 = PayModel.instance:getProductOriginPriceSymbol(arg_11_0._mo.id)
+		local var_11_2, var_11_3, var_11_4 = PayModel.instance:getProductOriginPriceNum(arg_11_0._mo.id)
 
-		arg_10_0._txtmaterialNum.text = string.format("%s%s", var_10_1, var_10_3)
+		arg_11_0._txtmaterialNum.text = string.format("%s%s", var_11_1, var_11_3)
 
-		local var_10_5 = var_10_2 * (StoreConfig.instance:getChargeGoodsOriginalCost(arg_10_0._mo.config.id) / var_10_0)
+		local var_11_5 = var_11_2 * (StoreConfig.instance:getChargeGoodsOriginalCost(arg_11_0._mo.config.id) / var_11_0)
 
-		if var_10_4 then
-			var_10_5 = math.ceil(var_10_5)
-			arg_10_0._txtprice.text = string.format("%s%s", var_10_1, string.format("%s", var_10_5))
+		if var_11_4 then
+			var_11_5 = math.ceil(var_11_5)
+			arg_11_0._txtprice.text = string.format("%s%s", var_11_1, string.format("%s", var_11_5))
 		else
-			arg_10_0._txtprice.text = string.format("%s%s", var_10_1, string.format("%.2f", var_10_5))
+			arg_11_0._txtprice.text = string.format("%s%s", var_11_1, string.format("%.2f", var_11_5))
 		end
 
-		gohelper.setActive(arg_10_0._imagematerial.gameObject, false)
+		gohelper.setActive(arg_11_0._imagematerial.gameObject, false)
 	else
-		local var_10_6 = string.split(var_10_0, "|")
-		local var_10_7 = var_10_6[arg_10_0._mo.buyCount + 1] or var_10_6[#var_10_6]
-		local var_10_8 = string.splitToNumber(var_10_7, "#")
+		local var_11_6 = string.split(var_11_0, "|")
+		local var_11_7 = var_11_6[arg_11_0._mo.buyCount + 1] or var_11_6[#var_11_6]
+		local var_11_8 = string.splitToNumber(var_11_7, "#")
 
-		arg_10_0._costType = var_10_8[1]
-		arg_10_0._costId = var_10_8[2]
-		arg_10_0._costQuantity = var_10_8[3]
+		arg_11_0._costType = var_11_8[1]
+		arg_11_0._costId = var_11_8[2]
+		arg_11_0._costQuantity = var_11_8[3]
 
-		local var_10_9, var_10_10 = ItemModel.instance:getItemConfigAndIcon(arg_10_0._costType, arg_10_0._costId)
-		local var_10_11 = var_10_9.icon
-		local var_10_12 = string.format("%s_1", var_10_11)
+		local var_11_9, var_11_10 = ItemModel.instance:getItemConfigAndIcon(arg_11_0._costType, arg_11_0._costId)
+		local var_11_11 = var_11_9.icon
+		local var_11_12 = string.format("%s_1", var_11_11)
 
-		UISpriteSetMgr.instance:setCurrencyItemSprite(arg_10_0._imagematerial, var_10_12)
+		UISpriteSetMgr.instance:setCurrencyItemSprite(arg_11_0._imagematerial, var_11_12)
 
-		arg_10_0._txtmaterialNum.text = arg_10_0._costQuantity
-		arg_10_0._txtprice.text = arg_10_0._mo.config.originalCost
+		arg_11_0._txtmaterialNum.text = arg_11_0._costQuantity
+		arg_11_0._txtprice.text = arg_11_0._mo.config.originalCost
 
-		gohelper.setActive(arg_10_0._imagematerial.gameObject, true)
+		gohelper.setActive(arg_11_0._imagematerial.gameObject, true)
 
-		if ItemModel.instance:getItemQuantity(arg_10_0._costType, arg_10_0._costId) >= arg_10_0._costQuantity then
-			SLFramework.UGUI.GuiHelper.SetColor(arg_10_0._txtmaterialNum, "#393939")
+		if ItemModel.instance:getItemQuantity(arg_11_0._costType, arg_11_0._costId) >= arg_11_0._costQuantity then
+			SLFramework.UGUI.GuiHelper.SetColor(arg_11_0._txtmaterialNum, "#393939")
 		else
-			SLFramework.UGUI.GuiHelper.SetColor(arg_10_0._txtmaterialNum, "#bf2e11")
+			SLFramework.UGUI.GuiHelper.SetColor(arg_11_0._txtmaterialNum, "#bf2e11")
 		end
 	end
 end
 
-function var_0_0._refreshTagArea(arg_11_0)
-	local var_11_0 = tonumber(arg_11_0._mo:getDiscount())
+function var_0_0._refreshTagArea(arg_12_0)
+	local var_12_0 = tonumber(arg_12_0._mo:getDiscount())
 
-	if var_11_0 and var_11_0 > 0 then
-		gohelper.setActive(arg_11_0._gooffTag, true)
+	if var_12_0 and var_12_0 > 0 then
+		gohelper.setActive(arg_12_0._gooffTag, true)
 
-		arg_11_0._txtoff.text = string.format("-%d%%", var_11_0)
+		arg_12_0._txtoff.text = string.format("-%d%%", var_12_0)
 	else
-		gohelper.setActive(arg_11_0._gooffTag, false)
+		gohelper.setActive(arg_12_0._gooffTag, false)
 	end
 end
 
-function var_0_0._updateNormal(arg_12_0)
-	local var_12_0 = arg_12_0._mo:isLevelOpen()
-
-	gohelper.setActive(arg_12_0._btnbuy.gameObject, var_12_0)
-	gohelper.setActive(arg_12_0._gotips, var_12_0 == false)
-
-	if var_12_0 == false then
-		arg_12_0._txtlocktips.text = formatLuaLang("account_level_unlock", arg_12_0._mo.buyLevel)
-	end
-
-	if arg_12_0._mo.isChargeGoods and var_12_0 then
-		arg_12_0.isPreGoodsSoldOut = arg_12_0._mo:checkPreGoodsSoldOut()
-
-		gohelper.setActive(arg_12_0._btnbuy.gameObject, arg_12_0.isPreGoodsSoldOut)
-		gohelper.setActive(arg_12_0._gotips, arg_12_0.isPreGoodsSoldOut == false)
-
-		if arg_12_0.isPreGoodsSoldOut == false then
-			local var_12_1 = StoreConfig.instance:getChargeGoodsConfig(arg_12_0._mo.config.preGoodsId)
-
-			arg_12_0._txtlocktips.text = formatLuaLang("packagestoregoods_pregoods_tips", var_12_1.name)
-		end
-	end
-
-	local var_12_2 = gohelper.findChild(arg_12_0._gonormal, "info/remain/#go_rightbg")
-	local var_12_3 = gohelper.findChildText(arg_12_0._gonormal, "info/remain/#go_rightbg/#txt_remaintime")
-
-	if arg_12_0._mo.offlineTime > 0 then
-		local var_12_4 = math.floor(arg_12_0._mo.offlineTime - ServerTime.now())
-
-		gohelper.setActive(var_12_2, true)
-
-		var_12_3.text = string.format("%s%s", TimeUtil.secondToRoughTime(var_12_4))
-	else
-		gohelper.setActive(var_12_2, false)
-	end
-
-	local var_12_5 = gohelper.findChild(arg_12_0._gonormal, "info/remain/#go_leftbg")
-	local var_12_6 = gohelper.findChildText(arg_12_0._gonormal, "info/remain/#go_leftbg/#txt_remain")
-	local var_12_7 = gohelper.findChild(arg_12_0._gonormal, "info/remain")
-
-	arg_12_0:_updateNormalPackCommon(var_12_5, var_12_6, var_12_7)
-
-	local var_12_8 = gohelper.findChild(arg_12_0._gonormal, "info/scroll/#scroll_product/product")
-	local var_12_9 = gohelper.findChild(arg_12_0._gonormal, "info/scroll/#scroll_product/Viewport/Content")
-
-	gohelper.setActive(var_12_8, false)
-	arg_12_0:_updateNormalPackGoods(var_12_8, var_12_9)
-end
-
-function var_0_0._updateDetailDescNormalPack(arg_13_0)
-	gohelper.setActive(arg_13_0._goLine1, false)
-	gohelper.setActive(arg_13_0._gopropInfoTitle, false)
-	gohelper.setActive(arg_13_0._gopropInfoTitleLayout, false)
-
+function var_0_0._updateNormal(arg_13_0)
 	local var_13_0 = arg_13_0._mo:isLevelOpen()
 
 	gohelper.setActive(arg_13_0._btnbuy.gameObject, var_13_0)
@@ -349,283 +316,274 @@ function var_0_0._updateDetailDescNormalPack(arg_13_0)
 		end
 	end
 
-	local var_13_2 = gohelper.findChildText(arg_13_0._goDetailDescNormal, "info/remain/#go_rightbg/#txt_remaintime")
-	local var_13_3 = gohelper.findChild(arg_13_0._goDetailDescNormal, "info/remain/#go_rightbg")
+	local var_13_2 = gohelper.findChild(arg_13_0._gonormal, "info/remain/#go_rightbg")
+	local var_13_3 = gohelper.findChildText(arg_13_0._gonormal, "info/remain/#go_rightbg/#txt_remaintime")
 
 	if arg_13_0._mo.offlineTime > 0 then
 		local var_13_4 = math.floor(arg_13_0._mo.offlineTime - ServerTime.now())
 
-		gohelper.setActive(var_13_3, true)
+		gohelper.setActive(var_13_2, true)
 
-		var_13_2.text = string.format("%s%s", TimeUtil.secondToRoughTime(var_13_4))
+		var_13_3.text = string.format("%s%s", TimeUtil.secondToRoughTime(var_13_4))
 	else
-		gohelper.setActive(var_13_3, false)
+		gohelper.setActive(var_13_2, false)
 	end
 
-	local var_13_5 = gohelper.findChild(arg_13_0._goDetailDescNormal, "info/remain")
-	local var_13_6 = gohelper.findChild(arg_13_0._goDetailDescNormal, "info/remain/#go_leftbg")
-	local var_13_7 = gohelper.findChildText(arg_13_0._goDetailDescNormal, "info/remain/#go_leftbg/#txt_remain")
+	local var_13_5 = gohelper.findChild(arg_13_0._gonormal, "info/remain/#go_leftbg")
+	local var_13_6 = gohelper.findChildText(arg_13_0._gonormal, "info/remain/#go_leftbg/#txt_remain")
+	local var_13_7 = gohelper.findChild(arg_13_0._gonormal, "info/remain")
 
-	arg_13_0:_updateNormalPackCommon(var_13_6, var_13_7, var_13_5)
+	arg_13_0:_updateNormalPackCommon(var_13_5, var_13_6, var_13_7)
 
-	local var_13_8 = gohelper.findChild(arg_13_0._goDetailDescNormal, "info/scroll/#scroll_product/product")
-	local var_13_9 = gohelper.findChild(arg_13_0._goDetailDescNormal, "info/scroll/#scroll_product/Viewport/Content")
+	local var_13_8 = gohelper.findChild(arg_13_0._gonormal, "info/scroll/#scroll_product/product")
+	local var_13_9 = gohelper.findChild(arg_13_0._gonormal, "info/scroll/#scroll_product/Viewport/Content")
 
 	gohelper.setActive(var_13_8, false)
 	arg_13_0:_updateNormalPackGoods(var_13_8, var_13_9)
-
-	local var_13_10 = gohelper.findChild(arg_13_0._goDetailDescNormal, "info/desc/info/txt")
-	local var_13_11 = arg_13_0._mo.config.detailDesc
-	local var_13_12 = string.split(var_13_11, "\n")
-
-	gohelper.CreateObjList(nil, function(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
-		gohelper.findChildText(arg_14_1, "").text = arg_14_2
-	end, var_13_12, nil, var_13_10)
-
-	gohelper.findChildText(arg_13_0._goDetailDescNormal, "title/#txt_goodsNameCn").text = arg_13_0._mo.config.name
 end
 
-function var_0_0._updateNormalPackCommon(arg_15_0, arg_15_1, arg_15_2, arg_15_3)
-	local var_15_0 = arg_15_0._mo.maxBuyCount
-	local var_15_1 = var_15_0 - arg_15_0._mo.buyCount
-	local var_15_2
+function var_0_0._updateDetailDescNormalPack(arg_14_0)
+	gohelper.setActive(arg_14_0._goLine1, false)
+	gohelper.setActive(arg_14_0._gopropInfoTitle, false)
+	gohelper.setActive(arg_14_0._gopropInfoTitleLayout, false)
 
-	if arg_15_0._mo.isChargeGoods then
-		var_15_2 = StoreConfig.instance:getChargeRemainText(var_15_0, arg_15_0._mo.refreshTime, var_15_1, arg_15_0._mo.offlineTime)
-	else
-		var_15_2 = StoreConfig.instance:getRemainText(var_15_0, arg_15_0._mo.refreshTime, var_15_1, arg_15_0._mo.offlineTime)
+	local var_14_0 = arg_14_0._mo:isLevelOpen()
+
+	gohelper.setActive(arg_14_0._btnbuy.gameObject, var_14_0)
+	gohelper.setActive(arg_14_0._gotips, var_14_0 == false)
+
+	if var_14_0 == false then
+		arg_14_0._txtlocktips.text = formatLuaLang("account_level_unlock", arg_14_0._mo.buyLevel)
 	end
 
-	if string.nilorempty(var_15_2) then
-		gohelper.setActive(arg_15_1, false)
-		gohelper.setActive(arg_15_2.gameObject, false)
-		gohelper.setActive(arg_15_3, arg_15_0._mo.offlineTime > 0)
-	else
-		gohelper.setActive(arg_15_1, true)
-		gohelper.setActive(arg_15_2.gameObject, true)
+	if arg_14_0._mo.isChargeGoods and var_14_0 then
+		arg_14_0.isPreGoodsSoldOut = arg_14_0._mo:checkPreGoodsSoldOut()
 
-		arg_15_2.text = var_15_2
+		gohelper.setActive(arg_14_0._btnbuy.gameObject, arg_14_0.isPreGoodsSoldOut)
+		gohelper.setActive(arg_14_0._gotips, arg_14_0.isPreGoodsSoldOut == false)
+
+		if arg_14_0.isPreGoodsSoldOut == false then
+			local var_14_1 = StoreConfig.instance:getChargeGoodsConfig(arg_14_0._mo.config.preGoodsId)
+
+			arg_14_0._txtlocktips.text = formatLuaLang("packagestoregoods_pregoods_tips", var_14_1.name)
+		end
+	end
+
+	local var_14_2 = gohelper.findChildText(arg_14_0._goDetailDescNormal, "info/remain/#go_rightbg/#txt_remaintime")
+	local var_14_3 = gohelper.findChild(arg_14_0._goDetailDescNormal, "info/remain/#go_rightbg")
+
+	if arg_14_0._mo.offlineTime > 0 then
+		local var_14_4 = math.floor(arg_14_0._mo.offlineTime - ServerTime.now())
+
+		gohelper.setActive(var_14_3, true)
+
+		var_14_2.text = string.format("%s%s", TimeUtil.secondToRoughTime(var_14_4))
+	else
+		gohelper.setActive(var_14_3, false)
+	end
+
+	local var_14_5 = gohelper.findChild(arg_14_0._goDetailDescNormal, "info/remain")
+	local var_14_6 = gohelper.findChild(arg_14_0._goDetailDescNormal, "info/remain/#go_leftbg")
+	local var_14_7 = gohelper.findChildText(arg_14_0._goDetailDescNormal, "info/remain/#go_leftbg/#txt_remain")
+
+	arg_14_0:_updateNormalPackCommon(var_14_6, var_14_7, var_14_5)
+
+	local var_14_8 = gohelper.findChild(arg_14_0._goDetailDescNormal, "info/scroll/#scroll_product/product")
+	local var_14_9 = gohelper.findChild(arg_14_0._goDetailDescNormal, "info/scroll/#scroll_product/Viewport/Content")
+
+	gohelper.setActive(var_14_8, false)
+	arg_14_0:_updateNormalPackGoods(var_14_8, var_14_9)
+
+	local var_14_10 = gohelper.findChild(arg_14_0._goDetailDescNormal, "info/desc/info/txt")
+	local var_14_11 = arg_14_0._mo.config.detailDesc
+	local var_14_12 = string.split(var_14_11, "\n")
+
+	gohelper.CreateObjList(nil, function(arg_15_0, arg_15_1, arg_15_2, arg_15_3)
+		gohelper.findChildText(arg_15_1, "").text = arg_15_2
+	end, var_14_12, nil, var_14_10)
+
+	gohelper.findChildText(arg_14_0._goDetailDescNormal, "title/#txt_goodsNameCn").text = arg_14_0._mo.config.name
+end
+
+function var_0_0._updateNormalPackCommon(arg_16_0, arg_16_1, arg_16_2, arg_16_3)
+	local var_16_0 = arg_16_0._mo.maxBuyCount
+	local var_16_1 = var_16_0 - arg_16_0._mo.buyCount
+	local var_16_2
+
+	if arg_16_0._mo.isChargeGoods then
+		var_16_2 = StoreConfig.instance:getChargeRemainText(var_16_0, arg_16_0._mo.refreshTime, var_16_1, arg_16_0._mo.offlineTime)
+	else
+		var_16_2 = StoreConfig.instance:getRemainText(var_16_0, arg_16_0._mo.refreshTime, var_16_1, arg_16_0._mo.offlineTime)
+	end
+
+	if string.nilorempty(var_16_2) then
+		gohelper.setActive(arg_16_1, false)
+		gohelper.setActive(arg_16_2.gameObject, false)
+		gohelper.setActive(arg_16_3, arg_16_0._mo.offlineTime > 0)
+	else
+		gohelper.setActive(arg_16_1, true)
+		gohelper.setActive(arg_16_2.gameObject, true)
+
+		arg_16_2.text = var_16_2
 	end
 end
 
-function var_0_0._updateNormalPackGoods(arg_16_0, arg_16_1, arg_16_2)
-	local var_16_0 = arg_16_0._mo.config.product and GameUtil.splitString2(arg_16_0._mo.config.product) or {}
+function var_0_0._updateNormalPackGoods(arg_17_0, arg_17_1, arg_17_2)
+	local var_17_0 = arg_17_0._mo.config.product and GameUtil.splitString2(arg_17_0._mo.config.product) or {}
 
-	for iter_16_0, iter_16_1 in ipairs(var_16_0) do
-		local var_16_1 = arg_16_0._productList[iter_16_0]
+	for iter_17_0, iter_17_1 in ipairs(var_17_0) do
+		local var_17_1 = arg_17_0._productList[iter_17_0]
 
-		if var_16_1 == nil then
-			var_16_1 = PackageStoreGoodsViewItem.New()
+		if var_17_1 == nil then
+			var_17_1 = PackageStoreGoodsViewItem.New()
 
-			local var_16_2 = gohelper.clone(arg_16_1, arg_16_2, "productItem")
+			local var_17_2 = gohelper.clone(arg_17_1, arg_17_2, "productItem")
 
-			var_16_1:init(var_16_2)
+			var_17_1:init(var_17_2)
 
-			arg_16_0._productList[iter_16_0] = var_16_1
+			arg_17_0._productList[iter_17_0] = var_17_1
 		end
 
-		var_16_1:onUpdateMO(iter_16_1)
-		var_16_1:setActive(true)
+		var_17_1:onUpdateMO(iter_17_1)
+		var_17_1:setActive(true)
 	end
 
-	for iter_16_2 = #var_16_0 + 1, #arg_16_0._productList do
-		arg_16_0._productList[iter_16_2]:setActive(false)
+	for iter_17_2 = #var_17_0 + 1, #arg_17_0._productList do
+		arg_17_0._productList[iter_17_2]:setActive(false)
 	end
 end
 
-function var_0_0._updateMonthCard(arg_17_0)
-	gohelper.setActive(arg_17_0._btnbuy.gameObject, true)
-	gohelper.setActive(arg_17_0._gotips, false)
-
-	local var_17_0 = StoreConfig.instance:getMonthCardConfig(StoreEnum.MonthCardGoodsId)
-	local var_17_1 = string.split(var_17_0.onceBonus, "|")[1]
-	local var_17_2 = string.splitToNumber(var_17_1, "#")
-	local var_17_3 = var_17_2[1]
-	local var_17_4 = var_17_2[2]
-	local var_17_5 = var_17_2[3]
-
-	arg_17_0._monthCardItemIcon = arg_17_0._monthCardItemIcon or IconMgr.instance:getCommonItemIcon(arg_17_0._iconleft)
-
-	arg_17_0:_setIcon(arg_17_0._monthCardItemIcon, var_17_3, var_17_4, var_17_5)
-
-	local var_17_6 = string.split(var_17_0.onceBonus, "|")[2]
-	local var_17_7 = string.splitToNumber(var_17_6, "#")
-	local var_17_8 = var_17_7[1]
-	local var_17_9 = var_17_7[2]
-	local var_17_10 = var_17_7[3]
-
-	arg_17_0._monthCardItemIcon2 = arg_17_0._monthCardItemIcon2 or IconMgr.instance:getCommonItemIcon(arg_17_0._iconleft2)
-
-	gohelper.setAsFirstSibling(arg_17_0._monthCardItemIcon2.go)
-	arg_17_0:_setIcon(arg_17_0._monthCardItemIcon2, var_17_8, var_17_9, var_17_10)
-
-	local var_17_11 = StoreHelper.checkMonthCardLevelUpTagOpen()
-
-	gohelper.setActive(arg_17_0._goicon2new, var_17_11)
-
-	local var_17_12 = string.split(var_17_0.dailyBonus, "|")[1]
-	local var_17_13 = string.splitToNumber(var_17_12, "#")
-	local var_17_14 = var_17_13[1]
-	local var_17_15 = var_17_13[2]
-	local var_17_16 = var_17_13[3]
-
-	arg_17_0._monthCardDailyItemIcon = arg_17_0._monthCardDailyItemIcon or IconMgr.instance:getCommonItemIcon(arg_17_0._iconright)
-
-	arg_17_0:_setIcon(arg_17_0._monthCardDailyItemIcon, var_17_14, var_17_15, var_17_16)
-
-	local var_17_17 = string.split(var_17_0.dailyBonus, "|")[2]
-	local var_17_18 = string.splitToNumber(var_17_17, "#")
-	local var_17_19 = var_17_18[1]
-	local var_17_20 = var_17_18[2]
-	local var_17_21 = var_17_18[3]
-
-	arg_17_0._monthCardPowerItemIcon = arg_17_0._monthCardPowerItemIcon or IconMgr.instance:getCommonItemIcon(arg_17_0._iconpower)
-
-	arg_17_0:_setIcon(arg_17_0._monthCardPowerItemIcon, var_17_19, var_17_20, var_17_21)
-end
-
-function var_0_0._updateLittleMonthCard(arg_18_0)
+function var_0_0._updateMonthCard(arg_18_0)
 	gohelper.setActive(arg_18_0._btnbuy.gameObject, true)
 	gohelper.setActive(arg_18_0._gotips, false)
-	gohelper.setActive(arg_18_0._golittlemonthcardicon2new, false)
 
-	local var_18_0 = StoreConfig.instance:getMonthCardAddConfig(StoreEnum.LittleMonthCardGoodsId)
-	local var_18_1 = StoreConfig.instance:getMonthCardConfig(StoreEnum.MonthCardGoodsId)
-	local var_18_2 = string.split(var_18_0.onceBonus, "|")[1]
-	local var_18_3 = string.splitToNumber(var_18_2, "#")
-	local var_18_4 = var_18_3[1]
-	local var_18_5 = var_18_3[2]
-	local var_18_6 = var_18_3[3]
+	local var_18_0 = StoreConfig.instance:getMonthCardConfig(StoreEnum.MonthCardGoodsId)
+	local var_18_1 = string.split(var_18_0.onceBonus, "|")[1]
+	local var_18_2 = string.splitToNumber(var_18_1, "#")
+	local var_18_3 = var_18_2[1]
+	local var_18_4 = var_18_2[2]
+	local var_18_5 = var_18_2[3]
 
-	arg_18_0._littleMonthCardItemIcon = arg_18_0._littleMonthCardItemIcon or IconMgr.instance:getCommonItemIcon(arg_18_0._littlemonthcardiconleft)
+	arg_18_0._monthCardItemIcon = arg_18_0._monthCardItemIcon or IconMgr.instance:getCommonItemIcon(arg_18_0._iconleft)
 
-	arg_18_0:_setIcon(arg_18_0._littleMonthCardItemIcon, var_18_4, var_18_5, var_18_6)
+	arg_18_0:_setIcon(arg_18_0._monthCardItemIcon, var_18_3, var_18_4, var_18_5)
 
-	local var_18_7 = string.split(var_18_0.onceBonus, "|")[2]
-	local var_18_8 = string.splitToNumber(var_18_7, "#")
-	local var_18_9 = var_18_8[1]
-	local var_18_10 = var_18_8[2]
-	local var_18_11 = var_18_8[3]
+	local var_18_6 = string.split(var_18_0.onceBonus, "|")[2]
+	local var_18_7 = string.splitToNumber(var_18_6, "#")
+	local var_18_8 = var_18_7[1]
+	local var_18_9 = var_18_7[2]
+	local var_18_10 = var_18_7[3]
 
-	arg_18_0._littleMonthCardItemIcon2 = arg_18_0._littleMonthCardItemIcon2 or IconMgr.instance:getCommonItemIcon(arg_18_0._littlemonthcardiconleft2)
+	arg_18_0._monthCardItemIcon2 = arg_18_0._monthCardItemIcon2 or IconMgr.instance:getCommonItemIcon(arg_18_0._iconleft2)
 
-	gohelper.setAsFirstSibling(arg_18_0._littleMonthCardItemIcon2.go)
-	arg_18_0:_setIcon(arg_18_0._littleMonthCardItemIcon2, var_18_9, var_18_10, var_18_11)
+	gohelper.setAsFirstSibling(arg_18_0._monthCardItemIcon2.go)
+	arg_18_0:_setIcon(arg_18_0._monthCardItemIcon2, var_18_8, var_18_9, var_18_10)
 
-	local var_18_12 = string.split(var_18_1.dailyBonus, "|")[1]
+	local var_18_11 = StoreHelper.checkMonthCardLevelUpTagOpen()
+
+	gohelper.setActive(arg_18_0._goicon2new, var_18_11)
+
+	local var_18_12 = string.split(var_18_0.dailyBonus, "|")[1]
 	local var_18_13 = string.splitToNumber(var_18_12, "#")
 	local var_18_14 = var_18_13[1]
 	local var_18_15 = var_18_13[2]
 	local var_18_16 = var_18_13[3]
 
-	arg_18_0._littleMonthCardDailyItemIcon = arg_18_0._littleMonthCardDailyItemIcon or IconMgr.instance:getCommonItemIcon(arg_18_0._littlemonthcardiconright)
+	arg_18_0._monthCardDailyItemIcon = arg_18_0._monthCardDailyItemIcon or IconMgr.instance:getCommonItemIcon(arg_18_0._iconright)
 
-	arg_18_0:_setIcon(arg_18_0._littleMonthCardDailyItemIcon, var_18_14, var_18_15, var_18_16)
+	arg_18_0:_setIcon(arg_18_0._monthCardDailyItemIcon, var_18_14, var_18_15, var_18_16)
 
-	local var_18_17 = string.split(var_18_1.dailyBonus, "|")[2]
+	local var_18_17 = string.split(var_18_0.dailyBonus, "|")[2]
 	local var_18_18 = string.splitToNumber(var_18_17, "#")
 	local var_18_19 = var_18_18[1]
 	local var_18_20 = var_18_18[2]
 	local var_18_21 = var_18_18[3]
 
-	arg_18_0._littleMonthCardPowerItemIcon = arg_18_0._littleMonthCardPowerItemIcon or IconMgr.instance:getCommonItemIcon(arg_18_0._littlemonthcardiconpower)
+	arg_18_0._monthCardPowerItemIcon = arg_18_0._monthCardPowerItemIcon or IconMgr.instance:getCommonItemIcon(arg_18_0._iconpower)
 
-	arg_18_0:_setIcon(arg_18_0._littleMonthCardPowerItemIcon, var_18_19, var_18_20, var_18_21)
+	arg_18_0:_setIcon(arg_18_0._monthCardPowerItemIcon, var_18_19, var_18_20, var_18_21)
 end
 
-function var_0_0._updateSeasonCard(arg_19_0)
-	local var_19_0 = StoreConfig.instance:getSeasonCardMultiFactor()
-
+function var_0_0._updateLittleMonthCard(arg_19_0)
 	gohelper.setActive(arg_19_0._btnbuy.gameObject, true)
 	gohelper.setActive(arg_19_0._gotips, false)
+	gohelper.setActive(arg_19_0._golittlemonthcardicon2new, false)
 
+	local var_19_0 = StoreConfig.instance:getMonthCardAddConfig(StoreEnum.LittleMonthCardGoodsId)
 	local var_19_1 = StoreConfig.instance:getMonthCardConfig(StoreEnum.MonthCardGoodsId)
-	local var_19_2 = string.split(var_19_1.onceBonus, "|")[1]
+	local var_19_2 = string.split(var_19_0.onceBonus, "|")[1]
 	local var_19_3 = string.splitToNumber(var_19_2, "#")
 	local var_19_4 = var_19_3[1]
 	local var_19_5 = var_19_3[2]
-	local var_19_6 = var_19_3[3] * var_19_0
+	local var_19_6 = var_19_3[3]
 
-	arg_19_0._monthCardItemIcon = arg_19_0._monthCardItemIcon or IconMgr.instance:getCommonItemIcon(arg_19_0._seasoncard_iconleft)
+	arg_19_0._littleMonthCardItemIcon = arg_19_0._littleMonthCardItemIcon or IconMgr.instance:getCommonItemIcon(arg_19_0._littlemonthcardiconleft)
 
-	arg_19_0:_setIcon(arg_19_0._monthCardItemIcon, var_19_4, var_19_5, var_19_6)
+	arg_19_0:_setIcon(arg_19_0._littleMonthCardItemIcon, var_19_4, var_19_5, var_19_6)
 
-	local var_19_7 = string.split(var_19_1.onceBonus, "|")[2]
+	local var_19_7 = string.split(var_19_0.onceBonus, "|")[2]
 	local var_19_8 = string.splitToNumber(var_19_7, "#")
 	local var_19_9 = var_19_8[1]
 	local var_19_10 = var_19_8[2]
-	local var_19_11 = var_19_8[3] * var_19_0
+	local var_19_11 = var_19_8[3]
 
-	arg_19_0._monthCardItemIcon2 = arg_19_0._monthCardItemIcon2 or IconMgr.instance:getCommonItemIcon(arg_19_0._seasoncard_iconleft2)
+	arg_19_0._littleMonthCardItemIcon2 = arg_19_0._littleMonthCardItemIcon2 or IconMgr.instance:getCommonItemIcon(arg_19_0._littlemonthcardiconleft2)
 
-	gohelper.setAsFirstSibling(arg_19_0._monthCardItemIcon2.go)
-	arg_19_0:_setIcon(arg_19_0._monthCardItemIcon2, var_19_9, var_19_10, var_19_11)
+	gohelper.setAsFirstSibling(arg_19_0._littleMonthCardItemIcon2.go)
+	arg_19_0:_setIcon(arg_19_0._littleMonthCardItemIcon2, var_19_9, var_19_10, var_19_11)
 
-	local var_19_12 = StoreHelper.checkMonthCardLevelUpTagOpen()
+	local var_19_12 = string.split(var_19_1.dailyBonus, "|")[1]
+	local var_19_13 = string.splitToNumber(var_19_12, "#")
+	local var_19_14 = var_19_13[1]
+	local var_19_15 = var_19_13[2]
+	local var_19_16 = var_19_13[3]
 
-	gohelper.setActive(arg_19_0._seasoncard_goicon2new, var_19_12)
+	arg_19_0._littleMonthCardDailyItemIcon = arg_19_0._littleMonthCardDailyItemIcon or IconMgr.instance:getCommonItemIcon(arg_19_0._littlemonthcardiconright)
 
-	local var_19_13 = string.split(var_19_1.dailyBonus, "|")[1]
-	local var_19_14 = string.splitToNumber(var_19_13, "#")
-	local var_19_15 = var_19_14[1]
-	local var_19_16 = var_19_14[2]
-	local var_19_17 = var_19_14[3]
+	arg_19_0:_setIcon(arg_19_0._littleMonthCardDailyItemIcon, var_19_14, var_19_15, var_19_16)
 
-	arg_19_0._monthCardDailyItemIcon = arg_19_0._monthCardDailyItemIcon or IconMgr.instance:getCommonItemIcon(arg_19_0._seasoncard_iconright)
+	local var_19_17 = string.split(var_19_1.dailyBonus, "|")[2]
+	local var_19_18 = string.splitToNumber(var_19_17, "#")
+	local var_19_19 = var_19_18[1]
+	local var_19_20 = var_19_18[2]
+	local var_19_21 = var_19_18[3]
 
-	arg_19_0:_setIcon(arg_19_0._monthCardDailyItemIcon, var_19_15, var_19_16, var_19_17)
+	arg_19_0._littleMonthCardPowerItemIcon = arg_19_0._littleMonthCardPowerItemIcon or IconMgr.instance:getCommonItemIcon(arg_19_0._littlemonthcardiconpower)
 
-	local var_19_18 = string.split(var_19_1.dailyBonus, "|")[2]
-	local var_19_19 = string.splitToNumber(var_19_18, "#")
-	local var_19_20 = var_19_19[1]
-	local var_19_21 = var_19_19[2]
-	local var_19_22 = var_19_19[3]
-
-	arg_19_0._monthCardPowerItemIcon = arg_19_0._monthCardPowerItemIcon or IconMgr.instance:getCommonItemIcon(arg_19_0._seasoncard_iconpower)
-
-	arg_19_0:_setIcon(arg_19_0._monthCardPowerItemIcon, var_19_20, var_19_21, var_19_22)
+	arg_19_0:_setIcon(arg_19_0._littleMonthCardPowerItemIcon, var_19_19, var_19_20, var_19_21)
 end
 
-function var_0_0._updateDailyReleasePackage(arg_20_0, arg_20_1)
+function var_0_0._updateSeasonCard(arg_20_0)
+	local var_20_0 = StoreConfig.instance:getSeasonCardMultiFactor()
+
 	gohelper.setActive(arg_20_0._btnbuy.gameObject, true)
 	gohelper.setActive(arg_20_0._gotips, false)
 
-	if arg_20_0._mo.isChargeGoods then
-		arg_20_0.isPreGoodsSoldOut = arg_20_0._mo:checkPreGoodsSoldOut()
+	local var_20_1 = StoreConfig.instance:getMonthCardConfig(StoreEnum.MonthCardGoodsId)
+	local var_20_2 = string.split(var_20_1.onceBonus, "|")[1]
+	local var_20_3 = string.splitToNumber(var_20_2, "#")
+	local var_20_4 = var_20_3[1]
+	local var_20_5 = var_20_3[2]
+	local var_20_6 = var_20_3[3] * var_20_0
 
-		gohelper.setActive(arg_20_0._btnbuy.gameObject, arg_20_0.isPreGoodsSoldOut)
-		gohelper.setActive(arg_20_0._gotips, arg_20_0.isPreGoodsSoldOut == false)
+	arg_20_0._monthCardItemIcon = arg_20_0._monthCardItemIcon or IconMgr.instance:getCommonItemIcon(arg_20_0._seasoncard_iconleft)
 
-		if arg_20_0.isPreGoodsSoldOut == false then
-			local var_20_0 = StoreConfig.instance:getChargeGoodsConfig(arg_20_0._mo.config.preGoodsId)
+	arg_20_0:_setIcon(arg_20_0._monthCardItemIcon, var_20_4, var_20_5, var_20_6)
 
-			arg_20_0._txtlocktips.text = formatLuaLang("packagestoregoods_pregoods_tips", var_20_0.name)
-		end
-	end
+	local var_20_7 = string.split(var_20_1.onceBonus, "|")[2]
+	local var_20_8 = string.splitToNumber(var_20_7, "#")
+	local var_20_9 = var_20_8[1]
+	local var_20_10 = var_20_8[2]
+	local var_20_11 = var_20_8[3] * var_20_0
 
-	local var_20_1 = StoreConfig.instance:getDailyReleasePackageCfg(arg_20_0._mo.goodsId)
-	local var_20_2 = var_20_1.days
-	local var_20_3 = string.split(var_20_1.onceBonus, "|")
-	local var_20_4 = string.splitToNumber(var_20_3[1], "#")
-	local var_20_5 = var_20_4[1]
-	local var_20_6 = var_20_4[2]
-	local var_20_7 = var_20_4[3]
+	arg_20_0._monthCardItemIcon2 = arg_20_0._monthCardItemIcon2 or IconMgr.instance:getCommonItemIcon(arg_20_0._seasoncard_iconleft2)
 
-	arg_20_0._dailyReleasePackageIcon = arg_20_0._dailyReleasePackageIcon or IconMgr.instance:getCommonItemIcon(arg_20_0._icon2dailyreleasereleft)
+	gohelper.setAsFirstSibling(arg_20_0._monthCardItemIcon2.go)
+	arg_20_0:_setIcon(arg_20_0._monthCardItemIcon2, var_20_9, var_20_10, var_20_11)
 
-	arg_20_0:_setIcon(arg_20_0._dailyReleasePackageIcon, var_20_5, var_20_6, var_20_7)
+	local var_20_12 = StoreHelper.checkMonthCardLevelUpTagOpen()
 
-	if #var_20_3 > 1 then
-		local var_20_8 = var_20_3[2]
-		local var_20_9 = string.splitToNumber(var_20_8, "#")
-		local var_20_10 = var_20_9[1]
-		local var_20_11 = var_20_9[2]
-		local var_20_12 = var_20_9[3]
-
-		arg_20_0._dailyReleasePackageIcon2 = arg_20_0._dailyReleasePackageIcon2 or IconMgr.instance:getCommonItemIcon(arg_20_0._icondailyreleasereleft)
-
-		arg_20_0:_setIcon(arg_20_0._dailyReleasePackageIcon2, var_20_10, var_20_11, var_20_12)
-	end
+	gohelper.setActive(arg_20_0._seasoncard_goicon2new, var_20_12)
 
 	local var_20_13 = string.split(var_20_1.dailyBonus, "|")[1]
 	local var_20_14 = string.splitToNumber(var_20_13, "#")
@@ -633,9 +591,9 @@ function var_0_0._updateDailyReleasePackage(arg_20_0, arg_20_1)
 	local var_20_16 = var_20_14[2]
 	local var_20_17 = var_20_14[3]
 
-	arg_20_0._dailyReleasePackageDailyItemIcon1 = arg_20_0._dailyReleasePackageDailyItemIcon1 or IconMgr.instance:getCommonItemIcon(arg_20_0._icondailyreleasereright)
+	arg_20_0._monthCardDailyItemIcon = arg_20_0._monthCardDailyItemIcon or IconMgr.instance:getCommonItemIcon(arg_20_0._seasoncard_iconright)
 
-	arg_20_0:_setIcon(arg_20_0._dailyReleasePackageDailyItemIcon1, var_20_15, var_20_16, var_20_17 * var_20_2)
+	arg_20_0:_setIcon(arg_20_0._monthCardDailyItemIcon, var_20_15, var_20_16, var_20_17)
 
 	local var_20_18 = string.split(var_20_1.dailyBonus, "|")[2]
 	local var_20_19 = string.splitToNumber(var_20_18, "#")
@@ -643,103 +601,165 @@ function var_0_0._updateDailyReleasePackage(arg_20_0, arg_20_1)
 	local var_20_21 = var_20_19[2]
 	local var_20_22 = var_20_19[3]
 
-	arg_20_0._dailyReleasePackageDailyItemIcon2 = arg_20_0._dailyReleasePackageDailyItemIcon2 or IconMgr.instance:getCommonItemIcon(arg_20_0._icondailyreleaserepower)
+	arg_20_0._monthCardPowerItemIcon = arg_20_0._monthCardPowerItemIcon or IconMgr.instance:getCommonItemIcon(arg_20_0._seasoncard_iconpower)
 
-	arg_20_0:_setIcon(arg_20_0._dailyReleasePackageDailyItemIcon2, var_20_20, var_20_21, var_20_22 * var_20_2)
-
-	arg_20_0._txtDailyReleaseDesc1.text = var_20_1.desc1
-	arg_20_0._txtDailyReleaseDesc2.text = var_20_1.desc2
+	arg_20_0:_setIcon(arg_20_0._monthCardPowerItemIcon, var_20_20, var_20_21, var_20_22)
 end
 
-function var_0_0._loadiconCb(arg_21_0)
-	arg_21_0._simageicon.gameObject:GetComponent(gohelper.Type_Image):SetNativeSize()
+function var_0_0._updateDailyReleasePackage(arg_21_0, arg_21_1)
+	gohelper.setActive(arg_21_0._btnbuy.gameObject, true)
+	gohelper.setActive(arg_21_0._gotips, false)
+
+	if arg_21_0._mo.isChargeGoods then
+		arg_21_0.isPreGoodsSoldOut = arg_21_0._mo:checkPreGoodsSoldOut()
+
+		gohelper.setActive(arg_21_0._btnbuy.gameObject, arg_21_0.isPreGoodsSoldOut)
+		gohelper.setActive(arg_21_0._gotips, arg_21_0.isPreGoodsSoldOut == false)
+
+		if arg_21_0.isPreGoodsSoldOut == false then
+			local var_21_0 = StoreConfig.instance:getChargeGoodsConfig(arg_21_0._mo.config.preGoodsId)
+
+			arg_21_0._txtlocktips.text = formatLuaLang("packagestoregoods_pregoods_tips", var_21_0.name)
+		end
+	end
+
+	local var_21_1 = StoreConfig.instance:getDailyReleasePackageCfg(arg_21_0._mo.goodsId)
+	local var_21_2 = var_21_1.days
+	local var_21_3 = string.split(var_21_1.onceBonus, "|")
+	local var_21_4 = string.splitToNumber(var_21_3[1], "#")
+	local var_21_5 = var_21_4[1]
+	local var_21_6 = var_21_4[2]
+	local var_21_7 = var_21_4[3]
+
+	arg_21_0._dailyReleasePackageIcon = arg_21_0._dailyReleasePackageIcon or IconMgr.instance:getCommonItemIcon(arg_21_0._icon2dailyreleasereleft)
+
+	arg_21_0:_setIcon(arg_21_0._dailyReleasePackageIcon, var_21_5, var_21_6, var_21_7)
+
+	if #var_21_3 > 1 then
+		local var_21_8 = var_21_3[2]
+		local var_21_9 = string.splitToNumber(var_21_8, "#")
+		local var_21_10 = var_21_9[1]
+		local var_21_11 = var_21_9[2]
+		local var_21_12 = var_21_9[3]
+
+		arg_21_0._dailyReleasePackageIcon2 = arg_21_0._dailyReleasePackageIcon2 or IconMgr.instance:getCommonItemIcon(arg_21_0._icondailyreleasereleft)
+
+		arg_21_0:_setIcon(arg_21_0._dailyReleasePackageIcon2, var_21_10, var_21_11, var_21_12)
+	end
+
+	local var_21_13 = string.split(var_21_1.dailyBonus, "|")[1]
+	local var_21_14 = string.splitToNumber(var_21_13, "#")
+	local var_21_15 = var_21_14[1]
+	local var_21_16 = var_21_14[2]
+	local var_21_17 = var_21_14[3]
+
+	arg_21_0._dailyReleasePackageDailyItemIcon1 = arg_21_0._dailyReleasePackageDailyItemIcon1 or IconMgr.instance:getCommonItemIcon(arg_21_0._icondailyreleasereright)
+
+	arg_21_0:_setIcon(arg_21_0._dailyReleasePackageDailyItemIcon1, var_21_15, var_21_16, var_21_17 * var_21_2)
+
+	local var_21_18 = string.split(var_21_1.dailyBonus, "|")[2]
+	local var_21_19 = string.splitToNumber(var_21_18, "#")
+	local var_21_20 = var_21_19[1]
+	local var_21_21 = var_21_19[2]
+	local var_21_22 = var_21_19[3]
+
+	arg_21_0._dailyReleasePackageDailyItemIcon2 = arg_21_0._dailyReleasePackageDailyItemIcon2 or IconMgr.instance:getCommonItemIcon(arg_21_0._icondailyreleaserepower)
+
+	arg_21_0:_setIcon(arg_21_0._dailyReleasePackageDailyItemIcon2, var_21_20, var_21_21, var_21_22 * var_21_2)
+
+	arg_21_0._txtDailyReleaseDesc1.text = var_21_1.desc1
+	arg_21_0._txtDailyReleaseDesc2.text = var_21_1.desc2
 end
 
-function var_0_0._setIcon(arg_22_0, arg_22_1, arg_22_2, arg_22_3, arg_22_4)
-	if arg_22_2 == MaterialEnum.MaterialType.PowerPotion then
-		arg_22_1:setMOValue(arg_22_2, arg_22_3, arg_22_4, nil, true)
-		arg_22_1:setCantJump(true)
-		arg_22_1:setCountFontSize(36)
-		arg_22_1:setScale(0.7)
-		arg_22_1:SetCountLocalY(43.6)
-		arg_22_1:SetCountBgHeight(25)
-		arg_22_1:setItemIconScale(1.1)
+function var_0_0._loadiconCb(arg_22_0)
+	arg_22_0._simageicon.gameObject:GetComponent(gohelper.Type_Image):SetNativeSize()
+end
 
-		local var_22_0 = arg_22_1:getIcon().transform
+function var_0_0._setIcon(arg_23_0, arg_23_1, arg_23_2, arg_23_3, arg_23_4)
+	if arg_23_2 == MaterialEnum.MaterialType.PowerPotion then
+		arg_23_1:setMOValue(arg_23_2, arg_23_3, arg_23_4, nil, true)
+		arg_23_1:setCantJump(true)
+		arg_23_1:setCountFontSize(36)
+		arg_23_1:setScale(0.7)
+		arg_23_1:SetCountLocalY(43.6)
+		arg_23_1:SetCountBgHeight(25)
+		arg_23_1:setItemIconScale(1.1)
 
-		recthelper.setAnchor(var_22_0, -7.2, 3.5)
+		local var_23_0 = arg_23_1:getIcon().transform
 
-		local var_22_1 = arg_22_1:getDeadline1()
+		recthelper.setAnchor(var_23_0, -7.2, 3.5)
 
-		recthelper.setAnchor(var_22_1.transform, 78, 82.8)
-		transformhelper.setLocalScale(var_22_1.transform, 0.7, 0.7, 1)
+		local var_23_1 = arg_23_1:getDeadline1()
 
-		arg_22_0._simgdeadline = gohelper.findChildImage(var_22_1, "timebg")
+		recthelper.setAnchor(var_23_1.transform, 78, 82.8)
+		transformhelper.setLocalScale(var_23_1.transform, 0.7, 0.7, 1)
 
-		UISpriteSetMgr.instance:setStoreGoodsSprite(arg_22_0._simgdeadline, "img_xianshi1")
+		arg_23_0._simgdeadline = gohelper.findChildImage(var_23_1, "timebg")
+
+		UISpriteSetMgr.instance:setStoreGoodsSprite(arg_23_0._simgdeadline, "img_xianshi1")
 	else
-		arg_22_1:setMOValue(arg_22_2, arg_22_3, arg_22_4, nil, true)
-		arg_22_1:setCantJump(true)
-		arg_22_1:setCountFontSize(36)
-		arg_22_1:setScale(0.7)
-		arg_22_1:SetCountLocalY(43.6)
-		arg_22_1:SetCountBgHeight(25)
+		arg_23_1:setMOValue(arg_23_2, arg_23_3, arg_23_4, nil, true)
+		arg_23_1:setCantJump(true)
+		arg_23_1:setCountFontSize(36)
+		arg_23_1:setScale(0.7)
+		arg_23_1:SetCountLocalY(43.6)
+		arg_23_1:SetCountBgHeight(25)
 	end
 end
 
-function var_0_0._buyCallback(arg_23_0, arg_23_1, arg_23_2, arg_23_3)
-	if arg_23_2 == 0 then
-		arg_23_0:closeThis()
+function var_0_0._buyCallback(arg_24_0, arg_24_1, arg_24_2, arg_24_3)
+	if arg_24_2 == 0 then
+		arg_24_0:closeThis()
 	end
 end
 
-function var_0_0._payFinished(arg_24_0)
-	arg_24_0:closeThis()
+function var_0_0._payFinished(arg_25_0)
+	arg_25_0:closeThis()
 end
 
-function var_0_0.refreshSkinTips(arg_25_0, arg_25_1)
-	local var_25_0, var_25_1 = SkinConfig.instance:isSkinStoreGoods(arg_25_1.goodsId)
+function var_0_0.refreshSkinTips(arg_26_0, arg_26_1)
+	local var_26_0, var_26_1 = SkinConfig.instance:isSkinStoreGoods(arg_26_1.goodsId)
 
-	if not var_25_0 then
-		gohelper.setActive(arg_25_0._goSkinTips, false)
+	if not var_26_0 then
+		gohelper.setActive(arg_26_0._goSkinTips, false)
 
 		return
 	end
 
-	if StoreModel.instance:isSkinGoodsCanRepeatBuy(arg_25_1, var_25_1) then
-		gohelper.setActive(arg_25_0._goSkinTips, true)
+	if StoreModel.instance:isSkinGoodsCanRepeatBuy(arg_26_1, var_26_1) then
+		gohelper.setActive(arg_26_0._goSkinTips, true)
 
-		local var_25_2 = SkinConfig.instance:getSkinCo(var_25_1)
-		local var_25_3 = string.splitToNumber(var_25_2.compensate, "#")
-		local var_25_4 = var_25_3[2]
-		local var_25_5 = var_25_3[3]
-		local var_25_6 = CurrencyConfig.instance:getCurrencyCo(var_25_4)
+		local var_26_2 = SkinConfig.instance:getSkinCo(var_26_1)
+		local var_26_3 = string.splitToNumber(var_26_2.compensate, "#")
+		local var_26_4 = var_26_3[2]
+		local var_26_5 = var_26_3[3]
+		local var_26_6 = CurrencyConfig.instance:getCurrencyCo(var_26_4)
 
-		UISpriteSetMgr.instance:setCurrencyItemSprite(arg_25_0._imgProp, string.format("%s_1", var_25_6.icon))
+		UISpriteSetMgr.instance:setCurrencyItemSprite(arg_26_0._imgProp, string.format("%s_1", var_26_6.icon))
 
-		arg_25_0._txtPropNum.text = tostring(var_25_5)
+		arg_26_0._txtPropNum.text = tostring(var_26_5)
 	else
-		gohelper.setActive(arg_25_0._goSkinTips, false)
+		gohelper.setActive(arg_26_0._goSkinTips, false)
 	end
 end
 
-function var_0_0.onClose(arg_26_0)
+function var_0_0.onClose(arg_27_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Mail_switch)
-	arg_26_0:removeEventCb(PayController.instance, PayEvent.PayFinished, arg_26_0._payFinished, arg_26_0)
+	arg_27_0:removeEventCb(PayController.instance, PayEvent.PayFinished, arg_27_0._payFinished, arg_27_0)
 end
 
-function var_0_0.onDestroyView(arg_27_0)
-	arg_27_0._simageicon:UnLoadImage()
-	arg_27_0._simageleftbg:UnLoadImage()
-	arg_27_0._simagerightbg:UnLoadImage()
-	GameUtil.onDestroyViewMemberList(arg_27_0, "_productList")
+function var_0_0.onDestroyView(arg_28_0)
+	arg_28_0._simageicon:UnLoadImage()
+	arg_28_0._simageleftbg:UnLoadImage()
+	arg_28_0._simagerightbg:UnLoadImage()
+	GameUtil.onDestroyViewMemberList(arg_28_0, "_productList")
 
-	if arg_27_0._monthCardItemIcon then
-		arg_27_0._monthCardItemIcon:onDestroy()
+	if arg_28_0._monthCardItemIcon then
+		arg_28_0._monthCardItemIcon:onDestroy()
 	end
 
-	if arg_27_0._monthCardDailyItemIcon then
-		arg_27_0._monthCardDailyItemIcon:onDestroy()
+	if arg_28_0._monthCardDailyItemIcon then
+		arg_28_0._monthCardDailyItemIcon:onDestroy()
 	end
 end
 

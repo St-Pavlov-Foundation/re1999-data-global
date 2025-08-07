@@ -355,5 +355,26 @@
     "isSp": false,
     "weekLimitTimes": 0,
     "expUpShow": false
+  },
+  {
+    "bpId": 305,
+    "chargeId1": 710001,
+    "chargeId2": 710002,
+    "chargeId1to2": 710003,
+    "payStatus1Bonus": "1#481010#1",
+    "payStatus2Bonus": "2#2#400|1#173101#1|10#21#3|1#120013#5",
+    "name": "",
+    "payStatus2AddLevel": 10,
+    "expLevelUp": 1000,
+    "bpSkinDesc": "language_10077924",
+    "bpSkinNametxt": "language_10078094",
+    "bpSkinEnNametxt": "The Golden  <br> Nurturer",
+    "bpviewicon": "",
+    "bpviewpos": "",
+    "showBonus": "",
+    "showBonusDate": "2025-08-28 05:00:00",
+    "isSp": false,
+    "weekLimitTimes": 0,
+    "expUpShow": false
   }
 ]

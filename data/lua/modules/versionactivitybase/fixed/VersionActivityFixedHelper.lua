@@ -3,7 +3,7 @@
 local var_0_0 = class("VersionActivityFixedHelper")
 local var_0_1 = {
 	big = 2,
-	small = 7
+	small = 9
 }
 local var_0_2
 local var_0_3 = "%s_%s"

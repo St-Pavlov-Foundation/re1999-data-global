@@ -25,6 +25,7 @@ function var_0_0.onConstructor(arg_1_0, arg_1_1)
 	arg_1_0.param = FightParamData.New(arg_1_1.param)
 	arg_1_0.customData = FightCustomData.New(arg_1_1.customData)
 	arg_1_0.fightTaskBox = FightTaskBoxData.New(arg_1_1.fightTaskBox)
+	arg_1_0.progressDic = FightProgressInfoData.New(arg_1_1.progressList)
 end
 
 return var_0_0

@@ -670,5 +670,75 @@
     "motion": "b_beike2|b_tideng|b_sinian",
     "node": "Drawables/bone/effect-Bone/roleeffect_ttsz_beike|Drawables/bone2/effect-Bone/roleeffect_ttsz_td2|Drawables/bone6/effect-Bone/roleeffect_ttsz_sinian6#Drawables/bone/effect-Bone/roleeffect_ttsz_sinian",
     "everNode": ""
+  },
+  {
+    "heroResName": "312202_alexios",
+    "effectCompName": "CommonRoleEffect",
+    "motion": "b_zadi",
+    "node": "Drawables/bone/effect-Bone/roleeffect_alexios_zd0#Drawables/bone1/effect-Bone/roleeffect_alexios_zd1",
+    "everNode": ""
+  },
+  {
+    "heroResName": "312301_aja",
+    "effectCompName": "CommonRoleEffect",
+    "motion": "b_xiujian",
+    "node": "Drawables/bone16/effect-Bone/roleeffect_aja_xj16#Drawables/bone17/effect-Bone/roleeffect_aja_xj17",
+    "everNode": ""
+  },
+  {
+    "heroResName": "312302_aja",
+    "effectCompName": "CommonRoleEffect",
+    "motion": "b_xiujian|b_yumao",
+    "node": "Drawables/bone16/effect-Bone/roleeffect_aja_xj16#Drawables/bone17/effect-Bone/roleeffect_aja_xj17|Drawables/bone/effect-Bone/roleeffect_aja_ym0#Drawables/bone18/effect-Bone/roleeffect_aja_ym18",
+    "everNode": ""
+  },
+  {
+    "heroResName": "312402_ksdl",
+    "effectCompName": "CommonRoleEffect",
+    "motion": "b_yinshen",
+    "node": "Drawables/bone/effect-Bone/roleeffect_ksdl_ys0",
+    "everNode": ""
+  },
+  {
+    "heroResName": "306504_makusi",
+    "effectCompName": "CommonRoleEffect",
+    "motion": "b_jiegou|b_huoba",
+    "node": "Drawables/bone/effect-Bone/roleeffect_mks_jiegou|Drawables/bone2/effect-Bone/roleeffect_mks_hb2",
+    "everNode": ""
+  },
+  {
+    "heroResName": "308704_wl",
+    "effectCompName": "CommonRoleEffect",
+    "motion": "b_beike|b_zhulei|b_shuihen",
+    "node": "Drawables/bone/effect-Bone/roleeffect_wl_bk0|Drawables/bone3/effect-Bone/roleeffect_wl_zl3#Drawables/bone5/effect-Bone/roleeffect_wl_zl5#Drawables/bone6/effect-Bone/roleeffect_wl_zl6|Drawables/bone2/effect-Bone/roleeffect_wl_shuihen2#Drawables/bone4/effect-Bone/roleeffect_wl_shuihen4",
+    "everNode": ""
+  },
+  {
+    "heroResName": "305104_wnfld",
+    "effectCompName": "CommonRoleEffect",
+    "motion": "b_quanzhang",
+    "node": "Drawables/bone7/effect-Bone/roleeffect_wn_qz7",
+    "everNode": ""
+  },
+  {
+    "heroResName": "302804_apple_p_light",
+    "effectCompName": "CommonRoleEffect",
+    "motion": "b_bianse",
+    "node": "mountroot/mountweapon/roleeffect_apple_bs",
+    "everNode": ""
+  },
+  {
+    "heroResName": "302804_apple_p",
+    "effectCompName": "CommonRoleEffect",
+    "motion": "b_bianse",
+    "node": "root/mountweapon/roleeffect_apple_bs",
+    "everNode": ""
+  },
+  {
+    "heroResName": "311603_lzl",
+    "effectCompName": "CommonRoleEffect",
+    "motion": "b_shihua",
+    "node": "Drawables/bone2/effect-Bone/roleeffect_lzl_sh2#Drawables/bone3/effect-Bone/roleeffect_lzl_sh3#Drawables/bone5/effect-Bone/roleeffect_lzl_sh5#Drawables/bone6/effect-Bone/roleeffect_lzl_sh6#Drawables/bone8/effect-Bone/roleeffect_lzl_sh8#Drawables/bone9/effect-Bone/roleeffect_lzl_sh9",
+    "everNode": ""
   }
 ]

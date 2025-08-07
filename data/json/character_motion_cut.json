@@ -190,5 +190,11 @@
     "skinId": 310803,
     "motion": "biaoyan",
     "onlyStopCut": 1
+  },
+  {
+    "heroId": 3065,
+    "skinId": 306504,
+    "motion": "yuedu",
+    "onlyStopCut": 1
   }
 ]

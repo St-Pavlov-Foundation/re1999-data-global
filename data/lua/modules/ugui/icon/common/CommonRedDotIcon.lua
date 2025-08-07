@@ -35,6 +35,7 @@ function var_0_0.addEventListeners(arg_3_0)
 	RedDotController.instance:registerCallback(RedDotEvent.UpdateActTag, arg_3_0.refreshDot, arg_3_0)
 	RedDotController.instance:registerCallback(RedDotEvent.UpdateRelateDotInfo, arg_3_0.refreshRelateDot, arg_3_0)
 	ActivityController.instance:registerCallback(ActivityEvent.ChangeActivityStage, arg_3_0.refreshDot, arg_3_0)
+	MainUISwitchController.instance:registerCallback(MainUISwitchEvent.UseMainUI, arg_3_0.defaultRefreshDot, arg_3_0)
 end
 
 function var_0_0.removeEventListeners(arg_4_0)
@@ -42,6 +43,7 @@ function var_0_0.removeEventListeners(arg_4_0)
 	RedDotController.instance:unregisterCallback(RedDotEvent.UpdateFriendInfoDot, arg_4_0.refreshDot, arg_4_0)
 	RedDotController.instance:unregisterCallback(RedDotEvent.UpdateRelateDotInfo, arg_4_0.refreshRelateDot, arg_4_0)
 	ActivityController.instance:unregisterCallback(ActivityEvent.ChangeActivityStage, arg_4_0.refreshDot, arg_4_0)
+	MainUISwitchController.instance:unregisterCallback(MainUISwitchEvent.UseMainUI, arg_4_0.defaultRefreshDot, arg_4_0)
 end
 
 function var_0_0.onStart(arg_5_0)
@@ -67,18 +69,25 @@ end
 function var_0_0.defaultRefreshDot(arg_7_0)
 	arg_7_0.show = false
 
+	local var_7_0 = MainUISwitchModel.instance:getCurUseUI()
+
 	if arg_7_0.infoList then
 		for iter_7_0, iter_7_1 in ipairs(arg_7_0.infoList) do
 			arg_7_0.show = RedDotModel.instance:isDotShow(iter_7_1.id, iter_7_1.uid)
 
 			if arg_7_0.show then
-				local var_7_0 = RedDotModel.instance:getDotInfoCount(iter_7_1.id, iter_7_1.uid)
+				local var_7_1 = RedDotModel.instance:getDotInfoCount(iter_7_1.id, iter_7_1.uid)
 
-				arg_7_0._txtCount.text = var_7_0
+				arg_7_0._txtCount.text = var_7_1
 
-				local var_7_1 = RedDotConfig.instance:getRedDotCO(iter_7_1.id).style
+				local var_7_2 = RedDotConfig.instance:getRedDotCO(iter_7_1.id).style
+				local var_7_3 = MainUISwitchConfig.instance:getUIReddotStyle(var_7_0, iter_7_1.id)
 
-				arg_7_0:showRedDot(var_7_1)
+				if var_7_3 then
+					var_7_2 = var_7_3.style
+				end
+
+				arg_7_0:showRedDot(var_7_2)
 
 				return
 			end

@@ -531,7 +531,7 @@ function var_0_0._showBuffFloat(arg_20_0, arg_20_1)
 				var_20_2 = var_20_2 .. luaLang("multiple") .. var_20_3
 			end
 
-			FightFloatMgr.instance:float(arg_20_1.entityId, FightEnum.FloatType.buff, var_20_2, var_20_1.dontShowFloat)
+			FightFloatMgr.instance:float(arg_20_1.entityId, FightEnum.FloatType.buff, var_20_2, var_20_1.dontShowFloat, false)
 		end
 	end
 end

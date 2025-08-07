@@ -68,6 +68,10 @@ function var_0_0._OnShowResourceView(arg_7_0)
 end
 
 function var_0_0.addChapterItem(arg_8_0, arg_8_1)
+	if not arg_8_1 then
+		return
+	end
+
 	for iter_8_0, iter_8_1 in ipairs(arg_8_1) do
 		arg_8_0:getChapterItem(arg_8_0._index):updateParam(iter_8_1)
 

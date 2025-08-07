@@ -6,23 +6,26 @@ function var_0_0.init(arg_1_0, arg_1_1)
 	arg_1_0._go = arg_1_1
 	arg_1_0._simagestone = gohelper.findChildSingleImage(arg_1_1, "#simage_stone")
 	arg_1_0._txttitle = gohelper.findChildText(arg_1_1, "title/#txt_title")
+	arg_1_0._goNewTag = gohelper.findChild(arg_1_1, "title/#go_NewTag")
 	arg_1_0._godecitem = gohelper.findChild(arg_1_1, "#go_decitem")
 	arg_1_0._descItemList = {}
 	arg_1_0._descCompList = {}
 end
 
-function var_0_0.setData(arg_2_0, arg_2_1, arg_2_2)
+function var_0_0.setData(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
 	arg_2_0._destinyId = arg_2_2
 	arg_2_0._roleId = arg_2_1
 
-	arg_2_0:refreshUI(arg_2_1, arg_2_2)
+	arg_2_0:refreshUI(arg_2_1, arg_2_2, arg_2_3)
 end
 
 function var_0_0.SetActive(arg_3_0, arg_3_1)
 	gohelper.setActive(arg_3_0._go, arg_3_1)
 end
 
-function var_0_0.refreshUI(arg_4_0, arg_4_1, arg_4_2)
+function var_0_0.refreshUI(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
+	gohelper.setActive(arg_4_0._goNewTag, arg_4_3 or false)
+
 	local var_4_0 = CharacterDestinyConfig.instance:getDestinyFacetCo(arg_4_2)
 	local var_4_1 = CharacterDestinyConfig.instance:getDestinyFacetConsumeCo(arg_4_2)
 

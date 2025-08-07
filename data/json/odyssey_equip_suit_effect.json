@@ -1,0 +1,178 @@
+[
+  {
+    "id": 1,
+    "level": 1,
+    "number": 2,
+    "addSkill": "4#8290001",
+    "addRule": "",
+    "effect": "language_10079284"
+  },
+  {
+    "id": 1,
+    "level": 2,
+    "number": 4,
+    "addSkill": "4#8290002",
+    "addRule": "",
+    "effect": "language_10079285"
+  },
+  {
+    "id": 2,
+    "level": 1,
+    "number": 2,
+    "addSkill": "4#8290101",
+    "addRule": "",
+    "effect": "language_10079286"
+  },
+  {
+    "id": 3,
+    "level": 1,
+    "number": 2,
+    "addSkill": "3#8290201",
+    "addRule": "",
+    "effect": "language_10079287"
+  },
+  {
+    "id": 4,
+    "level": 1,
+    "number": 2,
+    "addSkill": "3#8290301",
+    "addRule": "",
+    "effect": "language_10079288"
+  },
+  {
+    "id": 4,
+    "level": 2,
+    "number": 4,
+    "addSkill": "3#8290302",
+    "addRule": "",
+    "effect": "language_10079289"
+  },
+  {
+    "id": 4,
+    "level": 3,
+    "number": 6,
+    "addSkill": "3#8290303",
+    "addRule": "",
+    "effect": "language_10079290"
+  },
+  {
+    "id": 5,
+    "level": 1,
+    "number": 2,
+    "addSkill": "4#8290401",
+    "addRule": "",
+    "effect": "language_10079291"
+  },
+  {
+    "id": 5,
+    "level": 2,
+    "number": 4,
+    "addSkill": "4#8290402",
+    "addRule": "",
+    "effect": "language_10079292"
+  },
+  {
+    "id": 5,
+    "level": 3,
+    "number": 6,
+    "addSkill": "4#8290403",
+    "addRule": "",
+    "effect": "language_10079293"
+  },
+  {
+    "id": 6,
+    "level": 1,
+    "number": 2,
+    "addSkill": "3#82905000|3#8290501|4#8290499",
+    "addRule": "",
+    "effect": "language_10079294"
+  },
+  {
+    "id": 6,
+    "level": 2,
+    "number": 4,
+    "addSkill": "3#82905000|3#8290502|4#8290499",
+    "addRule": "",
+    "effect": "language_10079295"
+  },
+  {
+    "id": 6,
+    "level": 3,
+    "number": 6,
+    "addSkill": "3#82905000|3#8290503|4#8290499",
+    "addRule": "",
+    "effect": "language_10079296"
+  },
+  {
+    "id": 7,
+    "level": 1,
+    "number": 2,
+    "addSkill": "3#8290601|4#82906010",
+    "addRule": "",
+    "effect": "language_10079297"
+  },
+  {
+    "id": 7,
+    "level": 2,
+    "number": 4,
+    "addSkill": "3#8290602|4#82906020",
+    "addRule": "",
+    "effect": "language_10079298"
+  },
+  {
+    "id": 7,
+    "level": 3,
+    "number": 6,
+    "addSkill": "3#8290603|4#82906030",
+    "addRule": "",
+    "effect": "language_10079299"
+  },
+  {
+    "id": 8,
+    "level": 1,
+    "number": 2,
+    "addSkill": "3#8290701",
+    "addRule": "",
+    "effect": "language_10079300"
+  },
+  {
+    "id": 8,
+    "level": 2,
+    "number": 4,
+    "addSkill": "3#8290702",
+    "addRule": "",
+    "effect": "language_10079301"
+  },
+  {
+    "id": 8,
+    "level": 3,
+    "number": 6,
+    "addSkill": "3#8290703",
+    "addRule": "",
+    "effect": "language_10079302"
+  },
+  {
+    "id": 9,
+    "level": 1,
+    "number": 2,
+    "addSkill": "3#82908018|4#8290801",
+    "addRule": "",
+    "effect": "language_10079303"
+  },
+  {
+    "id": 9,
+    "level": 2,
+    "number": 4,
+    "addSkill": "3#82908028|4#8290802",
+    "addRule": "",
+    "effect": "language_10079304"
+  },
+  {
+    "id": 9,
+    "level": 3,
+    "number": 6,
+    "addSkill": "3#82908038|4#8290803",
+    "addRule": "",
+    "effect": "language_10079305"
+  }
+]

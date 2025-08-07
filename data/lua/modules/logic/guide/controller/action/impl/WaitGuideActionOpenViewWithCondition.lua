@@ -341,4 +341,34 @@ function var_0_0.commonCheck(arg_32_0)
 	end
 end
 
+function var_0_0.checkOdysseyPlayerLevel()
+	local var_33_0 = OdysseyModel.instance:getHeroCurLevelAndExp()
+	local var_33_1 = OdysseyTalentModel.instance:getCurTalentPoint()
+
+	return var_33_0 >= 2 and var_33_1 > 0
+end
+
+function var_0_0.checkReligionUnlock()
+	local var_34_0 = OdysseyConfig.instance:getConstConfig(OdysseyEnum.ConstId.ReligionUnlock)
+
+	return (OdysseyDungeonModel.instance:checkConditionCanUnlock(var_34_0.value))
+end
+
+function var_0_0.checkMercenaryUnlock()
+	local var_35_0 = OdysseyConfig.instance:getConstConfig(OdysseyEnum.ConstId.MercenaryUnlock)
+
+	return (OdysseyDungeonModel.instance:checkConditionCanUnlock(var_35_0.value))
+end
+
+function var_0_0.checkMythUnlock()
+	return OdysseyDungeonModel.instance:checkHasFightTypeElement(OdysseyEnum.FightType.Myth)
+end
+
+function var_0_0.checkOpenConquerView()
+	local var_37_0 = OdysseyDungeonModel.instance:getCurInElementId()
+	local var_37_1 = OdysseyConfig.instance:getElementFightConfig(var_37_0)
+
+	return var_37_1 and var_37_1.type == OdysseyEnum.FightType.Conquer
+end
+
 return var_0_0

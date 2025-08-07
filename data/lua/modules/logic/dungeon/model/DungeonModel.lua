@@ -676,7 +676,9 @@ local var_0_1 = {
 	[DungeonEnum.EpisodeType.TowerLimited] = true,
 	[DungeonEnum.EpisodeType.TowerBossTeach] = true,
 	[DungeonEnum.EpisodeType.Act183] = true,
-	[DungeonEnum.EpisodeType.Act191] = true
+	[DungeonEnum.EpisodeType.Act191] = true,
+	[DungeonEnum.EpisodeType.Odyssey] = true,
+	[DungeonEnum.EpisodeType.Assassin2Outside] = true
 }
 
 function var_0_0.isBattleEpisode(arg_31_0)
@@ -1101,7 +1103,11 @@ end
 function var_0_0.chapterIsUnLock(arg_68_0, arg_68_1)
 	local var_68_0 = DungeonConfig.instance:getChapterEpisodeCOList(arg_68_1)
 
-	return var_68_0 and #var_68_0 > 0 and arg_68_0:hasPassLevelAndStory(var_68_0[1].preEpisode), var_68_0[1].preEpisode
+	if var_68_0 and #var_68_0 > 0 then
+		return arg_68_0:hasPassLevelAndStory(var_68_0[1].preEpisode), var_68_0[1].preEpisode
+	end
+
+	return false, nil
 end
 
 function var_0_0.episodeIsInLockTime(arg_69_0, arg_69_1)

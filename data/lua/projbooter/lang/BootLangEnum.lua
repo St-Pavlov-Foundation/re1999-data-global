@@ -3,6 +3,7 @@
 local var_0_0 = _M
 
 var_0_0.Font = {
+	b_regular = "bootres/fonts/b_regular.ttf",
 	b_hwzs = "bootres/fonts/b_hwzs.ttf",
 	b_korea = "bootres/fonts/b_korea.ttf",
 	b_japan = "bootres/fonts/b_japan.otf"
@@ -17,7 +18,7 @@ var_0_0.fr = 64
 var_0_0.thai = 128
 var_0_0.LangFont = {
 	[var_0_0.zh] = var_0_0.Font.b_hwzs,
-	[var_0_0.en] = var_0_0.Font.b_hwzs,
+	[var_0_0.en] = var_0_0.Font.b_regular,
 	[var_0_0.jp] = var_0_0.Font.b_japan,
 	[var_0_0.ko] = var_0_0.Font.b_korea
 }

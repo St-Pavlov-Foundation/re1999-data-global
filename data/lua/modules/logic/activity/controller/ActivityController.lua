@@ -103,7 +103,10 @@ local var_0_1 = {
 	ActivityEnum.Activity.V2a5_Act186Sign,
 	ActivityEnum.Activity.V2a7_Labor_Sign,
 	ActivityEnum.Activity.V2a7_SelfSelectSix1,
-	ActivityEnum.Activity.V2a7_SelfSelectSix2
+	ActivityEnum.Activity.V2a7_SelfSelectSix2,
+	ActivityEnum.Activity.V2a9_VersionSummon_Part1,
+	ActivityEnum.Activity.V2a9_VersionSummon_Part2,
+	ActivityEnum.Activity.V2a9_FreeMonthCard
 }
 local var_0_2 = {
 	ActivityEnum.Activity.V3a0_WarmUp,

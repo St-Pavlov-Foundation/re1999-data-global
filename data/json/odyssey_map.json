@@ -1,0 +1,47 @@
+[
+  {
+    "id": 1,
+    "unlockCondition": "",
+    "res": "sp01_m_s08_hddt_b/scenes_prefab/sp01_m_s08_hddt_yadian_p",
+    "initPos": "-17.03#11.5",
+    "mapName": "language_10078741",
+    "recommendLevel": "1#10",
+    "unlockDesc": ""
+  },
+  {
+    "id": 2,
+    "unlockCondition": "finish#130110",
+    "res": "sp01_m_s08_hddt_b/scenes_prefab/sp01_m_s08_hddt_kaifalongniya_p",
+    "initPos": "-17.03#11.5",
+    "mapName": "language_10078742",
+    "recommendLevel": "4#12",
+    "unlockDesc": "language_10078743"
+  },
+  {
+    "id": 3,
+    "unlockCondition": "finish#216002",
+    "res": "sp01_m_s08_hddt_b/scenes_prefab/sp01_m_s08_hddt_deerfeishenmiao_p",
+    "initPos": "-14.43#8.81",
+    "mapName": "language_10078744",
+    "recommendLevel": "7#18",
+    "unlockDesc": "language_10078745"
+  },
+  {
+    "id": 4,
+    "unlockCondition": "time#7|finish#316002",
+    "res": "sp01_m_s08_hddt_b/scenes_prefab/sp01_m_s08_hddt_sibada_p",
+    "initPos": "-17.03#11.5",
+    "mapName": "language_90001168",
+    "recommendLevel": "9#25",
+    "unlockDesc": "language_10078746"
+  },
+  {
+    "id": 5,
+    "unlockCondition": "time#7|finish#430410",
+    "res": "sp01_m_s08_hddt_b/scenes_prefab/sp01_m_s08_hddt_aolinpiya_p",
+    "initPos": "-15.95#5.98",
+    "mapName": "language_10078747",
+    "recommendLevel": "11#30",
+    "unlockDesc": "language_10079535"
+  }
+]

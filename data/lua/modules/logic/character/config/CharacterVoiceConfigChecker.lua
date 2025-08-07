@@ -35,7 +35,8 @@ function var_0_0.checkConfig(arg_1_0)
 		[CharacterEnum.VoiceType.MainViewSpecialInteraction] = arg_1_0._handlerMainViewSpecialInteraction,
 		[CharacterEnum.VoiceType.MainViewSpecialRespond] = arg_1_0._handlerMainViewSpecialRespond,
 		[CharacterEnum.VoiceType.MainViewDragSpecialRespond] = arg_1_0._handlerMainViewDragSpecialRespond,
-		[CharacterEnum.VoiceType.MultiVoice] = arg_1_0._handlerMultiVoice
+		[CharacterEnum.VoiceType.MultiVoice] = arg_1_0._handlerMultiVoice,
+		[CharacterEnum.VoiceType.FightCardSkill3] = arg_1_0._handlerFightCardSkill3Voice
 	}
 
 	for iter_1_0, iter_1_1 in ipairs(lua_character_voice.configList) do
@@ -180,6 +181,19 @@ function var_0_0._handlerMultiVoice(arg_13_0, arg_13_1)
 
 	if not var_13_0 or var_13_0 == arg_13_1 then
 		logError(string.format("CharacterVoiceConfigChecker audio:%s type:%s param:%s is invalid", arg_13_1.audio, arg_13_1.type, arg_13_1.param))
+	end
+end
+
+function var_0_0._handlerFightCardSkill3Voice(arg_14_0, arg_14_1)
+	local var_14_0 = arg_14_1.param
+
+	if not string.nilorempty(var_14_0) then
+		local var_14_1 = FightHelper.getRolesTimelinePath(var_14_0)
+		local var_14_2 = SLFramework.FrameworkSettings.AssetRootDir .. "/" .. var_14_1
+
+		if not SLFramework.FileHelper.IsFileExists(var_14_2) then
+			logError(string.format("[CharacterVoiceConfigChecker] 角色语音表配置的timeline不存在, audio:%s, type:%s, param:%s, is invalid", arg_14_1.audio, arg_14_1.type, arg_14_1.param))
+		end
 	end
 end
 

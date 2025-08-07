@@ -60,6 +60,12 @@ function var_0_0._onBeforeEnterStepBehaviour(arg_8_0)
 		arg_8_0.viewContainer.rightElementLayoutView:showElement(FightRightElementEnum.Elements.CharSupport)
 	end
 
+	if FightDataHelper.teamDataMgr.myData.itemSkillInfos then
+		gohelper.setActive(arg_8_0._goSimple, false)
+
+		return
+	end
+
 	arg_8_0:openSubView(FightViewClothSkill, arg_8_0.viewGO)
 end
 

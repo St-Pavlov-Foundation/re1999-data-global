@@ -33,6 +33,8 @@ function var_0_0.refreshTeamDataByProto(arg_6_0, arg_6_1, arg_6_2)
 	if arg_6_1.bloodPool then
 		arg_6_2.bloodPool = FightDataUtil.coverData(arg_6_1.bloodPool, arg_6_2.bloodPool)
 	end
+
+	arg_6_2.itemSkillInfos = FightDataUtil.coverData(arg_6_1.itemSkillInfos, arg_6_2.itemSkillInfos)
 end
 
 function var_0_0.checkBloodPoolExist(arg_7_0, arg_7_1)

@@ -126,6 +126,7 @@ function var_0_0._editableInitView(arg_8_0)
 	arg_8_0._sortIndex = 2
 	arg_8_0._asceTime = false
 	arg_8_0._asceRare = false
+	arg_8_0._golightspineParent = gohelper.findChild(arg_8_0.viewGO, "#go_spine_scale/lightspine")
 
 	gohelper.addUIClickAudio(arg_8_0._btnchange.gameObject, AudioEnum.UI.Store_Good_Click)
 	CharacterSwitchListModel.instance:initHeroList()
@@ -231,12 +232,22 @@ function var_0_0._getLightSpine(arg_15_0)
 		return
 	end
 
-	local var_15_0 = UnityEngine.GameObject.Find("UIRoot/POPUP_TOP/MainThumbnailView/#go_spine_scale/lightspine/#go_lightspine")
+	if not ViewMgr.instance:isOpen(ViewName.MainThumbnailView) then
+		return
+	end
 
-	gohelper.addChildPosStay(arg_15_0._golightspine.transform.parent.gameObject, var_15_0)
+	local var_15_0 = ViewMgr.instance:getContainer(ViewName.MainThumbnailView)
+
+	if not var_15_0 then
+		return
+	end
+
+	local var_15_1 = var_15_0:getLightSpineGo()
+
+	gohelper.addChildPosStay(arg_15_0._golightspine.transform.parent.gameObject, var_15_1)
 	gohelper.destroy(arg_15_0._golightspine)
 
-	arg_15_0._golightspine = var_15_0
+	arg_15_0._golightspine = var_15_1
 end
 
 function var_0_0.showTip(arg_16_0)
@@ -325,6 +336,7 @@ function var_0_0.onTabSwitchOpen(arg_25_0)
 	gohelper.setActive(arg_25_0._golightspine, true)
 	arg_25_0._rootAnimator:Play("open", 0, 0)
 	arg_25_0:_checkSpineAnim()
+	arg_25_0:_setOffset()
 end
 
 function var_0_0.onTabSwitchClose(arg_26_0, arg_26_1)
@@ -479,9 +491,13 @@ function var_0_0._showSkinItem(arg_36_0, arg_36_1, arg_36_2, arg_36_3)
 	var_36_0:setSelected(arg_36_3)
 end
 
-function var_0_0.onDestroyView(arg_37_0)
-	arg_37_0._simagesignature:UnLoadImage()
-	GameGCMgr.instance:dispatchEvent(GameGCEvent.DelayFullGC, 1, arg_37_0)
+function var_0_0.getLightSpineGo(arg_37_0)
+	return arg_37_0._golightspine, arg_37_0._golightspineParent
+end
+
+function var_0_0.onDestroyView(arg_38_0)
+	arg_38_0._simagesignature:UnLoadImage()
+	GameGCMgr.instance:dispatchEvent(GameGCEvent.DelayFullGC, 1, arg_38_0)
 end
 
 return var_0_0

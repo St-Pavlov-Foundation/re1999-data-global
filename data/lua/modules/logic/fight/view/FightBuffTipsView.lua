@@ -232,7 +232,7 @@ function var_0_0.updateBuffDesc(arg_11_0, arg_11_1, arg_11_2, arg_11_3, arg_11_4
 
 			var_0_0.showBuffTime(var_11_15, var_11_9, var_11_10, arg_11_1)
 
-			var_11_19.text = var_11_10.name
+			var_11_19.text = var_0_0.getBuffName(var_11_9, var_11_10)
 
 			local var_11_25 = var_11_19.preferredWidth
 
@@ -311,78 +311,104 @@ function var_0_0.onClickBuffHyperLink(arg_13_0, arg_13_1, arg_13_2)
 	CommonBuffTipController.instance:openCommonTipViewWithCustomPosCallback(arg_13_1, arg_13_0.getAnchorFunc, arg_13_0.viewClass)
 end
 
-function var_0_0.showBuffTime(arg_14_0, arg_14_1, arg_14_2, arg_14_3)
-	if FightBuffHelper.isCountContinueChanelBuff(arg_14_1) then
-		arg_14_0.text = string.format(luaLang("enemytip_buff_time"), arg_14_1.exInfo)
+function var_0_0.getBuffName(arg_14_0, arg_14_1)
+	if FightHeroSpEffectConfig.instance:isKSDLSpecialBuff(arg_14_0.buffId) then
+		return var_0_0.getKSDLBuffName(arg_14_0, arg_14_1)
+	end
+
+	return arg_14_1.name
+end
+
+function var_0_0.showBuffTime(arg_15_0, arg_15_1, arg_15_2, arg_15_3)
+	if FightHeroSpEffectConfig.instance:isKSDLSpecialBuff(arg_15_1.buffId) then
+		arg_15_0.text = ""
 
 		return
 	end
 
-	if arg_14_1 and FightConfig.instance:hasBuffFeature(arg_14_1.buffId, FightEnum.BuffFeature.CountUseSelfSkillContinueChannel) then
-		arg_14_0.text = string.format(luaLang("enemytip_buff_time"), arg_14_1.exInfo)
+	if FightBuffHelper.isCountContinueChanelBuff(arg_15_1) then
+		arg_15_0.text = string.format(luaLang("enemytip_buff_time"), arg_15_1.exInfo)
 
 		return
 	end
 
-	if FightBuffHelper.isDuduBoneContinueChannelBuff(arg_14_1) then
-		arg_14_0.text = string.format(luaLang("buff_tip_duration"), arg_14_1.exInfo)
+	if arg_15_1 and FightConfig.instance:hasBuffFeature(arg_15_1.buffId, FightEnum.BuffFeature.CountUseSelfSkillContinueChannel) then
+		arg_15_0.text = string.format(luaLang("enemytip_buff_time"), arg_15_1.exInfo)
 
 		return
 	end
 
-	if FightBuffHelper.isDeadlyPoisonBuff(arg_14_1) then
-		local var_14_0 = FightSkillBuffMgr.instance:getStackedCount(arg_14_1.entityId, arg_14_1)
-
-		arg_14_0.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("buff_tip_round_and_layer"), arg_14_1.duration, var_14_0)
+	if FightBuffHelper.isDuduBoneContinueChannelBuff(arg_15_1) then
+		arg_15_0.text = string.format(luaLang("buff_tip_duration"), arg_15_1.exInfo)
 
 		return
 	end
 
-	local var_14_1 = lua_skill_bufftype.configDict[arg_14_2.typeId]
-	local var_14_2, var_14_3 = FightSkillBuffMgr.instance:buffIsStackerBuff(arg_14_2)
+	if FightBuffHelper.isDeadlyPoisonBuff(arg_15_1) then
+		local var_15_0 = FightSkillBuffMgr.instance:getStackedCount(arg_15_1.entityId, arg_15_1)
 
-	if var_14_2 then
-		local var_14_4 = string.format(luaLang("enemytip_buff_stacked_count"), FightSkillBuffMgr.instance:getStackedCount(arg_14_3.id, arg_14_1))
+		arg_15_0.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("buff_tip_round_and_layer"), arg_15_1.duration, var_15_0)
 
-		if var_14_3 == FightEnum.BuffIncludeTypes.Stacked12 then
-			arg_14_0.text = var_14_4 .. " " .. string.format(luaLang("enemytip_buff_time"), arg_14_1.duration)
+		return
+	end
+
+	local var_15_1 = lua_skill_bufftype.configDict[arg_15_2.typeId]
+	local var_15_2, var_15_3 = FightSkillBuffMgr.instance:buffIsStackerBuff(arg_15_2)
+
+	if var_15_2 then
+		local var_15_4 = string.format(luaLang("enemytip_buff_stacked_count"), FightSkillBuffMgr.instance:getStackedCount(arg_15_3.id, arg_15_1))
+
+		if var_15_3 == FightEnum.BuffIncludeTypes.Stacked12 then
+			arg_15_0.text = var_15_4 .. " " .. string.format(luaLang("enemytip_buff_time"), arg_15_1.duration)
 		else
-			arg_14_0.text = var_14_4
+			arg_15_0.text = var_15_4
 		end
-	elseif arg_14_1.duration == 0 then
-		if arg_14_1.count == 0 then
-			arg_14_0.text = luaLang("forever")
+	elseif arg_15_1.duration == 0 then
+		if arg_15_1.count == 0 then
+			arg_15_0.text = luaLang("forever")
 		else
-			local var_14_5 = arg_14_1.count
-			local var_14_6 = "enemytip_buff_count"
-			local var_14_7 = var_14_1 and var_14_1.includeTypes or ""
+			local var_15_5 = arg_15_1.count
+			local var_15_6 = "enemytip_buff_count"
+			local var_15_7 = var_15_1 and var_15_1.includeTypes or ""
 
-			if string.split(var_14_7, "#")[1] == "11" then
-				var_14_6 = "enemytip_buff_stacked_count"
-				var_14_5 = arg_14_1.layer
+			if string.split(var_15_7, "#")[1] == "11" then
+				var_15_6 = "enemytip_buff_stacked_count"
+				var_15_5 = arg_15_1.layer
 			end
 
-			arg_14_0.text = string.format(luaLang(var_14_6), var_14_5)
+			arg_15_0.text = string.format(luaLang(var_15_6), var_15_5)
 		end
-	elseif arg_14_1.count == 0 then
-		arg_14_0.text = string.format(luaLang("enemytip_buff_time"), arg_14_1.duration)
+	elseif arg_15_1.count == 0 then
+		arg_15_0.text = string.format(luaLang("enemytip_buff_time"), arg_15_1.duration)
 	else
-		local var_14_8 = arg_14_1.count
-		local var_14_9 = "round_or_times"
-		local var_14_10 = var_14_1 and var_14_1.includeTypes or ""
+		local var_15_8 = arg_15_1.count
+		local var_15_9 = "round_or_times"
+		local var_15_10 = var_15_1 and var_15_1.includeTypes or ""
 
-		if string.split(var_14_10, "#")[1] == "11" then
-			var_14_9 = "round_or_stacked_count"
-			var_14_8 = arg_14_1.layer
+		if string.split(var_15_10, "#")[1] == "11" then
+			var_15_9 = "round_or_stacked_count"
+			var_15_8 = arg_15_1.layer
 		end
 
-		local var_14_11 = {
-			arg_14_1.duration,
-			var_14_8
+		local var_15_11 = {
+			arg_15_1.duration,
+			var_15_8
 		}
 
-		arg_14_0.text = GameUtil.getSubPlaceholderLuaLang(luaLang(var_14_9), var_14_11)
+		arg_15_0.text = GameUtil.getSubPlaceholderLuaLang(luaLang(var_15_9), var_15_11)
 	end
+end
+
+function var_0_0.getKSDLBuffName(arg_16_0, arg_16_1)
+	arg_16_0 = FightBuffHelper.getKSDLSpecialBuffList(arg_16_0)[1]
+
+	if not arg_16_0 then
+		return arg_16_1.name
+	end
+
+	arg_16_1 = arg_16_0:getCO()
+
+	return arg_16_1.name
 end
 
 return var_0_0

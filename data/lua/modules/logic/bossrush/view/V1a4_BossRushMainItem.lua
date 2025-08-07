@@ -92,7 +92,7 @@ function var_0_0.setData(arg_11_0, arg_11_1, arg_11_2)
 	arg_11_0:_setActive(false)
 
 	if arg_11_2 then
-		arg_11_0:_tweenOpen()
+		TaskDispatcher.runDelay(arg_11_0._delayOpenCallBack, arg_11_0, arg_11_0._index * 0.06)
 	else
 		arg_11_0:_playIdle()
 	end
@@ -172,16 +172,6 @@ function var_0_0._onRefreshDeadline(arg_15_0)
 		arg_15_0._txtLocked.text = BossRushConfig.instance:getRemainTimeStrWithFmt(var_15_1, Activity128Config.ETimeFmtStyle.UnLock)
 	else
 		TaskDispatcher.cancelTask(arg_15_0._onRefreshDeadline, arg_15_0)
-
-		if arg_15_0:_isOpen() then
-			if arg_15_0._openAnimed then
-				BossRushRedModel.instance:setIsNewUnlockStage(var_15_0, false)
-				arg_15_0:_playUnlocking()
-			else
-				arg_15_0:_playUnlock(true)
-			end
-		end
-
 		arg_15_0:_refresh()
 	end
 end
@@ -190,36 +180,25 @@ function var_0_0._onClick(arg_16_0)
 	local var_16_0 = arg_16_0._mo
 
 	BossRushController.instance:openLevelDetailView(var_16_0)
+	BossRushRedModel.instance:setIsNewUnlockStage(arg_16_0:_getStage(), false)
 end
 
 function var_0_0._delayOpenCallBack(arg_17_0)
 	arg_17_0:_setActive(true)
 
-	if arg_17_0._isForcePlayUnlock and arg_17_0:_isOpen() then
+	if arg_17_0:_getIsNewUnlockStage() then
 		arg_17_0:_playUnlock(true)
-	else
-		arg_17_0:_playOpen()
-	end
 
-	arg_17_0._openAnim = false
-end
-
-function var_0_0._tweenOpen(arg_18_0)
-	if arg_18_0._openAnim then
 		return
 	end
 
-	arg_18_0._openAnim = true
+	arg_17_0:_playOpen()
+end
 
+function var_0_0._getIsNewUnlockStage(arg_18_0)
 	local var_18_0 = arg_18_0:_getStage()
 
-	if BossRushRedModel.instance:getIsNewUnlockStage(var_18_0) then
-		arg_18_0._isForcePlayUnlock = true
-	end
-
-	arg_18_0._openAnimed = true
-
-	TaskDispatcher.runDelay(arg_18_0._delayOpenCallBack, arg_18_0, arg_18_0._index * 0.06)
+	return arg_18_0:_isOpen() and BossRushRedModel.instance:getIsPlayUnlockAnimStage(var_18_0)
 end
 
 function var_0_0._playOpen(arg_19_0)
@@ -239,20 +218,26 @@ function var_0_0._playIdle(arg_20_0)
 end
 
 function var_0_0._playUnlock(arg_21_0, arg_21_1)
-	if arg_21_0._openAnim and not arg_21_0._isForcePlayUnlock then
-		if arg_21_1 then
-			arg_21_0._isForcePlayUnlock = true
-		end
-
-		return
-	end
-
 	arg_21_0:_playAnim(var_0_1.Unlock, 0, 0)
 	AudioMgr.instance:trigger(AudioEnum.ui_activity_1_4_qiutu.play_ui_qiutu_list_maintain)
 
 	arg_21_0._isForcePlayUnlock = false
 
 	gohelper.setActive(arg_21_0._goRecord, true)
+
+	local var_21_0 = arg_21_0:_getStage()
+
+	BossRushRedModel.instance:setIsPlayUnlockAnimStage(arg_21_0:_getStage(), false)
+
+	local var_21_1 = BossRushModel.instance:getStageLayersInfo(var_21_0)
+
+	if var_21_1 then
+		for iter_21_0, iter_21_1 in ipairs(var_21_1) do
+			local var_21_2 = iter_21_1.layerCO.layer
+
+			BossRushRedModel.instance:setIsNewUnlockStageLayer(var_21_0, var_21_2, true)
+		end
+	end
 end
 
 function var_0_0._playUnlocking(arg_22_0)
@@ -270,7 +255,9 @@ function var_0_0._setActive(arg_23_0, arg_23_1)
 end
 
 function var_0_0._playAnim(arg_24_0, arg_24_1, ...)
-	arg_24_0._anim:Play(arg_24_1, ...)
+	if arg_24_0._anim then
+		arg_24_0._anim:Play(arg_24_1, ...)
+	end
 end
 
 function var_0_0._refreshRed(arg_25_0)

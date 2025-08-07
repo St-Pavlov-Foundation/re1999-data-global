@@ -1546,97 +1546,277 @@
   },
   {
     "id": 927015001,
-    "eventName": "play_battle_plot27_npc512901_1",
+    "eventName": "battle_plot27_npc512901_1",
     "bankName": "npc512901_level_yuzhou2_7"
   },
   {
     "id": 927015002,
-    "eventName": "play_battle_plot27_hero3117_2",
+    "eventName": "battle_plot27_hero3117_2",
     "bankName": "hero3117_level_yuzhou2_7"
   },
   {
     "id": 927015003,
-    "eventName": "play_battle_plot27_hero3117_4",
+    "eventName": "battle_plot27_hero3117_4",
     "bankName": "hero3117_level_yuzhou2_7"
   },
   {
     "id": 927015004,
-    "eventName": "play_battle_plot27_hero3117_5",
+    "eventName": "battle_plot27_hero3117_5",
     "bankName": "hero3117_level_yuzhou2_7"
   },
   {
     "id": 927015005,
-    "eventName": "play_battle_plot27_hero3117_6",
+    "eventName": "battle_plot27_hero3117_6",
     "bankName": "hero3117_level_yuzhou2_7"
   },
   {
     "id": 927015006,
-    "eventName": "play_battle_plot27_hero3117_7",
+    "eventName": "battle_plot27_hero3117_7",
     "bankName": "hero3117_level_yuzhou2_7"
   },
   {
     "id": 927015007,
-    "eventName": "play_battle_plot27_hero3117_8",
+    "eventName": "battle_plot27_hero3117_8",
     "bankName": "hero3117_level_yuzhou2_7"
   },
   {
     "id": 927015008,
-    "eventName": "play_battle_plot27_hero3117_9",
+    "eventName": "battle_plot27_hero3117_9",
     "bankName": "hero3117_level_yuzhou2_7"
   },
   {
     "id": 927015009,
-    "eventName": "play_battle_plot27_hero3117_10",
+    "eventName": "battle_plot27_hero3117_10",
     "bankName": "hero3117_level_yuzhou2_7"
   },
   {
     "id": 927015010,
-    "eventName": "play_battle_plot27_hero3117_11",
+    "eventName": "battle_plot27_hero3117_11",
     "bankName": "hero3117_level_yuzhou2_7"
   },
   {
     "id": 927015011,
-    "eventName": "play_battle_plot27_hero3117_12",
+    "eventName": "battle_plot27_hero3117_12",
     "bankName": "hero3117_level_yuzhou2_7"
   },
   {
     "id": 927015012,
-    "eventName": "play_battle_plot27_hero3117_13",
+    "eventName": "battle_plot27_hero3117_13",
     "bankName": "hero3117_level_yuzhou2_7"
   },
   {
     "id": 927015013,
-    "eventName": "play_battle_plot27_hero3117_14",
+    "eventName": "battle_plot27_hero3117_14",
     "bankName": "hero3117_level_yuzhou2_7"
   },
   {
     "id": 927015014,
-    "eventName": "play_battle_plot27_hero3117_15",
+    "eventName": "battle_plot27_hero3117_15",
     "bankName": "hero3117_level_yuzhou2_7"
   },
   {
     "id": 927015015,
-    "eventName": "play_battle_plot27_npc512901_16",
+    "eventName": "battle_plot27_npc512901_16",
     "bankName": "npc512901_level_yuzhou2_7"
   },
   {
     "id": 927015016,
-    "eventName": "play_battle_plot27_hero3117_17",
+    "eventName": "battle_plot27_hero3117_17",
     "bankName": "hero3117_level_yuzhou2_7"
   },
   {
     "id": 927015017,
-    "eventName": "play_battle_plot27_hero3117_18",
+    "eventName": "battle_plot27_hero3117_18",
     "bankName": "hero3117_level_yuzhou2_7"
   },
   {
     "id": 927015018,
-    "eventName": "play_battle_plot27_hero3117_19",
+    "eventName": "battle_plot27_hero3117_19",
     "bankName": "hero3117_level_yuzhou2_7"
   },
   {
     "id": 927015019,
-    "eventName": "play_battle_plot27_hero3117_20",
+    "eventName": "battle_plot27_hero3117_20",
     "bankName": "hero3117_level_yuzhou2_7"
+  },
+  {
+    "id": 930515001,
+    "eventName": "play_level_plots01_npc635201_1",
+    "bankName": "npc635201_level_cikeshang_s01"
+  },
+  {
+    "id": 930515002,
+    "eventName": "play_level_plots01_hero3028_2",
+    "bankName": "hero3028_level_cikeshang_s01"
+  },
+  {
+    "id": 930515003,
+    "eventName": "play_level_plots01_npc635101_3",
+    "bankName": "npc635101_level_cikeshang_s01"
+  },
+  {
+    "id": 930515004,
+    "eventName": "play_level_plots01_hero3028_4",
+    "bankName": "hero3028_level_cikeshang_s01"
+  },
+  {
+    "id": 930515005,
+    "eventName": "play_level_plots01_npc636301b_5",
+    "bankName": "npc636301b_level_cikeshang_s01"
+  },
+  {
+    "id": 930515006,
+    "eventName": "play_level_plots01_npc635101_6",
+    "bankName": "npc635101_level_cikeshang_s01"
+  },
+  {
+    "id": 930515007,
+    "eventName": "play_level_plots01_hero3009_7",
+    "bankName": "hero3009_level_cikeshang_s01"
+  },
+  {
+    "id": 930515008,
+    "eventName": "play_level_plots01_hero3009_8",
+    "bankName": "hero3009_level_cikeshang_s01"
+  },
+  {
+    "id": 930515009,
+    "eventName": "play_battle_plots01_hero5043_1",
+    "bankName": "hero5043_level_cikeshang_s01"
+  },
+  {
+    "id": 930515010,
+    "eventName": "play_battle_plots01_npc635301_2",
+    "bankName": "npc635301_level_cikeshang_s01"
+  },
+  {
+    "id": 930515011,
+    "eventName": "play_battle_plots01_npc635301_3",
+    "bankName": "npc635301_level_cikeshang_s01"
+  },
+  {
+    "id": 930515012,
+    "eventName": "play_battle_plots01_hero3123_4",
+    "bankName": "hero3123_level_cikeshang_s01"
+  },
+  {
+    "id": 930515013,
+    "eventName": "play_battle_plots01_npc635301_5",
+    "bankName": "npc635301_level_cikeshang_s01"
+  },
+  {
+    "id": 930515014,
+    "eventName": "play_battle_plots01_hero5043_6",
+    "bankName": "hero5043_level_cikeshang_s01"
+  },
+  {
+    "id": 930515015,
+    "eventName": "play_battle_plots01_npc635301_7",
+    "bankName": "npc635301_level_cikeshang_s01"
+  },
+  {
+    "id": 930515016,
+    "eventName": "play_battle_plots01_npc635301_8",
+    "bankName": "npc635301_level_cikeshang_s01"
+  },
+  {
+    "id": 930515017,
+    "eventName": "play_battle_plots01_npc635301_9",
+    "bankName": "npc635301_level_cikeshang_s01"
+  },
+  {
+    "id": 930515018,
+    "eventName": "play_battle_plots01_npc635301_10",
+    "bankName": "npc635301_level_cikeshang_s01"
+  },
+  {
+    "id": 930515019,
+    "eventName": "play_battle_plots01_hero3124_11",
+    "bankName": "hero3124_level_cikexia_s01"
+  },
+  {
+    "id": 930515020,
+    "eventName": "play_battle_plots01_hero3122_12",
+    "bankName": "hero3122_level_cikexia_s01"
+  },
+  {
+    "id": 930515021,
+    "eventName": "play_battle_plots01_hero3122_13",
+    "bankName": "hero3122_level_cikexia_s01"
+  },
+  {
+    "id": 930515022,
+    "eventName": "play_battle_plots01_hero3122_14",
+    "bankName": "hero3122_level_cikexia_s01"
+  },
+  {
+    "id": 930515023,
+    "eventName": "play_battle_plots01_hero3124_15",
+    "bankName": "hero3124_level_cikexia_s01"
+  },
+  {
+    "id": 930515024,
+    "eventName": "play_battle_plots01_hero3122_16",
+    "bankName": "hero3122_level_cikexia_s01"
+  },
+  {
+    "id": 930515025,
+    "eventName": "play_battle_plots01_hero3124_17",
+    "bankName": "hero3124_level_cikexia_s01"
+  },
+  {
+    "id": 930515026,
+    "eventName": "play_battle_plots01_hero3122_18",
+    "bankName": "hero3122_level_cikexia_s01"
+  },
+  {
+    "id": 930515027,
+    "eventName": "play_battle_plots01_hero3122_19",
+    "bankName": "hero3122_level_cikexia_s01"
+  },
+  {
+    "id": 930515028,
+    "eventName": "play_battle_plots01_hero3122_20",
+    "bankName": "hero3122_level_cikexia_s01"
+  },
+  {
+    "id": 930515029,
+    "eventName": "play_battle_plots01_hero3124_22",
+    "bankName": "hero3124_level_cikexia_s01"
+  },
+  {
+    "id": 930515030,
+    "eventName": "play_battle_plots01_hero3122_23",
+    "bankName": "hero3122_level_cikexia_s01"
+  },
+  {
+    "id": 930515031,
+    "eventName": "play_battle_plots01_hero3124_24",
+    "bankName": "hero3124_level_cikexia_s01"
+  },
+  {
+    "id": 930515032,
+    "eventName": "play_battle_plots01_hero3122_25",
+    "bankName": "hero3122_level_cikexia_s01"
+  },
+  {
+    "id": 930515033,
+    "eventName": "play_battle_plots01_hero3122_26",
+    "bankName": "hero3122_level_cikexia_s01"
+  },
+  {
+    "id": 930515034,
+    "eventName": "play_battle_plots01_hero3122_27",
+    "bankName": "hero3122_level_cikexia_s01"
+  },
+  {
+    "id": 930515035,
+    "eventName": "play_battle_plots01_hero3124_28",
+    "bankName": "hero3124_level_cikexia_s01"
+  },
+  {
+    "id": 930515036,
+    "eventName": "play_battle_plots01_hero3122_29",
+    "bankName": "hero3122_level_cikexia_s01"
   }
 ]

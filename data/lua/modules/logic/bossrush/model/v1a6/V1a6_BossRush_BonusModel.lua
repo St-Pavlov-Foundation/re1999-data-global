@@ -138,6 +138,27 @@ function var_0_0.getLayer4ProgressWidth(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
 	return var_7_1, var_7_2
 end
 
+function var_0_0.getBonusViewPath(arg_8_0)
+	local var_8_0 = {}
+	local var_8_1 = BossRushModel.instance:getActivityBonus()
+
+	for iter_8_0, iter_8_1 in ipairs(var_8_1) do
+		table.insert(var_8_0, {
+			iter_8_1.ViewPath
+		})
+	end
+
+	return var_8_0
+end
+
+function var_0_0.getTab(arg_9_0)
+	return arg_9_0._selectTab or BossRushEnum.BonusViewTab.AchievementTab
+end
+
+function var_0_0.setTab(arg_10_0, arg_10_1)
+	arg_10_0._selectTab = arg_10_1
+end
+
 var_0_0.instance = var_0_0.New()
 
 return var_0_0

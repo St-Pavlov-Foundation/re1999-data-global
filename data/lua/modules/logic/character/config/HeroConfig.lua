@@ -130,11 +130,14 @@ function var_0_0.getAnyRareCharacterCount(arg_12_0, arg_12_1)
 	return var_12_1
 end
 
-function var_0_0.getAnyOnlineRareCharacterCount(arg_13_0, arg_13_1)
+function var_0_0.getAnyOnlineRareCharacterCount(arg_13_0, arg_13_1, arg_13_2)
 	local var_13_0 = 0
+	local var_13_1 = CharacterEnum.StatType.All
+
+	arg_13_2 = arg_13_2 or CharacterEnum.StatType.Normal
 
 	for iter_13_0, iter_13_1 in pairs(arg_13_0.heroConfig.configDict) do
-		if iter_13_1.rare == arg_13_1 then
+		if iter_13_1.rare == arg_13_1 and (arg_13_2 == var_13_1 or iter_13_1.stat == arg_13_2) then
 			if iter_13_1.isOnline == "1" then
 				var_13_0 = var_13_0 + 1
 			elseif iter_13_1.isOnline ~= "0" and TimeUtil.stringToTimestamp(iter_13_1.isOnline) < ServerTime.now() then

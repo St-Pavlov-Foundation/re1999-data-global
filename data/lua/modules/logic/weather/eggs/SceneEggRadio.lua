@@ -3,7 +3,7 @@
 local var_0_0 = class("SceneEggRadio", SceneBaseEgg)
 
 function var_0_0._onInit(arg_1_0)
-	arg_1_0._heroId = tonumber(arg_1_0._eggConfig.actionParams)
+	arg_1_0._heroOrSkinId = tonumber(arg_1_0._eggConfig.actionParams)
 	arg_1_0._isMainScene = arg_1_0._context and arg_1_0._context.isMainScene
 
 	if arg_1_0._isMainScene then
@@ -21,19 +21,19 @@ function var_0_0._onChangeMainHero(arg_2_0)
 		return
 	end
 
-	local var_2_0 = CharacterSwitchListModel.instance:getMainHero()
+	local var_2_0, var_2_1 = CharacterSwitchListModel.instance:getMainHero()
 
-	arg_2_0:setGoListVisible(arg_2_0._heroId ~= var_2_0)
+	arg_2_0:setGoListVisible(arg_2_0._heroOrSkinId ~= var_2_0 and arg_2_0._heroOrSkinId ~= var_2_1)
 end
 
-function var_0_0._onRandomMainHero(arg_3_0, arg_3_1)
+function var_0_0._onRandomMainHero(arg_3_0, arg_3_1, arg_3_2)
 	if not arg_3_0._isMainScene then
 		arg_3_0:setGoListVisible(true)
 
 		return
 	end
 
-	arg_3_0:setGoListVisible(arg_3_0._heroId ~= arg_3_1)
+	arg_3_0:setGoListVisible(arg_3_0._heroOrSkinId ~= arg_3_1 and arg_3_0._heroOrSkinId ~= arg_3_2)
 end
 
 function var_0_0._onSceneClose(arg_4_0)

@@ -13,6 +13,10 @@ function var_0_0.getBuffDesc(arg_1_0)
 		return ""
 	end
 
+	if FightHeroSpEffectConfig.instance:isKSDLSpecialBuff(arg_1_0.buffId) then
+		return var_0_0.getKSDLBuffDesc(arg_1_0, var_1_0)
+	end
+
 	if string.nilorempty(arg_1_0.actCommonParams) then
 		return var_0_0.buildDesc(var_1_0.desc)
 	end
@@ -117,6 +121,26 @@ end
 
 function var_0_0.getStorageDamageDesc(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
 	return GameUtil.getSubPlaceholderLuaLangOneParam(arg_10_1.desc, arg_10_3[2])
+end
+
+function var_0_0.getKSDLBuffDesc(arg_11_0, arg_11_1)
+	local var_11_0 = FightBuffHelper.getKSDLSpecialBuffList(arg_11_0)
+
+	if #var_11_0 < 1 then
+		return var_0_0.buildDesc(arg_11_1.desc)
+	end
+
+	local var_11_1 = ""
+
+	for iter_11_0, iter_11_1 in ipairs(var_11_0) do
+		local var_11_2 = lua_skill_buff.configDict[iter_11_1.buffId]
+
+		if var_11_2 then
+			var_11_1 = var_11_1 .. var_0_0.buildDesc(var_11_2.desc)
+		end
+	end
+
+	return var_11_1
 end
 
 return var_0_0

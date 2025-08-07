@@ -121,6 +121,7 @@ function var_0_0._editableInitView(arg_8_0)
 	RoleActivityModel.instance:initData(arg_8_0.actId)
 	arg_8_0:_initStageItems()
 	gohelper.setActive(arg_8_0._btnPlayBtn, arg_8_0.actConfig.storyId > 0)
+	gohelper.setActive(arg_8_0._gotime, false)
 end
 
 function var_0_0.onOpen(arg_9_0)
@@ -133,7 +134,7 @@ function var_0_0.onOpen(arg_9_0)
 
 	local var_9_0 = gohelper.findChild(arg_9_0._btnTask.gameObject, "#go_reddot")
 
-	RedDotController.instance:addRedDot(var_9_0, RedDotEnum.DotNode.V1a6RoleActivityTask, arg_9_0.actId)
+	RedDotController.instance:addRedDot(var_9_0, RedDotEnum.DotNode.PermanentRoleActivityTask, arg_9_0.actId)
 	arg_9_0:OnDotChange()
 	arg_9_0:_showLeftTime()
 	TaskDispatcher.runRepeat(arg_9_0._showLeftTime, arg_9_0, 1)
@@ -242,7 +243,7 @@ function var_0_0.OnEndDungeonPush(arg_17_0)
 end
 
 function var_0_0.OnDotChange(arg_18_0)
-	if RedDotModel.instance:isDotShow(RedDotEnum.DotNode.V1a6RoleActivityTask, arg_18_0.actId) then
+	if RedDotModel.instance:isDotShow(RedDotEnum.DotNode.PermanentRoleActivityTask, arg_18_0.actId) then
 		arg_18_0._animTask:Play("loop")
 	else
 		arg_18_0._animTask:Play("idle")

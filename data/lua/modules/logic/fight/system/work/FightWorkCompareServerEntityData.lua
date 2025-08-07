@@ -79,11 +79,31 @@ function var_0_0.compareSummonedInfo(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
 end
 
 local var_0_1 = {
+	actInfo = function(arg_5_0, arg_5_1)
+		local function var_5_0(arg_6_0, arg_6_1)
+			return arg_6_0.actId < arg_6_1.actId
+		end
+
+		table.sort(arg_5_0, var_5_0)
+		table.sort(arg_5_1, var_5_0)
+		FightDataUtil.doFindDiff(arg_5_0, arg_5_1)
+	end
+}
+
+local function var_0_2(arg_7_0, arg_7_1)
+	FightDataUtil.doFindDiff(arg_7_0, arg_7_1, nil, var_0_1)
+end
+
+function var_0_0.compareBuffDic(arg_8_0, arg_8_1)
+	FightDataUtil.doFindDiff(arg_8_0, arg_8_1, nil, nil, var_0_2)
+end
+
+local var_0_3 = {
 	[FightDataUtil.diffType.missingSource] = "服务器数据不存在",
 	[FightDataUtil.diffType.missingTarget] = "本地数据不存在",
 	[FightDataUtil.diffType.difference] = "数据不一致"
 }
-local var_0_2 = {
+local var_0_4 = {
 	buffFeaturesSplit = true,
 	playCardExPoint = true,
 	resistanceDict = true,
@@ -97,70 +117,76 @@ local var_0_2 = {
 	skillList = true,
 	_moveCardAddExpoint = true
 }
-local var_0_3 = {
+
+var_0_0.filterCompareKey = var_0_4
+
+local var_0_5 = {
 	attrMO = var_0_0.compareAttrMO,
-	summonedInfo = var_0_0.compareSummonedInfo
+	summonedInfo = var_0_0.compareSummonedInfo,
+	buffDic = var_0_0.compareBuffDic
 }
 
-function var_0_0._onCountEntityInfoReply(arg_5_0, arg_5_1, arg_5_2)
-	if arg_5_1 == 0 then
-		local var_5_0 = arg_5_2.entityInfo and FightLocalDataMgr.instance.entityMgr:getById(arg_5_2.entityInfo.uid)
+var_0_0.costomCompareFunc = var_0_5
 
-		if var_5_0 then
-			local var_5_1 = var_5_0.id
-			local var_5_2 = FightEntityMO.New()
+function var_0_0._onCountEntityInfoReply(arg_9_0, arg_9_1, arg_9_2)
+	if arg_9_1 == 0 then
+		local var_9_0 = arg_9_2.entityInfo and FightLocalDataMgr.instance.entityMgr:getById(arg_9_2.entityInfo.uid)
 
-			var_5_2:init(arg_5_2.entityInfo, var_5_0.side)
+		if var_9_0 then
+			local var_9_1 = var_9_0.id
+			local var_9_2 = FightEntityMO.New()
 
-			local var_5_3, var_5_4 = FightDataUtil.findDiff(var_5_2, var_5_0, var_0_2, var_0_3)
+			var_9_2:init(arg_9_2.entityInfo, var_9_0.side)
 
-			if var_5_3 then
-				local var_5_5 = var_5_0:getCO()
-				local var_5_6 = "前后端entity数据不一致,entityId:%s, 角色名称:%s \n"
-				local var_5_7 = string.format(var_5_6, var_5_1, var_5_5 and var_5_5.name or "")
+			local var_9_3, var_9_4 = FightDataUtil.findDiff(var_9_2, var_9_0, var_0_4, var_0_5)
 
-				for iter_5_0, iter_5_1 in pairs(var_5_4) do
-					for iter_5_2, iter_5_3 in ipairs(iter_5_1) do
-						local var_5_8 = " "
+			if var_9_3 then
+				local var_9_5 = var_9_0:getCO()
+				local var_9_6 = "前后端entity数据不一致,entityId:%s, 角色名称:%s \n"
+				local var_9_7 = string.format(var_9_6, var_9_1, var_9_5 and var_9_5.name or "")
 
-						if iter_5_3.diffType == FightDataUtil.diffType.difference then
-							local var_5_9, var_5_10 = FightDataUtil.getDiffValue(var_5_2, var_5_0, iter_5_3)
+				for iter_9_0, iter_9_1 in pairs(var_9_4) do
+					for iter_9_2, iter_9_3 in ipairs(iter_9_1) do
+						local var_9_8 = " "
 
-							var_5_8 = string.format("    服务器数据:%s, 本地数据:%s", var_5_9, var_5_10)
+						if iter_9_3.diffType == FightDataUtil.diffType.difference then
+							local var_9_9, var_9_10 = FightDataUtil.getDiffValue(var_9_2, var_9_0, iter_9_3)
+
+							var_9_8 = string.format("    服务器数据:%s, 本地数据:%s", var_9_9, var_9_10)
 						end
 
-						var_5_7 = var_5_7 .. "路径: entityMO." .. iter_5_3.pathStr .. ", 原因:" .. var_0_1[iter_5_3.diffType] .. var_5_8 .. "\n"
+						var_9_7 = var_9_7 .. "路径: entityMO." .. iter_9_3.pathStr .. ", 原因:" .. var_0_3[iter_9_3.diffType] .. var_9_8 .. "\n"
 					end
 
-					var_5_7 = var_5_7 .. "\n"
-					var_5_7 = var_5_7 .. "服务器数据: entityMO." .. iter_5_0 .. " = " .. FightHelper.logStr(var_5_2[iter_5_0], var_0_2) .. "\n"
-					var_5_7 = var_5_7 .. "\n"
-					var_5_7 = var_5_7 .. "本地数据: entityMO." .. iter_5_0 .. " = " .. FightHelper.logStr(var_5_0[iter_5_0], var_0_2) .. "\n"
-					var_5_7 = var_5_7 .. "------------------------------------------------------------------------------------------------------------------------\n"
+					var_9_7 = var_9_7 .. "\n"
+					var_9_7 = var_9_7 .. "服务器数据: entityMO." .. iter_9_0 .. " = " .. FightHelper.logStr(var_9_2[iter_9_0], var_0_4) .. "\n"
+					var_9_7 = var_9_7 .. "\n"
+					var_9_7 = var_9_7 .. "本地数据: entityMO." .. iter_9_0 .. " = " .. FightHelper.logStr(var_9_0[iter_9_0], var_0_4) .. "\n"
+					var_9_7 = var_9_7 .. "------------------------------------------------------------------------------------------------------------------------\n"
 				end
 
-				logError(var_5_7)
-				FightLocalDataMgr.instance.entityMgr:replaceEntityMO(var_5_2)
+				logError(var_9_7)
+				FightLocalDataMgr.instance.entityMgr:replaceEntityMO(var_9_2)
 			end
 		else
 			logError("数据错误")
 		end
 	end
 
-	arg_5_0._count = arg_5_0._count - 1
+	arg_9_0._count = arg_9_0._count - 1
 
-	if arg_5_0._count <= 0 then
+	if arg_9_0._count <= 0 then
 		FightController.instance:dispatchEvent(FightEvent.AfterForceUpdatePerformanceData)
-		arg_5_0:onDone(true)
+		arg_9_0:onDone(true)
 	end
 end
 
-function var_0_0._delayDone(arg_6_0)
+function var_0_0._delayDone(arg_10_0)
 	logError("对比前后端数据超时")
-	arg_6_0:onDone(true)
+	arg_10_0:onDone(true)
 end
 
-function var_0_0.clearWork(arg_7_0)
+function var_0_0.clearWork(arg_11_0)
 	return
 end
 

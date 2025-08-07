@@ -2,22 +2,23 @@
 
 local var_0_0 = {}
 local var_0_1 = {
-	exSkillLv = 7,
-	act104EquipId2 = 13,
-	attrId = 14,
-	facetsId = 15,
 	equipRefine = 11,
+	act104EquipId2 = 13,
+	facetsId = 15,
 	skin = 4,
-	trialTemplate = 2,
+	equipId = 9,
 	heroId = 3,
+	act104EquipId1 = 12,
+	exSkillLv = 7,
+	level = 6,
+	attrId = 14,
+	facetslevel = 16,
+	trialTemplate = 2,
 	trialType = 5,
 	talent = 8,
-	equipId = 9,
-	act104EquipId1 = 12,
+	special = 17,
 	id = 1,
-	facetslevel = 16,
-	equipLv = 10,
-	level = 6
+	equipLv = 10
 }
 local var_0_2 = {
 	"id",

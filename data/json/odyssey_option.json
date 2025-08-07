@@ -1,0 +1,932 @@
+[
+  {
+    "id": 12100101,
+    "unlockCondition": "",
+    "notFinish": 0,
+    "desc": "language_10078857",
+    "subDesc": "",
+    "reward": "",
+    "dataBase": 0,
+    "story": 0
+  },
+  {
+    "id": 12100201,
+    "unlockCondition": "",
+    "notFinish": 0,
+    "desc": "language_10030535",
+    "subDesc": "",
+    "reward": "",
+    "dataBase": 0,
+    "story": 0
+  },
+  {
+    "id": 12100301,
+    "unlockCondition": "",
+    "notFinish": 0,
+    "desc": "language_10030626",
+    "subDesc": "",
+    "reward": "exp#50",
+    "dataBase": 0,
+    "story": 0
+  },
+  {
+    "id": 12100401,
+    "unlockCondition": "",
+    "notFinish": 0,
+    "desc": "language_10030626",
+    "subDesc": "",
+    "reward": "exp#50",
+    "dataBase": 0,
+    "story": 0
+  },
+  {
+    "id": 12200101,
+    "unlockCondition": "",
+    "notFinish": 0,
+    "desc": "language_10078858",
+    "subDesc": "",
+    "reward": "",
+    "dataBase": 0,
+    "story": 0
+  },
+  {
+    "id": 12300101,
+    "unlockCondition": "",
+    "notFinish": 0,
+    "desc": "language_10078859",
+    "subDesc": "",
+    "reward": "",
+    "dataBase": 0,
+    "story": 0
+  },
+  {
+    "id": 22100101,
+    "unlockCondition": "",
+    "notFinish": 0,
+    "desc": "language_10078860",
+    "subDesc": "",
+    "reward": "",
+    "dataBase": 0,
+    "story": 0
+  },
+  {
+    "id": 22200101,
+    "unlockCondition": "",
+    "notFinish": 0,
+    "desc": "language_10078861",
+    "subDesc": "",
+    "reward": "",
+    "dataBase": 0,
+    "story": 0
+  },
+  {
+    "id": 22300101,
+    "unlockCondition": "",
+    "notFinish": 0,
+    "desc": "language_10078862",
+    "subDesc": "",
+    "reward": "",
+    "dataBase": 0,
+    "story": 0
+  },
+  {
+    "id": 22300201,
+    "unlockCondition": "",
+    "notFinish": 0,
+    "desc": "language_10030535",
+    "subDesc": "",
+    "reward": "",
+    "dataBase": 0,
+    "story": 0
+  },
+  {
+    "id": 22300301,
+    "unlockCondition": "",
+    "notFinish": 0,
+    "desc": "language_10030626",
+    "subDesc": "",
+    "reward": "exp#50",
+    "dataBase": 0,
+    "story": 0
+  },
+  {
+    "id": 22300401,
+    "unlockCondition": "",
+    "notFinish": 0,
+    "desc": "language_10030626",
+    "subDesc": "",
+    "reward": "exp#50",
+    "dataBase": 0,
+    "story": 0
+  },
+  {
+    "id": 22300501,
+    "unlockCondition": "",
+    "notFinish": 0,
+    "desc": "language_10030626",
+    "subDesc": "",
+    "reward": "exp#50",
+    "dataBase": 0,
+    "story": 0
+  },
+  {
+    "id": 32100101,
+    "unlockCondition": "",
+    "notFinish": 0,
+    "desc": "language_10078861",
+    "subDesc": "",
+    "reward": "",
+    "dataBase": 0,
+    "story": 0
+  },
+  {
+    "id": 32200101,
+    "unlockCondition": "",
+    "notFinish": 0,
+    "desc": "language_10078863",
+    "subDesc": "",
+    "reward": "",
+    "dataBase": 0,
+    "story": 0
+  },
+  {
+    "id": 42100101,
+    "unlockCondition": "",
+    "notFinish": 0,
+    "desc": "language_10078868",
+    "subDesc": "",
+    "reward": "",
+    "dataBase": 0,
+    "story": 0
+  },
+  {
+    "id": 42200101,
+    "unlockCondition": "",
+    "notFinish": 0,
+    "desc": "language_10078869",
+    "subDesc": "",
+    "reward": "",
+    "dataBase": 0,
+    "story": 0
+  },
+  {
+    "id": 42200201,
+    "unlockCondition": "",
+    "notFinish": 0,
+    "desc": "language_10030535",
+    "subDesc": "",
+    "reward": "",
+    "dataBase": 0,
+    "story": 0
+  },
+  {
+    "id": 42200301,
+    "unlockCondition": "",
+    "notFinish": 0,
+    "desc": "language_10030626",
+    "subDesc": "",
+    "reward": "exp#50",
+    "dataBase": 0,
+    "story": 0
+  },
+  {
+    "id": 42200401,
+    "unlockCondition": "",
+    "notFinish": 0,
+    "desc": "language_10030626",
+    "subDesc": "",
+    "reward": "exp#50",
+    "dataBase": 0,
+    "story": 0
+  },
+  {
+    "id": 52100101,
+    "unlockCondition": "",
+    "notFinish": 0,
+    "desc": "language_10078870",
+    "subDesc": "",
+    "reward": "",
+    "dataBase": 0,
+    "story": 0
+  },
+  {
+    "id": 52100201,
+    "unlockCondition": "",
+    "notFinish": 0,
+    "desc": "language_10030626",
+    "subDesc": "",
+    "reward": "exp#50",
+    "dataBase": 0,
+    "story": 0
+  },
+  {
+    "id": 52200101,
+    "unlockCondition": "",
+    "notFinish": 0,
+    "desc": "language_10001080",
+    "subDesc": "",
+    "reward": "",
+    "dataBase": 0,
+    "story": 0
+  },
+  {
+    "id": 52300101,
+    "unlockCondition": "",
+    "notFinish": 0,
+    "desc": "language_10078871",
+    "subDesc": "",
+    "reward": "",
+    "dataBase": 0,
+    "story": 0
+  },
+  {
+    "id": 52300201,
+    "unlockCondition": "",
+    "notFinish": 0,
+    "desc": "language_10078872",
+    "subDesc": "",
+    "reward": "",
+    "dataBase": 0,
+    "story": 0
+  },
+  {
+    "id": 52300301,
+    "unlockCondition": "",
+    "notFinish": 0,
+    "desc": "language_10078873",
+    "subDesc": "",
+    "reward": "exp#50",
+    "dataBase": 0,
+    "story": 0
+  },
+  {
+    "id": 12100102,
+    "unlockCondition": "",
+    "notFinish": 1,
+    "desc": "language_10000985",
+    "subDesc": "",
+    "reward": "",
+    "dataBase": 0,
+    "story": 0
+  },
+  {
+    "id": 12200102,
+    "unlockCondition": "",
+    "notFinish": 1,
+    "desc": "language_10000985",
+    "subDesc": "",
+    "reward": "",
+    "dataBase": 0,
+    "story": 0
+  },
+  {
+    "id": 12300102,
+    "unlockCondition": "",
+    "notFinish": 1,
+    "desc": "language_10000985",
+    "subDesc": "",
+    "reward": "",
+    "dataBase": 0,
+    "story": 0
+  },
+  {
+    "id": 22100102,
+    "unlockCondition": "",
+    "notFinish": 1,
+    "desc": "language_10000985",
+    "subDesc": "",
+    "reward": "",
+    "dataBase": 0,
+    "story": 0
+  },
+  {
+    "id": 22200102,
+    "unlockCondition": "",
+    "notFinish": 1,
+    "desc": "language_10000985",
+    "subDesc": "",
+    "reward": "",
+    "dataBase": 0,
+    "story": 0
+  },
+  {
+    "id": 22300102,
+    "unlockCondition": "",
+    "notFinish": 1,
+    "desc": "language_10000985",
+    "subDesc": "",
+    "reward": "",
+    "dataBase": 0,
+    "story": 0
+  },
+  {
+    "id": 32100102,
+    "unlockCondition": "",
+    "notFinish": 1,
+    "desc": "language_10000985",
+    "subDesc": "",
+    "reward": "",
+    "dataBase": 0,
+    "story": 0
+  },
+  {
+    "id": 32200102,
+    "unlockCondition": "",
+    "notFinish": 1,
+    "desc": "language_10000985",
+    "subDesc": "",
+    "reward": "",
+    "dataBase": 0,
+    "story": 0
+  },
+  {
+    "id": 42100102,
+    "unlockCondition": "",
+    "notFinish": 1,
+    "desc": "language_10000985",
+    "subDesc": "",
+    "reward": "",
+    "dataBase": 0,
+    "story": 0
+  },
+  {
+    "id": 42200102,
+    "unlockCondition": "",
+    "notFinish": 1,
+    "desc": "language_10000985",
+    "subDesc": "",
+    "reward": "",
+    "dataBase": 0,
+    "story": 0
+  },
+  {
+    "id": 52100102,
+    "unlockCondition": "",
+    "notFinish": 1,
+    "desc": "language_10000985",
+    "subDesc": "",
+    "reward": "",
+    "dataBase": 0,
+    "story": 0
+  },
+  {
+    "id": 52200102,
+    "unlockCondition": "",
+    "notFinish": 1,
+    "desc": "language_10000985",
+    "subDesc": "",
+    "reward": "",
+    "dataBase": 0,
+    "story": 0
+  },
+  {
+    "id": 52300102,
+    "unlockCondition": "",
+    "notFinish": 1,
+    "desc": "language_10000985",
+    "subDesc": "",
+    "reward": "",
+    "dataBase": 0,
+    "story": 0
+  },
+  {
+    "id": 21400101,
+    "unlockCondition": "",
+    "notFinish": 0,
+    "desc": "language_10078874",
+    "subDesc": "",
+    "reward": "",
+    "dataBase": 0,
+    "story": 0
+  },
+  {
+    "id": 21400102,
+    "unlockCondition": "",
+    "notFinish": 0,
+    "desc": "language_10078875",
+    "subDesc": "",
+    "reward": "",
+    "dataBase": 0,
+    "story": 0
+  },
+  {
+    "id": 21500101,
+    "unlockCondition": "",
+    "notFinish": 0,
+    "desc": "language_10078876",
+    "subDesc": "",
+    "reward": "",
+    "dataBase": 0,
+    "story": 0
+  },
+  {
+    "id": 21500102,
+    "unlockCondition": "",
+    "notFinish": 0,
+    "desc": "language_10078877",
+    "subDesc": "",
+    "reward": "",
+    "dataBase": 0,
+    "story": 0
+  },
+  {
+    "id": 21500103,
+    "unlockCondition": "",
+    "notFinish": 0,
+    "desc": "language_10078878",
+    "subDesc": "",
+    "reward": "",
+    "dataBase": 0,
+    "story": 0
+  },
+  {
+    "id": 21500104,
+    "unlockCondition": "",
+    "notFinish": 0,
+    "desc": "language_10078879",
+    "subDesc": "",
+    "reward": "",
+    "dataBase": 0,
+    "story": 0
+  },
+  {
+    "id": 21600101,
+    "unlockCondition": "",
+    "notFinish": 0,
+    "desc": "language_10078880",
+    "subDesc": "",
+    "reward": "",
+    "dataBase": 0,
+    "story": 0
+  },
+  {
+    "id": 21600102,
+    "unlockCondition": "",
+    "notFinish": 0,
+    "desc": "language_10078881",
+    "subDesc": "",
+    "reward": "",
+    "dataBase": 0,
+    "story": 0
+  },
+  {
+    "id": 31400101,
+    "unlockCondition": "",
+    "notFinish": 0,
+    "desc": "language_10078882",
+    "subDesc": "",
+    "reward": "",
+    "dataBase": 0,
+    "story": 0
+  },
+  {
+    "id": 31400102,
+    "unlockCondition": "",
+    "notFinish": 0,
+    "desc": "language_10078883",
+    "subDesc": "",
+    "reward": "",
+    "dataBase": 0,
+    "story": 0
+  },
+  {
+    "id": 31400201,
+    "unlockCondition": "",
+    "notFinish": 0,
+    "desc": "language_10078884",
+    "subDesc": "",
+    "reward": "",
+    "dataBase": 0,
+    "story": 0
+  },
+  {
+    "id": 31400202,
+    "unlockCondition": "",
+    "notFinish": 0,
+    "desc": "language_10078885",
+    "subDesc": "",
+    "reward": "",
+    "dataBase": 0,
+    "story": 0
+  },
+  {
+    "id": 31500101,
+    "unlockCondition": "",
+    "notFinish": 0,
+    "desc": "language_10078886",
+    "subDesc": "",
+    "reward": "",
+    "dataBase": 0,
+    "story": 0
+  },
+  {
+    "id": 31500102,
+    "unlockCondition": "",
+    "notFinish": 0,
+    "desc": "language_10078887",
+    "subDesc": "",
+    "reward": "",
+    "dataBase": 0,
+    "story": 0
+  },
+  {
+    "id": 31500201,
+    "unlockCondition": "",
+    "notFinish": 0,
+    "desc": "language_10078888",
+    "subDesc": "",
+    "reward": "",
+    "dataBase": 0,
+    "story": 0
+  },
+  {
+    "id": 31500202,
+    "unlockCondition": "",
+    "notFinish": 0,
+    "desc": "language_10078889",
+    "subDesc": "",
+    "reward": "",
+    "dataBase": 0,
+    "story": 0
+  },
+  {
+    "id": 31600101,
+    "unlockCondition": "",
+    "notFinish": 0,
+    "desc": "language_10078890",
+    "subDesc": "",
+    "reward": "",
+    "dataBase": 0,
+    "story": 0
+  },
+  {
+    "id": 31600102,
+    "unlockCondition": "",
+    "notFinish": 0,
+    "desc": "language_10078891",
+    "subDesc": "",
+    "reward": "",
+    "dataBase": 0,
+    "story": 0
+  },
+  {
+    "id": 41400101,
+    "unlockCondition": "",
+    "notFinish": 0,
+    "desc": "language_10078892",
+    "subDesc": "",
+    "reward": "",
+    "dataBase": 0,
+    "story": 0
+  },
+  {
+    "id": 41400102,
+    "unlockCondition": "",
+    "notFinish": 0,
+    "desc": "language_10078893",
+    "subDesc": "",
+    "reward": "",
+    "dataBase": 0,
+    "story": 0
+  },
+  {
+    "id": 41500101,
+    "unlockCondition": "",
+    "notFinish": 0,
+    "desc": "language_10078894",
+    "subDesc": "",
+    "reward": "",
+    "dataBase": 0,
+    "story": 0
+  },
+  {
+    "id": 41500102,
+    "unlockCondition": "",
+    "notFinish": 0,
+    "desc": "language_10078895",
+    "subDesc": "",
+    "reward": "",
+    "dataBase": 0,
+    "story": 0
+  },
+  {
+    "id": 51500101,
+    "unlockCondition": "",
+    "notFinish": 0,
+    "desc": "language_10078896",
+    "subDesc": "",
+    "reward": "",
+    "dataBase": 0,
+    "story": 0
+  },
+  {
+    "id": 51500102,
+    "unlockCondition": "",
+    "notFinish": 0,
+    "desc": "language_10078897",
+    "subDesc": "",
+    "reward": "",
+    "dataBase": 0,
+    "story": 0
+  },
+  {
+    "id": 11000101,
+    "unlockCondition": "",
+    "notFinish": 0,
+    "desc": "language_10078898",
+    "subDesc": "",
+    "reward": "exp#50",
+    "dataBase": 101,
+    "story": 0
+  },
+  {
+    "id": 11000201,
+    "unlockCondition": "",
+    "notFinish": 0,
+    "desc": "language_10078898",
+    "subDesc": "",
+    "reward": "exp#50",
+    "dataBase": 102,
+    "story": 0
+  },
+  {
+    "id": 31000501,
+    "unlockCondition": "",
+    "notFinish": 0,
+    "desc": "language_10078898",
+    "subDesc": "",
+    "reward": "exp#50",
+    "dataBase": 103,
+    "story": 0
+  },
+  {
+    "id": 31000401,
+    "unlockCondition": "",
+    "notFinish": 0,
+    "desc": "language_10078898",
+    "subDesc": "",
+    "reward": "exp#50",
+    "dataBase": 104,
+    "story": 0
+  },
+  {
+    "id": 11000501,
+    "unlockCondition": "",
+    "notFinish": 0,
+    "desc": "language_10078898",
+    "subDesc": "",
+    "reward": "exp#50",
+    "dataBase": 111,
+    "story": 0
+  },
+  {
+    "id": 11000601,
+    "unlockCondition": "",
+    "notFinish": 0,
+    "desc": "language_10078898",
+    "subDesc": "",
+    "reward": "exp#50",
+    "dataBase": 120,
+    "story": 0
+  },
+  {
+    "id": 11000701,
+    "unlockCondition": "",
+    "notFinish": 0,
+    "desc": "language_10078898",
+    "subDesc": "",
+    "reward": "exp#50",
+    "dataBase": 121,
+    "story": 0
+  },
+  {
+    "id": 11000801,
+    "unlockCondition": "",
+    "notFinish": 0,
+    "desc": "language_10078898",
+    "subDesc": "",
+    "reward": "exp#50",
+    "dataBase": 126,
+    "story": 0
+  },
+  {
+    "id": 11000901,
+    "unlockCondition": "",
+    "notFinish": 0,
+    "desc": "language_10078898",
+    "subDesc": "",
+    "reward": "exp#50",
+    "dataBase": 114,
+    "story": 0
+  },
+  {
+    "id": 21000101,
+    "unlockCondition": "",
+    "notFinish": 0,
+    "desc": "language_10078898",
+    "subDesc": "",
+    "reward": "exp#50",
+    "dataBase": 122,
+    "story": 0
+  },
+  {
+    "id": 21000201,
+    "unlockCondition": "",
+    "notFinish": 0,
+    "desc": "language_10078898",
+    "subDesc": "",
+    "reward": "exp#50",
+    "dataBase": 113,
+    "story": 0
+  },
+  {
+    "id": 21000301,
+    "unlockCondition": "",
+    "notFinish": 0,
+    "desc": "language_10078898",
+    "subDesc": "",
+    "reward": "exp#50",
+    "dataBase": 115,
+    "story": 0
+  },
+  {
+    "id": 31000101,
+    "unlockCondition": "",
+    "notFinish": 0,
+    "desc": "language_10078898",
+    "subDesc": "",
+    "reward": "exp#50",
+    "dataBase": 116,
+    "story": 0
+  },
+  {
+    "id": 31000201,
+    "unlockCondition": "",
+    "notFinish": 0,
+    "desc": "language_10078898",
+    "subDesc": "",
+    "reward": "exp#50",
+    "dataBase": 123,
+    "story": 0
+  },
+  {
+    "id": 31000301,
+    "unlockCondition": "",
+    "notFinish": 0,
+    "desc": "language_10078898",
+    "subDesc": "",
+    "reward": "exp#50",
+    "dataBase": 105,
+    "story": 0
+  },
+  {
+    "id": 41000101,
+    "unlockCondition": "",
+    "notFinish": 0,
+    "desc": "language_10078898",
+    "subDesc": "",
+    "reward": "exp#50",
+    "dataBase": 117,
+    "story": 0
+  },
+  {
+    "id": 41000201,
+    "unlockCondition": "",
+    "notFinish": 0,
+    "desc": "language_10078898",
+    "subDesc": "",
+    "reward": "exp#50",
+    "dataBase": 118,
+    "story": 0
+  },
+  {
+    "id": 41000301,
+    "unlockCondition": "",
+    "notFinish": 0,
+    "desc": "language_10078898",
+    "subDesc": "",
+    "reward": "exp#50",
+    "dataBase": 124,
+    "story": 0
+  },
+  {
+    "id": 41000401,
+    "unlockCondition": "",
+    "notFinish": 0,
+    "desc": "language_10078898",
+    "subDesc": "",
+    "reward": "exp#50",
+    "dataBase": 106,
+    "story": 0
+  },
+  {
+    "id": 41000501,
+    "unlockCondition": "",
+    "notFinish": 0,
+    "desc": "language_10078898",
+    "subDesc": "",
+    "reward": "exp#50",
+    "dataBase": 107,
+    "story": 0
+  },
+  {
+    "id": 51000101,
+    "unlockCondition": "",
+    "notFinish": 0,
+    "desc": "language_10078898",
+    "subDesc": "",
+    "reward": "exp#50",
+    "dataBase": 119,
+    "story": 0
+  },
+  {
+    "id": 51000201,
+    "unlockCondition": "",
+    "notFinish": 0,
+    "desc": "language_10078898",
+    "subDesc": "",
+    "reward": "exp#50",
+    "dataBase": 125,
+    "story": 0
+  },
+  {
+    "id": 51000301,
+    "unlockCondition": "",
+    "notFinish": 0,
+    "desc": "language_10078898",
+    "subDesc": "",
+    "reward": "exp#50",
+    "dataBase": 108,
+    "story": 0
+  },
+  {
+    "id": 51000401,
+    "unlockCondition": "",
+    "notFinish": 0,
+    "desc": "language_10078898",
+    "subDesc": "",
+    "reward": "exp#50",
+    "dataBase": 109,
+    "story": 0
+  },
+  {
+    "id": 51000501,
+    "unlockCondition": "",
+    "notFinish": 0,
+    "desc": "language_10078898",
+    "subDesc": "",
+    "reward": "exp#50",
+    "dataBase": 110,
+    "story": 0
+  },
+  {
+    "id": 11010201,
+    "unlockCondition": "",
+    "notFinish": 0,
+    "desc": "language_10004757",
+    "subDesc": "",
+    "reward": "exp#200",
+    "dataBase": 0,
+    "story": 2030524
+  },
+  {
+    "id": 11010301,
+    "unlockCondition": "",
+    "notFinish": 0,
+    "desc": "language_10004757",
+    "subDesc": "",
+    "reward": "exp#200",
+    "dataBase": 0,
+    "story": 2030525
+  },
+  {
+    "id": 11010401,
+    "unlockCondition": "",
+    "notFinish": 0,
+    "desc": "language_10004757",
+    "subDesc": "",
+    "reward": "exp#200",
+    "dataBase": 0,
+    "story": 2030526
+  },
+  {
+    "id": 11010701,
+    "unlockCondition": "",
+    "notFinish": 0,
+    "desc": "language_10004757",
+    "subDesc": "",
+    "reward": "exp#200",
+    "dataBase": 0,
+    "story": 2030531
+  },
+  {
+    "id": 11010801,
+    "unlockCondition": "",
+    "notFinish": 0,
+    "desc": "language_10004757",
+    "subDesc": "",
+    "reward": "exp#200",
+    "dataBase": 0,
+    "story": 2030532
+  }
+]

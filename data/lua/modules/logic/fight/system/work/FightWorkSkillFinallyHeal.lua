@@ -54,9 +54,9 @@ function var_0_0._onSkillEnd(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
 			FightDataHelper.playEffectData(iter_5_1)
 
 			if iter_5_1.effectType == FightEnum.EffectType.HEAL then
-				FightFloatMgr.instance:float(var_5_0.id, FightEnum.FloatType.heal, iter_5_1.effectNum)
+				FightFloatMgr.instance:float(var_5_0.id, FightEnum.FloatType.heal, iter_5_1.effectNum, nil, iter_5_1.effectNum1 == 1)
 			elseif iter_5_1.effectType == FightEnum.EffectType.HEALCRIT then
-				FightFloatMgr.instance:float(var_5_0.id, FightEnum.FloatType.crit_heal, iter_5_1.effectNum)
+				FightFloatMgr.instance:float(var_5_0.id, FightEnum.FloatType.crit_heal, iter_5_1.effectNum, nil, iter_5_1.effectNum1 == 1)
 			end
 
 			if var_5_0.nameUI then

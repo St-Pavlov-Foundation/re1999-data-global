@@ -40,6 +40,7 @@ function var_0_0.ctor(arg_1_0)
 	arg_1_0.duplicateCount = 0
 	arg_1_0.belongOtherPlayer = false
 	arg_1_0.otherPlayerEquipMo = nil
+	arg_1_0.extraStr = nil
 end
 
 function var_0_0.init(arg_2_0, arg_2_1, arg_2_2)
@@ -258,6 +259,10 @@ function var_0_0.initFromTrial(arg_18_0, arg_18_1, arg_18_2, arg_18_3)
 
 	arg_18_0.destinyStoneMo:refreshMo(var_18_0.facetslevel, 1, var_18_0.facetsId)
 	arg_18_0.destinyStoneMo:setTrial()
+
+	arg_18_0.extraMo = arg_18_0.extraMo or CharacterExtraMO.New(arg_18_0)
+
+	arg_18_0.extraMo:refreshMo(var_18_0.special)
 end
 
 function var_0_0.initFromConfig(arg_19_0, arg_19_1)
@@ -316,6 +321,10 @@ function var_0_0.update(arg_20_0, arg_20_1)
 	arg_20_0.destinyStoneMo:refreshMo(arg_20_1.destinyRank, arg_20_1.destinyLevel, arg_20_1.destinyStone, arg_20_1.destinyStoneUnlock)
 	arg_20_0.destinyStoneMo:setRedDot(arg_20_1.redDot)
 	arg_20_0:setIsBelongOtherPlayer(arg_20_1.belongOtherPlayer)
+
+	arg_20_0.extraMo = arg_20_0.extraMo or CharacterExtraMO.New(arg_20_0)
+
+	arg_20_0.extraMo:refreshMo(arg_20_1.extraStr)
 end
 
 function var_0_0._getListInfo(arg_21_0, arg_21_1, arg_21_2)
@@ -929,20 +938,32 @@ function var_0_0.isHasDestinySystem(arg_54_0)
 	return CharacterDestinyConfig.instance:hasDestinyHero(arg_54_0.heroId)
 end
 
-function var_0_0.getRecommendEquip(arg_55_0)
-	if arg_55_0.recommendEquips then
-		return arg_55_0.recommendEquips
+function var_0_0.checkReplaceSkill(arg_55_0, arg_55_1)
+	if arg_55_0.destinyStoneMo then
+		arg_55_1 = arg_55_0.destinyStoneMo:_replaceSkill(arg_55_1)
 	end
 
-	arg_55_0.recommendEquips = {}
-
-	if not arg_55_0.config or string.nilorempty(arg_55_0.config.equipRec) then
-		return arg_55_0.recommendEquips
+	if arg_55_0.extraMo then
+		arg_55_1 = arg_55_0.extraMo:getReplaceSkills(arg_55_1)
 	end
 
-	arg_55_0.recommendEquips = string.splitToNumber(arg_55_0.config.equipRec, "#")
+	return arg_55_1
+end
 
-	return arg_55_0.recommendEquips
+function var_0_0.getRecommendEquip(arg_56_0)
+	if arg_56_0.recommendEquips then
+		return arg_56_0.recommendEquips
+	end
+
+	arg_56_0.recommendEquips = {}
+
+	if not arg_56_0.config or string.nilorempty(arg_56_0.config.equipRec) then
+		return arg_56_0.recommendEquips
+	end
+
+	arg_56_0.recommendEquips = string.splitToNumber(arg_56_0.config.equipRec, "#")
+
+	return arg_56_0.recommendEquips
 end
 
 return var_0_0

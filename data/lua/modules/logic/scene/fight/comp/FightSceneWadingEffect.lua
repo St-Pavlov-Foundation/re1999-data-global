@@ -229,8 +229,10 @@ function var_0_0._onSkillPlayFinish(arg_11_0)
 end
 
 function var_0_0._onSetEntityAlpha(arg_12_0, arg_12_1, arg_12_2)
-	if arg_12_0._effects2 and arg_12_0._effects2[arg_12_1] then
-		arg_12_0._effects2[arg_12_1]:setActive(arg_12_2, "_onSetEntityAlpha")
+	local var_12_0 = arg_12_0._effects2 and arg_12_0._effects2[arg_12_1]
+
+	if var_12_0 and var_12_0.containerGO then
+		var_12_0:setActive(arg_12_2, "_onSetEntityAlpha")
 	end
 end
 

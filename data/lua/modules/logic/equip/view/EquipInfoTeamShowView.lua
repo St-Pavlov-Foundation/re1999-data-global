@@ -347,7 +347,8 @@ function var_0_0._editableInitView(arg_20_0)
 		[EquipEnum.FromViewEnum.FromCharacterView] = arg_20_0._onClickConfirmBtnFromCharacterView,
 		[EquipEnum.FromViewEnum.FromSeasonFightView] = arg_20_0._onClickConfirmBtnFromHeroGroupFightView,
 		[EquipEnum.FromViewEnum.FromSeason123HeroGroupFightView] = arg_20_0._onClickConfirmBtnFromHeroGroupFightView,
-		[EquipEnum.FromViewEnum.FromSeason166HeroGroupFightView] = arg_20_0._onClickConfirmBtnFromSeason166HeroGroupFightView
+		[EquipEnum.FromViewEnum.FromSeason166HeroGroupFightView] = arg_20_0._onClickConfirmBtnFromSeason166HeroGroupFightView,
+		[EquipEnum.FromViewEnum.FromOdysseyHeroGroupFightView] = arg_20_0._onClickConfirmBtnFromHeroGroupFightView
 	}
 end
 
@@ -405,6 +406,10 @@ function var_0_0.initOriginEquipMo(arg_25_0)
 	elseif arg_25_0.viewParam.fromView == EquipEnum.FromViewEnum.FromCachotHeroGroupFightView then
 		arg_25_0.originEquipMo = arg_25_0.viewParam.equipMo
 	elseif arg_25_0.viewParam.fromView == EquipEnum.FromViewEnum.FromSeason123HeroGroupFightView or arg_25_0.viewParam.fromView == EquipEnum.FromViewEnum.FromSeason166HeroGroupFightView then
+		arg_25_0.originEquipMo = arg_25_0.viewParam.equipMo
+	elseif arg_25_0.viewParam.fromView == EquipEnum.FromViewEnum.FromOdysseyHeroGroupFightView then
+		arg_25_0.originEquipMo = arg_25_0.viewParam.equipMo
+	elseif arg_25_0.viewParam.fromView == EquipEnum.FromViewEnum.FromAssassinHeroView then
 		arg_25_0.originEquipMo = arg_25_0.viewParam.equipMo
 	else
 		logError("not found from view ...")
@@ -886,7 +891,7 @@ function var_0_0.refreshEquipSkillDesc(arg_38_0)
 end
 
 function var_0_0.refreshInTeam(arg_39_0)
-	if arg_39_0.viewParam.fromView ~= EquipEnum.FromViewEnum.FromHeroGroupFightView and arg_39_0.viewParam.fromView ~= EquipEnum.FromViewEnum.FromSeasonFightView and arg_39_0.viewParam.fromView ~= EquipEnum.FromViewEnum.FromCachotHeroGroupView and arg_39_0.viewParam.fromView ~= EquipEnum.FromViewEnum.FromCachotHeroGroupFightView then
+	if arg_39_0.viewParam.fromView ~= EquipEnum.FromViewEnum.FromHeroGroupFightView and arg_39_0.viewParam.fromView ~= EquipEnum.FromViewEnum.FromSeasonFightView and arg_39_0.viewParam.fromView ~= EquipEnum.FromViewEnum.FromCachotHeroGroupView and arg_39_0.viewParam.fromView ~= EquipEnum.FromViewEnum.FromCachotHeroGroupFightView and arg_39_0.viewParam.fromView ~= EquipEnum.FromViewEnum.FromOdysseyHeroGroupFightView then
 		gohelper.setActive(arg_39_0._gointeam, false)
 
 		return

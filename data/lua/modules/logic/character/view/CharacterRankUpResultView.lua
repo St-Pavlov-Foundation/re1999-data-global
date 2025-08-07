@@ -233,53 +233,90 @@ function var_0_0._refreshEffect(arg_13_0)
 
 		arg_13_0._txttalentlevel.text = string.format(var_13_11, var_0_0.characterTalentLevel[var_13_10])
 	end
+
+	arg_13_0:_cheskExtra()
 end
 
-function var_0_0._refreshAttribute(arg_14_0)
-	local var_14_0 = arg_14_0:getCurrentHeroAttribute()
-	local var_14_1 = arg_14_0:getHeroPreAttribute()
+function var_0_0._cheskExtra(arg_14_0)
+	if arg_14_0.heroMo.extraMo then
+		local var_14_0
+		local var_14_1 = arg_14_0.heroMo.extraMo:getSkillTalentMo()
 
-	for iter_14_0, iter_14_1 in ipairs(arg_14_0._attributeItems) do
-		UISpriteSetMgr.instance:setCommonSprite(iter_14_1.icon, "icon_att_" .. CharacterEnum.BaseAttrIdList[iter_14_0])
+		if var_14_1 then
+			var_14_0 = var_14_1:getUnlockRankStr(arg_14_0.heroMo.rank)
+		end
 
-		iter_14_1.preNumTxt.text = var_14_1[iter_14_0]
-		iter_14_1.curNumTxt.text = var_14_0[iter_14_0]
+		if arg_14_0.heroMo.extraMo:hasWeapon() then
+			local var_14_2 = arg_14_0.heroMo.extraMo:getWeaponMo()
+
+			if var_14_2 then
+				var_14_0 = var_14_2:getUnlockRankStr(arg_14_0.heroMo.rank)
+			end
+		end
+
+		if var_14_0 then
+			for iter_14_0, iter_14_1 in ipairs(var_14_0) do
+				if not arg_14_0._txtextra then
+					arg_14_0._txtextra = arg_14_0:getUserDataTb_()
+				end
+
+				if not arg_14_0._txtextra[iter_14_0] then
+					local var_14_3 = gohelper.cloneInPlace(arg_14_0._txtlevel.gameObject, "extra")
+
+					arg_14_0._txtextra[iter_14_0] = var_14_3:GetComponent(typeof(TMPro.TMP_Text))
+				end
+
+				arg_14_0._txtextra[iter_14_0].text = iter_14_1
+			end
+		end
 	end
 end
 
-function var_0_0.getHeroPreAttribute(arg_15_0)
-	return arg_15_0:_getHeroAttribute(arg_15_0.heroMo.level - 1, arg_15_0.heroMo.rank - 1)
+function var_0_0._refreshAttribute(arg_15_0)
+	local var_15_0 = arg_15_0:getCurrentHeroAttribute()
+	local var_15_1 = arg_15_0:getHeroPreAttribute()
+
+	for iter_15_0, iter_15_1 in ipairs(arg_15_0._attributeItems) do
+		UISpriteSetMgr.instance:setCommonSprite(iter_15_1.icon, "icon_att_" .. CharacterEnum.BaseAttrIdList[iter_15_0])
+
+		iter_15_1.preNumTxt.text = var_15_1[iter_15_0]
+		iter_15_1.curNumTxt.text = var_15_0[iter_15_0]
+	end
 end
 
-function var_0_0.getCurrentHeroAttribute(arg_16_0)
-	return arg_16_0:_getHeroAttribute()
+function var_0_0.getHeroPreAttribute(arg_16_0)
+	return arg_16_0:_getHeroAttribute(arg_16_0.heroMo.level - 1, arg_16_0.heroMo.rank - 1)
 end
 
-function var_0_0._getHeroAttribute(arg_17_0, arg_17_1, arg_17_2)
-	arg_17_1 = arg_17_1 or arg_17_0.heroMo.level
-	arg_17_2 = arg_17_2 or arg_17_0.heroMo.rank
+function var_0_0.getCurrentHeroAttribute(arg_17_0)
+	return arg_17_0:_getHeroAttribute()
+end
 
-	local var_17_0
+function var_0_0._getHeroAttribute(arg_18_0, arg_18_1, arg_18_2)
+	arg_18_1 = arg_18_1 or arg_18_0.heroMo.level
+	arg_18_2 = arg_18_2 or arg_18_0.heroMo.rank
 
-	if arg_17_0.heroMo:hasDefaultEquip() then
-		var_17_0 = {
-			arg_17_0.heroMo.defaultEquipUid
+	local var_18_0
+
+	if arg_18_0.heroMo:hasDefaultEquip() then
+		var_18_0 = {
+			arg_18_0.heroMo.defaultEquipUid
 		}
 	end
 
-	return arg_17_0.heroMo:getTotalBaseAttrList(var_17_0, arg_17_1, arg_17_2)
+	return arg_18_0.heroMo:getTotalBaseAttrList(var_18_0, arg_18_1, arg_18_2)
 end
 
-function var_0_0.onClose(arg_18_0)
-	arg_18_0._simagecenterbg:UnLoadImage()
-	arg_18_0._uiSpine:setModelVisible(false)
+function var_0_0.onClose(arg_19_0)
+	arg_19_0._simagecenterbg:UnLoadImage()
+	arg_19_0._uiSpine:setModelVisible(false)
 end
 
-function var_0_0.onDestroyView(arg_19_0)
-	if arg_19_0._uiSpine then
-		arg_19_0._uiSpine:onDestroy()
+function var_0_0.onDestroyView(arg_20_0)
+	if arg_20_0._uiSpine then
+		arg_20_0._uiSpine:onDestroy()
 
-		arg_19_0._uiSpine = nil
+		arg_20_0._uiSpine = nil
 	end
 end
 

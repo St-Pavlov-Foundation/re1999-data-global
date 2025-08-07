@@ -1,0 +1,18 @@
+[
+  {
+    "activityId": 130520,
+    "chaseId": 1305201,
+    "roleIcon": "302501",
+    "roleName": "language_10005352",
+    "roleNameEn": "Regulus",
+    "dialog": "language_10079487"
+  },
+  {
+    "activityId": 130520,
+    "chaseId": 1305202,
+    "roleIcon": "302801",
+    "roleName": "language_10005358",
+    "roleNameEn": "APPLe",
+    "dialog": "language_10079488"
+  }
+]

@@ -250,9 +250,10 @@ function var_0_0.onClose(arg_23_0)
 
 	local var_23_0 = arg_23_0.viewParam.callback
 	local var_23_1 = arg_23_0.viewParam.callbackTarget
+	local var_23_2 = arg_23_0.viewParam.callbackParams or {}
 
 	if var_23_0 then
-		var_23_0(var_23_1)
+		var_23_0(var_23_1, var_23_2, arg_23_0.isFinishDialogue or arg_23_0._isDone)
 	end
 end
 

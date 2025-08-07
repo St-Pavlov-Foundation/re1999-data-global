@@ -273,6 +273,7 @@ function var_0_0.addCustomEvents(arg_15_0)
 	arg_15_0:addEventCb(FightController.instance, FightEvent.OnExSkillPointChange, arg_15_0.onExSkillPointChange, arg_15_0)
 	arg_15_0:addEventCb(FightController.instance, FightEvent.OnStoreExPointChange, arg_15_0.onStoreExPointChange, arg_15_0)
 	arg_15_0:addEventCb(FightController.instance, FightEvent.BeContract, arg_15_0.onBeContract, arg_15_0)
+	arg_15_0:addEventCb(FightController.instance, FightEvent.CoverPerformanceEntityData, arg_15_0.onCoverPerformanceEntityData, arg_15_0)
 end
 
 function var_0_0.onBeContract(arg_16_0, arg_16_1)
@@ -852,34 +853,40 @@ function var_0_0.log(arg_45_0, arg_45_1)
 	return
 end
 
-function var_0_0.beforeDestroy(arg_46_0)
-	TaskDispatcher.cancelTask(arg_46_0.hideTsnnEffect, arg_46_0)
+function var_0_0.onCoverPerformanceEntityData(arg_46_0, arg_46_1)
+	if arg_46_1 == arg_46_0.entityId then
+		arg_46_0:updateSelfExPoint()
+	end
+end
 
-	if arg_46_0.pointItemList then
-		for iter_46_0, iter_46_1 in ipairs(arg_46_0.pointItemList) do
-			iter_46_1:destroy()
+function var_0_0.beforeDestroy(arg_47_0)
+	TaskDispatcher.cancelTask(arg_47_0.hideTsnnEffect, arg_47_0)
+
+	if arg_47_0.pointItemList then
+		for iter_47_0, iter_47_1 in ipairs(arg_47_0.pointItemList) do
+			iter_47_1:destroy()
 		end
 	end
 
-	if arg_46_0.exPointItemPool then
-		for iter_46_2, iter_46_3 in ipairs(arg_46_0.exPointItemPool) do
-			iter_46_3:destroy()
+	if arg_47_0.exPointItemPool then
+		for iter_47_2, iter_47_3 in ipairs(arg_47_0.exPointItemPool) do
+			iter_47_3:destroy()
 		end
 	end
 
-	if arg_46_0.extraPointItemPool then
-		for iter_46_4, iter_46_5 in ipairs(arg_46_0.extraPointItemPool) do
-			iter_46_5:destroy()
+	if arg_47_0.extraPointItemPool then
+		for iter_47_4, iter_47_5 in ipairs(arg_47_0.extraPointItemPool) do
+			iter_47_5:destroy()
 		end
 	end
 
-	arg_46_0.pointItemList = nil
-	arg_46_0.exPointItemList = nil
-	arg_46_0.extraExPointItemList = nil
-	arg_46_0.exPointItemPool = nil
-	arg_46_0.extraPointItemPool = nil
+	arg_47_0.pointItemList = nil
+	arg_47_0.exPointItemList = nil
+	arg_47_0.extraExPointItemList = nil
+	arg_47_0.exPointItemPool = nil
+	arg_47_0.extraPointItemPool = nil
 
-	arg_46_0:__onDispose()
+	arg_47_0:__onDispose()
 end
 
 return var_0_0

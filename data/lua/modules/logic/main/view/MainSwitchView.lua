@@ -53,6 +53,7 @@ function var_0_0.onOpen(arg_6_0)
 
 	arg_6_0:addEventCb(MainSceneSwitchController.instance, MainSceneSwitchEvent.SwitchCategoryClick, arg_6_0._itemClick, arg_6_0)
 	arg_6_0:addEventCb(MainSceneSwitchController.instance, MainSceneSwitchEvent.SceneSwitchUIVisible, arg_6_0._onSceneSwitchUIVisible, arg_6_0)
+	arg_6_0:addEventCb(MainUISwitchController.instance, MainUISwitchEvent.SwitchUIVisible, arg_6_0._onSceneSwitchUIVisible, arg_6_0)
 	arg_6_0:addEventCb(MainSceneSwitchController.instance, MainSceneSwitchEvent.BeforeStartSwitchScene, arg_6_0._onStartSwitchScene, arg_6_0)
 	arg_6_0:addEventCb(MainSceneSwitchController.instance, MainSceneSwitchEvent.CloseSwitchSceneLoading, arg_6_0._onCloseSwitchSceneLoading, arg_6_0)
 end

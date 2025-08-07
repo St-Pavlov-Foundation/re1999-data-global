@@ -8,7 +8,7 @@ function var_0_0.onStart(arg_1_0)
 	arg_1_0:com_sendFightEvent(FightEvent.ChangeShield, var_1_0)
 
 	if arg_1_0.actEffectData.reserveId == "1" then
-		FightFloatMgr.instance:float(var_1_0, FightEnum.FloatType.addShield, "+" .. arg_1_0.actEffectData.effectNum)
+		FightFloatMgr.instance:float(var_1_0, FightEnum.FloatType.addShield, "+" .. arg_1_0.actEffectData.effectNum, nil, arg_1_0.actEffectData.effectNum1 == 1)
 	end
 
 	arg_1_0:onDone(true)

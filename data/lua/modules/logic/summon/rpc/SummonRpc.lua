@@ -32,6 +32,7 @@ function var_0_0.onReceiveSummonReply(arg_2_0, arg_2_1, arg_2_2)
 	SDKChannelEventModel.instance:addTotalSummonCount(#var_2_0)
 	SDKChannelEventModel.instance:onSummonResult(var_2_0)
 	SummonController.instance:summonSuccess(var_2_0)
+	SummonController.instance:dispatchEvent(SummonEvent.onReceiveSummonReply, arg_2_2)
 end
 
 function var_0_0.sendGetSummonInfoRequest(arg_3_0, arg_3_1, arg_3_2)
@@ -111,6 +112,20 @@ function var_0_0.onReceiveChooseEnhancedPoolHeroReply(arg_12_0, arg_12_1, arg_12
 	if arg_12_1 == 0 then
 		SummonController.instance:dispatchEvent(SummonEvent.onCustomPicked)
 		arg_12_0:sendGetSummonInfoRequest()
+	end
+end
+
+function var_0_0.sendGetSummonProgressRewardsRequest(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
+	local var_13_0 = SummonModule_pb.GetSummonProgressRewardsRequest()
+
+	var_13_0.poolId = arg_13_1
+
+	return arg_13_0:sendMsg(var_13_0, arg_13_2, arg_13_3)
+end
+
+function var_0_0.onReceiveGetSummonProgressRewardsReply(arg_14_0, arg_14_1, arg_14_2)
+	if arg_14_1 == 0 then
+		SummonController.instance:summonProgressRewards(arg_14_2)
 	end
 end
 

@@ -47,11 +47,19 @@ function var_0_0.removeEvents(arg_3_0)
 end
 
 function var_0_0._btnprestoneOnClick(arg_4_0)
+	if arg_4_0._openUnlockStoneView then
+		return
+	end
+
 	arg_4_0._animRoot:Play(CharacterDestinyEnum.StoneViewAnim.SwitchRight, 0, 0)
 	TaskDispatcher.runDelay(arg_4_0._cutPreStoneCB, arg_4_0, 0.16)
 end
 
 function var_0_0._btnnextstoneOnClick(arg_5_0)
+	if arg_5_0._openUnlockStoneView then
+		return
+	end
+
 	arg_5_0._animRoot:Play(CharacterDestinyEnum.StoneViewAnim.SwitchLeft, 0, 0)
 	TaskDispatcher.runDelay(arg_5_0._cutNextStoneCB, arg_5_0, 0.16)
 end
@@ -451,6 +459,8 @@ function var_0_0.openUnlockStoneView(arg_26_0, arg_26_1)
 	arg_26_0:playRootOpenCloseAnim(false, arg_26_0._hideRoot, arg_26_0)
 	arg_26_0:playUnlockstoneOpenCloseAnim(true, nil, arg_26_0)
 	arg_26_0.viewContainer:setOpenUnlockStoneView(true)
+
+	arg_26_0._openUnlockStoneView = true
 end
 
 function var_0_0.closeUnlockStoneView(arg_27_0)
@@ -458,6 +468,8 @@ function var_0_0.closeUnlockStoneView(arg_27_0)
 	arg_27_0:playRootOpenCloseAnim(true, nil, arg_27_0)
 	arg_27_0:playUnlockstoneOpenCloseAnim(false, arg_27_0._hideUnlockstone, arg_27_0)
 	arg_27_0.viewContainer:setOpenUnlockStoneView(false)
+
+	arg_27_0._openUnlockStoneView = false
 end
 
 function var_0_0._cutPreStoneCB(arg_28_0)
@@ -479,6 +491,10 @@ function var_0_0._dragEventCb(arg_31_0, arg_31_1, arg_31_2)
 end
 
 function var_0_0._dragEndEventCb(arg_32_0, arg_32_1, arg_32_2)
+	if arg_32_0._openUnlockStoneView then
+		return
+	end
+
 	if #arg_32_0._facetMos < 2 then
 		arg_32_0._dragPos = nil
 

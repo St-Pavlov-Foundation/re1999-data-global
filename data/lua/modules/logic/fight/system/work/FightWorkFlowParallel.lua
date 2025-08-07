@@ -38,7 +38,7 @@ function var_0_0.onStart(arg_5_0)
 			if iter_5_1.WORKFINISHED or iter_5_1.IS_DISPOSED then
 				arg_5_0._finishCount = arg_5_0._finishCount + 1
 			elseif not iter_5_1.STARTED then
-				iter_5_1:start(arg_5_0.context)
+				xpcall(iter_5_1.start, __G__TRACKBACK__, iter_5_1, arg_5_0.context)
 			end
 		end
 

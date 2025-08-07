@@ -1276,5 +1276,125 @@
     "monsterId": 10241021,
     "monsterSpeed": 1,
     "actionId": 10241121
+  },
+  {
+    "battleId": 1029211,
+    "monsterId": 10292111,
+    "monsterSpeed": 1,
+    "actionId": 10292111
+  },
+  {
+    "battleId": 1029211,
+    "monsterId": 10292112,
+    "monsterSpeed": 1,
+    "actionId": 10292112
+  },
+  {
+    "battleId": 1029211,
+    "monsterId": 10292121,
+    "monsterSpeed": 1,
+    "actionId": 10292121
+  },
+  {
+    "battleId": 1029211,
+    "monsterId": 10292122,
+    "monsterSpeed": 1,
+    "actionId": 10292122
+  },
+  {
+    "battleId": 1029211,
+    "monsterId": 10292131,
+    "monsterSpeed": 1,
+    "actionId": 10292131
+  },
+  {
+    "battleId": 1029211,
+    "monsterId": 10292132,
+    "monsterSpeed": 1,
+    "actionId": 10292132
+  },
+  {
+    "battleId": 1029211,
+    "monsterId": 10292141,
+    "monsterSpeed": 1,
+    "actionId": 10292141
+  },
+  {
+    "battleId": 1029211,
+    "monsterId": 10292142,
+    "monsterSpeed": 1,
+    "actionId": 10292142
+  },
+  {
+    "battleId": 1029221,
+    "monsterId": 10292211,
+    "monsterSpeed": 1,
+    "actionId": 10292211
+  },
+  {
+    "battleId": 1029221,
+    "monsterId": 10292212,
+    "monsterSpeed": 1,
+    "actionId": 10292212
+  },
+  {
+    "battleId": 1029111,
+    "monsterId": 10291111,
+    "monsterSpeed": 1,
+    "actionId": 10291111
+  },
+  {
+    "battleId": 1029111,
+    "monsterId": 10291112,
+    "monsterSpeed": 1,
+    "actionId": 10291112
+  },
+  {
+    "battleId": 1029111,
+    "monsterId": 10291121,
+    "monsterSpeed": 1,
+    "actionId": 10291121
+  },
+  {
+    "battleId": 1029111,
+    "monsterId": 10291122,
+    "monsterSpeed": 1,
+    "actionId": 10291122
+  },
+  {
+    "battleId": 1029111,
+    "monsterId": 10291131,
+    "monsterSpeed": 1,
+    "actionId": 10291131
+  },
+  {
+    "battleId": 1029111,
+    "monsterId": 10291132,
+    "monsterSpeed": 1,
+    "actionId": 10291132
+  },
+  {
+    "battleId": 1029111,
+    "monsterId": 10291141,
+    "monsterSpeed": 1,
+    "actionId": 10291141
+  },
+  {
+    "battleId": 1029111,
+    "monsterId": 10291142,
+    "monsterSpeed": 1,
+    "actionId": 10291142
+  },
+  {
+    "battleId": 1029121,
+    "monsterId": 10291211,
+    "monsterSpeed": 1,
+    "actionId": 10291211
+  },
+  {
+    "battleId": 1029121,
+    "monsterId": 10291212,
+    "monsterSpeed": 1,
+    "actionId": 10291212
   }
 ]

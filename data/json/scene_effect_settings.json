@@ -184,5 +184,253 @@
       72,
       38
     ]
+  },
+  {
+    "sceneId": 4,
+    "id": 1,
+    "path": "s01_obj_a/Anim/Effect/m_s01_effect_air",
+    "tag": "",
+    "colorKey": "_MainColor",
+    "lightColor1": [
+      255,
+      255,
+      255,
+      150
+    ],
+    "lightColor2": [
+      64,
+      128,
+      87,
+      38
+    ],
+    "lightColor3": [
+      187,
+      136,
+      208,
+      166
+    ],
+    "lightColor4": [
+      89,
+      175,
+      255,
+      15
+    ]
+  },
+  {
+    "sceneId": 4,
+    "id": 2,
+    "path": "s01_obj_a/Anim/Effect/m_s01_effect_huaban01",
+    "tag": "",
+    "colorKey": "_MainColor",
+    "lightColor1": [
+      255,
+      255,
+      255,
+      255
+    ],
+    "lightColor2": [
+      148,
+      148,
+      148,
+      200
+    ],
+    "lightColor3": [
+      178,
+      178,
+      178,
+      166
+    ],
+    "lightColor4": [
+      75,
+      83,
+      128,
+      255
+    ]
+  },
+  {
+    "sceneId": 4,
+    "id": 3,
+    "path": "s01_obj_a/Anim/Effect/m_s01_effect_huaban02",
+    "tag": "",
+    "colorKey": "_MainColor",
+    "lightColor1": [
+      255,
+      255,
+      255,
+      255
+    ],
+    "lightColor2": [
+      148,
+      148,
+      148,
+      200
+    ],
+    "lightColor3": [
+      178,
+      178,
+      178,
+      166
+    ],
+    "lightColor4": [
+      75,
+      83,
+      128,
+      255
+    ]
+  },
+  {
+    "sceneId": 4,
+    "id": 4,
+    "path": "s01_obj_a/Anim/Effect/smoke/l_smoke1",
+    "tag": "",
+    "colorKey": "_MainColor",
+    "lightColor1": [
+      214,
+      217,
+      195,
+      76
+    ],
+    "lightColor2": [
+      204,
+      177,
+      122,
+      89
+    ],
+    "lightColor3": [
+      204,
+      160,
+      143,
+      76
+    ],
+    "lightColor4": [
+      255,
+      255,
+      255,
+      0
+    ]
+  },
+  {
+    "sceneId": 4,
+    "id": 5,
+    "path": "s01_obj_a/Anim/Effect/smoke/l_smoke2",
+    "tag": "",
+    "colorKey": "_MainColor",
+    "lightColor1": [
+      217,
+      198,
+      174,
+      153
+    ],
+    "lightColor2": [
+      149,
+      166,
+      157,
+      102
+    ],
+    "lightColor3": [
+      183,
+      172,
+      191,
+      64
+    ],
+    "lightColor4": [
+      255,
+      255,
+      255,
+      0
+    ]
+  },
+  {
+    "sceneId": 4,
+    "id": 6,
+    "path": "s01_obj_a/Anim/Effect/m_s01_effect_bird",
+    "tag": "",
+    "colorKey": "_MainColor",
+    "lightColor1": [
+      178,
+      178,
+      143,
+      102
+    ],
+    "lightColor2": [
+      148,
+      148,
+      119,
+      102
+    ],
+    "lightColor3": [
+      255,
+      207,
+      189,
+      128
+    ],
+    "lightColor4": [
+      255,
+      255,
+      255,
+      0
+    ]
+  },
+  {
+    "sceneId": 4,
+    "id": 7,
+    "path": "s01_obj_a/Anim/Drawing/s01_xiangkuang_d_back",
+    "tag": "frame",
+    "colorKey": "",
+    "lightColor1": [
+      255,
+      255,
+      255,
+      0
+    ],
+    "lightColor2": [
+      118,
+      146,
+      146,
+      122
+    ],
+    "lightColor3": [
+      80,
+      90,
+      177,
+      136
+    ],
+    "lightColor4": [
+      20,
+      76,
+      125,
+      181
+    ]
+  },
+  {
+    "sceneId": 4,
+    "id": 8,
+    "path": "s01_obj_a/Anim/Effect/bgm/bg",
+    "tag": "",
+    "colorKey": "_MainColor",
+    "lightColor1": [
+      255,
+      255,
+      255,
+      20
+    ],
+    "lightColor2": [
+      107,
+      127,
+      121,
+      38
+    ],
+    "lightColor3": [
+      71,
+      57,
+      76,
+      38
+    ],
+    "lightColor4": [
+      18,
+      42,
+      89,
+      38
+    ]
   }
 ]

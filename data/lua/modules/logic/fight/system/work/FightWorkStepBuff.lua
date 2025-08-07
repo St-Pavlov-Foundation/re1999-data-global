@@ -64,8 +64,23 @@ function var_0_0.onStart(arg_2_0)
 
 	FightController.instance:dispatchEvent(FightEvent.OnBuffUpdate, arg_2_0._entityId, var_2_1, arg_2_0._buffId, arg_2_0._buffUid, arg_2_0.actEffectData.configEffect, arg_2_0.actEffectData.buff)
 
+	local var_2_2 = FightDataHelper.tempMgr.buffDurationDic[arg_2_0._entityId]
+
+	if not var_2_2 then
+		var_2_2 = {}
+		FightDataHelper.tempMgr.buffDurationDic[arg_2_0._entityId] = var_2_2
+	end
+
+	var_2_2[arg_2_0._buffUid] = arg_2_0.actEffectData.buff.duration
+
 	if var_0_0.canPlayDormantBuffAni then
 		arg_2_0:com_registTimer(arg_2_0._delayDone, 2 / FightModel.instance:getSpeed())
+
+		return
+	end
+
+	if arg_2_0._buffId == 229601 then
+		arg_2_0:com_registTimer(arg_2_0._delayDone, 1.5)
 
 		return
 	end

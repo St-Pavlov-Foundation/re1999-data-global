@@ -108,6 +108,9 @@ end
 
 local var_0_3 = {
 	"txtLockName",
+	"normal/0/seal/ani/txtLockName",
+	"normal/0/unseal/ani/txtLockName",
+	"normal/0/sealing/ani/txtLockName",
 	"normal/1/seal/ani/txtLockName",
 	"normal/1/unseal/ani/txtLockName",
 	"normal/1/sealing/ani/txtLockName",
@@ -120,6 +123,9 @@ local var_0_3 = {
 	"bigskill/4/seal/ani/txtLockName",
 	"bigskill/4/unseal/ani/txtLockName",
 	"bigskill/4/sealing/ani/txtLockName",
+	"normal/0/seal/notani/txtLockName",
+	"normal/0/unseal/notani/txtLockName",
+	"normal/0/sealing/notani/txtLockName",
 	"normal/1/seal/notani/txtLockName",
 	"normal/1/unseal/notani/txtLockName",
 	"normal/1/sealing/notani/txtLockName",

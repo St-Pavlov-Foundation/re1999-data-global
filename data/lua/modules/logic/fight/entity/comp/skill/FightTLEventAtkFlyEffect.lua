@@ -320,6 +320,8 @@ function var_0_0._startFly(arg_7_0)
 				arg_7_0:_setBezierMove(iter_7_1, var_7_1, var_7_2, var_7_3, var_7_4, var_7_5, var_7_6)
 			elseif not string.nilorempty(arg_7_0._curveParam) then
 				arg_7_0:_setCurveMove(iter_7_1, var_7_1, var_7_2, var_7_3, var_7_4, var_7_5, var_7_6)
+			elseif arg_7_0._paramsArr[27] == "1" then
+				arg_7_0:moveByPosScale(iter_7_1, var_7_1, var_7_2, var_7_3, var_7_4, var_7_5, var_7_6)
 			else
 				arg_7_0:_setEaseMove(iter_7_1, var_7_1, var_7_2, var_7_3, var_7_4, var_7_5, var_7_6)
 			end
@@ -327,77 +329,56 @@ function var_0_0._startFly(arg_7_0)
 	end
 end
 
-function var_0_0._setEaseMove(arg_8_0, arg_8_1, arg_8_2, arg_8_3, arg_8_4, arg_8_5, arg_8_6, arg_8_7)
-	if arg_8_0._withRotation == 1 then
-		arg_8_0:_calcRotation(arg_8_1, arg_8_2, arg_8_3, arg_8_4, arg_8_5, arg_8_6, arg_8_7)
+function var_0_0.moveByPosScale(arg_8_0, arg_8_1, arg_8_2, arg_8_3, arg_8_4, arg_8_5, arg_8_6, arg_8_7)
+	local var_8_0 = arg_8_1.containerGO
+	local var_8_1 = arg_8_0._paramsArr
+	local var_8_2 = var_8_1[24]
+	local var_8_3 = var_8_1[25]
+	local var_8_4 = var_8_1[26]
+	local var_8_5 = MonoHelper.addLuaComOnceToGo(var_8_0, UnitMoverCurve)
+	local var_8_6 = MonoHelper.addLuaComOnceToGo(var_8_0, UnitMoverHandler)
+
+	var_8_6:init(var_8_0)
+	var_8_6:addEventListeners()
+	var_8_5:setXMoveCruve(var_8_2)
+	var_8_5:setYMoveCruve(var_8_3)
+	var_8_5:setZMoveCruve(var_8_4)
+
+	if not string.nilorempty(arg_8_0._easeFunc) then
+		var_8_5:setEaseType(EaseType.Str2Type(arg_8_0._easeFunc))
+	else
+		var_8_5:setEaseType(nil)
 	end
 
-	local var_8_0 = MonoHelper.addLuaComOnceToGo(arg_8_1.containerGO, UnitMoverEase)
-
-	MonoHelper.addLuaComOnceToGo(arg_8_1.containerGO, UnitMoverHandler)
-	var_8_0:setEaseType(EaseType.Str2Type(arg_8_0._easeFunc))
-	var_8_0:simpleMove(arg_8_2, arg_8_3, arg_8_4, arg_8_5, arg_8_6, arg_8_7, arg_8_0._duration)
-
-	if arg_8_0._previousFrame > 0 or arg_8_0._afterFrame > 0 then
-		var_8_0:setGetTimeFunction(arg_8_0.getTimeFunction, arg_8_0)
-	end
-
-	arg_8_0._mover = var_8_0
+	var_8_5:simpleMove(arg_8_2, arg_8_3, arg_8_4, arg_8_5, arg_8_6, arg_8_7, arg_8_0._duration)
 end
 
-function var_0_0._setParabolaMove(arg_9_0, arg_9_1, arg_9_2, arg_9_3, arg_9_4, arg_9_5, arg_9_6, arg_9_7)
-	local var_9_0 = MonoHelper.addLuaComOnceToGo(arg_9_1.containerGO, UnitMoverParabola)
-
-	MonoHelper.addLuaComOnceToGo(arg_9_1.containerGO, UnitMoverHandler)
-	var_9_0:simpleMove(arg_9_2, arg_9_3, arg_9_4, arg_9_5, arg_9_6, arg_9_7, arg_9_0._duration, arg_9_0._parabolaHeight)
-
+function var_0_0._setEaseMove(arg_9_0, arg_9_1, arg_9_2, arg_9_3, arg_9_4, arg_9_5, arg_9_6, arg_9_7)
 	if arg_9_0._withRotation == 1 then
-		var_9_0:registerCallback(UnitMoveEvent.PosChanged, arg_9_0._onPosChange, arg_9_0)
-
-		arg_9_0._moverParamDict = arg_9_0._moverParamDict or {}
-
-		local var_9_1 = {
-			mover = var_9_0,
-			effectWrap = arg_9_1,
-			startX = arg_9_2,
-			startY = arg_9_3,
-			startZ = arg_9_4
-		}
-
-		arg_9_0._moverParamDict[var_9_0] = var_9_1
+		arg_9_0:_calcRotation(arg_9_1, arg_9_2, arg_9_3, arg_9_4, arg_9_5, arg_9_6, arg_9_7)
 	end
 
+	local var_9_0 = MonoHelper.addLuaComOnceToGo(arg_9_1.containerGO, UnitMoverEase)
+
+	MonoHelper.addLuaComOnceToGo(arg_9_1.containerGO, UnitMoverHandler)
+	var_9_0:setEaseType(EaseType.Str2Type(arg_9_0._easeFunc))
+	var_9_0:simpleMove(arg_9_2, arg_9_3, arg_9_4, arg_9_5, arg_9_6, arg_9_7, arg_9_0._duration)
+
 	if arg_9_0._previousFrame > 0 or arg_9_0._afterFrame > 0 then
-		var_9_0:setGetFrameFunction(arg_9_0.getFrameFunction, arg_9_0)
+		var_9_0:setGetTimeFunction(arg_9_0.getTimeFunction, arg_9_0)
 	end
 
 	arg_9_0._mover = var_9_0
 end
 
-function var_0_0._setBezierMove(arg_10_0, arg_10_1, arg_10_2, arg_10_3, arg_10_4, arg_10_5, arg_10_6, arg_10_7)
-	if arg_10_0._withRotation == 1 then
-		arg_10_0:_calcRotation(arg_10_1, arg_10_2, arg_10_3, arg_10_4, arg_10_5, arg_10_6, arg_10_7)
-	end
-
-	local var_10_0 = MonoHelper.addLuaComOnceToGo(arg_10_1.containerGO, UnitMoverBezier)
+function var_0_0._setParabolaMove(arg_10_0, arg_10_1, arg_10_2, arg_10_3, arg_10_4, arg_10_5, arg_10_6, arg_10_7)
+	local var_10_0 = MonoHelper.addLuaComOnceToGo(arg_10_1.containerGO, UnitMoverParabola)
 
 	MonoHelper.addLuaComOnceToGo(arg_10_1.containerGO, UnitMoverHandler)
-	var_10_0:setBezierParam(arg_10_0._bezierParam)
-
-	if not string.nilorempty(arg_10_0._easeFunc) then
-		var_10_0:setEaseType(EaseType.Str2Type(arg_10_0._easeFunc))
-	else
-		var_10_0:setEaseType(nil)
-	end
-
-	var_10_0:simpleMove(arg_10_2, arg_10_3, arg_10_4, arg_10_5, arg_10_6, arg_10_7, arg_10_0._duration)
+	var_10_0:simpleMove(arg_10_2, arg_10_3, arg_10_4, arg_10_5, arg_10_6, arg_10_7, arg_10_0._duration, arg_10_0._parabolaHeight)
 
 	if arg_10_0._withRotation == 1 then
-		-- block empty
-	end
-
-	if arg_10_0._alwayForceLookForward then
-		var_10_0:registerCallback(UnitMoveEvent.PosChanged, arg_10_0._onAlwayForceLookForward, arg_10_0)
+		var_10_0:registerCallback(UnitMoveEvent.PosChanged, arg_10_0._onPosChange, arg_10_0)
 
 		arg_10_0._moverParamDict = arg_10_0._moverParamDict or {}
 
@@ -413,22 +394,21 @@ function var_0_0._setBezierMove(arg_10_0, arg_10_1, arg_10_2, arg_10_3, arg_10_4
 	end
 
 	if arg_10_0._previousFrame > 0 or arg_10_0._afterFrame > 0 then
-		var_10_0:setGetTimeFunction(arg_10_0.getTimeFunction, arg_10_0)
+		var_10_0:setGetFrameFunction(arg_10_0.getFrameFunction, arg_10_0)
 	end
 
 	arg_10_0._mover = var_10_0
 end
 
-function var_0_0._setCurveMove(arg_11_0, arg_11_1, arg_11_2, arg_11_3, arg_11_4, arg_11_5, arg_11_6, arg_11_7)
+function var_0_0._setBezierMove(arg_11_0, arg_11_1, arg_11_2, arg_11_3, arg_11_4, arg_11_5, arg_11_6, arg_11_7)
 	if arg_11_0._withRotation == 1 then
 		arg_11_0:_calcRotation(arg_11_1, arg_11_2, arg_11_3, arg_11_4, arg_11_5, arg_11_6, arg_11_7)
 	end
 
-	local var_11_0 = MonoHelper.addLuaComOnceToGo(arg_11_1.containerGO, UnitMoverCurve)
+	local var_11_0 = MonoHelper.addLuaComOnceToGo(arg_11_1.containerGO, UnitMoverBezier)
 
 	MonoHelper.addLuaComOnceToGo(arg_11_1.containerGO, UnitMoverHandler)
-	var_11_0:setCurveParam(arg_11_0._curveParam)
-	var_11_0:setTCurveParam(arg_11_0._tCurveParam)
+	var_11_0:setBezierParam(arg_11_0._bezierParam)
 
 	if not string.nilorempty(arg_11_0._easeFunc) then
 		var_11_0:setEaseType(EaseType.Str2Type(arg_11_0._easeFunc))
@@ -465,136 +445,182 @@ function var_0_0._setCurveMove(arg_11_0, arg_11_1, arg_11_2, arg_11_3, arg_11_4,
 	arg_11_0._mover = var_11_0
 end
 
-function var_0_0._onPosChange(arg_12_0, arg_12_1, arg_12_2)
-	local var_12_0 = arg_12_0._moverParamDict and arg_12_0._moverParamDict[arg_12_1]
+function var_0_0._setCurveMove(arg_12_0, arg_12_1, arg_12_2, arg_12_3, arg_12_4, arg_12_5, arg_12_6, arg_12_7)
+	if arg_12_0._withRotation == 1 then
+		arg_12_0:_calcRotation(arg_12_1, arg_12_2, arg_12_3, arg_12_4, arg_12_5, arg_12_6, arg_12_7)
+	end
 
-	if var_12_0 then
-		local var_12_1, var_12_2, var_12_3 = arg_12_1:getPos()
-		local var_12_4 = var_12_0.effectWrap
-		local var_12_5 = var_12_0.startX
-		local var_12_6 = var_12_0.startY
-		local var_12_7 = var_12_0.startZ
+	local var_12_0 = MonoHelper.addLuaComOnceToGo(arg_12_1.containerGO, UnitMoverCurve)
 
-		arg_12_0:_calcRotation(var_12_4, var_12_5, var_12_6, var_12_7, var_12_1, var_12_2, var_12_3, arg_12_2)
+	MonoHelper.addLuaComOnceToGo(arg_12_1.containerGO, UnitMoverHandler)
+	var_12_0:setCurveParam(arg_12_0._curveParam)
+	var_12_0:setTCurveParam(arg_12_0._tCurveParam)
 
-		var_12_0.startX = var_12_1
-		var_12_0.startY = var_12_2
-		var_12_0.startZ = var_12_3
+	if not string.nilorempty(arg_12_0._easeFunc) then
+		var_12_0:setEaseType(EaseType.Str2Type(arg_12_0._easeFunc))
+	else
+		var_12_0:setEaseType(nil)
+	end
+
+	var_12_0:simpleMove(arg_12_2, arg_12_3, arg_12_4, arg_12_5, arg_12_6, arg_12_7, arg_12_0._duration)
+
+	if arg_12_0._withRotation == 1 then
+		-- block empty
+	end
+
+	if arg_12_0._alwayForceLookForward then
+		var_12_0:registerCallback(UnitMoveEvent.PosChanged, arg_12_0._onAlwayForceLookForward, arg_12_0)
+
+		arg_12_0._moverParamDict = arg_12_0._moverParamDict or {}
+
+		local var_12_1 = {
+			mover = var_12_0,
+			effectWrap = arg_12_1,
+			startX = arg_12_2,
+			startY = arg_12_3,
+			startZ = arg_12_4
+		}
+
+		arg_12_0._moverParamDict[var_12_0] = var_12_1
+	end
+
+	if arg_12_0._previousFrame > 0 or arg_12_0._afterFrame > 0 then
+		var_12_0:setGetTimeFunction(arg_12_0.getTimeFunction, arg_12_0)
+	end
+
+	arg_12_0._mover = var_12_0
+end
+
+function var_0_0._onPosChange(arg_13_0, arg_13_1, arg_13_2)
+	local var_13_0 = arg_13_0._moverParamDict and arg_13_0._moverParamDict[arg_13_1]
+
+	if var_13_0 then
+		local var_13_1, var_13_2, var_13_3 = arg_13_1:getPos()
+		local var_13_4 = var_13_0.effectWrap
+		local var_13_5 = var_13_0.startX
+		local var_13_6 = var_13_0.startY
+		local var_13_7 = var_13_0.startZ
+
+		arg_13_0:_calcRotation(var_13_4, var_13_5, var_13_6, var_13_7, var_13_1, var_13_2, var_13_3, arg_13_2)
+
+		var_13_0.startX = var_13_1
+		var_13_0.startY = var_13_2
+		var_13_0.startZ = var_13_3
 	end
 end
 
-function var_0_0._onAlwayForceLookForward(arg_13_0, arg_13_1)
-	arg_13_0:_onPosChange(arg_13_1, arg_13_0._alwayForceLookForward)
+function var_0_0._onAlwayForceLookForward(arg_14_0, arg_14_1)
+	arg_14_0:_onPosChange(arg_14_1, arg_14_0._alwayForceLookForward)
 end
 
-function var_0_0._calcRotation(arg_14_0, arg_14_1, arg_14_2, arg_14_3, arg_14_4, arg_14_5, arg_14_6, arg_14_7, arg_14_8)
-	local var_14_0 = FightHelper.getEffectLookDir(arg_14_0._attacker:getSide())
-	local var_14_1 = Quaternion.LookRotation(Vector3.New(arg_14_5 - arg_14_2, arg_14_6 - arg_14_3, arg_14_7 - arg_14_4), Vector3.up)
-	local var_14_2 = Quaternion.AngleAxis(var_14_0, Vector3.up)
-	local var_14_3 = Quaternion.AngleAxis(arg_14_8 or 90, Vector3.up)
+function var_0_0._calcRotation(arg_15_0, arg_15_1, arg_15_2, arg_15_3, arg_15_4, arg_15_5, arg_15_6, arg_15_7, arg_15_8)
+	local var_15_0 = FightHelper.getEffectLookDir(arg_15_0._attacker:getSide())
+	local var_15_1 = Quaternion.LookRotation(Vector3.New(arg_15_5 - arg_15_2, arg_15_6 - arg_15_3, arg_15_7 - arg_15_4), Vector3.up)
+	local var_15_2 = Quaternion.AngleAxis(var_15_0, Vector3.up)
+	local var_15_3 = Quaternion.AngleAxis(arg_15_8 or 90, Vector3.up)
 
-	arg_14_1.containerTr.rotation = var_14_1 * var_14_2 * var_14_3
+	arg_15_1.containerTr.rotation = var_15_1 * var_15_2 * var_15_3
 end
 
-function var_0_0.getTimeFunction(arg_15_0)
-	if not arg_15_0._attacker then
-		return 1000
-	end
-
-	local var_15_0 = arg_15_0._attacker.skill:getCurFrameFloat()
-
-	if not var_15_0 then
-		return 1000
-	end
-
-	local var_15_1 = var_15_0 + 1 - arg_15_0._startFrame
-
-	if var_15_1 <= arg_15_0._previousFrame then
-		return 0
-	end
-
-	if arg_15_0._totalFrame <= 0 then
-		return arg_15_0._duration
-	end
-
-	return (var_15_1 - arg_15_0._previousFrame) / arg_15_0._totalFrame * arg_15_0._duration
-end
-
-function var_0_0.getFrameFunction(arg_16_0)
+function var_0_0.getTimeFunction(arg_16_0)
 	if not arg_16_0._attacker then
-		return 1000, 1, 1
+		return 1000
 	end
 
 	local var_16_0 = arg_16_0._attacker.skill:getCurFrameFloat()
 
 	if not var_16_0 then
+		return 1000
+	end
+
+	local var_16_1 = var_16_0 + 1 - arg_16_0._startFrame
+
+	if var_16_1 <= arg_16_0._previousFrame then
+		return 0
+	end
+
+	if arg_16_0._totalFrame <= 0 then
+		return arg_16_0._duration
+	end
+
+	return (var_16_1 - arg_16_0._previousFrame) / arg_16_0._totalFrame * arg_16_0._duration
+end
+
+function var_0_0.getFrameFunction(arg_17_0)
+	if not arg_17_0._attacker then
 		return 1000, 1, 1
 	end
 
-	return var_16_0 + 1 - arg_16_0._startFrame, arg_16_0._previousFrame, arg_16_0._totalFrame
+	local var_17_0 = arg_17_0._attacker.skill:getCurFrameFloat()
+
+	if not var_17_0 then
+		return 1000, 1, 1
+	end
+
+	return var_17_0 + 1 - arg_17_0._startFrame, arg_17_0._previousFrame, arg_17_0._totalFrame
 end
 
-function var_0_0.onDestructor(arg_17_0)
-	if arg_17_0._moverParamDict then
-		for iter_17_0, iter_17_1 in pairs(arg_17_0._moverParamDict) do
-			iter_17_0:unregisterCallback(UnitMoveEvent.PosChanged, arg_17_0._onPosChange, arg_17_0)
+function var_0_0.onDestructor(arg_18_0)
+	if arg_18_0._moverParamDict then
+		for iter_18_0, iter_18_1 in pairs(arg_18_0._moverParamDict) do
+			iter_18_0:unregisterCallback(UnitMoveEvent.PosChanged, arg_18_0._onPosChange, arg_18_0)
 		end
 	end
 
-	arg_17_0._moverParamDict = nil
+	arg_18_0._moverParamDict = nil
 
-	arg_17_0:_removeEffect()
-	arg_17_0:_removeMover()
+	arg_18_0:_removeEffect()
+	arg_18_0:_removeMover()
 end
 
-function var_0_0._removeMover(arg_18_0)
-	if arg_18_0._mover then
-		if arg_18_0._mover.setGetTimeFunction then
-			arg_18_0._mover:setGetTimeFunction(nil, nil)
+function var_0_0._removeMover(arg_19_0)
+	if arg_19_0._mover then
+		if arg_19_0._mover.setGetTimeFunction then
+			arg_19_0._mover:setGetTimeFunction(nil, nil)
 		end
 
-		if arg_18_0._mover.setGetFrameFunction then
-			arg_18_0._mover:setGetFrameFunction(nil, nil)
+		if arg_19_0._mover.setGetFrameFunction then
+			arg_19_0._mover:setGetFrameFunction(nil, nil)
 		end
 
-		arg_18_0._mover = nil
-	end
-
-	if arg_18_0._attackEffectWrapList then
-		for iter_18_0, iter_18_1 in ipairs(arg_18_0._attackEffectWrapList) do
-			MonoHelper.removeLuaComFromGo(iter_18_1.containerGO, UnitMoverEase)
-			MonoHelper.removeLuaComFromGo(iter_18_1.containerGO, UnitMoverParabola)
-			MonoHelper.removeLuaComFromGo(iter_18_1.containerGO, UnitMoverBezier)
-			MonoHelper.removeLuaComFromGo(iter_18_1.containerGO, UnitMoverCurve)
-			MonoHelper.removeLuaComFromGo(iter_18_1.containerGO, UnitMoverHandler)
-		end
-	end
-end
-
-function var_0_0._removeEffect(arg_19_0)
-	local var_19_0 = true
-
-	if arg_19_0._releaseTime then
-		var_19_0 = false
-	end
-
-	if arg_19_0._tokenRelease then
-		var_19_0 = false
+		arg_19_0._mover = nil
 	end
 
 	if arg_19_0._attackEffectWrapList then
 		for iter_19_0, iter_19_1 in ipairs(arg_19_0._attackEffectWrapList) do
-			if var_19_0 then
-				FightRenderOrderMgr.instance:onRemoveEffectWrap(arg_19_0._attacker.id, iter_19_1)
-				arg_19_0._attacker.effect:removeEffect(iter_19_1)
+			MonoHelper.removeLuaComFromGo(iter_19_1.containerGO, UnitMoverEase)
+			MonoHelper.removeLuaComFromGo(iter_19_1.containerGO, UnitMoverParabola)
+			MonoHelper.removeLuaComFromGo(iter_19_1.containerGO, UnitMoverBezier)
+			MonoHelper.removeLuaComFromGo(iter_19_1.containerGO, UnitMoverCurve)
+			MonoHelper.removeLuaComFromGo(iter_19_1.containerGO, UnitMoverHandler)
+		end
+	end
+end
+
+function var_0_0._removeEffect(arg_20_0)
+	local var_20_0 = true
+
+	if arg_20_0._releaseTime then
+		var_20_0 = false
+	end
+
+	if arg_20_0._tokenRelease then
+		var_20_0 = false
+	end
+
+	if arg_20_0._attackEffectWrapList then
+		for iter_20_0, iter_20_1 in ipairs(arg_20_0._attackEffectWrapList) do
+			if var_20_0 then
+				FightRenderOrderMgr.instance:onRemoveEffectWrap(arg_20_0._attacker.id, iter_20_1)
+				arg_20_0._attacker.effect:removeEffect(iter_20_1)
 			end
 		end
 
-		arg_19_0._attackEffectWrapList = nil
+		arg_20_0._attackEffectWrapList = nil
 	end
 
-	arg_19_0._flyParamDict = nil
-	arg_19_0._attacker = nil
+	arg_20_0._flyParamDict = nil
+	arg_20_0._attacker = nil
 end
 
 return var_0_0

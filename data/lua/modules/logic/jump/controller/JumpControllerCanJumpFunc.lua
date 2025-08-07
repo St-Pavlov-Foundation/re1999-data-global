@@ -589,6 +589,44 @@ function var_0_0.canJumpToTower(arg_40_0, arg_40_1)
 	return arg_40_0:defaultCanJump(arg_40_1)
 end
 
+function var_0_0.canJumpToOdyssey(arg_41_0, arg_41_1)
+	local var_41_0 = VersionActivity2_9Enum.ActivityId.Dungeon2
+
+	if not VersionActivityEnterHelper.checkCanOpen(var_41_0) then
+		return false, ToastEnum.ActivityNotOpen
+	end
+
+	local var_41_1 = string.splitToNumber(arg_41_1, "#")
+	local var_41_2 = var_41_1[2]
+
+	if var_41_2 == OdysseyEnum.JumpType.JumpToElementAndOpen then
+		if not OdysseyDungeonModel.instance:getElementMo(var_41_1[3]) then
+			return false, ToastEnum.OdysseyElementLock
+		end
+	elseif var_41_2 == OdysseyEnum.JumpType.JumpToReligion then
+		local var_41_3 = OdysseyConfig.instance:getConstConfig(OdysseyEnum.ConstId.ReligionUnlock)
+
+		if not OdysseyDungeonModel.instance:checkConditionCanUnlock(var_41_3.value) then
+			return false, ToastEnum.OdysseyReligionLock
+		end
+	elseif var_41_2 == OdysseyEnum.JumpType.JumpToMyth and not OdysseyDungeonModel.instance:checkHasFightTypeElement(OdysseyEnum.FightType.Myth) then
+		return false, ToastEnum.OdysseyMythViewLock
+	end
+
+	return arg_41_0:defaultCanJump(arg_41_1)
+end
+
+function var_0_0.canJumpToAssassinLibraryView(arg_42_0, arg_42_1)
+	local var_42_0 = string.splitToNumber(arg_42_1, "#")[2]
+	local var_42_1, var_42_2, var_42_3 = ActivityHelper.getActivityStatusAndToast(var_42_0)
+
+	if not (var_42_1 == ActivityEnum.ActivityStatus.Normal or var_42_1 == ActivityEnum.ActivityStatus.Expired) then
+		return false, var_42_2, var_42_3
+	end
+
+	return true
+end
+
 var_0_0.JumpViewToCanJumpFunc = {
 	[JumpEnum.JumpView.StoreView] = var_0_0.canJumpToStoreView,
 	[JumpEnum.JumpView.SummonView] = var_0_0.canJumpToSummonView,
@@ -616,6 +654,8 @@ var_0_0.JumpViewToCanJumpFunc = {
 	[JumpEnum.JumpView.SeasonMainView] = var_0_0.canJumpToSeasonMainView,
 	[JumpEnum.JumpView.Tower] = var_0_0.canJumpToTower,
 	[JumpEnum.JumpView.Challenge] = Act183JumpHelper.canJumpToAct183,
+	[JumpEnum.JumpView.Odyssey] = var_0_0.canJumpToOdyssey,
+	[JumpEnum.JumpView.AssassinLibraryView] = var_0_0.canJumpToAssassinLibraryView,
 	[JumpEnum.JumpView.V1a5Dungeon] = var_0_0.canJumpToAct1_5DungeonView,
 	[JumpEnum.JumpView.V1a6Dungeon] = var_0_0.canJumpToAct1_6DungeonView,
 	[JumpEnum.JumpView.Season123] = var_0_0.canJumpToSeason123,

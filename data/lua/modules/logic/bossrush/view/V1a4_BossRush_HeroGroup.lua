@@ -24,6 +24,8 @@ function var_0_0.init(arg_2_0, arg_2_1)
 
 		table.insert(arg_2_0._groupList, var_2_3)
 	end
+
+	arg_2_0._go = arg_2_1
 end
 
 function var_0_0._createHeroItem(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
@@ -38,14 +40,14 @@ function var_0_0._createHeroItem(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
 		var_3_1 = BossRushEnum.ResPath.v1a4_bossrush_herogroupitem2
 	end
 
-	local var_3_2 = arg_3_0._parentViewContainer:getResInst(var_3_1, arg_3_1, var_3_0.__cname)
+	local var_3_2 = arg_3_0._parentViewContainer:getResInst(var_3_1, arg_3_1 or arg_3_0._go, var_3_0.__cname)
 
 	return MonoHelper.addNoUpdateLuaComOnceToGo(var_3_2, var_3_0)
 end
 
 function var_0_0.setDataByFightParam(arg_4_0, arg_4_1)
 	local var_4_0 = arg_4_1:getHeroEquipMoList()
-	local var_4_1 = math.min(4, #var_4_0)
+	local var_4_1 = math.min(#arg_4_0._groupList, #var_4_0)
 	local var_4_2 = arg_4_0._groupList[var_4_1]
 
 	arg_4_0._heroList = {}

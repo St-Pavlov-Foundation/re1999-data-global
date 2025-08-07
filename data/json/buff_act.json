@@ -2887,5 +2887,149 @@
     "effect": "",
     "effectHangPoint": "",
     "audioId": 0
+  },
+  {
+    "id": 10000,
+    "type": "EzioBigSkill",
+    "effectTime": 0,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 10001,
+    "type": "AdrenalineAddCard",
+    "effectTime": 105,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 10002,
+    "type": "AttrByHeroId",
+    "effectTime": 0,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 10003,
+    "type": "AssassinateCreateAdditionalDamage",
+    "effectTime": 203,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 10004,
+    "type": "BeAttackedAssassinate",
+    "effectTime": 202,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 10005,
+    "type": "Provoke",
+    "effectTime": 0,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 10006,
+    "type": "BeatBackDependOnAttackMe",
+    "effectTime": 401,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 10007,
+    "type": "AddAssassinateY",
+    "effectTime": 0,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 10008,
+    "type": "CopyBuffGroupByKill",
+    "effectTime": 212,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 10009,
+    "type": "RecordAddBuffLayerToAddBuff",
+    "effectTime": 304,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 10010,
+    "type": "BeAttackedFromUseSkill",
+    "effectTime": 209,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 10011,
+    "type": "UseBigSkillLike3Rank",
+    "effectTime": 0,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 10012,
+    "type": "AddBeAssassinateY",
+    "effectTime": 0,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 10013,
+    "type": "AlertProtect",
+    "effectTime": 0,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 10014,
+    "type": "PowerUnobtainable",
+    "effectTime": 0,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 10015,
+    "type": "CreateTempSkill3Card",
+    "effectTime": 105,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
   }
 ]

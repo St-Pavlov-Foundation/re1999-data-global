@@ -64,6 +64,8 @@ function var_0_0._refreshItem(arg_6_0)
 	arg_6_0._txtunselectnamecn.text = var_6_3.name
 	arg_6_0._txtunselectnameen.text = var_6_3.nameEn
 
+	gohelper.setActive(arg_6_0._goreddot, true)
+
 	if arg_6_0._mo.type == ActivityEnum.ActivityType.Normal then
 		local var_6_6 = ActivityConfig.instance:getActivityCo(ActivityEnum.Activity.NorSign).showCenter
 		local var_6_7 = ActivityConfig.instance:getActivityCenterCo(var_6_6).reddotid
@@ -151,9 +153,15 @@ function var_0_0._refreshItem(arg_6_0)
 				})
 			end
 
-			RedDotController.instance:addRedDot(arg_6_0._goreddot, reddotid, nil, arg_6_0._checkIsV2a4WarmupRed, arg_6_0)
+			RedDotController.instance:addRedDot(arg_6_0._goreddot, var_6_4 ~= 0 and var_6_4 or RedDotEnum.DotNode.Activity125Task, nil, arg_6_0._checkIsV2a4WarmupRed, arg_6_0)
+		elseif var_6_2 == ActivityEnum.Activity.V2a9_FreeMonthCard then
+			RedDotController.instance:addRedDot(arg_6_0._goreddot, var_6_8, arg_6_0._mo.id)
+
+			local var_6_14 = V2a9FreeMonthCardModel.instance:isCurDayCouldGet()
+
+			gohelper.setActive(arg_6_0._goreddot, var_6_14)
 		elseif var_6_5 == ActivityEnum.ActivityTypeID.Act189 then
-			local var_6_14 = {
+			local var_6_15 = {
 				{
 					id = var_6_4,
 					uid = var_6_2
@@ -168,7 +176,7 @@ function var_0_0._refreshItem(arg_6_0)
 				}
 			}
 
-			RedDotController.instance:addMultiRedDot(arg_6_0._goreddot, var_6_14)
+			RedDotController.instance:addMultiRedDot(arg_6_0._goreddot, var_6_15)
 		elseif var_6_5 == ActivityEnum.ActivityTypeID.Act201 then
 			RedDotController.instance:addRedDot(arg_6_0._goreddot, var_6_4, nil, arg_6_0.checkActivityShowFirstEnter, arg_6_0)
 		else

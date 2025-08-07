@@ -337,6 +337,24 @@ function var_0_0.onReceiveSetMainSceneSkinReply(arg_38_0, arg_38_1, arg_38_2)
 	local var_38_0 = arg_38_2.itemId
 end
 
+function var_0_0.sendSetUiStyleSkinRequest(arg_39_0, arg_39_1, arg_39_2, arg_39_3)
+	local var_39_0 = PlayerModule_pb.SetUiStyleSkinRequest()
+
+	var_39_0.itemId = arg_39_1
+
+	return arg_39_0:sendMsg(var_39_0, arg_39_2, arg_39_3)
+end
+
+function var_0_0.onReceiveSetUiStyleSkinReply(arg_40_0, arg_40_1, arg_40_2)
+	if arg_40_1 ~= 0 then
+		return
+	end
+
+	local var_40_0 = arg_40_2.itemId
+
+	GameFacade.showToast(ToastEnum.MainUISwitchSuccess)
+end
+
 var_0_0.instance = var_0_0.New()
 
 return var_0_0

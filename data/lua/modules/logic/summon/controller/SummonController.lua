@@ -628,23 +628,33 @@ function var_0_0.updateSummonInfo(arg_62_0, arg_62_1)
 	arg_62_0:dispatchEvent(SummonEvent.onSummonInfoGot)
 end
 
-function var_0_0.insertSummonPopupList(arg_63_0, arg_63_1, arg_63_2, arg_63_3)
-	arg_63_0._popupParams = arg_63_0._popupParams or {}
+function var_0_0.summonProgressRewards(arg_63_0, arg_63_1)
+	local var_63_0 = SummonMainModel.instance:getPoolServerMO(arg_63_1.poolId)
 
-	local var_63_0 = {
-		priority = arg_63_1,
-		viewName = arg_63_2,
-		param = arg_63_3
-	}
+	if var_63_0 and var_63_0.customPickMO then
+		var_63_0.customPickMO.hasGetRewardProgresses = arg_63_1.hasGetRewardProgresses or {}
+	end
 
-	table.insert(arg_63_0._popupParams, var_63_0)
+	arg_63_0:dispatchEvent(SummonEvent.onSummonProgressRewards)
 end
 
-function var_0_0.nextSummonPopupParam(arg_64_0)
-	if arg_64_0._popupParams and #arg_64_0._popupParams > 0 then
-		local var_64_0 = table.remove(arg_64_0._popupParams, 1)
+function var_0_0.insertSummonPopupList(arg_64_0, arg_64_1, arg_64_2, arg_64_3)
+	arg_64_0._popupParams = arg_64_0._popupParams or {}
 
-		PopupController.instance:addPopupView(var_64_0.priority, var_64_0.viewName, var_64_0.param)
+	local var_64_0 = {
+		priority = arg_64_1,
+		viewName = arg_64_2,
+		param = arg_64_3
+	}
+
+	table.insert(arg_64_0._popupParams, var_64_0)
+end
+
+function var_0_0.nextSummonPopupParam(arg_65_0)
+	if arg_65_0._popupParams and #arg_65_0._popupParams > 0 then
+		local var_65_0 = table.remove(arg_65_0._popupParams, 1)
+
+		PopupController.instance:addPopupView(var_65_0.priority, var_65_0.viewName, var_65_0.param)
 
 		return true
 	end
@@ -652,258 +662,258 @@ function var_0_0.nextSummonPopupParam(arg_64_0)
 	return false
 end
 
-function var_0_0.clearSummonPopupList(arg_65_0)
-	arg_65_0._popupParams = {}
+function var_0_0.clearSummonPopupList(arg_66_0)
+	arg_66_0._popupParams = {}
 end
 
 function var_0_0.getCharScenePrefabPath()
 	return SummonEnum.SummonCharScenePath
 end
 
-function var_0_0.isInSummonGuide(arg_67_0)
+function var_0_0.isInSummonGuide(arg_68_0)
 	return GuideController.instance:isGuiding() and SummonEnum.GuideIdSet[GuideModel.instance:getDoingGuideId()]
 end
 
-function var_0_0.doVirtualSummonBehavior(arg_68_0, arg_68_1, arg_68_2, arg_68_3, arg_68_4, arg_68_5, arg_68_6)
-	if not arg_68_1 then
+function var_0_0.doVirtualSummonBehavior(arg_69_0, arg_69_1, arg_69_2, arg_69_3, arg_69_4, arg_69_5, arg_69_6)
+	if not arg_69_1 then
 		return
 	end
 
-	if #arg_68_1 <= 0 then
+	if #arg_69_1 <= 0 then
 		return
 	end
 
-	local var_68_0 = {
-		hideADView = arg_68_3,
+	local var_69_0 = {
+		hideADView = arg_69_3,
 		jumpPoolId = SummonEnum.PoolId.Normal
 	}
 
-	arg_68_0:enterSummonScene(var_68_0)
+	arg_69_0:enterSummonScene(var_69_0)
 
-	local var_68_1 = arg_68_0:getVirtualSummonResult(arg_68_1, false, arg_68_2)
+	local var_69_1 = arg_69_0:getVirtualSummonResult(arg_69_1, false, arg_69_2)
 
-	arg_68_0:summonSuccess(var_68_1, SummonEnum.SummonCallingType.SummonSimulation)
-	var_0_0.instance:setSummonEndOpenCallBack(arg_68_4, arg_68_5)
+	arg_69_0:summonSuccess(var_69_1, SummonEnum.SummonCallingType.SummonSimulation)
+	var_0_0.instance:setSummonEndOpenCallBack(arg_69_4, arg_69_5)
 
-	if arg_68_6 then
-		TaskDispatcher.runDelay(arg_68_0.autoCloseBlur, arg_68_0, 1.5)
+	if arg_69_6 then
+		TaskDispatcher.runDelay(arg_69_0.autoCloseBlur, arg_69_0, 1.5)
 	end
 end
 
-function var_0_0.autoCloseBlur(arg_69_0)
-	TaskDispatcher.cancelTask(arg_69_0.autoCloseBlur, arg_69_0)
+function var_0_0.autoCloseBlur(arg_70_0)
+	TaskDispatcher.cancelTask(arg_70_0.autoCloseBlur, arg_70_0)
 	UIBlockMgr.instance:endAll()
 	PostProcessingMgr.instance:forceRefreshCloseBlur()
 end
 
-function var_0_0.getVirtualSummonResult(arg_70_0, arg_70_1, arg_70_2, arg_70_3)
-	arg_70_2 = arg_70_2 or false
+function var_0_0.getVirtualSummonResult(arg_71_0, arg_71_1, arg_71_2, arg_71_3)
+	arg_71_2 = arg_71_2 or false
 
-	local var_70_0 = {}
+	local var_71_0 = {}
 
-	if not arg_70_1 then
-		return var_70_0
+	if not arg_71_1 then
+		return var_71_0
 	end
 
-	local var_70_1 = #arg_70_1
+	local var_71_1 = #arg_71_1
 
-	if var_70_1 <= 0 then
-		return var_70_0
+	if var_71_1 <= 0 then
+		return var_71_0
 	end
 
-	local var_70_2 = {}
-	local var_70_3 = {}
+	local var_71_2 = {}
+	local var_71_3 = {}
 
-	for iter_70_0 = 1, var_70_1 do
-		local var_70_4 = arg_70_1[iter_70_0]
+	for iter_71_0 = 1, var_71_1 do
+		local var_71_4 = arg_71_1[iter_71_0]
 
-		if var_70_3[var_70_4] then
-			var_70_3[var_70_4] = var_70_3[var_70_4] + 1
+		if var_71_3[var_71_4] then
+			var_71_3[var_71_4] = var_71_3[var_71_4] + 1
 		else
-			var_70_3[var_70_4] = 1
+			var_71_3[var_71_4] = 1
 		end
 	end
 
-	for iter_70_1 = 1, var_70_1 do
-		local var_70_5 = arg_70_1[iter_70_1]
-		local var_70_6 = arg_70_0:haveHero(var_70_5)
-		local var_70_7 = arg_70_0:getHeroDuplicateCount(var_70_5)
+	for iter_71_1 = 1, var_71_1 do
+		local var_71_5 = arg_71_1[iter_71_1]
+		local var_71_6 = arg_71_0:haveHero(var_71_5)
+		local var_71_7 = arg_71_0:getHeroDuplicateCount(var_71_5)
 
-		if arg_70_3 then
-			local var_70_8 = var_70_3[var_70_5]
+		if arg_71_3 then
+			local var_71_8 = var_71_3[var_71_5]
 
-			var_70_7 = math.max(0, var_70_7 - var_70_8)
-			var_70_6 = var_70_7 > 0
+			var_71_7 = math.max(0, var_71_7 - var_71_8)
+			var_71_6 = var_71_7 > 0
 		end
 
-		if var_70_2[var_70_5] then
-			var_70_7 = var_70_2[var_70_5] + 1
-			var_70_2[var_70_5] = var_70_7
+		if var_71_2[var_71_5] then
+			var_71_7 = var_71_2[var_71_5] + 1
+			var_71_2[var_71_5] = var_71_7
 		else
-			var_70_2[var_70_5] = var_70_7
+			var_71_2[var_71_5] = var_71_7
 		end
 
-		local var_70_9 = not var_70_6
-		local var_70_10 = {
-			heroId = var_70_5,
-			duplicateCount = var_70_7,
-			isNew = var_70_9
+		local var_71_9 = not var_71_6
+		local var_71_10 = {
+			heroId = var_71_5,
+			duplicateCount = var_71_7,
+			isNew = var_71_9
 		}
 
-		table.insert(var_70_0, var_70_10)
+		table.insert(var_71_0, var_71_10)
 	end
 
-	if arg_70_2 then
-		SummonModel.sortResult(var_70_0, nil)
+	if arg_71_2 then
+		SummonModel.sortResult(var_71_0, nil)
 	end
 
-	return var_70_0
+	return var_71_0
 end
 
-function var_0_0.haveHero(arg_71_0, arg_71_1)
-	local var_71_0 = HeroModel.instance:getByHeroId(arg_71_1)
-
-	return var_71_0 ~= nil and var_71_0.exSkillLevel >= 0
-end
-
-function var_0_0.getHeroDuplicateCount(arg_72_0, arg_72_1)
+function var_0_0.haveHero(arg_72_0, arg_72_1)
 	local var_72_0 = HeroModel.instance:getByHeroId(arg_72_1)
 
-	if var_72_0 then
-		return var_72_0.duplicateCount + 1
+	return var_72_0 ~= nil and var_72_0.exSkillLevel >= 0
+end
+
+function var_0_0.getHeroDuplicateCount(arg_73_0, arg_73_1)
+	local var_73_0 = HeroModel.instance:getByHeroId(arg_73_1)
+
+	if var_73_0 then
+		return var_73_0.duplicateCount + 1
 	end
 
 	return 0
 end
 
-function var_0_0.getSummonEndOpenCallBack(arg_73_0)
-	return arg_73_0.summonEndOpenCallBack
+function var_0_0.getSummonEndOpenCallBack(arg_74_0)
+	return arg_74_0.summonEndOpenCallBack
 end
 
-function var_0_0.setSummonEndOpenCallBack(arg_74_0, arg_74_1, arg_74_2)
-	if arg_74_0.summonEndOpenCallBack then
-		LuaGeneralCallback.getPool():putObject(arg_74_0.summonEndOpenCallBack)
+function var_0_0.setSummonEndOpenCallBack(arg_75_0, arg_75_1, arg_75_2)
+	if arg_75_0.summonEndOpenCallBack then
+		LuaGeneralCallback.getPool():putObject(arg_75_0.summonEndOpenCallBack)
 
-		arg_74_0.summonEndOpenCallBack = nil
+		arg_75_0.summonEndOpenCallBack = nil
 	end
 
-	if arg_74_1 ~= nil and arg_74_2 ~= nil then
-		local var_74_0 = LuaGeneralCallback.getPool():getObject()
+	if arg_75_1 ~= nil and arg_75_2 ~= nil then
+		local var_75_0 = LuaGeneralCallback.getPool():getObject()
 
-		var_74_0.callback = arg_74_1
+		var_75_0.callback = arg_75_1
 
-		var_74_0:setCbObj(arg_74_2)
+		var_75_0:setCbObj(arg_75_2)
 
-		arg_74_0.summonEndOpenCallBack = var_74_0
+		arg_75_0.summonEndOpenCallBack = var_75_0
 	end
 end
 
-function var_0_0.getLimitedHeroSkinIdsByPopupParam(arg_75_0)
-	if not arg_75_0._popupParams then
+function var_0_0.getLimitedHeroSkinIdsByPopupParam(arg_76_0)
+	if not arg_76_0._popupParams then
 		return
 	end
 
-	local var_75_0 = {}
+	local var_76_0 = {}
 
-	if #arg_75_0._popupParams <= 0 then
-		for iter_75_0 = 1, 10 do
-			local var_75_1, var_75_2 = SummonModel.instance:openSummonResult(iter_75_0)
+	if #arg_76_0._popupParams <= 0 then
+		for iter_76_0 = 1, 10 do
+			local var_76_1, var_76_2 = SummonModel.instance:openSummonResult(iter_76_0)
 
-			if var_75_1 then
-				local var_75_3 = var_75_1.heroId
-				local var_75_4 = arg_75_0:getMvSkinIdByHeroId(var_75_3)
+			if var_76_1 then
+				local var_76_3 = var_76_1.heroId
+				local var_76_4 = arg_76_0:getMvSkinIdByHeroId(var_76_3)
 
-				if var_75_4 then
-					var_75_0[var_75_3] = var_75_4
+				if var_76_4 then
+					var_76_0[var_76_3] = var_76_4
 				end
 			end
 		end
 	end
 
-	for iter_75_1 = 1, #arg_75_0._popupParams do
-		local var_75_5 = arg_75_0._popupParams[iter_75_1]
+	for iter_76_1 = 1, #arg_76_0._popupParams do
+		local var_76_5 = arg_76_0._popupParams[iter_76_1]
 
-		if var_75_5.viewName == ViewName.CharacterGetView then
-			local var_75_6 = var_75_5.param.heroId
-			local var_75_7 = arg_75_0:getMvSkinIdByHeroId(var_75_6)
+		if var_76_5.viewName == ViewName.CharacterGetView then
+			local var_76_6 = var_76_5.param.heroId
+			local var_76_7 = arg_76_0:getMvSkinIdByHeroId(var_76_6)
 
-			if var_75_7 then
-				var_75_0[var_75_6] = var_75_7
+			if var_76_7 then
+				var_76_0[var_76_6] = var_76_7
 			end
 		end
 	end
 
-	return var_75_0
+	return var_76_0
 end
 
-function var_0_0.getMvSkinIdByHeroId(arg_76_0, arg_76_1)
+function var_0_0.getMvSkinIdByHeroId(arg_77_0, arg_77_1)
 	if VersionValidator.instance:isInReviewing() then
 		return nil
 	end
 
-	if not arg_76_1 then
+	if not arg_77_1 then
 		return nil
 	end
 
-	local var_76_0 = HeroModel.instance:getByHeroId(arg_76_1)
+	local var_77_0 = HeroModel.instance:getByHeroId(arg_77_1)
 
-	if var_76_0 and var_76_0.config then
-		local var_76_1 = var_76_0.config
-		local var_76_2 = lua_character_limited.configDict[var_76_1.mvskinId]
+	if var_77_0 and var_77_0.config then
+		local var_77_1 = var_77_0.config
+		local var_77_2 = lua_character_limited.configDict[var_77_1.mvskinId]
 
-		if var_76_1 and var_76_1.mvskinId and var_76_2 and not string.nilorempty(var_76_2.entranceMv) then
-			return var_76_1.mvskinId
+		if var_77_1 and var_77_1.mvskinId and var_77_2 and not string.nilorempty(var_77_2.entranceMv) then
+			return var_77_1.mvskinId
 		end
 	end
 
 	return nil
 end
 
-function var_0_0._trackSummonClientEvent(arg_77_0, arg_77_1, arg_77_2, arg_77_3)
+function var_0_0._trackSummonClientEvent(arg_78_0, arg_78_1, arg_78_2, arg_78_3)
 	SDKDataTrackMgr.instance:track("summon_client", {
-		poolid = arg_77_1 or -1,
-		entrance = arg_77_2 or "",
-		position_list = arg_77_3 or ""
+		poolid = arg_78_1 or -1,
+		entrance = arg_78_2 or "",
+		position_list = arg_78_3 or ""
 	})
 end
 
-function var_0_0.trackSummonClientEvent(arg_78_0, arg_78_1, arg_78_2)
-	local var_78_0 = var_0_1
-	local var_78_1 = arg_78_1 and "skip" or "rotate"
-	local var_78_2 = ""
+function var_0_0.trackSummonClientEvent(arg_79_0, arg_79_1, arg_79_2)
+	local var_79_0 = var_0_1
+	local var_79_1 = arg_79_1 and "skip" or "rotate"
+	local var_79_2 = ""
 
-	if arg_78_1 then
-		if type(arg_78_2) == "table" then
-			local var_78_3 = arg_78_2.st
-			local var_78_4 = string.format("%0.2f", var_78_3.x)
-			local var_78_5 = string.format("%0.2f", var_78_3.y)
+	if arg_79_1 then
+		if type(arg_79_2) == "table" then
+			local var_79_3 = arg_79_2.st
+			local var_79_4 = string.format("%0.2f", var_79_3.x)
+			local var_79_5 = string.format("%0.2f", var_79_3.y)
 
-			var_78_2 = string.format("[(%s, %s)]", var_78_4, var_78_5)
+			var_79_2 = string.format("[(%s, %s)]", var_79_4, var_79_5)
 		end
 
-		var_0_0.instance:_trackSummonClientEvent(var_78_0, var_78_1, var_78_2)
+		var_0_0.instance:_trackSummonClientEvent(var_79_0, var_79_1, var_79_2)
 	else
-		if type(arg_78_2) == "table" then
-			local var_78_6 = arg_78_2.st
-			local var_78_7 = arg_78_2.ed
-			local var_78_8 = string.format("%0.2f", var_78_6.x)
-			local var_78_9 = string.format("%0.2f", var_78_6.y)
-			local var_78_10 = string.format("%0.2f", var_78_7.x)
-			local var_78_11 = string.format("%0.2f", var_78_7.y)
+		if type(arg_79_2) == "table" then
+			local var_79_6 = arg_79_2.st
+			local var_79_7 = arg_79_2.ed
+			local var_79_8 = string.format("%0.2f", var_79_6.x)
+			local var_79_9 = string.format("%0.2f", var_79_6.y)
+			local var_79_10 = string.format("%0.2f", var_79_7.x)
+			local var_79_11 = string.format("%0.2f", var_79_7.y)
 
-			var_78_2 = string.format("[(%s, %s), (%s, %s)]", var_78_8, var_78_9, var_78_10, var_78_11)
+			var_79_2 = string.format("[(%s, %s), (%s, %s)]", var_79_8, var_79_9, var_79_10, var_79_11)
 		end
 
-		var_0_0.instance:_trackSummonClientEvent(var_78_0, var_78_1, var_78_2)
+		var_0_0.instance:_trackSummonClientEvent(var_79_0, var_79_1, var_79_2)
 	end
 end
 
-function var_0_0.simpleEnterSummonScene(arg_79_0, arg_79_1, arg_79_2)
-	GameUtil.onDestroyViewMember(arg_79_0, "_simpleFlow")
+function var_0_0.simpleEnterSummonScene(arg_80_0, arg_80_1, arg_80_2)
+	GameUtil.onDestroyViewMember(arg_80_0, "_simpleFlow")
 
-	arg_79_0._simpleFlow = VirtualSummonBehaviorFlow.New()
+	arg_80_0._simpleFlow = VirtualSummonBehaviorFlow.New()
 
-	arg_79_0._simpleFlow:start(arg_79_1, arg_79_2)
+	arg_80_0._simpleFlow:start(arg_80_1, arg_80_2)
 end
 
 var_0_0.instance = var_0_0.New()

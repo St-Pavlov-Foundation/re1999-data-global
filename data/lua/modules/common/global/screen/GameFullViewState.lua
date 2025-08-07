@@ -102,6 +102,8 @@ function var_0_0._onOpenFullView(arg_11_0, arg_11_1)
 	if var_11_1 == SceneType.Fight then
 		CameraMgr.instance:setVirtualCameraChildActive(false, "light")
 	end
+
+	GameSceneMgr.instance:dispatchEvent(SceneEventName.SceneGoChangeVisible, false)
 end
 
 function var_0_0.forceSceneCameraActive(arg_12_0, arg_12_1)
@@ -124,6 +126,8 @@ function var_0_0._onCloseFullView(arg_13_0, arg_13_1)
 		if GameSceneMgr.instance:getCurSceneType() == SceneType.Fight then
 			CameraMgr.instance:setVirtualCameraChildActive(true, "light")
 		end
+
+		GameSceneMgr.instance:dispatchEvent(SceneEventName.SceneGoChangeVisible, true)
 	end
 end
 

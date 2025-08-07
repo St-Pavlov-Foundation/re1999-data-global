@@ -308,75 +308,83 @@ function var_0_0._loadCondition(arg_21_0)
 		return
 	end
 
-	local var_21_0 = DungeonModel.instance:getEpisodeInfo(arg_21_0._episodeId)
-	local var_21_1 = DungeonConfig.instance:getEpisodeCO(arg_21_0._episodeId)
+	local var_21_0 = FightDataHelper.fieldMgr.customData[FightCustomData.CustomDataType.Odyssey]
 
-	if var_21_1 then
-		if var_21_1.type == DungeonEnum.EpisodeType.RoleStoryChallenge then
-			gohelper.setActive(arg_21_0._gopasstarget, false)
-
-			return
-		elseif SeasonFightHandler.loadSeasonCondition(var_21_1.type, arg_21_0._gopasstarget, arg_21_0._goconditionitemdesc, arg_21_0._goconditionitem) then
-			return
-		end
-	end
-
-	local var_21_2 = DungeonConfig.instance:getFirstEpisodeWinConditionText(nil, FightModel.instance:getBattleId())
-
-	if BossRushController.instance:isInBossRushInfiniteFight() then
-		var_21_2 = luaLang("v1a4_bossrushleveldetail_txt_target")
-	end
-
-	arg_21_0:_setConditionText(arg_21_0._goconditionitemdesc, var_21_2, false)
-	arg_21_0:_setStarStatus(arg_21_0._goconditionitemdesc, false)
-
-	if not var_21_0 or not var_21_1 then
+	if var_21_0 and var_21_0.elementId and var_21_0.elementId ~= 0 and arg_21_0:refreshOdysseyTask(var_21_0) then
 		return
 	end
 
-	local var_21_3 = DungeonModel.instance.curSendChapterId
+	local var_21_1 = DungeonModel.instance:getEpisodeInfo(arg_21_0._episodeId)
+	local var_21_2 = DungeonConfig.instance:getEpisodeCO(arg_21_0._episodeId)
 
-	if var_21_3 then
-		local var_21_4 = DungeonConfig.instance:getChapterCO(var_21_3)
+	if var_21_2 then
+		if var_21_2.type == DungeonEnum.EpisodeType.RoleStoryChallenge then
+			gohelper.setActive(arg_21_0._gopasstarget, false)
 
-		if var_21_4 and var_21_4.type == DungeonEnum.ChapterType.Simple then
+			return
+		elseif SeasonFightHandler.loadSeasonCondition(var_21_2.type, arg_21_0._gopasstarget, arg_21_0._goconditionitemdesc, arg_21_0._goconditionitem) then
+			return
+		elseif VersionActivity2_9DungeonHelper.loadFightCondition(arg_21_0, arg_21_0._episodeId, arg_21_0._gopasstarget) then
 			return
 		end
 	end
 
-	local var_21_5 = DungeonConfig.instance:getEpisodeAdvancedConditionText(arg_21_0._episodeId, FightModel.instance:getBattleId())
+	local var_21_3 = DungeonConfig.instance:getFirstEpisodeWinConditionText(nil, FightModel.instance:getBattleId())
 
-	if not LuaUtil.isEmptyStr(var_21_5) then
-		local var_21_6 = gohelper.clone(arg_21_0._goconditionitemdesc, arg_21_0._goconditionitem, "platnumdesc")
-		local var_21_7 = arg_21_0:checkPlatCondition(DungeonConfig.instance:getEpisodeAdvancedCondition2(arg_21_0._episodeId, 1, FightModel.instance:getBattleId()))
-		local var_21_8 = ""
+	if BossRushController.instance:isInBossRushInfiniteFight() then
+		var_21_3 = luaLang("v1a4_bossrushleveldetail_txt_target")
+	end
+
+	arg_21_0:_setConditionText(arg_21_0._goconditionitemdesc, var_21_3, false)
+	arg_21_0:_setStarStatus(arg_21_0._goconditionitemdesc, false)
+
+	if not var_21_1 or not var_21_2 then
+		return
+	end
+
+	local var_21_4 = DungeonModel.instance.curSendChapterId
+
+	if var_21_4 then
+		local var_21_5 = DungeonConfig.instance:getChapterCO(var_21_4)
+
+		if var_21_5 and var_21_5.type == DungeonEnum.ChapterType.Simple then
+			return
+		end
+	end
+
+	local var_21_6 = DungeonConfig.instance:getEpisodeAdvancedConditionText(arg_21_0._episodeId, FightModel.instance:getBattleId())
+
+	if not LuaUtil.isEmptyStr(var_21_6) then
+		local var_21_7 = gohelper.clone(arg_21_0._goconditionitemdesc, arg_21_0._goconditionitem, "platnumdesc")
+		local var_21_8 = arg_21_0:checkPlatCondition(DungeonConfig.instance:getEpisodeAdvancedCondition2(arg_21_0._episodeId, 1, FightModel.instance:getBattleId()))
+		local var_21_9 = ""
 
 		if not FightModel.instance.needFightReconnect then
-			local var_21_9 = DungeonConfig.instance:getEpisodeAdvancedCondition(arg_21_0._episodeId, FightModel.instance:getBattleId())
-			local var_21_10 = lua_condition.configDict[tonumber(var_21_9)]
-			local var_21_11 = var_21_10 and tonumber(var_21_10.type)
+			local var_21_10 = DungeonConfig.instance:getEpisodeAdvancedCondition(arg_21_0._episodeId, FightModel.instance:getBattleId())
+			local var_21_11 = lua_condition.configDict[tonumber(var_21_10)]
+			local var_21_12 = var_21_11 and tonumber(var_21_11.type)
 
-			if var_21_11 and var_21_11 == 7 then
-				var_21_8 = string.format(" (%d/%s)", arg_21_0:_getPlatinumProgress7(), var_21_10.attr)
-			elseif var_21_11 and var_21_11 == 8 then
-				var_21_8 = string.format(" (%d/%s)", arg_21_0:_getPlatinumProgress8(), var_21_10.attr)
-			elseif var_21_11 and var_21_11 == 9 then
-				var_21_8 = string.format(" (%d%%/%s%%)", arg_21_0:_getPlatinumProgress9(), tostring(tonumber(var_21_10.attr) / 10))
+			if var_21_12 and var_21_12 == 7 then
+				var_21_9 = string.format(" (%d/%s)", arg_21_0:_getPlatinumProgress7(), var_21_11.attr)
+			elseif var_21_12 and var_21_12 == 8 then
+				var_21_9 = string.format(" (%d/%s)", arg_21_0:_getPlatinumProgress8(), var_21_11.attr)
+			elseif var_21_12 and var_21_12 == 9 then
+				var_21_9 = string.format(" (%d%%/%s%%)", arg_21_0:_getPlatinumProgress9(), tostring(tonumber(var_21_11.attr) / 10))
 			end
 		end
 
-		arg_21_0:_setConditionText(var_21_6, var_21_5 .. var_21_8, var_21_7)
-		arg_21_0:_setStarStatus(var_21_6, var_21_7)
+		arg_21_0:_setConditionText(var_21_7, var_21_6 .. var_21_9, var_21_8)
+		arg_21_0:_setStarStatus(var_21_7, var_21_8)
 	end
 
-	local var_21_12 = DungeonConfig.instance:getEpisodeAdvancedCondition2Text(arg_21_0._episodeId, FightModel.instance:getBattleId())
+	local var_21_13 = DungeonConfig.instance:getEpisodeAdvancedCondition2Text(arg_21_0._episodeId, FightModel.instance:getBattleId())
 
-	if not LuaUtil.isEmptyStr(var_21_12) then
-		local var_21_13 = gohelper.clone(arg_21_0._goconditionitemdesc, arg_21_0._goconditionitem, "platnumdesc2")
-		local var_21_14 = arg_21_0:checkPlatCondition(DungeonConfig.instance:getEpisodeAdvancedCondition2(arg_21_0._episodeId, 2, FightModel.instance:getBattleId()))
+	if not LuaUtil.isEmptyStr(var_21_13) then
+		local var_21_14 = gohelper.clone(arg_21_0._goconditionitemdesc, arg_21_0._goconditionitem, "platnumdesc2")
+		local var_21_15 = arg_21_0:checkPlatCondition(DungeonConfig.instance:getEpisodeAdvancedCondition2(arg_21_0._episodeId, 2, FightModel.instance:getBattleId()))
 
-		arg_21_0:_setConditionText(var_21_13, var_21_12, var_21_14)
-		arg_21_0:_setStarStatus(var_21_13, var_21_14)
+		arg_21_0:_setConditionText(var_21_14, var_21_13, var_21_15)
+		arg_21_0:_setStarStatus(var_21_14, var_21_15)
 	end
 end
 
@@ -590,190 +598,246 @@ function var_0_0._ruleListClickFunc(arg_32_0)
 	gohelper.setActive(arg_32_0._goadditiondetail, true)
 end
 
-function var_0_0._refreshWeekwalkVer2Condition(arg_33_0)
-	local var_33_0 = FightDataHelper.fieldMgr.customData[FightCustomData.CustomDataType.WeekwalkVer2]
+function var_0_0.refreshOdysseyTask(arg_33_0, arg_33_1)
+	local var_33_0 = arg_33_1.elementId
+	local var_33_1 = lua_odyssey_fight_element.configDict[var_33_0]
 
-	var_33_0 = var_33_0 and cjson.decode(var_33_0)
-
-	if not var_33_0 then
+	if not var_33_1 then
 		return
 	end
 
-	if not var_33_0.cupIds then
+	if var_33_1.type ~= 6 then
 		return
 	end
 
-	local var_33_1 = {}
+	local var_33_2 = var_33_1.param
+	local var_33_3 = GameUtil.splitString2(var_33_2, true)
 
-	for iter_33_0, iter_33_1 in ipairs(var_33_0.cupIds) do
-		table.insert(var_33_1, iter_33_1)
+	table.sort(var_33_3, function(arg_34_0, arg_34_1)
+		return arg_34_0[1] < arg_34_1[1]
+	end)
+
+	local var_33_4 = {}
+
+	for iter_33_0, iter_33_1 in ipairs(var_33_3) do
+		local var_33_5 = iter_33_1[2]
+		local var_33_6 = lua_odyssey_fight_task_desc.configDict[var_33_5]
+
+		if var_33_6 then
+			table.insert(var_33_4, var_33_6)
+		end
 	end
 
-	table.sort(var_33_1, var_0_0.sortWeekWalkVer2Task)
+	for iter_33_2, iter_33_3 in ipairs(var_33_4) do
+		local var_33_7 = gohelper.clone(arg_33_0._goconditionitemdesc, arg_33_0._goconditionitem, "platnumdesc")
 
-	for iter_33_2, iter_33_3 in ipairs(var_33_1) do
-		local var_33_2 = gohelper.clone(arg_33_0._goconditionitemdesc, arg_33_0._goconditionitem, "platnumdesc")
-
-		arg_33_0:_showWeekWalkVer2OneTaskGroup(var_33_2, iter_33_3, iter_33_2)
+		arg_33_0:showOdysseyTask(var_33_7, iter_33_3, iter_33_2)
 	end
 
 	gohelper.setActive(arg_33_0._goconditionitemdesc, false)
+
+	gohelper.onceAddComponent(arg_33_0._goconditionitem, gohelper.Type_VerticalLayoutGroup).spacing = 60
+	gohelper.findChildComponent(arg_33_0.viewGO, "#go_quitshowview/center/layout/passtarget/#go_conditionitem/passtargetTip", typeof(UnityEngine.UI.LayoutElement)).minHeight = 35
+
+	return true
 end
 
-function var_0_0._showWeekWalkVer2OneTaskGroup(arg_34_0, arg_34_1, arg_34_2, arg_34_3)
-	local var_34_0 = lua_weekwalk_ver2_cup.configDict[arg_34_2]
-	local var_34_1 = gohelper.findChildText(arg_34_1, "")
-	local var_34_2 = GameUtil.splitString2(var_34_0.cupTask, true)
+function var_0_0.showOdysseyTask(arg_35_0, arg_35_1, arg_35_2, arg_35_3)
+	gohelper.findChildText(arg_35_1, "").text = arg_35_2.desc
 
-	table.sort(var_34_2, var_0_0.sortWeekWalkVer2CupList)
+	gohelper.setActive(gohelper.findChild(arg_35_1, "star"), false)
 
-	local var_34_3
-	local var_34_4
-	local var_34_5 = FightDataHelper.fieldMgr.fightTaskBox.tasks
+	local var_35_0 = gohelper.findChildImage(arg_35_1, "star_weekwalkheart")
 
-	for iter_34_0, iter_34_1 in ipairs(var_34_2) do
-		local var_34_6 = 0
+	transformhelper.setLocalScale(var_35_0.transform, 0.8, 0.8, 0.8)
+	gohelper.setActive(var_35_0.gameObject, true)
+	UISpriteSetMgr.instance:setSp01OdysseyDungeonSprite(var_35_0, "pingji_x_" .. arg_35_3)
+end
 
-		for iter_34_2 = 2, #iter_34_1 do
-			local var_34_7 = var_34_5[iter_34_1[iter_34_2]]
+function var_0_0._refreshWeekwalkVer2Condition(arg_36_0)
+	local var_36_0 = FightDataHelper.fieldMgr.customData[FightCustomData.CustomDataType.WeekwalkVer2]
 
-			if var_34_7 then
-				if var_34_7.status ~= FightTaskBoxData.TaskStatus.Finished then
-					var_34_3 = iter_34_1[1]
+	var_36_0 = var_36_0 and cjson.decode(var_36_0)
+
+	if not var_36_0 then
+		return
+	end
+
+	if not var_36_0.cupIds then
+		return
+	end
+
+	local var_36_1 = {}
+
+	for iter_36_0, iter_36_1 in ipairs(var_36_0.cupIds) do
+		table.insert(var_36_1, iter_36_1)
+	end
+
+	table.sort(var_36_1, var_0_0.sortWeekWalkVer2Task)
+
+	for iter_36_2, iter_36_3 in ipairs(var_36_1) do
+		local var_36_2 = gohelper.clone(arg_36_0._goconditionitemdesc, arg_36_0._goconditionitem, "platnumdesc")
+
+		arg_36_0:_showWeekWalkVer2OneTaskGroup(var_36_2, iter_36_3, iter_36_2)
+	end
+
+	gohelper.setActive(arg_36_0._goconditionitemdesc, false)
+end
+
+function var_0_0._showWeekWalkVer2OneTaskGroup(arg_37_0, arg_37_1, arg_37_2, arg_37_3)
+	local var_37_0 = lua_weekwalk_ver2_cup.configDict[arg_37_2]
+	local var_37_1 = gohelper.findChildText(arg_37_1, "")
+	local var_37_2 = GameUtil.splitString2(var_37_0.cupTask, true)
+
+	table.sort(var_37_2, var_0_0.sortWeekWalkVer2CupList)
+
+	local var_37_3
+	local var_37_4
+	local var_37_5 = FightDataHelper.fieldMgr.fightTaskBox.tasks
+
+	for iter_37_0, iter_37_1 in ipairs(var_37_2) do
+		local var_37_6 = 0
+
+		for iter_37_2 = 2, #iter_37_1 do
+			local var_37_7 = var_37_5[iter_37_1[iter_37_2]]
+
+			if var_37_7 then
+				if var_37_7.status ~= FightTaskBoxData.TaskStatus.Finished then
+					var_37_3 = iter_37_1[1]
 
 					break
 				end
 
-				if var_34_7.status == FightTaskBoxData.TaskStatus.Finished then
-					var_34_6 = var_34_6 + 1
+				if var_37_7.status == FightTaskBoxData.TaskStatus.Finished then
+					var_37_6 = var_37_6 + 1
 				end
 			end
 		end
 
-		if var_34_6 == #iter_34_1 - 1 then
-			var_34_4 = iter_34_1[1]
+		if var_37_6 == #iter_37_1 - 1 then
+			var_37_4 = iter_37_1[1]
 		end
 
-		if var_34_3 then
+		if var_37_3 then
 			break
 		end
 	end
 
-	local var_34_8 = var_0_0._getWeekWalkVer2CupProgressDesc(var_34_3, var_34_0) or ""
+	local var_37_8 = var_0_0._getWeekWalkVer2CupProgressDesc(var_37_3, var_37_0) or ""
 
-	var_34_1.text = var_34_0.desc .. var_34_8
+	var_37_1.text = var_37_0.desc .. var_37_8
 
-	gohelper.setActive(gohelper.findChild(arg_34_1, "star"), false)
+	gohelper.setActive(gohelper.findChild(arg_37_1, "star"), false)
 
-	local var_34_9 = gohelper.findChild(arg_34_1, "star_weekwalkheart")
+	local var_37_9 = gohelper.findChild(arg_37_1, "star_weekwalkheart")
 
-	gohelper.setActive(var_34_9, true)
+	gohelper.setActive(var_37_9, true)
 
-	local var_34_10 = gohelper.findChildImage(arg_34_1, "star_weekwalkheart")
+	local var_37_10 = gohelper.findChildImage(arg_37_1, "star_weekwalkheart")
 
-	var_34_4 = var_34_4 or 0
-	var_34_10.enabled = false
+	var_37_4 = var_37_4 or 0
+	var_37_10.enabled = false
 
-	local var_34_11 = arg_34_0:getResInst(arg_34_0.viewContainer._viewSetting.otherRes.weekwalkheart_star, var_34_10.gameObject)
+	local var_37_11 = arg_37_0:getResInst(arg_37_0.viewContainer._viewSetting.otherRes.weekwalkheart_star, var_37_10.gameObject)
 
-	WeekWalk_2Helper.setCupEffectByResult(var_34_11, var_34_4)
+	WeekWalk_2Helper.setCupEffectByResult(var_37_11, var_37_4)
 end
 
-function var_0_0._getWeekWalkVer2CupProgressDesc(arg_35_0, arg_35_1)
-	if not arg_35_0 then
+function var_0_0._getWeekWalkVer2CupProgressDesc(arg_38_0, arg_38_1)
+	if not arg_38_0 then
 		return
 	end
 
-	local var_35_0 = arg_35_1.progressDesc
+	local var_38_0 = arg_38_1.progressDesc
 
-	if string.nilorempty(var_35_0) then
+	if string.nilorempty(var_38_0) then
 		return
 	end
 
-	local var_35_1 = GameUtil.splitString2(var_35_0)
-	local var_35_2
+	local var_38_1 = GameUtil.splitString2(var_38_0)
+	local var_38_2
 
-	for iter_35_0, iter_35_1 in ipairs(var_35_1) do
-		if tonumber(iter_35_1[1]) == arg_35_0 then
-			var_35_2 = iter_35_1[2]
+	for iter_38_0, iter_38_1 in ipairs(var_38_1) do
+		if tonumber(iter_38_1[1]) == arg_38_0 then
+			var_38_2 = iter_38_1[2]
 
 			break
 		end
 	end
 
-	if not var_35_2 then
+	if not var_38_2 then
 		return
 	end
 
-	local var_35_3 = arg_35_1.paramOfProgressDesc
+	local var_38_3 = arg_38_1.paramOfProgressDesc
 
-	if string.nilorempty(var_35_3) then
+	if string.nilorempty(var_38_3) then
 		return
 	end
 
-	local var_35_4 = GameUtil.splitString2(var_35_3)
-	local var_35_5
+	local var_38_4 = GameUtil.splitString2(var_38_3)
+	local var_38_5
 
-	for iter_35_2, iter_35_3 in ipairs(var_35_4) do
-		if tonumber(iter_35_3[1]) == arg_35_0 then
-			var_35_5 = iter_35_3
+	for iter_38_2, iter_38_3 in ipairs(var_38_4) do
+		if tonumber(iter_38_3[1]) == arg_38_0 then
+			var_38_5 = iter_38_3
 
 			break
 		end
 	end
 
-	if not var_35_5 then
+	if not var_38_5 then
 		return
 	end
 
-	local var_35_6 = FightDataHelper.fieldMgr.fightTaskBox.tasks
-	local var_35_7 = {}
-	local var_35_8 = GameUtil.splitString2(var_35_5[2], true, "_", "&")
+	local var_38_6 = FightDataHelper.fieldMgr.fightTaskBox.tasks
+	local var_38_7 = {}
+	local var_38_8 = GameUtil.splitString2(var_38_5[2], true, "_", "&")
 
-	for iter_35_4, iter_35_5 in ipairs(var_35_8) do
-		local var_35_9 = var_35_6[iter_35_5[1]]
+	for iter_38_4, iter_38_5 in ipairs(var_38_8) do
+		local var_38_9 = var_38_6[iter_38_5[1]]
 
-		if var_35_9 then
-			for iter_35_6, iter_35_7 in ipairs(var_35_9.values) do
-				if iter_35_7.index == iter_35_5[2] then
-					if iter_35_5[3] == 1 then
-						local var_35_10 = math.ceil(iter_35_7.progress / iter_35_7.maxProgress * 100)
+		if var_38_9 then
+			for iter_38_6, iter_38_7 in ipairs(var_38_9.values) do
+				if iter_38_7.index == iter_38_5[2] then
+					if iter_38_5[3] == 1 then
+						local var_38_10 = math.ceil(iter_38_7.progress / iter_38_7.maxProgress * 100)
 
-						table.insert(var_35_7, var_35_10 .. "%")
-					elseif iter_35_5[3] == 2 then
-						local var_35_11 = math.floor(iter_35_7.progress / iter_35_7.maxProgress * 100)
+						table.insert(var_38_7, var_38_10 .. "%")
+					elseif iter_38_5[3] == 2 then
+						local var_38_11 = math.floor(iter_38_7.progress / iter_38_7.maxProgress * 100)
 
-						table.insert(var_35_7, var_35_11 .. "%")
+						table.insert(var_38_7, var_38_11 .. "%")
 					else
-						table.insert(var_35_7, iter_35_7.progress)
+						table.insert(var_38_7, iter_38_7.progress)
 					end
 				end
 			end
 		end
 	end
 
-	return (GameUtil.getSubPlaceholderLuaLang(var_35_2, var_35_7))
+	return (GameUtil.getSubPlaceholderLuaLang(var_38_2, var_38_7))
 end
 
-function var_0_0.sortWeekWalkVer2CupList(arg_36_0, arg_36_1)
-	return arg_36_0[1] < arg_36_1[1]
+function var_0_0.sortWeekWalkVer2CupList(arg_39_0, arg_39_1)
+	return arg_39_0[1] < arg_39_1[1]
 end
 
-function var_0_0.sortWeekWalkVer2Task(arg_37_0, arg_37_1)
-	local var_37_0 = lua_weekwalk_ver2_cup.configDict[arg_37_0]
-	local var_37_1 = lua_weekwalk_ver2_cup.configDict[arg_37_1]
+function var_0_0.sortWeekWalkVer2Task(arg_40_0, arg_40_1)
+	local var_40_0 = lua_weekwalk_ver2_cup.configDict[arg_40_0]
+	local var_40_1 = lua_weekwalk_ver2_cup.configDict[arg_40_1]
 
-	return var_37_0.cupNo < var_37_1.cupNo
+	return var_40_0.cupNo < var_40_1.cupNo
 end
 
-function var_0_0.onClose(arg_38_0)
+function var_0_0.onClose(arg_41_0)
 	FightAudioMgr.instance:obscureBgm(false)
 end
 
-function var_0_0.onDestroyView(arg_39_0)
-	arg_39_0._simagetipbg:UnLoadImage()
-	arg_39_0._simagemaskbg:UnLoadImage()
-	arg_39_0._simagenumline:UnLoadImage()
+function var_0_0.onDestroyView(arg_42_0)
+	arg_42_0._simagetipbg:UnLoadImage()
+	arg_42_0._simagemaskbg:UnLoadImage()
+	arg_42_0._simagenumline:UnLoadImage()
 end
 
 return var_0_0

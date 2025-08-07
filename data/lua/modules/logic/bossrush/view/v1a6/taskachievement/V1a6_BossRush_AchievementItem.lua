@@ -12,6 +12,7 @@ end
 function var_0_0.onInitView(arg_2_0)
 	arg_2_0._goNormal = gohelper.findChild(arg_2_0.viewGO, "#go_Normal")
 	arg_2_0._imageAssessIcon = gohelper.findChildSingleImage(arg_2_0.viewGO, "#go_Normal/#image_AssessIcon")
+	arg_2_0._txtScore = gohelper.findChildText(arg_2_0.viewGO, "#go_Normal/txt_Score")
 	arg_2_0._txtDescr = gohelper.findChildText(arg_2_0.viewGO, "#go_Normal/#txt_Descr")
 	arg_2_0._scrollRewards = gohelper.findChildScrollRect(arg_2_0.viewGO, "#go_Normal/#scroll_Rewards")
 	arg_2_0._gorewards = gohelper.findChild(arg_2_0.viewGO, "#go_Normal/#scroll_Rewards/Viewport/#go_rewards")
@@ -118,6 +119,10 @@ function var_0_0.refreshNormalUI(arg_13_0, arg_13_1)
 	IconMgr.instance:getCommonPropItemIconList(arg_13_0, arg_13_0._onRewardItemShow, var_13_9, arg_13_0._gorewards)
 
 	arg_13_0._txtDescr.text = BossRushConfig.instance:getScoreStr(var_13_4)
+
+	local var_13_10 = arg_13_1.ScoreDesc or "p_v1a4_bossrushleveldetail_txt_ScoreDesc"
+
+	arg_13_0._txtScore.text = luaLang(var_13_10)
 end
 
 function var_0_0.refreshGetAllUI(arg_14_0, arg_14_1)

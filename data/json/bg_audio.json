@@ -1803,5 +1803,85 @@
     "id": 3270034,
     "eventName": "play_2_7_yuzhou_ui_checkoutspace",
     "bankName": "ui_checkpoint_2_7_yuzhou_amb"
+  },
+  {
+    "id": 3290001,
+    "eventName": "play_activitymusic_theme_s01_cikeshang",
+    "bankName": "firsthalf_cikeshang_music"
+  },
+  {
+    "id": 3290002,
+    "eventName": "play_activitymusic_theme_s01_cikexia",
+    "bankName": "secondhalf_cikexia_music"
+  },
+  {
+    "id": 3290003,
+    "eventName": "play_activitymusic_ac2_s01_cikeshang",
+    "bankName": "firsthalf_cikeshang_music"
+  },
+  {
+    "id": 3290004,
+    "eventName": "play_activitymusic_odyssey_s01_cikexia",
+    "bankName": "secondhalf_cikexia_music"
+  },
+  {
+    "id": 3290005,
+    "eventName": "play_activitymusic_ac2state_s01_cikeshang",
+    "bankName": "firsthalf_cikeshang_music"
+  },
+  {
+    "id": 3290006,
+    "eventName": "play_battle_cikeshang_s01_bossfight",
+    "bankName": "activtiy_cikeshang_combataudio"
+  },
+  {
+    "id": 3290007,
+    "eventName": "play_battle_cikeshang_s01_normalfight",
+    "bankName": "activtiy_cikeshang_combataudio"
+  },
+  {
+    "id": 3290008,
+    "eventName": "play_battle_cikexia_s01_bossfight",
+    "bankName": "activtiy_cikexia_combataudio"
+  },
+  {
+    "id": 3290009,
+    "eventName": "play_battle_cikexia_s01_normalfight",
+    "bankName": "activtiy_cikexia_combataudio"
+  },
+  {
+    "id": 3290010,
+    "eventName": "play_ui_checkpoint_noise_roof",
+    "bankName": "activtiy_cike_combataudio_noise"
+  },
+  {
+    "id": 3290011,
+    "eventName": "play_ui_checkpoint_noise_muralboss",
+    "bankName": "activtiy_cike_combataudio_noise"
+  },
+  {
+    "id": 3290012,
+    "eventName": "play_ui_checkpoint_noise_athens",
+    "bankName": "activtiy_cike_combataudio_noise"
+  },
+  {
+    "id": 3290013,
+    "eventName": "play_ui_checkpoint_noise_dionysia",
+    "bankName": "activtiy_cike_combataudio_noise"
+  },
+  {
+    "id": 3290014,
+    "eventName": "play_ui_checkpoint_noise_dionysiaboss",
+    "bankName": "activtiy_cike_combataudio_noise"
+  },
+  {
+    "id": 3290015,
+    "eventName": "play_ui_checkpoint_noise_mural",
+    "bankName": "activtiy_cike_combataudio_noise"
+  },
+  {
+    "id": 3290016,
+    "eventName": "stop_activitymusic_ac2state_s01_cikeshang",
+    "bankName": "firsthalf_cikeshang_music"
   }
 ]

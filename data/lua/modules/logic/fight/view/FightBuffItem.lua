@@ -115,6 +115,21 @@ function var_0_0.getBuffGoodText(arg_8_0, arg_8_1)
 end
 
 function var_0_0.refreshTxt(arg_9_0, arg_9_1, arg_9_2)
+	if isDebugBuild and GMController.instance.hideBuffLayer then
+		gohelper.setActive(arg_9_0._txtGoodBuff.gameObject, false)
+		gohelper.setActive(arg_9_0._txtGoodCount.gameObject, false)
+		gohelper.setActive(arg_9_0._txtBadBuff.gameObject, false)
+		gohelper.setActive(arg_9_0._txtBadCount.gameObject, false)
+
+		return
+	end
+
+	if FightHeroSpEffectConfig.instance:isKSDLSpecialBuff(arg_9_1.buffId) then
+		arg_9_0:refreshKSDLSpecialBuffTxt(arg_9_1, arg_9_2)
+
+		return
+	end
+
 	if FightBuffHelper.isDeadlyPoisonBuff(arg_9_1) then
 		arg_9_0:refreshDeadlyPoisonTxt(arg_9_1, arg_9_2)
 
@@ -193,15 +208,22 @@ function var_0_0.refreshDuduBoneContinueChannelTxt(arg_11_0, arg_11_1, arg_11_2)
 	arg_11_0._txtGoodCount.text = ""
 end
 
-function var_0_0.calculateBuffType(arg_12_0, arg_12_1)
-	for iter_12_0, iter_12_1 in ipairs(FightEnum.BuffTypeList.GoodBuffList) do
-		if arg_12_1 == iter_12_1 then
+function var_0_0.refreshKSDLSpecialBuffTxt(arg_12_0, arg_12_1, arg_12_2)
+	gohelper.setActive(arg_12_0._txtGoodBuff.gameObject, false)
+	gohelper.setActive(arg_12_0._txtGoodCount.gameObject, false)
+	gohelper.setActive(arg_12_0._txtBadBuff.gameObject, false)
+	gohelper.setActive(arg_12_0._txtBadCount.gameObject, false)
+end
+
+function var_0_0.calculateBuffType(arg_13_0, arg_13_1)
+	for iter_13_0, iter_13_1 in ipairs(FightEnum.BuffTypeList.GoodBuffList) do
+		if arg_13_1 == iter_13_1 then
 			return FightEnum.FightBuffType.GoodBuff
 		end
 	end
 
-	for iter_12_2, iter_12_3 in ipairs(FightEnum.BuffTypeList.BadBuffList) do
-		if arg_12_1 == iter_12_3 then
+	for iter_13_2, iter_13_3 in ipairs(FightEnum.BuffTypeList.BadBuffList) do
+		if arg_13_1 == iter_13_3 then
 			return FightEnum.FightBuffType.BadBuff
 		end
 	end
@@ -209,20 +231,20 @@ function var_0_0.calculateBuffType(arg_12_0, arg_12_1)
 	return FightEnum.FightBuffType.NormalBuff
 end
 
-function var_0_0.isTimeBuff(arg_13_0, arg_13_1)
-	local var_13_0 = arg_13_1.features
+function var_0_0.isTimeBuff(arg_14_0, arg_14_1)
+	local var_14_0 = arg_14_1.features
 
-	if string.nilorempty(var_13_0) then
+	if string.nilorempty(var_14_0) then
 		return false
 	end
 
-	local var_13_1 = FightStrUtil.instance:getSplitCache(var_13_0, "|")
-	local var_13_2
+	local var_14_1 = FightStrUtil.instance:getSplitCache(var_14_0, "|")
+	local var_14_2
 
-	for iter_13_0, iter_13_1 in ipairs(var_13_1) do
-		local var_13_3 = FightStrUtil.instance:getSplitToNumberCache(iter_13_1, "#")
+	for iter_14_0, iter_14_1 in ipairs(var_14_1) do
+		local var_14_3 = FightStrUtil.instance:getSplitToNumberCache(iter_14_1, "#")
 
-		if #var_13_3 >= 2 and var_13_3[1] == 702 and var_13_3[2] > 2 then
+		if #var_14_3 >= 2 and var_14_3[1] == 702 and var_14_3[2] > 2 then
 			return true
 		end
 	end
@@ -230,57 +252,57 @@ function var_0_0.isTimeBuff(arg_13_0, arg_13_1)
 	return false
 end
 
-function var_0_0.showPoisoningEffect(arg_14_0)
-	arg_14_0:playAni("buffeffect")
+function var_0_0.showPoisoningEffect(arg_15_0)
+	arg_15_0:playAni("buffeffect")
 end
 
-function var_0_0._hidePoisoningEffect(arg_15_0)
-	arg_15_0:closeAni()
+function var_0_0._hidePoisoningEffect(arg_16_0)
+	arg_16_0:closeAni()
 end
 
-function var_0_0.playAni(arg_16_0, arg_16_1)
-	local var_16_0 = FightModel.instance:getUISpeed()
+function var_0_0.playAni(arg_17_0, arg_17_1)
+	local var_17_0 = FightModel.instance:getUISpeed()
 
-	arg_16_0._animator.enabled = true
-	arg_16_0._animator.speed = var_16_0
+	arg_17_0._animator.enabled = true
+	arg_17_0._animator.speed = var_17_0
 
-	arg_16_0._animator:Play(arg_16_1, 0, 0)
+	arg_17_0._animator:Play(arg_17_1, 0, 0)
 
-	local var_16_1 = arg_16_0._animator:GetCurrentAnimatorStateInfo(0).length / var_16_0
+	local var_17_1 = arg_17_0._animator:GetCurrentAnimatorStateInfo(0).length / var_17_0
 
-	TaskDispatcher.runDelay(arg_16_0.closeAni, arg_16_0, var_16_1)
+	TaskDispatcher.runDelay(arg_17_0.closeAni, arg_17_0, var_17_1)
 
-	return var_16_1
+	return var_17_1
 end
 
-function var_0_0.closeAni(arg_17_0)
-	if not arg_17_0._animator then
+function var_0_0.closeAni(arg_18_0)
+	if not arg_18_0._animator then
 		return
 	end
 
-	arg_17_0._animator.enabled = false
+	arg_18_0._animator.enabled = false
 
-	ZProj.UGUIHelper.SetColorAlpha(arg_17_0._imgIcon, 1)
+	ZProj.UGUIHelper.SetColorAlpha(arg_18_0._imgIcon, 1)
 
-	gohelper.onceAddComponent(arg_17_0.go, gohelper.Type_CanvasGroup).alpha = 1
+	gohelper.onceAddComponent(arg_18_0.go, gohelper.Type_CanvasGroup).alpha = 1
 
-	gohelper.setActive(arg_17_0.bgeffect, false)
-	gohelper.setActive(arg_17_0.buffquan, false)
-	gohelper.setActive(arg_17_0.bufffinish, false)
-	gohelper.setActive(arg_17_0.buffdot, false)
-	transformhelper.setLocalScale(arg_17_0._txtBadBuff.transform, 0.4, 0.4, 1)
-	transformhelper.setLocalScale(arg_17_0._txtGoodBuff.transform, 0.4, 0.4, 1)
-	transformhelper.setLocalScale(arg_17_0._txtBadCount.transform, 0.4, 0.4, 1)
-	transformhelper.setLocalScale(arg_17_0._txtGoodCount.transform, 0.4, 0.4, 1)
+	gohelper.setActive(arg_18_0.bgeffect, false)
+	gohelper.setActive(arg_18_0.buffquan, false)
+	gohelper.setActive(arg_18_0.bufffinish, false)
+	gohelper.setActive(arg_18_0.buffdot, false)
+	transformhelper.setLocalScale(arg_18_0._txtBadBuff.transform, 0.4, 0.4, 1)
+	transformhelper.setLocalScale(arg_18_0._txtGoodBuff.transform, 0.4, 0.4, 1)
+	transformhelper.setLocalScale(arg_18_0._txtBadCount.transform, 0.4, 0.4, 1)
+	transformhelper.setLocalScale(arg_18_0._txtGoodCount.transform, 0.4, 0.4, 1)
 end
 
-function var_0_0.onDestroy(arg_18_0)
-	arg_18_0._imgIcon = nil
-	arg_18_0._callback = nil
-	arg_18_0._callbackObj = nil
+function var_0_0.onDestroy(arg_19_0)
+	arg_19_0._imgIcon = nil
+	arg_19_0._callback = nil
+	arg_19_0._callbackObj = nil
 
-	TaskDispatcher.cancelTask(arg_18_0._hidePoisoningEffect, arg_18_0)
-	TaskDispatcher.cancelTask(arg_18_0.closeAni, arg_18_0)
+	TaskDispatcher.cancelTask(arg_19_0._hidePoisoningEffect, arg_19_0)
+	TaskDispatcher.cancelTask(arg_19_0.closeAni, arg_19_0)
 end
 
 return var_0_0

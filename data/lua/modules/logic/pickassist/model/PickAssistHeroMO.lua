@@ -74,6 +74,10 @@ local function var_0_1(arg_1_0, arg_1_1)
 
 	var_1_10.destinyStoneMo:refreshMo(arg_1_0.destinyRank, arg_1_0.destinyLevel, arg_1_0.destinyStone, arg_1_0.destinyStoneUnlock)
 
+	var_1_10.extraMo = var_1_10.extraMo or CharacterExtraMO.New(var_1_10)
+
+	var_1_10.extraMo:refreshMo(arg_1_0.extraStr)
+
 	return var_1_10
 end
 
@@ -111,6 +115,7 @@ function var_0_0.setHeroInfo(arg_3_0, arg_3_1)
 	arg_3_0.destinyRank = arg_3_1.destinyRank
 	arg_3_0.destinyLevel = arg_3_1.destinyLevel
 	arg_3_0.destinyStone = arg_3_1.destinyStone
+	arg_3_0.extraStr = arg_3_1.extraStr
 	arg_3_0.style = arg_3_1.style
 end
 

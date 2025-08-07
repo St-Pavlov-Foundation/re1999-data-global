@@ -38,74 +38,80 @@ function var_0_0._initFrame(arg_5_0)
 	var_5_0.material = arg_5_0._frameBgMaterial
 end
 
-function var_0_0.loadPhotoFrameBg(arg_6_0)
-	local var_6_0 = MultiAbLoader.New()
+function var_0_0.getFramePath(arg_6_0)
+	local var_6_0 = 0
+	local var_6_1 = lua_scene_switch.configDict[arg_6_0].resName
 
-	arg_6_0._photoFrameBgLoader = var_6_0
+	return (string.format("scenes/dynamic/%s/lightmaps/%s_back_a_%s.tga", var_6_1, string.gsub(var_6_1, "_zjm_a", ""), var_6_0))
+end
 
-	local var_6_1 = 0
-	local var_6_2 = string.format("scenes/dynamic/m_s01_zjm_a/lightmaps/m_s01_back_a_%s.tga", var_6_1)
+function var_0_0.loadPhotoFrameBg(arg_7_0)
+	local var_7_0 = MultiAbLoader.New()
 
-	var_6_0:addPath(var_6_2)
-	var_6_0:startLoad(function()
-		local var_7_0 = var_6_0:getAssetItem(var_6_2):GetResource(var_6_2)
+	arg_7_0._photoFrameBgLoader = var_7_0
 
-		arg_6_0._frameBgMaterial:SetTexture("_MainTex", var_7_0)
-		gohelper.setActive(arg_6_0._frameBg, true)
+	local var_7_1 = var_0_0.getFramePath(arg_7_0._sceneId)
+
+	var_7_0:addPath(var_7_1)
+	var_7_0:startLoad(function()
+		local var_8_0 = var_7_0:getAssetItem(var_7_1):GetResource(var_7_1)
+
+		arg_7_0._frameBgMaterial:SetTexture("_MainTex", var_8_0)
+		gohelper.setActive(arg_7_0._frameBg, true)
 	end)
 end
 
-function var_0_0.getFrameColor(arg_8_0, arg_8_1)
-	local var_8_0
-	local var_8_1 = MainSceneSwitchConfig.instance:getSceneEffect(arg_8_0, WeatherEnum.EffectTag.Frame)
+function var_0_0.getFrameColor(arg_9_0, arg_9_1)
+	local var_9_0
+	local var_9_1 = MainSceneSwitchConfig.instance:getSceneEffect(arg_9_0, WeatherEnum.EffectTag.Frame)
 
-	if var_8_1 then
-		local var_8_2 = var_8_1["lightColor" .. arg_8_1]
+	if var_9_1 then
+		local var_9_2 = var_9_1["lightColor" .. arg_9_1]
 
-		var_8_0 = {
-			var_8_2[1] / 255,
-			var_8_2[2] / 255,
-			var_8_2[3] / 255,
-			var_8_2[4] / 255
+		var_9_0 = {
+			var_9_2[1] / 255,
+			var_9_2[2] / 255,
+			var_9_2[3] / 255,
+			var_9_2[4] / 255
 		}
 	end
 
-	var_8_0 = var_8_0 or WeatherEnum.FrameTintColor[arg_8_1]
+	var_9_0 = var_9_0 or WeatherEnum.FrameTintColor[arg_9_1]
 
-	return Color.New(var_8_0[1], var_8_0[2], var_8_0[3], var_8_0[4])
+	return Color.New(var_9_0[1], var_9_0[2], var_9_0[3], var_9_0[4])
 end
 
-function var_0_0.onRoleBlend(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
-	if not arg_9_0._targetFrameTintColor then
-		local var_9_0 = arg_9_1:getCurLightMode()
-		local var_9_1 = arg_9_1:getPrevLightMode() or var_9_0
+function var_0_0.onRoleBlend(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
+	if not arg_10_0._targetFrameTintColor then
+		local var_10_0 = arg_10_1:getCurLightMode()
+		local var_10_1 = arg_10_1:getPrevLightMode() or var_10_0
 
-		if not var_9_0 then
+		if not var_10_0 then
 			return
 		end
 
-		arg_9_0._targetFrameTintColor = var_0_0.getFrameColor(arg_9_0._sceneId, var_9_0)
-		arg_9_0._srcFrameTintColor = var_0_0.getFrameColor(arg_9_0._sceneId, var_9_1)
+		arg_10_0._targetFrameTintColor = var_0_0.getFrameColor(arg_10_0._sceneId, var_10_0)
+		arg_10_0._srcFrameTintColor = var_0_0.getFrameColor(arg_10_0._sceneId, var_10_1)
 
-		arg_9_0._frameBgMaterial:EnableKeyword("_COLORGRADING_ON")
+		arg_10_0._frameBgMaterial:EnableKeyword("_COLORGRADING_ON")
 	end
 
-	arg_9_0._frameBgMaterial:SetColor(arg_9_0._TintColorId, arg_9_1:lerpColorRGBA(arg_9_0._srcFrameTintColor, arg_9_0._targetFrameTintColor, arg_9_2))
+	arg_10_0._frameBgMaterial:SetColor(arg_10_0._TintColorId, arg_10_1:lerpColorRGBA(arg_10_0._srcFrameTintColor, arg_10_0._targetFrameTintColor, arg_10_2))
 
-	if arg_9_3 then
-		arg_9_0._targetFrameTintColor = nil
+	if arg_10_3 then
+		arg_10_0._targetFrameTintColor = nil
 
-		if arg_9_1:getCurLightMode() == 1 then
-			arg_9_0._frameBgMaterial:DisableKeyword("_COLORGRADING_ON")
+		if arg_10_1:getCurLightMode() == 1 then
+			arg_10_0._frameBgMaterial:DisableKeyword("_COLORGRADING_ON")
 		end
 	end
 end
 
-function var_0_0.onSceneClose(arg_10_0)
-	if arg_10_0._photoFrameBgLoader then
-		arg_10_0._photoFrameBgLoader:dispose()
+function var_0_0.onSceneClose(arg_11_0)
+	if arg_11_0._photoFrameBgLoader then
+		arg_11_0._photoFrameBgLoader:dispose()
 
-		arg_10_0._photoFrameBgLoader = nil
+		arg_11_0._photoFrameBgLoader = nil
 	end
 end
 

@@ -100,7 +100,7 @@ function var_0_0._onClick(arg_10_0)
 
 		CurrencyJumpHandler.JumpByCurrency(var_10_3)
 	elseif var_10_2.jumpFunc then
-		var_10_2.jumpFunc()
+		var_10_2.jumpFunc(var_10_2.type, var_10_2.id)
 	end
 end
 
@@ -196,34 +196,37 @@ function var_0_0._onCurrencyChange(arg_16_0)
 
 		if var_16_3 then
 			local var_16_4 = false
+			local var_16_5 = true
 
 			if type(var_16_3) == "number" then
-				local var_16_5 = var_16_3
-				local var_16_6 = CurrencyModel.instance:getCurrency(var_16_5)
-				local var_16_7 = CurrencyConfig.instance:getCurrencyCo(var_16_5)
-				local var_16_8 = var_16_6 and var_16_6.quantity or 0
+				local var_16_6 = var_16_3
+				local var_16_7 = CurrencyModel.instance:getCurrency(var_16_6)
+				local var_16_8 = CurrencyConfig.instance:getCurrencyCo(var_16_6)
+				local var_16_9 = var_16_7 and var_16_7.quantity or 0
 
-				if arg_16_0._minusItemDict and arg_16_0._minusItemDict[var_16_5] then
-					var_16_8 = var_16_8 - arg_16_0._minusItemDict[var_16_5]
+				if arg_16_0._minusItemDict and arg_16_0._minusItemDict[var_16_6] then
+					var_16_9 = var_16_9 - arg_16_0._minusItemDict[var_16_6]
 				end
 
 				if arg_16_0.showMaxLimit then
-					var_16_2.txt.text = string.format("%s/%s", GameUtil.numberDisplay(var_16_8), GameUtil.numberDisplay(var_16_7.maxLimit))
+					var_16_2.txt.text = string.format("%s/%s", GameUtil.numberDisplay(var_16_9), GameUtil.numberDisplay(var_16_8.maxLimit))
 				else
-					var_16_2.txt.text = GameUtil.numberDisplay(var_16_8)
+					var_16_2.txt.text = GameUtil.numberDisplay(var_16_9)
 				end
 
 				var_16_2.go:SetActive(true)
 
-				local var_16_9 = var_16_7.icon
+				local var_16_10 = var_16_8.icon
 
-				UISpriteSetMgr.instance:setCurrencyItemSprite(var_16_2.image, var_16_9 .. "_1")
+				UISpriteSetMgr.instance:setCurrencyItemSprite(var_16_2.image, var_16_10 .. "_1")
 
 				if arg_16_0:isNeedShieldAddBtn() then
-					gohelper.setActive(var_16_2.btn.gameObject, false)
+					var_16_5 = false
+
+					var_16_2.btn.gameObject:SetActive(false)
 				end
 
-				if var_16_5 == CurrencyEnum.CurrencyType.Power then
+				if var_16_6 == CurrencyEnum.CurrencyType.Power then
 					arg_16_0.powerItemObj = var_16_2
 
 					arg_16_0:_onRefreshDeadline()
@@ -231,40 +234,40 @@ function var_0_0._onCurrencyChange(arg_16_0)
 
 				var_16_4 = false
 			else
-				local var_16_10 = var_16_3.type
-				local var_16_11 = var_16_3.id
-				local var_16_12 = var_16_3.isIcon
-				local var_16_13 = var_16_3.quantity or ItemModel.instance:getItemQuantity(var_16_10, var_16_11)
+				local var_16_11 = var_16_3.type
+				local var_16_12 = var_16_3.id
+				local var_16_13 = var_16_3.isIcon
+				local var_16_14 = var_16_3.quantity or ItemModel.instance:getItemQuantity(var_16_11, var_16_12)
 
-				var_16_2.txt.text = GameUtil.numberDisplay(var_16_13)
+				var_16_2.txt.text = GameUtil.numberDisplay(var_16_14)
 
 				var_16_2.go:SetActive(true)
 
 				if var_16_3.isCurrencySprite then
-					local var_16_14 = var_16_3.icon or var_16_11
+					local var_16_15 = var_16_3.icon or var_16_12
 
-					UISpriteSetMgr.instance:setCurrencyItemSprite(var_16_2.image, tostring(var_16_14) .. "_1")
+					UISpriteSetMgr.instance:setCurrencyItemSprite(var_16_2.image, tostring(var_16_15) .. "_1")
 				else
-					local var_16_15 = var_16_3.icon
+					local var_16_16 = var_16_3.icon
 
-					if not var_16_15 then
-						if var_16_12 then
-							var_16_15 = ItemModel.instance:getItemSmallIcon(var_16_11)
+					if not var_16_16 then
+						if var_16_13 then
+							var_16_16 = ItemModel.instance:getItemSmallIcon(var_16_12)
 						else
-							local var_16_16, var_16_17 = ItemModel.instance:getItemConfigAndIcon(var_16_10, var_16_11, var_16_12)
+							local var_16_17, var_16_18 = ItemModel.instance:getItemConfigAndIcon(var_16_11, var_16_12, var_16_13)
 
-							var_16_15 = var_16_17
+							var_16_16 = var_16_18
 						end
 					end
 
-					var_16_2.simage:LoadImage(var_16_15)
+					var_16_2.simage:LoadImage(var_16_16)
 				end
 
-				if arg_16_0:isNeedShieldAddBtn() then
-					gohelper.setActive(var_16_2.btn.gameObject, false)
+				if arg_16_0:isNeedShieldAddBtn() or var_16_3.isHideAddBtn == true then
+					var_16_5 = false
 				end
 
-				if var_16_10 == MaterialEnum.MaterialType.PowerPotion then
+				if var_16_11 == MaterialEnum.MaterialType.PowerPotion then
 					arg_16_0.powerItemObj = var_16_2
 
 					arg_16_0:_onRefreshDeadline()
@@ -275,6 +278,7 @@ function var_0_0._onCurrencyChange(arg_16_0)
 
 			gohelper.setActive(var_16_2.image.gameObject, not var_16_4)
 			gohelper.setActive(var_16_2.simage.gameObject, var_16_4)
+			gohelper.setActive(var_16_2.btn, var_16_5)
 		else
 			var_16_2.go:SetActive(false)
 		end
@@ -354,6 +358,7 @@ function var_0_0.isNeedShieldAddBtn(arg_18_0)
 			[ViewName.CharacterTalentLevelUpView] = 1,
 			[ViewName.RoomStoreGoodsTipView] = 1,
 			[ViewName.PackageStoreGoodsView] = 1,
+			[ViewName.StoreLinkGiftGoodsView] = 1,
 			[ViewName.StoreSkinGoodsView] = 1,
 			[ViewName.DecorateStoreGoodsView] = 1,
 			[ViewName.VersionActivityStoreView] = 1,
@@ -363,7 +368,8 @@ function var_0_0.isNeedShieldAddBtn(arg_18_0)
 			[ViewName.V1a5BuildingView] = 1,
 			[ViewName.V1a5BuildingDetailView] = 1,
 			[ViewName.PowerActChangeView] = 1,
-			[ViewName.SummonStoreGoodsView] = 1
+			[ViewName.SummonStoreGoodsView] = 1,
+			[ViewName.VersionActivity1_6NormalStoreGoodsView] = 1
 		}
 	end
 

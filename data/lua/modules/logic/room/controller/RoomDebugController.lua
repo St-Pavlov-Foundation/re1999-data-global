@@ -837,11 +837,10 @@ end
 
 function var_0_0.resetPackageJson(arg_64_0, arg_64_1, arg_64_2)
 	local var_64_0 = {
-		infos = arg_64_0:getEmptyMapInfo(true, arg_64_1).infos
+		infos = arg_64_0:getEmptyMapInfo(true, arg_64_1).infos,
+		buildingInfos = {},
+		packageName = arg_64_2
 	}
-
-	var_64_0.buildingInfos = nil
-	var_64_0.packageName = arg_64_2
 
 	arg_64_0:savePackageMapParam(arg_64_1, var_64_0)
 end
@@ -896,15 +895,17 @@ function var_0_0.deletePackageJson(arg_67_0, arg_67_1)
 
 		arg_67_0:_clearPackageInfo(var_68_0)
 
-		local var_68_1 = arg_67_0:_jsonEncode(var_68_0)
+		local var_68_1, var_68_2 = arg_67_0:_getAllInfo(var_68_0)
+		local var_68_3 = arg_67_0:_jsonEncode(var_68_0)
 
 		if not SLFramework.FrameworkSettings.IsEditor then
 			return
 		end
 
-		local var_68_2 = System.IO.Path.Combine(SLFramework.FrameworkSettings.AssetRootDir, RoomEnum.BlockPackageMapPath)
+		local var_68_4 = arg_67_0:_replaceInfoStr(var_68_3, var_68_1, var_68_2)
+		local var_68_5 = System.IO.Path.Combine(SLFramework.FrameworkSettings.AssetRootDir, RoomEnum.BlockPackageMapPath)
 
-		SLFramework.FileHelper.WriteTextToPath(var_68_2, var_68_1)
+		SLFramework.FileHelper.WriteTextToPath(var_68_5, var_68_4)
 		arg_67_0:savePackageDataParam(arg_68_0)
 		arg_67_0:assetDatabaseRefresh()
 		logNormal("导出完成 记得提交前后端配置文件")
@@ -930,165 +931,263 @@ function var_0_0.renamePackageJson(arg_69_0, arg_69_1, arg_69_2)
 	end)
 end
 
-function var_0_0.savePackageMapParam(arg_71_0, arg_71_1, arg_71_2, arg_71_3)
+function var_0_0.changePackageMapIdJson(arg_71_0, arg_71_1, arg_71_2)
 	arg_71_0:getDebugPackageInfo(function(arg_72_0)
-		local var_72_0 = false
+		local var_72_0
 
 		for iter_72_0, iter_72_1 in ipairs(arg_72_0) do
 			if iter_72_1.packageMapId == arg_71_1 then
-				iter_72_1.infos = arg_71_2.infos
-				iter_72_1.buildingInfos = arg_71_2.buildingInfos
-				iter_72_1.packageName = arg_71_2.packageName
-				var_72_0 = true
+				iter_72_1.packageMapId = arg_71_2
+				var_72_0 = iter_72_1
+
+				local var_72_1 = arg_71_0:_getNextBlockId(true, arg_71_2)
+
+				for iter_72_2, iter_72_3 in ipairs(var_72_0.infos) do
+					iter_72_3.blockId = var_72_1
+					var_72_1 = var_72_1 + 1
+				end
 
 				break
 			end
 		end
 
-		if not var_72_0 then
-			table.insert(arg_72_0, {
-				packageMapId = arg_71_1,
-				infos = arg_71_2.infos,
-				buildingInfos = arg_71_2.buildingInfos,
-				packageName = arg_71_2.packageName
+		if var_72_0 then
+			arg_71_0:savePackageMapParam(arg_71_2, var_72_0)
+		end
+	end)
+end
+
+function var_0_0.savePackageMapParam(arg_73_0, arg_73_1, arg_73_2, arg_73_3)
+	arg_73_0:getDebugPackageInfo(function(arg_74_0)
+		local var_74_0 = false
+
+		for iter_74_0, iter_74_1 in ipairs(arg_74_0) do
+			if iter_74_1.packageMapId == arg_73_1 then
+				iter_74_1.infos = arg_73_2.infos
+				iter_74_1.buildingInfos = arg_73_2.buildingInfos
+				iter_74_1.packageName = arg_73_2.packageName
+				var_74_0 = true
+
+				break
+			end
+		end
+
+		if not var_74_0 then
+			table.insert(arg_74_0, {
+				packageMapId = arg_73_1,
+				infos = arg_73_2.infos,
+				buildingInfos = arg_73_2.buildingInfos,
+				packageName = arg_73_2.packageName
 			})
 		end
 
-		arg_71_0:_refreshPackageOrder(arg_72_0)
+		arg_73_0:_refreshPackageOrder(arg_74_0)
 
-		arg_71_0._tempPackageConfig = arg_72_0
+		arg_73_0._tempPackageConfig = arg_74_0
 
-		if arg_71_3 then
+		if arg_73_3 then
 			return
 		end
 
-		local var_72_1 = LuaUtil.deepCopyNoMeta(arg_72_0)
+		local var_74_1 = LuaUtil.deepCopyNoMeta(arg_74_0)
 
-		arg_71_0:_clearPackageInfo(var_72_1)
+		arg_73_0:_clearPackageInfo(var_74_1)
 
-		local var_72_2 = arg_71_0:_jsonEncode(var_72_1)
+		local var_74_2, var_74_3 = arg_73_0:_getAllInfo(var_74_1)
+		local var_74_4 = arg_73_0:_jsonEncode(var_74_1)
 
 		if not SLFramework.FrameworkSettings.IsEditor then
 			return
 		end
 
-		local var_72_3 = System.IO.Path.Combine(SLFramework.FrameworkSettings.AssetRootDir, RoomEnum.BlockPackageMapPath)
+		local var_74_5 = arg_73_0:_replaceInfoStr(var_74_4, var_74_2, var_74_3)
+		local var_74_6 = System.IO.Path.Combine(SLFramework.FrameworkSettings.AssetRootDir, RoomEnum.BlockPackageMapPath)
 
-		SLFramework.FileHelper.WriteTextToPath(var_72_3, var_72_2)
-		arg_71_0:savePackageDataParam(arg_72_0)
-		arg_71_0:assetDatabaseRefresh()
+		SLFramework.FileHelper.WriteTextToPath(var_74_6, var_74_5)
+		arg_73_0:savePackageDataParam(arg_74_0)
+		arg_73_0:assetDatabaseRefresh()
 		logNormal("导出完成 记得提交前后端配置文件")
 	end)
 end
 
-function var_0_0._clearPackageInfo(arg_73_0, arg_73_1)
-	for iter_73_0, iter_73_1 in ipairs(arg_73_1) do
-		for iter_73_2, iter_73_3 in ipairs(iter_73_1.infos) do
-			iter_73_3.packageId = nil
-			iter_73_3.packageOrder = nil
+function var_0_0._getAllInfo(arg_75_0, arg_75_1)
+	local var_75_0 = {}
+	local var_75_1 = {}
+
+	for iter_75_0, iter_75_1 in ipairs(arg_75_1) do
+		local var_75_2 = {}
+
+		for iter_75_2, iter_75_3 in ipairs(iter_75_1.infos) do
+			var_75_2[iter_75_2] = arg_75_0:_jsonEncodeOrdered(iter_75_3, {
+				"defineId",
+				"mainRes",
+				"x",
+				"y",
+				"rotate",
+				"blockId"
+			})
 		end
 
-		table.sort(iter_73_1.infos, function(arg_74_0, arg_74_1)
-			if arg_74_0.blockId ~= arg_74_1.blockId then
-				return arg_74_0.blockId < arg_74_1.blockId
+		var_75_0[iter_75_0] = table.concat(var_75_2, ",\n")
+
+		local var_75_3 = {}
+
+		if iter_75_1.buildingInfos then
+			for iter_75_4, iter_75_5 in ipairs(iter_75_1.buildingInfos) do
+				var_75_3[iter_75_4] = arg_75_0:_jsonEncodeOrdered(iter_75_5, {
+					"uid",
+					"defineId",
+					"use",
+					"x",
+					"y",
+					"rotate",
+					"resAreaDirection"
+				})
+			end
+		end
+
+		var_75_1[iter_75_0] = table.concat(var_75_3, ",\n")
+	end
+
+	return var_75_0, var_75_1
+end
+
+function var_0_0._replaceInfoStr(arg_76_0, arg_76_1, arg_76_2, arg_76_3)
+	local var_76_0 = arg_76_1
+
+	if arg_76_2 then
+		local var_76_1 = 0
+
+		var_76_0 = var_76_0:gsub("\"infos\":%b[]", function()
+			var_76_1 = var_76_1 + 1
+
+			return "\"infos\":[" .. arg_76_2[var_76_1] .. "]"
+		end)
+	end
+
+	if arg_76_3 then
+		local var_76_2 = 0
+
+		var_76_0 = var_76_0:gsub("\"buildingInfos\":%b{}", "\"buildingInfos\":[]")
+		var_76_0 = var_76_0:gsub("\"buildingInfos\":%b[]", function()
+			var_76_2 = var_76_2 + 1
+
+			return "\"buildingInfos\":[" .. arg_76_3[var_76_2] .. "]"
+		end)
+		var_76_0 = var_76_0:gsub("\"buildingInfos\":%[%]", "\"buildingInfos\":{}")
+	end
+
+	return var_76_0
+end
+
+function var_0_0._clearPackageInfo(arg_79_0, arg_79_1)
+	for iter_79_0, iter_79_1 in ipairs(arg_79_1) do
+		for iter_79_2, iter_79_3 in ipairs(iter_79_1.infos) do
+			iter_79_3.packageId = nil
+			iter_79_3.packageOrder = nil
+		end
+
+		table.sort(iter_79_1.infos, function(arg_80_0, arg_80_1)
+			if arg_80_0.blockId ~= arg_80_1.blockId then
+				return arg_80_0.blockId < arg_80_1.blockId
 			end
 		end)
 	end
 
-	table.sort(arg_73_1, function(arg_75_0, arg_75_1)
-		if arg_75_0.packageMapId ~= arg_75_1.packageMapId then
-			return arg_75_0.packageMapId < arg_75_1.packageMapId
+	table.sort(arg_79_1, function(arg_81_0, arg_81_1)
+		if arg_81_0.packageMapId ~= arg_81_1.packageMapId then
+			return arg_81_0.packageMapId < arg_81_1.packageMapId
 		end
 	end)
 end
 
-function var_0_0._refreshPackageOrder(arg_76_0, arg_76_1)
-	local var_76_0 = {}
+function var_0_0._refreshPackageOrder(arg_82_0, arg_82_1)
+	local var_82_0 = {}
 
-	for iter_76_0, iter_76_1 in ipairs(arg_76_1) do
-		for iter_76_2, iter_76_3 in ipairs(iter_76_1.infos) do
-			if iter_76_3.packageId and iter_76_3.packageId > 0 then
-				var_76_0[iter_76_3.packageId] = var_76_0[iter_76_3.packageId] or {}
-				var_76_0[iter_76_3.packageId][iter_76_3.mainRes] = var_76_0[iter_76_3.packageId][iter_76_3.mainRes] or {}
+	for iter_82_0, iter_82_1 in ipairs(arg_82_1) do
+		for iter_82_2, iter_82_3 in ipairs(iter_82_1.infos) do
+			if iter_82_3.packageId and iter_82_3.packageId > 0 then
+				var_82_0[iter_82_3.packageId] = var_82_0[iter_82_3.packageId] or {}
+				var_82_0[iter_82_3.packageId][iter_82_3.mainRes] = var_82_0[iter_82_3.packageId][iter_82_3.mainRes] or {}
 
-				table.insert(var_76_0[iter_76_3.packageId][iter_76_3.mainRes], iter_76_3)
+				table.insert(var_82_0[iter_82_3.packageId][iter_82_3.mainRes], iter_82_3)
 			end
 		end
 	end
 
-	for iter_76_4, iter_76_5 in pairs(var_76_0) do
-		for iter_76_6, iter_76_7 in pairs(iter_76_5) do
-			table.sort(iter_76_7, function(arg_77_0, arg_77_1)
-				return arg_77_0.packageOrder < arg_77_1.packageOrder
+	for iter_82_4, iter_82_5 in pairs(var_82_0) do
+		for iter_82_6, iter_82_7 in pairs(iter_82_5) do
+			table.sort(iter_82_7, function(arg_83_0, arg_83_1)
+				return arg_83_0.packageOrder < arg_83_1.packageOrder
 			end)
 		end
 	end
 
-	for iter_76_8, iter_76_9 in pairs(var_76_0) do
-		for iter_76_10, iter_76_11 in pairs(iter_76_9) do
-			for iter_76_12, iter_76_13 in ipairs(iter_76_11) do
-				iter_76_13.packageOrder = iter_76_12
+	for iter_82_8, iter_82_9 in pairs(var_82_0) do
+		for iter_82_10, iter_82_11 in pairs(iter_82_9) do
+			for iter_82_12, iter_82_13 in ipairs(iter_82_11) do
+				iter_82_13.packageOrder = iter_82_12
 
-				local var_76_1 = RoomMapBlockModel.instance:getFullBlockMOById(iter_76_13.blockId)
+				local var_82_1 = RoomMapBlockModel.instance:getFullBlockMOById(iter_82_13.blockId)
 
-				if var_76_1 then
-					var_76_1.packageOrder = iter_76_13.packageOrder
+				if var_82_1 then
+					var_82_1.packageOrder = iter_82_13.packageOrder
 				end
 			end
 		end
 	end
 end
 
-function var_0_0.savePackageDataParam(arg_78_0, arg_78_1)
-	local var_78_0 = {}
+function var_0_0.savePackageDataParam(arg_84_0, arg_84_1)
+	local var_84_0 = {}
 
-	for iter_78_0, iter_78_1 in ipairs(arg_78_1) do
-		for iter_78_2, iter_78_3 in ipairs(iter_78_1.infos) do
-			if iter_78_3.packageId and iter_78_3.packageId ~= 0 then
-				local var_78_1
+	for iter_84_0, iter_84_1 in ipairs(arg_84_1) do
+		for iter_84_2, iter_84_3 in ipairs(iter_84_1.infos) do
+			if iter_84_3.packageId and iter_84_3.packageId ~= 0 then
+				local var_84_1
 
-				for iter_78_4, iter_78_5 in ipairs(var_78_0) do
-					if iter_78_5.id == iter_78_3.packageId then
-						var_78_1 = iter_78_5
+				for iter_84_4, iter_84_5 in ipairs(var_84_0) do
+					if iter_84_5.id == iter_84_3.packageId then
+						var_84_1 = iter_84_5
 
 						break
 					end
 				end
 
-				if not var_78_1 then
-					var_78_1 = {
-						id = iter_78_3.packageId,
+				if not var_84_1 then
+					var_84_1 = {
+						id = iter_84_3.packageId,
 						infos = {}
 					}
 
-					JsonUtil.markAsArray(var_78_1.infos)
-					table.insert(var_78_0, var_78_1)
+					JsonUtil.markAsArray(var_84_1.infos)
+					table.insert(var_84_0, var_84_1)
 				end
 
-				if iter_78_3.mainRes and iter_78_3.mainRes >= 0 then
-					table.insert(var_78_1.infos, {
-						blockId = iter_78_3.blockId,
-						defineId = iter_78_3.defineId,
-						mainRes = iter_78_3.mainRes,
-						packageOrder = iter_78_3.packageOrder,
-						ownType = var_0_1[iter_78_3.packageId] or 0
+				if iter_84_3.mainRes and iter_84_3.mainRes >= 0 then
+					table.insert(var_84_1.infos, {
+						blockId = iter_84_3.blockId,
+						defineId = iter_84_3.defineId,
+						mainRes = iter_84_3.mainRes,
+						packageOrder = iter_84_3.packageOrder,
+						ownType = var_0_1[iter_84_3.packageId] or 0
 					})
 				end
 			end
 		end
 	end
 
-	for iter_78_6, iter_78_7 in ipairs(var_78_0) do
-		table.sort(iter_78_7.infos, function(arg_79_0, arg_79_1)
-			if arg_79_0.packageOrder ~= arg_79_1.packageOrder then
-				return arg_79_0.packageOrder < arg_79_1.packageOrder
+	for iter_84_6, iter_84_7 in ipairs(var_84_0) do
+		table.sort(iter_84_7.infos, function(arg_85_0, arg_85_1)
+			if arg_85_0.packageOrder ~= arg_85_1.packageOrder then
+				return arg_85_0.packageOrder < arg_85_1.packageOrder
 			end
 
-			return arg_79_0.blockId < arg_79_1.blockId
+			return arg_85_0.blockId < arg_85_1.blockId
 		end)
 
-		for iter_78_8, iter_78_9 in ipairs(iter_78_7.infos) do
-			iter_78_9.packageOrder = nil
+		for iter_84_8, iter_84_9 in ipairs(iter_84_7.infos) do
+			iter_84_9.packageOrder = nil
 		end
 	end
 
@@ -1096,65 +1195,65 @@ function var_0_0.savePackageDataParam(arg_78_0, arg_78_1)
 		return
 	end
 
-	JsonUtil.markAsArray(var_78_0)
+	JsonUtil.markAsArray(var_84_0)
 
-	local var_78_2 = arg_78_0:_jsonEncode(var_78_0)
-	local var_78_3 = arg_78_0:_wrapClientConfigParam(var_78_0, "block_package_data")
-	local var_78_4 = System.IO.Path.Combine(UnityEngine.Application.dataPath, "../../../projm-server/projM-server-config/resources/T_block_package_data.json")
-	local var_78_5 = System.IO.Path.Combine(SLFramework.FrameworkSettings.AssetRootDir, RoomEnum.BlockPackageDataPath)
+	local var_84_2 = arg_84_0:_jsonEncode(var_84_0)
+	local var_84_3 = arg_84_0:_wrapClientConfigParam(var_84_0, "block_package_data")
+	local var_84_4 = System.IO.Path.Combine(UnityEngine.Application.dataPath, "../../../projm-server/projM-server-config/resources/T_block_package_data.json")
+	local var_84_5 = System.IO.Path.Combine(SLFramework.FrameworkSettings.AssetRootDir, RoomEnum.BlockPackageDataPath)
 
-	SLFramework.FileHelper.WriteTextToPath(var_78_4, var_78_2)
-	SLFramework.FileHelper.WriteTextToPath(var_78_5, var_78_3)
+	SLFramework.FileHelper.WriteTextToPath(var_84_4, var_84_2)
+	SLFramework.FileHelper.WriteTextToPath(var_84_5, var_84_3)
 
 	if GameSceneMgr.instance:getCurSceneType() == SceneType.Room then
-		local var_78_6 = GameSceneMgr.instance:getCurScene()
-		local var_78_7 = System.IO.Path.Combine(UnityEngine.Application.dataPath, "../../../projm-server/projM-server-config/resources/T_block.json")
+		local var_84_6 = GameSceneMgr.instance:getCurScene()
+		local var_84_7 = System.IO.Path.Combine(UnityEngine.Application.dataPath, "../../../projm-server/projM-server-config/resources/T_block.json")
 
-		loadAbAsset(RoomEnum.BlockPath, false, function(arg_80_0)
-			if arg_80_0.IsLoadSuccess then
-				local var_80_0 = arg_80_0:GetResource(RoomEnum.BlockPath)
-				local var_80_1 = cjson.decode(var_80_0.text)[2]
-				local var_80_2 = {}
+		loadAbAsset(RoomEnum.BlockPath, false, function(arg_86_0)
+			if arg_86_0.IsLoadSuccess then
+				local var_86_0 = arg_86_0:GetResource(RoomEnum.BlockPath)
+				local var_86_1 = cjson.decode(var_86_0.text)[2]
+				local var_86_2 = {}
 
-				for iter_80_0, iter_80_1 in ipairs(var_80_1) do
-					table.insert(var_80_2, {
-						defineId = iter_80_1.defineId,
-						resourceIds = iter_80_1.resourceIds,
-						category = iter_80_1.category,
-						prefabPath = iter_80_1.prefabPath
+				for iter_86_0, iter_86_1 in ipairs(var_86_1) do
+					table.insert(var_86_2, {
+						defineId = iter_86_1.defineId,
+						resourceIds = iter_86_1.resourceIds,
+						category = iter_86_1.category,
+						prefabPath = iter_86_1.prefabPath
 					})
 				end
 
-				SLFramework.FileHelper.WriteTextToPath(var_78_7, arg_78_0:_jsonEncode(var_80_2))
+				SLFramework.FileHelper.WriteTextToPath(var_84_7, arg_84_0:_jsonEncode(var_86_2))
 			end
 		end)
 	end
 
-	arg_78_0:_saveBlockPrefabExcelData(var_78_0)
+	arg_84_0:_saveBlockPrefabExcelData(var_84_0)
 end
 
-function var_0_0._saveBlockPrefabExcelData(arg_81_0, arg_81_1)
-	local var_81_0 = "blockId resName packageId"
+function var_0_0._saveBlockPrefabExcelData(arg_87_0, arg_87_1)
+	local var_87_0 = "blockId resName packageId"
 
-	for iter_81_0, iter_81_1 in ipairs(arg_81_1) do
-		if var_0_1[iter_81_1.id] and iter_81_1.infos then
-			for iter_81_2, iter_81_3 in ipairs(iter_81_1.infos) do
-				local var_81_1 = RoomConfig.instance:getBlockDefineConfig(iter_81_3.defineId)
+	for iter_87_0, iter_87_1 in ipairs(arg_87_1) do
+		if var_0_1[iter_87_1.id] and iter_87_1.infos then
+			for iter_87_2, iter_87_3 in ipairs(iter_87_1.infos) do
+				local var_87_1 = RoomConfig.instance:getBlockDefineConfig(iter_87_3.defineId)
 
-				if var_81_1 then
-					var_81_0 = string.format("%s\n%s %s %s", var_81_0, iter_81_3.blockId, RoomHelper.getBlockPrefabName(var_81_1.prefabPath), iter_81_1.id)
+				if var_87_1 then
+					var_87_0 = string.format("%s\n%s %s %s", var_87_0, iter_87_3.blockId, RoomHelper.getBlockPrefabName(var_87_1.prefabPath), iter_87_1.id)
 				end
 			end
 		end
 	end
 
-	local var_81_2 = System.IO.Path.Combine(SLFramework.FrameworkSettings.AssetRootDir, "../../roomTempData/blockPrefabPath.txt")
+	local var_87_2 = System.IO.Path.Combine(SLFramework.FrameworkSettings.AssetRootDir, "../../roomTempData/blockPrefabPath.txt")
 
-	SLFramework.FileHelper.WriteTextToPath(var_81_2, var_81_0)
-	logNormal("生成excel格式独立地块的id和资源名字的数据,导入excel方式：数据->从文本/CSV。\n文件路径：" .. var_81_2)
+	SLFramework.FileHelper.WriteTextToPath(var_87_2, var_87_0)
+	logNormal("生成excel格式独立地块的id和资源名字的数据,导入excel方式：数据->从文本/CSV。\n文件路径：" .. var_87_2)
 end
 
-function var_0_0.assetDatabaseRefresh(arg_82_0)
+function var_0_0.assetDatabaseRefresh(arg_88_0)
 	if not SLFramework.FrameworkSettings.IsEditor then
 		return
 	end
@@ -1162,38 +1261,59 @@ function var_0_0.assetDatabaseRefresh(arg_82_0)
 	require("tolua.reflection")
 	tolua.loadassembly("UnityEditor")
 
-	local var_82_0 = tolua.gettypemethod(typeof("UnityEditor.AssetDatabase"), "Refresh", System.Array.CreateInstance(typeof("System.Type"), 0))
+	local var_88_0 = tolua.gettypemethod(typeof("UnityEditor.AssetDatabase"), "Refresh", System.Array.CreateInstance(typeof("System.Type"), 0))
 
-	var_82_0:Call()
-	var_82_0:Destroy()
+	var_88_0:Call()
+	var_88_0:Destroy()
 end
 
-function var_0_0.output(arg_83_0, arg_83_1)
+function var_0_0.output(arg_89_0, arg_89_1)
 	if RoomController.instance:isDebugInitMode() then
-		local var_83_0 = RoomModel.instance:getDebugParam()
+		local var_89_0 = RoomModel.instance:getDebugParam()
 
-		arg_83_0:outputInitJson(arg_83_1)
+		arg_89_0:outputInitJson(arg_89_1)
 	elseif RoomController.instance:isDebugPackageMode() then
-		local var_83_1 = RoomModel.instance:getDebugParam()
+		local var_89_1 = RoomModel.instance:getDebugParam()
 
-		arg_83_0:outputPackageJson(var_83_1.packageMapId, arg_83_1)
+		arg_89_0:outputPackageJson(var_89_1.packageMapId, arg_89_1)
 	end
 end
 
-function var_0_0._wrapClientConfigParam(arg_84_0, arg_84_1, arg_84_2)
-	local var_84_0 = {}
+function var_0_0._wrapClientConfigParam(arg_90_0, arg_90_1, arg_90_2)
+	local var_90_0 = {}
 
-	JsonUtil.markAsArray(var_84_0)
-	table.insert(var_84_0, arg_84_2)
-	table.insert(var_84_0, arg_84_1)
+	JsonUtil.markAsArray(var_90_0)
+	table.insert(var_90_0, arg_90_2)
+	table.insert(var_90_0, arg_90_1)
 
-	return arg_84_0:_jsonEncode(var_84_0)
+	return arg_90_0:_jsonEncode(var_90_0)
 end
 
-function var_0_0._jsonEncode(arg_85_0, arg_85_1)
-	local var_85_0 = JsonUtil.encode(arg_85_1)
+function var_0_0._jsonEncode(arg_91_0, arg_91_1)
+	local var_91_0 = JsonUtil.encode(arg_91_1)
 
-	return (string.gsub(var_85_0, "},{", "},\n{"))
+	return (string.gsub(var_91_0, "},{", "},\n{"))
+end
+
+function var_0_0._jsonEncodeOrdered(arg_92_0, arg_92_1, arg_92_2)
+	local var_92_0 = {}
+	local var_92_1 = {}
+
+	for iter_92_0, iter_92_1 in ipairs(arg_92_2) do
+		if arg_92_1[iter_92_1] ~= nil then
+			table.insert(var_92_0, string.format("%q:%s", iter_92_1, cjson.encode(arg_92_1[iter_92_1])))
+		end
+
+		var_92_1[iter_92_1] = true
+	end
+
+	for iter_92_2, iter_92_3 in pairs(arg_92_1) do
+		if not var_92_1[iter_92_2] then
+			logError(string.format("RoomDebugController:_jsonEncodeOrdered error, no specific key order, key:%s", iter_92_2))
+		end
+	end
+
+	return "{" .. table.concat(var_92_0, ",") .. "}"
 end
 
 var_0_0.instance = var_0_0.New()

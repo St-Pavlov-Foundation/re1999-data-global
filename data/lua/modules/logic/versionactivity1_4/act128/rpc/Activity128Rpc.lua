@@ -62,4 +62,21 @@ function var_0_0.onReceiveAct128GetTotalSingleRewardReply(arg_10_0, arg_10_1, ar
 	arg_10_0:_onReceiveAct128GetTotalSingleRewardReply(arg_10_1, arg_10_2)
 end
 
+function var_0_0.sendAct128SpFirstHalfSelectItemRequest(arg_11_0, arg_11_1, arg_11_2, arg_11_3, arg_11_4, arg_11_5)
+	local var_11_0 = Activity128Module_pb.Act128SpFirstHalfSelectItemRequest()
+
+	var_11_0.activityId = arg_11_1
+	var_11_0.bossId = arg_11_2
+
+	for iter_11_0, iter_11_1 in pairs(arg_11_3) do
+		var_11_0.itemTypeIds:append(iter_11_1)
+	end
+
+	return arg_11_0:sendMsg(var_11_0, arg_11_4, arg_11_5)
+end
+
+function var_0_0.onReceiveAct128SpFirstHalfSelectItemReply(arg_12_0, arg_12_1, arg_12_2)
+	arg_12_0:_onReceiveAct128SpFirstHalfSelectItemReply(arg_12_1, arg_12_2)
+end
+
 return var_0_0

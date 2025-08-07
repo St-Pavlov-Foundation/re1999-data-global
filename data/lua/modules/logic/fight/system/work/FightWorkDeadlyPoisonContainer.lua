@@ -31,7 +31,7 @@ function var_0_0.onStart(arg_1_0)
 				if var_1_4 > 0 then
 					local var_1_5 = var_1_3 and -var_1_4 or var_1_4
 
-					FightFloatMgr.instance:float(iter_1_2, arg_1_0:getFloatType(), var_1_5)
+					FightFloatMgr.instance:float(iter_1_2, arg_1_0:getFloatType(), var_1_5, nil, iter_1_5[3])
 
 					if var_1_2.nameUI then
 						var_1_2.nameUI:addHp(-var_1_4)
@@ -88,11 +88,16 @@ function var_0_0.addActEffectData(arg_3_0, arg_3_1)
 	if not var_3_4 then
 		var_3_4 = {
 			arg_3_1.effectNum,
-			var_3_3
+			var_3_3,
+			arg_3_1.effectNum1 == 1
 		}
 		var_3_1[var_3_2] = var_3_4
 	else
 		var_3_4[1] = var_3_4[1] + arg_3_1.effectNum
+
+		if arg_3_1.effectNum1 == 1 then
+			var_3_4[3] = true
+		end
 	end
 
 	arg_3_1:setDone()

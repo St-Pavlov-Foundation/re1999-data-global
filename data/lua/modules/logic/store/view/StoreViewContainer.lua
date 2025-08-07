@@ -263,8 +263,8 @@ function var_0_0.setCurrencyByParams(arg_6_0, arg_6_1)
 end
 
 function var_0_0.selectTabView(arg_7_0, arg_7_1, arg_7_2, arg_7_3, arg_7_4)
-	arg_7_0.jumpTabId = arg_7_1
-	arg_7_0.jumpGoodsId = arg_7_3
+	arg_7_0.viewParam.jumpTab = arg_7_1
+	arg_7_0.viewParam.jumpGoodsId = arg_7_3
 	arg_7_0._selectFirstTabId = arg_7_2
 
 	local var_7_0 = StoreConfig.instance:getTabConfig(arg_7_2)
@@ -332,20 +332,24 @@ function var_0_0.setRoomStoreAnimation(arg_14_0, arg_14_1)
 end
 
 function var_0_0.getJumpTabId(arg_15_0)
-	return arg_15_0.jumpTabId
+	return arg_15_0.viewParam.jumpTab
 end
 
 function var_0_0.getJumpGoodsId(arg_16_0)
-	local var_16_0 = arg_16_0.jumpGoodsId
+	local var_16_0 = arg_16_0.viewParam.jumpGoodsId
 
-	arg_16_0.jumpGoodsId = nil
+	arg_16_0.viewParam.jumpGoodsId = nil
 
 	return var_16_0
 end
 
-function var_0_0.setVisibleInternal(arg_17_0, arg_17_1)
-	var_0_0.super.setVisibleInternal(arg_17_0, arg_17_1)
-	StoreController.instance:dispatchEvent(StoreEvent.SetVisibleInternal, arg_17_1)
+function var_0_0.isJumpFocus(arg_17_0)
+	return arg_17_0.viewParam.isFocus
+end
+
+function var_0_0.setVisibleInternal(arg_18_0, arg_18_1)
+	var_0_0.super.setVisibleInternal(arg_18_0, arg_18_1)
+	StoreController.instance:dispatchEvent(StoreEvent.SetVisibleInternal, arg_18_1)
 end
 
 return var_0_0

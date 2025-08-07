@@ -414,8 +414,8 @@ function var_0_0.loadPhotoFrameBg(arg_33_0)
 
 	arg_33_0._photoFrameBgLoader = var_33_1
 
-	local var_33_2 = 0
-	local var_33_3 = string.format("scenes/dynamic/m_s01_zjm_a/lightmaps/m_s01_back_a_%s.tga", var_33_2)
+	local var_33_2 = MainSceneSwitchModel.instance:getCurSceneId()
+	local var_33_3 = WeatherFrameComp.getFramePath(var_33_2)
 
 	var_33_1:addPath(var_33_3)
 	var_33_1:startLoad(function()

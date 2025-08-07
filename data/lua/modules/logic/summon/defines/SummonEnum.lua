@@ -147,6 +147,7 @@ var_0_0.Type = {
 	Newbie = 1,
 	LuckyBag = 5,
 	MultiProbUp4 = 4,
+	CoBranding = 21,
 	ProbUp = 3,
 	DoubleSsrUp = 202,
 	Normal = 2
@@ -179,7 +180,8 @@ var_0_0.Type2PageIndex = {
 	var_0_0.TabContentIndex.CharProbUp,
 	var_0_0.TabContentIndex.CharProbUp,
 	[10] = var_0_0.TabContentIndex.EquipNormal,
-	[11] = var_0_0.TabContentIndex.EquipProbUp
+	[11] = var_0_0.TabContentIndex.EquipProbUp,
+	[21] = var_0_0.TabContentIndex.CharProbUp
 }
 var_0_0.Type2Result = {
 	var_0_0.ResultType.Char,
@@ -218,8 +220,9 @@ var_0_0.DetailParagraphType = {
 var_0_0.BannerFlagType = {
 	Limit = 3,
 	Activity = 2,
-	Newbie = 1,
-	Reprint = 4
+	Cobrand = 5,
+	Reprint = 4,
+	Newbie = 1
 }
 var_0_0.TenSummonAgainOpen = false
 var_0_0.MultiProbUp4ShowRate = 25
@@ -231,6 +234,14 @@ var_0_0.PoolId = {
 }
 var_0_0.ChooseNeedFirstHeroIds = {
 	3025
+}
+var_0_0.CurrencyShowAddItemIds = {
+	140001,
+	140002
+}
+var_0_0.CharacterCoBrandingGiftView = {
+	SummonCharacterCoBranding291 = "V2a9_LinkGiftView2",
+	SummonCharacterCoBranding292 = "V2a9_LinkGiftView"
 }
 
 return var_0_0

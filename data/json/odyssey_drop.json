@@ -1,0 +1,20 @@
+[
+  {
+    "id": 1,
+    "dropRare": "1#100",
+    "dropSuit": "2#3",
+    "dropNum": 2
+  },
+  {
+    "id": 2,
+    "dropRare": "1#40|2#60",
+    "dropSuit": "1#2#3#4#5#6#7#8#9",
+    "dropNum": 2
+  },
+  {
+    "id": 3,
+    "dropRare": "1#40|2#40|3#20",
+    "dropSuit": "1#2#3#4#5#6#7#8#9",
+    "dropNum": 3
+  }
+]

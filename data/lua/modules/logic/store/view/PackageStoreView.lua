@@ -236,7 +236,7 @@ function var_0_0._refreshGoods(arg_13_0, arg_13_1, arg_13_2)
 
 		local var_13_3 = StoreModel.instance:storeId2PackageGoodMoList(arg_13_0.storeId)
 
-		StorePackageGoodsItemListModel.instance:setMOList(StoreModel.instance:getStoreMO(arg_13_0.storeId), var_13_3)
+		StorePackageGoodsItemListModel.instance:setMOList(StoreModel.instance:getStoreMO(arg_13_0.storeId), var_13_3, nil, true)
 		StoreRpc.instance:sendGetStoreInfosRequest({
 			arg_13_0.storeId
 		})
@@ -282,6 +282,7 @@ function var_0_0.onOpen(arg_17_0)
 	arg_17_0:addEventCb(RedDotController.instance, RedDotEvent.RefreshClientCharacterDot, arg_17_0._onRefreshRedDot, arg_17_0)
 	arg_17_0:addEventCb(StoreController.instance, StoreEvent.UpdatePackageStore, arg_17_0.onUpdatePackageGoodsList, arg_17_0)
 	arg_17_0:addEventCb(StoreController.instance, StoreEvent.CurPackageListEmpty, arg_17_0.onPackageGoodsListEmpty, arg_17_0)
+	arg_17_0:addEventCb(TaskController.instance, TaskEvent.OnFinishTask, arg_17_0._onFinishTask, arg_17_0)
 
 	if var_17_1 then
 		StoreController.instance:openPackageStoreGoodsView(StoreModel.instance:getGoodsMO(tonumber(var_17_1)))
@@ -292,92 +293,112 @@ function var_0_0._updateInfo(arg_18_0)
 	arg_18_0:_refreshGoods(false)
 end
 
-function var_0_0.onClose(arg_19_0)
-	arg_19_0:removeEventCb(StoreController.instance, StoreEvent.BeforeUpdatePackageStore, arg_19_0._beforeUpdatePackageStore, arg_19_0)
-	arg_19_0:removeEventCb(StoreController.instance, StoreEvent.AfterUpdatePackageStore, arg_19_0._afterUpdatePackageStore, arg_19_0)
-	arg_19_0:removeEventCb(StoreController.instance, StoreEvent.GoodsModelChanged, arg_19_0._updateInfo, arg_19_0)
-	arg_19_0:removeEventCb(StoreController.instance, StoreEvent.StoreInfoChanged, arg_19_0._updateInfo, arg_19_0)
-	arg_19_0:removeEventCb(RedDotController.instance, RedDotEvent.RefreshClientCharacterDot, arg_19_0._onRefreshRedDot, arg_19_0)
-	arg_19_0:removeEventCb(StoreController.instance, StoreEvent.UpdatePackageStore, arg_19_0.onUpdatePackageGoodsList, arg_19_0)
-	arg_19_0:removeEventCb(StoreController.instance, StoreEvent.CurPackageListEmpty, arg_19_0.onPackageGoodsListEmpty, arg_19_0)
-end
+function var_0_0._onFinishTask(arg_19_0, arg_19_1)
+	if StoreConfig.instance:getChargeConditionalConfig(arg_19_1) and not arg_19_0._isHasWaitRefeshGoodsTask then
+		arg_19_0._isHasWaitRefeshGoodsTask = true
 
-function var_0_0.onUpdateParam(arg_20_0)
-	arg_20_0._selectFirstTabId = arg_20_0.viewContainer:getSelectFirstTabId()
-
-	local var_20_0 = arg_20_0.viewContainer:getJumpTabId()
-	local var_20_1 = arg_20_0.viewContainer:getJumpGoodsId()
-
-	arg_20_0:_refreshTabs(var_20_0)
-
-	if var_20_1 then
-		StoreController.instance:openPackageStoreGoodsView(StoreModel.instance:getGoodsMO(tonumber(var_20_1)))
+		TaskDispatcher.runDelay(arg_19_0._onRunWaitRefeshGoods, arg_19_0, 0.1)
 	end
 end
 
-function var_0_0.onDestroyView(arg_21_0)
-	if arg_21_0._categoryItemContainer and #arg_21_0._categoryItemContainer > 0 then
-		for iter_21_0 = 1, #arg_21_0._categoryItemContainer do
-			local var_21_0 = arg_21_0._categoryItemContainer[iter_21_0]
+function var_0_0._onRunWaitRefeshGoods(arg_20_0)
+	arg_20_0._isHasWaitRefeshGoodsTask = false
 
-			var_21_0.btn:RemoveClickListener()
+	arg_20_0:_refreshGoods(true)
+end
 
-			if var_21_0.childItemContainer and #var_21_0.childItemContainer > 0 then
-				for iter_21_1 = 1, #var_21_0.childItemContainer do
-					var_21_0.childItemContainer[iter_21_1].btn:RemoveClickListener()
+function var_0_0.onClose(arg_21_0)
+	arg_21_0:removeEventCb(StoreController.instance, StoreEvent.BeforeUpdatePackageStore, arg_21_0._beforeUpdatePackageStore, arg_21_0)
+	arg_21_0:removeEventCb(StoreController.instance, StoreEvent.AfterUpdatePackageStore, arg_21_0._afterUpdatePackageStore, arg_21_0)
+	arg_21_0:removeEventCb(StoreController.instance, StoreEvent.GoodsModelChanged, arg_21_0._updateInfo, arg_21_0)
+	arg_21_0:removeEventCb(StoreController.instance, StoreEvent.StoreInfoChanged, arg_21_0._updateInfo, arg_21_0)
+	arg_21_0:removeEventCb(RedDotController.instance, RedDotEvent.RefreshClientCharacterDot, arg_21_0._onRefreshRedDot, arg_21_0)
+	arg_21_0:removeEventCb(StoreController.instance, StoreEvent.UpdatePackageStore, arg_21_0.onUpdatePackageGoodsList, arg_21_0)
+	arg_21_0:removeEventCb(StoreController.instance, StoreEvent.CurPackageListEmpty, arg_21_0.onPackageGoodsListEmpty, arg_21_0)
+	arg_21_0:removeEventCb(TaskController.instance, TaskEvent.OnFinishTask, arg_21_0._onFinishTask, arg_21_0)
+
+	if arg_21_0._isHasWaitRefeshGoodsTask then
+		arg_21_0._isHasWaitRefeshGoodsTask = nil
+
+		TaskDispatcher.cancelTask(arg_21_0._onRunWaitRefeshGoods, arg_21_0)
+	end
+end
+
+function var_0_0.onUpdateParam(arg_22_0)
+	arg_22_0._selectFirstTabId = arg_22_0.viewContainer:getSelectFirstTabId()
+
+	local var_22_0 = arg_22_0.viewContainer:getJumpTabId()
+	local var_22_1 = arg_22_0.viewContainer:getJumpGoodsId()
+
+	arg_22_0:_refreshTabs(var_22_0)
+
+	if var_22_1 then
+		StoreController.instance:openPackageStoreGoodsView(StoreModel.instance:getGoodsMO(tonumber(var_22_1)))
+	end
+end
+
+function var_0_0.onDestroyView(arg_23_0)
+	if arg_23_0._categoryItemContainer and #arg_23_0._categoryItemContainer > 0 then
+		for iter_23_0 = 1, #arg_23_0._categoryItemContainer do
+			local var_23_0 = arg_23_0._categoryItemContainer[iter_23_0]
+
+			var_23_0.btn:RemoveClickListener()
+
+			if var_23_0.childItemContainer and #var_23_0.childItemContainer > 0 then
+				for iter_23_1 = 1, #var_23_0.childItemContainer do
+					var_23_0.childItemContainer[iter_23_1].btn:RemoveClickListener()
 				end
 			end
 		end
 	end
 
-	arg_21_0._simagebg:UnLoadImage()
+	arg_23_0._simagebg:UnLoadImage()
 end
 
-function var_0_0.onUpdatePackageGoodsList(arg_22_0)
-	arg_22_0:_refreshAllSecondTabs()
-	arg_22_0:_onRefreshRedDot()
-	arg_22_0:refreshScrollViewPos(false)
+function var_0_0.onUpdatePackageGoodsList(arg_24_0)
+	arg_24_0:_refreshAllSecondTabs()
+	arg_24_0:_onRefreshRedDot()
+	arg_24_0:refreshScrollViewPos(false)
 end
 
-function var_0_0.updateRecommendPackageList(arg_23_0, arg_23_1)
-	local var_23_0 = StoreModel.instance:getCurBuyPackageId()
-	local var_23_1 = StorePackageGoodsItemListModel.instance:getList()
+function var_0_0.updateRecommendPackageList(arg_25_0, arg_25_1)
+	local var_25_0 = StoreModel.instance:getCurBuyPackageId()
+	local var_25_1 = StorePackageGoodsItemListModel.instance:getList()
 
-	if (not var_23_1 or #var_23_1 == 0) and var_23_0 == nil then
-		arg_23_0:_refreshTabs(StoreEnum.StoreId.Package, true)
+	if (not var_25_1 or #var_25_1 == 0) and var_25_0 == nil then
+		arg_25_0:_refreshTabs(StoreEnum.StoreId.Package, true)
 
 		return
 	end
 
-	arg_23_0:_onRefreshRedDot()
-	arg_23_0:refreshScrollViewPos(arg_23_1)
+	arg_25_0:_onRefreshRedDot()
+	arg_25_0:refreshScrollViewPos(arg_25_1)
 end
 
-function var_0_0.onPackageGoodsListEmpty(arg_24_0)
-	arg_24_0:_refreshTabs(arg_24_0.storeId or StoreEnum.StoreId.Package, false)
-	arg_24_0:_setActivtSoldOut(true)
+function var_0_0.onPackageGoodsListEmpty(arg_26_0)
+	arg_26_0:_refreshTabs(StoreEnum.StoreId.Package, true)
 end
 
-function var_0_0.refreshScrollViewPos(arg_25_0, arg_25_1)
-	local var_25_0 = StoreModel.instance:isPackageStoreTabRedDotShow(arg_25_0._selectSecondTabId)
+function var_0_0.refreshScrollViewPos(arg_27_0, arg_27_1)
+	local var_27_0 = StoreModel.instance:isPackageStoreTabRedDotShow(arg_27_0._selectSecondTabId)
 
-	if arg_25_1 or var_25_0 then
-		local var_25_1 = StorePackageGoodsItemListModel.instance:getList()
+	if arg_27_1 or var_27_0 then
+		local var_27_1 = StorePackageGoodsItemListModel.instance:getList()
 
-		for iter_25_0, iter_25_1 in ipairs(var_25_1) do
-			local var_25_2 = iter_25_1.goodsId
+		for iter_27_0, iter_27_1 in ipairs(var_27_1) do
+			local var_27_2 = iter_27_1.goodsId
 
-			if StoreModel.instance:isGoodsItemRedDotShow(var_25_2) then
-				arg_25_0._scrollprop.horizontalNormalizedPosition = (iter_25_0 - 1) / (#var_25_1 - 1)
+			if StoreModel.instance:isGoodsItemRedDotShow(var_27_2) then
+				arg_27_0._scrollprop.horizontalNormalizedPosition = (iter_27_0 - 1) / (#var_27_1 - 1)
 
 				return
 			end
 		end
 	end
 
-	if arg_25_0._resetScrollPos then
-		arg_25_0._scrollprop.horizontalNormalizedPosition = 0
-		arg_25_0._resetScrollPos = false
+	if arg_27_0._resetScrollPos then
+		arg_27_0._scrollprop.horizontalNormalizedPosition = 0
+		arg_27_0._resetScrollPos = false
 	end
 end
 

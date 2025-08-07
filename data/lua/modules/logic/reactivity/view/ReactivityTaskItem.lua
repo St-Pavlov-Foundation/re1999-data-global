@@ -154,7 +154,6 @@ function var_0_0.refreshRewardItems(arg_13_0)
 		if not var_13_5 then
 			var_13_5 = IconMgr.instance:getCommonPropItemIcon(arg_13_0.goRewardContent)
 
-			transformhelper.setLocalScale(var_13_5.go.transform, 0.6, 0.6, 1)
 			var_13_5:setMOValue(var_13_2, var_13_3, var_13_4, nil, true)
 			var_13_5:setCountFontSize(40)
 			var_13_5:showStackableNum2()

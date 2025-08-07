@@ -110,6 +110,9 @@ function var_0_0.onInitView(arg_2_0)
 	arg_2_0.go_fetter = gohelper.findChild(arg_2_0.viewGO, "fightinfocontainer/#go_infoView/go_fetter")
 	arg_2_0.go_quality = gohelper.findChild(arg_2_0.viewGO, "fightinfocontainer/#go_infoView/go_quality")
 	arg_2_0.go_collection = gohelper.findChild(arg_2_0.viewGO, "fightinfocontainer/#go_infoView/content/player/#go_collection")
+	arg_2_0.odysseySuitRoot = gohelper.findChild(arg_2_0.viewGO, "fightinfocontainer/#go_odysseySuit")
+	arg_2_0.aiJiAoSliderRoot = gohelper.findChild(arg_2_0.viewGO, "fightinfocontainer/#go_infoView/content/player/#go_azio")
+	arg_2_0.alertRoot = gohelper.findChild(arg_2_0.viewGO, "fightinfocontainer/#go_infoView/content/info/#go_alert")
 
 	if arg_2_0._editableInitView then
 		arg_2_0:_editableInitView()
@@ -249,6 +252,9 @@ function var_0_0._editableInitView(arg_14_0)
 		table.insert(arg_14_0._playerpassiveGOList, var_14_0)
 	end
 
+	local var_14_1 = gohelper.findChild(arg_14_0.viewGO, "fightinfocontainer/#go_infoView/content/player/#go_playerpassive/playerpassivelevel/go_playerpassivelevel4")
+
+	arg_14_0._playerpassiveGOList[0] = var_14_1
 	arg_14_0._txttalent = gohelper.findChildTextMesh(arg_14_0.viewGO, "fightinfocontainer/#go_infoView/content/player/#go_playerpassive/talent/tmp_talent")
 	arg_14_0._txttalent.overflowMode = TMPro.TextOverflowModes.Ellipsis
 	arg_14_0._gosuperitem = gohelper.findChild(arg_14_0.viewGO, "fightinfocontainer/#go_infoView/content/skill/content/go_superitem")
@@ -259,22 +265,22 @@ function var_0_0._editableInitView(arg_14_0)
 
 	arg_14_0._superItemList = {}
 
-	local var_14_1
+	local var_14_2
 
 	for iter_14_1 = 1, 3 do
-		local var_14_2 = arg_14_0:createSuperItem()
+		local var_14_3 = arg_14_0:createSuperItem()
 
-		table.insert(arg_14_0._superItemList, var_14_2)
+		table.insert(arg_14_0._superItemList, var_14_3)
 	end
 
 	arg_14_0._skillGOs = {}
 
-	local var_14_3
+	local var_14_4
 
 	for iter_14_2 = 1, 3 do
-		local var_14_4 = arg_14_0:createSkillItem()
+		local var_14_5 = arg_14_0:createSkillItem()
 
-		table.insert(arg_14_0._skillGOs, var_14_4)
+		table.insert(arg_14_0._skillGOs, var_14_5)
 	end
 
 	arg_14_0._godetailcontent = gohelper.findChild(arg_14_0.viewGO, "fightinfocontainer/#go_detailView/#scroll_content/viewport/content")
@@ -286,12 +292,12 @@ function var_0_0._editableInitView(arg_14_0)
 
 	ViewMgr.instance:registerCallback(ViewEvent.OnCloseView, arg_14_0._onCloseView, arg_14_0)
 
-	local var_14_5 = DungeonModel.instance.curSendChapterId
+	local var_14_6 = DungeonModel.instance.curSendChapterId
 
-	if var_14_5 then
-		local var_14_6 = DungeonConfig.instance:getChapterCO(var_14_5)
+	if var_14_6 then
+		local var_14_7 = DungeonConfig.instance:getChapterCO(var_14_6)
 
-		arg_14_0.isSimple = var_14_6 and var_14_6.type == DungeonEnum.ChapterType.Simple
+		arg_14_0.isSimple = var_14_7 and var_14_7.type == DungeonEnum.ChapterType.Simple
 	end
 
 	arg_14_0.resistanceComp = FightEntityResistanceComp.New(arg_14_0._goresistance, arg_14_0.viewContainer)
@@ -503,6 +509,10 @@ function var_0_0._refreshUI(arg_24_0)
 	arg_24_0:refreshDouQuQuFetter()
 	arg_24_0:refreshDouQuQuStar()
 	arg_24_0:refreshDouQuQuCollection()
+	arg_24_0:showOdysseyEquip()
+	arg_24_0:showOdysseyEquipSuit()
+	arg_24_0:showAiJiAoExPointSlider()
+	arg_24_0:showAlert()
 end
 
 function var_0_0.setAssistBossStatus(arg_25_0, arg_25_1, arg_25_2)
@@ -996,30 +1006,37 @@ function var_0_0._refreshCharacterPassiveSkill(arg_42_0, arg_42_1)
 	local var_42_1, var_42_2 = SkillConfig.instance:getHeroExSkillLevelByLevel(var_42_0.id, arg_42_1.level)
 	local var_42_3 = {}
 	local var_42_4 = arg_42_0:getPassiveSkillList(arg_42_1)
+	local var_42_5 = var_42_4 and var_42_4[0]
 
 	if var_42_4 and #var_42_4 > 0 then
 		gohelper.setActive(arg_42_0._goplayerpassive, true)
 
-		local var_42_5 = var_42_4[1]
+		local var_42_6 = var_42_4[1]
 
-		arg_42_0._txttalent.text = lua_skill.configDict[var_42_5].name
+		arg_42_0._txttalent.text = lua_skill.configDict[var_42_6].name
 
-		for iter_42_0 = 1, #var_42_4 do
-			local var_42_6 = iter_42_0 <= var_42_1
+		for iter_42_0, iter_42_1 in pairs(var_42_4) do
+			local var_42_7 = iter_42_0 <= var_42_1
 
-			gohelper.setActive(arg_42_0._playerpassiveGOList[iter_42_0], var_42_6)
+			gohelper.setActive(arg_42_0._playerpassiveGOList[iter_42_0], var_42_7)
 
-			if var_42_6 then
-				table.insert(var_42_3, FightHelper.getPassiveSkill(arg_42_1.id, var_42_4[iter_42_0]))
+			if var_42_7 then
+				var_42_3[iter_42_0] = FightHelper.getPassiveSkill(arg_42_1.id, iter_42_1)
 			end
 		end
 
-		for iter_42_1 = #var_42_4 + 1, #arg_42_0._playerpassiveGOList do
-			gohelper.setActive(arg_42_0._playerpassiveGOList[iter_42_1], false)
+		for iter_42_2 = #var_42_4 + 1, #arg_42_0._playerpassiveGOList do
+			gohelper.setActive(arg_42_0._playerpassiveGOList[iter_42_2], false)
 		end
 	end
 
-	gohelper.setActive(arg_42_0._goplayerpassive, #var_42_3 > 0)
+	if var_42_5 then
+		gohelper.setActive(arg_42_0._playerpassiveGOList[0], true)
+	else
+		gohelper.setActive(arg_42_0._playerpassiveGOList[0], false)
+	end
+
+	gohelper.setActive(arg_42_0._goplayerpassive, #var_42_3 > 0 or var_42_5)
 
 	arg_42_0._passiveSkillIds = var_42_3
 end
@@ -1042,6 +1059,10 @@ function var_0_0.getPassiveSkillList(arg_43_0, arg_43_1)
 
 		local var_43_4 = arg_43_1.exSkillLevel
 		local var_43_5 = SkillConfig.instance:getPassiveSKillsCoByExSkillLevel(var_43_1, var_43_4)
+
+		if var_43_5[0] then
+			var_43_0[0] = var_43_5[0].skillPassive
+		end
 
 		for iter_43_2, iter_43_3 in ipairs(var_43_5) do
 			table.insert(var_43_0, iter_43_3.skillPassive)
@@ -1400,7 +1421,13 @@ end
 function var_0_0._showPassiveDetail(arg_56_0)
 	arg_56_0:closeAllTips()
 
-	if arg_56_0._passiveSkillIds and #arg_56_0._passiveSkillIds > 0 then
+	if not arg_56_0._passiveSkillIds then
+		return
+	end
+
+	local var_56_0 = arg_56_0._passiveSkillIds[0]
+
+	if #arg_56_0._passiveSkillIds > 0 or var_56_0 then
 		gohelper.setActive(arg_56_0._godetailView, true)
 		arg_56_0:_refreshPassiveDetail()
 
@@ -1548,19 +1575,28 @@ function var_0_0._hideDetail(arg_63_0)
 end
 
 function var_0_0._refreshPassiveDetail(arg_64_0)
-	local var_64_0 = arg_64_0._passiveSkillIds
-	local var_64_1 = #var_64_0
-	local var_64_2 = arg_64_0:_checkDestinyEffect(var_64_0)
+	local var_64_0 = {}
 
-	for iter_64_0 = 1, var_64_1 do
-		local var_64_3 = tonumber(var_64_2[iter_64_0])
+	if arg_64_0._passiveSkillIds[0] then
+		table.insert(var_64_0, arg_64_0._passiveSkillIds[0])
+	end
+
+	for iter_64_0 = 1, #arg_64_0._passiveSkillIds do
+		table.insert(var_64_0, arg_64_0._passiveSkillIds[iter_64_0])
+	end
+
+	local var_64_1 = #var_64_0
+	local var_64_2 = arg_64_0:_checkReplaceSkill(var_64_0)
+
+	for iter_64_1 = 1, var_64_1 do
+		local var_64_3 = tonumber(var_64_2[iter_64_1])
 		local var_64_4 = lua_skill.configDict[var_64_3]
 
 		if var_64_4 then
-			local var_64_5 = arg_64_0._detailPassiveTables[iter_64_0]
+			local var_64_5 = arg_64_0._detailPassiveTables[iter_64_1]
 
 			if not var_64_5 then
-				local var_64_6 = gohelper.cloneInPlace(arg_64_0._godetailpassiveitem, "item" .. iter_64_0)
+				local var_64_6 = gohelper.cloneInPlace(arg_64_0._godetailpassiveitem, "item" .. iter_64_1)
 
 				var_64_5 = arg_64_0:getUserDataTb_()
 				var_64_5.go = var_64_6
@@ -1583,24 +1619,20 @@ function var_0_0._refreshPassiveDetail(arg_64_0)
 
 			var_64_5.desc:GetPreferredValues()
 			gohelper.setActive(var_64_5.go, true)
-			gohelper.setActive(var_64_5.line, iter_64_0 < var_64_1)
+			gohelper.setActive(var_64_5.line, iter_64_1 < var_64_1)
 		else
 			logError(string.format("被动技能配置没找到, id: %d", var_64_3))
 		end
 	end
 
-	for iter_64_1 = var_64_1 + 1, #arg_64_0._detailPassiveTables do
-		gohelper.setActive(arg_64_0._detailPassiveTables[iter_64_1].go, false)
+	for iter_64_2 = var_64_1 + 1, #arg_64_0._detailPassiveTables do
+		gohelper.setActive(arg_64_0._detailPassiveTables[iter_64_2].go, false)
 	end
 end
 
-function var_0_0._checkDestinyEffect(arg_65_0, arg_65_1)
+function var_0_0._checkReplaceSkill(arg_65_0, arg_65_1)
 	if arg_65_1 and arg_65_0._entityMO then
-		local var_65_0 = arg_65_0._entityMO:getHeroDestinyStoneMo()
-
-		if var_65_0 then
-			arg_65_1 = var_65_0:_replaceSkill(arg_65_1)
-		end
+		arg_65_1 = arg_65_0._entityMO:checkReplaceSkill(arg_65_1)
 	end
 
 	return arg_65_1
@@ -1661,6 +1693,7 @@ function var_0_0._onCloseView(arg_69_0, arg_69_1)
 end
 
 function var_0_0.onClose(arg_70_0)
+	gohelper.setActive(arg_70_0.odysseySuitRoot, false)
 	TaskDispatcher.cancelTask(arg_70_0._refreshUI, arg_70_0)
 	arg_70_0:_releaseTween()
 
@@ -1925,7 +1958,15 @@ function var_0_0.refreshDouQuQuFetter(arg_80_0)
 end
 
 function var_0_0.refreshDouQuQuStar(arg_81_0)
-	gohelper.setActive(arg_81_0.levelRoot, false)
+	local var_81_0 = FightDataHelper.fieldMgr.customData
+
+	if not var_81_0 then
+		return
+	end
+
+	if var_81_0[FightCustomData.CustomDataType.Act191] then
+		gohelper.setActive(arg_81_0.levelRoot, false)
+	end
 end
 
 function var_0_0.refreshDouQuQuCollection(arg_82_0)
@@ -1942,6 +1983,82 @@ function var_0_0.refreshDouQuQuCollection(arg_82_0)
 			arg_82_0.douQuQuCollectionView:refreshEntityMO(arg_82_0._entityMO)
 		else
 			arg_82_0.douQuQuCollectionView = arg_82_0:com_openSubView(FightDouQuQuCollectionView, "ui/viewres/fight/fight_act191collectionview.prefab", arg_82_0.go_collection, arg_82_0._entityMO)
+		end
+	end
+end
+
+function var_0_0.showOdysseyEquip(arg_83_0)
+	local var_83_0 = FightDataHelper.fieldMgr.customData
+
+	if not var_83_0 then
+		return
+	end
+
+	var_83_0 = var_83_0[FightCustomData.CustomDataType.Odyssey] or var_83_0[FightCustomData.CustomDataType.Act128Sp]
+
+	if var_83_0 then
+		gohelper.setActive(arg_83_0.go_collection, true)
+
+		if arg_83_0.odysseyEquipView then
+			arg_83_0.odysseyEquipView:refreshEntityMO(arg_83_0._entityMO)
+		else
+			arg_83_0.odysseyEquipView = arg_83_0:com_openSubView(FightFocusOdysseyEquipView, "ui/viewres/fight/fight_odysseycollectionview.prefab", arg_83_0.go_collection, arg_83_0._entityMO)
+		end
+	end
+end
+
+function var_0_0.showOdysseyEquipSuit(arg_84_0)
+	local var_84_0 = FightDataHelper.fieldMgr.customData
+
+	if not var_84_0 then
+		return
+	end
+
+	var_84_0 = var_84_0[FightCustomData.CustomDataType.Odyssey] or var_84_0[FightCustomData.CustomDataType.Act128Sp]
+
+	if var_84_0 then
+		gohelper.setActive(arg_84_0.go_collection, true)
+
+		if arg_84_0.odysseyEquipSuitView then
+			arg_84_0.odysseyEquipSuitView:refreshEntityMO(arg_84_0._entityMO)
+		else
+			arg_84_0.odysseyEquipSuitView = arg_84_0:com_openSubView(FightFocusOdysseyEquipSuitView, "ui/viewres/fight/fight_odysseysuitview.prefab", arg_84_0.odysseySuitRoot, arg_84_0._entityMO)
+		end
+	end
+end
+
+function var_0_0.showAiJiAoExPointSlider(arg_85_0)
+	if arg_85_0._entityMO.exPointType == FightEnum.ExPointType.Synchronization then
+		gohelper.setActive(arg_85_0.aiJiAoSliderRoot, true)
+
+		if arg_85_0.aiJiAoExPointSliderView then
+			arg_85_0.aiJiAoExPointSliderView:refreshEntityMO(arg_85_0._entityMO)
+		else
+			arg_85_0.aiJiAoExPointSliderView = arg_85_0:com_openSubView(FightFocusAiJiAoExPointSliderView, "ui/viewres/fight/fightaijiaoenergysliderview.prefab", arg_85_0.aiJiAoSliderRoot, arg_85_0._entityMO)
+		end
+	else
+		gohelper.setActive(arg_85_0.aiJiAoSliderRoot, false)
+	end
+end
+
+function var_0_0.showAlert(arg_86_0)
+	gohelper.setActive(arg_86_0.alertRoot, false)
+
+	local var_86_0 = arg_86_0._entityMO._powerInfos
+
+	if var_86_0 then
+		for iter_86_0, iter_86_1 in pairs(var_86_0) do
+			if iter_86_0 == FightEnum.PowerType.Alert then
+				gohelper.setActive(arg_86_0.alertRoot, true)
+
+				if arg_86_0.alertView then
+					arg_86_0.alertView:refreshData(arg_86_0._entityMO.id, iter_86_1)
+				else
+					local var_86_1 = "ui/viewres/fight/fightalertview.prefab"
+
+					arg_86_0.alertView = arg_86_0:com_openSubView(FightNamePowerInfoView6, var_86_1, arg_86_0.alertRoot, arg_86_0._entityMO.id, iter_86_1, true)
+				end
+			end
 		end
 	end
 end

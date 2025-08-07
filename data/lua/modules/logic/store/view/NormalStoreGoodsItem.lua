@@ -127,6 +127,14 @@ end
 
 function var_0_0._onNormalGoodsClick(arg_9_0)
 	if arg_9_0._hascloth then
+		local var_9_0 = ItemModel.instance:getItemConfig(arg_9_0._itemType, arg_9_0._itemId)
+
+		if arg_9_0:_isAlreadyHasIgnoreType(var_9_0.subType) and StoreConfig.instance:getGoodsConfig(arg_9_0._mo.goodsId).maxBuyCount - arg_9_0._mo.buyCount > 0 then
+			StoreController.instance:openNormalGoodsView(arg_9_0._mo)
+
+			return
+		end
+
 		GameFacade.showToast(ToastEnum.NormalStoreGoodsHasCloth)
 	elseif arg_9_0._soldout then
 		GameFacade.showToast(ToastEnum.ActivityNoRemainBuyCount)
@@ -223,488 +231,502 @@ function var_0_0.onUpdateMO(arg_15_0, arg_15_1)
 	gohelper.setActive(arg_15_0._goActTag, var_15_0)
 end
 
-function var_0_0.refreshNormalGoods(arg_16_0)
-	local var_16_0 = arg_16_0._mo
-	local var_16_1 = arg_16_0:_isStoreItemUnlock()
+var_0_0.AlreadyHasIgnoreType = {
+	ItemEnum.SubType.RoomBlockGift,
+	ItemEnum.SubType.RoomBlockGiftNew
+}
 
-	gohelper.setActive(arg_16_0._goitemreddot, StoreModel.instance:isGoodsItemRedDotShow(var_16_0.goodsId))
-	gohelper.setActive(arg_16_0._golevellimit, not var_16_1)
+function var_0_0._isAlreadyHasIgnoreType(arg_16_0, arg_16_1)
+	return LuaUtil.tableContains(var_0_0.AlreadyHasIgnoreType, arg_16_1)
+end
 
-	if not var_16_1 then
-		local var_16_2 = StoreConfig.instance:getGoodsConfig(var_16_0.goodsId).needEpisodeId
+function var_0_0.refreshNormalGoods(arg_17_0)
+	local var_17_0 = arg_17_0._mo
+	local var_17_1 = arg_17_0:_isStoreItemUnlock()
 
-		if var_16_2 == StoreEnum.Need4RDEpisodeId then
-			arg_16_0._txtlvlimit.text = string.format("%s%s", luaLang("level_limit_4RD_unlock"), luaLang("dungeon_unlock"))
+	gohelper.setActive(arg_17_0._goitemreddot, StoreModel.instance:isGoodsItemRedDotShow(var_17_0.goodsId))
+	gohelper.setActive(arg_17_0._golevellimit, not var_17_1)
+
+	if not var_17_1 then
+		local var_17_2 = StoreConfig.instance:getGoodsConfig(var_17_0.goodsId).needEpisodeId
+
+		if var_17_2 == StoreEnum.Need4RDEpisodeId then
+			arg_17_0._txtlvlimit.text = string.format("%s%s", luaLang("level_limit_4RD_unlock"), luaLang("dungeon_unlock"))
 		else
-			local var_16_3 = DungeonConfig.instance:getEpisodeCO(var_16_2)
-			local var_16_4 = DungeonConfig.instance:getChapterCO(var_16_3.chapterId)
-			local var_16_5 = "dungeon_main_unlock"
+			local var_17_3 = DungeonConfig.instance:getEpisodeCO(var_17_2)
+			local var_17_4 = DungeonConfig.instance:getChapterCO(var_17_3.chapterId)
+			local var_17_5 = "dungeon_main_unlock"
 
-			arg_16_0.isHardChapter = false
+			arg_17_0.isHardChapter = false
 
-			if var_16_4 and var_16_4.type == DungeonEnum.ChapterType.Hard then
-				var_16_3 = DungeonConfig.instance:getEpisodeCO(var_16_3.preEpisode)
-				var_16_4 = DungeonConfig.instance:getChapterCO(var_16_3.chapterId)
-				var_16_5 = "dungeon_main_hard_unlock"
-				arg_16_0.isHardChapter = true
+			if var_17_4 and var_17_4.type == DungeonEnum.ChapterType.Hard then
+				var_17_3 = DungeonConfig.instance:getEpisodeCO(var_17_3.preEpisode)
+				var_17_4 = DungeonConfig.instance:getChapterCO(var_17_3.chapterId)
+				var_17_5 = "dungeon_main_hard_unlock"
+				arg_17_0.isHardChapter = true
 			end
 
-			local var_16_6
-			local var_16_7
-			local var_16_8
+			local var_17_6
+			local var_17_7
+			local var_17_8
 
-			if var_16_3 and var_16_4 then
-				var_16_6 = var_16_4.chapterIndex
+			if var_17_3 and var_17_4 then
+				var_17_6 = var_17_4.chapterIndex
 
-				local var_16_9
+				local var_17_9
 
-				var_16_7, var_16_9 = DungeonConfig.instance:getChapterEpisodeIndexWithSP(var_16_4.id, var_16_3.id)
+				var_17_7, var_17_9 = DungeonConfig.instance:getChapterEpisodeIndexWithSP(var_17_4.id, var_17_3.id)
 
-				if type == DungeonEnum.EpisodeType.Sp then
-					var_16_6 = "SP"
+				if var_17_9 == DungeonEnum.EpisodeType.Sp then
+					var_17_6 = "SP"
 				end
 			end
 
-			arg_16_0._txtlvlimit.text = string.format(luaLang(var_16_5), string.format("%s-%s", var_16_6, var_16_7))
-			arg_16_0.lvlimitchapter = var_16_6
-			arg_16_0.lvlimitepisode = var_16_7
+			arg_17_0._txtlvlimit.text = string.format(luaLang(var_17_5), string.format("%s-%s", var_17_6, var_17_7))
+			arg_17_0.lvlimitchapter = var_17_6
+			arg_17_0.lvlimitepisode = var_17_7
 		end
 	end
 
-	if StoreNormalGoodsItemListModel.needWeekWalkLayerUnlock(var_16_0.goodsId) then
-		gohelper.setActive(arg_16_0._golevellimit, true)
+	if StoreNormalGoodsItemListModel.needWeekWalkLayerUnlock(var_17_0.goodsId) then
+		gohelper.setActive(arg_17_0._golevellimit, true)
 
-		local var_16_10 = StoreConfig.instance:getGoodsConfig(var_16_0.goodsId).needWeekwalkLayer
+		local var_17_10 = StoreConfig.instance:getGoodsConfig(var_17_0.goodsId).needWeekwalkLayer
 
-		arg_16_0._txtlvlimit.text = string.format(luaLang("dungeon_weekwalk_unlock"), var_16_10)
+		arg_17_0._txtlvlimit.text = string.format(luaLang("dungeon_weekwalk_unlock"), var_17_10)
 	end
 
-	local var_16_11 = StoreConfig.instance:getGoodsConfig(var_16_0.goodsId)
+	local var_17_11 = StoreConfig.instance:getGoodsConfig(var_17_0.goodsId)
 
-	arg_16_0:updateGoodsItemAttribute(var_16_11)
+	arg_17_0:updateGoodsItemAttribute(var_17_11)
 
-	local var_16_12 = ItemModel.instance:getItemConfig(arg_16_0._itemType, arg_16_0._itemId)
+	local var_17_12 = ItemModel.instance:getItemConfig(arg_17_0._itemType, arg_17_0._itemId)
 
-	if string.nilorempty(var_16_0.config.name) == false then
-		arg_16_0._txtgoodsName.text = var_16_0.config.name
-	elseif var_16_12 then
-		arg_16_0._txtgoodsName.text = var_16_12.name
+	if string.nilorempty(var_17_0.config.name) == false then
+		arg_17_0._txtgoodsName.text = var_17_0.config.name
+	elseif var_17_12 then
+		arg_17_0._txtgoodsName.text = var_17_12.name
 	else
-		logError("找不到商品配置: " .. var_16_11.product)
+		logError("找不到商品配置: " .. var_17_11.product)
 	end
 
-	arg_16_0:_refreshGoods(var_16_11)
+	arg_17_0:_refreshGoods(var_17_11)
 
-	local var_16_13 = var_16_11.cost
+	local var_17_13 = var_17_11.cost
 
-	if string.nilorempty(var_16_13) then
-		arg_16_0._txtmaterialNum.text = luaLang("store_free")
+	if string.nilorempty(var_17_13) then
+		arg_17_0._txtmaterialNum.text = luaLang("store_free")
 
-		gohelper.setActive(arg_16_0._imagematerial.gameObject, false)
+		gohelper.setActive(arg_17_0._imagematerial.gameObject, false)
 	else
-		local var_16_14 = string.split(var_16_13, "|")
-		local var_16_15 = var_16_14[var_16_0.buyCount + 1] or var_16_14[#var_16_14]
-		local var_16_16 = string.splitToNumber(var_16_15, "#")
-		local var_16_17 = var_16_16[1]
-		local var_16_18 = var_16_16[2]
+		local var_17_14 = string.split(var_17_13, "|")
+		local var_17_15 = var_17_14[var_17_0.buyCount + 1] or var_17_14[#var_17_14]
+		local var_17_16 = string.splitToNumber(var_17_15, "#")
+		local var_17_17 = var_17_16[1]
+		local var_17_18 = var_17_16[2]
 
-		arg_16_0._costQuantity = var_16_16[3]
+		arg_17_0._costQuantity = var_17_16[3]
 
-		local var_16_19, var_16_20 = ItemModel.instance:getItemConfigAndIcon(var_16_17, var_16_18)
-		local var_16_21 = var_16_19.icon
-		local var_16_22 = string.format("%s_1", var_16_21)
+		local var_17_19, var_17_20 = ItemModel.instance:getItemConfigAndIcon(var_17_17, var_17_18)
+		local var_17_21 = var_17_19.icon
+		local var_17_22 = string.format("%s_1", var_17_21)
 
-		UISpriteSetMgr.instance:setCurrencyItemSprite(arg_16_0._imagematerial, var_16_22)
-		gohelper.setActive(arg_16_0._imagematerial.gameObject, true)
+		UISpriteSetMgr.instance:setCurrencyItemSprite(arg_17_0._imagematerial, var_17_22)
+		gohelper.setActive(arg_17_0._imagematerial.gameObject, true)
 
-		arg_16_0._txtmaterialNum.text = arg_16_0._costQuantity
+		arg_17_0._txtmaterialNum.text = arg_17_0._costQuantity
 	end
 
-	local var_16_23 = var_16_11.cost2
+	local var_17_23 = var_17_11.cost2
 
-	if string.nilorempty(var_16_23) then
-		gohelper.setActive(arg_16_0._txtCost2Num.gameObject, false)
+	if string.nilorempty(var_17_23) then
+		gohelper.setActive(arg_17_0._txtCost2Num.gameObject, false)
+		gohelper.setActive(arg_17_0._goline, false)
 
-		arg_16_0._txtmaterialNum.fontSize = 36
-		arg_16_0._txtCost2Num.fontSize = 36
+		arg_17_0._txtmaterialNum.fontSize = 36
+		arg_17_0._txtCost2Num.fontSize = 36
 	else
-		arg_16_0._txtmaterialNum.fontSize = 30
-		arg_16_0._txtCost2Num.fontSize = 30
+		arg_17_0._txtmaterialNum.fontSize = 30
+		arg_17_0._txtCost2Num.fontSize = 30
 
-		gohelper.setActive(arg_16_0._txtCost2Num.gameObject, true)
-		gohelper.setActive(arg_16_0._goline, true)
+		gohelper.setActive(arg_17_0._txtCost2Num.gameObject, true)
+		gohelper.setActive(arg_17_0._goline, true)
 
-		local var_16_24 = string.split(var_16_23, "|")
-		local var_16_25 = var_16_24[var_16_0.buyCount + 1] or var_16_24[#var_16_24]
-		local var_16_26 = string.splitToNumber(var_16_25, "#")
-		local var_16_27 = var_16_26[1]
-		local var_16_28 = var_16_26[2]
-		local var_16_29 = var_16_26[3]
-		local var_16_30, var_16_31 = ItemModel.instance:getItemConfigAndIcon(var_16_27, var_16_28)
-		local var_16_32 = var_16_30.icon
-		local var_16_33 = string.format("%s_1", var_16_32)
+		local var_17_24 = string.split(var_17_23, "|")
+		local var_17_25 = var_17_24[var_17_0.buyCount + 1] or var_17_24[#var_17_24]
+		local var_17_26 = string.splitToNumber(var_17_25, "#")
+		local var_17_27 = var_17_26[1]
+		local var_17_28 = var_17_26[2]
+		local var_17_29 = var_17_26[3]
+		local var_17_30, var_17_31 = ItemModel.instance:getItemConfigAndIcon(var_17_27, var_17_28)
+		local var_17_32 = var_17_30.icon
+		local var_17_33 = string.format("%s_1", var_17_32)
 
-		UISpriteSetMgr.instance:setCurrencyItemSprite(arg_16_0._imageCost2, var_16_33)
+		UISpriteSetMgr.instance:setCurrencyItemSprite(arg_17_0._imageCost2, var_17_33)
 
-		arg_16_0._txtCost2Num.text = var_16_29
+		arg_17_0._txtCost2Num.text = var_17_29
 	end
 
-	if arg_16_0._mo.config.jumpId ~= 0 then
-		gohelper.setActive(arg_16_0._goCost, false)
-		gohelper.setActive(arg_16_0._goline, false)
-		gohelper.setActive(arg_16_0._goPath, true)
+	if arg_17_0._mo.config.jumpId ~= 0 then
+		gohelper.setActive(arg_17_0._goCost, false)
+		gohelper.setActive(arg_17_0._goline, false)
+		gohelper.setActive(arg_17_0._goPath, true)
 
-		if arg_16_0._mo.config.activityId ~= 0 then
-			arg_16_0._txtPath.text = luaLang("getGoodsByActivity")
-		elseif arg_16_0._mo.config.bindgoodid ~= 0 then
-			arg_16_0._txtPath.text = luaLang("getGoodsByBingGoods")
+		if arg_17_0._mo.config.activityId ~= 0 then
+			arg_17_0._txtPath.text = luaLang("getGoodsByActivity")
+		elseif arg_17_0._mo.config.bindgoodid ~= 0 then
+			arg_17_0._txtPath.text = luaLang("getGoodsByBingGoods")
 		end
 	end
 
-	gohelper.setActive(arg_16_0._godiscount, var_16_0.config.originalCost > 0)
+	gohelper.setActive(arg_17_0._godiscount, var_17_0.config.originalCost > 0)
 
-	if var_16_11.cost and var_16_11.cost2 then
-		gohelper.setActive(arg_16_0._txtoriginalCost.gameObject, false)
+	if var_17_11.cost and var_17_11.cost2 then
+		gohelper.setActive(arg_17_0._txtoriginalCost.gameObject, false)
 	else
-		gohelper.setActive(arg_16_0._txtoriginalCost.gameObject, var_16_0.config.originalCost > 0)
+		gohelper.setActive(arg_17_0._txtoriginalCost.gameObject, var_17_0.config.originalCost > 0)
 	end
 
-	local var_16_34 = arg_16_0._costQuantity / var_16_0.config.originalCost
-	local var_16_35 = math.ceil(var_16_34 * 100)
+	local var_17_34 = arg_17_0._costQuantity / var_17_0.config.originalCost
+	local var_17_35 = math.ceil(var_17_34 * 100)
 
-	arg_16_0._txtdiscount.text = string.format("-%d%%", 100 - var_16_35)
-	arg_16_0._txtoriginalCost.text = var_16_0.config.originalCost
+	arg_17_0._txtdiscount.text = string.format("-%d%%", 100 - var_17_35)
+	arg_17_0._txtoriginalCost.text = var_17_0.config.originalCost
 
-	gohelper.setActive(arg_16_0._gooffflineTime, not arg_16_0._hideOffflineTime and var_16_0.offlineTime > 0)
+	gohelper.setActive(arg_17_0._gooffflineTime, not arg_17_0._hideOffflineTime and var_17_0.offlineTime > 0)
 
-	local var_16_36 = var_16_0.offlineTime - ServerTime.now()
+	local var_17_36 = var_17_0.offlineTime - ServerTime.now()
 
-	if var_16_36 > 0 then
-		if var_16_36 > 3600 then
-			local var_16_37, var_16_38 = TimeUtil.secondToRoughTime(var_16_36)
+	if var_17_36 > 0 then
+		if var_17_36 > 3600 then
+			local var_17_37, var_17_38 = TimeUtil.secondToRoughTime(var_17_36)
 
-			arg_16_0._txtoffflineTime.text = formatLuaLang("remain", var_16_37 .. var_16_38)
+			arg_17_0._txtoffflineTime.text = formatLuaLang("remain", var_17_37 .. var_17_38)
 		else
-			arg_16_0._txtoffflineTime.text = luaLang("not_enough_one_hour")
+			arg_17_0._txtoffflineTime.text = luaLang("not_enough_one_hour")
 		end
 	end
 
-	arg_16_0._soldout = var_16_0:isSoldOut()
+	arg_17_0._soldout = var_17_0:isSoldOut()
 
-	arg_16_0:refreshNextRefreshTime(var_16_11)
+	arg_17_0:refreshNextRefreshTime(var_17_11)
 
-	if var_16_0:needShowNew() then
-		local var_16_39 = arg_16_0._itemType == MaterialEnum.MaterialType.BlockPackage
-		local var_16_40 = arg_16_0._itemType == MaterialEnum.MaterialType.Building
+	if var_17_0:needShowNew() then
+		local var_17_39 = arg_17_0._itemType == MaterialEnum.MaterialType.BlockPackage
+		local var_17_40 = arg_17_0._itemType == MaterialEnum.MaterialType.Building
 
-		if not var_16_39 and not var_16_40 then
-			gohelper.setActive(arg_16_0._gonewtag, var_16_0:needShowNew())
+		if not var_17_39 and not var_17_40 then
+			gohelper.setActive(arg_17_0._gonewtag, var_17_0:needShowNew())
 		end
 	end
 
-	local var_16_41 = var_16_11.maxBuyCount - var_16_0.buyCount
-	local var_16_42 = StoreConfig.instance:getRemain(var_16_11, var_16_41, var_16_0.offlineTime)
+	local var_17_41 = var_17_11.maxBuyCount - var_17_0.buyCount
+	local var_17_42 = StoreConfig.instance:getRemain(var_17_11, var_17_41, var_17_0.offlineTime)
 
-	if string.nilorempty(var_16_42) then
-		gohelper.setActive(arg_16_0._txtremain.gameObject, false)
+	if string.nilorempty(var_17_42) then
+		gohelper.setActive(arg_17_0._txtremain.gameObject, false)
 	else
-		gohelper.setActive(arg_16_0._txtremain.gameObject, true)
+		gohelper.setActive(arg_17_0._txtremain.gameObject, true)
 
-		arg_16_0._txtremain.text = var_16_42
+		arg_17_0._txtremain.text = var_17_42
 	end
 
-	arg_16_0._hascloth = var_16_0:alreadyHas()
+	arg_17_0._hascloth = var_17_0:alreadyHas()
 
-	gohelper.setActive(arg_16_0._gohas, false)
-	gohelper.setActive(arg_16_0._gosoldout, false)
-	gohelper.setActive(arg_16_0._btnPath.gameObject, not arg_16_0._hascloth)
+	gohelper.setActive(arg_17_0._gohas, false)
+	gohelper.setActive(arg_17_0._gosoldout, false)
+	gohelper.setActive(arg_17_0._btnPath.gameObject, not arg_17_0._hascloth)
 
-	if arg_16_0._hascloth then
-		gohelper.setActive(arg_16_0._gohas, true)
-	elseif arg_16_0._soldout then
-		gohelper.setActive(arg_16_0._gosoldout, true)
-		gohelper.setActive(arg_16_0._goherofull, false)
+	if arg_17_0._hascloth then
+		if arg_17_0:_isAlreadyHasIgnoreType(var_17_12.subType) and var_17_41 > 0 then
+			gohelper.setActive(arg_17_0._gohas, false)
+		else
+			gohelper.setActive(arg_17_0._gohas, true)
+		end
+	elseif arg_17_0._soldout then
+		gohelper.setActive(arg_17_0._gosoldout, true)
+		gohelper.setActive(arg_17_0._goherofull, false)
 	end
 
-	arg_16_0:refreshGoUnique()
-	arg_16_0:refreshLimitHas()
+	arg_17_0:refreshGoUnique()
+	arg_17_0:refreshLimitHas()
 end
 
-function var_0_0.updateGoodsItemAttribute(arg_17_0, arg_17_1)
-	local var_17_0 = arg_17_1.product
-	local var_17_1 = GameUtil.splitString2(var_17_0, true)[1]
+function var_0_0.updateGoodsItemAttribute(arg_18_0, arg_18_1)
+	local var_18_0 = arg_18_1.product
+	local var_18_1 = GameUtil.splitString2(var_18_0, true)[1]
 
-	arg_17_0._itemType = var_17_1[1]
-	arg_17_0._itemId = var_17_1[2]
-	arg_17_0._itemQuantity = var_17_1[3]
-	arg_17_0.itemConfig, arg_17_0.itemIcon = ItemModel.instance:getItemConfigAndIcon(arg_17_0._itemType, arg_17_0._itemId, true)
+	arg_18_0._itemType = var_18_1[1]
+	arg_18_0._itemId = var_18_1[2]
+	arg_18_0._itemQuantity = var_18_1[3]
+	arg_18_0.itemConfig, arg_18_0.itemIcon = ItemModel.instance:getItemConfigAndIcon(arg_18_0._itemType, arg_18_0._itemId, true)
 end
 
-function var_0_0.refreshNextRefreshTime(arg_18_0, arg_18_1)
-	local var_18_0 = arg_18_0._soldout and arg_18_1.refreshTime ~= StoreEnum.RefreshTime.Forever
+function var_0_0.refreshNextRefreshTime(arg_19_0, arg_19_1)
+	local var_19_0 = arg_19_0._soldout and arg_19_1.refreshTime ~= StoreEnum.RefreshTime.Forever
 
-	gohelper.setActive(arg_18_0._goRefreshTime, var_18_0)
+	gohelper.setActive(arg_19_0._goRefreshTime, var_19_0)
 
-	if var_18_0 then
-		local var_18_1 = arg_18_0:getEndTimeStamp(arg_18_1) - ServerTime.now()
+	if var_19_0 then
+		local var_19_1 = arg_19_0:getEndTimeStamp(arg_19_1) - ServerTime.now()
 
-		if var_18_1 > 0 then
-			gohelper.setActive(arg_18_0._goRefreshTime, true)
+		if var_19_1 > 0 then
+			gohelper.setActive(arg_19_0._goRefreshTime, true)
 
-			if var_18_1 > TimeUtil.OneHourSecond then
-				local var_18_2, var_18_3 = TimeUtil.secondToRoughTime(var_18_1)
+			if var_19_1 > TimeUtil.OneHourSecond then
+				local var_19_2, var_19_3 = TimeUtil.secondToRoughTime(var_19_1)
 
-				arg_18_0._txtRefreshTime.text = formatLuaLang("refresh_remain_time", var_18_2 .. var_18_3)
+				arg_19_0._txtRefreshTime.text = formatLuaLang("refresh_remain_time", var_19_2 .. var_19_3)
 			else
-				arg_18_0._txtRefreshTime.text = luaLang("not_enough_one_hour")
+				arg_19_0._txtRefreshTime.text = luaLang("not_enough_one_hour")
 			end
 		else
-			arg_18_0._txtRefreshTime.text = ""
+			arg_19_0._txtRefreshTime.text = ""
 		end
 	end
 end
 
-function var_0_0.getEndTimeStamp(arg_19_0, arg_19_1)
-	if not arg_19_1 then
+function var_0_0.getEndTimeStamp(arg_20_0, arg_20_1)
+	if not arg_20_1 then
 		return -1
 	end
 
-	if arg_19_1.refreshTime == StoreEnum.RefreshTime.Forever then
+	if arg_20_1.refreshTime == StoreEnum.RefreshTime.Forever then
 		return -1
-	elseif arg_19_1.refreshTime == StoreEnum.RefreshTime.Day then
+	elseif arg_20_1.refreshTime == StoreEnum.RefreshTime.Day then
 		return ServerTime.getToadyEndTimeStamp(true)
-	elseif arg_19_1.refreshTime == StoreEnum.RefreshTime.Week then
+	elseif arg_20_1.refreshTime == StoreEnum.RefreshTime.Week then
 		return ServerTime.getWeekEndTimeStamp(true)
-	elseif arg_19_1.refreshTime == StoreEnum.RefreshTime.Month then
+	elseif arg_20_1.refreshTime == StoreEnum.RefreshTime.Month then
 		return ServerTime.getMonthEndTimeStamp(true)
 	else
 		return -1
 	end
 end
 
-function var_0_0.refreshLimitHas(arg_20_0)
-	if arg_20_0._itemType == MaterialEnum.MaterialType.Equip and not arg_20_0._soldout then
-		arg_20_0._limitSold = EquipModel.instance:isLimitAndAlreadyHas(arg_20_0._itemId)
+function var_0_0.refreshLimitHas(arg_21_0)
+	if arg_21_0._itemType == MaterialEnum.MaterialType.Equip and not arg_21_0._soldout then
+		arg_21_0._limitSold = EquipModel.instance:isLimitAndAlreadyHas(arg_21_0._itemId)
 
-		gohelper.setActive(arg_20_0._golevellimit, arg_20_0._limitSold)
+		gohelper.setActive(arg_21_0._golevellimit, arg_21_0._limitSold)
 
-		arg_20_0._txtlvlimit.text = string.format(luaLang("reachUpperLimit"))
+		arg_21_0._txtlvlimit.text = string.format(luaLang("reachUpperLimit"))
 	else
-		arg_20_0._limitSold = false
+		arg_21_0._limitSold = false
 	end
 end
 
-function var_0_0.refreshActGoods(arg_21_0)
-	arg_21_0._soldout = false
-	arg_21_0._limitSold = false
-	arg_21_0._hascloth = false
+function var_0_0.refreshActGoods(arg_22_0)
+	arg_22_0._soldout = false
+	arg_22_0._limitSold = false
+	arg_22_0._hascloth = false
 
-	local var_21_0 = arg_21_0._mo
-	local var_21_1 = var_21_0:getBelongStoreId()
-	local var_21_2 = arg_21_0._mo:getActGoodsId()
+	local var_22_0 = arg_22_0._mo
+	local var_22_1 = var_22_0:getBelongStoreId()
+	local var_22_2 = arg_22_0._mo:getActGoodsId()
 
-	gohelper.setActive(arg_21_0._goitemreddot, false)
-	gohelper.setActive(arg_21_0._golevellimit, false)
+	gohelper.setActive(arg_22_0._goitemreddot, false)
+	gohelper.setActive(arg_22_0._golevellimit, false)
 
-	local var_21_3 = var_21_0:getIsGreatActGoods()
+	local var_22_3 = var_22_0:getIsGreatActGoods()
 
-	gohelper.setActive(arg_21_0._goActBgEff, var_21_3)
-	arg_21_0:updateActGoodsItemAttribute(var_21_1, var_21_2)
+	gohelper.setActive(arg_22_0._goActBgEff, var_22_3)
+	arg_22_0:updateActGoodsItemAttribute(var_22_1, var_22_2)
 
-	local var_21_4 = ItemModel.instance:getItemConfig(arg_21_0._itemType, arg_21_0._itemId)
+	local var_22_4 = ItemModel.instance:getItemConfig(arg_22_0._itemType, arg_22_0._itemId)
 
-	arg_21_0._txtgoodsName.text = var_21_4 and var_21_4.name or ""
+	arg_22_0._txtgoodsName.text = var_22_4 and var_22_4.name or ""
 
-	arg_21_0:_refreshGoods()
+	arg_22_0:_refreshGoods()
 
-	local var_21_5 = FurnaceTreasureModel.instance:getCostItem(var_21_1)
+	local var_22_5 = FurnaceTreasureModel.instance:getCostItem(var_22_1)
 
-	if not var_21_5 then
-		arg_21_0._txtmaterialNum.text = luaLang("store_free")
+	if not var_22_5 then
+		arg_22_0._txtmaterialNum.text = luaLang("store_free")
 
-		gohelper.setActive(arg_21_0._imagematerial.gameObject, false)
+		gohelper.setActive(arg_22_0._imagematerial.gameObject, false)
 	else
-		local var_21_6 = MaterialEnum.MaterialType.Currency
-		local var_21_7 = FurnaceTreasureConfig.instance:get147GoodsCost(var_21_2)
+		local var_22_6 = MaterialEnum.MaterialType.Currency
+		local var_22_7 = FurnaceTreasureConfig.instance:get147GoodsCost(var_22_2)
 
-		if string.nilorempty(var_21_7) then
-			arg_21_0._costQuantity = 0
+		if string.nilorempty(var_22_7) then
+			arg_22_0._costQuantity = 0
 		else
-			arg_21_0._costQuantity = string.splitToNumber(var_21_7, "#")[1]
+			arg_22_0._costQuantity = string.splitToNumber(var_22_7, "#")[1]
 		end
 
-		local var_21_8 = ItemModel.instance:getItemConfigAndIcon(var_21_6, var_21_5).icon
-		local var_21_9 = string.format("%s_1", var_21_8)
+		local var_22_8 = ItemModel.instance:getItemConfigAndIcon(var_22_6, var_22_5).icon
+		local var_22_9 = string.format("%s_1", var_22_8)
 
-		UISpriteSetMgr.instance:setCurrencyItemSprite(arg_21_0._imagematerial, var_21_9)
-		gohelper.setActive(arg_21_0._imagematerial.gameObject, true)
+		UISpriteSetMgr.instance:setCurrencyItemSprite(arg_22_0._imagematerial, var_22_9)
+		gohelper.setActive(arg_22_0._imagematerial.gameObject, true)
 
-		arg_21_0._txtmaterialNum.text = arg_21_0._costQuantity
+		arg_22_0._txtmaterialNum.text = arg_22_0._costQuantity
 	end
 
-	gohelper.setActive(arg_21_0._txtCost2Num.gameObject, false)
+	gohelper.setActive(arg_22_0._txtCost2Num.gameObject, false)
 
-	arg_21_0._txtmaterialNum.fontSize = 36
-	arg_21_0._txtCost2Num.fontSize = 36
+	arg_22_0._txtmaterialNum.fontSize = 36
+	arg_22_0._txtCost2Num.fontSize = 36
 
-	gohelper.setActive(arg_21_0._godiscount, false)
-	gohelper.setActive(arg_21_0._txtoriginalCost.gameObject, false)
-	gohelper.setActive(arg_21_0._gooffflineTime, false)
-	gohelper.setActive(arg_21_0._goRefreshTime, false)
-	gohelper.setActive(arg_21_0._gonewtag, false)
+	gohelper.setActive(arg_22_0._godiscount, false)
+	gohelper.setActive(arg_22_0._txtoriginalCost.gameObject, false)
+	gohelper.setActive(arg_22_0._gooffflineTime, false)
+	gohelper.setActive(arg_22_0._goRefreshTime, false)
+	gohelper.setActive(arg_22_0._gonewtag, false)
 
-	local var_21_10 = FurnaceTreasureModel.instance:getGoodsRemainCount(var_21_1, var_21_2)
+	local var_22_10 = FurnaceTreasureModel.instance:getGoodsRemainCount(var_22_1, var_22_2)
 
-	arg_21_0._txtremain.text = formatLuaLang("store_buylimit_day", var_21_10)
+	arg_22_0._txtremain.text = formatLuaLang("store_buylimit_day", var_22_10)
 
-	gohelper.setActive(arg_21_0._txtremain.gameObject, true)
-	gohelper.setActive(arg_21_0._gohas, false)
-	gohelper.setActive(arg_21_0._gosoldout, false)
-	gohelper.setActive(arg_21_0._goherofull, false)
-	arg_21_0:refreshGoUnique()
+	gohelper.setActive(arg_22_0._txtremain.gameObject, true)
+	gohelper.setActive(arg_22_0._gohas, false)
+	gohelper.setActive(arg_22_0._gosoldout, false)
+	gohelper.setActive(arg_22_0._goherofull, false)
+	arg_22_0:refreshGoUnique()
 end
 
-function var_0_0.updateActGoodsItemAttribute(arg_22_0, arg_22_1, arg_22_2)
-	local var_22_0 = FurnaceTreasureModel.instance:getGoodsPoolId(arg_22_1, arg_22_2)
+function var_0_0.updateActGoodsItemAttribute(arg_23_0, arg_23_1, arg_23_2)
+	local var_23_0 = FurnaceTreasureModel.instance:getGoodsPoolId(arg_23_1, arg_23_2)
 
-	arg_22_0._itemType, arg_22_0._itemId, arg_22_0._itemQuantity = FurnaceTreasureConfig.instance:getAct147GoodsShowItem(var_22_0)
-	arg_22_0.itemConfig, arg_22_0.itemIcon = ItemModel.instance:getItemConfigAndIcon(arg_22_0._itemType, arg_22_0._itemId, true)
+	arg_23_0._itemType, arg_23_0._itemId, arg_23_0._itemQuantity = FurnaceTreasureConfig.instance:getAct147GoodsShowItem(var_23_0)
+	arg_23_0.itemConfig, arg_23_0.itemIcon = ItemModel.instance:getItemConfigAndIcon(arg_23_0._itemType, arg_23_0._itemId, true)
 end
 
 local var_0_1 = {
 	StoreEnum.StoreId.CritterStore
 }
 
-function var_0_0._refreshGoods(arg_23_0, arg_23_1)
-	local function var_23_0(arg_24_0, arg_24_1)
-		recthelper.setSize(arg_23_0._imgicon.transform, arg_24_0, arg_24_1)
+function var_0_0._refreshGoods(arg_24_0, arg_24_1)
+	local function var_24_0(arg_25_0, arg_25_1)
+		recthelper.setSize(arg_24_0._imgicon.transform, arg_25_0, arg_25_1)
 	end
 
-	local var_23_1 = 278
-	local var_23_2 = 228
-	local var_23_3 = 256
-	local var_23_4 = 256
-	local var_23_5 = false
+	local var_24_1 = 278
+	local var_24_2 = 228
+	local var_24_3 = 256
+	local var_24_4 = 256
+	local var_24_5 = false
 
-	if arg_23_0._itemType == MaterialEnum.MaterialType.Equip then
-		arg_23_0._goicon:LoadImage(ResUrl.getHeroDefaultEquipIcon(arg_23_0.itemConfig.icon), var_23_0(var_23_1, var_23_2))
-	elseif not string.nilorempty(arg_23_0.itemIcon) then
-		arg_23_0._goicon:LoadImage(arg_23_0.itemIcon, var_23_0(var_23_3, var_23_4))
+	if arg_24_0._itemType == MaterialEnum.MaterialType.Equip then
+		arg_24_0._goicon:LoadImage(ResUrl.getHeroDefaultEquipIcon(arg_24_0.itemConfig.icon), var_24_0(var_24_1, var_24_2))
+	elseif not string.nilorempty(arg_24_0.itemIcon) then
+		arg_24_0._goicon:LoadImage(arg_24_0.itemIcon, var_24_0(var_24_3, var_24_4))
 	else
-		var_23_5 = true
+		var_24_5 = true
 	end
 
-	local var_23_6 = arg_23_0._itemType == MaterialEnum.MaterialType.BlockPackage
-	local var_23_7 = arg_23_0._itemType == MaterialEnum.MaterialType.Building
+	local var_24_6 = arg_24_0._itemType == MaterialEnum.MaterialType.BlockPackage
+	local var_24_7 = arg_24_0._itemType == MaterialEnum.MaterialType.Building
 
-	gohelper.setActive(arg_23_0._goicon.gameObject, not var_23_6 and not var_23_7 and not var_23_5)
-	gohelper.setActive(arg_23_0._goroomactive, not LuaUtil.tableContains(var_0_1, arg_23_0._mo.belongStoreId) and (var_23_6 or var_23_7))
-	gohelper.setActive(arg_23_0._goroomticket, arg_23_0:checkShowTicket() and not arg_23_0._soldout)
-	arg_23_0:refreshRoomItemUI(var_23_6, var_23_7)
+	gohelper.setActive(arg_24_0._goicon.gameObject, not var_24_6 and not var_24_7 and not var_24_5)
+	gohelper.setActive(arg_24_0._goroomactive, not LuaUtil.tableContains(var_0_1, arg_24_0._mo.belongStoreId) and (var_24_6 or var_24_7))
+	gohelper.setActive(arg_24_0._goroomticket, arg_24_0:checkShowTicket() and not arg_24_0._soldout)
+	arg_24_0:refreshRoomItemUI(var_24_6, var_24_7)
 
-	if var_23_6 or var_23_7 then
-		UISpriteSetMgr.instance:setRoomSprite(arg_23_0._simageroomactiveicon, "jianshezhi")
+	if var_24_6 or var_24_7 then
+		UISpriteSetMgr.instance:setRoomSprite(arg_24_0._simageroomactiveicon, "jianshezhi")
 	end
 
-	local var_23_8 = 0
-	local var_23_9 = arg_23_1 and arg_23_1.product
+	local var_24_8 = 0
+	local var_24_9 = arg_24_1 and arg_24_1.product
 
-	if not string.nilorempty(var_23_9) then
-		local var_23_10 = GameUtil.splitString2(var_23_9, true)
+	if not string.nilorempty(var_24_9) then
+		local var_24_10 = GameUtil.splitString2(var_24_9, true)
 
-		for iter_23_0, iter_23_1 in ipairs(var_23_10) do
-			if iter_23_1[1] == MaterialEnum.MaterialType.BlockPackage then
-				var_23_8 = var_23_8 + RoomConfig.instance:getBlockPackageFullDegree(iter_23_1[2]) * iter_23_1[3]
-			elseif iter_23_1[1] == MaterialEnum.MaterialType.Building then
-				var_23_8 = var_23_8 + RoomConfig.instance:getBuildingConfig(iter_23_1[2]).buildDegree * iter_23_1[3]
+		for iter_24_0, iter_24_1 in ipairs(var_24_10) do
+			if iter_24_1[1] == MaterialEnum.MaterialType.BlockPackage then
+				var_24_8 = var_24_8 + RoomConfig.instance:getBlockPackageFullDegree(iter_24_1[2]) * iter_24_1[3]
+			elseif iter_24_1[1] == MaterialEnum.MaterialType.Building then
+				var_24_8 = var_24_8 + RoomConfig.instance:getBuildingConfig(iter_24_1[2]).buildDegree * iter_24_1[3]
 			end
 		end
 	end
 
-	arg_23_0._txtroomnum.text = var_23_8
+	arg_24_0._txtroomnum.text = var_24_8
 
-	arg_23_0:showStackableNum()
-	arg_23_0:_checkHeroFullDuplicateCount()
-	arg_23_0:refreshRare()
+	arg_24_0:showStackableNum()
+	arg_24_0:_checkHeroFullDuplicateCount()
+	arg_24_0:refreshRare()
 end
 
-function var_0_0.refreshRare(arg_25_0)
-	local var_25_0 = false
+function var_0_0.refreshRare(arg_26_0)
+	local var_26_0 = false
 
-	if arg_25_0._mo:getIsActGoods() then
-		UISpriteSetMgr.instance:setStoreGoodsSprite(arg_25_0._rare, FurnaceTreasureEnum.RareBgName)
+	if arg_26_0._mo:getIsActGoods() then
+		UISpriteSetMgr.instance:setStoreGoodsSprite(arg_26_0._rare, FurnaceTreasureEnum.RareBgName)
 
-		var_25_0 = true
-	elseif arg_25_0.itemConfig then
-		UISpriteSetMgr.instance:setStoreGoodsSprite(arg_25_0._rare, "rare" .. arg_25_0.itemConfig.rare)
+		var_26_0 = true
+	elseif arg_26_0.itemConfig then
+		UISpriteSetMgr.instance:setStoreGoodsSprite(arg_26_0._rare, "rare" .. arg_26_0.itemConfig.rare)
 
-		var_25_0 = true
+		var_26_0 = true
 	end
 
-	gohelper.setActive(arg_25_0._rare.gameObject, var_25_0)
+	gohelper.setActive(arg_26_0._rare.gameObject, var_26_0)
 end
 
-function var_0_0.refreshRoomItemUI(arg_26_0, arg_26_1, arg_26_2)
-	gohelper.setActive(arg_26_0._goroomiconmask, arg_26_1 or arg_26_2)
+function var_0_0.refreshRoomItemUI(arg_27_0, arg_27_1, arg_27_2)
+	gohelper.setActive(arg_27_0._goroomiconmask, arg_27_1 or arg_27_2)
 
-	if arg_26_1 or arg_26_2 then
-		local var_26_0 = arg_26_0._mo.config.bigImg
+	if arg_27_1 or arg_27_2 then
+		local var_27_0 = arg_27_0._mo.config.bigImg
 
-		if string.nilorempty(arg_26_0._mo.config.bigImg) then
-			var_26_0 = arg_26_0.itemIcon
+		if string.nilorempty(arg_27_0._mo.config.bigImg) then
+			var_27_0 = arg_27_0.itemIcon
 		end
 
-		arg_26_0._simageroomicon:LoadImage(var_26_0, function()
-			arg_26_0._simageroomicon.gameObject:GetComponent(gohelper.Type_Image):SetNativeSize()
+		arg_27_0._simageroomicon:LoadImage(var_27_0, function()
+			arg_27_0._simageroomicon.gameObject:GetComponent(gohelper.Type_Image):SetNativeSize()
 		end)
 	end
 end
 
-function var_0_0.showStackableNum(arg_28_0)
-	if not arg_28_0.itemConfig then
-		gohelper.setActive(arg_28_0._gonum.gameObject, false)
+function var_0_0.showStackableNum(arg_29_0)
+	if not arg_29_0.itemConfig then
+		gohelper.setActive(arg_29_0._gonum.gameObject, false)
 
 		return
 	end
 
-	if (not arg_28_0.itemConfig.isStackable or arg_28_0.itemConfig.isStackable == 1 or arg_28_0._itemType == MaterialEnum.MaterialType.Equip) and arg_28_0._itemQuantity > 1 then
-		gohelper.setActive(arg_28_0._gonum.gameObject, true)
+	if (not arg_29_0.itemConfig.isStackable or arg_29_0.itemConfig.isStackable == 1 or arg_29_0._itemType == MaterialEnum.MaterialType.Equip) and arg_29_0._itemQuantity > 1 then
+		gohelper.setActive(arg_29_0._gonum.gameObject, true)
 
-		arg_28_0._gonumText.text = GameUtil.numberDisplay(arg_28_0._itemQuantity)
+		arg_29_0._gonumText.text = GameUtil.numberDisplay(arg_29_0._itemQuantity)
 	else
-		gohelper.setActive(arg_28_0._gonum.gameObject, false)
+		gohelper.setActive(arg_29_0._gonum.gameObject, false)
 	end
 end
 
-function var_0_0._checkHeroFullDuplicateCount(arg_29_0)
-	local var_29_0 = false
+function var_0_0._checkHeroFullDuplicateCount(arg_30_0)
+	local var_30_0 = false
 
-	if arg_29_0._itemType == MaterialEnum.MaterialType.Hero then
-		var_29_0 = CharacterModel.instance:isHeroFullDuplicateCount(arg_29_0._itemId)
+	if arg_30_0._itemType == MaterialEnum.MaterialType.Hero then
+		var_30_0 = CharacterModel.instance:isHeroFullDuplicateCount(arg_30_0._itemId)
 	end
 
-	gohelper.setActive(arg_29_0._goherofull, var_29_0)
+	gohelper.setActive(arg_30_0._goherofull, var_30_0)
 end
 
-function var_0_0.refreshGoUnique(arg_30_0)
-	gohelper.setActive(arg_30_0._goLimit, ItemConfig.instance:isUniqueByCo(arg_30_0._itemType, arg_30_0.itemConfig))
+function var_0_0.refreshGoUnique(arg_31_0)
+	gohelper.setActive(arg_31_0._goLimit, ItemConfig.instance:isUniqueByCo(arg_31_0._itemType, arg_31_0.itemConfig))
 end
 
-function var_0_0.checkShowTicket(arg_31_0)
-	if arg_31_0._mo.belongStoreId == StoreEnum.StoreId.OldRoomStore or arg_31_0._mo.belongStoreId == StoreEnum.StoreId.NewRoomStore then
-		if arg_31_0._itemType ~= MaterialEnum.MaterialType.BlockPackage and arg_31_0._itemType ~= MaterialEnum.MaterialType.Building then
+function var_0_0.checkShowTicket(arg_32_0)
+	if arg_32_0._mo.belongStoreId == StoreEnum.StoreId.OldRoomStore or arg_32_0._mo.belongStoreId == StoreEnum.StoreId.NewRoomStore then
+		if arg_32_0._itemType ~= MaterialEnum.MaterialType.BlockPackage and arg_32_0._itemType ~= MaterialEnum.MaterialType.Building then
 			return false
 		end
 
-		if arg_31_0._mo:getIsJumpGoods() then
+		if arg_32_0._mo:getIsJumpGoods() then
 			return false
 		end
 
-		if arg_31_0.itemConfig.rare <= 3 then
+		if arg_32_0.itemConfig.rare <= 3 then
 			if ItemModel.instance:getItemCount(StoreEnum.NormalRoomTicket) > 0 or ItemModel.instance:getItemCount(StoreEnum.TopRoomTicket) > 0 then
 				return true
 			end
-		elseif arg_31_0.itemConfig.rare <= 5 and ItemModel.instance:getItemCount(StoreEnum.TopRoomTicket) > 0 then
+		elseif arg_32_0.itemConfig.rare <= 5 and ItemModel.instance:getItemCount(StoreEnum.TopRoomTicket) > 0 then
 			return true
 		end
 	end
@@ -712,16 +734,16 @@ function var_0_0.checkShowTicket(arg_31_0)
 	return false
 end
 
-function var_0_0.onDestroy(arg_32_0)
-	if arg_32_0._goicon then
-		arg_32_0._goicon:UnLoadImage()
+function var_0_0.onDestroy(arg_33_0)
+	if arg_33_0._goicon then
+		arg_33_0._goicon:UnLoadImage()
 
-		arg_32_0._goicon = nil
+		arg_33_0._goicon = nil
 	end
 
-	arg_32_0._simageroomicon:UnLoadImage()
-	arg_32_0._btn:RemoveClickListener()
-	arg_32_0._btnPath:RemoveClickListener()
+	arg_33_0._simageroomicon:UnLoadImage()
+	arg_33_0._btn:RemoveClickListener()
+	arg_33_0._btnPath:RemoveClickListener()
 end
 
 return var_0_0

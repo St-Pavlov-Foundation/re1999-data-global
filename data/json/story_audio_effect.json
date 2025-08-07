@@ -5880,29 +5880,344 @@
     "bankName": "activity_yuzhou2_7_sfx_part05"
   },
   {
-    "id": 27500138,
-    "eventName": "play_activitystorysfx_yuzhou_cloth",
-    "bankName": "activitystory_yuzhou2_7_huahuan_sfx"
+    "id": 29500001,
+    "eventName": "play_activitysfx_cikexia_athensnoise1_loop",
+    "bankName": "activitysfx_cikexia_s01_sfx_part01"
   },
   {
-    "id": 27500139,
-    "eventName": "play_activitysfx_yuzhou_firefly_amb",
-    "bankName": "activity_yuzhou2_7_sfx_fuyong"
+    "id": 29500002,
+    "eventName": "play_activitysfx_cikexia_lyre1",
+    "bankName": "activitysfx_cikexia_s01_sfx_part01"
   },
   {
-    "id": 27500140,
-    "eventName": "play_activitysfx_yuzhou_puppy_whimper",
-    "bankName": "activity_yuzhou2_7_sfx_fuyong"
+    "id": 29500003,
+    "eventName": "play_activitysfx_cikexia_lyre2",
+    "bankName": "activitysfx_cikexia_s01_sfx_part01"
   },
   {
-    "id": 27500141,
-    "eventName": "play_activitysfx_yuzhou_hero3048_04",
-    "bankName": "activity_yuzhou2_7_sfx_fuyong"
+    "id": 29500004,
+    "eventName": "play_activitysfx_cikexia_lyre3",
+    "bankName": "activitysfx_cikexia_s01_sfx_part01"
   },
   {
-    "id": 27500142,
-    "eventName": "play_activitysfx_yuzhou_hero3048_14",
-    "bankName": "activity_yuzhou2_7_sfx_fuyong"
+    "id": 29500005,
+    "eventName": "play_activitysfx_cikexia_femalecough",
+    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+  },
+  {
+    "id": 29500006,
+    "eventName": "play_activitysfx_cikexia_coin",
+    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+  },
+  {
+    "id": 29500007,
+    "eventName": "play_activitysfx_cikexia_femalestep_loop",
+    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+  },
+  {
+    "id": 29500008,
+    "eventName": "play_activitysfx_cikexia_shortspearstab",
+    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+  },
+  {
+    "id": 29500009,
+    "eventName": "play_activitysfx_cikexia_eaglewhoosh",
+    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+  },
+  {
+    "id": 29500010,
+    "eventName": "play_activitysfx_cikexia_athensnoise2_loop",
+    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+  },
+  {
+    "id": 29500011,
+    "eventName": "play_activitysfx_cikexia_raspdrop",
+    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+  },
+  {
+    "id": 29500012,
+    "eventName": "play_activitysfx_cikexia_earthendrop1",
+    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+  },
+  {
+    "id": 29500013,
+    "eventName": "play_activitysfx_cikexia_earthendrop2",
+    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+  },
+  {
+    "id": 29500014,
+    "eventName": "play_activitysfx_cikexia_earthendrop3",
+    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+  },
+  {
+    "id": 29500015,
+    "eventName": "play_activitysfx_cikexia_earthendrops",
+    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+  },
+  {
+    "id": 29500016,
+    "eventName": "play_activitysfx_cikexia_leaves",
+    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+  },
+  {
+    "id": 29500017,
+    "eventName": "play_activitysfx_cikexia_applepick",
+    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+  },
+  {
+    "id": 29500018,
+    "eventName": "play_activitysfx_cikexia_athensnoise3_loop",
+    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+  },
+  {
+    "id": 29500019,
+    "eventName": "play_activitysfx_cikexia_cheer",
+    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+  },
+  {
+    "id": 29500020,
+    "eventName": "play_activitysfx_cikexia_tiledestroy",
+    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+  },
+  {
+    "id": 29500021,
+    "eventName": "play_activitysfx_cikexia_tilestep",
+    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+  },
+  {
+    "id": 29500022,
+    "eventName": "play_activitysfx_cikexia_swordshing",
+    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+  },
+  {
+    "id": 29500023,
+    "eventName": "play_activitysfx_cikexia_eaglehoot",
+    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+  },
+  {
+    "id": 29500024,
+    "eventName": "play_activitysfx_cikexia_fighting",
+    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+  },
+  {
+    "id": 29500025,
+    "eventName": "play_activitysfx_cikexia_swordwhoosh",
+    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+  },
+  {
+    "id": 29500026,
+    "eventName": "play_activitysfx_cikexia_crowdfled_loop",
+    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+  },
+  {
+    "id": 29500027,
+    "eventName": "play_activitysfx_cikexia_malestep",
+    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+  },
+  {
+    "id": 29500028,
+    "eventName": "play_activitysfx_cikexia_weaponcollide1",
+    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+  },
+  {
+    "id": 29500029,
+    "eventName": "play_activitysfx_cikexia_weaponcollide2",
+    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+  },
+  {
+    "id": 29500030,
+    "eventName": "play_activitysfx_cikexia_drawspear",
+    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+  },
+  {
+    "id": 29500031,
+    "eventName": "play_activitysfx_cikeshang_dao1",
+    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+  },
+  {
+    "id": 29500032,
+    "eventName": "play_activitysfx_cikeshang_fstp1",
+    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+  },
+  {
+    "id": 29500033,
+    "eventName": "play_activitysfx_cikeshang_ke",
+    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+  },
+  {
+    "id": 29500034,
+    "eventName": "play_activitysfx_cikeshang_dao2",
+    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+  },
+  {
+    "id": 29500035,
+    "eventName": "play_activitysfx_cikeshang_luodi",
+    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+  },
+  {
+    "id": 29500036,
+    "eventName": "play_activitysfx_cikeshang_dao3",
+    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+  },
+  {
+    "id": 29500037,
+    "eventName": "play_activitysfx_cikeshang_run",
+    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+  },
+  {
+    "id": 29500038,
+    "eventName": "play_activitysfx_cikeshang_overwall",
+    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+  },
+  {
+    "id": 29500039,
+    "eventName": "play_activitysfx_cikeshang_paoku",
+    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+  },
+  {
+    "id": 29500040,
+    "eventName": "play_activitysfx_cikeshang_jump1",
+    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+  },
+  {
+    "id": 29500041,
+    "eventName": "play_activitysfx_cikeshang_jump2",
+    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+  },
+  {
+    "id": 29500042,
+    "eventName": "play_activitysfx_cikeshang_grass",
+    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+  },
+  {
+    "id": 29500043,
+    "eventName": "play_activitysfx_cikeshang_fall",
+    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+  },
+  {
+    "id": 29500044,
+    "eventName": "play_activitysfx_cikeshang_sing",
+    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+  },
+  {
+    "id": 29500045,
+    "eventName": "play_activitysfx_cikeshang_stretch",
+    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+  },
+  {
+    "id": 29500046,
+    "eventName": "play_activitysfx_cikeshang_fstp2",
+    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+  },
+  {
+    "id": 29500047,
+    "eventName": "play_activitysfx_cikeshang_bird",
+    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+  },
+  {
+    "id": 29500048,
+    "eventName": "play_activitysfx_cikeshang_kada",
+    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+  },
+  {
+    "id": 29500049,
+    "eventName": "play_activitysfx_cikeshang_fstp3",
+    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+  },
+  {
+    "id": 29500050,
+    "eventName": "play_activitysfx_cikeshang_fstp4",
+    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+  },
+  {
+    "id": 29500051,
+    "eventName": "play_activitysfx_cikeshang_moca",
+    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+  },
+  {
+    "id": 29500052,
+    "eventName": "play_activitysfx_cikeshang_louti",
+    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+  },
+  {
+    "id": 29500053,
+    "eventName": "play_activitysfx_cikeshang_liba",
+    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+  },
+  {
+    "id": 29500054,
+    "eventName": "play_activitysfx_cikeshang_dao4",
+    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+  },
+  {
+    "id": 29500055,
+    "eventName": "play_activitysfx_cikeshang_xu",
+    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+  },
+  {
+    "id": 29500056,
+    "eventName": "play_activitysfx_cikeshang_lorentz_amb",
+    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+  },
+  {
+    "id": 29500057,
+    "eventName": "play_activitysfx_cikeshang_keyboard",
+    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+  },
+  {
+    "id": 29500058,
+    "eventName": "play_activitysfx_cikeshang_font_scrolling_01",
+    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+  },
+  {
+    "id": 29500059,
+    "eventName": "play_activitysfx_cikeshang_font_scrolling_02",
+    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+  },
+  {
+    "id": 29500060,
+    "eventName": "play_activitysfx_cikeshang_computer_beeps",
+    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+  },
+  {
+    "id": 29500061,
+    "eventName": "play_activitysfx_cikeshang_rain_transition",
+    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+  },
+  {
+    "id": 29500062,
+    "eventName": "play_activitysfx_cikeshang_candlelight",
+    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+  },
+  {
+    "id": 29500063,
+    "eventName": "play_activitysfx_cikeshang_little_person",
+    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+  },
+  {
+    "id": 29500064,
+    "eventName": "play_activitysfx_cikeshang_knife_cross",
+    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+  },
+  {
+    "id": 29500065,
+    "eventName": "play_activitysfx_cikeshang_knife_across",
+    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+  },
+  {
+    "id": 29500066,
+    "eventName": "play_activitysfx_cikexia_paint",
+    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+  },
+  {
+    "id": 29500067,
+    "eventName": "play_activitysfx_cikeshang_s01_heartbeat_fast",
+    "bankName": "activitysfx_cikeshang_s01_sfx_fuyong"
+  },
+  {
+    "id": 29500068,
+    "eventName": "play_activitysfx_cikeshang_s01_whisper_loop",
+    "bankName": "activitysfx_cikeshang_s01_sfx_fuyong"
   },
   {
     "id": 530053,
@@ -6076,8 +6391,38 @@
   },
   {
     "id": 27530004,
-    "eventName": "play_battle_2_7_normalfight_combatlist",
+    "eventName": "play_battle_yuzhou_2_7_normalfight",
     "bankName": "activtiy_yuzhou_combataudio"
+  },
+  {
+    "id": 29530001,
+    "eventName": "play_activitymusic_theme_s01_cikeshang",
+    "bankName": "firsthalf_cikeshang_music"
+  },
+  {
+    "id": 29530002,
+    "eventName": "play_activitymusic_plot_s01_cikeshang",
+    "bankName": "firsthalf_cikeshang_music"
+  },
+  {
+    "id": 29530003,
+    "eventName": "play_activitymusic_theme_s01_cikexia",
+    "bankName": "secondhalf_cikexia_music"
+  },
+  {
+    "id": 29530004,
+    "eventName": "play_activitymusic_plot_s01_cikexia",
+    "bankName": "secondhalf_cikexia_music"
+  },
+  {
+    "id": 29530005,
+    "eventName": "play_activitymusic_celebration_s01_cikexia",
+    "bankName": "secondhalf_cikexia_music"
+  },
+  {
+    "id": 29530006,
+    "eventName": "play_activitymusic_ac2_s01_cikeshang",
+    "bankName": "firsthalf_cikeshang_music"
   },
   {
     "id": 520105,
@@ -6380,28 +6725,58 @@
     "bankName": "activity_yuzhou2_7_sfx"
   },
   {
-    "id": 27520004,
-    "eventName": "play_yuzhou2_7_cutscene_ending",
-    "bankName": "yuzhou2_7_cutscene_sfx_vo"
+    "id": 29520000,
+    "eventName": "play_cike_s01_pv_sfx_vo_music",
+    "bankName": "cikeshangs01_cutscene_sfx_vo"
   },
   {
-    "id": 27520005,
-    "eventName": "play_yuzhou2_7_cutscene_opening",
-    "bankName": "yuzhou2_7_cutscene_sfx_vo"
+    "id": 29520001,
+    "eventName": "play_cikeshangs01_cutscene_florence_spring_sfx",
+    "bankName": "cikeshangs01_cutscene_sfx_vo"
   },
   {
-    "id": 27520006,
-    "eventName": "play_yuzhou2_7_cutscene_bossfought_sfx_vo",
-    "bankName": "yuzhou2_7_cutscene_sfx_vo"
+    "id": 29520002,
+    "eventName": "play_cikexias01_cutscene_jinpingguo_sfx_vo",
+    "bankName": "cikexias01_cutscene_sfx_vo"
   },
   {
-    "id": 27520007,
-    "eventName": "play_yuzhou2_7_cutscene_transfer",
-    "bankName": "yuzhou2_7_cutscene_sfx_vo"
+    "id": 29520003,
+    "eventName": "play_cikeshangs01_cutscene_ezio_broke_sfx",
+    "bankName": "cikeshangs01_cutscene_sfx_vo"
   },
   {
-    "id": 27520008,
-    "eventName": "play_yuzhou2_7_pv_sfx_vo_music",
-    "bankName": "yuzhou2_7_cutscene_sfx_vo"
+    "id": 29520004,
+    "eventName": "play_cikexias01_cutscene_sibsfight_sfx_vo",
+    "bankName": "cikexias01_cutscene_sfx_vo"
+  },
+  {
+    "id": 29520005,
+    "eventName": "play_activitysfx_cikeshang_chapter_open",
+    "bankName": "activitysfx_cikeshang_s01_sfx"
+  },
+  {
+    "id": 29520006,
+    "eventName": "play_activitysfx_cikeshang_subsection_open",
+    "bankName": "activitysfx_cikeshang_s01_sfx"
+  },
+  {
+    "id": 29520007,
+    "eventName": "play_activitysfx_cikeshang_chapter_continue",
+    "bankName": "activitysfx_cikeshang_s01_sfx"
+  },
+  {
+    "id": 29520008,
+    "eventName": "play_activitysfx_cikexia_chapter_open",
+    "bankName": "activitysfx_cikexia_s01_sfx"
+  },
+  {
+    "id": 29520009,
+    "eventName": "play_activitysfx_cikexia_subsection_open",
+    "bankName": "activitysfx_cikexia_s01_sfx"
+  },
+  {
+    "id": 29520010,
+    "eventName": "play_activitysfx_cikexia_chapter_continue",
+    "bankName": "activitysfx_cikexia_s01_sfx"
   }
 ]

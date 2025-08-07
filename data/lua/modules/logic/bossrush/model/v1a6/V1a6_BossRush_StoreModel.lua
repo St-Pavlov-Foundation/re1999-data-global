@@ -217,7 +217,7 @@ function var_0_0.readStoreGroupNewMo(arg_18_0, arg_18_1)
 
 			for iter_18_2, iter_18_3 in pairs(var_18_8) do
 				if iter_18_3 and iter_18_3[1] == var_18_5 then
-					if iter_18_3[2] ~= var_18_6 then
+					if var_18_6 > iter_18_3[2] then
 						var_18_7.isNew = true
 					else
 						var_18_7.isNew = iter_18_3[3] == 0

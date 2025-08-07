@@ -11,6 +11,8 @@ function var_0_0.get(arg_1_0, arg_1_1)
 end
 
 function var_0_0.playOpenAnim(arg_2_0)
+	arg_2_0.view.viewParam = arg_2_0.view.viewParam or {}
+
 	if arg_2_0.view.viewParam.skipOpenAnim then
 		arg_2_0.animator:Play(UIAnimationName.Open, 0, 1)
 

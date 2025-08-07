@@ -34,5 +34,7 @@ var_0_0.onLuckyListChanged = 802
 var_0_0.onCustomPicked = 901
 var_0_0.onCustomPickListChanged = 902
 var_0_0.onSummonScenePrepared = 1001
+var_0_0.onSummonProgressRewards = 2001
+var_0_0.onReceiveSummonReply = 2002
 
 return var_0_0

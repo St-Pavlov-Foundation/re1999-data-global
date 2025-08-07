@@ -22,20 +22,30 @@ function var_0_0.enterActivity12113(arg_1_0, arg_1_1)
 end
 
 function var_0_0.enterActivity12105(arg_4_0, arg_4_1)
-	DungeonModel.instance.curSendEpisodeId = nil
+	local var_4_0 = false
 
+	DungeonModel.instance:resetSendChapterEpisodeId()
 	MainController.instance:enterMainScene(arg_4_0)
 	SceneHelper.instance:waitSceneDone(SceneType.Main, function()
-		VersionActivity2_1EnterController.instance:openVersionActivityEnterViewIfNotOpened(nil, nil, VersionActivity2_1Enum.ActivityId.Aergusi, true)
+		if var_4_0 then
+			PermanentController.instance:jump2Activity(VersionActivity2_1Enum.ActivityId.Aergusi)
+		else
+			VersionActivity2_1EnterController.instance:openVersionActivityEnterViewIfNotOpened(nil, nil, VersionActivity2_1Enum.ActivityId.Aergusi, true)
+		end
 	end)
 end
 
 function var_0_0.enterActivity12114(arg_6_0, arg_6_1)
-	DungeonModel.instance.curSendEpisodeId = nil
+	local var_6_0 = false
 
+	DungeonModel.instance:resetSendChapterEpisodeId()
 	MainController.instance:enterMainScene(arg_6_0)
 	SceneHelper.instance:waitSceneDone(SceneType.Main, function()
-		VersionActivity2_1EnterController.instance:openVersionActivityEnterViewIfNotOpened(nil, nil, VersionActivity2_1Enum.ActivityId.LanShouPa, true)
+		if var_6_0 then
+			PermanentController.instance:jump2Activity(VersionActivity2_1Enum.ActivityId.LanShouPa)
+		else
+			VersionActivity2_1EnterController.instance:openVersionActivityEnterViewIfNotOpened(nil, nil, VersionActivity2_1Enum.ActivityId.LanShouPa, true)
+		end
 	end)
 end
 
@@ -209,10 +219,11 @@ function var_0_0.enterActivity12102(arg_14_0, arg_14_1)
 end
 
 function var_0_0._enterActivity12102(arg_15_0, arg_15_1)
-	local var_15_0 = arg_15_1.episodeId
-	local var_15_1 = arg_15_1.episodeCo
+	local var_15_0 = false
+	local var_15_1 = arg_15_1.episodeId
+	local var_15_2 = arg_15_1.episodeCo
 
-	if not var_15_1 then
+	if not var_15_2 then
 		return
 	end
 
@@ -222,50 +233,68 @@ function var_0_0._enterActivity12102(arg_15_0, arg_15_1)
 		var_0_0.sequence = nil
 	end
 
-	local var_15_2 = false
+	local var_15_3 = false
 
-	if var_15_1.chapterId == VersionActivity2_1DungeonEnum.DungeonChapterId.ElementFight then
-		DungeonMapModel.instance.lastElementBattleId = var_15_0
-		var_15_0 = VersionActivity2_1DungeonModel.instance:getLastEpisodeId()
+	if var_15_2.chapterId == VersionActivity2_1DungeonEnum.DungeonChapterId.ElementFight then
+		DungeonMapModel.instance.lastElementBattleId = var_15_1
+		var_15_1 = VersionActivity2_1DungeonModel.instance:getLastEpisodeId()
 
-		if var_15_0 then
+		if var_15_1 then
 			VersionActivity2_1DungeonModel.instance:setLastEpisodeId(nil)
 		else
-			var_15_0 = DungeonConfig.instance:getActivityElementFightEpisodeToNormalEpisodeId(var_15_1, VersionActivity2_1DungeonEnum.DungeonChapterId.Story)
+			var_15_1 = DungeonConfig.instance:getActivityElementFightEpisodeToNormalEpisodeId(var_15_2, VersionActivity2_1DungeonEnum.DungeonChapterId.Story)
 		end
 
 		GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, ViewName.VersionActivity2_1DungeonMapView)
 	elseif DungeonModel.instance.curSendEpisodePass then
-		var_15_2 = false
+		var_15_3 = false
 
 		GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, ViewName.VersionActivity2_1DungeonMapView)
 	else
-		var_15_2 = true
+		var_15_3 = true
 
 		GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, ViewName.VersionActivity2_1DungeonMapLevelView)
 	end
 
-	local var_15_3 = FlowSequence.New()
+	local var_15_4 = FlowSequence.New()
 
-	var_15_3:addWork(OpenViewWork.New({
-		openFunction = VersionActivity2_1EnterController.directOpenVersionActivityEnterView,
-		openFunctionObj = VersionActivity2_1EnterController.instance,
-		waitOpenViewName = ViewName.VersionActivity2_1EnterView
-	}))
-	var_15_3:registerDoneListener(function()
-		if var_15_2 then
-			VersionActivity2_1DungeonController.instance:openVersionActivityDungeonMapView(nil, var_15_0, function()
+	if var_15_0 then
+		var_15_4:addWork(OpenViewWork.New({
+			openFunction = var_0_0._openPermanent_EnterView,
+			waitOpenViewName = ViewName.VersionActivity2_1EnterView
+		}))
+	elseif GameBranchMgr.instance:isOnVer(2, 9) and SettingsModel.instance:isOverseas() then
+		var_15_4:addWork(OpenViewWork.New({
+			openFunction = function()
+				ViewMgr.instance:openView(ViewName.VersionActivity3_0_v2a1_ReactivityEnterview)
+			end
+		}))
+	else
+		var_15_4:addWork(OpenViewWork.New({
+			openFunction = VersionActivity2_1EnterController.directOpenVersionActivityEnterView,
+			openFunctionObj = VersionActivity2_1EnterController.instance,
+			waitOpenViewName = ViewName.VersionActivity2_1EnterView
+		}))
+	end
+
+	var_15_4:registerDoneListener(function()
+		if var_15_3 then
+			VersionActivity2_1DungeonController.instance:openVersionActivityDungeonMapView(nil, var_15_1, function()
 				ViewMgr.instance:openView(ViewName.VersionActivity2_1DungeonMapLevelView, {
-					episodeId = var_15_0
+					episodeId = var_15_1
 				})
 			end, nil)
 		else
-			VersionActivity2_1DungeonController.instance:openVersionActivityDungeonMapView(nil, var_15_0)
+			VersionActivity2_1DungeonController.instance:openVersionActivityDungeonMapView(nil, var_15_1)
 		end
 	end)
-	var_15_3:start()
+	var_15_4:start()
 
-	var_0_0.sequence = var_15_3
+	var_0_0.sequence = var_15_4
+end
+
+function var_0_0._openPermanent_EnterView()
+	PermanentController.instance:jump2Activity(VersionActivity2_1Enum.ActivityId.EnterView)
 end
 
 return var_0_0

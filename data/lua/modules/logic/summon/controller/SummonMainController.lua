@@ -238,6 +238,36 @@ function var_0_0.handleDailyRefresh(arg_14_0)
 	SummonRpc.instance:sendGetSummonInfoRequest()
 end
 
+function var_0_0.openpPogressRewardView(arg_15_0, arg_15_1)
+	local var_15_0 = SummonConfig.instance:getSummonPool(arg_15_1)
+
+	if not var_15_0 then
+		return
+	end
+
+	if string.nilorempty(var_15_0.progressRewards) then
+		logError(string.format("[export_召唤卡池] poolId:%s \"progressRewards\"字段为nil", arg_15_1))
+
+		return
+	end
+
+	if string.nilorempty(var_15_0.progressRewardPrefab) then
+		logError(string.format("[export_召唤卡池] poolId:%s \"progressRewardPrefab\"字段为nil", arg_15_1))
+
+		return
+	end
+
+	local var_15_1 = ViewMgr.instance:getSetting(ViewName.SummonPoolPogressRewardView)
+
+	if var_15_1 then
+		var_15_1.mainRes = string.format("ui/viewres/summon/%s", var_15_0.progressRewardPrefab)
+	end
+
+	ViewMgr.instance:openView(ViewName.SummonPoolPogressRewardView, {
+		poolId = arg_15_1
+	})
+end
+
 var_0_0.instance = var_0_0.New()
 
 return var_0_0

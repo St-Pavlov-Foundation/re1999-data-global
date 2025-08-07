@@ -142,9 +142,7 @@ function var_0_0.setResPath(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
 end
 
 function var_0_0.setInMainView(arg_10_0)
-	if not arg_10_0._isLive2D then
-		arg_10_0._curModel:setInMainView()
-	end
+	arg_10_0._curModel:setInMainView()
 end
 
 function var_0_0.setMainColor(arg_11_0, arg_11_1)

@@ -97,7 +97,7 @@ function var_0_0.createStep(arg_1_0, arg_1_1)
 		var_1_0 = EliminateCheckAndRefreshStep.New()
 	end
 
-	if arg_1_0 == EliminateEnum.StepWorkType.PlayAudio then
+	if arg_1_0 == EliminateEnum.StepWorkType.LengZhou6PlayAudio then
 		var_1_0 = EliminatePlayAudioStep.New()
 	end
 

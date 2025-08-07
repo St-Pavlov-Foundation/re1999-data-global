@@ -81,6 +81,7 @@ function var_0_0.onConstructor(arg_1_0, arg_1_1)
 	arg_1_0.guard = arg_1_1.guard
 	arg_1_0.subCd = arg_1_1.subCd
 	arg_1_0.exPointType = arg_1_1.exPointType
+	arg_1_0.customUnitId = arg_1_1.customUnitId
 end
 
 return var_0_0

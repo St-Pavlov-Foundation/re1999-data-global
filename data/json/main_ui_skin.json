@@ -1,0 +1,222 @@
+[
+  {
+    "id": 1,
+    "skinId": 1,
+    "icon": "icon_yj",
+    "iconAnchor": "0#10",
+    "iconRotate": "",
+    "isLangBg": 0,
+    "name": "p_mainview_mail",
+    "showChild": ""
+  },
+  {
+    "id": 1,
+    "skinId": 2,
+    "icon": "icon_yj_2",
+    "iconAnchor": "2#-5",
+    "iconRotate": "",
+    "isLangBg": 1,
+    "name": "",
+    "showChild": ""
+  },
+  {
+    "id": 2,
+    "skinId": 1,
+    "icon": "icon_rw",
+    "iconAnchor": "0#0",
+    "iconRotate": "",
+    "isLangBg": 0,
+    "name": "p_mainview_task",
+    "showChild": ""
+  },
+  {
+    "id": 2,
+    "skinId": 2,
+    "icon": "icon_rw_2",
+    "iconAnchor": "1.5#-18",
+    "iconRotate": "",
+    "isLangBg": 1,
+    "name": "",
+    "showChild": ""
+  },
+  {
+    "id": 3,
+    "skinId": 1,
+    "icon": "icon_ck",
+    "iconAnchor": "0#2.43",
+    "iconRotate": "",
+    "isLangBg": 0,
+    "name": "p_mainview_backpack",
+    "showChild": ""
+  },
+  {
+    "id": 3,
+    "skinId": 2,
+    "icon": "icon_ck_2",
+    "iconAnchor": "0#-16",
+    "iconRotate": "",
+    "isLangBg": 1,
+    "name": "",
+    "showChild": ""
+  },
+  {
+    "id": 4,
+    "skinId": 1,
+    "icon": "icon_yh",
+    "iconAnchor": "0#10",
+    "iconRotate": "",
+    "isLangBg": 0,
+    "name": "p_mainview_store",
+    "showChild": "go_bankeffect1"
+  },
+  {
+    "id": 4,
+    "skinId": 2,
+    "icon": "icon_yh_2",
+    "iconAnchor": "-3.5#-5.7",
+    "iconRotate": "",
+    "isLangBg": 1,
+    "name": "",
+    "showChild": "go_bankeffect2"
+  },
+  {
+    "id": 5,
+    "skinId": 1,
+    "icon": "btn_bxhy",
+    "iconAnchor": "",
+    "iconRotate": "",
+    "isLangBg": 1,
+    "name": "",
+    "showChild": "actframe_1"
+  },
+  {
+    "id": 5,
+    "skinId": 2,
+    "icon": "btn_bxhy_2",
+    "iconAnchor": "",
+    "iconRotate": "",
+    "isLangBg": 1,
+    "name": "",
+    "showChild": "actframe_2|act_maitian"
+  },
+  {
+    "id": 6,
+    "skinId": 1,
+    "icon": "btn_js",
+    "iconAnchor": "-1.140167#-7.450012",
+    "iconRotate": "",
+    "isLangBg": 1,
+    "name": "",
+    "showChild": "actframe_1"
+  },
+  {
+    "id": 6,
+    "skinId": 2,
+    "icon": "btn_js_2",
+    "iconAnchor": "30.6#-16.3",
+    "iconRotate": "",
+    "isLangBg": 1,
+    "name": "",
+    "showChild": "actframe_2|act_rolehead"
+  },
+  {
+    "id": 7,
+    "skinId": 1,
+    "icon": "btn_zj",
+    "iconAnchor": "0#0",
+    "iconRotate": "",
+    "isLangBg": 1,
+    "name": "",
+    "showChild": "actframe_1|mask1"
+  },
+  {
+    "id": 7,
+    "skinId": 2,
+    "icon": "btn_zj_2",
+    "iconAnchor": "",
+    "iconRotate": "",
+    "isLangBg": 1,
+    "name": "",
+    "showChild": "actframe_2|dec|image_dec1|image_dec2|image_dec3|mask2"
+  },
+  {
+    "id": 8,
+    "skinId": 1,
+    "icon": "btn_jr",
+    "iconAnchor": "0#0",
+    "iconRotate": "0#0#0",
+    "isLangBg": 1,
+    "name": "",
+    "showChild": "Text|enter"
+  },
+  {
+    "id": 8,
+    "skinId": 2,
+    "icon": "btn_jr_2",
+    "iconAnchor": "17.3#-6.13",
+    "iconRotate": "0#0#-3.13",
+    "isLangBg": 1,
+    "name": "",
+    "showChild": ""
+  },
+  {
+    "id": 9,
+    "skinId": 1,
+    "icon": "icon_cell",
+    "iconAnchor": "",
+    "iconRotate": "",
+    "isLangBg": 0,
+    "name": "",
+    "showChild": ""
+  },
+  {
+    "id": 9,
+    "skinId": 2,
+    "icon": "icon_cell_2",
+    "iconAnchor": "",
+    "iconRotate": "",
+    "isLangBg": 0,
+    "name": "",
+    "showChild": ""
+  },
+  {
+    "id": 10,
+    "skinId": 1,
+    "icon": "btn_add",
+    "iconAnchor": "",
+    "iconRotate": "",
+    "isLangBg": 0,
+    "name": "",
+    "showChild": ""
+  },
+  {
+    "id": 10,
+    "skinId": 2,
+    "icon": "btn_add_2",
+    "iconAnchor": "",
+    "iconRotate": "",
+    "isLangBg": 0,
+    "name": "",
+    "showChild": ""
+  },
+  {
+    "id": 11,
+    "skinId": 1,
+    "icon": "v2a5_kuang1",
+    "iconAnchor": "",
+    "iconRotate": "",
+    "isLangBg": 0,
+    "name": "",
+    "showChild": ""
+  },
+  {
+    "id": 11,
+    "skinId": 2,
+    "icon": "main_assassin_dec5",
+    "iconAnchor": "",
+    "iconRotate": "",
+    "isLangBg": 0,
+    "name": "",
+    "showChild": ""
+  }
+]

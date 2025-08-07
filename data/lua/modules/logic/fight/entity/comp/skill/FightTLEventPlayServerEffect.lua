@@ -75,6 +75,30 @@ function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 			end
 		end
 	end
+
+	if not string.nilorempty(arg_1_3[12]) then
+		for iter_1_4, iter_1_5 in ipairs(arg_1_0.fightStepData.actEffect) do
+			if iter_1_5.configEffect == FightTLEventDefHit.nuoDiKaLostLife then
+				local var_1_8 = arg_1_0:com_registWork(FightWorkNuoDikaLostLifeTimeline, iter_1_5, arg_1_0.fightStepData, arg_1_3[12])
+
+				arg_1_0:addWork2TimelineFinishWork(var_1_8)
+				var_1_8:start()
+			end
+		end
+	end
+
+	if not string.nilorempty(arg_1_3[13]) then
+		arg_1_0.timelineItem.workTimelineItem:onDoneAndKeepPlay()
+	end
+
+	local var_1_9 = arg_1_3[14]
+
+	if not string.nilorempty(var_1_9) then
+		local var_1_10 = string.split(var_1_9, "#")
+		local var_1_11 = arg_1_0:com_registWork(Work2FightWork, FightWorkNormalDialog, FightViewDialog.Type.NoCondition, tonumber(var_1_10[2]))
+
+		arg_1_0:addWork2TimelineFinishWork(var_1_11)
+	end
 end
 
 function var_0_0._playEffect(arg_2_0, arg_2_1)

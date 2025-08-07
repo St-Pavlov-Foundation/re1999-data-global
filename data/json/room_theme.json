@@ -214,5 +214,17 @@
     "collectionBonus": "11#12705#1",
     "extraShowBuilding": "",
     "sourcesType": ""
+  },
+  {
+    "id": 30501,
+    "name": "language_10077963",
+    "nameEn": "Memories of Florence",
+    "desc": "language_10078026",
+    "rewardIcon": "1720500",
+    "building": "130501|130502|130503",
+    "packages": "30501|30502|30503|30504",
+    "collectionBonus": "11#130503#1",
+    "extraShowBuilding": "",
+    "sourcesType": ""
   }
 ]

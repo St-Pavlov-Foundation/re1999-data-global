@@ -28,11 +28,19 @@ if isDebugBuild then
 	end
 end
 
-function string.delBracketContent(arg_4_0)
-	arg_4_0 = string.gsub(arg_4_0, "%b()", "")
-	arg_4_0 = string.gsub(arg_4_0, "（.-）", "")
+function string.replaceSpace(arg_4_0)
+	if LangSettings.instance:isKr() or LangSettings.instance:isEn() then
+		return arg_4_0
+	end
 
-	return arg_4_0
+	return string.gsub(arg_4_0, " ", " ")
+end
+
+function string.delBracketContent(arg_5_0)
+	arg_5_0 = string.gsub(arg_5_0, "%b()", "")
+	arg_5_0 = string.gsub(arg_5_0, "（.-）", "")
+
+	return arg_5_0
 end
 
 return var_0_0

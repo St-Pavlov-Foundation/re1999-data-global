@@ -1,0 +1,61 @@
+﻿module("modules.logic.sp01.odyssey.define.OdysseyEvent", package.seeall)
+
+local var_0_0 = _M
+
+var_0_0.OnCreateMapRootGoDone = 10000
+var_0_0.OnLoadSceneFinish = 10001
+var_0_0.OnInitElements = 10002
+var_0_0.OnDisposeScene = 10003
+var_0_0.OnUpdateElementArrow = 10004
+var_0_0.OnClickElement = 10005
+var_0_0.OnFocusElement = 10006
+var_0_0.OnElementFinish = 10007
+var_0_0.RefreshDungeonView = 10008
+var_0_0.OnUpdateElementPush = 10009
+var_0_0.OnDisposeOldMap = 10010
+var_0_0.OnInitMapSelect = 10011
+var_0_0.OnClickMapSelectItem = 10012
+var_0_0.OnFocusMapSelectItem = 10013
+var_0_0.OnMapSelectItemEnter = 10014
+var_0_0.OnRewardGet = 10015
+var_0_0.ShowAddExpEffect = 10016
+var_0_0.JumpNeedOpenElement = 10017
+var_0_0.CreateNewElement = 10018
+var_0_0.JumpToHeroPos = 10019
+var_0_0.SetDungeonUIShowState = 10020
+var_0_0.OnMapUpdate = 10021
+var_0_0.PlayElementAnim = 10022
+var_0_0.ShowDungeonRightUI = 10023
+var_0_0.ShowInteractCloseBtn = 10024
+var_0_0.OnCloseDungeonRewardView = 10025
+var_0_0.PlaySubTaskFinishEffect = 10026
+var_0_0.PlaySubTaskShowEffect = 10027
+var_0_0.RefreshMercenarySuit = 10101
+var_0_0.RefreshTalent = 10201
+var_0_0.RefreshTalentNodeSelect = 10202
+var_0_0.ResetTalent = 10203
+var_0_0.TrialTalentTreeChange = 10204
+var_0_0.TrialTalentTreeReset = 10205
+var_0_0.RefreshReligionMembers = 10301
+var_0_0.RefreshHeroInfo = 10302
+var_0_0.ShowExposeEffect = 10303
+var_0_0.DailyRefresh = 20000
+var_0_0.OdysseyTaskUpdated = 20001
+var_0_0.OdysseyTaskRefresh = 20002
+var_0_0.OnTaskRewardGetFinish = 20003
+var_0_0.OnRefreshReddot = 20004
+var_0_0.OnRefreshHeroLevel = 20005
+var_0_0.OnHeroGroupSwitch = 30000
+var_0_0.OnHeroGroupSave = 30001
+var_0_0.OnHeroGroupUpdate = 30002
+var_0_0.OnTipSubViewOpen = 30003
+var_0_0.OnTipSubViewClose = 30004
+var_0_0.OnEquipItemSelect = 40000
+var_0_0.OnEquipSuitSelect = 40001
+var_0_0.OnEquipPosSelect = 40002
+var_0_0.OnRefreshBagReddot = 40003
+var_0_0.ShowDungeonBagGetEffect = 50000
+var_0_0.ShowDungeonTalentGetEffect = 50001
+var_0_0.MythUnlockGuide = 60000
+
+return var_0_0

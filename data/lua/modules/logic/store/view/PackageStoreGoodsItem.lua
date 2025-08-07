@@ -65,6 +65,8 @@ function var_0_0._editableInitView(arg_4_0)
 	arg_4_0._gomooncardup = gohelper.findChild(arg_4_0.viewGO, "#go_mooncardup")
 	arg_4_0._gomaterialup = gohelper.findChild(arg_4_0.viewGO, "#go_materialup")
 	arg_4_0._gocobranded = gohelper.findChild(arg_4_0.viewGO, "#go_cobranded")
+	arg_4_0._golinkgift = gohelper.findChild(arg_4_0.viewGO, "#go_linkgift")
+	arg_4_0._gologoTab = gohelper.findChild(arg_4_0.viewGO, "#simage_logo")
 end
 
 function var_0_0._onClick(arg_5_0)
@@ -82,7 +84,14 @@ function var_0_0._onClick(arg_5_0)
 		return
 	end
 
-	if arg_5_0._hascloth then
+	if arg_5_0._cfgType == StoreEnum.StoreChargeType.LinkGiftGoods then
+		if arg_5_0._mo.buyCount > 0 and StoreCharageConditionalHelper.isHasCanFinishGoodsTask(arg_5_0._mo.goodsId) then
+			TaskRpc.instance:sendFinishTaskRequest(arg_5_0._mo.config.taskid)
+			StoreGoodsTaskController.instance:requestGoodsTaskList()
+		else
+			StoreController.instance:openPackageStoreGoodsView(arg_5_0._mo)
+		end
+	elseif arg_5_0._hascloth then
 		GameFacade.showToast(ToastEnum.PackageStoreGoodsHasCloth)
 	elseif arg_5_0._soldout then
 		GameFacade.showToast(ToastEnum.ActivityNoRemainBuyCount)
@@ -145,6 +154,7 @@ end
 
 function var_0_0.onUpdateMO(arg_10_0, arg_10_1)
 	arg_10_0._mo = arg_10_1
+	arg_10_0._cfgType = arg_10_1 and arg_10_1.config and arg_10_1.config.type
 
 	gohelper.setActive(arg_10_0._goitemreddot, StoreModel.instance:isGoodsItemRedDotShow(arg_10_1.goodsId))
 	gohelper.setActive(arg_10_0._golevellimit, not arg_10_0:_isStoreItemUnlock())
@@ -282,7 +292,7 @@ function var_0_0.onUpdateMO(arg_10_0, arg_10_1)
 	if arg_10_0._hascloth then
 		gohelper.setActive(arg_10_0._gohas, true)
 	elseif arg_10_0._soldout then
-		gohelper.setActive(arg_10_0._gosoldout, true)
+		gohelper.setActive(arg_10_0._gosoldout, not StoreCharageConditionalHelper.isCharageTaskNotFinish(arg_10_1.goodsId))
 		gohelper.setActive(arg_10_0._gosoldoutbg, not arg_10_0.hasTag)
 		gohelper.setActive(arg_10_0._gosoldouttagbg, arg_10_0.hasTag)
 		ZProj.UGUIHelper.SetColorAlpha(arg_10_0._iconImage, 0.8)
@@ -338,6 +348,7 @@ function var_0_0.onUpdateMO(arg_10_0, arg_10_1)
 	arg_10_0:_onUpdateMO_newMatUpTag(arg_10_1)
 	arg_10_0:_onUpdateMO_coBrandedTag(arg_10_1)
 	arg_10_0:_onUpdateMO_gosummonSimulationPickFX(arg_10_1)
+	arg_10_0:_onUpdateMO_linkPackage(arg_10_1)
 	arg_10_0:refreshSkinTips(arg_10_1)
 end
 
@@ -379,6 +390,12 @@ function var_0_0.onDestroy(arg_14_0)
 	arg_14_0._btn:RemoveClickListener()
 	arg_14_0._btnCost:RemoveClickListener()
 	GameUtil.onDestroyViewMember_ClickListener(arg_14_0, "_wenhaoClick")
+
+	if arg_14_0._linkGiftItemComp then
+		arg_14_0._linkGiftItemComp:onDestroy()
+
+		arg_14_0._linkGiftItemComp = nil
+	end
 end
 
 function var_0_0._onUpdateMO_newMatUpTag(arg_15_0, arg_15_1)
@@ -392,6 +409,7 @@ function var_0_0._onUpdateMO_coBrandedTag(arg_16_0, arg_16_1)
 	local var_16_0 = arg_16_1.config.showLinkageTag or false
 
 	gohelper.setActive(arg_16_0._gocobranded, var_16_0)
+	gohelper.setActive(arg_16_0._gologoTab, arg_16_1.config.showLogoTag)
 end
 
 function var_0_0._showSeasonCardTips(arg_17_0)
@@ -417,6 +435,22 @@ function var_0_0._onUpdateMO_gosummonSimulationPickFX(arg_18_0, arg_18_1)
 	end
 
 	gohelper.setActive(arg_18_0._gosummonSimulationPickFX, var_18_0)
+end
+
+function var_0_0._onUpdateMO_linkPackage(arg_19_0, arg_19_1)
+	local var_19_0 = arg_19_0._cfgType == StoreEnum.StoreChargeType.LinkGiftGoods
+
+	gohelper.setActive(arg_19_0._golinkgift, var_19_0)
+	gohelper.setActive(arg_19_0._txtname, not var_19_0)
+	gohelper.setActive(arg_19_0._txteng, not var_19_0)
+
+	if var_19_0 then
+		if arg_19_0._linkGiftItemComp == nil then
+			arg_19_0._linkGiftItemComp = MonoHelper.addNoUpdateLuaComOnceToGo(arg_19_0._golinkgift, StoreLinkGiftItemComp, arg_19_0)
+		end
+
+		arg_19_0._linkGiftItemComp:onUpdateMO(arg_19_1)
+	end
 end
 
 return var_0_0

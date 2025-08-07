@@ -313,5 +313,82 @@
     "priority": 1,
     "combination": [],
     "suffix": "_trans"
+  },
+  {
+    "id": 308704,
+    "buffId": 30870131,
+    "priority": 1,
+    "combination": [],
+    "suffix": "_trans"
+  },
+  {
+    "id": 308704,
+    "buffId": 30870132,
+    "priority": 1,
+    "combination": [],
+    "suffix": "_trans"
+  },
+  {
+    "id": 308704,
+    "buffId": 81800061,
+    "priority": 1,
+    "combination": [],
+    "suffix": "_trans"
+  },
+  {
+    "id": 308701,
+    "buffId": 30870331,
+    "priority": 1,
+    "combination": [],
+    "suffix": "_trans"
+  },
+  {
+    "id": 308702,
+    "buffId": 30870331,
+    "priority": 1,
+    "combination": [],
+    "suffix": "_trans"
+  },
+  {
+    "id": 308703,
+    "buffId": 30870331,
+    "priority": 1,
+    "combination": [],
+    "suffix": "_trans"
+  },
+  {
+    "id": 308704,
+    "buffId": 30870331,
+    "priority": 1,
+    "combination": [],
+    "suffix": "_trans"
+  },
+  {
+    "id": 308701,
+    "buffId": 30870332,
+    "priority": 1,
+    "combination": [],
+    "suffix": "_trans"
+  },
+  {
+    "id": 308702,
+    "buffId": 30870332,
+    "priority": 1,
+    "combination": [],
+    "suffix": "_trans"
+  },
+  {
+    "id": 308703,
+    "buffId": 30870332,
+    "priority": 1,
+    "combination": [],
+    "suffix": "_trans"
+  },
+  {
+    "id": 308704,
+    "buffId": 30870332,
+    "priority": 1,
+    "combination": [],
+    "suffix": "_trans"
   }
 ]

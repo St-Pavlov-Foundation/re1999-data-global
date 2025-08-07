@@ -188,7 +188,7 @@ function var_0_0.openDesc(arg_22_0)
 
 		arg_22_0:onAnimDone()
 		arg_22_0._warmUp:setBlock_scroll(false)
-		AudioMgr.instance:trigger(AudioEnum2_7.WarmUp.stop_ui_lushang_yure_typewriter)
+		AudioMgr.instance:trigger(AudioEnum3_0.WarmUp.stop_ui_lushang_yure_typewriter)
 	end)
 end
 

@@ -79,7 +79,7 @@ function var_0_0._setFolderName(arg_6_0, arg_6_1, arg_6_2)
 
 	arg_6_0._skinFolderNameMap[arg_6_1] = arg_6_2
 
-	if not string.match(arg_6_2, "v%d+a%d+_") then
+	if not string.match(arg_6_2, "v%d+a%d+_") and not string.match(arg_6_2, "s01_") then
 		logError(string.format("SkinConfig folderName:%s 不符合版本格式", arg_6_2))
 	end
 end

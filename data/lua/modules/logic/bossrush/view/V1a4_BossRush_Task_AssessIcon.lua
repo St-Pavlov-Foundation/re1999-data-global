@@ -13,12 +13,7 @@ function var_0_0.init(arg_1_0, arg_1_1)
 	arg_1_0._goAssessIconSSSS = gohelper.findChildSingleImage(arg_1_1, "#go_NotEmpty/#go_AssessIcon_sss2")
 	arg_1_0._goAssessIcon = arg_1_0._imageAssessIcon.gameObject
 
-	gohelper.setActive(arg_1_0._goAssessIcon, false)
-	gohelper.setActive(arg_1_0._goAssessIconS, false)
-	gohelper.setActive(arg_1_0._goAssessIconSS, false)
-	gohelper.setActive(arg_1_0._goAssessIconSSS, false)
-	gohelper.setActive(arg_1_0._goAssessIconSSSS, false)
-	gohelper.setActive(arg_1_0._goVxCircle, false)
+	arg_1_0:_hideAllAssessGo()
 end
 
 function var_0_0.setData(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
@@ -46,12 +41,25 @@ function var_0_0.setData(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
 	gohelper.setActive(arg_2_0._goNotEmpty, not var_2_3)
 end
 
-function var_0_0.onDestroyView(arg_4_0)
-	arg_4_0._imageAssessIcon:UnLoadImage()
-	arg_4_0._goAssessIconS:UnLoadImage()
-	arg_4_0._goAssessIconSS:UnLoadImage()
-	arg_4_0._goAssessIconSSS:UnLoadImage()
-	arg_4_0._goAssessIconSSSS:UnLoadImage()
+function var_0_0._hideAllAssessGo(arg_4_0)
+	gohelper.setActive(arg_4_0._goAssessIcon, false)
+	gohelper.setActive(arg_4_0._goAssessIconS, false)
+	gohelper.setActive(arg_4_0._goAssessIconSS, false)
+	gohelper.setActive(arg_4_0._goAssessIconSSS, false)
+	gohelper.setActive(arg_4_0._goAssessIconSSSS, false)
+	gohelper.setActive(arg_4_0._goVxCircle, false)
+end
+
+function var_0_0.onClose(arg_5_0)
+	arg_5_0:_hideAllAssessGo()
+end
+
+function var_0_0.onDestroyView(arg_6_0)
+	arg_6_0._imageAssessIcon:UnLoadImage()
+	arg_6_0._goAssessIconS:UnLoadImage()
+	arg_6_0._goAssessIconSS:UnLoadImage()
+	arg_6_0._goAssessIconSSS:UnLoadImage()
+	arg_6_0._goAssessIconSSSS:UnLoadImage()
 end
 
 return var_0_0

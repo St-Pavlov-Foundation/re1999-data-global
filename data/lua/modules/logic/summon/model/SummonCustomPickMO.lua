@@ -34,6 +34,8 @@ function var_0_0.update(arg_2_0, arg_2_1)
 	if arg_2_1.usedFirstSSRGuarantee ~= nil then
 		arg_2_0._haveFirstSSR = arg_2_1.usedFirstSSRGuarantee
 	end
+
+	arg_2_0.hasGetRewardProgresses = arg_2_1.hasGetRewardProgresses or {}
 end
 
 function var_0_0.isPicked(arg_3_0, arg_3_1)
@@ -42,6 +44,14 @@ end
 
 function var_0_0.isHaveFirstSSR(arg_4_0)
 	return arg_4_0._haveFirstSSR
+end
+
+function var_0_0.getRewardCount(arg_5_0)
+	if arg_5_0.hasGetRewardProgresses then
+		return #arg_5_0.hasGetRewardProgresses
+	end
+
+	return 0
 end
 
 return var_0_0

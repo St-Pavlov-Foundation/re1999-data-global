@@ -1894,5 +1894,101 @@
     "de": "",
     "fr": "",
     "thai": ""
+  },
+  {
+    "id": 2901,
+    "fontType": 1,
+    "zh": "<color=white><size=36>遥远天国  歌声飘扬</size></color>",
+    "tw": "<color=white><size=36>遙遠天國  歌聲飄揚</size></color>",
+    "en": "<color=white><size=36>A song descends from Olympus,</size></color>",
+    "kr": "<color=white><size=36>머나먼 천국, 은은한 선율~</size></color>",
+    "jp": "<color=white><size=36>天に舞う　歌声</size></color>",
+    "de": "",
+    "fr": "",
+    "thai": ""
+  },
+  {
+    "id": 2902,
+    "fontType": 1,
+    "zh": "<color=white><size=36>金苹果呵  太阳般明亮</size></color>",
+    "tw": "<color=white><size=36>金蘋果呵  太陽般明亮</size></color>",
+    "en": "<color=white><size=36>Of an apple gold as the sun.</size></color>",
+    "kr": "<color=white><size=36>황금 사과는 눈부시네~</size></color>",
+    "jp": "<color=white><size=36>金リンゴ　輝く</size></color>",
+    "de": "",
+    "fr": "",
+    "thai": ""
+  },
+  {
+    "id": 2903,
+    "fontType": 1,
+    "zh": "<color=white><size=36>你溢满学识  智慧且茁壮</size></color>",
+    "tw": "<color=white><size=36>你溢滿學識  智慧且茁壯</size></color>",
+    "en": "<color=white><size=36>For secrets held in Hesperides bough,</size></color>",
+    "kr": "<color=white><size=36>지혜롭고 때론 활기 넘치고~</size></color>",
+    "jp": "<color=white><size=36>知恵満ちたる　果実</size></color>",
+    "de": "",
+    "fr": "",
+    "thai": ""
+  },
+  {
+    "id": 2904,
+    "fontType": 1,
+    "zh": "<color=white><size=36>你也勾起动荡与纷争</size></color>",
+    "tw": "<color=white><size=36>你也勾起動盪與紛爭</size></color>",
+    "en": "<color=white><size=36>Stirs to conflict both the fairest and foul.</size></color>",
+    "kr": "<color=white><size=36>다툼과 소동을 일으키곤 한다네~</size></color>",
+    "jp": "<color=white><size=36>心ゆらし　戦起こす</size></color>",
+    "de": "",
+    "fr": "",
+    "thai": ""
+  },
+  {
+    "id": 2905,
+    "fontType": 1,
+    "zh": "<color=white><size=36>海妖高歌  漩涡汹涌</size></color>",
+    "tw": "<color=white><size=36>海妖高歌  漩渦洶湧</size></color>",
+    "en": "<color=white><size=36>Between Scylla and Charybdis</size></color>",
+    "kr": "<color=white><size=36>세이렌의 노래, 파도를 불러~</size></color>",
+    "jp": "<color=white><size=36>セイレーンの　歌声</size></color>",
+    "de": "",
+    "fr": "",
+    "thai": ""
+  },
+  {
+    "id": 2906,
+    "fontType": 1,
+    "zh": "<color=white><size=36>唯勇敢英雄  方可采撷</size></color>",
+    "tw": "<color=white><size=36>唯勇敢英雄  方可採擷</size></color>",
+    "en": "<color=white><size=36>For you, the bravest would venture.</size></color>",
+    "kr": "<color=white><size=36>용감한 영웅만 사과를 따지~</size></color>",
+    "jp": "<color=white><size=36>英雄は　刈るのか</size></color>",
+    "de": "",
+    "fr": "",
+    "thai": ""
+  },
+  {
+    "id": 2907,
+    "fontType": 1,
+    "zh": "<color=white><size=36>力大无穷战士  踏上征程</size></color>",
+    "tw": "<color=white><size=36>力大無窮戰士  踏上征程</size></color>",
+    "en": "<color=white><size=36>Mighty heroes, set forth now through great pain,</size></color>",
+    "kr": "<color=white><size=36>힘센 전사가 여정을 떠나네~</size></color>",
+    "jp": "<color=white><size=36>狂戦士よ　旅立て</size></color>",
+    "de": "",
+    "fr": "",
+    "thai": ""
+  },
+  {
+    "id": 2908,
+    "fontType": 1,
+    "zh": "<color=white><size=36>勇敢追逐  为敬仰与赞美</size></color>",
+    "tw": "<color=white><size=36>勇敢追逐  為敬仰與讚美</size></color>",
+    "en": "<color=white><size=36>And all shall look to you with great acclaim.</size></color>",
+    "kr": "<color=white><size=36>모두가 우러러보고 칭송하네~</size></color>",
+    "jp": "<color=white><size=36>求めたまえ　賛美のため</size></color>",
+    "de": "",
+    "fr": "",
+    "thai": ""
   }
 ]

@@ -9,12 +9,24 @@ end
 function var_0_0.onStart(arg_2_0)
 	arg_2_0:com_sendMsg(FightMsgId.FightProgressValueChange)
 
-	arg_2_0._maxValue = FightDataHelper.fieldMgr.progressMax
+	local var_2_0 = arg_2_0.actEffectData.buffActId
 
-	if arg_2_0._oldValue < arg_2_0._maxValue and FightDataHelper.fieldMgr.progress >= arg_2_0._maxValue then
-		arg_2_0:com_registTimer(arg_2_0._delayAfterPerformance, 0.25 / FightModel.instance:getUISpeed())
+	if var_2_0 == 0 then
+		arg_2_0._maxValue = FightDataHelper.fieldMgr.progressMax
+
+		if arg_2_0._oldValue < arg_2_0._maxValue and FightDataHelper.fieldMgr.progress >= arg_2_0._maxValue then
+			arg_2_0:com_registTimer(arg_2_0._delayAfterPerformance, 0.25 / FightModel.instance:getUISpeed())
+		else
+			arg_2_0:onDone(true)
+		end
 	else
-		arg_2_0:onDone(true)
+		local var_2_1 = FightMsgMgr.sendMsg(FightMsgId.NewProgressValueChange, var_2_0)
+
+		if var_2_1 then
+			arg_2_0:playWorkAndDone(var_2_1)
+		else
+			arg_2_0:onDone(true)
+		end
 	end
 end
 

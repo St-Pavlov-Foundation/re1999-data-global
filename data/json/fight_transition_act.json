@@ -970,5 +970,65 @@
     "fromAct": "posture",
     "endAct": "idle",
     "transitionAct": "change2"
+  },
+  {
+    "id": 308704,
+    "fromAct": "idle_trans",
+    "endAct": "idle",
+    "transitionAct": "trans"
+  },
+  {
+    "id": 308704,
+    "fromAct": "innate1_1",
+    "endAct": "idle",
+    "transitionAct": "trans"
+  },
+  {
+    "id": 308704,
+    "fromAct": "idle",
+    "endAct": "idle_trans",
+    "transitionAct": "trans2"
+  },
+  {
+    "id": 308704,
+    "fromAct": "freeze",
+    "endAct": "freeze_trans",
+    "transitionAct": "-1"
+  },
+  {
+    "id": 308704,
+    "fromAct": "freeze_trans",
+    "endAct": "freeze",
+    "transitionAct": "-1"
+  },
+  {
+    "id": 308704,
+    "fromAct": "freeze_trans",
+    "endAct": "hit_trans",
+    "transitionAct": "-1"
+  },
+  {
+    "id": 308704,
+    "fromAct": "freeze_trans",
+    "endAct": "hit",
+    "transitionAct": "-1"
+  },
+  {
+    "id": 308704,
+    "fromAct": "hit",
+    "endAct": "freeze",
+    "transitionAct": "-1"
+  },
+  {
+    "id": 308704,
+    "fromAct": "posture_trans",
+    "endAct": "idle_trans",
+    "transitionAct": "change2_trans"
+  },
+  {
+    "id": 306504,
+    "fromAct": "idle",
+    "endAct": "posture",
+    "transitionAct": "change"
   }
 ]

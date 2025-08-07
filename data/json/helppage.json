@@ -4360,6 +4360,186 @@
     "isCn": 0
   },
   {
+    "id": 30500101,
+    "title": "",
+    "type": 1,
+    "text": "艾吉奥武器引导",
+    "icon": "v2a9_role_help_1",
+    "iconText": "v2a9_role_help_1",
+    "unlockGuideId": 130521,
+    "isCn": 0
+  },
+  {
+    "id": 30500201,
+    "title": "",
+    "type": 1,
+    "text": "卡珊德拉能力引导1",
+    "icon": "v2a9_role_help_2",
+    "iconText": "v2a9_role_help_2",
+    "unlockGuideId": 130522,
+    "isCn": 0
+  },
+  {
+    "id": 30500202,
+    "title": "",
+    "type": 1,
+    "text": "卡珊德拉能力引导2",
+    "icon": "v2a9_role_help_3",
+    "iconText": "v2a9_role_help_3",
+    "unlockGuideId": 130522,
+    "isCn": 0
+  },
+  {
+    "id": 30500301,
+    "title": "",
+    "type": 2,
+    "text": "sp01鬃毛引导",
+    "icon": "v2a9_bossrush_help_1",
+    "iconText": "v2a9_bossrush_help_1",
+    "unlockGuideId": 130520,
+    "isCn": 0
+  },
+  {
+    "id": 30500401,
+    "title": "",
+    "type": 1,
+    "text": "潜行玩法玩法引导图1",
+    "icon": "v2a9_assassin2_help_1",
+    "iconText": "v2a9_assassin2_help_1",
+    "unlockGuideId": 130523,
+    "isCn": 0
+  },
+  {
+    "id": 30500402,
+    "title": "",
+    "type": 1,
+    "text": "潜行玩法玩法引导图2",
+    "icon": "v2a9_assassin2_help_2",
+    "iconText": "v2a9_assassin2_help_2",
+    "unlockGuideId": 130523,
+    "isCn": 0
+  },
+  {
+    "id": 30500403,
+    "title": "",
+    "type": 1,
+    "text": "潜行玩法玩法引导图3",
+    "icon": "v2a9_assassin2_help_3",
+    "iconText": "v2a9_assassin2_help_3",
+    "unlockGuideId": 130523,
+    "isCn": 0
+  },
+  {
+    "id": 30500404,
+    "title": "",
+    "type": 1,
+    "text": "潜行玩法玩法引导图4",
+    "icon": "v2a9_assassin2_help_4",
+    "iconText": "v2a9_assassin2_help_4",
+    "unlockGuideId": 130523,
+    "isCn": 0
+  },
+  {
+    "id": 30500501,
+    "title": "",
+    "type": 1,
+    "text": "区域地图引导图1",
+    "icon": "v2a9_odyssey_help_1",
+    "iconText": "v2a9_odyssey_help_1",
+    "unlockGuideId": 130511,
+    "isCn": 0
+  },
+  {
+    "id": 30500502,
+    "title": "",
+    "type": 1,
+    "text": "区域地图引导图2（佣兵）",
+    "icon": "v2a9_odyssey_help_5",
+    "iconText": "v2a9_odyssey_help_5",
+    "unlockGuideId": 130516,
+    "isCn": 0
+  },
+  {
+    "id": 30500601,
+    "title": "",
+    "type": 1,
+    "text": "编队界面引导图",
+    "icon": "v2a9_odyssey_help_2",
+    "iconText": "v2a9_odyssey_help_2",
+    "unlockGuideId": 130513,
+    "isCn": 0
+  },
+  {
+    "id": 30500701,
+    "title": "",
+    "type": 1,
+    "text": "天赋树界面引导图",
+    "icon": "v2a9_odyssey_help_3",
+    "iconText": "v2a9_odyssey_help_3",
+    "unlockGuideId": 130514,
+    "isCn": 0
+  },
+  {
+    "id": 30500801,
+    "title": "",
+    "type": 1,
+    "text": "神教成员界面引导图",
+    "icon": "v2a9_odyssey_help_4",
+    "iconText": "v2a9_odyssey_help_4",
+    "unlockGuideId": 130515,
+    "isCn": 0
+  },
+  {
+    "id": 30500901,
+    "title": "",
+    "type": 1,
+    "text": "神话生物界面引导图",
+    "icon": "v2a9_odyssey_help_6",
+    "iconText": "v2a9_odyssey_help_6",
+    "unlockGuideId": 130517,
+    "isCn": 0
+  },
+  {
+    "id": 30500503,
+    "title": "",
+    "type": 1,
+    "text": "征服战引导图",
+    "icon": "v2a9_odyssey_help_7",
+    "iconText": "v2a9_odyssey_help_7",
+    "unlockGuideId": 130518,
+    "isCn": 0
+  },
+  {
+    "id": 30501001,
+    "title": "",
+    "type": 1,
+    "text": "警戒值战斗引导",
+    "icon": "v2a9_alert_help_1",
+    "iconText": "v2a9_alert_help_1",
+    "unlockGuideId": 130531,
+    "isCn": 0
+  },
+  {
+    "id": 30501002,
+    "title": "",
+    "type": 1,
+    "text": "武器轮战斗引导",
+    "icon": "v2a9_wheel_help_1",
+    "iconText": "v2a9_wheel_help_1",
+    "unlockGuideId": 130532,
+    "isCn": 0
+  },
+  {
+    "id": 30501003,
+    "title": "",
+    "type": 1,
+    "text": "武器轮战斗引导",
+    "icon": "v2a9_wheel_help_2",
+    "iconText": "v2a9_wheel_help_2",
+    "unlockGuideId": 130532,
+    "isCn": 0
+  },
+  {
     "id": 2500201,
     "title": "",
     "type": 2,

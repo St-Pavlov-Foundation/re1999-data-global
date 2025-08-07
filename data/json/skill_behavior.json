@@ -2662,5 +2662,221 @@
     "audioId": 0,
     "dec_Type": 0,
     "dec": ""
+  },
+  {
+    "id": 100000,
+    "type": "EzioProps",
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0,
+    "dec_Type": 0,
+    "dec": ""
+  },
+  {
+    "id": 100001,
+    "type": "EzioBigSkillTyp1",
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0,
+    "dec_Type": 0,
+    "dec": ""
+  },
+  {
+    "id": 100002,
+    "type": "EzioBigSkillTyp2",
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0,
+    "dec_Type": 0,
+    "dec": ""
+  },
+  {
+    "id": 100003,
+    "type": "EzioBigSkillEnd",
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0,
+    "dec_Type": 0,
+    "dec": ""
+  },
+  {
+    "id": 100004,
+    "type": "AddAdrenalineExPoint",
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0,
+    "dec_Type": 0,
+    "dec": ""
+  },
+  {
+    "id": 100005,
+    "type": "Assassinate",
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0,
+    "dec_Type": 0,
+    "dec": ""
+  },
+  {
+    "id": 100006,
+    "type": "AddBuffByHeroId",
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0,
+    "dec_Type": 0,
+    "dec": ""
+  },
+  {
+    "id": 100007,
+    "type": "EzioReuse",
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0,
+    "dec_Type": 0,
+    "dec": ""
+  },
+  {
+    "id": 100008,
+    "type": "EzioOrigin",
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0,
+    "dec_Type": 0,
+    "dec": ""
+  },
+  {
+    "id": 100009,
+    "type": "EzioReuseDead",
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0,
+    "dec_Type": 0,
+    "dec": ""
+  },
+  {
+    "id": 100010,
+    "type": "EzioAddSynchronizationByDead",
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0,
+    "dec_Type": 0,
+    "dec": ""
+  },
+  {
+    "id": 100011,
+    "type": "EzioBigSkillWeapon1",
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0,
+    "dec_Type": 0,
+    "dec": ""
+  },
+  {
+    "id": 100012,
+    "type": "EzioBigSkillWeapon2",
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0,
+    "dec_Type": 0,
+    "dec": ""
+  },
+  {
+    "id": 100013,
+    "type": "EzioBigSkillWeapon3",
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0,
+    "dec_Type": 0,
+    "dec": ""
+  },
+  {
+    "id": 100014,
+    "type": "EzioAddSynchronization",
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0,
+    "dec_Type": 0,
+    "dec": ""
+  },
+  {
+    "id": 100015,
+    "type": "ProgressInitNew",
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0,
+    "dec_Type": 0,
+    "dec": ""
+  },
+  {
+    "id": 100016,
+    "type": "ProgressChangeNew",
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0,
+    "dec_Type": 0,
+    "dec": ""
+  },
+  {
+    "id": 100017,
+    "type": "IgnoreSkillConfigDamageRate",
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0,
+    "dec_Type": 0,
+    "dec": ""
+  },
+  {
+    "id": 100018,
+    "type": "ConsumeBuffCreateTempCardOrder",
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0,
+    "dec_Type": 0,
+    "dec": ""
+  },
+  {
+    "id": 100019,
+    "type": "ConsumeBuffFixMixedRate",
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0,
+    "dec_Type": 0,
+    "dec": ""
+  },
+  {
+    "id": 100020,
+    "type": "ConsumeBloodPoolChangeBuff",
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0,
+    "dec_Type": 0,
+    "dec": ""
+  },
+  {
+    "id": 100021,
+    "type": "ConsumeBloodPoolDirectUseSkill",
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0,
+    "dec_Type": 0,
+    "dec": ""
+  },
+  {
+    "id": 100022,
+    "type": "EzioBigSkillCheckTimes",
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0,
+    "dec_Type": 0,
+    "dec": ""
+  },
+  {
+    "id": 100023,
+    "type": "CritRateAlter2",
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0,
+    "dec_Type": 0,
+    "dec": ""
   }
 ]

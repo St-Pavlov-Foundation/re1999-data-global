@@ -27,6 +27,8 @@ function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
 		arg_3_0._slotTable = arg_3_2
 	elseif arg_3_1 == "character_destiny" then
 		arg_3_0._destinyTable = arg_3_2
+
+		arg_3_0:initDestinyTable()
 	end
 end
 
@@ -178,6 +180,38 @@ function var_0_0.getAllDestinyConfigList(arg_16_0)
 	end
 
 	return arg_16_0._destinyTable.configList
+end
+
+function var_0_0.initDestinyTable(arg_17_0)
+	local var_17_0 = arg_17_0:getAllDestinyConfigList()
+
+	arg_17_0._destinyFacetHeroIdDic = {}
+
+	if var_17_0 == nil then
+		return
+	end
+
+	for iter_17_0, iter_17_1 in ipairs(var_17_0) do
+		if not string.nilorempty(iter_17_1.facetsId) then
+			local var_17_1 = string.splitToNumber(iter_17_1.facetsId, "#")
+
+			for iter_17_2, iter_17_3 in ipairs(var_17_1) do
+				if not arg_17_0._destinyFacetHeroIdDic[iter_17_3] then
+					arg_17_0._destinyFacetHeroIdDic[iter_17_3] = iter_17_1.heroId
+				else
+					logError("角色命石表 存在重复命石id:" + tostring(iter_17_3))
+				end
+			end
+		end
+	end
+end
+
+function var_0_0.getDestinyFacetHeroId(arg_18_0, arg_18_1)
+	if not arg_18_0._destinyFacetHeroIdDic then
+		return nil
+	end
+
+	return arg_18_0._destinyFacetHeroIdDic[arg_18_1]
 end
 
 var_0_0.instance = var_0_0.New()

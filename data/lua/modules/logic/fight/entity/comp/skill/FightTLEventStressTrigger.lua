@@ -25,7 +25,7 @@ function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 	local var_1_5 = tonumber(var_1_4.value)
 	local var_1_6 = var_1_4.value2
 
-	FightFloatMgr.instance:float(var_1_0, FightEnum.FloatType.stress, var_1_6, var_1_5)
+	FightFloatMgr.instance:float(var_1_0, FightEnum.FloatType.stress, var_1_6, var_1_5, false)
 	FightController.instance:dispatchEvent(FightEvent.TriggerStressBehaviour, var_1_0, var_1_2)
 
 	for iter_1_0, iter_1_1 in ipairs(arg_1_1.actEffect) do

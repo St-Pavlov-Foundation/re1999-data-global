@@ -7,6 +7,7 @@ local var_0_1 = {
 }
 
 function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+	arg_1_0.paramsArr = arg_1_3
 	arg_1_0.fightStepData = arg_1_1
 	arg_1_0._delayReleaseEffect = not string.nilorempty(arg_1_3[8]) and tonumber(arg_1_3[8])
 
@@ -21,6 +22,8 @@ function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 
 		return
 	end
+
+	arg_1_0._tokenRelease = not string.nilorempty(arg_1_0.paramsArr[12])
 
 	local var_1_1 = arg_1_3[2]
 	local var_1_2 = arg_1_3[3]
@@ -122,15 +125,33 @@ function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 		end
 	end
 
+	local var_1_23 = arg_1_3[13]
+
+	var_1_23 = not string.nilorempty(var_1_23) and var_1_23
+
+	if var_1_23 then
+		for iter_1_8, iter_1_9 in ipairs(var_1_8) do
+			iter_1_9.effect:_onInvokeTokenRelease(var_1_23)
+		end
+
+		return
+	end
+
 	if #var_1_8 > 0 then
 		arg_1_0._effectWrapDict = {}
 
-		for iter_1_8, iter_1_9 in ipairs(var_1_8) do
-			local var_1_23 = arg_1_0:_createEffect(iter_1_9, var_1_0, var_1_1, var_1_2, var_1_3, var_1_4, var_1_5)
+		local var_1_24 = tonumber(arg_1_3[10])
 
-			arg_1_0:_setRenderOrder(iter_1_9.id, var_1_23, var_1_7)
+		for iter_1_10, iter_1_11 in ipairs(var_1_8) do
+			local var_1_25 = arg_1_0:_createEffect(iter_1_11, var_1_0, var_1_1, var_1_2, var_1_3, var_1_4, var_1_5)
 
-			arg_1_0._effectWrapDict[iter_1_9] = var_1_23
+			arg_1_0:_setRenderOrder(iter_1_11.id, var_1_25, var_1_7)
+
+			arg_1_0._effectWrapDict[iter_1_11] = var_1_25
+
+			if var_1_24 then
+				AudioMgr.instance:trigger(var_1_24)
+			end
 		end
 	end
 end
@@ -147,36 +168,52 @@ function var_0_0._createEffect(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4, arg_
 		var_3_1 = arg_3_1.effect:addHangEffect(arg_3_2, arg_3_3, var_3_0:getSide(), arg_3_0._delayReleaseEffect)
 
 		var_3_1:setLocalPos(arg_3_5, arg_3_6, arg_3_7)
+
+		local var_3_2 = tonumber(arg_3_0.paramsArr[11])
+
+		if var_3_2 then
+			local var_3_3 = var_3_1.containerTr
+
+			if var_3_3 then
+				local var_3_4, var_3_5, var_3_6 = transformhelper.getPos(var_3_3)
+
+				var_3_1:setWorldPos(var_3_4, var_3_2, var_3_6)
+			end
+		end
 	else
 		var_3_1 = arg_3_1.effect:addGlobalEffect(arg_3_2, var_3_0:getSide(), arg_3_0._delayReleaseEffect)
 
-		local var_3_2
-		local var_3_3
-		local var_3_4
+		local var_3_7
+		local var_3_8
+		local var_3_9
 
 		if arg_3_4 == "0" then
-			var_3_2, var_3_3, var_3_4 = FightHelper.getEntityWorldBottomPos(arg_3_1)
+			var_3_7, var_3_8, var_3_9 = FightHelper.getEntityWorldBottomPos(arg_3_1)
 		elseif arg_3_4 == "1" then
-			var_3_2, var_3_3, var_3_4 = FightHelper.getEntityWorldCenterPos(arg_3_1)
+			var_3_7, var_3_8, var_3_9 = FightHelper.getEntityWorldCenterPos(arg_3_1)
 		elseif arg_3_4 == "2" then
-			var_3_2, var_3_3, var_3_4 = FightHelper.getEntityWorldTopPos(arg_3_1)
+			var_3_7, var_3_8, var_3_9 = FightHelper.getEntityWorldTopPos(arg_3_1)
 		elseif arg_3_4 == "3" then
-			var_3_2, var_3_3, var_3_4 = FightHelper.getProcessEntitySpinePos(arg_3_1)
+			var_3_7, var_3_8, var_3_9 = FightHelper.getProcessEntitySpinePos(arg_3_1)
 		else
-			local var_3_5 = not string.nilorempty(arg_3_4) and arg_3_1:getHangPoint(arg_3_4)
+			local var_3_10 = not string.nilorempty(arg_3_4) and arg_3_1:getHangPoint(arg_3_4)
 
-			if var_3_5 then
-				local var_3_6 = var_3_5.transform.position
+			if var_3_10 then
+				local var_3_11 = var_3_10.transform.position
 
-				var_3_2, var_3_3, var_3_4 = var_3_6.x, var_3_6.y, var_3_6.z
+				var_3_7, var_3_8, var_3_9 = var_3_11.x, var_3_11.y, var_3_11.z
 			else
-				var_3_2, var_3_3, var_3_4 = FightHelper.getEntityWorldCenterPos(arg_3_1)
+				var_3_7, var_3_8, var_3_9 = FightHelper.getEntityWorldCenterPos(arg_3_1)
 			end
 		end
 
-		local var_3_7 = arg_3_1:isMySide() and -arg_3_5 or arg_3_5
+		local var_3_12 = arg_3_1:isMySide() and -arg_3_5 or arg_3_5
 
-		var_3_1:setWorldPos(var_3_2 + var_3_7, var_3_3 + arg_3_6, var_3_4 + arg_3_7)
+		var_3_1:setWorldPos(var_3_7 + var_3_12, var_3_8 + arg_3_6, var_3_9 + arg_3_7)
+	end
+
+	if arg_3_0._tokenRelease then
+		arg_3_1.effect:addTokenRelease(arg_3_0.paramsArr[12], var_3_1)
 	end
 
 	return var_3_1
@@ -195,7 +232,7 @@ function var_0_0.onDestructor(arg_5_0)
 end
 
 function var_0_0._removeEffect(arg_6_0)
-	if arg_6_0._effectWrapDict and not arg_6_0._delayReleaseEffect then
+	if arg_6_0._effectWrapDict and not arg_6_0._delayReleaseEffect and not arg_6_0._tokenRelease then
 		for iter_6_0, iter_6_1 in pairs(arg_6_0._effectWrapDict) do
 			FightRenderOrderMgr.instance:onRemoveEffectWrap(iter_6_0.id, iter_6_1)
 			iter_6_0.effect:removeEffect(iter_6_1)

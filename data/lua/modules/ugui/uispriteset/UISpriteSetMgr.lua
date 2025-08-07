@@ -145,6 +145,14 @@ function var_0_0.ctor(arg_1_0)
 	arg_1_0._v2a7_dungeon_sprite = arg_1_0:newSpriteSetUnit("ui/spriteassets/v2a7_dungeon.asset")
 	arg_1_0._v2a7_coopergarland_sprite = arg_1_0:newSpriteSetUnit("ui/spriteassets/v2a7_coopergarland_spriteset.asset")
 	arg_1_0._v2a7_hissabeth_sprite = arg_1_0:newSpriteSetUnit("ui/spriteassets/v2a7_hissabeth_spriteset.asset")
+	arg_1_0._v2a9_main_activity = arg_1_0:newSpriteSetUnit("ui/spriteassets/v2a9_mainactivity_spriteset.asset")
+	arg_1_0._v2a9_dungeon_sprite = arg_1_0:newSpriteSetUnit("ui/spriteassets/v2a9_dungeon.asset")
+	arg_1_0._sp01_odysseydungeon = arg_1_0:newSpriteSetUnit("ui/spriteassets/sp01_odysseydungeon.asset")
+	arg_1_0._sp01_odysseydungeonelement = arg_1_0:newSpriteSetUnit("ui/spriteassets/sp01_odysseydungeonelement.asset")
+	arg_1_0._sp01_odysseytalent = arg_1_0:newSpriteSetUnit("ui/spriteassets/sp01_odyssey_talenticon.asset")
+	arg_1_0._sp01_assassin = arg_1_0:newSpriteSetUnit("ui/spriteassets/assassin2.asset")
+	arg_1_0._sp01_talenticon = arg_1_0:newSpriteSetUnit("ui/spriteassets/sp01_odyssey_talenticon.asset")
+	arg_1_0._sp01_act205 = arg_1_0:newSpriteSetUnit("ui/spriteassets/v2a9_act205_spriteset.asset")
 end
 
 function var_0_0.newSpriteSetUnit(arg_2_0, arg_2_1)
@@ -724,14 +732,46 @@ function var_0_0.setHisSaBethSprite(arg_144_0, arg_144_1, arg_144_2, arg_144_3)
 	arg_144_0._v2a7_hissabeth_sprite:setSprite(arg_144_1, arg_144_2, arg_144_3)
 end
 
-function var_0_0.tryDispose(arg_145_0)
-	for iter_145_0, iter_145_1 in ipairs(arg_145_0._spriteSetList) do
-		iter_145_1:tryDispose()
+function var_0_0.setV2a9MainActivitySprite(arg_145_0, arg_145_1, arg_145_2, arg_145_3)
+	arg_145_0._v2a9_main_activity:setSprite(arg_145_1, arg_145_2, arg_145_3)
+end
+
+function var_0_0.setV2a9DungeonSprite(arg_146_0, arg_146_1, arg_146_2, arg_146_3)
+	arg_146_0._v2a9_dungeon_sprite:setSprite(arg_146_1, arg_146_2, arg_146_3)
+end
+
+function var_0_0.setSp01OdysseyDungeonSprite(arg_147_0, arg_147_1, arg_147_2, arg_147_3)
+	arg_147_0._sp01_odysseydungeon:setSprite(arg_147_1, arg_147_2, arg_147_3)
+end
+
+function var_0_0.setSp01OdysseyDungeonElementSprite(arg_148_0, arg_148_1, arg_148_2, arg_148_3)
+	arg_148_0._sp01_odysseydungeonelement:setSprite(arg_148_1, arg_148_2, arg_148_3)
+end
+
+function var_0_0.setSp01OdysseyTalentSprite(arg_149_0, arg_149_1, arg_149_2, arg_149_3)
+	arg_149_0._sp01_odysseytalent:setSprite(arg_149_1, arg_149_2, arg_149_3)
+end
+
+function var_0_0.setSp01AssassinSprite(arg_150_0, arg_150_1, arg_150_2, arg_150_3)
+	arg_150_0._sp01_assassin:setSprite(arg_150_1, arg_150_2, arg_150_3)
+end
+
+function var_0_0.setSp01TalentIconSprite(arg_151_0, arg_151_1, arg_151_2, arg_151_3)
+	arg_151_0._sp01_talenticon:setSprite(arg_151_1, arg_151_2, arg_151_3)
+end
+
+function var_0_0.setSp01Act205Sprite(arg_152_0, arg_152_1, arg_152_2, arg_152_3)
+	arg_152_0._sp01_act205:setSprite(arg_152_1, arg_152_2, arg_152_3)
+end
+
+function var_0_0.tryDispose(arg_153_0)
+	for iter_153_0, iter_153_1 in ipairs(arg_153_0._spriteSetList) do
+		iter_153_1:tryDispose()
 	end
 end
 
-function var_0_0.setActivityPuzzle(arg_146_0, arg_146_1, arg_146_2, arg_146_3)
-	arg_146_0._activitypuzzle:setSprite(arg_146_1, arg_146_2, arg_146_3)
+function var_0_0.setActivityPuzzle(arg_154_0, arg_154_1, arg_154_2, arg_154_3)
+	arg_154_0._activitypuzzle:setSprite(arg_154_1, arg_154_2, arg_154_3)
 end
 
 var_0_0.instance = var_0_0.New()

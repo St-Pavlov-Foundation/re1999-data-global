@@ -230,7 +230,7 @@ function var_0_0._onFrame(arg_10_0)
 end
 
 function var_0_0.openGMView(arg_12_0)
-	if ViewMgr.instance:isOpen(ViewName.GuideView) then
+	if arg_12_0:checkNeedOpenGM2View() then
 		ViewMgr.instance:closeView(ViewName.GMToolView)
 		ViewMgr.instance:openView(ViewName.GMToolView2)
 	else
@@ -239,69 +239,79 @@ function var_0_0.openGMView(arg_12_0)
 	end
 end
 
-function var_0_0.ignoreHeartBeatLog(arg_13_0)
+function var_0_0.checkNeedOpenGM2View(arg_13_0)
+	if SkillEditorMgr and SkillEditorMgr.instance and SkillEditorMgr.instance.inEditMode then
+		return true
+	end
+
+	if ViewMgr.instance:isOpen(ViewName.GuideView) then
+		return true
+	end
+end
+
+function var_0_0.ignoreHeartBeatLog(arg_14_0)
 	LuaSocketMgr.instance:setIgnoreSomeCmdLog({
 		"GetServerTimeRequest",
 		"GetServerTimeReply"
 	})
 end
 
-function var_0_0.resumeHeartBeatLog(arg_14_0)
+function var_0_0.resumeHeartBeatLog(arg_15_0)
 	LuaSocketMgr.instance:setIgnoreSomeCmdLog()
 end
 
-function var_0_0.refreshSkillEditorView(arg_15_0)
-	if not arg_15_0.goUiRoot then
-		arg_15_0.goUiRoot = gohelper.find("UIRoot")
+function var_0_0.refreshSkillEditorView(arg_16_0)
+	if not arg_16_0.goUiRoot then
+		arg_16_0.goUiRoot = gohelper.find("UIRoot")
 	end
 
-	if not arg_15_0.goCameraRoot then
-		arg_15_0.goCameraRoot = gohelper.find("cameraroot")
+	if not arg_16_0.goCameraRoot then
+		arg_16_0.goCameraRoot = gohelper.find("cameraroot")
 	end
 
-	if not arg_15_0.goIDRoot then
-		arg_15_0.goIDRoot = gohelper.find("IDCanvas")
+	if not arg_16_0.goIDRoot then
+		arg_16_0.goIDRoot = gohelper.find("IDCanvas")
 	end
 
-	arg_15_0.goNameBar = gohelper.findChild(arg_15_0.goUiRoot, "HUD/NameBar")
-	arg_15_0.goSkillEffectStatView = gohelper.findChild(arg_15_0.goUiRoot, "POPUP_TOP/SkillEffectStatView")
-	arg_15_0.goSkillEditorView = gohelper.findChild(arg_15_0.goUiRoot, "TOP/SkillEditorView")
-	arg_15_0.goText = gohelper.findChild(arg_15_0.goUiRoot, "Text")
-	arg_15_0.goSubHero = gohelper.findChild(arg_15_0.goCameraRoot, "SceneRoot/FightScene/Entitys/Player_-1")
+	arg_16_0.goNameBar = gohelper.findChild(arg_16_0.goUiRoot, "HUD/NameBar")
+	arg_16_0.goSkillEffectStatView = gohelper.findChild(arg_16_0.goUiRoot, "POPUP_TOP/SkillEffectStatView")
+	arg_16_0.goSkillEditorView = gohelper.findChild(arg_16_0.goUiRoot, "TOP/SkillEditorView")
+	arg_16_0.goText = gohelper.findChild(arg_16_0.goUiRoot, "Text")
+	arg_16_0.goSubHero = gohelper.findChild(arg_16_0.goCameraRoot, "SceneRoot/FightScene/Entitys/Player_-1")
 
-	if not arg_15_0.goIDPopup then
-		arg_15_0.goIDPopup = gohelper.findChild(arg_15_0.goIDRoot, "POPUP")
+	if not arg_16_0.goIDPopup then
+		arg_16_0.goIDPopup = gohelper.findChild(arg_16_0.goIDRoot, "POPUP")
 	end
 
-	arg_15_0.goFloat = gohelper.findChild(arg_15_0.goUiRoot, "HUD/Float")
+	arg_16_0.goFloat = gohelper.findChild(arg_16_0.goUiRoot, "HUD/Float")
 
-	gohelper.setActive(arg_15_0.goNameBar, arg_15_0.isShowEditorFightUI)
-	gohelper.setActive(arg_15_0.goSkillEffectStatView, arg_15_0.isShowEditorFightUI)
-	gohelper.setActive(arg_15_0.goSkillEditorView, arg_15_0.isShowEditorFightUI)
-	gohelper.setActive(arg_15_0.goText, arg_15_0.isShowEditorFightUI)
-	gohelper.setActive(arg_15_0.goSubHero, arg_15_0.isShowEditorFightUI)
-	gohelper.setActive(arg_15_0.goIDPopup, arg_15_0.isShowEditorFightUI)
-	gohelper.setActive(arg_15_0.goFloat, arg_15_0.isShowEditorFightUI)
+	gohelper.setActive(arg_16_0.goNameBar, arg_16_0.isShowEditorFightUI)
+	gohelper.setActive(arg_16_0.goSkillEffectStatView, arg_16_0.isShowEditorFightUI)
+	gohelper.setActive(arg_16_0.goSkillEditorView, arg_16_0.isShowEditorFightUI)
+	gohelper.setActive(arg_16_0.goText, arg_16_0.isShowEditorFightUI)
+	gohelper.setActive(arg_16_0.goSubHero, arg_16_0.isShowEditorFightUI)
+	gohelper.setActive(arg_16_0.goIDPopup, arg_16_0.isShowEditorFightUI)
+	gohelper.setActive(arg_16_0.goFloat, arg_16_0.isShowEditorFightUI)
 end
 
-function var_0_0.getIsShowEditorFightUI(arg_16_0)
-	return arg_16_0.isShowEditorFightUI
+function var_0_0.getIsShowEditorFightUI(arg_17_0)
+	return arg_17_0.isShowEditorFightUI
 end
 
-function var_0_0.playRightSkill(arg_17_0, arg_17_1)
-	local var_17_0 = ViewMgr.instance:getContainer(ViewName.SkillEditorView)
+function var_0_0.playRightSkill(arg_18_0, arg_18_1)
+	local var_18_0 = ViewMgr.instance:getContainer(ViewName.SkillEditorView)
 
-	if var_17_0 then
-		local var_17_1 = var_17_0.rightSkillEditorSideView._skillSelectView._entityMO.modelId
-		local var_17_2 = SkillConfig.instance:getHeroBaseSkillIdDict(var_17_1)
+	if var_18_0 then
+		local var_18_1 = var_18_0.rightSkillEditorSideView._skillSelectView._entityMO.modelId
+		local var_18_2 = SkillConfig.instance:getHeroBaseSkillIdDict(var_18_1)
 
-		var_17_0.rightSkillEditorSideView._skillSelectView._curSkillId = var_17_2[arg_17_1]
+		var_18_0.rightSkillEditorSideView._skillSelectView._curSkillId = var_18_2[arg_18_1]
 
-		var_17_0.rightSkillEditorSideView:_onClickFight()
+		var_18_0.rightSkillEditorSideView:_onClickFight()
 	end
 end
 
-function var_0_0.playFightSceneSpineAnimation(arg_18_0, arg_18_1)
+function var_0_0.playFightSceneSpineAnimation(arg_19_0, arg_19_1)
 	if GameSceneMgr.instance:getCurSceneType() ~= SceneType.Fight then
 		return
 	end
@@ -310,183 +320,183 @@ function var_0_0.playFightSceneSpineAnimation(arg_18_0, arg_18_1)
 		return
 	end
 
-	local var_18_0 = GameSceneMgr.instance:getCurScene()
+	local var_19_0 = GameSceneMgr.instance:getCurScene()
 
-	if not var_18_0 then
+	if not var_19_0 then
 		return
 	end
 
-	local var_18_1
+	local var_19_1
 
 	if SkillEditorMgr.instance.cur_select_entity_id then
-		var_18_1 = var_18_0.entityMgr:getEntity(SkillEditorMgr.instance.cur_select_entity_id)
+		var_19_1 = var_19_0.entityMgr:getEntity(SkillEditorMgr.instance.cur_select_entity_id)
 	else
-		var_18_1 = var_18_0.entityMgr:getEntityByPosId(SceneTag.UnitPlayer, SkillEditorView.selectPosId[FightEnum.EntitySide.MySide])
+		var_19_1 = var_19_0.entityMgr:getEntityByPosId(SceneTag.UnitPlayer, SkillEditorView.selectPosId[FightEnum.EntitySide.MySide])
 	end
 
-	if not var_18_1 then
+	if not var_19_1 then
 		logError("所选对象错误，请从新选择对象")
 
 		return
 	end
 
-	arg_18_0._attacker = var_18_1
+	arg_19_0._attacker = var_19_1
 
-	local var_18_2 = FightConfig.instance:getSkinSpineActionDict(arg_18_0._attacker:getMO().skin)
-	local var_18_3 = var_18_2 and var_18_2[arg_18_1]
+	local var_19_2 = FightConfig.instance:getSkinSpineActionDict(arg_19_0._attacker:getMO().skin)
+	local var_19_3 = var_19_2 and var_19_2[arg_19_1]
 
-	TaskDispatcher.cancelTask(arg_18_0.resetAnim, arg_18_0)
-	arg_18_0._attacker.spine:removeAnimEventCallback(arg_18_0._onAnimEvent, arg_18_0)
+	TaskDispatcher.cancelTask(arg_19_0.resetAnim, arg_19_0)
+	arg_19_0._attacker.spine:removeAnimEventCallback(arg_19_0._onAnimEvent, arg_19_0)
 
-	if var_18_3 and var_18_3.effectRemoveTime > 0 then
-		local var_18_4 = var_18_3.effectRemoveTime / FightModel.instance:getSpeed()
+	if var_19_3 and var_19_3.effectRemoveTime > 0 then
+		local var_19_4 = var_19_3.effectRemoveTime / FightModel.instance:getSpeed()
 
-		TaskDispatcher.runDelay(arg_18_0.resetAnim, arg_18_0, var_18_4)
+		TaskDispatcher.runDelay(arg_19_0.resetAnim, arg_19_0, var_19_4)
 	else
-		arg_18_0._ani_need_transition, arg_18_0._transition_ani = FightHelper.needPlayTransitionAni(arg_18_0._attacker, arg_18_1)
+		arg_19_0._ani_need_transition, arg_19_0._transition_ani = FightHelper.needPlayTransitionAni(arg_19_0._attacker, arg_19_1)
 
-		arg_18_0._attacker.spine:addAnimEventCallback(arg_18_0._onAnimEvent, arg_18_0)
+		arg_19_0._attacker.spine:addAnimEventCallback(arg_19_0._onAnimEvent, arg_19_0)
 	end
 
-	var_18_1.spine:play(arg_18_1, false, true)
+	var_19_1.spine:play(arg_19_1, false, true)
 end
 
-function var_0_0.resetAnim(arg_19_0)
-	if arg_19_0._attacker then
+function var_0_0.resetAnim(arg_20_0)
+	if arg_20_0._attacker then
 		FightController.instance:dispatchEvent(FightEvent.OnEditorPlaySpineAniEnd)
-		arg_19_0._attacker.spine:removeAnimEventCallback(arg_19_0._onAnimEvent, arg_19_0)
-		arg_19_0._attacker:resetAnimState()
+		arg_20_0._attacker.spine:removeAnimEventCallback(arg_20_0._onAnimEvent, arg_20_0)
+		arg_20_0._attacker:resetAnimState()
 	end
 end
 
-function var_0_0._onAnimEvent(arg_20_0, arg_20_1, arg_20_2, arg_20_3)
-	if arg_20_2 == SpineAnimEvent.ActionComplete then
-		if arg_20_0._ani_need_transition and arg_20_0._transition_ani == arg_20_1 then
+function var_0_0._onAnimEvent(arg_21_0, arg_21_1, arg_21_2, arg_21_3)
+	if arg_21_2 == SpineAnimEvent.ActionComplete then
+		if arg_21_0._ani_need_transition and arg_21_0._transition_ani == arg_21_1 then
 			return
 		end
 
-		arg_20_0:resetAnim()
+		arg_21_0:resetAnim()
 	end
 end
 
-function var_0_0.getVisualInteractiveMgr(arg_21_0)
-	if not arg_21_0.viaMgr then
-		arg_21_0.viaMgr = VisualInteractiveAreaMgr.New()
+function var_0_0.getVisualInteractiveMgr(arg_22_0)
+	if not arg_22_0.viaMgr then
+		arg_22_0.viaMgr = VisualInteractiveAreaMgr.New()
 
-		arg_21_0.viaMgr:init()
+		arg_22_0.viaMgr:init()
 	end
 
-	return arg_21_0.viaMgr
+	return arg_22_0.viaMgr
 end
 
-function var_0_0.getVisualInteractive(arg_22_0)
-	return arg_22_0.visualInteractive or false
+function var_0_0.getVisualInteractive(arg_23_0)
+	return arg_23_0.visualInteractive or false
 end
 
-function var_0_0.setVisualInteractive(arg_23_0, arg_23_1)
-	arg_23_0.visualInteractive = arg_23_1
+function var_0_0.setVisualInteractive(arg_24_0, arg_24_1)
+	arg_24_0.visualInteractive = arg_24_1
 end
 
-function var_0_0.switchEnemyVisible(arg_24_0)
-	arg_24_0.showEnemy = not arg_24_0.showEnemy
+function var_0_0.switchEnemyVisible(arg_25_0)
+	arg_25_0.showEnemy = not arg_25_0.showEnemy
 
-	local var_24_0 = gohelper.find("UIRoot/HUD/NameBar/Monster_1")
-	local var_24_1 = gohelper.find("cameraroot/SceneRoot/FightScene/Entitys/Monster_1")
+	local var_25_0 = gohelper.find("UIRoot/HUD/NameBar/Monster_1")
+	local var_25_1 = gohelper.find("cameraroot/SceneRoot/FightScene/Entitys/Monster_1")
 
-	gohelper.setActive(var_24_0, arg_24_0.showEnemy)
-	gohelper.setActive(var_24_1, arg_24_0.showEnemy)
+	gohelper.setActive(var_25_0, arg_25_0.showEnemy)
+	gohelper.setActive(var_25_1, arg_25_0.showEnemy)
 end
 
-function var_0_0._loadGMNodes(arg_25_0)
-	arg_25_0._gmNodeLoader = MultiAbLoader.New()
+function var_0_0._loadGMNodes(arg_26_0)
+	arg_26_0._gmNodeLoader = MultiAbLoader.New()
 
-	arg_25_0._gmNodeLoader:addPath(var_0_0.GMNodesPrefabUrl)
-	arg_25_0._gmNodeLoader:startLoad(arg_25_0._onLoadGMNodesFinish, arg_25_0)
+	arg_26_0._gmNodeLoader:addPath(var_0_0.GMNodesPrefabUrl)
+	arg_26_0._gmNodeLoader:startLoad(arg_26_0._onLoadGMNodesFinish, arg_26_0)
 end
 
-function var_0_0._onLoadGMNodesFinish(arg_26_0, arg_26_1)
-	arg_26_0._prefab = arg_26_1:getFirstAssetItem():GetResource()
+function var_0_0._onLoadGMNodesFinish(arg_27_0, arg_27_1)
+	arg_27_0._prefab = arg_27_1:getFirstAssetItem():GetResource()
 end
 
-function var_0_0.getGMNode(arg_27_0, arg_27_1, arg_27_2)
+function var_0_0.getGMNode(arg_28_0, arg_28_1, arg_28_2)
 	if isDebugBuild then
-		if not arg_27_0._prefab then
+		if not arg_28_0._prefab then
 			return nil
 		end
 
-		local var_27_0 = gohelper.findChild(arg_27_0._prefab, arg_27_1)
+		local var_28_0 = gohelper.findChild(arg_28_0._prefab, arg_28_1)
 
-		if var_27_0 then
-			return (gohelper.clone(var_27_0, arg_27_2, var_27_0.name))
+		if var_28_0 then
+			return (gohelper.clone(var_28_0, arg_28_2, var_28_0.name))
 		else
-			logError("找不到GM节点：" .. arg_27_1)
+			logError("找不到GM节点：" .. arg_28_1)
 		end
 	end
 end
 
-function var_0_0.initShowAudioLog(arg_28_0)
-	arg_28_0.showAudioLog = PlayerPrefsHelper.getNumber("showAudioLogKey", 0) == 1
-	ZProj.AudioManager.Instance.gmOpenLog = arg_28_0.showAudioLog
+function var_0_0.initShowAudioLog(arg_29_0)
+	arg_29_0.showAudioLog = PlayerPrefsHelper.getNumber("showAudioLogKey", 0) == 1
+	ZProj.AudioManager.Instance.gmOpenLog = arg_29_0.showAudioLog
 
-	if arg_28_0.showAudioLog then
+	if arg_29_0.showAudioLog then
 		ZProj.AudioEditorTool.Instance:ShowAudioLog()
-		arg_28_0:initClearAudioLogBtn()
+		arg_29_0:initClearAudioLogBtn()
 	end
 end
 
-function var_0_0.getShowAudioLog(arg_29_0)
-	return arg_29_0.showAudioLog
+function var_0_0.getShowAudioLog(arg_30_0)
+	return arg_30_0.showAudioLog
 end
 
-function var_0_0.setShowAudioLog(arg_30_0, arg_30_1)
-	if arg_30_1 == arg_30_0.showAudioLog then
+function var_0_0.setShowAudioLog(arg_31_0, arg_31_1)
+	if arg_31_1 == arg_31_0.showAudioLog then
 		return
 	end
 
-	arg_30_0.showAudioLog = arg_30_1
+	arg_31_0.showAudioLog = arg_31_1
 
-	PlayerPrefsHelper.setNumber("showAudioLogKey", arg_30_1 and 1 or 0)
+	PlayerPrefsHelper.setNumber("showAudioLogKey", arg_31_1 and 1 or 0)
 
-	if arg_30_0.showAudioLog then
+	if arg_31_0.showAudioLog then
 		ZProj.AudioEditorTool.Instance:ShowAudioLog()
-		arg_30_0:initClearAudioLogBtn()
+		arg_31_0:initClearAudioLogBtn()
 	else
 		ZProj.AudioEditorTool.Instance:HideAudioLog()
 	end
 end
 
-function var_0_0.initClearAudioLogBtn(arg_31_0)
-	if not gohelper.isNil(arg_31_0.clearAudioLogBtn) then
+function var_0_0.initClearAudioLogBtn(arg_32_0)
+	if not gohelper.isNil(arg_32_0.clearAudioLogBtn) then
 		return
 	end
-
-	TaskDispatcher.cancelTask(arg_31_0._initClearAudioLogBtn, arg_31_0)
-	TaskDispatcher.runRepeat(arg_31_0._initClearAudioLogBtn, arg_31_0, 1)
-end
-
-function var_0_0._initClearAudioLogBtn(arg_32_0)
-	local var_32_0 = gohelper.find("UIRoot/TOP/audiolog(Clone)")
-
-	if gohelper.isNil(var_32_0) then
-		return
-	end
-
-	arg_32_0.clearAudioLogBtn = SLFramework.UGUI.ButtonWrap.GetWithPath(var_32_0, "clearBtn")
-
-	arg_32_0.clearAudioLogBtn:AddClickListener(arg_32_0.onClickClearAudio, arg_32_0)
-
-	arg_32_0.txtLog = gohelper.findChildText(var_32_0, "Scroll View/Viewport/Content")
 
 	TaskDispatcher.cancelTask(arg_32_0._initClearAudioLogBtn, arg_32_0)
+	TaskDispatcher.runRepeat(arg_32_0._initClearAudioLogBtn, arg_32_0, 1)
 end
 
-function var_0_0.onClickClearAudio(arg_33_0)
-	if not gohelper.isNil(arg_33_0.txtLog) then
-		arg_33_0.txtLog.text = ""
+function var_0_0._initClearAudioLogBtn(arg_33_0)
+	local var_33_0 = gohelper.find("UIRoot/TOP/audiolog(Clone)")
+
+	if gohelper.isNil(var_33_0) then
+		return
+	end
+
+	arg_33_0.clearAudioLogBtn = SLFramework.UGUI.ButtonWrap.GetWithPath(var_33_0, "clearBtn")
+
+	arg_33_0.clearAudioLogBtn:AddClickListener(arg_33_0.onClickClearAudio, arg_33_0)
+
+	arg_33_0.txtLog = gohelper.findChildText(var_33_0, "Scroll View/Viewport/Content")
+
+	TaskDispatcher.cancelTask(arg_33_0._initClearAudioLogBtn, arg_33_0)
+end
+
+function var_0_0.onClickClearAudio(arg_34_0)
+	if not gohelper.isNil(arg_34_0.txtLog) then
+		arg_34_0.txtLog.text = ""
 	end
 end
 
-function var_0_0.invokeCSharpInstanceMethod(arg_34_0, arg_34_1)
+function var_0_0.invokeCSharpInstanceMethod(arg_35_0, arg_35_1)
 	if not SLFramework.FrameworkSettings.IsEditor then
 		return
 	end
@@ -494,121 +504,121 @@ function var_0_0.invokeCSharpInstanceMethod(arg_34_0, arg_34_1)
 	require("tolua.reflection")
 	tolua.loadassembly("Assembly-CSharp")
 
-	local var_34_0 = tolua.findtype(arg_34_0)
-	local var_34_1 = var_34_0.BaseType
-	local var_34_2 = tolua.getproperty(var_34_1, "Instance")
+	local var_35_0 = tolua.findtype(arg_35_0)
+	local var_35_1 = var_35_0.BaseType
+	local var_35_2 = tolua.getproperty(var_35_1, "Instance")
 
-	tolua.getmethod(var_34_0, arg_34_1):Call(var_34_2:Get(nil, nil))
+	tolua.getmethod(var_35_0, arg_35_1):Call(var_35_2:Get(nil, nil))
 end
 
-function var_0_0.TestFightByBattleId(arg_35_0, arg_35_1)
-	if not (arg_35_1 and lua_battle.configDict[arg_35_1]) then
+function var_0_0.TestFightByBattleId(arg_36_0, arg_36_1)
+	if not (arg_36_1 and lua_battle.configDict[arg_36_1]) then
 		return
 	end
 
-	local var_35_0 = FightController.instance:setFightParamByBattleId(arg_35_1)
+	local var_36_0 = FightController.instance:setFightParamByBattleId(arg_36_1)
 
-	HeroGroupModel.instance:setParam(arg_35_1, nil, nil)
+	HeroGroupModel.instance:setParam(arg_36_1, nil, nil)
 
-	local var_35_1 = HeroGroupModel.instance:getCurGroupMO()
+	local var_36_1 = HeroGroupModel.instance:getCurGroupMO()
 
-	if not var_35_1 then
+	if not var_36_1 then
 		logError("current HeroGroupMO is nil")
 		GameFacade.showMessageBox(MessageBoxIdDefine.HeroGroupPleaseAdd, MsgBoxEnum.BoxType.Yes)
 
 		return
 	end
 
-	local var_35_2, var_35_3 = var_35_1:getMainList()
-	local var_35_4, var_35_5 = var_35_1:getSubList()
-	local var_35_6 = var_35_1:getAllHeroEquips()
+	local var_36_2, var_36_3 = var_36_1:getMainList()
+	local var_36_4, var_36_5 = var_36_1:getSubList()
+	local var_36_6 = var_36_1:getAllHeroEquips()
 
-	for iter_35_0, iter_35_1 in ipairs(lua_episode.configList) do
-		if iter_35_1.battleId == arg_35_1 then
-			var_35_0.episodeId = iter_35_1.id
-			FightResultModel.instance.episodeId = iter_35_1.id
+	for iter_36_0, iter_36_1 in ipairs(lua_episode.configList) do
+		if iter_36_1.battleId == arg_36_1 then
+			var_36_0.episodeId = iter_36_1.id
+			FightResultModel.instance.episodeId = iter_36_1.id
 
-			DungeonModel.instance:SetSendChapterEpisodeId(iter_35_1.chapterId, iter_35_1.id)
+			DungeonModel.instance:SetSendChapterEpisodeId(iter_36_1.chapterId, iter_36_1.id)
 
 			break
 		end
 	end
 
-	if not var_35_0.episodeId then
-		var_35_0.episodeId = 10101
+	if not var_36_0.episodeId then
+		var_36_0.episodeId = 10101
 	end
 
-	var_35_0:setMySide(var_35_1.clothId, var_35_2, var_35_4, var_35_6)
-	FightController.instance:sendTestFightId(var_35_0)
+	var_36_0:setMySide(var_36_1.clothId, var_36_2, var_36_4, var_36_6)
+	FightController.instance:sendTestFightId(var_36_0)
 end
 
-function var_0_0.initProfilerCmdFileCheck(arg_36_0)
-	if arg_36_0._initProfiler then
+function var_0_0.initProfilerCmdFileCheck(arg_37_0)
+	if arg_37_0._initProfiler then
 		return
 	end
 
-	arg_36_0._initProfiler = true
+	arg_37_0._initProfiler = true
 
-	local var_36_0 = 10
-	local var_36_1 = System.IO.Path.Combine(UnityEngine.Application.persistentDataPath, "profiler")
-	local var_36_2 = "profilerCmd.json"
+	local var_37_0 = 10
+	local var_37_1 = System.IO.Path.Combine(UnityEngine.Application.persistentDataPath, "profiler")
+	local var_37_2 = "profilerCmd.json"
 
-	arg_36_0._profilerCmdFilePath = System.IO.Path.Combine(var_36_1, var_36_2)
+	arg_37_0._profilerCmdFilePath = System.IO.Path.Combine(var_37_1, var_37_2)
 
-	arg_36_0:_checkProfilerCmdFile()
-	TaskDispatcher.runRepeat(arg_36_0._checkProfilerCmdFile, arg_36_0, var_36_0)
+	arg_37_0:_checkProfilerCmdFile()
+	TaskDispatcher.runRepeat(arg_37_0._checkProfilerCmdFile, arg_37_0, var_37_0)
 end
 
-function var_0_0._checkProfilerCmdFile(arg_37_0)
-	if SLFramework.FileHelper.IsFileExists(arg_37_0._profilerCmdFilePath) then
-		local var_37_0 = SLFramework.FileHelper.ReadText(arg_37_0._profilerCmdFilePath)
+function var_0_0._checkProfilerCmdFile(arg_38_0)
+	if SLFramework.FileHelper.IsFileExists(arg_38_0._profilerCmdFilePath) then
+		local var_38_0 = SLFramework.FileHelper.ReadText(arg_38_0._profilerCmdFilePath)
 
-		if not var_37_0 or var_37_0 == "" then
+		if not var_38_0 or var_38_0 == "" then
 			return
 		end
 
-		BenchmarkApi.AndroidLog("profilerCmd.json: " .. var_37_0)
+		BenchmarkApi.AndroidLog("profilerCmd.json: " .. var_38_0)
 
-		local var_37_1 = cjson.decode(var_37_0).cmds
+		local var_38_1 = cjson.decode(var_38_0).cmds
 
-		PerformanceRecorder.instance:doProfilerCmdAction(var_37_1)
-		SLFramework.FileHelper.WriteTextToPath(arg_37_0._profilerCmdFilePath, "")
+		PerformanceRecorder.instance:doProfilerCmdAction(var_38_1)
+		SLFramework.FileHelper.WriteTextToPath(arg_38_0._profilerCmdFilePath, "")
 	end
 end
 
-function var_0_0.setRecordASFDCo(arg_38_0, arg_38_1, arg_38_2, arg_38_3)
-	arg_38_0.emitterId = tonumber(arg_38_1)
-	arg_38_0.missileId = tonumber(arg_38_2)
-	arg_38_0.explosionId = tonumber(arg_38_3)
+function var_0_0.setRecordASFDCo(arg_39_0, arg_39_1, arg_39_2, arg_39_3)
+	arg_39_0.emitterId = tonumber(arg_39_1)
+	arg_39_0.missileId = tonumber(arg_39_2)
+	arg_39_0.explosionId = tonumber(arg_39_3)
 end
 
-function var_0_0.tempHasField(arg_39_0, arg_39_1)
+function var_0_0.tempHasField(arg_40_0, arg_40_1)
 	return false
 end
 
-function var_0_0.startASFDFlow(arg_40_0, arg_40_1, arg_40_2, arg_40_3)
-	if arg_40_0.asfdSequence then
+function var_0_0.startASFDFlow(arg_41_0, arg_41_1, arg_41_2, arg_41_3)
+	if arg_41_0.asfdSequence then
 		return
 	end
 
-	local var_40_0 = FightDataHelper.entityMgr:getASFDEntityMo(arg_40_2) or arg_40_0:createASFDEmitter(arg_40_2)
-	local var_40_1 = {}
+	local var_41_0 = FightDataHelper.entityMgr:getASFDEntityMo(arg_41_2) or arg_41_0:createASFDEmitter(arg_41_2)
+	local var_41_1 = {}
 
-	for iter_40_0 = 1, arg_40_1 do
-		local var_40_2 = {
+	for iter_41_0 = 1, arg_41_1 do
+		local var_41_2 = {
 			cardIndex = 1,
 			actType = 1,
-			fromId = var_40_0.id,
-			toId = arg_40_3,
+			fromId = var_41_0.id,
+			toId = arg_41_3,
 			actId = FightASFDConfig.instance.skillId,
 			actEffect = {
 				{
-					targetId = arg_40_3,
+					targetId = arg_41_3,
 					effectType = FightEnum.EffectType.EMITTERFIGHTNOTIFY,
 					reserveStr = cjson.encode({
 						splitNum = 0,
-						emitterAttackNum = iter_40_0,
-						emitterAttackMaxNum = arg_40_1
+						emitterAttackNum = iter_41_0,
+						emitterAttackMaxNum = arg_41_1
 					}),
 					HasField = var_0_0.tempHasField,
 					cardInfoList = {},
@@ -616,57 +626,57 @@ function var_0_0.startASFDFlow(arg_40_0, arg_40_1, arg_40_2, arg_40_3)
 				}
 			}
 		}
-		local var_40_3 = FightStepData.New(var_40_2)
+		local var_41_3 = FightStepData.New(var_41_2)
 
-		table.insert(var_40_1, var_40_3)
+		table.insert(var_41_1, var_41_3)
 	end
 
-	arg_40_0.asfdSequence = FlowSequence.New()
+	arg_41_0.asfdSequence = FlowSequence.New()
 
-	for iter_40_1, iter_40_2 in ipairs(var_40_1) do
-		local var_40_4 = FightASFDFlow.New(iter_40_2, var_40_1[iter_40_1 + 1], iter_40_1)
+	for iter_41_1, iter_41_2 in ipairs(var_41_1) do
+		local var_41_4 = FightASFDFlow.New(iter_41_2, var_41_1[iter_41_1 + 1], iter_41_1)
 
-		arg_40_0.asfdSequence:addWork(var_40_4)
+		arg_41_0.asfdSequence:addWork(var_41_4)
 	end
 
-	TaskDispatcher.runDelay(arg_40_0.delayStartASFDFlow, arg_40_0, 1)
+	TaskDispatcher.runDelay(arg_41_0.delayStartASFDFlow, arg_41_0, 1)
 end
 
-function var_0_0.delayStartASFDFlow(arg_41_0)
+function var_0_0.delayStartASFDFlow(arg_42_0)
 	var_0_0.srcGetASFDCoFunc = FightASFDHelper.getASFDCo
 	FightASFDHelper.getASFDCo = var_0_0.tempGetASFDCo
 
-	arg_41_0.asfdSequence:registerDoneListener(arg_41_0.onASFDDone, arg_41_0)
-	arg_41_0.asfdSequence:start()
+	arg_42_0.asfdSequence:registerDoneListener(arg_42_0.onASFDDone, arg_42_0)
+	arg_42_0.asfdSequence:start()
 end
 
-function var_0_0.tempGetASFDCo(arg_42_0, arg_42_1, arg_42_2)
-	if arg_42_1 == FightEnum.ASFDUnit.Emitter then
-		local var_42_0 = var_0_0.instance.emitterId
+function var_0_0.tempGetASFDCo(arg_43_0, arg_43_1, arg_43_2)
+	if arg_43_1 == FightEnum.ASFDUnit.Emitter then
+		local var_43_0 = var_0_0.instance.emitterId
 
-		return lua_fight_asfd.configDict[var_42_0] or arg_42_2
-	elseif arg_42_1 == FightEnum.ASFDUnit.Missile then
-		local var_42_1 = var_0_0.instance.missileId
+		return lua_fight_asfd.configDict[var_43_0] or arg_43_2
+	elseif arg_43_1 == FightEnum.ASFDUnit.Missile then
+		local var_43_1 = var_0_0.instance.missileId
 
-		return lua_fight_asfd.configDict[var_42_1] or arg_42_2
-	elseif arg_42_1 == FightEnum.ASFDUnit.Explosion then
-		local var_42_2 = var_0_0.instance.explosionId
+		return lua_fight_asfd.configDict[var_43_1] or arg_43_2
+	elseif arg_43_1 == FightEnum.ASFDUnit.Explosion then
+		local var_43_2 = var_0_0.instance.explosionId
 
-		return lua_fight_asfd.configDict[var_42_2] or arg_42_2
+		return lua_fight_asfd.configDict[var_43_2] or arg_43_2
 	else
-		return arg_42_2
+		return arg_43_2
 	end
 end
 
-function var_0_0.onASFDDone(arg_43_0)
+function var_0_0.onASFDDone(arg_44_0)
 	FightASFDHelper.getASFDCo = var_0_0.srcGetASFDCoFunc
-	arg_43_0.asfdSequence = nil
+	arg_44_0.asfdSequence = nil
 end
 
-function var_0_0.createASFDEmitter(arg_44_0, arg_44_1)
-	local var_44_0 = FightEntityMO.New()
+function var_0_0.createASFDEmitter(arg_45_0, arg_45_1)
+	local var_45_0 = FightEntityMO.New()
 
-	var_44_0:init({
+	var_45_0:init({
 		skin = 0,
 		exSkillLevel = 0,
 		userId = 0,
@@ -681,9 +691,9 @@ function var_0_0.createASFDEmitter(arg_44_0, arg_44_1)
 		exPoint = 0,
 		shieldValue = 0,
 		modelId = 0,
-		uid = arg_44_1 == FightEnum.TeamType.MySide and "99998" or "-99998",
+		uid = arg_45_1 == FightEnum.TeamType.MySide and "99998" or "-99998",
 		entityType = FightEnum.EntityType.ASFDEmitter,
-		side = arg_44_1,
+		side = arg_45_1,
 		attr = {
 			defense = 0,
 			multiHpNum = 0,
@@ -701,18 +711,18 @@ function var_0_0.createASFDEmitter(arg_44_0, arg_44_1)
 		SummonedList = {}
 	})
 
-	var_44_0.side = arg_44_1
+	var_45_0.side = arg_45_1
 
-	local var_44_1 = FightDataHelper.entityMgr:addEntityMO(var_44_0)
-	local var_44_2 = FightDataHelper.entityMgr:getOriginASFDEmitterList(var_44_1.side)
+	local var_45_1 = FightDataHelper.entityMgr:addEntityMO(var_45_0)
+	local var_45_2 = FightDataHelper.entityMgr:getOriginASFDEmitterList(var_45_1.side)
 
-	table.insert(var_44_2, var_44_1)
+	table.insert(var_45_2, var_45_1)
 
-	local var_44_3 = GameSceneMgr.instance:getCurScene()
+	local var_45_3 = GameSceneMgr.instance:getCurScene()
 
-	;(var_44_3 and var_44_3.entityMgr):addASFDUnit()
+	;(var_45_3 and var_45_3.entityMgr):addASFDUnit()
 
-	return var_44_1
+	return var_45_1
 end
 
 var_0_0.instance = var_0_0.New()

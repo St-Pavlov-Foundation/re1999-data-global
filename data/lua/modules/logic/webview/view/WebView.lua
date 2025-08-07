@@ -38,8 +38,6 @@ end
 
 function var_0_0._editableInitView(arg_6_0)
 	arg_6_0.webViewComp = gohelper.onceAddComponent(arg_6_0._goweb, typeof(ZProj.SLWebView))
-
-	arg_6_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_6_0._onOpenView, arg_6_0)
 end
 
 function var_0_0._onOpenView(arg_7_0, arg_7_1)

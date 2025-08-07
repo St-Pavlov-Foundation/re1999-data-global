@@ -22,5 +22,13 @@
     "ruleIcon": "shen_guize_18",
     "ruleFront": "1#9270501",
     "ruleRear": "1#9270502"
+  },
+  {
+    "timeId": 7,
+    "issueId": 7,
+    "optionalSkills": "2024#2025#2026#2027#2004#2006",
+    "ruleIcon": "shen_guize_18",
+    "ruleFront": "1#8291209",
+    "ruleRear": "1#8291210"
   }
 ]

@@ -1,0 +1,44 @@
+[
+  {
+    "weaponId": 1001,
+    "type": 1,
+    "firsticon": "character_weapon_main_3",
+    "secondicon": "character_weapon_main_3",
+    "name": "language_10077368"
+  },
+  {
+    "weaponId": 1002,
+    "type": 1,
+    "firsticon": "character_weapon_main_1",
+    "secondicon": "character_weapon_main_1",
+    "name": "language_10077369"
+  },
+  {
+    "weaponId": 1003,
+    "type": 1,
+    "firsticon": "character_weapon_main_2",
+    "secondicon": "character_weapon_main_2",
+    "name": "language_10077370"
+  },
+  {
+    "weaponId": 2001,
+    "type": 2,
+    "firsticon": "character_weapon_sub_1",
+    "secondicon": "character_weapon_sub_1",
+    "name": "language_10077371"
+  },
+  {
+    "weaponId": 2002,
+    "type": 2,
+    "firsticon": "character_weapon_sub_2",
+    "secondicon": "character_weapon_sub_2",
+    "name": "language_10077372"
+  },
+  {
+    "weaponId": 2003,
+    "type": 2,
+    "firsticon": "character_weapon_sub_3",
+    "secondicon": "character_weapon_sub_3",
+    "name": "language_10077373"
+  }
+]

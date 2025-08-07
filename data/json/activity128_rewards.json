@@ -2494,5 +2494,133 @@
     "rewardPointNum": 850000,
     "reward": "2#26#100",
     "display": 0
+  },
+  {
+    "activityId": 130505,
+    "id": 1,
+    "stage": 1,
+    "rewardPointNum": 25000,
+    "reward": "2#26#100",
+    "display": 0
+  },
+  {
+    "activityId": 130505,
+    "id": 2,
+    "stage": 1,
+    "rewardPointNum": 100000,
+    "reward": "2#26#100",
+    "display": 0
+  },
+  {
+    "activityId": 130505,
+    "id": 3,
+    "stage": 1,
+    "rewardPointNum": 200000,
+    "reward": "2#26#100",
+    "display": 0
+  },
+  {
+    "activityId": 130505,
+    "id": 4,
+    "stage": 1,
+    "rewardPointNum": 300000,
+    "reward": "2#26#100",
+    "display": 0
+  },
+  {
+    "activityId": 130505,
+    "id": 5,
+    "stage": 1,
+    "rewardPointNum": 400000,
+    "reward": "2#26#150",
+    "display": 0
+  },
+  {
+    "activityId": 130505,
+    "id": 6,
+    "stage": 1,
+    "rewardPointNum": 550000,
+    "reward": "2#26#150",
+    "display": 0
+  },
+  {
+    "activityId": 130505,
+    "id": 7,
+    "stage": 1,
+    "rewardPointNum": 700000,
+    "reward": "2#26#200",
+    "display": 0
+  },
+  {
+    "activityId": 130505,
+    "id": 8,
+    "stage": 1,
+    "rewardPointNum": 850000,
+    "reward": "2#26#200",
+    "display": 0
+  },
+  {
+    "activityId": 130505,
+    "id": 9,
+    "stage": 2,
+    "rewardPointNum": 25000,
+    "reward": "2#26#100",
+    "display": 0
+  },
+  {
+    "activityId": 130505,
+    "id": 10,
+    "stage": 2,
+    "rewardPointNum": 100000,
+    "reward": "2#26#100",
+    "display": 0
+  },
+  {
+    "activityId": 130505,
+    "id": 11,
+    "stage": 2,
+    "rewardPointNum": 200000,
+    "reward": "2#26#100",
+    "display": 0
+  },
+  {
+    "activityId": 130505,
+    "id": 12,
+    "stage": 2,
+    "rewardPointNum": 300000,
+    "reward": "2#26#100",
+    "display": 0
+  },
+  {
+    "activityId": 130505,
+    "id": 13,
+    "stage": 2,
+    "rewardPointNum": 400000,
+    "reward": "2#26#150",
+    "display": 0
+  },
+  {
+    "activityId": 130505,
+    "id": 14,
+    "stage": 2,
+    "rewardPointNum": 550000,
+    "reward": "2#26#150",
+    "display": 0
+  },
+  {
+    "activityId": 130505,
+    "id": 15,
+    "stage": 2,
+    "rewardPointNum": 700000,
+    "reward": "2#26#200",
+    "display": 0
+  },
+  {
+    "activityId": 130505,
+    "id": 16,
+    "stage": 2,
+    "rewardPointNum": 850000,
+    "reward": "2#26#200",
+    "display": 0
   }
 ]

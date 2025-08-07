@@ -48,12 +48,14 @@ function var_0_0._btnrewardOnClick(arg_4_0)
 end
 
 function var_0_0._btnstoneOnClick(arg_5_0)
-	local var_5_0 = {
+	local var_5_0 = VersionActivity2_3NewCultivationDestinyModel.instance:getDestinyStoneById(arg_5_0._actId)
+	local var_5_1 = {
 		actId = arg_5_0._actId,
+		destinyId = var_5_0,
 		showType = VersionActivity2_3NewCultivationDetailView.DISPLAY_TYPE.Effect
 	}
 
-	ViewMgr.instance:openView(ViewName.VersionActivity2_3NewCultivationDetailView, var_5_0)
+	ViewMgr.instance:openView(ViewName.VersionActivity2_3NewCultivationDetailView, var_5_1)
 end
 
 function var_0_0._btnrewarddetailOnClick(arg_6_0)

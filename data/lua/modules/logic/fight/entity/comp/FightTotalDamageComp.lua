@@ -61,31 +61,50 @@ local var_0_2 = {
 
 function var_0_0._showTotalFloat(arg_6_0)
 	for iter_6_0, iter_6_1 in pairs(arg_6_0._damageDict) do
-		if iter_6_1.showTotal and #iter_6_1 > 1 then
-			local var_6_0 = false
-			local var_6_1 = 0
+		local var_6_0 = iter_6_1.showTotal and #iter_6_1 > 1
+
+		if iter_6_0.forceShowDamageTotalFloat then
+			var_6_0 = true
+		end
+
+		if var_6_0 then
+			local var_6_1 = false
+			local var_6_2 = false
+			local var_6_3 = 0
 
 			for iter_6_2, iter_6_3 in ipairs(iter_6_0.actEffect) do
 				if iter_6_3.targetId == arg_6_0.entity.id then
-					local var_6_2 = iter_6_3.effectType
+					local var_6_4 = iter_6_3.effectType
 
-					if FightTLEventDefHit.originHitEffectType[var_6_2] then
-						var_6_0 = true
+					if FightTLEventDefHit.originHitEffectType[var_6_4] then
+						var_6_1 = true
+					end
+
+					if iter_6_3.effectNum1 == 1 then
+						var_6_2 = true
 					end
 				end
 			end
 
 			for iter_6_4, iter_6_5 in ipairs(iter_6_0.actEffect) do
 				if iter_6_5.targetId == arg_6_0.entity.id then
-					local var_6_3 = iter_6_5.effectType
+					local var_6_5 = iter_6_5.effectType
 
-					if var_0_1[var_6_3] then
-						var_6_1 = var_6_1 + iter_6_5.effectNum
-					elseif var_0_2[var_6_3] then
-						var_6_1 = 0
+					if var_0_1[var_6_5] then
+						var_6_3 = var_6_3 + iter_6_5.effectNum
+
+						if iter_6_5.effectNum1 == 1 then
+							var_6_2 = true
+						end
+					elseif var_0_2[var_6_5] then
+						var_6_3 = 0
 
 						for iter_6_6, iter_6_7 in ipairs(iter_6_1) do
-							var_6_1 = var_6_1 + iter_6_7
+							var_6_3 = var_6_3 + iter_6_7
+						end
+
+						if iter_6_5.effectNum1 == 1 then
+							var_6_2 = true
 						end
 
 						break
@@ -93,20 +112,20 @@ function var_0_0._showTotalFloat(arg_6_0)
 				end
 			end
 
-			if var_6_1 > 0 then
-				local var_6_4 = {
+			if var_6_3 > 0 then
+				local var_6_6 = {
 					fromId = iter_6_1.fromId,
 					defenderId = arg_6_0.entity.id
 				}
 
 				if arg_6_0._fixedPos then
-					var_6_4.pos_x = arg_6_0._fixedPos[1]
-					var_6_4.pos_y = arg_6_0._fixedPos[2]
+					var_6_6.pos_x = arg_6_0._fixedPos[1]
+					var_6_6.pos_y = arg_6_0._fixedPos[2]
 				end
 
-				local var_6_5 = var_6_0 and FightEnum.FloatType.total_origin or FightEnum.FloatType.total
+				local var_6_7 = var_6_1 and FightEnum.FloatType.total_origin or FightEnum.FloatType.total
 
-				FightFloatMgr.instance:float(arg_6_0.entity.id, var_6_5, var_6_1, var_6_4)
+				FightFloatMgr.instance:float(arg_6_0.entity.id, var_6_7, var_6_3, var_6_6, var_6_2)
 			end
 		end
 

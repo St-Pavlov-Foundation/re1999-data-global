@@ -2,7 +2,7 @@
 
 local var_0_0 = class("FightFloatMgr")
 local var_0_1 = 1
-local var_0_2 = 4
+local var_0_2 = 5
 local var_0_3 = 10
 local var_0_4 = 0.3
 local var_0_5 = 3
@@ -147,7 +147,11 @@ function var_0_0.clearFloatItem(arg_8_0)
 	arg_8_0._dataQueue4 = {}
 end
 
-function var_0_0.float(arg_9_0, arg_9_1, arg_9_2, arg_9_3, arg_9_4)
+function var_0_0.float(arg_9_0, arg_9_1, arg_9_2, arg_9_3, arg_9_4, arg_9_5)
+	if isDebugBuild and GMController.instance.hideFloat then
+		return
+	end
+
 	if FightDataHelper.entityMgr:isAssistBoss(arg_9_1) then
 		return
 	end
@@ -174,6 +178,7 @@ function var_0_0.float(arg_9_0, arg_9_1, arg_9_2, arg_9_3, arg_9_4)
 	table.insert(arg_9_0._dataQueue4, arg_9_2)
 	table.insert(arg_9_0._dataQueue4, arg_9_3)
 	table.insert(arg_9_0._dataQueue4, arg_9_4)
+	table.insert(arg_9_0._dataQueue4, arg_9_5 or false)
 	TaskDispatcher.runRepeat(arg_9_0._onTick, arg_9_0, 0.1 / FightModel.instance:getUISpeed())
 end
 
@@ -228,19 +233,21 @@ function var_0_0._onTick(arg_16_0)
 		local var_16_4 = arg_16_0._dataQueue4[iter_16_0 + 1]
 		local var_16_5 = arg_16_0._dataQueue4[iter_16_0 + 2]
 		local var_16_6 = arg_16_0._dataQueue4[iter_16_0 + 3]
-		local var_16_7 = arg_16_0._entityTimeDict[var_16_3]
+		local var_16_7 = arg_16_0._dataQueue4[iter_16_0 + 4]
+		local var_16_8 = arg_16_0._entityTimeDict[var_16_3]
 
-		if not var_0_6[var_16_4] and var_16_7 and var_16_1 - var_16_7 < var_0_4 then
+		if not var_0_6[var_16_4] and var_16_8 and var_16_1 - var_16_8 < var_0_4 then
 			var_16_2 = var_16_2 or {}
 
 			table.insert(var_16_2, var_16_3)
 			table.insert(var_16_2, var_16_4)
 			table.insert(var_16_2, var_16_5)
 			table.insert(var_16_2, var_16_6)
+			table.insert(var_16_2, var_16_7)
 		else
 			arg_16_0._entityTimeDict[var_16_3] = var_16_1
 
-			arg_16_0:_doShowTip(var_16_3, var_16_4, var_16_5, var_16_6)
+			arg_16_0:_doShowTip(var_16_3, var_16_4, var_16_5, var_16_6, var_16_7)
 
 			var_16_0 = var_16_0 + 1
 		end
@@ -250,16 +257,16 @@ function var_0_0._onTick(arg_16_0)
 		end
 	end
 
-	local var_16_8 = var_16_2 and #var_16_2 or 0
+	local var_16_9 = var_16_2 and #var_16_2 or 0
 
-	for iter_16_1 = 1, var_16_8 do
+	for iter_16_1 = 1, var_16_9 do
 		arg_16_0._dataQueue4[iter_16_1] = var_16_2[iter_16_1]
 	end
 
-	local var_16_9 = var_16_0 * var_0_2
+	local var_16_10 = var_16_0 * var_0_2
 
-	for iter_16_2 = var_16_8 + 1, #arg_16_0._dataQueue4 do
-		arg_16_0._dataQueue4[iter_16_2] = arg_16_0._dataQueue4[iter_16_2 + var_16_9]
+	for iter_16_2 = var_16_9 + 1, #arg_16_0._dataQueue4 do
+		arg_16_0._dataQueue4[iter_16_2] = arg_16_0._dataQueue4[iter_16_2 + var_16_10]
 	end
 
 	if #arg_16_0._dataQueue4 == 0 then
@@ -267,7 +274,7 @@ function var_0_0._onTick(arg_16_0)
 	end
 end
 
-function var_0_0._doShowTip(arg_17_0, arg_17_1, arg_17_2, arg_17_3, arg_17_4)
+function var_0_0._doShowTip(arg_17_0, arg_17_1, arg_17_2, arg_17_3, arg_17_4, arg_17_5)
 	local var_17_0 = arg_17_0._entityId2PlayingItems[arg_17_1]
 
 	if not var_17_0 then
@@ -294,7 +301,7 @@ function var_0_0._doShowTip(arg_17_0, arg_17_1, arg_17_2, arg_17_3, arg_17_4)
 		gohelper.addChild(var_17_1.nameUI:getFloatContainerGO(), var_17_2:getGO())
 	end
 
-	var_17_2:startFloat(arg_17_1, arg_17_3, arg_17_4)
+	var_17_2:startFloat(arg_17_1, arg_17_3, arg_17_4, arg_17_5)
 
 	local var_17_3 = 0
 	local var_17_4 = var_17_1 and var_17_1.nameUI and var_17_1.nameUI:getFloatItemStartY() or 0

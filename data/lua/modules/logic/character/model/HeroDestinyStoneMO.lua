@@ -226,12 +226,12 @@ function var_0_0._replaceSkill(arg_24_0, arg_24_1)
 			if not string.nilorempty(var_24_1) then
 				local var_24_2 = GameUtil.splitString2(var_24_1, true)
 
-				for iter_24_0 = 1, #arg_24_1 do
-					for iter_24_1, iter_24_2 in ipairs(var_24_2) do
-						local var_24_3 = iter_24_2[1]
-						local var_24_4 = iter_24_2[2]
+				for iter_24_0, iter_24_1 in pairs(arg_24_1) do
+					for iter_24_2, iter_24_3 in ipairs(var_24_2) do
+						local var_24_3 = iter_24_3[1]
+						local var_24_4 = iter_24_3[2]
 
-						if arg_24_1[iter_24_0] == var_24_3 then
+						if iter_24_1 == var_24_3 then
 							arg_24_1[iter_24_0] = var_24_4
 						end
 					end

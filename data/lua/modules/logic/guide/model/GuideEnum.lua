@@ -47,8 +47,9 @@ var_0_0.GuideId = {
 	RoomDailyOrder = 418
 }
 var_0_0.EventTrigger = {
+	Act178FoodNotEnough = 2,
 	MusicFreeView = 1,
-	Act178FoodNotEnough = 2
+	FightItemPlayerSkillGroup = 3
 }
 
 return var_0_0

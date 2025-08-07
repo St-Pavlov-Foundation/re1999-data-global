@@ -1,0 +1,74 @@
+[
+  {
+    "id": 19302001,
+    "hardType": 1,
+    "winRewardId": 1,
+    "failRewardId": 7,
+    "bindingDice": "19302101#19302106",
+    "goalRange": "1#7",
+    "goalname": "language_10079430",
+    "goaldesc": "language_10079424",
+    "iconRes": "oceanselect_pic01",
+    "weight": 20
+  },
+  {
+    "id": 19302002,
+    "hardType": 1,
+    "winRewardId": 2,
+    "failRewardId": 8,
+    "bindingDice": "19302102",
+    "goalRange": "6#12",
+    "goalname": "language_10079431",
+    "goaldesc": "language_10079425",
+    "iconRes": "oceanselect_pic02",
+    "weight": 10
+  },
+  {
+    "id": 19302003,
+    "hardType": 1,
+    "winRewardId": 3,
+    "failRewardId": 9,
+    "bindingDice": "19302104",
+    "goalRange": "9#14",
+    "goalname": "language_10079432",
+    "goaldesc": "language_10079426",
+    "iconRes": "oceanselect_pic03",
+    "weight": 30
+  },
+  {
+    "id": 19302004,
+    "hardType": 1,
+    "winRewardId": 4,
+    "failRewardId": 10,
+    "bindingDice": "19302104#19302107",
+    "goalRange": "12#18",
+    "goalname": "language_10079433",
+    "goaldesc": "language_10079427",
+    "iconRes": "oceanselect_pic04",
+    "weight": 30
+  },
+  {
+    "id": 19302005,
+    "hardType": 2,
+    "winRewardId": 5,
+    "failRewardId": 11,
+    "bindingDice": "19302105#19302104",
+    "goalRange": "20#25",
+    "goalname": "language_10079434",
+    "goaldesc": "language_10079428",
+    "iconRes": "oceanselect_pic05",
+    "weight": 20
+  },
+  {
+    "id": 19302006,
+    "hardType": 2,
+    "winRewardId": 6,
+    "failRewardId": 12,
+    "bindingDice": "19302101#19302105",
+    "goalRange": "-3#3",
+    "goalname": "language_10000908",
+    "goaldesc": "language_10079429",
+    "iconRes": "oceanselect_pic06",
+    "weight": 10
+  }
+]

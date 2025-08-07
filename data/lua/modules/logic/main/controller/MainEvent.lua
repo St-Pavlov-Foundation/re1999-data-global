@@ -4,6 +4,7 @@ local var_0_0 = _M
 
 var_0_0.OnFirstEnterMain = GameUtil.getEventId()
 var_0_0.OnMainPopupFlowFinish = GameUtil.getEventId()
+var_0_0.OnDailyPopupFlowFinish = GameUtil.getEventId()
 var_0_0.OnFuncUnlockRefresh = GameUtil.getEventId()
 var_0_0.OnReceiveAddFaithEvent = GameUtil.getEventId()
 var_0_0.OnClickSwitchRole = GameUtil.getEventId()

@@ -14,13 +14,15 @@ var_0_0.VersionActivity1_9Enter = {
 }
 
 local var_0_1 = {
-	RougeMain = 3200143,
 	ToughBattle = 3200140,
-	FairyLand = 3200063,
+	role_activity_kakania = 3200139,
 	Act1_9DungeonBgm = 3200118,
 	HeroInvitation = 3200062,
 	SemmelWeisGift = 20190124,
-	RougeFavorite = 3200099
+	role_activity_lucy = 3200138,
+	RougeFavorite = 3200099,
+	RougeMain = 3200143,
+	FairyLand = 3200063
 }
 local var_0_2 = {
 	OpenRewardNoticeView = 20190380,

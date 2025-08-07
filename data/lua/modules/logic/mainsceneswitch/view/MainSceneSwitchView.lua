@@ -13,11 +13,11 @@ function var_0_0.onInitView(arg_1_0)
 	arg_1_0._goSceneLogo = gohelper.findChild(arg_1_0.viewGO, "right/#go_SceneLogo")
 	arg_1_0._goHideBtn = gohelper.findChild(arg_1_0.viewGO, "left/LayoutGroup/#go_HideBtn")
 	arg_1_0._btnHide = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "left/LayoutGroup/#go_HideBtn/#btn_Hide")
-	arg_1_0._btnShow = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "left/#btn_show")
+	arg_1_0._btnShow = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_show")
 	arg_1_0._goSceneName = gohelper.findChild(arg_1_0.viewGO, "left/LayoutGroup/#go_SceneName")
 	arg_1_0._txtSceneName = gohelper.findChildText(arg_1_0.viewGO, "left/LayoutGroup/#go_SceneName/#txt_SceneName")
+	arg_1_0._txtTime = gohelper.findChildText(arg_1_0.viewGO, "left/LayoutGroup/#go_SceneName/#txt_SceneName/#txt_Time")
 	arg_1_0._goTime = gohelper.findChild(arg_1_0.viewGO, "left/LayoutGroup/#go_Time")
-	arg_1_0._txtTime = gohelper.findChildText(arg_1_0.viewGO, "left/LayoutGroup/#go_Time/#txt_Time")
 	arg_1_0._txtSceneDescr = gohelper.findChildText(arg_1_0.viewGO, "left/#txt_SceneDescr")
 	arg_1_0._gobtns = gohelper.findChild(arg_1_0.viewGO, "#go_btns")
 
@@ -156,6 +156,8 @@ end
 
 function var_0_0._onCloseView(arg_14_0, arg_14_1)
 	if arg_14_1 == ViewName.MainSceneSwitchInfoView then
+		arg_14_0._curSceneSkinId = MainSceneSwitchModel.instance:getCurSceneId()
+
 		arg_14_0:_showSceneStatus()
 		MainSceneSwitchListModel.instance:onModelUpdate()
 	end
@@ -270,7 +272,7 @@ function var_0_0._updateSceneInfo(arg_27_0)
 	arg_27_0._txtSceneName.text = var_27_2.name
 	arg_27_0._txtSceneDescr.text = var_27_2.desc
 
-	gohelper.setActive(arg_27_0._goTime, true)
+	gohelper.setActive(arg_27_0._goTime, false)
 
 	if var_27_0.defaultUnlock == 1 then
 		local var_27_3 = PlayerModel.instance:getPlayinfo()
@@ -286,8 +288,6 @@ function var_0_0._updateSceneInfo(arg_27_0)
 			arg_27_0._txtTime.text = string.format(luaLang("receive_time"), var_27_6)
 		else
 			arg_27_0._txtTime.text = ""
-
-			gohelper.setActive(arg_27_0._goTime, false)
 		end
 	end
 end

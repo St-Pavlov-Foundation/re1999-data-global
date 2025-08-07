@@ -529,5 +529,41 @@
     "delayVisible": 0,
     "frameVisible": 1,
     "realtime": ""
+  },
+  {
+    "id": 312301,
+    "effect": "Drawables/bone16/effect-Bone/roleeffect_aja_xj16|Drawables/bone17/effect-Bone/roleeffect_aja_xj17/root",
+    "scale": 1.0,
+    "changeVisible": 0,
+    "delayVisible": 0,
+    "frameVisible": 1,
+    "realtime": ""
+  },
+  {
+    "id": 312302,
+    "effect": "Drawables/bone16/effect-Bone/roleeffect_aja_xj16|Drawables/bone17/effect-Bone/roleeffect_aja_xj17/root",
+    "scale": 1.0,
+    "changeVisible": 0,
+    "delayVisible": 0,
+    "frameVisible": 1,
+    "realtime": ""
+  },
+  {
+    "id": 306504,
+    "effect": "Drawables/bone/effect-Bone/roleeffect_mks_jiegou/root",
+    "scale": 1.0,
+    "changeVisible": 0,
+    "delayVisible": 0,
+    "frameVisible": 1,
+    "realtime": ""
+  },
+  {
+    "id": 308704,
+    "effect": "Drawables/bone2/effect-Bone/roleeffect_wl_shuihen2|Drawables/bone4/effect-Bone/roleeffect_wl_shuihen4/root",
+    "scale": 1.0,
+    "changeVisible": 0,
+    "delayVisible": 0,
+    "frameVisible": 1,
+    "realtime": ""
   }
 ]

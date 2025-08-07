@@ -100,7 +100,7 @@ function var_0_0._activityBtnOnClick(arg_7_0, arg_7_1)
 
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_hero_sign)
 
-	local var_7_0 = arg_7_0["onClickActivity" .. arg_7_1.index]
+	local var_7_0 = arg_7_0["onClickActivity" .. arg_7_1.actId] or arg_7_0["onClickActivity" .. arg_7_1.index]
 
 	if var_7_0 then
 		var_7_0(arg_7_0)
@@ -463,7 +463,7 @@ function var_0_0.refreshActivityItem(arg_30_0, arg_30_1)
 		end
 	end
 
-	if var_30_1 and arg_30_1.redDotId and arg_30_1.redDotId ~= 0 then
+	if var_30_1 and arg_30_1.redDotId and arg_30_1.redDotId ~= 0 and not gohelper.isNil(arg_30_1.goRedPoint) then
 		RedDotController.instance:addRedDot(arg_30_1.goRedPoint, arg_30_1.redDotId)
 	end
 

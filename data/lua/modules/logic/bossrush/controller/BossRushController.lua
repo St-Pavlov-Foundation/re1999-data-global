@@ -93,6 +93,14 @@ function var_0_0.openLevelDetailView(arg_7_0, arg_7_1, arg_7_2)
 		return
 	end
 
+	if not arg_7_0._model:isBossOpen(var_7_0) then
+		local var_7_2, var_7_3 = arg_7_0._model:getBossUnlockEpisode(var_7_0)
+
+		GameFacade.showToast(ToastEnum.ActivityDungeon, var_7_2, var_7_3)
+
+		return
+	end
+
 	if not arg_7_1.stageCO then
 		arg_7_1.stageCO = BossRushConfig.instance:getStageCO(var_7_0)
 	end
@@ -350,6 +358,48 @@ function var_0_0.openBossRushOfferRoleView(arg_30_0)
 	}
 
 	ViewMgr.instance:openView(ViewName.V2a1_BossRush_OfferRoleView, var_30_0)
+end
+
+function var_0_0.getGroupFightViewName(arg_31_0, arg_31_1)
+	if V2a9BossRushModel.instance:isV2a9BossRush() then
+		local var_31_0 = BossRushConfig.instance:getEpisodeCoByEpisodeId(arg_31_1)
+
+		if var_31_0 and var_31_0.layer == BossRushEnum.LayerEnum.V2a9 then
+			if var_31_0.stage == BossRushEnum.V2a9StageEnum.First then
+				return ViewName.V2a9_BossRushHeroGroupFightView
+			else
+				return ViewName.OdysseyHeroGroupView
+			end
+		end
+	end
+end
+
+function var_0_0.openV2a9BossRushSkillBackpackView(arg_32_0, arg_32_1)
+	if arg_32_1 then
+		local var_32_0 = V2a9BossRushSkillBackpackListModel.instance:getList()
+
+		if var_32_0 then
+			for iter_32_0, iter_32_1 in ipairs(var_32_0) do
+				if iter_32_1.itemType == arg_32_1 then
+					V2a9BossRushModel.instance:selectSpItemId(iter_32_1.id)
+				end
+			end
+		end
+	end
+
+	arg_32_0:_reallyOpenV2a9BossRushSkillBackpackView()
+end
+
+function var_0_0._reallyOpenV2a9BossRushSkillBackpackView(arg_33_0)
+	local var_33_0 = AssassinBackpackListModel.instance:getList()
+
+	if not var_33_0 or #var_33_0 <= 0 then
+		GameFacade.showToast(ToastEnum.AssassinStealthNoItem)
+
+		return
+	end
+
+	ViewMgr.instance:openView(ViewName.V2a9_BossRushSkillBackpackView)
 end
 
 var_0_0.instance = var_0_0.New()

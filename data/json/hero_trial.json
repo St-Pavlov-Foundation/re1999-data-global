@@ -15,7 +15,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1002,
@@ -33,7 +34,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1003,
@@ -51,7 +53,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1004,
@@ -69,7 +72,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1005,
@@ -87,7 +91,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1010201,
@@ -105,7 +110,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1010202,
@@ -123,7 +129,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1010203,
@@ -141,7 +148,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3121001,
@@ -159,7 +167,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3121002,
@@ -177,7 +186,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3121003,
@@ -195,7 +205,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3121004,
@@ -213,7 +224,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3121005,
@@ -231,7 +243,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3122011,
@@ -249,7 +262,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3122012,
@@ -267,7 +281,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3122013,
@@ -285,7 +300,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3122014,
@@ -303,7 +319,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3122021,
@@ -321,7 +338,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3122022,
@@ -339,7 +357,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3122023,
@@ -357,7 +376,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3122024,
@@ -375,7 +395,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3122031,
@@ -393,7 +414,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3122032,
@@ -411,7 +433,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3122033,
@@ -429,7 +452,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3122034,
@@ -447,7 +471,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3122041,
@@ -465,7 +490,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3122042,
@@ -483,7 +509,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3122043,
@@ -501,7 +528,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3122044,
@@ -519,7 +547,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3122051,
@@ -537,7 +566,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3122052,
@@ -555,7 +585,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3122053,
@@ -573,7 +604,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3122054,
@@ -591,7 +623,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3122061,
@@ -609,7 +642,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3122062,
@@ -627,7 +661,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3122063,
@@ -645,7 +680,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3122064,
@@ -663,7 +699,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3122071,
@@ -681,7 +718,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3122072,
@@ -699,7 +737,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3122073,
@@ -717,7 +756,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3122074,
@@ -735,7 +775,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3123011,
@@ -753,7 +794,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3123012,
@@ -771,7 +813,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3123013,
@@ -789,7 +832,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3123021,
@@ -807,7 +851,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3123022,
@@ -825,7 +870,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3123023,
@@ -843,7 +889,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3123031,
@@ -861,7 +908,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3123032,
@@ -879,7 +927,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3123033,
@@ -897,7 +946,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3137011,
@@ -915,7 +965,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3137012,
@@ -933,7 +984,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3137013,
@@ -951,7 +1003,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3137014,
@@ -969,7 +1022,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3137021,
@@ -987,7 +1041,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3137022,
@@ -1005,7 +1060,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3137023,
@@ -1023,7 +1079,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3137024,
@@ -1041,7 +1098,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3137031,
@@ -1059,7 +1117,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3137032,
@@ -1077,7 +1136,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3137033,
@@ -1095,7 +1155,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3137034,
@@ -1113,7 +1174,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3137041,
@@ -1131,7 +1193,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3137042,
@@ -1149,7 +1212,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3137043,
@@ -1167,7 +1231,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3137044,
@@ -1185,7 +1250,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3137051,
@@ -1203,7 +1269,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3137052,
@@ -1221,7 +1288,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3137053,
@@ -1239,7 +1307,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3137054,
@@ -1257,7 +1326,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3137061,
@@ -1275,7 +1345,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3137062,
@@ -1293,7 +1364,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3137063,
@@ -1311,7 +1383,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3137064,
@@ -1329,7 +1402,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3138001,
@@ -1347,7 +1421,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3138002,
@@ -1365,7 +1440,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3139001,
@@ -1383,7 +1459,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 61313601,
@@ -1401,7 +1478,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 61313602,
@@ -1419,7 +1497,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 61313603,
@@ -1437,7 +1516,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 61313604,
@@ -1455,7 +1535,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 61313605,
@@ -1473,7 +1554,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 61313606,
@@ -1491,7 +1573,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 61313607,
@@ -1509,7 +1592,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 61313608,
@@ -1527,7 +1611,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 61313609,
@@ -1545,7 +1630,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 61313610,
@@ -1563,7 +1649,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 61313611,
@@ -1581,7 +1668,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 61313612,
@@ -1599,7 +1687,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 61313613,
@@ -1617,7 +1706,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 61313614,
@@ -1635,7 +1725,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 61313615,
@@ -1653,7 +1744,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 61313616,
@@ -1671,7 +1763,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 5137011,
@@ -1689,7 +1782,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 5137012,
@@ -1707,7 +1801,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 5137013,
@@ -1725,7 +1820,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 5137014,
@@ -1743,7 +1839,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 5137021,
@@ -1761,7 +1858,8 @@
     "act104EquipId2": 140077,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 5137022,
@@ -1779,7 +1877,8 @@
     "act104EquipId2": 140077,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 5137023,
@@ -1797,7 +1896,8 @@
     "act104EquipId2": 140077,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 5137024,
@@ -1815,7 +1915,8 @@
     "act104EquipId2": 140077,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 5137031,
@@ -1833,7 +1934,8 @@
     "act104EquipId2": 140028,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 5137032,
@@ -1851,7 +1953,8 @@
     "act104EquipId2": 140028,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 5137033,
@@ -1869,7 +1972,8 @@
     "act104EquipId2": 140028,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 5137034,
@@ -1887,7 +1991,8 @@
     "act104EquipId2": 140028,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 5137041,
@@ -1905,7 +2010,8 @@
     "act104EquipId2": 140088,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 5137042,
@@ -1923,7 +2029,8 @@
     "act104EquipId2": 140088,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 5137043,
@@ -1941,7 +2048,8 @@
     "act104EquipId2": 140088,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 5137044,
@@ -1959,7 +2067,8 @@
     "act104EquipId2": 140088,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 5138011,
@@ -1977,7 +2086,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 5138021,
@@ -1995,7 +2105,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 5138031,
@@ -2013,7 +2124,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 5138032,
@@ -2031,7 +2143,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 5138041,
@@ -2049,7 +2162,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 5138051,
@@ -2067,7 +2181,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 5138061,
@@ -2085,7 +2200,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 5138062,
@@ -2103,7 +2219,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 5138071,
@@ -2121,7 +2238,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 5138081,
@@ -2139,7 +2257,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 5138091,
@@ -2157,7 +2276,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 5138092,
@@ -2175,7 +2295,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 5138101,
@@ -2193,7 +2314,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 5138111,
@@ -2211,7 +2333,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 5138121,
@@ -2229,7 +2352,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 5138122,
@@ -2247,7 +2371,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1141001,
@@ -2265,7 +2390,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1141002,
@@ -2283,7 +2409,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 4141001,
@@ -2301,7 +2428,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 4141002,
@@ -2319,7 +2447,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 6141001,
@@ -2337,7 +2466,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 6141002,
@@ -2355,7 +2485,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 6141003,
@@ -2373,7 +2504,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1151001,
@@ -2391,7 +2523,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1151001,
@@ -2409,7 +2542,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 61500001,
@@ -2427,7 +2561,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 61500002,
@@ -2445,7 +2580,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 61500003,
@@ -2463,7 +2599,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 61500004,
@@ -2481,7 +2618,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 61500005,
@@ -2499,7 +2637,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 61500006,
@@ -2517,7 +2656,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 61500007,
@@ -2535,7 +2675,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 61500008,
@@ -2553,7 +2694,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 61500020,
@@ -2571,7 +2713,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 61500021,
@@ -2589,7 +2732,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 61500022,
@@ -2607,7 +2751,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 61500023,
@@ -2625,7 +2770,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 61500024,
@@ -2643,7 +2789,8 @@
     "act104EquipId2": 150091,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 61500025,
@@ -2661,7 +2808,8 @@
     "act104EquipId2": 150091,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 61500026,
@@ -2679,7 +2827,8 @@
     "act104EquipId2": 150091,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 61500027,
@@ -2697,7 +2846,8 @@
     "act104EquipId2": 150091,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 61500028,
@@ -2715,7 +2865,8 @@
     "act104EquipId2": 150095,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 61500029,
@@ -2733,7 +2884,8 @@
     "act104EquipId2": 150095,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 61500030,
@@ -2751,7 +2903,8 @@
     "act104EquipId2": 150095,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 61500031,
@@ -2769,7 +2922,8 @@
     "act104EquipId2": 150095,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 61500032,
@@ -2787,7 +2941,8 @@
     "act104EquipId2": 150091,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 61500033,
@@ -2805,7 +2960,8 @@
     "act104EquipId2": 150091,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 61500034,
@@ -2823,7 +2979,8 @@
     "act104EquipId2": 150091,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 61500035,
@@ -2841,7 +2998,8 @@
     "act104EquipId2": 150091,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 61600001,
@@ -2859,7 +3017,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 61600002,
@@ -2877,7 +3036,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 61600003,
@@ -2895,7 +3055,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 61600004,
@@ -2913,7 +3074,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 61600005,
@@ -2931,7 +3093,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 61600006,
@@ -2949,7 +3112,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 61600007,
@@ -2967,7 +3131,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 61600008,
@@ -2985,7 +3150,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 61600009,
@@ -3003,7 +3169,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 61600010,
@@ -3021,7 +3188,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 61600011,
@@ -3039,7 +3207,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 61600012,
@@ -3057,7 +3226,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 61600013,
@@ -3075,7 +3245,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 61600014,
@@ -3093,7 +3264,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 61600020,
@@ -3111,7 +3283,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 61600021,
@@ -3129,7 +3302,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 61600022,
@@ -3147,7 +3321,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 61600023,
@@ -3165,7 +3340,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 61600024,
@@ -3183,7 +3359,8 @@
     "act104EquipId2": 160110,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 61600025,
@@ -3201,7 +3378,8 @@
     "act104EquipId2": 160110,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 61600026,
@@ -3219,7 +3397,8 @@
     "act104EquipId2": 160110,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 61600027,
@@ -3237,7 +3416,8 @@
     "act104EquipId2": 160110,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 61600028,
@@ -3255,7 +3435,8 @@
     "act104EquipId2": 160106,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 61600029,
@@ -3273,7 +3454,8 @@
     "act104EquipId2": 160106,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 61600030,
@@ -3291,7 +3473,8 @@
     "act104EquipId2": 160106,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 61600031,
@@ -3309,7 +3492,8 @@
     "act104EquipId2": 160106,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 61600032,
@@ -3327,7 +3511,8 @@
     "act104EquipId2": 160110,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 61600033,
@@ -3345,7 +3530,8 @@
     "act104EquipId2": 160110,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 61600034,
@@ -3363,7 +3549,8 @@
     "act104EquipId2": 160110,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 61600035,
@@ -3381,7 +3568,8 @@
     "act104EquipId2": 160110,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1161001,
@@ -3399,7 +3587,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1161002,
@@ -3417,7 +3606,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1161003,
@@ -3435,7 +3625,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1161004,
@@ -3453,7 +3644,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1161005,
@@ -3471,7 +3663,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1161006,
@@ -3489,7 +3682,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1161007,
@@ -3507,7 +3701,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1161008,
@@ -3525,7 +3720,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1161009,
@@ -3543,7 +3739,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1161010,
@@ -3561,7 +3758,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1161011,
@@ -3579,7 +3777,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1162001,
@@ -3597,7 +3796,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1162002,
@@ -3615,7 +3815,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1162003,
@@ -3633,7 +3834,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1162004,
@@ -3651,7 +3853,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1162005,
@@ -3669,7 +3872,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1162006,
@@ -3687,7 +3891,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1162007,
@@ -3705,7 +3910,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1162008,
@@ -3723,7 +3929,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1162009,
@@ -3741,7 +3948,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1162010,
@@ -3759,7 +3967,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1162011,
@@ -3777,7 +3986,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1162012,
@@ -3795,7 +4005,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 71600001,
@@ -3813,7 +4024,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 71600002,
@@ -3831,7 +4043,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 6171001,
@@ -3849,7 +4062,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 6171002,
@@ -3867,7 +4081,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 6171003,
@@ -3885,7 +4100,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 6171004,
@@ -3903,7 +4119,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 6171005,
@@ -3921,7 +4138,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 6171006,
@@ -3939,7 +4157,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 6172001,
@@ -3957,7 +4176,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 6172002,
@@ -3975,7 +4195,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 6172003,
@@ -3993,7 +4214,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 6172004,
@@ -4011,7 +4233,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 6172005,
@@ -4029,7 +4252,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 6172006,
@@ -4047,7 +4271,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 318010101,
@@ -4065,7 +4290,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 318010102,
@@ -4083,7 +4309,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1181001,
@@ -4101,7 +4328,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1181002,
@@ -4119,7 +4347,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1181003,
@@ -4137,7 +4366,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1181004,
@@ -4155,7 +4385,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1181005,
@@ -4173,7 +4404,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1181006,
@@ -4191,7 +4423,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1182001,
@@ -4209,7 +4442,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1182002,
@@ -4227,7 +4461,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1182003,
@@ -4245,7 +4480,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1182004,
@@ -4263,7 +4499,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1182005,
@@ -4281,7 +4518,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1182006,
@@ -4299,7 +4537,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1183001,
@@ -4317,7 +4556,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 8191001,
@@ -4335,7 +4575,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 8191002,
@@ -4353,7 +4594,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 8191003,
@@ -4371,7 +4613,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 8191004,
@@ -4389,7 +4632,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 8191005,
@@ -4407,7 +4651,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 8191006,
@@ -4425,7 +4670,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 8191011,
@@ -4443,7 +4689,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 8191012,
@@ -4461,7 +4708,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 8191013,
@@ -4479,7 +4727,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 8191014,
@@ -4497,7 +4746,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 8191015,
@@ -4515,7 +4765,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 8191016,
@@ -4533,7 +4784,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 8190401,
@@ -4551,7 +4803,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 8190402,
@@ -4569,7 +4822,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 8190403,
@@ -4587,7 +4841,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 8190404,
@@ -4605,7 +4860,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 8190405,
@@ -4623,7 +4879,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 8190406,
@@ -4641,7 +4898,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 8190407,
@@ -4659,7 +4917,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 8190408,
@@ -4677,7 +4936,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 8190409,
@@ -4695,7 +4955,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 8190501,
@@ -4713,7 +4974,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 8190502,
@@ -4731,7 +4993,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 8190503,
@@ -4749,7 +5012,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 8190504,
@@ -4767,7 +5031,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 8190505,
@@ -4785,7 +5050,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 8190506,
@@ -4803,7 +5069,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 8190507,
@@ -4821,7 +5088,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 8190508,
@@ -4839,7 +5107,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 8190509,
@@ -4857,7 +5126,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 8190601,
@@ -4875,7 +5145,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 8190602,
@@ -4893,7 +5164,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 8190603,
@@ -4911,7 +5183,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 8190604,
@@ -4929,7 +5202,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 8190605,
@@ -4947,7 +5221,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 8190606,
@@ -4965,7 +5240,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 8190607,
@@ -4983,7 +5259,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 8190608,
@@ -5001,7 +5278,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 8190609,
@@ -5019,7 +5297,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1191001,
@@ -5037,7 +5316,8 @@
     "act104EquipId2": 0,
     "attrId": 1191001,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1192001,
@@ -5055,7 +5335,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1192002,
@@ -5073,7 +5354,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1192003,
@@ -5091,7 +5373,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1192004,
@@ -5109,7 +5392,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1192005,
@@ -5127,7 +5411,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1192006,
@@ -5145,7 +5430,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 8200001,
@@ -5163,7 +5449,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1201001,
@@ -5181,7 +5468,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1201002,
@@ -5199,7 +5487,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1201003,
@@ -5217,7 +5506,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1201004,
@@ -5235,7 +5525,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1201005,
@@ -5253,7 +5544,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1201006,
@@ -5271,7 +5563,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1201007,
@@ -5289,7 +5582,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1201008,
@@ -5307,7 +5601,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1201009,
@@ -5325,7 +5620,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1201010,
@@ -5343,7 +5639,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1201011,
@@ -5361,7 +5658,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1201012,
@@ -5379,7 +5677,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 4201041,
@@ -5397,7 +5696,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 4201001,
@@ -5415,7 +5715,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 4201002,
@@ -5433,7 +5734,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1211001,
@@ -5451,7 +5753,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 4014011,
@@ -5469,7 +5772,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 2210001,
@@ -5487,7 +5791,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 2210002,
@@ -5505,7 +5810,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 2210003,
@@ -5523,7 +5829,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 2210004,
@@ -5541,7 +5848,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 2210005,
@@ -5559,7 +5867,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 2210006,
@@ -5577,7 +5886,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 2210007,
@@ -5595,7 +5905,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 2210008,
@@ -5613,7 +5924,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 5210001,
@@ -5631,7 +5943,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 5210002,
@@ -5649,7 +5962,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 5210003,
@@ -5667,7 +5981,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 5210004,
@@ -5685,7 +6000,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 5210005,
@@ -5703,7 +6019,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 5210006,
@@ -5721,7 +6038,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 5210007,
@@ -5739,7 +6057,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 5210008,
@@ -5757,7 +6076,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 5210009,
@@ -5775,7 +6095,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 5210010,
@@ -5793,7 +6114,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 5210011,
@@ -5811,7 +6133,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 5210012,
@@ -5829,7 +6152,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 5210013,
@@ -5847,7 +6171,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 5210014,
@@ -5865,7 +6190,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 5210015,
@@ -5883,7 +6209,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 5210016,
@@ -5901,7 +6228,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 8221100,
@@ -5919,7 +6247,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 8221110,
@@ -5937,7 +6266,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 8221200,
@@ -5955,7 +6285,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 8221210,
@@ -5973,7 +6304,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 8221220,
@@ -5991,7 +6323,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 8221300,
@@ -6009,7 +6342,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 8221310,
@@ -6027,7 +6361,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 8221320,
@@ -6045,7 +6380,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 8221330,
@@ -6063,7 +6399,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 8221340,
@@ -6081,7 +6418,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 5220001,
@@ -6099,7 +6437,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 5220002,
@@ -6117,7 +6456,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 8221001,
@@ -6135,7 +6475,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 8221002,
@@ -6153,7 +6494,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 8221003,
@@ -6171,7 +6513,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 8222001,
@@ -6189,7 +6532,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 8222002,
@@ -6207,7 +6551,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 8222003,
@@ -6225,7 +6570,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 8222004,
@@ -6243,7 +6589,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 8222005,
@@ -6261,7 +6608,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 8222006,
@@ -6279,7 +6627,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 6221001,
@@ -6297,7 +6646,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 6221002,
@@ -6315,7 +6665,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 6221003,
@@ -6333,7 +6684,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 6221004,
@@ -6351,7 +6703,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 6221005,
@@ -6369,7 +6722,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 6221006,
@@ -6387,7 +6741,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 6221007,
@@ -6405,7 +6760,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 6221008,
@@ -6423,7 +6779,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 6221009,
@@ -6441,7 +6798,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 6221010,
@@ -6459,7 +6817,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 4015011,
@@ -6477,7 +6836,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 9231001,
@@ -6495,7 +6855,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 9231002,
@@ -6513,7 +6874,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 9231003,
@@ -6531,7 +6893,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 9232001,
@@ -6549,7 +6912,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 8231001,
@@ -6567,7 +6931,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 8231002,
@@ -6585,7 +6950,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 8231003,
@@ -6603,7 +6969,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 8231004,
@@ -6621,7 +6988,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 8231005,
@@ -6639,7 +7007,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3241001,
@@ -6657,7 +7026,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3241002,
@@ -6675,7 +7045,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3241003,
@@ -6693,7 +7064,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3241004,
@@ -6711,7 +7083,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3241005,
@@ -6729,7 +7102,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3241006,
@@ -6747,7 +7121,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 8241001,
@@ -6765,7 +7140,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 8241002,
@@ -6783,7 +7159,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 8241003,
@@ -6801,7 +7178,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 8241004,
@@ -6819,7 +7197,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 2241001,
@@ -6837,7 +7216,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 304101,
-    "facetslevel": 4
+    "facetslevel": 4,
+    "special": ""
   },
   {
     "id": 2241002,
@@ -6855,7 +7235,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 2241003,
@@ -6873,7 +7254,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 304801,
-    "facetslevel": 4
+    "facetslevel": 4,
+    "special": ""
   },
   {
     "id": 2241004,
@@ -6891,7 +7273,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3251001,
@@ -6909,7 +7292,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3251002,
@@ -6927,7 +7311,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3251003,
@@ -6945,7 +7330,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3251004,
@@ -6963,7 +7349,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 8251001,
@@ -6981,7 +7368,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 8251002,
@@ -6999,7 +7387,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 8251003,
@@ -7017,7 +7406,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 8251004,
@@ -7035,7 +7425,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 4016011,
@@ -7053,7 +7444,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 4016012,
@@ -7071,7 +7463,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 6251001,
@@ -7089,7 +7482,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 6251002,
@@ -7107,7 +7501,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 303901,
-    "facetslevel": 4
+    "facetslevel": 4,
+    "special": ""
   },
   {
     "id": 6251003,
@@ -7125,7 +7520,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 300901,
-    "facetslevel": 4
+    "facetslevel": 4,
+    "special": ""
   },
   {
     "id": 6251004,
@@ -7143,7 +7539,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3261001,
@@ -7161,7 +7558,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3261002,
@@ -7179,7 +7577,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3261003,
@@ -7197,7 +7596,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3261004,
@@ -7215,7 +7615,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3261005,
@@ -7233,7 +7634,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 3261006,
@@ -7251,7 +7653,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 8261001,
@@ -7269,7 +7672,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 8261002,
@@ -7287,7 +7691,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 306201,
-    "facetslevel": 4
+    "facetslevel": 4,
+    "special": ""
   },
   {
     "id": 8261003,
@@ -7305,7 +7710,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 307201,
-    "facetslevel": 4
+    "facetslevel": 4,
+    "special": ""
   },
   {
     "id": 8261004,
@@ -7323,7 +7729,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 304701,
-    "facetslevel": 4
+    "facetslevel": 4,
+    "special": ""
   },
   {
     "id": 2261001,
@@ -7341,7 +7748,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 2261002,
@@ -7359,7 +7767,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 2261003,
@@ -7377,7 +7786,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 304801,
-    "facetslevel": 4
+    "facetslevel": 4,
+    "special": ""
   },
   {
     "id": 2261004,
@@ -7395,7 +7805,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1272001,
@@ -7413,7 +7824,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 307401,
-    "facetslevel": 4
+    "facetslevel": 4,
+    "special": ""
   },
   {
     "id": 1272002,
@@ -7431,7 +7843,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 307402,
-    "facetslevel": 4
+    "facetslevel": 4,
+    "special": ""
   },
   {
     "id": 1272003,
@@ -7449,7 +7862,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 308301,
-    "facetslevel": 4
+    "facetslevel": 4,
+    "special": ""
   },
   {
     "id": 1272004,
@@ -7467,7 +7881,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 304801,
-    "facetslevel": 4
+    "facetslevel": 4,
+    "special": ""
   },
   {
     "id": 1272005,
@@ -7485,7 +7900,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 306201,
-    "facetslevel": 4
+    "facetslevel": 4,
+    "special": ""
   },
   {
     "id": 1272006,
@@ -7503,7 +7919,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 300301,
-    "facetslevel": 4
+    "facetslevel": 4,
+    "special": ""
   },
   {
     "id": 1273001,
@@ -7521,7 +7938,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1273002,
@@ -7539,7 +7957,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1273003,
@@ -7557,7 +7976,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 303901,
-    "facetslevel": 4
+    "facetslevel": 4,
+    "special": ""
   },
   {
     "id": 1273004,
@@ -7575,7 +7995,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1273011,
@@ -7593,7 +8014,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 305601,
-    "facetslevel": 4
+    "facetslevel": 4,
+    "special": ""
   },
   {
     "id": 1273012,
@@ -7611,7 +8033,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 300901,
-    "facetslevel": 4
+    "facetslevel": 4,
+    "special": ""
   },
   {
     "id": 1273013,
@@ -7629,7 +8052,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 300301,
-    "facetslevel": 4
+    "facetslevel": 4,
+    "special": ""
   },
   {
     "id": 1273014,
@@ -7647,7 +8071,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1273021,
@@ -7665,7 +8090,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 300401,
-    "facetslevel": 4
+    "facetslevel": 4,
+    "special": ""
   },
   {
     "id": 1273022,
@@ -7683,7 +8109,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1273023,
@@ -7701,7 +8128,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1273024,
@@ -7719,7 +8147,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1273031,
@@ -7737,7 +8166,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1273032,
@@ -7755,7 +8185,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 304801,
-    "facetslevel": 4
+    "facetslevel": 4,
+    "special": ""
   },
   {
     "id": 1273033,
@@ -7773,7 +8204,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1273034,
@@ -7791,7 +8223,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 307401,
-    "facetslevel": 4
+    "facetslevel": 4,
+    "special": ""
   },
   {
     "id": 1273041,
@@ -7809,7 +8242,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1273042,
@@ -7827,7 +8261,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 305201,
-    "facetslevel": 4
+    "facetslevel": 4,
+    "special": ""
   },
   {
     "id": 1273043,
@@ -7845,7 +8280,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1273044,
@@ -7863,7 +8299,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1273051,
@@ -7881,7 +8318,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1273052,
@@ -7899,7 +8337,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1273053,
@@ -7917,7 +8356,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1273054,
@@ -7935,7 +8375,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1273061,
@@ -7953,7 +8394,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 305101,
-    "facetslevel": 4
+    "facetslevel": 4,
+    "special": ""
   },
   {
     "id": 1273062,
@@ -7971,7 +8413,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1273063,
@@ -7989,7 +8432,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 306301,
-    "facetslevel": 4
+    "facetslevel": 4,
+    "special": ""
   },
   {
     "id": 1273064,
@@ -8007,7 +8451,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 304701,
-    "facetslevel": 4
+    "facetslevel": 4,
+    "special": ""
   },
   {
     "id": 1273071,
@@ -8025,7 +8470,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 308301,
-    "facetslevel": 4
+    "facetslevel": 4,
+    "special": ""
   },
   {
     "id": 1273072,
@@ -8043,7 +8489,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 306301,
-    "facetslevel": 4
+    "facetslevel": 4,
+    "special": ""
   },
   {
     "id": 1273073,
@@ -8061,7 +8508,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1273074,
@@ -8079,7 +8527,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1273081,
@@ -8097,7 +8546,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1273082,
@@ -8115,7 +8565,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1273083,
@@ -8133,7 +8584,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 304701,
-    "facetslevel": 4
+    "facetslevel": 4,
+    "special": ""
   },
   {
     "id": 1273084,
@@ -8151,7 +8603,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 306201,
-    "facetslevel": 4
+    "facetslevel": 4,
+    "special": ""
   },
   {
     "id": 1273091,
@@ -8169,7 +8622,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1273092,
@@ -8187,7 +8641,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 1273093,
@@ -8205,7 +8660,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 304701,
-    "facetslevel": 4
+    "facetslevel": 4,
+    "special": ""
   },
   {
     "id": 1273094,
@@ -8223,7 +8679,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 306201,
-    "facetslevel": 4
+    "facetslevel": 4,
+    "special": ""
   },
   {
     "id": 7270001,
@@ -8241,7 +8698,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 7270002,
@@ -8259,7 +8717,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 304801,
-    "facetslevel": 4
+    "facetslevel": 4,
+    "special": ""
   },
   {
     "id": 7270003,
@@ -8277,7 +8736,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 7270004,
@@ -8295,7 +8755,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 9271001,
@@ -8313,7 +8774,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 308301,
-    "facetslevel": 4
+    "facetslevel": 4,
+    "special": ""
   },
   {
     "id": 9271002,
@@ -8331,7 +8793,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 9271003,
@@ -8349,7 +8812,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 307401,
-    "facetslevel": 4
+    "facetslevel": 4,
+    "special": ""
   },
   {
     "id": 9271004,
@@ -8367,7 +8831,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 5271001,
@@ -8385,7 +8850,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 8270001,
@@ -8403,7 +8869,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 8270002,
@@ -8421,7 +8888,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
   },
   {
     "id": 8270003,
@@ -8439,7 +8907,8 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 306201,
-    "facetslevel": 4
+    "facetslevel": 4,
+    "special": ""
   },
   {
     "id": 8270004,
@@ -8457,6 +8926,330 @@
     "act104EquipId2": 0,
     "attrId": 0,
     "facetsId": 0,
-    "facetslevel": 0
+    "facetslevel": 0,
+    "special": ""
+  },
+  {
+    "id": 2291001,
+    "trialTemplate": 0,
+    "heroId": 3123,
+    "skin": 312302,
+    "trialType": 0,
+    "level": 180,
+    "exSkillLv": 0,
+    "talent": 12,
+    "equipId": 1551,
+    "equipLv": 60,
+    "equipRefine": 5,
+    "act104EquipId1": 0,
+    "act104EquipId2": 0,
+    "attrId": 0,
+    "facetsId": 0,
+    "facetslevel": 0,
+    "special": "1001#2001"
+  },
+  {
+    "id": 2291002,
+    "trialTemplate": 0,
+    "heroId": 3051,
+    "skin": 305102,
+    "trialType": 0,
+    "level": 180,
+    "exSkillLv": 0,
+    "talent": 12,
+    "equipId": 1426,
+    "equipLv": 60,
+    "equipRefine": 5,
+    "act104EquipId1": 0,
+    "act104EquipId2": 0,
+    "attrId": 0,
+    "facetsId": 0,
+    "facetslevel": 0,
+    "special": ""
+  },
+  {
+    "id": 2291003,
+    "trialTemplate": 0,
+    "heroId": 3052,
+    "skin": 305202,
+    "trialType": 0,
+    "level": 180,
+    "exSkillLv": 0,
+    "talent": 12,
+    "equipId": 1439,
+    "equipLv": 60,
+    "equipRefine": 5,
+    "act104EquipId1": 0,
+    "act104EquipId2": 0,
+    "attrId": 0,
+    "facetsId": 0,
+    "facetslevel": 0,
+    "special": ""
+  },
+  {
+    "id": 2291004,
+    "trialTemplate": 0,
+    "heroId": 3087,
+    "skin": 308704,
+    "trialType": 0,
+    "level": 180,
+    "exSkillLv": 0,
+    "talent": 12,
+    "equipId": 1525,
+    "equipLv": 60,
+    "equipRefine": 5,
+    "act104EquipId1": 0,
+    "act104EquipId2": 0,
+    "attrId": 0,
+    "facetsId": 0,
+    "facetslevel": 0,
+    "special": ""
+  },
+  {
+    "id": 2291005,
+    "trialTemplate": 0,
+    "heroId": 3116,
+    "skin": 311603,
+    "trialType": 0,
+    "level": 180,
+    "exSkillLv": 0,
+    "talent": 12,
+    "equipId": 1546,
+    "equipLv": 60,
+    "equipRefine": 5,
+    "act104EquipId1": 0,
+    "act104EquipId2": 0,
+    "attrId": 0,
+    "facetsId": 0,
+    "facetslevel": 0,
+    "special": ""
+  },
+  {
+    "id": 2291006,
+    "trialTemplate": 0,
+    "heroId": 3065,
+    "skin": 306504,
+    "trialType": 0,
+    "level": 180,
+    "exSkillLv": 0,
+    "talent": 12,
+    "equipId": 1524,
+    "equipLv": 60,
+    "equipRefine": 5,
+    "act104EquipId1": 0,
+    "act104EquipId2": 0,
+    "attrId": 0,
+    "facetsId": 0,
+    "facetslevel": 0,
+    "special": ""
+  },
+  {
+    "id": 2291007,
+    "trialTemplate": 0,
+    "heroId": 3062,
+    "skin": 306203,
+    "trialType": 0,
+    "level": 180,
+    "exSkillLv": 0,
+    "talent": 12,
+    "equipId": 1509,
+    "equipLv": 60,
+    "equipRefine": 5,
+    "act104EquipId1": 0,
+    "act104EquipId2": 0,
+    "attrId": 0,
+    "facetsId": 0,
+    "facetslevel": 0,
+    "special": ""
+  },
+  {
+    "id": 2291008,
+    "trialTemplate": 0,
+    "heroId": 3028,
+    "skin": 302804,
+    "trialType": 0,
+    "level": 120,
+    "exSkillLv": 0,
+    "talent": 10,
+    "equipId": 1503,
+    "equipLv": 60,
+    "equipRefine": 5,
+    "act104EquipId1": 0,
+    "act104EquipId2": 0,
+    "attrId": 0,
+    "facetsId": 0,
+    "facetslevel": 0,
+    "special": ""
+  },
+  {
+    "id": 2291009,
+    "trialTemplate": 0,
+    "heroId": 3009,
+    "skin": 300902,
+    "trialType": 0,
+    "level": 180,
+    "exSkillLv": 0,
+    "talent": 12,
+    "equipId": 1430,
+    "equipLv": 60,
+    "equipRefine": 5,
+    "act104EquipId1": 0,
+    "act104EquipId2": 0,
+    "attrId": 0,
+    "facetsId": 0,
+    "facetslevel": 0,
+    "special": ""
+  },
+  {
+    "id": 6291001,
+    "trialTemplate": 0,
+    "heroId": 3009,
+    "skin": 300901,
+    "trialType": 0,
+    "level": 35,
+    "exSkillLv": 0,
+    "talent": 5,
+    "equipId": 1508,
+    "equipLv": 60,
+    "equipRefine": 0,
+    "act104EquipId1": 0,
+    "act104EquipId2": 0,
+    "attrId": 0,
+    "facetsId": 0,
+    "facetslevel": 0,
+    "special": ""
+  },
+  {
+    "id": 1305001,
+    "trialTemplate": 0,
+    "heroId": 3124,
+    "skin": 312401,
+    "trialType": 0,
+    "level": 150,
+    "exSkillLv": 0,
+    "talent": 10,
+    "equipId": 1552,
+    "equipLv": 60,
+    "equipRefine": 0,
+    "act104EquipId1": 0,
+    "act104EquipId2": 0,
+    "attrId": 0,
+    "facetsId": 0,
+    "facetslevel": 0,
+    "special": ""
+  },
+  {
+    "id": 9291001,
+    "trialTemplate": 0,
+    "heroId": 3065,
+    "skin": 306501,
+    "trialType": 0,
+    "level": 180,
+    "exSkillLv": 0,
+    "talent": 12,
+    "equipId": 1524,
+    "equipLv": 60,
+    "equipRefine": 0,
+    "act104EquipId1": 0,
+    "act104EquipId2": 0,
+    "attrId": 0,
+    "facetsId": 306501,
+    "facetslevel": 4,
+    "special": ""
+  },
+  {
+    "id": 9291002,
+    "trialTemplate": 0,
+    "heroId": 3087,
+    "skin": 308701,
+    "trialType": 0,
+    "level": 180,
+    "exSkillLv": 0,
+    "talent": 12,
+    "equipId": 1525,
+    "equipLv": 60,
+    "equipRefine": 0,
+    "act104EquipId1": 0,
+    "act104EquipId2": 0,
+    "attrId": 0,
+    "facetsId": 308701,
+    "facetslevel": 4,
+    "special": ""
+  },
+  {
+    "id": 9291003,
+    "trialTemplate": 0,
+    "heroId": 3051,
+    "skin": 305101,
+    "trialType": 0,
+    "level": 180,
+    "exSkillLv": 0,
+    "talent": 12,
+    "equipId": 1426,
+    "equipLv": 60,
+    "equipRefine": 0,
+    "act104EquipId1": 0,
+    "act104EquipId2": 0,
+    "attrId": 0,
+    "facetsId": 305102,
+    "facetslevel": 4,
+    "special": ""
+  },
+  {
+    "id": 9291004,
+    "trialTemplate": 0,
+    "heroId": 3047,
+    "skin": 304701,
+    "trialType": 0,
+    "level": 180,
+    "exSkillLv": 0,
+    "talent": 12,
+    "equipId": 1431,
+    "equipLv": 60,
+    "equipRefine": 0,
+    "act104EquipId1": 0,
+    "act104EquipId2": 0,
+    "attrId": 0,
+    "facetsId": 304701,
+    "facetslevel": 4,
+    "special": ""
+  },
+  {
+    "id": 9291005,
+    "trialTemplate": 0,
+    "heroId": 3062,
+    "skin": 306201,
+    "trialType": 0,
+    "level": 180,
+    "exSkillLv": 0,
+    "talent": 12,
+    "equipId": 1509,
+    "equipLv": 60,
+    "equipRefine": 0,
+    "act104EquipId1": 0,
+    "act104EquipId2": 0,
+    "attrId": 0,
+    "facetsId": 306201,
+    "facetslevel": 4,
+    "special": ""
+  },
+  {
+    "id": 9291006,
+    "trialTemplate": 0,
+    "heroId": 3074,
+    "skin": 307401,
+    "trialType": 0,
+    "level": 180,
+    "exSkillLv": 0,
+    "talent": 12,
+    "equipId": 1511,
+    "equipLv": 60,
+    "equipRefine": 0,
+    "act104EquipId1": 0,
+    "act104EquipId2": 0,
+    "attrId": 0,
+    "facetsId": 307402,
+    "facetslevel": 4,
+    "special": ""
   }
 ]

@@ -19,6 +19,7 @@ local var_0_1 = {
 	powerMax = 13,
 	mvskinId = 35,
 	roleBirthday = 29,
+	stat = 36,
 	useDesc = 33,
 	duplicateItem = 16,
 	rare = 6,

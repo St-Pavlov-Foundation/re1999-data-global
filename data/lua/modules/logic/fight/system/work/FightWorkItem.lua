@@ -156,7 +156,7 @@ function var_0_0.playCallback(arg_20_0, arg_20_1)
 		local var_20_1 = #arg_20_1
 
 		for iter_20_0, iter_20_1 in ipairs(arg_20_1) do
-			local var_20_2 = arg_20_0.WORKFINISHED
+			local var_20_2 = arg_20_0.WORKFINISHED or arg_20_0.FIGHT_WORK_ENTRUSTED
 
 			if not arg_20_0.WORKFINISHED and arg_20_0.STARTED then
 				local var_20_3 = iter_20_1.handle

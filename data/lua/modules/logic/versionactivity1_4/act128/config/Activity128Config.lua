@@ -22,7 +22,8 @@ function var_0_0.reqConfigNames(arg_2_0)
 		"monster_template",
 		"battle",
 		"episode",
-		"skin"
+		"skin",
+		"assassin_style_zongmao"
 	}
 end
 

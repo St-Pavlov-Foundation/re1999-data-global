@@ -65,22 +65,29 @@ function var_0_0.buffIsStackerBuff(arg_7_0, arg_7_1)
 
 	local var_7_0 = arg_7_1.id
 
+	if FightHeroSpEffectConfig.instance:isKSDLSpecialBuff(var_7_0) then
+		local var_7_1 = lua_skill_bufftype.configDict[arg_7_1.typeId]
+		local var_7_2 = FightStrUtil.instance:getSplitCache(var_7_1.includeTypes, "#")
+
+		return true, var_7_2[1]
+	end
+
 	for iter_7_0, iter_7_1 in ipairs(var_0_0.StackBuffFeatureList) do
 		if FightConfig.instance:hasBuffFeature(var_7_0, iter_7_1) then
-			local var_7_1 = lua_skill_bufftype.configDict[arg_7_1.typeId]
-			local var_7_2 = FightStrUtil.instance:getSplitCache(var_7_1.includeTypes, "#")
+			local var_7_3 = lua_skill_bufftype.configDict[arg_7_1.typeId]
+			local var_7_4 = FightStrUtil.instance:getSplitCache(var_7_3.includeTypes, "#")
 
-			return true, var_7_2[1]
+			return true, var_7_4[1]
 		end
 	end
 
-	local var_7_3 = lua_skill_bufftype.configDict[arg_7_1.typeId]
+	local var_7_5 = lua_skill_bufftype.configDict[arg_7_1.typeId]
 
-	if var_7_3 then
-		local var_7_4 = FightStrUtil.instance:getSplitCache(var_7_3.includeTypes, "#")[1]
+	if var_7_5 then
+		local var_7_6 = FightStrUtil.instance:getSplitCache(var_7_5.includeTypes, "#")[1]
 
-		if var_7_4 == FightEnum.BuffIncludeTypes.Stacked or var_7_4 == FightEnum.BuffIncludeTypes.Stacked12 or var_7_4 == FightEnum.BuffIncludeTypes.Stacked15 or var_7_4 == FightEnum.BuffIncludeTypes.Stacked14 then
-			return true, var_7_4
+		if var_7_6 == FightEnum.BuffIncludeTypes.Stacked or var_7_6 == FightEnum.BuffIncludeTypes.Stacked12 or var_7_6 == FightEnum.BuffIncludeTypes.Stacked15 or var_7_6 == FightEnum.BuffIncludeTypes.Stacked14 then
+			return true, var_7_6
 		end
 	end
 end

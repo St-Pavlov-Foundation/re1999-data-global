@@ -6,9 +6,11 @@ function var_0_0.buildViews(arg_1_0)
 	local var_1_0 = {}
 
 	arg_1_0._equipView = CharacterDefaultEquipView.New()
+	arg_1_0._extraView = CharacterDefaultExtraView.New()
 
 	table.insert(var_1_0, CharacterView.New())
 	table.insert(var_1_0, arg_1_0._equipView)
+	table.insert(var_1_0, arg_1_0._extraView)
 	table.insert(var_1_0, CharacterSpineGCView.New())
 	table.insert(var_1_0, CommonRainEffectView.New("anim/bgcanvas/#go_glowcontainer"))
 

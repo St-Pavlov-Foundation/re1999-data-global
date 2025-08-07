@@ -62,4 +62,10 @@ function var_0_0.checkTowerPermanentElite()
 	return TowerPermanentModel.instance:checkNewLayerIsElite()
 end
 
+function var_0_0.checkMercenaryUnlock()
+	local var_10_0 = OdysseyConfig.instance:getConstConfig(OdysseyEnum.ConstId.MercenaryUnlock)
+
+	return (OdysseyDungeonModel.instance:checkConditionCanUnlock(var_10_0.value))
+end
+
 return var_0_0

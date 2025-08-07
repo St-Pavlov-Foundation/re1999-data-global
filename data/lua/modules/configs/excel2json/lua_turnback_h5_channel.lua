@@ -4,6 +4,7 @@ local var_0_0 = {}
 local var_0_1 = {
 	id = 1,
 	channelId = 2,
+	testUrl = 4,
 	url = 3
 }
 local var_0_2 = {

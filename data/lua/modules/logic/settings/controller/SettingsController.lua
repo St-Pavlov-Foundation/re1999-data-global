@@ -66,7 +66,9 @@ function var_0_0._changeLang2(arg_9_0)
 		local var_9_1 = LangSettings.aihelpKey[var_9_0]
 
 		if var_9_1 then
-			SDKMgr.instance:setLanguage(var_9_1)
+			if SDKMgr.instance.setLanguage then
+				SDKMgr.instance:setLanguage(var_9_1)
+			end
 		else
 			logError("aihelpKey miss :" .. var_9_0)
 		end

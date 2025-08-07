@@ -1,0 +1,51 @@
+[
+  {
+    "id": 1001,
+    "name": "",
+    "missionId": 2001,
+    "gridId": 13,
+    "costPoint": 1
+  },
+  {
+    "id": 1002,
+    "name": "",
+    "missionId": 2001,
+    "gridId": 33,
+    "costPoint": 2
+  },
+  {
+    "id": 301401,
+    "name": "",
+    "missionId": 3014,
+    "gridId": 32,
+    "costPoint": 1
+  },
+  {
+    "id": 303101,
+    "name": "",
+    "missionId": 30314,
+    "gridId": 14,
+    "costPoint": 1
+  },
+  {
+    "id": 303102,
+    "name": "",
+    "missionId": 30314,
+    "gridId": 52,
+    "costPoint": 1
+  },
+  {
+    "id": 304301,
+    "name": "",
+    "missionId": 3043,
+    "gridId": 15,
+    "costPoint": 1
+  },
+  {
+    "id": 304302,
+    "name": "",
+    "missionId": 3043,
+    "gridId": 51,
+    "costPoint": 1
+  }
+]

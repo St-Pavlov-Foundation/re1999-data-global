@@ -150,7 +150,11 @@ end
 function var_0_0._showEquipBackpackNum(arg_15_0)
 	local var_15_0 = CharacterBackpackEquipListModel.instance:getCount()
 
-	arg_15_0._txtequipbackpacknum.text = string.format("%s ：%s/%s", luaLang("equip"), var_15_0, EquipConfig.instance:getEquipBackpackMaxCount())
+	arg_15_0._txtequipbackpacknum.text = GameUtil.getSubPlaceholderLuaLang(luaLang("CharacterBackpackEquipView_showEquipBackpackNum"), {
+		luaLang("equip"),
+		var_15_0,
+		EquipConfig.instance:getEquipBackpackMaxCount()
+	})
 end
 
 function var_0_0.refreshFilterBtn(arg_16_0)

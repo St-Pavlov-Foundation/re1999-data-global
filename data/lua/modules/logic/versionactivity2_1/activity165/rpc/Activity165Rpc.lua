@@ -9,12 +9,12 @@ function var_0_0.onReceiveAct165StoryInfo(arg_1_0, arg_1_1, arg_1_2)
 	end
 end
 
-function var_0_0.sendAct165GetInfoRequest(arg_2_0, arg_2_1)
+function var_0_0.sendAct165GetInfoRequest(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
 	local var_2_0 = Activity165Module_pb.Act165GetInfoRequest()
 
 	var_2_0.activityId = arg_2_1
 
-	arg_2_0:sendMsg(var_2_0)
+	return arg_2_0:sendMsg(var_2_0, arg_2_2, arg_2_3)
 end
 
 function var_0_0.onReceiveAct165GetInfoReply(arg_3_0, arg_3_1, arg_3_2)

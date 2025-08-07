@@ -19,6 +19,7 @@ function var_0_0.init(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 	gohelper.setActive(arg_1_0.goBuffItem, false)
 	arg_1_0:refreshBuffList()
 	FightController.instance:registerCallback(FightEvent.OnRoundSequenceStart, arg_1_0.updateBuff, arg_1_0)
+	FightController.instance:registerCallback(FightEvent.SkillHideBuffLayer, arg_1_0.updateBuff, arg_1_0)
 	FightController.instance:registerCallback(FightEvent.OnBuffUpdate, arg_1_0.updateBuff, arg_1_0)
 	FightController.instance:registerCallback(FightEvent.MultiHpChange, arg_1_0._onMultiHpChange, arg_1_0)
 	FightController.instance:registerCallback(FightEvent.OnRoundSequenceFinish, arg_1_0.updateBuff, arg_1_0)
@@ -36,6 +37,7 @@ function var_0_0.beforeDestroy(arg_2_0)
 
 	TaskDispatcher.cancelTask(arg_2_0.playDeleteAniDone, arg_2_0)
 	FightController.instance:unregisterCallback(FightEvent.OnRoundSequenceStart, arg_2_0.updateBuff, arg_2_0)
+	FightController.instance:unregisterCallback(FightEvent.SkillHideBuffLayer, arg_2_0.updateBuff, arg_2_0)
 	FightController.instance:unregisterCallback(FightEvent.OnBuffUpdate, arg_2_0.updateBuff, arg_2_0)
 	FightController.instance:unregisterCallback(FightEvent.MultiHpChange, arg_2_0._onMultiHpChange, arg_2_0)
 	FightController.instance:unregisterCallback(FightEvent.OnRoundSequenceFinish, arg_2_0.updateBuff, arg_2_0)
@@ -86,8 +88,14 @@ function var_0_0.updateBuff(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4, arg_3_5
 
 	if arg_3_2 == FightEnum.EffectType.BUFFUPDATE then
 		for iter_3_2, iter_3_3 in ipairs(arg_3_0.buffItemList) do
-			if arg_3_4 == iter_3_3.buffMO.uid and iter_3_3.buffMO._last_clone_mo and iter_3_3.buffMO.duration > iter_3_3.buffMO._last_clone_mo.duration then
-				iter_3_3:playAni("text")
+			if arg_3_4 == iter_3_3.buffMO.uid then
+				local var_3_3 = FightDataHelper.tempMgr.buffDurationDic[arg_3_1]
+
+				var_3_3 = var_3_3 and var_3_3[arg_3_4]
+
+				if var_3_3 and var_3_3 < iter_3_3.buffMO.duration then
+					iter_3_3:playAni("text")
+				end
 			end
 		end
 	end

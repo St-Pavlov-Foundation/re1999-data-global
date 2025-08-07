@@ -78,11 +78,11 @@ function var_0_0._btncloseviewOnClick(arg_4_0)
 end
 
 function var_0_0._btnactivitystoreOnClick(arg_5_0)
-	VersionActivity2_1DungeonController.instance:openStoreView()
+	ReactivityController.instance:openReactivityStoreView(VersionActivity3_0Enum.ActivityId.Reactivity)
 end
 
 function var_0_0._btnactivitytaskOnClick(arg_6_0)
-	VersionActivity2_1DungeonController.instance:openTaskView()
+	ReactivityController.instance:openReactivityTaskView(VersionActivity3_0Enum.ActivityId.Reactivity)
 end
 
 function var_0_0._btnrestaurantOnClick(arg_7_0)
@@ -265,6 +265,11 @@ end
 
 function var_0_0.refreshStoreRemainTime(arg_31_0)
 	local var_31_0 = VersionActivity2_1Enum.ActivityId.DungeonStore
+
+	if ReactivityEnum.ActivityDefine[VersionActivity2_1Enum.ActivityId.Dungeon] then
+		var_31_0 = VersionActivity3_0Enum.ActivityId.ReactivityStore
+	end
+
 	local var_31_1 = ActivityModel.instance:getActMO(var_31_0):getRealEndTimeStamp() - ServerTime.now()
 
 	if var_31_1 > TimeUtil.OneDaySecond then

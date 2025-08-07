@@ -74,6 +74,8 @@ function var_0_0.init(arg_3_0, arg_3_1, arg_3_2)
 		arg_3_0.side = arg_3_2
 	end
 
+	arg_3_0._powerInfos = {}
+
 	arg_3_0:setPowerInfos(arg_3_1.powerInfos)
 	arg_3_0:buildSummonedInfo(arg_3_1.SummonedList)
 
@@ -89,6 +91,7 @@ function var_0_0.init(arg_3_0, arg_3_1, arg_3_2)
 	arg_3_0.guard = arg_3_1.guard
 	arg_3_0.subCd = arg_3_1.subCd
 	arg_3_0.exPointType = arg_3_1.exPointType
+	arg_3_0.customUnitId = arg_3_1.customUnitId
 end
 
 function var_0_0._buildAttr(arg_4_0, arg_4_1)
@@ -343,6 +346,11 @@ end
 
 function var_0_0.changeExpointMaxAdd(arg_36_0, arg_36_1)
 	arg_36_0.expointMaxAdd = arg_36_0.expointMaxAdd or 0
+
+	if arg_36_0.exPointType ~= FightEnum.ExPointType.Common then
+		return
+	end
+
 	arg_36_0.expointMaxAdd = arg_36_0.expointMaxAdd + arg_36_1
 end
 
@@ -359,6 +367,10 @@ function var_0_0.getExpointMaxAddNum(arg_38_0)
 end
 
 function var_0_0.changeServerUniqueCost(arg_39_0, arg_39_1)
+	if arg_39_0.exPointType ~= FightEnum.ExPointType.Common then
+		return
+	end
+
 	arg_39_0.exSkillPointChange = arg_39_0:getExpointCostOffsetNum() + arg_39_1
 end
 
@@ -484,7 +496,7 @@ function var_0_0.hasBuffFeature(arg_50_0, arg_50_1)
 				local var_50_2 = lua_buff_act.configDict[iter_50_3[1]]
 
 				if var_50_2 and var_50_2.type == arg_50_1 then
-					return true
+					return true, iter_50_1
 				end
 			end
 		end
@@ -563,20 +575,22 @@ function var_0_0.onChangeHero(arg_58_0)
 end
 
 function var_0_0.setPowerInfos(arg_59_0, arg_59_1)
-	arg_59_0._powerInfos = {}
+	local var_59_0 = {}
 
 	for iter_59_0, iter_59_1 in ipairs(arg_59_1) do
-		arg_59_0:refreshPowerInfo(iter_59_1)
+		local var_59_1 = FightPowerInfoData.New(iter_59_1)
+
+		var_59_0[var_59_1.powerId] = var_59_1
 	end
+
+	FightDataUtil.coverData(var_59_0, arg_59_0._powerInfos)
 end
 
 function var_0_0.refreshPowerInfo(arg_60_0, arg_60_1)
-	local var_60_0 = arg_60_0._powerInfos[arg_60_1.powerId] or {}
+	local var_60_0 = FightPowerInfoData.New(arg_60_1)
+	local var_60_1 = var_60_0.powerId
 
-	var_60_0.powerId = arg_60_1.powerId
-	var_60_0.num = arg_60_1.num
-	var_60_0.max = arg_60_1.max
-	arg_60_0._powerInfos[arg_60_1.powerId] = var_60_0
+	arg_60_0._powerInfos[var_60_1] = FightDataUtil.coverData(var_60_0, arg_60_0._powerInfos[var_60_1])
 end
 
 function var_0_0.getPowerInfos(arg_61_0)
@@ -817,6 +831,51 @@ function var_0_0.getHeroDestinyStoneMo(arg_84_0)
 	end
 
 	return arg_84_0.destinyStoneMo
+end
+
+function var_0_0.getHeroExtraMo(arg_85_0)
+	if arg_85_0.trialId and arg_85_0.trialId > 0 then
+		local var_85_0 = lua_hero_trial.configDict[arg_85_0.trialId][0]
+
+		if var_85_0 then
+			local var_85_1 = var_85_0.extraStr
+
+			if not string.nilorempty(var_85_1) then
+				local var_85_2 = HeroConfig.instance:getHeroCO(arg_85_0.modelId)
+				local var_85_3 = HeroMo.New()
+
+				var_85_3:init(var_85_0, var_85_2)
+
+				arg_85_0.extraMo = arg_85_0.extraMo or CharacterExtraMO.New(var_85_3)
+
+				arg_85_0.extraMo:refreshMo(var_85_1)
+			end
+		end
+	else
+		local var_85_4 = HeroModel.instance:getByHeroId(arg_85_0.modelId)
+
+		arg_85_0.extraMo = var_85_4 and var_85_4.extraMo
+	end
+
+	return arg_85_0.extraMo
+end
+
+function var_0_0.checkReplaceSkill(arg_86_0, arg_86_1)
+	if arg_86_1 then
+		local var_86_0 = arg_86_0:getHeroDestinyStoneMo()
+
+		if var_86_0 then
+			arg_86_1 = var_86_0:_replaceSkill(arg_86_1)
+		end
+
+		local var_86_1 = arg_86_0:getHeroExtraMo()
+
+		if var_86_1 then
+			arg_86_1 = var_86_1:getReplaceSkills(arg_86_1)
+		end
+	end
+
+	return arg_86_1
 end
 
 return var_0_0

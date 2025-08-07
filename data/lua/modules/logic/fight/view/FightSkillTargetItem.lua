@@ -10,16 +10,23 @@ end
 function var_0_0.onUpdateMO(arg_2_0, arg_2_1)
 	local var_2_0 = FightDataHelper.entityMgr:getById(arg_2_1)
 	local var_2_1 = FightConfig.instance:getSkinCO(var_2_0.skin)
+	local var_2_2 = ""
 
-	arg_2_0._cardIcon:LoadImage(ResUrl.getHeadIconSmall(var_2_1.retangleIcon))
+	if var_2_0:isEnemySide() then
+		var_2_2 = ResUrl.monsterHeadIcon(var_2_1.headIcon)
+	else
+		var_2_2 = ResUrl.getHeadIconSmall(var_2_1.retangleIcon)
+	end
+
+	arg_2_0._cardIcon:LoadImage(var_2_2)
 
 	if var_2_0:isMonster() then
-		local var_2_2 = lua_monster.configDict[var_2_0.modelId]
+		local var_2_3 = lua_monster.configDict[var_2_0.modelId]
 
-		if var_2_2 and var_2_2.heartVariantId ~= 0 then
+		if var_2_3 and var_2_3.heartVariantId ~= 0 then
 			arg_2_0._cardImage = gohelper.findChildImage(arg_2_0.go, "icon")
 
-			IconMaterialMgr.instance:loadMaterialAddSet(IconMaterialMgr.instance:getMaterialPath(var_2_2.heartVariantId), arg_2_0._cardImage)
+			IconMaterialMgr.instance:loadMaterialAddSet(IconMaterialMgr.instance:getMaterialPath(var_2_3.heartVariantId), arg_2_0._cardImage)
 		end
 	end
 end

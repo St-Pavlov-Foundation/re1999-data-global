@@ -391,7 +391,7 @@ function var_0_0.addDescItem(arg_28_0, arg_28_1, arg_28_2)
 	local var_28_0 = arg_28_0._descList[arg_28_1]
 
 	if not var_28_0 then
-		var_28_0 = CharacterSkillDescripte.New()
+		var_28_0 = CharacterSkillDescripteNew.New()
 
 		local var_28_1 = gohelper.clone(arg_28_0._godescitem, arg_28_0._godescripteList)
 

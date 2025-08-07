@@ -544,5 +544,14 @@
       "jp",
       "kr"
     ]
+  },
+  {
+    "name": "s01_pv",
+    "supportLang": [
+      "en",
+      "zh",
+      "jp",
+      "kr"
+    ]
   }
 ]

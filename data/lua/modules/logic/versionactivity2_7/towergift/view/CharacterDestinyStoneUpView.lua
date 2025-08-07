@@ -42,7 +42,7 @@ end
 function var_0_0._useStoneUpTicket(arg_6_0)
 	local var_6_0 = {}
 	local var_6_1 = {
-		materialId = TowerGiftEnum.StoneUpTicketId
+		materialId = arg_6_0._materialId
 	}
 
 	var_6_1.quantity = 1
@@ -149,6 +149,7 @@ function var_0_0.onOpen(arg_16_0)
 		arg_16_0._effectItems[iter_16_0] = var_16_1
 	end
 
+	arg_16_0._materialId = arg_16_0.viewParam.materialId
 	arg_16_0._heroMO = arg_16_0.viewParam.heroMo
 	arg_16_0._curStoneMo = arg_16_0.viewParam.stoneMo
 	arg_16_0._destinyStoneMo = arg_16_0._heroMO.destinyStoneMo

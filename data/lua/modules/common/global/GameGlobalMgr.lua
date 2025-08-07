@@ -7,7 +7,9 @@ function var_0_0.ctor(arg_1_0)
 end
 
 function var_0_0.initLangFont(arg_2_0)
-	arg_2_0._langFont = GameLangFont.New()
+	if arg_2_0._langFont == nil then
+		arg_2_0._langFont = GameLangFont.New()
+	end
 end
 
 function var_0_0.init(arg_3_0)
@@ -19,10 +21,7 @@ function var_0_0.init(arg_3_0)
 	arg_3_0._screenBrightness = GameScreenBrightness.New()
 	arg_3_0._screenTouch = GameScreenTouch.New()
 
-	if arg_3_0._langFont == nil then
-		arg_3_0._langFont = GameLangFont.New()
-	end
-
+	arg_3_0:initLangFont()
 	GoHelperExtend.activateExtend()
 	StringExtend.activateExtend()
 	LuaMixScrollViewExtended.activateExtend()

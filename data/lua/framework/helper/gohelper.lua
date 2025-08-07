@@ -23,7 +23,6 @@ local var_0_6 = SLFramework.UGUI.SliderWrap
 local var_0_7 = SLFramework.UGUI.ToggleWrap
 local var_0_8 = SLFramework.UGUI.SingleImage
 local var_0_9 = SLFramework.UGUI.UIClickListener
-local var_0_10 = SLFramework.UGUI.TMPDropdownWrap
 
 function var_0_0.isNil(arg_1_0)
 	return arg_1_0 == nil or arg_1_0:Equals(nil)
@@ -161,10 +160,6 @@ end
 
 function var_0_0.getClick(arg_34_0)
 	return var_0_9.Get(arg_34_0)
-end
-
-function var_0_0.findChildDropdown(arg_35_0, arg_35_1)
-	return var_0_10.GetWithPath(arg_35_0, arg_35_1)
 end
 
 return var_0_0

@@ -24,8 +24,7 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 	if arg_2_1 == 2 then
 		local var_2_0 = ReactivityModel.instance:getActivityCurrencyId(arg_2_0.viewParam.actId)
 		local var_2_1 = CurrencyView.New({
-			var_2_0,
-			CurrencyEnum.CurrencyType.ReactivityCurrency
+			var_2_0
 		})
 
 		var_2_1.foreHideBtn = true

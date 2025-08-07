@@ -19,5 +19,7 @@ var_0_0.OnHandleInStoreView = 1005
 var_0_0.OnEnterStoreView = 1006
 var_0_0.OnClickGetAllSpecialScheduleBouns = 1007
 var_0_0.OnSelectEnhanceRole = 1100
+var_0_0.OnSelectV2a9SpItem = 1200
+var_0_0.onReceiveAct128SpFirstHalfSelectItemReply = 1201
 
 return var_0_0

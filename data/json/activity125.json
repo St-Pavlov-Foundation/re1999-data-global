@@ -1168,6 +1168,22 @@
     "key": ""
   },
   {
+    "activityId": 130516,
+    "id": 1,
+    "preId": 0,
+    "openDay": 1,
+    "frequency": "",
+    "initFrequency": 0,
+    "targetFrequency": 0,
+    "name": "",
+    "text": "",
+    "bonus": "10#11#1|2#3#4000|2#5#4000|1#491004#3|1#120011#3|1#110902#3|1#110301#3",
+    "clientbonus": "",
+    "musictime": 0,
+    "time": 0,
+    "key": ""
+  },
+  {
     "activityId": 13017,
     "id": 1,
     "preId": 0,

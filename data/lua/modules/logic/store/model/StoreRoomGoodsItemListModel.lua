@@ -86,10 +86,25 @@ function var_0_0.sortFunction(arg_3_0, arg_3_1)
 		return var_3_7
 	end
 
-	local var_3_8 = StoreNormalGoodsItemListModel.needWeekWalkLayerUnlock(arg_3_0.goodsId)
+	local var_3_8 = var_3_0.maxBuyCount
+	local var_3_9 = var_3_1.maxBuyCount
 
-	if var_3_8 ~= StoreNormalGoodsItemListModel.needWeekWalkLayerUnlock(arg_3_1.goodsId) then
-		if var_3_8 then
+	if var_3_8 == 1 and var_3_6 then
+		var_3_2 = var_3_2 or true
+	end
+
+	if var_3_9 == 1 and var_3_7 then
+		var_3_3 = var_3_3 or true
+	end
+
+	if var_3_2 ~= var_3_3 then
+		return var_3_3
+	end
+
+	local var_3_10 = StoreNormalGoodsItemListModel.needWeekWalkLayerUnlock(arg_3_0.goodsId)
+
+	if var_3_10 ~= StoreNormalGoodsItemListModel.needWeekWalkLayerUnlock(arg_3_1.goodsId) then
+		if var_3_10 then
 			return false
 		end
 

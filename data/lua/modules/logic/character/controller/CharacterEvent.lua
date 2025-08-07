@@ -69,5 +69,13 @@ var_0_0.onReturnTalentView = 20005
 var_0_0.onHeroTalentStyleStatReply = 20006
 var_0_0.onVideoBtnDisplay = 30001
 var_0_0.onClientVideoPlayFinish = 30002
+var_0_0.onChoiceHero3124TalentTreeReply = 40001
+var_0_0.onResetHero3124TalentTreeReply = 40002
+var_0_0.onCancelHero3124TalentTreeReply = 40003
+var_0_0.onClickTalentTreeNode = 40011
+var_0_0.onCloseSkillTalentTipView = 40012
+var_0_0.onChoiceHero3123WeaponReply = 40101
+var_0_0.onClickWeapon = 40111
+var_0_0.onRefreshCharacterSkill = 40111
 
 return var_0_0

@@ -125,6 +125,27 @@ function var_0_0._checkAll(arg_14_0)
 	arg_14_0._isAll = var_14_0
 end
 
+function var_0_0.getSelectIdList(arg_15_0)
+	return arg_15_0._selectIdList
+end
+
+function var_0_0.initThemeData(arg_16_0, arg_16_1)
+	arg_16_0:_clearData()
+
+	local var_16_0 = {}
+
+	for iter_16_0, iter_16_1 in ipairs(arg_16_1) do
+		local var_16_1 = RoomThemeMO.New()
+		local var_16_2 = RoomConfig.instance:getThemeConfig(iter_16_1)
+
+		var_16_1:init(iter_16_1, var_16_2)
+		table.insert(var_16_0, var_16_1)
+	end
+
+	table.sort(var_16_0, var_0_0.sortMOFunc)
+	arg_16_0:setList(var_16_0)
+end
+
 var_0_0.instance = var_0_0.New()
 
 return var_0_0

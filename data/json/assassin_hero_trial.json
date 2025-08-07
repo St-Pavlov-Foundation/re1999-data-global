@@ -1,0 +1,92 @@
+[
+  {
+    "assassinHeroId": 3123,
+    "career": 1,
+    "secondCareer": 0,
+    "heroIcon": "assassin_hero_headicon_small_01",
+    "heroImg": "assassin_hero_headicon_01",
+    "entityIcon": "assassin_hero_headicon_circle_01",
+    "unlock": "",
+    "model": 2291001
+  },
+  {
+    "assassinHeroId": 3051,
+    "career": 2,
+    "secondCareer": 8,
+    "heroIcon": "assassin_hero_headicon_small_02",
+    "heroImg": "assassin_hero_headicon_02",
+    "entityIcon": "assassin_hero_headicon_circle_02",
+    "unlock": "finish_quest#3011",
+    "model": 2291002
+  },
+  {
+    "assassinHeroId": 3052,
+    "career": 3,
+    "secondCareer": 2,
+    "heroIcon": "assassin_hero_headicon_small_03",
+    "heroImg": "assassin_hero_headicon_03",
+    "entityIcon": "assassin_hero_headicon_circle_03",
+    "unlock": "finish_quest#3012",
+    "model": 2291003
+  },
+  {
+    "assassinHeroId": 3087,
+    "career": 4,
+    "secondCareer": 5,
+    "heroIcon": "assassin_hero_headicon_small_09",
+    "heroImg": "assassin_hero_headicon_09",
+    "entityIcon": "assassin_hero_headicon_circle_09",
+    "unlock": "finish_quest#3014",
+    "model": 2291004
+  },
+  {
+    "assassinHeroId": 3116,
+    "career": 5,
+    "secondCareer": 9,
+    "heroIcon": "assassin_hero_headicon_small_07",
+    "heroImg": "assassin_hero_headicon_07",
+    "entityIcon": "assassin_hero_headicon_circle_07",
+    "unlock": "finish_quest#3021",
+    "model": 2291005
+  },
+  {
+    "assassinHeroId": 3065,
+    "career": 6,
+    "secondCareer": 7,
+    "heroIcon": "assassin_hero_headicon_small_08",
+    "heroImg": "assassin_hero_headicon_08",
+    "entityIcon": "assassin_hero_headicon_circle_08",
+    "unlock": "finish_quest#3016",
+    "model": 2291006
+  },
+  {
+    "assassinHeroId": 3062,
+    "career": 7,
+    "secondCareer": 6,
+    "heroIcon": "assassin_hero_headicon_small_04",
+    "heroImg": "assassin_hero_headicon_04",
+    "entityIcon": "assassin_hero_headicon_circle_04",
+    "unlock": "finish_quest#3013",
+    "model": 2291007
+  },
+  {
+    "assassinHeroId": 3028,
+    "career": 8,
+    "secondCareer": 3,
+    "heroIcon": "assassin_hero_headicon_small_05",
+    "heroImg": "assassin_hero_headicon_05",
+    "entityIcon": "assassin_hero_headicon_circle_05",
+    "unlock": "finish_quest#3022",
+    "model": 2291008
+  },
+  {
+    "assassinHeroId": 3009,
+    "career": 9,
+    "secondCareer": 4,
+    "heroIcon": "assassin_hero_headicon_small_06",
+    "heroImg": "assassin_hero_headicon_06",
+    "entityIcon": "assassin_hero_headicon_circle_06",
+    "unlock": "finish_quest#3015",
+    "model": 2291009
+  }
+]

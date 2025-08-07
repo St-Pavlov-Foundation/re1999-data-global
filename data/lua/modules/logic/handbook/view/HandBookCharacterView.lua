@@ -276,15 +276,15 @@ function var_0_0.findItemSubNodes(arg_15_0, arg_15_1)
 		goempty = gohelper.findChild(var_15_0, "#go_empty"),
 		gocircle = gohelper.findChild(var_15_0, "circle"),
 		simagehero = gohelper.findChildSingleImage(var_15_0, "hero/simage_hero"),
-		simagesignature = gohelper.findChildSingleImage(var_15_0, "hero/txt_name/image_career/simage_signature"),
-		careerIcon = gohelper.findChildImage(var_15_0, "hero/txt_name/image_career"),
+		simagesignature = gohelper.findChildSingleImage(var_15_0, "hero/simage_signature"),
+		careerIcon = gohelper.findChildImage(var_15_0, "hero/image_career"),
 		gonew = gohelper.findChild(var_15_0, "hero/go_new"),
 		txtname = gohelper.findChildTextMesh(var_15_0, "hero/txt_name"),
 		gostars = {}
 	}
 
 	for iter_15_0 = 1, 6 do
-		table.insert(var_15_1.gostars, gohelper.findChild(var_15_0, "hero/txt_name/star/star" .. iter_15_0))
+		table.insert(var_15_1.gostars, gohelper.findChild(var_15_0, "hero/star/star" .. iter_15_0))
 	end
 
 	var_15_1.simagenohero = gohelper.findChildSingleImage(var_15_0, "nohero/simage_nohero")
@@ -408,6 +408,10 @@ function var_0_0._getConfigHeroList(arg_27_0)
 end
 
 function var_0_0._checkConfig(arg_28_0, arg_28_1)
+	if arg_28_1.stat == CharacterEnum.StatType.NotStat and not HeroModel.instance:getByHeroId(arg_28_1.id) then
+		return false
+	end
+
 	if not arg_28_0:_isAllHeroType() then
 		return arg_28_1.heroType == arg_28_0.heroType
 	end

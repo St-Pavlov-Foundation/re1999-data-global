@@ -81,6 +81,7 @@ function var_0_0._editableInitView(arg_4_0)
 	arg_4_0._txtmaterialNum = gohelper.findChildText(arg_4_0._goprice, "txt_materialNum")
 	arg_4_0._simagematerial = gohelper.findChildImage(arg_4_0._goprice, "simage_material")
 	arg_4_0._goLinkage = gohelper.findChild(arg_4_0.viewGO, "#go_Linkage")
+	arg_4_0._goLinkageLogo = gohelper.findChild(arg_4_0.viewGO, "#go_Linkage/image_Logo")
 	arg_4_0._linkage_simageicon = gohelper.findChildSingleImage(arg_4_0._goLinkage, "#simage_icon")
 	arg_4_0._btnGO = gohelper.findChild(arg_4_0.viewGO, "clickArea")
 	arg_4_0._btn = gohelper.getClickWithAudio(arg_4_0._btnGO, AudioEnum.UI.play_ui_rolesopen)
@@ -171,6 +172,7 @@ function var_0_0.onUpdateMO(arg_10_0, arg_10_1)
 	gohelper.setActive(arg_10_0._goAdvanceSkin, var_10_2)
 	gohelper.setActive(arg_10_0._goUniqueSkin, var_10_3)
 	gohelper.setActive(arg_10_0._goLinkage, var_10_0)
+	gohelper.setActive(arg_10_0._goLinkageLogo, arg_10_0:_isShowLinkageLogo())
 
 	if var_10_3 then
 		arg_10_0:_onUpdateMO_uniqueSkin()
@@ -524,6 +526,10 @@ end
 
 function var_0_0._isLinkageSkin(arg_26_0)
 	return arg_26_0._mo.config.islinkageSkin or false
+end
+
+function var_0_0._isShowLinkageLogo(arg_27_0)
+	return arg_27_0._mo.config.showLinkageLogo or false
 end
 
 return var_0_0

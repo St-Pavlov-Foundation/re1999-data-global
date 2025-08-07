@@ -48,10 +48,12 @@ end
 
 function var_0_0.customAddEvent(arg_7_0)
 	arg_7_0:addEventCb(SummonController.instance, SummonEvent.onSummonTabSet, arg_7_0._refreshSelected, arg_7_0)
+	arg_7_0:addEventCb(RedDotController.instance, RedDotEvent.RefreshClientCharacterDot, arg_7_0._refreshNewFlag, arg_7_0)
 end
 
 function var_0_0.customRemoveEvent(arg_8_0)
 	arg_8_0:removeEventCb(SummonController.instance, SummonEvent.onSummonTabSet, arg_8_0._refreshSelected, arg_8_0)
+	arg_8_0:removeEventCb(RedDotController.instance, RedDotEvent.RefreshClientCharacterDot, arg_8_0._refreshNewFlag, arg_8_0)
 end
 
 function var_0_0._btnselfOnClick(arg_9_0)
@@ -196,38 +198,56 @@ function var_0_0._refreshFlag(arg_14_0, arg_14_1)
 	end
 end
 
+var_0_0._BannerFlag_DataDict = {
+	[SummonEnum.BannerFlagType.Newbie] = {
+		langKey = "p_summonmaincategoryitem_invite",
+		imageBg = "bg_lx"
+	},
+	[SummonEnum.BannerFlagType.Activity] = {
+		langKey = "summon_category_flag_activity",
+		imageBg = "bg123123"
+	},
+	[SummonEnum.BannerFlagType.Limit] = {
+		imageBg = "v1a6_quniang_summon_tag",
+		langKey = "summon_limit_banner_flag",
+		isTxtCororFormat = true
+	},
+	[SummonEnum.BannerFlagType.Reprint] = {
+		imageBg = "v1a6_quniang_summon_tag",
+		langKey = "summon_reprint_banner_flag",
+		isTxtCororFormat = true
+	},
+	[SummonEnum.BannerFlagType.Cobrand] = {
+		langKey = "summon_cobrand_banner_flag",
+		imageBg = "bg_lx"
+	}
+}
+
 function var_0_0._refreshSingleFlag(arg_15_0, arg_15_1, arg_15_2, arg_15_3, arg_15_4, arg_15_5)
 	local var_15_0 = arg_15_0._mo.originConf
 	local var_15_1 = SummonMainModel.instance:getPoolServerMO(var_15_0.id)
 	local var_15_2 = false
 	local var_15_3 = 0.5
 
-	if var_15_1 ~= nil and var_15_0.bannerFlag == SummonEnum.BannerFlagType.Newbie then
+	if var_15_1 ~= nil and var_0_0._BannerFlag_DataDict[var_15_0.bannerFlag] then
 		var_15_2 = true
-		arg_15_4.text = luaLang("p_summonmaincategoryitem_invite")
 
-		UISpriteSetMgr.instance:setSummonSprite(arg_15_3, "bg_lx", true)
+		local var_15_4 = var_0_0._BannerFlag_DataDict[var_15_0.bannerFlag]
+		local var_15_5 = luaLang(var_15_4.langKey)
+
+		UISpriteSetMgr.instance:setSummonSprite(arg_15_3, var_15_4.imageBg, true)
 		SLFramework.UGUI.GuiHelper.SetColor(arg_15_2, "#808080")
-	elseif var_15_1 ~= nil and var_15_0.bannerFlag == SummonEnum.BannerFlagType.Activity then
-		var_15_2 = true
-		arg_15_4.text = luaLang("summon_category_flag_activity")
 
-		UISpriteSetMgr.instance:setSummonSprite(arg_15_3, "bg123123", true)
-		SLFramework.UGUI.GuiHelper.SetColor(arg_15_2, "#808080")
-	elseif var_15_1 ~= nil and (var_15_0.bannerFlag == SummonEnum.BannerFlagType.Limit or var_15_0.bannerFlag == SummonEnum.BannerFlagType.Reprint) then
-		var_15_2 = true
-
-		local var_15_4 = var_15_0.bannerFlag == SummonEnum.BannerFlagType.Limit and luaLang("summon_limit_banner_flag") or luaLang("summon_reprint_banner_flag")
-
-		if arg_15_5 then
-			arg_15_4.text = string.format("<color=#fefefe>%s</color>", var_15_4)
-		else
-			arg_15_4.text = string.format("<color=#c5c6c7>%s</color>", var_15_4)
-			var_15_3 = 1
+		if var_15_4.isTxtCororFormat then
+			if arg_15_5 then
+				var_15_5 = string.format("<color=#fefefe>%s</color>", var_15_5)
+			else
+				var_15_5 = string.format("<color=#c5c6c7>%s</color>", var_15_5)
+				var_15_3 = 1
+			end
 		end
 
-		UISpriteSetMgr.instance:setSummonSprite(arg_15_3, "v1a6_quniang_summon_tag", true)
-		SLFramework.UGUI.GuiHelper.SetColor(arg_15_2, "#808080")
+		arg_15_4.text = var_15_5
 	else
 		arg_15_4.text = ""
 	end

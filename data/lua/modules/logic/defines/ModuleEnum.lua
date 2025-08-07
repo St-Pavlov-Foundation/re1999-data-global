@@ -49,6 +49,7 @@ var_0_0.HeroGroupType = {
 	Season123 = 7,
 	Resources = 2,
 	Season123Retail = 8,
+	Odyssey = 13,
 	General = 12,
 	Season166Teach = 11,
 	Temp = 3

@@ -45,10 +45,19 @@ function var_0_0.onBuffUpdate(arg_2_0, arg_2_1, arg_2_2, arg_2_3, arg_2_4)
 	end
 
 	local var_2_5 = var_2_4.layer
-	local var_2_6 = var_2_2[var_2_5]
+
+	var_2_2 = var_2_2[var_2_5] or var_2_2[311601]
+
+	if not var_2_2 then
+		logError(string.format("冷周六飘字表没找到buffTypeId = `%s`, layer = `%s` 的配置", var_2_1, var_2_5))
+
+		return
+	end
+
+	local var_2_6 = var_2_2[var_2_3.skin]
 
 	if not var_2_6 then
-		logError(string.format("冷周六飘字表没找到buffTypeId = `%s`, layer = `%s` 的配置", var_2_1, var_2_5))
+		logError(string.format("冷周六飘字表没找到buffTypeId = `%s`, layer = `%s`, skinId = `%s` 的配置", var_2_1, var_2_5, var_2_3.skin))
 
 		return
 	end

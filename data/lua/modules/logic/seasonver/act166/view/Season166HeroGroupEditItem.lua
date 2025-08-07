@@ -17,8 +17,6 @@ function var_0_0.init(arg_1_0, arg_1_1)
 end
 
 function var_0_0._initObj(arg_2_0, arg_2_1)
-	arg_2_0._heroItem:_setTxtWidth("_nameCnTxt", 180)
-
 	arg_2_0._animator = arg_2_0._heroItem.go:GetComponent(typeof(UnityEngine.Animator))
 	arg_2_0._itemAnim = arg_2_1:GetComponent(typeof(UnityEngine.Animator))
 	arg_2_0._itemAnim.keepAnimatorControllerStateOnDisable = true
@@ -28,12 +26,6 @@ function var_0_0._initObj(arg_2_0, arg_2_1)
 	arg_2_0._enableDeselect = true
 
 	transformhelper.setLocalScale(arg_2_1.transform, 0.8, 0.8, 1)
-	arg_2_0._heroItem:_setTxtPos("_nameCnTxt", 0.55, 68.9)
-	arg_2_0._heroItem:_setTxtPos("_rankObj", 1.7, -107.7)
-	arg_2_0._heroItem:_setTranScale("_nameCnTxt", 1.25, 1.25)
-	arg_2_0._heroItem:_setTranScale("_nameEnTxt", 1.25, 1.25)
-	arg_2_0._heroItem:_setTranScale("_lvObj", 1.25, 1.25)
-	arg_2_0._heroItem:_setTranScale("_rankObj", 0.22, 0.22)
 end
 
 var_0_0.CurSelectItem = 2

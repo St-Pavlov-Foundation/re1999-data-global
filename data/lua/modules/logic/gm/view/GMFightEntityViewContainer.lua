@@ -81,14 +81,18 @@ function var_0_0.onContainerClose(arg_3_0)
 end
 
 function var_0_0._onGetEntityInfo(arg_4_0, arg_4_1)
-	FightRpc.instance:refreshEntityMO(arg_4_1)
+	local var_4_0 = arg_4_1.entityInfo
+	local var_4_1 = var_4_0.uid
+	local var_4_2 = var_4_0 and FightDataHelper.entityMgr:getById(var_4_1)
 
-	local var_4_0 = arg_4_1.entityInfo and FightLocalDataMgr.instance.entityMgr:getById(arg_4_1.entityInfo.uid)
+	if var_4_2 then
+		FightDataHelper.entityMgr:addEntityMOByProto(var_4_0)
+	end
 
-	if var_4_0 then
-		local var_4_1 = FightDataHelper.entityMgr:getById(var_4_0.id)
+	local var_4_3 = FightLocalDataMgr.instance.entityMgr:getById(var_4_1)
 
-		FightEntityDataHelper.copyEntityMO(var_4_1, var_4_0)
+	if var_4_3 then
+		FightEntityDataHelper.copyEntityMO(var_4_2, var_4_3)
 	end
 
 	GMFightEntityModel.instance:onGetSingleEntityInfo(arg_4_1)

@@ -148,5 +148,20 @@
     "storyId": 800002,
     "iconArea": 0,
     "effect": "v1a9_caidai"
+  },
+  {
+    "id": 3051001,
+    "name": "language_10077980",
+    "nameen": "Assassin Observation Result",
+    "icon": "v2a9_antique_icon_1",
+    "gifticon": "v2a9_antique_icon_1",
+    "sign": "501207",
+    "title": "language_10077980",
+    "titleen": "Assassin Observation Result",
+    "desc": "language_10077981",
+    "sources": "",
+    "storyId": 800004,
+    "iconArea": 0,
+    "effect": "v1a9_caidai"
   }
 ]

@@ -17,7 +17,9 @@ function var_0_0.buildViews(arg_1_0)
 		TabViewGroup.New(1, "#go_righttop"),
 		MainViewCamera.New(),
 		MainActivityCenterView.New(),
-		MainNoticeRequestView.New()
+		MainNoticeRequestView.New(),
+		MainUIPartView.New(),
+		MainEagleAnimView.New()
 	}
 end
 

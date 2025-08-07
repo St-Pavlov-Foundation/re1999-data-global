@@ -1018,5 +1018,415 @@
     "triggerEffect": "",
     "delEffect": "",
     "audio": 430830353
+  },
+  {
+    "buffId": 30512,
+    "orEnemy": 2,
+    "skinId": 305104,
+    "effectHang": "special3",
+    "effectPath": "buff/s01_wenni_innate_1_special3",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 0
+  },
+  {
+    "buffId": 30514,
+    "orEnemy": 2,
+    "skinId": 305104,
+    "effectHang": "special3",
+    "effectPath": "buff/s01_wenni_innate_1_special3",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 0
+  },
+  {
+    "buffId": 30513,
+    "orEnemy": 2,
+    "skinId": 305104,
+    "effectHang": "special3",
+    "effectPath": "buff/s01_wenni_innate_2_special3",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 0
+  },
+  {
+    "buffId": 30515,
+    "orEnemy": 2,
+    "skinId": 305104,
+    "effectHang": "special3",
+    "effectPath": "buff/s01_wenni_innate_2_special3",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 0
+  },
+  {
+    "buffId": 72100004,
+    "orEnemy": 2,
+    "skinId": 305104,
+    "effectHang": "special3",
+    "effectPath": "buff/s01_wenni_innate_2_special3",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 0
+  },
+  {
+    "buffId": 6230631,
+    "orEnemy": 2,
+    "skinId": 305104,
+    "effectHang": "special3",
+    "effectPath": "buff/s01_wenni_innate_2_special3",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 0
+  },
+  {
+    "buffId": 30650104,
+    "orEnemy": 1,
+    "skinId": 306504,
+    "effectHang": "",
+    "effectPath": "s01_makusi/makusi_biaozhu",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 0
+  },
+  {
+    "buffId": 30650204,
+    "orEnemy": 1,
+    "skinId": 306503,
+    "effectHang": "",
+    "effectPath": "v2a2_makusi/makusi_biaozhu",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 0
+  },
+  {
+    "buffId": 30650204,
+    "orEnemy": 1,
+    "skinId": 306504,
+    "effectHang": "",
+    "effectPath": "s01_makusi/makusi_biaozhu",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 0
+  },
+  {
+    "buffId": 30870111,
+    "orEnemy": 2,
+    "skinId": 308704,
+    "effectHang": "",
+    "effectPath": "s01_weila/weila_innate_04",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 430870443
+  },
+  {
+    "buffId": 30870114,
+    "orEnemy": 2,
+    "skinId": 308704,
+    "effectHang": "",
+    "effectPath": "s01_weila/weila_innate_04",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 430870443
+  },
+  {
+    "buffId": 30870117,
+    "orEnemy": 2,
+    "skinId": 308704,
+    "effectHang": "",
+    "effectPath": "s01_weila/weila_innate_04",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 430870443
+  },
+  {
+    "buffId": 30870121,
+    "orEnemy": 2,
+    "skinId": 308704,
+    "effectHang": "",
+    "effectPath": "s01_weila/weila_innate_03",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 430870443
+  },
+  {
+    "buffId": 30870124,
+    "orEnemy": 2,
+    "skinId": 308704,
+    "effectHang": "",
+    "effectPath": "s01_weila/weila_innate_03",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 430870443
+  },
+  {
+    "buffId": 30870127,
+    "orEnemy": 2,
+    "skinId": 308704,
+    "effectHang": "",
+    "effectPath": "s01_weila/weila_innate_03",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 430870443
+  },
+  {
+    "buffId": 30870131,
+    "orEnemy": 2,
+    "skinId": 308704,
+    "effectHang": "",
+    "effectPath": "s01_weila/weila_innate_05",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 430870444
+  },
+  {
+    "buffId": 30870132,
+    "orEnemy": 2,
+    "skinId": 308704,
+    "effectHang": "",
+    "effectPath": "s01_weila/weila_innate_05",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 430870444
+  },
+  {
+    "buffId": 30870141,
+    "orEnemy": 2,
+    "skinId": 308704,
+    "effectHang": "",
+    "effectPath": "s01_weila/weila_innate_03",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 430870443
+  },
+  {
+    "buffId": 30870142,
+    "orEnemy": 2,
+    "skinId": 308704,
+    "effectHang": "",
+    "effectPath": "s01_weila/weila_innate_03",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 430870443
+  },
+  {
+    "buffId": 30870331,
+    "orEnemy": 2,
+    "skinId": 308704,
+    "effectHang": "",
+    "effectPath": "s01_weila/weila_innate_05",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 430870444
+  },
+  {
+    "buffId": 30870332,
+    "orEnemy": 2,
+    "skinId": 308704,
+    "effectHang": "",
+    "effectPath": "s01_weila/weila_innate_05",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 430870444
+  },
+  {
+    "buffId": 30870331,
+    "orEnemy": 2,
+    "skinId": 308703,
+    "effectHang": "",
+    "effectPath": "v2a2_weila_ytsc/weila_ytsc_innate_05",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 430870344
+  },
+  {
+    "buffId": 30870332,
+    "orEnemy": 2,
+    "skinId": 308703,
+    "effectHang": "",
+    "effectPath": "v2a2_weila_ytsc/weila_ytsc_innate_05",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 430870344
+  },
+  {
+    "buffId": 81800061,
+    "orEnemy": 2,
+    "skinId": 308703,
+    "effectHang": "",
+    "effectPath": "v2a2_weila_ytsc/weila_ytsc_innate_05",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 430870344
+  },
+  {
+    "buffId": 81800061,
+    "orEnemy": 2,
+    "skinId": 308704,
+    "effectHang": "",
+    "effectPath": "s01_weila/weila_innate_05",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 430870444
+  },
+  {
+    "buffId": 30870311,
+    "orEnemy": 2,
+    "skinId": 308704,
+    "effectHang": "",
+    "effectPath": "s01_weila/weila_innate_04",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 430870443
+  },
+  {
+    "buffId": 30870314,
+    "orEnemy": 2,
+    "skinId": 308704,
+    "effectHang": "",
+    "effectPath": "s01_weila/weila_innate_04",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 430870443
+  },
+  {
+    "buffId": 30870317,
+    "orEnemy": 2,
+    "skinId": 308704,
+    "effectHang": "",
+    "effectPath": "s01_weila/weila_innate_04",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 430870443
+  },
+  {
+    "buffId": 30870321,
+    "orEnemy": 2,
+    "skinId": 308704,
+    "effectHang": "",
+    "effectPath": "s01_weila/weila_innate_03",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 430870443
+  },
+  {
+    "buffId": 30870324,
+    "orEnemy": 2,
+    "skinId": 308704,
+    "effectHang": "",
+    "effectPath": "s01_weila/weila_innate_03",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 430870443
+  },
+  {
+    "buffId": 30870327,
+    "orEnemy": 2,
+    "skinId": 308704,
+    "effectHang": "",
+    "effectPath": "s01_weila/weila_innate_03",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 430870443
+  },
+  {
+    "buffId": 30870341,
+    "orEnemy": 2,
+    "skinId": 308704,
+    "effectHang": "",
+    "effectPath": "s01_weila/weila_innate_03",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 430870443
+  },
+  {
+    "buffId": 30870342,
+    "orEnemy": 2,
+    "skinId": 308704,
+    "effectHang": "",
+    "effectPath": "s01_weila/weila_innate_03",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 430870443
+  },
+  {
+    "buffId": 30870311,
+    "orEnemy": 2,
+    "skinId": 308703,
+    "effectHang": "",
+    "effectPath": "v2a2_weila_ytsc/weila_ytsc_innate_03_bsq",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 430870343
+  },
+  {
+    "buffId": 30870314,
+    "orEnemy": 2,
+    "skinId": 308703,
+    "effectHang": "",
+    "effectPath": "v2a2_weila_ytsc/weila_ytsc_innate_03_bsq",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 430870343
+  },
+  {
+    "buffId": 30870317,
+    "orEnemy": 2,
+    "skinId": 308703,
+    "effectHang": "",
+    "effectPath": "v2a2_weila_ytsc/weila_ytsc_innate_03_bsq",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 430870343
+  },
+  {
+    "buffId": 30870321,
+    "orEnemy": 2,
+    "skinId": 308703,
+    "effectHang": "",
+    "effectPath": "v2a2_weila_ytsc/weila_ytsc_innate_03",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 430870343
+  },
+  {
+    "buffId": 30870324,
+    "orEnemy": 2,
+    "skinId": 308703,
+    "effectHang": "",
+    "effectPath": "v2a2_weila_ytsc/weila_ytsc_innate_03",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 430870343
+  },
+  {
+    "buffId": 30870327,
+    "orEnemy": 2,
+    "skinId": 308703,
+    "effectHang": "",
+    "effectPath": "v2a2_weila_ytsc/weila_ytsc_innate_03",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 430870343
+  },
+  {
+    "buffId": 30870341,
+    "orEnemy": 2,
+    "skinId": 308703,
+    "effectHang": "",
+    "effectPath": "v2a2_weila_ytsc/weila_ytsc_innate_03",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 430870343
+  },
+  {
+    "buffId": 30870342,
+    "orEnemy": 2,
+    "skinId": 308703,
+    "effectHang": "",
+    "effectPath": "v2a2_weila_ytsc/weila_ytsc_innate_03",
+    "triggerEffect": "",
+    "delEffect": "",
+    "audio": 430870343
   }
 ]

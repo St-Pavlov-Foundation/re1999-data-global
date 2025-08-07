@@ -145,7 +145,7 @@ function var_0_0._doSkillBehaviorEffect(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_
 			var_4_8 = arg_4_2.entity and arg_4_2.entity.uid or arg_4_1.fromId
 		end
 
-		FightFloatMgr.instance:float(var_4_8, FightEnum.FloatType.buff, arg_4_3.dec, arg_4_3.dec_Type)
+		FightFloatMgr.instance:float(var_4_8, FightEnum.FloatType.buff, arg_4_3.dec, arg_4_3.dec_Type, false)
 	end
 
 	if arg_4_4 then

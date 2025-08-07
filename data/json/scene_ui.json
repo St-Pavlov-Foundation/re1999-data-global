@@ -1,0 +1,16 @@
+[
+  {
+    "id": 1,
+    "defaultUnlock": 1,
+    "itemId": 350001,
+    "icon": "mainsceneswitch_ui_pic01",
+    "previewIcon": "mainsceneswitch_ui_01"
+  },
+  {
+    "id": 2,
+    "defaultUnlock": 0,
+    "itemId": 350002,
+    "icon": "mainsceneswitch_ui_pic02",
+    "previewIcon": "mainsceneswitch_ui_02"
+  }
+]

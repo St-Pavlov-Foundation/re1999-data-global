@@ -711,6 +711,11 @@
 		"Act128DoublePointRequest",
 		"Act128DoublePointReply"
 	},
+	[14305] = {
+		"Activity128",
+		"Act128SpFirstHalfSelectItemRequest",
+		"Act128SpFirstHalfSelectItemReply"
+	},
 	[10521] = {
 		"Activity129",
 		"Get129InfosRequest",
@@ -1956,6 +1961,73 @@
 		"Get201InfoRequest",
 		"Get201InfoReply"
 	},
+	[16558] = {
+		"Activity204",
+		"GetAct204InfoRequest",
+		"GetAct204InfoReply"
+	},
+	[-18186] = {
+		"Activity204",
+		"FinishAct204TaskRequest",
+		"FinishAct204TaskReply"
+	},
+	[7351] = {
+		"Activity204",
+		"GetAct204MilestoneRewardRequest",
+		"GetAct204MilestoneRewardReply"
+	},
+	[-21439] = {
+		"Activity204",
+		"GetAct204DailyCollectionRequest",
+		"GetAct204DailyCollectionReply"
+	},
+	[2793] = {
+		"Activity204",
+		"Act204TaskPush"
+	},
+	[18862] = {
+		"Activity204",
+		"GetAct204OnceBonusRequest",
+		"GetAct204OnceBonusReply"
+	},
+	[-32240] = {
+		"Activity205",
+		"Act205GetInfoRequest",
+		"Act205GetInfoReply"
+	},
+	[23306] = {
+		"Activity205",
+		"Act205GetGameInfoRequest",
+		"Act205GetGameInfoReply"
+	},
+	[-29217] = {
+		"Activity205",
+		"Act205FinishGameRequest",
+		"Act205FinishGameReply"
+	},
+	[-25724] = {
+		"Activity205",
+		"Act205InfoPush"
+	},
+	[28210] = {
+		"Activity206",
+		"Act206GetInfoRequest",
+		"Act206GetInfoReply"
+	},
+	[27112] = {
+		"Activity206",
+		"Act206ChooseDirectionRequest",
+		"Act206ChooseDirectionReply"
+	},
+	[14477] = {
+		"Activity206",
+		"Act206GetBonusRequest",
+		"Act206GetBonusReply"
+	},
+	[-346] = {
+		"Activity206",
+		"Act206InfoPush"
+	},
 	[-14582] = {
 		"Activity",
 		"GetActivityInfosRequest",
@@ -1992,6 +2064,156 @@
 	[13506] = {
 		"Antique",
 		"AntiqueUpdatePush"
+	},
+	[-415] = {
+		"AssassinOutSide",
+		"GetAssassinOutSideInfoRequest",
+		"GetAssassinOutSideInfoReply"
+	},
+	[-20386] = {
+		"AssassinOutSide",
+		"BuildingLevelUpRequest",
+		"BuildingLevelUpReply"
+	},
+	[-18575] = {
+		"AssassinOutSide",
+		"InteractiveRequest",
+		"InteractiveReply"
+	},
+	[28888] = {
+		"AssassinOutSide",
+		"HeroTransferCareerRequest",
+		"HeroTransferCareerReply"
+	},
+	[-3308] = {
+		"AssassinOutSide",
+		"EquipHeroItemRequest",
+		"EquipHeroItemReply"
+	},
+	[16004] = {
+		"AssassinOutSide",
+		"AssassinOutSideUnlockPush"
+	},
+	[268] = {
+		"AssassinOutSide",
+		"AssassinUnlockLibraryPush"
+	},
+	[8985] = {
+		"AssassinOutSide",
+		"GetAssassinLibraryInfoRequest",
+		"GetAssassinLibraryInfoReply"
+	},
+	[13077] = {
+		"AssassinScene",
+		"EnterAssassinSceneRequest",
+		"EnterAssassinSceneReply"
+	},
+	[-17527] = {
+		"AssassinScene",
+		"HeroMoveRequest",
+		"HeroMoveReply"
+	},
+	[14378] = {
+		"AssassinScene",
+		"HeroAttackRequest",
+		"HeroAttackReply"
+	},
+	[31575] = {
+		"AssassinScene",
+		"HeroAssassinRequest",
+		"HeroAssassinReply"
+	},
+	[22096] = {
+		"AssassinScene",
+		"HeroInteractiveRequest",
+		"HeroInteractiveReply"
+	},
+	[-11507] = {
+		"AssassinScene",
+		"FinishUserTurnRequest",
+		"FinishUserTurnReply"
+	},
+	[-8312] = {
+		"AssassinScene",
+		"RecoverSceneRequest",
+		"RecoverSceneReply"
+	},
+	[-32213] = {
+		"AssassinScene",
+		"NextRoundRequest",
+		"NextRoundReply"
+	},
+	[21131] = {
+		"AssassinScene",
+		"SummonMonsterPush"
+	},
+	[-20788] = {
+		"AssassinScene",
+		"NewInteractivePush"
+	},
+	[-1527] = {
+		"AssassinScene",
+		"MissionUpdatePush"
+	},
+	[20559] = {
+		"AssassinScene",
+		"MonsterUpdatePush"
+	},
+	[14951] = {
+		"AssassinScene",
+		"FinishMissionRequest",
+		"FinishMissionReply"
+	},
+	[25279] = {
+		"AssassinScene",
+		"GameStatePush"
+	},
+	[26295] = {
+		"AssassinScene",
+		"ReturnAssassinSceneRequest",
+		"ReturnAssassinSceneReply"
+	},
+	[26450] = {
+		"AssassinScene",
+		"GainItemPush"
+	},
+	[-15136] = {
+		"AssassinScene",
+		"UseAssassinItemRequest",
+		"UseAssassinItemReply"
+	},
+	[10246] = {
+		"AssassinScene",
+		"AssassinChangingMapPush"
+	},
+	[15132] = {
+		"AssassinScene",
+		"RestartAssassinSceneRequest",
+		"RestartAssassinSceneReply"
+	},
+	[-2873] = {
+		"AssassinScene",
+		"GiveUpAssassinSceneRequest",
+		"GiveUpAssassinSceneReply"
+	},
+	[-12019] = {
+		"AssassinScene",
+		"AssassinChangeMapRequest",
+		"AssassinChangeMapReply"
+	},
+	[-26475] = {
+		"AssassinScene",
+		"AssassinUseSkillRequest",
+		"AssassinUseSkillReply"
+	},
+	[-29244] = {
+		"AssassinScene",
+		"EnterBattleGridRequest",
+		"EnterBattleGridReply"
+	},
+	[-32619] = {
+		"AssassinScene",
+		"HeroUpdatePush"
 	},
 	[-10819] = {
 		"AutoChess",
@@ -3119,6 +3341,26 @@
 		"PutTalentCubeBatchRequest",
 		"PutTalentCubeBatchReply"
 	},
+	[13914] = {
+		"Hero",
+		"ChoiceHero3124TalentTreeRequest",
+		"ChoiceHero3124TalentTreeReply"
+	},
+	[5714] = {
+		"Hero",
+		"ResetHero3124TalentTreeRequest",
+		"ResetHero3124TalentTreeReply"
+	},
+	[29963] = {
+		"Hero",
+		"ChoiceHero3123WeaponRequest",
+		"ChoiceHero3123WeaponReply"
+	},
+	[-8715] = {
+		"Hero",
+		"CancelHero3124TalentTreeRequest",
+		"CancelHero3124TalentTreeReply"
+	},
 	[-27537] = {
 		"HeroStory",
 		"GetHeroStoryRequest",
@@ -3314,6 +3556,126 @@
 		"Material",
 		"MaterialChangePush"
 	},
+	[23853] = {
+		"Odyssey",
+		"OdysseyGetInfoRequest",
+		"OdysseyGetInfoReply"
+	},
+	[-176] = {
+		"Odyssey",
+		"OdysseyUpdateInfoPush"
+	},
+	[-31076] = {
+		"Odyssey",
+		"OdysseyUpdateLevelPush"
+	},
+	[21875] = {
+		"Odyssey",
+		"OdysseyHotfixRequest",
+		"OdysseyHotfixReply"
+	},
+	[-18893] = {
+		"Odyssey",
+		"OdysseyHotfixPush"
+	},
+	[30961] = {
+		"Odyssey",
+		"OdysseyMapSetCurrElementRequest",
+		"OdysseyMapSetCurrElementReply"
+	},
+	[-11399] = {
+		"Odyssey",
+		"OdysseyMapInteractRequest",
+		"OdysseyMapInteractReply"
+	},
+	[31148] = {
+		"Odyssey",
+		"OdysseyMapUpdateElementPush"
+	},
+	[-28798] = {
+		"Odyssey",
+		"OdysseyMapUpdatePush"
+	},
+	[15809] = {
+		"Odyssey",
+		"OdysseyBagUpdateItemNewFlagRequest",
+		"OdysseyBagUpdateItemNewFlagReply"
+	},
+	[5466] = {
+		"Odyssey",
+		"OdysseyBagGetItemPush"
+	},
+	[-25268] = {
+		"Odyssey",
+		"OdysseyTalentNodeLevelUpRequest",
+		"OdysseyTalentNodeLevelUpReply"
+	},
+	[-9889] = {
+		"Odyssey",
+		"OdysseyTalentNodeLevelDownRequest",
+		"OdysseyTalentNodeLevelDownReply"
+	},
+	[-17147] = {
+		"Odyssey",
+		"OdysseyTalentAllResetRequest",
+		"OdysseyTalentAllResetReply"
+	},
+	[3540] = {
+		"Odyssey",
+		"OdysseyTalentCassandraTreeChoiceRequest",
+		"OdysseyTalentCassandraTreeChoiceReply"
+	},
+	[-17233] = {
+		"Odyssey",
+		"OdysseyTalentCassandraTreeCancelRequest",
+		"OdysseyTalentCassandraTreeCancelReply"
+	},
+	[30348] = {
+		"Odyssey",
+		"OdysseyTalentCassandraTreeResetRequest",
+		"OdysseyTalentCassandraTreeResetReply"
+	},
+	[25238] = {
+		"Odyssey",
+		"OdysseyTalentPointUpdatePush"
+	},
+	[-21433] = {
+		"Odyssey",
+		"OdysseyFormSwitchRequest",
+		"OdysseyFormSwitchReply"
+	},
+	[-13276] = {
+		"Odyssey",
+		"OdysseyFormSaveRequest",
+		"OdysseyFormSaveReply"
+	},
+	[4418] = {
+		"Odyssey",
+		"OdysseyFightReligionDiscloseRequest",
+		"OdysseyFightReligionDiscloseReply"
+	},
+	[-1721] = {
+		"Odyssey",
+		"OdysseyFightReligionMemberUpdatePush"
+	},
+	[30522] = {
+		"Odyssey",
+		"OdysseyFightMercenarySetDropRequest",
+		"OdysseyFightMercenarySetDropReply"
+	},
+	[-6648] = {
+		"Odyssey",
+		"OdysseyFightMercenaryRefreshRequest",
+		"OdysseyFightMercenaryRefreshReply"
+	},
+	[18204] = {
+		"Odyssey",
+		"OdysseyFightMercenaryUpdatePush"
+	},
+	[16804] = {
+		"Odyssey",
+		"OdysseyFightSettlePush"
+	},
 	[-7688] = {
 		"Open",
 		"UpdateOpenPush"
@@ -3472,6 +3834,11 @@
 		"Player",
 		"SetMainSceneSkinRequest",
 		"SetMainSceneSkinReply"
+	},
+	[27886] = {
+		"Player",
+		"SetUiStyleSkinRequest",
+		"SetUiStyleSkinReply"
 	},
 	[26644] = {
 		"RedDot",
@@ -4558,6 +4925,11 @@
 		"Summon",
 		"ChooseEnhancedPoolHeroRequest",
 		"ChooseEnhancedPoolHeroReply"
+	},
+	[-3044] = {
+		"Summon",
+		"GetSummonProgressRewardsRequest",
+		"GetSummonProgressRewardsReply"
 	},
 	[-3389] = {
 		"Task",

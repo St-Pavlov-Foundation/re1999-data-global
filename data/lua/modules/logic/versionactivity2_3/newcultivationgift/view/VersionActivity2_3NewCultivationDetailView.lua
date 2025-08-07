@@ -49,6 +49,8 @@ function var_0_0._editableInitView(arg_5_0)
 	arg_5_0._destinyEffectItemList = {}
 	arg_5_0._rewardItemList = {}
 	arg_5_0._roleItemList = {}
+
+	gohelper.setActive(arg_5_0._goeffectitem, false)
 end
 
 function var_0_0.onUpdateParam(arg_6_0)
@@ -60,6 +62,20 @@ function var_0_0.onOpen(arg_7_0)
 
 	arg_7_0._showType, var_7_0 = arg_7_0.viewParam.showType, arg_7_0.viewParam.actId
 	arg_7_0._needShowHeroIds = arg_7_0.viewParam.heroId or nil
+
+	local var_7_1 = arg_7_0.viewParam.destinyId or nil
+
+	if var_7_1 ~= nil then
+		local var_7_2 = {}
+
+		for iter_7_0, iter_7_1 in ipairs(var_7_1) do
+			var_7_2[iter_7_1] = true
+		end
+
+		arg_7_0._needShowDestinyIds = var_7_1
+		arg_7_0._needShowDestinyIdDic = var_7_2
+	end
+
 	arg_7_0._actId = var_7_0
 
 	arg_7_0:refreshUI()
@@ -161,41 +177,62 @@ function var_0_0._refreshRoleInfo(arg_12_0)
 		end
 
 		var_12_0 = var_12_1
+	elseif arg_12_0._needShowDestinyIds ~= nil then
+		local var_12_2 = {}
+		local var_12_3 = {}
+
+		for iter_12_4, iter_12_5 in ipairs(arg_12_0._needShowDestinyIds) do
+			local var_12_4 = CharacterDestinyConfig.instance:getDestinyFacetHeroId(iter_12_5)
+
+			if not var_12_3[var_12_4] then
+				var_12_3[var_12_4] = true
+
+				local var_12_5 = CharacterDestinyConfig.instance:getHeroDestiny(var_12_4)
+
+				if var_12_5 ~= nil then
+					table.insert(var_12_2, var_12_5)
+				else
+					logError("角色命石表 不存在的命石id:" + tostring(var_12_4))
+				end
+			end
+		end
+
+		var_12_0 = var_12_2
 	end
 
-	local var_12_2 = #var_12_0
+	local var_12_6 = #var_12_0
 
-	if var_12_2 <= 0 then
+	if var_12_6 <= 0 then
 		return
 	end
 
-	local var_12_3 = #arg_12_0._roleItemList
+	local var_12_7 = #arg_12_0._roleItemList
 
-	for iter_12_4 = 1, var_12_2 do
-		local var_12_4
+	for iter_12_6 = 1, var_12_6 do
+		local var_12_8
 
-		if var_12_3 < iter_12_4 then
-			local var_12_5 = gohelper.clone(arg_12_0._goroleitem, arg_12_0._goroleitemcontent)
+		if var_12_7 < iter_12_6 then
+			local var_12_9 = gohelper.clone(arg_12_0._goroleitem, arg_12_0._goroleitemcontent)
 
-			gohelper.setActive(var_12_5, true)
+			gohelper.setActive(var_12_9, true)
 
-			var_12_4 = MonoHelper.addNoUpdateLuaComOnceToGo(var_12_5, VersionActivity2_3NewCultivationRoleItem)
+			var_12_8 = MonoHelper.addNoUpdateLuaComOnceToGo(var_12_9, VersionActivity2_3NewCultivationRoleItem)
 
-			var_12_4:init(var_12_5)
-			table.insert(arg_12_0._roleItemList, var_12_4)
+			var_12_8:init(var_12_9)
+			table.insert(arg_12_0._roleItemList, var_12_8)
 		else
-			var_12_4 = arg_12_0._roleItemList[iter_12_4]
+			var_12_8 = arg_12_0._roleItemList[iter_12_6]
 		end
 
-		local var_12_6 = var_12_0[iter_12_4]
+		local var_12_10 = var_12_0[iter_12_6]
 
-		var_12_4:setData(var_12_6)
-		var_12_4:setClickCallBack(arg_12_0.onSelectRoleItem, arg_12_0)
+		var_12_8:setData(var_12_10)
+		var_12_8:setClickCallBack(arg_12_0.onSelectRoleItem, arg_12_0)
 	end
 
-	local var_12_7 = var_12_0[1]
+	local var_12_11 = var_12_0[1]
 
-	arg_12_0:onSelectRoleItem(var_12_7.heroId)
+	arg_12_0:onSelectRoleItem(var_12_11.heroId)
 end
 
 function var_0_0._refreshEffectInfo(arg_13_0, arg_13_1)
@@ -213,23 +250,36 @@ function var_0_0._refreshEffectInfo(arg_13_0, arg_13_1)
 
 	local var_13_2 = #var_13_1
 	local var_13_3 = #arg_13_0._destinyEffectItemList
+	local var_13_4 = var_13_2 > 1 and arg_13_0._needShowDestinyIds ~= nil
+
+	if var_13_4 then
+		table.sort(var_13_1, function(arg_14_0, arg_14_1)
+			if arg_13_0._needShowDestinyIdDic[arg_14_0] ~= arg_13_0._needShowDestinyIdDic[arg_14_1] then
+				return arg_13_0._needShowDestinyIdDic[arg_14_0]
+			end
+
+			return arg_14_1 < arg_14_0
+		end)
+	end
 
 	for iter_13_0, iter_13_1 in ipairs(var_13_1) do
-		local var_13_4
+		local var_13_5
 
 		if var_13_3 < iter_13_0 then
-			local var_13_5 = gohelper.clone(arg_13_0._goeffectitem, arg_13_0._godestinycontent)
+			local var_13_6 = gohelper.clone(arg_13_0._goeffectitem, arg_13_0._godestinycontent)
 
-			var_13_4 = MonoHelper.addNoUpdateLuaComOnceToGo(var_13_5, VersionActivity2_3NewCultivationDestinyItem)
+			var_13_5 = MonoHelper.addNoUpdateLuaComOnceToGo(var_13_6, VersionActivity2_3NewCultivationDestinyItem)
 
-			table.insert(arg_13_0._destinyEffectItemList, var_13_4)
-			var_13_4:init(var_13_5)
+			table.insert(arg_13_0._destinyEffectItemList, var_13_5)
+			var_13_5:init(var_13_6)
 		else
-			var_13_4 = arg_13_0._destinyEffectItemList[iter_13_0]
+			var_13_5 = arg_13_0._destinyEffectItemList[iter_13_0]
 		end
 
-		var_13_4:SetActive(true)
-		var_13_4:setData(arg_13_1, iter_13_1)
+		local var_13_7 = var_13_4 and arg_13_0._needShowDestinyIdDic[iter_13_1]
+
+		var_13_5:SetActive(true)
+		var_13_5:setData(arg_13_1, iter_13_1, var_13_7)
 	end
 
 	if var_13_2 < var_13_3 then
@@ -239,11 +289,11 @@ function var_0_0._refreshEffectInfo(arg_13_0, arg_13_1)
 	end
 end
 
-function var_0_0.onClose(arg_14_0)
+function var_0_0.onClose(arg_15_0)
 	return
 end
 
-function var_0_0.onDestroyView(arg_15_0)
+function var_0_0.onDestroyView(arg_16_0)
 	return
 end
 

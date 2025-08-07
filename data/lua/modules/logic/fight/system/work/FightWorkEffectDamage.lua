@@ -16,7 +16,7 @@ function var_0_0.onStart(arg_1_0)
 				var_1_3 = FightEnum.FloatType.damage
 			end
 
-			FightFloatMgr.instance:float(var_1_0.id, var_1_3, var_1_2)
+			FightFloatMgr.instance:float(var_1_0.id, var_1_3, var_1_2, nil, arg_1_0.actEffectData.effectNum1 == 1)
 
 			if var_1_0.nameUI then
 				var_1_0.nameUI:addHp(-var_1_1)

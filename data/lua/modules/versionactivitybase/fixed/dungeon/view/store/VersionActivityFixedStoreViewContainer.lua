@@ -37,23 +37,27 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 end
 
 function var_0_0._onCurrencyOpen(arg_3_0)
-	local var_3_0 = arg_3_0._currencyView:getCurrencyItem(1)
-
-	gohelper.setActive(var_3_0.btn, false)
-	gohelper.setActive(var_3_0.click, true)
-	recthelper.setAnchorX(var_3_0.txt.transform, 313)
+	arg_3_0:refreshCurrencyItem()
 end
 
-function var_0_0.playOpenTransition(arg_4_0)
-	arg_4_0:startViewOpenBlock()
-	arg_4_0.viewGO:GetComponent(typeof(UnityEngine.Animation)):Play("activitystore_open")
-	TaskDispatcher.runDelay(arg_4_0.onPlayOpenTransitionFinish, arg_4_0, 0.5)
+function var_0_0.refreshCurrencyItem(arg_4_0)
+	local var_4_0 = arg_4_0._currencyView:getCurrencyItem(1)
+
+	gohelper.setActive(var_4_0.btn, false)
+	gohelper.setActive(var_4_0.click, true)
+	recthelper.setAnchorX(var_4_0.txt.transform, 313)
 end
 
-function var_0_0.playCloseTransition(arg_5_0)
-	arg_5_0:startViewCloseBlock()
-	arg_5_0.viewGO:GetComponent(typeof(UnityEngine.Animation)):Play("activitystore_close")
-	TaskDispatcher.runDelay(arg_5_0.onPlayCloseTransitionFinish, arg_5_0, 0.167)
+function var_0_0.playOpenTransition(arg_5_0)
+	arg_5_0:startViewOpenBlock()
+	arg_5_0.viewGO:GetComponent(typeof(UnityEngine.Animation)):Play("activitystore_open")
+	TaskDispatcher.runDelay(arg_5_0.onPlayOpenTransitionFinish, arg_5_0, 0.5)
+end
+
+function var_0_0.playCloseTransition(arg_6_0)
+	arg_6_0:startViewCloseBlock()
+	arg_6_0.viewGO:GetComponent(typeof(UnityEngine.Animation)):Play("activitystore_close")
+	TaskDispatcher.runDelay(arg_6_0.onPlayCloseTransitionFinish, arg_6_0, 0.167)
 end
 
 return var_0_0

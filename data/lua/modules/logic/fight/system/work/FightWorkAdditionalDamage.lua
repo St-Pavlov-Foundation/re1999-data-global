@@ -11,7 +11,7 @@ function var_0_0.onStart(arg_1_0)
 		if var_1_1 > 0 then
 			local var_1_2 = var_1_0:isMySide() and -var_1_1 or var_1_1
 
-			FightFloatMgr.instance:float(var_1_0.id, FightEnum.FloatType.additional_damage, var_1_2)
+			FightFloatMgr.instance:float(var_1_0.id, FightEnum.FloatType.additional_damage, var_1_2, nil, arg_1_0.actEffectData.effectNum1 == 1)
 
 			if var_1_0.nameUI then
 				var_1_0.nameUI:addHp(-var_1_1)

@@ -4975,6 +4975,16 @@
     "bankName": "hero3028_skill"
   },
   {
+    "id": 1302835,
+    "eventName": "play_mianvoc_hero3028_03",
+    "bankName": "mianvoc_hero3028"
+  },
+  {
+    "id": 1302836,
+    "eventName": "play_hero3028fightingvoc_27",
+    "bankName": "hero3028_skill"
+  },
+  {
     "id": 1302901,
     "eventName": "play_mianvoc_hero3029_01",
     "bankName": "mianvoc_hero3029"
@@ -9203,6 +9213,36 @@
     "id": 1305138,
     "eventName": "play_hero3051_fightingvoc_32",
     "bankName": "hero3051_skill"
+  },
+  {
+    "id": 1305139,
+    "eventName": "play_hero3051_mainvoc_06",
+    "bankName": "hero3051_mainvoc"
+  },
+  {
+    "id": 1305140,
+    "eventName": "play_hero3051_mainvoc_11",
+    "bankName": "hero3051_mainvoc"
+  },
+  {
+    "id": 1305141,
+    "eventName": "play_hero3051_mainvoc_17",
+    "bankName": "hero3051_mainvoc"
+  },
+  {
+    "id": 1305142,
+    "eventName": "play_hero3051_fightingvoc_23",
+    "bankName": "hero3051_skill"
+  },
+  {
+    "id": 1305143,
+    "eventName": "play_hero3051_fightingvoc_33",
+    "bankName": "hero3051_skill"
+  },
+  {
+    "id": 1305144,
+    "eventName": "play_hero305102_mainsfx_mace",
+    "bankName": "hero305102_mainsfx"
   },
   {
     "id": 1305201,

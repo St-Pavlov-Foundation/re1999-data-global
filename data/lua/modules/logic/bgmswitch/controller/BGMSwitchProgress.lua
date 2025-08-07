@@ -111,7 +111,8 @@ var_0_0.WeatherEffect = {
 	"大雪",
 	"大雾",
 	"白天烟花",
-	"夜晚烟花"
+	"夜晚烟花",
+	"夜晚闪电"
 }
 
 function var_0_0._updateGMProgress(arg_7_0)
@@ -152,8 +153,8 @@ function var_0_0._updateGMProgress(arg_7_0)
 			local var_7_3 = WeatherController.instance:getCurrReport()
 			local var_7_4 = var_7_3 and var_7_3.lightMode or 1
 			local var_7_5 = var_7_3 and var_7_3.effect or 1
-			local var_7_6 = var_0_0.WeatherLight[var_7_4]
-			local var_7_7 = var_0_0.WeatherEffect[var_7_5]
+			local var_7_6 = var_0_0.WeatherLight[var_7_4] or var_7_4
+			local var_7_7 = var_0_0.WeatherEffect[var_7_5] or var_7_5
 
 			var_7_2 = var_7_6 .. "-" .. var_7_7
 		end

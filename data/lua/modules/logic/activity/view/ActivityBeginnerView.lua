@@ -112,7 +112,12 @@ local var_0_1 = {
 	[ActivityEnum.Activity.V2a7_Labor_Sign] = ViewName.V2a7_Labor_FullSignView,
 	[ActivityEnum.Activity.V2a7_WarmUp] = ViewName.V2a7_WarmUp,
 	[ActivityEnum.Activity.V2a7_SelfSelectSix1] = ViewName.V2a7_SelfSelectSix_FullView,
-	[ActivityEnum.Activity.V2a7_TowerGift] = ViewName.TowerGiftFullView
+	[ActivityEnum.Activity.V2a7_TowerGift] = ViewName.TowerGiftFullView,
+	[ActivityEnum.Activity.V2a9_VersionSummon_Part1] = ViewName.V2a9_VersionSummonFull_Part1,
+	[ActivityEnum.Activity.V2a9_VersionSummon_Part2] = ViewName.V2a9_VersionSummonFull_Part2,
+	[ActivityEnum.Activity.V2a9_TurnBackH5] = ViewName.TurnBackInvitationMainView,
+	[ActivityEnum.Activity.V2a9_FreeMonthCard] = ViewName.V2a9_FreeMonthCard_FullView,
+	[ActivityEnum.Activity.V2a9_NewCultivationGift] = ViewName.VersionActivity2_3NewCultivationGiftView
 }
 local var_0_2 = {
 	[ActivityEnum.ActivityTypeID.Act201] = ViewName.TurnBackFullView,

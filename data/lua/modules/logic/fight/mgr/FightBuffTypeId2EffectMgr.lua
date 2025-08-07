@@ -5,6 +5,7 @@ local var_0_0 = class("FightBuffTypeId2EffectMgr", FightBaseClass)
 function var_0_0.onConstructor(arg_1_0)
 	arg_1_0.effectDic = {}
 	arg_1_0.refCounter = {}
+	arg_1_0.posDic = {}
 
 	arg_1_0:com_registFightEvent(FightEvent.AddEntityBuff, arg_1_0._onAddEntityBuff)
 	arg_1_0:com_registFightEvent(FightEvent.RemoveEntityBuff, arg_1_0._onRemoveEntityBuff)
@@ -12,6 +13,7 @@ function var_0_0.onConstructor(arg_1_0)
 	arg_1_0:com_registFightEvent(FightEvent.OnSkillPlayStart, arg_1_0._onSkillPlayStart)
 	arg_1_0:com_registFightEvent(FightEvent.OnSkillPlayFinish, arg_1_0._onSkillPlayFinish)
 	arg_1_0:com_registFightEvent(FightEvent.OnRoundSequenceFinish, arg_1_0._onOnRoundSequenceFinish)
+	arg_1_0:com_registFightEvent(FightEvent.SetBuffTypeIdSceneEffect, arg_1_0._onSetBuffTypeIdSceneEffect)
 end
 
 function var_0_0._isValid(arg_2_0, arg_2_1)
@@ -101,6 +103,11 @@ function var_0_0.addEffect(arg_7_0, arg_7_1, arg_7_2)
 
 	var_7_8:setLocalPos(var_7_4, var_7_6, var_7_7)
 
+	arg_7_0.posDic[arg_7_2] = {
+		var_7_4,
+		var_7_6,
+		var_7_7
+	}
 	arg_7_0.effectDic[arg_7_2] = var_7_8
 end
 
@@ -146,56 +153,67 @@ function var_0_0._onSkillPlayFinish(arg_11_0, arg_11_1, arg_11_2)
 	end
 end
 
-function var_0_0._hideEffect(arg_12_0)
+function var_0_0._onSetBuffTypeIdSceneEffect(arg_12_0, arg_12_1)
 	for iter_12_0, iter_12_1 in pairs(arg_12_0.effectDic) do
-		iter_12_1:setActive(false, "FightBuffTypeId2EffectMgr")
+		local var_12_0 = arg_12_0.posDic[iter_12_0]
+		local var_12_1 = arg_12_1 and var_12_0[1] or 9999
+		local var_12_2 = arg_12_1 and var_12_0[2] or 9999
+		local var_12_3 = arg_12_1 and var_12_0[3] or 9999
+
+		iter_12_1:setLocalPos(var_12_1, var_12_2, var_12_3)
 	end
 end
 
-function var_0_0._showEffect(arg_13_0)
+function var_0_0._hideEffect(arg_13_0)
 	for iter_13_0, iter_13_1 in pairs(arg_13_0.effectDic) do
-		iter_13_1:setActive(true, "FightBuffTypeId2EffectMgr")
+		iter_13_1:setActive(false, "FightBuffTypeId2EffectMgr")
 	end
 end
 
-function var_0_0._onOnRoundSequenceFinish(arg_14_0)
-	if tabletool.len(arg_14_0.refCounter) <= 0 then
+function var_0_0._showEffect(arg_14_0)
+	for iter_14_0, iter_14_1 in pairs(arg_14_0.effectDic) do
+		iter_14_1:setActive(true, "FightBuffTypeId2EffectMgr")
+	end
+end
+
+function var_0_0._onOnRoundSequenceFinish(arg_15_0)
+	if tabletool.len(arg_15_0.refCounter) <= 0 then
 		return
 	end
 
-	local var_14_0 = {}
-	local var_14_1 = FightDataHelper.entityMgr:getAllEntityData()
+	local var_15_0 = {}
+	local var_15_1 = FightDataHelper.entityMgr:getAllEntityData()
 
-	for iter_14_0, iter_14_1 in pairs(var_14_1) do
-		local var_14_2 = iter_14_1:getBuffDic()
+	for iter_15_0, iter_15_1 in pairs(var_15_1) do
+		local var_15_2 = iter_15_1:getBuffDic()
 
-		for iter_14_2, iter_14_3 in pairs(var_14_2) do
-			local var_14_3 = lua_skill_buff.configDict[iter_14_3.buffId]
+		for iter_15_2, iter_15_3 in pairs(var_15_2) do
+			local var_15_3 = lua_skill_buff.configDict[iter_15_3.buffId]
 
-			if var_14_3 and lua_fight_buff_type_id_2_scene_effect.configDict[var_14_3.typeId] then
-				local var_14_4 = (var_14_0[var_14_3.typeId] or 0) + 1
+			if var_15_3 and lua_fight_buff_type_id_2_scene_effect.configDict[var_15_3.typeId] then
+				local var_15_4 = (var_15_0[var_15_3.typeId] or 0) + 1
 
-				var_14_0[var_14_3.typeId] = var_14_4
+				var_15_0[var_15_3.typeId] = var_15_4
 			end
 		end
 	end
 
-	if FightDataUtil.findDiff(arg_14_0.refCounter, var_14_0) then
-		arg_14_0:releaseAllEffect()
+	if FightDataUtil.findDiff(arg_15_0.refCounter, var_15_0) then
+		arg_15_0:releaseAllEffect()
 
-		arg_14_0.refCounter = {}
+		arg_15_0.refCounter = {}
 
-		arg_14_0:_onFightReconnectLastWork()
+		arg_15_0:_onFightReconnectLastWork()
 	end
 end
 
-function var_0_0.releaseAllEffect(arg_15_0)
-	for iter_15_0, iter_15_1 in pairs(arg_15_0.effectDic) do
-		arg_15_0:releaseEffect(iter_15_0)
+function var_0_0.releaseAllEffect(arg_16_0)
+	for iter_16_0, iter_16_1 in pairs(arg_16_0.effectDic) do
+		arg_16_0:releaseEffect(iter_16_0)
 	end
 end
 
-function var_0_0.onDestructor(arg_16_0)
+function var_0_0.onDestructor(arg_17_0)
 	return
 end
 

@@ -282,6 +282,22 @@ function var_0_0.getStrongCustomChoiceIds(arg_26_0, arg_26_1)
 	return nil
 end
 
+function var_0_0.getProgressRewardsByPoolId(arg_27_0, arg_27_1)
+	if not arg_27_0._poolProgressRewardsDic then
+		arg_27_0._poolProgressRewardsDic = {}
+
+		local var_27_0 = arg_27_0:getSummonPoolList()
+
+		for iter_27_0, iter_27_1 in ipairs(var_27_0) do
+			if iter_27_1 and not string.nilorempty(iter_27_1.progressRewards) then
+				arg_27_0._poolProgressRewardsDic[iter_27_1.id] = GameUtil.splitString2(iter_27_1.progressRewards, true)
+			end
+		end
+	end
+
+	return arg_27_0._poolProgressRewardsDic[arg_27_1]
+end
+
 var_0_0.instance = var_0_0.New()
 
 return var_0_0

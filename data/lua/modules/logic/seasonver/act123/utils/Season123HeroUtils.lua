@@ -71,6 +71,10 @@ function var_0_0.createHeroMOByAssistMO(arg_1_0, arg_1_1)
 
 	var_1_10.destinyStoneMo:refreshMo(arg_1_0.destinyRank, arg_1_0.destinyLevel, arg_1_0.destinyStone, arg_1_0.destinyStoneUnlock)
 
+	var_1_10.extraMo = var_1_10.extraMo or CharacterExtraMO.New(var_1_10)
+
+	var_1_10.extraMo:refreshMo(arg_1_0.extraStr)
+
 	return var_1_10
 end
 

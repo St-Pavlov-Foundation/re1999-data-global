@@ -54,8 +54,6 @@ function var_0_0.initHeroInfoItem(arg_6_0)
 		var_6_0.txtName = gohelper.findChildText(var_6_1, "Name")
 		arg_6_0.heroInfoItemList[iter_6_0] = var_6_0
 	end
-
-	gohelper.setActive(goHeroInfo, false)
 end
 
 function var_0_0.initHeroAndEquipItem(arg_7_0)

@@ -83,6 +83,10 @@ function var_0_0.onConstructor(arg_1_0, arg_1_1)
 	if arg_1_1:HasField("fight") then
 		arg_1_0.fight = FightData.New(arg_1_1.fight)
 	end
+
+	if arg_1_1:HasField("buffActInfo") then
+		arg_1_0.buffActInfo = FightBuffActInfoData.New(arg_1_1.buffActInfo)
+	end
 end
 
 function var_0_0.isDone(arg_2_0)

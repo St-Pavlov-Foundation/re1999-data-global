@@ -2102,5 +2102,61 @@
     "type": 1,
     "content": "language_10073262",
     "toastId": 0
+  },
+  {
+    "id": 30510101,
+    "title": "language_10075901",
+    "res": "v2a9_dungeon_fragmenticon_7",
+    "type": 1,
+    "content": "language_10075902",
+    "toastId": 0
+  },
+  {
+    "id": 30510102,
+    "title": "language_10075903",
+    "res": "v2a9_dungeon_fragmenticon_2",
+    "type": 1,
+    "content": "language_10075904",
+    "toastId": 0
+  },
+  {
+    "id": 30510103,
+    "title": "language_10075905",
+    "res": "v2a9_dungeon_fragmenticon_1",
+    "type": 1,
+    "content": "language_10075906",
+    "toastId": 0
+  },
+  {
+    "id": 30510105,
+    "title": "language_10075907",
+    "res": "v2a9_dungeon_fragmenticon_4",
+    "type": 1,
+    "content": "language_10075908",
+    "toastId": 0
+  },
+  {
+    "id": 30510107,
+    "title": "language_10075909",
+    "res": "v2a9_dungeon_fragmenticon_3",
+    "type": 1,
+    "content": "language_10075910",
+    "toastId": 0
+  },
+  {
+    "id": 30510108,
+    "title": "language_10070381",
+    "res": "v2a9_dungeon_fragmenticon_5",
+    "type": 1,
+    "content": "language_10075911",
+    "toastId": 0
+  },
+  {
+    "id": 30510109,
+    "title": "language_10075912",
+    "res": "v2a9_dungeon_fragmenticon_6",
+    "type": 1,
+    "content": "language_10075913",
+    "toastId": 0
   }
 ]

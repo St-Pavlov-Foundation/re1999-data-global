@@ -1,0 +1,18 @@
+[
+  {
+    "activityId": 130518,
+    "stageId": 1,
+    "startTime": "2025-08-07 05:00:00",
+    "endTime": "2025-08-28 04:59:59",
+    "globalTaskActivityId": 130528,
+    "globalTaskId": 305173001
+  },
+  {
+    "activityId": 130518,
+    "stageId": 2,
+    "startTime": "2025-08-28 05:00:00",
+    "endTime": "2025-09-19 04:59:59",
+    "globalTaskActivityId": 130529,
+    "globalTaskId": 305173002
+  }
+]

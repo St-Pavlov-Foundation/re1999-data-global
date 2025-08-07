@@ -1,0 +1,56 @@
+[
+  {
+    "id": 1,
+    "name": "language_10079266",
+    "desc": "language_10079267",
+    "icon": "odyssey_herogroup_icon_5_0"
+  },
+  {
+    "id": 2,
+    "name": "language_10079268",
+    "desc": "language_10079269",
+    "icon": "odyssey_herogroup_icon_2_0"
+  },
+  {
+    "id": 3,
+    "name": "language_10079270",
+    "desc": "language_10079271",
+    "icon": "odyssey_herogroup_icon_1_0"
+  },
+  {
+    "id": 4,
+    "name": "language_10079272",
+    "desc": "language_10079273",
+    "icon": "odyssey_herogroup_icon_7_0"
+  },
+  {
+    "id": 5,
+    "name": "language_10079274",
+    "desc": "language_10079275",
+    "icon": "odyssey_herogroup_icon_6_0"
+  },
+  {
+    "id": 6,
+    "name": "language_10079276",
+    "desc": "language_10079277",
+    "icon": "odyssey_herogroup_icon_8_0"
+  },
+  {
+    "id": 7,
+    "name": "language_10079278",
+    "desc": "language_10079279",
+    "icon": "odyssey_herogroup_icon_4_0"
+  },
+  {
+    "id": 8,
+    "name": "language_10079280",
+    "desc": "language_10079281",
+    "icon": "odyssey_herogroup_icon_10_0"
+  },
+  {
+    "id": 9,
+    "name": "language_10079282",
+    "desc": "language_10079283",
+    "icon": "odyssey_herogroup_icon_3_0"
+  }
+]

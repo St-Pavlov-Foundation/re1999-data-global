@@ -2,16 +2,18 @@
 
 local var_0_0 = {}
 local var_0_1 = {
-	effectRoot = 4,
-	effect = 3,
-	effectAudio = 5,
+	effectRoot = 5,
+	effect = 4,
+	effectAudio = 6,
+	skinId = 3,
 	id = 1,
-	duration = 6,
+	duration = 7,
 	layer = 2
 }
 local var_0_2 = {
 	"id",
-	"layer"
+	"layer",
+	"skinId"
 }
 local var_0_3 = {}
 

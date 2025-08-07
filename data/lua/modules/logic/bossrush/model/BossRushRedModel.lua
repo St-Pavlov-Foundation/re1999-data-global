@@ -151,7 +151,7 @@ function var_0_0._onTick(arg_18_0)
 	end
 
 	for iter_18_0, iter_18_1 in pairs(var_18_0) do
-		if BossRushModel.instance:isBossOnline(iter_18_1) then
+		if BossRushModel.instance:isBossOnline(iter_18_1) and BossRushModel.instance:isBossOpen(iter_18_1) then
 			var_18_0[iter_18_0] = nil
 
 			arg_18_0:setIsNewUnlockStage(iter_18_1, true)
@@ -514,7 +514,7 @@ function var_0_0._startTick(arg_44_0)
 	for iter_44_0, iter_44_1 in pairs(var_44_0) do
 		local var_44_2 = iter_44_1.stage
 
-		if not BossRushModel.instance:isBossOnline(var_44_2) then
+		if not BossRushModel.instance:isBossOnline(var_44_2) and BossRushModel.instance:isBossOpen(var_44_2) then
 			var_44_1[#var_44_1 + 1] = var_44_2
 		end
 	end
@@ -543,7 +543,7 @@ function var_0_0._tryUpdateMissingRed(arg_45_0)
 
 	for iter_45_0, iter_45_1 in pairs(var_45_1) do
 		local var_45_8 = iter_45_1.stage
-		local var_45_9 = BossRushModel.instance:isBossOnline(var_45_8)
+		local var_45_9 = BossRushModel.instance:isBossOnline(var_45_8) and BossRushModel.instance:isBossOpen(var_45_8)
 		local var_45_10, var_45_11, var_45_12, var_45_13 = arg_45_0:_getDUSValueByDSL(var_0_4.BossRushNewBoss, var_45_8)
 
 		if not var_45_13 then
@@ -698,22 +698,36 @@ function var_0_0.getIsNewUnlockStageLayer(arg_56_0, arg_56_1, arg_56_2)
 	return arg_56_0:checkIsShow(var_0_4.BossRushNewLayer, arg_56_1, arg_56_2)
 end
 
-function var_0_0.checkIsShow(arg_57_0, arg_57_1, arg_57_2, arg_57_3)
-	local var_57_0, var_57_1, var_57_2 = arg_57_0:_getValueByDSL(arg_57_1, arg_57_2, arg_57_3)
+function var_0_0.getIsPlayUnlockAnimStage(arg_57_0, arg_57_1)
+	local var_57_0 = arg_57_0:_getActivityId()
+	local var_57_1 = string.format(BossRushEnum.PlayUnlockAnimStage, var_57_0, arg_57_1)
 
-	return var_57_0 and var_57_1 >= 1 or var_57_2 >= 1
+	return GameUtil.playerPrefsGetNumberByUserId(var_57_1, 0) == 0
+end
+
+function var_0_0.setIsPlayUnlockAnimStage(arg_58_0, arg_58_1, arg_58_2)
+	local var_58_0 = arg_58_0:_getActivityId()
+	local var_58_1 = string.format(BossRushEnum.PlayUnlockAnimStage, var_58_0, arg_58_1)
+
+	GameUtil.playerPrefsSetNumberByUserId(var_58_1, arg_58_2 and 0 or 1)
+end
+
+function var_0_0.checkIsShow(arg_59_0, arg_59_1, arg_59_2, arg_59_3)
+	local var_59_0, var_59_1, var_59_2 = arg_59_0:_getValueByDSL(arg_59_1, arg_59_2, arg_59_3)
+
+	return var_59_0 and var_59_1 >= 1 or var_59_2 >= 1
 end
 
 local var_0_9
 local var_0_10
 local var_0_11
 
-function var_0_0._printerWarmUp(arg_58_0)
+function var_0_0._printerWarmUp(arg_60_0)
 	if not var_0_9 then
 		var_0_9 = {}
 
-		for iter_58_0, iter_58_1 in pairs(RedDotEnum.DotNode) do
-			var_0_9[iter_58_1] = iter_58_0
+		for iter_60_0, iter_60_1 in pairs(RedDotEnum.DotNode) do
+			var_0_9[iter_60_1] = iter_60_0
 		end
 	end
 
@@ -722,145 +736,145 @@ function var_0_0._printerWarmUp(arg_58_0)
 	end
 
 	if not var_0_11 then
-		local var_58_0 = PlayerModel.instance:getMyUserId()
+		local var_60_0 = PlayerModel.instance:getMyUserId()
 
-		if var_58_0 and var_58_0 ~= 0 then
-			var_0_11 = var_58_0
+		if var_60_0 and var_60_0 ~= 0 then
+			var_0_11 = var_60_0
 		end
 	end
 end
 
-function var_0_0._print(arg_59_0, arg_59_1)
+function var_0_0._print(arg_61_0, arg_61_1)
 	if not SLFramework.FrameworkSettings.IsEditor then
 		return
 	end
 
-	if not arg_59_1 then
+	if not arg_61_1 then
 		return
 	end
 
-	arg_59_0:_printerWarmUp()
-	assert(var_0_9[arg_59_1], "defineId = " .. arg_59_1)
+	arg_61_0:_printerWarmUp()
+	assert(var_0_9[arg_61_1], "defineId = " .. arg_61_1)
 
-	function RedDotGroupMo.tostring(arg_60_0)
-		local var_60_0 = arg_60_0.id
-		local var_60_1 = arg_60_0.infos
-		local var_60_2 = var_0_9[var_60_0]
-		local var_60_3 = string.format("%s(%s):", var_60_2, var_0_1(var_60_0))
-		local var_60_4 = true
+	function RedDotGroupMo.tostring(arg_62_0)
+		local var_62_0 = arg_62_0.id
+		local var_62_1 = arg_62_0.infos
+		local var_62_2 = var_0_9[var_62_0]
+		local var_62_3 = string.format("%s(%s):", var_62_2, var_0_1(var_62_0))
+		local var_62_4 = true
 
-		for iter_60_0, iter_60_1 in pairs(var_60_1) do
-			if iter_60_0 ~= 0 then
-				local var_60_5 = iter_60_1.value
+		for iter_62_0, iter_62_1 in pairs(var_62_1) do
+			if iter_62_0 ~= 0 then
+				local var_62_5 = iter_62_1.value
 
-				var_60_3 = string.format("%s\n\tuid: %s (%s)", var_60_3, var_0_1(iter_60_0), var_0_1(var_60_5))
-				var_60_4 = false
+				var_62_3 = string.format("%s\n\tuid: %s (%s)", var_62_3, var_0_1(iter_62_0), var_0_1(var_62_5))
+				var_62_4 = false
 			end
 		end
 
-		if var_60_4 then
-			var_60_3 = var_60_3 .. " empty"
+		if var_62_4 then
+			var_62_3 = var_62_3 .. " empty"
 		end
 
-		return var_60_3
+		return var_62_3
 	end
 
-	local var_59_0 = RedDotModel.instance:getRedDotInfo(arg_59_1)
+	local var_61_0 = RedDotModel.instance:getRedDotInfo(arg_61_1)
 
-	if not var_59_0 then
-		var_0_10(var_0_9[arg_59_1] .. ": null")
+	if not var_61_0 then
+		var_0_10(var_0_9[arg_61_1] .. ": null")
 
 		return
 	end
 
-	var_0_10(var_59_0:tostring())
+	var_0_10(var_61_0:tostring())
 end
 
-function var_0_0.logDalayInfo(arg_61_0)
-	arg_61_0:_printerWarmUp()
-	var_0_10("#_delayNeedUpdateDictList=" .. var_0_1(#arg_61_0._delayNeedUpdateDictList))
-	var_0_10("#_delayUpdateRedValueList=" .. var_0_1(#arg_61_0._delayUpdateRedValueList))
-end
-
-function var_0_0._delete(arg_62_0, arg_62_1, arg_62_2)
-	local var_62_0 = arg_62_0:_getPrefsKey(arg_62_1, arg_62_2)
-	local var_62_1 = PlayerModel.instance:getMyUserId()
-
-	if not var_62_1 or var_62_1 == 0 then
-		var_62_1 = var_0_11
-	end
-
-	if not var_62_1 then
-		return
-	end
-
-	arg_62_0:_printerWarmUp()
-
-	local var_62_2 = var_62_0 .. "#" .. var_0_1(var_62_1)
-
-	if PlayerPrefsHelper.hasKey(var_62_2) then
-		PlayerPrefsHelper.deleteKey(var_62_2)
-
-		return var_62_0
-	end
-
-	var_0_10("_delete no existed prefsKey!!", var_62_2)
-end
-
-function var_0_0._deleteByDSL(arg_63_0, arg_63_1, arg_63_2, arg_63_3)
-	local var_63_0, var_63_1 = arg_63_0:_getDUByDSL(arg_63_1, arg_63_2, arg_63_3)
-	local var_63_2 = arg_63_0:_delete(var_63_0, var_63_1)
-
-	if not var_63_2 then
-		return
-	end
-
-	if not SLFramework.FrameworkSettings.IsEditor then
-		return
-	end
-
-	if not var_63_0 then
-		return
-	end
-
+function var_0_0.logDalayInfo(arg_63_0)
 	arg_63_0:_printerWarmUp()
-
-	local var_63_3 = "deleted " .. var_0_1(var_63_2)
-	local var_63_4 = ""
-
-	if arg_63_2 and arg_63_3 then
-		var_63_4 = var_63_4 .. string.format("bossid: %s, layer: %s", arg_63_2, arg_63_3)
-	elseif arg_63_2 then
-		var_63_4 = var_63_4 .. string.format("bossid: %s", arg_63_2)
-	end
-
-	local var_63_5 = var_63_3 .. ": " .. var_63_4
-
-	var_0_10(var_63_5)
+	var_0_10("#_delayNeedUpdateDictList=" .. var_0_1(#arg_63_0._delayNeedUpdateDictList))
+	var_0_10("#_delayUpdateRedValueList=" .. var_0_1(#arg_63_0._delayUpdateRedValueList))
 end
 
-function var_0_0._reload(arg_64_0)
-	if not arg_64_0:isInitReady() then
+function var_0_0._delete(arg_64_0, arg_64_1, arg_64_2)
+	local var_64_0 = arg_64_0:_getPrefsKey(arg_64_1, arg_64_2)
+	local var_64_1 = PlayerModel.instance:getMyUserId()
+
+	if not var_64_1 or var_64_1 == 0 then
+		var_64_1 = var_0_11
+	end
+
+	if not var_64_1 then
 		return
 	end
 
 	arg_64_0:_printerWarmUp()
-	arg_64_0:reInit()
 
-	local var_64_0 = {}
+	local var_64_2 = var_64_0 .. "#" .. var_0_1(var_64_1)
 
-	arg_64_0:_initRootRed(var_64_0)
-	arg_64_0:_initBossRed(var_64_0)
+	if PlayerPrefsHelper.hasKey(var_64_2) then
+		PlayerPrefsHelper.deleteKey(var_64_2)
 
-	local var_64_1 = {}
+		return var_64_0
+	end
 
-	for iter_64_0, iter_64_1 in ipairs(var_64_0) do
-		if arg_64_0:_isSValueValid(iter_64_1.value) then
-			var_0_3(var_64_1, iter_64_1)
+	var_0_10("_delete no existed prefsKey!!", var_64_2)
+end
+
+function var_0_0._deleteByDSL(arg_65_0, arg_65_1, arg_65_2, arg_65_3)
+	local var_65_0, var_65_1 = arg_65_0:_getDUByDSL(arg_65_1, arg_65_2, arg_65_3)
+	local var_65_2 = arg_65_0:_delete(var_65_0, var_65_1)
+
+	if not var_65_2 then
+		return
+	end
+
+	if not SLFramework.FrameworkSettings.IsEditor then
+		return
+	end
+
+	if not var_65_0 then
+		return
+	end
+
+	arg_65_0:_printerWarmUp()
+
+	local var_65_3 = "deleted " .. var_0_1(var_65_2)
+	local var_65_4 = ""
+
+	if arg_65_2 and arg_65_3 then
+		var_65_4 = var_65_4 .. string.format("bossid: %s, layer: %s", arg_65_2, arg_65_3)
+	elseif arg_65_2 then
+		var_65_4 = var_65_4 .. string.format("bossid: %s", arg_65_2)
+	end
+
+	local var_65_5 = var_65_3 .. ": " .. var_65_4
+
+	var_0_10(var_65_5)
+end
+
+function var_0_0._reload(arg_66_0)
+	if not arg_66_0:isInitReady() then
+		return
+	end
+
+	arg_66_0:_printerWarmUp()
+	arg_66_0:reInit()
+
+	local var_66_0 = {}
+
+	arg_66_0:_initRootRed(var_66_0)
+	arg_66_0:_initBossRed(var_66_0)
+
+	local var_66_1 = {}
+
+	for iter_66_0, iter_66_1 in ipairs(var_66_0) do
+		if arg_66_0:_isSValueValid(iter_66_1.value) then
+			var_0_3(var_66_1, iter_66_1)
 		end
 	end
 
-	RedDotRpc.instance:clientAddRedDotGroupList(var_64_1, true)
+	RedDotRpc.instance:clientAddRedDotGroupList(var_66_1, true)
 	var_0_10("<color=#00FF00>reload BossRushRedModel finished!!</color>")
 end
 

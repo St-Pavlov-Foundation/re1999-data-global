@@ -124,5 +124,41 @@
     "bonus": "26#4#50|2#2503#50",
     "jumpId": 0,
     "activityId": 12589
+  },
+  {
+    "id": 305173001,
+    "isOnline": 1,
+    "minType": "",
+    "name": "language_10078331",
+    "desc": "language_10078331",
+    "listenerType": "Act173Global",
+    "listenerParam": "130528",
+    "maxProgress": 19990000,
+    "sortId": 0,
+    "prepose": "",
+    "openLimit": "",
+    "bonusMail": 0,
+    "params": "",
+    "bonus": "2#30503#60",
+    "jumpId": 0,
+    "activityId": 130528
+  },
+  {
+    "id": 305173002,
+    "isOnline": 1,
+    "minType": "",
+    "name": "language_10078332",
+    "desc": "language_10078332",
+    "listenerType": "Act173Global",
+    "listenerParam": "130529",
+    "maxProgress": 19990000,
+    "sortId": 0,
+    "prepose": "",
+    "openLimit": "",
+    "bonusMail": 0,
+    "params": "",
+    "bonus": "2#30503#60",
+    "jumpId": 0,
+    "activityId": 130529
   }
 ]

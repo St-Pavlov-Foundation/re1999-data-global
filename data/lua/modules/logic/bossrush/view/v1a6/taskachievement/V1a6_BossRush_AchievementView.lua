@@ -56,6 +56,11 @@ end
 
 function var_0_0.onClose(arg_7_0)
 	gohelper.setActive(arg_7_0._goRight, false)
+
+	if arg_7_0._assessIcon then
+		arg_7_0._assessIcon:onClose()
+	end
+
 	arg_7_0:playAnim(BossRushEnum.V1a6_BonusViewAnimName.Out)
 end
 
@@ -73,11 +78,17 @@ function var_0_0._initAssessIcon(arg_9_0)
 		arg_9_0._assessIcon = MonoHelper.addNoUpdateLuaComOnceToGo(var_9_1, var_9_0)
 	end
 
-	local var_9_2 = BossRushModel.instance:getHighestPoint(arg_9_0.stage)
+	local var_9_2 = BossRushModel.instance:getActivityBonus()
+	local var_9_3 = var_9_2 and var_9_2[V1a6_BossRush_BonusModel.instance:getTab()]
+	local var_9_4 = BossRushModel.instance:getHighestPoint(arg_9_0.stage)
 
-	arg_9_0._assessIcon:setData(arg_9_0.stage, var_9_2, false)
+	if var_9_3.SpModel and var_9_3.SpModel.instance.getHighestPoint then
+		var_9_4 = var_9_3.SpModel.instance:getHighestPoint(arg_9_0.stage)
+	end
 
-	arg_9_0._txtScoreNum.text = BossRushConfig.instance:getScoreStr(var_9_2)
+	arg_9_0._assessIcon:setData(arg_9_0.stage, var_9_4, false)
+
+	arg_9_0._txtScoreNum.text = BossRushConfig.instance:getScoreStr(var_9_4)
 end
 
 function var_0_0._refresh(arg_10_0)

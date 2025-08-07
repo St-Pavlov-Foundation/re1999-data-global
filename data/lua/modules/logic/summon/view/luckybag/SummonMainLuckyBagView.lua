@@ -253,8 +253,8 @@ function var_0_0._btnsummon10OnClick(arg_16_0)
 		return
 	end
 
-	local var_16_1, var_16_2, var_16_3 = SummonMainModel.getCostByConfig(var_16_0.cost10)
-	local var_16_4 = {
+	local var_16_1, var_16_2, var_16_3, var_16_4 = SummonMainModel.getCostByConfig(var_16_0.cost10)
+	local var_16_5 = {
 		type = var_16_1,
 		id = var_16_2,
 		quantity = var_16_3,
@@ -262,34 +262,34 @@ function var_0_0._btnsummon10OnClick(arg_16_0)
 		callbackObj = arg_16_0
 	}
 
-	var_16_4.notEnough = false
+	var_16_5.notEnough = false
+	var_16_4 = var_16_4 or ItemModel.instance:getItemQuantity(var_16_1, var_16_2)
 
-	local var_16_5 = ItemModel.instance:getItemQuantity(var_16_1, var_16_2)
-	local var_16_6 = var_16_3 <= var_16_5
+	local var_16_6 = var_16_3 <= var_16_4
 	local var_16_7 = SummonMainModel.instance.everyCostCount
 	local var_16_8 = SummonMainModel.instance:getOwnCostCurrencyNum()
-	local var_16_9 = 10 - var_16_5
+	local var_16_9 = 10 - var_16_4
 	local var_16_10 = var_16_7 * var_16_9
 
 	if not var_16_6 and var_16_8 < var_16_10 then
-		var_16_4.notEnough = true
+		var_16_5.notEnough = true
 	end
 
 	if var_16_6 then
-		var_16_4.needTransform = false
+		var_16_5.needTransform = false
 
 		arg_16_0:_summon10Confirm()
 
 		return
 	else
-		var_16_4.needTransform = true
-		var_16_4.cost_type = SummonMainModel.instance.costCurrencyType
-		var_16_4.cost_id = SummonMainModel.instance.costCurrencyId
-		var_16_4.cost_quantity = var_16_10
-		var_16_4.miss_quantity = var_16_9
+		var_16_5.needTransform = true
+		var_16_5.cost_type = SummonMainModel.instance.costCurrencyType
+		var_16_5.cost_id = SummonMainModel.instance.costCurrencyId
+		var_16_5.cost_quantity = var_16_10
+		var_16_5.miss_quantity = var_16_9
 	end
 
-	ViewMgr.instance:openView(ViewName.SummonConfirmView, var_16_4)
+	ViewMgr.instance:openView(ViewName.SummonConfirmView, var_16_5)
 end
 
 function var_0_0._summon10Confirm(arg_17_0)
@@ -513,7 +513,7 @@ function var_0_0.refreshCost(arg_30_0)
 end
 
 function var_0_0._refreshSingleCost(arg_31_0, arg_31_1, arg_31_2, arg_31_3)
-	local var_31_0, var_31_1, var_31_2 = SummonMainModel.getCostByConfig(arg_31_1)
+	local var_31_0, var_31_1, var_31_2 = SummonMainModel.getCostByConfig(arg_31_1, true)
 	local var_31_3 = SummonMainModel.getSummonItemIcon(var_31_0, var_31_1)
 
 	arg_31_2:LoadImage(var_31_3)

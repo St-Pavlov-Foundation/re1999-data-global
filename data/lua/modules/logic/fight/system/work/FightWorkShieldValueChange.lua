@@ -26,7 +26,7 @@ function var_0_0.onStart(arg_2_0)
 			local var_2_2 = var_2_0:isMySide() and var_2_1 or -var_2_1
 			local var_2_3 = arg_2_0:_getOriginFloatType() or FightEnum.FloatType.damage
 
-			FightFloatMgr.instance:float(var_2_0.id, var_2_3, var_2_2)
+			FightFloatMgr.instance:float(var_2_0.id, var_2_3, var_2_2, nil, arg_2_0.actEffectData.buffActId == 1)
 		end
 
 		FightController.instance:dispatchEvent(FightEvent.OnShieldChange, var_2_0, var_2_1)

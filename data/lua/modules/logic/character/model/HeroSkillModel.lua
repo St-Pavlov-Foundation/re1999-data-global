@@ -166,8 +166,8 @@ function var_0_0.getSkillEffectTagIdsFormDescTabRecursion(arg_17_0, arg_17_1)
 	local var_17_1 = {}
 	local var_17_2 = {}
 
-	for iter_17_0 = 1, #arg_17_1 do
-		local var_17_3 = arg_17_0:getEffectTagIDsFromDescNotRecursion(arg_17_1[iter_17_0])
+	for iter_17_0, iter_17_1 in pairs(arg_17_1) do
+		local var_17_3 = arg_17_0:getEffectTagIDsFromDescNotRecursion(iter_17_1)
 
 		var_17_2[iter_17_0] = arg_17_0:treeLevelTraversal(var_17_3, {}, var_17_0)
 	end

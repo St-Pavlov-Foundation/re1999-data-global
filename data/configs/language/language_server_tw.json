@@ -103721,7 +103721,7 @@
   },
   {
     "key": "language_10025933",
-    "content": "每回合開始時回復使用者攻擊*20%的生命"
+    "content": "每回合開始時回復使用者攻擊*120%的生命"
   },
   {
     "key": "language_10025934",
@@ -125378,6 +125378,5998 @@
   {
     "key": "language_10031347",
     "content": "歷史的縫隙"
+  },
+  {
+    "key": "language_10031348",
+    "content": "葡萄藤結時"
+  },
+  {
+    "key": "language_10031349",
+    "content": "我最親愛的"
+  },
+  {
+    "key": "language_10031350",
+    "content": "咆哮驚喜月"
+  },
+  {
+    "key": "language_10031351",
+    "content": "【規則說明】\n1.“咆哮驚喜月”活動時間：<#b95323>8月7日10:00-9月19日04:59</color>(UTC+8)。\n2.活動期間，玩家每日登錄可領取一次<#b95323>純雨滴×90，苦目糖果（限時）×1</color>。至多可領取<#b95323>30</color>次。\n3.活動結束時，未消耗完的獎勵領取次數將不會進行獎勵補發。\n4.領取機會將在每日<#b95323>5:00</color>(UTC+8)更新，玩家可在當日5:00(UTC+8)至次日5:00(UTC+8)期間登錄領取。\n5.“咆哮驚喜月”活動和櫃員機訂閱“咆哮的一月”可同時生效，即訂閱了“咆哮的一月”的玩家可以在“咆哮驚喜月”活動期間合計每日共領取純雨滴×180，苦目糖果（限時）×2。"
+  },
+  {
+    "key": "language_10031352",
+    "content": "{【聯動徵集—刺客教條】規則}\n<color=#B65223>【▩1%s】</color>限時聯動徵集現已開啟，玩家可以從中邀請聯動up角色及限時活動UP角色。\n<color=#B65223>【▩1%s】</color>屬於<color=#B65223>【聯動徵集—刺客教條】</color>，徵集保底次數將單獨累積，與任意類型徵集的保底次數均不共享。\n活動期間內，6星聯動角色<color=#B65223>[upname=1]</color>以及5星角色<color=#B65223>[upname=2]</color>、<color=#B65223>[upname=3]</color>的徵集獲取機率將大幅提升！\n新增角色[upname=1]為聯動徵集角色，不加入除<color=#B65223>【聯動徵集—刺客教條】</color>之外的其他類型徵集。\n本次徵集活動結束後，<color=#B65223>該聯動徵集【時代引導先知】</color>的保底次數將會清零，不會繼承至其他類型徵集活動。\n\n▪ 在本次徵集活動中，僅限一次，前10次徵集必會獲得至少1名5星或以上角色。\n▪ 在本次徵集活動中，每10次徵集必會獲得至少1名4星或以上角色。\n▪ 一般情況下所有角色均適用基礎機率，如觸發機率UP、保底等以具體規則為準。\n\n{聯動徵集—刺客教條聯動角色額外獲取規則}\n本次徵集活動期間，包含聯動角色額外獲取規則。\n在<color=#B65223>【時代引導先知】</color>中，徵集次數達到第100次、160次、220次和280次徵集時，分別可額外獲取聯動角色“埃齊歐”*1，最多可通過該規則額外獲取4次。\n\n{【聯動徵集—刺客教條】機率說明}\n在<color=#B65223>【▩1%s】</color>徵集活動中，\n6星角色徵集的基礎機率為1.5%，綜合機率（含保底）2.36%；\n5星角色徵集的基礎機率為8.5%；\n4星角色徵集的基礎機率為40%；\n3星角色徵集的基礎機率為45%；\n2星角色徵集的基礎機率為5%。\n\n當徵集獲取6星角色時，有50%的機率為本期聯動6星UP角色<color=#B65223>[upname=1]</color>。如果本次徵集獲取的6星角色非本期聯動6星UP角色，則下次徵集獲取的6星角色必定為本期聯動6星UP角色。\n當徵集獲取5星角色時，有50%的機率為本期5星UP角色<color=#B65223>[upname=2]</color>、<color=#B65223>[upname=3]</color>中的一個。每個本期5星UP角色的獲取機率均等。\n\n{特殊說明}\n在本次<color=#B65223>【▩1%s】</color>聯動徵集活動中，若連續60次徵集未獲取6星角色，則下次徵集獲取6星角色的機率將從1.5%提升至4%。若該次徵集仍未獲取6星角色，則後續每次徵集獲取6星角色的機率將繼續依照2.5%累加遞升。\n最多70次徵集必定能通過保底獲取6星角色。\n注意：獲得6星角色後，在<color=#B65223>該聯動徵集【時代引導先知】</color>類型活動中獲取6星角色的機率將恢復至1.5%。\n\n{獲得重複角色}\n\n無論通過何種方式（包含但不限於徵集、銀行兌換、系統贈送等）\n\n▪ 獲取相同6星角色時：第2～6次，每次將轉化為<color=#B65223>1</color>個對應角色的人物 造像和<color=#B65223>12</color>個大容量迷途之聲；第7次及之後，每次將僅轉化成<color=#B65223>28</color>個大 容量迷途之聲。\n\n▪ 獲取相同5星角色時：第2～6次，每次將轉化為<color=#B65223>1</color>個對應角色的人物 造像和<color=#B65223>3</color>個大容量迷途之聲；第7次及之後，每次將僅轉化成<color=#B65223>7</color>個大容 量迷途之聲。\n\n▪ 獲取相同4星角色時：第2～6次，每次將轉化為<color=#B65223>1</color>個對應角色的人物 造像和<color=#B65223>8</color>個迷途之聲；第7次及之後，每次將僅轉化成<color=#B65223>12</color>個迷途之 聲。\n\n▪ 獲取相同3星角色時：第2～6次，每次將轉化為<color=#B65223>1</color>個對應角色的人物 造像和<color=#B65223>4</color>個迷途之聲；第7次及之後，每次將僅轉化成<color=#B65223>7</color>個迷途之聲。\n\n▪ 獲取相同2星角色時：第2～6次，每次將轉化為<color=#B65223>1</color>個對應角色的人物 造像和<color=#B65223>3</color>個迷途之聲；第7次及之後，每次將僅轉化成<color=#B65223>5</color>個迷途之聲。"
+  },
+  {
+    "key": "language_10031353",
+    "content": "{【聯動徵集—刺客教條】規則}\n<color=#B65223>【▩1%s】</color>限時聯動徵集現已開啟，玩家可以從中邀請聯動up角色及限時活動UP角色。\n<color=#B65223>【▩1%s】</color>屬於<color=#B65223>【聯動徵集—刺客教條】</color>，徵集保底次數將單獨累積，與任意類型徵集的保底次數均不共享。\n活動期間內，6星聯動角色<color=#B65223>[upname=1]</color>以及5星角色<color=#B65223>[upname=2]</color>、<color=#B65223>[upname=3]</color>的徵集獲取機率將大幅提升！\n新增角色[upname=1]為聯動徵集角色，不加入除<color=#B65223>【聯動徵集—刺客教條】</color>之外的其他類型徵集。\n本次徵集活動結束後，<color=#B65223>該聯動徵集【鷹翔於酒色之海】</color>的保底次數將會清零，不會繼承至其他類型徵集活動。\n\n▪ 在本次徵集活動中，僅限一次，前10次徵集必會獲得至少1名5星或以上角色。\n▪ 在本次徵集活動中，每10次徵集必會獲得至少1名4星或以上角色。\n▪ 一般情況下所有角色均適用基礎機率，如觸發機率UP、保底等以具體規則為準。\n\n{【聯動徵集—刺客教條】聯動角色額外獲取規則}\n本次徵集活動期間，包含聯動角色額外獲取規則。\n在<color=#B65223>【鷹翔於酒色之海】</color>中，徵集次數達到第100次、160次、220次和280次徵集時，分別可額外獲取聯動角色“卡珊卓”*1，最多可通過該規則額外獲取4次。\n\n{【聯動徵集—刺客教條】機率說明}\n在<color=#B65223>【▩1%s】</color>徵集活動中，\n6星角色徵集的基礎機率為1.5%，綜合機率（含保底）2.36%；\n5星角色徵集的基礎機率為8.5%；\n4星角色徵集的基礎機率為40%；\n3星角色徵集的基礎機率為45%；\n2星角色徵集的基礎機率為5%。\n\n當徵集獲取6星角色時，有50%的機率為本期聯動6星UP角色<color=#B65223>[upname=1]</color>。如果本次徵集獲取的6星角色非本期聯動6星UP角色，則下次徵集獲取的6星角色必定為本期聯動6星UP角色。\n當徵集獲取5星角色時，有50%的機率為本期5星UP角色<color=#B65223>[upname=2]</color>、<color=#B65223>[upname=3]</color>中的一個。每個本期5星UP角色的獲取機率均等。\n\n{特殊說明}在本次<color=#B65223>【▩1%s】</color>聯動徵集活動中，若連續60次徵集未獲取6星角色，則下次徵集獲取6星角色的機率將從1.5%提升至4%。若該次徵集仍未獲取6星角色，則後續每次徵集獲取6星角色的機率將繼續依照2.5%累加遞升。\n最多70次徵集必定能通過保底獲取6星角色。\n注意：獲得6星角色後，在<color=#B65223>該聯動徵集【鷹翔於酒色之海】</color>類型活動中獲取6星角色的機率將恢復至1.5%。\n\n{獲得重複角色}\n\n無論通過何種方式（包含但不限於徵集、銀行兌換、系統贈送等）\n\n▪ 獲取相同6星角色時：第2～6次，每次將轉化為<color=#B65223>1</color>個對應角色的人物 造像和<color=#B65223>12</color>個大容量迷途之聲；第7次及之後，每次將僅轉化成<color=#B65223>28</color>個大 容量迷途之聲。\n\n▪ 獲取相同5星角色時：第2～6次，每次將轉化為<color=#B65223>1</color>個對應角色的人物 造像和<color=#B65223>3</color>個大容量迷途之聲；第7次及之後，每次將僅轉化成<color=#B65223>7</color>個大容 量迷途之聲。\n\n▪ 獲取相同4星角色時：第2～6次，每次將轉化為<color=#B65223>1</color>個對應角色的人物 造像和<color=#B65223>8</color>個迷途之聲；第7次及之後，每次將僅轉化成<color=#B65223>12</color>個迷途之 聲。\n\n▪ 獲取相同3星角色時：第2～6次，每次將轉化為<color=#B65223>1</color>個對應角色的人物 造像和<color=#B65223>4</color>個迷途之聲；第7次及之後，每次將僅轉化成<color=#B65223>7</color>個迷途之聲。▪ 獲取相同2星角色時：第2～6次，每次將轉化為<color=#B65223>1</color>個對應角色的人物 造像和<color=#B65223>3</color>個迷途之聲；第7次及之後，每次將僅轉化成<color=#B65223>5</color>個迷途之聲。"
+  },
+  {
+    "key": "language_10031354",
+    "content": "畫壁奧秘"
+  },
+  {
+    "key": "language_10031355",
+    "content": "先知札記"
+  },
+  {
+    "key": "language_10031356",
+    "content": "再頌酒神"
+  },
+  {
+    "key": "language_10031357",
+    "content": "馴鷹人札記"
+  },
+  {
+    "key": "language_10031358",
+    "content": "秩序拷問官"
+  },
+  {
+    "key": "language_10031359",
+    "content": "致古老以問候"
+  },
+  {
+    "key": "language_10031360",
+    "content": "閱無遺漏"
+  },
+  {
+    "key": "language_10031361",
+    "content": "兄弟會邀請函"
+  },
+  {
+    "key": "language_10031362",
+    "content": "影中之鷹"
+  },
+  {
+    "key": "language_10031363",
+    "content": "亞歷克西歐斯的造像"
+  },
+  {
+    "key": "language_10031364",
+    "content": "埃齊歐·奧迪托雷的造像"
+  },
+  {
+    "key": "language_10031365",
+    "content": "卡珊卓的造像"
+  },
+  {
+    "key": "language_10031366",
+    "content": "鷹巢園地"
+  },
+  {
+    "key": "language_10031367",
+    "content": "手提箱制式"
+  },
+  {
+    "key": "language_10031368",
+    "content": "一份獨特的設計方案，可在框架藝術中改變箱中的外觀。"
+  },
+  {
+    "key": "language_10031369",
+    "content": "伊卡洛斯所見"
+  },
+  {
+    "key": "language_10031370",
+    "content": "獨一調·伊述餘音"
+  },
+  {
+    "key": "language_10031371",
+    "content": "毋須編織的、獨一無二的線，可在【時代引導先知】或【鷹翔於酒色之海】徵集中使紡車轉動一周。\n<color=#AC5320>僅限用於【時代引導先知】或【鷹翔於酒色之海】中徵集角色。</color>【時代引導先知】和【鷹翔於酒色之海】限時徵集結束後，<color=#AC5320>該道具過期。</color>"
+  },
+  {
+    "key": "language_10031372",
+    "content": "獨一調·【時代引導先知】"
+  },
+  {
+    "key": "language_10031373",
+    "content": "毋須編織的、獨一無二的線，可在【時代引導先知】徵集中使紡車轉動一周。\n<color=#AC5320>僅限用於【時代引導先知】中徵集角色。</color>【時代引導先知】限時徵集結束後，<color=#AC5320>該道具過期。</color>"
+  },
+  {
+    "key": "language_10031374",
+    "content": "獨一調·【鷹翔於酒色之海】"
+  },
+  {
+    "key": "language_10031375",
+    "content": "毋須編織的、獨一無二的線，可在【鷹翔於酒色之海】徵集中使紡車轉動一周。\n<color=#AC5320>僅限用於【鷹翔於酒色之海】中徵集角色。</color>【鷹翔於酒色之海】限時徵集結束後，<color=#AC5320>該道具過期。</color>"
+  },
+  {
+    "key": "language_10031376",
+    "content": "十全調·【時代引導先知】"
+  },
+  {
+    "key": "language_10031377",
+    "content": "各行其是的、拾全拾美的線，可在【時代引導先知】徵集中使紡車轉動十周。\n<color=#AC5320>僅限用於【時代引導先知】中徵集角色。</color>【時代引導先知】限時徵集結束後，<color=#AC5320>該道具過期。</color>"
+  },
+  {
+    "key": "language_10031378",
+    "content": "十全調·【鷹翔於酒色之海】"
+  },
+  {
+    "key": "language_10031379",
+    "content": "各行其是的、拾全拾美的線，可在【鷹翔於酒色之海】徵集中使紡車轉動十周。\n<color=#AC5320>僅限用於【鷹翔於酒色之海】中徵集角色。</color>【鷹翔於酒色之海】限時徵集結束後，<color=#AC5320>該道具過期。</color>"
+  },
+  {
+    "key": "language_10031380",
+    "content": "堆放起來的利齒子兒，包含利齒子兒*100000。"
+  },
+  {
+    "key": "language_10031381",
+    "content": "堆積如山的利齒子兒，包含利齒子兒*500000。"
+  },
+  {
+    "key": "language_10031382",
+    "content": "最新調配出的穩定膠體，包含微塵*100000。可用於提升角色的等級。"
+  },
+  {
+    "key": "language_10031383",
+    "content": "特殊配製出的盒裝膠囊，包含微塵*500000。可用於提升角色的等級。"
+  },
+  {
+    "key": "language_10031384",
+    "content": "奇巧秘物包裹"
+  },
+  {
+    "key": "language_10031385",
+    "content": "神秘學家都熟悉的小包裹。開啟後可隨機獲得1件奇巧材料，用於角色的洞悉與共鳴。"
+  },
+  {
+    "key": "language_10031386",
+    "content": "翡冷翠暮色"
+  },
+  {
+    "key": "language_10031387",
+    "content": "一枚小小箱牌，將翡冷翠的日暮存留在你的箱中。\n可在旅券集介面用於更替旅券集。"
+  },
+  {
+    "key": "language_10031388",
+    "content": "豐饒時日"
+  },
+  {
+    "key": "language_10031389",
+    "content": "行至影中"
+  },
+  {
+    "key": "language_10031390",
+    "content": "翡冷翠回望"
+  },
+  {
+    "key": "language_10031391",
+    "content": "同行伊卡洛斯"
+  },
+  {
+    "key": "language_10031392",
+    "content": "收錄了一段回憶的磁記錄媒介。《葡萄藤結時》已經添加至氛圍製造機。"
+  },
+  {
+    "key": "language_10031393",
+    "content": "收錄了一段回憶的磁記錄媒介。《我最親愛的》已經添加至氛圍製造機。"
+  },
+  {
+    "key": "language_10031394",
+    "content": "初階構想積木"
+  },
+  {
+    "key": "language_10031395",
+    "content": "自童年而來的荒原積木套組，最初的構想便以此搭建。使用後可兌換【明日構想】內已下架的紫色品階及以下的建築或孤嶼組合。"
+  },
+  {
+    "key": "language_10031396",
+    "content": "中階構想積木"
+  },
+  {
+    "key": "language_10031397",
+    "content": "不知出處的荒原積木套組，渴望著以自身填補偉大設計的空缺。使用後可兌換【明日構想】內已下架的金色品階及以下的建築或孤嶼組合。"
+  },
+  {
+    "key": "language_10031398",
+    "content": "高階構想積木"
+  },
+  {
+    "key": "language_10031399",
+    "content": "代代相傳的荒原積木套組，無拘形態的神秘學至寶。使用後可兌換【明日構想】內已下架的橙色品階及以下的建築或孤嶼組合。"
+  },
+  {
+    "key": "language_10031400",
+    "content": "弗羅林"
+  },
+  {
+    "key": "language_10031401",
+    "content": "文藝復興時期佛羅倫斯使用的鑄幣，通行於義大利半島。可用於特別櫃檯兌換。"
+  },
+  {
+    "key": "language_10031402",
+    "content": "紛飛數據"
+  },
+  {
+    "key": "language_10031403",
+    "content": "菲涅耳干涉儀運行途中產生的變數數據，可用於在“數據拾遺”中兌換相應獎勵。"
+  },
+  {
+    "key": "language_10031404",
+    "content": "翡冷翠之春"
+  },
+  {
+    "key": "language_10031405",
+    "content": "步入影中"
+  },
+  {
+    "key": "language_10031406",
+    "content": "入雅典記"
+  },
+  {
+    "key": "language_10031407",
+    "content": "不確定性"
+  },
+  {
+    "key": "language_10031408",
+    "content": "騎士的美德"
+  },
+  {
+    "key": "language_10031409",
+    "content": "風帆裡"
+  },
+  {
+    "key": "language_10031410",
+    "content": "黑色阿諾"
+  },
+  {
+    "key": "language_10031411",
+    "content": "《實用幾何》"
+  },
+  {
+    "key": "language_10031412",
+    "content": "咕咕，啾！"
+  },
+  {
+    "key": "language_10031413",
+    "content": "神羔羊"
+  },
+  {
+    "key": "language_10031414",
+    "content": "動物寓言"
+  },
+  {
+    "key": "language_10031415",
+    "content": "秩序的黃昏"
+  },
+  {
+    "key": "language_10031416",
+    "content": "教條"
+  },
+  {
+    "key": "language_10031417",
+    "content": "春"
+  },
+  {
+    "key": "language_10031418",
+    "content": "無終點之爭"
+  },
+  {
+    "key": "language_10031419",
+    "content": "貪婪者"
+  },
+  {
+    "key": "language_10031420",
+    "content": "鬣狗的凱旋"
+  },
+  {
+    "key": "language_10031421",
+    "content": "樂園"
+  },
+  {
+    "key": "language_10031422",
+    "content": "一場衝突"
+  },
+  {
+    "key": "language_10031423",
+    "content": ""
+  },
+  {
+    "key": "language_10031424",
+    "content": ""
+  },
+  {
+    "key": "language_10031425",
+    "content": ""
+  },
+  {
+    "key": "language_10031426",
+    "content": ""
+  },
+  {
+    "key": "language_10031427",
+    "content": ""
+  },
+  {
+    "key": "language_10031428",
+    "content": ""
+  },
+  {
+    "key": "language_10031429",
+    "content": ""
+  },
+  {
+    "key": "language_10031430",
+    "content": ""
+  },
+  {
+    "key": "language_10031431",
+    "content": ""
+  },
+  {
+    "key": "language_10031432",
+    "content": ""
+  },
+  {
+    "key": "language_10031433",
+    "content": ""
+  },
+  {
+    "key": "language_10031434",
+    "content": ""
+  },
+  {
+    "key": "language_10031435",
+    "content": ""
+  },
+  {
+    "key": "language_10031436",
+    "content": ""
+  },
+  {
+    "key": "language_10031437",
+    "content": ""
+  },
+  {
+    "key": "language_10031438",
+    "content": ""
+  },
+  {
+    "key": "language_10031439",
+    "content": ""
+  },
+  {
+    "key": "language_10031440",
+    "content": ""
+  },
+  {
+    "key": "language_10031441",
+    "content": ""
+  },
+  {
+    "key": "language_10031442",
+    "content": ""
+  },
+  {
+    "key": "language_10031443",
+    "content": ""
+  },
+  {
+    "key": "language_10031444",
+    "content": ""
+  },
+  {
+    "key": "language_10031445",
+    "content": ""
+  },
+  {
+    "key": "language_10031446",
+    "content": ""
+  },
+  {
+    "key": "language_10031447",
+    "content": ""
+  },
+  {
+    "key": "language_10031448",
+    "content": ""
+  },
+  {
+    "key": "language_10031449",
+    "content": ""
+  },
+  {
+    "key": "language_10031450",
+    "content": ""
+  },
+  {
+    "key": "language_10031451",
+    "content": ""
+  },
+  {
+    "key": "language_10031452",
+    "content": ""
+  },
+  {
+    "key": "language_10031453",
+    "content": ""
+  },
+  {
+    "key": "language_10031454",
+    "content": ""
+  },
+  {
+    "key": "language_10031455",
+    "content": ""
+  },
+  {
+    "key": "language_10031456",
+    "content": ""
+  },
+  {
+    "key": "language_10031457",
+    "content": ""
+  },
+  {
+    "key": "language_10031458",
+    "content": ""
+  },
+  {
+    "key": "language_10031459",
+    "content": ""
+  },
+  {
+    "key": "language_10031460",
+    "content": ""
+  },
+  {
+    "key": "language_10031461",
+    "content": ""
+  },
+  {
+    "key": "language_10031462",
+    "content": ""
+  },
+  {
+    "key": "language_10031463",
+    "content": ""
+  },
+  {
+    "key": "language_10031464",
+    "content": ""
+  },
+  {
+    "key": "language_10031465",
+    "content": "舊城邦"
+  },
+  {
+    "key": "language_10031466",
+    "content": "悲劇與生活"
+  },
+  {
+    "key": "language_10031467",
+    "content": "豐腴的，甜美的"
+  },
+  {
+    "key": "language_10031468",
+    "content": "普羅米修斯"
+  },
+  {
+    "key": "language_10031469",
+    "content": "屋頂賽跑"
+  },
+  {
+    "key": "language_10031470",
+    "content": "繆斯所賜予的"
+  },
+  {
+    "key": "language_10031471",
+    "content": "假如你，我的朋友"
+  },
+  {
+    "key": "language_10031472",
+    "content": "《雅典的一日》"
+  },
+  {
+    "key": "language_10031473",
+    "content": "金蘋果頌"
+  },
+  {
+    "key": "language_10031474",
+    "content": "再次光臨"
+  },
+  {
+    "key": "language_10031475",
+    "content": "舊相識"
+  },
+  {
+    "key": "language_10031476",
+    "content": "酒神的賜福"
+  },
+  {
+    "key": "language_10031477",
+    "content": "史詩之外"
+  },
+  {
+    "key": "language_10031478",
+    "content": "“得摩斯”"
+  },
+  {
+    "key": "language_10031479",
+    "content": "影的痕跡"
+  },
+  {
+    "key": "language_10031480",
+    "content": ""
+  },
+  {
+    "key": "language_10031481",
+    "content": ""
+  },
+  {
+    "key": "language_10031482",
+    "content": ""
+  },
+  {
+    "key": "language_10031483",
+    "content": ""
+  },
+  {
+    "key": "language_10031484",
+    "content": ""
+  },
+  {
+    "key": "language_10031485",
+    "content": ""
+  },
+  {
+    "key": "language_10031486",
+    "content": ""
+  },
+  {
+    "key": "language_10031487",
+    "content": ""
+  },
+  {
+    "key": "language_10031488",
+    "content": ""
+  },
+  {
+    "key": "language_10031489",
+    "content": ""
+  },
+  {
+    "key": "language_10031490",
+    "content": ""
+  },
+  {
+    "key": "language_10031491",
+    "content": ""
+  },
+  {
+    "key": "language_10031492",
+    "content": ""
+  },
+  {
+    "key": "language_10031493",
+    "content": "原型剖析3"
+  },
+  {
+    "key": "language_10031494",
+    "content": "聖殿騎士·長官"
+  },
+  {
+    "key": "language_10031495",
+    "content": "聖殿騎士團的長官。\n聽從他的命令，請馬上照辦。"
+  },
+  {
+    "key": "language_10031496",
+    "content": "聖殿騎士·兵卒"
+  },
+  {
+    "key": "language_10031497",
+    "content": "聖殿騎士團的普通士兵。\n看上去他對自己所維護的篤信無疑。"
+  },
+  {
+    "key": "language_10031498",
+    "content": "聖殿騎士·弓兵"
+  },
+  {
+    "key": "language_10031499",
+    "content": "聖殿騎士團的弓兵。\n瞄準、穿透，無出其右。"
+  },
+  {
+    "key": "language_10031500",
+    "content": "聖殿騎士·斧兵"
+  },
+  {
+    "key": "language_10031501",
+    "content": "聖殿騎士團的斧兵。\n有些正義需要訴諸暴力，有些斧頭需要啜飲鮮血。"
+  },
+  {
+    "key": "language_10031502",
+    "content": "李奧納多·達·文西"
+  },
+  {
+    "key": "language_10031503",
+    "content": "李奧納多，還未成為“達·文西”之前。\n不能要求畫家擅長武鬥。"
+  },
+  {
+    "key": "language_10031504",
+    "content": "阿爾貝托神父"
+  },
+  {
+    "key": "language_10031505",
+    "content": "潛藏在無盡崇高的信仰之下，欲望與罪惡竟也有了天然的豁免權。\n以詩、以畫，妄想改變世界，至純者與至惡者同時說。"
+  },
+  {
+    "key": "language_10031506",
+    "content": "古諺中的神跡"
+  },
+  {
+    "key": "language_10031507",
+    "content": "恐懼的名諱"
+  },
+  {
+    "key": "language_10031508",
+    "content": "神秘學金屬類，遺落於雅典，偏愛好鬥者或嗜血者。"
+  },
+  {
+    "key": "language_10031509",
+    "content": "覬覦者"
+  },
+  {
+    "key": "language_10031510",
+    "content": "一位僕從，被血腥蠱惑而來，覬覦死者的遺物。"
+  },
+  {
+    "key": "language_10031511",
+    "content": "蹩腳的“演員”"
+  },
+  {
+    "key": "language_10031512",
+    "content": "領到了劇本的演員。\n大酒神節從不缺乏表演者，他在準備一齣好戲……一切順利的話。"
+  },
+  {
+    "key": "language_10031513",
+    "content": "酒神節信徒"
+  },
+  {
+    "key": "language_10031514",
+    "content": "享受節日的酒神信徒。\n戴歐尼修斯，我們讚頌你之名，願更多人得享你帶來的歡樂。"
+  },
+  {
+    "key": "language_10031515",
+    "content": "“工匠”"
+  },
+  {
+    "key": "language_10031516",
+    "content": "形跡可疑的工匠。\n他們要創造的作品，並不獻給諸神。"
+  },
+  {
+    "key": "language_10031517",
+    "content": "秩序神教士兵"
+  },
+  {
+    "key": "language_10031518",
+    "content": "服從於秩序神教的士兵。\n混沌與秩序都太遙遠，但得摩斯的暴怒十分真實。"
+  },
+  {
+    "key": "language_10031519",
+    "content": "“雅典市民”"
+  },
+  {
+    "key": "language_10031520",
+    "content": "裝扮成雅典市民的士兵，服從於秩序神教。\n以秩序之名，他們將繁華與歡樂變為混亂。"
+  },
+  {
+    "key": "language_10031521",
+    "content": "亞歷克西歐斯"
+  },
+  {
+    "key": "language_10031522",
+    "content": "先知預言中的不祥之子。\n“遮蔽羔羊雙目，得以構建秩序；施以暴戾及恐懼，方才鑄就永恆。”"
+  },
+  {
+    "key": "language_10031523",
+    "content": "“間諜”"
+  },
+  {
+    "key": "language_10031524",
+    "content": "隸屬於秩序神教的間諜，你見過他，你已經忘了他。\n這是一個好間諜的必備素質：一張屬於“雅典”的面孔。在大酒神節熙熙攘攘的人群中，相似的面孔正在沉醉、放歌、表演戲劇。能夠被記住的只有“這是一個普通的雅典人”。"
+  },
+  {
+    "key": "language_10031525",
+    "content": "“士兵”"
+  },
+  {
+    "key": "language_10031526",
+    "content": "隸屬於秩序神教的士兵，青銅面孔比血肉的面孔更好用。\n他或她曾經擁有名字與故鄉，但是現在，這已無關緊要。為理想與秩序，為財富與權力，刀刃才是最真實的東西。一把刀折斷，總會有下一把刀來代替。"
+  },
+  {
+    "key": "language_10031527",
+    "content": "“古老智慧”克利俄"
+  },
+  {
+    "key": "language_10031528",
+    "content": "線索顯示，這是一位雅典的秩序神教智者。\n人們喜歡和她交談，樂於聆聽她的建議。畢竟，年齡代表著智慧，不是嗎？當然，得摩斯並不這麼認為，而這位年長者也並不喜歡那位年輕的天命之子。儘管恐懼會讓一切服從。"
+  },
+  {
+    "key": "language_10031529",
+    "content": "“本地人”"
+  },
+  {
+    "key": "language_10031530",
+    "content": "一位凱法隆尼亞的秩序神教成員。\n暴力是最簡單的語言，任誰都能讀懂它。在那位馴鷹人的第二故鄉，許多人都想成為葡萄園與港口的實際控制者。這位熟悉海洋的幫派首領似乎得到了許多支持——來自本地民眾甚至動物，但不僅限於此。"
+  },
+  {
+    "key": "language_10031531",
+    "content": "“利螯”"
+  },
+  {
+    "key": "language_10031532",
+    "content": "一位凱法隆尼亞的秩序神教成員。\n伊薩卡的宮殿並非第一次被佔據。同古時一樣，這支小隊目的單純，他們渴望發掘史詩英雄的失落財富，順便搶劫一些過路人。他們的首領馴養了一些揮舞大螯的幫手，由此得到了形象的綽號。有人對他們的發掘成果很好奇，用一位詩人的話來說：一位並無新意的幕後黑手。"
+  },
+  {
+    "key": "language_10031533",
+    "content": "“信使”"
+  },
+  {
+    "key": "language_10031534",
+    "content": "一位德爾菲的秩序神教成員。\n一直以來，這位皮媞亞都忠實地傳達著神諭。偶爾對神的話語做一點小小的、無傷大雅的改動，那有什麼要緊？當然，這都是為了秩序。她當然是一位可信又可敬的皮媞亞。"
+  },
+  {
+    "key": "language_10031535",
+    "content": "“鑒賞家”"
+  },
+  {
+    "key": "language_10031536",
+    "content": "一位德爾菲的秩序神教成員。\n這位常客對德爾菲的戲劇表演如此熱情，他慷慨地贊助戲服與道具，組織排練，發掘演員，對每位青年演員不吝鼓勵。作為交換，劇場成了他眼睛與耳朵的延伸。"
+  },
+  {
+    "key": "language_10031537",
+    "content": "“隱匿者”科斯塔斯"
+  },
+  {
+    "key": "language_10031538",
+    "content": "線索顯示，這是一位德爾菲的秩序神教智者。\n控制從來不僅僅關乎暴力。借由一些忠實下屬的幫助，科斯塔斯瞭解這片為神所愛的土地的一切風吹草動。一些傳言對他的外型作出了誇張的描述。當他的眼目被一一剪除，科斯塔斯的短暫統治即將迎來末日。"
+  },
+  {
+    "key": "language_10031539",
+    "content": "“頑石”"
+  },
+  {
+    "key": "language_10031540",
+    "content": "一位斯巴達的秩序神教成員。\n他是你容易想像的那種僱傭兵，直來直去、從不憐憫、以戰鬥為樂。秩序神教向他遞來橄欖枝後，他發現生活中有了更多樂趣。現在，你可以用你們都懂的那種語言同他“談一談”。"
+  },
+  {
+    "key": "language_10031541",
+    "content": "“讚美者”"
+  },
+  {
+    "key": "language_10031542",
+    "content": "一位斯巴達的秩序神教成員。\n這位斯巴達人在本地頗有聲望：他對軍事相當有見解，對公共事業也十分熱心。不過，在某些方面，他似乎不能容忍別人的意見。比如……一尊英雄雕塑需要如何創作。"
+  },
+  {
+    "key": "language_10031543",
+    "content": "“贊助人”"
+  },
+  {
+    "key": "language_10031544",
+    "content": "一位奧林匹亞的秩序神教成員。\n來到奧林匹亞、立志成為運動員的人們歡迎這位贊助人。他搜羅有潛力的年輕人，訓練他們為秩序神教所用。最近，他試圖雇傭一位剛來此地的豎琴手，恰好，這位豎琴手非常、非常善於閱讀……"
+  },
+  {
+    "key": "language_10031545",
+    "content": "“聲音洪亮者”阿勒克托"
+  },
+  {
+    "key": "language_10031546",
+    "content": "線索顯示，這是一位奧林匹亞的秩序神教智者。\n阿勒克托具備領袖應有的號召力——至少是領袖應有的大嗓門。這令他在每次公共演講中都有如神助。他曾經是一位運動會冠軍，之後，他同秩序神教一拍即合。"
+  },
+  {
+    "key": "language_10031547",
+    "content": "“不可撼動者”"
+  },
+  {
+    "key": "language_10031548",
+    "content": "線索顯示，這是一位秩序神教聖者。\n每段英雄傳奇臨近高潮時，都應當有位這樣的人物：冷酷、強大、驕傲，帶來那場你期待已久的戰鬥。這位秩序神教聖者對自己的實力深信不疑，儘管你已經剪除了他的所有羽翼。所以，現在去戰勝他吧——你的旅程當然不會止步於此。"
+  },
+  {
+    "key": "language_10031549",
+    "content": "斯庫拉"
+  },
+  {
+    "key": "language_10031550",
+    "content": "出沒於凱法隆尼亞的大型神秘學生物。\n海生，形似少女，間歇性發出類似人聲的高頻聲波，但據當地塞壬稱，其並不具備交流能力，僅憑藉掠食本能行動。\n不建議窺探她的裙擺。\n注：其出現或為觀測時的冗餘數據所致，需長期觀察、收集數據。"
+  },
+  {
+    "key": "language_10031551",
+    "content": "癸干忒斯"
+  },
+  {
+    "key": "language_10031552",
+    "content": "出沒於德爾菲的大型神秘學生物。\n陸生，體型巨大，行動遲緩，食性廣泛，似仍處於成長期。同地脈能量極其親和，與地脈保持聯繫時，具有較強自我修復能力。\n所以，來聽聽神話的建議。\n注：其出現或為觀測時的冗餘數據所致，需長期觀察、收集數據。"
+  },
+  {
+    "key": "language_10031553",
+    "content": "蠍尾獅"
+  },
+  {
+    "key": "language_10031554",
+    "content": "出沒於奧林匹亞的巨型神秘學生物。\n陸生，面部類似人面，有多條肢體。周身攜帶危險毒液，以尾部毒液濃度最高。難以歸入現有的神秘學動物分類體系。\n小心那些藍色，黏稠、流動的藍色。\n注：其出現或為觀測時的冗餘數據所致，需長期觀察、收集數據。"
+  },
+  {
+    "key": "language_10031555",
+    "content": "“異教徒”"
+  },
+  {
+    "key": "language_10031556",
+    "content": "她在典籍中徜徉，她汲取智慧的靈光。如今終於領悟，她應崇奉的知識另有所在。"
+  },
+  {
+    "key": "language_10031557",
+    "content": "“大理石”"
+  },
+  {
+    "key": "language_10031558",
+    "content": "他的雕塑作品正如他的品格——堅硬，忠誠，一塵不染。"
+  },
+  {
+    "key": "language_10031559",
+    "content": "“真理”"
+  },
+  {
+    "key": "language_10031560",
+    "content": "“真理”從不撒謊，質疑者的喉嚨總是比他們的理論更早被割開。"
+  },
+  {
+    "key": "language_10031561",
+    "content": "“蝠”"
+  },
+  {
+    "key": "language_10031562",
+    "content": "當夜幕降臨，人們會聽到翅膀劃破天空的聲響——那不是普通的蝙蝠，而是他的影子。"
+  },
+  {
+    "key": "language_10031563",
+    "content": "傳聞她是梅杜莎的後裔，凡直視她雙眼者會先看見自己的死亡。"
+  },
+  {
+    "key": "language_10031564",
+    "content": "“溺水者”"
+  },
+  {
+    "key": "language_10031565",
+    "content": "她的鎖鏈上掛著珊瑚與船骸，呼吸間帶著鹹腥的腐朽。"
+  },
+  {
+    "key": "language_10031566",
+    "content": "“巨嘴”"
+  },
+  {
+    "key": "language_10031567",
+    "content": "他的戰吼能震碎陶罐，而他的胃口……呵，最好別問那些俘虜去了哪裡。"
+  },
+  {
+    "key": "language_10031568",
+    "content": "“哨兵”"
+  },
+  {
+    "key": "language_10031569",
+    "content": "他從不睡覺。不，不是比喻。水手們發誓曾在風暴中看見他屹立船首，如礁石般紋絲不動。"
+  },
+  {
+    "key": "language_10031570",
+    "content": "“瘟疫”"
+  },
+  {
+    "key": "language_10031571",
+    "content": "有人說他幼時被扔進屍坑卻爬了出來，更多人相信他主動擁抱了腐敗之神。"
+  },
+  {
+    "key": "language_10031572",
+    "content": "克勞迪婭財務室"
+  },
+  {
+    "key": "language_10031573",
+    "content": ""
+  },
+  {
+    "key": "language_10031574",
+    "content": "遠眺穹頂之日"
+  },
+  {
+    "key": "language_10031575",
+    "content": "史詩的破曉"
+  },
+  {
+    "key": "language_10031576",
+    "content": "藏於日光之外"
+  },
+  {
+    "key": "language_10031577",
+    "content": "信使“請”留步"
+  },
+  {
+    "key": "language_10031578",
+    "content": "日落翡冷翠"
+  },
+  {
+    "key": "language_10031579",
+    "content": "酒神吟遊日"
+  },
+  {
+    "key": "language_10031580",
+    "content": ""
+  },
+  {
+    "key": "language_10031581",
+    "content": ""
+  },
+  {
+    "key": "language_10031582",
+    "content": "“強於阿瑞斯。”"
+  },
+  {
+    "key": "language_10031583",
+    "content": "“勝過阿波羅！”"
+  },
+  {
+    "key": "language_10031584",
+    "content": "恐懼燒灼之日"
+  },
+  {
+    "key": "language_10031585",
+    "content": "先覺"
+  },
+  {
+    "key": "language_10031586",
+    "content": "血，抑或哀鳴"
+  },
+  {
+    "key": "language_10031587",
+    "content": "血，抑或哀鳴Ⅱ"
+  },
+  {
+    "key": "language_10031588",
+    "content": "血，抑或哀鳴Ⅲ"
+  },
+  {
+    "key": "language_10031589",
+    "content": ""
+  },
+  {
+    "key": "language_10031590",
+    "content": ""
+  },
+  {
+    "key": "language_10031591",
+    "content": ""
+  },
+  {
+    "key": "language_10031592",
+    "content": ""
+  },
+  {
+    "key": "language_10031593",
+    "content": ""
+  },
+  {
+    "key": "language_10031594",
+    "content": ""
+  },
+  {
+    "key": "language_10031595",
+    "content": ""
+  },
+  {
+    "key": "language_10031596",
+    "content": ""
+  },
+  {
+    "key": "language_10031597",
+    "content": ""
+  },
+  {
+    "key": "language_10031598",
+    "content": "長矛所向"
+  },
+  {
+    "key": "language_10031599",
+    "content": "屠戮競技"
+  },
+  {
+    "key": "language_10031600",
+    "content": "死鬥盛宴"
+  },
+  {
+    "key": "language_10031601",
+    "content": "盛宴尾聲"
+  },
+  {
+    "key": "language_10031602",
+    "content": "回以死志"
+  },
+  {
+    "key": "language_10031603",
+    "content": "疼痛誘惑"
+  },
+  {
+    "key": "language_10031604",
+    "content": "沐浴恐懼"
+  },
+  {
+    "key": "language_10031605",
+    "content": "復甦輝光Ⅱ"
+  },
+  {
+    "key": "language_10031606",
+    "content": "回以死志Ⅱ"
+  },
+  {
+    "key": "language_10031607",
+    "content": "疼痛誘惑Ⅱ"
+  },
+  {
+    "key": "language_10031608",
+    "content": "沐浴恐懼Ⅱ"
+  },
+  {
+    "key": "language_10031609",
+    "content": "刺穿"
+  },
+  {
+    "key": "language_10031610",
+    "content": "暗算"
+  },
+  {
+    "key": "language_10031611",
+    "content": "神教技藝"
+  },
+  {
+    "key": "language_10031612",
+    "content": "時刻警戒"
+  },
+  {
+    "key": "language_10031613",
+    "content": "脆弱意志"
+  },
+  {
+    "key": "language_10031614",
+    "content": "緊急打磨"
+  },
+  {
+    "key": "language_10031615",
+    "content": "拙劣揮砍"
+  },
+  {
+    "key": "language_10031616",
+    "content": "英勇的銼刀"
+  },
+  {
+    "key": "language_10031617",
+    "content": "蹩腳技藝"
+  },
+  {
+    "key": "language_10031618",
+    "content": "手舞足蹈"
+  },
+  {
+    "key": "language_10031619",
+    "content": "開懷暢飲的邀約"
+  },
+  {
+    "key": "language_10031620",
+    "content": "慶典餘興"
+  },
+  {
+    "key": "language_10031621",
+    "content": "“雕刻”"
+  },
+  {
+    "key": "language_10031622",
+    "content": "“塑形”"
+  },
+  {
+    "key": "language_10031623",
+    "content": "秩序的切削"
+  },
+  {
+    "key": "language_10031624",
+    "content": "秩序同一"
+  },
+  {
+    "key": "language_10031625",
+    "content": "為了秩序"
+  },
+  {
+    "key": "language_10031626",
+    "content": "戳刺"
+  },
+  {
+    "key": "language_10031627",
+    "content": "突擊"
+  },
+  {
+    "key": "language_10031628",
+    "content": "秩序的征伐"
+  },
+  {
+    "key": "language_10031629",
+    "content": "協同經驗"
+  },
+  {
+    "key": "language_10031630",
+    "content": "眾目睽睽"
+  },
+  {
+    "key": "language_10031631",
+    "content": "衝撞"
+  },
+  {
+    "key": "language_10031632",
+    "content": "踐踏"
+  },
+  {
+    "key": "language_10031633",
+    "content": "秩序的偽裝"
+  },
+  {
+    "key": "language_10031634",
+    "content": "共同偽裝"
+  },
+  {
+    "key": "language_10031635",
+    "content": "機敏防禦"
+  },
+  {
+    "key": "language_10031636",
+    "content": "劍技吻痕"
+  },
+  {
+    "key": "language_10031637",
+    "content": "徒留灰燼"
+  },
+  {
+    "key": "language_10031638",
+    "content": "命定的利刃"
+  },
+  {
+    "key": "language_10031639",
+    "content": "得摩斯之名"
+  },
+  {
+    "key": "language_10031640",
+    "content": "血親與血仇"
+  },
+  {
+    "key": "language_10031641",
+    "content": "淋漓盡致"
+  },
+  {
+    "key": "language_10031642",
+    "content": "恐懼為何物"
+  },
+  {
+    "key": "language_10031643",
+    "content": "以痛回禮"
+  },
+  {
+    "key": "language_10031644",
+    "content": "盛宴前兆"
+  },
+  {
+    "key": "language_10031645",
+    "content": "垂死之志"
+  },
+  {
+    "key": "language_10031646",
+    "content": "目擊值"
+  },
+  {
+    "key": "language_10031647",
+    "content": "捕食欲望"
+  },
+  {
+    "key": "language_10031648",
+    "content": "野外生存"
+  },
+  {
+    "key": "language_10031649",
+    "content": "捕獵本能"
+  },
+  {
+    "key": "language_10031650",
+    "content": "團隊行動Ⅱ"
+  },
+  {
+    "key": "language_10031651",
+    "content": "警惕Ⅰ"
+  },
+  {
+    "key": "language_10031652",
+    "content": "挑戰者Ⅰ"
+  },
+  {
+    "key": "language_10031653",
+    "content": "挑戰者Ⅱ"
+  },
+  {
+    "key": "language_10031654",
+    "content": "為了秩序Ⅱ"
+  },
+  {
+    "key": "language_10031655",
+    "content": "“古老智慧”"
+  },
+  {
+    "key": "language_10031656",
+    "content": "甲殼生物Ⅱ"
+  },
+  {
+    "key": "language_10031657",
+    "content": "“隱匿者”"
+  },
+  {
+    "key": "language_10031658",
+    "content": "岩石反震"
+  },
+  {
+    "key": "language_10031659",
+    "content": "雕塑創作"
+  },
+  {
+    "key": "language_10031660",
+    "content": "逐步求解"
+  },
+  {
+    "key": "language_10031661",
+    "content": "“聲音洪亮者”"
+  },
+  {
+    "key": "language_10031662",
+    "content": "輕盈執劍"
+  },
+  {
+    "key": "language_10031663",
+    "content": "磁體適應"
+  },
+  {
+    "key": "language_10031664",
+    "content": "電磁增強"
+  },
+  {
+    "key": "language_10031665",
+    "content": "技藝淬煉"
+  },
+  {
+    "key": "language_10031666",
+    "content": "警惕姿態"
+  },
+  {
+    "key": "language_10031667",
+    "content": "灼熱氣流"
+  },
+  {
+    "key": "language_10031668",
+    "content": "荊棘中解脫"
+  },
+  {
+    "key": "language_10031669",
+    "content": "畏懼光芒"
+  },
+  {
+    "key": "language_10031670",
+    "content": "瘋癲Ⅱ"
+  },
+  {
+    "key": "language_10031671",
+    "content": "理性殘存"
+  },
+  {
+    "key": "language_10031672",
+    "content": "意識碎片"
+  },
+  {
+    "key": "language_10031673",
+    "content": "怪談再現"
+  },
+  {
+    "key": "language_10031674",
+    "content": "怪談再現Ⅱ"
+  },
+  {
+    "key": "language_10031675",
+    "content": "黏質脫落"
+  },
+  {
+    "key": "language_10031676",
+    "content": "膠質溶解"
+  },
+  {
+    "key": "language_10031677",
+    "content": "藥物"
+  },
+  {
+    "key": "language_10031678",
+    "content": "飛刀"
+  },
+  {
+    "key": "language_10031679",
+    "content": "毒刃"
+  },
+  {
+    "key": "language_10031680",
+    "content": ""
+  },
+  {
+    "key": "language_10031681",
+    "content": ""
+  },
+  {
+    "key": "language_10031682",
+    "content": ""
+  },
+  {
+    "key": "language_10031683",
+    "content": ""
+  },
+  {
+    "key": "language_10031684",
+    "content": ""
+  },
+  {
+    "key": "language_10031685",
+    "content": ""
+  },
+  {
+    "key": "language_10031686",
+    "content": ""
+  },
+  {
+    "key": "language_10031687",
+    "content": "行於黑暗"
+  },
+  {
+    "key": "language_10031688",
+    "content": "侍奉光明"
+  },
+  {
+    "key": "language_10031689",
+    "content": "信仰烙下之時"
+  },
+  {
+    "key": "language_10031690",
+    "content": "刺客三誡"
+  },
+  {
+    "key": "language_10031691",
+    "content": "刺客三誡Ⅱ"
+  },
+  {
+    "key": "language_10031692",
+    "content": "刺客三誡Ⅲ"
+  },
+  {
+    "key": "language_10031708",
+    "content": "羈絆2"
+  },
+  {
+    "key": "language_10031709",
+    "content": "羈絆4"
+  },
+  {
+    "key": "language_10031710",
+    "content": "埃齊歐的羅馬兜帽"
+  },
+  {
+    "key": "language_10031711",
+    "content": "埃齊歐的羅馬臂甲"
+  },
+  {
+    "key": "language_10031712",
+    "content": "埃齊歐的羅馬長袍"
+  },
+  {
+    "key": "language_10031713",
+    "content": "埃齊歐的羅馬腰纏"
+  },
+  {
+    "key": "language_10031714",
+    "content": "埃齊歐的羅馬之靴"
+  },
+  {
+    "key": "language_10031715",
+    "content": "阿伽門農的頭盔"
+  },
+  {
+    "key": "language_10031716",
+    "content": "阿伽門農的鐵手套"
+  },
+  {
+    "key": "language_10031717",
+    "content": "阿伽門農的身體盔甲"
+  },
+  {
+    "key": "language_10031718",
+    "content": "阿伽門農的束腰帶"
+  },
+  {
+    "key": "language_10031719",
+    "content": "阿伽門農之靴"
+  },
+  {
+    "key": "language_10031720",
+    "content": "刺客大師兜帽"
+  },
+  {
+    "key": "language_10031721",
+    "content": "刺客大師長袍"
+  },
+  {
+    "key": "language_10031722",
+    "content": "刺客大師靴子"
+  },
+  {
+    "key": "language_10031723",
+    "content": "刺客大師兜帽 技能"
+  },
+  {
+    "key": "language_10031724",
+    "content": "刺客大師長袍 技能"
+  },
+  {
+    "key": "language_10031725",
+    "content": "刺客大師靴子 技能"
+  },
+  {
+    "key": "language_10031726",
+    "content": "戴歐尼修斯的豹皮"
+  },
+  {
+    "key": "language_10031727",
+    "content": "儀式長袍"
+  },
+  {
+    "key": "language_10031728",
+    "content": "爬藤脛甲"
+  },
+  {
+    "key": "language_10031729",
+    "content": "戴歐尼修斯的豹皮 技能"
+  },
+  {
+    "key": "language_10031730",
+    "content": "儀式長袍 技能"
+  },
+  {
+    "key": "language_10031731",
+    "content": "爬藤脛甲 技能"
+  },
+  {
+    "key": "language_10031732",
+    "content": "半神的護胸甲"
+  },
+  {
+    "key": "language_10031733",
+    "content": "半神的腰帶"
+  },
+  {
+    "key": "language_10031734",
+    "content": "半神的靴子"
+  },
+  {
+    "key": "language_10031735",
+    "content": "半神的腕甲"
+  },
+  {
+    "key": "language_10031736",
+    "content": "亞馬遜人的頭冠"
+  },
+  {
+    "key": "language_10031737",
+    "content": "亞馬遜腕甲"
+  },
+  {
+    "key": "language_10031738",
+    "content": "亞馬遜人服裝"
+  },
+  {
+    "key": "language_10031739",
+    "content": "亞馬遜的腿甲"
+  },
+  {
+    "key": "language_10031740",
+    "content": "羈絆6"
+  },
+  {
+    "key": "language_10031741",
+    "content": "毒蛇的兜帽"
+  },
+  {
+    "key": "language_10031742",
+    "content": "毒液手套"
+  },
+  {
+    "key": "language_10031743",
+    "content": "覆鱗護身甲"
+  },
+  {
+    "key": "language_10031744",
+    "content": "蛇行腰帶"
+  },
+  {
+    "key": "language_10031745",
+    "content": "有毒的靴子"
+  },
+  {
+    "key": "language_10031746",
+    "content": "荷米斯的雙蛇杖"
+  },
+  {
+    "key": "language_10031747",
+    "content": "昆蟲"
+  },
+  {
+    "key": "language_10031748",
+    "content": "大盾甲"
+  },
+  {
+    "key": "language_10031749",
+    "content": "兜蟲"
+  },
+  {
+    "key": "language_10031750",
+    "content": "工人的飾裙"
+  },
+  {
+    "key": "language_10031751",
+    "content": "外骨骼"
+  },
+  {
+    "key": "language_10031752",
+    "content": "被詛咒的蛇髮女妖劍"
+  },
+  {
+    "key": "language_10031753",
+    "content": "競技場鬥士的頭盔"
+  },
+  {
+    "key": "language_10031754",
+    "content": "競技場鬥士鐵手套"
+  },
+  {
+    "key": "language_10031755",
+    "content": "競技場鬥士的盔甲"
+  },
+  {
+    "key": "language_10031756",
+    "content": "競技場鬥士的束腰帶"
+  },
+  {
+    "key": "language_10031757",
+    "content": "競技場鬥士的靴子"
+  },
+  {
+    "key": "language_10031758",
+    "content": "米諾陶洛斯的雙頭斧"
+  },
+  {
+    "key": "language_10031759",
+    "content": "波瑟芬妮的頭盔"
+  },
+  {
+    "key": "language_10031760",
+    "content": "黑卡蒂的黃金手鐲"
+  },
+  {
+    "key": "language_10031761",
+    "content": "常春花盔甲"
+  },
+  {
+    "key": "language_10031762",
+    "content": "往日腰帶"
+  },
+  {
+    "key": "language_10031763",
+    "content": "荷米斯脛甲"
+  },
+  {
+    "key": "language_10031764",
+    "content": "提堤俄斯的狂怒"
+  },
+  {
+    "key": "language_10031765",
+    "content": "珀伽索斯之峰"
+  },
+  {
+    "key": "language_10031766",
+    "content": "羽飾腕甲"
+  },
+  {
+    "key": "language_10031767",
+    "content": "防禦羽衣"
+  },
+  {
+    "key": "language_10031768",
+    "content": "珀伽索斯的擁抱"
+  },
+  {
+    "key": "language_10031769",
+    "content": "有翼的守護者脛甲"
+  },
+  {
+    "key": "language_10031770",
+    "content": "尼可拉歐斯的劍"
+  },
+  {
+    "key": "language_10031771",
+    "content": "耀眼葉冠"
+  },
+  {
+    "key": "language_10031772",
+    "content": "耀眼腕甲"
+  },
+  {
+    "key": "language_10031773",
+    "content": "耀眼胸甲"
+  },
+  {
+    "key": "language_10031774",
+    "content": "耀眼腰帶"
+  },
+  {
+    "key": "language_10031775",
+    "content": "耀眼脛甲"
+  },
+  {
+    "key": "language_10031776",
+    "content": "堤豐的斧頭"
+  },
+  {
+    "key": "language_10031777",
+    "content": "雅典戰爭英雄兜帽"
+  },
+  {
+    "key": "language_10031778",
+    "content": "雅典戰爭英雄兜帽 技能"
+  },
+  {
+    "key": "language_10031779",
+    "content": "雅典戰爭英雄盔甲"
+  },
+  {
+    "key": "language_10031780",
+    "content": "雅典戰爭英雄盔甲 技能"
+  },
+  {
+    "key": "language_10031781",
+    "content": "雅典戰爭英雄靴"
+  },
+  {
+    "key": "language_10031782",
+    "content": "雅典戰爭英雄鐵手套"
+  },
+  {
+    "key": "language_10031783",
+    "content": "帕里斯之弓"
+  },
+  {
+    "key": "language_10031784",
+    "content": "帕里斯之弓 技能"
+  },
+  {
+    "key": "language_10031785",
+    "content": "珀爾修斯頭冠"
+  },
+  {
+    "key": "language_10031786",
+    "content": "忒修斯的腕甲"
+  },
+  {
+    "key": "language_10031787",
+    "content": "伊阿宋的金羊毛"
+  },
+  {
+    "key": "language_10031788",
+    "content": "伊阿宋的金羊毛 技能"
+  },
+  {
+    "key": "language_10031789",
+    "content": "希波呂忒的腰帶"
+  },
+  {
+    "key": "language_10031790",
+    "content": "普羅米修斯的短彎刀"
+  },
+  {
+    "key": "language_10031791",
+    "content": "長生軍鐵手套"
+  },
+  {
+    "key": "language_10031792",
+    "content": "長生軍的盔甲"
+  },
+  {
+    "key": "language_10031793",
+    "content": "長生軍的束腰帶"
+  },
+  {
+    "key": "language_10031794",
+    "content": "長生軍之靴"
+  },
+  {
+    "key": "language_10031795",
+    "content": "涅墨亞之爪"
+  },
+  {
+    "key": "language_10031796",
+    "content": "獵人的踏靴"
+  },
+  {
+    "key": "language_10031797",
+    "content": "勇者的腕甲"
+  },
+  {
+    "key": "language_10031798",
+    "content": "森林之王"
+  },
+  {
+    "key": "language_10031799",
+    "content": "獅之羅網"
+  },
+  {
+    "key": "language_10031800",
+    "content": "潘朵拉的科庇斯彎刀"
+  },
+  {
+    "key": "language_10031801",
+    "content": "電擊Ⅰ"
+  },
+  {
+    "key": "language_10031802",
+    "content": "電擊Ⅱ"
+  },
+  {
+    "key": "language_10031803",
+    "content": "電擊Ⅲ"
+  },
+  {
+    "key": "language_10031804",
+    "content": "閃電風暴Ⅰ"
+  },
+  {
+    "key": "language_10031805",
+    "content": "閃電風暴Ⅱ"
+  },
+  {
+    "key": "language_10031806",
+    "content": "閃電風暴Ⅲ"
+  },
+  {
+    "key": "language_10031807",
+    "content": "殞落者的頭盔"
+  },
+  {
+    "key": "language_10031808",
+    "content": "殞落者的鐵手套"
+  },
+  {
+    "key": "language_10031809",
+    "content": "殞落者的胸甲"
+  },
+  {
+    "key": "language_10031810",
+    "content": "殞落者的束腰帶"
+  },
+  {
+    "key": "language_10031811",
+    "content": "被詛咒的阿基里斯之矛"
+  },
+  {
+    "key": "language_10031812",
+    "content": "判官的頭盔"
+  },
+  {
+    "key": "language_10031813",
+    "content": "判官的腕甲"
+  },
+  {
+    "key": "language_10031814",
+    "content": "判官的胸甲"
+  },
+  {
+    "key": "language_10031815",
+    "content": "判官的腰帶"
+  },
+  {
+    "key": "language_10031816",
+    "content": "判官手杖"
+  },
+  {
+    "key": "language_10031817",
+    "content": "反擊藝術"
+  },
+  {
+    "key": "language_10031818",
+    "content": "袖中之鋒"
+  },
+  {
+    "key": "language_10031819",
+    "content": "爆發號令"
+  },
+  {
+    "key": "language_10031820",
+    "content": "行於暗影"
+  },
+  {
+    "key": "language_10031821",
+    "content": "上半大規則"
+  },
+  {
+    "key": "language_10031822",
+    "content": "下半大規則"
+  },
+  {
+    "key": "language_10031823",
+    "content": "長官所指"
+  },
+  {
+    "key": "language_10031824",
+    "content": "長官所向"
+  },
+  {
+    "key": "language_10031825",
+    "content": "操縱者的鎮壓"
+  },
+  {
+    "key": "language_10031826",
+    "content": "列邦之中"
+  },
+  {
+    "key": "language_10031827",
+    "content": "盟誓"
+  },
+  {
+    "key": "language_10031828",
+    "content": "服從"
+  },
+  {
+    "key": "language_10031829",
+    "content": "守序"
+  },
+  {
+    "key": "language_10031830",
+    "content": "操縱者的號令"
+  },
+  {
+    "key": "language_10031831",
+    "content": "堅守"
+  },
+  {
+    "key": "language_10031832",
+    "content": "鎖定"
+  },
+  {
+    "key": "language_10031833",
+    "content": "操縱者的盯梢"
+  },
+  {
+    "key": "language_10031834",
+    "content": "瞄準"
+  },
+  {
+    "key": "language_10031835",
+    "content": "捍衛"
+  },
+  {
+    "key": "language_10031836",
+    "content": "警戒"
+  },
+  {
+    "key": "language_10031837",
+    "content": "操縱者的審判"
+  },
+  {
+    "key": "language_10031838",
+    "content": "聖職特權"
+  },
+  {
+    "key": "language_10031839",
+    "content": "信仰的協同"
+  },
+  {
+    "key": "language_10031840",
+    "content": "思索者"
+  },
+  {
+    "key": "language_10031841",
+    "content": "創造奇想"
+  },
+  {
+    "key": "language_10031842",
+    "content": "與創造者共譜"
+  },
+  {
+    "key": "language_10031843",
+    "content": "沉思縫隙"
+  },
+  {
+    "key": "language_10031844",
+    "content": "罪業"
+  },
+  {
+    "key": "language_10031845",
+    "content": "福祉"
+  },
+  {
+    "key": "language_10031846",
+    "content": "神跡在上"
+  },
+  {
+    "key": "language_10031847",
+    "content": "顯靈於眾人"
+  },
+  {
+    "key": "language_10031848",
+    "content": "庇於祂懷中"
+  },
+  {
+    "key": "language_10031849",
+    "content": "罪孽深重"
+  },
+  {
+    "key": "language_10031850",
+    "content": "福祉恩賜"
+  },
+  {
+    "key": "language_10031851",
+    "content": "神跡的盡頭"
+  },
+  {
+    "key": "language_10031852",
+    "content": "本相"
+  },
+  {
+    "key": "language_10031853",
+    "content": "崇奉者之血"
+  },
+  {
+    "key": "language_10031854",
+    "content": "致幻懺悔"
+  },
+  {
+    "key": "language_10031855",
+    "content": "福音室"
+  },
+  {
+    "key": "language_10031856",
+    "content": "信徒之獻"
+  },
+  {
+    "key": "language_10031857",
+    "content": "讚頌"
+  },
+  {
+    "key": "language_10031858",
+    "content": "來世福音"
+  },
+  {
+    "key": "language_10031859",
+    "content": "讚頌Ⅱ"
+  },
+  {
+    "key": "language_10031860",
+    "content": "來世福音Ⅱ"
+  },
+  {
+    "key": "language_10031861",
+    "content": "信徒之獻Ⅱ"
+  },
+  {
+    "key": "language_10031862",
+    "content": "單體攻擊，造成200%現實創傷；使自身腎上腺素+1"
+  },
+  {
+    "key": "language_10031863",
+    "content": "單體攻擊，造成300%現實創傷；使自身腎上腺素+2"
+  },
+  {
+    "key": "language_10031864",
+    "content": "單體攻擊，造成500%現實創傷；使自身腎上腺素+4"
+  },
+  {
+    "key": "language_10031865",
+    "content": "群體攻擊，對2名敵人造成120%現實創傷；暴擊時，使自身腎上腺素+1"
+  },
+  {
+    "key": "language_10031866",
+    "content": "群體攻擊，對2名敵人造成180%現實創傷；暴擊時，使自身腎上腺素+2"
+  },
+  {
+    "key": "language_10031867",
+    "content": "群體攻擊，對2名敵人造成300%現實創傷；暴擊時，使自身腎上腺素+4"
+  },
+  {
+    "key": "language_10031868",
+    "content": "群體攻擊，對敵方全體造成400%現實創傷，使自身獲得1層【伊述之血<id:0>】，本次攻擊為1次【刺殺】"
+  },
+  {
+    "key": "language_10031869",
+    "content": "激情點替換為腎上腺素；回合開始時：腎上腺素達到8可以釋放至終的儀式，並清空腎上腺素"
+  },
+  {
+    "key": "language_10031870",
+    "content": "回合開始時，使自身腎上腺素+1"
+  },
+  {
+    "key": "language_10031871",
+    "content": "任意己方攻擊觸發【刺殺】後，使自身腎上腺素+1；\n任意己方攻擊觸發【刺殺】後，若其他友方存在【刺殺】角色，5%機率釋放至終的儀式，每回合最多觸發1次；若其他友方存在卡珊卓，機率提升至10%"
+  },
+  {
+    "key": "language_10031872",
+    "content": "單體攻擊，造成240%現實創傷；使自身腎上腺素+1"
+  },
+  {
+    "key": "language_10031873",
+    "content": "單體攻擊，造成360%現實創傷；使自身腎上腺素+2"
+  },
+  {
+    "key": "language_10031874",
+    "content": "單體攻擊，造成600%現實創傷；使自身腎上腺素+4"
+  },
+  {
+    "key": "language_10031875",
+    "content": "回合開始時，使自身腎上腺素+2"
+  },
+  {
+    "key": "language_10031876",
+    "content": "群體攻擊，對2名敵人造成150%現實創傷；暴擊時，使自身腎上腺素+1"
+  },
+  {
+    "key": "language_10031877",
+    "content": "群體攻擊，對2名敵人造成225%現實創傷；暴擊時，使自身腎上腺素+2"
+  },
+  {
+    "key": "language_10031878",
+    "content": "群體攻擊，對2名敵人造成375%現實創傷；暴擊時，使自身腎上腺素+4"
+  },
+  {
+    "key": "language_10031879",
+    "content": "群體攻擊，對敵方全體造成400%現實創傷，使自身獲得1層【伊述之血<id:4>】，本次攻擊為1次【刺殺】"
+  },
+  {
+    "key": "language_10031880",
+    "content": "群體攻擊，對敵方全體造成500%現實創傷，使自身獲得1層【伊述之血<id:5>】，本次攻擊為1次【刺殺】"
+  },
+  {
+    "key": "language_10031881",
+    "content": ""
+  },
+  {
+    "key": "language_10031882",
+    "content": ""
+  },
+  {
+    "key": "language_10031883",
+    "content": ""
+  },
+  {
+    "key": "language_10031884",
+    "content": ""
+  },
+  {
+    "key": "language_10031885",
+    "content": ""
+  },
+  {
+    "key": "language_10031886",
+    "content": ""
+  },
+  {
+    "key": "language_10031887",
+    "content": ""
+  },
+  {
+    "key": "language_10031888",
+    "content": ""
+  },
+  {
+    "key": "language_10031889",
+    "content": ""
+  },
+  {
+    "key": "language_10031890",
+    "content": ""
+  },
+  {
+    "key": "language_10031891",
+    "content": ""
+  },
+  {
+    "key": "language_10031892",
+    "content": "靈光上限+1；\n回合開始時，若沒有敵方處於【標注<id:1>】狀態，則賦予敵方單體【標注<id:1>】（優先首領目標）；\n回合開始時，若自身靈光大於等於2，則消耗盡可能多的靈光提升自身隨機咒語的階次：1階提升至2階、2階提升至3階分別消耗2、3點靈光，優先提升低階咒語"
+  },
+  {
+    "key": "language_10031893",
+    "content": "靈光上限+1；\n回合開始時，若沒有敵方處於【標注<id:1>】狀態，則賦予敵方單體【標注<id:1>】（優先首領目標）；\n回合開始時，若自身靈光大於等於2，則消耗盡可能多的靈光提升自身隨機咒語的階次：1階提升至2階、2階提升至3階分別消耗2、2點靈光，優先提升低階咒語"
+  },
+  {
+    "key": "language_10031894",
+    "content": "戰鬥開始時，自身靈光+1；\n回合開始時，自身靈光+1；\n戰鬥開始時，己方包括3名或以上的木、靈、智靈感角色時，自身獲得【精讀<id:1>】，當場上角色靈感不滿足條件時，移除【精讀<id:1>】效果"
+  },
+  {
+    "key": "language_10031895",
+    "content": "戰鬥開始時，自身靈光+3；\n回合開始時，自身靈光+1；\n戰鬥開始時，己方包括3名或以上的木、靈、智靈感角色時，自身獲得【精讀<id:1>】，當場上角色靈感不滿足條件時，移除【精讀<id:1>】效果"
+  },
+  {
+    "key": "language_10031896",
+    "content": "戰鬥開始時，自身靈光+3；\n回合開始時，自身靈光+2；\n戰鬥開始時，己方包括3名或以上的木、靈、智靈感角色時，自身獲得【精讀<id:1>】，當場上角色靈感不滿足條件時，移除【精讀<id:1>】效果"
+  },
+  {
+    "key": "language_10031897",
+    "content": "單體攻擊，造成200%精神創傷；消耗2層【閱歷】，額外造成200%精神創傷"
+  },
+  {
+    "key": "language_10031898",
+    "content": "單體攻擊，造成330%精神創傷；消耗2層【閱歷】，額外造成330%精神創傷"
+  },
+  {
+    "key": "language_10031899",
+    "content": "單體攻擊，造成450%精神創傷；本次攻擊穿透率提升30%；消耗2層【閱歷】，額外造成450%精神創傷，穿透率額外提升30%"
+  },
+  {
+    "key": "language_10031900",
+    "content": "單體攻擊，造成230%精神創傷；消耗2層【閱歷】，額外造成230%精神創傷"
+  },
+  {
+    "key": "language_10031901",
+    "content": "單體攻擊，造成380%精神創傷；消耗2層【閱歷】，額外造成380%精神創傷"
+  },
+  {
+    "key": "language_10031902",
+    "content": "單體攻擊，造成520%精神創傷；本次攻擊穿透率提升30%；消耗2層【閱歷】，額外造成520%精神創傷，穿透率額外提升30%"
+  },
+  {
+    "key": "language_10031903",
+    "content": "群體攻擊，對2名敵人造成130%精神創傷；若目標處於【標注<id:1>】狀態下，則額外造成30%精神創傷；消耗2層【閱歷】，額外造成130%精神創傷，若目標處於【標注<id:1>】狀態下，則額外造成90%精神創傷"
+  },
+  {
+    "key": "language_10031904",
+    "content": "群體攻擊，對2名敵人造成200%精神創傷；命中時使其獲得1層【虛弱】；若目標處於【標注<id:1>】狀態下，則額外造成40%精神創傷；消耗2層【閱歷】，額外造成200%精神創傷，若目標處於【標注<id:1>】狀態下，則額外造成120%精神創傷"
+  },
+  {
+    "key": "language_10031905",
+    "content": "群體攻擊，對2名敵人造成300%精神創傷；命中時使其獲得1層【虛弱】；若目標處於【標注<id:1>】狀態下，則額外造成75%精神創傷；消耗2層【閱歷】，額外造成300%精神創傷，若目標處於【標注<id:1>】狀態下，則額外造成225%精神創傷"
+  },
+  {
+    "key": "language_10031906",
+    "content": "群體攻擊，對2名敵人造成160%精神創傷；若目標處於【標注<id:1>】狀態下，則額外造成30%精神創傷；消耗2層【閱歷】，額外造成160%精神創傷，若目標處於【標注<id:1>】狀態下，則額外造成90%精神創傷"
+  },
+  {
+    "key": "language_10031907",
+    "content": "群體攻擊，對2名敵人造成270%精神創傷；命中時使其獲得1層【虛弱】；若目標處於【標注<id:1>】狀態下，則額外造成40%精神創傷；消耗2層【閱歷】，額外造成270%精神創傷，若目標處於【標注<id:1>】狀態下，則額外造成120%精神創傷"
+  },
+  {
+    "key": "language_10031908",
+    "content": "群體攻擊，對2名敵人造成420%精神創傷；命中時使其獲得1層【虛弱】；若目標處於【標注<id:1>】狀態下，則額外造成75%精神創傷；消耗2層【閱歷】，額外造成420%精神創傷，若目標處於【標注<id:1>】狀態下，則額外造成225%精神創傷"
+  },
+  {
+    "key": "language_10031909",
+    "content": "群體攻擊，對敵方全體造成250%精神創傷；若目標處於【標注<id:1>】狀態下，則額外造成200%精神創傷；自身獲得1層【籌備·馬庫斯<id:1>】；使自身靈光+2；消耗2層【閱歷】，額外造成250%精神創傷，若目標處於【標注<id:1>】狀態下，則額外造成600%精神創傷"
+  },
+  {
+    "key": "language_10031910",
+    "content": ""
+  },
+  {
+    "key": "language_10031911",
+    "content": ""
+  },
+  {
+    "key": "language_10031912",
+    "content": ""
+  },
+  {
+    "key": "language_10031913",
+    "content": ""
+  },
+  {
+    "key": "language_10031914",
+    "content": "群體增強，驅散己方全體【屬性削弱】【狀態異常】【控制】後，使自身獲得3回合【魯薩爾卡】，同時使己方場上已有的【慷慨之歌<id:1>】轉為【熱忱之歌<id:1>】，並使持續回合數重置"
+  },
+  {
+    "key": "language_10031915",
+    "content": "群體增強，驅散己方全體【屬性削弱】【狀態異常】【控制】後，使自身獲得3回合【魯薩爾卡】，同時使己方場上已有的【慷慨之歌<id:2>】轉為【熱忱之歌<id:2>】，並使持續回合數重置"
+  },
+  {
+    "key": "language_10031916",
+    "content": "群體增強，驅散己方全體【屬性削弱】【狀態異常】【控制】後，使自身獲得3回合【魯薩爾卡】，同時使己方場上已有的【慷慨之歌<id:2>】轉為【熱忱之歌<id:3>】，並使持續回合數重置"
+  },
+  {
+    "key": "language_10031917",
+    "content": "群體增強，驅散己方全體【屬性削弱】【狀態異常】【控制】後，使自身獲得3回合【魯薩爾卡】，同時使己方場上已有的【慷慨之歌<id:3>】轉為【熱忱之歌<id:4>】，並使持續回合數重置"
+  },
+  {
+    "key": "language_10031918",
+    "content": "群體增強，驅散己方全體【屬性削弱】【狀態異常】【控制】後，使自身獲得3回合【魯薩爾卡】，同時使己方場上已有的【慷慨之歌<id:3>】轉為【熱忱之歌<id:5>】，並使持續回合數重置"
+  },
+  {
+    "key": "language_10031919",
+    "content": "群體增強，驅散己方全體【屬性削弱】【狀態異常】【控制】後，使自身獲得4回合【魯薩爾卡】，同時使己方場上已有的【慷慨之歌<id:3>】轉為【熱忱之歌<id:5>】，並使持續回合數重置"
+  },
+  {
+    "key": "language_10031920",
+    "content": "進入戰鬥時，激情+1；其他友方每有1名精神創傷類型角色時，激情額外+1，最多計入2名\n回合開始時若處於【魯薩爾卡】狀態下，獲得1張預備咒語【鼓舞之歌】：使單體目標激情+1，靈光+1；使目標獲得【熱忱之歌<id:1>】；使維拉激情+1（不消耗行動點）"
+  },
+  {
+    "key": "language_10031921",
+    "content": "進入戰鬥時，激情+1；其他友方每有1名精神創傷類型角色時，激情額外+1，最多計入2名\n回合開始時若處於【魯薩爾卡】狀態下，獲得1張預備咒語【鼓舞之歌】：使單體目標激情+1，靈光+1；使目標獲得【熱忱之歌<id:2>】；使維拉激情+1（不消耗行動點）"
+  },
+  {
+    "key": "language_10031922",
+    "content": "進入戰鬥時，激情+1；其他友方每有1名精神創傷類型角色時，激情額外+1，最多計入2名\n回合開始時若處於【魯薩爾卡】狀態下，獲得1張預備咒語【鼓舞之歌】：使單體目標激情+1，靈光+1；使目標獲得【熱忱之歌<id:3>】；使維拉激情+1（不消耗行動點）"
+  },
+  {
+    "key": "language_10031923",
+    "content": "進入戰鬥時，激情+1；其他友方每有1名精神創傷類型角色時，激情額外+1，最多計入2名\n回合開始時若處於【魯薩爾卡】狀態下，獲得1張預備咒語【鼓舞之歌】：使單體目標激情+1，靈光+1；使目標獲得【熱忱之歌<id:4>】；使維拉激情+1（不消耗行動點）"
+  },
+  {
+    "key": "language_10031924",
+    "content": "進入戰鬥時，激情+1；其他友方每有1名精神創傷類型角色時，激情額外+1，最多計入2名\n回合開始時若處於【魯薩爾卡】狀態下，獲得1張預備咒語【鼓舞之歌】：使單體目標激情+1，靈光+1；使目標獲得【熱忱之歌<id:5>】；使維拉激情+1（不消耗行動點）"
+  },
+  {
+    "key": "language_10031925",
+    "content": "使單體目標激情+1，靈光+1；使目標獲得【熱忱之歌】；使維拉激情+1"
+  },
+  {
+    "key": "language_10031926",
+    "content": "單體增強，使目標獲得2回合【慷慨之歌<id:1>】；若自身處於【魯薩爾卡】狀態下，獲得的【慷慨之歌<id:1>】改為【熱忱之歌<id:1>】"
+  },
+  {
+    "key": "language_10031927",
+    "content": "單體增強，使目標獲得2回合【慷慨之歌<id:1>】、1層【爆發力】；若自身處於【魯薩爾卡】狀態下，獲得的【慷慨之歌<id:1>】改為【熱忱之歌<id:1>】"
+  },
+  {
+    "key": "language_10031928",
+    "content": "單體增強，使目標獲得2回合【慷慨之歌<id:1>】、2層【爆發力】；若自身處於【魯薩爾卡】狀態下，獲得的【慷慨之歌<id:1>】改為【熱忱之歌<id:1>】"
+  },
+  {
+    "key": "language_10031929",
+    "content": "單體增強，使目標獲得2回合【慷慨之歌<id:2>】；若自身處於【魯薩爾卡】狀態下，獲得的【慷慨之歌<id:2>】改為【熱忱之歌<id:2>】"
+  },
+  {
+    "key": "language_10031930",
+    "content": "單體增強，使目標獲得2回合【慷慨之歌<id:2>】、1層【爆發力】；若自身處於【魯薩爾卡】狀態下，獲得的【慷慨之歌<id:2>】改為【熱忱之歌<id:2>】"
+  },
+  {
+    "key": "language_10031931",
+    "content": "單體增強，使目標獲得2回合【慷慨之歌<id:2>】、2層【爆發力】；若自身處於【魯薩爾卡】狀態下，獲得的【慷慨之歌<id:2>】改為【熱忱之歌<id:2>】"
+  },
+  {
+    "key": "language_10031932",
+    "content": "單體增強，使目標獲得2回合【慷慨之歌<id:2>】；若自身處於【魯薩爾卡】狀態下，獲得的【慷慨之歌<id:2>】改為【熱忱之歌<id:3>】"
+  },
+  {
+    "key": "language_10031933",
+    "content": "單體增強，使目標獲得2回合【慷慨之歌<id:2>】、1層【爆發力】；若自身處於【魯薩爾卡】狀態下，獲得的【慷慨之歌<id:2>】改為【熱忱之歌<id:3>】"
+  },
+  {
+    "key": "language_10031934",
+    "content": "單體增強，使目標獲得2回合【慷慨之歌<id:2>】、2層【爆發力】；若自身處於【魯薩爾卡】狀態下，獲得的【慷慨之歌<id:2>】改為【熱忱之歌<id:3>】"
+  },
+  {
+    "key": "language_10031935",
+    "content": "單體增強，使目標獲得2回合【慷慨之歌<id:3>】；若自身處於【魯薩爾卡】狀態下，獲得的【慷慨之歌<id:3>】改為【熱忱之歌<id:4>】"
+  },
+  {
+    "key": "language_10031936",
+    "content": "單體增強，使目標獲得2回合【慷慨之歌<id:3>】、1層【爆發力】；若自身處於【魯薩爾卡】狀態下，獲得的【慷慨之歌<id:3>】改為【熱忱之歌<id:4>】"
+  },
+  {
+    "key": "language_10031937",
+    "content": "單體增強，使目標獲得2回合【慷慨之歌<id:3>】、2層【爆發力】；若自身處於【魯薩爾卡】狀態下，獲得的【慷慨之歌<id:3>】改為【熱忱之歌<id:4>】"
+  },
+  {
+    "key": "language_10031938",
+    "content": "單體增強，使目標獲得2回合【慷慨之歌<id:3>】；若自身處於【魯薩爾卡】狀態下，獲得的【慷慨之歌<id:3>】改為【熱忱之歌<id:5>】"
+  },
+  {
+    "key": "language_10031939",
+    "content": "單體增強，使目標獲得2回合【慷慨之歌<id:3>】、1層【爆發力】；若自身處於【魯薩爾卡】狀態下，獲得的【慷慨之歌<id:3>】改為【熱忱之歌<id:5>】"
+  },
+  {
+    "key": "language_10031940",
+    "content": "單體增強，使目標獲得2回合【慷慨之歌<id:3>】、2層【爆發力】；若自身處於【魯薩爾卡】狀態下，獲得的【慷慨之歌<id:3>】改為【熱忱之歌<id:5>】"
+  },
+  {
+    "key": "language_10031941",
+    "content": "免疫【流血】【腐蝕】【中毒】"
+  },
+  {
+    "key": "language_10031942",
+    "content": "進入戰鬥時，獲得【永生之血】；【永生之血】效果增強，回合開始時，消耗己方全體20%當前生命值，若薪血達到10/20/30，消耗相應的【薪血】，使【永生之血】進階"
+  },
+  {
+    "key": "language_10031943",
+    "content": "單體攻擊，失去10%當前生命，造成200%現實創傷；命中時使目標陷入【重傷】狀態1回合；【永生之血】達到2階時，使自身激情+1"
+  },
+  {
+    "key": "language_10031944",
+    "content": "單體攻擊，失去10%當前生命，造成300%現實創傷；命中時使目標陷入【重傷】狀態1回合；【永生之血】達到2階時，使自身激情+1"
+  },
+  {
+    "key": "language_10031945",
+    "content": "單體攻擊，失去10%當前生命，造成500%現實創傷；命中時使目標陷入【重傷】狀態1回合；【永生之血】達到2階時，使自身激情+1"
+  },
+  {
+    "key": "language_10031946",
+    "content": "單體攻擊，失去10%當前生命，造成220%現實創傷；命中時使目標陷入【重傷】狀態1回合；【永生之血】達到2階時，使自身激情+1"
+  },
+  {
+    "key": "language_10031947",
+    "content": "單體攻擊，失去10%當前生命，造成330%現實創傷；命中時使目標陷入【重傷】狀態1回合；【永生之血】達到2階時，使自身激情+1"
+  },
+  {
+    "key": "language_10031948",
+    "content": "單體攻擊，失去10%當前生命，造成550%現實創傷；命中時使目標陷入【重傷】狀態1回合；【永生之血】達到2階時，使自身激情+1"
+  },
+  {
+    "key": "language_10031949",
+    "content": "群體攻擊，失去10%當前生命，對2名敵方造成160%現實創傷；【永生之血】達到2階時，使自身激情+1"
+  },
+  {
+    "key": "language_10031950",
+    "content": "群體攻擊，失去10%當前生命，對2名敵方造成240%現實創傷；【永生之血】達到2階時，使自身激情+1"
+  },
+  {
+    "key": "language_10031951",
+    "content": "群體攻擊，失去10%當前生命，對2名敵方造成400%現實創傷；【永生之血】達到2階時，使自身激情+1"
+  },
+  {
+    "key": "language_10031952",
+    "content": "群體攻擊，失去10%當前生命，對2名敵方造成180%現實創傷；【永生之血】達到2階時，使自身激情+1"
+  },
+  {
+    "key": "language_10031953",
+    "content": "群體攻擊，失去10%當前生命，對2名敵方造成270%現實創傷；【永生之血】達到2階時，使自身激情+1"
+  },
+  {
+    "key": "language_10031954",
+    "content": "群體攻擊，失去10%當前生命，對2名敵方造成450%現實創傷；【永生之血】達到2階時，使自身激情+1"
+  },
+  {
+    "key": "language_10031955",
+    "content": "群體攻擊，對敵方全體造成300%現實創傷；本次攻擊吸血率提升50%；【永生之血】達到3階時，必定暴擊，額外造成相當於300%現實創傷"
+  },
+  {
+    "key": "language_10031956",
+    "content": "群體攻擊，對敵方全體造成350%現實創傷；本次攻擊吸血率提升50%；【永生之血】達到3階時，必定暴擊，額外造成相當於350%現實創傷"
+  },
+  {
+    "key": "language_10031957",
+    "content": "群體攻擊，對敵方全體造成350%現實創傷；本次攻擊吸血率提升60%；【永生之血】達到3階時，必定暴擊，額外造成相當於350%現實創傷"
+  },
+  {
+    "key": "language_10031958",
+    "content": "群體攻擊，對敵方全體造成400%現實創傷；本次攻擊吸血率提升60%；【永生之血】達到3階時，必定暴擊，額外造成相當於400%現實創傷"
+  },
+  {
+    "key": "language_10031959",
+    "content": ""
+  },
+  {
+    "key": "language_10031960",
+    "content": ""
+  },
+  {
+    "key": "language_10031961",
+    "content": ""
+  },
+  {
+    "key": "language_10031962",
+    "content": ""
+  },
+  {
+    "key": "language_10031963",
+    "content": ""
+  },
+  {
+    "key": "language_10031964",
+    "content": ""
+  },
+  {
+    "key": "language_10031965",
+    "content": ""
+  },
+  {
+    "key": "language_10031966",
+    "content": ""
+  },
+  {
+    "key": "language_10031967",
+    "content": ""
+  },
+  {
+    "key": "language_10031968",
+    "content": ""
+  },
+  {
+    "key": "language_10031969",
+    "content": ""
+  },
+  {
+    "key": "language_10031970",
+    "content": ""
+  },
+  {
+    "key": "language_10031971",
+    "content": ""
+  },
+  {
+    "key": "language_10031972",
+    "content": ""
+  },
+  {
+    "key": "language_10031973",
+    "content": ""
+  },
+  {
+    "key": "language_10031974",
+    "content": ""
+  },
+  {
+    "key": "language_10031975",
+    "content": ""
+  },
+  {
+    "key": "language_10031976",
+    "content": ""
+  },
+  {
+    "key": "language_10031977",
+    "content": ""
+  },
+  {
+    "key": "language_10031978",
+    "content": ""
+  },
+  {
+    "key": "language_10031979",
+    "content": ""
+  },
+  {
+    "key": "language_10031980",
+    "content": "單體攻擊，造成80%現實創傷；命中時使其現實防禦降低30%，持續2回合"
+  },
+  {
+    "key": "language_10031981",
+    "content": "群體攻擊，對敵方全體造成100%現實創傷；若自身處於【護盾】中，額外附加自身攻擊*100%的本源創傷，並使目標造成傷害降低30%，持續2回合"
+  },
+  {
+    "key": "language_10031982",
+    "content": "單體攻擊，造成200%現實創傷；並追加3次【盛宴尾聲】攻擊"
+  },
+  {
+    "key": "language_10031983",
+    "content": "單體攻擊，造成200%現實創傷，單次至終的儀式追加的第3次攻擊額外造成200%現實創傷，並為1次【刺殺】"
+  },
+  {
+    "key": "language_10031984",
+    "content": ""
+  },
+  {
+    "key": "language_10031985",
+    "content": "受到攻擊後釋放咒語1進行攻擊，並且若自身處於【護盾】中，此次攻擊術法威力額外提升40%（每回合最多觸發2次）"
+  },
+  {
+    "key": "language_10031986",
+    "content": "回合結束時，獲得10層【疼痛誘惑】；受到暴擊攻擊後，失去1層【疼痛誘惑】，受到【刺殺】攻擊後，失去3層【疼痛誘惑】"
+  },
+  {
+    "key": "language_10031987",
+    "content": "攻擊時，若目標生命低於50%，攻擊力提升20%"
+  },
+  {
+    "key": "language_10031988",
+    "content": "自我增強，獲得自身最大生命*50%的護盾，持續2回合；並進入【儀式蘊蓄<id:9290109>】狀態，持續2回合"
+  },
+  {
+    "key": "language_10031989",
+    "content": "每次受到致命傷害時復甦，保留所有狀態並繼續原本的行動，消滅原先的友方並召喚出新的友方，每次復甦後賦予自身2層【再造】；若靈光已滿，則行動改為釋放至終的儀式"
+  },
+  {
+    "key": "language_10031990",
+    "content": "若處於【護盾】中，最終免傷提升40%；受到攻擊後釋放咒語1進行攻擊，並且若自身處於【護盾】中，此次攻擊術法威力額外提升40%（每回合最多觸發2次）"
+  },
+  {
+    "key": "language_10031991",
+    "content": "回合結束時，獲得20層【疼痛誘惑】；受到暴擊攻擊後，失去1層【疼痛誘惑】，受到至終的儀式攻擊後，失去2層【疼痛誘惑】"
+  },
+  {
+    "key": "language_10031992",
+    "content": "攻擊時，若目標生命低於50%，本次攻擊必定暴擊且暴擊創傷提升50%"
+  },
+  {
+    "key": "language_10031993",
+    "content": "單體攻擊，造成160%現實創傷；若目標處於【屬性削弱】【狀態異常】【控制】中，額外造成80%現實創傷"
+  },
+  {
+    "key": "language_10031994",
+    "content": "單體攻擊，造成200%現實創傷；命中時賦予目標2層【鈍化】"
+  },
+  {
+    "key": "language_10031995",
+    "content": "群體攻擊，對敵方全體造成250%現實創傷；命中時使其暴擊防禦降低30%，持續2回合"
+  },
+  {
+    "key": "language_10031996",
+    "content": "受到未暴擊攻擊時，【目擊值】提升（每回合最多觸發1次）；回合開始時，若自身處於【護盾】中，使己方全體造成傷害提升40%，持續1回合"
+  },
+  {
+    "key": "language_10031997",
+    "content": "進入戰鬥時，獲得【秩序至上<id:9290115>】，受到【刺殺】攻擊後解除"
+  },
+  {
+    "key": "language_10031998",
+    "content": "自我反制，進入【回擊架勢】狀態2回合，受到攻擊後使用【拙劣揮砍】進行反擊，受到【刺殺】攻擊後解除"
+  },
+  {
+    "key": "language_10031999",
+    "content": "自我反制，進入【回擊架勢】狀態3回合，受到攻擊後使用【拙劣揮砍】進行反擊，受到【刺殺】攻擊後解除"
+  },
+  {
+    "key": "language_10032000",
+    "content": "單體攻擊，造成500%現實創傷，攻擊後使自身造成傷害降低25%，持續2回合"
+  },
+  {
+    "key": "language_10032001",
+    "content": "攻擊後，有30%機率賦予目標1層【傷口】，持續1回合"
+  },
+  {
+    "key": "language_10032002",
+    "content": "群體攻擊，對敵方全體造成100%精神創傷，命中時使目標陷入【繳械】狀態1回合"
+  },
+  {
+    "key": "language_10032003",
+    "content": "受到至終的儀式攻擊後，【目擊值】提升；自身達到高【目擊值】後離開戰場"
+  },
+  {
+    "key": "language_10032004",
+    "content": "單體攻擊，造成240%現實創傷；若目標處於【屬性削弱】【狀態異常】【控制】中，額外造成80%現實創傷"
+  },
+  {
+    "key": "language_10032005",
+    "content": "單體攻擊，造成300%現實創傷；命中時賦予目標2層【鈍化】"
+  },
+  {
+    "key": "language_10032006",
+    "content": "攻擊時，每存在1名友方，造成傷害提升10%，暴擊率提升15%"
+  },
+  {
+    "key": "language_10032007",
+    "content": "進入戰鬥及每3回合開始時，賦予自身【秩序至上<id:9290227>】，受到【刺殺】攻擊後解除"
+  },
+  {
+    "key": "language_10032008",
+    "content": "單體攻擊，造成200%現實創傷；命中時使其陷入【重傷】狀態2回合"
+  },
+  {
+    "key": "language_10032009",
+    "content": "單體攻擊，造成300%現實創傷；命中時使其陷入【重傷】狀態2回合"
+  },
+  {
+    "key": "language_10032010",
+    "content": "群體攻擊，對敵方全體造成250%現實創傷；命中時賦予目標3層【鈍化】"
+  },
+  {
+    "key": "language_10032011",
+    "content": "受到攻擊時，每存在1名友方，受到傷害降低15%"
+  },
+  {
+    "key": "language_10032012",
+    "content": "受到【刺殺】攻擊後，使其他友方【目擊值】提升（每回合最多觸發1次）"
+  },
+  {
+    "key": "language_10032013",
+    "content": "單體攻擊，造成160%精神創傷；若目標不處於【屬性提升】【狀態增益】中，額外造成80%精神創傷"
+  },
+  {
+    "key": "language_10032014",
+    "content": "單體攻擊，造成240%精神創傷；若目標不處於【屬性提升】【狀態增益】中，額外造成80%精神創傷"
+  },
+  {
+    "key": "language_10032015",
+    "content": "單體攻擊，造成200%精神創傷；攻擊後驅散目標1種【屬性提升】【狀態增益】"
+  },
+  {
+    "key": "language_10032016",
+    "content": "單體攻擊，造成300%精神創傷；攻擊後驅散目標2種【屬性提升】【狀態增益】"
+  },
+  {
+    "key": "language_10032017",
+    "content": "群體攻擊，對敵方全體造成250%精神創傷；攻擊後驅散目標所有【屬性提升】【狀態增益】"
+  },
+  {
+    "key": "language_10032018",
+    "content": "受到【刺殺】攻擊後，使自身【目擊值】大幅提升（每回合最多觸發1次）"
+  },
+  {
+    "key": "language_10032019",
+    "content": "單體攻擊，造成160%現實創傷；命中時使其陷入【流血】狀態，持續1回合"
+  },
+  {
+    "key": "language_10032020",
+    "content": "單體攻擊，造成240%現實創傷；命中時使其陷入【流血】狀態，持續1回合"
+  },
+  {
+    "key": "language_10032021",
+    "content": "群體攻擊，對2名敵人造成120%現實創傷；命中時賦予目標4層【燃燒】"
+  },
+  {
+    "key": "language_10032022",
+    "content": "群體攻擊，對2名敵人造成180%現實創傷；命中時賦予目標6層【燃燒】"
+  },
+  {
+    "key": "language_10032023",
+    "content": "群體攻擊，對敵方全體造成150%現實創傷，本次攻擊為1次【刺殺】，並對主目標追加1次攻擊"
+  },
+  {
+    "key": "language_10032024",
+    "content": "行動力+2；自身生命不會低於60%以下，回合開始時若自身生命不高於60%，則進入下一階段"
+  },
+  {
+    "key": "language_10032025",
+    "content": "回合開始時，輪流釋放咒語1/2攻擊1次"
+  },
+  {
+    "key": "language_10032026",
+    "content": "優先攻擊卡珊卓；受到卡珊卓以外角色傷害降低70%，受到卡珊卓【刺殺】攻擊傷害提升50%"
+  },
+  {
+    "key": "language_10032027",
+    "content": "單體攻擊，造成160%現實創傷；攻擊後使目標現實防禦降低30%，持續2回合"
+  },
+  {
+    "key": "language_10032028",
+    "content": "單體攻擊，造成240%現實創傷；攻擊後使目標現實防禦降低30%，持續2回合"
+  },
+  {
+    "key": "language_10032029",
+    "content": "群體攻擊，對敵方全體造成100%現實創傷，若自身處於【護盾】中，額外造成80%現實創傷並使目標造成傷害降低25%，持續2回合"
+  },
+  {
+    "key": "language_10032030",
+    "content": "群體攻擊，對敵方全體造成150%現實創傷，若自身處於【護盾】中，額外造成80%現實創傷並使目標造成傷害降低25%，持續2回合"
+  },
+  {
+    "key": "language_10032031",
+    "content": "單體攻擊，造成200%現實創傷；自身每有2點激情，追加1次【死鬥盛宴】攻擊"
+  },
+  {
+    "key": "language_10032032",
+    "content": "無法獲得至終的儀式；激情上限為6；回合結束時，獲得3點激情；受到【刺殺】攻擊後，失去1點激情"
+  },
+  {
+    "key": "language_10032033",
+    "content": "受到攻擊後，消耗1點激情釋放咒語1進行反擊"
+  },
+  {
+    "key": "language_10032034",
+    "content": "回合開始時，若自身處於【護盾】中，獲得【盛宴前兆】狀態，若2回合結束後仍處於該狀態，則釋放至終的儀式進行攻擊"
+  },
+  {
+    "key": "language_10032035",
+    "content": "若自身生命低於40%，攻擊時吸血率提升50%；若自身生命低於20%，行動力+1，且攻擊時暴擊率提升50%，暴擊傷害提升50%"
+  },
+  {
+    "key": "language_10032036",
+    "content": "受到【刺殺】攻擊時，受到傷害提升50%\n無目擊值或者低目擊值可以被任意攻擊觸發【刺殺】；\n中目擊值或者高目擊值受到傷害減少30%；\n目擊值提升至高時，將獲得其最大生命*30%的【護盾】，【護盾】被擊破後目擊值清零"
+  },
+  {
+    "key": "language_10032037",
+    "content": "攻擊後，賦予自身和目標2層【燃燒】，若自身處於【護盾】中，額外賦予3層【燃燒】"
+  },
+  {
+    "key": "language_10032038",
+    "content": "釋放至終的儀式時，自身每攜帶1層【燃燒】，儀式威力提升5%；受到攻擊時，攻擊者每攜帶1層【燃燒】，自身創傷減免提升10%；回合結束時，若不存在友方，則召喚2名靈體"
+  },
+  {
+    "key": "language_10032039",
+    "content": "進入戰鬥及使用至終的儀式後，獲得5層【洞察】並佈設術陣【淒美開幕<id:9290303>】；受到額外行動攻擊後失去1層【洞察】；回合結束時，自身每有5層【洞察】，激情+1"
+  },
+  {
+    "key": "language_10032040",
+    "content": "進入戰鬥及使用至終的儀式後，獲得5層【傾力】並佈設術陣【至暗終幕<id:9290304>】；受到額外行動攻擊後失去1層【傾力】；回合結束時，自身每有5層【傾力】，激情+2"
+  },
+  {
+    "key": "language_10032041",
+    "content": ""
+  },
+  {
+    "key": "language_10032042",
+    "content": ""
+  },
+  {
+    "key": "language_10032043",
+    "content": ""
+  },
+  {
+    "key": "language_10032044",
+    "content": "暴擊率提升100%；受到【刺殺】攻擊後暴擊率下降80%，持續1回合"
+  },
+  {
+    "key": "language_10032045",
+    "content": "受到傷害降低60%；失去【護盾】後，本回合內受到至終的儀式攻擊傷害提升100%"
+  },
+  {
+    "key": "language_10032046",
+    "content": "攻擊時，若處於【護盾】中，則暴擊創傷提升50%"
+  },
+  {
+    "key": "language_10032047",
+    "content": "行動點+1；受到攻擊或行動後，若自身生命低於50%，獲得【地脈湧流】"
+  },
+  {
+    "key": "language_10032048",
+    "content": "暴擊率提升50%；受到【刺殺】攻擊後暴擊率下降80%，持續1回合"
+  },
+  {
+    "key": "language_10032049",
+    "content": "現實防禦、精神防禦提升80%；受到2/3階咒語攻擊後，獲得1/3層【意志削弱】，持續1回合"
+  },
+  {
+    "key": "language_10032050",
+    "content": "使用至終儀式後獲得【意志·怒號<id:9290322>】狀態，持續3回合；被攻擊後生命低於50%/25%，則立刻釋放至終的儀式（每個階段最多觸發1次）"
+  },
+  {
+    "key": "language_10032051",
+    "content": "攻擊時，附加目標10%當前生命的本源創傷，若自身處於【護盾】狀態，則額外附加目標10%當前生命的本源創傷"
+  },
+  {
+    "key": "language_10032052",
+    "content": "攻擊時，若自身處於【護盾】中，則造成傷害提升30%"
+  },
+  {
+    "key": "language_10032053",
+    "content": "回合開始時，若處於【護盾】中，則回復已損失生命的15%"
+  },
+  {
+    "key": "language_10032054",
+    "content": "回合開始時，若處於【護盾】中，則釋放咒語1進行發動攻擊"
+  },
+  {
+    "key": "language_10032055",
+    "content": "至終的儀式為1次【刺殺】，且造成傷害提升40%"
+  },
+  {
+    "key": "language_10032056",
+    "content": "攻擊時，若目標有2種及以上【狀態異常】，則本次攻擊為1次【刺殺】，且傷害提升30%"
+  },
+  {
+    "key": "language_10032057",
+    "content": "攻擊時，若自身處於【護盾】中，則驅散目標所有【狀態增益】【屬性提升】"
+  },
+  {
+    "key": "language_10032058",
+    "content": "回合開始時，若處於【護盾】中，驅散自身所有【狀態異常】【屬性削弱】"
+  },
+  {
+    "key": "language_10032059",
+    "content": "進入戰鬥時，暴擊率提升30%，穿透率提升30%；退場時，清空己方全體角色的【目擊值】"
+  },
+  {
+    "key": "language_10032060",
+    "content": "進入戰鬥時，激情+2；釋放至終的儀式後，降低敵方士氣"
+  },
+  {
+    "key": "language_10032061",
+    "content": "攻擊時，若自身處於【護盾】中，則略微降低敵方士氣"
+  },
+  {
+    "key": "language_10032062",
+    "content": "退場時，隨機友方激情+1；使用至終的儀式後，隨機友方激情+1"
+  },
+  {
+    "key": "language_10032063",
+    "content": "退場時，大幅提升隨機友方【目擊值】"
+  },
+  {
+    "key": "language_10032064",
+    "content": "回合開始時，若處於【護盾】中，則回復自身最大生命10%的生命"
+  },
+  {
+    "key": "language_10032065",
+    "content": "受到未暴擊的攻擊後，回復自身最大生命5%的生命"
+  },
+  {
+    "key": "language_10032066",
+    "content": "回合開始時，若處於【護盾】中，則自身獲得【靈巧】，持續1回合"
+  },
+  {
+    "key": "language_10032067",
+    "content": "受到攻擊時，攻擊者每有1種【狀態異常】，自身受到傷害降低30%"
+  },
+  {
+    "key": "language_10032068",
+    "content": "攻擊時，每有1名友方，造成傷害提升30%；受到攻擊時，每有1名友方，受到傷害降低50%"
+  },
+  {
+    "key": "language_10032069",
+    "content": "回合開始時，若存在其他友方，則自身獲得1層【甲殼質】"
+  },
+  {
+    "key": "language_10032070",
+    "content": "攻擊時自身每損失10%生命，創傷加成提高15%"
+  },
+  {
+    "key": "language_10032071",
+    "content": "受到精神創傷攻擊後，自身【目擊值】提升，並釋放咒語1進行攻擊"
+  },
+  {
+    "key": "language_10032072",
+    "content": "回合開始時，若處於【護盾】中，則自身進入【隱蔽】狀態，持續2回合"
+  },
+  {
+    "key": "language_10032073",
+    "content": "離場後，大幅提升全體友方【目擊值】並使其獲得2層【激昂】"
+  },
+  {
+    "key": "language_10032074",
+    "content": "回合開始時，賦予處於【狀態異常】中的敵方1層【麻痹】"
+  },
+  {
+    "key": "language_10032075",
+    "content": "受到傷害降低80%，受到2/3階咒語攻擊時受到傷害增加150%"
+  },
+  {
+    "key": "language_10032076",
+    "content": "回合開始時，若處於【護盾】中，使敵方全體儀式威力降低100%，持續2回合"
+  },
+  {
+    "key": "language_10032077",
+    "content": "受到攻擊時，使傷害來源獲得1層【豆類過敏】"
+  },
+  {
+    "key": "language_10032078",
+    "content": "回合結束時，召喚2個幾何卡邦克魯"
+  },
+  {
+    "key": "language_10032079",
+    "content": "自身現實防禦、精神防禦提升150%，受到主動使用咒語攻擊時，受到傷害降低80%，並反彈自身現實防禦*150%的本源創傷"
+  },
+  {
+    "key": "language_10032080",
+    "content": "受到額外行動攻擊後，現實防禦、精神防禦降低20%，持續1回合（效果可疊加）"
+  },
+  {
+    "key": "language_10032081",
+    "content": "受創回復提升90%；自身每處於1種【屬性削弱】【狀態異常】【控制】，受創回復降低10%"
+  },
+  {
+    "key": "language_10032082",
+    "content": "攻擊時，術法威力提升80%；自身每處於1種【屬性削弱】【狀態異常】【控制】，攻擊時術法威力降低10%"
+  },
+  {
+    "key": "language_10032083",
+    "content": "攻擊後，自身獲得1層【血腥狩獵】；受到【刺殺】攻擊後，失去1層【血腥狩獵】"
+  },
+  {
+    "key": "language_10032084",
+    "content": "單次受到傷害不超過自身生命上限的5%；受到額外行動攻擊後，獲得2層【灼熱傷口】，持續1回合"
+  },
+  {
+    "key": "language_10032085",
+    "content": "免疫激情降低；受到普通咒語攻擊時，受到傷害降低70%；每受到3次普通咒語攻擊後，釋放1次1階咒語1進行攻擊"
+  },
+  {
+    "key": "language_10032086",
+    "content": "受到1階咒語攻擊時，傷害降低60%"
+  },
+  {
+    "key": "language_10032087",
+    "content": "回合開始時，獲得【咒語強化Ⅰ】，持續1回合"
+  },
+  {
+    "key": "language_10032088",
+    "content": "受到未暴擊攻擊後，隨機裝備1顆【子彈】；攜帶【子彈】攻擊時，本次攻擊必定暴擊，且暴擊創傷提升25%"
+  },
+  {
+    "key": "language_10032089",
+    "content": "受到傷害降低50%；受到【刺殺】攻擊傷害提升80%；受到攻擊時，自身每有一種【屬性削弱】【狀態異常】【控制】，攻擊方穿透率提升15%"
+  },
+  {
+    "key": "language_10032090",
+    "content": "受到1階咒語攻擊後，獲得2層【預燃】；回合開始時，自身每有一種【屬性削弱】【狀態異常】【控制】，回復5%已損失生命"
+  },
+  {
+    "key": "language_10032091",
+    "content": "回合開始時，獲得2層【荊棘】，受到【刺殺】攻擊失去1層【荊棘】；回合結束時，若自身【荊棘】達到10層，獲得【解脫】"
+  },
+  {
+    "key": "language_10032092",
+    "content": "受到至終的儀式攻擊時，攻擊方暴擊創傷提升50%；自身每有一種【屬性提升】【狀態增益】，回合結束時回復5%已損失生命"
+  },
+  {
+    "key": "language_10032093",
+    "content": "受到攻擊時，其他友方激情+1，每回合最多觸發1次；自身受到攻擊時若激情為5則釋放1次【理想講演】"
+  },
+  {
+    "key": "language_10032094",
+    "content": "受到攻擊時，其他友方激情+1，每回合最多觸發1次；自身受到攻擊時若激情為5則釋放1次【文學自由】"
+  },
+  {
+    "key": "language_10032095",
+    "content": "回合開始時，獲得1層【幸運】；攻擊時，自身每攜帶1層【燃燒】，造成傷害降低3%"
+  },
+  {
+    "key": "language_10032096",
+    "content": "釋放至終的儀式後，己方全體獲得1回合【靈巧】；若自身生命低於50%，則改為獲得2回合【靈巧】"
+  },
+  {
+    "key": "language_10032097",
+    "content": "攻擊時附加自身攻擊*200%的本源創傷"
+  },
+  {
+    "key": "language_10032098",
+    "content": "攻擊時附加自身攻擊*100%的本源創傷"
+  },
+  {
+    "key": "language_10032099",
+    "content": "回合結束時，召喚2個脫殼黏垢"
+  },
+  {
+    "key": "language_10032100",
+    "content": "入場2回合後退場，失去所有生命，回復其他友方自身當前生命*50%的生命"
+  },
+  {
+    "key": "language_10032101",
+    "content": "生成一張特殊預備咒語，該咒語可以回復己方全體50%已損失生命"
+  },
+  {
+    "key": "language_10032102",
+    "content": "生成一張特殊預備咒語，該咒語可以回復己方全體100%已損失生命"
+  },
+  {
+    "key": "language_10032103",
+    "content": "生成一張特殊預備咒語，該咒語可以直接對敵方目標造成其最大生命*25%的本源創傷，可以立刻擊退非頭領的敵人"
+  },
+  {
+    "key": "language_10032104",
+    "content": "生成一張特殊預備咒語，該咒語可以直接對敵方目標造成其最大生命*50%的本源創傷，可以立刻擊退非頭領的敵人"
+  },
+  {
+    "key": "language_10032105",
+    "content": "小幅度降低敵方全體的目擊值"
+  },
+  {
+    "key": "language_10032106",
+    "content": "生成一張特殊咒語，該咒語可以給目標施加中毒狀態"
+  },
+  {
+    "key": "language_10032107",
+    "content": "使本回合行動點+1"
+  },
+  {
+    "key": "language_10032108",
+    "content": "使本回合行動點+2"
+  },
+  {
+    "key": "language_10032109",
+    "content": "己方全體激情+2，同步率+50%，腎上腺素+5"
+  },
+  {
+    "key": "language_10032110",
+    "content": "己方全體激情+5，同步率+100%，腎上腺素+10"
+  },
+  {
+    "key": "language_10032111",
+    "content": "回復己方全體50%已損失生命"
+  },
+  {
+    "key": "language_10032112",
+    "content": "回復己方全體100%已損失生命"
+  },
+  {
+    "key": "language_10032113",
+    "content": "對敵方目標造成其最大生命*25%的本源創傷，可以立刻擊退非頭領的敵人"
+  },
+  {
+    "key": "language_10032114",
+    "content": "對敵方目標造成其最大生命*50%的本源創傷，可以立刻擊退非頭領的敵人"
+  },
+  {
+    "key": "language_10032115",
+    "content": "賦予敵方目標5個【中毒】狀態"
+  },
+  {
+    "key": "language_10032116",
+    "content": "賦予敵方目標10個【中毒】狀態"
+  },
+  {
+    "key": "language_10032117",
+    "content": ""
+  },
+  {
+    "key": "language_10032118",
+    "content": ""
+  },
+  {
+    "key": "language_10032119",
+    "content": ""
+  },
+  {
+    "key": "language_10032120",
+    "content": ""
+  },
+  {
+    "key": "language_10032121",
+    "content": ""
+  },
+  {
+    "key": "language_10032122",
+    "content": "受到【刺殺】攻擊時，受到傷害提升50%\n每回合目擊值將會提升\n無目擊值或者低目擊值可以被任意攻擊觸發【刺殺】；\n中目擊值或者高目擊值受到傷害減少30%；\n目擊值提升至高時，將獲得其最大生命*30%的【護盾】，【護盾】被擊破後目擊值清零"
+  },
+  {
+    "key": "language_10032123",
+    "content": ""
+  },
+  {
+    "key": "language_10032124",
+    "content": ""
+  },
+  {
+    "key": "language_10032125",
+    "content": ""
+  },
+  {
+    "key": "language_10032126",
+    "content": ""
+  },
+  {
+    "key": "language_10032127",
+    "content": ""
+  },
+  {
+    "key": "language_10032128",
+    "content": ""
+  },
+  {
+    "key": "language_10032129",
+    "content": ""
+  },
+  {
+    "key": "language_10032130",
+    "content": ""
+  },
+  {
+    "key": "language_10032131",
+    "content": ""
+  },
+  {
+    "key": "language_10032132",
+    "content": ""
+  },
+  {
+    "key": "language_10032133",
+    "content": ""
+  },
+  {
+    "key": "language_10032134",
+    "content": ""
+  },
+  {
+    "key": "language_10032135",
+    "content": ""
+  },
+  {
+    "key": "language_10032136",
+    "content": ""
+  },
+  {
+    "key": "language_10032137",
+    "content": ""
+  },
+  {
+    "key": "language_10032138",
+    "content": ""
+  },
+  {
+    "key": "language_10032139",
+    "content": ""
+  },
+  {
+    "key": "language_10032140",
+    "content": ""
+  },
+  {
+    "key": "language_10032141",
+    "content": "單體攻擊，造成350%現實創傷，本次攻擊為1次【刺殺】"
+  },
+  {
+    "key": "language_10032142",
+    "content": "單體攻擊，造成525%現實創傷，本次攻擊為1次【刺殺】"
+  },
+  {
+    "key": "language_10032143",
+    "content": "單體攻擊，造成875%現實創傷，本次攻擊為1次【刺殺】"
+  },
+  {
+    "key": "language_10032144",
+    "content": "單體攻擊，造成350%現實創傷，本次攻擊為1次【刺殺】，命中後將賦予目標1層【刺客印記】"
+  },
+  {
+    "key": "language_10032145",
+    "content": "單體攻擊，造成525%現實創傷，本次攻擊為1次【刺殺】，命中後將賦予目標1層【刺客印記】"
+  },
+  {
+    "key": "language_10032146",
+    "content": "單體攻擊，造成875%現實創傷，本次攻擊為1次【刺殺】，命中後將賦予目標1層【刺客印記】"
+  },
+  {
+    "key": "language_10032147",
+    "content": "單體攻擊，造成350%現實創傷，本次攻擊為1次【刺殺】，命中後將賦予目標2層【刺客印記】"
+  },
+  {
+    "key": "language_10032148",
+    "content": "單體攻擊，造成525%現實創傷，本次攻擊為1次【刺殺】，命中後將賦予目標2層【刺客印記】"
+  },
+  {
+    "key": "language_10032149",
+    "content": "單體攻擊，造成875%現實創傷，本次攻擊為1次【刺殺】，命中後將賦予目標2層【刺客印記】"
+  },
+  {
+    "key": "language_10032150",
+    "content": "單體攻擊，造成400%現實創傷，本次攻擊為1次【刺殺】"
+  },
+  {
+    "key": "language_10032151",
+    "content": "單體攻擊，造成600%現實創傷，本次攻擊為1次【刺殺】"
+  },
+  {
+    "key": "language_10032152",
+    "content": "單體攻擊，造成1000%現實創傷，本次攻擊為1次【刺殺】"
+  },
+  {
+    "key": "language_10032153",
+    "content": "單體攻擊，造成400%現實創傷，本次攻擊為1次【刺殺】，命中後將賦予目標2層【刺客印記】"
+  },
+  {
+    "key": "language_10032154",
+    "content": "單體攻擊，造成600%現實創傷，本次攻擊為1次【刺殺】，命中後將賦予目標2層【刺客印記】"
+  },
+  {
+    "key": "language_10032155",
+    "content": "單體攻擊，造成1000%現實創傷，本次攻擊為1次【刺殺】，命中後將賦予目標2層【刺客印記】"
+  },
+  {
+    "key": "language_10032156",
+    "content": "自我反制，使即將釋放攻擊類咒語最多的敵方陷入【白袍焦點】狀態1回合，之後{name}進入【格鬥記憶】狀態1回合"
+  },
+  {
+    "key": "language_10032157",
+    "content": "自我反制，使即將釋放攻擊類咒語最多的敵方陷入【白袍焦點】狀態2回合，之後{name}進入【格鬥記憶】狀態2回合"
+  },
+  {
+    "key": "language_10032158",
+    "content": "自我反制，使即將釋放攻擊類咒語最多的敵方陷入【白袍焦點】狀態3回合，之後{name}進入【格鬥記憶】狀態3回合"
+  },
+  {
+    "key": "language_10032159",
+    "content": "自我反制，使敵方全體陷入【白袍焦點】狀態2回合，之後{name}進入【格鬥記憶】狀態2回合"
+  },
+  {
+    "key": "language_10032160",
+    "content": "自我反制，使敵方全體陷入【白袍焦點】狀態3回合，之後{name}進入【格鬥記憶】狀態3回合"
+  },
+  {
+    "key": "language_10032161",
+    "content": "自我反制，使敵方全體陷入【白袍焦點】狀態4回合，之後{name}進入【格鬥記憶】狀態4回合"
+  },
+  {
+    "key": "language_10032162",
+    "content": "自我反制，使即將釋放攻擊類咒語最多的敵方陷入【白袍焦點】狀態1回合，之後{name}進入【格鬥記憶<id:3>】狀態1回合"
+  },
+  {
+    "key": "language_10032163",
+    "content": "自我反制，使即將釋放攻擊類咒語最多的敵方陷入【白袍焦點】狀態2回合，之後{name}進入【格鬥記憶<id:3>】狀態2回合"
+  },
+  {
+    "key": "language_10032164",
+    "content": "自我反制，使即將釋放攻擊類咒語最多的敵方陷入【白袍焦點】狀態3回合，之後{name}進入【格鬥記憶<id:3>】狀態3回合"
+  },
+  {
+    "key": "language_10032165",
+    "content": "自我反制，使敵方全體陷入【白袍焦點】狀態2回合，之後{name}進入【格鬥記憶<id:3>】狀態2回合"
+  },
+  {
+    "key": "language_10032166",
+    "content": "自我反制，使敵方全體陷入【白袍焦點】狀態3回合，之後{name}進入【格鬥記憶<id:3>】狀態3回合"
+  },
+  {
+    "key": "language_10032167",
+    "content": "自我反制，使敵方全體陷入【白袍焦點】狀態4回合，之後{name}進入【格鬥記憶<id:3>】狀態4回合"
+  },
+  {
+    "key": "language_10032168",
+    "content": "自我反制，使敵方全體陷入【白袍焦點】狀態5回合，之後{name}進入【格鬥記憶<id:3>】狀態5回合"
+  },
+  {
+    "key": "language_10032169",
+    "content": "選擇1個敵方目標，對其釋放【箭矢同心】或【鋒刃同心】，一共3次，最後對該目標釋放【死亡並非殘酷】（釋放時不受敵方影響改變攻擊目標）"
+  },
+  {
+    "key": "language_10032170",
+    "content": "【箭矢同心】：單體攻擊，造成150%現實創傷，若目標當前生命低於50%，則額外造成100%現實創傷，本次攻擊為1次【刺殺】"
+  },
+  {
+    "key": "language_10032171",
+    "content": "【鋒刃同心】：單體攻擊，造成150%現實創傷，若目標當前生命高於等於50%，則額外造成100%現實創傷，本次攻擊為1次【刺殺】"
+  },
+  {
+    "key": "language_10032172",
+    "content": "【死亡並非殘酷】：單體攻擊，造成800%現實創傷，本次攻擊為1次【刺殺】"
+  },
+  {
+    "key": "language_10032173",
+    "content": "選擇1個敵方目標，對其釋放【箭矢同心】或【鋒刃同心】，一共4次，最後對該目標釋放【死亡並非殘酷】（釋放時不受敵方影響改變攻擊目標）"
+  },
+  {
+    "key": "language_10032174",
+    "content": "選擇1個敵方目標，對其釋放【箭矢同心<id:1>】或【鋒刃同心<id:1>】，一共4次，最後對該目標釋放【死亡並非殘酷】（釋放時不受敵方影響改變攻擊目標）"
+  },
+  {
+    "key": "language_10032175",
+    "content": "【箭矢同心】：單體攻擊，造成200%現實創傷，若目標當前生命低於50%，則額外造成100%現實創傷，本次攻擊為1次【刺殺】"
+  },
+  {
+    "key": "language_10032176",
+    "content": "【鋒刃同心】：單體攻擊，造成200%現實創傷，若目標當前生命高於等於50%，則額外造成100%現實創傷，本次攻擊為1次【刺殺】"
+  },
+  {
+    "key": "language_10032177",
+    "content": "選擇1個敵方目標，對其釋放【箭矢同心<id:1>】或【鋒刃同心<id:1>】，一共4次，最後對該目標釋放【死亡並非殘酷<id:1>】（釋放時不受敵方影響改變攻擊目標）"
+  },
+  {
+    "key": "language_10032178",
+    "content": "【死亡並非殘酷】：單體攻擊，造成1000%現實創傷，本次攻擊為1次【刺殺】"
+  },
+  {
+    "key": "language_10032179",
+    "content": "激情點替換為同步率，回合開始時，若同步率到達100%將立刻釋放至終的儀式（無法通過其他途徑釋放至終的儀式）\n同步率提升方式：\n普通咒語攻擊觸發【刺殺】後，同步率提升5%；\n【反制擊殺】反擊了攜帶【白袍焦點】的目標後，同步率提升5%；\n擊退了攻擊目標後，同步率提升10%"
+  },
+  {
+    "key": "language_10032180",
+    "content": "處於【格鬥記憶】狀態受到攻擊時，受到傷害降低15%，若目標處於【白袍焦點】狀態，則受到傷害額外降低30%"
+  },
+  {
+    "key": "language_10032181",
+    "content": "受到攻擊後，若自身的生命低於30%，則解除敵方全體的【白袍焦點】狀態並進入【潛行暗殺】狀態1回合（每回合最多觸發1次）\n任意己方攻擊觸發【刺殺】時，自身獲得1層【刺客學徒】"
+  },
+  {
+    "key": "language_10032182",
+    "content": "受到攻擊後，若自身的生命低於30%，則解除敵方全體的【白袍焦點】狀態並進入【潛行暗殺】狀態1回合（每回合最多觸發1次）\n任意己方攻擊觸發【刺殺】時，自身獲得1層【刺客學徒<id:1>】"
+  },
+  {
+    "key": "language_10032183",
+    "content": "受到攻擊後，若自身的生命低於30%，則解除敵方全體的【白袍焦點】狀態並進入【潛行暗殺】狀態1回合（每回合最多觸發1次）\n任意己方攻擊觸發【刺殺】時，自身獲得1層【刺客學徒<id:2>】"
+  },
+  {
+    "key": "language_10032184",
+    "content": "受到攻擊後，若自身的生命低於30%，則解除敵方全體的【白袍焦點】狀態並進入【潛行暗殺】狀態1回合（每回合最多觸發1次）\n任意己方攻擊觸發【刺殺】時，自身獲得1層【刺客學徒<id:3>】"
+  },
+  {
+    "key": "language_10032185",
+    "content": "單體攻擊，造成250%現實創傷，本次攻擊為1次【刺殺】，本次攻擊暴擊創傷提升50%"
+  },
+  {
+    "key": "language_10032186",
+    "content": "單體攻擊，造成300%現實創傷，本次攻擊為1次【刺殺】，本次攻擊暴擊創傷提升50%"
+  },
+  {
+    "key": "language_10032187",
+    "content": "單體攻擊，造成250%現實創傷，本次攻擊為1次【刺殺】"
+  },
+  {
+    "key": "language_10032188",
+    "content": "單體攻擊，造成300%現實創傷，本次攻擊為1次【刺殺】"
+  },
+  {
+    "key": "language_10032189",
+    "content": ""
+  },
+  {
+    "key": "language_10032190",
+    "content": ""
+  },
+  {
+    "key": "language_10032191",
+    "content": ""
+  },
+  {
+    "key": "language_10032192",
+    "content": ""
+  },
+  {
+    "key": "language_10032193",
+    "content": ""
+  },
+  {
+    "key": "language_10032194",
+    "content": ""
+  },
+  {
+    "key": "language_10032195",
+    "content": ""
+  },
+  {
+    "key": "language_10032196",
+    "content": ""
+  },
+  {
+    "key": "language_10032197",
+    "content": ""
+  },
+  {
+    "key": "language_10032198",
+    "content": ""
+  },
+  {
+    "key": "language_10032199",
+    "content": ""
+  },
+  {
+    "key": "language_10032200",
+    "content": ""
+  },
+  {
+    "key": "language_10032201",
+    "content": ""
+  },
+  {
+    "key": "language_10032202",
+    "content": ""
+  },
+  {
+    "key": "language_10032203",
+    "content": ""
+  },
+  {
+    "key": "language_10032204",
+    "content": ""
+  },
+  {
+    "key": "language_10032205",
+    "content": ""
+  },
+  {
+    "key": "language_10032206",
+    "content": ""
+  },
+  {
+    "key": "language_10032207",
+    "content": ""
+  },
+  {
+    "key": "language_10032208",
+    "content": ""
+  },
+  {
+    "key": "language_10032209",
+    "content": ""
+  },
+  {
+    "key": "language_10032210",
+    "content": ""
+  },
+  {
+    "key": "language_10032211",
+    "content": ""
+  },
+  {
+    "key": "language_10032212",
+    "content": ""
+  },
+  {
+    "key": "language_10032213",
+    "content": ""
+  },
+  {
+    "key": "language_10032214",
+    "content": ""
+  },
+  {
+    "key": "language_10032215",
+    "content": ""
+  },
+  {
+    "key": "language_10032216",
+    "content": ""
+  },
+  {
+    "key": "language_10032217",
+    "content": ""
+  },
+  {
+    "key": "language_10032218",
+    "content": ""
+  },
+  {
+    "key": "language_10032357",
+    "content": "入場及每2個回合開始時，己方全體進入【潛行】狀態"
+  },
+  {
+    "key": "language_10032358",
+    "content": "每個回合開始時，己方全體進入【潛行】狀態"
+  },
+  {
+    "key": "language_10032359",
+    "content": "持有【埃齊歐】裝備的角色：進入戰鬥時，獲得【潛行】"
+  },
+  {
+    "key": "language_10032360",
+    "content": "持有【埃齊歐】裝備的角色：進入戰鬥時，獲得100層【威力】"
+  },
+  {
+    "key": "language_10032361",
+    "content": "持有【埃齊歐】裝備的角色：進入戰鬥時，獲得100層【禮儀】"
+  },
+  {
+    "key": "language_10032362",
+    "content": "持有【埃齊歐】裝備的角色：進入戰鬥時，啟動至終的儀式"
+  },
+  {
+    "key": "language_10032363",
+    "content": "持有【埃齊歐】裝備的角色：進入戰鬥時，獲得【閃避】"
+  },
+  {
+    "key": "language_10032364",
+    "content": "創傷加成+10%，進入戰鬥時，獲得1張預備咒語【火圖騰】"
+  },
+  {
+    "key": "language_10032365",
+    "content": "攻擊+5%，進入戰鬥時，獲得1張預備咒語【火圖騰】"
+  },
+  {
+    "key": "language_10032366",
+    "content": "受創減免+10%，進入戰鬥時，獲得1張預備咒語【火圖騰】"
+  },
+  {
+    "key": "language_10032367",
+    "content": "最大生命+5%，進入戰鬥時，獲得1張預備咒語【火圖騰】"
+  },
+  {
+    "key": "language_10032368",
+    "content": "暴擊率+10%，進入戰鬥時，獲得1張預備咒語【火圖騰】"
+  },
+  {
+    "key": "language_10032369",
+    "content": "持有【刺客大師】裝備的角色：回合結束時隨機對1名敵人施加【放鬆警惕】，持續1回合"
+  },
+  {
+    "key": "language_10032370",
+    "content": "持有【刺客大師】裝備的角色：攻擊未達到高目擊值的敵人時創傷加成+50%"
+  },
+  {
+    "key": "language_10032371",
+    "content": "持有【刺客大師】裝備的角色：攻擊後，使目標目擊值降低1級"
+  },
+  {
+    "key": "language_10032372",
+    "content": "回合結束時隨機對1名敵人施加【放鬆警惕】，持續1回合"
+  },
+  {
+    "key": "language_10032373",
+    "content": "攻擊未達到高目擊值的敵人時創傷加成+50%"
+  },
+  {
+    "key": "language_10032374",
+    "content": "攻擊後，使目標目擊值降低1級"
+  },
+  {
+    "key": "language_10032375",
+    "content": "持有【戴歐尼修斯的豹皮】【儀式長袍】【爬藤脛甲】的角色：回合開始時，隨機對1名敵人施加1層【破綻】"
+  },
+  {
+    "key": "language_10032376",
+    "content": "持有【戴歐尼修斯的豹皮】【儀式長袍】【爬藤脛甲】的角色：攻擊後對敵人施加【刺殺易傷】，持續1回合"
+  },
+  {
+    "key": "language_10032377",
+    "content": "持有【戴歐尼修斯的豹皮】【儀式長袍】【爬藤脛甲】的角色：【刺殺】時，創傷加成+100%"
+  },
+  {
+    "key": "language_10032378",
+    "content": "回合開始時，隨機對1名敵人命中時賦予目標1層【致命傷】"
+  },
+  {
+    "key": "language_10032379",
+    "content": "攻擊後對敵人施加【刺殺易傷】，持續2回合"
+  },
+  {
+    "key": "language_10032380",
+    "content": "【刺殺】時，創傷加成+100%"
+  },
+  {
+    "key": "language_10032381",
+    "content": "入場及每2個回合開始時，己方行動點臨時+1，咒語獲取上限臨時+1"
+  },
+  {
+    "key": "language_10032382",
+    "content": "回合開始時，自身所有咒語升1階"
+  },
+  {
+    "key": "language_10032383",
+    "content": "釋放至終的儀式後，己方所有咒語升1階"
+  },
+  {
+    "key": "language_10032384",
+    "content": "暴擊率+10%，暴擊創傷+20%"
+  },
+  {
+    "key": "language_10032385",
+    "content": "術法威力+20%，儀式威力+20%"
+  },
+  {
+    "key": "language_10032386",
+    "content": "戰鬥開始時，己方全體獲得最大生命*100%的護盾，持續永久；\n擁有護盾的角色攻擊+20%，現實、精神防禦+20%"
+  },
+  {
+    "key": "language_10032387",
+    "content": "回合結束時，獲得自身最大生命*20%的護盾，可疊加不超過自身最大生命*100%"
+  },
+  {
+    "key": "language_10032388",
+    "content": "回合結束時，恢復自身最大生命*20%的生命"
+  },
+  {
+    "key": "language_10032389",
+    "content": "使用治療類咒語時，使目標獲得其最大生命*20%的護盾，可疊加不超過其最大生命*100%"
+  },
+  {
+    "key": "language_10032390",
+    "content": "使用增益類咒語時，驅散目標1種【控制】"
+  },
+  {
+    "key": "language_10032391",
+    "content": "己方攻擊後，隨機賦予目標【狀態異常集合<id:8290301>】中的1種效果"
+  },
+  {
+    "key": "language_10032392",
+    "content": "己方攻擊後，隨機賦予目標【狀態異常集合<id:8290301>】中的1種效果\n己方攻擊前，所有目標每攜帶1種【狀態異常】，抗暴率、暴擊防禦降低10%"
+  },
+  {
+    "key": "language_10032393",
+    "content": "己方攻擊後，隨機賦予目標【狀態異常集合<id:8290301>】中的1種效果，觸發2次\n己方攻擊前，所有目標每攜帶1種【狀態異常】，抗暴率、暴擊防禦降低10%，精神、現實防禦降低10%"
+  },
+  {
+    "key": "language_10032394",
+    "content": "攻擊處於【中毒】狀態的目標，提升己方全體的中毒創傷加成2%，最多疊加5層，持續3回合"
+  },
+  {
+    "key": "language_10032395",
+    "content": "若敵方全體共計攜帶20個以上的【中毒】狀態，則本回合敵方的【中毒】持續回合不會因結算而減少"
+  },
+  {
+    "key": "language_10032396",
+    "content": "回合開始時，獲得1張【毒素混合】"
+  },
+  {
+    "key": "language_10032397",
+    "content": "己方攻擊具有【中毒】的單位時，立即釋放1次【毒素混合】"
+  },
+  {
+    "key": "language_10032398",
+    "content": "自身主動攻擊後施加1層【僵硬】"
+  },
+  {
+    "key": "language_10032399",
+    "content": "攻擊具有【僵硬】的敵人傷害提升20%，對具有【石化】的敵人傷害提升40%"
+  },
+  {
+    "key": "language_10032400",
+    "content": "己方攻擊使敵方退場後，敵方身上攜帶的所有【狀態異常】將轉移至其他隨機敵方（優先選擇生命最低）"
+  },
+  {
+    "key": "language_10032401",
+    "content": "己方釋放至終的儀式後，使敵方的【狀態異常】回合+1"
+  },
+  {
+    "key": "language_10032402",
+    "content": "敵方全體每共計攜帶3種【狀態異常】【控制】，己方主動使用咒語後額外施放一次，至多5次"
+  },
+  {
+    "key": "language_10032403",
+    "content": "回合結束時，敵方全體每共計攜帶2種【狀態異常】【控制】（卡珊卓攜帶時，改為每攜帶1個），敵方全體額外受到1次自身攻擊100%的本源傷害，【石化】的敵方額外受到1次"
+  },
+  {
+    "key": "language_10032404",
+    "content": "最左側己方戰鬥初始時啟動至終的儀式\n至終的儀式不消耗行動點"
+  },
+  {
+    "key": "language_10032405",
+    "content": "己方全體戰鬥初始時啟動至終的儀式\n至終的儀式不消耗行動點"
+  },
+  {
+    "key": "language_10032406",
+    "content": "己方全體戰鬥初始時啟動至終的儀式\n至終的儀式不消耗行動點\n己方免疫【心神不寧】狀態"
+  },
+  {
+    "key": "language_10032407",
+    "content": "釋放至終的儀式後，使其他友方疊加20層【禮儀】"
+  },
+  {
+    "key": "language_10032408",
+    "content": "釋放至終的儀式後，為自身疊加40層【禮儀】"
+  },
+  {
+    "key": "language_10032409",
+    "content": "釋放至終的儀式後，獲得【連續行動Ⅰ】，持續1回合"
+  },
+  {
+    "key": "language_10032410",
+    "content": "己方至終的儀式激情消耗-2，上限-2"
+  },
+  {
+    "key": "language_10032411",
+    "content": "己方至終的儀式有50%的機率額外釋放1次"
+  },
+  {
+    "key": "language_10032412",
+    "content": "其他友方釋放至終的儀式時，釋放自身至終的儀式，每回合限1次"
+  },
+  {
+    "key": "language_10032413",
+    "content": "釋放至終的儀式後，恢復1點激情"
+  },
+  {
+    "key": "language_10032414",
+    "content": "回合結束時，恢復1點激情"
+  },
+  {
+    "key": "language_10032415",
+    "content": "自身主動攻擊後，賦予目標1層【激情萃取】"
+  },
+  {
+    "key": "language_10032416",
+    "content": "己方全體激情獲得額外2點上限，至終的儀式獲取和消耗不變，己方全體溢出的激情會被臨時儲存，至多5點"
+  },
+  {
+    "key": "language_10032417",
+    "content": "釋放至終的儀式時，根據當前激情點數提升傷害，每點激情提升20%"
+  },
+  {
+    "key": "language_10032418",
+    "content": "釋放至終的儀式後，其他友方下次釋放至終的儀式不消耗激情；卡珊卓攜帶時，釋放至終的儀式後，給己方全體疊加5%儀式威力，至多6層"
+  },
+  {
+    "key": "language_10032419",
+    "content": "己方累計行動5次後，己方攻擊最高的角色釋放1次【結構分解】；"
+  },
+  {
+    "key": "language_10032420",
+    "content": "己方累計行動4次後，己方攻擊最高的角色釋放1次【結構分解】；\n額外行動附加自身攻擊25%的本源傷害"
+  },
+  {
+    "key": "language_10032421",
+    "content": "己方累計行動3次後，己方攻擊最高的角色釋放1次【結構分解】；\n額外行動附加自身攻擊50%的本源傷害"
+  },
+  {
+    "key": "language_10032422",
+    "content": "己方累計行動5次後，則為己方全體疊加1層【洞察】"
+  },
+  {
+    "key": "language_10032423",
+    "content": "本回合內未主動使用咒語，為己方全體疊加1層【洞察】"
+  },
+  {
+    "key": "language_10032424",
+    "content": "額外行動後，使目標受到本源創傷提升10%(效果可疊加，每層時間獨立計算）"
+  },
+  {
+    "key": "language_10032425",
+    "content": "己方額外行動會對目標施加【傷口】"
+  },
+  {
+    "key": "language_10032426",
+    "content": "己方釋放【結構分解】後額外釋放1次【結構分解Ⅱ】"
+  },
+  {
+    "key": "language_10032427",
+    "content": "對敵方全體造成自身攻擊*300%的自身對應類型創傷"
+  },
+  {
+    "key": "language_10032428",
+    "content": "己方額外行動後，施放1次【斯巴達踢擊<id:1>】（每回合限2次）"
+  },
+  {
+    "key": "language_10032429",
+    "content": "額外行動後，為自身疊加1層【計畫】"
+  },
+  {
+    "key": "language_10032430",
+    "content": "攻擊目標若處於【屬性削弱】【狀態異常】【控制】中，為己方全體疊加1層【計畫】"
+  },
+  {
+    "key": "language_10032431",
+    "content": "己方額外行動後，為敵方全體施加5層【燃燒】"
+  },
+  {
+    "key": "language_10032432",
+    "content": "回合開始時，對敵方全體施加10層【燃燒】"
+  },
+  {
+    "key": "language_10032433",
+    "content": "攻擊前若目標具有【燃燒】，釋放1次【火圖騰】"
+  },
+  {
+    "key": "language_10032434",
+    "content": "回合結束時，敵方全體每具有5層【燃燒】，釋放1次【火圖騰】"
+  },
+  {
+    "key": "language_10032435",
+    "content": "己方消耗靈光時將累計【啟示】；\n己方全體每回合靈光+1，且行動後額外消耗1點靈光，使本回合【即興咒語】攻擊次數+1"
+  },
+  {
+    "key": "language_10032436",
+    "content": "己方消耗靈光時將累計【啟示】；\n己方全體每回合靈光+1，且行動後額外消耗1點靈光，使本回合【即興咒語】攻擊次數+1\n【即興咒語】造成傷害提升20%"
+  },
+  {
+    "key": "language_10032437",
+    "content": "己方消耗靈光時將累計【啟示】；\n己方全體每回合靈光+2，且行動後額外消耗2點靈光，使本回合【即興咒語】攻擊次數+2\n【即興咒語】造成傷害提升50%"
+  },
+  {
+    "key": "language_10032438",
+    "content": "即興咒語將附加攻擊*25%的本源創傷"
+  },
+  {
+    "key": "language_10032439",
+    "content": "即興咒語使目標受到本源創傷提升10%(效果可疊加，每層時間獨立計算）"
+  },
+  {
+    "key": "language_10032440",
+    "content": "攻擊【屬性削弱】【狀態異常】【控制】的目標時，為本回合的【即興咒語】計入1點【啟示】"
+  },
+  {
+    "key": "language_10032441",
+    "content": "釋放至終的儀式，會對主目標施加【跟蹤鎖定】，並為本回合的【即興咒語】計入8點【啟示】"
+  },
+  {
+    "key": "language_10032442",
+    "content": "每次即興咒語將施加1個【中毒】"
+  },
+  {
+    "key": "language_10032443",
+    "content": "己方主動使用咒語時，額外計入等同於階數的啟示點"
+  },
+  {
+    "key": "language_10032444",
+    "content": "消耗靈光時，自身術法威力提升20%，持續2回合"
+  },
+  {
+    "key": "language_10032445",
+    "content": "即興咒語將降低敵人5%精神防禦，持續2回合，可疊加至多5層，每層持續時間獨立計算"
+  },
+  {
+    "key": "language_10032446",
+    "content": "消耗靈光時，自身疊加2層【幸運】"
+  },
+  {
+    "key": "language_10032447",
+    "content": "己方消耗靈光時將額外計入1點【啟示】"
+  },
+  {
+    "key": "language_10032448",
+    "content": "己方損失生命時將累計【薪血】；\n己方每回合開始時，最大生命提升5%"
+  },
+  {
+    "key": "language_10032449",
+    "content": "己方損失生命時將累計【薪血】；\n己方每回合開始時，最大生命提升5%；\n己方攻擊時，附加自身最大生命*20%的本源創傷"
+  },
+  {
+    "key": "language_10032450",
+    "content": "己方損失生命時將累計【薪血】；\n己方每回合開始時，最大生命提升10%；\n己方攻擊時，附加自身最大生命*50%的本源創傷"
+  },
+  {
+    "key": "language_10032451",
+    "content": "回合結束時，失去10%當前生命，獲得最大生命*10%的護盾，生命低於30%則不會失去生命"
+  },
+  {
+    "key": "language_10032452",
+    "content": "回合結束時，若生命低於50%，【薪血】+8；若高於50%，則使【薪血】+4"
+  },
+  {
+    "key": "language_10032453",
+    "content": "受到攻擊時，每損失10%生命，受創回復+20%"
+  },
+  {
+    "key": "language_10032454",
+    "content": "攻擊時，附加自身最大生命*50%的本源創傷"
+  },
+  {
+    "key": "language_10032455",
+    "content": "【薪血】高於20時，至終的儀式傷害提升20%；【薪血】高於40時，至終的儀式傷害提升60%"
+  },
+  {
+    "key": "language_10032456",
+    "content": "行動後，累計1點【薪血】"
+  },
+  {
+    "key": "language_10032457",
+    "content": "瀕死時消耗10點【薪血】，回復自身最大生命*50%的生命，每場戰鬥限2次"
+  },
+  {
+    "key": "language_10032458",
+    "content": "行動後，回復自身最大生命*20%的生命；若自身滿血，則使己方全體回復最大生命*10%的生命"
+  },
+  {
+    "key": "language_10032459",
+    "content": "【薪血】高於20時，額外行動傷害提升50%"
+  },
+  {
+    "key": "language_10032460",
+    "content": "進入戰鬥時，自身最大生命提升50%，並使其他友方提升自身最大生命*10%的最大生命"
+  },
+  {
+    "key": "language_10032461",
+    "content": "回合開始時不處於【湧動電場】下，佈設【湧動電場lv1】；\n回合結束時，己方獲得5層【電能】並注入，隨機釋放1次【電擊Ⅰ】"
+  },
+  {
+    "key": "language_10032462",
+    "content": "回合開始時不處於【湧動電場】下，佈設【湧動電場lv1】；\n回合結束時，己方獲得5層【電能】並注入，隨機釋放2次【電擊Ⅱ】"
+  },
+  {
+    "key": "language_10032463",
+    "content": "回合開始時不處於【湧動電場】下，佈設【湧動電場lv1】；\n回合結束時，己方獲得10層【電能】並注入，隨機釋放3次【電擊Ⅲ】"
+  },
+  {
+    "key": "language_10032464",
+    "content": "造成1次自身100%攻擊力的本源傷害"
+  },
+  {
+    "key": "language_10032465",
+    "content": "造成2次自身100%攻擊力的本源傷害"
+  },
+  {
+    "key": "language_10032466",
+    "content": "造成3次自身100%攻擊力的本源傷害"
+  },
+  {
+    "key": "language_10032467",
+    "content": "對敵方全體造成1次自身100%攻擊力的本源傷害"
+  },
+  {
+    "key": "language_10032468",
+    "content": "對敵方全體造成2次自身100%攻擊力的本源傷害"
+  },
+  {
+    "key": "language_10032469",
+    "content": "對敵方全體造成3次自身100%攻擊力的本源傷害"
+  },
+  {
+    "key": "language_10032470",
+    "content": "回合開始時若【湧動電場】等級低於lv2，佈設【湧動電場lv2】"
+  },
+  {
+    "key": "language_10032471",
+    "content": "回合結束時，若處於【湧動電場lv1】，釋放1次【電擊Ⅰ】；若處於【湧動電場lv2】，釋放2次【電擊Ⅱ】；若處於【湧動電場lv3】，釋放3次【電擊Ⅲ】"
+  },
+  {
+    "key": "language_10032472",
+    "content": "主動攻擊時，若處於【湧動電場lv1】，額外釋放1次【電擊Ⅰ】；若處於【湧動電場lv2】，額外釋放1次【電擊Ⅱ】；若處於【湧動電場lv3】，額外釋放1次【電擊Ⅲ】"
+  },
+  {
+    "key": "language_10032473",
+    "content": "回合結束時，若處於【湧動電場lv1】，釋放1次【閃電風暴Ⅰ】；若處於【湧動電場lv2】，釋放2次【閃電風暴Ⅱ】；若處於【湧動電場lv3】，釋放3次【閃電風暴Ⅲ】"
+  },
+  {
+    "key": "language_10032474",
+    "content": "主動攻擊時，若處於【湧動電場lv1】，額外釋放1次【閃電風暴Ⅰ】；若處於【湧動電場lv2】，額外釋放1次【閃電風暴Ⅱ】；若處於【湧動電場lv3】，額外釋放1次【閃電風暴Ⅲ】"
+  },
+  {
+    "key": "language_10032475",
+    "content": "主動使用咒語時，獲得層數等同於階數2倍的【電能】並注入"
+  },
+  {
+    "key": "language_10032476",
+    "content": "己方釋放至終的儀式時，根據持有的【電能】層數提升儀式威力，每層提升5%"
+  },
+  {
+    "key": "language_10032477",
+    "content": "若處於【湧動電場lv1】，傷害提升10%；若處於【湧動電場lv2】，傷害提升30%；若處於【湧動電場lv3】，傷害提升75%"
+  },
+  {
+    "key": "language_10032478",
+    "content": "若處於【湧動電場lv2】，行動點+1；若處於【湧動電場lv3】，行動點+2"
+  },
+  {
+    "key": "language_10032479",
+    "content": "回合開始時，使己方所有咒語升至3階，若【湧動電場】等級低於lv3，佈設【湧動電場lv3】"
+  },
+  {
+    "key": "language_10032509",
+    "content": "受到刺殺攻擊後，自身獲得1層【傾力】"
+  },
+  {
+    "key": "language_10032510",
+    "content": "受到非刺殺攻擊後，自身獲得1層【洞察】"
+  },
+  {
+    "key": "language_10032511",
+    "content": "回合結束時，若場上存在【紙片遊行】/【床單波浪】/【告別大地】，則自身獲得1層【傾力】"
+  },
+  {
+    "key": "language_10032512",
+    "content": "回合結束時，若場上存在【無形無影】，則自身獲得1層【傾力】"
+  },
+  {
+    "key": "language_10032513",
+    "content": "單體攻擊，造成200%現實創傷，使己方全體造成傷害提升20%，持續2回合"
+  },
+  {
+    "key": "language_10032514",
+    "content": "單體攻擊，造成300%現實創傷，使己方全體造成傷害提升20%，持續2回合"
+  },
+  {
+    "key": "language_10032515",
+    "content": "單體攻擊，造成200%現實創傷，使己方全體受到傷害降低20%，持續2回合"
+  },
+  {
+    "key": "language_10032516",
+    "content": "單體攻擊，造成300%現實創傷，使己方全體受到傷害降低20%，持續2回合"
+  },
+  {
+    "key": "language_10032517",
+    "content": "群體攻擊，對敵方全體造成250%現實創傷，並驅使其他友方進行追擊"
+  },
+  {
+    "key": "language_10032518",
+    "content": "【目擊值】達到滿值時，召喚1個聖殿騎士·兵卒（場上最多存在2名其他友方）"
+  },
+  {
+    "key": "language_10032519",
+    "content": "回合開始時若存在其他友方，則自身獲得受到傷害降低20%，持續1回合；\n自身退場時，使其他友方獲得受到傷害提升50%，持續2回合"
+  },
+  {
+    "key": "language_10032520",
+    "content": ""
+  },
+  {
+    "key": "language_10032521",
+    "content": "單體攻擊，造成200%現實創傷，每存在1個其他友方，則額外附加自身攻擊*50%的本源創傷"
+  },
+  {
+    "key": "language_10032522",
+    "content": "單體攻擊，造成300%現實創傷，每存在1個其他友方，則額外附加自身攻擊*50%的本源創傷"
+  },
+  {
+    "key": "language_10032523",
+    "content": "群體攻擊，造成150%現實創傷，每存在1個其他友方，則額外附加自身攻擊*50%的本源創傷"
+  },
+  {
+    "key": "language_10032524",
+    "content": "群體攻擊，造成225%現實創傷，每存在1個其他友方，則額外附加自身攻擊*50%的本源創傷"
+  },
+  {
+    "key": "language_10032525",
+    "content": "單體攻擊，造成300%現實創傷，每存在1個其他友方，則額外附加自身攻擊*100%的本源創傷"
+  },
+  {
+    "key": "language_10032526",
+    "content": "回合開始時，每存在1個其他友方，則【目擊值】提升1次；\n其他友方退場時，移除自身【護盾】並清空【目擊值】"
+  },
+  {
+    "key": "language_10032527",
+    "content": "單體攻擊，造成200%現實創傷，本次攻擊穿透率提升20%"
+  },
+  {
+    "key": "language_10032528",
+    "content": "單體攻擊，造成300%現實創傷，本次攻擊穿透率提升30%"
+  },
+  {
+    "key": "language_10032529",
+    "content": "群體攻擊，對2名敵方造成150%現實創傷，並賦予目標1層【脆弱】"
+  },
+  {
+    "key": "language_10032530",
+    "content": "群體攻擊，對2名敵方造成225%現實創傷，並賦予目標2層【脆弱】"
+  },
+  {
+    "key": "language_10032531",
+    "content": "群體攻擊，對敵方全體造成250%現實創傷，使自身【目擊值】大幅提升"
+  },
+  {
+    "key": "language_10032532",
+    "content": "【目擊值】達到滿值時，自身進入【瞄準】狀態2回合，且隨機敵方陷入【準心】狀態；失去【瞄準】狀態後清空【目擊值】"
+  },
+  {
+    "key": "language_10032533",
+    "content": ""
+  },
+  {
+    "key": "language_10032534",
+    "content": "單體攻擊，造成200%現實創傷；若自身生命高於50%，則獲得【嘲諷】1回合"
+  },
+  {
+    "key": "language_10032535",
+    "content": "單體攻擊，造成300%現實創傷；若自身生命高於50%，則獲得【嘲諷】1回合"
+  },
+  {
+    "key": "language_10032536",
+    "content": "單體攻擊，造成200%現實創傷，使自身【目擊值】提升"
+  },
+  {
+    "key": "language_10032537",
+    "content": "單體攻擊，造成300%現實創傷，使自身【目擊值】提升"
+  },
+  {
+    "key": "language_10032538",
+    "content": "單體攻擊，造成300%現實創傷，且自身受到傷害降低50%，持續2回合"
+  },
+  {
+    "key": "language_10032539",
+    "content": "進入戰鬥及每2回合開始時，若自身生命高於50%，現實、精神防禦提升50%，持續2回合；\n若自身生命低於50%，移除自身1種【屬性提升】且【目擊值】提升至滿"
+  },
+  {
+    "key": "language_10032540",
+    "content": "其他友方受到攻擊所承受傷害的50%改為自身承受"
+  },
+  {
+    "key": "language_10032541",
+    "content": "【目擊值】達到滿值時，自身進入【蓄力】狀態，持續2回合；失去【蓄力】狀態後清空【目擊值】"
+  },
+  {
+    "key": "language_10032542",
+    "content": "單體攻擊，造成目標最大生命*20%的本源創傷；吟誦每持續1回合，則吟誦結束時額外附加目標最大生命*10%的本源創傷"
+  },
+  {
+    "key": "language_10032543",
+    "content": ""
+  },
+  {
+    "key": "language_10032544",
+    "content": "自我吟誦，使自身進入【破譯】狀態，且受創回復提升20%，持續2回合"
+  },
+  {
+    "key": "language_10032545",
+    "content": "自我吟誦，使自身進入【破譯】狀態，且受創回復提升25%，持續2回合"
+  },
+  {
+    "key": "language_10032546",
+    "content": "群體增益，使己方全體造成傷害提升20%，持續2回合"
+  },
+  {
+    "key": "language_10032547",
+    "content": "群體增益，使己方全體造成傷害提升25%，持續2回合"
+  },
+  {
+    "key": "language_10032548",
+    "content": "群體攻擊，對敵方全體造成300%精神創傷，且額外附加目標最大生命*100%的本源創傷"
+  },
+  {
+    "key": "language_10032549",
+    "content": "回合開始時，若自身處於【破譯】狀態，則自身受創減免提升50%，持續1回合"
+  },
+  {
+    "key": "language_10032550",
+    "content": "使己方全體獲得2點激情和1層【激昂】"
+  },
+  {
+    "key": "language_10032551",
+    "content": "群體攻擊，對2名敵方造成150%精神創傷，並賦予目標和自身1層【贖罪】"
+  },
+  {
+    "key": "language_10032552",
+    "content": "群體攻擊，對2名敵方造成225%精神創傷，並賦予目標和自身2層【贖罪】"
+  },
+  {
+    "key": "language_10032553",
+    "content": "自我增強，使自身【目擊值】提升，且敵我全體回復自身已損失生命*5%"
+  },
+  {
+    "key": "language_10032554",
+    "content": "自我增強，使自身【目擊值】提升，且敵我全體回復自身已損失生命*10%"
+  },
+  {
+    "key": "language_10032555",
+    "content": "自我吟誦，使自身進入【福音<id:1>】狀態1回合，並鎖定最左側的敵方角色"
+  },
+  {
+    "key": "language_10032556",
+    "content": "激情點替換為【目擊值】，【目擊值】達到滿值時立即釋放至終的儀式，且敵我全體進入【福音室】，持續2回合"
+  },
+  {
+    "key": "language_10032557",
+    "content": "受到攻擊時若生命不高於50%，則使敵我全體進入【福音室】，持續2回合(僅觸發1次）"
+  },
+  {
+    "key": "language_10032558",
+    "content": "單體攻擊，對目標造成100%精神創傷，額外造成目標當前生命*20%的本源創傷，並賦予自身和目標5層【贖罪】"
+  },
+  {
+    "key": "language_10032559",
+    "content": ""
+  },
+  {
+    "key": "language_10032560",
+    "content": ""
+  },
+  {
+    "key": "language_10032561",
+    "content": "受到【刺殺】攻擊時，受到傷害提升50%\n無目擊值或者低目擊值可以被任意攻擊觸發【刺殺】；\n中目擊值或者高目擊值受到傷害減少30%；\n每回合開始時，【目擊值】提升；\n目擊值提升至高時，將獲得其最大生命*30%的【護盾】，【護盾】被擊破後目擊值清零"
+  },
+  {
+    "key": "language_10032562",
+    "content": "群體攻擊，對敵方全體造成150%精神創傷，並賦予目標和自身2層【贖罪】"
+  },
+  {
+    "key": "language_10032563",
+    "content": "群體攻擊，對敵方全體造成225%精神創傷，並賦予目標和自身3層【贖罪】"
+  },
+  {
+    "key": "language_10032564",
+    "content": "自我增強，使自身【目擊值】提升，且獲得【裁決】狀態，持續2回合"
+  },
+  {
+    "key": "language_10032565",
+    "content": "自我增強，使自身【目擊值】提升，且獲得【裁決】狀態，持續3回合"
+  },
+  {
+    "key": "language_10032566",
+    "content": "自我吟誦，使自身進入【福音<id:2>】狀態1回合，若未處於【懺悔間】，則使敵我全體進入【懺悔間】，持續2回合"
+  },
+  {
+    "key": "language_10032567",
+    "content": "進入二階段時，自身【目擊值】提升至滿；\n【福音室】轉化為【懺悔間】，持續2回合；當自身失去【護盾】時，移除【懺悔間】"
+  },
+  {
+    "key": "language_10032568",
+    "content": "激情點替換為【目擊值】，【目擊值】達到滿值時立即釋放至終的儀式"
+  },
+  {
+    "key": "language_10032569",
+    "content": "回合開始時，使敵我全體回復已損失生命*25%的生命"
+  },
+  {
+    "key": "language_10032570",
+    "content": "群體攻擊，對敵方全體造成100%精神創傷，額外造成目標當前生命*20%的本源創傷；\n敵方全體每共計攜帶10層【恥辱】，則額外造成目標當前生命*20%的本源創傷（最多額外造成目標當前生命*40%的本源創傷）"
+  },
+  {
+    "key": "language_10032571",
+    "content": ""
+  },
+  {
+    "key": "language_10032572",
+    "content": ""
+  },
+  {
+    "key": "language_10032573",
+    "content": ""
+  },
+  {
+    "key": "language_10032574",
+    "content": "每2回合開始時，召喚1個聖殿騎士·兵卒"
+  },
+  {
+    "key": "language_10032575",
+    "content": "進入戰鬥時，己方全體【目擊值】提升至滿"
+  },
+  {
+    "key": "language_10032576",
+    "content": ""
+  },
+  {
+    "key": "language_10032577",
+    "content": ""
+  },
+  {
+    "key": "language_10032578",
+    "content": ""
+  },
+  {
+    "key": "language_10032579",
+    "content": ""
+  },
+  {
+    "key": "language_10032580",
+    "content": ""
+  },
+  {
+    "key": "language_10032581",
+    "content": ""
+  },
+  {
+    "key": "language_10032582",
+    "content": ""
+  },
+  {
+    "key": "language_10032583",
+    "content": ""
+  },
+  {
+    "key": "language_10032584",
+    "content": ""
+  },
+  {
+    "key": "language_10032585",
+    "content": ""
+  },
+  {
+    "key": "language_10032586",
+    "content": ""
+  },
+  {
+    "key": "language_10032587",
+    "content": "群體攻擊，對敵方全體造成150%精神創傷，移除自身2層【恥辱】，並賦予目標和自身2層【贖罪】"
+  },
+  {
+    "key": "language_10032588",
+    "content": "群體攻擊，對敵方全體造成300%精神創傷；敵方全體若共計攜帶20層【恥辱】，則額外造成目標最大生命*40%的本源創傷，並移除目標10層【恥辱】；之後使【福音室】轉化為【懺悔間】，持續2回合，並驅散自身所有【狀態異常】【控制】"
+  },
+  {
+    "key": "language_10032589",
+    "content": "回合開始時，若不存在【福音室】或【懺悔間】，則使敵我全體進入【福音室】"
+  },
+  {
+    "key": "language_10032590",
+    "content": "受到【刺殺】攻擊後，自身獲得1層【恥辱】；受到非【刺殺】攻擊後，自身和攻擊來源獲得1層【恥辱】"
+  },
+  {
+    "key": "language_10032591",
+    "content": "處於低/中/高【目擊值】時，自身受到傷害降低15%/30%/60%"
+  },
+  {
+    "key": "language_10032592",
+    "content": "受到【刺殺】攻擊時，受到傷害提升50%\n無目擊值或者低目擊值可以被任意攻擊觸發【刺殺】；\n每回合的目擊值將會提升，目擊值提升後受到傷害也會隨之減少30%；\n目擊值提升至高時，將獲得其最大生命*30%的【護盾】，【護盾】被擊破後目擊值清零"
+  },
+  {
+    "key": "language_10032593",
+    "content": "處於低/中/高【目擊值】時，自身最終免傷提升10%/20%/40%"
+  },
+  {
+    "key": "language_10032594",
+    "content": "受到【刺殺】攻擊時，受到傷害提升50%\n無目擊值或者低目擊值可以被任意攻擊觸發【刺殺】；\n每回合的目擊值將會提升，目擊值提升後受到傷害也會隨之減少30%；\n目擊值提升至高時，將獲得其最大生命*50%的【護盾】，【護盾】被擊破後目擊值清零"
+  },
+  {
+    "key": "language_10032595",
+    "content": ""
+  },
+  {
+    "key": "language_10032596",
+    "content": ""
+  },
+  {
+    "key": "language_10032597",
+    "content": ""
+  },
+  {
+    "key": "language_10032598",
+    "content": "受到攻擊後，自身和攻擊來源獲得1層【恥辱】；若受到攻擊未暴擊，則攻擊來源額外獲得1層【恥辱】"
+  },
+  {
+    "key": "language_10032599",
+    "content": ""
+  },
+  {
+    "key": "language_10032600",
+    "content": ""
+  },
+  {
+    "key": "language_10032601",
+    "content": ""
+  },
+  {
+    "key": "language_10032602",
+    "content": ""
+  },
+  {
+    "key": "language_10032603",
+    "content": "其他友方受到攻擊所承受傷害的20%改為自身承受；退場後，對古諺中的神跡造成自身最大生命*20%的本源創傷"
+  },
+  {
+    "key": "language_10032604",
+    "content": "每回合開始時獲得1層【成長】，受到致命傷害後驅散己方全體【成長】"
+  },
+  {
+    "key": "language_10032605",
+    "content": "每次受到攻擊時，本回合受創減免減低5%，最多疊加5次"
+  },
+  {
+    "key": "language_10032606",
+    "content": "每次受到攻擊時，本回合受創減免減低5%，最多疊加8次"
+  },
+  {
+    "key": "language_10032607",
+    "content": "回合結束時，對敵方最前方角色釋放至終的儀式"
+  },
+  {
+    "key": "language_10032608",
+    "content": "回合結束時，若攜帶至少3種子彈，下回合行動點+1"
+  },
+  {
+    "key": "language_10032609",
+    "content": "退場後，使其他友方失去5層【禦寒絨毛】"
+  },
+  {
+    "key": "language_10032610",
+    "content": "攻擊時暴擊創傷提升30%；若攻擊為【刺殺】攻擊，則暴擊創傷額外提升30%"
+  },
+  {
+    "key": "language_10032611",
+    "content": "額外行動造成傷害提升20%；釋放至終的儀式時，儀式威力提升20%"
+  },
+  {
+    "key": "language_10032612",
+    "content": "【恐懼燒灼之日<id:0>】額外造成80%現實創傷，最多疊加5層（效果可疊加）"
+  },
+  {
+    "key": "language_10032613",
+    "content": "【恐懼燒灼之日<id:4>】額外造成100%現實創傷，最多疊加5層（效果可疊加）"
+  },
+  {
+    "key": "language_10032614",
+    "content": "【恐懼燒灼之日<id:5>】額外造成100%現實創傷，最多疊加5層（效果可疊加）"
+  },
+  {
+    "key": "language_10032615",
+    "content": ""
+  },
+  {
+    "key": "language_10032616",
+    "content": ""
+  },
+  {
+    "key": "language_10032617",
+    "content": ""
+  },
+  {
+    "key": "language_10032618",
+    "content": ""
+  },
+  {
+    "key": "language_10032619",
+    "content": ""
+  },
+  {
+    "key": "language_10032620",
+    "content": ""
+  },
+  {
+    "key": "language_10032621",
+    "content": ""
+  },
+  {
+    "key": "language_10032622",
+    "content": ""
+  },
+  {
+    "key": "language_10032623",
+    "content": ""
+  },
+  {
+    "key": "language_10032624",
+    "content": ""
+  },
+  {
+    "key": "language_10032625",
+    "content": "用於生成預備咒語或強化咒語"
+  },
+  {
+    "key": "language_10032626",
+    "content": "使用2/3階咒語時，使自身激情+1；\n任意己方使用2/3階咒語後，馬庫斯獲得1/2層【閱歷】；\n回合開始時，消耗1/2層【閱歷】，生成一張1/2階預備咒語-精讀課；消耗1/2層【閱歷】，生成一張1/2階預備咒語-與燈火中（不可驅散）"
+  },
+  {
+    "key": "language_10032627",
+    "content": "馬庫斯攻擊【標注<id:1>】目標時，溢出暴擊率轉化為暴擊創傷，並回復1靈光（不可驅散）"
+  },
+  {
+    "key": "language_10032628",
+    "content": ""
+  },
+  {
+    "key": "language_10032629",
+    "content": ""
+  },
+  {
+    "key": "language_10032630",
+    "content": ""
+  },
+  {
+    "key": "language_10032631",
+    "content": "創傷加成+25%，受創回復+25%；不會受到【屬性削弱】影響；最大生命值提升30%；每擁有1000點最大生命，提升自身50攻擊（不可驅散）"
+  },
+  {
+    "key": "language_10032632",
+    "content": "創傷加成+25%，受創回復+25%；不會受到【屬性削弱】影響；最大生命值提升80%；每擁有1000點最大生命，提升自身70攻擊（不可驅散）"
+  },
+  {
+    "key": "language_10032633",
+    "content": "創傷加成+25%，受創回復+25%；不會受到【屬性削弱】影響；最大生命值提升150%；每擁有1000點最大生命，提升自身120攻擊（不可驅散）"
+  },
+  {
+    "key": "language_10032634",
+    "content": "術法威力提升40%，穿透率提升30%"
+  },
+  {
+    "key": "language_10032635",
+    "content": "造成傷害降低25%（使用咒語暴擊後減少1層）"
+  },
+  {
+    "key": "language_10032636",
+    "content": "暴擊率提升30%，穿透率提升30%"
+  },
+  {
+    "key": "language_10032637",
+    "content": "受到攻擊後使用【拙劣揮砍】進行反擊，受到【刺殺】攻擊後解除"
+  },
+  {
+    "key": "language_10032638",
+    "content": "若持續回合結束後仍處於該狀態，則釋放至終的儀式進行攻擊；失去護盾時，則將中止該狀態"
+  },
+  {
+    "key": "language_10032639",
+    "content": "現實防禦，精神防禦降低10%（可以疊加，最多疊加10層）"
+  },
+  {
+    "key": "language_10032640",
+    "content": "現實防禦、精神防禦提升40%，吸血率提升100%"
+  },
+  {
+    "key": "language_10032641",
+    "content": "儀式威力-100%"
+  },
+  {
+    "key": "language_10032642",
+    "content": "現實防禦-20%（可以疊加）"
+  },
+  {
+    "key": "language_10032643",
+    "content": "精神防禦-20%（可以疊加）"
+  },
+  {
+    "key": "language_10032644",
+    "content": "受創減免+20%（可疊加）"
+  },
+  {
+    "key": "language_10032645",
+    "content": "暴擊防禦+5%，受創減免+5%（可以疊加，最多疊加20層）"
+  },
+  {
+    "key": "language_10032646",
+    "content": "暴擊率-80%"
+  },
+  {
+    "key": "language_10032647",
+    "content": ""
+  },
+  {
+    "key": "language_10032648",
+    "content": ""
+  },
+  {
+    "key": "language_10032649",
+    "content": ""
+  },
+  {
+    "key": "language_10032650",
+    "content": ""
+  },
+  {
+    "key": "language_10032651",
+    "content": ""
+  },
+  {
+    "key": "language_10032652",
+    "content": ""
+  },
+  {
+    "key": "language_10032653",
+    "content": "埃齊歐吸引目標注意，受到部分攻擊時，埃齊歐會優先成為攻擊目標"
+  },
+  {
+    "key": "language_10032654",
+    "content": "己方受到攻擊後，埃齊歐發動【反制擊殺】進行反擊（重複施加會疊加持續回合，不可驅散）"
+  },
+  {
+    "key": "language_10032655",
+    "content": "己方受到攻擊後，埃齊歐發動【反制擊殺<id:3>】進行反擊（重複施加會疊加持續回合，不可驅散）"
+  },
+  {
+    "key": "language_10032656",
+    "content": "疊加8層後，變為獲得【刺客大師】狀態，若其他友方存在【刺殺】角色，將使其他友方也都獲得【刺客大師】狀態，提升效果為埃齊歐的50%，【刺殺】角色的提升效果為埃齊歐的70%"
+  },
+  {
+    "key": "language_10032657",
+    "content": "【刺殺】時與攻擊目標每差距100點暴擊技巧，本次攻擊最終造成傷害額外提升5%"
+  },
+  {
+    "key": "language_10032658",
+    "content": "【刺殺】時與攻擊目標每差距100點暴擊技巧，本次攻擊最終造成傷害額外提升3.5%"
+  },
+  {
+    "key": "language_10032659",
+    "content": "【刺殺】時與攻擊目標每差距100點暴擊技巧，本次攻擊最終造成傷害額外提升2.5%"
+  },
+  {
+    "key": "language_10032660",
+    "content": "疊加8層後，變為獲得【刺客大師<id:1>】狀態，若其他友方存在【刺殺】角色，將使其他友方也都獲得【刺客大師<id:1>】狀態，提升效果為埃齊歐的50%，【刺殺】角色的提升效果為埃齊歐的70%"
+  },
+  {
+    "key": "language_10032661",
+    "content": "【刺殺】時與攻擊目標每差距100點暴擊技巧，本次攻擊最終造成傷害額外提升9%"
+  },
+  {
+    "key": "language_10032662",
+    "content": "【刺殺】時與攻擊目標每差距100點暴擊技巧，本次攻擊最終造成傷害額外提升6.3%"
+  },
+  {
+    "key": "language_10032663",
+    "content": "【刺殺】時與攻擊目標每差距100點暴擊技巧，本次攻擊最終造成傷害額外提升4.5%"
+  },
+  {
+    "key": "language_10032664",
+    "content": "疊加8層後，變為獲得【刺客大師<id:2>】狀態，若其他友方存在【刺殺】角色，將使其他友方也都獲得【刺客大師<id:2>】狀態，提升效果為埃齊歐的50%，【刺殺】角色的提升效果為埃齊歐的70%"
+  },
+  {
+    "key": "language_10032665",
+    "content": "【刺殺】時與攻擊目標每差距100點暴擊技巧，本次攻擊最終造成傷害額外提升10%"
+  },
+  {
+    "key": "language_10032666",
+    "content": "【刺殺】時與攻擊目標每差距100點暴擊技巧，本次攻擊最終造成傷害額外提升7%"
+  },
+  {
+    "key": "language_10032667",
+    "content": "疊加8層後，變為獲得【刺客大師<id:3>】狀態，若其他友方存在【刺殺】角色，將使其他友方也都獲得【刺客大師<id:3>】狀態，提升效果為埃齊歐的50%，【刺殺】角色的提升效果為埃齊歐的70%"
+  },
+  {
+    "key": "language_10032668",
+    "content": "【刺殺】時與攻擊目標每差距100點暴擊技巧，本次攻擊最終造成傷害額外提升11%"
+  },
+  {
+    "key": "language_10032669",
+    "content": "【刺殺】時與攻擊目標每差距100點暴擊技巧，本次攻擊最終造成傷害額外提升7.7%"
+  },
+  {
+    "key": "language_10032670",
+    "content": "【刺殺】時與攻擊目標每差距100點暴擊技巧，本次攻擊最終造成傷害額外提升5.5%"
+  },
+  {
+    "key": "language_10032671",
+    "content": "暴擊創傷+30%，受創減免+40%"
+  },
+  {
+    "key": "language_10032672",
+    "content": "其他友方主動使用咒語攻擊的主目標時，埃齊歐會消耗目標1層【刺客印記】並對該目標釋放【行於黑暗】，本次攻擊視為1次追擊，不會使目標獲得【刺客印記】（最多疊加5層）"
+  },
+  {
+    "key": "language_10032673",
+    "content": "釋放至終的儀式時消耗，每消耗3層可以額外選擇對目標發動1次【箭矢同心】或【鋒刃同心】（最多疊加6層）"
+  },
+  {
+    "key": "language_10032674",
+    "content": "釋放至終的儀式時消耗，每消耗2層可以額外選擇對目標發動1次【箭矢同心】或【鋒刃同心】（最多疊加6層）"
+  },
+  {
+    "key": "language_10032675",
+    "content": ""
+  },
+  {
+    "key": "language_10032676",
+    "content": ""
+  },
+  {
+    "key": "language_10032707",
+    "content": "攻擊時，創傷加成+100%（生效後移除）"
+  },
+  {
+    "key": "language_10032708",
+    "content": "目擊值不會提高"
+  },
+  {
+    "key": "language_10032709",
+    "content": "受到【刺殺】攻擊時，攻擊者與自身每差距100點暴擊技巧，本次攻擊最終造成傷害額外提升5%"
+  },
+  {
+    "key": "language_10032710",
+    "content": "1層【傷口】/2回合【中毒】/5層【燃燒】"
+  },
+  {
+    "key": "language_10032711",
+    "content": "中毒創傷提升2%，可疊加，至多5層"
+  },
+  {
+    "key": "language_10032712",
+    "content": "擊殺敵方單位後，將其攜帶的【傷口】【中毒】【燃燒】賦予其生命最低的友方"
+  },
+  {
+    "key": "language_10032713",
+    "content": "回合結束時受到自身攻擊*100%的本源創傷"
+  },
+  {
+    "key": "language_10032714",
+    "content": "己方免疫【心神不寧】狀態"
+  },
+  {
+    "key": "language_10032715",
+    "content": "儀式威力+5%（最多疊加6層，且不可驅散）"
+  },
+  {
+    "key": "language_10032716",
+    "content": "每次行動獲得1層計數（累計5次轉變）"
+  },
+  {
+    "key": "language_10032717",
+    "content": "每次行動獲得1層計數（累計4次轉變）"
+  },
+  {
+    "key": "language_10032718",
+    "content": "累計行動N次獲得"
+  },
+  {
+    "key": "language_10032719",
+    "content": "優先成為即興咒語的攻擊目標"
+  },
+  {
+    "key": "language_10032720",
+    "content": "精神防禦-5%，可疊加至多5層"
+  },
+  {
+    "key": "language_10032722",
+    "content": "吟誦結束後，對處於【準心】的目標釋放2次【鎖定<id:6295043>】（受到刺殺攻擊後移除）"
+  },
+  {
+    "key": "language_10032723",
+    "content": "無法使用咒語，吟誦結束後，對隨機敵方造成目標最大生命*20%的現實創傷；吟誦每持續1回合，則吟誦結束時額外附加目標最大生命*10%的現實創傷（受到2次刺殺攻擊後移除）"
+  },
+  {
+    "key": "language_10032724",
+    "content": "吟誦1回合，結束後釋放【懲戒<id:6295044>】"
+  },
+  {
+    "key": "language_10032725",
+    "content": "吟誦結束後，己方全體獲得2點激情和1層【激昂】"
+  },
+  {
+    "key": "language_10032726",
+    "content": "現實、精神防禦+50%"
+  },
+  {
+    "key": "language_10032727",
+    "content": ""
+  },
+  {
+    "key": "language_10032728",
+    "content": "受到傷害降低5%（無法驅散，可疊加最多10層）"
+  },
+  {
+    "key": "language_10032729",
+    "content": ""
+  },
+  {
+    "key": "language_10032730",
+    "content": "吟誦1回合，結束後釋放【懲戒<id:6295045>】"
+  },
+  {
+    "key": "language_10032731",
+    "content": "受到傷害提升3%；成為增益/治療/吟誦咒語目標時移除1層此狀態（無法驅散，可疊加最多20層）"
+  },
+  {
+    "key": "language_10032732",
+    "content": ""
+  },
+  {
+    "key": "language_10032733",
+    "content": "敵方行動點+1，回合開始時，若敵方共計攜帶超過10層【贖罪】，則敵方本回合行動點+1"
+  },
+  {
+    "key": "language_10032734",
+    "content": "敵我方行動點-1，回合開始時，若敵方共計攜帶超過10層【恥辱】，則敵方本回合行動點-1"
+  },
+  {
+    "key": "language_10032735",
+    "content": "自我吟誦，回合結束時對隨機敵方釋放【罪孽深重】，自身每攜帶5層【恥辱】，額外追加釋放1次【罪孽深重】（最多觸發4次）"
+  },
+  {
+    "key": "language_10032736",
+    "content": "己方行動點+1，回合開始時，若己方共計攜帶超過10層【贖罪】，則本回合行動點+1"
+  },
+  {
+    "key": "language_10032737",
+    "content": ""
+  },
+  {
+    "key": "language_10032738",
+    "content": ""
+  },
+  {
+    "key": "language_10032739",
+    "content": "“戰爭機器”的小小的齒輪（受到攻擊後失去1層）"
+  },
+  {
+    "key": "language_10032740",
+    "content": "【即興咒語】啟示大於等於1/2/3/4/5/6/7/8/9/10/11/12/13/14/15/16/17/18/19/20時，【即興咒語】攻擊次數+1/2/3/4/5/6/7/8/9/10/11/12/13/14/15/16/17/18/19/20"
+  },
+  {
+    "key": "language_10032741",
+    "content": ""
+  },
+  {
+    "key": "language_10032742",
+    "content": ""
+  },
+  {
+    "key": "language_10032743",
+    "content": ""
+  },
+  {
+    "key": "language_10032744",
+    "content": ""
+  },
+  {
+    "key": "language_10032745",
+    "content": ""
+  },
+  {
+    "key": "language_10032746",
+    "content": ""
+  },
+  {
+    "key": "language_10032747",
+    "content": "受創減免-5%（可疊加，最多8層，不可驅散）"
+  },
+  {
+    "key": "language_10032748",
+    "content": "敵方回合開始時，若敵方共計攜帶超過10層【贖罪】，則敵方本回合行動點+1"
+  },
+  {
+    "key": "language_10032749",
+    "content": "敵方回合開始時，若敵方共計攜帶超過10層【恥辱】，則敵方本回合行動點-1"
+  },
+  {
+    "key": "language_10032750",
+    "content": "創傷加成+2%（可疊加最多10層）"
+  },
+  {
+    "key": "language_10032751",
+    "content": "往頁之所以珍貴"
+  },
+  {
+    "key": "language_10032752",
+    "content": "如何托舉一輪理想"
+  },
+  {
+    "key": "language_10032753",
+    "content": "生命轉圜如潮"
+  },
+  {
+    "key": "language_10032754",
+    "content": "埃齊歐·奧迪托雷"
+  },
+  {
+    "key": "language_10032755",
+    "content": "卡珊卓"
+  },
+  {
+    "key": "language_10032756",
+    "content": "群蛇的春祭"
+  },
+  {
+    "key": "language_10032757",
+    "content": "酒色之海的女兒"
+  },
+  {
+    "key": "language_10032758",
+    "content": "致冥府的門扉"
+  },
+  {
+    "key": "language_10032759",
+    "content": "以黃金哺育"
+  },
+  {
+    "key": "language_10032760",
+    "content": "智慧盡頭"
+  },
+  {
+    "key": "language_10032761",
+    "content": "征服戰未解鎖"
+  },
+  {
+    "key": "language_10032762",
+    "content": ""
+  },
+  {
+    "key": "language_10032763",
+    "content": "探索等級不足"
+  },
+  {
+    "key": "language_10032764",
+    "content": "為啟動中能力的前置條件，不可降級"
+  },
+  {
+    "key": "language_10032765",
+    "content": "能力點不足"
+  },
+  {
+    "key": "language_10032766",
+    "content": "神話生物未發現"
+  },
+  {
+    "key": "language_10032767",
+    "content": "裝備成功"
+  },
+  {
+    "key": "language_10032768",
+    "content": "神教成員尚未解鎖"
+  },
+  {
+    "key": "language_10032769",
+    "content": ""
+  },
+  {
+    "key": "language_10032770",
+    "content": ""
+  },
+  {
+    "key": "language_10032771",
+    "content": "每日5點更新次數"
+  },
+  {
+    "key": "language_10032772",
+    "content": "航海機會不足，請選擇"
+  },
+  {
+    "key": "language_10032773",
+    "content": "已達數量上限"
+  },
+  {
+    "key": "language_10032774",
+    "content": "裝配成功"
+  },
+  {
+    "key": "language_10032775",
+    "content": "請選擇追逐方向"
+  },
+  {
+    "key": "language_10032776",
+    "content": "超過重選次數上限"
+  },
+  {
+    "key": "language_10032777",
+    "content": "每日▩1%s前可以重選"
+  },
+  {
+    "key": "language_10032778",
+    "content": "暫無可用道具，前往莊園解鎖"
+  },
+  {
+    "key": "language_10032779",
+    "content": "刺客數量已達上限"
+  },
+  {
+    "key": "language_10032780",
+    "content": "已擁有【明日構想】內已下架的全部孤嶼和建築"
+  },
+  {
+    "key": "language_10032781",
+    "content": "請選擇任意孤嶼或建築"
+  },
+  {
+    "key": "language_10032782",
+    "content": "已擁有【明日構想】內已下架的全部孤嶼"
+  },
+  {
+    "key": "language_10032783",
+    "content": "已擁有【明日構想】內已下架的全部建築"
+  },
+  {
+    "key": "language_10032784",
+    "content": ""
+  },
+  {
+    "key": "language_10032785",
+    "content": "與影同行Ⅰ"
+  },
+  {
+    "key": "language_10032786",
+    "content": "與影同行Ⅱ"
+  },
+  {
+    "key": "language_10032787",
+    "content": "與西風同行Ⅰ"
+  },
+  {
+    "key": "language_10032788",
+    "content": "與西風同行Ⅱ"
+  },
+  {
+    "key": "language_10032789",
+    "content": "達·文西贈禮"
+  },
+  {
+    "key": "language_10032790",
+    "content": "兄弟會贈禮"
+  },
+  {
+    "key": "language_10032791",
+    "content": "燈芯屋饋贈"
+  },
+  {
+    "key": "language_10032792",
+    "content": "刺客禮讚·酬賓"
+  },
+  {
+    "key": "language_10032793",
+    "content": "傭兵禮讚·酬賓"
+  },
+  {
+    "key": "language_10032794",
+    "content": "刺客禮讚·特惠"
+  },
+  {
+    "key": "language_10032795",
+    "content": "傭兵禮讚·特惠"
+  },
+  {
+    "key": "language_10032796",
+    "content": "伊甸的間奏"
+  },
+  {
+    "key": "language_10032797",
+    "content": "群鷹隨行"
+  },
+  {
+    "key": "language_10032798",
+    "content": "106#翡冷翠記憶#Memories of Florence"
+  },
+  {
+    "key": "language_10032799",
+    "content": "刺客觀測回饋"
+  },
+  {
+    "key": "language_10032800",
+    "content": "大理石之家"
+  },
+  {
+    "key": "language_10032801",
+    "content": "安卓絲緹雅號"
+  },
+  {
+    "key": "language_10032802",
+    "content": "貢多拉隧道"
+  },
+  {
+    "key": "language_10032803",
+    "content": "逐鷹小巷"
+  },
+  {
+    "key": "language_10032804",
+    "content": "潛行廣場"
+  },
+  {
+    "key": "language_10032805",
+    "content": "模擬運河Ⅰ"
+  },
+  {
+    "key": "language_10032806",
+    "content": "模擬運河Ⅱ"
+  },
+  {
+    "key": "language_10032807",
+    "content": "埃齊歐·奧迪托雷的紀念旌旗"
+  },
+  {
+    "key": "language_10032808",
+    "content": "亞歷克西歐斯的紀念旌旗"
+  },
+  {
+    "key": "language_10032809",
+    "content": "卡珊卓的紀念旌旗"
+  },
+  {
+    "key": "language_10032810",
+    "content": "“時代引導先知”結束通知"
+  },
+  {
+    "key": "language_10032811",
+    "content": "“鷹翔於酒色之海”結束通知"
+  },
+  {
+    "key": "language_10032812",
+    "content": "獨一調·伊述餘音過期通知"
+  },
+  {
+    "key": "language_10032813",
+    "content": "鷹翔於酒色之海"
+  },
+  {
+    "key": "language_10032814",
+    "content": "時代引導先知"
+  },
+  {
+    "key": "language_10032815",
+    "content": "在“翡冷翠之春”中，完成章節LPdF-10“教條”[故事]難度"
+  },
+  {
+    "key": "language_10032816",
+    "content": "在“翡冷翠之春”中，完成章節LPdF-10“教條”[艱難]難度"
+  },
+  {
+    "key": "language_10032817",
+    "content": "在“入雅典記”中，完成“屋頂賽跑”章節"
+  },
+  {
+    "key": "language_10032818",
+    "content": "在“入雅典記”中，完成“金蘋果頌”章節"
+  },
+  {
+    "key": "language_10032819",
+    "content": "在“鬃毛郵報”中，委託評估累計達到120000"
+  },
+  {
+    "key": "language_10032820",
+    "content": "在“鬃毛郵報”中，本期2個委託最佳委託評估均達到A級"
+  },
+  {
+    "key": "language_10032821",
+    "content": "在“藏於日光之外”活動中，參與3次“翡冷翠合約”玩法"
+  },
+  {
+    "key": "language_10032822",
+    "content": "在“藏於日光之外”活動中，參與3次“航海記”玩法"
+  },
+  {
+    "key": "language_10032823",
+    "content": "在“數據拾遺”中，獲取200個“紛飛數據”"
+  },
+  {
+    "key": "language_10032824",
+    "content": "在[克勞迪婭財務室]中消耗10000個弗羅林"
+  },
+  {
+    "key": "language_10032825",
+    "content": "在“鬃毛郵報特刊·鷹眼”中，調查任意一個人物。"
+  },
+  {
+    "key": "language_10032826",
+    "content": "收集關於“埃齊歐身世”的所有資料庫資訊。"
+  },
+  {
+    "key": "language_10032827",
+    "content": "收集關於“卡珊卓身世”的所有資料庫資訊。"
+  },
+  {
+    "key": "language_10032828",
+    "content": "在“汽笛前奏曲”活動中領取Day1的獎勵"
+  },
+  {
+    "key": "language_10032829",
+    "content": "鐘響於暮色"
+  },
+  {
+    "key": "language_10032830",
+    "content": "看那，這陳舊勻亮的回憶，\n噗通一聲，墜入天邊紅雲。\n暮色裡鐘聲喚來墳墓裡的回憶，\n化作白鴿，失去重量，不再灼痛。\n而我等著，它不倦的無限次的重逢。"
+  },
+  {
+    "key": "language_10032831",
+    "content": "史詩的終點"
+  },
+  {
+    "key": "language_10032832",
+    "content": "盤旋，揚翅，向玫瑰色手指的黎明，\n跨步，飛躍，駛往酒色的大海。\n繳緊船舵，昂頸高歌，\n直到海妖攀上你的鋒刃，\n喚來最初的夢，將你蜇痛。"
+  },
+  {
+    "key": "language_10032851",
+    "content": "活動期間，全服完成擊殺1999萬次"
+  },
+  {
+    "key": "language_10032852",
+    "content": "活動期間，全服與箱中角色互動1999萬次"
+  },
+  {
+    "key": "language_10032853",
+    "content": "奧迪托雷別墅"
+  },
+  {
+    "key": "language_10032854",
+    "content": "藥房"
+  },
+  {
+    "key": "language_10032855",
+    "content": "軍營"
+  },
+  {
+    "key": "language_10032856",
+    "content": "鐵匠鋪"
+  },
+  {
+    "key": "language_10032857",
+    "content": "教堂"
+  },
+  {
+    "key": "language_10032858",
+    "content": "佛羅倫斯-聖喬瓦尼區"
+  },
+  {
+    "key": "language_10032859",
+    "content": "威尼斯"
+  },
+  {
+    "key": "language_10032860",
+    "content": "佛羅倫斯-聖馬可區"
+  },
+  {
+    "key": "language_10032861",
+    "content": "一場衝突JF-1"
+  },
+  {
+    "key": "language_10032862",
+    "content": "一場衝突JF-2"
+  },
+  {
+    "key": "language_10032863",
+    "content": "一場衝突JF-3"
+  },
+  {
+    "key": "language_10032864",
+    "content": "一場衝突JF-4"
+  },
+  {
+    "key": "language_10032865",
+    "content": "一場衝突VF-1"
+  },
+  {
+    "key": "language_10032866",
+    "content": "一場衝突VF-2"
+  },
+  {
+    "key": "language_10032867",
+    "content": "一場衝突VF-3"
+  },
+  {
+    "key": "language_10032868",
+    "content": "一場衝突VF-4"
+  },
+  {
+    "key": "language_10032869",
+    "content": "一場衝突MF-1"
+  },
+  {
+    "key": "language_10032870",
+    "content": "一場衝突MF-2"
+  },
+  {
+    "key": "language_10032871",
+    "content": "一場衝突MF-3"
+  },
+  {
+    "key": "language_10032872",
+    "content": "一場衝突MF-4"
+  },
+  {
+    "key": "language_10032873",
+    "content": "時代印象JT-1"
+  },
+  {
+    "key": "language_10032874",
+    "content": "時代印象JT-2"
+  },
+  {
+    "key": "language_10032875",
+    "content": "時代印象JT-3"
+  },
+  {
+    "key": "language_10032876",
+    "content": "時代印象JT-4"
+  },
+  {
+    "key": "language_10032877",
+    "content": "時代印象JT-5"
+  },
+  {
+    "key": "language_10032878",
+    "content": "時代印象JT-6"
+  },
+  {
+    "key": "language_10032879",
+    "content": "時代印象JT-7"
+  },
+  {
+    "key": "language_10032880",
+    "content": "時代印象JT-8"
+  },
+  {
+    "key": "language_10032881",
+    "content": "時代印象VT-1"
+  },
+  {
+    "key": "language_10032882",
+    "content": "時代印象VT-2"
+  },
+  {
+    "key": "language_10032883",
+    "content": "時代印象VT-3"
+  },
+  {
+    "key": "language_10032884",
+    "content": "時代印象VT-4"
+  },
+  {
+    "key": "language_10032885",
+    "content": "時代印象VT-5"
+  },
+  {
+    "key": "language_10032886",
+    "content": "時代印象MT-1"
+  },
+  {
+    "key": "language_10032887",
+    "content": "時代印象MT-2"
+  },
+  {
+    "key": "language_10032888",
+    "content": "時代印象MT-3"
+  },
+  {
+    "key": "language_10032889",
+    "content": "時代印象MT-4"
+  },
+  {
+    "key": "language_10032890",
+    "content": "時代印象MT-5"
+  },
+  {
+    "key": "language_10032891",
+    "content": "影的痕跡JS-1"
+  },
+  {
+    "key": "language_10032892",
+    "content": "影的痕跡JS-2"
+  },
+  {
+    "key": "language_10032893",
+    "content": "影的痕跡JS-3"
+  },
+  {
+    "key": "language_10032894",
+    "content": "影的痕跡JS-4"
+  },
+  {
+    "key": "language_10032895",
+    "content": "影的痕跡JS-5"
+  },
+  {
+    "key": "language_10032896",
+    "content": "影的痕跡JS-6"
+  },
+  {
+    "key": "language_10032897",
+    "content": "影的痕跡VS-1"
+  },
+  {
+    "key": "language_10032898",
+    "content": "影的痕跡VS-2"
+  },
+  {
+    "key": "language_10032899",
+    "content": "影的痕跡MS-1"
+  },
+  {
+    "key": "language_10032900",
+    "content": "影的痕跡JS-E-1"
+  },
+  {
+    "key": "language_10032901",
+    "content": "影的痕跡VS-E-1"
+  },
+  {
+    "key": "language_10032902",
+    "content": "影的痕跡VS-E-2"
+  },
+  {
+    "key": "language_10032903",
+    "content": "影的痕跡MS-E-1"
+  },
+  {
+    "key": "language_10032904",
+    "content": "影的痕跡MS-E-2"
+  },
+  {
+    "key": "language_10032905",
+    "content": "影的痕跡MS-E-3"
+  },
+  {
+    "key": "language_10032906",
+    "content": "探索等級低於敵人時，所有敵人最終增傷及最終免傷提升"
+  },
+  {
+    "key": "language_10032907",
+    "content": "探索等級與敵人相同，勢均力敵的戰鬥"
+  },
+  {
+    "key": "language_10032908",
+    "content": "探索等級高於敵人時，我方全隊角色獲得最終增傷及最終免傷提升"
+  },
+  {
+    "key": "language_10032909",
+    "content": "可領取獎勵"
+  },
+  {
+    "key": "language_10032910",
+    "content": ""
+  },
+  {
+    "key": "language_10032911",
+    "content": ""
+  },
+  {
+    "key": "language_10032912",
+    "content": ""
+  },
+  {
+    "key": "language_10032913",
+    "content": ""
+  },
+  {
+    "key": "language_10032914",
+    "content": ""
+  },
+  {
+    "key": "language_10032915",
+    "content": ""
+  },
+  {
+    "key": "language_10032916",
+    "content": ""
+  },
+  {
+    "key": "language_10032917",
+    "content": ""
+  },
+  {
+    "key": "language_10032918",
+    "content": ""
+  },
+  {
+    "key": "language_10032919",
+    "content": ""
+  },
+  {
+    "key": "language_10032920",
+    "content": ""
+  },
+  {
+    "key": "language_10032921",
+    "content": ""
+  },
+  {
+    "key": "language_10032922",
+    "content": "“據X所說，這些信使四處傳達波吉亞家族的詭計，而且隨身攜帶著整整1503枚弗洛林！如果抓到其中一個，不僅可以阻止他們的陰謀，還能再買一艘全新的‘APPLe Ⅲ’號！我們得擦亮靴子，以最熱烈的搖滾精神追上去！”"
+  },
+  {
+    "key": "language_10032923",
+    "content": "“明白船長……看起來，後者才是我們的主要目標。”"
+  },
+  {
+    "key": "language_10032924",
+    "content": ""
+  },
+  {
+    "key": "language_10032925",
+    "content": "受到攻擊時若生命不高於50%，則使敵我全體進入【福音室<id:6295019>】，持續2回合(僅觸發1次）"
+  },
+  {
+    "key": "language_10032926",
+    "content": ""
+  },
+  {
+    "key": "language_10032927",
+    "content": "自我吟誦，使自身進入【福音<id:2>】狀態1回合，若未處於【懺悔間<id:6295020>】，則使敵我全體進入【懺悔間<id:6295020>】，持續2回合"
+  },
+  {
+    "key": "language_10032928",
+    "content": "進入二階段時，自身【目擊值】提升至滿；\n【福音室<id:6295019>】轉化為【懺悔間<id:6295020>】，持續2回合；當自身失去【護盾】時，移除【懺悔間<id:6295020>】"
+  },
+  {
+    "key": "language_10032929",
+    "content": ""
+  },
+  {
+    "key": "language_10032930",
+    "content": ""
+  },
+  {
+    "key": "language_10032931",
+    "content": "群體攻擊，對敵方全體造成300%精神創傷；敵方全體若共計攜帶20層【恥辱】，則額外造成目標最大生命*40%的本源創傷，並移除目標10層【恥辱】；之後使【福音室<id:6295058>】轉化為【懺悔間<id:6295059>】，持續2回合，並驅散自身所有【狀態異常】【控制】"
+  },
+  {
+    "key": "language_10032932",
+    "content": "回合開始時，若不存在【福音室<id:6295058>】或【懺悔間<id:6295059>】，則使敵我全體進入【福音室<id:6295058>】"
+  },
+  {
+    "key": "language_10032933",
+    "content": "太陽親吻葡萄時"
+  },
+  {
+    "key": "language_10032934",
+    "content": "收錄了一段回憶的磁記錄媒介。《太陽親吻葡萄時》已經添加至氛圍製造機。"
+  },
+  {
+    "key": "language_10032935",
+    "content": "0"
+  },
+  {
+    "key": "language_10032936",
+    "content": "激情點替換為【目擊值】，【目擊值】達到滿值時立即釋放至終的儀式，且敵我全體進入【福音室<id:6295019>】，持續2回合"
+  },
+  {
+    "key": "language_10032937",
+    "content": "神話生物尚未解鎖"
+  },
+  {
+    "key": "language_10032938",
+    "content": "克勞迪婭財務室閉店通知"
+  },
+  {
+    "key": "language_10032939",
+    "content": "在“鬃毛郵報特刊·鷹眼”中，委託評估累計達到120000"
+  },
+  {
+    "key": "language_10032940",
+    "content": "在“鬃毛郵報特刊·鷹眼”中，本期2個委託最佳委託評估均達到A級"
+  },
+  {
+    "key": "language_10032941",
+    "content": "在“鬃毛郵報特刊·鷹眼”中，本期1個委託最佳委託評估均達到A級"
+  },
+  {
+    "key": "language_10032942",
+    "content": "在“鬃毛郵報特刊·鷹眼”中，本期2個委託最佳委託評估均達到S級"
+  },
+  {
+    "key": "language_10032943",
+    "content": "自我增強，使自身【目擊值】提升，且獲得【裁決】狀態，持續1回合"
+  },
+  {
+    "key": "language_10032944",
+    "content": "自我增強，獲得自身最大生命*50%的護盾，持續2回合；並進入【儀式蘊蓄<id:6295052>】狀態，持續2回合"
+  },
+  {
+    "key": "language_10032945",
+    "content": "▩1%s▩2%s【毀滅之雨<id:20>】命中時額外賦予目標1層【致命傷】\n\n當前【力場】效果強化：己方觸發【刺殺】時，附加125%創傷"
+  },
+  {
+    "key": "language_10032946",
+    "content": "0"
+  },
+  {
+    "key": "language_10032947",
+    "content": "自我增強，使自身【目擊值】提升，且獲得【裁決<id:6295057>】狀態，持續1回合"
+  },
+  {
+    "key": "language_10032948",
+    "content": "自我增強，獲得自身最大生命*60%的護盾，持續2回合；並進入【儀式蘊蓄<id:6295052>】狀態，持續2回合"
+  },
+  {
+    "key": "language_10032949",
+    "content": "受到【刺殺】攻擊後，自身獲得2層【恥辱】；受到非【刺殺】攻擊後，自身和攻擊來源獲得2層【恥辱】"
+  },
+  {
+    "key": "language_10032950",
+    "content": "受到攻擊後，自身和攻擊來源獲得2層【恥辱】；若受到攻擊未暴擊，則攻擊來源額外獲得2層【恥辱】"
+  },
+  {
+    "key": "language_10032951",
+    "content": "敵我方行動點-1，回合開始時，若敵方共計攜帶超過10層【恥辱】，則敵方本回合行動點-1；且將敵我全體攜帶的【贖罪】轉化為對應層數的【恥辱】"
+  },
+  {
+    "key": "language_10032952",
+    "content": "自我吟誦，回合結束時對隨機敵方釋放【罪孽深重<id:6295022>】，自身每攜帶5層【恥辱】，額外追加釋放1次【罪孽深重<id:6295022>】（最多觸發4次）"
+  },
+  {
+    "key": "language_10032953",
+    "content": "自我吟誦，回合結束時對隨機敵方釋放【罪孽深重<id:6295060>】，自身每攜帶5層【恥辱】，額外追加釋放1次【罪孽深重<id:6295060>】（最多觸發4次）"
+  },
+  {
+    "key": "language_10032954",
+    "content": "敵方回合開始時，若敵方共計攜帶超過10層【恥辱】，則敵方本回合行動點-1；且將敵我全體攜帶的【贖罪】轉化為對應層數的【恥辱】"
+  },
+  {
+    "key": "language_10032955",
+    "content": "在“鬃毛郵報特刊·鷹眼”中，本期1個委託最佳委託評估達到A級"
+  },
+  {
+    "key": "language_10032956",
+    "content": "在“風庫傳信”活動中領取Day1的獎勵"
+  },
+  {
+    "key": "language_10032957",
+    "content": "洞悉後解鎖"
+  },
+  {
+    "key": "language_10032958",
+    "content": "洞悉二解鎖"
+  },
+  {
+    "key": "language_10032959",
+    "content": "0"
+  },
+  {
+    "key": "language_10032960",
+    "content": "0"
+  },
+  {
+    "key": "language_10032961",
+    "content": "0"
+  },
+  {
+    "key": "language_10032962",
+    "content": "受到【刺殺】攻擊時，受到最終傷害提升50%\n每回合目擊值將會提升\n無目擊值或者低目擊值可以被任意攻擊觸發【刺殺】；\n中目擊值或者高目擊值受到傷害減少30%；\n目擊值提升至高時，將獲得其最大生命*30%的【護盾】，【護盾】被擊破後目擊值清零"
+  },
+  {
+    "key": "language_10032963",
+    "content": "單體攻擊，造成600%現實創傷，命中時賦予【刺殺傷口<id:0>】，持續3回合，本次攻擊為1次【刺殺】"
+  },
+  {
+    "key": "language_10032964",
+    "content": "單體攻擊，造成600%現實創傷，本次攻擊為1次【刺殺】，暴擊後使自身獲得【籌備·卡珊卓<id:0>】"
+  },
+  {
+    "key": "language_10032965",
+    "content": "單體攻擊，造成600%現實創傷，本次攻擊為1次【刺殺】（視為至終的儀式）"
+  },
+  {
+    "key": "language_10032966",
+    "content": "單體攻擊，造成600%現實創傷，命中時賦予【刺殺傷口<id:0>】，持續3回合，本次攻擊為1次【刺殺】，暴擊後使自身獲得【籌備·卡珊卓<id:1>】"
+  },
+  {
+    "key": "language_10032967",
+    "content": "單體攻擊，造成600%現實創傷，命中時賦予【刺殺傷口<id:0>】，持續3回合，本次攻擊為1次【刺殺】（視為至終的儀式）"
+  },
+  {
+    "key": "language_10032968",
+    "content": "群體攻擊，對敵方全體造成100%精神創傷，移除自身2層【恥辱】，並賦予目標和自身2層【贖罪】"
+  },
+  {
+    "key": "language_10032969",
+    "content": "群體攻擊，對敵方全體造成200%精神創傷；敵方全體若共計攜帶40層【恥辱】，則額外造成目標最大生命*30%的本源創傷，並移除目標20層【恥辱】；之後使【福音室<id:6295058>】轉化為【懺悔間<id:6295059>】，持續2回合，並驅散自身所有【狀態異常】【控制】"
+  },
+  {
+    "key": "language_10032970",
+    "content": "處於低/中/高【目擊值】時，自身最終免傷提升5%/10%/15%"
+  },
+  {
+    "key": "language_10032971",
+    "content": "受到【刺殺】攻擊時，受到最終傷害提升50%\n無目擊值或者低目擊值可以被任意攻擊觸發【刺殺】；\n每回合的目擊值將會提升，目擊值提升後受到最終傷害也會隨之減少30%；\n目擊值提升至高時，將獲得其最大生命*50%的【護盾】，【護盾】被擊破後目擊值清零"
+  },
+  {
+    "key": "language_10032972",
+    "content": ""
+  },
+  {
+    "key": "language_10032973",
+    "content": ""
+  },
+  {
+    "key": "language_10032974",
+    "content": ""
+  },
+  {
+    "key": "language_10032975",
+    "content": ""
+  },
+  {
+    "key": "language_10032976",
+    "content": "受到攻擊時觸發【刺殺】，觸發後移除1層；受到【刺殺】攻擊時，攻擊者與自身每差距100點暴擊技巧，本次攻擊最終造成傷害額外提升1%，觸發後不移除"
+  },
+  {
+    "key": "language_10032977",
+    "content": "【力場】效果：使己方全體造成傷害提升14%"
+  },
+  {
+    "key": "language_10032978",
+    "content": "；使己方全體造成傷害提升2.8%*【三神指引】層數，己方【刺殺】角色額外提升2.8%*【三神指引】層數"
+  },
+  {
+    "key": "language_10032979",
+    "content": "；使己方全體術法威力提升18%，己方刺殺角色額外提升12%"
+  },
+  {
+    "key": "language_10032980",
+    "content": "受到攻擊時，額外受到使用者攻擊*10%的本源創傷"
+  },
+  {
+    "key": "language_10032981",
+    "content": "【力場】效果：使己方全體暴擊創傷提升27%"
+  },
+  {
+    "key": "language_10032982",
+    "content": "；使己方全體暴擊創傷提升5.4%*【三神指引】層數，己方【刺殺】角色額外提升5.4%*【三神指引】層數"
+  },
+  {
+    "key": "language_10032983",
+    "content": "；使己方全體暴擊率提升15%，己方刺殺角色額外提升10%"
+  },
+  {
+    "key": "language_10032984",
+    "content": "【力場】效果：使己方全體攻擊提升7%"
+  },
+  {
+    "key": "language_10032985",
+    "content": "；使己方全體攻擊提升1.4%*【三神指引】層數，己方【刺殺】角色額外提升1.4%*【三神指引】層數"
+  },
+  {
+    "key": "language_10032986",
+    "content": "；使己方全體穿透率提升24%，己方刺殺角色額外提升16%"
+  },
+  {
+    "key": "language_10032987",
+    "content": "；使己方全體造成傷害提升4.8%*【三神指引】層數，己方【刺殺】角色額外提升4.8%*【三神指引】層數"
+  },
+  {
+    "key": "language_10032988",
+    "content": "；使己方全體暴擊創傷提升9.3%*【三神指引】層數，己方【刺殺】角色額外提升9.3%*【三神指引】層數"
+  },
+  {
+    "key": "language_10032989",
+    "content": "；使己方全體攻擊提升2.8%*【三神指引】層數，己方【刺殺】角色額外提升2.8%*【三神指引】層數"
+  },
+  {
+    "key": "language_10032990",
+    "content": "；使己方全體術法威力提升30%，己方刺殺角色額外提升20%"
+  },
+  {
+    "key": "language_10032991",
+    "content": "；使己方全體暴擊率提升24%，己方刺殺角色額外提升16%"
+  },
+  {
+    "key": "language_10032992",
+    "content": "；使己方全體穿透率提升42%，己方刺殺角色額外提升28%"
+  },
+  {
+    "key": "language_10032993",
+    "content": "自我吟誦，回合結束時對隨機敵方釋放【罪孽深重<id:6295060>】，自身每攜帶5層【恥辱】，額外追加釋放1次【罪孽深重<id:6295060>】（最多觸發3次）"
+  },
+  {
+    "key": "language_10032994",
+    "content": "敵方回合開始時，若敵方共計攜帶超過20層【贖罪】，則敵方本回合行動點+1"
+  },
+  {
+    "key": "language_10032995",
+    "content": "敵方回合開始時，若敵方共計攜帶超過40層【恥辱】，則敵方本回合行動點-1；且將敵我全體攜帶的【贖罪】轉化為對應層數的【恥辱】"
+  },
+  {
+    "key": "language_10032996",
+    "content": "【刺殺】時卡珊卓與攻擊目標每差距100點技巧，本次攻擊最終造成傷害額外提升1%"
+  },
+  {
+    "key": "language_10032997",
+    "content": "【刺殺】時卡珊卓與攻擊目標每差距100點技巧，本次攻擊最終造成傷害額外提升4%"
+  },
+  {
+    "key": "language_10032998",
+    "content": "單體攻擊，造成400%現實創傷，本次攻擊為1次【刺殺】，命中後將賦予目標1層【刺客印記】"
+  },
+  {
+    "key": "language_10032999",
+    "content": "單體攻擊，造成600%現實創傷，本次攻擊為1次【刺殺】，命中後將賦予目標1層【刺客印記】"
+  },
+  {
+    "key": "language_10033000",
+    "content": "單體攻擊，造成1000%現實創傷，本次攻擊為1次【刺殺】，命中後將賦予目標1層【刺客印記】"
+  },
+  {
+    "key": "language_10033001",
+    "content": "單體攻擊，造成450%現實創傷，本次攻擊為1次【刺殺】"
+  },
+  {
+    "key": "language_10033002",
+    "content": "單體攻擊，造成675%現實創傷，本次攻擊為1次【刺殺】"
+  },
+  {
+    "key": "language_10033003",
+    "content": "單體攻擊，造成1125%現實創傷，本次攻擊為1次【刺殺】"
+  },
+  {
+    "key": "language_10033004",
+    "content": "單體攻擊，造成450%現實創傷，本次攻擊為1次【刺殺】，命中後將賦予目標2層【刺客印記】"
+  },
+  {
+    "key": "language_10033005",
+    "content": "單體攻擊，造成675%現實創傷，本次攻擊為1次【刺殺】，命中後將賦予目標2層【刺客印記】"
+  },
+  {
+    "key": "language_10033006",
+    "content": "單體攻擊，造成1125%現實創傷，本次攻擊為1次【刺殺】，命中後將賦予目標2層【刺客印記】"
+  },
+  {
+    "key": "language_10033007",
+    "content": "【箭矢同心】：單體攻擊，造成100%現實創傷，若目標當前生命低於50%，則額外造成50%現實創傷，本次攻擊為1次【刺殺】"
+  },
+  {
+    "key": "language_10033008",
+    "content": "【鋒刃同心】：單體攻擊，造成100%現實創傷，若目標當前生命高於等於50%，則額外造成50%現實創傷，本次攻擊為1次【刺殺】"
+  },
+  {
+    "key": "language_10033009",
+    "content": "【死亡並非殘酷】：單體攻擊，造成700%現實創傷，本次攻擊為1次【刺殺】"
+  },
+  {
+    "key": "language_10033010",
+    "content": "【箭矢同心】：單體攻擊，造成140%現實創傷，若目標當前生命低於50%，則額外造成50%現實創傷，本次攻擊為1次【刺殺】"
+  },
+  {
+    "key": "language_10033011",
+    "content": "【鋒刃同心】：單體攻擊，造成140%現實創傷，若目標當前生命高於等於50%，則額外造成50%現實創傷，本次攻擊為1次【刺殺】"
+  },
+  {
+    "key": "language_10033012",
+    "content": "【死亡並非殘酷】：單體攻擊，造成900%現實創傷，本次攻擊為1次【刺殺】"
+  },
+  {
+    "key": "language_10033013",
+    "content": "單體攻擊，造成500%現實創傷，本次攻擊為1次【刺殺】，本次攻擊暴擊創傷提升50%"
+  },
+  {
+    "key": "language_10033014",
+    "content": "單體攻擊，造成600%現實創傷，本次攻擊為1次【刺殺】，本次攻擊暴擊創傷提升50%"
+  },
+  {
+    "key": "language_10033015",
+    "content": "單體攻擊，造成500%現實創傷，本次攻擊為1次【刺殺】"
+  },
+  {
+    "key": "language_10033016",
+    "content": ""
+  },
+  {
+    "key": "language_10033017",
+    "content": ""
+  },
+  {
+    "key": "language_10033018",
+    "content": ""
+  },
+  {
+    "key": "language_10033019",
+    "content": ""
+  },
+  {
+    "key": "language_10033020",
+    "content": ""
+  },
+  {
+    "key": "language_10033021",
+    "content": ""
+  },
+  {
+    "key": "language_10033022",
+    "content": ""
+  },
+  {
+    "key": "language_10033023",
+    "content": ""
+  },
+  {
+    "key": "language_10033024",
+    "content": "創傷加成+25%，受創回復+25%；不會受到【屬性削弱】影響；最大生命值提升10%；每擁有1000點最大生命，提升自身50攻擊（不可驅散）"
+  },
+  {
+    "key": "language_10033025",
+    "content": "創傷加成+25%，受創回復+25%；不會受到【屬性削弱】影響；最大生命值提升30%；每擁有1000點最大生命，提升自身70攻擊（不可驅散）"
+  },
+  {
+    "key": "language_10033026",
+    "content": "創傷加成+25%，受創回復+25%；不會受到【屬性削弱】影響；最大生命值提升60%；每擁有1000點最大生命，提升自身120攻擊（不可驅散）"
+  },
+  {
+    "key": "language_10033027",
+    "content": ""
+  },
+  {
+    "key": "language_10033028",
+    "content": ""
+  },
+  {
+    "key": "language_10033029",
+    "content": ""
+  },
+  {
+    "key": "language_10033030",
+    "content": "【刺殺】時與攻擊目標每差距100點暴擊技巧，本次攻擊最終造成傷害額外提升6%"
+  },
+  {
+    "key": "language_10033031",
+    "content": "【刺殺】時與攻擊目標每差距100點暴擊技巧，本次攻擊最終造成傷害額外提升4.2%"
+  },
+  {
+    "key": "language_10033032",
+    "content": "【刺殺】時與攻擊目標每差距100點暴擊技巧，本次攻擊最終造成傷害額外提升3%"
+  },
+  {
+    "key": "language_10033033",
+    "content": "【刺殺】時與攻擊目標每差距100點暴擊技巧，本次攻擊最終造成傷害額外提升12%"
+  },
+  {
+    "key": "language_10033034",
+    "content": "【刺殺】時與攻擊目標每差距100點暴擊技巧，本次攻擊最終造成傷害額外提升8.4%"
+  },
+  {
+    "key": "language_10033035",
+    "content": ""
+  },
+  {
+    "key": "language_10033036",
+    "content": "【刺殺】時卡珊卓與攻擊目標每差距100點暴擊技巧，本次攻擊最終造成傷害額外提升1%"
+  },
+  {
+    "key": "language_10033037",
+    "content": "【刺殺】時卡珊卓與攻擊目標每差距100點暴擊技巧，本次攻擊最終造成傷害額外提升4%"
+  },
+  {
+    "key": "language_10033038",
+    "content": ""
+  },
+  {
+    "key": "language_10033039",
+    "content": ""
+  },
+  {
+    "key": "language_10033040",
+    "content": ""
+  },
+  {
+    "key": "language_10033041",
+    "content": "數據拾遺"
+  },
+  {
+    "key": "language_10033042",
+    "content": ""
+  },
+  {
+    "key": "language_10033043",
+    "content": ""
+  },
+  {
+    "key": "language_10033044",
+    "content": ""
+  },
+  {
+    "key": "language_10033045",
+    "content": ""
+  },
+  {
+    "key": "language_90001164",
+    "content": "無形無影"
+  },
+  {
+    "key": "language_90001165",
+    "content": "嗯……"
+  },
+  {
+    "key": "language_90001166",
+    "content": "好時光"
+  },
+  {
+    "key": "language_90001167",
+    "content": "通行證"
+  },
+  {
+    "key": "language_90001168",
+    "content": "斯巴達衛城"
+  },
+  {
+    "key": "language_90001169",
+    "content": "裝備"
+  },
+  {
+    "key": "language_90001170",
+    "content": "攻擊"
+  },
+  {
+    "key": "language_90001171",
+    "content": "行動力不足"
+  },
+  {
+    "key": "language_90001172",
+    "content": "回溯"
+  },
+  {
+    "key": "language_90001173",
+    "content": "第六感"
+  },
+  {
+    "key": "language_90001174",
+    "content": "水域"
+  },
+  {
+    "key": "language_90001175",
+    "content": "追擊"
+  },
+  {
+    "key": "language_90001176",
+    "content": "建築等級提升"
+  },
+  {
+    "key": "language_90001177",
+    "content": "收集"
+  },
+  {
+    "key": "language_90001178",
+    "content": "我。"
+  },
+  {
+    "key": "language_90001179",
+    "content": "偵查"
+  },
+  {
+    "key": "language_90001180",
+    "content": "追蹤"
+  },
+  {
+    "key": "language_90001181",
+    "content": "重振旗鼓"
+  },
+  {
+    "key": "language_90001182",
+    "content": "散射"
+  },
+  {
+    "key": "language_90001183",
+    "content": "航海記"
+  },
+  {
+    "key": "language_90001184",
+    "content": "荒原守望者"
+  },
+  {
+    "key": "language_90001185",
+    "content": "達摩克利斯之劍"
+  },
+  {
+    "key": "language_90001186",
+    "content": "已滿級"
+  },
+  {
+    "key": "language_90001187",
+    "content": "刺殺"
+  },
+  {
+    "key": "language_90001188",
+    "content": "紅"
+  },
+  {
+    "key": "language_90001189",
+    "content": "黃"
+  },
+  {
+    "key": "language_90001190",
+    "content": "綠"
+  },
+  {
+    "key": "language_90001191",
+    "content": "伊卡洛斯"
+  },
+  {
+    "key": "language_90001192",
+    "content": "放棄"
+  },
+  {
+    "key": "language_90001193",
+    "content": "遺體"
+  },
+  {
+    "key": "language_90001194",
+    "content": "完成輪次"
   },
   {
     "key": "language_90001153",

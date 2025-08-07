@@ -7,7 +7,6 @@ function var_0_0.buildViews(arg_1_0)
 
 	table.insert(var_1_0, MainSceneSwitchInfoDisplayView.New())
 	table.insert(var_1_0, MainSceneSwitchInfoView.New())
-	table.insert(var_1_0, TabViewGroup.New(1, "#go_btns"))
 
 	return var_1_0
 end

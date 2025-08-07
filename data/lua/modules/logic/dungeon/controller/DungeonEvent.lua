@@ -68,5 +68,6 @@ var_0_0.SwitchHardMode = 401
 var_0_0.SelectMainStorySection = 501
 var_0_0.OnCoverDungeonRecordReply = 1001
 var_0_0.OnDramaRewardStatusChange = 1101
+var_0_0.OnStartDungeonExtraParams = 1102
 
 return var_0_0

@@ -52,7 +52,17 @@ function var_0_0.isBossLayerOpen(arg_9_0, arg_9_1, arg_9_2)
 		return true
 	end
 
-	return arg_9_0:hasPassLevel(arg_9_1, arg_9_2 - 1)
+	if arg_9_0.__config:getEpisodeCO(arg_9_1, arg_9_2 - 1) then
+		return arg_9_0:hasPassLevel(arg_9_1, arg_9_2 - 1)
+	end
+
+	local var_9_0 = arg_9_0.__config:getDungeonEpisodeCO(arg_9_1, arg_9_2)
+
+	if var_9_0 and var_9_0.preEpisode ~= 0 then
+		return DungeonModel.instance:hasPassLevel(var_9_0.preEpisode)
+	end
+
+	return true
 end
 
 function var_0_0.hasGetBonusIds(arg_10_0, arg_10_1, arg_10_2)
@@ -149,101 +159,135 @@ function var_0_0.isBossOnline(arg_22_0, arg_22_1)
 	return ServerTime.now() >= arg_22_0:getStageOpenServerTime(arg_22_1)
 end
 
-function var_0_0._updateHasGetBonusIds(arg_23_0, arg_23_1, arg_23_2)
-	arg_23_0.__stageHasGetBonusIds[arg_23_1] = {}
+function var_0_0.isBossOpen(arg_23_0, arg_23_1)
+	local var_23_0 = BossRushModel.instance:getStageLayersInfo(arg_23_1)
 
-	local var_23_0 = arg_23_0.__stageHasGetBonusIds[arg_23_1]
+	for iter_23_0, iter_23_1 in pairs(var_23_0) do
+		if iter_23_1.isOpen then
+			return true
+		end
+	end
 
-	for iter_23_0, iter_23_1 in ipairs(arg_23_2) do
-		var_23_0[iter_23_1] = true
+	return false
+end
+
+function var_0_0.getBossUnlockEpisode(arg_24_0, arg_24_1)
+	local var_24_0 = arg_24_0:_getUnlockEpisodeId(arg_24_1)
+	local var_24_1 = DungeonConfig.instance:getEpisodeCO(var_24_0)
+	local var_24_2 = DungeonConfig.instance:getChapterCO(var_24_1 and var_24_1.chapterId)
+	local var_24_3 = ActivityConfig.instance:getActivityCo(var_24_2 and var_24_2.actId)
+	local var_24_4 = DungeonConfig.instance:getEpisodeDisplay(var_24_0)
+
+	return var_24_3 and var_24_3.name, var_24_4
+end
+
+function var_0_0._getUnlockEpisodeId(arg_25_0, arg_25_1)
+	local var_25_0 = BossRushModel.instance:getStageLayersInfo(arg_25_1)
+
+	for iter_25_0, iter_25_1 in pairs(var_25_0) do
+		local var_25_1 = BossRushConfig.instance:getDungeonEpisodeCO(arg_25_1, iter_25_1.layer)
+
+		if var_25_1 and var_25_1.preEpisode ~= 0 then
+			return var_25_1.preEpisode
+		end
 	end
 end
 
-function var_0_0._updateSingleHasGetBonusIds(arg_24_0, arg_24_1, arg_24_2)
-	if not arg_24_0.__stageHasGetBonusIds[arg_24_1] then
-		arg_24_0.__stageHasGetBonusIds[arg_24_1] = {}
-	end
+function var_0_0._updateHasGetBonusIds(arg_26_0, arg_26_1, arg_26_2)
+	arg_26_0.__stageHasGetBonusIds[arg_26_1] = {}
 
-	arg_24_0.__stageHasGetBonusIds[arg_24_1][arg_24_2] = true
-end
+	local var_26_0 = arg_26_0.__stageHasGetBonusIds[arg_26_1]
 
-function var_0_0._updateAll(arg_25_0, arg_25_1)
-	arg_25_0._activityId = arg_25_1.activityId
-
-	for iter_25_0, iter_25_1 in ipairs(arg_25_1.bossDetail) do
-		local var_25_0 = iter_25_1.bossId
-
-		arg_25_0.__stageInfos[var_25_0] = iter_25_1
-
-		arg_25_0:_updateHasGetBonusIds(var_25_0, iter_25_1.hasGetBonusIds)
-		arg_25_0:_setLayer4Score(iter_25_1.bossId, iter_25_1 and iter_25_1.layer4TotalPoint or 0)
-		arg_25_0:_setLayer4HightScore(iter_25_1.bossId, iter_25_1 and iter_25_1.layer4HighestPoint or 0)
+	for iter_26_0, iter_26_1 in ipairs(arg_26_2) do
+		var_26_0[iter_26_1] = true
 	end
 end
 
-function var_0_0.onReceiveGet128InfosReply(arg_26_0, arg_26_1)
-	arg_26_0:_updateAll(arg_26_1)
-	arg_26_0:_onReceiveGet128InfosReply(arg_26_1)
+function var_0_0._updateSingleHasGetBonusIds(arg_27_0, arg_27_1, arg_27_2)
+	if not arg_27_0.__stageHasGetBonusIds[arg_27_1] then
+		arg_27_0.__stageHasGetBonusIds[arg_27_1] = {}
+	end
+
+	arg_27_0.__stageHasGetBonusIds[arg_27_1][arg_27_2] = true
 end
 
-function var_0_0._setLayer4Score(arg_27_0, arg_27_1, arg_27_2)
-	arg_27_0._layer4Score[arg_27_1] = tonumber(arg_27_2)
+function var_0_0._updateAll(arg_28_0, arg_28_1)
+	arg_28_0._activityId = arg_28_1.activityId
+
+	for iter_28_0, iter_28_1 in ipairs(arg_28_1.bossDetail) do
+		local var_28_0 = iter_28_1.bossId
+
+		arg_28_0.__stageInfos[var_28_0] = iter_28_1
+
+		arg_28_0:_updateHasGetBonusIds(var_28_0, iter_28_1.hasGetBonusIds)
+		arg_28_0:_setLayer4Score(iter_28_1.bossId, iter_28_1 and iter_28_1.layer4TotalPoint or 0)
+		arg_28_0:_setLayer4HightScore(iter_28_1.bossId, iter_28_1 and iter_28_1.layer4HighestPoint or 0)
+	end
 end
 
-function var_0_0.getLayer4CurScore(arg_28_0, arg_28_1)
-	return arg_28_0._layer4Score[arg_28_1] or 0
+function var_0_0.onReceiveGet128InfosReply(arg_29_0, arg_29_1)
+	arg_29_0:_updateAll(arg_29_1)
+	arg_29_0:_onReceiveGet128InfosReply(arg_29_1)
 end
 
-function var_0_0._setLayer4HightScore(arg_29_0, arg_29_1, arg_29_2)
-	arg_29_0._layer4HighestScore[arg_29_1] = tonumber(arg_29_2)
+function var_0_0._setLayer4Score(arg_30_0, arg_30_1, arg_30_2)
+	arg_30_0._layer4Score[arg_30_1] = tonumber(arg_30_2)
 end
 
-function var_0_0.getLayer4HightScore(arg_30_0, arg_30_1)
-	return arg_30_0._layer4HighestScore[arg_30_1] or 0
+function var_0_0.getLayer4CurScore(arg_31_0, arg_31_1)
+	return arg_31_0._layer4Score[arg_31_1] or 0
 end
 
-function var_0_0.onReceiveAct128GetTotalRewardsReply(arg_31_0, arg_31_1)
-	local var_31_0 = arg_31_1.bossId
-	local var_31_1 = arg_31_1.hasGetBonusIds
-
-	arg_31_0:_updateHasGetBonusIds(var_31_0, var_31_1)
-	arg_31_0:_onReceiveAct128GetTotalRewardsReply(arg_31_1)
+function var_0_0._setLayer4HightScore(arg_32_0, arg_32_1, arg_32_2)
+	arg_32_0._layer4HighestScore[arg_32_1] = tonumber(arg_32_2)
 end
 
-function var_0_0.onReceiveAct128SingleRewardReply(arg_32_0, arg_32_1)
-	local var_32_0 = arg_32_1.bossId
-	local var_32_1 = arg_32_1.rewardId
-
-	arg_32_0:_updateSingleHasGetBonusIds(var_32_0, var_32_1)
-	arg_32_0:_onReceiveAct128SingleRewardReply(arg_32_1)
+function var_0_0.getLayer4HightScore(arg_33_0, arg_33_1)
+	return arg_33_0._layer4HighestScore[arg_33_1] or 0
 end
 
-function var_0_0.onReceiveAct128DoublePointReply(arg_33_0, arg_33_1)
-	local var_33_0 = arg_33_1.bossId
-	local var_33_1 = arg_33_1.doubleNum
-	local var_33_2 = arg_33_1.totalPoint
-	local var_33_3 = arg_33_0:getStageInfo(var_33_0)
+function var_0_0.onReceiveAct128GetTotalRewardsReply(arg_34_0, arg_34_1)
+	local var_34_0 = arg_34_1.bossId
+	local var_34_1 = arg_34_1.hasGetBonusIds
 
-	var_33_3.doubleNum = var_33_1
-	var_33_3.totalPoint = var_33_2
-
-	arg_33_0:_onReceiveAct128DoublePointReply(arg_33_1)
+	arg_34_0:_updateHasGetBonusIds(var_34_0, var_34_1)
+	arg_34_0:_onReceiveAct128GetTotalRewardsReply(arg_34_1)
 end
 
-function var_0_0.onReceiveAct128InfoUpdatePush(arg_34_0, arg_34_1)
-	arg_34_0:_updateAll(arg_34_1)
-	arg_34_0:_onReceiveAct128InfoUpdatePush(arg_34_1)
+function var_0_0.onReceiveAct128SingleRewardReply(arg_35_0, arg_35_1)
+	local var_35_0 = arg_35_1.bossId
+	local var_35_1 = arg_35_1.rewardId
+
+	arg_35_0:_updateSingleHasGetBonusIds(var_35_0, var_35_1)
+	arg_35_0:_onReceiveAct128SingleRewardReply(arg_35_1)
 end
 
-function var_0_0._onReceiveGet128InfosReply(arg_35_0, arg_35_1)
+function var_0_0.onReceiveAct128DoublePointReply(arg_36_0, arg_36_1)
+	local var_36_0 = arg_36_1.bossId
+	local var_36_1 = arg_36_1.doubleNum
+	local var_36_2 = arg_36_1.totalPoint
+	local var_36_3 = arg_36_0:getStageInfo(var_36_0)
+
+	var_36_3.doubleNum = var_36_1
+	var_36_3.totalPoint = var_36_2
+
+	arg_36_0:_onReceiveAct128DoublePointReply(arg_36_1)
+end
+
+function var_0_0.onReceiveAct128InfoUpdatePush(arg_37_0, arg_37_1)
+	arg_37_0:_updateAll(arg_37_1)
+	arg_37_0:_onReceiveAct128InfoUpdatePush(arg_37_1)
+end
+
+function var_0_0._onReceiveGet128InfosReply(arg_38_0, arg_38_1)
 	return
 end
 
-function var_0_0._onReceiveAct128GetTotalRewardsReply(arg_36_0, arg_36_1)
+function var_0_0._onReceiveAct128GetTotalRewardsReply(arg_39_0, arg_39_1)
 	return
 end
 
-function var_0_0._onReceiveAct128DoublePointReply(arg_37_0, arg_37_1)
+function var_0_0._onReceiveAct128DoublePointReply(arg_40_0, arg_40_1)
 	return
 end
 

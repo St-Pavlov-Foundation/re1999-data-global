@@ -4,6 +4,7 @@ local var_0_0 = class("SkillTipView", BaseView)
 
 function var_0_0.onInitView(arg_1_0)
 	arg_1_0._gonewskilltip = gohelper.findChild(arg_1_0.viewGO, "#go_newskilltip")
+	arg_1_0._goassassinbg = gohelper.findChild(arg_1_0.viewGO, "#go_newskilltip/skillbgassassin")
 	arg_1_0._gospecialitem = gohelper.findChild(arg_1_0.viewGO, "#go_newskilltip/skilltipScrollview/Viewport/Content/name/special/#go_specialitem")
 	arg_1_0._goline = gohelper.findChild(arg_1_0.viewGO, "#go_newskilltip/skilltipScrollview/Viewport/Content/#go_line")
 	arg_1_0._goskillspecialitem = gohelper.findChild(arg_1_0.viewGO, "#go_newskilltip/skilltipScrollview/Viewport/Content/skillspecial/#go_skillspecialitem")
@@ -120,7 +121,7 @@ end
 
 function var_0_0._setNewSkills(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
 	arg_8_0._curSkillLevel = arg_8_0._curSkillLevel or nil
-	arg_8_1 = arg_8_0:_checkDestinyEffect(arg_8_1)
+	arg_8_1 = arg_8_0:_checkReplaceSkill(arg_8_1)
 	arg_8_0._skillIdList = arg_8_1
 	arg_8_0._super = arg_8_2
 
@@ -203,12 +204,12 @@ function var_0_0._setNewSkills(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
 	end
 end
 
-function var_0_0._checkDestinyEffect(arg_9_0, arg_9_1)
+function var_0_0._checkReplaceSkill(arg_9_0, arg_9_1)
 	if arg_9_1 then
 		local var_9_0 = arg_9_0.viewParam and arg_9_0.viewParam.heroMo
 
-		if var_9_0 and var_9_0.destinyStoneMo then
-			arg_9_1 = var_9_0.destinyStoneMo:_replaceSkill(arg_9_1)
+		if var_9_0 then
+			arg_9_1 = var_9_0:checkReplaceSkill(arg_9_1)
 		end
 	end
 
@@ -348,177 +349,214 @@ function var_0_0._refreshSkillSpecial(arg_11_0, arg_11_1)
 end
 
 function var_0_0._onHyperLinkClick(arg_12_0, arg_12_1, arg_12_2)
-	CommonBuffTipController.instance:openCommonTipViewWithCustomPos(tonumber(arg_12_1), CommonBuffTipEnum.Anchor[arg_12_0.viewName], CommonBuffTipEnum.Pivot.Right)
+	if arg_12_0.viewParam and arg_12_0.viewParam.adjustBuffTip then
+		CommonBuffTipController.instance:openCommonTipViewWithCustomPosCallback(tonumber(arg_12_1), arg_12_0.setTipPosCallback, arg_12_0)
+	else
+		CommonBuffTipController.instance:openCommonTipViewWithCustomPos(tonumber(arg_12_1), CommonBuffTipEnum.Anchor[arg_12_0.viewName], CommonBuffTipEnum.Pivot.Right)
+	end
+end
+
+function var_0_0.setTipPosCallback(arg_13_0, arg_13_1, arg_13_2)
+	local var_13_0 = 10
+	local var_13_1 = arg_13_0._gonewskilltip.transform
+	local var_13_2, var_13_3 = recthelper.uiPosToScreenPos2(var_13_1)
+	local var_13_4, var_13_5 = SLFramework.UGUI.RectTrHelper.ScreenPosXYToAnchorPosXY(var_13_2, var_13_3, arg_13_1, CameraMgr.instance:getUICamera(), nil, nil)
+	local var_13_6 = recthelper.getWidth(var_13_1) / 2
+	local var_13_7 = GameUtil.getViewSize() / 2 + var_13_4 - var_13_6 - var_13_0
+	local var_13_8 = recthelper.getWidth(arg_13_2)
+	local var_13_9 = var_13_8 <= var_13_7
+	local var_13_10 = var_13_4
+
+	if var_13_9 then
+		var_13_10 = var_13_10 - var_13_6 - var_13_0
+	else
+		var_13_10 = var_13_10 + var_13_6 + var_13_0 + var_13_8
+	end
+
+	local var_13_11 = var_13_5 + recthelper.getHeight(var_13_1) / 2
+
+	arg_13_2.pivot = CommonBuffTipEnum.Pivot.Right
+
+	recthelper.setAnchor(arg_13_2, var_13_10, var_13_11)
 end
 
 function var_0_0.AutoEffectDescItem()
 	return
 end
 
-function var_0_0.onUpdateParam(arg_14_0)
-	if arg_14_0.viewName ~= ViewName.FightFocusView then
-		arg_14_0:initView()
-	end
-end
-
-function var_0_0.onOpen(arg_15_0)
+function var_0_0.onUpdateParam(arg_15_0)
 	if arg_15_0.viewName ~= ViewName.FightFocusView then
 		arg_15_0:initView()
+	end
+end
+
+function var_0_0.onOpen(arg_16_0)
+	if arg_16_0.viewName ~= ViewName.FightFocusView then
+		arg_16_0:initView()
 	else
-		arg_15_0:hideInfo()
+		arg_16_0:hideInfo()
 	end
 end
 
-function var_0_0.initView(arg_16_0)
-	local var_16_0 = arg_16_0.viewParam
+function var_0_0.initView(arg_17_0)
+	local var_17_0 = arg_17_0.viewParam
 
-	arg_16_0.srcSkillIdList = var_16_0.skillIdList
-	arg_16_0.isSuper = var_16_0.super
-	arg_16_0.isCharacter = true
+	arg_17_0.srcSkillIdList = var_17_0.skillIdList
+	arg_17_0.isSuper = var_17_0.super
+	arg_17_0.isCharacter = true
 
-	arg_16_0:updateMonsterName()
-	arg_16_0:refreshUpgradeBtn(arg_16_0.isCharacter)
-	arg_16_0:_setNewSkills(arg_16_0.srcSkillIdList, arg_16_0.isSuper, arg_16_0.isCharacter)
+	arg_17_0:updateMonsterName()
+	arg_17_0:refreshUpgradeBtn(arg_17_0.isCharacter)
+	arg_17_0:_setNewSkills(arg_17_0.srcSkillIdList, arg_17_0.isSuper, arg_17_0.isCharacter)
 
-	local var_16_1 = var_16_0 and var_16_0.anchorX
+	local var_17_1 = arg_17_0.viewGO.transform
+	local var_17_2 = var_17_0 and var_17_0.anchorX
 
-	if var_16_1 then
-		recthelper.setAnchorX(arg_16_0.viewGO.transform, var_16_1)
+	if var_17_2 then
+		recthelper.setAnchorX(var_17_1, var_17_2)
 	end
+
+	local var_17_3 = var_17_0 and var_17_0.anchorY
+
+	if var_17_3 then
+		recthelper.setAnchorY(var_17_1, var_17_3)
+	end
+
+	gohelper.setActive(arg_17_0._goassassinbg, var_17_0 and var_17_0.showAssassinBg)
 end
 
-function var_0_0.updateMonsterName(arg_17_0)
-	arg_17_0.monsterName = arg_17_0.viewParam.monsterName
-
-	if string.nilorempty(arg_17_0.monsterName) then
-		logError("SkillTipView 缺少 monsterName 参数")
-
-		arg_17_0.monsterName = ""
-	end
-end
-
-function var_0_0.showInfo(arg_18_0, arg_18_1, arg_18_2, arg_18_3)
-	if not arg_18_0._viewInitialized then
-		return
-	end
-
-	arg_18_0.entityMo = FightDataHelper.entityMgr:getById(arg_18_3)
-	arg_18_0.monsterName = FightConfig.instance:getEntityName(arg_18_3)
-	arg_18_0.entitySkillIndex = arg_18_1.skillIndex
+function var_0_0.updateMonsterName(arg_18_0)
+	arg_18_0.monsterName = arg_18_0.viewParam.monsterName
 
 	if string.nilorempty(arg_18_0.monsterName) then
-		logError("SkillTipView monsterName 为 nil, entityId : " .. tostring(arg_18_3))
+		logError("SkillTipView 缺少 monsterName 参数")
 
 		arg_18_0.monsterName = ""
 	end
-
-	arg_18_0.srcSkillIdList = arg_18_1.skillIdList
-	arg_18_0.isSuper = arg_18_1.super
-	arg_18_0.isCharacter = arg_18_2
-
-	gohelper.setActive(arg_18_0._gonewskilltip, true)
-
-	arg_18_0._upgradeSelectShow = false
-
-	arg_18_0:refreshUpgradeBtn(arg_18_0.isCharacter)
-	arg_18_0:_setNewSkills(arg_18_0.srcSkillIdList, arg_18_0.isSuper, arg_18_0.isCharacter)
-	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Tipsopen)
 end
 
-function var_0_0.hideInfo(arg_19_0)
+function var_0_0.showInfo(arg_19_0, arg_19_1, arg_19_2, arg_19_3)
 	if not arg_19_0._viewInitialized then
 		return
 	end
 
-	gohelper.setActive(arg_19_0._gonewskilltip, false)
+	arg_19_0.entityMo = FightDataHelper.entityMgr:getById(arg_19_3)
+	arg_19_0.monsterName = FightConfig.instance:getEntityName(arg_19_3)
+	arg_19_0.entitySkillIndex = arg_19_1.skillIndex
+
+	if string.nilorempty(arg_19_0.monsterName) then
+		logError("SkillTipView monsterName 为 nil, entityId : " .. tostring(arg_19_3))
+
+		arg_19_0.monsterName = ""
+	end
+
+	arg_19_0.srcSkillIdList = arg_19_1.skillIdList
+	arg_19_0.isSuper = arg_19_1.super
+	arg_19_0.isCharacter = arg_19_2
+
+	gohelper.setActive(arg_19_0._gonewskilltip, true)
+
+	arg_19_0._upgradeSelectShow = false
+
+	arg_19_0:refreshUpgradeBtn(arg_19_0.isCharacter)
+	arg_19_0:_setNewSkills(arg_19_0.srcSkillIdList, arg_19_0.isSuper, arg_19_0.isCharacter)
+	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Tipsopen)
 end
 
-function var_0_0.refreshUpgradeBtn(arg_20_0, arg_20_1)
-	if not arg_20_0._canShowUpgradeBtn then
-		gohelper.setActive(arg_20_0._btnupgradeShow.gameObject, false)
+function var_0_0.hideInfo(arg_20_0)
+	if not arg_20_0._viewInitialized then
+		return
+	end
+
+	gohelper.setActive(arg_20_0._gonewskilltip, false)
+end
+
+function var_0_0.refreshUpgradeBtn(arg_21_0, arg_21_1)
+	if not arg_21_0._canShowUpgradeBtn then
+		gohelper.setActive(arg_21_0._btnupgradeShow.gameObject, false)
 
 		return
 	end
 
-	if arg_20_0.viewName ~= ViewName.FightFocusView then
-		arg_20_0:refreshHeroUpgrade()
+	if arg_21_0.viewName ~= ViewName.FightFocusView then
+		arg_21_0:refreshHeroUpgrade()
 	else
-		arg_20_0:refreshEntityUpgrade(arg_20_1)
+		arg_21_0:refreshEntityUpgrade(arg_21_1)
 	end
 end
 
-function var_0_0.refreshHeroUpgrade(arg_21_0)
-	local var_21_0 = arg_21_0.viewParam.heroMo
-	local var_21_1 = arg_21_0.viewParam.skillIndex
-	local var_21_2 = var_21_0 and var_21_0.exSkillLevel or 0
+function var_0_0.refreshHeroUpgrade(arg_22_0)
+	local var_22_0 = arg_22_0.viewParam.heroMo
+	local var_22_1 = arg_22_0.viewParam.skillIndex
+	local var_22_2 = var_22_0 and var_22_0.exSkillLevel or 0
 
-	arg_21_0.hasBreakLevelSkill, arg_21_0.upgradeSkillIdList = SkillConfig.instance:getHeroUpgradeSkill(arg_21_0.viewParam.heroId, var_21_2, var_21_1)
-
-	arg_21_0:refreshUpgradeUI()
-end
-
-function var_0_0.refreshEntityUpgrade(arg_22_0, arg_22_1)
-	if not arg_22_1 then
-		arg_22_0:refreshUpgradeUI()
-
-		return
-	end
-
-	local var_22_0 = arg_22_0.entityMo and arg_22_0.entityMo:getCO()
-	local var_22_1 = var_22_0 and var_22_0.id
-
-	if not var_22_1 then
-		gohelper.setActive(arg_22_0._btnupgradeShow.gameObject, false)
-
-		return
-	end
-
-	arg_22_0.hasBreakLevelSkill, arg_22_0.upgradeSkillIdList = SkillConfig.instance:getHeroUpgradeSkill(var_22_1, arg_22_0.entityMo.exSkillLevel, arg_22_0.entitySkillIndex)
-
-	if arg_22_0.upgradeSkillIdList and arg_22_0.srcSkillIdList[1] == arg_22_0.upgradeSkillIdList[1] then
-		arg_22_0.upgraded = true
-	else
-		arg_22_0.upgraded = false
-	end
+	arg_22_0.hasBreakLevelSkill, arg_22_0.upgradeSkillIdList = SkillConfig.instance:getHeroUpgradeSkill(arg_22_0.viewParam.heroId, var_22_2, var_22_1)
 
 	arg_22_0:refreshUpgradeUI()
 end
 
-function var_0_0._btnUpgradeShowOnClock(arg_23_0)
-	arg_23_0._upgradeSelectShow = not arg_23_0._upgradeSelectShow
+function var_0_0.refreshEntityUpgrade(arg_23_0, arg_23_1)
+	if not arg_23_1 then
+		arg_23_0:refreshUpgradeUI()
+
+		return
+	end
+
+	local var_23_0 = arg_23_0.entityMo and arg_23_0.entityMo:getCO()
+	local var_23_1 = var_23_0 and var_23_0.id
+
+	if not var_23_1 then
+		gohelper.setActive(arg_23_0._btnupgradeShow.gameObject, false)
+
+		return
+	end
+
+	arg_23_0.hasBreakLevelSkill, arg_23_0.upgradeSkillIdList = SkillConfig.instance:getHeroUpgradeSkill(var_23_1, arg_23_0.entityMo.exSkillLevel, arg_23_0.entitySkillIndex)
+
+	if arg_23_0.upgradeSkillIdList and arg_23_0.srcSkillIdList[1] == arg_23_0.upgradeSkillIdList[1] then
+		arg_23_0.upgraded = true
+	else
+		arg_23_0.upgraded = false
+	end
 
 	arg_23_0:refreshUpgradeUI()
-
-	local var_23_0 = arg_23_0._upgradeSelectShow and arg_23_0.upgradeSkillIdList or arg_23_0.srcSkillIdList
-
-	arg_23_0:_setNewSkills(var_23_0, arg_23_0.isSuper, arg_23_0.isCharacter)
 end
 
-function var_0_0.refreshUpgradeUI(arg_24_0)
-	local var_24_0 = not arg_24_0.upgraded and arg_24_0.hasBreakLevelSkill
-	local var_24_1 = arg_24_0.upgraded or arg_24_0._upgradeSelectShow
+function var_0_0._btnUpgradeShowOnClock(arg_24_0)
+	arg_24_0._upgradeSelectShow = not arg_24_0._upgradeSelectShow
 
-	gohelper.setActive(arg_24_0._btnupgradeShow, var_24_0)
-	gohelper.setActive(arg_24_0._goshowSelect, var_24_1)
-	gohelper.setActive(arg_24_0._goBtnUpgraded, arg_24_0._upgradeSelectShow)
-	gohelper.setActive(arg_24_0._goBtnNormal, not arg_24_0._upgradeSelectShow)
+	arg_24_0:refreshUpgradeUI()
+
+	local var_24_0 = arg_24_0._upgradeSelectShow and arg_24_0.upgradeSkillIdList or arg_24_0.srcSkillIdList
+
+	arg_24_0:_setNewSkills(var_24_0, arg_24_0.isSuper, arg_24_0.isCharacter)
 end
 
-function var_0_0.setUpgradebtnShowState(arg_25_0, arg_25_1)
-	arg_25_0._canShowUpgradeBtn = arg_25_1
+function var_0_0.refreshUpgradeUI(arg_25_0)
+	local var_25_0 = not arg_25_0.upgraded and arg_25_0.hasBreakLevelSkill
+	local var_25_1 = arg_25_0.upgraded or arg_25_0._upgradeSelectShow
+
+	gohelper.setActive(arg_25_0._btnupgradeShow, var_25_0)
+	gohelper.setActive(arg_25_0._goshowSelect, var_25_1)
+	gohelper.setActive(arg_25_0._goBtnUpgraded, arg_25_0._upgradeSelectShow)
+	gohelper.setActive(arg_25_0._goBtnNormal, not arg_25_0._upgradeSelectShow)
 end
 
-function var_0_0.onClose(arg_26_0)
+function var_0_0.setUpgradebtnShowState(arg_26_0, arg_26_1)
+	arg_26_0._canShowUpgradeBtn = arg_26_1
+end
+
+function var_0_0.onClose(arg_27_0)
 	return
 end
 
-function var_0_0.onDestroyView(arg_27_0)
-	arg_27_0._scrollskilltipScrollview:RemoveOnValueChanged()
+function var_0_0.onDestroyView(arg_28_0)
+	arg_28_0._scrollskilltipScrollview:RemoveOnValueChanged()
 
-	if arg_27_0._newskillitems then
-		for iter_27_0, iter_27_1 in pairs(arg_27_0._newskillitems) do
-			iter_27_1.icon:UnLoadImage()
-			iter_27_1.btn:RemoveClickListener()
+	if arg_28_0._newskillitems then
+		for iter_28_0, iter_28_1 in pairs(arg_28_0._newskillitems) do
+			iter_28_1.icon:UnLoadImage()
+			iter_28_1.btn:RemoveClickListener()
 		end
 	end
 end

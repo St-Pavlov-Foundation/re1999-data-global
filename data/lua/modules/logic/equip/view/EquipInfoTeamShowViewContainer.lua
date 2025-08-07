@@ -35,6 +35,9 @@ function var_0_0.buildViews(arg_1_0)
 	elseif arg_1_0.viewParam.fromView == EquipEnum.FromViewEnum.FromCachotHeroGroupFightView then
 		arg_1_0.listModel = V1a6_CachotEquipInfoTeamListModel.instance
 		var_1_0.cellClass = V1a6_CachotEquipInfoTeamItem
+	elseif arg_1_0.viewParam.fromView == EquipEnum.FromViewEnum.FromOdysseyHeroGroupFightView then
+		arg_1_0.listModel = OdysseyEquipInfoTeamListModel.instance
+		var_1_0.cellClass = OdysseyEquipInfoTeamItem
 	else
 		logError("not found from view ...")
 

@@ -105,6 +105,8 @@ end
 
 function var_0_0.activeExtend()
 	ActivityHelper.activateClass("EnterActivityViewOnExitFightSceneHelper%d_%d", 1, 1)
+
+	local var_7_0 = _G.EnterActivityViewOnExitFightSceneHelper2_9
 end
 
 return var_0_0

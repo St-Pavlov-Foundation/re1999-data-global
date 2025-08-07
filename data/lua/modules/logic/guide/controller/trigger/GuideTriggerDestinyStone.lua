@@ -18,8 +18,12 @@ function var_0_0.assertGuideSatisfy(arg_2_0, arg_2_1, arg_2_2)
 end
 
 function var_0_0._characterLevelUp(arg_3_0)
-	if arg_3_0.heroMo and arg_3_0.heroMo:isOwnHero() and arg_3_0.heroMo:isCanOpenDestinySystem() then
-		arg_3_0:checkStartGuide(23301)
+	if arg_3_0:_checkDestinyStone(arg_3_0.heroMo) then
+		local var_3_0 = arg_3_0.heroMo.destinyStoneMo
+
+		if var_3_0 and not var_3_0:isUnlockSlot() then
+			arg_3_0:checkStartGuide(23301)
+		end
 	end
 end
 
@@ -27,34 +31,62 @@ function var_0_0._onOpenView(arg_4_0, arg_4_1, arg_4_2)
 	if arg_4_1 == ViewName.CharacterView then
 		local var_4_0 = arg_4_2
 
-		if var_4_0 and var_4_0:isOwnHero() and var_4_0:isCanOpenDestinySystem() then
-			arg_4_0:checkStartGuide(23301)
+		if arg_4_0:_checkDestinyStone(var_4_0) then
+			local var_4_1 = var_4_0.destinyStoneMo
+			local var_4_2 = 23301
+
+			if var_4_1:isUnlockSlot() then
+				local var_4_3 = GuideModel.instance:getById(var_4_2)
+
+				if var_4_3 and not (var_4_3.serverStepId == -1 and var_4_3.clientStepId == -1) then
+					GuideStepController.instance:clearFlow(var_4_2)
+					GuideModel.instance:remove(var_4_3)
+				end
+			else
+				arg_4_0:checkStartGuide(var_4_2)
+			end
 		end
 
 		arg_4_0.heroMo = var_4_0
 	end
 
 	if arg_4_1 == ViewName.CharacterDestinySlotView then
-		local var_4_1 = arg_4_2.heroMo
+		local var_4_4 = arg_4_2.heroMo
 
-		if var_4_1 and var_4_1:isOwnHero() then
-			if var_4_1.destinyStoneMo:isUnlockSlot() then
-				arg_4_0:checkStartGuide(23302)
-			end
+		if arg_4_0:_checkDestinyStone(var_4_4) then
+			local var_4_5 = var_4_4.destinyStoneMo
 
-			if var_4_1.destinyStoneMo.curUseStoneId ~= 0 then
-				arg_4_0:checkStartGuide(23303)
+			if var_4_5 and var_4_5:isUnlockSlot() then
+				if var_4_5.curUseStoneId == 0 then
+					if not var_4_5.unlockStoneIds or #var_4_5.unlockStoneIds == 0 then
+						arg_4_0:checkStartGuide(23302)
+					end
+				else
+					arg_4_0:checkStartGuide(23303)
+				end
 			end
 		end
 	end
 end
 
-function var_0_0._OnUnlockSlot(arg_5_0)
-	arg_5_0:checkStartGuide(23302)
+function var_0_0._checkDestinyStone(arg_5_0, arg_5_1)
+	if not arg_5_1 or not arg_5_1:isOwnHero() then
+		return
+	end
+
+	if not arg_5_1:isCanOpenDestinySystem() then
+		return
+	end
+
+	return true
 end
 
-function var_0_0._OnUseStone(arg_6_0, arg_6_1, arg_6_2)
-	arg_6_0:checkStartGuide(23303)
+function var_0_0._OnUnlockSlot(arg_6_0)
+	arg_6_0:checkStartGuide(23302)
+end
+
+function var_0_0._OnUseStone(arg_7_0, arg_7_1, arg_7_2)
+	arg_7_0:checkStartGuide(23303)
 end
 
 return var_0_0

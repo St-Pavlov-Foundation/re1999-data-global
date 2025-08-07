@@ -48,6 +48,7 @@ function var_0_0.clear(arg_5_0)
 	arg_5_0._sceneRoot = nil
 	arg_5_0._callback = nil
 	arg_5_0._callbackTarget = nil
+	arg_5_0._curSceneId = nil
 end
 
 function var_0_0.hasSceneRoot(arg_6_0)

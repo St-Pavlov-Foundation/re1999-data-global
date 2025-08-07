@@ -1,0 +1,102 @@
+[
+  {
+    "id": 101,
+    "clue": "language_10079096",
+    "unlockCondition": "finish#110104"
+  },
+  {
+    "id": 201,
+    "clue": "language_10079097",
+    "unlockCondition": "finish#110107|finish#130401"
+  },
+  {
+    "id": 301,
+    "clue": "language_10079098",
+    "unlockCondition": "item#10001#1"
+  },
+  {
+    "id": 401,
+    "clue": "language_10079099",
+    "unlockCondition": "finish#215001"
+  },
+  {
+    "id": 501,
+    "clue": "language_10079100",
+    "unlockCondition": "finish#216001"
+  },
+  {
+    "id": 601,
+    "clue": "language_10079101",
+    "unlockCondition": "finish#315001"
+  },
+  {
+    "id": 701,
+    "clue": "language_10079102",
+    "unlockCondition": "finish#316001"
+  },
+  {
+    "id": 801,
+    "clue": "language_10079103",
+    "unlockCondition": "item#10002#1"
+  },
+  {
+    "id": 802,
+    "clue": "language_10079104",
+    "unlockCondition": "item#10003#1"
+  },
+  {
+    "id": 803,
+    "clue": "language_10079105",
+    "unlockCondition": "item#10004#1"
+  },
+  {
+    "id": 804,
+    "clue": "language_10079106",
+    "unlockCondition": "item#10005#1"
+  },
+  {
+    "id": 901,
+    "clue": "language_10079107",
+    "unlockCondition": "finish#414001"
+  },
+  {
+    "id": 1001,
+    "clue": "language_10079108",
+    "unlockCondition": "finish#415001"
+  },
+  {
+    "id": 1101,
+    "clue": "language_10079109",
+    "unlockCondition": "finish#515001"
+  },
+  {
+    "id": 1201,
+    "clue": "language_10079110",
+    "unlockCondition": "item#10006#1"
+  },
+  {
+    "id": 1202,
+    "clue": "language_10079111",
+    "unlockCondition": "item#10007#1"
+  },
+  {
+    "id": 1203,
+    "clue": "language_10079112",
+    "unlockCondition": "item#10008#1"
+  },
+  {
+    "id": 1301,
+    "clue": "language_10079113",
+    "unlockCondition": "item#10009#1"
+  },
+  {
+    "id": 1302,
+    "clue": "language_10079114",
+    "unlockCondition": "item#10010#1"
+  },
+  {
+    "id": 1303,
+    "clue": "language_10079115",
+    "unlockCondition": "item#10011#1"
+  }
+]

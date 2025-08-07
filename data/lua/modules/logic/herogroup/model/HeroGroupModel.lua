@@ -114,7 +114,7 @@ function var_0_0.isAdventureOrWeekWalk(arg_8_0)
 	return arg_8_0.adventure or arg_8_0.weekwalk
 end
 
-function var_0_0.setParam(arg_9_0, arg_9_1, arg_9_2, arg_9_3, arg_9_4)
+function var_0_0.setParam(arg_9_0, arg_9_1, arg_9_2, arg_9_3, arg_9_4, arg_9_5)
 	local var_9_0 = {
 		battleId = arg_9_1,
 		episodeId = arg_9_2,
@@ -133,6 +133,10 @@ function var_0_0.setParam(arg_9_0, arg_9_1, arg_9_2, arg_9_3, arg_9_4)
 	arg_9_0.battleConfig = var_9_1
 	arg_9_0.heroGroupTypeCo = var_9_2 and HeroConfig.instance:getHeroGroupTypeCo(var_9_2.chapterId)
 	arg_9_0._episodeType = var_9_2 and var_9_2.type or 0
+
+	if arg_9_5 then
+		arg_9_0._episodeType = arg_9_5
+	end
 
 	local var_9_4 = arg_9_0:getAmountLimit(var_9_1)
 
@@ -219,6 +223,14 @@ function var_0_0.setParam(arg_9_0, arg_9_1, arg_9_2, arg_9_3, arg_9_4)
 		if var_9_14 then
 			arg_9_0.heroGroupType = var_9_14(var_9_0)
 		end
+	elseif arg_9_0._episodeType == DungeonEnum.EpisodeType.Odyssey then
+		arg_9_0.heroGroupType = ModuleEnum.HeroGroupType.Odyssey
+
+		HeroSingleGroupModel.instance:setMaxHeroCount(OdysseyEnum.MaxHeroGroupCount)
+	elseif V2a9BossRushModel.instance:isV2a9BossRushSecondStageSpecialLayer(arg_9_0._episodeType, arg_9_0.episodeId) then
+		arg_9_0.heroGroupType = ModuleEnum.HeroGroupType.Odyssey
+
+		HeroSingleGroupModel.instance:setMaxHeroCount(OdysseyEnum.MaxHeroGroupCount)
 	elseif HeroGroupHandler.checkIsEpisodeType(arg_9_0._episodeType) then
 		arg_9_0.heroGroupType = ModuleEnum.HeroGroupType.General
 
@@ -341,6 +353,10 @@ function var_0_0._getAmountLimit(arg_13_0, arg_13_1)
 end
 
 function var_0_0.getBattleRoleNum(arg_14_0)
+	if arg_14_0.heroGroupType == ModuleEnum.HeroGroupType.Odyssey then
+		return OdysseyEnum.MaxHeroGroupCount
+	end
+
 	local var_14_0 = arg_14_0.episodeId
 	local var_14_1
 
@@ -507,6 +523,8 @@ function var_0_0.getCurGroupMO(arg_20_0)
 		end
 	elseif arg_20_0.heroGroupType == ModuleEnum.HeroGroupType.General then
 		return HeroGroupSnapshotModel.instance:getCurGroup()
+	elseif arg_20_0.heroGroupType == ModuleEnum.HeroGroupType.Odyssey then
+		return OdysseyHeroGroupModel.instance:getCurHeroGroup()
 	else
 		return arg_20_0:getById(arg_20_0._curGroupId)
 	end
@@ -537,6 +555,12 @@ function var_0_0.setHeroGroupSelectIndex(arg_23_0, arg_23_1)
 		end
 
 		return var_23_0
+	end
+
+	if arg_23_0.heroGroupType == ModuleEnum.HeroGroupType.Odyssey then
+		arg_23_0:_setSingleGroup()
+
+		return
 	end
 
 	if not arg_23_0.heroGroupTypeCo then
@@ -587,6 +611,10 @@ function var_0_0.saveCurGroupData(arg_26_0, arg_26_1, arg_26_2, arg_26_3)
 	local var_26_0 = lua_episode.configDict[arg_26_0.episodeId]
 
 	if not var_26_0 then
+		if arg_26_0.heroGroupType == ModuleEnum.HeroGroupType.Odyssey then
+			OdysseyHeroGroupController.instance:saveHeroGroupInfo(arg_26_3, nil, arg_26_1, arg_26_2)
+		end
+
 		return
 	end
 
@@ -652,6 +680,12 @@ function var_0_0.saveCurGroupData(arg_26_0, arg_26_1, arg_26_2, arg_26_3)
 			FightParam.initTowerFightGroup(var_26_3.fightGroup, arg_26_3.clothId, arg_26_3:getMainList(), arg_26_3:getSubList(), arg_26_3:getAllHeroEquips(), arg_26_3:getAllHeroActivity104Equips(), arg_26_3:getAssistBossId())
 		else
 			FightParam.initFightGroup(var_26_3.fightGroup, arg_26_3.clothId, arg_26_3:getMainList(), arg_26_3:getSubList(), arg_26_3:getAllHeroEquips(), arg_26_3:getAllHeroActivity104Equips(), arg_26_3:getAssistBossId())
+		end
+
+		if arg_26_0.heroGroupType == ModuleEnum.HeroGroupType.Odyssey then
+			OdysseyHeroGroupController.instance:saveHeroGroupInfo(arg_26_3, nil, arg_26_1, arg_26_2)
+
+			return
 		end
 
 		local var_26_4 = ModuleEnum.HeroGroupSnapshotType.Common
@@ -768,6 +802,10 @@ function var_0_0.getCurGroupId(arg_32_0)
 end
 
 function var_0_0.isPositionOpen(arg_33_0, arg_33_1)
+	if arg_33_0.heroGroupType == ModuleEnum.HeroGroupType.Odyssey then
+		return OdysseyHeroGroupModel.instance:isPositionOpen(arg_33_1)
+	end
+
 	local var_33_0 = lua_open_group.configDict[arg_33_1]
 
 	if not var_33_0 then
@@ -929,6 +967,14 @@ end
 
 function var_0_0.getCurrentBattleConfig(arg_41_0)
 	return arg_41_0.battleConfig
+end
+
+function var_0_0.setHeroGroupType(arg_42_0, arg_42_1)
+	arg_42_0._heroGroupType = arg_42_1
+end
+
+function var_0_0.getHeroGroupType(arg_43_0)
+	return arg_43_0._heroGroupType
 end
 
 var_0_0.instance = var_0_0.New()

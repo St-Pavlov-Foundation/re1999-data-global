@@ -85,107 +85,164 @@ function var_0_0.setTrialByBattleId(arg_2_0, arg_2_1)
 	end
 end
 
+function var_0_0.setTrialByOdysseyGroupMo(arg_3_0, arg_3_1)
+	arg_3_0:clear()
+
+	arg_3_0._limitNum = 1
+
+	if arg_3_1.trialDict then
+		for iter_3_0, iter_3_1 in pairs(arg_3_1.trialDict) do
+			local var_3_0 = iter_3_1[1]
+
+			if var_3_0 ~= nil and var_3_0 ~= 0 then
+				local var_3_1 = HeroMo.New()
+
+				var_3_1:initFromTrial(var_3_0, 0, iter_3_0)
+				arg_3_0:addAtLast(var_3_1)
+
+				local var_3_2 = lua_hero_trial.configDict[var_3_0][0]
+				local var_3_3 = EquipMO.New()
+
+				var_3_3:initByTrialCO(var_3_2)
+				var_3_3:clearRecommend()
+				arg_3_0._trialEquipMo:addAtLast(var_3_3)
+			end
+		end
+	end
+end
+
+function var_0_0.setTrailByTrialIdList(arg_4_0, arg_4_1, arg_4_2)
+	arg_4_0:clear()
+
+	arg_4_0._limitNum = arg_4_2 or arg_4_0._limitNum
+
+	if arg_4_1 then
+		for iter_4_0, iter_4_1 in ipairs(arg_4_1) do
+			arg_4_0:addTrialHero(iter_4_1)
+		end
+	end
+end
+
+function var_0_0.addTrialHero(arg_5_0, arg_5_1, arg_5_2)
+	if not arg_5_1 or arg_5_1 == 0 then
+		return
+	end
+
+	arg_5_2 = arg_5_2 or 0
+
+	local var_5_0 = HeroMo.New()
+
+	var_5_0:initFromTrial(arg_5_1, arg_5_2)
+	arg_5_0:addAtLast(var_5_0)
+
+	local var_5_1 = lua_hero_trial.configDict[arg_5_1][arg_5_2]
+	local var_5_2 = EquipMO.New()
+
+	var_5_2:initByTrialCO(var_5_1)
+	arg_5_0._trialEquipMo:addAtLast(var_5_2)
+end
+
 local var_0_1 = false
 local var_0_2 = false
 
-function var_0_0.sortByLevelAndRare(arg_3_0, arg_3_1, arg_3_2)
-	var_0_1 = arg_3_1
-	var_0_2 = arg_3_2
+function var_0_0.sortByLevelAndRare(arg_6_0, arg_6_1, arg_6_2)
+	var_0_1 = arg_6_1
+	var_0_2 = arg_6_2
 
-	arg_3_0:sort(var_0_0.sortMoFunc)
+	arg_6_0:sort(var_0_0.sortMoFunc)
 end
 
-function var_0_0.sortMoFunc(arg_4_0, arg_4_1)
+function var_0_0.sortMoFunc(arg_7_0, arg_7_1)
 	if var_0_1 then
-		if arg_4_0.level ~= arg_4_1.level then
+		if arg_7_0.level ~= arg_7_1.level then
 			if var_0_2 then
-				return arg_4_0.level < arg_4_1.level
+				return arg_7_0.level < arg_7_1.level
 			else
-				return arg_4_0.level > arg_4_1.level
+				return arg_7_0.level > arg_7_1.level
 			end
-		elseif arg_4_0.config.rare ~= arg_4_1.config.rare then
-			return arg_4_0.config.rare > arg_4_1.config.rare
+		elseif arg_7_0.config.rare ~= arg_7_1.config.rare then
+			return arg_7_0.config.rare > arg_7_1.config.rare
 		end
-	elseif arg_4_0.config.rare ~= arg_4_1.config.rare then
+	elseif arg_7_0.config.rare ~= arg_7_1.config.rare then
 		if var_0_2 then
-			return arg_4_0.config.rare < arg_4_1.config.rare
+			return arg_7_0.config.rare < arg_7_1.config.rare
 		else
-			return arg_4_0.config.rare > arg_4_1.config.rare
+			return arg_7_0.config.rare > arg_7_1.config.rare
 		end
-	elseif arg_4_0.level ~= arg_4_1.level then
-		return arg_4_0.level > arg_4_1.level
+	elseif arg_7_0.level ~= arg_7_1.level then
+		return arg_7_0.level > arg_7_1.level
 	end
 
-	return arg_4_0.config.id < arg_4_1.config.id
+	return arg_7_0.config.id < arg_7_1.config.id
 end
 
-function var_0_0.setFilter(arg_5_0, arg_5_1, arg_5_2)
-	arg_5_0._filterDmgs = arg_5_1
-	arg_5_0._filterCareers = arg_5_2
+function var_0_0.setFilter(arg_8_0, arg_8_1, arg_8_2)
+	arg_8_0._filterDmgs = arg_8_1
+	arg_8_0._filterCareers = arg_8_2
 end
 
-function var_0_0.getFilterList(arg_6_0)
-	arg_6_0:checkBattleIdIsVaild()
+function var_0_0.getFilterList(arg_9_0)
+	arg_9_0:checkBattleIdIsVaild()
 
-	local var_6_0 = {}
+	local var_9_0 = {}
 
-	for iter_6_0, iter_6_1 in ipairs(arg_6_0:getList()) do
-		if (not arg_6_0._filterCareers or tabletool.indexOf(arg_6_0._filterCareers, iter_6_1.config.career)) and (not arg_6_0._filterDmgs or tabletool.indexOf(arg_6_0._filterDmgs, iter_6_1.config.dmgType)) then
-			table.insert(var_6_0, iter_6_1)
+	for iter_9_0, iter_9_1 in ipairs(arg_9_0:getList()) do
+		if (not arg_9_0._filterCareers or tabletool.indexOf(arg_9_0._filterCareers, iter_9_1.config.career)) and (not arg_9_0._filterDmgs or tabletool.indexOf(arg_9_0._filterDmgs, iter_9_1.config.dmgType)) then
+			table.insert(var_9_0, iter_9_1)
 		end
 	end
 
-	return var_6_0
+	return var_9_0
 end
 
-function var_0_0.clear(arg_7_0)
-	arg_7_0.curBattleId = nil
-	arg_7_0._limitNum = 0
+function var_0_0.clear(arg_10_0)
+	arg_10_0.curBattleId = nil
+	arg_10_0._limitNum = 0
 
-	arg_7_0._trialEquipMo:clear()
-	var_0_0.super.clear(arg_7_0)
+	arg_10_0._trialEquipMo:clear()
+	var_0_0.super.clear(arg_10_0)
 end
 
-function var_0_0.getLimitNum(arg_8_0)
-	arg_8_0:checkBattleIdIsVaild()
+function var_0_0.getLimitNum(arg_11_0)
+	arg_11_0:checkBattleIdIsVaild()
 
-	return arg_8_0._limitNum
+	return arg_11_0._limitNum
 end
 
-function var_0_0.getHeroMo(arg_9_0, arg_9_1)
-	return arg_9_0:getById(tostring(tonumber(arg_9_1.id .. "." .. arg_9_1.trialTemplate) - 1099511627776))
+function var_0_0.getHeroMo(arg_12_0, arg_12_1)
+	return arg_12_0:getById(tostring(tonumber(arg_12_1.id .. "." .. arg_12_1.trialTemplate) - 1099511627776))
 end
 
-function var_0_0.getEquipMo(arg_10_0, arg_10_1)
-	return arg_10_0._trialEquipMo:getById(tonumber(arg_10_1))
+function var_0_0.getEquipMo(arg_13_0, arg_13_1)
+	return arg_13_0._trialEquipMo:getById(tonumber(arg_13_1))
 end
 
-function var_0_0.getTrialEquipList(arg_11_0)
-	return arg_11_0._trialEquipMo:getList()
+function var_0_0.getTrialEquipList(arg_14_0)
+	return arg_14_0._trialEquipMo:getList()
 end
 
-function var_0_0.checkBattleIdIsVaild(arg_12_0)
-	if arg_12_0.curBattleId and HeroGroupModel.instance.battleId and HeroGroupModel.instance.battleId > 0 and arg_12_0.curBattleId ~= HeroGroupModel.instance.battleId then
-		arg_12_0:clear()
+function var_0_0.checkBattleIdIsVaild(arg_15_0)
+	if arg_15_0.curBattleId and HeroGroupModel.instance.battleId and HeroGroupModel.instance.battleId > 0 and arg_15_0.curBattleId ~= HeroGroupModel.instance.battleId then
+		arg_15_0:clear()
 	end
 end
 
-function var_0_0.isOnlyUseTrial(arg_13_0)
-	arg_13_0:checkBattleIdIsVaild()
+function var_0_0.isOnlyUseTrial(arg_16_0)
+	arg_16_0:checkBattleIdIsVaild()
 
-	if not arg_13_0.curBattleId then
+	if not arg_16_0.curBattleId then
 		return false
 	end
 
-	local var_13_0 = lua_battle.configDict[arg_13_0.curBattleId]
+	local var_16_0 = lua_battle.configDict[arg_16_0.curBattleId]
 
-	return arg_13_0._limitNum > 0 and var_13_0.onlyTrial == 1
+	return arg_16_0._limitNum > 0 and var_16_0.onlyTrial == 1
 end
 
-function var_0_0.haveTrialEquip(arg_14_0)
-	arg_14_0:checkBattleIdIsVaild()
+function var_0_0.haveTrialEquip(arg_17_0)
+	arg_17_0:checkBattleIdIsVaild()
 
-	return arg_14_0._trialEquipMo:getCount() > 0
+	return arg_17_0._trialEquipMo:getCount() > 0
 end
 
 var_0_0.instance = var_0_0.New()

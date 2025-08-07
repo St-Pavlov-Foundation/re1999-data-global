@@ -70,12 +70,7 @@ function var_0_0.initHeroItem(arg_8_0)
 		var_8_0.enabled = false
 	end
 
-	arg_8_0._heroItem:_setTxtPos("_rankObj", 2, -37)
-	arg_8_0._heroItem:_setTxtPos("_lvObj", 1.7, 165)
-	arg_8_0._heroItem:_setTxtPos("_nameCnTxt", 0.55, 153.4)
-	arg_8_0._heroItem:_setTxtPos("_nameEnTxt", 0.55, 124.3)
-	arg_8_0._heroItem:_setTxtPos("_goexskill", 1.7, -170)
-	arg_8_0._heroItem:_setTranScale("_rankObj", 0.2, 0.2)
+	arg_8_0._heroItem:setStyle_RougePickAssist()
 	arg_8_0._heroItem:setSelect(false)
 	arg_8_0._heroItem:isShowSeasonMask(true)
 end

@@ -1,0 +1,211 @@
+[
+  {
+    "id": 1,
+    "type": 1,
+    "name": "language_10079451",
+    "desc": "language_10079452",
+    "img": "icon_changjing_1",
+    "restrain": "7#8#9",
+    "spEff": 0,
+    "weight": 100,
+    "subWeight": 100
+  },
+  {
+    "id": 2,
+    "type": 1,
+    "name": "language_10079453",
+    "desc": "language_10079454",
+    "img": "icon_changjing_2",
+    "restrain": "7#8#9",
+    "spEff": 0,
+    "weight": 100,
+    "subWeight": 100
+  },
+  {
+    "id": 3,
+    "type": 1,
+    "name": "language_10079455",
+    "desc": "language_10079456",
+    "img": "icon_changjing_3",
+    "restrain": "7#8#9",
+    "spEff": 0,
+    "weight": 100,
+    "subWeight": 100
+  },
+  {
+    "id": 4,
+    "type": 1,
+    "name": "language_10079457",
+    "desc": "language_10079458",
+    "img": "icon_changjing_4",
+    "restrain": "1#2#3",
+    "spEff": 0,
+    "weight": 100,
+    "subWeight": 100
+  },
+  {
+    "id": 5,
+    "type": 1,
+    "name": "language_10079459",
+    "desc": "language_10079460",
+    "img": "icon_changjing_5",
+    "restrain": "1#2#3",
+    "spEff": 0,
+    "weight": 100,
+    "subWeight": 100
+  },
+  {
+    "id": 6,
+    "type": 1,
+    "name": "language_10079461",
+    "desc": "language_10079462",
+    "img": "icon_changjing_6",
+    "restrain": "1#2#3",
+    "spEff": 0,
+    "weight": 100,
+    "subWeight": 100
+  },
+  {
+    "id": 7,
+    "type": 1,
+    "name": "language_10079463",
+    "desc": "language_10079464",
+    "img": "icon_changjing_7",
+    "restrain": "4#5#6",
+    "spEff": 0,
+    "weight": 100,
+    "subWeight": 100
+  },
+  {
+    "id": 8,
+    "type": 1,
+    "name": "language_10079465",
+    "desc": "language_10079466",
+    "img": "icon_changjing_8",
+    "restrain": "4#5#6",
+    "spEff": 0,
+    "weight": 100,
+    "subWeight": 100
+  },
+  {
+    "id": 9,
+    "type": 1,
+    "name": "language_10079467",
+    "desc": "language_10079468",
+    "img": "icon_changjing_9",
+    "restrain": "4#5#6",
+    "spEff": 0,
+    "weight": 100,
+    "subWeight": 100
+  },
+  {
+    "id": 10,
+    "type": 2,
+    "name": "language_10079469",
+    "desc": "language_10079470",
+    "img": "icon_wuqi_5",
+    "restrain": "14#15",
+    "spEff": 0,
+    "weight": 100,
+    "subWeight": 100
+  },
+  {
+    "id": 11,
+    "type": 2,
+    "name": "language_10079471",
+    "desc": "language_10079472",
+    "img": "icon_wuqi_4",
+    "restrain": "14#15",
+    "spEff": 0,
+    "weight": 100,
+    "subWeight": 100
+  },
+  {
+    "id": 12,
+    "type": 2,
+    "name": "language_10079473",
+    "desc": "language_10079474",
+    "img": "icon_wuqi_7",
+    "restrain": "10#11",
+    "spEff": 0,
+    "weight": 100,
+    "subWeight": 100
+  },
+  {
+    "id": 13,
+    "type": 2,
+    "name": "language_10079475",
+    "desc": "language_10079476",
+    "img": "icon_wuqi_6",
+    "restrain": "10#11",
+    "spEff": 0,
+    "weight": 100,
+    "subWeight": 100
+  },
+  {
+    "id": 14,
+    "type": 2,
+    "name": "language_10079477",
+    "desc": "language_10079478",
+    "img": "icon_wuqi_2",
+    "restrain": "12#13",
+    "spEff": 0,
+    "weight": 100,
+    "subWeight": 100
+  },
+  {
+    "id": 15,
+    "type": 2,
+    "name": "language_10077372",
+    "desc": "language_10079479",
+    "img": "icon_wuqi_3",
+    "restrain": "12#13",
+    "spEff": 0,
+    "weight": 100,
+    "subWeight": 100
+  },
+  {
+    "id": 16,
+    "type": 2,
+    "name": "language_10079480",
+    "desc": "language_10079481",
+    "img": "icon_wuqi_1",
+    "restrain": "",
+    "spEff": 1,
+    "weight": 0,
+    "subWeight": 0
+  },
+  {
+    "id": 17,
+    "type": 2,
+    "name": "language_10079482",
+    "desc": "language_10079483",
+    "img": "icon_wuqi_8",
+    "restrain": "",
+    "spEff": 2,
+    "weight": 100,
+    "subWeight": 100
+  },
+  {
+    "id": 18,
+    "type": 2,
+    "name": "language_10079484",
+    "desc": "language_10079485",
+    "img": "icon_wuqi_9",
+    "restrain": "",
+    "spEff": 1,
+    "weight": 100,
+    "subWeight": 100
+  },
+  {
+    "id": 19,
+    "type": 2,
+    "name": "language_10079486",
+    "desc": "language_10079483",
+    "img": "icon_wuqi_10",
+    "restrain": "",
+    "spEff": 2,
+    "weight": 100,
+    "subWeight": 100
+  }
+]

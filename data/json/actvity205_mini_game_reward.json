@@ -1,0 +1,121 @@
+[
+  {
+    "type": 1,
+    "rewardId": 1,
+    "bonus": "2#5#3000",
+    "isWin": false,
+    "rewardDesc": "language_10079420"
+  },
+  {
+    "type": 1,
+    "rewardId": 2,
+    "bonus": "2#3#2000",
+    "isWin": false,
+    "rewardDesc": "language_10079420"
+  },
+  {
+    "type": 1,
+    "rewardId": 3,
+    "bonus": "1#491004#1|2#30503#10",
+    "isWin": true,
+    "rewardDesc": "language_10079421"
+  },
+  {
+    "type": 1,
+    "rewardId": 4,
+    "bonus": "1#491004#2|2#30503#10",
+    "isWin": true,
+    "rewardDesc": "language_10079422"
+  },
+  {
+    "type": 1,
+    "rewardId": 5,
+    "bonus": "2#30503#20|2#3#5000",
+    "isWin": true,
+    "rewardDesc": "language_10079423"
+  },
+  {
+    "type": 2,
+    "rewardId": 1,
+    "bonus": "2#30503#10|2#5#500",
+    "isWin": true,
+    "rewardDesc": "language_10079424"
+  },
+  {
+    "type": 2,
+    "rewardId": 2,
+    "bonus": "2#30503#10|2#3#500",
+    "isWin": true,
+    "rewardDesc": "language_10079425"
+  },
+  {
+    "type": 2,
+    "rewardId": 3,
+    "bonus": "2#30503#10|1#491004#2",
+    "isWin": true,
+    "rewardDesc": "language_10079426"
+  },
+  {
+    "type": 2,
+    "rewardId": 4,
+    "bonus": "2#30503#10|9#1003#5",
+    "isWin": true,
+    "rewardDesc": "language_10079427"
+  },
+  {
+    "type": 2,
+    "rewardId": 5,
+    "bonus": "2#30503#20|1#491007#1",
+    "isWin": true,
+    "rewardDesc": "language_10079428"
+  },
+  {
+    "type": 2,
+    "rewardId": 6,
+    "bonus": "2#30503#20|1#491007#1",
+    "isWin": true,
+    "rewardDesc": "language_10079429"
+  },
+  {
+    "type": 2,
+    "rewardId": 7,
+    "bonus": "2#3#2000",
+    "isWin": false,
+    "rewardDesc": "language_10079424"
+  },
+  {
+    "type": 2,
+    "rewardId": 8,
+    "bonus": "2#3#2000",
+    "isWin": false,
+    "rewardDesc": "language_10079425"
+  },
+  {
+    "type": 2,
+    "rewardId": 9,
+    "bonus": "2#3#2000",
+    "isWin": false,
+    "rewardDesc": "language_10079426"
+  },
+  {
+    "type": 2,
+    "rewardId": 10,
+    "bonus": "2#3#2000",
+    "isWin": false,
+    "rewardDesc": "language_10079427"
+  },
+  {
+    "type": 2,
+    "rewardId": 11,
+    "bonus": "2#5#3000",
+    "isWin": false,
+    "rewardDesc": "language_10079428"
+  },
+  {
+    "type": 2,
+    "rewardId": 12,
+    "bonus": "2#5#3000",
+    "isWin": false,
+    "rewardDesc": "language_10079429"
+  }
+]

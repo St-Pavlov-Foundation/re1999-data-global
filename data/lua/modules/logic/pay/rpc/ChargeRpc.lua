@@ -59,6 +59,7 @@ function var_0_0.onReceiveOrderCompletePush(arg_5_0, arg_5_1, arg_5_2)
 		arg_5_0:_tryUpdateMonthCard(arg_5_2)
 
 		if StoreConfig.instance:getChargeGoodsConfig(var_5_0) then
+			arg_5_0:_tryUpdateStoreLinkPackage(arg_5_2)
 			var_0_0.instance:sendGetChargeInfoRequest()
 		end
 
@@ -140,6 +141,15 @@ function var_0_0._tryUpdateMonthCard(arg_14_0, arg_14_1)
 	end
 
 	SignInController.instance:sendGetSignInInfoRequestIfUnlock()
+end
+
+function var_0_0._tryUpdateStoreLinkPackage(arg_15_0, arg_15_1)
+	local var_15_0 = arg_15_1.id
+	local var_15_1 = StoreConfig.instance:getChargeGoodsConfig(var_15_0)
+
+	if var_15_1 and var_15_1.taskid ~= 0 then
+		StoreGoodsTaskController.instance:requestGoodsTaskList()
+	end
 end
 
 var_0_0.instance = var_0_0.New()

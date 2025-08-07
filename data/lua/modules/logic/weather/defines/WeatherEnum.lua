@@ -14,17 +14,21 @@ var_0_0.LightModeDusk = 3
 var_0_0.LightModeNight = 4
 var_0_0.DayTimeFireworks = 9
 var_0_0.NightTimeFireworks = 10
+var_0_0.SpRainStorm = 11
 var_0_0.EffectAudioTime = {
 	[var_0_0.DayTimeFireworks] = 40,
-	[var_0_0.NightTimeFireworks] = 40
+	[var_0_0.NightTimeFireworks] = 40,
+	[var_0_0.SpRainStorm] = 15
 }
 var_0_0.EffectPlayAudio = {
 	[var_0_0.DayTimeFireworks] = 20250601,
-	[var_0_0.NightTimeFireworks] = 20250601
+	[var_0_0.NightTimeFireworks] = 20250601,
+	[var_0_0.SpRainStorm] = 20305004
 }
 var_0_0.EffectStopAudio = {
 	[var_0_0.DayTimeFireworks] = 20250602,
-	[var_0_0.NightTimeFireworks] = 20250602
+	[var_0_0.NightTimeFireworks] = 20250602,
+	[var_0_0.SpRainStorm] = 20305005
 }
 var_0_0.EffectMode = {
 	"Normal",
@@ -36,7 +40,8 @@ var_0_0.EffectMode = {
 	"Heavy_Snow",
 	"Heavy_Fog",
 	"Normal",
-	"Normal"
+	"Normal",
+	"Heavy_Rainstorm"
 }
 var_0_0.EffectAirColor = {
 	{

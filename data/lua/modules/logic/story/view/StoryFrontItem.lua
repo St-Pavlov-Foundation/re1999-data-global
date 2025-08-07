@@ -408,7 +408,7 @@ function var_0_0._startShowLine(arg_33_0, arg_33_1)
 			end
 		end
 
-		if #var_33_3 > 1 then
+		if #var_33_3 >= 1 then
 			for iter_34_1 = 1, #var_33_3 do
 				local var_34_3 = #string.split(var_33_3[iter_34_1], "\n") or 1
 

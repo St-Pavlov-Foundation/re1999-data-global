@@ -34,6 +34,14 @@ function var_0_0._initSpineVoiceMouth(arg_3_0, arg_3_1, arg_3_2)
 
 	if var_3_1 and var_3_1 ~= arg_3_0._spineVoiceMouth then
 		var_3_1:suspend()
+
+		if arg_3_0:getInStory() and var_3_1 == arg_3_0._autoVoiceMouth then
+			local var_3_2 = arg_3_0._autoVoiceMouth:getMouth(arg_3_1)
+
+			if string.nilorempty(var_3_2) then
+				var_3_1:_setBiZui()
+			end
+		end
 	end
 
 	arg_3_0._spineVoiceMouth:init(arg_3_0, arg_3_1, arg_3_2)

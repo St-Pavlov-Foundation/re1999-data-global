@@ -533,7 +533,12 @@ function var_0_0._refreshCommonDetail(arg_30_0)
 	local var_30_2 = DecorateStoreConfig.instance:getDecorateConfig(var_30_0)
 
 	arg_30_0._txtdec.text = var_30_2.typeName
-	arg_30_0._txttitle.text = GameUtil.setFirstStrSize(var_30_1.config.name, tonumber(luaLang("DecorateStoreView_txttitle_setFirstStrSize")) or 100)
+
+	if LangSettings.instance:isJp() then
+		arg_30_0._txttitle.text = var_30_1.config.name
+	else
+		arg_30_0._txttitle.text = GameUtil.setFirstStrSize(var_30_1.config.name, tonumber(luaLang("DecorateStoreView_txttitle_setFirstStrSize")) or 100)
+	end
 
 	if DecorateStoreModel.instance:isDecorateGoodItemHas(var_30_0) then
 		gohelper.setActive(arg_30_0._goowned, true)

@@ -7,6 +7,7 @@ function var_0_0.onConstructor(arg_1_0, arg_1_1, arg_1_2, arg_1_3, arg_1_4)
 	arg_1_0.type = arg_1_2
 	arg_1_0.binder = arg_1_3
 	arg_1_0.timelineItem = arg_1_4
+	arg_1_0.workTimelineItem = arg_1_4.workTimelineItem
 end
 
 function var_0_0.onTrackStart(arg_2_0, arg_2_1, arg_2_2, arg_2_3)

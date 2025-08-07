@@ -279,7 +279,7 @@
     "nameEn": "EVENT MALL",
     "prefab": 0,
     "icon": "",
-    "order": 8,
+    "order": 7,
     "showCost": "2#1",
     "openId": 0,
     "activityId": 0,
@@ -313,7 +313,7 @@
     "nameEn": "ENDLESS SUPPLY",
     "prefab": 0,
     "icon": "",
-    "order": 7,
+    "order": 6,
     "showCost": "2#1",
     "openId": 0,
     "activityId": 0,
@@ -609,6 +609,23 @@
     "openTime": "",
     "endTime": "",
     "storeId": 302,
+    "openHideId": 0
+  },
+  {
+    "id": 616,
+    "belongFirstTab": 610,
+    "belongSecondTab": 0,
+    "name": "language_10077959",
+    "nameEn": "MEDICI BANK",
+    "prefab": 0,
+    "icon": "",
+    "order": 8,
+    "showCost": "2#1",
+    "openId": 0,
+    "activityId": 0,
+    "openTime": "",
+    "endTime": "2025-09-19 04:59:59",
+    "storeId": 616,
     "openHideId": 0
   }
 ]

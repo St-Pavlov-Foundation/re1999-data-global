@@ -66,6 +66,38 @@ function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 			end
 		end
 	end
+
+	local var_1_10 = tonumber(arg_1_3[7])
+
+	if var_1_10 and var_1_2 then
+		for iter_1_4, iter_1_5 in ipairs(var_1_2) do
+			local var_1_11 = iter_1_5 and iter_1_5.spine and iter_1_5.spine:getSpineGO()
+
+			if var_1_11 then
+				local var_1_12 = var_1_11:GetComponent(typeof(UnityEngine.MeshFilter))
+
+				var_1_12 = var_1_12 and var_1_12.mesh
+
+				if var_1_12 then
+					local var_1_13 = var_1_10 / var_1_12.bounds.size.y
+
+					if var_1_13 < 1 then
+						transformhelper.setLocalScale(var_1_11.transform, var_1_13, var_1_13, var_1_13)
+					end
+				end
+			end
+		end
+	end
+
+	if not string.nilorempty(arg_1_3[8]) and var_1_2 then
+		for iter_1_6, iter_1_7 in ipairs(var_1_2) do
+			local var_1_14 = iter_1_7 and iter_1_7.spine and iter_1_7.spine:getSpineGO()
+
+			if var_1_14 then
+				transformhelper.setLocalScale(var_1_14.transform, 1, 1, 1)
+			end
+		end
+	end
 end
 
 function var_0_0._getScale(arg_3_0, arg_3_1)

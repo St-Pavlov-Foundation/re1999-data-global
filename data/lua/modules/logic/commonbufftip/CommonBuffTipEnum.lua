@@ -5,7 +5,8 @@ local var_0_0 = _M
 var_0_0.Pivot = {
 	Left = Vector2(0, 1),
 	Right = Vector2(1, 1),
-	Down = Vector2(1, 0)
+	Down = Vector2(1, 0),
+	Center = Vector2(0.5, 0.5)
 }
 var_0_0.DefaultInterval = 50
 var_0_0.BottomMargin = 50

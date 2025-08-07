@@ -30,6 +30,7 @@ function var_0_0.updateData(arg_3_0, arg_3_1)
 	arg_3_0.playerFinisherInfo = arg_3_0:buildPlayerFinisherInfo(arg_3_1)
 	arg_3_0.customData = FightDataUtil.coverData(arg_3_1.customData, arg_3_0.customData)
 	arg_3_0.fightTaskBox = FightDataUtil.coverData(arg_3_1.fightTaskBox, arg_3_0.fightTaskBox)
+	arg_3_0.progressDic = FightDataUtil.coverData(arg_3_1.progressDic, arg_3_0.progressDic)
 end
 
 function var_0_0.buildIndicators(arg_4_0, arg_4_1)

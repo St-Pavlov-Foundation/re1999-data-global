@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "name": "language_10077678",
+    "desc": "language_10078361",
+    "targetDesc": "language_10078362",
+    "icon": "",
+    "times": 3
+  },
+  {
+    "id": 2,
+    "name": "language_10078363",
+    "desc": "language_10078364",
+    "targetDesc": "language_10078365",
+    "icon": "",
+    "times": 3
+  },
+  {
+    "id": 3,
+    "name": "language_10078366",
+    "desc": "language_10078367",
+    "targetDesc": "language_10078368",
+    "icon": "",
+    "times": 3
+  }
+]

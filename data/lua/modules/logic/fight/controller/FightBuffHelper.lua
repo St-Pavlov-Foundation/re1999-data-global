@@ -537,18 +537,25 @@ function var_0_0.getDeadlyPoisonSignKey(arg_29_0)
 	return (string.format("%s_%s_%s", var_29_1[1], arg_29_0.duration, var_29_1[2]))
 end
 
+var_0_0.KSDL_BUFF_MO_SIGN_KEY = "KSDL_BUFF_MO_SIGN_KEY"
+
 function var_0_0.getBuffMoSignKey(arg_30_0)
 	if not arg_30_0 then
 		return ""
 	end
 
-	local var_30_0 = lua_skill_buff.configDict[arg_30_0.buffId]
+	local var_30_0 = arg_30_0.buffId
+	local var_30_1 = lua_skill_buff.configDict[var_30_0]
 
-	if not var_30_0 then
+	if not var_30_1 then
 		return ""
 	end
 
-	if not lua_skill_bufftype.configDict[var_30_0.typeId] then
+	if FightHeroSpEffectConfig.instance:isKSDLSpecialBuff(var_30_0) then
+		return var_0_0.KSDL_BUFF_MO_SIGN_KEY
+	end
+
+	if not lua_skill_bufftype.configDict[var_30_1.typeId] then
 		return ""
 	end
 
@@ -556,7 +563,7 @@ function var_0_0.getBuffMoSignKey(arg_30_0)
 		return var_0_0.getDeadlyPoisonSignKey(arg_30_0)
 	end
 
-	return var_30_0.features .. "__" .. var_30_0.typeId
+	return var_30_1.features .. "__" .. var_30_1.typeId
 end
 
 function var_0_0.checkPlayDuDuGuAddExPointEffect(arg_31_0)
@@ -594,6 +601,39 @@ function var_0_0.getFeatureList(arg_32_0, arg_32_1)
 			return var_32_2
 		end
 	end
+end
+
+var_0_0.TempKSDLBuffList = {}
+
+function var_0_0.getKSDLSpecialBuffList(arg_33_0)
+	local var_33_0 = var_0_0.TempKSDLBuffList
+
+	tabletool.clear(var_33_0)
+
+	local var_33_1 = arg_33_0.entityId
+	local var_33_2 = var_33_1 and FightDataHelper.entityMgr:getById(var_33_1)
+
+	if not var_33_2 then
+		return var_33_0
+	end
+
+	local var_33_3 = var_33_2:getBuffList(var_33_0)
+
+	for iter_33_0 = #var_33_3, 1, -1 do
+		arg_33_0 = var_33_3[iter_33_0]
+
+		if not FightHeroSpEffectConfig.instance:isKSDLSpecialBuff(arg_33_0.buffId) then
+			table.remove(var_33_3, iter_33_0)
+		end
+	end
+
+	table.sort(var_33_3, var_0_0.sortKSDLBuffList)
+
+	return var_33_3
+end
+
+function var_0_0.sortKSDLBuffList(arg_34_0, arg_34_1)
+	return FightHeroSpEffectConfig.instance:getKSDLSpecialBuffRank(arg_34_0.buffId) < FightHeroSpEffectConfig.instance:getKSDLSpecialBuffRank(arg_34_1.buffId)
 end
 
 return var_0_0

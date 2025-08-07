@@ -16,11 +16,15 @@ end
 function var_0_0.addEvents(arg_2_0)
 	arg_2_0._scrollstore:AddOnValueChanged(arg_2_0._onScrollValueChanged, arg_2_0)
 	arg_2_0:addEventCb(JumpController.instance, JumpEvent.BeforeJump, arg_2_0.closeThis, arg_2_0)
+	arg_2_0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_2_0._onCurrencyChange, arg_2_0, LuaEventSystem.Low)
+	arg_2_0:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_2_0._onCurrencyChange, arg_2_0, LuaEventSystem.Low)
 end
 
 function var_0_0.removeEvents(arg_3_0)
 	arg_3_0._scrollstore:RemoveOnValueChanged()
 	arg_3_0:removeEventCb(JumpController.instance, JumpEvent.BeforeJump, arg_3_0.closeThis, arg_3_0)
+	arg_3_0:removeEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_3_0._onCurrencyChange, arg_3_0)
+	arg_3_0:removeEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_3_0._onCurrencyChange, arg_3_0)
 end
 
 function var_0_0._onScrollValueChanged(arg_4_0)
@@ -125,13 +129,17 @@ function var_0_0.getFirstNoSellOutGroup(arg_10_0)
 	return 1
 end
 
-function var_0_0.onClose(arg_11_0)
-	TaskDispatcher.cancelTask(arg_11_0.refreshTime, arg_11_0)
+function var_0_0._onCurrencyChange(arg_11_0)
+	arg_11_0.viewContainer:refreshCurrencyItem()
 end
 
-function var_0_0.onDestroyView(arg_12_0)
-	for iter_12_0, iter_12_1 in ipairs(arg_12_0.storeItemList) do
-		iter_12_1:onDestroy()
+function var_0_0.onClose(arg_12_0)
+	TaskDispatcher.cancelTask(arg_12_0.refreshTime, arg_12_0)
+end
+
+function var_0_0.onDestroyView(arg_13_0)
+	for iter_13_0, iter_13_1 in ipairs(arg_13_0.storeItemList) do
+		iter_13_1:onDestroy()
 	end
 end
 

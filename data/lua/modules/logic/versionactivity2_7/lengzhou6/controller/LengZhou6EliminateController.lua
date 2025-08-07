@@ -196,7 +196,7 @@ function var_0_0.handleEliminate(arg_11_0)
 		LocalEliminateChessModel.instance:setEliminateDieEffect(nil)
 	end
 
-	local var_11_19 = EliminateStepUtil.createStep(EliminateEnum.StepWorkType.PlayAudio, var_11_18)
+	local var_11_19 = EliminateStepUtil.createStep(EliminateEnum.StepWorkType.LengZhou6PlayAudio, var_11_18)
 
 	var_11_4:addWork(var_11_19)
 	arg_11_0:buildSeqFlow(var_11_3)

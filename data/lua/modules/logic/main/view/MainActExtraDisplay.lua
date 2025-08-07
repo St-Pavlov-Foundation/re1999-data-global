@@ -37,7 +37,17 @@ end
 function var_0_0._btnreactivityOnClick(arg_4_0)
 	local var_4_0 = ReactivityController.instance:getCurReactivityId()
 
-	arg_4_0:_getEnterController():openVersionActivityEnterViewIfNotOpened(nil, nil, var_4_0, true)
+	if GameBranchMgr.instance:isOnVer(2, 9) then
+		ActivityStageHelper.recordOneActivityStage(var_4_0)
+
+		if SettingsModel.instance:isOverseas() then
+			ViewMgr.instance:openView(ViewName.VersionActivity3_0_v2a1_ReactivityEnterview)
+		else
+			ViewMgr.instance:openView(ViewName.V2a3_ReactivityEnterview)
+		end
+	else
+		arg_4_0:_getEnterController():openVersionActivityEnterViewIfNotOpened(nil, nil, var_4_0, true)
+	end
 end
 
 function var_0_0.OnNotifyEnterCurActivity(arg_5_0)

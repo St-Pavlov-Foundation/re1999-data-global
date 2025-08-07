@@ -86,29 +86,12 @@ function var_0_4._hook_GMToolView(arg_6_0, arg_6_1)
 end
 
 function var_0_4._hook_MainController(arg_7_0, arg_7_1)
-	GMMinusModel.instance:saveOriginalFunc(arg_7_1, "_onCheckAutoPop")
-
-	function arg_7_1._onCheckAutoPop(arg_8_0, ...)
-		GMMinusModel.instance:callOriginalSelfFunc(arg_8_0, "_onCheckAutoPop", ...)
-		arg_8_0:_gm_destroyPopupFlow()
-
-		arg_8_0._gm_popupFlow = arg_8_0._popupFlow
-		arg_8_0._popupFlow = nil
-		arg_8_0._inPopupFlow = false
-	end
-
-	function arg_7_1._gm_destroyPopupFlow(arg_9_0)
-		if arg_9_0._gm_popupFlow then
-			arg_9_0._gm_popupFlow:destroy()
-
-			arg_9_0._gm_popupFlow = nil
-		end
-	end
+	return
 end
 
 ;(function()
-	for iter_10_0, iter_10_1 in ipairs(var_0_7) do
-		var_0_4:_try_inject(iter_10_1)
+	for iter_8_0, iter_8_1 in ipairs(var_0_7) do
+		var_0_4:_try_inject(iter_8_1)
 	end
 end)()
 

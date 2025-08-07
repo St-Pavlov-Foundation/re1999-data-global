@@ -46,6 +46,7 @@ function var_0_0.update(arg_3_0, arg_3_1)
 	arg_3_0.discountTime = arg_3_1.discountTime or 0
 	arg_3_0.canGetGuaranteeSRCount = arg_3_1.canGetGuaranteeSRCount or 0
 	arg_3_0.guaranteeSRCountDown = arg_3_1.guaranteeSRCountDown or 0
+	arg_3_0.summonCount = arg_3_1.summonCount or 0
 end
 
 function var_0_0.isOpening(arg_4_0)
@@ -57,6 +58,22 @@ function var_0_0.isOpening(arg_4_0)
 	local var_4_1, var_4_2 = arg_4_0:onOffTimestamp()
 
 	return var_4_1 <= var_4_0 and var_4_0 <= var_4_2
+end
+
+function var_0_0.isHasProgressReward(arg_5_0)
+	local var_5_0 = SummonConfig.instance:getProgressRewardsByPoolId(arg_5_0.id)
+	local var_5_1 = 0
+	local var_5_2 = arg_5_0.customPickMO:getRewardCount() or 0
+
+	if var_5_0 and #var_5_0 > 0 then
+		for iter_5_0, iter_5_1 in ipairs(var_5_0) do
+			if iter_5_1[1] <= arg_5_0.summonCount then
+				var_5_1 = var_5_1 + 1
+			end
+		end
+	end
+
+	return var_5_2 < var_5_1
 end
 
 return var_0_0

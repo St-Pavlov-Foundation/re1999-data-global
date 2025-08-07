@@ -88,6 +88,10 @@ function var_0_0._initReddotitem(arg_10_0)
 
 	if arg_10_0._centerCo.id == ActivityEnum.ActivityType.Welfare then
 		arg_10_0._redDot = RedDotController.instance:addRedDot(var_10_1, var_10_2, false, arg_10_0._onRefreshDot_Welfare, arg_10_0)
+	elseif arg_10_0._centerCo.id == ActivityEnum.ActivityType.Beginner then
+		arg_10_0._redDot = RedDotController.instance:addRedDot(var_10_1, var_10_2, false, arg_10_0._onRefreshDot_ActivityBeginner, arg_10_0)
+
+		arg_10_0:_checkShowBeginnerReddot(var_10_2)
 	else
 		arg_10_0._redDot = RedDotController.instance:addRedDot(var_10_1, var_10_2, false, arg_10_0._onRefreshDot_ActivityBeginner, arg_10_0)
 	end
@@ -136,41 +140,41 @@ function var_0_0._onRefreshDot_ActivityBeginner(arg_12_0, arg_12_1)
 	if not var_12_0 then
 		logError(string.format("ActivityMainBtnItem:_checkRed_ActivityBeginner actId:%s error:%s", arg_12_0._curActId, var_12_1))
 	end
+
+	arg_12_0:_checkShowBeginnerReddot(arg_12_1.dotId)
 end
 
-function var_0_0._checkRed_ActivityBeginner(arg_13_0, arg_13_1)
-	local var_13_0 = arg_13_0:_checkIsShowRed_ActivityBeginner(arg_13_1.dotId, 0)
-
-	arg_13_1.show = var_13_0
-
-	gohelper.setActive(arg_13_1.go, var_13_0)
-	gohelper.setActive(arg_13_0._imgGo, not var_13_0)
-end
-
-function var_0_0._checkRed_Welfare(arg_14_0, arg_14_1)
-	local var_14_0 = arg_14_0:_checkIsShowRed_Welfare(arg_14_1.dotId, 0)
-
-	arg_14_1.show = var_14_0
-
-	gohelper.setActive(arg_14_1.go, var_14_0)
-	gohelper.setActive(arg_14_0._imgGo, not var_14_0)
-end
-
-function var_0_0._checkIsShowRed_Welfare(arg_15_0, arg_15_1, arg_15_2)
-	if RedDotModel.instance:isDotShow(arg_15_1, arg_15_2 or 0) then
-		return true
+function var_0_0._checkShowBeginnerReddot(arg_13_0, arg_13_1)
+	if not arg_13_1 then
+		return
 	end
 
-	local var_15_0 = ActivityModel.instance:getCenterActivities(ActivityEnum.ActivityType.Welfare)
+	local var_13_0 = gohelper.findChild(arg_13_0.go, "go_activityreddot")
 
-	for iter_15_0, iter_15_1 in pairs(var_15_0) do
-		arg_15_0._curActId = iter_15_1
+	gohelper.setActive(var_13_0, false)
 
-		if iter_15_1 == ActivityEnum.Activity.StoryShow and not TaskModel.instance:isFinishAllNoviceTask() and string.nilorempty(arg_15_0:getActivityShowRedDotData(iter_15_1)) then
-			return true
+	local var_13_1 = RedDotModel.instance:getDotChilds(arg_13_1)
+
+	for iter_13_0, iter_13_1 in pairs(var_13_1) do
+		local var_13_2 = RedDotModel.instance:getRedDotInfo(iter_13_1).infos
+
+		for iter_13_2, iter_13_3 in pairs(var_13_2) do
+			if iter_13_3.value > 0 and not arg_13_0:_isBeginnerIgnoreReddotActivity(iter_13_3.uid) then
+				gohelper.setActive(var_13_0, true)
+
+				return
+			end
 		end
+	end
+end
 
-		if iter_15_1 == ActivityEnum.Activity.ClassShow and not TeachNoteModel.instance:isFinalRewardGet() and string.nilorempty(arg_15_0:getActivityShowRedDotData(iter_15_1)) then
+local var_0_1 = {
+	ActivityEnum.Activity.V2a9_FreeMonthCard
+}
+
+function var_0_0._isBeginnerIgnoreReddotActivity(arg_14_0, arg_14_1)
+	for iter_14_0, iter_14_1 in pairs(var_0_1) do
+		if iter_14_1 == tonumber(arg_14_1) then
 			return true
 		end
 	end
@@ -178,58 +182,98 @@ function var_0_0._checkIsShowRed_Welfare(arg_15_0, arg_15_1, arg_15_2)
 	return false
 end
 
-function var_0_0._checkIsShowRed_ActivityBeginner(arg_16_0, arg_16_1, arg_16_2)
-	if RedDotModel.instance:isDotShow(arg_16_1, arg_16_2 or 0) then
+function var_0_0._checkRed_ActivityBeginner(arg_15_0, arg_15_1)
+	local var_15_0 = arg_15_0:_checkIsShowRed_ActivityBeginner(arg_15_1.dotId, 0)
+
+	arg_15_1.show = var_15_0
+
+	gohelper.setActive(arg_15_1.go, var_15_0)
+	gohelper.setActive(arg_15_0._imgGo, not var_15_0)
+end
+
+function var_0_0._checkRed_Welfare(arg_16_0, arg_16_1)
+	local var_16_0 = arg_16_0:_checkIsShowRed_Welfare(arg_16_1.dotId, 0)
+
+	arg_16_1.show = var_16_0
+
+	gohelper.setActive(arg_16_1.go, var_16_0)
+	gohelper.setActive(arg_16_0._imgGo, not var_16_0)
+end
+
+function var_0_0._checkIsShowRed_Welfare(arg_17_0, arg_17_1, arg_17_2)
+	if RedDotModel.instance:isDotShow(arg_17_1, arg_17_2 or 0) then
 		return true
 	end
 
-	local var_16_0 = ActivityModel.instance:getCenterActivities(ActivityEnum.ActivityType.Beginner)
+	local var_17_0 = ActivityModel.instance:getCenterActivities(ActivityEnum.ActivityType.Welfare)
 
-	for iter_16_0, iter_16_1 in pairs(var_16_0) do
-		arg_16_0._curActId = iter_16_1
+	for iter_17_0, iter_17_1 in pairs(var_17_0) do
+		arg_17_0._curActId = iter_17_1
 
-		if iter_16_1 == DoubleDropModel.instance:getActId() and string.nilorempty(arg_16_0:getActivityShowRedDotData(iter_16_1)) then
+		if iter_17_1 == ActivityEnum.Activity.StoryShow and not TaskModel.instance:isFinishAllNoviceTask() and string.nilorempty(arg_17_0:getActivityShowRedDotData(iter_17_1)) then
 			return true
 		end
 
-		if iter_16_1 == ActivityEnum.Activity.DreamShow then
-			local var_16_1 = TaskModel.instance:getTaskMoList(TaskEnum.TaskType.ActivityShow, ActivityEnum.Activity.DreamShow)
-			local var_16_2 = var_16_1 and var_16_1[1]
+		if iter_17_1 == ActivityEnum.Activity.ClassShow and not TeachNoteModel.instance:isFinalRewardGet() and string.nilorempty(arg_17_0:getActivityShowRedDotData(iter_17_1)) then
+			return true
+		end
+	end
 
-			if var_16_2 and var_16_2.config and var_16_2.finishCount < var_16_2.config.maxFinishCount and string.nilorempty(arg_16_0:getActivityShowRedDotData(iter_16_1)) then
+	return false
+end
+
+function var_0_0._checkIsShowRed_ActivityBeginner(arg_18_0, arg_18_1, arg_18_2)
+	if RedDotModel.instance:isDotShow(arg_18_1, arg_18_2 or 0) then
+		return true
+	end
+
+	local var_18_0 = ActivityModel.instance:getCenterActivities(ActivityEnum.ActivityType.Beginner)
+
+	for iter_18_0, iter_18_1 in pairs(var_18_0) do
+		arg_18_0._curActId = iter_18_1
+
+		if iter_18_1 == DoubleDropModel.instance:getActId() and string.nilorempty(arg_18_0:getActivityShowRedDotData(iter_18_1)) then
+			return true
+		end
+
+		if iter_18_1 == ActivityEnum.Activity.DreamShow then
+			local var_18_1 = TaskModel.instance:getTaskMoList(TaskEnum.TaskType.ActivityShow, ActivityEnum.Activity.DreamShow)
+			local var_18_2 = var_18_1 and var_18_1[1]
+
+			if var_18_2 and var_18_2.config and var_18_2.finishCount < var_18_2.config.maxFinishCount and string.nilorempty(arg_18_0:getActivityShowRedDotData(iter_18_1)) then
 				return true
 			end
 		end
 
-		if iter_16_1 == ActivityEnum.Activity.Activity1_7WarmUp and Activity125Controller.instance:checkActRed(iter_16_1) then
+		if iter_18_1 == ActivityEnum.Activity.Activity1_7WarmUp and Activity125Controller.instance:checkActRed(iter_18_1) then
 			return true
 		end
 
-		if iter_16_1 == ActivityEnum.Activity.Activity1_8WarmUp and Activity125Controller.instance:checkActRed1(iter_16_1) then
+		if iter_18_1 == ActivityEnum.Activity.Activity1_8WarmUp and Activity125Controller.instance:checkActRed1(iter_18_1) then
 			return true
 		end
 
-		if (iter_16_1 == ActivityEnum.Activity.Activity1_9WarmUp or iter_16_1 == ActivityEnum.Activity.V2a0_WarmUp or iter_16_1 == ActivityEnum.Activity.V2a1_WarmUp or iter_16_1 == ActivityEnum.Activity.V2a2_WarmUp or iter_16_1 == ActivityEnum.Activity.V2a3_WarmUp or iter_16_1 == ActivityEnum.Activity.V2a5_WarmUp or iter_16_1 == ActivityEnum.Activity.V2a6_WarmUp or iter_16_1 == ActivityEnum.Activity.V2a7_WarmUp) and Activity125Controller.instance:checkActRed2(iter_16_1) then
+		if (iter_18_1 == ActivityEnum.Activity.Activity1_9WarmUp or iter_18_1 == ActivityEnum.Activity.V2a0_WarmUp or iter_18_1 == ActivityEnum.Activity.V2a1_WarmUp or iter_18_1 == ActivityEnum.Activity.V2a2_WarmUp or iter_18_1 == ActivityEnum.Activity.V2a3_WarmUp or iter_18_1 == ActivityEnum.Activity.V2a5_WarmUp or iter_18_1 == ActivityEnum.Activity.V2a6_WarmUp or iter_18_1 == ActivityEnum.Activity.V2a7_WarmUp) and Activity125Controller.instance:checkActRed2(iter_18_1) then
 			return true
 		end
 
-		if iter_16_1 == ActivityEnum.Activity.Activity1_5WarmUp and Activity146Controller.instance:isActFirstEnterToday() and (not Activity146Model.instance:isAllEpisodeFinish() or Activity146Model.instance:isHasEpisodeCanReceiveReward()) then
+		if iter_18_1 == ActivityEnum.Activity.Activity1_5WarmUp and Activity146Controller.instance:isActFirstEnterToday() and (not Activity146Model.instance:isAllEpisodeFinish() or Activity146Model.instance:isHasEpisodeCanReceiveReward()) then
 			return true
 		end
 
-		if iter_16_1 == ActivityEnum.Activity.V2a2_TurnBack_H5 and ActivityBeginnerController.instance:checkFirstEnter(iter_16_1) then
+		if iter_18_1 == ActivityEnum.Activity.V2a2_TurnBack_H5 and ActivityBeginnerController.instance:checkFirstEnter(iter_18_1) then
 			return true
 		end
 
-		if iter_16_1 == VersionActivity2_2Enum.ActivityId.LimitDecorate and ActivityBeginnerController.instance:checkFirstEnter(iter_16_1) then
+		if iter_18_1 == VersionActivity2_2Enum.ActivityId.LimitDecorate and ActivityBeginnerController.instance:checkFirstEnter(iter_18_1) then
 			return true
 		end
 
-		if typeId == ActivityEnum.ActivityTypeID.Act125 and Activity125Controller.instance:checkActRed2(iter_16_1) then
+		if typeId == ActivityEnum.ActivityTypeID.Act125 and Activity125Controller.instance:checkActRed2(iter_18_1) then
 			return true
 		end
 
-		if typeId == ActivityEnum.ActivityTypeID.Act201 and ActivityBeginnerController.instance:checkFirstEnter(iter_16_1) then
+		if typeId == ActivityEnum.ActivityTypeID.Act201 and ActivityBeginnerController.instance:checkFirstEnter(iter_18_1) then
 			return true
 		end
 	end
@@ -237,90 +281,90 @@ function var_0_0._checkIsShowRed_ActivityBeginner(arg_16_0, arg_16_1, arg_16_2)
 	return false
 end
 
-function var_0_0._checkActivityShowRedDotData(arg_17_0, arg_17_1)
-	arg_17_1:defaultRefreshDot()
+function var_0_0._checkActivityShowRedDotData(arg_19_0, arg_19_1)
+	arg_19_1:defaultRefreshDot()
 
-	if not arg_17_1.show then
-		local var_17_0 = ActivityModel.instance:getCenterActivities(ActivityEnum.ActivityType.Beginner)
+	if not arg_19_1.show then
+		local var_19_0 = ActivityModel.instance:getCenterActivities(ActivityEnum.ActivityType.Beginner)
 
-		for iter_17_0, iter_17_1 in pairs(var_17_0) do
-			local var_17_1 = ActivityConfig.instance:getActivityCo(iter_17_1).typeId
+		for iter_19_0, iter_19_1 in pairs(var_19_0) do
+			local var_19_1 = ActivityConfig.instance:getActivityCo(iter_19_1).typeId
 
-			arg_17_0._curActId = iter_17_1
+			arg_19_0._curActId = iter_19_1
 
-			if iter_17_1 == VoyageConfig.instance:getActivityId() and string.nilorempty(arg_17_0:getActivityShowRedDotData(iter_17_1)) then
-				arg_17_0:_showRedDotType(arg_17_1, iter_17_1)
-
-				return
-			end
-
-			if iter_17_1 == DoubleDropModel.instance:getActId() and string.nilorempty(arg_17_0:getActivityShowRedDotData(iter_17_1)) then
-				arg_17_0:_showRedDotType(arg_17_1, iter_17_1)
+			if iter_19_1 == VoyageConfig.instance:getActivityId() and string.nilorempty(arg_19_0:getActivityShowRedDotData(iter_19_1)) then
+				arg_19_0:_showRedDotType(arg_19_1, iter_19_1)
 
 				return
 			end
 
-			if iter_17_1 == ActivityEnum.Activity.DreamShow then
-				local var_17_2 = TaskModel.instance:getTaskMoList(TaskEnum.TaskType.ActivityShow, ActivityEnum.Activity.DreamShow)
-				local var_17_3 = var_17_2 and var_17_2[1]
+			if iter_19_1 == DoubleDropModel.instance:getActId() and string.nilorempty(arg_19_0:getActivityShowRedDotData(iter_19_1)) then
+				arg_19_0:_showRedDotType(arg_19_1, iter_19_1)
 
-				if var_17_3 and var_17_3.config and var_17_3.finishCount < var_17_3.config.maxFinishCount and string.nilorempty(arg_17_0:getActivityShowRedDotData(iter_17_1)) then
-					arg_17_0:_showRedDotType(arg_17_1, iter_17_1)
+				return
+			end
+
+			if iter_19_1 == ActivityEnum.Activity.DreamShow then
+				local var_19_2 = TaskModel.instance:getTaskMoList(TaskEnum.TaskType.ActivityShow, ActivityEnum.Activity.DreamShow)
+				local var_19_3 = var_19_2 and var_19_2[1]
+
+				if var_19_3 and var_19_3.config and var_19_3.finishCount < var_19_3.config.maxFinishCount and string.nilorempty(arg_19_0:getActivityShowRedDotData(iter_19_1)) then
+					arg_19_0:_showRedDotType(arg_19_1, iter_19_1)
 
 					return
 				end
 			end
 
-			if iter_17_1 == ActivityEnum.Activity.WeekWalkDeepShow and ActivityModel.instance:getActivityInfo()[iter_17_1]:isNewStageOpen() then
-				arg_17_0:_showRedDotType(arg_17_1, iter_17_1)
+			if iter_19_1 == ActivityEnum.Activity.WeekWalkDeepShow and ActivityModel.instance:getActivityInfo()[iter_19_1]:isNewStageOpen() then
+				arg_19_0:_showRedDotType(arg_19_1, iter_19_1)
 
 				return
 			end
 
-			if iter_17_1 == ActivityEnum.Activity.Activity1_7WarmUp and Activity125Controller.instance:checkActRed(iter_17_1) then
-				arg_17_0:_showRedDotType(arg_17_1, iter_17_1)
+			if iter_19_1 == ActivityEnum.Activity.Activity1_7WarmUp and Activity125Controller.instance:checkActRed(iter_19_1) then
+				arg_19_0:_showRedDotType(arg_19_1, iter_19_1)
 
 				return
 			end
 
-			if iter_17_1 == ActivityEnum.Activity.Activity1_8WarmUp and Activity125Controller.instance:checkActRed1(iter_17_1) then
-				arg_17_0:_showRedDotType(arg_17_1, iter_17_1)
+			if iter_19_1 == ActivityEnum.Activity.Activity1_8WarmUp and Activity125Controller.instance:checkActRed1(iter_19_1) then
+				arg_19_0:_showRedDotType(arg_19_1, iter_19_1)
 
 				return
 			end
 
-			if (iter_17_1 == ActivityEnum.Activity.Activity1_9WarmUp or iter_17_1 == ActivityEnum.Activity.V2a0_WarmUp or iter_17_1 == ActivityEnum.Activity.V2a1_WarmUp or iter_17_1 == ActivityEnum.Activity.V2a2_WarmUp or iter_17_1 == ActivityEnum.Activity.V2a3_WarmUp or iter_17_1 == ActivityEnum.Activity.V2a5_WarmUp or iter_17_1 == ActivityEnum.Activity.V2a6_WarmUp or iter_17_1 == ActivityEnum.Activity.V2a7_WarmUp) and Activity125Controller.instance:checkActRed2(iter_17_1) then
-				arg_17_0:_showRedDotType(arg_17_1, iter_17_1)
+			if (iter_19_1 == ActivityEnum.Activity.Activity1_9WarmUp or iter_19_1 == ActivityEnum.Activity.V2a0_WarmUp or iter_19_1 == ActivityEnum.Activity.V2a1_WarmUp or iter_19_1 == ActivityEnum.Activity.V2a2_WarmUp or iter_19_1 == ActivityEnum.Activity.V2a3_WarmUp or iter_19_1 == ActivityEnum.Activity.V2a5_WarmUp or iter_19_1 == ActivityEnum.Activity.V2a6_WarmUp or iter_19_1 == ActivityEnum.Activity.V2a7_WarmUp) and Activity125Controller.instance:checkActRed2(iter_19_1) then
+				arg_19_0:_showRedDotType(arg_19_1, iter_19_1)
 
 				return
 			end
 
-			if iter_17_1 == ActivityEnum.Activity.Activity1_5WarmUp and Activity146Controller.instance:isActFirstEnterToday() and (not Activity146Model.instance:isAllEpisodeFinish() or Activity146Model.instance:isHasEpisodeCanReceiveReward()) then
-				arg_17_0:_showRedDotType(arg_17_1, iter_17_1)
+			if iter_19_1 == ActivityEnum.Activity.Activity1_5WarmUp and Activity146Controller.instance:isActFirstEnterToday() and (not Activity146Model.instance:isAllEpisodeFinish() or Activity146Model.instance:isHasEpisodeCanReceiveReward()) then
+				arg_19_0:_showRedDotType(arg_19_1, iter_19_1)
 
 				return
 			end
 
-			if iter_17_1 == ActivityEnum.Activity.V2a2_TurnBack_H5 and ActivityBeginnerController.instance:checkFirstEnter(iter_17_1) then
-				arg_17_0:_showRedDotType(arg_17_1, iter_17_1)
+			if iter_19_1 == ActivityEnum.Activity.V2a2_TurnBack_H5 and ActivityBeginnerController.instance:checkFirstEnter(iter_19_1) then
+				arg_19_0:_showRedDotType(arg_19_1, iter_19_1)
 
 				return
 			end
 
-			if iter_17_1 == VersionActivity2_2Enum.ActivityId.LimitDecorate and ActivityBeginnerController.instance:checkFirstEnter(iter_17_1) then
-				arg_17_0:_showRedDotType(arg_17_1, iter_17_1)
+			if iter_19_1 == VersionActivity2_2Enum.ActivityId.LimitDecorate and ActivityBeginnerController.instance:checkFirstEnter(iter_19_1) then
+				arg_19_0:_showRedDotType(arg_19_1, iter_19_1)
 
 				return
 			end
 
-			if iter_17_1 == ActivityEnum.Activity.V2a4_WarmUp and Activity125Controller.instance:checkActRed3(iter_17_1) then
-				arg_17_0:_showRedDotType(arg_17_1, iter_17_1)
+			if iter_19_1 == ActivityEnum.Activity.V2a4_WarmUp and Activity125Controller.instance:checkActRed3(iter_19_1) then
+				arg_19_0:_showRedDotType(arg_19_1, iter_19_1)
 
 				return
 			end
 
-			if var_17_1 == ActivityEnum.ActivityTypeID.Act201 and ActivityBeginnerController.instance:checkFirstEnter(iter_17_1) then
-				arg_17_0:_showRedDotType(arg_17_1, iter_17_1)
+			if var_19_1 == ActivityEnum.ActivityTypeID.Act201 and ActivityBeginnerController.instance:checkFirstEnter(iter_19_1) then
+				arg_19_0:_showRedDotType(arg_19_1, iter_19_1)
 
 				return
 			end
@@ -328,23 +372,23 @@ function var_0_0._checkActivityShowRedDotData(arg_17_0, arg_17_1)
 	end
 end
 
-function var_0_0._checkActivityWelfareRedDot(arg_18_0, arg_18_1)
-	arg_18_1:defaultRefreshDot()
+function var_0_0._checkActivityWelfareRedDot(arg_20_0, arg_20_1)
+	arg_20_1:defaultRefreshDot()
 
-	if not arg_18_1.show then
-		local var_18_0 = ActivityModel.instance:getCenterActivities(ActivityEnum.ActivityType.Welfare)
+	if not arg_20_1.show then
+		local var_20_0 = ActivityModel.instance:getCenterActivities(ActivityEnum.ActivityType.Welfare)
 
-		for iter_18_0, iter_18_1 in pairs(var_18_0) do
-			arg_18_0._curActId = iter_18_1
+		for iter_20_0, iter_20_1 in pairs(var_20_0) do
+			arg_20_0._curActId = iter_20_1
 
-			if iter_18_1 == ActivityEnum.Activity.StoryShow and not TaskModel.instance:isFinishAllNoviceTask() and string.nilorempty(arg_18_0:getActivityShowRedDotData(iter_18_1)) then
-				arg_18_0:_showRedDotType(arg_18_1, iter_18_1)
+			if iter_20_1 == ActivityEnum.Activity.StoryShow and not TaskModel.instance:isFinishAllNoviceTask() and string.nilorempty(arg_20_0:getActivityShowRedDotData(iter_20_1)) then
+				arg_20_0:_showRedDotType(arg_20_1, iter_20_1)
 
 				return
 			end
 
-			if iter_18_1 == ActivityEnum.Activity.ClassShow and not TeachNoteModel.instance:isFinalRewardGet() and string.nilorempty(arg_18_0:getActivityShowRedDotData(iter_18_1)) then
-				arg_18_0:_showRedDotType(arg_18_1, iter_18_1)
+			if iter_20_1 == ActivityEnum.Activity.ClassShow and not TeachNoteModel.instance:isFinalRewardGet() and string.nilorempty(arg_20_0:getActivityShowRedDotData(iter_20_1)) then
+				arg_20_0:_showRedDotType(arg_20_1, iter_20_1)
 
 				return
 			end

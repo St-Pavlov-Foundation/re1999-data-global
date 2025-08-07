@@ -7,6 +7,7 @@ function var_0_0.onInitView(arg_1_0)
 	arg_1_0._goempty = gohelper.findChild(arg_1_0.viewGO, "#go_empty")
 	arg_1_0._gostorecategoryitem = gohelper.findChild(arg_1_0.viewGO, "left/scroll_category/viewport/categorycontent/#go_storecategoryitem")
 	arg_1_0._scrollprop = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_prop")
+	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "#scroll_prop/viewport/content")
 	arg_1_0._drag = SLFramework.UGUI.UIDragListener.Get(arg_1_0._scrollprop.gameObject)
 	arg_1_0._godeduction = gohelper.findChild(arg_1_0.viewGO, "#go_deduction")
 	arg_1_0._txtdeduction = gohelper.findChildTextMesh(arg_1_0.viewGO, "#go_deduction/#txt_deadTime")
@@ -297,6 +298,7 @@ function var_0_0.onOpen(arg_18_0)
 
 	local var_18_0 = arg_18_0.viewContainer:getJumpTabId()
 	local var_18_1 = arg_18_0.viewContainer:getJumpGoodsId()
+	local var_18_2 = arg_18_0.viewContainer:isJumpFocus()
 
 	arg_18_0:_refreshTabs(var_18_0, true)
 	arg_18_0:addEventCb(StoreController.instance, StoreEvent.GoodsModelChanged, arg_18_0._updateInfo, arg_18_0)
@@ -305,12 +307,21 @@ function var_0_0.onOpen(arg_18_0)
 	BackpackController.instance:registerCallback(BackpackEvent.UpdateItemList, arg_18_0._updateItemList, arg_18_0)
 
 	if var_18_1 then
-		ViewMgr.instance:openView(ViewName.StoreSkinPreviewView, {
-			goodsMO = StoreModel.instance:getGoodsMO(tonumber(var_18_1))
-		})
-	end
+		if not var_18_2 then
+			ViewMgr.instance:openView(ViewName.StoreSkinPreviewView, {
+				goodsMO = StoreModel.instance:getGoodsMO(tonumber(var_18_1))
+			})
 
-	arg_18_0._scrollprop.horizontalNormalizedPosition = 0
+			arg_18_0._scrollprop.horizontalNormalizedPosition = 0
+		else
+			local var_18_3 = StoreClothesGoodsItemListModel.instance:getGoodIndex(var_18_1)
+			local var_18_4, var_18_5 = transformhelper.getLocalPos(arg_18_0._gocontent.transform)
+			local var_18_6 = arg_18_0.viewContainer._ScrollViewSkinStore._param
+			local var_18_7 = -(var_18_6.cellWidth + var_18_6.cellSpaceH) * (var_18_3 - 1) - var_18_6.startSpace
+
+			transformhelper.setLocalPosXY(arg_18_0._gocontent.transform, var_18_7, var_18_5)
+		end
+	end
 end
 
 function var_0_0._updateItemList(arg_19_0)

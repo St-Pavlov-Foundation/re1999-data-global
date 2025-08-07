@@ -3,72 +3,68 @@
 local var_0_0 = class("AergusiController", BaseController)
 
 function var_0_0.addConstEvents(arg_1_0)
-	ActivityController.instance:registerCallback(ActivityEvent.RefreshActivityState, arg_1_0._checkActivityInfo, arg_1_0)
+	return
 end
 
 function var_0_0.reInit(arg_2_0)
-	TaskDispatcher.cancelTask(arg_2_0._delayGetInfo, arg_2_0)
+	return
 end
 
-function var_0_0._checkActivityInfo(arg_3_0)
-	if ActivityModel.instance:isActOnLine(VersionActivity2_1Enum.ActivityId.Aergusi) then
-		TaskDispatcher.cancelTask(arg_3_0._delayGetInfo, arg_3_0)
-		TaskDispatcher.runDelay(arg_3_0._delayGetInfo, arg_3_0, 0.2)
+function var_0_0.openAergusiLevelView(arg_3_0, arg_3_1, arg_3_2)
+	arg_3_1 = arg_3_1 or VersionActivity2_1Enum.ActivityId.Aergusi
+
+	if arg_3_2 then
+		Activity163Rpc.instance:sendGet163InfosRequest(arg_3_1, function(arg_4_0, arg_4_1, arg_4_2)
+			if arg_4_1 == 0 then
+				ViewMgr.instance:openView(ViewName.AergusiLevelView)
+			end
+		end)
+	else
+		ViewMgr.instance:openView(ViewName.AergusiLevelView)
 	end
 end
 
-function var_0_0._delayGetInfo(arg_4_0)
-	Activity163Rpc.instance:sendGet163InfosRequest(VersionActivity2_1Enum.ActivityId.Aergusi)
-	TaskRpc.instance:sendGetTaskInfoRequest({
-		TaskEnum.TaskType.Activity163
-	})
-end
-
-function var_0_0.openAergusiLevelView(arg_5_0)
-	ViewMgr.instance:openView(ViewName.AergusiLevelView)
-end
-
-function var_0_0.openAergusiTaskView(arg_6_0)
+function var_0_0.openAergusiTaskView(arg_5_0)
 	ViewMgr.instance:openView(ViewName.AergusiTaskView)
 end
 
-function var_0_0.openAergusiDialogView(arg_7_0, arg_7_1)
-	ViewMgr.instance:openView(ViewName.AergusiDialogView, arg_7_1)
+function var_0_0.openAergusiDialogView(arg_6_0, arg_6_1)
+	ViewMgr.instance:openView(ViewName.AergusiDialogView, arg_6_1)
 end
 
-function var_0_0.openAergusiClueView(arg_8_0, arg_8_1)
-	ViewMgr.instance:openView(ViewName.AergusiClueView, arg_8_1)
+function var_0_0.openAergusiClueView(arg_7_0, arg_7_1)
+	ViewMgr.instance:openView(ViewName.AergusiClueView, arg_7_1)
 end
 
-function var_0_0.openAergusiFailView(arg_9_0, arg_9_1)
-	ViewMgr.instance:openView(ViewName.AergusiFailView, arg_9_1)
+function var_0_0.openAergusiFailView(arg_8_0, arg_8_1)
+	ViewMgr.instance:openView(ViewName.AergusiFailView, arg_8_1)
 end
 
-function var_0_0.openAergusiDialogStartView(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
+function var_0_0.openAergusiDialogStartView(arg_9_0, arg_9_1, arg_9_2, arg_9_3)
+	local var_9_0 = {
+		groupId = arg_9_1,
+		callback = arg_9_2,
+		callbackObj = arg_9_3
+	}
+
+	ViewMgr.instance:openView(ViewName.AergusiDialogStartView, var_9_0)
+end
+
+function var_0_0.openAergusiDialogEndView(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
 	local var_10_0 = {
-		groupId = arg_10_1,
+		episodeId = arg_10_1,
 		callback = arg_10_2,
 		callbackObj = arg_10_3
 	}
 
-	ViewMgr.instance:openView(ViewName.AergusiDialogStartView, var_10_0)
+	ViewMgr.instance:openView(ViewName.AergusiDialogEndView, var_10_0)
 end
 
-function var_0_0.openAergusiDialogEndView(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
-	local var_11_0 = {
-		episodeId = arg_11_1,
-		callback = arg_11_2,
-		callbackObj = arg_11_3
-	}
+function var_0_0.delayReward(arg_11_0, arg_11_1, arg_11_2)
+	if arg_11_0._actTaskMO == nil and arg_11_2 then
+		arg_11_0._actTaskMO = arg_11_2
 
-	ViewMgr.instance:openView(ViewName.AergusiDialogEndView, var_11_0)
-end
-
-function var_0_0.delayReward(arg_12_0, arg_12_1, arg_12_2)
-	if arg_12_0._actTaskMO == nil and arg_12_2 then
-		arg_12_0._actTaskMO = arg_12_2
-
-		TaskDispatcher.runDelay(arg_12_0._onPreFinish, arg_12_0, arg_12_1)
+		TaskDispatcher.runDelay(arg_11_0._onPreFinish, arg_11_0, arg_11_1)
 
 		return true
 	end
@@ -76,40 +72,40 @@ function var_0_0.delayReward(arg_12_0, arg_12_1, arg_12_2)
 	return false
 end
 
-function var_0_0._onPreFinish(arg_13_0)
-	local var_13_0 = arg_13_0._actTaskMO
+function var_0_0._onPreFinish(arg_12_0)
+	local var_12_0 = arg_12_0._actTaskMO
 
-	arg_13_0._actTaskMO = nil
+	arg_12_0._actTaskMO = nil
 
-	if var_13_0 and (var_13_0.id == AergusiEnum.TaskMOAllFinishId or var_13_0:alreadyGotReward()) then
-		AergusiTaskListModel.instance:preFinish(var_13_0)
+	if var_12_0 and (var_12_0.id == AergusiEnum.TaskMOAllFinishId or var_12_0:alreadyGotReward()) then
+		AergusiTaskListModel.instance:preFinish(var_12_0)
 
-		arg_13_0._actTaskId = var_13_0.id
+		arg_12_0._actTaskId = var_12_0.id
 
-		TaskDispatcher.runDelay(arg_13_0._onRewardTask, arg_13_0, AergusiEnum.AnimatorTime.TaskRewardMoveUp)
+		TaskDispatcher.runDelay(arg_12_0._onRewardTask, arg_12_0, AergusiEnum.AnimatorTime.TaskRewardMoveUp)
 	end
 end
 
-function var_0_0._onRewardTask(arg_14_0)
-	local var_14_0 = arg_14_0._actTaskId
+function var_0_0._onRewardTask(arg_13_0)
+	local var_13_0 = arg_13_0._actTaskId
 
-	arg_14_0._actTaskId = nil
+	arg_13_0._actTaskId = nil
 
-	if var_14_0 then
-		if var_14_0 == AergusiEnum.TaskMOAllFinishId then
+	if var_13_0 then
+		if var_13_0 == AergusiEnum.TaskMOAllFinishId then
 			TaskRpc.instance:sendFinishAllTaskRequest(TaskEnum.TaskType.Activity163)
 		else
-			TaskRpc.instance:sendFinishTaskRequest(var_14_0)
+			TaskRpc.instance:sendFinishTaskRequest(var_13_0)
 		end
 	end
 end
 
-function var_0_0.oneClaimReward(arg_15_0, arg_15_1)
-	local var_15_0 = AergusiTaskListModel.instance:getList()
+function var_0_0.oneClaimReward(arg_14_0, arg_14_1)
+	local var_14_0 = AergusiTaskListModel.instance:getList()
 
-	for iter_15_0, iter_15_1 in pairs(var_15_0) do
-		if iter_15_1:alreadyGotReward() and iter_15_1.id ~= AergusiEnum.TaskMOAllFinishId then
-			TaskRpc.instance:sendFinishTaskRequest(iter_15_1.id)
+	for iter_14_0, iter_14_1 in pairs(var_14_0) do
+		if iter_14_1:alreadyGotReward() and iter_14_1.id ~= AergusiEnum.TaskMOAllFinishId then
+			TaskRpc.instance:sendFinishTaskRequest(iter_14_1.id)
 		end
 	end
 end

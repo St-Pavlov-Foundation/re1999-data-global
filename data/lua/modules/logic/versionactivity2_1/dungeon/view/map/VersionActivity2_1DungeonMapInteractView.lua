@@ -179,7 +179,7 @@ function var_0_0.refreshUI(arg_12_0)
 end
 
 function var_0_0.refreshRewards(arg_13_0)
-	local var_13_0 = arg_13_0._config.reward
+	local var_13_0 = arg_13_0._config.retroReward
 
 	if string.nilorempty(var_13_0) then
 		gohelper.setActive(arg_13_0.goRewardContainer, false)

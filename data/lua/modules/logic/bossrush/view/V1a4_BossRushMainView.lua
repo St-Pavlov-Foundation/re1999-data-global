@@ -96,16 +96,6 @@ end
 
 function var_0_0.onOpenFinish(arg_10_0)
 	BossRushRedModel.instance:setIsOpenActivity(false)
-
-	local var_10_0 = BossRushConfig.instance:getStages()
-
-	for iter_10_0, iter_10_1 in ipairs(var_10_0) do
-		local var_10_1 = iter_10_1.stage
-
-		if BossRushModel.instance:isBossOnline(var_10_1) then
-			BossRushRedModel.instance:setIsNewUnlockStage(var_10_1, false)
-		end
-	end
 end
 
 function var_0_0.onClose(arg_11_0)
@@ -142,7 +132,7 @@ end
 
 function var_0_0._create_V1a4_BossRushMainItem(arg_17_0)
 	local var_17_0 = V1a4_BossRushMainItem
-	local var_17_1 = arg_17_0.viewContainer:getResInst(BossRushEnum.ResPath.v1a4_bossrushmainitem, arg_17_0._goContent, var_17_0.__cname)
+	local var_17_1 = arg_17_0.viewContainer:getResInst(BossRushModel.instance:getActivityMainViewItemPath(), arg_17_0._goContent, var_17_0.__cname)
 
 	return MonoHelper.addNoUpdateLuaComOnceToGo(var_17_1, var_17_0)
 end

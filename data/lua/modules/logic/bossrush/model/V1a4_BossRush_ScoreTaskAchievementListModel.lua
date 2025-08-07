@@ -75,7 +75,7 @@ function var_0_0.getFinishCount(arg_5_0, arg_5_1, arg_5_2)
 end
 
 function var_0_0.setAchievementMoList(arg_6_0, arg_6_1)
-	local var_6_0 = BossRushModel.instance:getTaskMoListByStage(arg_6_1)
+	local var_6_0 = arg_6_0:getMoList(arg_6_1)
 
 	if arg_6_0:getFinishCount(var_6_0, arg_6_1) > 1 then
 		table.insert(var_6_0, 1, {
@@ -89,7 +89,7 @@ function var_0_0.setAchievementMoList(arg_6_0, arg_6_1)
 end
 
 function var_0_0.getAllAchievementTask(arg_7_0, arg_7_1)
-	local var_7_0 = BossRushModel.instance:getTaskMoListByStage(arg_7_1)
+	local var_7_0 = arg_7_0:getMoList(arg_7_1)
 	local var_7_1 = {}
 
 	for iter_7_0, iter_7_1 in pairs(var_7_0) do
@@ -99,8 +99,8 @@ function var_0_0.getAllAchievementTask(arg_7_0, arg_7_1)
 	return var_7_1
 end
 
-function var_0_0.isReddot(arg_8_0, arg_8_1)
-	local var_8_0 = BossRushModel.instance:getTaskMoListByStage(arg_8_1)
+function var_0_0.isReddot(arg_8_0, arg_8_1, arg_8_2)
+	local var_8_0 = arg_8_0:getMoList(arg_8_1, arg_8_2)
 
 	if var_8_0 then
 		for iter_8_0, iter_8_1 in pairs(var_8_0) do
@@ -111,6 +111,16 @@ function var_0_0.isReddot(arg_8_0, arg_8_1)
 			end
 		end
 	end
+end
+
+function var_0_0.getMoList(arg_9_0, arg_9_1, arg_9_2)
+	local var_9_0 = BossRushModel.instance:getActivityBonus()
+
+	arg_9_2 = arg_9_2 or V1a6_BossRush_BonusModel.instance:getTab() or 1
+
+	local var_9_1 = var_9_0 and var_9_0[arg_9_2]
+
+	return var_9_1 and BossRushModel.instance:getMoListByStageAndType(arg_9_1, var_9_1.TaskListenerType, var_9_1.ScoreDesc)
 end
 
 var_0_0.instance = var_0_0.New()

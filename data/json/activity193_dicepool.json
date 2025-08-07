@@ -1,0 +1,66 @@
+[
+  {
+    "id": 19302101,
+    "dicePoints": "1#1#2#2#3#4",
+    "winDice": 0,
+    "name": "language_10008472",
+    "desc": "language_10078351",
+    "weight": 30
+  },
+  {
+    "id": 19302102,
+    "dicePoints": "-1#-1#2#2#2#2",
+    "winDice": 0,
+    "name": "language_10008473",
+    "desc": "language_10078352",
+    "weight": 20
+  },
+  {
+    "id": 19302103,
+    "dicePoints": "1#1#3#3#3#5",
+    "winDice": 0,
+    "name": "language_10008474",
+    "desc": "language_10078353",
+    "weight": 15
+  },
+  {
+    "id": 19302104,
+    "dicePoints": "-2#-1#0#0#0#2",
+    "winDice": 0,
+    "name": "language_10008475",
+    "desc": "language_10078354",
+    "weight": 15
+  },
+  {
+    "id": 19302105,
+    "dicePoints": "0#0#0#0#1#1",
+    "winDice": 0,
+    "name": "language_10008476",
+    "desc": "language_10078355",
+    "weight": 20
+  },
+  {
+    "id": 19302106,
+    "dicePoints": "0#0#0#1#1#2",
+    "winDice": 0,
+    "name": "language_10008477",
+    "desc": "language_10078356",
+    "weight": 10
+  },
+  {
+    "id": 19302107,
+    "dicePoints": "0#1#1#1#1#2",
+    "winDice": 0,
+    "name": "language_10078357",
+    "desc": "language_10078358",
+    "weight": 10
+  },
+  {
+    "id": 19302108,
+    "dicePoints": "",
+    "winDice": 1,
+    "name": "language_10078359",
+    "desc": "language_10078360",
+    "weight": 5
+  }
+]

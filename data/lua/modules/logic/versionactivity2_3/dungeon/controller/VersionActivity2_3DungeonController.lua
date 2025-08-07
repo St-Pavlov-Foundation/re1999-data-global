@@ -23,13 +23,21 @@ function var_0_0._openTaskViewAfterRpc(arg_4_0)
 end
 
 function var_0_0.openStoreView(arg_5_0)
-	local var_5_0 = VersionActivity2_3Enum.ActivityId.DungeonStore
+	local var_5_0 = VersionActivity2_3Enum.ActivityId.Dungeon
 
-	if not VersionActivityEnterHelper.checkCanOpen(var_5_0) then
+	if ReactivityEnum.ActivityDefine[var_5_0] then
+		ReactivityController.instance:openReactivityStoreView(var_5_0, ViewName.V2a3_ReactivityStoreView)
+
 		return
 	end
 
-	Activity107Rpc.instance:sendGet107GoodsInfoRequest(var_5_0, arg_5_0._openStoreViewAfterRpc, arg_5_0)
+	local var_5_1 = VersionActivity2_3Enum.ActivityId.DungeonStore
+
+	if not VersionActivityEnterHelper.checkCanOpen(var_5_1) then
+		return
+	end
+
+	Activity107Rpc.instance:sendGet107GoodsInfoRequest(var_5_1, arg_5_0._openStoreViewAfterRpc, arg_5_0)
 end
 
 function var_0_0._openStoreViewAfterRpc(arg_6_0)

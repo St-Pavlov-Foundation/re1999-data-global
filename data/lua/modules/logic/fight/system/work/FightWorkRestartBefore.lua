@@ -68,21 +68,18 @@ function var_0_0._onDestroyViewFinish(arg_3_0, arg_3_1)
 end
 
 function var_0_0._correctRootState(arg_4_0)
-	if GameSceneMgr.instance:getCurSceneId() == FightTLEventMarkSceneDefaultRoot.sceneId and GameSceneMgr.instance:getCurLevelId() == FightTLEventMarkSceneDefaultRoot.levelId then
-		local var_4_0 = GameSceneMgr.instance:getCurScene()
+	local var_4_0 = GameSceneMgr.instance:getCurScene()
+	local var_4_1 = var_4_0.level:getSceneGo()
 
-		if var_4_0 then
-			local var_4_1 = var_4_0.level:getSceneGo()
+	gohelper.setActive(var_4_1, true)
 
-			if var_4_1 then
-				local var_4_2 = var_4_1.transform.childCount
+	if GameSceneMgr.instance:getCurSceneId() == FightTLEventMarkSceneDefaultRoot.sceneId and GameSceneMgr.instance:getCurLevelId() == FightTLEventMarkSceneDefaultRoot.levelId and var_4_0 and var_4_1 then
+		local var_4_2 = var_4_1.transform.childCount
 
-				for iter_4_0 = 0, var_4_2 - 1 do
-					local var_4_3 = var_4_1.transform:GetChild(iter_4_0)
+		for iter_4_0 = 0, var_4_2 - 1 do
+			local var_4_3 = var_4_1.transform:GetChild(iter_4_0)
 
-					gohelper.setActive(var_4_3.gameObject, var_4_3.name == FightTLEventMarkSceneDefaultRoot.rootName)
-				end
-			end
+			gohelper.setActive(var_4_3.gameObject, var_4_3.name == FightTLEventMarkSceneDefaultRoot.rootName)
 		end
 	end
 end

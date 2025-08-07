@@ -1,0 +1,28 @@
+[
+  {
+    "activityId": 130519,
+    "stageId": 1,
+    "startTime": "2025-06-30 05:00:00",
+    "endTime": "2025-08-28 04:59:59",
+    "times": 2,
+    "name": "language_10079411",
+    "desc": "language_10079412",
+    "targetDesc": "language_10079413",
+    "ruleTitle": "language_10079414",
+    "ruleDesc": "language_10079415",
+    "icon": "gamestart_pic03"
+  },
+  {
+    "activityId": 130519,
+    "stageId": 2,
+    "startTime": "2025-08-28 05:00:00",
+    "endTime": "2025-09-19 04:59:59",
+    "times": 2,
+    "name": "language_90001183",
+    "desc": "language_10079416",
+    "targetDesc": "language_10079417",
+    "ruleTitle": "language_10079418",
+    "ruleDesc": "language_10079419",
+    "icon": "gamestart_pic01"
+  }
+]

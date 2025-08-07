@@ -61,7 +61,7 @@ function var_0_0.sendGameExit(arg_7_0, arg_7_1)
 		[StatEnum.EventProperties.CooperGarland_FailTimes] = arg_7_0.failCount,
 		[StatEnum.EventProperties.CooperGarland_ResetTimes] = arg_7_0.resetCount,
 		[StatEnum.EventProperties.CooperGarland_MapUseTime] = UnityEngine.Time.realtimeSinceStartup - arg_7_0.mapStartTime,
-		[StatEnum.EventProperties.CooperGarland_MapId] = CooperGarlandGameModel.instance:getMapId(),
+		[StatEnum.EventProperties.CooperGarland_MapId] = tostring(CooperGarlandGameModel.instance:getMapId()),
 		[StatEnum.EventProperties.CooperGarland_From] = arg_7_1
 	})
 end
@@ -72,7 +72,7 @@ function var_0_0.sendMapArrive(arg_8_0)
 		[StatEnum.EventProperties.CooperGarland_EpisodeId] = arg_8_0.episodeId,
 		[StatEnum.EventProperties.CooperGarland_GameId] = CooperGarlandGameModel.instance:getGameId(),
 		[StatEnum.EventProperties.CooperGarland_IsJoystick] = CooperGarlandGameModel.instance:getIsJoystick(),
-		[StatEnum.EventProperties.CooperGarland_MapId] = CooperGarlandGameModel.instance:getMapId(),
+		[StatEnum.EventProperties.CooperGarland_MapId] = tostring(CooperGarlandGameModel.instance:getMapId()),
 		[StatEnum.EventProperties.CooperGarland_MapUseTime] = UnityEngine.Time.realtimeSinceStartup - arg_8_0.mapStartTime,
 		[StatEnum.EventProperties.CooperGarland_RemoveComp] = CooperGarlandGameEntityMgr.instance:getRemoveCompList(),
 		[StatEnum.EventProperties.CooperGarland_MapResetTimes] = arg_8_0.mapResetCount
@@ -88,7 +88,7 @@ function var_0_0.sendMapFail(arg_9_0, arg_9_1)
 		[StatEnum.EventProperties.CooperGarland_GameId] = CooperGarlandGameModel.instance:getGameId(),
 		[StatEnum.EventProperties.CooperGarland_IsJoystick] = CooperGarlandGameModel.instance:getIsJoystick(),
 		[StatEnum.EventProperties.CooperGarland_CompId] = arg_9_1,
-		[StatEnum.EventProperties.CooperGarland_MapId] = CooperGarlandGameModel.instance:getMapId(),
+		[StatEnum.EventProperties.CooperGarland_MapId] = tostring(CooperGarlandGameModel.instance:getMapId()),
 		[StatEnum.EventProperties.CooperGarland_UseTime] = UnityEngine.Time.realtimeSinceStartup - arg_9_0.gameStartTime,
 		[StatEnum.EventProperties.CooperGarland_MapUseTime] = UnityEngine.Time.realtimeSinceStartup - arg_9_0.mapStartTime,
 		[StatEnum.EventProperties.CooperGarland_ResetUseTime] = UnityEngine.Time.realtimeSinceStartup - arg_9_0.resetStartTime,
@@ -105,7 +105,7 @@ function var_0_0.sendMapReset(arg_10_0, arg_10_1)
 		[StatEnum.EventProperties.CooperGarland_EpisodeId] = arg_10_0.episodeId,
 		[StatEnum.EventProperties.CooperGarland_GameId] = CooperGarlandGameModel.instance:getGameId(),
 		[StatEnum.EventProperties.CooperGarland_IsJoystick] = CooperGarlandGameModel.instance:getIsJoystick(),
-		[StatEnum.EventProperties.CooperGarland_MapId] = CooperGarlandGameModel.instance:getMapId(),
+		[StatEnum.EventProperties.CooperGarland_MapId] = tostring(CooperGarlandGameModel.instance:getMapId()),
 		[StatEnum.EventProperties.CooperGarland_UseTime] = UnityEngine.Time.realtimeSinceStartup - arg_10_0.gameStartTime,
 		[StatEnum.EventProperties.CooperGarland_MapUseTime] = UnityEngine.Time.realtimeSinceStartup - arg_10_0.mapStartTime,
 		[StatEnum.EventProperties.CooperGarland_ResetUseTime] = UnityEngine.Time.realtimeSinceStartup - arg_10_0.resetStartTime,

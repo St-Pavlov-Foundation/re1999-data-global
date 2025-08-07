@@ -74,12 +74,20 @@ function var_0_0._onConfirm(arg_6_0)
 		end
 
 		TowerAssistBossModel.instance:getTempUnlockTrialBossMO(var_6_4)
+	elseif var_6_2.type == DungeonEnum.EpisodeType.Assassin2Outside or var_6_2.type == DungeonEnum.EpisodeType.Assassin2Stealth then
+		AssassinController.instance:getAssassinOutsideInfo()
+
+		if var_6_2.type == DungeonEnum.EpisodeType.Assassin2Outside then
+			local var_6_7 = AssassinConfig.instance:getFightQuestId(var_6_1)
+
+			AssassinOutsideModel.instance:setEnterFightQuest(var_6_7)
+		end
 	end
 
 	if DungeonConfig.instance:isLeiMiTeBeiChapterType(var_6_2) then
-		local var_6_7 = var_6_0.type == FightEnum.FightReason.DungeonRecord
+		local var_6_8 = var_6_0.type == FightEnum.FightReason.DungeonRecord
 
-		FightController.instance:setFightParamByEpisodeId(var_6_1, var_6_7, var_6_0.multiplication)
+		FightController.instance:setFightParamByEpisodeId(var_6_1, var_6_8, var_6_0.multiplication)
 	elseif var_6_2.type == DungeonEnum.EpisodeType.WeekWalk then
 		WeekWalkModel.instance:setCurMapId(var_6_0.layerId)
 		WeekWalkModel.instance:setBattleElementId(var_6_0.elementId)
@@ -91,11 +99,11 @@ function var_0_0._onConfirm(arg_6_0)
 	elseif var_6_2.type == DungeonEnum.EpisodeType.Meilanni then
 		FightController.instance:setFightParamByEpisodeBattleId(var_6_1, FightModel.instance:getBattleId())
 
-		local var_6_8 = var_6_0.eventEpisodeId
-		local var_6_9 = var_6_8 and lua_activity108_episode.configDict[var_6_8]
-		local var_6_10 = var_6_9 and var_6_9.mapId
+		local var_6_9 = var_6_0.eventEpisodeId
+		local var_6_10 = var_6_9 and lua_activity108_episode.configDict[var_6_9]
+		local var_6_11 = var_6_10 and var_6_10.mapId
 
-		MeilanniModel.instance:setCurMapId(var_6_10)
+		MeilanniModel.instance:setCurMapId(var_6_11)
 		Activity108Rpc.instance:sendGet108InfosRequest(MeilanniEnum.activityId)
 	elseif var_6_2.type == DungeonEnum.EpisodeType.Dog then
 		FightController.instance:setFightParamByEpisodeBattleId(var_6_0.episodeId, var_6_0.battleId)
@@ -104,12 +112,12 @@ function var_0_0._onConfirm(arg_6_0)
 	elseif SeasonHeroGroupHandler.checkIsSeasonTypeByEpisodeId(var_6_1) then
 		SeasonFightHandler.checkProcessFightReconnect(var_6_0)
 	else
-		local var_6_11 = var_6_0.type == FightEnum.FightReason.DungeonRecord
-		local var_6_12 = var_6_0.multiplication
+		local var_6_12 = var_6_0.type == FightEnum.FightReason.DungeonRecord
+		local var_6_13 = var_6_0.multiplication
 
-		var_6_12 = var_6_12 and var_6_12 > 0 and var_6_12 or 1
+		var_6_13 = var_6_13 and var_6_13 > 0 and var_6_13 or 1
 
-		FightController.instance:setFightParamByEpisodeId(var_6_1, var_6_11, var_6_12, var_6_0.battleId)
+		FightController.instance:setFightParamByEpisodeId(var_6_1, var_6_12, var_6_13, var_6_0.battleId)
 		HeroGroupModel.instance:setParam(var_6_0.battleId, var_6_1, false, true)
 	end
 

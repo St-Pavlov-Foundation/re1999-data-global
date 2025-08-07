@@ -94,52 +94,67 @@ function var_0_0.initActivityVersion()
 		var_0_1 = {}
 		var_0_2 = {}
 
-		local var_5_0 = 1
-
-		for iter_5_0 = 1, math.huge do
-			for iter_5_1 = var_5_0, math.huge do
-				local var_5_1 = string.format("VersionActivity%d_%dEnum", iter_5_0, iter_5_1)
-
-				if iter_5_0 == 1 and iter_5_1 == 1 then
-					var_5_1 = "VersionActivityEnum"
-				end
-
-				local var_5_2 = _G[var_5_1]
-
-				if iter_5_1 == 0 and not var_5_2 then
-					return
-				elseif not var_5_2 then
-					break
-				end
-
-				if isDebugBuild then
-					logNormal("自动加载" .. var_5_1)
-				end
-
-				if var_5_2.ActivityId then
-					local var_5_3 = string.format("%d_%d", iter_5_0, iter_5_1)
-
-					for iter_5_2, iter_5_3 in pairs(var_5_2.ActivityId) do
-						var_0_1[iter_5_3] = var_5_3
-					end
-				end
-
-				if var_5_2.JumpNeedCloseView then
-					for iter_5_4, iter_5_5 in pairs(var_5_2.JumpNeedCloseView()) do
-						var_0_2[iter_5_5] = true
-					end
-				end
-			end
-
-			var_5_0 = 0
-		end
+		var_0_0._loadAllDefineVersionActivityEnum()
+		var_0_0._loadVersionActivityEnum(2, 9)
 	end
 end
 
-function var_0_0.getActivityVersion(arg_6_0)
+function var_0_0._loadAllDefineVersionActivityEnum()
+	local var_6_0 = 1
+
+	for iter_6_0 = 1, math.huge do
+		for iter_6_1 = var_6_0, math.huge do
+			local var_6_1 = var_0_0._loadVersionActivityEnum(iter_6_0, iter_6_1)
+
+			if iter_6_1 == 0 and not var_6_1 then
+				return
+			elseif not var_6_1 then
+				break
+			end
+		end
+
+		var_6_0 = 0
+	end
+end
+
+function var_0_0._loadVersionActivityEnum(arg_7_0, arg_7_1)
+	local var_7_0 = string.format("VersionActivity%d_%dEnum", arg_7_0, arg_7_1)
+
+	if arg_7_0 == 1 and arg_7_1 == 1 then
+		var_7_0 = "VersionActivityEnum"
+	end
+
+	local var_7_1 = _G[var_7_0]
+
+	if not var_7_1 then
+		return
+	end
+
+	if isDebugBuild then
+		logNormal("自动加载" .. var_7_0)
+	end
+
+	if var_7_1.ActivityId then
+		local var_7_2 = string.format("%d_%d", arg_7_0, arg_7_1)
+
+		for iter_7_0, iter_7_1 in pairs(var_7_1.ActivityId) do
+			var_0_1[iter_7_1] = var_7_2
+		end
+	end
+
+	if var_7_1.JumpNeedCloseView then
+		for iter_7_2, iter_7_3 in pairs(var_7_1.JumpNeedCloseView()) do
+			var_0_2[iter_7_3] = true
+		end
+	end
+
+	return var_7_1
+end
+
+function var_0_0.getActivityVersion(arg_8_0)
 	var_0_0.initActivityVersion()
 
-	return var_0_1[arg_6_0] or ""
+	return var_0_1[arg_8_0] or ""
 end
 
 function var_0_0.getJumpNeedCloseViewDict()
@@ -148,49 +163,49 @@ function var_0_0.getJumpNeedCloseViewDict()
 	return var_0_2
 end
 
-function var_0_0.activateClass(arg_8_0, arg_8_1, arg_8_2)
-	arg_8_1 = arg_8_1 or 1
-	arg_8_2 = arg_8_2 or 0
+function var_0_0.activateClass(arg_10_0, arg_10_1, arg_10_2)
+	arg_10_1 = arg_10_1 or 1
+	arg_10_2 = arg_10_2 or 0
 
-	for iter_8_0 = arg_8_1, math.huge do
-		for iter_8_1 = arg_8_2, math.huge do
-			local var_8_0 = string.format(arg_8_0, iter_8_0, iter_8_1)
-			local var_8_1 = _G[var_8_0]
+	for iter_10_0 = arg_10_1, math.huge do
+		for iter_10_1 = arg_10_2, math.huge do
+			local var_10_0 = string.format(arg_10_0, iter_10_0, iter_10_1)
+			local var_10_1 = _G[var_10_0]
 
-			if not var_8_1 then
-				local var_8_2 = iter_8_1
+			if not var_10_1 then
+				local var_10_2 = iter_10_1
 
-				while iter_8_1 < 10 do
-					iter_8_1 = iter_8_1 + 1
-					var_8_0 = string.format(arg_8_0, iter_8_0, iter_8_1)
-					var_8_1 = _G[var_8_0]
+				while iter_10_1 < 10 do
+					iter_10_1 = iter_10_1 + 1
+					var_10_0 = string.format(arg_10_0, iter_10_0, iter_10_1)
+					var_10_1 = _G[var_10_0]
 
-					if var_8_1 then
+					if var_10_1 then
 						break
 					end
 				end
 
-				if var_8_2 == 0 and not var_8_1 then
+				if var_10_2 == 0 and not var_10_1 then
 					return
 				end
 
-				if iter_8_1 >= 10 then
+				if iter_10_1 >= 10 then
 					break
 				end
 			end
 
-			if iter_8_1 == 0 and not var_8_1 then
+			if iter_10_1 == 0 and not var_10_1 then
 				return
-			elseif not var_8_1 then
+			elseif not var_10_1 then
 				break
 			end
 
 			if isDebugBuild then
-				logNormal("自动加载" .. var_8_0)
+				logNormal("自动加载" .. var_10_0)
 			end
 		end
 
-		arg_8_2 = 0
+		arg_10_2 = 0
 	end
 end
 

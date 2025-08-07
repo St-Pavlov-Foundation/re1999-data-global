@@ -124,14 +124,14 @@ function var_0_0._btnsummon10OnClick(arg_6_0)
 		return
 	end
 
-	local var_6_1, var_6_2, var_6_3 = SummonMainModel.getCostByConfig(var_6_0.cost10)
-	local var_6_4 = SummonMainModel.instance:getDiscountCost10(var_6_0.id)
+	local var_6_1, var_6_2, var_6_3, var_6_4 = SummonMainModel.getCostByConfig(var_6_0.cost10)
+	local var_6_5 = SummonMainModel.instance:getDiscountCost10(var_6_0.id)
 
 	if SummonMainModel.instance:getDiscountCostId(var_6_0.id) == var_6_2 then
-		var_6_3 = var_6_4 < 0 and var_6_3 or var_6_4
+		var_6_3 = var_6_5 < 0 and var_6_3 or var_6_5
 	end
 
-	local var_6_5 = {
+	local var_6_6 = {
 		type = var_6_1,
 		id = var_6_2,
 		quantity = var_6_3,
@@ -139,34 +139,34 @@ function var_0_0._btnsummon10OnClick(arg_6_0)
 		callbackObj = arg_6_0
 	}
 
-	var_6_5.notEnough = false
+	var_6_6.notEnough = false
+	var_6_4 = var_6_4 or ItemModel.instance:getItemQuantity(var_6_1, var_6_2)
 
-	local var_6_6 = ItemModel.instance:getItemQuantity(var_6_1, var_6_2)
-	local var_6_7 = var_6_3 <= var_6_6
+	local var_6_7 = var_6_3 <= var_6_4
 	local var_6_8 = SummonMainModel.instance.everyCostCount
 	local var_6_9 = SummonMainModel.instance:getOwnCostCurrencyNum()
-	local var_6_10 = var_6_3 - var_6_6
+	local var_6_10 = var_6_3 - var_6_4
 	local var_6_11 = var_6_8 * var_6_10
 
 	if not var_6_7 and var_6_9 < var_6_11 then
-		var_6_5.notEnough = true
+		var_6_6.notEnough = true
 	end
 
 	if var_6_7 then
-		var_6_5.needTransform = false
+		var_6_6.needTransform = false
 
 		arg_6_0:_summon10Confirm()
 
 		return
 	else
-		var_6_5.needTransform = true
-		var_6_5.cost_type = SummonMainModel.instance.costCurrencyType
-		var_6_5.cost_id = SummonMainModel.instance.costCurrencyId
-		var_6_5.cost_quantity = var_6_11
-		var_6_5.miss_quantity = var_6_10
+		var_6_6.needTransform = true
+		var_6_6.cost_type = SummonMainModel.instance.costCurrencyType
+		var_6_6.cost_id = SummonMainModel.instance.costCurrencyId
+		var_6_6.cost_quantity = var_6_11
+		var_6_6.miss_quantity = var_6_10
 	end
 
-	ViewMgr.instance:openView(ViewName.SummonConfirmView, var_6_5)
+	ViewMgr.instance:openView(ViewName.SummonConfirmView, var_6_6)
 end
 
 function var_0_0._onClickDetail(arg_7_0)

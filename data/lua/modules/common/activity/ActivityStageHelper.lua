@@ -63,67 +63,93 @@ function var_0_0.checkOneActivityStageHasChange(arg_3_0)
 	return var_3_0[2] ~= var_3_2 or var_3_0[3] ~= var_3_3 or var_3_0[4] ~= var_3_4
 end
 
-function var_0_0.recordActivityStage(arg_4_0)
+function var_0_0.checkOneActivityNewOpen(arg_4_0)
 	if not var_0_2 then
 		var_0_0.initActivityStage()
 	end
 
-	for iter_4_0, iter_4_1 in ipairs(arg_4_0) do
-		var_0_0.recordOneActivityStage(iter_4_1)
+	if ActivityHelper.getActivityStatus(arg_4_0) ~= ActivityEnum.ActivityStatus.Normal then
+		return false
+	end
+
+	local var_4_0 = var_0_1[arg_4_0]
+
+	if not var_4_0 then
+		return true
+	end
+
+	local var_4_1 = ActivityModel.instance:getActivityInfo()[arg_4_0]
+
+	if not var_4_1 then
+		return false
+	end
+
+	local var_4_2 = var_4_1:isOpen() and 1 or 0
+
+	return var_4_0[2] ~= var_4_2
+end
+
+function var_0_0.recordActivityStage(arg_5_0)
+	if not var_0_2 then
+		var_0_0.initActivityStage()
+	end
+
+	for iter_5_0, iter_5_1 in ipairs(arg_5_0) do
+		var_0_0.recordOneActivityStage(iter_5_1)
 	end
 end
 
-function var_0_0.recordOneActivityStage(arg_5_0)
+function var_0_0.recordOneActivityStage(arg_6_0)
 	if not var_0_2 then
 		var_0_0.initActivityStage()
 	end
 
-	if not var_0_0.checkOneActivityStageHasChange(arg_5_0) then
+	if not var_0_0.checkOneActivityStageHasChange(arg_6_0) then
 		return
 	end
 
-	local var_5_0 = PlayerPrefsHelper.getString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.ActivityStageKey), "")
-	local var_5_1 = false
-	local var_5_2 = {}
-	local var_5_3 = string.split(var_5_0, ";")
-	local var_5_4
-	local var_5_5
+	local var_6_0 = PlayerPrefsHelper.getString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.ActivityStageKey), "")
+	local var_6_1 = false
+	local var_6_2 = {}
+	local var_6_3 = string.split(var_6_0, ";")
+	local var_6_4
+	local var_6_5
 
-	for iter_5_0, iter_5_1 in ipairs(var_5_3) do
-		if not string.nilorempty(iter_5_1) then
-			local var_5_6 = string.splitToNumber(iter_5_1, "#")
+	for iter_6_0, iter_6_1 in ipairs(var_6_3) do
+		if not string.nilorempty(iter_6_1) then
+			local var_6_6 = string.splitToNumber(iter_6_1, "#")
 
-			if var_5_6 and var_5_6[1] == arg_5_0 then
-				var_5_1 = true
-				var_5_5 = var_0_0._buildActPlayerPrefsString(arg_5_0)
+			if var_6_6 and var_6_6[1] == arg_6_0 then
+				var_6_1 = true
+				var_6_5 = var_0_0._buildActPlayerPrefsString(arg_6_0)
 
-				table.insert(var_5_2, var_5_5)
+				table.insert(var_6_2, var_6_5)
 			else
-				table.insert(var_5_2, iter_5_1)
+				table.insert(var_6_2, iter_6_1)
 			end
 		end
 	end
 
-	if not var_5_1 then
-		var_5_5 = var_0_0._buildActPlayerPrefsString(arg_5_0)
+	if not var_6_1 then
+		var_6_5 = var_0_0._buildActPlayerPrefsString(arg_6_0)
 
-		table.insert(var_5_2, var_5_5)
+		table.insert(var_6_2, var_6_5)
 	end
 
-	var_0_1[arg_5_0] = string.splitToNumber(var_5_5, "#")
+	var_0_1[arg_6_0] = string.splitToNumber(var_6_5, "#")
 
-	PlayerPrefsHelper.setString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.ActivityStageKey), table.concat(var_5_2, ";"))
+	PlayerPrefsHelper.setString(PlayerModel.instance:getPlayerPrefsKey(PlayerPrefsKey.ActivityStageKey), table.concat(var_6_2, ";"))
 	ActivityController.instance:dispatchEvent(ActivityEvent.ChangeActivityStage)
 end
 
-function var_0_0._buildActPlayerPrefsString(arg_6_0)
-	local var_6_0 = ActivityModel.instance:getActivityInfo()[arg_6_0]
+function var_0_0._buildActPlayerPrefsString(arg_7_0)
+	local var_7_0 = ActivityModel.instance:getActivityInfo()[arg_7_0]
 
-	if not var_6_0 then
+	if not var_7_0 then
 		return
 	end
 
-	return string.format("%s#%s#%s#%s", arg_6_0, var_6_0:isOpen() and 1 or 0, var_6_0:getCurrentStage(), var_6_0:isUnlock() and 1 or 0)
+	return string.format("%s#%s#%s#%s", arg_7_0, var_7_0:isOpen() and 1 or 0, var_7_0:getCurrentStage(), var_7_0:isUnlock() and 1 or 0)
 end
 
 function var_0_0.clear()

@@ -18,5 +18,45 @@
       0
     ],
     "reverseX": 0
+  },
+  {
+    "id": 6295019,
+    "effect": "s01_aebtsf/sf_fuyin",
+    "pos": [
+      0,
+      0,
+      0
+    ],
+    "reverseX": 0
+  },
+  {
+    "id": 6295020,
+    "effect": "s01_aebtsf/sf_daiduo",
+    "pos": [
+      0,
+      0,
+      0
+    ],
+    "reverseX": 0
+  },
+  {
+    "id": 6295058,
+    "effect": "s01_aebtsf/sf_fuyin",
+    "pos": [
+      0,
+      0,
+      0
+    ],
+    "reverseX": 0
+  },
+  {
+    "id": 6295059,
+    "effect": "s01_aebtsf/sf_daiduo",
+    "pos": [
+      0,
+      0,
+      0
+    ],
+    "reverseX": 0
   }
 ]

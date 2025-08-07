@@ -17,6 +17,7 @@ function var_0_0.onInitView(arg_1_0)
 	arg_1_0._gomonthdetail = gohelper.findChild(arg_1_0.viewGO, "rightContent/monthdetail")
 	arg_1_0._txtdesc = gohelper.findChildText(arg_1_0.viewGO, "scroll_desc/Viewport/Content/#txt_desc")
 	arg_1_0._txtday = gohelper.findChildText(arg_1_0.viewGO, "leftContent/#txt_day")
+	arg_1_0._txtdayfestival = gohelper.findChildText(arg_1_0.viewGO, "leftContent/#txt_day_festival")
 	arg_1_0._txtmonth = gohelper.findChildText(arg_1_0.viewGO, "leftContent/#txt_month")
 	arg_1_0._txtdate = gohelper.findChildText(arg_1_0.viewGO, "leftContent/#txt_date")
 	arg_1_0._gorewarditem = gohelper.findChild(arg_1_0.viewGO, "leftBottomContent/#go_rewarditem")
@@ -328,13 +329,17 @@ function var_0_0._refreshGMDateContent(arg_9_0, arg_9_1)
 	UISpriteSetMgr.instance:setSignInSprite(arg_9_0._imageweek, "date_" .. tostring(var_9_2))
 
 	arg_9_0._txtdesc.text = SignInConfig.instance:getSignDescByDate(var_9_1)
-	arg_9_0._txtday.text = string.format("%02d", os.date("%d", var_9_1))
+
+	local var_9_3 = string.format("%02d", os.date("%d", var_9_1))
+
+	arg_9_0:_setDayTextStr(var_9_3)
+
 	arg_9_0._txtmonth.text = string.format("%02d", os.date("%m", var_9_1))
 	arg_9_0._txtdate.text = string.format("%s.%s", string.upper(string.sub(os.date("%B", var_9_1), 1, 3)), os.date("%Y", var_9_1))
 
-	local var_9_3 = TimeUtil.timestampToString1(var_9_1)
+	local var_9_4 = TimeUtil.timestampToString1(var_9_1)
 
-	arg_9_0._inputdate:SetText(var_9_3)
+	arg_9_0._inputdate:SetText(var_9_4)
 end
 
 function var_0_0._onInputValueChanged(arg_10_0)
@@ -861,7 +866,9 @@ function var_0_0._setTitleInfo(arg_40_0)
 	UISpriteSetMgr.instance:setSignInSprite(arg_40_0._imageweek, "date_" .. tostring(var_40_1))
 
 	arg_40_0._txtdesc.text = SignInConfig.instance:getSignDescByDate(var_40_0)
-	arg_40_0._txtday.text = string.format("%02d", arg_40_0._targetDate[3])
+
+	arg_40_0:_setDayTextStr(string.format("%02d", arg_40_0._targetDate[3]))
+
 	arg_40_0._txtmonth.text = string.format("%02d", arg_40_0._targetDate[2])
 	arg_40_0._txtdate.text = string.format("%s.%s", string.upper(string.sub(os.date("%B", var_40_0), 1, 3)), arg_40_0._targetDate[1])
 
@@ -886,788 +893,798 @@ function var_0_0._setTitleInfo(arg_40_0)
 	end
 end
 
-function var_0_0._setRewardItems(arg_41_0)
-	local var_41_0 = SignInModel.instance:getSignBirthdayHeros(arg_41_0._targetDate[1], arg_41_0._targetDate[2], arg_41_0._targetDate[3])
+function var_0_0._setDayTextStr(arg_41_0, arg_41_1)
+	arg_41_0._txtday.text = arg_41_1
+	arg_41_0._txtdayfestival.text = arg_41_1
+end
 
-	if arg_41_0._curDate.year == arg_41_0._targetDate[1] and arg_41_0._curDate.month == arg_41_0._targetDate[2] and arg_41_0._curDate.day == arg_41_0._targetDate[3] then
-		var_41_0 = SignInModel.instance:getCurDayBirthdayHeros()
+function var_0_0._setRewardItems(arg_42_0)
+	local var_42_0 = SignInModel.instance:getSignBirthdayHeros(arg_42_0._targetDate[1], arg_42_0._targetDate[2], arg_42_0._targetDate[3])
+
+	if arg_42_0._curDate.year == arg_42_0._targetDate[1] and arg_42_0._curDate.month == arg_42_0._targetDate[2] and arg_42_0._curDate.day == arg_42_0._targetDate[3] then
+		var_42_0 = SignInModel.instance:getCurDayBirthdayHeros()
 	end
 
-	local var_41_1 = arg_41_0:_getTextInputheros()
+	local var_42_1 = arg_42_0:_getTextInputheros()
 
-	if var_41_1 ~= "" and arg_41_0._curDate.year == arg_41_0._targetDate[1] and arg_41_0._curDate.month == arg_41_0._targetDate[2] and arg_41_0._curDate.day == arg_41_0._targetDate[3] then
-		var_41_0 = string.splitToNumber(var_41_1, "|")
+	if var_42_1 ~= "" and arg_42_0._curDate.year == arg_42_0._targetDate[1] and arg_42_0._curDate.month == arg_42_0._targetDate[2] and arg_42_0._curDate.day == arg_42_0._targetDate[3] then
+		var_42_0 = string.splitToNumber(var_42_1, "|")
 	end
 
-	if arg_41_0._curDate.year == arg_41_0._targetDate[1] and arg_41_0._curDate.month == arg_41_0._targetDate[2] and arg_41_0._curDate.day == arg_41_0._targetDate[3] then
-		if arg_41_0._index > 0 then
-			RedDotController.instance:addRedDot(arg_41_0._gogiftreddot, RedDotEnum.DotNode.SignInBirthReward, var_41_0[arg_41_0._index])
+	if arg_42_0._curDate.year == arg_42_0._targetDate[1] and arg_42_0._curDate.month == arg_42_0._targetDate[2] and arg_42_0._curDate.day == arg_42_0._targetDate[3] then
+		if arg_42_0._index > 0 then
+			RedDotController.instance:addRedDot(arg_42_0._gogiftreddot, RedDotEnum.DotNode.SignInBirthReward, var_42_0[arg_42_0._index])
 		end
 	else
-		RedDotController.instance:addRedDot(arg_41_0._gogiftreddot, 0)
+		RedDotController.instance:addRedDot(arg_42_0._gogiftreddot, 0)
 	end
 
-	local var_41_2 = false
+	local var_42_2 = false
 
-	if arg_41_0._curDate.year == arg_41_0._targetDate[1] and arg_41_0._curDate.month == arg_41_0._targetDate[2] and arg_41_0._curDate.day == arg_41_0._targetDate[3] then
-		for iter_41_0, iter_41_1 in pairs(var_41_0) do
-			if not SignInModel.instance:isHeroBirthdayGet(iter_41_1) then
-				var_41_2 = true
+	if arg_42_0._curDate.year == arg_42_0._targetDate[1] and arg_42_0._curDate.month == arg_42_0._targetDate[2] and arg_42_0._curDate.day == arg_42_0._targetDate[3] then
+		for iter_42_0, iter_42_1 in pairs(var_42_0) do
+			if not SignInModel.instance:isHeroBirthdayGet(iter_42_1) then
+				var_42_2 = true
 			end
 		end
 	end
 
-	gohelper.setActive(arg_41_0._goqiehuan, var_41_2)
+	gohelper.setActive(arg_42_0._goqiehuan, var_42_2)
 
-	for iter_41_2, iter_41_3 in pairs(arg_41_0._nodeItems) do
-		gohelper.setActive(iter_41_3.go, false)
+	for iter_42_2, iter_42_3 in pairs(arg_42_0._nodeItems) do
+		gohelper.setActive(iter_42_3.go, false)
 	end
 
-	if #var_41_0 > 0 then
-		for iter_41_4 = 1, #var_41_0 + 1 do
-			if not arg_41_0._nodeItems[iter_41_4] then
-				arg_41_0._nodeItems[iter_41_4] = arg_41_0:getUserDataTb_()
-				arg_41_0._nodeItems[iter_41_4].go = gohelper.cloneInPlace(arg_41_0._gonodeitem, "node" .. tostring(iter_41_4))
-				arg_41_0._nodeItems[iter_41_4].on = gohelper.findChild(arg_41_0._nodeItems[iter_41_4].go, "on")
-				arg_41_0._nodeItems[iter_41_4].off = gohelper.findChild(arg_41_0._nodeItems[iter_41_4].off, "off")
+	if #var_42_0 > 0 then
+		for iter_42_4 = 1, #var_42_0 + 1 do
+			if not arg_42_0._nodeItems[iter_42_4] then
+				arg_42_0._nodeItems[iter_42_4] = arg_42_0:getUserDataTb_()
+				arg_42_0._nodeItems[iter_42_4].go = gohelper.cloneInPlace(arg_42_0._gonodeitem, "node" .. tostring(iter_42_4))
+				arg_42_0._nodeItems[iter_42_4].on = gohelper.findChild(arg_42_0._nodeItems[iter_42_4].go, "on")
+				arg_42_0._nodeItems[iter_42_4].off = gohelper.findChild(arg_42_0._nodeItems[iter_42_4].off, "off")
 			end
 
-			gohelper.setActive(arg_41_0._nodeItems[iter_41_4].go, true)
-			gohelper.setActive(arg_41_0._nodeItems[iter_41_4].on, arg_41_0._index == iter_41_4 - 1)
-			gohelper.setActive(arg_41_0._nodeItems[iter_41_4].off, arg_41_0._index ~= iter_41_4 - 1)
+			gohelper.setActive(arg_42_0._nodeItems[iter_42_4].go, true)
+			gohelper.setActive(arg_42_0._nodeItems[iter_42_4].on, arg_42_0._index == iter_42_4 - 1)
+			gohelper.setActive(arg_42_0._nodeItems[iter_42_4].off, arg_42_0._index ~= iter_42_4 - 1)
 		end
 
-		gohelper.setActive(arg_41_0._gonodes, true)
+		gohelper.setActive(arg_42_0._gonodes, true)
 
-		if arg_41_0._index == 0 then
-			arg_41_0:_showDayRewardItem()
+		if arg_42_0._index == 0 then
+			arg_42_0:_showDayRewardItem()
 		else
-			arg_41_0:_showBirthdayRewardItem()
+			arg_42_0:_showBirthdayRewardItem()
 		end
 	else
-		gohelper.setActive(arg_41_0._gonodes, false)
-		arg_41_0:_showNoBirthdayRewardItem()
+		gohelper.setActive(arg_42_0._gonodes, false)
+		arg_42_0:_showNoBirthdayRewardItem()
 	end
 end
 
-function var_0_0._showNoBirthdayRewardItem(arg_42_0)
-	gohelper.setActive(arg_42_0._btnqiehuan.gameObject, false)
-	gohelper.setActive(arg_42_0._simageorangebg.gameObject, false)
-	gohelper.setActive(arg_42_0._gobirthdayrewarditem, false)
+function var_0_0._showNoBirthdayRewardItem(arg_43_0)
+	gohelper.setActive(arg_43_0._btnqiehuan.gameObject, false)
+	gohelper.setActive(arg_43_0._simageorangebg.gameObject, false)
+	gohelper.setActive(arg_43_0._gobirthdayrewarditem, false)
 end
 
-function var_0_0._showDayRewardItem(arg_43_0)
-	gohelper.setActive(arg_43_0._gobirthday, false)
-	gohelper.setActive(arg_43_0._btnqiehuan.gameObject, true)
-	gohelper.setActive(arg_43_0._simageorangebg.gameObject, true)
-	gohelper.setActive(arg_43_0._gobirthdayrewarditem, true)
-	arg_43_0._simagebirthdaybg:LoadImage(ResUrl.getSignInBg("img_bcard1"))
-	arg_43_0._simagebirthdaybg2:LoadImage(ResUrl.getSignInBg("img_bcard1"))
-end
-
-function var_0_0._showBirthdayRewardItem(arg_44_0)
-	gohelper.setActive(arg_44_0._gobirthday, true)
+function var_0_0._showDayRewardItem(arg_44_0)
+	gohelper.setActive(arg_44_0._gobirthday, false)
 	gohelper.setActive(arg_44_0._btnqiehuan.gameObject, true)
 	gohelper.setActive(arg_44_0._simageorangebg.gameObject, true)
 	gohelper.setActive(arg_44_0._gobirthdayrewarditem, true)
 	arg_44_0._simagebirthdaybg:LoadImage(ResUrl.getSignInBg("img_bcard1"))
 	arg_44_0._simagebirthdaybg2:LoadImage(ResUrl.getSignInBg("img_bcard1"))
-	arg_44_0:_setBirthdayInfo()
 end
 
-function var_0_0._delaySignInRequest(arg_45_0)
-	gohelper.setActive(arg_45_0._gonormaldaysigned, true)
-	gohelper.setActive(arg_45_0._gonormaldaysigned_gold, true)
-	gohelper.setActive(arg_45_0._gomonthcarddaysigned, true)
-	gohelper.setActive(arg_45_0._gomonthcarddaysigned_gold, true)
-	gohelper.setActive(arg_45_0._gomonthcardsigned, true)
-	gohelper.setActive(arg_45_0._gonormaldayget, false)
-	gohelper.setActive(arg_45_0._gonormaldayget_gold, false)
-	gohelper.setActive(arg_45_0._gomonthcarddayget, false)
-	gohelper.setActive(arg_45_0._gomonthcarddayget_gold, false)
-	gohelper.setActive(arg_45_0._gomonthcardget, false)
-	gohelper.setActive(arg_45_0._gonormaldaynoget, true)
-	gohelper.setActive(arg_45_0._gomonthcarddaynoget, true)
-	gohelper.setActive(arg_45_0._gomonthcarddaynoget_gold, true)
-	gohelper.setActive(arg_45_0._gomonthcardnoget, true)
-	gohelper.setActive(arg_45_0._gomonthcardpowernoget, true)
-	gohelper.setActive(arg_45_0._goget, true)
-	gohelper.setActive(arg_45_0._gonoget, false)
-	arg_45_0._normaldayrewardAni:Play("lingqu")
-	arg_45_0._normaldayrewardAni_gold:Play("lingqu")
-	ZProj.UGUIHelper.SetColorAlpha(arg_45_0._txtnormaldayrewardcount, 0.7)
+function var_0_0._showBirthdayRewardItem(arg_45_0)
+	gohelper.setActive(arg_45_0._gobirthday, true)
+	gohelper.setActive(arg_45_0._btnqiehuan.gameObject, true)
+	gohelper.setActive(arg_45_0._simageorangebg.gameObject, true)
+	gohelper.setActive(arg_45_0._gobirthdayrewarditem, true)
+	arg_45_0._simagebirthdaybg:LoadImage(ResUrl.getSignInBg("img_bcard1"))
+	arg_45_0._simagebirthdaybg2:LoadImage(ResUrl.getSignInBg("img_bcard1"))
+	arg_45_0:_setBirthdayInfo()
+end
+
+function var_0_0._delaySignInRequest(arg_46_0)
+	gohelper.setActive(arg_46_0._gonormaldaysigned, true)
+	gohelper.setActive(arg_46_0._gonormaldaysigned_gold, true)
+	gohelper.setActive(arg_46_0._gomonthcarddaysigned, true)
+	gohelper.setActive(arg_46_0._gomonthcarddaysigned_gold, true)
+	gohelper.setActive(arg_46_0._gomonthcardsigned, true)
+	gohelper.setActive(arg_46_0._gonormaldayget, false)
+	gohelper.setActive(arg_46_0._gonormaldayget_gold, false)
+	gohelper.setActive(arg_46_0._gomonthcarddayget, false)
+	gohelper.setActive(arg_46_0._gomonthcarddayget_gold, false)
+	gohelper.setActive(arg_46_0._gomonthcardget, false)
+	gohelper.setActive(arg_46_0._gonormaldaynoget, true)
+	gohelper.setActive(arg_46_0._gomonthcarddaynoget, true)
+	gohelper.setActive(arg_46_0._gomonthcarddaynoget_gold, true)
+	gohelper.setActive(arg_46_0._gomonthcardnoget, true)
+	gohelper.setActive(arg_46_0._gomonthcardpowernoget, true)
+	gohelper.setActive(arg_46_0._goget, true)
+	gohelper.setActive(arg_46_0._gonoget, false)
+	arg_46_0._normaldayrewardAni:Play("lingqu")
+	arg_46_0._normaldayrewardAni_gold:Play("lingqu")
+	ZProj.UGUIHelper.SetColorAlpha(arg_46_0._txtnormaldayrewardcount, 0.7)
 	UIBlockMgr.instance:endBlock("signshowing")
 
-	if arg_45_0._startGetReward then
+	if arg_46_0._startGetReward then
 		return
 	end
 
 	LifeCircleController.instance:sendSignInRequest()
 
-	arg_45_0._startGetReward = true
+	arg_46_0._startGetReward = true
 end
 
-function var_0_0._onCloseViewFinish(arg_46_0, arg_46_1)
-	if arg_46_1 == ViewName.CommonPropView then
-		if not arg_46_0._startGetReward then
+function var_0_0._onCloseViewFinish(arg_47_0, arg_47_1)
+	if arg_47_1 == ViewName.CommonPropView then
+		if not arg_47_0._startGetReward then
 			return
 		end
 
-		arg_46_0._startGetReward = false
+		arg_47_0._startGetReward = false
 
-		local var_46_0 = SignInModel.instance:getCurDayBirthdayHeros()
+		local var_47_0 = SignInModel.instance:getCurDayBirthdayHeros()
 
-		if arg_46_0._index >= #var_46_0 then
+		if arg_47_0._index >= #var_47_0 then
 			return
 		end
 
-		arg_46_0:_btnqiehuanOnClick()
+		arg_47_0:_btnqiehuanOnClick()
 	end
 end
 
-function var_0_0._onWaitSwitchBirthFinished(arg_47_0)
+function var_0_0._onWaitSwitchBirthFinished(arg_48_0)
 	UIBlockMgr.instance:endBlock("switchshowing")
 end
 
-function var_0_0._onCloseMonthRewardDetailClick(arg_48_0)
-	gohelper.setActive(arg_48_0._gomonthrewarddetail, false)
+function var_0_0._onCloseMonthRewardDetailClick(arg_49_0)
+	gohelper.setActive(arg_49_0._gomonthrewarddetail, false)
 end
 
-function var_0_0._onMonthRewardClick(arg_49_0, arg_49_1)
-	local var_49_0 = SignInModel.instance:isSignTotalRewardGet(arg_49_1)
-	local var_49_1 = SignInModel.instance:getTotalSignDays() >= tonumber(SignInConfig.instance:getSignMonthReward(arg_49_1).signinaddup)
+function var_0_0._onMonthRewardClick(arg_50_0, arg_50_1)
+	local var_50_0 = SignInModel.instance:isSignTotalRewardGet(arg_50_1)
+	local var_50_1 = SignInModel.instance:getTotalSignDays() >= tonumber(SignInConfig.instance:getSignMonthReward(arg_50_1).signinaddup)
 
-	gohelper.setActive(arg_49_0._gogetmonthbgs[arg_49_1], var_49_1)
+	gohelper.setActive(arg_50_0._gogetmonthbgs[arg_50_1], var_50_1)
 
-	if not var_49_0 and var_49_1 then
+	if not var_50_0 and var_50_1 then
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_sign_receive)
-		gohelper.setActive(arg_49_0._gomonthgets[arg_49_1], true)
-		gohelper.setActive(arg_49_0._monthgetlightanimTab[arg_49_1], true)
+		gohelper.setActive(arg_50_0._gomonthgets[arg_50_1], true)
+		gohelper.setActive(arg_50_0._monthgetlightanimTab[arg_50_1], true)
 
-		arg_49_0._targetid = arg_49_1
+		arg_50_0._targetid = arg_50_1
 
-		TaskDispatcher.runDelay(arg_49_0._showGetRewards, arg_49_0, 1.2)
+		TaskDispatcher.runDelay(arg_50_0._showGetRewards, arg_50_0, 1.2)
 	else
-		MaterialTipController.instance:showMaterialInfo(tonumber(arg_49_0._monthRewards[arg_49_1].reward[1]), tonumber(arg_49_0._monthRewards[arg_49_1].reward[2]))
+		MaterialTipController.instance:showMaterialInfo(tonumber(arg_50_0._monthRewards[arg_50_1].reward[1]), tonumber(arg_50_0._monthRewards[arg_50_1].reward[2]))
 	end
 end
 
-function var_0_0._showGetRewards(arg_50_0)
-	if arg_50_0._targetid then
-		gohelper.setActive(arg_50_0._gomonthgets[arg_50_0._targetid], false)
-		gohelper.setActive(arg_50_0._gonomonthgets[arg_50_0._targetid], true)
-		SignInRpc.instance:sendSignInAddupRequest(arg_50_0._targetid)
+function var_0_0._showGetRewards(arg_51_0)
+	if arg_51_0._targetid then
+		gohelper.setActive(arg_51_0._gomonthgets[arg_51_0._targetid], false)
+		gohelper.setActive(arg_51_0._gonomonthgets[arg_51_0._targetid], true)
+		SignInRpc.instance:sendSignInAddupRequest(arg_51_0._targetid)
 
-		arg_50_0._targetid = nil
+		arg_51_0._targetid = nil
 	end
 end
 
-function var_0_0._setBirthdayInfo(arg_51_0)
-	local var_51_0 = SignInModel.instance:getSignBirthdayHeros(arg_51_0._targetDate[1], arg_51_0._targetDate[2], arg_51_0._targetDate[3])
+function var_0_0._setBirthdayInfo(arg_52_0)
+	local var_52_0 = SignInModel.instance:getSignBirthdayHeros(arg_52_0._targetDate[1], arg_52_0._targetDate[2], arg_52_0._targetDate[3])
 
-	if arg_51_0._curDate.year == arg_51_0._targetDate[1] and arg_51_0._curDate.month == arg_51_0._targetDate[2] and arg_51_0._curDate.day == arg_51_0._targetDate[3] then
-		var_51_0 = SignInModel.instance:getCurDayBirthdayHeros()
+	if arg_52_0._curDate.year == arg_52_0._targetDate[1] and arg_52_0._curDate.month == arg_52_0._targetDate[2] and arg_52_0._curDate.day == arg_52_0._targetDate[3] then
+		var_52_0 = SignInModel.instance:getCurDayBirthdayHeros()
 	end
 
-	local var_51_1 = arg_51_0:_getTextInputheros()
+	local var_52_1 = arg_52_0:_getTextInputheros()
 
-	if var_51_1 ~= "" then
-		var_51_0 = string.splitToNumber(var_51_1, "|")
+	if var_52_1 ~= "" then
+		var_52_0 = string.splitToNumber(var_52_1, "|")
 	end
 
-	local var_51_2 = var_51_0[arg_51_0._index]
-	local var_51_3 = HeroModel.instance:getByHeroId(var_51_2)
-	local var_51_4 = var_51_3 and var_51_3.skin or HeroConfig.instance:getHeroCO(var_51_2).skinId
+	local var_52_2 = var_52_0[arg_52_0._index]
+	local var_52_3 = HeroModel.instance:getByHeroId(var_52_2)
+	local var_52_4 = var_52_3 and var_52_3.skin or HeroConfig.instance:getHeroCO(var_52_2).skinId
 
-	arg_51_0._simagebirthdayIcon:LoadImage(ResUrl.getHeadIconSmall(var_51_4))
+	arg_52_0._simagebirthdayIcon:LoadImage(ResUrl.getHeadIconSmall(var_52_4))
 
-	local var_51_5 = SignInModel.instance:getHeroBirthdayCount(var_51_2)
-	local var_51_6 = var_51_5
+	local var_52_5 = SignInModel.instance:getHeroBirthdayCount(var_52_2)
+	local var_52_6 = var_52_5
 
-	if arg_51_0._curDate.month == arg_51_0._targetDate[2] then
-		local var_51_7 = SignInModel.instance:isHeroBirthdayGet(var_51_2)
+	if arg_52_0._curDate.month == arg_52_0._targetDate[2] then
+		local var_52_7 = SignInModel.instance:isHeroBirthdayGet(var_52_2)
 
-		if arg_51_0._curDate.year == arg_51_0._targetDate[1] then
-			var_51_6 = var_51_7 and var_51_5 or var_51_5 + 1
+		if arg_52_0._curDate.year == arg_52_0._targetDate[1] then
+			var_52_6 = var_52_7 and var_52_5 or var_52_5 + 1
 		else
-			var_51_6 = var_51_7 and var_51_5 - 1 or var_51_5
+			var_52_6 = var_52_7 and var_52_5 - 1 or var_52_5
 		end
 	end
 
-	if var_51_1 ~= "" then
-		var_51_6 = arg_51_0._droptimes:GetValue() + 1
+	if var_52_1 ~= "" then
+		var_52_6 = arg_52_0._droptimes:GetValue() + 1
 	end
 
-	local var_51_8 = string.split(HeroConfig.instance:getHeroCO(var_51_2).desc, "|")[var_51_6]
+	local var_52_8 = string.split(HeroConfig.instance:getHeroCO(var_52_2).desc, "|")[var_52_6]
 
-	arg_51_0._txtdeco.text = var_51_8
+	arg_52_0._txtdeco.text = var_52_8
 
-	arg_51_0._simagesignature:LoadImage(ResUrl.getSignature(tostring(var_51_2)))
+	ZProj.UGUIHelper.RebuildLayout(arg_52_0._txtdeco.gameObject.transform)
+	gohelper.setActive(arg_52_0._txtdeco.gameObject, false)
+	gohelper.setActive(arg_52_0._txtdeco.gameObject, true)
+	arg_52_0._simagesignature:LoadImage(ResUrl.getSignature(tostring(var_52_2)))
 
-	local var_51_9 = true
+	local var_52_9 = true
 
-	if arg_51_0._curDate.year == arg_51_0._targetDate[1] and arg_51_0._curDate.month == arg_51_0._targetDate[2] and arg_51_0._curDate.day == arg_51_0._targetDate[3] then
-		var_51_9 = SignInModel.instance:isHeroBirthdayGet(var_51_2)
+	if arg_52_0._curDate.year == arg_52_0._targetDate[1] and arg_52_0._curDate.month == arg_52_0._targetDate[2] and arg_52_0._curDate.day == arg_52_0._targetDate[3] then
+		var_52_9 = SignInModel.instance:isHeroBirthdayGet(var_52_2)
 	end
 
-	gohelper.setActive(arg_51_0._gogiftnoget, not var_51_9)
-	gohelper.setActive(arg_51_0._gogiftget, var_51_9)
+	gohelper.setActive(arg_52_0._gogiftnoget, not var_52_9)
+	gohelper.setActive(arg_52_0._gogiftget, var_52_9)
 end
 
-function var_0_0._setMonthViewRewardTips(arg_52_0)
-	local var_52_0 = SignInModel.instance:getTotalSignDays()
-	local var_52_1 = string.format("<color=#ED7B3C>%s</color>", var_52_0)
-	local var_52_2 = string.format(luaLang("p_activitysignin_signindaystitle"), var_52_1)
+function var_0_0._setMonthViewRewardTips(arg_53_0)
+	local var_53_0 = SignInModel.instance:getTotalSignDays()
+	local var_53_1 = string.format("<color=#ED7B3C>%s</color>", var_53_0)
+	local var_53_2 = string.format(luaLang("p_activitysignin_signindaystitle"), var_53_1)
 
-	arg_52_0._txtmonthtitle.text = var_52_2
+	arg_53_0._txtmonthtitle.text = var_53_2
 
-	local var_52_3 = SignInConfig.instance:getSignMonthRewards()
+	local var_53_3 = SignInConfig.instance:getSignMonthRewards()
 
-	for iter_52_0 = 1, 3 do
-		arg_52_0:_showMonthRewardInfo(iter_52_0)
+	for iter_53_0 = 1, 3 do
+		arg_53_0:_showMonthRewardInfo(iter_53_0)
 	end
 
-	local var_52_4 = SignInModel.instance:isSignTotalRewardGet(1)
-	local var_52_5 = SignInModel.instance:getTotalSignDays() >= tonumber(SignInConfig.instance:getSignMonthReward(1).signinaddup)
+	local var_53_4 = SignInModel.instance:isSignTotalRewardGet(1)
+	local var_53_5 = SignInModel.instance:getTotalSignDays() >= tonumber(SignInConfig.instance:getSignMonthReward(1).signinaddup)
 
-	gohelper.setActive(arg_52_0._gorewardmark1, not var_52_4 and var_52_5)
-	gohelper.setActive(arg_52_0._gogetmonthbg1, var_52_5)
+	gohelper.setActive(arg_53_0._gorewardmark1, not var_53_4 and var_53_5)
+	gohelper.setActive(arg_53_0._gogetmonthbg1, var_53_5)
 
-	if var_52_4 then
-		gohelper.setActive(arg_52_0._gomonthget1, arg_52_0._gomonthget1.activeSelf)
-		gohelper.setActive(arg_52_0._gonomonthget1, not arg_52_0._gomonthget1.activeSelf)
-		arg_52_0._month1Ani:Play("lingqu")
-		ZProj.UGUIHelper.SetColorAlpha(arg_52_0._txtmonthquantity1, 0.5)
-		ZProj.UGUIHelper.SetColorAlpha(arg_52_0._txtrewardcount1, 0.5)
+	if var_53_4 then
+		gohelper.setActive(arg_53_0._gomonthget1, arg_53_0._gomonthget1.activeSelf)
+		gohelper.setActive(arg_53_0._gonomonthget1, not arg_53_0._gomonthget1.activeSelf)
+		arg_53_0._month1Ani:Play("lingqu")
+		ZProj.UGUIHelper.SetColorAlpha(arg_53_0._txtmonthquantity1, 0.5)
+		ZProj.UGUIHelper.SetColorAlpha(arg_53_0._txtrewardcount1, 0.5)
 	else
-		gohelper.setActive(arg_52_0._gomonthget1, false)
-		gohelper.setActive(arg_52_0._gonomonthget1, false)
-		arg_52_0._month1Ani:Play("none")
-		ZProj.UGUIHelper.SetColorAlpha(arg_52_0._txtmonthquantity1, 1)
-		ZProj.UGUIHelper.SetColorAlpha(arg_52_0._txtrewardcount1, 1)
+		gohelper.setActive(arg_53_0._gomonthget1, false)
+		gohelper.setActive(arg_53_0._gonomonthget1, false)
+		arg_53_0._month1Ani:Play("none")
+		ZProj.UGUIHelper.SetColorAlpha(arg_53_0._txtmonthquantity1, 1)
+		ZProj.UGUIHelper.SetColorAlpha(arg_53_0._txtrewardcount1, 1)
 	end
 
-	local var_52_6 = SignInModel.instance:isSignTotalRewardGet(2)
-	local var_52_7 = SignInModel.instance:getTotalSignDays() >= tonumber(SignInConfig.instance:getSignMonthReward(2).signinaddup)
+	local var_53_6 = SignInModel.instance:isSignTotalRewardGet(2)
+	local var_53_7 = SignInModel.instance:getTotalSignDays() >= tonumber(SignInConfig.instance:getSignMonthReward(2).signinaddup)
 
-	gohelper.setActive(arg_52_0._gorewardmark2, not var_52_6 and var_52_7)
-	gohelper.setActive(arg_52_0._gogetmonthbg2, var_52_7)
+	gohelper.setActive(arg_53_0._gorewardmark2, not var_53_6 and var_53_7)
+	gohelper.setActive(arg_53_0._gogetmonthbg2, var_53_7)
 
-	if var_52_6 then
-		gohelper.setActive(arg_52_0._gomonthget2, arg_52_0._gomonthget2.activeSelf)
-		gohelper.setActive(arg_52_0._gonomonthget2, not arg_52_0._gomonthget2.activeSelf)
-		arg_52_0._month2Ani:Play("lingqu")
-		ZProj.UGUIHelper.SetColorAlpha(arg_52_0._txtmonthquantity2, 0.5)
-		ZProj.UGUIHelper.SetColorAlpha(arg_52_0._txtrewardcount2, 0.5)
+	if var_53_6 then
+		gohelper.setActive(arg_53_0._gomonthget2, arg_53_0._gomonthget2.activeSelf)
+		gohelper.setActive(arg_53_0._gonomonthget2, not arg_53_0._gomonthget2.activeSelf)
+		arg_53_0._month2Ani:Play("lingqu")
+		ZProj.UGUIHelper.SetColorAlpha(arg_53_0._txtmonthquantity2, 0.5)
+		ZProj.UGUIHelper.SetColorAlpha(arg_53_0._txtrewardcount2, 0.5)
 	else
-		gohelper.setActive(arg_52_0._gomonthget2, false)
-		gohelper.setActive(arg_52_0._gonomonthget2, false)
-		arg_52_0._month2Ani:Play("none")
-		ZProj.UGUIHelper.SetColorAlpha(arg_52_0._txtmonthquantity2, 1)
-		ZProj.UGUIHelper.SetColorAlpha(arg_52_0._txtrewardcount2, 1)
+		gohelper.setActive(arg_53_0._gomonthget2, false)
+		gohelper.setActive(arg_53_0._gonomonthget2, false)
+		arg_53_0._month2Ani:Play("none")
+		ZProj.UGUIHelper.SetColorAlpha(arg_53_0._txtmonthquantity2, 1)
+		ZProj.UGUIHelper.SetColorAlpha(arg_53_0._txtrewardcount2, 1)
 	end
 
-	local var_52_8 = SignInModel.instance:isSignTotalRewardGet(3)
-	local var_52_9 = SignInModel.instance:getTotalSignDays() >= tonumber(SignInConfig.instance:getSignMonthReward(3).signinaddup)
+	local var_53_8 = SignInModel.instance:isSignTotalRewardGet(3)
+	local var_53_9 = SignInModel.instance:getTotalSignDays() >= tonumber(SignInConfig.instance:getSignMonthReward(3).signinaddup)
 
-	gohelper.setActive(arg_52_0._gorewardmark3, not var_52_8 and var_52_9)
-	gohelper.setActive(arg_52_0._gogetmonthbg3, var_52_9)
+	gohelper.setActive(arg_53_0._gorewardmark3, not var_53_8 and var_53_9)
+	gohelper.setActive(arg_53_0._gogetmonthbg3, var_53_9)
 
-	if var_52_8 then
-		gohelper.setActive(arg_52_0._gomonthget3, arg_52_0._gomonthget3.activeSelf)
-		gohelper.setActive(arg_52_0._gonomonthget3, not arg_52_0._gomonthget3.activeSelf)
-		arg_52_0._month3Ani:Play("lingqu")
-		ZProj.UGUIHelper.SetColorAlpha(arg_52_0._txtmonthquantity3, 0.5)
-		ZProj.UGUIHelper.SetColorAlpha(arg_52_0._txtrewardcount3, 0.5)
+	if var_53_8 then
+		gohelper.setActive(arg_53_0._gomonthget3, arg_53_0._gomonthget3.activeSelf)
+		gohelper.setActive(arg_53_0._gonomonthget3, not arg_53_0._gomonthget3.activeSelf)
+		arg_53_0._month3Ani:Play("lingqu")
+		ZProj.UGUIHelper.SetColorAlpha(arg_53_0._txtmonthquantity3, 0.5)
+		ZProj.UGUIHelper.SetColorAlpha(arg_53_0._txtrewardcount3, 0.5)
 	else
-		gohelper.setActive(arg_52_0._gomonthget3, false)
-		gohelper.setActive(arg_52_0._gonomonthget3, false)
-		arg_52_0._month3Ani:Play("none")
-		ZProj.UGUIHelper.SetColorAlpha(arg_52_0._txtmonthquantity3, 1)
-		ZProj.UGUIHelper.SetColorAlpha(arg_52_0._txtrewardcount3, 1)
+		gohelper.setActive(arg_53_0._gomonthget3, false)
+		gohelper.setActive(arg_53_0._gonomonthget3, false)
+		arg_53_0._month3Ani:Play("none")
+		ZProj.UGUIHelper.SetColorAlpha(arg_53_0._txtmonthquantity3, 1)
+		ZProj.UGUIHelper.SetColorAlpha(arg_53_0._txtrewardcount3, 1)
 	end
 
-	local var_52_10 = SignInModel.instance:getSignTargetDate()
+	local var_53_10 = SignInModel.instance:getSignTargetDate()
 
-	arg_52_0:_setGoldRewards(var_52_10)
+	arg_53_0:_setGoldRewards(var_53_10)
 
-	arg_52_0._curDayRewards = string.splitToNumber(SignInConfig.instance:getSignRewards(var_52_10[3]).signinBonus, "#")
+	arg_53_0._curDayRewards = string.splitToNumber(SignInConfig.instance:getSignRewards(var_53_10[3]).signinBonus, "#")
 
-	local var_52_11, var_52_12 = ItemModel.instance:getItemConfigAndIcon(arg_52_0._curDayRewards[1], arg_52_0._curDayRewards[2], true)
+	local var_53_11, var_53_12 = ItemModel.instance:getItemConfigAndIcon(arg_53_0._curDayRewards[1], arg_53_0._curDayRewards[2], true)
 
-	arg_52_0._txtnormaldayrewardcount.text = luaLang("multiple") .. tostring(arg_52_0._curDayRewards[3])
-	arg_52_0._txtmonthcarddayrewardcount.text = luaLang("multiple") .. tostring(arg_52_0._curDayRewards[3])
+	arg_53_0._txtnormaldayrewardcount.text = luaLang("multiple") .. tostring(arg_53_0._curDayRewards[3])
+	arg_53_0._txtmonthcarddayrewardcount.text = luaLang("multiple") .. tostring(arg_53_0._curDayRewards[3])
 
-	arg_52_0._simagenormaldayrewardicon:LoadImage(var_52_12)
-	arg_52_0._simagemonthcarddayrewardicon:LoadImage(var_52_12)
+	arg_53_0._simagenormaldayrewardicon:LoadImage(var_53_12)
+	arg_53_0._simagemonthcarddayrewardicon:LoadImage(var_53_12)
 
-	if tonumber(arg_52_0._curDayRewards[1]) == MaterialEnum.MaterialType.Equip then
-		arg_52_0._simagenormaldayrewardicon:LoadImage(ResUrl.getPropItemIcon(var_52_11.icon))
-		arg_52_0._simagemonthcarddayrewardicon:LoadImage(ResUrl.getPropItemIcon(var_52_11.icon))
+	if tonumber(arg_53_0._curDayRewards[1]) == MaterialEnum.MaterialType.Equip then
+		arg_53_0._simagenormaldayrewardicon:LoadImage(ResUrl.getPropItemIcon(var_53_11.icon))
+		arg_53_0._simagemonthcarddayrewardicon:LoadImage(ResUrl.getPropItemIcon(var_53_11.icon))
 	end
 
-	local var_52_13 = SignInModel.instance:getValidMonthCard(var_52_10[1], var_52_10[2], var_52_10[3])
+	local var_53_13 = SignInModel.instance:getValidMonthCard(var_53_10[1], var_53_10[2], var_53_10[3])
 
-	gohelper.setActive(arg_52_0._gomonthcard, var_52_13)
-	gohelper.setActive(arg_52_0._gonormal, not var_52_13)
+	gohelper.setActive(arg_53_0._gomonthcard, var_53_13)
+	gohelper.setActive(arg_53_0._gonormal, not var_53_13)
 
-	if var_52_13 then
-		local var_52_14 = string.split(StoreConfig.instance:getMonthCardConfig(var_52_13).dailyBonus, "|")
+	if var_53_13 then
+		local var_53_14 = string.split(StoreConfig.instance:getMonthCardConfig(var_53_13).dailyBonus, "|")
 
-		arg_52_0._curmonthCardRewards = string.splitToNumber(var_52_14[1], "#")
-		arg_52_0._curmonthCardPower = string.splitToNumber(var_52_14[2], "#")
-		arg_52_0._txtmonthcardcount.text = luaLang("multiple") .. tostring(arg_52_0._curmonthCardRewards[3])
-		arg_52_0._txtmonthcardpowercount.text = luaLang("multiple") .. tostring(arg_52_0._curmonthCardPower[3])
+		arg_53_0._curmonthCardRewards = string.splitToNumber(var_53_14[1], "#")
+		arg_53_0._curmonthCardPower = string.splitToNumber(var_53_14[2], "#")
+		arg_53_0._txtmonthcardcount.text = luaLang("multiple") .. tostring(arg_53_0._curmonthCardRewards[3])
+		arg_53_0._txtmonthcardpowercount.text = luaLang("multiple") .. tostring(arg_53_0._curmonthCardPower[3])
 
-		local var_52_15, var_52_16 = ItemModel.instance:getItemConfigAndIcon(arg_52_0._curmonthCardRewards[1], arg_52_0._curmonthCardRewards[2], true)
+		local var_53_15, var_53_16 = ItemModel.instance:getItemConfigAndIcon(arg_53_0._curmonthCardRewards[1], arg_53_0._curmonthCardRewards[2], true)
 
-		arg_52_0._simagemonthcardicon:LoadImage(var_52_16)
+		arg_53_0._simagemonthcardicon:LoadImage(var_53_16)
 
-		local var_52_17, var_52_18 = ItemModel.instance:getItemConfigAndIcon(arg_52_0._curmonthCardPower[1], arg_52_0._curmonthCardPower[2], true)
+		local var_53_17, var_53_18 = ItemModel.instance:getItemConfigAndIcon(arg_53_0._curmonthCardPower[1], arg_53_0._curmonthCardPower[2], true)
 
-		arg_52_0._simagemonthcardpowericon:LoadImage(var_52_18)
-		gohelper.setActive(arg_52_0._gopowerlimittime, false)
+		arg_53_0._simagemonthcardpowericon:LoadImage(var_53_18)
+		gohelper.setActive(arg_53_0._gopowerlimittime, false)
 
-		if var_52_17.expireTime then
-			gohelper.setActive(arg_52_0._gopowerlimittime, true)
+		if var_53_17.expireTime then
+			gohelper.setActive(arg_53_0._gopowerlimittime, true)
 		end
 
-		local var_52_19 = StoreModel.instance:getMonthCardInfo()
+		local var_53_19 = StoreModel.instance:getMonthCardInfo()
 
-		if var_52_19 then
-			local var_52_20 = var_52_19:getRemainDay()
+		if var_53_19 then
+			local var_53_20 = var_53_19:getRemainDay()
 
-			if var_52_20 > 0 then
-				gohelper.setActive(arg_52_0._golimittime.gameObject, true)
+			if var_53_20 > 0 then
+				gohelper.setActive(arg_53_0._golimittime.gameObject, true)
 
-				if var_52_20 <= StoreEnum.MonthCardStatus.NotEnoughThreeDay then
-					gohelper.setActive(arg_52_0._goredlimittimebg, true)
-					gohelper.setActive(arg_52_0._gonormallimittimebg, false)
+				if var_53_20 <= StoreEnum.MonthCardStatus.NotEnoughThreeDay then
+					gohelper.setActive(arg_53_0._goredlimittimebg, true)
+					gohelper.setActive(arg_53_0._gonormallimittimebg, false)
 				else
-					gohelper.setActive(arg_52_0._goredlimittimebg, false)
-					gohelper.setActive(arg_52_0._gonormallimittimebg, true)
+					gohelper.setActive(arg_53_0._goredlimittimebg, false)
+					gohelper.setActive(arg_53_0._gonormallimittimebg, true)
 				end
 
-				arg_52_0._txtlimittime.text = formatLuaLang("remain_day", var_52_20)
+				arg_53_0._txtlimittime.text = formatLuaLang("remain_day", var_53_20)
 			else
-				gohelper.setActive(arg_52_0._golimittime.gameObject, false)
+				gohelper.setActive(arg_53_0._golimittime.gameObject, false)
 			end
 		end
 
-		local var_52_21 = arg_52_0._curDate.year == arg_52_0._targetDate[1] and arg_52_0._curDate.month == arg_52_0._targetDate[2] and arg_52_0._curDate.day == arg_52_0._targetDate[3] and not arg_52_0._rewardGetState
+		local var_53_21 = arg_53_0._curDate.year == arg_53_0._targetDate[1] and arg_53_0._curDate.month == arg_53_0._targetDate[2] and arg_53_0._curDate.day == arg_53_0._targetDate[3] and not arg_53_0._rewardGetState
 
-		gohelper.setActive(arg_52_0._gomonthcardget, var_52_21)
-		gohelper.setActive(arg_52_0._gomonthcarddayget, var_52_21)
-		gohelper.setActive(arg_52_0._gomonthcarddayget_gold, var_52_21)
-		gohelper.setActive(arg_52_0._gomonthcardnoget, not var_52_21)
-		gohelper.setActive(arg_52_0._gomonthcardpowernoget, not var_52_21)
-		gohelper.setActive(arg_52_0._gomonthcarddaynoget, not var_52_21)
-		gohelper.setActive(arg_52_0._gomonthcarddaynoget_gold, not var_52_21)
+		gohelper.setActive(arg_53_0._gomonthcardget, var_53_21)
+		gohelper.setActive(arg_53_0._gomonthcarddayget, var_53_21)
+		gohelper.setActive(arg_53_0._gomonthcarddayget_gold, var_53_21)
+		gohelper.setActive(arg_53_0._gomonthcardnoget, not var_53_21)
+		gohelper.setActive(arg_53_0._gomonthcardpowernoget, not var_53_21)
+		gohelper.setActive(arg_53_0._gomonthcarddaynoget, not var_53_21)
+		gohelper.setActive(arg_53_0._gomonthcarddaynoget_gold, not var_53_21)
 	end
 end
 
-function var_0_0._setGoldRewards(arg_53_0, arg_53_1)
-	if SignInModel.instance:checkIsGoldDay(arg_53_1) then
-		local var_53_0 = SignInModel.instance:getTargetDailyAllowanceBonus(arg_53_1)
+function var_0_0._setGoldRewards(arg_54_0, arg_54_1)
+	if SignInModel.instance:checkIsGoldDay(arg_54_1) then
+		local var_54_0 = SignInModel.instance:getTargetDailyAllowanceBonus(arg_54_1)
 
-		gohelper.setActive(arg_53_0._gonormaldayreward_gold, var_53_0)
-		gohelper.setActive(arg_53_0._gomonthcarddayreward_gold, var_53_0)
+		gohelper.setActive(arg_54_0._gonormaldayreward_gold, var_54_0)
+		gohelper.setActive(arg_54_0._gomonthcarddayreward_gold, var_54_0)
 
-		if var_53_0 then
-			local var_53_1 = string.split(var_53_0, "#")
+		if var_54_0 then
+			local var_54_1 = string.split(var_54_0, "#")
 
-			arg_53_0._goldReward = var_53_1
+			arg_54_0._goldReward = var_54_1
 
-			local var_53_2, var_53_3 = ItemModel.instance:getItemConfigAndIcon(var_53_1[1], var_53_1[2], true)
+			local var_54_2, var_54_3 = ItemModel.instance:getItemConfigAndIcon(var_54_1[1], var_54_1[2], true)
 
-			arg_53_0._txtnormaldayrewardcount_gold.text = luaLang("multiple") .. tostring(var_53_1[3])
-			arg_53_0._txtmonthcarddayrewardcount_gold.text = luaLang("multiple") .. tostring(var_53_1[3])
+			arg_54_0._txtnormaldayrewardcount_gold.text = luaLang("multiple") .. tostring(var_54_1[3])
+			arg_54_0._txtmonthcarddayrewardcount_gold.text = luaLang("multiple") .. tostring(var_54_1[3])
 
-			arg_53_0._simagenormaldayrewardicon_gold:LoadImage(var_53_3)
-			arg_53_0._simagemonthcarddayrewardicon_gold:LoadImage(var_53_3)
+			arg_54_0._simagenormaldayrewardicon_gold:LoadImage(var_54_3)
+			arg_54_0._simagemonthcarddayrewardicon_gold:LoadImage(var_54_3)
 
-			if tonumber(var_53_1[1]) == MaterialEnum.MaterialType.Equip then
-				arg_53_0._simagenormaldayrewardicon_gold:LoadImage(ResUrl.getPropItemIcon(var_53_2.icon))
-				arg_53_0._simagemonthcarddayrewardicon_gold:LoadImage(ResUrl.getPropItemIcon(var_53_2.icon))
+			if tonumber(var_54_1[1]) == MaterialEnum.MaterialType.Equip then
+				arg_54_0._simagenormaldayrewardicon_gold:LoadImage(ResUrl.getPropItemIcon(var_54_2.icon))
+				arg_54_0._simagemonthcarddayrewardicon_gold:LoadImage(ResUrl.getPropItemIcon(var_54_2.icon))
 			end
 		end
 	else
-		gohelper.setActive(arg_53_0._gonormaldayreward_gold, false)
-		gohelper.setActive(arg_53_0._gomonthcarddayreward_gold, false)
+		gohelper.setActive(arg_54_0._gonormaldayreward_gold, false)
+		gohelper.setActive(arg_54_0._gomonthcarddayreward_gold, false)
 	end
 end
 
-function var_0_0._showMonthRewardInfo(arg_54_0, arg_54_1)
-	local var_54_0 = {
-		rewardCo = SignInConfig.instance:getSignMonthReward(arg_54_1)
+function var_0_0._showMonthRewardInfo(arg_55_0, arg_55_1)
+	local var_55_0 = {
+		rewardCo = SignInConfig.instance:getSignMonthReward(arg_55_1)
 	}
 
-	var_54_0.rewards = string.split(var_54_0.rewardCo.signinBonus, "|")
-	var_54_0.reward = string.split(var_54_0.rewards[1], "#")
+	var_55_0.rewards = string.split(var_55_0.rewardCo.signinBonus, "|")
+	var_55_0.reward = string.split(var_55_0.rewards[1], "#")
 
-	local var_54_1, var_54_2 = ItemModel.instance:getItemConfigAndIcon(var_54_0.reward[1], var_54_0.reward[2])
+	local var_55_1, var_55_2 = ItemModel.instance:getItemConfigAndIcon(var_55_0.reward[1], var_55_0.reward[2])
 
-	arg_54_0["_simagemonthicon" .. arg_54_1]:LoadImage(var_54_2)
+	arg_55_0["_simagemonthicon" .. arg_55_1]:LoadImage(var_55_2)
 
-	arg_54_0["_txtmonthquantity" .. arg_54_1].text = var_54_0.rewardCo.signinaddup
-	arg_54_0["_txtrewardcount" .. arg_54_1].text = string.format("<size=22>%s</size>%s", luaLang("multiple"), var_54_0.reward[3])
+	arg_55_0["_txtmonthquantity" .. arg_55_1].text = var_55_0.rewardCo.signinaddup
+	arg_55_0["_txtrewardcount" .. arg_55_1].text = string.format("<size=22>%s</size>%s", luaLang("multiple"), var_55_0.reward[3])
 
-	table.insert(arg_54_0._monthRewards, arg_54_1, var_54_0)
+	table.insert(arg_55_0._monthRewards, arg_55_1, var_55_0)
 end
 
-function var_0_0._setPropItems(arg_55_0)
-	local var_55_0 = os.date("%d", os.time({
+function var_0_0._setPropItems(arg_56_0)
+	local var_56_0 = os.date("%d", os.time({
 		day = 0,
-		year = arg_55_0._targetDate[1],
-		month = arg_55_0._targetDate[2] + 1
+		year = arg_56_0._targetDate[1],
+		month = arg_56_0._targetDate[2] + 1
 	}))
-	local var_55_1 = {}
+	local var_56_1 = {}
 
-	for iter_55_0 = 1, tonumber(var_55_0) do
-		local var_55_2 = string.splitToNumber(SignInConfig.instance:getSignRewards(iter_55_0).signinBonus, "#")
-		local var_55_3 = {
-			materilType = var_55_2[1],
-			materilId = var_55_2[2],
-			quantity = var_55_2[3]
+	for iter_56_0 = 1, tonumber(var_56_0) do
+		local var_56_2 = string.splitToNumber(SignInConfig.instance:getSignRewards(iter_56_0).signinBonus, "#")
+		local var_56_3 = {
+			materilType = var_56_2[1],
+			materilId = var_56_2[2],
+			quantity = var_56_2[3]
 		}
 
-		var_55_3.isIcon = true
-		var_55_3.parent = arg_55_0
+		var_56_3.isIcon = true
+		var_56_3.parent = arg_56_0
 
-		table.insert(var_55_1, var_55_3)
+		table.insert(var_56_1, var_56_3)
 	end
 
-	SignInListModel.instance:setPropList(var_55_1)
+	SignInListModel.instance:setPropList(var_56_1)
 end
 
-function var_0_0._setMonthItems(arg_56_0)
-	local var_56_0 = SignInModel.instance:getShowMonthItemCo()
+function var_0_0._setMonthItems(arg_57_0)
+	local var_57_0 = SignInModel.instance:getShowMonthItemCo()
 
-	arg_56_0:_onCloneSigninMonthItem(var_56_0)
+	arg_57_0:_onCloneSigninMonthItem(var_57_0)
 end
 
-function var_0_0._onCloneSigninMonthItem(arg_57_0, arg_57_1)
-	for iter_57_0, iter_57_1 in ipairs(arg_57_1) do
-		local var_57_0 = arg_57_0._monthItemTabs[iter_57_0]
+function var_0_0._onCloneSigninMonthItem(arg_58_0, arg_58_1)
+	for iter_58_0, iter_58_1 in ipairs(arg_58_1) do
+		local var_58_0 = arg_58_0._monthItemTabs[iter_58_0]
 
-		if not var_57_0 then
-			var_57_0 = {
-				go = gohelper.clone(arg_57_0._gosigninmonthitem, arg_57_0._gomonthitem, "item" .. iter_57_0)
+		if not var_58_0 then
+			var_58_0 = {
+				go = gohelper.clone(arg_58_0._gosigninmonthitem, arg_58_0._gomonthitem, "item" .. iter_58_0)
 			}
-			var_57_0.anim = gohelper.findChild(var_57_0.go, "obj"):GetComponent(typeof(UnityEngine.Animator))
-			var_57_0.anim.enabled = false
+			var_58_0.anim = gohelper.findChild(var_58_0.go, "obj"):GetComponent(typeof(UnityEngine.Animator))
+			var_58_0.anim.enabled = false
 
-			gohelper.setActive(var_57_0.go, false)
+			gohelper.setActive(var_58_0.go, false)
 
-			var_57_0.monthitem = MonoHelper.addNoUpdateLuaComOnceToGo(var_57_0.go, SignInMonthListItem, arg_57_0)
+			var_58_0.monthitem = MonoHelper.addNoUpdateLuaComOnceToGo(var_58_0.go, SignInMonthListItem, arg_58_0)
 
-			table.insert(arg_57_0._monthItemTabs, var_57_0)
+			table.insert(arg_58_0._monthItemTabs, var_58_0)
 		end
 
-		var_57_0.monthitem:init(var_57_0.go)
-		var_57_0.monthitem:onUpdateMO(iter_57_1)
+		var_58_0.monthitem:init(var_58_0.go)
+		var_58_0.monthitem:onUpdateMO(iter_58_1)
 	end
 
-	arg_57_0:_showSigninMonthItemEffect(arg_57_1)
+	arg_58_0:_showSigninMonthItemEffect(arg_58_1)
 end
 
-function var_0_0._showSigninMonthItemEffect(arg_58_0, arg_58_1)
-	for iter_58_0 = 1, #arg_58_1 do
-		local function var_58_0()
-			arg_58_0:_showMonthItem(iter_58_0)
+function var_0_0._showSigninMonthItemEffect(arg_59_0, arg_59_1)
+	for iter_59_0 = 1, #arg_59_1 do
+		local function var_59_0()
+			arg_59_0:_showMonthItem(iter_59_0)
 		end
 
-		TaskDispatcher.runDelay(var_58_0, arg_58_0, iter_58_0 * 0.03)
-		table.insert(arg_58_0._delayAnimTab, var_58_0)
+		TaskDispatcher.runDelay(var_59_0, arg_59_0, iter_59_0 * 0.03)
+		table.insert(arg_59_0._delayAnimTab, var_59_0)
 	end
 
-	TaskDispatcher.runDelay(arg_58_0._onLineAniStart, arg_58_0, (#arg_58_1 + 1) * 0.1)
+	TaskDispatcher.runDelay(arg_59_0._onLineAniStart, arg_59_0, (#arg_59_1 + 1) * 0.1)
 end
 
-function var_0_0._showMonthItem(arg_60_0, arg_60_1)
-	gohelper.setActive(arg_60_0._monthItemTabs[arg_60_1].go, true)
+function var_0_0._showMonthItem(arg_61_0, arg_61_1)
+	gohelper.setActive(arg_61_0._monthItemTabs[arg_61_1].go, true)
 
-	arg_60_0._monthItemTabs[arg_60_1].anim.enabled = true
+	arg_61_0._monthItemTabs[arg_61_1].anim.enabled = true
 end
 
-function var_0_0._showBirthdayRewardDetail(arg_61_0)
-	gohelper.setActive(arg_61_0._gobirthdayrewarddetail, true)
-	gohelper.setActive(arg_61_0._btnrewarddetailclose.gameObject, true)
+function var_0_0._showBirthdayRewardDetail(arg_62_0)
+	gohelper.setActive(arg_62_0._gobirthdayrewarddetail, true)
+	gohelper.setActive(arg_62_0._btnrewarddetailclose.gameObject, true)
 
-	local var_61_0 = SignInModel.instance:getSignBirthdayHeros(arg_61_0._targetDate[1], arg_61_0._targetDate[2], arg_61_0._targetDate[3])
+	local var_62_0 = SignInModel.instance:getSignBirthdayHeros(arg_62_0._targetDate[1], arg_62_0._targetDate[2], arg_62_0._targetDate[3])
 
-	if arg_61_0._curDate.year == arg_61_0._targetDate[1] and arg_61_0._curDate.month == arg_61_0._targetDate[2] and arg_61_0._curDate.day == arg_61_0._targetDate[3] then
-		var_61_0 = SignInModel.instance:getCurDayBirthdayHeros()
+	if arg_62_0._curDate.year == arg_62_0._targetDate[1] and arg_62_0._curDate.month == arg_62_0._targetDate[2] and arg_62_0._curDate.day == arg_62_0._targetDate[3] then
+		var_62_0 = SignInModel.instance:getCurDayBirthdayHeros()
 	end
 
-	local var_61_1 = arg_61_0:_getTextInputheros()
+	local var_62_1 = arg_62_0:_getTextInputheros()
 
-	if var_61_1 ~= "" then
-		var_61_0 = string.splitToNumber(var_61_1, "|")
+	if var_62_1 ~= "" then
+		var_62_0 = string.splitToNumber(var_62_1, "|")
 	end
 
-	local var_61_2 = var_61_0[arg_61_0._index]
-	local var_61_3 = SignInModel.instance:getHeroBirthdayCount(var_61_2)
-	local var_61_4 = var_61_3
+	local var_62_2 = var_62_0[arg_62_0._index]
+	local var_62_3 = SignInModel.instance:getHeroBirthdayCount(var_62_2)
+	local var_62_4 = var_62_3
 
-	if arg_61_0._curDate.month == arg_61_0._targetDate[2] then
-		local var_61_5 = SignInModel.instance:isHeroBirthdayGet(var_61_2)
+	if arg_62_0._curDate.month == arg_62_0._targetDate[2] then
+		local var_62_5 = SignInModel.instance:isHeroBirthdayGet(var_62_2)
 
-		if arg_61_0._curDate.year == arg_61_0._targetDate[1] then
-			var_61_4 = var_61_5 and var_61_3 or var_61_3 + 1
+		if arg_62_0._curDate.year == arg_62_0._targetDate[1] then
+			var_62_4 = var_62_5 and var_62_3 or var_62_3 + 1
 		else
-			var_61_4 = var_61_5 and var_61_3 - 1 or var_61_3
+			var_62_4 = var_62_5 and var_62_3 - 1 or var_62_3
 		end
 	end
 
-	if var_61_1 ~= "" then
-		var_61_4 = arg_61_0._droptimes:GetValue() + 1
+	if var_62_1 ~= "" then
+		var_62_4 = arg_62_0._droptimes:GetValue() + 1
 	end
 
-	local var_61_6 = string.split(HeroConfig.instance:getHeroCO(var_61_2).birthdayBonus, ";")[var_61_4]
-	local var_61_7 = string.split(var_61_6, "|")
+	local var_62_6 = string.split(HeroConfig.instance:getHeroCO(var_62_2).birthdayBonus, ";")[var_62_4]
+	local var_62_7 = string.split(var_62_6, "|")
 
-	arg_61_0:_hideAllRewardTipsItem()
+	arg_62_0:_hideAllRewardTipsItem()
 
-	for iter_61_0, iter_61_1 in ipairs(var_61_7) do
-		if not arg_61_0._rewardTipItems[iter_61_0] then
-			local var_61_8 = {
-				go = gohelper.clone(arg_61_0._gorewarddetailitem, arg_61_0._gorewardContent, "item" .. iter_61_0)
+	for iter_62_0, iter_62_1 in ipairs(var_62_7) do
+		if not arg_62_0._rewardTipItems[iter_62_0] then
+			local var_62_8 = {
+				go = gohelper.clone(arg_62_0._gorewarddetailitem, arg_62_0._gorewardContent, "item" .. iter_62_0)
 			}
-			local var_61_9 = gohelper.findChild(var_61_8.go, "icon")
+			local var_62_9 = gohelper.findChild(var_62_8.go, "icon")
 
-			var_61_8.icon = IconMgr.instance:getCommonItemIcon(var_61_9)
+			var_62_8.icon = IconMgr.instance:getCommonItemIcon(var_62_9)
 
-			table.insert(arg_61_0._rewardTipItems, var_61_8)
+			table.insert(arg_62_0._rewardTipItems, var_62_8)
 		end
 
-		gohelper.setActive(arg_61_0._rewardTipItems[iter_61_0].go, true)
+		gohelper.setActive(arg_62_0._rewardTipItems[iter_62_0].go, true)
 
-		local var_61_10 = string.split(iter_61_1, "#")
-		local var_61_11, var_61_12 = ItemModel.instance:getItemConfigAndIcon(var_61_10[1], var_61_10[2])
+		local var_62_10 = string.split(iter_62_1, "#")
+		local var_62_11, var_62_12 = ItemModel.instance:getItemConfigAndIcon(var_62_10[1], var_62_10[2])
 
-		arg_61_0._rewardTipItems[iter_61_0].icon:setMOValue(var_61_10[1], var_61_10[2], var_61_10[3], nil, true)
-		arg_61_0._rewardTipItems[iter_61_0].icon:setScale(0.6)
-		arg_61_0._rewardTipItems[iter_61_0].icon:isShowQuality(false)
-		arg_61_0._rewardTipItems[iter_61_0].icon:isShowCount(false)
+		arg_62_0._rewardTipItems[iter_62_0].icon:setMOValue(var_62_10[1], var_62_10[2], var_62_10[3], nil, true)
+		arg_62_0._rewardTipItems[iter_62_0].icon:setScale(0.6)
+		arg_62_0._rewardTipItems[iter_62_0].icon:isShowQuality(false)
+		arg_62_0._rewardTipItems[iter_62_0].icon:isShowCount(false)
 
-		gohelper.findChildText(arg_61_0._rewardTipItems[iter_61_0].go, "name").text = var_61_11.name
-		gohelper.findChildText(arg_61_0._rewardTipItems[iter_61_0].go, "name/quantity").text = luaLang("multiple") .. var_61_10[3]
+		gohelper.findChildText(arg_62_0._rewardTipItems[iter_62_0].go, "name").text = var_62_11.name
+		gohelper.findChildText(arg_62_0._rewardTipItems[iter_62_0].go, "name/quantity").text = luaLang("multiple") .. var_62_10[3]
 	end
 
-	arg_61_0:_computeRewardsTipsContainerHeight(#var_61_7)
+	arg_62_0:_computeRewardsTipsContainerHeight(#var_62_7)
 end
 
-function var_0_0._hideAllRewardTipsItem(arg_62_0)
-	for iter_62_0, iter_62_1 in ipairs(arg_62_0._rewardTipItems) do
-		gohelper.setActive(iter_62_1.go, false)
+function var_0_0._hideAllRewardTipsItem(arg_63_0)
+	for iter_63_0, iter_63_1 in ipairs(arg_63_0._rewardTipItems) do
+		gohelper.setActive(iter_63_1.go, false)
 	end
 end
 
-function var_0_0._computeRewardsTipsContainerHeight(arg_63_0, arg_63_1)
-	local var_63_0 = recthelper.getHeight(arg_63_0._trstitle) + arg_63_1 * recthelper.getHeight(arg_63_0._gorewarddetailitem.transform) - 10
+function var_0_0._computeRewardsTipsContainerHeight(arg_64_0, arg_64_1)
+	local var_64_0 = recthelper.getHeight(arg_64_0._trstitle) + arg_64_1 * recthelper.getHeight(arg_64_0._gorewarddetailitem.transform) - 10
 
-	recthelper.setHeight(arg_63_0._gocontentSize.transform, var_63_0)
+	recthelper.setHeight(arg_64_0._gocontentSize.transform, var_64_0)
 end
 
-function var_0_0._onLineAniStart(arg_64_0)
-	gohelper.setActive(arg_64_0._gomonthleftline, true)
-	gohelper.setActive(arg_64_0._gomonthrightline, true)
+function var_0_0._onLineAniStart(arg_65_0)
+	gohelper.setActive(arg_65_0._gomonthleftline, true)
+	gohelper.setActive(arg_65_0._gomonthrightline, true)
 end
 
-function var_0_0._setRedDot(arg_65_0)
-	RedDotController.instance:addRedDot(arg_65_0._gomonthtip1, RedDotEnum.DotNode.SignInMonthTab, 1)
-	RedDotController.instance:addRedDot(arg_65_0._gomonthtip2, RedDotEnum.DotNode.SignInMonthTab, 2)
-	RedDotController.instance:addRedDot(arg_65_0._gomonthtip3, RedDotEnum.DotNode.SignInMonthTab, 3)
+function var_0_0._setRedDot(arg_66_0)
+	RedDotController.instance:addRedDot(arg_66_0._gomonthtip1, RedDotEnum.DotNode.SignInMonthTab, 1)
+	RedDotController.instance:addRedDot(arg_66_0._gomonthtip2, RedDotEnum.DotNode.SignInMonthTab, 2)
+	RedDotController.instance:addRedDot(arg_66_0._gomonthtip3, RedDotEnum.DotNode.SignInMonthTab, 3)
 end
 
-function var_0_0._switchFestivalDecoration(arg_66_0, arg_66_1)
-	if arg_66_0._haveFestival == arg_66_1 then
+function var_0_0._switchFestivalDecoration(arg_67_0, arg_67_1)
+	if arg_67_0._haveFestival == arg_67_1 then
 		return
 	end
 
-	arg_66_0._haveFestival = arg_66_1
+	arg_67_0._haveFestival = arg_67_1
 
-	arg_66_0:_refreshFestivalDecoration()
+	arg_67_0:_refreshFestivalDecoration()
 end
 
-function var_0_0._refreshFestivalDecoration(arg_67_0)
-	local var_67_0 = arg_67_0:haveFestival()
+function var_0_0._refreshFestivalDecoration(arg_68_0)
+	local var_68_0 = arg_68_0:haveFestival()
 
-	gohelper.setActive(arg_67_0._gofestivaldecorationright, var_67_0)
-	gohelper.setActive(arg_67_0._gofestivaldecorationleft, var_67_0)
-	gohelper.setActive(arg_67_0._gofestivaldecorationtop, var_67_0)
-	gohelper.setActive(arg_67_0._gorewardicon, not var_67_0)
-	gohelper.setActive(arg_67_0._goeffect, var_67_0)
-	gohelper.setActive(arg_67_0._godayrewarditem_festivaldecorationtop, var_67_0)
-	gohelper.setActive(arg_67_0._godayrewarditem_gofestivaldecorationleft2, var_67_0)
-	gohelper.setActive(arg_67_0._gobtnchange_gofestivaldecoration, var_67_0)
-	gohelper.setActive(arg_67_0._gochange, not var_67_0)
-	arg_67_0:_setFestivalColor(arg_67_0._txtmonth)
-	arg_67_0:_setFestivalColor(arg_67_0._imgbias)
-	arg_67_0:_setFestivalColor(arg_67_0._txtday)
-	arg_67_0:_setFestivalColor(arg_67_0._txtdate)
-	arg_67_0._simagebg:LoadImage(ResUrl.getSignInBg(var_67_0 and "act_bg_white2" or "bg_white2"))
-	arg_67_0._simagerewardbg:LoadImage(ResUrl.getSignInBg(var_67_0 and "act_img_di" or "img_di"))
+	gohelper.setActive(arg_68_0._gofestivaldecorationright, var_68_0)
+	gohelper.setActive(arg_68_0._gofestivaldecorationleft, var_68_0)
+	gohelper.setActive(arg_68_0._gofestivaldecorationtop, var_68_0)
+	gohelper.setActive(arg_68_0._gorewardicon, not var_68_0)
+	gohelper.setActive(arg_68_0._goeffect, var_68_0)
+	gohelper.setActive(arg_68_0._godayrewarditem_festivaldecorationtop, var_68_0)
+	gohelper.setActive(arg_68_0._godayrewarditem_gofestivaldecorationleft2, var_68_0)
+	gohelper.setActive(arg_68_0._gobtnchange_gofestivaldecoration, var_68_0)
+	gohelper.setActive(arg_68_0._gochange, not var_68_0)
+	gohelper.setActive(arg_68_0._txtday, not var_68_0)
+	gohelper.setActive(arg_68_0._txtdayfestival, var_68_0)
+	arg_68_0:_setFestivalColor(arg_68_0._txtmonth)
+	arg_68_0:_setFestivalColor(arg_68_0._imgbias)
+	arg_68_0:_setFestivalColor(arg_68_0._txtday)
+	arg_68_0:_setFestivalColor(arg_68_0._txtdate)
+	arg_68_0._simagebg:LoadImage(ResUrl.getSignInBg(var_68_0 and "act_bg_white2" or "bg_white2"))
+	arg_68_0._simagerewardbg:LoadImage(ResUrl.getSignInBg(var_68_0 and "act_img_di" or "img_di"))
 end
 
-function var_0_0.onClose(arg_68_0)
-	TaskDispatcher.cancelTask(arg_68_0._setActive_LifeCircle, arg_68_0)
-	TaskDispatcher.cancelTask(arg_68_0._onSwitchRewardAnim, arg_68_0)
+function var_0_0.onClose(arg_69_0)
+	TaskDispatcher.cancelTask(arg_69_0._setActive_LifeCircle, arg_69_0)
+	TaskDispatcher.cancelTask(arg_69_0._onSwitchRewardAnim, arg_69_0)
 	UIBlockHelper.instance:endBlock(var_0_2)
 
-	if arg_68_0._lifeCircleSignView then
-		arg_68_0._lifeCircleSignView:onClose()
+	if arg_69_0._lifeCircleSignView then
+		arg_69_0._lifeCircleSignView:onClose()
 	end
 
-	arg_68_0:_removeCustomEvent()
+	arg_69_0:_removeCustomEvent()
 end
 
-function var_0_0.onDestroyView(arg_69_0)
-	GameUtil.onDestroyViewMember(arg_69_0, "_lifeCircleSignView")
+function var_0_0.onDestroyView(arg_70_0)
+	GameUtil.onDestroyViewMember(arg_70_0, "_lifeCircleSignView")
 	UIBlockMgr.instance:endBlock("signshowing")
 	SignInModel.instance:setNewSwitch(false)
 	SignInListModel.instance:clearPropList()
-	TaskDispatcher.cancelTask(arg_69_0._setView1Effect, arg_69_0)
-	TaskDispatcher.cancelTask(arg_69_0._onLineAniStart, arg_69_0)
-	TaskDispatcher.cancelTask(arg_69_0._delaySignInRequest, arg_69_0)
-	TaskDispatcher.cancelTask(arg_69_0._showGetRewards, arg_69_0)
-	TaskDispatcher.cancelTask(arg_69_0._onWaitSwitchBirthFinished, arg_69_0)
+	TaskDispatcher.cancelTask(arg_70_0._setView1Effect, arg_70_0)
+	TaskDispatcher.cancelTask(arg_70_0._onLineAniStart, arg_70_0)
+	TaskDispatcher.cancelTask(arg_70_0._delaySignInRequest, arg_70_0)
+	TaskDispatcher.cancelTask(arg_70_0._showGetRewards, arg_70_0)
+	TaskDispatcher.cancelTask(arg_70_0._onWaitSwitchBirthFinished, arg_70_0)
 
-	for iter_69_0, iter_69_1 in pairs(arg_69_0._delayAnimTab) do
-		TaskDispatcher.cancelTask(iter_69_1, arg_69_0)
+	for iter_70_0, iter_70_1 in pairs(arg_70_0._delayAnimTab) do
+		TaskDispatcher.cancelTask(iter_70_1, arg_70_0)
 	end
 
-	arg_69_0._simagebg:UnLoadImage()
-	arg_69_0._simagemonthicon1:UnLoadImage()
-	arg_69_0._simagemonthicon2:UnLoadImage()
-	arg_69_0._simagemonthicon3:UnLoadImage()
-	arg_69_0._simagenormaldayrewardicon:UnLoadImage()
-	arg_69_0._simageorangebg:UnLoadImage()
-	arg_69_0._simagerewardbg:UnLoadImage()
-	arg_69_0._simagebirthdaybg:UnLoadImage()
-	arg_69_0._simagebirthdaybg2:UnLoadImage()
-	arg_69_0._simagebirthdayIcon:UnLoadImage()
+	arg_70_0._simagebg:UnLoadImage()
+	arg_70_0._simagemonthicon1:UnLoadImage()
+	arg_70_0._simagemonthicon2:UnLoadImage()
+	arg_70_0._simagemonthicon3:UnLoadImage()
+	arg_70_0._simagenormaldayrewardicon:UnLoadImage()
+	arg_70_0._simageorangebg:UnLoadImage()
+	arg_70_0._simagerewardbg:UnLoadImage()
+	arg_70_0._simagebirthdaybg:UnLoadImage()
+	arg_70_0._simagebirthdaybg2:UnLoadImage()
+	arg_70_0._simagebirthdayIcon:UnLoadImage()
 
-	if arg_69_0.viewParam and arg_69_0.viewParam.callback then
-		arg_69_0.viewParam.callback(arg_69_0.viewParam.callbackObj)
+	if arg_70_0.viewParam and arg_70_0.viewParam.callback then
+		arg_70_0.viewParam.callback(arg_70_0.viewParam.callbackObj)
 	end
 end
 
-function var_0_0.closeThis(arg_70_0)
-	var_0_0.super.closeThis(arg_70_0)
+function var_0_0.closeThis(arg_71_0)
+	var_0_0.super.closeThis(arg_71_0)
 end
 
-function var_0_0._getTextInputheros(arg_71_0)
-	if arg_71_0._inputheros then
-		return arg_71_0._inputheros:GetText()
+function var_0_0._getTextInputheros(arg_72_0)
+	if arg_72_0._inputheros then
+		return arg_72_0._inputheros:GetText()
 	end
 
 	return ""
 end
 
-function var_0_0.haveFestival(arg_72_0, arg_72_1)
-	if arg_72_0._haveFestival == nil or arg_72_1 then
-		arg_72_0._haveFestival = SignInModel.instance.checkFestivalDecorationUnlock()
+function var_0_0.haveFestival(arg_73_0, arg_73_1)
+	if arg_73_0._haveFestival == nil or arg_73_1 then
+		arg_73_0._haveFestival = SignInModel.instance.checkFestivalDecorationUnlock()
 	end
 
-	return arg_72_0._haveFestival
+	return arg_73_0._haveFestival
 end
 
-function var_0_0._setFestivalColor(arg_73_0, arg_73_1)
-	local var_73_0 = arg_73_0:haveFestival() and "#3D201A" or "#222222"
+function var_0_0._setFestivalColor(arg_74_0, arg_74_1)
+	local var_74_0 = arg_74_0:haveFestival() and "#3D201A" or "#222222"
 
-	SLFramework.UGUI.GuiHelper.SetColor(arg_73_1, var_73_0)
+	SLFramework.UGUI.GuiHelper.SetColor(arg_74_1, var_74_0)
 end
 
-function var_0_0._btnchangeOnClick(arg_74_0)
-	arg_74_0:_setActive_LifeCicle(not arg_74_0._isActiveLifeCircle)
+function var_0_0._btnchangeOnClick(arg_75_0)
+	arg_75_0:_setActive_LifeCicle(not arg_75_0._isActiveLifeCircle)
 end
 
-function var_0_0._setActive_LifeCicle(arg_75_0, arg_75_1)
-	gohelper.setActive(arg_75_0._gomonth, not arg_75_1)
+function var_0_0._setActive_LifeCicle(arg_76_0, arg_76_1)
+	gohelper.setActive(arg_76_0._gomonth, not arg_76_1)
 
-	if arg_75_0._isActiveLifeCircle == arg_75_1 then
+	if arg_76_0._isActiveLifeCircle == arg_76_1 then
 		return
 	end
 
-	arg_75_0._isActiveLifeCircle = arg_75_1
+	arg_76_0._isActiveLifeCircle = arg_76_1
 
-	if arg_75_1 then
-		arg_75_0:_refreshLifeCircleView()
+	if arg_76_1 then
+		arg_76_0:_refreshLifeCircleView()
 	end
 
-	if arg_75_0._lifeCircleSignView then
-		arg_75_0:_switchLifeCircleAnsSignIn(arg_75_1)
+	if arg_76_0._lifeCircleSignView then
+		arg_76_0:_switchLifeCircleAnsSignIn(arg_76_1)
 	else
-		arg_75_0:_setActive_LifeCircle(arg_75_1)
+		arg_76_0:_setActive_LifeCircle(arg_76_1)
 	end
 end
 
-function var_0_0._refreshLifeCircleView(arg_76_0)
-	local var_76_0 = arg_76_0._lifeCircleSignView
+function var_0_0._refreshLifeCircleView(arg_77_0)
+	local var_77_0 = arg_77_0._lifeCircleSignView
 
-	if not var_76_0 then
-		var_76_0 = LifeCircleSignView.New({
-			parent = arg_76_0,
-			baseViewContainer = arg_76_0.viewContainer
+	if not var_77_0 then
+		var_77_0 = LifeCircleSignView.New({
+			parent = arg_77_0,
+			baseViewContainer = arg_77_0.viewContainer
 		})
 
-		local var_76_1 = arg_76_0.viewContainer:getResInst(SignInEnum.ResPath.lifecirclesignview, arg_76_0._goLifeCircle)
+		local var_77_1 = arg_77_0.viewContainer:getResInst(SignInEnum.ResPath.lifecirclesignview, arg_77_0._goLifeCircle)
 
-		var_76_0:init(var_76_1)
-		var_76_0:onOpen()
+		var_77_0:init(var_77_1)
+		var_77_0:onOpen()
 
-		arg_76_0._lifeCircleSignView = var_76_0
+		arg_77_0._lifeCircleSignView = var_77_0
 	else
-		var_76_0:onUpdateParam()
+		var_77_0:onUpdateParam()
 	end
 end
 
-function var_0_0._switchLifeCircleAnsSignIn(arg_77_0, arg_77_1)
-	TaskDispatcher.cancelTask(arg_77_0._setActive_LifeCircle, arg_77_0)
+function var_0_0._switchLifeCircleAnsSignIn(arg_78_0, arg_78_1)
+	TaskDispatcher.cancelTask(arg_78_0._setActive_LifeCircle, arg_78_0)
 	UIBlockHelper.instance:endBlock(var_0_2)
 
-	if arg_77_1 then
-		arg_77_0:_playAnim("switch_reward")
-		TaskDispatcher.runDelay(arg_77_0._onSwitchRewardAnim, arg_77_0, 0.16)
+	if arg_78_1 then
+		arg_78_0:_playAnim("switch_reward")
+		TaskDispatcher.runDelay(arg_78_0._onSwitchRewardAnim, arg_78_0, 0.16)
 	else
-		UIBlockHelper.instance:startBlock(var_0_2, 2, arg_77_0.viewName)
-		arg_77_0:_playAnim("switch_main")
-		TaskDispatcher.runDelay(arg_77_0._setActive_LifeCircle, arg_77_0, 0.16)
+		UIBlockHelper.instance:startBlock(var_0_2, 2, arg_78_0.viewName)
+		arg_78_0:_playAnim("switch_main")
+		TaskDispatcher.runDelay(arg_78_0._setActive_LifeCircle, arg_78_0, 0.16)
 	end
 end
 
-function var_0_0._setActive_LifeCircle(arg_78_0, arg_78_1)
-	gohelper.setActive(arg_78_0._goLifeCircle, arg_78_1 and true or false)
-	gohelper.setActive(arg_78_0._btnchangeGo, arg_78_1)
-	gohelper.setActive(arg_78_0._btnchange2Go, not arg_78_1)
+function var_0_0._setActive_LifeCircle(arg_79_0, arg_79_1)
+	gohelper.setActive(arg_79_0._goLifeCircle, arg_79_1 and true or false)
+	gohelper.setActive(arg_79_0._btnchangeGo, arg_79_1)
+	gohelper.setActive(arg_79_0._btnchange2Go, not arg_79_1)
 
-	if arg_78_1 then
-		arg_78_0:_switchFestivalDecoration(false)
+	if arg_79_1 then
+		arg_79_0:_switchFestivalDecoration(false)
 	else
-		if arg_78_0._haveFestival ~= arg_78_0:haveFestival(true) then
-			arg_78_0:_refreshFestivalDecoration()
+		if arg_79_0._haveFestival ~= arg_79_0:haveFestival(true) then
+			arg_79_0:_refreshFestivalDecoration()
 		end
 
 		UIBlockHelper.instance:endBlock(var_0_2)
 	end
 end
 
-function var_0_0._checkLifeCircleRed(arg_79_0, arg_79_1)
-	arg_79_1.show = LifeCircleController.instance:isShowRed()
+function var_0_0._checkLifeCircleRed(arg_80_0, arg_80_1)
+	arg_80_1.show = LifeCircleController.instance:isShowRed()
 
-	arg_79_1:showRedDot(RedDotEnum.Style.Normal)
+	arg_80_1:showRedDot(RedDotEnum.Style.Normal)
 end
 
-function var_0_0._onSwitchRewardAnim(arg_80_0)
-	arg_80_0:_setActive_LifeCircle(true)
+function var_0_0._onSwitchRewardAnim(arg_81_0)
+	arg_81_0:_setActive_LifeCircle(true)
 end
 
-function var_0_0._playAnim(arg_81_0, arg_81_1, arg_81_2, arg_81_3)
-	arg_81_0._viewAnimPlayer:Play(arg_81_1, arg_81_2 or function()
+function var_0_0._playAnim(arg_82_0, arg_82_1, arg_82_2, arg_82_3)
+	arg_82_0._viewAnimPlayer:Play(arg_82_1, arg_82_2 or function()
 		return
-	end, arg_81_3)
+	end, arg_82_3)
 end
 
 return var_0_0

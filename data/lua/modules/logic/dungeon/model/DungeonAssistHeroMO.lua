@@ -47,6 +47,7 @@ function var_0_0.init(arg_1_0, arg_1_1, arg_1_2)
 	arg_1_0.destinyRank = arg_1_2.destinyRank
 	arg_1_0.destinyLevel = arg_1_2.destinyLevel
 	arg_1_0.destinyStone = arg_1_2.destinyStone
+	arg_1_0.extraStr = arg_1_2.extraStr
 
 	return true
 end
@@ -73,7 +74,8 @@ function var_0_0.getHeroInfo(arg_2_0)
 		style = arg_2_0:getTalentStyle(),
 		destinyRank = arg_2_0:getDestinyRank(),
 		destinyLevel = arg_2_0:getDestinyLevel(),
-		destinyStone = arg_2_0:getDestinyStone()
+		destinyStone = arg_2_0:getDestinyStone(),
+		extraStr = arg_2_0:getExtraStr()
 	}
 end
 
@@ -163,6 +165,10 @@ end
 
 function var_0_0.getDestinyStone(arg_24_0)
 	return arg_24_0.destinyStone
+end
+
+function var_0_0.getExtraStr(arg_25_0)
+	return arg_25_0.extraStr
 end
 
 return var_0_0

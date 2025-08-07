@@ -13,4 +13,10 @@ function var_0_0.onContainerClickModalMask(arg_2_0)
 	arg_2_0:closeThis()
 end
 
+function var_0_0.getCustomViewMaskAlpha(arg_3_0)
+	if ViewMgr.instance:isOpen(ViewName.AssassinStatsView) then
+		return 0
+	end
+end
+
 return var_0_0

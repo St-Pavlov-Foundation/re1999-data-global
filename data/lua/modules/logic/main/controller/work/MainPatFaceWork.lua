@@ -11,6 +11,8 @@ function var_0_0.onStart(arg_1_0, arg_1_1)
 		var_1_0 = PatFaceEnum.patFaceType.NewDay
 	end
 
+	arg_1_0._patFaceType = var_1_0
+
 	if not PatFaceController.instance:startPatFace(var_1_0) then
 		arg_1_0:onDone(true)
 	end
@@ -22,6 +24,7 @@ end
 
 function var_0_0.clearWork(arg_3_0)
 	PatFaceController.instance:unregisterCallback(PatFaceEvent.FinishAllPatFace, arg_3_0._onFinishAllPatFace, arg_3_0)
+	PatFaceController.instance:dispatchEvent(PatFaceEvent.PatFaceWorkDone, arg_3_0._patFaceType)
 end
 
 return var_0_0

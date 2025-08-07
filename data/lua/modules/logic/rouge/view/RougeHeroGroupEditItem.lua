@@ -45,13 +45,6 @@ function var_0_0._initObj(arg_3_0, arg_3_1)
 	arg_3_0._enableDeselect = true
 
 	transformhelper.setLocalScale(arg_3_1.transform, 0.8, 0.8, 1)
-	arg_3_0._heroItem:_setTxtPos("_nameCnTxt", 0.55, 68.9)
-	arg_3_0._heroItem:_setTxtPos("_nameEnTxt", 0.55, 36.1)
-	arg_3_0._heroItem:_setTxtPos("_rankObj", 1.7, -107.7)
-	arg_3_0._heroItem:_setTranScale("_nameCnTxt", 1.25, 1.25)
-	arg_3_0._heroItem:_setTranScale("_nameEnTxt", 1.25, 1.25)
-	arg_3_0._heroItem:_setTranScale("_lvObj", 1.25, 1.25)
-	arg_3_0._heroItem:_setTranScale("_rankObj", 0.22, 0.22)
 
 	arg_3_0._heroGroupEditListModel = RougeHeroGroupEditListModel.instance
 	arg_3_0._heroGroupQuickEditListModel = HeroGroupQuickEditListModel.instance

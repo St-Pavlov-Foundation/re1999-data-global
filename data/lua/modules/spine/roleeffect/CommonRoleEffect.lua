@@ -68,36 +68,62 @@ function var_0_0.showEverNodes(arg_5_0, arg_5_1)
 	end
 end
 
-function var_0_0._setNodeVisible(arg_6_0, arg_6_1, arg_6_2)
-	if not arg_6_1 then
+function var_0_0._playShakeEffect(arg_6_0, arg_6_1, arg_6_2)
+	if not arg_6_0._spine:isInMainView() then
 		return
 	end
 
-	local var_6_0 = arg_6_0._nodeList[arg_6_1]
+	local var_6_0 = gohelper.findChild(arg_6_1, "root/shakeconfig")
 
-	for iter_6_0, iter_6_1 in ipairs(var_6_0) do
-		local var_6_1 = gohelper.findChild(arg_6_0._spineGo, iter_6_1)
+	if var_6_0 then
+		local var_6_1 = var_6_0:GetComponent(typeof(ZProj.EffectShakeComponent))
 
-		gohelper.setActive(var_6_1, arg_6_2)
+		if var_6_1 then
+			if arg_6_2 then
+				gohelper.setActive(var_6_0, true)
 
-		if not var_6_1 and SLFramework.FrameworkSettings.IsEditor then
-			logError(string.format("%s找不到特效节点：%s,请检查路径", arg_6_0._spine._resPath, iter_6_1))
-		end
+				var_6_1.enabled = true
 
-		if arg_6_2 then
-			arg_6_0._effectVisible = true
+				var_6_1:Play(CameraMgr.instance:getCameraShake(), 1, 1)
+			else
+				CameraMgr.instance:getCameraShake():StopShake()
+				gohelper.setActive(var_6_0, false)
+			end
 		end
 	end
 end
 
-function var_0_0.playBodyEffect(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
+function var_0_0._setNodeVisible(arg_7_0, arg_7_1, arg_7_2)
+	if not arg_7_1 then
+		return
+	end
+
+	local var_7_0 = arg_7_0._nodeList[arg_7_1]
+
+	for iter_7_0, iter_7_1 in ipairs(var_7_0) do
+		local var_7_1 = gohelper.findChild(arg_7_0._spineGo, iter_7_1)
+
+		gohelper.setActive(var_7_1, arg_7_2)
+		arg_7_0:_playShakeEffect(var_7_1, arg_7_2)
+
+		if not var_7_1 and SLFramework.FrameworkSettings.IsEditor then
+			logError(string.format("%s找不到特效节点：%s,请检查路径", arg_7_0._spine._resPath, iter_7_1))
+		end
+
+		if arg_7_2 then
+			arg_7_0._effectVisible = true
+		end
+	end
+end
+
+function var_0_0.playBodyEffect(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
 	return
 end
 
-function var_0_0.onDestroy(arg_8_0)
-	arg_8_0._spineGo = nil
+function var_0_0.onDestroy(arg_9_0)
+	arg_9_0._spineGo = nil
 
-	TaskDispatcher.cancelTask(arg_8_0._delayShowEverNodes, arg_8_0)
+	TaskDispatcher.cancelTask(arg_9_0._delayShowEverNodes, arg_9_0)
 end
 
 return var_0_0

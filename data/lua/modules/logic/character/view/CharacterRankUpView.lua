@@ -14,7 +14,7 @@ function var_0_0.onInitView(arg_1_0)
 	arg_1_0._txtcount = gohelper.findChildText(arg_1_0.viewGO, "#go_items/level/#txt_count")
 	arg_1_0._goranknormal = gohelper.findChild(arg_1_0.viewGO, "rank/#go_ranknormal")
 	arg_1_0._goranklarge = gohelper.findChild(arg_1_0.viewGO, "rank/#go_ranklarge")
-	arg_1_0._goeffect = gohelper.findChild(arg_1_0.viewGO, "#go_effect")
+	arg_1_0._goeffect = gohelper.findChild(arg_1_0.viewGO, "#scroll_effect/viewport/#go_effect")
 	arg_1_0._btnupgrade = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_upgrade")
 	arg_1_0._goupgradeeffect = gohelper.findChild(arg_1_0.viewGO, "#btn_upgrade/#go_levelupbeffect")
 
@@ -443,110 +443,156 @@ function var_0_0._refreshEffect(arg_22_0)
 	end
 
 	gohelper.setActive(arg_22_0._effects[5].go, var_22_4 > 1)
+	arg_22_0:_checkExtra(var_22_3)
 end
 
-function var_0_0._getEffectTxt(arg_23_0, arg_23_1, arg_23_2)
-	arg_23_1 = tonumber(arg_23_1)
+function var_0_0._checkExtra(arg_23_0, arg_23_1)
+	if arg_23_1.extraMo then
+		local var_23_0
+		local var_23_1 = arg_23_0.viewParam.rank + 1
+		local var_23_2 = arg_23_1.extraMo:getSkillTalentMo()
 
-	local var_23_0
+		if var_23_2 then
+			var_23_0 = var_23_2:getUnlockRankStr(var_23_1)
+		end
 
-	if arg_23_1 == 1 then
-		local var_23_1 = {
-			arg_23_0.viewParam.config.name,
-			tostring(HeroConfig.instance:getShowLevel(tonumber(arg_23_2)))
+		if arg_23_1.extraMo:hasWeapon() then
+			local var_23_3 = arg_23_1.extraMo:getWeaponMo()
+
+			if var_23_3 then
+				var_23_0 = var_23_3:getUnlockRankStr(var_23_1)
+			end
+		end
+
+		if var_23_0 then
+			local var_23_4 = 6
+
+			for iter_23_0, iter_23_1 in ipairs(var_23_0) do
+				arg_23_0:_getEffectItem(var_23_4).txt.text = iter_23_1
+				var_23_4 = var_23_4 + 1
+			end
+		end
+	end
+end
+
+function var_0_0._getEffectItem(arg_24_0, arg_24_1)
+	local var_24_0 = arg_24_0._effects[arg_24_1]
+
+	if not var_24_0 then
+		var_24_0 = arg_24_0:getUserDataTb_()
+
+		local var_24_1 = gohelper.cloneInPlace(arg_24_0._effects[1].go, "effect" .. arg_24_1)
+
+		var_24_0.go = var_24_1
+		var_24_0.txt = var_24_1:GetComponent(typeof(TMPro.TMP_Text))
+		arg_24_0._effects[arg_24_1] = var_24_0
+	end
+
+	return var_24_0
+end
+
+function var_0_0._getEffectTxt(arg_25_0, arg_25_1, arg_25_2)
+	arg_25_1 = tonumber(arg_25_1)
+
+	local var_25_0
+
+	if arg_25_1 == 1 then
+		local var_25_1 = {
+			arg_25_0.viewParam.config.name,
+			tostring(HeroConfig.instance:getShowLevel(tonumber(arg_25_2)))
 		}
 
-		var_23_0 = GameUtil.getSubPlaceholderLuaLang(luaLang("character_rankup_levellimit"), var_23_1)
-	elseif arg_23_1 == 2 then
-		local var_23_2 = SkillConfig.instance:getpassiveskillCO(arg_23_0.viewParam.heroId, 1).skillPassive
-		local var_23_3 = string.format("<u><link=%s>%s</link></u>", lua_skill.configDict[var_23_2].name, lua_skill.configDict[var_23_2].name)
+		var_25_0 = GameUtil.getSubPlaceholderLuaLang(luaLang("character_rankup_levellimit"), var_25_1)
+	elseif arg_25_1 == 2 then
+		local var_25_2 = SkillConfig.instance:getpassiveskillCO(arg_25_0.viewParam.heroId, 1).skillPassive
+		local var_25_3 = string.format("<u><link=%s>%s</link></u>", lua_skill.configDict[var_25_2].name, lua_skill.configDict[var_25_2].name)
 
-		var_23_0 = string.format(luaLang("character_rankup_skill"), var_23_3)
-	elseif arg_23_1 == 3 then
+		var_25_0 = string.format(luaLang("character_rankup_skill"), var_25_3)
+	elseif arg_25_1 == 3 then
 		if not CharacterEnum.SkinOpen then
 			return nil
 		end
 
-		local var_23_4 = SkinConfig.instance:getSkinCo(tonumber(arg_23_2))
+		local var_25_4 = SkinConfig.instance:getSkinCo(tonumber(arg_25_2))
 
-		var_23_0 = string.format(luaLang("character_rankup_skinunlock"), tostring(var_23_4.name))
-	elseif arg_23_1 == 4 then
-		var_23_0 = luaLang("character_rankup_attribute")
+		var_25_0 = string.format(luaLang("character_rankup_skinunlock"), tostring(var_25_4.name))
+	elseif arg_25_1 == 4 then
+		var_25_0 = luaLang("character_rankup_attribute")
 	end
 
-	return var_23_0
+	return var_25_0
 end
 
-function var_0_0._hasEffect(arg_24_0)
-	local var_24_0 = SkillConfig.instance:getherorankCO(arg_24_0.viewParam.heroId, arg_24_0.viewParam.rank + 1)
+function var_0_0._hasEffect(arg_26_0)
+	local var_26_0 = SkillConfig.instance:getherorankCO(arg_26_0.viewParam.heroId, arg_26_0.viewParam.rank + 1)
 
-	if var_24_0 and var_24_0.effects ~= "" then
+	if var_26_0 and var_26_0.effects ~= "" then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0._refreshButton(arg_25_0)
-	gohelper.setActive(arg_25_0._btnupgrade.gameObject, not arg_25_0:_hasfull())
+function var_0_0._refreshButton(arg_27_0)
+	gohelper.setActive(arg_27_0._btnupgrade.gameObject, not arg_27_0:_hasfull())
 
-	if arg_25_0:_hasfull() then
+	if arg_27_0:_hasfull() then
 		return
 	end
 
-	local var_25_0 = SkillConfig.instance:getherorankCO(arg_25_0.viewParam.heroId, arg_25_0.viewParam.rank + 1)
-	local var_25_1 = string.split(var_25_0.consume, "|")
-	local var_25_2 = {}
+	local var_27_0 = SkillConfig.instance:getherorankCO(arg_27_0.viewParam.heroId, arg_27_0.viewParam.rank + 1)
+	local var_27_1 = string.split(var_27_0.consume, "|")
+	local var_27_2 = {}
 
-	for iter_25_0 = 1, #var_25_1 do
-		local var_25_3 = string.splitToNumber(var_25_1[iter_25_0], "#")
-		local var_25_4 = {
-			type = var_25_3[1],
-			id = var_25_3[2],
-			quantity = var_25_3[3]
+	for iter_27_0 = 1, #var_27_1 do
+		local var_27_3 = string.splitToNumber(var_27_1[iter_27_0], "#")
+		local var_27_4 = {
+			type = var_27_3[1],
+			id = var_27_3[2],
+			quantity = var_27_3[3]
 		}
 
-		table.insert(var_25_2, var_25_4)
+		table.insert(var_27_2, var_27_4)
 	end
 
-	local var_25_5, var_25_6, var_25_7 = ItemModel.instance:hasEnoughItems(var_25_2)
-	local var_25_8 = string.split(var_25_0.requirement, "|")
-	local var_25_9 = 0
+	local var_27_5, var_27_6, var_27_7 = ItemModel.instance:hasEnoughItems(var_27_2)
+	local var_27_8 = string.split(var_27_0.requirement, "|")
+	local var_27_9 = 0
 
-	for iter_25_1, iter_25_2 in pairs(var_25_8) do
-		local var_25_10 = string.splitToNumber(iter_25_2, "#")
+	for iter_27_1, iter_27_2 in pairs(var_27_8) do
+		local var_27_10 = string.splitToNumber(iter_27_2, "#")
 
-		if var_25_10[1] == 1 then
-			var_25_9 = var_25_10[2]
+		if var_27_10[1] == 1 then
+			var_27_9 = var_27_10[2]
 		end
 	end
 
-	gohelper.setActive(arg_25_0._goupgradeeffect, var_25_6 and var_25_9 <= arg_25_0.viewParam.level)
+	gohelper.setActive(arg_27_0._goupgradeeffect, var_27_6 and var_27_9 <= arg_27_0.viewParam.level)
 end
 
-function var_0_0._hasfull(arg_26_0)
-	return arg_26_0.viewParam.rank == CharacterModel.instance:getMaxRank(arg_26_0.viewParam.heroId)
+function var_0_0._hasfull(arg_28_0)
+	return arg_28_0.viewParam.rank == CharacterModel.instance:getMaxRank(arg_28_0.viewParam.heroId)
 end
 
-function var_0_0.onClose(arg_27_0)
-	if not arg_27_0._uiSpine then
+function var_0_0.onClose(arg_29_0)
+	if not arg_29_0._uiSpine then
 		return
 	end
 
-	arg_27_0._uiSpine:setModelVisible(false)
+	arg_29_0._uiSpine:setModelVisible(false)
 end
 
-function var_0_0.onDestroyView(arg_28_0)
-	if arg_28_0._uiSpine then
-		arg_28_0._uiSpine:onDestroy()
+function var_0_0.onDestroyView(arg_30_0)
+	if arg_30_0._uiSpine then
+		arg_30_0._uiSpine:onDestroy()
 
-		arg_28_0._uiSpine = nil
+		arg_30_0._uiSpine = nil
 	end
 
-	arg_28_0._simagecenterbg:UnLoadImage()
+	arg_30_0._simagecenterbg:UnLoadImage()
 
-	if arg_28_0._items then
-		arg_28_0._items = nil
+	if arg_30_0._items then
+		arg_30_0._items = nil
 	end
 end
 

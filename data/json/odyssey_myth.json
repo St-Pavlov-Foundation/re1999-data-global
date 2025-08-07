@@ -1,0 +1,26 @@
+[
+  {
+    "id": 1,
+    "name": "language_10075968",
+    "res": "mythcreatures/odyssey_mythcreatures_boss_1",
+    "elementId": 230601,
+    "unlockMap": "sp01_m_s08_hddt_b/prefab/sp01_m_s08_obj_2",
+    "pos": "34.1#-4.06#-1"
+  },
+  {
+    "id": 2,
+    "name": "language_10075970",
+    "res": "mythcreatures/odyssey_mythcreatures_boss_2",
+    "elementId": 330601,
+    "unlockMap": "sp01_m_s08_hddt_b/prefab/sp01_m_s08_obj_1",
+    "pos": "20.67#-4.39#-1"
+  },
+  {
+    "id": 3,
+    "name": "language_10075972",
+    "res": "mythcreatures/odyssey_mythcreatures_boss_3",
+    "elementId": 530601,
+    "unlockMap": "sp01_m_s08_hddt_b/prefab/sp01_m_s08_obj_3",
+    "pos": "18#-3#-1"
+  }
+]

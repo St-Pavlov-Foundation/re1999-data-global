@@ -4,8 +4,8 @@ local var_0_0 = class("FightWorkStartBorn", BaseWork)
 local var_0_1 = 10
 
 function var_0_0.onStart(arg_1_0)
-	arg_1_0:_playEnterVoice()
-
+	arg_1_0.playedVoice = false
+	FightAudioMgr.instance.enterFightVoiceHeroID = nil
 	arg_1_0._flowParallel = FlowParallel.New()
 
 	local var_1_0 = FightHelper.getSideEntitys(FightEnum.EntitySide.MySide, true)
@@ -23,6 +23,12 @@ function var_0_0.onStart(arg_1_0)
 		end
 
 		if not var_1_2 then
+			if not arg_1_0.playedVoice then
+				arg_1_0.playedVoice = true
+
+				arg_1_0:_playEnterVoice()
+			end
+
 			local var_1_3 = FightWorkStartBornNormal.New(iter_1_1, true)
 
 			var_1_3.dontDealBuff = true

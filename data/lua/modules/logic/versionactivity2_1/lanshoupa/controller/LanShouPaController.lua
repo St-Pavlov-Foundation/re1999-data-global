@@ -147,6 +147,20 @@ function var_0_0._onFail(arg_18_0)
 	ViewMgr.instance:openView(ViewName.LanShouPaGameResultView, false)
 end
 
+function var_0_0.openLanShouPaMapView(arg_19_0, arg_19_1, arg_19_2)
+	arg_19_1 = arg_19_1 or VersionActivity2_1Enum.ActivityId.LanShouPa
+
+	if arg_19_2 then
+		Activity164Rpc.instance:sendGetActInfoRequest(arg_19_1, function(arg_20_0, arg_20_1, arg_20_2)
+			if arg_20_1 == 0 then
+				ViewMgr.instance:openView(ViewName.LanShouPaMapView)
+			end
+		end)
+	else
+		ViewMgr.instance:openView(ViewName.LanShouPaMapView)
+	end
+end
+
 var_0_0.instance = var_0_0.New()
 
 LuaEventSystem.addEventMechanism(var_0_0.instance)

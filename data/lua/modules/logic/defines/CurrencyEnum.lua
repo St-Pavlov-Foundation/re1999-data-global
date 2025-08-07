@@ -35,6 +35,7 @@ var_0_0.CurrencyType = {
 	V2a1Dungeon = 2101,
 	Act134Clue = 1414,
 	V1a8FactoryPart = 1812,
+	V2a9Dungeon = 30501,
 	V2a0Dungeon = 2001,
 	Act186 = 2503,
 	RoomCritterTrain = 280001,

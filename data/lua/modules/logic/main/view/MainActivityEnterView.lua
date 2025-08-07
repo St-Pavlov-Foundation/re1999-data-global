@@ -9,8 +9,10 @@ function var_0_0.onInitView(arg_1_0)
 	arg_1_0.btnGuideFight = gohelper.findButtonWithAudio(arg_1_0._goGuideFight)
 	arg_1_0.btnNormalFight = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "right/go_fight/#go_normalfight/#btn_fight")
 	arg_1_0.btnJumpFight = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "right/go_fight/#go_normalfight/#btn_jumpfight")
-	arg_1_0.txtChapter = gohelper.findChildText(arg_1_0.viewGO, "right/go_fight/#go_normalfight/#btn_jumpfight/#txt_chapter")
-	arg_1_0.txtChapterName = gohelper.findChildText(arg_1_0.viewGO, "right/go_fight/#go_normalfight/#btn_jumpfight/#txt_chaptername")
+	arg_1_0.txtChapter = gohelper.findChildText(arg_1_0.viewGO, "right/go_fight/#go_normalfight/#btn_jumpfight/1/#txt_chapter")
+	arg_1_0.txtChapter2 = gohelper.findChildText(arg_1_0.viewGO, "right/go_fight/#go_normalfight/#btn_jumpfight/2/#txt_chapter")
+	arg_1_0.txtChapterName = gohelper.findChildText(arg_1_0.viewGO, "right/go_fight/#go_normalfight/#btn_jumpfight/1/#txt_chaptername")
+	arg_1_0.txtChapterName2 = gohelper.findChildText(arg_1_0.viewGO, "right/go_fight/#go_normalfight/#btn_jumpfight/2/#txt_chaptername")
 	arg_1_0.btnActivityFight = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "right/go_fight/#go_activityfight/#btn_fight")
 	arg_1_0.btnEnterActivity = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "right/go_fight/#go_activityfight/#btn_activefight")
 	arg_1_0.simageActivityIcon = gohelper.findChildSingleImage(arg_1_0.viewGO, "right/go_fight/#go_activityfight/#btn_activefight/icon")
@@ -190,7 +192,9 @@ function var_0_0.refreshFastEnterDungeonUI(arg_17_0)
 		local var_17_4 = lua_chapter.configDict[var_17_3]
 
 		arg_17_0.txtChapter.text = DungeonController.getEpisodeName(var_17_0)
+		arg_17_0.txtChapter2.text = DungeonController.getEpisodeName(var_17_0)
 		arg_17_0.txtChapterName.text = var_17_0.name
+		arg_17_0.txtChapterName2.text = var_17_0.name
 		arg_17_0._jumpParam = arg_17_0._jumpParam or {}
 		arg_17_0._jumpParam.chapterType = var_17_4.type
 		arg_17_0._jumpParam.chapterId = var_17_3
@@ -250,7 +254,9 @@ function var_0_0.getEnterViewActIdList(arg_21_0)
 			[ActivityEnum.VersionActivityIdDict.Activity1_7] = VersionActivity1_7Enum.EnterViewActIdListWithRedDot,
 			[ActivityEnum.VersionActivityIdDict.Activity1_8] = VersionActivity1_8Enum.EnterViewActIdListWithRedDot,
 			[ActivityEnum.VersionActivityIdDict.Activity1_9] = VersionActivity1_9Enum.EnterViewActIdListWithRedDot,
-			[ActivityEnum.VersionActivityIdDict.Activity2_7] = VersionActivity2_7Enum.EnterViewActIdListWithRedDot
+			[ActivityEnum.VersionActivityIdDict.Activity2_7] = VersionActivity2_7Enum.EnterViewActIdListWithRedDot,
+			[ActivityEnum.VersionActivityIdDict.Activity_Assassin_1] = VersionActivity2_9Enum.EnterViewActIdListWithGroup[ActivityEnum.VersionActivityIdDict.Activity_Assassin_1],
+			[ActivityEnum.VersionActivityIdDict.Activity_Assassin_2] = VersionActivity2_9Enum.EnterViewActIdListWithGroup[ActivityEnum.VersionActivityIdDict.Activity_Assassin_2]
 		}
 	end
 
@@ -304,7 +310,9 @@ function var_0_0.getActivityEnterHandleFunc(arg_24_0, arg_24_1)
 			[ActivityEnum.VersionActivityIdDict.Activity2_3] = VersionActivity2_3EnterController.instance,
 			[ActivityEnum.VersionActivityIdDict.Activity2_4] = VersionActivity2_4EnterController.instance,
 			[ActivityEnum.VersionActivityIdDict.Activity2_5] = VersionActivity2_5EnterController.instance,
-			[ActivityEnum.VersionActivityIdDict.Activity2_6] = VersionActivity2_6EnterController.instance
+			[ActivityEnum.VersionActivityIdDict.Activity2_6] = VersionActivity2_6EnterController.instance,
+			[ActivityEnum.VersionActivityIdDict.Activity_Assassin_1] = VersionActivity2_9EnterController.instance,
+			[ActivityEnum.VersionActivityIdDict.Activity_Assassin_2] = VersionActivity2_9EnterController.instance
 		}
 	end
 

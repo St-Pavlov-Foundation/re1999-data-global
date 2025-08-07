@@ -40,6 +40,7 @@ var_0_0.Type = {
 	ChangeCareer = 28,
 	DeadPerformanceNoCondition = 30,
 	AfterMonsterA2B = 26,
+	NoCondition = 38,
 	NewHeroSpawn = 3
 }
 
@@ -622,6 +623,8 @@ function var_0_0._onFightDialogCheck(arg_28_0, arg_28_1, arg_28_2, arg_28_3, arg
 		arg_28_0:_checkShowDialog(arg_28_1, arg_28_2)
 	elseif arg_28_1 == var_0_0.Type.BeforeStartFightAndXXTimesEnterBattleId then
 		arg_28_0:_checkShowDialog(arg_28_1, nil, nil, arg_28_0._onCheckBeforeStartFightAndXXTimesEnterBattleId)
+	elseif arg_28_1 == var_0_0.Type.NoCondition then
+		arg_28_0:_checkShowDialog(arg_28_1, arg_28_2)
 	end
 end
 

@@ -35,7 +35,7 @@ function var_0_0.getCurReactivityId(arg_6_0)
 	end
 end
 
-function var_0_0.openReactivityStoreView(arg_7_0, arg_7_1)
+function var_0_0.openReactivityStoreView(arg_7_0, arg_7_1, arg_7_2)
 	local var_7_0 = ReactivityEnum.ActivityDefine[arg_7_1]
 
 	if not var_7_0 then
@@ -44,7 +44,7 @@ function var_0_0.openReactivityStoreView(arg_7_0, arg_7_1)
 
 	local var_7_1 = var_7_0.storeActId
 
-	arg_7_0:_enterActivityView(ViewName.ReactivityStoreView, var_7_1, arg_7_0._openStoreView, arg_7_0)
+	arg_7_0:_enterActivityView(arg_7_2 or ViewName.ReactivityStoreView, var_7_1, arg_7_0._openStoreView, arg_7_0)
 end
 
 function var_0_0._openStoreView(arg_8_0, arg_8_1, arg_8_2)

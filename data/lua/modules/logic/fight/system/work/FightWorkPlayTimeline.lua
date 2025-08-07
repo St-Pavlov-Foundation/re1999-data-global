@@ -2,10 +2,11 @@
 
 local var_0_0 = class("FightWorkPlayTimeline", BaseWork)
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2)
+function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 	arg_1_0._entity = arg_1_1
 	arg_1_0._entityId = arg_1_1.id
 	arg_1_0._timeline = arg_1_2
+	arg_1_0._toId = arg_1_3
 end
 
 function var_0_0.onStart(arg_2_0, arg_2_1)
@@ -32,7 +33,7 @@ function var_0_0._playTimeline(arg_3_0)
 				}
 			},
 			fromId = arg_3_0._entityId,
-			toId = arg_3_0._entityId,
+			toId = arg_3_0._toId or arg_3_0._entityId,
 			actType = FightEnum.ActType.SKILL,
 			stepUid = FightTLEventEntityVisible.latestStepUid or 0
 		}

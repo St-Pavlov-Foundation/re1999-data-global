@@ -8,8 +8,11 @@ function var_0_0.buildViews(arg_1_0)
 	var_1_0:setHelpId(HelpEnum.HelpId.BossRushViewHelp)
 	var_1_0:setDelayTime(0.5)
 
+	local var_1_1 = BossRushModel.instance:getActivityMainView()
+	local var_1_2 = (var_1_1 and var_1_1.MainViewClass or V1a4_BossRushMainView).New()
+
 	return {
-		V1a4_BossRushMainView.New(),
+		var_1_2,
 		TabViewGroup.New(1, "top_left"),
 		var_1_0
 	}
@@ -21,7 +24,7 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 			true,
 			true,
 			true
-		}, 14601, arg_2_0._closeCallback, nil, nil, arg_2_0)
+		}, HelpEnum.HelpId.BossRushViewHelp, arg_2_0._closeCallback, nil, nil, arg_2_0)
 
 		return {
 			arg_2_0._navigateButtonView

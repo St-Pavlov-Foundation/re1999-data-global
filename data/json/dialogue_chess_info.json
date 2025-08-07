@@ -538,5 +538,257 @@
     "id": 2,
     "res": "dialogue_sangtuosi",
     "pos": "165#0"
+  },
+  {
+    "dialogueId": 10000,
+    "id": 1,
+    "res": "dialogue_role31_right",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 10001,
+    "id": 1,
+    "res": "dialogue_role31_right",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 10002,
+    "id": 1,
+    "res": "dialogue_role32_right",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 10003,
+    "id": 1,
+    "res": "dialogue_role31_right",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 10004,
+    "id": 1,
+    "res": "dialogue_role31_right",
+    "pos": "0#0"
+  },
+  {
+    "dialogueId": 10005,
+    "id": 1,
+    "res": "dialogue_role31_right",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 10006,
+    "id": 1,
+    "res": "dialogue_role31_right",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 10007,
+    "id": 1,
+    "res": "dialogue_role32_right",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 10008,
+    "id": 1,
+    "res": "dialogue_role36_right",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 10009,
+    "id": 1,
+    "res": "dialogue_role32_right",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 10010,
+    "id": 1,
+    "res": "dialogue_role33_right",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 10011,
+    "id": 1,
+    "res": "dialogue_role40_right",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 10012,
+    "id": 1,
+    "res": "dialogue_role30_left",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 10013,
+    "id": 1,
+    "res": "dialogue_role33_right",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 10014,
+    "id": 1,
+    "res": "dialogue_role34_right",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 10015,
+    "id": 1,
+    "res": "dialogue_role33_right",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 10016,
+    "id": 1,
+    "res": "dialogue_role33_right",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 10017,
+    "id": 1,
+    "res": "dialogue_role34_right",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 10018,
+    "id": 1,
+    "res": "dialogue_role33_right",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 10019,
+    "id": 1,
+    "res": "dialogue_role34_right",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 10020,
+    "id": 1,
+    "res": "dialogue_role33_right",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 10000,
+    "id": 2,
+    "res": "dialogue_role32_left",
+    "pos": "165#0"
+  },
+  {
+    "dialogueId": 10001,
+    "id": 2,
+    "res": "dialogue_role32_left",
+    "pos": "165#0"
+  },
+  {
+    "dialogueId": 10002,
+    "id": 2,
+    "res": "dialogue_role31_left",
+    "pos": "165#0"
+  },
+  {
+    "dialogueId": 10003,
+    "id": 2,
+    "res": "dialogue_role32_left",
+    "pos": "165#0"
+  },
+  {
+    "dialogueId": 10005,
+    "id": 2,
+    "res": "dialogue_role32_left",
+    "pos": "165#0"
+  },
+  {
+    "dialogueId": 10006,
+    "id": 2,
+    "res": "dialogue_role32_left",
+    "pos": "165#0"
+  },
+  {
+    "dialogueId": 10007,
+    "id": 2,
+    "res": "dialogue_role31_left",
+    "pos": "165#0"
+  },
+  {
+    "dialogueId": 10008,
+    "id": 2,
+    "res": "dialogue_role35_left",
+    "pos": "165#0"
+  },
+  {
+    "dialogueId": 10009,
+    "id": 2,
+    "res": "dialogue_role37_left",
+    "pos": "165#0"
+  },
+  {
+    "dialogueId": 10010,
+    "id": 2,
+    "res": "dialogue_role39_left",
+    "pos": "165#0"
+  },
+  {
+    "dialogueId": 10011,
+    "id": 2,
+    "res": "dialogue_role41_left",
+    "pos": "165#0"
+  },
+  {
+    "dialogueId": 10012,
+    "id": 2,
+    "res": "dialogue_role42_left",
+    "pos": "165#0"
+  },
+  {
+    "dialogueId": 10013,
+    "id": 2,
+    "res": "dialogue_role34_left",
+    "pos": "165#0"
+  },
+  {
+    "dialogueId": 10014,
+    "id": 2,
+    "res": "dialogue_role33_left",
+    "pos": "165#0"
+  },
+  {
+    "dialogueId": 10015,
+    "id": 2,
+    "res": "dialogue_role34_left",
+    "pos": "165#0"
+  },
+  {
+    "dialogueId": 10016,
+    "id": 2,
+    "res": "dialogue_role34_left",
+    "pos": "165#0"
+  },
+  {
+    "dialogueId": 10017,
+    "id": 2,
+    "res": "dialogue_role33_left",
+    "pos": "165#0"
+  },
+  {
+    "dialogueId": 10018,
+    "id": 2,
+    "res": "dialogue_role34_left",
+    "pos": "165#0"
+  },
+  {
+    "dialogueId": 10019,
+    "id": 2,
+    "res": "dialogue_role33_left",
+    "pos": "165#0"
+  },
+  {
+    "dialogueId": 10020,
+    "id": 2,
+    "res": "dialogue_role34_left",
+    "pos": "165#0"
+  },
+  {
+    "dialogueId": 10009,
+    "id": 3,
+    "res": "dialogue_role38_left",
+    "pos": "420#0"
   }
 ]

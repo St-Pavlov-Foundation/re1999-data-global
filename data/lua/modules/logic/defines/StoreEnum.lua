@@ -46,6 +46,7 @@ var_0_0.StoreId = {
 	LimitStore = 112,
 	DecorateStore = 800,
 	RecommendPackage = 611,
+	MediciPackage = 616,
 	Summon = 130,
 	RoomStore = 170,
 	VersionPackage = 612,
@@ -106,7 +107,8 @@ var_0_0.Need4RDEpisodeId = 9999
 var_0_0.StoreChargeType = {
 	DailyReleasePackage = 4,
 	Optional = 5,
-	MonthCard = 2
+	MonthCard = 2,
+	LinkGiftGoods = 8
 }
 var_0_0.Prefab = {
 	RoomStore = 6,

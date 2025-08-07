@@ -14,5 +14,6 @@ var_0_0.SceneSwitchUIVisible = GameUtil.getEventId()
 var_0_0.PreviewSceneSwitchUIVisible = GameUtil.getEventId()
 var_0_0.ShowSceneInfo = GameUtil.getEventId()
 var_0_0.ShowPreviewSceneInfo = GameUtil.getEventId()
+var_0_0.ForceShowSceneTab = GameUtil.getEventId()
 
 return var_0_0

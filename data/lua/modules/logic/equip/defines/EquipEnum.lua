@@ -14,14 +14,16 @@ var_0_0.ChooseEquipStatus = {
 	Success = 0
 }
 var_0_0.FromViewEnum = {
-	FromCachotHeroGroupView = 4,
+	FromOdysseyHeroGroupFightView = 9,
 	FromCharacterView = 2,
+	FromCachotHeroGroupView = 4,
 	FromSeason123HeroGroupFightView = 6,
-	FromRougeHeroGroupFightView = 7,
+	FromAssassinHeroView = 10,
 	FromSeason166HeroGroupFightView = 8,
-	FromCachotHeroGroupFightView = 5,
 	FromSeasonFightView = 3,
-	FromHeroGroupFightView = 1
+	FromHeroGroupFightView = 1,
+	FromRougeHeroGroupFightView = 7,
+	FromCachotHeroGroupFightView = 5
 }
 var_0_0.ConstId = {
 	equipNotShowRefineRare = 16

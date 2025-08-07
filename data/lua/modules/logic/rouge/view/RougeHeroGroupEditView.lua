@@ -790,6 +790,15 @@ function var_0_0._refreshPassiveSkill(arg_32_0)
 	for iter_32_1 = #var_32_0 + 1, #arg_32_0._passiveskillitems do
 		gohelper.setActive(arg_32_0._passiveskillitems[iter_32_1].go, false)
 	end
+
+	if var_32_0[0] then
+		gohelper.setActive(arg_32_0._passiveskillitems[0].on, true)
+		gohelper.setActive(arg_32_0._passiveskillitems[0].off, false)
+		gohelper.setActive(arg_32_0._passiveskillitems[0].balance, var_32_4)
+		gohelper.setActive(arg_32_0._passiveskillitems[0].go, true)
+	else
+		gohelper.setActive(arg_32_0._passiveskillitems[0].go, false)
+	end
 end
 
 function var_0_0._refreshSkill(arg_33_0)
@@ -1194,15 +1203,10 @@ function var_0_0._editableInitView(arg_46_0)
 	arg_46_0._passiveskillitems = {}
 
 	for iter_46_4 = 1, 3 do
-		local var_46_1 = arg_46_0:getUserDataTb_()
-
-		var_46_1.go = gohelper.findChild(arg_46_0._gopassiveskills, "passiveskill" .. tostring(iter_46_4))
-		var_46_1.on = gohelper.findChild(var_46_1.go, "on")
-		var_46_1.off = gohelper.findChild(var_46_1.go, "off")
-		var_46_1.balance = gohelper.findChild(var_46_1.go, "balance")
-		arg_46_0._passiveskillitems[iter_46_4] = var_46_1
+		arg_46_0._passiveskillitems[iter_46_4] = arg_46_0:_findPassiveskillitems(iter_46_4)
 	end
 
+	arg_46_0._passiveskillitems[0] = arg_46_0:_findPassiveskillitems(4)
 	arg_46_0._skillContainer = MonoHelper.addNoUpdateLuaComOnceToGo(arg_46_0._goskill, CharacterSkillContainer)
 
 	gohelper.setActive(arg_46_0._gononecharacter, false)
@@ -1216,279 +1220,290 @@ function var_0_0._editableInitView(arg_46_0)
 	arg_46_0._fightAssitTip = gohelper.findChild(arg_46_0.viewGO, "#go_chooserole/assit")
 end
 
-function var_0_0._isFightEditType(arg_47_0)
-	return arg_47_0.viewParam.heroGroupEditType == RougeEnum.HeroGroupEditType.Fight or arg_47_0.viewParam.heroGroupEditType == RougeEnum.HeroGroupEditType.FightAssit
+function var_0_0._findPassiveskillitems(arg_47_0, arg_47_1)
+	local var_47_0 = arg_47_0:getUserDataTb_()
+
+	var_47_0.go = gohelper.findChild(arg_47_0._gopassiveskills, "passiveskill" .. arg_47_1)
+	var_47_0.on = gohelper.findChild(var_47_0.go, "on")
+	var_47_0.off = gohelper.findChild(var_47_0.go, "off")
+	var_47_0.balance = gohelper.findChild(var_47_0.go, "balance")
+
+	return var_47_0
 end
 
-function var_0_0._initFightTip(arg_48_0)
-	local var_48_0 = arg_48_0.viewParam.heroGroupEditType
-
-	gohelper.setActive(arg_48_0._fightTip, var_48_0 == RougeEnum.HeroGroupEditType.Fight)
-	gohelper.setActive(arg_48_0._fightAssitTip, var_48_0 == RougeEnum.HeroGroupEditType.FightAssit)
+function var_0_0._isFightEditType(arg_48_0)
+	return arg_48_0.viewParam.heroGroupEditType == RougeEnum.HeroGroupEditType.Fight or arg_48_0.viewParam.heroGroupEditType == RougeEnum.HeroGroupEditType.FightAssit
 end
 
-function var_0_0._initCapacity(arg_49_0)
-	arg_49_0._selectHeroCapacity = arg_49_0.viewParam.selectHeroCapacity
-	arg_49_0._curCapacity = arg_49_0.viewParam.curCapacity
-	arg_49_0._totalCapacity = arg_49_0.viewParam.totalCapacity
-	arg_49_0._assistCapacity = arg_49_0.viewParam.assistCapacity
-	arg_49_0._assistPos = arg_49_0.viewParam.assistPos
-	arg_49_0._assistHeroId = arg_49_0.viewParam.assistHeroId
+function var_0_0._initFightTip(arg_49_0)
+	local var_49_0 = arg_49_0.viewParam.heroGroupEditType
 
-	RougeHeroGroupEditListModel.instance:setCapacityInfo(arg_49_0._selectHeroCapacity, arg_49_0._curCapacity, arg_49_0._totalCapacity, arg_49_0._assistCapacity, arg_49_0._assistPos, arg_49_0._assistHeroId)
+	gohelper.setActive(arg_49_0._fightTip, var_49_0 == RougeEnum.HeroGroupEditType.Fight)
+	gohelper.setActive(arg_49_0._fightAssitTip, var_49_0 == RougeEnum.HeroGroupEditType.FightAssit)
+end
 
-	if not arg_49_0._capacityComp then
-		local var_49_0 = gohelper.findChild(arg_49_0.viewGO, "characterinfo/volumebg/volume")
-		local var_49_1 = gohelper.findChildText(arg_49_0.viewGO, "characterinfo/volumebg/txt_titletips")
+function var_0_0._initCapacity(arg_50_0)
+	arg_50_0._selectHeroCapacity = arg_50_0.viewParam.selectHeroCapacity
+	arg_50_0._curCapacity = arg_50_0.viewParam.curCapacity
+	arg_50_0._totalCapacity = arg_50_0.viewParam.totalCapacity
+	arg_50_0._assistCapacity = arg_50_0.viewParam.assistCapacity
+	arg_50_0._assistPos = arg_50_0.viewParam.assistPos
+	arg_50_0._assistHeroId = arg_50_0.viewParam.assistHeroId
 
-		if arg_49_0.viewParam.heroGroupEditType == RougeEnum.HeroGroupEditType.SelectHero then
-			var_49_1.text = luaLang("p_rougeinitteamview_txt_titletips")
+	RougeHeroGroupEditListModel.instance:setCapacityInfo(arg_50_0._selectHeroCapacity, arg_50_0._curCapacity, arg_50_0._totalCapacity, arg_50_0._assistCapacity, arg_50_0._assistPos, arg_50_0._assistHeroId)
+
+	if not arg_50_0._capacityComp then
+		local var_50_0 = gohelper.findChild(arg_50_0.viewGO, "characterinfo/volumebg/volume")
+		local var_50_1 = gohelper.findChildText(arg_50_0.viewGO, "characterinfo/volumebg/txt_titletips")
+
+		if arg_50_0.viewParam.heroGroupEditType == RougeEnum.HeroGroupEditType.SelectHero then
+			var_50_1.text = luaLang("p_rougeinitteamview_txt_titletips")
 		else
-			var_49_1.text = luaLang("p_rougeinitteamview_txt_titletips2")
+			var_50_1.text = luaLang("p_rougeinitteamview_txt_titletips2")
 		end
 
-		local var_49_2
+		local var_50_2
 
-		if arg_49_0:_isFightEditType() then
-			var_49_2 = RougeCapacityComp.SpriteType2
+		if arg_50_0:_isFightEditType() then
+			var_50_2 = RougeCapacityComp.SpriteType2
 		end
 
-		arg_49_0._capacityComp = RougeCapacityComp.Add(var_49_0, arg_49_0._curCapacity, arg_49_0._totalCapacity, true, var_49_2)
+		arg_50_0._capacityComp = RougeCapacityComp.Add(var_50_0, arg_50_0._curCapacity, arg_50_0._totalCapacity, true, var_50_2)
 
-		arg_49_0._capacityComp:showChangeEffect(true)
+		arg_50_0._capacityComp:showChangeEffect(true)
 	else
-		arg_49_0._capacityComp:updateCurAndMaxNum(arg_49_0._curCapacity, arg_49_0._totalCapacity)
+		arg_50_0._capacityComp:updateCurAndMaxNum(arg_50_0._curCapacity, arg_50_0._totalCapacity)
 	end
 end
 
-function var_0_0._updateTotalCapacity(arg_50_0)
-	if arg_50_0._isShowQuickEdit then
-		local var_50_0 = RougeHeroGroupQuickEditListModel.instance:calcTotalCapacity()
+function var_0_0._updateTotalCapacity(arg_51_0)
+	if arg_51_0._isShowQuickEdit then
+		local var_51_0 = RougeHeroGroupQuickEditListModel.instance:calcTotalCapacity()
 
-		arg_50_0._capacityComp:updateCurAndMaxNum(var_50_0, arg_50_0._totalCapacity)
+		arg_51_0._capacityComp:updateCurAndMaxNum(var_51_0, arg_51_0._totalCapacity)
 
 		return
 	end
 
-	local var_50_1 = RougeHeroGroupEditListModel.instance:calcTotalCapacity(arg_50_0._singleGroupMOId, arg_50_0._heroMO)
+	local var_51_1 = RougeHeroGroupEditListModel.instance:calcTotalCapacity(arg_51_0._singleGroupMOId, arg_51_0._heroMO)
 
-	arg_50_0._capacityComp:updateCurAndMaxNum(var_50_1, arg_50_0._totalCapacity)
+	arg_51_0._capacityComp:updateCurAndMaxNum(var_51_1, arg_51_0._totalCapacity)
 end
 
-function var_0_0.onUpdateParam(arg_51_0)
+function var_0_0.onUpdateParam(arg_52_0)
 	AudioMgr.instance:trigger(AudioEnum.HeroGroupUI.Play_UI_Team_Open)
 end
 
-function var_0_0._initFakeLevelList(arg_52_0, arg_52_1)
+function var_0_0._initFakeLevelList(arg_53_0, arg_53_1)
 	if not RougeHeroGroupBalanceHelper.getIsBalanceMode() then
 		return
 	end
 
-	local var_52_0 = {}
+	local var_53_0 = {}
 
-	for iter_52_0, iter_52_1 in ipairs(arg_52_1) do
-		local var_52_1 = RougeHeroGroupBalanceHelper.getHeroBalanceLv(iter_52_1.heroId)
+	for iter_53_0, iter_53_1 in ipairs(arg_53_1) do
+		local var_53_1 = RougeHeroGroupBalanceHelper.getHeroBalanceLv(iter_53_1.heroId)
 
-		if var_52_1 > iter_52_1.level then
-			var_52_0[iter_52_1.heroId] = var_52_1
+		if var_53_1 > iter_53_1.level then
+			var_53_0[iter_53_1.heroId] = var_53_1
 		end
 	end
 
-	CharacterModel.instance:setFakeList(var_52_0)
+	CharacterModel.instance:setFakeList(var_53_0)
 end
 
-function var_0_0.onOpen(arg_53_0)
+function var_0_0.onOpen(arg_54_0)
 	AudioMgr.instance:trigger(AudioEnum.HeroGroupUI.Play_UI_Team_Open)
 
-	arg_53_0._isShowQuickEdit = false
-	arg_53_0._scrollcard.verticalNormalizedPosition = 1
-	arg_53_0._scrollquickedit.verticalNormalizedPosition = 1
-	arg_53_0._originalHeroUid = arg_53_0.viewParam.originalHeroUid
-	arg_53_0._singleGroupMOId = arg_53_0.viewParam.singleGroupMOId
-	arg_53_0._adventure = arg_53_0.viewParam.adventure
-	arg_53_0._equips = arg_53_0.viewParam.equips
+	arg_54_0._isShowQuickEdit = false
+	arg_54_0._scrollcard.verticalNormalizedPosition = 1
+	arg_54_0._scrollquickedit.verticalNormalizedPosition = 1
+	arg_54_0._originalHeroUid = arg_54_0.viewParam.originalHeroUid
+	arg_54_0._singleGroupMOId = arg_54_0.viewParam.singleGroupMOId
+	arg_54_0._adventure = arg_54_0.viewParam.adventure
+	arg_54_0._equips = arg_54_0.viewParam.equips
 
-	for iter_53_0 = 1, 2 do
-		arg_53_0._selectDmgs[iter_53_0] = false
+	for iter_54_0 = 1, 2 do
+		arg_54_0._selectDmgs[iter_54_0] = false
 	end
 
-	for iter_53_1 = 1, 6 do
-		arg_53_0._selectAttrs[iter_53_1] = false
+	for iter_54_1 = 1, 6 do
+		arg_54_0._selectAttrs[iter_54_1] = false
 	end
 
-	for iter_53_2 = 1, 6 do
-		arg_53_0._selectLocations[iter_53_2] = false
+	for iter_54_2 = 1, 6 do
+		arg_54_0._selectLocations[iter_54_2] = false
 	end
 
-	arg_53_0._heroGroupEditListModel = RougeHeroGroupEditListModel.instance
-	arg_53_0._heroGroupQuickEditListModel = RougeHeroGroupQuickEditListModel.instance
-	arg_53_0._heroSingleGroupModel = RougeHeroSingleGroupModel.instance
-	arg_53_0._heroGroupModel = RougeHeroGroupModel.instance
+	arg_54_0._heroGroupEditListModel = RougeHeroGroupEditListModel.instance
+	arg_54_0._heroGroupQuickEditListModel = RougeHeroGroupQuickEditListModel.instance
+	arg_54_0._heroSingleGroupModel = RougeHeroSingleGroupModel.instance
+	arg_54_0._heroGroupModel = RougeHeroGroupModel.instance
 
-	local var_53_0
+	local var_54_0
 
-	if arg_53_0:_isFightEditType() then
-		var_53_0 = RougeHeroGroupEditListModel.instance:getTeamNoSortedList()
+	if arg_54_0:_isFightEditType() then
+		var_54_0 = RougeHeroGroupEditListModel.instance:getTeamNoSortedList()
 	else
-		var_53_0 = HeroModel.instance:getList()
+		var_54_0 = HeroModel.instance:getList()
 	end
 
-	CharacterModel.instance:setHeroList(var_53_0)
-	arg_53_0:_initFakeLevelList(var_53_0)
+	CharacterModel.instance:setHeroList(var_54_0)
+	arg_54_0:_initFakeLevelList(var_54_0)
 	CharacterModel.instance:setCharacterList(false, CharacterEnum.FilterType.HeroGroup)
-	arg_53_0._heroGroupEditListModel:setParam(arg_53_0._originalHeroUid, arg_53_0._adventure, arg_53_0._heroHps)
-	arg_53_0._heroGroupQuickEditListModel:setParam(arg_53_0._adventure, arg_53_0._heroHps)
-	arg_53_0._heroGroupEditListModel:setHeroGroupEditType(arg_53_0.viewParam.heroGroupEditType)
+	arg_54_0._heroGroupEditListModel:setParam(arg_54_0._originalHeroUid, arg_54_0._adventure, arg_54_0._heroHps)
+	arg_54_0._heroGroupQuickEditListModel:setParam(arg_54_0._adventure, arg_54_0._heroHps)
+	arg_54_0._heroGroupEditListModel:setHeroGroupEditType(arg_54_0.viewParam.heroGroupEditType)
 
-	arg_53_0._isInitType = arg_53_0.viewParam.heroGroupEditType == RougeEnum.HeroGroupEditType.Init
+	arg_54_0._isInitType = arg_54_0.viewParam.heroGroupEditType == RougeEnum.HeroGroupEditType.Init
 
-	arg_53_0.viewContainer:_setHomeBtnVisible(arg_53_0:_isFightEditType())
-	arg_53_0:_initCapacity()
-	arg_53_0:_initFightTip()
+	arg_54_0.viewContainer:_setHomeBtnVisible(arg_54_0:_isFightEditType())
+	arg_54_0:_initCapacity()
+	arg_54_0:_initFightTip()
 
-	arg_53_0._heroMO = arg_53_0._heroGroupEditListModel:copyCharacterCardList(true)
+	arg_54_0._heroMO = arg_54_0._heroGroupEditListModel:copyCharacterCardList(true)
 
-	arg_53_0:_refreshEditMode()
-	arg_53_0:_refreshBtnIcon()
-	arg_53_0:_refreshCharacterInfo()
-	arg_53_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroRankUp, arg_53_0._updateHeroList, arg_53_0)
-	arg_53_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroLevelUp, arg_53_0._updateHeroList, arg_53_0)
-	arg_53_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroExSkillUp, arg_53_0._updateHeroList, arg_53_0)
-	arg_53_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnClickHeroEditItem, arg_53_0._onClickHeroEditItem, arg_53_0)
-	arg_53_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroRankUp, arg_53_0._refreshCharacterInfo, arg_53_0)
-	arg_53_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroLevelUp, arg_53_0._refreshCharacterInfo, arg_53_0)
-	arg_53_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroExSkillUp, arg_53_0._refreshCharacterInfo, arg_53_0)
-	arg_53_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroTalentUp, arg_53_0._refreshCharacterInfo, arg_53_0)
-	arg_53_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroExSkillUp, arg_53_0._refreshCharacterInfo, arg_53_0)
-	arg_53_0:addEventCb(CharacterController.instance, CharacterEvent.levelUpAttribute, arg_53_0._onAttributeChanged, arg_53_0)
-	arg_53_0:addEventCb(CharacterController.instance, CharacterEvent.showCharacterRankUpView, arg_53_0._showCharacterRankUpView, arg_53_0)
-	arg_53_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyHeroGroup, arg_53_0._onGroupModify, arg_53_0)
-	arg_53_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnSnapshotSaveSucc, arg_53_0._onGroupModify, arg_53_0)
-	arg_53_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_53_0._onOpenView, arg_53_0)
-	arg_53_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_53_0._onCloseView, arg_53_0)
-	arg_53_0:addEventCb(CharacterController.instance, CharacterEvent.HeroUpdatePush, arg_53_0._refreshCharacterInfo, arg_53_0)
-	gohelper.addUIClickAudio(arg_53_0._btnlvrank.gameObject, AudioEnum.UI.UI_Common_Click)
-	gohelper.addUIClickAudio(arg_53_0._btnrarerank.gameObject, AudioEnum.UI.UI_Common_Click)
-	gohelper.addUIClickAudio(arg_53_0._btnexskillrank.gameObject, AudioEnum.UI.UI_Common_Click)
-	gohelper.addUIClickAudio(arg_53_0._btnattribute.gameObject, AudioEnum.UI.UI_Common_Click)
-	gohelper.addUIClickAudio(arg_53_0._btnpassiveskill.gameObject, AudioEnum.UI.UI_Common_Click)
-	gohelper.addUIClickAudio(arg_53_0._btncharacter.gameObject, AudioEnum.UI.UI_Common_Click)
+	arg_54_0:_refreshEditMode()
+	arg_54_0:_refreshBtnIcon()
+	arg_54_0:_refreshCharacterInfo()
+	arg_54_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroRankUp, arg_54_0._updateHeroList, arg_54_0)
+	arg_54_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroLevelUp, arg_54_0._updateHeroList, arg_54_0)
+	arg_54_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroExSkillUp, arg_54_0._updateHeroList, arg_54_0)
+	arg_54_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnClickHeroEditItem, arg_54_0._onClickHeroEditItem, arg_54_0)
+	arg_54_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroRankUp, arg_54_0._refreshCharacterInfo, arg_54_0)
+	arg_54_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroLevelUp, arg_54_0._refreshCharacterInfo, arg_54_0)
+	arg_54_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroExSkillUp, arg_54_0._refreshCharacterInfo, arg_54_0)
+	arg_54_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroTalentUp, arg_54_0._refreshCharacterInfo, arg_54_0)
+	arg_54_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroExSkillUp, arg_54_0._refreshCharacterInfo, arg_54_0)
+	arg_54_0:addEventCb(CharacterController.instance, CharacterEvent.levelUpAttribute, arg_54_0._onAttributeChanged, arg_54_0)
+	arg_54_0:addEventCb(CharacterController.instance, CharacterEvent.showCharacterRankUpView, arg_54_0._showCharacterRankUpView, arg_54_0)
+	arg_54_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyHeroGroup, arg_54_0._onGroupModify, arg_54_0)
+	arg_54_0:addEventCb(HeroGroupController.instance, HeroGroupEvent.OnSnapshotSaveSucc, arg_54_0._onGroupModify, arg_54_0)
+	arg_54_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_54_0._onOpenView, arg_54_0)
+	arg_54_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_54_0._onCloseView, arg_54_0)
+	arg_54_0:addEventCb(CharacterController.instance, CharacterEvent.HeroUpdatePush, arg_54_0._refreshCharacterInfo, arg_54_0)
+	gohelper.addUIClickAudio(arg_54_0._btnlvrank.gameObject, AudioEnum.UI.UI_Common_Click)
+	gohelper.addUIClickAudio(arg_54_0._btnrarerank.gameObject, AudioEnum.UI.UI_Common_Click)
+	gohelper.addUIClickAudio(arg_54_0._btnexskillrank.gameObject, AudioEnum.UI.UI_Common_Click)
+	gohelper.addUIClickAudio(arg_54_0._btnattribute.gameObject, AudioEnum.UI.UI_Common_Click)
+	gohelper.addUIClickAudio(arg_54_0._btnpassiveskill.gameObject, AudioEnum.UI.UI_Common_Click)
+	gohelper.addUIClickAudio(arg_54_0._btncharacter.gameObject, AudioEnum.UI.UI_Common_Click)
 
-	_, arg_53_0._initScrollContentPosY = transformhelper.getLocalPos(arg_53_0._goScrollContent.transform)
+	_, arg_54_0._initScrollContentPosY = transformhelper.getLocalPos(arg_54_0._goScrollContent.transform)
 
-	gohelper.setActive(arg_53_0._btnquickedit, arg_53_0.viewParam.heroGroupEditType == RougeEnum.HeroGroupEditType.Fight or arg_53_0._isInitType)
+	gohelper.setActive(arg_54_0._btnquickedit, arg_54_0.viewParam.heroGroupEditType == RougeEnum.HeroGroupEditType.Fight or arg_54_0._isInitType)
 
-	if arg_53_0.viewParam.heroGroupEditType == RougeEnum.HeroGroupEditType.SelectHero then
-		arg_53_0:_btnquickeditOnClick()
+	if arg_54_0.viewParam.heroGroupEditType == RougeEnum.HeroGroupEditType.SelectHero then
+		arg_54_0:_btnquickeditOnClick()
 	end
 
-	arg_53_0:_updateTotalCapacity()
+	arg_54_0:_updateTotalCapacity()
 end
 
-function var_0_0.onClose(arg_54_0)
-	arg_54_0:removeEventCb(CharacterController.instance, CharacterEvent.successHeroRankUp, arg_54_0._updateHeroList, arg_54_0)
-	arg_54_0:removeEventCb(CharacterController.instance, CharacterEvent.successHeroLevelUp, arg_54_0._updateHeroList, arg_54_0)
-	arg_54_0:removeEventCb(CharacterController.instance, CharacterEvent.successHeroExSkillUp, arg_54_0._updateHeroList, arg_54_0)
-	arg_54_0:removeEventCb(HeroGroupController.instance, HeroGroupEvent.OnClickHeroEditItem, arg_54_0._onClickHeroEditItem, arg_54_0)
-	arg_54_0:removeEventCb(CharacterController.instance, CharacterEvent.successHeroRankUp, arg_54_0._refreshCharacterInfo, arg_54_0)
-	arg_54_0:removeEventCb(CharacterController.instance, CharacterEvent.successHeroLevelUp, arg_54_0._refreshCharacterInfo, arg_54_0)
-	arg_54_0:removeEventCb(CharacterController.instance, CharacterEvent.successHeroExSkillUp, arg_54_0._refreshCharacterInfo, arg_54_0)
-	arg_54_0:removeEventCb(CharacterController.instance, CharacterEvent.successHeroTalentUp, arg_54_0._refreshCharacterInfo, arg_54_0)
-	arg_54_0:removeEventCb(CharacterController.instance, CharacterEvent.successHeroExSkillUp, arg_54_0._refreshCharacterInfo, arg_54_0)
-	arg_54_0:removeEventCb(CharacterController.instance, CharacterEvent.levelUpAttribute, arg_54_0._onAttributeChanged, arg_54_0)
-	arg_54_0:removeEventCb(CharacterController.instance, CharacterEvent.showCharacterRankUpView, arg_54_0._showCharacterRankUpView, arg_54_0)
-	arg_54_0:removeEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyHeroGroup, arg_54_0._onGroupModify, arg_54_0)
-	arg_54_0:removeEventCb(HeroGroupController.instance, HeroGroupEvent.OnSnapshotSaveSucc, arg_54_0._onGroupModify, arg_54_0)
-	arg_54_0:removeEventCb(CharacterController.instance, CharacterEvent.HeroUpdatePush, arg_54_0._refreshCharacterInfo, arg_54_0)
+function var_0_0.onClose(arg_55_0)
+	arg_55_0:removeEventCb(CharacterController.instance, CharacterEvent.successHeroRankUp, arg_55_0._updateHeroList, arg_55_0)
+	arg_55_0:removeEventCb(CharacterController.instance, CharacterEvent.successHeroLevelUp, arg_55_0._updateHeroList, arg_55_0)
+	arg_55_0:removeEventCb(CharacterController.instance, CharacterEvent.successHeroExSkillUp, arg_55_0._updateHeroList, arg_55_0)
+	arg_55_0:removeEventCb(HeroGroupController.instance, HeroGroupEvent.OnClickHeroEditItem, arg_55_0._onClickHeroEditItem, arg_55_0)
+	arg_55_0:removeEventCb(CharacterController.instance, CharacterEvent.successHeroRankUp, arg_55_0._refreshCharacterInfo, arg_55_0)
+	arg_55_0:removeEventCb(CharacterController.instance, CharacterEvent.successHeroLevelUp, arg_55_0._refreshCharacterInfo, arg_55_0)
+	arg_55_0:removeEventCb(CharacterController.instance, CharacterEvent.successHeroExSkillUp, arg_55_0._refreshCharacterInfo, arg_55_0)
+	arg_55_0:removeEventCb(CharacterController.instance, CharacterEvent.successHeroTalentUp, arg_55_0._refreshCharacterInfo, arg_55_0)
+	arg_55_0:removeEventCb(CharacterController.instance, CharacterEvent.successHeroExSkillUp, arg_55_0._refreshCharacterInfo, arg_55_0)
+	arg_55_0:removeEventCb(CharacterController.instance, CharacterEvent.levelUpAttribute, arg_55_0._onAttributeChanged, arg_55_0)
+	arg_55_0:removeEventCb(CharacterController.instance, CharacterEvent.showCharacterRankUpView, arg_55_0._showCharacterRankUpView, arg_55_0)
+	arg_55_0:removeEventCb(HeroGroupController.instance, HeroGroupEvent.OnModifyHeroGroup, arg_55_0._onGroupModify, arg_55_0)
+	arg_55_0:removeEventCb(HeroGroupController.instance, HeroGroupEvent.OnSnapshotSaveSucc, arg_55_0._onGroupModify, arg_55_0)
+	arg_55_0:removeEventCb(CharacterController.instance, CharacterEvent.HeroUpdatePush, arg_55_0._refreshCharacterInfo, arg_55_0)
 	CharacterModel.instance:clearFakeList()
 	CharacterModel.instance:setFakeLevel()
-	arg_54_0._heroGroupEditListModel:cancelAllSelected()
-	arg_54_0._heroGroupEditListModel:clear()
-	arg_54_0._heroGroupQuickEditListModel:cancelAllSelected()
-	arg_54_0._heroGroupQuickEditListModel:clear()
+	arg_55_0._heroGroupEditListModel:cancelAllSelected()
+	arg_55_0._heroGroupEditListModel:clear()
+	arg_55_0._heroGroupQuickEditListModel:cancelAllSelected()
+	arg_55_0._heroGroupQuickEditListModel:clear()
 	HeroGroupTrialModel.instance:setFilter()
 	CommonHeroHelper.instance:resetGrayState()
 
-	arg_54_0._selectDmgs = {}
-	arg_54_0._selectAttrs = {}
-	arg_54_0._selectLocations = {}
+	arg_55_0._selectDmgs = {}
+	arg_55_0._selectAttrs = {}
+	arg_55_0._selectLocations = {}
 
-	if arg_54_0._isStopBgm then
-		TaskDispatcher.cancelTask(arg_54_0._delyStopBgm, arg_54_0)
-		arg_54_0:_delyStopBgm()
+	if arg_55_0._isStopBgm then
+		TaskDispatcher.cancelTask(arg_55_0._delyStopBgm, arg_55_0)
+		arg_55_0:_delyStopBgm()
 	end
 end
 
-function var_0_0._onOpenView(arg_55_0, arg_55_1)
-	if arg_55_1 == ViewName.CharacterView and arg_55_0._isStopBgm then
-		TaskDispatcher.cancelTask(arg_55_0._delyStopBgm, arg_55_0)
+function var_0_0._onOpenView(arg_56_0, arg_56_1)
+	if arg_56_1 == ViewName.CharacterView and arg_56_0._isStopBgm then
+		TaskDispatcher.cancelTask(arg_56_0._delyStopBgm, arg_56_0)
 		AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Unsatisfied_Music)
 
 		return
 	end
 end
 
-function var_0_0._showRecommendCareer(arg_56_0)
-	local var_56_0, var_56_1 = FightHelper.detectAttributeCounter()
+function var_0_0._showRecommendCareer(arg_57_0)
+	local var_57_0, var_57_1 = FightHelper.detectAttributeCounter()
 
-	gohelper.CreateObjList(arg_56_0, arg_56_0._onRecommendCareerItemShow, var_56_0, arg_56_0._goattrlist, arg_56_0._goattritem)
+	gohelper.CreateObjList(arg_57_0, arg_57_0._onRecommendCareerItemShow, var_57_0, arg_57_0._goattrlist, arg_57_0._goattritem)
 
-	arg_56_0._txtrecommendAttrDesc.text = #var_56_0 == 0 and luaLang("herogroupeditview_notrecommend") or luaLang("herogroupeditview_recommend")
+	arg_57_0._txtrecommendAttrDesc.text = #var_57_0 == 0 and luaLang("herogroupeditview_notrecommend") or luaLang("herogroupeditview_recommend")
 
-	gohelper.setActive(arg_56_0._goattrlist, #var_56_0 ~= 0)
+	gohelper.setActive(arg_57_0._goattrlist, #var_57_0 ~= 0)
 end
 
-function var_0_0._onRecommendCareerItemShow(arg_57_0, arg_57_1, arg_57_2, arg_57_3)
-	local var_57_0 = gohelper.findChildImage(arg_57_1, "icon")
+function var_0_0._onRecommendCareerItemShow(arg_58_0, arg_58_1, arg_58_2, arg_58_3)
+	local var_58_0 = gohelper.findChildImage(arg_58_1, "icon")
 
-	UISpriteSetMgr.instance:setHeroGroupSprite(var_57_0, "career_" .. arg_57_2)
+	UISpriteSetMgr.instance:setHeroGroupSprite(var_58_0, "career_" .. arg_58_2)
 end
 
-function var_0_0._onCloseView(arg_58_0, arg_58_1)
-	if arg_58_1 == ViewName.CharacterView then
+function var_0_0._onCloseView(arg_59_0, arg_59_1)
+	if arg_59_1 == ViewName.CharacterView then
 		AudioMgr.instance:trigger(AudioEnum.UI.Stop_UIMusic)
 
-		arg_58_0._isStopBgm = true
+		arg_59_0._isStopBgm = true
 
-		TaskDispatcher.cancelTask(arg_58_0._delyStopBgm, arg_58_0)
-		TaskDispatcher.runDelay(arg_58_0._delyStopBgm, arg_58_0, 1)
+		TaskDispatcher.cancelTask(arg_59_0._delyStopBgm, arg_59_0)
+		TaskDispatcher.runDelay(arg_59_0._delyStopBgm, arg_59_0, 1)
 	end
 end
 
-function var_0_0._delyStopBgm(arg_59_0)
-	arg_59_0._isStopBgm = false
+function var_0_0._delyStopBgm(arg_60_0)
+	arg_60_0._isStopBgm = false
 
 	AudioMgr.instance:trigger(AudioEnum.Bgm.Pause_FightingMusic)
 end
 
-function var_0_0._showCharacterRankUpView(arg_60_0, arg_60_1)
-	arg_60_1()
+function var_0_0._showCharacterRankUpView(arg_61_0, arg_61_1)
+	arg_61_1()
 end
 
-function var_0_0.onDestroyView(arg_61_0)
+function var_0_0.onDestroyView(arg_62_0)
 	CharacterModel.instance:clearFakeList()
 	CharacterModel.instance:setHeroList(nil)
 
-	if arg_61_0:_isFightEditType() then
+	if arg_62_0:_isFightEditType() then
 		CharacterModel.instance:setCharacterList(false, CharacterEnum.FilterType.HeroGroup)
 	end
 
-	arg_61_0._imgBg:UnLoadImage()
-	arg_61_0._simageredlight:UnLoadImage()
+	arg_62_0._imgBg:UnLoadImage()
+	arg_62_0._simageredlight:UnLoadImage()
 
-	arg_61_0._imgBg = nil
-	arg_61_0._simageredlight = nil
+	arg_62_0._imgBg = nil
+	arg_62_0._simageredlight = nil
 
-	for iter_61_0 = 1, 2 do
-		arg_61_0._dmgBtnClicks[iter_61_0]:RemoveClickListener()
+	for iter_62_0 = 1, 2 do
+		arg_62_0._dmgBtnClicks[iter_62_0]:RemoveClickListener()
 	end
 
-	for iter_61_1 = 1, 6 do
-		arg_61_0._attrBtnClicks[iter_61_1]:RemoveClickListener()
+	for iter_62_1 = 1, 6 do
+		arg_62_0._attrBtnClicks[iter_62_1]:RemoveClickListener()
 	end
 
-	for iter_61_2 = 1, 6 do
-		arg_61_0._locationBtnClicks[iter_61_2]:RemoveClickListener()
+	for iter_62_2 = 1, 6 do
+		arg_62_0._locationBtnClicks[iter_62_2]:RemoveClickListener()
 	end
 end
 

@@ -19,5 +19,6 @@ var_0_0.ReddotStatus = {
 	Open = 2
 }
 var_0_0.DefaultScene = 1
+var_0_0.SpSceneId = 4
 
 return var_0_0

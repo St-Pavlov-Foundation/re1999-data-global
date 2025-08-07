@@ -408,11 +408,7 @@ function var_0_0.destroyPicture(arg_19_0, arg_19_1, arg_19_2, arg_19_3)
 	arg_19_0._picCo = arg_19_1
 	arg_19_0._destroyKeepTime = arg_19_3 or 0
 
-	if not arg_19_0._picCo then
-		return
-	end
-
-	if arg_19_2 then
+	if not arg_19_0._picCo or arg_19_2 then
 		arg_19_0:onDestroy()
 
 		return

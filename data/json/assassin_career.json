@@ -1,0 +1,74 @@
+[
+  {
+    "careerId": 1,
+    "title": "language_10077613",
+    "equipName": "language_10078647",
+    "capacity": 4,
+    "attrs": "105#250|202#1000",
+    "pic": "assassin2_weapon_1"
+  },
+  {
+    "careerId": 2,
+    "title": "language_10078648",
+    "equipName": "language_10078649",
+    "capacity": 1,
+    "attrs": "102#1500|101#500|103#500|104#250",
+    "pic": "assassin2_weapon_2"
+  },
+  {
+    "careerId": 3,
+    "title": "language_10078650",
+    "equipName": "language_10078651",
+    "capacity": 1,
+    "attrs": "101#1000|103#1000|104#500",
+    "pic": "assassin2_weapon_3"
+  },
+  {
+    "careerId": 4,
+    "title": "language_10078652",
+    "equipName": "language_10078653",
+    "capacity": 3,
+    "attrs": "101#500|212#1000|103#250",
+    "pic": "assassin2_weapon_4"
+  },
+  {
+    "careerId": 5,
+    "title": "language_10078654",
+    "equipName": "language_10078655",
+    "capacity": 2,
+    "attrs": "102#2000|104#500",
+    "pic": "assassin2_weapon_5"
+  },
+  {
+    "careerId": 6,
+    "title": "language_10059369",
+    "equipName": "language_10078656",
+    "capacity": 4,
+    "attrs": "102#500|201#500|203#500",
+    "pic": "assassin2_weapon_8"
+  },
+  {
+    "careerId": 7,
+    "title": "language_10078657",
+    "equipName": "language_10078658",
+    "capacity": 3,
+    "attrs": "210#250|201#500|203#500",
+    "pic": "assassin2_weapon_6"
+  },
+  {
+    "careerId": 8,
+    "title": "language_10078659",
+    "equipName": "language_10078660",
+    "capacity": 3,
+    "attrs": "101#500|103#500|104#500",
+    "pic": "assassin2_weapon_7"
+  },
+  {
+    "careerId": 9,
+    "title": "language_10078661",
+    "equipName": "language_10078662",
+    "capacity": 2,
+    "attrs": "102#250|212#500|209#250|104#250",
+    "pic": "assassin2_weapon_9"
+  }
+]

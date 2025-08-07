@@ -27,8 +27,6 @@ function var_0_0._onBeforeDestroyEntity(arg_2_0, arg_2_1)
 		for iter_2_0, iter_2_1 in ipairs(arg_2_0._delayReleaseEntity) do
 			if iter_2_1.entity == arg_2_1 then
 				arg_2_0._entityVisible[arg_2_1.id] = 0
-
-				table.remove(arg_2_0._delayReleaseEntity, iter_2_0)
 			end
 		end
 	end

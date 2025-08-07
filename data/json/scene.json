@@ -3589,5 +3589,77 @@
     "levels": [
       29601
     ]
+  },
+  {
+    "id": 31101,
+    "name": "language_10075523",
+    "nameen": "Rooftop, Florence Cathedral",
+    "levels": [
+      31101
+    ]
+  },
+  {
+    "id": 31201,
+    "name": "language_10075524",
+    "nameen": "Secret Chamber, Florence Cathedral",
+    "levels": [
+      31201
+    ]
+  },
+  {
+    "id": 31301,
+    "name": "language_10075525",
+    "nameen": "Temporary Workshop",
+    "levels": [
+      31301
+    ]
+  },
+  {
+    "id": 31401,
+    "name": "language_10075526",
+    "nameen": "Street, Athens",
+    "levels": [
+      31401
+    ]
+  },
+  {
+    "id": 31501,
+    "name": "language_10075527",
+    "nameen": "Inside the Temple",
+    "levels": [
+      31501
+    ]
+  },
+  {
+    "id": 31601,
+    "name": "language_10075528",
+    "nameen": "Festival Plaza",
+    "levels": [
+      31601
+    ]
+  },
+  {
+    "id": 31701,
+    "name": "language_10075528",
+    "nameen": "Festival Plaza",
+    "levels": [
+      31701
+    ]
+  },
+  {
+    "id": 31801,
+    "name": "language_10075524",
+    "nameen": "Secret Chamber, Florence Cathedral",
+    "levels": [
+      31801
+    ]
+  },
+  {
+    "id": 241011,
+    "name": "language_10075529",
+    "nameen": "Abandoned Monastery",
+    "levels": [
+      241011
+    ]
   }
 ]

@@ -23,7 +23,9 @@ function var_0_0.ctor(arg_2_0)
 		[TaskEnum.TaskType.RoleActivity] = var_0_0._getRoleActivity,
 		[TaskEnum.TaskType.Activity125] = var_0_0._getActivity125,
 		[TaskEnum.TaskType.Activity183] = var_0_0._getAct183Task,
-		[TaskEnum.TaskType.Activity189] = var_0_0._getActivity189
+		[TaskEnum.TaskType.Activity189] = var_0_0._getActivity189,
+		[TaskEnum.TaskType.AssassinOutside] = var_0_0._getAssassinOutside,
+		[TaskEnum.TaskType.StoreLinkPackage] = var_0_0._getStoreLinkPackage
 	}
 end
 
@@ -91,6 +93,14 @@ end
 
 function var_0_0._getActivity189(arg_18_0)
 	return Activity189Config.instance:getTaskCO(arg_18_0)
+end
+
+function var_0_0._getAssassinOutside(arg_19_0)
+	return AssassinConfig.instance:getTaskCo(arg_19_0)
+end
+
+function var_0_0._getStoreLinkPackage(arg_20_0)
+	return StoreConfig.instance:getChargeConditionalConfig(arg_20_0)
 end
 
 var_0_0.instance = var_0_0.New()

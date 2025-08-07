@@ -72,6 +72,14 @@ function var_0_0.onConstructor(arg_1_0, arg_1_1)
 	if arg_1_1:HasField("bloodPool") then
 		arg_1_0.bloodPool = FightDataBloodPool.New(arg_1_1.bloodPool)
 	end
+
+	if arg_1_1:HasField("itemSkillGroup") then
+		arg_1_0.itemSkillInfos = {}
+
+		for iter_1_10, iter_1_11 in ipairs(arg_1_1.itemSkillGroup.itemSkillInfos) do
+			table.insert(arg_1_0.itemSkillInfos, FightItemPlayerSkillInfoData.New(iter_1_11))
+		end
+	end
 end
 
 return var_0_0

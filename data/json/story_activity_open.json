@@ -3406,5 +3406,181 @@
     "titleEn": "Au revoir, chers amis",
     "labelRes": "8",
     "storyBg": ""
+  },
+  {
+    "chapter": 2901,
+    "part": 1,
+    "title": "language_10075492",
+    "titleEn": "Particles of Chaos",
+    "labelRes": "1",
+    "storyBg": ""
+  },
+  {
+    "chapter": 2901,
+    "part": 2,
+    "title": "language_10075493",
+    "titleEn": "\"Knightly Virtues\"",
+    "labelRes": "2",
+    "storyBg": ""
+  },
+  {
+    "chapter": 2901,
+    "part": 3,
+    "title": "language_10075494",
+    "titleEn": "Free Falling",
+    "labelRes": "3",
+    "storyBg": ""
+  },
+  {
+    "chapter": 2901,
+    "part": 4,
+    "title": "language_10075495",
+    "titleEn": "The Dark of the Arno",
+    "labelRes": "4",
+    "storyBg": ""
+  },
+  {
+    "chapter": 2901,
+    "part": 5,
+    "title": "language_10075496",
+    "titleEn": "Practical Geometry",
+    "labelRes": "5",
+    "storyBg": ""
+  },
+  {
+    "chapter": 2901,
+    "part": 6,
+    "title": "language_10075497",
+    "titleEn": "Chirps and Chatter",
+    "labelRes": "6",
+    "storyBg": ""
+  },
+  {
+    "chapter": 2901,
+    "part": 7,
+    "title": "language_10075498",
+    "titleEn": "Agnus Dei",
+    "labelRes": "7",
+    "storyBg": ""
+  },
+  {
+    "chapter": 2901,
+    "part": 8,
+    "title": "language_10075499",
+    "titleEn": "Bestiary",
+    "labelRes": "8",
+    "storyBg": ""
+  },
+  {
+    "chapter": 2901,
+    "part": 9,
+    "title": "language_10075500",
+    "titleEn": "A Deadly Dusk",
+    "labelRes": "9",
+    "storyBg": ""
+  },
+  {
+    "chapter": 2901,
+    "part": 10,
+    "title": "language_10075501",
+    "titleEn": "Creed",
+    "labelRes": "10",
+    "storyBg": ""
+  },
+  {
+    "chapter": 2901,
+    "part": 11,
+    "title": "language_10075502",
+    "titleEn": "Primavera",
+    "labelRes": "11",
+    "storyBg": ""
+  },
+  {
+    "chapter": 2901,
+    "part": 12,
+    "title": "language_10036491",
+    "titleEn": "A Moment of Peace",
+    "labelRes": "12",
+    "storyBg": ""
+  },
+  {
+    "chapter": 2902,
+    "part": 1,
+    "title": "language_10075503",
+    "titleEn": "In the Ancient City",
+    "labelRes": "1",
+    "storyBg": ""
+  },
+  {
+    "chapter": 2902,
+    "part": 2,
+    "title": "language_10075504",
+    "titleEn": "Life and Tragedies",
+    "labelRes": "2",
+    "storyBg": ""
+  },
+  {
+    "chapter": 2902,
+    "part": 3,
+    "title": "language_10075505",
+    "titleEn": "The Sweetest Fruit",
+    "labelRes": "3",
+    "storyBg": ""
+  },
+  {
+    "chapter": 2902,
+    "part": 4,
+    "title": "language_10075506",
+    "titleEn": "Prometheus Bound",
+    "labelRes": "4",
+    "storyBg": ""
+  },
+  {
+    "chapter": 2902,
+    "part": 5,
+    "title": "language_10075507",
+    "titleEn": "Adventure on the Roofs",
+    "labelRes": "5",
+    "storyBg": ""
+  },
+  {
+    "chapter": 2902,
+    "part": 6,
+    "title": "language_10075508",
+    "titleEn": "\"Blessed\" by the Muses",
+    "labelRes": "6",
+    "storyBg": ""
+  },
+  {
+    "chapter": 2902,
+    "part": 7,
+    "title": "language_10075509",
+    "titleEn": "Above Suspicion",
+    "labelRes": "7",
+    "storyBg": ""
+  },
+  {
+    "chapter": 2902,
+    "part": 8,
+    "title": "language_10021961",
+    "titleEn": "The Code Breaker",
+    "labelRes": "8",
+    "storyBg": ""
+  },
+  {
+    "chapter": 2902,
+    "part": 9,
+    "title": "language_10075510",
+    "titleEn": "A Day in Athens",
+    "labelRes": "9",
+    "storyBg": ""
+  },
+  {
+    "chapter": 2902,
+    "part": 10,
+    "title": "language_10075511",
+    "titleEn": "Ode to the Golden Apple",
+    "labelRes": "10",
+    "storyBg": ""
   }
 ]

@@ -75,8 +75,14 @@ function var_0_0._adjustMask(arg_7_0, arg_7_1)
 
 	local var_7_3
 
-	var_7_3.a, var_7_3 = var_7_1.maskAlpha or arg_7_0.DefaultMaskAlpha, arg_7_0._imgMask.color
-	arg_7_0._imgMask.color = var_7_3
+	if var_7_0.getCustomViewMaskAlpha then
+		var_7_3 = var_7_0:getCustomViewMaskAlpha()
+	end
+
+	local var_7_4
+
+	var_7_4.a, var_7_4 = var_7_3 or var_7_1.maskAlpha or arg_7_0.DefaultMaskAlpha, arg_7_0._imgMask.color
+	arg_7_0._imgMask.color = var_7_4
 end
 
 function var_0_0._hideModalMask(arg_8_0)

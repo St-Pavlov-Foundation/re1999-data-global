@@ -83,8 +83,9 @@ function var_0_0._onMoveOrCombine(arg_7_0, arg_7_1, arg_7_2)
 
 	if var_7_1 then
 		local var_7_2 = FightDataHelper.entityMgr:getById(var_7_1)
+		local var_7_3 = var_7_2 and var_7_2.exPointType == var_7_0.exPointType
 
-		if var_7_2 then
+		if var_7_2 and var_7_3 then
 			var_7_2:onMoveCardExPoint(arg_7_2)
 			FightController.instance:dispatchEvent(FightEvent.UpdateExPoint, var_7_1)
 		else
@@ -120,8 +121,9 @@ function var_0_0._onPlayHandCard(arg_8_0, arg_8_1)
 
 	if var_8_1 then
 		local var_8_2 = FightDataHelper.entityMgr:getById(var_8_1)
+		local var_8_3 = var_8_2 and var_8_2.exPointType == var_8_0.exPointType
 
-		if var_8_2 then
+		if var_8_2 and var_8_3 then
 			var_8_2:onPlayCardExPoint(arg_8_1.skillId)
 			FightController.instance:dispatchEvent(FightEvent.AddPlayCardClientExPoint, var_8_1)
 		else

@@ -7,8 +7,10 @@ var_0_0.VersionActivity2_0Enter = {
 }
 
 local var_0_1 = {
-	Act2_0DungeonBgm = 3200152,
 	play_ui_feichi_noise_yure_20200116 = 20200116,
+	role_activity_joe = 3200157,
+	Act2_0DungeonBgm = 3200152,
+	role_activity_mercuria = 3200158,
 	stop_ui_feichi_noise_yure_20200117 = 20200117
 }
 local var_0_2 = {

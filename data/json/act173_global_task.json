@@ -250,5 +250,89 @@
     "id": 5,
     "endValue": 19990000,
     "isVisible": 0
+  },
+  {
+    "activityId": 130528,
+    "id": 1,
+    "endValue": 600000,
+    "isVisible": 0
+  },
+  {
+    "activityId": 130528,
+    "id": 2,
+    "endValue": 1000000,
+    "isVisible": 0
+  },
+  {
+    "activityId": 130528,
+    "id": 3,
+    "endValue": 1890000,
+    "isVisible": 0
+  },
+  {
+    "activityId": 130528,
+    "id": 4,
+    "endValue": 3248600,
+    "isVisible": 0
+  },
+  {
+    "activityId": 130528,
+    "id": 5,
+    "endValue": 5000000,
+    "isVisible": 0
+  },
+  {
+    "activityId": 130528,
+    "id": 6,
+    "endValue": 6845413,
+    "isVisible": 0
+  },
+  {
+    "activityId": 130528,
+    "id": 7,
+    "endValue": 19990000,
+    "isVisible": 0
+  },
+  {
+    "activityId": 130529,
+    "id": 1,
+    "endValue": 661231,
+    "isVisible": 0
+  },
+  {
+    "activityId": 130529,
+    "id": 2,
+    "endValue": 1000000,
+    "isVisible": 0
+  },
+  {
+    "activityId": 130529,
+    "id": 3,
+    "endValue": 1890000,
+    "isVisible": 0
+  },
+  {
+    "activityId": 130529,
+    "id": 4,
+    "endValue": 3248600,
+    "isVisible": 0
+  },
+  {
+    "activityId": 130529,
+    "id": 5,
+    "endValue": 5000000,
+    "isVisible": 0
+  },
+  {
+    "activityId": 130529,
+    "id": 6,
+    "endValue": 6845413,
+    "isVisible": 0
+  },
+  {
+    "activityId": 130529,
+    "id": 7,
+    "endValue": 19990000,
+    "isVisible": 0
   }
 ]

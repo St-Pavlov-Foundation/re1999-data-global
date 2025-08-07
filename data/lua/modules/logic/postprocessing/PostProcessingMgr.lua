@@ -277,6 +277,10 @@ function var_0_0._isKeepTop(arg_20_0, arg_20_1, arg_20_2, arg_20_3)
 		return true
 	end
 
+	if var_20_0 == ViewName.AssassinStatsView and (var_20_1 == ViewName.CharacterTipView and arg_20_3 == ViewName.CharacterTipView or var_20_1 == ViewName.SkillTipView and arg_20_3 == ViewName.SkillTipView) then
+		return true
+	end
+
 	return false
 end
 

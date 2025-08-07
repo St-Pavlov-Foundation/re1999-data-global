@@ -53,7 +53,8 @@ function var_0_0.buildViews(arg_1_0)
 		GMSubViewResource.New(),
 		GMSubViewProfiler.New(),
 		GMSubViewRoom.New(),
-		GMSubViewEliminate.New()
+		GMSubViewEliminate.New(),
+		GMSubViewEditorFight.New()
 	}
 end
 

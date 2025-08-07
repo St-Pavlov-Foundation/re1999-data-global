@@ -385,6 +385,55 @@
     "patFaceOrder": 20000
   },
   {
+    "id": 300501,
+    "patFaceActivityId": 130513,
+    "patFaceViewName": "V2a9_FreeMonthCard_PanelView",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 1
+  },
+  {
+    "id": 20900,
+    "patFaceActivityId": 130514,
+    "patFaceViewName": "V2a9_VersionSummonPanel_Part1",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 20900
+  },
+  {
+    "id": 20901,
+    "patFaceActivityId": 130515,
+    "patFaceViewName": "V2a9_VersionSummonPanel_Part2",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 20901
+  },
+  {
+    "id": 20903,
+    "patFaceActivityId": 130521,
+    "patFaceViewName": "V2a9_LoginSign_PanelView",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 20903
+  },
+  {
+    "id": 20904,
+    "patFaceActivityId": 130516,
+    "patFaceViewName": "VersionActivity2_3NewCultivationGiftFullView",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 20904
+  },
+  {
+    "id": 20905,
+    "patFaceActivityId": 130522,
+    "patFaceViewName": "V2a9_Role_PanelSignView_Part1",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 20905
+  },
+  {
+    "id": 20906,
+    "patFaceActivityId": 130523,
+    "patFaceViewName": "V2a9_Role_PanelSignView_Part2",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 20906
+  },
+  {
     "id": 30002,
     "patFaceActivityId": 13014,
     "patFaceViewName": "V3a0_SummerSign_PanelView",

@@ -1746,5 +1746,43 @@
     "sources": "",
     "canShowHandbook": "",
     "upperLimit": 1
+  },
+  {
+    "id": 1551,
+    "name": "language_10078218",
+    "name_en": "As the Bell Tolls",
+    "skillName": "",
+    "icon": "1551",
+    "rare": 5,
+    "skillType": 1551,
+    "strengthType": 1551,
+    "tag": "1#2",
+    "isExpEquip": 0,
+    "isSpRefine": 0,
+    "useSpRefine": "",
+    "desc": "language_10078219",
+    "useDesc": "",
+    "sources": "",
+    "canShowHandbook": "",
+    "upperLimit": 1
+  },
+  {
+    "id": 1552,
+    "name": "language_10078220",
+    "name_en": "An Epic's End",
+    "skillName": "",
+    "icon": "1552",
+    "rare": 5,
+    "skillType": 1501,
+    "strengthType": 1501,
+    "tag": "1#5",
+    "isExpEquip": 0,
+    "isSpRefine": 0,
+    "useSpRefine": "",
+    "desc": "language_10078221",
+    "useDesc": "",
+    "sources": "",
+    "canShowHandbook": "",
+    "upperLimit": 1
   }
 ]

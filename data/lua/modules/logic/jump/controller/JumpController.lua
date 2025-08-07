@@ -246,6 +246,9 @@ local var_0_1 = {
 	"V2a5_Role_PanelSignView_Part1",
 	"V2a5_Role_PanelSignView_Part2",
 	"V2a7_Labor_PanelSignView",
+	"V2a9_VersionSummonPanel_Part1",
+	"V2a9_VersionSummonPanel_Part2",
+	"V2a9_FreeMonthCard_PanelView",
 	"V3a0_SummerSign_PanelView"
 }
 

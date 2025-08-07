@@ -27,6 +27,16 @@ function var_0_0.init(arg_2_0, arg_2_1, arg_2_2)
 	arg_2_0.actCommonParams = arg_2_1.actCommonParams or ""
 	arg_2_0.layer = arg_2_1.layer or 0
 	arg_2_0.type = arg_2_1.type or FightEnum.BuffType.Normal
+	arg_2_0.actInfo = {}
+
+	local var_2_1 = arg_2_1.actInfo
+
+	if var_2_1 then
+		for iter_2_0 = 1, #var_2_1 do
+			arg_2_0.actInfo[iter_2_0] = FightBuffActInfoData.New(var_2_1[iter_2_0])
+		end
+	end
+
 	arg_2_0.clientNum = 0
 end
 
@@ -34,8 +44,6 @@ function var_0_0.clone(arg_3_0)
 	local var_3_0 = var_0_0.New()
 
 	var_3_0:init(arg_3_0, arg_3_0.entityId)
-
-	arg_3_0._last_clone_mo = var_3_0
 
 	return var_3_0
 end

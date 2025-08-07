@@ -1693,5 +1693,20 @@
     "verifingHide": 0,
     "bindActivityId": 0,
     "roomLevel": 0
+  },
+  {
+    "id": 3050101,
+    "name": "language_10075767",
+    "isOnline": 1,
+    "playerLv": 1,
+    "episodeId": 30510112,
+    "elementId": 0,
+    "verifingEpisodeId": 30510112,
+    "isAlwaysShowBtn": 0,
+    "showInEpisode": 0,
+    "dec": 2005,
+    "verifingHide": 0,
+    "bindActivityId": 0,
+    "roomLevel": 0
   }
 ]

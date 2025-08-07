@@ -308,10 +308,10 @@ function var_0_0.openDesc(arg_26_0, arg_26_1, arg_26_2)
 
 	gohelper.setActive(arg_26_0._goWrongChannel, false)
 	gohelper.setActive(arg_26_0._scroll_TaskDescGo, true)
-	AudioMgr.instance:trigger(AudioEnum2_7.WarmUp.play_ui_lushang_yure_typewriter)
+	AudioMgr.instance:trigger(AudioEnum3_0.WarmUp.play_ui_lushang_yure_typewriter)
 
 	local function var_26_4()
-		AudioMgr.instance:trigger(AudioEnum2_7.WarmUp.stop_ui_lushang_yure_typewriter)
+		AudioMgr.instance:trigger(AudioEnum3_0.WarmUp.stop_ui_lushang_yure_typewriter)
 
 		if arg_26_1 then
 			arg_26_1(arg_26_2)
@@ -409,7 +409,7 @@ end
 function var_0_0._resetTweenDescPos(arg_38_0)
 	GameUtil.onDestroyViewMember_TweenId(arg_38_0, "_movetweenId")
 	GameUtil.onDestroyViewMember_TweenId(arg_38_0, "_tweenId")
-	AudioMgr.instance:trigger(AudioEnum2_7.WarmUp.stop_ui_lushang_yure_typewriter)
+	AudioMgr.instance:trigger(AudioEnum3_0.WarmUp.stop_ui_lushang_yure_typewriter)
 	arg_38_0:_resetTaskContentPos()
 end
 

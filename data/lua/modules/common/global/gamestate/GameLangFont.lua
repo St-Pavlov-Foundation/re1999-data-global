@@ -21,6 +21,7 @@ local var_0_3 = 2
 local var_0_4 = 3
 
 function var_0_0.ctor(arg_2_0)
+	arg_2_0._hasInit = true
 	arg_2_0._loadStatus = var_0_2
 	arg_2_0._SettingStatus = var_0_2
 	arg_2_0._registerFontDict = {}
@@ -59,6 +60,14 @@ function var_0_0._callback(arg_3_0, arg_3_1, arg_3_2)
 end
 
 function var_0_0.changeFontAsset(arg_4_0, arg_4_1, arg_4_2)
+	if not arg_4_0._hasInit then
+		if arg_4_1 then
+			arg_4_1(arg_4_2)
+		end
+
+		return
+	end
+
 	arg_4_0._loadStatus = var_0_2
 	arg_4_0._loadFontAssetCallback = arg_4_1
 	arg_4_0._loadFontAssetcallbackObj = arg_4_2
@@ -236,6 +245,10 @@ function var_0_0._setFontAsset(arg_7_0, arg_7_1)
 end
 
 function var_0_0.ControlDoubleEn(arg_8_0)
+	if not arg_8_0._hasInit then
+		return
+	end
+
 	local var_8_0 = ViewMgr.instance:getUIRoot()
 
 	arg_8_0.languageMgr = SLFramework.LanguageMgr.Instance

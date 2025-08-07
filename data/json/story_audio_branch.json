@@ -82444,47 +82444,5 @@
     "bankName": "activityvoc_story_hero3048_yuzhou",
     "eventName_Overseas": "",
     "bankName_Overseas": ""
-  },
-  {
-    "id": 612701695,
-    "eventName": "play_activityvoc_story_plot27_hero3117_9_1",
-    "bankName": "activityvoc_story_hero3117_yuzhou_part02",
-    "eventName_Overseas": "",
-    "bankName_Overseas": ""
-  },
-  {
-    "id": 612701696,
-    "eventName": "play_activityvoc_plot27_npc506101_2376_1",
-    "bankName": "activityvoc_npc506101_2_7_yuzhou",
-    "eventName_Overseas": "",
-    "bankName_Overseas": ""
-  },
-  {
-    "id": 612701697,
-    "eventName": "play_activityvoc_plot27_npcnoname173_2339",
-    "bankName": "activityvoc_npcnoname173_2_7_yuzhou",
-    "eventName_Overseas": "",
-    "bankName_Overseas": ""
-  },
-  {
-    "id": 612701698,
-    "eventName": "play_activityvoc_plot27_npcnoname173_2340",
-    "bankName": "activityvoc_npcnoname173_2_7_yuzhou",
-    "eventName_Overseas": "",
-    "bankName_Overseas": ""
-  },
-  {
-    "id": 612701699,
-    "eventName": "play_activityvoc_plot27_npcnoname173_2341",
-    "bankName": "activityvoc_npcnoname173_2_7_yuzhou",
-    "eventName_Overseas": "",
-    "bankName_Overseas": ""
-  },
-  {
-    "id": 612701700,
-    "eventName": "play_activityvoc_plot27_npc633201_1367_1",
-    "bankName": "activityvoc_npc633201_2_7_yuzhou",
-    "eventName_Overseas": "",
-    "bankName_Overseas": ""
   }
 ]

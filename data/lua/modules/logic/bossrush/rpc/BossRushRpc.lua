@@ -50,6 +50,7 @@ function var_0_0._onReceiveGet128InfosReply(arg_7_0, arg_7_1, arg_7_2)
 	end
 
 	BossRushModel.instance:onReceiveGet128InfosReply(arg_7_2)
+	V2a9BossRushModel.instance:onRefresh128InfosReply(arg_7_2)
 end
 
 function var_0_0._onReceiveAct128GetTotalRewardsReply(arg_8_0, arg_8_1, arg_8_2)
@@ -74,6 +75,7 @@ function var_0_0._onReceiveAct128InfoUpdatePush(arg_10_0, arg_10_1, arg_10_2)
 	end
 
 	BossRushModel.instance:onReceiveAct128InfoUpdatePush(arg_10_2)
+	V2a9BossRushModel.instance:onRefresh128InfosReply(arg_10_2)
 end
 
 function var_0_0._onReceiveAct128GetTotalSingleRewardReply(arg_11_0, arg_11_1, arg_11_2)
@@ -82,6 +84,15 @@ function var_0_0._onReceiveAct128GetTotalSingleRewardReply(arg_11_0, arg_11_1, a
 	end
 
 	BossRushModel.instance:onReceiveAct128SingleRewardReply(arg_11_2)
+end
+
+function var_0_0._onReceiveAct128SpFirstHalfSelectItemReply(arg_12_0, arg_12_1, arg_12_2)
+	if not var_0_1(arg_12_1, arg_12_2) then
+		return
+	end
+
+	V2a9BossRushModel.instance:onReceiveAct128SpFirstHalfSelectItemReply(arg_12_2)
+	BossRushController.instance:dispatchEvent(BossRushEvent.onReceiveAct128SpFirstHalfSelectItemReply)
 end
 
 var_0_0.instance = var_0_0.New()
