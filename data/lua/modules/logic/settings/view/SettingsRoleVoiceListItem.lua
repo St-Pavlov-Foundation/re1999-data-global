@@ -41,6 +41,7 @@ function var_0_0.onUpdateMO(arg_5_0, arg_5_1)
 	local var_5_3 = luaLang(LangSettings.shortcutTab[var_5_1])
 
 	arg_5_0._heroItem:setCenterTxt(var_5_3)
+	arg_5_0._heroItem:setStyle_CharacterBackpack()
 end
 
 function var_0_0._onrefreshItem(arg_6_0)

@@ -26,20 +26,7 @@ function var_0_0.init(arg_2_0, arg_2_1)
 	arg_2_0._gocanClick = gohelper.findChild(arg_2_0.go, "#go_canClick")
 	arg_2_0._btnclick = gohelper.findChildClickWithAudio(arg_2_0.go, "#btn_click", AudioEnum2_9.StealthGame.play_ui_cikeshang_normalclick)
 	arg_2_0._effectComp = MonoHelper.addNoUpdateLuaComOnceToGo(arg_2_0.go, AssassinStealthGameEffectComp)
-	arg_2_0.monsterId = AssassinStealthGameModel.instance:getEnemyMo(arg_2_0.uid, true):getMonsterId()
-	arg_2_0.go.name = string.format("%s", arg_2_0.monsterId)
-
-	local var_2_2 = AssassinConfig.instance:getEnemyHeadIcon(arg_2_0.monsterId)
-
-	UISpriteSetMgr.instance:setSp01AssassinSprite(arg_2_0._imagehead, var_2_2)
-	UISpriteSetMgr.instance:setSp01AssassinSprite(arg_2_0._imagehead2, var_2_2)
-
 	arg_2_0._godefend = gohelper.findChild(arg_2_0.go, "#go_defend")
-
-	local var_2_3 = AssassinConfig.instance:getEnemyIsNotMove(arg_2_0.monsterId)
-
-	gohelper.setActive(arg_2_0._godefend, var_2_3)
-
 	arg_2_0._goboss = gohelper.findChild(arg_2_0.go, "#go_boss")
 	arg_2_0._gotarget = gohelper.findChild(arg_2_0.go, "#go_target")
 	arg_2_0._gobuff = gohelper.findChild(arg_2_0.go, "#go_buff")
@@ -72,6 +59,7 @@ function var_0_0.changeParent(arg_6_0, arg_6_1)
 end
 
 function var_0_0.refresh(arg_7_0, arg_7_1)
+	arg_7_0:refreshMonster()
 	arg_7_0:refreshStatus()
 	arg_7_0:refreshPos()
 	arg_7_0:refreshSelected()
@@ -80,123 +68,143 @@ function var_0_0.refresh(arg_7_0, arg_7_1)
 	arg_7_0:playEffect(arg_7_1)
 end
 
-function var_0_0.refreshStatus(arg_8_0)
-	local var_8_0 = AssassinStealthGameModel.instance:getEnemyMo(arg_8_0.uid, true):getIsDead()
+function var_0_0.refreshMonster(arg_8_0)
+	local var_8_0 = AssassinStealthGameModel.instance:getEnemyMo(arg_8_0.uid, true):getMonsterId()
 
-	if var_8_0 then
-		gohelper.setActive(arg_8_0._goboss, false)
-		gohelper.setActive(arg_8_0._gonormal, false)
-		gohelper.setActive(arg_8_0._gotarget, false)
-		gohelper.setActive(arg_8_0._gobuff, false)
+	if arg_8_0.monsterId and arg_8_0.monsterId == var_8_0 then
+		return
+	end
+
+	arg_8_0.monsterId = var_8_0
+	arg_8_0.go.name = string.format("%s", arg_8_0.monsterId)
+
+	local var_8_1 = AssassinConfig.instance:getEnemyHeadIcon(arg_8_0.monsterId)
+
+	UISpriteSetMgr.instance:setSp01AssassinSprite(arg_8_0._imagehead, var_8_1)
+	UISpriteSetMgr.instance:setSp01AssassinSprite(arg_8_0._imagehead2, var_8_1)
+
+	local var_8_2 = AssassinConfig.instance:getEnemyIsNotMove(arg_8_0.monsterId)
+
+	gohelper.setActive(arg_8_0._godefend, var_8_2)
+end
+
+function var_0_0.refreshStatus(arg_9_0)
+	local var_9_0 = AssassinStealthGameModel.instance:getEnemyMo(arg_9_0.uid, true):getIsDead()
+
+	if var_9_0 then
+		gohelper.setActive(arg_9_0._goboss, false)
+		gohelper.setActive(arg_9_0._gonormal, false)
+		gohelper.setActive(arg_9_0._gotarget, false)
+		gohelper.setActive(arg_9_0._gobuff, false)
 	else
-		local var_8_1 = AssassinConfig.instance:getEnemyIsBoss(arg_8_0.monsterId)
+		local var_9_1 = AssassinConfig.instance:getEnemyIsBoss(arg_9_0.monsterId)
 
-		gohelper.setActive(arg_8_0._goboss, var_8_1)
-		gohelper.setActive(arg_8_0._gonormal, not var_8_1)
+		gohelper.setActive(arg_9_0._goboss, var_9_1)
+		gohelper.setActive(arg_9_0._gonormal, not var_9_1)
 
-		local var_8_2 = false
-		local var_8_3 = AssassinStealthGameModel.instance:getMissionId()
-		local var_8_4 = AssassinConfig.instance:getTargetEnemies(var_8_3)
+		local var_9_2 = false
+		local var_9_3 = AssassinStealthGameModel.instance:getMissionId()
+		local var_9_4 = AssassinConfig.instance:getTargetEnemies(var_9_3)
 
-		if var_8_4 then
-			for iter_8_0, iter_8_1 in ipairs(var_8_4) do
-				if iter_8_1 == arg_8_0.monsterId then
-					var_8_2 = true
+		if var_9_4 then
+			for iter_9_0, iter_9_1 in ipairs(var_9_4) do
+				if iter_9_1 == arg_9_0.monsterId then
+					var_9_2 = true
 
 					break
 				end
 			end
 		end
 
-		gohelper.setActive(arg_8_0._gotarget, var_8_2)
-		gohelper.setActive(arg_8_0._gobuff, true)
-		arg_8_0:refreshBuff()
+		gohelper.setActive(arg_9_0._gotarget, var_9_2)
+		gohelper.setActive(arg_9_0._gobuff, true)
+		arg_9_0:refreshBuff()
 	end
 
-	gohelper.setActive(arg_8_0._godead, var_8_0)
+	gohelper.setActive(arg_9_0._godead, var_9_0)
 end
 
-function var_0_0.refreshBuff(arg_9_0)
-	local var_9_0 = AssassinStealthGameModel.instance:getEnemyMo(arg_9_0.uid, true)
-	local var_9_1 = var_9_0:hasBuffType(AssassinEnum.StealGameBuffType.Petrifaction)
+function var_0_0.refreshBuff(arg_10_0)
+	local var_10_0 = AssassinStealthGameModel.instance:getEnemyMo(arg_10_0.uid, true)
+	local var_10_1 = var_10_0:hasBuffType(AssassinEnum.StealGameBuffType.Petrifaction)
 
-	gohelper.setActive(arg_9_0._gopetrifact, var_9_1)
+	gohelper.setActive(arg_10_0._gopetrifact, var_10_1)
 
-	local var_9_2 = AssassinConfig.instance:getBuffIdList()
+	local var_10_2 = AssassinConfig.instance:getBuffIdList()
 
-	for iter_9_0, iter_9_1 in ipairs(var_9_2) do
-		local var_9_3 = AssassinConfig.instance:getAssassinBuffEffectId(iter_9_1)
+	for iter_10_0, iter_10_1 in ipairs(var_10_2) do
+		local var_10_3 = AssassinConfig.instance:getAssassinBuffEffectId(iter_10_1)
 
-		if var_9_0:hasBuff(iter_9_1) then
-			arg_9_0:playEffect(var_9_3)
+		if var_10_0:hasBuff(iter_10_1) then
+			arg_10_0:playEffect(var_10_3)
 		else
-			arg_9_0:removeEffect(var_9_3)
+			arg_10_0:removeEffect(var_10_3)
 		end
 	end
 end
 
-function var_0_0.refreshPos(arg_10_0)
-	local var_10_0, var_10_1 = AssassinStealthGameModel.instance:getEnemyMo(arg_10_0.uid, true):getPos()
-	local var_10_2 = AssassinStealthGameEntityMgr.instance:getGridPointGoPosInEntityLayer(var_10_0, var_10_1, arg_10_0.transParent)
+function var_0_0.refreshPos(arg_11_0)
+	local var_11_0, var_11_1 = AssassinStealthGameModel.instance:getEnemyMo(arg_11_0.uid, true):getPos()
+	local var_11_2 = AssassinStealthGameEntityMgr.instance:getGridPointGoPosInEntityLayer(var_11_0, var_11_1, arg_11_0.transParent)
 
-	transformhelper.setLocalPosXY(arg_10_0.trans, var_10_2.x, var_10_2.y)
+	transformhelper.setLocalPosXY(arg_11_0.trans, var_11_2.x, var_11_2.y)
 end
 
-function var_0_0.refreshSelected(arg_11_0)
+function var_0_0.refreshSelected(arg_12_0)
 	return
 end
 
-function var_0_0.refreshCanRemove(arg_12_0)
-	local var_12_0 = AssassinStealthGameHelper.isSelectedHeroCanRemoveEnemyBody(arg_12_0.uid)
-
-	if arg_12_0._gocanRemove.activeSelf == var_12_0 then
-		return
-	end
-
-	gohelper.setActive(arg_12_0._gocanRemove, var_12_0)
-
-	if var_12_0 then
-		arg_12_0._animatorPlayer:Play("search", nil, arg_12_0)
-	end
-end
-
-function var_0_0.refreshCanClick(arg_13_0)
+function var_0_0.refreshCanRemove(arg_13_0)
 	local var_13_0 = AssassinStealthGameHelper.isSelectedHeroCanRemoveEnemyBody(arg_13_0.uid)
-	local var_13_1 = AssassinStealthGameHelper.isSelectedHeroCanUseSkillPropToEnemy(arg_13_0.uid)
-	local var_13_2 = AssassinStealthGameHelper.isSelectedHeroCanSelectEnemy(arg_13_0.uid)
 
-	gohelper.setActive(arg_13_0._gocanClick, var_13_0 or var_13_1 or var_13_2)
-end
-
-function var_0_0.playRemove(arg_14_0)
-	arg_14_0._animatorPlayer:Play("close", arg_14_0.destroy, arg_14_0)
-end
-
-function var_0_0.playEffect(arg_15_0, arg_15_1, arg_15_2, arg_15_3, arg_15_4, arg_15_5)
-	if arg_15_0._effectComp then
-		arg_15_0._effectComp:playEffect(arg_15_1, arg_15_2, arg_15_3, arg_15_4, nil, nil, arg_15_5)
-	end
-end
-
-function var_0_0.removeEffect(arg_16_0, arg_16_1)
-	if not arg_16_0._effectComp or not arg_16_1 or arg_16_1 == 0 then
+	if arg_13_0._gocanRemove.activeSelf == var_13_0 then
 		return
 	end
 
-	arg_16_0._effectComp:removeEffect(arg_16_1)
+	gohelper.setActive(arg_13_0._gocanRemove, var_13_0)
+
+	if var_13_0 then
+		arg_13_0._animatorPlayer:Play("search", nil, arg_13_0)
+	end
 end
 
-function var_0_0.getLocalPos(arg_17_0)
-	return transformhelper.getLocalPos(arg_17_0.trans)
+function var_0_0.refreshCanClick(arg_14_0)
+	local var_14_0 = AssassinStealthGameHelper.isSelectedHeroCanRemoveEnemyBody(arg_14_0.uid)
+	local var_14_1 = AssassinStealthGameHelper.isSelectedHeroCanUseSkillPropToEnemy(arg_14_0.uid)
+	local var_14_2 = AssassinStealthGameHelper.isSelectedHeroCanSelectEnemy(arg_14_0.uid)
+
+	gohelper.setActive(arg_14_0._gocanClick, var_14_0 or var_14_1 or var_14_2)
 end
 
-function var_0_0.destroy(arg_18_0)
-	arg_18_0.go:DestroyImmediate()
+function var_0_0.playRemove(arg_15_0)
+	arg_15_0._animatorPlayer:Play("close", arg_15_0.destroy, arg_15_0)
 end
 
-function var_0_0.onDestroy(arg_19_0)
-	arg_19_0.uid = nil
-	arg_19_0.monsterId = nil
+function var_0_0.playEffect(arg_16_0, arg_16_1, arg_16_2, arg_16_3, arg_16_4, arg_16_5)
+	if arg_16_0._effectComp then
+		arg_16_0._effectComp:playEffect(arg_16_1, arg_16_2, arg_16_3, arg_16_4, nil, nil, arg_16_5)
+	end
+end
+
+function var_0_0.removeEffect(arg_17_0, arg_17_1)
+	if not arg_17_0._effectComp or not arg_17_1 or arg_17_1 == 0 then
+		return
+	end
+
+	arg_17_0._effectComp:removeEffect(arg_17_1)
+end
+
+function var_0_0.getLocalPos(arg_18_0)
+	return transformhelper.getLocalPos(arg_18_0.trans)
+end
+
+function var_0_0.destroy(arg_19_0)
+	arg_19_0.go:DestroyImmediate()
+end
+
+function var_0_0.onDestroy(arg_20_0)
+	arg_20_0.uid = nil
+	arg_20_0.monsterId = nil
 end
 
 return var_0_0

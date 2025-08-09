@@ -556,14 +556,5 @@
     "delayVisible": 0,
     "frameVisible": 1,
     "realtime": ""
-  },
-  {
-    "id": 308704,
-    "effect": "Drawables/bone2/effect-Bone/roleeffect_wl_shuihen2|Drawables/bone4/effect-Bone/roleeffect_wl_shuihen4/root",
-    "scale": 1.0,
-    "changeVisible": 0,
-    "delayVisible": 0,
-    "frameVisible": 1,
-    "realtime": ""
   }
 ]

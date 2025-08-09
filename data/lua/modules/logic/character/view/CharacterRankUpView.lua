@@ -100,7 +100,8 @@ end
 function var_0_0.selfViewIsTop(arg_7_0)
 	arg_7_0.ignoreViewList = arg_7_0.ignoreViewList or {
 		ViewName.CharacterTipView,
-		ViewName.CommonBuffTipView
+		ViewName.CommonBuffTipView,
+		ViewName.ShareTipView
 	}
 
 	return ViewHelper.instance:checkViewOnTheTop(arg_7_0.viewName, arg_7_0.ignoreViewList)

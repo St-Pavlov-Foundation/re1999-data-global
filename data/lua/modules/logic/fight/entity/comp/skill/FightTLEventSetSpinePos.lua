@@ -17,9 +17,9 @@ function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 
 		var_1_1 = FightHelper.getAllSideEntitys(var_1_2:getSide())
 	elseif var_1_0 == "4" then
-		local var_1_3 = FightHelper.getEntity(arg_1_1.toId)
+		local var_1_3 = FightDataHelper.entityMgr:getById(arg_1_1.toId)
 
-		var_1_1 = FightHelper.getAllSideEntitys(var_1_3:getSide())
+		var_1_1 = var_1_3 and FightHelper.getAllSideEntitys(var_1_3.side) or {}
 	elseif var_1_0 == "5" then
 		local var_1_4 = FightHelper.getEntity(arg_1_1.fromId)
 
@@ -41,6 +41,14 @@ function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 			if iter_1_3.id == arg_1_1.toId then
 				table.remove(var_1_1, iter_1_2)
 
+				if FightHelper.isAssembledMonster(iter_1_3) then
+					for iter_1_4 = #var_1_1, 1, -1 do
+						if FightHelper.isAssembledMonster(var_1_1[iter_1_4]) then
+							table.remove(var_1_1, iter_1_4)
+						end
+					end
+				end
+
 				break
 			end
 		end
@@ -53,11 +61,11 @@ function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 
 		local var_1_7 = string.splitToNumber(arg_1_3[4], "#")
 
-		for iter_1_4, iter_1_5 in pairs(var_1_6._entityDic) do
-			local var_1_8 = iter_1_5:getMO()
+		for iter_1_5, iter_1_6 in pairs(var_1_6._entityDic) do
+			local var_1_8 = iter_1_6:getMO()
 
 			if var_1_8 and tabletool.indexOf(var_1_7, var_1_8.skin) then
-				table.insert(var_1_1, iter_1_5)
+				table.insert(var_1_1, iter_1_6)
 			end
 		end
 	end
@@ -66,8 +74,8 @@ function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 	local var_1_10 = arg_1_3[3] == "1"
 
 	if #var_1_1 > 0 then
-		for iter_1_6, iter_1_7 in ipairs(var_1_1) do
-			local var_1_11 = iter_1_7.spine
+		for iter_1_7, iter_1_8 in ipairs(var_1_1) do
+			local var_1_11 = iter_1_8.spine
 			local var_1_12 = var_1_11 and var_1_11:getSpineTr()
 
 			if var_1_12 then

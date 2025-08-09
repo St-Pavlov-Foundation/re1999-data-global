@@ -168,6 +168,9 @@ function var_0_0.refreshLine(arg_19_0)
 	end
 
 	if arg_19_0._lineWith and arg_19_0._lineWith ~= var_19_2 then
+		gohelper.setActive(arg_19_0.trsLine.gameObject, false)
+		gohelper.setActive(arg_19_0.trsLine.gameObject, true)
+
 		arg_19_0._lineWith = var_19_2
 		arg_19_0._moveTweenId = ZProj.TweenHelper.DOWidth(arg_19_0.trsLine, var_19_2, 2)
 

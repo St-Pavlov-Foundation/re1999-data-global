@@ -137,6 +137,13 @@ function var_0_0.setChoiceHero3123WeaponRequest(arg_15_0, arg_15_1, arg_15_2)
 		var_15_1 = arg_15_0._curEquipWeapon[CharacterExtraEnum.WeaponType.Second] or 0
 	else
 		var_15_0 = arg_15_0._curEquipWeapon[CharacterExtraEnum.WeaponType.First] or 0
+
+		if var_15_0 == 0 then
+			GameFacade.showToast(ToastEnum.CharacterNoEquipFirstWeapon)
+
+			return
+		end
+
 		var_15_1 = arg_15_2
 	end
 

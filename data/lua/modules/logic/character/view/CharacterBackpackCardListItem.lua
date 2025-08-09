@@ -30,6 +30,7 @@ function var_0_0.onUpdateMO(arg_5_0, arg_5_1)
 	arg_5_0._mo = arg_5_1
 
 	arg_5_0._heroItem:onUpdateMO(arg_5_1)
+	arg_5_0._heroItem:setStyle_CharacterBackpack()
 	arg_5_0:_refreshRedDot()
 
 	if arg_5_0._heroItemContainer then

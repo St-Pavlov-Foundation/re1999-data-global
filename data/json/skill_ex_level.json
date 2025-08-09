@@ -6329,7 +6329,7 @@
     "consume": "1#133123#1",
     "requirement": "",
     "desc": "language_10079781",
-    "skillGroup1": "",
+    "skillGroup1": "312301112|312301122|312301132",
     "skillGroup2": "",
     "skillEx": 312301312,
     "passiveSkill": "31230153#312301532|31230140#312301402",
@@ -6342,7 +6342,7 @@
     "requirement": "",
     "desc": "language_10079763",
     "skillGroup1": "",
-    "skillGroup2": "",
+    "skillGroup2": "312301211|312301221|312301231",
     "skillEx": 312301313,
     "passiveSkill": "31230153#312301533|31230140#312301403",
     "consume2": ""

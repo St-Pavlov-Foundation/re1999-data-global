@@ -620,4 +620,16 @@ function var_0_0.setStyle_RougePickAssist(arg_55_0)
 	arg_55_0:_setTranScale("_rankObj", 0.2, 0.2)
 end
 
+function var_0_0.setStyle_CharacterBackpack(arg_56_0)
+	arg_56_0:_setTxtWidth("_nameCnTxt", 205)
+	arg_56_0:_setTranScale("_nameCnTxt", 1, 1)
+	arg_56_0:_setTranScale("_nameEnTxt", 1, 1)
+	arg_56_0:_setTranScale("_lvObj", 1, 1)
+	arg_56_0:_setTranScale("_rankObj", 0.18, 0.18)
+	arg_56_0:_setTxtPos("_nameCnTxt", 0.99, 68.9)
+	arg_56_0:_setTxtPos("_nameEnTxt", 1.1, 42.29)
+	arg_56_0:_setTxtPos("_lvObj", 2.02, 75)
+	arg_56_0:_setTxtPos("_rankObj", 1.06, -127.22)
+end
+
 return var_0_0

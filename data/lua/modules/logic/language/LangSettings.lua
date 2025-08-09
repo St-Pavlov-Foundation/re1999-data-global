@@ -364,8 +364,12 @@ function var_0_0.isThai(arg_33_0)
 	return arg_33_0:getCurLang() == var_0_0.thai
 end
 
-function langVideoUrl(arg_34_0)
-	return var_0_0.instance:_langVideoUrl(arg_34_0)
+function var_0_0.isCn(arg_34_0)
+	return arg_34_0:isZh() or arg_34_0:isTw()
+end
+
+function langVideoUrl(arg_35_0)
+	return var_0_0.instance:_langVideoUrl(arg_35_0)
 end
 
 setGlobal("lang", lang)

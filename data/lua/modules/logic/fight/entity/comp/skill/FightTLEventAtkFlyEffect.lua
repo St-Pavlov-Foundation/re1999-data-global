@@ -514,6 +514,10 @@ function var_0_0._onAlwayForceLookForward(arg_14_0, arg_14_1)
 end
 
 function var_0_0._calcRotation(arg_15_0, arg_15_1, arg_15_2, arg_15_3, arg_15_4, arg_15_5, arg_15_6, arg_15_7, arg_15_8)
+	if not arg_15_0._attacker then
+		return
+	end
+
 	local var_15_0 = FightHelper.getEffectLookDir(arg_15_0._attacker:getSide())
 	local var_15_1 = Quaternion.LookRotation(Vector3.New(arg_15_5 - arg_15_2, arg_15_6 - arg_15_3, arg_15_7 - arg_15_4), Vector3.up)
 	local var_15_2 = Quaternion.AngleAxis(var_15_0, Vector3.up)

@@ -737,39 +737,55 @@ function var_0_0._isCurrencyHideAddBtn(arg_58_0)
 	return true
 end
 
-function var_0_0.addCurrencyByCostStr(arg_59_0, arg_59_1, arg_59_2)
-	if not string.nilorempty(arg_59_1) then
-		local var_59_0 = string.split(arg_59_1, "|")
+function var_0_0._isCurrencyShow(arg_59_0, arg_59_1)
+	if tabletool.indexOf(SummonEnum.CurrencyShowAddItemIds, arg_59_1) then
+		return true
+	end
 
-		for iter_59_0, iter_59_1 in ipairs(var_59_0) do
-			local var_59_1 = string.splitToNumber(iter_59_1, "#")
-			local var_59_2 = var_59_1[1]
-			local var_59_3 = var_59_1[2]
-			local var_59_4 = var_59_1[3]
+	local var_59_0 = ItemModel.instance:getItemQuantity(arg_59_0, arg_59_1)
 
-			if not arg_59_2[var_59_3] then
-				local var_59_5 = var_0_0._isCurrencyHideAddBtn(var_59_3)
+	if var_59_0 and var_59_0 > 0 then
+		return true
+	end
 
-				table.insert(arg_59_0, {
-					isIcon = true,
-					id = var_59_3,
-					type = var_59_2,
-					isHideAddBtn = var_59_5,
-					jumpFunc = var_0_0.jumpToSummonCostShop
-				})
+	return false
+end
 
-				arg_59_2[var_59_3] = true
+function var_0_0.addCurrencyByCostStr(arg_60_0, arg_60_1, arg_60_2)
+	if not string.nilorempty(arg_60_1) then
+		local var_60_0 = string.split(arg_60_1, "|")
+
+		for iter_60_0, iter_60_1 in ipairs(var_60_0) do
+			local var_60_1 = string.splitToNumber(iter_60_1, "#")
+			local var_60_2 = var_60_1[1]
+			local var_60_3 = var_60_1[2]
+			local var_60_4 = var_60_1[3]
+
+			if not arg_60_2[var_60_3] then
+				if var_0_0._isCurrencyShow(var_60_2, var_60_3) then
+					local var_60_5 = var_0_0._isCurrencyHideAddBtn(var_60_3)
+
+					table.insert(arg_60_0, {
+						isIcon = true,
+						id = var_60_3,
+						type = var_60_2,
+						isHideAddBtn = var_60_5,
+						jumpFunc = var_0_0.jumpToSummonCostShop
+					})
+				end
+
+				arg_60_2[var_60_3] = true
 			end
 		end
 	end
 end
 
-function var_0_0.entryNeedReddot(arg_60_0)
-	local var_60_0 = arg_60_0:getServerMOMap()
+function var_0_0.entryNeedReddot(arg_61_0)
+	local var_61_0 = arg_61_0:getServerMOMap()
 
-	if var_60_0 then
-		for iter_60_0, iter_60_1 in pairs(var_60_0) do
-			if var_0_0.needShowReddot(iter_60_1) then
+	if var_61_0 then
+		for iter_61_0, iter_61_1 in pairs(var_61_0) do
+			if var_0_0.needShowReddot(iter_61_1) then
 				return true
 			end
 		end
@@ -778,34 +794,34 @@ function var_0_0.entryNeedReddot(arg_60_0)
 	return false
 end
 
-function var_0_0.needShowReddot(arg_61_0)
-	if not arg_61_0:isOpening() then
+function var_0_0.needShowReddot(arg_62_0)
+	if not arg_62_0:isOpening() then
 		return false
 	end
 
-	if arg_61_0.luckyBagMO and arg_61_0.luckyBagMO:isGot() and not arg_61_0.luckyBagMO:isOpened() then
+	if arg_62_0.luckyBagMO and arg_62_0.luckyBagMO:isGot() and not arg_62_0.luckyBagMO:isOpened() then
 		return true
 	end
 
-	if arg_61_0.haveFree then
+	if arg_62_0.haveFree then
 		return true
 	end
 
-	if arg_61_0:isHasProgressReward() then
+	if arg_62_0:isHasProgressReward() then
 		return true
 	end
 
-	local var_61_0 = StoreConfig.instance:getCharageGoodsCfgListByPoolId(arg_61_0.id)
+	local var_62_0 = StoreConfig.instance:getCharageGoodsCfgListByPoolId(arg_62_0.id)
 
-	if var_61_0 then
-		for iter_61_0, iter_61_1 in ipairs(var_61_0) do
-			if StoreCharageConditionalHelper.isHasCanFinishGoodsTask(iter_61_1.id) then
+	if var_62_0 then
+		for iter_62_0, iter_62_1 in ipairs(var_62_0) do
+			if StoreCharageConditionalHelper.isHasCanFinishGoodsTask(iter_62_1.id) then
 				return true
 			end
 		end
 	end
 
-	if StoreGoodsTaskController.instance:isHasNewRedDotByPoolId(arg_61_0.id) then
+	if StoreGoodsTaskController.instance:isHasNewRedDotByPoolId(arg_62_0.id) then
 		return true
 	end
 

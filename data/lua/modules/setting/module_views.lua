@@ -21207,7 +21207,9 @@ var_0_0.VersionActivity2_9DungeonMapView = {
 		"ui/viewres/sp01/assassin2/v2a9_mapepisodeitem.prefab",
 		"ui/viewres/dungeon/chaptermap/chaptermaplayout.prefab",
 		"ui/viewres/sp01/assassin2/v2a9_dungeonmap_direction.prefab",
-		"ui/viewres/sp01/assassin2/v2a9_dungeonmapbg.prefab"
+		"ui/viewres/sp01/assassin2/v2a9_dungeonmapbg.prefab",
+		"scenes/dynamic/sp01_m_s08_dna/dnamove_y.asset",
+		"scenes/dynamic/sp01_m_s08_dna/dnamove_z.asset"
 	},
 	tabRes = {
 		{

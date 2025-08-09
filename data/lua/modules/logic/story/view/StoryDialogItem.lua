@@ -187,11 +187,12 @@ function var_0_0.playDialog(arg_9_0, arg_9_1, arg_9_2, arg_9_3, arg_9_4)
 
 	local var_9_0 = arg_9_0._stepCo.conversation.audios[1] or 0
 	local var_9_1 = StoryModel.instance:getStoryTxtByVoiceType(arg_9_1, var_9_0)
+	local var_9_2 = string.gsub(var_9_1, "<notShowInLog>", "")
 
 	arg_9_0:clearSlideDialog()
 
 	if arg_9_0._stepCo.conversation.type == StoryEnum.ConversationType.SlideDialog then
-		arg_9_0:playSlideDialog(var_9_1, arg_9_3, arg_9_4)
+		arg_9_0:playSlideDialog(var_9_2, arg_9_3, arg_9_4)
 
 		return
 	end
@@ -201,9 +202,9 @@ function var_0_0.playDialog(arg_9_0, arg_9_1, arg_9_2, arg_9_3, arg_9_4)
 	gohelper.setActive(arg_9_0._gonexticon, true)
 
 	if arg_9_0._stepCo.conversation.effType == StoryEnum.ConversationEffectType.Magic or arg_9_0._stepCo.conversation.effType == StoryEnum.ConversationEffectType.ReshapeMagic then
-		arg_9_0:playMagicText(var_9_1, arg_9_3, arg_9_4)
+		arg_9_0:playMagicText(var_9_2, arg_9_3, arg_9_4)
 	else
-		arg_9_0:playNormalText(var_9_1, arg_9_3, arg_9_4)
+		arg_9_0:playNormalText(var_9_2, arg_9_3, arg_9_4)
 	end
 end
 

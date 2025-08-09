@@ -5,8 +5,10 @@ local var_0_0 = class("VersionActivity2_9DungeonMapScene", VersionActivityFixedD
 function var_0_0._editableInitView(arg_1_0)
 	var_0_0.super._editableInitView(arg_1_0)
 
-	arg_1_0._mapPosYCurve = ZProj.AnimationCurveHelper.GetAnimationCurve(VersionActivity2_9DungeonEnum.MapPosYCurve)
-	arg_1_0._mapPosZCurve = ZProj.AnimationCurveHelper.GetAnimationCurve(VersionActivity2_9DungeonEnum.MapPosZCurve)
+	local var_1_0 = arg_1_0.viewContainer:getSetting()
+
+	arg_1_0._mapPosYCurve = arg_1_0.viewContainer._abLoader:getAssetItem(var_1_0.otherRes[5]):GetResource()
+	arg_1_0._mapPosZCurve = arg_1_0.viewContainer._abLoader:getAssetItem(var_1_0.otherRes[6]):GetResource()
 	arg_1_0._mapWorldPos = Vector3()
 	arg_1_0._mapLocalPos = Vector3()
 	arg_1_0._offset = Vector2()
@@ -246,14 +248,14 @@ function var_0_0._getRootLocalPosXYZ(arg_17_0, arg_17_1)
 	arg_17_1 = Mathf.Clamp(arg_17_1, arg_17_0._minRootLocalPosX, arg_17_0._maxRootLocalPosX)
 
 	local var_17_0 = (arg_17_0._maxRootLocalPosX - arg_17_1) / VersionActivity2_9DungeonEnum.MapMaxPosXRange
-	local var_17_1 = arg_17_0._mapPosYCurve:Evaluate(var_17_0)
-	local var_17_2 = arg_17_0._mapPosZCurve:Evaluate(var_17_0)
+	local var_17_1 = arg_17_0._mapPosYCurve:GetY(var_17_0)
+	local var_17_2 = arg_17_0._mapPosZCurve:GetY(var_17_0)
 
 	return arg_17_1, var_17_1, var_17_2
 end
 
 function var_0_0._updateRootPosition(arg_18_0, arg_18_1, arg_18_2, arg_18_3)
-	if not arg_18_0._tranroot or not arg_18_0._tranelementroot then
+	if not arg_18_0._tranroot or not arg_18_0._tranelementroot or gohelper.isNil(arg_18_0._goroot) or gohelper.isNil(arg_18_0._goelementroot) then
 		return
 	end
 

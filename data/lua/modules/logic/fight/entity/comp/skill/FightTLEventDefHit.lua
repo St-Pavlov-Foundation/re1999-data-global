@@ -436,7 +436,7 @@ function var_0_0._playDefHit(arg_7_0, arg_7_1, arg_7_2)
 			arg_7_2.targetId,
 			var_7_21,
 			var_7_22,
-			true
+			false
 		})
 
 		if var_7_20 ~= 0 then
@@ -1052,7 +1052,7 @@ function var_0_0.showEzioOriginFloat(arg_26_0)
 				if var_26_3 then
 					local var_26_4 = var_26_3:isMySide() and -var_26_1 or var_26_1
 
-					FightFloatMgr.instance:float(iter_26_1.targetId, var_26_2, var_26_4, nil, true)
+					FightFloatMgr.instance:float(iter_26_1.targetId, var_26_2, var_26_4, nil, false)
 				end
 			end
 		end

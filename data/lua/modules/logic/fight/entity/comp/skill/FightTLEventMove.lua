@@ -31,6 +31,10 @@ function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 					if var_1_8 and var_1_8.canHide == 1 then
 						var_1_6 = true
 					end
+
+					if lua_fight_assembled_monster.configDict[var_1_7.skin] then
+						var_1_6 = true
+					end
 				end
 			end
 		end

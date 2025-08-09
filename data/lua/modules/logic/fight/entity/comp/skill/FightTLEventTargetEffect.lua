@@ -210,6 +210,18 @@ function var_0_0._createEffect(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4, arg_
 		local var_3_12 = arg_3_1:isMySide() and -arg_3_5 or arg_3_5
 
 		var_3_1:setWorldPos(var_3_7 + var_3_12, var_3_8 + arg_3_6, var_3_9 + arg_3_7)
+
+		local var_3_13 = tonumber(arg_3_0.paramsArr[11])
+
+		if var_3_13 then
+			local var_3_14 = var_3_1.containerTr
+
+			if var_3_14 then
+				local var_3_15, var_3_16, var_3_17 = transformhelper.getPos(var_3_14)
+
+				var_3_1:setWorldPos(var_3_15, var_3_13, var_3_17)
+			end
+		end
 	end
 
 	if arg_3_0._tokenRelease then

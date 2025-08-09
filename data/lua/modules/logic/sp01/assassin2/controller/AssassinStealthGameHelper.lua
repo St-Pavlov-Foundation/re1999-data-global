@@ -343,16 +343,17 @@ function var_0_0.isSelectedHeroCanSelectEnemy(arg_12_0)
 		local var_12_6 = AssassinStealthGameModel.instance:getMapId()
 		local var_12_7 = AssassinConfig.instance:getGridType(var_12_6, var_12_5) == AssassinEnum.StealthGameGridType.Roof
 		local var_12_8 = var_12_2:getMonsterId()
+		local var_12_9 = not AssassinConfig.instance:getEnemyIsBoss(var_12_8) and not var_12_7
 
-		if not AssassinConfig.instance:getEnemyIsBoss(var_12_8) and not var_12_7 then
-			local var_12_9 = AssassinConfig.instance:getGridType(var_12_6, var_12_3)
-			local var_12_10 = var_0_0.getSelectedHeroPointType()
+		if var_12_1:getStatus() == AssassinEnum.HeroStatus.Stealth and var_12_9 then
+			local var_12_10 = AssassinConfig.instance:getGridType(var_12_6, var_12_3)
+			local var_12_11 = var_0_0.getSelectedHeroPointType()
 
-			if var_12_9 == AssassinEnum.StealthGameGridType.Roof then
+			if var_12_10 == AssassinEnum.StealthGameGridType.Roof then
 				if var_0_0.isAdjacentGrid(var_12_3, var_12_5) then
 					var_12_0 = true
 				end
-			elseif var_12_10 == AssassinEnum.StealthGamePointType.Tower and AssassinConfig.instance:getTowerGridDict(var_12_6, var_12_3, var_12_4)[var_12_5] then
+			elseif var_12_11 == AssassinEnum.StealthGamePointType.Tower and AssassinConfig.instance:getTowerGridDict(var_12_6, var_12_3, var_12_4)[var_12_5] then
 				var_12_0 = true
 			end
 		end
@@ -361,10 +362,10 @@ function var_0_0.isSelectedHeroCanSelectEnemy(arg_12_0)
 	end
 
 	if var_12_0 then
-		local var_12_11 = var_0_0.getSelectedHeroAssassinateActId(arg_12_0)
-		local var_12_12, var_12_13 = var_0_0.getSelectedHeroAttackActId(arg_12_0)
+		local var_12_12 = var_0_0.getSelectedHeroAssassinateActId(arg_12_0)
+		local var_12_13, var_12_14 = var_0_0.getSelectedHeroAttackActId(arg_12_0)
 
-		if var_12_11 or var_12_12 or var_12_13 then
+		if var_12_12 or var_12_13 or var_12_14 then
 			return true
 		end
 	end

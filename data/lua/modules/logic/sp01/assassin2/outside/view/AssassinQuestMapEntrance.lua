@@ -54,6 +54,7 @@ function var_0_0._btnclickOnClick(arg_5_0, arg_5_1, arg_5_2)
 end
 
 function var_0_0._onFinishQuest(arg_6_0)
+	arg_6_0:refreshStatus()
 	arg_6_0:refreshProgress()
 end
 

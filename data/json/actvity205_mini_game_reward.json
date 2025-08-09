@@ -30,21 +30,21 @@
   {
     "type": 1,
     "rewardId": 5,
-    "bonus": "2#30503#20|2#3#5000",
+    "bonus": "1#491004#3|2#30503#10",
     "isWin": true,
     "rewardDesc": "language_10079423"
   },
   {
     "type": 2,
     "rewardId": 1,
-    "bonus": "2#30503#10|2#5#500",
+    "bonus": "2#30503#10|2#5#2000",
     "isWin": true,
     "rewardDesc": "language_10079424"
   },
   {
     "type": 2,
     "rewardId": 2,
-    "bonus": "2#30503#10|2#3#500",
+    "bonus": "2#30503#10|2#3#3000",
     "isWin": true,
     "rewardDesc": "language_10079425"
   },

@@ -77,7 +77,7 @@ function var_0_0._refreshBonus(arg_8_0)
 			if ActivityType101Model.instance:isType101RewardCouldGet(var_8_2, iter_8_1.id) then
 				table.insert(var_8_0, iter_8_1)
 			end
-		elseif var_8_3 == ActivityEnum.ActivityStatus.NotOpen then
+		elseif var_8_3 == ActivityEnum.ActivityStatus.NotOpen and var_8_2 ~= 130525 then
 			table.insert(var_8_1, iter_8_1)
 
 			break

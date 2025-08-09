@@ -2,7 +2,7 @@
   {
     "id": 1,
     "odds_nextstep": "101#80|108#20",
-    "option_nextstep": "",
+    "option_nextstep": 0,
     "isSpineAnim": 0,
     "animName": "",
     "loop": 0,
@@ -14,7 +14,7 @@
   {
     "id": 101,
     "odds_nextstep": "102",
-    "option_nextstep": "",
+    "option_nextstep": 0,
     "isSpineAnim": 1,
     "animName": "land",
     "loop": 1,
@@ -26,7 +26,7 @@
   {
     "id": 102,
     "odds_nextstep": "103#40|104#40|106#20",
-    "option_nextstep": "105",
+    "option_nextstep": 105,
     "isSpineAnim": 1,
     "animName": "idle3",
     "loop": 0,
@@ -38,7 +38,7 @@
   {
     "id": 103,
     "odds_nextstep": "102",
-    "option_nextstep": "105",
+    "option_nextstep": 105,
     "isSpineAnim": 1,
     "animName": "idle1",
     "loop": 0,
@@ -50,7 +50,7 @@
   {
     "id": 104,
     "odds_nextstep": "102",
-    "option_nextstep": "105",
+    "option_nextstep": 105,
     "isSpineAnim": 1,
     "animName": "idle2",
     "loop": 0,
@@ -62,7 +62,7 @@
   {
     "id": 105,
     "odds_nextstep": "106#50|107#50",
-    "option_nextstep": "",
+    "option_nextstep": 0,
     "isSpineAnim": 0,
     "animName": "",
     "loop": 0,
@@ -74,7 +74,7 @@
   {
     "id": 106,
     "odds_nextstep": "101#50|108#50",
-    "option_nextstep": "",
+    "option_nextstep": 0,
     "isSpineAnim": 1,
     "animName": "fly",
     "loop": 0,
@@ -86,7 +86,7 @@
   {
     "id": 107,
     "odds_nextstep": "102",
-    "option_nextstep": "",
+    "option_nextstep": 0,
     "isSpineAnim": 1,
     "animName": "scare",
     "loop": 0,
@@ -98,7 +98,7 @@
   {
     "id": 108,
     "odds_nextstep": "101",
-    "option_nextstep": "",
+    "option_nextstep": 0,
     "isSpineAnim": 0,
     "animName": "hover",
     "loop": 0,

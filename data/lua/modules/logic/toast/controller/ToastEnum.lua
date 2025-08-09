@@ -709,6 +709,7 @@ return {
 	CharVoiceLangLost = 90304,
 	V1a6CachotToast03 = 60103,
 	ActivityNoRemainBuyCount = 43,
+	CharacterNoEquipFirstWeapon = 305203,
 	TrialCantTakeOff = 3304,
 	V1a4_BossRushLayerLockTip = 40501,
 	RoomTransportStartMove = 220026,

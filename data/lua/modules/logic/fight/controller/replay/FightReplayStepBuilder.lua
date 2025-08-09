@@ -15,6 +15,8 @@ function var_0_0.buildReplaySequence()
 
 		var_1_0:addWork(WorkWaitSeconds.New(0.1 / FightModel.instance:getSpeed()))
 		var_1_0:addWork(FunctionWork.New(function()
+			FightDataHelper.tempMgr.replayAiJiAoQtePreTimeline = nil
+
 			FightController.instance:setCurStage(FightEnum.Stage.Card)
 		end))
 

@@ -204,6 +204,10 @@ end
 function var_0_0._onMultiDrag(arg_13_0, arg_13_1, arg_13_2)
 	arg_13_0._multiDragging = true
 
+	if not arg_13_0:_checkCanScale() then
+		return
+	end
+
 	local var_13_0 = arg_13_2 * 0.01
 
 	arg_13_0.curScale = arg_13_0.curScale + var_13_0
@@ -212,37 +216,7 @@ function var_0_0._onMultiDrag(arg_13_0, arg_13_1, arg_13_2)
 end
 
 function var_0_0._onMouseScrollWheelChange(arg_14_0, arg_14_1)
-	local var_14_0 = true
-	local var_14_1 = AssassinStealthGameModel.instance:getMapId()
-	local var_14_2, var_14_3 = AssassinConfig.instance:getStealthMapForbidScaleGuide(var_14_1)
-
-	if var_14_2 then
-		if var_14_3 then
-			var_14_0 = GuideModel.instance:isStepFinish(var_14_2, var_14_3)
-		else
-			var_14_0 = GuideModel.instance:isGuideFinish(var_14_2)
-		end
-	end
-
-	if not var_14_0 then
-		return
-	end
-
-	if arg_14_0:checkInGuide() then
-		return
-	end
-
-	if UIBlockMgr.instance:isBlock() then
-		return
-	end
-
-	local var_14_4 = ViewMgr.instance:getOpenViewNameList()
-
-	if var_14_4[#var_14_4] ~= arg_14_0.viewName then
-		return
-	end
-
-	if arg_14_0.tweenId or arg_14_0._gouseItem.activeSelf or arg_14_0._goselectenemy.activeSelf or arg_14_0._goshow.activeSelf then
+	if not arg_14_0:_checkCanScale() then
 		return
 	end
 
@@ -251,554 +225,592 @@ function var_0_0._onMouseScrollWheelChange(arg_14_0, arg_14_1)
 	arg_14_0:setLocalScale()
 end
 
-function var_0_0._btntechniqueOnClick(arg_15_0)
+function var_0_0._checkCanScale(arg_15_0)
+	local var_15_0 = true
+	local var_15_1 = AssassinStealthGameModel.instance:getMapId()
+	local var_15_2, var_15_3 = AssassinConfig.instance:getStealthMapForbidScaleGuide(var_15_1)
+
+	if var_15_2 then
+		if var_15_3 then
+			var_15_0 = GuideModel.instance:isStepFinish(var_15_2, var_15_3)
+		else
+			var_15_0 = GuideModel.instance:isGuideFinish(var_15_2)
+		end
+	end
+
+	if not var_15_0 then
+		return false
+	end
+
+	if arg_15_0:checkInGuide() then
+		return false
+	end
+
+	if UIBlockMgr.instance:isBlock() then
+		return false
+	end
+
+	local var_15_4 = ViewMgr.instance:getOpenViewNameList()
+
+	if var_15_4[#var_15_4] ~= arg_15_0.viewName then
+		return false
+	end
+
+	if arg_15_0.tweenId or arg_15_0._gouseItem.activeSelf or arg_15_0._goselectenemy.activeSelf or arg_15_0._goshow.activeSelf then
+		return false
+	end
+
+	return true
+end
+
+function var_0_0._btntechniqueOnClick(arg_16_0)
 	AssassinController.instance:openAssassinStealthTechniqueView()
 end
 
-function var_0_0._onEscBtnClick(arg_16_0)
-	if arg_16_0:checkInGuide() then
+function var_0_0._onEscBtnClick(arg_17_0)
+	if arg_17_0:checkInGuide() then
 		return
 	end
 
 	AssassinController.instance:openAssassinStealthGamePauseView()
 end
 
-function var_0_0._onHeroUpdate(arg_17_0)
-	arg_17_0:refreshInteractQTEBtn()
-	arg_17_0:refreshHeroHeadItem()
-end
-
-function var_0_0._onHeroMove(arg_18_0)
+function var_0_0._onHeroUpdate(arg_18_0)
 	arg_18_0:refreshInteractQTEBtn()
 	arg_18_0:refreshHeroHeadItem()
 end
 
-function var_0_0._onSelectedHero(arg_19_0, arg_19_1)
-	local var_19_0 = arg_19_1.lastSelectedHeroUid
+function var_0_0._onHeroMove(arg_19_0)
+	arg_19_0:refreshInteractQTEBtn()
+	arg_19_0:refreshHeroHeadItem()
+end
+
+function var_0_0._onSelectedHero(arg_20_0, arg_20_1)
+	local var_20_0 = arg_20_1.lastSelectedHeroUid
 
 	if AssassinStealthGameModel.instance:getSelectedHero() then
-		arg_19_0:initHeroItem(true, var_19_0)
+		arg_20_0:initHeroItem(true, var_20_0)
 	else
-		arg_19_0:refreshHeroHeadItem(true, var_19_0)
+		arg_20_0:refreshHeroHeadItem(true, var_20_0)
 	end
 
-	arg_19_0:refreshInteractQTEBtn()
+	arg_20_0:refreshInteractQTEBtn()
 
-	local var_19_1 = arg_19_1.needFocus
-	local var_19_2 = AssassinStealthGameModel.instance:getSelectedHeroGameMo()
+	local var_20_1 = arg_20_1.needFocus
+	local var_20_2 = AssassinStealthGameModel.instance:getSelectedHeroGameMo()
 
-	if var_19_1 and var_19_2 then
-		local var_19_3 = var_19_2:getPos()
+	if var_20_1 and var_20_2 then
+		local var_20_3 = var_20_2:getPos()
 
-		arg_19_0:mapFocus2Grid(var_19_3)
+		arg_20_0:mapFocus2Grid(var_20_3)
 	end
 end
 
-function var_0_0._onSelectEnemy(arg_20_0, arg_20_1)
-	local var_20_0 = AssassinStealthGameModel.instance:getSelectedEnemyGameMo()
-
-	if var_20_0 then
-		arg_20_0:_setSelectedEnemyOpItemList()
-
-		if arg_20_1 then
-			AssassinStealthGameEntityMgr.instance:changeEnemyParent(arg_20_1)
-			AssassinStealthGameEntityMgr.instance:refreshEnemyEntity(arg_20_1)
-		end
-
-		local var_20_1 = var_20_0:getPos()
-
-		arg_20_0:mapFocus2Grid(var_20_1, nil, true, arg_20_0._changeSelectedEnemyLayer, arg_20_0)
-	else
-		AssassinHelper.lockScreen(AssassinEnum.BlockKey.SelectedEnemy, true)
-
-		arg_20_0._oldSelectedEnemy = arg_20_1
-
-		arg_20_0._selectEnemyAnimatorPlayer:Play("close", arg_20_0._hideSelectEnemyGo, arg_20_0)
-	end
-end
-
-function var_0_0._changeSelectedEnemyLayer(arg_21_0)
+function var_0_0._onSelectEnemy(arg_21_0, arg_21_1)
 	local var_21_0 = AssassinStealthGameModel.instance:getSelectedEnemyGameMo()
 
 	if var_21_0 then
-		local var_21_1 = var_21_0:getUid()
+		arg_21_0:_setSelectedEnemyOpItemList()
 
-		AssassinStealthGameEntityMgr.instance:changeEnemyParent(var_21_1, arg_21_0._transselectenemy)
-
-		local var_21_2, var_21_3 = AssassinStealthGameEntityMgr.instance:getEnemyLocalPos(var_21_1)
-
-		if var_21_2 and var_21_3 then
-			transformhelper.setLocalPosXY(arg_21_0._transselectenemywheel, var_21_2, var_21_3)
+		if arg_21_1 then
+			AssassinStealthGameEntityMgr.instance:changeEnemyParent(arg_21_1)
+			AssassinStealthGameEntityMgr.instance:refreshEnemyEntity(arg_21_1)
 		end
 
-		gohelper.setActive(arg_21_0._goselectenemy, true)
-		arg_21_0._selectEnemyAnimatorPlayer:Play("open", nil, arg_21_0)
+		local var_21_1 = var_21_0:getPos()
+
+		arg_21_0:mapFocus2Grid(var_21_1, nil, true, arg_21_0._changeSelectedEnemyLayer, arg_21_0)
+	else
+		AssassinHelper.lockScreen(AssassinEnum.BlockKey.SelectedEnemy, true)
+
+		arg_21_0._oldSelectedEnemy = arg_21_1
+
+		arg_21_0._selectEnemyAnimatorPlayer:Play("close", arg_21_0._hideSelectEnemyGo, arg_21_0)
 	end
 end
 
-function var_0_0._setSelectedEnemyOpItemList(arg_22_0)
-	local var_22_0 = {}
-	local var_22_1
-	local var_22_2 = AssassinStealthGameHelper.getSelectedHeroAssassinateActId()
+function var_0_0._changeSelectedEnemyLayer(arg_22_0)
+	local var_22_0 = AssassinStealthGameModel.instance:getSelectedEnemyGameMo()
 
-	if var_22_2 then
-		local var_22_3 = {
-			actId = var_22_2
+	if var_22_0 then
+		local var_22_1 = var_22_0:getUid()
+
+		AssassinStealthGameEntityMgr.instance:changeEnemyParent(var_22_1, arg_22_0._transselectenemy)
+
+		local var_22_2, var_22_3 = AssassinStealthGameEntityMgr.instance:getEnemyLocalPos(var_22_1)
+
+		if var_22_2 and var_22_3 then
+			transformhelper.setLocalPosXY(arg_22_0._transselectenemywheel, var_22_2, var_22_3)
+		end
+
+		gohelper.setActive(arg_22_0._goselectenemy, true)
+		arg_22_0._selectEnemyAnimatorPlayer:Play("open", nil, arg_22_0)
+	end
+end
+
+function var_0_0._setSelectedEnemyOpItemList(arg_23_0)
+	local var_23_0 = {}
+	local var_23_1
+	local var_23_2 = AssassinStealthGameHelper.getSelectedHeroAssassinateActId()
+
+	if var_23_2 then
+		local var_23_3 = {
+			actId = var_23_2
 		}
 
-		var_22_0[#var_22_0 + 1] = var_22_3
+		var_23_0[#var_23_0 + 1] = var_23_3
 	end
 
-	local var_22_4, var_22_5 = AssassinStealthGameHelper.getSelectedHeroAttackActId()
+	local var_23_4, var_23_5 = AssassinStealthGameHelper.getSelectedHeroAttackActId()
 
-	var_22_0[#var_22_0 + 1] = var_22_4
-	var_22_0[#var_22_0 + 1] = var_22_5
+	var_23_0[#var_23_0 + 1] = var_23_4
+	var_23_0[#var_23_0 + 1] = var_23_5
 
-	for iter_22_0, iter_22_1 in ipairs(arg_22_0._opItemList) do
-		local var_22_6 = var_22_0[iter_22_0]
+	for iter_23_0, iter_23_1 in ipairs(arg_23_0._opItemList) do
+		local var_23_6 = var_23_0[iter_23_0]
 
-		if var_22_6 then
-			local var_22_7 = var_22_6
-			local var_22_8 = false
+		if var_23_6 then
+			local var_23_7 = var_23_6
+			local var_23_8 = false
 
-			if LuaUtil.isTable(var_22_6) then
-				var_22_7 = var_22_6.actId
-				var_22_8 = true
+			if LuaUtil.isTable(var_23_6) then
+				var_23_7 = var_23_6.actId
+				var_23_8 = true
 			end
 
-			AssassinHelper.setAssassinActIcon(var_22_7, iter_22_1.imageicon)
+			AssassinHelper.setAssassinActIcon(var_23_7, iter_23_1.imageicon)
 
-			local var_22_9 = AssassinConfig.instance:getAssassinActPower(var_22_7)
+			local var_23_9 = AssassinConfig.instance:getAssassinActPower(var_23_7)
 
-			iter_22_1.apComp:setAPCount(var_22_9)
+			iter_23_1.apComp:setAPCount(var_23_9)
 
-			iter_22_1.actId = var_22_7
-			iter_22_1.isAssassinate = var_22_8
+			iter_23_1.actId = var_23_7
+			iter_23_1.isAssassinate = var_23_8
 		else
-			iter_22_1.actId = nil
-			iter_22_1.isAssassinate = nil
+			iter_23_1.actId = nil
+			iter_23_1.isAssassinate = nil
 		end
 
-		gohelper.setActive(iter_22_1.go, iter_22_1.actId)
+		gohelper.setActive(iter_23_1.go, iter_23_1.actId)
 	end
 
-	gohelper.CreateObjList(arg_22_0, arg_22_0._onCreateOpReadmeItem, var_22_0, arg_22_0._goopreadmelayout, arg_22_0._goopreadmeItem)
+	gohelper.CreateObjList(arg_23_0, arg_23_0._onCreateOpReadmeItem, var_23_0, arg_23_0._goopreadmelayout, arg_23_0._goopreadmeItem)
 end
 
-function var_0_0._onCreateOpReadmeItem(arg_23_0, arg_23_1, arg_23_2, arg_23_3)
-	local var_23_0 = arg_23_2
+function var_0_0._onCreateOpReadmeItem(arg_24_0, arg_24_1, arg_24_2, arg_24_3)
+	local var_24_0 = arg_24_2
 
-	if LuaUtil.isTable(arg_23_2) then
-		var_23_0 = arg_23_2.actId
+	if LuaUtil.isTable(arg_24_2) then
+		var_24_0 = arg_24_2.actId
 	end
 
-	local var_23_1 = gohelper.findChildImage(arg_23_1, "#image_icon")
+	local var_24_1 = gohelper.findChildImage(arg_24_1, "#image_icon")
 
-	AssassinHelper.setAssassinActIcon(var_23_0, var_23_1)
+	AssassinHelper.setAssassinActIcon(var_24_0, var_24_1)
 
-	gohelper.findChildText(arg_23_1, "#txt_name").text = AssassinConfig.instance:getAssassinActName(var_23_0)
+	gohelper.findChildText(arg_24_1, "#txt_name").text = AssassinConfig.instance:getAssassinActName(var_24_0)
 end
 
-function var_0_0._hideSelectEnemyGo(arg_24_0)
-	if arg_24_0._oldSelectedEnemy then
-		AssassinStealthGameEntityMgr.instance:changeEnemyParent(arg_24_0._oldSelectedEnemy)
-		AssassinStealthGameEntityMgr.instance:refreshEnemyEntity(arg_24_0._oldSelectedEnemy)
+function var_0_0._hideSelectEnemyGo(arg_25_0)
+	if arg_25_0._oldSelectedEnemy then
+		AssassinStealthGameEntityMgr.instance:changeEnemyParent(arg_25_0._oldSelectedEnemy)
+		AssassinStealthGameEntityMgr.instance:refreshEnemyEntity(arg_25_0._oldSelectedEnemy)
 
-		arg_24_0._oldSelectedEnemy = nil
+		arg_25_0._oldSelectedEnemy = nil
 	end
 
 	AssassinHelper.lockScreen(AssassinEnum.BlockKey.SelectedEnemy, false)
-	gohelper.setActive(arg_24_0._goselectenemy, false)
+	gohelper.setActive(arg_25_0._goselectenemy, false)
 end
 
-function var_0_0._onSelectSkillProp(arg_25_0, arg_25_1)
-	for iter_25_0, iter_25_1 in ipairs(arg_25_0._heroHeadItemList) do
-		iter_25_1:refreshSkillProp()
+function var_0_0._onSelectSkillProp(arg_26_0, arg_26_1)
+	for iter_26_0, iter_26_1 in ipairs(arg_26_0._heroHeadItemList) do
+		iter_26_1:refreshSkillProp()
 	end
 
-	local var_25_0, var_25_1 = AssassinStealthGameModel.instance:getSelectedSkillProp()
+	local var_26_0, var_26_1 = AssassinStealthGameModel.instance:getSelectedSkillProp()
 
-	if var_25_0 then
-		local var_25_2 = ""
-		local var_25_3 = ""
+	if var_26_0 then
+		local var_26_2 = ""
+		local var_26_3 = ""
 
-		if var_25_1 then
-			AssassinHelper.setAssassinSkillIcon(var_25_0, arg_25_0._imageitemicon)
+		if var_26_1 then
+			AssassinHelper.setAssassinSkillIcon(var_26_0, arg_26_0._imageitemicon)
 
-			var_25_2 = AssassinConfig.instance:getAssassinSkillName(var_25_0)
-			var_25_3 = AssassinConfig.instance:getAssassinCareerSkillDesc(var_25_0)
+			var_26_2 = AssassinConfig.instance:getAssassinSkillName(var_26_0)
+			var_26_3 = AssassinConfig.instance:getAssassinCareerSkillDesc(var_26_0)
 		else
-			AssassinHelper.setAssassinItemIcon(var_25_0, arg_25_0._imageitemicon)
+			AssassinHelper.setAssassinItemIcon(var_26_0, arg_26_0._imageitemicon)
 
-			var_25_2 = AssassinConfig.instance:getAssassinItemName(var_25_0)
-			var_25_3 = AssassinConfig.instance:getAssassinItemStealthEffDesc(var_25_0)
+			var_26_2 = AssassinConfig.instance:getAssassinItemName(var_26_0)
+			var_26_3 = AssassinConfig.instance:getAssassinItemStealthEffDesc(var_26_0)
 		end
 
-		arg_25_0._txtitemName.text = var_25_2
-		arg_25_0._txtitemDesc.text = var_25_3
+		arg_26_0._txtitemName.text = var_26_2
+		arg_26_0._txtitemDesc.text = var_26_3
 
-		gohelper.setActive(arg_25_0._goitemtag, false)
+		gohelper.setActive(arg_26_0._goitemtag, false)
 	end
 
-	arg_25_0:_setIsShowUseItem(var_25_0, arg_25_1)
+	arg_26_0:_setIsShowUseItem(var_26_0, arg_26_1)
 end
 
-function var_0_0._onUseSkillProp(arg_26_0)
-	arg_26_0:_setIsShowUseItem(false)
-	arg_26_0:changeHeroSkillProp()
+function var_0_0._onUseSkillProp(arg_27_0)
+	arg_27_0:_setIsShowUseItem(false)
+	arg_27_0:changeHeroSkillProp()
 end
 
-function var_0_0._setIsShowUseItem(arg_27_0, arg_27_1, arg_27_2)
-	if arg_27_1 then
-		gohelper.setActive(arg_27_0._gouseItem, true)
+function var_0_0._setIsShowUseItem(arg_28_0, arg_28_1, arg_28_2)
+	if arg_28_1 then
+		gohelper.setActive(arg_28_0._gouseItem, true)
 
-		local var_27_0 = AssassinStealthGameEntityMgr.instance:changeSkillPropTargetLayer(arg_27_0._transuseitemtargetlayer) and "assassin_stealth_use_skill_prop_select_target" or "assassin_stealth_use_skill_prop_no_target"
+		local var_28_0 = AssassinStealthGameEntityMgr.instance:changeSkillPropTargetLayer(arg_28_0._transuseitemtargetlayer) and "assassin_stealth_use_skill_prop_select_target" or "assassin_stealth_use_skill_prop_no_target"
 
-		arg_27_0._txttips.text = luaLang(var_27_0)
+		arg_28_0._txttips.text = luaLang(var_28_0)
 	else
-		AssassinStealthGameEntityMgr.instance:changeSkillPropTargetLayer(arg_27_0._transuseitemtargetlayer)
+		AssassinStealthGameEntityMgr.instance:changeSkillPropTargetLayer(arg_28_0._transuseitemtargetlayer)
 
-		if arg_27_2 then
-			arg_27_0:_hideUseItemGo()
+		if arg_28_2 then
+			arg_28_0:_hideUseItemGo()
 		else
-			arg_27_0._useItemAnimatorPlayer:Play("close", arg_27_0._hideUseItemGo, arg_27_0)
+			arg_28_0._useItemAnimatorPlayer:Play("close", arg_28_0._hideUseItemGo, arg_28_0)
 		end
 	end
 end
 
-function var_0_0._hideUseItemGo(arg_28_0)
-	gohelper.setActive(arg_28_0._gouseItem, false)
+function var_0_0._hideUseItemGo(arg_29_0)
+	gohelper.setActive(arg_29_0._gouseItem, false)
 end
 
-function var_0_0._showHeroActImg(arg_29_0, arg_29_1, arg_29_2)
-	local var_29_0 = AssassinConfig.instance:getAssassinActShowImg(arg_29_1)
+function var_0_0._showHeroActImg(arg_30_0, arg_30_1, arg_30_2)
+	local var_30_0 = AssassinConfig.instance:getAssassinActShowImg(arg_30_1)
 
-	if string.nilorempty(var_29_0) then
-		AssassinStealthGameController.instance:showActImgFinish(arg_29_1, arg_29_2)
+	if string.nilorempty(var_30_0) then
+		AssassinStealthGameController.instance:showActImgFinish(arg_30_1, arg_30_2)
 	else
-		arg_29_0._txtname.text = AssassinConfig.instance:getAssassinActName(arg_29_1)
+		arg_30_0._txtname.text = AssassinConfig.instance:getAssassinActName(arg_30_1)
 
-		AssassinHelper.setAssassinActIcon(arg_29_1, arg_29_0._imageshowicon)
+		AssassinHelper.setAssassinActIcon(arg_30_1, arg_30_0._imageshowicon)
 
-		local var_29_1 = ResUrl.getSp01AssassinSingleBg("stealth/" .. var_29_0)
+		local var_30_1 = ResUrl.getSp01AssassinSingleBg("stealth/" .. var_30_0)
 
-		arg_29_0._simagepic:LoadImage(var_29_1)
+		arg_30_0._simagepic:LoadImage(var_30_1)
 
-		arg_29_0._showActId = arg_29_1
-		arg_29_0._actParam = arg_29_2
+		arg_30_0._showActId = arg_30_1
+		arg_30_0._actParam = arg_30_2
 
-		gohelper.setActive(arg_29_0._goshow, true)
-		arg_29_0._showAnimatorPlayer:Play("open", arg_29_0._playShowFinished, arg_29_0)
+		gohelper.setActive(arg_30_0._goshow, true)
+		arg_30_0._showAnimatorPlayer:Play("open", arg_30_0._playShowFinished, arg_30_0)
 
-		local var_29_2 = AssassinConfig.instance:getAssassinActAudioId(arg_29_1)
+		local var_30_2 = AssassinConfig.instance:getAssassinActAudioId(arg_30_1)
 
-		if var_29_2 and var_29_2 ~= 0 then
-			AudioMgr.instance:trigger(var_29_2)
+		if var_30_2 and var_30_2 ~= 0 then
+			AudioMgr.instance:trigger(var_30_2)
 		end
 	end
 end
 
-function var_0_0._playShowFinished(arg_30_0)
-	gohelper.setActive(arg_30_0._goshow, false)
-	AssassinStealthGameController.instance:showActImgFinish(arg_30_0._showActId, arg_30_0._actParam)
+function var_0_0._playShowFinished(arg_31_0)
+	gohelper.setActive(arg_31_0._goshow, false)
+	AssassinStealthGameController.instance:showActImgFinish(arg_31_0._showActId, arg_31_0._actParam)
 end
 
-function var_0_0._onHeroGetItem(arg_31_0, arg_31_1, arg_31_2)
-	arg_31_0._getItemUid = arg_31_1
-	arg_31_0._newItemDict = arg_31_2
+function var_0_0._onHeroGetItem(arg_32_0, arg_32_1, arg_32_2)
+	arg_32_0._getItemUid = arg_32_1
+	arg_32_0._newItemDict = arg_32_2
 
 	AssassinStealthGameController.instance:selectSkillProp(nil, nil, true)
 end
 
-function var_0_0._onShowExposeTip(arg_32_0, arg_32_1)
-	local var_32_0 = {}
+function var_0_0._onShowExposeTip(arg_33_0, arg_33_1)
+	local var_33_0 = {}
 
-	for iter_32_0, iter_32_1 in ipairs(arg_32_1) do
-		local var_32_1 = AssassinStealthGameModel.instance:getHeroMo(iter_32_1, true)
-		local var_32_2 = var_32_1 and var_32_1:getHeroId()
-		local var_32_3 = AssassinHeroModel.instance:getAssassinHeroName(var_32_2)
+	for iter_33_0, iter_33_1 in ipairs(arg_33_1) do
+		local var_33_1 = AssassinStealthGameModel.instance:getHeroMo(iter_33_1, true)
+		local var_33_2 = var_33_1 and var_33_1:getHeroId()
+		local var_33_3 = AssassinHeroModel.instance:getAssassinHeroName(var_33_2)
 
-		if not string.nilorempty(var_32_3) then
-			var_32_0[#var_32_0 + 1] = var_32_3
+		if not string.nilorempty(var_33_3) then
+			var_33_0[#var_33_0 + 1] = var_33_3
 		end
 	end
 
-	local var_32_4 = luaLang("room_levelup_init_and1")
-	local var_32_5 = table.concat(var_32_0, var_32_4)
+	local var_33_4 = luaLang("room_levelup_init_and1")
+	local var_33_5 = table.concat(var_33_0, var_33_4)
 
-	arg_32_0._txtexposetips.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("assassin_stealth_expose_tip"), var_32_5)
+	arg_33_0._txtexposetips.text = GameUtil.getSubPlaceholderLuaLangOneParam(luaLang("assassin_stealth_expose_tip"), var_33_5)
 
-	gohelper.setActive(arg_32_0._goexposetips, true)
-	arg_32_0._exposeAnimatorPlayer:Play("open", arg_32_0._playExposeTipFinished, arg_32_0)
+	gohelper.setActive(arg_33_0._goexposetips, true)
+	arg_33_0._exposeAnimatorPlayer:Play("open", arg_33_0._playExposeTipFinished, arg_33_0)
 	AudioMgr.instance:trigger(AudioEnum2_9.StealthGame.play_ui_cikeshang_exposure)
-	arg_32_0:refreshHeroHeadItem()
+	arg_33_0:refreshHeroHeadItem()
 end
 
-function var_0_0._playExposeTipFinished(arg_33_0)
-	gohelper.setActive(arg_33_0._goexposetips, false)
+function var_0_0._playExposeTipFinished(arg_34_0)
+	gohelper.setActive(arg_34_0._goexposetips, false)
 	AssassinStealthGameController.instance:dispatchEvent(AssassinEvent.PlayExposeTipFinished)
 end
 
-function var_0_0._onPlayerEndTurn(arg_34_0)
-	arg_34_0:refreshRound(true)
-	arg_34_0:refreshEndPlayerRoundBtn()
+function var_0_0._onPlayerEndTurn(arg_35_0)
+	arg_35_0:refreshRound(true)
+	arg_35_0:refreshEndPlayerRoundBtn()
 end
 
-function var_0_0._beforeEnterFight(arg_35_0)
-	local var_35_0, var_35_1 = transformhelper.getLocalPos(arg_35_0._transmap)
+function var_0_0._beforeEnterFight(arg_36_0)
+	local var_36_0, var_36_1 = transformhelper.getLocalPos(arg_36_0._transmap)
 
-	AssassinStealthGameModel.instance:setMapPosRecordOnFight(var_35_0, var_35_1, arg_35_0.curScale)
+	AssassinStealthGameModel.instance:setMapPosRecordOnFight(var_36_0, var_36_1, arg_36_0.curScale)
 end
 
-function var_0_0._onCloseView(arg_36_0, arg_36_1)
-	if arg_36_1 == ViewName.AssassinStealthGameEventView then
-		arg_36_0._bellAnimator:Play("get", 0, 0)
+function var_0_0._onCloseView(arg_37_0, arg_37_1)
+	if arg_37_1 == ViewName.AssassinStealthGameEventView then
+		arg_37_0._bellAnimator:Play("get", 0, 0)
 		AudioMgr.instance:trigger(AudioEnum2_9.StealthGame.play_ui_cikeshang_taskring)
-	elseif arg_36_1 == ViewName.AssassinStealthGameGetItemView then
-		for iter_36_0, iter_36_1 in ipairs(arg_36_0._heroHeadItemList) do
-			iter_36_1:playGetItem(arg_36_0._getItemUid, arg_36_0._newItemDict)
+	elseif arg_37_1 == ViewName.AssassinStealthGameGetItemView then
+		for iter_37_0, iter_37_1 in ipairs(arg_37_0._heroHeadItemList) do
+			iter_37_1:playGetItem(arg_37_0._getItemUid, arg_37_0._newItemDict)
 		end
 
-		arg_36_0._getItemUid = nil
-		arg_36_0._newItemDict = nil
+		arg_37_0._getItemUid = nil
+		arg_37_0._newItemDict = nil
 
 		AudioMgr.instance:trigger(AudioEnum2_9.StealthGame.play_ui_cikeshang_getitembag)
-	elseif arg_36_1 == ViewName.LoadingView then
-		if arg_36_0._needCheckGameRequestAfterCloseLoading then
+	elseif arg_37_1 == ViewName.LoadingView then
+		if arg_37_0._needCheckGameRequestAfterCloseLoading then
 			AssassinStealthGameController.instance:checkGameRequest()
 		end
 
-		arg_36_0._needCheckGameRequestAfterCloseLoading = nil
+		arg_37_0._needCheckGameRequestAfterCloseLoading = nil
 	end
 end
 
-function var_0_0._onBeginNewRound(arg_37_0)
+function var_0_0._onBeginNewRound(arg_38_0)
 	if AssassinStealthGameController.instance:checkGameState() then
 		return
 	end
 
-	arg_37_0:refreshRound(true)
-	arg_37_0:refreshBell()
-	arg_37_0:refreshMoveDir()
-	arg_37_0:refreshEndPlayerRoundBtn()
-	arg_37_0:changeHeroSkillProp()
-	arg_37_0:refreshHeroHeadItem()
+	arg_38_0:refreshRound(true)
+	arg_38_0:refreshBell()
+	arg_38_0:refreshMoveDir()
+	arg_38_0:refreshEndPlayerRoundBtn()
+	arg_38_0:changeHeroSkillProp()
+	arg_38_0:refreshHeroHeadItem()
 end
 
 local var_0_1 = 0.8
 
-function var_0_0._onMissionUpdate(arg_38_0)
-	arg_38_0:refreshTarget()
-	arg_38_0:_checkMissionProgress()
+function var_0_0._onMissionUpdate(arg_39_0)
+	arg_39_0:refreshTarget()
+	arg_39_0:_checkMissionProgress()
 end
 
-function var_0_0._checkMissionProgress(arg_39_0)
-	local var_39_0 = false
-	local var_39_1, var_39_2 = AssassinStealthGameModel.instance:getMissionProgress()
+function var_0_0._checkMissionProgress(arg_40_0)
+	local var_40_0 = false
+	local var_40_1, var_40_2 = AssassinStealthGameModel.instance:getMissionProgress()
 
-	if var_39_2 <= var_39_1 then
-		arg_39_0:_cancelFinishMissionTask()
+	if var_40_2 <= var_40_1 then
+		arg_40_0:_cancelFinishMissionTask()
 		AssassinHelper.lockScreen(AssassinEnum.BlockKey.FinishMission, true)
-		gohelper.setActive(arg_39_0._gostartLight, true)
-		TaskDispatcher.runDelay(arg_39_0._onFinishMission, arg_39_0, var_0_1)
+		gohelper.setActive(arg_40_0._gostartLight, true)
+		TaskDispatcher.runDelay(arg_40_0._onFinishMission, arg_40_0, var_0_1)
 
-		var_39_0 = true
+		var_40_0 = true
 	end
 
-	return var_39_0
+	return var_40_0
 end
 
-function var_0_0._onFinishMission(arg_40_0)
+function var_0_0._onFinishMission(arg_41_0)
 	AssassinStealthGameController.instance:finishMission()
 	AssassinHelper.lockScreen(AssassinEnum.BlockKey.FinishMission, false)
 end
 
-function var_0_0._cancelFinishMissionTask(arg_41_0)
-	TaskDispatcher.cancelTask(arg_41_0._onFinishMission, arg_41_0)
+function var_0_0._cancelFinishMissionTask(arg_42_0)
+	TaskDispatcher.cancelTask(arg_42_0._onFinishMission, arg_42_0)
 	AssassinHelper.lockScreen(AssassinEnum.BlockKey.FinishMission, false)
 end
 
-function var_0_0._onMissionChange(arg_42_0)
-	local var_42_0 = AssassinStealthGameModel.instance:getMissionId()
+function var_0_0._onMissionChange(arg_43_0)
+	local var_43_0 = AssassinStealthGameModel.instance:getMissionId()
 
-	if var_42_0 and var_42_0 > 0 then
-		gohelper.setActive(arg_42_0._gochangeMissionEff, false)
-		gohelper.setActive(arg_42_0._gochangeMissionEff, true)
-		gohelper.setActive(arg_42_0._gostartLight, false)
+	if var_43_0 and var_43_0 > 0 then
+		gohelper.setActive(arg_43_0._gochangeMissionEff, false)
+		gohelper.setActive(arg_43_0._gochangeMissionEff, true)
+		gohelper.setActive(arg_43_0._gostartLight, false)
 		AudioMgr.instance:trigger(AudioEnum2_9.StealthGame.play_ui_cikeshang_nexttask)
-		arg_42_0:refreshTarget()
+		arg_43_0:refreshTarget()
 	end
 
-	if arg_42_0._needCheckGameRequest then
+	if arg_43_0._needCheckGameRequest then
 		AssassinStealthGameController.instance:checkGameRequest()
 	end
 
-	arg_42_0._needCheckGameRequest = nil
+	arg_43_0._needCheckGameRequest = nil
 end
 
-function var_0_0._onQTEInteractUpdate(arg_43_0)
-	arg_43_0:refreshInteractQTEBtn()
+function var_0_0._onQTEInteractUpdate(arg_44_0)
+	arg_44_0:refreshInteractQTEBtn()
 end
 
-function var_0_0._onGameSceneRecover(arg_44_0)
-	arg_44_0:_resetGameView(false)
-end
-
-function var_0_0._onGameSceneRestart(arg_45_0)
+function var_0_0._onGameSceneRecover(arg_45_0)
 	arg_45_0:_resetGameView(false)
 end
 
-function var_0_0._onGameChangeMap(arg_46_0)
+function var_0_0._onGameSceneRestart(arg_46_0)
 	arg_46_0:_resetGameView(false)
 end
 
-function var_0_0._onAlertLevelChange(arg_47_0)
-	arg_47_0:refreshBell()
+function var_0_0._onGameChangeMap(arg_47_0)
+	arg_47_0:_resetGameView(false)
 end
 
-function var_0_0._onTweenMapPos(arg_48_0, arg_48_1, arg_48_2)
-	if not arg_48_1 then
+function var_0_0._onAlertLevelChange(arg_48_0)
+	arg_48_0:refreshBell()
+end
+
+function var_0_0._onTweenMapPos(arg_49_0, arg_49_1, arg_49_2)
+	if not arg_49_1 then
 		return
 	end
 
-	if arg_48_2 then
-		local var_48_0, var_48_1 = transformhelper.getLocalPos(arg_48_0._transmap)
+	if arg_49_2 then
+		local var_49_0, var_49_1 = transformhelper.getLocalPos(arg_49_0._transmap)
 
-		AssassinStealthGameModel.instance:setMapPosRecordOnTurn(var_48_0, var_48_1, arg_48_0.curScale)
+		AssassinStealthGameModel.instance:setMapPosRecordOnTurn(var_49_0, var_49_1, arg_49_0.curScale)
 	end
 
-	local var_48_2, var_48_3 = transformhelper.getLocalPos(arg_48_0._transmap)
-	local var_48_4 = arg_48_1.x or var_48_2
-	local var_48_5 = arg_48_1.y or var_48_3
+	local var_49_2, var_49_3 = transformhelper.getLocalPos(arg_49_0._transmap)
+	local var_49_4 = arg_49_1.x or var_49_2
+	local var_49_5 = arg_49_1.y or var_49_3
 
-	arg_48_0:tweenMapPos(var_48_4, var_48_5, arg_48_1.scale)
+	arg_49_0:tweenMapPos(var_49_4, var_49_5, arg_49_1.scale)
 end
 
-function var_0_0._onGuideFocusHero(arg_49_0, arg_49_1)
-	local var_49_0 = AssassinStealthGameModel.instance:getSelectedHero()
+function var_0_0._onGuideFocusHero(arg_50_0, arg_50_1)
+	local var_50_0 = AssassinStealthGameModel.instance:getSelectedHero()
 
-	arg_49_1 = arg_49_1 and tonumber(arg_49_1)
+	arg_50_1 = arg_50_1 and tonumber(arg_50_1)
 
-	arg_49_0:mapFocus2Hero(var_49_0, arg_49_1, true)
+	arg_50_0:mapFocus2Hero(var_50_0, arg_50_1, true)
 end
 
-function var_0_0._editableInitView(arg_50_0)
-	AssassinStealthGameController.instance:initBaseMap(arg_50_0._gomap)
+function var_0_0._editableInitView(arg_51_0)
+	AssassinStealthGameController.instance:initBaseMap(arg_51_0._gomap)
 
-	arg_50_0._qteApComp = MonoHelper.addNoUpdateLuaComOnceToGo(arg_50_0._goapLayout, AssassinStealthGameAPComp)
+	arg_51_0._qteApComp = MonoHelper.addNoUpdateLuaComOnceToGo(arg_51_0._goapLayout, AssassinStealthGameAPComp)
 
-	gohelper.setActive(arg_50_0._gotargetTip, false)
+	gohelper.setActive(arg_51_0._gotargetTip, false)
 
-	arg_50_0._dirGOList = arg_50_0:getUserDataTb_()
-	arg_50_0._dirGOList[#arg_50_0._dirGOList + 1] = gohelper.findChild(arg_50_0.viewGO, "root/#go_bell/image_top")
-	arg_50_0._dirGOList[#arg_50_0._dirGOList + 1] = gohelper.findChild(arg_50_0.viewGO, "root/#go_bell/image_bottom")
-	arg_50_0._dirGOList[#arg_50_0._dirGOList + 1] = gohelper.findChild(arg_50_0.viewGO, "root/#go_bell/image_left")
-	arg_50_0._dirGOList[#arg_50_0._dirGOList + 1] = gohelper.findChild(arg_50_0.viewGO, "root/#go_bell/image_right")
-	arg_50_0._opItemList = {}
+	arg_51_0._dirGOList = arg_51_0:getUserDataTb_()
+	arg_51_0._dirGOList[#arg_51_0._dirGOList + 1] = gohelper.findChild(arg_51_0.viewGO, "root/#go_bell/image_top")
+	arg_51_0._dirGOList[#arg_51_0._dirGOList + 1] = gohelper.findChild(arg_51_0.viewGO, "root/#go_bell/image_bottom")
+	arg_51_0._dirGOList[#arg_51_0._dirGOList + 1] = gohelper.findChild(arg_51_0.viewGO, "root/#go_bell/image_left")
+	arg_51_0._dirGOList[#arg_51_0._dirGOList + 1] = gohelper.findChild(arg_51_0.viewGO, "root/#go_bell/image_right")
+	arg_51_0._opItemList = {}
 
-	gohelper.setActive(arg_50_0._goopItem, false)
+	gohelper.setActive(arg_51_0._goopItem, false)
 
-	local var_50_0 = arg_50_0._goopLayout.transform
-	local var_50_1 = var_50_0.childCount
+	local var_51_0 = arg_51_0._goopLayout.transform
+	local var_51_1 = var_51_0.childCount
 
-	for iter_50_0 = 1, var_50_1 do
-		local var_50_2 = arg_50_0:getUserDataTb_()
-		local var_50_3 = var_50_0:GetChild(iter_50_0 - 1)
+	for iter_51_0 = 1, var_51_1 do
+		local var_51_2 = arg_51_0:getUserDataTb_()
+		local var_51_3 = var_51_0:GetChild(iter_51_0 - 1)
 
-		var_50_2.go = gohelper.clone(arg_50_0._goopItem, var_50_3.gameObject, "opItem")
-		var_50_2.imageicon = gohelper.findChildImage(var_50_2.go, "#image_icon")
+		var_51_2.go = gohelper.clone(arg_51_0._goopItem, var_51_3.gameObject, "opItem")
+		var_51_2.imageicon = gohelper.findChildImage(var_51_2.go, "#image_icon")
 
-		local var_50_4 = gohelper.findChild(var_50_2.go, "#go_apLayout")
+		local var_51_4 = gohelper.findChild(var_51_2.go, "#go_apLayout")
 
-		var_50_2.btnclick = gohelper.findChildClickWithAudio(var_50_2.go, "#btn_click", AudioEnum2_9.StealthGame.play_ui_cikeshang_normalclick)
-		var_50_2.apComp = MonoHelper.addNoUpdateLuaComOnceToGo(var_50_4, AssassinStealthGameAPComp)
+		var_51_2.btnclick = gohelper.findChildClickWithAudio(var_51_2.go, "#btn_click", AudioEnum2_9.StealthGame.play_ui_cikeshang_normalclick)
+		var_51_2.apComp = MonoHelper.addNoUpdateLuaComOnceToGo(var_51_4, AssassinStealthGameAPComp)
 
-		var_50_2.btnclick:AddClickListener(arg_50_0._onOpItemClick, arg_50_0, iter_50_0)
+		var_51_2.btnclick:AddClickListener(arg_51_0._onOpItemClick, arg_51_0, iter_51_0)
 
-		arg_50_0._opItemList[iter_50_0] = var_50_2
+		arg_51_0._opItemList[iter_51_0] = var_51_2
 	end
 
-	local var_50_5 = arg_50_0.viewGO.transform
+	local var_51_5 = arg_51_0.viewGO.transform
 
-	arg_50_0._viewWidth = recthelper.getWidth(var_50_5)
-	arg_50_0._viewHeight = recthelper.getHeight(var_50_5)
-	arg_50_0.mapWidth = arg_50_0._viewWidth / AssassinEnum.StealthConst.MinMapScale
-	arg_50_0.mapHeight = arg_50_0._viewHeight / AssassinEnum.StealthConst.MinMapScale
-	arg_50_0._transmap = arg_50_0._gomap.transform
-	arg_50_0._transdrag = arg_50_0._godrag.transform
-	arg_50_0._drag = SLFramework.UGUI.UIDragListener.Get(arg_50_0._godrag)
-	arg_50_0._touchEventMgr = TouchEventMgrHepler.getTouchEventMgr(arg_50_0._godrag)
+	arg_51_0._viewWidth = recthelper.getWidth(var_51_5)
+	arg_51_0._viewHeight = recthelper.getHeight(var_51_5)
+	arg_51_0.mapWidth = arg_51_0._viewWidth / AssassinEnum.StealthConst.MinMapScale
+	arg_51_0.mapHeight = arg_51_0._viewHeight / AssassinEnum.StealthConst.MinMapScale
+	arg_51_0._transmap = arg_51_0._gomap.transform
+	arg_51_0._transdrag = arg_51_0._godrag.transform
+	arg_51_0._drag = SLFramework.UGUI.UIDragListener.Get(arg_51_0._godrag)
+	arg_51_0._touchEventMgr = TouchEventMgrHepler.getTouchEventMgr(arg_51_0._godrag)
 
-	arg_50_0._touchEventMgr:SetIgnoreUI(true)
+	arg_51_0._touchEventMgr:SetIgnoreUI(true)
 
-	arg_50_0._useitemdrag = SLFramework.UGUI.UIDragListener.Get(arg_50_0._gouseItem)
-	arg_50_0._transselectenemy = arg_50_0._goselectenemy.transform
-	arg_50_0._transselectenemywheel = arg_50_0._goselectedwheel.transform
-	arg_50_0._transuseitemtargetlayer = arg_50_0._gouseitemtargetlayer.transform
+	arg_51_0._useitemdrag = SLFramework.UGUI.UIDragListener.Get(arg_51_0._gouseItem)
+	arg_51_0._transselectenemy = arg_51_0._goselectenemy.transform
+	arg_51_0._transselectenemywheel = arg_51_0._goselectedwheel.transform
+	arg_51_0._transuseitemtargetlayer = arg_51_0._gouseitemtargetlayer.transform
 
-	arg_50_0:setLocalScale()
-	arg_50_0:setMapPos(0, 0)
+	arg_51_0:setLocalScale()
+	arg_51_0:setMapPos(0, 0)
 
-	arg_50_0._animatorPlayer = ZProj.ProjAnimatorPlayer.Get(arg_50_0.viewGO)
-	arg_50_0._bellAnimator = arg_50_0._gobell:GetComponent(typeof(UnityEngine.Animator))
-	arg_50_0._topAnimatorPlayer = ZProj.ProjAnimatorPlayer.Get(arg_50_0._gotop)
-	arg_50_0._useItemAnimatorPlayer = ZProj.ProjAnimatorPlayer.Get(arg_50_0._gouseItem)
-	arg_50_0._showAnimatorPlayer = ZProj.ProjAnimatorPlayer.Get(arg_50_0._goshow)
-	arg_50_0._selectEnemyAnimatorPlayer = ZProj.ProjAnimatorPlayer.Get(arg_50_0._goselectenemy)
-	arg_50_0._exposeAnimatorPlayer = ZProj.ProjAnimatorPlayer.Get(arg_50_0._goexposetips)
+	arg_51_0._animatorPlayer = ZProj.ProjAnimatorPlayer.Get(arg_51_0.viewGO)
+	arg_51_0._bellAnimator = arg_51_0._gobell:GetComponent(typeof(UnityEngine.Animator))
+	arg_51_0._topAnimatorPlayer = ZProj.ProjAnimatorPlayer.Get(arg_51_0._gotop)
+	arg_51_0._useItemAnimatorPlayer = ZProj.ProjAnimatorPlayer.Get(arg_51_0._gouseItem)
+	arg_51_0._showAnimatorPlayer = ZProj.ProjAnimatorPlayer.Get(arg_51_0._goshow)
+	arg_51_0._selectEnemyAnimatorPlayer = ZProj.ProjAnimatorPlayer.Get(arg_51_0._goselectenemy)
+	arg_51_0._exposeAnimatorPlayer = ZProj.ProjAnimatorPlayer.Get(arg_51_0._goexposetips)
 
-	gohelper.setActive(arg_50_0._gotips, true)
+	gohelper.setActive(arg_51_0._gotips, true)
 end
 
-function var_0_0.mapFocus2Hero(arg_51_0, arg_51_1, arg_51_2, arg_51_3)
-	local var_51_0 = AssassinStealthGameModel.instance:getHeroMo(arg_51_1, true)
+function var_0_0.mapFocus2Hero(arg_52_0, arg_52_1, arg_52_2, arg_52_3)
+	local var_52_0 = AssassinStealthGameModel.instance:getHeroMo(arg_52_1, true)
 
-	if not var_51_0 then
+	if not var_52_0 then
 		return
 	end
 
-	local var_51_1 = var_51_0:getPos()
+	local var_52_1 = var_52_0:getPos()
 
-	arg_51_0:mapFocus2Grid(var_51_1, arg_51_2, arg_51_3)
+	arg_52_0:mapFocus2Grid(var_52_1, arg_52_2, arg_52_3)
 end
 
-function var_0_0.mapFocus2Grid(arg_52_0, arg_52_1, arg_52_2, arg_52_3, arg_52_4, arg_52_5)
-	local var_52_0 = AssassinStealthGameEntityMgr.instance:getGridItem(arg_52_1, true)
-	local var_52_1 = var_52_0 and var_52_0:getGoPosition()
+function var_0_0.mapFocus2Grid(arg_53_0, arg_53_1, arg_53_2, arg_53_3, arg_53_4, arg_53_5)
+	local var_53_0 = AssassinStealthGameEntityMgr.instance:getGridItem(arg_53_1, true)
+	local var_53_1 = var_53_0 and var_53_0:getGoPosition()
 
-	if var_52_1 then
-		if arg_52_3 then
+	if var_53_1 then
+		if arg_53_3 then
 			AssassinHelper.lockScreen(AssassinEnum.BlockKey.TweenMapPos, true)
 		end
 
-		local var_52_2 = arg_52_0._transmap:InverseTransformPoint(var_52_1)
+		local var_53_2 = arg_53_0._transmap:InverseTransformPoint(var_53_1)
 
-		arg_52_0:tweenMapPos(-var_52_2.x, -var_52_2.y, arg_52_2, arg_52_4, arg_52_5)
+		arg_53_0:tweenMapPos(-var_53_2.x, -var_53_2.y, arg_53_2, arg_53_4, arg_53_5)
 	end
 end
 
-function var_0_0.setLocalScale(arg_53_0)
-	arg_53_0.curScale = Mathf.Clamp(arg_53_0.curScale or 1, AssassinEnum.StealthConst.MinMapScale, AssassinEnum.StealthConst.MaxMapScale)
+function var_0_0.setLocalScale(arg_54_0)
+	arg_54_0.curScale = Mathf.Clamp(arg_54_0.curScale or 1, AssassinEnum.StealthConst.MinMapScale, AssassinEnum.StealthConst.MaxMapScale)
 
-	transformhelper.setLocalScale(arg_53_0._transmap, arg_53_0.curScale, arg_53_0.curScale, 1)
-	transformhelper.setLocalScale(arg_53_0._transselectenemywheel, arg_53_0.curScale, arg_53_0.curScale, 1)
-	arg_53_0:calculateDragBorder()
-	arg_53_0:setMapPos()
+	transformhelper.setLocalScale(arg_54_0._transmap, arg_54_0.curScale, arg_54_0.curScale, 1)
+	transformhelper.setLocalScale(arg_54_0._transselectenemywheel, arg_54_0.curScale, arg_54_0.curScale, 1)
+	arg_54_0:calculateDragBorder()
+	arg_54_0:setMapPos()
 end
 
-function var_0_0.calculateDragBorder(arg_54_0)
-	local var_54_0 = arg_54_0.mapWidth * arg_54_0.curScale
-	local var_54_1 = arg_54_0.mapHeight * arg_54_0.curScale
+function var_0_0.calculateDragBorder(arg_55_0)
+	local var_55_0 = arg_55_0.mapWidth * arg_55_0.curScale
+	local var_55_1 = arg_55_0.mapHeight * arg_55_0.curScale
 
-	arg_54_0.maxOffsetX = (var_54_0 - arg_54_0._viewWidth) / 2
-	arg_54_0.maxOffsetY = (var_54_1 - arg_54_0._viewHeight) / 2
+	arg_55_0.maxOffsetX = (var_55_0 - arg_55_0._viewWidth) / 2
+	arg_55_0.maxOffsetY = (var_55_1 - arg_55_0._viewHeight) / 2
 end
 
-function var_0_0.checkInGuide(arg_55_0)
-	local var_55_0 = GuideModel.instance:isDoingClickGuide()
-	local var_55_1 = GuideController.instance:isForbidGuides()
+function var_0_0.checkInGuide(arg_56_0)
+	local var_56_0 = GuideModel.instance:isDoingClickGuide()
+	local var_56_1 = GuideController.instance:isForbidGuides()
 
-	if var_55_0 and not var_55_1 then
+	if var_56_0 and not var_56_1 then
 		return true
 	end
 
@@ -807,350 +819,350 @@ function var_0_0.checkInGuide(arg_55_0)
 	end
 end
 
-function var_0_0.setMapPos(arg_56_0, arg_56_1, arg_56_2)
-	if not arg_56_1 or not arg_56_2 then
-		arg_56_1, arg_56_2 = transformhelper.getLocalPos(arg_56_0._transmap)
+function var_0_0.setMapPos(arg_57_0, arg_57_1, arg_57_2)
+	if not arg_57_1 or not arg_57_2 then
+		arg_57_1, arg_57_2 = transformhelper.getLocalPos(arg_57_0._transmap)
 	end
 
-	arg_56_1 = Mathf.Clamp(arg_56_1, -arg_56_0.maxOffsetX, arg_56_0.maxOffsetX)
-	arg_56_2 = Mathf.Clamp(arg_56_2, -arg_56_0.maxOffsetY, arg_56_0.maxOffsetY)
+	arg_57_1 = Mathf.Clamp(arg_57_1, -arg_57_0.maxOffsetX, arg_57_0.maxOffsetX)
+	arg_57_2 = Mathf.Clamp(arg_57_2, -arg_57_0.maxOffsetY, arg_57_0.maxOffsetY)
 
-	transformhelper.setLocalPosXY(arg_56_0._transmap, arg_56_1, arg_56_2)
+	transformhelper.setLocalPosXY(arg_57_0._transmap, arg_57_1, arg_57_2)
 	AssassinStealthGameEntityMgr.instance:refreshSkillPropTargetPos()
 end
 
-function var_0_0.tweenMapPos(arg_57_0, arg_57_1, arg_57_2, arg_57_3, arg_57_4, arg_57_5)
-	if not arg_57_1 or not arg_57_2 then
+function var_0_0.tweenMapPos(arg_58_0, arg_58_1, arg_58_2, arg_58_3, arg_58_4, arg_58_5)
+	if not arg_58_1 or not arg_58_2 then
 		AssassinHelper.lockScreen(AssassinEnum.BlockKey.TweenMapPos, false)
 
 		return
 	end
 
-	arg_57_0:killTween()
+	arg_58_0:killTween()
 
-	arg_57_0._tweenMapPosFinishCb = arg_57_4
-	arg_57_0._tweenMapPosFinishCbObj = arg_57_5
-	arg_57_0._tweenStartPosX, arg_57_0._tweenStartPosY = transformhelper.getLocalPos(arg_57_0._transmap)
-	arg_57_0._tweenStartScale = arg_57_0.curScale
+	arg_58_0._tweenMapPosFinishCb = arg_58_4
+	arg_58_0._tweenMapPosFinishCbObj = arg_58_5
+	arg_58_0._tweenStartPosX, arg_58_0._tweenStartPosY = transformhelper.getLocalPos(arg_58_0._transmap)
+	arg_58_0._tweenStartScale = arg_58_0.curScale
 
-	local var_57_0 = true
+	local var_58_0 = true
 
-	if arg_57_3 then
-		arg_57_0._tweenTargetPosX = arg_57_1
-		arg_57_0._tweenTargetPosY = arg_57_2
-		arg_57_0._tweenTargetScale = arg_57_3
-		var_57_0 = arg_57_0._tweenTargetScale == arg_57_0.curScale
+	if arg_58_3 then
+		arg_58_0._tweenTargetPosX = arg_58_1
+		arg_58_0._tweenTargetPosY = arg_58_2
+		arg_58_0._tweenTargetScale = arg_58_3
+		var_58_0 = arg_58_0._tweenTargetScale == arg_58_0.curScale
 	else
-		arg_57_0._tweenTargetPosX = Mathf.Clamp(arg_57_1, -arg_57_0.maxOffsetX, arg_57_0.maxOffsetX)
-		arg_57_0._tweenTargetPosY = Mathf.Clamp(arg_57_2, -arg_57_0.maxOffsetY, arg_57_0.maxOffsetY)
+		arg_58_0._tweenTargetPosX = Mathf.Clamp(arg_58_1, -arg_58_0.maxOffsetX, arg_58_0.maxOffsetX)
+		arg_58_0._tweenTargetPosY = Mathf.Clamp(arg_58_2, -arg_58_0.maxOffsetY, arg_58_0.maxOffsetY)
 	end
 
-	if arg_57_0._tweenStartPosX == arg_57_0._tweenTargetPosX and arg_57_0._tweenStartPosY == arg_57_0._tweenTargetPosY and var_57_0 then
-		arg_57_0:tweenFinishCallback()
+	if arg_58_0._tweenStartPosX == arg_58_0._tweenTargetPosX and arg_58_0._tweenStartPosY == arg_58_0._tweenTargetPosY and var_58_0 then
+		arg_58_0:tweenFinishCallback()
 
 		return
 	end
 
-	arg_57_0.tweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, AssassinEnum.StealthConst.MapTweenPosTime, arg_57_0.tweenFrameCallback, arg_57_0.tweenFinishCallback, arg_57_0)
+	arg_58_0.tweenId = ZProj.TweenHelper.DOTweenFloat(0, 1, AssassinEnum.StealthConst.MapTweenPosTime, arg_58_0.tweenFrameCallback, arg_58_0.tweenFinishCallback, arg_58_0)
 
-	arg_57_0:tweenFrameCallback(0)
+	arg_58_0:tweenFrameCallback(0)
 end
 
-function var_0_0.tweenFrameCallback(arg_58_0, arg_58_1)
-	if arg_58_0._tweenTargetScale then
-		arg_58_0.curScale = Mathf.Lerp(arg_58_0._tweenStartScale, arg_58_0._tweenTargetScale, arg_58_1)
-
-		arg_58_0:setLocalScale()
-	end
-
-	local var_58_0 = Mathf.Lerp(arg_58_0._tweenStartPosX, arg_58_0._tweenTargetPosX, arg_58_1)
-	local var_58_1 = Mathf.Lerp(arg_58_0._tweenStartPosY, arg_58_0._tweenTargetPosY, arg_58_1)
-
-	arg_58_0:setMapPos(var_58_0, var_58_1)
-end
-
-function var_0_0.tweenFinishCallback(arg_59_0)
+function var_0_0.tweenFrameCallback(arg_59_0, arg_59_1)
 	if arg_59_0._tweenTargetScale then
-		arg_59_0.curScale = arg_59_0._tweenTargetScale
+		arg_59_0.curScale = Mathf.Lerp(arg_59_0._tweenStartScale, arg_59_0._tweenTargetScale, arg_59_1)
 
 		arg_59_0:setLocalScale()
 	end
 
-	arg_59_0:setMapPos(arg_59_0._tweenTargetPosX, arg_59_0._tweenTargetPosY)
+	local var_59_0 = Mathf.Lerp(arg_59_0._tweenStartPosX, arg_59_0._tweenTargetPosX, arg_59_1)
+	local var_59_1 = Mathf.Lerp(arg_59_0._tweenStartPosY, arg_59_0._tweenTargetPosY, arg_59_1)
 
-	if arg_59_0._tweenMapPosFinishCb then
-		arg_59_0._tweenMapPosFinishCb(arg_59_0._tweenMapPosFinishCbObj)
+	arg_59_0:setMapPos(var_59_0, var_59_1)
+end
+
+function var_0_0.tweenFinishCallback(arg_60_0)
+	if arg_60_0._tweenTargetScale then
+		arg_60_0.curScale = arg_60_0._tweenTargetScale
+
+		arg_60_0:setLocalScale()
 	end
 
-	arg_59_0:killTween()
+	arg_60_0:setMapPos(arg_60_0._tweenTargetPosX, arg_60_0._tweenTargetPosY)
+
+	if arg_60_0._tweenMapPosFinishCb then
+		arg_60_0._tweenMapPosFinishCb(arg_60_0._tweenMapPosFinishCbObj)
+	end
+
+	arg_60_0:killTween()
 	AssassinHelper.lockScreen(AssassinEnum.BlockKey.TweenMapPos, false)
 end
 
-function var_0_0.killTween(arg_60_0)
-	if arg_60_0.tweenId then
-		ZProj.TweenHelper.KillById(arg_60_0.tweenId)
+function var_0_0.killTween(arg_61_0)
+	if arg_61_0.tweenId then
+		ZProj.TweenHelper.KillById(arg_61_0.tweenId)
 	end
 
-	arg_60_0.tweenId = nil
-	arg_60_0._tweenMapPosFinishCb = nil
-	arg_60_0._tweenMapPosFinishCbObj = nil
-	arg_60_0._tweenStartPosX = nil
-	arg_60_0._tweenStartPosY = nil
-	arg_60_0._tweenTargetPosX = nil
-	arg_60_0._tweenTargetPosY = nil
-	arg_60_0._tweenStartScale = nil
-	arg_60_0._tweenTargetScale = nil
+	arg_61_0.tweenId = nil
+	arg_61_0._tweenMapPosFinishCb = nil
+	arg_61_0._tweenMapPosFinishCbObj = nil
+	arg_61_0._tweenStartPosX = nil
+	arg_61_0._tweenStartPosY = nil
+	arg_61_0._tweenTargetPosX = nil
+	arg_61_0._tweenTargetPosY = nil
+	arg_61_0._tweenStartScale = nil
+	arg_61_0._tweenTargetScale = nil
 end
 
-function var_0_0.onUpdateParam(arg_61_0)
+function var_0_0.onUpdateParam(arg_62_0)
 	return
 end
 
-function var_0_0.onOpen(arg_62_0)
-	local var_62_0 = arg_62_0.viewParam and arg_62_0.viewParam.fightReturn
+function var_0_0.onOpen(arg_63_0)
+	local var_63_0 = arg_63_0.viewParam and arg_63_0.viewParam.fightReturn
 
-	arg_62_0:_resetGameView(var_62_0, true)
+	arg_63_0:_resetGameView(var_63_0, true)
 
-	local var_62_1 = AssassinStealthGameModel.instance:getMapId()
+	local var_63_1 = AssassinStealthGameModel.instance:getMapId()
 
-	AssassinStealthGameController.instance:dispatchEvent(AssassinEvent.TriggerGuideOnEnterStealthGameMap, var_62_1)
+	AssassinStealthGameController.instance:dispatchEvent(AssassinEvent.TriggerGuideOnEnterStealthGameMap, var_63_1)
 end
 
-function var_0_0._resetGameView(arg_63_0, arg_63_1, arg_63_2)
-	arg_63_0._needCheckGameRequest = nil
-	arg_63_0._needCheckGameRequestAfterCloseLoading = nil
+function var_0_0._resetGameView(arg_64_0, arg_64_1, arg_64_2)
+	arg_64_0._needCheckGameRequest = nil
+	arg_64_0._needCheckGameRequestAfterCloseLoading = nil
 
-	arg_63_0:killTween()
-	gohelper.setActive(arg_63_0._gochangeMissionEff, false)
-	gohelper.setActive(arg_63_0._gostartLight, false)
-	arg_63_0:initHeroItem()
-	arg_63_0:refresh()
+	arg_64_0:killTween()
+	gohelper.setActive(arg_64_0._gochangeMissionEff, false)
+	gohelper.setActive(arg_64_0._gostartLight, false)
+	arg_64_0:initHeroItem()
+	arg_64_0:refresh()
 
-	local var_63_0 = AssassinStealthGameModel.instance:getIsNeedRequest()
-	local var_63_1 = false
+	local var_64_0 = AssassinStealthGameModel.instance:getIsNeedRequest()
+	local var_64_1 = false
 
-	if arg_63_2 then
-		var_63_1 = AssassinStealthGameModel.instance:getGameState() ~= AssassinEnum.GameState.InProgress
+	if arg_64_2 then
+		var_64_1 = AssassinStealthGameModel.instance:getGameState() ~= AssassinEnum.GameState.InProgress
 	end
 
-	if var_63_0 or arg_63_1 or var_63_1 then
-		gohelper.setActive(arg_63_0._gomissionTip, false)
-		arg_63_0._animatorPlayer:Play("open2", arg_63_0._afterOpen2Anim, arg_63_0)
+	if var_64_0 or arg_64_1 or var_64_1 then
+		gohelper.setActive(arg_64_0._gomissionTip, false)
+		arg_64_0._animatorPlayer:Play("open2", arg_64_0._afterOpen2Anim, arg_64_0)
 	else
-		arg_63_0:showTargetTip()
-		arg_63_0._animatorPlayer:Play("open1", arg_63_0.showEvent, arg_63_0)
+		arg_64_0:showTargetTip()
+		arg_64_0._animatorPlayer:Play("open1", arg_64_0.showEvent, arg_64_0)
 	end
 
-	arg_63_0:_hideUseItemGo()
+	arg_64_0:_hideUseItemGo()
 
-	local var_63_2
-	local var_63_3
-	local var_63_4
+	local var_64_2
+	local var_64_3
+	local var_64_4
 
-	if arg_63_1 and arg_63_0.viewParam then
-		var_63_2 = arg_63_0.viewParam.mapPosX
-		var_63_3 = arg_63_0.viewParam.mapPosY
-		var_63_4 = arg_63_0.viewParam.mapScale
+	if arg_64_1 and arg_64_0.viewParam then
+		var_64_2 = arg_64_0.viewParam.mapPosX
+		var_64_3 = arg_64_0.viewParam.mapPosY
+		var_64_4 = arg_64_0.viewParam.mapScale
 	end
 
-	if var_63_4 then
-		arg_63_0.curScale = var_63_4
+	if var_64_4 then
+		arg_64_0.curScale = var_64_4
 
-		arg_63_0:setLocalScale()
+		arg_64_0:setLocalScale()
 	end
 
-	if var_63_2 and var_63_3 then
-		arg_63_0:setMapPos(var_63_2, var_63_3)
+	if var_64_2 and var_64_3 then
+		arg_64_0:setMapPos(var_64_2, var_64_3)
 	else
-		local var_63_5 = AssassinConfig.instance:getAssassinConst(AssassinEnum.ConstId.RequireAssassinHeroId, true)
-		local var_63_6 = AssassinStealthGameModel.instance:getHeroUidByAssassinHeroId(var_63_5)
+		local var_64_5 = AssassinConfig.instance:getAssassinConst(AssassinEnum.ConstId.RequireAssassinHeroId, true)
+		local var_64_6 = AssassinStealthGameModel.instance:getHeroUidByAssassinHeroId(var_64_5)
 
-		arg_63_0:mapFocus2Hero(var_63_6)
+		arg_64_0:mapFocus2Hero(var_64_6)
 	end
 end
 
-function var_0_0._afterOpen2Anim(arg_64_0)
+function var_0_0._afterOpen2Anim(arg_65_0)
 	if AssassinStealthGameController.instance:checkGameState() then
 		return
 	end
 
-	if arg_64_0:_checkMissionProgress() then
-		arg_64_0._needCheckGameRequest = true
+	if arg_65_0:_checkMissionProgress() then
+		arg_65_0._needCheckGameRequest = true
 	elseif ViewMgr.instance:isOpen(ViewName.LoadingView) then
-		arg_64_0._needCheckGameRequestAfterCloseLoading = true
+		arg_65_0._needCheckGameRequestAfterCloseLoading = true
 	else
 		AssassinStealthGameController.instance:checkGameRequest()
 	end
 end
 
-function var_0_0.initHeroItem(arg_65_0, arg_65_1, arg_65_2)
-	arg_65_0._heroHeadItemList = {}
+function var_0_0.initHeroItem(arg_66_0, arg_66_1, arg_66_2)
+	arg_66_0._heroHeadItemList = {}
 
-	local var_65_0 = {}
-	local var_65_1 = AssassinStealthGameModel.instance:getHeroUidList()
-	local var_65_2 = #var_65_1
+	local var_66_0 = {}
+	local var_66_1 = AssassinStealthGameModel.instance:getHeroUidList()
+	local var_66_2 = #var_66_1
 
-	for iter_65_0, iter_65_1 in ipairs(var_65_1) do
-		var_65_0[iter_65_0] = {
-			heroUid = iter_65_1,
-			checkSelectedAnim = arg_65_1,
-			oldSelectedHeroUid = arg_65_2,
-			isLastHeroHead = iter_65_0 == var_65_2
+	for iter_66_0, iter_66_1 in ipairs(var_66_1) do
+		var_66_0[iter_66_0] = {
+			heroUid = iter_66_1,
+			checkSelectedAnim = arg_66_1,
+			oldSelectedHeroUid = arg_66_2,
+			isLastHeroHead = iter_66_0 == var_66_2
 		}
 	end
 
-	gohelper.CreateObjList(arg_65_0, arg_65_0._onCreateHeroHeadItem, var_65_0, arg_65_0._goheroLayout, arg_65_0._goheroItem, AssassinStealthGameHeroHeadItem)
+	gohelper.CreateObjList(arg_66_0, arg_66_0._onCreateHeroHeadItem, var_66_0, arg_66_0._goheroLayout, arg_66_0._goheroItem, AssassinStealthGameHeroHeadItem)
 end
 
-function var_0_0._onCreateHeroHeadItem(arg_66_0, arg_66_1, arg_66_2, arg_66_3)
-	arg_66_1:setData(arg_66_2)
+function var_0_0._onCreateHeroHeadItem(arg_67_0, arg_67_1, arg_67_2, arg_67_3)
+	arg_67_1:setData(arg_67_2)
 
-	arg_66_0._heroHeadItemList[arg_66_3] = arg_66_1
+	arg_67_0._heroHeadItemList[arg_67_3] = arg_67_1
 end
 
-function var_0_0.showTargetTip(arg_67_0)
-	local var_67_0 = AssassinStealthGameModel.instance:getMissionId()
+function var_0_0.showTargetTip(arg_68_0)
+	local var_68_0 = AssassinStealthGameModel.instance:getMissionId()
 
-	if var_67_0 <= 0 then
+	if var_68_0 <= 0 then
 		return
 	end
 
-	local var_67_1 = AssassinConfig.instance:getStealthMissionDesc(var_67_0)
+	local var_68_1 = AssassinConfig.instance:getStealthMissionDesc(var_68_0)
 
-	arg_67_0._txtmissionTip.text = var_67_1
+	arg_68_0._txtmissionTip.text = var_68_1
 
-	gohelper.setActive(arg_67_0._gomissionTip, false)
-	gohelper.setActive(arg_67_0._gomissionTip, true)
+	gohelper.setActive(arg_68_0._gomissionTip, false)
+	gohelper.setActive(arg_68_0._gomissionTip, true)
 	AudioMgr.instance:trigger(AudioEnum2_9.StealthGame.play_ui_cikeshang_taskin)
 end
 
-function var_0_0.showEvent(arg_68_0)
+function var_0_0.showEvent(arg_69_0)
 	AssassinController.instance:openAssassinStealthGameEventView()
 	AssassinHelper.lockScreen(AssassinEnum.BlockKey.PlayRoundAnim, false)
 end
 
-function var_0_0.refresh(arg_69_0)
-	arg_69_0:refreshRound()
-	arg_69_0:refreshMoveDir()
-	arg_69_0:refreshTarget()
-	arg_69_0:refreshHeroHeadItem()
-	arg_69_0:refreshBell()
-	arg_69_0:refreshInteractQTEBtn()
-	arg_69_0:refreshEndPlayerRoundBtn()
+function var_0_0.refresh(arg_70_0)
+	arg_70_0:refreshRound()
+	arg_70_0:refreshMoveDir()
+	arg_70_0:refreshTarget()
+	arg_70_0:refreshHeroHeadItem()
+	arg_70_0:refreshBell()
+	arg_70_0:refreshInteractQTEBtn()
+	arg_70_0:refreshEndPlayerRoundBtn()
 end
 
-function var_0_0.refreshRound(arg_70_0, arg_70_1)
-	local var_70_0 = AssassinStealthGameModel.instance:isPlayerTurn()
+function var_0_0.refreshRound(arg_71_0, arg_71_1)
+	local var_71_0 = AssassinStealthGameModel.instance:isPlayerTurn()
 
-	gohelper.setActive(arg_70_0._goplayerturnbg, var_70_0)
-	gohelper.setActive(arg_70_0._goenemyturnbg, not var_70_0)
+	gohelper.setActive(arg_71_0._goplayerturnbg, var_71_0)
+	gohelper.setActive(arg_71_0._goenemyturnbg, not var_71_0)
 
-	local var_70_1 = var_70_0 and luaLang("assassin_stealth_game_player_turn") or luaLang("assassin_stealth_game_enemy_turn")
+	local var_71_1 = var_71_0 and luaLang("assassin_stealth_game_player_turn") or luaLang("assassin_stealth_game_enemy_turn")
 
-	arg_70_0._txtroundTip.text = var_70_1
-	arg_70_0._txtroundTipEff.text = var_70_1
+	arg_71_0._txtroundTip.text = var_71_1
+	arg_71_0._txtroundTipEff.text = var_71_1
 
-	local var_70_2 = AssassinStealthGameModel.instance:getRound()
-	local var_70_3 = AssassinConfig.instance:getAssassinStealthConst(AssassinEnum.StealthConstId.MaxRound)
+	local var_71_2 = AssassinStealthGameModel.instance:getRound()
+	local var_71_3 = AssassinConfig.instance:getAssassinStealthConst(AssassinEnum.StealthConstId.MaxRound)
 
-	arg_70_0._txtround.text = string.format("%s/%s", var_70_2, var_70_3)
+	arg_71_0._txtround.text = string.format("%s/%s", var_71_2, var_71_3)
 
-	if arg_70_1 then
-		if var_70_0 then
-			arg_70_0._topAnimatorPlayer:Play("open", arg_70_0.showEvent, arg_70_0)
+	if arg_71_1 then
+		if var_71_0 then
+			arg_71_0._topAnimatorPlayer:Play("open", arg_71_0.showEvent, arg_71_0)
 			AssassinHelper.lockScreen(AssassinEnum.BlockKey.PlayRoundAnim, true)
 		else
-			arg_70_0._topAnimatorPlayer:Play("open")
+			arg_71_0._topAnimatorPlayer:Play("open")
 		end
 
 		AudioMgr.instance:trigger(AudioEnum2_9.StealthGame.play_ui_cikeshang_foeround)
 	end
 end
 
-function var_0_0.refreshTarget(arg_71_0)
-	local var_71_0 = AssassinStealthGameModel.instance:getMissionId()
+function var_0_0.refreshTarget(arg_72_0)
+	local var_72_0 = AssassinStealthGameModel.instance:getMissionId()
 
-	if var_71_0 <= 0 then
+	if var_72_0 <= 0 then
 		return
 	end
 
-	local var_71_1 = AssassinConfig.instance:getStealthMissionDesc(var_71_0)
-	local var_71_2, var_71_3 = AssassinStealthGameModel.instance:getMissionProgress()
-	local var_71_4 = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("assassin_stealth_game_mission_progress"), var_71_2, var_71_3)
+	local var_72_1 = AssassinConfig.instance:getStealthMissionDesc(var_72_0)
+	local var_72_2, var_72_3 = AssassinStealthGameModel.instance:getMissionProgress()
+	local var_72_4 = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("assassin_stealth_game_mission_progress"), var_72_2, var_72_3)
 
-	arg_71_0._txttarget.text = string.format("%s%s", var_71_1, var_71_4)
+	arg_72_0._txttarget.text = string.format("%s%s", var_72_1, var_72_4)
 end
 
-function var_0_0.refreshHeroHeadItem(arg_72_0, arg_72_1, arg_72_2)
-	for iter_72_0, iter_72_1 in ipairs(arg_72_0._heroHeadItemList) do
-		iter_72_1:refresh(arg_72_1, arg_72_2)
-	end
-end
-
-function var_0_0.changeHeroSkillProp(arg_73_0)
+function var_0_0.refreshHeroHeadItem(arg_73_0, arg_73_1, arg_73_2)
 	for iter_73_0, iter_73_1 in ipairs(arg_73_0._heroHeadItemList) do
-		iter_73_1:onSkillPropChange()
+		iter_73_1:refresh(arg_73_1, arg_73_2)
 	end
 end
 
-function var_0_0.refreshBell(arg_74_0)
-	local var_74_0 = AssassinStealthGameModel.instance:isAlertBellRing()
-
-	gohelper.setActive(arg_74_0._gogreen, not var_74_0)
-	gohelper.setActive(arg_74_0._gored, var_74_0)
-	gohelper.setActive(arg_74_0._gobellringmask, var_74_0)
-	arg_74_0:_changeBgmState()
+function var_0_0.changeHeroSkillProp(arg_74_0)
+	for iter_74_0, iter_74_1 in ipairs(arg_74_0._heroHeadItemList) do
+		iter_74_1:onSkillPropChange()
+	end
 end
 
-function var_0_0._changeBgmState(arg_75_0)
-	local var_75_0
+function var_0_0.refreshBell(arg_75_0)
+	local var_75_0 = AssassinStealthGameModel.instance:isAlertBellRing()
+
+	gohelper.setActive(arg_75_0._gogreen, not var_75_0)
+	gohelper.setActive(arg_75_0._gored, var_75_0)
+	gohelper.setActive(arg_75_0._gobellringmask, var_75_0)
+	arg_75_0:_changeBgmState()
+end
+
+function var_0_0._changeBgmState(arg_76_0)
+	local var_76_0
 
 	if AssassinStealthGameModel.instance:isAlertBellRing() then
-		var_75_0 = AudioMgr.instance:getIdFromString("danger")
+		var_76_0 = AudioMgr.instance:getIdFromString("danger")
 	else
-		var_75_0 = AudioMgr.instance:getIdFromString("explore")
+		var_76_0 = AudioMgr.instance:getIdFromString("explore")
 	end
 
-	local var_75_1 = AudioMgr.instance:getIdFromString("dl_music")
+	local var_76_1 = AudioMgr.instance:getIdFromString("dl_music")
 
-	AudioMgr.instance:setState(var_75_1, var_75_0)
+	AudioMgr.instance:setState(var_76_1, var_76_0)
 end
 
-function var_0_0.refreshInteractQTEBtn(arg_76_0)
-	local var_76_0 = AssassinStealthGameHelper.isSelectedHeroCanInteract()
+function var_0_0.refreshInteractQTEBtn(arg_77_0)
+	local var_77_0 = AssassinStealthGameHelper.isSelectedHeroCanInteract()
 
-	if var_76_0 then
-		local var_76_1 = AssassinStealthGameModel.instance:getSelectedHeroGameMo():getPos()
-		local var_76_2 = AssassinStealthGameModel.instance:getGridInteractId(var_76_1)
-		local var_76_3 = AssassinConfig.instance:getInteractApCost(var_76_2)
+	if var_77_0 then
+		local var_77_1 = AssassinStealthGameModel.instance:getSelectedHeroGameMo():getPos()
+		local var_77_2 = AssassinStealthGameModel.instance:getGridInteractId(var_77_1)
+		local var_77_3 = AssassinConfig.instance:getInteractApCost(var_77_2)
 
-		arg_76_0._qteApComp:setAPCount(var_76_3)
+		arg_77_0._qteApComp:setAPCount(var_77_3)
 	end
 
-	gohelper.setActive(arg_76_0._btnqte, var_76_0)
+	gohelper.setActive(arg_77_0._btnqte, var_77_0)
 end
 
-function var_0_0.refreshEndPlayerRoundBtn(arg_77_0)
-	local var_77_0 = AssassinStealthGameModel.instance:isPlayerTurn()
+function var_0_0.refreshEndPlayerRoundBtn(arg_78_0)
+	local var_78_0 = AssassinStealthGameModel.instance:isPlayerTurn()
 
-	gohelper.setActive(arg_77_0._btnend, var_77_0)
+	gohelper.setActive(arg_78_0._btnend, var_78_0)
 end
 
-function var_0_0.refreshMoveDir(arg_78_0)
-	local var_78_0 = AssassinStealthGameModel.instance:getEnemyMoveDir()
+function var_0_0.refreshMoveDir(arg_79_0)
+	local var_79_0 = AssassinStealthGameModel.instance:getEnemyMoveDir()
 
-	for iter_78_0, iter_78_1 in ipairs(arg_78_0._dirGOList) do
-		gohelper.setActive(iter_78_1, iter_78_0 == var_78_0)
+	for iter_79_0, iter_79_1 in ipairs(arg_79_0._dirGOList) do
+		gohelper.setActive(iter_79_1, iter_79_0 == var_79_0)
 	end
 end
 
-function var_0_0.onClose(arg_79_0)
-	arg_79_0._simagepic:UnLoadImage()
-	arg_79_0:killTween()
-	arg_79_0:_cancelFinishMissionTask()
+function var_0_0.onClose(arg_80_0)
+	arg_80_0._simagepic:UnLoadImage()
+	arg_80_0:killTween()
+	arg_80_0:_cancelFinishMissionTask()
 
-	arg_79_0._needCheckGameRequest = nil
-	arg_79_0._needCheckGameRequestAfterCloseLoading = nil
+	arg_80_0._needCheckGameRequest = nil
+	arg_80_0._needCheckGameRequestAfterCloseLoading = nil
 
 	AssassinHelper.lockScreen(AssassinEnum.BlockKey.TweenMapPos, false)
 	AssassinHelper.lockScreen(AssassinEnum.BlockKey.SelectedEnemy, false)
@@ -1158,9 +1170,9 @@ function var_0_0.onClose(arg_79_0)
 	AssassinHelper.lockScreen(AssassinEnum.BlockKey.PlayRoundAnim, false)
 end
 
-function var_0_0.onDestroyView(arg_80_0)
-	arg_80_0._opItemList = nil
-	arg_80_0._heroHeadItemList = nil
+function var_0_0.onDestroyView(arg_81_0)
+	arg_81_0._opItemList = nil
+	arg_81_0._heroHeadItemList = nil
 
 	AssassinStealthGameController.instance:onGameViewDestroy()
 end
