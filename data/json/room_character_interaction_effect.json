@@ -5292,6 +5292,20 @@
     "animName": "idle_birthday_loop"
   },
   {
+    "skinId": 312301,
+    "id": 1305312307,
+    "point": "special6",
+    "effectRes": "s01_aja/s01_aja_idleroom6",
+    "animName": "idle_room"
+  },
+  {
+    "skinId": 312301,
+    "id": 1305312308,
+    "point": "special6",
+    "effectRes": "s01_aja/s01_aja_idleroom6",
+    "animName": "idle_room"
+  },
+  {
     "skinId": 305601,
     "id": 116305601,
     "point": "birthday",

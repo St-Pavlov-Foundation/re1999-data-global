@@ -259,7 +259,7 @@ function var_0_0.checkPkPoint(arg_15_0)
 
 	Act205CardModel.instance:setResultPoint(var_15_2)
 
-	return true
+	return var_15_2
 end
 
 function var_0_0.getCardPKResult(arg_16_0, arg_16_1, arg_16_2)
@@ -297,7 +297,14 @@ function var_0_0.cardGameFinishGetReward(arg_17_0)
 		return
 	end
 
-	local var_17_1 = Act205CardModel.instance:getResultPoint()
+	local var_17_1 = Act205CardModel.instance:getResultPoint() or arg_17_0:checkPkPoint()
+
+	if not var_17_1 then
+		var_17_1 = Act205Config.instance:getMaxPoint()
+
+		Act205CardModel.instance:setResultPoint(var_17_1)
+	end
+
 	local var_17_2 = var_17_1 > Act205Enum.CardGameFailPoint
 	local var_17_3 = 0
 
@@ -323,8 +330,8 @@ function var_0_0._onGetCardGameReward(arg_18_0, arg_18_1, arg_18_2, arg_18_3)
 
 	local var_18_0 = Act205CardModel.instance:getResultPoint()
 
-	Act205CardModel.instance:setResultPoint()
 	arg_18_0:openCardResultView(var_18_0, arg_18_3.rewardId)
+	Act205CardModel.instance:setResultPoint()
 
 	local var_18_1 = Act205Model.instance:getAct205Id()
 

@@ -67,6 +67,7 @@ end
 function var_0_0._editableInitView(arg_4_0)
 	gohelper.setActive(arg_4_0._godialogcontainer, false)
 	gohelper.setActive(arg_4_0._godialog, false)
+	gohelper.addChild(arg_4_0.viewGO, arg_4_0._godialogcontainer)
 
 	arg_4_0._dialogItem = MonoHelper.addNoUpdateLuaComOnceToGo(arg_4_0._godialog, FightViewDialogItem, arg_4_0)
 	arg_4_0._toShowConfigList = {}

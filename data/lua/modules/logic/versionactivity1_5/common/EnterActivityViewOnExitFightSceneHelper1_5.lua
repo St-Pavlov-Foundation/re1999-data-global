@@ -41,11 +41,6 @@ function var_0_0._enterActivity11502(arg_2_0, arg_2_1)
 
 	local var_2_3 = FlowSequence.New()
 
-	var_2_3:addWork(OpenViewWork.New({
-		openFunction = VersionActivity2_0EnterController.directOpenVersionActivityEnterView,
-		openFunctionObj = VersionActivity2_0EnterController.instance,
-		waitOpenViewName = ViewName.VersionActivity2_0EnterView
-	}))
 	var_2_3:registerDoneListener(function()
 		if var_2_2 then
 			VersionActivity1_5DungeonController.instance:openVersionActivityDungeonMapView(nil, var_2_0, function()

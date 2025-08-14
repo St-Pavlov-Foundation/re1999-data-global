@@ -34,6 +34,12 @@ function var_0_0.buildReplaySequence()
 			end
 		end
 
+		if #iter_1_1.opers == 0 then
+			var_1_0:addWork(FunctionWork.New(function()
+				FightRpc.instance:sendBeginRoundRequest(FightDataHelper.operationDataMgr:getOpList())
+			end))
+		end
+
 		var_1_0:addWork(FightReplayWorkWaitRoundEnd.New())
 		var_1_0:addWork(WorkWaitSeconds.New(0.1 / FightModel.instance:getSpeed()))
 	end

@@ -299,14 +299,15 @@ function var_0_0.refreshAllStageLayerUnlockState(arg_28_0)
 
 		for iter_28_2, iter_28_3 in pairs(var_28_1) do
 			local var_28_2 = iter_28_3.isOpen
-			local var_28_3, var_28_4, var_28_5, var_28_6 = arg_28_0:_getDUSValueByDSL(var_0_4.BossRushNewLayer, iter_28_0, iter_28_2)
+			local var_28_3 = iter_28_3.layer
+			local var_28_4, var_28_5, var_28_6, var_28_7 = arg_28_0:_getDUSValueByDSL(var_0_4.BossRushNewLayer, iter_28_0, var_28_3)
 
-			if not var_28_6 then
+			if not var_28_7 then
 				if var_28_2 then
-					arg_28_0:setIsNewUnlockStageLayer(iter_28_0, iter_28_2, true)
+					arg_28_0:setIsNewUnlockStageLayer(iter_28_0, var_28_3, true)
 				end
-			elseif not var_28_2 and var_28_5 >= 1 then
-				arg_28_0:setIsNewUnlockStageLayer(iter_28_0, iter_28_2, false, true)
+			elseif not var_28_2 and var_28_6 >= 1 then
+				arg_28_0:setIsNewUnlockStageLayer(iter_28_0, var_28_3, false, true)
 			end
 		end
 	end

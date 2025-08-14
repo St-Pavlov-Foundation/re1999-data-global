@@ -7015,6 +7015,11 @@
     "bankName": "hero311603_mainsfx"
   },
   {
+    "id": 1311660,
+    "eventName": "play_hero3116_mainvoc_16",
+    "bankName": "hero3116_mainvoc"
+  },
+  {
     "id": 1311701,
     "eventName": "play_hero3117_mainvoc_1",
     "bankName": "hero3117_mainvoc"

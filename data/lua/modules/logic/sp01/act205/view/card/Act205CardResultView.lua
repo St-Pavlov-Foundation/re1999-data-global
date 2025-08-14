@@ -58,6 +58,10 @@ end
 function var_0_0.onUpdateParam(arg_7_0)
 	arg_7_0._point = arg_7_0.viewParam.point
 	arg_7_0._rewardId = arg_7_0.viewParam.rewardId
+
+	if not arg_7_0._point then
+		arg_7_0._point = Act205Config.instance:getPointByReward(arg_7_0._rewardId) or Act205Config.instance:getMaxPoint()
+	end
 end
 
 function var_0_0.onOpen(arg_8_0)

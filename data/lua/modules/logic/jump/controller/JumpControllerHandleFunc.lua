@@ -1186,8 +1186,7 @@ end
 
 function var_0_0.jumpToAct1_5Dungeon(arg_91_0, arg_91_1, arg_91_2)
 	table.insert(arg_91_0.closeViewNames, ViewName.VersionActivity1_5DungeonMapLevelView)
-	table.insert(arg_91_0.waitOpenViewNames, ViewName.VersionActivity2_0EnterView)
-	VersionActivity2_1EnterController.instance:openVersionActivityEnterViewIfNotOpened(function()
+	VersionActivity2_0EnterController.instance:openVersionActivityEnterViewIfNotOpened(function()
 		if #arg_91_2 >= 3 then
 			local var_92_0 = arg_91_2[3]
 
@@ -1217,8 +1216,7 @@ function var_0_0.jumpToAct1_5Dungeon(arg_91_0, arg_91_1, arg_91_2)
 end
 
 function var_0_0.jumpToAct1_5DungeonStore(arg_93_0, arg_93_1, arg_93_2)
-	table.insert(arg_93_0.waitOpenViewNames, ViewName.VersionActivity2_0EnterView)
-	VersionActivity2_1EnterController.instance:openVersionActivityEnterViewIfNotOpened(function()
+	VersionActivity2_0EnterController.instance:openVersionActivityEnterViewIfNotOpened(function()
 		table.insert(arg_93_0.waitOpenViewNames, ViewName.ReactivityStoreView)
 		ReactivityController.instance:openReactivityStoreView(JumpEnum.ActIdEnum.Act1_5Dungeon)
 	end)

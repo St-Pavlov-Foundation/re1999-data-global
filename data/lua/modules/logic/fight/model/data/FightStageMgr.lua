@@ -20,7 +20,8 @@ var_0_0.FightStateType = {
 	Distribute1Card = GameUtil.getEnumId(),
 	OperationView2PlayView = GameUtil.getEnumId(),
 	SendOperation2Server = GameUtil.getEnumId(),
-	PlaySeasonChangeHero = GameUtil.getEnumId()
+	PlaySeasonChangeHero = GameUtil.getEnumId(),
+	AiJiAoQteIng = GameUtil.getEnumId()
 }
 var_0_0.OperateStateType = {
 	Discard = GameUtil.getEnumId(),

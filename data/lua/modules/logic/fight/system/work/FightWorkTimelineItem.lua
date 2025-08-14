@@ -78,7 +78,13 @@ function var_0_0.skipSkill(arg_10_0)
 end
 
 function var_0_0.onTimelineFinish(arg_11_0)
-	if not arg_11_0.skipAfterTimelineFunc then
+	local var_11_0 = false
+
+	if arg_11_0.skipAfterTimelineFunc then
+		var_11_0 = true
+	end
+
+	if not var_11_0 then
 		arg_11_0:afterPlayTimeline()
 	end
 
@@ -96,6 +102,11 @@ end
 
 function var_0_0.afterPlayTimeline(arg_12_0)
 	FightSkillMgr.instance:afterTimeline(arg_12_0.entity, arg_12_0.fightStepData)
+
+	if FightDataHelper.stageMgr:inFightState(FightStageMgr.FightStateType.AiJiAoQteIng) then
+		return
+	end
+
 	arg_12_0:_resetTargetHp()
 
 	if arg_12_0.timelineItem then

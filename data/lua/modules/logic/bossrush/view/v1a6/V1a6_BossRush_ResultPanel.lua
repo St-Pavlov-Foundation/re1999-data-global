@@ -173,6 +173,7 @@ end
 
 function var_0_0._onTweenFinish(arg_19_0)
 	arg_19_0._isCanSkip = true
+	arg_19_0._txtScore.text = arg_19_0.fightScore
 end
 
 function var_0_0.initEvaluate(arg_20_0)

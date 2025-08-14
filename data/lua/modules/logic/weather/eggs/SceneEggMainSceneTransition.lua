@@ -44,11 +44,13 @@ function var_0_0._showEffect(arg_6_0)
 	TaskDispatcher.runDelay(arg_6_0._delayHideGoList, arg_6_0, 2)
 	arg_6_0:setGoListVisible(true)
 	PostProcessingMgr.instance:setUnitPPValue("sceneMaskTexDownTimes", 0)
+	GameGCMgr.instance:dispatchEvent(GameGCEvent.SetBanGc, "SceneEggMainSceneTransition", true)
 end
 
 function var_0_0._delayHideGoList(arg_7_0)
 	arg_7_0:setGoListVisible(false)
 	PostProcessingMgr.instance:setUnitPPValue("sceneMaskTexDownTimes", 1)
+	GameGCMgr.instance:dispatchEvent(GameGCEvent.SetBanGc, "SceneEggMainSceneTransition", false)
 end
 
 function var_0_0._onSceneClose(arg_8_0)

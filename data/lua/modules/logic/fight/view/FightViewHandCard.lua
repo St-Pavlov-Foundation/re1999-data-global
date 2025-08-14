@@ -768,6 +768,15 @@ function var_0_0._playHandCard(arg_36_0, arg_36_1, arg_36_2, arg_36_3)
 	arg_36_0:_playCardAudio(var_36_1)
 end
 
+local var_0_3 = {
+	31160101,
+	31160102,
+	31160103,
+	31160104,
+	31160105,
+	31160106
+}
+
 function var_0_0._playCardAudio(arg_37_0, arg_37_1)
 	if FightReplayModel.instance:isReplay() then
 		return
@@ -796,7 +805,7 @@ function var_0_0._playCardAudio(arg_37_0, arg_37_1)
 	local var_37_6 = HeroConfig.instance:getHeroCO(var_37_5)
 	local var_37_7
 
-	if arg_37_1.cardType == FightEnum.CardType.SKILL3 then
+	if not tabletool.indexOf(var_0_3, arg_37_1.skillId) and arg_37_1.cardType == FightEnum.CardType.SKILL3 then
 		local var_37_8 = FightConfig.instance:getSkinSkillTimeline(var_37_1.skin, arg_37_1.skillId)
 		local var_37_9 = FightAudioMgr.instance:_getHeroVoiceCOs(var_37_5, CharacterEnum.VoiceType.FightCardSkill3, var_37_1.skin)
 

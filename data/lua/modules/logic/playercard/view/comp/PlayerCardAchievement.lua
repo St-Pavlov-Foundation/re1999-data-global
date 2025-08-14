@@ -87,6 +87,10 @@ end
 function var_0_0.onRefreshView(arg_12_0)
 	local var_12_0 = arg_12_0:getCardInfo()
 
+	if not var_12_0 then
+		return
+	end
+
 	if var_12_0.achievementCount == -1 then
 		arg_12_0.txtDec.text = PlayerCardEnum.EmptyString2
 	else

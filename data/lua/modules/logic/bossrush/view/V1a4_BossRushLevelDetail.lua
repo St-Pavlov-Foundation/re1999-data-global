@@ -67,7 +67,7 @@ function var_0_0.removeEvents(arg_3_0)
 end
 
 function var_0_0._btnbonusOnClick(arg_4_0)
-	ViewMgr.instance:openView(ViewName.V1a6_BossRush_BonusView, arg_4_0.viewParam)
+	BossRushController.instance:openBonusView(arg_4_0.viewParam)
 end
 
 function var_0_0._btnOfferOnClick(arg_5_0)

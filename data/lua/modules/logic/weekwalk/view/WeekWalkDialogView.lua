@@ -450,6 +450,8 @@ function var_0_0._sendFinishDialog(arg_27_0)
 		if var_27_0 ~= var_27_2 then
 			var_27_0 = var_27_2
 		end
+	else
+		var_27_0 = 0
 	end
 
 	WeekwalkRpc.instance:sendWeekwalkDialogRequest(arg_27_0._config.id, var_27_0)

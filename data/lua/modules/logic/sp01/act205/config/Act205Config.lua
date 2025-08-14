@@ -227,42 +227,62 @@ function var_0_0.getPointList(arg_25_0)
 	return var_25_0
 end
 
-function var_0_0.getRewardId(arg_26_0, arg_26_1)
-	local var_26_0 = arg_26_0:getAct205CardSettleCfg(arg_26_1, true)
+function var_0_0.getMaxPoint(arg_26_0)
+	if not arg_26_0._cardGameMaxPoint then
+		arg_26_0._cardGameMaxPoint = 0
 
-	return var_26_0 and var_26_0.rewardId
+		for iter_26_0, iter_26_1 in ipairs(lua_activity205_card_settle.configList) do
+			arg_26_0._cardGameMaxPoint = math.max(arg_26_0._cardGameMaxPoint, iter_26_1.point)
+		end
+	end
+
+	return arg_26_0._cardGameMaxPoint
 end
 
-function var_0_0.getIsCardRestrain(arg_27_0, arg_27_1, arg_27_2)
-	if arg_27_0:isSpCard(arg_27_1) then
+function var_0_0.getPointByReward(arg_27_0, arg_27_1)
+	for iter_27_0, iter_27_1 in ipairs(lua_activity205_card_settle.configList) do
+		if iter_27_1.rewardId == arg_27_1 then
+			return iter_27_1.point
+		end
+	end
+end
+
+function var_0_0.getRewardId(arg_28_0, arg_28_1)
+	local var_28_0 = arg_28_0:getAct205CardSettleCfg(arg_28_1, true)
+
+	return var_28_0 and var_28_0.rewardId
+end
+
+function var_0_0.getIsCardRestrain(arg_29_0, arg_29_1, arg_29_2)
+	if arg_29_0:isSpCard(arg_29_1) then
 		return
 	end
 
-	return arg_27_0._restrainedDict[arg_27_1] and arg_27_0._restrainedDict[arg_27_1][arg_27_2]
+	return arg_29_0._restrainedDict[arg_29_1] and arg_29_0._restrainedDict[arg_29_1][arg_29_2]
 end
 
-function var_0_0.getIsCardBeRestrained(arg_28_0, arg_28_1, arg_28_2)
-	if arg_28_0:isSpCard(arg_28_1) then
+function var_0_0.getIsCardBeRestrained(arg_30_0, arg_30_1, arg_30_2)
+	if arg_30_0:isSpCard(arg_30_1) then
 		return
 	end
 
-	return arg_28_0._beRestrainedDict[arg_28_1] and arg_28_0._beRestrainedDict[arg_28_1][arg_28_2]
+	return arg_30_0._beRestrainedDict[arg_30_1] and arg_30_0._beRestrainedDict[arg_30_1][arg_30_2]
 end
 
-function var_0_0.getBeRestrainedCard(arg_29_0, arg_29_1)
-	local var_29_0
+function var_0_0.getBeRestrainedCard(arg_31_0, arg_31_1)
+	local var_31_0
 
-	if arg_29_0._beRestrainedDict[arg_29_1] then
-		local var_29_1 = {}
+	if arg_31_0._beRestrainedDict[arg_31_1] then
+		local var_31_1 = {}
 
-		for iter_29_0, iter_29_1 in pairs(arg_29_0._beRestrainedDict[arg_29_1]) do
-			var_29_1[#var_29_1 + 1] = iter_29_0
+		for iter_31_0, iter_31_1 in pairs(arg_31_0._beRestrainedDict[arg_31_1]) do
+			var_31_1[#var_31_1 + 1] = iter_31_0
 		end
 
-		var_29_0 = var_29_1[math.random(1, #var_29_1)]
+		var_31_0 = var_31_1[math.random(1, #var_31_1)]
 	end
 
-	return var_29_0
+	return var_31_0
 end
 
 var_0_0.instance = var_0_0.New()

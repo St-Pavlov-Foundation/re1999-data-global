@@ -131,10 +131,11 @@ function var_0_0.onDestroyView(arg_17_0)
 end
 
 function var_0_0.firstAnimationDone(arg_18_0)
-	local var_18_0 = arg_18_0._view.viewContainer:getScrollAnimRemoveItem(BossRushEnum.BonusViewTab.ScheduleTab)
+	local var_18_0 = V1a6_BossRush_BonusModel.instance:getTab()
+	local var_18_1 = arg_18_0._view.viewContainer:getScrollAnimRemoveItem(var_18_0)
 
-	if var_18_0 then
-		var_18_0:removeByIndex(arg_18_0._index, arg_18_0.secondAnimationDone, arg_18_0)
+	if var_18_1 then
+		var_18_1:removeByIndex(arg_18_0._index, arg_18_0.secondAnimationDone, arg_18_0)
 	else
 		arg_18_0:secondAnimationDone()
 	end

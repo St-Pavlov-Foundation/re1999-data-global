@@ -49,6 +49,8 @@ function var_0_0.checkNeedPlayerOperate(arg_7_0)
 		FightDataHelper.tempMgr.aiJiAoFakeHpOffset = {}
 		FightDataHelper.tempMgr.aiJiAoQteCount = 0
 		FightDataHelper.tempMgr.aiJiAoQteEndlessLoop = 0
+
+		FightDataHelper.stageMgr:exitFightState(FightStageMgr.FightStateType.AiJiAoQteIng)
 	end
 
 	if arg_7_0:_checkChangeHeroNeedUseSkill() then

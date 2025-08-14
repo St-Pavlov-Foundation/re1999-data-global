@@ -119,7 +119,7 @@ function var_0_0.onOpen(arg_7_0)
 	if var_7_0.pos then
 		local var_7_19, var_7_20 = recthelper.screenPosToAnchorPos2(var_7_0.pos, arg_7_0.viewGO.transform)
 		local var_7_21 = var_7_19 - var_0_0.TipHalfWidth
-		local var_7_22 = var_7_20 + var_0_0.TipOffsetY
+		local var_7_22 = math.max(0, var_7_20 + var_0_0.TipOffsetY)
 
 		arg_7_0:setTipPos(var_7_21, var_7_22)
 		gohelper.fitScreenOffset(arg_7_0._gosuitTip.transform)
@@ -127,7 +127,16 @@ function var_0_0.onOpen(arg_7_0)
 end
 
 function var_0_0._onHyperLinkClick(arg_8_0, arg_8_1, arg_8_2)
-	CommonBuffTipController.instance:openCommonTipView(tonumber(arg_8_1), arg_8_2)
+	local var_8_0 = recthelper.getAnchorX(arg_8_0._gosuitTip.transform)
+	local var_8_1
+
+	if var_8_0 >= 0 then
+		var_8_1 = Vector2.New(var_8_0 - 825, 175)
+	else
+		var_8_1 = Vector2.New(var_8_0 + 255, 175)
+	end
+
+	CommonBuffTipController.instance:openCommonTipViewWithCustomPos(tonumber(arg_8_1), var_8_1)
 end
 
 function var_0_0.setTipPos(arg_9_0, arg_9_1, arg_9_2)

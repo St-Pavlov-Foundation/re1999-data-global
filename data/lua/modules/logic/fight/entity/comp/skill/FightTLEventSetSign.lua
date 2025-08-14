@@ -51,9 +51,17 @@ function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 	if arg_1_3[5] == "1" then
 		arg_1_1.forceShowDamageTotalFloat = true
 	end
+
+	local var_1_11 = arg_1_3[6]
+
+	if var_1_11 == "aiJiAoQteStart" then
+		FightDataHelper.stageMgr:enterFightState(FightStageMgr.FightStateType.AiJiAoQteIng)
+	elseif var_1_11 == "aiJiAoQteEnd" then
+		FightDataHelper.stageMgr:exitFightState(FightStageMgr.FightStateType.AiJiAoQteIng)
+	end
 end
 
-function var_0_0.onDestructor(arg_2_0)
+function var_0_0.onTrackEnd(arg_2_0)
 	if arg_2_0.workTimelineItem.skipAfterTimelineFunc then
 		local var_2_0 = FightSkillMgr.instance
 
@@ -65,6 +73,10 @@ function var_0_0.onDestructor(arg_2_0)
 
 		var_2_0._playingEntityId2StepData[arg_2_0.fightStepData.fromId] = nil
 	end
+end
+
+function var_0_0.onDestructor(arg_3_0)
+	return
 end
 
 return var_0_0

@@ -82,7 +82,7 @@ end
 function var_0_0.getScrollAnimRemoveItem(arg_4_0, arg_4_1)
 	local var_4_0 = arg_4_0._tabView[arg_4_1]
 
-	if var_4_0 then
+	if var_4_0 and var_4_0.scrollView and not gohelper.isNil(var_4_0.scrollView._csListScroll) then
 		return ListScrollAnimRemoveItem.Get(var_4_0.scrollView)
 	end
 end

@@ -209,6 +209,10 @@ function var_0_0._onStartSwitchScene(arg_19_0)
 	arg_19_0._tempRoleParam = arg_19_0._changeRoleParam
 
 	arg_19_0:onSceneClose()
+
+	if arg_19_0._isMain then
+		arg_19_0._randomMainHero = false
+	end
 end
 
 function var_0_0._onSwitchSceneInitFinish(arg_20_0)

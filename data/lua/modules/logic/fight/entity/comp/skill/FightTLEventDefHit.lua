@@ -429,7 +429,7 @@ function var_0_0._playDefHit(arg_7_0, arg_7_1, arg_7_2)
 		FightWorkEzioBigSkillDamage1000.fakeDecreaseHp(arg_7_1.id, var_7_20)
 		arg_7_0:com_sendFightEvent(FightEvent.AiJiAoFakeDecreaseHp, arg_7_1.id)
 
-		local var_7_21 = arg_7_2.effectNum1 == 3 and FightEnum.FloatType.crit_damage_origin or FightEnum.FloatType.damage_origin
+		local var_7_21 = arg_7_2.effectNum1 == 131 and FightEnum.FloatType.crit_damage_origin or FightEnum.FloatType.damage_origin
 		local var_7_22 = arg_7_1:isMySide() and -var_7_20 or var_7_20
 
 		table.insert(arg_7_0._floatParams, {
@@ -1046,7 +1046,7 @@ function var_0_0.showEzioOriginFloat(arg_26_0)
 				FightDataHelper.playEffectData(iter_26_1)
 
 				local var_26_1 = iter_26_1.effectNum
-				local var_26_2 = iter_26_1.effectNum1 == 3 and FightEnum.FloatType.crit_damage_origin or FightEnum.FloatType.damage_origin
+				local var_26_2 = iter_26_1.effectNum1 == 131 and FightEnum.FloatType.crit_damage_origin or FightEnum.FloatType.damage_origin
 				local var_26_3 = FightHelper.getEntity(var_26_0)
 
 				if var_26_3 then

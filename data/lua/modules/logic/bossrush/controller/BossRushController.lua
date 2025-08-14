@@ -176,196 +176,206 @@ function var_0_0.openVersionActivityEnterViewIfNotOpened(arg_13_0)
 	end
 end
 
-function var_0_0._respBeginFight(arg_14_0)
-	if not arg_14_0:isInBossRushFight() then
-		return
+function var_0_0.openBonusView(arg_14_0, arg_14_1)
+	V1a6_BossRush_BonusModel.instance:setTab(BossRushEnum.BonusViewTab.AchievementTab)
+
+	local function var_14_0()
+		ViewMgr.instance:openView(ViewName.V1a6_BossRush_BonusView, arg_14_1)
 	end
 
-	local var_14_0 = FightModel.instance:getCurMonsterGroupId()
-
-	if not var_14_0 then
-		return
-	end
-
-	local var_14_1 = BossRushConfig.instance:getMonsterGroupBossId(var_14_0)
-
-	arg_14_0._temp11235 = 0
-
-	arg_14_0._model:setFightScore(0)
-	arg_14_0._model:clearStageScore()
-
-	if string.nilorempty(var_14_1) then
-		arg_14_0._model:setBossIdList(nil)
-	else
-		local var_14_2 = string.splitToNumber(var_14_1, "#")
-
-		arg_14_0._model:setBossIdList(var_14_2)
-		arg_14_0._model:setBossBloodCount(arg_14_0._model:getBossBloodMaxCount())
-	end
-
-	arg_14_0:_refreshCurBossHP()
+	var_0_0.instance:sendGetTaskInfoRequest(var_14_0, arg_14_0)
 end
 
-function var_0_0._respBeginRound(arg_15_0)
+function var_0_0._respBeginFight(arg_16_0)
+	if not arg_16_0:isInBossRushFight() then
+		return
+	end
+
+	local var_16_0 = FightModel.instance:getCurMonsterGroupId()
+
+	if not var_16_0 then
+		return
+	end
+
+	local var_16_1 = BossRushConfig.instance:getMonsterGroupBossId(var_16_0)
+
+	arg_16_0._temp11235 = 0
+
+	arg_16_0._model:setFightScore(0)
+	arg_16_0._model:clearStageScore()
+
+	if string.nilorempty(var_16_1) then
+		arg_16_0._model:setBossIdList(nil)
+	else
+		local var_16_2 = string.splitToNumber(var_16_1, "#")
+
+		arg_16_0._model:setBossIdList(var_16_2)
+		arg_16_0._model:setBossBloodCount(arg_16_0._model:getBossBloodMaxCount())
+	end
+
+	arg_16_0:_refreshCurBossHP()
+end
+
+function var_0_0._respBeginRound(arg_17_0)
 	return
 end
 
-function var_0_0._onIndicatorChange(arg_16_0, arg_16_1)
-	local var_16_0 = FightEnum.IndicatorId
+function var_0_0._onIndicatorChange(arg_18_0, arg_18_1)
+	local var_18_0 = FightEnum.IndicatorId
 
-	if var_16_0.V1a4_BossRush_ig_ScoreTips == arg_16_1 then
-		local var_16_1 = FightDataHelper.fieldMgr:getIndicatorNum(arg_16_1)
+	if var_18_0.V1a4_BossRush_ig_ScoreTips == arg_18_1 then
+		local var_18_1 = FightDataHelper.fieldMgr:getIndicatorNum(arg_18_1)
 
-		arg_16_0._temp11235 = (arg_16_0._temp11235 or 0) + var_16_1
+		arg_18_0._temp11235 = (arg_18_0._temp11235 or 0) + var_18_1
 
-		arg_16_0._model:noticeFightScore(arg_16_0._temp11235)
-		arg_16_0._model:setFightScore(arg_16_0._temp11235)
-	elseif var_16_0.BossInfiniteHPCount == arg_16_1 then
-		local var_16_2 = FightDataHelper.fieldMgr:getIndicatorNum(arg_16_1)
+		arg_18_0._model:noticeFightScore(arg_18_0._temp11235)
+		arg_18_0._model:setFightScore(arg_18_0._temp11235)
+	elseif var_18_0.BossInfiniteHPCount == arg_18_1 then
+		local var_18_2 = FightDataHelper.fieldMgr:getIndicatorNum(arg_18_1)
 
-		arg_16_0._model:setInfiniteBossDeadSum(var_16_2)
+		arg_18_0._model:setInfiniteBossDeadSum(var_18_2)
 	end
 end
 
-function var_0_0._refreshCurBossHP(arg_17_0)
-	local var_17_0 = arg_17_0._model:getBossEntityMO()
+function var_0_0._refreshCurBossHP(arg_19_0)
+	local var_19_0 = arg_19_0._model:getBossEntityMO()
 
-	if not var_17_0 then
+	if not var_19_0 then
 		return
 	end
 
-	arg_17_0._model:setBossCurHP(var_17_0.currentHp)
+	arg_19_0._model:setBossCurHP(var_19_0.currentHp)
 end
 
-function var_0_0._onHpChange(arg_18_0, arg_18_1)
-	if not arg_18_1 then
+function var_0_0._onHpChange(arg_20_0, arg_20_1)
+	if not arg_20_1 then
 		return
 	end
 
-	local var_18_0 = arg_18_0._model:getBossEntityMO()
+	local var_20_0 = arg_20_0._model:getBossEntityMO()
 
-	if not var_18_0 then
+	if not var_20_0 then
 		return
 	end
 
-	local var_18_1 = arg_18_1:getMO()
+	local var_20_1 = arg_20_1:getMO()
 
-	if var_18_0.id ~= var_18_1.id then
+	if var_20_0.id ~= var_20_1.id then
 		return
 	end
 
-	arg_18_0._model:setBossCurHP(var_18_0.currentHp)
+	arg_20_0._model:setBossCurHP(var_20_0.currentHp)
 end
 
-function var_0_0._onMonsterChange(arg_19_0, arg_19_1, arg_19_2)
-	arg_19_0._model:subBossBlood()
+function var_0_0._onMonsterChange(arg_21_0, arg_21_1, arg_21_2)
+	arg_21_0._model:subBossBlood()
 end
 
-function var_0_0._onGetInfoFinish(arg_20_0)
-	arg_20_0:_recordBossRushCurrencyNum()
+function var_0_0._onGetInfoFinish(arg_22_0)
+	arg_22_0:_recordBossRushCurrencyNum()
 end
 
-function var_0_0._recordBossRushCurrencyNum(arg_21_0)
-	local var_21_0 = PlayerEnum.SimpleProperty.V2a7_BossRushCurrencyNum
+function var_0_0._recordBossRushCurrencyNum(arg_23_0)
+	local var_23_0 = PlayerEnum.SimpleProperty.V2a7_BossRushCurrencyNum
 
-	if not PlayerModel.instance:getSimpleProperty(var_21_0) then
-		local var_21_1 = V1a6_BossRush_StoreModel.instance:getCurrencyCount()
+	if not PlayerModel.instance:getSimpleProperty(var_23_0) then
+		local var_23_1 = V1a6_BossRush_StoreModel.instance:getCurrencyCount()
 
-		PlayerModel.instance:forceSetSimpleProperty(var_21_0, tostring(var_21_1))
-		PlayerRpc.instance:sendSetSimplePropertyRequest(var_21_0, tostring(var_21_1))
+		PlayerModel.instance:forceSetSimpleProperty(var_23_0, tostring(var_23_1))
+		PlayerRpc.instance:sendSetSimplePropertyRequest(var_23_0, tostring(var_23_1))
 	end
 end
 
-function var_0_0.checkBattleChapterType(arg_22_0, arg_22_1, arg_22_2)
-	if arg_22_1 and GameSceneMgr.instance:getCurSceneType() ~= SceneType.Fight then
+function var_0_0.checkBattleChapterType(arg_24_0, arg_24_1, arg_24_2)
+	if arg_24_1 and GameSceneMgr.instance:getCurSceneType() ~= SceneType.Fight then
 		return false
 	end
 
-	local var_22_0 = DungeonModel.instance.curSendChapterId
+	local var_24_0 = DungeonModel.instance.curSendChapterId
 
-	if not var_22_0 then
+	if not var_24_0 then
 		return false
 	end
 
-	local var_22_1 = DungeonConfig.instance:getChapterCO(var_22_0)
+	local var_24_1 = DungeonConfig.instance:getChapterCO(var_24_0)
 
-	if not var_22_1 then
+	if not var_24_1 then
 		return false
 	end
 
-	return var_22_1.type == arg_22_2
+	return var_24_1.type == arg_24_2
 end
 
-function var_0_0.isInBossRushInfiniteFight(arg_23_0, arg_23_1)
-	return arg_23_0:checkBattleChapterType(arg_23_1, DungeonEnum.ChapterType.BossRushInfinite)
+function var_0_0.isInBossRushInfiniteFight(arg_25_0, arg_25_1)
+	return arg_25_0:checkBattleChapterType(arg_25_1, DungeonEnum.ChapterType.BossRushInfinite)
 end
 
-function var_0_0.isInBossRushNormalFight(arg_24_0, arg_24_1)
-	return arg_24_0:checkBattleChapterType(arg_24_1, DungeonEnum.ChapterType.BossRushNormal)
+function var_0_0.isInBossRushNormalFight(arg_26_0, arg_26_1)
+	return arg_26_0:checkBattleChapterType(arg_26_1, DungeonEnum.ChapterType.BossRushNormal)
 end
 
-function var_0_0.isInBossRushFight(arg_25_0, arg_25_1)
-	return arg_25_0:isInBossRushNormalFight(arg_25_1) or arg_25_0:isInBossRushInfiniteFight(arg_25_1)
+function var_0_0.isInBossRushFight(arg_27_0, arg_27_1)
+	return arg_27_0:isInBossRushNormalFight(arg_27_1) or arg_27_0:isInBossRushInfiniteFight(arg_27_1)
 end
 
-function var_0_0.isInBossRushDungeon(arg_26_0)
-	local var_26_0 = DungeonModel.instance.curSendEpisodeId
+function var_0_0.isInBossRushDungeon(arg_28_0)
+	local var_28_0 = DungeonModel.instance.curSendEpisodeId
 
-	if not var_26_0 then
+	if not var_28_0 then
 		return false
 	end
 
-	local var_26_1 = DungeonConfig.instance:getEpisodeCO(var_26_0)
+	local var_28_1 = DungeonConfig.instance:getEpisodeCO(var_28_0)
 
-	if not var_26_1 then
+	if not var_28_1 then
 		return false
 	end
 
-	local var_26_2 = var_26_1.chapterId
-	local var_26_3 = DungeonConfig.instance:getChapterCO(var_26_2)
+	local var_28_2 = var_28_1.chapterId
+	local var_28_3 = DungeonConfig.instance:getChapterCO(var_28_2)
 
-	if not var_26_3 then
+	if not var_28_3 then
 		return false
 	end
 
-	local var_26_4 = var_26_3.type
-	local var_26_5 = DungeonEnum.ChapterType
+	local var_28_4 = var_28_3.type
+	local var_28_5 = DungeonEnum.ChapterType
 
-	if var_26_4 == var_26_5.BossRushInfinite or var_26_4 == var_26_5.BossRushNormal then
+	if var_28_4 == var_28_5.BossRushInfinite or var_28_4 == var_28_5.BossRushNormal then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.openBossRushStoreView(arg_27_0, arg_27_1)
+function var_0_0.openBossRushStoreView(arg_29_0, arg_29_1)
 	StoreRpc.instance:sendGetStoreInfosRequest(StoreEnum.BossRushStore, function()
-		local var_28_0 = {
-			actId = arg_27_1
+		local var_30_0 = {
+			actId = arg_29_1
 		}
 
-		ViewMgr.instance:openView(ViewName.V1a6_BossRush_StoreView, var_28_0)
-	end, arg_27_0)
+		ViewMgr.instance:openView(ViewName.V1a6_BossRush_StoreView, var_30_0)
+	end, arg_29_0)
 end
 
-function var_0_0.openResultPanel(arg_29_0, arg_29_1)
-	ViewMgr.instance:openView(ViewName.V1a6_BossRush_ResultPanel, arg_29_1)
+function var_0_0.openResultPanel(arg_31_0, arg_31_1)
+	ViewMgr.instance:openView(ViewName.V1a6_BossRush_ResultPanel, arg_31_1)
 end
 
-function var_0_0.openBossRushOfferRoleView(arg_30_0)
-	local var_30_0 = {
+function var_0_0.openBossRushOfferRoleView(arg_32_0)
+	local var_32_0 = {
 		actId = BossRushConfig.instance:getActivityId()
 	}
 
-	ViewMgr.instance:openView(ViewName.V2a1_BossRush_OfferRoleView, var_30_0)
+	ViewMgr.instance:openView(ViewName.V2a1_BossRush_OfferRoleView, var_32_0)
 end
 
-function var_0_0.getGroupFightViewName(arg_31_0, arg_31_1)
+function var_0_0.getGroupFightViewName(arg_33_0, arg_33_1)
 	if V2a9BossRushModel.instance:isV2a9BossRush() then
-		local var_31_0 = BossRushConfig.instance:getEpisodeCoByEpisodeId(arg_31_1)
+		local var_33_0 = BossRushConfig.instance:getEpisodeCoByEpisodeId(arg_33_1)
 
-		if var_31_0 and var_31_0.layer == BossRushEnum.LayerEnum.V2a9 then
-			if var_31_0.stage == BossRushEnum.V2a9StageEnum.First then
+		if var_33_0 and var_33_0.layer == BossRushEnum.LayerEnum.V2a9 then
+			if var_33_0.stage == BossRushEnum.V2a9StageEnum.First then
 				return ViewName.V2a9_BossRushHeroGroupFightView
 			else
 				return ViewName.OdysseyHeroGroupView
@@ -374,26 +384,26 @@ function var_0_0.getGroupFightViewName(arg_31_0, arg_31_1)
 	end
 end
 
-function var_0_0.openV2a9BossRushSkillBackpackView(arg_32_0, arg_32_1)
-	if arg_32_1 then
-		local var_32_0 = V2a9BossRushSkillBackpackListModel.instance:getList()
+function var_0_0.openV2a9BossRushSkillBackpackView(arg_34_0, arg_34_1)
+	if arg_34_1 then
+		local var_34_0 = V2a9BossRushSkillBackpackListModel.instance:getList()
 
-		if var_32_0 then
-			for iter_32_0, iter_32_1 in ipairs(var_32_0) do
-				if iter_32_1.itemType == arg_32_1 then
-					V2a9BossRushModel.instance:selectSpItemId(iter_32_1.id)
+		if var_34_0 then
+			for iter_34_0, iter_34_1 in ipairs(var_34_0) do
+				if iter_34_1.itemType == arg_34_1 then
+					V2a9BossRushModel.instance:selectSpItemId(iter_34_1.id)
 				end
 			end
 		end
 	end
 
-	arg_32_0:_reallyOpenV2a9BossRushSkillBackpackView()
+	arg_34_0:_reallyOpenV2a9BossRushSkillBackpackView()
 end
 
-function var_0_0._reallyOpenV2a9BossRushSkillBackpackView(arg_33_0)
-	local var_33_0 = AssassinBackpackListModel.instance:getList()
+function var_0_0._reallyOpenV2a9BossRushSkillBackpackView(arg_35_0)
+	local var_35_0 = AssassinBackpackListModel.instance:getList()
 
-	if not var_33_0 or #var_33_0 <= 0 then
+	if not var_35_0 or #var_35_0 <= 0 then
 		GameFacade.showToast(ToastEnum.AssassinStealthNoItem)
 
 		return

@@ -15,6 +15,10 @@ function var_0_0.init(arg_1_0, arg_1_1)
 end
 
 function var_0_0.updateInfo(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
+	if LangSettings.instance:isEn() then
+		arg_2_2 = SkillConfig.replaceHeroName(arg_2_2, arg_2_3)
+	end
+
 	arg_2_0._txtComp = arg_2_1
 	arg_2_0._heroId = arg_2_3
 
