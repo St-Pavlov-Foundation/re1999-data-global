@@ -290,37 +290,47 @@ function var_0_0.getCardPKResult(arg_16_0, arg_16_1, arg_16_2)
 	return var_16_1
 end
 
-function var_0_0.cardGameFinishGetReward(arg_17_0)
-	local var_17_0 = Act205CardModel.instance:getGameStageId()
+local var_0_2 = 0.5
 
-	if not Act205Model.instance:isGameStageOpen(var_17_0, true) then
+function var_0_0.cardGameFinishGetReward(arg_17_0)
+	local var_17_0 = ServerTime.now()
+	local var_17_1 = Act205CardModel.instance:getRecordRewardTime()
+
+	if var_17_1 and var_17_0 - var_17_1 < var_0_2 then
 		return
 	end
 
-	local var_17_1 = Act205CardModel.instance:getResultPoint() or arg_17_0:checkPkPoint()
+	local var_17_2 = Act205CardModel.instance:getGameStageId()
 
-	if not var_17_1 then
-		var_17_1 = Act205Config.instance:getMaxPoint()
-
-		Act205CardModel.instance:setResultPoint(var_17_1)
+	if not Act205Model.instance:isGameStageOpen(var_17_2, true) then
+		return
 	end
 
-	local var_17_2 = var_17_1 > Act205Enum.CardGameFailPoint
-	local var_17_3 = 0
+	local var_17_3 = Act205CardModel.instance:getResultPoint() or arg_17_0:checkPkPoint()
 
-	if not var_17_2 then
-		var_17_3 = Act205CardModel.instance:getContinueFailCount() + 1
+	if not var_17_3 then
+		var_17_3 = Act205Config.instance:getMaxPoint()
+
+		Act205CardModel.instance:setResultPoint(var_17_3)
 	end
 
-	local var_17_4 = Act205Config.instance:getRewardId(var_17_1)
-	local var_17_5 = {
+	local var_17_4 = var_17_3 > Act205Enum.CardGameFailPoint
+	local var_17_5 = 0
+
+	if not var_17_4 then
+		var_17_5 = Act205CardModel.instance:getContinueFailCount() + 1
+	end
+
+	local var_17_6 = Act205Config.instance:getRewardId(var_17_3)
+	local var_17_7 = {
 		activityId = Act205Model.instance:getAct205Id(),
-		gameType = var_17_0,
-		gameInfo = tostring(var_17_3),
-		rewardId = var_17_4
+		gameType = var_17_2,
+		gameInfo = tostring(var_17_5),
+		rewardId = var_17_6
 	}
 
-	Activity205Rpc.instance:sendAct205FinishGameRequest(var_17_5, arg_17_0._onGetCardGameReward, arg_17_0)
+	Activity205Rpc.instance:sendAct205FinishGameRequest(var_17_7, arg_17_0._onGetCardGameReward, arg_17_0)
+	Act205CardModel.instance:setGetRewardTime(var_17_0)
 end
 
 function var_0_0._onGetCardGameReward(arg_18_0, arg_18_1, arg_18_2, arg_18_3)

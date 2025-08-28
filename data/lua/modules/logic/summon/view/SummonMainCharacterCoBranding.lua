@@ -124,6 +124,7 @@ function var_0_0.onOpen(arg_11_0)
 	arg_11_0:addEventCb(SummonController.instance, SummonEvent.onSummonProgressRewards, arg_11_0._refreshProgressRewards, arg_11_0)
 	arg_11_0:addEventCb(TaskController.instance, TaskEvent.SetTaskList, arg_11_0._refreshGift, arg_11_0)
 	arg_11_0:addEventCb(TaskController.instance, TaskEvent.UpdateTaskList, arg_11_0._refreshGift, arg_11_0)
+	arg_11_0:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_11_0._refreshGift, arg_11_0)
 	arg_11_0:addEventCb(TaskController.instance, TaskEvent.UpdateTaskList, arg_11_0._checkCanFinishGiftTask, arg_11_0)
 	arg_11_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_11_0._onCloseViewEvent, arg_11_0)
 	var_0_0.super.onOpen(arg_11_0)
@@ -154,10 +155,12 @@ function var_0_0.onClose(arg_13_0)
 	arg_13_0:removeEventCb(SummonController.instance, SummonEvent.onSummonProgressRewards, arg_13_0._refreshProgressRewards, arg_13_0)
 	arg_13_0:removeEventCb(TaskController.instance, TaskEvent.SetTaskList, arg_13_0._refreshGift, arg_13_0)
 	arg_13_0:removeEventCb(TaskController.instance, TaskEvent.UpdateTaskList, arg_13_0._refreshGift, arg_13_0)
+	arg_13_0:removeEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_13_0._refreshGift, arg_13_0)
 	arg_13_0:removeEventCb(TaskController.instance, TaskEvent.UpdateTaskList, arg_13_0._checkCanFinishGiftTask, arg_13_0)
 	arg_13_0:removeEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_13_0._onCloseViewEvent, arg_13_0)
 	TaskDispatcher.cancelTask(arg_13_0._onRunTaskOpenGiftView, arg_13_0)
 	var_0_0.super.onClose(arg_13_0)
+	StoreGoodsTaskController.instance:waitUpdateRedDot()
 end
 
 function var_0_0.onDestroyView(arg_14_0)
@@ -243,6 +246,7 @@ function var_0_0._refreshProgressRewards(arg_18_0)
 	end
 
 	arg_18_0:_refreshPreferentialInfo()
+	arg_18_0:_refreshGift()
 end
 
 function var_0_0._playNumAninByKey(arg_19_0, arg_19_1, arg_19_2)
@@ -257,8 +261,8 @@ function var_0_0._playNumAninByKey(arg_19_0, arg_19_1, arg_19_2)
 end
 
 function var_0_0._refreshGift(arg_20_0)
-	local var_20_0 = SummonMainModel.instance:getCurPool()
-	local var_20_1 = var_20_0 and StoreConfig.instance:getCharageGoodsCfgListByPoolId(var_20_0.id)
+	local var_20_0 = SummonMainModel.instance:getCurId()
+	local var_20_1 = StoreConfig.instance:getCharageGoodsCfgListByPoolId(var_20_0)
 	local var_20_2 = false
 
 	if var_20_1 then
@@ -271,6 +275,10 @@ function var_0_0._refreshGift(arg_20_0)
 				break
 			end
 		end
+	end
+
+	if var_20_2 and SummonModel.instance:getSummonFullExSkillHero(var_20_0) then
+		var_20_2 = false
 	end
 
 	if arg_20_0._redotComp then

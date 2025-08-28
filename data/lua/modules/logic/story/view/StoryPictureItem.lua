@@ -82,7 +82,7 @@ function var_0_0._onPicPrefabLoaded(arg_4_0)
 		local var_4_3 = StoryConfig.instance:getStoryPicTxtConfig(tonumber(var_4_2[1]))
 		local var_4_4 = LuaUtil.containChinese(var_4_3[LangSettings.shortcutTab[LangSettings.zh]])
 
-		gohelper.setActive(arg_4_0._txtEnImg.gameObject, not var_4_4 and var_4_3.fontType == 0)
+		gohelper.setActive(arg_4_0._txtEnImg.gameObject, var_4_3.fontType == 0)
 		gohelper.setActive(arg_4_0._txtTmp.gameObject, var_4_4 and var_4_3.fontType ~= 0 and arg_4_0._picCo.inType == StoryEnum.PictureInType.TxtFadeIn)
 		gohelper.setActive(arg_4_0._txtImg.gameObject, not arg_4_0._txtEnImg.gameObject.activeSelf and not arg_4_0._txtTmp.gameObject.activeSelf)
 
@@ -90,10 +90,10 @@ function var_0_0._onPicPrefabLoaded(arg_4_0)
 		local var_4_6 = 0.1 * LuaUtil.getStrLen(var_4_5) * var_4_2[2]
 
 		if arg_4_0._picCo.inType ~= StoryEnum.PictureInType.TxtFadeIn then
-			if var_4_4 then
-				arg_4_0.tweenId = ZProj.TweenHelper.DOText(arg_4_0._txtImg, var_4_5, var_4_6, nil, nil, nil, EaseType.Linear)
-			else
+			if var_4_3.fontType == 0 then
 				arg_4_0.tweenId = ZProj.TweenHelper.DOText(arg_4_0._txtEnImg, var_4_5, var_4_6, nil, nil, nil, EaseType.Linear)
+			else
+				arg_4_0.tweenId = ZProj.TweenHelper.DOText(arg_4_0._txtImg, var_4_5, var_4_6, nil, nil, nil, EaseType.Linear)
 			end
 		end
 
@@ -378,17 +378,23 @@ function var_0_0._setFullPicture(arg_17_0)
 
 	arg_17_0._picParentGo.transform:SetParent(arg_17_0.viewGO.transform)
 
-	arg_17_0._picImg = gohelper.findChildImage(arg_17_0._picGo, "result")
+	local var_17_0 = arg_17_0._picGo:GetComponent(typeof(Coffee.UISoftMask.SoftMask))
 
-	local var_17_0 = SLFramework.UGUI.GuiHelper.ParseColor(arg_17_0._picCo.picColor)
+	recthelper.setSize(arg_17_0._picGo.transform, 3000, 2000)
 
-	arg_17_0._picImg.color = var_17_0
+	var_17_0.enabled = false
+	arg_17_0._picImg = arg_17_0._picGo:GetComponent(gohelper.Type_Image)
+	arg_17_0._picImg.sprite = nil
 
-	ZProj.TweenHelper.DOFadeCanvasGroup(arg_17_0._picGo, 0, var_17_0.a, arg_17_0._picCo.inTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()], nil, nil, nil, EaseType.Linear)
-	recthelper.setSize(arg_17_0._picGo.transform, 2 * arg_17_0._picCo.cirRadius, 2 * arg_17_0._picCo.cirRadius)
-	transformhelper.setLocalPosXY(arg_17_0._picGo.transform, arg_17_0._picCo.pos[1], arg_17_0._picCo.pos[2])
-	transformhelper.setLocalScale(arg_17_0._picGo.transform, 1, 1, 1)
-	transformhelper.setLocalPosXY(arg_17_0._picImg.transform, -arg_17_0._picCo.pos[1], -arg_17_0._picCo.pos[2])
+	local var_17_1 = gohelper.findChild(arg_17_0._picGo, "result")
+
+	gohelper.setActive(var_17_1, false)
+
+	local var_17_2 = SLFramework.UGUI.GuiHelper.ParseColor(arg_17_0._picCo.picColor)
+
+	arg_17_0._picImg.color = var_17_2
+
+	ZProj.TweenHelper.DOFadeCanvasGroup(arg_17_0._picGo, 0, var_17_2.a, arg_17_0._picCo.inTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()], nil, nil, nil, EaseType.Linear)
 end
 
 function var_0_0._onFullFocusPictureLoaded(arg_18_0)

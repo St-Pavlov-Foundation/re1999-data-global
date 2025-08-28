@@ -44,18 +44,26 @@ function var_0_0._btnenterOnClick(arg_4_0)
 end
 
 function var_0_0._editableInitView(arg_5_0)
+	arg_5_0.anim = arg_5_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
 	arg_5_0._imageExploreBar = arg_5_0._goexploreBar:GetComponent(gohelper.Type_Image)
 end
 
 function var_0_0.onUpdateParam(arg_6_0)
 	arg_6_0:initData()
 	arg_6_0:refreshUI()
+	AudioMgr.instance:trigger(AudioEnum2_9.Odyssey.play_ui_cikexia_link_popup_unfold)
+
+	arg_6_0.anim.enabled = true
+
+	arg_6_0.anim:Play("open", 0, 0)
+	arg_6_0.anim:Update(0)
 end
 
 function var_0_0.onOpen(arg_7_0)
 	OdysseyDungeonController.instance:dispatchEvent(OdysseyEvent.ShowDungeonRightUI, false)
 	arg_7_0:initData()
 	arg_7_0:refreshUI()
+	AudioMgr.instance:trigger(AudioEnum2_9.Odyssey.play_ui_cikexia_link_popup_unfold)
 end
 
 function var_0_0.dailyRefresh(arg_8_0)
@@ -152,6 +160,7 @@ end
 function var_0_0.onClose(arg_12_0)
 	TaskDispatcher.cancelTask(arg_12_0.refreshLockDesc, arg_12_0)
 	OdysseyDungeonController.instance:dispatchEvent(OdysseyEvent.ShowDungeonRightUI, true)
+	AudioMgr.instance:trigger(AudioEnum2_9.Odyssey.play_ui_cikexia_link_popup_fold)
 end
 
 function var_0_0.onDestroyView(arg_13_0)

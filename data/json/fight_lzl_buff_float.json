@@ -156,7 +156,7 @@
     "id": 31160099,
     "layer": 2,
     "skinId": 311602,
-    "effect": "v2a7_lzl/lzl_shefa_1",
+    "effect": "v2a7_lzl/lzl_shefa_2",
     "effectRoot": "mountroot",
     "effectAudio": 431160156,
     "duration": 1
@@ -165,7 +165,7 @@
     "id": 31160099,
     "layer": 3,
     "skinId": 311602,
-    "effect": "v2a7_lzl/lzl_shefa_1",
+    "effect": "v2a7_lzl/lzl_shefa_3",
     "effectRoot": "mountroot",
     "effectAudio": 431160156,
     "duration": 1
@@ -174,7 +174,7 @@
     "id": 31160099,
     "layer": 4,
     "skinId": 311602,
-    "effect": "v2a7_lzl/lzl_shefa_1",
+    "effect": "v2a7_lzl/lzl_shefa_4",
     "effectRoot": "mountroot",
     "effectAudio": 431160156,
     "duration": 1
@@ -183,7 +183,7 @@
     "id": 31160099,
     "layer": 5,
     "skinId": 311602,
-    "effect": "v2a7_lzl/lzl_shefa_1",
+    "effect": "v2a7_lzl/lzl_shefa_5",
     "effectRoot": "mountroot",
     "effectAudio": 431160156,
     "duration": 1
@@ -192,7 +192,7 @@
     "id": 31160099,
     "layer": 6,
     "skinId": 311602,
-    "effect": "v2a7_lzl/lzl_shefa_1",
+    "effect": "v2a7_lzl/lzl_shefa_6",
     "effectRoot": "mountroot",
     "effectAudio": 431160156,
     "duration": 1
@@ -201,7 +201,7 @@
     "id": 31160099,
     "layer": 7,
     "skinId": 311602,
-    "effect": "v2a7_lzl/lzl_shefa_1",
+    "effect": "v2a7_lzl/lzl_shefa_7",
     "effectRoot": "mountroot",
     "effectAudio": 431160156,
     "duration": 1
@@ -210,7 +210,7 @@
     "id": 31160099,
     "layer": 8,
     "skinId": 311602,
-    "effect": "v2a7_lzl/lzl_shefa_1",
+    "effect": "v2a7_lzl/lzl_shefa_8",
     "effectRoot": "mountroot",
     "effectAudio": 431160156,
     "duration": 1

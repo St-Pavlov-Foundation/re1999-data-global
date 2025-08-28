@@ -43,6 +43,7 @@ function var_0_0._editableInitView(arg_4_0)
 	arg_4_0:addEventCb(OdysseyController.instance, OdysseyEvent.RefreshHeroInfo, arg_4_0.refreshOdysseyLevel, arg_4_0)
 	arg_4_0:addEventCb(OdysseyController.instance, OdysseyEvent.OdysseyTaskUpdated, arg_4_0.refreshReddot, arg_4_0)
 	arg_4_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenView, arg_4_0._onOpenView, arg_4_0)
+	arg_4_0:addEventCb(NavigateMgr.instance, NavigateEvent.ClickHome, arg_4_0._clickHome, arg_4_0)
 
 	arg_4_0.reddotIconMap = arg_4_0:getUserDataTb_()
 
@@ -356,6 +357,10 @@ function var_0_0.beforePlayOpenAnimation(arg_43_0)
 	if var_43_1 and var_43_1 ~= 0 then
 		AudioMgr.instance:trigger(var_43_1)
 	end
+end
+
+function var_0_0._clickHome(arg_44_0)
+	VersionActivity2_9EnterController.instance:clearLastEnterMainActId()
 end
 
 return var_0_0

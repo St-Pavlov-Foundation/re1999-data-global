@@ -34,6 +34,10 @@ function var_0_0._btnSkipOnClick(arg_4_0)
 end
 
 function var_0_0.showResult(arg_5_0)
+	if arg_5_0._finish then
+		return
+	end
+
 	arg_5_0._finish = true
 
 	Act205CardController.instance:cardGameFinishGetReward()

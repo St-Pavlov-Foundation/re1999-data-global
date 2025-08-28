@@ -112,7 +112,7 @@ end
 function var_0_0.isHasNewRedDotByPoolId(arg_13_0, arg_13_1)
 	local var_13_0 = StoreConfig.instance:getCharageGoodsCfgListByPoolId(arg_13_1)
 
-	if var_13_0 and PlayerPrefsHelper.getNumber(arg_13_0:_getKeyPoolId(arg_13_1), 0) == 0 then
+	if var_13_0 and PlayerPrefsHelper.getNumber(arg_13_0:_getKeyPoolId(arg_13_1), 0) == 0 and not SummonModel.instance:getSummonFullExSkillHero(arg_13_1) then
 		for iter_13_0, iter_13_1 in ipairs(var_13_0) do
 			local var_13_1 = iter_13_1.id
 			local var_13_2 = StoreModel.instance:getGoodsMO(var_13_1)

@@ -288,6 +288,9 @@ function var_0_0._repeatShowEffectAnimCB(arg_22_0)
 
 		if not string.nilorempty(var_22_1) then
 			var_22_0.anim:Play(var_22_1, 0, 0)
+		else
+			gohelper.setActive(var_22_0.anim.gameObject, false)
+			gohelper.setActive(var_22_0.anim.gameObject, true)
 		end
 	end
 end
@@ -308,8 +311,6 @@ function var_0_0._getAnimStateName(arg_23_0, arg_23_1)
 
 		return var_23_0
 	end
-
-	logError("FightUISwitchEffectComp--动画状态名需保持跟动画名一致" .. var_23_0)
 end
 
 function var_0_0.onClose(arg_24_0)

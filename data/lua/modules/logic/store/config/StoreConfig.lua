@@ -207,12 +207,28 @@ function var_0_0.getCharageGoodsCfgListByPoolId(arg_11_0, arg_11_1)
 
 		for iter_11_0, iter_11_1 in ipairs(arg_11_0._storeChargeGoodsConfig.configList) do
 			local var_11_0 = arg_11_0:getChargeConditionalConfig(iter_11_1.taskid)
-			local var_11_1 = var_11_0 and var_11_0.id
+			local var_11_1
 
-			if var_11_1 and var_11_1 ~= 0 then
-				arg_11_0._poolId2CharageGoodsCfgListDic[var_11_1] = arg_11_0._poolId2CharageGoodsCfgListDic[var_11_1] or {}
+			if var_11_0 then
+				if not string.nilorempty(var_11_0.idsStr) then
+					var_11_1 = string.splitToNumber(var_11_0.idsStr, "#")
+				end
 
-				table.insert(arg_11_0._poolId2CharageGoodsCfgListDic[var_11_1], iter_11_1)
+				if var_11_0.id ~= 0 then
+					var_11_1 = var_11_1 or {}
+
+					if not tabletool.indexOf(var_11_1, var_11_0.id) then
+						table.insert(var_11_1, var_11_0.id)
+					end
+				end
+			end
+
+			if var_11_1 then
+				for iter_11_2, iter_11_3 in ipairs(var_11_1) do
+					arg_11_0._poolId2CharageGoodsCfgListDic[iter_11_3] = arg_11_0._poolId2CharageGoodsCfgListDic[iter_11_3] or {}
+
+					table.insert(arg_11_0._poolId2CharageGoodsCfgListDic[iter_11_3], iter_11_1)
+				end
 			end
 		end
 	end

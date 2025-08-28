@@ -6,10 +6,30 @@ function var_0_0._getFuncDict()
 	if not var_0_0._conditionFunction then
 		var_0_0._conditionFunction = {
 			HasHero = function(arg_2_0, arg_2_1)
-				local var_2_0 = arg_2_1 and tonumber(arg_2_1.listenerParam)
-				local var_2_1 = HeroModel.instance:getByHeroId(var_2_0)
+				local var_2_0
+				local var_2_1 = arg_2_1 and arg_2_1.maxProgress or 1
 
-				return var_2_1 and var_2_1:isOwnHero()
+				if arg_2_1 and not string.nilorempty(arg_2_1.listenerParam) then
+					var_2_0 = string.splitToNumber(arg_2_1.listenerParam, "#")
+				end
+
+				if var_2_0 then
+					local var_2_2 = 0
+
+					for iter_2_0, iter_2_1 in ipairs(var_2_0) do
+						local var_2_3 = HeroModel.instance:getByHeroId(iter_2_1)
+
+						if var_2_3 and var_2_3:isOwnHero() then
+							var_2_2 = var_2_2 + 1
+						end
+
+						if var_2_1 <= var_2_2 then
+							return true
+						end
+					end
+				end
+
+				return false
 			end
 		}
 	end

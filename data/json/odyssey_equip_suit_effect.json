@@ -61,7 +61,7 @@
     "number": 2,
     "addSkill": "4#8290401",
     "addRule": "",
-    "effect": "language_10079291"
+    "effect": "language_10079868"
   },
   {
     "id": 5,
@@ -69,7 +69,7 @@
     "number": 4,
     "addSkill": "4#8290402",
     "addRule": "",
-    "effect": "language_10079292"
+    "effect": "language_10079869"
   },
   {
     "id": 5,
@@ -77,7 +77,7 @@
     "number": 6,
     "addSkill": "4#8290403",
     "addRule": "",
-    "effect": "language_10079293"
+    "effect": "language_10079870"
   },
   {
     "id": 6,
@@ -85,7 +85,7 @@
     "number": 2,
     "addSkill": "3#82905000|3#8290501|4#8290499",
     "addRule": "",
-    "effect": "language_10079294"
+    "effect": "language_10079871"
   },
   {
     "id": 6,
@@ -93,7 +93,7 @@
     "number": 4,
     "addSkill": "3#82905000|3#8290502|4#8290499",
     "addRule": "",
-    "effect": "language_10079295"
+    "effect": "language_10079872"
   },
   {
     "id": 6,
@@ -101,7 +101,7 @@
     "number": 6,
     "addSkill": "3#82905000|3#8290503|4#8290499",
     "addRule": "",
-    "effect": "language_10079296"
+    "effect": "language_10079873"
   },
   {
     "id": 7,

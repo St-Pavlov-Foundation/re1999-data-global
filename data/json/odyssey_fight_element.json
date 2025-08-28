@@ -237,7 +237,7 @@
     "episodeId": 202532101,
     "title": "language_10079054",
     "desc": "language_10079055",
-    "reward": "exp#400|item#20505#1",
+    "reward": "exp#400",
     "randomDrop": 0,
     "enemyLevel": 25
   },
@@ -688,7 +688,7 @@
     "episodeId": 202130501,
     "title": "language_10079057",
     "desc": "language_10079058",
-    "reward": "exp#400@exp#400|item#20404#1@exp#200@exp#200|item#20406#1",
+    "reward": "exp#400@exp#400|item#20403#1@exp#200@exp#200|item#20406#1",
     "randomDrop": 0,
     "enemyLevel": 5
   },
@@ -743,7 +743,7 @@
     "episodeId": 202230601,
     "title": "language_10075968",
     "desc": "language_10075969",
-    "reward": "exp#500|item#20510#1@exp#500|item#20410#1@item#20512#1",
+    "reward": "exp#500|item#20510#1@exp#500|item#20511#1@item#20512#1",
     "randomDrop": 0,
     "enemyLevel": 10
   },

@@ -263,7 +263,7 @@ function var_0_0.getUnlockRankStr(arg_23_0, arg_23_1)
 		table.insert(var_23_0, var_23_2)
 	end
 
-	local var_23_3 = arg_23_0:getTalentSkillPointByRank(arg_23_1 - 1)
+	local var_23_3 = arg_23_0:getTalentSkillPointByRank(arg_23_1)
 
 	if var_23_3 and var_23_3 > 0 then
 		local var_23_4 = luaLang("character_rankup_talentskilltree_add_point")

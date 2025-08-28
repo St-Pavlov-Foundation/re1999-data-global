@@ -81,8 +81,10 @@ function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 			if var_1_12 then
 				if var_1_10 then
 					transformhelper.setLocalPos(var_1_12, 0, 0, 0)
+					FightController.instance:dispatchEvent(FightEvent.SetSpinePosByTimeline, iter_1_8.id, 0, 0, 0)
 				else
 					transformhelper.setLocalPos(var_1_12, var_1_9[1] or 0, var_1_9[2] or 0, var_1_9[3] or 0)
+					FightController.instance:dispatchEvent(FightEvent.SetSpinePosByTimeline, iter_1_8.id, var_1_9[1] or 0, var_1_9[2] or 0, var_1_9[3] or 0)
 				end
 			end
 		end

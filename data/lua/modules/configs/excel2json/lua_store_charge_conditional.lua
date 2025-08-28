@@ -4,6 +4,7 @@ local var_0_0 = {}
 local var_0_1 = {
 	id = 8,
 	order2 = 9,
+	idsStr = 11,
 	bigImg3 = 7,
 	conDesc = 10,
 	listenerType = 2,

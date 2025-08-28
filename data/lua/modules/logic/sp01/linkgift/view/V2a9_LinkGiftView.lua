@@ -4,7 +4,10 @@ local var_0_0 = class("V2a9_LinkGiftView", BaseView)
 
 function var_0_0.onInitView(arg_1_0)
 	arg_1_0._btnclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "root/#btn_close")
-	arg_1_0._txttime = gohelper.findChildText(arg_1_0.viewGO, "root/#go_time/#txt_time")
+	arg_1_0._txttime1 = gohelper.findChildText(arg_1_0.viewGO, "root/BG/go_bg1/#go_time/#txt_time")
+	arg_1_0._txttime2 = gohelper.findChildText(arg_1_0.viewGO, "root/BG/go_bg2/#go_time/#txt_time")
+	arg_1_0._gobg1 = gohelper.findChild(arg_1_0.viewGO, "root/BG/go_bg1")
+	arg_1_0._gobg2 = gohelper.findChild(arg_1_0.viewGO, "root/BG/go_bg2")
 
 	if arg_1_0._editableInitView then
 		arg_1_0:_editableInitView()
@@ -26,11 +29,16 @@ end
 function var_0_0._editableInitView(arg_5_0)
 	arg_5_0._linkGiftItemList = {}
 
-	for iter_5_0 = 1, 2 do
-		local var_5_0 = gohelper.findChild(arg_5_0.viewGO, "root/gift" .. iter_5_0)
-		local var_5_1 = MonoHelper.addNoUpdateLuaComOnceToGo(var_5_0, V2a9_LinkGiftItem, arg_5_0)
+	for iter_5_0 = 1, 10 do
+		local var_5_0 = gohelper.findChild(arg_5_0.viewGO, "root/Gift/gift" .. iter_5_0)
 
-		table.insert(arg_5_0._linkGiftItemList, var_5_1)
+		if var_5_0 then
+			local var_5_1 = MonoHelper.addNoUpdateLuaComOnceToGo(var_5_0, V2a9_LinkGiftItem, arg_5_0)
+
+			table.insert(arg_5_0._linkGiftItemList, var_5_1)
+		else
+			break
+		end
 	end
 end
 
@@ -45,7 +53,16 @@ function var_0_0.onOpen(arg_7_0)
 	arg_7_0._poolId = arg_7_0.viewParam and arg_7_0.viewParam.poolId
 	arg_7_0._goodsCdfList = {}
 
-	tabletool.addValues(arg_7_0._goodsCdfList, StoreConfig.instance:getCharageGoodsCfgListByPoolId(arg_7_0._poolId))
+	local var_7_0 = StoreConfig.instance:getCharageGoodsCfgListByPoolId(arg_7_0._poolId)
+
+	if var_7_0 then
+		for iter_7_0, iter_7_1 in ipairs(var_7_0) do
+			if StoreModel.instance:getGoodsMO(iter_7_1.id) then
+				table.insert(arg_7_0._goodsCdfList, iter_7_1)
+			end
+		end
+	end
+
 	table.sort(arg_7_0._goodsCdfList, var_0_0._sortGoodsCfgList)
 	arg_7_0:_refreshUI()
 	arg_7_0:_refreshOpenTime()
@@ -79,6 +96,11 @@ function var_0_0._refreshUI(arg_12_0)
 	for iter_12_0, iter_12_1 in ipairs(arg_12_0._linkGiftItemList) do
 		iter_12_1:onUpdateMO(arg_12_0._goodsCdfList[iter_12_0])
 	end
+
+	local var_12_0 = #arg_12_0._goodsCdfList >= 3
+
+	gohelper.setActive(arg_12_0._gobg1, not var_12_0)
+	gohelper.setActive(arg_12_0._gobg2, var_12_0)
 end
 
 function var_0_0.repeatCallCountdown(arg_13_0)
@@ -87,14 +109,18 @@ end
 
 function var_0_0._refreshOpenTime(arg_14_0)
 	local var_14_0 = SummonMainModel.instance:getPoolServerMO(arg_14_0._poolId)
+	local var_14_1
 
 	if var_14_0 ~= nil and var_14_0.offlineTime ~= 0 and var_14_0.offlineTime < TimeUtil.maxDateTimeStamp then
-		local var_14_1 = var_14_0.offlineTime - ServerTime.now()
+		local var_14_2 = var_14_0.offlineTime - ServerTime.now()
 
-		arg_14_0._txttime.text = SummonModel.formatRemainTime(var_14_1)
+		var_14_1 = SummonModel.formatRemainTime(var_14_2)
 	else
-		arg_14_0._txttime.text = ""
+		var_14_1 = ""
 	end
+
+	arg_14_0._txttime1.text = var_14_1
+	arg_14_0._txttime2.text = var_14_1
 end
 
 function var_0_0._sortGoodsCfgList(arg_15_0, arg_15_1)

@@ -616,9 +616,9 @@
     "bonus": "2#30503#80",
     "missionorder": 1,
     "realPrepose": "",
-    "durationHour": 72,
+    "durationHour": 0,
     "secretornot": 1,
-    "durationLimitActivityId": 130505
+    "durationLimitActivityId": 0
   },
   {
     "id": 13051828,
@@ -846,8 +846,8 @@
     "bonus": "2#30503#50",
     "missionorder": 1,
     "realPrepose": "",
-    "durationHour": 72,
+    "durationHour": 0,
     "secretornot": 1,
-    "durationLimitActivityId": 130505
+    "durationLimitActivityId": 0
   }
 ]
