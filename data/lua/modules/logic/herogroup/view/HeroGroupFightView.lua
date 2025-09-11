@@ -407,7 +407,7 @@ function var_0_0.onOpen(arg_22_0)
 	local var_22_2 = var_22_1 and var_22_1.star == DungeonEnum.StarType.Advanced and var_22_1.hasRecord
 	local var_22_3 = PlayerPrefsHelper.getString(FightModel.getPrefsKeyFightPassModel(), "")
 
-	if var_22_0 and var_22_2 and not string.nilorempty(var_22_3) and cjson.decode(var_22_3)[tostring(arg_22_0._episodeId)] and not arg_22_0._replayMode then
+	if var_22_0 and var_22_2 and not string.nilorempty(var_22_3) and arg_22_0.episodeConfig and arg_22_0.episodeConfig.canUseRecord == 1 and cjson.decode(var_22_3)[tostring(arg_22_0._episodeId)] and not arg_22_0._replayMode then
 		arg_22_0._replayMode = true
 		arg_22_0._multiplication = PlayerPrefsHelper.getNumber(arg_22_0:_getMultiplicationKey(), 1)
 

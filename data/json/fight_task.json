@@ -2642,7 +2642,7 @@
   {
     "id": 305704,
     "condition": "",
-    "taskParam1": "KillMonster#83070702,83070712,83070713,83070722,83070723",
+    "taskParam1": "KillMonster#83070702,83070712,83070713,83070722,83070723,83070724",
     "sysParam1": "3",
     "taskParam2": "",
     "sysParam2": "",
@@ -2654,7 +2654,7 @@
   {
     "id": 305705,
     "condition": "",
-    "taskParam1": "KillMonster#83070702,83070712,83070713,83070722,83070723",
+    "taskParam1": "KillMonster#83070702,83070712,83070713,83070722,83070723,83070724",
     "sysParam1": "6",
     "taskParam2": "",
     "sysParam2": "",
@@ -2666,7 +2666,7 @@
   {
     "id": 305706,
     "condition": "",
-    "taskParam1": "KillMonster#83070702,83070712,83070713,83070722,83070723",
+    "taskParam1": "KillMonster#83070702,83070712,83070713,83070722,83070723,83070724",
     "sysParam1": "9",
     "taskParam2": "",
     "sysParam2": "",
@@ -2726,7 +2726,7 @@
   {
     "id": 305804,
     "condition": "",
-    "taskParam1": "KillMonster#83070802,83070812,83070813,83070822,83070823",
+    "taskParam1": "KillMonster#83070802,83070812,83070813,83070822,83070823,83070824",
     "sysParam1": "3",
     "taskParam2": "",
     "sysParam2": "",
@@ -2738,7 +2738,7 @@
   {
     "id": 305805,
     "condition": "",
-    "taskParam1": "KillMonster#83070802,83070812,83070813,83070822,83070823",
+    "taskParam1": "KillMonster#83070802,83070812,83070813,83070822,83070823,83070824",
     "sysParam1": "6",
     "taskParam2": "",
     "sysParam2": "",
@@ -2750,7 +2750,7 @@
   {
     "id": 305806,
     "condition": "",
-    "taskParam1": "KillMonster#83070802,83070812,83070813,83070822,83070823",
+    "taskParam1": "KillMonster#83070802,83070812,83070813,83070822,83070823,83070824",
     "sysParam1": "9",
     "taskParam2": "",
     "sysParam2": "",

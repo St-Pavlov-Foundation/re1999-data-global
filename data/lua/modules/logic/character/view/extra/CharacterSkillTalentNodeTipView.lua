@@ -92,6 +92,7 @@ function var_0_0._editableInitView(arg_9_0)
 	arg_9_0._txtyesnum = gohelper.findChildText(arg_9_0.viewGO, "#go_tip/#btn_yes/txt_num")
 	arg_9_0._txtnonum = gohelper.findChildText(arg_9_0.viewGO, "#go_tip/#btn_no/txt_num")
 	arg_9_0._txtlocknum = gohelper.findChildText(arg_9_0.viewGO, "#go_tip/#btn_Locked/txt_num")
+	arg_9_0._txtlock = gohelper.findChildText(arg_9_0.viewGO, "#go_tip/#btn_Locked/no")
 	arg_9_0._txtfield = gohelper.findChildText(arg_9_0._golichang, "txt_desc")
 	arg_9_0._gofieldbg = gohelper.findChild(arg_9_0._golichang, "image_LightBG")
 	arg_9_0._animPlayer = SLFramework.AnimatorPlayer.Get(arg_9_0._gotip.gameObject)
@@ -105,6 +106,9 @@ function var_0_0.onOpen(arg_10_0)
 	gohelper.setActive(arg_10_0._gotip, false)
 	gohelper.setActive(arg_10_0._btnclose.gameObject, false)
 end
+
+local var_0_1 = "+"
+local var_0_2 = "-"
 
 function var_0_0._openNodeTip(arg_11_0, arg_11_1, arg_11_2)
 	local var_11_0 = arg_11_0.heroMo.exSkillLevel
@@ -129,31 +133,22 @@ function var_0_0._openNodeTip(arg_11_0, arg_11_1, arg_11_2)
 	arg_11_0._nodeMo = arg_11_0.skillTalentMo:getTreeNodeMoBySubLevel(arg_11_1, arg_11_2)
 
 	local var_11_4 = #arg_11_0.skillTalentMo:getLightOrCancelNodes(arg_11_1, arg_11_2)
-
-	if arg_11_0._nodeMo:isLight() then
-		arg_11_0._txtnonum.text = "+" .. var_11_4
-		arg_11_0._txtlocknum.text = "+" .. var_11_4
-	elseif arg_11_0._nodeMo:isLock() then
-		arg_11_0._txtlocknum.text = "+" .. var_11_4
-	else
-		arg_11_0._txtyesnum.text = "-" .. var_11_4
-	end
+	local var_11_5 = var_11_4 > arg_11_0.skillTalentMo:getTalentpoint()
 
 	arg_11_0._fieldDesc = MonoHelper.addNoUpdateLuaComOnceToGo(arg_11_0._txtfield.gameObject, SkillDescComp)
 
 	arg_11_0._fieldDesc:updateInfo(arg_11_0._txtfield, var_11_3, arg_11_0.heroMo.heroId)
 
-	local var_11_5 = arg_11_0._treeMo:isAllLight()
-	local var_11_6 = arg_11_0._nodeMo:isLock()
-	local var_11_7 = arg_11_0._nodeMo:isLight()
-	local var_11_8 = arg_11_0._nodeMo:isNormal()
-	local var_11_9 = arg_11_0.skillTalentMo:getExtraCount()
-	local var_11_10 = ""
+	local var_11_6 = arg_11_0._treeMo:isAllLight()
+	local var_11_7 = arg_11_0._nodeMo:isLock()
+	local var_11_8 = arg_11_0._nodeMo:isLight()
+	local var_11_9 = arg_11_0._nodeMo:isNormal()
+	local var_11_10 = arg_11_0.skillTalentMo:getExtraCount()
 	local var_11_11 = ""
-	local var_11_12 = var_11_4 > arg_11_0.skillTalentMo:getTalentpoint()
+	local var_11_12 = ""
 
-	if var_11_12 then
-		var_11_10 = luaLang("characterskilltalent_warning_3")
+	if var_11_5 then
+		var_11_11 = luaLang("characterskilltalent_warning_3")
 	end
 
 	local var_11_13 = arg_11_0.skillTalentMo:getMainFieldMo()
@@ -162,21 +157,21 @@ function var_0_0._openNodeTip(arg_11_0, arg_11_1, arg_11_2)
 		local var_11_14 = var_11_13.co and var_11_13.co.sub
 
 		if var_11_14 and var_11_14 ~= arg_11_1 then
-			if not var_11_12 then
-				var_11_10 = luaLang("characterskilltalent_warning_2")
+			if not var_11_5 then
+				var_11_11 = luaLang("characterskilltalent_warning_2")
 			end
 
 			local var_11_15 = luaLang("characterskilltalent_warning_1")
 			local var_11_16 = luaLang("characterskilltalent_sub_" .. var_11_14)
 			local var_11_17 = luaLang("characterskilltalent_sub_" .. arg_11_1)
 
-			var_11_11 = GameUtil.getSubPlaceholderLuaLangTwoParam(var_11_15, var_11_16, var_11_17)
+			var_11_12 = GameUtil.getSubPlaceholderLuaLangTwoParam(var_11_15, var_11_16, var_11_17)
 		end
 	end
 
-	local var_11_18 = var_11_5 and var_11_9 == 2
-	local var_11_19 = var_11_6 and not string.nilorempty(var_11_10)
-	local var_11_20 = not string.nilorempty(var_11_11)
+	local var_11_18 = var_11_6 and var_11_10 > 1
+	local var_11_19 = var_11_7 and not string.nilorempty(var_11_11)
+	local var_11_20 = not string.nilorempty(var_11_12)
 	local var_11_21 = not string.nilorempty(var_11_3)
 	local var_11_22 = arg_11_0.heroMo:isOwnHero()
 
@@ -184,14 +179,25 @@ function var_0_0._openNodeTip(arg_11_0, arg_11_1, arg_11_2)
 	gohelper.setActive(arg_11_0._golichang.gameObject, var_11_22 and var_11_21)
 	gohelper.setActive(arg_11_0._txtTips.gameObject, var_11_22 and var_11_19)
 	gohelper.setActive(arg_11_0._txtWarning.gameObject, var_11_22 and var_11_20)
-	gohelper.setActive(arg_11_0._btnyes.gameObject, var_11_22 and not var_11_18 and var_11_8)
-	gohelper.setActive(arg_11_0._btnno.gameObject, var_11_22 and not var_11_18 and var_11_7)
+	gohelper.setActive(arg_11_0._btnyes.gameObject, var_11_22 and not var_11_18 and var_11_9)
+	gohelper.setActive(arg_11_0._btnno.gameObject, var_11_22 and not var_11_18 and var_11_8)
 	gohelper.setActive(arg_11_0._btnLocked.gameObject, var_11_22 and (var_11_18 or var_11_19))
-	gohelper.setActive(arg_11_0._goWarning.gameObject, var_11_22 and not var_11_5 and var_11_20)
+	gohelper.setActive(arg_11_0._goWarning.gameObject, var_11_22 and not var_11_6 and var_11_20)
 	arg_11_0:_activeTip(true)
 
-	arg_11_0._txtWarning.text = var_11_11
-	arg_11_0._txtTips.text = var_11_10
+	if arg_11_0._nodeMo:isLight() then
+		arg_11_0._txtnonum.text = var_0_1 .. var_11_4
+		arg_11_0._txtlocknum.text = var_0_1 .. var_11_4
+		arg_11_0._txtlock.text = luaLang("characterskilltalent_cancel_light")
+	elseif arg_11_0._nodeMo:isLock() then
+		arg_11_0._txtlocknum.text = var_0_2 .. var_11_4
+		arg_11_0._txtlock.text = luaLang("characterskilltalent_sure_light")
+	else
+		arg_11_0._txtyesnum.text = var_0_2 .. var_11_4
+	end
+
+	arg_11_0._txtWarning.text = var_11_12
+	arg_11_0._txtTips.text = var_11_11
 end
 
 function var_0_0._activeTip(arg_12_0, arg_12_1)

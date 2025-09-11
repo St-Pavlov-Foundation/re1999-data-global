@@ -7,8 +7,11 @@ local var_0_3 = {}
 local var_0_4 = "▩rich_replace▩"
 local var_0_5 = 0
 local var_0_6 = {}
-local var_0_7 = "▩bracket_replace▩"
-local var_0_8 = 0
+local var_0_7 = {}
+local var_0_8 = "▩bracket_replace▩"
+local var_0_9 = "▩BRACKET_replace▩"
+local var_0_10 = 0
+local var_0_11 = 0
 
 function var_0_0.init(arg_1_0, arg_1_1)
 	arg_1_0.viewGO = arg_1_1
@@ -126,7 +129,7 @@ function var_0_0.addLink(arg_7_0, arg_7_1)
 	return arg_7_1
 end
 
-local function var_0_9(arg_8_0, arg_8_1)
+local function var_0_12(arg_8_0, arg_8_1)
 	local var_8_0 = SkillConfig.instance:getSkillEffectDescCoByName(arg_8_1)
 
 	arg_8_1 = SkillHelper.removeRichTag(arg_8_1)
@@ -149,13 +152,13 @@ end
 function var_0_0.addLinkCb1(arg_9_0)
 	local var_9_0 = "[%s]"
 
-	return var_0_9(var_9_0, arg_9_0)
+	return var_0_12(var_9_0, arg_9_0)
 end
 
 function var_0_0.addLinkCb2(arg_10_0)
 	local var_10_0 = "【%s】"
 
-	return var_0_9(var_10_0, arg_10_0)
+	return var_0_12(var_10_0, arg_10_0)
 end
 
 function var_0_0.addNumColor(arg_11_0, arg_11_1)
@@ -206,8 +209,9 @@ end
 
 function var_0_0.filterBracketText(arg_17_0, arg_17_1)
 	tabletool.clear(var_0_6)
+	tabletool.clear(var_0_7)
 
-	arg_17_1 = string.gsub(arg_17_1, "【.-】", arg_17_0._filterBracketText)
+	arg_17_1 = string.gsub(arg_17_1, "【.-】", arg_17_0._filterBRACKETText)
 	arg_17_1 = string.gsub(arg_17_1, "%[.-%]", arg_17_0._filterBracketText)
 
 	return arg_17_1
@@ -216,58 +220,73 @@ end
 function var_0_0._filterBracketText(arg_18_0)
 	table.insert(var_0_6, arg_18_0)
 
-	return var_0_7
+	return var_0_8
 end
 
-function var_0_0.revertBracketText(arg_19_0, arg_19_1)
-	var_0_8 = 0
-	arg_19_1 = string.gsub(arg_19_1, var_0_7, arg_19_0._reverBracketText)
+function var_0_0._filterBRACKETText(arg_19_0)
+	table.insert(var_0_7, arg_19_0)
+
+	return var_0_9
+end
+
+function var_0_0.revertBracketText(arg_20_0, arg_20_1)
+	var_0_10 = 0
+	var_0_11 = 0
+	arg_20_1 = string.gsub(arg_20_1, var_0_9, arg_20_0._reverBRACKETText)
+	arg_20_1 = string.gsub(arg_20_1, var_0_8, arg_20_0._reverBracketText)
 
 	tabletool.clear(var_0_6)
+	tabletool.clear(var_0_7)
 
-	return arg_19_1
+	return arg_20_1
 end
 
-function var_0_0._reverBracketText(arg_20_0)
-	var_0_8 = var_0_8 + 1
+function var_0_0._reverBracketText(arg_21_0)
+	var_0_10 = var_0_10 + 1
 
-	return var_0_6[var_0_8] or ""
+	return var_0_6[var_0_10] or ""
 end
 
-function var_0_0._onHyperLinkClick(arg_21_0, arg_21_1, arg_21_2)
+function var_0_0._reverBRACKETText(arg_22_0)
+	var_0_11 = var_0_11 + 1
+
+	return var_0_7[var_0_11] or ""
+end
+
+function var_0_0._onHyperLinkClick(arg_23_0, arg_23_1, arg_23_2)
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Universal_Click)
 
-	local var_21_0 = string.match(arg_21_1, "skillIndex=(%d)")
+	local var_23_0 = string.match(arg_23_1, "skillIndex=(%d)")
 
-	var_21_0 = var_21_0 and tonumber(var_21_0)
+	var_23_0 = var_23_0 and tonumber(var_23_0)
 
-	if not var_21_0 then
-		CommonBuffTipController.instance:openCommonTipViewWithCustomPos(tonumber(arg_21_1), arg_21_0._buffTipAnchor or CommonBuffTipEnum.Anchor[ViewName.CharacterExSkillView], arg_21_0._buffTipPivot or CommonBuffTipEnum.Pivot.Right)
-	elseif var_21_0 == 0 then
-		local var_21_1 = {}
+	if not var_23_0 then
+		CommonBuffTipController.instance:openCommonTipViewWithCustomPos(tonumber(arg_23_1), arg_23_0._buffTipAnchor or CommonBuffTipEnum.Anchor[ViewName.CharacterExSkillView], arg_23_0._buffTipPivot or CommonBuffTipEnum.Pivot.Right)
+	elseif var_23_0 == 0 then
+		local var_23_1 = {}
 
-		var_21_1.tag = "passiveskill"
-		var_21_1.heroid = arg_21_0._heroId
-		var_21_1.tipPos = Vector2.New(-292, -51.1)
-		var_21_1.anchorParams = {
+		var_23_1.tag = "passiveskill"
+		var_23_1.heroid = arg_23_0._heroId
+		var_23_1.tipPos = Vector2.New(-292, -51.1)
+		var_23_1.anchorParams = {
 			Vector2.New(1, 0.5),
 			Vector2.New(1, 0.5)
 		}
-		var_21_1.buffTipsX = -776
-		var_21_1.heroMo = arg_21_0.heroMo
+		var_23_1.buffTipsX = -776
+		var_23_1.heroMo = arg_23_0.heroMo
 
-		CharacterController.instance:openCharacterTipView(var_21_1)
+		CharacterController.instance:openCharacterTipView(var_23_1)
 	else
-		local var_21_2 = {}
-		local var_21_3 = SkillConfig.instance:getHeroAllSkillIdDictByExSkillLevel(arg_21_0._heroId)
+		local var_23_2 = {}
+		local var_23_3 = SkillConfig.instance:getHeroAllSkillIdDictByExSkillLevel(arg_23_0._heroId)
 
-		var_21_2.super = var_21_0 == 3
-		var_21_2.skillIdList = var_21_3[var_21_0]
-		var_21_2.monsterName = HeroConfig.instance:getHeroCO(arg_21_0._heroId).name
-		var_21_2.anchorX = arg_21_0._skillTipAnchorX
-		var_21_2.heroMo = arg_21_0.heroMo
+		var_23_2.super = var_23_0 == 3
+		var_23_2.skillIdList = var_23_3[var_23_0]
+		var_23_2.monsterName = HeroConfig.instance:getHeroCO(arg_23_0._heroId).name
+		var_23_2.anchorX = arg_23_0._skillTipAnchorX
+		var_23_2.heroMo = arg_23_0.heroMo
 
-		ViewMgr.instance:openView(ViewName.SkillTipView, var_21_2)
+		ViewMgr.instance:openView(ViewName.SkillTipView, var_23_2)
 	end
 end
 

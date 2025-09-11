@@ -68,6 +68,7 @@ function var_0_0._initBgmConfigs(arg_8_0)
 		arg_8_0._viewName2ActId[ViewName.AssassinMapView] = VersionActivity2_9Enum.ActivityId.Outside
 		arg_8_0._viewName2ActId[ViewName.V1a4_BossRushMainView] = VersionActivity2_9Enum.ActivityId.BossRush
 		arg_8_0._viewName2ActId[ViewName.VersionActivity2_9DungeonMapView] = VersionActivity2_9Enum.ActivityId.Dungeon
+		arg_8_0._viewName2ActId[ViewName.OdysseyDungeonView] = VersionActivity2_9Enum.ActivityId.Dungeon2
 	end
 
 	if not arg_8_0._viewName2ActIdHandle then
@@ -82,6 +83,7 @@ function var_0_0._initBgmConfigs(arg_8_0)
 		arg_8_0._actId2BgmHandle[VersionActivity2_9Enum.ActivityId.BossRush] = arg_8_0.playBgm_BossRush
 		arg_8_0._actId2BgmHandle[VersionActivity2_9Enum.ActivityId.Outside] = arg_8_0.playBgm_default
 		arg_8_0._actId2BgmHandle[VersionActivity2_9Enum.ActivityId.Dungeon] = arg_8_0.playBgm_default
+		arg_8_0._actId2BgmHandle[VersionActivity2_9Enum.ActivityId.Dungeon2] = arg_8_0.playBgm_default
 	end
 end
 

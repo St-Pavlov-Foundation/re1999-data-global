@@ -365,6 +365,8 @@ end
 function var_0_0.onClose(arg_31_0)
 	arg_31_0._dropherogroup:RemoveOnValueChanged()
 	OdysseyStatHelper.instance:sendOdysseyViewStayTime("OdysseyHeroGroupView")
+	HeroSingleGroupModel.instance:setMaxHeroCount()
+	HeroGroupTrialModel.instance:clear()
 end
 
 function var_0_0.onDestroyView(arg_32_0)
