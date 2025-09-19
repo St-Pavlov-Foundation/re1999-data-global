@@ -16,7 +16,7 @@ function var_0_0.onStart(arg_1_0)
 			local var_1_3 = math.max(var_1_2.enterTime / 1000, 0.7)
 
 			arg_1_0:com_registTimer(arg_1_0._delayDone, var_1_3 / FightModel.instance:getSpeed())
-			FightController.instance:dispatchEvent(FightEvent.AddMagicCircile, var_1_1)
+			FightController.instance:dispatchEvent(FightEvent.AddMagicCircile, var_1_1, arg_1_0.fightStepData.fromId)
 
 			return
 		end

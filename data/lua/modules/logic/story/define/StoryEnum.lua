@@ -23,6 +23,7 @@ var_0_0.ConversationEffectType = {
 	SoftLight = 8,
 	ReshapeMagic = 9,
 	TwoLineShow = 5,
+	Glitch = 10,
 	LineByLine = 4,
 	WordByWord = 3,
 	Shake = 1,
@@ -36,6 +37,7 @@ var_0_0.HeroPos = {
 }
 var_0_0.HeroEffect = {
 	StyDissolve = "stydissolve",
+	KeepAction = "keepAction",
 	Gray = "gray"
 }
 var_0_0.BgType = {
@@ -82,14 +84,22 @@ var_0_0.BgEffectType = {
 	BgBlur = 1,
 	FullGray = 6,
 	FishEye = 2,
-	Sketch = 9,
+	Opposition = 11,
 	BlindFilter = 10,
 	EagleEye = 13,
 	FullBlur = 4,
+	Sketch = 9,
 	MoveCurve = 7,
 	Shake = 3,
 	Interfere = 8,
+	RgbSplit = 12,
 	None = 0
+}
+var_0_0.BgRgbSplitType = {
+	Once = 1,
+	LoopStrong = 3,
+	LoopWeak = 2,
+	Trans = 0
 }
 var_0_0.AudioOrderType = {
 	Continuity = 0,
@@ -157,7 +167,8 @@ var_0_0.OptionFeedbackType = {
 	None = 0
 }
 var_0_0.OptionConditionType = {
-	HeroLead = 1,
+	MainSpine = 2,
+	NormalLead = 1,
 	None = 0
 }
 var_0_0.NavigateType = {
@@ -184,6 +195,10 @@ var_0_0.BorderType = {
 	Keep = 3,
 	FadeIn = 2,
 	None = 0
+}
+var_0_0.IconResType = {
+	IconEff = 1,
+	Spine = 0
 }
 
 return var_0_0

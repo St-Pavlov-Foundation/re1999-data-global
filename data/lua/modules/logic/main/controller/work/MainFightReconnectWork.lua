@@ -109,6 +109,10 @@ function var_0_0._onConfirm(arg_6_0)
 		FightController.instance:setFightParamByEpisodeBattleId(var_6_0.episodeId, var_6_0.battleId)
 	elseif var_6_2.type == DungeonEnum.EpisodeType.YaXian then
 		FightController.instance:setFightParamByEpisodeBattleId(YaXianGameEnum.EpisodeId, FightModel.instance:getBattleId())
+	elseif var_6_2.type == DungeonEnum.EpisodeType.Survival or var_6_2.type == DungeonEnum.EpisodeType.Shelter then
+		SurvivalController.instance:tryEnterSurvivalFight(arg_6_0._enterFightScene, arg_6_0)
+
+		return
 	elseif SeasonHeroGroupHandler.checkIsSeasonTypeByEpisodeId(var_6_1) then
 		SeasonFightHandler.checkProcessFightReconnect(var_6_0)
 	else
@@ -121,22 +125,26 @@ function var_0_0._onConfirm(arg_6_0)
 		HeroGroupModel.instance:setParam(var_6_0.battleId, var_6_1, false, true)
 	end
 
+	arg_6_0:_enterFightScene()
+end
+
+function var_0_0._enterFightScene(arg_7_0)
 	FightModel.instance:updateMySide(FightModel.instance.last_fightGroup)
 	FightController.instance:enterFightScene()
 end
 
-function var_0_0._onCancel(arg_7_0)
+function var_0_0._onCancel(arg_8_0)
 	DungeonFightController.instance:sendEndFightRequest(true)
 	FightModel.instance:clear()
-	arg_7_0:onDone(true)
+	arg_8_0:onDone(true)
 end
 
-function var_0_0._onEnterFightScene(arg_8_0)
-	arg_8_0:removeEnterFightListener()
-	TaskDispatcher.runRepeat(arg_8_0._onCheckEnterMainView, arg_8_0, 0.5)
+function var_0_0._onEnterFightScene(arg_9_0)
+	arg_9_0:removeEnterFightListener()
+	TaskDispatcher.runRepeat(arg_9_0._onCheckEnterMainView, arg_9_0, 0.5)
 end
 
-function var_0_0._onCheckEnterMainView(arg_9_0)
+function var_0_0._onCheckEnterMainView(arg_10_0)
 	if not MainController.instance:isInMainView() then
 		return
 	end
@@ -150,24 +158,24 @@ function var_0_0._onCheckEnterMainView(arg_9_0)
 	end
 
 	if not ViewMgr.instance:hasOpenFullView() and ViewMgr.instance:isOpen(ViewName.MainView) then
-		TaskDispatcher.cancelTask(arg_9_0._onCheckEnterMainView, arg_9_0)
-		arg_9_0:onDone(true)
+		TaskDispatcher.cancelTask(arg_10_0._onCheckEnterMainView, arg_10_0)
+		arg_10_0:onDone(true)
 	end
 end
 
-function var_0_0._onDelayDone(arg_10_0)
+function var_0_0._onDelayDone(arg_11_0)
 	logError("战斗重连超时，打开下一个Popup")
-	arg_10_0:onDone(true)
+	arg_11_0:onDone(true)
 end
 
-function var_0_0.clearWork(arg_11_0)
-	arg_11_0:removeEnterFightListener()
-	TaskDispatcher.cancelTask(arg_11_0._onCheckEnterMainView, arg_11_0)
+function var_0_0.clearWork(arg_12_0)
+	arg_12_0:removeEnterFightListener()
+	TaskDispatcher.cancelTask(arg_12_0._onCheckEnterMainView, arg_12_0)
 end
 
-function var_0_0.removeEnterFightListener(arg_12_0)
-	TaskDispatcher.cancelTask(arg_12_0._onDelayDone, arg_12_0)
-	GameSceneMgr.instance:unregisterCallback(SceneType.Fight, arg_12_0._onEnterFightScene, arg_12_0)
+function var_0_0.removeEnterFightListener(arg_13_0)
+	TaskDispatcher.cancelTask(arg_13_0._onDelayDone, arg_13_0)
+	GameSceneMgr.instance:unregisterCallback(SceneType.Fight, arg_13_0._onEnterFightScene, arg_13_0)
 end
 
 return var_0_0

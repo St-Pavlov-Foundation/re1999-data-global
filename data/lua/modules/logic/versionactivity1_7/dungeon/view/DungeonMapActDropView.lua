@@ -9,6 +9,7 @@ function var_0_0.onInitView(arg_1_0)
 	arg_1_0._btnstore = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_act/layout/#btn_store")
 	arg_1_0._btntask = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_act/layout/#btn_task")
 	arg_1_0._gotaskreddot = gohelper.findChild(arg_1_0.viewGO, "#go_act/layout/#btn_task/#go_reddot")
+	arg_1_0._txtshop = gohelper.findChildText(arg_1_0.viewGO, "#go_act/layout/#btn_store/normal/txt_shop")
 	arg_1_0._txtnum = gohelper.findChildText(arg_1_0.viewGO, "#go_act/layout/#btn_store/normal/#txt_num")
 	arg_1_0._txtStoreTime = gohelper.findChildText(arg_1_0.viewGO, "#go_act/layout/#btn_store/#go_time/#txt_time")
 	arg_1_0._goStoreTime = gohelper.findChild(arg_1_0.viewGO, "#go_act/layout/#btn_store/#go_time")
@@ -35,11 +36,11 @@ var_0_0.ActBtnPosY = {
 }
 
 function var_0_0.onClickStore(arg_4_0)
-	VersionActivity2_6DungeonController.instance:openStoreView()
+	VersionActivity2_8DungeonController.instance:openStoreView()
 end
 
 function var_0_0.onClickTask(arg_5_0)
-	VersionActivity2_6DungeonController.instance:openTaskView()
+	VersionActivity2_8DungeonController.instance:openTaskView()
 end
 
 function var_0_0._editableInitView(arg_6_0)
@@ -68,7 +69,7 @@ function var_0_0.onOpen(arg_9_0)
 	arg_9_0.chapterId = arg_9_0.viewParam.chapterId
 	arg_9_0.chapterCo = DungeonConfig.instance:getChapterCO(arg_9_0.chapterId)
 
-	RedDotController.instance:addRedDot(arg_9_0._gotaskreddot, RedDotEnum.DotNode.V2a6DungeonTask)
+	RedDotController.instance:addRedDot(arg_9_0._gotaskreddot, RedDotEnum.DotNode.V2a8DungeonTask)
 	arg_9_0:_showActNode(arg_9_0:checkCanShowAct())
 end
 
@@ -109,14 +110,14 @@ function var_0_0.refreshLayout(arg_12_0)
 end
 
 function var_0_0.refreshStoreCurrency(arg_13_0)
-	local var_13_0 = CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.V2a6Dungeon)
+	local var_13_0 = CurrencyModel.instance:getCurrency(CurrencyEnum.CurrencyType.V2a8Dungeon)
 	local var_13_1 = var_13_0 and var_13_0.quantity or 0
 
 	arg_13_0._txtnum.text = GameUtil.numberDisplay(var_13_1)
 end
 
 function var_0_0.refreshRemainTime(arg_14_0)
-	local var_14_0 = ActivityModel.instance:getActivityInfo()[VersionActivity2_6Enum.ActivityId.DungeonStore]
+	local var_14_0 = ActivityModel.instance:getActivityInfo()[VersionActivity2_8Enum.ActivityId.DungeonStore]
 
 	if not var_14_0 then
 		gohelper.setActive(arg_14_0._goStoreTime, false)
@@ -127,6 +128,7 @@ function var_0_0.refreshRemainTime(arg_14_0)
 	gohelper.setActive(arg_14_0._goStoreTime, true)
 
 	arg_14_0._txtStoreTime.text = var_14_0:getRemainTimeStr2ByEndTime(true)
+	arg_14_0._txtshop.text = var_14_0.config.name
 end
 
 function var_0_0.checkCanShowAct(arg_15_0)

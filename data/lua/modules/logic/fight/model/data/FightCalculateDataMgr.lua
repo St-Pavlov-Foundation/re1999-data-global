@@ -613,6 +613,10 @@ function var_0_0.playEffect91(arg_91_0, arg_91_1)
 		return
 	end
 
+	if var_91_0.exPointType ~= FightEnum.ExPointType.Common then
+		return
+	end
+
 	var_91_0:changeExpointMaxAdd(arg_91_1.effectNum)
 end
 
@@ -800,6 +804,10 @@ function var_0_0.playEffect113(arg_113_0, arg_113_1)
 	local var_113_0 = arg_113_0:getTarEntityMO(arg_113_1)
 
 	if not var_113_0 then
+		return
+	end
+
+	if var_113_0.exPointType ~= FightEnum.ExPointType.Common then
 		return
 	end
 
@@ -1588,6 +1596,10 @@ function var_0_0.playEffect244(arg_198_0, arg_198_1)
 		return
 	end
 
+	if var_198_0.exPointType ~= FightEnum.ExPointType.Common then
+		return
+	end
+
 	local var_198_1 = string.splitToNumber(arg_198_1.reserveStr, "#")
 	local var_198_2 = var_198_1[1]
 	local var_198_3 = var_198_1[2]
@@ -1841,7 +1853,7 @@ function var_0_0.playEffect282(arg_222_0, arg_222_1)
 end
 
 function var_0_0.playEffect283(arg_223_0, arg_223_1)
-	arg_223_0.dataMgr.fieldMgr:setPlayerFinisherInfo(arg_223_1.playerFinisherInfo)
+	arg_223_0.dataMgr.fieldMgr.playerFinisherInfo = FightDataUtil.coverData(arg_223_1.playerFinisherInfo, arg_223_0.dataMgr.fieldMgr.playerFinisherInfo)
 end
 
 function var_0_0.playEffect287(arg_224_0, arg_224_1)
@@ -2015,6 +2027,11 @@ end
 
 function var_0_0.playEffect330(arg_241_0, arg_241_1)
 	local var_241_0 = arg_241_0.dataMgr.fieldMgr.param
+
+	if string.nilorempty(arg_241_1.reserveStr) then
+		return
+	end
+
 	local var_241_1 = GameUtil.splitString2(arg_241_1.reserveStr, true)
 
 	for iter_241_0, iter_241_1 in ipairs(var_241_1) do
@@ -2030,6 +2047,10 @@ function var_0_0.playEffect337(arg_242_0, arg_242_1)
 end
 
 function var_0_0.playEffect338(arg_243_0, arg_243_1)
+	if string.nilorempty(arg_243_1.reserveStr) then
+		return
+	end
+
 	local var_243_0 = arg_243_0:getHandCard()
 	local var_243_1 = FightStrUtil.instance:getSplitString2Cache(arg_243_1.reserveStr, true)
 
@@ -2070,7 +2091,7 @@ function var_0_0.playEffect350(arg_245_0, arg_245_1)
 		return
 	end
 
-	local var_245_1 = var_245_0.buffDic[arg_245_1.effectNum]
+	local var_245_1 = var_245_0.buffDic[arg_245_1.reserveId]
 
 	if not var_245_1 then
 		return
@@ -2280,6 +2301,28 @@ end
 
 function var_0_0.ingoreLogError(arg_260_0)
 	return
+end
+
+function var_0_0.playEffect345(arg_261_0, arg_261_1)
+	local var_261_0 = arg_261_0.dataMgr.fieldMgr.customData and arg_261_0.dataMgr.fieldMgr.customData[FightCustomData.CustomDataType.Survival]
+
+	if not var_261_0 then
+		return
+	end
+
+	if not var_261_0.hero2Health then
+		return
+	end
+
+	local var_261_1 = arg_261_1.effectNum1
+	local var_261_2 = tostring(var_261_1)
+	local var_261_3 = var_261_0.hero2Health[var_261_2]
+
+	if not var_261_3 then
+		return
+	end
+
+	var_261_0.hero2Health[var_261_2] = var_261_3 + arg_261_1.effectNum
 end
 
 return var_0_0

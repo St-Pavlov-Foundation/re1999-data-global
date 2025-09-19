@@ -2,12 +2,13 @@
 
 local var_0_0 = {}
 local var_0_1 = {
-	cost = 4,
-	context = 3,
-	group = 2,
+	context = 4,
 	id = 1,
-	weight = 5,
-	order = 6
+	goodsId = 2,
+	cost = 5,
+	group = 3,
+	weight = 6,
+	order = 7
 }
 local var_0_2 = {
 	"id"

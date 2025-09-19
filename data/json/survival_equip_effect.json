@@ -1,0 +1,672 @@
+[
+  {
+    "id": 1000001,
+    "effect": "skillStage#1000#0#72800301#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1000002,
+    "effect": "skillStage#1000#0#72800302#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1000003,
+    "effect": "skillStage#1000#0#72800303#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1000004,
+    "effect": "skillStage#1000#0#72800304#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1000005,
+    "effect": "skillStage#1000#0#72800305#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1000006,
+    "effect": "skillStage#1000#0#72800306#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1000007,
+    "effect": "skillStage#1000#0#72800307#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1000008,
+    "effect": "skillStage#1000#0#72800308#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1000009,
+    "effect": "skillStage#1000#0#72800309#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1000010,
+    "effect": "skillStage#1000#0#72800310#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1000011,
+    "effect": "skillStage#1000#0#72800311#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1000012,
+    "effect": "skillStage#1000#0#72800312#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1000013,
+    "effect": "skillStage#1000#0#72800313#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1000014,
+    "effect": "skillStage#1000#0#72800314#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1000015,
+    "effect": "skillStage#1000#0#72800315#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1000016,
+    "effect": "skillStage#1000#0#72800316#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1000017,
+    "effect": "skillStage#1000#0#72800317#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1000018,
+    "effect": "skillStage#1000#0#72800318#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1000019,
+    "effect": "skillStage#1000#0#72800319#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1000020,
+    "effect": "skillStage#1000#0#72800320#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1000021,
+    "effect": "skillStage#1000#0#72800321#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1000022,
+    "effect": "skillStage#1000#0#72800322#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1000023,
+    "effect": "skillStage#1000#0#72800323#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1000024,
+    "effect": "skillStage#1000#0#72800324#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1000025,
+    "effect": "skillStage#1000#0#72800325#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1000026,
+    "effect": "skillStage#1000#0#72800326#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1000027,
+    "effect": "skillStage#1000#0#72800327#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1000028,
+    "effect": "skillStage#1000#0#72800328#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1000029,
+    "effect": "skillStage#1000#0#72800329#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1000030,
+    "effect": "skillStage#1000#0#72800330#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1000031,
+    "effect": "vorpalithSkillStage#1000#0#72800331",
+    "effect_score": ""
+  },
+  {
+    "id": 1000032,
+    "effect": "vorpalithSkillStage#1000#0#72800332",
+    "effect_score": ""
+  },
+  {
+    "id": 1000033,
+    "effect": "vorpalithSkillStage#1000#0#72800333",
+    "effect_score": ""
+  },
+  {
+    "id": 1000034,
+    "effect": "vorpalithSkillStage#1000#0#72800334",
+    "effect_score": ""
+  },
+  {
+    "id": 1000035,
+    "effect": "vorpalithSkillStage#1000#0#72800335",
+    "effect_score": ""
+  },
+  {
+    "id": 1000036,
+    "effect": "vorpalithSkillStage#1000#0#72800336",
+    "effect_score": ""
+  },
+  {
+    "id": 1000037,
+    "effect": "vorpalithSkillStage#1000#0#72800337",
+    "effect_score": ""
+  },
+  {
+    "id": 1000038,
+    "effect": "vorpalithSkillStage#1000#0#72800338",
+    "effect_score": ""
+  },
+  {
+    "id": 1000039,
+    "effect": "vorpalithSkillStage#1000#0#72800339",
+    "effect_score": ""
+  },
+  {
+    "id": 1000040,
+    "effect": "vorpalithSkillStage#1000#0#72800340",
+    "effect_score": ""
+  },
+  {
+    "id": 1000041,
+    "effect": "vorpalithSkillStage#1000#0#72800341",
+    "effect_score": ""
+  },
+  {
+    "id": 1000042,
+    "effect": "vorpalithSkillStage#1000#0#72800342",
+    "effect_score": ""
+  },
+  {
+    "id": 1000043,
+    "effect": "vorpalithSkillStage#1000#0#72800343",
+    "effect_score": ""
+  },
+  {
+    "id": 1000044,
+    "effect": "vorpalithSkillStage#1000#0#72800344",
+    "effect_score": ""
+  },
+  {
+    "id": 1000045,
+    "effect": "vorpalithSkillStage#1000#0#72800345",
+    "effect_score": ""
+  },
+  {
+    "id": 1000046,
+    "effect": "vorpalithSkillStage#1000#0#72800346",
+    "effect_score": ""
+  },
+  {
+    "id": 1000047,
+    "effect": "vorpalithSkillStage#1000#0#72800347",
+    "effect_score": ""
+  },
+  {
+    "id": 1000048,
+    "effect": "vorpalithSkillStage#1000#0#72800348",
+    "effect_score": ""
+  },
+  {
+    "id": 1000049,
+    "effect": "vorpalithSkillStage#1000#0#72800349",
+    "effect_score": ""
+  },
+  {
+    "id": 1000050,
+    "effect": "vorpalithSkillStage#1000#0#72800350",
+    "effect_score": ""
+  },
+  {
+    "id": 1000051,
+    "effect": "vorpalithSkillStage#1000#0#72800351",
+    "effect_score": ""
+  },
+  {
+    "id": 1000052,
+    "effect": "vorpalithSkillStage#1000#0#72800352",
+    "effect_score": ""
+  },
+  {
+    "id": 1000053,
+    "effect": "vorpalithSkillStage#1000#0#72800353",
+    "effect_score": ""
+  },
+  {
+    "id": 1000054,
+    "effect": "vorpalithSkillStage#1000#0#72800354",
+    "effect_score": ""
+  },
+  {
+    "id": 1000055,
+    "effect": "vorpalithSkillStage#1000#0#72800355",
+    "effect_score": ""
+  },
+  {
+    "id": 1000056,
+    "effect": "vorpalithSkillStage#1000#0#72800356",
+    "effect_score": ""
+  },
+  {
+    "id": 1000057,
+    "effect": "vorpalithSkillStage#1000#0#72800357",
+    "effect_score": ""
+  },
+  {
+    "id": 1000058,
+    "effect": "vorpalithSkillStage#1000#0#72800358",
+    "effect_score": ""
+  },
+  {
+    "id": 1000059,
+    "effect": "vorpalithSkillStage#1000#0#72800359",
+    "effect_score": ""
+  },
+  {
+    "id": 1000060,
+    "effect": "vorpalithSkillStage#1000#0#72800360",
+    "effect_score": ""
+  },
+  {
+    "id": 1000061,
+    "effect": "skillStage#1000#0#72800361#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1000062,
+    "effect": "skillStage#1000#0#72800362#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1000063,
+    "effect": "skillStage#1000#0#72800363#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1000064,
+    "effect": "skillStage#1000#0#72800364#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1000065,
+    "effect": "skillStage#1000#0#72800365#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1000066,
+    "effect": "vorpalithSkillStage#1000#0#72800366",
+    "effect_score": ""
+  },
+  {
+    "id": 1000067,
+    "effect": "vorpalithSkillStage#1000#0#72800367",
+    "effect_score": ""
+  },
+  {
+    "id": 1000068,
+    "effect": "vorpalithSkillStage#1000#0#72800368",
+    "effect_score": ""
+  },
+  {
+    "id": 1000069,
+    "effect": "vorpalithSkillStage#1000#0#72800369",
+    "effect_score": ""
+  },
+  {
+    "id": 1000070,
+    "effect": "vorpalithSkillStage#1000#0#72800370",
+    "effect_score": ""
+  },
+  {
+    "id": 1000071,
+    "effect": "skillStage#1000#0#72800371#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1000072,
+    "effect": "skillStage#1000#0#72800372#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1000073,
+    "effect": "skillStage#1000#0#72800373#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1000074,
+    "effect": "skillStage#1000#0#72800374#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1000075,
+    "effect": "skillStage#1000#0#72800375#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1000076,
+    "effect": "skillStage#1000#0#72810314#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1000077,
+    "effect": "ruleStage#1000#0#7280014#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1000078,
+    "effect": "ruleStage#1000#0#7280015#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1000079,
+    "effect": "ruleStage#1000#0#7280016#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1000080,
+    "effect": "ruleStage#1000#0#7280025#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1000081,
+    "effect": "skillStage#1000#0#72800331#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1000082,
+    "effect": "skillStage#1000#0#72800332#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1000083,
+    "effect": "skillStage#1000#0#72800333#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1000084,
+    "effect": "skillStage#1000#0#72800334#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1000085,
+    "effect": "skillStage#1000#0#72800335#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1000086,
+    "effect": "skillStage#1000#0#72800336#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1010001,
+    "effect": "ruleStage#1000#0#7280001#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1010002,
+    "effect": "ruleStage#1000#0#7280002#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1010003,
+    "effect": "vorpalithSkillStage#1009#1#72810125",
+    "effect_score": ""
+  },
+  {
+    "id": 1010004,
+    "effect": "vorpalithSkillStage#1009#1#72810126",
+    "effect_score": ""
+  },
+  {
+    "id": 1010005,
+    "effect": "ruleStage#1009#1#7280003#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1010006,
+    "effect": "ruleStage#1009#1#7280004#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1010007,
+    "effect": "vorpalithSkillStage#1009#1#72810127",
+    "effect_score": ""
+  },
+  {
+    "id": 1010008,
+    "effect": "vorpalithSkillStage#1009#1#72810128",
+    "effect_score": ""
+  },
+  {
+    "id": 1010009,
+    "effect": "vorpalithSkillStage#1000#0#72810119",
+    "effect_score": ""
+  },
+  {
+    "id": 1010010,
+    "effect": "vorpalithSkillStage#1000#0#72810120",
+    "effect_score": ""
+  },
+  {
+    "id": 1020001,
+    "effect": "ruleStage#1000#0#7280005#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1020002,
+    "effect": "ruleStage#1000#0#7280006#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1020003,
+    "effect": "skillStage#1009#1#72810204#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1020004,
+    "effect": "skillStage#1009#1#72810205#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1020005,
+    "effect": "vorpalithSkillStage#1009#1#72810206",
+    "effect_score": ""
+  },
+  {
+    "id": 1020006,
+    "effect": "ruleStage#1000#0#7280007#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1020007,
+    "effect": "ruleStage#1000#0#7280008#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1020008,
+    "effect": "ruleStage#1009#1#7280009#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1020009,
+    "effect": "vorpalithSkillStage#1009#1#72810215",
+    "effect_score": ""
+  },
+  {
+    "id": 1020010,
+    "effect": "vorpalithSkillStage#1010#1#72810210",
+    "effect_score": ""
+  },
+  {
+    "id": 1020011,
+    "effect": "vorpalithSkillStage#1013#1#72810211",
+    "effect_score": ""
+  },
+  {
+    "id": 1020012,
+    "effect": "ruleStage#1000#0#7280017#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1030001,
+    "effect": "skillStage#1009#1#72810304#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1030002,
+    "effect": "skillStage#1009#1#72810305#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1030006,
+    "effect": "vorpalithSkillStage#1011#1#72810312",
+    "effect_score": ""
+  },
+  {
+    "id": 1030007,
+    "effect": "vorpalithSkillStage#1012#1#72810313",
+    "effect_score": ""
+  },
+  {
+    "id": 1030008,
+    "effect": "skillStage#1009#1#72800371#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1030009,
+    "effect": "skillStage#1009#1#72800373#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1030010,
+    "effect": "skillStage#1009#1#72810306#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1030011,
+    "effect": "skillStage#1009#1#72810315#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1030012,
+    "effect": "skillStage#1009#1#72800326#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1030013,
+    "effect": "skillStage#1009#1#72800328#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1050001,
+    "effect": "ruleStage#1009#1#7280010#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1050002,
+    "effect": "ruleStage#1009#1#7280011#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1050003,
+    "effect": "vorpalithSkillStage#1009#1#72810504",
+    "effect_score": ""
+  },
+  {
+    "id": 1050004,
+    "effect": "vorpalithSkillStage#1009#1#72810505",
+    "effect_score": ""
+  },
+  {
+    "id": 1050005,
+    "effect": "ruleStage#1009#1#7280012#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1050006,
+    "effect": "ruleStage#1009#1#7280013#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1050007,
+    "effect": "vorpalithSkillStage#1009#1#72810508",
+    "effect_score": ""
+  },
+  {
+    "id": 1050008,
+    "effect": "vorpalithSkillStage#1009#1#72810509",
+    "effect_score": ""
+  },
+  {
+    "id": 1050009,
+    "effect": "skillStage#1009#1#72800306#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1050010,
+    "effect": "skillStage#1009#1#72800311#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1040001,
+    "effect": "skillStage#1000#0#72810408#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1040002,
+    "effect": "skillStage#1000#0#72810408#1",
+    "effect_score": ""
+  },
+  {
+    "id": 1040003,
+    "effect": "vorpalithPerTotalAddSkill#1001#1#99#72810410",
+    "effect_score": ""
+  },
+  {
+    "id": 1040004,
+    "effect": "vorpalithSkillStage#1009#1#72810411",
+    "effect_score": ""
+  },
+  {
+    "id": 1040005,
+    "effect": "vorpalithSkillStage#1009#1#72810412",
+    "effect_score": ""
+  },
+  {
+    "id": 1040006,
+    "effect": "vorpalithSkillStage#1009#1#72810413",
+    "effect_score": ""
+  }
+]

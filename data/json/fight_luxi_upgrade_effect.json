@@ -1,0 +1,137 @@
+[
+  {
+    "id": 308601,
+    "buffId": 30860171,
+    "effectType": 1,
+    "countOffset": 0,
+    "effect": "v1a9_luxi/luxi_update1",
+    "effectHangPoint": "mountroot",
+    "audio": 430860102
+  },
+  {
+    "id": 308601,
+    "buffId": 30860172,
+    "effectType": 1,
+    "countOffset": 0,
+    "effect": "v1a9_luxi/luxi_update2",
+    "effectHangPoint": "mountroot",
+    "audio": 430860102
+  },
+  {
+    "id": 308601,
+    "buffId": 30860173,
+    "effectType": 1,
+    "countOffset": 0,
+    "effect": "v1a9_luxi/luxi_update3",
+    "effectHangPoint": "mountroot",
+    "audio": 430860102
+  },
+  {
+    "id": 308601,
+    "buffId": 30860174,
+    "effectType": 1,
+    "countOffset": 0,
+    "effect": "v1a9_luxi/luxi_update4",
+    "effectHangPoint": "mountroot",
+    "audio": 430860102
+  },
+  {
+    "id": 308601,
+    "buffId": 30860175,
+    "effectType": 1,
+    "countOffset": 0,
+    "effect": "v1a9_luxi/luxi_update5",
+    "effectHangPoint": "mountroot",
+    "audio": 430860102
+  },
+  {
+    "id": 308602,
+    "buffId": 30860171,
+    "effectType": 1,
+    "countOffset": 0,
+    "effect": "v1a9_luxi/luxi_update1",
+    "effectHangPoint": "mountroot",
+    "audio": 430860102
+  },
+  {
+    "id": 308602,
+    "buffId": 30860172,
+    "effectType": 1,
+    "countOffset": 0,
+    "effect": "v1a9_luxi/luxi_update2",
+    "effectHangPoint": "mountroot",
+    "audio": 430860102
+  },
+  {
+    "id": 308602,
+    "buffId": 30860173,
+    "effectType": 1,
+    "countOffset": 0,
+    "effect": "v1a9_luxi/luxi_update3",
+    "effectHangPoint": "mountroot",
+    "audio": 430860102
+  },
+  {
+    "id": 308602,
+    "buffId": 30860174,
+    "effectType": 1,
+    "countOffset": 0,
+    "effect": "v1a9_luxi/luxi_update4",
+    "effectHangPoint": "mountroot",
+    "audio": 430860102
+  },
+  {
+    "id": 308602,
+    "buffId": 30860175,
+    "effectType": 1,
+    "countOffset": 0,
+    "effect": "v1a9_luxi/luxi_update5",
+    "effectHangPoint": "mountroot",
+    "audio": 430860102
+  },
+  {
+    "id": 308603,
+    "buffId": 30860171,
+    "effectType": 2,
+    "countOffset": 0,
+    "effect": "v2a8_luxi/luxi_update1#v2a8_luxi/luxi_update2#v2a8_luxi/luxi_update3#v2a8_luxi/luxi_update4#v2a8_luxi/luxi_update4",
+    "effectHangPoint": "mountroot",
+    "audio": 430860302
+  },
+  {
+    "id": 308603,
+    "buffId": 30860172,
+    "effectType": 2,
+    "countOffset": 0,
+    "effect": "v2a8_luxi/luxi_update1#v2a8_luxi/luxi_update2#v2a8_luxi/luxi_update3#v2a8_luxi/luxi_update4#v2a8_luxi/luxi_update4",
+    "effectHangPoint": "mountroot",
+    "audio": 430860302
+  },
+  {
+    "id": 308603,
+    "buffId": 30860173,
+    "effectType": 2,
+    "countOffset": 0,
+    "effect": "v2a8_luxi/luxi_update1#v2a8_luxi/luxi_update2#v2a8_luxi/luxi_update3#v2a8_luxi/luxi_update4#v2a8_luxi/luxi_update4",
+    "effectHangPoint": "mountroot",
+    "audio": 430860302
+  },
+  {
+    "id": 308603,
+    "buffId": 30860174,
+    "effectType": 2,
+    "countOffset": 0,
+    "effect": "v2a8_luxi/luxi_update1#v2a8_luxi/luxi_update2#v2a8_luxi/luxi_update3#v2a8_luxi/luxi_update4#v2a8_luxi/luxi_update4",
+    "effectHangPoint": "mountroot",
+    "audio": 430860302
+  },
+  {
+    "id": 308603,
+    "buffId": 30860175,
+    "effectType": 2,
+    "countOffset": 3,
+    "effect": "v2a8_luxi/luxi_update1#v2a8_luxi/luxi_update2#v2a8_luxi/luxi_update3#v2a8_luxi/luxi_update4#v2a8_luxi/luxi_update4",
+    "effectHangPoint": "mountroot",
+    "audio": 430860302
+  }
+]

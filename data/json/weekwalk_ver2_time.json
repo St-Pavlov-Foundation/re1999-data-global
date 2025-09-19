@@ -24,11 +24,27 @@
     "ruleRear": "1#9270502"
   },
   {
+    "timeId": 4,
+    "issueId": 4,
+    "optionalSkills": "2016#2001#2017#2018#2006#2012",
+    "ruleIcon": "shen_guize_18",
+    "ruleFront": "1#9280208",
+    "ruleRear": "1#9280209"
+  },
+  {
     "timeId": 7,
     "issueId": 7,
     "optionalSkills": "2024#2025#2026#2027#2004#2006",
     "ruleIcon": "shen_guize_18",
     "ruleFront": "1#8291209",
     "ruleRear": "1#8291210"
+  },
+  {
+    "timeId": 8,
+    "issueId": 4,
+    "optionalSkills": "2016#2001#2017#2018#2006#2012",
+    "ruleIcon": "shen_guize_18",
+    "ruleFront": "1#9280208",
+    "ruleRear": "1#9280209"
   }
 ]

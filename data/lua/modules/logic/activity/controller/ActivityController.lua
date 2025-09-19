@@ -104,9 +104,13 @@ local var_0_1 = {
 	ActivityEnum.Activity.V2a7_Labor_Sign,
 	ActivityEnum.Activity.V2a7_SelfSelectSix1,
 	ActivityEnum.Activity.V2a7_SelfSelectSix2,
+	ActivityEnum.Activity.V2a8_DragonBoat,
+	ActivityEnum.Activity.V2a8_WuErLiXiGift,
 	ActivityEnum.Activity.V2a9_VersionSummon_Part1,
 	ActivityEnum.Activity.V2a9_VersionSummon_Part2,
-	ActivityEnum.Activity.V2a9_FreeMonthCard
+	ActivityEnum.Activity.V2a9_FreeMonthCard,
+	ActivityEnum.Activity.V3a0_SummerSign,
+	ActivityEnum.Activity.V3a1_AutumnSign
 }
 local var_0_2 = {
 	ActivityEnum.Activity.V3a0_WarmUp,
@@ -125,8 +129,12 @@ local var_0_2 = {
 }
 
 function var_0_0.checkGetActivityInfo(arg_9_0)
-	for iter_9_0, iter_9_1 in ipairs(var_0_2) do
-		Activity125Controller.instance:getAct125InfoFromServer(iter_9_1)
+	local var_9_0 = ActivityConfig.instance:typeId2ActivityCOList(ActivityEnum.ActivityTypeID.Act125)
+
+	for iter_9_0, iter_9_1 in ipairs(var_9_0) do
+		local var_9_1 = iter_9_1.id
+
+		Activity125Controller.instance:getAct125InfoFromServer(var_9_1)
 	end
 
 	if ActivityModel.instance:isActOnLine(ActivityEnum.Activity.Activity1_5WarmUp) then
@@ -135,10 +143,10 @@ function var_0_0.checkGetActivityInfo(arg_9_0)
 
 	arg_9_0._getActSuccess = true
 
-	local var_9_0 = Activity104Model.instance:getCurSeasonId()
+	local var_9_2 = Activity104Model.instance:getCurSeasonId()
 
-	if arg_9_0._getGroupSuccess and ActivityModel.instance:isActOnLine(var_9_0) then
-		Activity104Rpc.instance:sendGet104InfosRequest(var_9_0)
+	if arg_9_0._getGroupSuccess and ActivityModel.instance:isActOnLine(var_9_2) then
+		Activity104Rpc.instance:sendGet104InfosRequest(var_9_2)
 		TaskRpc.instance:sendGetTaskInfoRequest({
 			TaskEnum.TaskType.Season
 		})
@@ -165,6 +173,7 @@ function var_0_0.checkGetActivityInfo(arg_9_0)
 	end
 
 	arg_9_0:requestAct186Info()
+	arg_9_0:requestAct165Info()
 end
 
 function var_0_0.requestAct186Info(arg_10_0)
@@ -253,6 +262,10 @@ function var_0_0._initLinkageActivity_kAct101RedList(arg_16_0)
 	local var_16_0 = GameBranchMgr.instance:Vxax_ActId("LinkageActivity", ActivityEnum.Activity.LinkageActivity_FullView)
 
 	table.insert(var_0_1, var_16_0)
+end
+
+function var_0_0.requestAct165Info(arg_17_0)
+	Activity165Model.instance:onInitInfo()
 end
 
 var_0_0.instance = var_0_0.New()

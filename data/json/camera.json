@@ -70,5 +70,14 @@
     "fov": 50.0,
     "focusZ": 0.0,
     "yOffset": 2.0
+  },
+  {
+    "id": 9,
+    "yaw": 0.0,
+    "pitch": 40.0,
+    "distance": 5.0,
+    "fov": 30.0,
+    "focusZ": 0.0,
+    "yOffset": 0.0
   }
 ]

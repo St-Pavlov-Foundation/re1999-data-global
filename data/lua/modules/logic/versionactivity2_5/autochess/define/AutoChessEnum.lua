@@ -3,10 +3,16 @@
 local var_0_0 = _M
 
 var_0_0.ModuleId = {
+	PVP = 1,
+	Friend = 3,
 	PVE = 0,
-	PVP = 1
+	PVP2 = 2
 }
-var_0_0.PvpEpisodeId = 11010
+var_0_0.EpisodeType = {
+	PVP = 1,
+	PVP2 = 2,
+	PVE = 0
+}
 var_0_0.SpecialMaster = {
 	Role37 = 30020
 }
@@ -27,13 +33,14 @@ var_0_0.ActionType = {
 	NewStart = 5
 }
 var_0_0.EffectType = {
-	ExpChange = 13,
+	UdimoSkill = 24,
 	NextFightStep = 1,
 	FightUpdate = 20,
 	LeaderSkillUpdate = 22,
 	DelBuff = 10,
 	BattleChange = 16,
 	LeaderChange = 23,
+	ExpChange = 13,
 	ChessMove = 6,
 	LeaderHpFloat = 3,
 	LeaderHp = 2,
@@ -61,11 +68,13 @@ var_0_0.TeamType = {
 var_0_0.WarZone = {
 	Two = 2,
 	One = 1,
+	Four = 4,
 	Three = 3
 }
 var_0_0.WarZoneType = {
 	AutoChessStrEnum.ChessType.Support,
-	AutoChessStrEnum.ChessType.Attack
+	AutoChessStrEnum.ChessType.Attack,
+	AutoChessStrEnum.ChessType.Incubate
 }
 var_0_0.ConstKey = {
 	ChessSellPrice = 6,
@@ -108,9 +117,9 @@ var_0_0.TileSize = {
 }
 var_0_0.TileStartPos = {
 	[var_0_0.ViewType.Player] = {
-		Vector2(-377, 256),
-		Vector2(-405, 76),
-		(Vector2(-432, -102))
+		Vector2(-215, 245),
+		Vector2(-241, 76),
+		(Vector2(-261, -102))
 	},
 	[var_0_0.ViewType.Enemy] = {
 		Vector2(-436, 259),
@@ -171,16 +180,36 @@ var_0_0.ContextType = {
 	Fight = 4,
 	Immediately = 1
 }
-var_0_0.MaterialPath = {
-	Player = "ui/materials/dynamic/outlinesprite_lw_ui_01.mat",
-	Enemy = "ui/materials/dynamic/outlinesprite_lw_ui_00.mat"
+var_0_0.Tag2EffectId = {
+	Die = 10002,
+	Ranged = 20002,
+	BattleFury = 2003,
+	Damaged = 20001,
+	GrowUp = 10003,
+	Raw = 10001
 }
-var_0_0.ChessEntityPath = "ui/viewres/versionactivity_2_5/autochess/item/autochessentity.prefab"
-var_0_0.ChessLeaderEntityPath = "ui/viewres/versionactivity_2_5/autochess/item/autochessleaderentity.prefab"
-var_0_0.LeaderItemPath = "ui/viewres/versionactivity_2_5/autochess/item/autochessleaderitem.prefab"
-var_0_0.ChessCardPath = "ui/viewres/versionactivity_2_5/autochess/item/autochesscard.prefab"
-var_0_0.LeaderCardPath = "ui/viewres/versionactivity_2_5/autochess/item/autochessleadercard.prefab"
-var_0_0.BadgeItemPath = "ui/viewres/versionactivity_2_5/autochess/item/autochessbadgeitem.prefab"
-var_0_0.LevelItemPath = "ui/viewres/versionactivity_2_5/autochess/item/autochesslevelitem.prefab"
+var_0_0.HpFloatType = {
+	Poison = 2,
+	Attack = 1,
+	Cure = 3,
+	None = 0
+}
+var_0_0.EnergyBuffIds = {
+	1004,
+	1005
+}
+var_0_0.FireBuffIds = {
+	1017,
+	1018
+}
+var_0_0.PenguinChessIds = {
+	21007,
+	21008,
+	21009,
+	21010,
+	21011,
+	21012,
+	21013
+}
 
 return var_0_0

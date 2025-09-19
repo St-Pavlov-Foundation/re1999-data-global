@@ -110,6 +110,7 @@ local var_0_1 = {
 
 function var_0_0.init(arg_1_0, arg_1_1)
 	arg_1_0.go = arg_1_1
+	arg_1_0._gosimulate = gohelper.findChild(arg_1_1, "go_simulate")
 
 	if arg_1_0._editableInitView then
 		arg_1_0:_editableInitView()
@@ -141,20 +142,28 @@ function var_0_0.refreshHeroGroup(arg_7_0, arg_7_1)
 		return
 	end
 
-	local var_7_0 = arg_7_1:getEpisodeId()
+	local var_7_0 = arg_7_1:isSimulate()
+
+	gohelper.setActive(arg_7_0._gosimulate, var_7_0)
+
+	if var_7_0 then
+		return
+	end
+
+	local var_7_1 = arg_7_1:getEpisodeId()
 
 	arg_7_0._episodeType = arg_7_1:getEpisodeType()
-	arg_7_0._hasTeamLeader = Act183Helper.isEpisodeHasTeamLeader(var_7_0)
+	arg_7_0._hasTeamLeader = Act183Helper.isEpisodeHasTeamLeader(var_7_1)
 
-	local var_7_1 = arg_7_0:_setTeamLeaderPosition(arg_7_1)
-	local var_7_2 = var_7_1 and #var_7_1 or 0
-	local var_7_3 = arg_7_0.HeroIconPosition[var_7_2]
+	local var_7_2 = arg_7_0:_setTeamLeaderPosition(arg_7_1)
+	local var_7_3 = var_7_2 and #var_7_2 or 0
+	local var_7_4 = arg_7_0.HeroIconPosition[var_7_3]
 
-	for iter_7_0, iter_7_1 in ipairs(var_7_1) do
-		local var_7_4 = gohelper.clone(arg_7_0._goherotemplate, arg_7_0.go, "hero_" .. iter_7_0)
-		local var_7_5 = var_7_3 and var_7_3[iter_7_0]
+	for iter_7_0, iter_7_1 in ipairs(var_7_2) do
+		local var_7_5 = gohelper.clone(arg_7_0._goherotemplate, arg_7_0.go, "hero_" .. iter_7_0)
+		local var_7_6 = var_7_4 and var_7_4[iter_7_0]
 
-		arg_7_0:refreshSingleHeroItem(var_7_4, iter_7_1, iter_7_0, var_7_5)
+		arg_7_0:refreshSingleHeroItem(var_7_5, iter_7_1, iter_7_0, var_7_6)
 	end
 end
 

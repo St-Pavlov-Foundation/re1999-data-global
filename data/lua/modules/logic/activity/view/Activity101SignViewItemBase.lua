@@ -132,91 +132,125 @@ function var_0_0.getScrollModel(arg_11_0)
 		return var_11_0._model
 	end
 
+	if isDebugBuild then
+		assert(type(var_11_0.getScrollModel == "function", "please override this function"))
+	end
+
 	return var_11_0:getScrollModel()
 end
 
-function var_0_0._refreshRewardItem(arg_12_0, arg_12_1, arg_12_2)
-	arg_12_1:setMOValue(arg_12_2[1], arg_12_2[2], arg_12_2[3])
-	arg_12_1:setCountFontSize(46)
-	arg_12_1:setHideLvAndBreakFlag(true)
-	arg_12_1:hideEquipLvAndBreak(true)
-	arg_12_1:customOnClickCallback(function()
-		local var_13_0 = arg_12_0:actId()
-		local var_13_1 = arg_12_0._index
+function var_0_0.getCsListScroll(arg_12_0)
+	local var_12_0 = arg_12_0._view
 
-		if not ActivityModel.instance:isActOnLine(var_13_0) then
+	if arg_12_0:isLimitedScrollViewItem() then
+		return var_12_0:getCsListScroll()
+	end
+
+	if isDebugBuild then
+		assert(type(var_12_0.getCsListScroll == "function", "please override this function"))
+	end
+
+	return var_12_0:getCsListScroll()
+end
+
+function var_0_0._refreshRewardItem(arg_13_0, arg_13_1, arg_13_2)
+	arg_13_1:setMOValue(arg_13_2[1], arg_13_2[2], arg_13_2[3])
+	arg_13_1:setCountFontSize(46)
+	arg_13_1:setHideLvAndBreakFlag(true)
+	arg_13_1:hideEquipLvAndBreak(true)
+	arg_13_1:customOnClickCallback(function()
+		local var_14_0 = arg_13_0:actId()
+		local var_14_1 = arg_13_0._index
+
+		if not ActivityModel.instance:isActOnLine(var_14_0) then
 			GameFacade.showToast(ToastEnum.BattlePass)
 
 			return
 		end
 
-		if ActivityType101Model.instance:isType101RewardCouldGet(var_13_0, var_13_1) then
-			Activity101Rpc.instance:sendGet101BonusRequest(var_13_0, var_13_1)
+		if ActivityType101Model.instance:isType101RewardCouldGet(var_14_0, var_14_1) then
+			Activity101Rpc.instance:sendGet101BonusRequest(var_14_0, var_14_1)
 
 			return
 		end
 
-		MaterialTipController.instance:showMaterialInfo(arg_12_2[1], arg_12_2[2])
+		MaterialTipController.instance:showMaterialInfo(arg_13_2[1], arg_13_2[2])
 	end)
 end
 
-function var_0_0._setActive_TomorrowTagGo(arg_14_0, arg_14_1)
-	gohelper.setActive(arg_14_0:_tomorrowTagGo(), arg_14_1)
+function var_0_0._setActive_TomorrowTagGo(arg_15_0, arg_15_1)
+	gohelper.setActive(arg_15_0:_tomorrowTagGo(), arg_15_1)
 end
 
-function var_0_0._setActive_kelingquGo(arg_15_0, arg_15_1)
-	gohelper.setActive(arg_15_0:_kelingquGo(), arg_15_1)
+function var_0_0._setActive_kelingquGo(arg_16_0, arg_16_1)
+	gohelper.setActive(arg_16_0:_kelingquGo(), arg_16_1)
 end
 
 local var_0_4 = 86400
 
-function var_0_0._refresh_TomorrowTagGo(arg_16_0)
-	local var_16_0 = arg_16_0:actId()
-	local var_16_1 = arg_16_0._index == ActivityType101Model.instance:getType101LoginCount(var_16_0) + 1 and arg_16_0:getRemainTimeSec() >= var_0_4 or false
+function var_0_0._refresh_TomorrowTagGo(arg_17_0)
+	local var_17_0 = arg_17_0:actId()
+	local var_17_1 = arg_17_0._index == ActivityType101Model.instance:getType101LoginCount(var_17_0) + 1 and arg_17_0:getRemainTimeSec() >= var_0_4 or false
 
-	arg_16_0:_setActive_TomorrowTagGo(var_16_1)
+	arg_17_0:_setActive_TomorrowTagGo(var_17_1)
 end
 
-function var_0_0.actId(arg_17_0)
-	return arg_17_0._mo.data[1]
+function var_0_0.actId(arg_18_0)
+	return arg_18_0._mo.data[1]
 end
 
-function var_0_0.view(arg_18_0)
-	return arg_18_0._view
+function var_0_0.view(arg_19_0)
+	return arg_19_0._view
 end
 
-function var_0_0.viewContainer(arg_19_0)
-	return arg_19_0:view().viewContainer
+function var_0_0.viewContainer(arg_20_0)
+	return arg_20_0:view().viewContainer
 end
 
-function var_0_0.getRemainTimeSec(arg_20_0)
-	local var_20_0 = arg_20_0:actId()
+function var_0_0.getRemainTimeSec(arg_21_0)
+	local var_21_0 = arg_21_0:actId()
 
-	return ActivityModel.instance:getRemainTimeSec(var_20_0) or 0
+	return ActivityModel.instance:getRemainTimeSec(var_21_0) or 0
 end
 
-function var_0_0.onRefresh(arg_21_0)
+function var_0_0.onRefresh(arg_22_0)
 	assert(false, "please override thid function")
 end
 
-function var_0_0._kelingquGo(arg_22_0)
-	if not arg_22_0._kelinquGo then
-		if arg_22_0._goSelectedBG then
-			arg_22_0._kelinquGo = gohelper.findChild(arg_22_0._goSelectedBG, "kelinqu")
+function var_0_0._kelingquGo(arg_23_0)
+	if not arg_23_0._kelinquGo then
+		if arg_23_0._goSelectedBG then
+			arg_23_0._kelinquGo = gohelper.findChild(arg_23_0._goSelectedBG, "kelinqu")
 		else
-			arg_22_0._kelinquGo = gohelper.findChild(arg_22_0.viewGO, "Root/#go_SelectedBG/kelinqu")
+			arg_23_0._kelinquGo = gohelper.findChild(arg_23_0.viewGO, "Root/#go_SelectedBG/kelinqu")
 		end
 	end
 
-	return arg_22_0._kelinquGo
+	return arg_23_0._kelinquGo
 end
 
-function var_0_0._tomorrowTagGo(arg_23_0)
-	if not arg_23_0._goTomorrowTag then
-		arg_23_0._goTomorrowTag = gohelper.findChild(arg_23_0.viewGO, "Root/#go_TomorrowTag")
+function var_0_0._tomorrowTagGo(arg_24_0)
+	if not arg_24_0._goTomorrowTag then
+		arg_24_0._goTomorrowTag = gohelper.findChild(arg_24_0.viewGO, "Root/#go_TomorrowTag")
 	end
 
-	return arg_23_0._goTomorrowTag
+	return arg_24_0._goTomorrowTag
+end
+
+function var_0_0.setScrollparentGameObject(arg_25_0, arg_25_1)
+	if gohelper.isNil(arg_25_1) then
+		return
+	end
+
+	local var_25_0 = arg_25_1:GetComponent(gohelper.Type_LimitedScrollRect)
+
+	assert(var_25_0, "must add csharp LimitedScrollRect component!!")
+
+	local var_25_1 = arg_25_0:getCsListScroll()
+
+	assert(var_25_1, "parent scroll must add csharp ListScrollView component!!")
+
+	var_25_0.parentGameObject = var_25_1.gameObject
 end
 
 return var_0_0

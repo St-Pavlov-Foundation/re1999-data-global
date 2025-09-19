@@ -29,6 +29,13 @@ function var_0_0.buildFlow(arg_1_0, arg_1_1)
 		AudioMgr.instance:trigger(AudioEnum.UI.stop_combatnoise_bus)
 	end))
 	arg_1_0:addWork(FightWorkEndGC.New())
+
+	if FightWorkDirectStartNewFightAfterEndFight.directStartNewFight(FightDataHelper.fieldMgr.episodeId) then
+		arg_1_0:addWork(FunctionWork.New(arg_1_0.replaceEndCallback, arg_1_0, FightSystem.directStartNewFight))
+
+		return
+	end
+
 	arg_1_0:addWork(FightWorkEndResultViewShow.New())
 	arg_1_0:addWork(FightWorkSeasonPopupAndStory.New())
 	arg_1_0:addWork(FightWorkWeekWalkRevive.New())
@@ -40,6 +47,7 @@ function var_0_0.buildFlow(arg_1_0, arg_1_1)
 	arg_1_0:addWork(FightWorkAct183Ending.New())
 	arg_1_0:addWork(FightWorkOpenLoadingBlackView.New())
 	arg_1_0:addWork(FunctionWork.New(function()
+		DungeonMainStoryModel.instance:saveBattleChapterId(DungeonModel.instance.curSendEpisodeId)
 		FightSystem.instance:dispose()
 		FightController.instance:exitFightScene()
 		FightModel.instance:clearRecordMO()
@@ -63,6 +71,10 @@ function var_0_0._addCloseFightView(arg_6_0)
 	arg_6_0:addWork(FunctionWork.New(function()
 		ViewMgr.instance:closeView(ViewName.FightView)
 	end))
+end
+
+function var_0_0.replaceEndCallback(arg_8_0, arg_8_1)
+	arg_8_0._callback = arg_8_1
 end
 
 return var_0_0

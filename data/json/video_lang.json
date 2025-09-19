@@ -553,5 +553,23 @@
       "jp",
       "kr"
     ]
+  },
+  {
+    "name": "2_8_pv",
+    "supportLang": [
+      "en",
+      "zh",
+      "jp",
+      "kr"
+    ]
+  },
+  {
+    "name": "1_0_pv",
+    "supportLang": [
+      "en",
+      "zh",
+      "jp",
+      "kr"
+    ]
   }
 ]

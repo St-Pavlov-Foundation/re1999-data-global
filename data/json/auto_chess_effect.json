@@ -11,7 +11,7 @@
     "target": 0,
     "position": 2,
     "offset": "",
-    "duration": 0.0,
+    "duration": 0.5,
     "soundId": 0
   },
   {
@@ -56,7 +56,7 @@
     "target": 2,
     "position": 2,
     "offset": "",
-    "duration": 1.0,
+    "duration": 0.5,
     "soundId": 20250411
   },
   {
@@ -86,7 +86,7 @@
     "target": 2,
     "position": 2,
     "offset": "",
-    "duration": 1.0,
+    "duration": 0.3,
     "soundId": 20250420
   },
   {
@@ -101,7 +101,7 @@
     "target": 1,
     "position": 2,
     "offset": "",
-    "duration": 1.0,
+    "duration": 0.0,
     "soundId": 0
   },
   {
@@ -116,7 +116,7 @@
     "target": 1,
     "position": 2,
     "offset": "",
-    "duration": 1.5,
+    "duration": 0.0,
     "soundId": 20250416
   },
   {
@@ -131,7 +131,7 @@
     "target": 1,
     "position": 2,
     "offset": "",
-    "duration": 1.3,
+    "duration": 0.5,
     "soundId": 0
   },
   {
@@ -146,7 +146,7 @@
     "target": 1,
     "position": 2,
     "offset": "",
-    "duration": 1.3,
+    "duration": 0.5,
     "soundId": 0
   },
   {
@@ -161,7 +161,7 @@
     "target": 1,
     "position": 2,
     "offset": "",
-    "duration": 1.5,
+    "duration": 0.0,
     "soundId": 0
   },
   {
@@ -176,7 +176,7 @@
     "target": 1,
     "position": 2,
     "offset": "",
-    "duration": 1.5,
+    "duration": 0.0,
     "soundId": 0
   },
   {
@@ -191,7 +191,7 @@
     "target": 1,
     "position": 2,
     "offset": "",
-    "duration": 1.5,
+    "duration": 0.5,
     "soundId": 0
   },
   {
@@ -206,7 +206,7 @@
     "target": 2,
     "position": 2,
     "offset": "",
-    "duration": 1.5,
+    "duration": 1.0,
     "soundId": 20250414
   },
   {
@@ -221,7 +221,7 @@
     "target": 2,
     "position": 2,
     "offset": "",
-    "duration": 2.0,
+    "duration": 1.0,
     "soundId": 0
   },
   {
@@ -236,8 +236,23 @@
     "target": 2,
     "position": 2,
     "offset": "",
-    "duration": 1.0,
+    "duration": 0.0,
     "soundId": 0
+  },
+  {
+    "id": 30012,
+    "tag": "skill",
+    "subtag": "",
+    "nameUp": "autochess_box_up",
+    "nameDown": "",
+    "type": "normal",
+    "playertype": 2,
+    "loop": 0,
+    "target": 1,
+    "position": 2,
+    "offset": "",
+    "duration": 0.7,
+    "soundId": 20280302
   },
   {
     "id": 40001,
@@ -281,7 +296,7 @@
     "target": 2,
     "position": 2,
     "offset": "",
-    "duration": 1.5,
+    "duration": 1.0,
     "soundId": 20250413
   },
   {
@@ -296,8 +311,23 @@
     "target": 1,
     "position": 2,
     "offset": "",
-    "duration": 1.3,
+    "duration": 0.5,
     "soundId": 20250417
+  },
+  {
+    "id": 40005,
+    "tag": "buff",
+    "subtag": "",
+    "nameUp": "autochess_reborn_up",
+    "nameDown": "",
+    "type": "normal",
+    "playertype": 2,
+    "loop": 1,
+    "target": 2,
+    "position": 2,
+    "offset": "",
+    "duration": 0.0,
+    "soundId": 0
   },
   {
     "id": 50001,
@@ -313,5 +343,20 @@
     "offset": "",
     "duration": 1.5,
     "soundId": 20250415
+  },
+  {
+    "id": 50002,
+    "tag": "Lvup",
+    "subtag": "",
+    "nameUp": "autochess_lvup_loop",
+    "nameDown": "",
+    "type": "normal",
+    "playertype": 2,
+    "loop": 1,
+    "target": 2,
+    "position": 2,
+    "offset": "",
+    "duration": 0.0,
+    "soundId": 0
   }
 ]

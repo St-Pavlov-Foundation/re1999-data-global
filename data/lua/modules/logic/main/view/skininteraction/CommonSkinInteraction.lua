@@ -14,7 +14,7 @@ function var_0_0._beforePlayVoice(arg_3_0, arg_3_1)
 	arg_3_0._isRespondType = arg_3_0._isSpecialInteraction and arg_3_0:_isSpecialRespondType(arg_3_1.type)
 	arg_3_0._changeValue = nil
 
-	local var_3_0 = arg_3_1 and arg_3_1.audio == arg_3_0._waitVoice
+	local var_3_0 = arg_3_1 and arg_3_1.audio == arg_3_0._waitVoice and not arg_3_0._skipChangeStatus
 
 	if var_3_0 then
 		arg_3_0._changeValue = CharacterVoiceController.instance:getChangeValue(arg_3_1)
@@ -82,6 +82,7 @@ function var_0_0._onPlayVoice(arg_8_0)
 		arg_8_0._waitTime = var_8_1.time
 		arg_8_0._waitVoice = var_8_1.waitVoice
 		arg_8_0._timeoutVoiceConfig = lua_character_voice.configDict[arg_8_0._voiceConfig.heroId][var_8_1.timeoutVoice]
+		arg_8_0._skipChangeStatus = var_8_1.statusParams == CharacterVoiceEnum.StatusParams.Luxi_NoChangeStatus
 
 		CharacterVoiceController.instance:trackSpecialInteraction(arg_8_0._voiceConfig.heroId, arg_8_0._voiceConfig.audio, CharacterVoiceController.instance:getSpecialInteractionPlayType())
 	end
@@ -97,6 +98,7 @@ function var_0_0._onStopVoice(arg_10_0)
 	arg_10_0._isSpecialInteraction = nil
 	arg_10_0._waitVoice = nil
 	arg_10_0._timeoutVoiceConfig = nil
+	arg_10_0._skipChangeStatus = nil
 
 	TaskDispatcher.cancelTask(arg_10_0._waitTimeout, arg_10_0)
 end

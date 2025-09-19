@@ -47,27 +47,15 @@ function var_0_0.getWorkList(arg_7_0)
 	return arg_7_0.workList
 end
 
-function var_0_0.getAliveWorkList(arg_8_0)
-	local var_8_0 = {}
-
-	for iter_8_0, iter_8_1 in ipairs(arg_8_0.workList) do
-		if not iter_8_1.WORKFINISHED and not iter_8_1.IS_DISPOSED then
-			table.insert(var_8_0, iter_8_1)
-		end
-	end
-
-	return var_8_0
+function var_0_0.disposeAllWork(arg_8_0)
+	arg_8_0:disposeObjectList(arg_8_0.workList)
+	arg_8_0:onOneWorkFinish()
 end
 
-function var_0_0.disposeAllWork(arg_9_0)
+function var_0_0.onDestructor(arg_9_0)
 	arg_9_0:disposeObjectList(arg_9_0.workList)
-	arg_9_0:onOneWorkFinish()
-end
 
-function var_0_0.onDestructor(arg_10_0)
-	arg_10_0:disposeObjectList(arg_10_0.workList)
-
-	arg_10_0.workList = nil
+	arg_9_0.workList = nil
 end
 
 return var_0_0

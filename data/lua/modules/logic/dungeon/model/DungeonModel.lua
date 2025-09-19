@@ -166,7 +166,11 @@ function var_0_0.resetEpisodeInfoByChapterId(arg_13_0, arg_13_1)
 	local var_13_0 = DungeonConfig.instance:getChapterEpisodeCOList(arg_13_1)
 
 	for iter_13_0, iter_13_1 in ipairs(var_13_0) do
-		arg_13_0._dungeonEpisodeDic[iter_13_1.id].star = DungeonEnum.StarType.None
+		local var_13_1 = arg_13_0._dungeonEpisodeDic[iter_13_1.id]
+
+		if var_13_1 then
+			var_13_1.star = DungeonEnum.StarType.None
+		end
 	end
 end
 
@@ -326,6 +330,10 @@ function var_0_0.chapterIsLock(arg_20_0, arg_20_1)
 	end
 
 	if arg_20_0._dungeonChapterDic[arg_20_1] then
+		return false
+	end
+
+	if DungeonMainStoryModel.instance:isPreviewChapter(arg_20_1) then
 		return false
 	end
 
@@ -517,7 +525,9 @@ function var_0_0.startCheckUnlockChapter(arg_24_0)
 	local var_24_0 = DungeonConfig.instance:getNormalChapterList()
 
 	for iter_24_0, iter_24_1 in ipairs(var_24_0) do
-		arg_24_0._chapterStatus[iter_24_1.id] = arg_24_0:chapterIsLock(iter_24_1.id)
+		local var_24_1 = arg_24_0:chapterIsLock(iter_24_1.id) == true
+
+		arg_24_0._chapterStatus[iter_24_0] = var_24_1
 	end
 end
 
@@ -526,15 +536,22 @@ function var_0_0.endCheckUnlockChapter(arg_25_0)
 		return
 	end
 
-	for iter_25_0, iter_25_1 in pairs(arg_25_0._chapterStatus) do
-		if iter_25_1 and iter_25_1 ~= arg_25_0:chapterIsLock(iter_25_0) then
+	local var_25_0 = DungeonConfig.instance:getNormalChapterList()
+
+	for iter_25_0, iter_25_1 in ipairs(arg_25_0._chapterStatus) do
+		local var_25_1 = var_25_0[iter_25_0].id
+
+		if iter_25_1 and iter_25_1 ~= arg_25_0:chapterIsLock(var_25_1) then
 			arg_25_0._chapterStatus[iter_25_0] = false
-			arg_25_0.unlockNewChapterId = iter_25_0
+
+			DungeonController.instance:dispatchEvent(DungeonEvent.OnCheckChapterUnlock)
+
+			arg_25_0.unlockNewChapterId = var_25_1
 			arg_25_0.chapterTriggerNewChapter = true
 
-			local var_25_0 = DungeonConfig.instance:getChapterCO(iter_25_0)
+			local var_25_2 = DungeonConfig.instance:getChapterCO(var_25_1)
 
-			if var_25_0 and var_25_0.rewardPoint > 0 then
+			if var_25_2 and var_25_2.rewardPoint > 0 then
 				GameFacade.showToast(ToastEnum.UnlockChapter)
 			end
 
@@ -542,10 +559,12 @@ function var_0_0.endCheckUnlockChapter(arg_25_0)
 		end
 	end
 
-	for iter_25_2, iter_25_3 in pairs(arg_25_0._chapterStatus) do
-		if iter_25_3 and iter_25_3 ~= arg_25_0:chapterIsLock(iter_25_2) then
+	for iter_25_2, iter_25_3 in ipairs(arg_25_0._chapterStatus) do
+		local var_25_3 = var_25_0[iter_25_2].id
+
+		if iter_25_3 and iter_25_3 ~= arg_25_0:chapterIsLock(var_25_3) then
 			arg_25_0._chapterStatus[iter_25_2] = false
-			arg_25_0._otherChapterUnlock[iter_25_2] = true
+			arg_25_0._otherChapterUnlock[var_25_3] = true
 		end
 	end
 end
@@ -595,6 +614,10 @@ function var_0_0.isUnlock(arg_30_0, arg_30_1)
 	end
 
 	if arg_30_1.preEpisode2 == 0 then
+		return true
+	end
+
+	if DungeonMainStoryModel.isUnlockInPreviewChapter(arg_30_1.id) then
 		return true
 	end
 
@@ -677,6 +700,11 @@ local var_0_1 = {
 	[DungeonEnum.EpisodeType.TowerBossTeach] = true,
 	[DungeonEnum.EpisodeType.Act183] = true,
 	[DungeonEnum.EpisodeType.Act191] = true,
+	[DungeonEnum.EpisodeType.Survival] = true,
+	[DungeonEnum.EpisodeType.Shelter] = true,
+	[DungeonEnum.EpisodeType.V2_8Boss] = true,
+	[DungeonEnum.EpisodeType.V2_8BossAct] = true,
+	[DungeonEnum.EpisodeType.GameJumpFight] = true,
 	[DungeonEnum.EpisodeType.Odyssey] = true,
 	[DungeonEnum.EpisodeType.Assassin2Outside] = true
 }
@@ -982,117 +1010,137 @@ function var_0_0.chapterIsPass(arg_58_0, arg_58_1)
 	return true
 end
 
-function var_0_0.hasPassLevel(arg_59_0, arg_59_1)
-	local var_59_0 = arg_59_0:getEpisodeInfo(arg_59_1)
+function var_0_0.chapterLastEpisodeIsFinished(arg_59_0, arg_59_1)
+	local var_59_0 = DungeonConfig.instance:getChapterEpisodeCOList(arg_59_1)
 
-	return var_59_0 and var_59_0.star > DungeonEnum.StarType.None
+	if var_59_0 then
+		local var_59_1 = var_59_0[#var_59_0]
+
+		if var_59_1 and arg_59_0:hasPassLevelAndStory(var_59_1.id) then
+			return true
+		end
+	end
+
+	return false
 end
 
-function var_0_0.hasPassLevelAndStory(arg_60_0, arg_60_1)
-	if not arg_60_0:hasPassLevel(arg_60_1) then
+function var_0_0.hasPassLevel(arg_60_0, arg_60_1)
+	local var_60_0 = arg_60_0:getEpisodeInfo(arg_60_1)
+
+	return var_60_0 and var_60_0.star > DungeonEnum.StarType.None
+end
+
+function var_0_0.onlyCheckPassLevel(arg_61_0, arg_61_1)
+	local var_61_0 = arg_61_0._dungeonEpisodeDic[arg_61_1]
+
+	return var_61_0 and var_61_0.star > DungeonEnum.StarType.None
+end
+
+function var_0_0.hasPassLevelAndStory(arg_62_0, arg_62_1)
+	if not arg_62_0:hasPassLevel(arg_62_1) then
 		return false
 	end
 
-	local var_60_0 = DungeonConfig.instance:getEpisodeCO(arg_60_1)
+	local var_62_0 = DungeonConfig.instance:getEpisodeCO(arg_62_1)
 
-	if var_60_0.afterStory > 0 and not StoryModel.instance:isStoryFinished(var_60_0.afterStory) then
+	if var_62_0.afterStory > 0 and not StoryModel.instance:isStoryFinished(var_62_0.afterStory) then
 		return false
 	end
 
 	return true
 end
 
-function var_0_0.getUnlockContentList(arg_61_0, arg_61_1)
-	local var_61_0 = {}
-	local var_61_1 = OpenConfig.instance:getOpenShowInEpisode(arg_61_1)
+function var_0_0.getUnlockContentList(arg_63_0, arg_63_1)
+	local var_63_0 = {}
+	local var_63_1 = OpenConfig.instance:getOpenShowInEpisode(arg_63_1)
 
-	if var_61_1 then
-		for iter_61_0, iter_61_1 in ipairs(var_61_1) do
-			local var_61_2 = lua_open.configDict[iter_61_1].bindActivityId
+	if var_63_1 then
+		for iter_63_0, iter_63_1 in ipairs(var_63_1) do
+			local var_63_2 = lua_open.configDict[iter_63_1].bindActivityId
 
-			if var_61_2 ~= 0 then
-				local var_61_3 = ActivityHelper.getActivityStatus(var_61_2)
+			if var_63_2 ~= 0 then
+				local var_63_3 = ActivityHelper.getActivityStatus(var_63_2)
 
-				if var_61_3 == ActivityEnum.ActivityStatus.Normal or var_61_3 == ActivityEnum.ActivityStatus.NotUnlock then
-					local var_61_4 = arg_61_0:getUnlockContent(DungeonEnum.UnlockContentType.Open, iter_61_1)
+				if var_63_3 == ActivityEnum.ActivityStatus.Normal or var_63_3 == ActivityEnum.ActivityStatus.NotUnlock then
+					local var_63_4 = arg_63_0:getUnlockContent(DungeonEnum.UnlockContentType.Open, iter_63_1)
 
-					if var_61_4 then
-						table.insert(var_61_0, var_61_4)
+					if var_63_4 then
+						table.insert(var_63_0, var_63_4)
 					end
 				end
 			else
-				local var_61_5 = arg_61_0:getUnlockContent(DungeonEnum.UnlockContentType.Open, iter_61_1)
+				local var_63_5 = arg_63_0:getUnlockContent(DungeonEnum.UnlockContentType.Open, iter_63_1)
 
-				if var_61_5 then
-					table.insert(var_61_0, var_61_5)
+				if var_63_5 then
+					table.insert(var_63_0, var_63_5)
 				end
 			end
 		end
 	end
 
-	local var_61_6 = DungeonConfig.instance:getUnlockEpisodeList(arg_61_1)
+	local var_63_6 = DungeonConfig.instance:getUnlockEpisodeList(arg_63_1)
 
-	if var_61_6 then
-		for iter_61_2, iter_61_3 in ipairs(var_61_6) do
-			local var_61_7 = arg_61_0:getUnlockContent(DungeonEnum.UnlockContentType.Episode, iter_61_3)
+	if var_63_6 then
+		for iter_63_2, iter_63_3 in ipairs(var_63_6) do
+			local var_63_7 = arg_63_0:getUnlockContent(DungeonEnum.UnlockContentType.Episode, iter_63_3)
 
-			if var_61_7 then
-				table.insert(var_61_0, var_61_7)
+			if var_63_7 then
+				table.insert(var_63_0, var_63_7)
 			end
 		end
 	end
 
-	local var_61_8 = OpenConfig.instance:getOpenGroupShowInEpisode(arg_61_1)
+	local var_63_8 = OpenConfig.instance:getOpenGroupShowInEpisode(arg_63_1)
 
-	if var_61_8 then
-		for iter_61_4, iter_61_5 in ipairs(var_61_8) do
-			local var_61_9 = arg_61_0:getUnlockContent(DungeonEnum.UnlockContentType.OpenGroup, iter_61_5)
+	if var_63_8 then
+		for iter_63_4, iter_63_5 in ipairs(var_63_8) do
+			local var_63_9 = arg_63_0:getUnlockContent(DungeonEnum.UnlockContentType.OpenGroup, iter_63_5)
 
-			if var_61_9 then
-				table.insert(var_61_0, var_61_9)
+			if var_63_9 then
+				table.insert(var_63_0, var_63_9)
 			end
 		end
 	end
 
-	return var_61_0
+	return var_63_0
 end
 
-function var_0_0.getUnlockContent(arg_62_0, arg_62_1, arg_62_2)
-	if arg_62_1 == DungeonEnum.UnlockContentType.Open then
-		return string.format(luaLang("dungeon_unlock_content_1"), lua_open.configDict[arg_62_2].name)
-	elseif arg_62_1 == DungeonEnum.UnlockContentType.Episode then
-		local var_62_0 = DungeonConfig.instance:getEpisodeCO(arg_62_2)
+function var_0_0.getUnlockContent(arg_64_0, arg_64_1, arg_64_2)
+	if arg_64_1 == DungeonEnum.UnlockContentType.Open then
+		return string.format(luaLang("dungeon_unlock_content_1"), lua_open.configDict[arg_64_2].name)
+	elseif arg_64_1 == DungeonEnum.UnlockContentType.Episode then
+		local var_64_0 = DungeonConfig.instance:getEpisodeCO(arg_64_2)
 
-		return string.format(luaLang("dungeon_unlock_content_2"), string.format("%s %s", DungeonController.getEpisodeName(var_62_0), var_62_0.name))
-	elseif arg_62_1 == DungeonEnum.UnlockContentType.OpenGroup then
-		return string.format(luaLang("dungeon_unlock_content_3"), arg_62_2)
-	elseif arg_62_1 == DungeonEnum.UnlockContentType.ActivityOpen then
-		return string.format(luaLang("dungeon_unlock_content_4"), lua_open.configDict[arg_62_2].name)
+		return string.format(luaLang("dungeon_unlock_content_2"), string.format("%s %s", DungeonController.getEpisodeName(var_64_0), var_64_0.name))
+	elseif arg_64_1 == DungeonEnum.UnlockContentType.OpenGroup then
+		return string.format(luaLang("dungeon_unlock_content_3"), arg_64_2)
+	elseif arg_64_1 == DungeonEnum.UnlockContentType.ActivityOpen then
+		return string.format(luaLang("dungeon_unlock_content_4"), lua_open.configDict[arg_64_2].name)
 	end
 end
 
-function var_0_0.setDungeonStoryviewState(arg_63_0, arg_63_1)
-	arg_63_0._isDungeonStoryView = arg_63_1
+function var_0_0.setDungeonStoryviewState(arg_65_0, arg_65_1)
+	arg_65_0._isDungeonStoryView = arg_65_1
 end
 
-function var_0_0.getDungeonStoryState(arg_64_0)
-	return arg_64_0._isDungeonStoryView
+function var_0_0.getDungeonStoryState(arg_66_0)
+	return arg_66_0._isDungeonStoryView
 end
 
-function var_0_0.setLastSelectMode(arg_65_0, arg_65_1, arg_65_2)
-	arg_65_0._lastSelectEpisodeId = arg_65_2
-	arg_65_0._lastSelectChapterType = arg_65_1
+function var_0_0.setLastSelectMode(arg_67_0, arg_67_1, arg_67_2)
+	arg_67_0._lastSelectEpisodeId = arg_67_2
+	arg_67_0._lastSelectChapterType = arg_67_1
 end
 
-function var_0_0.getLastSelectMode(arg_66_0)
-	return arg_66_0._lastSelectChapterType, arg_66_0._lastSelectEpisodeId
+function var_0_0.getLastSelectMode(arg_68_0)
+	return arg_68_0._lastSelectChapterType, arg_68_0._lastSelectEpisodeId
 end
 
-function var_0_0.hasPassAllChapterEpisode(arg_67_0, arg_67_1)
-	local var_67_0 = DungeonConfig.instance:getChapterEpisodeCOList(arg_67_1)
+function var_0_0.hasPassAllChapterEpisode(arg_69_0, arg_69_1)
+	local var_69_0 = DungeonConfig.instance:getChapterEpisodeCOList(arg_69_1)
 
-	for iter_67_0, iter_67_1 in ipairs(var_67_0) do
-		if not arg_67_0:hasPassLevelAndStory(iter_67_1.id) then
+	for iter_69_0, iter_69_1 in ipairs(var_69_0) do
+		if not arg_69_0:hasPassLevelAndStory(iter_69_1.id) then
 			return false
 		end
 	end
@@ -1100,79 +1148,79 @@ function var_0_0.hasPassAllChapterEpisode(arg_67_0, arg_67_1)
 	return true
 end
 
-function var_0_0.chapterIsUnLock(arg_68_0, arg_68_1)
-	local var_68_0 = DungeonConfig.instance:getChapterEpisodeCOList(arg_68_1)
+function var_0_0.chapterIsUnLock(arg_70_0, arg_70_1)
+	local var_70_0 = DungeonConfig.instance:getChapterEpisodeCOList(arg_70_1)
 
-	if var_68_0 and #var_68_0 > 0 then
-		return arg_68_0:hasPassLevelAndStory(var_68_0[1].preEpisode), var_68_0[1].preEpisode
+	if var_70_0 and #var_70_0 > 0 then
+		return arg_70_0:hasPassLevelAndStory(var_70_0[1].preEpisode), var_70_0[1].preEpisode
 	end
 
 	return false, nil
 end
 
-function var_0_0.episodeIsInLockTime(arg_69_0, arg_69_1)
-	local var_69_0 = DungeonConfig.instance:getEpisodeCO(arg_69_1)
+function var_0_0.episodeIsInLockTime(arg_71_0, arg_71_1)
+	local var_71_0 = DungeonConfig.instance:getEpisodeCO(arg_71_1)
 
-	if not var_69_0 or string.nilorempty(var_69_0.lockTime) then
+	if not var_71_0 or string.nilorempty(var_71_0.lockTime) then
 		return false
 	end
 
-	local var_69_1 = ServerTime.now() * 1000
-	local var_69_2 = string.splitToNumber(var_69_0.lockTime, "#")
+	local var_71_1 = ServerTime.now() * 1000
+	local var_71_2 = string.splitToNumber(var_71_0.lockTime, "#")
 
-	if var_69_2[1] and var_69_2[2] then
-		return var_69_1 > var_69_2[1] and var_69_1 < var_69_2[2]
+	if var_71_2[1] and var_71_2[2] then
+		return var_71_1 > var_71_2[1] and var_71_1 < var_71_2[2]
 	end
 
 	return false
 end
 
-function var_0_0.getMapElementReward(arg_70_0, arg_70_1)
-	local var_70_0 = lua_chapter_map_element.configDict[arg_70_1]
+function var_0_0.getMapElementReward(arg_72_0, arg_72_1)
+	local var_72_0 = lua_chapter_map_element.configDict[arg_72_1]
 
-	if not var_70_0 then
+	if not var_72_0 then
 		return
 	end
 
-	local var_70_1 = lua_chapter_map.configDict[var_70_0.mapId].chapterId
-	local var_70_2 = DungeonConfig.instance:getChapterCO(var_70_1)
-	local var_70_3 = var_70_2 and ReactivityModel.instance:isReactivity(var_70_2.actId) or false
+	local var_72_1 = lua_chapter_map.configDict[var_72_0.mapId].chapterId
+	local var_72_2 = DungeonConfig.instance:getChapterCO(var_72_1)
+	local var_72_3 = var_72_2 and ReactivityModel.instance:isReactivity(var_72_2.actId) or false
 
-	if var_70_2.actId ~= 0 and ActivityConfig.instance:isPermanent(var_70_2.actId) then
-		return var_70_0.permanentReward
+	if var_72_2.actId ~= 0 and ActivityConfig.instance:isPermanent(var_72_2.actId) then
+		return var_72_0.permanentReward
 	else
-		return var_70_3 and var_70_0.retroReward or var_70_0.reward
+		return var_72_3 and var_72_0.retroReward or var_72_0.reward
 	end
 end
 
-function var_0_0.isSpecialMainPlot(arg_71_0, arg_71_1)
-	return DungeonEnum.SpecialMainPlot[arg_71_1] ~= nil
+function var_0_0.isSpecialMainPlot(arg_73_0, arg_73_1)
+	return DungeonEnum.SpecialMainPlot[arg_73_1] ~= nil
 end
 
-function var_0_0.getChapterRedId(arg_72_0, arg_72_1)
-	if arg_72_1 == DungeonEnum.ChapterId.HeroInvitation then
+function var_0_0.getChapterRedId(arg_74_0, arg_74_1)
+	if arg_74_1 == DungeonEnum.ChapterId.HeroInvitation then
 		return RedDotEnum.DotNode.HeroInvitationReward
 	end
 end
 
-function var_0_0.setCanGetDramaReward(arg_73_0, arg_73_1)
-	arg_73_0.canGetDramaReward = arg_73_1
+function var_0_0.setCanGetDramaReward(arg_75_0, arg_75_1)
+	arg_75_0.canGetDramaReward = arg_75_1
 end
 
-function var_0_0.isCanGetDramaReward(arg_74_0)
-	return arg_74_0.canGetDramaReward
+function var_0_0.isCanGetDramaReward(arg_76_0)
+	return arg_76_0.canGetDramaReward
 end
 
-function var_0_0.getLastFightEpisodePassMode(arg_75_0, arg_75_1)
-	local var_75_0 = DungeonConfig.instance:getEpisodeCO(arg_75_1.preEpisode)
-	local var_75_1 = arg_75_1.chapterId == var_75_0.chapterId
+function var_0_0.getLastFightEpisodePassMode(arg_77_0, arg_77_1)
+	local var_77_0 = DungeonConfig.instance:getEpisodeCO(arg_77_1.preEpisode)
+	local var_77_1 = arg_77_1.chapterId == var_77_0.chapterId
 
-	while var_75_0.type == DungeonEnum.EpisodeType.Story and var_75_1 do
-		var_75_0 = DungeonConfig.instance:getEpisodeCO(var_75_0.preEpisode)
-		var_75_1 = arg_75_1.chapterId == var_75_0.chapterId
+	while var_77_0.type == DungeonEnum.EpisodeType.Story and var_77_1 do
+		var_77_0 = DungeonConfig.instance:getEpisodeCO(var_77_0.preEpisode)
+		var_77_1 = arg_77_1.chapterId == var_77_0.chapterId
 	end
 
-	if var_75_1 and not arg_75_0:hasPassLevel(var_75_0.id) then
+	if var_77_1 and not arg_77_0:hasPassLevel(var_77_0.id) then
 		return DungeonEnum.ChapterType.Simple
 	end
 

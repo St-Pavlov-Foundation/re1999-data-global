@@ -5,7 +5,8 @@ local var_0_0 = class("GameTimeMgr")
 var_0_0.TimeScaleType = {
 	GM = "GM",
 	FightKillEnemy = "FightKillEnemy",
-	FightTLEventSpeed = "FightTLEventSpeed"
+	FightTLEventSpeed = "FightTLEventSpeed",
+	AutoChess = "AutoChess"
 }
 
 function var_0_0.ctor(arg_1_0)

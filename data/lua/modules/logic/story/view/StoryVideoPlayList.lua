@@ -185,7 +185,7 @@ function var_0_0.setPathAtIndex(arg_8_0, arg_8_1, arg_8_2)
 		arg_8_0._currentPlayNameMap[arg_8_2] = var_0_0.Empty
 	else
 		arg_8_0:clearOtherIndex(arg_8_2)
-		arg_8_0._uguiPlayList:SetMediaPath(SLFramework.FrameworkSettings.GetAssetFullPathForWWW(langVideoUrl(arg_8_1)), arg_8_2)
+		arg_8_0._uguiPlayList:SetMediaPath(langVideoUrl(arg_8_1), arg_8_2)
 
 		arg_8_0._currentPlayNameMap[arg_8_2] = arg_8_1
 	end

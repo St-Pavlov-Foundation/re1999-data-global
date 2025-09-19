@@ -1,0 +1,170 @@
+[
+  {
+    "id": 1,
+    "activityId": 12862,
+    "code": "URD",
+    "bonus": "9#1003#1|2#3#1000"
+  },
+  {
+    "id": 2,
+    "activityId": 12862,
+    "code": "Antarctic",
+    "bonus": "2#5#2000|2#3#1000"
+  },
+  {
+    "id": 3,
+    "activityId": 12862,
+    "code": "UTTU",
+    "bonus": "2#5#2000|2#3#1000"
+  },
+  {
+    "id": 4,
+    "activityId": 12862,
+    "code": "Nautika",
+    "bonus": "1#115033#1|2#3#1000"
+  },
+  {
+    "id": 5,
+    "activityId": 12862,
+    "code": "Moldir",
+    "bonus": "1#115043#1|2#3#1000"
+  },
+  {
+    "id": 6,
+    "activityId": 12862,
+    "code": "Vertin",
+    "bonus": "9#1004#1|2#3#1000"
+  },
+  {
+    "id": 7,
+    "activityId": 12862,
+    "code": "Ulrich",
+    "bonus": "1#481008#1|2#3#1000"
+  },
+  {
+    "id": 8,
+    "activityId": 12862,
+    "code": "Matilda",
+    "bonus": "1#481003#1|2#3#1000"
+  },
+  {
+    "id": 9,
+    "activityId": 12862,
+    "code": "Regulus",
+    "bonus": "1#481003#1|2#3#1000"
+  },
+  {
+    "id": 10,
+    "activityId": 12862,
+    "code": "Recoleta",
+    "bonus": "1#481008#1|2#3#1000"
+  },
+  {
+    "id": 11,
+    "activityId": 12862,
+    "code": "Lucy",
+    "bonus": "1#115013#1|2#3#1000"
+  },
+  {
+    "id": 12,
+    "activityId": 12862,
+    "code": "Kiperina",
+    "bonus": "1#481003#1|2#3#1000"
+  },
+  {
+    "id": 13,
+    "activityId": 12862,
+    "code": "anniversary",
+    "bonus": "1#115023#1|2#3#1000"
+  },
+  {
+    "id": 14,
+    "activityId": 12862,
+    "code": "reverse",
+    "bonus": "2#10#1|2#3#1000"
+  },
+  {
+    "id": 15,
+    "activityId": 12862,
+    "code": "Spools",
+    "bonus": "2#10#1|2#3#1000"
+  },
+  {
+    "id": 16,
+    "activityId": 12862,
+    "code": "GarmentDisplay",
+    "bonus": "1#491003#1|2#3#1000"
+  },
+  {
+    "id": 17,
+    "activityId": 12862,
+    "code": "CritterCrash",
+    "bonus": "1#120011#1|2#3#1000"
+  },
+  {
+    "id": 18,
+    "activityId": 12862,
+    "code": "PreStormProtocol",
+    "bonus": "1#120011#1|2#3#1000"
+  },
+  {
+    "id": 19,
+    "activityId": 12862,
+    "code": "thejourneyback",
+    "bonus": "2#10#1|2#3#1000"
+  },
+  {
+    "id": 20,
+    "activityId": 12862,
+    "code": "Paradise",
+    "bonus": "9#1004#1|2#3#1000"
+  },
+  {
+    "id": 21,
+    "activityId": 12862,
+    "code": "water",
+    "bonus": "9#1003#1|2#3#1000"
+  },
+  {
+    "id": 22,
+    "activityId": 12862,
+    "code": "thestorm",
+    "bonus": "9#1003#1|2#3#1000"
+  },
+  {
+    "id": 23,
+    "activityId": 12862,
+    "code": "Flood",
+    "bonus": "9#1003#1|2#3#1000"
+  },
+  {
+    "id": 24,
+    "activityId": 12862,
+    "code": "Roar",
+    "bonus": "2#3#2000|2#5#1000"
+  },
+  {
+    "id": 25,
+    "activityId": 12862,
+    "code": "thelovers",
+    "bonus": "2#3#2000|2#5#1000"
+  },
+  {
+    "id": 26,
+    "activityId": 12862,
+    "code": "apple",
+    "bonus": "1#481003#1|2#5#1000"
+  },
+  {
+    "id": 27,
+    "activityId": 12862,
+    "code": "jessica",
+    "bonus": "1#481003#1|2#5#1000"
+  },
+  {
+    "id": 28,
+    "activityId": 12862,
+    "code": "AAAAA",
+    "bonus": "1#481008#1|2#5#1000"
+  }
+]

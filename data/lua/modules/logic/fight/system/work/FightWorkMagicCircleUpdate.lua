@@ -13,7 +13,7 @@ function var_0_0.onStart(arg_1_0)
 		end
 
 		if lua_magic_circle.configDict[var_1_1] then
-			FightController.instance:dispatchEvent(FightEvent.UpdateMagicCircile, var_1_1)
+			FightController.instance:dispatchEvent(FightEvent.UpdateMagicCircile, var_1_1, arg_1_0.fightStepData.fromId)
 		else
 			logError("术阵表找不到id:" .. var_1_1)
 		end

@@ -118,5 +118,155 @@
     "capacity": 1,
     "canRefresh": false,
     "isFree": true
+  },
+  {
+    "id": 28001,
+    "type": 1,
+    "round": 1,
+    "showLevel": 1,
+    "groups": "28001#100",
+    "capacity": 3,
+    "canRefresh": true,
+    "isFree": false
+  },
+  {
+    "id": 28002,
+    "type": 1,
+    "round": 3,
+    "showLevel": 2,
+    "groups": "28001#100|28002#100",
+    "capacity": 4,
+    "canRefresh": true,
+    "isFree": false
+  },
+  {
+    "id": 28003,
+    "type": 1,
+    "round": 5,
+    "showLevel": 3,
+    "groups": "28001#100|28002#100|28003#100",
+    "capacity": 5,
+    "canRefresh": true,
+    "isFree": false
+  },
+  {
+    "id": 28004,
+    "type": 1,
+    "round": 7,
+    "showLevel": 4,
+    "groups": "28001#100|28002#100|28003#100|28004#100",
+    "capacity": 6,
+    "canRefresh": true,
+    "isFree": false
+  },
+  {
+    "id": 28005,
+    "type": 1,
+    "round": 9,
+    "showLevel": 5,
+    "groups": "28001#100|28002#100|28003#100|28004#100|28005#100",
+    "capacity": 7,
+    "canRefresh": true,
+    "isFree": false
+  },
+  {
+    "id": 28101,
+    "type": 1,
+    "round": 1,
+    "showLevel": 1,
+    "groups": "28001#100|30001#100",
+    "capacity": 3,
+    "canRefresh": true,
+    "isFree": false
+  },
+  {
+    "id": 28102,
+    "type": 1,
+    "round": 3,
+    "showLevel": 2,
+    "groups": "28001#100|28002#100|30001#100|30002#100",
+    "capacity": 4,
+    "canRefresh": true,
+    "isFree": false
+  },
+  {
+    "id": 28103,
+    "type": 1,
+    "round": 5,
+    "showLevel": 3,
+    "groups": "28001#100|28002#100|28003#100|30001#100|30002#100|30003#100",
+    "capacity": 5,
+    "canRefresh": true,
+    "isFree": false
+  },
+  {
+    "id": 28104,
+    "type": 1,
+    "round": 7,
+    "showLevel": 4,
+    "groups": "28001#100|28002#100|28003#100|28004#100|30001#100|30002#100|30003#100|30004#100",
+    "capacity": 6,
+    "canRefresh": true,
+    "isFree": false
+  },
+  {
+    "id": 28105,
+    "type": 1,
+    "round": 9,
+    "showLevel": 5,
+    "groups": "28001#100|28002#100|28003#100|28004#100|28005#100|30001#100|30002#100|30003#100|30004#100|30005#100",
+    "capacity": 7,
+    "canRefresh": true,
+    "isFree": false
+  },
+  {
+    "id": 30001,
+    "type": 1,
+    "round": 1,
+    "showLevel": 1,
+    "groups": "30001#100",
+    "capacity": 1,
+    "canRefresh": false,
+    "isFree": true
+  },
+  {
+    "id": 30002,
+    "type": 1,
+    "round": 3,
+    "showLevel": 2,
+    "groups": "30001#100|30002#100",
+    "capacity": 1,
+    "canRefresh": false,
+    "isFree": true
+  },
+  {
+    "id": 30003,
+    "type": 1,
+    "round": 5,
+    "showLevel": 3,
+    "groups": "30001#100|30002#100|30003#100",
+    "capacity": 1,
+    "canRefresh": false,
+    "isFree": true
+  },
+  {
+    "id": 30004,
+    "type": 1,
+    "round": 7,
+    "showLevel": 4,
+    "groups": "30001#100|30002#100|30003#100|30004#100",
+    "capacity": 1,
+    "canRefresh": false,
+    "isFree": true
+  },
+  {
+    "id": 30005,
+    "type": 1,
+    "round": 9,
+    "showLevel": 5,
+    "groups": "30001#100|30002#100|30003#100|30004#100|30005#100",
+    "capacity": 1,
+    "canRefresh": false,
+    "isFree": true
   }
 ]

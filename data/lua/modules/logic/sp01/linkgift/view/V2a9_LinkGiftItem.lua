@@ -1,4 +1,4 @@
-﻿module("modules.logic.sp01.linkpackage.view.V2a9_LinkGiftItem", package.seeall)
+﻿module("modules.logic.sp01.linkgift.view.V2a9_LinkGiftItem", package.seeall)
 
 local var_0_0 = class("V2a9_LinkGiftItem", LuaCompBase)
 

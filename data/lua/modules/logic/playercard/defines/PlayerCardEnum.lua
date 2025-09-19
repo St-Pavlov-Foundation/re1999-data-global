@@ -48,5 +48,6 @@ var_0_0.FriendViewType = {
 	online = 1,
 	playerinfo = 4
 }
+var_0_0.PlayerCardGuideId = 24110
 
 return var_0_0

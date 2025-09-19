@@ -192,36 +192,60 @@ function var_0_0._setFontAsset(arg_7_0, arg_7_1)
 			end
 
 			if not string.nilorempty(arg_7_1.str2) then
-				local var_7_6 = string.split(arg_7_1.str2, "|||")
-				local var_7_7 = SLFramework.UGUI.GuiHelper.ParseColor(var_7_6[1])
+				local var_7_6 = string.split(arg_7_1.str2, "&&&")
+				local var_7_7 = var_7_6[1]
+				local var_7_8 = var_7_6[2]
 
-				var_7_4:EnableKeyword("UNDERLAY_ON")
-				var_7_4:SetFloat("_UnderlayOffsetX", tonumber(var_7_6[2]))
-				var_7_4:SetFloat("_UnderlayOffsetY", tonumber(var_7_6[3]))
-				var_7_4:SetFloat("_UnderlayDilate", tonumber(var_7_6[4]))
-				var_7_4:SetFloat("_UnderlaySoftness", tonumber(var_7_6[5]))
-				var_7_4:SetColor("_UnderlayColor", var_7_7)
+				if string.nilorempty(var_7_7) == false then
+					local var_7_9 = string.split(var_7_7, "|||")
+					local var_7_10 = SLFramework.UGUI.GuiHelper.ParseColor(var_7_9[1])
+
+					var_7_4:EnableKeyword("UNDERLAY_ON")
+					var_7_4:SetFloat("_UnderlayOffsetX", tonumber(var_7_9[2]))
+					var_7_4:SetFloat("_UnderlayOffsetY", tonumber(var_7_9[3]))
+					var_7_4:SetFloat("_UnderlayDilate", tonumber(var_7_9[4]))
+					var_7_4:SetFloat("_UnderlaySoftness", tonumber(var_7_9[5]))
+					var_7_4:SetColor("_UnderlayColor", var_7_10)
+				end
+
+				if string.nilorempty(var_7_8) == false then
+					local var_7_11 = string.split(var_7_8, "|||")
+					local var_7_12 = SLFramework.UGUI.GuiHelper.ParseColor(var_7_11[1])
+					local var_7_13 = SLFramework.UGUI.GuiHelper.ParseColor(var_7_11[2])
+
+					var_7_4:EnableKeyword("_GRADUAL_COLOR_ON")
+					var_7_4:SetColor("_GradientColorA", var_7_12)
+					var_7_4:SetColor("_GradientColorB", var_7_13)
+
+					local var_7_14 = string.split(var_7_11[3], ",")
+					local var_7_15 = Vector4.New(tonumber(var_7_14[1]), tonumber(var_7_14[2]), 0, 0)
+
+					var_7_4:SetVector("_UIWorldCenter", var_7_15)
+					var_7_4:SetFloat("_UIWorldOffset", tonumber(var_7_11[4]))
+					var_7_4:SetFloat("_GradientAngle", tonumber(var_7_11[5]))
+					var_7_4:SetFloat("_GradientSoftness", tonumber(var_7_11[6]))
+				end
 			end
 
 			var_7_1.fontSharedMaterial = var_7_4
 		else
-			local var_7_8 = arg_7_1.tmpInputText
+			local var_7_16 = arg_7_1.tmpInputText
 
-			if var_7_8 then
-				local var_7_9 = arg_7_0._id2TmpFontAssetDict[var_7_0]
+			if var_7_16 then
+				local var_7_17 = arg_7_0._id2TmpFontAssetDict[var_7_0]
 
-				if var_7_9 then
-					var_7_8.fontAsset = var_7_9
+				if var_7_17 then
+					var_7_16.fontAsset = var_7_17
 				end
 			end
 
-			local var_7_10 = arg_7_1.tmpTextScene
+			local var_7_18 = arg_7_1.tmpTextScene
 
-			if var_7_10 then
-				local var_7_11 = arg_7_0._id2TmpFontAssetDict[var_7_0]
+			if var_7_18 then
+				local var_7_19 = arg_7_0._id2TmpFontAssetDict[var_7_0]
 
-				if var_7_11 then
-					var_7_10.font = var_7_11
+				if var_7_19 then
+					var_7_18.font = var_7_19
 				end
 			end
 		end
@@ -229,16 +253,16 @@ function var_0_0._setFontAsset(arg_7_0, arg_7_1)
 		return
 	end
 
-	local var_7_12 = arg_7_1.textId
+	local var_7_20 = arg_7_1.textId
 
-	if var_7_12 > 0 then
-		local var_7_13 = arg_7_1.text
+	if var_7_20 > 0 then
+		local var_7_21 = arg_7_1.text
 
-		if var_7_13 then
-			local var_7_14 = arg_7_0._id2TextFontAssetDict[var_7_12]
+		if var_7_21 then
+			local var_7_22 = arg_7_0._id2TextFontAssetDict[var_7_20]
 
-			if var_7_14 then
-				var_7_13.font = var_7_14
+			if var_7_22 then
+				var_7_21.font = var_7_22
 			end
 		end
 	end

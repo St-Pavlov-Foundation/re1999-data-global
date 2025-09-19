@@ -543,7 +543,7 @@ function var_0_0._setPosEquips(arg_15_0, arg_15_1, arg_15_2)
 end
 
 function var_0_0.updatePosEquips(arg_16_0, arg_16_1)
-	for iter_16_0 = 0, 3 do
+	for iter_16_0 = 0, math.max(3, #arg_16_0.heroList - 1) do
 		local var_16_0 = arg_16_0.equips[iter_16_0]
 
 		if var_16_0 and var_16_0.equipUid and #var_16_0.equipUid > 0 and arg_16_1.equipUid and #arg_16_1.equipUid > 0 then

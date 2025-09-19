@@ -1,9 +1,9 @@
 ﻿module("modules.logic.fight.system.work.FightWorkDistributeCard", package.seeall)
 
-local var_0_0 = class("FightWorkDistributeCard", BaseWork)
+local var_0_0 = class("FightWorkDistributeCard", FightWorkItem)
 
-function var_0_0.onConstructor(arg_1_0)
-	arg_1_0.skipAutoPlayData = true
+function var_0_0.onConstructor(arg_1_0, arg_1_1)
+	arg_1_0.isEnterDistribute = arg_1_1
 end
 
 function var_0_0.onStart(arg_2_0)
@@ -13,6 +13,7 @@ function var_0_0.onStart(arg_2_0)
 		return
 	end
 
+	arg_2_0:cancelFightWorkSafeTimer()
 	FightController.instance:setCurStage(FightEnum.Stage.Distribute)
 	FightController.instance:GuideFlowPauseAndContinue("OnGuideDistributePause", FightEvent.OnGuideDistributePause, FightEvent.OnGuideDistributeContinue, arg_2_0._distrubute, arg_2_0)
 end
@@ -24,7 +25,7 @@ function var_0_0._distrubute(arg_3_0)
 	local var_3_0 = FightDataHelper.handCardMgr.beforeCards1
 	local var_3_1 = FightDataHelper.handCardMgr.teamACards1
 
-	FightController.instance:dispatchEvent(FightEvent.DistributeCards, var_3_0, var_3_1)
+	FightController.instance:dispatchEvent(FightEvent.DistributeCards, var_3_0, var_3_1, arg_3_0.isEnterDistribute)
 end
 
 function var_0_0._done(arg_4_0)

@@ -397,6 +397,31 @@ function var_0_0.playNormalText(arg_16_0, arg_16_1, arg_16_2, arg_16_3)
 	arg_16_0._subemtext = StoryTool.filterSpTag(arg_16_0._txt)
 	arg_16_0._markTopList = StoryTool.getMarkTopTextList(arg_16_0._subemtext)
 	arg_16_0._subemtext = StoryTool.filterMarkTop(arg_16_0._subemtext)
+
+	local var_16_2 = string.match(arg_16_0._txt, "<glitch>")
+
+	if arg_16_0._glitchGo then
+		gohelper.setActive(arg_16_0._glitchGo, false)
+	end
+
+	arg_16_0._dialogTextShowFinishedCallback = nil
+	arg_16_0._dialogTextShowFinishedCallbackObj = nil
+
+	if var_16_2 then
+		arg_16_0._glitchTxt = string.gsub(arg_16_0._txt, "<glitch>", "<i><b>")
+		arg_16_0._glitchTxt = string.gsub(arg_16_0._glitchTxt, "</glitch>", "</i></b>")
+		arg_16_0._dialogTextShowFinishedCallback = arg_16_0._onDialogTextShowFinished
+		arg_16_0._dialogTextShowFinishedCallbackObj = arg_16_0
+
+		if GameLanguageMgr.instance:getLanguageTypeStoryIndex() == LanguageEnum.LanguageStoryType.EN then
+			arg_16_0._subemtext = string.gsub(arg_16_0._subemtext, "<glitch>", "")
+			arg_16_0._subemtext = string.gsub(arg_16_0._subemtext, "</glitch>", "")
+		else
+			arg_16_0._subemtext = string.gsub(arg_16_0._subemtext, "<glitch>", "<i><b>")
+			arg_16_0._subemtext = string.gsub(arg_16_0._subemtext, "</glitch>", "</i></b>")
+		end
+	end
+
 	arg_16_0._txtcontentcn.text = string.gsub(arg_16_0._subemtext, "(<sprite=%d>)", "")
 	arg_16_0._txtcontentmagic.text = ""
 	arg_16_0._txtcontentreshapemagic.text = ""
@@ -411,9 +436,9 @@ function var_0_0.playNormalText(arg_16_0, arg_16_1, arg_16_2, arg_16_3)
 
 			arg_16_0._txtcontentcn.fontSharedMaterial.renderQueue = 4995
 
-			local var_16_2 = Color.New(0, 0, 0, 0.75)
+			local var_16_3 = Color.New(0, 0, 0, 0.75)
 
-			arg_16_0._txtcontentcn.fontSharedMaterial:SetColor("_UnderlayColor", var_16_2)
+			arg_16_0._txtcontentcn.fontSharedMaterial:SetColor("_UnderlayColor", var_16_3)
 			arg_16_0._txtcontentcn.fontSharedMaterial:SetFloat("_UnderlayOffsetX", 0.143)
 			arg_16_0._txtcontentcn.fontSharedMaterial:SetFloat("_UnderlayOffsetY", -0.1)
 			arg_16_0._txtcontentcn.fontSharedMaterial:SetFloat("_UnderlayDilate", 0.107)
@@ -460,11 +485,11 @@ function var_0_0.playNormalText(arg_16_0, arg_16_1, arg_16_2, arg_16_3)
 		PostProcessingMgr.instance:setUIPPValue("localBloomActive", false)
 		PostProcessingMgr.instance:setUIPPValue("bloomDiffusion", 7)
 
-		local var_16_3 = arg_16_0._stepCo.conversation.type ~= StoryEnum.ConversationType.IrregularShake
+		local var_16_4 = arg_16_0._stepCo.conversation.type ~= StoryEnum.ConversationType.IrregularShake
 
-		gohelper.setActive(arg_16_0._goline, var_16_3)
-		gohelper.setActive(arg_16_0._goblackbottom, var_16_3)
-		gohelper.setActive(arg_16_0._gonexticon, var_16_3)
+		gohelper.setActive(arg_16_0._goline, var_16_4)
+		gohelper.setActive(arg_16_0._goblackbottom, var_16_4)
+		gohelper.setActive(arg_16_0._gonexticon, var_16_4)
 
 		arg_16_0._norDiaLayoutElement.ignoreLayout = false
 
@@ -473,30 +498,6 @@ function var_0_0.playNormalText(arg_16_0, arg_16_1, arg_16_2, arg_16_3)
 		recthelper.setWidth(arg_16_0._txtcontentcn.transform, 1200)
 
 		arg_16_0._txtcontentTmp.enableAutoSizing = false
-	end
-
-	arg_16_0._dialogTextShowFinishedCallback = nil
-	arg_16_0._dialogTextShowFinishedCallbackObj = nil
-
-	local var_16_4 = string.match(arg_16_0._txt, "<glitch>")
-
-	if arg_16_0._glitchGo then
-		gohelper.setActive(arg_16_0._glitchGo, var_16_4)
-	end
-
-	if var_16_4 then
-		arg_16_0._glitchTxt = string.gsub(arg_16_0._txt, "<glitch>", "<i><b>")
-		arg_16_0._glitchTxt = string.gsub(arg_16_0._glitchTxt, "</glitch>", "</i></b>")
-		arg_16_0._dialogTextShowFinishedCallback = arg_16_0._onDialogTextShowFinished
-		arg_16_0._dialogTextShowFinishedCallbackObj = arg_16_0
-
-		if GameLanguageMgr.instance:getLanguageTypeStoryIndex() == LanguageEnum.LanguageStoryType.EN then
-			arg_16_0._subemtext = string.gsub(arg_16_0._subemtext, "<glitch>", "")
-			arg_16_0._subemtext = string.gsub(arg_16_0._subemtext, "</glitch>", "")
-		else
-			arg_16_0._subemtext = string.gsub(arg_16_0._subemtext, "<glitch>", "<i><b>")
-			arg_16_0._subemtext = string.gsub(arg_16_0._subemtext, "</glitch>", "</i></b>")
-		end
 	end
 
 	if arg_16_0._stepCo.conversation.effType == StoryEnum.ConversationEffectType.Hard then
@@ -512,292 +513,373 @@ function var_0_0._onDialogTextShowFinished(arg_17_0)
 	gohelper.setActive(arg_17_0._glitchGo, var_17_0)
 
 	if var_17_0 then
+		arg_17_0._glitchTxt = arg_17_0:_getFitGlicthText(arg_17_0._glitchTxt)
+
 		arg_17_0:_checkPlayGlitch(arg_17_0._glitchTxt)
 	end
 end
 
-function var_0_0._checkPlayGlitch(arg_18_0, arg_18_1)
+function var_0_0._getFitGlicthText(arg_18_0, arg_18_1)
+	local var_18_0 = StoryTool.filterMarkTop(arg_18_1)
+	local var_18_1 = string.gsub(var_18_0, "<nobr>", "")
+	local var_18_2 = string.gsub(var_18_1, "</nobr>", "")
+	local var_18_3 = string.gsub(var_18_2, "​", "")
+	local var_18_4 = arg_18_0._txtcontentcn:GetTextInfo(var_18_3)
+	local var_18_5 = string.split(var_18_3, "\n")
+
+	if var_18_4.lineCount <= 1 or #var_18_5 > 1 then
+		return var_18_3
+	end
+
+	local var_18_6 = string.sub(var_18_3, 1, string.len("<i><b>")) == "<i><b>"
+	local var_18_7 = string.sub(var_18_3, string.len(var_18_3) - string.len("</i></b>") + 1, string.len(var_18_3)) == "</i></b>"
+
+	if var_18_6 and var_18_7 then
+		return var_18_3
+	end
+
+	local var_18_8 = {}
+
+	for iter_18_0 = 1, var_18_4.lineCount do
+		local var_18_9 = var_18_4.lineInfo[iter_18_0 - 1]
+		local var_18_10 = LuaUtil.subString(var_18_3, var_18_9.firstCharacterIndex + 1, var_18_9.firstCharacterIndex + var_18_9.characterCount)
+		local var_18_11 = string.find(var_18_10, "<i><b>")
+		local var_18_12 = string.find(var_18_10, "</i></b>")
+		local var_18_13 = var_18_9.firstCharacterIndex + var_18_9.characterCount
+
+		var_18_13 = var_18_11 and var_18_13 + string.len("<i><b>") or var_18_13
+		var_18_13 = var_18_12 and var_18_13 + string.len("</i></b>") or var_18_13
+
+		local var_18_14 = LuaUtil.subString(var_18_3, var_18_9.firstCharacterIndex + 1, var_18_13)
+
+		if var_18_11 and not var_18_12 then
+			table.insert(var_18_8, var_18_14)
+		end
+	end
+
+	if #var_18_8 > 0 then
+		for iter_18_1 = 1, #var_18_8 do
+			var_18_3 = string.gsub(var_18_3, var_18_8[iter_18_1], var_18_8[iter_18_1] .. "</i></b>\n<i><b>")
+		end
+	end
+
+	return var_18_3
+end
+
+function var_0_0._checkPlayGlitch(arg_19_0, arg_19_1)
 	StoryTool.enablePostProcess(true)
 
-	local var_18_0 = arg_18_1
+	local var_19_0 = string.sub(arg_19_1, 1, string.len("<i><b>")) == "<i><b>"
+	local var_19_1 = string.sub(arg_19_1, string.len(arg_19_1) - string.len("</i></b>") + 1, string.len(arg_19_1)) == "</i></b>"
+	local var_19_2 = var_19_0 and var_19_1
+	local var_19_3 = arg_19_1
 
 	if GameLanguageMgr.instance:getLanguageTypeStoryIndex() == LanguageEnum.LanguageStoryType.EN then
-		var_18_0 = string.gsub(var_18_0, "<i><b>", "")
-		var_18_0 = string.gsub(var_18_0, "</i></b>", "")
+		var_19_3 = string.gsub(var_19_3, "<i><b>", "")
+		var_19_3 = string.gsub(var_19_3, "</i></b>", "")
 	end
 
-	local var_18_1 = arg_18_0._txtcontentcn:GetTextInfo(var_18_0)
-	local var_18_2 = {}
+	local var_19_4 = arg_19_0._txtcontentcn:GetTextInfo(var_19_3)
+	local var_19_5 = {}
 
-	for iter_18_0 = 1, 4 do
-		local var_18_3 = gohelper.findChild(arg_18_0._glitchGo, "part_" .. tostring(iter_18_0)):GetComponent(typeof(UnityEngine.ParticleSystem))
+	for iter_19_0 = 1, 4 do
+		local var_19_6 = gohelper.findChild(arg_19_0._glitchGo, "part_" .. tostring(iter_19_0)):GetComponent(typeof(UnityEngine.ParticleSystem))
 
-		table.insert(var_18_2, var_18_3)
-		gohelper.setActive(var_18_3.gameObject, false)
+		table.insert(var_19_5, var_19_6)
+		gohelper.setActive(var_19_6.gameObject, false)
 	end
 
-	local var_18_4 = CameraMgr.instance:getUICamera()
-	local var_18_5 = var_18_1.characterInfo
-	local var_18_6 = recthelper.getWidth(arg_18_0._txtcontentcn.transform) + 121.8684
-	local var_18_7 = {}
-	local var_18_8 = string.split(arg_18_1, "\n")
+	local var_19_7 = CameraMgr.instance:getUICamera()
+	local var_19_8 = var_19_4.characterInfo
+	local var_19_9 = recthelper.getWidth(arg_19_0._txtcontentcn.transform) + 121.8684
+	local var_19_10 = {}
+	local var_19_11 = string.split(arg_19_1, "\n")
 
-	if #var_18_8 > 1 then
-		for iter_18_1 = 1, #var_18_8 do
-			local var_18_9 = var_18_8[iter_18_1]
-			local var_18_10 = string.find(var_18_9, "<i><b>")
-			local var_18_11 = {}
+	if #var_19_11 > 1 then
+		for iter_19_1 = 1, #var_19_11 do
+			local var_19_12 = var_19_11[iter_19_1]
+			local var_19_13 = string.find(var_19_12, "<i><b>")
+			local var_19_14 = {}
 
-			if not var_18_10 then
-				var_18_11.hasGlitch = false
-				var_18_11.startIndex = 0
-				var_18_11.endIndex = 0
-				var_18_11.lineTxt = var_18_9
+			if not var_19_13 then
+				var_19_14.hasGlitch = false
+				var_19_14.startIndex = 0
+				var_19_14.endIndex = 0
+				var_19_14.lineTxt = var_19_12
 
-				table.insert(var_18_7, var_18_11)
+				table.insert(var_19_10, var_19_14)
 			else
-				local var_18_12 = string.find(var_18_9, "<i><b>")
-				local var_18_13 = string.sub(var_18_9, 1, var_18_12 - 1)
-				local var_18_14 = string.gsub(var_18_9, "<i><b>", "")
-				local var_18_15 = string.find(var_18_14, "</i></b>")
-				local var_18_16 = string.sub(var_18_14, 1, var_18_15 - 1)
-				local var_18_17 = string.gsub(var_18_14, "</i></b>", "")
+				local var_19_15 = string.find(var_19_12, "<i><b>")
+				local var_19_16 = string.sub(var_19_12, 1, var_19_15 - 1)
+				local var_19_17 = string.gsub(var_19_12, "<i><b>", "")
+				local var_19_18 = string.find(var_19_17, "</i></b>")
+				local var_19_19 = string.sub(var_19_17, 1, var_19_18 - 1)
+				local var_19_20 = string.gsub(var_19_17, "</i></b>", "")
 
-				var_18_11.hasGlitch = true
-				var_18_11.startIndex = utf8.len(var_18_13)
-				var_18_11.endIndex = utf8.len(var_18_16)
-				var_18_11.lineTxt = var_18_17
+				var_19_14.hasGlitch = true
+				var_19_14.startIndex = utf8.len(var_19_16)
+				var_19_14.endIndex = utf8.len(var_19_19)
+				var_19_14.lineTxt = var_19_20
 
-				table.insert(var_18_7, var_18_11)
+				table.insert(var_19_10, var_19_14)
 			end
 		end
 	else
-		for iter_18_2 = 1, var_18_1.lineCount do
-			local var_18_18 = var_18_1.lineInfo[iter_18_2 - 1]
-			local var_18_19 = LuaUtil.subString(arg_18_1, var_18_18.firstCharacterIndex + 1, var_18_18.firstCharacterIndex + var_18_18.characterCount)
-			local var_18_20 = string.find(var_18_19, "<i><b>")
+		for iter_19_2 = 1, var_19_4.lineCount do
+			if var_19_2 then
+				local var_19_21 = {}
 
-			if var_18_20 then
-				var_18_19 = LuaUtil.subString(arg_18_1, var_18_18.firstCharacterIndex + 1, var_18_18.firstCharacterIndex + var_18_18.characterCount + string.len("<i><b>") + string.len("</i></b>"))
-			end
+				var_19_21.hasGlitch = true
+				var_19_21.lineGlitch = true
 
-			local var_18_21 = {}
-
-			if not var_18_20 then
-				var_18_21.hasGlitch = false
-				var_18_21.startIndex = 0
-				var_18_21.endIndex = 0
-				var_18_21.lineText = var_18_19
-
-				table.insert(var_18_7, var_18_21)
+				table.insert(var_19_10, var_19_21)
 			else
-				local var_18_22 = string.find(var_18_19, "<i><b>")
-				local var_18_23 = string.sub(var_18_19, 1, var_18_22 - 1)
-				local var_18_24 = string.gsub(var_18_19, "<i><b>", "")
-				local var_18_25 = string.find(var_18_24, "</i></b>")
-				local var_18_26 = string.sub(var_18_24, 1, var_18_25 - 1)
-				local var_18_27 = string.gsub(var_18_24, "</i></b>", "")
+				local var_19_22 = var_19_4.lineInfo[iter_19_2 - 1]
+				local var_19_23 = LuaUtil.subString(arg_19_1, var_19_22.firstCharacterIndex + 1, var_19_22.firstCharacterIndex + var_19_22.characterCount)
+				local var_19_24 = string.find(var_19_23, "<i><b>")
 
-				var_18_21.hasGlitch = true
-				var_18_21.startIndex = utf8.len(var_18_23)
-				var_18_21.endIndex = utf8.len(var_18_26)
-				var_18_21.lineTxt = var_18_27
+				if var_19_24 then
+					var_19_23 = LuaUtil.subString(arg_19_1, var_19_22.firstCharacterIndex + 1, var_19_22.firstCharacterIndex + var_19_22.characterCount + string.len("<i><b>") + string.len("</i></b>"))
+				end
 
-				table.insert(var_18_7, var_18_21)
+				local var_19_25 = {}
+
+				if not var_19_24 then
+					var_19_25.hasGlitch = false
+					var_19_25.startIndex = 0
+					var_19_25.endIndex = 0
+					var_19_25.lineText = var_19_23
+
+					table.insert(var_19_10, var_19_25)
+				else
+					local var_19_26 = string.find(var_19_23, "<i><b>")
+					local var_19_27 = string.sub(var_19_23, 1, var_19_26 - 1)
+					local var_19_28 = string.gsub(var_19_23, "<i><b>", "")
+					local var_19_29 = string.find(var_19_28, "</i></b>")
+
+					if not var_19_29 then
+						local var_19_30 = StoryController.instance._curStoryId
+						local var_19_31 = StoryController.instance._curStepId
+
+						logError(string.format("StoryId: %s StepId %s When using '<Glitch>' with multiple lines, please manually wrap the lines!", var_19_30, var_19_31))
+
+						return
+					end
+
+					local var_19_32 = string.sub(var_19_28, 1, var_19_29 - 1)
+					local var_19_33 = string.gsub(var_19_28, "</i></b>", "")
+
+					var_19_25.hasGlitch = true
+					var_19_25.startIndex = utf8.len(var_19_27)
+					var_19_25.endIndex = utf8.len(var_19_32)
+					var_19_25.lineTxt = var_19_33
+
+					table.insert(var_19_10, var_19_25)
+				end
 			end
 		end
 	end
 
-	for iter_18_3 = 1, #var_18_7 do
-		local var_18_28, var_18_29, var_18_30 = transformhelper.getLocalPos(var_18_2[iter_18_3].transform)
+	for iter_19_3 = 1, #var_19_10 do
+		local var_19_34, var_19_35, var_19_36 = transformhelper.getLocalPos(var_19_5[iter_19_3].transform)
 
-		if not var_18_7[iter_18_3].hasGlitch then
-			gohelper.setActive(var_18_2[iter_18_3].gameObject, false)
+		if not var_19_10[iter_19_3].hasGlitch then
+			gohelper.setActive(var_19_5[iter_19_3].gameObject, false)
 		else
-			gohelper.setActive(var_18_2[iter_18_3].gameObject, true)
+			gohelper.setActive(var_19_5[iter_19_3].gameObject, true)
 
-			local var_18_31 = var_18_5[0]
-			local var_18_32 = var_18_1.lineInfo[iter_18_3 - 1]
-			local var_18_33 = var_18_5[var_18_32.firstCharacterIndex + var_18_7[iter_18_3].startIndex]
-			local var_18_34 = var_18_5[var_18_32.firstCharacterIndex + var_18_7[iter_18_3].endIndex - 1]
-			local var_18_35 = var_18_4:WorldToScreenPoint(arg_18_0._txtcontentcn.transform:TransformPoint(var_18_31.bottomLeft))
-			local var_18_36 = var_18_4:WorldToScreenPoint(arg_18_0._txtcontentcn.transform:TransformPoint(var_18_33.bottomLeft))
-			local var_18_37 = var_18_4:WorldToScreenPoint(arg_18_0._txtcontentcn.transform:TransformPoint(var_18_34.bottomRight))
-			local var_18_38 = UnityEngine.Screen.width
-			local var_18_39 = UnityEngine.Screen.height
-			local var_18_40 = math.min(1, 0.9 * var_18_38 / (1.6 * var_18_39))
-			local var_18_41 = 1080 * (var_18_36.x - var_18_35.x) / (var_18_39 * var_18_40)
-			local var_18_42 = 1144.8 * (var_18_37.x - var_18_36.x) / (var_18_39 * var_18_40)
-			local var_18_43 = var_18_41 / var_18_6
-			local var_18_44 = var_18_42 / var_18_6
-			local var_18_45 = 647 * (2 * var_18_43 + var_18_44)
-			local var_18_46, var_18_47, var_18_48 = transformhelper.getLocalPos(var_18_2[iter_18_3].transform)
+			if var_19_10[iter_19_3].lineGlitch then
+				local var_19_37, var_19_38, var_19_39 = transformhelper.getLocalPos(var_19_5[iter_19_3].transform)
 
-			transformhelper.setLocalPos(var_18_2[iter_18_3].transform, var_18_45, var_18_47, var_18_48)
+				transformhelper.setLocalPos(var_19_5[iter_19_3].transform, 640, var_19_38, var_19_39)
 
-			local var_18_49 = 12 * var_18_44 * var_18_40
-			local var_18_50 = 0.4 * var_18_40
+				var_19_5[iter_19_3].shape.scale = Vector3(12, 0.4, 0)
 
-			var_18_2[iter_18_3].shape.scale = Vector3(var_18_49, var_18_50, 0)
+				ZProj.ParticleSystemHelper.SetMaxParticles(var_19_5[iter_19_3], 30)
+			else
+				local var_19_40 = var_19_8[0]
+				local var_19_41 = var_19_4.lineInfo[iter_19_3 - 1]
+				local var_19_42 = var_19_8[var_19_41.firstCharacterIndex + var_19_10[iter_19_3].startIndex]
+				local var_19_43 = var_19_8[var_19_41.firstCharacterIndex + var_19_10[iter_19_3].endIndex - 1]
+				local var_19_44 = var_19_7:WorldToScreenPoint(arg_19_0._txtcontentcn.transform:TransformPoint(var_19_40.bottomLeft))
+				local var_19_45 = var_19_7:WorldToScreenPoint(arg_19_0._txtcontentcn.transform:TransformPoint(var_19_42.bottomLeft))
+				local var_19_46 = var_19_7:WorldToScreenPoint(arg_19_0._txtcontentcn.transform:TransformPoint(var_19_43.bottomRight))
+				local var_19_47 = UnityEngine.Screen.width
+				local var_19_48 = UnityEngine.Screen.height
+				local var_19_49 = math.min(1, 0.9 * var_19_47 / (1.6 * var_19_48))
+				local var_19_50 = 1080 * (var_19_45.x - var_19_44.x) / (var_19_48 * var_19_49)
+				local var_19_51 = 1144.8 * (var_19_46.x - var_19_45.x) / (var_19_48 * var_19_49)
+				local var_19_52 = var_19_50 / var_19_9
+				local var_19_53 = var_19_51 / var_19_9
+				local var_19_54 = 647 * (2 * var_19_52 + var_19_53)
+				local var_19_55, var_19_56, var_19_57 = transformhelper.getLocalPos(var_19_5[iter_19_3].transform)
 
-			ZProj.ParticleSystemHelper.SetMaxParticles(var_18_2[iter_18_3], math.floor(30 * var_18_44))
+				transformhelper.setLocalPos(var_19_5[iter_19_3].transform, var_19_54, var_19_56, var_19_57)
+
+				local var_19_58 = 12 * var_19_53 * var_19_49
+				local var_19_59 = 0.4 * var_19_49
+
+				var_19_5[iter_19_3].shape.scale = Vector3(var_19_58, var_19_59, 0)
+
+				ZProj.ParticleSystemHelper.SetMaxParticles(var_19_5[iter_19_3], math.floor(30 * var_19_53))
+			end
 		end
 	end
 end
 
-function var_0_0._playHardIn(arg_19_0)
-	arg_19_0:_showMagicItem(false)
-	gohelper.setActive(arg_19_0._norDiaGO, true)
-	arg_19_0:conFinished()
-end
-
-function var_0_0._playGradualIn(arg_20_0)
+function var_0_0._playHardIn(arg_20_0)
 	arg_20_0:_showMagicItem(false)
 	gohelper.setActive(arg_20_0._norDiaGO, true)
-
-	local var_20_0 = UnityEngine.Screen.height
-
-	arg_20_0._conMat:SetFloat(arg_20_0._LineMinYId, var_20_0)
-	arg_20_0._conMat:SetFloat(arg_20_0._LineMaxYId, var_20_0)
-	arg_20_0._conMat:EnableKeyword("_GRADUAL_ON")
-	arg_20_0._conMat:DisableKeyword("_DISSOLVE_ON")
-
-	local var_20_1, var_20_2, var_20_3 = transformhelper.getLocalPos(arg_20_0._txtcontentcn.transform)
-
-	transformhelper.setLocalPos(arg_20_0._txtcontentcn.transform, var_20_1, var_20_2, 1)
-	TaskDispatcher.cancelTask(arg_20_0._delayShow, arg_20_0)
-	TaskDispatcher.runDelay(arg_20_0._delayShow, arg_20_0, 0.05)
+	arg_20_0:conFinished()
 end
 
-function var_0_0._showMagicItem(arg_21_0, arg_21_1)
-	if arg_21_1 then
-		if arg_21_0._magicFireGo then
+function var_0_0._playGradualIn(arg_21_0)
+	arg_21_0:_showMagicItem(false)
+	gohelper.setActive(arg_21_0._norDiaGO, true)
+
+	local var_21_0 = UnityEngine.Screen.height
+
+	arg_21_0._conMat:SetFloat(arg_21_0._LineMinYId, var_21_0)
+	arg_21_0._conMat:SetFloat(arg_21_0._LineMaxYId, var_21_0)
+	arg_21_0._conMat:EnableKeyword("_GRADUAL_ON")
+	arg_21_0._conMat:DisableKeyword("_DISSOLVE_ON")
+
+	local var_21_1, var_21_2, var_21_3 = transformhelper.getLocalPos(arg_21_0._txtcontentcn.transform)
+
+	transformhelper.setLocalPos(arg_21_0._txtcontentcn.transform, var_21_1, var_21_2, 1)
+	TaskDispatcher.cancelTask(arg_21_0._delayShow, arg_21_0)
+	TaskDispatcher.runDelay(arg_21_0._delayShow, arg_21_0, 0.05)
+end
+
+function var_0_0._showMagicItem(arg_22_0, arg_22_1)
+	if arg_22_1 then
+		if arg_22_0._magicFireGo then
 			StoryTool.enablePostProcess(true)
-			gohelper.setActive(arg_21_0._reshapeMagicFireGo, arg_21_0._stepCo.conversation.effType == StoryEnum.ConversationEffectType.ReshapeMagic)
+			gohelper.setActive(arg_22_0._reshapeMagicFireGo, arg_22_0._stepCo.conversation.effType == StoryEnum.ConversationEffectType.ReshapeMagic)
 		end
 
-		if arg_21_0._reshapeMagicFireGo then
+		if arg_22_0._reshapeMagicFireGo then
 			StoryTool.enablePostProcess(true)
-			gohelper.setActive(arg_21_0._reshapeMagicFireGo, arg_21_0._stepCo.conversation.effType == StoryEnum.ConversationEffectType.ReshapeMagic)
+			gohelper.setActive(arg_22_0._reshapeMagicFireGo, arg_22_0._stepCo.conversation.effType == StoryEnum.ConversationEffectType.ReshapeMagic)
 		end
 	else
-		arg_21_0._txtcontentmagic.text = ""
-		arg_21_0._txtcontentreshapemagic.text = ""
+		arg_22_0._txtcontentmagic.text = ""
+		arg_22_0._txtcontentreshapemagic.text = ""
 
-		gohelper.setActive(arg_21_0._magicFireGo, false)
-		gohelper.setActive(arg_21_0._reshapeMagicFireGo, false)
+		gohelper.setActive(arg_22_0._magicFireGo, false)
+		gohelper.setActive(arg_22_0._reshapeMagicFireGo, false)
 	end
 end
 
-function var_0_0._delayShow(arg_22_0)
-	local var_22_0 = UnityEngine.Screen.height
+function var_0_0._delayShow(arg_23_0)
+	local var_23_0 = UnityEngine.Screen.height
 
-	arg_22_0._dotMat:SetFloat(arg_22_0._LineMinYId, var_22_0)
-	arg_22_0._dotMat:SetFloat(arg_22_0._LineMaxYId, var_22_0)
+	arg_23_0._dotMat:SetFloat(arg_23_0._LineMinYId, var_23_0)
+	arg_23_0._dotMat:SetFloat(arg_23_0._LineMaxYId, var_23_0)
 
-	if arg_22_0._stepCo.conversation.type ~= StoryEnum.ConversationType.ScreenDialog then
-		arg_22_0._conMark:SetMarksTop(arg_22_0._markTopList)
+	if arg_23_0._stepCo.conversation.type ~= StoryEnum.ConversationType.ScreenDialog then
+		arg_23_0._conMark:SetMarksTop(arg_23_0._markTopList)
 	end
 
-	arg_22_0._textInfo = arg_22_0._txtcontentcn:GetTextInfo(arg_22_0._subemtext)
-	arg_22_0._lineInfoList = {}
+	arg_23_0._textInfo = arg_23_0._txtcontentcn:GetTextInfo(arg_23_0._subemtext)
+	arg_23_0._lineInfoList = {}
 
-	local var_22_1 = 0
+	local var_23_1 = 0
 
-	for iter_22_0 = 1, arg_22_0._textInfo.lineCount do
-		local var_22_2 = arg_22_0._textInfo.lineInfo[iter_22_0 - 1]
-		local var_22_3 = var_22_1 + 1
+	for iter_23_0 = 1, arg_23_0._textInfo.lineCount do
+		local var_23_2 = arg_23_0._textInfo.lineInfo[iter_23_0 - 1]
+		local var_23_3 = var_23_1 + 1
 
-		var_22_1 = var_22_1 + var_22_2.visibleCharacterCount
+		var_23_1 = var_23_1 + var_23_2.visibleCharacterCount
 
-		table.insert(arg_22_0._lineInfoList, {
-			var_22_2,
-			var_22_3,
-			var_22_1
+		table.insert(arg_23_0._lineInfoList, {
+			var_23_2,
+			var_23_3,
+			var_23_1
 		})
 	end
 
-	arg_22_0._contentX, arg_22_0._contentY, _ = transformhelper.getLocalPos(arg_22_0._txtcontentcn.transform)
-	arg_22_0._curLine = nil
+	arg_23_0._contentX, arg_23_0._contentY, _ = transformhelper.getLocalPos(arg_23_0._txtcontentcn.transform)
+	arg_23_0._curLine = nil
 
-	local var_22_4 = arg_22_0:_getDelayTime(var_22_1)
+	local var_23_4 = arg_23_0:_getDelayTime(var_23_1)
 
 	if GameLanguageMgr.instance:getLanguageTypeStoryIndex() == LangSettings.en then
-		var_22_4 = var_22_4 * 0.67
+		var_23_4 = var_23_4 * 0.67
 	end
 
-	if arg_22_0._conTweenId then
-		ZProj.TweenHelper.KillById(arg_22_0._conTweenId)
+	if arg_23_0._conTweenId then
+		ZProj.TweenHelper.KillById(arg_23_0._conTweenId)
 
-		arg_22_0._conTweenId = nil
+		arg_23_0._conTweenId = nil
 	end
 
-	if arg_22_0._stepCo.conversation.audioDelayTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()] < 0.1 then
-		arg_22_0:_playConAudio()
+	if arg_23_0._stepCo.conversation.audioDelayTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()] < 0.1 then
+		arg_23_0:_playConAudio()
 	else
-		TaskDispatcher.runDelay(arg_22_0._playConAudio, arg_22_0, arg_22_0._stepCo.conversation.audioDelayTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()])
+		TaskDispatcher.runDelay(arg_23_0._playConAudio, arg_23_0, arg_23_0._stepCo.conversation.audioDelayTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()])
 	end
 
-	arg_22_0._lastBottomLeft = 0
-	arg_22_0._lineSpace = 0
-	arg_22_0._hasUnderline = string.find(arg_22_0._subemtext, "<u>") and string.find(arg_22_0._subemtext, "</u>")
-	arg_22_0._conTweenId = ZProj.TweenHelper.DOTweenFloat(1, var_22_1, var_22_4, arg_22_0._conUpdate, arg_22_0._onTextFinished, arg_22_0, nil, EaseType.Linear)
+	arg_23_0._lastBottomLeft = 0
+	arg_23_0._lineSpace = 0
+	arg_23_0._hasUnderline = string.find(arg_23_0._subemtext, "<u>") and string.find(arg_23_0._subemtext, "</u>")
+	arg_23_0._conTweenId = ZProj.TweenHelper.DOTweenFloat(1, var_23_1, var_23_4, arg_23_0._conUpdate, arg_23_0._onTextFinished, arg_23_0, nil, EaseType.Linear)
 end
 
-function var_0_0._getDelayTime(arg_23_0, arg_23_1)
-	local var_23_0 = 1
+function var_0_0._getDelayTime(arg_24_0, arg_24_1)
+	local var_24_0 = 1
 
-	if arg_23_0._txt and string.find(arg_23_0._txt, "<speed=%d[%d.]*>") then
-		local var_23_1 = string.sub(arg_23_0._txt, string.find(arg_23_0._txt, "<speed=%d[%d.]*>"))
+	if arg_24_0._txt and string.find(arg_24_0._txt, "<speed=%d[%d.]*>") then
+		local var_24_1 = string.sub(arg_24_0._txt, string.find(arg_24_0._txt, "<speed=%d[%d.]*>"))
 
-		var_23_0 = var_23_1 and tonumber(string.match(var_23_1, "%d[%d.]*")) or 1
+		var_24_0 = var_24_1 and tonumber(string.match(var_24_1, "%d[%d.]*")) or 1
 	end
 
-	local var_23_2 = 0.08 * arg_23_1
+	local var_24_2 = 0.08 * arg_24_1
 
 	if GameLanguageMgr.instance:getLanguageTypeStoryIndex() == LanguageEnum.LanguageStoryType.EN then
-		var_23_2 = var_23_2 * 0.67
+		var_24_2 = var_24_2 * 0.67
 	end
 
-	return var_23_2 / var_23_0
+	return var_24_2 / var_24_0
 end
 
-function var_0_0._playConAudio(arg_24_0)
-	if arg_24_0._isLogStop then
+function var_0_0._playConAudio(arg_25_0)
+	if arg_25_0._isLogStop then
 		return
 	end
 
-	arg_24_0:stopConAudio()
+	arg_25_0:stopConAudio()
 
 	if StoryModel.instance:isSpecialVideoPlaying() then
 		return
 	end
 
-	arg_24_0._conAudioId = arg_24_0._stepCo.conversation.audios[1] or 0
+	arg_25_0._conAudioId = arg_25_0._stepCo.conversation.audios[1] or 0
 
-	if arg_24_0._conAudioId ~= 0 then
-		local var_24_0 = {}
+	if arg_25_0._conAudioId ~= 0 then
+		local var_25_0 = {}
 
-		var_24_0.loopNum = 1
-		var_24_0.fadeInTime = 0
-		var_24_0.fadeOutTime = 0
-		var_24_0.volume = 100
-		var_24_0.audioGo = arg_24_0:_getDialogGo()
-		var_24_0.callback = arg_24_0._onConAudioFinished
-		var_24_0.callbackTarget = arg_24_0
-		arg_24_0._playingAudioId = arg_24_0._conAudioId
+		var_25_0.loopNum = 1
+		var_25_0.fadeInTime = 0
+		var_25_0.fadeOutTime = 0
+		var_25_0.volume = 100
+		var_25_0.audioGo = arg_25_0:_getDialogGo()
+		var_25_0.callback = arg_25_0._onConAudioFinished
+		var_25_0.callbackTarget = arg_25_0
+		arg_25_0._playingAudioId = arg_25_0._conAudioId
 
-		AudioEffectMgr.instance:playAudio(arg_24_0._conAudioId, var_24_0)
+		AudioEffectMgr.instance:playAudio(arg_25_0._conAudioId, var_25_0)
 	else
-		arg_24_0._playingAudioId = 0
+		arg_25_0._playingAudioId = 0
 	end
 
-	arg_24_0._hasLowPassAudio = false
+	arg_25_0._hasLowPassAudio = false
 
-	if #arg_24_0._stepCo.conversation.audios > 1 then
-		for iter_24_0, iter_24_1 in pairs(arg_24_0._stepCo.conversation.audios) do
-			if iter_24_1 == AudioEnum.Story.Play_Lowpass then
-				arg_24_0._hasLowPassAudio = true
+	if #arg_25_0._stepCo.conversation.audios > 1 then
+		for iter_25_0, iter_25_1 in pairs(arg_25_0._stepCo.conversation.audios) do
+			if iter_25_1 == AudioEnum.Story.Play_Lowpass then
+				arg_25_0._hasLowPassAudio = true
 
 				AudioMgr.instance:trigger(AudioEnum.Story.Play_Lowpass)
 
@@ -807,429 +889,429 @@ function var_0_0._playConAudio(arg_24_0)
 	end
 end
 
-function var_0_0._getDialogGo(arg_25_0)
-	local var_25_0 = arg_25_0._roleMidAudioGo
+function var_0_0._getDialogGo(arg_26_0)
+	local var_26_0 = arg_26_0._roleMidAudioGo
 
-	if #arg_25_0._stepCo.heroList > 0 and arg_25_0._stepCo.conversation.showList[1] then
-		if not arg_25_0._stepCo.heroList[arg_25_0._stepCo.conversation.showList[1] + 1] then
-			return var_25_0
+	if #arg_26_0._stepCo.heroList > 0 and arg_26_0._stepCo.conversation.showList[1] then
+		if not arg_26_0._stepCo.heroList[arg_26_0._stepCo.conversation.showList[1] + 1] then
+			return var_26_0
 		end
 
-		local var_25_1 = arg_25_0._stepCo.heroList[arg_25_0._stepCo.conversation.showList[1] + 1].heroDir
+		local var_26_1 = arg_26_0._stepCo.heroList[arg_26_0._stepCo.conversation.showList[1] + 1].heroDir
 
-		if var_25_1 and var_25_1 == 0 then
-			var_25_0 = arg_25_0._roleLeftAudioGo
+		if var_26_1 and var_26_1 == 0 then
+			var_26_0 = arg_26_0._roleLeftAudioGo
 		end
 
-		if var_25_1 and var_25_1 == 2 then
-			var_25_0 = arg_25_0._roleRightAudioGo
+		if var_26_1 and var_26_1 == 2 then
+			var_26_0 = arg_26_0._roleRightAudioGo
 		end
 	end
 
-	return var_25_0
+	return var_26_0
 end
 
-function var_0_0._onTextFinished(arg_26_0)
-	TaskDispatcher.cancelTask(arg_26_0._delayShow, arg_26_0)
+function var_0_0._onTextFinished(arg_27_0)
+	TaskDispatcher.cancelTask(arg_27_0._delayShow, arg_27_0)
 
-	if arg_26_0._dialogTextShowFinishedCallback then
-		arg_26_0._dialogTextShowFinishedCallback(arg_26_0._dialogTextShowFinishedCallbackObj)
+	if arg_27_0._dialogTextShowFinishedCallback then
+		arg_27_0._dialogTextShowFinishedCallback(arg_27_0._dialogTextShowFinishedCallbackObj)
 
-		arg_26_0._dialogTextShowFinishedCallback = nil
-		arg_26_0._dialogTextShowFinishedCallbackObj = nil
+		arg_27_0._dialogTextShowFinishedCallback = nil
+		arg_27_0._dialogTextShowFinishedCallbackObj = nil
 	end
 
-	if arg_26_0._magicConTweenId then
-		ZProj.TweenHelper.KillById(arg_26_0._magicConTweenId)
-		gohelper.setActive(arg_26_0._magicFireGo, false)
-		gohelper.setActive(arg_26_0._reshapeMagicFireGo, false)
+	if arg_27_0._magicConTweenId then
+		ZProj.TweenHelper.KillById(arg_27_0._magicConTweenId)
+		gohelper.setActive(arg_27_0._magicFireGo, false)
+		gohelper.setActive(arg_27_0._reshapeMagicFireGo, false)
 
-		arg_26_0._magicFireAnim.speed = 1
-		arg_26_0._reshapeMagicFireAnim.speed = 1
-		arg_26_0._magicConTweenId = nil
+		arg_27_0._magicFireAnim.speed = 1
+		arg_27_0._reshapeMagicFireAnim.speed = 1
+		arg_27_0._magicConTweenId = nil
 	end
 
-	if arg_26_0._conTweenId then
-		ZProj.TweenHelper.KillById(arg_26_0._conTweenId)
+	if arg_27_0._conTweenId then
+		ZProj.TweenHelper.KillById(arg_27_0._conTweenId)
 
-		arg_26_0._conTweenId = nil
+		arg_27_0._conTweenId = nil
 	end
 
-	local var_26_0, var_26_1, var_26_2 = transformhelper.getLocalPos(arg_26_0._txtcontentcn.transform)
+	local var_27_0, var_27_1, var_27_2 = transformhelper.getLocalPos(arg_27_0._txtcontentcn.transform)
 
-	transformhelper.setLocalPos(arg_26_0._txtcontentcn.transform, var_26_0, var_26_1, 0)
+	transformhelper.setLocalPos(arg_27_0._txtcontentcn.transform, var_27_0, var_27_1, 0)
 
-	local var_26_3, var_26_4, var_26_5 = transformhelper.getLocalPos(arg_26_0._txtcontentmagic.transform)
+	local var_27_3, var_27_4, var_27_5 = transformhelper.getLocalPos(arg_27_0._txtcontentmagic.transform)
 
-	transformhelper.setLocalPos(arg_26_0._txtcontentmagic.transform, var_26_3, var_26_4, 0)
-	transformhelper.setLocalPos(arg_26_0._txtcontentreshapemagic.transform, var_26_3, var_26_4, 0)
-	arg_26_0._conMat:DisableKeyword("_GRADUAL_ON")
-	arg_26_0._conMat:SetFloat(arg_26_0._LineMinYId, 0)
-	arg_26_0._conMat:SetFloat(arg_26_0._LineMaxYId, 0)
+	transformhelper.setLocalPos(arg_27_0._txtcontentmagic.transform, var_27_3, var_27_4, 0)
+	transformhelper.setLocalPos(arg_27_0._txtcontentreshapemagic.transform, var_27_3, var_27_4, 0)
+	arg_27_0._conMat:DisableKeyword("_GRADUAL_ON")
+	arg_27_0._conMat:SetFloat(arg_27_0._LineMinYId, 0)
+	arg_27_0._conMat:SetFloat(arg_27_0._LineMaxYId, 0)
 
-	arg_26_0._subMeshs = {}
+	arg_27_0._subMeshs = {}
 
-	local var_26_6 = arg_26_0._txtcontentcn.gameObject:GetComponentsInChildren(typeof(TMPro.TMP_SubMeshUI), true)
+	local var_27_6 = arg_27_0._txtcontentcn.gameObject:GetComponentsInChildren(typeof(TMPro.TMP_SubMeshUI), true)
 
-	if var_26_6 then
-		local var_26_7 = var_26_6:GetEnumerator()
+	if var_27_6 then
+		local var_27_7 = var_27_6:GetEnumerator()
 
-		while var_26_7:MoveNext() do
-			local var_26_8 = var_26_7.Current.gameObject:GetComponent(typeof(TMPro.TMP_SubMeshUI))
+		while var_27_7:MoveNext() do
+			local var_27_8 = var_27_7.Current.gameObject:GetComponent(typeof(TMPro.TMP_SubMeshUI))
 
-			table.insert(arg_26_0._subMeshs, var_26_8)
+			table.insert(arg_27_0._subMeshs, var_27_8)
 		end
 	end
 
-	for iter_26_0, iter_26_1 in pairs(arg_26_0._subMeshs) do
-		if iter_26_1.sharedMaterial then
-			iter_26_1.sharedMaterial = arg_26_0._fontNormalMat
+	for iter_27_0, iter_27_1 in pairs(arg_27_0._subMeshs) do
+		if iter_27_1.sharedMaterial then
+			iter_27_1.sharedMaterial = arg_27_0._fontNormalMat
 
-			iter_26_1.sharedMaterial:DisableKeyword("_GRADUAL_ON")
+			iter_27_1.sharedMaterial:DisableKeyword("_GRADUAL_ON")
 		end
 	end
 
-	arg_26_0._textShowFinished = true
-
-	local var_26_9 = StoryModel.instance:isStoryAuto()
-
-	if arg_26_0._stepCo.conversation.type ~= StoryEnum.ConversationType.NoInteract and arg_26_0._stepCo.conversation.type ~= StoryEnum.ConversationType.None then
-		var_26_9 = var_26_9 or arg_26_0._stepCo.conversation.isAuto
-	end
-
-	if not var_26_9 or arg_26_0._playingAudioId == 0 then
-		arg_26_0:conFinished()
-	end
-end
-
-function var_0_0._onMagicTextFinished(arg_27_0)
 	arg_27_0._textShowFinished = true
 
-	arg_27_0:_magicConFinished()
+	local var_27_9 = StoryModel.instance:isStoryAuto()
+
+	if arg_27_0._stepCo.conversation.type ~= StoryEnum.ConversationType.NoInteract and arg_27_0._stepCo.conversation.type ~= StoryEnum.ConversationType.None then
+		var_27_9 = var_27_9 or arg_27_0._stepCo.conversation.isAuto
+	end
+
+	if not var_27_9 or arg_27_0._playingAudioId == 0 then
+		arg_27_0:conFinished()
+	end
 end
 
-function var_0_0._onConAudioFinished(arg_28_0, arg_28_1)
-	if arg_28_0._textShowFinished then
-		if arg_28_0._stepCo.conversation.effType == StoryEnum.ConversationEffectType.Magic or arg_28_0._stepCo.conversation.effType == StoryEnum.ConversationEffectType.ReshapeMagic then
-			arg_28_0:_magicConFinished()
+function var_0_0._onMagicTextFinished(arg_28_0)
+	arg_28_0._textShowFinished = true
+
+	arg_28_0:_magicConFinished()
+end
+
+function var_0_0._onConAudioFinished(arg_29_0, arg_29_1)
+	if arg_29_0._textShowFinished then
+		if arg_29_0._stepCo.conversation.effType == StoryEnum.ConversationEffectType.Magic or arg_29_0._stepCo.conversation.effType == StoryEnum.ConversationEffectType.ReshapeMagic then
+			arg_29_0:_magicConFinished()
 		else
-			arg_28_0:conFinished()
+			arg_29_0:conFinished()
 		end
 	end
 
-	if arg_28_0._playingAudioId == arg_28_1 then
-		arg_28_0._playingAudioId = 0
+	if arg_29_0._playingAudioId == arg_29_1 then
+		arg_29_0._playingAudioId = 0
 	end
 end
 
-function var_0_0.stopConAudio(arg_29_0)
-	if arg_29_0._hasLowPassAudio then
+function var_0_0.stopConAudio(arg_30_0)
+	if arg_30_0._hasLowPassAudio then
 		AudioMgr.instance:trigger(AudioEnum.Story.Stop_Lowpass)
 	end
 
-	if arg_29_0._isLogStop then
+	if arg_30_0._isLogStop then
 		return
 	end
 
-	arg_29_0._playingAudioId = 0
+	arg_30_0._playingAudioId = 0
 
-	if arg_29_0._conAudioId ~= 0 and arg_29_0._conAudioId then
-		AudioEffectMgr.instance:stopAudio(arg_29_0._conAudioId, 0)
+	if arg_30_0._conAudioId ~= 0 and arg_30_0._conAudioId then
+		AudioEffectMgr.instance:stopAudio(arg_30_0._conAudioId, 0)
 	end
 end
 
-function var_0_0._conUpdate(arg_30_0, arg_30_1)
-	local var_30_0 = UnityEngine.Screen.width
-	local var_30_1 = arg_30_0._txtcontentcn.transform
-	local var_30_2 = CameraMgr.instance:getUICamera()
-
-	arg_30_0._subMeshs = {}
-
-	local var_30_3 = arg_30_0._txtcontentcn.gameObject:GetComponentsInChildren(typeof(TMPro.TMP_SubMeshUI), true)
-
-	if var_30_3 then
-		local var_30_4 = var_30_3:GetEnumerator()
-
-		while var_30_4:MoveNext() do
-			local var_30_5 = var_30_4.Current.gameObject:GetComponent(typeof(TMPro.TMP_SubMeshUI))
-
-			table.insert(arg_30_0._subMeshs, var_30_5)
-		end
-	end
-
-	for iter_30_0, iter_30_1 in ipairs(arg_30_0._lineInfoList) do
-		local var_30_6 = iter_30_1[1]
-		local var_30_7 = iter_30_1[2]
-		local var_30_8 = iter_30_1[3]
-
-		if var_30_7 <= arg_30_1 and arg_30_1 <= var_30_8 then
-			local var_30_9 = arg_30_0._textInfo.characterInfo
-			local var_30_10 = var_30_9[var_30_6.firstVisibleCharacterIndex]
-			local var_30_11 = var_30_9[var_30_6.lastVisibleCharacterIndex]
-			local var_30_12 = var_30_2:WorldToScreenPoint(var_30_1:TransformPoint(var_30_10.bottomLeft))
-			local var_30_13 = var_30_12
-			local var_30_14 = var_30_12.y
-
-			for iter_30_2 = var_30_6.firstVisibleCharacterIndex, var_30_6.lastVisibleCharacterIndex do
-				local var_30_15 = var_30_9[iter_30_2]
-				local var_30_16 = var_30_2:WorldToScreenPoint(var_30_1:TransformPoint(var_30_15.bottomLeft))
-
-				if var_30_14 > var_30_16.y then
-					var_30_14 = var_30_16.y
-				end
-			end
-
-			var_30_13.y = var_30_14
-
-			local var_30_17 = var_30_2:WorldToScreenPoint(var_30_1:TransformPoint(var_30_10.topLeft))
-			local var_30_18 = var_30_17
-			local var_30_19 = var_30_17.y
-
-			for iter_30_3 = var_30_6.firstVisibleCharacterIndex, var_30_6.lastVisibleCharacterIndex do
-				local var_30_20 = var_30_9[iter_30_3]
-				local var_30_21 = var_30_2:WorldToScreenPoint(var_30_1:TransformPoint(var_30_20.topLeft))
-
-				if var_30_19 < var_30_21.y then
-					var_30_19 = var_30_21.y
-				end
-			end
-
-			var_30_18.y = var_30_19
-
-			local var_30_22 = var_30_2:WorldToScreenPoint(var_30_1:TransformPoint(var_30_11.bottomRight))
-
-			for iter_30_4, iter_30_5 in pairs(arg_30_0._subMeshs) do
-				if iter_30_5.sharedMaterial then
-					if arg_30_0._stepCo.conversation.effType == StoryEnum.ConversationEffectType.SoftLight then
-						break
-					end
-
-					iter_30_5.sharedMaterial = arg_30_0._fontNormalMat
-				end
-			end
-
-			if iter_30_0 == 1 then
-				if arg_30_0._hasUnderline then
-					arg_30_0._conMat:SetFloat(arg_30_0._LineMinYId, var_30_13.y - 4)
-				else
-					arg_30_0._conMat:SetFloat(arg_30_0._LineMinYId, var_30_13.y)
-				end
-
-				arg_30_0._conMat:SetFloat(arg_30_0._LineMaxYId, var_30_18.y + 20)
-				arg_30_0._dotMat:SetFloat(arg_30_0._LineMinYId, var_30_13.y - 10)
-				arg_30_0._dotMat:SetFloat(arg_30_0._LineMaxYId, var_30_18.y)
-			else
-				arg_30_0._lineSpace = arg_30_0._lastBottomLeft - var_30_18.y > 0 and arg_30_0._lastBottomLeft - var_30_18.y or arg_30_0._lineSpace
-
-				arg_30_0._conMat:SetFloat(arg_30_0._LineMinYId, var_30_13.y)
-				arg_30_0._conMat:SetFloat(arg_30_0._LineMaxYId, var_30_18.y + arg_30_0._lineSpace)
-				arg_30_0._dotMat:SetFloat(arg_30_0._LineMinYId, var_30_13.y - 10)
-				arg_30_0._dotMat:SetFloat(arg_30_0._LineMaxYId, var_30_18.y)
-			end
-
-			arg_30_0._lastBottomLeft = var_30_13.y
-
-			local var_30_23 = arg_30_0._txtcontentcn.gameObject
-
-			gohelper.setActive(var_30_23, false)
-			gohelper.setActive(var_30_23, true)
-
-			local var_30_24 = var_30_7 == var_30_8 and 1 or (arg_30_1 - var_30_7) / (var_30_8 - var_30_7)
-			local var_30_25 = Mathf.Lerp(var_30_13.x - 10, var_30_22.x + 10, var_30_24)
-			local var_30_26 = arg_30_0._stepCo.conversation.effType == StoryEnum.ConversationEffectType.SoftLight and 0 or 1 - var_30_25 / var_30_0
-
-			transformhelper.setLocalPos(arg_30_0._txtcontentcn.transform, arg_30_0._contentX, arg_30_0._contentY, var_30_26)
-
-			if arg_30_0._stepCo.conversation.effType == StoryEnum.ConversationEffectType.SoftLight then
-				arg_30_0._conMat:SetFloat(arg_30_0._LineMinYId, 0)
-				arg_30_0._conMat:SetFloat(arg_30_0._LineMaxYId, 0)
-
-				if #arg_30_0._lineInfoList > 1 then
-					if BootNativeUtil.isIOS() then
-						transformhelper.setLocalPosXY(arg_30_0._norDiaGO.transform, -351, 120 + 50 * (#arg_30_0._lineInfoList - 2))
-					else
-						transformhelper.setLocalPosXY(arg_30_0._norDiaGO.transform, -351, 100 + 50 * (#arg_30_0._lineInfoList - 2))
-					end
-				end
-			end
-		end
-	end
-end
-
-function var_0_0.conFinished(arg_31_0)
-	arg_31_0._textShowFinished = true
-
-	if arg_31_0._dialogTextShowFinishedCallback then
-		arg_31_0._dialogTextShowFinishedCallback(arg_31_0._dialogTextShowFinishedCallbackObj)
-
-		arg_31_0._dialogTextShowFinishedCallback = nil
-		arg_31_0._dialogTextShowFinishedCallbackObj = nil
-	end
-
-	if arg_31_0._stepCo and (arg_31_0._stepCo.conversation.type == StoryEnum.ConversationType.NoInteract or arg_31_0._stepCo.conversation.type == StoryEnum.ConversationType.None) then
-		return
-	end
-
-	if arg_31_0._magicConTweenId then
-		ZProj.TweenHelper.KillById(arg_31_0._magicConTweenId)
-		gohelper.setActive(arg_31_0._magicFireGo, false)
-		gohelper.setActive(arg_31_0._reshapeMagicFireGo, false)
-
-		arg_31_0._magicFireAnim.speed = 1
-		arg_31_0._reshapeMagicFireAnim.speed = 1
-		arg_31_0._magicConTweenId = nil
-	end
-
-	if arg_31_0._conTweenId then
-		ZProj.TweenHelper.KillById(arg_31_0._conTweenId)
-
-		arg_31_0._conTweenId = nil
-	end
-
-	arg_31_0._conMat:SetFloat(arg_31_0._LineMinYId, 0)
-	arg_31_0._conMat:SetFloat(arg_31_0._LineMaxYId, 0)
-
-	local var_31_0, var_31_1, var_31_2 = transformhelper.getLocalPos(arg_31_0._txtcontentcn.transform)
-
-	transformhelper.setLocalPos(arg_31_0._txtcontentcn.transform, var_31_0, var_31_1, 0)
-
-	local var_31_3, var_31_4, var_31_5 = transformhelper.getLocalPos(arg_31_0._txtcontentmagic.transform)
-
-	transformhelper.setLocalPos(arg_31_0._txtcontentmagic.transform, var_31_3, var_31_4, 0)
+function var_0_0._conUpdate(arg_31_0, arg_31_1)
+	local var_31_0 = UnityEngine.Screen.width
+	local var_31_1 = arg_31_0._txtcontentcn.transform
+	local var_31_2 = CameraMgr.instance:getUICamera()
 
 	arg_31_0._subMeshs = {}
 
-	local var_31_6 = arg_31_0._txtcontentcn.gameObject:GetComponentsInChildren(typeof(TMPro.TMP_SubMeshUI), true)
+	local var_31_3 = arg_31_0._txtcontentcn.gameObject:GetComponentsInChildren(typeof(TMPro.TMP_SubMeshUI), true)
 
-	if var_31_6 then
-		local var_31_7 = var_31_6:GetEnumerator()
+	if var_31_3 then
+		local var_31_4 = var_31_3:GetEnumerator()
 
-		while var_31_7:MoveNext() do
-			local var_31_8 = var_31_7.Current.gameObject:GetComponent(typeof(TMPro.TMP_SubMeshUI))
+		while var_31_4:MoveNext() do
+			local var_31_5 = var_31_4.Current.gameObject:GetComponent(typeof(TMPro.TMP_SubMeshUI))
 
-			table.insert(arg_31_0._subMeshs, var_31_8)
+			table.insert(arg_31_0._subMeshs, var_31_5)
 		end
 	end
 
-	for iter_31_0, iter_31_1 in pairs(arg_31_0._subMeshs) do
-		if iter_31_1.sharedMaterial then
-			iter_31_1.sharedMaterial:DisableKeyword("_GRADUAL_ON")
+	for iter_31_0, iter_31_1 in ipairs(arg_31_0._lineInfoList) do
+		local var_31_6 = iter_31_1[1]
+		local var_31_7 = iter_31_1[2]
+		local var_31_8 = iter_31_1[3]
+
+		if var_31_7 <= arg_31_1 and arg_31_1 <= var_31_8 then
+			local var_31_9 = arg_31_0._textInfo.characterInfo
+			local var_31_10 = var_31_9[var_31_6.firstVisibleCharacterIndex]
+			local var_31_11 = var_31_9[var_31_6.lastVisibleCharacterIndex]
+			local var_31_12 = var_31_2:WorldToScreenPoint(var_31_1:TransformPoint(var_31_10.bottomLeft))
+			local var_31_13 = var_31_12
+			local var_31_14 = var_31_12.y
+
+			for iter_31_2 = var_31_6.firstVisibleCharacterIndex, var_31_6.lastVisibleCharacterIndex do
+				local var_31_15 = var_31_9[iter_31_2]
+				local var_31_16 = var_31_2:WorldToScreenPoint(var_31_1:TransformPoint(var_31_15.bottomLeft))
+
+				if var_31_14 > var_31_16.y then
+					var_31_14 = var_31_16.y
+				end
+			end
+
+			var_31_13.y = var_31_14
+
+			local var_31_17 = var_31_2:WorldToScreenPoint(var_31_1:TransformPoint(var_31_10.topLeft))
+			local var_31_18 = var_31_17
+			local var_31_19 = var_31_17.y
+
+			for iter_31_3 = var_31_6.firstVisibleCharacterIndex, var_31_6.lastVisibleCharacterIndex do
+				local var_31_20 = var_31_9[iter_31_3]
+				local var_31_21 = var_31_2:WorldToScreenPoint(var_31_1:TransformPoint(var_31_20.topLeft))
+
+				if var_31_19 < var_31_21.y then
+					var_31_19 = var_31_21.y
+				end
+			end
+
+			var_31_18.y = var_31_19
+
+			local var_31_22 = var_31_2:WorldToScreenPoint(var_31_1:TransformPoint(var_31_11.bottomRight))
+
+			for iter_31_4, iter_31_5 in pairs(arg_31_0._subMeshs) do
+				if iter_31_5.sharedMaterial then
+					if arg_31_0._stepCo.conversation.effType == StoryEnum.ConversationEffectType.SoftLight then
+						break
+					end
+
+					iter_31_5.sharedMaterial = arg_31_0._fontNormalMat
+				end
+			end
+
+			if iter_31_0 == 1 then
+				if arg_31_0._hasUnderline then
+					arg_31_0._conMat:SetFloat(arg_31_0._LineMinYId, var_31_13.y - 4)
+				else
+					arg_31_0._conMat:SetFloat(arg_31_0._LineMinYId, var_31_13.y)
+				end
+
+				arg_31_0._conMat:SetFloat(arg_31_0._LineMaxYId, var_31_18.y + 20)
+				arg_31_0._dotMat:SetFloat(arg_31_0._LineMinYId, var_31_13.y - 10)
+				arg_31_0._dotMat:SetFloat(arg_31_0._LineMaxYId, var_31_18.y)
+			else
+				arg_31_0._lineSpace = arg_31_0._lastBottomLeft - var_31_18.y > 0 and arg_31_0._lastBottomLeft - var_31_18.y or arg_31_0._lineSpace
+
+				arg_31_0._conMat:SetFloat(arg_31_0._LineMinYId, var_31_13.y)
+				arg_31_0._conMat:SetFloat(arg_31_0._LineMaxYId, var_31_18.y + arg_31_0._lineSpace)
+				arg_31_0._dotMat:SetFloat(arg_31_0._LineMinYId, var_31_13.y - 10)
+				arg_31_0._dotMat:SetFloat(arg_31_0._LineMaxYId, var_31_18.y)
+			end
+
+			arg_31_0._lastBottomLeft = var_31_13.y
+
+			local var_31_23 = arg_31_0._txtcontentcn.gameObject
+
+			gohelper.setActive(var_31_23, false)
+			gohelper.setActive(var_31_23, true)
+
+			local var_31_24 = var_31_7 == var_31_8 and 1 or (arg_31_1 - var_31_7) / (var_31_8 - var_31_7)
+			local var_31_25 = Mathf.Lerp(var_31_13.x - 10, var_31_22.x + 10, var_31_24)
+			local var_31_26 = arg_31_0._stepCo.conversation.effType == StoryEnum.ConversationEffectType.SoftLight and 0 or 1 - var_31_25 / var_31_0
+
+			transformhelper.setLocalPos(arg_31_0._txtcontentcn.transform, arg_31_0._contentX, arg_31_0._contentY, var_31_26)
+
+			if arg_31_0._stepCo.conversation.effType == StoryEnum.ConversationEffectType.SoftLight then
+				arg_31_0._conMat:SetFloat(arg_31_0._LineMinYId, 0)
+				arg_31_0._conMat:SetFloat(arg_31_0._LineMaxYId, 0)
+
+				if #arg_31_0._lineInfoList > 1 then
+					if BootNativeUtil.isIOS() then
+						transformhelper.setLocalPosXY(arg_31_0._norDiaGO.transform, -351, 120 + 50 * (#arg_31_0._lineInfoList - 2))
+					else
+						transformhelper.setLocalPosXY(arg_31_0._norDiaGO.transform, -351, 100 + 50 * (#arg_31_0._lineInfoList - 2))
+					end
+				end
+			end
 		end
-	end
-
-	transformhelper.setLocalPos(arg_31_0._txtcontentreshapemagic.transform, var_31_3, var_31_4, 0)
-	arg_31_0._conMat:DisableKeyword("_GRADUAL_ON")
-
-	if arg_31_0._finishCallback then
-		arg_31_0._finishCallback(arg_31_0._finishCallbackObj)
 	end
 end
 
-function var_0_0.playNorDialogFadeIn(arg_32_0, arg_32_1, arg_32_2)
-	ZProj.TweenHelper.DoFade(arg_32_0._txtcontentcn, 0, 1, 2, function()
-		if arg_32_1 then
-			arg_32_1(arg_32_2)
+function var_0_0.conFinished(arg_32_0)
+	arg_32_0._textShowFinished = true
+
+	if arg_32_0._dialogTextShowFinishedCallback then
+		arg_32_0._dialogTextShowFinishedCallback(arg_32_0._dialogTextShowFinishedCallbackObj)
+
+		arg_32_0._dialogTextShowFinishedCallback = nil
+		arg_32_0._dialogTextShowFinishedCallbackObj = nil
+	end
+
+	if arg_32_0._stepCo and (arg_32_0._stepCo.conversation.type == StoryEnum.ConversationType.NoInteract or arg_32_0._stepCo.conversation.type == StoryEnum.ConversationType.None) then
+		return
+	end
+
+	if arg_32_0._magicConTweenId then
+		ZProj.TweenHelper.KillById(arg_32_0._magicConTweenId)
+		gohelper.setActive(arg_32_0._magicFireGo, false)
+		gohelper.setActive(arg_32_0._reshapeMagicFireGo, false)
+
+		arg_32_0._magicFireAnim.speed = 1
+		arg_32_0._reshapeMagicFireAnim.speed = 1
+		arg_32_0._magicConTweenId = nil
+	end
+
+	if arg_32_0._conTweenId then
+		ZProj.TweenHelper.KillById(arg_32_0._conTweenId)
+
+		arg_32_0._conTweenId = nil
+	end
+
+	arg_32_0._conMat:SetFloat(arg_32_0._LineMinYId, 0)
+	arg_32_0._conMat:SetFloat(arg_32_0._LineMaxYId, 0)
+
+	local var_32_0, var_32_1, var_32_2 = transformhelper.getLocalPos(arg_32_0._txtcontentcn.transform)
+
+	transformhelper.setLocalPos(arg_32_0._txtcontentcn.transform, var_32_0, var_32_1, 0)
+
+	local var_32_3, var_32_4, var_32_5 = transformhelper.getLocalPos(arg_32_0._txtcontentmagic.transform)
+
+	transformhelper.setLocalPos(arg_32_0._txtcontentmagic.transform, var_32_3, var_32_4, 0)
+
+	arg_32_0._subMeshs = {}
+
+	local var_32_6 = arg_32_0._txtcontentcn.gameObject:GetComponentsInChildren(typeof(TMPro.TMP_SubMeshUI), true)
+
+	if var_32_6 then
+		local var_32_7 = var_32_6:GetEnumerator()
+
+		while var_32_7:MoveNext() do
+			local var_32_8 = var_32_7.Current.gameObject:GetComponent(typeof(TMPro.TMP_SubMeshUI))
+
+			table.insert(arg_32_0._subMeshs, var_32_8)
+		end
+	end
+
+	for iter_32_0, iter_32_1 in pairs(arg_32_0._subMeshs) do
+		if iter_32_1.sharedMaterial then
+			iter_32_1.sharedMaterial:DisableKeyword("_GRADUAL_ON")
+		end
+	end
+
+	transformhelper.setLocalPos(arg_32_0._txtcontentreshapemagic.transform, var_32_3, var_32_4, 0)
+	arg_32_0._conMat:DisableKeyword("_GRADUAL_ON")
+
+	if arg_32_0._finishCallback then
+		arg_32_0._finishCallback(arg_32_0._finishCallbackObj)
+	end
+end
+
+function var_0_0.playNorDialogFadeIn(arg_33_0, arg_33_1, arg_33_2)
+	ZProj.TweenHelper.DoFade(arg_33_0._txtcontentcn, 0, 1, 2, function()
+		if arg_33_1 then
+			arg_33_1(arg_33_2)
 		end
 	end, nil, nil, EaseType.Linear)
 end
 
-function var_0_0.playWordByWord(arg_34_0, arg_34_1, arg_34_2)
-	arg_34_0._txtcontentcn.text = ""
+function var_0_0.playWordByWord(arg_35_0, arg_35_1, arg_35_2)
+	arg_35_0._txtcontentcn.text = ""
 
-	ZProj.TweenHelper.DOText(arg_34_0._txtcontentcn, arg_34_0._diatxt, 2, function()
-		if arg_34_1 then
-			arg_34_1(arg_34_2)
+	ZProj.TweenHelper.DOText(arg_35_0._txtcontentcn, arg_35_0._diatxt, 2, function()
+		if arg_35_1 then
+			arg_35_1(arg_35_2)
 		end
 	end)
 end
 
-function var_0_0.startAutoEnterNext(arg_36_0)
-	if arg_36_0._playingAudioId == 0 and arg_36_0._textShowFinished then
-		if arg_36_0._stepCo.conversation.effType == StoryEnum.ConversationEffectType.Magic or arg_36_0._stepCo.conversation.effType == StoryEnum.ConversationEffectType.ReshapeMagic then
-			arg_36_0:_magicConFinished()
+function var_0_0.startAutoEnterNext(arg_37_0)
+	if arg_37_0._playingAudioId == 0 and arg_37_0._textShowFinished then
+		if arg_37_0._stepCo.conversation.effType == StoryEnum.ConversationEffectType.Magic or arg_37_0._stepCo.conversation.effType == StoryEnum.ConversationEffectType.ReshapeMagic then
+			arg_37_0:_magicConFinished()
 		else
-			arg_36_0:conFinished()
+			arg_37_0:conFinished()
 		end
 	end
 end
 
-function var_0_0.checkAutoEnterNext(arg_37_0, arg_37_1, arg_37_2)
-	arg_37_0._diaFinishedCallback = arg_37_1
-	arg_37_0._diaFinishedCallbackObj = arg_37_2
+function var_0_0.checkAutoEnterNext(arg_38_0, arg_38_1, arg_38_2)
+	arg_38_0._diaFinishedCallback = arg_38_1
+	arg_38_0._diaFinishedCallbackObj = arg_38_2
 
-	TaskDispatcher.cancelTask(arg_37_0._onSecond, arg_37_0)
-	TaskDispatcher.cancelTask(arg_37_0._waitSecondFinished, arg_37_0)
-	TaskDispatcher.runRepeat(arg_37_0._onSecond, arg_37_0, 0.1)
+	TaskDispatcher.cancelTask(arg_38_0._onSecond, arg_38_0)
+	TaskDispatcher.cancelTask(arg_38_0._waitSecondFinished, arg_38_0)
+	TaskDispatcher.runRepeat(arg_38_0._onSecond, arg_38_0, 0.1)
 end
 
-function var_0_0._onSecond(arg_38_0)
-	if arg_38_0._playingAudioId == 0 and arg_38_0._textShowFinished then
-		TaskDispatcher.cancelTask(arg_38_0._onSecond, arg_38_0)
-		TaskDispatcher.cancelTask(arg_38_0._waitSecondFinished, arg_38_0)
-		TaskDispatcher.runDelay(arg_38_0._waitSecondFinished, arg_38_0, 2)
-	end
-end
-
-function var_0_0.isAudioPlaying(arg_39_0)
-	return arg_39_0._playingAudioId ~= 0
-end
-
-function var_0_0._waitSecondFinished(arg_40_0)
-	if arg_40_0._diaFinishedCallback then
-		arg_40_0._diaFinishedCallback(arg_40_0._diaFinishedCallbackObj)
+function var_0_0._onSecond(arg_39_0)
+	if arg_39_0._playingAudioId == 0 and arg_39_0._textShowFinished then
+		TaskDispatcher.cancelTask(arg_39_0._onSecond, arg_39_0)
+		TaskDispatcher.cancelTask(arg_39_0._waitSecondFinished, arg_39_0)
+		TaskDispatcher.runDelay(arg_39_0._waitSecondFinished, arg_39_0, 2)
 	end
 end
 
-function var_0_0.storyFinished(arg_41_0)
-	arg_41_0._finishCallback = nil
-	arg_41_0._finishCallbackObj = nil
+function var_0_0.isAudioPlaying(arg_40_0)
+	return arg_40_0._playingAudioId ~= 0
 end
 
-function var_0_0.destroy(arg_42_0)
-	arg_42_0._txtcontentcn.fontSharedMaterial = arg_42_0._fontNormalMat
-
-	arg_42_0:_removeEvent()
-	TaskDispatcher.cancelTask(arg_42_0._playConAudio, arg_42_0)
-	TaskDispatcher.cancelTask(arg_42_0._onSecond, arg_42_0)
-	TaskDispatcher.cancelTask(arg_42_0._waitSecondFinished, arg_42_0)
-	arg_42_0:stopConAudio()
-
-	if arg_42_0._slideItem then
-		arg_42_0._slideItem:destroy()
-
-		arg_42_0._slideItem = nil
+function var_0_0._waitSecondFinished(arg_41_0)
+	if arg_41_0._diaFinishedCallback then
+		arg_41_0._diaFinishedCallback(arg_41_0._diaFinishedCallbackObj)
 	end
+end
 
-	if arg_42_0._conTweenId then
-		ZProj.TweenHelper.KillById(arg_42_0._conTweenId)
-
-		arg_42_0._conTweenId = nil
-	end
-
-	if arg_42_0._magicConTweenId then
-		ZProj.TweenHelper.KillById(arg_42_0._magicConTweenId)
-
-		arg_42_0._magicConTweenId = nil
-	end
-
-	if arg_42_0._effLoader then
-		arg_42_0._effLoader:dispose()
-
-		arg_42_0._effLoader = nil
-	end
-
-	TaskDispatcher.cancelTask(arg_42_0._delayShow, arg_42_0)
-
+function var_0_0.storyFinished(arg_42_0)
 	arg_42_0._finishCallback = nil
 	arg_42_0._finishCallbackObj = nil
+end
 
-	arg_42_0._conMat:DisableKeyword("_GRADUAL_ON")
-	arg_42_0:_removeEvent()
+function var_0_0.destroy(arg_43_0)
+	arg_43_0._txtcontentcn.fontSharedMaterial = arg_43_0._fontNormalMat
 
-	if arg_42_0._matLoader then
-		arg_42_0._matLoader:dispose()
+	arg_43_0:_removeEvent()
+	TaskDispatcher.cancelTask(arg_43_0._playConAudio, arg_43_0)
+	TaskDispatcher.cancelTask(arg_43_0._onSecond, arg_43_0)
+	TaskDispatcher.cancelTask(arg_43_0._waitSecondFinished, arg_43_0)
+	arg_43_0:stopConAudio()
 
-		arg_42_0._matLoader = nil
+	if arg_43_0._slideItem then
+		arg_43_0._slideItem:destroy()
+
+		arg_43_0._slideItem = nil
+	end
+
+	if arg_43_0._conTweenId then
+		ZProj.TweenHelper.KillById(arg_43_0._conTweenId)
+
+		arg_43_0._conTweenId = nil
+	end
+
+	if arg_43_0._magicConTweenId then
+		ZProj.TweenHelper.KillById(arg_43_0._magicConTweenId)
+
+		arg_43_0._magicConTweenId = nil
+	end
+
+	if arg_43_0._effLoader then
+		arg_43_0._effLoader:dispose()
+
+		arg_43_0._effLoader = nil
+	end
+
+	TaskDispatcher.cancelTask(arg_43_0._delayShow, arg_43_0)
+
+	arg_43_0._finishCallback = nil
+	arg_43_0._finishCallbackObj = nil
+
+	arg_43_0._conMat:DisableKeyword("_GRADUAL_ON")
+	arg_43_0:_removeEvent()
+
+	if arg_43_0._matLoader then
+		arg_43_0._matLoader:dispose()
+
+		arg_43_0._matLoader = nil
 	end
 end
 

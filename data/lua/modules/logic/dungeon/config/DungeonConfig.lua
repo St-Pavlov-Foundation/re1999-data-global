@@ -655,22 +655,8 @@ function var_0_0.getEpisodeBattleId(arg_43_0, arg_43_1)
 		end
 	end
 
-	if FightModel.instance:getFightParam() then
-		if var_43_0.type == DungeonEnum.EpisodeType.WeekWalk or var_43_0.type == DungeonEnum.EpisodeType.WeekWalk_2 then
-			return FightModel.instance:getFightParam().battleId
-		elseif var_43_0.type == DungeonEnum.EpisodeType.Meilanni then
-			return FightModel.instance:getFightParam().battleId
-		elseif var_43_0.type == DungeonEnum.EpisodeType.Dog then
-			return FightModel.instance:getFightParam().battleId
-		elseif var_43_0.type == DungeonEnum.EpisodeType.Jiexika then
-			return FightModel.instance:getFightParam().battleId
-		elseif var_43_0.type == DungeonEnum.EpisodeType.YaXian then
-			return FightModel.instance:getFightParam().battleId
-		elseif var_43_0.type == DungeonEnum.EpisodeType.Explore then
-			return FightModel.instance:getFightParam().battleId
-		elseif var_43_0.type == DungeonEnum.EpisodeType.Act1_3Role2Chess then
-			return FightModel.instance:getFightParam().battleId
-		end
+	if FightModel.instance:getFightParam() and var_43_0.type ~= DungeonEnum.EpisodeType.Story and var_43_0.battleId == 0 then
+		return FightModel.instance:getFightParam().battleId
 	end
 
 	return var_43_0.battleId
@@ -823,8 +809,11 @@ function var_0_0._initChapterList(arg_49_0)
 	arg_49_0._normalChapterList = {}
 	arg_49_0._exploreChapterList = {}
 	arg_49_0._chapterUnlockMap = {}
+	arg_49_0._previewChapterList = {}
 
 	local var_49_0 = arg_49_0._chapterConfig.configList
+
+	arg_49_0._lastEarlyAccessChapterId = 0
 
 	for iter_49_0, iter_49_1 in ipairs(var_49_0) do
 		if iter_49_1.type == DungeonEnum.ChapterType.Normal then
@@ -834,128 +823,160 @@ function var_0_0._initChapterList(arg_49_0)
 		elseif iter_49_1.type == DungeonEnum.ChapterType.Explore then
 			table.insert(arg_49_0._exploreChapterList, iter_49_1)
 		end
+
+		if iter_49_1.dramaModeToMainChapterld > 0 then
+			local var_49_1 = {
+				iter_49_1,
+				lua_chapter.configDict[iter_49_1.dramaModeToMainChapterld]
+			}
+
+			arg_49_0._previewChapterList[iter_49_1.dramaModeToMainChapterld] = var_49_1
+			arg_49_0._previewChapterList[iter_49_1.id] = var_49_1
+
+			if iter_49_1.dramaModeToMainChapterld > arg_49_0._lastEarlyAccessChapterId then
+				arg_49_0._lastEarlyAccessChapterId = iter_49_1.dramaModeToMainChapterld
+			end
+		end
+	end
+
+	if arg_49_0._lastEarlyAccessChapterId == 0 then
+		logError("DungeonConfig _initChapterList _lastEarlyAccessChapterId == 0")
 	end
 end
 
-function var_0_0.getUnlockChapterConfig(arg_50_0, arg_50_1)
-	return arg_50_0._chapterUnlockMap[arg_50_1]
+function var_0_0.getLastEarlyAccessChapterId(arg_50_0)
+	return arg_50_0._lastEarlyAccessChapterId
 end
 
-function var_0_0.getNormalChapterList(arg_51_0)
-	return arg_51_0._normalChapterList
+function var_0_0.getPreviewChapterList(arg_51_0, arg_51_1)
+	local var_51_0 = arg_51_0._previewChapterList[arg_51_1]
+
+	if not var_51_0 or #var_51_0 ~= 2 then
+		logError(string.format("DungeonConfig getPreviewChapterList chapterId = %d, chapter list size = %s error", arg_51_1, var_51_0 and #var_51_0))
+	end
+
+	return var_51_0
 end
 
-function var_0_0.getExploreChapterList(arg_52_0)
-	return arg_52_0._exploreChapterList
+function var_0_0.getUnlockChapterConfig(arg_52_0, arg_52_1)
+	return arg_52_0._chapterUnlockMap[arg_52_1]
 end
 
-function var_0_0._rebuildEpisodeConfigs(arg_53_0)
-	local var_53_0 = {
+function var_0_0.getNormalChapterList(arg_53_0)
+	return arg_53_0._normalChapterList
+end
+
+function var_0_0.getExploreChapterList(arg_54_0)
+	return arg_54_0._exploreChapterList
+end
+
+function var_0_0._rebuildEpisodeConfigs(arg_55_0)
+	local var_55_0 = {
 		preEpisode2 = "preEpisode",
 		normalEpisodeId = "id"
 	}
-	local var_53_1 = {
+	local var_55_1 = {
 		"beforeStory",
 		"story",
 		"afterStory"
 	}
-	local var_53_2 = {}
-	local var_53_3 = {}
-	local var_53_4 = getmetatable(lua_episode.configList[1])
-	local var_53_5 = {
-		__index = function(arg_54_0, arg_54_1)
-			local var_54_0 = var_53_0[arg_54_1] or arg_54_1
-			local var_54_1 = var_53_4.__index(arg_54_0, var_54_0)
+	local var_55_2 = {}
+	local var_55_3 = {}
+	local var_55_4 = getmetatable(lua_episode.configList[1])
+	local var_55_5 = {
+		__index = function(arg_56_0, arg_56_1)
+			local var_56_0 = var_55_0[arg_56_1] or arg_56_1
+			local var_56_1 = var_55_4.__index(arg_56_0, var_56_0)
 
-			if arg_54_1 == "preEpisode" and var_54_1 > 0 or arg_54_1 == "normalEpisodeId" then
-				return var_53_2[var_54_1] or var_54_1
+			if arg_56_1 == "preEpisode" and var_56_1 > 0 or arg_56_1 == "normalEpisodeId" then
+				return var_55_2[var_56_1] or var_56_1
 			end
 
-			if tabletool.indexOf(var_53_1, arg_54_1) then
-				local var_54_2 = var_53_4.__index(arg_54_0, "chainEpisode")
+			if tabletool.indexOf(var_55_1, arg_56_1) then
+				local var_56_2 = var_55_4.__index(arg_56_0, "chainEpisode")
 
-				if var_54_2 > 0 and lua_episode.configDict[var_54_2] then
-					return lua_episode.configDict[var_54_2][arg_54_1]
+				if var_56_2 > 0 and lua_episode.configDict[var_56_2] then
+					return lua_episode.configDict[var_56_2][arg_56_1]
 				end
 			end
 
-			return var_54_1
+			return var_56_1
 		end,
-		__newindex = var_53_4.__newindex
+		__newindex = var_55_4.__newindex
 	}
 
-	for iter_53_0, iter_53_1 in ipairs(lua_episode.configList) do
-		setmetatable(iter_53_1, var_53_5)
+	for iter_55_0, iter_55_1 in ipairs(lua_episode.configList) do
+		setmetatable(iter_55_1, var_55_5)
 
-		if iter_53_1.chainEpisode > 0 then
-			var_53_2[iter_53_1.chainEpisode] = iter_53_1.id
-			var_53_3[iter_53_1.id] = iter_53_1.chainEpisode
+		if iter_55_1.chainEpisode > 0 then
+			var_55_2[iter_55_1.chainEpisode] = iter_55_1.id
+			var_55_3[iter_55_1.id] = iter_55_1.chainEpisode
 		end
 	end
 
-	arg_53_0._chainEpisodeDict = var_53_2
-	arg_53_0._backwardChainDict = var_53_3
+	arg_55_0._chainEpisodeDict = var_55_2
+	arg_55_0._backwardChainDict = var_55_3
 end
 
-function var_0_0.getChainEpisodeDict(arg_55_0)
-	return arg_55_0._chainEpisodeDict
+function var_0_0.getChainEpisodeDict(arg_57_0)
+	return arg_57_0._chainEpisodeDict
 end
 
-function var_0_0._initEpisodeList(arg_56_0)
-	arg_56_0._unlockEpisodeList = {}
-	arg_56_0._chapterSpStats = {}
-	arg_56_0._chapterEpisodeDict = {}
-	arg_56_0._chpaterNonSpEpisodeDict = {}
-	arg_56_0._episodeElementListDict = {}
-	arg_56_0._episodeUnlockDict = {}
+function var_0_0._initEpisodeList(arg_58_0)
+	arg_58_0._unlockEpisodeList = {}
+	arg_58_0._chapterSpStats = {}
+	arg_58_0._chapterEpisodeDict = {}
+	arg_58_0._chpaterNonSpEpisodeDict = {}
+	arg_58_0._episodeElementListDict = {}
+	arg_58_0._episodeUnlockDict = {}
 
-	local var_56_0 = arg_56_0._episodeConfig.configList
+	local var_58_0 = arg_58_0._episodeConfig.configList
 
-	for iter_56_0, iter_56_1 in ipairs(var_56_0) do
-		local var_56_1 = arg_56_0._chapterEpisodeDict[iter_56_1.chapterId]
+	for iter_58_0, iter_58_1 in ipairs(var_58_0) do
+		local var_58_1 = arg_58_0._chapterEpisodeDict[iter_58_1.chapterId]
 
-		if not var_56_1 then
-			var_56_1 = {}
-			arg_56_0._chapterEpisodeDict[iter_56_1.chapterId] = var_56_1
+		if not var_58_1 then
+			var_58_1 = {}
+			arg_58_0._chapterEpisodeDict[iter_58_1.chapterId] = var_58_1
 		end
 
-		table.insert(var_56_1, iter_56_1)
-		arg_56_0:_setEpisodeIndex(iter_56_1)
+		table.insert(var_58_1, iter_58_1)
+		arg_58_0:_setEpisodeIndex(iter_58_1)
 
-		if iter_56_1.preEpisode > 0 then
-			if not string.nilorempty(iter_56_1.elementList) then
-				arg_56_0._episodeElementListDict[iter_56_1.preEpisode] = iter_56_1.elementList
+		if iter_58_1.preEpisode > 0 then
+			if not string.nilorempty(iter_58_1.elementList) then
+				arg_58_0._episodeElementListDict[iter_58_1.preEpisode] = iter_58_1.elementList
 			end
 
-			local var_56_2 = arg_56_0:getChapterCO(iter_56_1.chapterId)
+			local var_58_2 = arg_58_0:getChapterCO(iter_58_1.chapterId)
 
-			if var_56_2 and var_56_2.type ~= DungeonEnum.ChapterType.Hard then
-				arg_56_0._episodeUnlockDict[iter_56_1.preEpisode] = iter_56_1.id
+			if var_58_2 and var_58_2.type ~= DungeonEnum.ChapterType.Hard then
+				arg_58_0._episodeUnlockDict[iter_58_1.preEpisode] = iter_58_1.id
 			end
 		end
 
-		if iter_56_1.unlockEpisode > 0 then
-			local var_56_3 = arg_56_0._unlockEpisodeList[iter_56_1.unlockEpisode] or {}
+		if iter_58_1.unlockEpisode > 0 then
+			local var_58_3 = arg_58_0._unlockEpisodeList[iter_58_1.unlockEpisode] or {}
 
-			arg_56_0._unlockEpisodeList[iter_56_1.unlockEpisode] = var_56_3
+			arg_58_0._unlockEpisodeList[iter_58_1.unlockEpisode] = var_58_3
 
-			table.insert(var_56_3, iter_56_1.id)
+			table.insert(var_58_3, iter_58_1.id)
 		end
 
-		if iter_56_1.type == DungeonEnum.EpisodeType.Sp then
-			local var_56_4 = (arg_56_0._chapterSpStats[iter_56_1.chapterId] or 0) + 1
+		if iter_58_1.type == DungeonEnum.EpisodeType.Sp then
+			local var_58_4 = (arg_58_0._chapterSpStats[iter_58_1.chapterId] or 0) + 1
 
-			arg_56_0._chapterSpStats[iter_56_1.chapterId] = var_56_4
+			arg_58_0._chapterSpStats[iter_58_1.chapterId] = var_58_4
 		end
 
-		arg_56_0:_mapConnectEpisode(iter_56_1)
+		arg_58_0:_mapConnectEpisode(iter_58_1)
 	end
 end
 
-function var_0_0._initVersionActivityEpisodeList(arg_57_0)
-	arg_57_0.versionActivityPreEpisodeDict = {}
+function var_0_0._initVersionActivityEpisodeList(arg_59_0)
+	arg_59_0.versionActivityPreEpisodeDict = {}
 
-	local var_57_0 = {
+	local var_59_0 = {
 		VersionActivityEnum.DungeonChapterId.LeiMiTeBei3,
 		VersionActivityEnum.DungeonChapterId.LeiMiTeBei4,
 		VersionActivity1_2DungeonEnum.DungeonChapterId.Activity1_2DungeonNormal2,
@@ -983,728 +1004,728 @@ function var_0_0._initVersionActivityEpisodeList(arg_57_0)
 		VersionActivity2_9DungeonEnum.DungeonChapterId.Story2,
 		VersionActivity2_9DungeonEnum.DungeonChapterId.Story3
 	}
-	local var_57_1
+	local var_59_1
 
-	for iter_57_0, iter_57_1 in ipairs(var_57_0) do
-		local var_57_2 = arg_57_0._chapterEpisodeDict[iter_57_1]
+	for iter_59_0, iter_59_1 in ipairs(var_59_0) do
+		local var_59_2 = arg_59_0._chapterEpisodeDict[iter_59_1]
 
-		for iter_57_2, iter_57_3 in ipairs(var_57_2) do
-			arg_57_0.versionActivityPreEpisodeDict[iter_57_3.preEpisode] = iter_57_3
+		for iter_59_2, iter_59_3 in ipairs(var_59_2) do
+			arg_59_0.versionActivityPreEpisodeDict[iter_59_3.preEpisode] = iter_59_3
 		end
 	end
 end
 
-function var_0_0.getVersionActivityEpisodeCoByPreEpisodeId(arg_58_0, arg_58_1)
-	if not arg_58_0.versionActivityPreEpisodeDict then
-		arg_58_0:_initVersionActivityEpisodeList()
+function var_0_0.getVersionActivityEpisodeCoByPreEpisodeId(arg_60_0, arg_60_1)
+	if not arg_60_0.versionActivityPreEpisodeDict then
+		arg_60_0:_initVersionActivityEpisodeList()
 	end
 
-	return arg_58_0.versionActivityPreEpisodeDict[arg_58_1]
+	return arg_60_0.versionActivityPreEpisodeDict[arg_60_1]
 end
 
-function var_0_0.getVersionActivityBrotherEpisodeByEpisodeCo(arg_59_0, arg_59_1)
-	local var_59_0 = ActivityConfig.instance:getActIdByChapterId(arg_59_1.chapterId)
+function var_0_0.getVersionActivityBrotherEpisodeByEpisodeCo(arg_61_0, arg_61_1)
+	local var_61_0 = ActivityConfig.instance:getActIdByChapterId(arg_61_1.chapterId)
 
-	if not var_59_0 then
+	if not var_61_0 then
 		return {
-			arg_59_1
+			arg_61_1
 		}
 	end
 
-	local var_59_1 = {}
-	local var_59_2 = ActivityConfig.instance:getActivityDungeonConfig(var_59_0)
+	local var_61_1 = {}
+	local var_61_2 = ActivityConfig.instance:getActivityDungeonConfig(var_61_0)
 
-	while arg_59_1.chapterId ~= var_59_2.story1ChapterId do
-		arg_59_1 = arg_59_0:getEpisodeCO(arg_59_1.preEpisode)
+	while arg_61_1.chapterId ~= var_61_2.story1ChapterId do
+		arg_61_1 = arg_61_0:getEpisodeCO(arg_61_1.preEpisode)
 	end
 
-	while arg_59_1 do
-		table.insert(var_59_1, arg_59_1)
+	while arg_61_1 do
+		table.insert(var_61_1, arg_61_1)
 
-		arg_59_1 = arg_59_0:getVersionActivityEpisodeCoByPreEpisodeId(arg_59_1.id)
+		arg_61_1 = arg_61_0:getVersionActivityEpisodeCoByPreEpisodeId(arg_61_1.id)
 	end
 
-	return var_59_1
+	return var_61_1
 end
 
-function var_0_0._initVersionActivityEpisodeLevelList(arg_60_0, arg_60_1, arg_60_2)
-	if not arg_60_0._versionActivityEpisodeLevelList then
-		arg_60_0._versionActivityEpisodeLevelList = {}
+function var_0_0._initVersionActivityEpisodeLevelList(arg_62_0, arg_62_1, arg_62_2)
+	if not arg_62_0._versionActivityEpisodeLevelList then
+		arg_62_0._versionActivityEpisodeLevelList = {}
 	end
 
-	local var_60_0 = {}
+	local var_62_0 = {}
 
-	while arg_60_2 ~= arg_60_1 do
-		local var_60_1 = arg_60_0:getChapterEpisodeCOList(arg_60_2)
+	while arg_62_2 ~= arg_62_1 do
+		local var_62_1 = arg_62_0:getChapterEpisodeCOList(arg_62_2)
 
-		for iter_60_0, iter_60_1 in ipairs(var_60_1) do
-			var_60_0[iter_60_1.preEpisode] = iter_60_1.id
-			arg_60_2 = arg_60_0:getEpisodeCO(iter_60_1.preEpisode).chapterId
+		for iter_62_0, iter_62_1 in ipairs(var_62_1) do
+			var_62_0[iter_62_1.preEpisode] = iter_62_1.id
+			arg_62_2 = arg_62_0:getEpisodeCO(iter_62_1.preEpisode).chapterId
 		end
 	end
 
-	local var_60_2 = arg_60_0:getChapterEpisodeCOList(arg_60_1)
+	local var_62_2 = arg_62_0:getChapterEpisodeCOList(arg_62_1)
 
-	for iter_60_2, iter_60_3 in ipairs(var_60_2) do
-		arg_60_0._versionActivityEpisodeLevelList[iter_60_3.id] = {
-			iter_60_3.id
+	for iter_62_2, iter_62_3 in ipairs(var_62_2) do
+		arg_62_0._versionActivityEpisodeLevelList[iter_62_3.id] = {
+			iter_62_3.id
 		}
 
-		if var_60_0[iter_60_3.id] then
-			local var_60_3 = iter_60_3.id
+		if var_62_0[iter_62_3.id] then
+			local var_62_3 = iter_62_3.id
 
-			while var_60_0[var_60_3] do
-				table.insert(arg_60_0._versionActivityEpisodeLevelList[iter_60_3.id], var_60_0[var_60_3])
+			while var_62_0[var_62_3] do
+				table.insert(arg_62_0._versionActivityEpisodeLevelList[iter_62_3.id], var_62_0[var_62_3])
 
-				var_60_3 = var_60_0[var_60_3]
+				var_62_3 = var_62_0[var_62_3]
 			end
 		end
 	end
 
-	for iter_60_4, iter_60_5 in pairs(arg_60_0._versionActivityEpisodeLevelList) do
-		if #iter_60_5 > 0 then
-			for iter_60_6, iter_60_7 in ipairs(iter_60_5) do
-				if iter_60_7 ~= iter_60_4 then
-					arg_60_0._versionActivityEpisodeLevelList[iter_60_7] = iter_60_5
+	for iter_62_4, iter_62_5 in pairs(arg_62_0._versionActivityEpisodeLevelList) do
+		if #iter_62_5 > 0 then
+			for iter_62_6, iter_62_7 in ipairs(iter_62_5) do
+				if iter_62_7 ~= iter_62_4 then
+					arg_62_0._versionActivityEpisodeLevelList[iter_62_7] = iter_62_5
 				end
 			end
 		end
 	end
 end
 
-function var_0_0.get1_2VersionActivityEpisodeCoList(arg_61_0, arg_61_1)
-	if arg_61_0._versionActivityEpisodeLevelList and arg_61_0._versionActivityEpisodeLevelList[arg_61_1] then
-		return arg_61_0._versionActivityEpisodeLevelList[arg_61_1]
+function var_0_0.get1_2VersionActivityEpisodeCoList(arg_63_0, arg_63_1)
+	if arg_63_0._versionActivityEpisodeLevelList and arg_63_0._versionActivityEpisodeLevelList[arg_63_1] then
+		return arg_63_0._versionActivityEpisodeLevelList[arg_63_1]
 	end
 
-	local var_61_0 = arg_61_0:getEpisodeCO(arg_61_1)
-	local var_61_1 = VersionActivity1_2DungeonEnum.DungeonChapterId2StartChapterId[var_61_0.chapterId] or var_61_0.chapterId
-	local var_61_2 = VersionActivity1_2DungeonEnum.DungeonChapterId2EndChapterId[var_61_0.chapterId] or var_61_0.chapterId
+	local var_63_0 = arg_63_0:getEpisodeCO(arg_63_1)
+	local var_63_1 = VersionActivity1_2DungeonEnum.DungeonChapterId2StartChapterId[var_63_0.chapterId] or var_63_0.chapterId
+	local var_63_2 = VersionActivity1_2DungeonEnum.DungeonChapterId2EndChapterId[var_63_0.chapterId] or var_63_0.chapterId
 
-	arg_61_0:_initVersionActivityEpisodeLevelList(var_61_1, var_61_2)
+	arg_63_0:_initVersionActivityEpisodeLevelList(var_63_1, var_63_2)
 
-	return arg_61_0._versionActivityEpisodeLevelList[arg_61_1]
+	return arg_63_0._versionActivityEpisodeLevelList[arg_63_1]
 end
 
-function var_0_0.get1_2VersionActivityFirstLevelEpisodeId(arg_62_0, arg_62_1)
-	local var_62_0 = arg_62_0:getEpisodeCO(arg_62_1)
-	local var_62_1 = var_62_0.chapterId
+function var_0_0.get1_2VersionActivityFirstLevelEpisodeId(arg_64_0, arg_64_1)
+	local var_64_0 = arg_64_0:getEpisodeCO(arg_64_1)
+	local var_64_1 = var_64_0.chapterId
 
-	if VersionActivity1_2DungeonEnum.DungeonChapterId2ViewShowId[var_62_1] then
-		while VersionActivity1_2DungeonEnum.DungeonChapterId2ViewShowId[var_62_1] ~= var_62_1 do
-			var_62_0 = var_0_0.instance:getEpisodeCO(var_62_0.preEpisode)
-			var_62_1 = var_62_0.chapterId
+	if VersionActivity1_2DungeonEnum.DungeonChapterId2ViewShowId[var_64_1] then
+		while VersionActivity1_2DungeonEnum.DungeonChapterId2ViewShowId[var_64_1] ~= var_64_1 do
+			var_64_0 = var_0_0.instance:getEpisodeCO(var_64_0.preEpisode)
+			var_64_1 = var_64_0.chapterId
 		end
 	end
 
-	return var_62_0.id
+	return var_64_0.id
 end
 
-function var_0_0.getElementList(arg_63_0, arg_63_1)
-	return arg_63_0._episodeElementListDict[arg_63_1] or ""
+function var_0_0.getElementList(arg_65_0, arg_65_1)
+	return arg_65_0._episodeElementListDict[arg_65_1] or ""
 end
 
-function var_0_0.getUnlockEpisodeId(arg_64_0, arg_64_1)
-	return arg_64_0._episodeUnlockDict[arg_64_1]
+function var_0_0.getUnlockEpisodeId(arg_66_0, arg_66_1)
+	return arg_66_0._episodeUnlockDict[arg_66_1]
 end
 
-function var_0_0.getChapterSpNum(arg_65_0, arg_65_1)
-	return arg_65_0._chapterSpStats[arg_65_1] or 0
+function var_0_0.getChapterSpNum(arg_67_0, arg_67_1)
+	return arg_67_0._chapterSpStats[arg_67_1] or 0
 end
 
-function var_0_0.getUnlockEpisodeList(arg_66_0, arg_66_1)
-	return arg_66_0._unlockEpisodeList[arg_66_1]
+function var_0_0.getUnlockEpisodeList(arg_68_0, arg_68_1)
+	return arg_68_0._unlockEpisodeList[arg_68_1]
 end
 
-function var_0_0.getChapterEpisodeCOList(arg_67_0, arg_67_1)
-	local var_67_0 = arg_67_0._chapterEpisodeDict[arg_67_1]
+function var_0_0.getChapterEpisodeCOList(arg_69_0, arg_69_1)
+	local var_69_0 = arg_69_0._chapterEpisodeDict[arg_69_1]
 
-	if var_67_0 and not var_67_0._sort then
-		var_67_0._sort = true
+	if var_69_0 and not var_69_0._sort then
+		var_69_0._sort = true
 
-		table.sort(var_67_0, function(arg_68_0, arg_68_1)
-			local var_68_0 = SLFramework.FrameworkSettings.IsEditor and {}
-			local var_68_1 = SLFramework.FrameworkSettings.IsEditor and {}
+		table.sort(var_69_0, function(arg_70_0, arg_70_1)
+			local var_70_0 = SLFramework.FrameworkSettings.IsEditor and {}
+			local var_70_1 = SLFramework.FrameworkSettings.IsEditor and {}
 
-			return arg_67_0:_getEpisodeIndex(arg_68_0, var_68_0) < arg_67_0:_getEpisodeIndex(arg_68_1, var_68_1)
+			return arg_69_0:_getEpisodeIndex(arg_70_0, var_70_0) < arg_69_0:_getEpisodeIndex(arg_70_1, var_70_1)
 		end)
-	end
-
-	return var_67_0
-end
-
-function var_0_0.getChapterNonSpEpisodeCOList(arg_69_0, arg_69_1)
-	local var_69_0 = arg_69_0._chpaterNonSpEpisodeDict[arg_69_1]
-
-	if not var_69_0 then
-		var_69_0 = {}
-		arg_69_0._chpaterNonSpEpisodeDict[arg_69_1] = var_69_0
-
-		local var_69_1 = arg_69_0:getChapterEpisodeCOList(arg_69_1)
-
-		for iter_69_0, iter_69_1 in ipairs(var_69_1) do
-			if iter_69_1.type ~= DungeonEnum.EpisodeType.Sp then
-				table.insert(var_69_0, iter_69_1)
-			end
-		end
 	end
 
 	return var_69_0
 end
 
-function var_0_0.getChapterLastNonSpEpisode(arg_70_0, arg_70_1)
-	local var_70_0 = arg_70_0:getChapterNonSpEpisodeCOList(arg_70_1)
+function var_0_0.getChapterNonSpEpisodeCOList(arg_71_0, arg_71_1)
+	local var_71_0 = arg_71_0._chpaterNonSpEpisodeDict[arg_71_1]
 
-	return var_70_0 and var_70_0[#var_70_0]
+	if not var_71_0 then
+		var_71_0 = {}
+		arg_71_0._chpaterNonSpEpisodeDict[arg_71_1] = var_71_0
+
+		local var_71_1 = arg_71_0:getChapterEpisodeCOList(arg_71_1)
+
+		for iter_71_0, iter_71_1 in ipairs(var_71_1) do
+			if iter_71_1.type ~= DungeonEnum.EpisodeType.Sp then
+				table.insert(var_71_0, iter_71_1)
+			end
+		end
+	end
+
+	return var_71_0
 end
 
-function var_0_0._setEpisodeIndex(arg_71_0, arg_71_1)
-	if arg_71_1.preEpisode > 0 then
-		local var_71_0 = arg_71_0._episodeIndex[arg_71_1.preEpisode]
+function var_0_0.getChapterLastNonSpEpisode(arg_72_0, arg_72_1)
+	local var_72_0 = arg_72_0:getChapterNonSpEpisodeCOList(arg_72_1)
 
-		if var_71_0 then
-			arg_71_0._episodeIndex[arg_71_1.id] = var_71_0 + 1
+	return var_72_0 and var_72_0[#var_72_0]
+end
+
+function var_0_0._setEpisodeIndex(arg_73_0, arg_73_1)
+	if arg_73_1.preEpisode > 0 then
+		local var_73_0 = arg_73_0._episodeIndex[arg_73_1.preEpisode]
+
+		if var_73_0 then
+			arg_73_0._episodeIndex[arg_73_1.id] = var_73_0 + 1
 		end
 	else
-		arg_71_0._episodeIndex[arg_71_1.id] = 0
+		arg_73_0._episodeIndex[arg_73_1.id] = 0
 	end
 end
 
-function var_0_0._getEpisodeIndex(arg_72_0, arg_72_1, arg_72_2)
-	if arg_72_2 then
-		arg_72_2[arg_72_1] = true
+function var_0_0._getEpisodeIndex(arg_74_0, arg_74_1, arg_74_2)
+	if arg_74_2 then
+		arg_74_2[arg_74_1] = true
 	end
 
-	local var_72_0 = arg_72_0._episodeIndex[arg_72_1.id]
+	local var_74_0 = arg_74_0._episodeIndex[arg_74_1.id]
 
-	if var_72_0 then
-		return var_72_0
+	if var_74_0 then
+		return var_74_0
 	end
 
-	local var_72_1 = arg_72_0:getEpisodeCO(arg_72_1.preEpisode)
+	local var_74_1 = arg_74_0:getEpisodeCO(arg_74_1.preEpisode)
 
-	if arg_72_2 and arg_72_2[var_72_1] then
-		logError(string.format("_getEpisodeIndex: %s前置互相依赖了", var_72_1.id))
+	if arg_74_2 and arg_74_2[var_74_1] then
+		logError(string.format("_getEpisodeIndex: %s前置互相依赖了", var_74_1.id))
 
 		return 0
 	end
 
-	local var_72_2 = arg_72_0:_getEpisodeIndex(var_72_1, arg_72_2) + 1
+	local var_74_2 = arg_74_0:_getEpisodeIndex(var_74_1, arg_74_2) + 1
 
-	arg_72_0._episodeIndex[arg_72_1.id] = var_72_2
+	arg_74_0._episodeIndex[arg_74_1.id] = var_74_2
 
-	return var_72_2
+	return var_74_2
 end
 
-function var_0_0.isPreChapterList(arg_73_0, arg_73_1, arg_73_2)
-	if arg_73_1 == arg_73_2 then
+function var_0_0.isPreChapterList(arg_75_0, arg_75_1, arg_75_2)
+	if arg_75_1 == arg_75_2 then
 		return false
 	end
 
-	local var_73_0 = arg_73_0:getChapterCO(arg_73_2)
-	local var_73_1 = {}
+	local var_75_0 = arg_75_0:getChapterCO(arg_75_2)
+	local var_75_1 = {}
 
-	while var_73_0 and var_73_0.preChapter ~= 0 do
-		if var_73_0.preChapter == arg_73_1 then
+	while var_75_0 and var_75_0.preChapter ~= 0 do
+		if var_75_0.preChapter == arg_75_1 then
 			return true
 		end
 
-		if var_73_1[var_73_0.preChapter] then
+		if var_75_1[var_75_0.preChapter] then
 			break
 		end
 
-		var_73_1[var_73_0.preChapter] = true
-		var_73_0 = arg_73_0:getChapterCO(var_73_0.preChapter)
+		var_75_1[var_75_0.preChapter] = true
+		var_75_0 = arg_75_0:getChapterCO(var_75_0.preChapter)
 	end
 
 	return false
 end
 
-function var_0_0.isPreEpisodeList(arg_74_0, arg_74_1, arg_74_2)
-	if arg_74_1 == arg_74_2 then
+function var_0_0.isPreEpisodeList(arg_76_0, arg_76_1, arg_76_2)
+	if arg_76_1 == arg_76_2 then
 		return false
 	end
 
-	if arg_74_1 == 0 or arg_74_2 == 0 then
+	if arg_76_1 == 0 or arg_76_2 == 0 then
 		return false
 	end
 
-	local var_74_0 = arg_74_0:getEpisodeCO(arg_74_1)
-	local var_74_1 = arg_74_0:getEpisodeCO(arg_74_2)
+	local var_76_0 = arg_76_0:getEpisodeCO(arg_76_1)
+	local var_76_1 = arg_76_0:getEpisodeCO(arg_76_2)
 
-	if not var_74_0 or not var_74_1 then
+	if not var_76_0 or not var_76_1 then
 		return false
 	end
 
-	if arg_74_0:isPreChapterList(var_74_0.chapterId, var_74_1.chapterId) then
+	if arg_76_0:isPreChapterList(var_76_0.chapterId, var_76_1.chapterId) then
 		return true
 	end
 
-	local var_74_2 = var_74_1
-	local var_74_3 = {}
+	local var_76_2 = var_76_1
+	local var_76_3 = {}
 
-	while var_74_2 and var_74_2.preEpisode ~= 0 do
-		if var_74_2.preEpisode == arg_74_1 then
+	while var_76_2 and var_76_2.preEpisode ~= 0 do
+		if var_76_2.preEpisode == arg_76_1 then
 			return true
 		end
 
-		if var_74_3[var_74_2.preEpisode] then
+		if var_76_3[var_76_2.preEpisode] then
 			break
 		end
 
-		var_74_3[var_74_2.preEpisode] = true
-		var_74_2 = arg_74_0:getEpisodeCO(var_74_2.preEpisode)
+		var_76_3[var_76_2.preEpisode] = true
+		var_76_2 = arg_76_0:getEpisodeCO(var_76_2.preEpisode)
 	end
 
 	return false
 end
 
-function var_0_0.getMonsterListFromGroupID(arg_75_0, arg_75_1)
-	local var_75_0 = {}
-	local var_75_1 = {}
-	local var_75_2 = {}
-	local var_75_3 = string.splitToNumber(arg_75_1, "#")
+function var_0_0.getMonsterListFromGroupID(arg_77_0, arg_77_1)
+	local var_77_0 = {}
+	local var_77_1 = {}
+	local var_77_2 = {}
+	local var_77_3 = string.splitToNumber(arg_77_1, "#")
 
-	for iter_75_0, iter_75_1 in ipairs(var_75_3) do
-		local var_75_4 = lua_monster_group.configDict[iter_75_1]
-		local var_75_5 = string.splitToNumber(var_75_4.monster, "#")
-		local var_75_6 = var_75_4.bossId
+	for iter_77_0, iter_77_1 in ipairs(var_77_3) do
+		local var_77_4 = lua_monster_group.configDict[iter_77_1]
+		local var_77_5 = string.splitToNumber(var_77_4.monster, "#")
+		local var_77_6 = var_77_4.bossId
 
-		for iter_75_2, iter_75_3 in ipairs(var_75_5) do
-			if iter_75_3 and lua_monster.configDict[iter_75_3] then
-				local var_75_7 = lua_monster.configDict[iter_75_3]
+		for iter_77_2, iter_77_3 in ipairs(var_77_5) do
+			if iter_77_3 and lua_monster.configDict[iter_77_3] then
+				local var_77_7 = lua_monster.configDict[iter_77_3]
 
-				if var_75_7 then
-					table.insert(var_75_0, var_75_7)
+				if var_77_7 then
+					table.insert(var_77_0, var_77_7)
 
-					if FightHelper.isBossId(var_75_6, iter_75_3) then
-						table.insert(var_75_2, var_75_7)
+					if FightHelper.isBossId(var_77_6, iter_77_3) then
+						table.insert(var_77_2, var_77_7)
 					else
-						table.insert(var_75_1, var_75_7)
+						table.insert(var_77_1, var_77_7)
 					end
 				end
 			end
 		end
 	end
 
-	return var_75_0, var_75_1, var_75_2
+	return var_77_0, var_77_1, var_77_2
 end
 
-function var_0_0.getCareersFromBattle(arg_76_0, arg_76_1)
-	local var_76_0 = {}
-	local var_76_1 = 0
-	local var_76_2 = lua_battle.configDict[arg_76_1]
+function var_0_0.getCareersFromBattle(arg_78_0, arg_78_1)
+	local var_78_0 = {}
+	local var_78_1 = 0
+	local var_78_2 = lua_battle.configDict[arg_78_1]
 
-	if var_76_2 then
-		local var_76_3 = {}
-		local var_76_4, var_76_5, var_76_6 = arg_76_0:getMonsterListFromGroupID(var_76_2.monsterGroupIds)
+	if var_78_2 then
+		local var_78_3 = {}
+		local var_78_4, var_78_5, var_78_6 = arg_78_0:getMonsterListFromGroupID(var_78_2.monsterGroupIds)
 
-		table.sort(var_76_5, function(arg_77_0, arg_77_1)
-			return arg_77_0.level < arg_77_1.level
+		table.sort(var_78_5, function(arg_79_0, arg_79_1)
+			return arg_79_0.level < arg_79_1.level
 		end)
-		table.sort(var_76_6, function(arg_78_0, arg_78_1)
-			return arg_78_0.level < arg_78_1.level
+		table.sort(var_78_6, function(arg_80_0, arg_80_1)
+			return arg_80_0.level < arg_80_1.level
 		end)
 
-		for iter_76_0, iter_76_1 in ipairs(var_76_5) do
-			var_76_1 = var_76_1 + 1
+		for iter_78_0, iter_78_1 in ipairs(var_78_5) do
+			var_78_1 = var_78_1 + 1
 
-			if not var_76_3[iter_76_1.career] then
-				var_76_3[iter_76_1.career] = {}
+			if not var_78_3[iter_78_1.career] then
+				var_78_3[iter_78_1.career] = {}
 			end
 
-			var_76_3[iter_76_1.career].score = var_76_1
-			var_76_3[iter_76_1.career].isBoss = false
+			var_78_3[iter_78_1.career].score = var_78_1
+			var_78_3[iter_78_1.career].isBoss = false
 		end
 
-		for iter_76_2, iter_76_3 in ipairs(var_76_6) do
-			var_76_1 = var_76_1 + 1
+		for iter_78_2, iter_78_3 in ipairs(var_78_6) do
+			var_78_1 = var_78_1 + 1
 
-			if not var_76_3[iter_76_3.career] then
-				var_76_3[iter_76_3.career] = {}
+			if not var_78_3[iter_78_3.career] then
+				var_78_3[iter_78_3.career] = {}
 			end
 
-			var_76_3[iter_76_3.career].score = var_76_1
-			var_76_3[iter_76_3.career].isBoss = true
+			var_78_3[iter_78_3.career].score = var_78_1
+			var_78_3[iter_78_3.career].isBoss = true
 		end
 
-		for iter_76_4, iter_76_5 in pairs(var_76_3) do
-			local var_76_7 = {
-				career = iter_76_4,
-				score = iter_76_5.score,
-				isBoss = iter_76_5.isBoss
+		for iter_78_4, iter_78_5 in pairs(var_78_3) do
+			local var_78_7 = {
+				career = iter_78_4,
+				score = iter_78_5.score,
+				isBoss = iter_78_5.isBoss
 			}
 
-			table.insert(var_76_0, var_76_7)
+			table.insert(var_78_0, var_78_7)
 		end
 
-		table.sort(var_76_0, function(arg_79_0, arg_79_1)
-			return arg_79_0.score < arg_79_1.score
+		table.sort(var_78_0, function(arg_81_0, arg_81_1)
+			return arg_81_0.score < arg_81_1.score
 		end)
 	end
 
-	return var_76_0
+	return var_78_0
 end
 
-function var_0_0.getBossMonsterIdDict(arg_80_0, arg_80_1)
-	local var_80_0 = {}
+function var_0_0.getBossMonsterIdDict(arg_82_0, arg_82_1)
+	local var_82_0 = {}
 
-	if arg_80_1 then
-		local var_80_1, var_80_2, var_80_3 = arg_80_0:getMonsterListFromGroupID(arg_80_1.monsterGroupIds)
+	if arg_82_1 then
+		local var_82_1, var_82_2, var_82_3 = arg_82_0:getMonsterListFromGroupID(arg_82_1.monsterGroupIds)
 
-		if var_80_3 then
-			for iter_80_0 = 1, #var_80_3 do
-				var_80_0[var_80_3[iter_80_0].id] = true
+		if var_82_3 then
+			for iter_82_0 = 1, #var_82_3 do
+				var_82_0[var_82_3[iter_82_0].id] = true
 			end
 		end
 	end
 
-	return var_80_0
+	return var_82_0
 end
 
-function var_0_0.getBattleDisplayMonsterIds(arg_81_0, arg_81_1)
-	local var_81_0 = {}
-	local var_81_1 = {}
-	local var_81_2 = string.splitToNumber(arg_81_1.monsterGroupIds, "#")
+function var_0_0.getBattleDisplayMonsterIds(arg_83_0, arg_83_1)
+	local var_83_0 = {}
+	local var_83_1 = {}
+	local var_83_2 = string.splitToNumber(arg_83_1.monsterGroupIds, "#")
 
-	for iter_81_0 = #var_81_2, 1, -1 do
-		local var_81_3 = var_81_2[iter_81_0]
-		local var_81_4 = lua_monster_group.configDict[var_81_3]
-		local var_81_5 = string.splitToNumber(var_81_4.monster, "#")
-		local var_81_6 = var_81_4.bossId
-		local var_81_7 = 100
-		local var_81_8 = {}
+	for iter_83_0 = #var_83_2, 1, -1 do
+		local var_83_3 = var_83_2[iter_83_0]
+		local var_83_4 = lua_monster_group.configDict[var_83_3]
+		local var_83_5 = string.splitToNumber(var_83_4.monster, "#")
+		local var_83_6 = var_83_4.bossId
+		local var_83_7 = 100
+		local var_83_8 = {}
 
-		for iter_81_1, iter_81_2 in ipairs(var_81_5) do
-			if FightHelper.isBossId(var_81_6, iter_81_2) then
-				var_81_7 = iter_81_1
+		for iter_83_1, iter_83_2 in ipairs(var_83_5) do
+			if FightHelper.isBossId(var_83_6, iter_83_2) then
+				var_83_7 = iter_83_1
 			end
 		end
 
-		for iter_81_3, iter_81_4 in ipairs(var_81_5) do
-			if iter_81_4 and lua_monster.configDict[iter_81_4] then
-				local var_81_9 = {
-					id = iter_81_4,
-					distance = math.abs(iter_81_3 - var_81_7)
+		for iter_83_3, iter_83_4 in ipairs(var_83_5) do
+			if iter_83_4 and lua_monster.configDict[iter_83_4] then
+				local var_83_9 = {
+					id = iter_83_4,
+					distance = math.abs(iter_83_3 - var_83_7)
 				}
 
-				table.insert(var_81_8, var_81_9)
+				table.insert(var_83_8, var_83_9)
 			end
 		end
 
-		table.sort(var_81_8, function(arg_82_0, arg_82_1)
-			return arg_82_0.distance < arg_82_1.distance
+		table.sort(var_83_8, function(arg_84_0, arg_84_1)
+			return arg_84_0.distance < arg_84_1.distance
 		end)
 
-		for iter_81_5, iter_81_6 in ipairs(var_81_8) do
-			if not var_81_1[iter_81_6.id] then
-				var_81_1[iter_81_6.id] = true
+		for iter_83_5, iter_83_6 in ipairs(var_83_8) do
+			if not var_83_1[iter_83_6.id] then
+				var_83_1[iter_83_6.id] = true
 
-				table.insert(var_81_0, iter_81_6.id)
+				table.insert(var_83_0, iter_83_6.id)
 			end
 		end
 	end
 
-	for iter_81_7, iter_81_8 in ipairs(var_81_2) do
-		local var_81_10 = lua_monster_group.configDict[iter_81_8]
-		local var_81_11 = string.nilorempty(var_81_10.spMonster) and {} or string.split(var_81_10.spMonster, "#")
+	for iter_83_7, iter_83_8 in ipairs(var_83_2) do
+		local var_83_10 = lua_monster_group.configDict[iter_83_8]
+		local var_83_11 = string.nilorempty(var_83_10.spMonster) and {} or string.split(var_83_10.spMonster, "#")
 
-		for iter_81_9, iter_81_10 in ipairs(var_81_11) do
-			if not var_81_1[iter_81_10] then
-				var_81_1[iter_81_10] = true
+		for iter_83_9, iter_83_10 in ipairs(var_83_11) do
+			if not var_83_1[iter_83_10] then
+				var_83_1[iter_83_10] = true
 
-				table.insert(var_81_0, tonumber(iter_81_10))
+				table.insert(var_83_0, tonumber(iter_83_10))
 			end
 		end
 	end
 
-	return var_81_0
+	return var_83_0
 end
 
-function var_0_0.getNormalChapterId(arg_83_0, arg_83_1)
-	local var_83_0 = arg_83_0:getEpisodeCO(arg_83_1)
-	local var_83_1 = arg_83_0:getChapterCO(var_83_0.chapterId)
+function var_0_0.getNormalChapterId(arg_85_0, arg_85_1)
+	local var_85_0 = arg_85_0:getEpisodeCO(arg_85_1)
+	local var_85_1 = arg_85_0:getChapterCO(var_85_0.chapterId)
 
-	if var_83_1.type == DungeonEnum.ChapterType.Hard then
-		local var_83_2 = arg_83_0:getEpisodeCO(var_83_0.preEpisode)
+	if var_85_1.type == DungeonEnum.ChapterType.Hard then
+		local var_85_2 = arg_85_0:getEpisodeCO(var_85_0.preEpisode)
 
-		var_83_1 = arg_83_0:getChapterCO(var_83_2.chapterId)
+		var_85_1 = arg_85_0:getChapterCO(var_85_2.chapterId)
 	end
 
-	return var_83_1.id
+	return var_85_1.id
 end
 
-function var_0_0.getChapterTypeByEpisodeId(arg_84_0, arg_84_1)
-	local var_84_0 = arg_84_0:getEpisodeCO(arg_84_1)
+function var_0_0.getChapterTypeByEpisodeId(arg_86_0, arg_86_1)
+	local var_86_0 = arg_86_0:getEpisodeCO(arg_86_1)
 
-	return arg_84_0:getChapterCO(var_84_0.chapterId).type
+	return arg_86_0:getChapterCO(var_86_0.chapterId).type
 end
 
-function var_0_0.getFirstEpisodeWinConditionText(arg_85_0, arg_85_1, arg_85_2)
-	local var_85_0 = arg_85_0:getEpisodeCondition(arg_85_1, arg_85_2)
+function var_0_0.getFirstEpisodeWinConditionText(arg_87_0, arg_87_1, arg_87_2)
+	local var_87_0 = arg_87_0:getEpisodeCondition(arg_87_1, arg_87_2)
 
-	if string.nilorempty(var_85_0) then
+	if string.nilorempty(var_87_0) then
 		return ""
 	end
 
-	local var_85_1 = GameUtil.splitString2(var_85_0, false, "|", "#")
+	local var_87_1 = GameUtil.splitString2(var_87_0, false, "|", "#")
 
-	return arg_85_0:getWinConditionText(var_85_1[1]) or "winCondition error:" .. var_85_0
+	return arg_87_0:getWinConditionText(var_87_1[1]) or "winCondition error:" .. var_87_0
 end
 
-function var_0_0.getEpisodeWinConditionTextList(arg_86_0, arg_86_1)
-	local var_86_0 = arg_86_0:getEpisodeCondition(arg_86_1)
+function var_0_0.getEpisodeWinConditionTextList(arg_88_0, arg_88_1)
+	local var_88_0 = arg_88_0:getEpisodeCondition(arg_88_1)
 
-	if string.nilorempty(var_86_0) then
+	if string.nilorempty(var_88_0) then
 		return {
 			""
 		}
 	end
 
-	local var_86_1 = {}
-	local var_86_2 = GameUtil.splitString2(var_86_0, false, "|", "#")
+	local var_88_1 = {}
+	local var_88_2 = GameUtil.splitString2(var_88_0, false, "|", "#")
 
-	for iter_86_0, iter_86_1 in ipairs(var_86_2) do
-		table.insert(var_86_1, arg_86_0:getWinConditionText(iter_86_1) or "winCondition error:" .. var_86_0)
+	for iter_88_0, iter_88_1 in ipairs(var_88_2) do
+		table.insert(var_88_1, arg_88_0:getWinConditionText(iter_88_1) or "winCondition error:" .. var_88_0)
 	end
 
-	return var_86_1
+	return var_88_1
 end
 
-function var_0_0.getWinConditionText(arg_87_0, arg_87_1)
-	if not arg_87_1 then
+function var_0_0.getWinConditionText(arg_89_0, arg_89_1)
+	if not arg_89_1 then
 		return nil
 	end
 
-	local var_87_0 = tonumber(arg_87_1[1])
+	local var_89_0 = tonumber(arg_89_1[1])
 
-	if var_87_0 == 1 or var_87_0 == 10 then
+	if var_89_0 == 1 or var_89_0 == 10 then
 		return luaLang("dungeon_beat_all")
-	elseif var_87_0 == 2 then
-		local var_87_1 = tonumber(arg_87_1[2])
-		local var_87_2 = lua_monster.configDict[var_87_1]
+	elseif var_89_0 == 2 then
+		local var_89_1 = tonumber(arg_89_1[2])
+		local var_89_2 = lua_monster.configDict[var_89_1]
 
-		if var_87_2 then
-			return formatLuaLang("dungeon_win_protect", string.format("<color=#ff0000>%s</color>", var_87_2.name))
+		if var_89_2 then
+			return formatLuaLang("dungeon_win_protect", string.format("<color=#ff0000>%s</color>", var_89_2.name))
 		end
-	elseif var_87_0 == 3 or var_87_0 == 9 then
-		local var_87_3 = string.split(arg_87_1[2], "&")
-		local var_87_4 = {}
+	elseif var_89_0 == 3 or var_89_0 == 9 then
+		local var_89_3 = string.split(arg_89_1[2], "&")
+		local var_89_4 = {}
 
-		for iter_87_0, iter_87_1 in ipairs(var_87_3) do
-			local var_87_5 = tonumber(iter_87_1)
-			local var_87_6 = lua_monster.configDict[var_87_5]
+		for iter_89_0, iter_89_1 in ipairs(var_89_3) do
+			local var_89_5 = tonumber(iter_89_1)
+			local var_89_6 = lua_monster.configDict[var_89_5]
 
-			if var_87_6 then
-				local var_87_7 = FightConfig.instance:getNewMonsterConfig(var_87_6) and var_87_6.highPriorityName or var_87_6.name
+			if var_89_6 then
+				local var_89_7 = FightConfig.instance:getNewMonsterConfig(var_89_6) and var_89_6.highPriorityName or var_89_6.name
 
-				table.insert(var_87_4, string.format("<color=#ff0000>%s</color>", var_87_7))
+				table.insert(var_89_4, string.format("<color=#ff0000>%s</color>", var_89_7))
 			end
 		end
 
-		if #var_87_4 > 0 then
-			return formatLuaLang("dungeon_win_3", table.concat(var_87_4, luaLang("else")))
+		if #var_89_4 > 0 then
+			return formatLuaLang("dungeon_win_3", table.concat(var_89_4, luaLang("else")))
 		end
-	elseif var_87_0 == 4 then
+	elseif var_89_0 == 4 then
 		-- block empty
-	elseif var_87_0 == 5 then
-		local var_87_8 = tonumber(arg_87_1[2])
-		local var_87_9 = lua_monster.configDict[var_87_8]
+	elseif var_89_0 == 5 then
+		local var_89_8 = tonumber(arg_89_1[2])
+		local var_89_9 = lua_monster.configDict[var_89_8]
 
-		if var_87_9 then
-			local var_87_10 = {
-				string.format("<color=#ff0000>%s</color>", var_87_9.name),
-				tonumber(arg_87_1[3]) / 10 .. "%"
+		if var_89_9 then
+			local var_89_10 = {
+				string.format("<color=#ff0000>%s</color>", var_89_9.name),
+				tonumber(arg_89_1[3]) / 10 .. "%"
 			}
 
-			return (GameUtil.getSubPlaceholderLuaLang(luaLang("dungeon_win_5"), var_87_10))
+			return (GameUtil.getSubPlaceholderLuaLang(luaLang("dungeon_win_5"), var_89_10))
 		end
-	elseif var_87_0 == 6 then
-		return formatLuaLang("dungeon_win_6", arg_87_1[2])
-	elseif var_87_0 == 7 then
+	elseif var_89_0 == 6 then
+		return formatLuaLang("dungeon_win_6", arg_89_1[2])
+	elseif var_89_0 == 7 then
 		return luaLang("dungeon_beat_all_without_die")
-	elseif var_87_0 == 8 then
-		return formatLuaLang("dungeon_win_8", arg_87_1[3])
-	elseif var_87_0 == 13 then
-		local var_87_11 = tonumber(arg_87_1[2])
-		local var_87_12 = lua_monster.configDict[var_87_11]
+	elseif var_89_0 == 8 then
+		return formatLuaLang("dungeon_win_8", arg_89_1[3])
+	elseif var_89_0 == 13 then
+		local var_89_11 = tonumber(arg_89_1[2])
+		local var_89_12 = lua_monster.configDict[var_89_11]
 
-		if var_87_12 then
-			return formatLuaLang("fight_charge_monster_energy", var_87_12.name)
+		if var_89_12 then
+			return formatLuaLang("fight_charge_monster_energy", var_89_12.name)
 		end
 	end
 
 	return nil
 end
 
-function var_0_0.getEpisodeAdvancedConditionText(arg_88_0, arg_88_1, arg_88_2)
-	local var_88_0 = arg_88_0:getEpisodeAdvancedCondition(arg_88_1, arg_88_2)
+function var_0_0.getEpisodeAdvancedConditionText(arg_90_0, arg_90_1, arg_90_2)
+	local var_90_0 = arg_90_0:getEpisodeAdvancedCondition(arg_90_1, arg_90_2)
 
-	if LuaUtil.isEmptyStr(var_88_0) == false then
-		local var_88_1 = string.splitToNumber(var_88_0, "|")[1]
+	if LuaUtil.isEmptyStr(var_90_0) == false then
+		local var_90_1 = string.splitToNumber(var_90_0, "|")[1]
 
-		return lua_condition.configDict[var_88_1].desc
+		return lua_condition.configDict[var_90_1].desc
 	else
 		return ""
 	end
 end
 
-function var_0_0.getEpisodeAdvancedCondition2Text(arg_89_0, arg_89_1, arg_89_2)
-	local var_89_0 = arg_89_0:getEpisodeAdvancedCondition(arg_89_1, arg_89_2)
+function var_0_0.getEpisodeAdvancedCondition2Text(arg_91_0, arg_91_1, arg_91_2)
+	local var_91_0 = arg_91_0:getEpisodeAdvancedCondition(arg_91_1, arg_91_2)
 
-	if LuaUtil.isEmptyStr(var_89_0) == false then
-		local var_89_1 = string.splitToNumber(var_89_0, "|")[2]
+	if LuaUtil.isEmptyStr(var_91_0) == false then
+		local var_91_1 = string.splitToNumber(var_91_0, "|")[2]
 
-		if not var_89_1 then
+		if not var_91_1 then
 			return ""
 		end
 
-		return lua_condition.configDict[var_89_1].desc
+		return lua_condition.configDict[var_91_1].desc
 	else
 		return ""
 	end
 end
 
-function var_0_0.getEpisodeFailedReturnCost(arg_90_0, arg_90_1, arg_90_2)
-	arg_90_2 = arg_90_2 or 1
+function var_0_0.getEpisodeFailedReturnCost(arg_92_0, arg_92_1, arg_92_2)
+	arg_92_2 = arg_92_2 or 1
 
-	local var_90_0 = arg_90_0:getEpisodeCO(arg_90_1)
+	local var_92_0 = arg_92_0:getEpisodeCO(arg_92_1)
 
-	if not var_90_0 then
+	if not var_92_0 then
 		return 0
 	end
 
-	local var_90_1 = string.split(var_90_0.cost, "#")
-	local var_90_2 = string.split(var_90_0.failCost, "#")
+	local var_92_1 = string.split(var_92_0.cost, "#")
+	local var_92_2 = string.split(var_92_0.failCost, "#")
 
-	if var_90_1[2] == var_90_2[2] and var_90_1[3] and var_90_2[3] then
-		return arg_90_2 * var_90_1[3] - var_90_2[3]
+	if var_92_1[2] == var_92_2[2] and var_92_1[3] and var_92_2[3] then
+		return arg_92_2 * var_92_1[3] - var_92_2[3]
 	else
 		return 0
 	end
 end
 
-function var_0_0.getEndBattleCost(arg_91_0, arg_91_1, arg_91_2)
-	local var_91_0 = arg_91_0:getEpisodeCO(arg_91_1)
+function var_0_0.getEndBattleCost(arg_93_0, arg_93_1, arg_93_2)
+	local var_93_0 = arg_93_0:getEpisodeCO(arg_93_1)
 
-	if not var_91_0 then
+	if not var_93_0 then
 		return 0
 	end
 
-	if arg_91_2 then
-		return string.split(var_91_0.failCost, "#")[3]
+	if arg_93_2 then
+		return string.split(var_93_0.failCost, "#")[3]
 	else
-		return string.split(var_91_0.cost, "#")[3]
+		return string.split(var_93_0.cost, "#")[3]
 	end
 end
 
-function var_0_0.getDungeonEveryDayCount(arg_92_0, arg_92_1)
-	local var_92_0 = CommonConfig.instance:getConstStr(ConstEnum.DungeonMaxCount)
-	local var_92_1 = GameUtil.splitString2(var_92_0, true, "|", "#")
-	local var_92_2 = 0
+function var_0_0.getDungeonEveryDayCount(arg_94_0, arg_94_1)
+	local var_94_0 = CommonConfig.instance:getConstStr(ConstEnum.DungeonMaxCount)
+	local var_94_1 = GameUtil.splitString2(var_94_0, true, "|", "#")
+	local var_94_2 = 0
 
-	for iter_92_0, iter_92_1 in ipairs(var_92_1) do
-		local var_92_3 = iter_92_1[1]
-		local var_92_4 = iter_92_1[2]
+	for iter_94_0, iter_94_1 in ipairs(var_94_1) do
+		local var_94_3 = iter_94_1[1]
+		local var_94_4 = iter_94_1[2]
 
-		if var_92_3 == arg_92_1 then
-			var_92_2 = var_92_4
+		if var_94_3 == arg_94_1 then
+			var_94_2 = var_94_4
 
 			break
 		end
 	end
 
-	return var_92_2
+	return var_94_2
 end
 
-function var_0_0.getDungeonEveryDayItem(arg_93_0, arg_93_1)
-	local var_93_0 = CommonConfig.instance:getConstStr(ConstEnum.DungeonItem)
-	local var_93_1 = GameUtil.splitString2(var_93_0, true, "|", "#")
-	local var_93_2 = 0
+function var_0_0.getDungeonEveryDayItem(arg_95_0, arg_95_1)
+	local var_95_0 = CommonConfig.instance:getConstStr(ConstEnum.DungeonItem)
+	local var_95_1 = GameUtil.splitString2(var_95_0, true, "|", "#")
+	local var_95_2 = 0
 
-	for iter_93_0, iter_93_1 in ipairs(var_93_1) do
-		local var_93_3 = iter_93_1[1]
-		local var_93_4 = iter_93_1[2]
+	for iter_95_0, iter_95_1 in ipairs(var_95_1) do
+		local var_95_3 = iter_95_1[1]
+		local var_95_4 = iter_95_1[2]
 
-		if var_93_3 == arg_93_1 then
-			var_93_2 = var_93_4
+		if var_95_3 == arg_95_1 then
+			var_95_2 = var_95_4
 
 			break
 		end
 	end
 
-	return var_93_2
+	return var_95_2
 end
 
-function var_0_0.getPuzzleQuestionCo(arg_94_0, arg_94_1)
-	return lua_chapter_puzzle_question.configDict[arg_94_1]
+function var_0_0.getPuzzleQuestionCo(arg_96_0, arg_96_1)
+	return lua_chapter_puzzle_question.configDict[arg_96_1]
 end
 
-function var_0_0._initPuzzleSquare(arg_95_0, arg_95_1)
-	arg_95_0._puzzle_square_data = {}
+function var_0_0._initPuzzleSquare(arg_97_0, arg_97_1)
+	arg_97_0._puzzle_square_data = {}
 
-	for iter_95_0, iter_95_1 in pairs(arg_95_1.configDict) do
-		if not arg_95_0._puzzle_square_data[iter_95_1.group] then
-			arg_95_0._puzzle_square_data[iter_95_1.group] = {}
+	for iter_97_0, iter_97_1 in pairs(arg_97_1.configDict) do
+		if not arg_97_0._puzzle_square_data[iter_97_1.group] then
+			arg_97_0._puzzle_square_data[iter_97_1.group] = {}
 		end
 
-		table.insert(arg_95_0._puzzle_square_data[iter_95_1.group], iter_95_1)
+		table.insert(arg_97_0._puzzle_square_data[iter_97_1.group], iter_97_1)
 	end
 end
 
-function var_0_0.getPuzzleSquareDebrisGroupList(arg_96_0, arg_96_1)
-	return arg_96_0._puzzle_square_data[arg_96_1]
+function var_0_0.getPuzzleSquareDebrisGroupList(arg_98_0, arg_98_1)
+	return arg_98_0._puzzle_square_data[arg_98_1]
 end
 
-function var_0_0.getPuzzleSquareData(arg_97_0, arg_97_1)
-	return lua_chapter_puzzle_square.configDict[arg_97_1]
+function var_0_0.getPuzzleSquareData(arg_99_0, arg_99_1)
+	return lua_chapter_puzzle_square.configDict[arg_99_1]
 end
 
-function var_0_0.getDecryptCo(arg_98_0, arg_98_1)
-	return arg_98_0._decryptConfig.configDict[arg_98_1]
+function var_0_0.getDecryptCo(arg_100_0, arg_100_1)
+	return arg_100_0._decryptConfig.configDict[arg_100_1]
 end
 
-function var_0_0.getDecryptChangeColorCo(arg_99_0, arg_99_1)
-	return arg_99_0._lvConfig.configDict[arg_99_1]
+function var_0_0.getDecryptChangeColorCo(arg_101_0, arg_101_1)
+	return arg_101_0._lvConfig.configDict[arg_101_1]
 end
 
-function var_0_0.getDecryptChangeColorInteractCos(arg_100_0)
-	return arg_100_0._interactConfig.configDict
+function var_0_0.getDecryptChangeColorInteractCos(arg_102_0)
+	return arg_102_0._interactConfig.configDict
 end
 
-function var_0_0.getDecryptChangeColorInteractCo(arg_101_0, arg_101_1)
-	return arg_101_0._interactConfig.configDict[arg_101_1]
+function var_0_0.getDecryptChangeColorInteractCo(arg_103_0, arg_103_1)
+	return arg_103_0._interactConfig.configDict[arg_103_1]
 end
 
-function var_0_0.getDecryptChangeColorColorCos(arg_102_0)
-	return arg_102_0._colorConfig.configDict
+function var_0_0.getDecryptChangeColorColorCos(arg_104_0)
+	return arg_104_0._colorConfig.configDict
 end
 
-function var_0_0.getDecryptChangeColorColorCo(arg_103_0, arg_103_1)
-	return arg_103_0._colorConfig.configDict[arg_103_1]
+function var_0_0.getDecryptChangeColorColorCo(arg_105_0, arg_105_1)
+	return arg_105_0._colorConfig.configDict[arg_105_1]
 end
 
-function var_0_0.isLeiMiTeBeiChapterType(arg_104_0, arg_104_1)
-	if not arg_104_1 then
+function var_0_0.isLeiMiTeBeiChapterType(arg_106_0, arg_106_1)
+	if not arg_106_1 then
 		return false
 	end
 
-	return arg_104_1.chapterId == VersionActivityEnum.DungeonChapterId.LeiMiTeBei or arg_104_1.chapterId == VersionActivityEnum.DungeonChapterId.LeiMiTeBeiHard or arg_104_1.chapterId == VersionActivityEnum.DungeonChapterId.LeiMiTeBei3 or arg_104_1.chapterId == VersionActivityEnum.DungeonChapterId.LeiMiTeBei4 or arg_104_1.chapterId == VersionActivityEnum.DungeonChapterId.ElementFight
+	return arg_106_1.chapterId == VersionActivityEnum.DungeonChapterId.LeiMiTeBei or arg_106_1.chapterId == VersionActivityEnum.DungeonChapterId.LeiMiTeBeiHard or arg_106_1.chapterId == VersionActivityEnum.DungeonChapterId.LeiMiTeBei3 or arg_106_1.chapterId == VersionActivityEnum.DungeonChapterId.LeiMiTeBei4 or arg_106_1.chapterId == VersionActivityEnum.DungeonChapterId.ElementFight
 end
 
-function var_0_0.getElementFightEpisodeToNormalEpisodeId(arg_105_0, arg_105_1)
-	for iter_105_0, iter_105_1 in ipairs(lua_chapter_map_element.configList) do
-		if iter_105_1.type == 2 and iter_105_1.param == tostring(arg_105_1.id) then
-			local var_105_0 = iter_105_1.mapId
-			local var_105_1 = arg_105_0._chapterMapList[VersionActivityEnum.DungeonChapterId.LeiMiTeBei]
+function var_0_0.getElementFightEpisodeToNormalEpisodeId(arg_107_0, arg_107_1)
+	for iter_107_0, iter_107_1 in ipairs(lua_chapter_map_element.configList) do
+		if iter_107_1.type == 2 and iter_107_1.param == tostring(arg_107_1.id) then
+			local var_107_0 = iter_107_1.mapId
+			local var_107_1 = arg_107_0._chapterMapList[VersionActivityEnum.DungeonChapterId.LeiMiTeBei]
 
-			for iter_105_2, iter_105_3 in pairs(var_105_1) do
-				if iter_105_3.id == var_105_0 then
-					local var_105_2 = var_0_0.instance:getChapterEpisodeCOList(VersionActivityEnum.DungeonChapterId.LeiMiTeBei)
+			for iter_107_2, iter_107_3 in pairs(var_107_1) do
+				if iter_107_3.id == var_107_0 then
+					local var_107_2 = var_0_0.instance:getChapterEpisodeCOList(VersionActivityEnum.DungeonChapterId.LeiMiTeBei)
 
-					for iter_105_4, iter_105_5 in ipairs(var_105_2) do
-						if iter_105_5.preEpisode == iter_105_2 then
-							return iter_105_5.id
+					for iter_107_4, iter_107_5 in ipairs(var_107_2) do
+						if iter_107_5.preEpisode == iter_107_2 then
+							return iter_107_5.id
 						end
 					end
 				end
@@ -1715,19 +1736,19 @@ function var_0_0.getElementFightEpisodeToNormalEpisodeId(arg_105_0, arg_105_1)
 	return nil
 end
 
-function var_0_0.getActivityElementFightEpisodeToNormalEpisodeId(arg_106_0, arg_106_1, arg_106_2)
-	for iter_106_0, iter_106_1 in ipairs(lua_chapter_map_element.configList) do
-		if iter_106_1.type == 2 and tonumber(iter_106_1.param) == arg_106_1.id then
-			local var_106_0 = iter_106_1.mapId
-			local var_106_1 = arg_106_0._chapterMapList[arg_106_2]
+function var_0_0.getActivityElementFightEpisodeToNormalEpisodeId(arg_108_0, arg_108_1, arg_108_2)
+	for iter_108_0, iter_108_1 in ipairs(lua_chapter_map_element.configList) do
+		if iter_108_1.type == 2 and tonumber(iter_108_1.param) == arg_108_1.id then
+			local var_108_0 = iter_108_1.mapId
+			local var_108_1 = arg_108_0._chapterMapList[arg_108_2]
 
-			for iter_106_2, iter_106_3 in pairs(var_106_1) do
-				if iter_106_3.id == var_106_0 then
-					local var_106_2 = var_0_0.instance:getChapterEpisodeCOList(arg_106_2)
+			for iter_108_2, iter_108_3 in pairs(var_108_1) do
+				if iter_108_3.id == var_108_0 then
+					local var_108_2 = var_0_0.instance:getChapterEpisodeCOList(arg_108_2)
 
-					for iter_106_4, iter_106_5 in ipairs(var_106_2) do
-						if iter_106_5.preEpisode == iter_106_2 then
-							return iter_106_5.id
+					for iter_108_4, iter_108_5 in ipairs(var_108_2) do
+						if iter_108_5.preEpisode == iter_108_2 then
+							return iter_108_5.id
 						end
 					end
 				end
@@ -1738,142 +1759,142 @@ function var_0_0.getActivityElementFightEpisodeToNormalEpisodeId(arg_106_0, arg_
 	return nil
 end
 
-function var_0_0.isActivity1_2Map(arg_107_0, arg_107_1)
-	local var_107_0 = var_0_0.instance:getEpisodeCO(arg_107_1)
+function var_0_0.isActivity1_2Map(arg_109_0, arg_109_1)
+	local var_109_0 = var_0_0.instance:getEpisodeCO(arg_109_1)
 
-	if var_107_0 then
-		local var_107_1 = var_107_0.chapterId
-		local var_107_2 = lua_chapter.configDict[var_107_1]
+	if var_109_0 then
+		local var_109_1 = var_109_0.chapterId
+		local var_109_2 = lua_chapter.configDict[var_109_1]
 
-		if var_107_2 and (var_107_2.type == DungeonEnum.ChapterType.Activity1_2DungeonNormal1 or var_107_2.type == DungeonEnum.ChapterType.Activity1_2DungeonNormal2 or var_107_2.type == DungeonEnum.ChapterType.Activity1_2DungeonNormal3 or var_107_2.type == DungeonEnum.ChapterType.Activity1_2DungeonHard) then
+		if var_109_2 and (var_109_2.type == DungeonEnum.ChapterType.Activity1_2DungeonNormal1 or var_109_2.type == DungeonEnum.ChapterType.Activity1_2DungeonNormal2 or var_109_2.type == DungeonEnum.ChapterType.Activity1_2DungeonNormal3 or var_109_2.type == DungeonEnum.ChapterType.Activity1_2DungeonHard) then
 			return true
 		end
 	end
 end
 
-function var_0_0.getEpisodeLevelIndex(arg_108_0, arg_108_1)
-	if not arg_108_1 then
+function var_0_0.getEpisodeLevelIndex(arg_110_0, arg_110_1)
+	if not arg_110_1 then
 		return 0
 	end
 
-	return arg_108_0:getEpisodeLevelIndexByEpisodeId(arg_108_1.id)
+	return arg_110_0:getEpisodeLevelIndexByEpisodeId(arg_110_1.id)
 end
 
-function var_0_0.getEpisodeLevelIndexByEpisodeId(arg_109_0, arg_109_1)
-	if not arg_109_1 or type(arg_109_1) ~= "number" then
+function var_0_0.getEpisodeLevelIndexByEpisodeId(arg_111_0, arg_111_1)
+	if not arg_111_1 or type(arg_111_1) ~= "number" then
 		return 0
 	end
 
-	return arg_109_1 % 100
+	return arg_111_1 % 100
 end
 
-function var_0_0.getExtendStory(arg_110_0, arg_110_1)
-	if not arg_110_0._episodeExtendStoryDict then
-		arg_110_0._episodeExtendStoryDict = {}
+function var_0_0.getExtendStory(arg_112_0, arg_112_1)
+	if not arg_112_0._episodeExtendStoryDict then
+		arg_112_0._episodeExtendStoryDict = {}
 
-		local var_110_0 = lua_const.configDict[ConstEnum.EpisodeExtendStory]
+		local var_112_0 = lua_const.configDict[ConstEnum.EpisodeExtendStory]
 
-		if var_110_0 and not string.nilorempty(var_110_0.value) then
-			local var_110_1 = GameUtil.splitString2(var_110_0.value, true)
+		if var_112_0 and not string.nilorempty(var_112_0.value) then
+			local var_112_1 = GameUtil.splitString2(var_112_0.value, true)
 
-			for iter_110_0, iter_110_1 in ipairs(var_110_1) do
-				arg_110_0._episodeExtendStoryDict[iter_110_1[1]] = {
-					iter_110_1[2],
-					iter_110_1[3]
+			for iter_112_0, iter_112_1 in ipairs(var_112_1) do
+				arg_112_0._episodeExtendStoryDict[iter_112_1[1]] = {
+					iter_112_1[2],
+					iter_112_1[3]
 				}
 			end
 		end
 	end
 
-	if not arg_110_0._episodeExtendStoryDict[arg_110_1] then
+	if not arg_112_0._episodeExtendStoryDict[arg_112_1] then
 		return nil
 	end
 
-	local var_110_2, var_110_3 = unpack(arg_110_0._episodeExtendStoryDict[arg_110_1])
+	local var_112_2, var_112_3 = unpack(arg_112_0._episodeExtendStoryDict[arg_112_1])
 
-	if not var_110_2 or not DungeonMapModel.instance:elementIsFinished(var_110_2) then
+	if not var_112_2 or not DungeonMapModel.instance:elementIsFinished(var_112_2) then
 		return nil
 	end
 
-	return var_110_3
+	return var_112_3
 end
 
-function var_0_0.getSimpleEpisode(arg_111_0, arg_111_1)
-	local var_111_0 = arg_111_1.chainEpisode
+function var_0_0.getSimpleEpisode(arg_113_0, arg_113_1)
+	local var_113_0 = arg_113_1.chainEpisode
 
-	if var_111_0 ~= 0 then
-		return arg_111_0:getEpisodeCO(var_111_0)
+	if var_113_0 ~= 0 then
+		return arg_113_0:getEpisodeCO(var_113_0)
 	end
 end
 
-function var_0_0.getVersionActivityDungeonNormalEpisode(arg_112_0, arg_112_1, arg_112_2, arg_112_3)
-	local var_112_0 = arg_112_0:getEpisodeCO(arg_112_1)
+function var_0_0.getVersionActivityDungeonNormalEpisode(arg_114_0, arg_114_1, arg_114_2, arg_114_3)
+	local var_114_0 = arg_114_0:getEpisodeCO(arg_114_1)
 
-	if var_112_0.chapterId == arg_112_2 then
-		arg_112_1 = arg_112_1 - 10000
-		var_112_0 = arg_112_0:getEpisodeCO(arg_112_1)
+	if var_114_0.chapterId == arg_114_2 then
+		arg_114_1 = arg_114_1 - 10000
+		var_114_0 = arg_114_0:getEpisodeCO(arg_114_1)
 	else
-		while var_112_0.chapterId ~= arg_112_3 do
-			var_112_0 = arg_112_0:getEpisodeCO(var_112_0.preEpisode)
+		while var_114_0.chapterId ~= arg_114_3 do
+			var_114_0 = arg_114_0:getEpisodeCO(var_114_0.preEpisode)
 		end
 	end
 
-	return var_112_0
+	return var_114_0
 end
 
-function var_0_0.getEpisodeByElement(arg_113_0, arg_113_1)
-	local var_113_0 = lua_chapter_map_element.configDict[arg_113_1]
+function var_0_0.getEpisodeByElement(arg_115_0, arg_115_1)
+	local var_115_0 = lua_chapter_map_element.configDict[arg_115_1]
 
-	if not var_113_0 then
+	if not var_115_0 then
 		return
 	end
 
-	local var_113_1 = var_113_0.mapId
-	local var_113_2 = lua_chapter_map.configDict[var_113_1]
+	local var_115_1 = var_115_0.mapId
+	local var_115_2 = lua_chapter_map.configDict[var_115_1]
 
-	return (arg_113_0:getEpisodeIdByMapCo(var_113_2))
+	return (arg_115_0:getEpisodeIdByMapCo(var_115_2))
 end
 
-function var_0_0.getRewardGroupCOList(arg_114_0, arg_114_1)
-	return arg_114_0._rewardConfigDict[arg_114_1]
+function var_0_0.getRewardGroupCOList(arg_116_0, arg_116_1)
+	return arg_116_0._rewardConfigDict[arg_116_1]
 end
 
-function var_0_0.calcRewardGroupRateInfoList(arg_115_0, arg_115_1)
-	local var_115_0 = {}
+function var_0_0.calcRewardGroupRateInfoList(arg_117_0, arg_117_1)
+	local var_117_0 = {}
 
-	arg_115_0:_calcRewardGroupRateInfoList(var_115_0, arg_115_1)
+	arg_117_0:_calcRewardGroupRateInfoList(var_117_0, arg_117_1)
 
-	return var_115_0
+	return var_117_0
 end
 
-function var_0_0._calcRewardGroupRateInfoList(arg_116_0, arg_116_1, arg_116_2)
-	local var_116_0 = arg_116_0:getRewardGroupCOList(arg_116_2)
+function var_0_0._calcRewardGroupRateInfoList(arg_118_0, arg_118_1, arg_118_2)
+	local var_118_0 = arg_118_0:getRewardGroupCOList(arg_118_2)
 
-	if not var_116_0 or #var_116_0 == 0 then
+	if not var_118_0 or #var_118_0 == 0 then
 		return
 	end
 
-	local var_116_1 = 0
-	local var_116_2 = #arg_116_1
+	local var_118_1 = 0
+	local var_118_2 = #arg_118_1
 
-	for iter_116_0, iter_116_1 in ipairs(var_116_0) do
-		local var_116_3 = tonumber(iter_116_1.count) or 0
+	for iter_118_0, iter_118_1 in ipairs(var_118_0) do
+		local var_118_3 = tonumber(iter_118_1.count) or 0
 
-		var_116_1 = var_116_1 + var_116_3
+		var_118_1 = var_118_1 + var_118_3
 
-		table.insert(arg_116_1, {
-			weight = var_116_3,
-			materialType = iter_116_1.materialType,
-			materialId = iter_116_1.materialId
+		table.insert(arg_118_1, {
+			weight = var_118_3,
+			materialType = iter_118_1.materialType,
+			materialId = iter_118_1.materialId
 		})
 	end
 
-	local var_116_4 = #arg_116_1
+	local var_118_4 = #arg_118_1
 
-	for iter_116_2 = var_116_2 + 1, var_116_4 do
-		local var_116_5 = arg_116_1[iter_116_2]
+	for iter_118_2 = var_118_2 + 1, var_118_4 do
+		local var_118_5 = arg_118_1[iter_118_2]
 
-		var_116_5.rate = var_116_1 == 0 and 0 or var_116_5.weight / var_116_1
+		var_118_5.rate = var_118_1 == 0 and 0 or var_118_5.weight / var_118_1
 	end
 end
 

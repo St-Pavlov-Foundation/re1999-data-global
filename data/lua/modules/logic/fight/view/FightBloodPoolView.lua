@@ -7,6 +7,7 @@ function var_0_0.onConstructor(arg_1_0, arg_1_1)
 end
 
 function var_0_0.onInitView(arg_2_0)
+	arg_2_0.root = gohelper.findChild(arg_2_0.viewGO, "root")
 	arg_2_0.goPreTxt = gohelper.findChild(arg_2_0.viewGO, "root/num/bottom/txt_preparation")
 	arg_2_0.bottomNumTxt = gohelper.findChildText(arg_2_0.viewGO, "root/num/bottom/#txt_num")
 	arg_2_0.bottomPreNumTxt = gohelper.findChildText(arg_2_0.viewGO, "root/num/bottom/txt_preparation/#txt_preparation")
@@ -218,6 +219,7 @@ end
 function var_0_0.onOpen(arg_15_0)
 	AudioMgr.instance:trigger(20270005)
 	arg_15_0:refreshTxt()
+	arg_15_0:showBengFaView()
 end
 
 function var_0_0.recordPreValue(arg_16_0)
@@ -306,12 +308,16 @@ function var_0_0.setNumAndImage(arg_22_0, arg_22_1, arg_22_2)
 	arg_22_0:refreshPreTxtActive()
 end
 
-function var_0_0.onDestroyView(arg_23_0)
-	arg_23_0:cleanHeartImageTween()
-	arg_23_0.longPress:RemoveClickListener()
-	arg_23_0.longPress:RemoveLongPressListener()
+function var_0_0.showBengFaView(arg_23_0)
+	arg_23_0:newClass(FightBengFaView, arg_23_0)
+end
 
-	arg_23_0.longPress = nil
+function var_0_0.onDestroyView(arg_24_0)
+	arg_24_0:cleanHeartImageTween()
+	arg_24_0.longPress:RemoveClickListener()
+	arg_24_0.longPress:RemoveLongPressListener()
+
+	arg_24_0.longPress = nil
 end
 
 return var_0_0

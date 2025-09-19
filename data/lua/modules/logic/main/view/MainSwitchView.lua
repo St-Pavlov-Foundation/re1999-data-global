@@ -8,6 +8,7 @@ function var_0_0.onInitView(arg_1_0)
 	arg_1_0._scrollcategory = gohelper.findChildScrollRect(arg_1_0.viewGO, "Tab/#scroll_category")
 	arg_1_0._gocategoryitem1 = gohelper.findChild(arg_1_0.viewGO, "Tab/#scroll_category/categorycontent/#go_categoryitem1")
 	arg_1_0._gocategoryitem2 = gohelper.findChild(arg_1_0.viewGO, "Tab/#scroll_category/categorycontent/#go_categoryitem2")
+	arg_1_0._gocategoryitem3 = gohelper.findChild(arg_1_0.viewGO, "Tab/#scroll_category/categorycontent/#go_categoryitem3")
 
 	if arg_1_0._editableInitView then
 		arg_1_0:_editableInitView()
@@ -29,6 +30,7 @@ function var_0_0._editableInitView(arg_4_0)
 	arg_4_0._rootAnimator = arg_4_0.viewGO:GetComponent("Animator")
 	arg_4_0._tabCanvasGroup = arg_4_0._gotab:GetComponent(typeof(UnityEngine.CanvasGroup))
 	arg_4_0._btnsCanvasGroup = arg_4_0._gobtns:GetComponent(typeof(UnityEngine.CanvasGroup))
+	arg_4_0._gridLayout = gohelper.findChild(arg_4_0.viewGO, "Tab/#scroll_category/categorycontent"):GetComponent(typeof(UnityEngine.UI.GridLayoutGroup))
 end
 
 function var_0_0.onUpdateParam(arg_5_0)
@@ -49,6 +51,14 @@ function var_0_0.onOpen(arg_6_0)
 		var_6_2:onUpdateMO(iter_6_1)
 
 		arg_6_0._itemList[iter_6_0] = var_6_2
+
+		gohelper.setActive(var_6_1, true)
+	end
+
+	if #var_6_0 > 2 then
+		arg_6_0._gridLayout.cellSize = Vector2(600, 90)
+	else
+		arg_6_0._gridLayout.cellSize = Vector2(780, 90)
 	end
 
 	arg_6_0:addEventCb(MainSceneSwitchController.instance, MainSceneSwitchEvent.SwitchCategoryClick, arg_6_0._itemClick, arg_6_0)
@@ -75,7 +85,7 @@ function var_0_0._onSceneSwitchUIVisible(arg_9_0, arg_9_1)
 end
 
 function var_0_0._itemClick(arg_10_0, arg_10_1)
-	arg_10_0.viewContainer:switchTab(arg_10_1)
+	arg_10_0.viewContainer:playCloseAnim(arg_10_1)
 
 	for iter_10_0, iter_10_1 in pairs(arg_10_0._itemList) do
 		iter_10_1:refreshStatus()

@@ -1,0 +1,1442 @@
+[
+  {
+    "id": 7100101,
+    "group": 10001,
+    "score": 100,
+    "effectDesc": "language_10084987",
+    "effectDesc2": "language_10084988",
+    "desc": "language_10084989",
+    "tag": "",
+    "effect": "1000081"
+  },
+  {
+    "id": 7200101,
+    "group": 10001,
+    "score": 200,
+    "effectDesc": "language_10084990",
+    "effectDesc2": "language_10084991",
+    "desc": "language_10084989",
+    "tag": "",
+    "effect": "1000083"
+  },
+  {
+    "id": 7300101,
+    "group": 10001,
+    "score": 300,
+    "effectDesc": "language_10084992",
+    "effectDesc2": "language_10084993",
+    "desc": "language_10084989",
+    "tag": "",
+    "effect": "1000086"
+  },
+  {
+    "id": 7100102,
+    "group": 10002,
+    "score": 100,
+    "effectDesc": "language_10084994",
+    "effectDesc2": "language_10084995",
+    "desc": "language_10084996",
+    "tag": "",
+    "effect": "1000081"
+  },
+  {
+    "id": 7200102,
+    "group": 10002,
+    "score": 200,
+    "effectDesc": "language_10084997",
+    "effectDesc2": "language_10084998",
+    "desc": "language_10084996",
+    "tag": "",
+    "effect": "1000083"
+  },
+  {
+    "id": 7300102,
+    "group": 10002,
+    "score": 300,
+    "effectDesc": "language_10084999",
+    "effectDesc2": "language_10085000",
+    "desc": "language_10084996",
+    "tag": "",
+    "effect": "1000086"
+  },
+  {
+    "id": 7100103,
+    "group": 10003,
+    "score": 100,
+    "effectDesc": "language_10085001",
+    "effectDesc2": "language_10085002",
+    "desc": "language_10085003",
+    "tag": "",
+    "effect": "1000081"
+  },
+  {
+    "id": 7200103,
+    "group": 10003,
+    "score": 200,
+    "effectDesc": "language_10085004",
+    "effectDesc2": "language_10085005",
+    "desc": "language_10085003",
+    "tag": "",
+    "effect": "1000083"
+  },
+  {
+    "id": 7300103,
+    "group": 10003,
+    "score": 300,
+    "effectDesc": "language_10085006",
+    "effectDesc2": "language_10085007",
+    "desc": "language_10085003",
+    "tag": "",
+    "effect": "1000086"
+  },
+  {
+    "id": 7100104,
+    "group": 10004,
+    "score": 100,
+    "effectDesc": "language_10085008",
+    "effectDesc2": "language_10085009",
+    "desc": "language_10085010",
+    "tag": "",
+    "effect": "1000016"
+  },
+  {
+    "id": 7200104,
+    "group": 10004,
+    "score": 200,
+    "effectDesc": "language_10085011",
+    "effectDesc2": "language_10085012",
+    "desc": "language_10085010",
+    "tag": "",
+    "effect": "1000018#1000018"
+  },
+  {
+    "id": 7300104,
+    "group": 10004,
+    "score": 300,
+    "effectDesc": "language_10085013",
+    "effectDesc2": "language_10085014",
+    "desc": "language_10085010",
+    "tag": "",
+    "effect": "1000018#1000018#1000020#1000005"
+  },
+  {
+    "id": 7100105,
+    "group": 10005,
+    "score": 100,
+    "effectDesc": "language_10085015",
+    "effectDesc2": "language_10085016",
+    "desc": "language_10085017",
+    "tag": "",
+    "effect": "1000006"
+  },
+  {
+    "id": 7200105,
+    "group": 10005,
+    "score": 200,
+    "effectDesc": "language_10085018",
+    "effectDesc2": "language_10085019",
+    "desc": "language_10085017",
+    "tag": "",
+    "effect": "1000010"
+  },
+  {
+    "id": 7300105,
+    "group": 10005,
+    "score": 300,
+    "effectDesc": "language_10085020",
+    "effectDesc2": "language_10085021",
+    "desc": "language_10085017",
+    "tag": "",
+    "effect": "1000008#1000010"
+  },
+  {
+    "id": 7100201,
+    "group": 10006,
+    "score": 100,
+    "effectDesc": "language_10085022",
+    "effectDesc2": "language_10085023",
+    "desc": "language_10085024",
+    "tag": "",
+    "effect": "1000077#1000001"
+  },
+  {
+    "id": 7200201,
+    "group": 10006,
+    "score": 200,
+    "effectDesc": "language_10085025",
+    "effectDesc2": "language_10085026",
+    "desc": "language_10085024",
+    "tag": "",
+    "effect": "1000078#1000003"
+  },
+  {
+    "id": 7300201,
+    "group": 10006,
+    "score": 300,
+    "effectDesc": "language_10085027",
+    "effectDesc2": "language_10085028",
+    "desc": "language_10085024",
+    "tag": "",
+    "effect": "1000079#1000005#1000001"
+  },
+  {
+    "id": 7100202,
+    "group": 10007,
+    "score": 100,
+    "effectDesc": "language_10085029",
+    "effectDesc2": "language_10085030",
+    "desc": "language_10085031",
+    "tag": "",
+    "effect": "1000011"
+  },
+  {
+    "id": 7200202,
+    "group": 10007,
+    "score": 200,
+    "effectDesc": "language_10085032",
+    "effectDesc2": "language_10085033",
+    "desc": "language_10085031",
+    "tag": "",
+    "effect": "1000013"
+  },
+  {
+    "id": 7300202,
+    "group": 10007,
+    "score": 300,
+    "effectDesc": "language_10085034",
+    "effectDesc2": "language_10085035",
+    "desc": "language_10085031",
+    "tag": "",
+    "effect": "1000015"
+  },
+  {
+    "id": 7100203,
+    "group": 10008,
+    "score": 100,
+    "effectDesc": "language_10085036",
+    "effectDesc2": "language_10085037",
+    "desc": "language_10085038",
+    "tag": "",
+    "effect": "1000021"
+  },
+  {
+    "id": 7200203,
+    "group": 10008,
+    "score": 200,
+    "effectDesc": "language_10085039",
+    "effectDesc2": "language_10085040",
+    "desc": "language_10085038",
+    "tag": "",
+    "effect": "1000023#1000023"
+  },
+  {
+    "id": 7300203,
+    "group": 10008,
+    "score": 300,
+    "effectDesc": "language_10085041",
+    "effectDesc2": "language_10085042",
+    "desc": "language_10085038",
+    "tag": "",
+    "effect": "1000025#1000025#1000021"
+  },
+  {
+    "id": 7101101,
+    "group": 10101,
+    "score": 100,
+    "effectDesc": "language_10085043",
+    "effectDesc2": "language_10085044",
+    "desc": "language_10085045",
+    "tag": "101",
+    "effect": "1000081"
+  },
+  {
+    "id": 7201101,
+    "group": 10101,
+    "score": 200,
+    "effectDesc": "language_10085046",
+    "effectDesc2": "language_10085047",
+    "desc": "language_10085045",
+    "tag": "101",
+    "effect": "1000083"
+  },
+  {
+    "id": 7301101,
+    "group": 10101,
+    "score": 300,
+    "effectDesc": "language_10085048",
+    "effectDesc2": "language_10085049",
+    "desc": "language_10085045",
+    "tag": "101",
+    "effect": "1000086"
+  },
+  {
+    "id": 7101102,
+    "group": 10102,
+    "score": 100,
+    "effectDesc": "language_10085050",
+    "effectDesc2": "language_10085051",
+    "desc": "language_10085052",
+    "tag": "101",
+    "effect": "1000081"
+  },
+  {
+    "id": 7201102,
+    "group": 10102,
+    "score": 200,
+    "effectDesc": "language_10085053",
+    "effectDesc2": "language_10085054",
+    "desc": "language_10085052",
+    "tag": "101",
+    "effect": "1000083"
+  },
+  {
+    "id": 7301102,
+    "group": 10102,
+    "score": 300,
+    "effectDesc": "language_10085055",
+    "effectDesc2": "language_10085056",
+    "desc": "language_10085052",
+    "tag": "101",
+    "effect": "1000086"
+  },
+  {
+    "id": 7101201,
+    "group": 10103,
+    "score": 100,
+    "effectDesc": "language_10085057",
+    "effectDesc2": "language_10085058",
+    "desc": "language_10085059",
+    "tag": "101",
+    "effect": "1000001"
+  },
+  {
+    "id": 7201201,
+    "group": 10103,
+    "score": 200,
+    "effectDesc": "language_10085060",
+    "effectDesc2": "language_10085061",
+    "desc": "language_10085059",
+    "tag": "101",
+    "effect": "1000003#1010009#1010001"
+  },
+  {
+    "id": 7301201,
+    "group": 10103,
+    "score": 300,
+    "effectDesc": "language_10085062",
+    "effectDesc2": "language_10085063",
+    "desc": "language_10085059",
+    "tag": "101",
+    "effect": "1000001#1000005#1010010#1010002"
+  },
+  {
+    "id": 7101202,
+    "group": 10104,
+    "score": 100,
+    "effectDesc": "language_10085015",
+    "effectDesc2": "language_10085016",
+    "desc": "language_10085064",
+    "tag": "101",
+    "effect": "1000006"
+  },
+  {
+    "id": 7201202,
+    "group": 10104,
+    "score": 200,
+    "effectDesc": "language_10085065",
+    "effectDesc2": "language_10085066",
+    "desc": "language_10085064",
+    "tag": "101#104",
+    "effect": "1000008"
+  },
+  {
+    "id": 7301202,
+    "group": 10104,
+    "score": 300,
+    "effectDesc": "language_10085067",
+    "effectDesc2": "language_10085068",
+    "desc": "language_10085064",
+    "tag": "101#104",
+    "effect": "1000008#1000008"
+  },
+  {
+    "id": 7101203,
+    "group": 10105,
+    "score": 100,
+    "effectDesc": "language_10085057",
+    "effectDesc2": "language_10085058",
+    "desc": "language_10085069",
+    "tag": "101",
+    "effect": "1000001"
+  },
+  {
+    "id": 7201203,
+    "group": 10105,
+    "score": 200,
+    "effectDesc": "language_10085070",
+    "effectDesc2": "language_10085071",
+    "desc": "language_10085069",
+    "tag": "101#103",
+    "effect": "1000003"
+  },
+  {
+    "id": 7301203,
+    "group": 10105,
+    "score": 300,
+    "effectDesc": "language_10085072",
+    "effectDesc2": "language_10085073",
+    "desc": "language_10085069",
+    "tag": "101#103",
+    "effect": "1000003#1000003"
+  },
+  {
+    "id": 7101204,
+    "group": 10106,
+    "score": 100,
+    "effectDesc": "language_10085008",
+    "effectDesc2": "language_10085009",
+    "desc": "language_10085074",
+    "tag": "101",
+    "effect": "1000016"
+  },
+  {
+    "id": 7201204,
+    "group": 10106,
+    "score": 200,
+    "effectDesc": "language_10085075",
+    "effectDesc2": "language_10085076",
+    "desc": "language_10085074",
+    "tag": "101",
+    "effect": "1000018#1010003"
+  },
+  {
+    "id": 7301204,
+    "group": 10106,
+    "score": 300,
+    "effectDesc": "language_10085077",
+    "effectDesc2": "language_10085078",
+    "desc": "language_10085074",
+    "tag": "101",
+    "effect": "1000018#1000018#1010004"
+  },
+  {
+    "id": 7101205,
+    "group": 10107,
+    "score": 100,
+    "effectDesc": "language_10085079",
+    "effectDesc2": "language_10085080",
+    "desc": "language_10085081",
+    "tag": "101",
+    "effect": "1000011"
+  },
+  {
+    "id": 7201205,
+    "group": 10107,
+    "score": 200,
+    "effectDesc": "language_10085082",
+    "effectDesc2": "language_10085083",
+    "desc": "language_10085081",
+    "tag": "101",
+    "effect": "1000012#1010005"
+  },
+  {
+    "id": 7301205,
+    "group": 10107,
+    "score": 300,
+    "effectDesc": "language_10085084",
+    "effectDesc2": "language_10085085",
+    "desc": "language_10085081",
+    "tag": "101",
+    "effect": "1000015#1010006"
+  },
+  {
+    "id": 7101206,
+    "group": 10108,
+    "score": 100,
+    "effectDesc": "language_10085015",
+    "effectDesc2": "language_10085016",
+    "desc": "language_10085086",
+    "tag": "101",
+    "effect": "1000006"
+  },
+  {
+    "id": 7201206,
+    "group": 10108,
+    "score": 200,
+    "effectDesc": "language_10085087",
+    "effectDesc2": "language_10085088",
+    "desc": "language_10085086",
+    "tag": "101",
+    "effect": "1000007#1010007"
+  },
+  {
+    "id": 7301206,
+    "group": 10108,
+    "score": 300,
+    "effectDesc": "language_10085089",
+    "effectDesc2": "language_10085090",
+    "desc": "language_10085086",
+    "tag": "101",
+    "effect": "1000010#1010008"
+  },
+  {
+    "id": 7102101,
+    "group": 10201,
+    "score": 100,
+    "effectDesc": "language_10085091",
+    "effectDesc2": "language_10085092",
+    "desc": "language_10085093",
+    "tag": "102",
+    "effect": "1000081"
+  },
+  {
+    "id": 7202101,
+    "group": 10201,
+    "score": 200,
+    "effectDesc": "language_10085094",
+    "effectDesc2": "language_10085095",
+    "desc": "language_10085093",
+    "tag": "102",
+    "effect": "1000083"
+  },
+  {
+    "id": 7302101,
+    "group": 10201,
+    "score": 300,
+    "effectDesc": "language_10085096",
+    "effectDesc2": "language_10085097",
+    "desc": "language_10085093",
+    "tag": "102",
+    "effect": "1000086"
+  },
+  {
+    "id": 7102102,
+    "group": 10202,
+    "score": 100,
+    "effectDesc": "language_10085098",
+    "effectDesc2": "language_10085099",
+    "desc": "language_10085100",
+    "tag": "102",
+    "effect": "1000081"
+  },
+  {
+    "id": 7202102,
+    "group": 10202,
+    "score": 200,
+    "effectDesc": "language_10085101",
+    "effectDesc2": "language_10085102",
+    "desc": "language_10085100",
+    "tag": "102",
+    "effect": "1000083"
+  },
+  {
+    "id": 7302102,
+    "group": 10202,
+    "score": 300,
+    "effectDesc": "language_10085103",
+    "effectDesc2": "language_10085104",
+    "desc": "language_10085100",
+    "tag": "102",
+    "effect": "1000086"
+  },
+  {
+    "id": 7102201,
+    "group": 10203,
+    "score": 100,
+    "effectDesc": "language_10085057",
+    "effectDesc2": "language_10085058",
+    "desc": "language_10085105",
+    "tag": "102",
+    "effect": "1000001"
+  },
+  {
+    "id": 7202201,
+    "group": 10203,
+    "score": 200,
+    "effectDesc": "language_10085106",
+    "effectDesc2": "language_10085107",
+    "desc": "language_10085105",
+    "tag": "102",
+    "effect": "1000003#1020001"
+  },
+  {
+    "id": 7302201,
+    "group": 10203,
+    "score": 300,
+    "effectDesc": "language_10085108",
+    "effectDesc2": "language_10085109",
+    "desc": "language_10085105",
+    "tag": "102",
+    "effect": "1000003#1000003#1020002#1020003"
+  },
+  {
+    "id": 7102202,
+    "group": 10204,
+    "score": 100,
+    "effectDesc": "language_10085008",
+    "effectDesc2": "language_10085009",
+    "desc": "language_10085110",
+    "tag": "102",
+    "effect": "1000016"
+  },
+  {
+    "id": 7202202,
+    "group": 10204,
+    "score": 200,
+    "effectDesc": "language_10085111",
+    "effectDesc2": "language_10085112",
+    "desc": "language_10085110",
+    "tag": "102#105",
+    "effect": "1000018"
+  },
+  {
+    "id": 7302202,
+    "group": 10204,
+    "score": 300,
+    "effectDesc": "language_10085113",
+    "effectDesc2": "language_10085114",
+    "desc": "language_10085110",
+    "tag": "102#105",
+    "effect": "1000018#1000018#1020004"
+  },
+  {
+    "id": 7102203,
+    "group": 10205,
+    "score": 100,
+    "effectDesc": "language_10085008",
+    "effectDesc2": "language_10085009",
+    "desc": "language_10085115",
+    "tag": "102",
+    "effect": "1000016"
+  },
+  {
+    "id": 7202203,
+    "group": 10205,
+    "score": 200,
+    "effectDesc": "language_10085116",
+    "effectDesc2": "language_10085117",
+    "desc": "language_10085115",
+    "tag": "102",
+    "effect": "1000018#1020012"
+  },
+  {
+    "id": 7302203,
+    "group": 10205,
+    "score": 300,
+    "effectDesc": "language_10085118",
+    "effectDesc2": "language_10085119",
+    "desc": "language_10085115",
+    "tag": "102",
+    "effect": "1000018#1000018#1020005#1020012#1020012"
+  },
+  {
+    "id": 7102204,
+    "group": 10206,
+    "score": 100,
+    "effectDesc": "language_10085120",
+    "effectDesc2": "language_10085121",
+    "desc": "language_10085122",
+    "tag": "102",
+    "effect": "1000061"
+  },
+  {
+    "id": 7202204,
+    "group": 10206,
+    "score": 200,
+    "effectDesc": "language_10085123",
+    "effectDesc2": "language_10085124",
+    "desc": "language_10085122",
+    "tag": "102",
+    "effect": "1000063#1020006"
+  },
+  {
+    "id": 7302204,
+    "group": 10206,
+    "score": 300,
+    "effectDesc": "language_10085125",
+    "effectDesc2": "language_10085126",
+    "desc": "language_10085122",
+    "tag": "102",
+    "effect": "1000063#1000063#1020007"
+  },
+  {
+    "id": 7102205,
+    "group": 10207,
+    "score": 100,
+    "effectDesc": "language_10085015",
+    "effectDesc2": "language_10085016",
+    "desc": "language_10085127",
+    "tag": "102",
+    "effect": "1000006"
+  },
+  {
+    "id": 7202205,
+    "group": 10207,
+    "score": 200,
+    "effectDesc": "language_10085128",
+    "effectDesc2": "language_10085129",
+    "desc": "language_10085127",
+    "tag": "102",
+    "effect": "1000007#1020009"
+  },
+  {
+    "id": 7302205,
+    "group": 10207,
+    "score": 300,
+    "effectDesc": "language_10085130",
+    "effectDesc2": "language_10085131",
+    "desc": "language_10085127",
+    "tag": "102",
+    "effect": "1000010#1020009#1020010"
+  },
+  {
+    "id": 7102206,
+    "group": 10208,
+    "score": 100,
+    "effectDesc": "language_10085079",
+    "effectDesc2": "language_10085080",
+    "desc": "language_10085132",
+    "tag": "102",
+    "effect": "1000011"
+  },
+  {
+    "id": 7202206,
+    "group": 10208,
+    "score": 200,
+    "effectDesc": "language_10085133",
+    "effectDesc2": "language_10085134",
+    "desc": "language_10085132",
+    "tag": "102",
+    "effect": "1000012"
+  },
+  {
+    "id": 7302206,
+    "group": 10208,
+    "score": 300,
+    "effectDesc": "language_10085135",
+    "effectDesc2": "language_10085136",
+    "desc": "language_10085132",
+    "tag": "102",
+    "effect": "1000015#1020011"
+  },
+  {
+    "id": 7103101,
+    "group": 10301,
+    "score": 100,
+    "effectDesc": "language_10085137",
+    "effectDesc2": "language_10085138",
+    "desc": "language_10085139",
+    "tag": "103",
+    "effect": "1000081"
+  },
+  {
+    "id": 7203101,
+    "group": 10301,
+    "score": 200,
+    "effectDesc": "language_10085140",
+    "effectDesc2": "language_10085141",
+    "desc": "language_10085139",
+    "tag": "103",
+    "effect": "1000083"
+  },
+  {
+    "id": 7303101,
+    "group": 10301,
+    "score": 300,
+    "effectDesc": "language_10085142",
+    "effectDesc2": "language_10085143",
+    "desc": "language_10085139",
+    "tag": "103",
+    "effect": "1000086"
+  },
+  {
+    "id": 7103102,
+    "group": 10302,
+    "score": 100,
+    "effectDesc": "language_10085144",
+    "effectDesc2": "language_10085145",
+    "desc": "language_10085146",
+    "tag": "103",
+    "effect": "1000081"
+  },
+  {
+    "id": 7203102,
+    "group": 10302,
+    "score": 200,
+    "effectDesc": "language_10085147",
+    "effectDesc2": "language_10085148",
+    "desc": "language_10085146",
+    "tag": "103",
+    "effect": "1000083"
+  },
+  {
+    "id": 7303102,
+    "group": 10302,
+    "score": 300,
+    "effectDesc": "language_10085149",
+    "effectDesc2": "language_10085150",
+    "desc": "language_10085146",
+    "tag": "103",
+    "effect": "1000086"
+  },
+  {
+    "id": 7103201,
+    "group": 10303,
+    "score": 100,
+    "effectDesc": "language_10085151",
+    "effectDesc2": "language_10085152",
+    "desc": "language_10085153",
+    "tag": "103",
+    "effect": "1000071"
+  },
+  {
+    "id": 7203201,
+    "group": 10303,
+    "score": 200,
+    "effectDesc": "language_10085154",
+    "effectDesc2": "language_10085155",
+    "desc": "language_10085153",
+    "tag": "103",
+    "effect": "1000073#1030008"
+  },
+  {
+    "id": 7303201,
+    "group": 10303,
+    "score": 300,
+    "effectDesc": "language_10085156",
+    "effectDesc2": "language_10085157",
+    "desc": "language_10085153",
+    "tag": "103",
+    "effect": "1000075#1030009"
+  },
+  {
+    "id": 7103202,
+    "group": 10304,
+    "score": 100,
+    "effectDesc": "language_10085015",
+    "effectDesc2": "language_10085016",
+    "desc": "language_10085158",
+    "tag": "103",
+    "effect": "1000006"
+  },
+  {
+    "id": 7203202,
+    "group": 10304,
+    "score": 200,
+    "effectDesc": "language_10085159",
+    "effectDesc2": "language_10085160",
+    "desc": "language_10085158",
+    "tag": "103",
+    "effect": "1000007#1030001"
+  },
+  {
+    "id": 7303202,
+    "group": 10304,
+    "score": 300,
+    "effectDesc": "language_10085161",
+    "effectDesc2": "language_10085162",
+    "desc": "language_10085158",
+    "tag": "103",
+    "effect": "1000010#1030002"
+  },
+  {
+    "id": 7103203,
+    "group": 10305,
+    "score": 100,
+    "effectDesc": "language_10085079",
+    "effectDesc2": "language_10085080",
+    "desc": "language_10085163",
+    "tag": "103",
+    "effect": "1000011"
+  },
+  {
+    "id": 7203203,
+    "group": 10305,
+    "score": 200,
+    "effectDesc": "language_10085164",
+    "effectDesc2": "language_10085165",
+    "desc": "language_10085163",
+    "tag": "103",
+    "effect": "1000012#1030010"
+  },
+  {
+    "id": 7303203,
+    "group": 10305,
+    "score": 300,
+    "effectDesc": "language_10085166",
+    "effectDesc2": "language_10085167",
+    "desc": "language_10085163",
+    "tag": "103",
+    "effect": "1000015#1030011"
+  },
+  {
+    "id": 7103204,
+    "group": 10306,
+    "score": 100,
+    "effectDesc": "language_10085008",
+    "effectDesc2": "language_10085009",
+    "desc": "language_10085168",
+    "tag": "103",
+    "effect": "1000016"
+  },
+  {
+    "id": 7203204,
+    "group": 10306,
+    "score": 200,
+    "effectDesc": "language_10085169",
+    "effectDesc2": "language_10085170",
+    "desc": "language_10085168",
+    "tag": "103#104",
+    "effect": "1000018"
+  },
+  {
+    "id": 7303204,
+    "group": 10306,
+    "score": 300,
+    "effectDesc": "language_10085171",
+    "effectDesc2": "language_10085172",
+    "desc": "language_10085168",
+    "tag": "103#104",
+    "effect": "1000018#1000018"
+  },
+  {
+    "id": 7103205,
+    "group": 10307,
+    "score": 100,
+    "effectDesc": "language_10085120",
+    "effectDesc2": "language_10085121",
+    "desc": "language_10085173",
+    "tag": "103",
+    "effect": "1000061"
+  },
+  {
+    "id": 7203205,
+    "group": 10307,
+    "score": 200,
+    "effectDesc": "language_10085174",
+    "effectDesc2": "language_10085175",
+    "desc": "language_10085173",
+    "tag": "103",
+    "effect": "1000063#1030006"
+  },
+  {
+    "id": 7303205,
+    "group": 10307,
+    "score": 300,
+    "effectDesc": "language_10085176",
+    "effectDesc2": "language_10085177",
+    "desc": "language_10085173",
+    "tag": "103",
+    "effect": "1000063#1000063#1030007"
+  },
+  {
+    "id": 7103206,
+    "group": 10308,
+    "score": 100,
+    "effectDesc": "language_10085178",
+    "effectDesc2": "language_10085179",
+    "desc": "language_10085180",
+    "tag": "103",
+    "effect": "1000026"
+  },
+  {
+    "id": 7203206,
+    "group": 10308,
+    "score": 200,
+    "effectDesc": "language_10085181",
+    "effectDesc2": "language_10085182",
+    "desc": "language_10085180",
+    "tag": "103",
+    "effect": "1000027#1030012"
+  },
+  {
+    "id": 7303206,
+    "group": 10308,
+    "score": 300,
+    "effectDesc": "language_10085183",
+    "effectDesc2": "language_10085184",
+    "desc": "language_10085180",
+    "tag": "103",
+    "effect": "1000028#1030013"
+  },
+  {
+    "id": 7104101,
+    "group": 10401,
+    "score": 100,
+    "effectDesc": "language_10085185",
+    "effectDesc2": "language_10085186",
+    "desc": "language_10085187",
+    "tag": "104",
+    "effect": "1000081"
+  },
+  {
+    "id": 7204101,
+    "group": 10401,
+    "score": 200,
+    "effectDesc": "language_10085188",
+    "effectDesc2": "language_10085189",
+    "desc": "language_10085187",
+    "tag": "104",
+    "effect": "1000083"
+  },
+  {
+    "id": 7304101,
+    "group": 10401,
+    "score": 300,
+    "effectDesc": "language_10085190",
+    "effectDesc2": "language_10085191",
+    "desc": "language_10085187",
+    "tag": "104",
+    "effect": "1000086"
+  },
+  {
+    "id": 7104102,
+    "group": 10402,
+    "score": 100,
+    "effectDesc": "language_10085192",
+    "effectDesc2": "language_10085193",
+    "desc": "language_10085194",
+    "tag": "104",
+    "effect": "1000081"
+  },
+  {
+    "id": 7204102,
+    "group": 10402,
+    "score": 200,
+    "effectDesc": "language_10085195",
+    "effectDesc2": "language_10085196",
+    "desc": "language_10085194",
+    "tag": "104",
+    "effect": "1000083"
+  },
+  {
+    "id": 7304102,
+    "group": 10402,
+    "score": 300,
+    "effectDesc": "language_10085197",
+    "effectDesc2": "language_10085198",
+    "desc": "language_10085194",
+    "tag": "104",
+    "effect": "1000086"
+  },
+  {
+    "id": 7104201,
+    "group": 10403,
+    "score": 100,
+    "effectDesc": "language_10085057",
+    "effectDesc2": "language_10085058",
+    "desc": "language_10085199",
+    "tag": "104",
+    "effect": "1000001"
+  },
+  {
+    "id": 7204201,
+    "group": 10403,
+    "score": 200,
+    "effectDesc": "language_10085200",
+    "effectDesc2": "language_10085201",
+    "desc": "language_10085199",
+    "tag": "104",
+    "effect": "1000001#1040001"
+  },
+  {
+    "id": 7304201,
+    "group": 10403,
+    "score": 300,
+    "effectDesc": "language_10085202",
+    "effectDesc2": "language_10085203",
+    "desc": "language_10085199",
+    "tag": "104",
+    "effect": "1000001#1040002#1040003"
+  },
+  {
+    "id": 7104202,
+    "group": 10404,
+    "score": 100,
+    "effectDesc": "language_10085057",
+    "effectDesc2": "language_10085058",
+    "desc": "language_10085204",
+    "tag": "104",
+    "effect": "1000001"
+  },
+  {
+    "id": 7204202,
+    "group": 10404,
+    "score": 200,
+    "effectDesc": "language_10085205",
+    "effectDesc2": "language_10085206",
+    "desc": "language_10085204",
+    "tag": "104",
+    "effect": "1000003"
+  },
+  {
+    "id": 7304202,
+    "group": 10404,
+    "score": 300,
+    "effectDesc": "language_10085207",
+    "effectDesc2": "language_10085208",
+    "desc": "language_10085204",
+    "tag": "104",
+    "effect": "1000003#1000003"
+  },
+  {
+    "id": 7104203,
+    "group": 10405,
+    "score": 100,
+    "effectDesc": "language_10085015",
+    "effectDesc2": "language_10085016",
+    "desc": "language_10085209",
+    "tag": "104",
+    "effect": "1000006"
+  },
+  {
+    "id": 7204203,
+    "group": 10405,
+    "score": 200,
+    "effectDesc": "language_10085210",
+    "effectDesc2": "language_10085211",
+    "desc": "language_10085209",
+    "tag": "104",
+    "effect": "1000007"
+  },
+  {
+    "id": 7304203,
+    "group": 10405,
+    "score": 300,
+    "effectDesc": "language_10085212",
+    "effectDesc2": "language_10085213",
+    "desc": "language_10085209",
+    "tag": "104",
+    "effect": "1000010#1040004"
+  },
+  {
+    "id": 7104204,
+    "group": 10406,
+    "score": 100,
+    "effectDesc": "language_10085120",
+    "effectDesc2": "language_10085121",
+    "desc": "language_10085214",
+    "tag": "104",
+    "effect": "1000061"
+  },
+  {
+    "id": 7204204,
+    "group": 10406,
+    "score": 200,
+    "effectDesc": "language_10085215",
+    "effectDesc2": "language_10085216",
+    "desc": "language_10085214",
+    "tag": "104",
+    "effect": "1000062"
+  },
+  {
+    "id": 7304204,
+    "group": 10406,
+    "score": 300,
+    "effectDesc": "language_10085217",
+    "effectDesc2": "language_10085218",
+    "desc": "language_10085214",
+    "tag": "104",
+    "effect": "1000065"
+  },
+  {
+    "id": 7104205,
+    "group": 10407,
+    "score": 100,
+    "effectDesc": "language_10085008",
+    "effectDesc2": "language_10085009",
+    "desc": "language_10085219",
+    "tag": "104",
+    "effect": "1000016"
+  },
+  {
+    "id": 7204205,
+    "group": 10407,
+    "score": 200,
+    "effectDesc": "language_10085220",
+    "effectDesc2": "language_10085221",
+    "desc": "language_10085219",
+    "tag": "104",
+    "effect": "1000018"
+  },
+  {
+    "id": 7304205,
+    "group": 10407,
+    "score": 300,
+    "effectDesc": "language_10085222",
+    "effectDesc2": "language_10085223",
+    "desc": "language_10085219",
+    "tag": "104",
+    "effect": "1000018#1000018#1040005"
+  },
+  {
+    "id": 7104206,
+    "group": 10408,
+    "score": 100,
+    "effectDesc": "language_10085079",
+    "effectDesc2": "language_10085080",
+    "desc": "language_10085224",
+    "tag": "104",
+    "effect": "1000011"
+  },
+  {
+    "id": 7204206,
+    "group": 10408,
+    "score": 200,
+    "effectDesc": "language_10085225",
+    "effectDesc2": "language_10085226",
+    "desc": "language_10085224",
+    "tag": "104",
+    "effect": "1000012"
+  },
+  {
+    "id": 7304206,
+    "group": 10408,
+    "score": 300,
+    "effectDesc": "language_10085227",
+    "effectDesc2": "language_10085228",
+    "desc": "language_10085224",
+    "tag": "104",
+    "effect": "1000015#1040006"
+  },
+  {
+    "id": 7105101,
+    "group": 10501,
+    "score": 100,
+    "effectDesc": "language_10085229",
+    "effectDesc2": "language_10085230",
+    "desc": "language_10085231",
+    "tag": "105",
+    "effect": "1000081"
+  },
+  {
+    "id": 7205101,
+    "group": 10501,
+    "score": 200,
+    "effectDesc": "language_10085232",
+    "effectDesc2": "language_10085233",
+    "desc": "language_10085231",
+    "tag": "105",
+    "effect": "1000083"
+  },
+  {
+    "id": 7305101,
+    "group": 10501,
+    "score": 300,
+    "effectDesc": "language_10085234",
+    "effectDesc2": "language_10085235",
+    "desc": "language_10085231",
+    "tag": "105",
+    "effect": "1000086"
+  },
+  {
+    "id": 7105102,
+    "group": 10502,
+    "score": 100,
+    "effectDesc": "language_10085236",
+    "effectDesc2": "language_10085237",
+    "desc": "language_10085238",
+    "tag": "105",
+    "effect": "1000081"
+  },
+  {
+    "id": 7205102,
+    "group": 10502,
+    "score": 200,
+    "effectDesc": "language_10085239",
+    "effectDesc2": "language_10085240",
+    "desc": "language_10085238",
+    "tag": "105",
+    "effect": "1000083"
+  },
+  {
+    "id": 7305102,
+    "group": 10502,
+    "score": 300,
+    "effectDesc": "language_10085241",
+    "effectDesc2": "language_10085242",
+    "desc": "language_10085238",
+    "tag": "105",
+    "effect": "1000086"
+  },
+  {
+    "id": 7105201,
+    "group": 10503,
+    "score": 100,
+    "effectDesc": "language_10085015",
+    "effectDesc2": "language_10085016",
+    "desc": "language_10085243",
+    "tag": "105",
+    "effect": "1000006"
+  },
+  {
+    "id": 7205201,
+    "group": 10503,
+    "score": 200,
+    "effectDesc": "language_10085244",
+    "effectDesc2": "language_10085245",
+    "desc": "language_10085243",
+    "tag": "105",
+    "effect": "1000007#1050009"
+  },
+  {
+    "id": 7305201,
+    "group": 10503,
+    "score": 300,
+    "effectDesc": "language_10085246",
+    "effectDesc2": "language_10085247",
+    "desc": "language_10085243",
+    "tag": "105",
+    "effect": "1000010#1050009"
+  },
+  {
+    "id": 7105202,
+    "group": 10504,
+    "score": 100,
+    "effectDesc": "language_10085079",
+    "effectDesc2": "language_10085080",
+    "desc": "language_10085248",
+    "tag": "105",
+    "effect": "1000011"
+  },
+  {
+    "id": 7205202,
+    "group": 10504,
+    "score": 200,
+    "effectDesc": "language_10085249",
+    "effectDesc2": "language_10085250",
+    "desc": "language_10085248",
+    "tag": "105",
+    "effect": "1000012#1050010"
+  },
+  {
+    "id": 7305202,
+    "group": 10504,
+    "score": 300,
+    "effectDesc": "language_10085251",
+    "effectDesc2": "language_10085252",
+    "desc": "language_10085248",
+    "tag": "105",
+    "effect": "1000015#1050010"
+  },
+  {
+    "id": 7105203,
+    "group": 10505,
+    "score": 100,
+    "effectDesc": "language_10085120",
+    "effectDesc2": "language_10085121",
+    "desc": "language_10085253",
+    "tag": "105",
+    "effect": "1000061"
+  },
+  {
+    "id": 7205203,
+    "group": 10505,
+    "score": 200,
+    "effectDesc": "language_10085254",
+    "effectDesc2": "language_10085255",
+    "desc": "language_10085253",
+    "tag": "105",
+    "effect": "1000063#1050001"
+  },
+  {
+    "id": 7305203,
+    "group": 10505,
+    "score": 300,
+    "effectDesc": "language_10085256",
+    "effectDesc2": "language_10085257",
+    "desc": "language_10085253",
+    "tag": "105",
+    "effect": "1000063#1000063#1050002"
+  },
+  {
+    "id": 7105204,
+    "group": 10506,
+    "score": 100,
+    "effectDesc": "language_10085258",
+    "effectDesc2": "language_10085259",
+    "desc": "language_10085260",
+    "tag": "105",
+    "effect": "1000021"
+  },
+  {
+    "id": 7205204,
+    "group": 10506,
+    "score": 200,
+    "effectDesc": "language_10085261",
+    "effectDesc2": "language_10085262",
+    "desc": "language_10085260",
+    "tag": "105",
+    "effect": "1000023"
+  },
+  {
+    "id": 7305204,
+    "group": 10506,
+    "score": 300,
+    "effectDesc": "language_10085263",
+    "effectDesc2": "language_10085264",
+    "desc": "language_10085260",
+    "tag": "105",
+    "effect": "1000023#1000023"
+  },
+  {
+    "id": 7105205,
+    "group": 10507,
+    "score": 100,
+    "effectDesc": "language_10085265",
+    "effectDesc2": "language_10085266",
+    "desc": "language_10085267",
+    "tag": "105",
+    "effect": "1000076"
+  },
+  {
+    "id": 7205205,
+    "group": 10507,
+    "score": 200,
+    "effectDesc": "language_10085268",
+    "effectDesc2": "language_10085269",
+    "desc": "language_10085267",
+    "tag": "105",
+    "effect": "1000076#1050005"
+  },
+  {
+    "id": 7305205,
+    "group": 10507,
+    "score": 300,
+    "effectDesc": "language_10085270",
+    "effectDesc2": "language_10085271",
+    "desc": "language_10085267",
+    "tag": "105",
+    "effect": "1000076#1050006"
+  },
+  {
+    "id": 7105206,
+    "group": 10508,
+    "score": 100,
+    "effectDesc": "language_10085057",
+    "effectDesc2": "language_10085058",
+    "desc": "language_10085272",
+    "tag": "105",
+    "effect": "1000001"
+  },
+  {
+    "id": 7205206,
+    "group": 10508,
+    "score": 200,
+    "effectDesc": "language_10085273",
+    "effectDesc2": "language_10085274",
+    "desc": "language_10085272",
+    "tag": "105",
+    "effect": "1000003#1050007"
+  },
+  {
+    "id": 7305206,
+    "group": 10508,
+    "score": 300,
+    "effectDesc": "language_10085275",
+    "effectDesc2": "language_10085276",
+    "desc": "language_10085272",
+    "tag": "105",
+    "effect": "1000003#1000003#1050008"
+  }
+]

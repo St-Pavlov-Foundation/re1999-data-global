@@ -17,6 +17,16 @@ function var_0_0.onStart(arg_1_0)
 
 		local var_1_5 = var_1_1.chapterId
 		local var_1_6 = DungeonConfig.instance:getChapterCO(var_1_5)
+
+		if var_1_5 == DungeonEnum.ChapterId.BossStory then
+			VersionActivity2_8BossModel.instance:setFocusElement(true)
+
+			if var_1_0 ~= VersionActivity2_8BossEnum.StoryBossLastEpisode then
+				arg_1_0:_done()
+
+				return
+			end
+		end
 	end
 
 	local var_1_7 = var_1_0 and DungeonConfig.instance:getElementEpisode(var_1_0)

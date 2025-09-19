@@ -38,7 +38,7 @@ function var_0_0.onOpen(arg_7_0)
 
 	local var_7_0 = AutoChessModel.instance.episodeId
 
-	arg_7_0.config = lua_auto_chess_episode.configDict[var_7_0]
+	arg_7_0.config = AutoChessConfig.instance:getEpisodeCO(var_7_0)
 
 	local var_7_1 = GameUtil.splitString2(arg_7_0.config.firstBounds, true)
 
@@ -73,15 +73,17 @@ function var_0_0.onDestroyView(arg_9_0)
 end
 
 function var_0_0.refreshSpecialUnlockTips(arg_10_0)
-	local var_10_0 = tonumber(lua_auto_chess_const.configDict[AutoChessEnum.ConstKey.UnlockLeaderRefresh].value)
-	local var_10_1 = tonumber(lua_auto_chess_const.configDict[AutoChessEnum.ConstKey.UnlockLeaderSlot].value)
-	local var_10_2 = lua_auto_chess_episode.configDict[AutoChessEnum.PvpEpisodeId].preEpisode
+	local var_10_0 = Activity182Model.instance:getCurActId()
+	local var_10_1 = AutoChessConfig.instance:getPvpEpisodeCo(var_10_0)
+	local var_10_2 = tonumber(lua_auto_chess_const.configDict[AutoChessEnum.ConstKey.UnlockLeaderRefresh].value)
+	local var_10_3 = tonumber(lua_auto_chess_const.configDict[AutoChessEnum.ConstKey.UnlockLeaderSlot].value)
+	local var_10_4 = var_10_1.preEpisode
 
-	if arg_10_0.config.id == var_10_0 then
+	if arg_10_0.config.id == var_10_2 then
 		arg_10_0._txtSpecialTarget.text = luaLang("autochess_pvesettleview_tips3")
-	elseif arg_10_0.config.id == var_10_1 then
+	elseif arg_10_0.config.id == var_10_3 then
 		arg_10_0._txtSpecialTarget.text = luaLang("autochess_pvesettleview_tips2")
-	elseif arg_10_0.config.id == var_10_2 then
+	elseif arg_10_0.config.id == var_10_4 then
 		arg_10_0._txtSpecialTarget.text = luaLang("autochess_pvesettleview_tips1")
 	else
 		gohelper.setActive(arg_10_0._goSpecialTarget, false)

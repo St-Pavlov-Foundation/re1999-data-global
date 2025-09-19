@@ -93,6 +93,9 @@ function var_0_0._getOrCreateHeroItem(arg_11_0, arg_11_1)
 		var_11_0.txtcost = gohelper.findChildText(var_11_0.viewGO, "go_lock/txt_cost")
 		var_11_0.goPos = gohelper.findChild(var_11_0.viewGO, "go_pos")
 		var_11_0.icon = IconMgr.instance:getCommonHeroItem(var_11_0.goPos)
+
+		var_11_0.icon:setStyle_CharacterBackpack()
+
 		var_11_0.animator = gohelper.onceAddComponent(var_11_0.golock, gohelper.Type_Animator)
 		var_11_0.btnclick = gohelper.findChildButtonWithAudio(var_11_0.viewGO, "btn_click")
 

@@ -8,7 +8,7 @@ function var_0_1.onModifyListScrollParam(arg_1_0, arg_1_1)
 	arg_1_1.scrollGOPath = "Root/#scroll_ItemList"
 	arg_1_1.cellWidth = 220
 	arg_1_1.cellHeight = 600
-	arg_1_1.cellSpaceH = -16
+	arg_1_1.cellSpaceH = -12
 end
 
 function var_0_1.onBuildViews(arg_2_0)

@@ -4,7 +4,8 @@ local var_0_0 = {}
 local var_0_1 = {
 	id = 1,
 	icon = 2,
-	spine = 3
+	resType = 3,
+	path = 4
 }
 local var_0_2 = {
 	"id"

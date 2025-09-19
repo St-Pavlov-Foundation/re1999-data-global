@@ -318,7 +318,7 @@ function var_0_0.getShareCode(arg_15_0)
 end
 
 function var_0_0.getSpecialCn(arg_16_0, arg_16_1)
-	local var_16_0 = arg_16_1 and CharacterEnum.TalentTxtByHeroType[arg_16_1.config.heroType] or 1
+	local var_16_0 = arg_16_1 and arg_16_1:getTalentTxtByHeroType() or 1
 
 	return luaLang("talent_character_talentcn" .. var_16_0)
 end

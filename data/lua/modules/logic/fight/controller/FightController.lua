@@ -87,6 +87,18 @@ end
 function var_0_0.exitFightScene(arg_8_0)
 	FightAudioMgr.instance:setSwitch(FightEnum.AudioSwitch.Checkpointend)
 
+	if DungeonJumpGameController.instance:checkIsJumpGameBattle() then
+		DungeonJumpGameController.instance:returnToJumpGameView()
+
+		return
+	end
+
+	if VersionActivity2_8DungeonBossBattleController.instance:checkIsBossBattle() then
+		VersionActivity2_8DungeonBossBattleController.instance:enterBossView()
+
+		return
+	end
+
 	if ToughBattleController.instance:checkIsToughBattle() then
 		ToughBattleController.instance:enterToughBattle()
 
@@ -123,10 +135,30 @@ function var_0_0.exitFightScene(arg_8_0)
 			return
 		end
 
+		if var_8_2.type == DungeonEnum.EpisodeType.Survival then
+			SurvivalMapHelper.instance:tryStartFlow("")
+
+			SurvivalMapModel.instance.isFightEnter = true
+
+			SurvivalController.instance:enterSurvivalMap()
+
+			return
+		end
+
+		if var_8_2.type == DungeonEnum.EpisodeType.Shelter then
+			SurvivalController.instance:enterShelterMap(true)
+
+			return
+		end
+
 		if var_8_2.type == DungeonEnum.EpisodeType.Rouge then
 			RougeMapController.instance:onExistFight()
 
 			return
+		end
+
+		if var_8_2.chapterId == DungeonEnum.ChapterId.BossStory then
+			GameSceneMgr.instance:dispatchEvent(SceneEventName.SetLoadingTypeOnce, GameLoadingState.VersionActivity2_8BossStoryLoadingView)
 		end
 	end
 
@@ -268,6 +300,9 @@ function var_0_0.handleJump(arg_16_0)
 				[ViewName.Season123HeroGroupEditView] = true,
 				[ViewName.Season166HeroGroupEditView] = true,
 				[ViewName.RougeHeroGroupEditView] = true,
+				[ViewName.SurvivalHeroGroupFightView] = true,
+				[ViewName.ShelterHeroGroupFightView] = true,
+				[ViewName.SurvivalHeroGroupEditView] = true,
 				[ViewName.OdysseyHeroGroupView] = true,
 				[ViewName.OdysseyHeroGroupEditView] = true
 			}

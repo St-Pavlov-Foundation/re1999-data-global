@@ -126,13 +126,31 @@ function var_0_0.openPackageStoreGoodsView(arg_15_0, arg_15_1)
 		ViewMgr.instance:openView(ViewName.OptionalChargeView, arg_15_1)
 	elseif var_15_0 == StoreEnum.StoreChargeType.LinkGiftGoods then
 		ViewMgr.instance:openView(ViewName.StoreLinkGiftGoodsView, arg_15_1)
+	elseif var_15_0 == StoreEnum.StoreChargeType.NationalGift then
+		local var_15_1 = {
+			goodMo = arg_15_1
+		}
+
+		NationalGiftController.instance:openNationalGiftBuyTipView(var_15_1)
 	else
 		ViewMgr.instance:openView(ViewName.PackageStoreGoodsView, arg_15_1)
 	end
 end
 
 function var_0_0.openDecorateStoreGoodsView(arg_16_0, arg_16_1)
-	ViewMgr.instance:openView(ViewName.DecorateStoreGoodsView, arg_16_1)
+	local var_16_0 = string.splitToNumber(arg_16_1.config.product, "#")
+	local var_16_1 = ItemModel.instance:getItemConfig(var_16_0[1], var_16_0[2])
+	local var_16_2 = DecorateStoreEnum.SpecialGoodsId
+
+	if var_16_1.subType == ItemEnum.SubType.PlayerBg and var_16_1.id == var_16_2 then
+		local var_16_3 = {
+			goodsMo = arg_16_1
+		}
+
+		ViewMgr.instance:openView(ViewName.DecorateStoreGoodsBuyView, var_16_3)
+	else
+		ViewMgr.instance:openView(ViewName.DecorateStoreGoodsView, arg_16_1)
+	end
 end
 
 function var_0_0.openSummonStoreGoodsView(arg_17_0, arg_17_1)

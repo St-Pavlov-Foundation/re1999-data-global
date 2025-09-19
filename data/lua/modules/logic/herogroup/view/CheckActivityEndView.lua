@@ -22,11 +22,21 @@ function var_0_0.checkIsActivityFight(arg_4_0, arg_4_1)
 	local var_4_0 = FightModel.instance:getFightParam().chapterId
 	local var_4_1 = DungeonConfig.instance:getChapterCO(var_4_0)
 
+	if DungeonController.closePreviewChapterViewActEnd(arg_4_1, var_4_0) then
+		arg_4_0:_checkAct(arg_4_1)
+
+		return
+	end
+
 	if not var_4_1 or var_4_1.actId ~= arg_4_1 then
 		return
 	end
 
-	if ActivityHelper.getActivityStatus(arg_4_1) ~= ActivityEnum.ActivityStatus.Normal then
+	arg_4_0:_checkAct(arg_4_1)
+end
+
+function var_0_0._checkAct(arg_5_0, arg_5_1)
+	if ActivityHelper.getActivityStatus(arg_5_1) ~= ActivityEnum.ActivityStatus.Normal then
 		GameFacade.showMessageBox(MessageBoxIdDefine.EndActivity, MsgBoxEnum.BoxType.Yes, var_0_0.yesCallback)
 	end
 end

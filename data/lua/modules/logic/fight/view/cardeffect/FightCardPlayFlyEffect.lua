@@ -158,24 +158,38 @@ function var_0_0._buildAniFlow_2_1(arg_6_0)
 		FightController.instance:dispatchEvent(FightEvent.OnPlayHandCard, arg_6_0._card_mo, arg_6_0._waitRemoveCard)
 
 		if GMFightShowState.cards then
-			local var_7_0 = FightDataHelper.entityMgr:getById(arg_6_0._card_mo.uid)
-			local var_7_1 = FightCardDataHelper.isBigSkill(arg_6_0._card_mo.skillId)
-			local var_7_2 = FightConfig.instance:getSkillLv(arg_6_0._card_mo.skillId)
-			local var_7_3 = ResUrl.getUIEffect(FightPreloadViewWork.ui_chupai_01)
-			local var_7_4 = FightHelper.getPreloadAssetItem(var_7_3)
+			local var_7_0 = FightCardDataHelper.getCardSkin()
+			local var_7_1 = FightDataHelper.entityMgr:getById(arg_6_0._card_mo.uid)
+			local var_7_2 = FightCardDataHelper.isBigSkill(arg_6_0._card_mo.skillId)
+			local var_7_3 = FightConfig.instance:getSkillLv(arg_6_0._card_mo.skillId)
+			local var_7_4 = ResUrl.getUIEffect(FightPreloadViewWork.ui_chupai_01)
 
-			gohelper.clone(var_7_4:GetResource(var_7_3), arg_6_0._card_transform.gameObject)
+			if var_7_0 == 672801 then
+				var_7_4 = ResUrl.getUIEffect(FightPreloadViewWork.ui_chupai_skin01)
+			end
 
-			if var_7_2 < FightEnum.UniqueSkillCardLv then
-				local var_7_5 = ResUrl.getUIEffect(FightPreloadViewWork.ui_chupai_02)
-				local var_7_6 = FightHelper.getPreloadAssetItem(var_7_5)
+			local var_7_5 = FightHelper.getPreloadAssetItem(var_7_4)
 
-				gohelper.clone(var_7_6:GetResource(var_7_5), arg_6_0._card_transform.gameObject)
+			if var_7_3 < FightEnum.UniqueSkillCardLv then
+				local var_7_6 = ResUrl.getUIEffect(FightPreloadViewWork.ui_chupai_02)
+
+				if var_7_0 == 672801 then
+					var_7_6 = ResUrl.getUIEffect(FightPreloadViewWork.ui_chupai_skin01)
+				end
+
+				local var_7_7 = FightHelper.getPreloadAssetItem(var_7_6)
+
+				gohelper.clone(var_7_7:GetResource(var_7_6), arg_6_0._card_transform.gameObject)
 			else
-				local var_7_7 = ResUrl.getUIEffect(FightPreloadViewWork.ui_chupai_03)
-				local var_7_8 = FightHelper.getPreloadAssetItem(var_7_7)
+				local var_7_8 = ResUrl.getUIEffect(FightPreloadViewWork.ui_chupai_03)
 
-				gohelper.clone(var_7_8:GetResource(var_7_7), arg_6_0._card_transform.gameObject)
+				if var_7_0 == 672801 then
+					var_7_8 = ResUrl.getUIEffect(FightPreloadViewWork.ui_chupai_skin03)
+				end
+
+				local var_7_9 = FightHelper.getPreloadAssetItem(var_7_8)
+
+				gohelper.clone(var_7_9:GetResource(var_7_8), arg_6_0._card_transform.gameObject)
 			end
 
 			FightController.instance:dispatchEvent(FightEvent.ShowPlayCardEffect, arg_6_0._card_mo, arg_6_0._show_index)

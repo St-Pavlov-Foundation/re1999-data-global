@@ -29,6 +29,7 @@ function var_0_0.setHeroItem(arg_4_0, arg_4_1)
 
 	arg_4_0._heroItem = IconMgr.instance:getCommonHeroItem(var_4_0)
 
+	arg_4_0._heroItem:setStyle_CharacterBackpack()
 	arg_4_0._heroItem:hideFavor(true)
 
 	arg_4_0._heroAnimator = arg_4_0._heroItem.go:GetComponent(typeof(UnityEngine.Animator))

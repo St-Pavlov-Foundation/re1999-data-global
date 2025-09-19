@@ -37,7 +37,7 @@ function var_0_0.onOpen(arg_7_0)
 
 	arg_7_0.actMo = Activity182Model.instance:getActMo()
 
-	local var_7_0 = arg_7_0:getResInst(AutoChessEnum.BadgeItemPath, arg_7_0._goBadgeRoot)
+	local var_7_0 = arg_7_0:getResInst(AutoChessStrEnum.ResPath.BadgeItem, arg_7_0._goBadgeRoot)
 
 	MonoHelper.addNoUpdateLuaComOnceToGo(var_7_0, AutoChessBadgeItem):setData(arg_7_0.actMo.rank, arg_7_0.actMo.score, AutoChessBadgeItem.ShowType.RankUpView)
 

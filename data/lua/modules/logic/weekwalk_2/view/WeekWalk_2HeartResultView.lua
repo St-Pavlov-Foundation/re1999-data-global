@@ -134,7 +134,7 @@ function var_0_0._showSpine(arg_10_0, arg_10_1)
 	arg_10_0._uiSpine:setImgPos(0)
 	arg_10_0._uiSpine:setResPath(var_10_1, function()
 		arg_10_0._spineLoaded = true
-	end, arg_10_0)
+	end, arg_10_0, CharacterVoiceEnum.NormalFullScreenEffectCameraSize)
 
 	local var_10_2, var_10_3 = SkinConfig.instance:getSkinOffset(var_10_1.fightSuccViewOffset)
 

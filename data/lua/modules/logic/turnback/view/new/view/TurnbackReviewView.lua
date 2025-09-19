@@ -181,7 +181,7 @@ function var_0_0._afterPlayAnim(arg_11_0)
 end
 
 function var_0_0._btnnextOnClick(arg_12_0, arg_12_1)
-	local var_12_0 = HandbookConfig.instance:getCGDictByChapter(arg_12_0._selectChapter)
+	local var_12_0 = HandbookConfig.instance:getCGDictByChapter(arg_12_0._selectChapter, arg_12_0._cgType)
 	local var_12_1 = var_12_0[#var_12_0].id
 	local var_12_2 = false
 
@@ -198,7 +198,7 @@ function var_0_0._btnnextOnClick(arg_12_0, arg_12_1)
 	elseif HandbookModel.instance:getCGUnlockCount(arg_12_0._selectChapter, arg_12_0._cgType) == HandbookModel.instance:getCGUnlockIndexInChapter(arg_12_0._selectChapter, arg_12_0._cgId, arg_12_0._cgType) then
 		var_12_2 = true
 		arg_12_0._selectChapter = 1
-		arg_12_0._cgId = HandbookConfig.instance:getCGDictByChapter(arg_12_0._selectChapter)[1].id
+		arg_12_0._cgId = HandbookConfig.instance:getCGDictByChapter(arg_12_0._selectChapter, arg_12_0._cgType)[1].id
 
 		arg_12_0:_focusItem()
 	end
@@ -233,10 +233,10 @@ end
 
 function var_0_0._initTop(arg_13_0)
 	arg_13_0._chapterList = {}
-	arg_13_0._cgConfigList = HandbookConfig.instance:getDungeonCGList()
+	arg_13_0._cgConfigList = HandbookConfig.instance:getCGList(arg_13_0._cgType)
 	arg_13_0._unlockChapterList = {}
 	arg_13_0._dungeonChapterList = {}
-	arg_13_0._dungeonChapterDict = HandbookConfig.instance:getCGDict()
+	arg_13_0._dungeonChapterDict = HandbookConfig.instance:getCGDict(arg_13_0._cgType)
 
 	for iter_13_0, iter_13_1 in ipairs(arg_13_0._cgConfigList) do
 		if HandbookModel.instance:isCGUnlock(iter_13_1.id) then
@@ -348,7 +348,7 @@ function var_0_0.getEpisodeName(arg_15_0, arg_15_1)
 end
 
 function var_0_0.getFirstCGIdAndEpisodeId(arg_16_0, arg_16_1)
-	local var_16_0 = HandbookConfig.instance:getCGDictByChapter(arg_16_1)
+	local var_16_0 = HandbookConfig.instance:getCGDictByChapter(arg_16_1, arg_16_0._cgType)
 	local var_16_1 = var_16_0[1].id
 	local var_16_2 = var_16_0[1].episodeId
 

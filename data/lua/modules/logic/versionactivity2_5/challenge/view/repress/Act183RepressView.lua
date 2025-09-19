@@ -102,6 +102,9 @@ function var_0_0._getOrCreateHeroItem(arg_11_0, arg_11_1)
 		var_11_0.viewGO = gohelper.cloneInPlace(arg_11_0._goheroitem, "heroitem_" .. arg_11_1)
 		var_11_0.gopos = gohelper.findChild(var_11_0.viewGO, "go_pos")
 		var_11_0.item = IconMgr.instance:getCommonHeroItem(var_11_0.gopos)
+
+		var_11_0.item:setStyle_CharacterBackpack()
+
 		var_11_0.btnclick = gohelper.findChildButtonWithAudio(var_11_0.viewGO, "btn_click")
 
 		var_11_0.btnclick:AddClickListener(arg_11_0._onClickHeroItem, arg_11_0, arg_11_1)

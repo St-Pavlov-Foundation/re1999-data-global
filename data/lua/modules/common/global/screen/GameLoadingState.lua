@@ -10,6 +10,8 @@ var_0_0.LoadingRoomView = 5
 var_0_0.LoadingDownloadView = 6
 var_0_0.LoadingCachotView = 7
 var_0_0.LoadingCachotChangeView = 8
+var_0_0.SurvivalLoadingView = 9
+var_0_0.VersionActivity2_8BossStoryLoadingView = 10
 
 local var_0_1 = {
 	[var_0_0.LoadingView] = ViewName.LoadingView,
@@ -19,7 +21,9 @@ local var_0_1 = {
 	[var_0_0.LoadingRoomView] = ViewName.LoadingRoomView,
 	[var_0_0.LoadingDownloadView] = ViewName.LoadingDownloadView,
 	[var_0_0.LoadingCachotView] = ViewName.V1a6_CachotLoadingView,
-	[var_0_0.LoadingCachotChangeView] = ViewName.V1a6_CachotLayerChangeView
+	[var_0_0.LoadingCachotChangeView] = ViewName.V1a6_CachotLayerChangeView,
+	[var_0_0.SurvivalLoadingView] = ViewName.SurvivalLoadingView,
+	[var_0_0.VersionActivity2_8BossStoryLoadingView] = ViewName.VersionActivity2_8BossStoryLoadingView
 }
 local var_0_2 = {
 	[ViewName.LoadingView] = var_0_0.LoadingView,
@@ -29,7 +33,9 @@ local var_0_2 = {
 	[ViewName.LoadingRoomView] = var_0_0.LoadingRoomView,
 	[ViewName.LoadingDownloadView] = var_0_0.LoadingDownloadView,
 	[ViewName.V1a6_CachotLoadingView] = var_0_0.LoadingCachotView,
-	[ViewName.V1a6_CachotLayerChangeView] = var_0_0.LoadingCachotChangeView
+	[ViewName.V1a6_CachotLayerChangeView] = var_0_0.LoadingCachotChangeView,
+	[ViewName.SurvivalLoadingView] = var_0_0.SurvivalLoadingView,
+	[ViewName.VersionActivity2_8BossStoryLoadingView] = var_0_0.VersionActivity2_8BossStoryLoadingView
 }
 
 function var_0_0.ctor(arg_1_0)
@@ -115,6 +121,10 @@ function var_0_0._closeLoading(arg_10_0)
 		-- block empty
 	elseif arg_10_0._showLoadingView == ViewName.V1a6_CachotLayerChangeView then
 		-- block empty
+	elseif arg_10_0._showLoadingView == ViewName.SurvivalLoadingView then
+		-- block empty
+	elseif arg_10_0._showLoadingView == ViewName.VersionActivity2_8BossStoryLoadingView then
+		GameSceneMgr.instance:dispatchEvent(SceneEventName.CanCloseLoading)
 	else
 		ViewMgr.instance:closeView(arg_10_0._showLoadingView)
 

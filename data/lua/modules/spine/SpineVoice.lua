@@ -103,7 +103,10 @@ function var_0_0.playVoice(arg_10_0, arg_10_1, arg_10_2, arg_10_3, arg_10_4, arg
 
 	arg_10_0:_initSpineVoiceMouth(arg_10_2, arg_10_1)
 	arg_10_0._voiceFace:init(arg_10_0, arg_10_2, arg_10_1)
-	arg_10_0._spineVoiceBody:init(arg_10_0, arg_10_2, arg_10_1)
+
+	if arg_10_2.noChangeBody ~= true or not arg_10_0._spineVoiceBody:getSpineVoice() then
+		arg_10_0._spineVoiceBody:init(arg_10_0, arg_10_2, arg_10_1)
+	end
 end
 
 function var_0_0._initSpineVoiceMouth(arg_11_0, arg_11_1, arg_11_2)

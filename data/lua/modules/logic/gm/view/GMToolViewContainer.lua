@@ -47,6 +47,7 @@ function var_0_0.buildViews(arg_1_0)
 		GMSubViewAudio.New(),
 		GMSubViewGuide.New(),
 		GMSubViewActivity.New(),
+		GMSubViewSurvival.New(),
 		GMSubViewRole.New(),
 		GMSubViewCode.New(),
 		GMSubViewRouge.New(),

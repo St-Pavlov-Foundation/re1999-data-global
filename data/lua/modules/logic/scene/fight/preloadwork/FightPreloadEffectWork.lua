@@ -43,24 +43,23 @@ function var_0_0.onStart(arg_1_0, arg_1_1)
 				end
 			end
 		end
-	end
 
-	local var_1_5 = FightDataHelper.entityMgr:getEnemyNormalList()
+		local var_1_5 = lua_fight_luxi_skin_effect.configDict[var_1_1]
+		local var_1_6 = var_1_5 and var_1_5[SpineAnimState.born]
 
-	for iter_1_4, iter_1_5 in ipairs(var_1_5) do
-		local var_1_6 = FightConfig.instance:getSkinCO(iter_1_5.skin)
-
-		if var_1_6 and not string.nilorempty(var_1_6.effect) then
+		if var_1_6 then
 			local var_1_7 = string.split(var_1_6.effect, "#")
 
-			for iter_1_6, iter_1_7 in ipairs(var_1_7) do
-				local var_1_8 = FightHelper.getEffectUrlWithLod(iter_1_7)
-
-				arg_1_0:_addPreloadEffect(FightHelper.getEffectUrlWithLod(iter_1_7))
+			for iter_1_4, iter_1_5 in ipairs(var_1_7) do
+				arg_1_0:_addPreloadEffect(FightHelper.getEffectUrlWithLod(iter_1_5))
 			end
 		end
+	end
 
-		local var_1_9 = lua_monster.configDict[iter_1_5.modelId]
+	local var_1_8 = FightDataHelper.entityMgr:getEnemyNormalList()
+
+	for iter_1_6, iter_1_7 in ipairs(var_1_8) do
+		local var_1_9 = FightConfig.instance:getSkinCO(iter_1_7.skin)
 
 		if var_1_9 and not string.nilorempty(var_1_9.effect) then
 			local var_1_10 = string.split(var_1_9.effect, "#")
@@ -69,6 +68,18 @@ function var_0_0.onStart(arg_1_0, arg_1_1)
 				local var_1_11 = FightHelper.getEffectUrlWithLod(iter_1_9)
 
 				arg_1_0:_addPreloadEffect(FightHelper.getEffectUrlWithLod(iter_1_9))
+			end
+		end
+
+		local var_1_12 = lua_monster.configDict[iter_1_7.modelId]
+
+		if var_1_12 and not string.nilorempty(var_1_12.effect) then
+			local var_1_13 = string.split(var_1_12.effect, "#")
+
+			for iter_1_10, iter_1_11 in ipairs(var_1_13) do
+				local var_1_14 = FightHelper.getEffectUrlWithLod(iter_1_11)
+
+				arg_1_0:_addPreloadEffect(FightHelper.getEffectUrlWithLod(iter_1_11))
 			end
 		end
 	end

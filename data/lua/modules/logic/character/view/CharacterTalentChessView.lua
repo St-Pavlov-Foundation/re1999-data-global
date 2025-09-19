@@ -221,8 +221,8 @@ function var_0_0.onOpen(arg_13_0)
 
 	arg_13_0:_initTemplateList()
 
-	arg_13_0._txttalentcn.text = luaLang("talent_charactertalentlevelup_leveltxt" .. CharacterEnum.TalentTxtByHeroType[arg_13_0.hero_mo_data.config.heroType])
-	arg_13_0._txttalentEn.text = luaLang("talent_charactertalentchess_staten" .. CharacterEnum.TalentTxtByHeroType[arg_13_0.hero_mo_data.config.heroType])
+	arg_13_0._txttalentcn.text = luaLang("talent_charactertalentlevelup_leveltxt" .. arg_13_0.hero_mo_data:getTalentTxtByHeroType())
+	arg_13_0._txttalentEn.text = luaLang("talent_charactertalentchess_staten" .. arg_13_0.hero_mo_data:getTalentTxtByHeroType())
 
 	arg_13_0:_refreshStyleTag()
 
@@ -828,7 +828,13 @@ function var_0_0._refreshAttrItem(arg_35_0, arg_35_1, arg_35_2)
 		end
 	end
 
-	local function var_35_13()
+	arg_35_0._cus_cube_level = arg_35_2
+
+	if arg_35_1 == arg_35_0._mainCubeId and arg_35_2 == nil and arg_35_0._canPlayCubeAnim then
+		var_35_3:Play("switch", 0, 0)
+		TaskDispatcher.cancelTask(arg_35_0._showMainCubeItemCB, arg_35_0)
+		TaskDispatcher.runDelay(arg_35_0._showMainCubeItemCB, arg_35_0, 0.16)
+	else
 		var_35_2.text = "Lv." .. (arg_35_2 or var_35_4.level)
 
 		gohelper.CreateObjList(arg_35_0, arg_35_0._onDebrisAttrItemShow, var_35_6, var_35_0, var_35_1)
@@ -842,16 +848,12 @@ function var_0_0._refreshAttrItem(arg_35_0, arg_35_1, arg_35_2)
 			arg_35_0:_showMaxLvBtn()
 		end
 	end
+end
 
-	if arg_35_1 == arg_35_0._mainCubeId and arg_35_2 == nil and arg_35_0._canPlayCubeAnim then
-		TaskDispatcher.cancelTask(var_35_13, arg_35_0)
-		var_35_3:Play("switch", 0, 0)
-		TaskDispatcher.runDelay(var_35_13, arg_35_0, 0.16)
+function var_0_0._showMainCubeItemCB(arg_37_0)
+	arg_37_0._canPlayCubeAnim = false
 
-		arg_35_0._canPlayCubeAnim = false
-	else
-		var_35_13()
-	end
+	arg_37_0:_refreshAttrItem(arg_37_0._mainCubeId, arg_37_0._cus_cube_level)
 end
 
 function var_0_0._onDebrisAttrItemShow(arg_38_0, arg_38_1, arg_38_2, arg_38_3)
@@ -1455,7 +1457,7 @@ function var_0_0._rotateCube(arg_59_0)
 end
 
 function var_0_0.onClose(arg_60_0)
-	return
+	TaskDispatcher.cancelTask(arg_60_0._showMainCubeItemCB, arg_60_0)
 end
 
 function var_0_0._releaseCellList(arg_61_0)
@@ -1493,7 +1495,7 @@ end
 function var_0_0._initTemplateList(arg_65_0)
 	table.sort(arg_65_0.hero_mo_data.talentTemplates, var_0_0.sortTemplate)
 
-	local var_65_0 = luaLang("talent_charactertalentchess_template" .. CharacterEnum.TalentTxtByHeroType[arg_65_0.hero_mo_data.config.heroType])
+	local var_65_0 = luaLang("talent_charactertalentchess_template" .. arg_65_0.hero_mo_data:getTalentTxtByHeroType())
 	local var_65_1 = {}
 	local var_65_2 = TalentStyleModel.instance:isUnlockStyleSystem(arg_65_0.hero_mo_data.talent)
 
@@ -1596,6 +1598,7 @@ function var_0_0._cutTalentStyle(arg_73_0)
 
 	arg_73_0._showTalentStyle = var_73_0
 	arg_73_0._isCanPlaySwitch = true
+	arg_73_0._canPlayCubeAnim = true
 
 	if not arg_73_0._mainCubeId then
 		arg_73_0._mainCubeId = arg_73_0.hero_mo_data.talentCubeInfos.own_main_cube_id
@@ -1640,7 +1643,7 @@ end
 function var_0_0._showTemplateName(arg_76_0)
 	for iter_76_0, iter_76_1 in ipairs(arg_76_0.hero_mo_data.talentTemplates) do
 		if iter_76_1.id == arg_76_0.hero_mo_data.useTalentTemplateId then
-			local var_76_0 = luaLang("talent_charactertalentchess_template" .. CharacterEnum.TalentTxtByHeroType[arg_76_0.hero_mo_data.config.heroType])
+			local var_76_0 = luaLang("talent_charactertalentchess_template" .. arg_76_0.hero_mo_data:getTalentTxtByHeroType())
 			local var_76_1
 
 			if LangSettings.instance:isEn() then

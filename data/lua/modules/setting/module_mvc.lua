@@ -1,4 +1,33 @@
 ﻿return {
+	FightUISwitch = {
+		model = {
+			"FightUISwitchModel",
+			"FightUISwitchListModel"
+		},
+		controller = {
+			"FightUISwitchController"
+		},
+		rpc = {
+			"FightUISwitchRpc"
+		},
+		config = {
+			"FightUISwitchConfig"
+		}
+	},
+	Activity199 = {
+		model = {
+			"Activity199Model"
+		},
+		controller = {
+			"Activity199Controller"
+		},
+		rpc = {
+			"Activity199Rpc"
+		},
+		config = {
+			"Activity199Config"
+		}
+	},
 	CharacterSkillTalent = {
 		config = {
 			"CharacterExtraConfig"
@@ -979,7 +1008,8 @@
 			"DungeonModel",
 			"DungeonChapterListModel",
 			"DungeonMapModel",
-			"DungeonAssistModel"
+			"DungeonAssistModel",
+			"DungeonMainStoryModel"
 		},
 		rpc = {
 			"DungeonRpc"
@@ -1573,6 +1603,22 @@
 			"DungeonPuzzleMazeDrawController",
 			"DungeonPuzzleChangeColorController",
 			"DungeonPuzzleCircuitController"
+		}
+	},
+	maze = {
+		model = {
+			"DungeonMazeModel"
+		},
+		controller = {
+			"DungeonMazeController"
+		},
+		config = {
+			"DungeonGameConfig"
+		}
+	},
+	JumpGame = {
+		controller = {
+			"DungeonJumpGameController"
 		}
 	},
 	ressplit = {
@@ -2572,7 +2618,8 @@
 			"Act183Config"
 		},
 		controller = {
-			"Act183Controller"
+			"Act183Controller",
+			"Act183JumpController"
 		}
 	},
 	FeiLinShiDuo = {
@@ -2612,6 +2659,24 @@
 		},
 		controller = {
 			"Activity186Controller"
+		}
+	},
+	Survival = {
+		model = {
+			"SurvivalModel",
+			"SurvivalMapModel",
+			"SurvivalShelterModel"
+		},
+		rpc = {
+			"SurvivalInteriorRpc",
+			"SurvivalWeekRpc",
+			"SurvivalOutSideRpc"
+		},
+		config = {
+			"SurvivalConfig"
+		},
+		controller = {
+			"SurvivalController"
 		}
 	},
 	LifeCircle = {
@@ -2674,6 +2739,30 @@
 			"VersionActivity2_6DungeonController"
 		}
 	},
+	VersionActivity2_8DungeonTaskStore = {
+		model = {
+			"VersionActivity2_8StoreListModel",
+			"VersionActivity2_8TaskListModel"
+		},
+		controller = {
+			"VersionActivity2_8DungeonTaskStoreController"
+		}
+	},
+	BossFight = {
+		config = {
+			"VersionActivity2_8BossConfig"
+		},
+		controller = {
+			"VersionActivity2_8DungeonBossController",
+			"VersionActivity2_8DungeonBossBattleController"
+		},
+		model = {
+			"VersionActivity2_8BossModel"
+		},
+		rpc = {
+			"VersionActivity2_8BossRpc"
+		}
+	},
 	VersionActivityFixedDungeon = {
 		model = {
 			"VersionActivityFixedDungeonModel",
@@ -2698,6 +2787,103 @@
 		},
 		controller = {
 			"DestinyStoneGiftPickChoiceController"
+		}
+	},
+	NuoDiKa = {
+		model = {
+			"NuoDiKaModel",
+			"NuoDiKaMapModel"
+		},
+		config = {
+			"NuoDiKaConfig"
+		},
+		controller = {
+			"NuoDiKaController"
+		}
+	},
+	Activity194 = {
+		model = {
+			"MoLiDeErModel",
+			"MoLiDeErGameModel"
+		},
+		config = {
+			"MoLiDeErConfig"
+		},
+		controller = {
+			"MoLiDeErController",
+			"MoLiDeErGameController"
+		},
+		rpc = {
+			"MoLiDeErRpc"
+		}
+	},
+	Activity197 = {
+		model = {
+			"Activity197Model"
+		},
+		config = {
+			"Activity197Config"
+		},
+		controller = {
+			"Activity197Controller"
+		},
+		rpc = {
+			"Activity197Rpc"
+		}
+	},
+	Activity196 = {
+		model = {
+			"Activity196Model",
+			"Activity2ndModel"
+		},
+		config = {
+			"Activity2ndConfig"
+		},
+		controller = {
+			"Activity2ndController"
+		},
+		rpc = {
+			"Activity196Rpc"
+		}
+	},
+	Activity201 = {
+		model = {
+			"Activity201Model"
+		},
+		controller = {
+			"Activity201Controller"
+		},
+		rpc = {
+			"Activity201Rpc"
+		},
+		config = {
+			"Activity201Config"
+		}
+	},
+	VersionActivity2_3NewCultivationDestiny = {
+		model = {
+			"VersionActivity2_3NewCultivationDestinyModel"
+		}
+	},
+	Activity198 = {
+		rpc = {
+			"Activity198Rpc"
+		}
+	},
+	Activity199 = {
+		model = {
+			"Activity199Model",
+			"V2a8_SelfSelectSix_PickChoiceListModel"
+		},
+		config = {
+			"Activity199Config"
+		},
+		controller = {
+			"V2a8_SelfSelectSix_PickChoiceController",
+			"Activity199Controller"
+		},
+		rpc = {
+			"Activity199Rpc"
 		}
 	},
 	Odyssey = {
@@ -2770,6 +2956,20 @@
 	VersionActivity2_3NewCultivationDestiny = {
 		model = {
 			"VersionActivity2_3NewCultivationDestinyModel"
+		}
+	},
+	NationalGift = {
+		model = {
+			"NationalGiftModel"
+		},
+		config = {
+			"NationalGiftConfig"
+		},
+		controller = {
+			"NationalGiftController"
+		},
+		rpc = {
+			"Activity212Rpc"
 		}
 	}
 }

@@ -53,9 +53,12 @@ function var_0_0.removeEvents(arg_3_0)
 end
 
 var_0_0.preloadList = {
-	"singlebg/summon/heroversion_1_9/selfselectsix/v1a9_selfselectsix_summon_fullbg.png",
-	"singlebg/summon/heroversion_1_9/selfselectsix/v1a9_selfselectsix_summon_unselect.png",
-	"singlebg/summon/heroversion_1_9/selfselectsix/v1a9_selfselectsix_summon_frontbg.png"
+	"singlebg/summon/heroversion_2_2/selfselectsix/v2a2_selfselectsix_summon_line4_2.png",
+	"singlebg/summon/heroversion_2_2/selfselectsix/v2a2_selfselectsix_summon_line4_1.png",
+	"singlebg/summon/heroversion_2_2/selfselectsix/v2a2_selfselectsix_summon_fullbg2.png",
+	"singlebg/summon/heroversion_2_2/selfselectsix/v2a2_selfselectsix_summon_line.png",
+	"singlebg/summon/heroversion_2_8/v2a8_selfselect2/v2a8_selfselect2_rolebg.png",
+	"singlebg/summon/heroversion_2_8/v2a8_selfselect2/v2a8_selfselect2_fullbg.png"
 }
 
 function var_0_0._btnselfselectOnClick(arg_4_0)

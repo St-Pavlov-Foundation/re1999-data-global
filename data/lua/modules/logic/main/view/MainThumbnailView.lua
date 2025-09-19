@@ -135,6 +135,10 @@ function var_0_0.onOpen(arg_12_0)
 
 	arg_12_0:addEventCb(PlayerController.instance, PlayerEvent.UpdateAssistRewardCount, arg_12_0.refreshRedDot, arg_12_0)
 	arg_12_0:_freshBtns()
+
+	local var_12_0 = VersionValidator.instance:isInReviewing()
+
+	gohelper.setActive(arg_12_0._gobanner, not var_12_0)
 end
 
 function var_0_0._freshBtns(arg_13_0)

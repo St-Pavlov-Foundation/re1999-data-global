@@ -27,11 +27,13 @@ end
 function var_0_0.addEvents(arg_2_0)
 	arg_2_0._btntask:AddClickListener(arg_2_0._btntaskOnClick, arg_2_0)
 	arg_2_0._btnClue:AddClickListener(arg_2_0._btnClueOnClick, arg_2_0)
+	arg_2_0._btnimage_TryBtn:AddClickListener(arg_2_0._btnimage_TryBtnOnClick, arg_2_0)
 end
 
 function var_0_0.removeEvents(arg_3_0)
 	arg_3_0._btntask:RemoveClickListener()
 	arg_3_0._btnClue:RemoveClickListener()
+	arg_3_0._btnimage_TryBtn:RemoveClickListener()
 end
 
 function var_0_0._btnClueOnClick(arg_4_0)
@@ -54,6 +56,10 @@ function var_0_0._editableInitView(arg_6_0)
 	arg_6_0._drag:createByScrollRect(arg_6_0._scrollcontent)
 
 	arg_6_0._levelItems = {}
+
+	gohelper.setActive(arg_6_0._gotime, false)
+
+	arg_6_0._btnimage_TryBtn = gohelper.findChildButtonWithAudio(arg_6_0.viewGO, "#go_Try/image_TryBtn")
 end
 
 function var_0_0._setInitLevelPos(arg_7_0)
@@ -299,6 +305,12 @@ function var_0_0.onDestroyView(arg_30_0)
 
 		arg_30_0._levelItems = nil
 	end
+end
+
+local var_0_1 = 10012118
+
+function var_0_0._btnimage_TryBtnOnClick(arg_31_0)
+	GameFacade.jump(var_0_1)
 end
 
 return var_0_0

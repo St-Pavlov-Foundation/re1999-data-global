@@ -86,7 +86,9 @@ function var_0_0.onRefresh(arg_11_0)
 end
 
 function var_0_0._refreshTimeTick(arg_12_0)
-	arg_12_0._txtLimitTime.text = ActivityHelper.getActivityRemainTimeStr(ActivityEnum.Activity.V1a9_Matildagift)
+	local var_12_0 = V1a9_MatildaGiftModel.instance:getMatildagiftActId()
+
+	arg_12_0._txtLimitTime.text = ActivityHelper.getActivityRemainTimeStr(var_12_0)
 end
 
 return var_0_0

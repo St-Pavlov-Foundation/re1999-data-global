@@ -36,9 +36,15 @@ function var_0_0.setCurrencyType(arg_3_0, arg_3_1)
 	end
 end
 
-function var_0_0.onContainerClickModalMask(arg_4_0)
+function var_0_0.setCurrencyTypes(arg_4_0, arg_4_1)
+	if arg_4_0._currencyView then
+		arg_4_0._currencyView:setCurrencyType(arg_4_1)
+	end
+end
+
+function var_0_0.onContainerClickModalMask(arg_5_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.UI_Mail_switch)
-	arg_4_0:closeThis()
+	arg_5_0:closeThis()
 end
 
 return var_0_0

@@ -6,6 +6,7 @@ local var_0_1 = {
 	protectionTime = 5,
 	time = 2,
 	id = 1,
+	statusParams = 6,
 	waitVoice = 3
 }
 local var_0_2 = {

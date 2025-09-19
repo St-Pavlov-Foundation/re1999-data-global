@@ -61,7 +61,7 @@ function var_0_0.onOpen(arg_7_0)
 	TaskDispatcher.runDelay(arg_7_0._playScrollTween, arg_7_0, 1.2)
 	TaskDispatcher.runDelay(arg_7_0._playAttrAni, arg_7_0, 1.2)
 
-	arg_7_0._txtleveluptip.text = luaLang("talent_charactertalentlevelupresult_tip" .. CharacterEnum.TalentTxtByHeroType[arg_7_0.hero_mo_data.config.heroType])
+	arg_7_0._txtleveluptip.text = luaLang("talent_charactertalentlevelupresult_tip" .. arg_7_0.hero_mo_data:getTalentTxtByHeroType())
 
 	gohelper.setActive(arg_7_0._goeasoning, arg_7_0.hero_mo_data.config.heroType == CharacterEnum.HumanHeroType)
 	gohelper.setActive(arg_7_0._goesonan, arg_7_0.hero_mo_data.config.heroType ~= CharacterEnum.HumanHeroType)
@@ -282,7 +282,7 @@ function var_0_0._onItemShow(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
 	gohelper.setActive(var_13_9, var_13_13)
 	gohelper.setActive(var_13_4, arg_13_2.up_type == var_0_0.DebrisType.UnlockStyle)
 
-	local var_13_14 = luaLang("talent_style_title_cn_" .. CharacterEnum.TalentTxtByHeroType[arg_13_0.hero_mo_data.config.heroType])
+	local var_13_14 = luaLang("talent_style_title_cn_" .. arg_13_0.hero_mo_data:getTalentTxtByHeroType())
 
 	var_13_5.text = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("talent_levelup_unlockstyle"), "#eea259", var_13_14)
 

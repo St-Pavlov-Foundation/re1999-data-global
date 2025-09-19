@@ -376,6 +376,10 @@ function var_0_0._updateView(arg_27_0, arg_27_1, arg_27_2)
 
 			var_27_6 = MonoHelper.addNoUpdateLuaComOnceToGo(var_27_9, FightViewCardItem, FightEnum.CardShowType.PlayCard)
 
+			if FightCardDataHelper.getCardSkin() == 672801 then
+				FightViewHandCardItem.replaceLockBg(gohelper.findChild(var_27_6.tr.parent.gameObject, "lock"))
+			end
+
 			table.insert(arg_27_0._cardItemList, var_27_6)
 		end
 

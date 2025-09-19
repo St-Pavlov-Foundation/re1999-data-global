@@ -65,6 +65,7 @@ var_0_0.JumpView = {
 	EquipView = 51,
 	CharacterBackpackViewWithEquip = 7,
 	CharacterBackpackViewWithCharacter = 6,
+	ShelterBuilding = 2801,
 	TaskView = 12
 }
 var_0_0.CharacterBackpack = {

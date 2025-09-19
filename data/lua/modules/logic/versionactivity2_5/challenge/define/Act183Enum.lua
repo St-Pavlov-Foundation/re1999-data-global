@@ -19,6 +19,11 @@ var_0_0.EpisodeClsType = {
 	[Act183Helper.getEpisodeClsKey(var_0_0.GroupType.HardMain, var_0_0.EpisodeType.Boss)] = Act183MainBossEpisodeItem,
 	[Act183Helper.getEpisodeClsKey(var_0_0.GroupType.HardMain, var_0_0.EpisodeType.Sub)] = Act183MainNormalEpisodeItem
 }
+var_0_0.GroupEntranceItemClsType = {
+	[var_0_0.GroupType.Daily] = Act183DailyGroupEntranceItem,
+	[var_0_0.GroupType.NormalMain] = Act183MainGroupEntranceItem,
+	[var_0_0.GroupType.HardMain] = Act183MainGroupEntranceItem
+}
 var_0_0.GroupCategoryClsType = {
 	[var_0_0.GroupType.Daily] = Act183DungeonBaseGroupItem,
 	[var_0_0.GroupType.NormalMain] = Act183DungeonBaseGroupItem,
@@ -78,9 +83,10 @@ var_0_0.MainGroupBossEpisodeNum = 1
 var_0_0.BossEpisodeMaxHeroNum = 5
 var_0_0.Const = {
 	MaxBadgeNum = 1,
-	BadgeItemId = 6,
+	RoundStage = 5,
 	PlayerClothIds = 7,
-	RoundStage = 5
+	BadgeItemId = 6,
+	MainBannerUrl = 8
 }
 var_0_0.RuleEscapeAnimType = {
 	RightTop2Center = 10,
@@ -113,7 +119,6 @@ var_0_0.BattleNumToSnapShotType = {
 	[4] = ModuleEnum.HeroGroupSnapshotType.Act183Normal,
 	[5] = ModuleEnum.HeroGroupSnapshotType.Act183Boss
 }
-var_0_0.EpisodeMaxStarNum = 3
 var_0_0.ActType = 183
 var_0_0.StoreEntryPrefabUrl = "ui/viewres/versionactivity_2_5/challenge/v2a5_challenge_storeentry.prefab"
 

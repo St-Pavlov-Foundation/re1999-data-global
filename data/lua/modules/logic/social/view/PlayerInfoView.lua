@@ -3,6 +3,7 @@
 local var_0_0 = class("PlayerInfoView", BaseView)
 
 function var_0_0.onInitView(arg_1_0)
+	arg_1_0._transScroll = gohelper.findChild(arg_1_0.viewGO, "Scroll_view").transform
 	arg_1_0._goplayericon = gohelper.findChild(arg_1_0.viewGO, "Scroll_view/Viewport/Content/playerinfo/#go_playericon")
 	arg_1_0._goimagebg = gohelper.findChild(arg_1_0.viewGO, "Scroll_view/Viewport/Content/bg/normal2")
 	arg_1_0._goskinbg = gohelper.findChild(arg_1_0.viewGO, "Scroll_view/Viewport/Content/bg/actskin")
@@ -132,8 +133,6 @@ function var_0_0._editableInitView(arg_16_0)
 
 	arg_16_0._parentWidth = recthelper.getWidth(arg_16_0.viewGO.transform.parent)
 	arg_16_0._parentHeight = recthelper.getHeight(arg_16_0.viewGO.transform.parent)
-	arg_16_0._viewWidth = 540
-	arg_16_0._viewHeight = 390
 end
 
 function var_0_0._refreshUI(arg_17_0)
@@ -215,16 +214,25 @@ function var_0_0.onUpdateParam(arg_21_0)
 end
 
 function var_0_0._refreshPos(arg_22_0)
+	arg_22_0._viewWidth = recthelper.getWidth(arg_22_0._transScroll)
+	arg_22_0._viewHeight = recthelper.getHeight(arg_22_0._transScroll)
+
 	local var_22_0 = 326
-	local var_22_1 = 144
+	local var_22_1 = arg_22_0._viewHeight / 2 - 140
 	local var_22_2 = recthelper.rectToRelativeAnchorPos(arg_22_0._worldPos, arg_22_0.viewGO.transform.parent)
 
 	for iter_22_0 = -1, 1, 2 do
 		for iter_22_1 = -1, 1, 2 do
 			local var_22_3 = var_22_2.x + var_22_0 * iter_22_0
 			local var_22_4 = var_22_2.y + var_22_1 * iter_22_1
+			local var_22_5, var_22_6 = arg_22_0:_isOverScreen(var_22_3, var_22_4)
 
-			if not arg_22_0:_isOverScreen(var_22_3, var_22_4) then
+			if var_22_5 and var_22_6 then
+				var_22_5 = false
+				var_22_4 = arg_22_0._viewHeight / 2 - arg_22_0._parentHeight / 2 + 30
+			end
+
+			if not var_22_5 then
 				recthelper.setAnchor(arg_22_0.viewGO.transform, var_22_3, var_22_4)
 
 				return
@@ -239,7 +247,7 @@ function var_0_0._isOverScreen(arg_23_0, arg_23_1, arg_23_2)
 	if math.abs(arg_23_1) * 2 >= arg_23_0._parentWidth - arg_23_0._viewWidth then
 		return true
 	elseif math.abs(arg_23_2) * 2 >= arg_23_0._parentHeight - arg_23_0._viewHeight then
-		return true
+		return true, true
 	end
 
 	return false

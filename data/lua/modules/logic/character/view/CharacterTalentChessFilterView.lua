@@ -43,13 +43,12 @@ end
 function var_0_0.onOpen(arg_7_0)
 	arg_7_0._heroId = arg_7_0.viewParam.heroId
 
-	local var_7_0 = HeroModel.instance:getByHeroId(arg_7_0._heroId)
-	local var_7_1 = CharacterEnum.TalentTxtByHeroType[var_7_0.config.heroType]
-	local var_7_2 = luaLang("talent_style_title_cn_" .. var_7_1)
-	local var_7_3 = luaLang("talent_style_title_en_" .. var_7_1)
+	local var_7_0 = HeroModel.instance:getByHeroId(arg_7_0._heroId):getTalentTxtByHeroType()
+	local var_7_1 = luaLang("talent_style_title_cn_" .. var_7_0)
+	local var_7_2 = luaLang("talent_style_title_en_" .. var_7_0)
 
-	arg_7_0._txtTitleCn.text = var_7_2
-	arg_7_0._txtTitleEn.text = var_7_3
+	arg_7_0._txtTitleCn.text = var_7_1
+	arg_7_0._txtTitleEn.text = var_7_2
 
 	TalentStyleModel.instance:openView(arg_7_0._heroId)
 	arg_7_0:_refreshVidew()

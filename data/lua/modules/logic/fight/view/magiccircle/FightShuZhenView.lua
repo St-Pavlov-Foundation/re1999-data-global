@@ -148,15 +148,15 @@ function var_0_0.onOpen(arg_11_0)
 	arg_11_0:addMagic()
 end
 
-function var_0_0._onAddMagicCircile(arg_12_0)
+function var_0_0._onAddMagicCircile(arg_12_0, arg_12_1, arg_12_2)
 	arg_12_0:addMagic()
 end
 
-function var_0_0._onDeleteMagicCircile(arg_13_0)
+function var_0_0._onDeleteMagicCircile(arg_13_0, arg_13_1, arg_13_2)
 	arg_13_0:removeMagic()
 end
 
-function var_0_0._onUpdateMagicCircile(arg_14_0)
+function var_0_0._onUpdateMagicCircile(arg_14_0, arg_14_1, arg_14_2)
 	local var_14_0 = FightModel.instance:getMagicCircleInfo()
 
 	if not var_14_0 then
@@ -174,7 +174,7 @@ function var_0_0._onUpdateMagicCircile(arg_14_0)
 	end
 
 	if var_14_1.uiType == (arg_14_0.magicItem and arg_14_0.magicItem:getUIType()) then
-		arg_14_0.magicItem:onUpdateMagic(var_14_0, var_14_1)
+		arg_14_0.magicItem:onUpdateMagic(var_14_0, var_14_1, arg_14_2)
 	else
 		arg_14_0:addMagic()
 	end

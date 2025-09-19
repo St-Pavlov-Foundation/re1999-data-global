@@ -540,6 +540,90 @@
     "pos": "165#0"
   },
   {
+    "dialogueId": 42,
+    "id": 1,
+    "res": "dialogue_wuerlixi_left",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 42,
+    "id": 2,
+    "res": "dialogue_songshu_right",
+    "pos": "165#0"
+  },
+  {
+    "dialogueId": 43,
+    "id": 1,
+    "res": "dialogue_wuerlixi_left",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 43,
+    "id": 2,
+    "res": "dialogue_songshu_right",
+    "pos": "165#0"
+  },
+  {
+    "dialogueId": 44,
+    "id": 1,
+    "res": "dialogue_wuerlixi_left",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 44,
+    "id": 2,
+    "res": "dialogue_songshu_right",
+    "pos": "165#0"
+  },
+  {
+    "dialogueId": 45,
+    "id": 1,
+    "res": "dialogue_wuerlixi_left",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 45,
+    "id": 2,
+    "res": "dialogue_songshu_right",
+    "pos": "165#0"
+  },
+  {
+    "dialogueId": 46,
+    "id": 1,
+    "res": "dialogue_keleiwusi_left",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 46,
+    "id": 2,
+    "res": "dialogue_kangsitanding_right",
+    "pos": "165#0"
+  },
+  {
+    "dialogueId": 47,
+    "id": 1,
+    "res": "dialogue_animusi_left",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 47,
+    "id": 2,
+    "res": "dialogue_role14_right",
+    "pos": "165#0"
+  },
+  {
+    "dialogueId": 48,
+    "id": 1,
+    "res": "dialogue_14downcoat_left",
+    "pos": "-165#0"
+  },
+  {
+    "dialogueId": 48,
+    "id": 2,
+    "res": "dialogue_sufeiya_right",
+    "pos": "165#0"
+  },
+  {
     "dialogueId": 10000,
     "id": 1,
     "res": "dialogue_role31_right",

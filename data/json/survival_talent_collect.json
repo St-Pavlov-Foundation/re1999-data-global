@@ -1,0 +1,74 @@
+[
+  {
+    "id": 1,
+    "groupId": 1,
+    "num": 2,
+    "desc": "language_10084956"
+  },
+  {
+    "id": 2,
+    "groupId": 1,
+    "num": 4,
+    "desc": "language_10084957"
+  },
+  {
+    "id": 3,
+    "groupId": 1,
+    "num": 8,
+    "desc": "language_10084958"
+  },
+  {
+    "id": 4,
+    "groupId": 2,
+    "num": 2,
+    "desc": "language_10084959"
+  },
+  {
+    "id": 5,
+    "groupId": 2,
+    "num": 4,
+    "desc": "language_10084960"
+  },
+  {
+    "id": 6,
+    "groupId": 2,
+    "num": 8,
+    "desc": "language_10084686"
+  },
+  {
+    "id": 7,
+    "groupId": 3,
+    "num": 2,
+    "desc": "language_10084961"
+  },
+  {
+    "id": 8,
+    "groupId": 3,
+    "num": 4,
+    "desc": "language_10084962"
+  },
+  {
+    "id": 9,
+    "groupId": 3,
+    "num": 8,
+    "desc": "language_10084692"
+  },
+  {
+    "id": 10,
+    "groupId": 4,
+    "num": 2,
+    "desc": "language_10084963"
+  },
+  {
+    "id": 11,
+    "groupId": 4,
+    "num": 4,
+    "desc": "language_10084696"
+  },
+  {
+    "id": 12,
+    "groupId": 4,
+    "num": 8,
+    "desc": "language_10084698"
+  }
+]

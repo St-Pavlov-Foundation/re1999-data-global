@@ -4,6 +4,7 @@ local var_0_0 = class("FightStatItem", ListScrollCell)
 
 function var_0_0.init(arg_1_0, arg_1_1)
 	arg_1_0._heroIcon = gohelper.findChildSingleImage(arg_1_1, "heroinfo/hero/icon")
+	arg_1_0._heroIconImage = arg_1_0._heroIcon:GetComponent(gohelper.Type_Image)
 	arg_1_0._career = gohelper.findChildImage(arg_1_1, "heroinfo/career")
 	arg_1_0._rare = gohelper.findChildImage(arg_1_1, "heroinfo/rare")
 	arg_1_0._front = gohelper.findChildImage(arg_1_1, "heroinfo/front")
@@ -69,6 +70,8 @@ function var_0_0.onUpdateMO(arg_4_0, arg_4_1)
 
 	if arg_4_0.entityMO:isAssistBoss() then
 		arg_4_0:refreshAssistBossInfo()
+	elseif arg_4_0.entityMO:isVorpalith() then
+		arg_4_0:refreshVorpalithInfo()
 	elseif arg_4_0.entityMO:isASFDEmitter() then
 		arg_4_0:refreshASFDInfo()
 	elseif var_4_0 then
@@ -393,66 +396,85 @@ function var_0_0.refreshASFDInfo(arg_11_0)
 	gohelper.setActive(arg_11_0.goCareer, false)
 end
 
-function var_0_0.onDestroy(arg_12_0)
-	if arg_12_0._tweenHarm then
-		ZProj.TweenHelper.KillById(arg_12_0._tweenHarm)
-		ZProj.TweenHelper.KillById(arg_12_0._tweenHurt)
-		ZProj.TweenHelper.KillById(arg_12_0._tweenHeal)
+function var_0_0.refreshVorpalithInfo(arg_12_0)
+	local var_12_0 = FightDataHelper.fieldMgr.customData and FightDataHelper.fieldMgr.customData[FightCustomData.CustomDataType.Survival]
+	local var_12_1 = var_12_0 and var_12_0.equipMaxTagId
+	local var_12_2 = var_12_1 and lua_survival_equip_found.configDict[var_12_1]
+	local var_12_3 = var_12_2 and var_12_2.icon3 or 76008111
+
+	arg_12_0._heroIcon:LoadImage(ResUrl.getHeadIconSmall(var_12_3), arg_12_0.onImageLoaded, arg_12_0)
+
+	arg_12_0._txtName.text = lua_survival_const.configDict[3001].value2
+
+	gohelper.setActive(arg_12_0.goLayout, false)
+	gohelper.setActive(arg_12_0.goRare, false)
+	gohelper.setActive(arg_12_0.goCareer, false)
+end
+
+function var_0_0.onImageLoaded(arg_13_0)
+	arg_13_0._heroIconImage:SetNativeSize()
+end
+
+function var_0_0.onDestroy(arg_14_0)
+	if arg_14_0._tweenHarm then
+		ZProj.TweenHelper.KillById(arg_14_0._tweenHarm)
+		ZProj.TweenHelper.KillById(arg_14_0._tweenHurt)
+		ZProj.TweenHelper.KillById(arg_14_0._tweenHeal)
 	end
 
-	arg_12_0._tweenHarm = nil
-	arg_12_0._tweenHurt = nil
-	arg_12_0._tweenHeal = nil
+	arg_14_0._tweenHarm = nil
+	arg_14_0._tweenHurt = nil
+	arg_14_0._tweenHeal = nil
 
-	for iter_12_0, iter_12_1 in pairs(arg_12_0._skillItems) do
-		if iter_12_1 then
-			for iter_12_2, iter_12_3 in pairs(iter_12_1.skillIconGo) do
-				iter_12_3.imgIcon:UnLoadImage()
+	for iter_14_0, iter_14_1 in pairs(arg_14_0._skillItems) do
+		if iter_14_1 then
+			for iter_14_2, iter_14_3 in pairs(iter_14_1.skillIconGo) do
+				iter_14_3.imgIcon:UnLoadImage()
 
-				if not iter_12_3.isBigSkill then
-					iter_12_3.tag:UnLoadImage()
+				if not iter_14_3.isBigSkill then
+					iter_14_3.tag:UnLoadImage()
 				end
 			end
 		end
 	end
 
-	arg_12_0._heroIcon:UnLoadImage()
+	arg_14_0._heroIcon:UnLoadImage()
 end
 
-function var_0_0.refreshAct174Info(arg_13_0)
-	gohelper.setActive(arg_13_0.goLayout, false)
-	recthelper.setAnchorY(arg_13_0._txtName.gameObject.transform, 0)
+function var_0_0.refreshAct174Info(arg_15_0)
+	gohelper.setActive(arg_15_0.goLayout, false)
+	recthelper.setAnchorY(arg_15_0._txtName.gameObject.transform, 0)
 
-	local var_13_0 = arg_13_0.entityMO.modelId
+	local var_15_0 = arg_15_0.entityMO.modelId
 
-	if var_13_0 then
-		local var_13_1 = Activity174Config.instance:getRoleCoByHeroId(var_13_0)
+	if var_15_0 then
+		local var_15_1 = Activity174Config.instance:getRoleCoByHeroId(var_15_0)
 
-		UISpriteSetMgr.instance:setCommonSprite(arg_13_0._career, "lssx_" .. tostring(var_13_1.career))
-		UISpriteSetMgr.instance:setCommonSprite(arg_13_0._rare, "bgequip" .. CharacterEnum.Color[var_13_1.rare])
-		arg_13_0._heroIcon:LoadImage(ResUrl.getHeadIconSmall(var_13_1.skinId))
+		UISpriteSetMgr.instance:setCommonSprite(arg_15_0._career, "lssx_" .. tostring(var_15_1.career))
+		UISpriteSetMgr.instance:setCommonSprite(arg_15_0._rare, "bgequip" .. CharacterEnum.Color[var_15_1.rare])
+		arg_15_0._heroIcon:LoadImage(ResUrl.getHeadIconSmall(var_15_1.skinId))
 
-		arg_13_0._txtName.text = var_13_1.name
+		arg_15_0._txtName.text = var_15_1.name
 	end
 end
 
-function var_0_0.refreshAct191Info(arg_14_0)
-	gohelper.setActive(arg_14_0.goLayout, false)
-	recthelper.setAnchorY(arg_14_0._txtName.gameObject.transform, 0)
+function var_0_0.refreshAct191Info(arg_16_0)
+	gohelper.setActive(arg_16_0.goLayout, false)
+	recthelper.setAnchorY(arg_16_0._txtName.gameObject.transform, 0)
 
-	local var_14_0 = arg_14_0.entityMO.modelId
+	local var_16_0 = arg_16_0.entityMO.modelId
 
-	if var_14_0 then
-		local var_14_1 = Activity191Config.instance:getRoleCoByNativeId(var_14_0, 1)
+	if var_16_0 then
+		local var_16_1 = Activity191Config.instance:getRoleCoByNativeId(var_16_0, 1)
 
-		UISpriteSetMgr.instance:setCommonSprite(arg_14_0._career, "lssx_" .. tostring(var_14_1.career))
-		UISpriteSetMgr.instance:setAct174Sprite(arg_14_0._rare, "act191_collection_rolebg")
-		transformhelper.setLocalScale(arg_14_0._rare.gameObject.transform, 0.8, 0.8, 1)
-		UISpriteSetMgr.instance:setAct174Sprite(arg_14_0._front, "act174_roleframe_" .. var_14_1.quality)
-		gohelper.setActive(arg_14_0._front, true)
-		arg_14_0._heroIcon:LoadImage(ResUrl.getHeadIconSmall(var_14_1.skinId))
+		UISpriteSetMgr.instance:setCommonSprite(arg_16_0._career, "lssx_" .. tostring(var_16_1.career))
+		UISpriteSetMgr.instance:setAct174Sprite(arg_16_0._rare, "act191_collection_rolebg")
+		transformhelper.setLocalScale(arg_16_0._rare.gameObject.transform, 0.8, 0.8, 1)
+		UISpriteSetMgr.instance:setAct174Sprite(arg_16_0._front, "act174_roleframe_" .. var_16_1.quality)
+		gohelper.setActive(arg_16_0._front, true)
+		arg_16_0._heroIcon:LoadImage(ResUrl.getHeadIconSmall(var_16_1.skinId))
 
-		arg_14_0._txtName.text = var_14_1.name
+		arg_16_0._txtName.text = var_16_1.name
 	end
 end
 

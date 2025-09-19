@@ -3,30 +3,49 @@
     "id": "Forest",
     "name": "language_10066198",
     "color": "#3F5B16",
-    "tagResName": "v2a5_autochess_tag_2"
+    "tagResName": "v2a5_autochess_tag_2",
+    "isShow": 1
   },
   {
     "id": "Machine",
     "name": "language_10066199",
     "color": "#6F6F6F",
-    "tagResName": "v2a5_autochess_tag_4"
+    "tagResName": "v2a5_autochess_tag_4",
+    "isShow": 1
   },
   {
     "id": "Supernatural",
     "name": "language_10066200",
     "color": "#605084",
-    "tagResName": "v2a5_autochess_tag_3"
+    "tagResName": "v2a5_autochess_tag_3",
+    "isShow": 1
   },
   {
     "id": "Ocean",
     "name": "language_10066201",
     "color": "#435F79",
-    "tagResName": "v2a5_autochess_tag_5"
+    "tagResName": "v2a5_autochess_tag_5",
+    "isShow": 1
   },
   {
     "id": "RareBeast",
     "name": "language_10066202",
     "color": "#876139",
-    "tagResName": "v2a5_autochess_tag_6"
+    "tagResName": "v2a5_autochess_tag_6",
+    "isShow": 1
+  },
+  {
+    "id": "Lava",
+    "name": "language_10080215",
+    "color": "#B65C42",
+    "tagResName": "v2a5_autochess_tag_7",
+    "isShow": 1
+  },
+  {
+    "id": "Neutral",
+    "name": "language_10080216",
+    "color": "#B08E2C",
+    "tagResName": "",
+    "isShow": 0
   }
 ]

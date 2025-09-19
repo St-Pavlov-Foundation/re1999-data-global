@@ -20,21 +20,27 @@ function var_0_0.onOpen(arg_3_0)
 
 	arg_3_0.levelItemDic = arg_3_0:getUserDataTb_()
 
+	local var_3_0 = Activity182Model.instance:getCurActId()
+	local var_3_1 = AutoChessConfig.instance:getPveEpisodeCoList(var_3_0)
+
 	for iter_3_0 = 1, 6 do
-		local var_3_0 = lua_auto_chess_episode.configList[iter_3_0]
-		local var_3_1 = gohelper.findChild(arg_3_0._goStageRoot, "go_Stage" .. iter_3_0)
-		local var_3_2 = arg_3_0:getResInst(AutoChessEnum.LevelItemPath, var_3_1, "stage" .. iter_3_0)
-		local var_3_3
+		local var_3_2 = var_3_1[iter_3_0]
 
-		var_3_3.goArrow, var_3_3 = gohelper.findChild(var_3_1, "go_Arrow" .. iter_3_0), MonoHelper.addNoUpdateLuaComOnceToGo(var_3_2, AutoChessLevelItem, arg_3_0)
+		if var_3_2 then
+			local var_3_3 = gohelper.findChild(arg_3_0._goStageRoot, "go_Stage" .. iter_3_0)
+			local var_3_4 = arg_3_0:getResInst(AutoChessStrEnum.ResPath.LevelItem, var_3_3, "stage" .. iter_3_0)
+			local var_3_5
 
-		var_3_3:setData(var_3_0)
+			var_3_5.goArrow, var_3_5 = gohelper.findChild(var_3_3, "go_Arrow" .. iter_3_0), MonoHelper.addNoUpdateLuaComOnceToGo(var_3_4, AutoChessLevelItem, arg_3_0)
 
-		local var_3_4, var_3_5, var_3_6 = transformhelper.getLocalRotation(var_3_1.transform)
+			var_3_5:setData(var_3_2)
 
-		transformhelper.setLocalRotation(var_3_3._goRewardTips.transform, 0, 0, -var_3_6)
+			local var_3_6, var_3_7, var_3_8 = transformhelper.getLocalRotation(var_3_3.transform)
 
-		arg_3_0.levelItemDic[var_3_0.id] = var_3_3
+			transformhelper.setLocalRotation(var_3_5._goRewardTips.transform, 0, 0, -var_3_8)
+
+			arg_3_0.levelItemDic[var_3_2.id] = var_3_5
+		end
 	end
 end
 

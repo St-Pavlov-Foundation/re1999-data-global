@@ -738,15 +738,44 @@
     "uiPath": []
   },
   {
-    "id": 21,
-    "audio": [],
-    "chapter": [],
+    "id": 19,
+    "audio": [
+      3200138,
+      3200139
+    ],
+    "chapter": [
+      19601,
+      19602,
+      19603,
+      19604
+    ],
     "guide": [],
-    "story": [],
+    "story": [
+      1960101,
+      1960102,
+      1960103,
+      1960104,
+      1960105,
+      1960106,
+      1960107,
+      1960108,
+      1960301,
+      1960302,
+      1960303,
+      1960304,
+      1960305,
+      1960306,
+      1960307,
+      1960308
+    ],
     "folderPath": [],
     "videoPath": [],
     "path": [],
-    "uiFolder": [],
+    "uiFolder": [
+      "ui/viewres/versionactivity_1_9/v1a9_dungeon",
+      "ui/viewres/versionactivity_1_9/v1a9_kakania",
+      "ui/viewres/versionactivity_1_9/v1a9_lucy"
+    ],
     "uiPath": []
   },
   {
@@ -796,6 +825,75 @@
       "ui/viewres/versionactivity_2_0/v2a0_enter",
       "ui/viewres/versionactivity_2_0/v2a0_joe",
       "ui/viewres/versionactivity_2_0/v2a0_mercuria"
+    ],
+    "uiPath": []
+  },
+  {
+    "id": 21,
+    "audio": [
+      3200166,
+      3200167
+    ],
+    "chapter": [
+      21101,
+      21201,
+      21301,
+      21401
+    ],
+    "guide": [
+      21201,
+      21202,
+      21203,
+      21204,
+      21205,
+      21206,
+      21207,
+      21208,
+      21209,
+      21210,
+      21211,
+      21212,
+      21213,
+      21214,
+      21215,
+      21216,
+      21218,
+      21219,
+      21301,
+      21302,
+      21303,
+      21304,
+      21305,
+      21306,
+      21307
+    ],
+    "story": [
+      1211401,
+      1211402,
+      1211403,
+      1211404,
+      1211405,
+      1211406,
+      1211407,
+      1211408,
+      1210501,
+      1210502,
+      1210503,
+      1210504,
+      1210505,
+      1210506,
+      1210507,
+      1210508
+    ],
+    "folderPath": [],
+    "videoPath": [
+      "2_1_pv"
+    ],
+    "path": [],
+    "uiFolder": [
+      "ui/viewres/versionactivity_2_1/v2a1_dungeon",
+      "ui/viewres/versionactivity_2_1/v2a1_aergusi",
+      "ui/viewres/versionactivity_2_1/v2a1_tuesday"
     ],
     "uiPath": []
   },

@@ -10,43 +10,25 @@ function var_0_0.onInitView(arg_1_0)
 	end
 end
 
-function var_0_0.addEvents(arg_2_0)
+function var_0_0.onClickModalMask(arg_2_0)
 	return
 end
 
-function var_0_0.removeEvents(arg_3_0)
-	return
-end
-
-function var_0_0.onClickModalMask(arg_4_0)
-	return
-end
-
-function var_0_0._editableInitView(arg_5_0)
-	return
-end
-
-function var_0_0.onUpdateParam(arg_6_0)
-	return
-end
-
-function var_0_0.onOpen(arg_7_0)
+function var_0_0.onOpen(arg_3_0)
 	AudioMgr.instance:trigger(AudioEnum.AutoChess.play_ui_tangren_qishou_confirm)
 
-	if arg_7_0.viewParam and arg_7_0.viewParam.leaderId then
-		local var_7_0 = arg_7_0:getResInst(AutoChessEnum.LeaderItemPath, arg_7_0._goLeaderRoot)
+	if arg_3_0.viewParam and arg_3_0.viewParam.leaderId then
+		local var_3_0 = arg_3_0:getResInst(AutoChessStrEnum.ResPath.LeaderItem, arg_3_0._goLeaderRoot)
 
-		MonoHelper.addNoUpdateLuaComOnceToGo(var_7_0, AutoChessLeaderItem):setData(arg_7_0.viewParam.leaderId)
-		TaskDispatcher.runDelay(arg_7_0.closeThis, arg_7_0, 2)
+		MonoHelper.addNoUpdateLuaComOnceToGo(var_3_0, AutoChessLeaderItem):setData(arg_3_0.viewParam.leaderId)
+		TaskDispatcher.runDelay(arg_3_0.closeThis, arg_3_0, 2)
 	end
 end
 
-function var_0_0.onClose(arg_8_0)
-	AutoChessRpc.instance:sendAutoChessEnterSceneRequest(arg_8_0.viewParam.moduleId, arg_8_0.viewParam.episodeId, arg_8_0.viewParam.leaderId)
-end
+function var_0_0.onClose(arg_4_0)
+	local var_4_0 = arg_4_0.viewParam.actId or Activity182Model.instance:getCurActId()
 
-function var_0_0.onDestroyView(arg_9_0)
-	return
+	AutoChessRpc.instance:sendAutoChessEnterSceneRequest(var_4_0, arg_4_0.viewParam.moduleId, arg_4_0.viewParam.episodeId, arg_4_0.viewParam.leaderId, true)
 end
 
 return var_0_0

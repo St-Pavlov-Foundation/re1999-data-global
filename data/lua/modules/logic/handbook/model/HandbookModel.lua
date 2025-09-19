@@ -112,7 +112,7 @@ end
 
 function var_0_0.getCGUnlockIndexInChapter(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
 	local var_10_0 = 1
-	local var_10_1 = HandbookConfig.instance:getCGDictByChapter(arg_10_1)
+	local var_10_1 = HandbookConfig.instance:getCGDictByChapter(arg_10_1, arg_10_3)
 
 	for iter_10_0, iter_10_1 in ipairs(var_10_1) do
 		if iter_10_1.id == arg_10_2 then

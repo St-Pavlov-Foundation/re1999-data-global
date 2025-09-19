@@ -28,8 +28,7 @@ function var_0_0.init(arg_1_0, arg_1_1)
 	arg_1_0.goHpFloat = gohelper.findChild(arg_1_0.goBar, "go_HpFloat")
 	arg_1_0.meshComp = MonoHelper.addNoUpdateLuaComOnceToGo(arg_1_0.goMesh, AutoChessMeshComp)
 	arg_1_0.effectComp = MonoHelper.addNoUpdateLuaComOnceToGo(arg_1_0.goEntity, AutoChessEffectComp)
-	arg_1_0.floatItemList = {}
-	arg_1_0.floatItemCacheList = {}
+	arg_1_0.goEffLight = gohelper.findChild(arg_1_1, "ani/go_EffLight")
 	arg_1_0.animStar1 = arg_1_0.goStar1:GetComponent(gohelper.Type_Animator)
 	arg_1_0.animStar2 = arg_1_0.goStar2:GetComponent(gohelper.Type_Animator)
 	arg_1_0.animStar3 = arg_1_0.goStar3:GetComponent(gohelper.Type_Animator)
@@ -44,390 +43,426 @@ function var_0_0.init(arg_1_0, arg_1_1)
 	arg_1_0:addEventCb(AutoChessController.instance, AutoChessEvent.DragChessEntityEnd, arg_1_0.onDragChessEnd, arg_1_0)
 	arg_1_0:addEventCb(AutoChessController.instance, AutoChessEvent.DrageMallItem, arg_1_0.onDragChess, arg_1_0)
 	arg_1_0:addEventCb(AutoChessController.instance, AutoChessEvent.DrageMallItemEnd, arg_1_0.onDragChessEnd, arg_1_0)
+
+	arg_1_0.goExp = gohelper.findChild(arg_1_0.goBar, "Exp")
+	arg_1_0.floatItemList = {}
+	arg_1_0.floatItemCacheList = {}
 end
 
-function var_0_0.onDragChess(arg_2_0, arg_2_1)
-	if arg_2_0.data.id == arg_2_1 and arg_2_0.data.maxExpLimit ~= 0 then
-		arg_2_0.lightIndex = arg_2_0.data.exp + 1
+function var_0_0.addEventListeners(arg_2_0)
+	arg_2_0:addEventCb(AutoChessController.instance, AutoChessEvent.UsingLeaderSkill, arg_2_0.onUsingLeaderSkill, arg_2_0)
+end
 
-		gohelper.setActive(arg_2_0["imageLight" .. arg_2_0.lightIndex].gameObject, true)
-		arg_2_0["animStar" .. arg_2_0.lightIndex]:Play("loop", 0, 0)
+function var_0_0.onUsingLeaderSkill(arg_3_0, arg_3_1)
+	if arg_3_1 then
+		local var_3_0 = AutoChessGameModel.instance.targetTypes
+
+		if tabletool.indexOf(var_3_0, arg_3_0.config.type) then
+			gohelper.setActive(arg_3_0.goEffLight, true)
+
+			return
+		end
+	end
+
+	gohelper.setActive(arg_3_0.goEffLight, false)
+end
+
+function var_0_0.onDragChess(arg_4_0, arg_4_1)
+	if arg_4_0.data.id == arg_4_1.id and arg_4_0.data.maxExpLimit ~= 0 then
+		arg_4_0.lightIndex = arg_4_0.data.exp + 1
+
+		gohelper.setActive(arg_4_0["imageLight" .. arg_4_0.lightIndex].gameObject, true)
+		arg_4_0["animStar" .. arg_4_0.lightIndex]:Play("loop", 0, 0)
 	end
 end
 
-function var_0_0.onDragChessEnd(arg_3_0)
-	if arg_3_0.lightIndex then
-		arg_3_0["animStar" .. arg_3_0.lightIndex]:Play("idle", 0, 0)
-		gohelper.setActive(arg_3_0["imageLight" .. arg_3_0.lightIndex].gameObject, false)
+function var_0_0.onDragChessEnd(arg_5_0)
+	if arg_5_0.lightIndex then
+		arg_5_0["animStar" .. arg_5_0.lightIndex]:Play("idle", 0, 0)
+		gohelper.setActive(arg_5_0["imageLight" .. arg_5_0.lightIndex].gameObject, false)
 
-		arg_3_0.lightIndex = nil
+		arg_5_0.lightIndex = nil
 	end
 end
 
-function var_0_0.onDestroy(arg_4_0)
-	TaskDispatcher.cancelTask(arg_4_0.delayFly, arg_4_0)
-	TaskDispatcher.cancelTask(arg_4_0.checkHpFloat, arg_4_0)
+function var_0_0.onDestroy(arg_6_0)
+	TaskDispatcher.cancelTask(arg_6_0.delayFly, arg_6_0)
+	TaskDispatcher.cancelTask(arg_6_0.checkHpFloat, arg_6_0)
 end
 
-function var_0_0.setData(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	arg_5_0:initChessData(arg_5_1)
+function var_0_0.setData(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
+	arg_7_0:initChessData(arg_7_1)
 
-	arg_5_0.warZone = arg_5_2
-	arg_5_0.index = arg_5_3
-	arg_5_0.teamType = arg_5_0.data.teamType
-	arg_5_0.config = lua_auto_chess.configDict[arg_5_1.id][arg_5_1.star]
-	arg_5_0.skillIds = {}
+	arg_7_0.warZone = arg_7_2
+	arg_7_0.index = arg_7_3
+	arg_7_0.teamType = arg_7_0.data.teamType
+	arg_7_0.config = AutoChessConfig.instance:getChessCfgById(arg_7_0.data.id, arg_7_0.data.star)
+	arg_7_0.skillIds = {}
 
-	if not string.nilorempty(arg_5_0.config.skillIds) then
-		arg_5_0.skillIds = string.splitToNumber(arg_5_0.config.skillIds, "#")
+	if not string.nilorempty(arg_7_0.config.skillIds) then
+		arg_7_0.skillIds = string.splitToNumber(arg_7_0.config.skillIds, "#")
 	end
 
-	local var_5_0 = arg_5_0.teamType == AutoChessEnum.TeamType.Enemy and 1 or -1
+	local var_7_0 = arg_7_0.teamType == AutoChessEnum.TeamType.Enemy and 1 or -1
 
-	transformhelper.setLocalScale(arg_5_0.dirTrs, var_5_0, 1, 1)
-	arg_5_0.meshComp:setData(arg_5_0.config.image, arg_5_0.teamType == AutoChessEnum.TeamType.Enemy)
-	arg_5_0:refreshUI()
-	arg_5_0:show()
+	transformhelper.setLocalScale(arg_7_0.dirTrs, var_7_0, 1, 1)
+	arg_7_0.meshComp:setData(arg_7_0.config.image, arg_7_0.teamType == AutoChessEnum.TeamType.Enemy)
+	arg_7_0:refreshUI()
+	arg_7_0:show()
+
+	if arg_7_0.config.type == AutoChessStrEnum.ChessType.Incubate and arg_7_0.data.cd == 0 then
+		arg_7_0.anim:Play("box_loop", 0, 0)
+	end
 end
 
-function var_0_0.updateIndex(arg_6_0, arg_6_1, arg_6_2)
-	arg_6_0.warZone = arg_6_1
-	arg_6_0.index = arg_6_2
+function var_0_0.updateIndex(arg_8_0, arg_8_1, arg_8_2)
+	arg_8_0.warZone = arg_8_1
+	arg_8_0.index = arg_8_2
 
-	arg_6_0:show()
+	arg_8_0:show()
 end
 
-function var_0_0.updateLocation(arg_7_0)
-	arg_7_0.pos = AutoChessGameModel.instance:getChessLocation(arg_7_0.warZone, arg_7_0.index + 1)
+function var_0_0.updateLocation(arg_9_0)
+	arg_9_0.pos = AutoChessGameModel.instance:getChessLocation(arg_9_0.warZone, arg_9_0.index + 1)
 
-	recthelper.setAnchor(arg_7_0.transform, arg_7_0.pos.x, arg_7_0.pos.y)
+	recthelper.setAnchor(arg_9_0.transform, arg_9_0.pos.x, arg_9_0.pos.y)
 end
 
-function var_0_0.setScale(arg_8_0, arg_8_1)
-	transformhelper.setLocalScale(arg_8_0.transform, arg_8_1, arg_8_1, arg_8_1)
+function var_0_0.setScale(arg_10_0, arg_10_1)
+	transformhelper.setLocalScale(arg_10_0.transform, arg_10_1, arg_10_1, arg_10_1)
 end
 
-function var_0_0.initChessData(arg_9_0, arg_9_1)
-	arg_9_0.data = arg_9_1
-	arg_9_0.data.battle = tonumber(arg_9_0.data.battle)
-	arg_9_0.data.hp = tonumber(arg_9_0.data.hp)
+function var_0_0.initChessData(arg_11_0, arg_11_1)
+	arg_11_0.data = arg_11_1
+	arg_11_0.data.battle = tonumber(arg_11_0.data.battle)
+	arg_11_0.data.hp = tonumber(arg_11_0.data.hp)
 end
 
-function var_0_0.updateChessData(arg_10_0, arg_10_1)
-	arg_10_0.data.id = arg_10_1.id
-	arg_10_0.data.uid = arg_10_1.uid
-	arg_10_0.data.star = arg_10_1.star
-	arg_10_0.data.exp = arg_10_1.exp
-	arg_10_0.data.maxExpLimit = arg_10_1.maxExpLimit
-	arg_10_0.data.status = arg_10_1.status
-	arg_10_0.data.hp = tonumber(arg_10_1.hp)
-	arg_10_0.data.battle = tonumber(arg_10_1.battle)
-	arg_10_0.data.skillContainer = arg_10_1.skillContainer
-	arg_10_0.data.buffContainer = arg_10_1.buffContainer
+function var_0_0.updateChessData(arg_12_0, arg_12_1)
+	arg_12_0.data.id = arg_12_1.id
+	arg_12_0.data.uid = arg_12_1.uid
+	arg_12_0.data.star = arg_12_1.star
+	arg_12_0.data.exp = arg_12_1.exp
+	arg_12_0.data.maxExpLimit = arg_12_1.maxExpLimit
+	arg_12_0.data.status = arg_12_1.status
+	arg_12_0.data.hp = tonumber(arg_12_1.hp)
+	arg_12_0.data.battle = tonumber(arg_12_1.battle)
+	arg_12_0.data.skillContainer = arg_12_1.skillContainer
+	arg_12_0.data.buffContainer = arg_12_1.buffContainer
 end
 
-function var_0_0.move(arg_11_0, arg_11_1)
-	arg_11_1 = tonumber(arg_11_1)
-	arg_11_0.pos = AutoChessGameModel.instance:getChessLocation(arg_11_0.warZone, arg_11_1 + 1)
+function var_0_0.move(arg_13_0, arg_13_1)
+	arg_13_0.index = tonumber(arg_13_1)
+	arg_13_0.pos = AutoChessGameModel.instance:getChessLocation(arg_13_0.warZone, arg_13_0.index + 1)
 
-	ZProj.TweenHelper.DOAnchorPosX(arg_11_0.transform, arg_11_0.pos.x, AutoChessEnum.ChessAniTime.Jump)
+	ZProj.TweenHelper.DOAnchorPosX(arg_13_0.transform, arg_13_0.pos.x, AutoChessEnum.ChessAniTime.Jump)
 	AudioMgr.instance:trigger(AudioEnum.AutoChess.play_ui_tangren_chess_move)
-	arg_11_0.anim:Play("jump", 0, 0)
+	arg_13_0.anim:Play("jump", 0, 0)
 end
 
-function var_0_0.attack(arg_12_0)
-	arg_12_0.anim:Play("melee", 0, 0)
+function var_0_0.attack(arg_14_0)
+	arg_14_0.anim:Play("melee", 0, 0)
 end
 
-function var_0_0.ranged(arg_13_0, arg_13_1, arg_13_2)
-	gohelper.setAsLastSibling(arg_13_0.go)
-	arg_13_0.anim:Play("attack", 0, 0)
-	arg_13_0.effectComp:playEffect(arg_13_2.id)
-	arg_13_0.effectComp:moveEffect(arg_13_2.nameUp, arg_13_1, arg_13_2.duration)
+function var_0_0.ranged(arg_15_0, arg_15_1, arg_15_2)
+	gohelper.setAsLastSibling(arg_15_0.go)
+	arg_15_0.anim:Play("attack", 0, 0)
+	arg_15_0.effectComp:playEffect(arg_15_2.id)
+	arg_15_0.effectComp:moveEffect(arg_15_2.nameUp, arg_15_1, arg_15_2.duration)
 end
 
-function var_0_0.skillAnim(arg_14_0, arg_14_1)
-	arg_14_0.anim:Play(arg_14_1, 0, 0)
+function var_0_0.skillAnim(arg_16_0, arg_16_1)
+	arg_16_0.anim:Play(arg_16_1, 0, 0)
 
 	return AutoChessEnum.ChessAniTime.Jump
 end
 
-function var_0_0.resetPos(arg_15_0)
-	ZProj.TweenHelper.DOAnchorPosX(arg_15_0.transform, arg_15_0.pos.x, 0.5)
+function var_0_0.resetPos(arg_17_0)
+	ZProj.TweenHelper.DOAnchorPosX(arg_17_0.transform, arg_17_0.pos.x, 0.5)
 end
 
-function var_0_0.initBuffEffect(arg_16_0)
-	arg_16_0.effectComp:hideAll()
+function var_0_0.initBuffEffect(arg_18_0)
+	arg_18_0.effectComp:hideAll()
 
-	for iter_16_0, iter_16_1 in ipairs(arg_16_0.data.buffContainer.buffs) do
-		local var_16_0 = lua_auto_chess_buff.configDict[iter_16_1.id].buffeffectID
+	for iter_18_0, iter_18_1 in ipairs(arg_18_0.data.buffContainer.buffs) do
+		local var_18_0 = lua_auto_chess_buff.configDict[iter_18_1.id].buffeffectID
 
-		if var_16_0 ~= 0 then
-			local var_16_1 = lua_auto_chess_effect.configDict[var_16_0]
+		if var_18_0 ~= 0 then
+			local var_18_1 = lua_auto_chess_effect.configDict[var_18_0]
 
-			if var_16_1.loop == 1 then
-				arg_16_0.effectComp:playEffect(var_16_1.id)
+			if var_18_1.loop == 1 then
+				arg_18_0.effectComp:playEffect(var_18_1.id)
 			end
 		end
 	end
 
-	local var_16_2 = arg_16_0.config.tag
+	local var_18_2 = arg_18_0.config.tag
 
-	if not string.nilorempty(var_16_2) then
-		arg_16_0.effectComp:playEffect(AutoChessStrEnum.Tag2EffectId[var_16_2])
+	if not string.nilorempty(var_18_2) then
+		arg_18_0.effectComp:playEffect(AutoChessEnum.Tag2EffectId[var_18_2])
 	end
 end
 
-function var_0_0.addBuffEffect(arg_17_0, arg_17_1)
-	local var_17_0 = lua_auto_chess_buff.configDict[arg_17_1]
+function var_0_0.addBuffEffect(arg_19_0, arg_19_1)
+	local var_19_0 = lua_auto_chess_buff.configDict[arg_19_1]
 
-	if var_17_0.buffeffectID ~= 0 then
-		arg_17_0.effectComp:playEffect(var_17_0.buffeffectID)
+	if var_19_0.buffeffectID ~= 0 then
+		arg_19_0.effectComp:playEffect(var_19_0.buffeffectID)
 	end
 end
 
-function var_0_0.addBuff(arg_18_0, arg_18_1)
-	arg_18_0:addBuffEffect(arg_18_1.id)
-	table.insert(arg_18_0.data.buffContainer.buffs, arg_18_1)
+function var_0_0.addBuff(arg_20_0, arg_20_1)
+	arg_20_0:addBuffEffect(arg_20_1.id)
+	table.insert(arg_20_0.data.buffContainer.buffs, arg_20_1)
 end
 
-function var_0_0.updateBuff(arg_19_0, arg_19_1)
-	arg_19_0:addBuffEffect(arg_19_1.id)
+function var_0_0.updateBuff(arg_21_0, arg_21_1)
+	arg_21_0:addBuffEffect(arg_21_1.id)
 
-	local var_19_0 = arg_19_0.data.buffContainer.buffs
+	local var_21_0 = arg_21_0.data.buffContainer.buffs
 
-	for iter_19_0, iter_19_1 in ipairs(var_19_0) do
-		if iter_19_1.uid == arg_19_1.uid then
-			var_19_0[iter_19_0] = arg_19_1
+	for iter_21_0, iter_21_1 in ipairs(var_21_0) do
+		if iter_21_1.uid == arg_21_1.uid then
+			var_21_0[iter_21_0] = arg_21_1
 
 			break
 		end
 	end
 end
 
-function var_0_0.delBuff(arg_20_0, arg_20_1)
-	local var_20_0 = arg_20_0.data.buffContainer.buffs
-	local var_20_1
+function var_0_0.delBuff(arg_22_0, arg_22_1)
+	local var_22_0 = arg_22_0.data.buffContainer.buffs
+	local var_22_1
 
-	for iter_20_0, iter_20_1 in ipairs(var_20_0) do
-		if iter_20_1.uid == arg_20_1 then
-			var_20_1 = iter_20_0
+	for iter_22_0, iter_22_1 in ipairs(var_22_0) do
+		if iter_22_1.uid == arg_22_1 then
+			var_22_1 = iter_22_0
 
 			break
 		end
 	end
 
-	if var_20_1 then
-		local var_20_2 = var_20_0[var_20_1]
-		local var_20_3 = lua_auto_chess_buff.configDict[var_20_2.id]
+	if var_22_1 then
+		local var_22_2 = var_22_0[var_22_1]
+		local var_22_3 = lua_auto_chess_buff.configDict[var_22_2.id]
 
-		if var_20_3.buffeffectID ~= 0 then
-			arg_20_0.effectComp:removeEffect(var_20_3.buffeffectID)
+		if var_22_3.buffeffectID ~= 0 then
+			arg_22_0.effectComp:removeEffect(var_22_3.buffeffectID)
 		end
 
-		table.remove(var_20_0, var_20_1)
+		table.remove(var_22_0, var_22_1)
 	else
-		logError(string.format("异常:未找到buffUid%s", arg_20_1))
+		logError(string.format("异常:未找到buffUid%s", arg_22_1))
 	end
 end
 
-function var_0_0.die(arg_21_0, arg_21_1)
-	arg_21_0.anim:Play("die", 0, 0)
+function var_0_0.die(arg_23_0, arg_23_1)
+	arg_23_0.anim:Play("die", 0, 0)
 
-	if arg_21_1 and #arg_21_0.skillIds ~= 0 then
-		local var_21_0 = lua_auto_chess_skill.configDict[arg_21_0.skillIds[1]]
+	if arg_23_1 and #arg_23_0.skillIds ~= 0 then
+		local var_23_0 = lua_auto_chess_skill.configDict[arg_23_0.skillIds[1]]
 
-		if var_21_0.tag == "Die" and var_21_0.useeffect ~= 0 then
-			arg_21_0.effectComp:playEffect(var_21_0.useeffect)
+		if var_23_0.tag == "Die" and var_23_0.useeffect ~= 0 then
+			arg_23_0.effectComp:playEffect(var_23_0.useeffect)
 
-			return var_21_0.useeffect
+			return var_23_0.useeffect
 		end
 	end
 end
 
-function var_0_0.activeExpStar(arg_22_0, arg_22_1)
-	gohelper.setActive(arg_22_0.goStar, arg_22_1)
+function var_0_0.activeExpStar(arg_24_0, arg_24_1)
+	gohelper.setActive(arg_24_0.goStar, arg_24_1)
 end
 
-function var_0_0.hide(arg_23_0)
-	gohelper.setActive(arg_23_0.go, false)
+function var_0_0.hide(arg_25_0)
+	gohelper.setActive(arg_25_0.go, false)
 end
 
-function var_0_0.show(arg_24_0)
-	arg_24_0:updateLocation()
-	gohelper.setActive(arg_24_0.go, true)
+function var_0_0.show(arg_26_0)
+	arg_26_0:updateLocation()
+	gohelper.setActive(arg_26_0.go, true)
 end
 
-function var_0_0.updateHp(arg_25_0, arg_25_1)
-	arg_25_1 = tonumber(arg_25_1)
-	arg_25_0.data.hp = arg_25_0.data.hp + arg_25_1
-
-	arg_25_0:refreshAttr()
-end
-
-function var_0_0.floatHp(arg_26_0, arg_26_1)
-	TaskDispatcher.cancelTask(arg_26_0.checkHpFloat, arg_26_0)
-	TaskDispatcher.runRepeat(arg_26_0.checkHpFloat, arg_26_0, 0.5)
-
-	local var_26_0
-	local var_26_1 = #arg_26_0.floatItemCacheList
-
-	if var_26_1 > 0 then
-		var_26_0 = arg_26_0.floatItemCacheList[var_26_1]
-		arg_26_0.floatItemCacheList[var_26_1] = nil
-	else
-		var_26_0 = arg_26_0:getUserDataTb_()
-		var_26_0.go = gohelper.cloneInPlace(arg_26_0.goHpFloat)
-		var_26_0.anim = var_26_0.go:GetComponent(gohelper.Type_Animator)
-		var_26_0.txtHpAdd = gohelper.findChildText(var_26_0.go, "txt_HpAdd")
-		var_26_0.txtHpSub = gohelper.findChildText(var_26_0.go, "txt_HpSub")
-	end
-
-	var_26_0.time = Time.time
-	arg_26_0.floatItemList[#arg_26_0.floatItemList + 1] = var_26_0
-
-	gohelper.setActive(var_26_0.go, true)
-
-	arg_26_1 = tonumber(arg_26_1)
-
-	if arg_26_1 > 0 then
-		var_26_0.txtHpAdd.text = "+" .. arg_26_1
-
-		var_26_0.anim:Play("hpadd", 0, 0)
-	else
-		var_26_0.txtHpSub.text = arg_26_1
-
-		var_26_0.anim:Play("hpsub", 0, 0)
-	end
-end
-
-function var_0_0.updateBattle(arg_27_0, arg_27_1)
+function var_0_0.updateHp(arg_27_0, arg_27_1)
 	arg_27_1 = tonumber(arg_27_1)
-	arg_27_0.data.battle = arg_27_0.data.battle + arg_27_1
+	arg_27_0.data.hp = arg_27_0.data.hp + arg_27_1
 
 	arg_27_0:refreshAttr()
 end
 
-function var_0_0.updateExp(arg_28_0, arg_28_1)
+function var_0_0.floatHp(arg_28_0, arg_28_1, arg_28_2)
+	TaskDispatcher.cancelTask(arg_28_0.checkHpFloat, arg_28_0)
+	TaskDispatcher.runRepeat(arg_28_0.checkHpFloat, arg_28_0, 0.5)
+
+	local var_28_0
+	local var_28_1 = #arg_28_0.floatItemCacheList
+
+	if var_28_1 > 0 then
+		var_28_0 = arg_28_0.floatItemCacheList[var_28_1]
+		arg_28_0.floatItemCacheList[var_28_1] = nil
+	else
+		var_28_0 = arg_28_0:getUserDataTb_()
+		var_28_0.go = gohelper.cloneInPlace(arg_28_0.goHpFloat)
+		var_28_0.anim = var_28_0.go:GetComponent(gohelper.Type_Animator)
+		var_28_0.txtHpAdd = gohelper.findChildText(var_28_0.go, "txt_HpAdd")
+		var_28_0.txtHpSub = gohelper.findChildText(var_28_0.go, "txt_HpSub")
+		var_28_0.txtHpPoison = gohelper.findChildText(var_28_0.go, "txt_HpPoison")
+	end
+
+	var_28_0.time = Time.time
+	arg_28_0.floatItemList[#arg_28_0.floatItemList + 1] = var_28_0
+
+	gohelper.setActive(var_28_0.go, true)
+
 	arg_28_1 = tonumber(arg_28_1)
-	arg_28_0.data.exp = arg_28_1 > arg_28_0.data.maxExpLimit and arg_28_0.data.maxExpLimit or arg_28_1
 
-	arg_28_0:refreshExp()
+	if tonumber(arg_28_2) == AutoChessEnum.HpFloatType.Attack then
+		var_28_0.txtHpSub.text = arg_28_1
+
+		var_28_0.anim:Play("hpsub", 0, 0)
+	elseif tonumber(arg_28_2) == AutoChessEnum.HpFloatType.Poison then
+		var_28_0.txtHpPoison.text = arg_28_1
+
+		var_28_0.anim:Play("hpposion", 0, 0)
+	elseif tonumber(arg_28_2) == AutoChessEnum.HpFloatType.Cure then
+		var_28_0.txtHpAdd.text = "+" .. arg_28_1
+
+		var_28_0.anim:Play("hpadd", 0, 0)
+	end
 end
 
-function var_0_0.updateStar(arg_29_0, arg_29_1)
-	arg_29_0:initChessData(arg_29_1)
-	arg_29_0:refreshUI()
+function var_0_0.updateBattle(arg_29_0, arg_29_1)
+	arg_29_1 = tonumber(arg_29_1)
+	arg_29_0.data.battle = arg_29_0.data.battle + arg_29_1
 
-	return arg_29_0.effectComp:playEffect(50001)
+	arg_29_0:refreshAttr()
 end
 
-function var_0_0.refreshUI(arg_30_0)
-	arg_30_0:initBuffEffect()
-	arg_30_0:refreshAttr()
-	arg_30_0:refreshStar()
+function var_0_0.updateExp(arg_30_0, arg_30_1)
+	arg_30_1 = tonumber(arg_30_1)
+	arg_30_0.data.exp = arg_30_1 > arg_30_0.data.maxExpLimit and arg_30_0.data.maxExpLimit or arg_30_1
+
 	arg_30_0:refreshExp()
 end
 
-function var_0_0.refreshAttr(arg_31_0)
-	if arg_31_0.warZone == AutoChessEnum.WarZone.Two then
-		gohelper.setActive(arg_31_0.goAttack, false)
-		gohelper.setActive(arg_31_0.goHp, false)
-	else
-		arg_31_0.txtAttack.text = arg_31_0.data.battle
-		arg_31_0.txtHp.text = arg_31_0.data.hp
+function var_0_0.updateStar(arg_31_0, arg_31_1)
+	arg_31_0:initChessData(arg_31_1)
+	arg_31_0:refreshUI()
 
-		gohelper.setActive(arg_31_0.goAttack, true)
-		gohelper.setActive(arg_31_0.goHp, true)
+	return arg_31_0.effectComp:playEffect(50001)
+end
+
+function var_0_0.refreshUI(arg_32_0)
+	arg_32_0:initBuffEffect()
+	arg_32_0:refreshAttr()
+	arg_32_0:refreshStar()
+	arg_32_0:refreshExp()
+end
+
+function var_0_0.refreshAttr(arg_33_0)
+	if arg_33_0.config.type == AutoChessStrEnum.ChessType.Attack then
+		arg_33_0.txtAttack.text = arg_33_0.data.battle
+		arg_33_0.txtHp.text = arg_33_0.data.hp
+
+		gohelper.setActive(arg_33_0.goAttack, true)
+		gohelper.setActive(arg_33_0.goHp, true)
+	else
+		gohelper.setActive(arg_33_0.goAttack, false)
+		gohelper.setActive(arg_33_0.goHp, false)
 	end
 end
 
-function var_0_0.refreshExp(arg_32_0)
-	for iter_32_0 = 1, 3 do
-		local var_32_0 = arg_32_0["imageLight" .. iter_32_0]
+function var_0_0.refreshExp(arg_34_0)
+	for iter_34_0 = 1, 3 do
+		local var_34_0 = arg_34_0["imageLight" .. iter_34_0]
 
-		gohelper.setActive(var_32_0, iter_32_0 <= arg_32_0.data.exp)
+		gohelper.setActive(var_34_0, iter_34_0 <= arg_34_0.data.exp)
 	end
 end
 
-function var_0_0.refreshStar(arg_33_0)
-	local var_33_0 = luaLang("autochess_malllevelupview_level")
-
-	UISpriteSetMgr.instance:setAutoChessSprite(arg_33_0.imageLevel, "v2a5_autochess_levelbg_" .. arg_33_0.data.star)
-
-	arg_33_0.txtLevel.text = GameUtil.getSubPlaceholderLuaLangOneParam(var_33_0, arg_33_0.data.star)
-
-	local var_33_1 = arg_33_0.data.maxExpLimit
-
-	if var_33_1 == 0 then
-		gohelper.setActive(arg_33_0.goStar, false)
+function var_0_0.refreshStar(arg_35_0)
+	if arg_35_0.data.star == 0 then
+		gohelper.setActive(arg_35_0.imageLevel, false)
+		gohelper.setActive(arg_35_0.goExp, false)
 	else
-		for iter_33_0 = 1, 3 do
-			local var_33_2 = arg_33_0["goStar" .. iter_33_0]
+		local var_35_0 = luaLang("autochess_malllevelupview_level")
 
-			gohelper.setActive(var_33_2, iter_33_0 <= var_33_1)
+		UISpriteSetMgr.instance:setAutoChessSprite(arg_35_0.imageLevel, "v2a5_autochess_levelbg_" .. arg_35_0.data.star)
+
+		arg_35_0.txtLevel.text = GameUtil.getSubPlaceholderLuaLangOneParam(var_35_0, arg_35_0.data.star)
+
+		local var_35_1 = arg_35_0.data.maxExpLimit
+
+		if var_35_1 == 0 then
+			gohelper.setActive(arg_35_0.goStar, false)
+		else
+			for iter_35_0 = 1, 3 do
+				local var_35_2 = arg_35_0["goStar" .. iter_35_0]
+
+				gohelper.setActive(var_35_2, iter_35_0 <= var_35_1)
+			end
+
+			gohelper.setActive(arg_35_0.goStar, true)
 		end
-
-		gohelper.setActive(arg_33_0.goStar, true)
 	end
 end
 
-function var_0_0.checkHpFloat(arg_34_0)
-	local var_34_0 = Time.time
+function var_0_0.checkHpFloat(arg_36_0)
+	local var_36_0 = Time.time
 
-	for iter_34_0 = #arg_34_0.floatItemList, 1, -1 do
-		local var_34_1 = arg_34_0.floatItemList[iter_34_0]
+	for iter_36_0 = #arg_36_0.floatItemList, 1, -1 do
+		local var_36_1 = arg_36_0.floatItemList[iter_36_0]
 
-		if var_34_0 - var_34_1.time >= 1 then
-			gohelper.setActive(var_34_1.go, false)
+		if var_36_0 - var_36_1.time >= 1 then
+			gohelper.setActive(var_36_1.go, false)
 
-			arg_34_0.floatItemCacheList[#arg_34_0.floatItemCacheList + 1] = var_34_1
+			arg_36_0.floatItemCacheList[#arg_36_0.floatItemCacheList + 1] = var_36_1
 
-			table.remove(arg_34_0.floatItemList, iter_34_0)
+			table.remove(arg_36_0.floatItemList, iter_36_0)
 		end
 	end
 
-	if #arg_34_0.floatItemList == 0 then
-		TaskDispatcher.cancelTask(arg_34_0.checkHpFloat, arg_34_0)
+	if #arg_36_0.floatItemList == 0 then
+		TaskDispatcher.cancelTask(arg_36_0.checkHpFloat, arg_36_0)
 	end
 end
 
-function var_0_0.flyStar(arg_35_0)
-	local var_35_0 = arg_35_0.config.levelFromMall
+function var_0_0.flyStar(arg_37_0)
+	local var_37_0 = arg_37_0.config.levelFromMall
 
-	var_35_0 = var_35_0 < 5 and var_35_0 or 5
+	var_37_0 = var_37_0 < 5 and var_37_0 or 5
 
-	for iter_35_0 = 1, var_35_0 do
-		gohelper.setActive(arg_35_0["goFlyStar" .. iter_35_0], true)
+	for iter_37_0 = 1, var_37_0 do
+		gohelper.setActive(arg_37_0["goFlyStar" .. iter_37_0], true)
 	end
 
-	gohelper.setActive(arg_35_0.goFlyStar, true)
-	TaskDispatcher.runDelay(arg_35_0.delayFly, arg_35_0, 0.6)
+	gohelper.setActive(arg_37_0.goFlyStar, true)
+	TaskDispatcher.runDelay(arg_37_0.delayFly, arg_37_0, 0.6)
 end
 
-function var_0_0.delayFly(arg_36_0)
-	local var_36_0 = AutoChessModel.instance:getChessMo().lastSvrFight
-	local var_36_1
+function var_0_0.delayFly(arg_38_0)
+	local var_38_0 = AutoChessModel.instance:getChessMo().lastSvrFight
+	local var_38_1
 
-	if arg_36_0.teamType == AutoChessEnum.TeamType.Player then
-		var_36_1 = var_36_0.mySideMaster.uid
+	if arg_38_0.teamType == AutoChessEnum.TeamType.Player then
+		var_38_1 = var_38_0.mySideMaster.uid
 	else
-		var_36_1 = var_36_0.enemyMaster.uid
+		var_38_1 = var_38_0.enemyMaster.uid
 	end
 
-	local var_36_2 = AutoChessEntityMgr.instance:getLeaderEntity(var_36_1)
+	local var_38_2 = AutoChessEntityMgr.instance:getLeaderEntity(var_38_1)
 
-	if var_36_2 then
-		local var_36_3, var_36_4, var_36_5 = transformhelper.getPos(var_36_2.go.transform)
-		local var_36_6 = recthelper.rectToRelativeAnchorPos(Vector3(var_36_3, var_36_4, var_36_5), arg_36_0.goFlyStar.transform)
-		local var_36_7 = arg_36_0.config.levelFromMall
+	if var_38_2 then
+		local var_38_3, var_38_4, var_38_5 = transformhelper.getPos(var_38_2.go.transform)
+		local var_38_6 = recthelper.rectToRelativeAnchorPos(Vector3(var_38_3, var_38_4, var_38_5), arg_38_0.goFlyStar.transform)
+		local var_38_7 = arg_38_0.config.levelFromMall
 
-		var_36_7 = var_36_7 < 5 and var_36_7 or 5
+		var_38_7 = var_38_7 < 5 and var_38_7 or 5
 
-		for iter_36_0 = 1, var_36_7 do
-			local var_36_8 = arg_36_0["goFlyStar" .. iter_36_0].transform
+		for iter_38_0 = 1, var_38_7 do
+			local var_38_8 = arg_38_0["goFlyStar" .. iter_38_0].transform
 
-			ZProj.TweenHelper.DOAnchorPos(var_36_8, var_36_6.x, var_36_6.y, 0.5)
+			ZProj.TweenHelper.DOAnchorPos(var_38_8, var_38_6.x, var_38_6.y, 0.5)
 		end
 	end
 end

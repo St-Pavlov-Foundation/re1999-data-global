@@ -124,6 +124,36 @@ function var_0_0._saveLocalRead(arg_9_0)
 	PlayerPrefsHelper.setString(PlayerPrefsKey.PermanentLocalRead .. var_9_0, var_9_1)
 end
 
+function var_0_0.IsDotShowPermanent2_1(arg_10_0)
+	local var_10_0 = VersionActivity2_1Enum.ActivityId.EnterView
+	local var_10_1 = ActivityModel.instance:getActMO(var_10_0)
+
+	if not var_10_1 then
+		return false
+	end
+
+	if not var_10_1:isPermanentUnlock() then
+		return false
+	end
+
+	local var_10_2 = false
+
+	for iter_10_0, iter_10_1 in ipairs(Permanent2_1EnterView.kRoleIndex2ActId or {}) do
+		local var_10_3 = iter_10_1.actId
+		local var_10_4 = iter_10_1.redDotId or 0
+
+		var_10_2 = RedDotModel.instance:isDotShow(var_10_4, var_10_3)
+
+		if var_10_2 then
+			break
+		end
+	end
+
+	var_10_2 = var_10_2 or Activity165Model.instance:isShowAct165Reddot()
+
+	return var_10_2
+end
+
 var_0_0.instance = var_0_0.New()
 
 return var_0_0

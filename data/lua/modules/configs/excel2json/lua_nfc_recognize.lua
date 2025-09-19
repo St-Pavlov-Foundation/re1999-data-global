@@ -3,10 +3,11 @@
 local var_0_0 = {}
 local var_0_1 = {
 	param = 3,
-	unlockId = 4,
-	unclaimedId = 5,
+	unlockId = 5,
+	unclaimedId = 6,
 	type = 2,
-	id = 1
+	id = 1,
+	notMainTipsId = 4
 }
 local var_0_2 = {
 	"id"

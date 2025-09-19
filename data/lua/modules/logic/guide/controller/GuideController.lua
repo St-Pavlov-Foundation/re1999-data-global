@@ -150,20 +150,28 @@ function var_0_0.oneKeyFinishGuide(arg_13_0, arg_13_1, arg_13_2)
 	else
 		var_13_1.isJumpPass = true
 
-		for iter_13_0 = #var_13_4, 1, -1 do
-			local var_13_5 = var_13_4[iter_13_0]
+		local var_13_5 = false
 
-			if var_13_5.keyStep == 1 then
+		for iter_13_0 = #var_13_4, 1, -1 do
+			local var_13_6 = var_13_4[iter_13_0]
+
+			if var_13_6.keyStep == 1 then
 				arg_13_0._toFinishGuides = arg_13_0._toFinishGuides or {}
 
 				table.insert(arg_13_0._toFinishGuides, {
 					arg_13_1,
-					var_13_5.stepId
+					var_13_6.stepId
 				})
 				TaskDispatcher.runRepeat(arg_13_0._onFrameFinishGuides, arg_13_0, 0.1)
 
+				var_13_5 = true
+
 				break
 			end
+		end
+
+		if not var_13_5 then
+			logError(string.format("GuideController oneKeyFinishGuide guide:%s no keyStep", arg_13_1))
 		end
 	end
 

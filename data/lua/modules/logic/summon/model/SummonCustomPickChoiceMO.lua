@@ -42,8 +42,12 @@ function var_0_0.hasHero(arg_3_0)
 	return arg_3_0.ownNum > 0
 end
 
-function var_0_0.getSkillLevel(arg_4_0)
-	return arg_4_0.exSkillLevel
+function var_0_0.checkHeroFullExSkillLevel(arg_4_0)
+	return arg_4_0.ownNum > CharacterEnum.MaxSkillExLevel
+end
+
+function var_0_0.getSkillLevel(arg_5_0)
+	return arg_5_0.exSkillLevel
 end
 
 return var_0_0

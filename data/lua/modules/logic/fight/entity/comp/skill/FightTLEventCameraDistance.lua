@@ -9,6 +9,8 @@ function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 		return
 	end
 
+	arg_1_0.tweenComp = arg_1_0:addComponent(FightTweenComponent)
+
 	local var_1_0 = CameraMgr.instance:getVirtualCameraGO()
 	local var_1_1 = GameSceneMgr.instance:getCurScene().camera
 	local var_1_2 = arg_1_3[6]
@@ -30,8 +32,6 @@ function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 			transformhelper.setLocalPos(var_1_0.transform, var_1_5[1], var_1_5[2], var_1_5[3])
 		end
 	end
-
-	arg_1_0.tweenComp = arg_1_0:addComponent(FightTweenComponent)
 
 	local var_1_6 = arg_1_3[1]
 	local var_1_7 = arg_1_3[2]

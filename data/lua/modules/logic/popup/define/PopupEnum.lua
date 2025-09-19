@@ -10,10 +10,12 @@ var_0_0.PriorityType = {
 	RoomBuildingGetView = 700,
 	SummonResultView = 500,
 	ChargeStoreQuickUseTip = 2,
+	SkinCouponTipView = 399,
 	SpecialEquipOpenTip = 1,
-	CollectionGet = 100002,
 	GainCharacterView = 600,
+	CollectionGet = 100002,
 	RoomGetCritterView = 801,
+	NuoDiKaUnitTip = 100003,
 	CommonPropView = 300,
 	AdventureCompleteView = 100
 }

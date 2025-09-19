@@ -98,6 +98,7 @@ function var_0_0.GMToolView_register(arg_3_0)
 
 	function arg_3_0._sendGM(arg_7_0, arg_7_1)
 		GameFacade.showToast(ToastEnum.IconId, arg_7_1)
+		GMCommandHistoryModel.instance:addCommandHistory(arg_7_1)
 
 		if arg_7_1:find("bossrush") then
 			BossRushController_Test.instance:_test(arg_7_1)

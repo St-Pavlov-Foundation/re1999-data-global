@@ -353,4 +353,51 @@ function var_0_0.getZRotation(arg_27_0, arg_27_1, arg_27_2, arg_27_3)
 	return Vector2.Angle(var_0_0.tempVector2_A, var_0_0.tempVector2_B) * var_27_0
 end
 
+function var_0_0.getLastRoundRecordCardEnergyByEntityMo(arg_28_0)
+	if not arg_28_0 then
+		return
+	end
+
+	local var_28_0 = arg_28_0:getBuffDic()
+
+	if not var_28_0 then
+		return
+	end
+
+	local var_28_1 = FightModel.instance:getCurRoundId() - 1
+
+	for iter_28_0, iter_28_1 in pairs(var_28_0) do
+		for iter_28_2, iter_28_3 in ipairs(iter_28_1.actInfo) do
+			if iter_28_3.actId == FightEnum.BuffActId.NoUseCardEnergyRecordByRound then
+				local var_28_2 = iter_28_3.strParam
+				local var_28_3 = FightStrUtil.instance:getSplitString2Cache(var_28_2, true, "|", "#")
+
+				for iter_28_4, iter_28_5 in ipairs(var_28_3) do
+					if iter_28_5[1] == var_28_1 then
+						return iter_28_5[2]
+					end
+				end
+			end
+		end
+	end
+end
+
+function var_0_0.getLastRoundRecordCardEnergy()
+	local var_29_0 = var_0_0.TempEntityMoList
+
+	tabletool.clear(var_29_0)
+
+	local var_29_1 = FightDataHelper.entityMgr:getMyNormalList(var_29_0)
+
+	for iter_29_0, iter_29_1 in ipairs(var_29_1) do
+		local var_29_2 = var_0_0.getLastRoundRecordCardEnergyByEntityMo(iter_29_1)
+
+		if var_29_2 then
+			return var_29_2
+		end
+	end
+
+	return 0
+end
+
 return var_0_0

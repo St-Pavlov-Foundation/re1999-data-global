@@ -15,10 +15,17 @@ function var_0_0._onInitDungeonDone(arg_2_0)
 end
 
 function var_0_0._checkPlayNewUnlockAnim(arg_3_0)
-	if Act183Model.instance:isHardMainGroupNewUnlock() then
+	if arg_3_0._status ~= Act183Enum.GroupStatus.Unlocked then
+		return
+	end
+
+	local var_3_0 = Act183Model.instance:getActivityId()
+
+	if not Act183Helper.isGroupHasPlayUnlockAnim(var_3_0, arg_3_0._groupId) then
 		gohelper.setActive(arg_3_0._golock, true)
 		arg_3_0._animUnlock:Play("unlock", 0, 0)
 		AudioMgr.instance:trigger(AudioEnum.UI.Act183_HardMainUnlock)
+		Act183Helper.savePlayUnlockAnimGroupIdInLocal(var_3_0, arg_3_0._groupId)
 	end
 end
 

@@ -7,63 +7,30 @@ function var_0_0.ctor(arg_1_0)
 end
 
 function var_0_0.onStart(arg_2_0)
-	ViewMgr.instance:registerCallback(ViewEvent.DestroyViewFinish, arg_2_0._onDestroyViewFinish, arg_2_0)
-	GameSceneMgr.instance:getCurScene().view:onSceneClose()
-	GameSceneMgr.instance:getCurScene().level:setFrontVisible(true)
+	arg_2_0.work = FightWorkClearBeforeRestart.New()
+
+	arg_2_0.work:registFinishCallback(arg_2_0._onWorkFinish, arg_2_0)
+	arg_2_0.work:start()
 end
 
-function var_0_0._onDestroyViewFinish(arg_3_0, arg_3_1)
-	if arg_3_1 == ViewName.FightView then
-		ViewMgr.instance:unregisterCallback(ViewEvent.DestroyViewFinish, arg_3_0._onDestroyViewFinish, arg_3_0)
+function var_0_0._onWorkFinish(arg_3_0)
+	if arg_3_0.context and arg_3_0.context.noReloadScene then
+		arg_3_0:_correctRootState()
+		arg_3_0:onDone(true)
 
-		FightDataHelper.tempMgr.simplePolarizationLevel = nil
+		return
+	end
 
-		StoryController.instance:closeStoryView()
-		FightFloatMgr.instance:clearFloatItem()
-		FightPreloadController.instance:releaseRoleCardAsset()
-		FightController.instance:dispatchEvent(FightEvent.OnEndFightForGuide)
-		FightController.instance:dispatchEvent(FightEvent.OnRestartStageBefore)
+	if GameSceneMgr.instance:getCurLevelId() ~= FightModel.instance:getFightParam():getSceneLevel(1) then
+		GameSceneMgr.instance:dispatchEvent(SceneEventName.SetLoadingTypeOnce, GameLoadingState.LoadingBlackView)
+		GameSceneMgr.instance:showLoading(SceneType.Fight)
+		TaskDispatcher.runDelay(arg_3_0._delayDone, arg_3_0, 5)
+		TaskDispatcher.runDelay(arg_3_0._startLoadLevel, arg_3_0, 0.25)
 
-		local var_3_0 = GameSceneMgr.instance:getCurScene()
-
-		var_3_0.entityMgr:removeAllUnits()
-		var_3_0.director:registRespBeginFight()
-		var_3_0.bgm:resumeBgm()
-		FightSkillMgr.instance:dispose()
-		FightSystem.instance:dispose()
-		FightNameMgr.instance:onRestartStage()
-		FightAudioMgr.instance:dispose()
-
-		FightRoundSequence.roundTempData = {}
-
-		var_3_0.camera:enablePostProcessSmooth(false)
-		var_3_0.camera:resetParam()
-		var_3_0.camera:setSceneCameraOffset()
-
-		FightModel.instance._curRoundId = 1
-
-		FightModel.instance:onRestart()
-		FightController.instance:dispatchEvent(FightEvent.OnRestartFightDisposeDone)
-		gohelper.setActiveCanvasGroup(ViewMgr.instance:getUILayer(UILayerName.Hud), false)
-
-		if arg_3_0.context and arg_3_0.context.noReloadScene then
-			arg_3_0:_correctRootState()
-			arg_3_0:onDone(true)
-
-			return
-		end
-
-		if GameSceneMgr.instance:getCurLevelId() ~= FightModel.instance:getFightParam():getSceneLevel(1) then
-			GameSceneMgr.instance:dispatchEvent(SceneEventName.SetLoadingTypeOnce, GameLoadingState.LoadingBlackView)
-			GameSceneMgr.instance:showLoading(SceneType.Fight)
-			TaskDispatcher.runDelay(arg_3_0._delayDone, arg_3_0, 5)
-			TaskDispatcher.runDelay(arg_3_0._startLoadLevel, arg_3_0, 0.25)
-
-			arg_3_0._loadTime = Time.time
-		else
-			arg_3_0:_correctRootState()
-			arg_3_0:onDone(true)
-		end
+		arg_3_0._loadTime = Time.time
+	else
+		arg_3_0:_correctRootState()
+		arg_3_0:onDone(true)
 	end
 end
 
@@ -117,6 +84,12 @@ function var_0_0.clearWork(arg_8_0)
 	TaskDispatcher.cancelTask(arg_8_0._delayDone, arg_8_0)
 	TaskDispatcher.cancelTask(arg_8_0._startLoadLevel, arg_8_0)
 	GameSceneMgr.instance:unregisterCallback(SceneEventName.OnLevelLoaded, arg_8_0._onLevelLoaded, arg_8_0)
+
+	if arg_8_0.work then
+		arg_8_0.work:disposeSelf()
+
+		arg_8_0.work = nil
+	end
 end
 
 return var_0_0

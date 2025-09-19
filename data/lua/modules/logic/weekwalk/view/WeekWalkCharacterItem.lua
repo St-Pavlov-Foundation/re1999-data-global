@@ -7,6 +7,7 @@ function var_0_0.init(arg_1_0, arg_1_1)
 	arg_1_0._heroItem = IconMgr.instance:getCommonHeroItem(arg_1_0._heroGOParent)
 
 	arg_1_0._heroItem:addClickListener(arg_1_0._onItemClick, arg_1_0)
+	arg_1_0._heroItem:setStyle_CharacterBackpack()
 
 	arg_1_0._goAnim = arg_1_0._heroItem.go:GetComponent(typeof(UnityEngine.Animator))
 	arg_1_0._hpbg = gohelper.findChild(arg_1_1, "hpbg")

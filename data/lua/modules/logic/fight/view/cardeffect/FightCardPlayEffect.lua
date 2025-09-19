@@ -18,42 +18,48 @@ function var_0_0.onStart(arg_1_0, arg_1_1)
 
 	if var_1_0._cardItem then
 		var_1_0._cardItem:setHeatRootVisible(false)
+
+		local var_1_1 = arg_1_1.fightBeginRoundOp.param3
+
+		if var_1_1 and var_1_1 ~= 0 then
+			var_1_0._cardItem:updateItem(var_1_0.cardInfoMO.uid, var_1_1, var_1_0.cardInfoMO)
+		end
 	end
 
 	arg_1_0._cardInfoMO = var_1_0.cardInfoMO:clone()
 	arg_1_0._clonePlayCardGO = gohelper.cloneInPlace(var_1_0.go)
 
-	local var_1_1 = arg_1_0._clonePlayCardGO.transform
+	local var_1_2 = arg_1_0._clonePlayCardGO.transform
 
 	gohelper.setActive(var_1_0.go, false)
 	var_1_0:updateItem(#arg_1_1.handCardItemList, nil)
-	arg_1_0:_addTrailEffect(var_1_1)
+	arg_1_0:_addTrailEffect(var_1_2)
 
-	local var_1_2 = true
-	local var_1_3 = false
+	local var_1_3 = true
+	local var_1_4 = false
 
 	if arg_1_0.context.needDiscard then
-		var_1_2 = false
-		var_1_3 = true
-	end
-
-	local var_1_4 = false
-	local var_1_5 = arg_1_1.dissolveCardIndexsAfterPlay
-
-	if var_1_5 and #var_1_5 > 0 then
-		var_1_2 = false
+		var_1_3 = false
 		var_1_4 = true
 	end
 
-	local var_1_6 = false
+	local var_1_5 = false
+	local var_1_6 = arg_1_1.dissolveCardIndexsAfterPlay
 
-	if var_1_2 then
-		var_1_6 = FightCardDataHelper.canCombineCardListForPerformance(FightDataHelper.handCardMgr.handCard) or false
+	if var_1_6 and #var_1_6 > 0 then
+		var_1_3 = false
+		var_1_5 = true
 	end
 
-	if var_1_6 then
+	local var_1_7 = false
+
+	if var_1_3 then
+		var_1_7 = FightCardDataHelper.canCombineCardListForPerformance(FightDataHelper.handCardMgr.handCard) or false
+	end
+
+	if var_1_7 then
 		arg_1_0._stepCount = 1
-	elseif var_1_3 or var_1_4 then
+	elseif var_1_4 or var_1_5 then
 		arg_1_0._stepCount = 2
 	elseif FightDataHelper.operationDataMgr:isCardOpEnd() and #FightDataHelper.operationDataMgr:getOpList() > 0 then
 		arg_1_0._stepCount = 2
@@ -69,44 +75,28 @@ function var_0_0.onStart(arg_1_0, arg_1_1)
 
 	arg_1_0._main_flow = FlowSequence.New()
 
-	local var_1_7 = FlowSequence.New()
+	local var_1_8 = FlowSequence.New()
 
-	var_1_7:addWork(FunctionWork.New(function()
+	var_1_8:addWork(FunctionWork.New(function()
 		FightController.instance:dispatchEvent(FightEvent.ShowPlayCardFlyEffect, arg_1_0._cardInfoMO, arg_1_0._clonePlayCardGO, arg_1_0.context.fightBeginRoundOp)
 	end))
 
-	local var_1_8 = false
-
-	if FightCardDataHelper.isNoCostSpecialCard(arg_1_0._cardInfoMO) then
-		var_1_8 = true
+	if arg_1_0.context.fightBeginRoundOp.costActPoint <= 0 then
+		var_1_8:addWork(arg_1_0:_buildNoActCostMoveFlow())
 	end
 
-	if FightCardDataHelper.isSkill3(arg_1_0._cardInfoMO) then
-		var_1_8 = true
-	end
+	var_1_8:addWork(WorkWaitSeconds.New(arg_1_0._dt * 1))
 
-	local var_1_9 = arg_1_0.context.fightBeginRoundOp
-
-	if not FightCardDataHelper.checkIsBigSkillCostActPoint(var_1_9.belongToEntityId, var_1_9.skillId) then
-		var_1_8 = true
-	end
-
-	if var_1_8 then
-		var_1_7:addWork(arg_1_0:_buildNoActCostMoveFlow())
-	end
-
-	var_1_7:addWork(WorkWaitSeconds.New(arg_1_0._dt * 1))
-
-	if var_1_6 then
-		var_1_7:addWork(FunctionWork.New(function()
+	if var_1_7 then
+		var_1_8:addWork(FunctionWork.New(function()
 			arg_1_0:_playShrinkFlow()
 		end))
-		var_1_7:addWork(WorkWaitSeconds.New(arg_1_0._dt * 6))
+		var_1_8:addWork(WorkWaitSeconds.New(arg_1_0._dt * 6))
 	else
-		var_1_7:addWork(arg_1_0:_startShrinkFlow())
+		var_1_8:addWork(arg_1_0:_startShrinkFlow())
 	end
 
-	arg_1_0._main_flow:addWork(var_1_7)
+	arg_1_0._main_flow:addWork(var_1_8)
 	TaskDispatcher.runDelay(arg_1_0._delayDone, arg_1_0, 10 / FightModel.instance:getUISpeed())
 	arg_1_0._main_flow:registerDoneListener(arg_1_0._onPlayCardDone, arg_1_0)
 	arg_1_0._main_flow:start(arg_1_1)

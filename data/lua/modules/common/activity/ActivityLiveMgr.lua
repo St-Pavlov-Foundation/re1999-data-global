@@ -17,9 +17,10 @@ end
 
 function var_0_0.initActivityMgrList(arg_3_0)
 	arg_3_0.actMgrInstanceList = {
-		ActivityLiveMgr2_9.instance
+		ActivityLiveMgr2_8.instance
 	}
 	arg_3_0.actId2ViewList = {}
+	arg_3_0.actIdCloseCheckList = {}
 
 	for iter_3_0, iter_3_1 in ipairs(arg_3_0.actMgrInstanceList) do
 		iter_3_1:init()
@@ -30,6 +31,14 @@ function var_0_0.initActivityMgrList(arg_3_0)
 			end
 
 			arg_3_0.actId2ViewList[iter_3_2] = iter_3_3
+		end
+
+		local var_3_0 = iter_3_1.getActIdCheckCloseList and iter_3_1:getActIdCheckCloseList()
+
+		if var_3_0 then
+			for iter_3_4, iter_3_5 in pairs(var_3_0) do
+				arg_3_0.actIdCloseCheckList[iter_3_4] = iter_3_5
+			end
 		end
 	end
 end
@@ -56,17 +65,20 @@ function var_0_0.checkOneActivityIsEnd(arg_6_0, arg_6_1)
 	end
 
 	if ActivityHelper.getActivityStatus(arg_6_1) ~= ActivityEnum.ActivityStatus.Normal then
-		local var_6_0 = arg_6_0.actId2ViewList[arg_6_1]
+		local var_6_0 = arg_6_0.actIdCloseCheckList[arg_6_1]
+		local var_6_1 = arg_6_0.actId2ViewList[arg_6_1]
 
-		if var_6_0 then
-			for iter_6_0, iter_6_1 in ipairs(var_6_0) do
-				if ViewMgr.instance:isOpen(iter_6_1) then
+		if var_6_1 then
+			for iter_6_0, iter_6_1 in ipairs(var_6_1) do
+				if ViewMgr.instance:isOpen(iter_6_1) and (not var_6_0 or var_6_0(arg_6_1, iter_6_1)) then
 					MessageBoxController.instance:showSystemMsgBox(MessageBoxIdDefine.EndActivity, MsgBoxEnum.BoxType.Yes, var_0_0.yesCallback)
 
 					return true
 				end
 			end
 		end
+
+		ActivityController.instance:dispatchEvent(ActivityEvent.CheckGuideOnEndActivity)
 	end
 
 	return false

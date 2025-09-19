@@ -1805,6 +1805,116 @@
     "bankName": "ui_checkpoint_2_7_yuzhou_amb"
   },
   {
+    "id": 3280001,
+    "eventName": "",
+    "bankName": ""
+  },
+  {
+    "id": 3280002,
+    "eventName": "play_activitymusic_remember_2_2",
+    "bankName": "activity2_2_music"
+  },
+  {
+    "id": 3280003,
+    "eventName": "play_activitymusic_crazymountains_2_8",
+    "bankName": "activity2_8_music"
+  },
+  {
+    "id": 3280004,
+    "eventName": "play_activitymusic_theme_2_8",
+    "bankName": "activity2_8_music"
+  },
+  {
+    "id": 3280005,
+    "eventName": "play_activitymusic_lullaby_2_8",
+    "bankName": "activity2_8_music"
+  },
+  {
+    "id": 3280006,
+    "eventName": "play_activitymusic_lullaby_2_8",
+    "bankName": "activity2_8_music"
+  },
+  {
+    "id": 3280007,
+    "eventName": "play_activitymusic_remember_2_2",
+    "bankName": "activity2_2_music"
+  },
+  {
+    "id": 3280008,
+    "eventName": "play_activitymusic_crazymountains_2_8",
+    "bankName": "activity2_2_music"
+  },
+  {
+    "id": 3280009,
+    "eventName": "play_activitymusic_finalfight_map_2_8",
+    "bankName": "activity2_8_music"
+  },
+  {
+    "id": 3280010,
+    "eventName": "play_plot_music_chessgame_vsyou",
+    "bankName": "plot_music_chessgame_vsyou"
+  },
+  {
+    "id": 3280011,
+    "eventName": "play_activitymusic_dl_camp_2_8",
+    "bankName": "activity2_8_dl_music"
+  },
+  {
+    "id": 3280012,
+    "eventName": "stop_activitymusic_dl_camp_2_8",
+    "bankName": "activity2_8_dl_music"
+  },
+  {
+    "id": 3280013,
+    "eventName": "play_activitymusic_dl_state_2_8",
+    "bankName": "activity2_8_dl_music"
+  },
+  {
+    "id": 3280014,
+    "eventName": "stop_activitymusic_dl_state_2_8",
+    "bankName": "activity2_8_dl_music"
+  },
+  {
+    "id": 3280015,
+    "eventName": "play_battle_fuleyuan_2_8_normalfight",
+    "bankName": "activtiy_fuleyuan_combataudio"
+  },
+  {
+    "id": 3280016,
+    "eventName": "play_battle_fuleyuan_2_8_olitiau_fight",
+    "bankName": "activtiy_fuleyuan_combataudio"
+  },
+  {
+    "id": 3280017,
+    "eventName": "play_battle_fuleyuan_2_8_arcana_bossfight",
+    "bankName": "activtiy_fuleyuan_combataudio"
+  },
+  {
+    "id": 3280018,
+    "eventName": "play_ui_checkpoint_noise_plain",
+    "bankName": "activtiy_fuleyuan_combataudio_noise"
+  },
+  {
+    "id": 3280019,
+    "eventName": "play_ui_checkpoint_noise_sea_area",
+    "bankName": "activtiy_fuleyuan_combataudio_noise"
+  },
+  {
+    "id": 3280020,
+    "eventName": "play_ui_checkpoint_noise_hilltop",
+    "bankName": "activtiy_fuleyuan_combataudio_noise"
+  },
+  {
+    "id": 3280021,
+    "eventName": "play_ui_checkpoint_noise_altar",
+    "bankName": "activtiy_fuleyuan_combataudio_noise"
+  },
+  {
+    "id": 3280022,
+    "eventName": "play_ui_checkpoint_noise_boss",
+    "bankName": "activtiy_fuleyuan_combataudio_noise"
+  },
+  {
     "id": 3290001,
     "eventName": "play_activitymusic_theme_s01_cikeshang",
     "bankName": "firsthalf_cikeshang_music"

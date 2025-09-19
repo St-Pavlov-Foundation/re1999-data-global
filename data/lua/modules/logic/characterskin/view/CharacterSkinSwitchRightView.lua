@@ -125,9 +125,6 @@ function var_0_0._editableInitView(arg_10_0)
 	arg_10_0._hadSkinDict = {}
 	arg_10_0._minAnchorPositionX = 0
 	arg_10_0._minChangeAnchorPositionX = 100
-
-	arg_10_0._simageskinSwitchBg:LoadImage(ResUrl.getCharacterSkinIcon("img_yulan_bg"))
-
 	arg_10_0._skincontainerCanvasGroup = arg_10_0._goskincontainer:GetComponent(typeof(UnityEngine.CanvasGroup))
 	arg_10_0.halfAnimationTime = var_0_0.TweenTime / 2
 	arg_10_0._animatorPlayer = ZProj.ProjAnimatorPlayer.Get(arg_10_0.viewGO)
@@ -142,6 +139,7 @@ end
 
 function var_0_0.initViewParam(arg_11_0)
 	arg_11_0.heroMo = arg_11_0.viewParam
+	arg_11_0._isFromHandbook = arg_11_0.viewParam and arg_11_0.viewParam.handbook
 end
 
 function var_0_0.onUpdateParam(arg_12_0)
@@ -159,6 +157,7 @@ end
 function var_0_0.refreshUI(arg_14_0)
 	arg_14_0:_refreshDressBtnStatus()
 	arg_14_0:refreshLeftUI()
+	arg_14_0:_refreshSkinRightBg()
 end
 
 function var_0_0.refreshHadSkinDict(arg_15_0)
@@ -213,7 +212,10 @@ function var_0_0.initSkinItem(arg_16_0)
 
 	arg_16_0.selectSkinCo = arg_16_0._itemObjects[arg_16_0._currentSelectSkinIndex].skinCo
 
-	arg_16_0:_refreshDressedSkin(arg_16_0.heroMo.skin)
+	if not arg_16_0._isFromHandbook then
+		arg_16_0:_refreshDressedSkin(arg_16_0.heroMo.skin)
+	end
+
 	recthelper.setAnchorX(arg_16_0._goContent.transform, -(arg_16_0._currentSelectSkinIndex - 1) * arg_16_0._itemWidth)
 end
 
@@ -424,7 +426,7 @@ function var_0_0._refreshDressBtnStatus(arg_27_0)
 	local var_27_0 = arg_27_0._itemObjects[arg_27_0._currentSelectSkinIndex].skinCo
 	local var_27_1 = var_27_0.gainApproach
 
-	if var_27_0.id == arg_27_0.heroMo.skin then
+	if var_27_0.id == arg_27_0.heroMo.skin and not arg_27_0._isFromHandbook then
 		gohelper.setActive(arg_27_0._godressing, true)
 	elseif arg_27_0._hadSkinDict[var_27_0.id] then
 		gohelper.setActive(arg_27_0._btndress.gameObject, true)
@@ -474,22 +476,33 @@ function var_0_0._refreshDressBtnStatus(arg_27_0)
 	end
 end
 
-function var_0_0.skinHasOnLine(arg_28_0, arg_28_1)
-	if not arg_28_1 then
+function var_0_0._refreshSkinRightBg(arg_28_0)
+	local var_28_0 = arg_28_0._itemObjects[arg_28_0._currentSelectSkinIndex].skinCo.id
+	local var_28_1 = HandbookConfig.instance:getSkinSuitIdBySkinId(var_28_0)
+
+	if var_28_1 then
+		arg_28_0._simageskinSwitchBg:LoadImage(ResUrl.getCharacterSkinSwitchBg(var_28_1))
+	else
+		arg_28_0._simageskinSwitchBg:LoadImage(ResUrl.getCharacterSkinIcon("img_yulan_bg"))
+	end
+end
+
+function var_0_0.skinHasOnLine(arg_29_0, arg_29_1)
+	if not arg_29_1 then
 		return false
 	end
 
-	local var_28_0 = StoreModel.instance:getStoreMO(var_0_0.RealSkinStoreId)
+	local var_29_0 = StoreModel.instance:getStoreMO(var_0_0.RealSkinStoreId)
 
-	if not var_28_0 then
+	if not var_29_0 then
 		return
 	end
 
-	for iter_28_0, iter_28_1 in ipairs(var_28_0:getGoodsList()) do
-		local var_28_1 = iter_28_1.config
-		local var_28_2 = string.splitToNumber(var_28_1.product, "#")
+	for iter_29_0, iter_29_1 in ipairs(var_29_0:getGoodsList()) do
+		local var_29_1 = iter_29_1.config
+		local var_29_2 = string.splitToNumber(var_29_1.product, "#")
 
-		if var_28_2[1] == MaterialEnum.MaterialType.HeroSkin and var_28_2[2] == arg_28_1 then
+		if var_29_2[1] == MaterialEnum.MaterialType.HeroSkin and var_29_2[2] == arg_29_1 then
 			return true
 		end
 	end
@@ -497,77 +510,79 @@ function var_0_0.skinHasOnLine(arg_28_0, arg_28_1)
 	return false
 end
 
-function var_0_0._clearBtnStatus(arg_29_0)
-	gohelper.setActive(arg_29_0._btndress.gameObject, false)
-	gohelper.setActive(arg_29_0._btnnotget.gameObject, false)
-	gohelper.setActive(arg_29_0._btnrank.gameObject, false)
-	gohelper.setActive(arg_29_0._btnskinstore.gameObject, false)
-	gohelper.setActive(arg_29_0._btngotogetskin.gameObject, false)
-	gohelper.setActive(arg_29_0._godressing, false)
-	gohelper.setActive(arg_29_0._goactivityget, false)
+function var_0_0._clearBtnStatus(arg_30_0)
+	gohelper.setActive(arg_30_0._btndress.gameObject, false)
+	gohelper.setActive(arg_30_0._btnnotget.gameObject, false)
+	gohelper.setActive(arg_30_0._btnrank.gameObject, false)
+	gohelper.setActive(arg_30_0._btnskinstore.gameObject, false)
+	gohelper.setActive(arg_30_0._btngotogetskin.gameObject, false)
+	gohelper.setActive(arg_30_0._godressing, false)
+	gohelper.setActive(arg_30_0._goactivityget, false)
 end
 
-function var_0_0.killTween(arg_30_0)
-	if arg_30_0._tweeningId and arg_30_0._tweeningId ~= 0 then
-		var_0_1.KillById(arg_30_0._tweeningId)
+function var_0_0.killTween(arg_31_0)
+	if arg_31_0._tweeningId and arg_31_0._tweeningId ~= 0 then
+		var_0_1.KillById(arg_31_0._tweeningId)
 	end
 end
 
-function var_0_0.onGainSkin(arg_31_0, arg_31_1)
-	if arg_31_1 ~= arg_31_0._itemObjects[arg_31_0._currentSelectSkinIndex].skinCo.id then
+function var_0_0.onGainSkin(arg_32_0, arg_32_1)
+	if arg_32_1 ~= arg_32_0._itemObjects[arg_32_0._currentSelectSkinIndex].skinCo.id then
 		return
 	end
 
-	arg_31_0:refreshHadSkinDict()
-	arg_31_0:_refreshSkinInfo()
-	arg_31_0:_refreshDressBtnStatus()
-end
-
-function var_0_0._successDressUpSkin(arg_32_0, arg_32_1)
-	if arg_32_1.heroId ~= arg_32_0.heroMo.heroId then
-		return
-	end
-
+	arg_32_0:refreshHadSkinDict()
+	arg_32_0:_refreshSkinInfo()
 	arg_32_0:_refreshDressBtnStatus()
-	arg_32_0:_refreshDressedSkin(arg_32_1.skinId)
+	arg_32_0:_refreshSkinRightBg()
 end
 
-function var_0_0.playAnim(arg_33_0, arg_33_1)
-	arg_33_0._isAnim = true
+function var_0_0._successDressUpSkin(arg_33_0, arg_33_1)
+	if arg_33_1.heroId ~= arg_33_0.heroMo.heroId then
+		return
+	end
 
-	arg_33_0:setShaderKeyWord()
-	arg_33_0._animatorPlayer:Play(arg_33_1, arg_33_0.onAnimDone, arg_33_0)
+	arg_33_0:_refreshSkinRightBg()
+	arg_33_0:_refreshDressBtnStatus()
+	arg_33_0:_refreshDressedSkin(arg_33_1.skinId)
 end
 
-function var_0_0.onAnimDone(arg_34_0)
-	arg_34_0._isAnim = false
+function var_0_0.playAnim(arg_34_0, arg_34_1)
+	arg_34_0._isAnim = true
 
 	arg_34_0:setShaderKeyWord()
+	arg_34_0._animatorPlayer:Play(arg_34_1, arg_34_0.onAnimDone, arg_34_0)
 end
 
-function var_0_0.setShaderKeyWord(arg_35_0)
-	if arg_35_0.dragging or arg_35_0._isAnim then
+function var_0_0.onAnimDone(arg_35_0)
+	arg_35_0._isAnim = false
+
+	arg_35_0:setShaderKeyWord()
+end
+
+function var_0_0.setShaderKeyWord(arg_36_0)
+	if arg_36_0.dragging or arg_36_0._isAnim then
 		UnityEngine.Shader.EnableKeyword("_CLIPALPHA_ON")
 	else
 		UnityEngine.Shader.DisableKeyword("_CLIPALPHA_ON")
 	end
 end
 
-function var_0_0.onClose(arg_36_0)
-	for iter_36_0, iter_36_1 in ipairs(arg_36_0._itemObjects) do
-		iter_36_1.image:UnLoadImage()
-		iter_36_1.click:RemoveClickListener()
+function var_0_0.onClose(arg_37_0)
+	for iter_37_0, iter_37_1 in ipairs(arg_37_0._itemObjects) do
+		iter_37_1.image:UnLoadImage()
+		iter_37_1.click:RemoveClickListener()
 	end
 
-	arg_36_0._drag:RemoveDragBeginListener()
-	arg_36_0._drag:RemoveDragEndListener()
-	arg_36_0._drag:RemoveDragListener()
+	arg_37_0._drag:RemoveDragBeginListener()
+	arg_37_0._drag:RemoveDragEndListener()
+	arg_37_0._drag:RemoveDragListener()
 end
 
-function var_0_0.onDestroyView(arg_37_0)
-	arg_37_0:killTween()
-	arg_37_0.animationEventWrap:RemoveAllEventListener()
-	arg_37_0._simageskinSwitchBg:UnLoadImage()
+function var_0_0.onDestroyView(arg_38_0)
+	arg_38_0:killTween()
+	arg_38_0.animationEventWrap:RemoveAllEventListener()
+	arg_38_0._simageskinSwitchBg:UnLoadImage()
 end
 
 return var_0_0

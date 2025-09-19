@@ -22,7 +22,6 @@ function var_0_0.init(arg_1_0, arg_1_1)
 	arg_1_0._goescape1_v2 = gohelper.findChild(arg_1_1, "rules2/go_rule1/go_escape")
 	arg_1_0._imageruleicon2_v2 = gohelper.findChildImage(arg_1_1, "rules2/go_rule2/image_icon")
 	arg_1_0._gorepress2_v2 = gohelper.findChild(arg_1_1, "rules2/go_rule2/go_repress")
-	arg_1_0._goepisodestaritem = gohelper.findChild(arg_1_1, "episodestars/go_episodestaritem")
 
 	if arg_1_0._editableInitView then
 		arg_1_0:_editableInitView()
@@ -65,7 +64,6 @@ function var_0_0.onUpdateMO(arg_6_0, arg_6_1, arg_6_2)
 	Act183Helper.setSubEpisodeResultIcon(var_6_2, arg_6_0._imageicon)
 	arg_6_0:refreshRepressIcon(arg_6_2)
 	arg_6_0:refreshHeroGroup(arg_6_2)
-	arg_6_0:refreshEpisodeStars(arg_6_2)
 	Act183Helper.setEpisodeConditionStar(arg_6_0._imagestar, var_6_0, nil)
 	gohelper.setActive(arg_6_0.go, true)
 end
@@ -92,28 +90,13 @@ function var_0_0.refreshRepressIcon(arg_7_0, arg_7_1)
 	gohelper.setActive(arg_7_0._gorules2, var_7_3)
 end
 
-function var_0_0.refreshEpisodeStars(arg_8_0, arg_8_1)
-	local var_8_0 = arg_8_1:getTotalStarCount()
-	local var_8_1 = arg_8_1:getFinishStarCount()
-
-	for iter_8_0 = 1, var_8_0 do
-		local var_8_2 = gohelper.cloneInPlace(arg_8_0._goepisodestaritem, "star_" .. iter_8_0)
-		local var_8_3 = gohelper.onceAddComponent(var_8_2, gohelper.Type_Image)
-		local var_8_4 = iter_8_0 <= var_8_1 and "#F77040" or "#87898C"
-
-		UISpriteSetMgr.instance:setCommonSprite(var_8_3, "zhuxianditu_pt_xingxing_001", true)
-		SLFramework.UGUI.GuiHelper.SetColor(var_8_3, var_8_4)
-		gohelper.setActive(var_8_2, true)
+function var_0_0.refreshHeroGroup(arg_8_0, arg_8_1)
+	if arg_8_0._herogroupComp then
+		arg_8_0._herogroupComp:onUpdateMO(arg_8_1)
 	end
 end
 
-function var_0_0.refreshHeroGroup(arg_9_0, arg_9_1)
-	if arg_9_0._herogroupComp then
-		arg_9_0._herogroupComp:onUpdateMO(arg_9_1)
-	end
-end
-
-function var_0_0.onDestroy(arg_10_0)
+function var_0_0.onDestroy(arg_9_0)
 	return
 end
 

@@ -7,7 +7,7 @@ local var_0_1 = {
 		openChapter = AudioEnum.UI.UI_checkpoint_story_open,
 		closeChapter = AudioEnum.UI.UI_checkpoint_story_close,
 		chapterListBoundary = AudioEnum.UI.UI_checkpoint_story_rebound,
-		cardPass = AudioEnum.UI.UI_checkpoint_story_cardpass
+		cardPass = AudioEnum2_8.MainStory.play_ui_checkpoint_chain
 	},
 	[DungeonEnum.ChapterListType.Resource] = {
 		changeCategory = AudioEnum.UI.UI_checkpoint_resources_Click,

@@ -179,6 +179,7 @@ function var_0_0._chapterStartOut(arg_10_0)
 end
 
 function var_0_0.showChapterEnd(arg_11_0, arg_11_1)
+	PostProcessingMgr.instance:setUIBlurActive(0)
 	gohelper.setActive(arg_11_0._goepisode, false)
 	gohelper.setActive(arg_11_0._gochapter, true)
 	gohelper.setActive(arg_11_0._goclose, true)

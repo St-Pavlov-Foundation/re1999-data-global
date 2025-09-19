@@ -661,5 +661,44 @@
     "showcolor": 0,
     "icon": "",
     "sortId": 0
+  },
+  {
+    "id": 222,
+    "attrType": "clutchDmg",
+    "type": 3,
+    "name": "language_10082458",
+    "desc": "language_10082459",
+    "isShowTips": 0,
+    "isShow": 0,
+    "showType": 1,
+    "showcolor": 0,
+    "icon": "",
+    "sortId": 0
+  },
+  {
+    "id": 223,
+    "attrType": "clutchFixNormalSkillRate",
+    "type": 3,
+    "name": "language_10082460",
+    "desc": "language_10082461",
+    "isShowTips": 0,
+    "isShow": 0,
+    "showType": 1,
+    "showcolor": 0,
+    "icon": "",
+    "sortId": 0
+  },
+  {
+    "id": 302,
+    "attrType": "poisonReduceRate",
+    "type": 3,
+    "name": "language_10082462",
+    "desc": "language_10082463",
+    "isShowTips": 0,
+    "isShow": 0,
+    "showType": 1,
+    "showcolor": 0,
+    "icon": "",
+    "sortId": 0
   }
 ]

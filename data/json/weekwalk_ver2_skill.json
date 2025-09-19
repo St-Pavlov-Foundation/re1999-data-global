@@ -91,6 +91,27 @@
     "rules": "1#9270515"
   },
   {
+    "id": 2016,
+    "name": "language_10083226",
+    "icon": "1019",
+    "desc": "language_10081073",
+    "rules": "1#9280205"
+  },
+  {
+    "id": 2017,
+    "name": "language_10082067",
+    "icon": "1015",
+    "desc": "language_10081074",
+    "rules": "1#9280206"
+  },
+  {
+    "id": 2018,
+    "name": "language_10082068",
+    "icon": "1017",
+    "desc": "language_10081075",
+    "rules": "1#9280207"
+  },
+  {
     "id": 2024,
     "name": "language_10076296",
     "icon": "1026",

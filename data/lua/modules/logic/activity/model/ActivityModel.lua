@@ -372,6 +372,18 @@ function var_0_0.showActivityEffect()
 	return false
 end
 
+function var_0_0.tryGetFirstOpenedActCOByTypeId(arg_35_0, arg_35_1)
+	local var_35_0 = ActivityConfig.instance:typeId2ActivityCOList(arg_35_1)
+
+	for iter_35_0, iter_35_1 in ipairs(var_35_0) do
+		local var_35_1 = iter_35_1.id
+
+		if ActivityHelper.getActivityStatus(var_35_1, true) == ActivityEnum.ActivityStatus.Normal then
+			return iter_35_1
+		end
+	end
+end
+
 var_0_0.instance = var_0_0.New()
 
 return var_0_0

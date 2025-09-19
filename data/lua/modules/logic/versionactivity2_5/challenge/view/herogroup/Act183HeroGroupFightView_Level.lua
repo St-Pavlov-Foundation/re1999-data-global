@@ -5,6 +5,7 @@ local var_0_0 = class("Act183HeroGroupFightView_Level", HeroGroupFightViewLevel)
 function var_0_0.onInitView(arg_1_0)
 	var_0_0.super.onInitView(arg_1_0)
 
+	arg_1_0._gotargetlist = gohelper.findChild(arg_1_0.viewGO, "#go_container/#scroll_info/infocontain/targetcontain/targetList")
 	arg_1_0._goadditioncontain = gohelper.findChild(arg_1_0.viewGO, "#go_container/#scroll_info/infocontain/challenge_additioncontain")
 	arg_1_0._goadditionitem = gohelper.findChild(arg_1_0.viewGO, "#go_container/#scroll_info/infocontain/challenge_additioncontain/targetList/#go_additionitem")
 	arg_1_0._goadditionstar1 = gohelper.findChild(arg_1_0.viewGO, "#go_container/#scroll_info/infocontain/challenge_additioncontain/text/starcontainer/#go_star1")
@@ -69,68 +70,67 @@ function var_0_0._refreshUI(arg_7_0)
 end
 
 function var_0_0._refreshTarget(arg_8_0)
-	var_0_0.super._refreshTarget(arg_8_0)
-	arg_8_0:_refreshAdvanceStar2()
+	arg_8_0:_refreshAdvanceStaList()
 end
 
-function var_0_0._refreshAdvanceStar2(arg_9_0)
-	local var_9_0 = DungeonConfig.instance:getEpisodeAdvancedCondition2Text(arg_9_0._episodeId)
-	local var_9_1 = not string.nilorempty(var_9_0)
+function var_0_0._refreshAdvanceStaList(arg_9_0)
+	local var_9_0 = Act183Helper.getEpisodeConditionDescList(arg_9_0._episodeId)
 
-	gohelper.setActive(arg_9_0._goplatinumcondition2, var_9_1)
+	arg_9_0._conditionDescNum = var_9_0 and #var_9_0 or 0
+	arg_9_0._useOneStarFlag = arg_9_0._conditionDescNum > 3
 
-	if not var_9_1 then
+	local var_9_1 = arg_9_0._useOneStarFlag and 1 or arg_9_0._conditionDescNum
+
+	arg_9_0:_initStars(var_9_1)
+	gohelper.CreateObjList(arg_9_0, arg_9_0._refreshTargetItem, var_9_0, arg_9_0._gotargetlist, arg_9_0._gonormalcondition)
+end
+
+function var_0_0._refreshTargetItem(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
+	local var_10_0 = gohelper.findChildText(arg_10_1, "#txt_normalcondition")
+	local var_10_1 = gohelper.findChild(arg_10_1, "#go_normalfinish")
+	local var_10_2 = gohelper.findChild(arg_10_1, "#go_normalunfinish")
+
+	var_10_0.text = arg_10_2
+
+	local var_10_3 = arg_10_3 <= arg_10_0._episodeInfo.star
+
+	gohelper.setActive(var_10_1, var_10_3)
+	gohelper.setActive(var_10_2, not var_10_3)
+	ZProj.UGUIHelper.SetColorAlpha(var_10_0, var_10_3 and 1 or 0.63)
+
+	if arg_10_0._useOneStarFlag then
+		arg_10_0:_setStar(arg_10_0._starList[1], arg_10_0._episodeInfo.star >= arg_10_0._conditionDescNum)
+	else
+		arg_10_0:_setStar(arg_10_0._starList[arg_10_3], var_10_3)
+	end
+end
+
+function var_0_0._initStars(arg_11_0, arg_11_1)
+	if arg_11_0._starList then
 		return
 	end
 
-	arg_9_0._txtplatinumcondition2.text = var_9_0
+	for iter_11_0 = 1, math.huge do
+		local var_11_0 = gohelper.findChild(arg_11_0.viewGO, "#go_container/#scroll_info/infocontain/targetcontain/text/starcontainer/#go_star" .. iter_11_0)
 
-	local var_9_2 = arg_9_0._episodeInfo.star >= DungeonEnum.StarType.Ultra
+		if gohelper.isNil(var_11_0) then
+			break
+		end
 
-	gohelper.setActive(arg_9_0._goplatinumfinish2, var_9_2)
-	gohelper.setActive(arg_9_0._goplatinumunfinish2, not var_9_2)
-	ZProj.UGUIHelper.SetColorAlpha(arg_9_0._txtplatinumcondition2, var_9_2 and 1 or 0.63)
-	arg_9_0:_setStar(arg_9_0._starList[3], var_9_2)
-end
+		local var_11_1 = iter_11_0 == arg_11_1
 
-function var_0_0._initStars(arg_10_0)
-	if arg_10_0._starList then
-		return
-	end
+		gohelper.setActive(var_11_0, var_11_1)
 
-	local var_10_0 = arg_10_0:_getTotalConditionNum()
+		if var_11_1 then
+			arg_11_0._starList = arg_11_0:getUserDataTb_()
 
-	for iter_10_0 = 1, Act183Enum.EpisodeMaxStarNum do
-		gohelper.setActive(arg_10_0["_gostar" .. iter_10_0], iter_10_0 == var_10_0)
-	end
+			for iter_11_1 = 1, arg_11_1 do
+				local var_11_2 = gohelper.findChildImage(var_11_0, "star" .. iter_11_1)
 
-	local var_10_1 = arg_10_0["_gostar" .. var_10_0]
-
-	arg_10_0._starList = arg_10_0:getUserDataTb_()
-
-	for iter_10_1 = 1, var_10_0 do
-		local var_10_2 = gohelper.findChildImage(var_10_1, "star" .. iter_10_1)
-
-		table.insert(arg_10_0._starList, var_10_2)
-	end
-end
-
-function var_0_0._getTotalConditionNum(arg_11_0)
-	local var_11_0 = {}
-
-	table.insert(var_11_0, DungeonConfig.instance:getFirstEpisodeWinConditionText(arg_11_0._episodeId))
-	table.insert(var_11_0, DungeonConfig.instance:getEpisodeAdvancedConditionText(arg_11_0._episodeId))
-	table.insert(var_11_0, DungeonConfig.instance:getEpisodeAdvancedCondition2Text(arg_11_0._episodeId))
-
-	local var_11_1 = 0
-
-	for iter_11_0, iter_11_1 in ipairs(var_11_0) do
-		if not string.nilorempty(iter_11_1) then
-			var_11_1 = var_11_1 + 1
+				table.insert(arg_11_0._starList, var_11_2)
+			end
 		end
 	end
-
-	return var_11_1
 end
 
 function var_0_0.refreshFightConditions(arg_12_0)
@@ -216,11 +216,30 @@ function var_0_0.refreshChallengeRules(arg_15_0)
 		gohelper.CreateObjList(arg_15_0, arg_15_0._refreshBaseRuleItem, arg_15_0._baseRuleDescList, arg_15_0._gobaserules, arg_15_0._gobaseruleItem)
 	end
 
-	if arg_15_0._episodeMo then
-		local var_15_0 = arg_15_0._episodeMo:getEpisodeType()
+	arg_15_0._escapeRules = arg_15_0._groupEpisodeMo:getEscapeRules(arg_15_0._episodeId)
+
+	if (arg_15_0._episodeMo and arg_15_0._episodeMo:getEpisodeType()) == Act183Enum.EpisodeType.Boss then
+		local var_15_0 = {}
+		local var_15_1 = arg_15_0._groupEpisodeMo:getTargetTypeAndStatusEpisodes(Act183Enum.EpisodeType.Sub, Act183Enum.EpisodeStatus.Locked)
+		local var_15_2 = arg_15_0._groupEpisodeMo:getTargetTypeAndStatusEpisodes(Act183Enum.EpisodeType.Sub, Act183Enum.EpisodeStatus.Unlocked)
+
+		tabletool.addValues(var_15_0, var_15_1)
+		tabletool.addValues(var_15_0, var_15_2)
+
+		for iter_15_0, iter_15_1 in ipairs(var_15_0) do
+			local var_15_3 = iter_15_1:getEpisodeId()
+			local var_15_4 = Act183Config.instance:getEpisodeAllRuleDesc(var_15_3)
+
+			for iter_15_2 = 1, #var_15_4 do
+				table.insert(arg_15_0._escapeRules, {
+					episodeId = var_15_3,
+					ruleIndex = iter_15_2,
+					ruleDesc = var_15_4[iter_15_2]
+				})
+			end
+		end
 	end
 
-	arg_15_0._escapeRules = arg_15_0._groupEpisodeMo:getEscapeRules(arg_15_0._episodeId)
 	arg_15_0._canGetRule = arg_15_0._escapeRules and #arg_15_0._escapeRules > 0
 
 	gohelper.setActive(arg_15_0._goescapecontainer, arg_15_0._canGetRule)

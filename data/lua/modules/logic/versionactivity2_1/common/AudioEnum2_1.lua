@@ -31,9 +31,11 @@ var_0_0.Activity163 = {
 }
 
 local var_0_1 = {
-	Act2_1DungeonBgm = 3200162,
+	stop_ui_preheat_2_1_music_20211602 = 20211602,
 	play_ui_preheat_2_1_music_20211601 = 20211601,
-	stop_ui_preheat_2_1_music_20211602 = 20211602
+	Act2_1_LanShouPa = 3200166,
+	Act2_1DungeonBgm = 3200162,
+	Act2_1_Aergusi = 3200167
 }
 local var_0_2 = {
 	play_ui_wangshi_carton_open_20211603 = 20211603

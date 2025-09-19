@@ -91,15 +91,9 @@ function var_0_0._refreshUI(arg_8_0)
 		return
 	end
 
-	local var_8_6 = lua_battle.configDict[arg_8_0._battleId]
-	local var_8_7 = var_8_6 and var_8_6.additionRule or ""
-	local var_8_8 = FightStrUtil.instance:getSplitString2Cache(var_8_7, true, "|", "#")
+	local var_8_6 = arg_8_0:_getRuleList(var_8_0)
 
-	if var_8_0.type == DungeonEnum.EpisodeType.Meilanni then
-		var_8_8 = var_0_0.meilanniExcludeRules(var_8_8)
-	end
-
-	if not var_8_8 or #var_8_8 == 0 then
+	if not var_8_6 or #var_8_6 == 0 then
 		gohelper.setActive(arg_8_0._goadditionRule, false)
 
 		return
@@ -109,69 +103,81 @@ function var_0_0._refreshUI(arg_8_0)
 
 	arg_8_0:_clearRules()
 
-	arg_8_0._ruleList = var_8_8
+	arg_8_0._ruleList = var_8_6
 
 	gohelper.setActive(arg_8_0._goadditionRule, true)
 
-	for iter_8_0, iter_8_1 in ipairs(var_8_8) do
-		local var_8_9 = iter_8_1[1]
-		local var_8_10 = iter_8_1[2]
-		local var_8_11 = lua_rule.configDict[var_8_10]
+	for iter_8_0, iter_8_1 in ipairs(var_8_6) do
+		local var_8_7 = iter_8_1[1]
+		local var_8_8 = iter_8_1[2]
+		local var_8_9 = lua_rule.configDict[var_8_8]
 
-		if var_8_11 then
-			arg_8_0:_addRuleItem(var_8_11, var_8_9)
+		if var_8_9 then
+			arg_8_0:_addRuleItem(var_8_9, var_8_7)
 		end
 
-		if iter_8_0 == #var_8_8 then
+		if iter_8_0 == #var_8_6 then
 			gohelper.setActive(arg_8_0._rulesimagelineList[iter_8_0], false)
 		end
 	end
 end
 
-function var_0_0._addRuleItem(arg_9_0, arg_9_1, arg_9_2)
-	local var_9_0 = gohelper.clone(arg_9_0._goruletemp, arg_9_0._gorulelist, arg_9_1.id)
+function var_0_0._getRuleList(arg_9_0, arg_9_1)
+	local var_9_0 = lua_battle.configDict[arg_9_0._battleId]
+	local var_9_1 = var_9_0 and var_9_0.additionRule or ""
+	local var_9_2 = FightStrUtil.instance:getSplitString2Cache(var_9_1, true, "|", "#")
 
-	gohelper.setActive(var_9_0, true)
-	table.insert(arg_9_0._cloneRuleGos, var_9_0)
+	if arg_9_1.type == DungeonEnum.EpisodeType.Meilanni then
+		var_9_2 = var_0_0.meilanniExcludeRules(var_9_2)
+	end
 
-	local var_9_1 = gohelper.findChildImage(var_9_0, "#image_tagicon")
-
-	UISpriteSetMgr.instance:setCommonSprite(var_9_1, "wz_" .. arg_9_2)
-
-	local var_9_2 = gohelper.findChildImage(var_9_0, "")
-
-	UISpriteSetMgr.instance:setDungeonLevelRuleSprite(var_9_2, arg_9_1.icon)
+	return var_9_2
 end
 
-function var_0_0._clearRules(arg_10_0)
-	for iter_10_0 = #arg_10_0._cloneRuleGos, 1, -1 do
-		gohelper.destroy(arg_10_0._cloneRuleGos[iter_10_0])
+function var_0_0._addRuleItem(arg_10_0, arg_10_1, arg_10_2)
+	local var_10_0 = gohelper.clone(arg_10_0._goruletemp, arg_10_0._gorulelist, arg_10_1.id)
 
-		arg_10_0._cloneRuleGos[iter_10_0] = nil
+	gohelper.setActive(var_10_0, true)
+	table.insert(arg_10_0._cloneRuleGos, var_10_0)
+
+	local var_10_1 = gohelper.findChildImage(var_10_0, "#image_tagicon")
+
+	UISpriteSetMgr.instance:setCommonSprite(var_10_1, "wz_" .. arg_10_2)
+
+	local var_10_2 = gohelper.findChildImage(var_10_0, "")
+
+	UISpriteSetMgr.instance:setDungeonLevelRuleSprite(var_10_2, arg_10_1.icon)
+end
+
+function var_0_0._clearRules(arg_11_0)
+	for iter_11_0 = #arg_11_0._cloneRuleGos, 1, -1 do
+		gohelper.destroy(arg_11_0._cloneRuleGos[iter_11_0])
+
+		arg_11_0._cloneRuleGos[iter_11_0] = nil
 	end
 end
 
-function var_0_0.meilanniExcludeRules(arg_11_0)
-	if not arg_11_0 or #arg_11_0 == 0 then
+function var_0_0.meilanniExcludeRules(arg_12_0)
+	if not arg_12_0 or #arg_12_0 == 0 then
 		return
 	end
 
-	local var_11_0 = MeilanniModel.instance:getCurMapId()
-	local var_11_1 = var_11_0 and MeilanniModel.instance:getMapInfo(var_11_0)
-	local var_11_2 = {}
+	local var_12_0 = MeilanniModel.instance:getCurMapId()
+	local var_12_1 = var_12_0 and MeilanniModel.instance:getMapInfo(var_12_0)
+	local var_12_2 = {}
 
-	for iter_11_0, iter_11_1 in ipairs(arg_11_0) do
-		local var_11_3 = iter_11_1[2]
+	for iter_12_0, iter_12_1 in ipairs(arg_12_0) do
+		local var_12_3 = iter_12_1[2]
 
-		if var_11_1 and not var_11_1:isExcludeRule(var_11_3) then
-			table.insert(var_11_2, iter_11_1)
+		if var_12_1 and not var_12_1:isExcludeRule(var_12_3) then
+			table.insert(var_12_2, iter_12_1)
 		end
 	end
 
-	return var_11_2
+	return var_12_2
 end
 
-function var_0_0.onDestroyView(arg_12_0)
+function var_0_0.onDestroyView(arg_13_0)
 	return
 end
 

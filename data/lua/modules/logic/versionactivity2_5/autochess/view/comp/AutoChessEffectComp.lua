@@ -52,10 +52,13 @@ function var_0_0.activeEffect(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
 	end
 
 	if arg_3_1.loop ~= 1 then
-		TaskDispatcher.runDelay(function()
-			gohelper.setActive(var_3_0, false)
-		end, nil, arg_3_1.duration + 0.2)
+		TaskDispatcher.cancelTask(var_0_0.hideEffect, var_3_0)
+		TaskDispatcher.runDelay(var_0_0.hideEffect, var_3_0, arg_3_1.duration + 0.2)
 	end
+end
+
+function var_0_0.hideEffect(arg_4_0)
+	gohelper.setActive(arg_4_0, false)
 end
 
 function var_0_0.removeEffect(arg_5_0, arg_5_1)
@@ -86,7 +89,10 @@ function var_0_0.moveEffect(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
 	arg_6_2 = recthelper.rectToRelativeAnchorPos(arg_6_2, var_6_0.transform.parent)
 
 	if var_6_0 then
-		ZProj.TweenHelper.DOAnchorPos(var_6_0.transform, arg_6_2.x, arg_6_2.y, arg_6_3, nil, nil, nil, EaseType.Linear)
+		local var_6_1 = var_6_0.transform
+
+		recthelper.setAnchor(var_6_1, 0, 0)
+		ZProj.TweenHelper.DOAnchorPos(var_6_1, arg_6_2.x, arg_6_2.y, arg_6_3, nil, nil, nil, EaseType.Linear)
 	else
 		logError(string.format("异常:未加载特效%s", arg_6_1))
 	end

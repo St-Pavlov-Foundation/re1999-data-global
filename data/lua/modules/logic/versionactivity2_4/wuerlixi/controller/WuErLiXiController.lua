@@ -19,7 +19,8 @@ function var_0_0.enterLevelView(arg_4_0)
 end
 
 function var_0_0._onRecInfo(arg_5_0, arg_5_1, arg_5_2, arg_5_3)
-	if arg_5_2 == 0 then
+	if arg_5_2 == 0 and arg_5_3.activityId == VersionActivity2_4Enum.ActivityId.WuErLiXi then
+		WuErLiXiModel.instance:initInfos(arg_5_3.act180EpisodeNO)
 		ViewMgr.instance:openView(ViewName.WuErLiXiLevelView)
 	end
 end

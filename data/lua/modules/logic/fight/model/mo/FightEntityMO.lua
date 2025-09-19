@@ -37,7 +37,7 @@ function var_0_0.init(arg_3_0, arg_3_1, arg_3_2)
 	arg_3_0.id = arg_3_1.uid
 	arg_3_0.uid = arg_3_1.uid
 	arg_3_0.modelId = arg_3_1.modelId
-	arg_3_0.skin = FightHelper.processEntitySkin(arg_3_1.skin, arg_3_1.uid)
+	arg_3_0.skin = arg_3_0:initSkin(arg_3_1)
 	arg_3_0.originSkin = arg_3_0.skin
 	arg_3_0.position = arg_3_1.position
 	arg_3_0.entityType = arg_3_1.entityType
@@ -91,6 +91,9 @@ function var_0_0.init(arg_3_0, arg_3_1, arg_3_2)
 	arg_3_0.guard = arg_3_1.guard
 	arg_3_0.subCd = arg_3_1.subCd
 	arg_3_0.exPointType = arg_3_1.exPointType
+	arg_3_0.equipRecord = arg_3_1.equipRecord
+	arg_3_0.destinyStone = arg_3_1.destinyStone
+	arg_3_0.destinyRank = arg_3_1.destinyRank
 	arg_3_0.customUnitId = arg_3_1.customUnitId
 end
 
@@ -276,6 +279,13 @@ function var_0_0.getCO(arg_26_0)
 		return lua_tower_assist_boss.configDict[arg_26_0.modelId]
 	elseif arg_26_0:isASFDEmitter() then
 		return FightASFDConfig.instance:getASFDEmitterConfig(arg_26_0.side)
+	elseif arg_26_0:isVorpalith() then
+		arg_26_0.vorpalithCo = arg_26_0.vorpalithCo or {
+			uniqueSkill_point = 5,
+			name = "灵刃"
+		}
+
+		return arg_26_0.vorpalithCo
 	end
 
 	return lua_character.configDict[arg_26_0.modelId] or lua_monster.configDict[arg_26_0.modelId]
@@ -297,220 +307,228 @@ function var_0_0.isASFDEmitter(arg_30_0)
 	return arg_30_0.entityType == FightEnum.EntityType.ASFDEmitter
 end
 
-function var_0_0.getSpineSkinCO(arg_31_0)
-	local var_31_0 = arg_31_0.skin
+function var_0_0.isVorpalith(arg_31_0)
+	return arg_31_0.entityType == FightEnum.EntityType.Vorpalith
+end
 
-	if not var_31_0 then
-		local var_31_1 = lua_character.configDict[arg_31_0.modelId]
-
-		var_31_0 = var_31_1 and var_31_1.skinId
+function var_0_0.getSpineSkinCO(arg_32_0)
+	if arg_32_0:isVorpalith() then
+		return
 	end
 
-	if not var_31_0 then
-		local var_31_2 = lua_monster.configDict[arg_31_0.modelId]
-		local var_31_3
+	local var_32_0 = arg_32_0.skin
 
-		var_31_3 = var_31_2 and var_31_2.skinId
+	if not var_32_0 then
+		local var_32_1 = lua_character.configDict[arg_32_0.modelId]
+
+		var_32_0 = var_32_1 and var_32_1.skinId
 	end
 
-	local var_31_4 = FightConfig.instance:getSkinCO(arg_31_0.skin)
+	if not var_32_0 then
+		local var_32_2 = lua_monster.configDict[arg_32_0.modelId]
+		local var_32_3
 
-	if var_31_4 then
-		return var_31_4
+		var_32_3 = var_32_2 and var_32_2.skinId
+	end
+
+	local var_32_4 = FightConfig.instance:getSkinCO(arg_32_0.skin)
+
+	if var_32_4 then
+		return var_32_4
 	else
-		if FightEntityDataHelper.isPlayerUid(arg_31_0.id) then
+		if FightEntityDataHelper.isPlayerUid(arg_32_0.id) then
 			return
 		end
 
-		logError("skin not exist: " .. arg_31_0.skin .. " modelId: " .. arg_31_0.modelId)
+		logError("skin not exist: " .. arg_32_0.skin .. " modelId: " .. arg_32_0.modelId)
 	end
 end
 
-function var_0_0.resetSimulateExPoint(arg_32_0)
-	arg_32_0.playCardExPoint = 0
-	arg_32_0.moveCardExPoint = 0
-end
-
-function var_0_0.applyMoveCardExPoint(arg_33_0)
-	arg_33_0.moveCardExPoint = 0
+function var_0_0.resetSimulateExPoint(arg_33_0)
 	arg_33_0.playCardExPoint = 0
+	arg_33_0.moveCardExPoint = 0
 end
 
-function var_0_0.getExPoint(arg_34_0)
-	return arg_34_0.exPoint
+function var_0_0.applyMoveCardExPoint(arg_34_0)
+	arg_34_0.moveCardExPoint = 0
+	arg_34_0.playCardExPoint = 0
 end
 
-function var_0_0.setExPoint(arg_35_0, arg_35_1)
-	arg_35_0.exPoint = arg_35_1
+function var_0_0.getExPoint(arg_35_0)
+	return arg_35_0.exPoint
 end
 
-function var_0_0.changeExpointMaxAdd(arg_36_0, arg_36_1)
-	arg_36_0.expointMaxAdd = arg_36_0.expointMaxAdd or 0
+function var_0_0.setExPoint(arg_36_0, arg_36_1)
+	arg_36_0.exPoint = arg_36_1
+end
 
-	if arg_36_0.exPointType ~= FightEnum.ExPointType.Common then
+function var_0_0.changeExpointMaxAdd(arg_37_0, arg_37_1)
+	arg_37_0.expointMaxAdd = arg_37_0.expointMaxAdd or 0
+
+	if arg_37_0.exPointType ~= FightEnum.ExPointType.Common then
 		return
 	end
 
-	arg_36_0.expointMaxAdd = arg_36_0.expointMaxAdd + arg_36_1
+	arg_37_0.expointMaxAdd = arg_37_0.expointMaxAdd + arg_37_1
 end
 
-function var_0_0.getMaxExPoint(arg_37_0)
-	if not arg_37_0:getCO() then
+function var_0_0.getMaxExPoint(arg_38_0)
+	if not arg_38_0:getCO() then
 		return 0
 	end
 
-	return arg_37_0:getConfigMaxExPoint() + arg_37_0:getExpointMaxAddNum()
+	return arg_38_0:getConfigMaxExPoint() + arg_38_0:getExpointMaxAddNum()
 end
 
-function var_0_0.getExpointMaxAddNum(arg_38_0)
-	return arg_38_0.expointMaxAdd or 0
+function var_0_0.getExpointMaxAddNum(arg_39_0)
+	return arg_39_0.expointMaxAdd or 0
 end
 
-function var_0_0.changeServerUniqueCost(arg_39_0, arg_39_1)
-	if arg_39_0.exPointType ~= FightEnum.ExPointType.Common then
+function var_0_0.changeServerUniqueCost(arg_40_0, arg_40_1)
+	if arg_40_0.exPointType ~= FightEnum.ExPointType.Common then
 		return
 	end
 
-	arg_39_0.exSkillPointChange = arg_39_0:getExpointCostOffsetNum() + arg_39_1
+	arg_40_0.exSkillPointChange = arg_40_0:getExpointCostOffsetNum() + arg_40_1
 end
 
-function var_0_0.getUniqueSkillPoint(arg_40_0)
-	for iter_40_0, iter_40_1 in pairs(arg_40_0.buffDic) do
-		local var_40_0 = iter_40_1.buffId
-		local var_40_1 = arg_40_0:getFeaturesSplitInfoByBuffId(var_40_0)
+function var_0_0.getUniqueSkillPoint(arg_41_0)
+	for iter_41_0, iter_41_1 in pairs(arg_41_0.buffDic) do
+		local var_41_0 = iter_41_1.buffId
+		local var_41_1 = arg_41_0:getFeaturesSplitInfoByBuffId(var_41_0)
 
-		if var_40_1 then
-			for iter_40_2, iter_40_3 in ipairs(var_40_1) do
-				if iter_40_3[1] == FightEnum.BuffActId.ExSkillNoConsumption then
+		if var_41_1 then
+			for iter_41_2, iter_41_3 in ipairs(var_41_1) do
+				if iter_41_3[1] == FightEnum.BuffActId.ExSkillNoConsumption then
 					return 0
 				end
 			end
 		end
 	end
 
-	return arg_40_0:getConfigMaxExPoint() + arg_40_0:getExpointCostOffsetNum()
+	return arg_41_0:getConfigMaxExPoint() + arg_41_0:getExpointCostOffsetNum()
 end
 
-function var_0_0.getExpointCostOffsetNum(arg_41_0)
-	return arg_41_0.exSkillPointChange or 0
+function var_0_0.getExpointCostOffsetNum(arg_42_0)
+	return arg_42_0.exSkillPointChange or 0
 end
 
-function var_0_0.getPreviewExPoint(arg_42_0)
-	return arg_42_0.exPoint + arg_42_0.moveCardExPoint + arg_42_0.playCardExPoint - FightHelper.getPredeductionExpoint(arg_42_0.id)
+function var_0_0.getPreviewExPoint(arg_43_0)
+	return arg_43_0.exPoint + arg_43_0.moveCardExPoint + arg_43_0.playCardExPoint - FightHelper.getPredeductionExpoint(arg_43_0.id)
 end
 
-function var_0_0.onPlayCardExPoint(arg_43_0, arg_43_1)
-	if not FightCardDataHelper.isBigSkill(arg_43_1) then
-		local var_43_0 = arg_43_0:getMaxExPoint()
+function var_0_0.onPlayCardExPoint(arg_44_0, arg_44_1)
+	if not FightCardDataHelper.isBigSkill(arg_44_1) then
+		local var_44_0 = arg_44_0:getMaxExPoint()
 
-		if var_43_0 > arg_43_0:getPreviewExPoint() then
-			arg_43_0.playCardExPoint = arg_43_0.playCardExPoint + arg_43_0._playCardAddExpoint
+		if var_44_0 > arg_44_0:getPreviewExPoint() then
+			arg_44_0.playCardExPoint = arg_44_0.playCardExPoint + arg_44_0._playCardAddExpoint
 
-			if var_43_0 < arg_43_0:getPreviewExPoint() then
-				arg_43_0.playCardExPoint = arg_43_0.playCardExPoint - (arg_43_0:getPreviewExPoint() - var_43_0)
+			if var_44_0 < arg_44_0:getPreviewExPoint() then
+				arg_44_0.playCardExPoint = arg_44_0.playCardExPoint - (arg_44_0:getPreviewExPoint() - var_44_0)
 			end
 		end
 	end
 end
 
-function var_0_0.onMoveCardExPoint(arg_44_0, arg_44_1)
-	local var_44_0 = arg_44_1 and arg_44_0._moveCardAddExpoint or arg_44_0._combineCardAddExpoint
-	local var_44_1 = arg_44_0:getMaxExPoint()
+function var_0_0.onMoveCardExPoint(arg_45_0, arg_45_1)
+	local var_45_0 = arg_45_1 and arg_45_0._moveCardAddExpoint or arg_45_0._combineCardAddExpoint
+	local var_45_1 = arg_45_0:getMaxExPoint()
 
-	if var_44_1 > arg_44_0:getPreviewExPoint() then
-		arg_44_0.moveCardExPoint = arg_44_0.moveCardExPoint + var_44_0
+	if var_45_1 > arg_45_0:getPreviewExPoint() then
+		arg_45_0.moveCardExPoint = arg_45_0.moveCardExPoint + var_45_0
 
-		if var_44_1 < arg_44_0:getPreviewExPoint() then
-			arg_44_0.moveCardExPoint = arg_44_0.moveCardExPoint - (arg_44_0:getPreviewExPoint() - var_44_1)
+		if var_45_1 < arg_45_0:getPreviewExPoint() then
+			arg_45_0.moveCardExPoint = arg_45_0.moveCardExPoint - (arg_45_0:getPreviewExPoint() - var_45_1)
 		end
 	end
 end
 
-function var_0_0._dealBuffFeature(arg_45_0)
-	arg_45_0._playCardAddExpoint = 1
-	arg_45_0._moveCardAddExpoint = 1
-	arg_45_0._combineCardAddExpoint = 1
+function var_0_0._dealBuffFeature(arg_46_0)
+	arg_46_0._playCardAddExpoint = 1
+	arg_46_0._moveCardAddExpoint = 1
+	arg_46_0._combineCardAddExpoint = 1
 
-	for iter_45_0, iter_45_1 in pairs(arg_45_0.buffDic) do
-		local var_45_0 = iter_45_1.buffId
-		local var_45_1 = arg_45_0:getFeaturesSplitInfoByBuffId(var_45_0)
+	for iter_46_0, iter_46_1 in pairs(arg_46_0.buffDic) do
+		local var_46_0 = iter_46_1.buffId
+		local var_46_1 = arg_46_0:getFeaturesSplitInfoByBuffId(var_46_0)
 
-		if var_45_1 then
-			for iter_45_2, iter_45_3 in ipairs(var_45_1) do
-				if iter_45_3[1] == 606 then
-					arg_45_0._combineCardAddExpoint = arg_45_0._combineCardAddExpoint + iter_45_3[2]
-				elseif iter_45_3[1] == 607 then
-					arg_45_0._moveCardAddExpoint = arg_45_0._moveCardAddExpoint + iter_45_3[2]
-				elseif iter_45_3[1] == 603 then
-					arg_45_0._playCardAddExpoint = 0
-					arg_45_0._combineCardAddExpoint = 0
-					arg_45_0._moveCardAddExpoint = 0
+		if var_46_1 then
+			for iter_46_2, iter_46_3 in ipairs(var_46_1) do
+				if iter_46_3[1] == 606 then
+					arg_46_0._combineCardAddExpoint = arg_46_0._combineCardAddExpoint + iter_46_3[2]
+				elseif iter_46_3[1] == 607 then
+					arg_46_0._moveCardAddExpoint = arg_46_0._moveCardAddExpoint + iter_46_3[2]
+				elseif iter_46_3[1] == 603 then
+					arg_46_0._playCardAddExpoint = 0
+					arg_46_0._combineCardAddExpoint = 0
+					arg_46_0._moveCardAddExpoint = 0
 
 					return
-				elseif iter_45_3[1] == 845 then
-					arg_45_0._playCardAddExpoint = arg_45_0._playCardAddExpoint + iter_45_3[2]
+				elseif iter_46_3[1] == 845 then
+					arg_46_0._playCardAddExpoint = arg_46_0._playCardAddExpoint + iter_46_3[2]
 				end
 			end
 		end
 	end
 end
 
-function var_0_0.getCombineCardAddExPoint(arg_46_0)
-	return arg_46_0._combineCardAddExpoint
+function var_0_0.getCombineCardAddExPoint(arg_47_0)
+	return arg_47_0._combineCardAddExpoint
 end
 
-function var_0_0.getMoveCardAddExPoint(arg_47_0)
-	return arg_47_0._moveCardAddExpoint
+function var_0_0.getMoveCardAddExPoint(arg_48_0)
+	return arg_48_0._moveCardAddExpoint
 end
 
-function var_0_0.getPlayCardAddExPoint(arg_48_0)
-	return arg_48_0._playCardAddExpoint
+function var_0_0.getPlayCardAddExPoint(arg_49_0)
+	return arg_49_0._playCardAddExpoint
 end
 
-function var_0_0.getFeaturesSplitInfoByBuffId(arg_49_0, arg_49_1)
-	if not arg_49_0.buffFeaturesSplit then
-		arg_49_0.buffFeaturesSplit = {}
+function var_0_0.getFeaturesSplitInfoByBuffId(arg_50_0, arg_50_1)
+	if not arg_50_0.buffFeaturesSplit then
+		arg_50_0.buffFeaturesSplit = {}
 	end
 
-	if not arg_49_0.buffFeaturesSplit[arg_49_1] then
-		local var_49_0 = lua_skill_buff.configDict[arg_49_1]
-		local var_49_1 = var_49_0 and var_49_0.features
+	if not arg_50_0.buffFeaturesSplit[arg_50_1] then
+		local var_50_0 = lua_skill_buff.configDict[arg_50_1]
+		local var_50_1 = var_50_0 and var_50_0.features
 
-		if not string.nilorempty(var_49_1) then
-			local var_49_2 = FightStrUtil.instance:getSplitString2Cache(var_49_1, true)
+		if not string.nilorempty(var_50_1) then
+			local var_50_2 = FightStrUtil.instance:getSplitString2Cache(var_50_1, true)
 
-			arg_49_0.buffFeaturesSplit[arg_49_1] = var_49_2
+			arg_50_0.buffFeaturesSplit[arg_50_1] = var_50_2
 		end
 	end
 
-	return arg_49_0.buffFeaturesSplit[arg_49_1]
+	return arg_50_0.buffFeaturesSplit[arg_50_1]
 end
 
-function var_0_0.hasBuffFeature(arg_50_0, arg_50_1)
-	for iter_50_0, iter_50_1 in pairs(arg_50_0.buffDic) do
-		local var_50_0 = iter_50_1.buffId
-		local var_50_1 = arg_50_0:getFeaturesSplitInfoByBuffId(var_50_0)
-
-		if var_50_1 then
-			for iter_50_2, iter_50_3 in ipairs(var_50_1) do
-				local var_50_2 = lua_buff_act.configDict[iter_50_3[1]]
-
-				if var_50_2 and var_50_2.type == arg_50_1 then
-					return true, iter_50_1
-				end
-			end
-		end
-	end
-end
-
-function var_0_0.hasBuffActId(arg_51_0, arg_51_1)
+function var_0_0.hasBuffFeature(arg_51_0, arg_51_1)
 	for iter_51_0, iter_51_1 in pairs(arg_51_0.buffDic) do
 		local var_51_0 = iter_51_1.buffId
 		local var_51_1 = arg_51_0:getFeaturesSplitInfoByBuffId(var_51_0)
 
 		if var_51_1 then
 			for iter_51_2, iter_51_3 in ipairs(var_51_1) do
-				if iter_51_3[1] == arg_51_1 then
+				local var_51_2 = lua_buff_act.configDict[iter_51_3[1]]
+
+				if var_51_2 and var_51_2.type == arg_51_1 then
+					return true, iter_51_1
+				end
+			end
+		end
+	end
+end
+
+function var_0_0.hasBuffActId(arg_52_0, arg_52_1)
+	for iter_52_0, iter_52_1 in pairs(arg_52_0.buffDic) do
+		local var_52_0 = iter_52_1.buffId
+		local var_52_1 = arg_52_0:getFeaturesSplitInfoByBuffId(var_52_0)
+
+		if var_52_1 then
+			for iter_52_2, iter_52_3 in ipairs(var_52_1) do
+				if iter_52_3[1] == arg_52_1 then
 					return true
 				end
 			end
@@ -518,221 +536,203 @@ function var_0_0.hasBuffActId(arg_51_0, arg_51_1)
 	end
 end
 
-function var_0_0.hasBuffTypeId(arg_52_0, arg_52_1)
-	for iter_52_0, iter_52_1 in pairs(arg_52_0.buffDic) do
-		local var_52_0 = iter_52_1:getCO()
-
-		if var_52_0 and var_52_0.typeId == arg_52_1 then
-			return true
-		end
-	end
-end
-
-function var_0_0.hasBuffId(arg_53_0, arg_53_1)
+function var_0_0.hasBuffTypeId(arg_53_0, arg_53_1)
 	for iter_53_0, iter_53_1 in pairs(arg_53_0.buffDic) do
-		if iter_53_1.buffId == arg_53_1 then
+		local var_53_0 = iter_53_1:getCO()
+
+		if var_53_0 and var_53_0.typeId == arg_53_1 then
 			return true
 		end
 	end
 end
 
-function var_0_0.setHp(arg_54_0, arg_54_1)
-	if arg_54_0:isASFDEmitter() then
-		return arg_54_0:setASFDEmitterHp(arg_54_1)
+function var_0_0.hasBuffId(arg_54_0, arg_54_1)
+	for iter_54_0, iter_54_1 in pairs(arg_54_0.buffDic) do
+		if iter_54_1.buffId == arg_54_1 then
+			return true
+		end
 	end
-
-	arg_54_0:defaultSetHp(arg_54_1)
 end
 
-function var_0_0.defaultSetHp(arg_55_0, arg_55_1)
-	if arg_55_1 < 0 then
-		arg_55_1 = 0
+function var_0_0.setHp(arg_55_0, arg_55_1)
+	if arg_55_0:isASFDEmitter() then
+		return arg_55_0:setASFDEmitterHp(arg_55_1)
 	end
 
-	if arg_55_1 > arg_55_0.attrMO.hp then
-		arg_55_1 = arg_55_0.attrMO.hp
-	end
-
-	arg_55_0.currentHp = arg_55_1
+	arg_55_0:defaultSetHp(arg_55_1)
 end
 
-function var_0_0.setASFDEmitterHp(arg_56_0, arg_56_1)
+function var_0_0.defaultSetHp(arg_56_0, arg_56_1)
 	if arg_56_1 < 0 then
 		arg_56_1 = 0
+	end
+
+	if arg_56_1 > arg_56_0.attrMO.hp then
+		arg_56_1 = arg_56_0.attrMO.hp
 	end
 
 	arg_56_0.currentHp = arg_56_1
 end
 
-function var_0_0.setShield(arg_57_0, arg_57_1)
-	arg_57_0.shieldValue = arg_57_1
-end
-
-function var_0_0.onChangeHero(arg_58_0)
-	tabletool.clear(arg_58_0.buffDic)
-	arg_58_0:_dealBuffFeature()
-	arg_58_0:setShield(0)
-end
-
-function var_0_0.setPowerInfos(arg_59_0, arg_59_1)
-	local var_59_0 = {}
-
-	for iter_59_0, iter_59_1 in ipairs(arg_59_1) do
-		local var_59_1 = FightPowerInfoData.New(iter_59_1)
-
-		var_59_0[var_59_1.powerId] = var_59_1
+function var_0_0.setASFDEmitterHp(arg_57_0, arg_57_1)
+	if arg_57_1 < 0 then
+		arg_57_1 = 0
 	end
 
-	FightDataUtil.coverData(var_59_0, arg_59_0._powerInfos)
+	arg_57_0.currentHp = arg_57_1
 end
 
-function var_0_0.refreshPowerInfo(arg_60_0, arg_60_1)
-	local var_60_0 = FightPowerInfoData.New(arg_60_1)
-	local var_60_1 = var_60_0.powerId
-
-	arg_60_0._powerInfos[var_60_1] = FightDataUtil.coverData(var_60_0, arg_60_0._powerInfos[var_60_1])
+function var_0_0.setShield(arg_58_0, arg_58_1)
+	arg_58_0.shieldValue = arg_58_1
 end
 
-function var_0_0.getPowerInfos(arg_61_0)
-	return arg_61_0._powerInfos or {}
+function var_0_0.onChangeHero(arg_59_0)
+	tabletool.clear(arg_59_0.buffDic)
+	arg_59_0:_dealBuffFeature()
+	arg_59_0:setShield(0)
 end
 
-function var_0_0.getPowerInfo(arg_62_0, arg_62_1)
-	return arg_62_0._powerInfos and arg_62_0._powerInfos[arg_62_1]
+function var_0_0.setPowerInfos(arg_60_0, arg_60_1)
+	local var_60_0 = {}
+
+	for iter_60_0, iter_60_1 in ipairs(arg_60_1) do
+		local var_60_1 = FightPowerInfoData.New(iter_60_1)
+
+		var_60_0[var_60_1.powerId] = var_60_1
+	end
+
+	FightDataUtil.coverData(var_60_0, arg_60_0._powerInfos)
 end
 
-function var_0_0.hasStress(arg_63_0)
-	local var_63_0 = arg_63_0._powerInfos and arg_63_0._powerInfos[FightEnum.PowerType.Stress]
+function var_0_0.refreshPowerInfo(arg_61_0, arg_61_1)
+	local var_61_0 = FightPowerInfoData.New(arg_61_1)
+	local var_61_1 = var_61_0.powerId
 
-	return var_63_0 and var_63_0.max > 0
+	arg_61_0._powerInfos[var_61_1] = FightDataUtil.coverData(var_61_0, arg_61_0._powerInfos[var_61_1])
 end
 
-function var_0_0.changePowerMax(arg_64_0, arg_64_1, arg_64_2)
-	if arg_64_0._powerInfos and arg_64_0._powerInfos[arg_64_1] then
-		arg_64_0._powerInfos[arg_64_1].max = arg_64_0._powerInfos[arg_64_1].max + arg_64_2
+function var_0_0.getPowerInfos(arg_62_0)
+	return arg_62_0._powerInfos or {}
+end
+
+function var_0_0.getPowerInfo(arg_63_0, arg_63_1)
+	return arg_63_0._powerInfos and arg_63_0._powerInfos[arg_63_1]
+end
+
+function var_0_0.hasStress(arg_64_0)
+	local var_64_0 = arg_64_0._powerInfos and arg_64_0._powerInfos[FightEnum.PowerType.Stress]
+
+	return var_64_0 and var_64_0.max > 0
+end
+
+function var_0_0.changePowerMax(arg_65_0, arg_65_1, arg_65_2)
+	if arg_65_0._powerInfos and arg_65_0._powerInfos[arg_65_1] then
+		arg_65_0._powerInfos[arg_65_1].max = arg_65_0._powerInfos[arg_65_1].max + arg_65_2
 	end
 end
 
-function var_0_0.buildSummonedInfo(arg_65_0, arg_65_1)
-	arg_65_0.summonedInfo = arg_65_0.summonedInfo or FightEntitySummonedInfo.New()
-
-	arg_65_0.summonedInfo:init(arg_65_1)
-
-	return arg_65_0.summonedInfo
-end
-
-function var_0_0.getSummonedInfo(arg_66_0)
+function var_0_0.buildSummonedInfo(arg_66_0, arg_66_1)
 	arg_66_0.summonedInfo = arg_66_0.summonedInfo or FightEntitySummonedInfo.New()
+
+	arg_66_0.summonedInfo:init(arg_66_1)
 
 	return arg_66_0.summonedInfo
 end
 
-function var_0_0.buildEnhanceInfoBox(arg_67_0, arg_67_1)
-	arg_67_0.canUpgradeIds = {}
-	arg_67_0.upgradedOptions = {}
+function var_0_0.getSummonedInfo(arg_67_0)
+	arg_67_0.summonedInfo = arg_67_0.summonedInfo or FightEntitySummonedInfo.New()
 
-	if arg_67_1 then
-		for iter_67_0, iter_67_1 in ipairs(arg_67_1.canUpgradeIds) do
-			arg_67_0.canUpgradeIds[iter_67_1] = iter_67_1
+	return arg_67_0.summonedInfo
+end
+
+function var_0_0.buildEnhanceInfoBox(arg_68_0, arg_68_1)
+	arg_68_0.canUpgradeIds = {}
+	arg_68_0.upgradedOptions = {}
+
+	if arg_68_1 then
+		for iter_68_0, iter_68_1 in ipairs(arg_68_1.canUpgradeIds) do
+			arg_68_0.canUpgradeIds[iter_68_1] = iter_68_1
 		end
 
-		for iter_67_2, iter_67_3 in ipairs(arg_67_1.upgradedOptions) do
-			arg_67_0.upgradedOptions[iter_67_3] = iter_67_3
+		for iter_68_2, iter_68_3 in ipairs(arg_68_1.upgradedOptions) do
+			arg_68_0.upgradedOptions[iter_68_3] = iter_68_3
 		end
 	end
 end
 
-function var_0_0.getTrialAttrCo(arg_68_0)
-	if not arg_68_0.trialId or arg_68_0.trialId <= 0 then
+function var_0_0.getTrialAttrCo(arg_69_0)
+	if not arg_69_0.trialId or arg_69_0.trialId <= 0 then
 		return
 	end
 
-	local var_68_0 = lua_hero_trial.configDict[arg_68_0.trialId][0]
+	local var_69_0 = lua_hero_trial.configDict[arg_69_0.trialId][0]
 
-	if not var_68_0 then
+	if not var_69_0 then
 		return
 	end
 
-	if var_68_0.attrId <= 0 then
+	if var_69_0.attrId <= 0 then
 		return
 	end
 
-	return lua_hero_trial_attr.configDict[var_68_0.attrId]
+	return lua_hero_trial_attr.configDict[var_69_0.attrId]
 end
 
-function var_0_0.updateStoredExPoint(arg_69_0)
-	arg_69_0.storedExPoint = 0
+function var_0_0.updateStoredExPoint(arg_70_0)
+	arg_70_0.storedExPoint = 0
 
-	for iter_69_0, iter_69_1 in ipairs(arg_69_0:getBuffList()) do
-		local var_69_0 = iter_69_1.actCommonParams
+	for iter_70_0, iter_70_1 in ipairs(arg_70_0:getBuffList()) do
+		local var_70_0 = iter_70_1.actCommonParams
 
-		if not string.nilorempty(var_69_0) then
-			local var_69_1 = FightStrUtil.instance:getSplitToNumberCache(var_69_0, "#")
-			local var_69_2 = var_69_1[1]
-			local var_69_3 = lua_buff_act.configDict[var_69_2]
+		if not string.nilorempty(var_70_0) then
+			local var_70_1 = FightStrUtil.instance:getSplitToNumberCache(var_70_0, "#")
+			local var_70_2 = var_70_1[1]
+			local var_70_3 = lua_buff_act.configDict[var_70_2]
 
-			if (var_69_3 and var_69_3.type) == FightEnum.BuffType_ExPointOverflowBank then
-				arg_69_0.storedExPoint = arg_69_0.storedExPoint + var_69_1[2]
+			if (var_70_3 and var_70_3.type) == FightEnum.BuffType_ExPointOverflowBank then
+				arg_70_0.storedExPoint = arg_70_0.storedExPoint + var_70_1[2]
 			end
 		end
 	end
 end
 
-function var_0_0.setStoredExPoint(arg_70_0, arg_70_1)
-	arg_70_0.storedExPoint = arg_70_1
+function var_0_0.setStoredExPoint(arg_71_0, arg_71_1)
+	arg_71_0.storedExPoint = arg_71_1
 end
 
-function var_0_0.changeStoredExPoint(arg_71_0, arg_71_1)
-	arg_71_0.storedExPoint = arg_71_0.storedExPoint + arg_71_1
+function var_0_0.changeStoredExPoint(arg_72_0, arg_72_1)
+	arg_72_0.storedExPoint = arg_72_0.storedExPoint + arg_72_1
 end
 
-function var_0_0.getStoredExPoint(arg_72_0)
-	return arg_72_0.storedExPoint
+function var_0_0.getStoredExPoint(arg_73_0)
+	return arg_73_0.storedExPoint
 end
 
-function var_0_0.hadStoredExPoint(arg_73_0)
-	return arg_73_0.storedExPoint > 0
+function var_0_0.hadStoredExPoint(arg_74_0)
+	return arg_74_0.storedExPoint > 0
 end
 
-function var_0_0.getResistanceDict(arg_74_0)
-	arg_74_0.resistanceDict = arg_74_0.resistanceDict or {}
+function var_0_0.getResistanceDict(arg_75_0)
+	arg_75_0.resistanceDict = arg_75_0.resistanceDict or {}
 
-	tabletool.clear(arg_74_0.resistanceDict)
+	tabletool.clear(arg_75_0.resistanceDict)
 
-	local var_74_0 = FightModel.instance:getSpAttributeMo(arg_74_0.uid)
-
-	if var_74_0 then
-		for iter_74_0, iter_74_1 in pairs(FightEnum.ResistanceKeyToSpAttributeMoField) do
-			local var_74_1 = var_74_0[iter_74_1]
-
-			if var_74_1 and var_74_1 > 0 then
-				arg_74_0.resistanceDict[iter_74_0] = var_74_1
-			end
-		end
-	end
-
-	return arg_74_0.resistanceDict
-end
-
-function var_0_0.isFullResistance(arg_75_0, arg_75_1)
 	local var_75_0 = FightModel.instance:getSpAttributeMo(arg_75_0.uid)
 
-	if not var_75_0 then
-		return false
+	if var_75_0 then
+		for iter_75_0, iter_75_1 in pairs(FightEnum.ResistanceKeyToSpAttributeMoField) do
+			local var_75_1 = var_75_0[iter_75_1]
+
+			if var_75_1 and var_75_1 > 0 then
+				arg_75_0.resistanceDict[iter_75_0] = var_75_1
+			end
+		end
 	end
 
-	local var_75_1 = var_75_0[arg_75_1]
-
-	if not var_75_1 then
-		logError(string.format("%s 不存在 %s 的sp attr", arg_75_0:getEntityName(), arg_75_1))
-
-		return false
-	end
-
-	return var_75_1 >= 1000
+	return arg_75_0.resistanceDict
 end
 
-function var_0_0.isPartResistance(arg_76_0, arg_76_1)
+function var_0_0.isFullResistance(arg_76_0, arg_76_1)
 	local var_76_0 = FightModel.instance:getSpAttributeMo(arg_76_0.uid)
 
 	if not var_76_0 then
@@ -747,135 +747,239 @@ function var_0_0.isPartResistance(arg_76_0, arg_76_1)
 		return false
 	end
 
-	return var_76_1 > 0
+	return var_76_1 >= 1000
 end
 
-function var_0_0.setNotifyBindContract(arg_77_0)
-	arg_77_0.notifyBindContract = true
-end
+function var_0_0.isPartResistance(arg_77_0, arg_77_1)
+	local var_77_0 = FightModel.instance:getSpAttributeMo(arg_77_0.uid)
 
-function var_0_0.clearNotifyBindContract(arg_78_0)
-	arg_78_0.notifyBindContract = nil
-end
-
-function var_0_0.isStatusDead(arg_79_0)
-	return arg_79_0.status == FightEnum.EntityStatus.Dead
-end
-
-function var_0_0.setDead(arg_80_0)
-	arg_80_0.status = FightEnum.EntityStatus.Dead
-end
-
-function var_0_0.getCareer(arg_81_0)
-	if arg_81_0:isASFDEmitter() then
-		return arg_81_0:getASFDCareer()
+	if not var_77_0 then
+		return false
 	end
 
-	return arg_81_0.career
+	local var_77_1 = var_77_0[arg_77_1]
+
+	if not var_77_1 then
+		logError(string.format("%s 不存在 %s 的sp attr", arg_77_0:getEntityName(), arg_77_1))
+
+		return false
+	end
+
+	return var_77_1 > 0
 end
 
-function var_0_0.getASFDCareer(arg_82_0)
-	for iter_82_0, iter_82_1 in pairs(arg_82_0.buffDic) do
-		local var_82_0 = iter_82_1.buffId
-		local var_82_1 = arg_82_0:getFeaturesSplitInfoByBuffId(var_82_0)
+function var_0_0.setNotifyBindContract(arg_78_0)
+	arg_78_0.notifyBindContract = true
+end
 
-		if var_82_1 then
-			for iter_82_2, iter_82_3 in ipairs(var_82_1) do
-				local var_82_2 = lua_buff_act.configDict[iter_82_3[1]]
+function var_0_0.clearNotifyBindContract(arg_79_0)
+	arg_79_0.notifyBindContract = nil
+end
 
-				if var_82_2 and var_82_2.type == FightEnum.BuffType_EmitterCareerChange then
-					return tonumber(iter_82_3[2])
-				end
-			end
-		end
+function var_0_0.isStatusDead(arg_80_0)
+	return arg_80_0.status == FightEnum.EntityStatus.Dead
+end
+
+function var_0_0.setDead(arg_81_0)
+	arg_81_0.status = FightEnum.EntityStatus.Dead
+end
+
+function var_0_0.getCareer(arg_82_0)
+	if arg_82_0:isASFDEmitter() then
+		return arg_82_0:getASFDCareer()
 	end
 
 	return arg_82_0.career
 end
 
-function var_0_0.getConfigMaxExPoint(arg_83_0)
-	if arg_83_0.configMaxExPoint then
-		return arg_83_0.configMaxExPoint
+function var_0_0.getASFDCareer(arg_83_0)
+	for iter_83_0, iter_83_1 in pairs(arg_83_0.buffDic) do
+		local var_83_0 = iter_83_1.buffId
+		local var_83_1 = arg_83_0:getFeaturesSplitInfoByBuffId(var_83_0)
+
+		if var_83_1 then
+			for iter_83_2, iter_83_3 in ipairs(var_83_1) do
+				local var_83_2 = lua_buff_act.configDict[iter_83_3[1]]
+
+				if var_83_2 and var_83_2.type == FightEnum.BuffType_EmitterCareerChange then
+					return tonumber(iter_83_3[2])
+				end
+			end
+		end
 	end
 
-	local var_83_0 = arg_83_0:getCO()
+	return arg_83_0.career
+end
 
-	if not var_83_0 then
+function var_0_0.getConfigMaxExPoint(arg_84_0)
+	if arg_84_0.configMaxExPoint then
+		return arg_84_0.configMaxExPoint
+	end
+
+	local var_84_0 = arg_84_0:getCO()
+
+	if not var_84_0 then
 		return 0
 	end
 
-	local var_83_1 = var_83_0.uniqueSkill_point
+	local var_84_1 = var_84_0.uniqueSkill_point
 
-	if var_83_1 and type(var_83_1) == "string" then
-		var_83_1 = tonumber(string.split(var_83_1, "#")[2])
+	if var_84_1 and type(var_84_1) == "string" then
+		var_84_1 = tonumber(string.split(var_84_1, "#")[2])
 	end
 
-	arg_83_0.configMaxExPoint = var_83_1
+	local var_84_2 = lua_character_rank_replace.configDict[arg_84_0.modelId]
 
-	return arg_83_0.configMaxExPoint
-end
+	if var_84_2 then
+		local var_84_3, var_84_4 = HeroConfig.instance:getShowLevel(arg_84_0.level or 1)
 
-function var_0_0.getHeroDestinyStoneMo(arg_84_0)
-	if arg_84_0.trialId and arg_84_0.trialId > 0 then
-		local var_84_0 = lua_hero_trial.configDict[arg_84_0.trialId][0]
-
-		if var_84_0 then
-			arg_84_0.destinyStoneMo = arg_84_0.destinyStoneMo or HeroDestinyStoneMO.New(arg_84_0.modelId)
-
-			arg_84_0.destinyStoneMo:refreshMo(var_84_0.facetslevel, 1, var_84_0.facetsId)
-		end
-	else
-		local var_84_1 = HeroModel.instance:getByHeroId(arg_84_0.modelId)
-
-		arg_84_0.destinyStoneMo = var_84_1 and var_84_1.destinyStoneMo
+		var_84_1 = var_84_4 > 2 and string.split(var_84_2.uniqueSkill_point, "#")[2] or var_84_1
 	end
 
-	return arg_84_0.destinyStoneMo
+	arg_84_0.configMaxExPoint = var_84_1
+
+	return arg_84_0.configMaxExPoint
 end
 
-function var_0_0.getHeroExtraMo(arg_85_0)
+function var_0_0.getHeroDestinyStoneMo(arg_85_0)
 	if arg_85_0.trialId and arg_85_0.trialId > 0 then
 		local var_85_0 = lua_hero_trial.configDict[arg_85_0.trialId][0]
 
 		if var_85_0 then
-			local var_85_1 = var_85_0.extraStr
+			arg_85_0.destinyStoneMo = arg_85_0.destinyStoneMo or HeroDestinyStoneMO.New(arg_85_0.modelId)
 
-			if not string.nilorempty(var_85_1) then
-				local var_85_2 = HeroConfig.instance:getHeroCO(arg_85_0.modelId)
-				local var_85_3 = HeroMo.New()
+			arg_85_0.destinyStoneMo:refreshMo(var_85_0.facetslevel, 1, var_85_0.facetsId)
+		end
+	else
+		local var_85_1 = HeroModel.instance:getByHeroId(arg_85_0.modelId)
 
-				var_85_3:init(var_85_0, var_85_2)
+		arg_85_0.destinyStoneMo = var_85_1 and var_85_1.destinyStoneMo
+	end
 
-				arg_85_0.extraMo = arg_85_0.extraMo or CharacterExtraMO.New(var_85_3)
+	return arg_85_0.destinyStoneMo
+end
 
-				arg_85_0.extraMo:refreshMo(var_85_1)
+function var_0_0.initSkin(arg_86_0, arg_86_1)
+	local var_86_0 = arg_86_1.skin
+
+	var_86_0 = var_86_0 ~= 312001 and FightHelper.processEntitySkin(var_86_0, arg_86_1.uid) or var_86_0
+
+	if var_86_0 == 312001 then
+		local var_86_1, var_86_2 = HeroConfig.instance:getShowLevel(arg_86_1.level)
+
+		if var_86_2 and var_86_2 - 1 >= 2 then
+			var_86_0 = 312002
+		end
+	end
+
+	return var_86_0
+end
+
+function var_0_0.getEquipMo(arg_87_0)
+	if not arg_87_0.equipRecord then
+		return
+	end
+
+	if not arg_87_0.equipMo then
+		arg_87_0.equipMo = EquipMO.New()
+
+		arg_87_0.equipMo:init({
+			count = 1,
+			exp = 0,
+			uid = arg_87_0.equipRecord.equipUid,
+			equipId = arg_87_0.equipRecord.equipId,
+			level = arg_87_0.equipRecord.equipLv,
+			refineLv = arg_87_0.equipRecord.refineLv
+		})
+		arg_87_0.equipMo:setBreakLvByLevel()
+	end
+
+	return arg_87_0.equipMo
+end
+
+function var_0_0.getLockMaxHpRate(arg_88_0)
+	for iter_88_0, iter_88_1 in pairs(arg_88_0.buffDic) do
+		local var_88_0 = iter_88_1.actCommonParams
+
+		if not string.nilorempty(var_88_0) then
+			local var_88_1 = FightStrUtil.instance:getSplitString2Cache(var_88_0, true, "|", "#")
+
+			for iter_88_2, iter_88_3 in ipairs(var_88_1) do
+				if iter_88_3[1] == FightEnum.BuffActId.LockHpMax then
+					return iter_88_3[2] and iter_88_3[2] / 1000 or 1
+				end
+			end
+		end
+	end
+
+	return 1
+end
+
+function var_0_0.getHpAndShieldFillAmount(arg_89_0, arg_89_1, arg_89_2)
+	local var_89_0 = arg_89_0:getLockMaxHpRate()
+	local var_89_1 = (arg_89_0.attrMO and arg_89_0.attrMO.hp > 0 and arg_89_0.attrMO.hp or 1) * var_89_0
+	local var_89_2 = arg_89_1 or arg_89_0.currentHp
+	local var_89_3 = arg_89_2 or arg_89_0.shieldValue
+	local var_89_4 = var_89_2 / var_89_1 or 0
+	local var_89_5 = 0
+
+	if var_89_1 >= var_89_3 + var_89_2 then
+		var_89_4 = var_89_2 / var_89_1
+		var_89_5 = (var_89_3 + var_89_2) / var_89_1
+	else
+		var_89_4 = var_89_2 / (var_89_2 + var_89_3)
+		var_89_5 = 1
+	end
+
+	local var_89_6 = var_89_4 * var_89_0
+	local var_89_7 = var_89_5 * var_89_0
+
+	return var_89_6, var_89_7
+end
+
+function var_0_0.getHeroExtraMo(arg_90_0)
+	if arg_90_0.trialId and arg_90_0.trialId > 0 then
+		local var_90_0 = lua_hero_trial.configDict[arg_90_0.trialId][0]
+
+		if var_90_0 then
+			local var_90_1 = var_90_0.extraStr
+
+			if not string.nilorempty(var_90_1) then
+				local var_90_2 = HeroConfig.instance:getHeroCO(arg_90_0.modelId)
+				local var_90_3 = HeroMo.New()
+
+				var_90_3:init(var_90_0, var_90_2)
+
+				arg_90_0.extraMo = arg_90_0.extraMo or CharacterExtraMO.New(var_90_3)
+
+				arg_90_0.extraMo:refreshMo(var_90_1)
 			end
 		end
 	else
-		local var_85_4 = HeroModel.instance:getByHeroId(arg_85_0.modelId)
+		local var_90_4 = HeroModel.instance:getByHeroId(arg_90_0.modelId)
 
-		arg_85_0.extraMo = var_85_4 and var_85_4.extraMo
+		arg_90_0.extraMo = var_90_4 and var_90_4.extraMo
 	end
 
-	return arg_85_0.extraMo
+	return arg_90_0.extraMo
 end
 
-function var_0_0.checkReplaceSkill(arg_86_0, arg_86_1)
-	if arg_86_1 then
-		local var_86_0 = arg_86_0:getHeroDestinyStoneMo()
+function var_0_0.checkReplaceSkill(arg_91_0, arg_91_1)
+	if arg_91_1 then
+		local var_91_0 = arg_91_0:getHeroDestinyStoneMo()
 
-		if var_86_0 then
-			arg_86_1 = var_86_0:_replaceSkill(arg_86_1)
+		if var_91_0 then
+			arg_91_1 = var_91_0:_replaceSkill(arg_91_1)
 		end
 
-		local var_86_1 = arg_86_0:getHeroExtraMo()
+		local var_91_1 = arg_91_0:getHeroExtraMo()
 
-		if var_86_1 then
-			arg_86_1 = var_86_1:getReplaceSkills(arg_86_1)
+		if var_91_1 then
+			arg_91_1 = var_91_1:getReplaceSkills(arg_91_1)
 		end
 	end
 
-	return arg_86_1
+	return arg_91_1
 end
 
 return var_0_0

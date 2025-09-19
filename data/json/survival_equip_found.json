@@ -1,0 +1,62 @@
+[
+  {
+    "id": 101,
+    "desc": "language_10085277",
+    "desc1": "language_10085278",
+    "icon": "survivalequip_icon_01",
+    "name": "language_10017063",
+    "icon2": "survivalequip_icon_01",
+    "icon3": "77008111",
+    "value": 1001,
+    "icon4": "101",
+    "level": "5#10#15"
+  },
+  {
+    "id": 102,
+    "desc": "language_10085279",
+    "desc1": "language_10085280",
+    "icon": "survivalequip_icon_02",
+    "name": "language_10063814",
+    "icon2": "survivalequip_icon_02",
+    "icon3": "77008114",
+    "value": 1004,
+    "icon4": "102",
+    "level": "6#9#12"
+  },
+  {
+    "id": 103,
+    "desc": "language_10085281",
+    "desc1": "language_10085282",
+    "icon": "survivalequip_icon_03",
+    "name": "language_10074378",
+    "icon2": "survivalequip_icon_03",
+    "icon3": "77008113",
+    "value": 1002,
+    "icon4": "103",
+    "level": "10#15#20"
+  },
+  {
+    "id": 104,
+    "desc": "language_10085283",
+    "desc1": "language_10085284",
+    "icon": "survivalequip_icon_04",
+    "name": "language_10018041",
+    "icon2": "survivalequip_icon_04",
+    "icon3": "77008112",
+    "value": 1001,
+    "icon4": "104",
+    "level": "7#10#13"
+  },
+  {
+    "id": 105,
+    "desc": "language_10085285",
+    "desc1": "language_10085286",
+    "icon": "survivalequip_icon_05",
+    "name": "language_10042206",
+    "icon2": "survivalequip_icon_05",
+    "icon3": "77008115",
+    "value": 1004,
+    "icon4": "105",
+    "level": "6#9#12"
+  }
+]

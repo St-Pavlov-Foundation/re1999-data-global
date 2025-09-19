@@ -403,6 +403,7 @@ function var_0_0._initViewList(arg_33_0)
 	arg_33_0:_addView("个人名片", ViewName.PlayerCardView, arg_33_0._onPlayerCardViewOpen, arg_33_0._onPlayerCardViewStaticDrawingUpdate, "UIRoot/POPUP_TOP/NewPlayerCardContentView/view", "playercardViewImgOffset", "characterViewImgOffset")
 	arg_33_0:_addView("装饰商店静态立绘", ViewName.StoreView, arg_33_0._onDecorateStoreStaticViewOpen, arg_33_0._onDecorateStoreStaticViewUpdate, "UIRoot/POPUP_TOP/StoreView/#go_store/decoratestoreview(Clone)/Bg/typebg/#go_typebg2/characterSpine/#go_skincontainer", "decorateskinOffset")
 	arg_33_0:_addView("6选3Up", ViewName.SummonThreeCustomPickView, arg_33_0._onSummonCustomThreePickOpen, arg_33_0._onSummonCustomThreePickDataUpdate, "UIRoot/POPUP_TOP/SummonThreeCustomPickView/#go_ui/current/#go_selected/#go_role%s/#simage_role%s", "summonPickUpImgOffset")
+	arg_33_0:_addHandBookSkinViewOption()
 	table.insert(arg_33_0._viewNameList, "0#spine小人")
 	arg_33_0:_addView("皮肤界面小人Spine", ViewName.CharacterSkinView, arg_33_0._onCharacterSkinSwitchViewOpen, arg_33_0._onCharacterSkinSwitchViewUpdate, "UIRoot/POPUP_TOP/CharacterSkinView/smalldynamiccontainer/#go_smallspine", "skinSpineOffset")
 	table.insert(arg_33_0._viewNameList, "0#皮肤放大缩小界面")
@@ -1618,77 +1619,117 @@ function var_0_0.onLive2dCameraLoadedCallback(arg_139_0, arg_139_1)
 	arg_139_0:getPreviewImage().texture = var_139_2.texture
 end
 
-function var_0_0.getPreviewImage(arg_140_0)
-	if not arg_140_0.previewImage then
-		local var_140_0 = gohelper.create2d(arg_140_0.goFullSkinContainer, "previewImageBg")
-		local var_140_1 = var_140_0.transform
-
-		var_140_1.anchorMin = RectTransformDefine.Anchor.RightMiddle
-		var_140_1.anchorMax = RectTransformDefine.Anchor.RightMiddle
-
-		recthelper.setSize(var_140_1, 200, 200)
-		recthelper.setAnchor(var_140_1, -100, -150)
-		gohelper.onceAddComponent(var_140_0, gohelper.Type_RawImage)
-
-		local var_140_2 = gohelper.create2d(arg_140_0.goFullSkinContainer, "previewImage")
-		local var_140_3 = var_140_2.transform
-
-		var_140_3.anchorMin = RectTransformDefine.Anchor.RightMiddle
-		var_140_3.anchorMax = RectTransformDefine.Anchor.RightMiddle
-
-		recthelper.setSize(var_140_3, 200, 200)
-		recthelper.setAnchor(var_140_3, -100, -150)
-
-		arg_140_0.previewImage = gohelper.onceAddComponent(var_140_2, gohelper.Type_RawImage)
-	end
-
-	return arg_140_0.previewImage
+function var_0_0._addHandBookSkinViewOption(arg_140_0)
+	arg_140_0:_addView("皮肤图鉴", ViewName.HandbookSkinSuitDetailView, arg_140_0._onHandBookSkinViewOpen, arg_140_0._onHandBookSkinViewDrawingUpdate, "UIRoot/POPUP_TOP/HandbookSkinSuitDetailView", "playercardViewImgOffset", "characterViewImgOffset")
 end
 
-function var_0_0.onCameraSizeInput(arg_141_0, arg_141_1)
-	arg_141_1 = tonumber(arg_141_1)
+function var_0_0._onHandBookSkinViewOpen(arg_141_0)
+	HandbookController.instance:openHandbookSkinView()
+end
 
-	if not arg_141_1 or arg_141_1 <= 0 then
-		arg_141_1 = 14
+function var_0_0._onHandBookSkinViewDrawingUpdate(arg_142_0)
+	if not arg_142_0._curViewInfo or not arg_142_0._curSkinInfo then
+		return
 	end
 
-	if arg_141_0.live2dCamera then
-		arg_141_0.live2dCamera.orthographicSize = arg_141_1
+	local var_142_0 = arg_142_0._curViewInfo[5]
+	local var_142_1 = gohelper.find(var_142_0).gameObject
+	local var_142_2 = gohelper.findChild(var_142_1, "#go_scroll/#go_storyStages/photo1/#image")
+	local var_142_3 = arg_142_0._curViewInfo[6]
+	local var_142_4 = arg_142_0._curViewInfo[7]
+	local var_142_5 = var_142_2
+	local var_142_6 = gohelper.getSingleImage(var_142_5)
 
-		SkinOffsetAdjustModel.instance:saveCameraSize(arg_141_0._curSkinInfo, arg_141_1)
+	var_142_6:LoadImage(ResUrl.getHeadIconImg(arg_142_0._curSkinInfo.id), function()
+		ZProj.UGUIHelper.SetImageSize(var_142_6.gameObject)
+	end, nil)
+
+	arg_142_0.playCardViewStaticDrawingDefaultOffset = arg_142_0.playCardViewStaticDrawingDefaultOffset or {
+		-150,
+		-150,
+		0.6
+	}
+
+	arg_142_0:setOffset(arg_142_0._curSkinInfo, var_142_3, function(arg_144_0, arg_144_1, arg_144_2)
+		local var_144_0 = var_142_6.transform
+
+		recthelper.setAnchor(var_144_0, arg_144_0, arg_144_1)
+
+		var_144_0.localScale = Vector3.one * arg_144_2
+	end, arg_142_0.playCardViewStaticDrawingDefaultOffset, var_142_4)
+end
+
+function var_0_0.getPreviewImage(arg_145_0)
+	if not arg_145_0.previewImage then
+		local var_145_0 = gohelper.create2d(arg_145_0.goFullSkinContainer, "previewImageBg")
+		local var_145_1 = var_145_0.transform
+
+		var_145_1.anchorMin = RectTransformDefine.Anchor.RightMiddle
+		var_145_1.anchorMax = RectTransformDefine.Anchor.RightMiddle
+
+		recthelper.setSize(var_145_1, 200, 200)
+		recthelper.setAnchor(var_145_1, -100, -150)
+		gohelper.onceAddComponent(var_145_0, gohelper.Type_RawImage)
+
+		local var_145_2 = gohelper.create2d(arg_145_0.goFullSkinContainer, "previewImage")
+		local var_145_3 = var_145_2.transform
+
+		var_145_3.anchorMin = RectTransformDefine.Anchor.RightMiddle
+		var_145_3.anchorMax = RectTransformDefine.Anchor.RightMiddle
+
+		recthelper.setSize(var_145_3, 200, 200)
+		recthelper.setAnchor(var_145_3, -100, -150)
+
+		arg_145_0.previewImage = gohelper.onceAddComponent(var_145_2, gohelper.Type_RawImage)
+	end
+
+	return arg_145_0.previewImage
+end
+
+function var_0_0.onCameraSizeInput(arg_146_0, arg_146_1)
+	arg_146_1 = tonumber(arg_146_1)
+
+	if not arg_146_1 or arg_146_1 <= 0 then
+		arg_146_1 = 14
+	end
+
+	if arg_146_0.live2dCamera then
+		arg_146_0.live2dCamera.orthographicSize = arg_146_1
+
+		SkinOffsetAdjustModel.instance:saveCameraSize(arg_146_0._curSkinInfo, arg_146_1)
 	end
 end
 
-function var_0_0.filterLive2dFunc(arg_142_0)
-	return arg_142_0 and not string.nilorempty(arg_142_0.live2d)
+function var_0_0.filterLive2dFunc(arg_147_0)
+	return arg_147_0 and not string.nilorempty(arg_147_0.live2d)
 end
 
-function var_0_0.onClose(arg_143_0)
-	arg_143_0._slideroffsetx:RemoveOnValueChanged()
-	arg_143_0._slideroffsety:RemoveOnValueChanged()
-	arg_143_0._slideroffsetscale:RemoveOnValueChanged()
-	arg_143_0:removeDragListener(SLFramework.UGUI.UIDragListener.Get(arg_143_0._slideroffsetx.gameObject))
-	arg_143_0:removeDragListener(SLFramework.UGUI.UIDragListener.Get(arg_143_0._slideroffsety.gameObject))
-	arg_143_0:removeDragListener(SLFramework.UGUI.UIDragListener.Get(arg_143_0._slideroffsetscale.gameObject))
+function var_0_0.onClose(arg_148_0)
+	arg_148_0._slideroffsetx:RemoveOnValueChanged()
+	arg_148_0._slideroffsety:RemoveOnValueChanged()
+	arg_148_0._slideroffsetscale:RemoveOnValueChanged()
+	arg_148_0:removeDragListener(SLFramework.UGUI.UIDragListener.Get(arg_148_0._slideroffsetx.gameObject))
+	arg_148_0:removeDragListener(SLFramework.UGUI.UIDragListener.Get(arg_148_0._slideroffsety.gameObject))
+	arg_148_0:removeDragListener(SLFramework.UGUI.UIDragListener.Get(arg_148_0._slideroffsetscale.gameObject))
 
-	for iter_143_0, iter_143_1 in ipairs(arg_143_0._btnList) do
-		iter_143_1:RemoveClickListener()
+	for iter_148_0, iter_148_1 in ipairs(arg_148_0._btnList) do
+		iter_148_1:RemoveClickListener()
 	end
 
-	arg_143_0._btnSearch:RemoveClickListener()
-	arg_143_0._goviewcontainerclick:RemoveClickListener()
-	arg_143_0._inputSkinLabel:RemoveOnValueChanged()
-	arg_143_0._inputCameraSize:RemoveOnValueChanged()
+	arg_148_0._btnSearch:RemoveClickListener()
+	arg_148_0._goviewcontainerclick:RemoveClickListener()
+	arg_148_0._inputSkinLabel:RemoveOnValueChanged()
+	arg_148_0._inputCameraSize:RemoveOnValueChanged()
 
-	for iter_143_2, iter_143_3 in ipairs(arg_143_0.viewItemList) do
-		if iter_143_3.click then
-			iter_143_3.click:RemoveClickListener()
+	for iter_148_2, iter_148_3 in ipairs(arg_148_0.viewItemList) do
+		if iter_148_3.click then
+			iter_148_3.click:RemoveClickListener()
 		end
 	end
 
-	arg_143_0.drag:RemoveDragBeginListener()
-	arg_143_0.drag:RemoveDragEndListener()
-	arg_143_0._goskincontainerclick:RemoveClickListener()
+	arg_148_0.drag:RemoveDragBeginListener()
+	arg_148_0.drag:RemoveDragEndListener()
+	arg_148_0._goskincontainerclick:RemoveClickListener()
 
 	module_views.FightSuccView.viewType = ViewType.Modal
 	module_views.CharacterGetView.viewType = ViewType.Normal
@@ -1696,15 +1737,15 @@ function var_0_0.onClose(arg_143_0)
 	logError("偏移编辑器修改了部分界面的参数，关闭偏移编辑器后应重开游戏再体验！！！")
 end
 
-function var_0_0.removeDragListener(arg_144_0, arg_144_1)
-	arg_144_1:RemoveDragBeginListener()
-	arg_144_1:RemoveDragListener()
-	arg_144_1:RemoveDragEndListener()
+function var_0_0.removeDragListener(arg_149_0, arg_149_1)
+	arg_149_1:RemoveDragBeginListener()
+	arg_149_1:RemoveDragListener()
+	arg_149_1:RemoveDragEndListener()
 end
 
-function var_0_0.onDestroyView(arg_145_0)
-	for iter_145_0, iter_145_1 in pairs(arg_145_0._simageList) do
-		iter_145_0:UnLoadImage()
+function var_0_0.onDestroyView(arg_150_0)
+	for iter_150_0, iter_150_1 in pairs(arg_150_0._simageList) do
+		iter_150_0:UnLoadImage()
 	end
 end
 

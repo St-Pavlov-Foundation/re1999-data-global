@@ -1361,6 +1361,93 @@ function var_0_0.getGainHeroViewShowNewState(arg_74_0)
 	return arg_74_0._hideOldGainHeroView
 end
 
+function var_0_0.getSpecialEffectDesc(arg_75_0, arg_75_1, arg_75_2)
+	local var_75_0 = lua_character_limited.configDict[arg_75_1]
+	local var_75_1
+
+	if var_75_0 and not string.nilorempty(var_75_0.specialInsightDesc) then
+		local var_75_2 = string.split(var_75_0.specialInsightDesc, "#")
+
+		if arg_75_2 == tonumber(var_75_2[1]) - 1 then
+			var_75_1 = {}
+
+			for iter_75_0 = 2, #var_75_2 do
+				table.insert(var_75_1, var_75_2[iter_75_0])
+			end
+		end
+	end
+
+	return var_75_1
+end
+
+function var_0_0.isNeedShowNewSkillReddot(arg_76_0, arg_76_1)
+	if not arg_76_1 or not arg_76_1:isOwnHero() then
+		return
+	end
+
+	local var_76_0 = lua_character_limited.configDict[arg_76_1.skin]
+
+	if var_76_0 and not string.nilorempty(var_76_0.specialLive2d) then
+		local var_76_1 = string.split(var_76_0.specialLive2d, "#")
+
+		if tonumber(var_76_1[1]) == 1 then
+			local var_76_2 = var_76_1[2] and tonumber(var_76_1[2]) or 3
+			local var_76_3 = arg_76_1.rank > var_76_2 - 1
+			local var_76_4 = PlayerModel.instance:getPropKeyValue(PlayerEnum.SimpleProperty.NuoDiKaNewSkill, arg_76_1.heroId, 0) == 0
+
+			return var_76_3, var_76_4, var_76_0
+		end
+	end
+end
+
+var_0_0.AnimKey_ReplaceSkillPlay = "CharacterSkillContainer_ReplaceSkill_"
+
+function var_0_0.isCanPlayReplaceSkillAnim(arg_77_0, arg_77_1)
+	local var_77_0, var_77_1, var_77_2 = arg_77_0:isNeedShowNewSkillReddot(arg_77_1)
+
+	if var_77_0 then
+		local var_77_3 = var_0_0.AnimKey_ReplaceSkillPlay .. arg_77_1.heroId
+
+		return GameUtil.playerPrefsGetNumberByUserId(var_77_3, 0) == 0, var_77_1, var_77_2
+	end
+end
+
+function var_0_0.setPlayReplaceSkillAnim(arg_78_0, arg_78_1)
+	GameUtil.playerPrefsSetNumberByUserId(var_0_0.AnimKey_ReplaceSkillPlay .. arg_78_1.heroId, 1)
+end
+
+function var_0_0.getReplaceSkillRank(arg_79_0, arg_79_1)
+	if not arg_79_1 then
+		return 0
+	end
+
+	return arg_79_0:getReplaceSkillRankBySkinId(arg_79_1.skin)
+end
+
+function var_0_0.getReplaceSkillRankBySkinId(arg_80_0, arg_80_1)
+	if not arg_80_1 then
+		return 0
+	end
+
+	local var_80_0 = arg_80_1
+
+	if not arg_80_0._heroReplaceSkillRankDict then
+		arg_80_0._heroReplaceSkillRankDict = {}
+	end
+
+	if not arg_80_0._heroReplaceSkillRankDict[var_80_0] then
+		local var_80_1 = lua_character_limited.configDict[var_80_0]
+
+		if var_80_1 then
+			local var_80_2 = string.split(var_80_1.specialInsightDesc, "#")
+
+			arg_80_0._heroReplaceSkillRankDict[var_80_0] = tonumber(var_80_2[1])
+		end
+	end
+
+	return arg_80_0._heroReplaceSkillRankDict[var_80_0] or 1
+end
+
 var_0_0.instance = var_0_0.New()
 
 return var_0_0

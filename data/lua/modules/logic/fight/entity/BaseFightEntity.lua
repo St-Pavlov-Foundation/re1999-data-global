@@ -35,6 +35,7 @@ function var_0_0.initComponents(arg_4_0)
 	arg_4_0:addComp("skinSpineEffect", FightSkinSpineEffect)
 	arg_4_0:addComp("totalDamage", FightTotalDamageComp)
 	arg_4_0:addComp("uniqueEffect", FightUniqueEffectComp)
+	arg_4_0:addComp("skinCustomComp", FightSkinCustomComp)
 
 	local var_4_0 = arg_4_0:getMO()
 
@@ -327,6 +328,10 @@ function var_0_0.getScale(arg_26_0)
 end
 
 function var_0_0.setScale(arg_27_0, arg_27_1)
+	if gohelper.isNil(arg_27_0.go) then
+		return
+	end
+
 	transformhelper.setLocalScale(arg_27_0.go.transform, arg_27_1, arg_27_1, arg_27_1)
 end
 

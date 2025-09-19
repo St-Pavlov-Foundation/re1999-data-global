@@ -9,6 +9,8 @@ function var_0_0.onInit(arg_1_0)
 end
 
 function var_0_0.onSceneStart(arg_2_0, arg_2_1, arg_2_2)
+	FightGameHelper.initGameMgr()
+
 	arg_2_0._sceneId = arg_2_1
 
 	FightStrUtil.instance:init()
@@ -158,7 +160,14 @@ function var_0_0._onPrepareFinish(arg_13_0)
 	arg_13_0:_log("资源2")
 	HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnHeroGroupExit)
 	arg_13_0._scene.previewEntityMgr:destroyEntity()
-	TaskDispatcher.runDelay(arg_13_0._delayStart, arg_13_0, 0.4)
+
+	local var_13_0 = 0.4
+	local var_13_1 = {
+		time = var_13_0
+	}
+
+	FightController.instance:dispatchEvent(FightEvent.ModifyDelayTime, var_13_1)
+	TaskDispatcher.runDelay(arg_13_0._delayStart, arg_13_0, var_13_1.time or var_13_0)
 end
 
 function var_0_0._delayStart(arg_14_0)

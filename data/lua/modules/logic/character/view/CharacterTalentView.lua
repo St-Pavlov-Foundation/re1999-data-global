@@ -268,13 +268,13 @@ function var_0_0._refreshUI(arg_15_0)
 	local var_15_2 = HeroResonanceConfig.instance:getTalentConfig(arg_15_0.hero_id, arg_15_0.hero_mo_data.talent + 1) == nil
 
 	arg_15_0._txtinsightLv.text = not var_15_2 and arg_15_0.hero_mo_data.talent or luaLang("character_max_overseas")
-	arg_15_0._txttalentcn.text = luaLang("talent_charactertalent_txt" .. CharacterEnum.TalentTxtByHeroType[arg_15_0.hero_mo_data.config.heroType])
+	arg_15_0._txttalentcn.text = luaLang("talent_charactertalent_txt" .. arg_15_0.hero_mo_data:getTalentTxtByHeroType())
 
 	gohelper.setActive(arg_15_0._goEsonan, arg_15_0.hero_mo_data.config.heroType ~= CharacterEnum.HumanHeroType)
 	gohelper.setActive(arg_15_0._goEsoning, arg_15_0.hero_mo_data.config.heroType == CharacterEnum.HumanHeroType)
 	gohelper.setActive(arg_15_0._golinemax, var_15_2)
 
-	local var_15_3 = luaLang("talent_style_title_cn_" .. CharacterEnum.TalentTxtByHeroType[arg_15_0.hero_mo_data.config.heroType])
+	local var_15_3 = luaLang("talent_style_title_cn_" .. arg_15_0.hero_mo_data:getTalentTxtByHeroType())
 
 	arg_15_0._txtTitleStyle.text = var_15_3
 
@@ -295,7 +295,7 @@ function var_0_0._addTouPrefab(arg_17_0, arg_17_1)
 			arg_17_0.rentou_ani = var_17_2:GetComponent(typeof(UnityEngine.Animator))
 		end
 
-		if arg_17_0.viewParam.isBack then
+		if arg_17_0.viewParam.isBack and not ViewMgr.instance:isOpen(ViewName.CharacterTalentStyleView) then
 			arg_17_0:_btninsightOnClick()
 		end
 	end
@@ -556,7 +556,7 @@ end
 function var_0_0._initTemplateList(arg_29_0)
 	table.sort(arg_29_0.hero_mo_data.talentTemplates, CharacterTalentChessView.sortTemplate)
 
-	local var_29_0 = luaLang("talent_charactertalentchess_template" .. CharacterEnum.TalentTxtByHeroType[arg_29_0.hero_mo_data.config.heroType])
+	local var_29_0 = luaLang("talent_charactertalentchess_template" .. arg_29_0.hero_mo_data:getTalentTxtByHeroType())
 	local var_29_1 = {}
 	local var_29_2 = TalentStyleModel.instance:isUnlockStyleSystem(arg_29_0.hero_mo_data.talent)
 
@@ -633,7 +633,7 @@ end
 function var_0_0._showTemplateName(arg_36_0)
 	for iter_36_0, iter_36_1 in ipairs(arg_36_0.hero_mo_data.talentTemplates) do
 		if iter_36_1.id == arg_36_0.hero_mo_data.useTalentTemplateId then
-			local var_36_0 = luaLang("talent_charactertalentchess_template" .. CharacterEnum.TalentTxtByHeroType[arg_36_0.hero_mo_data.config.heroType])
+			local var_36_0 = luaLang("talent_charactertalentchess_template" .. arg_36_0.hero_mo_data:getTalentTxtByHeroType())
 			local var_36_1 = string.nilorempty(iter_36_1.name) and var_36_0 .. arg_36_0._curSelectTemplateIndex or iter_36_1.name
 			local var_36_2 = TalentStyleModel.instance:getTalentStyle(arg_36_0._mainCubeId, iter_36_1.style)
 			local var_36_3 = var_36_2 and var_36_2._styleCo and var_36_2._styleCo.tagicon

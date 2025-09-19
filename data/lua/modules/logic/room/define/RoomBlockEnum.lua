@@ -29,22 +29,24 @@ var_0_0.OwnType = {
 	Package = 0
 }
 var_0_0.BlockType = {
-	Snow4 = 48,
-	Snow5 = 49,
+	v2a6_Snow = 47,
+	v1a8_Snow = 15,
+	v1a8_Snow2 = 16,
 	Green = 1,
-	Snow3 = 47,
-	Snow = 15,
-	Snow2 = 16
+	v2a6_Snow3 = 49,
+	v2a6_Snow2 = 48,
+	v2a8_Snow = 51
 }
 var_0_0.BlockLinkEffectGOPath = {
 	[var_0_0.BlockType.Green] = "junsi"
 }
 var_0_0.FootPrintDict = {
-	[var_0_0.BlockType.Snow] = true,
-	[var_0_0.BlockType.Snow2] = true,
-	[var_0_0.BlockType.Snow3] = true,
-	[var_0_0.BlockType.Snow4] = true,
-	[var_0_0.BlockType.Snow5] = true
+	[var_0_0.BlockType.v1a8_Snow] = true,
+	[var_0_0.BlockType.v1a8_Snow2] = true,
+	[var_0_0.BlockType.v2a6_Snow] = true,
+	[var_0_0.BlockType.v2a6_Snow2] = true,
+	[var_0_0.BlockType.v2a6_Snow3] = true,
+	[var_0_0.BlockType.v2a8_Snow] = true
 }
 var_0_0.EmptyDefineId = 1
 var_0_0.PlaceEffectAnimatorCloseTime = 0.16666666666666666

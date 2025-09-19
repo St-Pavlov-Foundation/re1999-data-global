@@ -16,7 +16,11 @@ function var_0_0.enterActivity(arg_3_0, arg_3_1)
 	local var_3_2 = "PermanentStoryRecord" .. var_3_1.storyId .. var_3_0
 
 	if PlayerPrefsHelper.getNumber(var_3_2, 0) == 0 then
-		StoryController.instance:playStory(var_3_1.storyId, nil, arg_3_0.storyCallback, arg_3_0, {
+		local var_3_3 = {}
+
+		var_3_3.isVersionActivityPV = true
+
+		StoryController.instance:playStory(var_3_1.storyId, var_3_3, arg_3_0.storyCallback, arg_3_0, {
 			_actId = arg_3_1
 		})
 		PlayerPrefsHelper.setNumber(var_3_2, 1)
@@ -27,21 +31,21 @@ function var_0_0.enterActivity(arg_3_0, arg_3_1)
 	end
 end
 
-function var_0_0.storyCallback(arg_4_0, arg_4_1)
+function var_0_0.storyCallback(arg_4_0, arg_4_1, arg_4_2)
 	local var_4_0 = arg_4_1._actId
 	local var_4_1 = PermanentConfig.instance:getPermanentCO(var_4_0)
 
 	if var_4_1 then
-		ViewMgr.instance:openView(ViewName[var_4_1.enterview])
+		ViewMgr.instance:openView(ViewName[var_4_1.enterview], arg_4_2)
 	end
 end
 
-function var_0_0.jump2Activity(arg_5_0, arg_5_1)
+function var_0_0.jump2Activity(arg_5_0, arg_5_1, arg_5_2)
 	local var_5_0 = PermanentConfig.instance:getPermanentCO(arg_5_1)
 
 	if var_5_0 then
 		DungeonController.instance:openDungeonView()
-		ViewMgr.instance:openView(ViewName[var_5_0.enterview])
+		ViewMgr.instance:openView(ViewName[var_5_0.enterview], arg_5_2)
 	end
 end
 

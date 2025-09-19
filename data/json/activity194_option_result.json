@@ -1,0 +1,464 @@
+[
+  {
+    "resultId": 1000201,
+    "picture": "",
+    "name": "language_10086903",
+    "desc": "language_10087056",
+    "effect": ""
+  },
+  {
+    "resultId": 1000202,
+    "picture": "",
+    "name": "language_10086903",
+    "desc": "language_10087057",
+    "effect": ""
+  },
+  {
+    "resultId": 1000203,
+    "picture": "",
+    "name": "language_10086903",
+    "desc": "language_10087058",
+    "effect": ""
+  },
+  {
+    "resultId": 1000204,
+    "picture": "",
+    "name": "language_10086903",
+    "desc": "language_10087059",
+    "effect": "1#20"
+  },
+  {
+    "resultId": 1000205,
+    "picture": "",
+    "name": "language_10086903",
+    "desc": "language_10087060",
+    "effect": ""
+  },
+  {
+    "resultId": 1000206,
+    "picture": "",
+    "name": "language_10086907",
+    "desc": "language_10087061",
+    "effect": ""
+  },
+  {
+    "resultId": 1000209,
+    "picture": "",
+    "name": "language_10086907",
+    "desc": "language_10087062",
+    "effect": ""
+  },
+  {
+    "resultId": 1000215,
+    "picture": "",
+    "name": "language_10086910",
+    "desc": "language_10087063",
+    "effect": ""
+  },
+  {
+    "resultId": 1000216,
+    "picture": "",
+    "name": "language_10086910",
+    "desc": "language_10087064",
+    "effect": "2#1#20002"
+  },
+  {
+    "resultId": 1000217,
+    "picture": "",
+    "name": "language_10086910",
+    "desc": "language_10087065",
+    "effect": ""
+  },
+  {
+    "resultId": 1000218,
+    "picture": "",
+    "name": "language_10086910",
+    "desc": "language_10087066",
+    "effect": ""
+  },
+  {
+    "resultId": 1000219,
+    "picture": "",
+    "name": "language_10086910",
+    "desc": "language_10087067",
+    "effect": ""
+  },
+  {
+    "resultId": 1000220,
+    "picture": "",
+    "name": "language_10086910",
+    "desc": "language_10087068",
+    "effect": ""
+  },
+  {
+    "resultId": 1000221,
+    "picture": "",
+    "name": "language_10086914",
+    "desc": "language_10087069",
+    "effect": ""
+  },
+  {
+    "resultId": 1000223,
+    "picture": "",
+    "name": "language_10086914",
+    "desc": "language_10087070",
+    "effect": ""
+  },
+  {
+    "resultId": 1000224,
+    "picture": "",
+    "name": "language_10086914",
+    "desc": "language_10087071",
+    "effect": ""
+  },
+  {
+    "resultId": 1000225,
+    "picture": "",
+    "name": "language_10086914",
+    "desc": "language_10087072",
+    "effect": "2#1#20003"
+  },
+  {
+    "resultId": 1000222,
+    "picture": "",
+    "name": "language_10086914",
+    "desc": "language_10087073",
+    "effect": "1#20"
+  },
+  {
+    "resultId": 1000226,
+    "picture": "",
+    "name": "language_10086918",
+    "desc": "language_10087074",
+    "effect": ""
+  },
+  {
+    "resultId": 1000227,
+    "picture": "",
+    "name": "language_10086918",
+    "desc": "language_10087075",
+    "effect": ""
+  },
+  {
+    "resultId": 1000228,
+    "picture": "",
+    "name": "language_10086918",
+    "desc": "language_10087076",
+    "effect": "3#1#30005"
+  },
+  {
+    "resultId": 1000229,
+    "picture": "",
+    "name": "language_10086918",
+    "desc": "language_10087077",
+    "effect": "1#20|2#-1#20002|2#1#20004"
+  },
+  {
+    "resultId": 1000230,
+    "picture": "",
+    "name": "language_10086921",
+    "desc": "language_10087078",
+    "effect": "1#20"
+  },
+  {
+    "resultId": 1000231,
+    "picture": "",
+    "name": "language_10086921",
+    "desc": "language_10087079",
+    "effect": ""
+  },
+  {
+    "resultId": 1000232,
+    "picture": "",
+    "name": "language_10086921",
+    "desc": "language_10087080",
+    "effect": "1#10"
+  },
+  {
+    "resultId": 1000233,
+    "picture": "",
+    "name": "language_10086921",
+    "desc": "language_10087081",
+    "effect": "1#20"
+  },
+  {
+    "resultId": 1000234,
+    "picture": "",
+    "name": "language_10086926",
+    "desc": "language_10087082",
+    "effect": ""
+  },
+  {
+    "resultId": 1000235,
+    "picture": "",
+    "name": "language_10086926",
+    "desc": "language_10087083",
+    "effect": ""
+  },
+  {
+    "resultId": 1000236,
+    "picture": "",
+    "name": "language_10086926",
+    "desc": "language_10087084",
+    "effect": ""
+  },
+  {
+    "resultId": 1000237,
+    "picture": "",
+    "name": "language_10086926",
+    "desc": "language_10087085",
+    "effect": ""
+  },
+  {
+    "resultId": 1000238,
+    "picture": "",
+    "name": "language_10086926",
+    "desc": "language_10087086",
+    "effect": ""
+  },
+  {
+    "resultId": 1000239,
+    "picture": "",
+    "name": "language_10086931",
+    "desc": "language_10087087",
+    "effect": ""
+  },
+  {
+    "resultId": 1000240,
+    "picture": "",
+    "name": "language_10086931",
+    "desc": "language_10087088",
+    "effect": ""
+  },
+  {
+    "resultId": 1000241,
+    "picture": "",
+    "name": "language_10086931",
+    "desc": "language_10087089",
+    "effect": ""
+  },
+  {
+    "resultId": 1000242,
+    "picture": "",
+    "name": "language_10086931",
+    "desc": "language_10087090",
+    "effect": ""
+  },
+  {
+    "resultId": 1000243,
+    "picture": "",
+    "name": "language_10086931",
+    "desc": "language_10087091",
+    "effect": ""
+  },
+  {
+    "resultId": 1000244,
+    "picture": "",
+    "name": "language_10086931",
+    "desc": "language_10087092",
+    "effect": ""
+  },
+  {
+    "resultId": 1000245,
+    "picture": "",
+    "name": "language_10086937",
+    "desc": "language_10087093",
+    "effect": ""
+  },
+  {
+    "resultId": 1000246,
+    "picture": "",
+    "name": "language_10086937",
+    "desc": "language_10087094",
+    "effect": ""
+  },
+  {
+    "resultId": 1000247,
+    "picture": "",
+    "name": "language_10086937",
+    "desc": "language_10087095",
+    "effect": ""
+  },
+  {
+    "resultId": 1000248,
+    "picture": "",
+    "name": "language_10086937",
+    "desc": "language_10087096",
+    "effect": "4#10027|4#10033"
+  },
+  {
+    "resultId": 1000249,
+    "picture": "",
+    "name": "language_10086937",
+    "desc": "language_10087097",
+    "effect": ""
+  },
+  {
+    "resultId": 1000250,
+    "picture": "",
+    "name": "language_10086937",
+    "desc": "language_10087098",
+    "effect": ""
+  },
+  {
+    "resultId": 1000251,
+    "picture": "",
+    "name": "language_10086937",
+    "desc": "language_10087092",
+    "effect": ""
+  },
+  {
+    "resultId": 1000252,
+    "picture": "",
+    "name": "language_10086944",
+    "desc": "language_10087099",
+    "effect": "3#1#30007|3#1#30008"
+  },
+  {
+    "resultId": 1000253,
+    "picture": "",
+    "name": "language_10086944",
+    "desc": "language_10087100",
+    "effect": "3#-1#30008"
+  },
+  {
+    "resultId": 1000254,
+    "picture": "",
+    "name": "language_10086944",
+    "desc": "language_10087101",
+    "effect": "3#-1#30007"
+  },
+  {
+    "resultId": 1000255,
+    "picture": "",
+    "name": "language_10086944",
+    "desc": "language_10087101",
+    "effect": "3#-1#30007"
+  },
+  {
+    "resultId": 1000256,
+    "picture": "",
+    "name": "language_10086944",
+    "desc": "language_10087100",
+    "effect": "3#-1#30008"
+  },
+  {
+    "resultId": 1000257,
+    "picture": "",
+    "name": "language_10086944",
+    "desc": "language_10087102",
+    "effect": ""
+  },
+  {
+    "resultId": 1000258,
+    "picture": "",
+    "name": "language_10086949",
+    "desc": "language_10087103",
+    "effect": ""
+  },
+  {
+    "resultId": 1000259,
+    "picture": "",
+    "name": "language_10086949",
+    "desc": "language_10087104",
+    "effect": ""
+  },
+  {
+    "resultId": 1000260,
+    "picture": "",
+    "name": "language_10086949",
+    "desc": "language_10087105",
+    "effect": ""
+  },
+  {
+    "resultId": 1000261,
+    "picture": "",
+    "name": "language_10086949",
+    "desc": "language_10087106",
+    "effect": ""
+  },
+  {
+    "resultId": 1000262,
+    "picture": "",
+    "name": "language_10086949",
+    "desc": "language_10087107",
+    "effect": ""
+  },
+  {
+    "resultId": 1000263,
+    "picture": "",
+    "name": "language_10086949",
+    "desc": "language_10087108",
+    "effect": "2#1#20007"
+  },
+  {
+    "resultId": 1000269,
+    "picture": "",
+    "name": "language_10086949",
+    "desc": "language_10087109",
+    "effect": "1#20"
+  },
+  {
+    "resultId": 1000264,
+    "picture": "",
+    "name": "language_10086953",
+    "desc": "language_10087110",
+    "effect": ""
+  },
+  {
+    "resultId": 1000265,
+    "picture": "",
+    "name": "language_10086953",
+    "desc": "language_10087111",
+    "effect": ""
+  },
+  {
+    "resultId": 1000266,
+    "picture": "",
+    "name": "language_10086953",
+    "desc": "language_10087112",
+    "effect": ""
+  },
+  {
+    "resultId": 1000267,
+    "picture": "",
+    "name": "language_10086953",
+    "desc": "language_10087113",
+    "effect": "1#20"
+  },
+  {
+    "resultId": 1000268,
+    "picture": "",
+    "name": "language_10086953",
+    "desc": "language_10087114",
+    "effect": ""
+  },
+  {
+    "resultId": 1000401,
+    "picture": "",
+    "name": "language_10086924",
+    "desc": "language_10087115",
+    "effect": "1#-10"
+  },
+  {
+    "resultId": 1000402,
+    "picture": "",
+    "name": "language_10086924",
+    "desc": "language_10087116",
+    "effect": "1#10"
+  },
+  {
+    "resultId": 1000405,
+    "picture": "",
+    "name": "language_10000806",
+    "desc": "language_10087117",
+    "effect": "1#10"
+  },
+  {
+    "resultId": 1000406,
+    "picture": "",
+    "name": "language_10000806",
+    "desc": "language_10087118",
+    "effect": ""
+  }
+]

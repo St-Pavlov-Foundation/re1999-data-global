@@ -96,8 +96,9 @@ end
 
 function var_0_0._getTextureSizeByCameraSize(arg_9_0, arg_9_1)
 	local var_9_0, var_9_1 = GuiLive2d.GetScaleByDevice()
+	local var_9_2 = GuiLive2d.getTextureSizeByCameraSize(arg_9_1) * var_9_1 * var_9_0
 
-	return GuiLive2d.getTextureSizeByCameraSize(arg_9_1) * var_9_1 * var_9_0
+	return math.floor(var_9_2)
 end
 
 function var_0_0._getTextureSize(arg_10_0, arg_10_1, arg_10_2, arg_10_3, arg_10_4)
@@ -106,6 +107,14 @@ function var_0_0._getTextureSize(arg_10_0, arg_10_1, arg_10_2, arg_10_3, arg_10_
 
 		if var_10_0 then
 			return arg_10_0:_getTextureSizeByCameraSize(var_10_0)
+		end
+	end
+
+	if arg_10_2 == CharacterVoiceEnum.RTShareType.Normal then
+		local var_10_1 = CharacterVoiceEnum.NormalTypeCameraSize
+
+		if var_10_1 then
+			return arg_10_0:_getTextureSizeByCameraSize(var_10_1)
 		end
 	end
 
@@ -166,8 +175,6 @@ function var_0_0.addShareInfo(arg_14_0, arg_14_1, arg_14_2, arg_14_3, arg_14_4, 
 		return
 	end
 
-	arg_14_6 = arg_14_6 or 0
-
 	local var_14_0 = arg_14_0:_getTypeInfoList(arg_14_3)
 
 	for iter_14_0, iter_14_1 in ipairs(var_14_0) do
@@ -186,7 +193,7 @@ function var_0_0.addShareInfo(arg_14_0, arg_14_1, arg_14_2, arg_14_3, arg_14_4, 
 		shareType = arg_14_3,
 		heroId = arg_14_4,
 		skinId = arg_14_5,
-		priority = arg_14_6
+		viewName = arg_14_6
 	})
 
 	if arg_14_3 == CharacterVoiceEnum.RTShareType.Normal then
@@ -194,7 +201,7 @@ function var_0_0.addShareInfo(arg_14_0, arg_14_1, arg_14_2, arg_14_3, arg_14_4, 
 	end
 
 	if arg_14_0._debugLog then
-		logError(string.format("addShareInfo camera:%s orthographicSize:%s image:%s shareType:%s num:%s priority:%s", arg_14_1, arg_14_1.orthographicSize, arg_14_2, arg_14_3, #var_14_0, arg_14_6))
+		logError(string.format("addShareInfo camera:%s orthographicSize:%s image:%s shareType:%s num:%s viewName:%s", arg_14_1, arg_14_1.orthographicSize, arg_14_2, arg_14_3, #var_14_0, arg_14_6))
 	end
 
 	arg_14_0._clearTime = nil
@@ -205,116 +212,113 @@ function var_0_0.addShareInfo(arg_14_0, arg_14_1, arg_14_2, arg_14_3, arg_14_4, 
 end
 
 function var_0_0._sortNormalList(arg_15_0, arg_15_1)
-	local var_15_0 = 0
-	local var_15_1 = 0
+	local var_15_0 = ViewMgr.instance:getOpenViewNameList()
 
 	for iter_15_0, iter_15_1 in ipairs(arg_15_1) do
-		if var_15_0 <= iter_15_1.priority then
-			var_15_0 = iter_15_1.priority
-			var_15_1 = iter_15_0
+		iter_15_1.priority = tabletool.indexOf(var_15_0, iter_15_1.viewName) or 0
+	end
+
+	table.sort(arg_15_1, function(arg_16_0, arg_16_1)
+		return arg_16_0.priority < arg_16_1.priority
+	end)
+end
+
+function var_0_0._getTopInfoList(arg_17_0)
+	for iter_17_0 = arg_17_0._maxType, arg_17_0._minType, -1 do
+		local var_17_0 = arg_17_0:_getTypeInfoList(iter_17_0)
+
+		if #var_17_0 > 0 then
+			return var_17_0, iter_17_0
 		end
 	end
 
-	if var_15_0 > 0 then
-		local var_15_2 = arg_15_1[var_15_1]
-
-		table.remove(arg_15_1, var_15_1)
-		table.insert(arg_15_1, var_15_2)
-	end
+	return arg_17_0:_getTypeInfoList(arg_17_0._minType), arg_17_0._minType
 end
 
-function var_0_0._getTopInfoList(arg_16_0)
-	for iter_16_0 = arg_16_0._maxType, arg_16_0._minType, -1 do
-		local var_16_0 = arg_16_0:_getTypeInfoList(iter_16_0)
-
-		if #var_16_0 > 0 then
-			return var_16_0, iter_16_0
-		end
-	end
-
-	return arg_16_0:_getTypeInfoList(arg_16_0._minType), arg_16_0._minType
+function var_0_0._isBloomType(arg_18_0, arg_18_1)
+	return arg_18_1 == CharacterVoiceEnum.RTShareType.BloomClose or arg_18_1 == CharacterVoiceEnum.RTShareType.BloomOpen
 end
 
-function var_0_0._isBloomType(arg_17_0, arg_17_1)
-	return arg_17_1 == CharacterVoiceEnum.RTShareType.BloomClose or arg_17_1 == CharacterVoiceEnum.RTShareType.BloomOpen
-end
+function var_0_0._checkRT(arg_19_0)
+	local var_19_0, var_19_1 = arg_19_0:_getTopInfoList()
 
-function var_0_0._checkRT(arg_18_0)
-	local var_18_0, var_18_1 = arg_18_0:_getTopInfoList()
+	if #var_19_0 == 0 then
+		arg_19_0._clearTime = arg_19_0._clearTime or Time.time
 
-	if #var_18_0 == 0 then
-		arg_18_0._clearTime = arg_18_0._clearTime or Time.time
+		if Time.time - arg_19_0._clearTime > 1 then
+			TaskDispatcher.cancelTask(arg_19_0._checkRT, arg_19_0)
 
-		if Time.time - arg_18_0._clearTime > 1 then
-			TaskDispatcher.cancelTask(arg_18_0._checkRT, arg_18_0)
+			arg_19_0._clearTime = nil
 
-			arg_18_0._clearTime = nil
-
-			arg_18_0:clearAllRT()
+			arg_19_0:clearAllRT()
 		end
 
 		return
 	end
 
-	local var_18_2
+	local var_19_2
 
-	for iter_18_0 = #var_18_0, 1, -1 do
-		local var_18_3 = var_18_0[iter_18_0]
+	for iter_19_0 = #var_19_0, 1, -1 do
+		local var_19_3 = var_19_0[iter_19_0]
 
-		if gohelper.isNil(var_18_3.camera) or gohelper.isNil(var_18_3.image) then
-			table.remove(var_18_0, iter_18_0)
+		if gohelper.isNil(var_19_3.camera) or gohelper.isNil(var_19_3.image) then
+			table.remove(var_19_0, iter_19_0)
 
-			var_18_3 = nil
+			var_19_3 = nil
 
-			if arg_18_0._debugLog then
-				logError(string.format("Live2dRTShareController:_checkRT remove frame:%s index:%s shareType:%s remain:%s", Time.frameCount, iter_18_0, var_18_1, #var_18_0))
+			if arg_19_0._debugLog then
+				logError(string.format("Live2dRTShareController:_checkRT remove frame:%s index:%s shareType:%s remain:%s", Time.frameCount, iter_19_0, var_19_1, #var_19_0))
 			end
 		end
 
-		if var_18_3 and var_18_1 == CharacterVoiceEnum.RTShareType.Normal then
-			local var_18_4 = arg_18_0:_getRT(var_18_3.camera, var_18_3.orthographicSize, var_18_3.shareType, var_18_3.heroId, var_18_3.skinId)
+		if var_19_3 and var_19_1 == CharacterVoiceEnum.RTShareType.Normal then
+			local var_19_4 = arg_19_0:_getRT(var_19_3.camera, var_19_3.orthographicSize, var_19_3.shareType, var_19_3.heroId, var_19_3.skinId)
 
-			var_18_3.camera.targetTexture = var_18_4
-			var_18_3.image.texture = var_18_4
+			var_19_3.camera.targetTexture = var_19_4
+			var_19_3.image.texture = var_19_4
 
-			var_18_3.image:SetNativeSize()
+			local var_19_5 = var_19_3.textureSize
+			local var_19_6 = var_19_5
+			local var_19_7 = var_19_5
 
-			var_18_2 = var_18_3
+			recthelper.setSize(var_19_3.image.rectTransform, var_19_6, var_19_7)
+
+			var_19_2 = var_19_3
 
 			break
-		elseif var_18_3 and var_18_3.image.gameObject.activeInHierarchy then
-			local var_18_5 = arg_18_0:_getRT(var_18_3.camera, var_18_3.orthographicSize, var_18_3.shareType, var_18_3.heroId, var_18_3.skinId)
+		elseif var_19_3 and var_19_3.image.gameObject.activeInHierarchy then
+			local var_19_8 = arg_19_0:_getRT(var_19_3.camera, var_19_3.orthographicSize, var_19_3.shareType, var_19_3.heroId, var_19_3.skinId)
 
-			var_18_3.camera.targetTexture = var_18_5
-			var_18_3.image.texture = var_18_5
+			var_19_3.camera.targetTexture = var_19_8
+			var_19_3.image.texture = var_19_8
 
-			local var_18_6 = var_18_5.width
-			local var_18_7 = var_18_5.height
+			local var_19_9 = var_19_8.width
+			local var_19_10 = var_19_8.height
 
-			if arg_18_0:_isBloomType(var_18_1) then
-				local var_18_8 = var_18_3.textureSize
+			if arg_19_0:_isBloomType(var_19_1) then
+				local var_19_11 = var_19_3.textureSize
 
-				var_18_6 = var_18_8
-				var_18_7 = var_18_8
+				var_19_9 = var_19_11
+				var_19_10 = var_19_11
 			end
 
-			recthelper.setSize(var_18_3.image.rectTransform, var_18_6, var_18_7)
+			recthelper.setSize(var_19_3.image.rectTransform, var_19_9, var_19_10)
 
-			var_18_2 = var_18_3
+			var_19_2 = var_19_3
 
 			break
 		end
 	end
 
-	for iter_18_1, iter_18_2 in ipairs(var_18_0) do
-		local var_18_9 = iter_18_2 == var_18_2
+	for iter_19_1, iter_19_2 in ipairs(var_19_0) do
+		local var_19_12 = iter_19_2 == var_19_2
 
-		if not gohelper.isNil(iter_18_2.camera) then
-			iter_18_2.camera.enabled = var_18_9
+		if not gohelper.isNil(iter_19_2.camera) then
+			iter_19_2.camera.enabled = var_19_12
 		end
 	end
 
-	arg_18_0._clearTime = nil
+	arg_19_0._clearTime = nil
 end
 
 var_0_0.instance = var_0_0.New()

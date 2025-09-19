@@ -44,6 +44,11 @@ function var_0_0._startEpisodeFinished(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
 		return
 	end
 
+	if arg_4_3.activityId ~= arg_4_0._actId then
+		return
+	end
+
+	WuErLiXiModel.instance:updateEpisodeInfo(arg_4_3.episode)
 	WuErLiXiModel.instance:setCurEpisodeIndex(arg_4_0._index)
 	arg_4_0:_playBeforeStory()
 end
@@ -88,6 +93,12 @@ function var_0_0._onStartUnlockBeforeStory(arg_7_0, arg_7_1, arg_7_2, arg_7_3)
 	if arg_7_2 ~= 0 then
 		return
 	end
+
+	if arg_7_3.activityId ~= arg_7_0._actId then
+		return
+	end
+
+	WuErLiXiModel.instance:updateEpisodeInfo(arg_7_3.episode)
 
 	if arg_7_0._isStoryEpisode and arg_7_0._config.afterStory == 0 then
 		WuErLiXiModel.instance:setNewFinishEpisode(arg_7_0.id)
@@ -135,6 +146,12 @@ function var_0_0._onStartUnlockGame(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
 		return
 	end
 
+	if arg_10_3.activityId ~= arg_10_0._actId then
+		return
+	end
+
+	WuErLiXiModel.instance:updateEpisodeInfo(arg_10_3.episode)
+
 	if arg_10_0._config.afterStory == 0 then
 		WuErLiXiModel.instance:setNewFinishEpisode(arg_10_0.id)
 	end
@@ -177,6 +194,11 @@ function var_0_0._onStartUnlockAfterStory(arg_13_0, arg_13_1, arg_13_2, arg_13_3
 		return
 	end
 
+	if arg_13_3.activityId ~= arg_13_0._actId then
+		return
+	end
+
+	WuErLiXiModel.instance:updateEpisodeInfo(arg_13_3.episode)
 	WuErLiXiModel.instance:setNewFinishEpisode(arg_13_0.id)
 	arg_13_0:_levelFinished()
 end

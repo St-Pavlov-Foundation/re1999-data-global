@@ -253,7 +253,7 @@ function var_0_0._generateDialogByHandbook(arg_15_0)
 	arg_15_0._layoutchatarea.padding.left = var_15_7
 end
 
-function var_0_0._getSelectorResult(arg_17_0, arg_17_1, arg_17_2, arg_17_3, arg_17_4, arg_17_5)
+function var_0_0._getSelectorResult(arg_17_0, arg_17_1, arg_17_2, arg_17_3, arg_17_4, arg_17_5, arg_17_6)
 	while arg_17_1 <= #arg_17_2 do
 		local var_17_0 = arg_17_2[arg_17_1]
 
@@ -264,7 +264,11 @@ function var_0_0._getSelectorResult(arg_17_0, arg_17_1, arg_17_2, arg_17_3, arg_
 				audio = var_17_0.audio
 			})
 		elseif var_17_0.type == "selector" then
-			arg_17_1 = arg_17_0:_getSelectorResult(arg_17_1 + 1, arg_17_2, arg_17_3, arg_17_4, arg_17_4[tonumber(var_17_0.param)])
+			if arg_17_6 then
+				return arg_17_1 - 1
+			end
+
+			arg_17_1 = arg_17_0:_getSelectorResult(arg_17_1 + 1, arg_17_2, arg_17_3, arg_17_4, arg_17_4[tonumber(var_17_0.param)], true)
 		elseif var_17_0.type == "selectorend" then
 			return arg_17_1
 		elseif var_17_0.type == "options" then

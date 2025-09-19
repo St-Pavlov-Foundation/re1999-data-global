@@ -165,6 +165,8 @@ function var_0_0._onUnlockStoneReply(arg_15_0, arg_15_1, arg_15_2)
 	arg_15_0:_refreshView()
 	gohelper.setActive(arg_15_0._root, true)
 	gohelper.setActive(arg_15_0._gounlockstone, false)
+
+	arg_15_0._openUnlockStoneView = false
 end
 
 function var_0_0._onUseStoneReply(arg_16_0, arg_16_1, arg_16_2)
@@ -203,362 +205,380 @@ function var_0_0.onOpen(arg_17_0)
 
 	if var_17_2 then
 		local var_17_3 = 1
-		local var_17_4 = 1
 
 		for iter_17_1, iter_17_2 in pairs(var_17_2) do
-			if iter_17_2.stoneId == arg_17_0._curUseStoneId then
-				var_17_4 = var_17_3
-			end
-
-			var_17_3 = var_17_3 + 1
-
 			table.insert(arg_17_0._facetMos, iter_17_2)
 		end
 
-		arg_17_0:_refreshStoneItem(var_17_4)
+		table.sort(arg_17_0._facetMos, arg_17_0._sortStone)
+
+		if arg_17_0._curUseStoneId and arg_17_0._curUseStoneId ~= 0 then
+			for iter_17_3, iter_17_4 in ipairs(arg_17_0._facetMos) do
+				if iter_17_4.stoneId == arg_17_0._curUseStoneId then
+					var_17_3 = iter_17_3
+				end
+			end
+		end
+
+		arg_17_0:_refreshStoneItem(var_17_3)
 		arg_17_0:_refreshBtn()
 	end
 
 	gohelper.setActive(arg_17_0._root, true)
 	gohelper.setActive(arg_17_0._gounlockstone, false)
+
+	arg_17_0._openUnlockStoneView = false
 end
 
-function var_0_0._refreshStoneItem(arg_18_0, arg_18_1)
-	if not arg_18_1 or arg_18_1 == 0 then
-		arg_18_1 = 1
+function var_0_0._sortStone(arg_18_0, arg_18_1)
+	local var_18_0 = CharacterDestinyConfig.instance:getDestinyFacetConsumeCo(arg_18_0.stoneId)
+	local var_18_1 = CharacterDestinyConfig.instance:getDestinyFacetConsumeCo(arg_18_1.stoneId)
+
+	if var_18_0.facetsSort ~= var_18_1.facetsSort then
+		return var_18_0.facetsSort < var_18_1.facetsSort
 	end
 
-	arg_18_0._selectStoneIndex = arg_18_1
+	return arg_18_0.stoneId > arg_18_1.stoneId
+end
 
-	local var_18_0 = #arg_18_0._facetMos
+function var_0_0._refreshStoneItem(arg_19_0, arg_19_1)
+	if not arg_19_1 or arg_19_1 == 0 then
+		arg_19_1 = 1
+	end
 
-	arg_18_0._curStoneMo = arg_18_0._facetMos[arg_18_1]
+	arg_19_0._selectStoneIndex = arg_19_1
 
-	if arg_18_0._curStoneMo then
-		arg_18_0._levelCos = arg_18_0._curStoneMo:getFacetCo()
+	local var_19_0 = #arg_19_0._facetMos
 
-		local var_18_1 = arg_18_0._curStoneMo.conusmeCo
+	arg_19_0._curStoneMo = arg_19_0._facetMos[arg_19_1]
 
-		if arg_18_0._levelCos then
-			for iter_18_0, iter_18_1 in ipairs(arg_18_0._effectItems) do
-				local var_18_2 = arg_18_0._levelCos[iter_18_0]
+	if arg_19_0._curStoneMo then
+		arg_19_0._levelCos = arg_19_0._curStoneMo:getFacetCo()
 
-				iter_18_1.skillDesc = MonoHelper.addNoUpdateLuaComOnceToGo(iter_18_1.txt.gameObject, SkillDescComp)
+		local var_19_1 = arg_19_0._curStoneMo.conusmeCo
 
-				iter_18_1.skillDesc:updateInfo(iter_18_1.txt, var_18_2.desc, arg_18_0._heroMO.heroId)
-				iter_18_1.skillDesc:setTipParam(0, Vector2(300, 100))
+		if arg_19_0._levelCos then
+			for iter_19_0, iter_19_1 in ipairs(arg_19_0._effectItems) do
+				local var_19_2 = arg_19_0._levelCos[iter_19_0]
 
-				local var_18_3 = arg_18_0._curStoneMo.isUnlock and iter_18_0 <= arg_18_0._heroMO.destinyStoneMo.rank
-				local var_18_4 = iter_18_1.txt.color
+				iter_19_1.skillDesc = MonoHelper.addNoUpdateLuaComOnceToGo(iter_19_1.txt.gameObject, SkillDescComp)
 
-				var_18_4.a = var_18_3 and 1 or 0.43
-				iter_18_1.txt.color = var_18_4
+				iter_19_1.skillDesc:updateInfo(iter_19_1.txt, var_19_2.desc, arg_19_0._heroMO.heroId)
+				iter_19_1.skillDesc:setTipParam(0, Vector2(300, 100))
 
-				if var_18_3 then
-					local var_18_5 = iter_18_1.unlockicon.color
+				local var_19_3 = arg_19_0._curStoneMo.isUnlock and iter_19_0 <= arg_19_0._heroMO.destinyStoneMo.rank
+				local var_19_4 = iter_19_1.txt.color
 
-					var_18_5.a = var_18_3 and 1 or 0.43
-					iter_18_1.unlockicon.color = var_18_5
+				var_19_4.a = var_19_3 and 1 or 0.43
+				iter_19_1.txt.color = var_19_4
+
+				if var_19_3 then
+					local var_19_5 = iter_19_1.unlockicon.color
+
+					var_19_5.a = var_19_3 and 1 or 0.43
+					iter_19_1.unlockicon.color = var_19_5
 				else
-					local var_18_6 = iter_18_1.lockicon.color
+					local var_19_6 = iter_19_1.lockicon.color
 
-					var_18_6.a = var_18_3 and 1 or 0.43
-					iter_18_1.lockicon.color = var_18_6
+					var_19_6.a = var_19_3 and 1 or 0.43
+					iter_19_1.lockicon.color = var_19_6
 				end
 
-				gohelper.setActive(iter_18_1.lockicon.gameObject, not var_18_3)
-				gohelper.setActive(iter_18_1.unlockicon.gameObject, var_18_3)
+				gohelper.setActive(iter_19_1.lockicon.gameObject, not var_19_3)
+				gohelper.setActive(iter_19_1.unlockicon.gameObject, var_19_3)
 			end
 		end
 
-		gohelper.setActive(arg_18_0._goEquip, arg_18_0._curStoneMo.isUse)
+		gohelper.setActive(arg_19_0._goEquip, arg_19_0._curStoneMo.isUse)
 
-		if var_18_1 then
-			local var_18_7, var_18_8 = arg_18_0._curStoneMo:getNameAndIcon()
+		if var_19_1 then
+			local var_19_7, var_19_8 = arg_19_0._curStoneMo:getNameAndIcon()
 
-			arg_18_0._txtstonename.text = var_18_7
+			arg_19_0._txtstonename.text = var_19_7
 
-			arg_18_0._simagestone:LoadImage(var_18_8)
+			arg_19_0._simagestone:LoadImage(var_19_8)
 
-			local var_18_9 = CharacterDestinyEnum.SlotTend[var_18_1.tend]
-			local var_18_10 = var_18_9.TitleIconName
+			local var_19_9 = CharacterDestinyEnum.SlotTend[var_19_1.tend]
+			local var_19_10 = var_19_9.TitleIconName
 
-			UISpriteSetMgr.instance:setUiCharacterSprite(arg_18_0._imageicon, var_18_10)
+			UISpriteSetMgr.instance:setUiCharacterSprite(arg_19_0._imageicon, var_19_10)
 
-			arg_18_0._txtstonename.color = GameUtil.parseColor(var_18_9.TitleColor)
+			arg_19_0._txtstonename.color = GameUtil.parseColor(var_19_9.TitleColor)
 		end
 
-		local var_18_11 = arg_18_0._curStoneMo.isUnlock and Color.white or Color(0.5, 0.5, 0.5, 1)
+		local var_19_11 = arg_19_0._curStoneMo.isUnlock and Color.white or Color(0.5, 0.5, 0.5, 1)
 
-		arg_18_0._imgstone.color = var_18_11
+		arg_19_0._imgstone.color = var_19_11
 
-		arg_18_0:_checkPlayAttrUnlockAnim(arg_18_0._curStoneMo.stoneId)
+		arg_19_0:_checkPlayAttrUnlockAnim(arg_19_0._curStoneMo.stoneId)
 	end
 
-	if not arg_18_0._pointItems then
-		arg_18_0._pointItems = arg_18_0:getUserDataTb_()
+	if not arg_19_0._pointItems then
+		arg_19_0._pointItems = arg_19_0:getUserDataTb_()
 	end
 
-	if var_18_0 > 1 then
-		for iter_18_2 = 1, var_18_0 do
-			local var_18_12 = arg_18_0:_getPointItem(iter_18_2)
+	if var_19_0 > 1 then
+		for iter_19_2 = 1, var_19_0 do
+			local var_19_12 = arg_19_0:_getPointItem(iter_19_2)
 
-			gohelper.setActive(var_18_12.select, arg_18_1 == iter_18_2)
-			gohelper.setActive(var_18_12.go, true)
+			gohelper.setActive(var_19_12.select, arg_19_1 == iter_19_2)
+			gohelper.setActive(var_19_12.go, true)
 		end
 	else
-		for iter_18_3, iter_18_4 in ipairs(arg_18_0._pointItems) do
-			gohelper.setActive(iter_18_4.go, false)
+		for iter_19_3, iter_19_4 in ipairs(arg_19_0._pointItems) do
+			gohelper.setActive(iter_19_4.go, false)
 		end
 	end
 
-	arg_18_0:_refreshConsume()
-	arg_18_0:_refreshPreAndNextStoneItem(arg_18_1)
+	arg_19_0:_refreshConsume()
+	arg_19_0:_refreshPreAndNextStoneItem(arg_19_1)
 end
 
-function var_0_0._refreshConsume(arg_19_0)
-	if not arg_19_0._curStoneMo then
+function var_0_0._refreshConsume(arg_20_0)
+	if not arg_20_0._curStoneMo then
 		return
 	end
 
-	local var_19_0 = arg_19_0._curStoneMo.conusmeCo
+	local var_20_0 = arg_20_0._curStoneMo.conusmeCo
 
-	if not arg_19_0._curStoneMo.isUnlock then
-		local var_19_1 = ItemModel.instance:getItemDataListByConfigStr(var_19_0.consume)
+	if not arg_20_0._curStoneMo.isUnlock then
+		local var_20_1 = ItemModel.instance:getItemDataListByConfigStr(var_20_0.consume)
 
-		IconMgr.instance:getCommonPropItemIconList(arg_19_0, arg_19_0._onCostItemShow, var_19_1, arg_19_0._gounlockitem)
+		IconMgr.instance:getCommonPropItemIconList(arg_20_0, arg_20_0._onCostItemShow, var_20_1, arg_20_0._gounlockitem)
 	end
 end
 
-function var_0_0._checkPlayAttrUnlockAnim(arg_20_0, arg_20_1)
-	if arg_20_0._effectItems then
-		for iter_20_0, iter_20_1 in ipairs(arg_20_0._effectItems) do
-			local var_20_0 = arg_20_0._heroMO.destinyStoneMo:isCanPlayAttrUnlockAnim(arg_20_1, iter_20_0)
+function var_0_0._checkPlayAttrUnlockAnim(arg_21_0, arg_21_1)
+	if arg_21_0._effectItems then
+		for iter_21_0, iter_21_1 in ipairs(arg_21_0._effectItems) do
+			local var_21_0 = arg_21_0._heroMO.destinyStoneMo:isCanPlayAttrUnlockAnim(arg_21_1, iter_21_0)
 
-			gohelper.setActive(iter_20_1.gounlock, var_20_0)
+			gohelper.setActive(iter_21_1.gounlock, var_21_0)
 		end
 	end
 end
 
-function var_0_0._refreshPreAndNextStoneItem(arg_21_0, arg_21_1)
-	if arg_21_1 > 1 then
-		local var_21_0 = arg_21_0._facetMos[arg_21_1 - 1]
+function var_0_0._refreshPreAndNextStoneItem(arg_22_0, arg_22_1)
+	if arg_22_1 > 1 then
+		local var_22_0 = arg_22_0._facetMos[arg_22_1 - 1]
 
-		if var_21_0 and var_21_0.conusmeCo then
-			local var_21_1, var_21_2 = var_21_0:getNameAndIcon()
+		if var_22_0 and var_22_0.conusmeCo then
+			local var_22_1, var_22_2 = var_22_0:getNameAndIcon()
 
-			arg_21_0._simagepre:LoadImage(var_21_2)
+			arg_22_0._simagepre:LoadImage(var_22_2)
 		end
 	end
 
-	if arg_21_1 < #arg_21_0._facetMos then
-		local var_21_3 = arg_21_0._facetMos[arg_21_1 + 1]
+	if arg_22_1 < #arg_22_0._facetMos then
+		local var_22_3 = arg_22_0._facetMos[arg_22_1 + 1]
 
-		if var_21_3 and var_21_3.conusmeCo then
-			local var_21_4, var_21_5 = var_21_3:getNameAndIcon()
+		if var_22_3 and var_22_3.conusmeCo then
+			local var_22_4, var_22_5 = var_22_3:getNameAndIcon()
 
-			arg_21_0._simagenext:LoadImage(var_21_5)
+			arg_22_0._simagenext:LoadImage(var_22_5)
 		end
 	end
 
-	gohelper.setActive(arg_21_0._goprestone, arg_21_1 > 1)
-	gohelper.setActive(arg_21_0._gonextstone, arg_21_1 < #arg_21_0._facetMos)
+	gohelper.setActive(arg_22_0._goprestone, arg_22_1 > 1)
+	gohelper.setActive(arg_22_0._gonextstone, arg_22_1 < #arg_22_0._facetMos)
 end
 
-function var_0_0._onCostItemShow(arg_22_0, arg_22_1, arg_22_2, arg_22_3)
-	transformhelper.setLocalScale(arg_22_1.viewGO.transform, 0.6, 0.6, 1)
-	arg_22_1:onUpdateMO(arg_22_2)
-	arg_22_1:setConsume(true)
-	arg_22_1:showStackableNum2()
-	arg_22_1:isShowEffect(true)
-	arg_22_1:setAutoPlay(true)
-	arg_22_1:setCountFontSize(48)
+function var_0_0._onCostItemShow(arg_23_0, arg_23_1, arg_23_2, arg_23_3)
+	transformhelper.setLocalScale(arg_23_1.viewGO.transform, 0.6, 0.6, 1)
+	arg_23_1:onUpdateMO(arg_23_2)
+	arg_23_1:setConsume(true)
+	arg_23_1:showStackableNum2()
+	arg_23_1:isShowEffect(true)
+	arg_23_1:setAutoPlay(true)
+	arg_23_1:setCountFontSize(48)
 
-	local var_22_0 = arg_22_1:getItemIcon():getCount()
-	local var_22_1 = 170
-	local var_22_2 = var_22_0.gameObject:GetComponent(typeof(UnityEngine.UI.ContentSizeFitter))
+	local var_23_0 = arg_23_1:getItemIcon():getCount()
+	local var_23_1 = 170
+	local var_23_2 = var_23_0.gameObject:GetComponent(typeof(UnityEngine.UI.ContentSizeFitter))
 
-	var_22_0.enableAutoSizing = true
-	var_22_2.enabled = false
-	var_22_0.fontSizeMax = 48
-	var_22_0.fontSizeMin = 30
-	var_22_0.transform.anchorMax = Vector2(0.5, 0.5)
-	var_22_0.transform.anchorMin = Vector2(0.5, 0.5)
-	var_22_0.transform.pivot = Vector2(0.5, 0.5)
-	var_22_0.alignment = TMPro.TextAlignmentOptions.Center
+	var_23_0.enableAutoSizing = true
+	var_23_2.enabled = false
+	var_23_0.fontSizeMax = 48
+	var_23_0.fontSizeMin = 30
+	var_23_0.transform.anchorMax = Vector2(0.5, 0.5)
+	var_23_0.transform.anchorMin = Vector2(0.5, 0.5)
+	var_23_0.transform.pivot = Vector2(0.5, 0.5)
+	var_23_0.alignment = TMPro.TextAlignmentOptions.Center
 
-	recthelper.setWidth(var_22_0.transform, var_22_1)
-	recthelper.setHeight(var_22_0.transform, 70)
-	arg_22_1:SetCountLocalY(-50)
-	arg_22_1:setCountText(ItemModel.instance:getItemIsEnoughText(arg_22_2))
-	arg_22_1:setOnBeforeClickCallback(arg_22_0.onBeforeClickItem, arg_22_0)
+	recthelper.setWidth(var_23_0.transform, var_23_1)
+	recthelper.setHeight(var_23_0.transform, 70)
+	arg_23_1:SetCountLocalY(-50)
+	arg_23_1:setCountText(ItemModel.instance:getItemIsEnoughText(arg_23_2))
+	arg_23_1:setOnBeforeClickCallback(arg_23_0.onBeforeClickItem, arg_23_0)
 end
 
-function var_0_0.onBeforeClickItem(arg_23_0, arg_23_1, arg_23_2)
-	local var_23_0 = JumpController.instance:getCurrentOpenedView(arg_23_0.viewName)
+function var_0_0.onBeforeClickItem(arg_24_0, arg_24_1, arg_24_2)
+	local var_24_0 = JumpController.instance:getCurrentOpenedView(arg_24_0.viewName)
 
-	for iter_23_0, iter_23_1 in ipairs(var_23_0) do
-		if iter_23_1.viewName == ViewName.CharacterDestinySlotView then
-			iter_23_1.viewParam.isBack = true
+	for iter_24_0, iter_24_1 in ipairs(var_24_0) do
+		if iter_24_1.viewName == ViewName.CharacterDestinySlotView then
+			iter_24_1.viewParam.isBack = true
 
 			break
 		end
 	end
 
-	arg_23_2:setRecordFarmItem({
-		type = arg_23_2._itemType,
-		id = arg_23_2._itemId,
-		quantity = arg_23_2._itemQuantity,
+	arg_24_2:setRecordFarmItem({
+		type = arg_24_2._itemType,
+		id = arg_24_2._itemId,
+		quantity = arg_24_2._itemQuantity,
 		sceneType = GameSceneMgr.instance:getCurSceneType(),
-		openedViewNameList = var_23_0
+		openedViewNameList = var_24_0
 	})
 end
 
-function var_0_0._refreshBtn(arg_24_0)
-	if not arg_24_0._curStoneMo then
+function var_0_0._refreshBtn(arg_25_0)
+	if not arg_25_0._curStoneMo then
 		return
 	end
 
-	local var_24_0 = arg_24_0._heroMO.destinyStoneMo:isUnlockSlot()
-	local var_24_1 = arg_24_0._curStoneMo.isUnlock
-	local var_24_2 = arg_24_0._curStoneMo.isUse
-	local var_24_3 = arg_24_0._curUseStoneId ~= 0
+	local var_25_0 = arg_25_0._heroMO.destinyStoneMo:isUnlockSlot()
+	local var_25_1 = arg_25_0._curStoneMo.isUnlock
+	local var_25_2 = arg_25_0._curStoneMo.isUse
+	local var_25_3 = arg_25_0._curUseStoneId ~= 0
 
-	gohelper.setActive(arg_24_0._gounlock.gameObject, var_24_0 and not var_24_1)
-	gohelper.setActive(arg_24_0._goselect.gameObject, var_24_0 and var_24_1 and not var_24_2 and not var_24_3)
-	gohelper.setActive(arg_24_0._gounselect.gameObject, var_24_0 and var_24_1 and var_24_2)
-	gohelper.setActive(arg_24_0._goexchange.gameObject, var_24_0 and var_24_1 and not var_24_2 and var_24_3)
+	gohelper.setActive(arg_25_0._gounlock.gameObject, var_25_0 and not var_25_1)
+	gohelper.setActive(arg_25_0._goselect.gameObject, var_25_0 and var_25_1 and not var_25_2 and not var_25_3)
+	gohelper.setActive(arg_25_0._gounselect.gameObject, var_25_0 and var_25_1 and var_25_2)
+	gohelper.setActive(arg_25_0._goexchange.gameObject, var_25_0 and var_25_1 and not var_25_2 and var_25_3)
 end
 
-function var_0_0._getPointItem(arg_25_0, arg_25_1)
-	local var_25_0 = arg_25_0._pointItems[arg_25_1]
+function var_0_0._getPointItem(arg_26_0, arg_26_1)
+	local var_26_0 = arg_26_0._pointItems[arg_26_1]
 
-	if not var_25_0 then
-		var_25_0 = arg_25_0:getUserDataTb_()
+	if not var_26_0 then
+		var_26_0 = arg_26_0:getUserDataTb_()
 
-		local var_25_1 = gohelper.cloneInPlace(arg_25_0._gopoint, arg_25_1)
+		local var_26_1 = gohelper.cloneInPlace(arg_26_0._gopoint, arg_26_1)
 
-		var_25_0.go = var_25_1
-		var_25_0.normal = gohelper.findChild(var_25_1, "normal")
-		var_25_0.select = gohelper.findChild(var_25_1, "select")
-		arg_25_0._pointItems[arg_25_1] = var_25_0
+		var_26_0.go = var_26_1
+		var_26_0.normal = gohelper.findChild(var_26_1, "normal")
+		var_26_0.select = gohelper.findChild(var_26_1, "select")
+		arg_26_0._pointItems[arg_26_1] = var_26_0
 	end
 
-	return var_25_0
+	return var_26_0
 end
 
-function var_0_0.openUnlockStoneView(arg_26_0, arg_26_1)
-	if not arg_26_0._unlockStoneView then
-		arg_26_0._unlockStoneView = MonoHelper.addNoUpdateLuaComOnceToGo(arg_26_0._gounlockstone, CharacterDestinyUnlockStoneComp)
+function var_0_0.openUnlockStoneView(arg_27_0, arg_27_1)
+	if not arg_27_0._unlockStoneView then
+		arg_27_0._unlockStoneView = MonoHelper.addNoUpdateLuaComOnceToGo(arg_27_0._gounlockstone, CharacterDestinyUnlockStoneComp)
 
-		arg_26_0._unlockStoneView:setStoneView(arg_26_0)
+		arg_27_0._unlockStoneView:setStoneView(arg_27_0)
 	end
 
-	arg_26_0._unlockStoneView:onUpdateMo(arg_26_0._heroMO.heroId, arg_26_1)
-	gohelper.setActive(arg_26_0._gounlockstone, true)
-	arg_26_0:playRootOpenCloseAnim(false, arg_26_0._hideRoot, arg_26_0)
-	arg_26_0:playUnlockstoneOpenCloseAnim(true, nil, arg_26_0)
-	arg_26_0.viewContainer:setOpenUnlockStoneView(true)
+	arg_27_0._unlockStoneView:onUpdateMo(arg_27_0._heroMO.heroId, arg_27_1)
+	gohelper.setActive(arg_27_0._gounlockstone, true)
+	arg_27_0:playRootOpenCloseAnim(false, arg_27_0._hideRoot, arg_27_0)
+	arg_27_0:playUnlockstoneOpenCloseAnim(true, nil, arg_27_0)
+	arg_27_0.viewContainer:setOpenUnlockStoneView(true)
 
-	arg_26_0._openUnlockStoneView = true
+	arg_27_0._openUnlockStoneView = true
 end
 
-function var_0_0.closeUnlockStoneView(arg_27_0)
-	gohelper.setActive(arg_27_0._root, true)
-	arg_27_0:playRootOpenCloseAnim(true, nil, arg_27_0)
-	arg_27_0:playUnlockstoneOpenCloseAnim(false, arg_27_0._hideUnlockstone, arg_27_0)
-	arg_27_0.viewContainer:setOpenUnlockStoneView(false)
+function var_0_0.closeUnlockStoneView(arg_28_0)
+	gohelper.setActive(arg_28_0._root, true)
+	arg_28_0:playRootOpenCloseAnim(true, nil, arg_28_0)
+	arg_28_0:playUnlockstoneOpenCloseAnim(false, arg_28_0._hideUnlockstone, arg_28_0)
+	arg_28_0.viewContainer:setOpenUnlockStoneView(false)
 
-	arg_27_0._openUnlockStoneView = false
+	arg_28_0._openUnlockStoneView = false
 end
 
-function var_0_0._cutPreStoneCB(arg_28_0)
-	arg_28_0:_refreshStoneItem(arg_28_0._selectStoneIndex - 1)
-	arg_28_0:_refreshBtn()
-end
-
-function var_0_0._cutNextStoneCB(arg_29_0)
-	arg_29_0:_refreshStoneItem(arg_29_0._selectStoneIndex + 1)
+function var_0_0._cutPreStoneCB(arg_29_0)
+	arg_29_0:_refreshStoneItem(arg_29_0._selectStoneIndex - 1)
 	arg_29_0:_refreshBtn()
 end
 
-function var_0_0._dragBeginEventCb(arg_30_0, arg_30_1, arg_30_2)
-	arg_30_0._dragPos = arg_30_2.position
+function var_0_0._cutNextStoneCB(arg_30_0)
+	arg_30_0:_refreshStoneItem(arg_30_0._selectStoneIndex + 1)
+	arg_30_0:_refreshBtn()
 end
 
-function var_0_0._dragEventCb(arg_31_0, arg_31_1, arg_31_2)
+function var_0_0._dragBeginEventCb(arg_31_0, arg_31_1, arg_31_2)
+	arg_31_0._dragPos = arg_31_2.position
+end
+
+function var_0_0._dragEventCb(arg_32_0, arg_32_1, arg_32_2)
 	return
 end
 
-function var_0_0._dragEndEventCb(arg_32_0, arg_32_1, arg_32_2)
-	if arg_32_0._openUnlockStoneView then
+function var_0_0._dragEndEventCb(arg_33_0, arg_33_1, arg_33_2)
+	if arg_33_0._openUnlockStoneView then
 		return
 	end
 
-	if #arg_32_0._facetMos < 2 then
-		arg_32_0._dragPos = nil
+	if #arg_33_0._facetMos < 2 then
+		arg_33_0._dragPos = nil
 
 		return
 	end
 
-	if arg_32_0._dragPos then
-		TaskDispatcher.cancelTask(arg_32_0._cutPreStoneCB, arg_32_0)
-		TaskDispatcher.cancelTask(arg_32_0._cutNextStoneCB, arg_32_0)
+	if arg_33_0._dragPos then
+		TaskDispatcher.cancelTask(arg_33_0._cutPreStoneCB, arg_33_0)
+		TaskDispatcher.cancelTask(arg_33_0._cutNextStoneCB, arg_33_0)
 
-		if arg_32_0._dragPos.x < arg_32_2.position.x and arg_32_0._selectStoneIndex > 1 then
-			arg_32_0._animRoot:Play(CharacterDestinyEnum.StoneViewAnim.SwitchRight, 0, 0)
-			TaskDispatcher.runDelay(arg_32_0._cutPreStoneCB, arg_32_0, 0.16)
-		elseif arg_32_0._dragPos.x > arg_32_2.position.x and arg_32_0._selectStoneIndex < #arg_32_0._facetMos then
-			arg_32_0._animRoot:Play(CharacterDestinyEnum.StoneViewAnim.SwitchLeft, 0, 0)
-			TaskDispatcher.runDelay(arg_32_0._cutNextStoneCB, arg_32_0, 0.16)
+		if arg_33_0._dragPos.x < arg_33_2.position.x and arg_33_0._selectStoneIndex > 1 then
+			arg_33_0._animRoot:Play(CharacterDestinyEnum.StoneViewAnim.SwitchRight, 0, 0)
+			TaskDispatcher.runDelay(arg_33_0._cutPreStoneCB, arg_33_0, 0.16)
+		elseif arg_33_0._dragPos.x > arg_33_2.position.x and arg_33_0._selectStoneIndex < #arg_33_0._facetMos then
+			arg_33_0._animRoot:Play(CharacterDestinyEnum.StoneViewAnim.SwitchLeft, 0, 0)
+			TaskDispatcher.runDelay(arg_33_0._cutNextStoneCB, arg_33_0, 0.16)
 		end
 	end
 end
 
-function var_0_0.onUnlockStone(arg_33_0)
-	arg_33_0.viewContainer:setOpenUnlockStoneView(false)
-	arg_33_0:_refreshBtn()
+function var_0_0.onUnlockStone(arg_34_0)
+	arg_34_0.viewContainer:setOpenUnlockStoneView(false)
+	arg_34_0:_refreshBtn()
 end
 
-function var_0_0.playRootOpenCloseAnim(arg_34_0, arg_34_1, arg_34_2, arg_34_3)
-	local var_34_0 = arg_34_1 and CharacterDestinyEnum.StoneViewAnim.Open or CharacterDestinyEnum.StoneViewAnim.Close
-
-	arg_34_0:playRootAnim(var_34_0, arg_34_2, arg_34_3)
-end
-
-function var_0_0.playUnlockstoneOpenCloseAnim(arg_35_0, arg_35_1, arg_35_2, arg_35_3)
+function var_0_0.playRootOpenCloseAnim(arg_35_0, arg_35_1, arg_35_2, arg_35_3)
 	local var_35_0 = arg_35_1 and CharacterDestinyEnum.StoneViewAnim.Open or CharacterDestinyEnum.StoneViewAnim.Close
 
-	arg_35_0:playUnlockstoneAnim(var_35_0, arg_35_2, arg_35_3)
+	arg_35_0:playRootAnim(var_35_0, arg_35_2, arg_35_3)
 end
 
-function var_0_0.playRootAnim(arg_36_0, arg_36_1, arg_36_2, arg_36_3)
-	arg_36_0._animPlayerRoot:Play(arg_36_1, arg_36_2, arg_36_3)
+function var_0_0.playUnlockstoneOpenCloseAnim(arg_36_0, arg_36_1, arg_36_2, arg_36_3)
+	local var_36_0 = arg_36_1 and CharacterDestinyEnum.StoneViewAnim.Open or CharacterDestinyEnum.StoneViewAnim.Close
+
+	arg_36_0:playUnlockstoneAnim(var_36_0, arg_36_2, arg_36_3)
 end
 
-function var_0_0.playUnlockstoneAnim(arg_37_0, arg_37_1, arg_37_2, arg_37_3)
-	arg_37_0._animPlayerUnlockStone:Play(arg_37_1, arg_37_2, arg_37_3)
+function var_0_0.playRootAnim(arg_37_0, arg_37_1, arg_37_2, arg_37_3)
+	arg_37_0._animPlayerRoot:Play(arg_37_1, arg_37_2, arg_37_3)
 end
 
-function var_0_0._hideRoot(arg_38_0)
-	gohelper.setActive(arg_38_0._root, false)
+function var_0_0.playUnlockstoneAnim(arg_38_0, arg_38_1, arg_38_2, arg_38_3)
+	arg_38_0._animPlayerUnlockStone:Play(arg_38_1, arg_38_2, arg_38_3)
 end
 
-function var_0_0._hideUnlockstone(arg_39_0)
-	gohelper.setActive(arg_39_0._gounlockstone, false)
+function var_0_0._hideRoot(arg_39_0)
+	gohelper.setActive(arg_39_0._root, false)
 end
 
-function var_0_0.onClose(arg_40_0)
+function var_0_0._hideUnlockstone(arg_40_0)
+	gohelper.setActive(arg_40_0._gounlockstone, false)
+
+	arg_40_0._openUnlockStoneView = false
+end
+
+function var_0_0.onClose(arg_41_0)
 	return
 end
 
-function var_0_0.onDestroyView(arg_41_0)
-	arg_41_0:_removeEvents()
-	arg_41_0._simagestone:UnLoadImage()
-	arg_41_0._simagepre:UnLoadImage()
-	arg_41_0._simagenext:UnLoadImage()
-	TaskDispatcher.cancelTask(arg_41_0._cutPreStoneCB, arg_41_0)
-	TaskDispatcher.cancelTask(arg_41_0._cutNextStoneCB, arg_41_0)
+function var_0_0.onDestroyView(arg_42_0)
+	arg_42_0:_removeEvents()
+	arg_42_0._simagestone:UnLoadImage()
+	arg_42_0._simagepre:UnLoadImage()
+	arg_42_0._simagenext:UnLoadImage()
+	TaskDispatcher.cancelTask(arg_42_0._cutPreStoneCB, arg_42_0)
+	TaskDispatcher.cancelTask(arg_42_0._cutNextStoneCB, arg_42_0)
 end
 
 return var_0_0

@@ -1324,5 +1324,39 @@
     "controlResilience": 1000,
     "delExPointResilience": 0,
     "stressUpResilience": 0
+  },
+  {
+    "id": 80509411,
+    "dizzy": 1000,
+    "sleep": 1000,
+    "petrified": 1000,
+    "frozen": 1000,
+    "disarm": 1000,
+    "forbid": 1000,
+    "seal": 1000,
+    "cantGetExskill": 1000,
+    "charm": 1000,
+    "delExPoint": 0,
+    "stressUp": 0,
+    "controlResilience": 0,
+    "delExPointResilience": 0,
+    "stressUpResilience": 0
+  },
+  {
+    "id": 80509412,
+    "dizzy": 0,
+    "sleep": 0,
+    "petrified": 0,
+    "frozen": 0,
+    "disarm": 0,
+    "forbid": 0,
+    "seal": 0,
+    "cantGetExskill": 0,
+    "charm": 0,
+    "delExPoint": 0,
+    "stressUp": 0,
+    "controlResilience": 1000,
+    "delExPointResilience": 0,
+    "stressUpResilience": 0
   }
 ]

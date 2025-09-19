@@ -103,6 +103,7 @@ var_0_0.FilterType = {
 	SkinOffsetAdjust = 5,
 	ShowCharacter = 3,
 	CharVoiceSetting = 7,
+	Survival = 8,
 	WeekWalk = 6
 }
 var_0_0.AttrId = {

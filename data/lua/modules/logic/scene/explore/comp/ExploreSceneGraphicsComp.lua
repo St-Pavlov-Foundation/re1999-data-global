@@ -19,6 +19,9 @@ function var_0_0.onSceneStart(arg_2_0, arg_2_1, arg_2_2)
 
 	local var_2_0 = CameraMgr.instance:getMainCamera()
 
+	arg_2_0.uiCameraData = CameraMgr.instance:getUICamera():GetComponent(PostProcessingMgr.PPCustomCamDataType)
+	arg_2_0.cacheUINeedLights = arg_2_0.uiCameraData.needLights
+	arg_2_0.uiCameraData.needLights = false
 	arg_2_0._farClip = var_2_0.farClipPlane
 	arg_2_0._nearClip = var_2_0.nearClipPlane
 	var_2_0.nearClipPlane = 1
@@ -34,6 +37,7 @@ end
 
 function var_0_0.onSceneClose(arg_3_0)
 	RenderPipelineSetting.uiUnderclocking = false
+	arg_3_0.uiCameraData.needLights = arg_3_0.cacheUINeedLights
 
 	UnityEngine.Shader.DisableKeyword("_FASTER_BLOOM")
 	GameGlobalMgr.instance:unregisterCallback(GameStateEvent.OnQualityChange, arg_3_0._refreshGraphics, arg_3_0)
@@ -46,6 +50,7 @@ function var_0_0.onSceneClose(arg_3_0)
 	UnityEngine.Physics.autoSimulation = arg_3_0.projPhysics
 	UnityEngine.Physics.autoSyncTransforms = arg_3_0.projTransforms
 	arg_3_0.projPhysics = nil
+	arg_3_0.uiCameraData = nil
 
 	local var_3_0 = CameraMgr.instance:getMainCamera()
 

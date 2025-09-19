@@ -1,0 +1,23 @@
+[
+  {
+    "skinId": 310701,
+    "effect": "buff/pre_v2a8_welx_charge",
+    "hangPoint": "special10",
+    "duration": 1,
+    "audioId": 431070154
+  },
+  {
+    "skinId": 310702,
+    "effect": "buff/pre_v2a8_welx_charge",
+    "hangPoint": "special10",
+    "duration": 1,
+    "audioId": 431070154
+  },
+  {
+    "skinId": 310703,
+    "effect": "buff/pre_v2a8_welx_pf_charge",
+    "hangPoint": "special10",
+    "duration": 1,
+    "audioId": 431070354
+  }
+]

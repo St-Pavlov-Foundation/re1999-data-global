@@ -4,6 +4,7 @@ local var_0_0 = class("GMController", BaseController)
 
 var_0_0.debugViewGO = nil
 var_0_0.Event = {
+	OnRecvGMMsg = 3,
 	ChangeSelectHeroItem = 2
 }
 var_0_0.GMNodesPrefabUrl = "ui/viewres/gm/gmnodes.prefab"
@@ -723,6 +724,62 @@ function var_0_0.createASFDEmitter(arg_45_0, arg_45_1)
 	;(var_45_3 and var_45_3.entityMgr):addASFDUnit()
 
 	return var_45_1
+end
+
+function var_0_0.getFightFloatPath(arg_46_0)
+	return arg_46_0.fightFloatPath
+end
+
+function var_0_0.setFightFloatPath(arg_47_0, arg_47_1)
+	arg_47_0.fightFloatPath = arg_47_1
+end
+
+function var_0_0.replaceGetFloatPathFunc(arg_48_0)
+	if arg_48_0.replaced then
+		return
+	end
+
+	arg_48_0.srcGetFightFloatPathFunc = FightFloatMgr.getFloatPrefab
+	FightFloatMgr.getFloatPrefab = var_0_0.getFightFloatPathFunc
+	arg_48_0.replaced = true
+end
+
+function var_0_0.getFightFloatPathFunc(arg_49_0)
+	local var_49_0 = var_0_0.instance:getFightFloatPath()
+
+	if var_49_0 then
+		return ResUrl.getSceneUIPrefab("fight", var_49_0)
+	end
+
+	return var_0_0.instance.srcGetFightFloatPathFunc(arg_49_0)
+end
+
+function var_0_0.getHeroMaxLevel(arg_50_0, arg_50_1)
+	arg_50_0.cacheHeroMaxLevelDict = arg_50_0.cacheHeroMaxLevelDict or {}
+
+	local var_50_0 = arg_50_0.cacheHeroMaxLevelDict[arg_50_1]
+
+	if var_50_0 then
+		return var_50_0
+	end
+
+	local var_50_1 = SkillConfig.instance:getherolevelsCO(arg_50_1)
+
+	if not var_50_1 then
+		return 0
+	end
+
+	local var_50_2 = 0
+
+	for iter_50_0, iter_50_1 in pairs(var_50_1) do
+		if var_50_2 < iter_50_1.level then
+			var_50_2 = iter_50_1.level
+		end
+	end
+
+	arg_50_0.cacheHeroMaxLevelDict[arg_50_1] = var_50_2
+
+	return var_50_2
 end
 
 var_0_0.instance = var_0_0.New()

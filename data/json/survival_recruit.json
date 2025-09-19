@@ -1,0 +1,12 @@
+[
+  {
+    "id": 1,
+    "showNum": 3,
+    "refreshTimes": 2,
+    "refreshCost": "item#2:100",
+    "randomNum": 6,
+    "chooseNum": 3,
+    "unlock": "building#10020901#1",
+    "cost": "item#2:300"
+  }
+]

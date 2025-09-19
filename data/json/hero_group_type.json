@@ -3,78 +3,105 @@
     "id": 1,
     "name": "language_10000137",
     "chapterIds": "",
-    "saveGroup": 1
+    "saveGroup": 1,
+    "changeForbiddenEpisode": 0
   },
   {
     "id": 2,
     "name": "language_10000138",
     "chapterIds": "601",
-    "saveGroup": 1
+    "saveGroup": 1,
+    "changeForbiddenEpisode": 0
   },
   {
     "id": 3,
     "name": "language_10000139",
     "chapterIds": "401",
-    "saveGroup": 1
+    "saveGroup": 1,
+    "changeForbiddenEpisode": 0
   },
   {
     "id": 4,
     "name": "language_10000140",
     "chapterIds": "501",
-    "saveGroup": 1
+    "saveGroup": 1,
+    "changeForbiddenEpisode": 0
   },
   {
     "id": 5,
     "name": "language_10000141",
     "chapterIds": "1001",
-    "saveGroup": 1
+    "saveGroup": 1,
+    "changeForbiddenEpisode": 0
   },
   {
     "id": 6,
     "name": "language_10000142",
     "chapterIds": "701",
-    "saveGroup": 1
+    "saveGroup": 1,
+    "changeForbiddenEpisode": 0
   },
   {
     "id": 7,
     "name": "language_10000143",
     "chapterIds": "702",
-    "saveGroup": 1
+    "saveGroup": 1,
+    "changeForbiddenEpisode": 0
   },
   {
     "id": 8,
     "name": "language_10000144",
     "chapterIds": "703",
-    "saveGroup": 1
+    "saveGroup": 1,
+    "changeForbiddenEpisode": 0
   },
   {
     "id": 9,
     "name": "language_10000145",
     "chapterIds": "704",
-    "saveGroup": 1
+    "saveGroup": 1,
+    "changeForbiddenEpisode": 0
   },
   {
     "id": 10,
     "name": "language_10000146",
     "chapterIds": "901",
-    "saveGroup": 0
+    "saveGroup": 0,
+    "changeForbiddenEpisode": 0
   },
   {
     "id": 100,
     "name": "language_10000147",
     "chapterIds": "",
-    "saveGroup": 0
+    "saveGroup": 0,
+    "changeForbiddenEpisode": 0
   },
   {
     "id": 11,
     "name": "language_10000064",
     "chapterIds": "1401#1402#1403",
-    "saveGroup": 1
+    "saveGroup": 1,
+    "changeForbiddenEpisode": 0
   },
   {
     "id": 12,
     "name": "language_10069593",
     "chapterIds": "26001",
-    "saveGroup": 0
+    "saveGroup": 0,
+    "changeForbiddenEpisode": 0
+  },
+  {
+    "id": 13,
+    "name": "language_10080251",
+    "chapterIds": "28101",
+    "saveGroup": 1,
+    "changeForbiddenEpisode": 2810101
+  },
+  {
+    "id": 14,
+    "name": "language_10080252",
+    "chapterIds": "28101",
+    "saveGroup": 1,
+    "changeForbiddenEpisode": 2810102
   }
 ]

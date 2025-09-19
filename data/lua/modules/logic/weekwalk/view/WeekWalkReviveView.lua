@@ -140,6 +140,7 @@ function var_0_0._addHeroItem(arg_13_0, arg_13_1)
 	local var_13_4 = arg_13_1.heroId
 	local var_13_5 = HeroModel.instance:getByHeroId(var_13_4)
 
+	var_13_3:setStyle_CharacterBackpack()
 	var_13_3:onUpdateMO(var_13_5)
 	var_13_3:addClickListener(arg_13_0._heroItemClick, arg_13_0)
 	var_13_3:setDamage(true)

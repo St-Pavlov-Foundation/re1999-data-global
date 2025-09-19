@@ -308,5 +308,10 @@
     "skillId": 30480335,
     "effectName": "all",
     "exceptEffect": "always/xtjjtk_idle"
+  },
+  {
+    "skillId": 7253502,
+    "effectName": "all",
+    "exceptEffect": "always/xtjjtk_idle"
   }
 ]

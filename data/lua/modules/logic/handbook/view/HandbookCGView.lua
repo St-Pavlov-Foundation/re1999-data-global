@@ -7,6 +7,8 @@ function var_0_0.onInitView(arg_1_0)
 	arg_1_0._simagelbwz4 = gohelper.findChildSingleImage(arg_1_0.viewGO, "icon/#simage_lbwz4")
 	arg_1_0._btnchange = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_change")
 	arg_1_0._scrollcg = gohelper.findChildScrollRect(arg_1_0.viewGO, "#scroll_cg")
+	arg_1_0._goitemcontent = gohelper.findChild(arg_1_0.viewGO, "#scroll_btnlist/viewport/content/")
+	arg_1_0._goitem = gohelper.findChild(arg_1_0.viewGO, "#scroll_btnlist/viewport/content/item")
 	arg_1_0.verticalScrollPixelList = {}
 	arg_1_0._lastSelectId = nil
 	arg_1_0._ischanged = false
@@ -49,27 +51,37 @@ function var_0_0.onOpen(arg_6_0)
 end
 
 function var_0_0._refreshBtnList(arg_7_0)
-	for iter_7_0 = 1, 2 do
-		local var_7_0 = arg_7_0._selectItemList[iter_7_0]
+	local var_7_0 = HandbookConfig.instance:getChapterTypeConfigList()
 
-		if not var_7_0 then
-			var_7_0 = arg_7_0:getUserDataTb_()
-			var_7_0.go = gohelper.findChild(arg_7_0.viewGO, "#scroll_btnlist/viewport/content/item" .. iter_7_0)
-			var_7_0.gobeselected = gohelper.findChild(var_7_0.go, "beselected")
-			var_7_0.gounselected = gohelper.findChild(var_7_0.go, "unselected")
-			var_7_0.chapternamecn1 = gohelper.findChildText(var_7_0.go, "beselected/chapternamecn")
-			var_7_0.chapternameen1 = gohelper.findChildText(var_7_0.go, "beselected/chapternameen")
-			var_7_0.chapternamecn2 = gohelper.findChildText(var_7_0.go, "unselected/chapternamecn")
-			var_7_0.chapternameen2 = gohelper.findChildText(var_7_0.go, "unselected/chapternameen")
-			var_7_0.btnclick = gohelper.findChildButtonWithAudio(var_7_0.go, "btnclick", AudioEnum.UI.Play_UI_Universal_Click)
+	for iter_7_0 = 1, #var_7_0 do
+		local var_7_1 = var_7_0[iter_7_0]
+		local var_7_2 = arg_7_0._selectItemList[iter_7_0]
 
-			var_7_0.btnclick:AddClickListener(arg_7_0._btnclickOnClick, arg_7_0, var_7_0)
-			table.insert(arg_7_0._selectItemList, var_7_0)
+		if not var_7_2 then
+			var_7_2 = arg_7_0:getUserDataTb_()
+			var_7_2.go = gohelper.clone(arg_7_0._goitem, arg_7_0._goitemcontent, var_7_1.typeId)
+			var_7_2.gobeselected = gohelper.findChild(var_7_2.go, "beselected")
+			var_7_2.gounselected = gohelper.findChild(var_7_2.go, "unselected")
+			var_7_2.chapternamecn1 = gohelper.findChildText(var_7_2.go, "beselected/chapternamecn")
+			var_7_2.chapternameen1 = gohelper.findChildText(var_7_2.go, "beselected/chapternameen")
+			var_7_2.chapternamecn2 = gohelper.findChildText(var_7_2.go, "unselected/chapternamecn")
+			var_7_2.chapternameen2 = gohelper.findChildText(var_7_2.go, "unselected/chapternameen")
+			var_7_2.btnclick = gohelper.findChildButtonWithAudio(var_7_2.go, "btnclick", AudioEnum.UI.Play_UI_Universal_Click)
+
+			var_7_2.btnclick:AddClickListener(arg_7_0._btnclickOnClick, arg_7_0, var_7_2)
+
+			var_7_2.chapternamecn1.text = var_7_1.name
+			var_7_2.chapternamecn2.text = var_7_1.name
+			var_7_2.chapternameen1.text = var_7_1.nameEn
+			var_7_2.chapternameen2.text = var_7_1.nameEn
+
+			gohelper.setActive(var_7_2.go, true)
+			table.insert(arg_7_0._selectItemList, var_7_2)
 		end
 
-		var_7_0.selectId = iter_7_0
+		var_7_2.selectId = iter_7_0
 
-		gohelper.setActive(var_7_0.go, true)
+		gohelper.setActive(var_7_2.go, true)
 	end
 
 	if #arg_7_0._selectItemList > 0 then
@@ -93,13 +105,7 @@ function var_0_0._btnclickOnClick(arg_8_0, arg_8_1)
 	local var_8_1 = {}
 	local var_8_2 = {}
 
-	if var_8_0 == HandbookEnum.CGType.Dungeon then
-		var_8_2 = HandbookConfig.instance:getDungeonCGList()
-	elseif var_8_0 == HandbookEnum.CGType.Role then
-		var_8_2 = HandbookConfig.instance:getRoleCGList()
-	end
-
-	var_8_1.cgList = var_8_2
+	var_8_1.cgList = HandbookConfig.instance:getCGList(var_8_0)
 	var_8_1.cgType = var_8_0
 
 	HandbookCGTripleListModel.instance:setCGList(var_8_1)

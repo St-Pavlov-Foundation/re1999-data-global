@@ -132,6 +132,8 @@ function var_0_0._editableInitView(arg_12_0)
 	TaskDispatcher.runRepeat(arg_12_0._everyMinuteCall, arg_12_0, TimeUtil.OneMinuteSecond)
 	RedDotController.instance:addRedDot(arg_12_0._goTaskReddot, RedDotEnum.DotNode.V2a1DungeonTask)
 	arg_12_0:_act165RedDot()
+	gohelper.setActive(arg_12_0._btnactivitystore.gameObject, false)
+	gohelper.setActive(arg_12_0._btnactivitytask.gameObject, false)
 end
 
 function var_0_0._everyMinuteCall(arg_13_0)

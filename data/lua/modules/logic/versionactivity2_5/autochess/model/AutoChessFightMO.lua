@@ -7,6 +7,7 @@ function var_0_0.init(arg_1_0, arg_1_1)
 
 	arg_1_0:initWarZones(arg_1_1.warZones)
 
+	arg_1_0.unwarZone = var_0_0.buildWarZone(arg_1_1.unwarZones[1])
 	arg_1_0.mySideMaster = var_0_0.copyMaster(arg_1_1.mySideMaster)
 	arg_1_0.enemyMaster = var_0_0.copyMaster(arg_1_1.enemyMaster)
 end
@@ -15,63 +16,71 @@ function var_0_0.initWarZones(arg_2_0, arg_2_1)
 	arg_2_0.warZones = {}
 
 	for iter_2_0, iter_2_1 in ipairs(arg_2_1) do
-		local var_2_0 = {
-			id = iter_2_1.id,
-			type = iter_2_1.type,
-			positions = {}
-		}
-
-		for iter_2_2, iter_2_3 in ipairs(iter_2_1.positions) do
-			local var_2_1 = {
-				index = iter_2_3.index,
-				teamType = iter_2_3.teamType,
-				chess = iter_2_3.chess
-			}
-
-			table.insert(var_2_0.positions, var_2_1)
-		end
-
-		table.insert(arg_2_0.warZones, var_2_0)
+		table.insert(arg_2_0.warZones, var_0_0.buildWarZone(iter_2_1))
 	end
 end
 
-function var_0_0.copyMaster(arg_3_0)
-	return {
+function var_0_0.buildWarZone(arg_3_0)
+	if not arg_3_0 then
+		return
+	end
+
+	local var_3_0 = {
 		id = arg_3_0.id,
-		teamType = arg_3_0.teamType,
-		hp = arg_3_0.hp,
-		uid = arg_3_0.uid,
-		skill = arg_3_0.skill,
-		buffContainer = arg_3_0.buffContainer
+		type = arg_3_0.type,
+		positions = {}
+	}
+
+	for iter_3_0, iter_3_1 in ipairs(arg_3_0.positions) do
+		local var_3_1 = {
+			index = iter_3_1.index,
+			teamType = iter_3_1.teamType,
+			chess = iter_3_1.chess
+		}
+
+		table.insert(var_3_0.positions, var_3_1)
+	end
+
+	return var_3_0
+end
+
+function var_0_0.copyMaster(arg_4_0)
+	return {
+		id = arg_4_0.id,
+		teamType = arg_4_0.teamType,
+		hp = arg_4_0.hp,
+		uid = arg_4_0.uid,
+		skill = arg_4_0.skill,
+		buffContainer = arg_4_0.buffContainer
 	}
 end
 
-function var_0_0.updateMasterSkill(arg_4_0, arg_4_1)
-	arg_4_0.mySideMaster.skill = arg_4_1
+function var_0_0.updateMasterSkill(arg_5_0, arg_5_1)
+	arg_5_0.mySideMaster.skill = arg_5_1
 
 	AutoChessController.instance:dispatchEvent(AutoChessEvent.UpdateMasterSkill)
 end
 
-function var_0_0.unlockMasterSkill(arg_5_0, arg_5_1)
-	if arg_5_0.mySideMaster.uid == arg_5_1 then
-		arg_5_0.mySideMaster.skill.unlock = true
-	elseif arg_5_0.enemyMaster.uid == arg_5_1 then
-		arg_5_0.enemyMaster.skill.unlock = true
+function var_0_0.unlockMasterSkill(arg_6_0, arg_6_1)
+	if arg_6_0.mySideMaster.uid == arg_6_1 then
+		arg_6_0.mySideMaster.skill.unlock = true
+	elseif arg_6_0.enemyMaster.uid == arg_6_1 then
+		arg_6_0.enemyMaster.skill.unlock = true
 	end
 
 	AutoChessController.instance:dispatchEvent(AutoChessEvent.UpdateMasterSkill)
 end
 
-function var_0_0.updateMaster(arg_6_0, arg_6_1)
-	arg_6_0.mySideMaster = var_0_0.copyMaster(arg_6_1)
+function var_0_0.updateMaster(arg_7_0, arg_7_1)
+	arg_7_0.mySideMaster = var_0_0.copyMaster(arg_7_1)
 
 	AutoChessController.instance:dispatchEvent(AutoChessEvent.UpdateMasterSkill)
 end
 
-function var_0_0.hasUpgradeableChess(arg_7_0, arg_7_1)
-	for iter_7_0, iter_7_1 in ipairs(arg_7_0.warZones) do
-		for iter_7_2, iter_7_3 in ipairs(iter_7_1.positions) do
-			if iter_7_3.index < AutoChessEnum.BoardSize.Column and iter_7_3.chess.id == arg_7_1 and iter_7_3.chess.maxExpLimit ~= 0 then
+function var_0_0.hasUpgradeableChess(arg_8_0, arg_8_1)
+	for iter_8_0, iter_8_1 in ipairs(arg_8_0.warZones) do
+		for iter_8_2, iter_8_3 in ipairs(iter_8_1.positions) do
+			if iter_8_3.index < AutoChessEnum.BoardSize.Column and iter_8_3.chess.id == arg_8_1 and iter_8_3.chess.maxExpLimit ~= 0 then
 				return true
 			end
 		end

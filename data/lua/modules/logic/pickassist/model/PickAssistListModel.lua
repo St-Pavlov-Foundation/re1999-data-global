@@ -4,7 +4,8 @@ local var_0_0 = class("PickAssistListModel", ListScrollModel)
 local var_0_1 = CharacterEnum.CareerType.Yan
 local var_0_2 = {}
 local var_0_3 = {
-	[PickAssistEnum.Type.Rouge] = "RougePickAssistView"
+	[PickAssistEnum.Type.Rouge] = "RougePickAssistView",
+	[PickAssistEnum.Type.Survival] = "SurvivalPickAssistView"
 }
 
 local function var_0_4(arg_1_0)

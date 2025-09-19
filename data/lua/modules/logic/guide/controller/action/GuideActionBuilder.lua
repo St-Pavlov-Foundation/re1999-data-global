@@ -86,6 +86,7 @@ function var_0_0.ctor(arg_1_0)
 	arg_1_0._ActionType2Impl[248] = WaitGuideActionRoomTransport
 	arg_1_0._ActionType2Impl[249] = WaitGuideActionPlayStoryStep
 	arg_1_0._ActionType2Impl[250] = WaitGuideActionEnterChapter
+	arg_1_0._ActionType2Impl[251] = WaitGuideActionSurvivalBuildingLv
 	arg_1_0._ActionType2Impl[301] = WaitGuideActionFightRoundBegin
 	arg_1_0._ActionType2Impl[302] = WaitGuideActionFightRoundEnd
 	arg_1_0._ActionType2Impl[303] = WaitGuideActionFightResultClose

@@ -20,7 +20,7 @@ end
 
 function var_0_0.onOpen(arg_4_0)
 	if arg_4_0.viewParam then
-		local var_4_0 = arg_4_0:getResInst(AutoChessEnum.LeaderCardPath, arg_4_0._goCard)
+		local var_4_0 = arg_4_0:getResInst(AutoChessStrEnum.ResPath.LeaderCard, arg_4_0._goCard)
 
 		MonoHelper.addNoUpdateLuaComOnceToGo(var_4_0, AutoChessLeaderCard):setData(arg_4_0.viewParam)
 	end

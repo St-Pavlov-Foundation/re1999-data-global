@@ -3,24 +3,30 @@
 local var_0_0 = class("Act183BaseEpisodeItem", LuaCompBase)
 
 function var_0_0.Get(arg_1_0, arg_1_1)
-	local var_1_0 = arg_1_1:getEpisodeType()
-	local var_1_1 = arg_1_1:getGroupType()
-	local var_1_2 = arg_1_1:getConfigOrder()
-	local var_1_3 = Act183Helper.getEpisodeClsKey(var_1_1, var_1_0)
-	local var_1_4 = Act183Enum.EpisodeClsType[var_1_3]
-	local var_1_5 = var_1_4.getItemParentPath(var_1_2)
-	local var_1_6 = gohelper.findChild(arg_1_0, var_1_5)
-	local var_1_7 = var_1_4.getItemTemplatePath()
-	local var_1_8 = var_1_4.getItemTemplateGo(arg_1_0, var_1_7)
-	local var_1_9 = "item_" .. var_1_2
-	local var_1_10 = gohelper.clone(var_1_8, var_1_6, var_1_9)
-	local var_1_11 = MonoHelper.addNoUpdateLuaComOnceToGo(var_1_10, var_1_4)
+	local var_1_0 = arg_1_1:getEpisodeId()
+	local var_1_1 = arg_1_1:getEpisodeType()
+	local var_1_2 = arg_1_1:getGroupType()
+	local var_1_3 = arg_1_1:getConfigOrder()
+	local var_1_4 = Act183Helper.getEpisodeClsKey(var_1_2, var_1_1)
+	local var_1_5 = Act183Enum.EpisodeClsType[var_1_4]
+	local var_1_6 = var_1_5.getItemParentPath(var_1_3)
+	local var_1_7 = gohelper.findChild(arg_1_0, var_1_6)
 
-	var_1_11.parentGo = var_1_6
+	if gohelper.isNil(var_1_7) then
+		logError(string.format("挑战玩法关卡挂点不存在 episodeId = %s, parentPath = %s", var_1_0, var_1_6))
+	end
 
-	var_1_11:initPosAndRotation()
+	local var_1_8 = var_1_5.getItemTemplatePath()
+	local var_1_9 = var_1_5.getItemTemplateGo(arg_1_0, var_1_8)
+	local var_1_10 = "item_" .. var_1_3
+	local var_1_11 = gohelper.clone(var_1_9, var_1_7, var_1_10)
+	local var_1_12 = MonoHelper.addNoUpdateLuaComOnceToGo(var_1_11, var_1_5)
 
-	return var_1_11
+	var_1_12.parentGo = var_1_7
+
+	var_1_12:initPosAndRotation()
+
+	return var_1_12
 end
 
 function var_0_0.getItemParentPath(arg_2_0)
@@ -45,7 +51,6 @@ function var_0_0.init(arg_5_0, arg_5_1)
 	arg_5_0._goselect = gohelper.findChild(arg_5_0.go, "go_select")
 	arg_5_0._simageicon = gohelper.findChildSingleImage(arg_5_0.go, "image_icon")
 	arg_5_0._animfinish = gohelper.onceAddComponent(arg_5_0._gofinish, gohelper.Type_Animator)
-	arg_5_0._starItemTab = arg_5_0:getUserDataTb_()
 end
 
 function var_0_0.initPosAndRotation(arg_6_0)

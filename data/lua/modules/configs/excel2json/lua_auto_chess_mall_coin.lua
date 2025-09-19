@@ -2,10 +2,12 @@
 
 local var_0_0 = {}
 local var_0_1 = {
-	round = 1,
-	coinNum = 2
+	activityId = 1,
+	coinNum = 3,
+	round = 2
 }
 local var_0_2 = {
+	"activityId",
 	"round"
 }
 local var_0_3 = {}

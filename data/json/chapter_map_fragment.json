@@ -2104,6 +2104,86 @@
     "toastId": 0
   },
   {
+    "id": 101001,
+    "title": "language_10080720",
+    "res": "v2a8_fragmenticon_001",
+    "type": 2,
+    "content": "",
+    "toastId": 0
+  },
+  {
+    "id": 101009,
+    "title": "language_10080721",
+    "res": "v2a8_fragmenticon_003",
+    "type": 2,
+    "content": "",
+    "toastId": 0
+  },
+  {
+    "id": 1010111,
+    "title": "language_10080722",
+    "res": "v2a8_fragmenticon_004",
+    "type": 2,
+    "content": "",
+    "toastId": 0
+  },
+  {
+    "id": 101018,
+    "title": "language_10080723",
+    "res": "v2a8_fragmenticon_006",
+    "type": 2,
+    "content": "",
+    "toastId": 0
+  },
+  {
+    "id": 1010231,
+    "title": "language_10080724",
+    "res": "v2a8_fragmenticon_009",
+    "type": 2,
+    "content": "",
+    "toastId": 0
+  },
+  {
+    "id": 101024,
+    "title": "language_10080725",
+    "res": "v2a8_fragmenticon_010",
+    "type": 2,
+    "content": "",
+    "toastId": 0
+  },
+  {
+    "id": 101002,
+    "title": "language_10080850",
+    "res": "v2a8_fragmenticon_002",
+    "type": 1,
+    "content": "language_10080851",
+    "toastId": 0
+  },
+  {
+    "id": 101015,
+    "title": "language_10080852",
+    "res": "v2a8_fragmenticon_005",
+    "type": 1,
+    "content": "language_10080853",
+    "toastId": 0
+  },
+  {
+    "id": 101019,
+    "title": "language_10080854",
+    "res": "v2a8_fragmenticon_007",
+    "type": 1,
+    "content": "language_10080855",
+    "toastId": 0
+  },
+  {
+    "id": 101025,
+    "title": "language_10080856",
+    "res": "v2a8_fragmenticon_011",
+    "type": 1,
+    "content": "language_10080857",
+    "toastId": 0
+  },
+  {
     "id": 30510101,
     "title": "language_10075901",
     "res": "v2a9_dungeon_fragmenticon_7",

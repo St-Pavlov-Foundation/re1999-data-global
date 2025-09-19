@@ -1,12 +1,6 @@
 ﻿module("modules.logic.versionactivity2_5.challenge.view.result.Act183SettlementView", package.seeall)
 
 local var_0_0 = class("Act183SettlementView", BaseView)
-local var_0_1 = {
-	"v2a5_challenge_result_roundbg4",
-	"v2a5_challenge_result_roundbg3",
-	"v2a5_challenge_result_roundbg2",
-	"v2a5_challenge_result_roundbg1"
-}
 
 function var_0_0.onInitView(arg_1_0)
 	arg_1_0._gonormalbg = gohelper.findChild(arg_1_0.viewGO, "root/bg")
@@ -18,8 +12,6 @@ function var_0_0.onInitView(arg_1_0)
 	arg_1_0._simageplayericon = gohelper.findChildSingleImage(arg_1_0.viewGO, "root/left/player/icon/#simage_playericon")
 	arg_1_0._txtname = gohelper.findChildText(arg_1_0.viewGO, "root/left/player/#txt_name")
 	arg_1_0._txtdate = gohelper.findChildText(arg_1_0.viewGO, "root/left/player/#txt_date")
-	arg_1_0._imageroundbg = gohelper.findChildImage(arg_1_0.viewGO, "root/left/totalround/#image_roundbg")
-	arg_1_0._txttotalround = gohelper.findChildText(arg_1_0.viewGO, "root/left/totalround/#txt_totalround")
 	arg_1_0._txtbossbadge = gohelper.findChildText(arg_1_0.viewGO, "root/right/#txt_bossbadge")
 	arg_1_0._gobossheros = gohelper.findChild(arg_1_0.viewGO, "root/right/#go_bossheros")
 	arg_1_0._goheroitem = gohelper.findChild(arg_1_0.viewGO, "root/#go_heroitem")
@@ -103,23 +95,10 @@ function var_0_0.refreshPlayerInfo(arg_11_0)
 end
 
 function var_0_0.refreshOtherInfo(arg_12_0)
-	local var_12_0 = arg_12_0._groupRecordMo:getAllRound()
+	local var_12_0 = arg_12_0._groupRecordMo:getGroupType()
 
-	arg_12_0._txttotalround.text = var_12_0
-
-	local var_12_1 = Act183Helper.getRoundStage(var_12_0)
-	local var_12_2 = var_0_1[var_12_1]
-
-	if var_12_2 then
-		UISpriteSetMgr.instance:setChallengeSprite(arg_12_0._imageroundbg, var_12_2)
-	else
-		logError(string.format("缺少回合数挡位 --> 回合数背景图配置 allRoundNum = %s, stage = %s", var_12_0, var_12_1))
-	end
-
-	local var_12_3 = arg_12_0._groupRecordMo:getGroupType()
-
-	gohelper.setActive(arg_12_0._gohardbg, var_12_3 == Act183Enum.GroupType.HardMain)
-	gohelper.setActive(arg_12_0._gonormalbg, var_12_3 ~= Act183Enum.GroupType.HardMain)
+	gohelper.setActive(arg_12_0._gohardbg, var_12_0 == Act183Enum.GroupType.HardMain)
+	gohelper.setActive(arg_12_0._gonormalbg, var_12_0 ~= Act183Enum.GroupType.HardMain)
 end
 
 function var_0_0.releaseAllSingleImage(arg_13_0)
@@ -133,7 +112,6 @@ end
 function var_0_0.onClose(arg_14_0)
 	arg_14_0:releaseAllSingleImage()
 	arg_14_0._simageplayericon:UnLoadImage()
-	arg_14_0._simageboss:UnLoadImage()
 end
 
 function var_0_0.onDestroyView(arg_15_0)

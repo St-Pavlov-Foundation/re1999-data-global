@@ -11,6 +11,7 @@ function var_0_0.init(arg_1_0, arg_1_1)
 
 	arg_1_0._heroItem:hideFavor(true)
 	arg_1_0._heroItem:addClickListener(arg_1_0._onItemClick, arg_1_0)
+	arg_1_0._heroItem:setStyle_CharacterBackpack()
 
 	arg_1_0._gohp = gohelper.findChild(arg_1_1, "#go_hp")
 	arg_1_0._sliderhp = gohelper.findChildSlider(arg_1_1, "#go_hp/#slider_hp")

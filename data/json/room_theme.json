@@ -216,6 +216,18 @@
     "sourcesType": ""
   },
   {
+    "id": 2801,
+    "name": "language_10086105",
+    "nameEn": "The Pale Expanse",
+    "desc": "language_10086293",
+    "rewardIcon": "1701900",
+    "building": "12801|12802|12803",
+    "packages": "2801|2802|2803|2804",
+    "collectionBonus": "11#12803#1",
+    "extraShowBuilding": "",
+    "sourcesType": ""
+  },
+  {
     "id": 30501,
     "name": "language_10077963",
     "nameEn": "Memories of Florence",

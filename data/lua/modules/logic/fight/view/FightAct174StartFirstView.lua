@@ -3,8 +3,6 @@
 local var_0_0 = class("FightAct174StartFirstView", FightBaseView)
 
 function var_0_0.onInitView(arg_1_0)
-	arg_1_0._titlebgGo = gohelper.findChild(arg_1_0.viewGO, "titlebg")
-	arg_1_0._ttitlebgAnimator = arg_1_0._titlebgGo:GetComponent(gohelper.Type_Animator)
 	arg_1_0._playerFirst = gohelper.findChild(arg_1_0.viewGO, "titlebg/#simage_player")
 	arg_1_0._enemyFirst = gohelper.findChild(arg_1_0.viewGO, "titlebg/#simage_enemy")
 	arg_1_0._title = gohelper.findChild(arg_1_0.viewGO, "titlebg/#simage_title")

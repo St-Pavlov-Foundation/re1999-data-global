@@ -574,6 +574,7 @@ function var_0_0._groupDropValueChanged(arg_36_0, arg_36_1)
 	gohelper.setActive(arg_36_0._btnmodifyname, var_36_0 ~= 0)
 
 	if HeroGroupModel.instance:setHeroGroupSelectIndex(var_36_0) then
+		HeroGroupModel.instance:_setSingleGroup()
 		arg_36_0:_checkEquipClothSkill()
 		GameFacade.showToast(arg_36_0._changeToastId or ToastEnum.SeasonGroupChanged)
 		HeroGroupController.instance:dispatchEvent(HeroGroupEvent.OnModifyHeroGroup)
@@ -1168,8 +1169,8 @@ end
 function var_0_0._refreshBtns(arg_67_0, arg_67_1)
 	local var_67_0 = HeroGroupBalanceHelper.getIsBalanceMode()
 
-	gohelper.setActive(arg_67_0._btnBalanceStart, var_67_0 and not arg_67_0._replayMode and arg_67_0._chapterConfig.type ~= DungeonEnum.ChapterType.Hard)
-	gohelper.setActive(arg_67_0._btnUnPowerBalanceStart, var_67_0 and not arg_67_0._replayMode and arg_67_0._chapterConfig.type == DungeonEnum.ChapterType.Hard)
+	gohelper.setActive(arg_67_0._btnBalanceStart, var_67_0 and not arg_67_0._replayMode and arg_67_1)
+	gohelper.setActive(arg_67_0._btnUnPowerBalanceStart, var_67_0 and not arg_67_0._replayMode and not arg_67_1)
 
 	local var_67_1 = arg_67_0._enterAfterFreeLimit or arg_67_0:_getfreeCount() > 0
 

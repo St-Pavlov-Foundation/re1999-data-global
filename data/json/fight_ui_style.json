@@ -1,0 +1,46 @@
+[
+  {
+    "id": 101,
+    "type": 1,
+    "defaultUnlock": 1,
+    "itemId": 682800,
+    "sort": 1,
+    "image": "mainsceneswitch_numbg_01",
+    "previewImage": "",
+    "banner": "10101#10102#10103#10104#10105#10106",
+    "showres": "sence_01/num01"
+  },
+  {
+    "id": 102,
+    "type": 1,
+    "defaultUnlock": 0,
+    "itemId": 682801,
+    "sort": 2,
+    "image": "mainsceneswitch_numbg_02",
+    "previewImage": "mainsceneswitch_numbg_pic02",
+    "banner": "10201#10202#10203#10204#10205#10206",
+    "showres": "sence_01/num02"
+  },
+  {
+    "id": 201,
+    "type": 2,
+    "defaultUnlock": 1,
+    "itemId": 672800,
+    "sort": 1,
+    "image": "mainsceneswitch_cardbg_01",
+    "previewImage": "",
+    "banner": "20101#20102",
+    "showres": "sence_01/card01"
+  },
+  {
+    "id": 202,
+    "type": 2,
+    "defaultUnlock": 0,
+    "itemId": 672801,
+    "sort": 2,
+    "image": "mainsceneswitch_cardbg_02",
+    "previewImage": "mainsceneswitch_cardbg_pic02",
+    "banner": "20201#20202",
+    "showres": "sence_01/card02"
+  }
+]

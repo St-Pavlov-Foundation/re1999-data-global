@@ -131,170 +131,202 @@ function var_0_0.modifyBgmAudioId(arg_17_0, arg_17_1, arg_17_2)
 		if arg_17_0._curBgmData == var_17_0 then
 			arg_17_0:_stopBgm(var_17_0)
 			arg_17_0:_playBgm(var_17_0)
+
+			return true
 		end
 	end
+
+	return false
 end
 
-function var_0_0.setSwitchData(arg_18_0, arg_18_1, arg_18_2, arg_18_3)
-	local var_18_0 = arg_18_0._bgmInfo:getBgmData(arg_18_1)
+function var_0_0.getCurPlayingId(arg_18_0)
+	return arg_18_0._curBgmData and arg_18_0._curBgmData.playId or nil
+end
 
-	if var_18_0 then
-		var_18_0.switchGroup = arg_18_2
-		var_18_0.switchState = arg_18_3
+function var_0_0.setSwitch(arg_19_0, arg_19_1)
+	local var_19_0 = arg_19_0._bgmInfo:getBgmData(arg_19_1)
+
+	if var_19_0 then
+		var_19_0:setSwitch()
 	end
 end
 
-function var_0_0.removeBgm(arg_19_0, arg_19_1)
-	arg_19_0._bgmInfo:removeBgm(arg_19_1)
+function var_0_0.setSwitchData(arg_20_0, arg_20_1, arg_20_2, arg_20_3)
+	local var_20_0 = arg_20_0._bgmInfo:getBgmData(arg_20_1)
+
+	if var_20_0 then
+		if var_20_0.switchGroup == arg_20_2 and var_20_0.switchState == arg_20_3 then
+			return false
+		end
+
+		var_20_0.switchGroup = arg_20_2
+		var_20_0.switchState = arg_20_3
+
+		return true
+	end
+
+	return false
 end
 
-function var_0_0.clearBgm(arg_20_0, arg_20_1)
-	arg_20_0._bgmInfo:clearBgm(arg_20_1)
-end
-
-function var_0_0.playBgm(arg_21_0, arg_21_1)
+function var_0_0.setStopId(arg_21_0, arg_21_1, arg_21_2)
 	local var_21_0 = arg_21_0._bgmInfo:getBgmData(arg_21_1)
 
-	arg_21_0:_setBgmData(var_21_0)
-end
-
-function var_0_0.stopBgm(arg_22_0, arg_22_1)
-	local var_22_0 = arg_22_0._bgmInfo:getBgmData(arg_22_1)
-
-	if arg_22_0._curBgmData == var_22_0 then
-		arg_22_0:_setBgmData(nil)
+	if var_21_0 then
+		var_21_0.stopId = arg_21_2
 	end
 end
 
-function var_0_0._setBgmData(arg_23_0, arg_23_1)
-	if arg_23_0._curBgmData == arg_23_1 then
+function var_0_0.removeBgm(arg_22_0, arg_22_1)
+	arg_22_0._bgmInfo:removeBgm(arg_22_1)
+end
+
+function var_0_0.clearBgm(arg_23_0, arg_23_1)
+	arg_23_0._bgmInfo:clearBgm(arg_23_1)
+end
+
+function var_0_0.playBgm(arg_24_0, arg_24_1)
+	local var_24_0 = arg_24_0._bgmInfo:getBgmData(arg_24_1)
+
+	arg_24_0:_setBgmData(var_24_0)
+end
+
+function var_0_0.stopBgm(arg_25_0, arg_25_1)
+	local var_25_0 = arg_25_0._bgmInfo:getBgmData(arg_25_1)
+
+	if arg_25_0._curBgmData == var_25_0 then
+		arg_25_0:_setBgmData(nil)
+	end
+end
+
+function var_0_0._setBgmData(arg_26_0, arg_26_1)
+	if arg_26_0._curBgmData == arg_26_1 then
 		return
 	end
 
-	if arg_23_0:_getPlayId(arg_23_0._curBgmData) == arg_23_0:_getPlayId(arg_23_1) then
-		arg_23_0._curBgmData = arg_23_1
+	if arg_26_0:_getPlayId(arg_26_0._curBgmData) == arg_26_0:_getPlayId(arg_26_1) then
+		arg_26_0._curBgmData = arg_26_1
 
 		return
 	end
 
-	arg_23_0:_stopBgm(arg_23_0._curBgmData)
+	arg_26_0:_stopBgm(arg_26_0._curBgmData)
 
-	arg_23_0._curBgmData = arg_23_1
+	arg_26_0._curBgmData = arg_26_1
 
-	arg_23_0:_playBgm(arg_23_0._curBgmData)
+	arg_26_0:_playBgm(arg_26_0._curBgmData)
 end
 
-function var_0_0._stopBgm(arg_24_0, arg_24_1)
-	if not arg_24_1 then
+function var_0_0._stopBgm(arg_27_0, arg_27_1)
+	if not arg_27_1 then
 		return nil
 	end
 
-	local var_24_0 = arg_24_0:_getStopId(arg_24_1)
+	local var_27_0 = arg_27_0:_getStopId(arg_27_1)
 
-	arg_24_0:dispatchEvent(AudioBgmEvent.onStopBgm, arg_24_1.layer, var_24_0)
+	arg_27_0:dispatchEvent(AudioBgmEvent.onStopBgm, arg_27_1.layer, var_27_0)
 
-	if var_24_0 > 0 then
-		AudioMgr.instance:trigger(var_24_0)
+	if var_27_0 > 0 then
+		AudioMgr.instance:trigger(var_27_0)
 	end
 
-	arg_24_0:_stopBindList(arg_24_1)
+	arg_27_0:_stopBindList(arg_27_1)
 end
 
-function var_0_0._playBgm(arg_25_0, arg_25_1)
-	if not arg_25_1 then
+function var_0_0._playBgm(arg_28_0, arg_28_1)
+	if not arg_28_1 then
 		return nil
 	end
 
-	local var_25_0 = arg_25_0:_getPlayId(arg_25_1)
+	local var_28_0 = arg_28_0:_getPlayId(arg_28_1)
 
-	arg_25_0:dispatchEvent(AudioBgmEvent.onPlayBgm, arg_25_1.layer, var_25_0)
+	arg_28_0:dispatchEvent(AudioBgmEvent.onPlayBgm, arg_28_1.layer, var_28_0)
 
-	if var_25_0 > 0 then
-		AudioMgr.instance:trigger(var_25_0)
-		arg_25_1:setSwitch()
+	if var_28_0 > 0 then
+		AudioMgr.instance:trigger(var_28_0)
+		arg_28_1:setSwitch()
 
-		if arg_25_1.resumeId then
-			arg_25_0._canPauseList[arg_25_1.layer] = arg_25_1
+		if arg_28_1.resumeId then
+			arg_28_0._canPauseList[arg_28_1.layer] = arg_28_1
 		end
 	end
 
-	arg_25_0:_playBindList(arg_25_1)
+	arg_28_0:_playBindList(arg_28_1)
 end
 
-function var_0_0._playBindList(arg_26_0, arg_26_1)
-	local var_26_0 = arg_26_0._bgmInfo:getBindList(arg_26_1.layer)
+function var_0_0._playBindList(arg_29_0, arg_29_1)
+	local var_29_0 = arg_29_0._bgmInfo:getBindList(arg_29_1.layer)
 
-	if not var_26_0 then
+	if not var_29_0 then
 		return
 	end
 
-	for iter_26_0, iter_26_1 in ipairs(var_26_0) do
-		local var_26_1 = arg_26_0._bgmInfo:getBgmData(iter_26_1)
+	for iter_29_0, iter_29_1 in ipairs(var_29_0) do
+		local var_29_1 = arg_29_0._bgmInfo:getBgmData(iter_29_1)
 
-		if var_26_1 then
-			local var_26_2 = arg_26_0:_getPlayId(var_26_1)
+		if var_29_1 then
+			local var_29_2 = arg_29_0:_getPlayId(var_29_1)
 
-			if var_26_2 > 0 then
-				AudioMgr.instance:trigger(var_26_2)
+			if var_29_2 > 0 then
+				AudioMgr.instance:trigger(var_29_2)
 			end
 		end
 	end
 end
 
-function var_0_0._stopBindList(arg_27_0, arg_27_1)
-	local var_27_0 = arg_27_0._bgmInfo:getBindList(arg_27_1.layer)
+function var_0_0._stopBindList(arg_30_0, arg_30_1)
+	local var_30_0 = arg_30_0._bgmInfo:getBindList(arg_30_1.layer)
 
-	if not var_27_0 then
+	if not var_30_0 then
 		return
 	end
 
-	for iter_27_0, iter_27_1 in ipairs(var_27_0) do
-		local var_27_1 = arg_27_0._bgmInfo:getBgmData(iter_27_1)
+	for iter_30_0, iter_30_1 in ipairs(var_30_0) do
+		local var_30_1 = arg_30_0._bgmInfo:getBgmData(iter_30_1)
 
-		if var_27_1 then
-			local var_27_2 = arg_27_0:_getStopId(var_27_1)
+		if var_30_1 then
+			local var_30_2 = arg_30_0:_getStopId(var_30_1)
 
-			if var_27_2 > 0 then
-				AudioMgr.instance:trigger(var_27_2)
+			if var_30_2 > 0 then
+				AudioMgr.instance:trigger(var_30_2)
 			end
 		end
 	end
 end
 
-function var_0_0._clearPauseBgm(arg_28_0, arg_28_1)
-	if arg_28_1 and arg_28_1.clearPauseBgm then
-		arg_28_0:_forceClearPauseBgm()
+function var_0_0._clearPauseBgm(arg_31_0, arg_31_1)
+	if arg_31_1 and arg_31_1.clearPauseBgm then
+		arg_31_0:_forceClearPauseBgm()
 	end
 end
 
-function var_0_0._forceClearPauseBgm(arg_29_0)
-	for iter_29_0, iter_29_1 in pairs(arg_29_0._canPauseList) do
-		AudioMgr.instance:trigger(iter_29_1.stopId)
-		rawset(arg_29_0._canPauseList, iter_29_0, nil)
+function var_0_0._forceClearPauseBgm(arg_32_0)
+	for iter_32_0, iter_32_1 in pairs(arg_32_0._canPauseList) do
+		AudioMgr.instance:trigger(iter_32_1.stopId)
+		rawset(arg_32_0._canPauseList, iter_32_0, nil)
 	end
 end
 
-function var_0_0._getPlayId(arg_30_0, arg_30_1)
-	if not arg_30_1 then
+function var_0_0._getPlayId(arg_33_0, arg_33_1)
+	if not arg_33_1 then
 		return nil
 	end
 
-	if arg_30_0._canPauseList[arg_30_1.layer] then
-		return arg_30_1.resumeId
+	if arg_33_0._canPauseList[arg_33_1.layer] then
+		return arg_33_1.resumeId
 	else
-		return arg_30_1.playId
+		return arg_33_1.playId
 	end
 end
 
-function var_0_0._getStopId(arg_31_0, arg_31_1)
-	if not arg_31_1 then
+function var_0_0._getStopId(arg_34_0, arg_34_1)
+	if not arg_34_1 then
 		return nil
 	end
 
-	if arg_31_0._canPauseList[arg_31_1.layer] then
-		return arg_31_1.pauseId
+	if arg_34_0._canPauseList[arg_34_1.layer] then
+		return arg_34_1.pauseId
 	else
-		return arg_31_1.stopId
+		return arg_34_1.stopId
 	end
 end
 

@@ -114,7 +114,11 @@ end
 
 function var_0_0.setShareRT(arg_13_0, arg_13_1, arg_13_2)
 	arg_13_0._shareRT = arg_13_1
-	arg_13_0._rtPriority = arg_13_2
+	arg_13_0._rtViewName = arg_13_2
+
+	if arg_13_1 == CharacterVoiceEnum.RTShareType.Normal and not arg_13_2 then
+		logError("CharacterVoiceEnum.RTShareType.Normal viewName is nil")
+	end
 end
 
 function var_0_0.setResPath(arg_14_0, arg_14_1, arg_14_2, arg_14_3, arg_14_4)
@@ -137,7 +141,7 @@ function var_0_0.setResPath(arg_14_0, arg_14_1, arg_14_2, arg_14_3, arg_14_4)
 		arg_14_0._curModel:setSkinId(arg_14_1.id)
 		arg_14_0._curModel:openBloomView(arg_14_0._openBloomView)
 		arg_14_0._curModel:showModel()
-		arg_14_0._curModel:setShareRT(arg_14_0._shareRT, arg_14_0._rtPriority)
+		arg_14_0._curModel:setShareRT(arg_14_0._shareRT, arg_14_0._rtViewName)
 
 		if arg_14_0._shareRT == CharacterVoiceEnum.RTShareType.BloomAuto then
 			if CharacterVoiceEnum.BloomCameraSize[arg_14_1.characterId] then
@@ -145,6 +149,8 @@ function var_0_0.setResPath(arg_14_0, arg_14_1, arg_14_2, arg_14_3, arg_14_4)
 			else
 				arg_14_0._curModel:setCameraSize(arg_14_4 or arg_14_1.cameraSize)
 			end
+		elseif arg_14_0._shareRT == CharacterVoiceEnum.RTShareType.Normal then
+			arg_14_0._curModel:setCameraSize(CharacterVoiceEnum.NormalFullScreenEffectCameraSize)
 		else
 			arg_14_0._curModel:setCameraSize(arg_14_4 or arg_14_1.cameraSize)
 		end
@@ -347,9 +353,22 @@ function var_0_0.setSwitch(arg_39_0, arg_39_1, arg_39_2)
 	end
 end
 
-function var_0_0.onDestroy(arg_40_0)
-	if arg_40_0._dragEffectGoList then
-		tabletool.clear(arg_40_0._dragEffectGoList)
+function var_0_0.playSpecialMotion(arg_40_0, arg_40_1, arg_40_2, arg_40_3)
+	if arg_40_0._curModel then
+		arg_40_0._curModel:stopVoice()
+		arg_40_0._curModel:setBodyAnimation(arg_40_1, arg_40_2, arg_40_3)
+	end
+end
+
+function var_0_0.setActionEventCb(arg_41_0, arg_41_1, arg_41_2)
+	if arg_41_0._curModel then
+		arg_41_0._curModel:setActionEventCb(arg_41_1, arg_41_2)
+	end
+end
+
+function var_0_0.onDestroy(arg_42_0)
+	if arg_42_0._dragEffectGoList then
+		tabletool.clear(arg_42_0._dragEffectGoList)
 	end
 end
 

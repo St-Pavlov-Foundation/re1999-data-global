@@ -2,11 +2,12 @@
 
 local var_0_0 = {}
 local var_0_1 = {
-	rankId = 2,
+	reward = 8,
 	name = 4,
 	protection = 5,
 	score = 6,
-	reward = 8,
+	rankId = 2,
+	isShow = 9,
 	icon = 3,
 	activityId = 1,
 	round2Score = 7

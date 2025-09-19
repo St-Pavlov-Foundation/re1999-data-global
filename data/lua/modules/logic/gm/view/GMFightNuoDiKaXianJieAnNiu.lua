@@ -16,7 +16,7 @@ function var_0_0.onClickStart(arg_3_0)
 	if Time.time - arg_3_0.time > arg_3_0.timeLimit then
 		arg_3_0.time = Time.time
 
-		arg_3_0:com_sendFightEvent(FightEvent.OperationForPlayEffect, arg_3_0.effectType)
+		arg_3_0:com_sendMsg(FightMsgId.OperationForPlayEffect, arg_3_0.effectType)
 	end
 end
 

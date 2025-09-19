@@ -72,6 +72,7 @@ function var_0_0._btnCloseRewardOnClick(arg_8_0)
 end
 
 function var_0_0.setData(arg_9_0, arg_9_1)
+	arg_9_0.actId = Activity182Model.instance:getCurActId()
 	arg_9_0.co = arg_9_1
 
 	if arg_9_1 then
@@ -112,7 +113,7 @@ function var_0_0.refreshUI(arg_10_0)
 end
 
 function var_0_0.refreshSelect(arg_11_0)
-	local var_11_0 = arg_11_0.actMo.gameMoDic[arg_11_0.moduleId]
+	local var_11_0 = arg_11_0.actMo:getGameMo(arg_11_0.actId, arg_11_0.moduleId)
 
 	arg_11_0.isSelect = var_11_0.episodeId == arg_11_0.co.id
 
@@ -167,15 +168,16 @@ function var_0_0.refreshFinish(arg_13_0)
 end
 
 function var_0_0.refreshSpecialUnlockTips(arg_14_0)
-	local var_14_0 = tonumber(lua_auto_chess_const.configDict[AutoChessEnum.ConstKey.UnlockLeaderRefresh].value)
-	local var_14_1 = tonumber(lua_auto_chess_const.configDict[AutoChessEnum.ConstKey.UnlockLeaderSlot].value)
-	local var_14_2 = lua_auto_chess_episode.configDict[AutoChessEnum.PvpEpisodeId].preEpisode
+	local var_14_0 = AutoChessConfig.instance:getPvpEpisodeCo(arg_14_0.actId)
+	local var_14_1 = tonumber(lua_auto_chess_const.configDict[AutoChessEnum.ConstKey.UnlockLeaderRefresh].value)
+	local var_14_2 = tonumber(lua_auto_chess_const.configDict[AutoChessEnum.ConstKey.UnlockLeaderSlot].value)
+	local var_14_3 = var_14_0.preEpisode
 
-	if arg_14_0.co.id == var_14_0 then
+	if arg_14_0.co.id == var_14_1 then
 		arg_14_0._txtUnlockTips.text = luaLang("autochess_levelview_unlocktips3")
-	elseif arg_14_0.co.id == var_14_1 then
-		arg_14_0._txtUnlockTips.text = luaLang("autochess_levelview_unlocktips2")
 	elseif arg_14_0.co.id == var_14_2 then
+		arg_14_0._txtUnlockTips.text = luaLang("autochess_levelview_unlocktips2")
+	elseif arg_14_0.co.id == var_14_3 then
 		arg_14_0._txtUnlockTips.text = luaLang("autochess_levelview_unlocktips1")
 	else
 		gohelper.setActive(arg_14_0._goRewardDesc, true)
@@ -198,7 +200,7 @@ end
 
 function var_0_0.enterLevel(arg_18_0)
 	if arg_18_0.unlock then
-		AutoChessController.instance:startGame(arg_18_0.moduleId, arg_18_0.co.id)
+		AutoChessController.instance:startGame(arg_18_0.actId, arg_18_0.moduleId, arg_18_0.co)
 	else
 		GameFacade.showToast(ToastEnum.AutoChessEpisodeLock)
 	end

@@ -24,7 +24,9 @@ var_0_0.IgnoreExceptionStatus = {
 	-311,
 	-312,
 	-314,
-	-321
+	-321,
+	-402,
+	-403
 }
 
 function var_0_0.ctor(arg_1_0)

@@ -3,7 +3,7 @@
 local var_0_0 = class("V1a9_MatildaGiftModel", BaseModel)
 
 function var_0_0.getMatildagiftActId(arg_1_0)
-	return ActivityEnum.Activity.V1a9_Matildagift
+	return ActivityEnum.Activity.V2a8_Matildagift
 end
 
 function var_0_0.isMatildaGiftOpen(arg_2_0, arg_2_1)
@@ -40,6 +40,8 @@ function var_0_0.onGetBonus(arg_5_0)
 		local var_5_0 = arg_5_0:getMatildagiftActId()
 
 		Activity101Rpc.instance:sendGet101BonusRequest(var_5_0, 1)
+	else
+		GameFacade.showToast(ToastEnum.ActivityRewardHasReceive)
 	end
 end
 

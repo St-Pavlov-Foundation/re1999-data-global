@@ -13,7 +13,7 @@ function var_0_0.onStart(arg_2_0)
 		return
 	end
 
-	if arg_2_0._work.WORKFINISHED then
+	if arg_2_0._work.WORK_IS_FINISHED then
 		arg_2_0:onDone(true)
 
 		return

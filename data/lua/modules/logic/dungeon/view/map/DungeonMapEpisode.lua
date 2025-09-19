@@ -699,6 +699,7 @@ function var_0_0.onDestroyView(arg_51_0)
 	TaskDispatcher.cancelTask(arg_51_0._onCheckVision, arg_51_0)
 	TaskDispatcher.cancelTask(arg_51_0._onEndScroll, arg_51_0)
 	TaskDispatcher.cancelTask(arg_51_0.refreshRoleStoryBg, arg_51_0)
+	TaskDispatcher.cancelTask(arg_51_0._delaySetMask2D, arg_51_0)
 
 	if arg_51_0._unlocksimagecgbg then
 		arg_51_0._unlocksimagecgbg:UnLoadImage()
@@ -734,26 +735,31 @@ function var_0_0._disposeOldLayout(arg_52_0)
 		arg_52_0._oldChapterContent = nil
 	end
 
-	arg_52_0._rectmask2D.enabled = true
+	TaskDispatcher.cancelTask(arg_52_0._delaySetMask2D, arg_52_0)
+	TaskDispatcher.runDelay(arg_52_0._delaySetMask2D, arg_52_0, 0)
 end
 
-function var_0_0._disposeOldBg(arg_53_0)
-	if arg_53_0._prevBgLoader then
-		arg_53_0._prevBgLoader:dispose()
+function var_0_0._delaySetMask2D(arg_53_0)
+	arg_53_0._rectmask2D.enabled = true
+end
 
-		arg_53_0._prevBgLoader = nil
+function var_0_0._disposeOldBg(arg_54_0)
+	if arg_54_0._prevBgLoader then
+		arg_54_0._prevBgLoader:dispose()
+
+		arg_54_0._prevBgLoader = nil
 	end
 
-	if arg_53_0._oldBgGO then
-		gohelper.destroy(arg_53_0._oldBgGO)
+	if arg_54_0._oldBgGO then
+		gohelper.destroy(arg_54_0._oldBgGO)
 
-		arg_53_0._oldBgGO = nil
+		arg_54_0._oldBgGO = nil
 	end
 
-	arg_53_0._oldBgCtrl = nil
+	arg_54_0._oldBgCtrl = nil
 
-	if arg_53_0._bgTweenId then
-		ZProj.TweenHelper.KillById(arg_53_0._bgTweenId)
+	if arg_54_0._bgTweenId then
+		ZProj.TweenHelper.KillById(arg_54_0._bgTweenId)
 	end
 end
 

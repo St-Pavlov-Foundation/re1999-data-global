@@ -3186,7 +3186,7 @@
   },
   {
     "id": 24500032,
-    "eventName": "play_activitystorysfx_diqiu_Paper_feeding",
+    "eventName": "play_activitystorysfx_diqiu_paper_feeding",
     "bankName": "activitystory_diqiu2_4_barcarole_sfx"
   },
   {
@@ -5880,344 +5880,1424 @@
     "bankName": "activity_yuzhou2_7_sfx_part05"
   },
   {
-    "id": 29500001,
-    "eventName": "play_activitysfx_cikexia_athensnoise1_loop",
-    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+    "id": 27500138,
+    "eventName": "play_activitystorysfx_yuzhou_cloth",
+    "bankName": "activitystory_yuzhou2_7_huahuan_sfx"
   },
   {
-    "id": 29500002,
-    "eventName": "play_activitysfx_cikexia_lyre1",
-    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+    "id": 27500139,
+    "eventName": "play_activitysfx_yuzhou_firefly_amb",
+    "bankName": "activity_yuzhou2_7_sfx_fuyong"
   },
   {
-    "id": 29500003,
-    "eventName": "play_activitysfx_cikexia_lyre2",
-    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+    "id": 27500140,
+    "eventName": "play_activitysfx_yuzhou_puppy_whimper",
+    "bankName": "activity_yuzhou2_7_sfx_fuyong"
   },
   {
-    "id": 29500004,
-    "eventName": "play_activitysfx_cikexia_lyre3",
-    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+    "id": 27500141,
+    "eventName": "play_activitysfx_yuzhou_hero3048_04",
+    "bankName": "activity_yuzhou2_7_sfx_fuyong"
   },
   {
-    "id": 29500005,
-    "eventName": "play_activitysfx_cikexia_femalecough",
-    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+    "id": 27500142,
+    "eventName": "play_activitysfx_yuzhou_hero3048_14",
+    "bankName": "activity_yuzhou2_7_sfx_fuyong"
   },
   {
-    "id": 29500006,
-    "eventName": "play_activitysfx_cikexia_coin",
-    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+    "id": 28500001,
+    "eventName": "play_chap10_glass_wipe",
+    "bankName": "prologuechapter_10_part01"
   },
   {
-    "id": 29500007,
-    "eventName": "play_activitysfx_cikexia_femalestep_loop",
-    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+    "id": 28500002,
+    "eventName": "play_chap10_video_play",
+    "bankName": "prologuechapter_10_part01"
   },
   {
-    "id": 29500008,
-    "eventName": "play_activitysfx_cikexia_shortspearstab",
-    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+    "id": 28500003,
+    "eventName": "play_chap10_fangche_scroll",
+    "bankName": "prologuechapter_10_part01"
   },
   {
-    "id": 29500009,
-    "eventName": "play_activitysfx_cikexia_eaglewhoosh",
-    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+    "id": 28500004,
+    "eventName": "play_chap10_boat_near",
+    "bankName": "prologuechapter_10_part01"
   },
   {
-    "id": 29500010,
-    "eventName": "play_activitysfx_cikexia_athensnoise2_loop",
-    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+    "id": 28500005,
+    "eventName": "play_chap10_dock_bang",
+    "bankName": "prologuechapter_10_part01"
   },
   {
-    "id": 29500011,
-    "eventName": "play_activitysfx_cikexia_raspdrop",
-    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+    "id": 28500006,
+    "eventName": "play_chap10_ice_break",
+    "bankName": "prologuechapter_10_part01"
   },
   {
-    "id": 29500012,
-    "eventName": "play_activitysfx_cikexia_earthendrop1",
-    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+    "id": 28500007,
+    "eventName": "play_chap10_kekaozhan_loop",
+    "bankName": "prologuechapter_10_part01"
   },
   {
-    "id": 29500013,
-    "eventName": "play_activitysfx_cikexia_earthendrop2",
-    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+    "id": 28500008,
+    "eventName": "play_chap10_engine_loop",
+    "bankName": "prologuechapter_10_part01"
   },
   {
-    "id": 29500014,
-    "eventName": "play_activitysfx_cikexia_earthendrop3",
-    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+    "id": 28500009,
+    "eventName": "play_chap10_telegraph_fault",
+    "bankName": "prologuechapter_10_part01"
   },
   {
-    "id": 29500015,
-    "eventName": "play_activitysfx_cikexia_earthendrops",
-    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+    "id": 28500010,
+    "eventName": "play_chap10_fluid_eat",
+    "bankName": "prologuechapter_10_part01"
   },
   {
-    "id": 29500016,
-    "eventName": "play_activitysfx_cikexia_leaves",
-    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+    "id": 28500011,
+    "eventName": "play_chap10_crawl_murky",
+    "bankName": "prologuechapter_10_part01"
   },
   {
-    "id": 29500017,
-    "eventName": "play_activitysfx_cikexia_applepick",
-    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+    "id": 28500012,
+    "eventName": "play_chap10_storm_loop",
+    "bankName": "prologuechapter_10_part01"
   },
   {
-    "id": 29500018,
-    "eventName": "play_activitysfx_cikexia_athensnoise3_loop",
-    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+    "id": 28500013,
+    "eventName": "play_chap10_can_scroll",
+    "bankName": "prologuechapter_10_part01"
   },
   {
-    "id": 29500019,
-    "eventName": "play_activitysfx_cikexia_cheer",
-    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+    "id": 28500014,
+    "eventName": "play_chap10_nuodika_moves",
+    "bankName": "prologuechapter_10_part01"
   },
   {
-    "id": 29500020,
-    "eventName": "play_activitysfx_cikexia_tiledestroy",
-    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+    "id": 28500015,
+    "eventName": "play_chap10_can_spilled",
+    "bankName": "prologuechapter_10_part01"
   },
   {
-    "id": 29500021,
-    "eventName": "play_activitysfx_cikexia_tilestep",
-    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+    "id": 28500016,
+    "eventName": "play_chap10_heizhen",
+    "bankName": "prologuechapter_10_part01"
   },
   {
-    "id": 29500022,
-    "eventName": "play_activitysfx_cikexia_swordshing",
-    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+    "id": 28500017,
+    "eventName": "play_chap10_wuerde_walk_loop",
+    "bankName": "prologuechapter_10_part01"
   },
   {
-    "id": 29500023,
-    "eventName": "play_activitysfx_cikexia_eaglehoot",
-    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+    "id": 28500018,
+    "eventName": "play_chap10_altar_loop",
+    "bankName": "prologuechapter_10_part01"
   },
   {
-    "id": 29500024,
-    "eventName": "play_activitysfx_cikexia_fighting",
-    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+    "id": 28500019,
+    "eventName": "play_chap10_altar_passage_loop",
+    "bankName": "prologuechapter_10_part01"
   },
   {
-    "id": 29500025,
-    "eventName": "play_activitysfx_cikexia_swordwhoosh",
-    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+    "id": 28500020,
+    "eventName": "play_chap10_sailing_loop",
+    "bankName": "prologuechapter_10_part01"
   },
   {
-    "id": 29500026,
-    "eventName": "play_activitysfx_cikexia_crowdfled_loop",
-    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+    "id": 28500021,
+    "eventName": "play_chap10_sailing_cabin_loop",
+    "bankName": "prologuechapter_10_part01"
   },
   {
-    "id": 29500027,
-    "eventName": "play_activitysfx_cikexia_malestep",
-    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+    "id": 28500022,
+    "eventName": "play_chap10_battleship_whistle",
+    "bankName": "prologuechapter_10_part01"
   },
   {
-    "id": 29500028,
-    "eventName": "play_activitysfx_cikexia_weaponcollide1",
-    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+    "id": 28500023,
+    "eventName": "play_chap10_liners_bump",
+    "bankName": "prologuechapter_10_part01"
   },
   {
-    "id": 29500029,
-    "eventName": "play_activitysfx_cikexia_weaponcollide2",
-    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+    "id": 28500024,
+    "eventName": "play_chap10_battleship_loop",
+    "bankName": "prologuechapter_10_part01"
   },
   {
-    "id": 29500030,
-    "eventName": "play_activitysfx_cikexia_drawspear",
-    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+    "id": 28500025,
+    "eventName": "play_chap10_torpedo_explode",
+    "bankName": "prologuechapter_10_part01"
   },
   {
-    "id": 29500031,
-    "eventName": "play_activitysfx_cikeshang_dao1",
-    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+    "id": 28500026,
+    "eventName": "play_chap10_monster_scorch",
+    "bankName": "prologuechapter_10_part01"
   },
   {
-    "id": 29500032,
-    "eventName": "play_activitysfx_cikeshang_fstp1",
-    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+    "id": 28500027,
+    "eventName": "play_chap10_battleship_fort",
+    "bankName": "prologuechapter_10_part01"
   },
   {
-    "id": 29500033,
-    "eventName": "play_activitysfx_cikeshang_ke",
-    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+    "id": 28500028,
+    "eventName": "play_chap10_lagong",
+    "bankName": "prologuechapter_10_part01"
   },
   {
-    "id": 29500034,
-    "eventName": "play_activitysfx_cikeshang_dao2",
-    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+    "id": 28500029,
+    "eventName": "play_chap10_laonvren_barefoot",
+    "bankName": "prologuechapter_10_part01"
   },
   {
-    "id": 29500035,
-    "eventName": "play_activitysfx_cikeshang_luodi",
-    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+    "id": 28500030,
+    "eventName": "play_chap10_monster_fell",
+    "bankName": "prologuechapter_10_part01"
   },
   {
-    "id": 29500036,
-    "eventName": "play_activitysfx_cikeshang_dao3",
-    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+    "id": 28500031,
+    "eventName": "play_chap10_engine_hasten",
+    "bankName": "prologuechapter_10_part02"
   },
   {
-    "id": 29500037,
-    "eventName": "play_activitysfx_cikeshang_run",
-    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+    "id": 28500032,
+    "eventName": "play_chap10_serac_jet",
+    "bankName": "prologuechapter_10_part02"
   },
   {
-    "id": 29500038,
-    "eventName": "play_activitysfx_cikeshang_overwall",
-    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+    "id": 28500033,
+    "eventName": "play_chap10_snowmobile_collide",
+    "bankName": "prologuechapter_10_part02"
   },
   {
-    "id": 29500039,
-    "eventName": "play_activitysfx_cikeshang_paoku",
-    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+    "id": 28500034,
+    "eventName": "play_chap10_nuodika_tripped",
+    "bankName": "prologuechapter_10_part02"
   },
   {
-    "id": 29500040,
-    "eventName": "play_activitysfx_cikeshang_jump1",
-    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+    "id": 28500035,
+    "eventName": "play_chap10_heizao_trample",
+    "bankName": "prologuechapter_10_part02"
   },
   {
-    "id": 29500041,
-    "eventName": "play_activitysfx_cikeshang_jump2",
-    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+    "id": 28500036,
+    "eventName": "play_chap10_corpse_breaks",
+    "bankName": "prologuechapter_10_part02"
   },
   {
-    "id": 29500042,
-    "eventName": "play_activitysfx_cikeshang_grass",
-    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+    "id": 28500037,
+    "eventName": "play_chap10_dogsbark_terror",
+    "bankName": "prologuechapter_10_part02"
   },
   {
-    "id": 29500043,
-    "eventName": "play_activitysfx_cikeshang_fall",
-    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+    "id": 28500038,
+    "eventName": "play_chap10_growl_terror",
+    "bankName": "prologuechapter_10_part02"
   },
   {
-    "id": 29500044,
-    "eventName": "play_activitysfx_cikeshang_sing",
-    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+    "id": 28500039,
+    "eventName": "play_chap10_dog_barking",
+    "bankName": "prologuechapter_10_part02"
   },
   {
-    "id": 29500045,
-    "eventName": "play_activitysfx_cikeshang_stretch",
-    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+    "id": 28500040,
+    "eventName": "play_chap10_dog_pursue_loop",
+    "bankName": "prologuechapter_10_part02"
   },
   {
-    "id": 29500046,
-    "eventName": "play_activitysfx_cikeshang_fstp2",
-    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+    "id": 28500041,
+    "eventName": "play_chap10_sanren_snow_loop",
+    "bankName": "prologuechapter_10_part02"
   },
   {
-    "id": 29500047,
-    "eventName": "play_activitysfx_cikeshang_bird",
-    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+    "id": 28500042,
+    "eventName": "play_chap10_liangren_cycle",
+    "bankName": "prologuechapter_10_part02"
   },
   {
-    "id": 29500048,
-    "eventName": "play_activitysfx_cikeshang_kada",
-    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+    "id": 28500043,
+    "eventName": "play_chap10_kekaozhan_bloody_loop",
+    "bankName": "prologuechapter_10_part02"
   },
   {
-    "id": 29500049,
-    "eventName": "play_activitysfx_cikeshang_fstp3",
-    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+    "id": 28500044,
+    "eventName": "play_chap10_kekaozhan_medical_loop",
+    "bankName": "prologuechapter_10_part02"
   },
   {
-    "id": 29500050,
-    "eventName": "play_activitysfx_cikeshang_fstp4",
-    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+    "id": 28500045,
+    "eventName": "play_chap10_food_drew",
+    "bankName": "prologuechapter_10_part02"
   },
   {
-    "id": 29500051,
-    "eventName": "play_activitysfx_cikeshang_moca",
-    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+    "id": 28500046,
+    "eventName": "play_chap10_avalanche",
+    "bankName": "prologuechapter_10_part02"
   },
   {
-    "id": 29500052,
-    "eventName": "play_activitysfx_cikeshang_louti",
-    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+    "id": 28500047,
+    "eventName": "play_chap10_beheld",
+    "bankName": "prologuechapter_10_part02"
   },
   {
-    "id": 29500053,
-    "eventName": "play_activitysfx_cikeshang_liba",
-    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+    "id": 28500048,
+    "eventName": "play_chap10_moto_fire",
+    "bankName": "prologuechapter_10_part02"
   },
   {
-    "id": 29500054,
-    "eventName": "play_activitysfx_cikeshang_dao4",
-    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+    "id": 28500049,
+    "eventName": "play_chap10_pobing_loop",
+    "bankName": "prologuechapter_10_part02"
   },
   {
-    "id": 29500055,
-    "eventName": "play_activitysfx_cikeshang_xu",
-    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+    "id": 28500050,
+    "eventName": "play_chap10_goujiao_poor_loop",
+    "bankName": "prologuechapter_10_part02"
   },
   {
-    "id": 29500056,
-    "eventName": "play_activitysfx_cikeshang_lorentz_amb",
-    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+    "id": 28500051,
+    "eventName": "play_chap10_whistle_long",
+    "bankName": "prologuechapter_10_part02"
   },
   {
-    "id": 29500057,
-    "eventName": "play_activitysfx_cikeshang_keyboard",
-    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+    "id": 28500052,
+    "eventName": "play_chap10_waved",
+    "bankName": "prologuechapter_10_part02"
   },
   {
-    "id": 29500058,
-    "eventName": "play_activitysfx_cikeshang_font_scrolling_01",
-    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+    "id": 28500053,
+    "eventName": "play_chap10_paoxue",
+    "bankName": "prologuechapter_10_part02"
   },
   {
-    "id": 29500059,
-    "eventName": "play_activitysfx_cikeshang_font_scrolling_02",
-    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+    "id": 28500054,
+    "eventName": "play_chap10_dog_run_loop",
+    "bankName": "prologuechapter_10_part02"
   },
   {
-    "id": 29500060,
-    "eventName": "play_activitysfx_cikeshang_computer_beeps",
-    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+    "id": 28500055,
+    "eventName": "play_chap10_shanggou",
+    "bankName": "prologuechapter_10_part02"
   },
   {
-    "id": 29500061,
-    "eventName": "play_activitysfx_cikeshang_rain_transition",
-    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+    "id": 28500056,
+    "eventName": "play_chap10_dog_tuoren_loop",
+    "bankName": "prologuechapter_10_part02"
   },
   {
-    "id": 29500062,
-    "eventName": "play_activitysfx_cikeshang_candlelight",
-    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+    "id": 28500057,
+    "eventName": "play_chap10_gun_loop",
+    "bankName": "prologuechapter_10_part02"
   },
   {
-    "id": 29500063,
-    "eventName": "play_activitysfx_cikeshang_little_person",
-    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+    "id": 28500058,
+    "eventName": "play_chap10_grenades_pull",
+    "bankName": "prologuechapter_10_part02"
   },
   {
-    "id": 29500064,
-    "eventName": "play_activitysfx_cikeshang_knife_cross",
-    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+    "id": 28500059,
+    "eventName": "play_chap10_grenades_homing",
+    "bankName": "prologuechapter_10_part02"
   },
   {
-    "id": 29500065,
-    "eventName": "play_activitysfx_cikeshang_knife_across",
-    "bankName": "activitysfx_cikeshang_s01_sfx_part01"
+    "id": 28500060,
+    "eventName": "play_chap10_handcuffs_show",
+    "bankName": "prologuechapter_10_part02"
   },
   {
-    "id": 29500066,
-    "eventName": "play_activitysfx_cikexia_paint",
-    "bankName": "activitysfx_cikexia_s01_sfx_part01"
+    "id": 28500061,
+    "eventName": "play_chap10_glove_twist",
+    "bankName": "prologuechapter_10_part03"
   },
   {
-    "id": 29500067,
-    "eventName": "play_activitysfx_cikeshang_s01_heartbeat_fast",
-    "bankName": "activitysfx_cikeshang_s01_sfx_fuyong"
+    "id": 28500062,
+    "eventName": "play_chap10_dog_frolic_loop",
+    "bankName": "prologuechapter_10_part03"
   },
   {
-    "id": 29500068,
-    "eventName": "play_activitysfx_cikeshang_s01_whisper_loop",
-    "bankName": "activitysfx_cikeshang_s01_sfx_fuyong"
+    "id": 28500063,
+    "eventName": "play_chap10_dog_sniff",
+    "bankName": "prologuechapter_10_part03"
+  },
+  {
+    "id": 28500064,
+    "eventName": "play_chap10_dog_sure",
+    "bankName": "prologuechapter_10_part03"
+  },
+  {
+    "id": 28500065,
+    "eventName": "play_chap10_rope_pull",
+    "bankName": "prologuechapter_10_part03"
+  },
+  {
+    "id": 28500066,
+    "eventName": "play_chap10_geleisi_linfen",
+    "bankName": "prologuechapter_10_part03"
+  },
+  {
+    "id": 28500067,
+    "eventName": "play_chap10_dog_quickstep",
+    "bankName": "prologuechapter_10_part03"
+  },
+  {
+    "id": 28500068,
+    "eventName": "play_chap10_quanshao_rapid",
+    "bankName": "prologuechapter_10_part03"
+  },
+  {
+    "id": 28500069,
+    "eventName": "play_chap10_maze_loop",
+    "bankName": "prologuechapter_10_part03"
+  },
+  {
+    "id": 28500070,
+    "eventName": "play_chap10_footsteps_haste",
+    "bankName": "prologuechapter_10_part03"
+  },
+  {
+    "id": 28500071,
+    "eventName": "play_chap10_maze_stroll_loop",
+    "bankName": "prologuechapter_10_part03"
+  },
+  {
+    "id": 28500072,
+    "eventName": "play_chap10_magic_carving",
+    "bankName": "prologuechapter_10_part03"
+  },
+  {
+    "id": 28500073,
+    "eventName": "play_chap10_shimen_close",
+    "bankName": "prologuechapter_10_part03"
+  },
+  {
+    "id": 28500074,
+    "eventName": "play_chap10_haizhan_loop",
+    "bankName": "prologuechapter_10_part03"
+  },
+  {
+    "id": 28500075,
+    "eventName": "play_chap10_shipwreck_slow",
+    "bankName": "prologuechapter_10_part03"
+  },
+  {
+    "id": 28500076,
+    "eventName": "play_chap10_battleship_inside_loop",
+    "bankName": "prologuechapter_10_part03"
+  },
+  {
+    "id": 28500077,
+    "eventName": "play_chap10_boat_influent_loop",
+    "bankName": "prologuechapter_10_part03"
+  },
+  {
+    "id": 28500078,
+    "eventName": "play_chap10_handcuffs_open",
+    "bankName": "prologuechapter_10_part03"
+  },
+  {
+    "id": 28500079,
+    "eventName": "play_chap10_trap_collapse",
+    "bankName": "prologuechapter_10_part03"
+  },
+  {
+    "id": 28500080,
+    "eventName": "play_chap10_boulders_bump",
+    "bankName": "prologuechapter_10_part03"
+  },
+  {
+    "id": 28500081,
+    "eventName": "play_chap10_penguin_tweet",
+    "bankName": "prologuechapter_10_part03"
+  },
+  {
+    "id": 28500082,
+    "eventName": "play_chap10_penguin_paraded",
+    "bankName": "prologuechapter_10_part03"
+  },
+  {
+    "id": 28500083,
+    "eventName": "play_chap10_squirrel_footsteps",
+    "bankName": "prologuechapter_10_part03"
+  },
+  {
+    "id": 28500084,
+    "eventName": "play_chap10_gather_whistle",
+    "bankName": "prologuechapter_10_part03"
+  },
+  {
+    "id": 28500085,
+    "eventName": "play_chap10_penguin_sure",
+    "bankName": "prologuechapter_10_part03"
+  },
+  {
+    "id": 28500086,
+    "eventName": "play_chap10_jiaohua",
+    "bankName": "prologuechapter_10_part03"
+  },
+  {
+    "id": 28500087,
+    "eventName": "play_chap10_diyi_whimper",
+    "bankName": "prologuechapter_10_part03"
+  },
+  {
+    "id": 28500088,
+    "eventName": "play_chap10_diyi_darted",
+    "bankName": "prologuechapter_10_part03"
+  },
+  {
+    "id": 28500089,
+    "eventName": "play_chap10_cabin_take",
+    "bankName": "prologuechapter_10_part03"
+  },
+  {
+    "id": 28500090,
+    "eventName": "play_chap10_plane_repair_loop",
+    "bankName": "prologuechapter_10_part03"
+  },
+  {
+    "id": 28500091,
+    "eventName": "play_chap10_baotou_squat",
+    "bankName": "prologuechapter_10_part04"
+  },
+  {
+    "id": 28500092,
+    "eventName": "play_chap10_snow_scratch_1",
+    "bankName": "prologuechapter_10_part04"
+  },
+  {
+    "id": 28500093,
+    "eventName": "play_chap10_snow_scratch_2",
+    "bankName": "prologuechapter_10_part04"
+  },
+  {
+    "id": 28500094,
+    "eventName": "play_chap10_snow_scratch_3",
+    "bankName": "prologuechapter_10_part04"
+  },
+  {
+    "id": 28500095,
+    "eventName": "play_chap10_snow_kick",
+    "bankName": "prologuechapter_10_part04"
+  },
+  {
+    "id": 28500096,
+    "eventName": "play_chap10_snow_cover",
+    "bankName": "prologuechapter_10_part04"
+  },
+  {
+    "id": 28500097,
+    "eventName": "play_chap10_snow_shakeoff",
+    "bankName": "prologuechapter_10_part04"
+  },
+  {
+    "id": 28500098,
+    "eventName": "play_chap10_rattle_loop",
+    "bankName": "prologuechapter_10_part04"
+  },
+  {
+    "id": 28500099,
+    "eventName": "play_chap10_space_wiggle_loop",
+    "bankName": "prologuechapter_10_part04"
+  },
+  {
+    "id": 28500100,
+    "eventName": "play_chap10_sanren_run_loop",
+    "bankName": "prologuechapter_10_part04"
+  },
+  {
+    "id": 28500101,
+    "eventName": "play_chap10_takeoff_strong",
+    "bankName": "prologuechapter_10_part04"
+  },
+  {
+    "id": 28500102,
+    "eventName": "play_chap10_spices_cut",
+    "bankName": "prologuechapter_10_part04"
+  },
+  {
+    "id": 28500103,
+    "eventName": "play_chap10_howling_terror_loop",
+    "bankName": "prologuechapter_10_part04"
+  },
+  {
+    "id": 28500104,
+    "eventName": "play_chap10_clothes_friction",
+    "bankName": "prologuechapter_10_part04"
+  },
+  {
+    "id": 28500105,
+    "eventName": "play_chap10_fangche_slow_loop",
+    "bankName": "prologuechapter_10_part04"
+  },
+  {
+    "id": 28500106,
+    "eventName": "play_chap10_fangche_fast_loop",
+    "bankName": "prologuechapter_10_part04"
+  },
+  {
+    "id": 28500107,
+    "eventName": "play_chap10_fangche_turn_once",
+    "bankName": "prologuechapter_10_part04"
+  },
+  {
+    "id": 28500108,
+    "eventName": "play_chap10_rope_tighten",
+    "bankName": "prologuechapter_10_part04"
+  },
+  {
+    "id": 28500109,
+    "eventName": "play_chap10_helicopter_hovering_loop",
+    "bankName": "prologuechapter_10_part04"
+  },
+  {
+    "id": 28500110,
+    "eventName": "play_chap10_fangche_shiver_loop",
+    "bankName": "prologuechapter_10_part04"
+  },
+  {
+    "id": 28500111,
+    "eventName": "play_chap10_vortex_loop",
+    "bankName": "prologuechapter_10_part04"
+  },
+  {
+    "id": 28500112,
+    "eventName": "play_chap10_spray_loop",
+    "bankName": "prologuechapter_10_part04"
+  },
+  {
+    "id": 28500113,
+    "eventName": "play_chap10_choppy_loop",
+    "bankName": "prologuechapter_10_part04"
+  },
+  {
+    "id": 28500114,
+    "eventName": "play_chap10_record_fault",
+    "bankName": "prologuechapter_10_part04"
+  },
+  {
+    "id": 28500115,
+    "eventName": "play_chap10_bird_fly_loop",
+    "bankName": "prologuechapter_10_part04"
+  },
+  {
+    "id": 28500116,
+    "eventName": "play_chap10_bird_stretch",
+    "bankName": "prologuechapter_10_part04"
+  },
+  {
+    "id": 28500117,
+    "eventName": "play_chap10_person_disappear_loop",
+    "bankName": "prologuechapter_10_part04"
+  },
+  {
+    "id": 28500118,
+    "eventName": "play_chap10_timer_fault_loop",
+    "bankName": "prologuechapter_10_part04"
+  },
+  {
+    "id": 28500119,
+    "eventName": "play_chap10_timer_urgent_loop",
+    "bankName": "prologuechapter_10_part04"
+  },
+  {
+    "id": 28500120,
+    "eventName": "play_chap10_shotguns_down",
+    "bankName": "prologuechapter_10_part05"
+  },
+  {
+    "id": 28500121,
+    "eventName": "play_chap10_overboard_explode",
+    "bankName": "prologuechapter_10_part05"
+  },
+  {
+    "id": 28500122,
+    "eventName": "play_chap10_qingsang",
+    "bankName": "prologuechapter_10_part05"
+  },
+  {
+    "id": 28500123,
+    "eventName": "play_chap10_box_clasp",
+    "bankName": "prologuechapter_10_part05"
+  },
+  {
+    "id": 28500124,
+    "eventName": "play_chap10_feixingguai_roar",
+    "bankName": "prologuechapter_10_part05"
+  },
+  {
+    "id": 28500125,
+    "eventName": "play_chap10_feixingguai_death",
+    "bankName": "prologuechapter_10_part05"
+  },
+  {
+    "id": 28500126,
+    "eventName": "play_chap10_phone_dial_loop",
+    "bankName": "prologuechapter_10_part05"
+  },
+  {
+    "id": 28500127,
+    "eventName": "play_chap10_squirrel_voc_1",
+    "bankName": "prologuechapter_10_part05"
+  },
+  {
+    "id": 28500128,
+    "eventName": "play_chap10_squirrel_voc_2",
+    "bankName": "prologuechapter_10_part05"
+  },
+  {
+    "id": 28500129,
+    "eventName": "play_chap10_squirrel_voc_3",
+    "bankName": "prologuechapter_10_part05"
+  },
+  {
+    "id": 28500130,
+    "eventName": "play_chap10_squirrel_voc_4",
+    "bankName": "prologuechapter_10_part05"
+  },
+  {
+    "id": 28500131,
+    "eventName": "play_chap10_squirrel_voc_5",
+    "bankName": "prologuechapter_10_part05"
+  },
+  {
+    "id": 28500132,
+    "eventName": "play_chap10_squirrel_voc_6",
+    "bankName": "prologuechapter_10_part05"
+  },
+  {
+    "id": 28500133,
+    "eventName": "play_chap10_squirrel_voc_7",
+    "bankName": "prologuechapter_10_part05"
+  },
+  {
+    "id": 28500134,
+    "eventName": "play_chap10_squirrel_voc_8",
+    "bankName": "prologuechapter_10_part05"
+  },
+  {
+    "id": 28500135,
+    "eventName": "play_chap10_squirrel_voc_9",
+    "bankName": "prologuechapter_10_part05"
+  },
+  {
+    "id": 28500136,
+    "eventName": "play_chap10_squirrel_voc_10",
+    "bankName": "prologuechapter_10_part05"
+  },
+  {
+    "id": 28500137,
+    "eventName": "play_chap10_squirrel_voc_11",
+    "bankName": "prologuechapter_10_part05"
+  },
+  {
+    "id": 28500138,
+    "eventName": "play_activitystorysfx_fuleyuan_pummel_loop",
+    "bankName": "activitystory_fuleyuan2_8_yishi_kanjila_sfx"
+  },
+  {
+    "id": 28500139,
+    "eventName": "play_activitystorysfx_fuleyuan_truck_ignition",
+    "bankName": "activitystory_fuleyuan2_8_yishi_kanjila_sfx"
+  },
+  {
+    "id": 28500140,
+    "eventName": "play_activitystorysfx_fuleyuan_truck_success",
+    "bankName": "activitystory_fuleyuan2_8_yishi_kanjila_sfx"
+  },
+  {
+    "id": 28500141,
+    "eventName": "play_activitystorysfx_fuleyuan_truck_driving_loop",
+    "bankName": "activitystory_fuleyuan2_8_yishi_kanjila_sfx"
+  },
+  {
+    "id": 28500142,
+    "eventName": "play_activitystorysfx_fuleyuan_truck_stop",
+    "bankName": "activitystory_fuleyuan2_8_yishi_kanjila_sfx"
+  },
+  {
+    "id": 28500143,
+    "eventName": "play_activitystorysfx_fuleyuan_truck_idling_loop",
+    "bankName": "activitystory_fuleyuan2_8_yishi_kanjila_sfx"
+  },
+  {
+    "id": 28500144,
+    "eventName": "play_activitystorysfx_fuleyuan_truck_flip_fall",
+    "bankName": "activitystory_fuleyuan2_8_yishi_kanjila_sfx"
+  },
+  {
+    "id": 28500145,
+    "eventName": "play_activitystorysfx_fuleyuan_truck_bump",
+    "bankName": "activitystory_fuleyuan2_8_yishi_kanjila_sfx"
+  },
+  {
+    "id": 28500146,
+    "eventName": "play_activitystorysfx_fuleyuan_truck_door",
+    "bankName": "activitystory_fuleyuan2_8_yishi_kanjila_sfx"
+  },
+  {
+    "id": 28500147,
+    "eventName": "play_activitystorysfx_fuleyuan_knife_insert",
+    "bankName": "activitystory_fuleyuan2_8_yishi_kanjila_sfx"
+  },
+  {
+    "id": 28500148,
+    "eventName": "play_activitystorysfx_fuleyuan_train_jump",
+    "bankName": "activitystory_fuleyuan2_8_yishi_kanjila_sfx"
+  },
+  {
+    "id": 28500149,
+    "eventName": "play_activitystorysfx_fuleyuan_yingdi_lp",
+    "bankName": "activitystory_fuleyuan2_8_molide_sfx"
+  },
+  {
+    "id": 28500150,
+    "eventName": "play_activitystorysfx_fuleyuan_liekai",
+    "bankName": "activitystory_fuleyuan2_8_molide_sfx"
+  },
+  {
+    "id": 28500151,
+    "eventName": "play_activitystorysfx_fuleyuan_animal",
+    "bankName": "activitystory_fuleyuan2_8_molide_sfx"
+  },
+  {
+    "id": 28500152,
+    "eventName": "play_activitystorysfx_fuleyuan_gun",
+    "bankName": "activitystory_fuleyuan2_8_molide_sfx"
+  },
+  {
+    "id": 28500153,
+    "eventName": "play_activitystorysfx_fuleyuan_dayun",
+    "bankName": "activitystory_fuleyuan2_8_molide_sfx"
+  },
+  {
+    "id": 28500154,
+    "eventName": "play_activitystorysfx_fuleyuan_shengzi",
+    "bankName": "activitystory_fuleyuan2_8_molide_sfx"
+  },
+  {
+    "id": 28500155,
+    "eventName": "play_activitystorysfx_fuleyuan_tent",
+    "bankName": "activitystory_fuleyuan2_8_molide_sfx"
+  },
+  {
+    "id": 28500156,
+    "eventName": "play_activitystorysfx_fuleyuan_fstp",
+    "bankName": "activitystory_fuleyuan2_8_molide_sfx"
+  },
+  {
+    "id": 28500157,
+    "eventName": "play_activitystorysfx_fuleyuan_tail",
+    "bankName": "activitystory_fuleyuan2_8_molide_sfx"
+  },
+  {
+    "id": 28500158,
+    "eventName": "play_activitystorysfx_fuleyuan_snow",
+    "bankName": "activitystory_fuleyuan2_8_molide_sfx"
+  },
+  {
+    "id": 28500159,
+    "eventName": "play_activitystorysfx_fuleyuan_ogre_lp",
+    "bankName": "activitystory_fuleyuan2_8_molide_sfx"
+  },
+  {
+    "id": 28500160,
+    "eventName": "play_activitystorysfx_fuleyuan_drag",
+    "bankName": "activitystory_fuleyuan2_8_molide_sfx"
+  },
+  {
+    "id": 28500161,
+    "eventName": "play_activitystorysfx_fuleyuan_cut",
+    "bankName": "activitystory_fuleyuan2_8_molide_sfx"
+  },
+  {
+    "id": 28500162,
+    "eventName": "play_activitystorysfx_fuleyuan_ice",
+    "bankName": "activitystory_fuleyuan2_8_molide_sfx"
+  },
+  {
+    "id": 28500163,
+    "eventName": "play_activitystorysfx_fuleyuan_shake",
+    "bankName": "activitystory_fuleyuan2_8_molide_sfx"
+  },
+  {
+    "id": 28500164,
+    "eventName": "play_activitystorysfx_fuleyuan_talkie",
+    "bankName": "activitystory_fuleyuan2_8_molide_sfx"
+  },
+  {
+    "id": 28500165,
+    "eventName": "play_activitystorysfx_fuleyuan_penguin1",
+    "bankName": "activitystory_fuleyuan2_8_molide_sfx"
+  },
+  {
+    "id": 28500166,
+    "eventName": "play_activitystorysfx_fuleyuan_penguin2",
+    "bankName": "activitystory_fuleyuan2_8_molide_sfx"
+  },
+  {
+    "id": 28500167,
+    "eventName": "play_activitystorysfx_fuleyuan_penguin3",
+    "bankName": "activitystory_fuleyuan2_8_molide_sfx"
+  },
+  {
+    "id": 28500168,
+    "eventName": "play_activitystorysfx_fuleyuan_penguin4",
+    "bankName": "activitystory_fuleyuan2_8_molide_sfx"
+  },
+  {
+    "id": 28500169,
+    "eventName": "play_activitystorysfx_fuleyuan_penguin5",
+    "bankName": "activitystory_fuleyuan2_8_molide_sfx"
+  },
+  {
+    "id": 28500170,
+    "eventName": "play_activitystorysfx_fuleyuan_penguin6",
+    "bankName": "activitystory_fuleyuan2_8_molide_sfx"
+  },
+  {
+    "id": 28500171,
+    "eventName": "play_activitystorysfx_fuleyuan_penguin7_lp",
+    "bankName": "activitystory_fuleyuan2_8_molide_sfx"
+  },
+  {
+    "id": 28500172,
+    "eventName": "play_activitystorysfx_fuleyuan_crawl",
+    "bankName": "activitystory_fuleyuan2_8_molide_sfx"
+  },
+  {
+    "id": 28500173,
+    "eventName": "play_activitystorysfx_fuleyuan_run_gasp_reverb",
+    "bankName": "activitystory_fuleyuan2_8_nuodika_sfx"
+  },
+  {
+    "id": 28500174,
+    "eventName": "play_activitystorysfx_fuleyuan_run_gasp",
+    "bankName": "activitystory_fuleyuan2_8_nuodika_sfx"
+  },
+  {
+    "id": 28500175,
+    "eventName": "play_activitystorysfx_fuleyuan_rest_gasp",
+    "bankName": "activitystory_fuleyuan2_8_nuodika_sfx"
+  },
+  {
+    "id": 28500176,
+    "eventName": "play_activitystorysfx_fuleyuan_single_slide",
+    "bankName": "activitystory_fuleyuan2_8_nuodika_sfx"
+  },
+  {
+    "id": 28500177,
+    "eventName": "play_activitystorysfx_fuleyuan_double_slide",
+    "bankName": "activitystory_fuleyuan2_8_nuodika_sfx"
+  },
+  {
+    "id": 28500178,
+    "eventName": "play_activitystorysfx_fuleyuan_moose_gasp",
+    "bankName": "activitystory_fuleyuan2_8_nuodika_sfx"
+  },
+  {
+    "id": 28500179,
+    "eventName": "play_activitystorysfx_fuleyuan_daoshui",
+    "bankName": "activitystory_fuleyuan2_8_nuodika_sfx"
+  },
+  {
+    "id": 28500180,
+    "eventName": "play_activitystorysfx_fuleyuan_animal_drink",
+    "bankName": "activitystory_fuleyuan2_8_nuodika_sfx"
+  },
+  {
+    "id": 28500181,
+    "eventName": "play_activitystorysfx_fuleyuan_deer_roar",
+    "bankName": "activitystory_fuleyuan2_8_nuodika_sfx"
+  },
+  {
+    "id": 28500182,
+    "eventName": "play_activitystorysfx_fuleyuan_deer_roar_reverb",
+    "bankName": "activitystory_fuleyuan2_8_nuodika_sfx"
+  },
+  {
+    "id": 28500183,
+    "eventName": "play_activitystorysfx_fuleyuan_load_walk",
+    "bankName": "activitystory_fuleyuan2_8_nuodika_sfx"
+  },
+  {
+    "id": 28500184,
+    "eventName": "play_activitystorysfx_fuleyuan_deer_walk_loop",
+    "bankName": "activitystory_fuleyuan2_8_nuodika_sfx"
+  },
+  {
+    "id": 28500185,
+    "eventName": "play_activitystorysfx_fuleyuan_deer_pull",
+    "bankName": "activitystory_fuleyuan2_8_nuodika_sfx"
+  },
+  {
+    "id": 28500186,
+    "eventName": "play_activitystorysfx_fuleyuan_deer_circle",
+    "bankName": "activitystory_fuleyuan2_8_nuodika_sfx"
+  },
+  {
+    "id": 28500187,
+    "eventName": "play_activitystorysfx_fuleyuan_deer_jump",
+    "bankName": "activitystory_fuleyuan2_8_nuodika_sfx"
+  },
+  {
+    "id": 28500188,
+    "eventName": "play_activitystorysfx_fuleyuan_candle_quenching",
+    "bankName": "activitystory_fuleyuan2_8_nuodika_sfx"
+  },
+  {
+    "id": 28500189,
+    "eventName": "play_activitystorysfx_fuleyuan_sled_ready_loop",
+    "bankName": "activitystory_fuleyuan2_8_nuodika_sfx"
+  },
+  {
+    "id": 28500190,
+    "eventName": "play_activitystorysfx_fuleyuan_flag_lift",
+    "bankName": "activitystory_fuleyuan2_8_nuodika_sfx"
+  },
+  {
+    "id": 28500191,
+    "eventName": "play_activitystorysfx_fuleyuan_whistle_start",
+    "bankName": "activitystory_fuleyuan2_8_nuodika_sfx"
+  },
+  {
+    "id": 28500192,
+    "eventName": "play_activitystorysfx_fuleyuan_race_start",
+    "bankName": "activitystory_fuleyuan2_8_nuodika_sfx"
+  },
+  {
+    "id": 28500193,
+    "eventName": "play_activitystorysfx_fuleyuan_wind_loop",
+    "bankName": "activitystory_fuleyuan2_8_nuodika_sfx"
+  },
+  {
+    "id": 28500194,
+    "eventName": "play_activitystorysfx_fuleyuan_skiing_loop",
+    "bankName": "activitystory_fuleyuan2_8_nuodika_sfx"
+  },
+  {
+    "id": 28500195,
+    "eventName": "play_activitystorysfx_fuleyuan_deer_run_loop",
+    "bankName": "activitystory_fuleyuan2_8_nuodika_sfx"
+  },
+  {
+    "id": 28500196,
+    "eventName": "play_activitystorysfx_fuleyuan_trees_rush",
+    "bankName": "activitystory_fuleyuan2_8_nuodika_sfx"
+  },
+  {
+    "id": 28500197,
+    "eventName": "play_activitystorysfx_fuleyuan_cliff_rush",
+    "bankName": "activitystory_fuleyuan2_8_nuodika_sfx"
+  },
+  {
+    "id": 28500198,
+    "eventName": "play_activitystorysfx_fuleyuan_cliff_fall",
+    "bankName": "activitystory_fuleyuan2_8_nuodika_sfx"
+  },
+  {
+    "id": 28500199,
+    "eventName": "play_activitystorysfx_fuleyuan_sled_forest_loop",
+    "bankName": "activitystory_fuleyuan2_8_nuodika_sfx"
+  },
+  {
+    "id": 28500200,
+    "eventName": "play_activitystorysfx_fuleyuan_xueshan_loop",
+    "bankName": "activitystory_fuleyuan2_8_nuodika_sfx"
+  },
+  {
+    "id": 28500201,
+    "eventName": "play_activitystorysfx_fuleyuan_snow_walk_loop",
+    "bankName": "activitystory_fuleyuan2_8_nuodika_sfx"
+  },
+  {
+    "id": 28500202,
+    "eventName": "play_activitystorysfx_fuleyuan_vomit",
+    "bankName": "activitystory_fuleyuan2_8_nuodika_sfx"
+  },
+  {
+    "id": 28500203,
+    "eventName": "play_chap10_ke",
+    "bankName": "prologuechapter_10_part05"
+  },
+  {
+    "id": 28500204,
+    "eventName": "play_chap10_knock_rock",
+    "bankName": "prologuechapter_10_part05"
+  },
+  {
+    "id": 28500205,
+    "eventName": "play_chap10_woodcrutch",
+    "bankName": "prologuechapter_10_part05"
+  },
+  {
+    "id": 28500206,
+    "eventName": "play_chap10_gasp_loop",
+    "bankName": "prologuechapter_10_part05"
+  },
+  {
+    "id": 28500207,
+    "eventName": "play_chap10_diqiu_opening_hatch",
+    "bankName": "prologuechapter_10_fuyong"
+  },
+  {
+    "id": 28500208,
+    "eventName": "play_chap10_diqiu_metal_collision",
+    "bankName": "prologuechapter_10_fuyong"
+  },
+  {
+    "id": 28500209,
+    "eventName": "play_chap10_diqiu_poison_arrow",
+    "bankName": "prologuechapter_10_fuyong"
+  },
+  {
+    "id": 28500210,
+    "eventName": "play_chap10_tangren_bag_turn",
+    "bankName": "prologuechapter_10_fuyong"
+  },
+  {
+    "id": 28500211,
+    "eventName": "play_chap10_diqiu_switch",
+    "bankName": "prologuechapter_10_fuyong"
+  },
+  {
+    "id": 28500212,
+    "eventName": "play_chap10_diqiu_tutu_mystique",
+    "bankName": "prologuechapter_10_fuyong"
+  },
+  {
+    "id": 28500213,
+    "eventName": "play_chap10_tangren_printer_button",
+    "bankName": "prologuechapter_10_fuyong"
+  },
+  {
+    "id": 28500214,
+    "eventName": "play_chap10_tangren_printing_paper",
+    "bankName": "prologuechapter_10_fuyong"
+  },
+  {
+    "id": 28500215,
+    "eventName": "play_chap10_shenghuo_towel_wipe",
+    "bankName": "prologuechapter_10_fuyong"
+  },
+  {
+    "id": 28500216,
+    "eventName": "play_chap10_yuzhou_snow_lp",
+    "bankName": "prologuechapter_10_fuyong"
+  },
+  {
+    "id": 28500217,
+    "eventName": "play_chap10_yuzhou_patted",
+    "bankName": "prologuechapter_10_fuyong"
+  },
+  {
+    "id": 28500218,
+    "eventName": "play_chap10_yuzhou_wind1",
+    "bankName": "prologuechapter_10_fuyong"
+  },
+  {
+    "id": 28500219,
+    "eventName": "play_chap10_yuzhou_switch",
+    "bankName": "prologuechapter_10_fuyong"
+  },
+  {
+    "id": 28500220,
+    "eventName": "play_chap10_wenming_heartbeat_slow",
+    "bankName": "prologuechapter_10_fuyong"
+  },
+  {
+    "id": 28500221,
+    "eventName": "play_chap10_wenming_heartbeat_fast",
+    "bankName": "prologuechapter_10_fuyong"
+  },
+  {
+    "id": 28500222,
+    "eventName": "play_chap10_yuzhou_fall_gem",
+    "bankName": "prologuechapter_10_fuyong"
+  },
+  {
+    "id": 28500223,
+    "eventName": "play_activitystorysfx_fuleyuan_sai",
+    "bankName": "activitystory_fuleyuan2_8_nuodika_sfx"
+  },
+  {
+    "id": 28500224,
+    "eventName": "play_activitystorysfx_fuleyuan_ftstep2_lp",
+    "bankName": "activitystory_fuleyuan2_8_nuodika_sfx"
+  },
+  {
+    "id": 28500225,
+    "eventName": "play_activitystorysfx_fuleyuan_tumble",
+    "bankName": "activitystory_fuleyuan2_8_nuodika_sfx"
+  },
+  {
+    "id": 28500226,
+    "eventName": "play_activitystorysfx_fuleyuan_footsteps2",
+    "bankName": "activitystory_fuleyuan2_8_nuodika_sfx"
+  },
+  {
+    "id": 28500227,
+    "eventName": "play_activitystorysfx_fuleyuan_footsteps3",
+    "bankName": "activitystory_fuleyuan2_8_nuodika_sfx"
+  },
+  {
+    "id": 28500228,
+    "eventName": "play_chap10_mosidianma_1",
+    "bankName": "prologuechapter_10_part05"
+  },
+  {
+    "id": 28500229,
+    "eventName": "play_chap10_mosidianma_2",
+    "bankName": "prologuechapter_10_part05"
+  },
+  {
+    "id": 28500230,
+    "eventName": "play_chap10_mosidianma_3",
+    "bankName": "prologuechapter_10_part05"
+  },
+  {
+    "id": 28500231,
+    "eventName": "play_chap10_mosidianma_slow",
+    "bankName": "prologuechapter_10_part05"
+  },
+  {
+    "id": 28500232,
+    "eventName": "play_chap10_cable_electron_loop",
+    "bankName": "prologuechapter_10_part05"
+  },
+  {
+    "id": 28500233,
+    "eventName": "play_chap10_cable_loop",
+    "bankName": "prologuechapter_10_part05"
+  },
+  {
+    "id": 28500234,
+    "eventName": "play_chap10_cable_terror_loop",
+    "bankName": "prologuechapter_10_part05"
+  },
+  {
+    "id": 28500235,
+    "eventName": "play_chap10_open_umbrella",
+    "bankName": "prologuechapter_10_part05"
+  },
+  {
+    "id": 28500236,
+    "eventName": "play_chap10_open_umbrella_group",
+    "bankName": "prologuechapter_10_part05"
+  },
+  {
+    "id": 28500237,
+    "eventName": "play_chap10_jianxie_1",
+    "bankName": "prologuechapter_10_part06"
+  },
+  {
+    "id": 28500238,
+    "eventName": "play_chap10_jianxie_2",
+    "bankName": "prologuechapter_10_part06"
+  },
+  {
+    "id": 28500239,
+    "eventName": "play_chap10_snowmobile_loop",
+    "bankName": "prologuechapter_10_part06"
+  },
+  {
+    "id": 28500240,
+    "eventName": "play_chap10_guihuo_1_loop",
+    "bankName": "prologuechapter_10_part06"
+  },
+  {
+    "id": 28500241,
+    "eventName": "play_chap10_guihuo_2",
+    "bankName": "prologuechapter_10_part06"
+  },
+  {
+    "id": 28500242,
+    "eventName": "play_chap10_guihuo_2_loop",
+    "bankName": "prologuechapter_10_part06"
+  },
+  {
+    "id": 28500243,
+    "eventName": "play_chap10_alchemy_2",
+    "bankName": "prologuechapter_10_part06"
+  },
+  {
+    "id": 28500244,
+    "eventName": "play_chap10_venom",
+    "bankName": "prologuechapter_10_part06"
+  },
+  {
+    "id": 28500245,
+    "eventName": "play_chap10_drizzle_loop",
+    "bankName": "prologuechapter_10_part06"
+  },
+  {
+    "id": 28500246,
+    "eventName": "play_chap10_liweitan_neigh",
+    "bankName": "prologuechapter_10_part06"
+  },
+  {
+    "id": 28500247,
+    "eventName": "play_chap10_magenusi_neigh",
+    "bankName": "prologuechapter_10_part06"
+  },
+  {
+    "id": 28500248,
+    "eventName": "play_chap10_monster_roar",
+    "bankName": "prologuechapter_10_part06"
+  },
+  {
+    "id": 28500249,
+    "eventName": "play_chap10_nuodika_revive",
+    "bankName": "prologuechapter_10_part06"
+  },
+  {
+    "id": 28500250,
+    "eventName": "play_chap10_radar_1_loop",
+    "bankName": "prologuechapter_10_part06"
+  },
+  {
+    "id": 28500251,
+    "eventName": "play_chap10_radar_2_loop",
+    "bankName": "prologuechapter_10_part06"
+  },
+  {
+    "id": 28500252,
+    "eventName": "play_chap10_radar_alert_loop",
+    "bankName": "prologuechapter_10_part06"
+  },
+  {
+    "id": 28500253,
+    "eventName": "play_chap10_screen_freeze",
+    "bankName": "prologuechapter_10_part06"
+  },
+  {
+    "id": 28500254,
+    "eventName": "play_chap10_snowslide_1",
+    "bankName": "prologuechapter_10_part06"
+  },
+  {
+    "id": 28500255,
+    "eventName": "play_chap10_snowslide_2",
+    "bankName": "prologuechapter_10_part06"
+  },
+  {
+    "id": 28500256,
+    "eventName": "play_chap10_moths",
+    "bankName": "prologuechapter_10_part06"
+  },
+  {
+    "id": 28500257,
+    "eventName": "play_chap10_moths_pack",
+    "bankName": "prologuechapter_10_part06"
+  },
+  {
+    "id": 28500258,
+    "eventName": "play_chap10_linfen_loop",
+    "bankName": "prologuechapter_10_part06"
+  },
+  {
+    "id": 28500259,
+    "eventName": "play_chap10_jinxian_loop",
+    "bankName": "prologuechapter_10_part06"
+  },
+  {
+    "id": 28500260,
+    "eventName": "play_chap10_jinxian_1_loop",
+    "bankName": "prologuechapter_10_part06"
+  },
+  {
+    "id": 28500261,
+    "eventName": "play_chap10_mucous_slow",
+    "bankName": "prologuechapter_10_part06"
+  },
+  {
+    "id": 28500262,
+    "eventName": "play_chap10_kaimen_slow",
+    "bankName": "prologuechapter_10_part06"
+  },
+  {
+    "id": 28500263,
+    "eventName": "play_chap10_diqiu_grace_attack",
+    "bankName": "prologuechapter_10_fuyong"
+  },
+  {
+    "id": 28500264,
+    "eventName": "play_chap10_tangren_bell_shortness_loop",
+    "bankName": "prologuechapter_10_fuyong"
+  },
+  {
+    "id": 28500265,
+    "eventName": "play_chap10_diqiu_dada",
+    "bankName": "prologuechapter_10_fuyong"
+  },
+  {
+    "id": 28500266,
+    "eventName": "play_chap10_wenming_pace_loop",
+    "bankName": "prologuechapter_10_fuyong"
+  },
+  {
+    "id": 28500267,
+    "eventName": "play_chap10_diqiu_liquid_spatter",
+    "bankName": "prologuechapter_10_fuyong"
+  },
+  {
+    "id": 28500268,
+    "eventName": "play_chap10_diqiu_whispering",
+    "bankName": "prologuechapter_10_fuyong"
+  },
+  {
+    "id": 28500269,
+    "eventName": "play_chap10_yuzhou_fstp_snow",
+    "bankName": "prologuechapter_10_fuyong"
+  },
+  {
+    "id": 28500270,
+    "eventName": "play_chap10_yuzhou_moca",
+    "bankName": "prologuechapter_10_fuyong"
+  },
+  {
+    "id": 28500271,
+    "eventName": "play_chap10_yuzhou_huxi1_lp",
+    "bankName": "prologuechapter_10_fuyong"
+  },
+  {
+    "id": 28500272,
+    "eventName": "play_activitystory_yishi2_5_kongnaodai_footsteps",
+    "bankName": "activitystorysfx_tangren2_5yishi_fuyong"
+  },
+  {
+    "id": 28500273,
+    "eventName": "play_activitystory_yishi2_5_plane_landing",
+    "bankName": "activitystorysfx_tangren2_5yishi_fuyong"
+  },
+  {
+    "id": 28500274,
+    "eventName": "play_activitystory_yishi2_5_lily_guaixiao",
+    "bankName": "activitystorysfx_tangren2_5yishi_fuyong"
+  },
+  {
+    "id": 28500275,
+    "eventName": "play_activitystory_yishi2_5_movieset_loop",
+    "bankName": "activitystorysfx_tangren2_5yishi_fuyong"
+  },
+  {
+    "id": 28500276,
+    "eventName": "play_activitystory_yishi2_5_cough_mask",
+    "bankName": "activitystorysfx_tangren2_5yishi_fuyong"
+  },
+  {
+    "id": 28500277,
+    "eventName": "play_activitystory_yishi2_5_image_roar",
+    "bankName": "activitystorysfx_tangren2_5yishi_fuyong"
+  },
+  {
+    "id": 28500278,
+    "eventName": "play_activitystory_yishi2_5_street_loop",
+    "bankName": "activitystorysfx_tangren2_5yishi_fuyong"
+  },
+  {
+    "id": 28500279,
+    "eventName": "play_activitystory_yishi2_6_moving_loop",
+    "bankName": "activitystorysfx_wenming2_6yishi_fuyong"
   },
   {
     "id": 530053,
@@ -6335,11 +7415,6 @@
     "bankName": "activity2_1_music"
   },
   {
-    "id": 25530001,
-    "eventName": "",
-    "bankName": ""
-  },
-  {
     "id": 25530002,
     "eventName": "play_activitymusic_intofilm_2_5",
     "bankName": "activity2_5_music"
@@ -6391,38 +7466,63 @@
   },
   {
     "id": 27530004,
-    "eventName": "play_battle_yuzhou_2_7_normalfight",
+    "eventName": "play_battle_2_7_normalfight_combatlist",
     "bankName": "activtiy_yuzhou_combataudio"
   },
   {
-    "id": 29530001,
-    "eventName": "play_activitymusic_theme_s01_cikeshang",
-    "bankName": "firsthalf_cikeshang_music"
+    "id": 28530001,
+    "eventName": "play_activitymusic_theme_2_8",
+    "bankName": "activity2_8_music"
   },
   {
-    "id": 29530002,
-    "eventName": "play_activitymusic_plot_s01_cikeshang",
-    "bankName": "firsthalf_cikeshang_music"
+    "id": 28530002,
+    "eventName": "play_activitymusic_prologuetheme_2_8",
+    "bankName": "activity2_8_music"
   },
   {
-    "id": 29530003,
-    "eventName": "play_activitymusic_theme_s01_cikexia",
-    "bankName": "secondhalf_cikexia_music"
+    "id": 28530003,
+    "eventName": "play_activitymusic_lullaby_harp_2_8",
+    "bankName": "activity2_8_music"
   },
   {
-    "id": 29530004,
-    "eventName": "play_activitymusic_plot_s01_cikexia",
-    "bankName": "secondhalf_cikexia_music"
+    "id": 28530004,
+    "eventName": "play_activitymusic_wenxin1_2_8",
+    "bankName": "activity2_8_music"
   },
   {
-    "id": 29530005,
-    "eventName": "play_activitymusic_celebration_s01_cikexia",
-    "bankName": "secondhalf_cikexia_music"
+    "id": 28530005,
+    "eventName": "play_activitymusic_wenxin2_2_8",
+    "bankName": "activity2_8_music"
   },
   {
-    "id": 29530006,
-    "eventName": "play_activitymusic_ac2_s01_cikeshang",
-    "bankName": "firsthalf_cikeshang_music"
+    "id": 28530006,
+    "eventName": "play_activitymusic_wenxin_2_8",
+    "bankName": "activity2_8_music"
+  },
+  {
+    "id": 28530007,
+    "eventName": "play_activitymusic_sacrifice_2_8",
+    "bankName": "activity2_8_music"
+  },
+  {
+    "id": 28530008,
+    "eventName": "play_activitymusic_crazymountains_2_8",
+    "bankName": "activity2_8_music"
+  },
+  {
+    "id": 28530009,
+    "eventName": "play_activitymusic_aroepvocal_2_8",
+    "bankName": "plot_music_aroep_2_8"
+  },
+  {
+    "id": 28530010,
+    "eventName": "play_activitymusic_aroepguitar_2_8",
+    "bankName": "plot_music_aroep_2_8"
+  },
+  {
+    "id": 28530011,
+    "eventName": "play_activitymusic_aroep_2_8",
+    "bankName": "plot_music_aroep_2_8"
   },
   {
     "id": 520105,
@@ -6725,58 +7825,73 @@
     "bankName": "activity_yuzhou2_7_sfx"
   },
   {
-    "id": 29520000,
-    "eventName": "play_cike_s01_pv_sfx_vo_music",
-    "bankName": "cikeshangs01_cutscene_sfx_vo"
+    "id": 27520004,
+    "eventName": "play_yuzhou2_7_cutscene_ending",
+    "bankName": "yuzhou2_7_cutscene_sfx_vo"
   },
   {
-    "id": 29520001,
-    "eventName": "play_cikeshangs01_cutscene_florence_spring_sfx",
-    "bankName": "cikeshangs01_cutscene_sfx_vo"
+    "id": 27520005,
+    "eventName": "play_yuzhou2_7_cutscene_opening",
+    "bankName": "yuzhou2_7_cutscene_sfx_vo"
   },
   {
-    "id": 29520002,
-    "eventName": "play_cikexias01_cutscene_jinpingguo_sfx_vo",
-    "bankName": "cikexias01_cutscene_sfx_vo"
+    "id": 27520006,
+    "eventName": "play_yuzhou2_7_cutscene_bossfought_sfx_vo",
+    "bankName": "yuzhou2_7_cutscene_sfx_vo"
   },
   {
-    "id": 29520003,
-    "eventName": "play_cikeshangs01_cutscene_ezio_broke_sfx",
-    "bankName": "cikeshangs01_cutscene_sfx_vo"
+    "id": 27520007,
+    "eventName": "play_yuzhou2_7_cutscene_transfer",
+    "bankName": "yuzhou2_7_cutscene_sfx_vo"
   },
   {
-    "id": 29520004,
-    "eventName": "play_cikexias01_cutscene_sibsfight_sfx_vo",
-    "bankName": "cikexias01_cutscene_sfx_vo"
+    "id": 27520008,
+    "eventName": "play_yuzhou2_7_pv_sfx_vo_music",
+    "bankName": "yuzhou2_7_cutscene_sfx_vo"
   },
   {
-    "id": 29520005,
-    "eventName": "play_activitysfx_cikeshang_chapter_open",
-    "bankName": "activitysfx_cikeshang_s01_sfx"
+    "id": 28520001,
+    "eventName": "play_chap10_chapter_big_open",
+    "bankName": "prologuechapter_10_sfx"
   },
   {
-    "id": 29520006,
-    "eventName": "play_activitysfx_cikeshang_subsection_open",
-    "bankName": "activitysfx_cikeshang_s01_sfx"
+    "id": 28520002,
+    "eventName": "play_plotpvsfx_aerkanarevive_chap10",
+    "bankName": "prologuechapter_10_cutscene"
   },
   {
-    "id": 29520007,
-    "eventName": "play_activitysfx_cikeshang_chapter_continue",
-    "bankName": "activitysfx_cikeshang_s01_sfx"
+    "id": 28520003,
+    "eventName": "play_plotpvsfx_1_0_plot_editing_chap10",
+    "bankName": "prologuechapter_10_cutscene"
   },
   {
-    "id": 29520008,
-    "eventName": "play_activitysfx_cikexia_chapter_open",
-    "bankName": "activitysfx_cikexia_s01_sfx"
+    "id": 28520004,
+    "eventName": "play_plotpvsfx_lullaby_chap10",
+    "bankName": "prologuechapter_10_cutscene"
   },
   {
-    "id": 29520009,
-    "eventName": "play_activitysfx_cikexia_subsection_open",
-    "bankName": "activitysfx_cikexia_s01_sfx"
+    "id": 28520005,
+    "eventName": "play_plotpvsfxvo_aerkanarevive_chap10",
+    "bankName": "prologuechapter_10_cutscene"
   },
   {
-    "id": 29520010,
-    "eventName": "play_activitysfx_cikexia_chapter_continue",
-    "bankName": "activitysfx_cikexia_s01_sfx"
+    "id": 28520006,
+    "eventName": "play_fuleyuan2_8_pv_sfx_vo_music",
+    "bankName": "fuleyuan2_8_cutscene_sfx_vo"
+  },
+  {
+    "id": 28520007,
+    "eventName": "play_plotpvsfx_wuerde_chap10",
+    "bankName": "prologuechapter_10_cutscene"
+  },
+  {
+    "id": 28520008,
+    "eventName": "play_plotpvsfx_ulde_sacrifice_chap10",
+    "bankName": "prologuechapter_10_cutscene"
+  },
+  {
+    "id": 28520009,
+    "eventName": "play_plotpvsfx_nuodika_chap10",
+    "bankName": "prologuechapter_10_cutscene"
   }
 ]

@@ -11,7 +11,7 @@ end
 function var_0_0.onStart(arg_2_0)
 	local var_2_0 = arg_2_0:com_registWorkDoneFlowSequence()
 
-	var_2_0:addWork(Work2FightWork.New(FightWorkEffectDeadNew, arg_2_0.fightStepData, arg_2_0.actEffectData, arg_2_0._waitForLastHit))
+	var_2_0:registWork(FightWorkEffectDeadNew, arg_2_0.fightStepData, arg_2_0.actEffectData, arg_2_0._waitForLastHit)
 
 	if FightModel.instance:getVersion() < 1 and arg_2_0.actEffectData and arg_2_0.actEffectData.targetId then
 		var_2_0:addWork(Work2FightWork.New(FightWorkDissolveCardForDeadVersion0, arg_2_0.actEffectData))

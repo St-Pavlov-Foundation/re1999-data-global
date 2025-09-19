@@ -81,6 +81,18 @@ function var_0_0.onConstructor(arg_1_0, arg_1_1)
 	arg_1_0.guard = arg_1_1.guard
 	arg_1_0.subCd = arg_1_1.subCd
 	arg_1_0.exPointType = arg_1_1.exPointType
+
+	local var_1_2 = arg_1_1.equips[1]
+
+	if var_1_2 then
+		arg_1_0.equipRecord = FightEquipRecordData.New(var_1_2)
+	end
+
+	if arg_1_1:HasField("destinyStone") and arg_1_1:HasField("destinyRank") then
+		arg_1_0.destinyStone = arg_1_1.destinyStone
+		arg_1_0.destinyRank = arg_1_1.destinyRank
+	end
+
 	arg_1_0.customUnitId = arg_1_1.customUnitId
 end
 

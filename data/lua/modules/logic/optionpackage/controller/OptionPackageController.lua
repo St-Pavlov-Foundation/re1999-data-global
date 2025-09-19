@@ -22,7 +22,7 @@ function var_0_0.onInitFinish(arg_2_0)
 		return
 	end
 
-	arg_2_0:_startHttpWorker()
+	TaskDispatcher.runDelay(arg_2_0._startHttpWorker, arg_2_0, 10)
 
 	arg_2_0._localPackageNameList = HotUpdateOptionPackageMgr.instance:getPackageNameList()
 

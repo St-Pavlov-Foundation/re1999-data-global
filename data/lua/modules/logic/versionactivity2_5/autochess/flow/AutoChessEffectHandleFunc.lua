@@ -23,7 +23,8 @@ function var_0_0.ctor(arg_1_0)
 		[AutoChessEnum.EffectType.UpdateChessPos] = var_0_0._handleUpdateChessPos,
 		[AutoChessEnum.EffectType.FightUpdate] = var_0_0._handleFightUpdate,
 		[AutoChessEnum.EffectType.LeaderSkillUpdate] = var_0_0._handleLeaderSkillUpdate,
-		[AutoChessEnum.EffectType.LeaderChange] = var_0_0._handleLeaderChange
+		[AutoChessEnum.EffectType.LeaderChange] = var_0_0._handleLeaderChange,
+		[AutoChessEnum.EffectType.UdimoSkill] = var_0_0._handleUdimoSkill
 	}
 end
 
@@ -38,14 +39,18 @@ function var_0_0._handleLeaderHp(arg_2_0)
 end
 
 function var_0_0._handleLeaderHpFloat(arg_3_0)
-	local var_3_0 = arg_3_0.mgr:getLeaderEntity(arg_3_0.effect.fromId)
-
-	if var_3_0 then
-		arg_3_0.mgr:flyStarByTeam(var_3_0.data.teamType)
-		TaskDispatcher.runDelay(arg_3_0.delayAttack, arg_3_0, 1.1)
-	else
+	if arg_3_0.effect.fromId == arg_3_0.effect.targetId then
 		arg_3_0:delayFloatLeader()
-		TaskDispatcher.runDelay(arg_3_0.finishWork, arg_3_0, 1)
+	else
+		local var_3_0 = arg_3_0.mgr:getLeaderEntity(arg_3_0.effect.fromId)
+
+		if var_3_0 then
+			arg_3_0.mgr:flyStarByTeam(var_3_0.data.teamType)
+			TaskDispatcher.runDelay(arg_3_0.delayAttack, arg_3_0, 1.1)
+		else
+			arg_3_0:delayFloatLeader()
+			TaskDispatcher.runDelay(arg_3_0.finishWork, arg_3_0, 1)
+		end
 	end
 end
 
@@ -63,33 +68,34 @@ function var_0_0._handleChessHpFloat(arg_5_0)
 	local var_5_0 = arg_5_0.mgr:getEntity(arg_5_0.effect.targetId)
 
 	if var_5_0 then
-		var_5_0:floatHp(arg_5_0.effect.effectNum)
+		var_5_0:floatHp(arg_5_0.effect.effectNum, arg_5_0.effect.fromId)
 	end
 
 	TaskDispatcher.runDelay(arg_5_0.finishWork, arg_5_0, 0.5)
 end
 
 function var_0_0._handleChessMove(arg_6_0)
-	local var_6_0 = arg_6_0.mgr:getEntity(arg_6_0.effect.targetId)
+	local var_6_0
 
-	if var_6_0 then
-		local var_6_1
+	if arg_6_0.context == AutoChessEnum.ContextType.EndBuy or arg_6_0.context == AutoChessEnum.ContextType.Fight then
+		var_6_0 = arg_6_0.chessMo.lastSvrFight
+	else
+		var_6_0 = arg_6_0.chessMo.svrFight
+	end
 
-		if arg_6_0.context == AutoChessEnum.ContextType.EndBuy or arg_6_0.context == AutoChessEnum.ContextType.Fight then
-			var_6_1 = arg_6_0.chessMo.lastSvrFight
-		else
-			var_6_1 = arg_6_0.chessMo.svrFight
-		end
+	local var_6_1, var_6_2 = arg_6_0.chessMo:getChessPosition1(arg_6_0.effect.targetId, var_6_0)
+	local var_6_3 = arg_6_0.chessMo:getChessPosition(var_6_2, tonumber(arg_6_0.effect.effectNum) + 1, var_6_0)
 
-		local var_6_2 = arg_6_0.chessMo:getChessPosition(var_6_0.warZone, tonumber(arg_6_0.effect.fromId) + 1, var_6_1)
-		local var_6_3 = arg_6_0.chessMo:getChessPosition(var_6_0.warZone, tonumber(arg_6_0.effect.effectNum) + 1, var_6_1)
+	if var_6_1 and var_6_3 then
+		var_6_1.chess, var_6_3.chess = var_6_3.chess, var_6_1.chess
+	else
+		logError(string.format("位置: %s %s 的ChessPosition数据为空,请检查", arg_6_0.effect.fromId, arg_6_0.effect.effectNum))
+	end
 
-		if var_6_2 and var_6_3 then
-			var_6_3.chess = var_6_2.chess
-			var_6_2.chess = AutoChessHelper.buildEmptyChess()
-		end
+	local var_6_4 = arg_6_0.mgr:getEntity(arg_6_0.effect.targetId)
 
-		var_6_0:move(arg_6_0.effect.effectNum)
+	if var_6_4 then
+		var_6_4:move(arg_6_0.effect.effectNum)
 	end
 
 	TaskDispatcher.runDelay(arg_6_0.finishWork, arg_6_0, AutoChessEnum.ChessAniTime.Jump)
@@ -129,7 +135,11 @@ function var_0_0._handleChessDie(arg_7_0)
 
 	arg_7_0.chessMo:getChessPosition(tonumber(arg_7_0.effect.fromId), tonumber(arg_7_0.effect.effectNum) + 1, var_7_0).chess = AutoChessHelper.buildEmptyChess()
 
-	TaskDispatcher.runDelay(arg_7_0.finishWork, arg_7_0, var_7_3)
+	if var_7_3 == 0 then
+		arg_7_0:finishWork()
+	else
+		TaskDispatcher.runDelay(arg_7_0.finishWork, arg_7_0, var_7_3)
+	end
 end
 
 function var_0_0._handleAddBuff(arg_8_0)
@@ -178,14 +188,24 @@ function var_0_0._handleExpChange(arg_12_0)
 end
 
 function var_0_0._handleStarChange(arg_13_0)
-	arg_13_0.chessMo:getChessPosition1(arg_13_0.effect.chess.uid).chess = arg_13_0.effect.chess
+	local var_13_0
 
-	local var_13_0 = arg_13_0.mgr:getEntity(arg_13_0.effect.chess.uid)
+	if arg_13_0.context == AutoChessEnum.ContextType.EndBuy or arg_13_0.context == AutoChessEnum.ContextType.Fight then
+		var_13_0 = arg_13_0.chessMo:getChessPosition1(arg_13_0.effect.chess.uid, arg_13_0.chessMo.lastSvrFight)
+	else
+		var_13_0 = arg_13_0.chessMo:getChessPosition1(arg_13_0.effect.chess.uid)
+	end
 
 	if var_13_0 then
-		local var_13_1 = var_13_0:updateStar(arg_13_0.effect.chess)
+		var_13_0.chess = arg_13_0.effect.chess
+	end
 
-		TaskDispatcher.runDelay(arg_13_0.finishWork, arg_13_0, var_13_1)
+	local var_13_1 = arg_13_0.mgr:getEntity(arg_13_0.effect.chess.uid)
+
+	if var_13_1 then
+		local var_13_2 = var_13_1:updateStar(arg_13_0.effect.chess)
+
+		TaskDispatcher.runDelay(arg_13_0.finishWork, arg_13_0, var_13_2)
 	else
 		arg_13_0:finishWork()
 	end
@@ -266,8 +286,13 @@ function var_0_0._handleLeaderChange(arg_21_0)
 	arg_21_0:finishWork()
 end
 
-function var_0_0.getHandleFunc(arg_22_0, arg_22_1)
-	return arg_22_0._defineList[arg_22_1]
+function var_0_0._handleUdimoSkill(arg_22_0)
+	arg_22_0.chessMo:updateSvrMallRegion(arg_22_0.effect.region, true)
+	arg_22_0:finishWork()
+end
+
+function var_0_0.getHandleFunc(arg_23_0, arg_23_1)
+	return arg_23_0._defineList[arg_23_1]
 end
 
 var_0_0.instance = var_0_0.New()

@@ -21,7 +21,7 @@ function var_0_0.beforeTimeline(arg_4_0, arg_4_1, arg_4_2)
 	arg_4_0._playingEntityId2StepData[arg_4_1.id] = arg_4_2 or 1
 
 	arg_4_1:resetEntity()
-	FightController.instance:dispatchEvent(FightEvent.BeforePlayTimeline, arg_4_1.id)
+	FightController.instance:dispatchEvent(FightEvent.BeforePlayTimeline, arg_4_1.id, arg_4_2)
 
 	if FightCardDataHelper.isBigSkill(arg_4_2.actId) then
 		FightController.instance:dispatchEvent(FightEvent.BeforePlayUniqueSkill, arg_4_1.id)

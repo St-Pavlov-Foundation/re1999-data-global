@@ -11,7 +11,7 @@ function var_0_0.onStart(arg_1_0)
 
 	local var_1_0 = arg_1_0:com_registWorkDoneFlowSequence()
 
-	var_1_0:addWork(Work2FightWork.New(FightWorkDistributeCard))
+	var_1_0:registWork(FightWorkDistributeCard)
 	var_1_0:registWork(FightWorkFunction, arg_1_0._afterDistribute, arg_1_0)
 	var_1_0:start()
 end

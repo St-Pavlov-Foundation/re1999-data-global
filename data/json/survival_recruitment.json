@@ -1,0 +1,62 @@
+[
+  {
+    "id": 1,
+    "desc": "language_10084135",
+    "conditionType": 1,
+    "param": "1:500"
+  },
+  {
+    "id": 2,
+    "desc": "language_10084136",
+    "conditionType": 2,
+    "param": "3:500"
+  },
+  {
+    "id": 3,
+    "desc": "language_10084137",
+    "conditionType": 3,
+    "param": "3#2"
+  },
+  {
+    "id": 4,
+    "desc": "language_10084138",
+    "conditionType": 4,
+    "param": "600"
+  },
+  {
+    "id": 5,
+    "desc": "language_10084139",
+    "conditionType": 5,
+    "param": "4#107030402"
+  },
+  {
+    "id": 6,
+    "desc": "language_10084140",
+    "conditionType": 6,
+    "param": "7#1070201"
+  },
+  {
+    "id": 7,
+    "desc": "language_10084141",
+    "conditionType": 4,
+    "param": "100"
+  },
+  {
+    "id": 8,
+    "desc": "language_10084142",
+    "conditionType": 4,
+    "param": "150"
+  },
+  {
+    "id": 9,
+    "desc": "language_10084143",
+    "conditionType": 4,
+    "param": "200"
+  },
+  {
+    "id": 1070302,
+    "desc": "language_10084144",
+    "conditionType": 4,
+    "param": "300"
+  }
+]

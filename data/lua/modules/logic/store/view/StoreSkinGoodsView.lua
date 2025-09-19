@@ -449,7 +449,6 @@ end
 function var_0_0._buyCallback(arg_22_0, arg_22_1, arg_22_2, arg_22_3)
 	if arg_22_2 == 0 then
 		arg_22_0:closeThis()
-		ViewMgr.instance:closeView(ViewName.StoreSkinPreviewView)
 	end
 end
 

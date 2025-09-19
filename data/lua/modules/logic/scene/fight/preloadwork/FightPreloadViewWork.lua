@@ -5,6 +5,8 @@ local var_0_0 = class("FightPreloadViewWork", BaseWork)
 var_0_0.ui_chupai_01 = "ui_chupai_01"
 var_0_0.ui_chupai_02 = "ui_chupai_02"
 var_0_0.ui_chupai_03 = "ui_chupai_03"
+var_0_0.ui_chupai_skin01 = "skin/ui_chupai_skin01"
+var_0_0.ui_chupai_skin03 = "skin/ui_chupai_skin03"
 var_0_0.ui_kapaituowei = "ui_kapaituowei"
 var_0_0.ui_dazhaoka = "ui_dazhaoka"
 var_0_0.ui_effect_dna_c = "ui/viewres/fight/ui_effect_dna_c.prefab"
@@ -18,6 +20,8 @@ function var_0_0.onStart(arg_1_0, arg_1_1)
 	arg_1_0._loader:addPath(ResUrl.getUIEffect(var_0_0.ui_chupai_01))
 	arg_1_0._loader:addPath(ResUrl.getUIEffect(var_0_0.ui_chupai_02))
 	arg_1_0._loader:addPath(ResUrl.getUIEffect(var_0_0.ui_chupai_03))
+	arg_1_0._loader:addPath(ResUrl.getUIEffect(var_0_0.ui_chupai_skin01))
+	arg_1_0._loader:addPath(ResUrl.getUIEffect(var_0_0.ui_chupai_skin03))
 	arg_1_0._loader:addPath(ResUrl.getUIEffect(var_0_0.ui_kapaituowei))
 	arg_1_0._loader:addPath(ResUrl.getUIEffect(var_0_0.ui_dazhaoka))
 	arg_1_0._loader:addPath(var_0_0.FightSpriteAssets)

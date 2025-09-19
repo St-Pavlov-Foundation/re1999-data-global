@@ -7,6 +7,7 @@ local var_0_1 = {
 	nameEn = 3,
 	resPage = 4,
 	chapterId = 6,
+	storyId = 7,
 	sectionId = 1
 }
 local var_0_2 = {

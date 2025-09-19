@@ -180,6 +180,7 @@ function var_0_0.onInitView(arg_1_0)
 	arg_1_0._btnrewarddetailclose = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_rewarddetailclose")
 	arg_1_0._viewAnimPlayer = var_0_1.Get(arg_1_0.viewGO)
 	arg_1_0._viewAniEventWrap = arg_1_0.viewGO:GetComponent(typeof(ZProj.AnimationEventWrap))
+	arg_1_0._gofestivaldecorationbg = gohelper.findChild(arg_1_0.viewGO, "bg/#go_festivalDecorationBg")
 	arg_1_0._gofestivaldecorationright = gohelper.findChild(arg_1_0.viewGO, "bg/#go_festivaldecorationright")
 	arg_1_0._gofestivaldecorationleft = gohelper.findChild(arg_1_0.viewGO, "#go_festivaldecorationleft")
 	arg_1_0._gofestivaldecorationtop = gohelper.findChild(arg_1_0.viewGO, "bg/#simage_bg/#go_festivaldecorationtop")
@@ -656,6 +657,10 @@ function var_0_0.onOpen(arg_33_0)
 	SignInModel.instance:setNewShowDetail(true)
 	NavigateMgr.instance:addEscape(ViewName.SignInView, arg_33_0._onEscapeBtnClick, arg_33_0)
 	arg_33_0:_refreshFestivalDecoration()
+
+	if arg_33_0.viewParam.isActiveLifeCicle then
+		arg_33_0:_setActive_LifeCicle(true)
+	end
 end
 
 function var_0_0._initIndex(arg_34_0)
@@ -1509,6 +1514,7 @@ end
 function var_0_0._refreshFestivalDecoration(arg_68_0)
 	local var_68_0 = arg_68_0:haveFestival()
 
+	gohelper.setActive(arg_68_0._gofestivaldecorationbg, var_68_0)
 	gohelper.setActive(arg_68_0._gofestivaldecorationright, var_68_0)
 	gohelper.setActive(arg_68_0._gofestivaldecorationleft, var_68_0)
 	gohelper.setActive(arg_68_0._gofestivaldecorationtop, var_68_0)

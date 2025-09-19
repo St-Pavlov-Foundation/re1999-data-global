@@ -2,10 +2,11 @@
 
 local var_0_0 = {}
 local var_0_1 = {
-	id = 1,
+	saveGroup = 4,
 	name = 2,
 	chapterIds = 3,
-	saveGroup = 4
+	id = 1,
+	changeForbiddenEpisode = 5
 }
 local var_0_2 = {
 	"id"

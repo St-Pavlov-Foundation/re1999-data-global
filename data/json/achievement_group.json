@@ -170,6 +170,26 @@
     "unLockAchievement": 41200901
   },
   {
+    "id": 121,
+    "category": 4,
+    "order": 982,
+    "name": "language_10080374",
+    "desc": "",
+    "uiListParam": "{\"groupNormalBgUrl\":\"singlebg_lang/txt_achievement/list/121.png\",\"groupUpgradeBgUrl\":\"singlebg_lang/txt_achievement/list/121_1.png\",\"id\":[1,2,3,4,5,6,7,8,9],\"pX\":[1.0,170.0,323.0,476.2,-16.4,109.9,262.5,404.8,516.5],\"pY\":[24.0,69.1,68.0,68.0,-103.0,-90.1,-86.4,-89.1,-102.2],\"sX\":[0.75,1.03,0.75,1.03,0.63,0.76,0.83,0.63,0.63],\"sY\":[0.75,1.03,0.75,1.03,0.63,0.76,0.83,0.63,0.63]}",
+    "uiPlayerParam": "{\"groupNormalBgUrl\":\"singlebg_lang/txt_achievement/player/121.png\",\"groupUpgradeBgUrl\":\"singlebg_lang/txt_achievement/player/121_1.png\",\"groupTitleColor\":\"#AFC3BFFF\",\"id\":[1,2,3,4,5,6,7,8,9],\"pX\":[2.0,68.70004,131.1,193.1,-5.9,44.6,106.6,164.0,209.0],\"pY\":[-12.0,6.5,6.5,6.5,-62.0,-56.8,-55.3,-56.9999847,-62.0],\"sX\":[0.3,0.41,0.25,0.41,0.25,0.3,0.33,0.25,0.25],\"sY\":[0.3,0.41,0.25,0.41,0.25,0.3,0.33,0.25,0.25]}",
+    "unLockAchievement": 41210901
+  },
+  {
+    "id": 122,
+    "category": 4,
+    "order": 981,
+    "name": "language_10080375",
+    "desc": "",
+    "uiListParam": "{\"groupNormalBgUrl\":\"singlebg_lang/txt_achievement/list/122.png\",\"groupUpgradeBgUrl\":\"singlebg_lang/txt_achievement/list/122_1.png\",\"id\":[1,2,3,4,5,6,7,8,9],\"pX\":[15.6001081,208.0,391.8,572.0,-124.0,40.0,221.0,395.7,557.9],\"pY\":[93.3,89.0,93.3,89.0,-79.0,-79.0,-78.3,-79.0,-79.0],\"sX\":[0.87,0.7,0.87,0.7,0.7,0.7,0.87,0.7,0.7],\"sY\":[0.87,0.7,0.87,0.7,0.7,0.7,0.87,0.7,0.7]}",
+    "uiPlayerParam": "{\"groupNormalBgUrl\":\"singlebg_lang/txt_achievement/player/122.png\",\"groupUpgradeBgUrl\":\"singlebg_lang/txt_achievement/player/122_1.png\",\"groupTitleColor\":\"#DED4BEFF\",\"id\":[1,2,3,4,5,6,7,8,9],\"pX\":[10.9,92.4,168.3,244.61,-46.5,21.4,97.4,169.5,238.6],\"pY\":[12.0,11.9,12.0,11.0,-58.9000168,-58.9,-58.9,-58.9000168,-58.9000168],\"sX\":[0.36,0.29,0.36,0.29,0.29,0.29,0.36,0.29,0.29],\"sY\":[0.36,0.29,0.36,0.29,0.29,0.29,0.36,0.29,0.29]}",
+    "unLockAchievement": 41220901
+  },
+  {
     "id": 124,
     "category": 4,
     "order": 979,

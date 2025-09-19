@@ -19,10 +19,12 @@ function var_0_0.init(arg_1_0, arg_1_1)
 	arg_1_0.txtHpSub = gohelper.findChildText(var_1_0, "HpChange/txt_HpSub")
 	arg_1_0.meshComp = MonoHelper.addNoUpdateLuaComOnceToGo(arg_1_0.goMesh, AutoChessMeshComp)
 	arg_1_0.effectComp = MonoHelper.addNoUpdateLuaComOnceToGo(arg_1_0.goEntity, AutoChessEffectComp)
-	arg_1_0.goEnergyL = gohelper.findChild(arg_1_1, "ani/go_EnergyL")
-	arg_1_0.txtEnergyL = gohelper.findChildText(arg_1_1, "ani/go_EnergyL/txt_EnergyL")
-	arg_1_0.goEnergyR = gohelper.findChild(arg_1_1, "ani/go_EnergyR")
-	arg_1_0.txtEnergyR = gohelper.findChildText(arg_1_1, "ani/go_EnergyR/txt_EnergyR")
+	arg_1_0.goPlayerBuff = gohelper.findChild(arg_1_1, "ani/go_PlayerBuff")
+	arg_1_0.txtEnergyL = gohelper.findChildText(arg_1_1, "ani/go_PlayerBuff/txt_EnergyL")
+	arg_1_0.txtFireL = gohelper.findChildText(arg_1_1, "ani/go_PlayerBuff/txt_FireL")
+	arg_1_0.goEnemyBuff = gohelper.findChild(arg_1_1, "ani/go_EnemyBuff")
+	arg_1_0.txtEnergyR = gohelper.findChildText(arg_1_1, "ani/go_EnemyBuff/txt_EnergyR")
+	arg_1_0.txtFireR = gohelper.findChildText(arg_1_1, "ani/go_EnemyBuff/txt_FireR")
 end
 
 function var_0_0.onDestroy(arg_2_0)
@@ -93,11 +95,8 @@ end
 
 function var_0_0.addBuff(arg_9_0, arg_9_1)
 	table.insert(arg_9_0.data.buffContainer.buffs, arg_9_1)
-
-	if arg_9_1.id == 1004 or arg_9_1.id == 1005 then
-		AutoChessController.instance:dispatchEvent(AutoChessEvent.UpdateLeaderEnergy)
-		arg_9_0:refreshEnergy()
-	end
+	AutoChessController.instance:dispatchEvent(AutoChessEvent.UpdateLeaderBuff)
+	arg_9_0:refreshBuff()
 end
 
 function var_0_0.updateBuff(arg_10_0, arg_10_1)
@@ -111,10 +110,8 @@ function var_0_0.updateBuff(arg_10_0, arg_10_1)
 		end
 	end
 
-	if arg_10_1.id == 1004 or arg_10_1.id == 1005 then
-		AutoChessController.instance:dispatchEvent(AutoChessEvent.UpdateLeaderEnergy)
-		arg_10_0:refreshEnergy()
-	end
+	AutoChessController.instance:dispatchEvent(AutoChessEvent.UpdateLeaderBuff)
+	arg_10_0:refreshBuff()
 end
 
 function var_0_0.delBuff(arg_11_0, arg_11_1)
@@ -125,11 +122,6 @@ function var_0_0.delBuff(arg_11_0, arg_11_1)
 		if iter_11_1.uid == arg_11_1 then
 			var_11_1 = iter_11_0
 
-			if iter_11_1.id == 1004 or iter_11_1.id == 1005 then
-				AutoChessController.instance:dispatchEvent(AutoChessEvent.UpdateLeaderEnergy)
-				arg_11_0:refreshEnergy()
-			end
-
 			break
 		end
 	end
@@ -139,6 +131,9 @@ function var_0_0.delBuff(arg_11_0, arg_11_1)
 	else
 		logError(string.format("异常:移除了不存在的棋子UID%s", arg_11_1))
 	end
+
+	AutoChessController.instance:dispatchEvent(AutoChessEvent.UpdateLeaderBuff)
+	arg_11_0:refreshBuff()
 end
 
 function var_0_0.hide(arg_12_0)
@@ -157,32 +152,37 @@ end
 function var_0_0.showEnergy(arg_14_0)
 	arg_14_0.needShowEnergy = true
 
-	arg_14_0:refreshEnergy()
+	arg_14_0:refreshBuff()
 end
 
-function var_0_0.refreshEnergy(arg_15_0)
+function var_0_0.refreshBuff(arg_15_0)
 	if not arg_15_0.needShowEnergy then
 		return
 	end
 
-	local var_15_0 = AutoChessHelper.getBuffEnergy(arg_15_0.data.buffContainer.buffs)
-
-	if var_15_0 == 0 then
-		gohelper.setActive(arg_15_0.goEnergyL, false)
-		gohelper.setActive(arg_15_0.goEnergyR, false)
-
-		return
-	end
+	local var_15_0 = AutoChessHelper.getBuffCnt(arg_15_0.data.buffContainer.buffs, AutoChessEnum.EnergyBuffIds)
+	local var_15_1 = AutoChessHelper.getBuffCnt(arg_15_0.data.buffContainer.buffs, AutoChessEnum.FireBuffIds)
 
 	if arg_15_0.isEnemey then
 		arg_15_0.txtEnergyR.text = var_15_0
 
-		gohelper.setActive(arg_15_0.goEnergyR, true)
+		gohelper.setActive(arg_15_0.txtEnergyR, var_15_0 ~= 0)
+
+		arg_15_0.txtFireR.text = var_15_1
+
+		gohelper.setActive(arg_15_0.txtFireR, var_15_1 ~= 0)
 	else
 		arg_15_0.txtEnergyL.text = var_15_0
 
-		gohelper.setActive(arg_15_0.goEnergyL, true)
+		gohelper.setActive(arg_15_0.txtEnergyL, var_15_0 ~= 0)
+
+		arg_15_0.txtFireL.text = var_15_1
+
+		gohelper.setActive(arg_15_0.txtFireL, var_15_1 ~= 0)
 	end
+
+	gohelper.setActive(arg_15_0.goPlayerBuff, not arg_15_0.isEnemey)
+	gohelper.setActive(arg_15_0.goEnemyBuff, arg_15_0.isEnemey)
 end
 
 return var_0_0

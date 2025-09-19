@@ -23,7 +23,9 @@ function var_0_0.removeEvents(arg_3_0)
 end
 
 function var_0_0._editableInitView(arg_4_0)
-	return
+	arg_4_0.image_LimitTimeBGGo = gohelper.findChild(arg_4_0.viewGO, "Left/LimitTime/image_LimitTimeBG")
+
+	gohelper.setActive(arg_4_0.image_LimitTimeBGGo, false)
 end
 
 function var_0_0.onUpdateParam(arg_5_0)

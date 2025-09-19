@@ -7,6 +7,8 @@ function var_0_0.onConstructor(arg_1_0, arg_1_1)
 	arg_1_0.clientId = var_0_1
 	var_0_1 = var_0_1 + 1
 
+	arg_1_0:initClientData()
+
 	if not arg_1_1 then
 		return
 	end
@@ -99,6 +101,10 @@ end
 
 function var_0_0.revertDone(arg_4_0)
 	arg_4_0.CUSTOM_ISDONE = false
+end
+
+function var_0_0.initClientData(arg_5_0)
+	arg_5_0.custom_nuoDiKaDamageSign = nil
 end
 
 return var_0_0

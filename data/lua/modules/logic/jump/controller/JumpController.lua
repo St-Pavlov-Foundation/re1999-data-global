@@ -76,7 +76,8 @@ function var_0_0.initJumpViewBelongScene(arg_7_0)
 		[JumpEnum.JumpView.SummonView] = SceneType.Main,
 		[JumpEnum.JumpView.V1a5Dungeon] = SceneType.Main,
 		[JumpEnum.JumpView.RoomView] = SceneType.Room,
-		[JumpEnum.JumpView.PushBox] = SceneType.PushBox
+		[JumpEnum.JumpView.PushBox] = SceneType.PushBox,
+		[JumpEnum.JumpView.ShelterBuilding] = SceneType.SurvivalShelter
 	}
 end
 
@@ -249,7 +250,9 @@ local var_0_1 = {
 	"V2a9_VersionSummonPanel_Part1",
 	"V2a9_VersionSummonPanel_Part2",
 	"V2a9_FreeMonthCard_PanelView",
-	"V3a0_SummerSign_PanelView"
+	"V3a0_SummerSign_PanelView",
+	"RoomFormulaMsgBoxView",
+	"V3a1_AutumnSign_PanelView"
 }
 
 function var_0_0.jumpTo(arg_15_0, arg_15_1, arg_15_2, arg_15_3, arg_15_4)

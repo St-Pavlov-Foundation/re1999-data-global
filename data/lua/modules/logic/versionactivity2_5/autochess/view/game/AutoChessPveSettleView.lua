@@ -60,10 +60,11 @@ function var_0_0.onClose(arg_10_0)
 	AutoChessController.instance:onSettleViewClose()
 
 	if arg_10_0.restart then
-		local var_10_1 = AutoChessEnum.ModuleId.PVE
-		local var_10_2 = lua_auto_chess_episode.configDict[var_10_0].masterId
+		local var_10_1 = Activity182Model.instance:getCurActId()
+		local var_10_2 = AutoChessEnum.ModuleId.PVE
+		local var_10_3 = AutoChessConfig.instance:getEpisodeCO(var_10_0).masterId
 
-		AutoChessRpc.instance:sendAutoChessEnterSceneRequest(var_10_1, var_10_0, var_10_2)
+		AutoChessRpc.instance:sendAutoChessEnterSceneRequest(var_10_1, var_10_2, var_10_0, var_10_3)
 	end
 end
 

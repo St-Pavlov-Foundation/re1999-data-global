@@ -1,7 +1,14 @@
 [
   {
-    "id": 1,
+    "id": 682800,
     "prefabPath": "fightfloat",
+    "startTime": "",
+    "endTime": "",
+    "priority": 0
+  },
+  {
+    "id": 682801,
+    "prefabPath": "fightfloat_skin2",
     "startTime": "",
     "endTime": "",
     "priority": 0

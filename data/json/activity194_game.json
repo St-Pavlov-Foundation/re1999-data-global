@@ -1,0 +1,50 @@
+[
+  {
+    "gameId": 2001,
+    "initialTeam": "30001",
+    "initialItem": "",
+    "eventGroup": 1,
+    "maxRoundLimit": 8,
+    "startEnergy": 100,
+    "winCondition": "2#8#1000105",
+    "winConditionStr": "language_10086895",
+    "extraCondition": "1#1000109",
+    "extraConditionStr": "language_10086896"
+  },
+  {
+    "gameId": 2002,
+    "initialTeam": "30002#30003#30004",
+    "initialItem": "20001#2",
+    "eventGroup": 2,
+    "maxRoundLimit": 10,
+    "startEnergy": 120,
+    "winCondition": "2#10#1000120",
+    "winConditionStr": "language_10086897",
+    "extraCondition": "3#1000132#1000133",
+    "extraConditionStr": "language_10086898"
+  },
+  {
+    "gameId": 2003,
+    "initialTeam": "30002#30009#30004#30006",
+    "initialItem": "20005#1",
+    "eventGroup": 3,
+    "maxRoundLimit": 99,
+    "startEnergy": 180,
+    "winCondition": "1#1000138#1000144#1000151",
+    "winConditionStr": "language_10086899",
+    "extraCondition": "2#10#1000138#1000144#1000151",
+    "extraConditionStr": "language_10086900"
+  },
+  {
+    "gameId": 2004,
+    "initialTeam": "30002#30006",
+    "initialItem": "20006#2",
+    "eventGroup": 4,
+    "maxRoundLimit": 15,
+    "startEnergy": 200,
+    "winCondition": "4#15#1000157#1000168",
+    "winConditionStr": "language_10086901",
+    "extraCondition": "1#1000163",
+    "extraConditionStr": "language_10086902"
+  }
+]

@@ -29,7 +29,14 @@ function var_0_0.playOpenTransition(arg_3_0)
 	arg_3_0:_cancelBlock()
 	arg_3_0:_stopOpenCloseAnim()
 	UnityEngine.Shader.EnableKeyword("_CLIPALPHA_ON")
-	ZProj.ProjAnimatorPlayer.Get(arg_3_0.viewGO):Play(UIAnimationName.Open, arg_3_0.onOpenAnimDone, arg_3_0)
+
+	local var_3_0 = ZProj.ProjAnimatorPlayer.Get(arg_3_0.viewGO)
+
+	if arg_3_0.viewParam and arg_3_0.viewParam.storyMode then
+		var_3_0:Play("left_open", arg_3_0.onOpenAnimDone, arg_3_0)
+	else
+		var_3_0:Play(UIAnimationName.Open, arg_3_0.onOpenAnimDone, arg_3_0)
+	end
 end
 
 function var_0_0.onOpenAnimDone(arg_4_0)
@@ -41,7 +48,14 @@ function var_0_0.playCloseTransition(arg_5_0)
 	arg_5_0:_cancelBlock()
 	arg_5_0:_stopOpenCloseAnim()
 	UnityEngine.Shader.EnableKeyword("_CLIPALPHA_ON")
-	ZProj.ProjAnimatorPlayer.Get(arg_5_0.viewGO):Play(UIAnimationName.Close, arg_5_0.onCloseAnimDone, arg_5_0)
+
+	local var_5_0 = ZProj.ProjAnimatorPlayer.Get(arg_5_0.viewGO)
+
+	if arg_5_0.viewParam and arg_5_0.viewParam.storyMode then
+		var_5_0:Play("left_out", arg_5_0.onCloseAnimDone, arg_5_0)
+	else
+		var_5_0:Play(UIAnimationName.Close, arg_5_0.onCloseAnimDone, arg_5_0)
+	end
 end
 
 function var_0_0.onCloseAnimDone(arg_6_0)

@@ -8,9 +8,7 @@ end
 
 function var_0_0.onInit(arg_2_0, arg_2_1)
 	arg_2_0._btnitem = gohelper.getClickWithAudio(arg_2_0._imgGo, AudioEnum.UI.play_ui_role_pieces_open)
-	arg_2_0._goexpup = gohelper.findChild(arg_2_0.go, "#go_expup")
 
-	gohelper.setActive(arg_2_0._goexpup, BpModel.instance:isShowExpUp())
 	arg_2_0:_refreshItem()
 end
 

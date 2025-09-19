@@ -12,7 +12,9 @@ function var_0_0.reInit(arg_2_0)
 end
 
 function var_0_0._checkActivityInfo(arg_3_0, arg_3_1)
-	if ActivityHelper.getActivityStatus(ActivityEnum.Activity.V1a9_Matildagift) == ActivityEnum.ActivityStatus.Normal then
+	local var_3_0 = V1a9_MatildaGiftModel.instance:getMatildagiftActId()
+
+	if ActivityHelper.getActivityStatus(var_3_0) == ActivityEnum.ActivityStatus.Normal then
 		arg_3_0:sendGet101InfosRequest()
 	end
 end

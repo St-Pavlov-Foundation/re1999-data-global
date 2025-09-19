@@ -1,0 +1,11 @@
+[
+  {
+    "id": 500001,
+    "roundLimit": 1,
+    "coldTime": 2,
+    "maxLimit": 999,
+    "desc": "使用一张特殊咒语",
+    "skillId": "500001",
+    "icon": "70001"
+  }
+]

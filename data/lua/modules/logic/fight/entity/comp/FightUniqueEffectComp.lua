@@ -13,6 +13,10 @@ function var_0_0.ctor(arg_1_0, arg_1_1)
 end
 
 function var_0_0.onDestroy(arg_2_0)
+	for iter_2_0, iter_2_1 in pairs(arg_2_0.releaseEffectDict) do
+		arg_2_0:removeEffect(iter_2_0)
+	end
+
 	if arg_2_0.updateHandle then
 		UpdateBeat:RemoveListener(arg_2_0.updateHandle)
 	end

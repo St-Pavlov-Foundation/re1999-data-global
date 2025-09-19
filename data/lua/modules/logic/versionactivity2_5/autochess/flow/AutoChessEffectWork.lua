@@ -29,8 +29,6 @@ function var_0_0.onStart(arg_3_0, arg_3_1)
 
 	if var_3_1 then
 		var_3_1(arg_3_0)
-	else
-		arg_3_0:finishWork()
 	end
 end
 

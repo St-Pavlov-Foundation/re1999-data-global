@@ -26,14 +26,14 @@ local var_0_1 = {
 	mainBody = 74,
 	id = 1,
 	unlockCondition = 30,
-	skinStoreId = 88,
+	skinStoreId = 89,
 	colorbg = 9,
 	name = 2,
 	live2dbg = 17,
 	color = 29,
 	skinReplaceIcon = 65,
 	skinGetIcon = 66,
-	skinGetBackIcon = 67,
+	skinStory = 88,
 	skinGetDetailViewIconOffset = 70,
 	canWade = 72,
 	showSwitchBtn = 63,
@@ -48,6 +48,7 @@ local var_0_1 = {
 	haloOffset = 44,
 	repeatBuyTime = 86,
 	triggerArea2 = 33,
+	skinGetBackIcon = 67,
 	live2d = 16,
 	skinGetColorbg = 68,
 	matId = 31,
@@ -95,9 +96,10 @@ local var_0_2 = {
 	"id"
 }
 local var_0_3 = {
-	characterSkin = 3,
 	name = 1,
 	skinDescription = 4,
+	skinStory = 5,
+	characterSkin = 3,
 	des = 2
 }
 

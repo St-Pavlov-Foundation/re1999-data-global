@@ -4696,6 +4696,54 @@
     "switch": "Fightboos_Third"
   },
   {
+    "id": 2810101,
+    "battleId": 101022,
+    "monster": 0,
+    "invokeType": 4,
+    "param": "0",
+    "switch": "Fightboos_First"
+  },
+  {
+    "id": 2810103,
+    "battleId": 101024,
+    "monster": 0,
+    "invokeType": 4,
+    "param": "0",
+    "switch": "Fightboos_First"
+  },
+  {
+    "id": 2810105,
+    "battleId": 101026,
+    "monster": 0,
+    "invokeType": 4,
+    "param": "0",
+    "switch": "Fightboos_Second"
+  },
+  {
+    "id": 2810201,
+    "battleId": 401022,
+    "monster": 0,
+    "invokeType": 4,
+    "param": "0",
+    "switch": "Fightboos_Second"
+  },
+  {
+    "id": 2810202,
+    "battleId": 401023,
+    "monster": 0,
+    "invokeType": 4,
+    "param": "0",
+    "switch": "Fightboos_Second"
+  },
+  {
+    "id": 2810203,
+    "battleId": 401024,
+    "monster": 0,
+    "invokeType": 4,
+    "param": "0",
+    "switch": "Fightboos_Second"
+  },
+  {
     "id": 30510110,
     "battleId": 9290106,
     "monster": 0,

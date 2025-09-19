@@ -20,10 +20,12 @@ end
 
 function var_0_0.addEventListeners(arg_3_0)
 	RedDotController.instance:registerCallback(RedDotEvent.RefreshClientCharacterDot, arg_3_0._refreshRedDot, arg_3_0)
+	PlayerController.instance:registerCallback(PlayerEvent.UpdateSimpleProperty, arg_3_0._refreshRedDot, arg_3_0)
 end
 
 function var_0_0.removeEventListeners(arg_4_0)
 	RedDotController.instance:unregisterCallback(RedDotEvent.RefreshClientCharacterDot, arg_4_0._refreshRedDot, arg_4_0)
+	PlayerController.instance:unregisterCallback(PlayerEvent.UpdateSimpleProperty, arg_4_0._refreshRedDot, arg_4_0)
 end
 
 function var_0_0.onUpdateMO(arg_5_0, arg_5_1)
@@ -39,7 +41,7 @@ function var_0_0.onUpdateMO(arg_5_0, arg_5_1)
 end
 
 function var_0_0._refreshRedDot(arg_6_0)
-	if CharacterModel.instance:isHeroCouldExskillUp(arg_6_0._mo.heroId) or CharacterModel.instance:hasCultureRewardGet(arg_6_0._mo.heroId) or CharacterModel.instance:hasItemRewardGet(arg_6_0._mo.heroId) or arg_6_0:_isShowDestinyReddot() or arg_6_0._mo.extraMo:showReddot() then
+	if CharacterModel.instance:isHeroCouldExskillUp(arg_6_0._mo.heroId) or CharacterModel.instance:hasCultureRewardGet(arg_6_0._mo.heroId) or CharacterModel.instance:hasItemRewardGet(arg_6_0._mo.heroId) or arg_6_0:_isShowDestinyReddot() or arg_6_0:_isShowNuodikaReddot() or arg_6_0._mo.extraMo:showReddot() then
 		arg_6_0._heroItem:setRedDotShow(true)
 	else
 		arg_6_0._heroItem:setRedDotShow(false)
@@ -149,6 +151,12 @@ function var_0_0._isShowDestinyReddot(arg_15_0)
 	if arg_15_0._mo and arg_15_0._mo.destinyStoneMo then
 		return arg_15_0._mo:isCanOpenDestinySystem() and arg_15_0._mo.destinyStoneMo:getRedDot() < 1
 	end
+end
+
+function var_0_0._isShowNuodikaReddot(arg_16_0)
+	local var_16_0, var_16_1 = CharacterModel.instance:isNeedShowNewSkillReddot(arg_16_0._mo)
+
+	return var_16_0 and var_16_1
 end
 
 return var_0_0

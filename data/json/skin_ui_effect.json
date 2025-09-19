@@ -531,6 +531,15 @@
     "realtime": ""
   },
   {
+    "id": 311403,
+    "effect": "Drawables/bone2/effect-Bone/roleeffect_xgj_bj2/root",
+    "scale": 1.0,
+    "changeVisible": 0,
+    "delayVisible": 0,
+    "frameVisible": 1,
+    "realtime": ""
+  },
+  {
     "id": 312301,
     "effect": "Drawables/bone16/effect-Bone/roleeffect_aja_xj16|Drawables/bone17/effect-Bone/roleeffect_aja_xj17/root",
     "scale": 1.0,

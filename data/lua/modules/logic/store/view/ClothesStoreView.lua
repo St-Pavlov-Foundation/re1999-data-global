@@ -47,10 +47,6 @@ function var_0_0._isSkinEmpty(arg_5_0, arg_5_1)
 end
 
 function var_0_0._payFinished(arg_6_0)
-	if ViewMgr.instance:isOpen(ViewName.StoreSkinPreviewView) then
-		ViewMgr.instance:closeView(ViewName.StoreSkinPreviewView)
-	end
-
 	arg_6_0:_refreshGoods(true)
 end
 

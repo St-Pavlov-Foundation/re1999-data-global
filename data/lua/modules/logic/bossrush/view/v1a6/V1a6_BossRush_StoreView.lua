@@ -21,7 +21,6 @@ function var_0_0.onInitView(arg_1_0)
 	arg_1_0._gotaglimit = gohelper.findChild(arg_1_0.viewGO, "Tag2/#go_taglimit")
 	arg_1_0._txtlimit = gohelper.findChildText(arg_1_0.viewGO, "Tag2/#go_taglimit/#txt_limit")
 	arg_1_0._txtTagName = gohelper.findChildText(arg_1_0.viewGO, "Tag2/txt_tagName")
-	arg_1_0._btnreplacetips = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_righttop/#btn_replacetips")
 
 	if arg_1_0._editableInitView then
 		arg_1_0:_editableInitView()
@@ -31,7 +30,6 @@ end
 function var_0_0.addEvents(arg_2_0)
 	arg_2_0._btnTips:AddClickListener(arg_2_0._btnTipsOnClick, arg_2_0)
 	arg_2_0._btnclosetip:AddClickListener(arg_2_0._btnclosetipOnClick, arg_2_0)
-	arg_2_0._btnreplacetips:AddClickListener(arg_2_0._btnreplacetipOnClick, arg_2_0)
 	arg_2_0:addEventCb(StoreController.instance, StoreEvent.GoodsModelChanged, arg_2_0.refreshStoreContent, arg_2_0)
 	arg_2_0:addEventCb(StoreController.instance, StoreEvent.StoreInfoChanged, arg_2_0.refreshStoreContent, arg_2_0)
 	arg_2_0:addEventCb(BossRushController.instance, BossRushEvent.OnHandleInStoreView, arg_2_0._OnHandleInStoreView, arg_2_0)
@@ -40,7 +38,6 @@ end
 function var_0_0.removeEvents(arg_3_0)
 	arg_3_0._btnTips:RemoveClickListener()
 	arg_3_0._btnclosetip:RemoveClickListener()
-	arg_3_0._btnreplacetips:RemoveClickListener()
 	arg_3_0:removeEventCb(StoreController.instance, StoreEvent.GoodsModelChanged, arg_3_0.refreshStoreContent, arg_3_0)
 	arg_3_0:removeEventCb(StoreController.instance, StoreEvent.StoreInfoChanged, arg_3_0.refreshStoreContent, arg_3_0)
 	arg_3_0:removeEventCb(BossRushController.instance, BossRushEvent.OnHandleInStoreView, arg_3_0._OnHandleInStoreView, arg_3_0)
@@ -54,340 +51,312 @@ function var_0_0._btnTipsOnClick(arg_5_0)
 	return
 end
 
-function var_0_0._btnreplacetipOnClick(arg_6_0)
-	local var_6_0 = Act183Helper.generateBossRush_ChallengeCurrencyReplaceViewParams()
+function var_0_0._btntagOnClick(arg_6_0, arg_6_1)
+	local var_6_0 = arg_6_0.itemNormalized[arg_6_1]
 
-	Act183Controller.instance:openAct183CurrencyReplaceTipsView(var_6_0)
-end
+	if var_6_0 and var_6_0.centerNormalized then
+		arg_6_0:killTween()
 
-function var_0_0._btntagOnClick(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_0.itemNormalized[arg_7_1]
-
-	if var_7_0 and var_7_0.centerNormalized then
-		arg_7_0:killTween()
-
-		arg_7_0.tweenId = ZProj.TweenHelper.DOTweenFloat(arg_7_0._scrollstore.verticalNormalizedPosition, var_7_0.centerNormalized, 0.5, arg_7_0.tweenFrameCallback, nil, arg_7_0)
+		arg_6_0.tweenId = ZProj.TweenHelper.DOTweenFloat(arg_6_0._scrollstore.verticalNormalizedPosition, var_6_0.centerNormalized, 0.5, arg_6_0.tweenFrameCallback, nil, arg_6_0)
 	end
 end
 
-function var_0_0._editableInitView(arg_8_0)
-	gohelper.setActive(arg_8_0._gostoreItem, false)
+function var_0_0._editableInitView(arg_7_0)
+	gohelper.setActive(arg_7_0._gostoreItem, false)
 
-	arg_8_0.storeItemList = arg_8_0:getUserDataTb_()
-	arg_8_0._tagList = arg_8_0:getUserDataTb_()
-	arg_8_0.showTagIndex = {
+	arg_7_0.storeItemList = arg_7_0:getUserDataTb_()
+	arg_7_0._tagList = arg_7_0:getUserDataTb_()
+	arg_7_0.showTagIndex = {
 		2
 	}
 
-	for iter_8_0 = 1, 3 do
-		local var_8_0 = gohelper.findChild(arg_8_0.viewGO, "Tag" .. iter_8_0)
+	for iter_7_0 = 1, 3 do
+		local var_7_0 = gohelper.findChild(arg_7_0.viewGO, "Tag" .. iter_7_0)
 
-		if var_8_0 then
-			local var_8_1 = gohelper.findChildButtonWithAudio(var_8_0, "image_tagType/btn_tag")
-			local var_8_2 = gohelper.findChildText(var_8_0, "txt_tagName")
-			local var_8_3 = gohelper.findChild(var_8_0, "#go_taglimit")
-			local var_8_4 = gohelper.findChildText(var_8_0, "#go_taglimit/#txt_limit")
-			local var_8_5 = var_8_0:GetComponent(typeof(UnityEngine.CanvasGroup))
-			local var_8_6 = {
-				go = var_8_0
+		if var_7_0 then
+			local var_7_1 = gohelper.findChildButtonWithAudio(var_7_0, "image_tagType/btn_tag")
+			local var_7_2 = gohelper.findChildText(var_7_0, "txt_tagName")
+			local var_7_3 = gohelper.findChild(var_7_0, "#go_taglimit")
+			local var_7_4 = gohelper.findChildText(var_7_0, "#go_taglimit/#txt_limit")
+			local var_7_5 = var_7_0:GetComponent(typeof(UnityEngine.CanvasGroup))
+			local var_7_6 = {
+				go = var_7_0
 			}
 
-			if var_8_1 then
-				var_8_1:AddClickListener(arg_8_0._btntagOnClick, arg_8_0, iter_8_0)
+			if var_7_1 then
+				var_7_1:AddClickListener(arg_7_0._btntagOnClick, arg_7_0, iter_7_0)
 
-				var_8_6.btn = var_8_1
+				var_7_6.btn = var_7_1
 			end
 
-			if var_8_2 then
-				var_8_6.titleTxt = var_8_2
+			if var_7_2 then
+				var_7_6.titleTxt = var_7_2
 			end
 
-			if var_8_3 then
-				var_8_6.limitgo = var_8_3
+			if var_7_3 then
+				var_7_6.limitgo = var_7_3
 
-				if var_8_4 then
-					var_8_6.limitTxt = var_8_4
+				if var_7_4 then
+					var_7_6.limitTxt = var_7_4
 				end
 			end
 
-			if var_8_5 then
-				var_8_6.canvasGroup = var_8_5
+			if var_7_5 then
+				var_7_6.canvasGroup = var_7_5
 			end
 
-			arg_8_0._tagList[iter_8_0] = var_8_6
+			arg_7_0._tagList[iter_7_0] = var_7_6
 
-			gohelper.setActive(var_8_0, false)
+			gohelper.setActive(var_7_0, false)
 		end
 	end
 
-	local var_8_7, var_8_8 = V1a6_BossRush_StoreModel.instance:getStoreGroupName(StoreEnum.BossRushStore.UpdateStore)
+	local var_7_7, var_7_8 = V1a6_BossRush_StoreModel.instance:getStoreGroupName(StoreEnum.BossRushStore.UpdateStore)
 
-	arg_8_0._txtTagName.text = var_8_7
+	arg_7_0._txtTagName.text = var_7_7
 end
 
-function var_0_0.onUpdateParam(arg_9_0)
+function var_0_0.onUpdateParam(arg_8_0)
 	return
 end
 
 var_0_0.ActId = VersionActivity1_6Enum.ActivityId.BossRush
 
-function var_0_0._onScrollValueChanged(arg_10_0)
-	if #arg_10_0.storeItemList > 0 then
-		for iter_10_0, iter_10_1 in ipairs(arg_10_0.storeItemList) do
-			if iter_10_0 == 1 then
-				iter_10_1:refreshTagClip(arg_10_0._scrollstore)
+function var_0_0._onScrollValueChanged(arg_9_0)
+	if #arg_9_0.storeItemList > 0 then
+		for iter_9_0, iter_9_1 in ipairs(arg_9_0.storeItemList) do
+			if iter_9_0 == 1 then
+				iter_9_1:refreshTagClip(arg_9_0._scrollstore)
 			end
 		end
 	end
 
-	arg_10_0:checkEnableTag()
+	arg_9_0:checkEnableTag()
 end
 
-function var_0_0.onOpen(arg_11_0)
-	arg_11_0._scrollstore:AddOnValueChanged(arg_11_0._onScrollValueChanged, arg_11_0)
+function var_0_0.onOpen(arg_10_0)
+	arg_10_0._scrollstore:AddOnValueChanged(arg_10_0._onScrollValueChanged, arg_10_0)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_leimi_souvenir_open)
-	TaskDispatcher.runRepeat(arg_11_0.refreshTime, arg_11_0, TimeUtil.OneMinuteSecond)
-	arg_11_0:refreshTime()
-	arg_11_0:refreshStoreContent()
-	arg_11_0:_onScrollValueChanged()
-	arg_11_0:checkOpenCurrencyReplaceTips()
-	arg_11_0:checkCurrencyReplaceTipsBtn()
+	TaskDispatcher.runRepeat(arg_10_0.refreshTime, arg_10_0, TimeUtil.OneMinuteSecond)
+	arg_10_0:refreshTime()
+	arg_10_0:refreshStoreContent()
+	arg_10_0:_onScrollValueChanged()
 	V1a6_BossRush_StoreModel.instance:setNotNewStoreGoods()
 	BossRushController.instance:dispatchEvent(BossRushEvent.OnEnterStoreView)
 end
 
-function var_0_0.onOpenFinish(arg_12_0)
-	arg_12_0._scrollstore.verticalNormalizedPosition = 1
+function var_0_0.onOpenFinish(arg_11_0)
+	arg_11_0._scrollstore.verticalNormalizedPosition = 1
 
-	local var_12_0 = V1a6_BossRush_StoreModel.instance:getStoreGroupMO()
-	local var_12_1 = var_12_0 and var_12_0[StoreEnum.BossRushStore.UpdateStore]
+	local var_11_0 = V1a6_BossRush_StoreModel.instance:getStoreGroupMO()
+	local var_11_1 = var_11_0 and var_11_0[StoreEnum.BossRushStore.UpdateStore]
 
-	if not (var_12_1 and next(var_12_1:getGoodsList()) == nil) then
-		TaskDispatcher.runDelay(arg_12_0.checkFirstEnterOneDay, arg_12_0, 0.7)
+	if not (var_11_1 and next(var_11_1:getGoodsList()) == nil) then
+		TaskDispatcher.runDelay(arg_11_0.checkFirstEnterOneDay, arg_11_0, 0.7)
 	end
 end
 
-function var_0_0._OnHandleInStoreView(arg_13_0)
-	arg_13_0._isHandleInStoreView = true
+function var_0_0._OnHandleInStoreView(arg_12_0)
+	arg_12_0._isHandleInStoreView = true
 end
 
-function var_0_0.checkFirstEnterOneDay(arg_14_0)
-	if arg_14_0:getFirstEnterOneDayPref() == 0 then
-		if not arg_14_0._isHandleInStoreView and arg_14_0._scrollstore.verticalNormalizedPosition == 1 then
-			arg_14_0:_btntagOnClick(2)
+function var_0_0.checkFirstEnterOneDay(arg_13_0)
+	if arg_13_0:getFirstEnterOneDayPref() == 0 then
+		if not arg_13_0._isHandleInStoreView and arg_13_0._scrollstore.verticalNormalizedPosition == 1 then
+			arg_13_0:_btntagOnClick(2)
 		end
 
-		arg_14_0:setFirstEnterOneDayPref()
+		arg_13_0:setFirstEnterOneDayPref()
 	end
 end
 
-function var_0_0.refreshStoreContent(arg_15_0)
-	local var_15_0 = V1a6_BossRush_StoreModel.instance:getStoreGroupMO()
-	local var_15_1 = V1a6_BossRush_StoreModel.instance:getStore()
+function var_0_0.refreshStoreContent(arg_14_0)
+	local var_14_0 = V1a6_BossRush_StoreModel.instance:getStoreGroupMO()
+	local var_14_1 = V1a6_BossRush_StoreModel.instance:getStore()
 
-	for iter_15_0, iter_15_1 in pairs(var_15_1) do
-		local var_15_2 = var_15_0[iter_15_1]
-		local var_15_3 = arg_15_0.storeItemList[iter_15_1]
+	for iter_14_0, iter_14_1 in pairs(var_14_1) do
+		local var_14_2 = var_14_0[iter_14_1]
+		local var_14_3 = arg_14_0.storeItemList[iter_14_1]
 
-		if not var_15_3 then
-			var_15_3 = V1a6_BossRush_StoreItem.New()
+		if not var_14_3 then
+			var_14_3 = V1a6_BossRush_StoreItem.New()
 
-			local var_15_4 = gohelper.cloneInPlace(arg_15_0._gostoreItem, iter_15_1)
+			local var_14_4 = gohelper.cloneInPlace(arg_14_0._gostoreItem, iter_14_1)
 
-			var_15_3:onInitView(var_15_4)
+			var_14_3:onInitView(var_14_4)
 
-			arg_15_0.storeItemList[iter_15_1] = var_15_3
+			arg_14_0.storeItemList[iter_14_1] = var_14_3
 		end
 
-		var_15_3:updateInfo(iter_15_0, var_15_2)
+		var_14_3:updateInfo(iter_14_0, var_14_2)
 	end
 
-	for iter_15_2, iter_15_3 in pairs(arg_15_0.storeItemList) do
-		gohelper.setSibling(iter_15_3.go, iter_15_3.groupId or iter_15_2)
+	for iter_14_2, iter_14_3 in pairs(arg_14_0.storeItemList) do
+		gohelper.setSibling(iter_14_3.go, iter_14_3.groupId or iter_14_2)
 	end
 
-	arg_15_0:refreshItemNormalized()
+	arg_14_0:refreshItemNormalized()
 end
 
-function var_0_0.onClose(arg_16_0)
-	arg_16_0._scrollstore:RemoveOnValueChanged()
-	TaskDispatcher.cancelTask(arg_16_0.refreshTime, arg_16_0)
-	TaskDispatcher.cancelTask(arg_16_0.checkFirstEnterOneDay, arg_16_0)
-	arg_16_0:killTween()
+function var_0_0.onClose(arg_15_0)
+	arg_15_0._scrollstore:RemoveOnValueChanged()
+	TaskDispatcher.cancelTask(arg_15_0.refreshTime, arg_15_0)
+	TaskDispatcher.cancelTask(arg_15_0.checkFirstEnterOneDay, arg_15_0)
+	arg_15_0:killTween()
 
-	if arg_16_0._tagList then
-		for iter_16_0, iter_16_1 in pairs(arg_16_0._tagList) do
-			if iter_16_1.btn then
-				iter_16_1.btn:RemoveClickListener()
+	if arg_15_0._tagList then
+		for iter_15_0, iter_15_1 in pairs(arg_15_0._tagList) do
+			if iter_15_1.btn then
+				iter_15_1.btn:RemoveClickListener()
 			end
 		end
 	end
 
-	if arg_16_0.storeItemList then
-		for iter_16_2, iter_16_3 in pairs(arg_16_0.storeItemList) do
-			iter_16_3:onClose()
+	if arg_15_0.storeItemList then
+		for iter_15_2, iter_15_3 in pairs(arg_15_0.storeItemList) do
+			iter_15_3:onClose()
 		end
 	end
 
 	V1a6_BossRush_StoreModel.instance:saveAllStoreGroupNewData()
 end
 
-function var_0_0.onDestroyView(arg_17_0)
-	for iter_17_0, iter_17_1 in pairs(arg_17_0.storeItemList) do
-		iter_17_1:onDestroy()
+function var_0_0.onDestroyView(arg_16_0)
+	for iter_16_0, iter_16_1 in pairs(arg_16_0.storeItemList) do
+		iter_16_1:onDestroy()
 	end
 end
 
-function var_0_0.refreshTime(arg_18_0)
-	local var_18_0 = V1a6_BossRush_StoreModel.instance:getUpdateStoreRemainTime()
+function var_0_0.refreshTime(arg_17_0)
+	local var_17_0 = V1a6_BossRush_StoreModel.instance:getUpdateStoreRemainTime()
 
-	arg_18_0._txtlimit.text = var_18_0
+	arg_17_0._txtlimit.text = var_17_0
 
-	local var_18_1 = V1a6_BossRush_StoreModel.instance:checkUpdateStoreActivity() or BossRushConfig.instance:getActivityId()
-	local var_18_2 = ActivityModel.instance:getActivityInfo()[var_18_1]
+	local var_17_1 = V1a6_BossRush_StoreModel.instance:checkUpdateStoreActivity() or BossRushConfig.instance:getActivityId()
+	local var_17_2 = ActivityModel.instance:getActivityInfo()[var_17_1]
 
-	if var_18_2 then
-		local var_18_3 = var_18_2:getRealEndTimeStamp() - ServerTime.now()
+	if var_17_2 then
+		local var_17_3 = var_17_2:getRealEndTimeStamp() - ServerTime.now()
 
-		gohelper.setActive(arg_18_0._txtTime.gameObject, var_18_3 > 0)
+		gohelper.setActive(arg_17_0._txtTime.gameObject, var_17_3 > 0)
 
-		if var_18_3 > 0 then
-			local var_18_4 = TimeUtil.SecondToActivityTimeFormat(var_18_3)
+		if var_17_3 > 0 then
+			local var_17_4 = TimeUtil.SecondToActivityTimeFormat(var_17_3)
 
-			arg_18_0._txtTime.text = string.format(luaLang("v1a4_bossrush_scoreview_txt_closetime"), var_18_4)
+			arg_17_0._txtTime.text = string.format(luaLang("v1a4_bossrush_scoreview_txt_closetime"), var_17_4)
 		end
 	end
 end
 
-function var_0_0.refreshItemNormalized(arg_19_0)
-	if arg_19_0.storeItemList then
-		ZProj.UGUIHelper.RebuildLayout(arg_19_0._goContent.transform)
+function var_0_0.refreshItemNormalized(arg_18_0)
+	if arg_18_0.storeItemList then
+		ZProj.UGUIHelper.RebuildLayout(arg_18_0._goContent.transform)
 
-		local var_19_0 = recthelper.getHeight(arg_19_0._goContent.transform)
+		local var_18_0 = recthelper.getHeight(arg_18_0._goContent.transform)
 
-		arg_19_0.itemNormalized = {}
+		arg_18_0.itemNormalized = {}
 
-		local var_19_1 = recthelper.getHeight(arg_19_0._scrollstore.transform)
-		local var_19_2 = {}
+		local var_18_1 = recthelper.getHeight(arg_18_0._scrollstore.transform)
+		local var_18_2 = {}
 
-		for iter_19_0, iter_19_1 in pairs(arg_19_0.storeItemList) do
-			table.insert(var_19_2, iter_19_1)
+		for iter_18_0, iter_18_1 in pairs(arg_18_0.storeItemList) do
+			table.insert(var_18_2, iter_18_1)
 		end
 
-		table.sort(var_19_2, function(arg_20_0, arg_20_1)
-			return arg_20_0.groupId < arg_20_1.groupId
+		table.sort(var_18_2, function(arg_19_0, arg_19_1)
+			return arg_19_0.groupId < arg_19_1.groupId
 		end)
 
-		if var_19_0 > 0 then
-			local var_19_3 = 0
-			local var_19_4 = 0
-			local var_19_5 = 90
-			local var_19_6 = var_19_0 - var_19_1
+		if var_18_0 > 0 then
+			local var_18_3 = 0
+			local var_18_4 = 0
+			local var_18_5 = 90
+			local var_18_6 = var_18_0 - var_18_1
 
-			for iter_19_2, iter_19_3 in ipairs(var_19_2) do
-				local var_19_7 = iter_19_3:getHeight()
-				local var_19_8 = {}
-				local var_19_9 = var_19_3 == 0 and 0 or var_19_3
-				local var_19_10 = var_19_4 + (var_19_7 - var_19_1)
-				local var_19_11 = var_19_4
+			for iter_18_2, iter_18_3 in ipairs(var_18_2) do
+				local var_18_7 = iter_18_3:getHeight()
+				local var_18_8 = {}
+				local var_18_9 = var_18_3 == 0 and 0 or var_18_3
+				local var_18_10 = var_18_4 + (var_18_7 - var_18_1)
+				local var_18_11 = var_18_4
 
-				var_19_3 = var_19_10 + var_19_5
-				var_19_4 = var_19_11 + var_19_7 + var_19_5
-				var_19_8.startNormalized = 1 - var_19_9 / var_19_6
-				var_19_8.endNormalized = 1 - var_19_3 / var_19_6
-				var_19_8.centerNormalized = 1 - var_19_11 / var_19_6
+				var_18_3 = var_18_10 + var_18_5
+				var_18_4 = var_18_11 + var_18_7 + var_18_5
+				var_18_8.startNormalized = 1 - var_18_9 / var_18_6
+				var_18_8.endNormalized = 1 - var_18_3 / var_18_6
+				var_18_8.centerNormalized = 1 - var_18_11 / var_18_6
 
-				table.insert(arg_19_0.itemNormalized, var_19_8)
+				table.insert(arg_18_0.itemNormalized, var_18_8)
 			end
 		end
 
-		arg_19_0:checkEnableTag()
+		arg_18_0:checkEnableTag()
 	end
 end
 
-function var_0_0.checkEnableTag(arg_21_0)
-	if not arg_21_0.itemNormalized then
-		for iter_21_0, iter_21_1 in ipairs(arg_21_0._tagList) do
-			gohelper.setActive(iter_21_1.go, false)
+function var_0_0.checkEnableTag(arg_20_0)
+	if not arg_20_0.itemNormalized then
+		for iter_20_0, iter_20_1 in ipairs(arg_20_0._tagList) do
+			gohelper.setActive(iter_20_1.go, false)
 		end
 
 		return
 	end
 
-	for iter_21_2, iter_21_3 in ipairs(arg_21_0.showTagIndex) do
-		if not arg_21_0.itemNormalized[iter_21_3] then
+	for iter_20_2, iter_20_3 in ipairs(arg_20_0.showTagIndex) do
+		if not arg_20_0.itemNormalized[iter_20_3] then
 			return
 		end
 
-		local var_21_0 = arg_21_0.itemNormalized[iter_21_3].startNormalized - 0.05
-		local var_21_1 = arg_21_0._scrollstore.verticalNormalizedPosition
-		local var_21_2 = arg_21_0._tagList[iter_21_3]
+		local var_20_0 = arg_20_0.itemNormalized[iter_20_3].startNormalized - 0.05
+		local var_20_1 = arg_20_0._scrollstore.verticalNormalizedPosition
+		local var_20_2 = arg_20_0._tagList[iter_20_3]
 
-		if var_21_2 and var_21_0 then
-			local var_21_3 = var_21_1 - var_21_0
-			local var_21_4 = 0
+		if var_20_2 and var_20_0 then
+			local var_20_3 = var_20_1 - var_20_0
+			local var_20_4 = 0
 
-			gohelper.setActive(var_21_2.go, true)
+			gohelper.setActive(var_20_2.go, true)
 
-			local var_21_5 = 1 - (0.05 - var_21_3) / 0.05
-			local var_21_6 = Mathf.Clamp01(var_21_5)
+			local var_20_5 = 1 - (0.05 - var_20_3) / 0.05
+			local var_20_6 = Mathf.Clamp01(var_20_5)
 
-			var_21_2.canvasGroup.alpha = var_21_6
+			var_20_2.canvasGroup.alpha = var_20_6
 
-			transformhelper.setLocalPosXY(arg_21_0._gotag.transform, arg_21_0._gotag.transform.localPosition.x, -455 + var_21_6 * 83)
+			transformhelper.setLocalPosXY(arg_20_0._gotag.transform, arg_20_0._gotag.transform.localPosition.x, -455 + var_20_6 * 83)
 		end
 	end
 end
 
-function var_0_0.killTween(arg_22_0)
-	if arg_22_0.tweenId then
-		ZProj.TweenHelper.KillById(arg_22_0.tweenId)
+function var_0_0.killTween(arg_21_0)
+	if arg_21_0.tweenId then
+		ZProj.TweenHelper.KillById(arg_21_0.tweenId)
 
-		arg_22_0.tweenId = nil
+		arg_21_0.tweenId = nil
 	end
 end
 
-function var_0_0.tweenFrameCallback(arg_23_0, arg_23_1)
-	arg_23_0._scrollstore.verticalNormalizedPosition = arg_23_1
+function var_0_0.tweenFrameCallback(arg_22_0, arg_22_1)
+	arg_22_0._scrollstore.verticalNormalizedPosition = arg_22_1
 end
 
-function var_0_0.getFirstEnterOneDayPref(arg_24_0)
+function var_0_0.getFirstEnterOneDayPref(arg_23_0)
+	local var_23_0 = arg_23_0:getFirstEnterOneDayPrefKey()
+
+	return (PlayerPrefsHelper.getNumber(var_23_0, 0))
+end
+
+function var_0_0.setFirstEnterOneDayPref(arg_24_0)
 	local var_24_0 = arg_24_0:getFirstEnterOneDayPrefKey()
 
-	return (PlayerPrefsHelper.getNumber(var_24_0, 0))
+	PlayerPrefsHelper.setNumber(var_24_0, 1)
 end
 
-function var_0_0.setFirstEnterOneDayPref(arg_25_0)
-	local var_25_0 = arg_25_0:getFirstEnterOneDayPrefKey()
+function var_0_0.getFirstEnterOneDayPrefKey(arg_25_0)
+	local var_25_0 = PlayerModel.instance:getPlayinfo()
+	local var_25_1 = var_25_0 and var_25_0.userId or 1999
 
-	PlayerPrefsHelper.setNumber(var_25_0, 1)
-end
-
-function var_0_0.getFirstEnterOneDayPrefKey(arg_26_0)
-	local var_26_0 = PlayerModel.instance:getPlayinfo()
-	local var_26_1 = var_26_0 and var_26_0.userId or 1999
-
-	return "BossRush_StoreView_FirstEnterOneDay_" .. var_26_1
-end
-
-function var_0_0.checkOpenCurrencyReplaceTips(arg_27_0)
-	if not VersionActivityFixedHelper.isTargetVersion(2, 7) then
-		return
-	end
-
-	if Act183Helper.isOpenCurrencyReplaceTipsViewInLocal() then
-		return
-	end
-
-	local var_27_0 = Act183Helper.generateBossRush_ChallengeCurrencyReplaceViewParams()
-
-	Act183Controller.instance:openAct183CurrencyReplaceTipsView(var_27_0)
-end
-
-function var_0_0.checkCurrencyReplaceTipsBtn(arg_28_0)
-	local var_28_0 = VersionActivityFixedHelper.isTargetVersion(2, 7)
-
-	gohelper.setActive(arg_28_0._btnreplacetips.gameObject, var_28_0)
+	return "BossRush_StoreView_FirstEnterOneDay_" .. var_25_1
 end
 
 return var_0_0

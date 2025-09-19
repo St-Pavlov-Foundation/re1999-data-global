@@ -14,9 +14,10 @@ end
 function var_0_0.init(arg_2_0, arg_2_1)
 	arg_2_0._selectSkillGO = gohelper.findChild(arg_2_1, "btnSelectSkill")
 	arg_2_0._txtSelect = gohelper.findChildText(arg_2_1, "btnSelectSkill/Text")
-	arg_2_0._skillsGO = gohelper.findChild(arg_2_1, "selectSkills")
-	arg_2_0._skillItemPrefab = gohelper.findChild(arg_2_1, "selectSkills/skill")
-	arg_2_0._clickMask = gohelper.findChildClick(arg_2_1, "selectSkills/ClickMask")
+	arg_2_0.scrollView = gohelper.findChild(arg_2_1, "skillScroll")
+	arg_2_0._skillsGO = gohelper.findChild(arg_2_1, "skillScroll/Viewport/selectSkills")
+	arg_2_0._skillItemPrefab = gohelper.findChild(arg_2_1, "skillScroll/Viewport/selectSkills/skill")
+	arg_2_0._clickMask = gohelper.findChildClick(arg_2_1, "skillScroll/ClickMask")
 
 	arg_2_0._clickMask:AddClickListener(arg_2_0._onClickMask, arg_2_0)
 	gohelper.setActive(arg_2_0._skillItemPrefab, false)
@@ -31,12 +32,13 @@ function var_0_0.dispose(arg_3_0)
 end
 
 function var_0_0.show(arg_4_0)
-	gohelper.setActive(arg_4_0._skillsGO, true)
+	gohelper.setActive(arg_4_0.scrollView, true)
+	recthelper.setAnchorX(arg_4_0._skillsGO.transform, 0)
 	arg_4_0:_updateSelect()
 end
 
 function var_0_0.hide(arg_5_0)
-	gohelper.setActive(arg_5_0._skillsGO, false)
+	gohelper.setActive(arg_5_0.scrollView, false)
 end
 
 function var_0_0.getSelectSkillId(arg_6_0)
@@ -154,7 +156,7 @@ function var_0_0._getEntitySkillCOList(arg_9_0, arg_9_1)
 end
 
 function var_0_0._onClickMask(arg_10_0)
-	gohelper.setActive(arg_10_0._skillsGO, false)
+	gohelper.setActive(arg_10_0.scrollView, false)
 end
 
 function var_0_0._onClickSkillItem(arg_11_0, arg_11_1)

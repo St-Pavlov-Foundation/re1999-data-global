@@ -5,7 +5,7 @@ local var_0_0 = class("DecalogPresentModel", BaseModel)
 var_0_0.REWARD_INDEX = 1
 
 function var_0_0.getDecalogPresentActId(arg_1_0)
-	return ActivityEnum.Activity.V2a5_DecaLogPresent
+	return ActivityEnum.Activity.V2a8_DecaLogPresent
 end
 
 function var_0_0.isDecalogPresentOpen(arg_2_0)

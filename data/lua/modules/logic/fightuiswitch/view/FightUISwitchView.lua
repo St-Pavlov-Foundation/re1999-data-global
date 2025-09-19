@@ -157,7 +157,7 @@ function var_0_0._getClassifyItem(arg_18_0, arg_18_1)
 	local var_18_0 = arg_18_0._classifyItems[arg_18_1]
 
 	if not var_18_0 then
-		local var_18_1 = arg_18_0.viewContainer:getSetting().otherRes[2]
+		local var_18_1 = arg_18_0.viewContainer:getSetting().otherRes[3]
 		local var_18_2 = arg_18_0:getResInst(var_18_1, arg_18_0._goleft, "classify" .. arg_18_1)
 
 		var_18_0 = MonoHelper.addNoUpdateLuaComOnceToGo(var_18_2, MainSwitchClassifyItem)

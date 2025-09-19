@@ -61,7 +61,6 @@ function var_0_0._editableInitView(arg_6_0)
 
 	arg_6_0._simagebg1:LoadImage(ResUrl.getCommonIcon("bg_1"))
 	arg_6_0._simagebg2:LoadImage(ResUrl.getCommonIcon("bg_2"))
-	NavigateMgr.instance:addEscape(arg_6_0.viewName, arg_6_0.closeThis, arg_6_0)
 end
 
 function var_0_0._refreshUI(arg_7_0)
@@ -105,6 +104,7 @@ function var_0_0._cloneJumpItem(arg_8_0)
 						return
 					end
 
+					arg_8_0:checkViewOpenAndClose()
 					GameFacade.jump(arg_9_0.jumpId, arg_8_0._onJumpFinish, arg_8_0, arg_8_0.viewParam.recordFarmItem)
 				else
 					GameFacade.showToast(ToastEnum.MaterialTipJump)
@@ -182,23 +182,35 @@ function var_0_0._getCantJump(arg_11_0, arg_11_1)
 	return var_11_1, var_11_2
 end
 
-function var_0_0.onUpdateParam(arg_12_0)
-	arg_12_0:_refreshUI()
-end
+var_0_0.NeedCloseView = {
+	ViewName.PackageStoreGoodsView
+}
 
-function var_0_0.onOpen(arg_13_0)
-	arg_13_0:_refreshUI()
-end
-
-function var_0_0.onClose(arg_14_0)
-	for iter_14_0 = 1, #arg_14_0.jumpItemGos do
-		arg_14_0.jumpItemGos[iter_14_0].jumpBtn:RemoveClickListener()
+function var_0_0.checkViewOpenAndClose(arg_12_0)
+	for iter_12_0, iter_12_1 in pairs(var_0_0.NeedCloseView) do
+		if ViewMgr.instance:isOpen(iter_12_1) then
+			ViewMgr.instance:closeView(iter_12_1)
+		end
 	end
 end
 
-function var_0_0.onDestroyView(arg_15_0)
-	arg_15_0._simagebg1:UnLoadImage()
-	arg_15_0._simagebg2:UnLoadImage()
+function var_0_0.onUpdateParam(arg_13_0)
+	arg_13_0:_refreshUI()
+end
+
+function var_0_0.onOpen(arg_14_0)
+	arg_14_0:_refreshUI()
+end
+
+function var_0_0.onClose(arg_15_0)
+	for iter_15_0 = 1, #arg_15_0.jumpItemGos do
+		arg_15_0.jumpItemGos[iter_15_0].jumpBtn:RemoveClickListener()
+	end
+end
+
+function var_0_0.onDestroyView(arg_16_0)
+	arg_16_0._simagebg1:UnLoadImage()
+	arg_16_0._simagebg2:UnLoadImage()
 end
 
 return var_0_0

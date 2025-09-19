@@ -26,10 +26,12 @@ end
 
 function var_0_0.addEvents(arg_2_0)
 	arg_2_0._btntask:AddClickListener(arg_2_0._btntaskOnClick, arg_2_0)
+	arg_2_0._btnimage_TryBtn:AddClickListener(arg_2_0._btnimage_TryBtnOnClick, arg_2_0)
 end
 
 function var_0_0.removeEvents(arg_3_0)
 	arg_3_0._btntask:RemoveClickListener()
+	arg_3_0._btnimage_TryBtn:RemoveClickListener()
 end
 
 function var_0_0._btntaskOnClick(arg_4_0)
@@ -44,6 +46,9 @@ function var_0_0._editableInitView(arg_5_0)
 	arg_5_0._taskAnimator = arg_5_0._gotaskani:GetComponent(typeof(UnityEngine.Animator))
 
 	RedDotController.instance:addRedDot(arg_5_0._gored, RedDotEnum.DotNode.V2a1LanShouPaTaskRed, VersionActivity2_1Enum.ActivityId.LanShouPa)
+	gohelper.setActive(arg_5_0._gotime, false)
+
+	arg_5_0._btnimage_TryBtn = gohelper.findChildButtonWithAudio(arg_5_0.viewGO, "#go_Try/image_TryBtn")
 end
 
 function var_0_0.onOpen(arg_6_0)
@@ -263,6 +268,12 @@ function var_0_0.onDestroyView(arg_26_0)
 
 		arg_26_0._stageItemList = nil
 	end
+end
+
+local var_0_1 = 10012117
+
+function var_0_0._btnimage_TryBtnOnClick(arg_27_0)
+	GameFacade.jump(var_0_1)
 end
 
 return var_0_0

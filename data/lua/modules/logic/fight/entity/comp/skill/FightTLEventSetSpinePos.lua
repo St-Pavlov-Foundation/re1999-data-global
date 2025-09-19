@@ -55,13 +55,13 @@ function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 	end
 
 	if not string.nilorempty(arg_1_3[4]) then
-		local var_1_6 = GameSceneMgr.instance:getCurScene().deadEntityMgr
+		local var_1_6 = arg_1_0:com_sendMsg(FightMsgId.GetDeadEntityMgr)
 
 		var_1_1 = {}
 
 		local var_1_7 = string.splitToNumber(arg_1_3[4], "#")
 
-		for iter_1_5, iter_1_6 in pairs(var_1_6._entityDic) do
+		for iter_1_5, iter_1_6 in pairs(var_1_6.entityDic) do
 			local var_1_8 = iter_1_6:getMO()
 
 			if var_1_8 and tabletool.indexOf(var_1_7, var_1_8.skin) then

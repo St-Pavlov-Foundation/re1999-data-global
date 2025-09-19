@@ -24,6 +24,12 @@ function var_0_0.initCategoryList(arg_3_0)
 		}
 	}
 
+	if FightUISwitchModel.instance:isOpenFightUISwitchSystem() then
+		table.insert(var_3_0, {
+			id = MainEnum.SwitchType.FightUI
+		})
+	end
+
 	arg_3_0:setList(var_3_0)
 end
 

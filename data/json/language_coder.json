@@ -6088,6 +6088,570 @@
     "lang": "language_10074580"
   },
   {
+    "id": "survival_choice_costtime",
+    "lang": "language_10082553"
+  },
+  {
+    "id": "survival_choice_currencyGE",
+    "lang": "language_10082554"
+  },
+  {
+    "id": "survival_choice_currencyLT",
+    "lang": "language_10082555"
+  },
+  {
+    "id": "survival_choice_enthusiastic_get",
+    "lang": "language_10082556"
+  },
+  {
+    "id": "survival_choice_enthusiastic_cost",
+    "lang": "language_10082557"
+  },
+  {
+    "id": "survival_choice_recruitmentNPC",
+    "lang": "language_10082558"
+  },
+  {
+    "id": "survival_choice_getitem",
+    "lang": "language_10082559"
+  },
+  {
+    "id": "survival_choice_costitem",
+    "lang": "language_10082560"
+  },
+  {
+    "id": "survival_choice_changehealth",
+    "lang": "language_10082561"
+  },
+  {
+    "id": "survival_choice_item_noenough",
+    "lang": "language_10082562"
+  },
+  {
+    "id": "survival_mainview_teamhealth",
+    "lang": "language_10082563"
+  },
+  {
+    "id": "survival_filter_material",
+    "lang": "language_10065899"
+  },
+  {
+    "id": "survival_filter_equip",
+    "lang": "language_10082564"
+  },
+  {
+    "id": "survival_filter_consume",
+    "lang": "language_10003210"
+  },
+  {
+    "id": "survival_sort_mass",
+    "lang": "language_10082565"
+  },
+  {
+    "id": "survival_sort_worth",
+    "lang": "language_10082566"
+  },
+  {
+    "id": "survival_sort_type",
+    "lang": "language_10082567"
+  },
+  {
+    "id": "survival_sort_time",
+    "lang": "language_10082568"
+  },
+  {
+    "id": "survival_bag_have",
+    "lang": "language_10082569"
+  },
+  {
+    "id": "survival_bag_remain",
+    "lang": "language_10082570"
+  },
+  {
+    "id": "survival_bag_place",
+    "lang": "language_10082571"
+  },
+  {
+    "id": "survival_baginfo_effect",
+    "lang": "language_10029633"
+  },
+  {
+    "id": "survival_baginfo_info",
+    "lang": "language_90001216"
+  },
+  {
+    "id": "survival_npcselectview_inteam",
+    "lang": "language_10030385"
+  },
+  {
+    "id": "survival_npcselectview_cantuse",
+    "lang": "language_10082572"
+  },
+  {
+    "id": "survival_log_additem",
+    "lang": "language_10082573"
+  },
+  {
+    "id": "survival_log_removeitem",
+    "lang": "language_10082574"
+  },
+  {
+    "id": "survival_log_addnpc",
+    "lang": "language_10082575"
+  },
+  {
+    "id": "survival_log_removenpc",
+    "lang": "language_10082576"
+  },
+  {
+    "id": "survival_log_addcurrency",
+    "lang": "language_10082573"
+  },
+  {
+    "id": "survival_log_removecurrency",
+    "lang": "language_10082577"
+  },
+  {
+    "id": "survival_log_removecurrency_shelter",
+    "lang": "language_10082578"
+  },
+  {
+    "id": "survival_log_addheart",
+    "lang": "language_10082579"
+  },
+  {
+    "id": "survival_log_removeheart",
+    "lang": "language_10082580"
+  },
+  {
+    "id": "survival_log_taskbegin",
+    "lang": "language_10082581"
+  },
+  {
+    "id": "survival_log_taskfail",
+    "lang": "language_10082582"
+  },
+  {
+    "id": "survival_log_teamhealthadd",
+    "lang": "language_10082583"
+  },
+  {
+    "id": "survival_log_teamhealthsub",
+    "lang": "language_10082584"
+  },
+  {
+    "id": "survival_log_herohealthadd",
+    "lang": "language_10082585"
+  },
+  {
+    "id": "survival_log_heaohealthsub",
+    "lang": "language_10082586"
+  },
+  {
+    "id": "survival_log_gettalent",
+    "lang": "language_10082587"
+  },
+  {
+    "id": "survival_reward_title",
+    "lang": "language_10031353"
+  },
+  {
+    "id": "survival_reward_npc_title",
+    "lang": "language_10082588"
+  },
+  {
+    "id": "survival_reward_select_title",
+    "lang": "language_10082589"
+  },
+  {
+    "id": "survivalselectdifficultyview_txt_assess",
+    "lang": "language_10082590"
+  },
+  {
+    "id": "survival_commititemview_worth",
+    "lang": "language_10082591"
+  },
+  {
+    "id": "survival_mainview_beginshrink",
+    "lang": "language_10082592"
+  },
+  {
+    "id": "survival_mainview_endshrink",
+    "lang": "language_10082593"
+  },
+  {
+    "id": "survival_mainview_lastshrink",
+    "lang": "language_10082594"
+  },
+  {
+    "id": "survival_mainview_useitem_tips",
+    "lang": "language_10082595"
+  },
+  {
+    "id": "survival_talentview_lock",
+    "lang": "language_10082596"
+  },
+  {
+    "id": "survival_resultview_time",
+    "lang": "language_10029672"
+  },
+  {
+    "id": "survival_resultview_loss",
+    "lang": "language_10082597"
+  },
+  {
+    "id": "survival_eventview_commititem",
+    "lang": "language_10082598"
+  },
+  {
+    "id": "survival_eventview_rewarditem",
+    "lang": "language_10082599"
+  },
+  {
+    "id": "survival_eventview_npcrecr",
+    "lang": "language_10082600"
+  },
+  {
+    "id": "survival_eventview_leave",
+    "lang": "language_10000985"
+  },
+  {
+    "id": "survival_equipoverview_simple",
+    "lang": "language_10082601"
+  },
+  {
+    "id": "survival_equipoverview_exdesc",
+    "lang": "language_10082602"
+  },
+  {
+    "id": "survivaltaskview_collection_txt",
+    "lang": "language_10082603"
+  },
+  {
+    "id": "survivalbuildingmanageview_buildinglock_txt",
+    "lang": "language_10019891"
+  },
+  {
+    "id": "survivalbuildingmanageview_unbuild_txt",
+    "lang": "language_10031834"
+  },
+  {
+    "id": "survivalbuildingmanageview_buildinglock_reason1",
+    "lang": "language_10082604"
+  },
+  {
+    "id": "survivalbuildingmanageview_buildinglock_reason2",
+    "lang": "language_10082605"
+  },
+  {
+    "id": "fight_get_secret_key",
+    "lang": "language_10082606"
+  },
+  {
+    "id": "survival_herogroup_round",
+    "lang": "language_10082607"
+  },
+  {
+    "id": "TurnBackFullView_title",
+    "lang": "language_10069580"
+  },
+  {
+    "id": "survival_decreevote_tips_agree",
+    "lang": "language_10082608"
+  },
+  {
+    "id": "survival_decreevote_tips_disagree",
+    "lang": "language_10082609"
+  },
+  {
+    "id": "anniversary_typingtips_1",
+    "lang": "language_10082610"
+  },
+  {
+    "id": "anniversary_typingtips_2",
+    "lang": "language_10082611"
+  },
+  {
+    "id": "anniversary_typingtips_3",
+    "lang": "language_10082612"
+  },
+  {
+    "id": "anniversary_typingtips_4",
+    "lang": "language_10082613"
+  },
+  {
+    "id": "anniversary_typingtips_5",
+    "lang": "language_10082614"
+  },
+  {
+    "id": "anniversary_typingtips_6",
+    "lang": "language_10082615"
+  },
+  {
+    "id": "survival_mainview_foodcost_speed",
+    "lang": "language_10082616"
+  },
+  {
+    "id": "survival_mainview_monster_begin",
+    "lang": "language_10082617"
+  },
+  {
+    "id": "survival_mainview_monster_end",
+    "lang": "language_10082618"
+  },
+  {
+    "id": "survival_recruitview_demand_tips",
+    "lang": "language_10082619"
+  },
+  {
+    "id": "survival_recruitview_menber_tips",
+    "lang": "language_10082620"
+  },
+  {
+    "id": "survivalcompositeview_equip_tip1",
+    "lang": "language_10082621"
+  },
+  {
+    "id": "survivalcompositeview_equip_tip2",
+    "lang": "language_10082622"
+  },
+  {
+    "id": "survivalcompositeview_equip_tip3",
+    "lang": "language_10082623"
+  },
+  {
+    "id": "survivalcompositeview_equip_tip4",
+    "lang": "language_10082624"
+  },
+  {
+    "id": "survivalcompositeview_equip_tip5",
+    "lang": "language_10082624"
+  },
+  {
+    "id": "survivalceremonyopeningview_txt_1",
+    "lang": "language_10082625"
+  },
+  {
+    "id": "survivalceremonyopeningview_txt_2",
+    "lang": "language_10082626"
+  },
+  {
+    "id": "V2a8_DragonBoat_RewardItem_txt_unlockTips",
+    "lang": "language_10082627"
+  },
+  {
+    "id": "V2a8_DragonBoat_RewardItem_txt_unlockTips_do_sth",
+    "lang": "language_10082628"
+  },
+  {
+    "id": "survivalceremonyclosingview_survivalTime",
+    "lang": "language_10082629"
+  },
+  {
+    "id": "survivalceremonyclosingview_extraTarget",
+    "lang": "language_10082630"
+  },
+  {
+    "id": "survivalceremonyclosingview_collection",
+    "lang": "language_10082631"
+  },
+  {
+    "id": "anniversary_activitytip_1",
+    "lang": "language_10082632"
+  },
+  {
+    "id": "roomblockgift_colloctcount1",
+    "lang": "language_10077661"
+  },
+  {
+    "id": "roomblockgift_colloctcount2",
+    "lang": "language_10051181"
+  },
+  {
+    "id": "roomblockgift_select",
+    "lang": "language_10077662"
+  },
+  {
+    "id": "roombuildinggift_placingrange",
+    "lang": "language_10030673"
+  },
+  {
+    "id": "SurvivalShelterChooseNpcItem_Tips",
+    "lang": "language_10030949"
+  },
+  {
+    "id": "survival_mainview_monster_fight",
+    "lang": "language_10082633"
+  },
+  {
+    "id": "survivalreportview_npc_empty",
+    "lang": "language_10082634"
+  },
+  {
+    "id": "survivalreportview_npc",
+    "lang": "language_10082635"
+  },
+  {
+    "id": "survivalreportview_monster_empty",
+    "lang": "language_10082636"
+  },
+  {
+    "id": "survivalreportview_monster",
+    "lang": "language_10082637"
+  },
+  {
+    "id": "survivalreportview_build_empty",
+    "lang": "language_10082638"
+  },
+  {
+    "id": "survivalreportview_build",
+    "lang": "language_10082639"
+  },
+  {
+    "id": "survivalreportview_score_success",
+    "lang": "language_10082640"
+  },
+  {
+    "id": "Activity2ndCollectionPageView_EnterMaxStr",
+    "lang": "language_10082641"
+  },
+  {
+    "id": "autochesscard_growup_tip",
+    "lang": "language_10082642"
+  },
+  {
+    "id": "shelterHeroGroupFightView_item",
+    "lang": "language_10082643"
+  },
+  {
+    "id": "anniversary_bonus_rule",
+    "lang": "language_10082644"
+  },
+  {
+    "id": "anniversary_activity_tip2",
+    "lang": "language_10082645"
+  },
+  {
+    "id": "acttime_from_to",
+    "lang": "language_10082646"
+  },
+  {
+    "id": "anniversary_bonus_max",
+    "lang": "language_10082647"
+  },
+  {
+    "id": "anniversary_activity_name",
+    "lang": "language_10082648"
+  },
+  {
+    "id": "fightuiswitch_classify_1",
+    "lang": "language_10082649"
+  },
+  {
+    "id": "fightuiswitch_classify_2",
+    "lang": "language_10082650"
+  },
+  {
+    "id": "fightuiswitch_obtaintime",
+    "lang": "language_10082651"
+  },
+  {
+    "id": "survivalceremonyclosingview_item",
+    "lang": "language_10082652"
+  },
+  {
+    "id": "molideer_interludeview_txt_title",
+    "lang": "language_10082653"
+  },
+  {
+    "id": "molideer_execution_change_tips",
+    "lang": "language_10082654"
+  },
+  {
+    "id": "molideer_team_add_tips",
+    "lang": "language_10082655"
+  },
+  {
+    "id": "molideer_item_add_tips",
+    "lang": "language_10082656"
+  },
+  {
+    "id": "autochess_leaderbuffview_energy",
+    "lang": "language_10082657"
+  },
+  {
+    "id": "autochess_leaderbuffview_fire",
+    "lang": "language_10082658"
+  },
+  {
+    "id": "ShelterMapEventView_looktask",
+    "lang": "language_10004521"
+  },
+  {
+    "id": "autochess_mainview_timetip",
+    "lang": "language_10082659"
+  },
+  {
+    "id": "taluo_show_character_name",
+    "lang": "language_10082660"
+  },
+  {
+    "id": "survival_SurvivalMonsterEventView_tips",
+    "lang": "language_10082661"
+  },
+  {
+    "id": "handbookskinview_playername",
+    "lang": "language_10082662"
+  },
+  {
+    "id": "survivalreportview_score_buildItem",
+    "lang": "language_10082663"
+  },
+  {
+    "id": "survivalreportview_score_foodItem",
+    "lang": "language_10082664"
+  },
+  {
+    "id": "survivalreportview_score_equipItem",
+    "lang": "language_10082665"
+  },
+  {
+    "id": "survivalreportview_score_goldItem",
+    "lang": "language_10082666"
+  },
+  {
+    "id": "survivalreportview_score_otherItem",
+    "lang": "language_10082667"
+  },
+  {
+    "id": "survivalreportview_score_npc",
+    "lang": "language_10082668"
+  },
+  {
+    "id": "survivalreportview_monster_today",
+    "lang": "language_10082669"
+  },
+  {
+    "id": "ShelterManagerInfoView_npc_foodcost",
+    "lang": "language_10082670"
+  },
+  {
+    "id": "survivalmonstereventview_monster_toady",
+    "lang": "language_10082671"
+  },
+  {
+    "id": "survivalreportview_score_failed",
+    "lang": "language_10082672"
+  },
+  {
+    "id": "survivalreportview_npc_new",
+    "lang": "language_10082673"
+  },
+  {
+    "id": "survival_shelter_quit_fight_confirm",
+    "lang": "language_10082674"
+  },
+  {
     "id": "assassin_quest_fight_pick_hero",
     "lang": "language_10022458"
   },
@@ -6536,20 +7100,24 @@
     "lang": "language_10029702"
   },
   {
-    "id": "roomblockgift_colloctcount1",
-    "lang": "language_10077661"
+    "id": "AutoChessMainView_refreshDoubleRankTip_allCnt",
+    "lang": "language_10082675"
   },
   {
-    "id": "roomblockgift_colloctcount2",
-    "lang": "language_10051181"
+    "id": "ShelterTaskMainTaskView_refreshTalent_txtBase",
+    "lang": "language_10082676"
   },
   {
-    "id": "roomblockgift_select",
-    "lang": "language_10077662"
+    "id": "SurvivalDecreeSelectItem_descItem_txtDesc",
+    "lang": "language_10082677"
   },
   {
-    "id": "roombuildinggift_placingrange",
-    "lang": "language_10030673"
+    "id": "buy_limit_time",
+    "lang": "language_10082678"
+  },
+  {
+    "id": "receive_limit_time",
+    "lang": "language_10082679"
   },
   {
     "id": "CharacterBackpackEquipView_showEquipBackpackNum",
@@ -6614,10 +7182,6 @@
   {
     "id": "MaterialTipView_jumpText_unlock",
     "lang": "language_10035622"
-  },
-  {
-    "id": "TurnBackFullView_title",
-    "lang": "language_10069580"
   },
   {
     "id": "NewPlayerCardView_activity_only",

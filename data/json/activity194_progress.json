@@ -1,0 +1,350 @@
+[
+  {
+    "optionId": 1000101,
+    "condition": "2001#1",
+    "progressChange": 1,
+    "progressNum": 33
+  },
+  {
+    "optionId": 1000102,
+    "condition": "2001#1",
+    "progressChange": 1,
+    "progressNum": 33
+  },
+  {
+    "optionId": 1000103,
+    "condition": "2001#1",
+    "progressChange": 1,
+    "progressNum": 33
+  },
+  {
+    "optionId": 1000104,
+    "condition": "2001#1",
+    "progressChange": 1,
+    "progressNum": 33
+  },
+  {
+    "optionId": 1000105,
+    "condition": "2001#1",
+    "progressChange": 2,
+    "progressNum": 0
+  },
+  {
+    "optionId": 1000106,
+    "condition": "2001#2",
+    "progressChange": 1,
+    "progressNum": 50
+  },
+  {
+    "optionId": 1000109,
+    "condition": "2001#2",
+    "progressChange": 2,
+    "progressNum": 0
+  },
+  {
+    "optionId": 1000115,
+    "condition": "2002#1",
+    "progressChange": 1,
+    "progressNum": 33
+  },
+  {
+    "optionId": 1000116,
+    "condition": "2002#1",
+    "progressChange": 1,
+    "progressNum": 33
+  },
+  {
+    "optionId": 1000117,
+    "condition": "2002#1",
+    "progressChange": 1,
+    "progressNum": 33
+  },
+  {
+    "optionId": 1000118,
+    "condition": "2002#1",
+    "progressChange": 1,
+    "progressNum": 33
+  },
+  {
+    "optionId": 1000119,
+    "condition": "2002#1",
+    "progressChange": 1,
+    "progressNum": 33
+  },
+  {
+    "optionId": 1000120,
+    "condition": "2002#1",
+    "progressChange": 2,
+    "progressNum": 0
+  },
+  {
+    "optionId": 1000121,
+    "condition": "2002#2",
+    "progressChange": 1,
+    "progressNum": 16
+  },
+  {
+    "optionId": 1000122,
+    "condition": "2002#2",
+    "progressChange": 3,
+    "progressNum": 0
+  },
+  {
+    "optionId": 1000123,
+    "condition": "2002#2",
+    "progressChange": 1,
+    "progressNum": 16
+  },
+  {
+    "optionId": 1000124,
+    "condition": "2002#2",
+    "progressChange": 3,
+    "progressNum": 0
+  },
+  {
+    "optionId": 1000125,
+    "condition": "2002#2",
+    "progressChange": 1,
+    "progressNum": 16
+  },
+  {
+    "optionId": 1000126,
+    "condition": "2002#2",
+    "progressChange": 1,
+    "progressNum": 10
+  },
+  {
+    "optionId": 1000128,
+    "condition": "2002#2",
+    "progressChange": 1,
+    "progressNum": 10
+  },
+  {
+    "optionId": 1000130,
+    "condition": "2002#2",
+    "progressChange": 3,
+    "progressNum": 0
+  },
+  {
+    "optionId": 1000131,
+    "condition": "2002#2",
+    "progressChange": 1,
+    "progressNum": 16
+  },
+  {
+    "optionId": 1000132,
+    "condition": "2002#2",
+    "progressChange": 2,
+    "progressNum": 0
+  },
+  {
+    "optionId": 1000133,
+    "condition": "2002#2",
+    "progressChange": 2,
+    "progressNum": 0
+  },
+  {
+    "optionId": 1000134,
+    "condition": "2003#1|2003#2",
+    "progressChange": 1,
+    "progressNum": 3
+  },
+  {
+    "optionId": 1000135,
+    "condition": "2003#1|2003#2",
+    "progressChange": 1,
+    "progressNum": 3
+  },
+  {
+    "optionId": 1000136,
+    "condition": "2003#1|2003#2",
+    "progressChange": 1,
+    "progressNum": 3
+  },
+  {
+    "optionId": 1000137,
+    "condition": "2003#1|2003#2",
+    "progressChange": 1,
+    "progressNum": 3
+  },
+  {
+    "optionId": 1000138,
+    "condition": "2003#1|2003#2",
+    "progressChange": 1,
+    "progressNum": 20
+  },
+  {
+    "optionId": 1000139,
+    "condition": "2003#1|2003#2",
+    "progressChange": 1,
+    "progressNum": 3
+  },
+  {
+    "optionId": 1000140,
+    "condition": "2003#1|2003#2",
+    "progressChange": 1,
+    "progressNum": 3
+  },
+  {
+    "optionId": 1000141,
+    "condition": "2003#1|2003#2",
+    "progressChange": 1,
+    "progressNum": 3
+  },
+  {
+    "optionId": 1000142,
+    "condition": "2003#1|2003#2",
+    "progressChange": 1,
+    "progressNum": 3
+  },
+  {
+    "optionId": 1000143,
+    "condition": "2003#1|2003#2",
+    "progressChange": 1,
+    "progressNum": 3
+  },
+  {
+    "optionId": 1000144,
+    "condition": "2003#1|2003#2",
+    "progressChange": 1,
+    "progressNum": 20
+  },
+  {
+    "optionId": 1000145,
+    "condition": "2003#1|2003#2",
+    "progressChange": 1,
+    "progressNum": 3
+  },
+  {
+    "optionId": 1000146,
+    "condition": "2003#1|2003#2",
+    "progressChange": 1,
+    "progressNum": 3
+  },
+  {
+    "optionId": 1000147,
+    "condition": "2003#1|2003#2",
+    "progressChange": 1,
+    "progressNum": 3
+  },
+  {
+    "optionId": 1000148,
+    "condition": "2003#1|2003#2",
+    "progressChange": 1,
+    "progressNum": 3
+  },
+  {
+    "optionId": 1000149,
+    "condition": "2003#1|2003#2",
+    "progressChange": 1,
+    "progressNum": 3
+  },
+  {
+    "optionId": 1000150,
+    "condition": "2003#1|2003#2",
+    "progressChange": 1,
+    "progressNum": 3
+  },
+  {
+    "optionId": 1000151,
+    "condition": "2003#1|2003#2",
+    "progressChange": 1,
+    "progressNum": 20
+  },
+  {
+    "optionId": 1000152,
+    "condition": "2004#1",
+    "progressChange": 1,
+    "progressNum": 25
+  },
+  {
+    "optionId": 1000153,
+    "condition": "2004#1",
+    "progressChange": 1,
+    "progressNum": 25
+  },
+  {
+    "optionId": 1000154,
+    "condition": "2004#1",
+    "progressChange": 1,
+    "progressNum": 25
+  },
+  {
+    "optionId": 1000155,
+    "condition": "2004#1",
+    "progressChange": 1,
+    "progressNum": 25
+  },
+  {
+    "optionId": 1000156,
+    "condition": "2004#1",
+    "progressChange": 1,
+    "progressNum": 25
+  },
+  {
+    "optionId": 1000157,
+    "condition": "2004#1",
+    "progressChange": 2,
+    "progressNum": 0
+  },
+  {
+    "optionId": 1000158,
+    "condition": "2004#2",
+    "progressChange": 1,
+    "progressNum": 33
+  },
+  {
+    "optionId": 1000159,
+    "condition": "2004#2",
+    "progressChange": 1,
+    "progressNum": 33
+  },
+  {
+    "optionId": 1000160,
+    "condition": "2004#2",
+    "progressChange": 3,
+    "progressNum": 0
+  },
+  {
+    "optionId": 1000161,
+    "condition": "2004#2",
+    "progressChange": 1,
+    "progressNum": 33
+  },
+  {
+    "optionId": 1000162,
+    "condition": "2004#2",
+    "progressChange": 3,
+    "progressNum": 0
+  },
+  {
+    "optionId": 1000163,
+    "condition": "2004#2",
+    "progressChange": 2,
+    "progressNum": 0
+  },
+  {
+    "optionId": 1000169,
+    "condition": "2004#2",
+    "progressChange": 3,
+    "progressNum": 0
+  },
+  {
+    "optionId": 1000164,
+    "condition": "2004#1",
+    "progressChange": 1,
+    "progressNum": 10
+  },
+  {
+    "optionId": 1000166,
+    "condition": "2004#1",
+    "progressChange": 1,
+    "progressNum": 10
+  },
+  {
+    "optionId": 1000168,
+    "condition": "2004#1",
+    "progressChange": 2,
+    "progressNum": 0
+  }
+]

@@ -1,0 +1,62 @@
+[
+  {
+    "itemId": 2001,
+    "name": "language_10086799",
+    "desc": "language_10086800",
+    "picture": "icon_guantou",
+    "pictureOffset": 0.8,
+    "canMove": 0,
+    "canEmpty": 0,
+    "skillID": 5
+  },
+  {
+    "itemId": 2002,
+    "name": "language_10086801",
+    "desc": "language_10086802",
+    "picture": "icon_binggao",
+    "pictureOffset": 0.8,
+    "canMove": 1,
+    "canEmpty": 0,
+    "skillID": 6
+  },
+  {
+    "itemId": 2003,
+    "name": "language_10086803",
+    "desc": "language_10086804",
+    "picture": "icon_mengudao",
+    "pictureOffset": 0.8,
+    "canMove": 0,
+    "canEmpty": 0,
+    "skillID": 7
+  },
+  {
+    "itemId": 2004,
+    "name": "language_10086805",
+    "desc": "language_10086806",
+    "picture": "icon_meiyoudeng",
+    "pictureOffset": 0.8,
+    "canMove": 1,
+    "canEmpty": 1,
+    "skillID": 8
+  },
+  {
+    "itemId": 2005,
+    "name": "language_10086807",
+    "desc": "language_10086808",
+    "picture": "icon_duijiangji",
+    "pictureOffset": 0.8,
+    "canMove": 1,
+    "canEmpty": 1,
+    "skillID": 9
+  },
+  {
+    "itemId": 2006,
+    "name": "language_10086809",
+    "desc": "",
+    "picture": "icon_lianzi",
+    "pictureOffset": 0.8,
+    "canMove": 0,
+    "canEmpty": 0,
+    "skillID": 0
+  }
+]

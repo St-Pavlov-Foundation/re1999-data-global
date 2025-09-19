@@ -28,43 +28,17 @@ end
 function var_0_0.initSelectConditionMap(arg_5_0)
 	arg_5_0._selectConditionMap = {}
 	arg_5_0._selectConditionIds = {}
+	arg_5_0._passFightConditionIds = arg_5_0._groupEpisodeMo:getAllPassConditionIds(arg_5_0._episodeId)
 
-	local var_5_0 = false
+	for iter_5_0, iter_5_1 in ipairs(arg_5_0._passFightConditionIds) do
+		arg_5_0._selectConditionMap[iter_5_1] = true
 
-	arg_5_0._fightConditionIds, arg_5_0._passFightConditionIds = arg_5_0._groupEpisodeMo:getTotalAndPassConditionIds(arg_5_0._episodeId)
-	arg_5_0._fightConditionIdMap = Act183Helper.listToMap(arg_5_0._fightConditionIds)
-	arg_5_0._passFightConditionIdMap = Act183Helper.listToMap(arg_5_0._passFightConditionIds)
-
-	if arg_5_0._episodeType == Act183Enum.EpisodeType.Boss then
-		local var_5_1 = {}
-
-		if PlayerPrefsHelper.hasKey(Act183Helper._generateSaveSelectCollectionIdsKey(arg_5_0._activityId, arg_5_0._episodeId)) then
-			var_5_1 = Act183Helper.getSelectConditionIdsInLocal(arg_5_0._activityId, arg_5_0._episodeId)
-		else
-			var_5_1 = arg_5_0._passFightConditionIds
-			var_5_0 = true
-		end
-
-		if var_5_1 then
-			for iter_5_0, iter_5_1 in ipairs(var_5_1) do
-				if arg_5_0._passFightConditionIdMap[iter_5_1] then
-					arg_5_0._selectConditionMap[iter_5_1] = true
-
-					table.insert(arg_5_0._selectConditionIds, iter_5_1)
-				else
-					var_5_0 = true
-				end
-			end
-		end
-	end
-
-	if var_5_0 then
-		Act183Helper.saveSelectConditionIdsInLocal(arg_5_0._activityId, arg_5_0._episodeId, arg_5_0._selectConditionIds)
+		table.insert(arg_5_0._selectConditionIds, iter_5_1)
 	end
 end
 
 function var_0_0.checkIsVisible(arg_6_0)
-	return arg_6_0._episodeType == Act183Enum.EpisodeType.Boss
+	return arg_6_0._episodeType == Act183Enum.EpisodeType.Boss and arg_6_0._groupType ~= Act183Enum.GroupType.Daily
 end
 
 function var_0_0.show(arg_7_0)
@@ -95,25 +69,7 @@ function var_0_0._initRewardRuleItemFunc(arg_8_0, arg_8_1, arg_8_2)
 end
 
 function var_0_0._onClickRewardItem(arg_9_0, arg_9_1)
-	local var_9_0 = arg_9_0._subEpisodeConditions and arg_9_0._subEpisodeConditions[arg_9_1]
-	local var_9_1 = Act183Config.instance:getConditionCo(var_9_0)
-
-	if not var_9_1 then
-		return
-	end
-
-	local var_9_2 = not arg_9_0._selectConditionMap[var_9_1.id]
-
-	arg_9_0._selectConditionMap[var_9_1.id] = var_9_2
-
-	tabletool.removeValue(arg_9_0._selectConditionIds, var_9_1.id)
-
-	if var_9_2 then
-		table.insert(arg_9_0._selectConditionIds, var_9_1.id)
-	end
-
-	Act183Helper.saveSelectConditionIdsInLocal(arg_9_0._activityId, arg_9_0._episodeId, arg_9_0._selectConditionIds)
-	arg_9_0:refresh()
+	return
 end
 
 function var_0_0._refreshRewardRuleItemFunc(arg_10_0, arg_10_1, arg_10_2, arg_10_3)

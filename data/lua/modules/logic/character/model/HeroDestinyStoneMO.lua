@@ -218,21 +218,29 @@ end
 
 function var_0_0._replaceSkill(arg_24_0, arg_24_1)
 	if arg_24_1 then
-		local var_24_0 = arg_24_0:getCurUseStoneCo()
+		var_0_0.replaceSkillList(arg_24_1, arg_24_0.curUseStoneId, arg_24_0.rank)
+	end
 
-		if var_24_0 then
-			local var_24_1 = var_24_0.exchangeSkills
+	return arg_24_1
+end
 
-			if not string.nilorempty(var_24_1) then
-				local var_24_2 = GameUtil.splitString2(var_24_1, true)
+function var_0_0.replaceSkillList(arg_25_0, arg_25_1, arg_25_2)
+	if arg_25_1 and arg_25_1 ~= 0 then
+		local var_25_0 = CharacterDestinyConfig.instance:getDestinyFacets(arg_25_1, arg_25_2)
 
-				for iter_24_0, iter_24_1 in pairs(arg_24_1) do
-					for iter_24_2, iter_24_3 in ipairs(var_24_2) do
-						local var_24_3 = iter_24_3[1]
-						local var_24_4 = iter_24_3[2]
+		if var_25_0 then
+			local var_25_1 = var_25_0.exchangeSkills
 
-						if iter_24_1 == var_24_3 then
-							arg_24_1[iter_24_0] = var_24_4
+			if not string.nilorempty(var_25_1) then
+				local var_25_2 = GameUtil.splitString2(var_25_1, true)
+
+				for iter_25_0, iter_25_1 in pairs(arg_25_0) do
+					for iter_25_2, iter_25_3 in ipairs(var_25_2) do
+						local var_25_3 = iter_25_3[1]
+						local var_25_4 = iter_25_3[2]
+
+						if iter_25_1 == var_25_3 then
+							arg_25_0[iter_25_0] = var_25_4
 						end
 					end
 				end
@@ -240,20 +248,20 @@ function var_0_0._replaceSkill(arg_24_0, arg_24_1)
 		end
 	end
 
-	return arg_24_1
+	return arg_25_0
 end
 
-function var_0_0.setRedDot(arg_25_0, arg_25_1)
-	arg_25_0.reddot = arg_25_1
+function var_0_0.setRedDot(arg_26_0, arg_26_1)
+	arg_26_0.reddot = arg_26_1
 end
 
-function var_0_0.getRedDot(arg_26_0)
-	return arg_26_0.reddot or 0
+function var_0_0.getRedDot(arg_27_0)
+	return arg_27_0.reddot or 0
 end
 
-function var_0_0.setTrial(arg_27_0)
-	if arg_27_0.maxLevel and arg_27_0.maxRank then
-		arg_27_0.level = arg_27_0.maxLevel[arg_27_0.maxRank] or 1
+function var_0_0.setTrial(arg_28_0)
+	if arg_28_0.maxLevel and arg_28_0.maxRank then
+		arg_28_0.level = arg_28_0.maxLevel[arg_28_0.maxRank] or 1
 	end
 end
 

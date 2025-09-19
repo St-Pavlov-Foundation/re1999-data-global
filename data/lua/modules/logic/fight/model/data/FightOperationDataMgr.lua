@@ -10,6 +10,7 @@ function var_0_0.onConstructor(arg_1_0)
 	arg_1_0.extraMoveUsedCount = 0
 	arg_1_0.playerFinisherSkillUsedCount = nil
 	arg_1_0.curSelectEntityId = 0
+	arg_1_0.survivalTalentSkillUsedCount = 0
 end
 
 function var_0_0.getOpList(arg_2_0)
@@ -31,6 +32,7 @@ function var_0_0.clearClientSimulationData(arg_5_0)
 
 	arg_5_0.extraMoveUsedCount = 0
 	arg_5_0.playerFinisherSkillUsedCount = nil
+	arg_5_0.survivalTalentSkillUsedCount = 0
 end
 
 function var_0_0.onCancelOperation(arg_6_0)
@@ -260,8 +262,12 @@ function var_0_0.getSelectEnemyPosLOrR(arg_21_0, arg_21_1)
 	end
 end
 
-function var_0_0.applyNextRoundActPoint(arg_23_0)
-	arg_23_0.actPoint = arg_23_0.dataMgr.roundMgr.curRoundData.actPoint or arg_23_0.actPoint
+function var_0_0.addSurvivalTalentSkillUsedCount(arg_23_0, arg_23_1)
+	arg_23_0.survivalTalentSkillUsedCount = arg_23_0.survivalTalentSkillUsedCount + arg_23_1
+end
+
+function var_0_0.applyNextRoundActPoint(arg_24_0)
+	arg_24_0.actPoint = arg_24_0.dataMgr.roundMgr.curRoundData.actPoint or arg_24_0.actPoint
 end
 
 return var_0_0

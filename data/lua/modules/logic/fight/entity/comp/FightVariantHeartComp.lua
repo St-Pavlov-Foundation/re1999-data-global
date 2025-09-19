@@ -109,11 +109,32 @@ function var_0_0._change(arg_7_0)
 		return
 	end
 
-	local var_7_0 = arg_7_0._hostEntity:getMO()
-	local var_7_1 = var_7_0 and var_7_0:getCO()
-	local var_7_2 = var_7_1 and var_7_1.heartVariantId
+	local var_7_0 = arg_7_0.entity.buff and arg_7_0.entity.buff:getBuffMatName()
+	local var_7_1
 
-	if not var_7_2 or not var_0_0.VariantKey[var_7_2] then
+	if not string.nilorempty(var_7_0) then
+		local var_7_2 = var_7_1 and var_7_1:getCO()
+
+		if var_7_2 then
+			local var_7_3 = lua_buff_mat_variant.configDict[var_7_2.typeId]
+
+			if var_7_3 then
+				local var_7_4 = var_7_3.variant
+
+				if var_7_4 and var_0_0.VariantKey[var_7_4] then
+					arg_7_0:_changeVariant(var_7_4)
+
+					return
+				end
+			end
+		end
+	end
+
+	local var_7_5 = arg_7_0._hostEntity:getMO()
+	local var_7_6 = var_7_5 and var_7_5:getCO()
+	local var_7_7 = var_7_6 and var_7_6.heartVariantId
+
+	if not var_7_7 or not var_0_0.VariantKey[var_7_7] then
 		return
 	end
 
@@ -121,7 +142,7 @@ function var_0_0._change(arg_7_0)
 		return
 	end
 
-	arg_7_0:_changeVariant(var_7_2)
+	arg_7_0:_changeVariant(var_7_7)
 end
 
 function var_0_0._changeVariant(arg_8_0, arg_8_1)

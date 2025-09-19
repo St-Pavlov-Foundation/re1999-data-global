@@ -972,6 +972,78 @@
     "transitionAct": "change2"
   },
   {
+    "id": 310701,
+    "fromAct": "idle",
+    "endAct": "channel_idle",
+    "transitionAct": "0"
+  },
+  {
+    "id": 310701,
+    "fromAct": "posture",
+    "endAct": "channel_idle",
+    "transitionAct": "0"
+  },
+  {
+    "id": 310701,
+    "fromAct": "channel_idle",
+    "endAct": "idle",
+    "transitionAct": "0"
+  },
+  {
+    "id": 310701,
+    "fromAct": "channel_idle",
+    "endAct": "hit",
+    "transitionAct": "-1"
+  },
+  {
+    "id": 310702,
+    "fromAct": "idle",
+    "endAct": "channel_idle",
+    "transitionAct": "0"
+  },
+  {
+    "id": 310702,
+    "fromAct": "posture",
+    "endAct": "channel_idle",
+    "transitionAct": "0"
+  },
+  {
+    "id": 310702,
+    "fromAct": "channel_idle",
+    "endAct": "idle",
+    "transitionAct": "0"
+  },
+  {
+    "id": 310702,
+    "fromAct": "channel_idle",
+    "endAct": "hit",
+    "transitionAct": "-1"
+  },
+  {
+    "id": 310703,
+    "fromAct": "idle",
+    "endAct": "channel_idle",
+    "transitionAct": "0"
+  },
+  {
+    "id": 310703,
+    "fromAct": "posture",
+    "endAct": "channel_idle",
+    "transitionAct": "0"
+  },
+  {
+    "id": 310703,
+    "fromAct": "channel_idle",
+    "endAct": "idle",
+    "transitionAct": "0"
+  },
+  {
+    "id": 310703,
+    "fromAct": "channel_idle",
+    "endAct": "hit",
+    "transitionAct": "-1"
+  },
+  {
     "id": 308704,
     "fromAct": "idle_trans",
     "endAct": "idle",

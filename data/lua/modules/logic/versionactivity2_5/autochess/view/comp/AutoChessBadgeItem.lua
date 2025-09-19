@@ -12,12 +12,12 @@ var_0_0.ShowType = {
 
 function var_0_0.init(arg_1_0, arg_1_1)
 	arg_1_0.go = arg_1_1
-	arg_1_0.goEmpty = gohelper.findChild(arg_1_1, "root/#go_Empty")
 	arg_1_0.goUnlock = gohelper.findChild(arg_1_1, "root/#go_Unlock")
-	arg_1_0.simageBadgeU = gohelper.findChildSingleImage(arg_1_1, "root/#go_Unlock/#simage_BadgeU")
 	arg_1_0.goProgress = gohelper.findChild(arg_1_1, "root/#go_Unlock/#go_Progress")
 	arg_1_0.imageProgress = gohelper.findChildImage(arg_1_1, "root/#go_Unlock/#go_Progress/#image_Progress")
 	arg_1_0.txtProgress = gohelper.findChildText(arg_1_1, "root/#go_Unlock/#go_Progress/#txt_Progress")
+	arg_1_0.simageBadgeU = gohelper.findChildSingleImage(arg_1_1, "root/#go_Unlock/#simage_BadgeU")
+	arg_1_0.goStar = gohelper.findChild(arg_1_1, "root/#go_Unlock/#go_Star")
 	arg_1_0.goLock = gohelper.findChild(arg_1_1, "root/#go_Lock")
 	arg_1_0.simageBadgeL = gohelper.findChildSingleImage(arg_1_1, "root/#go_Lock/#simage_BadgeL")
 	arg_1_0.txtUnlock = gohelper.findChildText(arg_1_1, "root/#go_Lock/#txt_Unlock")
@@ -43,11 +43,7 @@ function var_0_0.setData(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
 	arg_3_0.config = lua_auto_chess_rank.configDict[arg_3_0.actId][arg_3_1]
 
 	if not arg_3_0.config then
-		arg_3_0.txtName.text = luaLang("autochess_badgeitem_noget")
-
-		gohelper.setActive(arg_3_0.goUnlock, false)
-		gohelper.setActive(arg_3_0.goLock, false)
-		gohelper.setActive(arg_3_0.goReward, false)
+		logError(string.format("段位ID: %s 配置不存在", arg_3_1))
 
 		return
 	end
@@ -75,29 +71,38 @@ function var_0_0.addClick(arg_4_0)
 end
 
 function var_0_0.refreshNormal(arg_5_0)
-	arg_5_0.unlock = arg_5_0.needScore <= arg_5_0.curScore
-
-	if arg_5_0.unlock then
-		arg_5_0.simageBadgeU:LoadImage(ResUrl.getAutoChessIcon(arg_5_0.config.icon, "badgeicon"))
+	if arg_5_0.config.score == 0 then
+		arg_5_0.txtName.text = luaLang("autochess_badgeitem_noget")
 	else
-		arg_5_0.simageBadgeL:LoadImage(ResUrl.getAutoChessIcon(arg_5_0.config.icon, "badgeicon"))
+		arg_5_0.unlock = arg_5_0.needScore <= arg_5_0.curScore
 
-		local var_5_0 = luaLang("autochess_badgeitem_unlock")
+		if arg_5_0.unlock then
+			arg_5_0.simageBadgeU:LoadImage(ResUrl.getAutoChessIcon(arg_5_0.config.icon, "badgeicon"))
+		else
+			arg_5_0.simageBadgeL:LoadImage(ResUrl.getAutoChessIcon(arg_5_0.config.icon, "badgeicon"))
 
-		arg_5_0.txtUnlock.text = GameUtil.getSubPlaceholderLuaLangTwoParam(var_5_0, arg_5_0.curScore, arg_5_0.needScore)
+			local var_5_0 = luaLang("autochess_badgeitem_unlock")
+
+			arg_5_0.txtUnlock.text = GameUtil.getSubPlaceholderLuaLangTwoParam(var_5_0, arg_5_0.curScore, arg_5_0.needScore)
+		end
+
+		arg_5_0.txtName.text = arg_5_0.config.name
+
+		gohelper.setActive(arg_5_0.goUnlock, arg_5_0.unlock)
+		gohelper.setActive(arg_5_0.goLock, not arg_5_0.unlock)
 	end
 
-	arg_5_0.txtName.text = arg_5_0.config.name
-
-	gohelper.setActive(arg_5_0.goUnlock, arg_5_0.unlock)
-	gohelper.setActive(arg_5_0.goLock, not arg_5_0.unlock)
+	gohelper.setActive(arg_5_0.simageBadgeU, arg_5_0.config.score ~= 0)
+	gohelper.setActive(arg_5_0.goStar, arg_5_0.config.score ~= 0)
 end
 
 function var_0_0.showProgress(arg_6_0)
-	arg_6_0.imageProgress.fillAmount = arg_6_0.correctFillAmount(arg_6_0.curScore / arg_6_0.config.score)
-	arg_6_0.txtProgress.text = string.format("%d/%d", arg_6_0.curScore, arg_6_0.config.score)
+	if arg_6_0.config.score ~= 0 then
+		arg_6_0.imageProgress.fillAmount = arg_6_0.correctFillAmount(arg_6_0.curScore / arg_6_0.config.score)
+		arg_6_0.txtProgress.text = string.format("%d/%d", arg_6_0.curScore, arg_6_0.config.score)
 
-	gohelper.setActive(arg_6_0.goProgress, true)
+		gohelper.setActive(arg_6_0.goProgress, true)
+	end
 end
 
 function var_0_0.showReward(arg_7_0)
@@ -131,6 +136,7 @@ function var_0_0.showReward(arg_7_0)
 end
 
 function var_0_0.onClick(arg_8_0)
+	AutoChessController.instance:statButtonClick(ViewName.AutoChessMainView, "btnBadgeItemOnClick")
 	ViewMgr.instance:openView(ViewName.AutoChessBadgeView)
 end
 

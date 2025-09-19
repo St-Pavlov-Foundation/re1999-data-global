@@ -33,6 +33,8 @@ function var_0_0.onReceiveGMReply(arg_2_0, arg_2_1, arg_2_2)
 			ToastController.instance:showToastWithString("GM 命令不存在")
 		end
 	end
+
+	GMController.instance:dispatchEvent(GMController.Event.OnRecvGMMsg)
 end
 
 function var_0_0.sendGpuCpuLogRequest(arg_3_0, arg_3_1, arg_3_2)
@@ -73,7 +75,12 @@ function var_0_0.onReceiveServerErrorInfoPush(arg_8_0, arg_8_1, arg_8_2)
 		return
 	end
 
-	logError("服务器报错了: " .. arg_8_2.msg)
+	if arg_8_2.isAlert then
+		MessageBoxController.instance:showMsgBoxByStr("服务器报错了: " .. arg_8_2.msg, MsgBoxEnum.BoxType.Yes)
+	else
+		ToastController.instance:showToastWithString("服务器报错了，看一下Console！")
+		logError("服务器报错了: " .. arg_8_2.msg)
+	end
 end
 
 var_0_0.instance = var_0_0.New()

@@ -684,6 +684,12 @@ function var_0_0._onClickHandler(arg_34_0)
 end
 
 function var_0_0._showMapLevelView(arg_35_0, arg_35_1)
+	local var_35_0 = DungeonConfig.instance:getChapterDivideSectionId(arg_35_0._config.chapterId)
+
+	if var_35_0 and var_35_0 > 1 and not DungeonMainStoryModel.instance:sectionChapterAllPassed(var_35_0 - 1) then
+		DungeonModel.instance:setLastSelectMode(DungeonEnum.ChapterType.Simple)
+	end
+
 	DungeonController.instance:enterLevelView(arg_35_0.viewParam)
 
 	if arg_35_1 then

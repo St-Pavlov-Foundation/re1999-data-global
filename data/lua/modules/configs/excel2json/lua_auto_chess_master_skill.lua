@@ -4,13 +4,15 @@ local var_0_0 = {}
 local var_0_1 = {
 	cost = 2,
 	abilities = 6,
-	type = 3,
+	targetType = 11,
 	activeChessSkill = 5,
 	passiveChessSkills = 4,
 	skillIndex = 9,
+	type = 3,
 	skillaction = 7,
 	useeffect = 8,
-	id = 1
+	id = 1,
+	needTarget = 10
 }
 local var_0_2 = {
 	"id"

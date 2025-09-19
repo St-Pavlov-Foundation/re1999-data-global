@@ -7,6 +7,7 @@ function var_0_0.onInitView(arg_1_0)
 	arg_1_0._gocontent = gohelper.findChild(arg_1_0.viewGO, "#go_story/chapterlist/#scroll_chapter/content")
 	arg_1_0._gotip = gohelper.findChild(arg_1_0.viewGO, "#go_story/#go_mainstorytip")
 	arg_1_0._btntip = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_story/#go_mainstorytip/#btn_tip")
+	arg_1_0._btnfirst = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_story/#btn_first")
 	arg_1_0._txttipname = gohelper.findChildText(arg_1_0.viewGO, "#go_story/#go_mainstorytip/#txt_tipname")
 	arg_1_0._txttipnameen = gohelper.findChildText(arg_1_0.viewGO, "#go_story/#go_mainstorytip/#txt_tipname_en")
 
@@ -17,422 +18,597 @@ end
 
 function var_0_0.addEvents(arg_2_0)
 	arg_2_0._btntip:AddClickListener(arg_2_0._btntipOnClick, arg_2_0)
+	arg_2_0._btnfirst:AddClickListener(arg_2_0._btnfirstOnClick, arg_2_0)
 end
 
 function var_0_0.removeEvents(arg_3_0)
 	arg_3_0._btntip:RemoveClickListener()
+	arg_3_0._btnfirst:RemoveClickListener()
 end
 
-function var_0_0._btntipOnClick(arg_4_0)
-	if arg_4_0._curSelectedSectionItem then
-		arg_4_0._curSelectedSectionItem:externalClickTip()
+function var_0_0._btnfirstOnClick(arg_4_0)
+	if arg_4_0._previewChapterId then
+		arg_4_0:_onOnFocusNormalChapter(arg_4_0._previewChapterId)
 	end
 end
 
-function var_0_0._setSelectedSectionItem(arg_5_0, arg_5_1)
-	arg_5_0._curSelectedSectionItem = arg_5_1
+function var_0_0._btntipOnClick(arg_5_0)
+	if arg_5_0._curSelectedSectionItem then
+		arg_5_0._curSelectedSectionItem:externalClickTip()
+	end
+end
 
-	if not arg_5_1 then
-		gohelper.setActive(arg_5_0._gotip, false)
+function var_0_0._setSelectedSectionItem(arg_6_0, arg_6_1)
+	arg_6_0._curSelectedSectionItem = arg_6_1
+
+	if not arg_6_1 then
+		gohelper.setActive(arg_6_0._gotip, false)
 	else
-		arg_5_0:_updateNames()
+		arg_6_0:_updateNames()
 	end
 end
 
-function var_0_0._updateNames(arg_6_0)
-	arg_6_0._txttipname.text = arg_6_0._curSelectedSectionItem:getSectionName()
+function var_0_0._updateNames(arg_7_0)
+	arg_7_0._txttipname.text = arg_7_0._curSelectedSectionItem:getSectionName()
 
-	if arg_6_0._txttipnameen then
-		arg_6_0._txttipnameen.text = arg_6_0._curSelectedSectionItem:getSectionNameEn()
+	if arg_7_0._txttipnameen then
+		arg_7_0._txttipnameen.text = arg_7_0._curSelectedSectionItem:getSectionNameEn()
 	end
 end
 
-function var_0_0._editableInitView(arg_7_0)
-	gohelper.addUIClickAudio(arg_7_0._btntip.gameObject, AudioEnum.UI.Play_UI_Copies)
+function var_0_0._editableInitView(arg_8_0)
+	gohelper.addUIClickAudio(arg_8_0._btntip.gameObject, AudioEnum.UI.Play_UI_Copies)
 
-	arg_7_0._sectionList = arg_7_0:getUserDataTb_()
-	arg_7_0._chapterList = arg_7_0:getUserDataTb_()
-	arg_7_0._chapterPosMap = {}
-	arg_7_0._curSelectedSectionItem = nil
-	arg_7_0._showChapterItemList = arg_7_0:getUserDataTb_()
-	arg_7_0._posX = 0
-	arg_7_0._anchorVec = Vector2(0, 1)
-	arg_7_0._targetSectionId = -1
-	arg_7_0._gocontenttransform = arg_7_0._gocontent.transform
+	arg_8_0._tipAnimator = arg_8_0._gotip:GetComponent("Animator")
+	arg_8_0._initTipPosX = recthelper.getAnchorX(arg_8_0._gotip.transform)
+	arg_8_0._sectionList = arg_8_0:getUserDataTb_()
+	arg_8_0._chapterList = arg_8_0:getUserDataTb_()
+	arg_8_0._chapterPosMap = {}
+	arg_8_0._curSelectedSectionItem = nil
+	arg_8_0._showChapterItemList = arg_8_0:getUserDataTb_()
+	arg_8_0._posX = 0
+	arg_8_0._anchorVec = Vector2(0, 1)
+	arg_8_0._targetSectionId = -1
+	arg_8_0._gocontenttransform = arg_8_0._gocontent.transform
 
-	local var_7_0 = arg_7_0._gocontenttransform
-	local var_7_1 = arg_7_0._anchorVec
+	local var_8_0 = arg_8_0._gocontenttransform
+	local var_8_1 = arg_8_0._anchorVec
 
-	var_7_0.pivot = var_7_1
-	var_7_0.anchorMin = var_7_1
-	var_7_0.anchorMax = var_7_1
-	var_7_0.anchoredPosition = Vector2.zero
+	var_8_0.pivot = var_8_1
+	var_8_0.anchorMin = var_8_1
+	var_8_0.anchorMax = var_8_1
+	var_8_0.anchoredPosition = Vector2.zero
 
-	recthelper.setHeight(var_7_0, 748)
+	recthelper.setHeight(var_8_0, 748)
 
-	arg_7_0._gotemplatecell = gohelper.findChild(arg_7_0.viewGO, "#go_story/chapterlist/#scroll_chapter/content/templatecell")
+	arg_8_0._gotemplatecell = gohelper.findChild(arg_8_0.viewGO, "#go_story/chapterlist/#scroll_chapter/content/templatecell")
 
-	gohelper.setActive(arg_7_0._gotemplatecell, false)
-	arg_7_0:addEventCb(DungeonController.instance, DungeonEvent.SelectMainStorySection, arg_7_0._onSelectMainStorySection, arg_7_0)
-	arg_7_0:addEventCb(DungeonController.instance, DungeonEvent.OnFocusNormalChapter, arg_7_0._onOnFocusNormalChapter, arg_7_0)
+	gohelper.setActive(arg_8_0._gotemplatecell, false)
+	arg_8_0:addEventCb(DungeonController.instance, DungeonEvent.SelectMainStorySection, arg_8_0._onSelectMainStorySection, arg_8_0)
+	arg_8_0:addEventCb(DungeonController.instance, DungeonEvent.UnfoldMainStorySection, arg_8_0._onUnfoldMainStorySection, arg_8_0)
+	arg_8_0:addEventCb(DungeonController.instance, DungeonEvent.FakeUnfoldMainStorySection, arg_8_0._onFakeUnfoldMainStorySection, arg_8_0)
+	arg_8_0:addEventCb(DungeonController.instance, DungeonEvent.OnFocusNormalChapter, arg_8_0._onOnFocusNormalChapter, arg_8_0)
+	arg_8_0:addEventCb(DungeonController.instance, DungeonEvent.OnCheckChapterUnlock, arg_8_0._onCheckChapterUnlock, arg_8_0)
+	arg_8_0:addEventCb(DungeonController.instance, DungeonEvent.OnFocusLastEarlyAccessChapter, arg_8_0._onFocusLastEarlyAccessChapter, arg_8_0)
+	arg_8_0:addEventCb(DungeonController.instance, DungeonEvent.OnUpdateDungeonInfo, arg_8_0._onUpdateDungeonInfo, arg_8_0)
+	arg_8_0:addEventCb(ActivityController.instance, ActivityEvent.RefreshActivityState, arg_8_0._onRefreshActivity, arg_8_0)
+	gohelper.setActive(arg_8_0._btnfirst, false)
 end
 
-function var_0_0.onScrollChange(arg_8_0)
-	if not arg_8_0._curSelectedSectionItem then
-		arg_8_0._showFlowTipBtn = false
+function var_0_0._onUpdateDungeonInfo(arg_9_0)
+	arg_9_0:_refreshPreviewFlag()
+end
 
-		gohelper.setActive(arg_8_0._gotip, false)
+function var_0_0._onRefreshActivity(arg_10_0)
+	arg_10_0:_refreshPreviewFlag()
+end
+
+function var_0_0._refreshPreviewFlag(arg_11_0)
+	if not arg_11_0._previewChapterPosX or not arg_11_0._previewChapterId then
+		return
+	end
+
+	if not DungeonMainStoryModel.instance:showPreviewChapterFlag(arg_11_0._previewChapterId) then
+		arg_11_0._previewChapterPosX = nil
+		arg_11_0._previewChapterId = nil
+
+		gohelper.setActive(arg_11_0._btnfirst, false)
+	end
+end
+
+function var_0_0.onScrollChange(arg_12_0)
+	if not arg_12_0._curSelectedSectionItem then
+		arg_12_0._showFlowTipBtn = false
+
+		gohelper.setActive(arg_12_0._gotip, false)
 
 		return
 	end
 
-	local var_8_0 = recthelper.getAnchorX(arg_8_0._gocontenttransform)
-	local var_8_1 = arg_8_0._curSelectedSectionItem:getPosX() + DungeonMainStoryEnum.FlowTipOffsetX
-	local var_8_2 = var_8_0 <= -var_8_1
-	local var_8_3 = math.abs(var_8_1 - var_8_0)
-	local var_8_4 = arg_8_0._curSelectedSectionItem:getLineWidth() - var_8_3 + DungeonMainStoryEnum.FlowLineOffsetWidth
+	local var_12_0 = recthelper.getAnchorX(arg_12_0._gocontenttransform)
+	local var_12_1 = arg_12_0._curSelectedSectionItem:getPosX()
+	local var_12_2 = var_12_0 <= -var_12_1
 
-	recthelper.setWidth(arg_8_0._btntip.transform, var_8_4)
-	gohelper.setActive(arg_8_0._gotip, var_8_2)
-	arg_8_0._curSelectedSectionItem:setTipVisible(not var_8_2)
+	if arg_12_0._forceHideTip then
+		var_12_2 = false
+	end
 
-	if not arg_8_0._showFlowTipBtn then
-		arg_8_0._showFlowTipBtn = true
+	if var_12_2 then
+		local var_12_3 = var_12_1 + var_12_0
+		local var_12_4 = UnityEngine.Screen.width / UnityEngine.Screen.height > 2
+		local var_12_5 = arg_12_0._curSelectedSectionItem:getLineWidth() + var_12_3 + DungeonMainStoryEnum.FlowLineOffsetWidth + (var_12_4 and DungeonMainStoryEnum.FlowTipOffsetX or 0)
+		local var_12_6 = var_12_5 - DungeonMainStoryEnum.FlowLineMinWidth
 
-		arg_8_0:_updateNames()
+		recthelper.setAnchorX(arg_12_0._gotip.transform, var_12_6 < 0 and arg_12_0._initTipPosX + var_12_6 or arg_12_0._initTipPosX)
+		recthelper.setWidth(arg_12_0._btntip.transform, var_12_5)
+
+		if arg_12_0._lastFrameCount ~= Time.frameCount then
+			local var_12_7 = arg_12_0._openSelectedSectionFrame and Time.frameCount - arg_12_0._openSelectedSectionFrame <= 3
+
+			arg_12_0._tipAnimator:Play(var_12_7 and "open" or "idle", 0, 0)
+
+			arg_12_0._lastFrameCount = Time.frameCount
+		else
+			return
+		end
+	end
+
+	gohelper.setActive(arg_12_0._gotip, var_12_2)
+	arg_12_0._curSelectedSectionItem:setTipVisible(not var_12_2 and not arg_12_0._forceHideTip)
+
+	if not arg_12_0._forceHideTip and arg_12_0:_checkFirstBtnShow() then
+		TaskDispatcher.cancelTask(arg_12_0._checkFirstBtnShow, arg_12_0)
+		TaskDispatcher.runRepeat(arg_12_0._checkFirstBtnShow, arg_12_0, 0, 10)
+	end
+
+	if not arg_12_0._showFlowTipBtn then
+		arg_12_0._showFlowTipBtn = true
+
+		arg_12_0:_updateNames()
 	end
 end
 
-function var_0_0._onSelectMainStorySection(arg_9_0)
-	local var_9_0 = DungeonMainStoryModel.instance:getSelectedSectionId()
-	local var_9_1 = DungeonMainStoryModel.instance:getChapterList(var_9_0)
+function var_0_0._checkFirstBtnShow(arg_13_0)
+	local var_13_0 = recthelper.getAnchorX(arg_13_0._gocontenttransform)
+	local var_13_1 = arg_13_0:_getScreenWidth()
+	local var_13_2 = arg_13_0._previewChapterPosX and var_13_1 < var_13_0 + arg_13_0._previewChapterPosX
 
-	if var_9_1 and #var_9_1 > 0 then
-		arg_9_0:_selectFocusNormalChapter(var_9_1[#var_9_1].id)
+	gohelper.setActive(arg_13_0._btnfirst, var_13_2)
+
+	if not var_13_2 then
+		TaskDispatcher.cancelTask(arg_13_0._checkFirstBtnShow, arg_13_0)
+	end
+
+	return var_13_2
+end
+
+function var_0_0._getScreenWidth(arg_14_0)
+	return recthelper.getWidth(ViewMgr.instance:getUIRoot().transform)
+end
+
+function var_0_0._onUnfoldMainStorySection(arg_15_0)
+	local var_15_0 = DungeonMainStoryModel.instance:getSelectedSectionId()
+
+	if var_15_0 and var_15_0 ~= 0 then
+		DungeonMainStoryModel.instance:setSectionSelected(nil)
+		arg_15_0:_onSelectMainStorySection()
+	end
+end
+
+function var_0_0._onFakeUnfoldMainStorySection(arg_16_0)
+	local var_16_0 = DungeonMainStoryModel.instance:getSelectedSectionId()
+
+	if var_16_0 and var_16_0 ~= 0 then
+		DungeonMainStoryModel.instance:clearSectionSelected()
+
+		arg_16_0._isFakeUnfold = true
+
+		arg_16_0:_onSelectMainStorySection()
+
+		arg_16_0._isFakeUnfold = false
+
+		DungeonMainStoryModel.instance:setSectionSelected(var_16_0)
+	end
+end
+
+function var_0_0._onSelectMainStorySection(arg_17_0)
+	local var_17_0 = DungeonMainStoryModel.instance:getSelectedSectionId()
+	local var_17_1 = DungeonMainStoryModel.instance:getChapterList(var_17_0)
+
+	if var_17_1 and #var_17_1 > 0 then
+		arg_17_0:_selectFocusNormalChapter(var_17_1[#var_17_1].id)
 
 		return
 	end
 
-	arg_9_0:_selectFocusNormalChapter()
+	arg_17_0:_selectFocusNormalChapter()
 end
 
-function var_0_0._selectFocusNormalChapter(arg_10_0, arg_10_1)
-	arg_10_0:_beFocusChapter(arg_10_1)
+function var_0_0._selectFocusNormalChapter(arg_18_0, arg_18_1)
+	arg_18_0:_beFocusChapter(arg_18_1)
 end
 
-function var_0_0.onOpen(arg_11_0)
+function var_0_0.onOpen(arg_19_0)
 	return
 end
 
-function var_0_0._onOnFocusNormalChapter(arg_12_0, arg_12_1)
-	if (arg_12_1 and DungeonConfig.instance:getChapterDivideSectionId(arg_12_1)) == arg_12_0._targetSectionId then
-		local var_12_0 = arg_12_1 and arg_12_0._chapterPosMap[arg_12_1]
+function var_0_0._onFocusLastEarlyAccessChapter(arg_20_0)
+	local var_20_0 = DungeonConfig.instance:getLastEarlyAccessChapterId()
 
-		if var_12_0 then
-			arg_12_0:_moveToChapterPos(var_12_0)
+	arg_20_0:_onOnFocusNormalChapter(var_20_0)
+end
+
+function var_0_0._onCheckChapterUnlock(arg_21_0)
+	DungeonMainStoryModel.instance:forceUpdateChapterList()
+	arg_21_0:_onSelectMainStorySection()
+end
+
+function var_0_0._onOnFocusNormalChapter(arg_22_0, arg_22_1)
+	local var_22_0 = arg_22_1 and DungeonConfig.instance:getChapterDivideSectionId(arg_22_1)
+
+	if var_22_0 == arg_22_0._targetSectionId then
+		local var_22_1 = arg_22_1 and arg_22_0._chapterPosMap[arg_22_1]
+
+		if var_22_1 then
+			arg_22_0:_moveToChapterPos(var_22_1)
 
 			return
 		end
 	end
 
-	arg_12_0:_beFocusChapter(arg_12_1)
-end
-
-function var_0_0._beFocusChapter(arg_13_0, arg_13_1)
-	local var_13_0 = arg_13_1 and DungeonConfig.instance:getChapterDivideSectionId(arg_13_1)
-
-	arg_13_0._sameSectionId = var_13_0 == arg_13_0._targetSectionId
-	arg_13_0._beFocusChapterId = arg_13_1
-	arg_13_0._targetSectionId = var_13_0
-
-	arg_13_0:_playChapterFocusEffect()
-end
-
-function var_0_0._killTween(arg_14_0)
-	if arg_14_0.tweenId then
-		ZProj.TweenHelper.KillById(arg_14_0.tweenId)
-
-		arg_14_0.tweenId = nil
-	end
-end
-
-function var_0_0._tweenHorizontalPosition(arg_15_0)
-	arg_15_0:_killTween()
-
-	arg_15_0.tweenId = ZProj.TweenHelper.DOTweenFloat(arg_15_0._scrollchapter.horizontalNormalizedPosition, 0, DungeonMainStoryEnum.AnimTime, arg_15_0._tweenFrameCallback, nil, arg_15_0)
-end
-
-function var_0_0._tweenFrameCallback(arg_16_0, arg_16_1)
-	arg_16_0._scrollchapter.horizontalNormalizedPosition = arg_16_1
-end
-
-function var_0_0._playChapterFocusEffect(arg_17_0)
-	arg_17_0._hasOldSelectedSectionItem = nil
-
-	if #arg_17_0._showChapterItemList > 0 then
-		arg_17_0:_tweenHorizontalPosition()
-
-		for iter_17_0, iter_17_1 in ipairs(arg_17_0._showChapterItemList) do
-			iter_17_1:playCloseAnim()
-		end
-
-		for iter_17_2, iter_17_3 in pairs(arg_17_0._sectionList) do
-			iter_17_3:moveToUnFoldPosX()
-		end
-
-		if arg_17_0._curSelectedSectionItem and not arg_17_0._sameSectionId then
-			arg_17_0._hasOldSelectedSectionItem = true
-
-			arg_17_0._curSelectedSectionItem:playAnimName("close")
-		end
-
-		TaskDispatcher.cancelTask(arg_17_0._applyFocusChapter, arg_17_0)
-		TaskDispatcher.runDelay(arg_17_0._applyFocusChapter, arg_17_0, DungeonMainStoryEnum.AnimTime)
-		arg_17_0:_startBlock(DungeonMainStoryEnum.AnimTime)
+	if not var_22_0 then
+		arg_22_0:_onSelectMainStorySection()
 
 		return
 	end
 
-	arg_17_0:_applyFocusChapter()
+	arg_22_0:_beFocusChapter(arg_22_1)
 end
 
-function var_0_0._applyFocusChapter(arg_18_0)
-	arg_18_0:_focusNormalChapter(arg_18_0._beFocusChapterId)
+function var_0_0._beFocusChapter(arg_23_0, arg_23_1)
+	local var_23_0 = arg_23_1 and DungeonConfig.instance:getChapterDivideSectionId(arg_23_1)
+
+	arg_23_0._sameSectionId = var_23_0 == arg_23_0._targetSectionId
+	arg_23_0._beFocusChapterId = arg_23_1
+	arg_23_0._targetSectionId = var_23_0
+
+	arg_23_0:_playChapterFocusEffect()
 end
 
-function var_0_0._focusNormalChapter(arg_19_0, arg_19_1)
-	arg_19_0._curFocusChapterId = nil
+function var_0_0._killTween(arg_24_0)
+	if arg_24_0.tweenId then
+		ZProj.TweenHelper.KillById(arg_24_0.tweenId)
 
-	if arg_19_1 then
-		local var_19_0 = DungeonConfig.instance:getChapterDivideSectionId(arg_19_1)
+		arg_24_0.tweenId = nil
+	end
+end
 
-		if var_19_0 then
-			DungeonMainStoryModel.instance:setSectionSelected(var_19_0)
+function var_0_0._tweenHorizontalPosition(arg_25_0)
+	arg_25_0:_killTween()
 
-			arg_19_0._curFocusChapterId = arg_19_1
+	arg_25_0.tweenId = ZProj.TweenHelper.DOTweenFloat(arg_25_0._scrollchapter.horizontalNormalizedPosition, 0, DungeonMainStoryEnum.AnimTime, arg_25_0._tweenFrameCallback, nil, arg_25_0)
+end
+
+function var_0_0._tweenFrameCallback(arg_26_0, arg_26_1)
+	arg_26_0._scrollchapter.horizontalNormalizedPosition = arg_26_1
+end
+
+function var_0_0._playChapterFocusEffect(arg_27_0)
+	arg_27_0._previewChapterPosX = nil
+	arg_27_0._hasOldSelectedSectionItem = nil
+
+	if #arg_27_0._showChapterItemList > 0 then
+		arg_27_0:_tweenHorizontalPosition()
+
+		for iter_27_0, iter_27_1 in ipairs(arg_27_0._showChapterItemList) do
+			iter_27_1:playCloseAnim()
+		end
+
+		for iter_27_2, iter_27_3 in pairs(arg_27_0._sectionList) do
+			iter_27_3:moveToUnFoldPosX()
+		end
+
+		if arg_27_0._curSelectedSectionItem and not arg_27_0._sameSectionId then
+			arg_27_0._hasOldSelectedSectionItem = true
+
+			arg_27_0._curSelectedSectionItem:playAnimName("close")
+		end
+
+		if arg_27_0._isFakeUnfold then
+			arg_27_0._isFakeUnfold = false
+
+			arg_27_0:_applyFocusChapter()
+
+			return
+		end
+
+		TaskDispatcher.cancelTask(arg_27_0._applyFocusChapter, arg_27_0)
+		TaskDispatcher.runDelay(arg_27_0._applyFocusChapter, arg_27_0, DungeonMainStoryEnum.AnimTime)
+		arg_27_0:_startBlock(DungeonMainStoryEnum.AnimTime)
+
+		return
+	end
+
+	arg_27_0:_applyFocusChapter()
+end
+
+function var_0_0._applyFocusChapter(arg_28_0)
+	arg_28_0:_focusNormalChapter(arg_28_0._beFocusChapterId)
+end
+
+function var_0_0._focusNormalChapter(arg_29_0, arg_29_1)
+	arg_29_0._curFocusChapterId = nil
+
+	local var_29_0 = arg_29_0._curSelectedSectionItem ~= nil
+
+	if arg_29_1 then
+		local var_29_1 = DungeonConfig.instance:getChapterDivideSectionId(arg_29_1)
+
+		if var_29_1 then
+			DungeonMainStoryModel.instance:setSectionSelected(var_29_1)
+
+			arg_29_0._curFocusChapterId = arg_29_1
 		end
 	end
 
-	arg_19_0:_showAllChapterList()
+	arg_29_0:_showAllChapterList()
 
-	local var_19_1 = arg_19_0._curFocusChapterId and arg_19_0._chapterPosMap[arg_19_0._curFocusChapterId]
+	local var_29_2 = arg_29_0._curFocusChapterId and arg_29_0._chapterPosMap[arg_29_0._curFocusChapterId]
 
-	arg_19_0:_moveToChapterPos(var_19_1)
-	TaskDispatcher.cancelTask(arg_19_0.onScrollChange, arg_19_0)
-	TaskDispatcher.runDelay(arg_19_0.onScrollChange, arg_19_0, 0)
-	arg_19_0:onScrollChange()
+	arg_29_0:_moveToChapterPos(var_29_2, var_29_0)
+
+	arg_29_0._forceHideTip = true
+
+	arg_29_0:onScrollChange()
+
+	arg_29_0._forceHideTip = false
 end
 
-function var_0_0._moveToChapterPos(arg_20_0, arg_20_1)
-	if arg_20_1 then
-		arg_20_0._scrollchapter.movementType = 2
+function var_0_0._moveToChapterPos(arg_30_0, arg_30_1, arg_30_2)
+	if arg_30_1 then
+		arg_30_0._scrollchapter.movementType = 2
 
-		local var_20_0 = arg_20_1 - recthelper.getWidth(arg_20_0._scrollchapter.transform) / 2
+		local var_30_0 = -(arg_30_1 - recthelper.getWidth(arg_30_0._scrollchapter.transform) / 2)
 
-		recthelper.setAnchorX(arg_20_0._gocontent.transform, -var_20_0)
-		TaskDispatcher.cancelTask(arg_20_0._resetMovementType, arg_20_0)
-		TaskDispatcher.runDelay(arg_20_0._resetMovementType, arg_20_0, 0)
+		arg_30_0:_clearTween()
+		TaskDispatcher.cancelTask(arg_30_0._resetMovementType, arg_30_0)
+		TaskDispatcher.cancelTask(arg_30_0._delaySetContentPos, arg_30_0)
+
+		if not (UnityEngine.Screen.width / UnityEngine.Screen.height > 2) and arg_30_0._curSelectedSectionItem and arg_30_0._curSelectedSectionItem:getSectionId() > DungeonMainStoryEnum.FirstSectionId then
+			arg_30_0._tweenPosX = ZProj.TweenHelper.DOAnchorPosX(arg_30_0._gocontent.transform, var_30_0, DungeonMainStoryEnum.SectionAnimTime, arg_30_0._moveDone, arg_30_0)
+
+			TaskDispatcher.cancelTask(arg_30_0.onScrollChange, arg_30_0)
+			TaskDispatcher.runDelay(arg_30_0.onScrollChange, arg_30_0, 0)
+		else
+			arg_30_0._contentPos = var_30_0
+
+			recthelper.setAnchorX(arg_30_0._gocontent.transform, var_30_0)
+			TaskDispatcher.runDelay(arg_30_0._delaySetContentPos, arg_30_0, 0)
+		end
+	end
+end
+
+function var_0_0._moveDone(arg_31_0)
+	TaskDispatcher.cancelTask(arg_31_0._resetMovementType, arg_31_0)
+	TaskDispatcher.runDelay(arg_31_0._resetMovementType, arg_31_0, 0)
+end
+
+function var_0_0._delaySetContentPos(arg_32_0)
+	recthelper.setAnchorX(arg_32_0._gocontent.transform, arg_32_0._contentPos)
+	TaskDispatcher.runDelay(arg_32_0._resetMovementType, arg_32_0, 0)
+	TaskDispatcher.runDelay(arg_32_0.onScrollChange, arg_32_0, 0)
+end
+
+function var_0_0._clearTween(arg_33_0)
+	if arg_33_0._tweenPosX then
+		ZProj.TweenHelper.KillById(arg_33_0._tweenPosX)
+
+		arg_33_0._tweenPosX = nil
 	end
 end
 
 local var_0_1 = "DungeonViewMainStoryBlock"
 
-function var_0_0._startBlock(arg_21_0, arg_21_1)
-	TaskDispatcher.cancelTask(arg_21_0._endBlock, arg_21_0)
-	TaskDispatcher.runDelay(arg_21_0._endBlock, arg_21_0, arg_21_1 + DungeonMainStoryEnum.SectionAnimTime)
+function var_0_0._startBlock(arg_34_0, arg_34_1)
+	TaskDispatcher.cancelTask(arg_34_0._endBlock, arg_34_0)
+	TaskDispatcher.runDelay(arg_34_0._endBlock, arg_34_0, arg_34_1 + DungeonMainStoryEnum.SectionAnimTime)
 	UIBlockMgr.instance:startBlock(var_0_1)
 end
 
-function var_0_0._endBlock(arg_22_0)
+function var_0_0._endBlock(arg_35_0)
 	UIBlockMgr.instance:endBlock(var_0_1)
 end
 
-function var_0_0._resetMovementType(arg_23_0)
-	arg_23_0._scrollchapter.movementType = 1
+function var_0_0._resetMovementType(arg_36_0)
+	arg_36_0._scrollchapter.movementType = 1
 end
 
-function var_0_0._initSectionSelected(arg_24_0)
-	for iter_24_0, iter_24_1 in ipairs(lua_chapter_divide.configList) do
-		local var_24_0 = iter_24_1.sectionId
-		local var_24_1 = DungeonMainStoryModel.instance:getChapterList(var_24_0)
+function var_0_0._showAllChapterList(arg_37_0)
+	tabletool.clear(arg_37_0._showChapterItemList)
+	tabletool.clear(arg_37_0._chapterPosMap)
+	arg_37_0:_setSelectedSectionItem(nil)
 
-		if var_24_1 and #var_24_1 > 0 and not DungeonModel.instance:chapterIsLock(var_24_1[1].id) then
-			DungeonMainStoryModel.instance:setSectionSelected(var_24_0)
-		end
-	end
-end
+	arg_37_0._startPosX = 147.5
+	arg_37_0._posX = arg_37_0._startPosX
+	arg_37_0._sectionPosX = arg_37_0._startPosX
+	arg_37_0._previewChapterPosX = nil
+	arg_37_0._previewChapterId = nil
 
-function var_0_0._showAllChapterList(arg_25_0)
-	tabletool.clear(arg_25_0._showChapterItemList)
-	tabletool.clear(arg_25_0._chapterPosMap)
-	arg_25_0:_setSelectedSectionItem(nil)
+	gohelper.setActive(arg_37_0._btnfirst, false)
 
-	arg_25_0._startPosX = 147.5
-	arg_25_0._posX = arg_25_0._startPosX
-	arg_25_0._sectionPosX = arg_25_0._startPosX
+	local var_37_0 = 0
 
-	local var_25_0 = 0
+	for iter_37_0, iter_37_1 in ipairs(lua_chapter_divide.configList) do
+		local var_37_1 = iter_37_1.sectionId
+		local var_37_2 = DungeonMainStoryModel.instance:getChapterList(var_37_1)
 
-	for iter_25_0, iter_25_1 in ipairs(lua_chapter_divide.configList) do
-		local var_25_1 = iter_25_1.sectionId
-		local var_25_2 = DungeonMainStoryModel.instance:getChapterList(var_25_1)
+		if var_37_2 and #var_37_2 > 0 then
+			arg_37_0:_showOneSectionChapterList(var_37_1, var_37_2, var_37_0)
 
-		if var_25_2 and #var_25_2 > 0 then
-			arg_25_0:_showOneSectionChapterList(var_25_1, var_25_2, var_25_0)
-
-			var_25_0 = var_25_0 + #var_25_2
+			var_37_0 = #lua_chapter_divide.configDict[var_37_1].chapterId
 		end
 
-		arg_25_0._posX = arg_25_0._posX + DungeonMainStoryEnum.SectionSpace
+		arg_37_0._posX = arg_37_0._posX + DungeonMainStoryEnum.SectionSpace
 	end
 
-	recthelper.setWidth(arg_25_0._gocontent.transform, arg_25_0._posX)
+	recthelper.setWidth(arg_37_0._gocontent.transform, arg_37_0._posX)
 end
 
-function var_0_0._getSectionItem(arg_26_0, arg_26_1)
-	local var_26_0 = arg_26_0._sectionList[arg_26_1]
+function var_0_0._getSectionItem(arg_38_0, arg_38_1)
+	local var_38_0 = arg_38_0._sectionList[arg_38_1]
 
-	if not var_26_0 then
-		local var_26_1 = arg_26_0.viewContainer:getSetting().otherRes.section_item
-		local var_26_2 = gohelper.cloneInPlace(arg_26_0._gotemplatecell, "section")
+	if not var_38_0 then
+		local var_38_1 = arg_38_0.viewContainer:getSetting().otherRes.section_item
+		local var_38_2 = gohelper.cloneInPlace(arg_38_0._gotemplatecell, "section")
 
-		gohelper.setActive(var_26_2, true)
+		gohelper.setActive(var_38_2, true)
 
-		local var_26_3 = arg_26_0:getResInst(var_26_1, var_26_2, tostring(arg_26_1))
+		local var_38_3 = arg_38_0:getResInst(var_38_1, var_38_2, tostring(arg_38_1))
 
-		var_26_0 = MonoHelper.addNoUpdateLuaComOnceToGo(var_26_3, DungeonSectionItem)
-		arg_26_0._sectionList[arg_26_1] = var_26_0
+		var_38_0 = MonoHelper.addNoUpdateLuaComOnceToGo(var_38_3, DungeonSectionItem)
+		arg_38_0._sectionList[arg_38_1] = var_38_0
 
-		local var_26_4 = var_26_0.viewGO.transform
-		local var_26_5 = Vector2(0, 1)
+		local var_38_4 = var_38_0.viewGO.transform
+		local var_38_5 = Vector2(0, 1)
 
-		var_26_4.pivot = var_26_5
-		var_26_4.anchorMin = var_26_5
-		var_26_4.anchorMax = var_26_5
+		var_38_4.pivot = var_38_5
+		var_38_4.anchorMin = var_38_5
+		var_38_4.anchorMax = var_38_5
 
-		recthelper.setWidth(var_26_4, DungeonMainStoryEnum.ChapterWidth.Section)
+		recthelper.setWidth(var_38_4, DungeonMainStoryEnum.ChapterWidth.Section)
 	end
 
-	return var_26_0
+	return var_38_0
 end
 
-function var_0_0._getChapterItem(arg_27_0, arg_27_1, arg_27_2)
-	local var_27_0 = arg_27_0._chapterList[arg_27_1]
+function var_0_0._getChapterItem(arg_39_0, arg_39_1, arg_39_2)
+	local var_39_0 = arg_39_0._chapterList[arg_39_1]
 
-	if not var_27_0 then
-		local var_27_1 = DungeonModel.instance:isSpecialMainPlot(arg_27_1)
-		local var_27_2 = var_27_1 and arg_27_0.viewContainer:getSetting().otherRes.mini_item or arg_27_0.viewContainer:getSetting().otherRes[1]
-		local var_27_3 = gohelper.cloneInPlace(arg_27_0._gotemplatecell, "cell" .. arg_27_2 - 1)
+	if not var_39_0 then
+		local var_39_1 = DungeonModel.instance:isSpecialMainPlot(arg_39_1)
+		local var_39_2 = var_39_1 and arg_39_0.viewContainer:getSetting().otherRes.mini_item or arg_39_0.viewContainer:getSetting().otherRes[1]
+		local var_39_3 = gohelper.cloneInPlace(arg_39_0._gotemplatecell, "cell" .. arg_39_2 - 1)
 
-		gohelper.setActive(var_27_3, true)
+		gohelper.setActive(var_39_3, true)
 
-		local var_27_4 = arg_27_0:getResInst(var_27_2, var_27_3, var_27_1 and "mini_item" or LuaListScrollView.PrefabInstName)
+		local var_39_4 = arg_39_0:getResInst(var_39_2, var_39_3, var_39_1 and "mini_item" or LuaListScrollView.PrefabInstName)
 
-		var_27_0 = MonoHelper.addNoUpdateLuaComOnceToGo(var_27_4, var_27_1 and DungeonChapterMiniItem or DungeonChapterItem)
-		arg_27_0._chapterList[arg_27_1] = var_27_0
+		var_39_0 = MonoHelper.addNoUpdateLuaComOnceToGo(var_39_4, var_39_1 and DungeonChapterMiniItem or DungeonChapterItem)
+		arg_39_0._chapterList[arg_39_1] = var_39_0
 
-		if var_27_1 then
-			recthelper.setWidth(var_27_3.transform, DungeonMainStoryEnum.ChapterWidth.Special)
-			recthelper.setWidth(var_27_0.viewGO.transform, DungeonMainStoryEnum.ChapterWidth.Special)
+		if var_39_1 then
+			recthelper.setWidth(var_39_3.transform, DungeonMainStoryEnum.ChapterWidth.Special)
+			recthelper.setWidth(var_39_0.viewGO.transform, DungeonMainStoryEnum.ChapterWidth.Special)
 		else
-			recthelper.setWidth(var_27_3.transform, DungeonMainStoryEnum.ChapterWidth.Normal)
-			recthelper.setWidth(var_27_0.viewGO.transform, DungeonMainStoryEnum.ChapterWidth.Normal)
+			recthelper.setWidth(var_39_3.transform, DungeonMainStoryEnum.ChapterWidth.Normal)
+			recthelper.setWidth(var_39_0.viewGO.transform, DungeonMainStoryEnum.ChapterWidth.Normal)
 		end
 
-		local var_27_5 = var_27_0.viewGO.transform
-		local var_27_6 = arg_27_0._anchorVec
+		local var_39_5 = var_39_0.viewGO.transform
+		local var_39_6 = arg_39_0._anchorVec
 
-		var_27_5.pivot = var_27_6
-		var_27_5.anchorMin = var_27_6
-		var_27_5.anchorMax = var_27_6
+		var_39_5.pivot = var_39_6
+		var_39_5.anchorMin = var_39_6
+		var_39_5.anchorMax = var_39_6
 	end
 
-	return var_27_0
+	return var_39_0
 end
 
-function var_0_0._showSectionItem(arg_28_0, arg_28_1)
-	local var_28_0 = arg_28_0:_getSectionItem(arg_28_1)
+function var_0_0._showSectionItem(arg_40_0, arg_40_1)
+	local var_40_0 = arg_40_0:_getSectionItem(arg_40_1)
 
-	var_28_0:onUpdateMO(lua_chapter_divide.configDict[arg_28_1])
+	var_40_0:onUpdateMO(lua_chapter_divide.configDict[arg_40_1])
 
-	if DungeonMainStoryModel.instance:sectionIsSelected(arg_28_1) then
-		arg_28_0:_setSelectedSectionItem(var_28_0)
-		var_28_0:playAnimName("unfold")
+	if DungeonMainStoryModel.instance:sectionIsSelected(arg_40_1) then
+		arg_40_0:_setSelectedSectionItem(var_40_0)
+		var_40_0:playAnimName("unfold")
 	end
 
-	local var_28_1 = arg_28_0._posX
+	local var_40_1 = arg_40_0._posX
+	local var_40_2 = arg_40_0._sectionPosX
 
-	recthelper.setAnchor(var_28_0.viewGO.transform.parent, var_28_1, DungeonMainStoryEnum.ChapterPosY.Section)
-	var_28_0:setPosX(var_28_1)
-	var_28_0:setUnFoldPosX(arg_28_0._sectionPosX)
+	recthelper.setAnchor(var_40_0.viewGO.transform.parent, var_40_1, DungeonMainStoryEnum.ChapterPosY.Section)
+	var_40_0:setPosX(var_40_1)
+	var_40_0:setUnFoldPosX(arg_40_0._sectionPosX)
 
-	arg_28_0._posX = arg_28_0._posX + DungeonMainStoryEnum.ChapterWidth.Section
-	arg_28_0._sectionPosX = arg_28_0._sectionPosX + DungeonMainStoryEnum.ChapterWidth.Section
+	arg_40_0._posX = arg_40_0._posX + DungeonMainStoryEnum.ChapterWidth.Section
+	arg_40_0._sectionPosX = arg_40_0._sectionPosX + DungeonMainStoryEnum.ChapterWidth.Section + DungeonMainStoryEnum.SectionSpace
 
-	if arg_28_0._posX ~= arg_28_0._sectionPosX then
-		recthelper.setAnchor(var_28_0.viewGO.transform.parent, arg_28_0._sectionPosX, DungeonMainStoryEnum.ChapterPosY.Section)
-		var_28_0:moveToPosX()
+	if var_40_1 ~= var_40_2 then
+		recthelper.setAnchor(var_40_0.viewGO.transform.parent, var_40_2, DungeonMainStoryEnum.ChapterPosY.Section)
+		var_40_0:moveToPosX()
 	end
 end
 
-function var_0_0._hideChpaterList(arg_29_0, arg_29_1)
-	for iter_29_0, iter_29_1 in ipairs(arg_29_1) do
-		local var_29_0 = arg_29_0._chapterList[iter_29_1.id]
+function var_0_0._hideChpaterList(arg_41_0, arg_41_1)
+	for iter_41_0, iter_41_1 in ipairs(arg_41_1) do
+		local var_41_0 = arg_41_0._chapterList[iter_41_1.id]
 
-		if var_29_0 then
-			recthelper.setAnchorY(var_29_0.viewGO.transform.parent, 2000)
+		if var_41_0 then
+			recthelper.setAnchorY(var_41_0.viewGO.transform.parent, 2000)
 		end
 	end
 end
 
-function var_0_0._showOneSectionChapterList(arg_30_0, arg_30_1, arg_30_2, arg_30_3)
-	arg_30_0:_showSectionItem(arg_30_1)
+function var_0_0._showOneSectionChapterList(arg_42_0, arg_42_1, arg_42_2, arg_42_3)
+	arg_42_0:_showSectionItem(arg_42_1)
 
-	if not DungeonMainStoryModel.instance:sectionIsSelected(arg_30_1) then
-		arg_30_0:_hideChpaterList(arg_30_2)
+	if not DungeonMainStoryModel.instance:sectionIsSelected(arg_42_1) then
+		arg_42_0:_hideChpaterList(arg_42_2)
 
 		return
 	end
 
-	arg_30_0._posX = arg_30_0._posX + DungeonMainStoryEnum.ChapterStartPosX
+	arg_42_0._openSelectedSectionFrame = Time.frameCount
+	arg_42_0._posX = arg_42_0._posX + DungeonMainStoryEnum.ChapterStartPosX
 
-	for iter_30_0, iter_30_1 in ipairs(arg_30_2) do
-		local var_30_0 = DungeonModel.instance:isSpecialMainPlot(iter_30_1.id)
-		local var_30_1 = arg_30_0:_getChapterItem(iter_30_1.id, arg_30_3 + iter_30_0)
+	for iter_42_0, iter_42_1 in ipairs(arg_42_2) do
+		local var_42_0 = DungeonModel.instance:isSpecialMainPlot(iter_42_1.id)
+		local var_42_1 = arg_42_0:_getChapterItem(iter_42_1.id, arg_42_3 + iter_42_0)
 
-		var_30_1:onUpdateMO(iter_30_1)
+		var_42_1:onUpdateMO(iter_42_1)
 
-		arg_30_0._showChapterItemList[iter_30_0] = var_30_1
+		arg_42_0._showChapterItemList[iter_42_0] = var_42_1
 
-		if var_30_1:getIsPlayCloseAnim() then
-			var_30_1:playIdleAnim()
+		if var_42_1:getIsPlayCloseAnim() then
+			var_42_1:playIdleAnim()
 		end
 
-		local var_30_2 = arg_30_0._posX
+		local var_42_2 = arg_42_0._posX
 
-		arg_30_0._chapterPosMap[iter_30_1.id] = var_30_2
+		arg_42_0._chapterPosMap[iter_42_1.id] = var_42_2
 
-		if var_30_0 then
-			recthelper.setAnchor(var_30_1.viewGO.transform.parent, var_30_2, DungeonMainStoryEnum.ChapterPosY.Special)
+		if DungeonMainStoryModel.instance:showPreviewChapterFlag(iter_42_1.id) then
+			arg_42_0._previewChapterPosX = var_42_2 + DungeonMainStoryEnum.PreviewOffsetX
+			arg_42_0._previewChapterId = iter_42_1.id
+		end
 
-			arg_30_0._posX = arg_30_0._posX + DungeonMainStoryEnum.ChapterWidth.Special
+		if var_42_0 then
+			recthelper.setAnchor(var_42_1.viewGO.transform.parent, var_42_2, DungeonMainStoryEnum.ChapterPosY.Special)
+
+			arg_42_0._posX = arg_42_0._posX + DungeonMainStoryEnum.ChapterWidth.Special
 		else
-			recthelper.setAnchor(var_30_1.viewGO.transform.parent, var_30_2, DungeonMainStoryEnum.ChapterPosY.Normal)
+			recthelper.setAnchor(var_42_1.viewGO.transform.parent, var_42_2, DungeonMainStoryEnum.ChapterPosY.Normal)
 
-			arg_30_0._posX = arg_30_0._posX + DungeonMainStoryEnum.ChapterWidth.Normal
+			arg_42_0._posX = arg_42_0._posX + DungeonMainStoryEnum.ChapterWidth.Normal
 		end
 
-		if iter_30_0 ~= #arg_30_2 then
-			arg_30_0._posX = arg_30_0._posX + DungeonMainStoryEnum.ChapterSpace
+		if iter_42_0 ~= #arg_42_2 then
+			arg_42_0._posX = arg_42_0._posX + DungeonMainStoryEnum.ChapterSpace
 		end
 	end
 end
 
-function var_0_0.onClose(arg_31_0)
-	TaskDispatcher.cancelTask(arg_31_0._resetMovementType, arg_31_0)
-	TaskDispatcher.cancelTask(arg_31_0._applyFocusChapter, arg_31_0)
-	TaskDispatcher.cancelTask(arg_31_0.onScrollChange, arg_31_0)
-	arg_31_0:_endBlock()
+function var_0_0.onClose(arg_43_0)
+	TaskDispatcher.cancelTask(arg_43_0._delaySetContentPos, arg_43_0)
+	TaskDispatcher.cancelTask(arg_43_0._resetMovementType, arg_43_0)
+	TaskDispatcher.cancelTask(arg_43_0._applyFocusChapter, arg_43_0)
+	TaskDispatcher.cancelTask(arg_43_0.onScrollChange, arg_43_0)
+	TaskDispatcher.cancelTask(arg_43_0._checkFirstBtnShow, arg_43_0)
+	arg_43_0:_endBlock()
+	arg_43_0:_killTween()
+	arg_43_0:_clearTween()
 end
 
 return var_0_0

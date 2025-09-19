@@ -4360,6 +4360,196 @@
     "isCn": 0
   },
   {
+    "id": 2807001,
+    "title": "",
+    "type": 2,
+    "text": "尤提姆介绍",
+    "icon": "v2a5_autochess_help_6",
+    "iconText": "v2a5_autochess_help_6",
+    "unlockGuideId": 28301,
+    "isCn": 1
+  },
+  {
+    "id": 2807002,
+    "title": "",
+    "type": 2,
+    "text": "火山种族介绍",
+    "icon": "v2a5_autochess_help_7",
+    "iconText": "v2a5_autochess_help_7",
+    "unlockGuideId": 28301,
+    "isCn": 1
+  },
+  {
+    "id": 2807003,
+    "title": "",
+    "type": 2,
+    "text": "购买与出售",
+    "icon": "v2a5_autochess_help_9",
+    "iconText": "v2a5_autochess_help_9",
+    "unlockGuideId": 28302,
+    "isCn": 1
+  },
+  {
+    "id": 2807004,
+    "title": "",
+    "type": 2,
+    "text": "棋子升级",
+    "icon": "v2a5_autochess_help_3",
+    "iconText": "v2a5_autochess_help_3",
+    "unlockGuideId": 28302,
+    "isCn": 1
+  },
+  {
+    "id": 2807005,
+    "title": "",
+    "type": 2,
+    "text": "尤提姆介绍",
+    "icon": "v2a5_autochess_help_8",
+    "iconText": "v2a5_autochess_help_8",
+    "unlockGuideId": 28302,
+    "isCn": 1
+  },
+  {
+    "id": 2807006,
+    "title": "",
+    "type": 2,
+    "text": "技能与侦察",
+    "icon": "v2a5_autochess_help_10",
+    "iconText": "v2a5_autochess_help_10",
+    "unlockGuideId": 28302,
+    "isCn": 1
+  },
+  {
+    "id": 2808001,
+    "title": "",
+    "type": 2,
+    "text": "警铃鸣响时玩法指引",
+    "icon": "v2a5_challenge_help_9",
+    "iconText": "v2a5_challenge_help_9",
+    "unlockGuideId": 0,
+    "isCn": 0
+  },
+  {
+    "id": 2808002,
+    "title": "",
+    "type": 2,
+    "text": "警铃鸣响时玩法指引",
+    "icon": "v2a5_challenge_help_10",
+    "iconText": "v2a5_challenge_help_10",
+    "unlockGuideId": 0,
+    "isCn": 0
+  },
+  {
+    "id": 2808003,
+    "title": "",
+    "type": 2,
+    "text": "警铃鸣响时玩法指引",
+    "icon": "v2a5_challenge_help_11",
+    "iconText": "v2a5_challenge_help_11",
+    "unlockGuideId": 0,
+    "isCn": 0
+  },
+  {
+    "id": 2808004,
+    "title": "",
+    "type": 2,
+    "text": "警铃鸣响时玩法指引",
+    "icon": "v2a5_challenge_help_12",
+    "iconText": "v2a5_challenge_help_12",
+    "unlockGuideId": 0,
+    "isCn": 0
+  },
+  {
+    "id": 2809001,
+    "title": "",
+    "type": 1,
+    "text": "演习功能",
+    "icon": "v2a8_survival_help_1",
+    "iconText": "v2a8_survival_help_1",
+    "unlockGuideId": 28505,
+    "isCn": 0
+  },
+  {
+    "id": 2809002,
+    "title": "",
+    "type": 1,
+    "text": "演习事件",
+    "icon": "v2a8_survival_help_2",
+    "iconText": "v2a8_survival_help_2",
+    "unlockGuideId": 28505,
+    "isCn": 0
+  },
+  {
+    "id": 2809003,
+    "title": "",
+    "type": 1,
+    "text": "暴雨侵蚀",
+    "icon": "v2a8_survival_help_3",
+    "iconText": "v2a8_survival_help_3",
+    "unlockGuideId": 28506,
+    "isCn": 0
+  },
+  {
+    "id": 2809004,
+    "title": "",
+    "type": 1,
+    "text": "漫游行装",
+    "icon": "v2a8_survival_help_4",
+    "iconText": "v2a8_survival_help_4",
+    "unlockGuideId": 28508,
+    "isCn": 0
+  },
+  {
+    "id": 2809005,
+    "title": "",
+    "type": 1,
+    "text": "研究小组",
+    "icon": "v2a8_survival_help_5",
+    "iconText": "v2a8_survival_help_5",
+    "unlockGuideId": 28501,
+    "isCn": 0
+  },
+  {
+    "id": 2809006,
+    "title": "",
+    "type": 1,
+    "text": "漫游助理",
+    "icon": "v2a8_survival_help_6",
+    "iconText": "v2a8_survival_help_6",
+    "unlockGuideId": 28512,
+    "isCn": 0
+  },
+  {
+    "id": 2809007,
+    "title": "",
+    "type": 1,
+    "text": "组长的决策",
+    "icon": "v2a8_survival_help_7",
+    "iconText": "v2a8_survival_help_7",
+    "unlockGuideId": 28513,
+    "isCn": 0
+  },
+  {
+    "id": 2809008,
+    "title": "",
+    "type": 1,
+    "text": "入侵强敌",
+    "icon": "v2a8_survival_help_8",
+    "iconText": "v2a8_survival_help_8",
+    "unlockGuideId": 28514,
+    "isCn": 0
+  },
+  {
+    "id": 2809009,
+    "title": "",
+    "type": 1,
+    "text": "助理协助",
+    "icon": "v2a8_survival_help_9",
+    "iconText": "v2a8_survival_help_9",
+    "unlockGuideId": 28516,
+    "isCn": 0
+  },
+  {
     "id": 30500101,
     "title": "",
     "type": 1,

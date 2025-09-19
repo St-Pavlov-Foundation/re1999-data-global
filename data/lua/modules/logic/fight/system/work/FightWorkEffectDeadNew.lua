@@ -1,6 +1,6 @@
 ﻿module("modules.logic.fight.system.work.FightWorkEffectDeadNew", package.seeall)
 
-local var_0_0 = class("FightWorkEffectDeadNew", BaseWork)
+local var_0_0 = class("FightWorkEffectDeadNew", FightWorkItem)
 local var_0_1 = 1
 local var_0_2 = 0.35
 local var_0_3 = 0.4
@@ -8,13 +8,14 @@ local var_0_4 = 1
 local var_0_5 = 0.1
 local var_0_6 = 0.6
 
-function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
+function var_0_0.onConstructor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 	arg_1_0.fightStepData = arg_1_1
 	arg_1_0.actEffectData = arg_1_2
 	arg_1_0._waitForLastHit = arg_1_3
 end
 
 function var_0_0.onStart(arg_2_0)
+	arg_2_0.delayDoneTimer = arg_2_0:com_registTimer(arg_2_0._delayDone, 20)
 	arg_2_0._deadEntity = FightHelper.getEntity(arg_2_0.actEffectData.targetId)
 
 	if arg_2_0._deadEntity and not arg_2_0._deadEntity.isDead then
@@ -45,7 +46,6 @@ function var_0_0.onStart(arg_2_0)
 				return
 			end
 
-			TaskDispatcher.runDelay(arg_2_0._delayDone, arg_2_0, 20 / FightModel.instance:getSpeed())
 			FightController.instance:registerCallback(FightEvent.OnSkillLastHit, arg_2_0._onLastHit, arg_2_0)
 			FightController.instance:registerCallback(FightEvent.OnSkillPlayFinish, arg_2_0._onSkillPlayFinish, arg_2_0)
 			FightController.instance:registerCallback(FightEvent.PlaySameSkillOneDone, arg_2_0._playSameSKillOneDone, arg_2_0)
@@ -111,7 +111,9 @@ function var_0_0._onSkillPlayFinish(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
 end
 
 function var_0_0._playDeadWork(arg_7_0)
-	TaskDispatcher.runDelay(arg_7_0._delayDone, arg_7_0, 10)
+	arg_7_0:com_cancelTimer(arg_7_0.delayDoneTimer)
+
+	arg_7_0.delayDoneTimer = arg_7_0:com_registTimer(arg_7_0._delayDone, 20)
 
 	local var_7_0 = arg_7_0._deadEntity:getMO()
 	local var_7_1 = arg_7_0:_getDieActName(var_7_0)
@@ -145,7 +147,7 @@ function var_0_0._playDeadWork(arg_7_0)
 	}
 
 	if FightController.instance:GuideFlowPauseAndContinue(var_7_2, var_7_3, var_7_4, var_7_5, var_7_6, var_7_7) then
-		TaskDispatcher.cancelTask(arg_7_0._delayDone, arg_7_0)
+		arg_7_0:com_cancelTimer(arg_7_0.delayDoneTimer)
 	end
 
 	if arg_7_0._deadEntity.nameUI then
@@ -290,6 +292,12 @@ function var_0_0._delayNoDeadEffectDone(arg_15_0)
 end
 
 function var_0_0._delayDone(arg_16_0)
+	if FightTLEventPlayEffectByOperation.playing then
+		arg_16_0.delayDoneTimer = arg_16_0:com_registTimer(arg_16_0._delayDone, 20)
+
+		return
+	end
+
 	logError("dead step play timeout, targetId = " .. arg_16_0.actEffectData.targetId)
 	arg_16_0:_doneAndRemoveEntity()
 end
@@ -310,7 +318,7 @@ function var_0_0._doneAndRemoveEntity(arg_17_0)
 		FightController.instance:dispatchEvent(FightEvent.EntrustEntity, arg_17_0._deadEntity)
 		arg_17_0._afterDeadFlow:addWork(WorkWaitSeconds.New(var_17_3.playTime / 1000))
 	elseif var_17_4 then
-		TaskDispatcher.cancelTask(arg_17_0._delayDone, arg_17_0)
+		arg_17_0:com_cancelTimer(arg_17_0.delayDoneTimer)
 		arg_17_0._afterDeadFlow:addWork(FightHelper.buildDeadPerformanceWork(var_17_4, arg_17_0._deadEntity))
 		arg_17_0._afterDeadFlow:addWork(FunctionWork.New(function()
 			var_17_0:removeUnit(arg_17_0._deadEntity:getTag(), arg_17_0._deadEntity.id)
@@ -322,7 +330,7 @@ function var_0_0._doneAndRemoveEntity(arg_17_0)
 	arg_17_0._afterDeadFlow:addWork(FunctionWork.New(arg_17_0._dispatchDead, arg_17_0))
 
 	if var_17_1 then
-		TaskDispatcher.cancelTask(arg_17_0._delayDone, arg_17_0)
+		arg_17_0:com_cancelTimer(arg_17_0.delayDoneTimer)
 		arg_17_0._afterDeadFlow:addWork(FightWorkNormalDialog.New(FightViewDialog.Type.CheckDeadEntityCount))
 	end
 
@@ -341,7 +349,7 @@ function var_0_0._checkDieDialogAfter(arg_20_0)
 		FightController.instance:dispatchEvent(FightEvent.FightDialog, FightViewDialog.Type.MonsterDieP, arg_20_0._deadEntityModelId)
 
 		if var_0_0.needStopDeadWork then
-			TaskDispatcher.cancelTask(arg_20_0._delayDone, arg_20_0)
+			arg_20_0:com_cancelTimer(arg_20_0.delayDoneTimer)
 			FightController.instance:registerCallback(FightEvent.FightDialogEnd, arg_20_0._onFightDialogEnd, arg_20_0)
 		else
 			arg_20_0:_onFinish()
@@ -382,7 +390,6 @@ function var_0_0.clearWork(arg_23_0)
 	FightController.instance:unregisterCallback(FightEvent.OnSkillLastHit, arg_23_0._onLastHit, arg_23_0)
 	FightController.instance:unregisterCallback(FightEvent.OnSkillPlayFinish, arg_23_0._onSkillPlayFinish, arg_23_0)
 	FightController.instance:unregisterCallback(FightEvent.FightDialogEnd, arg_23_0._onFightDialogEnd, arg_23_0)
-	TaskDispatcher.cancelTask(arg_23_0._delayDone, arg_23_0)
 	TaskDispatcher.cancelTask(arg_23_0._deadPlayEffect, arg_23_0)
 	TaskDispatcher.cancelTask(arg_23_0._deadComplete, arg_23_0)
 	TaskDispatcher.cancelTask(arg_23_0._delayNoDeadEffectDone, arg_23_0)
@@ -403,10 +410,17 @@ function var_0_0._isNoDeadEffect(arg_25_0)
 	end
 
 	local var_25_0 = arg_25_0._deadEntity and arg_25_0._deadEntity:getMO()
-	local var_25_1 = var_25_0 and var_25_0:getCO()
-	local var_25_2 = var_25_1 and FightConfig.instance:getSkinCO(var_25_1.skinId)
+	local var_25_1 = var_25_0 and var_25_0.skin
 
-	return var_25_2 and var_25_2.noDeadEffect == FightEnum.DeadEffectType.NoEffect
+	if not var_25_1 then
+		local var_25_2 = var_25_0 and var_25_0:getCO()
+
+		var_25_1 = var_25_2 and var_25_2.skinId
+	end
+
+	local var_25_3 = FightConfig.instance:getSkinCO(var_25_1)
+
+	return var_25_3 and var_25_3.noDeadEffect == FightEnum.DeadEffectType.NoEffect
 end
 
 function var_0_0._getDeadEffectType(arg_26_0)

@@ -48,22 +48,7 @@ function var_0_0.playCard(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4, arg_5_5, 
 	arg_5_0.toId = arg_5_2
 	arg_5_0.skillId = arg_5_3
 	arg_5_0.belongToEntityId = arg_5_4
-
-	if FightCardDataHelper.isSpecialCardById(arg_5_4, arg_5_3) then
-		if arg_5_5.cardType == FightEnum.CardType.ROUGE_SP or arg_5_5.cardType == FightEnum.CardType.USE_ACT_POINT then
-			arg_5_0.costActPoint = 1
-		else
-			arg_5_0.costActPoint = 0
-		end
-	end
-
-	if FightCardDataHelper.isSkill3(arg_5_5) then
-		arg_5_0.costActPoint = 0
-	end
-
-	if not FightCardDataHelper.checkIsBigSkillCostActPoint(arg_5_4, arg_5_3) then
-		arg_5_0.costActPoint = 0
-	end
+	arg_5_0.costActPoint = FightCardDataHelper.playActCost(arg_5_5)
 
 	local var_5_0 = FightDataHelper.entityMgr:getById(arg_5_0.belongToEntityId)
 	local var_5_1 = FightBuffHelper.simulateBuffList(var_5_0)

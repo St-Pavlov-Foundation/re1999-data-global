@@ -8,7 +8,7 @@ end
 
 function var_0_0.onStart(arg_2_0)
 	FightController.instance:registerCallback(FightEvent.OnCombineCardEnd, arg_2_0._onCombineCardEnd, arg_2_0)
-	FightController.instance:dispatchEvent(FightEvent.SimulatePlayHandCard, arg_2_0.cardOp.param1, arg_2_0.cardOp.toId, arg_2_0.cardOp.param2)
+	FightController.instance:dispatchEvent(FightEvent.SimulatePlayHandCard, arg_2_0.cardOp.param1, arg_2_0.cardOp.toId, arg_2_0.cardOp.param2, arg_2_0.cardOp.param3)
 end
 
 function var_0_0._onCombineCardEnd(arg_3_0)

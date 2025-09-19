@@ -83,9 +83,11 @@ function var_0_0._editableInitView(arg_6_0)
 
 	for iter_6_0 = 1, 3 do
 		local var_6_0 = arg_6_0:getUserDataTb_()
+		local var_6_1 = gohelper.findChild(arg_6_0.skillContainerGo, "skillicon" .. iter_6_0)
 
-		var_6_0.icon = gohelper.findChildSingleImage(arg_6_0.skillContainerGo, string.format("skillicon%s/ani/imgIcon", iter_6_0))
-		var_6_0.tagIcon = gohelper.findChildSingleImage(arg_6_0.skillContainerGo, string.format("skillicon%s/ani/tag/tagIcon", iter_6_0))
+		var_6_0.go = var_6_1
+		var_6_0.icon = gohelper.findChildSingleImage(var_6_1, "ani/imgIcon")
+		var_6_0.tagIcon = gohelper.findChildSingleImage(var_6_1, "ani/tag/tagIcon")
 		arg_6_0.skillCardGoDict[iter_6_0] = var_6_0
 	end
 
@@ -210,20 +212,25 @@ function var_0_0.refreshCircleAnimation(arg_11_0)
 end
 
 function var_0_0.refreshSkillCardInfo(arg_12_0)
-	local var_12_0 = SkillConfig.instance:getHeroBaseSkillIdDict(arg_12_0._config.id)
+	local var_12_0 = SkillConfig.instance:getHeroBaseSkillIdDict(arg_12_0._config.id, true)
 	local var_12_1
 	local var_12_2
 
 	for iter_12_0 = 1, 3 do
 		local var_12_3 = var_12_0[iter_12_0]
-		local var_12_4 = lua_skill.configDict[var_12_3]
 
-		if not var_12_4 then
-			logError(string.format("heroID : %s, skillId not found : %s", arg_12_0._config.id, var_12_3))
+		if var_12_3 ~= 0 then
+			local var_12_4 = lua_skill.configDict[var_12_3]
+
+			if not var_12_4 then
+				logError(string.format("heroID : %s, skillId not found : %s", arg_12_0._config.id, var_12_3))
+			end
+
+			arg_12_0.skillCardGoDict[iter_12_0].icon:LoadImage(ResUrl.getSkillIcon(var_12_4.icon))
+			arg_12_0.skillCardGoDict[iter_12_0].tagIcon:LoadImage(ResUrl.getAttributeIcon("attribute_" .. var_12_4.showTag))
 		end
 
-		arg_12_0.skillCardGoDict[iter_12_0].icon:LoadImage(ResUrl.getSkillIcon(var_12_4.icon))
-		arg_12_0.skillCardGoDict[iter_12_0].tagIcon:LoadImage(ResUrl.getAttributeIcon("attribute_" .. var_12_4.showTag))
+		gohelper.setActive(arg_12_0.skillCardGoDict[iter_12_0].go.gameObject, var_12_3 ~= 0)
 	end
 end
 

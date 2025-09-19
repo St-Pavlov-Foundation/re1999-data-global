@@ -1278,6 +1278,384 @@
     "actionId": 10241121
   },
   {
+    "battleId": 80509314,
+    "monsterId": 805093141,
+    "monsterSpeed": 1,
+    "actionId": 805093111
+  },
+  {
+    "battleId": 80509314,
+    "monsterId": 805093142,
+    "monsterSpeed": 2,
+    "actionId": 805093112
+  },
+  {
+    "battleId": 80509315,
+    "monsterId": 805093151,
+    "monsterSpeed": 1,
+    "actionId": 805093111
+  },
+  {
+    "battleId": 80509315,
+    "monsterId": 805093152,
+    "monsterSpeed": 2,
+    "actionId": 805093112
+  },
+  {
+    "battleId": 80509312,
+    "monsterId": 805093121,
+    "monsterSpeed": 1,
+    "actionId": 805093111
+  },
+  {
+    "battleId": 80509312,
+    "monsterId": 805093122,
+    "monsterSpeed": 2,
+    "actionId": 805093112
+  },
+  {
+    "battleId": 80509113,
+    "monsterId": 805091131,
+    "monsterSpeed": 1,
+    "actionId": 805091111
+  },
+  {
+    "battleId": 80509113,
+    "monsterId": 805091132,
+    "monsterSpeed": 2,
+    "actionId": 805091112
+  },
+  {
+    "battleId": 80509113,
+    "monsterId": 805091133,
+    "monsterSpeed": 2,
+    "actionId": 805091112
+  },
+  {
+    "battleId": 80509114,
+    "monsterId": 805091141,
+    "monsterSpeed": 1,
+    "actionId": 805091111
+  },
+  {
+    "battleId": 80509114,
+    "monsterId": 805091142,
+    "monsterSpeed": 2,
+    "actionId": 805091112
+  },
+  {
+    "battleId": 80509114,
+    "monsterId": 805091143,
+    "monsterSpeed": 2,
+    "actionId": 805091112
+  },
+  {
+    "battleId": 80509313,
+    "monsterId": 805093131,
+    "monsterSpeed": 1,
+    "actionId": 805093111
+  },
+  {
+    "battleId": 80509313,
+    "monsterId": 805093132,
+    "monsterSpeed": 2,
+    "actionId": 805093112
+  },
+  {
+    "battleId": 80509412,
+    "monsterId": 805094121,
+    "monsterSpeed": 1,
+    "actionId": 80509411
+  },
+  {
+    "battleId": 8050912,
+    "monsterId": 805091211,
+    "monsterSpeed": 1,
+    "actionId": 805091211
+  },
+  {
+    "battleId": 8050912,
+    "monsterId": 805091212,
+    "monsterSpeed": 2,
+    "actionId": 805091212
+  },
+  {
+    "battleId": 8050912,
+    "monsterId": 805091213,
+    "monsterSpeed": 2,
+    "actionId": 805091212
+  },
+  {
+    "battleId": 8050931,
+    "monsterId": 805093111,
+    "monsterSpeed": 1,
+    "actionId": 805093111
+  },
+  {
+    "battleId": 8050931,
+    "monsterId": 805093112,
+    "monsterSpeed": 2,
+    "actionId": 805093112
+  },
+  {
+    "battleId": 8050941,
+    "monsterId": 80509411,
+    "monsterSpeed": 1,
+    "actionId": 80509411
+  },
+  {
+    "battleId": 8050922,
+    "monsterId": 80509221,
+    "monsterSpeed": 1,
+    "actionId": 80509221
+  },
+  {
+    "battleId": 8050922,
+    "monsterId": 80509222,
+    "monsterSpeed": 2,
+    "actionId": 80509222
+  },
+  {
+    "battleId": 8050922,
+    "monsterId": 80509223,
+    "monsterSpeed": 2,
+    "actionId": 80509223
+  },
+  {
+    "battleId": 8050932,
+    "monsterId": 805093211,
+    "monsterSpeed": 1,
+    "actionId": 805093211
+  },
+  {
+    "battleId": 8050932,
+    "monsterId": 805093212,
+    "monsterSpeed": 2,
+    "actionId": 805093212
+  },
+  {
+    "battleId": 8050942,
+    "monsterId": 80509421,
+    "monsterSpeed": 1,
+    "actionId": 80509421
+  },
+  {
+    "battleId": 8050913,
+    "monsterId": 805091311,
+    "monsterSpeed": 1,
+    "actionId": 805091311
+  },
+  {
+    "battleId": 8050913,
+    "monsterId": 805091312,
+    "monsterSpeed": 2,
+    "actionId": 805091312
+  },
+  {
+    "battleId": 8050913,
+    "monsterId": 805091313,
+    "monsterSpeed": 2,
+    "actionId": 805091312
+  },
+  {
+    "battleId": 8050923,
+    "monsterId": 80509231,
+    "monsterSpeed": 1,
+    "actionId": 80509231
+  },
+  {
+    "battleId": 8050923,
+    "monsterId": 80509232,
+    "monsterSpeed": 2,
+    "actionId": 80509232
+  },
+  {
+    "battleId": 8050923,
+    "monsterId": 80509233,
+    "monsterSpeed": 2,
+    "actionId": 80509233
+  },
+  {
+    "battleId": 8050933,
+    "monsterId": 805093311,
+    "monsterSpeed": 1,
+    "actionId": 805093311
+  },
+  {
+    "battleId": 8050933,
+    "monsterId": 805093312,
+    "monsterSpeed": 2,
+    "actionId": 805093312
+  },
+  {
+    "battleId": 8050943,
+    "monsterId": 80509431,
+    "monsterSpeed": 1,
+    "actionId": 80509431
+  },
+  {
+    "battleId": 8050914,
+    "monsterId": 805091411,
+    "monsterSpeed": 1,
+    "actionId": 805091411
+  },
+  {
+    "battleId": 8050914,
+    "monsterId": 805091412,
+    "monsterSpeed": 2,
+    "actionId": 805091412
+  },
+  {
+    "battleId": 8050914,
+    "monsterId": 805091413,
+    "monsterSpeed": 2,
+    "actionId": 805091412
+  },
+  {
+    "battleId": 8050924,
+    "monsterId": 80509241,
+    "monsterSpeed": 1,
+    "actionId": 80509241
+  },
+  {
+    "battleId": 8050924,
+    "monsterId": 80509242,
+    "monsterSpeed": 2,
+    "actionId": 80509242
+  },
+  {
+    "battleId": 8050924,
+    "monsterId": 80509243,
+    "monsterSpeed": 2,
+    "actionId": 80509243
+  },
+  {
+    "battleId": 8050934,
+    "monsterId": 805093411,
+    "monsterSpeed": 1,
+    "actionId": 805093411
+  },
+  {
+    "battleId": 8050934,
+    "monsterId": 805093412,
+    "monsterSpeed": 2,
+    "actionId": 805093412
+  },
+  {
+    "battleId": 8050944,
+    "monsterId": 80509441,
+    "monsterSpeed": 1,
+    "actionId": 80509441
+  },
+  {
+    "battleId": 8050915,
+    "monsterId": 805091511,
+    "monsterSpeed": 1,
+    "actionId": 805091511
+  },
+  {
+    "battleId": 8050915,
+    "monsterId": 805091512,
+    "monsterSpeed": 2,
+    "actionId": 805091512
+  },
+  {
+    "battleId": 8050915,
+    "monsterId": 805091513,
+    "monsterSpeed": 2,
+    "actionId": 805091512
+  },
+  {
+    "battleId": 8050925,
+    "monsterId": 80509251,
+    "monsterSpeed": 1,
+    "actionId": 80509251
+  },
+  {
+    "battleId": 8050925,
+    "monsterId": 80509252,
+    "monsterSpeed": 2,
+    "actionId": 80509252
+  },
+  {
+    "battleId": 8050925,
+    "monsterId": 80509253,
+    "monsterSpeed": 2,
+    "actionId": 80509253
+  },
+  {
+    "battleId": 8050935,
+    "monsterId": 805093511,
+    "monsterSpeed": 1,
+    "actionId": 805093511
+  },
+  {
+    "battleId": 8050935,
+    "monsterId": 805093512,
+    "monsterSpeed": 2,
+    "actionId": 805093512
+  },
+  {
+    "battleId": 8050945,
+    "monsterId": 80509451,
+    "monsterSpeed": 1,
+    "actionId": 80509451
+  },
+  {
+    "battleId": 8050921,
+    "monsterId": 80509211,
+    "monsterSpeed": 1,
+    "actionId": 80509211
+  },
+  {
+    "battleId": 8050921,
+    "monsterId": 80509212,
+    "monsterSpeed": 2,
+    "actionId": 80509212
+  },
+  {
+    "battleId": 8050921,
+    "monsterId": 80509213,
+    "monsterSpeed": 2,
+    "actionId": 80509213
+  },
+  {
+    "battleId": 80509111,
+    "monsterId": 805091111,
+    "monsterSpeed": 1,
+    "actionId": 805091111
+  },
+  {
+    "battleId": 80509111,
+    "monsterId": 805091112,
+    "monsterSpeed": 2,
+    "actionId": 805091112
+  },
+  {
+    "battleId": 80509111,
+    "monsterId": 805091113,
+    "monsterSpeed": 2,
+    "actionId": 805091112
+  },
+  {
+    "battleId": 80509112,
+    "monsterId": 805091121,
+    "monsterSpeed": 1,
+    "actionId": 805091111
+  },
+  {
+    "battleId": 80509112,
+    "monsterId": 805091122,
+    "monsterSpeed": 2,
+    "actionId": 805091112
+  },
+  {
+    "battleId": 80509112,
+    "monsterId": 805091123,
+    "monsterSpeed": 2,
+    "actionId": 805091112
+  },
+  {
     "battleId": 1029211,
     "monsterId": 10292111,
     "monsterSpeed": 1,

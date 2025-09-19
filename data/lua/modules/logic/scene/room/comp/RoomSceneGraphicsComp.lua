@@ -45,6 +45,9 @@ function var_0_0.init(arg_2_0, arg_2_1, arg_2_2)
 	var_2_1.useProbe = false
 	var_2_1.useLightmap = false
 	var_2_1.useLightData = false
+	arg_2_0.uiCameraData = CameraMgr.instance:getUICamera():GetComponent(PostProcessingMgr.PPCustomCamDataType)
+	arg_2_0.cacheUINeedLights = arg_2_0.uiCameraData.needLights
+	arg_2_0.uiCameraData.needLights = false
 	arg_2_0.lodBias = UnityEngine.QualitySettings.lodBias
 
 	UnityEngine.Shader.EnableKeyword("_FASTER_BLOOM")
@@ -83,6 +86,10 @@ end
 
 function var_0_0.onSceneClose(arg_5_0)
 	UnityEngine.Shader.DisableKeyword("_FASTER_BLOOM")
+
+	arg_5_0.uiCameraData.needLights = arg_5_0.cacheUINeedLights
+	arg_5_0.uiCameraData = nil
+
 	PostProcessingMgr.instance:setRenderShadow(true)
 	PostProcessingMgr.instance:clearLayerCullDistance()
 	GameGlobalMgr.instance:unregisterCallback(GameStateEvent.OnQualityChange, arg_5_0._refreshGraphics, arg_5_0)
@@ -95,6 +102,7 @@ function var_0_0.onSceneClose(arg_5_0)
 	var_5_1.useProbe = arg_5_0.useProbe
 	var_5_1.useLightmap = arg_5_0.useLightmap
 	var_5_1.useLightData = arg_5_0.useLightData
+	var_5_1.disableTransparentBackToFrontSort = false
 	UnityEngine.Physics.autoSimulation = arg_5_0.projPhysics
 	UnityEngine.Physics.autoSyncTransforms = arg_5_0.projTransforms
 	arg_5_0.projPhysics = nil
@@ -178,6 +186,7 @@ function var_0_0.setupShadowParam(arg_7_0, arg_7_1, arg_7_2)
 		local var_7_0
 		local var_7_1
 		local var_7_2 = arg_7_0:getCurScene()
+		local var_7_3 = CameraMgr.instance:getMainCamera()
 
 		if var_7_2 ~= nil and var_7_2.go ~= nil then
 			var_7_0 = var_7_2.go.sceneShadow
@@ -202,9 +211,9 @@ function var_0_0.setupShadowParam(arg_7_0, arg_7_1, arg_7_2)
 			var_7_0:ApplyProperty()
 		end
 
-		local var_7_3 = GameGlobalMgr.instance:getScreenState():getLocalQuality()
+		local var_7_4 = GameGlobalMgr.instance:getScreenState():getLocalQuality()
 
-		if var_7_3 == ModuleEnum.Performance.High and arg_7_0.compatibility then
+		if var_7_4 == ModuleEnum.Performance.High and arg_7_0.compatibility then
 			if arg_7_1 then
 				var_7_1:SetReflectionType(0)
 				arg_7_0:setPPValue("ssaoIntensity", 0.38)
@@ -217,13 +226,17 @@ function var_0_0.setupShadowParam(arg_7_0, arg_7_1, arg_7_2)
 		end
 
 		if arg_7_1 then
-			local var_7_4 = CameraMgr.instance:getMainCamera()
+			PostProcessingMgr.setCameraLayerInt(var_7_3, arg_7_0.LAYER_MASK_CullOnLowQuality, false)
+		elseif var_7_4 ~= ModuleEnum.Performance.Low then
+			PostProcessingMgr.setCameraLayerInt(var_7_3, arg_7_0.LAYER_MASK_CullOnLowQuality, true)
+		end
 
-			PostProcessingMgr.setCameraLayerInt(var_7_4, arg_7_0.LAYER_MASK_CullOnLowQuality, false)
-		elseif var_7_3 ~= ModuleEnum.Performance.Low then
-			local var_7_5 = CameraMgr.instance:getMainCamera()
+		local var_7_5 = var_7_3:GetComponent(PostProcessingMgr.PPCustomCamDataType)
 
-			PostProcessingMgr.setCameraLayerInt(var_7_5, arg_7_0.LAYER_MASK_CullOnLowQuality, true)
+		if arg_7_1 then
+			var_7_5.disableTransparentBackToFrontSort = true
+		else
+			var_7_5.disableTransparentBackToFrontSort = false
 		end
 
 		arg_7_0.overLookFlag = arg_7_1

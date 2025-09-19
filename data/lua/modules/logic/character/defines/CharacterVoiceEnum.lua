@@ -14,6 +14,12 @@ var_0_0.PlayType = {
 	Auto = 2,
 	Click = 1
 }
+var_0_0.StatusParams = {
+	Luxi_NoChangeStatus = "noChangeStatus"
+}
+var_0_0.RankUpResultShowMask = {
+	[3120] = true
+}
 var_0_0.UIBloomView = {
 	CharacterDataView = "view_CharacterDataView"
 }
@@ -24,16 +30,15 @@ var_0_0.RTShareType = {
 	FullScreen = 4,
 	Normal = 1
 }
-var_0_0.NormalPriority = {
-	CharacterGetView = 14,
-	CharacterRankUpResultView = 12,
-	CharacterRankUpView = 10
-}
 var_0_0.BloomCameraSize = {
 	[3116] = 10,
+	[3107] = 10,
 	[3108] = 10,
-	[3122] = 10
+	[3122] = 10,
+	[3120] = 10
 }
+var_0_0.NormalTypeCameraSize = 13
+var_0_0.NormalFullScreenEffectCameraSize = 13
 var_0_0.BloomFullScreenEffectCameraSize = 13
 var_0_0.DelayFrame = 5
 

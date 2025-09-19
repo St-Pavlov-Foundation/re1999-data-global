@@ -452,7 +452,8 @@ function var_0_0._buildOneBehaviorBuffs(arg_10_0, arg_10_1, arg_10_2, arg_10_3, 
 				buffId = arg_10_2,
 				duration = var_10_1 and var_10_1.duration + var_10_0.duringTime or var_10_0.duringTime,
 				count = var_10_1 and var_10_1.count + var_10_0.effectCount or var_10_0.effectCount,
-				uid = var_10_1 and var_10_1.uid or SkillEditorBuffSelectView.genBuffUid()
+				uid = var_10_1 and var_10_1.uid or SkillEditorBuffSelectView.genBuffUid(),
+				actInfo = {}
 			}
 
 			var_10_2:init(var_10_3, iter_10_1)

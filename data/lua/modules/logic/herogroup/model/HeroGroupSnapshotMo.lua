@@ -37,6 +37,8 @@ function var_0_0.getHeroGroupSnapshotList(arg_4_0)
 end
 
 function var_0_0.getHeroGroupInfo(arg_5_0, arg_5_1, arg_5_2)
+	arg_5_1 = arg_5_1 or 1
+
 	local var_5_0 = arg_5_0.groupInfoDict[arg_5_1]
 
 	if var_5_0 == nil and arg_5_2 then

@@ -4,6 +4,8 @@ local var_0_0 = class("FightWorkFbStory", BaseWork)
 
 var_0_0.Type_EnterWave = 1
 var_0_0.Type_BeforePlaySkill = 2
+var_0_0.Type_AfterPlaySkill = 3
+var_0_0.Type_ChangeRound = 4
 
 function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2)
 	arg_1_0.conditionType = arg_1_1
@@ -36,7 +38,7 @@ function var_0_0.onStart(arg_2_0)
 		end
 
 		arg_2_0:_checkPlayStory()
-	elseif arg_2_0.configCondType == 2 then
+	elseif arg_2_0.configCondType == 2 or arg_2_0.configCondType == 3 then
 		local var_2_0 = tonumber(arg_2_0.configCondParam)
 
 		if not var_2_0 or not arg_2_0.exParam or arg_2_0.exParam ~= var_2_0 then
@@ -44,6 +46,16 @@ function var_0_0.onStart(arg_2_0)
 
 			return
 		end
+
+		arg_2_0:_checkPlayStory()
+	elseif arg_2_0.configCondType == 4 then
+		if FightModel.instance:getCurRoundId() ~= tonumber(arg_2_0.configCondParam) then
+			arg_2_0:onDone(true)
+
+			return
+		end
+
+		arg_2_0.replayBgm = true
 
 		arg_2_0:_checkPlayStory()
 	else
@@ -70,6 +82,11 @@ end
 
 function var_0_0._afterPlayStory(arg_4_0)
 	arg_4_0:_setAllEntitysVisible(true)
+
+	if arg_4_0.replayBgm then
+		FightController.instance:dispatchEvent(FightEvent.ReplayBgmAfterAVG)
+	end
+
 	arg_4_0:onDone(true)
 end
 

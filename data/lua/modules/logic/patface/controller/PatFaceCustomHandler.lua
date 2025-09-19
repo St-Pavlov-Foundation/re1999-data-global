@@ -88,4 +88,54 @@ function var_0_0.setHasShow(arg_14_0)
 	PlayerPrefsHelper.setString(var_14_0, "hasEnter")
 end
 
+function var_0_0.V2a8_WuErLiXiGiftCheckCanPat(arg_15_0)
+	return V2a8_WuErLiXiGiftModel.instance:isShowRedDot()
+end
+
+function var_0_0.V2a8_WuErLiXiGiftPat(arg_16_0)
+	V2a8_WuErLiXiGiftController.instance:openV2a8_WuErLiXiGiftView()
+end
+
+function var_0_0.V2a8_SelfSelectCharacterViewCheckCanPat(arg_17_0)
+	return Activity199Model.instance:isShowRedDot()
+end
+
+function var_0_0.V2a8_SelfSelectCharacterViewPat(arg_18_0)
+	Activity199Controller.instance:openV2a8_SelfSelectCharacterView()
+end
+
+function var_0_0.V2a8_BPSkinFaceViewCanPat(arg_19_0)
+	local var_19_0 = BpModel.instance.payStatus
+
+	if var_19_0 ~= BpEnum.PayStatus.Pay1 and var_19_0 ~= BpEnum.PayStatus.Pay2 then
+		return false
+	end
+
+	local var_19_1 = CommonConfig.instance:getConstNum(ConstEnum.BPSkinFaceViewSkinId)
+
+	if not var_19_1 or var_19_1 == 0 or not lua_skin.configDict[var_19_1] then
+		return false
+	end
+
+	if BpController.instance:isEmptySkinFaceViewStr(var_19_1) then
+		local var_19_2 = StoreClothesGoodsItemListModel.instance:findMOByProduct(MaterialEnum.MaterialType.HeroSkin, var_19_1)
+
+		if var_19_2 and not var_19_2:alreadyHas() then
+			return true
+		end
+	end
+
+	return false
+end
+
+function var_0_0.V2a8_openBPSkinFaceViewPat()
+	local var_20_0 = CommonConfig.instance:getConstNum(ConstEnum.BPSkinFaceViewSkinId)
+
+	if var_20_0 ~= 0 then
+		ViewMgr.instance:openView(ViewName.BPSkinFaceView, {
+			skinId = var_20_0
+		})
+	end
+end
+
 return var_0_0

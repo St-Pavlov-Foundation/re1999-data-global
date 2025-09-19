@@ -76,6 +76,7 @@ function var_0_0._initHeroItems(arg_9_0)
 	arg_9_0._heroItem1:setNameContentShow(false)
 	arg_9_0._heroItem1:addEventListeners()
 	arg_9_0._heroItem1:addClickListener(arg_9_0._onHeroItem1Click, arg_9_0)
+	arg_9_0._heroItem1:setStyle_CharacterBackpack()
 
 	arg_9_0._hero1Info = nil
 	arg_9_0._heroItem2 = IconMgr.instance:getCommonHeroItem(arg_9_0._goselectheroitem2)
@@ -85,6 +86,7 @@ function var_0_0._initHeroItems(arg_9_0)
 	arg_9_0._heroItem2:setNameContentShow(false)
 	arg_9_0._heroItem2:addEventListeners()
 	arg_9_0._heroItem2:addClickListener(arg_9_0._onHeroItem2Click, arg_9_0)
+	arg_9_0._heroItem2:setStyle_CharacterBackpack()
 
 	arg_9_0._hero2Info = nil
 end

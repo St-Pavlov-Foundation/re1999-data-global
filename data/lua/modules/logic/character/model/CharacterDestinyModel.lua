@@ -67,13 +67,15 @@ function var_0_0.getCurSlotAttrInfos(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
 			var_4_2[1] = {}
 		end
 
-		for iter_4_4, iter_4_5 in pairs(CharacterDestinyEnum.DestinyUpBaseAttr) do
-			local var_4_11 = {
-				attrId = iter_4_5,
-				curNum = var_4_6[iter_4_5]
-			}
+		for iter_4_4, iter_4_5 in pairs(var_4_6) do
+			if LuaUtil.tableContains(CharacterDestinyEnum.DestinyUpBaseAttr, iter_4_4) then
+				local var_4_11 = {
+					attrId = iter_4_4,
+					curNum = iter_4_5
+				}
 
-			table.insert(var_4_2[1], var_4_11)
+				table.insert(var_4_2[1], var_4_11)
+			end
 		end
 	end
 

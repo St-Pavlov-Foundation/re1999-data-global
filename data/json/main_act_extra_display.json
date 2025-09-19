@@ -61,5 +61,12 @@
     "icon": "singlebg_lang/txt_act191_singlebg/act191_main_banner.png",
     "sortId": 3,
     "show": 1
+  },
+  {
+    "id": 11,
+    "name": "language_10080262",
+    "icon": "singlebg_lang/txt_v2a8_survival_singlebg/survival_mainenter_banner.png",
+    "sortId": 4,
+    "show": 1
   }
 ]

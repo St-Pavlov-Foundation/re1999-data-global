@@ -22,6 +22,10 @@ function var_0_0.cancelUpdate(arg_2_0)
 end
 
 function var_0_0.update()
+	if #var_0_1 == 0 then
+		return
+	end
+
 	local var_3_0 = Time.deltaTime
 
 	for iter_3_0, iter_3_1 in ipairs(var_0_1) do

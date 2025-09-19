@@ -271,6 +271,12 @@ function var_0_0._editableInitView(arg_16_0)
 	if not arg_16_0._exitBtn then
 		arg_16_0._exitBtn = StoryExitBtn.New(arg_16_0._goexit, arg_16_0.resetRightBtnPos, arg_16_0)
 	end
+
+	local var_16_0 = GMController.instance:getGMNode("storyview", arg_16_0.viewGO)
+
+	if var_16_0 and not arg_16_0._gmView then
+		arg_16_0._gmView = StoryGMView.New(var_16_0)
+	end
 end
 
 function var_0_0.onUpdateParam(arg_17_0)
@@ -385,6 +391,9 @@ function var_0_0._onPlayFullText(arg_24_0, arg_24_1)
 		arg_24_0._frontItem:playTextFadeIn(arg_24_0._stepCo, arg_24_0._onFullTextShowFinished, arg_24_0)
 	elseif arg_24_0._stepCo.conversation.effType == StoryEnum.ConversationEffectType.WordByWord then
 		arg_24_0._frontItem:wordByWord(arg_24_0._stepCo, arg_24_0._onFullTextShowFinished, arg_24_0)
+	elseif arg_24_0._stepCo.conversation.effType == StoryEnum.ConversationEffectType.Glitch then
+		arg_24_0._frontItem:playGlitch()
+		arg_24_0:_onFullTextShowFinished()
 	end
 end
 
@@ -722,6 +731,12 @@ function var_0_0.onDestroyView(arg_51_0)
 		arg_51_0._exitBtn:destroy()
 
 		arg_51_0._exitBtn = nil
+	end
+
+	if arg_51_0._gmView then
+		arg_51_0._gmView:destroy()
+
+		arg_51_0._gmView = nil
 	end
 end
 

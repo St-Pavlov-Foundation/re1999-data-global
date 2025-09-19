@@ -24,6 +24,7 @@ function var_0_0.buildViews(arg_1_0)
 	table.insert(var_1_0, BalanceUmbrellaDungeonMapView.New())
 	table.insert(var_1_0, InvestigateDungeonMapView.New())
 	table.insert(var_1_0, DiceHeroDungeonMapView.New())
+	table.insert(var_1_0, VersionActivity2_8BossActDungeonMapView.New())
 
 	return var_1_0
 end

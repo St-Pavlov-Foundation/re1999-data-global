@@ -28,6 +28,7 @@ function var_0_0.onStart(arg_1_0, arg_1_1)
 	arg_1_0._cloneMats = {}
 	arg_1_0._meshGOs = {}
 	arg_1_0._renderers = {}
+	arg_1_0._txtList = {}
 
 	for iter_1_0, iter_1_1 in ipairs(arg_1_1.dissolveSkillItemGOs) do
 		local var_1_2 = gohelper.cloneInPlace(iter_1_1)
@@ -49,18 +50,34 @@ function var_0_0.onStart(arg_1_0, arg_1_1)
 			end
 		end
 
-		local var_1_5 = arg_1_0:_setupMesh(var_1_3, var_1_0)
+		local var_1_5 = var_1_2:GetComponentsInChildren(gohelper.Type_TextMesh, false)
 
-		table.insert(arg_1_0._meshGOs, var_1_5)
+		for iter_1_3 = 0, var_1_5.Length - 1 do
+			local var_1_6 = var_1_5[iter_1_3]
 
-		local var_1_6 = var_1_5:GetComponentsInChildren(typeof(UnityEngine.Renderer), false)
+			table.insert(arg_1_0._txtList, var_1_6)
+		end
 
-		for iter_1_3 = 0, var_1_6.Length - 1 do
-			local var_1_7 = var_1_6[iter_1_3].material
+		local var_1_7 = var_1_2:GetComponentsInChildren(gohelper.Type_Text, false)
 
-			table.insert(arg_1_0._mats, var_1_7)
-			var_1_7:EnableKeyword(var_0_5)
-			var_1_7:SetFloat(var_0_6, 1)
+		for iter_1_4 = 0, var_1_7.Length - 1 do
+			local var_1_8 = var_1_7[iter_1_4]
+
+			table.insert(arg_1_0._txtList, var_1_8)
+		end
+
+		local var_1_9 = arg_1_0:_setupMesh(var_1_3, var_1_0)
+
+		table.insert(arg_1_0._meshGOs, var_1_9)
+
+		local var_1_10 = var_1_9:GetComponentsInChildren(typeof(UnityEngine.Renderer), false)
+
+		for iter_1_5 = 0, var_1_10.Length - 1 do
+			local var_1_11 = var_1_10[iter_1_5].material
+
+			table.insert(arg_1_0._mats, var_1_11)
+			var_1_11:EnableKeyword(var_0_5)
+			var_1_11:SetFloat(var_0_6, 1)
 		end
 	end
 
@@ -79,15 +96,21 @@ function var_0_0.onStart(arg_1_0, arg_1_1)
 end
 
 function var_0_0._tweenFrameFunc(arg_2_0, arg_2_1)
+	if arg_2_0._txtList then
+		for iter_2_0, iter_2_1 in ipairs(arg_2_0._txtList) do
+			ZProj.UGUIHelper.SetColorAlpha(iter_2_1, math.max(1 - arg_2_1 * 2, 0))
+		end
+	end
+
 	if arg_2_0._mats then
-		for iter_2_0, iter_2_1 in ipairs(arg_2_0._mats) do
+		for iter_2_2, iter_2_3 in ipairs(arg_2_0._mats) do
 			local var_2_0 = var_0_7[1]
 			local var_2_1 = var_0_7[2]
 			local var_2_2 = var_0_7[3]
 			local var_2_3 = var_0_7[4]
 			local var_2_4 = MaterialUtil.getLerpValue(var_2_1, var_2_2, var_2_3, arg_2_1)
 
-			MaterialUtil.setPropValue(iter_2_1, var_2_0, var_2_1, var_2_4)
+			MaterialUtil.setPropValue(iter_2_3, var_2_0, var_2_1, var_2_4)
 		end
 	end
 end
@@ -220,11 +243,17 @@ function var_0_0.clearWork(arg_7_0)
 		end
 	end
 
-	if arg_7_0._renderers then
-		for iter_7_4 = 1, #arg_7_0._renderers do
-			gohelper.destroy(arg_7_0._renderers[iter_7_4].material)
+	if arg_7_0._txtList then
+		for iter_7_4 = 1, #arg_7_0._txtList do
+			arg_7_0._txtList[iter_7_4] = nil
+		end
+	end
 
-			arg_7_0._renderers[iter_7_4] = nil
+	if arg_7_0._renderers then
+		for iter_7_5 = 1, #arg_7_0._renderers do
+			gohelper.destroy(arg_7_0._renderers[iter_7_5].material)
+
+			arg_7_0._renderers[iter_7_5] = nil
 		end
 	end
 

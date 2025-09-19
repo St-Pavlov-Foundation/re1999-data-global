@@ -215,18 +215,28 @@ function var_0_0.getMonsterHp(arg_16_0, arg_16_1, arg_16_2)
 	local var_16_2 = lua_monster.configDict[arg_16_1]
 
 	if var_16_2 then
-		if not arg_16_2 then
-			local var_16_3 = arg_16_0:calculateMonsterHpNewFunc(var_16_2)
+		local var_16_3 = true
 
-			if var_16_3 then
-				return var_16_3
+		if arg_16_2 then
+			local var_16_4 = var_16_2[var_16_0]
+
+			if var_16_4 and var_16_4 > 0 then
+				var_16_3 = false
 			end
 		end
 
-		local var_16_4 = lua_monster_template.configDict[var_16_2[var_16_0]]
+		if var_16_3 then
+			local var_16_5 = arg_16_0:calculateMonsterHpNewFunc(var_16_2)
 
-		if var_16_4 then
-			return var_16_4.life + var_16_2[var_16_1] * var_16_4.lifeGrow
+			if var_16_5 then
+				return var_16_5
+			end
+		end
+
+		local var_16_6 = lua_monster_template.configDict[var_16_2[var_16_0]]
+
+		if var_16_6 then
+			return var_16_6.life + var_16_2[var_16_1] * var_16_6.lifeGrow
 		end
 	end
 
@@ -249,26 +259,32 @@ function var_0_0.calculateMonsterHpNewFunc(arg_17_0, arg_17_1)
 			return
 		end
 
-		local var_17_3 = lua_monster_level.configDict[var_17_1.level]
+		local var_17_3 = arg_17_1.level_true
 
-		if not var_17_3 then
-			return
+		if var_17_3 <= 0 then
+			var_17_3 = var_17_1.level
 		end
 
-		local var_17_4 = lua_monster_job.configDict[var_17_2.job]
+		local var_17_4 = lua_monster_level.configDict[var_17_3]
 
 		if not var_17_4 then
 			return
 		end
 
-		local var_17_5 = var_17_2.life / 10000 * (var_17_4.life_base * var_17_3.base + var_17_4.life_equip_base * var_17_3.equip_base) / 10000 * var_17_1.life / 10000
-		local var_17_6 = math.floor(var_17_5)
+		local var_17_5 = lua_monster_job.configDict[var_17_2.job]
 
-		if var_17_1.multiHp > 1 then
-			var_17_6 = var_17_6 / var_17_1.multiHp
+		if not var_17_5 then
+			return
 		end
 
-		return var_17_6
+		local var_17_6 = var_17_2.life / 10000 * (var_17_5.life_base * var_17_4.base + var_17_5.life_equip_base * var_17_4.equip_base) / 10000 * var_17_1.life / 10000
+		local var_17_7 = math.floor(var_17_6)
+
+		if var_17_1.multiHp > 1 then
+			var_17_7 = var_17_7 / var_17_1.multiHp
+		end
+
+		return var_17_7
 	end
 end
 

@@ -1,0 +1,123 @@
+[
+  {
+    "id": 10001,
+    "name": "language_10086195",
+    "nameEn": "From the Uniform Locker",
+    "show": false,
+    "order": 1,
+    "des": "language_10086196",
+    "scenePath": "",
+    "nameRes": "",
+    "iconRes": ""
+  },
+  {
+    "id": 10002,
+    "name": "language_10086197",
+    "nameEn": "Behind the Curtain",
+    "show": false,
+    "order": 2,
+    "des": "language_10086198",
+    "scenePath": "",
+    "nameRes": "",
+    "iconRes": ""
+  },
+  {
+    "id": 10003,
+    "name": "language_10086199",
+    "nameEn": "Gathering of Cultures",
+    "show": true,
+    "order": 3,
+    "des": "language_10086200",
+    "scenePath": "scenes/v2a8_m_s17_pftj/prefab/sence_10003.prefab",
+    "nameRes": "skinhandbook_titletxt_06",
+    "iconRes": "skinhandbook_titleicon_06"
+  },
+  {
+    "id": 10004,
+    "name": "language_10086201",
+    "nameEn": "Costume Party",
+    "show": true,
+    "order": 4,
+    "des": "language_10086202",
+    "scenePath": "scenes/v2a8_m_s17_pftj/prefab/sence_10004.prefab",
+    "nameRes": "skinhandbook_titletxt_01",
+    "iconRes": "skinhandbook_titleicon_01"
+  },
+  {
+    "id": 10005,
+    "name": "language_10086203",
+    "nameEn": "Arts Crossover",
+    "show": true,
+    "order": 5,
+    "des": "language_10086204",
+    "scenePath": "scenes/v2a8_m_s17_pftj/prefab/sence_10005.prefab",
+    "nameRes": "skinhandbook_titletxt_04",
+    "iconRes": "skinhandbook_titleicon_04"
+  },
+  {
+    "id": 10006,
+    "name": "language_10086205",
+    "nameEn": "Pulse of Life",
+    "show": true,
+    "order": 6,
+    "des": "language_10086206",
+    "scenePath": "scenes/v2a8_m_s17_pftj/prefab/sence_10006.prefab",
+    "nameRes": "skinhandbook_titletxt_05",
+    "iconRes": "skinhandbook_titleicon_05"
+  },
+  {
+    "id": 10007,
+    "name": "language_10086207",
+    "nameEn": "Golden Getaway",
+    "show": true,
+    "order": 7,
+    "des": "language_10086208",
+    "scenePath": "scenes/v2a8_m_s17_pftj/prefab/sence_10007.prefab",
+    "nameRes": "skinhandbook_titletxt_03",
+    "iconRes": "skinhandbook_titleicon_03"
+  },
+  {
+    "id": 10008,
+    "name": "language_10086209",
+    "nameEn": "Dushuo Festival",
+    "show": false,
+    "order": 8,
+    "des": "language_10086196",
+    "scenePath": "",
+    "nameRes": "",
+    "iconRes": ""
+  },
+  {
+    "id": 10009,
+    "name": "language_10086210",
+    "nameEn": "Classic Fashion",
+    "show": true,
+    "order": 9,
+    "des": "language_10086211",
+    "scenePath": "scenes/v2a8_m_s17_pftj/prefab/sence_10009.prefab",
+    "nameRes": "skinhandbook_titletxt_02",
+    "iconRes": "skinhandbook_titleicon_02"
+  },
+  {
+    "id": 11001,
+    "name": "language_10086104",
+    "nameEn": "Card #0 to #21",
+    "show": false,
+    "order": 10,
+    "des": "language_10086212",
+    "scenePath": "",
+    "nameRes": "",
+    "iconRes": ""
+  },
+  {
+    "id": 12001,
+    "name": "language_10086213",
+    "nameEn": "On the Other Side of the \"Storm\"",
+    "show": true,
+    "order": 11,
+    "des": "language_10086214",
+    "scenePath": "scenes/v2a8_m_s17_pftj/prefab/sence_12001.prefab",
+    "nameRes": "skinhandbook_titletxt_08",
+    "iconRes": "skinhandbook_titleicon_08"
+  }
+]

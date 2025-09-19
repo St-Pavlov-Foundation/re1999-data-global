@@ -151,6 +151,4 @@ end
 
 var_0_0.instance = var_0_0.New()
 
-Act183JumpHelper.activate()
-
 return var_0_0

@@ -298,5 +298,25 @@
   {
     "id": 75,
     "skipvideo": "s01_activity_04"
+  },
+  {
+    "id": 76,
+    "skipvideo": "2_8_chapter10_01"
+  },
+  {
+    "id": 77,
+    "skipvideo": "2_8_chapter10_02"
+  },
+  {
+    "id": 78,
+    "skipvideo": "2_8_chapter10_03"
+  },
+  {
+    "id": 79,
+    "skipvideo": "2_8_chapter10_04"
+  },
+  {
+    "id": 80,
+    "skipvideo": "2_8_chapter10_05"
   }
 ]

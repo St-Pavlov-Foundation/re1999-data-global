@@ -110,5 +110,61 @@
     "rule": "1#25130011",
     "decs": "language_10067360",
     "unlockSupport": 9271004
+  },
+  {
+    "activityId": 12813,
+    "num": 1,
+    "rule": "1#25130004",
+    "decs": "language_10067353",
+    "unlockSupport": 0
+  },
+  {
+    "activityId": 12813,
+    "num": 2,
+    "rule": "1#25130005",
+    "decs": "language_10067354",
+    "unlockSupport": 9281001
+  },
+  {
+    "activityId": 12813,
+    "num": 3,
+    "rule": "1#25130006",
+    "decs": "language_10067355",
+    "unlockSupport": 0
+  },
+  {
+    "activityId": 12813,
+    "num": 4,
+    "rule": "1#25130007",
+    "decs": "language_10067356",
+    "unlockSupport": 9281002
+  },
+  {
+    "activityId": 12813,
+    "num": 5,
+    "rule": "1#25130008",
+    "decs": "language_10067357",
+    "unlockSupport": 0
+  },
+  {
+    "activityId": 12813,
+    "num": 6,
+    "rule": "1#25130009",
+    "decs": "language_10067358",
+    "unlockSupport": 9281003
+  },
+  {
+    "activityId": 12813,
+    "num": 7,
+    "rule": "1#25130010",
+    "decs": "language_10067359",
+    "unlockSupport": 0
+  },
+  {
+    "activityId": 12813,
+    "num": 8,
+    "rule": "1#25130011",
+    "decs": "language_10067360",
+    "unlockSupport": 9281004
   }
 ]

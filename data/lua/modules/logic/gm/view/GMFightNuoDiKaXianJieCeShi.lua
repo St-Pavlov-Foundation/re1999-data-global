@@ -45,24 +45,29 @@ function var_0_0.onClickStart(arg_5_0)
 	if #var_5_3 > 0 then
 		var_5_1.toId = var_5_3[1].id
 
-		for iter_5_0 = 1, tonumber(arg_5_0.inputCount:GetText()) do
-			local var_5_4 = FightActEffectData.New(FightDef_pb.ActEffect())
+		local var_5_4 = tonumber(arg_5_0.inputCount:GetText()) or 0
 
-			var_5_4.targetId = var_5_3[math.random(1, #var_5_3)].id
-			var_5_4.effectType = -666
-			var_5_4.effectNum = 100
+		for iter_5_0 = 1, var_5_4 do
+			local var_5_5 = FightActEffectData.New(FightDef_pb.ActEffect())
 
-			table.insert(var_5_1.actEffect, var_5_4)
+			var_5_5.targetId = var_5_3[math.random(1, #var_5_3)].id
+			var_5_5.effectType = FightEnum.EffectType.NUODIKARANDOMATTACK
+			var_5_5.effectNum = 100
+			var_5_5.effectNum1 = FightEnum.EffectType.DAMAGE
+			var_5_5.reserveStr = "0#" .. var_5_4
+
+			table.insert(var_5_1.actEffect, var_5_5)
 		end
 
 		for iter_5_1, iter_5_2 in ipairs(var_5_3) do
-			local var_5_5 = FightActEffectData.New(FightDef_pb.ActEffect())
+			local var_5_6 = FightActEffectData.New(FightDef_pb.ActEffect())
 
-			var_5_5.targetId = iter_5_2.id
-			var_5_5.effectType = 2
-			var_5_5.effectNum = 200
+			var_5_6.targetId = iter_5_2.id
+			var_5_6.effectType = FightEnum.EffectType.NUODIKATEAMATTACK
+			var_5_6.effectNum = 200
+			var_5_6.effectNum1 = FightEnum.EffectType.DAMAGE
 
-			table.insert(var_5_1.actEffect, var_5_5)
+			table.insert(var_5_1.actEffect, var_5_6)
 		end
 	end
 

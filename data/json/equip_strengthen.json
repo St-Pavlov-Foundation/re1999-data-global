@@ -630,6 +630,34 @@
     "mdef": 150
   },
   {
+    "strengthType": 1548,
+    "hp": 4300,
+    "atk": 390,
+    "def": 90,
+    "mdef": 90
+  },
+  {
+    "strengthType": 1549,
+    "hp": 3000,
+    "atk": 360,
+    "def": 160,
+    "mdef": 160
+  },
+  {
+    "strengthType": 1550,
+    "hp": 2600,
+    "atk": 380,
+    "def": 160,
+    "mdef": 160
+  },
+  {
+    "strengthType": 1441,
+    "hp": 2200,
+    "atk": 300,
+    "def": 140,
+    "mdef": 140
+  },
+  {
     "strengthType": 1551,
     "hp": 2600,
     "atk": 380,

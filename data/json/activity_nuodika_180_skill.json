@@ -1,0 +1,65 @@
+[
+  {
+    "skillId": 1,
+    "effect": 7,
+    "param": "",
+    "trigger": "2",
+    "scale": "3#1"
+  },
+  {
+    "skillId": 2,
+    "effect": 5,
+    "param": "",
+    "trigger": "3",
+    "scale": "4"
+  },
+  {
+    "skillId": 3,
+    "effect": 9,
+    "param": "",
+    "trigger": "4#2",
+    "scale": "0"
+  },
+  {
+    "skillId": 4,
+    "effect": 6,
+    "param": "",
+    "trigger": "3",
+    "scale": "4"
+  },
+  {
+    "skillId": 5,
+    "effect": 1,
+    "param": "10",
+    "trigger": "1",
+    "scale": "0"
+  },
+  {
+    "skillId": 6,
+    "effect": 2,
+    "param": "10",
+    "trigger": "1",
+    "scale": "1"
+  },
+  {
+    "skillId": 7,
+    "effect": 3,
+    "param": "4#3",
+    "trigger": "1",
+    "scale": "4"
+  },
+  {
+    "skillId": 8,
+    "effect": 4,
+    "param": "5",
+    "trigger": "1",
+    "scale": "2#2"
+  },
+  {
+    "skillId": 9,
+    "effect": 8,
+    "param": "",
+    "trigger": "1",
+    "scale": "3#2"
+  }
+]

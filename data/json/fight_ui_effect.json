@@ -1,0 +1,82 @@
+[
+  {
+    "id": 10101,
+    "name": "language_10086468",
+    "res": "root/fightfloat/crit_damage"
+  },
+  {
+    "id": 10102,
+    "name": "language_10086469",
+    "res": "root/fightfloat/crit_restrain"
+  },
+  {
+    "id": 10103,
+    "name": "language_10017009",
+    "res": "root/fightfloat/crit_heal"
+  },
+  {
+    "id": 10104,
+    "name": "language_10086470",
+    "res": "root/fightfloat/crit_damage_origin"
+  },
+  {
+    "id": 10105,
+    "name": "language_10086471",
+    "res": "root/fightfloat/crit_additional_damage"
+  },
+  {
+    "id": 10106,
+    "name": "language_10086472",
+    "res": "root/fightfloat/total_damage"
+  },
+  {
+    "id": 10201,
+    "name": "language_10086468",
+    "res": "root/fightfloat/crit_damage"
+  },
+  {
+    "id": 10202,
+    "name": "language_10086469",
+    "res": "root/fightfloat/crit_restrain"
+  },
+  {
+    "id": 10203,
+    "name": "language_10017009",
+    "res": "root/fightfloat/crit_heal"
+  },
+  {
+    "id": 10204,
+    "name": "language_10086470",
+    "res": "root/fightfloat/crit_damage_origin"
+  },
+  {
+    "id": 10205,
+    "name": "language_10086471",
+    "res": "root/fightfloat/crit_additional_damage"
+  },
+  {
+    "id": 10206,
+    "name": "language_10086472",
+    "res": "root/fightfloat/total_damage"
+  },
+  {
+    "id": 20101,
+    "name": "language_10086473",
+    "res": "root/#fapai"
+  },
+  {
+    "id": 20102,
+    "name": "language_10071668",
+    "res": "root/#chupai"
+  },
+  {
+    "id": 20201,
+    "name": "language_10086473",
+    "res": "root/#fapai"
+  },
+  {
+    "id": 20202,
+    "name": "language_10071668",
+    "res": "root/#chupai"
+  }
+]

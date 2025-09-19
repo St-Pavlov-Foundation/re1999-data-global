@@ -15,6 +15,8 @@ function var_0_0.onInitView(arg_1_0)
 	arg_1_0._hp_container_tran = gohelper.findChild(arg_1_0.viewGO, "Alpha/bossHp/mask/container").transform
 	arg_1_0._aniBossHp = arg_1_0._bossHpGO:GetComponent(typeof(UnityEngine.Animator))
 	arg_1_0._imgHp = gohelper.findChildImage(arg_1_0.viewGO, "Alpha/bossHp/mask/container/imgHp")
+	arg_1_0._reduceHp = gohelper.findChild(arg_1_0.viewGO, "Alpha/bossHp/mask/container/reducehp")
+	arg_1_0._reduceHpImage = arg_1_0._reduceHp:GetComponent(gohelper.Type_Image)
 	arg_1_0._gochoushi = gohelper.findChild(arg_1_0.viewGO, "Alpha/bossHp/choushi")
 	arg_1_0._goHpShield = gohelper.findChild(arg_1_0.viewGO, "Alpha/bossHp/mask/container/imgProtect")
 
@@ -72,6 +74,7 @@ function var_0_0.onOpen(arg_2_0)
 	arg_2_0:com_registFightEvent(FightEvent.CoverPerformanceEntityData, arg_2_0.onCoverPerformanceEntityData)
 	arg_2_0:com_registFightEvent(FightEvent.ChangeCareer, arg_2_0._onChangeCareer)
 	arg_2_0:com_registFightEvent(FightEvent.ChangeShield, arg_2_0._onChangeShield)
+	arg_2_0:com_registFightEvent(FightEvent.SetFakeNuoDiKaDamageShield, arg_2_0.onSetFakeNuoDiKaDamageShield)
 	arg_2_0:com_registFightEvent(FightEvent.AiJiAoFakeDecreaseHp, arg_2_0.onAiJiAoFakeDecreaseHp)
 	arg_2_0:com_registFightEvent(FightEvent.OnFightReconnectLastWork, arg_2_0.onFightReconnectLastWork)
 
@@ -79,7 +82,7 @@ function var_0_0.onOpen(arg_2_0)
 
 	arg_2_0:_checkBossAndUpdate()
 
-	if BossRushController.instance:isInBossRushFight(true) then
+	if BossRushController.instance:isInBossRushFight(true) or FightDataHelper.fieldMgr:isShelter() then
 		arg_2_0:com_openSubView(FightViewBossHpBossRushAction, "ui/viewres/fight/fightviewbosshpbossrushaction.prefab", arg_2_0._bossActionRoot)
 	end
 end
@@ -408,6 +411,7 @@ function var_0_0._onMultiHpChange(arg_24_0, arg_24_1)
 		arg_24_0._imgHpShield.fillAmount = var_24_1
 
 		arg_24_0:_tweenFillAmount(0.8)
+		arg_24_0:refreshReduceHP()
 	end
 end
 
@@ -488,6 +492,7 @@ function var_0_0._onShieldChange(arg_27_0, arg_27_1, arg_27_2)
 		end
 
 		arg_27_0:_tweenFillAmount()
+		arg_27_0:refreshReduceHP()
 	end
 end
 
@@ -519,218 +524,238 @@ function var_0_0._tweenFillAmount(arg_29_0, arg_29_1, arg_29_2, arg_29_3)
 	ZProj.TweenHelper.KillByObj(arg_29_0._imgHpShield)
 	ZProj.TweenHelper.DOFillAmount(arg_29_0._imgHp, var_29_0, arg_29_1 / FightModel.instance:getUISpeed())
 	ZProj.TweenHelper.DOFillAmount(arg_29_0._imgHpShield, var_29_1, arg_29_1 / FightModel.instance:getUISpeed())
+	arg_29_0:refreshReduceHP()
 	arg_29_0:setAiJiAoFakeHp(var_29_2)
 end
 
-function var_0_0._changeShieldPos(arg_30_0, arg_30_1)
-	if arg_30_0:_checkShieldBreakAnim() then
+function var_0_0.refreshReduceHP(arg_30_0)
+	local var_30_0 = arg_30_0._bossEntityMO
+
+	if not var_30_0 then
+		gohelper.setActive(arg_30_0._reduceHp, false)
+
 		return
 	end
 
-	recthelper.setAnchorX(arg_30_0._trsShieldPosUI, arg_30_1 * arg_30_0.sheildWidth)
+	local var_30_1 = var_30_0 and var_30_0:getLockMaxHpRate() or 1
+	local var_30_2 = var_30_1 < 1
+
+	gohelper.setActive(arg_30_0._reduceHp, var_30_2)
+
+	if var_30_2 then
+		arg_30_0._reduceHpImage.fillAmount = Mathf.Clamp01(1 - var_30_1)
+	end
 end
 
-function var_0_0._getFillAmount(arg_31_0, arg_31_1, arg_31_2)
-	if not arg_31_0._bossEntityMO then
+function var_0_0._changeShieldPos(arg_31_0, arg_31_1)
+	if arg_31_0:_checkShieldBreakAnim() then
+		return
+	end
+
+	recthelper.setAnchorX(arg_31_0._trsShieldPosUI, arg_31_1 * arg_31_0.sheildWidth)
+end
+
+function var_0_0._getFillAmount(arg_32_0, arg_32_1, arg_32_2)
+	if not arg_32_0._bossEntityMO then
 		return 0, 0
 	end
 
-	local var_31_0 = arg_31_0._bossEntityMO
-	local var_31_1 = var_31_0.attrMO and var_31_0.attrMO.hp > 0 and var_31_0.attrMO.hp or 1
+	arg_32_1 = arg_32_1 or arg_32_0._curHp
+	arg_32_2 = arg_32_2 or arg_32_0._curShield
 
-	arg_31_1 = arg_31_1 or arg_31_0._curHp
-	arg_31_2 = arg_31_2 or arg_31_0._curShield
+	local var_32_0 = arg_32_0._bossEntityMO
+	local var_32_1, var_32_2 = var_32_0:getHpAndShieldFillAmount(arg_32_1, arg_32_2)
+	local var_32_3 = var_32_0.attrMO and var_32_0.attrMO.hp > 0 and var_32_0.attrMO.hp or 1
+	local var_32_4 = var_32_0.attrMO and var_32_0.attrMO.original_max_hp or 1
 
-	local var_31_2 = var_31_1 > 0 and arg_31_1 / var_31_1 or 0
-	local var_31_3 = 0
+	if var_32_3 < var_32_4 then
+		local var_32_5 = var_32_4 - var_32_3
 
-	if var_31_1 >= arg_31_2 + arg_31_1 then
-		var_31_2 = arg_31_1 / var_31_1
-		var_31_3 = (arg_31_2 + arg_31_1) / var_31_1
+		var_32_1 = var_32_1 * var_32_3 / var_32_4 + var_32_5 / var_32_4
+		var_32_2 = var_32_2 * var_32_3 / var_32_4 + var_32_5 / var_32_4
+		arg_32_0._hp_width = arg_32_0._hp_width or recthelper.getWidth(arg_32_0._hp_container_tran)
+
+		recthelper.setAnchorX(arg_32_0._hp_container_tran, 0 - arg_32_0._hp_width * (var_32_5 / var_32_4))
 	else
-		var_31_2 = arg_31_1 / (arg_31_1 + arg_31_2)
-		var_31_3 = 1
+		recthelper.setAnchorX(arg_32_0._hp_container_tran, 0)
 	end
 
-	local var_31_4 = var_31_0.attrMO and var_31_0.attrMO.original_max_hp or 1
-
-	if var_31_1 < var_31_4 then
-		local var_31_5 = var_31_4 - var_31_1
-
-		var_31_2 = var_31_2 * var_31_1 / var_31_4 + var_31_5 / var_31_4
-		var_31_3 = var_31_3 * var_31_1 / var_31_4 + var_31_5 / var_31_4
-		arg_31_0._hp_width = arg_31_0._hp_width or recthelper.getWidth(arg_31_0._hp_container_tran)
-
-		recthelper.setAnchorX(arg_31_0._hp_container_tran, 0 - arg_31_0._hp_width * (var_31_5 / var_31_4))
-	else
-		recthelper.setAnchorX(arg_31_0._hp_container_tran, 0)
-	end
-
-	return var_31_2, var_31_3
+	return var_32_1, var_32_2
 end
 
-function var_0_0._updatePassiveSkill(arg_32_0)
-	if not arg_32_0._bossEntityMO then
+function var_0_0._updatePassiveSkill(arg_33_0)
+	if not arg_33_0._bossEntityMO then
 		return
 	end
 
-	local var_32_0 = lua_monster.configDict[arg_32_0._bossEntityMO.modelId]
-	local var_32_1 = FightConfig.instance:getPassiveSkillsAfterUIFilter(var_32_0.id)
-	local var_32_2 = FightConfig.instance:_filterSpeicalSkillIds(var_32_1, true)
+	local var_33_0 = lua_monster.configDict[arg_33_0._bossEntityMO.modelId]
+	local var_33_1 = FightConfig.instance:getPassiveSkillsAfterUIFilter(var_33_0.id)
+	local var_33_2 = FightConfig.instance:_filterSpeicalSkillIds(var_33_1, true)
 
-	arg_32_0.bossSkillInfos = {}
+	arg_33_0.bossSkillInfos = {}
 
-	for iter_32_0 = 1, #var_32_2 do
-		local var_32_3 = var_32_2[iter_32_0]
-		local var_32_4 = lua_skill_specialbuff.configDict[var_32_3]
+	for iter_33_0 = 1, #var_33_2 do
+		local var_33_3 = var_33_2[iter_33_0]
+		local var_33_4 = lua_skill_specialbuff.configDict[var_33_3]
 
-		if var_32_4 then
-			local var_32_5 = arg_32_0._specialSkillGOs[iter_32_0]
+		if var_33_4 then
+			local var_33_5 = arg_33_0._specialSkillGOs[iter_33_0]
 
-			if not var_32_5 then
-				var_32_5 = arg_32_0:getUserDataTb_()
-				var_32_5.go = gohelper.cloneInPlace(arg_32_0._passiveSkillPrefab, "item" .. iter_32_0)
-				var_32_5._gotag = gohelper.findChild(var_32_5.go, "tag")
-				var_32_5._txttag = gohelper.findChildText(var_32_5.go, "tag/#txt_tag")
+			if not var_33_5 then
+				var_33_5 = arg_33_0:getUserDataTb_()
+				var_33_5.go = gohelper.cloneInPlace(arg_33_0._passiveSkillPrefab, "item" .. iter_33_0)
+				var_33_5._gotag = gohelper.findChild(var_33_5.go, "tag")
+				var_33_5._txttag = gohelper.findChildText(var_33_5.go, "tag/#txt_tag")
 
-				table.insert(arg_32_0._specialSkillGOs, var_32_5)
+				table.insert(arg_33_0._specialSkillGOs, var_33_5)
 
-				local var_32_6 = gohelper.findChildImage(var_32_5.go, "icon")
+				local var_33_6 = gohelper.findChildImage(var_33_5.go, "icon")
 
-				table.insert(arg_32_0._passiveSkillImgs, var_32_6)
+				table.insert(arg_33_0._passiveSkillImgs, var_33_6)
 			end
 
-			if not string.nilorempty(var_32_4.lv) then
-				gohelper.setActive(var_32_5._gotag, true)
+			if not string.nilorempty(var_33_4.lv) then
+				gohelper.setActive(var_33_5._gotag, true)
 
-				var_32_5._txttag.text = var_32_4.lv
+				var_33_5._txttag.text = var_33_4.lv
 			else
-				gohelper.setActive(var_32_5._gotag, false)
+				gohelper.setActive(var_33_5._gotag, false)
 			end
 
-			if var_32_4.icon == 0 then
-				logError("boss抗性表的icon字段没有配置,技能ID:" .. var_32_4.id)
+			if var_33_4.icon == 0 then
+				logError("boss抗性表的icon字段没有配置,技能ID:" .. var_33_4.id)
 			end
 
-			UISpriteSetMgr.instance:setFightPassiveSprite(arg_32_0._passiveSkillImgs[iter_32_0], var_32_4.icon)
-			gohelper.setActive(var_32_5.go, true)
-			table.insert(arg_32_0.bossSkillInfos, {
-				skillId = var_32_3,
-				icon = var_32_4.icon
+			UISpriteSetMgr.instance:setFightPassiveSprite(arg_33_0._passiveSkillImgs[iter_33_0], var_33_4.icon)
+			gohelper.setActive(var_33_5.go, true)
+			table.insert(arg_33_0.bossSkillInfos, {
+				skillId = var_33_3,
+				icon = var_33_4.icon
 			})
 		end
 	end
 
-	gohelper.setAsLastSibling(arg_32_0._btnpassiveSkill.gameObject)
+	gohelper.setAsLastSibling(arg_33_0._btnpassiveSkill.gameObject)
 
-	for iter_32_1 = #var_32_2 + 1, #arg_32_0._specialSkillGOs do
-		gohelper.setActive(arg_32_0._specialSkillGOs[iter_32_1].go, false)
+	for iter_33_1 = #var_33_2 + 1, #arg_33_0._specialSkillGOs do
+		gohelper.setActive(arg_33_0._specialSkillGOs[iter_33_1].go, false)
 	end
 end
 
-function var_0_0._onClickPassiveSkill(arg_33_0)
+function var_0_0._onClickPassiveSkill(arg_34_0)
 	if not FightModel.instance:isStartFinish() then
 		return
 	end
 
-	if not arg_33_0.bossSkillInfos then
+	if not arg_34_0.bossSkillInfos then
 		return
 	end
 
-	FightController.instance:dispatchEvent(FightEvent.OnPassiveSkillClick, arg_33_0.bossSkillInfos, arg_33_0._btnpassiveSkill.transform, -509.5, -29, arg_33_0._bossEntityMO.id)
+	FightController.instance:dispatchEvent(FightEvent.OnPassiveSkillClick, arg_34_0.bossSkillInfos, arg_34_0._btnpassiveSkill.transform, -509.5, -29, arg_34_0._bossEntityMO.id)
 end
 
-function var_0_0._updateExPoint(arg_34_0)
-	if not arg_34_0._bossEntityMO then
+function var_0_0._updateExPoint(arg_35_0)
+	if not arg_35_0._bossEntityMO then
 		return
 	end
 
-	local var_34_0 = arg_34_0._bossEntityMO.exPoint
-	local var_34_1 = arg_34_0._bossEntityMO:getMaxExPoint()
+	local var_35_0 = arg_35_0._bossEntityMO.exPoint
+	local var_35_1 = arg_35_0._bossEntityMO:getMaxExPoint()
 
-	for iter_34_0 = 1, var_34_1 do
-		if not arg_34_0._exPointFullList[iter_34_0] then
-			local var_34_2 = gohelper.cloneInPlace(arg_34_0._exPointPrefab, arg_34_0._exPointPrefab.name .. iter_34_0)
+	for iter_35_0 = 1, var_35_1 do
+		if not arg_35_0._exPointFullList[iter_35_0] then
+			local var_35_2 = gohelper.cloneInPlace(arg_35_0._exPointPrefab, arg_35_0._exPointPrefab.name .. iter_35_0)
 
-			table.insert(arg_34_0._exPointFullList, gohelper.findChild(var_34_2, "full"))
-			gohelper.setActive(var_34_2, true)
+			table.insert(arg_35_0._exPointFullList, gohelper.findChild(var_35_2, "full"))
+			gohelper.setActive(var_35_2, true)
 		end
 
-		gohelper.setActive(arg_34_0._exPointFullList[iter_34_0], iter_34_0 <= var_34_0)
+		gohelper.setActive(arg_35_0._exPointFullList[iter_35_0], iter_35_0 <= var_35_0)
 	end
 
-	for iter_34_1 = var_34_1 + 1, #arg_34_0._exPointFullList do
-		gohelper.setActive(arg_34_0._exPointFullList[iter_34_1], false)
-	end
-end
-
-function var_0_0._onMaxHpChange(arg_35_0, arg_35_1, arg_35_2, arg_35_3)
-	if arg_35_0._bossEntityMO and arg_35_0._bossEntityMO.id == arg_35_1 then
-		arg_35_0:_updateUI()
+	for iter_35_1 = var_35_1 + 1, #arg_35_0._exPointFullList do
+		gohelper.setActive(arg_35_0._exPointFullList[iter_35_1], false)
 	end
 end
 
-function var_0_0._onCurrentHpChange(arg_36_0, arg_36_1, arg_36_2, arg_36_3)
+function var_0_0._onMaxHpChange(arg_36_0, arg_36_1, arg_36_2, arg_36_3)
 	if arg_36_0._bossEntityMO and arg_36_0._bossEntityMO.id == arg_36_1 then
 		arg_36_0:_updateUI()
 	end
 end
 
-function var_0_0._onChangeShield(arg_37_0, arg_37_1)
+function var_0_0._onCurrentHpChange(arg_37_0, arg_37_1, arg_37_2, arg_37_3)
 	if arg_37_0._bossEntityMO and arg_37_0._bossEntityMO.id == arg_37_1 then
 		arg_37_0:_updateUI()
 	end
 end
 
-function var_0_0.onCoverPerformanceEntityData(arg_38_0, arg_38_1)
-	if not arg_38_0._bossEntityMO or arg_38_1 ~= arg_38_0._bossEntityMO.id then
-		return
+function var_0_0._onChangeShield(arg_38_0, arg_38_1)
+	if arg_38_0._bossEntityMO and arg_38_0._bossEntityMO.id == arg_38_1 then
+		arg_38_0:_updateUI()
 	end
-
-	arg_38_0:_tweenFillAmount()
 end
 
-function var_0_0.onAiJiAoFakeDecreaseHp(arg_39_0, arg_39_1)
-	if arg_39_0._bossEntityMO and arg_39_1 == arg_39_0._bossEntityMO.id and FightDataHelper.tempMgr.aiJiAoFakeHpOffset[arg_39_1] then
+function var_0_0.onSetFakeNuoDiKaDamageShield(arg_39_0, arg_39_1, arg_39_2)
+	if arg_39_0._bossEntityMO and arg_39_0._bossEntityMO.id == arg_39_1 then
+		arg_39_0._curShield = arg_39_2 > 0 and arg_39_2 or 0
+
 		arg_39_0:_tweenFillAmount()
 	end
 end
 
-function var_0_0.setAiJiAoFakeHp(arg_40_0, arg_40_1)
-	if not arg_40_0.aiJiAoFakeHpBgImg then
-		local var_40_0 = arg_40_0._imgHp.gameObject
+function var_0_0.onCoverPerformanceEntityData(arg_40_0, arg_40_1)
+	if not arg_40_0._bossEntityMO or arg_40_1 ~= arg_40_0._bossEntityMO.id then
+		return
+	end
 
-		arg_40_0.aiJiAoFakeHpBgImg = gohelper.onceAddComponent(gohelper.cloneInPlace(var_40_0, "aiJiAoFakeHpBgImg"), gohelper.Type_Image)
+	arg_40_0._curHp = arg_40_0._bossEntityMO.currentHp
+	arg_40_0._curShield = arg_40_0._bossEntityMO.shieldValue
 
-		gohelper.setAsLastSibling(var_40_0)
+	arg_40_0:_tweenFillAmount()
+end
 
-		local var_40_1 = arg_40_0.aiJiAoFakeHpBgImg.transform
-		local var_40_2 = var_40_1.childCount
+function var_0_0.onAiJiAoFakeDecreaseHp(arg_41_0, arg_41_1)
+	if arg_41_0._bossEntityMO and arg_41_1 == arg_41_0._bossEntityMO.id and FightDataHelper.tempMgr.aiJiAoFakeHpOffset[arg_41_1] then
+		arg_41_0:_tweenFillAmount()
+	end
+end
 
-		for iter_40_0 = 1, var_40_2 do
-			local var_40_3 = var_40_1:GetChild(iter_40_0 - 1)
+function var_0_0.setAiJiAoFakeHp(arg_42_0, arg_42_1)
+	if not arg_42_0.aiJiAoFakeHpBgImg then
+		local var_42_0 = arg_42_0._imgHp.gameObject
 
-			gohelper.setActive(var_40_3.gameObject, false)
+		arg_42_0.aiJiAoFakeHpBgImg = gohelper.onceAddComponent(gohelper.cloneInPlace(var_42_0, "aiJiAoFakeHpBgImg"), gohelper.Type_Image)
+
+		gohelper.setAsLastSibling(var_42_0)
+
+		local var_42_1 = arg_42_0.aiJiAoFakeHpBgImg.transform
+		local var_42_2 = var_42_1.childCount
+
+		for iter_42_0 = 1, var_42_2 do
+			local var_42_3 = var_42_1:GetChild(iter_42_0 - 1)
+
+			gohelper.setActive(var_42_3.gameObject, false)
 		end
 
-		SLFramework.UGUI.GuiHelper.SetColor(arg_40_0.aiJiAoFakeHpBgImg, "#E1C590")
+		SLFramework.UGUI.GuiHelper.SetColor(arg_42_0.aiJiAoFakeHpBgImg, "#E1C590")
 	end
 
-	if arg_40_0._bossEntityMO and not FightDataHelper.tempMgr.aiJiAoFakeHpOffset[arg_40_0._bossEntityMO.id] then
-		arg_40_1 = 0
+	if arg_42_0._bossEntityMO and not FightDataHelper.tempMgr.aiJiAoFakeHpOffset[arg_42_0._bossEntityMO.id] then
+		arg_42_1 = 0
 	end
 
-	arg_40_0.aiJiAoFakeHpBgImg.fillAmount = arg_40_1
+	arg_42_0.aiJiAoFakeHpBgImg.fillAmount = arg_42_1
 end
 
-function var_0_0.checkAiJiAoFakeDecreaseHp(arg_41_0)
-	if arg_41_0._bossEntityMO then
-		arg_41_0:onAiJiAoFakeDecreaseHp(arg_41_0._bossEntityMO.id)
+function var_0_0.checkAiJiAoFakeDecreaseHp(arg_43_0)
+	if arg_43_0._bossEntityMO then
+		arg_43_0:onAiJiAoFakeDecreaseHp(arg_43_0._bossEntityMO.id)
 	end
 end
 
-function var_0_0.onFightReconnectLastWork(arg_42_0)
-	arg_42_0:checkAiJiAoFakeDecreaseHp()
+function var_0_0.onFightReconnectLastWork(arg_44_0)
+	arg_44_0:checkAiJiAoFakeDecreaseHp()
 end
 
 return var_0_0

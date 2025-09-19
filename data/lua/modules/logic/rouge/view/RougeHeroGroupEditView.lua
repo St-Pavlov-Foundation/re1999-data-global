@@ -616,7 +616,7 @@ function var_0_0._refreshMainInfo(arg_26_0)
 				arg_26_0._txttalenticon.color = GameUtil.parseColor("#D3CCBF")
 			end
 
-			arg_26_0._txttalentType.text = luaLang("talent_character_talentcn" .. CharacterEnum.TalentTxtByHeroType[arg_26_0._heroMO.config.heroType])
+			arg_26_0._txttalentType.text = luaLang("talent_character_talentcn" .. arg_26_0._heroMO:getTalentTxtByHeroType())
 		else
 			gohelper.setActive(arg_26_0._golevel, true)
 			gohelper.setActive(arg_26_0._golevelWithTalent, false)

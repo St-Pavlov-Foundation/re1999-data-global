@@ -1,0 +1,42 @@
+[
+  {
+    "id": 8050911,
+    "fightId": 8050911,
+    "initSchemeGroup": "8050911",
+    "extraSchemeGroup": "",
+    "schemeGroup": "0",
+    "destructionLevel": "1000,500,500#500,200,250"
+  },
+  {
+    "id": 8050912,
+    "fightId": 8050912,
+    "initSchemeGroup": "8050911",
+    "extraSchemeGroup": "8050912#8050913",
+    "schemeGroup": "1",
+    "destructionLevel": "1000,500,500#500,200,250"
+  },
+  {
+    "id": 8050913,
+    "fightId": 8050913,
+    "initSchemeGroup": "8050911",
+    "extraSchemeGroup": "8050912#8050913",
+    "schemeGroup": "2",
+    "destructionLevel": "1000,500,500#500,200,250"
+  },
+  {
+    "id": 8050914,
+    "fightId": 8050914,
+    "initSchemeGroup": "8050911#8050914",
+    "extraSchemeGroup": "8050912#8050913",
+    "schemeGroup": "2",
+    "destructionLevel": "1000,500,500#500,200,250"
+  },
+  {
+    "id": 8050915,
+    "fightId": 8050915,
+    "initSchemeGroup": "8050911#8050914",
+    "extraSchemeGroup": "8050912#8050913#8050915",
+    "schemeGroup": "3",
+    "destructionLevel": "1000,500,500#500,200,250"
+  }
+]

@@ -8,7 +8,9 @@
     "abilities": "",
     "skillaction": "jump",
     "useeffect": 0,
-    "skillIndex": 2
+    "skillIndex": 2,
+    "needTarget": false,
+    "targetType": ""
   },
   {
     "id": 3000201,
@@ -17,9 +19,11 @@
     "passiveChessSkills": "3000201",
     "activeChessSkill": "",
     "abilities": "",
-    "skillaction": "",
+    "skillaction": "jump",
     "useeffect": 0,
-    "skillIndex": 1
+    "skillIndex": 1,
+    "needTarget": false,
+    "targetType": ""
   },
   {
     "id": 3000301,
@@ -30,7 +34,9 @@
     "abilities": "",
     "skillaction": "jump",
     "useeffect": 0,
-    "skillIndex": 2
+    "skillIndex": 2,
+    "needTarget": false,
+    "targetType": ""
   },
   {
     "id": 3000401,
@@ -41,7 +47,9 @@
     "abilities": "",
     "skillaction": "jump",
     "useeffect": 0,
-    "skillIndex": 2
+    "skillIndex": 2,
+    "needTarget": false,
+    "targetType": ""
   },
   {
     "id": 3000501,
@@ -52,7 +60,9 @@
     "abilities": "",
     "skillaction": "jump",
     "useeffect": 0,
-    "skillIndex": 1
+    "skillIndex": 1,
+    "needTarget": false,
+    "targetType": ""
   },
   {
     "id": 3000601,
@@ -63,7 +73,9 @@
     "abilities": "StoreLevelLimitations#4",
     "skillaction": "jump",
     "useeffect": 0,
-    "skillIndex": 2
+    "skillIndex": 2,
+    "needTarget": false,
+    "targetType": ""
   },
   {
     "id": 3000701,
@@ -74,7 +86,9 @@
     "abilities": "DigTreasure#3#3",
     "skillaction": "jump",
     "useeffect": 0,
-    "skillIndex": 3
+    "skillIndex": 3,
+    "needTarget": false,
+    "targetType": ""
   },
   {
     "id": 3000801,
@@ -85,7 +99,9 @@
     "abilities": "InitialFollower#21001#1",
     "skillaction": "",
     "useeffect": 0,
-    "skillIndex": 3
+    "skillIndex": 3,
+    "needTarget": false,
+    "targetType": ""
   },
   {
     "id": 3000901,
@@ -96,18 +112,22 @@
     "abilities": "",
     "skillaction": "jump",
     "useeffect": 0,
-    "skillIndex": 2
+    "skillIndex": 2,
+    "needTarget": false,
+    "targetType": ""
   },
   {
     "id": 3001001,
-    "cost": "coin#6",
+    "cost": "coin#3",
     "type": "active",
     "passiveChessSkills": "",
-    "activeChessSkill": "3001001",
-    "abilities": "",
+    "activeChessSkill": "",
+    "abilities": "LevelUpCursor#3",
     "skillaction": "jump",
     "useeffect": 0,
-    "skillIndex": 2
+    "skillIndex": 2,
+    "needTarget": true,
+    "targetType": "Attack#Support"
   },
   {
     "id": 3001101,
@@ -118,7 +138,9 @@
     "abilities": "RefreshNextLevel#1",
     "skillaction": "jump",
     "useeffect": 0,
-    "skillIndex": 3
+    "skillIndex": 3,
+    "needTarget": false,
+    "targetType": ""
   },
   {
     "id": 3001201,
@@ -129,7 +151,9 @@
     "abilities": "ExploreCostDecrease#3",
     "skillaction": "",
     "useeffect": 0,
-    "skillIndex": 3
+    "skillIndex": 3,
+    "needTarget": false,
+    "targetType": ""
   },
   {
     "id": 3001301,
@@ -140,7 +164,9 @@
     "abilities": "ChessReplace#16013#1#312#3004#1#-1",
     "skillaction": "jump",
     "useeffect": 0,
-    "skillIndex": 3
+    "skillIndex": 3,
+    "needTarget": false,
+    "targetType": ""
   },
   {
     "id": 3001401,
@@ -151,7 +177,9 @@
     "abilities": "RefreshReplaceChess#Supernatural",
     "skillaction": "",
     "useeffect": 0,
-    "skillIndex": 3
+    "skillIndex": 3,
+    "needTarget": false,
+    "targetType": ""
   },
   {
     "id": 3001501,
@@ -162,7 +190,9 @@
     "abilities": "",
     "skillaction": "jump",
     "useeffect": 0,
-    "skillIndex": 1
+    "skillIndex": 1,
+    "needTarget": false,
+    "targetType": ""
   },
   {
     "id": 3001601,
@@ -173,7 +203,9 @@
     "abilities": "",
     "skillaction": "jump",
     "useeffect": 0,
-    "skillIndex": 2
+    "skillIndex": 2,
+    "needTarget": false,
+    "targetType": ""
   },
   {
     "id": 3001701,
@@ -184,7 +216,9 @@
     "abilities": "",
     "skillaction": "",
     "useeffect": 0,
-    "skillIndex": 1
+    "skillIndex": 1,
+    "needTarget": false,
+    "targetType": ""
   },
   {
     "id": 3001801,
@@ -195,7 +229,9 @@
     "abilities": "",
     "skillaction": "jump",
     "useeffect": 0,
-    "skillIndex": 1
+    "skillIndex": 1,
+    "needTarget": false,
+    "targetType": ""
   },
   {
     "id": 3001901,
@@ -203,10 +239,12 @@
     "type": "active",
     "passiveChessSkills": "",
     "activeChessSkill": "",
-    "abilities": "LoanCoin#6#6",
+    "abilities": "LoanCoin#6#3",
     "skillaction": "jump",
     "useeffect": 0,
-    "skillIndex": 3
+    "skillIndex": 3,
+    "needTarget": false,
+    "targetType": ""
   },
   {
     "id": 3002001,
@@ -217,7 +255,9 @@
     "abilities": "PrimeNumber#1",
     "skillaction": "",
     "useeffect": 0,
-    "skillIndex": 3
+    "skillIndex": 3,
+    "needTarget": false,
+    "targetType": ""
   },
   {
     "id": 3002101,
@@ -228,7 +268,9 @@
     "abilities": "",
     "skillaction": "jump",
     "useeffect": 0,
-    "skillIndex": 1
+    "skillIndex": 1,
+    "needTarget": false,
+    "targetType": ""
   },
   {
     "id": 3002201,
@@ -239,7 +281,9 @@
     "abilities": "",
     "skillaction": "jump",
     "useeffect": 0,
-    "skillIndex": 1
+    "skillIndex": 1,
+    "needTarget": false,
+    "targetType": ""
   },
   {
     "id": 3002301,
@@ -249,7 +293,295 @@
     "activeChessSkill": "",
     "abilities": "",
     "skillaction": "jump",
+    "useeffect": 30010,
+    "skillIndex": 1,
+    "needTarget": false,
+    "targetType": ""
+  },
+  {
+    "id": 3002401,
+    "cost": "",
+    "type": "passive",
+    "passiveChessSkills": "",
+    "activeChessSkill": "",
+    "abilities": "InitialFollower#21005,21005#1",
+    "skillaction": "",
     "useeffect": 0,
-    "skillIndex": 1
+    "skillIndex": 0,
+    "needTarget": false,
+    "targetType": ""
+  },
+  {
+    "id": 3002501,
+    "cost": "",
+    "type": "passive",
+    "passiveChessSkills": "3002501",
+    "activeChessSkill": "",
+    "abilities": "",
+    "skillaction": "jump",
+    "useeffect": 0,
+    "skillIndex": 0,
+    "needTarget": false,
+    "targetType": ""
+  },
+  {
+    "id": 3002601,
+    "cost": "",
+    "type": "passive",
+    "passiveChessSkills": "",
+    "activeChessSkill": "",
+    "abilities": "InitialFollower#12013#3",
+    "skillaction": "jump",
+    "useeffect": 0,
+    "skillIndex": 0,
+    "needTarget": false,
+    "targetType": ""
+  },
+  {
+    "id": 3002701,
+    "cost": "",
+    "type": "passive",
+    "passiveChessSkills": "3002701",
+    "activeChessSkill": "",
+    "abilities": "",
+    "skillaction": "jump",
+    "useeffect": 30010,
+    "skillIndex": 1,
+    "needTarget": false,
+    "targetType": ""
+  },
+  {
+    "id": 3002801,
+    "cost": "",
+    "type": "passive",
+    "passiveChessSkills": "3002801",
+    "activeChessSkill": "",
+    "abilities": "",
+    "skillaction": "jump",
+    "useeffect": 0,
+    "skillIndex": 0,
+    "needTarget": false,
+    "targetType": ""
+  },
+  {
+    "id": 3002901,
+    "cost": "",
+    "type": "passive",
+    "passiveChessSkills": "3002901",
+    "activeChessSkill": "",
+    "abilities": "",
+    "skillaction": "jump",
+    "useeffect": 30010,
+    "skillIndex": 0,
+    "needTarget": false,
+    "targetType": ""
+  },
+  {
+    "id": 3003001,
+    "cost": "",
+    "type": "passive",
+    "passiveChessSkills": "3003001",
+    "activeChessSkill": "",
+    "abilities": "",
+    "skillaction": "jump",
+    "useeffect": 0,
+    "skillIndex": 0,
+    "needTarget": false,
+    "targetType": ""
+  },
+  {
+    "id": 3003101,
+    "cost": "",
+    "type": "passive",
+    "passiveChessSkills": "",
+    "activeChessSkill": "",
+    "abilities": "InitialFollower#17005,17005#1",
+    "skillaction": "",
+    "useeffect": 0,
+    "skillIndex": 0,
+    "needTarget": false,
+    "targetType": ""
+  },
+  {
+    "id": 3003201,
+    "cost": "coin#1",
+    "type": "active",
+    "passiveChessSkills": "",
+    "activeChessSkill": "",
+    "abilities": "AddBuffCursor#1002#-1#1",
+    "skillaction": "jump",
+    "useeffect": 0,
+    "skillIndex": 0,
+    "needTarget": true,
+    "targetType": "Attack"
+  },
+  {
+    "id": 3003301,
+    "cost": "coin#20",
+    "type": "active",
+    "passiveChessSkills": "",
+    "activeChessSkill": "3003301",
+    "abilities": "",
+    "skillaction": "jump",
+    "useeffect": 0,
+    "skillIndex": 0,
+    "needTarget": false,
+    "targetType": ""
+  },
+  {
+    "id": 3003401,
+    "cost": "coin#1",
+    "type": "active",
+    "passiveChessSkills": "",
+    "activeChessSkill": "",
+    "abilities": "TransformationSP#Carbuncle",
+    "skillaction": "jump",
+    "useeffect": 0,
+    "skillIndex": 0,
+    "needTarget": true,
+    "targetType": "Attack"
+  },
+  {
+    "id": 3003501,
+    "cost": "",
+    "type": "passive",
+    "passiveChessSkills": "3003501",
+    "activeChessSkill": "",
+    "abilities": "",
+    "skillaction": "jump",
+    "useeffect": 0,
+    "skillIndex": 0,
+    "needTarget": false,
+    "targetType": ""
+  },
+  {
+    "id": 3003601,
+    "cost": "",
+    "type": "passive",
+    "passiveChessSkills": "3003601",
+    "activeChessSkill": "",
+    "abilities": "",
+    "skillaction": "jump",
+    "useeffect": 0,
+    "skillIndex": 0,
+    "needTarget": false,
+    "targetType": ""
+  },
+  {
+    "id": 3003701,
+    "cost": "coin#0",
+    "type": "active",
+    "passiveChessSkills": "",
+    "activeChessSkill": "3003702",
+    "abilities": "",
+    "skillaction": "jump",
+    "useeffect": 0,
+    "skillIndex": 0,
+    "needTarget": false,
+    "targetType": ""
+  },
+  {
+    "id": 3003801,
+    "cost": "coin#1",
+    "type": "active",
+    "passiveChessSkills": "",
+    "activeChessSkill": "3003801",
+    "abilities": "",
+    "skillaction": "jump",
+    "useeffect": 0,
+    "skillIndex": 0,
+    "needTarget": false,
+    "targetType": ""
+  },
+  {
+    "id": 3003901,
+    "cost": "",
+    "type": "passive",
+    "passiveChessSkills": "3003901",
+    "activeChessSkill": "",
+    "abilities": "",
+    "skillaction": "jump",
+    "useeffect": 0,
+    "skillIndex": 0,
+    "needTarget": false,
+    "targetType": ""
+  },
+  {
+    "id": 3004001,
+    "cost": "coin#3",
+    "type": "active",
+    "passiveChessSkills": "",
+    "activeChessSkill": "3004001",
+    "abilities": "",
+    "skillaction": "jump",
+    "useeffect": 0,
+    "skillIndex": 0,
+    "needTarget": false,
+    "targetType": ""
+  },
+  {
+    "id": 3004101,
+    "cost": "hp#3",
+    "type": "active",
+    "passiveChessSkills": "",
+    "activeChessSkill": "",
+    "abilities": "ConsumeHpExchangeCoin#0",
+    "skillaction": "jump",
+    "useeffect": 0,
+    "skillIndex": 0,
+    "needTarget": false,
+    "targetType": ""
+  },
+  {
+    "id": 3004301,
+    "cost": "",
+    "type": "passive",
+    "passiveChessSkills": "3004301",
+    "activeChessSkill": "",
+    "abilities": "",
+    "skillaction": "",
+    "useeffect": 0,
+    "skillIndex": 0,
+    "needTarget": false,
+    "targetType": ""
+  },
+  {
+    "id": 3004401,
+    "cost": "coin#0",
+    "type": "active",
+    "passiveChessSkills": "",
+    "activeChessSkill": "",
+    "abilities": "AddBuffCursor#1027#1#1",
+    "skillaction": "jump",
+    "useeffect": 0,
+    "skillIndex": 0,
+    "needTarget": true,
+    "targetType": "Attack"
+  },
+  {
+    "id": 3100701,
+    "cost": "coin#0",
+    "type": "active",
+    "passiveChessSkills": "",
+    "activeChessSkill": "",
+    "abilities": "DigTreasureSP#3#3",
+    "skillaction": "jump",
+    "useeffect": 0,
+    "skillIndex": 3,
+    "needTarget": false,
+    "targetType": ""
+  },
+  {
+    "id": 3103401,
+    "cost": "coin#0",
+    "type": "active",
+    "passiveChessSkills": "",
+    "activeChessSkill": "",
+    "abilities": "TransformationSP#None",
+    "skillaction": "jump",
+    "useeffect": 0,
+    "skillIndex": 3,
+    "needTarget": true,
+    "targetType": "Attack"
   }
 ]

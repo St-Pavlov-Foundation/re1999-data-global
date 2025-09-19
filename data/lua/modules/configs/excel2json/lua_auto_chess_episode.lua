@@ -3,21 +3,24 @@
 local var_0_0 = {}
 local var_0_1 = {
 	preEpisode = 6,
-	name = 2,
+	name = 3,
 	firstBounds = 14,
-	type = 4,
+	type = 5,
 	winCondition = 11,
-	image = 3,
+	image = 4,
 	lostCondition = 12,
-	masterId = 13,
+	functionOn = 16,
 	mallIds = 9,
 	maxRound = 10,
+	masterLibraryId = 15,
 	enemyId = 7,
-	id = 1,
-	activityId = 5,
+	id = 2,
+	masterId = 13,
+	activityId = 1,
 	npcEnemyId = 8
 }
 local var_0_2 = {
+	"activityId",
 	"id"
 }
 local var_0_3 = {

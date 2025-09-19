@@ -78,7 +78,7 @@
     "mainThumbnailViewActBg": false
   },
   {
-    "id": 130526,
+    "id": 12874,
     "effectDuration": 0,
     "mainView": [
       "#simage_actbg",
@@ -96,8 +96,7 @@
     "isShowActBg": true,
     "mainThumbnailView": [
       "#simage_actbg",
-      "#simage_logo",
-      "#vx_actbg"
+      "#simage_logo"
     ],
     "isShowfx": true,
     "mainThumbnailViewActBg": true

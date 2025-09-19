@@ -76,10 +76,11 @@ function var_0_0.play(arg_4_0)
 	end
 
 	arg_4_0.binder:Play(arg_4_0.assetLoader, arg_4_0.timelineUrl)
+	arg_4_0:com_registUpdate(arg_4_0.onUpdate)
 end
 
-function var_0_0.onUpdate(arg_5_0)
-	arg_5_0.binder:Evaluate(arg_5_0.timeScale * Time.deltaTime)
+function var_0_0.onUpdate(arg_5_0, arg_5_1)
+	arg_5_0.binder:Evaluate(arg_5_0.timeScale * arg_5_1)
 end
 
 function var_0_0._onFrameEventCallback(arg_6_0, arg_6_1, arg_6_2, arg_6_3, arg_6_4, arg_6_5)

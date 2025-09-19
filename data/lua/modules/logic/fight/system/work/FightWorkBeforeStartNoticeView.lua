@@ -60,41 +60,49 @@ function var_0_0.canShowTips()
 		else
 			var_5_1 = SeasonFightHandler.canSeasonShowTips(var_5_5, var_5_4)
 		end
-	elseif var_5_4 == DungeonEnum.EpisodeType.Rouge then
-		local var_5_8 = RougeMapModel.instance:getCurNode()
-		local var_5_9 = var_5_8 and var_5_8.eventMo
-		local var_5_10 = var_5_9 and var_5_9:getSurpriseAttackList()
+	else
+		if var_5_4 == DungeonEnum.EpisodeType.Rouge then
+			local var_5_8 = RougeMapModel.instance:getCurNode()
+			local var_5_9 = var_5_8 and var_5_8.eventMo
+			local var_5_10 = var_5_9 and var_5_9:getSurpriseAttackList()
 
-		var_5_1 = var_5_10 and #var_5_10 > 0
+			var_5_1 = var_5_10 and #var_5_10 > 0
+		end
+
+		if var_5_4 == DungeonEnum.EpisodeType.Survival then
+			local var_5_11 = SurvivalShelterModel.instance:addExRule({})
+
+			var_5_1 = var_5_1 or #var_5_11 > 0
+		end
 	end
 
-	local var_5_11 = FightDataHelper.fieldMgr.customData
+	local var_5_12 = FightDataHelper.fieldMgr.customData
 
-	if var_5_11 then
-		local var_5_12 = var_5_11[FightCustomData.CustomDataType.WeekwalkVer2]
+	if var_5_12 then
+		local var_5_13 = var_5_12[FightCustomData.CustomDataType.WeekwalkVer2]
 
-		if var_5_12 and cjson.decode(var_5_12).ruleMap then
+		if var_5_13 and cjson.decode(var_5_13).ruleMap then
 			var_5_1 = true
 		end
 
-		local var_5_13 = var_5_11[FightCustomData.CustomDataType.Act183]
+		local var_5_14 = var_5_12[FightCustomData.CustomDataType.Act183]
 
-		if var_5_13 then
-			if var_5_13.currRules and #var_5_13.currRules > 0 then
+		if var_5_14 then
+			if var_5_14.currRules and #var_5_14.currRules > 0 then
 				var_5_1 = true
 			end
 
-			if var_5_13.transferRules and #var_5_13.transferRules > 0 then
+			if var_5_14.transferRules and #var_5_14.transferRules > 0 then
 				var_5_1 = true
 			end
 		end
 	end
 
-	local var_5_14 = GuideModel.instance:isDoingFirstGuide()
-	local var_5_15 = GuideController.instance:isForbidGuides()
-	local var_5_16 = FightReplayModel.instance:isReplay()
+	local var_5_15 = GuideModel.instance:isDoingFirstGuide()
+	local var_5_16 = GuideController.instance:isForbidGuides()
+	local var_5_17 = FightReplayModel.instance:isReplay()
 
-	if var_5_1 and (not var_5_14 or var_5_15) and not var_5_16 then
+	if var_5_1 and (not var_5_15 or var_5_16) and not var_5_17 then
 		return true
 	else
 		return false

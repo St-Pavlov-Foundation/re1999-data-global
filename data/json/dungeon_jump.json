@@ -1,0 +1,263 @@
+[
+  {
+    "id": 1001,
+    "cellId": 1,
+    "coord": "-661#-577",
+    "celltype": 0,
+    "evenid": "",
+    "cellspecies": 1,
+    "isflag": 0
+  },
+  {
+    "id": 1001,
+    "cellId": 2,
+    "coord": "-316#-537",
+    "celltype": 0,
+    "evenid": "",
+    "cellspecies": 1,
+    "isflag": 0
+  },
+  {
+    "id": 1001,
+    "cellId": 3,
+    "coord": "-168#-317",
+    "celltype": 3,
+    "evenid": "28100",
+    "cellspecies": 2,
+    "isflag": 0
+  },
+  {
+    "id": 1001,
+    "cellId": 4,
+    "coord": "16#-32",
+    "celltype": 0,
+    "evenid": "",
+    "cellspecies": 3,
+    "isflag": 0
+  },
+  {
+    "id": 1001,
+    "cellId": 5,
+    "coord": "340#10",
+    "celltype": 2,
+    "evenid": "2001#2002",
+    "cellspecies": 2,
+    "isflag": 0
+  },
+  {
+    "id": 1001,
+    "cellId": 6,
+    "coord": "656#190",
+    "celltype": 0,
+    "evenid": "",
+    "cellspecies": 2,
+    "isflag": 0
+  },
+  {
+    "id": 1001,
+    "cellId": 7,
+    "coord": "902#75",
+    "celltype": 4,
+    "evenid": "42",
+    "cellspecies": 1,
+    "isflag": 0
+  },
+  {
+    "id": 1001,
+    "cellId": 8,
+    "coord": "1309#51",
+    "celltype": 0,
+    "evenid": "",
+    "cellspecies": 3,
+    "isflag": 0
+  },
+  {
+    "id": 1001,
+    "cellId": 9,
+    "coord": "1459#383",
+    "celltype": 2,
+    "evenid": "2003#2004",
+    "cellspecies": 2,
+    "isflag": 0
+  },
+  {
+    "id": 1001,
+    "cellId": 10,
+    "coord": "2017#431",
+    "celltype": 4,
+    "evenid": "43",
+    "cellspecies": 4,
+    "isflag": 0
+  },
+  {
+    "id": 1001,
+    "cellId": 11,
+    "coord": "2167#733",
+    "celltype": 0,
+    "evenid": "",
+    "cellspecies": 4,
+    "isflag": 0
+  },
+  {
+    "id": 1001,
+    "cellId": 12,
+    "coord": "2574#672",
+    "celltype": 2,
+    "evenid": "2005#2006#2007",
+    "cellspecies": 2,
+    "isflag": 0
+  },
+  {
+    "id": 1001,
+    "cellId": 13,
+    "coord": "2883#762",
+    "celltype": 0,
+    "evenid": "",
+    "cellspecies": 3,
+    "isflag": 0
+  },
+  {
+    "id": 1001,
+    "cellId": 14,
+    "coord": "2983#1158",
+    "celltype": 2,
+    "evenid": "2008#2009",
+    "cellspecies": 2,
+    "isflag": 0
+  },
+  {
+    "id": 1001,
+    "cellId": 15,
+    "coord": "3187#1379",
+    "celltype": 0,
+    "evenid": "",
+    "cellspecies": 1,
+    "isflag": 0
+  },
+  {
+    "id": 1001,
+    "cellId": 16,
+    "coord": "3548#1145",
+    "celltype": 4,
+    "evenid": "44",
+    "cellspecies": 2,
+    "isflag": 0
+  },
+  {
+    "id": 1001,
+    "cellId": 17,
+    "coord": "4000#1272",
+    "celltype": 0,
+    "evenid": "",
+    "cellspecies": 3,
+    "isflag": 0
+  },
+  {
+    "id": 1001,
+    "cellId": 18,
+    "coord": "4324#1145",
+    "celltype": 0,
+    "evenid": "",
+    "cellspecies": 1,
+    "isflag": 0
+  },
+  {
+    "id": 1001,
+    "cellId": 19,
+    "coord": "4526#1409",
+    "celltype": 2,
+    "evenid": "2010",
+    "cellspecies": 4,
+    "isflag": 0
+  },
+  {
+    "id": 1001,
+    "cellId": 20,
+    "coord": "4743#1759",
+    "celltype": 5,
+    "evenid": "282011",
+    "cellspecies": 2,
+    "isflag": 1
+  },
+  {
+    "id": 1001,
+    "cellId": 21,
+    "coord": "5070#1659",
+    "celltype": 0,
+    "evenid": "",
+    "cellspecies": 4,
+    "isflag": 0
+  },
+  {
+    "id": 1001,
+    "cellId": 22,
+    "coord": "5535#1699",
+    "celltype": 0,
+    "evenid": "",
+    "cellspecies": 4,
+    "isflag": 0
+  },
+  {
+    "id": 1001,
+    "cellId": 23,
+    "coord": "5738#1891",
+    "celltype": 4,
+    "evenid": "45",
+    "cellspecies": 3,
+    "isflag": 0
+  },
+  {
+    "id": 1001,
+    "cellId": 24,
+    "coord": "6088#1914",
+    "celltype": 0,
+    "evenid": "",
+    "cellspecies": 3,
+    "isflag": 0
+  },
+  {
+    "id": 1001,
+    "cellId": 25,
+    "coord": "6204#1699",
+    "celltype": 2,
+    "evenid": "2011",
+    "cellspecies": 2,
+    "isflag": 0
+  },
+  {
+    "id": 1001,
+    "cellId": 26,
+    "coord": "6668#1699",
+    "celltype": 2,
+    "evenid": "2012",
+    "cellspecies": 2,
+    "isflag": 0
+  },
+  {
+    "id": 1001,
+    "cellId": 27,
+    "coord": "6769#1909",
+    "celltype": 0,
+    "evenid": "",
+    "cellspecies": 1,
+    "isflag": 0
+  },
+  {
+    "id": 1001,
+    "cellId": 28,
+    "coord": "6962#2245",
+    "celltype": 0,
+    "evenid": "",
+    "cellspecies": 4,
+    "isflag": 0
+  },
+  {
+    "id": 1001,
+    "cellId": 29,
+    "coord": "7157#2414",
+    "celltype": 3,
+    "evenid": "28101",
+    "cellspecies": 3,
+    "isflag": 0
+  }
+]

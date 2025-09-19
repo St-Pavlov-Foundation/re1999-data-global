@@ -9,6 +9,12 @@ function var_0_0.beforePlayEffectData(arg_1_0)
 end
 
 function var_0_0.onStart(arg_2_0)
+	if arg_2_0.actEffectData.custom_nuoDiKaDamageSign then
+		arg_2_0:onDone(true)
+
+		return
+	end
+
 	arg_2_0._newValue = arg_2_0._entityMO and arg_2_0._entityMO.shieldValue or 0
 
 	local var_2_0 = FightHelper.getEntity(arg_2_0._entityId)

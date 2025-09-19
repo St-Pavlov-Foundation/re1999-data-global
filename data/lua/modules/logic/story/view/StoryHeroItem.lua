@@ -24,6 +24,10 @@ function var_0_0.resetHero(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
 		return
 	end
 
+	arg_3_0._noChangeBody = false
+
+	TaskDispatcher.cancelTask(arg_3_0._waitHeroSpineLoaded, arg_3_0)
+
 	if arg_3_2.name == "spine_ui_default" and arg_3_0._initMat then
 		arg_3_2 = arg_3_0._initMat
 	end
@@ -32,6 +36,9 @@ function var_0_0.resetHero(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
 
 	if arg_3_0._heroGo.activeSelf then
 		local var_3_0 = GameLanguageMgr.instance:getVoiceTypeStoryIndex()
+		local var_3_1 = arg_3_1.effs[var_3_0]
+
+		arg_3_0._noChangeBody = arg_3_0._heroSpineGo and var_3_1 and string.split(var_3_1, "#")[1] and string.split(var_3_1, "#")[1] == StoryEnum.HeroEffect.KeepAction
 
 		if (arg_3_1.anims[var_3_0] ~= "" or arg_3_1.expressions[var_3_0] ~= "" or arg_3_1.mouses[var_3_0] ~= "") and not string.find(arg_3_1.mouses[var_3_0], "_auto") and arg_3_1.anims[var_3_0] == arg_3_0._heroCo.anims[var_3_0] and arg_3_1.expressions[var_3_0] == arg_3_0._heroCo.expressions[var_3_0] and arg_3_1.mouses[var_3_0] == arg_3_0._heroCo.mouses[var_3_0] then
 			if not arg_3_0._isLightSpine then
@@ -97,6 +104,10 @@ function var_0_0._fadeInUpdate(arg_5_0, arg_5_1)
 		return
 	end
 
+	if not arg_5_0._heroSpineGo then
+		return
+	end
+
 	if arg_5_0._isLive2D then
 		arg_5_0._heroSpine:setAlpha(arg_5_1)
 	else
@@ -148,7 +159,11 @@ function var_0_0._setHeroMat(arg_8_0, arg_8_1)
 		return
 	end
 
-	if arg_8_0._isLive2D and arg_8_0._heroSpine then
+	if not arg_8_0._heroSpine then
+		return
+	end
+
+	if arg_8_0._isLive2D then
 		if arg_8_1.name == "spine_ui_dark" then
 			arg_8_0._heroSpine:SetDark()
 		else
@@ -156,7 +171,7 @@ function var_0_0._setHeroMat(arg_8_0, arg_8_1)
 		end
 	end
 
-	if arg_8_0._heroSpine and arg_8_0._heroSkeletonGraphic then
+	if arg_8_0._heroSkeletonGraphic then
 		if arg_8_0._heroSkeletonGraphic.material and arg_8_0._heroSkeletonGraphic.material == arg_8_1 then
 			return
 		end
@@ -215,6 +230,10 @@ function var_0_0._onDelay(arg_10_0)
 end
 
 function var_0_0._fadeOut(arg_11_0)
+	if not arg_11_0._heroSpine then
+		return
+	end
+
 	if arg_11_0._fadeInTweenId then
 		ZProj.TweenHelper.KillById(arg_11_0._fadeInTweenId)
 
@@ -244,6 +263,10 @@ function var_0_0._fadeOutUpdate(arg_12_0, arg_12_1)
 		return
 	end
 
+	if not arg_12_0._heroSpineGo then
+		return
+	end
+
 	if arg_12_0._isLive2D then
 		arg_12_0._heroSpine:setAlpha(arg_12_1)
 	else
@@ -256,6 +279,10 @@ function var_0_0._fadeOutUpdate(arg_12_0, arg_12_1)
 end
 
 function var_0_0._fadeOutFinished(arg_13_0)
+	if not arg_13_0._heroSpine then
+		return
+	end
+
 	gohelper.setActive(arg_13_0._heroGo, false)
 	arg_13_0:_fadeOutUpdate(1)
 
@@ -272,6 +299,7 @@ function var_0_0._fadeOutFinished(arg_13_0)
 end
 
 function var_0_0.buildHero(arg_14_0, arg_14_1, arg_14_2, arg_14_3, arg_14_4, arg_14_5, arg_14_6)
+	arg_14_0._noChangeBody = false
 	arg_14_0._conAudioId = arg_14_6
 	arg_14_0._heroCo = arg_14_1
 	arg_14_0._heroGo = gohelper.create2d(arg_14_0.viewGO, "rolespine")
@@ -327,7 +355,7 @@ function var_0_0.buildHero(arg_14_0, arg_14_1, arg_14_2, arg_14_3, arg_14_4, arg
 
 			gohelper.setActive(arg_14_0._heroSpineGo, false)
 
-			var_14_0.sortingOrder = var_14_1 * 10
+			var_14_0.sortingOrder = (var_14_1 + 1) * 10
 
 			if arg_14_0._heroSkeletonGraphic and arg_14_0._heroSkeletonGraphic.material.name ~= "spine_ui_default" then
 				arg_14_0._initMat = arg_14_0._heroSkeletonGraphic.material
@@ -365,7 +393,7 @@ function var_0_0.buildHero(arg_14_0, arg_14_1, arg_14_2, arg_14_3, arg_14_4, arg
 			gohelper.setActive(arg_14_0._heroSpineGo, false)
 			arg_14_0._heroSpine:setSortingOrder(var_14_1 * 10)
 
-			var_14_0.sortingOrder = var_14_1 * 10
+			var_14_0.sortingOrder = (var_14_1 + 1) * 10
 
 			gohelper.setLayer(arg_14_0._heroSpineGo, UnityLayer.UISecond, true)
 			arg_14_0:_setHeroMat(arg_14_2)
@@ -415,6 +443,8 @@ function var_0_0._grayFinished(arg_19_0)
 end
 
 function var_0_0._playHeroVoice(arg_20_0)
+	TaskDispatcher.cancelTask(arg_20_0._waitHeroSpineLoaded, arg_20_0)
+
 	if not arg_20_0._heroSpineGo then
 		TaskDispatcher.runRepeat(arg_20_0._waitHeroSpineLoaded, arg_20_0, 0.01)
 
@@ -425,6 +455,10 @@ function var_0_0._playHeroVoice(arg_20_0)
 end
 
 function var_0_0._waitHeroSpineLoaded(arg_21_0)
+	if not arg_21_0._heroSpine then
+		return
+	end
+
 	if not arg_21_0._heroSpineGo then
 		return
 	end
@@ -453,7 +487,7 @@ function var_0_0._waitHeroSpineLoaded(arg_21_0)
 		var_21_3 = string.gsub(var_21_3, var_21_5, "")
 	end
 
-	if var_21_4 then
+	if var_21_4 and not arg_21_0._noChangeBody then
 		arg_21_0._heroSpine:stopVoice()
 	end
 
@@ -462,7 +496,8 @@ function var_0_0._waitHeroSpineLoaded(arg_21_0)
 		face = arg_21_0._heroCo.expressions[GameLanguageMgr.instance:getVoiceTypeStoryIndex()],
 		mouth = arg_21_0._heroCo.mouses[GameLanguageMgr.instance:getVoiceTypeStoryIndex()],
 		storyAudioId = arg_21_0._conAudioId,
-		storyHeroIndex = arg_21_0._heroCo.heroIndex
+		storyHeroIndex = arg_21_0._heroCo.heroIndex,
+		noChangeBody = arg_21_0._noChangeBody
 	}
 	local var_21_7 = arg_21_0._heroSpine:getSpineVoice()
 
@@ -518,7 +553,13 @@ function var_0_0._playHeroEffect(arg_22_0)
 				arg_22_0:_startStyDissolve()
 			end
 		end)
+	elseif var_22_1[1] == StoryEnum.HeroEffect.KeepAction then
+		-- block empty
 	else
+		if not arg_22_0._heroSpineGo then
+			return
+		end
+
 		local var_22_4 = GameUtil.splitString2(var_22_0, false, "|", "#")
 
 		if arg_22_0._heroLoader then

@@ -2,24 +2,27 @@
 
 local var_0_0 = {}
 local var_0_1 = {
+	attackMode = 14,
+	name = 6,
+	tag = 9,
+	type = 4,
+	skillDesc = 13,
+	cds = 17,
+	specialShopCost = 18,
+	image = 21,
+	race = 7,
+	moveType = 15,
+	attack = 10,
 	star = 2,
-	name = 5,
+	skillIds = 12,
+	illustrationShow = 3,
+	durability = 16,
+	fixExp = 19,
+	subRace = 8,
+	hp = 11,
 	id = 1,
-	type = 3,
-	attack = 9,
-	attackMode = 13,
-	image = 18,
-	race = 6,
-	moveType = 14,
-	tag = 8,
-	skillDesc = 12,
-	skillIds = 11,
-	fixExp = 16,
-	subRace = 7,
-	hp = 10,
-	specialShopCost = 15,
-	levelFromMall = 4,
-	initBuff = 17
+	levelFromMall = 5,
+	initBuff = 20
 }
 local var_0_2 = {
 	"id",

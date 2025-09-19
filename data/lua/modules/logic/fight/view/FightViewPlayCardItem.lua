@@ -8,14 +8,41 @@ function var_0_0.init(arg_1_0, arg_1_1)
 	arg_1_0.tr = arg_1_1.transform
 	arg_1_0._emtpyGO = gohelper.findChild(arg_1_1, "imgEmpty")
 	arg_1_0._emptyNormal = gohelper.findChild(arg_1_1, "imgEmpty/emptyNormal")
+
+	local var_1_0 = FightCardDataHelper.getCardSkin()
+	local var_1_1 = gohelper.findChildImage(arg_1_1, "imgEmpty/emptyNormal")
+	local var_1_2 = gohelper.findChildSingleImage(arg_1_1, "imgMove/Image")
+	local var_1_3 = "singlebg_lang/txt_fight/change.png"
+
+	if var_1_0 == 672801 then
+		UISpriteSetMgr.instance:setFightSkillCardSprite(var_1_1, "card_dz5", true)
+
+		var_1_3 = "singlebg_lang/txt_fight/change2.png"
+
+		local var_1_4 = gohelper.cloneInPlace(arg_1_0._emptyNormal.gameObject, "emptyDarkBg")
+
+		var_1_4 = var_1_4 and gohelper.onceAddComponent(var_1_4, gohelper.Type_Image)
+
+		if var_1_4 then
+			UISpriteSetMgr.instance:setFightSkillCardSprite(var_1_4, "card_dz6", true)
+		end
+	end
+
+	var_1_2:UnLoadImage()
+	var_1_2:LoadImage(var_1_3)
+
 	arg_1_0._moveGO = gohelper.findChild(arg_1_1, "imgMove")
 	arg_1_0._moveAnimComp = arg_1_0._moveGO:GetComponent(typeof(UnityEngine.Animation))
 	arg_1_0._lockGO = gohelper.findChild(arg_1_1, "lock")
 
-	local var_1_0 = ViewMgr.instance:getContainer(ViewName.FightView)
-	local var_1_1 = var_1_0:getSetting().otherRes[1]
+	if FightCardDataHelper.getCardSkin() == 672801 then
+		FightViewHandCardItem.replaceLockBg(arg_1_0._lockGO)
+	end
 
-	arg_1_0._innerGO = var_1_0:getResInst(var_1_1, arg_1_0.go, "card")
+	local var_1_5 = ViewMgr.instance:getContainer(ViewName.FightView)
+	local var_1_6 = var_1_5:getSetting().otherRes[1]
+
+	arg_1_0._innerGO = var_1_5:getResInst(var_1_6, arg_1_0.go, "card")
 
 	transformhelper.setLocalScale(arg_1_0._innerGO.transform, var_0_1, var_0_1, var_0_1)
 	gohelper.setSiblingBefore(arg_1_0._innerGO, arg_1_0._lockGO)
@@ -46,10 +73,10 @@ function var_0_0.init(arg_1_0, arg_1_1)
 	arg_1_0._seasonCurActIndex = gohelper.findChild(arg_1_1, "imgEmpty/SeasonRoot/#go_Selected")
 	arg_1_0._seasonCurActArrow = gohelper.findChild(arg_1_1, "imgEmpty/SeasonRoot/image_SelectedArrow")
 
-	local var_1_2 = FightModel.instance:isSeason2()
+	local var_1_7 = FightModel.instance:isSeason2()
 
-	gohelper.setActive(arg_1_0._seasonRoot, var_1_2)
-	gohelper.setActive(arg_1_0._emptyNormal, not var_1_2)
+	gohelper.setActive(arg_1_0._seasonRoot, var_1_7)
+	gohelper.setActive(arg_1_0._emptyNormal, not var_1_7)
 
 	arg_1_0.goASFD = gohelper.findChild(arg_1_1, "asfd_icon")
 	arg_1_0.asfdAnimatorPlayer = ZProj.ProjAnimatorPlayer.Get(arg_1_0.goASFD)

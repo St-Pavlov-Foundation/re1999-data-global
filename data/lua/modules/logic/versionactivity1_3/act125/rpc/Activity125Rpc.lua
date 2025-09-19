@@ -2,12 +2,12 @@
 
 local var_0_0 = class("Activity125Rpc", BaseRpc)
 
-function var_0_0.sendGetAct125InfosRequest(arg_1_0, arg_1_1)
+function var_0_0.sendGetAct125InfosRequest(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 	local var_1_0 = Activity125Module_pb.GetAct125InfosRequest()
 
 	var_1_0.activityId = arg_1_1
 
-	arg_1_0:sendMsg(var_1_0)
+	arg_1_0:sendMsg(var_1_0, arg_1_2, arg_1_3)
 end
 
 function var_0_0.onReceiveGetAct125InfosReply(arg_2_0, arg_2_1, arg_2_2)

@@ -14,7 +14,7 @@ function var_0_0.onInitView(arg_1_0)
 	arg_1_0._txtcount = gohelper.findChildText(arg_1_0.viewGO, "#go_items/level/#txt_count")
 	arg_1_0._goranknormal = gohelper.findChild(arg_1_0.viewGO, "rank/#go_ranknormal")
 	arg_1_0._goranklarge = gohelper.findChild(arg_1_0.viewGO, "rank/#go_ranklarge")
-	arg_1_0._goeffect = gohelper.findChild(arg_1_0.viewGO, "#scroll_effect/viewport/#go_effect")
+	arg_1_0._goeffect = gohelper.findChild(arg_1_0.viewGO, "#go_effect")
 	arg_1_0._btnupgrade = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_upgrade")
 	arg_1_0._goupgradeeffect = gohelper.findChild(arg_1_0.viewGO, "#btn_upgrade/#go_levelupbeffect")
 
@@ -130,12 +130,13 @@ function var_0_0._editableInitView(arg_10_0)
 
 	arg_10_0._uiSpine = GuiModelAgent.Create(arg_10_0._gospine, true)
 
-	arg_10_0._uiSpine:setShareRT(CharacterVoiceEnum.RTShareType.Normal, CharacterVoiceEnum.NormalPriority.CharacterRankUpView)
+	arg_10_0._uiSpine:setShareRT(CharacterVoiceEnum.RTShareType.Normal, arg_10_0.viewName)
 	arg_10_0._uiSpine:useRT()
 
 	arg_10_0._items = {}
 	arg_10_0._norrank = {}
 	arg_10_0._norrank.insights = {}
+	arg_10_0._effect = gohelper.findChild(arg_10_0._goeffect, "#scroll_info/viewport/effect")
 
 	for iter_10_0 = 1, 3 do
 		local var_10_0 = arg_10_0:getUserDataTb_()
@@ -183,10 +184,12 @@ function var_0_0._editableInitView(arg_10_0)
 	for iter_10_6 = 1, 5 do
 		local var_10_2 = arg_10_0:getUserDataTb_()
 
-		var_10_2.go = gohelper.findChild(arg_10_0._goeffect, "effect/effect" .. tostring(iter_10_6))
-		var_10_2.txt = gohelper.findChildText(arg_10_0._goeffect, "effect/effect" .. tostring(iter_10_6))
+		var_10_2.go = gohelper.findChild(arg_10_0._effect, "effect" .. tostring(iter_10_6))
+		var_10_2.txt = gohelper.findChildText(arg_10_0._effect, "effect" .. tostring(iter_10_6))
 		arg_10_0._effects[iter_10_6] = var_10_2
 	end
+
+	arg_10_0:_initSpecialEffectItem()
 
 	arg_10_0._hyperLinkClick = arg_10_0._effects[2].txt.gameObject:GetComponent(typeof(ZProj.TMPHyperLinkClick))
 
@@ -198,402 +201,445 @@ function var_0_0._editableInitView(arg_10_0)
 	arg_10_0:addEventCb(ViewMgr.instance, ViewEvent.OnOpenViewFinish, arg_10_0._onOpenViewFinish, arg_10_0)
 end
 
-function var_0_0._onHyperLinkClick(arg_11_0, arg_11_1)
-	local var_11_0 = {}
+function var_0_0._initSpecialEffectItem(arg_11_0)
+	arg_11_0._specialEffectItem = arg_11_0:getUserDataTb_()
 
-	var_11_0.tag = "passiveskill"
-	var_11_0.heroid = arg_11_0.viewParam.heroId
-	var_11_0.tipPos = Vector2.New(-292, -51.1)
-	var_11_0.anchorParams = {
+	local var_11_0 = gohelper.findChild(arg_11_0._effect, "SpecialEffect")
+	local var_11_1 = arg_11_0:getUserDataTb_()
+
+	var_11_1.go = var_11_0
+	var_11_1.txt = gohelper.findChildText(var_11_0, "#txt_SpecialEffect")
+	arg_11_0._specialEffectItem[1] = var_11_1
+
+	gohelper.setSibling(var_11_1.go, 0)
+
+	local var_11_2 = arg_11_0:getUserDataTb_()
+
+	var_11_2.go = gohelper.cloneInPlace(var_11_0)
+	var_11_2.txt = gohelper.findChildText(var_11_2.go, "#txt_SpecialEffect")
+
+	gohelper.setSibling(var_11_2.go, 1)
+
+	arg_11_0._specialEffectItem[2] = var_11_2
+end
+
+function var_0_0._onHyperLinkClick(arg_12_0, arg_12_1)
+	local var_12_0 = {}
+
+	var_12_0.tag = "passiveskill"
+	var_12_0.heroid = arg_12_0.viewParam.heroId
+	var_12_0.tipPos = Vector2.New(-292, -51.1)
+	var_12_0.anchorParams = {
 		Vector2.New(1, 0.5),
 		Vector2.New(1, 0.5)
 	}
-	var_11_0.buffTipsX = -776
+	var_12_0.buffTipsX = -776
 
 	AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Universal_Click)
-	CharacterController.instance:openCharacterTipView(var_11_0)
+	CharacterController.instance:openCharacterTipView(var_12_0)
 end
 
-function var_0_0._onSpineLoaded(arg_12_0)
-	if arg_12_0._uiSpine:isSpine() and arg_12_0.viewGO.transform.parent.name == "POPUPBlur" then
-		arg_12_0.needReloadSpine = true
+function var_0_0._onSpineLoaded(arg_13_0)
+	if arg_13_0._uiSpine:isSpine() and arg_13_0.viewGO.transform.parent.name == "POPUPBlur" then
+		arg_13_0.needReloadSpine = true
 	end
 
-	arg_12_0._uiSpine:setUIMask(true)
+	arg_13_0._uiSpine:setUIMask(true)
 end
 
-function var_0_0.onOpen(arg_13_0)
-	arg_13_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroLevelUp, arg_13_0._refreshItems, arg_13_0)
-	arg_13_0:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_13_0._refreshItems, arg_13_0)
-	arg_13_0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_13_0._refreshItems, arg_13_0)
-	arg_13_0:addEventCb(HelpController.instance, HelpEvent.RefreshHelp, arg_13_0.viewContainer.refreshHelp, arg_13_0.viewContainer)
-	arg_13_0:_initItems()
-	arg_13_0:_refreshView()
+function var_0_0.onOpen(arg_14_0)
+	arg_14_0:addEventCb(CharacterController.instance, CharacterEvent.successHeroLevelUp, arg_14_0._refreshItems, arg_14_0)
+	arg_14_0:addEventCb(BackpackController.instance, BackpackEvent.UpdateItemList, arg_14_0._refreshItems, arg_14_0)
+	arg_14_0:addEventCb(CurrencyController.instance, CurrencyEvent.CurrencyChange, arg_14_0._refreshItems, arg_14_0)
+	arg_14_0:addEventCb(HelpController.instance, HelpEvent.RefreshHelp, arg_14_0.viewContainer.refreshHelp, arg_14_0.viewContainer)
+	arg_14_0:_initItems()
+	arg_14_0:_refreshView()
 end
 
-function var_0_0._initItems(arg_14_0)
-	local var_14_0 = SkillConfig.instance:getherorankCO(arg_14_0.viewParam.heroId, arg_14_0.viewParam.rank + 1)
+function var_0_0._initItems(arg_15_0)
+	local var_15_0 = SkillConfig.instance:getherorankCO(arg_15_0.viewParam.heroId, arg_15_0.viewParam.rank + 1)
 
-	if not var_14_0 then
+	if not var_15_0 then
 		return
 	end
 
-	local var_14_1 = string.split(var_14_0.consume, "|")
+	local var_15_1 = string.split(var_15_0.consume, "|")
 
-	for iter_14_0 = 1, #var_14_1 do
-		local var_14_2 = arg_14_0.viewContainer:getSetting().otherRes[1]
-		local var_14_3 = arg_14_0:getResInst(var_14_2, arg_14_0._goitem)
-		local var_14_4 = arg_14_0:getUserDataTb_()
+	for iter_15_0 = 1, #var_15_1 do
+		local var_15_2 = arg_15_0.viewContainer:getSetting().otherRes[1]
+		local var_15_3 = arg_15_0:getResInst(var_15_2, arg_15_0._goitem)
+		local var_15_4 = arg_15_0:getUserDataTb_()
 
-		var_14_4.go = var_14_3
-		var_14_4.rare = var_14_3:GetComponent(typeof(UnityEngine.UI.Image))
-		var_14_4.icon = gohelper.findChild(var_14_4.go, "icon")
-		arg_14_0._items[iter_14_0] = var_14_4
+		var_15_4.go = var_15_3
+		var_15_4.rare = var_15_3:GetComponent(typeof(UnityEngine.UI.Image))
+		var_15_4.icon = gohelper.findChild(var_15_4.go, "icon")
+		arg_15_0._items[iter_15_0] = var_15_4
 	end
 end
 
-function var_0_0.onOpenFinish(arg_15_0)
-	if arg_15_0.viewParam.level == 30 then
+function var_0_0.onOpenFinish(arg_16_0)
+	if arg_16_0.viewParam.level == 30 then
 		CharacterController.instance:dispatchEvent(CharacterEvent.OnGuideInsight)
 	end
 end
 
-function var_0_0.onUpdateParam(arg_16_0)
-	arg_16_0:_refreshView()
+function var_0_0.onUpdateParam(arg_17_0)
+	arg_17_0:_refreshView()
 end
 
-function var_0_0._onOpenViewFinish(arg_17_0, arg_17_1)
-	if arg_17_1 == ViewName.CharacterGetView then
-		arg_17_0:closeThis()
+function var_0_0._onOpenViewFinish(arg_18_0, arg_18_1)
+	if arg_18_1 == ViewName.CharacterGetView then
+		arg_18_0:closeThis()
 	end
 end
 
-function var_0_0._refreshView(arg_18_0)
-	arg_18_0:_refreshSpine()
-	arg_18_0:_refreshItems()
-	arg_18_0:_refreshRank()
-	arg_18_0:_refreshEffect()
-	arg_18_0:_refreshButton()
+function var_0_0._refreshView(arg_19_0)
+	arg_19_0:_refreshSpine()
+	arg_19_0:_refreshItems()
+	arg_19_0:_refreshRank()
+	arg_19_0:_refreshEffect()
+	arg_19_0:_refreshButton()
 end
 
-function var_0_0._refreshSpine(arg_19_0)
-	local var_19_0 = SkinConfig.instance:getSkinCo(arg_19_0.viewParam.skin)
+function var_0_0._refreshSpine(arg_20_0)
+	local var_20_0 = SkinConfig.instance:getSkinCo(arg_20_0.viewParam.skin)
 
-	arg_19_0._uiSpine:setResPath(var_19_0, arg_19_0._onSpineLoaded, arg_19_0)
+	arg_20_0._uiSpine:setResPath(var_20_0, arg_20_0._onSpineLoaded, arg_20_0)
 
-	local var_19_1 = var_19_0.characterRankUpViewOffset
-	local var_19_2
+	local var_20_1 = var_20_0.characterRankUpViewOffset
+	local var_20_2
 
-	if string.nilorempty(var_19_1) then
-		var_19_2 = SkinConfig.instance:getSkinOffset(var_19_0.characterViewOffset)
-		var_19_2 = SkinConfig.instance:getAfterRelativeOffset(503, var_19_2)
+	if string.nilorempty(var_20_1) then
+		var_20_2 = SkinConfig.instance:getSkinOffset(var_20_0.characterViewOffset)
+		var_20_2 = SkinConfig.instance:getAfterRelativeOffset(503, var_20_2)
 	else
-		var_19_2 = SkinConfig.instance:getSkinOffset(var_19_1)
+		var_20_2 = SkinConfig.instance:getSkinOffset(var_20_1)
 	end
 
-	recthelper.setAnchor(arg_19_0._gospine.transform, tonumber(var_19_2[1]), tonumber(var_19_2[2]))
-	transformhelper.setLocalScale(arg_19_0._gospine.transform, tonumber(var_19_2[3]), tonumber(var_19_2[3]), tonumber(var_19_2[3]))
+	recthelper.setAnchor(arg_20_0._gospine.transform, tonumber(var_20_2[1]), tonumber(var_20_2[2]))
+	transformhelper.setLocalScale(arg_20_0._gospine.transform, tonumber(var_20_2[3]), tonumber(var_20_2[3]), tonumber(var_20_2[3]))
 end
 
-function var_0_0._refreshItems(arg_20_0)
-	local var_20_0 = SkillConfig.instance:getherorankCO(arg_20_0.viewParam.heroId, arg_20_0.viewParam.rank + 1)
+function var_0_0._refreshItems(arg_21_0)
+	local var_21_0 = SkillConfig.instance:getherorankCO(arg_21_0.viewParam.heroId, arg_21_0.viewParam.rank + 1)
 
-	if not var_20_0 then
-		gohelper.setActive(arg_20_0._goitems, false)
+	if not var_21_0 then
+		gohelper.setActive(arg_21_0._goitems, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_20_0._goitems, true)
+	gohelper.setActive(arg_21_0._goitems, true)
 
-	local var_20_1 = string.split(var_20_0.requirement, "|")
+	local var_21_1 = string.split(var_21_0.requirement, "|")
 
-	for iter_20_0, iter_20_1 in pairs(var_20_1) do
-		local var_20_2 = string.split(iter_20_1, "#")
+	for iter_21_0, iter_21_1 in pairs(var_21_1) do
+		local var_21_2 = string.split(iter_21_1, "#")
 
-		if var_20_2[1] == "1" then
-			local var_20_3 = HeroConfig.instance:getShowLevel(arg_20_0.viewParam.level)
-			local var_20_4 = HeroConfig.instance:getShowLevel(tonumber(var_20_2[2]))
+		if var_21_2[1] == "1" then
+			local var_21_3 = HeroConfig.instance:getShowLevel(arg_21_0.viewParam.level)
+			local var_21_4 = HeroConfig.instance:getShowLevel(tonumber(var_21_2[2]))
 
-			arg_20_0._txtlevel.text = var_20_4
+			arg_21_0._txtlevel.text = var_21_4
 
-			if var_20_3 < var_20_4 then
-				arg_20_0._txtcount.text = "<color=#cd5353>" .. tostring(var_20_3) .. "</color>" .. "/" .. var_20_4
+			if var_21_3 < var_21_4 then
+				arg_21_0._txtcount.text = "<color=#cd5353>" .. tostring(var_21_3) .. "</color>" .. "/" .. var_21_4
 			else
-				arg_20_0._txtcount.text = tostring(var_20_3) .. "/" .. var_20_4
+				arg_21_0._txtcount.text = tostring(var_21_3) .. "/" .. var_21_4
 			end
 		end
 	end
 
-	local var_20_5 = string.split(var_20_0.consume, "|")
-	local var_20_6 = {}
+	local var_21_5 = string.split(var_21_0.consume, "|")
+	local var_21_6 = {}
 
-	for iter_20_2 = 1, #var_20_5 do
-		local var_20_7 = string.splitToNumber(var_20_5[iter_20_2], "#")
-		local var_20_8 = {
-			type = tonumber(var_20_7[1]),
-			id = tonumber(var_20_7[2]),
-			quantity = tonumber(var_20_7[3])
+	for iter_21_2 = 1, #var_21_5 do
+		local var_21_7 = string.splitToNumber(var_21_5[iter_21_2], "#")
+		local var_21_8 = {
+			type = tonumber(var_21_7[1]),
+			id = tonumber(var_21_7[2]),
+			quantity = tonumber(var_21_7[3])
 		}
 
-		var_20_8.rare = ItemModel.instance:getItemConfig(var_20_8.type, var_20_8.id).rare
+		var_21_8.rare = ItemModel.instance:getItemConfig(var_21_8.type, var_21_8.id).rare
 
-		table.insert(var_20_6, var_20_8)
+		table.insert(var_21_6, var_21_8)
 	end
 
-	for iter_20_3 = 1, #var_20_6 do
-		gohelper.setActive(arg_20_0._items[iter_20_3].go, iter_20_3 <= #var_20_6)
+	for iter_21_3 = 1, #var_21_6 do
+		gohelper.setActive(arg_21_0._items[iter_21_3].go, iter_21_3 <= #var_21_6)
 	end
 
-	for iter_20_4 = 1, #var_20_6 do
-		local var_20_9, var_20_10 = ItemModel.instance:getItemConfigAndIcon(var_20_6[iter_20_4].type, var_20_6[iter_20_4].id)
+	for iter_21_4 = 1, #var_21_6 do
+		local var_21_9, var_21_10 = ItemModel.instance:getItemConfigAndIcon(var_21_6[iter_21_4].type, var_21_6[iter_21_4].id)
 
-		if not arg_20_0._items[iter_20_4].item then
-			arg_20_0._items[iter_20_4].item = IconMgr.instance:getCommonItemIcon(arg_20_0._items[iter_20_4].icon)
+		if not arg_21_0._items[iter_21_4].item then
+			arg_21_0._items[iter_21_4].item = IconMgr.instance:getCommonItemIcon(arg_21_0._items[iter_21_4].icon)
 		end
 
-		arg_20_0._items[iter_20_4].item:setMOValue(var_20_6[iter_20_4].type, var_20_6[iter_20_4].id, var_20_6[iter_20_4].quantity)
-		arg_20_0._items[iter_20_4].item:setConsume(true)
-		arg_20_0._items[iter_20_4].item:setCountFontSize(38)
+		arg_21_0._items[iter_21_4].item:setMOValue(var_21_6[iter_21_4].type, var_21_6[iter_21_4].id, var_21_6[iter_21_4].quantity)
+		arg_21_0._items[iter_21_4].item:setConsume(true)
+		arg_21_0._items[iter_21_4].item:setCountFontSize(38)
 
-		local var_20_11 = arg_20_0._items[iter_20_4].item:getCount()
+		local var_21_11 = arg_21_0._items[iter_21_4].item:getCount()
 
-		arg_20_0._items[iter_20_4].item:setRecordFarmItem({
-			type = var_20_6[iter_20_4].type,
-			id = var_20_6[iter_20_4].id,
-			quantity = var_20_6[iter_20_4].quantity
+		arg_21_0._items[iter_21_4].item:setRecordFarmItem({
+			type = var_21_6[iter_21_4].type,
+			id = var_21_6[iter_21_4].id,
+			quantity = var_21_6[iter_21_4].quantity
 		})
-		arg_20_0._items[iter_20_4].item:setOnBeforeClickCallback(JumpController.commonIconBeforeClickSetRecordItem, arg_20_0)
+		arg_21_0._items[iter_21_4].item:setOnBeforeClickCallback(JumpController.commonIconBeforeClickSetRecordItem, arg_21_0)
 
-		local var_20_12 = ItemModel.instance:getItemQuantity(var_20_6[iter_20_4].type, var_20_6[iter_20_4].id)
+		local var_21_12 = ItemModel.instance:getItemQuantity(var_21_6[iter_21_4].type, var_21_6[iter_21_4].id)
 
-		if var_20_12 >= var_20_6[iter_20_4].quantity then
-			if var_20_6[iter_20_4].type == MaterialEnum.MaterialType.Currency then
-				var_20_11.text = tostring(GameUtil.numberDisplay(var_20_6[iter_20_4].quantity))
+		if var_21_12 >= var_21_6[iter_21_4].quantity then
+			if var_21_6[iter_21_4].type == MaterialEnum.MaterialType.Currency then
+				var_21_11.text = tostring(GameUtil.numberDisplay(var_21_6[iter_21_4].quantity))
 			else
-				var_20_11.text = tostring(GameUtil.numberDisplay(var_20_12)) .. "/" .. tostring(GameUtil.numberDisplay(var_20_6[iter_20_4].quantity))
+				var_21_11.text = tostring(GameUtil.numberDisplay(var_21_12)) .. "/" .. tostring(GameUtil.numberDisplay(var_21_6[iter_21_4].quantity))
 			end
-		elseif var_20_6[iter_20_4].type == MaterialEnum.MaterialType.Currency then
-			var_20_11.text = "<color=#cd5353>" .. tostring(GameUtil.numberDisplay(var_20_6[iter_20_4].quantity)) .. "</color>"
+		elseif var_21_6[iter_21_4].type == MaterialEnum.MaterialType.Currency then
+			var_21_11.text = "<color=#cd5353>" .. tostring(GameUtil.numberDisplay(var_21_6[iter_21_4].quantity)) .. "</color>"
 		else
-			var_20_11.text = "<color=#cd5353>" .. tostring(GameUtil.numberDisplay(var_20_12)) .. "</color>" .. "/" .. tostring(GameUtil.numberDisplay(var_20_6[iter_20_4].quantity))
+			var_21_11.text = "<color=#cd5353>" .. tostring(GameUtil.numberDisplay(var_21_12)) .. "</color>" .. "/" .. tostring(GameUtil.numberDisplay(var_21_6[iter_21_4].quantity))
 		end
 	end
 end
 
-function var_0_0._refreshRank(arg_21_0)
-	local var_21_0 = arg_21_0:_hasEffect()
+function var_0_0._refreshRank(arg_22_0)
+	local var_22_0 = arg_22_0:_hasEffect()
 
-	gohelper.setActive(arg_21_0._goranknormal, var_21_0)
-	gohelper.setActive(arg_21_0._goranklarge, not var_21_0)
+	gohelper.setActive(arg_22_0._goranknormal, var_22_0)
+	gohelper.setActive(arg_22_0._goranklarge, not var_22_0)
 
-	local var_21_1 = var_21_0 and arg_21_0._norrank or arg_21_0._uprank
-	local var_21_2 = arg_21_0.viewParam.config.rare
-	local var_21_3 = HeroModel.instance:getByHeroId(arg_21_0.viewParam.heroId).rank
-	local var_21_4 = HeroConfig.instance:getMaxRank(var_21_2)
+	local var_22_1 = var_22_0 and arg_22_0._norrank or arg_22_0._uprank
+	local var_22_2 = arg_22_0.viewParam.config.rare
+	local var_22_3 = HeroModel.instance:getByHeroId(arg_22_0.viewParam.heroId).rank
+	local var_22_4 = HeroConfig.instance:getMaxRank(var_22_2)
 
-	for iter_21_0 = 1, 3 do
-		gohelper.setActive(var_21_1.insights[iter_21_0].go, var_21_4 == iter_21_0)
+	for iter_22_0 = 1, 3 do
+		gohelper.setActive(var_22_1.insights[iter_22_0].go, var_22_4 == iter_22_0)
 
-		for iter_21_1 = 1, iter_21_0 do
-			if iter_21_1 <= var_21_3 - 1 then
-				SLFramework.UGUI.GuiHelper.SetColor(var_21_1.insights[iter_21_0].lights[iter_21_1]:GetComponent("Image"), "#f59d3d")
+		for iter_22_1 = 1, iter_22_0 do
+			if iter_22_1 <= var_22_3 - 1 then
+				SLFramework.UGUI.GuiHelper.SetColor(var_22_1.insights[iter_22_0].lights[iter_22_1]:GetComponent("Image"), "#f59d3d")
 			else
-				SLFramework.UGUI.GuiHelper.SetColor(var_21_1.insights[iter_21_0].lights[iter_21_1]:GetComponent("Image"), "#646161")
+				SLFramework.UGUI.GuiHelper.SetColor(var_22_1.insights[iter_22_0].lights[iter_22_1]:GetComponent("Image"), "#646161")
 			end
 		end
 	end
 
-	gohelper.setActive(var_21_1.eyes[1], var_21_4 ~= var_21_3 - 1)
-	gohelper.setActive(var_21_1.eyes[2], var_21_4 == var_21_3 - 1)
+	gohelper.setActive(var_22_1.eyes[1], var_22_4 ~= var_22_3 - 1)
+	gohelper.setActive(var_22_1.eyes[2], var_22_4 == var_22_3 - 1)
 end
 
-function var_0_0._refreshEffect(arg_22_0)
-	if not arg_22_0:_hasEffect() then
-		gohelper.setActive(arg_22_0._goeffect, false)
+function var_0_0._refreshEffect(arg_23_0)
+	if not arg_23_0:_hasEffect() then
+		gohelper.setActive(arg_23_0._goeffect, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_22_0._goeffect, true)
+	gohelper.setActive(arg_23_0._goeffect, true)
+	arg_23_0:_refreshSpecialEffect()
 
-	local var_22_0 = string.split(SkillConfig.instance:getherorankCO(arg_22_0.viewParam.heroId, arg_22_0.viewParam.rank + 1).effect, "|")
+	local var_23_0 = string.split(SkillConfig.instance:getherorankCO(arg_23_0.viewParam.heroId, arg_23_0.viewParam.rank + 1).effect, "|")
 
-	for iter_22_0 = 1, 5 do
-		gohelper.setActive(arg_22_0._effects[iter_22_0].go, iter_22_0 <= #var_22_0)
+	for iter_23_0 = 1, 5 do
+		gohelper.setActive(arg_23_0._effects[iter_23_0].go, iter_23_0 <= #var_23_0)
 	end
 
-	for iter_22_1 = 1, #var_22_0 do
-		local var_22_1 = string.split(var_22_0[iter_22_1], "#")
-		local var_22_2 = arg_22_0:_getEffectTxt(var_22_1[1], var_22_1[2])
-
-		if var_22_2 then
-			arg_22_0._effects[iter_22_1].txt.text = var_22_2
-		else
-			gohelper.setActive(arg_22_0._effects[iter_22_1].go, false)
-		end
-	end
-
-	local var_22_3 = HeroModel.instance:getByHeroId(arg_22_0.viewParam.heroId)
-	local var_22_4 = var_22_3.rank
-
-	if var_22_4 > 1 then
-		local var_22_5 = luaLang("talent_characterrankup_talentlevellimit" .. CharacterEnum.TalentTxtByHeroType[var_22_3.config.heroType])
-
-		arg_22_0._effects[5].txt.text = string.format(var_22_5, var_0_0.characterTalentLevel[var_22_4])
-	end
-
-	gohelper.setActive(arg_22_0._effects[5].go, var_22_4 > 1)
-	arg_22_0:_checkExtra(var_22_3)
-end
-
-function var_0_0._checkExtra(arg_23_0, arg_23_1)
-	if arg_23_1.extraMo then
-		local var_23_0
-		local var_23_1 = arg_23_0.viewParam.rank + 1
-		local var_23_2 = arg_23_1.extraMo:getSkillTalentMo()
+	for iter_23_1 = 1, #var_23_0 do
+		local var_23_1 = string.split(var_23_0[iter_23_1], "#")
+		local var_23_2 = arg_23_0:_getEffectTxt(var_23_1[1], var_23_1[2])
 
 		if var_23_2 then
-			var_23_0 = var_23_2:getUnlockRankStr(var_23_1)
+			arg_23_0._effects[iter_23_1].txt.text = var_23_2
+		else
+			gohelper.setActive(arg_23_0._effects[iter_23_1].go, false)
+		end
+	end
+
+	local var_23_3 = HeroModel.instance:getByHeroId(arg_23_0.viewParam.heroId)
+	local var_23_4 = var_23_3.rank
+
+	if var_23_4 > 1 then
+		local var_23_5 = luaLang("talent_characterrankup_talentlevellimit" .. var_23_3:getTalentTxtByHeroType())
+
+		arg_23_0._effects[5].txt.text = string.format(var_23_5, var_0_0.characterTalentLevel[var_23_4])
+	end
+
+	gohelper.setActive(arg_23_0._effects[5].go, var_23_4 > 1)
+	arg_23_0:_checkExtra(var_23_3)
+end
+
+function var_0_0._checkExtra(arg_24_0, arg_24_1)
+	if arg_24_1.extraMo then
+		local var_24_0
+		local var_24_1 = arg_24_0.viewParam.rank + 1
+		local var_24_2 = arg_24_1.extraMo:getSkillTalentMo()
+
+		if var_24_2 then
+			var_24_0 = var_24_2:getUnlockRankStr(var_24_1)
 		end
 
-		if arg_23_1.extraMo:hasWeapon() then
-			local var_23_3 = arg_23_1.extraMo:getWeaponMo()
+		if arg_24_1.extraMo:hasWeapon() then
+			local var_24_3 = arg_24_1.extraMo:getWeaponMo()
 
-			if var_23_3 then
-				var_23_0 = var_23_3:getUnlockRankStr(var_23_1)
+			if var_24_3 then
+				var_24_0 = var_24_3:getUnlockRankStr(var_24_1)
 			end
 		end
 
-		if var_23_0 then
-			local var_23_4 = 6
+		if var_24_0 then
+			local var_24_4 = 6
 
-			for iter_23_0, iter_23_1 in ipairs(var_23_0) do
-				arg_23_0:_getEffectItem(var_23_4).txt.text = iter_23_1
-				var_23_4 = var_23_4 + 1
+			for iter_24_0, iter_24_1 in ipairs(var_24_0) do
+				arg_24_0:_getEffectItem(var_24_4).txt.text = iter_24_1
+				var_24_4 = var_24_4 + 1
 			end
 		end
 	end
 end
 
-function var_0_0._getEffectItem(arg_24_0, arg_24_1)
-	local var_24_0 = arg_24_0._effects[arg_24_1]
+function var_0_0._getEffectItem(arg_25_0, arg_25_1)
+	local var_25_0 = arg_25_0._effects[arg_25_1]
 
-	if not var_24_0 then
-		var_24_0 = arg_24_0:getUserDataTb_()
+	if not var_25_0 then
+		var_25_0 = arg_25_0:getUserDataTb_()
 
-		local var_24_1 = gohelper.cloneInPlace(arg_24_0._effects[1].go, "effect" .. arg_24_1)
+		local var_25_1 = gohelper.cloneInPlace(arg_25_0._effects[1].go, "effect" .. arg_25_1)
 
-		var_24_0.go = var_24_1
-		var_24_0.txt = var_24_1:GetComponent(typeof(TMPro.TMP_Text))
-		arg_24_0._effects[arg_24_1] = var_24_0
-	end
-
-	return var_24_0
-end
-
-function var_0_0._getEffectTxt(arg_25_0, arg_25_1, arg_25_2)
-	arg_25_1 = tonumber(arg_25_1)
-
-	local var_25_0
-
-	if arg_25_1 == 1 then
-		local var_25_1 = {
-			arg_25_0.viewParam.config.name,
-			tostring(HeroConfig.instance:getShowLevel(tonumber(arg_25_2)))
-		}
-
-		var_25_0 = GameUtil.getSubPlaceholderLuaLang(luaLang("character_rankup_levellimit"), var_25_1)
-	elseif arg_25_1 == 2 then
-		local var_25_2 = SkillConfig.instance:getpassiveskillCO(arg_25_0.viewParam.heroId, 1).skillPassive
-		local var_25_3 = string.format("<u><link=%s>%s</link></u>", lua_skill.configDict[var_25_2].name, lua_skill.configDict[var_25_2].name)
-
-		var_25_0 = string.format(luaLang("character_rankup_skill"), var_25_3)
-	elseif arg_25_1 == 3 then
-		if not CharacterEnum.SkinOpen then
-			return nil
-		end
-
-		local var_25_4 = SkinConfig.instance:getSkinCo(tonumber(arg_25_2))
-
-		var_25_0 = string.format(luaLang("character_rankup_skinunlock"), tostring(var_25_4.name))
-	elseif arg_25_1 == 4 then
-		var_25_0 = luaLang("character_rankup_attribute")
+		var_25_0.go = var_25_1
+		var_25_0.txt = var_25_1:GetComponent(typeof(TMPro.TMP_Text))
+		arg_25_0._effects[arg_25_1] = var_25_0
 	end
 
 	return var_25_0
 end
 
-function var_0_0._hasEffect(arg_26_0)
-	local var_26_0 = SkillConfig.instance:getherorankCO(arg_26_0.viewParam.heroId, arg_26_0.viewParam.rank + 1)
+function var_0_0._getEffectTxt(arg_26_0, arg_26_1, arg_26_2)
+	arg_26_1 = tonumber(arg_26_1)
 
-	if var_26_0 and var_26_0.effects ~= "" then
+	local var_26_0
+
+	if arg_26_1 == 1 then
+		local var_26_1 = {
+			arg_26_0.viewParam.config.name,
+			tostring(HeroConfig.instance:getShowLevel(tonumber(arg_26_2)))
+		}
+
+		var_26_0 = GameUtil.getSubPlaceholderLuaLang(luaLang("character_rankup_levellimit"), var_26_1)
+	elseif arg_26_1 == 2 then
+		local var_26_2 = SkillConfig.instance:getpassiveskillCO(arg_26_0.viewParam.heroId, 1).skillPassive
+		local var_26_3 = lua_skill.configDict[var_26_2]
+
+		if var_26_3 then
+			local var_26_4 = string.format("<u><link=%s>%s</link></u>", var_26_3.name, var_26_3.name)
+
+			var_26_0 = string.format(luaLang("character_rankup_skill"), var_26_4)
+		end
+	elseif arg_26_1 == 3 then
+		if not CharacterEnum.SkinOpen then
+			return nil
+		end
+
+		local var_26_5 = SkinConfig.instance:getSkinCo(tonumber(arg_26_2))
+
+		var_26_0 = string.format(luaLang("character_rankup_skinunlock"), tostring(var_26_5.name))
+	elseif arg_26_1 == 4 then
+		var_26_0 = luaLang("character_rankup_attribute")
+	end
+
+	return var_26_0
+end
+
+function var_0_0._refreshSpecialEffect(arg_27_0)
+	local var_27_0 = CharacterModel.instance:getSpecialEffectDesc(arg_27_0.viewParam.skin, arg_27_0.viewParam.rank)
+	local var_27_1 = 0
+
+	if var_27_0 then
+		for iter_27_0, iter_27_1 in ipairs(var_27_0) do
+			arg_27_0._specialEffectItem[iter_27_0].txt.text = iter_27_1
+			var_27_1 = var_27_1 + 1
+		end
+	end
+
+	for iter_27_2 = 1, #arg_27_0._specialEffectItem do
+		gohelper.setActive(arg_27_0._specialEffectItem[iter_27_2].go, iter_27_2 <= var_27_1)
+	end
+end
+
+function var_0_0._hasEffect(arg_28_0)
+	local var_28_0 = SkillConfig.instance:getherorankCO(arg_28_0.viewParam.heroId, arg_28_0.viewParam.rank + 1)
+
+	if var_28_0 and var_28_0.effects ~= "" then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0._refreshButton(arg_27_0)
-	gohelper.setActive(arg_27_0._btnupgrade.gameObject, not arg_27_0:_hasfull())
+function var_0_0._refreshButton(arg_29_0)
+	gohelper.setActive(arg_29_0._btnupgrade.gameObject, not arg_29_0:_hasfull())
 
-	if arg_27_0:_hasfull() then
+	if arg_29_0:_hasfull() then
 		return
 	end
 
-	local var_27_0 = SkillConfig.instance:getherorankCO(arg_27_0.viewParam.heroId, arg_27_0.viewParam.rank + 1)
-	local var_27_1 = string.split(var_27_0.consume, "|")
-	local var_27_2 = {}
+	local var_29_0 = SkillConfig.instance:getherorankCO(arg_29_0.viewParam.heroId, arg_29_0.viewParam.rank + 1)
+	local var_29_1 = string.split(var_29_0.consume, "|")
+	local var_29_2 = {}
 
-	for iter_27_0 = 1, #var_27_1 do
-		local var_27_3 = string.splitToNumber(var_27_1[iter_27_0], "#")
-		local var_27_4 = {
-			type = var_27_3[1],
-			id = var_27_3[2],
-			quantity = var_27_3[3]
+	for iter_29_0 = 1, #var_29_1 do
+		local var_29_3 = string.splitToNumber(var_29_1[iter_29_0], "#")
+		local var_29_4 = {
+			type = var_29_3[1],
+			id = var_29_3[2],
+			quantity = var_29_3[3]
 		}
 
-		table.insert(var_27_2, var_27_4)
+		table.insert(var_29_2, var_29_4)
 	end
 
-	local var_27_5, var_27_6, var_27_7 = ItemModel.instance:hasEnoughItems(var_27_2)
-	local var_27_8 = string.split(var_27_0.requirement, "|")
-	local var_27_9 = 0
+	local var_29_5, var_29_6, var_29_7 = ItemModel.instance:hasEnoughItems(var_29_2)
+	local var_29_8 = string.split(var_29_0.requirement, "|")
+	local var_29_9 = 0
 
-	for iter_27_1, iter_27_2 in pairs(var_27_8) do
-		local var_27_10 = string.splitToNumber(iter_27_2, "#")
+	for iter_29_1, iter_29_2 in pairs(var_29_8) do
+		local var_29_10 = string.splitToNumber(iter_29_2, "#")
 
-		if var_27_10[1] == 1 then
-			var_27_9 = var_27_10[2]
+		if var_29_10[1] == 1 then
+			var_29_9 = var_29_10[2]
 		end
 	end
 
-	gohelper.setActive(arg_27_0._goupgradeeffect, var_27_6 and var_27_9 <= arg_27_0.viewParam.level)
+	gohelper.setActive(arg_29_0._goupgradeeffect, var_29_6 and var_29_9 <= arg_29_0.viewParam.level)
 end
 
-function var_0_0._hasfull(arg_28_0)
-	return arg_28_0.viewParam.rank == CharacterModel.instance:getMaxRank(arg_28_0.viewParam.heroId)
+function var_0_0._hasfull(arg_30_0)
+	return arg_30_0.viewParam.rank == CharacterModel.instance:getMaxRank(arg_30_0.viewParam.heroId)
 end
 
-function var_0_0.onClose(arg_29_0)
-	if not arg_29_0._uiSpine then
+function var_0_0.onClose(arg_31_0)
+	if not arg_31_0._uiSpine then
 		return
 	end
 
-	arg_29_0._uiSpine:setModelVisible(false)
+	arg_31_0._uiSpine:setModelVisible(false)
 end
 
-function var_0_0.onDestroyView(arg_30_0)
-	if arg_30_0._uiSpine then
-		arg_30_0._uiSpine:onDestroy()
+function var_0_0.onDestroyView(arg_32_0)
+	if arg_32_0._uiSpine then
+		arg_32_0._uiSpine:onDestroy()
 
-		arg_30_0._uiSpine = nil
+		arg_32_0._uiSpine = nil
 	end
 
-	arg_30_0._simagecenterbg:UnLoadImage()
+	arg_32_0._simagecenterbg:UnLoadImage()
 
-	if arg_30_0._items then
-		arg_30_0._items = nil
+	if arg_32_0._items then
+		arg_32_0._items = nil
 	end
 end
 

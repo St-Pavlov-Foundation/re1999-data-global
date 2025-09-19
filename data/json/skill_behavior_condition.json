@@ -2076,10 +2076,6 @@
     "type": "PerBuffId"
   },
   {
-    "id": 74209,
-    "type": "Hurt"
-  },
-  {
     "id": 48013,
     "type": "None"
   },
@@ -7332,10 +7328,6 @@
     "type": "TeamInjuryCountRound"
   },
   {
-    "id": 579,
-    "type": "ExPointIncrChange"
-  },
-  {
     "id": 580,
     "type": "ExPointDecrChange"
   },
@@ -8254,10 +8246,6 @@
   {
     "id": 593,
     "type": "none"
-  },
-  {
-    "id": 594,
-    "type": "ExPointIncrChange"
   },
   {
     "id": 513301,
@@ -22858,6 +22846,686 @@
   {
     "id": 552,
     "type": "Random"
+  },
+  {
+    "id": 52008,
+    "type": "None"
+  },
+  {
+    "id": 544004,
+    "type": "NotInMagicCircleId"
+  },
+  {
+    "id": 645209,
+    "type": "Hurt"
+  },
+  {
+    "id": 579018,
+    "type": "ExPointIncrChange"
+  },
+  {
+    "id": 579023,
+    "type": "ExPointIncrChange"
+  },
+  {
+    "id": 89018,
+    "type": "ExpointMoreThan"
+  },
+  {
+    "id": 537103,
+    "type": "HasTypeIdBuffTotalCountMoreThan"
+  },
+  {
+    "id": 735000,
+    "type": "SurvivalPerHealth"
+  },
+  {
+    "id": 735002,
+    "type": "SurvivalPerHealth"
+  },
+  {
+    "id": 735100,
+    "type": "SurvivalPerHealth"
+  },
+  {
+    "id": 735101,
+    "type": "SurvivalPerHealth"
+  },
+  {
+    "id": 735102,
+    "type": "SurvivalPerHealth"
+  },
+  {
+    "id": 735103,
+    "type": "SurvivalPerHealth"
+  },
+  {
+    "id": 735104,
+    "type": "SurvivalPerHealth"
+  },
+  {
+    "id": 735105,
+    "type": "SurvivalPerHealth"
+  },
+  {
+    "id": 735106,
+    "type": "SurvivalPerHealth"
+  },
+  {
+    "id": 735201,
+    "type": "SurvivalPerHealth"
+  },
+  {
+    "id": 735202,
+    "type": "SurvivalPerHealth"
+  },
+  {
+    "id": 735203,
+    "type": "SurvivalPerHealth"
+  },
+  {
+    "id": 735204,
+    "type": "SurvivalPerHealth"
+  },
+  {
+    "id": 735205,
+    "type": "SurvivalPerHealth"
+  },
+  {
+    "id": 735206,
+    "type": "SurvivalPerHealth"
+  },
+  {
+    "id": 735207,
+    "type": "SurvivalPerHealth"
+  },
+  {
+    "id": 735208,
+    "type": "SurvivalPerHealth"
+  },
+  {
+    "id": 735209,
+    "type": "SurvivalPerHealth"
+  },
+  {
+    "id": 735210,
+    "type": "SurvivalPerHealth"
+  },
+  {
+    "id": 735211,
+    "type": "SurvivalPerHealth"
+  },
+  {
+    "id": 735212,
+    "type": "SurvivalPerHealth"
+  },
+  {
+    "id": 735213,
+    "type": "SurvivalPerHealth"
+  },
+  {
+    "id": 735301,
+    "type": "SurvivalPerHealth"
+  },
+  {
+    "id": 735302,
+    "type": "SurvivalPerHealth"
+  },
+  {
+    "id": 735303,
+    "type": "SurvivalPerHealth"
+  },
+  {
+    "id": 735304,
+    "type": "SurvivalPerHealth"
+  },
+  {
+    "id": 735305,
+    "type": "SurvivalPerHealth"
+  },
+  {
+    "id": 735306,
+    "type": "SurvivalPerHealth"
+  },
+  {
+    "id": 735307,
+    "type": "SurvivalPerHealth"
+  },
+  {
+    "id": 735401,
+    "type": "SurvivalPerHealth"
+  },
+  {
+    "id": 735402,
+    "type": "SurvivalPerHealth"
+  },
+  {
+    "id": 736000,
+    "type": "SurvivalHealthCheck"
+  },
+  {
+    "id": 736002,
+    "type": "SurvivalHealthCheck"
+  },
+  {
+    "id": 736100,
+    "type": "SurvivalHealthCheck"
+  },
+  {
+    "id": 736101,
+    "type": "SurvivalHealthCheck"
+  },
+  {
+    "id": 736102,
+    "type": "SurvivalHealthCheck"
+  },
+  {
+    "id": 736103,
+    "type": "SurvivalHealthCheck"
+  },
+  {
+    "id": 736104,
+    "type": "SurvivalHealthCheck"
+  },
+  {
+    "id": 736105,
+    "type": "SurvivalHealthCheck"
+  },
+  {
+    "id": 736106,
+    "type": "SurvivalHealthCheck"
+  },
+  {
+    "id": 736201,
+    "type": "SurvivalHealthCheck"
+  },
+  {
+    "id": 736202,
+    "type": "SurvivalHealthCheck"
+  },
+  {
+    "id": 736203,
+    "type": "SurvivalHealthCheck"
+  },
+  {
+    "id": 736204,
+    "type": "SurvivalHealthCheck"
+  },
+  {
+    "id": 736205,
+    "type": "SurvivalHealthCheck"
+  },
+  {
+    "id": 736206,
+    "type": "SurvivalHealthCheck"
+  },
+  {
+    "id": 736207,
+    "type": "SurvivalHealthCheck"
+  },
+  {
+    "id": 736208,
+    "type": "SurvivalHealthCheck"
+  },
+  {
+    "id": 736209,
+    "type": "SurvivalHealthCheck"
+  },
+  {
+    "id": 736210,
+    "type": "SurvivalHealthCheck"
+  },
+  {
+    "id": 736211,
+    "type": "SurvivalHealthCheck"
+  },
+  {
+    "id": 736212,
+    "type": "SurvivalHealthCheck"
+  },
+  {
+    "id": 736213,
+    "type": "SurvivalHealthCheck"
+  },
+  {
+    "id": 736301,
+    "type": "SurvivalHealthCheck"
+  },
+  {
+    "id": 736302,
+    "type": "SurvivalHealthCheck"
+  },
+  {
+    "id": 736303,
+    "type": "SurvivalHealthCheck"
+  },
+  {
+    "id": 736304,
+    "type": "SurvivalHealthCheck"
+  },
+  {
+    "id": 736305,
+    "type": "SurvivalHealthCheck"
+  },
+  {
+    "id": 736306,
+    "type": "SurvivalHealthCheck"
+  },
+  {
+    "id": 736307,
+    "type": "SurvivalHealthCheck"
+  },
+  {
+    "id": 736401,
+    "type": "SurvivalHealthCheck"
+  },
+  {
+    "id": 736402,
+    "type": "SurvivalHealthCheck"
+  },
+  {
+    "id": 57931,
+    "type": "NoBuffId"
+  },
+  {
+    "id": 19931,
+    "type": "HasBuffId"
+  },
+  {
+    "id": 51931,
+    "type": "HasTypeIdBuffMoreThan"
+  },
+  {
+    "id": 737212,
+    "type": "IsEffectEntity"
+  },
+  {
+    "id": 542004,
+    "type": "InMagicCircleId"
+  },
+  {
+    "id": 716212,
+    "type": "TeammateInjuryCount2"
+  },
+  {
+    "id": 738000,
+    "type": "PerConsumeBloodPoolValue"
+  },
+  {
+    "id": 738002,
+    "type": "PerConsumeBloodPoolValue"
+  },
+  {
+    "id": 738100,
+    "type": "PerConsumeBloodPoolValue"
+  },
+  {
+    "id": 738101,
+    "type": "PerConsumeBloodPoolValue"
+  },
+  {
+    "id": 738102,
+    "type": "PerConsumeBloodPoolValue"
+  },
+  {
+    "id": 738103,
+    "type": "PerConsumeBloodPoolValue"
+  },
+  {
+    "id": 738104,
+    "type": "PerConsumeBloodPoolValue"
+  },
+  {
+    "id": 738105,
+    "type": "PerConsumeBloodPoolValue"
+  },
+  {
+    "id": 738106,
+    "type": "PerConsumeBloodPoolValue"
+  },
+  {
+    "id": 738201,
+    "type": "PerConsumeBloodPoolValue"
+  },
+  {
+    "id": 738202,
+    "type": "PerConsumeBloodPoolValue"
+  },
+  {
+    "id": 738203,
+    "type": "PerConsumeBloodPoolValue"
+  },
+  {
+    "id": 738204,
+    "type": "PerConsumeBloodPoolValue"
+  },
+  {
+    "id": 738205,
+    "type": "PerConsumeBloodPoolValue"
+  },
+  {
+    "id": 738206,
+    "type": "PerConsumeBloodPoolValue"
+  },
+  {
+    "id": 738207,
+    "type": "PerConsumeBloodPoolValue"
+  },
+  {
+    "id": 738208,
+    "type": "PerConsumeBloodPoolValue"
+  },
+  {
+    "id": 738209,
+    "type": "PerConsumeBloodPoolValue"
+  },
+  {
+    "id": 738210,
+    "type": "PerConsumeBloodPoolValue"
+  },
+  {
+    "id": 738211,
+    "type": "PerConsumeBloodPoolValue"
+  },
+  {
+    "id": 738212,
+    "type": "PerConsumeBloodPoolValue"
+  },
+  {
+    "id": 738213,
+    "type": "PerConsumeBloodPoolValue"
+  },
+  {
+    "id": 738301,
+    "type": "PerConsumeBloodPoolValue"
+  },
+  {
+    "id": 738302,
+    "type": "PerConsumeBloodPoolValue"
+  },
+  {
+    "id": 738303,
+    "type": "PerConsumeBloodPoolValue"
+  },
+  {
+    "id": 738304,
+    "type": "PerConsumeBloodPoolValue"
+  },
+  {
+    "id": 738305,
+    "type": "PerConsumeBloodPoolValue"
+  },
+  {
+    "id": 738306,
+    "type": "PerConsumeBloodPoolValue"
+  },
+  {
+    "id": 738307,
+    "type": "PerConsumeBloodPoolValue"
+  },
+  {
+    "id": 738401,
+    "type": "PerConsumeBloodPoolValue"
+  },
+  {
+    "id": 738402,
+    "type": "PerConsumeBloodPoolValue"
+  },
+  {
+    "id": 739000,
+    "type": "ConsumeBloodCounterCheck"
+  },
+  {
+    "id": 739002,
+    "type": "ConsumeBloodCounterCheck"
+  },
+  {
+    "id": 739100,
+    "type": "ConsumeBloodCounterCheck"
+  },
+  {
+    "id": 739101,
+    "type": "ConsumeBloodCounterCheck"
+  },
+  {
+    "id": 739102,
+    "type": "ConsumeBloodCounterCheck"
+  },
+  {
+    "id": 739103,
+    "type": "ConsumeBloodCounterCheck"
+  },
+  {
+    "id": 739104,
+    "type": "ConsumeBloodCounterCheck"
+  },
+  {
+    "id": 739105,
+    "type": "ConsumeBloodCounterCheck"
+  },
+  {
+    "id": 739106,
+    "type": "ConsumeBloodCounterCheck"
+  },
+  {
+    "id": 739201,
+    "type": "ConsumeBloodCounterCheck"
+  },
+  {
+    "id": 739202,
+    "type": "ConsumeBloodCounterCheck"
+  },
+  {
+    "id": 739203,
+    "type": "ConsumeBloodCounterCheck"
+  },
+  {
+    "id": 739204,
+    "type": "ConsumeBloodCounterCheck"
+  },
+  {
+    "id": 739205,
+    "type": "ConsumeBloodCounterCheck"
+  },
+  {
+    "id": 739206,
+    "type": "ConsumeBloodCounterCheck"
+  },
+  {
+    "id": 739207,
+    "type": "ConsumeBloodCounterCheck"
+  },
+  {
+    "id": 739208,
+    "type": "ConsumeBloodCounterCheck"
+  },
+  {
+    "id": 739209,
+    "type": "ConsumeBloodCounterCheck"
+  },
+  {
+    "id": 739210,
+    "type": "ConsumeBloodCounterCheck"
+  },
+  {
+    "id": 739211,
+    "type": "ConsumeBloodCounterCheck"
+  },
+  {
+    "id": 739212,
+    "type": "ConsumeBloodCounterCheck"
+  },
+  {
+    "id": 739213,
+    "type": "ConsumeBloodCounterCheck"
+  },
+  {
+    "id": 739301,
+    "type": "ConsumeBloodCounterCheck"
+  },
+  {
+    "id": 739302,
+    "type": "ConsumeBloodCounterCheck"
+  },
+  {
+    "id": 739303,
+    "type": "ConsumeBloodCounterCheck"
+  },
+  {
+    "id": 739304,
+    "type": "ConsumeBloodCounterCheck"
+  },
+  {
+    "id": 739305,
+    "type": "ConsumeBloodCounterCheck"
+  },
+  {
+    "id": 739306,
+    "type": "ConsumeBloodCounterCheck"
+  },
+  {
+    "id": 739307,
+    "type": "ConsumeBloodCounterCheck"
+  },
+  {
+    "id": 739401,
+    "type": "ConsumeBloodCounterCheck"
+  },
+  {
+    "id": 739402,
+    "type": "ConsumeBloodCounterCheck"
+  },
+  {
+    "id": 740000,
+    "type": "BloodPoolMax"
+  },
+  {
+    "id": 740002,
+    "type": "BloodPoolMax"
+  },
+  {
+    "id": 740100,
+    "type": "BloodPoolMax"
+  },
+  {
+    "id": 740101,
+    "type": "BloodPoolMax"
+  },
+  {
+    "id": 740102,
+    "type": "BloodPoolMax"
+  },
+  {
+    "id": 740103,
+    "type": "BloodPoolMax"
+  },
+  {
+    "id": 740104,
+    "type": "BloodPoolMax"
+  },
+  {
+    "id": 740105,
+    "type": "BloodPoolMax"
+  },
+  {
+    "id": 740106,
+    "type": "BloodPoolMax"
+  },
+  {
+    "id": 740201,
+    "type": "BloodPoolMax"
+  },
+  {
+    "id": 740202,
+    "type": "BloodPoolMax"
+  },
+  {
+    "id": 740203,
+    "type": "BloodPoolMax"
+  },
+  {
+    "id": 740204,
+    "type": "BloodPoolMax"
+  },
+  {
+    "id": 740205,
+    "type": "BloodPoolMax"
+  },
+  {
+    "id": 740206,
+    "type": "BloodPoolMax"
+  },
+  {
+    "id": 740207,
+    "type": "BloodPoolMax"
+  },
+  {
+    "id": 740208,
+    "type": "BloodPoolMax"
+  },
+  {
+    "id": 740209,
+    "type": "BloodPoolMax"
+  },
+  {
+    "id": 740210,
+    "type": "BloodPoolMax"
+  },
+  {
+    "id": 740211,
+    "type": "BloodPoolMax"
+  },
+  {
+    "id": 740212,
+    "type": "BloodPoolMax"
+  },
+  {
+    "id": 740213,
+    "type": "BloodPoolMax"
+  },
+  {
+    "id": 740301,
+    "type": "BloodPoolMax"
+  },
+  {
+    "id": 740302,
+    "type": "BloodPoolMax"
+  },
+  {
+    "id": 740303,
+    "type": "BloodPoolMax"
+  },
+  {
+    "id": 740304,
+    "type": "BloodPoolMax"
+  },
+  {
+    "id": 740305,
+    "type": "BloodPoolMax"
+  },
+  {
+    "id": 740306,
+    "type": "BloodPoolMax"
+  },
+  {
+    "id": 740307,
+    "type": "BloodPoolMax"
+  },
+  {
+    "id": 740401,
+    "type": "BloodPoolMax"
+  },
+  {
+    "id": 740402,
+    "type": "BloodPoolMax"
+  },
+  {
+    "id": 10411,
+    "type": "None"
+  },
+  {
+    "id": 507208,
+    "type": "UseSkillId"
   },
   {
     "id": 1000002,

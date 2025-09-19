@@ -53,17 +53,30 @@ function var_0_0.registSingleTimer(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4, 
 	end
 end
 
-function var_0_0.releaseAllTimer(arg_6_0)
-	for iter_6_0, iter_6_1 in ipairs(arg_6_0.timerList) do
-		iter_6_1.isDone = true
+function var_0_0.releaseSingleTimer(arg_6_0, arg_6_1)
+	if not arg_6_0.singleTimer then
+		return
+	end
+
+	local var_6_0 = arg_6_0.singleTimer[arg_6_1]
+
+	if var_6_0 then
+		var_6_0.isDone = true
+		arg_6_0.singleTimer[arg_6_1] = nil
 	end
 end
 
-function var_0_0.onDestructor(arg_7_0)
-	arg_7_0:releaseAllTimer()
+function var_0_0.releaseAllTimer(arg_7_0)
+	for iter_7_0, iter_7_1 in ipairs(arg_7_0.timerList) do
+		iter_7_1.isDone = true
+	end
+end
 
-	arg_7_0.timerList = nil
-	arg_7_0.singleTimer = nil
+function var_0_0.onDestructor(arg_8_0)
+	arg_8_0:releaseAllTimer()
+
+	arg_8_0.timerList = nil
+	arg_8_0.singleTimer = nil
 end
 
 return var_0_0

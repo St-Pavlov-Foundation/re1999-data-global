@@ -1,0 +1,16 @@
+[
+  {
+    "chapterId": 28101,
+    "fieldId": 1,
+    "episodeIds": "2810101#2810103#2810105",
+    "heroGroupTypeId": 13,
+    "chapterMapIds": "11026#11028#11030"
+  },
+  {
+    "chapterId": 28101,
+    "fieldId": 2,
+    "episodeIds": "2810102#2810104",
+    "heroGroupTypeId": 14,
+    "chapterMapIds": "11027#11029"
+  }
+]

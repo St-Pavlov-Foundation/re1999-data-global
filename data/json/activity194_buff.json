@@ -1,0 +1,86 @@
+[
+  {
+    "buffId": 40001,
+    "buffType": 1,
+    "effectType": "",
+    "effectDesc": "language_10087131"
+  },
+  {
+    "buffId": 40002,
+    "buffType": 1,
+    "effectType": "1#-50#30003",
+    "effectDesc": "language_10087132"
+  },
+  {
+    "buffId": 40003,
+    "buffType": 1,
+    "effectType": "2#-50#30004",
+    "effectDesc": "language_10087133"
+  },
+  {
+    "buffId": 40004,
+    "buffType": 1,
+    "effectType": "3#1#30002",
+    "effectDesc": "language_10087134"
+  },
+  {
+    "buffId": 40005,
+    "buffType": 1,
+    "effectType": "4#-10#30002",
+    "effectDesc": "language_10087135"
+  },
+  {
+    "buffId": 40006,
+    "buffType": 1,
+    "effectType": "1#-50#30009",
+    "effectDesc": "language_10087132"
+  },
+  {
+    "buffId": 40011,
+    "buffType": 3,
+    "effectType": "9#-1",
+    "effectDesc": "language_10087136"
+  },
+  {
+    "buffId": 40012,
+    "buffType": 2,
+    "effectType": "5#-1",
+    "effectDesc": "language_10087137"
+  },
+  {
+    "buffId": 40013,
+    "buffType": 2,
+    "effectType": "",
+    "effectDesc": "language_10087138"
+  },
+  {
+    "buffId": 40014,
+    "buffType": 2,
+    "effectType": "5#-2",
+    "effectDesc": "language_10087139"
+  },
+  {
+    "buffId": 40015,
+    "buffType": 2,
+    "effectType": "6#-5",
+    "effectDesc": "language_10087140"
+  },
+  {
+    "buffId": 40016,
+    "buffType": 2,
+    "effectType": "7#-1#30009#30004",
+    "effectDesc": "language_10087141"
+  },
+  {
+    "buffId": 40017,
+    "buffType": 3,
+    "effectType": "8#10",
+    "effectDesc": "language_10087142"
+  },
+  {
+    "buffId": 40018,
+    "buffType": 2,
+    "effectType": "",
+    "effectDesc": "language_10087143"
+  }
+]

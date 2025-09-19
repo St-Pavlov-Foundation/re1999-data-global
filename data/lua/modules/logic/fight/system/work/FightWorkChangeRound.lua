@@ -21,7 +21,10 @@ function var_0_0.onStart(arg_1_0)
 		FightController.instance:dispatchEvent(FightEvent.ChangeEntitySubCd, iter_1_1.uid)
 	end
 
-	arg_1_0:onDone(true)
+	local var_1_1 = arg_1_0:com_registWorkDoneFlowSequence()
+
+	var_1_1:registWork(Work2FightWork, FightWorkFbStory, FightWorkFbStory.Type_ChangeRound, FightModel.instance._curRoundId)
+	var_1_1:start()
 end
 
 function var_0_0.clearWork(arg_2_0)

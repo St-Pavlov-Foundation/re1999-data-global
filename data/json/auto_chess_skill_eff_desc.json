@@ -68,5 +68,35 @@
     "id": 14,
     "name": "language_10066223",
     "desc": "language_10066224"
+  },
+  {
+    "id": 15,
+    "name": "language_10080206",
+    "desc": "language_10080207"
+  },
+  {
+    "id": 16,
+    "name": "language_10006360",
+    "desc": "language_10080208"
+  },
+  {
+    "id": 17,
+    "name": "language_10080052",
+    "desc": "language_10080209"
+  },
+  {
+    "id": 18,
+    "name": "language_10080005",
+    "desc": "language_10080210"
+  },
+  {
+    "id": 19,
+    "name": "language_10080211",
+    "desc": "language_10080212"
+  },
+  {
+    "id": 20,
+    "name": "language_10080213",
+    "desc": "language_10080214"
   }
 ]

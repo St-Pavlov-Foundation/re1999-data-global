@@ -80,6 +80,8 @@ function var_0_0._initBgmDatas(arg_2_0)
 	arg_2_0:_addBgmData(AudioBgmEnum.Layer.V2a0_WarmUp, AudioEnum.Bgm.play_ui_feichi_noise_yure_20200116, AudioEnum.Bgm.stop_ui_feichi_noise_yure_20200117)
 	arg_2_0:_addBgmData(AudioBgmEnum.Layer.VersionActivity2_1Main, AudioEnum.Bgm.Act2_1DungeonBgm, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
 	arg_2_0:_addBgmData(AudioBgmEnum.Layer.V2a1_WarmUp, AudioEnum.Bgm.play_ui_preheat_2_1_music_20211601, AudioEnum.Bgm.stop_ui_preheat_2_1_music_20211602)
+	arg_2_0:_addBgmData(AudioBgmEnum.Layer.Act_Aergusi, AudioEnum.Bgm.Act2_1_Aergusi, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
+	arg_2_0:_addBgmData(AudioBgmEnum.Layer.Act_LanShouPa, AudioEnum.Bgm.Act2_1_LanShouPa, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
 	arg_2_0:_addBgmData(AudioBgmEnum.Layer.VersionActivity2_2Main, 0, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
 	arg_2_0:_addBgmData(AudioBgmEnum.Layer.InvestigateRoleStory, AudioEnum.Bgm.play_activitymusic_sadness, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
 	arg_2_0:_addBgmData(AudioBgmEnum.Layer.NormalBattleV2_2, AudioEnum.Bgm.play_battle_youyui_2_2_normalfight, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
@@ -94,10 +96,15 @@ function var_0_0._initBgmDatas(arg_2_0)
 	arg_2_0:_addBgmData(AudioBgmEnum.Layer.VersionActivity2_4WuErLiXi, AudioEnum.WuErLiXi.bgm_wuerliximap, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
 	arg_2_0:_addBgmData(AudioBgmEnum.Layer.VersionActivity2_4WuErLiXiGame, AudioEnum.WuErLiXi.bgm_wuerliximapgame, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
 	arg_2_0:_addBgmData(AudioBgmEnum.Layer.VersionActivity2_5Main, 0, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
+	arg_2_0:_addBgmData(AudioBgmEnum.Layer.AutoChess, AudioEnum.Bgm.play_autochess, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
 	arg_2_0:_addBgmData(AudioBgmEnum.Layer.VersionActivity2_6Main, 0, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
 	arg_2_0:_addBgmData(AudioBgmEnum.Layer.VersionActivity2_6_DiceHero, AudioEnum2_6.DiceHero.Bgm, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
 	arg_2_0:_addBgmData(AudioBgmEnum.Layer.VersionActivity2_6_DiceHero_Game, AudioEnum2_6.DiceHero.Bgm_Game, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
 	arg_2_0:_addBgmData(AudioBgmEnum.Layer.VersionActivity2_7Main, 0, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
+	arg_2_0:_addBgmData(AudioBgmEnum.Layer.VersionActivity2_8Main, 0, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
+	arg_2_0:_addBgmData(AudioBgmEnum.Layer.VersionActivity2_8DungeonBoss, AudioEnum2_8.DungeonBgm.boss, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
+	arg_2_0:_addBgmData(AudioBgmEnum.Layer.SurvivalBGM, AudioEnum2_8.Survival.play_activitymusic_dl_state_2_8, AudioEnum2_8.Survival.stop_activitymusic_dl_state_2_8)
+	arg_2_0:_addBgmData(AudioBgmEnum.Layer.ShelterBGM, AudioEnum2_8.Survival.play_activitymusic_dl_camp_2_8, AudioEnum2_8.Survival.stop_activitymusic_dl_camp_2_8)
 	arg_2_0:_addBgmData(AudioBgmEnum.Layer.VersionActivity2_9Main, 0, AudioEnum.Bgm.Stop_LeiMiTeBeiBgm)
 	arg_2_0:_addBgmData(AudioBgmEnum.Layer.VersionActivity2_9Stealth, AudioEnum2_9.StealthGameBgm.StealthGameBgm, AudioEnum2_9.StealthGameBgm.StealthGameStopBgm)
 end
@@ -372,7 +379,8 @@ function var_0_0._initBgmUsage(arg_3_0)
 	arg_3_0:_addBgmUsage({
 		AudioBgmEnum.Layer.VersionActivity1_9Main
 	}, AudioBgmEnum.UsageType.View, {
-		ViewName.VersionActivity1_9EnterView
+		ViewName.VersionActivity1_9EnterView,
+		ViewName.Permanent1_9EnterView
 	}, nil, nil, true)
 	arg_3_0:_addBgmUsage({
 		AudioBgmEnum.Layer.Act_Lucy
@@ -454,6 +462,16 @@ function var_0_0._initBgmUsage(arg_3_0)
 		AudioBgmEnum.Layer.V2a1_WarmUp
 	}, AudioBgmEnum.UsageType.View, {
 		ViewName.V2a1_WarmUp
+	})
+	arg_3_0:_addBgmUsage({
+		AudioBgmEnum.Layer.Act_Aergusi
+	}, AudioBgmEnum.UsageType.View, {
+		ViewName.AergusiLevelView
+	})
+	arg_3_0:_addBgmUsage({
+		AudioBgmEnum.Layer.Act_LanShouPa
+	}, AudioBgmEnum.UsageType.View, {
+		ViewName.LanShouPaMapView
 	})
 	arg_3_0:_addBgmUsage({
 		AudioBgmEnum.Layer.VersionActivity2_2Main
@@ -555,6 +573,27 @@ function var_0_0._initBgmUsage(arg_3_0)
 	}, AudioBgmEnum.UsageType.View, {
 		ViewName.VersionActivity2_7EnterView
 	}, nil, nil, true)
+	arg_3_0:_addBgmUsage({
+		AudioBgmEnum.Layer.VersionActivity2_8Main
+	}, AudioBgmEnum.UsageType.View, {
+		ViewName.VersionActivity2_8EnterView
+	}, nil, nil, true)
+	arg_3_0:_addBgmUsage({
+		AudioBgmEnum.Layer.VersionActivity2_8DungeonBoss
+	}, AudioBgmEnum.UsageType.View, {
+		ViewName.VersionActivity2_8BossStoryEnterView,
+		ViewName.VersionActivity2_8BossActEnterView
+	}, nil, nil, true)
+	arg_3_0:_addBgmUsage({
+		AudioBgmEnum.Layer.SurvivalBGM
+	}, AudioBgmEnum.UsageType.Scene, {
+		SceneType.Survival
+	})
+	arg_3_0:_addBgmUsage({
+		AudioBgmEnum.Layer.ShelterBGM
+	}, AudioBgmEnum.UsageType.Scene, {
+		SceneType.SurvivalShelter
+	})
 	arg_3_0:_addBgmUsage({
 		AudioBgmEnum.Layer.VersionActivity2_9Main
 	}, AudioBgmEnum.UsageType.View, {

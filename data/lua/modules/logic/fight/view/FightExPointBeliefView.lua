@@ -14,7 +14,6 @@ function var_0_0.onInitView(arg_2_0)
 end
 
 function var_0_0.addEvents(arg_3_0)
-	arg_3_0:com_registMsg(FightMsgId.GetExPointView, arg_3_0.onGetExPointView)
 	arg_3_0:com_registFightEvent(FightEvent.OnExpointMaxAdd, arg_3_0.onExPointMaxAdd)
 end
 

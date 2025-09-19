@@ -123,6 +123,12 @@ function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 			arg_1_0._attacker.effect:addRoundRelease(tonumber(arg_1_3[12]), arg_1_0._effectWrap)
 		end
 	end
+
+	local var_1_16 = tonumber(arg_1_3[14])
+
+	if var_1_16 then
+		AudioMgr.instance:trigger(var_1_16)
+	end
 end
 
 function var_0_0.onTrackEnd(arg_2_0)

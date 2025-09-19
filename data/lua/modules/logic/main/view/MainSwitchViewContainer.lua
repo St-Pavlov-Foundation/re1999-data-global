@@ -20,6 +20,8 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 			false
 		})
 
+		arg_2_0.navigateView:setOverrideClose(arg_2_0.overrideCloseFunc, arg_2_0)
+
 		return {
 			arg_2_0.navigateView
 		}
@@ -30,6 +32,7 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 
 		arg_2_0:_addCharacterSwitch(var_2_0)
 		arg_2_0:_addSceneClassify(var_2_0)
+		arg_2_0:_addFightUISwitch(var_2_0)
 
 		return var_2_0
 	end
@@ -181,30 +184,111 @@ function var_0_0._addMainUI(arg_12_0, arg_12_1)
 	return arg_12_1[1]
 end
 
-function var_0_0.switchTab(arg_13_0, arg_13_1)
-	arg_13_0:dispatchEvent(ViewEvent.ToSwitchTab, 1, arg_13_1)
+function var_0_0._addFightUISwitch(arg_13_0, arg_13_1)
+	local var_13_0 = {}
 
-	if arg_13_0._displayView and arg_13_0._displayView:isShowView() then
-		if arg_13_1 == MainEnum.SwitchType.Scene then
-			arg_13_0._displayView:showTab()
+	table.insert(var_13_0, FightUISwitchView.New())
+
+	local var_13_1 = MixScrollParam.New()
+
+	var_13_1.scrollGOPath = "root/#go_right/#scroll_style"
+	var_13_1.prefabType = ScrollEnum.ScrollPrefabFromRes
+	var_13_1.prefabUrl = arg_13_0._viewSetting.tabRes[1][3][2]
+	var_13_1.cellClass = FightUISwitchItem
+	var_13_1.scrollDir = ScrollEnum.ScrollDirV
+	var_13_1.lineCount = 1
+
+	table.insert(var_13_0, LuaMixScrollView.New(FightUISwitchListModel.instance, var_13_1))
+
+	arg_13_1[MainEnum.SwitchType.FightUI] = MultiView.New(var_13_0)
+end
+
+function var_0_0.switchTab(arg_14_0, arg_14_1)
+	arg_14_0:dispatchEvent(ViewEvent.ToSwitchTab, 1, arg_14_1)
+
+	if arg_14_0._displayView and arg_14_0._displayView:isShowView() then
+		if arg_14_1 == MainEnum.SwitchType.Scene then
+			arg_14_0._displayView:showTab()
 		else
-			arg_13_0._displayView:hideTab()
+			arg_14_0._displayView:hideTab()
 		end
 	end
 end
 
-function var_0_0.switchClassifyTab(arg_14_0, arg_14_1)
-	arg_14_0._classifyTabId = arg_14_1
+function var_0_0.switchClassifyTab(arg_15_0, arg_15_1)
+	arg_15_0._classifyTabId = arg_15_1
 
-	arg_14_0:dispatchEvent(ViewEvent.ToSwitchTab, 3, arg_14_1)
+	arg_15_0:dispatchEvent(ViewEvent.ToSwitchTab, 3, arg_15_1)
 end
 
-function var_0_0.getClassify(arg_15_0)
-	return arg_15_0._classifyTabId or MainSwitchClassifyEnum.Classify.Scene
+function var_0_0.getClassify(arg_16_0)
+	return arg_16_0._classifyTabId or MainSwitchClassifyEnum.Classify.Scene
 end
 
-function var_0_0.isInitMainFullView(arg_16_0)
+function var_0_0.isInitMainFullView(arg_17_0)
 	return false
+end
+
+function var_0_0.playCloseAnim(arg_18_0, arg_18_1)
+	local var_18_0 = false
+
+	if arg_18_0._lastTabId then
+		local var_18_1 = arg_18_0._views[2] and arg_18_0._views[2]._tabViews[arg_18_0._lastTabId]
+
+		if var_18_1 and var_18_1.viewGO then
+			local var_18_2 = SLFramework.AnimatorPlayer.Get(var_18_1.viewGO)
+
+			if var_18_2 then
+				local function var_18_3()
+					arg_18_0:switchTab(arg_18_1)
+				end
+
+				var_18_2:Play("close", var_18_3, arg_18_0)
+
+				var_18_0 = true
+			end
+		end
+	end
+
+	local var_18_4 = arg_18_0._views[2] and arg_18_0._views[2]._tabViews[arg_18_1]
+
+	if var_18_4 and var_18_4.viewGO then
+		local var_18_5 = var_18_4.viewGO:GetComponent(typeof(UnityEngine.Animator))
+
+		if var_18_5 then
+			var_18_5.enabled = true
+
+			var_18_5:Play("open", 0, 0)
+		end
+	end
+
+	arg_18_0._lastTabId = arg_18_1
+
+	if not var_18_0 then
+		arg_18_0:switchTab(arg_18_1)
+	end
+end
+
+function var_0_0.overrideCloseFunc(arg_20_0)
+	local var_20_0 = false
+
+	if arg_20_0._lastTabId then
+		local var_20_1 = arg_20_0._views[2] and arg_20_0._views[2]._tabViews[arg_20_0._lastTabId]
+
+		if var_20_1 and var_20_1.viewGO then
+			local var_20_2 = SLFramework.AnimatorPlayer.Get(var_20_1.viewGO)
+
+			if var_20_2 then
+				var_20_2:Play("close", arg_20_0.closeThis, arg_20_0)
+
+				var_20_0 = true
+			end
+		end
+	end
+
+	if not var_20_0 then
+		arg_20_0:closeThis()
+	end
 end
 
 return var_0_0

@@ -81,13 +81,19 @@ function var_0_0.pullOutAllEffect(arg_5_0, arg_5_1)
 
 		FightRenderOrderMgr.instance:onRemoveEffectWrap(arg_5_0.entityId, var_5_0)
 
-		if var_5_1 then
-			local var_5_3 = arg_5_0.entity.effect:addHangEffect(var_5_1.pullOutRes, ModuleEnum.SpineHangPoint.mountmiddle, nil, 1)
+		if var_5_1 and arg_5_0.entity then
+			if arg_5_0.entity.effect:isDestroyed() then
+				if isDebugBuild then
+					logError(string.format("entityName : %s, effectComp is destroyed", FightHelper.getEntityName(arg_5_0.entity)))
+				end
+			else
+				local var_5_3 = arg_5_0.entity.effect:addHangEffect(var_5_1.pullOutRes, ModuleEnum.SpineHangPoint.mountmiddle, nil, 1)
 
-			var_5_3:setLocalPos(0, 0, 0)
-			FightRenderOrderMgr.instance:addEffectWrapByOrder(arg_5_0.entityId, var_5_3, FightRenderOrderMgr.MaxOrder)
-			arg_5_0:setRotation(var_5_3.containerGO.transform, var_5_2)
-			arg_5_0:playAudio(var_5_1.audioId)
+				var_5_3:setLocalPos(0, 0, 0)
+				FightRenderOrderMgr.instance:addEffectWrapByOrder(arg_5_0.entityId, var_5_3, FightRenderOrderMgr.MaxOrder)
+				arg_5_0:setRotation(var_5_3.containerGO.transform, var_5_2)
+				arg_5_0:playAudio(var_5_1.audioId)
+			end
 		end
 	end
 

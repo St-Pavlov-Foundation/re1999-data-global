@@ -121,17 +121,25 @@ end
 function var_0_0.getChessPosition(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
 	arg_13_3 = arg_13_3 or arg_13_0.svrFight
 
-	for iter_13_0, iter_13_1 in ipairs(arg_13_3.warZones) do
-		if iter_13_1.id == arg_13_1 then
-			for iter_13_2, iter_13_3 in ipairs(iter_13_1.positions) do
-				if iter_13_3.index == arg_13_2 - 1 then
-					return iter_13_3
+	if arg_13_1 == AutoChessEnum.WarZone.Four then
+		for iter_13_0, iter_13_1 in ipairs(arg_13_3.unwarZone.positions) do
+			if iter_13_1.index == arg_13_2 - 1 then
+				return iter_13_1
+			end
+		end
+	else
+		for iter_13_2, iter_13_3 in ipairs(arg_13_3.warZones) do
+			if iter_13_3.id == arg_13_1 then
+				for iter_13_4, iter_13_5 in ipairs(iter_13_3.positions) do
+					if iter_13_5.index == arg_13_2 - 1 then
+						return iter_13_5
+					end
 				end
 			end
 		end
 	end
 
-	logError(string.format("异常:不存在战区%s站位%s的ChessPos数据"), arg_13_1, arg_13_2)
+	logError(string.format("异常:不存在战区%s站位%s的ChessPos数据", arg_13_1, arg_13_2))
 end
 
 function var_0_0.getChessPosition1(arg_14_0, arg_14_1, arg_14_2)
@@ -140,7 +148,7 @@ function var_0_0.getChessPosition1(arg_14_0, arg_14_1, arg_14_2)
 	for iter_14_0, iter_14_1 in ipairs(arg_14_2.warZones) do
 		for iter_14_2, iter_14_3 in ipairs(iter_14_1.positions) do
 			if iter_14_3.chess.uid == arg_14_1 then
-				return iter_14_3
+				return iter_14_3, iter_14_1.id
 			end
 		end
 	end
@@ -149,11 +157,19 @@ function var_0_0.getChessPosition1(arg_14_0, arg_14_1, arg_14_2)
 end
 
 function var_0_0.getEmptyPos(arg_15_0, arg_15_1)
-	for iter_15_0, iter_15_1 in ipairs(arg_15_0.svrFight.warZones) do
-		if arg_15_1 == AutoChessEnum.WarZoneType[iter_15_1.type] then
-			for iter_15_2, iter_15_3 in ipairs(iter_15_1.positions) do
-				if iter_15_3.teamType == AutoChessEnum.TeamType.Player and tonumber(iter_15_3.chess.uid) == 0 then
-					return iter_15_1.id, iter_15_3.index + 1
+	if arg_15_1 == AutoChessStrEnum.ChessType.Incubate then
+		for iter_15_0, iter_15_1 in ipairs(arg_15_0.svrFight.unwarZone.positions) do
+			if iter_15_1.teamType == AutoChessEnum.TeamType.Player and tonumber(iter_15_1.chess.uid) == 0 then
+				return arg_15_0.svrFight.unwarZone.id, iter_15_1.index + 1
+			end
+		end
+	else
+		for iter_15_2, iter_15_3 in ipairs(arg_15_0.svrFight.warZones) do
+			if arg_15_1 == AutoChessEnum.WarZoneType[iter_15_3.type] then
+				for iter_15_4, iter_15_5 in ipairs(iter_15_3.positions) do
+					if iter_15_5.teamType == AutoChessEnum.TeamType.Player and tonumber(iter_15_5.chess.uid) == 0 then
+						return iter_15_3.id, iter_15_5.index + 1
+					end
 				end
 			end
 		end
@@ -164,12 +180,18 @@ function var_0_0.checkCostEnough(arg_16_0, arg_16_1, arg_16_2)
 	if arg_16_1 == AutoChessStrEnum.CostType.Coin then
 		if arg_16_2 <= tonumber(arg_16_0.svrMall.coin) then
 			return true
+		else
+			return false, ToastEnum.AutoChessCoinNotEnough
 		end
-	elseif arg_16_1 == AutoChessStrEnum.CostType.Hp and arg_16_2 <= tonumber(arg_16_0.svrFight.mySideMaster.hp) then
-		return true
+	elseif arg_16_1 == AutoChessStrEnum.CostType.Hp then
+		if arg_16_2 < tonumber(arg_16_0.svrFight.mySideMaster.hp) then
+			return true
+		else
+			return false, ToastEnum.AutoChessHpNotEnough
+		end
 	end
 
-	return false
+	return false, ToastEnum.AutoChessCoinNotEnough
 end
 
 return var_0_0

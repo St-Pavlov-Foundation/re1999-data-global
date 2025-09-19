@@ -1,0 +1,722 @@
+[
+  {
+    "activityId": 12864,
+    "poolId": 1,
+    "index": 1,
+    "bonus": "2#2#100"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 1,
+    "index": 2,
+    "bonus": "1#115013#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 1,
+    "index": 3,
+    "bonus": "1#620102#4"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 1,
+    "index": 4,
+    "bonus": "10#10#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 1,
+    "index": 5,
+    "bonus": "1#110503#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 1,
+    "index": 6,
+    "bonus": "1#110403#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 1,
+    "index": 7,
+    "bonus": "1#110303#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 1,
+    "index": 8,
+    "bonus": "1#110402#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 1,
+    "index": 9,
+    "bonus": "1#110202#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 1,
+    "index": 10,
+    "bonus": "1#110102#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 1,
+    "index": 11,
+    "bonus": "2#3#10000"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 1,
+    "index": 12,
+    "bonus": "2#5#10000"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 2,
+    "index": 1,
+    "bonus": "1#620103#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 2,
+    "index": 2,
+    "bonus": "1#110704#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 2,
+    "index": 3,
+    "bonus": "1#491010#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 2,
+    "index": 4,
+    "bonus": "10#10#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 2,
+    "index": 5,
+    "bonus": "1#110403#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 2,
+    "index": 6,
+    "bonus": "1#110303#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 2,
+    "index": 7,
+    "bonus": "1#110203#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 2,
+    "index": 8,
+    "bonus": "1#620101#60"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 2,
+    "index": 9,
+    "bonus": "1#110302#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 2,
+    "index": 10,
+    "bonus": "1#110702#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 2,
+    "index": 11,
+    "bonus": "2#3#10000"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 2,
+    "index": 12,
+    "bonus": "2#5#10000"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 3,
+    "index": 1,
+    "bonus": "1#120013#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 3,
+    "index": 2,
+    "bonus": "1#111013#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 3,
+    "index": 3,
+    "bonus": "1#491010#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 3,
+    "index": 4,
+    "bonus": "10#10#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 3,
+    "index": 5,
+    "bonus": "1#110203#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 3,
+    "index": 6,
+    "bonus": "1#110603#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 3,
+    "index": 7,
+    "bonus": "1#620101#60"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 3,
+    "index": 8,
+    "bonus": "1#110602#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 3,
+    "index": 9,
+    "bonus": "1#110702#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 3,
+    "index": 10,
+    "bonus": "1#111001#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 3,
+    "index": 11,
+    "bonus": "2#3#10000"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 3,
+    "index": 12,
+    "bonus": "2#5#10000"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 4,
+    "index": 1,
+    "bonus": "2#2#100"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 4,
+    "index": 2,
+    "bonus": "1#115023#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 4,
+    "index": 3,
+    "bonus": "1#620102#4"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 4,
+    "index": 4,
+    "bonus": "10#10#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 4,
+    "index": 5,
+    "bonus": "1#110603#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 4,
+    "index": 6,
+    "bonus": "1#110103#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 4,
+    "index": 7,
+    "bonus": "1#110703#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 4,
+    "index": 8,
+    "bonus": "1#110402#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 4,
+    "index": 9,
+    "bonus": "1#110302#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 4,
+    "index": 10,
+    "bonus": "1#110202#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 4,
+    "index": 11,
+    "bonus": "2#3#10000"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 4,
+    "index": 12,
+    "bonus": "2#5#10000"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 5,
+    "index": 1,
+    "bonus": "10#11#2"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 5,
+    "index": 2,
+    "bonus": "1#491010#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 5,
+    "index": 3,
+    "bonus": "1#620102#4"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 5,
+    "index": 4,
+    "bonus": "10#10#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 5,
+    "index": 5,
+    "bonus": "1#110103#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 5,
+    "index": 6,
+    "bonus": "1#110703#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 5,
+    "index": 7,
+    "bonus": "1#111002#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 5,
+    "index": 8,
+    "bonus": "1#110402#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 5,
+    "index": 9,
+    "bonus": "1#110602#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 5,
+    "index": 10,
+    "bonus": "1#111001#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 5,
+    "index": 11,
+    "bonus": "2#3#10000"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 5,
+    "index": 12,
+    "bonus": "2#5#10000"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 6,
+    "index": 1,
+    "bonus": "1#620103#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 6,
+    "index": 2,
+    "bonus": "1#110304#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 6,
+    "index": 3,
+    "bonus": "1#491010#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 6,
+    "index": 4,
+    "bonus": "10#10#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 6,
+    "index": 5,
+    "bonus": "1#110703#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 6,
+    "index": 6,
+    "bonus": "1#111002#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 6,
+    "index": 7,
+    "bonus": "1#111012#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 6,
+    "index": 8,
+    "bonus": "1#620101#60"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 6,
+    "index": 9,
+    "bonus": "1#110302#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 6,
+    "index": 10,
+    "bonus": "1#110102#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 6,
+    "index": 11,
+    "bonus": "2#3#10000"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 6,
+    "index": 12,
+    "bonus": "2#5#10000"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 7,
+    "index": 1,
+    "bonus": "2#2#120"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 7,
+    "index": 2,
+    "bonus": "1#115033#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 7,
+    "index": 3,
+    "bonus": "1#620102#4"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 7,
+    "index": 4,
+    "bonus": "10#10#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 7,
+    "index": 5,
+    "bonus": "1#110503#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 7,
+    "index": 6,
+    "bonus": "1#110403#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 7,
+    "index": 7,
+    "bonus": "1#111012#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 7,
+    "index": 8,
+    "bonus": "1#110602#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 7,
+    "index": 9,
+    "bonus": "1#110702#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 7,
+    "index": 10,
+    "bonus": "1#111001#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 7,
+    "index": 11,
+    "bonus": "2#3#10000"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 7,
+    "index": 12,
+    "bonus": "2#5#10000"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 8,
+    "index": 1,
+    "bonus": "10#11#3"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 8,
+    "index": 2,
+    "bonus": "1#491010#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 8,
+    "index": 3,
+    "bonus": "1#620102#4"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 8,
+    "index": 4,
+    "bonus": "10#10#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 8,
+    "index": 5,
+    "bonus": "1#110303#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 8,
+    "index": 6,
+    "bonus": "1#110203#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 8,
+    "index": 7,
+    "bonus": "1#111002#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 8,
+    "index": 8,
+    "bonus": "1#110202#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 8,
+    "index": 9,
+    "bonus": "1#110102#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 8,
+    "index": 10,
+    "bonus": "1#111001#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 8,
+    "index": 11,
+    "bonus": "2#3#10000"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 8,
+    "index": 12,
+    "bonus": "2#5#10000"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 9,
+    "index": 1,
+    "bonus": "1#620103#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 9,
+    "index": 2,
+    "bonus": "1#110204#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 9,
+    "index": 3,
+    "bonus": "1#491010#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 9,
+    "index": 4,
+    "bonus": "10#10#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 9,
+    "index": 5,
+    "bonus": "1#110103#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 9,
+    "index": 6,
+    "bonus": "1#111012#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 9,
+    "index": 7,
+    "bonus": "1#620101#60"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 9,
+    "index": 8,
+    "bonus": "1#110302#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 9,
+    "index": 9,
+    "bonus": "1#110202#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 9,
+    "index": 10,
+    "bonus": "1#110702#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 9,
+    "index": 11,
+    "bonus": "2#3#10000"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 9,
+    "index": 12,
+    "bonus": "2#5#10000"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 10,
+    "index": 1,
+    "bonus": "2#2#180"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 10,
+    "index": 2,
+    "bonus": "1#110504#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 10,
+    "index": 3,
+    "bonus": "1#115043#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 10,
+    "index": 4,
+    "bonus": "10#10#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 10,
+    "index": 5,
+    "bonus": "1#110503#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 10,
+    "index": 6,
+    "bonus": "1#110603#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 10,
+    "index": 7,
+    "bonus": "1#620101#60"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 10,
+    "index": 8,
+    "bonus": "1#110402#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 10,
+    "index": 9,
+    "bonus": "1#110102#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 10,
+    "index": 10,
+    "bonus": "1#110702#1"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 10,
+    "index": 11,
+    "bonus": "2#3#10000"
+  },
+  {
+    "activityId": 12864,
+    "poolId": 10,
+    "index": 12,
+    "bonus": "2#5#10000"
+  }
+]

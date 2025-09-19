@@ -52,9 +52,7 @@ function var_0_0.onInitView(arg_1_0)
 	arg_1_0._goperUnselectIcon = gohelper.findChild(arg_1_0.viewGO, "bottom/categorylist/#btn_permanent/#go_perUnselectText/icon")
 	arg_1_0._goperSelectText = gohelper.findChild(arg_1_0.viewGO, "bottom/categorylist/#btn_permanent/#go_perSelectText")
 	arg_1_0._goreddotpermanent = gohelper.findChild(arg_1_0.viewGO, "bottom/categorylist/#btn_permanent/#go_perUnselectText/redpoint")
-
-	RedDotController.instance:addRedDotTag(arg_1_0._goreddotpermanent, RedDotEnum.DotNode.Dungeon_Permanent, false, arg_1_0._checkPermanentReddot, arg_1_0)
-
+	arg_1_0._goreddotpermanentTag = RedDotController.instance:addRedDotTag(arg_1_0._goreddotpermanent, RedDotEnum.DotNode.Dungeon_Permanent, false, arg_1_0._checkPermanentReddot, arg_1_0)
 	arg_1_0._btnDramaReward = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#go_story/#btn_story")
 	arg_1_0._gostoryUnselectTextIcon = gohelper.findChild(arg_1_0.viewGO, "bottom/categorylist/#btn_story/#go_storyUnselectText/icon")
 	arg_1_0._goreddotstory = gohelper.findChild(arg_1_0.viewGO, "bottom/categorylist/#btn_story/#go_storyUnselectText/redpoint")
@@ -165,7 +163,7 @@ function var_0_0._realCloseSubView(arg_15_0)
 end
 
 function var_0_0._btnstoryOnClick(arg_16_0)
-	if DungeonModel.instance:chapterListIsNormalType() then
+	if arg_16_0._curIsNormalType then
 		return
 	end
 
@@ -332,6 +330,9 @@ function var_0_0.setBtnStatus(arg_30_0)
 
 	gohelper.setActive(arg_30_0._gostorySelectText, var_30_0)
 	gohelper.setActive(arg_30_0._gostoryUnselectText, not var_30_0)
+
+	arg_30_0._curIsNormalType = var_30_0
+
 	gohelper.setActive(arg_30_0._goexploreSelectText, var_30_5)
 	gohelper.setActive(arg_30_0._goexploreUnselectText, not var_30_5)
 	gohelper.setActive(arg_30_0._gogoldSelectText, var_30_1)
@@ -358,20 +359,29 @@ function var_0_0.setBtnStatus(arg_30_0)
 		arg_30_0.viewContainer:setOverrideClose(nil, nil)
 	end
 
-	if var_30_0 then
-		gohelper.setActive(arg_30_0._gostory, false)
+	gohelper.setActive(arg_30_0._gostory, true)
 
+	if var_30_0 then
 		if not arg_30_0._firstShowNormal then
 			arg_30_0._firstShowNormal = true
 			DungeonChapterListModel.instance.firstShowNormalTime = Time.time
 		end
 
-		if arg_30_0._moveChapterId then
-			arg_30_0:_focusNormalChapter(arg_30_0._moveChapterId)
+		arg_30_0:_focusNormalChapter(arg_30_0._moveChapterId)
+		recthelper.setAnchorY(arg_30_0._gostory.transform, 0)
+
+		arg_30_0._animator = arg_30_0._animator or arg_30_0.viewGO:GetComponent("Animator")
+
+		if arg_30_0._animator then
+			arg_30_0._animator.enabled = true
+
+			arg_30_0._animator:Play("open", 0, 0)
 		end
+	else
+		DungeonController.instance:dispatchEvent(DungeonEvent.FakeUnfoldMainStorySection)
+		recthelper.setAnchorY(arg_30_0._gostory.transform, 10000)
 	end
 
-	gohelper.setActive(arg_30_0._gostory, var_30_0)
 	gohelper.setActive(arg_30_0._goresource, var_30_1 or var_30_2)
 	gohelper.setActive(arg_30_0._goweekwalk, var_30_3)
 	gohelper.setActive(arg_30_0._goexplore, var_30_5)
@@ -477,25 +487,27 @@ function var_0_0.onOpen(arg_36_0)
 	arg_36_0:addEventCb(ViewMgr.instance, ViewEvent.OnCloseView, arg_36_0._onCloseView, arg_36_0)
 	arg_36_0:addEventCb(WeekWalkController.instance, WeekWalkEvent.OnAllShallowLayerFinish, arg_36_0._onAllShallowLayerFinish, arg_36_0)
 	arg_36_0:addEventCb(DungeonController.instance, DungeonEvent.OnDramaRewardStatusChange, arg_36_0._refreshDramaBtnStatus, arg_36_0)
+	arg_36_0:addEventCb(Activity165Controller.instance, Activity165Event.refreshStoryReddot, arg_36_0._onRefreshStoryReddot, arg_36_0)
 	arg_36_0:_refreshDramaBtnStatus()
-	arg_36_0:_moveChapter()
+	arg_36_0:_moveChapter(DungeonMainStoryModel.instance:getJumpFocusChapterIdOnce())
 	arg_36_0:_refreshBtnUnlock()
 	arg_36_0:playCategoryAnimation()
 end
 
 function var_0_0._moveChapter(arg_37_0, arg_37_1)
 	if not arg_37_1 then
-		local var_37_0, var_37_1 = DungeonModel.instance:getLastEpisodeConfigAndInfo()
+		arg_37_1 = DungeonMainStoryModel.instance:getClickChapterId()
+	else
+		DungeonMainStoryModel.instance:saveClickChapterId(arg_37_1)
+	end
 
-		arg_37_1 = var_37_0.chapterId
+	if not arg_37_1 then
+		DungeonMainStoryModel.instance:initSelectedSectionId()
 	end
 
 	arg_37_0._moveChapterId = arg_37_1
 
 	arg_37_0:setBtnStatus()
-
-	arg_37_0._moveChapter = nil
-
 	DungeonController.instance:dispatchEvent(DungeonEvent.OnEnterDungeonChatperView, arg_37_0._moveChapterId)
 end
 
@@ -514,16 +526,7 @@ function var_0_0._onAllShallowLayerFinish(arg_39_0)
 end
 
 function var_0_0._focusNormalChapter(arg_40_0, arg_40_1)
-	local var_40_0 = DungeonChapterListModel.instance:getMixCellPos(arg_40_1)
-	local var_40_1 = arg_40_0.viewContainer:getScrollParam().startSpace + var_40_0 - recthelper.getWidth(arg_40_0._scrollchapter.transform) / 2
-	local var_40_2 = gohelper.findChild(arg_40_0._scrollchapter.gameObject, "content")
-
-	arg_40_0._scrollchapter.movementType = 2
-
-	recthelper.setAnchorX(var_40_2.transform, -var_40_1)
-	TaskDispatcher.cancelTask(arg_40_0._resetMovementType, arg_40_0)
-	TaskDispatcher.runDelay(arg_40_0._resetMovementType, arg_40_0, 0)
-	arg_40_0.viewContainer:getScrollView():refreshScroll()
+	DungeonController.instance:dispatchEvent(DungeonEvent.OnFocusNormalChapter, arg_40_1)
 end
 
 function var_0_0._resetMovementType(arg_41_0)
@@ -620,8 +623,18 @@ end
 function var_0_0._checkPermanentReddot(arg_52_0, arg_52_1)
 	local var_52_0 = RedDotModel.instance:isDotShow(arg_52_1.dotId, 0) or not PermanentModel.instance:isActivityLocalRead()
 
+	var_52_0 = var_52_0 or PermanentModel.instance:IsDotShowPermanent2_1()
+
 	gohelper.setActive(arg_52_0._goperUnselectIcon, not var_52_0)
 	gohelper.setActive(arg_52_0._goreddotpermanent, var_52_0)
+end
+
+function var_0_0._onRefreshStoryReddot(arg_53_0)
+	if not arg_53_0._goreddotpermanentTag then
+		return
+	end
+
+	arg_53_0._goreddotpermanentTag:refreshDot()
 end
 
 return var_0_0

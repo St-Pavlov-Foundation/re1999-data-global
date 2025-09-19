@@ -5,7 +5,8 @@ local var_0_1 = {
 	id = 1,
 	name = 2,
 	tagResName = 4,
-	color = 3
+	color = 3,
+	isShow = 5
 }
 local var_0_2 = {
 	"id"

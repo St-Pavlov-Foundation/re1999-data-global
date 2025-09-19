@@ -558,9 +558,9 @@ function var_0_0.onAutoRound(arg_53_0, arg_53_1)
 	arg_53_0.autoPlayCardList = {}
 
 	for iter_53_0, iter_53_1 in ipairs(arg_53_1) do
-		local var_53_0 = FightBeginRoundOp.New()
+		local var_53_0 = FightOperationItemData.New()
 
-		var_53_0:init(iter_53_1)
+		var_53_0:setByProto(iter_53_1)
 		table.insert(arg_53_0.autoPlayCardList, var_53_0)
 	end
 end

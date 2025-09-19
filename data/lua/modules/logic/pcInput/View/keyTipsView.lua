@@ -34,17 +34,18 @@ function var_0_0._onCallback(arg_4_0)
 	arg_4_0._btn2 = gohelper.findChild(arg_4_0._instGO, "btn_2")
 
 	local var_4_1 = arg_4_0._keyName or PCInputModel.instance:getKey(arg_4_0._activityid, arg_4_0._keyid)
+	local var_4_2 = PCInputController.instance:KeyNameToDescName(var_4_1)
 
-	if arg_4_0:selectType(var_4_1) == 1 then
+	if arg_4_0:selectType(var_4_2) == 1 then
 		arg_4_0._btn1:SetActive(true)
 		arg_4_0._btn2:SetActive(false)
 
-		arg_4_0._text1.text = PCInputController.instance:KeyNameToDescName(var_4_1)
+		arg_4_0._text1.text = var_4_2
 	else
 		arg_4_0._btn1:SetActive(false)
 		arg_4_0._btn2:SetActive(true)
 
-		arg_4_0._text2.text = PCInputController.instance:KeyNameToDescName(var_4_1)
+		arg_4_0._text2.text = var_4_2
 	end
 end
 

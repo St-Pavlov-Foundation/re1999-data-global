@@ -5,7 +5,6 @@ local var_0_1 = 2
 local var_0_2 = {
 	[FightEnum.BuffType_Petrified] = FightBuffFrozen,
 	[FightEnum.BuffType_Frozen] = FightBuffFrozen,
-	[FightEnum.BuffTypeId_CoverPerson] = FightBuffCoverPerson,
 	[FightEnum.BuffType_ExPointOverflowBank] = FightBuffStoredExPoint,
 	[FightEnum.BuffType_ContractBuff] = FightBuffContractBuff,
 	[FightEnum.BuffType_BeContractedBuff] = FightBuffBeContractedBuff,
@@ -15,11 +14,17 @@ local var_0_2 = {
 	[FightEnum.BuffType_SaveFightRecord] = FightBuffSaveFightRecord,
 	[FightEnum.BuffType_SubBuff] = FightBuffSubBuff,
 	[FightEnum.BuffType_AddCardRecordByRound] = FightBuffRecordByRound,
-	[FightEnum.BuffType_AddCardCastChannel] = FightBuffAddCardContinueChannel
+	[FightEnum.BuffType_AddCardCastChannel] = FightBuffAddCardContinueChannel,
+	[FightEnum.BuffType_LockHpMax] = FightBuffLockHpComp
 }
 local var_0_3 = {
 	[31080132] = FightBuffAddBKLESpBuff,
 	[31080134] = FightBuffAddBKLESpBuff
+}
+local var_0_4 = {
+	[FightEnum.BuffTypeId_CoverPerson] = FightBuffCoverPerson,
+	[31070111] = FightBuffSpecialCountCastBuff,
+	[31070121] = FightBuffSpecialCountCastBuff
 }
 
 function var_0_0.ctor(arg_1_0, arg_1_1)
@@ -36,6 +41,9 @@ function var_0_0.ctor(arg_1_0, arg_1_1)
 	arg_1_0._addBuffEffectPathDic = {}
 	arg_1_0._curBuffTypeIdDic = {}
 	arg_1_0._buffDic = {}
+	arg_1_0.skinBuffEffectMgr = FightEntitySkinBuffEffectMgr.New()
+
+	arg_1_0:registSkinBuffEffect()
 end
 
 function var_0_0.init(arg_2_0, arg_2_1)
@@ -288,28 +296,17 @@ function var_0_0._addBuffHandler(arg_11_0, arg_11_1)
 
 	for iter_11_0, iter_11_1 in pairs(var_11_2) do
 		if var_0_2[iter_11_0] then
-			var_11_1 = iter_11_0
+			local var_11_3 = iter_11_0
+			local var_11_4 = var_0_2[var_11_3]
+			local var_11_5 = FightBuffHandlerPool.getHandlerInst(var_11_3, var_11_4)
+
+			if var_11_5 then
+				arg_11_0._buffHandlerDict[arg_11_1.uid] = var_11_5
+
+				var_11_5:onBuffStart(arg_11_0._entity, arg_11_1)
+			end
 
 			break
-		end
-	end
-
-	if not var_11_1 then
-		local var_11_3 = lua_skill_bufftype.configDict[var_11_0.typeId]
-
-		if var_11_3 and var_0_2[var_11_3.id] then
-			var_11_1 = var_11_3.id
-		end
-	end
-
-	if var_11_1 then
-		local var_11_4 = var_0_2[var_11_1]
-		local var_11_5 = FightBuffHandlerPool.getHandlerInst(var_11_1, var_11_4)
-
-		if var_11_5 then
-			arg_11_0._buffHandlerDict[arg_11_1.uid] = var_11_5
-
-			var_11_5:onBuffStart(arg_11_0._entity, arg_11_1)
 		end
 	end
 
@@ -321,6 +318,20 @@ function var_0_0._addBuffHandler(arg_11_0, arg_11_1)
 			arg_11_0._buffHandlerDict[arg_11_1.uid] = var_11_7
 
 			var_11_7:onBuffStart(arg_11_0._entity, arg_11_1)
+		end
+	end
+
+	local var_11_8 = lua_skill_bufftype.configDict[var_11_0.typeId]
+	local var_11_9 = var_11_8 and var_11_8.id
+
+	if var_11_9 and var_0_4[var_11_9] then
+		local var_11_10 = var_0_4[var_11_9]
+		local var_11_11 = FightBuffHandlerPool.getHandlerInst(var_11_9, var_11_10)
+
+		if var_11_11 then
+			arg_11_0._buffHandlerDict[arg_11_1.uid] = var_11_11
+
+			var_11_11:onBuffStart(arg_11_0._entity, arg_11_1)
 		end
 	end
 end
@@ -550,7 +561,7 @@ function var_0_0._onCoverPerformanceEntityData(arg_21_0, arg_21_1)
 	end
 end
 
-local var_0_4 = {
+local var_0_5 = {
 	[4150003] = true
 }
 
@@ -624,7 +635,7 @@ function var_0_0.delBuff(arg_22_0, arg_22_1, arg_22_2)
 		if var_22_6 and var_22_10 ~= "0" and not string.nilorempty(var_22_10) then
 			local var_22_12 = true
 
-			if arg_22_2 and var_0_4[var_22_2.id] then
+			if arg_22_2 and var_0_5[var_22_2.id] then
 				var_22_12 = false
 			end
 
@@ -725,6 +736,8 @@ function var_0_0.releaseAllBuff(arg_28_0)
 end
 
 function var_0_0.beforeDestroy(arg_29_0)
+	arg_29_0.skinBuffEffectMgr:disposeSelf()
+
 	local var_29_0 = arg_29_0._entity:getMO()
 
 	if var_29_0 then
@@ -751,6 +764,22 @@ function var_0_0.onDestroy(arg_30_0)
 	arg_30_0._buff_loop_effect_name = nil
 	arg_30_0.lockFloat = nil
 	arg_30_0._buffDic = nil
+end
+
+function var_0_0.registSkinBuffEffect(arg_31_0)
+	local var_31_0 = FightDataHelper.entityMgr:getById(arg_31_0._entity.id)
+
+	if not var_31_0 then
+		return
+	end
+
+	local var_31_1 = arg_31_0.skinBuffEffectMgr
+	local var_31_2 = var_31_0.skin
+	local var_31_3 = lua_fight_luxi_upgrade_effect.configDict[var_31_2]
+
+	if var_31_3 then
+		var_31_1:newClass(FightBuffLuXiUpgradeEffect, arg_31_0._entity, var_31_0, var_31_3)
+	end
 end
 
 return var_0_0

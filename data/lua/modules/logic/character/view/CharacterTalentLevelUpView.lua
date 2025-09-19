@@ -130,7 +130,7 @@ function var_0_0.onOpen(arg_12_0)
 	arg_12_0.hero_id = arg_12_0.viewParam[1]
 	arg_12_0.hero_mo_data = HeroModel.instance:getByHeroId(arg_12_0.hero_id)
 
-	local var_12_0 = luaLang("talent_charactertalentlevelup_leveltxt" .. CharacterEnum.TalentTxtByHeroType[arg_12_0.hero_mo_data.config.heroType])
+	local var_12_0 = luaLang("talent_charactertalentlevelup_leveltxt" .. arg_12_0.hero_mo_data:getTalentTxtByHeroType())
 
 	if LangSettings.instance:isEn() then
 		var_12_0 = var_12_0 .. " "
@@ -189,7 +189,7 @@ function var_0_0.onOpen(arg_12_0)
 		gohelper.setActive(arg_12_0._golevelupbeffect, arg_12_0:_detectLevelUp())
 	end
 
-	arg_12_0._txtbtntalentcn.text = luaLang("talent_charactertalentlevelup_btntalent" .. CharacterEnum.TalentTxtByHeroType[arg_12_0.hero_mo_data.config.heroType])
+	arg_12_0._txtbtntalentcn.text = luaLang("talent_charactertalentlevelup_btntalent" .. arg_12_0.hero_mo_data:getTalentTxtByHeroType())
 
 	arg_12_0:_checkTalentStyle()
 end
@@ -264,7 +264,7 @@ function var_0_0._checkTalentStyle(arg_17_0)
 	local var_17_6 = {}
 
 	if TalentStyleModel.instance:getLevelUnlockStyle(arg_17_0.hero_mo_data.talentCubeInfos.own_main_cube_id, var_17_1) then
-		local var_17_7 = luaLang("talent_style_title_cn_" .. CharacterEnum.TalentTxtByHeroType[arg_17_0.hero_mo_data.config.heroType])
+		local var_17_7 = luaLang("talent_style_title_cn_" .. arg_17_0.hero_mo_data:getTalentTxtByHeroType())
 		local var_17_8 = GameUtil.getSubPlaceholderLuaLangTwoParam(luaLang("talent_levelup_unlockstyle"), "#eea259", var_17_7)
 
 		table.insert(var_17_6, {

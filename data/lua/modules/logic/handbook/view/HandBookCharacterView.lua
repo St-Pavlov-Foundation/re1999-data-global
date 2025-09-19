@@ -413,10 +413,16 @@ function var_0_0._checkConfig(arg_28_0, arg_28_1)
 	end
 
 	if not arg_28_0:_isAllHeroType() then
+		local var_28_0 = HeroModel.instance:getByHeroId(arg_28_1.id)
+
+		if var_28_0 then
+			return var_28_0:getHeroType() == arg_28_0.heroType
+		end
+
 		return arg_28_1.heroType == arg_28_0.heroType
 	end
 
-	local var_28_0 = {
+	local var_28_1 = {
 		101,
 		102,
 		103,
@@ -430,10 +436,10 @@ function var_0_0._checkConfig(arg_28_0, arg_28_1)
 			return true
 		end
 
-		local var_28_1 = string.splitToNumber(arg_28_1.battleTag, "#")
+		local var_28_2 = string.splitToNumber(arg_28_1.battleTag, "#")
 
-		for iter_28_0, iter_28_1 in ipairs(var_28_0) do
-			for iter_28_2, iter_28_3 in pairs(var_28_1) do
+		for iter_28_0, iter_28_1 in ipairs(var_28_1) do
+			for iter_28_2, iter_28_3 in pairs(var_28_2) do
 				if arg_28_0._selectLocations[iter_28_0] and iter_28_3 == iter_28_1 then
 					return true
 				end

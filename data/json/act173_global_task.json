@@ -252,6 +252,54 @@
     "isVisible": 0
   },
   {
+    "activityId": 12880,
+    "id": 1,
+    "endValue": 217895,
+    "isVisible": 0
+  },
+  {
+    "activityId": 12880,
+    "id": 2,
+    "endValue": 2711465,
+    "isVisible": 0
+  },
+  {
+    "activityId": 12880,
+    "id": 3,
+    "endValue": 5205035,
+    "isVisible": 0
+  },
+  {
+    "activityId": 12880,
+    "id": 4,
+    "endValue": 7698605,
+    "isVisible": 0
+  },
+  {
+    "activityId": 12880,
+    "id": 5,
+    "endValue": 10192175,
+    "isVisible": 0
+  },
+  {
+    "activityId": 12880,
+    "id": 6,
+    "endValue": 12685745,
+    "isVisible": 0
+  },
+  {
+    "activityId": 12880,
+    "id": 7,
+    "endValue": 15179315,
+    "isVisible": 0
+  },
+  {
+    "activityId": 12880,
+    "id": 8,
+    "endValue": 19990000,
+    "isVisible": 0
+  },
+  {
     "activityId": 130528,
     "id": 1,
     "endValue": 600000,

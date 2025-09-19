@@ -129,7 +129,7 @@ function var_0_0.addEpisodeRes(arg_4_0)
 end
 
 function var_0_0.addMapRes(arg_5_0, arg_5_1)
-	local var_5_0 = DungeonConfig.instance:getChapterMapCfg(arg_5_0.chapterId, arg_5_0.id)
+	local var_5_0 = DungeonMapEpisodeItem.getMap(arg_5_0)
 
 	if var_5_0 then
 		local var_5_1 = ResUrl.getDungeonMapRes(var_5_0.res)
@@ -143,6 +143,20 @@ function var_0_0.addMapRes(arg_5_0, arg_5_1)
 			for iter_5_0, iter_5_1 in ipairs(var_5_2) do
 				ResSplitModel.instance:setExclude(ResSplitEnum.Path, iter_5_1, arg_5_1)
 				var_0_0._addDependRes(iter_5_1, arg_5_1, var_5_0.id)
+			end
+		end
+
+		local var_5_3 = var_0_0._mapElementFragmentDic[var_5_0.id]
+
+		if var_5_3 then
+			for iter_5_2, iter_5_3 in pairs(var_5_3) do
+				local var_5_4 = lua_chapter_map_fragment.configDict[iter_5_2]
+
+				if not string.nilorempty(var_5_4.res) then
+					local var_5_5 = ResUrl.getDungeonFragmentIcon(var_5_4.res)
+
+					ResSplitModel.instance:setExclude(ResSplitEnum.Path, var_5_5, arg_5_1)
+				end
 			end
 		end
 	end
@@ -241,6 +255,7 @@ function var_0_0._buildMapData()
 	local var_9_0 = lua_chapter_map_element.configDict
 
 	var_0_0._mapElementResDic = {}
+	var_0_0._mapElementFragmentDic = {}
 
 	for iter_9_0, iter_9_1 in pairs(var_9_0) do
 		if var_0_0._mapElementResDic[iter_9_1.mapId] == nil then
@@ -253,6 +268,14 @@ function var_0_0._buildMapData()
 
 		if string.nilorempty(iter_9_1.effect) == false then
 			table.insert(var_0_0._mapElementResDic[iter_9_1.mapId], iter_9_1.effect)
+		end
+
+		if iter_9_1.fragment > 0 then
+			if var_0_0._mapElementFragmentDic[iter_9_1.mapId] == nil then
+				var_0_0._mapElementFragmentDic[iter_9_1.mapId] = {}
+			end
+
+			var_0_0._mapElementFragmentDic[iter_9_1.mapId][iter_9_1.fragment] = true
 		end
 	end
 end

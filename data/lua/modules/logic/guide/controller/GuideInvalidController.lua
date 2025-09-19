@@ -5,8 +5,9 @@ local var_0_1 = "EndFight"
 local var_0_2 = "ActivityEnd"
 local var_0_3 = "InvalidCondition"
 local var_0_4 = "checkFinishGuide"
-local var_0_5 = "FinishElement"
-local var_0_6 = "InvalidNotInWindows"
+local var_0_5 = "checkFinishGuideAndValidAct"
+local var_0_6 = "FinishElement"
+local var_0_7 = "InvalidNotInWindows"
 
 function var_0_0.addConstEvents(arg_1_0)
 	PlayerController.instance:registerCallback(PlayerEvent.PlayerLevelUp, arg_1_0._checkFinishGuideInMainView, arg_1_0)
@@ -63,7 +64,7 @@ function var_0_0.isInvalid(arg_2_0, arg_2_1)
 			var_2_2 = GameSceneMgr.instance:getCurSceneType() == SceneType.Fight and var_2_13
 		elseif var_2_4 == "ExitEpisode" then
 			var_2_2 = var_2_3 ~= nil and GameSceneMgr.instance:getCurSceneType() ~= SceneType.Fight
-		elseif var_2_4 == var_0_5 then
+		elseif var_2_4 == var_0_6 then
 			local var_2_14 = tonumber(var_2_5)
 
 			var_2_2 = DungeonMapModel.instance:elementIsFinished(var_2_14)
@@ -79,7 +80,7 @@ function var_0_0.isInvalid(arg_2_0, arg_2_1)
 
 				var_2_2 = var_2_3 ~= nil and var_2_16 == ActivityEnum.ActivityStatus.Expired
 			end
-		elseif var_2_4 == var_0_6 then
+		elseif var_2_4 == var_0_7 then
 			var_2_2 = not BootNativeUtil.isWindows()
 		else
 			var_2_2 = false
@@ -155,7 +156,7 @@ function var_0_0._onFinishedGuide(arg_8_0, arg_8_1)
 				local var_8_5 = iter_8_2[1]
 				local var_8_6 = iter_8_2[2]
 
-				if var_8_5 == var_0_3 and var_8_6 == var_0_4 and GuideInvalidCondition[var_8_6](var_8_2, iter_8_2) then
+				if var_8_5 == var_0_3 and (var_8_6 == var_0_4 or var_8_6 == var_0_5) and GuideInvalidCondition[var_8_6](var_8_2, iter_8_2) then
 					GuideController.instance:oneKeyFinishGuide(var_8_2, true)
 				end
 			end

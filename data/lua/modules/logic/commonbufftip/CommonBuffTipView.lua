@@ -133,7 +133,7 @@ function var_0_0.addBuffTip(arg_11_0, arg_11_1)
 	local var_11_4 = SkillHelper.removeRichTag(var_11_3)
 
 	var_11_2.txtName.text = var_11_4
-	var_11_2.txtDesc.text = SkillHelper.getSkillDesc(nil, var_11_1)
+	var_11_2.txtDesc.text = SkillHelper.getSkillDesc(arg_11_0.viewParam.monsterName, var_11_1)
 
 	local var_11_5 = CommonBuffTipController.instance:getBuffTagName(var_11_3)
 	local var_11_6 = not string.nilorempty(var_11_5)

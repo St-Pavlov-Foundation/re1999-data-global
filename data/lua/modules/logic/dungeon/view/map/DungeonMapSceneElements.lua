@@ -401,6 +401,14 @@ function var_0_0.clickElement(arg_28_0, arg_28_1)
 		end
 
 		DungeonController.instance:dispatchEvent(DungeonMapElementEvent.OnClickExploreElement)
+	elseif var_28_1.type == DungeonEnum.ElementType.BossStory then
+		AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
+
+		if not DungeonModel.instance:chapterIsPass(DungeonEnum.ChapterId.BossStory) then
+			VersionActivity2_8DungeonBossController.instance:openVersionActivity2_8BossStoryEnterView()
+		else
+			logError("boss剧情已经通关了")
+		end
 	elseif var_28_1.type == DungeonEnum.ElementType.ToughBattle then
 		AudioMgr.instance:trigger(AudioEnum.UI.UI_Common_Click)
 		ToughBattleModel.instance:setIsJumpActElement(false)

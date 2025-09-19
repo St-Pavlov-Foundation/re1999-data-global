@@ -460,59 +460,66 @@ function var_0_0.checkIsBigSkillCostActPoint(arg_31_0, arg_31_1)
 	return true
 end
 
-function var_0_0.moveActCost(arg_32_0)
-	if FightEnum.UniversalCard[arg_32_0.skillId] then
+function var_0_0.checkIsSmallSkillCostActPoint(arg_32_0, arg_32_1)
+	local var_32_0 = FightDataHelper.entityMgr:getById(arg_32_0)
+
+	if not var_32_0 then
+		return true
+	end
+
+	local var_32_1 = lua_skill.configDict[arg_32_1]
+
+	if not var_32_1 then
+		return true
+	end
+
+	if var_32_1.isBigSkill == 1 then
+		return true
+	end
+
+	if var_32_0:hasBuffFeature(FightEnum.BuffType_NotBigSkillNoUseActPoint) then
+		return false
+	end
+
+	return true
+end
+
+function var_0_0.moveActCost(arg_33_0)
+	if FightEnum.UniversalCard[arg_33_0.skillId] then
 		return 0
 	end
 
 	return 1
 end
 
-function var_0_0.playActCost(arg_33_0)
-	local var_33_0 = 1
-	local var_33_1 = arg_33_0.uid
-	local var_33_2 = arg_33_0.skillId
-	local var_33_3 = arg_33_0.cardType
+function var_0_0.playActCost(arg_34_0)
+	local var_34_0 = 1
+	local var_34_1 = arg_34_0.uid
+	local var_34_2 = arg_34_0.skillId
+	local var_34_3 = arg_34_0.cardType
 
-	if var_0_0.isSpecialCardById(var_33_1, var_33_2) then
-		var_33_0 = (var_33_3 == FightEnum.CardType.ROUGE_SP or var_33_3 == FightEnum.CardType.USE_ACT_POINT) and 1 or 0
+	if var_0_0.isSpecialCardById(var_34_1, var_34_2) then
+		var_34_0 = (var_34_3 == FightEnum.CardType.ROUGE_SP or var_34_3 == FightEnum.CardType.USE_ACT_POINT) and 1 or 0
 	end
 
-	if var_0_0.isSkill3(arg_33_0) then
-		var_33_0 = 0
+	if var_0_0.isSkill3(arg_34_0) then
+		var_34_0 = 0
 	end
 
-	if not var_0_0.checkIsBigSkillCostActPoint(var_33_1, var_33_2) then
-		var_33_0 = 0
-	end
+	local var_34_4 = lua_skill.configDict[var_34_2]
 
-	return var_33_0
-end
-
-function var_0_0.canPlayCard(arg_34_0)
-	if not arg_34_0 then
-		return false
-	end
-
-	if var_0_0.isFrozenCard(arg_34_0) then
-		return false
-	end
-
-	if var_0_0.isBlockade(arg_34_0) then
-		local var_34_0 = FightDataHelper.handCardMgr:getHandCard()
-		local var_34_1 = tabletool.indexOf(var_34_0, arg_34_0)
-
-		if var_34_1 then
-			local var_34_2 = var_34_0
-
-			return var_34_1 == 1 or var_34_1 == #var_34_2
+	if var_34_4 and var_34_4.isBigSkill == 1 then
+		if not var_0_0.checkIsBigSkillCostActPoint(var_34_1, var_34_2) then
+			var_34_0 = 0
 		end
+	elseif not var_0_0.checkIsSmallSkillCostActPoint(var_34_1, var_34_2) then
+		var_34_0 = 0
 	end
 
-	return true
+	return var_34_0
 end
 
-function var_0_0.checkCanPlayCard(arg_35_0, arg_35_1)
+function var_0_0.canPlayCard(arg_35_0)
 	if not arg_35_0 then
 		return false
 	end
@@ -522,22 +529,21 @@ function var_0_0.checkCanPlayCard(arg_35_0, arg_35_1)
 	end
 
 	if var_0_0.isBlockade(arg_35_0) then
-		local var_35_0 = tabletool.indexOf(arg_35_1, arg_35_0)
+		local var_35_0 = FightDataHelper.handCardMgr:getHandCard()
+		local var_35_1 = tabletool.indexOf(var_35_0, arg_35_0)
 
-		if var_35_0 then
-			return var_35_0 == 1 or var_35_0 == #arg_35_1
+		if var_35_1 then
+			local var_35_2 = var_35_0
+
+			return var_35_1 == 1 or var_35_1 == #var_35_2
 		end
 	end
 
 	return true
 end
 
-function var_0_0.canMoveCard(arg_36_0)
+function var_0_0.checkCanPlayCard(arg_36_0, arg_36_1)
 	if not arg_36_0 then
-		return false
-	end
-
-	if var_0_0.isSpecialCard(arg_36_0) then
 		return false
 	end
 
@@ -545,41 +551,43 @@ function var_0_0.canMoveCard(arg_36_0)
 		return false
 	end
 
-	if var_0_0.isSkill3(arg_36_0) then
-		return false
-	end
+	if var_0_0.isBlockade(arg_36_0) then
+		local var_36_0 = tabletool.indexOf(arg_36_1, arg_36_0)
 
-	return true
-end
-
-function var_0_0.playCanAddExpoint(arg_37_0, arg_37_1)
-	if not arg_37_1 then
-		return false
-	end
-
-	if var_0_0.isSpecialCard(arg_37_1) then
-		return false
-	end
-
-	if var_0_0.isSkill3(arg_37_1) then
-		return false
-	end
-
-	local var_37_0 = FightDataHelper.entityMgr:getById(arg_37_1.uid)
-
-	if var_37_0 then
-		local var_37_1 = FightEnum.ExPointTypeFeature[var_37_0.exPointType]
-
-		if var_37_1 then
-			return var_37_1.playAddExpoint
+		if var_36_0 then
+			return var_36_0 == 1 or var_36_0 == #arg_36_1
 		end
 	end
 
 	return true
 end
 
-function var_0_0.moveCanAddExpoint(arg_38_0, arg_38_1)
+function var_0_0.canMoveCard(arg_37_0)
+	if not arg_37_0 then
+		return false
+	end
+
+	if var_0_0.isSpecialCard(arg_37_0) then
+		return false
+	end
+
+	if var_0_0.isFrozenCard(arg_37_0) then
+		return false
+	end
+
+	if var_0_0.isSkill3(arg_37_0) then
+		return false
+	end
+
+	return true
+end
+
+function var_0_0.playCanAddExpoint(arg_38_0, arg_38_1)
 	if not arg_38_1 then
+		return false
+	end
+
+	if var_0_0.isSpecialCard(arg_38_1) then
 		return false
 	end
 
@@ -587,7 +595,29 @@ function var_0_0.moveCanAddExpoint(arg_38_0, arg_38_1)
 		return false
 	end
 
-	if FightEnum.UniversalCard[arg_38_1.skillId] then
+	local var_38_0 = FightDataHelper.entityMgr:getById(arg_38_1.uid)
+
+	if var_38_0 then
+		local var_38_1 = FightEnum.ExPointTypeFeature[var_38_0.exPointType]
+
+		if var_38_1 then
+			return var_38_1.playAddExpoint
+		end
+	end
+
+	return true
+end
+
+function var_0_0.moveCanAddExpoint(arg_39_0, arg_39_1)
+	if not arg_39_1 then
+		return false
+	end
+
+	if var_0_0.isSkill3(arg_39_1) then
+		return false
+	end
+
+	if FightEnum.UniversalCard[arg_39_1.skillId] then
 		return false
 	end
 
@@ -595,90 +625,69 @@ function var_0_0.moveCanAddExpoint(arg_38_0, arg_38_1)
 		return false
 	end
 
-	local var_38_0 = FightDataHelper.operationDataMgr.extraMoveAct
+	local var_39_0 = FightDataHelper.operationDataMgr.extraMoveAct
 
-	if var_38_0 > 0 and var_38_0 > #FightDataHelper.operationDataMgr:getMoveCardOpCostActList() then
+	if var_39_0 > 0 and var_39_0 > #FightDataHelper.operationDataMgr:getMoveCardOpCostActList() then
 		return false
 	end
 
-	local var_38_1 = FightDataHelper.entityMgr:getById(arg_38_1.uid)
+	local var_39_1 = FightDataHelper.entityMgr:getById(arg_39_1.uid)
 
-	if var_38_1 then
-		local var_38_2 = FightEnum.ExPointTypeFeature[var_38_1.exPointType]
+	if var_39_1 then
+		local var_39_2 = FightEnum.ExPointTypeFeature[var_39_1.exPointType]
 
-		if var_38_2 then
-			return var_38_2.moveAddExpoint
+		if var_39_2 then
+			return var_39_2.moveAddExpoint
 		end
 	end
 
 	return true
 end
 
-function var_0_0.combineCanAddExpoint(arg_39_0, arg_39_1, arg_39_2)
-	if not arg_39_1 or not arg_39_2 then
+function var_0_0.combineCanAddExpoint(arg_40_0, arg_40_1, arg_40_2)
+	if not arg_40_1 or not arg_40_2 then
 		return false
 	end
 
-	if var_0_0.isSkill3(arg_39_1) or var_0_0.isSkill3(arg_39_2) then
+	if var_0_0.isSkill3(arg_40_1) or var_0_0.isSkill3(arg_40_2) then
 		return false
 	end
 
-	local var_39_0 = FightDataHelper.entityMgr:getById(FightEnum.UniversalCard[arg_39_1.skillId] and arg_39_2.uid or arg_39_1.uid)
+	local var_40_0 = FightDataHelper.entityMgr:getById(FightEnum.UniversalCard[arg_40_1.skillId] and arg_40_2.uid or arg_40_1.uid)
 
-	if var_39_0 then
-		local var_39_1 = FightEnum.ExPointTypeFeature[var_39_0.exPointType]
+	if var_40_0 then
+		local var_40_1 = FightEnum.ExPointTypeFeature[var_40_0.exPointType]
 
-		if var_39_1 then
-			return var_39_1.combineAddExpoint
+		if var_40_1 then
+			return var_40_1.combineAddExpoint
 		end
 	end
 
 	return true
 end
 
-function var_0_0.allFrozenCard(arg_40_0)
-	local var_40_0 = 0
+function var_0_0.allFrozenCard(arg_41_0)
+	local var_41_0 = 0
 
-	for iter_40_0, iter_40_1 in ipairs(arg_40_0) do
-		if var_0_0.isFrozenCard(iter_40_1) then
-			var_40_0 = var_40_0 + 1
+	for iter_41_0, iter_41_1 in ipairs(arg_41_0) do
+		if var_0_0.isFrozenCard(iter_41_1) then
+			var_41_0 = var_41_0 + 1
 		end
 	end
 
-	return var_40_0 == #arg_40_0
+	return var_41_0 == #arg_41_0
 end
 
-function var_0_0.calcRemoveCardTime(arg_41_0, arg_41_1, arg_41_2)
-	local var_41_0 = 0.033
-	local var_41_1 = arg_41_2 or 1.2
-	local var_41_2 = #arg_41_0
-	local var_41_3 = #arg_41_1
-
-	for iter_41_0, iter_41_1 in ipairs(arg_41_1) do
-		if iter_41_1 < var_41_2 then
-			var_41_1 = var_41_1 + var_41_0 * 7
-			var_41_1 = var_41_1 + 3 * var_41_0 * (var_41_2 - arg_41_1[var_41_3] - var_41_3)
-
-			break
-		end
-	end
-
-	return var_41_1
-end
-
-function var_0_0.calcRemoveCardTime2(arg_42_0, arg_42_1, arg_42_2)
+function var_0_0.calcRemoveCardTime(arg_42_0, arg_42_1, arg_42_2)
 	local var_42_0 = 0.033
 	local var_42_1 = arg_42_2 or 1.2
-	local var_42_2 = tabletool.copy(arg_42_0)
+	local var_42_2 = #arg_42_0
+	local var_42_3 = #arg_42_1
 
 	for iter_42_0, iter_42_1 in ipairs(arg_42_1) do
-		table.remove(var_42_2, iter_42_1)
-	end
-
-	for iter_42_2, iter_42_3 in ipairs(var_42_2) do
-		if iter_42_3 ~= arg_42_0[iter_42_2] then
+		if iter_42_1 < var_42_2 then
 			var_42_1 = var_42_1 + var_42_0 * 7
-			var_42_1 = var_42_1 + 3 * var_42_0 * (#var_42_2 - iter_42_2)
+			var_42_1 = var_42_1 + 3 * var_42_0 * (var_42_2 - arg_42_1[var_42_3] - var_42_3)
 
 			break
 		end
@@ -687,13 +696,34 @@ function var_0_0.calcRemoveCardTime2(arg_42_0, arg_42_1, arg_42_2)
 	return var_42_1
 end
 
-function var_0_0.cardChangeIsMySide(arg_43_0)
+function var_0_0.calcRemoveCardTime2(arg_43_0, arg_43_1, arg_43_2)
+	local var_43_0 = 0.033
+	local var_43_1 = arg_43_2 or 1.2
+	local var_43_2 = tabletool.copy(arg_43_0)
+
+	for iter_43_0, iter_43_1 in ipairs(arg_43_1) do
+		table.remove(var_43_2, iter_43_1)
+	end
+
+	for iter_43_2, iter_43_3 in ipairs(var_43_2) do
+		if iter_43_3 ~= arg_43_0[iter_43_2] then
+			var_43_1 = var_43_1 + var_43_0 * 7
+			var_43_1 = var_43_1 + 3 * var_43_0 * (#var_43_2 - iter_43_2)
+
+			break
+		end
+	end
+
+	return var_43_1
+end
+
+function var_0_0.cardChangeIsMySide(arg_44_0)
 	if FightModel.instance:getVersion() >= 1 then
-		if not arg_43_0 then
+		if not arg_44_0 then
 			return false
 		end
 
-		if arg_43_0 and arg_43_0.teamType ~= FightEnum.TeamType.MySide then
+		if arg_44_0 and arg_44_0.teamType ~= FightEnum.TeamType.MySide then
 			return false
 		end
 	end
@@ -701,106 +731,106 @@ function var_0_0.cardChangeIsMySide(arg_43_0)
 	return true
 end
 
-function var_0_0.newCardList(arg_44_0)
-	local var_44_0 = {}
-
-	for iter_44_0, iter_44_1 in ipairs(arg_44_0) do
-		table.insert(var_44_0, FightCardInfoData.New(iter_44_1))
-	end
-
-	return var_44_0
-end
-
-function var_0_0.newPlayCardList(arg_45_0)
+function var_0_0.newCardList(arg_45_0)
 	local var_45_0 = {}
 
 	for iter_45_0, iter_45_1 in ipairs(arg_45_0) do
-		table.insert(var_45_0, FightClientPlayCardData.New(iter_45_1, iter_45_0))
+		table.insert(var_45_0, FightCardInfoData.New(iter_45_1))
 	end
 
 	return var_45_0
 end
 
-function var_0_0.remainedAfterCombine(arg_46_0, arg_46_1)
-	local var_46_0 = arg_46_0.cardData
-	local var_46_1 = arg_46_1.cardData
+function var_0_0.newPlayCardList(arg_46_0)
+	local var_46_0 = {}
 
-	if FightEnum.UniversalCard[var_46_0.skillId] or FightEnum.UniversalCard[var_46_1.skillId] then
-		local var_46_2 = FightEnum.UniversalCard[arg_46_0.cardData.skillId] and arg_46_1 or arg_46_0
-		local var_46_3 = var_46_2 == arg_46_0 and arg_46_1 or arg_46_0
-
-		return var_46_2, var_46_3
+	for iter_46_0, iter_46_1 in ipairs(arg_46_0) do
+		table.insert(var_46_0, FightClientPlayCardData.New(iter_46_1, iter_46_0))
 	end
 
-	if arg_46_0:getItemIndex() < arg_46_1:getItemIndex() then
-		return arg_46_0, arg_46_1
+	return var_46_0
+end
+
+function var_0_0.remainedAfterCombine(arg_47_0, arg_47_1)
+	local var_47_0 = arg_47_0.cardData
+	local var_47_1 = arg_47_1.cardData
+
+	if FightEnum.UniversalCard[var_47_0.skillId] or FightEnum.UniversalCard[var_47_1.skillId] then
+		local var_47_2 = FightEnum.UniversalCard[arg_47_0.cardData.skillId] and arg_47_1 or arg_47_0
+		local var_47_3 = var_47_2 == arg_47_0 and arg_47_1 or arg_47_0
+
+		return var_47_2, var_47_3
+	end
+
+	if arg_47_0:getItemIndex() < arg_47_1:getItemIndex() then
+		return arg_47_0, arg_47_1
 	else
-		return arg_46_1, arg_46_0
+		return arg_47_1, arg_47_0
 	end
 end
 
-function var_0_0.isBigSkill(arg_47_0)
-	local var_47_0 = lua_skill.configDict[arg_47_0]
+function var_0_0.isBigSkill(arg_48_0)
+	local var_48_0 = lua_skill.configDict[arg_48_0]
 
-	if not var_47_0 then
+	if not var_48_0 then
 		return false
 	end
 
-	return var_47_0.isBigSkill == 1
+	return var_48_0.isBigSkill == 1
 end
 
-function var_0_0.getSkillLv(arg_48_0, arg_48_1)
-	local var_48_0 = FightDataHelper.entityMgr:getById(arg_48_0)
+function var_0_0.getSkillLv(arg_49_0, arg_49_1)
+	local var_49_0 = FightDataHelper.entityMgr:getById(arg_49_0)
 
-	if var_48_0 then
-		return var_48_0:getSkillLv(arg_48_1)
+	if var_49_0 then
+		return var_49_0:getSkillLv(arg_49_1)
 	end
 
-	return FightConfig.instance:getSkillLv(arg_48_1)
+	return FightConfig.instance:getSkillLv(arg_49_1)
 end
 
-function var_0_0.getSkillNextLvId(arg_49_0, arg_49_1)
-	local var_49_0 = lua_skill_next.configDict[arg_49_1]
+function var_0_0.getSkillNextLvId(arg_50_0, arg_50_1)
+	local var_50_0 = lua_skill_next.configDict[arg_50_1]
 
-	if var_49_0 and var_49_0.nextId ~= 0 then
-		return var_49_0.nextId
+	if var_50_0 and var_50_0.nextId ~= 0 then
+		return var_50_0.nextId
 	end
 
-	local var_49_1 = FightDataHelper.entityMgr:getById(arg_49_0)
+	local var_50_1 = FightDataHelper.entityMgr:getById(arg_50_0)
 
-	if var_49_1 then
-		return var_49_1:getSkillNextLvId(arg_49_1)
+	if var_50_1 then
+		return var_50_1:getSkillNextLvId(arg_50_1)
 	end
 
-	return FightConfig.instance:getSkillNextLvId(arg_49_1)
+	return FightConfig.instance:getSkillNextLvId(arg_50_1)
 end
 
-function var_0_0.getSkillPrevLvId(arg_50_0, arg_50_1)
-	local var_50_0 = FightDataHelper.entityMgr:getById(arg_50_0)
-
-	if var_50_0 then
-		return var_50_0:getSkillPrevLvId(arg_50_1)
-	end
-
-	return FightConfig.instance:getSkillPrevLvId(arg_50_1)
-end
-
-function var_0_0.isActiveSkill(arg_51_0, arg_51_1)
+function var_0_0.getSkillPrevLvId(arg_51_0, arg_51_1)
 	local var_51_0 = FightDataHelper.entityMgr:getById(arg_51_0)
 
 	if var_51_0 then
-		return var_51_0:isActiveSkill(arg_51_1)
+		return var_51_0:getSkillPrevLvId(arg_51_1)
 	end
 
-	return FightConfig.instance:isActiveSkill(arg_51_1)
+	return FightConfig.instance:getSkillPrevLvId(arg_51_1)
 end
 
-function var_0_0.calcCardsAfterCombine(arg_52_0)
-	arg_52_0 = FightDataUtil.copyData(arg_52_0)
+function var_0_0.isActiveSkill(arg_52_0, arg_52_1)
+	local var_52_0 = FightDataHelper.entityMgr:getById(arg_52_0)
 
-	var_0_0.combineCardListForPerformance(arg_52_0)
+	if var_52_0 then
+		return var_52_0:isActiveSkill(arg_52_1)
+	end
 
-	return arg_52_0
+	return FightConfig.instance:isActiveSkill(arg_52_1)
+end
+
+function var_0_0.calcCardsAfterCombine(arg_53_0)
+	arg_53_0 = FightDataUtil.copyData(arg_53_0)
+
+	var_0_0.combineCardListForPerformance(arg_53_0)
+
+	return arg_53_0
 end
 
 local var_0_1 = {
@@ -826,49 +856,60 @@ local var_0_1 = {
 	0.4
 }
 
-function var_0_0.getHandCardContainerScale(arg_53_0, arg_53_1)
-	local var_53_0 = #(arg_53_1 or FightDataHelper.handCardMgr.handCard)
-	local var_53_1 = var_0_1[var_53_0] or 1
+function var_0_0.getHandCardContainerScale(arg_54_0, arg_54_1)
+	local var_54_0 = #(arg_54_1 or FightDataHelper.handCardMgr.handCard)
+	local var_54_1 = var_0_1[var_54_0] or 1
 
-	if var_53_0 > 20 then
-		var_53_1 = 0.4
+	if var_54_0 > 20 then
+		var_54_1 = 0.4
 	end
 
-	if arg_53_0 and var_53_0 >= 8 then
-		var_53_1 = var_53_1 * 0.9
+	if arg_54_0 and var_54_0 >= 8 then
+		var_54_1 = var_54_1 * 0.9
 	end
 
-	return var_53_1
+	return var_54_1
 end
 
-function var_0_0.moveOnly(arg_54_0, arg_54_1, arg_54_2)
-	local var_54_0 = table.remove(arg_54_0, arg_54_1)
+function var_0_0.moveOnly(arg_55_0, arg_55_1, arg_55_2)
+	local var_55_0 = table.remove(arg_55_0, arg_55_1)
 
-	table.insert(arg_54_0, arg_54_2, var_54_0)
+	table.insert(arg_55_0, arg_55_2, var_55_0)
 end
 
-function var_0_0.checkOpAsPlayCardHandle(arg_55_0)
-	if not arg_55_0 then
+function var_0_0.checkOpAsPlayCardHandle(arg_56_0)
+	if not arg_56_0 then
 		return false
 	end
 
-	if arg_55_0:isPlayCard() then
+	if arg_56_0:isPlayCard() then
 		return true
 	end
 
-	if arg_55_0:isAssistBossPlayCard() then
+	if arg_56_0:isAssistBossPlayCard() then
 		return true
 	end
 
-	if arg_55_0:isBloodPoolSkill() then
+	if arg_56_0:isBloodPoolSkill() then
 		return true
 	end
 
-	if arg_55_0:isPlayerFinisherSkill() then
+	if arg_56_0:isPlayerFinisherSkill() then
 		return true
 	end
 
 	return false
+end
+
+function var_0_0.getCardSkin()
+	local var_57_0 = FightUISwitchModel.instance:getCurUseFightUICardStyleId()
+	local var_57_1 = lua_fight_ui_style.configDict[var_57_0]
+
+	if not var_57_1 then
+		return 672800
+	end
+
+	return var_57_1.itemId
 end
 
 return var_0_0

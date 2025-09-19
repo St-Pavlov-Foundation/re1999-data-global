@@ -61,6 +61,12 @@ end
 function var_0_0.onClose(arg_7_0)
 	var_0_0.super.onClose(arg_7_0)
 
+	if arg_7_0._moveTweenId then
+		ZProj.TweenHelper.KillById(arg_7_0._moveTweenId)
+
+		arg_7_0._moveTweenId = nil
+	end
+
 	if arg_7_0.dontPlayCloseAnimation then
 		return
 	end

@@ -1,0 +1,80 @@
+[
+  {
+    "id": 1,
+    "name": "language_10080284",
+    "enName": "",
+    "desc": "language_10085989",
+    "abPath": "map06",
+    "useScene": 108011,
+    "effect": " ",
+    "effectDesc": "language_10085990",
+    "mapGroup": 10000,
+    "pic": "survival_map_pic01",
+    "lightPram": 0
+  },
+  {
+    "id": 2,
+    "name": "language_10080280",
+    "enName": "",
+    "desc": "language_10085991",
+    "abPath": "map04",
+    "useScene": 250011,
+    "effect": " ",
+    "effectDesc": "language_10085992",
+    "mapGroup": 20000,
+    "pic": "survival_map_pic02",
+    "lightPram": 0
+  },
+  {
+    "id": 3,
+    "name": "language_10080279",
+    "enName": "",
+    "desc": "language_10085993",
+    "abPath": "map05",
+    "useScene": 158011,
+    "effect": "",
+    "effectDesc": "language_10085994",
+    "mapGroup": 30000,
+    "pic": "survival_map_pic03",
+    "lightPram": 0
+  },
+  {
+    "id": 4,
+    "name": "language_10080283",
+    "enName": "",
+    "desc": "language_10085995",
+    "abPath": "map03",
+    "useScene": 222011,
+    "effect": "",
+    "effectDesc": "language_10085996",
+    "mapGroup": 40000,
+    "pic": "survival_map_pic04",
+    "lightPram": 1
+  },
+  {
+    "id": 5,
+    "name": "language_10080282",
+    "enName": "",
+    "desc": "language_10085997",
+    "abPath": "map01",
+    "useScene": 183011,
+    "effect": "",
+    "effectDesc": "language_10085998",
+    "mapGroup": 50000,
+    "pic": "survival_map_pic05",
+    "lightPram": 0
+  },
+  {
+    "id": 6,
+    "name": "language_10080281",
+    "enName": "",
+    "desc": "language_10085999",
+    "abPath": "map02",
+    "useScene": 178011,
+    "effect": "",
+    "effectDesc": "language_10086000",
+    "mapGroup": 60000,
+    "pic": "survival_map_pic06",
+    "lightPram": 0
+  }
+]

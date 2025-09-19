@@ -1,0 +1,62 @@
+[
+  {
+    "worldlevel": 1,
+    "type": 1,
+    "level": "200#300"
+  },
+  {
+    "worldlevel": 2,
+    "type": 1,
+    "level": "200#300"
+  },
+  {
+    "worldlevel": 3,
+    "type": 1,
+    "level": "200#300"
+  },
+  {
+    "worldlevel": 4,
+    "type": 1,
+    "level": "200#300"
+  },
+  {
+    "worldlevel": 5,
+    "type": 1,
+    "level": "200#300"
+  },
+  {
+    "worldlevel": 6,
+    "type": 1,
+    "level": "200#300"
+  },
+  {
+    "worldlevel": 1,
+    "type": 2,
+    "level": "500#600"
+  },
+  {
+    "worldlevel": 2,
+    "type": 2,
+    "level": "500#700"
+  },
+  {
+    "worldlevel": 3,
+    "type": 2,
+    "level": "800#1200"
+  },
+  {
+    "worldlevel": 4,
+    "type": 2,
+    "level": "900#1400"
+  },
+  {
+    "worldlevel": 5,
+    "type": 2,
+    "level": "1000#1500"
+  },
+  {
+    "worldlevel": 6,
+    "type": 2,
+    "level": "1300#2000"
+  }
+]

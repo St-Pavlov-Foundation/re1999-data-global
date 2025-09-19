@@ -3,7 +3,7 @@
 local var_0_0 = class("FightWorkWaitDialog", BaseWork)
 
 function var_0_0.onStart(arg_1_0)
-	local var_1_0 = gohelper.find("UIRoot/HUD/FightView/root/#go_dialogcontainer")
+	local var_1_0 = gohelper.find("UIRoot/HUD/FightView/#go_dialogcontainer")
 
 	if var_1_0 and var_1_0.activeInHierarchy then
 		TaskDispatcher.runDelay(arg_1_0._delayDone, arg_1_0, 60)

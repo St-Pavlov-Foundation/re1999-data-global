@@ -27,6 +27,10 @@ function var_0_0._editableInitView(arg_4_0)
 
 	arg_4_0._drag:AddDragBeginListener(arg_4_0._onDragBegin, arg_4_0)
 	arg_4_0._drag:AddDragEndListener(arg_4_0._onDragEnd, arg_4_0)
+
+	arg_4_0._image_LimitTimeBGGo = gohelper.findChild(arg_4_0.viewGO, "Left/LimitTime/image_LimitTimeBG")
+
+	gohelper.setActive(arg_4_0._image_LimitTimeBGGo, false)
 end
 
 function var_0_0._onDragBegin(arg_5_0)

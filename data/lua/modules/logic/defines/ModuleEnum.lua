@@ -65,7 +65,9 @@ var_0_0.HeroGroupSnapshotType = {
 	Season123 = 6,
 	TowerPermanentAndLimit = 10,
 	Season123Retail = 7,
-	Act183Boss = 13
+	Act183Boss = 13,
+	Survival = 15,
+	Shelter = 14
 }
 var_0_0.HeroGroupServerType = {
 	Activity = 100,

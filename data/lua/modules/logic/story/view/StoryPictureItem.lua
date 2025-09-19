@@ -366,6 +366,10 @@ function var_0_0._setNormalPicture(arg_16_0)
 		return
 	end
 
+	if not arg_16_0._picImg then
+		return
+	end
+
 	local var_16_0 = SLFramework.UGUI.GuiHelper.ParseColor(arg_16_0._picCo.picColor)
 
 	arg_16_0._picImg.color = Color.New(var_16_0.r, var_16_0.g, var_16_0.b, arg_16_0._picImg.color.a)

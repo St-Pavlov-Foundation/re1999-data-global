@@ -4,48 +4,103 @@
     "time": 5.0,
     "waitVoice": 1308637,
     "timeoutVoice": 1308638,
-    "protectionTime": 0
+    "protectionTime": 0,
+    "statusParams": ""
   },
   {
     "id": 1308675,
     "time": 5.0,
     "waitVoice": 1308676,
     "timeoutVoice": 1308677,
-    "protectionTime": 0
+    "protectionTime": 0,
+    "statusParams": ""
   },
   {
     "id": 1302575,
     "time": 5.0,
     "waitVoice": 1302576,
     "timeoutVoice": 1302577,
-    "protectionTime": 0
+    "protectionTime": 0,
+    "statusParams": ""
   },
   {
     "id": 1310035,
     "time": 5.0,
     "waitVoice": 1310036,
     "timeoutVoice": 1310037,
-    "protectionTime": 0
+    "protectionTime": 0,
+    "statusParams": ""
   },
   {
     "id": 1306670,
     "time": 11.0,
     "waitVoice": 1306671,
     "timeoutVoice": 1306673,
-    "protectionTime": 0
+    "protectionTime": 0,
+    "statusParams": ""
   },
   {
     "id": 1311036,
     "time": 5.0,
     "waitVoice": 1311037,
     "timeoutVoice": 1311038,
-    "protectionTime": 10
+    "protectionTime": 10,
+    "statusParams": ""
   },
   {
     "id": 1308370,
     "time": 5.0,
     "waitVoice": 1308371,
     "timeoutVoice": 1308372,
-    "protectionTime": 10
+    "protectionTime": 10,
+    "statusParams": ""
+  },
+  {
+    "id": 1312044,
+    "time": 5.0,
+    "waitVoice": 1312045,
+    "timeoutVoice": 1312046,
+    "protectionTime": 0,
+    "statusParams": ""
+  },
+  {
+    "id": 1312047,
+    "time": 5.0,
+    "waitVoice": 1312048,
+    "timeoutVoice": 1312049,
+    "protectionTime": 17,
+    "statusParams": ""
+  },
+  {
+    "id": 10386127,
+    "time": 5.0,
+    "waitVoice": 10386128,
+    "timeoutVoice": 10386129,
+    "protectionTime": 0,
+    "statusParams": ""
+  },
+  {
+    "id": 10386168,
+    "time": 5.0,
+    "waitVoice": 10386169,
+    "timeoutVoice": 10386170,
+    "protectionTime": 0,
+    "statusParams": ""
+  },
+  {
+    "id": 10386124,
+    "time": 5.0,
+    "waitVoice": 10386125,
+    "timeoutVoice": 10386126,
+    "protectionTime": 0,
+    "statusParams": "noChangeStatus"
+  },
+  {
+    "id": 10386165,
+    "time": 5.0,
+    "waitVoice": 10386166,
+    "timeoutVoice": 10386167,
+    "protectionTime": 0,
+    "statusParams": "noChangeStatus"
   }
 ]

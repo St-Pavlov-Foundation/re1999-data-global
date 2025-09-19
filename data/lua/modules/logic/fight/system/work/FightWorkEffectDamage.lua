@@ -3,6 +3,13 @@
 local var_0_0 = class("FightWorkEffectDamage", FightEffectBase)
 
 function var_0_0.onStart(arg_1_0)
+	if arg_1_0.actEffectData.custom_nuoDiKaDamageSign then
+		arg_1_0:com_sendFightEvent(FightEvent.OnCurrentHpChange, arg_1_0.actEffectData.targetId)
+		arg_1_0:onDone(true)
+
+		return
+	end
+
 	local var_1_0 = FightHelper.getEntity(arg_1_0.actEffectData.targetId)
 
 	if var_1_0 then

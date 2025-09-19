@@ -58,7 +58,7 @@ function var_0_0._playNext(arg_9_0)
 	local var_9_0 = arg_9_0._workList[arg_9_0._curIndex]
 
 	if var_9_0 then
-		if var_9_0.WORKFINISHED or var_9_0.IS_DISPOSED then
+		if var_9_0.WORK_IS_FINISHED or var_9_0.IS_DISPOSED then
 			return arg_9_0:_playNext()
 		elseif not var_9_0.STARTED then
 			arg_9_0._playStartCount = arg_9_0._playStartCount + 1

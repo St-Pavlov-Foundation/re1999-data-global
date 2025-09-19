@@ -125,5 +125,15 @@ var_0_0.MainSceneChangeCD = 2506
 var_0_0.BpShowBonusLvs = 2601
 var_0_0.FreeMonthCardTitle = 30501
 var_0_0.FreeMonthCardDesc = 30502
+var_0_0.BPSkinFaceViewSkinId = 28124
+var_0_0.LoginViewVideoPathId = 30101
+var_0_0.LoginViewVideoShowDungeonId = 30102
+var_0_0.S01SpRole = 30503
+var_0_0.TowerDeepTip = 31001
+var_0_0.PowerMakerPatFaceTime = 305
+var_0_0.BPOperActTitle = 3103
+var_0_0.FBPOperActDesc = 3104
+var_0_0.NationalGiftDesc = 3105
+var_0_0.SurvivalOperActItem = 31002
 
 return var_0_0

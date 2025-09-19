@@ -21,7 +21,8 @@ function var_0_0.reqConfigNames(arg_2_0)
 		"hero_trial",
 		"hero_trial_attr",
 		"hero_group_type",
-		"character_limited"
+		"character_limited",
+		"character_rank_replace"
 	}
 end
 
@@ -54,6 +55,8 @@ function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
 		end
 	elseif arg_3_1 == "hero_trial" then
 		arg_3_0.heroTrialConfig = arg_3_2.configDict
+	elseif arg_3_1 == "character_rank_replace" then
+		arg_3_0.heroRankReplaceConfig = arg_3_2.configDict
 	end
 end
 
@@ -370,6 +373,10 @@ function var_0_0.getHeroAttrRate(arg_28_0, arg_28_1, arg_28_2)
 	end
 
 	return lua_character_grow.configList[#lua_character_grow.configList].id
+end
+
+function var_0_0.getHeroRankReplaceConfig(arg_29_0, arg_29_1)
+	return arg_29_0.heroRankReplaceConfig[arg_29_1]
 end
 
 var_0_0.instance = var_0_0.New()

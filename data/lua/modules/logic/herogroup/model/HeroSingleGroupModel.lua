@@ -18,13 +18,14 @@ function var_0_0.isTemp(arg_4_0)
 	return arg_4_0.temp
 end
 
-function var_0_0.setMaxHeroCount(arg_5_0, arg_5_1)
+function var_0_0.setMaxHeroCount(arg_5_0, arg_5_1, arg_5_2)
 	local var_5_0 = {}
 
 	arg_5_1 = arg_5_1 or ModuleEnum.MaxHeroCountInGroup
+	arg_5_2 = arg_5_2 or HeroSingleGroupMO
 
 	for iter_5_0 = 1, arg_5_1 do
-		table.insert(var_5_0, HeroSingleGroupMO.New())
+		table.insert(var_5_0, arg_5_2.New())
 	end
 
 	arg_5_0:clear()

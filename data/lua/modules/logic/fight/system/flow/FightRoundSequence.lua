@@ -54,7 +54,7 @@ function var_0_0.buildRoundFlows(arg_3_0)
 
 	if not FightModel.instance:isFinish() then
 		if FightModel.instance:getVersion() < 4 then
-			arg_3_0:addWork(FightWorkDistributeCard.New())
+			arg_3_0:addWork(FightWork2Work.New(FightWorkDistributeCard))
 			arg_3_0:addWork(FunctionWork.New(function()
 				FightController.instance:setCurStage(FightEnum.Stage.Play)
 			end))

@@ -46,12 +46,19 @@ function var_0_0.setData(arg_5_0, arg_5_1)
 		arg_5_0:loadMesh()
 
 		arg_5_0._txtHp.text = arg_5_0.config.hp
+
+		gohelper.setActive(arg_5_0.go, true)
 	else
 		local var_5_0 = tonumber(lua_auto_chess_const.configDict[AutoChessEnum.ConstKey.UnlockLeaderSlot].value)
-		local var_5_1 = lua_auto_chess_episode.configDict[var_5_0].name
-		local var_5_2 = luaLang("autochess_leaderitem_unlock")
 
-		arg_5_0._txtLock.text = GameUtil.getSubPlaceholderLuaLangOneParam(var_5_2, var_5_1)
+		if var_5_0 ~= 0 then
+			local var_5_1 = AutoChessConfig.instance:getEpisodeCO(var_5_0).name
+			local var_5_2 = luaLang("autochess_leaderitem_unlock")
+
+			arg_5_0._txtLock.text = GameUtil.getSubPlaceholderLuaLangOneParam(var_5_2, var_5_1)
+		end
+
+		gohelper.setActive(arg_5_0.go, var_5_0 ~= 0)
 	end
 
 	gohelper.setActive(arg_5_0._goUnLock, arg_5_1)

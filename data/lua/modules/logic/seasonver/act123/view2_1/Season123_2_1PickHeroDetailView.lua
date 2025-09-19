@@ -255,7 +255,7 @@ function var_0_0._refreshMainInfo(arg_10_0)
 			arg_10_0._txtlevelWithTalent.text = tostring(var_10_1)
 			arg_10_0._txtlevelmaxWithTalent.text = string.format("/%d", var_10_2)
 			arg_10_0._txttalent.text = "Lv.<size=40>" .. tostring(arg_10_0._heroMO.talent)
-			arg_10_0._txttalentType.text = luaLang("talent_character_talentcn" .. CharacterEnum.TalentTxtByHeroType[arg_10_0._heroMO.config.heroType])
+			arg_10_0._txttalentType.text = luaLang("talent_character_talentcn" .. arg_10_0._heroMO:getTalentTxtByHeroType())
 		else
 			gohelper.setActive(arg_10_0._golevel, true)
 			gohelper.setActive(arg_10_0._golevelWithTalent, false)

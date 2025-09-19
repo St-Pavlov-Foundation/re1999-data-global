@@ -30,6 +30,8 @@ function var_0_0.onSceneClose(arg_2_0, arg_2_1, arg_2_2)
 	ViewMgr.instance:closeView(ViewName.FightNaNaTargetView, true)
 	ViewMgr.instance:closeView(ViewName.FightCardDeckView, true)
 	ViewMgr.instance:closeView(ViewName.FightBloodPoolTipsView, true)
+	ViewMgr.instance:closeView(ViewName.FightPlayChoiceCardView, true)
+	ViewMgr.instance:closeView(ViewName.FightNuoDiKaQteView, true)
 	ViewMgr.instance:closeView(ViewName.FightAiJiAoQteView, true)
 	ViewMgr.instance:closeView(ViewName.FightAiJiAoQteSelectView, true)
 end

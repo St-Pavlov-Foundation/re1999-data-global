@@ -318,6 +318,10 @@ function var_0_0.setBgSkinRed(arg_26_0, arg_26_1, arg_26_2)
 	PlayerPrefsHelper.setNumber(var_26_1, var_26_0)
 end
 
+function var_0_0.getCurViewParam(arg_27_0)
+	return arg_27_0.viewParam
+end
+
 var_0_0.instance = var_0_0.New()
 
 return var_0_0

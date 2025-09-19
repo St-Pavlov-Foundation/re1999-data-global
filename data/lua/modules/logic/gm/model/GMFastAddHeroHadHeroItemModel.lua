@@ -14,10 +14,10 @@ end
 
 function var_0_0._sortMo(arg_2_0, arg_2_1)
 	if arg_2_0.config.id ~= arg_2_1.config.id then
-		return arg_2_0.config.id < arg_2_1.config.id
+		return arg_2_0.config.id > arg_2_1.config.id
 	end
 
-	return arg_2_0.uid < arg_2_1.uid
+	return arg_2_0.uid > arg_2_1.uid
 end
 
 function var_0_0.setShowType(arg_3_0, arg_3_1)

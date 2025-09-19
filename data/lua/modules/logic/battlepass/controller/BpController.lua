@@ -185,6 +185,24 @@ function var_0_0._showCommonPropView(arg_17_0, arg_17_1)
 	end
 end
 
+function var_0_0.isEmptySkinFaceViewStr(arg_18_0, arg_18_1)
+	local var_18_0 = PlayerPrefsHelper.getString(arg_18_0:_getSkinFaceViewKey(arg_18_1), "")
+
+	return string.nilorempty(var_18_0)
+end
+
+function var_0_0.setSkinFaceViewStr(arg_19_0, arg_19_1)
+	arg_19_1 = arg_19_1 or 0
+
+	return PlayerPrefsHelper.setString(arg_19_0:_getSkinFaceViewKey(arg_19_1), tostring(arg_19_1))
+end
+
+function var_0_0._getSkinFaceViewKey(arg_20_0, arg_20_1)
+	arg_20_1 = arg_20_1 or 0
+
+	return string.format("%s#%s#%s", PlayerPrefsKey.BPSkinFaceView, arg_20_1, PlayerModel.instance:getMyUserId())
+end
+
 var_0_0.instance = var_0_0.New()
 
 return var_0_0

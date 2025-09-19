@@ -40,35 +40,23 @@ function var_0_0.init(arg_4_0)
 end
 
 function var_0_0.getFloatPrefab(arg_5_0)
-	local var_5_0
-	local var_5_1 = os.time()
+	local var_5_0 = FightUISwitchModel.instance:getCurUseFightUIFloatStyleId()
+	local var_5_1 = var_5_0 and lua_fight_ui_style.configDict[var_5_0]
 
-	for iter_5_0, iter_5_1 in ipairs(lua_fight_float_effect.configList) do
-		local var_5_2 = true
-		local var_5_3 = false
-
-		if not string.nilorempty(iter_5_1.startTime) then
-			var_5_2 = var_5_1 >= TimeUtil.stringToTimestamp(iter_5_1.startTime)
-		end
-
-		if not string.nilorempty(iter_5_1.endTime) then
-			var_5_3 = var_5_1 >= TimeUtil.stringToTimestamp(iter_5_1.endTime)
-		end
-
-		if var_5_2 and not var_5_3 then
-			if not var_5_0 then
-				var_5_0 = iter_5_1
-			elseif iter_5_1.priority > var_5_0.priority then
-				var_5_0 = iter_5_1
-			end
-		end
-	end
-
-	if not var_5_0 then
+	if not var_5_1 then
 		return ResUrl.getSceneUIPrefab("fight", "fightfloat")
 	end
 
-	return ResUrl.getSceneUIPrefab("fight", var_5_0.prefabPath)
+	local var_5_2 = var_5_1.itemId
+	local var_5_3 = var_5_2 and lua_fight_float_effect.configDict[var_5_2]
+
+	if not var_5_3 then
+		logError(string.format("lua_fight_float_effect 战斗飘字表没找到 道具id : '%s' 对应的配置", var_5_2))
+
+		return ResUrl.getSceneUIPrefab("fight", "fightfloat")
+	end
+
+	return ResUrl.getSceneUIPrefab("fight", var_5_3.prefabPath)
 end
 
 function var_0_0._onLoadCallback(arg_6_0)
@@ -105,6 +93,7 @@ function var_0_0._onLoadCallback(arg_6_0)
 	arg_6_0:_initPrefab(FightEnum.FloatType.additional_damage, gohelper.findChild(var_6_0, "additional_damage"), 0)
 	arg_6_0:_initPrefab(FightEnum.FloatType.crit_additional_damage, gohelper.findChild(var_6_0, "crit_additional_damage"), 0)
 	arg_6_0:_initPrefab(FightEnum.FloatType.addShield, gohelper.findChild(var_6_0, "shield"), 0)
+	arg_6_0:_initPrefab(FightEnum.FloatType.secret_key, gohelper.findChild(var_6_0, "secret_key"), 0)
 end
 
 function var_0_0.dispose(arg_7_0)

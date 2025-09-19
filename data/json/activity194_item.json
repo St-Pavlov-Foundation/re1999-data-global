@@ -1,0 +1,51 @@
+[
+  {
+    "itemId": 20001,
+    "isUse": 1,
+    "buffId": "40011",
+    "picture": "singlebg/v2a8_molideer_singlebg/item/icon_zhinanzhen.png",
+    "name": "language_10087120"
+  },
+  {
+    "itemId": 20002,
+    "isUse": 0,
+    "buffId": "40012",
+    "picture": "singlebg/v2a8_molideer_singlebg/item/icon_jiareqi.png",
+    "name": "language_10087121"
+  },
+  {
+    "itemId": 20003,
+    "isUse": 0,
+    "buffId": "40013",
+    "picture": "singlebg/v2a8_molideer_singlebg/item/icon_zhi.png",
+    "name": "language_10087122"
+  },
+  {
+    "itemId": 20004,
+    "isUse": 0,
+    "buffId": "40014",
+    "picture": "singlebg/v2a8_molideer_singlebg/item/icon_jiareqiplus.png",
+    "name": "language_10087123"
+  },
+  {
+    "itemId": 20005,
+    "isUse": 0,
+    "buffId": "40016",
+    "picture": "singlebg/v2a8_molideer_singlebg/item/icon_shoudian.png",
+    "name": "language_10087124"
+  },
+  {
+    "itemId": 20006,
+    "isUse": 1,
+    "buffId": "40017",
+    "picture": "singlebg/v2a8_molideer_singlebg/item/icon_dongyu.png",
+    "name": "language_10087125"
+  },
+  {
+    "itemId": 20007,
+    "isUse": 0,
+    "buffId": "40018",
+    "picture": "singlebg/v2a8_molideer_singlebg/item/icon_duijiangji.png",
+    "name": "language_10087126"
+  }
+]

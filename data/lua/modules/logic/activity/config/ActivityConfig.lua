@@ -25,7 +25,7 @@ end
 
 function var_0_0.onConfigLoaded(arg_3_0, arg_3_1, arg_3_2)
 	if arg_3_1 == "activity" then
-		arg_3_0._activityConfig = arg_3_2
+		arg_3_0:__init_activity(arg_3_2)
 	elseif arg_3_1 == "activity_center" then
 		arg_3_0._activityCenterConfig = arg_3_2
 	elseif arg_3_1 == "activity101" then
@@ -279,6 +279,33 @@ function var_0_0.getActivityCenterRedDotId(arg_30_0, arg_30_1)
 	local var_30_0 = arg_30_0:getActivityCenterCo(arg_30_1)
 
 	return var_30_0 and var_30_0.reddotid or 0
+end
+
+function var_0_0.__init_activity(arg_31_0, arg_31_1)
+	arg_31_0._activityConfig = arg_31_1
+	arg_31_0._typeId2ActivityCOList = {}
+
+	for iter_31_0, iter_31_1 in ipairs(arg_31_1.configList) do
+		local var_31_0 = iter_31_1.typeId
+
+		arg_31_0._typeId2ActivityCOList[var_31_0] = arg_31_0._typeId2ActivityCOList[var_31_0] or {}
+
+		table.insert(arg_31_0._typeId2ActivityCOList[var_31_0], iter_31_1)
+	end
+
+	for iter_31_2, iter_31_3 in pairs(arg_31_0._typeId2ActivityCOList) do
+		table.sort(iter_31_3, function(arg_32_0, arg_32_1)
+			return arg_32_0.id > arg_32_1.id
+		end)
+	end
+end
+
+function var_0_0.typeId2ActivityCOList(arg_33_0, arg_33_1)
+	if not arg_33_1 then
+		return {}
+	end
+
+	return arg_33_0._typeId2ActivityCOList[arg_33_1] or {}
 end
 
 var_0_0.instance = var_0_0.New()

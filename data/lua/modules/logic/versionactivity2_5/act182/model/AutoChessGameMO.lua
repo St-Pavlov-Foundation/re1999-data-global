@@ -3,6 +3,7 @@
 local var_0_0 = pureTable("AutoChessGameMO")
 
 function var_0_0.init(arg_1_0, arg_1_1)
+	arg_1_0.activityId = arg_1_1.activityId
 	arg_1_0.module = arg_1_1.module
 	arg_1_0.start = arg_1_1.start
 	arg_1_0.currRound = arg_1_1.currRound

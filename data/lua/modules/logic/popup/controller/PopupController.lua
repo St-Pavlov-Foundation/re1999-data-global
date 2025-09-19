@@ -170,6 +170,20 @@ function var_0_0.getPopupCount(arg_18_0)
 	return (arg_18_0._popupList:getSize())
 end
 
+function var_0_0.havePopupView(arg_19_0, arg_19_1)
+	if not arg_19_0._popupList or arg_19_0._popupList:getSize() <= 0 then
+		return false
+	end
+
+	for iter_19_0, iter_19_1 in ipairs(arg_19_0._popupList._dataList) do
+		if iter_19_1[2] == arg_19_1 then
+			return true
+		end
+	end
+
+	return false
+end
+
 var_0_0.instance = var_0_0.New()
 
 return var_0_0

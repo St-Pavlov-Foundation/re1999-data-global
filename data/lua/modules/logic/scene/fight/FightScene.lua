@@ -21,20 +21,7 @@ function var_0_0._createAllComps(arg_1_0)
 	arg_1_0:_addComp("specialEffectMgr", FightSceneSpecialEffectMgr)
 	arg_1_0:_addComp("cardCamera", FightSceneCardCameraComp)
 	arg_1_0:_addComp("wadingEffect", FightSceneWadingEffect)
-
-	if GameSceneMgr.instance:useDefaultScene() == false then
-		arg_1_0:_addComp("triggerSceneAnimator", FightSceneTriggerSceneAnimatorComp)
-	end
-
 	arg_1_0:_addComp("magicCircle", FightSceneMagicCircleComp)
-	arg_1_0:_addComp("deadEntityMgr", FightSceneDeadEntityMgrComp)
-	arg_1_0:_addComp("tempEntityMgr", FightSceneTempEntityMgrComp)
-	arg_1_0:_addComp("fightStatus", FightSceneFightStatusComp)
-
-	if isDebugBuild then
-		arg_1_0:_addComp("fightLog", FightSceneFightLogComp)
-	end
-
 	arg_1_0:_addComp("mgr", FightSceneMgrComp)
 	arg_1_0:addLowPhoneMemoryComp()
 end
@@ -55,7 +42,9 @@ function var_0_0.addLowPhoneMemoryComp(arg_2_0)
 end
 
 function var_0_0.onClose(arg_3_0)
+	FightGameHelper.disposeGameMgr()
 	arg_3_0.mgr:onSceneClose()
+	FightSystem.instance:clearDirectStartNewFightWork()
 	var_0_0.super.onClose(arg_3_0)
 	FightTLEventPool.dispose()
 	FightSkillBehaviorMgr.instance:dispose()

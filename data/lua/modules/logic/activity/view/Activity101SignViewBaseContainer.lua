@@ -17,6 +17,10 @@ function var_0_0._getScrollView(arg_2_0)
 	var_2_1.cellSpaceV = 0
 	var_2_1.startSpace = 0
 	var_2_1.prefabUrl = arg_2_0._viewSetting.otherRes[1]
+	var_2_1.rectMaskSoftness = {
+		0,
+		0
+	}
 
 	arg_2_0:onModifyListScrollParam(var_2_1)
 	assert(var_2_1.cellClass)
@@ -84,7 +88,19 @@ end
 
 function var_0_0.getCsListScroll(arg_11_0)
 	if not arg_11_0:isLimitedScrollView() then
-		return
+		local var_11_0 = arg_11_0:getScrollRect()
+
+		if not var_11_0 then
+			return nil
+		end
+
+		local var_11_1 = var_11_0.gameObject
+
+		if gohelper.isNil(var_11_1) then
+			return nil
+		end
+
+		return var_11_1:GetComponent(gohelper.Type_LimitedScrollRect)
 	end
 
 	return arg_11_0:getScrollView():getCsListScroll()
@@ -170,6 +186,48 @@ function var_0_0._onRefreshNorSignActivity(arg_23_0)
 
 		arg_23_0.__onceGotRewardFetch101Infos = false
 	end
+end
+
+local var_0_1 = "Activity101|"
+
+function var_0_0.getPrefsKeyPrefix(arg_24_0)
+	return var_0_1 .. tostring(arg_24_0:actId())
+end
+
+function var_0_0.saveInt(arg_25_0, arg_25_1, arg_25_2)
+	GameUtil.playerPrefsSetNumberByUserId(arg_25_1, arg_25_2)
+end
+
+function var_0_0.getInt(arg_26_0, arg_26_1, arg_26_2)
+	return GameUtil.playerPrefsGetNumberByUserId(arg_26_1, arg_26_2)
+end
+
+function var_0_0.getMoonFestivalSignMaxDay(arg_27_0)
+	return ActivityType101Config.instance:getMoonFestivalSignMaxDay(arg_27_0:actId())
+end
+
+function var_0_0.getType101LoginCount(arg_28_0)
+	return ActivityType101Model.instance:getType101LoginCount(arg_28_0:actId())
+end
+
+function var_0_0.getLastGetIndex(arg_29_0)
+	return ActivityType101Model.instance:getLastGetIndex(arg_29_0:actId())
+end
+
+function var_0_0.isType101RewardCouldGetAnyOne(arg_30_0)
+	return ActivityType101Model.instance:isType101RewardCouldGetAnyOne(arg_30_0:actId())
+end
+
+function var_0_0.isType101RewardCouldGet(arg_31_0, arg_31_1)
+	return ActivityType101Model.instance:isType101RewardCouldGet(arg_31_0:actId(), arg_31_1)
+end
+
+function var_0_0.isType101RewardGet(arg_32_0, arg_32_1)
+	return ActivityType101Model.instance:isType101RewardGet(arg_32_0:actId(), arg_32_1)
+end
+
+function var_0_0.getFirstAvailableIndex(arg_33_0)
+	return ActivityType101Model.instance:getFirstAvailableIndex(arg_33_0:actId())
 end
 
 return var_0_0

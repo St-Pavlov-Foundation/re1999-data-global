@@ -40,13 +40,18 @@
     "enterview": "Permanent1_6EnterView"
   },
   {
-    "id": 12101,
-    "kvIcon": "reappear_img_kv11",
-    "enterview": "Permanent2_1EnterView"
+    "id": 11901,
+    "kvIcon": "reappear_img_kv09",
+    "enterview": "Permanent1_9EnterView"
   },
   {
     "id": 12002,
     "kvIcon": "reappear_img_kv10",
     "enterview": "Permanent2_0EnterView"
+  },
+  {
+    "id": 12101,
+    "kvIcon": "reappear_img_kv11",
+    "enterview": "Permanent2_1EnterView"
   }
 ]

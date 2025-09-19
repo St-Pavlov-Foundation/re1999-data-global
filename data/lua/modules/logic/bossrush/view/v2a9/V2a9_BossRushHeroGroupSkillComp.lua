@@ -66,7 +66,9 @@ function var_0_0.onUpdateMO(arg_7_0)
 
 	arg_7_0._stage = BossRushConfig.instance:getEpisodeCoByEpisodeId(var_7_0).stage
 
-	AssassinController.instance:getAssassinOutsideInfo(arg_7_0._refreshModel, arg_7_0, true)
+	local var_7_1 = AssassinOutsideModel.instance:getAct195Id()
+
+	AssassinOutSideRpc.instance:sendGetAssassinOutSideInfoRequest(var_7_1, arg_7_0._refreshModel, arg_7_0)
 end
 
 function var_0_0._refreshModel(arg_8_0)

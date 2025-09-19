@@ -1,0 +1,23 @@
+[
+  {
+    "id": 312002,
+    "priority": 1,
+    "posZ": -3,
+    "scale": 0.8,
+    "posXOffset": 0.3
+  },
+  {
+    "id": 312002,
+    "priority": 2,
+    "posZ": -2,
+    "scale": 0.81,
+    "posXOffset": 0.3
+  },
+  {
+    "id": 312002,
+    "priority": 3,
+    "posZ": -1,
+    "scale": 0.82,
+    "posXOffset": -0.2
+  }
+]

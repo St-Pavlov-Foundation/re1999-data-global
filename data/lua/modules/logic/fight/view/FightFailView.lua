@@ -213,6 +213,10 @@ function var_0_0.refreshTips(arg_9_0)
 		var_9_6 = HeroGroupFightViewRule.meilanniExcludeRules(var_9_6)
 	end
 
+	if arg_9_0.episodeCo.type == DungeonEnum.EpisodeType.Survival then
+		var_9_6 = SurvivalShelterModel.instance:addExRule(var_9_6)
+	end
+
 	if var_9_6 and #var_9_6 ~= 0 then
 		arg_9_0:refreshConditionsContainer(var_9_6)
 	else

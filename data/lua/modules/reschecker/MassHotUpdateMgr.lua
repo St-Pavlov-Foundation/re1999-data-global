@@ -86,7 +86,7 @@ function var_0_0.onDownloadProgress(arg_3_0, arg_3_1, arg_3_2)
 	local var_3_3 = HotUpdateMgr.instance:_fixSizeStr(arg_3_0._allSize)
 	local var_3_4 = string.format(booterLang("mass_download_Progress"), arg_3_1, var_3_3)
 
-	BootLoadingView.instance:show(var_3_2, var_3_4)
+	HotUpdateProgress.instance:setProgressDownloadRes(var_3_2, var_3_4)
 end
 
 function var_0_0.onDownloadFinish(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4)
@@ -139,17 +139,13 @@ function var_0_0.onDownloadFinish(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4)
 			arg_4_0._useBackupCount = 0
 		end
 
-		if BootNativeUtil.getPackageName() ~= "com.shenlan.m.reverse1999.nearme.gamecenter" then
-			if SDKMgr.instance:isIgnoreFileMissing() then
-				if var_4_4 == true then
-					arg_4_0._lastFailedFileCount = arg_4_1
+		if BootNativeUtil.getPackageName() ~= "com.shenlan.m.reverse1999.nearme.gamecenter" and SDKMgr.instance:isIgnoreFileMissing() then
+			if var_4_4 == true then
+				arg_4_0._lastFailedFileCount = arg_4_1
 
-					arg_4_0:_skip()
-				else
-					arg_4_0:retryFailedFiles()
-				end
-
-				return
+				arg_4_0:_skip()
+			else
+				arg_4_0:retryFailedFiles()
 			end
 
 			return

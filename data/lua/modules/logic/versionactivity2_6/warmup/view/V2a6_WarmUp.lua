@@ -53,26 +53,7 @@ end
 
 function var_0_0._btngotoOnClick(arg_5_0)
 	SDKDataTrackMgr.instance:trackClickActivityJumpButton()
-
-	local var_5_0 = arg_5_0.viewContainer:getH5BaseUrl()
-
-	if SettingsModel.instance:isTwRegion() then
-		WebViewController.instance:openWebView(var_5_0, false, arg_5_0._onWebViewCb, arg_5_0)
-	elseif SettingsModel.instance:isKrRegion() then
-		local var_5_1 = SDKMgr.instance:getUserInfoExtraParams()
-
-		if var_5_1.ko_jwt then
-			var_5_0 = var_5_0 .. tostring(var_5_1.ko_jwt)
-		end
-
-		if BootNativeUtil.isAndroid() then
-			GameUtil.openURL(var_5_0)
-		else
-			WebViewController.instance:openWebView(var_5_0, false, arg_5_0._onWebViewCb, arg_5_0)
-		end
-	else
-		WebViewController.instance:simpleOpenWebView(var_5_0, false, arg_5_0._onWebViewCb, arg_5_0)
-	end
+	arg_5_0.viewContainer:openWebView(arg_5_0._onWebViewCb, arg_5_0)
 end
 
 function var_0_0._onWebViewCb(arg_6_0, arg_6_1, arg_6_2)

@@ -103,34 +103,42 @@ function var_0_0._addSkinRes(arg_2_0, arg_2_1, arg_2_2)
 
 	ResSplitModel.instance:setExclude(ResSplitEnum.Folder, var_2_11, arg_2_2)
 
-	local var_2_12 = ResUrl.getRolesPrefabStoryFolder(arg_2_1.verticalDrawing)
-	local var_2_13 = string.sub(var_2_12, 1, string.len(var_2_12) - 1)
+	local var_2_12 = arg_2_1.live2dbg
 
-	ResSplitModel.instance:setExclude(ResSplitEnum.Path, var_2_13, arg_2_2)
+	if not string.nilorempty(var_2_12) then
+		local var_2_13 = ResUrl.getCharacterSkinLive2dBg(var_2_12)
 
-	local var_2_14 = string.split(arg_2_1.spine, "/")
-	local var_2_15 = string.format("roles/%s/", var_2_14[1])
+		ResSplitModel.instance:setExclude(ResSplitEnum.Folder, var_2_13, arg_2_2)
+	end
 
-	ResSplitModel.instance:setExclude(ResSplitEnum.Folder, var_2_15, arg_2_2)
+	local var_2_14 = ResUrl.getRolesPrefabStoryFolder(arg_2_1.verticalDrawing)
+	local var_2_15 = string.sub(var_2_14, 1, string.len(var_2_14) - 1)
 
-	local var_2_16 = string.split(arg_2_1.alternateSpine, "/")
+	ResSplitModel.instance:setExclude(ResSplitEnum.Path, var_2_15, arg_2_2)
+
+	local var_2_16 = string.split(arg_2_1.spine, "/")
 	local var_2_17 = string.format("roles/%s/", var_2_16[1])
 
 	ResSplitModel.instance:setExclude(ResSplitEnum.Folder, var_2_17, arg_2_2)
 
-	local var_2_18 = lua_character_limited.configDict[arg_2_1.id]
+	local var_2_18 = string.split(arg_2_1.alternateSpine, "/")
+	local var_2_19 = string.format("roles/%s/", var_2_18[1])
 
-	if var_2_18 and not string.nilorempty(var_2_18.entranceMv) then
-		ResSplitModel.instance:setExclude(ResSplitEnum.Video, var_2_18.entranceMv, true)
+	ResSplitModel.instance:setExclude(ResSplitEnum.Folder, var_2_19, arg_2_2)
+
+	local var_2_20 = lua_character_limited.configDict[arg_2_1.id]
+
+	if var_2_20 and not string.nilorempty(var_2_20.entranceMv) then
+		ResSplitModel.instance:setExclude(ResSplitEnum.Video, var_2_20.entranceMv, true)
 	end
 
 	if arg_2_2 == false then
 		FightConfig.instance:_checkskinSkill()
 
-		local var_2_19 = FightConfig.instance._skinSkillTLDict[arg_2_1.id]
+		local var_2_21 = FightConfig.instance._skinSkillTLDict[arg_2_1.id]
 
-		if var_2_19 then
-			for iter_2_0, iter_2_1 in pairs(var_2_19) do
+		if var_2_21 then
+			for iter_2_0, iter_2_1 in pairs(var_2_21) do
 				ResSplitModel.instance:addIncludeTimeline(iter_2_1)
 			end
 		end

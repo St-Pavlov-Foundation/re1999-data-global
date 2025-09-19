@@ -1296,6 +1296,762 @@
     "audio": 0
   },
   {
+    "id": 28001,
+    "stepId": 1,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "512901",
+    "content": "language_10080479",
+    "audio": 0
+  },
+  {
+    "id": 28002,
+    "stepId": 1,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "512901",
+    "content": "language_10080480",
+    "audio": 0
+  },
+  {
+    "id": 28003,
+    "stepId": 1,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "512901",
+    "content": "language_10080481",
+    "audio": 0
+  },
+  {
+    "id": 28004,
+    "stepId": 1,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "512901",
+    "content": "language_10080482",
+    "audio": 0
+  },
+  {
+    "id": 28005,
+    "stepId": 1,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "512901",
+    "content": "language_10080483",
+    "audio": 0
+  },
+  {
+    "id": 28006,
+    "stepId": 1,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "512901",
+    "content": "language_10080484",
+    "audio": 0
+  },
+  {
+    "id": 28007,
+    "stepId": 1,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "512901",
+    "content": "language_10080485",
+    "audio": 0
+  },
+  {
+    "id": 28008,
+    "stepId": 1,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "512901",
+    "content": "language_10080486",
+    "audio": 0
+  },
+  {
+    "id": 28009,
+    "stepId": 1,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "512901",
+    "content": "language_10080487",
+    "audio": 0
+  },
+  {
+    "id": 28010,
+    "stepId": 1,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "512901",
+    "content": "language_10080488",
+    "audio": 0
+  },
+  {
+    "id": 28010,
+    "stepId": 2,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "310701",
+    "content": "language_10080489",
+    "audio": 0
+  },
+  {
+    "id": 28010,
+    "stepId": 3,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "512901",
+    "content": "language_10080490",
+    "audio": 0
+  },
+  {
+    "id": 28010,
+    "stepId": 4,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "310701",
+    "content": "language_10080491",
+    "audio": 0
+  },
+  {
+    "id": 28010,
+    "stepId": 5,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "512901",
+    "content": "language_10080492",
+    "audio": 0
+  },
+  {
+    "id": 28010,
+    "stepId": 6,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "310701",
+    "content": "language_10080493",
+    "audio": 0
+  },
+  {
+    "id": 28010,
+    "stepId": 7,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "512901",
+    "content": "language_10080494",
+    "audio": 0
+  },
+  {
+    "id": 28010,
+    "stepId": 8,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "310701",
+    "content": "language_10080495",
+    "audio": 0
+  },
+  {
+    "id": 28010,
+    "stepId": 9,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "310701",
+    "content": "language_10080496",
+    "audio": 0
+  },
+  {
+    "id": 28010,
+    "stepId": 10,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "310701",
+    "content": "language_10080497",
+    "audio": 0
+  },
+  {
+    "id": 28010,
+    "stepId": 11,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "512901",
+    "content": "language_10080498",
+    "audio": 0
+  },
+  {
+    "id": 28010,
+    "stepId": 12,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "512901",
+    "content": "language_10080499",
+    "audio": 0
+  },
+  {
+    "id": 28010,
+    "stepId": 13,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "310701",
+    "content": "language_10080500",
+    "audio": 0
+  },
+  {
+    "id": 28010,
+    "stepId": 14,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "512901",
+    "content": "language_10080501",
+    "audio": 0
+  },
+  {
+    "id": 28010,
+    "stepId": 15,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "512901",
+    "content": "language_10080502",
+    "audio": 0
+  },
+  {
+    "id": 28011,
+    "stepId": 1,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "512901",
+    "content": "language_10080503",
+    "audio": 0
+  },
+  {
+    "id": 28012,
+    "stepId": 1,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "512901",
+    "content": "language_10080504",
+    "audio": 0
+  },
+  {
+    "id": 28012,
+    "stepId": 2,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "310701",
+    "content": "language_10080505",
+    "audio": 0
+  },
+  {
+    "id": 28012,
+    "stepId": 3,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "512901",
+    "content": "language_10080506",
+    "audio": 0
+  },
+  {
+    "id": 28013,
+    "stepId": 1,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "512901",
+    "content": "language_10080507",
+    "audio": 0
+  },
+  {
+    "id": 28013,
+    "stepId": 2,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "310701",
+    "content": "language_10080508",
+    "audio": 0
+  },
+  {
+    "id": 28013,
+    "stepId": 3,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "512901",
+    "content": "language_10080509",
+    "audio": 0
+  },
+  {
+    "id": 28013,
+    "stepId": 4,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "310701",
+    "content": "language_10080510",
+    "audio": 0
+  },
+  {
+    "id": 28013,
+    "stepId": 5,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "512901",
+    "content": "language_10080511",
+    "audio": 0
+  },
+  {
+    "id": 28013,
+    "stepId": 6,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "311601",
+    "content": "language_10080512",
+    "audio": 0
+  },
+  {
+    "id": 28013,
+    "stepId": 7,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "512901",
+    "content": "language_10080513",
+    "audio": 0
+  },
+  {
+    "id": 28013,
+    "stepId": 8,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "311601",
+    "content": "language_10080514",
+    "audio": 0
+  },
+  {
+    "id": 28013,
+    "stepId": 9,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "311601",
+    "content": "language_10080515",
+    "audio": 0
+  },
+  {
+    "id": 28014,
+    "stepId": 1,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "512901",
+    "content": "language_10080516",
+    "audio": 0
+  },
+  {
+    "id": 28014,
+    "stepId": 2,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "310701",
+    "content": "language_10080517",
+    "audio": 0
+  },
+  {
+    "id": 28014,
+    "stepId": 3,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "512901",
+    "content": "language_10080518",
+    "audio": 0
+  },
+  {
+    "id": 28014,
+    "stepId": 4,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "512901",
+    "content": "language_10080519",
+    "audio": 0
+  },
+  {
+    "id": 28014,
+    "stepId": 5,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "310701",
+    "content": "language_10080520",
+    "audio": 0
+  },
+  {
+    "id": 28014,
+    "stepId": 6,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "512901",
+    "content": "language_10080521",
+    "audio": 0
+  },
+  {
+    "id": 28014,
+    "stepId": 7,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "512901",
+    "content": "language_10080522",
+    "audio": 0
+  },
+  {
+    "id": 28014,
+    "stepId": 8,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "512901",
+    "content": "language_10080523",
+    "audio": 0
+  },
+  {
+    "id": 28014,
+    "stepId": 9,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "304701",
+    "content": "language_10080524",
+    "audio": 0
+  },
+  {
+    "id": 28014,
+    "stepId": 10,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "310701",
+    "content": "language_10080525",
+    "audio": 0
+  },
+  {
+    "id": 28014,
+    "stepId": 11,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "304701",
+    "content": "language_10080526",
+    "audio": 0
+  },
+  {
+    "id": 28014,
+    "stepId": 12,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "304701",
+    "content": "language_10080527",
+    "audio": 0
+  },
+  {
+    "id": 28015,
+    "stepId": 1,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "512901",
+    "content": "language_10001221",
+    "audio": 0
+  },
+  {
+    "id": 28015,
+    "stepId": 2,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "310701",
+    "content": "language_10080528",
+    "audio": 0
+  },
+  {
+    "id": 28015,
+    "stepId": 3,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "512901",
+    "content": "language_10080529",
+    "audio": 0
+  },
+  {
+    "id": 28015,
+    "stepId": 4,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "310701",
+    "content": "language_90001207",
+    "audio": 0
+  },
+  {
+    "id": 28015,
+    "stepId": 5,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "512901",
+    "content": "language_10080530",
+    "audio": 0
+  },
+  {
+    "id": 28015,
+    "stepId": 6,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "512901",
+    "content": "language_10080531",
+    "audio": 0
+  },
+  {
+    "id": 28015,
+    "stepId": 7,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "310701",
+    "content": "language_10080532",
+    "audio": 0
+  },
+  {
+    "id": 28015,
+    "stepId": 8,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "512901",
+    "content": "language_10080533",
+    "audio": 0
+  },
+  {
+    "id": 28015,
+    "stepId": 9,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "311601",
+    "content": "language_10001221",
+    "audio": 0
+  },
+  {
+    "id": 28015,
+    "stepId": 10,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "304701",
+    "content": "language_10080534",
+    "audio": 0
+  },
+  {
+    "id": 28015,
+    "stepId": 11,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "311601",
+    "content": "language_10080535",
+    "audio": 0
+  },
+  {
+    "id": 28015,
+    "stepId": 12,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "304701",
+    "content": "language_10080536",
+    "audio": 0
+  },
+  {
+    "id": 28015,
+    "stepId": 13,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "311601",
+    "content": "language_10080537",
+    "audio": 0
+  },
+  {
+    "id": 28016,
+    "stepId": 1,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "512901",
+    "content": "language_10080538",
+    "audio": 0
+  },
+  {
+    "id": 28017,
+    "stepId": 1,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "512901",
+    "content": "language_10080539",
+    "audio": 0
+  },
+  {
+    "id": 28018,
+    "stepId": 1,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "512901",
+    "content": "language_10080540",
+    "audio": 0
+  },
+  {
+    "id": 28019,
+    "stepId": 1,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "512901",
+    "content": "language_10080541",
+    "audio": 0
+  },
+  {
+    "id": 28020,
+    "stepId": 1,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "512901",
+    "content": "language_10080542",
+    "audio": 0
+  },
+  {
+    "id": 28021,
+    "stepId": 1,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "512901",
+    "content": "language_10080543",
+    "audio": 0
+  },
+  {
+    "id": 28022,
+    "stepId": 1,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "512901",
+    "content": "language_10080544",
+    "audio": 0
+  },
+  {
+    "id": 28023,
+    "stepId": 1,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "512901",
+    "content": "language_10080545",
+    "audio": 0
+  },
+  {
+    "id": 28024,
+    "stepId": 1,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "512901",
+    "content": "language_10080546",
+    "audio": 0
+  },
+  {
+    "id": 28025,
+    "stepId": 1,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "512901",
+    "content": "language_10080547",
+    "audio": 0
+  },
+  {
+    "id": 28026,
+    "stepId": 1,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "512901",
+    "content": "language_10080548",
+    "audio": 0
+  },
+  {
+    "id": 28027,
+    "stepId": 1,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "512901",
+    "content": "language_10080549",
+    "audio": 0
+  },
+  {
+    "id": 28028,
+    "stepId": 1,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "512901",
+    "content": "language_10080550",
+    "audio": 0
+  },
+  {
+    "id": 28029,
+    "stepId": 1,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "512901",
+    "content": "language_10080551",
+    "audio": 0
+  },
+  {
+    "id": 28030,
+    "stepId": 1,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "512901",
+    "content": "language_10080552",
+    "audio": 0
+  },
+  {
+    "id": 28031,
+    "stepId": 1,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "512901",
+    "content": "language_10080553",
+    "audio": 0
+  },
+  {
+    "id": 28032,
+    "stepId": 1,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "512901",
+    "content": "language_10080554",
+    "audio": 0
+  },
+  {
+    "id": 28033,
+    "stepId": 1,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "512901",
+    "content": "language_10080555",
+    "audio": 0
+  },
+  {
+    "id": 28034,
+    "stepId": 1,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "512901",
+    "content": "language_10080556",
+    "audio": 0
+  },
+  {
+    "id": 28035,
+    "stepId": 1,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "512901",
+    "content": "language_10080557",
+    "audio": 0
+  },
+  {
+    "id": 28036,
+    "stepId": 1,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "512901",
+    "content": "language_10080558",
+    "audio": 0
+  },
+  {
+    "id": 28037,
+    "stepId": 1,
+    "type": "talk",
+    "pos": "440#276",
+    "icon": "512901",
+    "content": "language_10080559",
+    "audio": 0
+  },
+  {
     "id": 305001,
     "stepId": 1,
     "type": "talk",

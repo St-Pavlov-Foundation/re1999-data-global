@@ -20,7 +20,7 @@ end
 
 local var_0_2 = 0
 local var_0_3 = 1
-local var_0_4 = "服务器异常"
+local var_0_4 = "myserver error"
 local var_0_5 = "returnCode: -2"
 local var_0_6 = _G.class("STesting", var_0_0)
 
@@ -384,6 +384,43 @@ end
 function var_0_9._test(arg_33_0)
 	arg_33_0._client:build_test()
 	arg_33_0._sever:build_test()
+end
+
+function var_0_9._offline_test(arg_34_0)
+	local var_34_0 = lua_activity125.configList or {}
+	local var_34_1 = var_34_0[#var_34_0]
+	local var_34_2 = var_34_1 and var_34_1.activityId or nil
+
+	logError(var_34_2)
+
+	if not var_34_2 then
+		logError("Activity125Testing offline test error: can not found actid")
+
+		return
+	end
+
+	local var_34_3 = os.time() * 1000
+	local var_34_4 = var_34_3 + 259200
+	local var_34_5 = {
+		activityInfos = {
+			{
+				currentStage = 0,
+				isUnlock = true,
+				online = true,
+				isReceiveAllBonus = false,
+				isNewStage = false,
+				id = var_34_2,
+				startTime = var_34_3,
+				endTime = var_34_4
+			}
+		}
+	}
+
+	ActivityModel.instance:setActivityInfo(var_34_5)
+	var_0_9.instance:_test()
+	Activity125Model.instance:setSelectEpisodeId(var_34_2, 1)
+	ActivityModel.instance:setTargetActivityCategoryId(var_34_2)
+	ViewMgr.instance:openView(ViewName.ActivityBeginnerView)
 end
 
 var_0_9.instance = var_0_9.New()

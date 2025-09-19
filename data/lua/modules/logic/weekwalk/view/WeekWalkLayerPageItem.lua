@@ -306,9 +306,11 @@ function var_0_0._updateStatus(arg_21_0)
 		return
 	end
 
-	local var_21_1 = WeekWalkModel.instance:getFinishMapId()
+	local var_21_1 = arg_21_0._mapInfo
+	local var_21_2 = WeekWalkModel.instance:getFinishMapId()
+	local var_21_3 = arg_21_0._layerPage:getVisible() and var_21_2 and var_21_2 < arg_21_0._config.id
 
-	if arg_21_0._layerPage:getVisible() and var_21_1 and var_21_1 < arg_21_0._config.id or arg_21_0._showUnlockAnim then
+	if var_21_3 or arg_21_0._showUnlockAnim then
 		WeekWalkModel.instance:setFinishMapId(nil)
 
 		if arg_21_0._mapInfo.isFinish ~= 1 then
@@ -316,25 +318,27 @@ function var_0_0._updateStatus(arg_21_0)
 			AudioMgr.instance:trigger(AudioEnum.WeekWalk.play_artificial_ui_unlockdream)
 		end
 	else
-		local var_21_2 = arg_21_0._mapInfo
-
-		if not arg_21_0._layerPage:getVisible() and var_21_1 and var_21_1 < arg_21_0._config.id then
-			var_21_2 = false
+		if not arg_21_0._layerPage:getVisible() and var_21_2 and var_21_2 < arg_21_0._config.id then
+			var_21_1 = false
 		end
 
-		gohelper.setActive(arg_21_0._gounlock, var_21_2)
-		gohelper.setActive(arg_21_0._golock, not var_21_2)
+		gohelper.setActive(arg_21_0._gounlock, var_21_1)
+		gohelper.setActive(arg_21_0._golock, not var_21_1)
 	end
 
-	local var_21_3 = arg_21_0._config.id
-	local var_21_4 = WeekWalkRewardView.getTaskType(var_21_3)
-	local var_21_5, var_21_6 = WeekWalkTaskListModel.instance:canGetRewardNum(var_21_4, var_21_3)
-	local var_21_7 = var_21_5 > 0
+	local var_21_4 = arg_21_0._config.id
+	local var_21_5 = WeekWalkRewardView.getTaskType(var_21_4)
+	local var_21_6, var_21_7 = WeekWalkTaskListModel.instance:canGetRewardNum(var_21_5, var_21_4)
+	local var_21_8 = var_21_6 > 0
 
-	gohelper.setActive(arg_21_0._gorewardIcon, var_21_7)
-	gohelper.setActive(arg_21_0._gorewardfinish, not var_21_7 and var_21_6 <= 0)
-	gohelper.setActive(arg_21_0._gonormalIcon, not var_21_7 and var_21_6 > 0)
+	gohelper.setActive(arg_21_0._gorewardIcon, var_21_8)
+	gohelper.setActive(arg_21_0._gorewardfinish, not var_21_8 and var_21_7 <= 0)
+	gohelper.setActive(arg_21_0._gonormalIcon, not var_21_8 and var_21_7 > 0)
 	gohelper.setActive(arg_21_0._gomapfinish, arg_21_0._mapInfo.isFinished > 0)
+
+	if (var_21_8 or arg_21_0._mapInfo.isFinished > 0) and not var_21_1 then
+		logError(string.format("WeekWalkLayerPageItem error unlock mapId:%s canGetReward:%s isUnlock:%s showUnlockAnim:%s self._showUnlockAnim:%s finishMapId:%s pageVisible:%s isFinished:%s", var_21_4, var_21_8, var_21_1, var_21_3, arg_21_0._showUnlockAnim, var_21_2, arg_21_0._layerPage:getVisible(), arg_21_0._mapInfo.isFinished))
+	end
 end
 
 function var_0_0.onDestroyView(arg_22_0)

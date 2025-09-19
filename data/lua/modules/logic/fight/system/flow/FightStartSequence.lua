@@ -59,7 +59,7 @@ function var_0_0._buildFocusBorn(arg_6_0)
 	arg_6_0:addWork(FightWorkFocusMonster.New())
 
 	if FightModel.instance:getVersion() < 4 then
-		arg_6_0:addWork(FightWorkDistributeCard.New())
+		arg_6_0:addWork(FightWork2Work.New(FightWorkDistributeCard))
 		arg_6_0:addWork(FunctionWork.New(function()
 			FightController.instance:setCurStage(FightEnum.Stage.StartRound)
 		end))
@@ -112,7 +112,7 @@ function var_0_0._buildNormalBorn(arg_12_0)
 	end
 
 	if FightModel.instance:getVersion() < 4 then
-		var_12_1:addWork(FightWorkDistributeCard.New())
+		var_12_1:addWork(FightWork2Work.New(FightWorkDistributeCard))
 		arg_12_0:addWork(FunctionWork.New(function()
 			FightController.instance:setCurStage(FightEnum.Stage.StartRound)
 		end))

@@ -16,8 +16,8 @@ function var_0_0.buildTabViews(arg_2_0, arg_2_1)
 		arg_2_0.navigateView = NavigateButtonsView.New({
 			true,
 			true,
-			false
-		})
+			true
+		}, 2807003)
 
 		return {
 			arg_2_0.navigateView

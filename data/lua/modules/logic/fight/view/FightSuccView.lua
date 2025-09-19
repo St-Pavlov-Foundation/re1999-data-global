@@ -503,7 +503,7 @@ function var_0_0._setSpineVoice(arg_18_0)
 			arg_18_0._uiSpine:setUIMask(true)
 			arg_18_0:_playSpineVoice()
 			arg_18_0._uiSpine:setAllLayer(UnityLayer.UI)
-		end, arg_18_0)
+		end, arg_18_0, CharacterVoiceEnum.NormalFullScreenEffectCameraSize)
 
 		local var_18_1, var_18_2 = SkinConfig.instance:getSkinOffset(var_18_0.fightSuccViewOffset)
 
@@ -730,6 +730,8 @@ function var_0_0._loadBonusItems(arg_32_0)
 				arg_32_0:_addFirstItem(iter_32_5, arg_32_0.onRefreshV2a2Dungeon)
 			elseif iter_32_5.materilType == MaterialEnum.MaterialType.Currency and iter_32_5.materilId == CurrencyEnum.CurrencyType.V2a6Dungeon then
 				arg_32_0:_addFirstItem(iter_32_5, arg_32_0.onRefreshV2a6Dungeon)
+			elseif iter_32_5.materilType == MaterialEnum.MaterialType.Currency and iter_32_5.materilId == CurrencyEnum.CurrencyType.V2a8Dungeon then
+				arg_32_0:_addFirstItem(iter_32_5, arg_32_0.onRefreshV2a8Dungeon)
 			else
 				arg_32_0:_addFirstItem(iter_32_5)
 			end
@@ -1003,42 +1005,52 @@ function var_0_0.onRefreshV2a6Dungeon(arg_44_0, arg_44_1)
 	gohelper.setActive(var_44_0._gov1a7act, true)
 end
 
-function var_0_0._showRecordFarmItem(arg_45_0)
-	local var_45_0 = FightResultModel.instance:getEpisodeId()
-	local var_45_1 = JumpModel.instance:getRecordFarmItem()
-	local var_45_2 = var_0_0.checkRecordFarmItem(var_45_0, var_45_1)
+function var_0_0.onRefreshV2a8Dungeon(arg_45_0, arg_45_1)
+	local var_45_0 = arg_45_1._itemIcon
 
-	gohelper.setActive(arg_45_0._godemand, var_45_2)
+	var_45_0:setCanShowDeadLine(false)
 
-	if var_45_2 then
-		arg_45_0._godemand:GetComponent(typeof(UnityEngine.CanvasGroup)).alpha = 0
-		arg_45_0._farmTweenId = ZProj.TweenHelper.DOFadeCanvasGroup(arg_45_0._godemand, 0, 1, 0.3, nil, nil, nil, EaseType.Linear)
+	var_45_0._gov1a7act = var_45_0._gov1a7act or gohelper.findChild(var_45_0.go, "act")
 
-		if var_45_1.special then
-			arg_45_0._txtdemand.text = var_45_1.desc
+	gohelper.setActive(var_45_0._gov1a7act, true)
+end
 
-			gohelper.setActive(arg_45_0._btnbacktosource.gameObject, true)
+function var_0_0._showRecordFarmItem(arg_46_0)
+	local var_46_0 = FightResultModel.instance:getEpisodeId()
+	local var_46_1 = JumpModel.instance:getRecordFarmItem()
+	local var_46_2 = var_0_0.checkRecordFarmItem(var_46_0, var_46_1)
+
+	gohelper.setActive(arg_46_0._godemand, var_46_2)
+
+	if var_46_2 then
+		arg_46_0._godemand:GetComponent(typeof(UnityEngine.CanvasGroup)).alpha = 0
+		arg_46_0._farmTweenId = ZProj.TweenHelper.DOFadeCanvasGroup(arg_46_0._godemand, 0, 1, 0.3, nil, nil, nil, EaseType.Linear)
+
+		if var_46_1.special then
+			arg_46_0._txtdemand.text = var_46_1.desc
+
+			gohelper.setActive(arg_46_0._btnbacktosource.gameObject, true)
 		else
-			local var_45_3 = ItemModel.instance:getItemConfig(var_45_1.type, var_45_1.id)
-			local var_45_4 = ItemModel.instance:getItemQuantity(var_45_1.type, var_45_1.id)
+			local var_46_3 = ItemModel.instance:getItemConfig(var_46_1.type, var_46_1.id)
+			local var_46_4 = ItemModel.instance:getItemQuantity(var_46_1.type, var_46_1.id)
 
-			if var_45_1.quantity then
-				if var_45_4 >= var_45_1.quantity then
-					arg_45_0._txtdemand.text = string.format("%s %s <color=#81ce83>%s</color>/%s", luaLang("fightsuccview_demand"), var_45_3.name, GameUtil.numberDisplay(var_45_4), GameUtil.numberDisplay(var_45_1.quantity))
+			if var_46_1.quantity then
+				if var_46_4 >= var_46_1.quantity then
+					arg_46_0._txtdemand.text = string.format("%s %s <color=#81ce83>%s</color>/%s", luaLang("fightsuccview_demand"), var_46_3.name, GameUtil.numberDisplay(var_46_4), GameUtil.numberDisplay(var_46_1.quantity))
 				else
-					arg_45_0._txtdemand.text = string.format("%s %s <color=#cc492f>%s</color>/%s", luaLang("fightsuccview_demand"), var_45_3.name, GameUtil.numberDisplay(var_45_4), GameUtil.numberDisplay(var_45_1.quantity))
+					arg_46_0._txtdemand.text = string.format("%s %s <color=#cc492f>%s</color>/%s", luaLang("fightsuccview_demand"), var_46_3.name, GameUtil.numberDisplay(var_46_4), GameUtil.numberDisplay(var_46_1.quantity))
 				end
 
-				gohelper.setActive(arg_45_0._btnbacktosource.gameObject, true)
+				gohelper.setActive(arg_46_0._btnbacktosource.gameObject, true)
 			else
-				local var_45_5 = {
-					var_45_3.name,
-					(GameUtil.numberDisplay(var_45_4))
+				local var_46_5 = {
+					var_46_3.name,
+					(GameUtil.numberDisplay(var_46_4))
 				}
 
-				arg_45_0._txtdemand.text = GameUtil.getSubPlaceholderLuaLang(luaLang("FightSuccView_txtdemand_overseas"), var_45_5)
+				arg_46_0._txtdemand.text = GameUtil.getSubPlaceholderLuaLang(luaLang("FightSuccView_txtdemand_overseas"), var_46_5)
 
-				gohelper.setActive(arg_45_0._btnbacktosource.gameObject, true)
+				gohelper.setActive(arg_46_0._btnbacktosource.gameObject, true)
 			end
 		end
 	else
@@ -1046,49 +1058,49 @@ function var_0_0._showRecordFarmItem(arg_45_0)
 	end
 end
 
-function var_0_0.checkRecordFarmItem(arg_46_0, arg_46_1)
-	if not arg_46_1 then
+function var_0_0.checkRecordFarmItem(arg_47_0, arg_47_1)
+	if not arg_47_1 then
 		return false
 	end
 
-	if arg_46_1.checkFunc then
-		return arg_46_1.checkFunc(arg_46_1.checkFuncObj)
+	if arg_47_1.checkFunc then
+		return arg_47_1.checkFunc(arg_47_1.checkFuncObj)
 	end
 
-	local var_46_0 = ItemModel.instance:processRPCItemList(FightResultModel.instance:getMaterialDataList())
+	local var_47_0 = ItemModel.instance:processRPCItemList(FightResultModel.instance:getMaterialDataList())
 
-	for iter_46_0, iter_46_1 in ipairs(var_46_0) do
-		if iter_46_1.materilType == arg_46_1.type and iter_46_1.materilId == arg_46_1.id then
+	for iter_47_0, iter_47_1 in ipairs(var_47_0) do
+		if iter_47_1.materilType == arg_47_1.type and iter_47_1.materilId == arg_47_1.id then
 			return true
 		end
 	end
 
-	if not (arg_46_0 and DungeonConfig.instance:getEpisodeCO(arg_46_0)) then
+	if not (arg_47_0 and DungeonConfig.instance:getEpisodeCO(arg_47_0)) then
 		return false
 	end
 
-	if var_0_0.checkRecordFarmItemByReward(DungeonModel.instance:getEpisodeFirstBonus(arg_46_0), arg_46_1) then
+	if var_0_0.checkRecordFarmItemByReward(DungeonModel.instance:getEpisodeFirstBonus(arg_47_0), arg_47_1) then
 		return true
 	end
 
-	if var_0_0.checkRecordFarmItemByReward(DungeonModel.instance:getEpisodeAdvancedBonus(arg_46_0), arg_46_1) then
+	if var_0_0.checkRecordFarmItemByReward(DungeonModel.instance:getEpisodeAdvancedBonus(arg_47_0), arg_47_1) then
 		return true
 	end
 
-	if var_0_0.checkRecordFarmItemByReward(DungeonModel.instance:getEpisodeBonus(arg_46_0), arg_46_1) then
+	if var_0_0.checkRecordFarmItemByReward(DungeonModel.instance:getEpisodeBonus(arg_47_0), arg_47_1) then
 		return true
 	end
 
-	if var_0_0.checkRecordFarmItemByReward(DungeonModel.instance:getEpisodeRewardList(arg_46_0), arg_46_1) then
+	if var_0_0.checkRecordFarmItemByReward(DungeonModel.instance:getEpisodeRewardList(arg_47_0), arg_47_1) then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.checkRecordFarmItemByReward(arg_47_0, arg_47_1)
-	for iter_47_0, iter_47_1 in ipairs(arg_47_0) do
-		if tonumber(iter_47_1[1]) == arg_47_1.type and tonumber(iter_47_1[2]) == arg_47_1.id then
+function var_0_0.checkRecordFarmItemByReward(arg_48_0, arg_48_1)
+	for iter_48_0, iter_48_1 in ipairs(arg_48_0) do
+		if tonumber(iter_48_1[1]) == arg_48_1.type and tonumber(iter_48_1[2]) == arg_48_1.id then
 			return true
 		end
 	end
@@ -1096,113 +1108,113 @@ function var_0_0.checkRecordFarmItemByReward(arg_47_0, arg_47_1)
 	return false
 end
 
-function var_0_0._showCharacterGetView(arg_48_0)
+function var_0_0._showCharacterGetView(arg_49_0)
 	PopupController.instance:setPause("fightsuccess", false)
 
-	arg_48_0._canClick = true
+	arg_49_0._canClick = true
 end
 
-function var_0_0._showBonus(arg_49_0)
-	if arg_49_0.hadHighRareProp then
+function var_0_0._showBonus(arg_50_0)
+	if arg_50_0.hadHighRareProp then
 		AudioMgr.instance:trigger(AudioEnum.UI.Play_UI_Rewards_High_2)
 	else
 		AudioMgr.instance:trigger(AudioEnum.UI.play_ui_settleaccounts_resources)
 	end
 
-	if #arg_49_0._bonusGOList <= 0 then
-		arg_49_0:_showRecordFarmItem()
-		arg_49_0:_showCharacterGetView()
+	if #arg_50_0._bonusGOList <= 0 then
+		arg_50_0:_showRecordFarmItem()
+		arg_50_0:_showCharacterGetView()
 
 		return
 	end
 
-	if arg_49_0._popupFlow then
-		arg_49_0._popupFlow:destroy()
+	if arg_50_0._popupFlow then
+		arg_50_0._popupFlow:destroy()
 
-		arg_49_0._popupFlow = nil
+		arg_50_0._popupFlow = nil
 	end
 
-	arg_49_0.popupFlow = FlowSequence.New()
+	arg_50_0.popupFlow = FlowSequence.New()
 
-	arg_49_0.popupFlow:addWork(FightSuccShowBonusWork.New(arg_49_0._bonusGOList, arg_49_0._containerGODict, arg_49_0._delayTime, arg_49_0._itemDelay))
-	arg_49_0.popupFlow:addWork(FightSuccShowExtraBonusWork.New(arg_49_0._extraBonusGOList, arg_49_0._extraContainerGODict, arg_49_0._showBonusEffect, arg_49_0, arg_49_0._moveBonusGOList, arg_49_0._bonusItemContainer, arg_49_0._delayTime, arg_49_0._itemDelay))
-	arg_49_0.popupFlow:addWork(FightSuccShowExtraBonusWork.New(arg_49_0._additionBonusGOList, arg_49_0._additionContainerGODict, arg_49_0._showBonusEffect, arg_49_0, arg_49_0._moveBonusGOList, arg_49_0._bonusItemContainer, arg_49_0._delayTime, arg_49_0._itemDelay))
-	arg_49_0.popupFlow:registerDoneListener(arg_49_0._onAllTweenFinish, arg_49_0)
-	arg_49_0.popupFlow:start()
+	arg_50_0.popupFlow:addWork(FightSuccShowBonusWork.New(arg_50_0._bonusGOList, arg_50_0._containerGODict, arg_50_0._delayTime, arg_50_0._itemDelay))
+	arg_50_0.popupFlow:addWork(FightSuccShowExtraBonusWork.New(arg_50_0._extraBonusGOList, arg_50_0._extraContainerGODict, arg_50_0._showBonusEffect, arg_50_0, arg_50_0._moveBonusGOList, arg_50_0._bonusItemContainer, arg_50_0._delayTime, arg_50_0._itemDelay))
+	arg_50_0.popupFlow:addWork(FightSuccShowExtraBonusWork.New(arg_50_0._additionBonusGOList, arg_50_0._additionContainerGODict, arg_50_0._showBonusEffect, arg_50_0, arg_50_0._moveBonusGOList, arg_50_0._bonusItemContainer, arg_50_0._delayTime, arg_50_0._itemDelay))
+	arg_50_0.popupFlow:registerDoneListener(arg_50_0._onAllTweenFinish, arg_50_0)
+	arg_50_0.popupFlow:start()
 end
 
-function var_0_0._showBonusEffect(arg_50_0)
-	local var_50_0 = gohelper.findChild(arg_50_0.viewGO, "#reward_vx")
+function var_0_0._showBonusEffect(arg_51_0)
+	local var_51_0 = gohelper.findChild(arg_51_0.viewGO, "#reward_vx")
 
-	gohelper.setActive(var_50_0, true)
+	gohelper.setActive(var_51_0, true)
 	AudioMgr.instance:trigger(AudioEnum.UI.play_ui_checkpoint_extrafall)
 
-	if #arg_50_0._firstBonusGOList > 0 then
-		recthelper.setAnchorX(var_50_0.transform, 169)
+	if #arg_51_0._firstBonusGOList > 0 then
+		recthelper.setAnchorX(var_51_0.transform, 169)
 	end
 end
 
-function var_0_0._onAllTweenFinish(arg_51_0)
-	arg_51_0:_showRecordFarmItem()
-	arg_51_0:_showCharacterGetView()
+function var_0_0._onAllTweenFinish(arg_52_0)
+	arg_52_0:_showRecordFarmItem()
+	arg_52_0:_showCharacterGetView()
 
-	if arg_51_0.viewContainer.fightSuccActView then
-		arg_51_0.viewContainer.fightSuccActView:showReward()
+	if arg_52_0.viewContainer.fightSuccActView then
+		arg_52_0.viewContainer.fightSuccActView:showReward()
 	end
 end
 
-function var_0_0._showPlayerLevelUpView(arg_52_0)
-	local var_52_0 = DungeonModel.instance.curSendEpisodeId
-	local var_52_1 = lua_episode.configDict[var_52_0]
+function var_0_0._showPlayerLevelUpView(arg_53_0)
+	local var_53_0 = DungeonModel.instance.curSendEpisodeId
+	local var_53_1 = lua_episode.configDict[var_53_0]
 
 	if ViewMgr.instance:isOpen(ViewName.SkinOffsetAdjustView) then
 		return
 	end
 
-	local var_52_2 = PlayerModel.instance:getAndResetPlayerLevelUp()
+	local var_53_2 = PlayerModel.instance:getAndResetPlayerLevelUp()
 
-	if var_52_2 > 0 then
-		ViewMgr.instance:openView(ViewName.PlayerLevelUpView, var_52_2)
+	if var_53_2 > 0 then
+		ViewMgr.instance:openView(ViewName.PlayerLevelUpView, var_53_2)
 	else
-		arg_52_0:_showBonus()
-	end
-end
-
-function var_0_0._onCloseView(arg_53_0, arg_53_1)
-	if arg_53_1 == ViewName.PlayerLevelUpView or arg_53_1 == ViewName.SeasonLevelView then
 		arg_53_0:_showBonus()
 	end
 end
 
-function var_0_0._onClickData(arg_54_0)
+function var_0_0._onCloseView(arg_54_0, arg_54_1)
+	if arg_54_1 == ViewName.PlayerLevelUpView or arg_54_1 == ViewName.SeasonLevelView then
+		arg_54_0:_showBonus()
+	end
+end
+
+function var_0_0._onClickData(arg_55_0)
 	ViewMgr.instance:openView(ViewName.FightStatView)
 end
 
-function var_0_0._onClickBackToSource(arg_55_0)
-	local var_55_0 = JumpModel.instance:getRecordFarmItem()
+function var_0_0._onClickBackToSource(arg_56_0)
+	local var_56_0 = JumpModel.instance:getRecordFarmItem()
 
-	if var_55_0 then
-		var_55_0.canBackSource = true
+	if var_56_0 then
+		var_56_0.canBackSource = true
 	end
 
-	arg_55_0:closeThis()
+	arg_56_0:closeThis()
 	var_0_0.onStoryEnd()
 end
 
-function var_0_0.showUnLockCurrentEpisodeNewMode(arg_56_0)
-	local var_56_0 = ActivityConfig.instance:getActIdByChapterId(arg_56_0._curChapterId)
+function var_0_0.showUnLockCurrentEpisodeNewMode(arg_57_0)
+	local var_57_0 = ActivityConfig.instance:getActIdByChapterId(arg_57_0._curChapterId)
 
-	if not var_56_0 then
+	if not var_57_0 then
 		return
 	end
 
-	local var_56_1 = ActivityConfig.instance:getActivityDungeonConfig(var_56_0)
+	local var_57_1 = ActivityConfig.instance:getActivityDungeonConfig(var_57_0)
 
-	if not var_56_1 then
+	if not var_57_1 then
 		return
 	end
 
-	if var_56_1.story1ChapterId ~= arg_56_0._curChapterId and var_56_1.story2ChapterId ~= arg_56_0._curChapterId then
+	if var_57_1.story1ChapterId ~= arg_57_0._curChapterId and var_57_1.story2ChapterId ~= arg_57_0._curChapterId then
 		return
 	end
 
@@ -1210,98 +1222,98 @@ function var_0_0.showUnLockCurrentEpisodeNewMode(arg_56_0)
 		return
 	end
 
-	local var_56_2 = DungeonConfig.instance:getVersionActivityBrotherEpisodeByEpisodeCo(lua_episode.configDict[arg_56_0._curEpisodeId])
+	local var_57_2 = DungeonConfig.instance:getVersionActivityBrotherEpisodeByEpisodeCo(lua_episode.configDict[arg_57_0._curEpisodeId])
 
-	if not var_56_2 or #var_56_2 <= 1 then
+	if not var_57_2 or #var_57_2 <= 1 then
 		return
 	end
 
-	local var_56_3 = ActivityConfig.instance:getChapterIdMode(arg_56_0._curChapterId)
+	local var_57_3 = ActivityConfig.instance:getChapterIdMode(arg_57_0._curChapterId)
 
-	GameFacade.showToast(ToastEnum.UnLockCurrentEpisode, luaLang(VersionActivityDungeonBaseEnum.ChapterModeNameKey[var_56_3 + 1]))
+	GameFacade.showToast(ToastEnum.UnLockCurrentEpisode, luaLang(VersionActivityDungeonBaseEnum.ChapterModeNameKey[var_57_3 + 1]))
 end
 
-function var_0_0._hideGoDemand(arg_57_0)
-	gohelper.setActive(arg_57_0._godemand, false)
+function var_0_0._hideGoDemand(arg_58_0)
+	gohelper.setActive(arg_58_0._godemand, false)
 end
 
-function var_0_0._show1_2DailyEpisodeEndNotice(arg_58_0)
-	local var_58_0 = lua_activity116_episode_sp.configDict[arg_58_0._curEpisodeId]
+function var_0_0._show1_2DailyEpisodeEndNotice(arg_59_0)
+	local var_59_0 = lua_activity116_episode_sp.configDict[arg_59_0._curEpisodeId]
 
-	if var_58_0 then
-		ToastController.instance:showToastWithString(var_58_0.endShow)
+	if var_59_0 then
+		ToastController.instance:showToastWithString(var_59_0.endShow)
 	end
 end
 
-function var_0_0._showWeekWalk_2Condition(arg_59_0)
-	local var_59_0 = lua_episode.configDict[arg_59_0._curEpisodeId]
+function var_0_0._showWeekWalk_2Condition(arg_60_0)
+	local var_60_0 = lua_episode.configDict[arg_60_0._curEpisodeId]
 
-	if not (var_59_0 and var_59_0.type == DungeonEnum.EpisodeType.WeekWalk_2) then
+	if not (var_60_0 and var_60_0.type == DungeonEnum.EpisodeType.WeekWalk_2) then
 		return
 	end
 
-	local var_59_1 = WeekWalk_2Model.instance:getResultCupInfos()
+	local var_60_1 = WeekWalk_2Model.instance:getResultCupInfos()
 
-	if not var_59_1 then
+	if not var_60_1 then
 		return
 	end
 
-	for iter_59_0, iter_59_1 in ipairs(var_59_1) do
-		local var_59_2 = gohelper.cloneInPlace(arg_59_0._goweekwalkcontentitem)
+	for iter_60_0, iter_60_1 in ipairs(var_60_1) do
+		local var_60_2 = gohelper.cloneInPlace(arg_60_0._goweekwalkcontentitem)
 
-		arg_59_0:_showWeekWalkVer2OneTaskGroup(var_59_2, iter_59_1, iter_59_0)
+		arg_60_0:_showWeekWalkVer2OneTaskGroup(var_60_2, iter_60_1, iter_60_0)
 	end
 
-	gohelper.setActive(arg_59_0._goalcontent, false)
-	gohelper.setActive(arg_59_0._goweekwalkgoalcontent, true)
+	gohelper.setActive(arg_60_0._goalcontent, false)
+	gohelper.setActive(arg_60_0._goweekwalkgoalcontent, true)
 end
 
-function var_0_0._showWeekWalkVer2OneTaskGroup(arg_60_0, arg_60_1, arg_60_2, arg_60_3)
-	local var_60_0 = arg_60_2.config
+function var_0_0._showWeekWalkVer2OneTaskGroup(arg_61_0, arg_61_1, arg_61_2, arg_61_3)
+	local var_61_0 = arg_61_2.config
 
-	gohelper.findChildText(arg_60_1, "condition").text = var_60_0["desc" .. arg_60_2.result] or var_60_0.desc1
+	gohelper.findChildText(arg_61_1, "condition").text = var_61_0["desc" .. arg_61_2.result] or var_61_0.desc1
 
-	local var_60_1 = gohelper.findChildImage(arg_60_1, "star")
+	local var_61_1 = gohelper.findChildImage(arg_61_1, "star")
 
-	var_60_1.enabled = false
+	var_61_1.enabled = false
 
-	local var_60_2 = arg_60_0:getResInst(arg_60_0.viewContainer._viewSetting.otherRes.weekwalkheart_star, var_60_1.gameObject)
+	local var_61_2 = arg_61_0:getResInst(arg_61_0.viewContainer._viewSetting.otherRes.weekwalkheart_star, var_61_1.gameObject)
 
-	WeekWalk_2Helper.setCupEffect(var_60_2, arg_60_2)
-	gohelper.setActive(arg_60_1, true)
+	WeekWalk_2Helper.setCupEffect(var_61_2, arg_61_2)
+	gohelper.setActive(arg_61_1, true)
 end
 
-function var_0_0._show1_6EpisodeMaterial(arg_61_0)
-	local var_61_0 = lua_episode.configDict[arg_61_0._curEpisodeId]
-	local var_61_1 = var_61_0 and var_61_0.type == DungeonEnum.EpisodeType.Act1_6Dungeon
-	local var_61_2 = OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Act_60101)
+function var_0_0._show1_6EpisodeMaterial(arg_62_0)
+	local var_62_0 = lua_episode.configDict[arg_62_0._curEpisodeId]
+	local var_62_1 = var_62_0 and var_62_0.type == DungeonEnum.EpisodeType.Act1_6Dungeon
+	local var_62_2 = OpenModel.instance:isFunctionUnlock(OpenEnum.UnlockFunc.Act_60101)
 
-	if not var_61_1 or not var_61_2 then
-		gohelper.setActive(arg_61_0._goPlatConditionMaterial, false)
+	if not var_62_1 or not var_62_2 then
+		gohelper.setActive(arg_62_0._goPlatConditionMaterial, false)
 
 		return
 	end
 
-	gohelper.setActive(arg_61_0._goPlatConditionMaterial, true)
+	gohelper.setActive(arg_62_0._goPlatConditionMaterial, true)
 
-	local var_61_3
-	local var_61_4
-	local var_61_5
-	local var_61_6 = gohelper.findChildImage(arg_61_0._goPlatConditionMaterial, "icon")
-	local var_61_7 = CurrencyConfig.instance:getCurrencyCo(CurrencyEnum.CurrencyType.V1a6DungeonSkill)
-	local var_61_8 = string.format("%s_1", var_61_7 and var_61_7.icon)
+	local var_62_3
+	local var_62_4
+	local var_62_5
+	local var_62_6 = gohelper.findChildImage(arg_62_0._goPlatConditionMaterial, "icon")
+	local var_62_7 = CurrencyConfig.instance:getCurrencyCo(CurrencyEnum.CurrencyType.V1a6DungeonSkill)
+	local var_62_8 = string.format("%s_1", var_62_7 and var_62_7.icon)
 
-	UISpriteSetMgr.instance:setCurrencyItemSprite(var_61_6, var_61_8)
+	UISpriteSetMgr.instance:setCurrencyItemSprite(var_62_6, var_62_8)
 
-	local var_61_9 = Activity148Config.instance:getAct148ConstValue(VersionActivity1_6Enum.ActivityId.DungeonSkillTree, VersionActivity1_6DungeonEnum.DungeonConstId.MaxSkillPointNum)
-	local var_61_10 = VersionActivity1_6DungeonSkillModel.instance:getAllSkillPoint()
-	local var_61_11 = string.format("<color=#EB5F34>%s</color>/%s", var_61_10 or 0, var_61_9)
+	local var_62_9 = Activity148Config.instance:getAct148ConstValue(VersionActivity1_6Enum.ActivityId.DungeonSkillTree, VersionActivity1_6DungeonEnum.DungeonConstId.MaxSkillPointNum)
+	local var_62_10 = VersionActivity1_6DungeonSkillModel.instance:getAllSkillPoint()
+	local var_62_11 = string.format("<color=#EB5F34>%s</color>/%s", var_62_10 or 0, var_62_9)
 
-	gohelper.findChildText(arg_61_0._goPlatConditionMaterial, "value").text = var_61_11
-	gohelper.findChildText(arg_61_0._goPlatConditionMaterial, "condition").text = luaLang("act1_6dungeonFightResultViewMaterialTitle")
+	gohelper.findChildText(arg_62_0._goPlatConditionMaterial, "value").text = var_62_11
+	gohelper.findChildText(arg_62_0._goPlatConditionMaterial, "condition").text = luaLang("act1_6dungeonFightResultViewMaterialTitle")
 end
 
-function var_0_0._playVictoryAudio_2_7(arg_62_0)
+function var_0_0._playVictoryAudio_2_7(arg_63_0)
 	if LuaUtil.tableContains(VersionActivity2_7DungeonEnum.DungeonChapterId, FightResultModel.instance:getChapterId()) then
 		AudioMgr.instance:setSwitch(AudioMgr.instance:getIdFromString("Checkpointstate"), AudioMgr.instance:getIdFromString("Victory"))
 	end

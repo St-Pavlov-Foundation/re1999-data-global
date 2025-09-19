@@ -24,6 +24,7 @@ function var_0_0.init(arg_1_0, arg_1_1)
 	arg_1_0._groupId = arg_1_0._config and arg_1_0._config.groupId
 	arg_1_0._params = arg_1_1.params
 	arg_1_0._star = arg_1_1.star
+	arg_1_0._simulate = arg_1_1.simulate
 	arg_1_0._totalStarCount = Act183Helper.calcEpisodeTotalConditionCount(arg_1_0._episodeId)
 
 	arg_1_0:_buildEscapeRules()
@@ -44,6 +45,8 @@ function var_0_0._buildEscapeRules(arg_2_0)
 	if var_2_2 ~= 2 then
 		table.insert(arg_2_0._escapeRules, var_2_1)
 	end
+
+	arg_2_0._baseRuleNum = 0
 end
 
 function var_0_0.getEpisodeId(arg_3_0)
@@ -51,27 +54,7 @@ function var_0_0.getEpisodeId(arg_3_0)
 end
 
 function var_0_0.getStatus(arg_4_0)
-	if arg_4_0._isPass then
-		return Act183Enum.EpisodeStatus.Finished
-	end
-
-	local var_4_0 = arg_4_0:getPreEpisodeIds()
-
-	if var_4_0 then
-		for iter_4_0, iter_4_1 in ipairs(var_4_0) do
-			local var_4_1 = Act183Model.instance:getEpisodeMo(arg_4_0._groupId, iter_4_1)
-
-			if var_4_1 then
-				if not var_4_1:isFinished() then
-					return Act183Enum.EpisodeStatus.Locked
-				end
-			else
-				logError(string.format("前置关卡不存在 curEpisodeId = %s, preEpisodeId = %s", arg_4_0._episodeId, iter_4_1))
-			end
-		end
-	end
-
-	return Act183Enum.EpisodeStatus.Unlocked
+	return arg_4_0._isPass and Act183Enum.EpisodeStatus.Finished or Act183Enum.EpisodeStatus.Unlocked
 end
 
 function var_0_0.getPreEpisodeIds(arg_5_0)
@@ -207,6 +190,10 @@ end
 
 function var_0_0.getTotalStarCount(arg_28_0)
 	return arg_28_0._totalStarCount
+end
+
+function var_0_0.isSimulate(arg_29_0)
+	return arg_29_0._simulate
 end
 
 return var_0_0

@@ -63,6 +63,18 @@ function var_0_0.getGlobalVisibleTaskStages(arg_8_0)
 	return var_8_0
 end
 
+function var_0_0.getGlobalVisibleTaskStagesByActId(arg_9_0, arg_9_1)
+	local var_9_0 = {}
+
+	for iter_9_0, iter_9_1 in ipairs(arg_9_0._globalTaskCo.configList) do
+		if iter_9_1.activityId == arg_9_1 then
+			table.insert(var_9_0, iter_9_1)
+		end
+	end
+
+	return var_9_0
+end
+
 var_0_0.instance = var_0_0.New()
 
 return var_0_0

@@ -22,6 +22,8 @@ function var_0_0.init(arg_1_0, arg_1_1)
 	arg_1_0._config = Act183Config.instance:getEpisodeCo(arg_1_0._episodeId)
 	arg_1_0._params = arg_1_1.params
 	arg_1_0._star = arg_1_1.star
+	arg_1_0._simulate = arg_1_1.simulate
+	arg_1_0._round = arg_1_1.round
 	arg_1_0._totalStarCount = Act183Helper.calcEpisodeTotalConditionCount(arg_1_0._episodeId)
 end
 
@@ -103,6 +105,14 @@ end
 
 function var_0_0.getTotalStarCount(arg_17_0)
 	return arg_17_0._totalStarCount
+end
+
+function var_0_0.isSimulate(arg_18_0)
+	return arg_18_0._simulate
+end
+
+function var_0_0.getRound(arg_19_0)
+	return arg_19_0._round
 end
 
 return var_0_0

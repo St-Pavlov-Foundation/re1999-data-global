@@ -357,6 +357,27 @@
     "expUpShow": false
   },
   {
+    "bpId": 18,
+    "chargeId1": 710001,
+    "chargeId2": 710002,
+    "chargeId1to2": 710003,
+    "payStatus1Bonus": "1#481010#1",
+    "payStatus2Bonus": "2#2#400|1#171801#1|10#21#3|1#120013#5",
+    "name": "",
+    "payStatus2AddLevel": 10,
+    "expLevelUp": 1000,
+    "bpSkinDesc": "language_10082972",
+    "bpSkinNametxt": "language_10086377",
+    "bpSkinEnNametxt": "The Sound<br>  of Paradise",
+    "bpviewicon": "",
+    "bpviewpos": "",
+    "showBonus": "",
+    "showBonusDate": "2025-10-09 05:00:00",
+    "isSp": false,
+    "weekLimitTimes": 0,
+    "expUpShow": false
+  },
+  {
     "bpId": 305,
     "chargeId1": 710001,
     "chargeId2": 710002,

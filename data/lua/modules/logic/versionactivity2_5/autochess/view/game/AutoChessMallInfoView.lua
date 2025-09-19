@@ -42,7 +42,7 @@ function var_0_0._btnRightOnClick(arg_6_0)
 end
 
 function var_0_0._editableInitView(arg_7_0)
-	local var_7_0 = arg_7_0:getResInst(AutoChessEnum.ChessCardPath, arg_7_0._goCardRoot)
+	local var_7_0 = arg_7_0:getResInst(AutoChessStrEnum.ResPath.ChessCard, arg_7_0._goCardRoot)
 
 	arg_7_0.card = MonoHelper.addNoUpdateLuaComOnceToGo(var_7_0, AutoChessCard, arg_7_0)
 end

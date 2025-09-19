@@ -1,9 +1,13 @@
 ﻿module("modules.logic.fight.FightBaseClass", package.seeall)
 
 local var_0_0 = class("FightBaseClass", FightObject)
+local var_0_1 = rawset
+local var_0_2 = pairs
+local var_0_3 = type
+local var_0_4 = table
 
 function var_0_0.onConstructor(arg_1_0)
-	return
+	arg_1_0.USER_DATA_LIST = nil
 end
 
 function var_0_0.onAwake(arg_2_0, ...)
@@ -21,19 +25,19 @@ function var_0_0.onDestructor(arg_4_0)
 		for iter_4_0 = #var_4_0, 1, -1 do
 			local var_4_1 = var_4_0[iter_4_0]
 
-			for iter_4_1 in pairs(var_4_1) do
-				rawset(var_4_1, iter_4_1, nil)
+			for iter_4_1 in var_0_2(var_4_1) do
+				var_0_1(var_4_1, iter_4_1, nil)
 			end
 
-			rawset(var_4_0, iter_4_0, nil)
+			var_0_1(var_4_0, iter_4_0, nil)
 		end
 
 		arg_4_0.USER_DATA_LIST = nil
 	end
 
-	for iter_4_2, iter_4_3 in pairs(arg_4_0) do
-		if type(iter_4_3) == "userdata" then
-			rawset(arg_4_0, iter_4_2, nil)
+	for iter_4_2, iter_4_3 in var_0_2(arg_4_0) do
+		if var_0_3(iter_4_3) == "userdata" then
+			var_0_1(arg_4_0, iter_4_2, nil)
 		end
 	end
 end
@@ -53,7 +57,7 @@ function var_0_0.newUserDataTable(arg_6_0)
 
 	local var_6_0 = {}
 
-	table.insert(arg_6_0.USER_DATA_LIST, var_6_0)
+	var_0_4.insert(arg_6_0.USER_DATA_LIST, var_6_0)
 
 	return var_6_0
 end
@@ -143,82 +147,90 @@ function var_0_0.com_registSingleTimer(arg_20_0, arg_20_1, arg_20_2, arg_20_3)
 	return arg_20_0:getComponent(FightTimerComponent):registSingleTimer(arg_20_1, arg_20_0, arg_20_2, 1, arg_20_3)
 end
 
-function var_0_0.com_restartTimer(arg_21_0, arg_21_1, arg_21_2, arg_21_3)
-	return arg_21_0:com_restartRepeatTimer(arg_21_1, arg_21_2, 1, arg_21_3)
+function var_0_0.com_registSingleRepeatTimer(arg_21_0, arg_21_1, arg_21_2, arg_21_3, arg_21_4)
+	return arg_21_0:getComponent(FightTimerComponent):registSingleTimer(arg_21_1, arg_21_0, arg_21_2, arg_21_3, arg_21_4)
 end
 
-function var_0_0.com_restartRepeatTimer(arg_22_0, arg_22_1, arg_22_2, arg_22_3, arg_22_4)
-	if not arg_22_1.isDone then
-		arg_22_1:restart(arg_22_2, arg_22_3, arg_22_4)
+function var_0_0.com_releaseSingleTimer(arg_22_0, arg_22_1)
+	return arg_22_0:getComponent(FightTimerComponent):releaseSingleTimer(arg_22_1)
+end
+
+function var_0_0.com_restartTimer(arg_23_0, arg_23_1, arg_23_2, arg_23_3)
+	return arg_23_0:com_restartRepeatTimer(arg_23_1, arg_23_2, 1, arg_23_3)
+end
+
+function var_0_0.com_restartRepeatTimer(arg_24_0, arg_24_1, arg_24_2, arg_24_3, arg_24_4)
+	if not arg_24_1.isDone then
+		arg_24_1:restart(arg_24_2, arg_24_3, arg_24_4)
 
 		return
 	end
 
-	return arg_22_0:getComponent(FightTimerComponent):restartRepeatTimer(arg_22_1, arg_22_2, arg_22_3, arg_22_4)
+	return arg_24_0:getComponent(FightTimerComponent):restartRepeatTimer(arg_24_1, arg_24_2, arg_24_3, arg_24_4)
 end
 
-function var_0_0.com_registFightEvent(arg_23_0, arg_23_1, arg_23_2, arg_23_3)
-	arg_23_0:com_registEvent(FightController.instance, arg_23_1, arg_23_2, arg_23_3)
+function var_0_0.com_registFightEvent(arg_25_0, arg_25_1, arg_25_2, arg_25_3)
+	arg_25_0:com_registEvent(FightController.instance, arg_25_1, arg_25_2, arg_25_3)
 end
 
-function var_0_0.com_registEvent(arg_24_0, arg_24_1, arg_24_2, arg_24_3, arg_24_4)
-	arg_24_0:getComponent(FightEventComponent):registEvent(arg_24_1, arg_24_2, arg_24_3, arg_24_0, arg_24_4)
+function var_0_0.com_registEvent(arg_26_0, arg_26_1, arg_26_2, arg_26_3, arg_26_4)
+	arg_26_0:getComponent(FightEventComponent):registEvent(arg_26_1, arg_26_2, arg_26_3, arg_26_0, arg_26_4)
 end
 
-function var_0_0.com_cancelFightEvent(arg_25_0, arg_25_1, arg_25_2)
-	arg_25_0:com_cancelEvent(FightController.instance, arg_25_1, arg_25_2)
+function var_0_0.com_cancelFightEvent(arg_27_0, arg_27_1, arg_27_2)
+	arg_27_0:com_cancelEvent(FightController.instance, arg_27_1, arg_27_2)
 end
 
-function var_0_0.com_cancelEvent(arg_26_0, arg_26_1, arg_26_2, arg_26_3)
-	arg_26_0:getComponent(FightEventComponent):cancelEvent(arg_26_1, arg_26_2, arg_26_3, arg_26_0)
+function var_0_0.com_cancelEvent(arg_28_0, arg_28_1, arg_28_2, arg_28_3)
+	arg_28_0:getComponent(FightEventComponent):cancelEvent(arg_28_1, arg_28_2, arg_28_3, arg_28_0)
 end
 
-function var_0_0.com_lockEvent(arg_27_0)
-	arg_27_0:getComponent(FightEventComponent):lockEvent()
+function var_0_0.com_lockEvent(arg_29_0)
+	arg_29_0:getComponent(FightEventComponent):lockEvent()
 end
 
-function var_0_0.com_unlockEvent(arg_28_0)
-	arg_28_0:getComponent(FightEventComponent):unlockEvent()
+function var_0_0.com_unlockEvent(arg_30_0)
+	arg_30_0:getComponent(FightEventComponent):unlockEvent()
 end
 
-function var_0_0.com_sendFightEvent(arg_29_0, arg_29_1, ...)
-	FightController.instance:dispatchEvent(arg_29_1, ...)
+function var_0_0.com_sendFightEvent(arg_31_0, arg_31_1, ...)
+	FightController.instance:dispatchEvent(arg_31_1, ...)
 end
 
-function var_0_0.com_sendEvent(arg_30_0, arg_30_1, arg_30_2, ...)
-	arg_30_1:dispatchEvent(arg_30_2, ...)
+function var_0_0.com_sendEvent(arg_32_0, arg_32_1, arg_32_2, ...)
+	arg_32_1:dispatchEvent(arg_32_2, ...)
 end
 
-function var_0_0.com_registMsg(arg_31_0, arg_31_1, arg_31_2)
-	return arg_31_0:getComponent(FightMsgComponent):registMsg(arg_31_1, arg_31_2, arg_31_0)
+function var_0_0.com_registMsg(arg_33_0, arg_33_1, arg_33_2)
+	return arg_33_0:getComponent(FightMsgComponent):registMsg(arg_33_1, arg_33_2, arg_33_0)
 end
 
-function var_0_0.com_removeMsg(arg_32_0, arg_32_1)
-	return arg_32_0:getComponent(FightMsgComponent):removeMsg(arg_32_1)
+function var_0_0.com_removeMsg(arg_34_0, arg_34_1)
+	return arg_34_0:getComponent(FightMsgComponent):removeMsg(arg_34_1)
 end
 
-function var_0_0.com_sendMsg(arg_33_0, arg_33_1, ...)
-	return FightMsgMgr.sendMsg(arg_33_1, ...)
+function var_0_0.com_sendMsg(arg_35_0, arg_35_1, ...)
+	return FightMsgMgr.sendMsg(arg_35_1, ...)
 end
 
-function var_0_0.com_replyMsg(arg_34_0, arg_34_1, arg_34_2)
-	return FightMsgMgr.replyMsg(arg_34_1, arg_34_2)
+function var_0_0.com_replyMsg(arg_36_0, arg_36_1, arg_36_2)
+	return FightMsgMgr.replyMsg(arg_36_1, arg_36_2)
 end
 
-function var_0_0.com_lockMsg(arg_35_0)
-	return arg_35_0:getComponent(FightMsgComponent):lockMsg()
+function var_0_0.com_lockMsg(arg_37_0)
+	return arg_37_0:getComponent(FightMsgComponent):lockMsg()
 end
 
-function var_0_0.com_unlockMsg(arg_36_0)
-	return arg_36_0:getComponent(FightMsgComponent):unlockMsg()
+function var_0_0.com_unlockMsg(arg_38_0)
+	return arg_38_0:getComponent(FightMsgComponent):unlockMsg()
 end
 
-function var_0_0.com_registUpdate(arg_37_0, arg_37_1, arg_37_2)
-	return arg_37_0:getComponent(FightUpdateComponent):registUpdate(arg_37_1, arg_37_0, arg_37_2)
+function var_0_0.com_registUpdate(arg_39_0, arg_39_1, arg_39_2)
+	return arg_39_0:getComponent(FightUpdateComponent):registUpdate(arg_39_1, arg_39_0, arg_39_2)
 end
 
-function var_0_0.com_cancelUpdate(arg_38_0, arg_38_1)
-	return arg_38_0:getComponent(FightUpdateComponent):cancelUpdate(arg_38_1)
+function var_0_0.com_cancelUpdate(arg_40_0, arg_40_1)
+	return arg_40_0:getComponent(FightUpdateComponent):cancelUpdate(arg_40_1)
 end
 
 return var_0_0

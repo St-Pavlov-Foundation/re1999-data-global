@@ -65,8 +65,12 @@ function var_0_0.initList(arg_5_0)
 		end
 	end
 
-	table.sort(arg_5_0.ownList, var_0_1)
-	table.sort(arg_5_0.noGainList, var_0_1)
+	local var_5_2 = SummonConfig.instance:getSummonPool(arg_5_0._poolId)
+
+	if var_5_2 and var_5_2.type ~= SummonEnum.Type.CustomPick then
+		table.sort(arg_5_0.ownList, var_0_1)
+		table.sort(arg_5_0.noGainList, var_0_1)
+	end
 end
 
 function var_0_0.setSelectId(arg_6_0, arg_6_1)

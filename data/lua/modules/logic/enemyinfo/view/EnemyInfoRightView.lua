@@ -247,6 +247,12 @@ function var_0_0.refreshHeader(arg_14_0)
 		local var_14_5 = tonumber(var_14_4)
 
 		arg_14_0._txthp.text = var_14_5 and math.floor(var_14_5 * var_14_3) or var_14_4
+	elseif arg_14_0.viewParam.tabEnum == EnemyInfoEnum.TabEnum.Survival then
+		local var_14_6 = arg_14_0.viewParam.hpFixRate
+		local var_14_7 = CharacterDataConfig.instance:getMonsterHp(var_14_0.id, arg_14_0.isSimple)
+		local var_14_8 = tonumber(var_14_7)
+
+		arg_14_0._txthp.text = var_14_8 and math.floor(var_14_8 * (1 + var_14_6)) or var_14_7
 	else
 		arg_14_0._txthp.text = CharacterDataConfig.instance:getMonsterHp(var_14_0.id, arg_14_0.isSimple)
 	end

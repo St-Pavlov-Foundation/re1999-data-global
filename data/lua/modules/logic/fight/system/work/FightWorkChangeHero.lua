@@ -32,6 +32,20 @@ function var_0_0.onStart(arg_1_0)
 	arg_1_0._changedSubEntity = FightHelper.getEntity(arg_1_0._changedId)
 	arg_1_0._changedEntityMO = FightDataHelper.entityMgr:getById(arg_1_0._changedId)
 
+	if not arg_1_0._changedEntityMO then
+		local var_1_0 = "换人失败,找不到上场的实体, episodeId:%s, battleId:%s, entityId:%s"
+		local var_1_1 = FightDataHelper.fieldMgr.episodeId
+		local var_1_2 = FightDataHelper.fieldMgr.battleId
+		local var_1_3 = arg_1_0._changedId
+		local var_1_4 = string.format(var_1_0, var_1_1, var_1_2, var_1_3) .. "配队: "
+
+		for iter_1_0, iter_1_1 in pairs(FightDataHelper.entityMgr:getSideList(FightEnum.EntitySide.MySide, nil, true)) do
+			var_1_4 = var_1_4 .. iter_1_1:getEntityName() .. ","
+		end
+
+		logError(var_1_4)
+	end
+
 	FightController.instance:dispatchEvent(FightEvent.BeforeChangeSubHero, arg_1_0._targetId, arg_1_0._changedId)
 
 	arg_1_0._seasonUseChangeHero = FightModel.instance:isSeason2() and arg_1_0.actEffectData.configEffect == 1
@@ -47,15 +61,15 @@ function var_0_0.onStart(arg_1_0)
 			arg_1_0._toBuildSubId = arg_1_0._changedEntityMO.id
 
 			if not arg_1_0._changedSubEntity then
-				local var_1_0 = arg_1_0._entityMgr:buildSubSpine(arg_1_0._changedEntityMO)
+				local var_1_5 = arg_1_0._entityMgr:buildSubSpine(arg_1_0._changedEntityMO)
 
-				if var_1_0 then
-					local var_1_1 = lua_stance.configDict[FightHelper.getEntityStanceId(arg_1_0._changedEntityMO)]
+				if var_1_5 then
+					local var_1_6 = lua_stance.configDict[FightHelper.getEntityStanceId(arg_1_0._changedEntityMO)]
 
-					if var_1_1 then
-						local var_1_2 = var_1_1.subPos1
+					if var_1_6 then
+						local var_1_7 = var_1_6.subPos1
 
-						transformhelper.setLocalPos(var_1_0.go.transform, var_1_2[1] or 0, var_1_2[2] or 0, var_1_2[3] or 0)
+						transformhelper.setLocalPos(var_1_5.go.transform, var_1_7[1] or 0, var_1_7[2] or 0, var_1_7[3] or 0)
 					end
 				end
 			end

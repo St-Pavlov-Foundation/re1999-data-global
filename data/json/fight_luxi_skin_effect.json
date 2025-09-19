@@ -1,0 +1,18 @@
+[
+  {
+    "id": 308603,
+    "actionName": "born",
+    "effect": "buff/born/pre_v2a8_luxi_born#buff/born/pre_roleeffect_born_308603_lx",
+    "effectDuration": 2,
+    "effectHangPoint": "mountroot#mountroot",
+    "audio": 430860391
+  },
+  {
+    "id": 308603,
+    "actionName": "die",
+    "effect": "v2a8_luxi/luxi_die#roleeffects/roleeffect_death_308603_lx",
+    "effectDuration": 2,
+    "effectHangPoint": "mountroot#mountroot",
+    "audio": 430860392
+  }
+]

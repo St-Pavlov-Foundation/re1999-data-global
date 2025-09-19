@@ -9,9 +9,10 @@ end
 
 function var_0_0.setByProto(arg_2_0, arg_2_1)
 	arg_2_0.operType = arg_2_1.operType
+	arg_2_0.toId = arg_2_1.toId
 	arg_2_0.param1 = arg_2_1.param1
 	arg_2_0.param2 = arg_2_1.param2
-	arg_2_0.toId = arg_2_1.toId
+	arg_2_0.param3 = arg_2_1.param3
 end
 
 function var_0_0.moveCard(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
@@ -36,11 +37,12 @@ function var_0_0.moveUniversalCard(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
 	arg_4_0.moveToIndex = arg_4_2
 end
 
-function var_0_0.playCard(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4)
+function var_0_0.playCard(arg_5_0, arg_5_1, arg_5_2, arg_5_3, arg_5_4, arg_5_5)
 	arg_5_0.operType = FightEnum.CardOpType.PlayCard
+	arg_5_0.toId = arg_5_0:getTarget(arg_5_2, arg_5_3.skillId)
 	arg_5_0.param1 = arg_5_1
 	arg_5_0.param2 = arg_5_4
-	arg_5_0.toId = arg_5_0:getTarget(arg_5_2, arg_5_3.skillId)
+	arg_5_0.param3 = arg_5_5
 
 	local var_5_0 = arg_5_3.uid
 	local var_5_1 = arg_5_3.skillId

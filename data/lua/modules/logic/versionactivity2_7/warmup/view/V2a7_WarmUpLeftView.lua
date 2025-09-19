@@ -25,9 +25,7 @@ local var_0_5 = {
 }
 local var_0_6 = 5
 
-function var_0_0.ctor(arg_4_0, ...)
-	V2a6_WarmUpLeftView.super.ctor(arg_4_0, ...)
-
+function var_0_0.ctor(arg_4_0)
 	arg_4_0._draggedState = var_0_1
 end
 

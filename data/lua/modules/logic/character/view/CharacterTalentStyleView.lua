@@ -175,8 +175,8 @@ function var_0_0.onOpen(arg_15_0)
 	arg_15_0._heroId = arg_15_0.viewParam.hero_id
 	arg_15_0._heroMo = HeroModel.instance:getByHeroId(arg_15_0._heroId)
 
-	local var_15_0 = luaLang("talent_style_title_using_cn_" .. CharacterEnum.TalentTxtByHeroType[arg_15_0._heroMo.config.heroType])
-	local var_15_1 = luaLang("talent_style_title_use_cn_" .. CharacterEnum.TalentTxtByHeroType[arg_15_0._heroMo.config.heroType])
+	local var_15_0 = luaLang("talent_style_title_using_cn_" .. arg_15_0._heroMo:getTalentTxtByHeroType())
+	local var_15_1 = luaLang("talent_style_title_use_cn_" .. arg_15_0._heroMo:getTalentTxtByHeroType())
 
 	arg_15_0._txtusing.text = var_15_0
 	arg_15_0._txtuse.text = var_15_1

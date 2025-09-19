@@ -131,26 +131,25 @@ function var_0_0.updateRewardCouldGetHorizontalScrollPixel(arg_17_0, arg_17_1)
 		var_17_1 = arg_17_1(var_17_1)
 	end
 
-	if arg_17_0.viewContainer:getCsListScroll() then
-		arg_17_0:_tweenByLimitedScrollView(var_17_1)
-	else
-		arg_17_0:_tweenByScrollContent(var_17_1)
-	end
+	arg_17_0:focusByIndex(var_17_1)
 end
 
 function var_0_0._tweenByLimitedScrollView(arg_18_0, arg_18_1)
-	local var_18_0 = arg_18_0.viewContainer:getCsListScroll()
-	local var_18_1 = arg_18_0.viewContainer:getListScrollParam()
-	local var_18_2 = (var_18_1.cellWidth + var_18_1.cellSpaceH) * math.max(0, arg_18_1)
+	local var_18_0 = arg_18_0:getCsListScroll()
+	local var_18_1 = arg_18_0:getListScrollParam()
+	local var_18_2 = var_18_1.cellWidth
+	local var_18_3 = var_18_1.cellSpaceH
+	local var_18_4 = var_18_1.rectMaskSoftness[1] or 0
+	local var_18_5 = (var_18_2 + var_18_3) * math.max(0, arg_18_1) + math.min(0, -var_18_4)
 
-	var_18_0.HorizontalScrollPixel = math.max(0, var_18_2)
+	var_18_0.HorizontalScrollPixel = math.max(0, var_18_5)
 
 	var_18_0:UpdateCells(true)
 end
 
 function var_0_0._tweenByScrollContent(arg_19_0, arg_19_1)
-	local var_19_0 = arg_19_0.viewContainer:getScrollContentTranform()
-	local var_19_1 = arg_19_0.viewContainer:getListScrollParam()
+	local var_19_0 = arg_19_0:getScrollContentTranform()
+	local var_19_1 = arg_19_0:getListScrollParam()
 	local var_19_2 = var_19_1.startSpace
 
 	if arg_19_1 <= 1 then
@@ -159,13 +158,14 @@ function var_0_0._tweenByScrollContent(arg_19_0, arg_19_1)
 		return
 	end
 
-	local var_19_3 = arg_19_0:getMaxScrollX()
-	local var_19_4 = var_19_1.cellWidth
-	local var_19_5 = var_19_1.cellSpaceH
-	local var_19_6 = math.max(0, var_19_2 + (arg_19_1 - 1) * (var_19_4 + var_19_5))
-	local var_19_7 = math.min(var_19_3, var_19_6)
+	local var_19_3 = var_19_1.rectMaskSoftness[1] or 0
+	local var_19_4 = arg_19_0:getMaxScrollX()
+	local var_19_5 = var_19_1.cellWidth
+	local var_19_6 = var_19_1.cellSpaceH
+	local var_19_7 = math.max(0, var_19_2 + (arg_19_1 - 1) * (var_19_5 + var_19_6)) + math.min(0, -var_19_3)
+	local var_19_8 = math.min(var_19_4, var_19_7)
 
-	recthelper.setAnchorX(var_19_0, -var_19_7)
+	recthelper.setAnchorX(var_19_0, -var_19_8)
 end
 
 function var_0_0.getRemainTimeStr(arg_20_0)
@@ -210,10 +210,12 @@ function var_0_0._createList(arg_21_0)
 
 	local var_21_0 = arg_21_0:getDataList()
 
-	recthelper.setWidth(arg_21_0.viewContainer:getScrollContentTranform(), arg_21_0:calcContentWidth())
+	recthelper.setWidth(arg_21_0:getScrollContentTranform(), arg_21_0:calcContentWidth())
 
-	if arg_21_0._scrollItemList then
-		arg_21_0._scrollItemList:GetComponent(gohelper.Type_RectMask2D).enabled = #var_21_0 > 7
+	local var_21_1 = arg_21_0:_rectMask2d()
+
+	if var_21_1 then
+		var_21_1.enabled = #var_21_0 > 7
 	end
 
 	arg_21_0.__itemList = {}
@@ -312,7 +314,7 @@ end
 
 function var_0_0.calcContentWidth(arg_29_0)
 	local var_29_0 = arg_29_0:getTempDataList() or arg_29_0:getDataList()
-	local var_29_1 = arg_29_0.viewContainer:getListScrollParam()
+	local var_29_1 = arg_29_0:getListScrollParam()
 	local var_29_2 = var_29_1.cellWidth
 	local var_29_3 = var_29_1.cellSpaceH
 	local var_29_4 = var_29_1.startSpace
@@ -332,54 +334,98 @@ function var_0_0.getScrollModel(arg_31_0)
 	return arg_31_0.viewContainer:getScrollModel()
 end
 
-function var_0_0.getRemainTimeSec(arg_32_0)
-	local var_32_0 = arg_32_0:actId()
-
-	return ActivityModel.instance:getRemainTimeSec(var_32_0) or 0
+function var_0_0.getCsListScroll(arg_32_0)
+	return arg_32_0.viewContainer:getCsListScroll()
 end
 
-function var_0_0._editableInitView(arg_33_0)
+function var_0_0.getListScrollParam(arg_33_0)
+	return arg_33_0.viewContainer:getListScrollParam()
+end
+
+function var_0_0.getScrollContentTranform(arg_34_0)
+	return arg_34_0.viewContainer:getScrollContentTranform()
+end
+
+function var_0_0.isLimitedScrollView(arg_35_0)
+	return arg_35_0.viewContainer:isLimitedScrollView()
+end
+
+function var_0_0._rectMask2d(arg_36_0)
+	if arg_36_0.__rectMask2d then
+		return arg_36_0.__rectMask2d
+	end
+
+	if arg_36_0._scrollItemList then
+		arg_36_0.__rectMask2d = arg_36_0._scrollItemList:GetComponent(gohelper.Type_RectMask2D)
+	end
+
+	return arg_36_0.__rectMask2d
+end
+
+function var_0_0.rectMask2dSoftnessV2(arg_37_0)
+	return arg_37_0:getListScrollParam().rectMaskSoftness
+end
+
+function var_0_0.getRemainTimeSec(arg_38_0)
+	local var_38_0 = arg_38_0:actId()
+
+	return ActivityModel.instance:getRemainTimeSec(var_38_0) or 0
+end
+
+function var_0_0._editableInitView(arg_39_0)
 	assert(false, "please override this function")
 end
 
-function var_0_0._setPinStartIndex(arg_34_0, arg_34_1)
-	local var_34_0, var_34_1 = arg_34_0:getRewardCouldGetIndex()
+function var_0_0._setPinStartIndex(arg_40_0, arg_40_1)
+	local var_40_0, var_40_1 = arg_40_0:getRewardCouldGetIndex()
 
-	arg_34_0:getScrollModel():setDefaultPinStartIndex(arg_34_1, var_34_0 and var_34_1 or 1)
+	arg_40_0:getScrollModel():setDefaultPinStartIndex(arg_40_1, var_40_0 and var_40_1 or 1)
 end
 
-function var_0_0.onStart(arg_35_0)
-	if arg_35_0.viewContainer:isLimitedScrollView() then
+function var_0_0.onStart(arg_41_0)
+	if arg_41_0:isLimitedScrollView() then
 		return
 	end
 
-	arg_35_0:_createList()
-	arg_35_0:_updateScrollViewPos()
+	arg_41_0:_createList()
+	arg_41_0:_updateScrollViewPos()
 end
 
-function var_0_0.onRefresh(arg_36_0)
-	arg_36_0:_refreshList()
+function var_0_0.onRefresh(arg_42_0)
+	arg_42_0:_refreshList()
 end
 
-function var_0_0.onRefreshList(arg_37_0, arg_37_1)
-	if not arg_37_1 then
+function var_0_0.onRefreshList(arg_43_0, arg_43_1)
+	if not arg_43_1 then
 		return
 	end
 
-	local var_37_0 = arg_37_0.__itemList
+	local var_43_0 = arg_43_0.__itemList
 
-	for iter_37_0, iter_37_1 in ipairs(arg_37_1) do
-		local var_37_1 = var_37_0[iter_37_0]
+	for iter_43_0, iter_43_1 in ipairs(arg_43_1) do
+		local var_43_1 = var_43_0[iter_43_0]
 
-		if var_37_1 then
-			local var_37_2 = var_37_1._mo
+		if var_43_1 then
+			local var_43_2 = var_43_1._mo
 
-			if var_37_2 then
-				iter_37_1.__isPlayedOpenAnim = var_37_2.__isPlayedOpenAnim
+			if var_43_2 then
+				iter_43_1.__isPlayedOpenAnim = var_43_2.__isPlayedOpenAnim
 			end
 
-			var_37_1:onUpdateMO(iter_37_1)
+			var_43_1:onUpdateMO(iter_43_1)
 		end
+	end
+end
+
+function var_0_0.getItemByIndex(arg_44_0, arg_44_1)
+	return arg_44_0.__itemList[arg_44_1]
+end
+
+function var_0_0.focusByIndex(arg_45_0, arg_45_1)
+	if arg_45_0:isLimitedScrollView() then
+		arg_45_0:_tweenByLimitedScrollView(arg_45_1)
+	else
+		arg_45_0:_tweenByScrollContent(arg_45_1)
 	end
 end
 

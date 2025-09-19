@@ -30,14 +30,16 @@ function var_0_0._editableInitView(arg_4_0)
 	local var_4_0 = StoryConfig.instance:getStoryLeadHeroSpine()
 
 	for iter_4_0 = 1, #var_4_0 do
-		if not arg_4_0._goSpines[iter_4_0] then
-			arg_4_0._goSpines[iter_4_0] = gohelper.create2d(arg_4_0._gospine, "spine" .. iter_4_0)
-			arg_4_0._heroSpines[iter_4_0] = GuiSpine.Create(arg_4_0._goSpines[iter_4_0], true)
+		if var_4_0[iter_4_0].resType == StoryEnum.IconResType.Spine then
+			if not arg_4_0._goSpines[iter_4_0] then
+				arg_4_0._goSpines[iter_4_0] = gohelper.create2d(arg_4_0._gospine, "spine" .. iter_4_0)
+				arg_4_0._heroSpines[iter_4_0] = GuiSpine.Create(arg_4_0._goSpines[iter_4_0], true)
+			end
+
+			local var_4_1 = "rolesstory/" .. var_4_0[iter_4_0].path
+
+			arg_4_0._heroSpines[iter_4_0]:setResPath(var_4_1, arg_4_0["_onHeroSpineLoaded" .. iter_4_0], arg_4_0)
 		end
-
-		local var_4_1 = "rolesstory/" .. var_4_0[iter_4_0].spine
-
-		arg_4_0._heroSpines[iter_4_0]:setResPath(var_4_1, arg_4_0["_onHeroSpineLoaded" .. iter_4_0], arg_4_0)
 	end
 
 	arg_4_0._animator = arg_4_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
@@ -74,8 +76,24 @@ function var_0_0.onUpdateParam(arg_10_0)
 	return
 end
 
-function var_0_0._showView(arg_11_0, arg_11_1)
+function var_0_0._showView(arg_11_0, arg_11_1, arg_11_2)
 	gohelper.setActive(arg_11_0.viewGO, arg_11_1)
+
+	if arg_11_2 then
+		gohelper.setActive(arg_11_0._gospineroot, true)
+
+		local var_11_0 = StoryConfig.instance:getStoryLeadHeroSpine()
+
+		for iter_11_0, iter_11_1 in ipairs(var_11_0) do
+			if arg_11_2 == iter_11_1.icon then
+				for iter_11_2, iter_11_3 in ipairs(arg_11_0._goSpines) do
+					gohelper.setActive(iter_11_3, iter_11_0 == iter_11_2)
+				end
+
+				return
+			end
+		end
+	end
 end
 
 function var_0_0._keepSpineAni(arg_12_0, arg_12_1)

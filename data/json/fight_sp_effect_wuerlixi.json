@@ -1,0 +1,44 @@
+[
+  {
+    "buffTypeId": 31070111,
+    "skinId": 310701,
+    "effect": "buff/pre_v2a8_welx_skill1_channel",
+    "hangPoint": "special5",
+    "channelHangPoint": "special7"
+  },
+  {
+    "buffTypeId": 31070121,
+    "skinId": 310701,
+    "effect": "buff/pre_v2a8_welx_skill2_channel",
+    "hangPoint": "special4",
+    "channelHangPoint": "special6"
+  },
+  {
+    "buffTypeId": 31070111,
+    "skinId": 310702,
+    "effect": "buff/pre_v2a8_welx_skill1_channel",
+    "hangPoint": "special5",
+    "channelHangPoint": "special7"
+  },
+  {
+    "buffTypeId": 31070121,
+    "skinId": 310702,
+    "effect": "buff/pre_v2a8_welx_skill2_channel",
+    "hangPoint": "special4",
+    "channelHangPoint": "special6"
+  },
+  {
+    "buffTypeId": 31070111,
+    "skinId": 310703,
+    "effect": "buff/pre_v2a8_welx_pf_skill1_channel",
+    "hangPoint": "special5",
+    "channelHangPoint": "special7"
+  },
+  {
+    "buffTypeId": 31070121,
+    "skinId": 310703,
+    "effect": "buff/pre_v2a8_welxpf_skill2_channel",
+    "hangPoint": "special4",
+    "channelHangPoint": "special6"
+  }
+]

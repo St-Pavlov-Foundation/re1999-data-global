@@ -42,27 +42,52 @@ function var_0_3.getRecordUserUrl(arg_2_0, arg_2_1)
 		return arg_2_1
 	end
 
-	local var_2_0 = {
-		arg_2_1 .. "?" .. string.format("timestamp=%s", ServerTime.now() * 1000)
-	}
+	local var_2_0 = {}
+	local var_2_1 = GameChannelConfig.isEfun()
+	local var_2_2 = GameChannelConfig.isLongCheng()
 
-	table.insert(var_2_0, string.format("gameId=%s", SDKMgr.instance:getGameId()))
-	table.insert(var_2_0, string.format("gameRoleId=%s", PlayerModel.instance:getMyUserId()))
-	table.insert(var_2_0, string.format("channelUserId=%s", LoginModel.instance.channelUserId))
+	if SLFramework.FrameworkSettings.IsEditor and isDebugBuild then
+		var_2_1 = var_2_1 or SettingsModel.instance:isTwRegion()
+		var_2_2 = var_2_2 or SettingsModel.instance:isKrRegion()
+	end
 
-	local var_2_1 = string.format("deviceModel=%s", arg_2_0:urlEncode(UnityEngine.SystemInfo.deviceModel))
+	if var_2_1 then
+		local var_2_3 = SDKMgr.instance:getUserInfoExtraParams()
+		local var_2_4 = PayModel.instance:getGameRoleInfo()
 
-	table.insert(var_2_0, var_2_1)
-	table.insert(var_2_0, string.format("deviceId=%s", SDKMgr.instance:getDeviceInfo().deviceId))
+		var_0_1(var_2_0, arg_2_1)
+		var_0_1(var_2_0, var_0_0("userId=%s", var_2_3.userId))
+		var_0_1(var_2_0, var_0_0("sign=%s", var_2_3.sign))
+		var_0_1(var_2_0, var_0_0("timestamp=%s", var_2_3.timestamp))
+		var_0_1(var_2_0, "gameCode=twcfwl")
+		var_0_1(var_2_0, var_0_0("serverCode=%s", var_2_4.serverId))
+		var_0_1(var_2_0, var_0_0("roleId=%s", var_2_4.roleId))
+		var_0_1(var_2_0, var_0_0("serverName=%s", arg_2_0:urlEncode(var_2_4.serverName)))
+		var_0_1(var_2_0, var_0_0("roleName=%s", arg_2_0:urlEncode(var_2_4.roleName)))
+		var_0_1(var_2_0, "language=zh-TW")
+	elseif var_2_2 then
+		local var_2_5 = SDKMgr.instance:getUserInfoExtraParams()
+		local var_2_6 = var_2_5 and var_2_5.ko_jwt or "nil"
 
-	local var_2_2 = string.format("os=%s", arg_2_0:urlEncode(UnityEngine.SystemInfo.operatingSystem))
+		var_0_1(var_2_0, arg_2_1 .. "?" .. var_0_0("jwt=%s", var_2_6))
+	else
+		var_0_1(var_2_0, arg_2_1 .. "?" .. var_0_0("timestamp=%s", ServerTime.now() * 1000))
+		var_0_1(var_2_0, var_0_0("gameId=%s", SDKMgr.instance:getGameId()))
+		var_0_1(var_2_0, var_0_0("gameRoleId=%s", PlayerModel.instance:getMyUserId()))
+		var_0_1(var_2_0, var_0_0("channelUserId=%s", LoginModel.instance.channelUserId))
+		var_0_1(var_2_0, var_0_0("deviceModel=%s", arg_2_0:urlEncode(UnityEngine.SystemInfo.deviceModel)))
+		var_0_1(var_2_0, var_0_0("deviceId=%s", SDKMgr.instance:getDeviceInfo().deviceId))
+		var_0_1(var_2_0, var_0_0("os=%s", arg_2_0:urlEncode(UnityEngine.SystemInfo.operatingSystem)))
+		var_0_1(var_2_0, var_0_0("token=%s", SDKMgr.instance:getGameSdkToken()))
+		var_0_1(var_2_0, var_0_0("channelId=%s", SDKMgr.instance:getChannelId()))
+		var_0_1(var_2_0, var_0_0("isEmulator=%s", SDKMgr.instance:isEmulator() and 1 or 0))
+	end
 
-	table.insert(var_2_0, var_2_2)
-	table.insert(var_2_0, string.format("token=%s", SDKMgr.instance:getGameSdkToken()))
-	table.insert(var_2_0, string.format("channelId=%s", SDKMgr.instance:getChannelId()))
-	table.insert(var_2_0, string.format("isEmulator=%s", SDKMgr.instance:isEmulator() and 1 or 0))
+	local var_2_7 = var_0_2(var_2_0, "&")
 
-	return table.concat(var_2_0, "&")
+	logNormal(var_2_7)
+
+	return var_2_7
 end
 
 function var_0_3.urlEncode(arg_3_0, arg_3_1)
@@ -182,40 +207,16 @@ function var_0_3.urlParse(arg_9_0)
 	return nil
 end
 
-function var_0_3.simpleOpenWebView(arg_10_0, arg_10_1, arg_10_2, arg_10_3, arg_10_4)
-	local var_10_0 = {}
+function var_0_3.simpleOpenWebView(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
+	local var_10_0 = arg_10_0:getRecordUserUrl(arg_10_1)
 
-	if GameChannelConfig.isEfun() then
-		local var_10_1 = SDKMgr.instance:getUserInfoExtraParams()
-		local var_10_2 = PayModel.instance:getGameRoleInfo()
+	arg_10_0:openWebView(var_10_0, false, arg_10_2, arg_10_3)
+end
 
-		var_0_1(var_10_0, arg_10_1)
-		var_0_1(var_10_0, var_0_0("userId=%s", var_10_1.userId))
-		var_0_1(var_10_0, var_0_0("sign=%s", var_10_1.sign))
-		var_0_1(var_10_0, var_0_0("timestamp=%s", var_10_1.timestamp))
-		var_0_1(var_10_0, "gameCode=twcfwl")
-		var_0_1(var_10_0, var_0_0("serverCode=%s", var_10_2.serverId))
-		var_0_1(var_10_0, var_0_0("roleId=%s", var_10_2.roleId))
-		var_0_1(var_10_0, var_0_0("serverName=%s", arg_10_0:urlEncode(var_10_2.serverName)))
-		var_0_1(var_10_0, var_0_0("roleName=%s", arg_10_0:urlEncode(var_10_2.roleName)))
-		var_0_1(var_10_0, "language=zh-TW")
-	else
-		var_0_1(var_10_0, arg_10_1 .. "?" .. var_0_0("timestamp=%s", ServerTime.now() * 1000))
-		var_0_1(var_10_0, var_0_0("gameId=%s", SDKMgr.instance:getGameId()))
-		var_0_1(var_10_0, var_0_0("gameRoleId=%s", PlayerModel.instance:getMyUserId()))
-		var_0_1(var_10_0, var_0_0("channelUserId=%s", LoginModel.instance.channelUserId))
-		var_0_1(var_10_0, var_0_0("deviceModel=%s", arg_10_0:urlEncode(UnityEngine.SystemInfo.deviceModel)))
-		var_0_1(var_10_0, var_0_0("deviceId=%s", SDKMgr.instance:getDeviceInfo().deviceId))
-		var_0_1(var_10_0, var_0_0("os=%s", arg_10_0:urlEncode(UnityEngine.SystemInfo.operatingSystem)))
-		var_0_1(var_10_0, var_0_0("token=%s", SDKMgr.instance:getGameSdkToken()))
-		var_0_1(var_10_0, var_0_0("channelId=%s", SDKMgr.instance:getChannelId()))
-		var_0_1(var_10_0, var_0_0("isEmulator=%s", SDKMgr.instance:isEmulator() and 1 or 0))
-	end
+function var_0_3.simpleOpenWebBrowser(arg_11_0, arg_11_1)
+	local var_11_0 = arg_11_0:getRecordUserUrl(arg_11_1)
 
-	local var_10_3 = var_0_2(var_10_0, "&")
-
-	logNormal(var_10_3)
-	arg_10_0:openWebView(var_10_3, arg_10_2, arg_10_3, arg_10_4)
+	GameUtil.openURL(var_11_0)
 end
 
 var_0_3.instance = var_0_3.New()

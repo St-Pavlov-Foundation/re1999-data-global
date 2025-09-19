@@ -34,62 +34,67 @@ function var_0_0._editableInitView(arg_4_0)
 	arg_4_0._audioScroll = MonoHelper.addLuaComOnceToGo(arg_4_0._scrollBadgeGo, DungeonMapEpisodeAudio, arg_4_0._scrollBadge)
 end
 
-function var_0_0.onUpdateParam(arg_5_0)
-	return
-end
-
-function var_0_0.onOpen(arg_6_0)
+function var_0_0.onOpen(arg_5_0)
 	AudioMgr.instance:trigger(AudioEnum.Meilanni.play_ui_mln_page_turn)
 
-	arg_6_0.actId = Activity182Model.instance:getCurActId()
-	arg_6_0.actMo = Activity182Model.instance:getActMo()
-	arg_6_0.rankCoList = lua_auto_chess_rank.configDict[arg_6_0.actId]
-	arg_6_0.curIndex = 0
+	arg_5_0.actId = Activity182Model.instance:getCurActId()
+	arg_5_0.actMo = Activity182Model.instance:getActMo()
+	arg_5_0.rankCoList = {}
 
-	arg_6_0:delayInit()
-	TaskDispatcher.runRepeat(arg_6_0.delayInit, arg_6_0, 0.1)
+	local var_5_0 = lua_auto_chess_rank.configDict[arg_5_0.actId]
+
+	for iter_5_0, iter_5_1 in ipairs(var_5_0) do
+		if iter_5_1.isShow then
+			arg_5_0.rankCoList[#arg_5_0.rankCoList + 1] = iter_5_1
+		end
+	end
+
+	arg_5_0.curIndex = 0
+
+	arg_5_0:delayInit()
+	TaskDispatcher.runRepeat(arg_5_0.delayInit, arg_5_0, 0.1)
 end
 
-function var_0_0.delayInit(arg_7_0)
-	arg_7_0.curIndex = arg_7_0.curIndex + 1
+function var_0_0.delayInit(arg_6_0)
+	arg_6_0.curIndex = arg_6_0.curIndex + 1
 
-	local var_7_0 = arg_7_0.rankCoList[arg_7_0.curIndex]
-	local var_7_1 = arg_7_0:getResInst(AutoChessEnum.BadgeItemPath, arg_7_0._goBadgeContent)
+	local var_6_0 = arg_6_0.rankCoList[arg_6_0.curIndex]
+	local var_6_1 = arg_6_0:getResInst(AutoChessStrEnum.ResPath.BadgeItem, arg_6_0._goBadgeContent)
 
-	MonoHelper.addNoUpdateLuaComOnceToGo(var_7_1, AutoChessBadgeItem):setData(var_7_0.rankId, arg_7_0.actMo.score, AutoChessBadgeItem.ShowType.BadgeView)
+	MonoHelper.addNoUpdateLuaComOnceToGo(var_6_1, AutoChessBadgeItem):setData(var_6_0.rankId, arg_6_0.actMo.score, AutoChessBadgeItem.ShowType.BadgeView)
 
-	if arg_7_0.curIndex >= #arg_7_0.rankCoList then
-		TaskDispatcher.cancelTask(arg_7_0.delayInit, arg_7_0)
+	if arg_6_0.curIndex >= #arg_6_0.rankCoList then
+		TaskDispatcher.cancelTask(arg_6_0.delayInit, arg_6_0)
 	end
 end
 
-function var_0_0.onDestroyView(arg_8_0)
-	TaskDispatcher.cancelTask(arg_8_0.delayInit, arg_8_0)
+function var_0_0.onDestroyView(arg_7_0)
+	TaskDispatcher.cancelTask(arg_7_0.delayInit, arg_7_0)
 
-	if arg_8_0._drag then
-		arg_8_0._drag:RemoveDragBeginListener()
-		arg_8_0._drag:RemoveDragEndListener()
+	if arg_7_0._drag then
+		arg_7_0._drag:RemoveDragBeginListener()
+		arg_7_0._drag:RemoveDragEndListener()
 
-		arg_8_0._drag = nil
+		arg_7_0._drag = nil
 	end
 
-	if arg_8_0._touch then
-		arg_8_0._touch:RemoveClickDownListener()
+	if arg_7_0._touch then
+		arg_7_0._touch:RemoveClickDownListener()
 
-		arg_8_0._touch = nil
+		arg_7_0._touch = nil
 	end
 end
 
-function var_0_0._onDragBeginHandler(arg_9_0)
-	arg_9_0._audioScroll:onDragBegin()
+function var_0_0._onDragBeginHandler(arg_8_0)
+	arg_8_0._audioScroll:onDragBegin()
 end
 
-function var_0_0._onDragEndHandler(arg_10_0)
-	arg_10_0._audioScroll:onDragEnd()
+function var_0_0._onDragEndHandler(arg_9_0)
+	arg_9_0._audioScroll:onDragEnd()
 end
 
-function var_0_0._onClickDownHandler(arg_11_0)
-	arg_11_0._audioScroll:onClickDown()
+function var_0_0._onClickDownHandler(arg_10_0)
+	arg_10_0._audioScroll:onClickDown()
 end
 
 return var_0_0

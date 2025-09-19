@@ -22,8 +22,8 @@
   },
   {
     "id": 4,
-    "patFaceActivityId": 12524,
-    "patFaceViewName": "V2a5DecalogPresentView",
+    "patFaceActivityId": 12871,
+    "patFaceViewName": "V2a8DecalogPresentView",
     "patFaceStoryId": 0,
     "patFaceOrder": 3
   },
@@ -385,6 +385,76 @@
     "patFaceOrder": 20000
   },
   {
+    "id": 20800,
+    "patFaceActivityId": 12872,
+    "patFaceViewName": "V2a8_Role_PanelSignView_Part1",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 2086
+  },
+  {
+    "id": 20801,
+    "patFaceActivityId": 12873,
+    "patFaceViewName": "V2a8_Role_PanelSignView_Part2",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 2087
+  },
+  {
+    "id": 20802,
+    "patFaceActivityId": 12869,
+    "patFaceViewName": "V2a8_WuErLiXiGiftView",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 2081
+  },
+  {
+    "id": 12801,
+    "patFaceActivityId": 12870,
+    "patFaceViewName": "V1a9_MatildagiftView",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 2083
+  },
+  {
+    "id": 20803,
+    "patFaceActivityId": 12877,
+    "patFaceViewName": "VersionActivity2_3NewCultivationGiftFullView",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 2089
+  },
+  {
+    "id": 20804,
+    "patFaceActivityId": 12866,
+    "patFaceViewName": "Activity2ndMailView",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 2084
+  },
+  {
+    "id": 20805,
+    "patFaceActivityId": 12868,
+    "patFaceViewName": "V2a8_DragonBoat_PanelView",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 2085
+  },
+  {
+    "id": 20806,
+    "patFaceActivityId": 12863,
+    "patFaceViewName": "V2a8_SelfSelectCharacterView",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 2082
+  },
+  {
+    "id": 20807,
+    "patFaceActivityId": 12867,
+    "patFaceViewName": "Activity2ndShowSkinView",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 2088
+  },
+  {
+    "id": 20808,
+    "patFaceActivityId": 12860,
+    "patFaceViewName": "BPSkinFaceView",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 2090
+  },
+  {
     "id": 300501,
     "patFaceActivityId": 130513,
     "patFaceViewName": "V2a9_FreeMonthCard_PanelView",
@@ -432,6 +502,13 @@
     "patFaceViewName": "V2a9_Role_PanelSignView_Part2",
     "patFaceStoryId": 0,
     "patFaceOrder": 20906
+  },
+  {
+    "id": 30104,
+    "patFaceActivityId": 13110,
+    "patFaceViewName": "V3a1_AutumnSign_PanelView",
+    "patFaceStoryId": 0,
+    "patFaceOrder": 30104
   },
   {
     "id": 30002,

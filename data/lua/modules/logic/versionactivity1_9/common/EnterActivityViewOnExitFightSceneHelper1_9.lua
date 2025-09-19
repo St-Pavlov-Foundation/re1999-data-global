@@ -173,52 +173,42 @@ end
 
 function var_0_0.enterActivity11908(arg_8_0, arg_8_1)
 	DungeonModel.instance:resetSendChapterEpisodeId()
-
-	local var_8_0 = VersionActivity1_9Enum.ActivityId.Lucy
-
 	MainController.instance:enterMainScene(arg_8_0)
 	SceneHelper.instance:waitSceneDone(SceneType.Main, function()
-		GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, ViewName.VersionActivity1_9EnterView)
-		VersionActivity1_9EnterController.instance:openVersionActivityEnterViewIfNotOpened(function()
-			RoleActivityController.instance:openLevelView({
-				needShowFight = true,
-				actId = var_8_0
-			})
-		end, nil, var_8_0)
+		PermanentController.instance:jump2Activity(VersionActivity1_9Enum.ActivityId.EnterView)
+		RoleActivityController.instance:openLevelView({
+			needShowFight = true,
+			actId = VersionActivity1_9Enum.ActivityId.Lucy
+		})
 	end)
 end
 
-function var_0_0.enterActivity11909(arg_11_0, arg_11_1)
+function var_0_0.enterActivity11909(arg_10_0, arg_10_1)
 	DungeonModel.instance:resetSendChapterEpisodeId()
-
-	local var_11_0 = VersionActivity1_9Enum.ActivityId.KaKaNia
-
-	MainController.instance:enterMainScene(arg_11_0)
+	MainController.instance:enterMainScene(arg_10_0)
 	SceneHelper.instance:waitSceneDone(SceneType.Main, function()
-		GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, ViewName.VersionActivity1_9EnterView)
-		VersionActivity1_9EnterController.instance:openVersionActivityEnterViewIfNotOpened(function()
-			RoleActivityController.instance:openLevelView({
-				needShowFight = true,
-				actId = var_11_0
-			})
-		end, nil, var_11_0)
+		PermanentController.instance:jump2Activity(VersionActivity1_9Enum.ActivityId.EnterView)
+		RoleActivityController.instance:openLevelView({
+			needShowFight = true,
+			actId = VersionActivity1_9Enum.ActivityId.KaKaNia
+		})
 	end)
 end
 
-function var_0_0.enterActivity11910(arg_14_0, arg_14_1)
-	local var_14_0 = DungeonModel.instance.curSendEpisodeId
-	local var_14_1, var_14_2 = BossRushConfig.instance:tryGetStageAndLayerByEpisodeId(var_14_0)
+function var_0_0.enterActivity11910(arg_12_0, arg_12_1)
+	local var_12_0 = DungeonModel.instance.curSendEpisodeId
+	local var_12_1, var_12_2 = BossRushConfig.instance:tryGetStageAndLayerByEpisodeId(var_12_0)
 
 	DungeonModel.instance.curSendEpisodeId = nil
 
-	MainController.instance:enterMainScene(arg_14_0)
+	MainController.instance:enterMainScene(arg_12_0)
 	SceneHelper.instance:waitSceneDone(SceneType.Main, function()
 		GameSceneMgr.instance:dispatchEvent(SceneEventName.WaitViewOpenCloseLoading, ViewName.V1a4_BossRushMainView)
 		VersionActivity1_9EnterController.instance:openVersionActivityEnterViewIfNotOpened(function()
 			BossRushController.instance:openMainView({
 				isOpenLevelDetail = true,
-				stage = var_14_1,
-				layer = var_14_2
+				stage = var_12_1,
+				layer = var_12_2
 			})
 		end, nil, BossRushConfig.instance:getActivityId())
 	end)

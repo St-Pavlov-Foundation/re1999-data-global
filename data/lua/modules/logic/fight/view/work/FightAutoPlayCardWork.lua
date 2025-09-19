@@ -18,7 +18,7 @@ function var_0_0.onStart(arg_2_0, arg_2_1)
 		local var_2_0 = arg_2_0._beginRoundOp.param1
 		local var_2_1 = FightDataHelper.handCardMgr.handCard[var_2_0]
 
-		FightController.instance:dispatchEvent(FightEvent.PlayHandCard, var_2_1 and var_2_0 or 1, arg_2_0._beginRoundOp.toId, arg_2_0._beginRoundOp.param2)
+		FightController.instance:dispatchEvent(FightEvent.PlayHandCard, var_2_1 and var_2_0 or 1, arg_2_0._beginRoundOp.toId, arg_2_0._beginRoundOp.param2, arg_2_0._beginRoundOp.param3)
 	end
 end
 

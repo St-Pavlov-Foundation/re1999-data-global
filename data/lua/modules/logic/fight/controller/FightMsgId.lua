@@ -41,6 +41,7 @@ local var_0_0 = {
 	EntrustFightWork = GameUtil.getMsgId(),
 	GetDeadEntityMgr = GameUtil.getMsgId(),
 	GetExPointView = GameUtil.getMsgId(),
+	OperationForPlayEffect = GameUtil.getMsgId(),
 	NewProgressValueChange = GameUtil.getMsgId(),
 	ShowAiJiAoExpointEffectBeforeUniqueSkill = GameUtil.getMsgId(),
 	CheckGuideFightItemPlayerSkillGroup = GameUtil.getMsgId(),

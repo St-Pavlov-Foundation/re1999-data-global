@@ -40,6 +40,7 @@ function var_0_0.addEventListeners(arg_2_0)
 	arg_2_0:addEventCb(ActivityController.instance, ActivityEvent.UnlockPermanent, arg_2_0._onUnlcokPermanent, arg_2_0)
 	arg_2_0:addEventCb(ActivityController.instance, ActivityEvent.GetActivityInfoWithParamSuccess, arg_2_0._refreshAllGetFlag, arg_2_0)
 	arg_2_0:addEventCb(RedDotController.instance, RedDotEvent.UpdateRelateDotInfo, arg_2_0.refreshRedDot, arg_2_0, LuaEventSystem.Low)
+	arg_2_0:addEventCb(Activity165Controller.instance, Activity165Event.refreshStoryReddot, arg_2_0._onRefreshStoryReddot, arg_2_0)
 end
 
 function var_0_0.removeEventListeners(arg_3_0)
@@ -48,6 +49,7 @@ function var_0_0.removeEventListeners(arg_3_0)
 	arg_3_0:removeEventCb(ActivityController.instance, ActivityEvent.UnlockPermanent, arg_3_0._onUnlcokPermanent, arg_3_0)
 	arg_3_0:removeEventCb(ActivityController.instance, ActivityEvent.GetActivityInfoWithParamSuccess, arg_3_0._refreshAllGetFlag, arg_3_0)
 	arg_3_0:removeEventCb(RedDotController.instance, RedDotEvent.UpdateRelateDotInfo, arg_3_0.refreshRedDot, arg_3_0)
+	arg_3_0:removeEventCb(Activity165Controller.instance, Activity165Event.refreshStoryReddot, arg_3_0._onRefreshStoryReddot, arg_3_0)
 end
 
 function var_0_0.refreshRedDot(arg_4_0)
@@ -73,20 +75,23 @@ function var_0_0.onUpdateMO(arg_5_0, arg_5_1)
 		return
 	end
 
-	local var_5_0 = PermanentConfig.instance:getKvIconName(arg_5_1.id)
+	local var_5_0 = arg_5_1.config.id
+	local var_5_1 = PermanentConfig.instance:getKvIconName(arg_5_1.id)
 
-	arg_5_0._simagekv:LoadImage(ResUrl.getPermanentSingleBg(var_5_0))
+	arg_5_0._simagekv:LoadImage(ResUrl.getPermanentSingleBg(var_5_1))
 
 	arg_5_0._txtname.text = arg_5_1.config.name
 	arg_5_0._txtnameen.text = arg_5_1.config.nameEn
 
-	arg_5_0._simagekvL:LoadImage(ResUrl.getPermanentSingleBg(var_5_0))
+	arg_5_0._simagekvL:LoadImage(ResUrl.getPermanentSingleBg(var_5_1))
 
 	arg_5_0._txtnameL.text = arg_5_1.config.name
 	arg_5_0._txtnameenL.text = arg_5_1.config.nameEn
 
 	if arg_5_1.config.redDotId ~= 0 then
 		RedDotController.instance:addRedDot(arg_5_0._goreddot, arg_5_1.config.redDotId)
+	elseif var_5_0 == VersionActivity2_1Enum.ActivityId.EnterView then
+		arg_5_0.notEventRedDot = RedDotController.instance:addNotEventRedDot(arg_5_0._goreddot, arg_5_0._v2a1_checkNotEventReddotShow, arg_5_0)
 	else
 		arg_5_0.notEventRedDot = RedDotController.instance:addNotEventRedDot(arg_5_0._goreddot, arg_5_0._checkNotEventReddotShow, arg_5_0)
 	end
@@ -213,6 +218,36 @@ end
 
 function var_0_0.getAnimator(arg_16_0)
 	return arg_16_0.animator
+end
+
+function var_0_0._v2a1_checkNotEventReddotShow(arg_17_0)
+	return arg_17_0:_checkNotEventReddotShow() or PermanentModel.instance:IsDotShowPermanent2_1()
+end
+
+function var_0_0._onRefreshStoryReddot(arg_18_0)
+	local var_18_0 = arg_18_0._mo
+
+	if not var_18_0 then
+		return
+	end
+
+	if not arg_18_0.notEventRedDot then
+		return
+	end
+
+	if var_18_0.id == -999 then
+		return
+	end
+
+	if not var_18_0.config then
+		return
+	end
+
+	if var_18_0.config.id ~= VersionActivity2_1Enum.ActivityId.EnterView then
+		return
+	end
+
+	arg_18_0.notEventRedDot:refreshRedDot()
 end
 
 return var_0_0

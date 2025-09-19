@@ -232,15 +232,17 @@ function var_0_0._checkIsShowRed_ActivityBeginner(arg_18_0, arg_18_1, arg_18_2)
 	for iter_18_0, iter_18_1 in pairs(var_18_0) do
 		arg_18_0._curActId = iter_18_1
 
+		local var_18_1 = ActivityConfig.instance:getActivityCo(iter_18_1).typeId
+
 		if iter_18_1 == DoubleDropModel.instance:getActId() and string.nilorempty(arg_18_0:getActivityShowRedDotData(iter_18_1)) then
 			return true
 		end
 
 		if iter_18_1 == ActivityEnum.Activity.DreamShow then
-			local var_18_1 = TaskModel.instance:getTaskMoList(TaskEnum.TaskType.ActivityShow, ActivityEnum.Activity.DreamShow)
-			local var_18_2 = var_18_1 and var_18_1[1]
+			local var_18_2 = TaskModel.instance:getTaskMoList(TaskEnum.TaskType.ActivityShow, ActivityEnum.Activity.DreamShow)
+			local var_18_3 = var_18_2 and var_18_2[1]
 
-			if var_18_2 and var_18_2.config and var_18_2.finishCount < var_18_2.config.maxFinishCount and string.nilorempty(arg_18_0:getActivityShowRedDotData(iter_18_1)) then
+			if var_18_3 and var_18_3.config and var_18_3.finishCount < var_18_3.config.maxFinishCount and string.nilorempty(arg_18_0:getActivityShowRedDotData(iter_18_1)) then
 				return true
 			end
 		end
@@ -250,10 +252,6 @@ function var_0_0._checkIsShowRed_ActivityBeginner(arg_18_0, arg_18_1, arg_18_2)
 		end
 
 		if iter_18_1 == ActivityEnum.Activity.Activity1_8WarmUp and Activity125Controller.instance:checkActRed1(iter_18_1) then
-			return true
-		end
-
-		if (iter_18_1 == ActivityEnum.Activity.Activity1_9WarmUp or iter_18_1 == ActivityEnum.Activity.V2a0_WarmUp or iter_18_1 == ActivityEnum.Activity.V2a1_WarmUp or iter_18_1 == ActivityEnum.Activity.V2a2_WarmUp or iter_18_1 == ActivityEnum.Activity.V2a3_WarmUp or iter_18_1 == ActivityEnum.Activity.V2a5_WarmUp or iter_18_1 == ActivityEnum.Activity.V2a6_WarmUp or iter_18_1 == ActivityEnum.Activity.V2a7_WarmUp) and Activity125Controller.instance:checkActRed2(iter_18_1) then
 			return true
 		end
 
@@ -269,11 +267,11 @@ function var_0_0._checkIsShowRed_ActivityBeginner(arg_18_0, arg_18_1, arg_18_2)
 			return true
 		end
 
-		if typeId == ActivityEnum.ActivityTypeID.Act125 and Activity125Controller.instance:checkActRed2(iter_18_1) then
+		if var_18_1 == ActivityEnum.ActivityTypeID.Act125 and Activity125Controller.instance:checkActRed2(iter_18_1) then
 			return true
 		end
 
-		if typeId == ActivityEnum.ActivityTypeID.Act201 and ActivityBeginnerController.instance:checkFirstEnter(iter_18_1) then
+		if var_18_1 == ActivityEnum.ActivityTypeID.Act201 and ActivityBeginnerController.instance:checkFirstEnter(iter_18_1) then
 			return true
 		end
 	end

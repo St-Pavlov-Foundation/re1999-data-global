@@ -70,7 +70,6 @@ function var_0_0.initList(arg_5_0, arg_5_1)
 	end
 
 	table.sort(arg_5_0.ownList, var_0_1)
-	table.sort(arg_5_0.noGainList, var_0_1)
 end
 
 function var_0_0.setSelectId(arg_6_0, arg_6_1)

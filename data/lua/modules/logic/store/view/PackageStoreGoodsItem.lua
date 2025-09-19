@@ -62,9 +62,11 @@ function var_0_0._editableInitView(arg_4_0)
 	arg_4_0._goremaintime = gohelper.findChild(arg_4_0.viewGO, "go_remaintime")
 	arg_4_0._txtremiantime = gohelper.findChildText(arg_4_0.viewGO, "go_remaintime/bg/#txt_remiantime")
 	arg_4_0._gonewtag = gohelper.findChild(arg_4_0.viewGO, "go_newtag")
+	arg_4_0._nationalgifttag = gohelper.findChild(arg_4_0.viewGO, "go_nationalgift")
 	arg_4_0._gomooncardup = gohelper.findChild(arg_4_0.viewGO, "#go_mooncardup")
 	arg_4_0._gomaterialup = gohelper.findChild(arg_4_0.viewGO, "#go_materialup")
 	arg_4_0._gocobranded = gohelper.findChild(arg_4_0.viewGO, "#go_cobranded")
+	arg_4_0._gotxtv2a8_09 = gohelper.findChild(arg_4_0.viewGO, "txt_v2a8_09")
 	arg_4_0._golinkgift = gohelper.findChild(arg_4_0.viewGO, "#go_linkgift")
 	arg_4_0._gologoTab = gohelper.findChild(arg_4_0.viewGO, "#simage_logo")
 end
@@ -159,6 +161,7 @@ function var_0_0.onUpdateMO(arg_10_0, arg_10_1)
 	gohelper.setActive(arg_10_0._goitemreddot, StoreModel.instance:isGoodsItemRedDotShow(arg_10_1.goodsId))
 	gohelper.setActive(arg_10_0._golevellimit, not arg_10_0:_isStoreItemUnlock())
 	gohelper.setActive(arg_10_0._gomooncardup, false)
+	gohelper.setActive(arg_10_0._nationalgifttag, arg_10_1.config.offTag == "1")
 
 	if not arg_10_0:_isStoreItemUnlock() then
 		local var_10_0 = arg_10_0._mo.config.needEpisodeId
@@ -350,6 +353,7 @@ function var_0_0.onUpdateMO(arg_10_0, arg_10_1)
 	arg_10_0:_onUpdateMO_gosummonSimulationPickFX(arg_10_1)
 	arg_10_0:_onUpdateMO_linkPackage(arg_10_1)
 	arg_10_0:refreshSkinTips(arg_10_1)
+	gohelper.setActive(arg_10_0._gotxtv2a8_09, PackageStoreEnum.AnimHeadDict[arg_10_1.goodsId])
 end
 
 function var_0_0.showMonthCardTips(arg_11_0)

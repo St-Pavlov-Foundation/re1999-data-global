@@ -8,31 +8,34 @@ function var_0_0.initViewParam(arg_1_0)
 	tabletool.clear(arg_1_0.viewParam)
 end
 
-function var_0_0.openCommonTipView(arg_2_0, arg_2_1, arg_2_2)
+function var_0_0.openCommonTipView(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
 	arg_2_0:initViewParam()
 
 	arg_2_0.viewParam.effectId = arg_2_1
 	arg_2_0.viewParam.clickPosition = arg_2_2
+	arg_2_0.viewParam.monsterName = arg_2_3
 
 	ViewMgr.instance:openView(ViewName.CommonBuffTipView, arg_2_0.viewParam)
 end
 
-function var_0_0.openCommonTipViewWithCustomPos(arg_3_0, arg_3_1, arg_3_2, arg_3_3)
+function var_0_0.openCommonTipViewWithCustomPos(arg_3_0, arg_3_1, arg_3_2, arg_3_3, arg_3_4)
 	arg_3_0:initViewParam()
 
 	arg_3_0.viewParam.effectId = arg_3_1
 	arg_3_0.viewParam.scrollAnchorPos = arg_3_2
 	arg_3_0.viewParam.pivot = arg_3_3 or CommonBuffTipEnum.Pivot.Left
+	arg_3_0.viewParam.monsterName = arg_3_4
 
 	ViewMgr.instance:openView(ViewName.CommonBuffTipView, arg_3_0.viewParam)
 end
 
-function var_0_0.openCommonTipViewWithCustomPosCallback(arg_4_0, arg_4_1, arg_4_2, arg_4_3)
+function var_0_0.openCommonTipViewWithCustomPosCallback(arg_4_0, arg_4_1, arg_4_2, arg_4_3, arg_4_4)
 	arg_4_0:initViewParam()
 
 	arg_4_0.viewParam.effectId = arg_4_1
 	arg_4_0.viewParam.setScrollPosCallback = arg_4_2
 	arg_4_0.viewParam.setScrollPosCallbackObj = arg_4_3
+	arg_4_0.viewParam.monsterName = arg_4_4
 
 	ViewMgr.instance:openView(ViewName.CommonBuffTipView, arg_4_0.viewParam)
 end

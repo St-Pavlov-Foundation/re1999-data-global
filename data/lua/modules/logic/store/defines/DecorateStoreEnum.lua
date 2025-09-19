@@ -22,5 +22,6 @@ var_0_0.MaxBuyTipType = {
 	Owned = 1,
 	SoldOut = 2
 }
+var_0_0.SpecialGoodsId = 210005
 
 return var_0_0

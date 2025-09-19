@@ -71,8 +71,8 @@ function var_0_0._editableInitView(arg_6_0)
 	end
 
 	arg_6_0._uguiListPlayer:SetEventListener(arg_6_0._onVideoPlayEvent, arg_6_0)
-	arg_6_0._uguiListPlayer:SetMediaPath(SLFramework.FrameworkSettings.GetAssetFullPathForWWW(langVideoUrl("make_name_start")), 0)
-	arg_6_0._uguiListPlayer:SetMediaPath(SLFramework.FrameworkSettings.GetAssetFullPathForWWW(langVideoUrl("make_name_loop")), 1)
+	arg_6_0._uguiListPlayer:SetMediaPath(langVideoUrl("make_name_start"), 0)
+	arg_6_0._uguiListPlayer:SetMediaPath(langVideoUrl("make_name_loop"), 1)
 	gohelper.setActive(arg_6_0._goname, false)
 	gohelper.setActive(arg_6_0._gonormal, false)
 
@@ -124,7 +124,7 @@ end
 
 function var_0_0._showInputUI(arg_12_0)
 	gohelper.setActive(arg_12_0._goname, true)
-	arg_12_0._uguiListPlayer:SetMediaPath(SLFramework.FrameworkSettings.GetAssetFullPathForWWW(langVideoUrl("make_name_end")), 0)
+	arg_12_0._uguiListPlayer:SetMediaPath(langVideoUrl("make_name_end"), 0)
 end
 
 function var_0_0._delayShowNameUI(arg_13_0)

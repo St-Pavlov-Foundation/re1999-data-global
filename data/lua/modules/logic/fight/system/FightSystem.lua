@@ -113,7 +113,25 @@ function var_0_0._onEndFight(arg_12_0)
 	arg_12_0._endSequence:start(arg_12_0._onEndFinish, arg_12_0)
 end
 
-function var_0_0._onStartFinish(arg_13_0)
+function var_0_0.directStartNewFight(arg_13_0)
+	if arg_13_0.directStartNewFightWork then
+		arg_13_0.directStartNewFightWork:disposeSelf()
+	end
+
+	arg_13_0.directStartNewFightWork = FightWorkDirectStartNewFightAfterEndFight.New()
+
+	arg_13_0.directStartNewFightWork:start()
+end
+
+function var_0_0.clearDirectStartNewFightWork(arg_14_0)
+	if arg_14_0.directStartNewFightWork then
+		arg_14_0.directStartNewFightWork:disposeSelf()
+
+		arg_14_0.directStartNewFightWork = nil
+	end
+end
+
+function var_0_0._onStartFinish(arg_15_0)
 	FightMgr.instance:exitStage(FightStageMgr.StageType.Play)
 	FightDataHelper.stageMgr:exitFightState(FightStageMgr.FightStateType.Enter)
 
@@ -127,31 +145,31 @@ function var_0_0._onStartFinish(arg_13_0)
 	FightController.instance:dispatchEvent(FightEvent.OnStartSequenceFinish)
 end
 
-function var_0_0.getReconnectSequence(arg_14_0)
-	return arg_14_0._reconnectSequence
+function var_0_0.getReconnectSequence(arg_16_0)
+	return arg_16_0._reconnectSequence
 end
 
-function var_0_0.getStartSequence(arg_15_0)
-	return arg_15_0._startSequence
+function var_0_0.getStartSequence(arg_17_0)
+	return arg_17_0._startSequence
 end
 
-function var_0_0.getRoundSequence(arg_16_0)
-	return arg_16_0._roundSequence
+function var_0_0.getRoundSequence(arg_18_0)
+	return arg_18_0._roundSequence
 end
 
-function var_0_0.getClothSkillSequence(arg_17_0)
-	return arg_17_0._clothSkillSequence
+function var_0_0.getClothSkillSequence(arg_19_0)
+	return arg_19_0._clothSkillSequence
 end
 
-function var_0_0.getEndSequence(arg_18_0)
-	return arg_18_0._endSequence
+function var_0_0.getEndSequence(arg_20_0)
+	return arg_20_0._endSequence
 end
 
-function var_0_0.getRestartSequence(arg_19_0)
-	return arg_19_0._restartSequence
+function var_0_0.getRestartSequence(arg_21_0)
+	return arg_21_0._restartSequence
 end
 
-function var_0_0._onRoundFinish(arg_20_0)
+function var_0_0._onRoundFinish(arg_22_0)
 	FightMgr.instance:exitStage(FightStageMgr.StageType.Play)
 	FightModel.instance:onEndRound()
 
@@ -166,7 +184,7 @@ function var_0_0._onRoundFinish(arg_20_0)
 	FightController.instance:dispatchEvent(FightEvent.OnRoundSequenceFinish)
 end
 
-function var_0_0._onClothSkillRoundFinish(arg_21_0)
+function var_0_0._onClothSkillRoundFinish(arg_23_0)
 	FightMgr.instance:exitStage(FightStageMgr.StageType.Play)
 
 	if not FightModel.instance:isFinish() then
@@ -177,88 +195,88 @@ function var_0_0._onClothSkillRoundFinish(arg_21_0)
 		end
 	end
 
-	local var_21_0 = FightModel.instance:getCurStage()
+	local var_23_0 = FightModel.instance:getCurStage()
 
-	if var_21_0 == FightEnum.Stage.Card or var_21_0 == FightEnum.Stage.AutoCard then
+	if var_23_0 == FightEnum.Stage.Card or var_23_0 == FightEnum.Stage.AutoCard then
 		FightViewPartVisible.set(true, true, true, false, false)
 	end
 
 	FightController.instance:dispatchEvent(FightEvent.OnClothSkillRoundSequenceFinish)
 end
 
-function var_0_0._onEndFinish(arg_22_0)
+function var_0_0._onEndFinish(arg_24_0)
 	FightController.instance:setCurStage(FightEnum.Stage.End)
 	FightController.instance:dispatchEvent(FightEvent.OnEndSequenceFinish)
 end
 
-function var_0_0.dispose(arg_23_0)
-	arg_23_0._reconnectSequence:stop()
-	arg_23_0._startSequence:stop()
-	arg_23_0._roundSequence:stop()
-	arg_23_0._clothSkillSequence:stop()
-	arg_23_0._endSequence:stop()
-	arg_23_0._reconnectSequence:dispose()
-	arg_23_0._startSequence:dispose()
-	arg_23_0._roundSequence:dispose()
-	arg_23_0._clothSkillSequence:dispose()
-	arg_23_0._endSequence:dispose()
+function var_0_0.dispose(arg_25_0)
+	arg_25_0._reconnectSequence:stop()
+	arg_25_0._startSequence:stop()
+	arg_25_0._roundSequence:stop()
+	arg_25_0._clothSkillSequence:stop()
+	arg_25_0._endSequence:stop()
+	arg_25_0._reconnectSequence:dispose()
+	arg_25_0._startSequence:dispose()
+	arg_25_0._roundSequence:dispose()
+	arg_25_0._clothSkillSequence:dispose()
+	arg_25_0._endSequence:dispose()
 	FightPlayCardModel.instance:onEndRound()
 	FightModel.instance:clear()
 	FightModel.instance:setCurStage(nil)
 end
 
-function var_0_0.dumpStates(arg_24_0)
-	arg_24_0:_dumpSequence(arg_24_0._reconnectSequence, "reconnectSequence")
-	arg_24_0:_dumpSequence(arg_24_0._startSequence, "startSequence")
-	arg_24_0:_dumpSequence(arg_24_0._roundSequence, "roundSequence")
-	arg_24_0:_dumpSequence(arg_24_0._clothSkillSequence, "clothSkillSequence")
-	arg_24_0:_dumpSequence(arg_24_0._endSequence, "endSequence")
+function var_0_0.dumpStates(arg_26_0)
+	arg_26_0:_dumpSequence(arg_26_0._reconnectSequence, "reconnectSequence")
+	arg_26_0:_dumpSequence(arg_26_0._startSequence, "startSequence")
+	arg_26_0:_dumpSequence(arg_26_0._roundSequence, "roundSequence")
+	arg_26_0:_dumpSequence(arg_26_0._clothSkillSequence, "clothSkillSequence")
+	arg_26_0:_dumpSequence(arg_26_0._endSequence, "endSequence")
 end
 
-function var_0_0._dumpSequence(arg_25_0, arg_25_1, arg_25_2)
-	if arg_25_1._sequence and arg_25_1._sequence.status == WorkStatus.Running then
-		local var_25_0 = {
-			arg_25_2
+function var_0_0._dumpSequence(arg_27_0, arg_27_1, arg_27_2)
+	if arg_27_1._sequence and arg_27_1._sequence.status == WorkStatus.Running then
+		local var_27_0 = {
+			arg_27_2
 		}
-		local var_25_1 = arg_25_1._sequence
+		local var_27_1 = arg_27_1._sequence
 
-		if var_25_1 then
-			arg_25_0:_getWorks(var_25_1, var_25_0, 0)
+		if var_27_1 then
+			arg_27_0:_getWorks(var_27_1, var_27_0, 0)
 		end
 
-		logError(table.concat(var_25_0, "\n"))
+		logError(table.concat(var_27_0, "\n"))
 	end
 end
 
-function var_0_0._getWorks(arg_26_0, arg_26_1, arg_26_2, arg_26_3)
-	local var_26_0 = ""
+function var_0_0._getWorks(arg_28_0, arg_28_1, arg_28_2, arg_28_3)
+	local var_28_0 = ""
 
-	for iter_26_0 = 1, arg_26_3 do
-		var_26_0 = var_26_0 .. "  "
+	for iter_28_0 = 1, arg_28_3 do
+		var_28_0 = var_28_0 .. "  "
 	end
 
-	local var_26_1 = var_26_0 .. arg_26_1.__cname
+	local var_28_1 = var_28_0 .. arg_28_1.__cname
 
-	if arg_26_1.status == WorkStatus.Running then
-		var_26_1 = var_26_1 .. "(running)"
+	if arg_28_1.status == WorkStatus.Running then
+		var_28_1 = var_28_1 .. "(running)"
 	end
 
-	table.insert(arg_26_2, var_26_1)
+	table.insert(arg_28_2, var_28_1)
 
-	if isTypeOf(arg_26_1, FlowSequence) then
-		local var_26_2 = arg_26_1._workList
+	if isTypeOf(arg_28_1, FlowSequence) then
+		local var_28_2 = arg_28_1._workList
 
-		for iter_26_1, iter_26_2 in ipairs(var_26_2) do
-			arg_26_0:_getWorks(iter_26_2, arg_26_2, arg_26_3 + 1)
+		for iter_28_1, iter_28_2 in ipairs(var_28_2) do
+			arg_28_0:_getWorks(iter_28_2, arg_28_2, arg_28_3 + 1)
 		end
-	elseif isTypeOf(arg_26_1, FlowParallel) then
-		local var_26_3 = arg_26_1._workList
+	elseif isTypeOf(arg_28_1, FlowParallel) then
+		local var_28_3 = arg_28_1._workList
 
-		for iter_26_3, iter_26_4 in ipairs(var_26_3) do
-			arg_26_0:_getWorks(iter_26_4, arg_26_2, arg_26_3 + 1)
+		for iter_28_3, iter_28_4 in ipairs(var_28_3) do
+			arg_28_0:_getWorks(iter_28_4, arg_28_2, arg_28_3 + 1)
 		end
-	elseif isTypeOf(arg_26_1, FightSkillFlow) and arg_26_1._sequence then
-		arg_26_0:_getWorks(arg_26_1._sequence, arg_26_2, arg_26_3 + 1)
+	elseif isTypeOf(arg_28_1, FightSkillFlow) and arg_28_1._sequence then
+		arg_28_0:_getWorks(arg_28_1._sequence, arg_28_2, arg_28_3 + 1)
 	end
 end
 

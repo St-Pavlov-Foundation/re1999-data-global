@@ -39,17 +39,26 @@ function var_0_0.loadMesh(arg_4_0)
 end
 
 function var_0_0.loadResFinish(arg_5_0)
-	local var_5_0 = arg_5_0.loader:getAssetItem(arg_5_0.meshUrl):GetResource(arg_5_0.meshUrl)
+	local var_5_0 = arg_5_0.loader:getAssetItem(arg_5_0.meshUrl)
 
-	arg_5_0.uiMesh.mesh = var_5_0
+	if var_5_0 then
+		local var_5_1 = var_5_0:GetResource(arg_5_0.meshUrl)
 
-	arg_5_0.uiMesh:SetVerticesDirty()
+		arg_5_0.uiMesh.mesh = var_5_1
 
-	local var_5_1 = arg_5_0.loader:getAssetItem(arg_5_0.materialUrl):GetResource(arg_5_0.materialUrl)
+		arg_5_0.uiMesh:SetVerticesDirty()
+	end
 
-	arg_5_0.uiMesh.material = var_5_1
+	local var_5_2 = arg_5_0.loader:getAssetItem(arg_5_0.materialUrl)
 
-	arg_5_0.uiMesh:SetMaterialDirty()
+	if var_5_2 then
+		local var_5_3 = var_5_2:GetResource(arg_5_0.materialUrl)
+
+		arg_5_0.uiMesh.material = var_5_3
+
+		arg_5_0.uiMesh:SetMaterialDirty()
+	end
+
 	gohelper.setActive(arg_5_0.uiMesh, true)
 end
 

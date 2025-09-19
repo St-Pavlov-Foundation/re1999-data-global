@@ -301,6 +301,20 @@ function var_0_1.claimAll(arg_24_0, arg_24_1, arg_24_2, arg_24_3)
 	end
 end
 
+function var_0_1.getFirstAvailableIndex(arg_25_0, arg_25_1)
+	local var_25_0 = arg_25_0:getType101Info(arg_25_1)
+
+	for iter_25_0, iter_25_1 in ipairs(var_25_0 or {}) do
+		local var_25_1 = iter_25_1.id
+
+		if iter_25_1.state == var_0_3 then
+			return iter_25_0
+		end
+	end
+
+	return 0
+end
+
 local var_0_5 = "_Container"
 local var_0_6 = {
 	bgBlur = 0,
@@ -401,118 +415,118 @@ local var_0_15 = {
 	anim = ViewAnim.Default
 }
 
-local function var_0_16(arg_25_0, arg_25_1, arg_25_2)
-	local function var_25_0(arg_26_0)
-		local var_26_0 = var_0_0(arg_26_0._viewName, arg_25_0, arg_25_1)
-		local var_26_1 = var_0_0(arg_26_0._viewContainerName, arg_25_0, arg_25_1)
+local function var_0_16(arg_26_0, arg_26_1, arg_26_2)
+	local function var_26_0(arg_27_0)
+		local var_27_0 = var_0_0(arg_27_0._viewName, arg_26_0, arg_26_1)
+		local var_27_1 = var_0_0(arg_27_0._viewContainerName, arg_26_0, arg_26_1)
 
-		arg_26_0.mainRes = var_0_0(arg_26_0.mainRes, arg_25_0, arg_25_1)
-		arg_26_0.otherRes[1] = var_0_0(arg_26_0.otherRes[1], arg_25_0, arg_25_1)
-		arg_26_0._viewName = var_26_0
+		arg_27_0.mainRes = var_0_0(arg_27_0.mainRes, arg_26_0, arg_26_1)
+		arg_27_0.otherRes[1] = var_0_0(arg_27_0.otherRes[1], arg_26_0, arg_26_1)
+		arg_27_0._viewName = var_27_0
 
-		local var_26_2
-		local var_26_3 = _G.class(var_26_1, Vxax_Role_SignItem_SignViewContainer)
+		local var_27_2
+		local var_27_3 = _G.class(var_27_1, Vxax_Role_SignItem_SignViewContainer)
 
-		if arg_26_0._isFullView then
-			var_26_2 = _G.class(var_26_0, Vxax_Role_FullSignView)
+		if arg_27_0._isFullView then
+			var_27_2 = _G.class(var_27_0, Vxax_Role_FullSignView)
 
-			Vxax_Role_SignItem_SignViewContainer.Vxax_Role_FullSignView_PartX(var_26_2, arg_25_0, arg_25_1, arg_26_0._whichPart)
+			Vxax_Role_SignItem_SignViewContainer.Vxax_Role_FullSignView_PartX(var_27_2, arg_26_0, arg_26_1, arg_27_0._whichPart)
 		else
-			var_26_2 = _G.class(var_26_0, Vxax_Role_PanelSignView)
+			var_27_2 = _G.class(var_27_0, Vxax_Role_PanelSignView)
 
-			Vxax_Role_SignItem_SignViewContainer.Vxax_Role_PanelSignView_PartX(var_26_2, arg_25_0, arg_25_1, arg_26_0._whichPart)
+			Vxax_Role_SignItem_SignViewContainer.Vxax_Role_PanelSignView_PartX(var_27_2, arg_26_0, arg_26_1, arg_27_0._whichPart)
 		end
 
-		Vxax_Role_SignItem_SignViewContainer.Vxax_Role_xxxSignView_Container(var_26_3, var_26_2)
+		Vxax_Role_SignItem_SignViewContainer.Vxax_Role_xxxSignView_Container(var_27_3, var_27_2)
 
-		arg_25_2[var_26_0] = arg_26_0
+		arg_26_2[var_27_0] = arg_27_0
 
-		rawset(_G.ViewName, var_26_0, var_26_0)
-		rawset(_G, var_26_0, var_26_2)
-		rawset(_G, var_26_1, var_26_3)
+		rawset(_G.ViewName, var_27_0, var_27_0)
+		rawset(_G, var_27_0, var_27_2)
+		rawset(_G, var_27_1, var_27_3)
 	end
 
-	var_25_0(var_0_7)
-	var_25_0(var_0_8)
-	var_25_0(var_0_10)
-	var_25_0(var_0_11)
+	var_26_0(var_0_7)
+	var_26_0(var_0_8)
+	var_26_0(var_0_10)
+	var_26_0(var_0_11)
 end
 
-local function var_0_17(arg_27_0, arg_27_1, arg_27_2)
-	local function var_27_0(arg_28_0)
-		local var_28_0 = var_0_0(arg_28_0._viewName, arg_27_0, arg_27_1)
-		local var_28_1 = var_0_0(arg_28_0._viewContainerName, arg_27_0, arg_27_1)
+local function var_0_17(arg_28_0, arg_28_1, arg_28_2)
+	local function var_28_0(arg_29_0)
+		local var_29_0 = var_0_0(arg_29_0._viewName, arg_28_0, arg_28_1)
+		local var_29_1 = var_0_0(arg_29_0._viewContainerName, arg_28_0, arg_28_1)
 
-		arg_28_0.mainRes = var_0_0(arg_28_0.mainRes, arg_27_0, arg_27_1)
-		arg_28_0._viewName = var_28_0
+		arg_29_0.mainRes = var_0_0(arg_29_0.mainRes, arg_28_0, arg_28_1)
+		arg_29_0._viewName = var_29_0
 
-		local var_28_2
-		local var_28_3 = _G.class(var_28_1, Vxax_Special_SignItemViewContainer)
+		local var_29_2
+		local var_29_3 = _G.class(var_29_1, Vxax_Special_SignItemViewContainer)
 
-		if arg_28_0._isFullView then
-			var_28_2 = _G.class(var_28_0, var_0_12)
+		if arg_29_0._isFullView then
+			var_29_2 = _G.class(var_29_0, var_0_12)
 
-			Vxax_Special_SignItemViewContainer.Vxax_Special_FullSignView(var_28_2, arg_27_0, arg_27_1)
+			Vxax_Special_SignItemViewContainer.Vxax_Special_FullSignView(var_29_2, arg_28_0, arg_28_1)
 		else
-			var_28_2 = _G.class(var_28_0, var_0_13)
+			var_29_2 = _G.class(var_29_0, var_0_13)
 
-			Vxax_Special_SignItemViewContainer.Vxax_Special_PanelSignView(var_28_2, arg_27_0, arg_27_1)
+			Vxax_Special_SignItemViewContainer.Vxax_Special_PanelSignView(var_29_2, arg_28_0, arg_28_1)
 		end
 
-		Vxax_Special_SignItemViewContainer.Vxax_Special_xxxSignView_Container(var_28_3, var_28_2)
+		Vxax_Special_SignItemViewContainer.Vxax_Special_xxxSignView_Container(var_29_3, var_29_2)
 
-		arg_27_2[var_28_0] = arg_28_0
+		arg_28_2[var_29_0] = arg_29_0
 
-		rawset(_G.ViewName, var_28_0, var_28_0)
-		rawset(_G, var_28_0, var_28_2)
-		rawset(_G, var_28_1, var_28_3)
+		rawset(_G.ViewName, var_29_0, var_29_0)
+		rawset(_G, var_29_0, var_29_2)
+		rawset(_G, var_29_1, var_29_3)
 	end
 
-	var_27_0(var_0_12)
-	var_27_0(var_0_13)
+	var_28_0(var_0_12)
+	var_28_0(var_0_13)
 end
 
-local function var_0_18(arg_29_0, arg_29_1, arg_29_2)
-	local function var_29_0(arg_30_0)
-		local var_30_0 = var_0_0(arg_30_0._viewName, arg_29_0, arg_29_1)
-		local var_30_1 = var_0_0(arg_30_0._viewContainerName, arg_29_0, arg_29_1)
+local function var_0_18(arg_30_0, arg_30_1, arg_30_2)
+	local function var_30_0(arg_31_0)
+		local var_31_0 = var_0_0(arg_31_0._viewName, arg_30_0, arg_30_1)
+		local var_31_1 = var_0_0(arg_31_0._viewContainerName, arg_30_0, arg_30_1)
 
-		arg_30_0.mainRes = var_0_0(arg_30_0.mainRes, arg_29_0, arg_29_1)
-		arg_30_0._viewName = var_30_0
+		arg_31_0.mainRes = var_0_0(arg_31_0.mainRes, arg_30_0, arg_30_1)
+		arg_31_0._viewName = var_31_0
 
-		local var_30_2
-		local var_30_3 = _G.class(var_30_1, LinkageActivity_BaseViewContainer)
+		local var_31_2
+		local var_31_3 = _G.class(var_31_1, LinkageActivity_BaseViewContainer)
 
-		if arg_30_0._isFullView then
-			var_30_2 = _G.class(var_30_0, LinkageActivity_FullView)
+		if arg_31_0._isFullView then
+			var_31_2 = _G.class(var_31_0, LinkageActivity_FullView)
 
-			LinkageActivity_BaseViewContainer.Vxax_LinkageActivity_FullView(var_30_2, arg_29_0, arg_29_1)
+			LinkageActivity_BaseViewContainer.Vxax_LinkageActivity_FullView(var_31_2, arg_30_0, arg_30_1)
 		else
-			var_30_2 = _G.class(var_30_0, LinkageActivity_PanelView)
+			var_31_2 = _G.class(var_31_0, LinkageActivity_PanelView)
 
-			LinkageActivity_BaseViewContainer.Vxax_LinkageActivity_PanelView(var_30_2, arg_29_0, arg_29_1)
+			LinkageActivity_BaseViewContainer.Vxax_LinkageActivity_PanelView(var_31_2, arg_30_0, arg_30_1)
 		end
 
-		LinkageActivity_BaseViewContainer.Vxax_LinkageActivity_xxxView_Container(var_30_3, var_30_2)
+		LinkageActivity_BaseViewContainer.Vxax_LinkageActivity_xxxView_Container(var_31_3, var_31_2)
 
-		arg_29_2[var_30_0] = arg_30_0
+		arg_30_2[var_31_0] = arg_31_0
 
-		rawset(_G.ViewName, var_30_0, var_30_0)
-		rawset(_G, var_30_0, var_30_2)
-		rawset(_G, var_30_1, var_30_3)
+		rawset(_G.ViewName, var_31_0, var_31_0)
+		rawset(_G, var_31_0, var_31_2)
+		rawset(_G, var_31_1, var_31_3)
 	end
 
-	var_29_0(var_0_14)
-	var_29_0(var_0_15)
+	var_30_0(var_0_14)
+	var_30_0(var_0_15)
 end
 
-function var_0_1.onModuleViews(arg_31_0, arg_31_1, arg_31_2)
-	local var_31_0 = arg_31_1.curV
-	local var_31_1 = arg_31_1.curA
+function var_0_1.onModuleViews(arg_32_0, arg_32_1, arg_32_2)
+	local var_32_0 = arg_32_1.curV
+	local var_32_1 = arg_32_1.curA
 
-	var_0_16(var_31_0, var_31_1, arg_31_2)
-	var_0_17(var_31_0, var_31_1, arg_31_2)
-	var_0_18(var_31_0, var_31_1, arg_31_2)
+	var_0_16(var_32_0, var_32_1, arg_32_2)
+	var_0_17(var_32_0, var_32_1, arg_32_2)
+	var_0_18(var_32_0, var_32_1, arg_32_2)
 end
 
 var_0_1.instance = var_0_1.New()

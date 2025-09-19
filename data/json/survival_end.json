@@ -1,0 +1,112 @@
+[
+  {
+    "id": 1001,
+    "name": "language_10019683",
+    "type": 1,
+    "endDesc": "language_10086082",
+    "unlock": "",
+    "endImg": "singlebg/survival_singlebg/shelter/survival_close_pic_2.png",
+    "order": 1,
+    "mainImg": ""
+  },
+  {
+    "id": 2001,
+    "name": "language_10086083",
+    "type": 2,
+    "endDesc": "language_10086084",
+    "unlock": "finishTask#1#104001",
+    "endImg": "singlebg/survival_singlebg/shelter/survival_close_pic_3.png",
+    "order": 1,
+    "mainImg": ""
+  },
+  {
+    "id": 2002,
+    "name": "language_10086083",
+    "type": 2,
+    "endDesc": "language_10086084",
+    "unlock": "finishTask#1#105001",
+    "endImg": "singlebg/survival_singlebg/shelter/survival_close_pic_3.png",
+    "order": 1,
+    "mainImg": ""
+  },
+  {
+    "id": 2003,
+    "name": "language_10086083",
+    "type": 2,
+    "endDesc": "language_10086084",
+    "unlock": "finishTask#1#106002",
+    "endImg": "singlebg/survival_singlebg/shelter/survival_close_pic_3.png",
+    "order": 1,
+    "mainImg": ""
+  },
+  {
+    "id": 2004,
+    "name": "language_10086083",
+    "type": 2,
+    "endDesc": "language_10086084",
+    "unlock": "finishTask#1#107002",
+    "endImg": "singlebg/survival_singlebg/shelter/survival_close_pic_3.png",
+    "order": 1,
+    "mainImg": ""
+  },
+  {
+    "id": 2005,
+    "name": "language_10086083",
+    "type": 2,
+    "endDesc": "language_10086084",
+    "unlock": "finishTask#1#108002",
+    "endImg": "singlebg/survival_singlebg/shelter/survival_close_pic_3.png",
+    "order": 1,
+    "mainImg": ""
+  },
+  {
+    "id": 2006,
+    "name": "language_10086083",
+    "type": 2,
+    "endDesc": "language_10086084",
+    "unlock": "finishTask#1#109002",
+    "endImg": "singlebg/survival_singlebg/shelter/survival_close_pic_3.png",
+    "order": 1,
+    "mainImg": ""
+  },
+  {
+    "id": 2007,
+    "name": "language_10086083",
+    "type": 2,
+    "endDesc": "language_10086084",
+    "unlock": "finishTask#1#110003",
+    "endImg": "singlebg/survival_singlebg/shelter/survival_close_pic_3.png",
+    "order": 1,
+    "mainImg": ""
+  },
+  {
+    "id": 2008,
+    "name": "language_10086083",
+    "type": 2,
+    "endDesc": "language_10086084",
+    "unlock": "finishTask#1#111003",
+    "endImg": "singlebg/survival_singlebg/shelter/survival_close_pic_3.png",
+    "order": 1,
+    "mainImg": ""
+  },
+  {
+    "id": 2009,
+    "name": "language_10086083",
+    "type": 2,
+    "endDesc": "language_10086084",
+    "unlock": "finishTask#1#112003",
+    "endImg": "singlebg/survival_singlebg/shelter/survival_close_pic_3.png",
+    "order": 1,
+    "mainImg": ""
+  },
+  {
+    "id": 3001,
+    "name": "language_10086085",
+    "type": 3,
+    "endDesc": "language_10086086",
+    "unlock": "finishTask#3#300007",
+    "endImg": "singlebg/survival_singlebg/shelter/survival_close_pic_1.png",
+    "order": 2,
+    "mainImg": ""
+  }
+]

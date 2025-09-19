@@ -77,6 +77,8 @@ function var_0_0.login(arg_10_0, arg_10_1)
 		logNormal("LoginController:login" .. debug.traceback("", 2))
 	end
 
+	arg_10_0.userManualLogout = arg_10_1 and arg_10_1.userManualLogout
+
 	ViewMgr.instance:openView(ViewName.LoginView, arg_10_1, true)
 end
 
@@ -90,17 +92,25 @@ function var_0_0.logout(arg_11_0, arg_11_1)
 end
 
 function var_0_0.onSdkLogout(arg_12_0)
+	local var_12_0 = arg_12_0.userManualLogout
+
+	arg_12_0.userManualLogout = nil
+
 	LoginModel.instance:clearDatas()
 	TimeDispatcher.instance:stopTick()
 
 	if ViewMgr.instance:isOpen(ViewName.LoginView) then
-		SDKMgr.instance:login()
+		if var_12_0 ~= true or not SDKMgr.instance:getBoolMetaData("ssgame_dontShowLoginPanelAfterLogout") then
+			SDKMgr.instance:login()
+		end
 	else
 		arg_12_0:_moduleLogout(LuaSocketMgr.instance:isConnected(), true)
 	end
 end
 
-function var_0_0.sdkLogout(arg_13_0)
+function var_0_0.sdkLogout(arg_13_0, arg_13_1)
+	arg_13_0.userManualLogout = arg_13_1
+
 	LoginModel.instance:clearDatas()
 	SDKMgr.instance:logout()
 end

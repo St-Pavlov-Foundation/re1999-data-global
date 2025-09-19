@@ -25,6 +25,12 @@ function var_0_0.onInitView(arg_1_0)
 	arg_1_0.assistBoss_go = gohelper.findChild(arg_1_0.viewGO, "info/Scroll View/Viewport/Content/power/assistboss")
 	arg_1_0.emitterEnergy_input = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "info/Scroll View/Viewport/Content/power/emitterenergy/input")
 	arg_1_0.emitterEnergy_go = gohelper.findChild(arg_1_0.viewGO, "info/Scroll View/Viewport/Content/power/emitterenergy")
+	arg_1_0.bloodPool_input = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "info/Scroll View/Viewport/Content/power/bloodpool/input")
+	arg_1_0.bloodPool_max = gohelper.findChildText(arg_1_0.viewGO, "info/Scroll View/Viewport/Content/power/bloodpool/max")
+	arg_1_0.bloodPool_go = gohelper.findChild(arg_1_0.viewGO, "info/Scroll View/Viewport/Content/power/bloodpool")
+	arg_1_0.health_input = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "info/Scroll View/Viewport/Content/power/health/input")
+	arg_1_0.health_max = gohelper.findChildText(arg_1_0.viewGO, "info/Scroll View/Viewport/Content/power/health/max")
+	arg_1_0.health_go = gohelper.findChild(arg_1_0.viewGO, "info/Scroll View/Viewport/Content/power/health")
 	arg_1_0.shield_input = gohelper.findChildTextMeshInputField(arg_1_0.viewGO, "info/Scroll View/Viewport/Content/shield/input")
 	arg_1_0._icon = gohelper.findChildSingleImage(arg_1_0.viewGO, "info/image")
 	arg_1_0._imgIcon = gohelper.findChildImage(arg_1_0.viewGO, "info/image")
@@ -40,6 +46,8 @@ function var_0_0.addEvents(arg_2_0)
 	arg_2_0.stress_input:AddOnEndEdit(arg_2_0._onEndEditStress, arg_2_0)
 	arg_2_0.assistBoss_input:AddOnEndEdit(arg_2_0._onEndEditAssistBoss, arg_2_0)
 	arg_2_0.emitterEnergy_input:AddOnEndEdit(arg_2_0._onEndEditEmitterEnergy, arg_2_0)
+	arg_2_0.bloodPool_input:AddOnEndEdit(arg_2_0._onEndEditBloodPool, arg_2_0)
+	arg_2_0.health_input:AddOnEndEdit(arg_2_0._onEndEditHealth, arg_2_0)
 end
 
 function var_0_0.removeEvents(arg_3_0)
@@ -51,6 +59,8 @@ function var_0_0.removeEvents(arg_3_0)
 	arg_3_0.stress_input:RemoveOnEndEdit()
 	arg_3_0.assistBoss_input:RemoveOnEndEdit()
 	arg_3_0.emitterEnergy_input:RemoveOnEndEdit()
+	arg_3_0.bloodPool_input:RemoveOnEndEdit()
+	arg_3_0.health_input:RemoveOnEndEdit()
 end
 
 function var_0_0.onOpen(arg_4_0)
@@ -128,29 +138,53 @@ function var_0_0._onSelectHero(arg_6_0, arg_6_1)
 	end
 
 	gohelper.setActive(arg_6_0.emitterEnergy_go, var_6_5)
+
+	local var_6_6 = FightEnum.TeamType.MySide
+	local var_6_7 = FightDataHelper.getBloodPool(var_6_6)
+	local var_6_8 = arg_6_0._entityMO.id == FightEntityScene.MySideId and var_6_7
+
+	if var_6_8 then
+		arg_6_0.bloodPool_input:SetText(var_6_7.value)
+
+		arg_6_0.bloodPool_max.text = "/" .. tostring(var_6_7.max)
+	end
+
+	gohelper.setActive(arg_6_0.bloodPool_go, var_6_8)
+
+	local var_6_9 = FightHelper.getSurvivalEntityHealth(arg_6_1.id)
+	local var_6_10 = var_6_9 ~= nil
+
+	gohelper.setActive(arg_6_0.health_go, var_6_10)
+
+	if var_6_10 then
+		arg_6_0.health_input:SetText(var_6_9)
+
+		arg_6_0.health_max.text = "/" .. tostring(FightHelper.getSurvivalMaxHealth())
+	end
+
 	arg_6_0.shield_input:SetText(arg_6_1.shieldValue)
 	arg_6_0._icon:UnLoadImage()
 
 	if not arg_6_1:isMonster() or not lua_monster.configDict[arg_6_1.modelId] then
-		local var_6_6 = lua_character.configDict[arg_6_1.modelId]
+		local var_6_11 = lua_character.configDict[arg_6_1.modelId]
 	end
 
-	local var_6_7 = FightConfig.instance:getSkinCO(arg_6_1.originSkin)
+	local var_6_12 = FightConfig.instance:getSkinCO(arg_6_1.originSkin)
 
 	if arg_6_1:isCharacter() then
-		local var_6_8 = ResUrl.getHeadIconSmall(var_6_7.retangleIcon)
+		local var_6_13 = ResUrl.getHeadIconSmall(var_6_12.retangleIcon)
 
-		arg_6_0._icon:LoadImage(var_6_8)
+		arg_6_0._icon:LoadImage(var_6_13)
 	elseif arg_6_1:isMonster() then
-		gohelper.getSingleImage(arg_6_0._imgIcon.gameObject):LoadImage(ResUrl.monsterHeadIcon(var_6_7.headIcon))
+		gohelper.getSingleImage(arg_6_0._imgIcon.gameObject):LoadImage(ResUrl.monsterHeadIcon(var_6_12.headIcon))
 
 		arg_6_0._imgIcon.enabled = true
 	end
 
-	local var_6_9 = arg_6_1:getCareer()
+	local var_6_14 = arg_6_1:getCareer()
 
-	if var_6_9 ~= 0 then
-		UISpriteSetMgr.instance:setEnemyInfoSprite(arg_6_0._imgCareer, "sxy_" .. tostring(var_6_9))
+	if var_6_14 ~= 0 then
+		UISpriteSetMgr.instance:setEnemyInfoSprite(arg_6_0._imgCareer, "sxy_" .. tostring(var_6_14))
 	end
 end
 
@@ -361,6 +395,28 @@ function var_0_0._onEndEditEmitterEnergy(arg_13_0, arg_13_1)
 
 	GMRpc.instance:sendGMRequest(string.format("fightChangeEmitterEnergy %s %d", var_13_0.id, var_13_1))
 	FightDataHelper.ASFDDataMgr:changeEmitterEnergy(FightEnum.EntitySide.MySide, var_13_1)
+end
+
+function var_0_0._onEndEditBloodPool(arg_14_0, arg_14_1)
+	local var_14_0 = tonumber(arg_14_1)
+
+	if not var_14_0 then
+		return
+	end
+
+	local var_14_1 = FightEnum.TeamType.MySide
+	local var_14_2 = FightDataHelper.getBloodPool(var_14_1)
+	local var_14_3 = var_14_2.max
+	local var_14_4 = math.min(math.max(0, var_14_0), var_14_3)
+
+	var_14_2.value = var_14_4
+
+	GMRpc.instance:sendGMRequest(string.format("setBloodPoolValue %d", var_14_4))
+	FightController.instance:dispatchEvent(FightEvent.BloodPool_ValueChange, var_14_1)
+end
+
+function var_0_0._onEndEditHealth(arg_15_0, arg_15_1)
+	local var_15_0 = tonumber(arg_15_1)
 end
 
 return var_0_0

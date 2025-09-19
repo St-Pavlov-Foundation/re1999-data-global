@@ -6,6 +6,11 @@ var_0_0.IS_FIGHT_BASE_VIEW = true
 
 function var_0_0.onConstructor(arg_1_0, ...)
 	arg_1_0.inner_visible = true
+	arg_1_0.viewGO = nil
+	arg_1_0.viewContainer = nil
+	arg_1_0.viewParam = nil
+	arg_1_0.viewName = nil
+	arg_1_0.PARENT_VIEW = nil
 end
 
 function var_0_0.setViewVisible(arg_2_0, arg_2_1)

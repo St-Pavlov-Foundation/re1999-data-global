@@ -97,8 +97,12 @@ function var_0_0.addResBySkillId(arg_9_0, arg_9_1)
 	local var_9_0 = lua_skill.configDict[arg_9_1]
 
 	if var_9_0 then
-		table.insert(arg_9_0.resList, ResUrl.getSkillIcon(var_9_0.icon))
-	else
+		if var_9_0.icon == 0 then
+			logError("技能未配置icon, skillId:" .. arg_9_1)
+		else
+			table.insert(arg_9_0.resList, ResUrl.getSkillIcon(var_9_0.icon))
+		end
+	elseif arg_9_1 ~= 0 then
 		logError("技能表找不到id:" .. arg_9_1)
 	end
 end

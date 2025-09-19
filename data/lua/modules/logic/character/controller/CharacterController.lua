@@ -87,7 +87,13 @@ function var_0_0.openCharacterLevelUpView(arg_16_0, arg_16_1, arg_16_2)
 end
 
 function var_0_0.openCharacterRankUpView(arg_17_0, arg_17_1)
-	ViewMgr.instance:openView(ViewName.CharacterRankUpView, arg_17_1)
+	local var_17_0 = arg_17_1 and arg_17_1.heroId
+
+	if var_17_0 and HeroModel.instance:getByHeroId(var_17_0) then
+		ViewMgr.instance:openView(ViewName.CharacterRankUpView, arg_17_1)
+	else
+		GameFacade.showToast(ToastEnum.DontHaveCharacter)
+	end
 end
 
 function var_0_0.openCharacterRankUpResultView(arg_18_0, arg_18_1)

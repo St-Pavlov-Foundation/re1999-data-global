@@ -150,6 +150,21 @@
     "effect": "v1a9_caidai"
   },
   {
+    "id": 281001,
+    "name": "language_10082731",
+    "nameen": "",
+    "icon": "v2a8_antique_icon_1",
+    "gifticon": "v2a8_antique_icon_1",
+    "sign": "501206",
+    "title": "language_10082731",
+    "titleen": "Regulus Record Player Prototype",
+    "desc": "language_10086129",
+    "sources": "",
+    "storyId": 800003,
+    "iconArea": 0,
+    "effect": "v1a9_caidai"
+  },
+  {
     "id": 3051001,
     "name": "language_10077980",
     "nameen": "Assassin Observation Result",

@@ -192,72 +192,13 @@ function var_0_2.isTimeToActiveH5Btn(arg_42_0)
 	return ServerTime.now() >= TimeUtil.stringToTimestamp(var_42_1)
 end
 
-local function var_0_4(...)
-	return WebViewController.instance:urlEncode(...)
+function var_0_2.openWebView(arg_43_0, arg_43_1, arg_43_2)
+	local var_43_0 = arg_43_0:getH5BaseUrl()
+
+	WebViewController.instance:simpleOpenWebView(var_43_0, arg_43_1, arg_43_2)
 end
 
-function var_0_2.openWebView(arg_44_0, arg_44_1, arg_44_2)
-	local var_44_0 = arg_44_0:getH5BaseUrl()
-	local var_44_1 = {}
-	local var_44_2 = GameChannelConfig.isEfun()
-	local var_44_3 = GameChannelConfig.isLongCheng()
-
-	if SLFramework.FrameworkSettings.IsEditor and isDebugBuild then
-		var_44_2 = var_44_2 or SettingsModel.instance:isTwRegion()
-		var_44_3 = var_44_3 or SettingsModel.instance:isKrRegion()
-	end
-
-	if var_44_2 then
-		local var_44_4 = SDKMgr.instance:getUserInfoExtraParams()
-		local var_44_5 = PayModel.instance:getGameRoleInfo()
-
-		var_0_0(var_44_1, var_44_0)
-
-		local var_44_6 = var_44_4 and var_44_4.userId or "nil"
-		local var_44_7 = var_44_4 and var_44_4.sign or "nil"
-		local var_44_8 = var_44_4 and var_44_4.timestamp or "nil"
-
-		var_0_0(var_44_1, var_0_1("userId=%s", var_44_6))
-		var_0_0(var_44_1, var_0_1("sign=%s", var_44_7))
-		var_0_0(var_44_1, var_0_1("timestamp=%s", var_44_8))
-		var_0_0(var_44_1, "gameCode=twcfwl")
-		var_0_0(var_44_1, var_0_1("serverCode=%s", var_44_5.serverId))
-		var_0_0(var_44_1, var_0_1("roleId=%s", var_44_5.roleId))
-		var_0_0(var_44_1, var_0_1("serverName=%s", var_0_4(var_44_5.serverName)))
-		var_0_0(var_44_1, var_0_1("roleName=%s", var_0_4(var_44_5.roleName)))
-		var_0_0(var_44_1, "language=zh-TW")
-	elseif var_44_3 then
-		local var_44_9 = SDKMgr.instance:getUserInfoExtraParams()
-		local var_44_10 = var_44_9 and var_44_9.ko_jwt or "nil"
-
-		var_0_0(var_44_1, var_44_0 .. "?" .. var_0_1("jwt=%s", var_44_10))
-	else
-		var_0_0(var_44_1, var_44_0 .. "?" .. var_0_1("timestamp=%s", ServerTime.now() * 1000))
-		var_0_0(var_44_1, var_0_1("gameId=%s", SDKMgr.instance:getGameId()))
-		var_0_0(var_44_1, var_0_1("gameRoleId=%s", PlayerModel.instance:getMyUserId()))
-		var_0_0(var_44_1, var_0_1("channelUserId=%s", LoginModel.instance.channelUserId))
-		var_0_0(var_44_1, var_0_1("deviceModel=%s", var_0_4(UnityEngine.SystemInfo.deviceModel)))
-		var_0_0(var_44_1, var_0_1("deviceId=%s", SDKMgr.instance:getDeviceInfo().deviceId))
-		var_0_0(var_44_1, var_0_1("os=%s", var_0_4(UnityEngine.SystemInfo.operatingSystem)))
-		var_0_0(var_44_1, var_0_1("token=%s", SDKMgr.instance:getGameSdkToken()))
-		var_0_0(var_44_1, var_0_1("channelId=%s", SDKMgr.instance:getChannelId()))
-		var_0_0(var_44_1, var_0_1("isEmulator=%s", SDKMgr.instance:isEmulator() and 1 or 0))
-	end
-
-	local var_44_11 = table.concat(var_44_1, "&")
-
-	logNormal(var_44_11)
-
-	if GameBranchMgr.instance:isOnVer(2, 6) and BootNativeUtil.isAndroid() and GameChannelConfig.isLongCheng() then
-		GameUtil.openURL(var_44_11)
-
-		return
-	end
-
-	WebViewController.instance:openWebView(var_44_11, false, arg_44_1, arg_44_2)
-end
-
-function var_0_2.actId(arg_45_0)
+function var_0_2.actId(arg_44_0)
 	assert(false, "please override this function")
 end
 

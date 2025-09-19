@@ -20,7 +20,7 @@ function var_0_0.onStart(arg_1_0)
 
 	local var_1_3 = var_0_0.ClientEffectWaitTime[var_1_0]
 
-	if var_1_3 then
+	if var_1_3 and var_1_3 > 0 then
 		var_1_2:registWork(Work2FightWork, TimerWork, var_1_3)
 	end
 
@@ -35,8 +35,13 @@ function var_0_0.clientEffect2(arg_3_0)
 	FightController.instance:dispatchEvent(FightEvent.DoomsdayClock_OnClear)
 end
 
+function var_0_0.clientEffect3(arg_4_0)
+	FightController.instance:dispatchEvent(FightEvent.TriggerVorpalithSkill)
+end
+
 var_0_0.ClientEffectEnum = {
 	DoomsdayClock = 1,
+	TriggerVorpalithSkill = 3,
 	DoomsdayClockClear = 2
 }
 var_0_0.ClientEffectWaitTime = {

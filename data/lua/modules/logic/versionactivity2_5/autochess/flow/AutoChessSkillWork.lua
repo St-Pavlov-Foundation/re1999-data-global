@@ -40,10 +40,12 @@ function var_0_0.onStart(arg_2_0, arg_2_1)
 		end
 	end
 
-	if math.max(var_2_3, var_2_4) == 0 then
+	local var_2_6 = math.max(var_2_3, var_2_4)
+
+	if var_2_6 == 0 then
 		arg_2_0:finishWork()
 	else
-		TaskDispatcher.runDelay(arg_2_0.finishWork, arg_2_0, var_2_3)
+		TaskDispatcher.runDelay(arg_2_0.finishWork, arg_2_0, var_2_6)
 	end
 end
 
@@ -57,8 +59,6 @@ end
 
 function var_0_0.clearWork(arg_5_0)
 	TaskDispatcher.cancelTask(arg_5_0.finishWork, arg_5_0)
-
-	arg_5_0.effect = nil
 end
 
 function var_0_0.finishWork(arg_6_0)

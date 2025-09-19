@@ -131,6 +131,8 @@ function var_0_0.detectStepEffect(arg_6_0, arg_6_1)
 	while arg_6_1[var_6_0] do
 		local var_6_1 = arg_6_1[var_6_0]
 
+		arg_6_0:processNuoDiKaUniqueDamage(arg_6_1, var_6_0, var_6_1)
+
 		if var_6_1.effectType == FightEnum.EffectType.SPLITSTART then
 			arg_6_0.effectSplitIndex = arg_6_0.effectSplitIndex + 1
 		elseif var_6_1.effectType == FightEnum.EffectType.SPLITEND then
@@ -210,6 +212,24 @@ function var_0_0.needAddRoundStep(arg_10_0)
 
 	if arg_10_0.fakeTimeline then
 		return true
+	end
+end
+
+function var_0_0.processNuoDiKaUniqueDamage(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
+	if (arg_11_3.effectType == FightEnum.EffectType.NUODIKARANDOMATTACK or arg_11_3.effectType == FightEnum.EffectType.NUODIKATEAMATTACK) and not arg_11_3.custom_nuoDiKaDamageSign then
+		local var_11_0 = arg_11_3.configEffect
+
+		for iter_11_0 = #arg_11_1, arg_11_2, -1 do
+			local var_11_1 = arg_11_1[iter_11_0]
+
+			if var_11_1.effectType == FightEnum.EffectType.DAMAGE and var_11_1.configEffect == var_11_0 then
+				var_11_1.custom_nuoDiKaDamageSign = true
+			end
+
+			if var_11_1.effectType == FightEnum.EffectType.SHIELD and var_11_1.configEffect == var_11_0 then
+				var_11_1.custom_nuoDiKaDamageSign = true
+			end
+		end
 	end
 end
 

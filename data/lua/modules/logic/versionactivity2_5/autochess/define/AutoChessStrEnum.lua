@@ -12,21 +12,25 @@ var_0_0.SkillType = {
 }
 var_0_0.ChessType = {
 	Support = "Support",
-	Attack = "Attack"
-}
-var_0_0.Tag2EffectId = {
-	Die = 10002,
-	Ranged = 20002,
-	BattleFury = 2003,
-	Damaged = 20001,
-	GrowUp = 10003,
-	Raw = 10001
+	Attack = "Attack",
+	Incubate = "Incubate"
 }
 var_0_0.SkillEffect = {
 	GrowUpNow2 = "GrowUpNow2",
-	RoundAddCoin = "RoundAddCoin",
 	AdditionalDamage = "AdditionalDamage",
-	DigTreasure = "DigTreasure"
+	DigTreasure = "DigTreasure",
+	MasterTransfigurationBuyChess = "MasterTransfigurationBuyChess",
+	RoundAddCoin = "RoundAddCoin",
+	DigTreasureSP = "DigTreasureSP"
+}
+var_0_0.ResPath = {
+	ChessEntity = "ui/viewres/versionactivity_2_5/autochess/item/autochessentity.prefab",
+	ChessCard = "ui/viewres/versionactivity_2_5/autochess/item/autochesscard.prefab",
+	BadgeItem = "ui/viewres/versionactivity_2_5/autochess/item/autochessbadgeitem.prefab",
+	LeaderEntity = "ui/viewres/versionactivity_2_5/autochess/item/autochessleaderentity.prefab",
+	LeaderItem = "ui/viewres/versionactivity_2_5/autochess/item/autochessleaderitem.prefab",
+	LevelItem = "ui/viewres/versionactivity_2_5/autochess/item/autochesslevelitem.prefab",
+	LeaderCard = "ui/viewres/versionactivity_2_5/autochess/item/autochessleadercard.prefab"
 }
 
 return var_0_0

@@ -4,6 +4,8 @@ local var_0_0 = class("CharacterSkinTagView", BaseView)
 
 var_0_0.MAX_TAG_HEIGHT = 825
 
+local var_0_1 = 608
+
 function var_0_0.onInitView(arg_1_0)
 	arg_1_0._gobg = gohelper.findChild(arg_1_0.viewGO, "bg")
 	arg_1_0._scrollprop = gohelper.findChildScrollRect(arg_1_0.viewGO, "bg/#scroll_prop")
@@ -39,12 +41,17 @@ function var_0_0.onOpen(arg_6_0)
 
 	local var_6_0 = string.splitToNumber(arg_6_0._skinCo.storeTag, "|")
 	local var_6_1 = math.min(#var_6_0 * 62 + 120, 400)
+	local var_6_2 = arg_6_0._gobg.transform
 
-	recthelper.setHeight(arg_6_0._gobg.transform, var_6_1)
+	recthelper.setHeight(var_6_2, var_6_1)
 
-	local var_6_2 = not VersionValidator.instance:isInReviewing() and arg_6_0._skinCo.isSkinVideo
+	if arg_6_0.viewParam and arg_6_0.viewParam.isInStoryMode then
+		recthelper.setAnchorX(var_6_2, var_0_1)
+	end
 
-	gohelper.setActive(arg_6_0._btnplay, var_6_2)
+	local var_6_3 = not VersionValidator.instance:isInReviewing() and arg_6_0._skinCo.isSkinVideo
+
+	gohelper.setActive(arg_6_0._btnplay, var_6_3)
 	arg_6_0:_refreshContent()
 end
 

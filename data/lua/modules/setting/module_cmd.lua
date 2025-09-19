@@ -1683,6 +1683,31 @@
 		"Act182GetRankRewardRequest",
 		"Act182GetRankRewardReply"
 	},
+	[-6229] = {
+		"Activity182",
+		"Act182SaveSnapshotRequest",
+		"Act182SaveSnapshotReply"
+	},
+	[10800] = {
+		"Activity182",
+		"Act182GetHasSnapshotFriendRequest",
+		"Act182GetHasSnapshotFriendReply"
+	},
+	[-31641] = {
+		"Activity182",
+		"Act182GetFriendSnapshotsRequest",
+		"Act182GetFriendSnapshotsReply"
+	},
+	[15304] = {
+		"Activity182",
+		"Act182GetFriendFightRecordsRequest",
+		"Act182GetFriendFightRecordsReply"
+	},
+	[32155] = {
+		"Activity182",
+		"Act182GetFriendFightMessageRequest",
+		"Act182GetFriendFightMessageReply"
+	},
 	[-29530] = {
 		"Activity183",
 		"Act183GetInfoRequest",
@@ -1956,6 +1981,116 @@
 		"Activity192",
 		"Act192EpisodePush"
 	},
+	[-23311] = {
+		"Activity194",
+		"Act194GetInfosRequest",
+		"Act194GetInfosReply"
+	},
+	[23897] = {
+		"Activity194",
+		"Act194EnterEpisodeRequest",
+		"Act194EnterEpisodeReply"
+	},
+	[14653] = {
+		"Activity194",
+		"Act194FinishStoryEpisodeRequest",
+		"Act194FinishStoryEpisodeReply"
+	},
+	[18791] = {
+		"Activity194",
+		"Act194GetEpisodeInfoRequest",
+		"Act194GetEpisodeInfoReply"
+	},
+	[28706] = {
+		"Activity194",
+		"Act194SendTeamExploreRequest",
+		"Act194SendTeamExploreReply"
+	},
+	[16878] = {
+		"Activity194",
+		"Act194UseItemRequest",
+		"Act194UseItemReply"
+	},
+	[31417] = {
+		"Activity194",
+		"Act194NextRoundRequest",
+		"Act194NextRoundReply"
+	},
+	[-29821] = {
+		"Activity194",
+		"Act194WithdrawTeamRequest",
+		"Act194WithdrawTeamReply"
+	},
+	[-11106] = {
+		"Activity194",
+		"Act194ResetEpisodeRequest",
+		"Act194ResetEpisodeReply"
+	},
+	[-3534] = {
+		"Activity194",
+		"Act194SkipEpisodeRequest",
+		"Act194SkipEpisodeReply"
+	},
+	[-25247] = {
+		"Activity194",
+		"Act194EpisodeRecordsPush"
+	},
+	[-1701] = {
+		"Activity194",
+		"Act194EpisodeInfoPush"
+	},
+	[-31055] = {
+		"Activity194",
+		"Act194NewEventInfosPush"
+	},
+	[8304] = {
+		"Activity194",
+		"Act194EpisodeFinishPush"
+	},
+	[8714] = {
+		"Activity196",
+		"Get196InfoRequest",
+		"Get196InfoReply"
+	},
+	[-30315] = {
+		"Activity196",
+		"Act196GainRequest",
+		"Act196GainReply"
+	},
+	[-20116] = {
+		"Activity197",
+		"Get197InfoRequest",
+		"Get197InfoReply"
+	},
+	[-11674] = {
+		"Activity197",
+		"Act197RummageRequest",
+		"Act197RummageReply"
+	},
+	[12439] = {
+		"Activity197",
+		"Act197ExploreRequest",
+		"Act197ExploreReply"
+	},
+	[15033] = {
+		"Activity198",
+		"Act198CanGetPush"
+	},
+	[-22439] = {
+		"Activity198",
+		"Act198GainRequest",
+		"Act198GainReply"
+	},
+	[14267] = {
+		"Activity199",
+		"Act199GainRequest",
+		"Act199GainReply"
+	},
+	[-12240] = {
+		"Activity199",
+		"Get199InfoRequest",
+		"Get199InfoReply"
+	},
 	[-5040] = {
 		"Activity201",
 		"Get201InfoRequest",
@@ -2027,6 +2162,20 @@
 	[-346] = {
 		"Activity206",
 		"Act206InfoPush"
+	},
+	[2348] = {
+		"Activity212",
+		"GetAct212InfoRequest",
+		"GetAct212InfoReply"
+	},
+	[-20022] = {
+		"Activity212",
+		"Act212ReceiveBonusRequest",
+		"Act212ReceiveBonusReply"
+	},
+	[28059] = {
+		"Activity212",
+		"Act212BonusPush"
 	},
 	[-14582] = {
 		"Activity",
@@ -2260,6 +2409,11 @@
 		"AutoChessUseMasterSkillRequest",
 		"AutoChessUseMasterSkillReply"
 	},
+	[10043] = {
+		"AutoChess",
+		"AutoChessUseSkillRequest",
+		"AutoChessUseSkillReply"
+	},
 	[3715] = {
 		"AutoChess",
 		"AutoChessPreviewFightRequest",
@@ -2269,6 +2423,11 @@
 		"AutoChess",
 		"AutoChessGiveUpRequest",
 		"AutoChessGiveUpReply"
+	},
+	[-3067] = {
+		"AutoChess",
+		"AutoChessEnterFriendFightSceneRequest",
+		"AutoChessEnterFriendFightSceneReply"
 	},
 	[-10420] = {
 		"AutoChess",
@@ -2319,6 +2478,11 @@
 		"Bgm",
 		"ReadBgmRequest",
 		"ReadBgmReply"
+	},
+	[15341] = {
+		"BossFight",
+		"BossFightResetChapterRequest",
+		"BossFightResetChapterReply"
 	},
 	[-5055] = {
 		"Bp",
@@ -4930,6 +5094,374 @@
 		"Summon",
 		"GetSummonProgressRewardsRequest",
 		"GetSummonProgressRewardsReply"
+	},
+	[-14893] = {
+		"SurvivalInterior",
+		"EnterSurvivalRequest",
+		"EnterSurvivalReply"
+	},
+	[15540] = {
+		"SurvivalInterior",
+		"SurvivalSceneOperationRequest",
+		"SurvivalSceneOperationReply"
+	},
+	[19869] = {
+		"SurvivalInterior",
+		"SurvivalQuickItemBarUpdateRequest",
+		"SurvivalQuickItemBarUpdateReply"
+	},
+	[21447] = {
+		"SurvivalInterior",
+		"SurvivalUpdateClientDataRequest",
+		"SurvivalUpdateClientDataReply"
+	},
+	[-9172] = {
+		"SurvivalInterior",
+		"SurvivalSceneOperationLogRequest",
+		"SurvivalSceneOperationLogReply"
+	},
+	[2321] = {
+		"SurvivalInterior",
+		"SurvivalUseItemRequest",
+		"SurvivalUseItemReply"
+	},
+	[11667] = {
+		"SurvivalInterior",
+		"SurvivalSceneGiveUpRequest",
+		"SurvivalSceneGiveUpReply"
+	},
+	[-13194] = {
+		"SurvivalInterior",
+		"SurvivalSceneOperationLogPush"
+	},
+	[-7141] = {
+		"SurvivalInterior",
+		"SurvivalTaskFollowRequest",
+		"SurvivalTaskFollowReply"
+	},
+	[32442] = {
+		"SurvivalInterior",
+		"SurvivalSceneEndPush"
+	},
+	[-6780] = {
+		"SurvivalInterior",
+		"SurvivalDailyReportPush"
+	},
+	[28582] = {
+		"SurvivalInterior",
+		"SurvivalSceneHotfix1Request",
+		"SurvivalSceneHotfix1Reply"
+	},
+	[28583] = {
+		"SurvivalInterior",
+		"SurvivalSceneHotfix2Request",
+		"SurvivalSceneHotfix2Reply"
+	},
+	[28584] = {
+		"SurvivalInterior",
+		"SurvivalSceneHotfix3Request",
+		"SurvivalSceneHotfix3Reply"
+	},
+	[-5786] = {
+		"SurvivalInterior",
+		"SurvivalSceneHotfix1Push"
+	},
+	[-5785] = {
+		"SurvivalInterior",
+		"SurvivalSceneHotfix2Push"
+	},
+	[-5784] = {
+		"SurvivalInterior",
+		"SurvivalSceneHotfix3Push"
+	},
+	[-5489] = {
+		"SurvivalOutSide",
+		"SurvivalOutSideGetInfoRequest",
+		"SurvivalOutSideGetInfoReply"
+	},
+	[30471] = {
+		"SurvivalOutSide",
+		"SurvivalOutSideGainRewardRequest",
+		"SurvivalOutSideGainRewardReply"
+	},
+	[-29328] = {
+		"SurvivalOutSide",
+		"SurvivalOutSideAlterTalentGroupRequest",
+		"SurvivalOutSideAlterTalentGroupReply"
+	},
+	[11799] = {
+		"SurvivalOutSide",
+		"SurvivalOutSideUnlockTalentIdsPush"
+	},
+	[-11044] = {
+		"SurvivalOutSide",
+		"SurvivalSurvivalOutSideClientDataRequest",
+		"SurvivalSurvivalOutSideClientDataReply"
+	},
+	[726] = {
+		"SurvivalWeek",
+		"SurvivalAttrContainerUpdatePush"
+	},
+	[-6272] = {
+		"SurvivalWeek",
+		"SurvivalRemoveBagItemRequest",
+		"SurvivalRemoveBagItemReply"
+	},
+	[-29978] = {
+		"SurvivalWeek",
+		"SurvivalBagUpdatePush"
+	},
+	[-28092] = {
+		"SurvivalWeek",
+		"SurvivalItemTipsPush"
+	},
+	[14795] = {
+		"SurvivalWeek",
+		"SurvivalTaskUpdatePush"
+	},
+	[7501] = {
+		"SurvivalWeek",
+		"SurvivalReceiveTaskRewardRequest",
+		"SurvivalReceiveTaskRewardReply"
+	},
+	[29901] = {
+		"SurvivalWeek",
+		"SurvivalStartWeekChooseDiffRequest",
+		"SurvivalStartWeekChooseDiffReply"
+	},
+	[-2372] = {
+		"SurvivalWeek",
+		"SurvivalStartWeekChooseTalentRequest",
+		"SurvivalStartWeekChooseTalentReply"
+	},
+	[13041] = {
+		"SurvivalWeek",
+		"SurvivalGetWeekInfoRequest",
+		"SurvivalGetWeekInfoReply"
+	},
+	[10008] = {
+		"SurvivalWeek",
+		"SurvivalAbandonWeekRequest",
+		"SurvivalAbandonWeekReply"
+	},
+	[-5262] = {
+		"SurvivalWeek",
+		"SurvivalSettleWeekPush"
+	},
+	[5063] = {
+		"SurvivalWeek",
+		"SurvivalChooseBootyRequest",
+		"SurvivalChooseBootyReply"
+	},
+	[-24627] = {
+		"SurvivalWeek",
+		"SurvivalWeekInfoPush"
+	},
+	[12677] = {
+		"SurvivalWeek",
+		"SurvivalBuildRequest",
+		"SurvivalBuildReply"
+	},
+	[3352] = {
+		"SurvivalWeek",
+		"SurvivalRepairRequest",
+		"SurvivalRepairReply"
+	},
+	[30653] = {
+		"SurvivalWeek",
+		"SurvivalUpgradeRequest",
+		"SurvivalUpgradeReply"
+	},
+	[8917] = {
+		"SurvivalWeek",
+		"SurvivalNpcChangePositionRequest",
+		"SurvivalNpcChangePositionReply"
+	},
+	[15762] = {
+		"SurvivalWeek",
+		"SurvivalNpcExchangePositionRequest",
+		"SurvivalNpcExchangePositionReply"
+	},
+	[17124] = {
+		"SurvivalWeek",
+		"SurvivalBatchHeroChangePositionRequest",
+		"SurvivalBatchHeroChangePositionReply"
+	},
+	[23074] = {
+		"SurvivalWeek",
+		"SurvivalHeroChangePositionRequest",
+		"SurvivalHeroChangePositionReply"
+	},
+	[31775] = {
+		"SurvivalWeek",
+		"SurvivalHeroExchangePositionRequest",
+		"SurvivalHeroExchangePositionReply"
+	},
+	[-22711] = {
+		"SurvivalWeek",
+		"SurvivalGetEquipInfoRequest",
+		"SurvivalGetEquipInfoReply"
+	},
+	[12602] = {
+		"SurvivalWeek",
+		"SurvivalEquipSwitchPlanRequest",
+		"SurvivalEquipSwitchPlanReply"
+	},
+	[-26420] = {
+		"SurvivalWeek",
+		"SurvivalEquipWearRequest",
+		"SurvivalEquipWearReply"
+	},
+	[29753] = {
+		"SurvivalWeek",
+		"SurvivalEquipDemountRequest",
+		"SurvivalEquipDemountReply"
+	},
+	[-28681] = {
+		"SurvivalWeek",
+		"SurvivalEquipOneKeyWearRequest",
+		"SurvivalEquipOneKeyWearReply"
+	},
+	[-24700] = {
+		"SurvivalWeek",
+		"SurvivalEquipOneKeyDemountRequest",
+		"SurvivalEquipOneKeyDemountReply"
+	},
+	[29090] = {
+		"SurvivalWeek",
+		"SurvivalEquipCompoundRequest",
+		"SurvivalEquipCompoundReply"
+	},
+	[-23251] = {
+		"SurvivalWeek",
+		"SurvivalEquipSetNewFlagRequest",
+		"SurvivalEquipSetNewFlagReply"
+	},
+	[-17732] = {
+		"SurvivalWeek",
+		"SurvivalEquipUpdatePush"
+	},
+	[9953] = {
+		"SurvivalWeek",
+		"SurvivalDecreePromulgateRequest",
+		"SurvivalDecreePromulgateReply"
+	},
+	[-29838] = {
+		"SurvivalWeek",
+		"SurvivalDecreeChoosePolicyRequest",
+		"SurvivalDecreeChoosePolicyReply"
+	},
+	[-28470] = {
+		"SurvivalWeek",
+		"SurvivalDecreeChangeUpdatePush"
+	},
+	[-25510] = {
+		"SurvivalWeek",
+		"SurvivalIntrudeExterminateRequest",
+		"SurvivalIntrudeExterminateReply"
+	},
+	[-11279] = {
+		"SurvivalWeek",
+		"SurvivalIntrudeReExterminateRequest",
+		"SurvivalIntrudeReExterminateReply"
+	},
+	[12621] = {
+		"SurvivalWeek",
+		"SurvivalIntrudeAbandonExterminateRequest",
+		"SurvivalIntrudeAbandonExterminateReply"
+	},
+	[9079] = {
+		"SurvivalWeek",
+		"SurvivalIntrudeFightSettlePush"
+	},
+	[-3930] = {
+		"SurvivalWeek",
+		"SurvivalHeroUpdatePush"
+	},
+	[19158] = {
+		"SurvivalWeek",
+		"SurvivalPanelOperationRequest",
+		"SurvivalPanelOperationReply"
+	},
+	[3675] = {
+		"SurvivalWeek",
+		"SurvivalClosePanelRequest",
+		"SurvivalClosePanelReply"
+	},
+	[12702] = {
+		"SurvivalWeek",
+		"SurvivalRefreshRecruitTagRequest",
+		"SurvivalRefreshRecruitTagReply"
+	},
+	[-7962] = {
+		"SurvivalWeek",
+		"SurvivalPublishRecruitTagRequest",
+		"SurvivalPublishRecruitTagReply"
+	},
+	[5140] = {
+		"SurvivalWeek",
+		"SurvivalRecruitNpcRequest",
+		"SurvivalRecruitNpcReply"
+	},
+	[23431] = {
+		"SurvivalWeek",
+		"SurvivalAbandonRecruitNpcRequest",
+		"SurvivalAbandonRecruitNpcReply"
+	},
+	[6079] = {
+		"SurvivalWeek",
+		"SurvivalRecruitInfoPush"
+	},
+	[19423] = {
+		"SurvivalWeek",
+		"SurvivalShopSellRequest",
+		"SurvivalShopSellReply"
+	},
+	[-7442] = {
+		"SurvivalWeek",
+		"SurvivalShopBuyRequest",
+		"SurvivalShopBuyReply"
+	},
+	[23641] = {
+		"SurvivalWeek",
+		"SurvivalNpcAcceptTaskRequest",
+		"SurvivalNpcAcceptTaskReply"
+	},
+	[-7905] = {
+		"SurvivalWeek",
+		"SurvivalStepPush"
+	},
+	[29562] = {
+		"SurvivalWeek",
+		"SurvivalSurvivalWeekClientDataRequest",
+		"SurvivalSurvivalWeekClientDataReply"
+	},
+	[-31548] = {
+		"SurvivalWeek",
+		"SurvivalWeekHotfix1Request",
+		"SurvivalWeekHotfix1Reply"
+	},
+	[-31547] = {
+		"SurvivalWeek",
+		"SurvivalWeekHotfix2Request",
+		"SurvivalWeekHotfix2Reply"
+	},
+	[-31546] = {
+		"SurvivalWeek",
+		"SurvivalWeekHotfix3Request",
+		"SurvivalWeekHotfix3Reply"
+	},
+	[23940] = {
+		"SurvivalWeek",
+		"SurvivalWeekHotfix1Push"
+	},
+	[23941] = {
+		"SurvivalWeek",
+		"SurvivalWeekHotfix2Push"
+	},
+	[23942] = {
+		"SurvivalWeek",
+		"SurvivalWeekHotfix3Push"
 	},
 	[-3389] = {
 		"Task",

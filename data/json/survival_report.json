@@ -1,0 +1,50 @@
+[
+  {
+    "id": 10001,
+    "type": 1,
+    "condition": "npcNumChage",
+    "priority": 1,
+    "img": 0,
+    "desc": "很遗憾，%d名npc离开了你的营地，赶紧给他们床位睡觉和喂他们吃饭啊"
+  },
+  {
+    "id": 10002,
+    "type": 1,
+    "condition": "buildingDestroy",
+    "priority": 2,
+    "img": 0,
+    "desc": "不好好驱赶怪物，%d被拆了，赶紧去维修一下"
+  },
+  {
+    "id": 10003,
+    "type": 1,
+    "condition": "",
+    "priority": 3,
+    "img": 0,
+    "desc": "好好维护营地吧！大英雄~"
+  },
+  {
+    "id": 20001,
+    "type": 2,
+    "condition": "finishtask#1001",
+    "priority": 3,
+    "img": 0,
+    "desc": "恭喜你触发隐藏结局咯"
+  },
+  {
+    "id": 20002,
+    "type": 2,
+    "condition": "fail",
+    "priority": 1,
+    "img": 0,
+    "desc": "废物你输了"
+  },
+  {
+    "id": 20003,
+    "type": 2,
+    "condition": "finishtask#1002",
+    "priority": 2,
+    "img": 0,
+    "desc": "普通结局"
+  }
+]

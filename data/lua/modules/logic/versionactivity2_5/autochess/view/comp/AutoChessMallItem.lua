@@ -40,6 +40,7 @@ end
 
 function var_0_0.addEventListeners(arg_4_0)
 	arg_4_0:addEventCb(AutoChessController.instance, AutoChessEvent.StartBuyStepFinih, arg_4_0.refreshLvup, arg_4_0)
+	arg_4_0:addEventCb(AutoChessController.instance, AutoChessEvent.ImmediatelyFlowFinish, arg_4_0.refreshLvup, arg_4_0)
 end
 
 function var_0_0.onDestroy(arg_5_0)
@@ -59,52 +60,55 @@ function var_0_0.setData(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
 	if arg_6_2 then
 		arg_6_0.data = arg_6_2
 
-		local var_6_0 = false
-
 		if arg_6_0.isFree then
-			arg_6_0.txtCost.text = 0
+			arg_6_0.cost = 0
+			arg_6_0.txtCost.text = arg_6_0.cost
+
+			gohelper.setActive(arg_6_0.goCost, false)
 		else
-			local var_6_1, var_6_2 = AutoChessConfig.instance:getItemBuyCost(arg_6_2.id)
-			local var_6_3 = "v2a5_autochess_cost" .. var_6_1
+			arg_6_0.costType, arg_6_0.cost = AutoChessConfig.instance:getItemBuyCost(arg_6_2.id)
 
-			UISpriteSetMgr.instance:setAutoChessSprite(arg_6_0.imageCost, var_6_3)
+			local var_6_0 = "v2a5_autochess_cost" .. arg_6_0.costType
 
-			if AutoChessModel.instance:getChessMo().svrFight.mySideMaster.id == AutoChessEnum.SpecialMaster.Role37 and AutoChessHelper.isPrimeNumber(arg_6_0.data.chess.battle) and AutoChessHelper.isPrimeNumber(arg_6_0.data.chess.hp) then
-				var_6_2 = var_6_2 - 1
+			UISpriteSetMgr.instance:setAutoChessSprite(arg_6_0.imageCost, var_6_0)
+
+			local var_6_1 = AutoChessModel.instance:getChessMo()
+
+			if arg_6_0.cost >= 1 and var_6_1.svrFight.mySideMaster.id == AutoChessEnum.SpecialMaster.Role37 and AutoChessHelper.isPrimeNumber(arg_6_0.data.chess.battle) and AutoChessHelper.isPrimeNumber(arg_6_0.data.chess.hp) then
+				arg_6_0.cost = arg_6_0.cost - 1
 			end
 
-			arg_6_0.txtCost.text = var_6_2
-			var_6_0 = var_6_2 ~= 3
+			arg_6_0.txtCost.text = arg_6_0.cost
+
+			gohelper.setActive(arg_6_0.goCost, arg_6_0.costType ~= AutoChessStrEnum.CostType.Coin or arg_6_0.cost ~= 3)
 		end
 
-		gohelper.setActive(arg_6_0.goCost, not arg_6_0.isFree and var_6_0)
+		local var_6_2 = arg_6_2.chess
 
-		local var_6_4 = arg_6_2.chess
-
-		arg_6_0.config = lua_auto_chess.configDict[var_6_4.id][var_6_4.star]
+		arg_6_0.config = AutoChessConfig.instance:getChessCfgById(var_6_2.id, var_6_2.star)
 
 		if arg_6_0.config then
 			arg_6_0.meshComp:setData(arg_6_0.config.image)
 			arg_6_0:initBuffEffect()
 
-			if arg_6_0.config.type == AutoChessStrEnum.ChessType.Support then
-				UISpriteSetMgr.instance:setAutoChessSprite(arg_6_0.imageBg, "v2a5_autochess_quality2_" .. arg_6_0.config.levelFromMall)
-				gohelper.setActive(arg_6_0.goAttack, false)
-				gohelper.setActive(arg_6_0.goHp, false)
-			else
+			if arg_6_0.config.type == AutoChessStrEnum.ChessType.Attack then
 				UISpriteSetMgr.instance:setAutoChessSprite(arg_6_0.imageBg, "v2a5_autochess_quality1_" .. arg_6_0.config.levelFromMall)
 
-				arg_6_0.txtAttack.text = var_6_4.battle
-				arg_6_0.txtHp.text = var_6_4.hp
-
-				gohelper.setActive(arg_6_0.goAttack, true)
-				gohelper.setActive(arg_6_0.goHp, true)
+				arg_6_0.txtAttack.text = var_6_2.battle
+				arg_6_0.txtHp.text = var_6_2.hp
+			elseif arg_6_0.config.type == AutoChessStrEnum.ChessType.Support then
+				UISpriteSetMgr.instance:setAutoChessSprite(arg_6_0.imageBg, "v2a5_autochess_quality2_" .. arg_6_0.config.levelFromMall)
+			elseif arg_6_0.config.type == AutoChessStrEnum.ChessType.Incubate then
+				UISpriteSetMgr.instance:setAutoChessSprite(arg_6_0.imageBg, "autochess_leader_chessbg" .. arg_6_0.config.levelFromMall)
 			end
 
-			local var_6_5 = lua_auto_chess_translate.configDict[arg_6_0.config.race]
+			gohelper.setActive(arg_6_0.goAttack, arg_6_0.config.type == AutoChessStrEnum.ChessType.Attack)
+			gohelper.setActive(arg_6_0.goHp, arg_6_0.config.type == AutoChessStrEnum.ChessType.Attack)
 
-			if var_6_5 then
-				UISpriteSetMgr.instance:setAutoChessSprite(arg_6_0.imageTag, var_6_5.tagResName)
+			local var_6_3 = lua_auto_chess_translate.configDict[arg_6_0.config.race]
+
+			if var_6_3 and not string.nilorempty(var_6_3.tagResName) then
+				UISpriteSetMgr.instance:setAutoChessSprite(arg_6_0.imageTag, var_6_3.tagResName)
 				gohelper.setActive(arg_6_0.imageTag, true)
 			else
 				gohelper.setActive(arg_6_0.imageTag, false)
@@ -112,7 +116,7 @@ function var_0_0.setData(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
 
 			arg_6_0:refreshLvup()
 		else
-			logError(string.format("异常:不存在棋子配置ID:%s星级:%s", var_6_4.id, var_6_4.star))
+			logError(string.format("异常:不存在棋子配置ID:%s星级:%s", var_6_2.id, var_6_2.star))
 		end
 
 		arg_6_0:setLock(arg_6_2.freeze)
@@ -151,7 +155,7 @@ function var_0_0._beginDrag(arg_10_0)
 
 	local var_10_0 = tonumber(arg_10_0.txtCost.text)
 
-	AutoChessController.instance:dispatchEvent(AutoChessEvent.DrageMallItem, arg_10_0.config.id, var_10_0)
+	AutoChessController.instance:dispatchEvent(AutoChessEvent.DrageMallItem, arg_10_0.config, var_10_0)
 end
 
 function var_0_0._onDrag(arg_11_0, arg_11_1, arg_11_2)
@@ -191,25 +195,24 @@ function var_0_0.checkBuy(arg_14_0, arg_14_1)
 	local var_14_0 = recthelper.screenPosToAnchorPos(arg_14_1, arg_14_0.mallView.viewGO.transform)
 	local var_14_1, var_14_2 = AutoChessGameModel.instance:getNearestTileXY(var_14_0.x, var_14_0.y)
 
-	if var_14_1 and AutoChessController.instance:isRowIndexEnable(var_14_1) then
+	if var_14_1 then
 		local var_14_3 = AutoChessModel.instance:getChessMo()
-		local var_14_4, var_14_5 = AutoChessConfig.instance:getItemBuyCost(arg_14_0.data.id)
 
-		if var_14_3.svrFight.mySideMaster.id == AutoChessEnum.SpecialMaster.Role37 and AutoChessHelper.isPrimeNumber(arg_14_0.data.chess.battle) and AutoChessHelper.isPrimeNumber(arg_14_0.data.chess.hp) then
-			var_14_5 = var_14_5 - 1
-		end
+		if not arg_14_0.isFree and arg_14_0.cost ~= 0 then
+			local var_14_4, var_14_5 = var_14_3:checkCostEnough(arg_14_0.costType, arg_14_0.cost)
 
-		if not arg_14_0.isFree and not var_14_3:checkCostEnough(var_14_4, var_14_5) then
-			ZProj.TweenHelper.DOAnchorPos(arg_14_0.transform, arg_14_0.startX, arg_14_0.startY, 0.2)
-			GameFacade.showToast(ToastEnum.AutoChessCoinNotEnough)
+			if not var_14_4 then
+				ZProj.TweenHelper.DOAnchorPos(arg_14_0.transform, arg_14_0.startX, arg_14_0.startY, 0.2)
+				GameFacade.showToast(var_14_5)
 
-			return
+				return
+			end
 		end
 
 		local var_14_6 = var_14_3:getChessPosition(var_14_1, var_14_2)
 
 		if tonumber(var_14_6.chess.uid) == 0 then
-			if arg_14_0.config.type == AutoChessStrEnum.ChessType.Attack and var_14_1 == AutoChessEnum.WarZone.Two or arg_14_0.config.type == AutoChessStrEnum.ChessType.Support and var_14_1 ~= AutoChessEnum.WarZone.Two then
+			if arg_14_0.config.type == AutoChessStrEnum.ChessType.Incubate and var_14_1 ~= AutoChessEnum.WarZone.Four or arg_14_0.config.type == AutoChessStrEnum.ChessType.Attack and var_14_1 ~= AutoChessEnum.WarZone.One and var_14_1 ~= AutoChessEnum.WarZone.Three or arg_14_0.config.type == AutoChessStrEnum.ChessType.Support and var_14_1 ~= AutoChessEnum.WarZone.Two then
 				GameFacade.showToast(ToastEnum.AutoChessBuyWarZoneError)
 				ZProj.TweenHelper.DOAnchorPos(arg_14_0.transform, arg_14_0.startX, arg_14_0.startY, 0.2)
 
@@ -217,49 +220,29 @@ function var_0_0.checkBuy(arg_14_0, arg_14_1)
 			else
 				AudioMgr.instance:trigger(AudioEnum.AutoChess.play_ui_tangren_chess_purchase)
 			end
-
-			if arg_14_0.isFree and AutoChessController.instance:isDragDisable(GuideModel.GuideFlag.AutoChessEnableDragFreeChess) then
-				ZProj.TweenHelper.DOAnchorPos(arg_14_0.transform, arg_14_0.startX, arg_14_0.startY, 0.2)
-
-				return
-			end
-
-			if not arg_14_0.isFree and AutoChessController.instance:isDragDisable(GuideModel.GuideFlag.AutoChessEnableDragChess) then
-				ZProj.TweenHelper.DOAnchorPos(arg_14_0.transform, arg_14_0.startX, arg_14_0.startY, 0.2)
-
-				return
-			end
 		else
-			local var_14_7 = AutoChessHelper.hasUniversalBuff(arg_14_0.data.chess.buffContainer.buffs)
-
-			if not var_14_7 and (arg_14_0.config.type == AutoChessStrEnum.ChessType.Attack and var_14_1 == AutoChessEnum.WarZone.Two or arg_14_0.config.type == AutoChessStrEnum.ChessType.Support and var_14_1 ~= AutoChessEnum.WarZone.Two) then
+			if arg_14_0.config.type == AutoChessStrEnum.ChessType.Incubate or var_14_1 == AutoChessEnum.WarZone.Four then
 				GameFacade.showToast(ToastEnum.AutoChessBuyWarZoneError)
 				ZProj.TweenHelper.DOAnchorPos(arg_14_0.transform, arg_14_0.startX, arg_14_0.startY, 0.2)
 
 				return
 			end
 
-			local var_14_8 = var_14_6.chess.id
-			local var_14_9 = string.format("%s_%s", var_14_6.chess.exp, arg_14_0.data.chess.exp)
+			local var_14_7, var_14_8 = AutoChessHelper.canMix(var_14_6.chess, arg_14_0.data.chess)
 
-			if var_14_8 == arg_14_0.data.chess.id or var_14_7 then
-				local var_14_10 = var_14_6.chess
+			if var_14_7 then
+				local var_14_9 = var_14_6.chess
 
-				if var_14_10.exp == var_14_10.maxExpLimit then
+				if not var_14_8 and var_14_9.exp == var_14_9.maxExpLimit then
 					GameFacade.showToast(ToastEnum.AutoChessExpMax)
 					ZProj.TweenHelper.DOAnchorPos(arg_14_0.transform, arg_14_0.startX, arg_14_0.startY, 0.2)
 
 					return
-				elseif AutoChessController.instance:isDragDisable(GuideModel.GuideFlag.AutoChessEnableExchangeEXP, var_14_9) then
-					ZProj.TweenHelper.DOAnchorPos(arg_14_0.transform, arg_14_0.startX, arg_14_0.startY, 0.2)
-
-					return
 				else
-					AutoChessController.instance:dispatchEvent(AutoChessEvent.ZDragChessExchangeEXP)
 					AudioMgr.instance:trigger(AudioEnum.UI.play_ui_lvhu_building_click)
 				end
 			else
-				GameFacade.showToast(ToastEnum.AutoChessBuyTargetError)
+				GameFacade.showToast(var_14_8)
 				ZProj.TweenHelper.DOAnchorPos(arg_14_0.transform, arg_14_0.startX, arg_14_0.startY, 0.2)
 
 				return
@@ -269,15 +252,9 @@ function var_0_0.checkBuy(arg_14_0, arg_14_1)
 		gohelper.setActive(arg_14_0.go, false)
 		recthelper.setAnchor(arg_14_0.transform, arg_14_0.startX, arg_14_0.startY)
 
-		local var_14_11 = AutoChessModel.instance:getCurModuleId()
+		local var_14_10 = AutoChessModel.instance.moduleId
 
-		AutoChessRpc.instance:sendAutoChessBuyChessRequest(var_14_11, arg_14_0.mallId, arg_14_0.data.uid, var_14_1, var_14_2 - 1)
-		AutoChessController.instance:dispatchEvent(AutoChessEvent.ZBuyChess, arg_14_0.data.chess.id)
-		AutoChessController.instance:dispatchEvent(AutoChessEvent.ZDrayChessToPos, string.format("%d_%d", arg_14_0.data.chess.id, var_14_1))
-
-		if arg_14_0.isFree then
-			AutoChessController.instance:dispatchEvent(AutoChessEvent.ZDragFreeChess)
-		end
+		AutoChessRpc.instance:sendAutoChessBuyChessRequest(var_14_10, arg_14_0.mallId, arg_14_0.data.uid, var_14_1, var_14_2 - 1)
 	else
 		ZProj.TweenHelper.DOAnchorPos(arg_14_0.transform, arg_14_0.startX, arg_14_0.startY, 0.2)
 	end
@@ -301,7 +278,11 @@ function var_0_0.initBuffEffect(arg_15_0)
 	local var_15_2 = arg_15_0.config.tag
 
 	if not string.nilorempty(var_15_2) then
-		arg_15_0.effectComp:playEffect(AutoChessStrEnum.Tag2EffectId[var_15_2])
+		arg_15_0.effectComp:playEffect(AutoChessEnum.Tag2EffectId[var_15_2])
+	end
+
+	if arg_15_0.data.chess.star ~= 0 and arg_15_0.data.chess.star ~= 1 then
+		arg_15_0.effectComp:playEffect(50002)
 	end
 end
 

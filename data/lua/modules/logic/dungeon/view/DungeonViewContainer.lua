@@ -24,6 +24,10 @@ function var_0_0.buildViews(arg_1_0)
 	table.insert(var_1_0, arg_1_0._dungeonViewAudio)
 	table.insert(var_1_0, DungeonView.New())
 
+	arg_1_0._mainStory = DungeonViewMainStory.New()
+
+	table.insert(var_1_0, arg_1_0._mainStory)
+
 	local var_1_2 = MixScrollParam.New()
 
 	var_1_2.scrollGOPath = "#go_story/chapterlist/#scroll_chapter"
@@ -34,10 +38,7 @@ function var_0_0.buildViews(arg_1_0)
 	var_1_2.startSpace = 147.5
 	var_1_2.endSpace = 0
 	arg_1_0._scrollParam = var_1_2
-	arg_1_0._scrollView = LuaMixScrollView.New(DungeonChapterListModel.instance, var_1_2)
 
-	arg_1_0._scrollView:setDynamicGetItem(arg_1_0._dynamicGetItem, arg_1_0)
-	table.insert(var_1_0, arg_1_0._scrollView)
 	table.insert(var_1_0, TabViewGroup.New(1, "top_left"))
 	table.insert(var_1_0, DungeonResourceView.New())
 	table.insert(var_1_0, DungeonViewEffect.New())
@@ -62,7 +63,7 @@ function var_0_0._dynamicGetItem(arg_3_0, arg_3_1)
 end
 
 function var_0_0.onContainerOpen(arg_4_0)
-	return
+	arg_4_0._dungeonViewAudio:addScrollChangeCallback(arg_4_0._mainStory.onScrollChange, arg_4_0._mainStory)
 end
 
 function var_0_0.getScrollView(arg_5_0)

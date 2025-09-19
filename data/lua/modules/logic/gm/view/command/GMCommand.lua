@@ -131,4 +131,8 @@ function var_0_0.clearTrialData(arg_9_0)
 	end
 end
 
+function var_0_0.enterSurvival(arg_10_0)
+	GMSubViewSurvival.enterSurvival(_, tonumber(arg_10_0))
+end
+
 return var_0_0

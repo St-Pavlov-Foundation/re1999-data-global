@@ -158,6 +158,10 @@ function var_0_0._onReceiveMaterialChangePush(arg_6_0, arg_6_1, arg_6_2, arg_6_3
 		LifeCircleController.instance:openLifeCircleRewardView(arg_6_2)
 	elseif var_6_0 == MaterialEnum.GetApproach.AutoChessRankReward or var_6_0 == MaterialEnum.GetApproach.AutoChessPveReward then
 		AutoChessController.instance:addPopupView(ViewName.CommonPropView, arg_6_2)
+	elseif var_6_0 == MaterialEnum.GetApproach.Activity197View then
+		Activity197Controller.instance:setRummageReward(ViewName.CommonPropView, arg_6_2)
+	elseif var_6_0 == MaterialEnum.GetApproach.SkinCoupon then
+		PopupController.instance:addPopupView(PopupEnum.PriorityType.SkinCouponTipView, ViewName.SkinCouponTipView, arg_6_2)
 	else
 		arg_6_0:_onReceiveMaterialChangePush_default(arg_6_1, arg_6_2, arg_6_3, arg_6_4, arg_6_5)
 	end
@@ -196,38 +200,46 @@ function var_0_0._onReceiveMaterialChangePush_default(arg_7_0, arg_7_1, arg_7_2,
 	end
 
 	for iter_7_0, iter_7_1 in ipairs(arg_7_2) do
-		local var_7_2 = MainSceneSwitchConfig.instance:getConfigByItemId(iter_7_1.materilId)
+		local var_7_2 = FightUISwitchModel.instance:getStyleMoByItemId(iter_7_1.materilId)
 
 		if var_7_2 then
+			PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.FightUISwitchEquipView, {
+				mo = var_7_2
+			})
+		end
+
+		local var_7_3 = MainSceneSwitchConfig.instance:getConfigByItemId(iter_7_1.materilId)
+
+		if var_7_3 then
 			PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.MainSceneSwitchInfoView, {
-				sceneSkinId = var_7_2.id,
+				sceneSkinId = var_7_3.id,
 				materialDataMOList = arg_7_2
 			})
 		end
 
-		local var_7_3 = MainUISwitchConfig.instance:getUISwitchCoByItemId(iter_7_1.materilId)
+		local var_7_4 = MainUISwitchConfig.instance:getUISwitchCoByItemId(iter_7_1.materilId)
 
-		if var_7_3 then
+		if var_7_4 then
 			PopupController.instance:addPopupView(PopupEnum.PriorityType.CommonPropView, ViewName.MainUISwitchInfoBlurMaskView, {
-				SkinId = var_7_3.id
+				SkinId = var_7_4.id
 			})
 		end
 	end
 
-	local var_7_4 = #arg_7_2
+	local var_7_5 = #arg_7_2
 
-	if var_7_4 ~= 0 and arg_7_2[1].materilType == MaterialEnum.MaterialType.Critter then
+	if var_7_5 ~= 0 and arg_7_2[1].materilType == MaterialEnum.MaterialType.Critter then
 		CritterController.instance:popUpCritterGetView()
 
-		if var_7_4 == 1 then
+		if var_7_5 == 1 then
 			return
 		end
 	end
 
-	local var_7_5 = ItemConfig.instance:getItemListBySubType(ItemEnum.SubType.PlayerBg)
+	local var_7_6 = ItemConfig.instance:getItemListBySubType(ItemEnum.SubType.PlayerBg)
 
-	if var_7_5 and #var_7_5 > 0 then
-		for iter_7_2, iter_7_3 in ipairs(var_7_5) do
+	if var_7_6 and #var_7_6 > 0 then
+		for iter_7_2, iter_7_3 in ipairs(var_7_6) do
 			if #arg_7_2 == 1 and iter_7_3.id == arg_7_2[1].materilId then
 				PlayerCardController.instance:ShowChangeBgSkin(iter_7_3.id)
 			end

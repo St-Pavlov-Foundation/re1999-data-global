@@ -54,25 +54,32 @@ function var_0_0.checkFinishGuide(arg_6_0, arg_6_1)
 	return GuideModel.instance:isGuideFinish(tonumber(arg_6_1[3]))
 end
 
-function var_0_0.checkViewsIsClose(arg_7_0, arg_7_1)
-	if not GuideModel.instance:getById(arg_7_0) then
+function var_0_0.checkFinishGuideAndValidAct(arg_7_0, arg_7_1)
+	local var_7_0 = tonumber(arg_7_1[3])
+	local var_7_1 = tonumber(arg_7_1[4])
+
+	return GuideModel.instance:isGuideFinish(var_7_0) and ActivityHelper.getActivityStatus(var_7_1) == ActivityEnum.ActivityStatus.Normal
+end
+
+function var_0_0.checkViewsIsClose(arg_8_0, arg_8_1)
+	if not GuideModel.instance:getById(arg_8_0) then
 		return false
 	end
 
-	local var_7_0 = {
-		unpack(arg_7_1, 3)
+	local var_8_0 = {
+		unpack(arg_8_1, 3)
 	}
-	local var_7_1 = true
+	local var_8_1 = true
 
-	for iter_7_0, iter_7_1 in pairs(var_7_0) do
-		if ViewMgr.instance:isOpen(iter_7_1) then
-			var_7_1 = false
+	for iter_8_0, iter_8_1 in pairs(var_8_0) do
+		if ViewMgr.instance:isOpen(iter_8_1) then
+			var_8_1 = false
 
 			break
 		end
 	end
 
-	return var_7_1
+	return var_8_1
 end
 
 return var_0_0

@@ -478,6 +478,7 @@ function var_0_0.thumbnailRedDotRefreshFunc(arg_39_0, arg_39_1)
 		var_39_0 = var_39_0 or PlayerModel.instance:isHasAssistReward()
 		var_39_0 = var_39_0 or BGMSwitchController.instance:hasBgmRedDot()
 		var_39_0 = var_39_0 or LifeCircleController.instance:isShowRed()
+		var_39_0 = var_39_0 or HandbookController.instance:isFirstHandbookSkin()
 		arg_39_1.show = var_39_0
 
 		arg_39_1:showRedDot(RedDotEnum.Style.Normal)

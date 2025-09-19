@@ -2,11 +2,12 @@
 
 local var_0_0 = {}
 local var_0_1 = {
-	nameEn = 4,
-	name = 3,
-	year = 5,
+	nameEn = 5,
+	name = 4,
+	year = 6,
+	type = 2,
 	id = 1,
-	order = 2
+	order = 3
 }
 local var_0_2 = {
 	"id"

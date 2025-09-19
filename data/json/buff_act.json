@@ -2889,6 +2889,213 @@
     "audioId": 0
   },
   {
+    "id": 1000,
+    "type": "BalanceEmitterDamage",
+    "effectTime": 901,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 1001,
+    "type": "AttrOnlyCalDamageAttackBigSkill",
+    "effectTime": 0,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 1002,
+    "type": "SpecialCountCastChannel",
+    "effectTime": 303,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 1003,
+    "type": "SpecialCountContinueChannelBuff",
+    "effectTime": 104,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 1004,
+    "type": "AddAttrBySpecialCount",
+    "effectTime": 0,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 1005,
+    "type": "AttrOnlyCalDamageReplaceAttrADCreator",
+    "effectTime": 0,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 1006,
+    "type": "NuoDiKaCastChannel",
+    "effectTime": 304,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 1007,
+    "type": "AttrOnlyCalDamageReplaceAttr",
+    "effectTime": 0,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 1008,
+    "type": "BanLostLife",
+    "effectTime": 0,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 1009,
+    "type": "BloodValueUseSkill",
+    "effectTime": 0,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 1010,
+    "type": "DyingHealDisperse1",
+    "effectTime": 12,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 1011,
+    "type": "CureUpByLostHp",
+    "effectTime": 0,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 1012,
+    "type": "AbsorbHpToBuffTarget",
+    "effectTime": 0,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 1013,
+    "type": "LockHpMax",
+    "effectTime": 0,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 1014,
+    "type": "InjurySave",
+    "effectTime": 0,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 1015,
+    "type": "NotBigSkillNoUseActPoint",
+    "effectTime": 0,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 1016,
+    "type": "NoUseCardEnergyRecordByRound",
+    "effectTime": 1061,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 1017,
+    "type": "SettleDotAndCostDotDuration",
+    "effectTime": 101,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 1018,
+    "type": "PoisonSettleCountAddBuff",
+    "effectTime": 304,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 1019,
+    "type": "LostHpCountAddBuff",
+    "effectTime": 307,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 1020,
+    "type": "UseBloodPoolCount",
+    "effectTime": 305,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 1021,
+    "type": "BloodPoolCountAddExPoint",
+    "effectTime": 0,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
+    "id": 213,
+    "type": "Dot",
+    "effectTime": 101,
+    "effectCondition": 0,
+    "effect": "",
+    "effectHangPoint": "",
+    "audioId": 0
+  },
+  {
     "id": 10000,
     "type": "EzioBigSkill",
     "effectTime": 0,

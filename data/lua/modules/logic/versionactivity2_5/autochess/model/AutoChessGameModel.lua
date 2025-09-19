@@ -28,16 +28,30 @@ function var_0_0.initTileNodes(arg_1_0, arg_1_1)
 
 			arg_1_0.tileNodes[iter_1_0][iter_1_1] = Vector2(var_1_5, var_1_4.y)
 		end
-	end
 
-	return arg_1_0.tileNodes
+		if arg_1_1 == AutoChessEnum.ViewType.Player then
+			if not arg_1_0.tileNodes[4] then
+				arg_1_0.tileNodes[4] = {}
+			end
+
+			local var_1_6 = var_1_4.x - (var_1_3.x + var_1_2)
+
+			arg_1_0.tileNodes[4][iter_1_0] = Vector2(var_1_6, var_1_4.y)
+		end
+	end
 end
 
 function var_0_0.getNearestTileXY(arg_2_0, arg_2_1, arg_2_2)
 	for iter_2_0, iter_2_1 in ipairs(arg_2_0.tileNodes) do
-		local var_2_0 = AutoChessEnum.TileSize[arg_2_0.viewType][iter_2_0]
+		local var_2_0
+
+		if iter_2_0 ~= 4 then
+			var_2_0 = AutoChessEnum.TileSize[arg_2_0.viewType][iter_2_0]
+		end
 
 		for iter_2_2, iter_2_3 in ipairs(iter_2_1) do
+			var_2_0 = var_2_0 or AutoChessEnum.TileSize[arg_2_0.viewType][iter_2_2]
+
 			local var_2_1 = math.abs(arg_2_1 - iter_2_3.x)
 			local var_2_2 = math.abs(arg_2_2 - iter_2_3.y)
 
@@ -80,6 +94,13 @@ end
 
 function var_0_0.setChessAvatar(arg_6_0, arg_6_1)
 	arg_6_0.avatar = arg_6_1
+end
+
+function var_0_0.setUsingLeaderSkill(arg_7_0, arg_7_1, arg_7_2)
+	arg_7_0.usingLeaderSkill = arg_7_1
+	arg_7_0.targetTypes = arg_7_2
+
+	AutoChessController.instance:dispatchEvent(AutoChessEvent.UsingLeaderSkill, arg_7_1)
 end
 
 var_0_0.instance = var_0_0.New()

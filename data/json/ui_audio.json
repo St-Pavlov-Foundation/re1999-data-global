@@ -10620,6 +10620,641 @@
     "bankName": "ui_activity_2_7_yuzhou"
   },
   {
+    "id": 20280001,
+    "eventName": "play_buff_hanqiruti",
+    "bankName": "effects_fight_2_8"
+  },
+  {
+    "id": 20280002,
+    "eventName": "play_buff_diannengzhuru",
+    "bankName": "effects_fight_2_8"
+  },
+  {
+    "id": 20280003,
+    "eventName": "play_ui_player_interface_open",
+    "bankName": "main_ui"
+  },
+  {
+    "id": 20280004,
+    "eventName": "play_ui_player_interface_close",
+    "bankName": "main_ui"
+  },
+  {
+    "id": 20280005,
+    "eventName": "play_ui_achieve_weiqicard_switch",
+    "bankName": "main_ui"
+  },
+  {
+    "id": 20280006,
+    "eventName": "play_ui_role_nuodika",
+    "bankName": "ui_role_2_8"
+  },
+  {
+    "id": 20280007,
+    "eventName": "play_ui_fight_snow_2_8",
+    "bankName": "fight_ui_sfx2_8"
+  },
+  {
+    "id": 20280011,
+    "eventName": "play_replay_music_theme_2_8",
+    "bankName": "ui_replay_mainmusic2_8"
+  },
+  {
+    "id": 20280012,
+    "eventName": "play_replay_music_crazymountains_2_8",
+    "bankName": "ui_replay_mainmusic2_8"
+  },
+  {
+    "id": 20280013,
+    "eventName": "play_replay_music_sacrifice_2_8",
+    "bankName": "ui_replay_mainmusic2_8"
+  },
+  {
+    "id": 20280014,
+    "eventName": "play_ui_fuleyuan_eyes",
+    "bankName": "ui_activity_2_8_fuleyuan"
+  },
+  {
+    "id": 20280015,
+    "eventName": "play_ui_fuleyuan_push",
+    "bankName": "ui_activity_2_8_fuleyuan"
+  },
+  {
+    "id": 20280016,
+    "eventName": "play_ui_fuleyuan_click",
+    "bankName": "ui_activity_2_8_fuleyuan"
+  },
+  {
+    "id": 20280017,
+    "eventName": "play_ui_fuleyuan_tiaoyitiao_xuli",
+    "bankName": "ui_activity_2_8_fuleyuan"
+  },
+  {
+    "id": 20280018,
+    "eventName": "play_ui_fuleyuan_tiaoyitiao_fall",
+    "bankName": "ui_activity_2_8_fuleyuan"
+  },
+  {
+    "id": 20280019,
+    "eventName": "play_ui_fuleyuan_tiaoyitiao_fail",
+    "bankName": "ui_activity_2_8_fuleyuan"
+  },
+  {
+    "id": 20280020,
+    "eventName": "play_ui_fuleyuan_boss_eye_open",
+    "bankName": "ui_activity_2_8_fuleyuan"
+  },
+  {
+    "id": 20280021,
+    "eventName": "play_ui_fuleyuan_boss_snow",
+    "bankName": "ui_activity_2_8_fuleyuan"
+  },
+  {
+    "id": 20280022,
+    "eventName": "stop_ui_fuleyuan_tiaoyitiao_xuli",
+    "bankName": "ui_activity_2_8_fuleyuan"
+  },
+  {
+    "id": 20280023,
+    "eventName": "stop_ui_fuleyuan_eyes",
+    "bankName": "ui_activity_2_8_fuleyuan"
+  },
+  {
+    "id": 20280024,
+    "eventName": "play_ui_fuleyuan_tiaoyitiao_drop",
+    "bankName": "ui_activity_2_8_fuleyuan"
+  },
+  {
+    "id": 20280801,
+    "eventName": "play_ui_molu_sky_open",
+    "bankName": "ui_activity_molu"
+  },
+  {
+    "id": 20280802,
+    "eventName": "play_ui_fuleyuan_typewriter_unfold",
+    "bankName": "ui_activity_2_8_fuleyuan"
+  },
+  {
+    "id": 20280803,
+    "eventName": "play_ui_fuleyuan_typewriter_loop",
+    "bankName": "ui_activity_2_8_fuleyuan"
+  },
+  {
+    "id": 20280804,
+    "eventName": "stop_ui_fuleyuan_typewriter_loop",
+    "bankName": "ui_activity_2_8_fuleyuan"
+  },
+  {
+    "id": 20280805,
+    "eventName": "play_ui_fuleyuan_typewriter_start",
+    "bankName": "ui_activity_2_8_fuleyuan"
+  },
+  {
+    "id": 20280806,
+    "eventName": "play_ui_fuleyuan_typewriter_click",
+    "bankName": "ui_activity_2_8_fuleyuan"
+  },
+  {
+    "id": 20280807,
+    "eventName": "play_ui_role_culture_open",
+    "bankName": "ui_role"
+  },
+  {
+    "id": 20280808,
+    "eventName": "play_ui_checkpoint_chain",
+    "bankName": "ui_checkpoint"
+  },
+  {
+    "id": 20280809,
+    "eventName": "stop_ui_checkpoint_chain",
+    "bankName": "ui_checkpoint"
+  },
+  {
+    "id": 20280810,
+    "eventName": "play_ui_fuleyuan_yaoyu_make",
+    "bankName": "ui_activity_2_8_fuleyuan"
+  },
+  {
+    "id": 20280811,
+    "eventName": "play_ui_mln_no_effect",
+    "bankName": "ui_activity"
+  },
+  {
+    "id": 20280901,
+    "eventName": "play_hero312002_mainsfx_adm_action",
+    "bankName": "hero312002_mainsfx"
+  },
+  {
+    "id": 20280902,
+    "eventName": "stop_hero312002_mainsfx_adm_action",
+    "bankName": "hero312002_mainsfx"
+  },
+  {
+    "id": 20280903,
+    "eventName": "play_hero308603_mainsfx_adm_action",
+    "bankName": "hero308603_mainsfx"
+  },
+  {
+    "id": 20280904,
+    "eventName": "stop_hero308603_mainsfx_adm_action",
+    "bankName": "hero308603_mainsfx"
+  },
+  {
+    "id": 20280701,
+    "eventName": "play_amb_2_8_explore_noise",
+    "bankName": "ui_activity_2_8_explore_noise"
+  },
+  {
+    "id": 20280702,
+    "eventName": "stop_amb_2_8_explore_noise",
+    "bankName": "ui_activity_2_8_explore_noise"
+  },
+  {
+    "id": 20280201,
+    "eventName": "play_ui_yuzhou_level_lit",
+    "bankName": "ui_activity_2_7_yuzhou_kubohuahuan"
+  },
+  {
+    "id": 20280202,
+    "eventName": "play_ui_fuleyuan_newlevels_unlock",
+    "bankName": "ui_activity_2_8_fuleyuan_molideer"
+  },
+  {
+    "id": 20280203,
+    "eventName": "play_ui_leimi_decrypt_correct",
+    "bankName": "ui_activity"
+  },
+  {
+    "id": 20280204,
+    "eventName": "play_ui_mln_no_effect",
+    "bankName": "ui_activity"
+  },
+  {
+    "id": 20280205,
+    "eventName": "play_ui_molu_jlbn_open",
+    "bankName": "ui_activity_molu"
+  },
+  {
+    "id": 20280206,
+    "eventName": "play_ui_molu_arm_repair",
+    "bankName": "ui_activity_molu"
+  },
+  {
+    "id": 20280207,
+    "eventName": "play_ui_fuleyuan_lines_extend",
+    "bankName": "ui_activity_2_8_fuleyuan_molideer"
+  },
+  {
+    "id": 20280208,
+    "eventName": "play_ui_molu_exit_appear",
+    "bankName": "ui_activity_molu"
+  },
+  {
+    "id": 20280209,
+    "eventName": "play_ui_gudu_bubble_click",
+    "bankName": "ui_activity_1_9_gudu"
+  },
+  {
+    "id": 20280210,
+    "eventName": "play_ui_pkls_endpoint_arrival",
+    "bankName": "ui_activity"
+  },
+  {
+    "id": 20280211,
+    "eventName": "play_ui_pkls_challenge_fail",
+    "bankName": "ui_activity"
+  },
+  {
+    "id": 20280212,
+    "eventName": "play_ui_gudu_input_right",
+    "bankName": "ui_activity_1_9_gudu"
+  },
+  {
+    "id": 20280301,
+    "eventName": "play_ui_fuleyuan_comity_open",
+    "bankName": "ui_activity_2_8_fuleyuan_fandouqi"
+  },
+  {
+    "id": 20280302,
+    "eventName": "play_ui_fuleyuan_box_open",
+    "bankName": "ui_activity_2_8_fuleyuan_fandouqi"
+  },
+  {
+    "id": 20280401,
+    "eventName": "play_ui_fight_nautika_qte2_8",
+    "bankName": "fight_ui_sfx_nautikaux2_8"
+  },
+  {
+    "id": 20280402,
+    "eventName": "play_ui_fight_nautika_click2_8",
+    "bankName": "fight_ui_sfx_nautikaux2_8"
+  },
+  {
+    "id": 20280403,
+    "eventName": "play_ui_fight_nautika_switch2_8",
+    "bankName": "fight_ui_sfx_nautikaux2_8"
+  },
+  {
+    "id": 20280501,
+    "eventName": "play_ui_yuzhou_level_lit",
+    "bankName": "ui_activity_2_7_yuzhou_kubohuahuan"
+  },
+  {
+    "id": 20280502,
+    "eventName": "play_ui_fuleyuan_newlevels_unlock",
+    "bankName": "ui_activity_2_8_fuleyuan_molideer"
+  },
+  {
+    "id": 20280503,
+    "eventName": "play_ui_fuleyuan_newlevels_unlock",
+    "bankName": "ui_activity_2_8_fuleyuan_molideer"
+  },
+  {
+    "id": 20280504,
+    "eventName": "play_ui_fuleyuan_yidong",
+    "bankName": "ui_activity_2_8_fuleyuan_nuodika"
+  },
+  {
+    "id": 20280505,
+    "eventName": "play_ui_fuleyuan_diren_sk1",
+    "bankName": "ui_activity_2_8_fuleyuan_nuodika"
+  },
+  {
+    "id": 20280506,
+    "eventName": "play_ui_fuleyuan_diren_death",
+    "bankName": "ui_activity_2_8_fuleyuan_nuodika"
+  },
+  {
+    "id": 20280507,
+    "eventName": "play_ui_fuleyuan_diren_hei",
+    "bankName": "ui_activity_2_8_fuleyuan_nuodika"
+  },
+  {
+    "id": 20280508,
+    "eventName": "play_ui_fuleyuan_diren_sk2",
+    "bankName": "ui_activity_2_8_fuleyuan_nuodika"
+  },
+  {
+    "id": 20280509,
+    "eventName": "play_ui_fuleyuan_huifu",
+    "bankName": "ui_activity_2_8_fuleyuan_nuodika"
+  },
+  {
+    "id": 20280510,
+    "eventName": "play_ui_fuleyuan_daoju_sk2",
+    "bankName": "ui_activity_2_8_fuleyuan_nuodika"
+  },
+  {
+    "id": 20280513,
+    "eventName": "play_ui_fuleyuan_daoju_sk1",
+    "bankName": "ui_activity_2_8_fuleyuan_nuodika"
+  },
+  {
+    "id": 20280514,
+    "eventName": "play_ui_fuleyuan_diaoluo",
+    "bankName": "ui_activity_2_8_fuleyuan_nuodika"
+  },
+  {
+    "id": 20280515,
+    "eventName": "play_ui_fuleyuan_nuodika_failed",
+    "bankName": "ui_activity_2_8_fuleyuan_nuodika"
+  },
+  {
+    "id": 20280516,
+    "eventName": "play_ui_fuleyuan_nuodika_win",
+    "bankName": "ui_activity_2_8_fuleyuan_nuodika"
+  },
+  {
+    "id": 20280517,
+    "eventName": "play_ui_fuleyuan_diren",
+    "bankName": "ui_activity_2_8_fuleyuan_nuodika"
+  },
+  {
+    "id": 20280518,
+    "eventName": "play_ui_fuleyuan_daoju_shouji",
+    "bankName": "ui_activity_2_8_fuleyuan_nuodika"
+  },
+  {
+    "id": 20280519,
+    "eventName": "play_ui_fuleyuan_snow",
+    "bankName": "ui_activity_2_8_fuleyuan_nuodika"
+  },
+  {
+    "id": 20280520,
+    "eventName": "play_ui_fuleyuan_transition1",
+    "bankName": "ui_activity_2_8_fuleyuan_nuodika"
+  },
+  {
+    "id": 20280601,
+    "eventName": "play_ui_wenming_page",
+    "bankName": "ui_activity_2_6_wenming"
+  },
+  {
+    "id": 20280602,
+    "eventName": "play_ui_fuleyuan_tansuo_switch",
+    "bankName": "ui_activity_2_8_fuleyuan_tansuo"
+  },
+  {
+    "id": 20280603,
+    "eventName": "play_ui_fuleyuan_tansuo_general_1",
+    "bankName": "ui_activity_2_8_fuleyuan_tansuo"
+  },
+  {
+    "id": 20280604,
+    "eventName": "play_ui_fuleyuan_tansuo_loading",
+    "bankName": "ui_activity_2_8_fuleyuan_tansuo"
+  },
+  {
+    "id": 20280605,
+    "eventName": "play_ui_qiutu_general_click",
+    "bankName": "ui_activity_qiutu_third_door"
+  },
+  {
+    "id": 20280606,
+    "eventName": "play_ui_fuleyuan_tansuo_move",
+    "bankName": "ui_activity_2_8_fuleyuan_tansuo"
+  },
+  {
+    "id": 20280608,
+    "eventName": "play_ui_fuleyuan_tansuo_general_2",
+    "bankName": "ui_activity_2_8_fuleyuan_tansuo"
+  },
+  {
+    "id": 20280609,
+    "eventName": "play_ui_fuleyuan_tansuo_sougua_1",
+    "bankName": "ui_activity_2_8_fuleyuan_tansuo"
+  },
+  {
+    "id": 20280610,
+    "eventName": "play_ui_mail_open",
+    "bankName": "ui_mail"
+  },
+  {
+    "id": 20280611,
+    "eventName": "play_ui_checkpoint_resources_click",
+    "bankName": "ui_checkpoint"
+  },
+  {
+    "id": 20280612,
+    "eventName": "play_ui_fuleyuan_tansuo_sougua_2",
+    "bankName": "ui_activity_2_8_fuleyuan_tansuo"
+  },
+  {
+    "id": 20280613,
+    "eventName": "play_ui_fuleyuan_tansuo_details",
+    "bankName": "ui_activity_2_8_fuleyuan_tansuo"
+  },
+  {
+    "id": 20280614,
+    "eventName": "play_ui_fuleyuan_tansuo_sougua_3",
+    "bankName": "ui_activity_2_8_fuleyuan_tansuo"
+  },
+  {
+    "id": 20280615,
+    "eventName": "play_ui_fuleyuan_tansuo_bag_open",
+    "bankName": "ui_activity_2_8_fuleyuan_tansuo"
+  },
+  {
+    "id": 20280616,
+    "eventName": "play_ui_mail_open_1",
+    "bankName": "ui_mail"
+  },
+  {
+    "id": 20280617,
+    "eventName": "play_ui_mail_close",
+    "bankName": "ui_mail"
+  },
+  {
+    "id": 20280618,
+    "eventName": "play_ui_fuleyuan_tansuo_dutiao_loop",
+    "bankName": "ui_activity_2_8_fuleyuan_tansuo"
+  },
+  {
+    "id": 20280619,
+    "eventName": "stop_ui_fuleyuan_tansuo_dutiao_loop",
+    "bankName": "ui_activity_2_8_fuleyuan_tansuo"
+  },
+  {
+    "id": 20280620,
+    "eventName": "play_ui_wangshi_argus_level_finish",
+    "bankName": "ui_activity_2_1_wangshi_argus"
+  },
+  {
+    "id": 20280621,
+    "eventName": "play_ui_wangshi_argus_level_ask",
+    "bankName": "ui_activity_2_1_wangshi_argus"
+  },
+  {
+    "id": 20280622,
+    "eventName": "play_ui_fuleyuan_tansuo_put_1",
+    "bankName": "ui_activity_2_8_fuleyuan_tansuo"
+  },
+  {
+    "id": 20280623,
+    "eventName": "play_ui_fuleyuan_tansuo_put_2",
+    "bankName": "ui_activity_2_8_fuleyuan_tansuo"
+  },
+  {
+    "id": 20280624,
+    "eventName": "play_ui_fuleyuan_tansuo_fail",
+    "bankName": "ui_activity_2_8_fuleyuan_tansuo"
+  },
+  {
+    "id": 20280625,
+    "eventName": "play_ui_fuleyuan_tansuo_success_1",
+    "bankName": "ui_activity_2_8_fuleyuan_tansuo"
+  },
+  {
+    "id": 20280626,
+    "eventName": "play_ui_fuleyuan_tansuo_success_2",
+    "bankName": "ui_activity_2_8_fuleyuan_tansuo"
+  },
+  {
+    "id": 20280627,
+    "eventName": "play_ui_fuleyuan_tansuo_killed",
+    "bankName": "ui_activity_2_8_fuleyuan_tansuo"
+  },
+  {
+    "id": 20280628,
+    "eventName": "play_ui_fuleyuan_tansuo_move_fast",
+    "bankName": "ui_activity_2_8_fuleyuan_tansuo"
+  },
+  {
+    "id": 20280629,
+    "eventName": "play_ui_fuleyuan_tansuo_transmit",
+    "bankName": "ui_activity_2_8_fuleyuan_tansuo"
+  },
+  {
+    "id": 20280630,
+    "eventName": "play_ui_fuleyuan_tansuo_build",
+    "bankName": "ui_activity_2_8_fuleyuan_tansuo"
+  },
+  {
+    "id": 20280631,
+    "eventName": "play_ui_fuleyuan_binansuo_decide",
+    "bankName": "ui_activity_2_8_fuleyuan_binansuo"
+  },
+  {
+    "id": 20280632,
+    "eventName": "play_ui_fuleyuan_binansuo_discuss",
+    "bankName": "ui_activity_2_8_fuleyuan_binansuo"
+  },
+  {
+    "id": 20280633,
+    "eventName": "play_ui_fuleyuan_binansuo_agree",
+    "bankName": "ui_activity_2_8_fuleyuan_binansuo"
+  },
+  {
+    "id": 20280634,
+    "eventName": "play_ui_fuleyuan_binansuo_decision",
+    "bankName": "ui_activity_2_8_fuleyuan_binansuo"
+  },
+  {
+    "id": 20280635,
+    "eventName": "stop_ui_fuleyuan_tansuo_loading",
+    "bankName": "ui_activity_2_8_fuleyuan_binansuo"
+  },
+  {
+    "id": 20280636,
+    "eventName": "play_ui_fuleyuan_binansuo_fail_2",
+    "bankName": "ui_activity_2_8_fuleyuan_binansuo"
+  },
+  {
+    "id": 20280637,
+    "eventName": "play_ui_fuleyuan_binansuo_draw",
+    "bankName": "ui_activity_2_8_fuleyuan_binansuo"
+  },
+  {
+    "id": 20280638,
+    "eventName": "play_ui_fuleyuan_binansuo_warn",
+    "bankName": "ui_activity_2_8_fuleyuan_binansuo"
+  },
+  {
+    "id": 20280639,
+    "eventName": "play_ui_fuleyuan_binansuo_fight",
+    "bankName": "ui_activity_2_8_fuleyuan_binansuo"
+  },
+  {
+    "id": 20280640,
+    "eventName": "play_ui_gudu_win",
+    "bankName": "ui_activity_1_9_gudu"
+  },
+  {
+    "id": 20280641,
+    "eventName": "play_ui_fuleyuan_binansuo_sougua_4",
+    "bankName": "ui_activity_2_8_fuleyuan_binansuo"
+  },
+  {
+    "id": 20280642,
+    "eventName": "play_ui_qiutu_explore_senior",
+    "bankName": "ui_activity_qiutu_third_door"
+  },
+  {
+    "id": 20280643,
+    "eventName": "play_ui_qiutu_teleport",
+    "bankName": "ui_activity_qiutu_third_door"
+  },
+  {
+    "id": 20280644,
+    "eventName": "play_ui_fuleyuan_tansuo_sougua_3",
+    "bankName": "ui_activity_2_8_fuleyuan_tansuo"
+  },
+  {
+    "id": 20280645,
+    "eventName": "play_ui_qiutu_award_all",
+    "bankName": "ui_activity_1_4_qiutu"
+  },
+  {
+    "id": 20280646,
+    "eventName": "play_ui_fuleyuan_tansuo_transmit_2",
+    "bankName": "ui_activity_2_8_fuleyuan_tansuo"
+  },
+  {
+    "id": 20280647,
+    "eventName": "stop_ui_fuleyuan_tansuo_move_fast",
+    "bankName": "ui_activity_2_8_fuleyuan_tansuo"
+  },
+  {
+    "id": 20280850,
+    "eventName": "play_ui_tujianskin_amb_loop",
+    "bankName": "ui_tujianskin_2_8"
+  },
+  {
+    "id": 20280851,
+    "eventName": "play_ui_tujianskin_group_switch_1",
+    "bankName": "ui_tujianskin_2_8"
+  },
+  {
+    "id": 20280852,
+    "eventName": "play_ui_tujianskin_group_switch_2",
+    "bankName": "ui_tujianskin_2_8"
+  },
+  {
+    "id": 20280853,
+    "eventName": "play_ui_tujianskin_floor_switch",
+    "bankName": "ui_tujianskin_2_8"
+  },
+  {
+    "id": 20280854,
+    "eventName": "play_ui_tujianskin_group_open",
+    "bankName": "ui_tujianskin_2_8"
+  },
+  {
+    "id": 20280751,
+    "eventName": "play_ui_fuleyuan_yure_open",
+    "bankName": "ui_activity_2_8_fuleyuan_yure"
+  },
+  {
+    "id": 20280752,
+    "eventName": "play_ui_fuleyuan_yure_paper",
+    "bankName": "ui_activity_2_8_fuleyuan_yure"
+  },
+  {
+    "id": 20280753,
+    "eventName": "play_ui_fuleyuan_yure_whoosh",
+    "bankName": "ui_activity_2_8_fuleyuan_yure"
+  },
+  {
     "id": 20305001,
     "eventName": "play_ui_fight_click_expand",
     "bankName": "fight_ui_sfx_s01"
@@ -11178,6 +11813,16 @@
     "id": 20305620,
     "eventName": "play_ui_cikexia_link_fade_away",
     "bankName": "ui_activity_s01_cikexia_link"
+  },
+  {
+    "id": 310036,
+    "eventName": "play_ui_leimi_souvenir_open",
+    "bankName": "ui_activity"
+  },
+  {
+    "id": 310037,
+    "eventName": "play_ui_mln_page_turn",
+    "bankName": "ui_activity"
   },
   {
     "id": 20300031,

@@ -2,15 +2,11 @@
 
 local var_0_0 = {}
 local var_0_1 = {
-	skillEx = 5,
-	skillGroup1 = 3,
-	id = 1,
-	skillGroup2 = 4,
-	skillLevel = 2
+	upgradeSkillId = 2,
+	skillId = 1
 }
 local var_0_2 = {
-	"id",
-	"skillLevel"
+	"skillId"
 }
 local var_0_3 = {}
 

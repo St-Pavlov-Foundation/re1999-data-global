@@ -17,6 +17,7 @@ function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 	arg_1_0.duration = arg_1_2
 	arg_1_0.paramsArr = arg_1_3
 	arg_1_0.release_time = not string.nilorempty(arg_1_3[9]) and arg_1_3[9] ~= "0" and tonumber(arg_1_3[9])
+	arg_1_0._tokenRelease = not string.nilorempty(arg_1_3[14])
 
 	local var_1_0 = arg_1_3[6]
 
@@ -98,6 +99,10 @@ function var_0_0._bootLogic(arg_2_0, arg_2_1, arg_2_2, arg_2_3)
 		arg_2_0._effectWrap = arg_2_0:_createEffect(arg_2_0._effectName, arg_2_0._hangPoint)
 
 		if arg_2_0._effectWrap then
+			if arg_2_0._tokenRelease then
+				arg_2_0._attacker.effect:addTokenRelease(arg_2_0.paramsArr[14], arg_2_0._effectWrap)
+			end
+
 			arg_2_0:_setRenderOrder(arg_2_0._effectWrap, var_2_5)
 
 			if string.nilorempty(arg_2_0._hangPoint) and var_2_7 then
@@ -255,11 +260,23 @@ function var_0_0.onDestructor(arg_11_0)
 end
 
 function var_0_0._removeEffect(arg_12_0)
-	if arg_12_0._effectWrap and not arg_12_0.release_time then
-		FightRenderOrderMgr.instance:onRemoveEffectWrap(arg_12_0._targetEntity.id, arg_12_0._effectWrap)
-		arg_12_0._targetEntity.effect:removeEffect(arg_12_0._effectWrap)
+	if arg_12_0._effectWrap then
+		local var_12_0 = true
 
-		arg_12_0._effectWrap = nil
+		if arg_12_0.release_time then
+			var_12_0 = false
+		end
+
+		if arg_12_0._tokenRelease then
+			var_12_0 = false
+		end
+
+		if var_12_0 then
+			FightRenderOrderMgr.instance:onRemoveEffectWrap(arg_12_0._targetEntity.id, arg_12_0._effectWrap)
+			arg_12_0._targetEntity.effect:removeEffect(arg_12_0._effectWrap)
+
+			arg_12_0._effectWrap = nil
+		end
 	end
 
 	arg_12_0._targetEntity = nil

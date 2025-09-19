@@ -14,6 +14,7 @@ var_0_0.TakeoffAllTalentCube = 9
 var_0_0.OnGuideAttenuation = 10
 var_0_0.ChangeMainHero = 11
 var_0_0.RandomMainHero = 12
+var_0_0.MainHeroGmPlayVoice = 13
 var_0_0.HeroInfoListReply = 1001
 var_0_0.HeroUpdatePush = 1002
 var_0_0.successHeroRankUp = 1003

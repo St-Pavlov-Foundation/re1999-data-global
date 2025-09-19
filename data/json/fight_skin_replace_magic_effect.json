@@ -134,5 +134,39 @@
       0,
       -0.75
     ]
+  },
+  {
+    "id": 100041,
+    "skinId": 308803,
+    "enterEffect": "",
+    "enterTime": 0,
+    "enterAudio": 0,
+    "loopEffect": "buff/v2a3_shuzhen_xueyu",
+    "closeEffect": "",
+    "closeTime": 0,
+    "closeAniName": "",
+    "closeAudio": 0,
+    "posArr": [
+      6.07,
+      0.33,
+      -1
+    ]
+  },
+  {
+    "id": 100051,
+    "skinId": 308803,
+    "enterEffect": "",
+    "enterTime": 0,
+    "enterAudio": 0,
+    "loopEffect": "buff/v2a3_shuzhen_xueyu",
+    "closeEffect": "",
+    "closeTime": 0,
+    "closeAniName": "",
+    "closeAudio": 0,
+    "posArr": [
+      6.07,
+      0.33,
+      -1
+    ]
   }
 ]

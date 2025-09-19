@@ -46,8 +46,8 @@ function var_0_0.onCreateMagic(arg_7_0, arg_7_1, arg_7_2)
 	arg_7_0:refreshUI(arg_7_1, arg_7_2)
 end
 
-function var_0_0.onUpdateMagic(arg_8_0, arg_8_1, arg_8_2)
-	arg_8_0:refreshUI(arg_8_1, arg_8_2)
+function var_0_0.onUpdateMagic(arg_8_0, arg_8_1, arg_8_2, arg_8_3)
+	arg_8_0:refreshUI(arg_8_1, arg_8_2, arg_8_3)
 end
 
 function var_0_0.onRemoveMagic(arg_9_0)
@@ -60,7 +60,7 @@ function var_0_0.playAnim(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
 	arg_10_0._aniPlayer:Play(arg_10_1, arg_10_2, arg_10_3)
 end
 
-function var_0_0.refreshUI(arg_11_0, arg_11_1, arg_11_2)
+function var_0_0.refreshUI(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
 	return
 end
 

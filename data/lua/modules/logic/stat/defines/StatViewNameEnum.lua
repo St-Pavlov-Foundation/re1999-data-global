@@ -139,6 +139,14 @@ var_0_0.ChineseViewName = {
 	[ViewName.CooperGarlandTaskView] = "库珀花环角色任务",
 	[ViewName.TowerGiftFullView] = "爬塔运营活动",
 	[ViewName.Act191MainView] = "匣中交流赛",
+	[ViewName.TurnBackFullView] = "海外人拉人H5活动界面",
+	[ViewName.VersionActivity2_8EnterView] = "2.8版本活动页",
+	[ViewName.NuoDiKaLevelView] = "诺谛卡角色活动",
+	[ViewName.NuoDiKaTaskView] = "诺谛卡角色任务",
+	[ViewName.MoLiDeErLevelView] = "莫莉德尔角色活动",
+	[ViewName.MoLiDeErTaskView] = "莫莉德尔角色任务",
+	[ViewName.VersionActivity2_8StoreView] = "2.8副本商店",
+	[ViewName.SurvivalView] = "雨前漫游指南",
 	[ViewName.VersionActivity2_9EnterView] = "S01版本活动页",
 	[ViewName.VersionActivity2_9DungeonMapView] = "副本地图-翡冷翠之春",
 	[ViewName.OdysseyDungeonView] = "副本地图-入雅典记",
@@ -269,6 +277,13 @@ var_0_0.NeedTrackViewDict = {
 	[ViewName.CooperGarlandTaskView] = true,
 	[ViewName.TowerGiftFullView] = true,
 	[ViewName.Act191MainView] = true,
+	[ViewName.VersionActivity2_8EnterView] = true,
+	[ViewName.NuoDiKaLevelView] = true,
+	[ViewName.NuoDiKaTaskView] = true,
+	[ViewName.MoLiDeErLevelView] = true,
+	[ViewName.MoLiDeErTaskView] = true,
+	[ViewName.VersionActivity2_8StoreView] = true,
+	[ViewName.SurvivalView] = true,
 	[ViewName.V2a3_ReactivityEnterview] = true,
 	[ViewName.VersionActivity2_9EnterView] = true,
 	[ViewName.VersionActivity2_9DungeonMapView] = true,
@@ -291,6 +306,7 @@ var_0_0.NeedListenTabSwitchList = {
 	ViewName.VersionActivity2_5EnterView,
 	ViewName.VersionActivity2_6EnterView,
 	ViewName.VersionActivity2_7EnterView,
+	ViewName.VersionActivity2_8EnterView,
 	ViewName.StoreView
 }
 var_0_0.TabViewContainerID = {
@@ -304,6 +320,7 @@ var_0_0.TabViewContainerID = {
 	[ViewName.VersionActivity2_5EnterView] = 2,
 	[ViewName.VersionActivity2_6EnterView] = 2,
 	[ViewName.VersionActivity2_7EnterView] = 2,
+	[ViewName.VersionActivity2_8EnterView] = 2,
 	[ViewName.StoreView] = 3
 }
 var_0_0.TabViewName = {
@@ -332,19 +349,25 @@ var_0_0.TabViewName = {
 	VersionActivity2_5LiangYueEnterView = "梁月",
 	V2a2_Season166EnterView = "赛季",
 	V2a2_EliminateEnterView = "小队玩法",
-	VersionActivity2_4WuErLiXiEnterView = "乌尔里希",
+	V2a8_Season166EnterView = "赛季",
+	VersionActivity2_8NuoDiKaEnterView = "诺谛卡",
+	SurvivalEnterView = "雨前漫游指南",
 	Act183VersionActivityEnterView = "挑战玩法",
+	VersionActivity2_4WuErLiXiEnterView = "乌尔里希",
 	ActivityWeekWalkHeartShowView = "醒梦域",
 	VersionActivity2_7DungeonEnterView = "1987宇宙组曲",
 	VersionActivity2_6RougeEnterView = "常驻肉鸽",
 	DiceHeroEnterView = "阿莱夫",
 	VersionActivity2_3ZhiXinQuanErEnterView = "纸信圈儿",
 	TowerMainEntryView = "爬塔玩法",
+	VersionActivity2_8AutoChessEnterView = "魔精自走棋",
 	V2a5_v1a6_ReactivityEnterview = "1.6活动复刻",
 	VersionActivity2_3Act174EnterView = "和平角斗场",
+	VersionActivity2_8DungeonEnterView = "复乐园",
 	V2a2_TianShiNaNaEnterView = "天使娜娜",
 	V2a6_Season166EnterView = "赛季",
 	VersionActivity2_6DungeonEnterView = "疯癫与文明",
+	VersionActivity2_8MoLiDeErEnterView = "莫莉德尔",
 	V2a4_PinballEnterView = "图图石子",
 	V2a3_Season123EnterView = "赛季",
 	[V1a8_DungeonEnterView] = "副本",
@@ -400,6 +423,10 @@ var_0_0.DungeonViewName = {
 	Permanent = "映像",
 	RoleStory = "轶事",
 	Break = "洞悉"
+}
+var_0_0.OtherViewName = {
+	HandbookSkinSuitDetailView = "皮肤图鉴界面",
+	HandbookSkinView = "皮肤套组界面"
 }
 
 return var_0_0

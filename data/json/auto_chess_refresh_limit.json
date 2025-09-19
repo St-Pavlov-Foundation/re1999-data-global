@@ -318,5 +318,297 @@
   {
     "id": 31004,
     "maxRefreshLimit": 1
+  },
+  {
+    "id": 11013,
+    "maxRefreshLimit": 9
+  },
+  {
+    "id": 11014,
+    "maxRefreshLimit": 13
+  },
+  {
+    "id": 11015,
+    "maxRefreshLimit": 9
+  },
+  {
+    "id": 11016,
+    "maxRefreshLimit": 15
+  },
+  {
+    "id": 11017,
+    "maxRefreshLimit": 9
+  },
+  {
+    "id": 11018,
+    "maxRefreshLimit": 5
+  },
+  {
+    "id": 11019,
+    "maxRefreshLimit": 5
+  },
+  {
+    "id": 11020,
+    "maxRefreshLimit": 15
+  },
+  {
+    "id": 12013,
+    "maxRefreshLimit": 15
+  },
+  {
+    "id": 12015,
+    "maxRefreshLimit": 16
+  },
+  {
+    "id": 12016,
+    "maxRefreshLimit": 9
+  },
+  {
+    "id": 13014,
+    "maxRefreshLimit": 16
+  },
+  {
+    "id": 14002,
+    "maxRefreshLimit": 16
+  },
+  {
+    "id": 14005,
+    "maxRefreshLimit": 15
+  },
+  {
+    "id": 14010,
+    "maxRefreshLimit": 16
+  },
+  {
+    "id": 14016,
+    "maxRefreshLimit": 5
+  },
+  {
+    "id": 15008,
+    "maxRefreshLimit": 16
+  },
+  {
+    "id": 15015,
+    "maxRefreshLimit": 15
+  },
+  {
+    "id": 16002,
+    "maxRefreshLimit": 16
+  },
+  {
+    "id": 16004,
+    "maxRefreshLimit": 16
+  },
+  {
+    "id": 16014,
+    "maxRefreshLimit": 15
+  },
+  {
+    "id": 17003,
+    "maxRefreshLimit": 16
+  },
+  {
+    "id": 17004,
+    "maxRefreshLimit": 15
+  },
+  {
+    "id": 17005,
+    "maxRefreshLimit": 16
+  },
+  {
+    "id": 17006,
+    "maxRefreshLimit": 15
+  },
+  {
+    "id": 17007,
+    "maxRefreshLimit": 15
+  },
+  {
+    "id": 17008,
+    "maxRefreshLimit": 16
+  },
+  {
+    "id": 17009,
+    "maxRefreshLimit": 13
+  },
+  {
+    "id": 17010,
+    "maxRefreshLimit": 9
+  },
+  {
+    "id": 17011,
+    "maxRefreshLimit": 13
+  },
+  {
+    "id": 17012,
+    "maxRefreshLimit": 5
+  },
+  {
+    "id": 17013,
+    "maxRefreshLimit": 5
+  },
+  {
+    "id": 17014,
+    "maxRefreshLimit": 5
+  },
+  {
+    "id": 17015,
+    "maxRefreshLimit": 9
+  },
+  {
+    "id": 17016,
+    "maxRefreshLimit": 5
+  },
+  {
+    "id": 41006,
+    "maxRefreshLimit": 15
+  },
+  {
+    "id": 41001,
+    "maxRefreshLimit": 1
+  },
+  {
+    "id": 41002,
+    "maxRefreshLimit": 1
+  },
+  {
+    "id": 41003,
+    "maxRefreshLimit": 1
+  },
+  {
+    "id": 41004,
+    "maxRefreshLimit": 1
+  },
+  {
+    "id": 41005,
+    "maxRefreshLimit": 1
+  },
+  {
+    "id": 30001,
+    "maxRefreshLimit": 15
+  },
+  {
+    "id": 30002,
+    "maxRefreshLimit": 9
+  },
+  {
+    "id": 30003,
+    "maxRefreshLimit": 13
+  },
+  {
+    "id": 30004,
+    "maxRefreshLimit": 5
+  },
+  {
+    "id": 30005,
+    "maxRefreshLimit": 13
+  },
+  {
+    "id": 30007,
+    "maxRefreshLimit": 13
+  },
+  {
+    "id": 30008,
+    "maxRefreshLimit": 5
+  },
+  {
+    "id": 30010,
+    "maxRefreshLimit": 9
+  },
+  {
+    "id": 30011,
+    "maxRefreshLimit": 13
+  },
+  {
+    "id": 30012,
+    "maxRefreshLimit": 13
+  },
+  {
+    "id": 30013,
+    "maxRefreshLimit": 5
+  },
+  {
+    "id": 30014,
+    "maxRefreshLimit": 9
+  },
+  {
+    "id": 30016,
+    "maxRefreshLimit": 15
+  },
+  {
+    "id": 30017,
+    "maxRefreshLimit": 15
+  },
+  {
+    "id": 30018,
+    "maxRefreshLimit": 13
+  },
+  {
+    "id": 30019,
+    "maxRefreshLimit": 13
+  },
+  {
+    "id": 30020,
+    "maxRefreshLimit": 5
+  },
+  {
+    "id": 30021,
+    "maxRefreshLimit": 15
+  },
+  {
+    "id": 30022,
+    "maxRefreshLimit": 13
+  },
+  {
+    "id": 30024,
+    "maxRefreshLimit": 16
+  },
+  {
+    "id": 30025,
+    "maxRefreshLimit": 15
+  },
+  {
+    "id": 30027,
+    "maxRefreshLimit": 16
+  },
+  {
+    "id": 30029,
+    "maxRefreshLimit": 13
+  },
+  {
+    "id": 30031,
+    "maxRefreshLimit": 13
+  },
+  {
+    "id": 30032,
+    "maxRefreshLimit": 13
+  },
+  {
+    "id": 30034,
+    "maxRefreshLimit": 5
+  },
+  {
+    "id": 30035,
+    "maxRefreshLimit": 13
+  },
+  {
+    "id": 30036,
+    "maxRefreshLimit": 16
+  },
+  {
+    "id": 30040,
+    "maxRefreshLimit": 13
+  },
+  {
+    "id": 30041,
+    "maxRefreshLimit": 9
+  },
+  {
+    "id": 30043,
+    "maxRefreshLimit": 9
+  },
+  {
+    "id": 30044,
+    "maxRefreshLimit": 13
   }
 ]

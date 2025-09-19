@@ -126,6 +126,24 @@
     "activityId": 12589
   },
   {
+    "id": 2800001,
+    "isOnline": 1,
+    "minType": "",
+    "name": "language_10086777",
+    "desc": "language_10086778",
+    "listenerType": "Act173Global",
+    "listenerParam": "12880",
+    "maxProgress": 19990000,
+    "sortId": 0,
+    "prepose": "",
+    "openLimit": "",
+    "bonusMail": 0,
+    "params": "",
+    "bonus": "18#281001#1",
+    "jumpId": 0,
+    "activityId": 12880
+  },
+  {
     "id": 305173001,
     "isOnline": 1,
     "minType": "",

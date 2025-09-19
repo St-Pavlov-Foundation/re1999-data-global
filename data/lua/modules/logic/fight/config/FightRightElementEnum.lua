@@ -22,11 +22,13 @@ var_0_0.Elements = {
 	DoomsdayClock = var_0_2(),
 	Dice = var_0_2(),
 	DouQuQuCoin = var_0_2(),
-	DouQuQuHunting = var_0_2()
+	DouQuQuHunting = var_0_2(),
+	SurvivalTalent = var_0_2()
 }
 var_0_0.Priority = {
 	var_0_0.Elements.Dice,
 	var_0_0.Elements.BossRush,
+	var_0_0.Elements.SurvivalTalent,
 	var_0_0.Elements.MelodyLevel,
 	var_0_0.Elements.MelodySkill,
 	var_0_0.Elements.AssistBossScore,
@@ -52,7 +54,8 @@ var_0_0.ElementsSizeDict = {
 	[var_0_0.Elements.AssistBossScore] = Vector2(200, 100),
 	[var_0_0.Elements.DoomsdayClock] = Vector2(200, 350),
 	[var_0_0.Elements.DouQuQuCoin] = Vector2(400, 80),
-	[var_0_0.Elements.DouQuQuHunting] = Vector2(220, 148)
+	[var_0_0.Elements.DouQuQuHunting] = Vector2(220, 148),
+	[var_0_0.Elements.SurvivalTalent] = Vector2(240, 200)
 }
 var_0_0.ElementsNodeName = {
 	[var_0_0.Elements.BossRush] = "bossrush_score",
@@ -67,7 +70,8 @@ var_0_0.ElementsNodeName = {
 	[var_0_0.Elements.DoomsdayClock] = "doomsdayclock",
 	[var_0_0.Elements.Dice] = "dice",
 	[var_0_0.Elements.DouQuQuCoin] = "douququCoin",
-	[var_0_0.Elements.DouQuQuHunting] = "douququHunting"
+	[var_0_0.Elements.DouQuQuHunting] = "douququHunting",
+	[var_0_0.Elements.SurvivalTalent] = "survival_talent"
 }
 var_0_0.AnchorTweenDuration = 0.2
 

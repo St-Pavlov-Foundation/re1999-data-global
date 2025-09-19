@@ -8,6 +8,7 @@ end
 
 function var_0_0.onStart(arg_2_0, arg_2_1)
 	LoginController.instance:login({
+		userManualLogout = true,
 		isModuleLogout = true,
 		isSdkLogout = arg_2_1.isSdkLogout
 	})

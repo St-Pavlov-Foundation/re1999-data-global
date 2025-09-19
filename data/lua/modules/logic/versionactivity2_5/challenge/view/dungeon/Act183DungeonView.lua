@@ -184,7 +184,7 @@ function var_0_0._getOrCreateGroupItem(arg_17_0, arg_17_1, arg_17_2)
 		local var_17_1 = gohelper.cloneInPlace(arg_17_0._gogroupitem, "groupitem_" .. arg_17_1)
 		local var_17_2 = Act183Enum.GroupCategoryClsType[arg_17_2]
 
-		var_17_0 = MonoHelper.addLuaComOnceToGo(var_17_1, var_17_2)
+		var_17_0 = MonoHelper.addNoUpdateLuaComOnceToGo(var_17_1, var_17_2)
 		arg_17_0._groupItemTab[arg_17_1] = var_17_0
 	end
 
@@ -279,129 +279,119 @@ function var_0_0.getEpisodeItemTab(arg_27_0)
 	return arg_27_0._episodeItemTab
 end
 
-function var_0_0._getEpisodeItemParent(arg_28_0, arg_28_1)
-	local var_28_0 = gohelper.findChild(arg_28_0.viewGO, arg_28_1)
+function var_0_0.refreshProgress(arg_28_0)
+	local var_28_0 = arg_28_0._groupMo:getEpisodeMos()
 
-	if gohelper.isNil(var_28_0) then
-		logError(string.format("关卡挂点不存在, 挂点路径: %s", arg_28_1))
+	arg_28_0._episodeCount = var_28_0 and #var_28_0 or 0
+	arg_28_0._episodeFinishCount = arg_28_0._groupMo:getEpisodeFinishCount()
+
+	local var_28_1 = {}
+
+	if var_28_0 then
+		for iter_28_0, iter_28_1 in ipairs(var_28_0) do
+			local var_28_2 = arg_28_0:_getOrCreateProgressItem(iter_28_0)
+
+			arg_28_0:refreshEpisodeProgress(var_28_2, iter_28_1, iter_28_0)
+
+			var_28_1[var_28_2] = true
+		end
 	end
 
-	return var_28_0
+	for iter_28_2, iter_28_3 in pairs(arg_28_0._progressItemTab) do
+		if not var_28_1[iter_28_3] then
+			gohelper.setActive(iter_28_3.viewGO, false)
+		end
+	end
+
+	gohelper.setAsLastSibling(arg_28_0._btnreset.gameObject)
 end
 
-function var_0_0.refreshProgress(arg_29_0)
-	local var_29_0 = arg_29_0._groupMo:getEpisodeMos()
-
-	arg_29_0._episodeCount = var_29_0 and #var_29_0 or 0
-	arg_29_0._episodeFinishCount = arg_29_0._groupMo:getEpisodeFinishCount()
-
-	local var_29_1 = {}
+function var_0_0.refreshCompletedUI(arg_29_0)
+	local var_29_0 = arg_29_0._groupMo:isGroupFinished()
+	local var_29_1 = false
 
 	if var_29_0 then
-		for iter_29_0, iter_29_1 in ipairs(var_29_0) do
-			local var_29_2 = arg_29_0:_getOrCreateProgressItem(iter_29_0)
+		local var_29_2 = arg_29_0._groupMo:getGroupId()
 
-			arg_29_0:refreshEpisodeProgress(var_29_2, iter_29_1, iter_29_0)
-
-			var_29_1[var_29_2] = true
-		end
+		var_29_1 = Act183Model.instance:getNewFinishGroupId() == var_29_2
 	end
 
-	for iter_29_2, iter_29_3 in pairs(arg_29_0._progressItemTab) do
-		if not var_29_1[iter_29_3] then
-			gohelper.setActive(iter_29_3.viewGO, false)
-		end
-	end
+	local var_29_3 = arg_29_0._groupMo and arg_29_0._groupMo:getGroupType()
 
-	gohelper.setAsLastSibling(arg_29_0._btnreset.gameObject)
+	gohelper.setActive(arg_29_0._gocompleted, var_29_0 and var_29_3 ~= Act183Enum.GroupType.Daily and not var_29_1)
+	gohelper.setActive(arg_29_0._godailycompleted, var_29_0 and var_29_3 == Act183Enum.GroupType.Daily and not var_29_1)
 end
 
-function var_0_0.refreshCompletedUI(arg_30_0)
-	local var_30_0 = arg_30_0._groupMo:isGroupFinished()
-	local var_30_1 = false
+function var_0_0._getOrCreateProgressItem(arg_30_0, arg_30_1)
+	local var_30_0 = arg_30_0._progressItemTab[arg_30_1]
 
-	if var_30_0 then
-		local var_30_2 = arg_30_0._groupMo:getGroupId()
-
-		var_30_1 = Act183Model.instance:getNewFinishGroupId() == var_30_2
+	if not var_30_0 then
+		var_30_0 = arg_30_0:getUserDataTb_()
+		var_30_0.viewGO = gohelper.cloneInPlace(arg_30_0._goprogressitem, "item_" .. arg_30_1)
+		var_30_0.goicon1 = gohelper.findChild(var_30_0.viewGO, "icon")
+		var_30_0.goicon2 = gohelper.findChild(var_30_0.viewGO, "icon2")
+		var_30_0.goicon3 = gohelper.findChild(var_30_0.viewGO, "icon3")
+		arg_30_0._progressItemTab[arg_30_1] = var_30_0
 	end
 
-	local var_30_3 = arg_30_0._groupMo and arg_30_0._groupMo:getGroupType()
-
-	gohelper.setActive(arg_30_0._gocompleted, var_30_0 and var_30_3 ~= Act183Enum.GroupType.Daily and not var_30_1)
-	gohelper.setActive(arg_30_0._godailycompleted, var_30_0 and var_30_3 == Act183Enum.GroupType.Daily and not var_30_1)
+	return var_30_0
 end
 
-function var_0_0._getOrCreateProgressItem(arg_31_0, arg_31_1)
-	local var_31_0 = arg_31_0._progressItemTab[arg_31_1]
+function var_0_0.refreshEpisodeProgress(arg_31_0, arg_31_1, arg_31_2, arg_31_3)
+	gohelper.setActive(arg_31_1.viewGO, true)
+	gohelper.setActive(arg_31_1.goicon1, false)
+	gohelper.setActive(arg_31_1.goicon2, false)
+	gohelper.setActive(arg_31_1.goicon3, false)
 
-	if not var_31_0 then
-		var_31_0 = arg_31_0:getUserDataTb_()
-		var_31_0.viewGO = gohelper.cloneInPlace(arg_31_0._goprogressitem, "item_" .. arg_31_1)
-		var_31_0.goicon1 = gohelper.findChild(var_31_0.viewGO, "icon")
-		var_31_0.goicon2 = gohelper.findChild(var_31_0.viewGO, "icon2")
-		var_31_0.goicon3 = gohelper.findChild(var_31_0.viewGO, "icon3")
-		arg_31_0._progressItemTab[arg_31_1] = var_31_0
-	end
-
-	return var_31_0
-end
-
-function var_0_0.refreshEpisodeProgress(arg_32_0, arg_32_1, arg_32_2, arg_32_3)
-	gohelper.setActive(arg_32_1.viewGO, true)
-	gohelper.setActive(arg_32_1.goicon1, false)
-	gohelper.setActive(arg_32_1.goicon2, false)
-	gohelper.setActive(arg_32_1.goicon3, false)
-
-	if arg_32_3 <= arg_32_0._episodeFinishCount then
-		gohelper.setActive(arg_32_1.goicon2, true)
-	elseif arg_32_3 == arg_32_0._episodeFinishCount + 1 then
-		gohelper.setActive(arg_32_1.goicon3, true)
+	if arg_31_3 <= arg_31_0._episodeFinishCount then
+		gohelper.setActive(arg_31_1.goicon2, true)
+	elseif arg_31_3 == arg_31_0._episodeFinishCount + 1 then
+		gohelper.setActive(arg_31_1.goicon3, true)
 	else
-		gohelper.setActive(arg_32_1.goicon1, true)
+		gohelper.setActive(arg_31_1.goicon1, true)
 	end
 end
 
-function var_0_0.focusGroupCategory(arg_33_0)
-	local var_33_0 = 0
-	local var_33_1 = false
+function var_0_0.focusGroupCategory(arg_32_0)
+	local var_32_0 = 0
+	local var_32_1 = false
 
-	if arg_33_0._selectGroupId and arg_33_0._groupList then
-		for iter_33_0, iter_33_1 in ipairs(arg_33_0._groupList) do
-			if iter_33_1:getGroupId() == arg_33_0._selectGroupId then
-				var_33_1 = true
+	if arg_32_0._selectGroupId and arg_32_0._groupList then
+		for iter_32_0, iter_32_1 in ipairs(arg_32_0._groupList) do
+			if iter_32_1:getGroupId() == arg_32_0._selectGroupId then
+				var_32_1 = true
 
 				break
 			end
 
-			var_33_0 = var_33_0 + arg_33_0:_getOrCreateGroupItem(iter_33_0):getHeight()
+			var_32_0 = var_32_0 + arg_32_0:_getOrCreateGroupItem(iter_32_0):getHeight()
 		end
 	end
 
-	ZProj.UGUIHelper.RebuildLayout(arg_33_0._gogroupcontent.transform)
+	ZProj.UGUIHelper.RebuildLayout(arg_32_0._gogroupcontent.transform)
 
-	local var_33_2 = recthelper.getHeight(arg_33_0._scrollgroups.transform)
-	local var_33_3 = recthelper.getHeight(arg_33_0._gogroupcontent.transform)
-	local var_33_4 = var_33_1 and var_33_0 or 0
+	local var_32_2 = recthelper.getHeight(arg_32_0._scrollgroups.transform)
+	local var_32_3 = recthelper.getHeight(arg_32_0._gogroupcontent.transform)
+	local var_32_4 = var_32_1 and var_32_0 or 0
 
-	arg_33_0._scrollgroups.verticalNormalizedPosition = 1 - var_33_4 / (var_33_3 - var_33_2)
+	arg_32_0._scrollgroups.verticalNormalizedPosition = 1 - var_32_4 / (var_32_3 - var_32_2)
 end
 
-function var_0_0.addGuide(arg_34_0)
-	if arg_34_0._groupType == Act183Enum.GroupType.NormalMain then
-		local var_34_0 = HelpShowView.New()
+function var_0_0.addGuide(arg_33_0)
+	if arg_33_0._groupType == Act183Enum.GroupType.NormalMain then
+		local var_33_0 = HelpShowView.New()
 
-		var_34_0:setHelpId(HelpEnum.HelpId.Act183EnterDungeon)
-		arg_34_0:addChildView(var_34_0)
+		var_33_0:setHelpId(HelpEnum.HelpId.Act183EnterDungeon)
+		arg_33_0:addChildView(var_33_0)
 	end
 end
 
-function var_0_0.onClose(arg_35_0)
-	TaskDispatcher.cancelTask(arg_35_0.refresh, arg_35_0)
-	TaskDispatcher.cancelTask(arg_35_0.checkRefreshGroupItems, arg_35_0)
+function var_0_0.onClose(arg_34_0)
+	TaskDispatcher.cancelTask(arg_34_0.refresh, arg_34_0)
+	TaskDispatcher.cancelTask(arg_34_0.checkRefreshGroupItems, arg_34_0)
 end
 
-function var_0_0.onDestroyView(arg_36_0)
+function var_0_0.onDestroyView(arg_35_0)
 	return
 end
 

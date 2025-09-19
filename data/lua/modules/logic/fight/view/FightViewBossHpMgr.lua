@@ -38,6 +38,12 @@ function var_0_0._onBeforeEnterStepBehaviour(arg_6_0)
 		return
 	end
 
+	if FightDataHelper.fieldMgr:isShelter() then
+		arg_6_0:com_openSubView(FightViewSurvivalBossHp, arg_6_0._hpItem)
+
+		return
+	end
+
 	if BossRushController.instance:isInBossRushInfiniteFight(true) then
 		arg_6_0:com_openSubView(BossRushFightViewBossHp, arg_6_0._hpItem)
 

@@ -1,0 +1,74 @@
+[
+  {
+    "teamId": 30001,
+    "buffId": "",
+    "picture": "singlebg/headicon_small/525601.png",
+    "name": "language_10087127",
+    "roundActionTime": 1,
+    "iconOffset": ""
+  },
+  {
+    "teamId": 30002,
+    "buffId": "40001",
+    "picture": "singlebg/headicon_small/312101.png",
+    "name": "language_10056607",
+    "roundActionTime": 1,
+    "iconOffset": ""
+  },
+  {
+    "teamId": 30003,
+    "buffId": "40002",
+    "picture": "singlebg/headicon_small/524803.png",
+    "name": "language_10080060",
+    "roundActionTime": 1,
+    "iconOffset": "1#1#-5#0"
+  },
+  {
+    "teamId": 30004,
+    "buffId": "40003",
+    "picture": "singlebg/headicon_small/524802.png",
+    "name": "language_10080058",
+    "roundActionTime": 1,
+    "iconOffset": "1#1#3#0"
+  },
+  {
+    "teamId": 30005,
+    "buffId": "",
+    "picture": "singlebg/headicon_small/518001.png",
+    "name": "language_10087128",
+    "roundActionTime": 1,
+    "iconOffset": ""
+  },
+  {
+    "teamId": 30006,
+    "buffId": "",
+    "picture": "singlebg/headicon_small/311501.png",
+    "name": "language_10080240",
+    "roundActionTime": 1,
+    "iconOffset": ""
+  },
+  {
+    "teamId": 30007,
+    "buffId": "40004",
+    "picture": "singlebg/headicon_small/625301.png",
+    "name": "language_10087129",
+    "roundActionTime": 1,
+    "iconOffset": "1#1#2#-1"
+  },
+  {
+    "teamId": 30008,
+    "buffId": "40005",
+    "picture": "singlebg/headicon_small/610501.png",
+    "name": "language_10087130",
+    "roundActionTime": 1,
+    "iconOffset": "1#1#-1#0"
+  },
+  {
+    "teamId": 30009,
+    "buffId": "40006",
+    "picture": "singlebg/headicon_small/524801.png",
+    "name": "language_10080056",
+    "roundActionTime": 1,
+    "iconOffset": ""
+  }
+]

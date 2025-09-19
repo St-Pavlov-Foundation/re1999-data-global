@@ -3,6 +3,7 @@
 local var_0_0 = {}
 local var_0_1 = {
 	desc = 3,
+	titile = 4,
 	activityId = 1,
 	day = 2
 }
@@ -11,6 +12,7 @@ local var_0_2 = {
 	"day"
 }
 local var_0_3 = {
+	titile = 2,
 	desc = 1
 }
 

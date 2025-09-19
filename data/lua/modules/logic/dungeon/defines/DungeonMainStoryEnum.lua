@@ -17,8 +17,15 @@ var_0_0.SectionSpace = 100
 var_0_0.ChapterSpace = 0
 var_0_0.TipLineWidthOffsetX = -67
 var_0_0.FlowTipOffsetX = -80
-var_0_0.FlowLineOffsetWidth = 120
+var_0_0.FlowLineOffsetWidth = 44
+var_0_0.FlowLineMinWidth = 392
 var_0_0.AnimTime = 0.16
-var_0_0.SectionAnimTime = 0.3
+var_0_0.SectionAnimTime = 0.4
+var_0_0.FirstSectionId = 1
+var_0_0.PreviewOffsetX = 20
+var_0_0.Guide = {
+	EarlyAccess = 28006,
+	PreviouslyOn = 28005
+}
 
 return var_0_0

@@ -540,23 +540,16 @@ function var_0_0.getMissionStatus(arg_39_0, arg_39_1, arg_39_2)
 		return Activity157Enum.MissionStatus.Finish
 	end
 
-	local var_39_2 = Activity157Config.instance:isSideMission(var_39_0, arg_39_2)
-	local var_39_3 = arg_39_0:getIsSideMissionUnlocked()
-
-	if var_39_2 and not var_39_3 then
-		return Activity157Enum.MissionStatus.Locked
-	end
-
 	if not DungeonMapModel.instance:getElementById(var_39_1) then
 		return Activity157Enum.MissionStatus.Locked
 	end
 
 	if DungeonConfig.instance:isDispatchElement(var_39_1) then
-		local var_39_4 = DispatchModel.instance:getDispatchStatus(var_39_1)
+		local var_39_2 = DispatchModel.instance:getDispatchStatus(var_39_1)
 
-		if var_39_4 == DispatchEnum.DispatchStatus.Finished then
+		if var_39_2 == DispatchEnum.DispatchStatus.Finished then
 			return Activity157Enum.MissionStatus.DispatchFinish
-		elseif var_39_4 == DispatchEnum.DispatchStatus.Dispatching then
+		elseif var_39_2 == DispatchEnum.DispatchStatus.Dispatching then
 			return Activity157Enum.MissionStatus.Dispatching
 		end
 	end

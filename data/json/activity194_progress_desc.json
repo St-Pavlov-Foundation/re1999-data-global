@@ -1,0 +1,66 @@
+[
+  {
+    "condition": "2001#1",
+    "type": 1,
+    "energyRange": "0#30#50",
+    "energyDesc": "language_10087119",
+    "roundRange": "0#3#6",
+    "roundDesc": "language_10087119"
+  },
+  {
+    "condition": "2001#2",
+    "type": 2,
+    "energyRange": "0#20#40",
+    "energyDesc": "language_10087119",
+    "roundRange": "0#3#6",
+    "roundDesc": "language_10087119"
+  },
+  {
+    "condition": "2002#1",
+    "type": 1,
+    "energyRange": "0#25#55",
+    "energyDesc": "language_10087119",
+    "roundRange": "0#2#5",
+    "roundDesc": "language_10087119"
+  },
+  {
+    "condition": "2002#2",
+    "type": 2,
+    "energyRange": "0#25#50",
+    "energyDesc": "language_10087119",
+    "roundRange": "0#3#6",
+    "roundDesc": "language_10087119"
+  },
+  {
+    "condition": "2003#1",
+    "type": 1,
+    "energyRange": "0#45#90",
+    "energyDesc": "language_10087119",
+    "roundRange": "0#3#6",
+    "roundDesc": "language_10087119"
+  },
+  {
+    "condition": "2003#2",
+    "type": 2,
+    "energyRange": "0#45#90",
+    "energyDesc": "language_10087119",
+    "roundRange": "0#4#7",
+    "roundDesc": "language_10087119"
+  },
+  {
+    "condition": "2004#1",
+    "type": 1,
+    "energyRange": "0#45#90",
+    "energyDesc": "language_10087119",
+    "roundRange": "0#4#8",
+    "roundDesc": "language_10087119"
+  },
+  {
+    "condition": "2004#2",
+    "type": 2,
+    "energyRange": "0#20#40",
+    "energyDesc": "language_10087119",
+    "roundRange": "0#3#6",
+    "roundDesc": "language_10087119"
+  }
+]

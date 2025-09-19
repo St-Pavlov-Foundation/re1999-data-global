@@ -192,6 +192,18 @@
     "onlyStopCut": 1
   },
   {
+    "heroId": 3120,
+    "skinId": 312002,
+    "motion": "hezhang|tousha",
+    "onlyStopCut": 1
+  },
+  {
+    "heroId": 3107,
+    "skinId": 310703,
+    "motion": "chayao|baoxiong",
+    "onlyStopCut": 1
+  },
+  {
     "heroId": 3065,
     "skinId": 306504,
     "motion": "yuedu",

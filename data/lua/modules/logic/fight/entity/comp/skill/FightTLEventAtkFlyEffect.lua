@@ -2,11 +2,12 @@
 
 local var_0_0 = class("FightTLEventAtkFlyEffect", FightTimelineTrackItem)
 local var_0_1 = {
-	[-666] = true,
 	[FightEnum.EffectType.MISS] = true,
 	[FightEnum.EffectType.DAMAGE] = true,
 	[FightEnum.EffectType.CRIT] = true,
-	[FightEnum.EffectType.COLDSATURDAYHURT] = true
+	[FightEnum.EffectType.COLDSATURDAYHURT] = true,
+	[FightEnum.EffectType.NUODIKARANDOMATTACK] = true,
+	[FightEnum.EffectType.NUODIKATEAMATTACK] = true
 }
 
 function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
@@ -121,55 +122,61 @@ function var_0_0.onTrackStart(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 		if var_1_16 then
 			var_1_12, var_1_13, var_1_14 = FightHelper.getEntityWorldCenterPos(var_1_16)
 		end
+	elseif arg_1_3[17] == "4" then
+		local var_1_17 = FightHelper.getEntity(arg_1_1.fromId)
+
+		if var_1_17 then
+			var_1_12, var_1_13, var_1_14 = FightHelper.getEntityWorldCenterPos(var_1_17)
+		end
 	end
 
-	local var_1_17 = var_1_12 + var_1_1
-	local var_1_18 = var_1_13 + var_1_2
-	local var_1_19 = var_1_14 + var_1_3
+	local var_1_18 = var_1_12 + var_1_1
+	local var_1_19 = var_1_13 + var_1_2
+	local var_1_20 = var_1_14 + var_1_3
 
 	if arg_1_3[3] == "1" then
-		local var_1_20 = string.split(arg_1_3[4], ",")
+		local var_1_21 = string.split(arg_1_3[4], ",")
 
-		var_1_17 = var_1_20[1] and tonumber(var_1_20[1]) or 0
+		var_1_18 = var_1_21[1] and tonumber(var_1_21[1]) or 0
 
 		if not arg_1_0._attacker:isMySide() then
-			var_1_17 = -var_1_17
+			var_1_18 = -var_1_18
 		end
 
-		var_1_18 = var_1_20[2] and tonumber(var_1_20[2]) or 0
-		var_1_19 = var_1_20[3] and tonumber(var_1_20[3]) or 0
+		var_1_19 = var_1_21[2] and tonumber(var_1_21[2]) or 0
+		var_1_20 = var_1_21[3] and tonumber(var_1_21[3]) or 0
 	end
 
 	if var_1_0 == 1 then
-		arg_1_0:_flyEffectSingle(var_1_17, var_1_18, var_1_19, var_1_7, var_1_8, var_1_9)
+		arg_1_0:_flyEffectSingle(var_1_18, var_1_19, var_1_20, var_1_7, var_1_8, var_1_9)
 	elseif var_1_0 == 2 then
-		arg_1_0:_flyEffectTarget(var_1_17, var_1_18, var_1_19, var_1_7, var_1_8, var_1_9, FightHelper.getEntityWorldCenterPos)
+		arg_1_0:_flyEffectTarget(var_1_18, var_1_19, var_1_20, var_1_7, var_1_8, var_1_9, FightHelper.getEntityWorldCenterPos)
 	elseif var_1_0 == 3 then
-		arg_1_0:_flyEffectTarget(var_1_17, var_1_18, var_1_19, var_1_7, var_1_8, var_1_9, false)
+		arg_1_0:_flyEffectTarget(var_1_18, var_1_19, var_1_20, var_1_7, var_1_8, var_1_9, false)
 	elseif var_1_0 == 4 then
-		arg_1_0:_flyEffectSingle(var_1_17, var_1_18, var_1_19, var_1_7, var_1_8, var_1_9, true)
+		arg_1_0:_flyEffectSingle(var_1_18, var_1_19, var_1_20, var_1_7, var_1_8, var_1_9, true)
 	elseif var_1_0 == 5 then
-		local var_1_21, var_1_22, var_1_23 = FightHelper.getProcessEntitySpinePos(arg_1_0._attacker)
+		local var_1_22, var_1_23, var_1_24 = FightHelper.getProcessEntitySpinePos(arg_1_0._attacker)
 
-		var_1_7 = var_1_7 + var_1_21
+		var_1_7 = var_1_7 + var_1_22
 
 		if not arg_1_0._attacker:isMySide() then
 			var_1_7 = -var_1_7
 		end
 
-		var_1_8 = var_1_8 + var_1_22
-		var_1_9 = var_1_9 + var_1_23
+		var_1_8 = var_1_8 + var_1_23
+		var_1_9 = var_1_9 + var_1_24
 
-		arg_1_0:_flyEffectSingle(var_1_17, var_1_18, var_1_19, var_1_7, var_1_8, var_1_9)
+		arg_1_0:_flyEffectSingle(var_1_18, var_1_19, var_1_20, var_1_7, var_1_8, var_1_9)
 	elseif var_1_0 == 6 then
-		arg_1_0:_flyEffectAbsolutely(var_1_17, var_1_18, var_1_19, var_1_7, var_1_8, var_1_9)
+		arg_1_0:_flyEffectAbsolutely(var_1_18, var_1_19, var_1_20, var_1_7, var_1_8, var_1_9)
 	else
-		arg_1_0:_flyEffectTarget(var_1_17, var_1_18, var_1_19, var_1_7, var_1_8, var_1_9, FightHelper.getEntityHangPointPos, arg_1_3[2])
+		arg_1_0:_flyEffectTarget(var_1_18, var_1_19, var_1_20, var_1_7, var_1_8, var_1_9, FightHelper.getEntityHangPointPos, arg_1_3[2])
 	end
 
-	local var_1_24 = arg_1_0._duration * FightModel.instance:getSpeed()
+	local var_1_25 = arg_1_0._duration * FightModel.instance:getSpeed()
 
-	arg_1_0._totalFrame = arg_1_0.binder:GetFrameFloatByTime(var_1_24) - arg_1_0._previousFrame - arg_1_0._afterFrame
+	arg_1_0._totalFrame = arg_1_0.binder:GetFrameFloatByTime(var_1_25) - arg_1_0._previousFrame - arg_1_0._afterFrame
 	arg_1_0._startFrame = arg_1_0.binder.CurFrameFloat + 1
 
 	arg_1_0:_startFly()

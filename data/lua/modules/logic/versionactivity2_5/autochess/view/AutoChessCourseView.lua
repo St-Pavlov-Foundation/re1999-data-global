@@ -36,7 +36,7 @@ function var_0_0.onOpen(arg_6_0)
 	AudioMgr.instance:trigger(AudioEnum.Meilanni.play_ui_mln_details_open)
 
 	local var_6_0 = arg_6_0.actMo.historyInfo
-	local var_6_1 = arg_6_0:getResInst(AutoChessEnum.BadgeItemPath, arg_6_0._goBadge)
+	local var_6_1 = arg_6_0:getResInst(AutoChessStrEnum.ResPath.BadgeItem, arg_6_0._goBadge)
 
 	MonoHelper.addNoUpdateLuaComOnceToGo(var_6_1, AutoChessBadgeItem, arg_6_0):setData(var_6_0.maxRank, 99999, AutoChessBadgeItem.ShowType.CourseView)
 
@@ -52,21 +52,24 @@ function var_0_0.onOpen(arg_6_0)
 		end)
 
 		for iter_6_0, iter_6_1 in ipairs(var_6_2) do
-			local var_6_3 = iter_6_1[1]
-			local var_6_4 = lua_auto_chess.configDict[var_6_3][1]
-			local var_6_5 = gohelper.cloneInPlace(arg_6_0._goChessItem)
-			local var_6_6 = gohelper.findChildImage(var_6_5, "image_Bg")
+			local var_6_3 = AutoChessConfig.instance:getChessCfgById(iter_6_1[1])
+			local var_6_4, var_6_5 = next(var_6_3)
 
-			if var_6_4.type == AutoChessStrEnum.ChessType.Support then
-				UISpriteSetMgr.instance:setAutoChessSprite(var_6_6, "v2a5_autochess_quality2_" .. var_6_4.levelFromMall)
-			else
-				UISpriteSetMgr.instance:setAutoChessSprite(var_6_6, "v2a5_autochess_quality1_" .. var_6_4.levelFromMall)
+			if var_6_5 then
+				local var_6_6 = gohelper.cloneInPlace(arg_6_0._goChessItem)
+				local var_6_7 = gohelper.findChildImage(var_6_6, "image_Bg")
+
+				if var_6_5.type == AutoChessStrEnum.ChessType.Attack then
+					UISpriteSetMgr.instance:setAutoChessSprite(var_6_7, "v2a5_autochess_quality1_" .. var_6_5.levelFromMall)
+				else
+					UISpriteSetMgr.instance:setAutoChessSprite(var_6_7, "v2a5_autochess_quality2_" .. var_6_5.levelFromMall)
+				end
+
+				local var_6_8 = gohelper.findChild(var_6_6, "Mesh")
+
+				MonoHelper.addNoUpdateLuaComOnceToGo(var_6_8, AutoChessMeshComp):setData(var_6_5.image)
+				gohelper.setActive(var_6_6, true)
 			end
-
-			local var_6_7 = gohelper.findChild(var_6_5, "Mesh")
-
-			MonoHelper.addNoUpdateLuaComOnceToGo(var_6_7, AutoChessMeshComp):setData(var_6_4.image)
-			gohelper.setActive(var_6_5, true)
 		end
 
 		arg_6_0._txtChessCnt.text = #var_6_2

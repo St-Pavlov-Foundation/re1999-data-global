@@ -5,6 +5,7 @@ local var_0_0 = class("GuideConfigChecker")
 function var_0_0.addConstEvents(arg_1_0)
 	if isDebugBuild then
 		GuideController.instance:registerCallback(GuideEvent.StartGuideStep, arg_1_0._onCheckForceGuideStep, arg_1_0)
+		GuideController.instance:registerCallback(GuideEvent.FinishStep, arg_1_0._onFinishStep, arg_1_0)
 	end
 end
 
@@ -70,6 +71,18 @@ end
 function var_0_0._onFinishGuide(arg_6_0, arg_6_1)
 	if arg_6_0._checkForceGuideId == arg_6_1 then
 		GuideController.instance:unregisterCallback(GuideEvent.FinishGuide, arg_6_0._onFinishGuide, arg_6_0)
+	end
+end
+
+function var_0_0._onFinishStep(arg_7_0, arg_7_1, arg_7_2)
+	if not ViewHelper.instance:checkViewOnTheTop(ViewName.DungeonView) then
+		return
+	end
+
+	local var_7_0 = DungeonMainStoryModel.instance:getConflictGuides()
+
+	if arg_7_1 ~= DungeonMainStoryEnum.Guide.PreviouslyOn and arg_7_1 ~= DungeonMainStoryEnum.Guide.EarlyAccess and not tabletool.indexOf(var_7_0, arg_7_1) then
+		logError(string.format("严重log,必须处理!!!请往DungeonMainStoryModel.instance:getConflictGuides()添加该指引:%s,否则会跟28005指引冲突", arg_7_1))
 	end
 end
 

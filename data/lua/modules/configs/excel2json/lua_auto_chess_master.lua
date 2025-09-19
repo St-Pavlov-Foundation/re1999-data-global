@@ -2,20 +2,24 @@
 
 local var_0_0 = {}
 local var_0_1 = {
-	roundTriggerCountLimit = 8,
+	unlockSkill = 7,
 	name = 2,
-	unlockSkill = 6,
-	isSelf = 3,
-	skillIcon = 11,
-	image = 5,
-	skillProgressDesc = 13,
-	totalTriggerCountLimit = 9,
-	hp = 4,
-	skillId = 7,
-	id = 1,
-	skillName = 10,
-	skillDesc = 12,
-	skillLockDesc = 14
+	spUdimoGoodsId = 18,
+	isSelf = 4,
+	udimoCase = 16,
+	spUdimo = 17,
+	skillIcon = 12,
+	skillId = 8,
+	skillName = 11,
+	skillDesc = 13,
+	skillLockDesc = 15,
+	roundTriggerCountLimit = 9,
+	illustrationShow = 3,
+	image = 6,
+	totalTriggerCountLimit = 10,
+	hp = 5,
+	skillProgressDesc = 14,
+	id = 1
 }
 local var_0_2 = {
 	"id"

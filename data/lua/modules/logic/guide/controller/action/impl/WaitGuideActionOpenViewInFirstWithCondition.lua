@@ -63,7 +63,7 @@ function var_0_0._check(arg_6_0)
 	local var_6_0 = ViewMgr.instance:getOpenViewNameList()
 
 	if #var_6_0 > 0 then
-		return arg_6_0:isFirstView(var_6_0, arg_6_0._viewName) and (arg_6_0._conditionCheckFun == nil or arg_6_0._conditionCheckFun(arg_6_0._conditionParam))
+		return arg_6_0:isFirstView(var_6_0, arg_6_0._viewName) and (arg_6_0._conditionCheckFun == nil or arg_6_0._conditionCheckFun(arg_6_0._conditionParam, arg_6_0))
 	else
 		return false
 	end
@@ -138,6 +138,38 @@ end
 
 function var_0_0.checkTowerLimitGuideTrigger()
 	return GuideTriggerOpenViewCondition.checkTowerLimitOpen()
+end
+
+function var_0_0.NoOtherGuideExecute(arg_11_0, arg_11_1)
+	if not DungeonModel.instance:chapterListIsNormalType() then
+		return false
+	end
+
+	local var_11_0 = DungeonMainStoryModel.instance:getConflictGuides()
+
+	for iter_11_0, iter_11_1 in ipairs(var_11_0) do
+		local var_11_1 = GuideModel.instance:getById(iter_11_1)
+
+		if var_11_1 and not var_11_1.isFinish and var_11_1.clientStepId ~= 0 then
+			if SLFramework.FrameworkSettings.IsEditor then
+				logWarn("有其它引导在跑 id:", tostring(iter_11_1), tostring(var_11_1.isFinish), tostring(var_11_1.clientStepId))
+			end
+
+			return false
+		end
+	end
+
+	local var_11_2 = DungeonConfig.instance:getLastEarlyAccessChapterId()
+
+	if arg_11_1.guideId == DungeonMainStoryEnum.Guide.PreviouslyOn then
+		return not DungeonMainStoryModel.instance:showPreviewChapterFlag(var_11_2)
+	end
+
+	if arg_11_1.guideId == DungeonMainStoryEnum.Guide.EarlyAccess then
+		return DungeonMainStoryModel.instance:showPreviewChapterFlag(var_11_2)
+	end
+
+	return false
 end
 
 return var_0_0

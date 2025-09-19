@@ -26,6 +26,10 @@ function var_0_0.onStart(arg_2_0)
 		return
 	end
 
+	if var_2_2.exPointType ~= FightEnum.ExPointType.Common then
+		return
+	end
+
 	if not var_2_2:hasBuffFeature(FightEnum.BuffType_SpExPointMaxAdd) then
 		arg_2_0:onDone(true)
 

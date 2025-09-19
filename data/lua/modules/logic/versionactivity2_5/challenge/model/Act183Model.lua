@@ -96,7 +96,6 @@ function var_0_0.recordBattleFinishedInfo(arg_15_0, arg_15_1)
 	if arg_15_0._actInfo and arg_15_0._battleFinishedInfo then
 		arg_15_0:recordNewFinishEpisodeId()
 		arg_15_0:recordNewFinishGroupId()
-		arg_15_0:recordNewUnlockHardMainGroup()
 	end
 end
 
@@ -108,7 +107,6 @@ function var_0_0.clearBattleFinishedInfo(arg_17_0)
 	arg_17_0._battleFinishedInfo = nil
 	arg_17_0._newFinishEpisodeId = nil
 	arg_17_0._newFinishGroupId = nil
-	arg_17_0._isHardMainGroupNewUnlock = false
 end
 
 function var_0_0.isHeroRepressInEpisode(arg_18_0, arg_18_1, arg_18_2)
@@ -170,88 +168,74 @@ function var_0_0.recordNewFinishGroupId(arg_23_0)
 	end
 end
 
-function var_0_0.recordNewUnlockHardMainGroup(arg_24_0)
-	if arg_24_0._newFinishGroupId then
-		local var_24_0 = arg_24_0:getGroupEpisodeMo(arg_24_0._newFinishGroupId)
-
-		if (var_24_0 and var_24_0:getGroupType()) == Act183Enum.GroupType.NormalMain and not var_24_0:isHasFinished() then
-			arg_24_0._isHardMainGroupNewUnlock = true
-		end
-	end
+function var_0_0.getNewFinishEpisodeId(arg_24_0)
+	return arg_24_0._newFinishEpisodeId
 end
 
-function var_0_0.getNewFinishEpisodeId(arg_25_0)
-	return arg_25_0._newFinishEpisodeId
-end
+function var_0_0.isEpisodeNewUnlock(arg_25_0, arg_25_1)
+	local var_25_0 = arg_25_0:getEpisodeMoById(arg_25_1)
 
-function var_0_0.isEpisodeNewUnlock(arg_26_0, arg_26_1)
-	local var_26_0 = arg_26_0:getEpisodeMoById(arg_26_1)
-
-	if (var_26_0 and var_26_0:getStatus()) ~= Act183Enum.EpisodeStatus.Unlocked then
+	if (var_25_0 and var_25_0:getStatus()) ~= Act183Enum.EpisodeStatus.Unlocked then
 		return
 	end
 
-	if not arg_26_0._battleFinishedInfo then
+	if not arg_25_0._battleFinishedInfo then
 		return
 	end
 
-	local var_26_1 = var_26_0:getPreEpisodeIds()
+	local var_25_1 = var_25_0:getPreEpisodeIds()
 
-	if var_26_1 then
-		local var_26_2 = arg_26_0._battleFinishedInfo.episodeMo
-		local var_26_3 = var_26_2 and var_26_2:getEpisodeId()
+	if var_25_1 then
+		local var_25_2 = arg_25_0._battleFinishedInfo.episodeMo
+		local var_25_3 = var_25_2 and var_25_2:getEpisodeId()
 
-		return tabletool.indexOf(var_26_1, var_26_3) ~= nil
+		return tabletool.indexOf(var_25_1, var_25_3) ~= nil
 	end
 end
 
-function var_0_0.getNewFinishGroupId(arg_27_0)
-	return arg_27_0._newFinishGroupId
+function var_0_0.getNewFinishGroupId(arg_26_0)
+	return arg_26_0._newFinishGroupId
 end
 
-function var_0_0.isHardMainGroupNewUnlock(arg_28_0)
-	return arg_28_0._isHardMainGroupNewUnlock
-end
-
-function var_0_0.initTaskStatusMap(arg_29_0)
-	if arg_29_0._initUnfinishTaskMapDone then
+function var_0_0.initTaskStatusMap(arg_27_0)
+	if arg_27_0._initUnfinishTaskMapDone then
 		return
 	end
 
-	arg_29_0._unfinishTaskMap = {}
+	arg_27_0._unfinishTaskMap = {}
 
-	local var_29_0 = TaskModel.instance:getTaskMoList(TaskEnum.TaskType.Activity183, arg_29_0._activityId)
+	local var_27_0 = TaskModel.instance:getTaskMoList(TaskEnum.TaskType.Activity183, arg_27_0._activityId)
 
-	if var_29_0 then
-		for iter_29_0, iter_29_1 in ipairs(var_29_0) do
-			local var_29_1 = iter_29_1.config
-			local var_29_2 = var_29_1 and var_29_1.groupId
+	if var_27_0 then
+		for iter_27_0, iter_27_1 in ipairs(var_27_0) do
+			local var_27_1 = iter_27_1.config
+			local var_27_2 = var_27_1 and var_27_1.groupId
 
-			arg_29_0._unfinishTaskMap[var_29_2] = arg_29_0._unfinishTaskMap[var_29_2] or {}
+			arg_27_0._unfinishTaskMap[var_27_2] = arg_27_0._unfinishTaskMap[var_27_2] or {}
 
-			if not Act183Helper.isTaskFinished(var_29_1.id) then
-				table.insert(arg_29_0._unfinishTaskMap[var_29_2], var_29_1.id)
+			if not Act183Helper.isTaskFinished(var_27_1.id) then
+				table.insert(arg_27_0._unfinishTaskMap[var_27_2], var_27_1.id)
 			end
 		end
 	end
 
-	arg_29_0._initUnfinishTaskMapDone = true
+	arg_27_0._initUnfinishTaskMapDone = true
 end
 
-function var_0_0.getUnfinishTaskMap(arg_30_0)
-	return arg_30_0._unfinishTaskMap
+function var_0_0.getUnfinishTaskMap(arg_28_0)
+	return arg_28_0._unfinishTaskMap
 end
 
-function var_0_0.recordLastRepressEpisodeId(arg_31_0, arg_31_1)
-	arg_31_0._recordRepressEpisodeId = arg_31_1
+function var_0_0.recordLastRepressEpisodeId(arg_29_0, arg_29_1)
+	arg_29_0._recordRepressEpisodeId = arg_29_1
 end
 
-function var_0_0.getRecordLastRepressEpisodeId(arg_32_0)
-	return arg_32_0._recordRepressEpisodeId
+function var_0_0.getRecordLastRepressEpisodeId(arg_30_0)
+	return arg_30_0._recordRepressEpisodeId
 end
 
-function var_0_0.clearRecordLastRepressEpisodeId(arg_33_0)
-	arg_33_0._recordRepressEpisodeId = nil
+function var_0_0.clearRecordLastRepressEpisodeId(arg_31_0)
+	arg_31_0._recordRepressEpisodeId = nil
 end
 
 var_0_0.instance = var_0_0.New()

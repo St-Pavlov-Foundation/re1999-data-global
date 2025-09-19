@@ -1,0 +1,371 @@
+[
+  {
+    "id": 110000001,
+    "condition": "NpcStatus#0",
+    "priority": 0,
+    "dialogueId": 110000001,
+    "chooseDesc": "language_10000985",
+    "chooseEvent": "",
+    "isMark": 0
+  },
+  {
+    "id": 110000002,
+    "condition": "NpcStatus#0",
+    "priority": 0,
+    "dialogueId": 110000002,
+    "chooseDesc": "language_10000985",
+    "chooseEvent": "",
+    "isMark": 0
+  },
+  {
+    "id": 110000003,
+    "condition": "NpcStatus#0",
+    "priority": 0,
+    "dialogueId": 110000003,
+    "chooseDesc": "language_10000985",
+    "chooseEvent": "",
+    "isMark": 0
+  },
+  {
+    "id": 110000004,
+    "condition": "NpcStatus#0",
+    "priority": 0,
+    "dialogueId": 110000004,
+    "chooseDesc": "language_10000985",
+    "chooseEvent": "",
+    "isMark": 0
+  },
+  {
+    "id": 110000005,
+    "condition": "NpcStatus#0",
+    "priority": 0,
+    "dialogueId": 110000005,
+    "chooseDesc": "language_10000985",
+    "chooseEvent": "",
+    "isMark": 0
+  },
+  {
+    "id": 110000006,
+    "condition": "NpcStatus#0",
+    "priority": 0,
+    "dialogueId": 110000006,
+    "chooseDesc": "language_10000985",
+    "chooseEvent": "",
+    "isMark": 0
+  },
+  {
+    "id": 110000007,
+    "condition": "NpcStatus#0",
+    "priority": 0,
+    "dialogueId": 110000007,
+    "chooseDesc": "language_10000985",
+    "chooseEvent": "",
+    "isMark": 0
+  },
+  {
+    "id": 110000008,
+    "condition": "NpcStatus#0",
+    "priority": 0,
+    "dialogueId": 110000008,
+    "chooseDesc": "language_10000985",
+    "chooseEvent": "",
+    "isMark": 0
+  },
+  {
+    "id": 110000009,
+    "condition": "NpcStatus#0",
+    "priority": 0,
+    "dialogueId": 110000009,
+    "chooseDesc": "language_10000985",
+    "chooseEvent": "",
+    "isMark": 0
+  },
+  {
+    "id": 110000010,
+    "condition": "NpcStatus#0",
+    "priority": 0,
+    "dialogueId": 110000010,
+    "chooseDesc": "language_10000985",
+    "chooseEvent": "",
+    "isMark": 0
+  },
+  {
+    "id": 110000011,
+    "condition": "NpcStatus#0",
+    "priority": 0,
+    "dialogueId": 110000011,
+    "chooseDesc": "language_10000985",
+    "chooseEvent": "",
+    "isMark": 0
+  },
+  {
+    "id": 110000012,
+    "condition": "NpcStatus#0",
+    "priority": 0,
+    "dialogueId": 110000012,
+    "chooseDesc": "language_10000985",
+    "chooseEvent": "",
+    "isMark": 0
+  },
+  {
+    "id": 110000013,
+    "condition": "NpcStatus#0",
+    "priority": 0,
+    "dialogueId": 110000013,
+    "chooseDesc": "language_10000985",
+    "chooseEvent": "",
+    "isMark": 0
+  },
+  {
+    "id": 110000014,
+    "condition": "NpcStatus#0",
+    "priority": 0,
+    "dialogueId": 110000014,
+    "chooseDesc": "language_10000985",
+    "chooseEvent": "",
+    "isMark": 0
+  },
+  {
+    "id": 110000015,
+    "condition": "NpcStatus#0",
+    "priority": 0,
+    "dialogueId": 110000015,
+    "chooseDesc": "language_10000985",
+    "chooseEvent": "",
+    "isMark": 0
+  },
+  {
+    "id": 110000016,
+    "condition": "NpcStatus#0",
+    "priority": 0,
+    "dialogueId": 110000016,
+    "chooseDesc": "language_10000985",
+    "chooseEvent": "",
+    "isMark": 0
+  },
+  {
+    "id": 110000017,
+    "condition": "NpcStatus#0",
+    "priority": 0,
+    "dialogueId": 110000017,
+    "chooseDesc": "language_10000985",
+    "chooseEvent": "",
+    "isMark": 0
+  },
+  {
+    "id": 110000018,
+    "condition": "NpcStatus#1",
+    "priority": 2,
+    "dialogueId": 110000018,
+    "chooseDesc": "language_10000985",
+    "chooseEvent": "",
+    "isMark": 0
+  },
+  {
+    "id": 110000019,
+    "condition": "NpcStatus#2",
+    "priority": 3,
+    "dialogueId": 110000019,
+    "chooseDesc": "language_10000985",
+    "chooseEvent": "",
+    "isMark": 0
+  },
+  {
+    "id": 110000020,
+    "condition": "NpcStatus#0",
+    "priority": 0,
+    "dialogueId": 110000020,
+    "chooseDesc": "language_10000985",
+    "chooseEvent": "",
+    "isMark": 0
+  },
+  {
+    "id": 110000021,
+    "condition": "NpcStatus#0",
+    "priority": 0,
+    "dialogueId": 110000021,
+    "chooseDesc": "language_10000985",
+    "chooseEvent": "",
+    "isMark": 0
+  },
+  {
+    "id": 110000022,
+    "condition": "NpcStatus#0",
+    "priority": 0,
+    "dialogueId": 110000022,
+    "chooseDesc": "language_10000985",
+    "chooseEvent": "",
+    "isMark": 0
+  },
+  {
+    "id": 110000023,
+    "condition": "NpcStatus#0",
+    "priority": 0,
+    "dialogueId": 110000023,
+    "chooseDesc": "language_10000985",
+    "chooseEvent": "",
+    "isMark": 0
+  },
+  {
+    "id": 110000024,
+    "condition": "NpcStatus#0",
+    "priority": 0,
+    "dialogueId": 110000024,
+    "chooseDesc": "language_10000985",
+    "chooseEvent": "",
+    "isMark": 0
+  },
+  {
+    "id": 110000025,
+    "condition": "NpcStatus#0",
+    "priority": 0,
+    "dialogueId": 110000025,
+    "chooseDesc": "language_10000985",
+    "chooseEvent": "",
+    "isMark": 0
+  },
+  {
+    "id": 110000026,
+    "condition": "NpcStatus#0",
+    "priority": 0,
+    "dialogueId": 110000026,
+    "chooseDesc": "language_10000985",
+    "chooseEvent": "",
+    "isMark": 0
+  },
+  {
+    "id": 121000001,
+    "condition": "unAcceptTask#3#300002",
+    "priority": 1,
+    "dialogueId": 121000001,
+    "chooseDesc": "language_10084121",
+    "chooseEvent": "behavior#121000002",
+    "isMark": 1
+  },
+  {
+    "id": 121000002,
+    "condition": "unAcceptTask#3#300002",
+    "priority": 1,
+    "dialogueId": 121000002,
+    "chooseDesc": "language_10084122",
+    "chooseEvent": "behavior#121000003",
+    "isMark": 0
+  },
+  {
+    "id": 121000003,
+    "condition": "unAcceptTask#3#300002",
+    "priority": 1,
+    "dialogueId": 121000003,
+    "chooseDesc": "language_10084123",
+    "chooseEvent": "acceptTask#3#300002",
+    "isMark": 0
+  },
+  {
+    "id": 122000001,
+    "condition": "finishTask#3#300003|unAcceptTask#3#300004",
+    "priority": 1,
+    "dialogueId": 122000001,
+    "chooseDesc": "language_10084124",
+    "chooseEvent": "behavior#122000002",
+    "isMark": 1
+  },
+  {
+    "id": 122000002,
+    "condition": "finishTask#3#300003|unAcceptTask#3#300004",
+    "priority": 1,
+    "dialogueId": 122000002,
+    "chooseDesc": "language_10084125",
+    "chooseEvent": "behavior#122000003",
+    "isMark": 0
+  },
+  {
+    "id": 122000003,
+    "condition": "finishTask#3#300003|unAcceptTask#3#300004",
+    "priority": 1,
+    "dialogueId": 122000003,
+    "chooseDesc": "language_10084126",
+    "chooseEvent": "behavior#122000004",
+    "isMark": 0
+  },
+  {
+    "id": 122000004,
+    "condition": "finishTask#3#300003|unAcceptTask#3#300004",
+    "priority": 1,
+    "dialogueId": 122000004,
+    "chooseDesc": "language_10084127",
+    "chooseEvent": "behavior#122000005",
+    "isMark": 0
+  },
+  {
+    "id": 122000005,
+    "condition": "finishTask#3#300003|unAcceptTask#3#300004",
+    "priority": 1,
+    "dialogueId": 122000004,
+    "chooseDesc": "language_10084128",
+    "chooseEvent": "behavior#122000006",
+    "isMark": 0
+  },
+  {
+    "id": 122000006,
+    "condition": "finishTask#3#300003|unAcceptTask#3#300004",
+    "priority": 1,
+    "dialogueId": 122000005,
+    "chooseDesc": "language_10084129",
+    "chooseEvent": "tipDialog#28003|behavior#122000007&tipDialog#28004|behavior#122000008",
+    "isMark": 0
+  },
+  {
+    "id": 122000007,
+    "condition": "finishTask#3#300003|unAcceptTask#3#300004",
+    "priority": 1,
+    "dialogueId": 122000006,
+    "chooseDesc": "language_10052398",
+    "chooseEvent": "acceptTask#3#300004",
+    "isMark": 0
+  },
+  {
+    "id": 122000008,
+    "condition": "finishTask#3#300003|unAcceptTask#3#300004",
+    "priority": 1,
+    "dialogueId": 122000007,
+    "chooseDesc": "language_10084130",
+    "chooseEvent": "acceptTask#3#300004",
+    "isMark": 0
+  },
+  {
+    "id": 123000001,
+    "condition": "finishTask#3#300005|unAcceptTask#3#300006",
+    "priority": 2,
+    "dialogueId": 123000001,
+    "chooseDesc": "language_10084131",
+    "chooseEvent": "behavior#123000002",
+    "isMark": 1
+  },
+  {
+    "id": 123000002,
+    "condition": "finishTask#3#300005|unAcceptTask#3#300006",
+    "priority": 2,
+    "dialogueId": 123000002,
+    "chooseDesc": "language_10084132",
+    "chooseEvent": "acceptTask#3#300006",
+    "isMark": 0
+  },
+  {
+    "id": 124000001,
+    "condition": "finishTask#3#300006|unAcceptTask#3#300007",
+    "priority": 3,
+    "dialogueId": 124000001,
+    "chooseDesc": "language_10084133",
+    "chooseEvent": "behavior#124000002",
+    "isMark": 1
+  },
+  {
+    "id": 124000002,
+    "condition": "finishTask#3#300006|unAcceptTask#3#300007",
+    "priority": 3,
+    "dialogueId": 124000002,
+    "chooseDesc": "language_10084134",
+    "chooseEvent": "tipDialog#28015|acceptTask#3#300007",
+    "isMark": 0
+  }
+]

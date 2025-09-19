@@ -35,6 +35,7 @@ local var_0_1 = {
 	[ActivityEnum.Activity.V2a7_Labor_Sign] = ViewName.V2a7_Labor_FullSignView,
 	[ActivityEnum.Activity.V3a0_SummerSign] = ViewName.V3a0_SummerSign_FullView,
 	[ActivityEnum.Activity.V3a0_WarmUp] = ViewName.V3a0_WarmUp,
+	[ActivityEnum.Activity.V3a1_AutumnSign] = ViewName.V3a1_AutumnSign_FullView,
 	[ActivityEnum.Activity.NoviceSign] = ViewName.ActivityNoviceSignView,
 	[ActivityEnum.Activity.NorSign] = ViewName.ActivityNorSignView,
 	[ActivityEnum.Activity.NoviceInsight] = ViewName.ActivityNoviceInsightView,
@@ -113,16 +114,28 @@ local var_0_1 = {
 	[ActivityEnum.Activity.V2a7_WarmUp] = ViewName.V2a7_WarmUp,
 	[ActivityEnum.Activity.V2a7_SelfSelectSix1] = ViewName.V2a7_SelfSelectSix_FullView,
 	[ActivityEnum.Activity.V2a7_TowerGift] = ViewName.TowerGiftFullView,
+	[ActivityEnum.Activity.V2a7_SelfSelectSix2] = ViewName.V2a7_SelfSelectSix_FullView,
+	[ActivityEnum.Activity.V2a8_Matildagift] = ViewName.V1a9_ActivityShow_MatildagiftView,
+	[ActivityEnum.Activity.V2a8_DecaLogPresent] = ViewName.V2a8DecalogPresentFullView,
+	[ActivityEnum.Activity.V2a8_NewCultivationDestiny] = ViewName.VersionActivity2_3NewCultivationGiftView,
+	[ActivityEnum.Activity.V2a8_DragonBoat] = ViewName.V2a8_DragonBoat_FullView,
+	[ActivityEnum.Activity.V2a8_WuErLiXiGift] = ViewName.V2a8_WuErLiXiGiftFullView,
 	[ActivityEnum.Activity.V2a9_VersionSummon_Part1] = ViewName.V2a9_VersionSummonFull_Part1,
 	[ActivityEnum.Activity.V2a9_VersionSummon_Part2] = ViewName.V2a9_VersionSummonFull_Part2,
 	[ActivityEnum.Activity.V2a9_TurnBackH5] = ViewName.TurnBackInvitationMainView,
 	[ActivityEnum.Activity.V2a9_FreeMonthCard] = ViewName.V2a9_FreeMonthCard_FullView,
-	[ActivityEnum.Activity.V2a9_NewCultivationGift] = ViewName.VersionActivity2_3NewCultivationGiftView
+	[ActivityEnum.Activity.V2a9_NewCultivationGift] = ViewName.VersionActivity2_3NewCultivationGiftView,
+	[ActivityEnum.Activity.V3a0_NewCultivationGift] = ViewName.VersionActivity2_3NewCultivationGiftView,
+	[ActivityEnum.Activity.V3a0_SummerSign] = ViewName.V3a0_SummerSign_FullView,
+	[ActivityEnum.Activity.V2a9_WarmUp] = ViewName.V2a9_WarmUp,
+	[VersionActivity3_1Enum.ActivityId.NationalGift] = ViewName.NationalGiftFullView
 }
 local var_0_2 = {
 	[ActivityEnum.ActivityTypeID.Act201] = ViewName.TurnBackFullView,
 	[ActivityEnum.ActivityTypeID.OpenTestWarmUp] = ViewName.ActivityWarmUpView,
-	[ActivityEnum.ActivityTypeID.DoubleDrop] = ViewName.V1a7_DoubleDropView
+	[ActivityEnum.ActivityTypeID.DoubleDrop] = ViewName.V1a7_DoubleDropView,
+	[ActivityEnum.ActivityTypeID.Act171] = ViewName.TurnBackInvitationMainView,
+	[ActivityEnum.ActivityTypeID.Act201] = ViewName.TurnBackFullView
 }
 
 function var_0_0.onUpdateParam(arg_5_0)
@@ -136,6 +149,7 @@ function var_0_0.onOpen(arg_6_0)
 	arg_6_0:_initRole_FullSignView()
 	arg_6_0:_initSpecial_FullSignView()
 	arg_6_0:_initLinkageActivity_FullView()
+	arg_6_0:_initWarmUp()
 
 	arg_6_0._needSetSortInfos = true
 
@@ -304,6 +318,21 @@ function var_0_0._initLinkageActivity_FullView(arg_16_0)
 	local var_16_1 = GameBranchMgr.instance:Vxax_ViewName("LinkageActivity_FullView", ViewName.LinkageActivity_FullView)
 
 	var_0_1[var_16_0] = var_16_1
+end
+
+local var_0_6 = false
+
+function var_0_0._initWarmUp(arg_17_0)
+	if var_0_6 then
+		return
+	end
+
+	var_0_6 = true
+
+	local var_17_0 = GameBranchMgr.instance:Vxax_ActId("WarmUp", ActivityEnum.Activity.V2a8_WarmUp)
+	local var_17_1 = GameBranchMgr.instance:Vxax_ViewName("WarmUp", ViewName.V2a8_WarmUp)
+
+	var_0_1[var_17_0] = var_17_1
 end
 
 return var_0_0

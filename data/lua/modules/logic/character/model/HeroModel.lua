@@ -253,7 +253,7 @@ function var_0_0._checkSkin(arg_18_0, arg_18_1, arg_18_2, arg_18_3)
 		return false
 	end
 
-	if arg_18_2.stateCondition ~= 0 then
+	if arg_18_1 and arg_18_2.stateCondition ~= 0 then
 		local var_18_0 = CharacterVoiceController.instance:getDefaultValue(arg_18_1.heroId)
 		local var_18_1 = PlayerModel.instance:getPropKeyValue(PlayerEnum.SimpleProperty.SkinState, arg_18_1.heroId, var_18_0)
 
@@ -266,7 +266,7 @@ function var_0_0._checkSkin(arg_18_0, arg_18_1, arg_18_2, arg_18_3)
 		return true
 	end
 
-	return string.find(arg_18_2.skins, arg_18_3 or arg_18_1.skin)
+	return string.find(arg_18_2.skins, arg_18_3 or arg_18_1 and arg_18_1.skin)
 end
 
 function var_0_0._cleckCondition(arg_19_0, arg_19_1, arg_19_2)
@@ -347,7 +347,7 @@ function var_0_0.checkHasSkin(arg_28_0, arg_28_1)
 	end
 
 	local var_28_0 = SkinConfig.instance:getSkinCo(arg_28_1)
-	local var_28_1 = arg_28_0:getByHeroId(var_28_0.characterId)
+	local var_28_1 = var_28_0 and arg_28_0:getByHeroId(var_28_0.characterId)
 
 	if var_28_1 then
 		if var_28_1.config.skinId == arg_28_1 then

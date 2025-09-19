@@ -15,7 +15,7 @@ function var_0_0.startCheck(arg_2_0, arg_2_1, arg_2_2)
 
 	if tostring(var_2_0) == var_2_1 then
 		logNormal("ResCheckMgr pass, is not first init")
-		arg_2_0:doCallBack(true)
+		arg_2_0:doCallBack(true, true)
 
 		return
 	end
@@ -47,7 +47,7 @@ function var_0_0.onCheckProgress(arg_3_0, arg_3_1, arg_3_2)
 	local var_3_0 = arg_3_1 / arg_3_2
 	local var_3_1 = string.format(booterLang("rescheker"), arg_3_1, arg_3_2)
 
-	BootLoadingView.instance:show(var_3_0, var_3_1)
+	HotUpdateProgress.instance:setProgressCheckRes(var_3_0, arg_3_1 .. "/" .. arg_3_2)
 end
 
 function var_0_0.onCheckFinish(arg_4_0, arg_4_1, arg_4_2)
@@ -77,7 +77,7 @@ function var_0_0.onCheckFinish(arg_4_0, arg_4_1, arg_4_2)
 	end
 end
 
-function var_0_0.doCallBack(arg_5_0, arg_5_1)
+function var_0_0.doCallBack(arg_5_0, arg_5_1, arg_5_2)
 	if arg_5_0.eventDispatcher then
 		arg_5_0.eventDispatcher:RemoveListener(arg_5_0.eventDispatcher.ResChecker_Finish)
 		arg_5_0.eventDispatcher:RemoveListener(arg_5_0.eventDispatcher.ResChecker_Progress)
@@ -85,66 +85,93 @@ function var_0_0.doCallBack(arg_5_0, arg_5_1)
 
 	if arg_5_1 then
 		arg_5_0:markLastCheckAppVersion()
-	end
 
-	if arg_5_0.cb then
+		if arg_5_2 then
+			if arg_5_0.cb then
+				arg_5_0.cb(arg_5_0.cbObj, true)
+			end
+		else
+			arg_5_0._fakeProgress = 0
+			arg_5_0._fakeProgressTimer = Timer.New(function()
+				arg_5_0:_updateFakeProgress()
+			end, 0.1, 20)
+
+			arg_5_0._fakeProgressTimer:Start()
+		end
+	elseif arg_5_0.cb then
 		arg_5_0.cb(arg_5_0.cbObj, arg_5_1)
 	end
 end
 
-function var_0_0.markLastCheckAppVersion(arg_6_0)
-	logNormal("ResCheckMgr:markLastCheckAppVersion")
+function var_0_0._updateFakeProgress(arg_7_0)
+	arg_7_0._fakeProgress = arg_7_0._fakeProgress + 0.1
 
-	local var_6_0 = BootNativeUtil.getAppVersion()
+	HotUpdateProgress.instance:setProgressDownloadRes(arg_7_0._fakeProgress)
 
-	SLFramework.FileHelper.WriteTextToPath(SLFramework.ResChecker.OutVersionPath, var_6_0)
+	if arg_7_0._fakeProgress >= 1 then
+		arg_7_0._fakeProgressTimer:Stop()
+
+		arg_7_0._fakeProgressTimer = nil
+
+		if arg_7_0.cb then
+			arg_7_0.cb(arg_7_0.cbObj, true)
+		end
+	end
 end
 
-function var_0_0._quitGame(arg_7_0)
+function var_0_0.markLastCheckAppVersion(arg_8_0)
+	logNormal("ResCheckMgr:markLastCheckAppVersion")
+
+	local var_8_0 = BootNativeUtil.getAppVersion()
+
+	SLFramework.FileHelper.WriteTextToPath(SLFramework.ResChecker.OutVersionPath, var_8_0)
+end
+
+function var_0_0._quitGame(arg_9_0)
 	logNormal("ResCheckMgr:_quitGame, 退出游戏！")
 	ProjBooter.instance:quitGame()
 end
 
-function var_0_0._getAllLocalLang(arg_8_0)
-	local var_8_0 = SLFramework.GameUpdate.OptionalUpdate.Instance
+function var_0_0._getAllLocalLang(arg_10_0)
+	local var_10_0 = SLFramework.GameUpdate.OptionalUpdate.Instance
 
-	var_8_0:Init()
+	var_10_0:Init()
 
-	local var_8_1 = {}
-	local var_8_2 = HotUpdateVoiceMgr.instance:getSupportVoiceLangs()
-	local var_8_3 = GameConfig:GetDefaultVoiceShortcut()
+	local var_10_1 = {}
+	local var_10_2 = HotUpdateVoiceMgr.instance:getSupportVoiceLangs()
+	local var_10_3 = GameConfig:GetDefaultVoiceShortcut()
 
-	table.insert(var_8_2, "HD")
+	table.insert(var_10_2, "HD")
 
-	for iter_8_0 = 1, #var_8_2 do
-		local var_8_4 = var_8_2[iter_8_0]
-		local var_8_5 = var_8_4 == var_8_3
-		local var_8_6 = var_8_0:GetLocalVersion(var_8_4)
-		local var_8_7 = not string.nilorempty(var_8_6)
-		local var_8_8 = not BootVoiceView.instance:isFirstDownloadDone()
+	for iter_10_0 = 1, #var_10_2 do
+		local var_10_4 = var_10_2[iter_10_0]
+		local var_10_5 = var_10_4 == var_10_3
+		local var_10_6 = var_10_0:GetLocalVersion(var_10_4)
+		local var_10_7 = not string.nilorempty(var_10_6)
+		local var_10_8 = not BootVoiceView.instance:isFirstDownloadDone()
 
-		if var_8_5 or var_8_7 or var_8_8 then
-			table.insert(var_8_1, var_8_4)
+		if var_10_5 or var_10_7 or var_10_8 then
+			table.insert(var_10_1, var_10_4)
 		end
 	end
 
-	return var_8_1
+	return var_10_1
 end
 
-function var_0_0._getDLCInfo(arg_9_0, arg_9_1)
-	local var_9_0 = HotUpdateOptionPackageMgr.instance:getPackageNameList()
-	local var_9_1 = {}
+function var_0_0._getDLCInfo(arg_11_0, arg_11_1)
+	local var_11_0 = HotUpdateOptionPackageMgr.instance:getPackageNameList()
+	local var_11_1 = {}
 
-	for iter_9_0, iter_9_1 in ipairs(var_9_0) do
-		table.insert(var_9_1, HotUpdateOptionPackageMgr.instance:formatLangPackName("res", iter_9_1))
-		table.insert(var_9_1, HotUpdateOptionPackageMgr.instance:formatLangPackName("media", iter_9_1))
+	for iter_11_0, iter_11_1 in ipairs(var_11_0) do
+		table.insert(var_11_1, HotUpdateOptionPackageMgr.instance:formatLangPackName("res", iter_11_1))
+		table.insert(var_11_1, HotUpdateOptionPackageMgr.instance:formatLangPackName("media", iter_11_1))
 
-		for iter_9_2, iter_9_3 in ipairs(arg_9_1) do
-			table.insert(var_9_1, HotUpdateOptionPackageMgr.instance:formatLangPackName(iter_9_3, iter_9_1))
+		for iter_11_2, iter_11_3 in ipairs(arg_11_1) do
+			table.insert(var_11_1, HotUpdateOptionPackageMgr.instance:formatLangPackName(iter_11_3, iter_11_1))
 		end
 	end
 
-	return #var_9_1 > 0, var_9_1
+	return #var_11_1 > 0, var_11_1
 end
 
 var_0_0.instance = var_0_0.New()

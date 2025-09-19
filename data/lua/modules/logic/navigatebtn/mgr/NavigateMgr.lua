@@ -8,7 +8,8 @@ local var_0_1 = {
 	[ViewName.BpVideoView] = true,
 	[ViewName.PlayerChangeBgListView] = true,
 	[ViewName.GMErrorView] = true,
-	[ViewName.RougeMapTipView] = true
+	[ViewName.RougeMapTipView] = true,
+	[ViewName.SurvivalToastView] = true
 }
 local var_0_2 = {
 	[ViewName.RougeMapTipView] = true,

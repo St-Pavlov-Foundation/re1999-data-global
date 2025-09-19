@@ -35,7 +35,7 @@ function var_0_0.onStart(arg_5_0)
 		return arg_5_0:onDone(true)
 	else
 		for iter_5_0, iter_5_1 in ipairs(arg_5_0._workList) do
-			if iter_5_1.WORKFINISHED or iter_5_1.IS_DISPOSED then
+			if iter_5_1.WORK_IS_FINISHED or iter_5_1.IS_DISPOSED then
 				arg_5_0._finishCount = arg_5_0._finishCount + 1
 			elseif not iter_5_1.STARTED then
 				xpcall(iter_5_1.start, __G__TRACKBACK__, iter_5_1, arg_5_0.context)

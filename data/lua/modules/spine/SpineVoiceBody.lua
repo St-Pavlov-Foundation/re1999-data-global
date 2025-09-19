@@ -71,57 +71,35 @@ function var_0_0.init(arg_6_0, arg_6_1, arg_6_2, arg_6_3)
 	arg_6_0:playBodyActionList(var_6_0)
 end
 
-function var_0_0.getMotion(arg_7_0, arg_7_1)
-	local var_7_0 = arg_7_0._spineVoice:getVoiceLang()
+function var_0_0.getSpineVoice(arg_7_0)
+	return arg_7_0._spineVoice
+end
 
-	if var_7_0 == "zh" then
-		return arg_7_1.motion
+function var_0_0.getMotion(arg_8_0, arg_8_1)
+	local var_8_0 = arg_8_0._spineVoice:getVoiceLang()
+
+	if var_8_0 == "zh" then
+		return arg_8_1.motion
 	else
-		return arg_7_1[var_7_0 .. "motion"] or arg_7_1.motion
+		return arg_8_1[var_8_0 .. "motion"] or arg_8_1.motion
 	end
 end
 
-function var_0_0._getHeroId(arg_8_0, arg_8_1)
-	if arg_8_1.storyHeroIndex then
-		local var_8_0 = lua_story_hero_to_character.configDict[arg_8_1.storyHeroIndex]
+function var_0_0._getHeroId(arg_9_0, arg_9_1)
+	if arg_9_1.storyHeroIndex then
+		local var_9_0 = lua_story_hero_to_character.configDict[arg_9_1.storyHeroIndex]
 
-		return var_8_0 and var_8_0.heroId
+		return var_9_0 and var_9_0.heroId
 	end
 
-	return arg_8_1.heroId
+	return arg_9_1.heroId
 end
 
-function var_0_0._initCutMotion(arg_9_0, arg_9_1)
-	arg_9_0._motionCutList = {}
-	arg_9_0._motionCutConfig = nil
+function var_0_0._initCutMotion(arg_10_0, arg_10_1)
+	arg_10_0._motionCutList = {}
+	arg_10_0._motionCutConfig = nil
 
-	local var_9_0 = lua_character_motion_cut.configDict[arg_9_0:_getHeroId(arg_9_1)]
-
-	if not var_9_0 then
-		return
-	end
-
-	var_9_0 = arg_9_0._skinId and var_9_0[arg_9_0._skinId] or var_9_0[1]
-
-	if not var_9_0 then
-		return
-	end
-
-	arg_9_0._motionCutConfig = var_9_0
-
-	local var_9_1 = var_9_0.motion
-	local var_9_2 = string.split(var_9_1, "|")
-
-	for iter_9_0, iter_9_1 in ipairs(var_9_2) do
-		arg_9_0._motionCutList["b_" .. iter_9_1] = true
-	end
-end
-
-function var_0_0._initPlayCutMotion(arg_10_0, arg_10_1)
-	arg_10_0._motionPlayCutList = {}
-	arg_10_0._motionPlayCutConfig = nil
-
-	local var_10_0 = lua_character_motion_play_cut.configDict[arg_10_0:_getHeroId(arg_10_1)]
+	local var_10_0 = lua_character_motion_cut.configDict[arg_10_0:_getHeroId(arg_10_1)]
 
 	if not var_10_0 then
 		return
@@ -133,215 +111,245 @@ function var_0_0._initPlayCutMotion(arg_10_0, arg_10_1)
 		return
 	end
 
-	arg_10_0._motionPlayCutConfig = var_10_0
+	arg_10_0._motionCutConfig = var_10_0
 
 	local var_10_1 = var_10_0.motion
 	local var_10_2 = string.split(var_10_1, "|")
 
 	for iter_10_0, iter_10_1 in ipairs(var_10_2) do
-		arg_10_0._motionPlayCutList["b_" .. iter_10_1] = true
+		arg_10_0._motionCutList["b_" .. iter_10_1] = true
 	end
 end
 
-function var_0_0._configValidity(arg_11_0, arg_11_1, arg_11_2)
-	for iter_11_0 = #arg_11_1, 1, -1 do
-		local var_11_0 = arg_11_1[iter_11_0]
-		local var_11_1 = string.split(var_11_0, "#")
-		local var_11_2 = true
+function var_0_0._initPlayCutMotion(arg_11_0, arg_11_1)
+	arg_11_0._motionPlayCutList = {}
+	arg_11_0._motionPlayCutConfig = nil
 
-		if var_11_1[2] then
-			local var_11_3 = "b_" .. var_11_1[1]
+	local var_11_0 = lua_character_motion_play_cut.configDict[arg_11_0:_getHeroId(arg_11_1)]
 
-			if arg_11_2:hasAnimation(var_11_3) then
-				var_11_2 = false
+	if not var_11_0 then
+		return
+	end
+
+	var_11_0 = arg_11_0._skinId and var_11_0[arg_11_0._skinId] or var_11_0[1]
+
+	if not var_11_0 then
+		return
+	end
+
+	arg_11_0._motionPlayCutConfig = var_11_0
+
+	local var_11_1 = var_11_0.motion
+	local var_11_2 = string.split(var_11_1, "|")
+
+	for iter_11_0, iter_11_1 in ipairs(var_11_2) do
+		arg_11_0._motionPlayCutList["b_" .. iter_11_1] = true
+	end
+end
+
+function var_0_0._configValidity(arg_12_0, arg_12_1, arg_12_2)
+	for iter_12_0 = #arg_12_1, 1, -1 do
+		local var_12_0 = arg_12_1[iter_12_0]
+		local var_12_1 = string.split(var_12_0, "#")
+		local var_12_2 = true
+
+		if var_12_1[2] then
+			local var_12_3 = "b_" .. var_12_1[1]
+
+			if arg_12_2:hasAnimation(var_12_3) then
+				var_12_2 = false
 			end
 		end
 
-		if var_11_2 then
+		if var_12_2 then
 			if SLFramework.FrameworkSettings.IsEditor then
-				logWarn(string.format("编辑器下的调试log，无需在意。 id：%s 语音 body 无效的配置：%s motion:%s", arg_11_0._voiceConfig.audio, var_11_0, arg_11_0._motion))
+				logWarn(string.format("编辑器下的调试log，无需在意。 id：%s 语音 body 无效的配置：%s motion:%s", arg_12_0._voiceConfig.audio, var_12_0, arg_12_0._motion))
 			end
 
-			table.remove(arg_11_1, iter_11_0)
+			table.remove(arg_12_1, iter_12_0)
 		end
 	end
 end
 
-function var_0_0.playBodyActionList(arg_12_0, arg_12_1)
-	arg_12_0._bodyStart = 0
-	arg_12_0._motion = arg_12_1
+function var_0_0.playBodyActionList(arg_13_0, arg_13_1)
+	arg_13_0._bodyStart = 0
+	arg_13_0._motion = arg_13_1
 
-	if not string.nilorempty(arg_12_1) then
-		arg_12_0._bodyList = string.split(arg_12_1, "|")
+	if not string.nilorempty(arg_13_1) then
+		arg_13_0._bodyList = string.split(arg_13_1, "|")
 
-		arg_12_0:_configValidity(arg_12_0._bodyList, arg_12_0._spine)
+		arg_13_0:_configValidity(arg_13_0._bodyList, arg_13_0._spine)
 	else
-		arg_12_0._bodyList = {}
+		arg_13_0._bodyList = {}
 	end
 
-	arg_12_0._appointIdleName = nil
-	arg_12_0._appointIdleMixTime = nil
+	arg_13_0._appointIdleName = nil
+	arg_13_0._appointIdleMixTime = nil
 
-	arg_12_0:_playBodyAction()
+	arg_13_0:_playBodyAction()
 end
 
-function var_0_0._checkAppointIdle(arg_13_0)
-	if arg_13_0._spineVoice:getInStory() and #arg_13_0._bodyList > 0 then
-		local var_13_0 = arg_13_0._bodyList[1]
-		local var_13_1 = string.split(var_13_0, "#")
+function var_0_0._checkAppointIdle(arg_14_0)
+	if arg_14_0._spineVoice:getInStory() and #arg_14_0._bodyList > 0 then
+		local var_14_0 = arg_14_0._bodyList[1]
+		local var_14_1 = string.split(var_14_0, "#")
 
-		if var_13_1[3] == "-2" then
-			arg_13_0._appointIdleName = "b_" .. var_13_1[1]
-			arg_13_0._appointIdleMixTime = tonumber(var_13_1[4])
+		if var_14_1[3] == "-2" then
+			arg_14_0._appointIdleName = "b_" .. var_14_1[1]
+			arg_14_0._appointIdleMixTime = tonumber(var_14_1[4])
 
-			table.remove(arg_13_0._bodyList, 1)
+			table.remove(arg_14_0._bodyList, 1)
 		end
 	end
 end
 
-function var_0_0._playBodyAction(arg_14_0)
-	arg_14_0._bodyActionName = nil
-	arg_14_0._playBodyName = nil
-	arg_14_0._nextActionStartTime = nil
+function var_0_0._playBodyAction(arg_15_0)
+	arg_15_0._bodyActionName = nil
+	arg_15_0._playBodyName = nil
+	arg_15_0._nextActionStartTime = nil
 
-	local var_14_0 = true
-	local var_14_1 = true
+	local var_15_0 = true
+	local var_15_1 = true
 
-	arg_14_0:_checkAppointIdle()
-	TaskDispatcher.cancelTask(arg_14_0._bodyActionDelay, arg_14_0)
+	arg_15_0:_checkAppointIdle()
+	TaskDispatcher.cancelTask(arg_15_0._bodyActionDelay, arg_15_0)
 
-	if #arg_14_0._bodyList > 0 then
-		local var_14_2 = table.remove(arg_14_0._bodyList, 1)
-		local var_14_3 = string.split(var_14_2, "#")
+	if #arg_15_0._bodyList > 0 then
+		local var_15_2 = table.remove(arg_15_0._bodyList, 1)
+		local var_15_3 = string.split(var_15_2, "#")
 
-		if var_14_3[2] then
-			arg_14_0._bodyActionName = "b_" .. var_14_3[1]
-			arg_14_0._actionLoop = var_14_3[3] == "-1"
-			arg_14_0._mixTime = var_14_3[4] and tonumber(var_14_3[4])
+		if var_15_3[2] then
+			arg_15_0._bodyActionName = "b_" .. var_15_3[1]
+			arg_15_0._actionLoop = var_15_3[3] == "-1"
+			arg_15_0._mixTime = var_15_3[4] and tonumber(var_15_3[4])
 
-			local var_14_4 = tonumber(var_14_3[2]) - arg_14_0._bodyStart
+			local var_15_4 = tonumber(var_15_3[2]) - arg_15_0._bodyStart
 
-			arg_14_0._bodyStartTime = Time.time
+			arg_15_0._bodyStartTime = Time.time
 
-			if var_14_4 > 0 then
-				TaskDispatcher.runDelay(arg_14_0._bodyActionDelay, arg_14_0, var_14_4)
+			if var_15_4 > 0 then
+				TaskDispatcher.runDelay(arg_15_0._bodyActionDelay, arg_15_0, var_15_4)
 			else
-				var_14_0 = false
+				var_15_0 = false
 
-				if arg_14_0._onlyVoiceStopCut then
-					TaskDispatcher.runDelay(arg_14_0._bodyActionDelay, arg_14_0, 0)
+				if arg_15_0._onlyVoiceStopCut then
+					TaskDispatcher.runDelay(arg_15_0._bodyActionDelay, arg_15_0, 0)
 				else
-					arg_14_0:_bodyActionDelay()
+					arg_15_0:_bodyActionDelay()
 				end
 			end
 
-			var_14_1 = false
+			var_15_1 = false
 		end
 	end
 
-	if var_14_0 then
-		arg_14_0:setNormal()
+	if var_15_0 then
+		arg_15_0:setNormal()
 	end
 
-	arg_14_0:_startCheckLoopEnd()
+	arg_15_0:_startCheckLoopEnd()
 
-	if var_14_1 then
-		arg_14_0:_onBodyEnd()
+	if var_15_1 then
+		arg_15_0:_onBodyEnd()
 	end
 end
 
-function var_0_0._startCheckLoopEnd(arg_15_0)
-	arg_15_0._nextActionStartTime = nil
+function var_0_0._startCheckLoopEnd(arg_16_0)
+	arg_16_0._nextActionStartTime = nil
 
-	TaskDispatcher.cancelTask(arg_15_0._checkLoopActionEnd, arg_15_0)
+	TaskDispatcher.cancelTask(arg_16_0._checkLoopActionEnd, arg_16_0)
 
-	if not arg_15_0._actionLoop then
+	if not arg_16_0._actionLoop then
 		return
 	end
 
-	if #arg_15_0._bodyList > 0 then
-		local var_15_0 = arg_15_0._bodyList[1]
-		local var_15_1 = string.split(var_15_0, "#")
+	if #arg_16_0._bodyList > 0 then
+		local var_16_0 = arg_16_0._bodyList[1]
+		local var_16_1 = string.split(var_16_0, "#")
 
-		if var_15_1[2] then
-			local var_15_2 = tonumber(var_15_1[2]) - arg_15_0._bodyStart
+		if var_16_1[2] then
+			local var_16_2 = tonumber(var_16_1[2]) - arg_16_0._bodyStart
 
-			arg_15_0._nextActionStartTime = arg_15_0._bodyStartTime + var_15_2
+			arg_16_0._nextActionStartTime = arg_16_0._bodyStartTime + var_16_2
 		end
 	end
 
-	if arg_15_0._nextActionStartTime then
-		TaskDispatcher.runRepeat(arg_15_0._checkLoopActionEnd, arg_15_0, 0)
+	if arg_16_0._nextActionStartTime then
+		TaskDispatcher.runRepeat(arg_16_0._checkLoopActionEnd, arg_16_0, 0)
 	end
 end
 
-function var_0_0._checkLoopActionEnd(arg_16_0)
-	if not arg_16_0._nextActionStartTime then
-		TaskDispatcher.cancelTask(arg_16_0._checkLoopActionEnd, arg_16_0)
+function var_0_0._checkLoopActionEnd(arg_17_0)
+	if not arg_17_0._nextActionStartTime then
+		TaskDispatcher.cancelTask(arg_17_0._checkLoopActionEnd, arg_17_0)
 
 		return
 	end
 
-	if arg_16_0._nextActionStartTime <= Time.time then
-		TaskDispatcher.cancelTask(arg_16_0._checkLoopActionEnd, arg_16_0)
+	if arg_17_0._nextActionStartTime <= Time.time then
+		TaskDispatcher.cancelTask(arg_17_0._checkLoopActionEnd, arg_17_0)
 
-		arg_16_0._bodyStart = arg_16_0._bodyStart + (Time.time - arg_16_0._bodyStartTime)
+		arg_17_0._bodyStart = arg_17_0._bodyStart + (Time.time - arg_17_0._bodyStartTime)
 
-		arg_16_0:_playBodyAction()
+		arg_17_0:_playBodyAction()
 	end
 end
 
-function var_0_0._onBodyEnd(arg_17_0)
-	arg_17_0._spineVoice:_onComponentStop(arg_17_0)
+function var_0_0._onBodyEnd(arg_18_0)
+	arg_18_0._spineVoice:_onComponentStop(arg_18_0)
 end
 
-function var_0_0.setNormal(arg_18_0)
-	if arg_18_0._appointIdleName then
-		arg_18_0:setBodyAnimation(arg_18_0._appointIdleName, true, arg_18_0._appointIdleMixTime)
+function var_0_0.setNormal(arg_19_0)
+	if not arg_19_0._spineVoice then
+		return
+	end
 
-		arg_18_0._appointIdleMixTime = nil
+	if arg_19_0._appointIdleName then
+		arg_19_0:setBodyAnimation(arg_19_0._appointIdleName, true, arg_19_0._appointIdleMixTime)
+
+		arg_19_0._appointIdleMixTime = nil
 
 		return
 	end
 
-	local var_18_0 = arg_18_0._spineVoice:getInStory() and StoryAnimName.B_IDLE or CharacterVoiceController.instance:getIdle(arg_18_0._voiceConfig.heroId)
+	local var_19_0 = arg_19_0._spineVoice:getInStory() and StoryAnimName.B_IDLE or CharacterVoiceController.instance:getIdle(arg_19_0._voiceConfig.heroId)
 
-	arg_18_0:setBodyAnimation(var_18_0, true)
+	arg_19_0:setBodyAnimation(var_19_0, true)
 end
 
-function var_0_0._bodyActionDelay(arg_19_0)
-	if arg_19_0._lastBodyActionName and arg_19_0._motionCutList[arg_19_0._lastBodyActionName] then
-		arg_19_0:_setBodyAnimation(arg_19_0._bodyActionName, arg_19_0._actionLoop, arg_19_0._mixTime, true)
+function var_0_0._bodyActionDelay(arg_20_0)
+	if arg_20_0._lastBodyActionName and arg_20_0._motionCutList[arg_20_0._lastBodyActionName] then
+		arg_20_0:_setBodyAnimation(arg_20_0._bodyActionName, arg_20_0._actionLoop, arg_20_0._mixTime, true)
 	else
-		arg_19_0:setBodyAnimation(arg_19_0._bodyActionName, arg_19_0._actionLoop, arg_19_0._mixTime)
+		arg_20_0:setBodyAnimation(arg_20_0._bodyActionName, arg_20_0._actionLoop, arg_20_0._mixTime)
 	end
 
-	arg_19_0._lastBodyActionName = arg_19_0._bodyActionName
-	arg_19_0._playBodyName = arg_19_0._bodyActionName
+	arg_20_0._lastBodyActionName = arg_20_0._bodyActionName
+	arg_20_0._playBodyName = arg_20_0._bodyActionName
 end
 
-function var_0_0.checkBodyEnd(arg_20_0, arg_20_1)
-	if arg_20_1 == arg_20_0._playBodyName and not arg_20_0._actionLoop then
-		arg_20_0._bodyStart = arg_20_0._bodyStart + (Time.time - arg_20_0._bodyStartTime)
+function var_0_0.checkBodyEnd(arg_21_0, arg_21_1)
+	if arg_21_1 == arg_21_0._playBodyName and not arg_21_0._actionLoop then
+		arg_21_0._bodyStart = arg_21_0._bodyStart + (Time.time - arg_21_0._bodyStartTime)
 
-		arg_20_0:_playBodyAction()
+		arg_21_0:_playBodyAction()
 
 		return true
 	end
 end
 
-function var_0_0.removeTaskActions(arg_21_0)
-	TaskDispatcher.cancelTask(arg_21_0._bodyActionDelay, arg_21_0)
-	TaskDispatcher.cancelTask(arg_21_0._checkLoopActionEnd, arg_21_0)
+function var_0_0.removeTaskActions(arg_22_0)
+	TaskDispatcher.cancelTask(arg_22_0._bodyActionDelay, arg_22_0)
+	TaskDispatcher.cancelTask(arg_22_0._checkLoopActionEnd, arg_22_0)
 end
 
-function var_0_0.onVoiceStop(arg_22_0)
-	arg_22_0._isVoiceStopping = true
+function var_0_0.onVoiceStop(arg_23_0)
+	arg_23_0._isVoiceStopping = true
 
-	arg_22_0:removeTaskActions()
-	arg_22_0:setNormal()
+	arg_23_0:removeTaskActions()
+	arg_23_0:setNormal()
 
-	arg_22_0._isVoiceStopping = false
+	arg_23_0._isVoiceStopping = false
 end
 
 return var_0_0

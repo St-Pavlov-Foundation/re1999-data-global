@@ -19,5 +19,6 @@ var_0_0.SetManualClose = 9913
 var_0_0.ManualClose = 9914
 var_0_0.LoadingAnimEnd = 9915
 var_0_0.SceneGoChangeVisible = 9916
+var_0_0.CanCloseLoading = 9917
 
 return var_0_0

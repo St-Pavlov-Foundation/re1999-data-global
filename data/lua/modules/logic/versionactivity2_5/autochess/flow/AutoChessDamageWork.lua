@@ -12,7 +12,7 @@ function var_0_0.onStart(arg_2_0, arg_2_1)
 	local var_2_0 = tonumber(arg_2_0.effect.effectNum)
 
 	if var_2_0 == AutoChessEnum.DamageType.Ranged then
-		local var_2_1 = AutoChessStrEnum.Tag2EffectId.Ranged
+		local var_2_1 = AutoChessEnum.Tag2EffectId.Ranged
 		local var_2_2 = lua_auto_chess_effect.configDict[var_2_1]
 		local var_2_3 = arg_2_0.entityMgr:getEntity(arg_2_0.effect.targetIds[1])
 

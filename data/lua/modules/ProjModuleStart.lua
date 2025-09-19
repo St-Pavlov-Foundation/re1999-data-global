@@ -15,7 +15,6 @@ function var_0_0.start(arg_1_0)
 
 		arg_1_0:init()
 	else
-		BootLoadingView.instance:show(0.9, booterLang("loading_res"))
 		arg_1_0:resCheck()
 	end
 end
@@ -87,7 +86,7 @@ function var_0_0.initFramework(arg_10_0)
 end
 
 function var_0_0.initModuleLogic(arg_11_0)
-	GameBranchMgr.instance:init()
+	GameBranchMgr.instance:init(2, 8)
 
 	local var_11_0 = addGlobalModule("modules.setting.module_mvc", "module_mvc")
 

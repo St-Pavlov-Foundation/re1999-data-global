@@ -223,6 +223,10 @@ function var_0_0.onOpen(arg_9_0)
 		end
 	end
 
+	if var_9_3 == DungeonEnum.EpisodeType.Survival then
+		var_9_11 = SurvivalShelterModel.instance:addExRule(var_9_11)
+	end
+
 	if var_9_11 and #var_9_11 > 0 then
 		var_9_2 = FightEnum.FightSpecialTipsType.Addition
 

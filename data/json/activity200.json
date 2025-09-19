@@ -1,0 +1,79 @@
+[
+  {
+    "activityId": 12865,
+    "id": 1,
+    "preId": 0,
+    "name": "language_10087158",
+    "text": "language_10087159",
+    "bonus": "1#110104#1",
+    "position": "514#47",
+    "photo1": "",
+    "photo2": ""
+  },
+  {
+    "activityId": 12865,
+    "id": 2,
+    "preId": 1,
+    "name": "language_10087160",
+    "text": "language_10087161",
+    "bonus": "1#110204#1",
+    "position": "390#-71",
+    "photo1": "",
+    "photo2": ""
+  },
+  {
+    "activityId": 12865,
+    "id": 3,
+    "preId": 2,
+    "name": "language_10087162",
+    "text": "language_10087163",
+    "bonus": "1#110304#1",
+    "position": "-150#169",
+    "photo1": "",
+    "photo2": ""
+  },
+  {
+    "activityId": 12865,
+    "id": 4,
+    "preId": 3,
+    "name": "language_10087164",
+    "text": "language_10087165",
+    "bonus": "1#110504#1",
+    "position": "-422#-73",
+    "photo1": "",
+    "photo2": ""
+  },
+  {
+    "activityId": 12865,
+    "id": 5,
+    "preId": 4,
+    "name": "language_10087166",
+    "text": "language_10087167",
+    "bonus": "1#111013#1",
+    "position": "73#-134",
+    "photo1": "",
+    "photo2": ""
+  },
+  {
+    "activityId": 12865,
+    "id": 6,
+    "preId": 5,
+    "name": "language_10087168",
+    "text": "language_10087169",
+    "bonus": "1#111003#1",
+    "position": "-128#222",
+    "photo1": "",
+    "photo2": ""
+  },
+  {
+    "activityId": 12865,
+    "id": 7,
+    "preId": 6,
+    "name": "language_10087170",
+    "text": "language_10087171",
+    "bonus": "1#110904#1",
+    "position": "429#142",
+    "photo1": "",
+    "photo2": ""
+  }
+]

@@ -123,15 +123,17 @@ function var_0_0.playSkill(arg_5_0, arg_5_1, arg_5_2)
 end
 
 function var_0_0.skipSkill(arg_6_0)
-	local var_6_0 = arg_6_0.workComp:getAliveWorkList()
+	local var_6_0 = arg_6_0.workComp.workList
 
 	for iter_6_0, iter_6_1 in ipairs(var_6_0) do
-		iter_6_1:skipSkill()
+		if iter_6_1:isAlive() then
+			iter_6_1:skipSkill()
+		end
 	end
 end
 
 function var_0_0.stopSkill(arg_7_0)
-	local var_7_0 = arg_7_0.workComp:getAliveWorkList()
+	local var_7_0 = arg_7_0.workComp.workList
 
 	for iter_7_0, iter_7_1 in ipairs(var_7_0) do
 		iter_7_1:disposeSelf()
@@ -143,9 +145,15 @@ function var_0_0.isLastWork(arg_8_0, arg_8_1)
 end
 
 function var_0_0.getLastWork(arg_9_0)
-	local var_9_0 = arg_9_0.workComp:getAliveWorkList()
+	local var_9_0 = arg_9_0.workComp.workList
 
-	return var_9_0[#var_9_0]
+	for iter_9_0 = #var_9_0, 1, -1 do
+		local var_9_1 = var_9_0[iter_9_0]
+
+		if var_9_1:isAlive() then
+			return var_9_1
+		end
+	end
 end
 
 function var_0_0.getBinder(arg_10_0)
@@ -187,154 +195,144 @@ end
 function var_0_0.setTimeScale(arg_14_0, arg_14_1)
 	arg_14_0.timeScale = arg_14_1
 
-	local var_14_0 = arg_14_0.workComp:getAliveWorkList()
+	local var_14_0 = arg_14_0.workComp.workList
 
 	for iter_14_0, iter_14_1 in ipairs(var_14_0) do
-		iter_14_1:setTimeScale(arg_14_1)
+		if iter_14_1:isAlive() then
+			iter_14_1:setTimeScale(arg_14_1)
+		end
 	end
 end
 
-function var_0_0.onUpdate(arg_15_0)
-	if not arg_15_0.workComp then
-		return
+function var_0_0.beforeDestroy(arg_15_0)
+	arg_15_0:stopSkill()
+	arg_15_0.workComp:disposeSelf()
+
+	arg_15_0.workComp = nil
+end
+
+function var_0_0.onDestroy(arg_16_0)
+	arg_16_0.sameSkillParam = nil
+end
+
+function var_0_0.recordSameSkillStartParam(arg_17_0, arg_17_1, arg_17_2)
+	arg_17_0.sameSkillStartParam[arg_17_1.stepUid] = arg_17_2
+end
+
+function var_0_0.recordFilterAtkEffect(arg_18_0, arg_18_1, arg_18_2)
+	local var_18_0 = arg_18_0.sameSkillParam[arg_18_2.stepUid]
+
+	if not var_18_0 then
+		var_18_0 = {}
+		arg_18_0.sameSkillParam[arg_18_2.stepUid] = var_18_0
 	end
 
-	local var_15_0 = arg_15_0.workComp:getAliveWorkList()
+	var_18_0.filter_atk_effects = {}
 
-	for iter_15_0, iter_15_1 in ipairs(var_15_0) do
-		iter_15_1:onUpdate()
+	local var_18_1 = string.split(arg_18_1, "#")
+
+	for iter_18_0, iter_18_1 in ipairs(var_18_1) do
+		var_18_0.filter_atk_effects[iter_18_1] = true
 	end
 end
 
-function var_0_0.beforeDestroy(arg_16_0)
-	arg_16_0:stopSkill()
-	arg_16_0.workComp:disposeSelf()
-
-	arg_16_0.workComp = nil
-end
-
-function var_0_0.onDestroy(arg_17_0)
-	arg_17_0.sameSkillParam = nil
-end
-
-function var_0_0.recordSameSkillStartParam(arg_18_0, arg_18_1, arg_18_2)
-	arg_18_0.sameSkillStartParam[arg_18_1.stepUid] = arg_18_2
-end
-
-function var_0_0.recordFilterAtkEffect(arg_19_0, arg_19_1, arg_19_2)
+function var_0_0.atkEffectNeedFilter(arg_19_0, arg_19_1, arg_19_2)
 	local var_19_0 = arg_19_0.sameSkillParam[arg_19_2.stepUid]
 
 	if not var_19_0 then
-		var_19_0 = {}
-		arg_19_0.sameSkillParam[arg_19_2.stepUid] = var_19_0
-	end
-
-	var_19_0.filter_atk_effects = {}
-
-	local var_19_1 = string.split(arg_19_1, "#")
-
-	for iter_19_0, iter_19_1 in ipairs(var_19_1) do
-		var_19_0.filter_atk_effects[iter_19_1] = true
-	end
-end
-
-function var_0_0.atkEffectNeedFilter(arg_20_0, arg_20_1, arg_20_2)
-	local var_20_0 = arg_20_0.sameSkillParam[arg_20_2.stepUid]
-
-	if not var_20_0 then
 		return
 	end
 
-	if var_20_0.filter_atk_effects and var_20_0.filter_atk_effects[arg_20_1] then
+	if var_19_0.filter_atk_effects and var_19_0.filter_atk_effects[arg_19_1] then
 		return true
 	end
 
 	return false
 end
 
-function var_0_0.recordFilterFlyEffect(arg_21_0, arg_21_1, arg_21_2)
-	local var_21_0 = arg_21_0.sameSkillParam[arg_21_2.stepUid]
+function var_0_0.recordFilterFlyEffect(arg_20_0, arg_20_1, arg_20_2)
+	local var_20_0 = arg_20_0.sameSkillParam[arg_20_2.stepUid]
 
-	if not var_21_0 then
-		var_21_0 = {}
-		arg_21_0.sameSkillParam[arg_21_2.stepUid] = var_21_0
+	if not var_20_0 then
+		var_20_0 = {}
+		arg_20_0.sameSkillParam[arg_20_2.stepUid] = var_20_0
 	end
 
-	var_21_0.filter_fly_effects = {}
+	var_20_0.filter_fly_effects = {}
 
-	local var_21_1 = string.split(arg_21_1, "#")
+	local var_20_1 = string.split(arg_20_1, "#")
 
-	for iter_21_0, iter_21_1 in ipairs(var_21_1) do
-		var_21_0.filter_fly_effects[iter_21_1] = true
+	for iter_20_0, iter_20_1 in ipairs(var_20_1) do
+		var_20_0.filter_fly_effects[iter_20_1] = true
 	end
 end
 
-function var_0_0.flyEffectNeedFilter(arg_22_0, arg_22_1, arg_22_2)
-	local var_22_0 = arg_22_0.sameSkillParam[arg_22_2.stepUid]
+function var_0_0.flyEffectNeedFilter(arg_21_0, arg_21_1, arg_21_2)
+	local var_21_0 = arg_21_0.sameSkillParam[arg_21_2.stepUid]
+
+	if not var_21_0 then
+		return
+	end
+
+	if var_21_0.filter_fly_effects and var_21_0.filter_fly_effects[arg_21_1] then
+		return true
+	end
+
+	return false
+end
+
+function var_0_0.clearSameSkillParam(arg_22_0, arg_22_1)
+	local var_22_0 = arg_22_0.sameSkillParam[arg_22_1.stepUid]
 
 	if not var_22_0 then
 		return
 	end
 
-	if var_22_0.filter_fly_effects and var_22_0.filter_fly_effects[arg_22_1] then
-		return true
+	local var_22_1 = var_22_0.preStepData
+
+	while var_22_1 do
+		local var_22_2 = var_22_1
+
+		var_22_1 = arg_22_0.sameSkillParam[var_22_2.stepUid] and arg_22_0.sameSkillParam[var_22_2.stepUid].preStepData
+		arg_22_0.sameSkillStartParam[var_22_2.stepUid] = nil
+		arg_22_0.sameSkillParam[var_22_2.stepUid] = nil
+
+		local var_22_3 = arg_22_0.workComp.workList
+
+		for iter_22_0, iter_22_1 in ipairs(var_22_3) do
+			if iter_22_1:isAlive() and iter_22_1.fightStepData == var_22_2 then
+				iter_22_1:onDone(true)
+			end
+		end
 	end
 
-	return false
+	arg_22_0.sameSkillParam[arg_22_1.stepUid] = nil
 end
 
-function var_0_0.clearSameSkillParam(arg_23_0, arg_23_1)
-	local var_23_0 = arg_23_0.sameSkillParam[arg_23_1.stepUid]
+function var_0_0.stopCurTimelineWaitPlaySameSkill(arg_23_0, arg_23_1, arg_23_2, arg_23_3, arg_23_4, arg_23_5)
+	local var_23_0 = arg_23_0:getLastWork()
 
 	if not var_23_0 then
 		return
 	end
 
-	local var_23_1 = var_23_0.preStepData
+	local var_23_1 = arg_23_0.sameSkillParam[arg_23_5.stepUid]
 
-	while var_23_1 do
-		local var_23_2 = var_23_1
-
-		var_23_1 = arg_23_0.sameSkillParam[var_23_2.stepUid] and arg_23_0.sameSkillParam[var_23_2.stepUid].preStepData
-		arg_23_0.sameSkillStartParam[var_23_2.stepUid] = nil
-		arg_23_0.sameSkillParam[var_23_2.stepUid] = nil
-
-		local var_23_3 = arg_23_0.workComp:getAliveWorkList()
-
-		for iter_23_0, iter_23_1 in ipairs(var_23_3) do
-			if iter_23_1.fightStepData == var_23_2 then
-				iter_23_1:onDone(true)
-			end
-		end
+	if not var_23_1 then
+		var_23_1 = {}
+		arg_23_0.sameSkillParam[arg_23_5.stepUid] = var_23_1
 	end
 
-	arg_23_0.sameSkillParam[arg_23_1.stepUid] = nil
+	var_23_1.curAnimState = arg_23_2
+	var_23_1.audio_id = arg_23_3
+	var_23_1.preStepData = arg_23_4
+	var_23_1.startParam = arg_23_0.sameSkillStartParam[arg_23_4.stepUid]
+
+	var_23_0.timelineItem:stopCurTimelineWaitPlaySameSkill(arg_23_1, arg_23_2)
 end
 
-function var_0_0.stopCurTimelineWaitPlaySameSkill(arg_24_0, arg_24_1, arg_24_2, arg_24_3, arg_24_4, arg_24_5)
-	local var_24_0 = arg_24_0:getLastWork()
-
-	if not var_24_0 then
-		return
-	end
-
-	local var_24_1 = arg_24_0.sameSkillParam[arg_24_5.stepUid]
-
-	if not var_24_1 then
-		var_24_1 = {}
-		arg_24_0.sameSkillParam[arg_24_5.stepUid] = var_24_1
-	end
-
-	var_24_1.curAnimState = arg_24_2
-	var_24_1.audio_id = arg_24_3
-	var_24_1.preStepData = arg_24_4
-	var_24_1.startParam = arg_24_0.sameSkillStartParam[arg_24_4.stepUid]
-
-	var_24_0.timelineItem:stopCurTimelineWaitPlaySameSkill(arg_24_1, arg_24_2)
-end
-
-function var_0_0.sameSkillPlaying(arg_25_0)
-	return tabletool.len(arg_25_0.sameSkillParam) > 0
+function var_0_0.sameSkillPlaying(arg_24_0)
+	return tabletool.len(arg_24_0.sameSkillParam) > 0
 end
 
 return var_0_0

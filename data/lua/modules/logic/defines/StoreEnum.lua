@@ -76,6 +76,7 @@ var_0_0.RecommendSubStoreId = {
 	GiftrecommendView2 = 804,
 	BpEnterView = 714,
 	StoreBlockPackageView = 802,
+	New6StarsChoose = 816,
 	StoreSkinBagView = 721,
 	GiftPacksView = 713,
 	ChargeView = 712
@@ -112,10 +113,11 @@ var_0_0.MonthCardStatus = {
 }
 var_0_0.Need4RDEpisodeId = 9999
 var_0_0.StoreChargeType = {
+	LinkGiftGoods = 8,
 	DailyReleasePackage = 4,
-	Optional = 5,
+	NationalGift = 9,
 	MonthCard = 2,
-	LinkGiftGoods = 8
+	Optional = 5
 }
 var_0_0.Prefab = {
 	RoomStore = 6,
@@ -133,6 +135,9 @@ var_0_0.TowerStore = {
 	UpdateStore = 302,
 	NormalStore = 301,
 	MainStore = 300
+}
+var_0_0.StoreTabId = {
+	Skin = 500
 }
 
 return var_0_0

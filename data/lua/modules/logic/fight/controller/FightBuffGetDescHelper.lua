@@ -52,7 +52,9 @@ function var_0_0.getBuffFeatureHandle(arg_3_0)
 			[FightEnum.BuffFeature.ResistancesAttr] = var_0_0.getResistancesAttrDesc,
 			[FightEnum.BuffFeature.FixAttrTeamEnergyAndBuff] = var_0_0.getFixAttrTeamEnergyAndBuffDesc,
 			[FightEnum.BuffFeature.FixAttrTeamEnergy] = var_0_0.getFixAttrTeamEnergyDesc,
-			[FightEnum.BuffFeature.StorageDamage] = var_0_0.getStorageDamageDesc
+			[FightEnum.BuffFeature.SpecialCountContinueChannelBuff] = var_0_0.getSpecialCountCastBuffDesc,
+			[FightEnum.BuffFeature.AddAttrBySpecialCount] = var_0_0.getAddAttrBySpecialCountDesc,
+			[FightEnum.BuffFeature.SpecialCountCastChannel] = var_0_0.getSpecialCountCastChannelDesc
 		}
 	end
 
@@ -123,24 +125,41 @@ function var_0_0.getStorageDamageDesc(arg_10_0, arg_10_1, arg_10_2, arg_10_3)
 	return GameUtil.getSubPlaceholderLuaLangOneParam(arg_10_1.desc, arg_10_3[2])
 end
 
-function var_0_0.getKSDLBuffDesc(arg_11_0, arg_11_1)
-	local var_11_0 = FightBuffHelper.getKSDLSpecialBuffList(arg_11_0)
+function var_0_0.getSpecialCountCastBuffDesc(arg_11_0, arg_11_1, arg_11_2, arg_11_3)
+	local var_11_0 = SkillHelper.getColorFormat("#D65F3C", arg_11_3[2])
 
-	if #var_11_0 < 1 then
-		return var_0_0.buildDesc(arg_11_1.desc)
+	return GameUtil.getSubPlaceholderLuaLangOneParam(arg_11_1.desc, var_11_0)
+end
+
+function var_0_0.getAddAttrBySpecialCountDesc(arg_12_0, arg_12_1, arg_12_2, arg_12_3)
+	local var_12_0 = tonumber(arg_12_3[2]) / 10
+	local var_12_1 = string.format("%+.1f", var_12_0)
+
+	return GameUtil.getSubPlaceholderLuaLangOneParam(arg_12_1.desc, var_12_1 .. "%%")
+end
+
+function var_0_0.getSpecialCountCastChannelDesc(arg_13_0, arg_13_1, arg_13_2, arg_13_3)
+	return GameUtil.getSubPlaceholderLuaLangOneParam(arg_13_1.desc, arg_13_3[2])
+end
+
+function var_0_0.getKSDLBuffDesc(arg_14_0, arg_14_1)
+	local var_14_0 = FightBuffHelper.getKSDLSpecialBuffList(arg_14_0)
+
+	if #var_14_0 < 1 then
+		return var_0_0.buildDesc(arg_14_1.desc)
 	end
 
-	local var_11_1 = ""
+	local var_14_1 = ""
 
-	for iter_11_0, iter_11_1 in ipairs(var_11_0) do
-		local var_11_2 = lua_skill_buff.configDict[iter_11_1.buffId]
+	for iter_14_0, iter_14_1 in ipairs(var_14_0) do
+		local var_14_2 = lua_skill_buff.configDict[iter_14_1.buffId]
 
-		if var_11_2 then
-			var_11_1 = var_11_1 .. var_0_0.buildDesc(var_11_2.desc)
+		if var_14_2 then
+			var_14_1 = var_14_1 .. var_0_0.buildDesc(var_14_2.desc)
 		end
 	end
 
-	return var_11_1
+	return var_14_1
 end
 
 return var_0_0

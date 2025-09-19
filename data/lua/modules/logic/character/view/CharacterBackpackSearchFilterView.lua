@@ -118,7 +118,7 @@ function var_0_0._btnconfirmOnClick(arg_6_0)
 		locations = var_6_2
 	}
 
-	CharacterModel.instance:filterCardListByDmgAndCareer(var_6_3, false, CharacterEnum.FilterType.BackpackHero)
+	CharacterModel.instance:filterCardListByDmgAndCareer(var_6_3, false, arg_6_0._filterType)
 
 	local var_6_4 = {
 		dmgs = arg_6_0._selectDmgs,
@@ -196,6 +196,7 @@ function var_0_0.onOpen(arg_12_0)
 	arg_12_0._selectDmgs = arg_12_0.viewParam.dmgs
 	arg_12_0._selectAttrs = arg_12_0.viewParam.attrs
 	arg_12_0._selectLocations = arg_12_0.viewParam.locations
+	arg_12_0._filterType = arg_12_0.viewParam.filterType or CharacterEnum.FilterType.BackpackHero
 
 	arg_12_0:_refreshView()
 end

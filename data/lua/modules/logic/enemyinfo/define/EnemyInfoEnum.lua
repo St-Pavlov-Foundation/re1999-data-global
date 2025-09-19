@@ -9,6 +9,7 @@ var_0_0.TabEnum = {
 	BossRush = 4,
 	Act191 = 7,
 	WeekWalk = 2,
+	Survival = 8,
 	Normal = 1
 }
 var_0_0.TabWidth = 252

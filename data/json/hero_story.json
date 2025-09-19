@@ -527,5 +527,28 @@
     "cgScale": "2",
     "mainviewName": "language_10073125",
     "permanentUnlock": "2#24#1"
+  },
+  {
+    "id": 24,
+    "chapterId": 1924,
+    "unlock": "2#24#0",
+    "bonus": "1#180003#1|1#110403#1|1#120011#3|2#3#5000|2#5#10000",
+    "heroName": "language_10017966",
+    "photo": "307102",
+    "cgBg": "307101",
+    "order": 24,
+    "name": "language_90001197",
+    "nameEn": "A</size>way  <color=#D2CDBC><size=30>From</size></color> Home<size=140>",
+    "episodeId": 0,
+    "main_pic": "rolestory_img_24",
+    "monster_pic": "",
+    "challengeBonus": "",
+    "activityId": 12805,
+    "activity_pic": "",
+    "cgUnlockEpisodeId": 192405,
+    "cgPos": "-515#58",
+    "cgScale": "1",
+    "mainviewName": "language_10082395",
+    "permanentUnlock": "2#24#1"
   }
 ]

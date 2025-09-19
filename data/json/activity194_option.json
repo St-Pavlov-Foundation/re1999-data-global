@@ -1,0 +1,596 @@
+[
+  {
+    "optionId": 1000101,
+    "name": "language_10086957",
+    "conditionDesc": "language_10086958",
+    "optionDesc": "language_10086959",
+    "optionRestriction": "",
+    "effect": "1#-20|5#1",
+    "optionResultId": 1000201
+  },
+  {
+    "optionId": 1000102,
+    "name": "language_10086960",
+    "conditionDesc": "language_10086958",
+    "optionDesc": "language_10086959",
+    "optionRestriction": "",
+    "effect": "1#-10|5#2",
+    "optionResultId": 1000202
+  },
+  {
+    "optionId": 1000103,
+    "name": "language_10086961",
+    "conditionDesc": "language_10086958",
+    "optionDesc": "language_10086959",
+    "optionRestriction": "",
+    "effect": "1#-10|5#1",
+    "optionResultId": 1000203
+  },
+  {
+    "optionId": 1000104,
+    "name": "language_10086962",
+    "conditionDesc": "language_10086963",
+    "optionDesc": "language_10086964",
+    "optionRestriction": "",
+    "effect": "5#2",
+    "optionResultId": 1000204
+  },
+  {
+    "optionId": 1000105,
+    "name": "language_10086965",
+    "conditionDesc": "language_10086966",
+    "optionDesc": "language_10086966",
+    "optionRestriction": "",
+    "effect": "1#-10",
+    "optionResultId": 1000205
+  },
+  {
+    "optionId": 1000106,
+    "name": "language_10086967",
+    "conditionDesc": "language_10086968",
+    "optionDesc": "language_10086969",
+    "optionRestriction": "",
+    "effect": "1#-20|5#1",
+    "optionResultId": 1000206
+  },
+  {
+    "optionId": 1000109,
+    "name": "language_10086970",
+    "conditionDesc": "language_10086971",
+    "optionDesc": "language_10086972",
+    "optionRestriction": "",
+    "effect": "1#-10|5#1",
+    "optionResultId": 1000209
+  },
+  {
+    "optionId": 1000115,
+    "name": "language_10086973",
+    "conditionDesc": "language_10086958",
+    "optionDesc": "language_10086959",
+    "optionRestriction": "",
+    "effect": "1#-10|5#2",
+    "optionResultId": 1000215
+  },
+  {
+    "optionId": 1000116,
+    "name": "language_10086974",
+    "conditionDesc": "language_10086975",
+    "optionDesc": "language_10086976",
+    "optionRestriction": "1#30002",
+    "effect": "1#-10|5#4",
+    "optionResultId": 1000216
+  },
+  {
+    "optionId": 1000117,
+    "name": "language_10086977",
+    "conditionDesc": "language_10086978",
+    "optionDesc": "language_10086979",
+    "optionRestriction": "",
+    "effect": "1#-30",
+    "optionResultId": 1000217
+  },
+  {
+    "optionId": 1000118,
+    "name": "language_10086980",
+    "conditionDesc": "language_10086958",
+    "optionDesc": "language_10086959",
+    "optionRestriction": "",
+    "effect": "1#-10|5#4",
+    "optionResultId": 1000218
+  },
+  {
+    "optionId": 1000119,
+    "name": "language_10086981",
+    "conditionDesc": "language_10086982",
+    "optionDesc": "language_10086983",
+    "optionRestriction": "1#30002",
+    "effect": "1#-10|5#2",
+    "optionResultId": 1000219
+  },
+  {
+    "optionId": 1000120,
+    "name": "language_10086984",
+    "conditionDesc": "language_10086985",
+    "optionDesc": "language_10086985",
+    "optionRestriction": "",
+    "effect": "1#-20|5#3",
+    "optionResultId": 1000220
+  },
+  {
+    "optionId": 1000121,
+    "name": "language_10086986",
+    "conditionDesc": "language_10086968",
+    "optionDesc": "language_10086969",
+    "optionRestriction": "",
+    "effect": "1#-10|5#4",
+    "optionResultId": 1000221
+  },
+  {
+    "optionId": 1000123,
+    "name": "language_10030362",
+    "conditionDesc": "language_10086968",
+    "optionDesc": "language_10086969",
+    "optionRestriction": "",
+    "effect": "1#-10|5#4",
+    "optionResultId": 1000223
+  },
+  {
+    "optionId": 1000124,
+    "name": "language_10042692",
+    "conditionDesc": "language_10086987",
+    "optionDesc": "language_10086987",
+    "optionRestriction": "",
+    "effect": "",
+    "optionResultId": 1000224
+  },
+  {
+    "optionId": 1000125,
+    "name": "language_10086988",
+    "conditionDesc": "language_10086989",
+    "optionDesc": "language_10086990",
+    "optionRestriction": "1#30005",
+    "effect": "",
+    "optionResultId": 1000225
+  },
+  {
+    "optionId": 1000122,
+    "name": "language_10086991",
+    "conditionDesc": "language_10086992",
+    "optionDesc": "language_10086993",
+    "optionRestriction": "",
+    "effect": "",
+    "optionResultId": 1000222
+  },
+  {
+    "optionId": 1000126,
+    "name": "language_10086986",
+    "conditionDesc": "language_10086968",
+    "optionDesc": "language_10086969",
+    "optionRestriction": "",
+    "effect": "1#-10|5#3",
+    "optionResultId": 1000226
+  },
+  {
+    "optionId": 1000127,
+    "name": "language_10042692",
+    "conditionDesc": "language_10086987",
+    "optionDesc": "language_10086987",
+    "optionRestriction": "",
+    "effect": "",
+    "optionResultId": 1000227
+  },
+  {
+    "optionId": 1000128,
+    "name": "language_10086994",
+    "conditionDesc": "language_10086995",
+    "optionDesc": "language_10086996",
+    "optionRestriction": "",
+    "effect": "",
+    "optionResultId": 1000228
+  },
+  {
+    "optionId": 1000129,
+    "name": "language_10086997",
+    "conditionDesc": "language_10086998",
+    "optionDesc": "language_10086999",
+    "optionRestriction": "",
+    "effect": "",
+    "optionResultId": 1000229
+  },
+  {
+    "optionId": 1000130,
+    "name": "language_10028203",
+    "conditionDesc": "language_10086992",
+    "optionDesc": "language_10086993",
+    "optionRestriction": "",
+    "effect": "",
+    "optionResultId": 1000230
+  },
+  {
+    "optionId": 1000131,
+    "name": "language_10087000",
+    "conditionDesc": "language_10087001",
+    "optionDesc": "language_10087001",
+    "optionRestriction": "1#30003#30004",
+    "effect": "1#-20|5#2",
+    "optionResultId": 1000231
+  },
+  {
+    "optionId": 1000132,
+    "name": "language_10087002",
+    "conditionDesc": "language_10087003",
+    "optionDesc": "language_10087004",
+    "optionRestriction": "",
+    "effect": "",
+    "optionResultId": 1000232
+  },
+  {
+    "optionId": 1000133,
+    "name": "language_10087005",
+    "conditionDesc": "language_10087006",
+    "optionDesc": "language_10087007",
+    "optionRestriction": "",
+    "effect": "5#2",
+    "optionResultId": 1000233
+  },
+  {
+    "optionId": 1000134,
+    "name": "language_10087008",
+    "conditionDesc": "language_10086958",
+    "optionDesc": "language_10086959",
+    "optionRestriction": "",
+    "effect": "1#-20|5#2",
+    "optionResultId": 1000234
+  },
+  {
+    "optionId": 1000135,
+    "name": "language_10028401",
+    "conditionDesc": "language_10086958",
+    "optionDesc": "language_10086959",
+    "optionRestriction": "",
+    "effect": "1#-10|5#4",
+    "optionResultId": 1000235
+  },
+  {
+    "optionId": 1000136,
+    "name": "language_10087009",
+    "conditionDesc": "language_10087010",
+    "optionDesc": "language_10087011",
+    "optionRestriction": "1#30002#30004#30009",
+    "effect": "1#-30|5#2",
+    "optionResultId": 1000236
+  },
+  {
+    "optionId": 1000137,
+    "name": "language_10087012",
+    "conditionDesc": "language_10086982",
+    "optionDesc": "language_10087013",
+    "optionRestriction": "1#30002",
+    "effect": "1#-10|5#2",
+    "optionResultId": 1000237
+  },
+  {
+    "optionId": 1000138,
+    "name": "language_10087014",
+    "conditionDesc": "language_10086979",
+    "optionDesc": "language_10086979",
+    "optionRestriction": "",
+    "effect": "1#-10",
+    "optionResultId": 1000238
+  },
+  {
+    "optionId": 1000139,
+    "name": "language_10087015",
+    "conditionDesc": "language_10086958",
+    "optionDesc": "language_10086959",
+    "optionRestriction": "",
+    "effect": "1#-10|5#2",
+    "optionResultId": 1000239
+  },
+  {
+    "optionId": 1000140,
+    "name": "language_10087016",
+    "conditionDesc": "language_10086982",
+    "optionDesc": "language_10087013",
+    "optionRestriction": "1#30002",
+    "effect": "1#-10|5#2",
+    "optionResultId": 1000240
+  },
+  {
+    "optionId": 1000141,
+    "name": "language_10042692",
+    "conditionDesc": "language_10086987",
+    "optionDesc": "language_10086987",
+    "optionRestriction": "",
+    "effect": "",
+    "optionResultId": 1000241
+  },
+  {
+    "optionId": 1000142,
+    "name": "language_10087017",
+    "conditionDesc": "language_10086958",
+    "optionDesc": "language_10086959",
+    "optionRestriction": "",
+    "effect": "1#-10|5#2",
+    "optionResultId": 1000242
+  },
+  {
+    "optionId": 1000143,
+    "name": "language_10087018",
+    "conditionDesc": "language_10086978",
+    "optionDesc": "language_10086979",
+    "optionRestriction": "",
+    "effect": "1#-30",
+    "optionResultId": 1000243
+  },
+  {
+    "optionId": 1000144,
+    "name": "language_10087014",
+    "conditionDesc": "language_10086979",
+    "optionDesc": "language_10086979",
+    "optionRestriction": "",
+    "effect": "1#-10",
+    "optionResultId": 1000244
+  },
+  {
+    "optionId": 1000145,
+    "name": "language_10087019",
+    "conditionDesc": "language_10086982",
+    "optionDesc": "language_10087013",
+    "optionRestriction": "1#30002",
+    "effect": "1#-10|5#2",
+    "optionResultId": 1000245
+  },
+  {
+    "optionId": 1000146,
+    "name": "language_10087020",
+    "conditionDesc": "language_10087021",
+    "optionDesc": "language_10087021",
+    "optionRestriction": "1#30009#30004#30006",
+    "effect": "1#-20|5#3",
+    "optionResultId": 1000246
+  },
+  {
+    "optionId": 1000147,
+    "name": "language_10004757",
+    "conditionDesc": "language_10086958",
+    "optionDesc": "language_10086959",
+    "optionRestriction": "",
+    "effect": "1#-10|5#4",
+    "optionResultId": 1000247
+  },
+  {
+    "optionId": 1000148,
+    "name": "language_10087015",
+    "conditionDesc": "language_10086958",
+    "optionDesc": "language_10087022",
+    "optionRestriction": "",
+    "effect": "1#-20|5#2",
+    "optionResultId": 1000248
+  },
+  {
+    "optionId": 1000149,
+    "name": "language_10087018",
+    "conditionDesc": "language_10086958",
+    "optionDesc": "language_10087022",
+    "optionRestriction": "",
+    "effect": "1#-10|5#4",
+    "optionResultId": 1000249
+  },
+  {
+    "optionId": 1000150,
+    "name": "language_10087023",
+    "conditionDesc": "language_10086958",
+    "optionDesc": "language_10086959",
+    "optionRestriction": "",
+    "effect": "1#-20|5#2",
+    "optionResultId": 1000250
+  },
+  {
+    "optionId": 1000151,
+    "name": "language_10087014",
+    "conditionDesc": "language_10086979",
+    "optionDesc": "language_10086979",
+    "optionRestriction": "",
+    "effect": "1#-10",
+    "optionResultId": 1000251
+  },
+  {
+    "optionId": 1000152,
+    "name": "language_10086910",
+    "conditionDesc": "language_10087024",
+    "optionDesc": "language_10087025",
+    "optionRestriction": "1#30002#30006",
+    "effect": "1#-30|5#1",
+    "optionResultId": 1000252
+  },
+  {
+    "optionId": 1000153,
+    "name": "language_10087026",
+    "conditionDesc": "language_10087027",
+    "optionDesc": "language_10087027",
+    "optionRestriction": "1#30002#30006",
+    "effect": "1#-30|5#2",
+    "optionResultId": 1000253
+  },
+  {
+    "optionId": 1000154,
+    "name": "language_10087028",
+    "conditionDesc": "language_10087027",
+    "optionDesc": "language_10087027",
+    "optionRestriction": "1#30002#30006",
+    "effect": "1#-30|5#2",
+    "optionResultId": 1000254
+  },
+  {
+    "optionId": 1000155,
+    "name": "language_10087028",
+    "conditionDesc": "language_10087027",
+    "optionDesc": "language_10087027",
+    "optionRestriction": "1#30002#30006",
+    "effect": "1#-30|5#2",
+    "optionResultId": 1000255
+  },
+  {
+    "optionId": 1000156,
+    "name": "language_10087026",
+    "conditionDesc": "language_10087027",
+    "optionDesc": "language_10087027",
+    "optionRestriction": "1#30002#30006",
+    "effect": "1#-30|5#2",
+    "optionResultId": 1000256
+  },
+  {
+    "optionId": 1000157,
+    "name": "language_10087029",
+    "conditionDesc": "language_10087030",
+    "optionDesc": "language_10087030",
+    "optionRestriction": "1#30002#30006",
+    "effect": "5#1",
+    "optionResultId": 1000257
+  },
+  {
+    "optionId": 1000158,
+    "name": "language_10087031",
+    "conditionDesc": "language_10087032",
+    "optionDesc": "language_10087033",
+    "optionRestriction": "1#30002#30006",
+    "effect": "5#2|1#-20",
+    "optionResultId": 1000258
+  },
+  {
+    "optionId": 1000159,
+    "name": "language_10087034",
+    "conditionDesc": "language_10087035",
+    "optionDesc": "language_10087036",
+    "optionRestriction": "1#30002",
+    "effect": "5#1|1#-10",
+    "optionResultId": 1000259
+  },
+  {
+    "optionId": 1000160,
+    "name": "language_10042692",
+    "conditionDesc": "language_10086987",
+    "optionDesc": "language_10086987",
+    "optionRestriction": "1#30002#30006",
+    "effect": "",
+    "optionResultId": 1000260
+  },
+  {
+    "optionId": 1000161,
+    "name": "language_10031749",
+    "conditionDesc": "language_10087037",
+    "optionDesc": "language_10087038",
+    "optionRestriction": "1#30002#30006",
+    "effect": "1#-10|5#1",
+    "optionResultId": 1000261
+  },
+  {
+    "optionId": 1000162,
+    "name": "language_10026618",
+    "conditionDesc": "language_10086987",
+    "optionDesc": "language_10086987",
+    "optionRestriction": "1#30002#30006",
+    "effect": "",
+    "optionResultId": 1000262
+  },
+  {
+    "optionId": 1000163,
+    "name": "language_10087039",
+    "conditionDesc": "language_10087040",
+    "optionDesc": "language_10087041",
+    "optionRestriction": "1#30008",
+    "effect": "",
+    "optionResultId": 1000263
+  },
+  {
+    "optionId": 1000169,
+    "name": "language_10087042",
+    "conditionDesc": "language_10086992",
+    "optionDesc": "language_10087043",
+    "optionRestriction": "1#30002#30006",
+    "effect": "",
+    "optionResultId": 1000269
+  },
+  {
+    "optionId": 1000164,
+    "name": "language_10087044",
+    "conditionDesc": "language_10087045",
+    "optionDesc": "language_10087046",
+    "optionRestriction": "1#30002#30006",
+    "effect": "2#-1#20006",
+    "optionResultId": 1000264
+  },
+  {
+    "optionId": 1000165,
+    "name": "language_10028390",
+    "conditionDesc": "language_10086987",
+    "optionDesc": "language_10086987",
+    "optionRestriction": "1#30002#30006",
+    "effect": "",
+    "optionResultId": 1000265
+  },
+  {
+    "optionId": 1000166,
+    "name": "language_10087047",
+    "conditionDesc": "language_10087048",
+    "optionDesc": "language_10087046",
+    "optionRestriction": "1#30002#30006",
+    "effect": "2#-1#20006",
+    "optionResultId": 1000266
+  },
+  {
+    "optionId": 1000167,
+    "name": "language_10087049",
+    "conditionDesc": "language_10086992",
+    "optionDesc": "language_10087043",
+    "optionRestriction": "1#30002#30006",
+    "effect": "",
+    "optionResultId": 1000267
+  },
+  {
+    "optionId": 1000168,
+    "name": "language_10087029",
+    "conditionDesc": "language_10087030",
+    "optionDesc": "language_10087030",
+    "optionRestriction": "1#30002#30006",
+    "effect": "5#1",
+    "optionResultId": 1000268
+  },
+  {
+    "optionId": 1000301,
+    "name": "language_10087050",
+    "conditionDesc": "language_10087051",
+    "optionDesc": "language_10086993",
+    "optionRestriction": "",
+    "effect": "",
+    "optionResultId": 1000401
+  },
+  {
+    "optionId": 1000302,
+    "name": "language_10087052",
+    "conditionDesc": "language_10087053",
+    "optionDesc": "language_10087054",
+    "optionRestriction": "",
+    "effect": "5#2",
+    "optionResultId": 1000402
+  },
+  {
+    "optionId": 1000305,
+    "name": "language_10087023",
+    "conditionDesc": "language_10087055",
+    "optionDesc": "language_10087054",
+    "optionRestriction": "",
+    "effect": "5#2",
+    "optionResultId": 1000405
+  },
+  {
+    "optionId": 1000306,
+    "name": "language_10030362",
+    "conditionDesc": "language_10086987",
+    "optionDesc": "language_10086987",
+    "optionRestriction": "",
+    "effect": "",
+    "optionResultId": 1000406
+  }
+]

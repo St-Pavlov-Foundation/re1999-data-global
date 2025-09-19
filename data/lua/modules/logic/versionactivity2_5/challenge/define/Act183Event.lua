@@ -23,5 +23,7 @@ var_0_2("OnGroupAllTaskFinished")
 var_0_2("OnUpdateSelectBadgeNum")
 var_0_2("OnUpdateBadgeDetailVisible")
 var_0_2("EpisodeStartPlayFinishAnim")
+var_0_2("FightBossIfSubUnfinish")
+var_0_2("OnPlayEffectDoneIfSubUnfinish")
 
 return var_0_0
