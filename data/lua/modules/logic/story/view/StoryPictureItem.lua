@@ -258,6 +258,10 @@ function var_0_0._followBg(arg_10_0)
 end
 
 function var_0_0._playScale(arg_11_0)
+	if not arg_11_0._picCo or not arg_11_0._picImg then
+		return
+	end
+
 	local var_11_0 = arg_11_0._picCo.effTimes[GameLanguageMgr.instance:getVoiceTypeStoryIndex()]
 	local var_11_1 = SLFramework.UGUI.GuiHelper.ParseColor(arg_11_0._picCo.picColor)
 
@@ -319,6 +323,8 @@ function var_0_0.reset(arg_14_0, arg_14_1, arg_14_2)
 	arg_14_0._picCo = arg_14_2
 
 	TaskDispatcher.cancelTask(arg_14_0._realDestroy, arg_14_0)
+	TaskDispatcher.cancelTask(arg_14_0._playScale, arg_14_0)
+	TaskDispatcher.cancelTask(arg_14_0._playShake, arg_14_0)
 	arg_14_0:_killTweenId()
 
 	if arg_14_0:_isSpImg() then

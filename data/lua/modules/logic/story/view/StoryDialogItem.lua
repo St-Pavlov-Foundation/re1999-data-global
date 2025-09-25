@@ -613,13 +613,25 @@ function var_0_0._checkPlayGlitch(arg_19_0, arg_19_1)
 				local var_19_16 = string.sub(var_19_12, 1, var_19_15 - 1)
 				local var_19_17 = string.gsub(var_19_12, "<i><b>", "")
 				local var_19_18 = string.find(var_19_17, "</i></b>")
-				local var_19_19 = string.sub(var_19_17, 1, var_19_18 - 1)
-				local var_19_20 = string.gsub(var_19_17, "</i></b>", "")
+
+				if not var_19_18 then
+					if isDebugBuild then
+						local var_19_19 = StoryController.instance._curStoryId
+						local var_19_20 = StoryController.instance._curStepId
+
+						logError(string.format("StoryId: %s StepId %s When using '<Glitch>' with multiple lines, please manually wrap the lines!", var_19_19, var_19_20))
+					end
+
+					return
+				end
+
+				local var_19_21 = string.sub(var_19_17, 1, var_19_18 - 1)
+				local var_19_22 = string.gsub(var_19_17, "</i></b>", "")
 
 				var_19_14.hasGlitch = true
 				var_19_14.startIndex = utf8.len(var_19_16)
-				var_19_14.endIndex = utf8.len(var_19_19)
-				var_19_14.lineTxt = var_19_20
+				var_19_14.endIndex = utf8.len(var_19_21)
+				var_19_14.lineTxt = var_19_22
 
 				table.insert(var_19_10, var_19_14)
 			end
@@ -627,61 +639,63 @@ function var_0_0._checkPlayGlitch(arg_19_0, arg_19_1)
 	else
 		for iter_19_2 = 1, var_19_4.lineCount do
 			if var_19_2 then
-				local var_19_21 = {}
+				local var_19_23 = {}
 
-				var_19_21.hasGlitch = true
-				var_19_21.lineGlitch = true
+				var_19_23.hasGlitch = true
+				var_19_23.lineGlitch = true
 
-				table.insert(var_19_10, var_19_21)
+				table.insert(var_19_10, var_19_23)
 			else
-				local var_19_22 = var_19_4.lineInfo[iter_19_2 - 1]
-				local var_19_23 = LuaUtil.subString(arg_19_1, var_19_22.firstCharacterIndex + 1, var_19_22.firstCharacterIndex + var_19_22.characterCount)
-				local var_19_24 = string.find(var_19_23, "<i><b>")
+				local var_19_24 = var_19_4.lineInfo[iter_19_2 - 1]
+				local var_19_25 = LuaUtil.subString(arg_19_1, var_19_24.firstCharacterIndex + 1, var_19_24.firstCharacterIndex + var_19_24.characterCount)
+				local var_19_26 = string.find(var_19_25, "<i><b>")
 
-				if var_19_24 then
-					var_19_23 = LuaUtil.subString(arg_19_1, var_19_22.firstCharacterIndex + 1, var_19_22.firstCharacterIndex + var_19_22.characterCount + string.len("<i><b>") + string.len("</i></b>"))
+				if var_19_26 then
+					var_19_25 = LuaUtil.subString(arg_19_1, var_19_24.firstCharacterIndex + 1, var_19_24.firstCharacterIndex + var_19_24.characterCount + string.len("<i><b>") + string.len("</i></b>"))
 				end
 
-				local var_19_25 = {}
+				local var_19_27 = {}
 
-				if not var_19_24 then
-					var_19_25.hasGlitch = false
-					var_19_25.startIndex = 0
-					var_19_25.endIndex = 0
-					var_19_25.lineText = var_19_23
+				if not var_19_26 then
+					var_19_27.hasGlitch = false
+					var_19_27.startIndex = 0
+					var_19_27.endIndex = 0
+					var_19_27.lineText = var_19_25
 
-					table.insert(var_19_10, var_19_25)
+					table.insert(var_19_10, var_19_27)
 				else
-					local var_19_26 = string.find(var_19_23, "<i><b>")
-					local var_19_27 = string.sub(var_19_23, 1, var_19_26 - 1)
-					local var_19_28 = string.gsub(var_19_23, "<i><b>", "")
-					local var_19_29 = string.find(var_19_28, "</i></b>")
+					local var_19_28 = string.find(var_19_25, "<i><b>")
+					local var_19_29 = string.sub(var_19_25, 1, var_19_28 - 1)
+					local var_19_30 = string.gsub(var_19_25, "<i><b>", "")
+					local var_19_31 = string.find(var_19_30, "</i></b>")
 
-					if not var_19_29 then
-						local var_19_30 = StoryController.instance._curStoryId
-						local var_19_31 = StoryController.instance._curStepId
+					if not var_19_31 then
+						if isDebugBuild then
+							local var_19_32 = StoryController.instance._curStoryId
+							local var_19_33 = StoryController.instance._curStepId
 
-						logError(string.format("StoryId: %s StepId %s When using '<Glitch>' with multiple lines, please manually wrap the lines!", var_19_30, var_19_31))
+							logError(string.format("StoryId: %s StepId %s When using '<Glitch>' with multiple lines, please manually wrap the lines!", var_19_32, var_19_33))
+						end
 
 						return
 					end
 
-					local var_19_32 = string.sub(var_19_28, 1, var_19_29 - 1)
-					local var_19_33 = string.gsub(var_19_28, "</i></b>", "")
+					local var_19_34 = string.sub(var_19_30, 1, var_19_31 - 1)
+					local var_19_35 = string.gsub(var_19_30, "</i></b>", "")
 
-					var_19_25.hasGlitch = true
-					var_19_25.startIndex = utf8.len(var_19_27)
-					var_19_25.endIndex = utf8.len(var_19_32)
-					var_19_25.lineTxt = var_19_33
+					var_19_27.hasGlitch = true
+					var_19_27.startIndex = utf8.len(var_19_29)
+					var_19_27.endIndex = utf8.len(var_19_34)
+					var_19_27.lineTxt = var_19_35
 
-					table.insert(var_19_10, var_19_25)
+					table.insert(var_19_10, var_19_27)
 				end
 			end
 		end
 	end
 
 	for iter_19_3 = 1, #var_19_10 do
-		local var_19_34, var_19_35, var_19_36 = transformhelper.getLocalPos(var_19_5[iter_19_3].transform)
+		local var_19_36, var_19_37, var_19_38 = transformhelper.getLocalPos(var_19_5[iter_19_3].transform)
 
 		if not var_19_10[iter_19_3].hasGlitch then
 			gohelper.setActive(var_19_5[iter_19_3].gameObject, false)
@@ -689,39 +703,39 @@ function var_0_0._checkPlayGlitch(arg_19_0, arg_19_1)
 			gohelper.setActive(var_19_5[iter_19_3].gameObject, true)
 
 			if var_19_10[iter_19_3].lineGlitch then
-				local var_19_37, var_19_38, var_19_39 = transformhelper.getLocalPos(var_19_5[iter_19_3].transform)
+				local var_19_39, var_19_40, var_19_41 = transformhelper.getLocalPos(var_19_5[iter_19_3].transform)
 
-				transformhelper.setLocalPos(var_19_5[iter_19_3].transform, 640, var_19_38, var_19_39)
+				transformhelper.setLocalPos(var_19_5[iter_19_3].transform, 640, var_19_40, var_19_41)
 
 				var_19_5[iter_19_3].shape.scale = Vector3(12, 0.4, 0)
 
 				ZProj.ParticleSystemHelper.SetMaxParticles(var_19_5[iter_19_3], 30)
 			else
-				local var_19_40 = var_19_8[0]
-				local var_19_41 = var_19_4.lineInfo[iter_19_3 - 1]
-				local var_19_42 = var_19_8[var_19_41.firstCharacterIndex + var_19_10[iter_19_3].startIndex]
-				local var_19_43 = var_19_8[var_19_41.firstCharacterIndex + var_19_10[iter_19_3].endIndex - 1]
-				local var_19_44 = var_19_7:WorldToScreenPoint(arg_19_0._txtcontentcn.transform:TransformPoint(var_19_40.bottomLeft))
-				local var_19_45 = var_19_7:WorldToScreenPoint(arg_19_0._txtcontentcn.transform:TransformPoint(var_19_42.bottomLeft))
-				local var_19_46 = var_19_7:WorldToScreenPoint(arg_19_0._txtcontentcn.transform:TransformPoint(var_19_43.bottomRight))
-				local var_19_47 = UnityEngine.Screen.width
-				local var_19_48 = UnityEngine.Screen.height
-				local var_19_49 = math.min(1, 0.9 * var_19_47 / (1.6 * var_19_48))
-				local var_19_50 = 1080 * (var_19_45.x - var_19_44.x) / (var_19_48 * var_19_49)
-				local var_19_51 = 1144.8 * (var_19_46.x - var_19_45.x) / (var_19_48 * var_19_49)
-				local var_19_52 = var_19_50 / var_19_9
-				local var_19_53 = var_19_51 / var_19_9
-				local var_19_54 = 647 * (2 * var_19_52 + var_19_53)
-				local var_19_55, var_19_56, var_19_57 = transformhelper.getLocalPos(var_19_5[iter_19_3].transform)
+				local var_19_42 = var_19_8[0]
+				local var_19_43 = var_19_4.lineInfo[iter_19_3 - 1]
+				local var_19_44 = var_19_8[var_19_43.firstCharacterIndex + var_19_10[iter_19_3].startIndex]
+				local var_19_45 = var_19_8[var_19_43.firstCharacterIndex + var_19_10[iter_19_3].endIndex - 1]
+				local var_19_46 = var_19_7:WorldToScreenPoint(arg_19_0._txtcontentcn.transform:TransformPoint(var_19_42.bottomLeft))
+				local var_19_47 = var_19_7:WorldToScreenPoint(arg_19_0._txtcontentcn.transform:TransformPoint(var_19_44.bottomLeft))
+				local var_19_48 = var_19_7:WorldToScreenPoint(arg_19_0._txtcontentcn.transform:TransformPoint(var_19_45.bottomRight))
+				local var_19_49 = UnityEngine.Screen.width
+				local var_19_50 = UnityEngine.Screen.height
+				local var_19_51 = math.min(1, 0.9 * var_19_49 / (1.6 * var_19_50))
+				local var_19_52 = 1080 * (var_19_47.x - var_19_46.x) / (var_19_50 * var_19_51)
+				local var_19_53 = 1144.8 * (var_19_48.x - var_19_47.x) / (var_19_50 * var_19_51)
+				local var_19_54 = var_19_52 / var_19_9
+				local var_19_55 = var_19_53 / var_19_9
+				local var_19_56 = 647 * (2 * var_19_54 + var_19_55)
+				local var_19_57, var_19_58, var_19_59 = transformhelper.getLocalPos(var_19_5[iter_19_3].transform)
 
-				transformhelper.setLocalPos(var_19_5[iter_19_3].transform, var_19_54, var_19_56, var_19_57)
+				transformhelper.setLocalPos(var_19_5[iter_19_3].transform, var_19_56, var_19_58, var_19_59)
 
-				local var_19_58 = 12 * var_19_53 * var_19_49
-				local var_19_59 = 0.4 * var_19_49
+				local var_19_60 = 12 * var_19_55 * var_19_51
+				local var_19_61 = 0.4 * var_19_51
 
-				var_19_5[iter_19_3].shape.scale = Vector3(var_19_58, var_19_59, 0)
+				var_19_5[iter_19_3].shape.scale = Vector3(var_19_60, var_19_61, 0)
 
-				ZProj.ParticleSystemHelper.SetMaxParticles(var_19_5[iter_19_3], math.floor(30 * var_19_53))
+				ZProj.ParticleSystemHelper.SetMaxParticles(var_19_5[iter_19_3], math.floor(30 * var_19_55))
 			end
 		end
 	end

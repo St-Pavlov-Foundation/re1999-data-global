@@ -26,6 +26,7 @@ function var_0_0.onInitView(arg_1_0)
 	arg_1_0._imageStoryDescBg = gohelper.findChildSingleImage(arg_1_0.viewGO, "#go_left/simage_leftbg")
 	arg_1_0._btnStoryDesc = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "desc/#btn_detail")
 	arg_1_0._btnStoryReturn = gohelper.findChildButtonWithAudio(arg_1_0.viewGO, "#btn_storyReturn")
+	arg_1_0._goskinItemListRoot = gohelper.findChild(arg_1_0.viewGO, "container/normal/skinSwitch/#scroll_skinSwitch")
 	arg_1_0._animator = arg_1_0.viewGO:GetComponent(typeof(UnityEngine.Animator))
 
 	if arg_1_0._editableInitView then
@@ -364,6 +365,7 @@ function var_0_0.refreshSkinStoryView(arg_31_0, arg_31_1)
 	local var_31_0 = HandbookConfig.instance:getSkinSuitIdBySkinId(arg_31_0.skinCo.id)
 
 	if arg_31_1 then
+		gohelper.setActive(arg_31_0._goskinItemListRoot, false)
 		gohelper.setActive(arg_31_0._goLeftStoryInfo, true)
 
 		arg_31_0._textStoryDesc.text = arg_31_0.skinCo.skinStory
@@ -375,6 +377,7 @@ function var_0_0.refreshSkinStoryView(arg_31_0, arg_31_1)
 			gohelper.setActive(arg_31_0._btnStoryReturn.gameObject, true)
 		end
 	else
+		gohelper.setActive(arg_31_0._goskinItemListRoot, true)
 		gohelper.setActive(arg_31_0._goLeftStoryInfo, false)
 		gohelper.setActive(arg_31_0._btnStoryDesc.gameObject, var_31_0 ~= nil)
 		gohelper.setActive(arg_31_0._btnStoryReturn.gameObject, false)

@@ -28,6 +28,8 @@ function var_0_0.ctor(arg_1_0, arg_1_1, arg_1_2, arg_1_3)
 
 	if var_0_1[arg_1_0.type] then
 		arg_1_0.goSp01Logo = gohelper.findChild(arg_1_2, var_0_1[arg_1_0.type])
+
+		gohelper.setActive(arg_1_0.goSp01Logo, false)
 	end
 
 	arg_1_0._floatFunc = var_0_0.FloatFunc[arg_1_1]
