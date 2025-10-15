@@ -462,8 +462,4 @@ function var_0_0.refreshBtnState(arg_26_0)
 	ZProj.UGUIHelper.SetGrayscale(arg_26_0._btnBattleRecord.gameObject, var_26_7)
 end
 
-function var_0_0.onClose(arg_27_0)
-	AutoChessController.instance:openMainView()
-end
-
 return var_0_0

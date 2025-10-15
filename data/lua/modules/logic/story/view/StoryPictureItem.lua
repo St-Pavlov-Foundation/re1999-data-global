@@ -449,10 +449,14 @@ function var_0_0._startDestroy(arg_20_0)
 		arg_20_0:onDestroy()
 	else
 		if not arg_20_0._picGo then
+			arg_20_0:_releaseLoader()
+
 			return
 		end
 
 		if not arg_20_0._picLoaded then
+			arg_20_0:_releaseLoader()
+
 			return
 		end
 
@@ -487,36 +491,42 @@ function var_0_0._checkDestroyItem(arg_22_0)
 	arg_22_0:_realDestroy()
 end
 
-function var_0_0._realDestroy(arg_23_0)
-	arg_23_0:_killTweenId()
+function var_0_0._releaseLoader(arg_23_0)
+	if arg_23_0._pictureLoader then
+		if arg_23_0._pictureLoader:getAssetItem() then
+			arg_23_0._pictureLoader:getAssetItem():Release()
+		end
 
-	if not arg_23_0._picLoaded then
-		return
-	end
-
-	if arg_23_0._pictureLoader and arg_23_0._pictureLoader:getAssetItem() then
-		arg_23_0._pictureLoader:getAssetItem():Release()
 		arg_23_0._pictureLoader:dispose()
 
 		arg_23_0._pictureLoader = nil
 	end
+end
 
-	TaskDispatcher.cancelTask(arg_23_0._playShake, arg_23_0)
-	TaskDispatcher.cancelTask(arg_23_0._followBg, arg_23_0)
-	TaskDispatcher.cancelTask(arg_23_0._realDestroy, arg_23_0)
-	TaskDispatcher.cancelTask(arg_23_0._checkDestroyItem, arg_23_0)
-	TaskDispatcher.cancelTask(arg_23_0._startDestroy, arg_23_0)
-	TaskDispatcher.cancelTask(arg_23_0._build, arg_23_0)
-	ZProj.TweenHelper.KillByObj(arg_23_0._picGo)
-	TaskDispatcher.cancelTask(arg_23_0._shakeStop, arg_23_0)
+function var_0_0._realDestroy(arg_24_0)
+	arg_24_0:_killTweenId()
 
-	if arg_23_0._simg then
-		arg_23_0._simg:UnLoadImage()
-
-		arg_23_0._simg = nil
+	if not arg_24_0._picLoaded then
+		return
 	end
 
-	gohelper.destroy(arg_23_0._picParentGo)
+	arg_24_0:_releaseLoader()
+	TaskDispatcher.cancelTask(arg_24_0._playShake, arg_24_0)
+	TaskDispatcher.cancelTask(arg_24_0._followBg, arg_24_0)
+	TaskDispatcher.cancelTask(arg_24_0._realDestroy, arg_24_0)
+	TaskDispatcher.cancelTask(arg_24_0._checkDestroyItem, arg_24_0)
+	TaskDispatcher.cancelTask(arg_24_0._startDestroy, arg_24_0)
+	TaskDispatcher.cancelTask(arg_24_0._build, arg_24_0)
+	ZProj.TweenHelper.KillByObj(arg_24_0._picGo)
+	TaskDispatcher.cancelTask(arg_24_0._shakeStop, arg_24_0)
+
+	if arg_24_0._simg then
+		arg_24_0._simg:UnLoadImage()
+
+		arg_24_0._simg = nil
+	end
+
+	gohelper.destroy(arg_24_0._picParentGo)
 end
 
 return var_0_0
